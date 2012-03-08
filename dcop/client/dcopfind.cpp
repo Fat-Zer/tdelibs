@@ -192,7 +192,7 @@ bool launchApp(TQString app)
 
 void usage()
 {
-   fprintf( stderr, "Usage: dcopfind [-l] [-a] application [object [function [arg1] [arg2] [arg3] ... ] ] ] \n" );
+   fprintf( stderr, "[dcopfind] Usage: dcopfind [-l] [-a] application [object [function [arg1] [arg2] [arg3] ... ] ] ] \n" );
    exit(0);
 }
 

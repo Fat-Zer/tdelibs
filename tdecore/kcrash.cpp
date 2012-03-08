@@ -148,10 +148,10 @@ KCrash::defaultCrashHandler (int sig)
       if (appName)
       {
 #ifndef NDEBUG
-        fprintf(stderr, "KCrash: crashing... crashRecursionCounter = %d\n", crashRecursionCounter);
-        fprintf(stderr, "KCrash: Application Name = %s path = %s pid = %d\n", appName ? appName : "<unknown>" , appPath ? appPath : "<unknown>", getpid());
+        fprintf(stderr, "[kcrash] KCrash: crashing... crashRecursionCounter = %d\n", crashRecursionCounter);
+        fprintf(stderr, "[kcrash] KCrash: Application Name = %s path = %s pid = %d\n", appName ? appName : "<unknown>" , appPath ? appPath : "<unknown>", getpid());
 #else
-        fprintf(stderr, "KCrash: Application '%s' crashing...\n", appName ? appName : "<unknown>");
+        fprintf(stderr, "[kcrash] KCrash: Application '%s' crashing...\n", appName ? appName : "<unknown>");
 #endif
 
           const char * argv[24]; // don't forget to update this
@@ -231,13 +231,13 @@ KCrash::defaultCrashHandler (int sig)
 
       }
       else {
-        fprintf(stderr, "Unknown appname\n");
+        fprintf(stderr, "[kcrash] Unknown appname\n");
       }
     }
 
     if (crashRecursionCounter < 4)
     {
-      fprintf(stderr, "Unable to start Dr. Konqi\n");
+      fprintf(stderr, "[kcrash] Unable to start Dr. Konqi\n");
     }
 #endif //Q_OS_UNIX
 
@@ -277,7 +277,7 @@ void KCrash::startDrKonqi( const char* argv[], int argc )
     int len = strlen( argv[ i ] ) + 1; // include terminating \0
     if( pos + len > BUFSIZE )
     {
-      fprintf( stderr, "BUFSIZE in KCrash not big enough!\n" );
+      fprintf( stderr, "[kcrash] BUFSIZE in KCrash not big enough!\n" );
       startDirectly( argv, argc );
       return;
     }
@@ -320,7 +320,7 @@ void KCrash::startDrKonqi( const char* argv[], int argc )
 // If we can't reach tdeinit we can still at least try to fork()
 void KCrash::startDirectly( const char* argv[], int )
 {
-  fprintf( stderr, "KCrash cannot reach tdeinit, launching directly.\n" );
+  fprintf( stderr, "[kcrash] KCrash cannot reach tdeinit, launching directly.\n" );
   pid_t pid = fork();
   if (pid <= 0)
   {
@@ -451,12 +451,12 @@ static int openSocket()
   {
      if (!home_dir || !home_dir[0])
      {
-        fprintf(stderr, "Warning: $HOME not set!\n");
+        fprintf(stderr, "[kcrash] Warning: $HOME not set!\n");
         return -1;
      }
      if (strlen(home_dir) > (MAX_SOCK_FILE-100))
      {
-        fprintf(stderr, "Warning: Home directory path too long!\n");
+        fprintf(stderr, "[kcrash] Warning: Home directory path too long!\n");
         return -1;
      }
      kde_home++;
@@ -473,7 +473,7 @@ static int openSocket()
       strncat(sock_file, getenv("XAUTHLOCALHOSTNAME"), MAX_SOCK_FILE - strlen(sock_file) - 1);
   else if (gethostname(sock_file+strlen(sock_file), MAX_SOCK_FILE - strlen(sock_file) - 1) != 0)
   {
-     perror("Warning: Could not determine hostname: ");
+     perror("[kcrash] Warning: Could not determine hostname: ");
      return -1;
   }
   sock_file[sizeof(sock_file)-1] = '\0';
@@ -482,13 +482,13 @@ static int openSocket()
   display = getDisplay();
   if (display == NULL)
   {
-     fprintf(stderr, "Error: Could not determine display.\n");
+     fprintf(stderr, "[kcrash] Error: Could not determine display.\n");
      return -1;
   }
 
   if (strlen(sock_file)+strlen(display)+strlen("/tdeinit_")+2 > MAX_SOCK_FILE)
   {
-     fprintf(stderr, "Warning: Socket name will be too long.\n");
+     fprintf(stderr, "[kcrash] Warning: Socket name will be too long.\n");
      free(display);
      return -1;
   }
@@ -498,7 +498,7 @@ static int openSocket()
 
   if (strlen(sock_file) >= sizeof(server.sun_path))
   {
-     fprintf(stderr, "Warning: Path of socketfile exceeds UNIX_PATH_MAX.\n");
+     fprintf(stderr, "[kcrash] Warning: Path of socketfile exceeds UNIX_PATH_MAX.\n");
      return -1;
   }
 
@@ -508,7 +508,7 @@ static int openSocket()
   s = socket(PF_UNIX, SOCK_STREAM, 0);
   if (s < 0) 
   {
-     perror("Warning: socket() failed: ");
+     perror("[kcrash] Warning: socket creation failed: ");
      return -1;
   }
 
@@ -517,7 +517,7 @@ static int openSocket()
   socklen = sizeof(server);
   if(connect(s, (struct sockaddr *)&server, socklen) == -1) 
   {
-     perror("Warning: connect() failed: ");
+     perror("[kcrash] Warning: socket connection failed: ");
      close(s);
      return -1;
   }

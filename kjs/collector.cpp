@@ -163,7 +163,7 @@ bool Collector::collect()
   if (InterpreterImp::s_hook) {
     InterpreterImp *scr = InterpreterImp::s_hook;
     do {
-      //fprintf( stderr, "Collector marking interpreter %p\n",(void*)scr);
+      //fprintf( stderr, "[kjs-collector] Collector marking interpreter %p\n",(void*)scr);
       scr->mark();
       scr = scr->next;
     } while (scr != InterpreterImp::s_hook);
@@ -221,7 +221,7 @@ bool Collector::collect()
 
       if (!(imp->_flags & ValueImp::VI_DESTRUCTED)) {
 	if (!imp->refcount && imp->_flags == (ValueImp::VI_GCALLOWED | ValueImp::VI_CREATED)) {
-	  //fprintf( stderr, "Collector::deleting ValueImp %p (%s)\n", (void*)imp, typeid(*imp).name());
+	  //fprintf( stderr, "[kjs-collector] Collector::deleting ValueImp %p (%s)\n", (void*)imp, typeid(*imp).name());
 	  // emulate destructing part of 'operator delete()'
 	  imp->~ValueImp();
 	  curBlock->usedCells--;

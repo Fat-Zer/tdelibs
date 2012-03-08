@@ -42,7 +42,7 @@ KCMKResources::KCMKResources( TQWidget *parent, const char *name, const TQString
   setButtons( Help | Apply );
   KAboutData *about =
    new KAboutData( I18N_NOOP( "kcmkresources" ),
-                   I18N_NOOP( "KDE Resources configuration module" ),
+                   I18N_NOOP( "TDE Resources configuration module" ),
                    0, 0, KAboutData::License_GPL,
                    I18N_NOOP( "(c) 2003 Tobias Koenig" ) );
 

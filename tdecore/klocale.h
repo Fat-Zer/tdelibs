@@ -130,7 +130,7 @@ public:
    * The constructor looks for an entry Locale/Language in the
    * configuration file.
    * If no config file is specified, it will also look for languages
-   * using the environment variables (KDE_LANG, LC_MESSAGES, LC_ALL, LANG),
+   * using the environment variables (TDE_LANG, LC_MESSAGES, LC_ALL, LANG),
    * as well as the global configuration file. If KLocale is not able to use
    * any of the specified languages, the default language (en_US) will be
    * used.

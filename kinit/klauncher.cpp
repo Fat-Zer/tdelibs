@@ -207,15 +207,15 @@ KLauncher::KLauncher(int _tdeinitSocket, bool new_startup)
    lastRequest = 0;
    bProcessingQueue = false;
 
-   mSlaveDebug = getenv("KDE_SLAVE_DEBUG_WAIT");
+   mSlaveDebug = getenv("TDE_SLAVE_DEBUG_WAIT");
    if (!mSlaveDebug.isEmpty())
    {
       tqWarning("Klauncher running in slave-debug mode for slaves of protocol '%s'", mSlaveDebug.data());
    }
-   mSlaveValgrind = getenv("KDE_SLAVE_VALGRIND");
+   mSlaveValgrind = getenv("TDE_SLAVE_VALGRIND");
    if (!mSlaveValgrind.isEmpty())
    {
-      mSlaveValgrindSkin = getenv("KDE_SLAVE_VALGRIND_SKIN");
+      mSlaveValgrindSkin = getenv("TDE_SLAVE_VALGRIND_SKIN");
       tqWarning("Klauncher running slaves through valgrind for slaves of protocol '%s'", mSlaveValgrind.data());
    }
    klauncher_header request_header;

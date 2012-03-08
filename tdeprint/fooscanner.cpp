@@ -1591,7 +1591,7 @@ static void yy_fatal_error( msg )
 char msg[];
 #endif
 	{
-	(void) fprintf( stderr, "%s\n", msg );
+	(void) fprintf( stderr, "[fooscanner] %s\n", msg );
 	exit( YY_EXIT_FAILURE );
 	}
 

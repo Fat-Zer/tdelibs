@@ -205,7 +205,7 @@ KConfig	*KInstance::config() const
 	}
 	
 	// Check if we are excempt from kiosk restrictions
-	if (kde_kiosk_admin && !kde_kiosk_exception && !TQCString(getenv("KDE_KIOSK_NO_RESTRICTIONS")).isEmpty())
+	if (kde_kiosk_admin && !kde_kiosk_exception && !TQCString(getenv("TDE_KIOSK_NO_RESTRICTIONS")).isEmpty())
 	{
             kde_kiosk_exception = true;
             d->sharedConfig = 0;

@@ -503,16 +503,16 @@ FunctionBodyNode *Parser::parse(const UChar *code, unsigned int length, SourceCo
     if (errMsg)
       *errMsg = "Parse error at line " + UString::from(eline);
 #ifdef KJS_VERBOSE
-    fprintf( stderr, "%s\n", UString(code,length).ascii() );
+    fprintf( stderr, "[kjs-internal] %s\n", UString(code,length).ascii() );
 #endif
 #ifndef NDEBUG
-    fprintf(stderr, "KJS: JavaScript parse error at line %d.\n", eline);
+    fprintf( stderr, "[kjs-internal] KJS: JavaScript parse error at line %d.\n", eline);
 #endif
     delete prog;
     return 0;
   }
 #ifdef KJS_VERBOSE
-  fprintf( stderr, "%s\n", prog->toCode().ascii() );
+  fprintf( stderr, "[kjs-internal] %s\n", prog->toCode().ascii() );
 #endif
 
   return prog;
@@ -524,7 +524,7 @@ InterpreterImp* InterpreterImp::s_hook = 0L;
 
 void InterpreterImp::globalInit()
 {
-  //fprintf( stderr, "InterpreterImp::globalInit()\n" );
+  //fprintf( stderr, "[kjs-internal] InterpreterImp::globalInit()\n" );
   UndefinedImp::staticUndefined = new UndefinedImp();
   UndefinedImp::staticUndefined->ref();
   NullImp::staticNull = new NullImp();
@@ -539,7 +539,7 @@ void InterpreterImp::globalInit()
 
 void InterpreterImp::globalClear()
 {
-  //fprintf( stderr, "InterpreterImp::globalClear()\n" );
+  //fprintf( stderr, "[kjs-internal] InterpreterImp::globalClear()\n" );
   UndefinedImp::staticUndefined->deref();
   UndefinedImp::staticUndefined->setGcAllowed();
   UndefinedImp::staticUndefined = 0L;
@@ -783,7 +783,7 @@ void InterpreterImp::mark()
     BooleanImp::staticTrue->mark();
   if (BooleanImp::staticFalse && !BooleanImp::staticFalse->marked())
     BooleanImp::staticFalse->mark();
-  //fprintf( stderr, "InterpreterImp::mark this=%p global.imp()=%p\n", this, global.imp() );
+  //fprintf( stderr, "[kjs-internal] InterpreterImp::mark this=%p global.imp()=%p\n", this, global.imp() );
   if (global.imp())
     global.imp()->mark();
   if (m_interpreter)

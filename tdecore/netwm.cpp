@@ -629,7 +629,7 @@ NETRootInfo::NETRootInfo(Display *display, Window supportWindow, const char *wmN
     p->desktop_layout_columns = p->desktop_layout_rows = 0;
     setDefaultProperties();
     if( properties_size > PROPERTIES_SIZE ) {
-        fprintf( stderr, "NETRootInfo::NETRootInfo(): properties array too large\n");
+        fprintf( stderr, "[netwm] NETRootInfo::NETRootInfo(): properties array too large\n");
         properties_size = PROPERTIES_SIZE;
     }
     for( int i = 0; i < properties_size; ++i )
@@ -730,7 +730,7 @@ NETRootInfo::NETRootInfo(Display *display, const unsigned long properties[], int
     p->desktop_layout_columns = p->desktop_layout_rows = 0;
     setDefaultProperties();
     if( properties_size > 2 ) {
-        fprintf( stderr, "NETWinInfo::NETWinInfo(): properties array too large\n");
+        fprintf( stderr, "[netwm] NETWinInfo::NETWinInfo(): properties array too large\n");
         properties_size = 2;
     }
     for( int i = 0; i < properties_size; ++i )

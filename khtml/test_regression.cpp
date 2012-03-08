@@ -481,7 +481,7 @@ int main(int argc, char *argv[])
     {
         TQString xvfbPath = KStandardDirs::findExe("Xvfb");
         if ( xvfbPath.isEmpty() ) {
-            fprintf( stderr, "ERROR: We need Xvfb to be installed for reliable results\n" );
+            fprintf( stderr, "[test_regression] ERROR: We need Xvfb to be installed for reliable results\n" );
             exit( 1 );
         }
         
@@ -578,7 +578,7 @@ int main(int argc, char *argv[])
     // we're not interested
     toplevel->statusBar()->hide();
 
-    if (!getenv("KDE_DEBUG")) {
+    if (!getenv("TDE_DEBUG")) {
         // set ulimits
         rlimit vmem_limit = { 256*1024*1024, RLIM_INFINITY };	// 256Mb Memory should suffice
         setrlimit(RLIMIT_AS, &vmem_limit);

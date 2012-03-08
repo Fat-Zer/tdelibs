@@ -174,8 +174,8 @@ If you want to have a core dump after your application crashes you need to
 do two things:
 
 1) Disable the TDE crash handler. This can be done either by using the 
---nocrashhandler command line option or by setting the KDE_DEBUG environment
-variable to some value e.g. KDE_DEBUG=true.
+--nocrashhandler command line option or by setting the TDE_DEBUG environment
+variable to some value e.g. TDE_DEBUG=true.
 
 2) Enable core dump generation by changing the so called 'ulimits' with the
 following command: 

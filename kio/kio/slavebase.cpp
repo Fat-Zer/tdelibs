@@ -168,7 +168,7 @@ SlaveBase::SlaveBase( const TQCString &protocol,
 {
     s_protocol = protocol.data();
 #ifdef Q_OS_UNIX
-    if (!getenv("KDE_DEBUG"))
+    if (!getenv("TDE_DEBUG"))
     {
         KCrash::setCrashHandler( sigsegv_handler );
         signal(SIGILL,&sigsegv_handler);

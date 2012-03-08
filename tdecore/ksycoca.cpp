@@ -112,7 +112,7 @@ bool KSycoca::openDatabase( bool openDummyIfNotFound )
    m_str = 0;
    m_barray = 0;
    TQString path;
-   TQCString ksycoca_env = getenv("KDESYCOCA");
+   TQCString ksycoca_env = getenv("TDESYCOCA");
    if (ksycoca_env.isEmpty())
       path = KGlobal::dirs()->saveLocation("cache") + "ksycoca";
    else

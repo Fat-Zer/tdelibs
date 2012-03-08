@@ -55,7 +55,7 @@ KPCopiesPage::KPCopiesPage(KPrinter *prt, TQWidget *parent, const char *name)
 	TQString whatsThisCurrentPagesLabel = i18n(  " <qt><b>Current Page:</b> Select <em>\"Current\"</em> if you want "
 						" to print the page currently visible in your KDE application.</p>"
 						" <p><b>Note:</b> this field is disabled if you print from"
-						" non-KDE applications like Mozilla or OpenOffice.org, since here KDEPrint has no"
+						" non-TDE applications like Mozilla or OpenOffice.org, since here KDEPrint has no"
 						" means to determine which document page you are currently viewing.</p></qt>" );
 	TQString whatsThisPageRangeLabel = i18n(  " <qt><b>Page Range:</b> Choose a \"Page Range\" to select a subset of the"
 						" complete document pages"

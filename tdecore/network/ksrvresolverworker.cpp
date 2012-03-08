@@ -245,7 +245,7 @@ namespace KNetwork
     void initSrvWorker() KDE_NO_EXPORT;
     void initSrvWorker()
     {
-      if (getenv("KDE_NO_SRV") != NULL)
+      if (getenv("TDE_NO_SRV") != NULL)
 	return;
       
       KResolverWorkerFactoryBase::registerNewWorker(new KResolverWorkerFactory<KSrvResolverWorker>);

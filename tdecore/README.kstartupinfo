@@ -134,7 +134,7 @@ Implementation details :
 ------------------------
 
  The ASN info data is sent using X ClientMessages as text ( see below ),
-this is mainly in hope also non-KDE people will start using it, and
+this is mainly in hope also non-TDE people will start using it, and
 they wouldn't be very happy with DCOP.
  Before starting an application, and environment variable called
 KDE_STARTUP_ENV is added to it's environment, and it's set to unique
@@ -271,7 +271,7 @@ Entries :
  Well, I guess that's all. The KDE2.2 release will show if the users like it
 or not ( it's quite good IMHO, even though there are probably some minor
 details to fix or improve ). The only big thing remaining is to make also
-non-KDE people agree on using something like this. My first attempt
+non-TDE people agree on using something like this. My first attempt
 https://listman.redhat.com/pipermail/xdg-list/2001-May/000083.html
 didn't get much attention, but now that there's a working implementation,
 I hope it will get better, when I try again sometime in the future.

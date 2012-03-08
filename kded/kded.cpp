@@ -104,7 +104,7 @@ Kded::Kded(bool checkUpdates, bool new_startup)
 {
   _self = this;
   TQCString cPath;
-  TQCString ksycoca_env = getenv("KDESYCOCA");
+  TQCString ksycoca_env = getenv("TDESYCOCA");
   if (ksycoca_env.isEmpty())
      cPath = TQFile::encodeName(KGlobal::dirs()->saveLocation("tmp")+"ksycoca");
   else
@@ -918,7 +918,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
 
      if (!KUniqueApplication::start())
      {
-        fprintf(stderr, "KDE Daemon (kded) already running.\n");
+        fprintf(stderr, "[kded] KDE Daemon (kded) already running.\n");
         exit(0);
      }
 

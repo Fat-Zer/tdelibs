@@ -108,7 +108,7 @@ static TQString sycocaPath()
   }
   else
   {
-     TQCString ksycoca_env = getenv("KDESYCOCA");
+     TQCString ksycoca_env = getenv("TDESYCOCA");
      if (ksycoca_env.isEmpty())
         path = KGlobal::dirs()->saveLocation("cache")+"ksycoca";
      else
@@ -120,7 +120,7 @@ static TQString sycocaPath()
 
 static TQString oldSycocaPath()
 {
-  TQCString ksycoca_env = getenv("KDESYCOCA");
+  TQCString ksycoca_env = getenv("TDESYCOCA");
   if (ksycoca_env.isEmpty())
      return KGlobal::dirs()->saveLocation("tmp")+"ksycoca";
 
@@ -476,7 +476,7 @@ bool KBuildSycoca::recreate()
   }
   if (database->status() != 0)
   {
-    fprintf(stderr, "kbuildsycoca: ERROR creating database '%s'! %s\n", path.local8Bit().data(),strerror(database->status()));
+    fprintf(stderr, "[kbuildsycoca] ERROR creating database '%s'! %s\n", path.local8Bit().data(),strerror(database->status()));
 #ifdef KBUILDSYCOCA_GUI // KBUILDSYCOCA_GUI is used on win32 to build 
                         // GUI version of kbuildsycoca, so-called "kbuildsycocaw".
     if (!silent)
@@ -505,11 +505,11 @@ bool KBuildSycoca::recreate()
     m_str = 0L;
     if (!database->close())
     {
-      fprintf(stderr, "kbuildsycoca: ERROR writing database '%s'!\n", database->name().local8Bit().data());
-      fprintf(stderr, "kbuildsycoca: Disk full?\n");
+      fprintf(stderr, "[kbuildsycoca] ERROR writing database '%s'!\n", database->name().local8Bit().data());
+      fprintf(stderr, "[kbuildsycoca] Disk full?\n");
 #ifdef KBUILDSYCOCA_GUI
       if (!silent)
-        KMessageBox::error(0, i18n("Error writing database '%1'.\nCheck that the permissions are correct on the directory and the disk is not full.\n").arg(path.local8Bit().data()), i18n("KBuildSycoca"));
+        KMessageBox::error(0, i18n("[kbuildsycoca] Error writing database '%1'.\nCheck that the permissions are correct on the directory and the disk is not full.\n").arg(path.local8Bit().data()), i18n("KBuildSycoca"));
 #endif
       return false;
     }
@@ -777,14 +777,14 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
      TQCString registeredName = dcopClient->registerAs(appName, false);
      if (registeredName.isEmpty())
      {
-       fprintf(stderr, "Warning: %s is unable to register with DCOP.\n", appName);
+       fprintf(stderr, "[kbuildsycoca] Warning: %s is unable to register with DCOP.\n", appName);
        break;
      }
      else if (registeredName == appName)
      {
        break; // Go
      }
-     fprintf(stderr, "Waiting for already running %s to finish.\n", appName);
+     fprintf(stderr, "[kbuildsycoca] Waiting for already running %s to finish.\n", appName);
 
      dcopClient->setNotifications( true );
      while (dcopClient->isApplicationRegistered(appName))
@@ -796,7 +796,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
      }
      dcopClient->setNotifications( false );
    }
-   fprintf(stderr, "%s running...\n", appName);
+   fprintf(stderr, "[kbuildsycoca] %s running...\n", appName);
 
    bool checkfiles = bGlobalDatabase || args->isSet("checkfiles");
 
@@ -870,7 +870,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
       g_ctimeDict = 0;
       if (incremental)
       {
-         tqWarning("Reusing existing ksycoca");
+         tqWarning("[kbuildsycoca] Reusing existing ksycoca.");
          KSycoca *oldSycoca = KSycoca::self();
          KSycocaFactoryList *factories = new KSycocaFactoryList;
          g_allEntries = new KSycocaEntryListList;
@@ -950,7 +950,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
 #ifdef KBUILDSYCOCA_GUI
    if (!silent) {
      progress.close();
-     KMessageBox::information(0, i18n("Configuration information reloaded successfully."), capt);
+     KMessageBox::information(0, i18n("[kbuildsycoca] Configuration information reloaded successfully."), capt);
    }
 #endif
    return 0;

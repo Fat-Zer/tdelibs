@@ -390,8 +390,8 @@ Slave* Slave::createSlave( const TQString &protocol, const KURL& url, int& error
     // for the slave to connect to the application.
     // In such case we start the slave via KProcess.
     // It's possible to force this by setting the env. variable
-    // KDE_FORK_SLAVES, Clearcase seems to require this.
-    static bool bForkSlaves = !TQCString(getenv("KDE_FORK_SLAVES")).isEmpty();
+    // TDE_FORK_SLAVES, Clearcase seems to require this.
+    static bool bForkSlaves = !TQCString(getenv("TDE_FORK_SLAVES")).isEmpty();
     
     if (bForkSlaves || !client->isAttached() || client->isAttachedToForeignServer())
     {

@@ -306,9 +306,9 @@ KLibLoader::KLibLoader( TQObject* parent, const char* name )
     d = new KLibLoaderPrivate;
     lt_dlinit();
     d->unload_mode = KLibLoaderPrivate::UNKNOWN;
-    if (getenv("KDE_NOUNLOAD") != 0)
+    if (getenv("TDE_NOUNLOAD") != 0)
         d->unload_mode = KLibLoaderPrivate::DONT_UNLOAD;
-    else if (getenv("KDE_DOUNLOAD") != 0)
+    else if (getenv("TDE_DOUNLOAD") != 0)
         d->unload_mode = KLibLoaderPrivate::UNLOAD;
     d->loaded_stack.setAutoDelete( true );
 }
@@ -525,7 +525,7 @@ void KLibLoader::close_pending(KLibWrapPrivate *wrap)
   bool deleted_one = false;
   while ((wrap = d->loaded_stack.first())) {
     /* Let's first see, if we want to try to unload this lib.
-       If the env. var KDE_DOUNLOAD is set, we try to unload every lib.
+       If the env. var TDE_DOUNLOAD is set, we try to unload every lib.
        If not, we look at the lib itself, and unload it only, if it exports
        the symbol __kde_do_unload. */
     if (d->unload_mode != KLibLoaderPrivate::UNLOAD

@@ -1274,7 +1274,7 @@ TQString KStandardDirs::kfsstnd_defaultbindir()
 #ifdef Q_WS_WIN
    s->defaultbindir = kfsstnd_defaultprefix() + TQString::fromLatin1("/bin");
 #else //UNIX
-   s->defaultbindir = __KDE_BINDIR;
+   s->defaultbindir = __TDE_BINDIR;
    if (s->defaultbindir.isEmpty())
       s->defaultbindir = kfsstnd_defaultprefix() + TQString::fromLatin1("/bin");
 #endif
@@ -1568,7 +1568,7 @@ bool KStandardDirs::addCustomized(KConfig *config)
 
         bool readProfiles = true;
 
-        if (kde_kiosk_admin && !TQCString(getenv("KDE_KIOSK_NO_PROFILES")).isEmpty())
+        if (kde_kiosk_admin && !TQCString(getenv("TDE_KIOSK_NO_PROFILES")).isEmpty())
             readProfiles = false;
 
         TQString userMapFile = config->readEntry("userProfileMapFile");
@@ -1630,7 +1630,7 @@ bool KStandardDirs::addCustomized(KConfig *config)
     }
 
     // Process KIOSK restrictions.
-    if (!kde_kiosk_admin || TQCString(getenv("KDE_KIOSK_NO_RESTRICTIONS")).isEmpty())
+    if (!kde_kiosk_admin || TQCString(getenv("TDE_KIOSK_NO_RESTRICTIONS")).isEmpty())
     {
         config->setGroup("KDE Resource Restrictions");
         TQMap<TQString, TQString> entries = config->entryMap("KDE Resource Restrictions");

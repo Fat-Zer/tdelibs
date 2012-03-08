@@ -156,7 +156,7 @@ void KLocale::initLanguageList(KConfig * config, bool useEnv)
   TQStringList languageList;
   if ( useEnv )
     languageList += TQStringList::split
-      (':', TQFile::decodeName( ::getenv("KDE_LANG") ));
+      (':', TQFile::decodeName( ::getenv("TDE_LANG") ));
 
   languageList += config->readListEntry("Language", ':');
 
@@ -2074,7 +2074,7 @@ void KLocale::initFileNameEncoding(KConfig *)
 {
   // If the following environment variable is set, assume all filenames
   // are in UTF-8 regardless of the current C locale.
-  d->utf8FileEncoding = getenv("KDE_UTF8_FILENAMES") != 0;
+  d->utf8FileEncoding = getenv("TDE_UTF8_FILENAMES") != 0;
   if (d->utf8FileEncoding)
   {
     TQFile::setEncodingFunction(KLocale::encodeFileNameUTF8);

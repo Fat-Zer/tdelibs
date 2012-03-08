@@ -40,7 +40,7 @@ static void sig_handler(int sig_num)
    // No recursion
    signal( SIGHUP, SIG_IGN);
    signal( SIGTERM, SIG_IGN);
-fprintf(stderr, "klauncher: Exiting on signal %d\n", sig_num);
+   fprintf(stderr, "[klauncher] Exiting on signal %d\n", sig_num);
    KLauncher::destruct(255);
 }
 
@@ -55,8 +55,8 @@ extern "C" KDE_EXPORT int kdemain( int argc, char**argv )
    // Started via tdeinit.
    if (fcntl(LAUNCHER_FD, F_GETFD) == -1)
    {
-      fprintf(stderr, "%s", i18n("klauncher: This program is not supposed to be started manually.\n"
-                                 "klauncher: It is started automatically by tdeinit.\n").local8Bit().data());
+      fprintf(stderr, "%s", i18n("[klauncher] This program is not supposed to be started manually.\n"
+                                 "[klauncher] It is started automatically by tdeinit.\n").local8Bit().data());
       return 1;
    }
 
@@ -82,7 +82,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char**argv )
       TQCString dcopName = KApplication::dcopClient()->registerAs(name, false);
       if (dcopName.isEmpty())
       {
-         kdWarning() << "DCOP communication problem!" << endl;
+         kdWarning() << "[klauncher] DCOP communication problem!" << endl;
          return 1;
       }
       if (dcopName == cname)
@@ -90,12 +90,12 @@ extern "C" KDE_EXPORT int kdemain( int argc, char**argv )
 
       if (--maxTry == 0)
       {
-         kdWarning() << "Another instance of klauncher is already running!" << endl;
+         kdWarning() << "[klauncher] Another instance of klauncher is already running!" << endl;
          return 1;
       }
       
       // Wait a bit...
-      kdWarning() << "Waiting for already running klauncher to exit." << endl;
+      kdWarning() << "[klauncher] Waiting for already running klauncher to exit." << endl;
       sleep(1);
 
       // Try again...
