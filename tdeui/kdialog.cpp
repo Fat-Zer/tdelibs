@@ -336,8 +336,10 @@ KSMModalDialogHeader::KSMModalDialogHeader(TQWidget* parent)
 	frame->setMinimumWidth(400);
 	vbox->addWidget( frame );
 	TQGridLayout* gbox = new TQGridLayout( frame, 1, 1, 0, KDialog::spacingHint() );
-	TQHBoxLayout* centerbox = new TQHBoxLayout( frame, 0, KDialog::spacingHint() );
-	TQHBoxLayout* seperatorbox = new TQHBoxLayout( frame, 0, 0 );
+	TQHBoxLayout* centerbox = new TQHBoxLayout( KDialog::spacingHint() );
+	TQHBoxLayout* seperatorbox = new TQHBoxLayout( 0 );
+	centerbox->setMargin(0);
+	seperatorbox->setMargin(0);
 
 	TQWidget* ticon = new TQWidget( frame );
 	KIconLoader * ldr = KGlobal::iconLoader();
@@ -402,7 +404,7 @@ KSMModalDialog::KSMModalDialog(TQWidget* parent)
 	XChangeProperty(tqt_xdisplay(), winId(), kde_wm_system_modal_notification, XA_INTEGER, 32, PropModeReplace, (unsigned char *) "TRUE", 1L);
 
 	TQVBoxLayout* vbox = new TQVBoxLayout( this );
-	
+
 	TQFrame* frame = new TQFrame( this );
 	frame->setFrameStyle( TQFrame::NoFrame );
 	frame->setLineWidth( style().pixelMetric( TQStyle::PM_DefaultFrameWidth, frame ) );
