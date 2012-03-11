@@ -238,7 +238,7 @@ static void close_fds()
 
 static void exitWithErrorMsg(const TQString &errorMsg)
 {
-   fprintf( stderr, "[kinit] %s\n", errorMsg.local8Bit().data() );
+   fprintf( stderr, "[tdeinit] %s\n", errorMsg.local8Bit().data() );
    TQCString utf8ErrorMsg = errorMsg.utf8();
    d.result = 3; // Error with msg
    write(d.fd[1], &d.result, 1);
@@ -256,18 +256,18 @@ static void setup_tty( const char* tty )
     int fd = open( tty, O_WRONLY );
     if( fd < 0 )
     {
-        fprintf(stderr, "[kinit] couldn't open() %s: %s\n", tty, strerror (errno) );
+        fprintf(stderr, "[tdeinit] couldn't open() %s: %s\n", tty, strerror (errno) );
         return;
     }
     if( dup2( fd, STDOUT_FILENO ) < 0 )
     {
-        fprintf(stderr, "[kinit] couldn't dup2() %s: %s\n", tty, strerror (errno) );
+        fprintf(stderr, "[tdeinit] couldn't dup2() %s: %s\n", tty, strerror (errno) );
         close( fd );
         return;
     }
     if( dup2( fd, STDERR_FILENO ) < 0 )
     {
-        fprintf(stderr, "[kinit] couldn't dup2() %s: %s\n", tty, strerror (errno) );
+        fprintf(stderr, "[tdeinit] couldn't dup2() %s: %s\n", tty, strerror (errno) );
         close( fd );
         return;
     }
@@ -435,7 +435,7 @@ static pid_t launch(int argc, const char *_name, const char *args,
       */
      if (0 > socketpair(AF_UNIX, SOCK_STREAM, 0, d.launcher))
      {
-        perror("[kinit] socketpair() failed!\n");
+        perror("[tdeinit] socketpair() failed!\n");
         exit(255);
      }
      launcher = 1;
@@ -470,7 +470,7 @@ static pid_t launch(int argc, const char *_name, const char *args,
 
   if (0 > pipe(d.fd))
   {
-     perror("[kinit] pipe() failed!\n");
+     perror("[tdeinit] pipe() failed!\n");
      d.result = 3;
      d.errorMsg = i18n("Unable to start new process.\n"
                        "The system may have reached the maximum number of open files possible or the maximum number of open files that you are allowed to use has been reached.").utf8();
@@ -492,7 +492,7 @@ static pid_t launch(int argc, const char *_name, const char *args,
   d.fork = fork();
   switch(d.fork) {
   case -1:
-     perror("[kinit] fork() failed!\n");
+     perror("[tdeinit] fork() failed!\n");
      d.result = 3;
      d.errorMsg = i18n("Unable to create new process.\n"
                        "The system may have reached the maximum number of processes possible or the maximum number of processes that you are allowed to use has been reached.").utf8();
@@ -575,11 +575,11 @@ static pid_t launch(int argc, const char *_name, const char *args,
        /* set the process name, so that killall works like intended */
        r = prctl(PR_SET_NAME, (unsigned long) name.data(), 0, 0, 0);
        if ( r == 0 )
-           tdeinit_setproctitle( "%s [kinit]%s", name.data(), procTitle.data() ? procTitle.data() : "" );
+           tdeinit_setproctitle( "%s [tdeinit]%s", name.data(), procTitle.data() ? procTitle.data() : "" );
        else
-           tdeinit_setproctitle( "[kinit] %s%s", name.data(), procTitle.data() ? procTitle.data() : "" );
+           tdeinit_setproctitle( "[tdeinit] %s%s", name.data(), procTitle.data() ? procTitle.data() : "" );
 #else
-       tdeinit_setproctitle( "[kinit] %s%s", name.data(), procTitle.data() ? procTitle.data() : "" );
+       tdeinit_setproctitle( "[tdeinit] %s%s", name.data(), procTitle.data() ? procTitle.data() : "" );
 #endif
      }
 
@@ -659,9 +659,9 @@ static pid_t launch(int argc, const char *_name, const char *args,
      d.func = (int (*)(int, char *[])) d.sym;
      if (d.debug_wait)
      {
-        fprintf(stderr, "[kinit] Suspending process\n"
-                        "[kinit] 'gdb tdeinit %d' to debug\n"
-                        "[kinit] 'kill -SIGCONT %d' to continue\n",
+        fprintf(stderr, "[tdeinit] Suspending process\n"
+                        "[tdeinit] 'gdb tdeinit %d' to debug\n"
+                        "[tdeinit] 'kill -SIGCONT %d' to continue\n",
                         getpid(), getpid());
         kill(getpid(), SIGSTOP);
      }
@@ -690,7 +690,7 @@ static pid_t launch(int argc, const char *_name, const char *args,
           if (d.result == 2)
           {
 #ifndef NDEBUG
-             fprintf(stderr, "[kinit] %s is executable and not a library. Launching with exec.\n", _name );
+             fprintf(stderr, "[tdeinit] %s is executable and not a library. Launching with exec.\n", _name );
 #endif
              exec = true;
              continue;
@@ -728,11 +728,11 @@ static pid_t launch(int argc, const char *_name, const char *args,
        }
        if (d.n == 0)
        {
-          perror("[kinit] Pipe closed unexpectedly");
+          perror("[tdeinit] Pipe closed unexpectedly");
           d.result = 1; // Error
           break;
        }
-       perror("[kinit] Error reading from pipe");
+       perror("[tdeinit] Error reading from pipe");
        d.result = 1; // Error
        break;
      }
@@ -777,20 +777,20 @@ static void init_signals()
 
   if (pipe(d.deadpipe) != 0)
   {
-     perror("[kinit] Aborting. Can't create pipe: ");
+     perror("[tdeinit] Aborting. Can't create pipe: ");
      exit(255);
   }
 
   options = fcntl(d.deadpipe[0], F_GETFL);
   if (options == -1)
   {
-     perror("[kinit] Aborting. Can't make pipe non-blocking: ");
+     perror("[tdeinit] Aborting. Can't make pipe non-blocking: ");
      exit(255);
   }
 
   if (fcntl(d.deadpipe[0], F_SETFL, options | O_NONBLOCK) == -1)
   {
-     perror("[kinit] Aborting. Can't make pipe non-blocking: ");
+     perror("[tdeinit] Aborting. Can't make pipe non-blocking: ");
      exit(255);
   }
 
@@ -831,7 +831,7 @@ static void init_tdeinit_socket()
   int max_tries = 10;
   if (!home_dir || !home_dir[0])
   {
-     fprintf(stderr, "[kinit] Aborting. $HOME not set!");
+     fprintf(stderr, "[tdeinit] Aborting. $HOME not set!");
      exit(255);
   }
   chdir(home_dir);
@@ -843,12 +843,12 @@ static void init_tdeinit_socket()
      {
        if (errno == ENOENT)
        {
-          fprintf(stderr, "[kinit] Aborting. $HOME directory (%s) does not exist.\n", path.data());
+          fprintf(stderr, "[tdeinit] Aborting. $HOME directory (%s) does not exist.\n", path.data());
           exit(255);
        }
        else if (readOnly.isEmpty())
        {
-          fprintf(stderr, "[kinit] Aborting. No write access to $HOME directory (%s).\n", path.data());
+          fprintf(stderr, "[tdeinit] Aborting. No write access to $HOME directory (%s).\n", path.data());
           exit(255);
        }
      }
@@ -860,7 +860,7 @@ static void init_tdeinit_socket()
      }
      if (access(path.data(), R_OK|W_OK) && (errno != ENOENT))
      {
-       fprintf(stderr, "[kinit] Aborting. No write access to '%s'.\n", path.data());
+       fprintf(stderr, "[tdeinit] Aborting. No write access to '%s'.\n", path.data());
        exit(255);
      }
   }
@@ -874,7 +874,7 @@ static void init_tdeinit_socket()
      int s;
      struct sockaddr_un server;
 
-//     fprintf(stderr, "[kinit] Warning, socket_file already exists!\n");
+//     fprintf(stderr, "[tdeinit] Warning, socket_file already exists!\n");
      /*
       * create the socket stream
       */
@@ -890,7 +890,7 @@ static void init_tdeinit_socket()
 
      if(connect(s, (struct sockaddr *)&server, socklen) == 0)
      {
-        fprintf(stderr, "[kinit] Shutting down running client.\n");
+        fprintf(stderr, "[tdeinit] Shutting down running client.\n");
         klauncher_header request_header;
         request_header.cmd = LAUNCHER_TERMINATE_TDEINIT;
         request_header.arg_length = 0;
@@ -908,21 +908,21 @@ static void init_tdeinit_socket()
   d.wrapper = socket(PF_UNIX, SOCK_STREAM, 0);
   if (d.wrapper < 0)
   {
-     perror("[kinit] Aborting. socket() failed: ");
+     perror("[tdeinit] Aborting. socket() failed: ");
      exit(255);
   }
 
   options = fcntl(d.wrapper, F_GETFL);
   if (options == -1)
   {
-     perror("[kinit] Aborting. Can't make socket non-blocking: ");
+     perror("[tdeinit] Aborting. Can't make socket non-blocking: ");
      close(d.wrapper);
      exit(255);
   }
 
   if (fcntl(d.wrapper, F_SETFL, options | O_NONBLOCK) == -1)
   {
-     perror("[kinit] Aborting. Can't make socket non-blocking: ");
+     perror("[tdeinit] Aborting. Can't make socket non-blocking: ");
      close(d.wrapper);
      exit(255);
   }
@@ -936,7 +936,7 @@ static void init_tdeinit_socket()
       if(bind(d.wrapper, (struct sockaddr *)&sa, socklen) != 0)
       {
           if (max_tries == 0) {
-	      perror("[kinit] Aborting. bind() failed: ");
+	      perror("[tdeinit] Aborting. bind() failed: ");
 	      fprintf(stderr, "Could not bind to socket '%s'\n", sock_file);
 	      close(d.wrapper);
 	      exit(255);
@@ -949,7 +949,7 @@ static void init_tdeinit_socket()
   /** set permissions **/
   if (chmod(sock_file, 0600) != 0)
   {
-     perror("[kinit] Aborting. Can't set permissions on socket: ");
+     perror("[tdeinit] Aborting. Can't set permissions on socket: ");
      fprintf(stderr, "Wrong permissions of socket '%s'\n", sock_file);
      unlink(sock_file);
      close(d.wrapper);
@@ -958,7 +958,7 @@ static void init_tdeinit_socket()
 
   if(listen(d.wrapper, SOMAXCONN) < 0)
   {
-     perror("[kinit] Aborting. listen() failed: ");
+     perror("[tdeinit] Aborting. listen() failed: ");
      unlink(sock_file);
      close(d.wrapper);
      exit(255);
@@ -968,14 +968,14 @@ static void init_tdeinit_socket()
   d.wrapper_old = socket(PF_UNIX, SOCK_STREAM, 0);
   if (d.wrapper_old < 0)
   {
-     // perror("[kinit] Aborting. socket() failed: ");
+     // perror("[tdeinit] Aborting. socket() failed: ");
      return;
   }
 
   options = fcntl(d.wrapper_old, F_GETFL);
   if (options == -1)
   {
-     // perror("[kinit] Aborting. Can't make socket non-blocking: ");
+     // perror("[tdeinit] Aborting. Can't make socket non-blocking: ");
      close(d.wrapper_old);
      d.wrapper_old = 0;
      return;
@@ -983,7 +983,7 @@ static void init_tdeinit_socket()
 
   if (fcntl(d.wrapper_old, F_SETFL, options | O_NONBLOCK) == -1)
   {
-     // perror("[kinit] Aborting. Can't make socket non-blocking: ");
+     // perror("[tdeinit] Aborting. Can't make socket non-blocking: ");
      close(d.wrapper_old);
      d.wrapper_old = 0;
      return;
@@ -999,7 +999,7 @@ static void init_tdeinit_socket()
       if(bind(d.wrapper_old, (struct sockaddr *)&sa_old, socklen) != 0)
       {
           if (max_tries == 0) {
-	      // perror("[kinit] Aborting. bind() failed: ");
+	      // perror("[tdeinit] Aborting. bind() failed: ");
 	      fprintf(stderr, "Could not bind to socket '%s'\n", sock_file_old);
 	      close(d.wrapper_old);
 	      d.wrapper_old = 0;
@@ -1022,7 +1022,7 @@ static void init_tdeinit_socket()
 
   if(listen(d.wrapper_old, SOMAXCONN) < 0)
   {
-     // perror("[kinit] Aborting. listen() failed: ");
+     // perror("[tdeinit] Aborting. listen() failed: ");
      unlink(sock_file_old);
      close(d.wrapper_old);
      d.wrapper_old = 0;
@@ -1069,14 +1069,14 @@ static void launcher_died()
    if (!d.launcher_ok)
    {
       /* This is bad. */
-      fprintf(stderr, "[kinit] Communication error with launcher. Exiting!\n");
+      fprintf(stderr, "[tdeinit] Communication error with launcher. Exiting!\n");
       ::exit(255);
       return;
    }
 
    // KLauncher died... restart
 #ifndef NDEBUG
-   fprintf(stderr, "[kinit] KLauncher died unexpectedly.\n");
+   fprintf(stderr, "[tdeinit] KLauncher died unexpectedly.\n");
 #endif
    // Make sure it's really dead.
    if (d.launcher_pid)
@@ -1092,7 +1092,7 @@ static void launcher_died()
 
    pid_t pid = launch( 1, "klauncher", 0 );
 #ifndef NDEBUG
-   fprintf(stderr, "[kinit] Relaunching KLauncher, pid = %ld result = %d\n", (long) pid, d.result);
+   fprintf(stderr, "[tdeinit] Relaunching KLauncher, pid = %ld result = %d\n", (long) pid, d.result);
 #endif
 }
 
@@ -1156,7 +1156,7 @@ static void handle_launcher_request(int sock = -1)
       const char *startup_id_str = "0";
 
 #ifndef NDEBUG
-     fprintf(stderr, "[kinit] Got %s '%s' from %s.\n",
+     fprintf(stderr, "[tdeinit] Got %s '%s' from %s.\n",
         (request_header.cmd == LAUNCHER_EXEC ? "EXEC" :
         (request_header.cmd == LAUNCHER_EXT_EXEC ? "EXT_EXEC" :
         (request_header.cmd == LAUNCHER_EXEC_NEW ? "EXEC_NEW" :
@@ -1218,7 +1218,7 @@ static void handle_launcher_request(int sock = -1)
      if ((arg_n - request_data) != request_header.arg_length)
      {
 #ifndef NDEBUG
-       fprintf(stderr, "[kinit] EXEC request has invalid format.\n");
+       fprintf(stderr, "[tdeinit] EXEC request has invalid format.\n");
 #endif
        free(request_data);
        d.debug_wait = false;
@@ -1273,16 +1273,16 @@ static void handle_launcher_request(int sock = -1)
 
 #ifndef NDEBUG
       if (launcher)
-         fprintf(stderr, "[kinit] Got SETENV '%s=%s' from klauncher.\n", env_name, env_value);
+         fprintf(stderr, "[tdeinit] Got SETENV '%s=%s' from klauncher.\n", env_name, env_value);
       else
-         fprintf(stderr, "[kinit] Got SETENV '%s=%s' from socket.\n", env_name, env_value);
+         fprintf(stderr, "[tdeinit] Got SETENV '%s=%s' from socket.\n", env_name, env_value);
 #endif
 
       if ( request_header.arg_length !=
           (int) (strlen(env_name) + strlen(env_value) + 2))
       {
 #ifndef NDEBUG
-         fprintf(stderr, "[kinit] SETENV request has invalid format.\n");
+         fprintf(stderr, "[tdeinit] SETENV request has invalid format.\n");
 #endif
          free(request_data);
          return;
@@ -1292,7 +1292,7 @@ static void handle_launcher_request(int sock = -1)
    else if (request_header.cmd == LAUNCHER_TERMINATE_KDE)
    {
 #ifndef NDEBUG
-       fprintf(stderr,"[kinit] Terminating Trinity.\n");
+       fprintf(stderr,"[tdeinit] Terminating Trinity.\n");
 #endif
 #ifdef Q_WS_X11
        tdeinit_xio_errhandler( 0L );
@@ -1301,7 +1301,7 @@ static void handle_launcher_request(int sock = -1)
    else if (request_header.cmd == LAUNCHER_TERMINATE_TDEINIT)
    {
 #ifndef NDEBUG
-       fprintf(stderr,"[kinit] Killing tdeinit/klauncher.\n");
+       fprintf(stderr,"[tdeinit] Killing tdeinit/klauncher.\n");
 #endif
        if (d.launcher_pid)
           kill(d.launcher_pid, SIGTERM);
@@ -1311,7 +1311,7 @@ static void handle_launcher_request(int sock = -1)
    else if (request_header.cmd == LAUNCHER_DEBUG_WAIT)
    {
 #ifndef NDEBUG
-       fprintf(stderr,"[kinit] Debug wait activated.\n");
+       fprintf(stderr,"[tdeinit] Debug wait activated.\n");
 #endif
        d.debug_wait = true;
    }
@@ -1351,7 +1351,7 @@ static void handle_requests(pid_t waitForPid)
         if (exit_pid > 0)
         {
 #ifndef NDEBUG
-           fprintf(stderr, "[kinit] PID %ld terminated.\n", (long) exit_pid);
+           fprintf(stderr, "[tdeinit] PID %ld terminated.\n", (long) exit_pid);
 #endif
            if (waitForPid && (exit_pid == waitForPid))
               return;
@@ -1513,7 +1513,7 @@ static void tdeinit_library_path()
    TQCString display = getenv(DISPLAY);
    if (display.isEmpty())
    {
-     fprintf(stderr, "[kinit] Aborting. $"DISPLAY" is not set.\n");
+     fprintf(stderr, "[tdeinit] Aborting. $"DISPLAY" is not set.\n");
      exit(255);
    }
    int i;
@@ -1523,7 +1523,7 @@ static void tdeinit_library_path()
    TQCString socketName = TQFile::encodeName(locateLocal("socket", TQString("tdeinit-%1").arg(TQString(display)), s_instance));
    if (socketName.length() >= MAX_SOCK_FILE)
    {
-     fprintf(stderr, "[kinit] Aborting. Socket name will be too long:\n");
+     fprintf(stderr, "[tdeinit] Aborting. Socket name will be too long:\n");
      fprintf(stderr, "         '%s'\n", socketName.data());
      exit(255);
    }
@@ -1533,7 +1533,7 @@ static void tdeinit_library_path()
    socketName = TQFile::encodeName(locateLocal("socket", TQString("tdeinit_%1").arg(TQString(display)), s_instance));
    if (socketName.length() >= MAX_SOCK_FILE)
    {
-     fprintf(stderr, "[kinit] Aborting. Socket name will be too long:\n");
+     fprintf(stderr, "[tdeinit] Aborting. Socket name will be too long:\n");
      fprintf(stderr, "         '%s'\n", socketName.data());
      exit(255);
    }
@@ -1545,7 +1545,7 @@ int tdeinit_xio_errhandler( Display *disp )
     // disp is 0L when KDE shuts down. We don't want those warnings then.
 
     if ( disp )
-    tqWarning( "[kinit] Fatal IO error: client killed" );
+    tqWarning( "[tdeinit] Fatal IO error: client killed" );
 
     if (sock_file[0])
     {
@@ -1567,7 +1567,7 @@ int tdeinit_xio_errhandler( Display *disp )
     }
 
     if ( disp )
-    tqWarning( "[kinit] sending SIGHUP to children." );
+    tqWarning( "[tdeinit] sending SIGHUP to children." );
 
     /* this should remove all children we started */
     signal(SIGHUP, SIG_IGN);
@@ -1576,14 +1576,14 @@ int tdeinit_xio_errhandler( Display *disp )
     sleep(2);
 
     if ( disp )
-    tqWarning( "[kinit] sending SIGTERM to children." );
+    tqWarning( "[tdeinit] sending SIGTERM to children." );
 
     /* and if they don't listen to us, this should work */
     signal(SIGTERM, SIG_IGN);
     kill(0, SIGTERM);
 
     if ( disp )
-    tqWarning( "[kinit] Exit." );
+    tqWarning( "[tdeinit] Exit." );
 
     exit( 0 );
     return 0;
@@ -1596,7 +1596,7 @@ int tdeinit_x_errhandler( Display *dpy, XErrorEvent *err )
     char errstr[256];
     // tdeinit almost doesn't use X, and therefore there shouldn't be any X error
     XGetErrorText( dpy, err->error_code, errstr, 256 );
-    fprintf(stderr, "[kinit] TDE detected X Error: %s %d\n"
+    fprintf(stderr, "[tdeinit] TDE detected X Error: %s %d\n"
                     "         Major opcode: %d\n"
                     "         Minor opcode: %d\n"
                     "         Resource id:  0x%lx\n",
@@ -1629,15 +1629,15 @@ static int initXconnection()
         BlackPixelOfScreen(DefaultScreenOfDisplay(X11display)),
         BlackPixelOfScreen(DefaultScreenOfDisplay(X11display)) );
 #ifndef NDEBUG
-    fprintf(stderr, "[kinit] opened connection to %s\n", DisplayString(X11display));
+    fprintf(stderr, "[tdeinit] opened connection to %s\n", DisplayString(X11display));
 #endif
     int fd = XConnectionNumber( X11display );
     int on = 1;
     (void) setsockopt(fd, SOL_SOCKET, SO_KEEPALIVE, (char *) &on, (int) sizeof(on));
     return fd;
   } else
-    fprintf(stderr, "[kinit] Can't connect to the X Server.\n" \
-     "[kinit] Might not terminate at end of session.\n");
+    fprintf(stderr, "[tdeinit] Can't connect to the X Server.\n" \
+     "[tdeinit] Might not terminate at end of session.\n");
 
   return -1;
 }
@@ -1794,12 +1794,12 @@ int main(int argc, char **argv, char **envp)
       else
          pid = launch( 2, "dcopserver", "--nosid" );
 #ifndef NDEBUG
-      fprintf(stderr, "[kinit] Launched DCOPServer, pid = %ld result = %d\n", (long) pid, d.result);
+      fprintf(stderr, "[tdeinit] Launched DCOPServer, pid = %ld result = %d\n", (long) pid, d.result);
 #endif
       WaitPid(pid);
       if (!WIFEXITED(d.exit_status) || (WEXITSTATUS(d.exit_status) != 0))
       {
-         fprintf(stderr, "[kinit] DCOPServer could not be started, aborting.\n");
+         fprintf(stderr, "[tdeinit] DCOPServer could not be started, aborting.\n");
          exit(1);
       }
    }
@@ -1818,7 +1818,7 @@ int main(int argc, char **argv, char **envp)
       else
          pid = launch( 1, "klauncher", 0 );
 #ifndef NDEBUG
-      fprintf(stderr, "[kinit] Launched KLauncher, pid = %ld result = %d\n", (long) pid, d.result);
+      fprintf(stderr, "[tdeinit] Launched KLauncher, pid = %ld result = %d\n", (long) pid, d.result);
 #endif
       handle_requests(pid); // Wait for klauncher to be ready
    }
@@ -1856,7 +1856,7 @@ int main(int argc, char **argv, char **envp)
       else
          pid = launch( 1, "kded", 0 );
 #ifndef NDEBUG
-      fprintf(stderr, "[kinit] Launched KDED, pid = %ld result = %d\n", (long) pid, d.result);
+      fprintf(stderr, "[tdeinit] Launched KDED, pid = %ld result = %d\n", (long) pid, d.result);
 #endif
       handle_requests(pid);
    }
@@ -1867,7 +1867,7 @@ int main(int argc, char **argv, char **envp)
       {
          pid = launch( 1, safe_argv[i]+1, 0);
 #ifndef NDEBUG
-      fprintf(stderr, "[kinit] Launched '%s', pid = %ld result = %d\n", safe_argv[i]+1, (long) pid, d.result);
+      fprintf(stderr, "[tdeinit] Launched '%s', pid = %ld result = %d\n", safe_argv[i]+1, (long) pid, d.result);
 #endif
          handle_requests(pid);
       }
@@ -1883,7 +1883,7 @@ int main(int argc, char **argv, char **envp)
       {
          pid = launch( 1, safe_argv[i], 0 );
 #ifndef NDEBUG
-      fprintf(stderr, "[kinit] Launched '%s', pid = %ld result = %d\n", safe_argv[i], (long) pid, d.result);
+      fprintf(stderr, "[tdeinit] Launched '%s', pid = %ld result = %d\n", safe_argv[i], (long) pid, d.result);
 #endif
       }
    }
