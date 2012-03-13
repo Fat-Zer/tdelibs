@@ -433,7 +433,7 @@ IcePointer	values;
 
     fprintf (stderr, "\n");
 
-    fprintf (stderr, "ICE error:  Offending minor opcode    = %d (%s)\n",
+    fprintf (stderr, "[KDE-ICE error] Offending minor opcode    = %d (%s)\n",
 	offendingMinorOpcode, str);
 
     fprintf (stderr, "            Offending sequence number = %ld\n",
@@ -618,7 +618,7 @@ IceConn iceConn;
 {
     (void)iceConn;/*unused*/
     fprintf (stderr,
-	"ICE default IO error handler doing an exit(), pid = %d, errno = %d\n",
+	"[KDE-ICE error] ICE default IO error handler doing an exit(), pid = %d, errno = %d\n",
 	getpid(), errno);
 
     exit (1);
