@@ -257,9 +257,9 @@ int main(int argc, char **argv)
 
   if (strcmp(argv[1], "tmp") == 0)
   {
-    tmp_prefix = (char *)malloc(strlen(tmp)+strlen("/kde-")+1);
+    tmp_prefix = (char *)malloc(strlen(tmp)+strlen("/tde-")+1);
     strcpy(tmp_prefix, tmp);
-    strcat(tmp_prefix, "/kde-"); 
+    strcat(tmp_prefix, "/tde-"); 
     
     kde_prefix = "/tmp-"; 
   }
@@ -277,9 +277,9 @@ int main(int argc, char **argv)
     if (!tmp || !tmp[0]) 
       tmp = "/var/tmp";
 
-    tmp_prefix = (char *)malloc(strlen(tmp)+strlen("/kdecache-")+1);
+    tmp_prefix = (char *)malloc(strlen(tmp)+strlen("/tdecache-")+1);
     strcpy(tmp_prefix, tmp );
-    strcat(tmp_prefix, "/kdecache-" );
+    strcat(tmp_prefix, "/tdecache-" );
 
     kde_prefix = "/cache-"; 
   }

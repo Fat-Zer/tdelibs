@@ -178,7 +178,7 @@ command at the prompt
 
 <variablelist>
 <varlistentry>
-<term><filename>/tmp/kde-$USER/ksyscoca</filename></term>
+<term><filename>/tmp/tde-$USER/ksyscoca</filename></term>
 <listitem>
 <para>...</para>
 </listitem>
