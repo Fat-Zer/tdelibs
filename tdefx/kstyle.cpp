@@ -1138,11 +1138,14 @@ void KStyle::drawComplexControl( TQ_ComplexControl control,
 			last    = querySubControlMetrics(control, widget, SC_ScrollBarLast,    opt);
 			subline2 = addline;
 
-			if ( useThreeButtonScrollBar )
-				if (horizontal)
+			if ( useThreeButtonScrollBar ) {
+				if (horizontal) {
 					subline2.moveBy(-addline.width(), 0);
-				else
+				}
+				else {
 					subline2.moveBy(0, -addline.height());
+				}
+			}
 
 			// Draw the up/left button set
 			if ((controls & SC_ScrollBarSubLine) && subline.isValid()) {
@@ -1238,7 +1241,14 @@ void KStyle::drawComplexControl( TQ_ComplexControl control,
 			}
 
 			p2.end();
-			bitBlt((TQWidget*)widget, r.x(), r.y(), &pix);
+
+			TQPaintDevice* ppd = p->device();
+			if (ppd->isExtDev()) {
+				p->drawPixmap(0, 0, pix);
+			}
+			else {
+				bitBlt((TQWidget*)widget, r.x(), r.y(), &pix);
+			}
 			break;
 		}
 
@@ -2105,7 +2115,6 @@ TQImage TransparencyHandler::handleRealAlpha(TQImage img) {
 	for (int y = 0; y < h; ++y) {
 		TQRgb *ls = (TQRgb *)clearImage.scanLine( y );
 		for (int x = 0; x < w; ++x) {
-			TQRgb l = ls[x];
 			ls[x] = tqRgba( 0, 0, 0, 0 );
 		}
 	}
