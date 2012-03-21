@@ -3,7 +3,7 @@
 
 <Menu>
   <Name>Applications</Name>
-  <Directory>kde-main.directory</Directory>
+  <Directory>tde-main.directory</Directory>
   <!-- Search the default locations -->
   <KDELegacyDirs/>
   <DefaultAppDirs/>
@@ -22,7 +22,7 @@
 
   <Menu>
     <Name>Applications</Name>
-    <Directory>kde-unknown.directory</Directory>
+    <Directory>tde-unknown.directory</Directory>
     <OnlyUnallocated/>
     <Include>
       <Not>
@@ -38,10 +38,10 @@
   </Menu>
   <Menu>
     <Name>Development</Name>
-    <Directory>kde-development.directory</Directory>
+    <Directory>tde-development.directory</Directory>
     <Menu>
       <Name>X-KDE-KDevelopIDE</Name>
-      <Directory>kde-development-tdevelop.directory</Directory>
+      <Directory>tde-development-tdevelop.directory</Directory>
       <Include>
         <And>
         <Category>Development</Category>
@@ -51,7 +51,7 @@
     </Menu>
     <Menu>
       <Name>Translation</Name>
-      <Directory>kde-development-translation.directory</Directory>
+      <Directory>tde-development-translation.directory</Directory>
       <Include>
         <And>
         <Category>Development</Category>
@@ -61,7 +61,7 @@
     </Menu>
     <Menu>
       <Name>Web Development</Name>
-      <Directory>kde-development-webdevelopment.directory</Directory>
+      <Directory>tde-development-webdevelopment.directory</Directory>
       <Include>
         <And>
         <Category>Development</Category>
@@ -80,7 +80,7 @@
   </Menu>
   <Menu>
     <Name>Science</Name>
-    <Directory>kde-science.directory</Directory>
+    <Directory>tde-science.directory</Directory>
     <Include>
       <And><!-- Include /any/ Science app which is not an Education app -->
         <Or>
@@ -99,10 +99,10 @@
   </Menu>
   <Menu>
     <Name>Edutainment</Name>
-    <Directory>kde-edutainment.directory</Directory>
+    <Directory>tde-edutainment.directory</Directory>
     <Menu>
       <Name>Languages</Name>
-      <Directory>kde-edu-languages.directory</Directory>
+      <Directory>tde-edu-languages.directory</Directory>
       <Include>
         <And>
         <Category>Education</Category>
@@ -115,7 +115,7 @@
     </Menu>
     <Menu>
       <Name>Mathematics</Name>
-      <Directory>kde-edu-mathematics.directory</Directory>
+      <Directory>tde-edu-mathematics.directory</Directory>
       <Include>
         <And>
         <Category>Education</Category>
@@ -125,7 +125,7 @@
     </Menu>
     <Menu>
       <Name>Miscellaneous</Name>
-      <Directory>kde-edu-miscellaneous.directory</Directory>
+      <Directory>tde-edu-miscellaneous.directory</Directory>
       <Include>
         <And>
         <Category>Education</Category>
@@ -142,7 +142,7 @@
     </Menu>
     <Menu>
       <Name>Science</Name>
-      <Directory>kde-edu-science.directory</Directory>
+      <Directory>tde-edu-science.directory</Directory>
       <Include>
         <And>
         <Category>Education</Category>
@@ -152,7 +152,7 @@
     </Menu>
     <Menu>
       <Name>Tools</Name>
-      <Directory>kde-edu-tools.directory</Directory>
+      <Directory>tde-edu-tools.directory</Directory>
       <Include>
         <And>
         <Category>Education</Category>
@@ -166,10 +166,10 @@
   </Menu>
   <Menu>
     <Name>Games</Name>
-    <Directory>kde-games.directory</Directory>
+    <Directory>tde-games.directory</Directory>
     <Menu>
       <Name>Arcade</Name>
-      <Directory>kde-games-arcade.directory</Directory>
+      <Directory>tde-games-arcade.directory</Directory>
       <Include>
         <And>
         <Category>Game</Category>
@@ -179,7 +179,7 @@
     </Menu>
     <Menu>
       <Name>Board</Name>
-      <Directory>kde-games-board.directory</Directory>
+      <Directory>tde-games-board.directory</Directory>
       <Include>
         <And>
         <Category>Game</Category>
@@ -189,7 +189,7 @@
     </Menu>
     <Menu>
       <Name>Card</Name>
-      <Directory>kde-games-card.directory</Directory>
+      <Directory>tde-games-card.directory</Directory>
       <Include>
         <And>
         <Category>Game</Category>
@@ -199,7 +199,7 @@
     </Menu>
     <Menu>
       <Name>Kidsgames</Name>
-      <Directory>kde-games-kids.directory</Directory>
+      <Directory>tde-games-kids.directory</Directory>
       <Include>
         <And>
         <Category>Game</Category>
@@ -212,7 +212,7 @@
     </Menu>
     <Menu>
       <Name>TacticStrategy</Name>
-      <Directory>kde-games-strategy.directory</Directory>
+      <Directory>tde-games-strategy.directory</Directory>
       <Include>
         <And>
         <Category>Game</Category>
@@ -236,7 +236,7 @@
   </Menu>
   <Menu>
     <Name>Graphics</Name>
-    <Directory>kde-graphics.directory</Directory>
+    <Directory>tde-graphics.directory</Directory>
     <Include>
       <And>
       <Category>Graphics</Category>
@@ -246,7 +246,7 @@
     </Include>
     <Menu>
       <Name>More</Name>
-      <Directory>kde-more.directory</Directory>
+      <Directory>tde-more.directory</Directory>
       <Include>
         <And>
         <Category>Graphics</Category>
@@ -257,7 +257,7 @@
   </Menu>
   <Menu>
     <Name>Internet</Name>
-    <Directory>kde-internet.directory</Directory>
+    <Directory>tde-internet.directory</Directory>
     <Include>
       <And>
       <Category>Network</Category>
@@ -266,11 +266,11 @@
     </Include>
     <Menu>
       <Name>Terminal</Name>
-      <Directory>kde-internet-terminal.directory</Directory>
+      <Directory>tde-internet-terminal.directory</Directory>
     </Menu>
     <Menu>
       <Name>More</Name>
-      <Directory>kde-more.directory</Directory>
+      <Directory>tde-more.directory</Directory>
       <Include>
         <And>
         <Category>Network</Category>
@@ -281,7 +281,7 @@
   </Menu>
   <Menu>
     <Name>Multimedia</Name>
-    <Directory>kde-multimedia.directory</Directory>
+    <Directory>tde-multimedia.directory</Directory>
     <Include>
       <And>
       <Category>AudioVideo</Category>
@@ -290,7 +290,7 @@
     </Include>
     <Menu>
       <Name>More</Name>
-      <Directory>kde-more.directory</Directory>
+      <Directory>tde-more.directory</Directory>
       <Include>
         <And>
         <Category>AudioVideo</Category>
@@ -301,7 +301,7 @@
   </Menu>
   <Menu>
     <Name>Office</Name>
-    <Directory>kde-office.directory</Directory>
+    <Directory>tde-office.directory</Directory>
     <Layout>
       <Merge type="menus"/>
       <Merge type="files"/>
@@ -317,7 +317,7 @@
     </Include>
     <Menu>
       <Name>More</Name>
-      <Directory>kde-more.directory</Directory>
+      <Directory>tde-more.directory</Directory>
       <Include>
         <And>
           <Category>Office</Category>
@@ -328,14 +328,14 @@
   </Menu>
   <Menu>
     <Name>Settingsmenu</Name>
-    <Directory>kde-settingsmenu.directory</Directory>
+    <Directory>tde-settingsmenu.directory</Directory>
     <Include>
       <Category>Settings</Category>
     </Include>
   </Menu>
   <Menu>
     <Name>System</Name>
-    <Directory>kde-system.directory</Directory>
+    <Directory>tde-system.directory</Directory>
     <Include>
       <And>
       <Category>System</Category>
@@ -344,7 +344,7 @@
     </Include>
     <Menu>
       <Name>SuperUser</Name>
-      <Directory>kde-system-su.directory</Directory>
+      <Directory>tde-system-su.directory</Directory>
       <Include>
         <And>
         <Category>X-KDE-System-su</Category>
@@ -354,7 +354,7 @@
     </Menu>
     <Menu>
       <Name>More</Name>
-      <Directory>kde-more.directory</Directory>
+      <Directory>tde-more.directory</Directory>
       <Include>
         <And>
         <Category>System</Category>
@@ -364,16 +364,16 @@
     </Menu>
     <Menu>
       <Name>ScreenSavers</Name>
-      <Directory>kde-system-screensavers.directory</Directory>
+      <Directory>tde-system-screensavers.directory</Directory>
     </Menu>
     <Menu>
       <Name>Terminal</Name>
-      <Directory>kde-system-terminal.directory</Directory>
+      <Directory>tde-system-terminal.directory</Directory>
     </Menu>
   </Menu>
   <Menu>
     <Name>Utilities</Name>
-    <Directory>kde-utilities.directory</Directory>
+    <Directory>tde-utilities.directory</Directory>
     <Include>
       <And>
       <Category>Utility</Category>
@@ -386,7 +386,7 @@
     </Include>
     <Menu>
       <Name>Accessibility</Name>
-      <Directory>kde-utilities-accessibility.directory</Directory>
+      <Directory>tde-utilities-accessibility.directory</Directory>
       <Include>
         <And>
         <Category>Utility</Category>
@@ -396,7 +396,7 @@
     </Menu>
     <Menu>
       <Name>Desktop</Name>
-      <Directory>kde-utilities-desktop.directory</Directory>
+      <Directory>tde-utilities-desktop.directory</Directory>
       <Include>
         <And>
         <Category>Utility</Category>
@@ -406,14 +406,14 @@
     </Menu>
     <Menu>
       <Name>Editors</Name>
-      <Directory>kde-editors.directory</Directory>
+      <Directory>tde-editors.directory</Directory>
       <Include>
         <Category>TextEditor</Category>
       </Include>
     </Menu>
     <Menu>
       <Name>PIM</Name>
-      <Directory>kde-utilities-pim.directory</Directory>
+      <Directory>tde-utilities-pim.directory</Directory>
       <Include>
         <And>
         <Category>Utility</Category>
@@ -423,18 +423,18 @@
     </Menu>
     <Menu>
       <Name>Toys</Name>
-      <Directory>kde-toys.directory</Directory>
+      <Directory>tde-toys.directory</Directory>
       <Include>
         <Category>Amusement</Category>
       </Include>
     </Menu>
     <Menu>
       <Name>XUtilities</Name>
-      <Directory>kde-utilities-xutils.directory</Directory>
+      <Directory>tde-utilities-xutils.directory</Directory>
     </Menu>
     <Menu>
       <Name>More</Name>
-      <Directory>kde-more.directory</Directory>
+      <Directory>tde-more.directory</Directory>
       <Include>
         <And>
         <Category>Utility</Category>
@@ -444,7 +444,7 @@
     </Menu>
     <Menu>
       <Name>More</Name>
-      <Directory>kde-more.directory</Directory>
+      <Directory>tde-more.directory</Directory>
       <Include>
         <And>
         <Category>Utility</Category>
