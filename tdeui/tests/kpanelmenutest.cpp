@@ -19,7 +19,7 @@ TestWidget::TestWidget(TQWidget *parent, const char *name)
     connect(subMenu, TQT_SIGNAL(activated(int)), TQT_SLOT(slotSubMenuCalled(int)));
     init();
     
-    setText("We added \"Client Test\" to kicker. Click the K Menu to check.");
+    setText("We added \"Client Test\" to kicker. Click the TDE Menu to check.");
     resize(sizeHint());
 }
 

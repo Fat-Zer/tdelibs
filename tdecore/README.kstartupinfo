@@ -22,7 +22,7 @@ on http://www.freedesktop.org .
 Starting apps with ASN :
 -------------------------
 
- When an application is started from the K-Menu or the minicli, and from other
+ When an application is started from the TDE Menu or the minicli, and from other
 places, ASN is sent automatically for it, assuming a matching .desktop file
 is found for the starting application. Application without a .desktop file
 don't get ASN ( this may change, but it's unlikely as it creates too many
