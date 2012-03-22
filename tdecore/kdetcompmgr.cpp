@@ -70,7 +70,7 @@ int main(int argc, char **argv)
         strcat(filename, home);
         strcat(filename, configfile);
 
-        printf("reading '%s' as kompmgr pidfile\n\n", filename);
+        printf("[kdetcompmgr] reading '%s' as kompmgr pidfile\n\n", filename);
 
         // Now that we did all that by way of introduction...read the file!
         FILE *pFile;
