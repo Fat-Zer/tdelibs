@@ -25,6 +25,7 @@ class KCharsets;
 class KConfig;
 class KSharedConfig;
 class KIconLoader;
+class TDEHardwareDevices;
 class KLocale;
 class KStandardDirs;
 class KStaticDeleterBase;
@@ -76,6 +77,12 @@ public:
      * @return the global iconloader object
      */
     static KIconLoader	        *iconLoader();
+
+    /**
+     *  Returns a hardwaredevices object.
+     * @return the global hardwaredevices object
+     */
+    static TDEHardwareDevices	*hardwareDevices();
 
     /**
      * Returns the global locale object.

@@ -24,6 +24,7 @@
 #include "klocale.h"
 #include "kcharsets.h"
 #include "kiconloader.h"
+#include "tdehardwaredevices.h"
 #include "kaboutdata.h"
 #include "kstandarddirs.h"
 #include "kdebug.h"
@@ -70,6 +71,7 @@ KInstance::KInstance( const TQCString& name)
   : _dirs (0L),
     _config (0L),
     _iconLoader (0L),
+    _hardwaredevices (0L),
     _name( name ), _aboutData( new KAboutData( name, "", 0 ) )
 {
     DEBUG_ADD
@@ -88,6 +90,7 @@ KInstance::KInstance( const KAboutData * aboutData )
   : _dirs (0L),
     _config (0L),
     _iconLoader (0L),
+    _hardwaredevices (0L),
     _name( aboutData->appName() ), _aboutData( aboutData )
 {
     DEBUG_ADD
@@ -107,6 +110,7 @@ KInstance::KInstance( KInstance* src )
   : _dirs ( src->_dirs ),
     _config ( src->_config ),
     _iconLoader ( src->_iconLoader ),
+    _hardwaredevices ( src->_hardwaredevices ),
     _name( src->_name ), _aboutData( src->_aboutData )
 {
     DEBUG_ADD
@@ -125,6 +129,7 @@ KInstance::KInstance( KInstance* src )
     src->_dirs = 0L;
     src->_config = 0L;
     src->_iconLoader = 0L;
+    src->_hardwaredevices = 0L;
     src->_aboutData = 0L;
     delete src;
 }
@@ -142,6 +147,9 @@ KInstance::~KInstance()
 
     delete _iconLoader;
     _iconLoader = 0;
+
+    delete _hardwaredevices;
+    _hardwaredevices = 0;
 
     // delete _config; // Do not delete, stored in d->sharedConfig
     _config = 0;
@@ -245,6 +253,16 @@ KIconLoader *KInstance::iconLoader() const
     }
 
     return _iconLoader;
+}
+
+TDEHardwareDevices *KInstance::hardwareDevices() const
+{
+    DEBUG_CHECK_ALIVE
+    if( _hardwaredevices == 0 ) {
+	_hardwaredevices = new TDEHardwareDevices( );
+    }
+
+    return _hardwaredevices;
 }
 
 void KInstance::newIconLoader() const

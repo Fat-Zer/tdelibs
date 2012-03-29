@@ -66,7 +66,7 @@ install( FILES
     kcalendarsystem.h kcalendarsystemfactory.h kmacroexpander.h
     kmanagerselection.h kmountpoint.h kuser.h klockfile.h
     kidna.h ktempdir.h kshell.h fixx11h.h kxerrorhandler.h
-    tdelibs_export.h kde_file.h ktimezones.h
+    tdelibs_export.h kde_file.h ktimezones.h tdehardwaredevices.h
     ${CMAKE_CURRENT_BINARY_DIR}/kdemacros.h
   DESTINATION ${INCLUDE_INSTALL_DIR} )
 
@@ -122,14 +122,14 @@ set( ${target}_SRCS
   ktempdir.cpp kshell.cpp kmountpoint.cpp kcalendarsystemjalali.cpp
   kprotocolinfo_tdecore.cpp kprotocolinfofactory.cpp kxerrorhandler.cpp
   kuser.cpp kconfigskeleton.cpp kconfigdialogmanager.cpp klockfile.cpp
-  kqiodevicegzip_p.cpp ktimezones.cpp
+  kqiodevicegzip_p.cpp ktimezones.cpp tdehardwaredevices.cpp
 )
 
 tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 4.2.0
   EMBED tdecorenetwork-static
-  LINK ltdlc-static ${KDESVGICONS} DCOP-shared tdefx-shared ${ZLIB_LIBRARIES} ${LIBIDN_LIBRARIES} ${XCOMPOSITE_LIBRARIES} ICE SM
+  LINK ltdlc-static ${KDESVGICONS} DCOP-shared tdefx-shared ${ZLIB_LIBRARIES} ${LIBIDN_LIBRARIES} ${XCOMPOSITE_LIBRARIES} ICE SM udev
   DEPENDENCIES dcopidl dcopidl2cpp
   DESTINATION ${LIB_INSTALL_DIR}
 )

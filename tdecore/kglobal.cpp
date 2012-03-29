@@ -34,6 +34,7 @@
 #include <klocale.h>
 #include <kcharsets.h>
 #include <kiconloader.h>
+#include <tdehardwaredevices.h>
 #include <kstandarddirs.h>
 #include <kinstance.h>
 #include "kstaticdeleter.h"
@@ -77,6 +78,13 @@ KIconLoader *KGlobal::iconLoader()
     MYASSERT(_instance);
 
     return _instance->iconLoader();
+}
+
+TDEHardwareDevices *KGlobal::hardwareDevices()
+{
+    MYASSERT(_instance);
+
+    return _instance->hardwareDevices();
 }
 
 KInstance *KGlobal::instance()

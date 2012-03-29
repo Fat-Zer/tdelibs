@@ -27,6 +27,7 @@ class TQFont;
 class KInstancePrivate;
 class KMimeSourceFactory;
 class KSharedConfig;
+class TDEHardwareDevices;
 
 #include <tqstring.h>
 #include "tdelibs_export.h"
@@ -101,6 +102,12 @@ class TDECORE_EXPORT KInstance
     KIconLoader	       *iconLoader() const;
 
     /**
+     *  Returns a hardwaredevices object.
+     * @return the hardwaredevices object.
+     */
+    TDEHardwareDevices	*hardwareDevices() const;
+
+    /**
      * Re-allocate the global iconloader.
      */
     void newIconLoader() const;
@@ -145,6 +152,8 @@ private:
 
     mutable KConfig             *_config;
     mutable KIconLoader         *_iconLoader;
+
+    mutable TDEHardwareDevices  *_hardwaredevices;
 
     TQCString                     _name;
     const KAboutData            *_aboutData;
