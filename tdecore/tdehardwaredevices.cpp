@@ -22,6 +22,9 @@
 #include <tqdir.h>
 #include <tqstringlist.h>
 
+#include <kglobal.h>
+#include <ktempfile.h>
+
 #include <libudev.h>
 
 #include <fcntl.h>
@@ -173,6 +176,22 @@ TQString TDEStorageDevice::mountPath() {
 	// See if this device node is mounted
 	// This requires parsing /proc/mounts, looking for deviceNode()
 
+	// The Device Mapper throws a monkey wrench into this
+	// It likes to advertise mounts as /dev/mapper/<something>,
+	// where <something> is listed in <system path>/dm/name
+	TQString dmnodename = systemPath();
+	dmnodename.append("/dm/name");
+	TQFile namefile( dmnodename );
+	TQString dmaltname;
+	if ( namefile.open( IO_ReadOnly ) ) {
+		TQTextStream stream( &namefile );
+		dmaltname = stream.readLine();
+		namefile.close();
+	}
+	if (!dmaltname.isNull()) {
+		dmaltname.prepend("/dev/mapper/");
+	}
+
 	TQStringList lines;
 	TQFile file( "/proc/mounts" );
 	if ( file.open( IO_ReadOnly ) ) {
@@ -181,7 +200,7 @@ TQString TDEStorageDevice::mountPath() {
 		while ( !stream.atEnd() ) {
 			line = stream.readLine();
 			TQStringList mountInfo = TQStringList::split(" ", line, true);
-			if (*mountInfo.at(0) == deviceNode()) {
+			if ((*mountInfo.at(0) == deviceNode()) || (*mountInfo.at(0) == dmaltname)) {
 				return *mountInfo.at(1);
 			}
 			lines += line;
@@ -189,7 +208,88 @@ TQString TDEStorageDevice::mountPath() {
 		file.close();
 	}
 
+	// While this device is not directly mounted, it could concievably be mounted via the Device Mapper
+	// If so, try to retrieve the mount path...
+	TQStringList slaveDeviceList = slaveDevices();
+	for ( TQStringList::Iterator slavedevit = slaveDeviceList.begin(); slavedevit != slaveDeviceList.end(); ++slavedevit ) {
+		// Try to locate this device path in the TDE device tree
+		TDEHardwareDevices *hwdevices = KGlobal::hardwareDevices();
+		TDEGenericDevice *hwdevice = hwdevices->findBySystemPath(*slavedevit);
+		if ((hwdevice) && (hwdevice->type() == TDEGenericDeviceType::Disk)) {
+			TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(hwdevice);
+			return sdevice->mountPath();
+		}
+	}
+
 	return TQString::null;
+}
+
+TQString TDEStorageDevice::mountDevice(TQString mediaName) {
+	TQString ret = mountPath();
+
+	if (!ret.isNull()) {
+		return ret;
+	}
+
+	// Create dummy password file
+	KTempFile passwordFile(TQString::null, "tmp", 0600);
+	passwordFile.setAutoDelete(true);
+
+	TQString command = TQString("pmount -p %1 %2").arg(passwordFile.name()).arg(deviceNode());
+	if (!mediaName.isNull()) {
+		command.append(mediaName);
+	}
+
+	if (system(command.ascii()) == 0) {
+		ret = mountPath();
+	}
+
+	return ret;
+}
+
+TQString TDEStorageDevice::mountEncryptedDevice(TQString passphrase, TQString mediaName) {
+	TQString ret = mountPath();
+
+	if (!ret.isNull()) {
+		return ret;
+	}
+
+	// Create dummy password file
+	KTempFile passwordFile(TQString::null, "tmp", 0600);
+	passwordFile.setAutoDelete(true);
+	TQFile* pwFile = passwordFile.file();
+	if (!pwFile) {
+		return TQString::null;
+	}
+
+	pwFile->writeBlock(passphrase.ascii(), passphrase.length());
+	pwFile->flush();
+
+	TQString command = TQString("pmount -p %1 %2").arg(passwordFile.name()).arg(deviceNode());
+	if (!mediaName.isNull()) {
+		command.append(mediaName);
+	}
+
+	if (system(command.ascii()) == 0) {
+		ret = mountPath();
+	}
+
+	return ret;
+}
+
+bool TDEStorageDevice::unmountDevice() {
+	TQString mountpoint = mountPath();
+
+	if (mountpoint.isNull()) {
+		return true;
+	}
+
+	TQString command = TQString("pumount %1").arg(mountpoint);
+	if (system(command.ascii()) == 0) {
+		return true;
+	}
+
+	return false;
 }
 
 TDEHardwareDevices::TDEHardwareDevices() {
@@ -233,6 +333,17 @@ TDEHardwareDevices::~TDEHardwareDevices() {
 
 	// Tear down udev interface
 	udev_unref(m_udevStruct);
+}
+
+TDEGenericDevice* TDEHardwareDevices::findBySystemPath(TQString syspath) {
+	TDEGenericDevice *hwdevice;
+	for ( hwdevice = m_deviceList.first(); hwdevice; hwdevice = m_deviceList.next() ) {
+		if (hwdevice->systemPath() == syspath) {
+			return hwdevice;
+		}
+	}
+
+	return 0;
 }
 
 void TDEHardwareDevices::checkForHotPluggedHardware() {

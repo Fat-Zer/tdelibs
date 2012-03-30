@@ -348,6 +348,30 @@ class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 		void setSlaveDevices(TQStringList sd);
 
 		/**
+		* Mounts the device if not encrypted
+		*
+		* @param a TQString containing a requested mount name under /media, if desired
+		* @return a TQString with the mount path, if successful
+		*/
+		TQString mountDevice(TQString mediaName=TQString::null);
+
+		/**
+		* Mounts the encrypted device if the correct passphrase is given
+		*
+		* @param a TQString containing the passphrase
+		* @param a TQString containing a requested mount name under /media, if desired
+		* @return a TQString with the mount path, if successful
+		*/
+		TQString mountEncryptedDevice(TQString passphrase, TQString mediaName=TQString::null);
+
+		/**
+		* Unmounts the device
+		*
+		* @return TRUE if unmount was successful
+		*/
+		bool unmountDevice();
+
+		/**
 		* @return a TQString with the mount path, if mounted
 		*/
 		TQString mountPath();
@@ -399,6 +423,12 @@ class TDECORE_EXPORT TDEHardwareDevices : TQObject
 		*  @return TQPtrList<TDEGenericDevice> containing all known hardware devices
 		*/
 		TQPtrList<TDEGenericDevice> &listAllPhysicalDevices();
+
+		/**
+		*  Return the device with system path @arg syspath, or 0 if no device exists for that path
+		*  @return TDEGenericDevice
+		*/
+		TDEGenericDevice* findBySystemPath(TQString syspath);
 
 	signals:
 		void hardwareAdded(TDEGenericDevice);
