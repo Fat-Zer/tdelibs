@@ -18,7 +18,17 @@
 
 #include <tdehardwaredevices.h>
 
+#include <tqfile.h>
+#include <tqstringlist.h>
+
 #include <libudev.h>
+
+#include <fcntl.h>
+#include <poll.h>
+
+// NOTE TO DEVELOPERS
+// This command will greatly help when attempting to find properties to distinguish one device from another
+// udevadm info --query=all --path=/sys/....
 
 TDEGenericDevice::TDEGenericDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) {
 	m_deviceType = dt;
@@ -40,6 +50,22 @@ void TDEGenericDevice::setName(TQString dn) {
 	m_deviceName = dn;
 }
 
+TQString &TDEGenericDevice::vendorName() {
+	return m_vendorName;
+}
+
+void TDEGenericDevice::setVendorName(TQString vn) {
+	m_vendorName = vn;
+}
+
+TQString &TDEGenericDevice::vendorModel() {
+	return m_vendorModel;
+}
+
+void TDEGenericDevice::setVendorModel(TQString vm) {
+	m_vendorModel = vm;
+}
+
 TQString &TDEGenericDevice::systemPath() {
 	return m_systemPath;
 }
@@ -56,6 +82,99 @@ void TDEGenericDevice::setDeviceNode(TQString sn) {
 	m_deviceNode = sn;
 }
 
+TQString &TDEGenericDevice::deviceBus() {
+	return m_deviceBus;
+}
+
+void TDEGenericDevice::setDeviceBus(TQString db) {
+	m_deviceBus = db;
+}
+
+TDEStorageDevice::TDEStorageDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn), m_mediaInserted(true) {
+}
+
+TDEStorageDevice::~TDEStorageDevice() {
+}
+
+TDEDiskDeviceType::TDEDiskDeviceType TDEStorageDevice::diskType() {
+	return m_diskType;
+}
+
+void TDEStorageDevice::setDiskType(TDEDiskDeviceType::TDEDiskDeviceType dt) {
+	m_diskType = dt;
+}
+
+TDEDiskDeviceStatus::TDEDiskDeviceStatus TDEStorageDevice::diskStatus() {
+	return m_diskStatus;
+}
+
+void TDEStorageDevice::setDiskStatus(TDEDiskDeviceStatus::TDEDiskDeviceStatus st) {
+	m_diskStatus = st;
+}
+
+TQString &TDEStorageDevice::diskLabel() {
+	return m_diskName;
+}
+
+void TDEStorageDevice::setDiskLabel(TQString dn) {
+	m_diskName = dn;
+}
+
+bool TDEStorageDevice::mediaInserted() {
+	return m_mediaInserted;
+}
+
+void TDEStorageDevice::setMediaInserted(bool inserted) {
+	m_mediaInserted = inserted;
+}
+
+TQString &TDEStorageDevice::fileSystemName() {
+	return m_fileSystemName;
+}
+
+void TDEStorageDevice::setFileSystemName(TQString fn) {
+	m_fileSystemName = fn;
+}
+
+TQString &TDEStorageDevice::fileSystemUsage() {
+	return m_fileSystemUsage;
+}
+
+void TDEStorageDevice::setFileSystemUsage(TQString fu) {
+	m_fileSystemUsage = fu;
+}
+
+TQString &TDEStorageDevice::diskUUID() {
+	return m_diskUUID;
+}
+
+void TDEStorageDevice::setDiskUUID(TQString id) {
+	m_diskUUID = id;
+}
+
+TQString TDEStorageDevice::mountPath() {
+	// See if this device node is mounted
+	// This requires parsing /proc/mounts, looking for deviceNode()
+
+	TQStringList lines;
+	TQFile file( "/proc/mounts" );
+	if ( file.open( IO_ReadOnly ) ) {
+		TQTextStream stream( &file );
+		TQString line;
+		while ( !stream.atEnd() ) {
+			line = stream.readLine();
+			TQStringList mountInfo = TQStringList::split(" ", line, true);
+			if (*mountInfo.at(0) == deviceNode()) {
+				return *mountInfo.at(1);
+			}
+			lines += line;
+		}
+		file.close();
+	}
+
+	return TQString::null;
+}
+
 TDEHardwareDevices::TDEHardwareDevices() {
 	// Set up device list
 	m_deviceList.setAutoDelete( TRUE );	// the list owns the objects
@@ -66,13 +185,343 @@ TDEHardwareDevices::TDEHardwareDevices() {
 		printf("Unable to create udev interface\n\r");
 	}
 
-	// Update internal device information
-	queryHardwareInformation();
+	if (m_udevStruct) {
+		// Set up device add/remove monitoring
+		m_udevMonitorStruct = udev_monitor_new_from_netlink(m_udevStruct, "udev");
+		udev_monitor_filter_add_match_subsystem_devtype(m_udevMonitorStruct, NULL, NULL);
+		udev_monitor_enable_receiving(m_udevMonitorStruct);
+
+		m_devScanTimer = new TQTimer();
+		connect( m_devScanTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(checkForHotPluggedHardware()) );
+		m_devScanTimer->start(1, TRUE);
+
+		// Monitor for changed mounts
+		m_mountScanTimer = new TQTimer();
+		connect( m_mountScanTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(checkForModifiedMounts()) );
+		m_mountScanTimer->start(1, TRUE);
+
+		// Update internal device information
+		queryHardwareInformation();
+	}
 }
 
 TDEHardwareDevices::~TDEHardwareDevices() {
+	// Stop hardware scanning
+	m_devScanTimer->stop();
+	delete m_devScanTimer;
+
+	// Stop mount scanning
+	m_mountScanTimer->stop();
+	delete m_mountScanTimer;
+
 	// Tear down udev interface
 	udev_unref(m_udevStruct);
+}
+
+void TDEHardwareDevices::checkForHotPluggedHardware() {
+	udev_device* dev = udev_monitor_receive_device(m_udevMonitorStruct);
+	if (dev) {
+		TQString actionevent(udev_device_get_action(dev));
+		if (actionevent == "add") {	
+			TDEGenericDevice* device = classifyUnknownDevice(dev);
+	
+			// Make sure this device is not a duplicate
+			TDEGenericDevice *hwdevice;
+			for (hwdevice = m_deviceList.first(); hwdevice; hwdevice = m_deviceList.next()) {
+				if (hwdevice->systemPath() == device->systemPath()) {
+					delete device;
+					device = 0;
+					break;
+				}
+			}
+	
+			if (device) {
+				m_deviceList.append(device);
+				emit hardwareAdded(*device);
+			}
+		}
+		else if (actionevent == "remove") {
+			// Delete device from hardware listing
+			TQString systempath(udev_device_get_syspath(dev));
+			TDEGenericDevice *hwdevice;
+			for (hwdevice = m_deviceList.first(); hwdevice; hwdevice = m_deviceList.next()) {
+				if (hwdevice->systemPath() == systempath) {
+					m_deviceList.remove(hwdevice);
+					emit hardwareAdded(*hwdevice);
+					break;
+				}
+			}
+		}
+	}
+
+	// Continue scanning for added/removed hardware
+	m_devScanTimer->start(1, TRUE);
+}
+
+void TDEHardwareDevices::checkForModifiedMounts() {
+	int mfd = open("/proc/mounts", O_RDONLY, 0);
+	struct pollfd pfd;
+	int rv;
+	
+	pfd.fd = mfd;
+	pfd.events = POLLERR | POLLPRI;
+	pfd.revents = 0;
+	while ((rv = poll(&pfd, 1, 5)) >= 0) {
+		if (pfd.revents & POLLERR) {
+			emit mountTableModified();
+		}
+	
+		pfd.revents = 0;
+	}
+
+	// Continue scanning for changed mounts
+	m_mountScanTimer->start(1, TRUE);
+}
+
+TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev) {
+	// Classify device and create TDEW device object
+	TQString devicename(udev_device_get_sysname(dev));
+	TQString devicetype(udev_device_get_devtype(dev));
+	TQString devicedriver(udev_device_get_driver(dev));
+	TQString devicesubsystem(udev_device_get_subsystem(dev));
+	TQString devicenode(udev_device_get_devnode(dev));
+	TQString systempath(udev_device_get_syspath(dev));
+	bool removable = false;
+	TDEGenericDevice* device = 0;
+
+	// FIXME
+	// Only a small subset of devices are classified right now
+	// Figure out the remaining udev logic to classify the rest!
+	// Helpful file: http://www.enlightenment.org/svn/e/trunk/PROTO/enna-explorer/src/bin/udev.c
+
+	if ((devicetype == "disk") || (devicetype == "partition")) {
+		// Determine if disk is removable
+		TQString removablenodename = udev_device_get_syspath(dev);
+		removablenodename.append("/removable");
+		FILE *fp = fopen(removablenodename.ascii(),"r");
+		if (fp) {
+			if (fgetc(fp) == '1') {
+				removable = true;
+			}
+			fclose(fp);
+		}
+		device = new TDEStorageDevice(TDEGenericDeviceType::Disk);
+
+		// Determine generic disk information
+		TQString devicevendor(udev_device_get_property_value(dev, "ID_VENDOR"));
+		TQString devicemodel(udev_device_get_property_value(dev, "ID_MODEL"));
+		TQString devicebus(udev_device_get_property_value(dev, "ID_BUS"));
+
+		// Get disk specific info
+		TQString disktypestring(udev_device_get_property_value(dev, "ID_TYPE"));
+		TQString disklabel(udev_device_get_property_value(dev, "ID_FS_LABEL"));
+		TQString diskuuid(udev_device_get_property_value(dev, "ID_FS_UUID"));
+		TQString filesystemtype(udev_device_get_property_value(dev, "ID_FS_TYPE"));
+		TQString filesystemusage(udev_device_get_property_value(dev, "ID_FS_USAGE"));
+
+		device->setVendorName(devicevendor);
+		device->setVendorModel(devicemodel);
+		device->setDeviceBus(devicebus);
+
+		TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(device);
+
+		TDEDiskDeviceType::TDEDiskDeviceType disktype = (TDEDiskDeviceType::TDEDiskDeviceType)0;
+		TDEDiskDeviceStatus::TDEDiskDeviceStatus diskstatus = (TDEDiskDeviceStatus::TDEDiskDeviceStatus)0;
+
+		if (devicebus.upper() == "USB") {
+			disktype = disktype | TDEDiskDeviceType::USB;
+		}
+
+		if (disktypestring.upper() == "ZIP") {
+			disktype = disktype | TDEDiskDeviceType::Zip;
+		}
+		if ((devicevendor.upper() == "IOMEGA") && (devicemodel.upper().contains("ZIP"))) {
+			disktype = disktype | TDEDiskDeviceType::Zip;
+		}
+
+		if (disktypestring.upper() == "FLOPPY") {
+			disktype = disktype | TDEDiskDeviceType::Floppy;
+		}
+
+		if (disktypestring.upper() == "TAPE") {
+			disktype = disktype | TDEDiskDeviceType::Tape;
+		}
+
+		if (disktypestring.upper() == "COMPACT_FLASH") {
+			disktype = disktype | TDEDiskDeviceType::CompactFlash;
+		}
+
+		if (disktypestring.upper() == "MEMORY_STICK") {
+			disktype = disktype | TDEDiskDeviceType::MemoryStick;
+		}
+
+		if (disktypestring.upper() == "SMART_MEDIA") {
+			disktype = disktype | TDEDiskDeviceType::SmartMedia;
+		}
+
+		if (disktypestring.upper() == "SD_MMC") {
+			disktype = disktype | TDEDiskDeviceType::SDMMC;
+		}
+
+		if (disktypestring.upper() == "FLASHKEY") {
+			disktype = disktype | TDEDiskDeviceType::Flash;
+		}
+
+		if (disktypestring.upper() == "OPTICAL") {
+			disktype = disktype | TDEDiskDeviceType::Optical;
+		}
+
+		if (disktypestring.upper() == "JAZ") {
+			disktype = disktype | TDEDiskDeviceType::Jaz;
+		}
+
+		if (disktypestring.upper() == "DISK") {
+			disktype = disktype | TDEDiskDeviceType::HDD;
+		}
+
+		if (disktypestring.upper() == "CD") {
+			if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA")) == "1") {
+				disktype = disktype | TDEDiskDeviceType::CDROM;
+			}
+			if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD")) == "1") {
+				disktype = disktype | TDEDiskDeviceType::DVDROM;
+				disktype = disktype & ~TDEDiskDeviceType::CDROM;
+			}
+			if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_RAM")) == "1") {
+				disktype = disktype | TDEDiskDeviceType::DVDRAM;
+				disktype = disktype & ~TDEDiskDeviceType::DVDROM;
+			}
+			if ((TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_RW")) == "1")
+				|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_RW_DL")) == "1")
+				|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_PLUS_RW")) == "1")
+				|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_MINUS_RW")) == "1")
+				|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_PLUS_RW_DL")) == "1")
+				|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_MINUS_RW_DL")) == "1")
+				) {
+				disktype = disktype | TDEDiskDeviceType::DVDRW;
+				disktype = disktype & ~TDEDiskDeviceType::DVDROM;
+			}
+			if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_BD")) == "1") {
+				disktype = disktype | TDEDiskDeviceType::BDROM;
+				disktype = disktype & ~TDEDiskDeviceType::CDROM;
+			}
+			if ((TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_BD_RW")) == "1")
+				|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_BD_RW_DL")) == "1")
+				|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_BD_PLUS_RW")) == "1")
+				|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_BD_MINUS_RW")) == "1")
+				|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_PLUS_RW_DL")) == "1")
+				|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_MINUS_RW_DL")) == "1")
+				) {
+				disktype = disktype | TDEDiskDeviceType::BDRW;
+				disktype = disktype & ~TDEDiskDeviceType::BDROM;
+			}
+			if (!TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_TRACK_COUNT_AUDIO")).isNull()) {
+				disktype = disktype | TDEDiskDeviceType::CDAudio;
+			}
+			if ((TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_VCD")) == "1") || (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_SDVD")) == "1")) {
+				disktype = disktype | TDEDiskDeviceType::CDVideo;
+			}
+			if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_STATE")).upper() == "BLANK") {
+				diskstatus = diskstatus | TDEDiskDeviceStatus::Blank;
+			}
+
+			sdevice->setMediaInserted(!(TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA")) == "0"));
+		}
+
+		if (removable) {
+			diskstatus = diskstatus | TDEDiskDeviceStatus::Removable;
+		}
+
+		if (disktypestring.upper() == "CRYPTO_LUKS") {
+			disktype = disktype | TDEDiskDeviceType::LUKS;
+		}
+		else if (disktypestring.upper() == "CRYPTO") {
+			disktype = disktype | TDEDiskDeviceType::OtherCrypted;
+		}
+
+		// Detect RAM and Loop devices, since udev can't seem to...
+		if (systempath.startsWith("/sys/devices/virtual/block/ram")) {
+			disktype = disktype | TDEDiskDeviceType::RAM;
+		}
+		if (systempath.startsWith("/sys/devices/virtual/block/loop")) {
+			disktype = disktype | TDEDiskDeviceType::Loop;
+		}
+
+		// Set mountable flag if device is likely to be mountable
+		diskstatus = diskstatus | TDEDiskDeviceStatus::Mountable;
+		if ((!disktypestring.upper().isNull()) && (disktype & TDEDiskDeviceType::HDD)) {
+			diskstatus = diskstatus & ~TDEDiskDeviceStatus::Mountable;
+		}
+		if (sdevice->mediaInserted()) {
+			diskstatus = diskstatus | TDEDiskDeviceStatus::Inserted;
+		}
+		else {
+			diskstatus = diskstatus & ~TDEDiskDeviceStatus::Mountable;
+		}
+
+		sdevice->setDiskType(disktype);
+		sdevice->setDiskUUID(diskuuid);
+		sdevice->setDiskLabel(disklabel);
+		sdevice->setDiskStatus(diskstatus);
+		sdevice->setFileSystemName(filesystemtype);
+		sdevice->setFileSystemUsage(filesystemusage);
+
+		printf("DISK DEVICE name: %s type: %s subsystem: %s vendor: %s model: %s bus: %s label: %s filesystem: %s disk type: %s disk type flags: 0x%08x media inserted: %d [Node Path: %s] [Syspath: %s]\n\r\n\r", devicename.ascii(), devicetype.ascii(), devicesubsystem.ascii(), devicevendor.ascii(), devicemodel.ascii(), devicebus.ascii(), disklabel.ascii(), filesystemtype.ascii(), disktypestring.ascii(), disktype, sdevice->mediaInserted(), devicenode.ascii(), udev_device_get_syspath(dev)); fflush(stdout);
+	}
+	else if (devicetype.isNull()) {
+		if (devicesubsystem == "acpi") {
+			device = new TDEGenericDevice(TDEGenericDeviceType::OtherACPI);
+		}
+		else if (devicesubsystem == "input") {
+			// Figure out if this device is a mouse, keyboard, or something else
+			// Check for mouse
+			// udev doesn't reliably help here, so guess from the device name
+			if (systempath.contains("/mouse")) {
+				device = new TDEGenericDevice(TDEGenericDeviceType::Mouse);
+			}
+			if (!device) {
+				// Second mouse check 
+				// Look for ID_INPUT_MOUSE property presence
+				if (udev_device_get_property_value(dev, "ID_INPUT_MOUSE") != 0) {
+					device = new TDEGenericDevice(TDEGenericDeviceType::Mouse);
+				}
+			}
+			if (!device) {
+				// Check for keyboard
+				// Look for ID_INPUT_KEYBOARD property presence
+				if (udev_device_get_property_value(dev, "ID_INPUT_KEYBOARD") != 0) {
+					device = new TDEGenericDevice(TDEGenericDeviceType::Keyboard);
+				}
+			}
+			if (!device) {
+				device = new TDEGenericDevice(TDEGenericDeviceType::HID);
+			}
+		}
+		else if (devicesubsystem == "tty") {
+			device = new TDEGenericDevice(TDEGenericDeviceType::TextIO);
+		}
+		else if (devicesubsystem == "thermal") {
+			// FIXME
+			// Figure out a way to differentiate between ThermalControl (fans and coolers) and ThermalSensor types
+			device = new TDEGenericDevice(TDEGenericDeviceType::ThermalControl);
+		}
+		else if (devicesubsystem == "hwmon") {
+			// FIXME
+			// This might pick up thermal sensors
+			device = new TDEGenericDevice(TDEGenericDeviceType::OtherSensor);
+		}
+	}
+
+	if (device == 0) {
+		// Unhandled
+		device = new TDEGenericDevice(TDEGenericDeviceType::Other);
+		printf("[FIXME] UNCLASSIFIED DEVICE name: %s type: %s subsystem: %s driver: %s [Node Path: %s] [Syspath: %s]\n\r", devicename.ascii(), devicetype.ascii(), devicesubsystem.ascii(), devicedriver.ascii(), devicenode.ascii(), udev_device_get_syspath(dev)); fflush(stdout);
+	}
+	device->setName(devicename);
+	device->setDeviceNode(devicenode);
+	device->setSystemPath(systempath);
+
+	return device;
 }
 
 bool TDEHardwareDevices::queryHardwareInformation() {
@@ -95,69 +544,26 @@ bool TDEHardwareDevices::queryHardwareInformation() {
 	// Get detailed information on each detected device
 	udev_list_entry_foreach(dev_list_entry, devices) {
 		const char *path;
-		
+
 		// Get the filename of the /sys entry for the device and create a udev_device object (dev) representing it
 		path = udev_list_entry_get_name(dev_list_entry);
 		dev = udev_device_new_from_syspath(m_udevStruct, path);
-	
-		// Classify device and create TDEW device object
-		TQString devicename(udev_device_get_sysname(dev));
-		TQString devicetype(udev_device_get_devtype(dev));
-		TQString devicedriver(udev_device_get_driver(dev));
-		TQString devicesubsystem(udev_device_get_subsystem(dev));
-		TQString devicenode(udev_device_get_devnode(dev));
-		TQString systempath(udev_device_get_syspath(dev));
-		bool removable = false;
-		TDEGenericDevice* device = 0;
 
-		if (devicetype == "disk") {
-			// Determine if disk is removable
-			TQString removablenodename = udev_device_get_syspath(dev);
-			removablenodename.append("/removable");
-			FILE *fp = fopen(removablenodename.ascii(),"r");
-			if (fp) {
-				if (fgetc(fp) == '1') {
-					removable = true;
-				}
-				fclose(fp);
-			}
-			if (removable) {
-				device = new TDEGenericDevice(TDEGenericDeviceType::RemovableDisk);
-			}
-			else {
-				device = new TDEGenericDevice(TDEGenericDeviceType::FixedDisk);
+		TDEGenericDevice* device = classifyUnknownDevice(dev);
+
+		// Make sure this device is not a duplicate
+		TDEGenericDevice *hwdevice;
+		for (hwdevice = m_deviceList.first(); hwdevice; hwdevice = m_deviceList.next()) {
+			if (hwdevice->systemPath() == device->systemPath()) {
+				delete device;
+				device = 0;
+				break;
 			}
 		}
-		else if (devicetype.isNull()) {
-			if (devicesubsystem == "acpi") {
-				device = new TDEGenericDevice(TDEGenericDeviceType::OtherACPI);
-			}
-			else if (devicesubsystem == "input") {
-				device = new TDEGenericDevice(TDEGenericDeviceType::HID);
-			}
-			else if (devicesubsystem == "tty") {
-				device = new TDEGenericDevice(TDEGenericDeviceType::TextIO);
-			}
-			else if (devicesubsystem == "thermal") {
-				// FIXME
-				// Figure out a way to differentiate between ThermalControl (fans and coolers) and ThermalSensor types
-				device = new TDEGenericDevice(TDEGenericDeviceType::ThermalControl);
-			}
-			else if (devicesubsystem == "hwmon") {
-				// FIXME
-				// This might pick up thermal sensors
-				device = new TDEGenericDevice(TDEGenericDeviceType::OtherSensor);
-			}
+
+		if (device) {
+			m_deviceList.append(device);
 		}
-		if (device == 0) {
-			// Unhandled
-			device = new TDEGenericDevice(TDEGenericDeviceType::Other);
-			printf("[FIXME] UNCLASSIFIED DEVICE name: %s type: %s subsystem: %s driver: %s [Node Path: %s] [Syspath: %s]\n\r", devicename.ascii(), devicetype.ascii(), devicesubsystem.ascii(), devicedriver.ascii(), devicenode.ascii(), udev_device_get_syspath(dev)); fflush(stdout);
-		}
-		device->setName(devicename);
-		device->setDeviceNode(devicenode);
-		device->setSystemPath(systempath);
-		m_deviceList.append(device);
 	}
 
 	// Free the enumerator object
@@ -169,3 +575,5 @@ bool TDEHardwareDevices::queryHardwareInformation() {
 TDEGenericHardwareList &TDEHardwareDevices::listAllPhysicalDevices() {
 	return m_deviceList;
 }
+
+#include "tdehardwaredevices.moc"
