@@ -21,6 +21,7 @@
 // TDE includes
 #include <tqstring.h>
 #include <tqptrlist.h>
+#include <tqstringlist.h>
 #include <tqtimer.h>
 #include "tdelibs_export.h"
 
@@ -98,6 +99,7 @@ enum TDEDiskDeviceType {
 	MemoryStick =	0x04000000,
 	SmartMedia =	0x08000000,
 	SDMMC =		0x10000000,
+	UnlockedCrypt =	0x20000000,
 	Other =		0x80000000
 };
 
@@ -123,6 +125,8 @@ enum TDEDiskDeviceStatus {
 	Removable =	0x00000002,
 	Inserted =	0x00000004,
 	Blank =		0x00000008,
+	UsedByDevice =	0x00000010,
+	UsesDevice =	0x00000020,
 	Other =		0x80000000
 };
 
@@ -324,6 +328,26 @@ class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 		void setFileSystemUsage(TQString fu);
 
 		/**
+		* @return a TQStringList containing system paths to all devices with a lock on this device, if any
+		*/
+		TQStringList &holdingDevices();
+
+		/**
+		* @param a TQStringList containing system paths to all devices with a lock on this device, if any
+		*/
+		void setHoldingDevices(TQStringList hd);
+
+		/**
+		* @return a TQStringList containing system paths to all devices locked by this device, if any
+		*/
+		TQStringList &slaveDevices();
+
+		/**
+		* @param a TQStringList containing system paths to all devices locked by this device, if any
+		*/
+		void setSlaveDevices(TQStringList sd);
+
+		/**
 		* @return a TQString with the mount path, if mounted
 		*/
 		TQString mountPath();
@@ -337,6 +361,8 @@ class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 		TQString m_fileSystemUsage;
 		bool m_mediaInserted;
 		TQString m_mountPath;
+		TQStringList m_holdingDevices;
+		TQStringList m_slaveDevices;
 };
 
 typedef TQPtrList<TDEGenericDevice> TDEGenericHardwareList;

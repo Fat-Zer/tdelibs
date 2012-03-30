@@ -19,6 +19,7 @@
 #include <tdehardwaredevices.h>
 
 #include <tqfile.h>
+#include <tqdir.h>
 #include <tqstringlist.h>
 
 #include <libudev.h>
@@ -150,6 +151,22 @@ TQString &TDEStorageDevice::diskUUID() {
 
 void TDEStorageDevice::setDiskUUID(TQString id) {
 	m_diskUUID = id;
+}
+
+TQStringList &TDEStorageDevice::holdingDevices() {
+	return m_holdingDevices;
+}
+
+void TDEStorageDevice::setHoldingDevices(TQStringList hd) {
+	m_slaveDevices = hd;
+}
+
+TQStringList &TDEStorageDevice::slaveDevices() {
+	return m_slaveDevices;
+}
+
+void TDEStorageDevice::setSlaveDevices(TQStringList sd) {
+	m_slaveDevices = sd;
 }
 
 TQString TDEStorageDevice::mountPath() {
@@ -305,6 +322,47 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev) {
 			}
 			fclose(fp);
 		}
+
+		// See if any other devices are exclusively using this device, such as the Device Mapper|
+		TQStringList holdingDeviceNodes;
+		TQString holdersnodename = udev_device_get_syspath(dev);
+		holdersnodename.append("/holders/");
+		TQDir holdersdir(holdersnodename);
+		holdersdir.setFilter(TQDir::All);
+		const TQFileInfoList *dirlist = holdersdir.entryInfoList();
+		if (dirlist) {
+			TQFileInfoListIterator holdersdirit(*dirlist);
+			TQFileInfo *dirfi;
+			while ( (dirfi = holdersdirit.current()) != 0 ) {
+				if (dirfi->isSymLink()) {
+					char* collapsedPath = realpath((holdersnodename + dirfi->readLink()).ascii(), NULL);
+					holdingDeviceNodes.append(TQString(collapsedPath));
+					free(collapsedPath);
+				}
+				++holdersdirit;
+			}
+		}
+
+		// See if any other physical devices underlie this device, for example when the Device Mapper is in use
+		TQStringList slaveDeviceNodes;
+		TQString slavesnodename = udev_device_get_syspath(dev);
+		slavesnodename.append("/slaves/");
+		TQDir slavedir(slavesnodename);
+		slavedir.setFilter(TQDir::All);
+		dirlist = slavedir.entryInfoList();
+		if (dirlist) {
+			TQFileInfoListIterator slavedirit(*dirlist);
+			TQFileInfo *dirfi;
+			while ( (dirfi = slavedirit.current()) != 0 ) {
+				if (dirfi->isSymLink()) {
+					char* collapsedPath = realpath((slavesnodename + dirfi->readLink()).ascii(), NULL);
+					slaveDeviceNodes.append(TQString(collapsedPath));
+					free(collapsedPath);
+				}
+				++slavedirit;
+			}
+		}
+
 		device = new TDEStorageDevice(TDEGenericDeviceType::Disk);
 
 		// Determine generic disk information
@@ -432,10 +490,10 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev) {
 			diskstatus = diskstatus | TDEDiskDeviceStatus::Removable;
 		}
 
-		if (disktypestring.upper() == "CRYPTO_LUKS") {
+		if (filesystemtype.upper() == "CRYPTO_LUKS") {
 			disktype = disktype | TDEDiskDeviceType::LUKS;
 		}
-		else if (disktypestring.upper() == "CRYPTO") {
+		else if (filesystemtype.upper() == "CRYPTO") {
 			disktype = disktype | TDEDiskDeviceType::OtherCrypted;
 		}
 
@@ -452,11 +510,32 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev) {
 		if ((!disktypestring.upper().isNull()) && (disktype & TDEDiskDeviceType::HDD)) {
 			diskstatus = diskstatus & ~TDEDiskDeviceStatus::Mountable;
 		}
-		if (sdevice->mediaInserted()) {
-			diskstatus = diskstatus | TDEDiskDeviceStatus::Inserted;
+		if (removable) {
+			if (sdevice->mediaInserted()) {
+				diskstatus = diskstatus | TDEDiskDeviceStatus::Inserted;
+			}
+			else {
+				diskstatus = diskstatus & ~TDEDiskDeviceStatus::Mountable;
+			}
 		}
-		else {
-			diskstatus = diskstatus & ~TDEDiskDeviceStatus::Mountable;
+
+		if (holdingDeviceNodes.count() > 0) {
+			diskstatus = diskstatus | TDEDiskDeviceStatus::UsedByDevice;
+		}
+
+		if (slaveDeviceNodes.count() > 0) {
+			diskstatus = diskstatus | TDEDiskDeviceStatus::UsesDevice;
+		}
+
+		// See if any slaves were crypted
+		for ( TQStringList::Iterator slaveit = slaveDeviceNodes.begin(); slaveit != slaveDeviceNodes.end(); ++slaveit ) {
+			struct udev_device *slavedev;
+			slavedev = udev_device_new_from_syspath(m_udevStruct, (*slaveit).ascii());
+			TQString slavediskfstype(udev_device_get_property_value(slavedev, "ID_FS_TYPE"));
+			if ((slavediskfstype.upper() == "CRYPTO_LUKS") || (slavediskfstype.upper() == "CRYPTO")) {
+				disktype = disktype | TDEDiskDeviceType::UnlockedCrypt;
+			}
+			udev_device_unref(slavedev);
 		}
 
 		sdevice->setDiskType(disktype);
@@ -465,6 +544,8 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev) {
 		sdevice->setDiskStatus(diskstatus);
 		sdevice->setFileSystemName(filesystemtype);
 		sdevice->setFileSystemUsage(filesystemusage);
+		sdevice->setSlaveDevices(slaveDeviceNodes);
+		sdevice->setHoldingDevices(holdingDeviceNodes);
 
 		printf("DISK DEVICE name: %s type: %s subsystem: %s vendor: %s model: %s bus: %s label: %s filesystem: %s disk type: %s disk type flags: 0x%08x media inserted: %d [Node Path: %s] [Syspath: %s]\n\r\n\r", devicename.ascii(), devicetype.ascii(), devicesubsystem.ascii(), devicevendor.ascii(), devicemodel.ascii(), devicebus.ascii(), disklabel.ascii(), filesystemtype.ascii(), disktypestring.ascii(), disktype, sdevice->mediaInserted(), devicenode.ascii(), udev_device_get_syspath(dev)); fflush(stdout);
 	}
@@ -564,6 +645,8 @@ bool TDEHardwareDevices::queryHardwareInformation() {
 		if (device) {
 			m_deviceList.append(device);
 		}
+
+		udev_device_unref(dev);
 	}
 
 	// Free the enumerator object
