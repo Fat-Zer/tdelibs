@@ -19,10 +19,10 @@
 #define _TDEHARDWAREDEVICES_H
 
 // TDE includes
+#include <tqobject.h>
 #include <tqstring.h>
 #include <tqptrlist.h>
 #include <tqstringlist.h>
-#include <tqtimer.h>
 #include "tdelibs_export.h"
 
 // udev includes
@@ -419,6 +419,8 @@ class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 
 typedef TQPtrList<TDEGenericDevice> TDEGenericHardwareList;
 
+class TQSocketNotifier;
+
 class TDECORE_EXPORT TDEHardwareDevices : TQObject
 {
 	Q_OBJECT
@@ -470,8 +472,8 @@ class TDECORE_EXPORT TDEHardwareDevices : TQObject
 		void mountTableModified();
 
 	private slots:
-		void checkForHotPluggedHardware();
-		void checkForModifiedMounts();
+		void processHotPluggedHardware();
+		void processModifiedMounts();
 
 	private:
 		TDEGenericDevice *classifyUnknownDevice(udev_device* dev);
@@ -479,9 +481,10 @@ class TDECORE_EXPORT TDEHardwareDevices : TQObject
 		struct udev *m_udevStruct;
 		struct udev_monitor *m_udevMonitorStruct;
 		TDEGenericHardwareList m_deviceList;
+		int m_procMountsFd;
 
-		TQTimer* m_devScanTimer;
-		TQTimer* m_mountScanTimer;
+		TQSocketNotifier* m_devScanNotifier;
+		TQSocketNotifier* m_mountScanNotifier;
 };
 
 #endif

@@ -21,6 +21,7 @@
 #include <tqfile.h>
 #include <tqdir.h>
 #include <tqstringlist.h>
+#include <tqsocketnotifier.h>
 
 #include <kglobal.h>
 #include <ktempfile.h>
@@ -382,14 +383,13 @@ TDEHardwareDevices::TDEHardwareDevices() {
 		udev_monitor_filter_add_match_subsystem_devtype(m_udevMonitorStruct, NULL, NULL);
 		udev_monitor_enable_receiving(m_udevMonitorStruct);
 
-		m_devScanTimer = new TQTimer();
-		connect( m_devScanTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(checkForHotPluggedHardware()) );
-		m_devScanTimer->start(1, TRUE);
+		m_devScanNotifier = new TQSocketNotifier(udev_monitor_get_fd(m_udevMonitorStruct), TQSocketNotifier::Read, this);
+		connect( m_devScanNotifier, TQT_SIGNAL(activated(int)), this, TQT_SLOT(processHotPluggedHardware()) );
 
 		// Monitor for changed mounts
-		m_mountScanTimer = new TQTimer();
-		connect( m_mountScanTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(checkForModifiedMounts()) );
-		m_mountScanTimer->start(1, TRUE);
+		m_procMountsFd = open("/proc/mounts", O_RDONLY, 0);
+		m_mountScanNotifier = new TQSocketNotifier(m_procMountsFd, TQSocketNotifier::Exception, this);
+		connect( m_mountScanNotifier, TQT_SIGNAL(activated(int)), this, TQT_SLOT(processModifiedMounts()) );
 
 		// Update internal device information
 		queryHardwareInformation();
@@ -397,13 +397,8 @@ TDEHardwareDevices::TDEHardwareDevices() {
 }
 
 TDEHardwareDevices::~TDEHardwareDevices() {
-	// Stop hardware scanning
-	m_devScanTimer->stop();
-	delete m_devScanTimer;
-
 	// Stop mount scanning
-	m_mountScanTimer->stop();
-	delete m_mountScanTimer;
+	close(m_procMountsFd);
 
 	// Tear down udev interface
 	udev_unref(m_udevStruct);
@@ -434,11 +429,11 @@ TDEStorageDevice* TDEHardwareDevices::findDiskByUID(TQString uid) {
 	return 0;
 }
 
-void TDEHardwareDevices::checkForHotPluggedHardware() {
+void TDEHardwareDevices::processHotPluggedHardware() {
 	udev_device* dev = udev_monitor_receive_device(m_udevMonitorStruct);
 	if (dev) {
 		TQString actionevent(udev_device_get_action(dev));
-		if (actionevent == "add") {	
+		if (actionevent == "add") {
 			TDEGenericDevice* device = classifyUnknownDevice(dev);
 	
 			// Make sure this device is not a duplicate
@@ -462,36 +457,21 @@ void TDEHardwareDevices::checkForHotPluggedHardware() {
 			TDEGenericDevice *hwdevice;
 			for (hwdevice = m_deviceList.first(); hwdevice; hwdevice = m_deviceList.next()) {
 				if (hwdevice->systemPath() == systempath) {
+					emit hardwareRemoved(*hwdevice);
 					m_deviceList.remove(hwdevice);
-					emit hardwareAdded(*hwdevice);
 					break;
 				}
 			}
 		}
 	}
-
-	// Continue scanning for added/removed hardware
-	m_devScanTimer->start(1, TRUE);
 }
 
-void TDEHardwareDevices::checkForModifiedMounts() {
-	int mfd = open("/proc/mounts", O_RDONLY, 0);
-	struct pollfd pfd;
-	int rv;
-	
-	pfd.fd = mfd;
-	pfd.events = POLLERR | POLLPRI;
-	pfd.revents = 0;
-	while ((rv = poll(&pfd, 1, 5)) >= 0) {
-		if (pfd.revents & POLLERR) {
-			emit mountTableModified();
-		}
-	
-		pfd.revents = 0;
-	}
+void TDEHardwareDevices::processModifiedMounts() {
+	// FIXME
+	// Detect what changed between the old mount table and the new one,
+	// and emit appropriate events
 
-	// Continue scanning for changed mounts
-	m_mountScanTimer->start(1, TRUE);
+	emit mountTableModified();
 }
 
 TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev) {
@@ -594,6 +574,13 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev) {
 		}
 		if ((devicevendor.upper() == "IOMEGA") && (devicemodel.upper().contains("ZIP"))) {
 			disktype = disktype | TDEDiskDeviceType::Zip;
+		}
+
+		if ((devicevendor.upper() == "APPLE") && (devicemodel.upper().contains("IPOD"))) {
+			disktype = disktype | TDEDiskDeviceType::MediaDevice;
+		}
+		if ((devicevendor.upper() == "SANDISK") && (devicemodel.upper().contains("SANSA"))) {
+			disktype = disktype | TDEDiskDeviceType::MediaDevice;
 		}
 
 		if (disktypestring.upper() == "FLOPPY") {
@@ -751,12 +738,36 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev) {
 
 		sdevice->setDiskType(disktype);
 		sdevice->setDiskUUID(diskuuid);
-		sdevice->setDiskLabel(disklabel);
 		sdevice->setDiskStatus(diskstatus);
 		sdevice->setFileSystemName(filesystemtype);
 		sdevice->setFileSystemUsage(filesystemusage);
 		sdevice->setSlaveDevices(slaveDeviceNodes);
 		sdevice->setHoldingDevices(holdingDeviceNodes);
+
+		// Clean up disk label
+		if ((sdevice->isDiskOfType(TDEDiskDeviceType::CDROM))
+			|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDRW))
+			|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDROM))
+			|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRW))
+			|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDROM))
+			|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDRW))
+			|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDAudio))
+			|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDVideo))
+			|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDVideo))
+			|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDVideo))
+			) {
+			if (disklabel == "") {
+				// Read the volume label in via volname, since udev couldn't be bothered to do this on its own
+				FILE *exepipe = popen((TQString("volname %1").arg(devicenode).ascii()), "r");
+				if (exepipe) {
+					char buffer[8092];
+					disklabel = fgets(buffer, sizeof(buffer), exepipe);
+					pclose(exepipe);
+				}
+			}
+		}
+
+		sdevice->setDiskLabel(disklabel);
 
 		printf("DISK DEVICE name: %s type: %s subsystem: %s vendor: %s model: %s bus: %s label: %s filesystem: %s disk type: %s disk type flags: 0x%08x media inserted: %d [Node Path: %s] [Syspath: %s]\n\r\n\r", devicename.ascii(), devicetype.ascii(), devicesubsystem.ascii(), devicevendor.ascii(), devicemodel.ascii(), devicebus.ascii(), disklabel.ascii(), filesystemtype.ascii(), disktypestring.ascii(), disktype, sdevice->mediaInserted(), devicenode.ascii(), udev_device_get_syspath(dev)); fflush(stdout);
 	}
