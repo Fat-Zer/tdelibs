@@ -369,25 +369,36 @@ class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 		* Mounts the device if not encrypted
 		*
 		* @param a TQString containing a requested mount name under /media, if desired
+		* @param a TQString containing any mount options for pmount, if desired
+		* @param a pointer to a TQString which will be populated with any error messages from pmount, if desired
+		* @param a pointer to an integer which will be populated with the return code from pmount, if desired
+		*
 		* @return a TQString with the mount path, if successful
 		*/
-		TQString mountDevice(TQString mediaName=TQString::null);
+		TQString mountDevice(TQString mediaName=TQString::null, TQString mountOptions=TQString::null, TQString* errRet=0, int* retcode=0);
 
 		/**
 		* Mounts the encrypted device if the correct passphrase is given
 		*
 		* @param a TQString containing the passphrase
 		* @param a TQString containing a requested mount name under /media, if desired
+		* @param a TQString containing any mount options for pmount, if desired
+		* @param a pointer to a TQString which will be populated with any error messages from pmount, if desired
+		* @param a pointer to an integer which will be populated with the return code from pmount, if desired
+		*
 		* @return a TQString with the mount path, if successful
 		*/
-		TQString mountEncryptedDevice(TQString passphrase, TQString mediaName=TQString::null);
+		TQString mountEncryptedDevice(TQString passphrase, TQString mediaName=TQString::null, TQString mountOptions=TQString::null, TQString* errRet=0, int* retcode=0);
 
 		/**
 		* Unmounts the device
 		*
+		* @param a pointer to a TQString which will be populated with any error messages from pmount, if desired
+		* @param a pointer to an integer which will be populated with the return code from pmount, if desired
+		*
 		* @return TRUE if unmount was successful
 		*/
-		bool unmountDevice();
+		bool unmountDevice(TQString* errRet, int* retcode=0);
 
 		/**
 		* @return a TQString with the mount path, if mounted
@@ -421,7 +432,7 @@ typedef TQPtrList<TDEGenericDevice> TDEGenericHardwareList;
 
 class TQSocketNotifier;
 
-class TDECORE_EXPORT TDEHardwareDevices : TQObject
+class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 {
 	Q_OBJECT
 
@@ -461,14 +472,21 @@ class TDECORE_EXPORT TDEHardwareDevices : TQObject
 		TDEGenericDevice* findBySystemPath(TQString syspath);
 
 		/**
+		*  Return the device with device node @arg devnode, or 0 if no device exists at that node
+		*  @return TDEGenericDevice
+		*/
+		TDEGenericDevice* findByDeviceNode(TQString devnode);
+
+		/**
 		*  Return the storage device with unique ID @arg uid, or 0 if no device exists for that uid
 		*  @return TDEGenericDevice
 		*/
 		TDEStorageDevice* findDiskByUID(TQString uid);
 
 	signals:
-		void hardwareAdded(TDEGenericDevice);
-		void hardwareRemoved(TDEGenericDevice);
+		void hardwareAdded(TDEGenericDevice*);
+		void hardwareRemoved(TDEGenericDevice*);
+		void hardwareUpdated(TDEGenericDevice*);
 		void mountTableModified();
 
 	private slots:
@@ -476,7 +494,7 @@ class TDECORE_EXPORT TDEHardwareDevices : TQObject
 		void processModifiedMounts();
 
 	private:
-		TDEGenericDevice *classifyUnknownDevice(udev_device* dev);
+		TDEGenericDevice *classifyUnknownDevice(udev_device* dev, TDEGenericDevice* existingdevice=0);
 
 		struct udev *m_udevStruct;
 		struct udev_monitor *m_udevMonitorStruct;
@@ -485,6 +503,8 @@ class TDECORE_EXPORT TDEHardwareDevices : TQObject
 
 		TQSocketNotifier* m_devScanNotifier;
 		TQSocketNotifier* m_mountScanNotifier;
+
+		TQStringList m_mountTable;
 };
 
 #endif
