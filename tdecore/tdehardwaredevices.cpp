@@ -29,6 +29,9 @@
 
 #include <fcntl.h>
 #include <poll.h>
+#include <sys/stat.h>
+#include <sys/ioctl.h>
+#include <linux/fs.h>
 
 // NOTE TO DEVELOPERS
 // This command will greatly help when attempting to find properties to distinguish one device from another
@@ -94,6 +97,11 @@ void TDEGenericDevice::setDeviceBus(TQString db) {
 	m_deviceBus = db;
 }
 
+TQString TDEGenericDevice::uniqueID() {
+	m_uniqueID = m_systemPath+m_deviceNode;
+	return m_uniqueID;
+}
+
 TDEStorageDevice::TDEStorageDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn), m_mediaInserted(true) {
 }
 
@@ -108,12 +116,20 @@ void TDEStorageDevice::setDiskType(TDEDiskDeviceType::TDEDiskDeviceType dt) {
 	m_diskType = dt;
 }
 
+bool TDEStorageDevice::isDiskOfType(TDEDiskDeviceType::TDEDiskDeviceType tf) {
+	return ((m_diskType&tf)!=(TDEDiskDeviceType::TDEDiskDeviceType)0);
+}
+
 TDEDiskDeviceStatus::TDEDiskDeviceStatus TDEStorageDevice::diskStatus() {
 	return m_diskStatus;
 }
 
 void TDEStorageDevice::setDiskStatus(TDEDiskDeviceStatus::TDEDiskDeviceStatus st) {
 	m_diskStatus = st;
+}
+
+bool TDEStorageDevice::checkDiskStatus(TDEDiskDeviceStatus::TDEDiskDeviceStatus sf) {
+	return ((m_diskStatus&sf)!=(TDEDiskDeviceStatus::TDEDiskDeviceStatus)0);
 }
 
 TQString &TDEStorageDevice::diskLabel() {
@@ -170,6 +186,64 @@ TQStringList &TDEStorageDevice::slaveDevices() {
 
 void TDEStorageDevice::setSlaveDevices(TQStringList sd) {
 	m_slaveDevices = sd;
+}
+
+unsigned long TDEStorageDevice::deviceSize() {
+	TQString bsnodename = systemPath();
+	bsnodename.append("/queue/physical_block_size");
+	TQFile bsfile( bsnodename );
+	TQString blocksize;
+	if ( bsfile.open( IO_ReadOnly ) ) {
+		TQTextStream stream( &bsfile );
+		blocksize = stream.readLine();
+		bsfile.close();
+	}
+
+	TQString dsnodename = systemPath();
+	dsnodename.append("/size");
+	TQFile dsfile( dsnodename );
+	TQString devicesize;
+	if ( dsfile.open( IO_ReadOnly ) ) {
+		TQTextStream stream( &dsfile );
+		devicesize = stream.readLine();
+		dsfile.close();
+	}
+
+	return (blocksize.toULong()*devicesize.toULong());
+}
+
+TQString TDEStorageDevice::deviceFriendlySize() {
+	double bytes = deviceSize();
+	TQString prettystring;
+
+	prettystring = TQString("%1b").arg(bytes);
+
+	if (bytes > 1024) {
+		bytes = bytes / 1024;
+		prettystring = TQString("%1Kb").arg(bytes, 0, 'f', 1);
+	}
+
+	if (bytes > 1024) {
+		bytes = bytes / 1024;
+		prettystring = TQString("%1Mb").arg(bytes, 0, 'f', 1);
+	}
+
+	if (bytes > 1024) {
+		bytes = bytes / 1024;
+		prettystring = TQString("%1Gb").arg(bytes, 0, 'f', 1);
+	}
+
+	if (bytes > 1024) {
+		bytes = bytes / 1024;
+		prettystring = TQString("%1Tb").arg(bytes, 0, 'f', 1);
+	}
+
+	if (bytes > 1024) {
+		bytes = bytes / 1024;
+		prettystring = TQString("%1Pb").arg(bytes, 0, 'f', 1);
+	}
+
+	return prettystring;
 }
 
 TQString TDEStorageDevice::mountPath() {
@@ -340,6 +414,20 @@ TDEGenericDevice* TDEHardwareDevices::findBySystemPath(TQString syspath) {
 	for ( hwdevice = m_deviceList.first(); hwdevice; hwdevice = m_deviceList.next() ) {
 		if (hwdevice->systemPath() == syspath) {
 			return hwdevice;
+		}
+	}
+
+	return 0;
+}
+
+TDEStorageDevice* TDEHardwareDevices::findDiskByUID(TQString uid) {
+	TDEGenericDevice *hwdevice;
+	for ( hwdevice = m_deviceList.first(); hwdevice; hwdevice = m_deviceList.next() ) {
+		if (hwdevice->type() == TDEGenericDeviceType::Disk) {
+			TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(hwdevice);
+			if (sdevice->uniqueID() == uid) {
+				return sdevice;
+			}
 		}
 	}
 
@@ -547,10 +635,19 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev) {
 		if (disktypestring.upper() == "DISK") {
 			disktype = disktype | TDEDiskDeviceType::HDD;
 		}
+		if (disktypestring.isNull()) {
+			// Fallback
+			// If we can't recognize the disk type then set it as a simple HDD volume
+			disktype = disktype | TDEDiskDeviceType::HDD;
+		}
 
 		if (disktypestring.upper() == "CD") {
 			if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA")) == "1") {
 				disktype = disktype | TDEDiskDeviceType::CDROM;
+			}
+			if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_CD_RW")) == "1") {
+				disktype = disktype | TDEDiskDeviceType::CDRW;
+				disktype = disktype & ~TDEDiskDeviceType::CDROM;
 			}
 			if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD")) == "1") {
 				disktype = disktype | TDEDiskDeviceType::DVDROM;
@@ -606,6 +703,9 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev) {
 		}
 		else if (filesystemtype.upper() == "CRYPTO") {
 			disktype = disktype | TDEDiskDeviceType::OtherCrypted;
+		}
+		else if (!filesystemtype.isNull()) {
+			diskstatus = diskstatus | TDEDiskDeviceStatus::ContainsFilesystem;
 		}
 
 		// Detect RAM and Loop devices, since udev can't seem to...

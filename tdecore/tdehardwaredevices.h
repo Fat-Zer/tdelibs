@@ -71,6 +71,7 @@ enum TDEGenericDeviceType {
 
 namespace TDEDiskDeviceType {
 enum TDEDiskDeviceType {
+	MediaDevice =	0x00000001,
 	Floppy =	0x00000002,
 	CDROM =		0x00000004,
 	CDRW =		0x00000008,
@@ -121,13 +122,14 @@ inline TDEDiskDeviceType operator~(TDEDiskDeviceType a)
 
 namespace TDEDiskDeviceStatus {
 enum TDEDiskDeviceStatus {
-	Mountable =	0x00000001,
-	Removable =	0x00000002,
-	Inserted =	0x00000004,
-	Blank =		0x00000008,
-	UsedByDevice =	0x00000010,
-	UsesDevice =	0x00000020,
-	Other =		0x80000000
+	Mountable =		0x00000001,
+	Removable =		0x00000002,
+	Inserted =		0x00000004,
+	Blank =			0x00000008,
+	UsedByDevice =		0x00000010,
+	UsesDevice =		0x00000020,
+	ContainsFilesystem =	0x00000040,
+	Other =			0x80000000
 };
 
 inline TDEDiskDeviceStatus operator|(TDEDiskDeviceStatus a, TDEDiskDeviceStatus b)
@@ -233,6 +235,11 @@ class TDECORE_EXPORT TDEGenericDevice
 		*/
 		void setDeviceNode(TQString sn);
 
+		/**
+		* @return a TQString containing a unique identifier for this device
+		*/
+		TQString uniqueID();
+
 	private:
 		TDEGenericDeviceType::TDEGenericDeviceType m_deviceType;
 		TQString m_deviceName;
@@ -241,6 +248,7 @@ class TDECORE_EXPORT TDEGenericDevice
 		TQString m_vendorName;
 		TQString m_vendorModel;
 		TQString m_deviceBus;
+		TQString m_uniqueID;
 };
 
 class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
@@ -288,6 +296,11 @@ class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 		void setDiskType(TDEDiskDeviceType::TDEDiskDeviceType tf);
 
 		/**
+		* @param an OR-ed combination of TDEDiskDeviceType::TDEDiskDeviceType type flags
+		*/
+		bool isDiskOfType(TDEDiskDeviceType::TDEDiskDeviceType tf);
+
+		/**
 		* @return an OR-ed combination of TDEDiskDeviceStatus::TDEDiskDeviceStatus type flags
 		*/
 		TDEDiskDeviceStatus::TDEDiskDeviceStatus diskStatus();
@@ -296,6 +309,11 @@ class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 		* @param an OR-ed combination of TDEDiskDeviceStatus::TDEDiskDeviceStatus type flags
 		*/
 		void setDiskStatus(TDEDiskDeviceStatus::TDEDiskDeviceStatus st);
+
+		/**
+		* @param an OR-ed combination of TDEDiskDeviceStatus::TDEDiskDeviceStatus type flags
+		*/
+		bool checkDiskStatus(TDEDiskDeviceStatus::TDEDiskDeviceStatus sf);
 
 		/**
 		* @return true if media inserted, false if no media available
@@ -376,6 +394,16 @@ class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 		*/
 		TQString mountPath();
 
+		/**
+		* @return an unsigned long with the device size in bytes
+		*/
+		unsigned long deviceSize();
+
+		/**
+		* @return a TQString with the device size in human readable form
+		*/
+		TQString deviceFriendlySize();
+
 	private:
 		TDEDiskDeviceType::TDEDiskDeviceType m_diskType;
 		TDEDiskDeviceStatus::TDEDiskDeviceStatus m_diskStatus;
@@ -429,6 +457,12 @@ class TDECORE_EXPORT TDEHardwareDevices : TQObject
 		*  @return TDEGenericDevice
 		*/
 		TDEGenericDevice* findBySystemPath(TQString syspath);
+
+		/**
+		*  Return the storage device with unique ID @arg uid, or 0 if no device exists for that uid
+		*  @return TDEGenericDevice
+		*/
+		TDEStorageDevice* findDiskByUID(TQString uid);
 
 	signals:
 		void hardwareAdded(TDEGenericDevice);
