@@ -930,9 +930,9 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDVideo))
 			|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDVideo))
 			) {
-			if (disklabel == "") {
+			if (disklabel == "" && sdevice->diskLabel().isNull()) {
 				// Read the volume label in via volname, since udev couldn't be bothered to do this on its own
-				FILE *exepipe = popen((TQString("volname %1").arg(devicenode).ascii()), "r");
+				FILE *exepipe = popen(((TQString("volname %1").arg(devicenode).ascii())), "r");
 				if (exepipe) {
 					char buffer[8092];
 					disklabel = fgets(buffer, sizeof(buffer), exepipe);
