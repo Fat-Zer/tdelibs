@@ -178,7 +178,7 @@ TQStringList &TDEStorageDevice::holdingDevices() {
 }
 
 void TDEStorageDevice::setHoldingDevices(TQStringList hd) {
-	m_slaveDevices = hd;
+	m_holdingDevices = hd;
 }
 
 TQStringList &TDEStorageDevice::slaveDevices() {
@@ -258,6 +258,10 @@ TQString TDEStorageDevice::mountPath() {
 	// The Device Mapper throws a monkey wrench into this
 	// It likes to advertise mounts as /dev/mapper/<something>,
 	// where <something> is listed in <system path>/dm/name
+
+	// First, ensure that all device information (mainly holders/slaves) is accurate
+	KGlobal::hardwareDevices()->rescanDeviceInformation(this);
+
 	TQString dmnodename = systemPath();
 	dmnodename.append("/dm/name");
 	TQFile namefile( dmnodename );
@@ -279,7 +283,9 @@ TQString TDEStorageDevice::mountPath() {
 		while ( !stream.atEnd() ) {
 			line = stream.readLine();
 			TQStringList mountInfo = TQStringList::split(" ", line, true);
-			if ((*mountInfo.at(0) == deviceNode()) || (*mountInfo.at(0) == dmaltname)) {
+			TQString testNode = *mountInfo.at(0);
+			// Check for match
+			if ((testNode == deviceNode()) || (testNode == dmaltname)) {
 				return *mountInfo.at(1);
 			}
 			lines += line;
@@ -289,7 +295,7 @@ TQString TDEStorageDevice::mountPath() {
 
 	// While this device is not directly mounted, it could concievably be mounted via the Device Mapper
 	// If so, try to retrieve the mount path...
-	TQStringList slaveDeviceList = slaveDevices();
+	TQStringList slaveDeviceList = holdingDevices();
 	for ( TQStringList::Iterator slavedevit = slaveDeviceList.begin(); slavedevit != slaveDeviceList.end(); ++slavedevit ) {
 		// Try to locate this device path in the TDE device tree
 		TDEHardwareDevices *hwdevices = KGlobal::hardwareDevices();
@@ -330,15 +336,15 @@ TQString TDEStorageDevice::mountDevice(TQString mediaName, TQString mountOptions
 		char buffer[8092];
 		pmount_output = fgets(buffer, sizeof(buffer), exepipe);
 		*retcode = pclose(exepipe);
-		if (*retcode == 0) {
-			ret = mountPath();
-		}
-		else {
-			if (errRet) {
-				*errRet = pmount_output;
-			}
+		if (errRet) {
+			*errRet = pmount_output;
 		}
 	}
+
+	// Update internal mount data
+	KGlobal::hardwareDevices()->processModifiedMounts();
+
+	ret = mountPath();
 
 	return ret;
 }
@@ -377,15 +383,15 @@ TQString TDEStorageDevice::mountEncryptedDevice(TQString passphrase, TQString me
 		char buffer[8092];
 		pmount_output = fgets(buffer, sizeof(buffer), exepipe);
 		*retcode = pclose(exepipe);
-		if (*retcode == 0) {
-			ret = mountPath();
-		}
-		else {
-			if (errRet) {
-				*errRet = pmount_output;
-			}
+		if (errRet) {
+			*errRet = pmount_output;
 		}
 	}
+
+	// Update internal mount data
+	KGlobal::hardwareDevices()->processModifiedMounts();
+
+	ret = mountPath();
 
 	return ret;
 }
@@ -418,6 +424,9 @@ bool TDEStorageDevice::unmountDevice(TQString* errRet, int* retcode) {
 			}
 		}
 	}
+
+	// Update internal mount data
+	KGlobal::hardwareDevices()->processModifiedMounts();
 
 	return false;
 }
@@ -469,6 +478,13 @@ TDEHardwareDevices::~TDEHardwareDevices() {
 
 	// Tear down udev interface
 	udev_unref(m_udevStruct);
+}
+
+void TDEHardwareDevices::rescanDeviceInformation(TDEGenericDevice* hwdevice) {
+	struct udev_device *dev;
+	dev = udev_device_new_from_syspath(m_udevStruct, hwdevice->systemPath().ascii());
+	classifyUnknownDevice(dev, hwdevice);
+	udev_device_unref(dev);
 }
 
 TDEGenericDevice* TDEHardwareDevices::findBySystemPath(TQString syspath) {
@@ -536,7 +552,24 @@ void TDEHardwareDevices::processHotPluggedHardware() {
 			for (hwdevice = m_deviceList.first(); hwdevice; hwdevice = m_deviceList.next()) {
 				if (hwdevice->systemPath() == systempath) {
 					emit hardwareRemoved(hwdevice);
-					m_deviceList.remove(hwdevice);
+
+					// If the device is a storage device and has a slave, update it as well
+					if (hwdevice->type() == TDEGenericDeviceType::Disk) {
+						TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(hwdevice);
+						TQStringList slavedevices = sdevice->slaveDevices();
+						m_deviceList.remove(hwdevice);
+						for ( TQStringList::Iterator slaveit = slavedevices.begin(); slaveit != slavedevices.end(); ++slaveit ) {
+							TDEGenericDevice* slavedevice = findBySystemPath(*slaveit);
+							if (slavedevice) {
+								rescanDeviceInformation(slavedevice);
+								emit hardwareUpdated(slavedevice);
+							}
+						}
+					}
+					else {
+						m_deviceList.remove(hwdevice);
+					}
+
 					break;
 				}
 			}
@@ -547,8 +580,20 @@ void TDEHardwareDevices::processHotPluggedHardware() {
 			TDEGenericDevice *hwdevice;
 			for (hwdevice = m_deviceList.first(); hwdevice; hwdevice = m_deviceList.next()) {
 				if (hwdevice->systemPath() == systempath) {
-					classifyUnknownDevice(dev, hwdevice);
-// 					emit hardwareUpdated(hwdevice);		// FIXME certain devices (***cough U3 system fake CD cough*** spam this quite badly, locking up anything monitoring hardwareUpdated()
+					// HACK
+					// I am lucky enough to have a Flash drive that spams udev continually with device change events
+					// I imagine I am not the only one, so here is a section in which specific devices can be blacklisted!
+					bool blacklisted = false;
+
+					// For "U3 System" fake CD
+					if ((TQString(udev_device_get_property_value(dev, "ID_VENDOR_ID")) == "08ec") && (TQString(udev_device_get_property_value(dev, "ID_MODEL_ID")) == "0020") && (TQString(udev_device_get_property_value(dev, "ID_TYPE")) == "cd")); {
+						blacklisted = true;
+					}
+
+					if (!blacklisted) {
+						classifyUnknownDevice(dev, hwdevice);
+						emit hardwareUpdated(hwdevice);	
+					}
 					break;
 				}
 			}
@@ -557,7 +602,6 @@ void TDEHardwareDevices::processHotPluggedHardware() {
 }
 
 void TDEHardwareDevices::processModifiedMounts() {
-	// FIXME
 	// Detect what changed between the old mount table and the new one,
 	// and emit appropriate events
 
@@ -602,7 +646,7 @@ void TDEHardwareDevices::processModifiedMounts() {
 			if (hwdevice->type() == TDEGenericDeviceType::Disk) {
 				TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(hwdevice);
 				TQStringList slavedevices = sdevice->slaveDevices();
-				for ( TQStringList::Iterator slaveit = addedEntries.begin(); slaveit != addedEntries.end(); ++slaveit ) {
+				for ( TQStringList::Iterator slaveit = slavedevices.begin(); slaveit != slavedevices.end(); ++slaveit ) {
 					TDEGenericDevice* slavedevice = findBySystemPath(*slaveit);
 					if (slavedevice) {
 						emit hardwareUpdated(slavedevice);
@@ -621,7 +665,7 @@ void TDEHardwareDevices::processModifiedMounts() {
 			if (hwdevice->type() == TDEGenericDeviceType::Disk) {
 				TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(hwdevice);
 				TQStringList slavedevices = sdevice->slaveDevices();
-				for ( TQStringList::Iterator slaveit = addedEntries.begin(); slaveit != addedEntries.end(); ++slaveit ) {
+				for ( TQStringList::Iterator slaveit = slavedevices.begin(); slaveit != slavedevices.end(); ++slaveit ) {
 					TDEGenericDevice* slavedevice = findBySystemPath(*slaveit);
 					if (slavedevice) {
 						emit hardwareUpdated(slavedevice);
@@ -699,6 +743,12 @@ TDEDiskDeviceType::TDEDiskDeviceType classifyDiskType(udev_device* dev, const TQ
 		// Fallback
 		// If we can't recognize the disk type then set it as a simple HDD volume
 		disktype = disktype | TDEDiskDeviceType::HDD;
+	}
+
+	// Certain combinations of media flags should never be set at the same time as they don't make sense
+	// This block is needed as udev is more than happy to provide inconsistent data to us
+	if ((disktype & TDEDiskDeviceType::Zip) || (disktype & TDEDiskDeviceType::Floppy) || (disktype & TDEDiskDeviceType::Jaz)) {
+		disktype = disktype & ~TDEDiskDeviceType::HDD;
 	}
 
 	if (disktypestring.upper() == "CD") {
@@ -865,6 +915,22 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 				diskstatus = diskstatus | TDEDiskDeviceStatus::Blank;
 			}
 			sdevice->setMediaInserted(!(TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA")) == "0"));
+		}
+
+		if (disktype & TDEDiskDeviceType::Zip) {
+			// A Zip drive does not advertise its status via udev, but it can be guessed from the size parameter
+			TQString zipnodename = systempath;
+			zipnodename.append("/size");
+			TQFile namefile( zipnodename );
+			TQString zipsize;
+			if ( namefile.open( IO_ReadOnly ) ) {
+				TQTextStream stream( &namefile );
+				zipsize = stream.readLine();
+				namefile.close();
+			}
+			if (!zipsize.isNull()) {
+				sdevice->setMediaInserted((zipsize.toInt() != 0));
+			}
 		}
 
 		if (removable) {

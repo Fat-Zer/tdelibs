@@ -494,6 +494,9 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 		void processModifiedMounts();
 
 	private:
+		void rescanDeviceInformation(TDEGenericDevice* hwdevice);
+
+	private:
 		TDEGenericDevice *classifyUnknownDevice(udev_device* dev, TDEGenericDevice* existingdevice=0);
 
 		struct udev *m_udevStruct;
@@ -505,6 +508,8 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 		TQSocketNotifier* m_mountScanNotifier;
 
 		TQStringList m_mountTable;
+
+	friend class TDEStorageDevice;
 };
 
 #endif
