@@ -678,7 +678,7 @@ void TDEHardwareDevices::processModifiedMounts() {
 	emit mountTableModified();
 }
 
-TDEDiskDeviceType::TDEDiskDeviceType classifyDiskType(udev_device* dev, const TQString &devicebus, const TQString &disktypestring, const TQString &systempath, const TQString &devicevendor, const TQString &devicemodel, const TQString &filesystemtype) {
+TDEDiskDeviceType::TDEDiskDeviceType classifyDiskType(udev_device* dev, const TQString &devicebus, const TQString &disktypestring, const TQString &systempath, const TQString &devicevendor, const TQString &devicemodel, const TQString &filesystemtype, const TQString &devicedriver) {
 	// Classify a disk device type to the best of our ability
 	TDEDiskDeviceType::TDEDiskDeviceType disktype = (TDEDiskDeviceType::TDEDiskDeviceType)0;
 
@@ -701,6 +701,9 @@ TDEDiskDeviceType::TDEDiskDeviceType classifyDiskType(udev_device* dev, const TQ
 	}
 
 	if (disktypestring.upper() == "FLOPPY") {
+		disktype = disktype | TDEDiskDeviceType::Floppy;
+	}
+	if (devicedriver.upper() == "FLOPPY") {
 		disktype = disktype | TDEDiskDeviceType::Floppy;
 	}
 
@@ -833,7 +836,10 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 	// Figure out the remaining udev logic to classify the rest!
 	// Helpful file: http://www.enlightenment.org/svn/e/trunk/PROTO/enna-explorer/src/bin/udev.c
 
-	if ((devicetype == "disk") || (devicetype == "partition")) {
+	if ((devicetype == "disk")
+		|| (devicetype == "partition")
+		|| (devicedriver == "floppy")
+		) {
 		// Determine if disk is removable
 		TQString removablenodename = udev_device_get_syspath(dev);
 		removablenodename.append("/removable");
@@ -908,7 +914,54 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		TDEDiskDeviceType::TDEDiskDeviceType disktype = (TDEDiskDeviceType::TDEDiskDeviceType)0;
 		TDEDiskDeviceStatus::TDEDiskDeviceStatus diskstatus = (TDEDiskDeviceStatus::TDEDiskDeviceStatus)0;
 
-		disktype = classifyDiskType(dev, devicebus, disktypestring, systempath, devicevendor, devicemodel, filesystemtype);
+		disktype = classifyDiskType(dev, devicebus, disktypestring, systempath, devicevendor, devicemodel, filesystemtype, devicedriver);
+
+		if (disktype & TDEDiskDeviceType::Floppy) {
+			// Floppy drives don't work well under udev
+			// I have to look for the block device name manually
+			TQString floppyblknodename = systempath;
+			floppyblknodename.append("/block");
+			TQDir floppyblkdir(floppyblknodename);
+			floppyblkdir.setFilter(TQDir::All);
+			const TQFileInfoList *floppyblkdirlist = floppyblkdir.entryInfoList();
+			if (floppyblkdirlist) {
+				TQFileInfoListIterator floppyblkdirit(*floppyblkdirlist);
+				TQFileInfo *dirfi;
+				while ( (dirfi = floppyblkdirit.current()) != 0 ) {
+					if ((dirfi->fileName() != ".") && (dirfi->fileName() != "..")) {
+						// Does this routine work with more than one floppy drive in the system?
+						devicenode = TQString("/dev/").append(dirfi->fileName());
+					}
+					++floppyblkdirit;
+				}
+			}
+	
+			// Some interesting information can be gleaned from the CMOS type file
+			// 0 : Defaults
+			// 1 : 5 1/4 DD
+			// 2 : 5 1/4 HD
+			// 3 : 3 1/2 DD
+			// 4 : 3 1/2 HD
+			// 5 : 3 1/2 ED
+			// 6 : 3 1/2 ED
+			// 16 : unknown or not installed
+			TQString floppycmsnodename = systempath;
+			floppycmsnodename.append("/cmos");
+			TQFile floppycmsfile( floppycmsnodename );
+			TQString cmosstring;
+			if ( floppycmsfile.open( IO_ReadOnly ) ) {
+				TQTextStream stream( &floppycmsfile );
+				cmosstring = stream.readLine();
+				floppycmsfile.close();
+			}
+			// FIXME
+			// Do something with the information in cmosstring
+
+			if (devicenode.isNull()) {
+				// This floppy drive cannot be mounted, so ignore it
+				disktype = disktype & ~TDEDiskDeviceType::Floppy;
+			}
+		}
 
 		if (disktypestring.upper() == "CD") {
 			if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_STATE")).upper() == "BLANK") {
@@ -971,7 +1024,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			if ((slavediskfstype.upper() == "CRYPTO_LUKS") || (slavediskfstype.upper() == "CRYPTO")) {
 				disktype = disktype | TDEDiskDeviceType::UnlockedCrypt;
 				// Set disk type based on parent device
-				disktype = disktype | classifyDiskType(slavedev, TQString(udev_device_get_property_value(dev, "ID_BUS")), TQString(udev_device_get_property_value(dev, "ID_TYPE")), (*slaveit), TQString(udev_device_get_property_value(dev, "ID_VENDOR")), TQString(udev_device_get_property_value(dev, "ID_MODEL")), TQString(udev_device_get_property_value(dev, "ID_FS_TYPE")));
+				disktype = disktype | classifyDiskType(slavedev, TQString(udev_device_get_property_value(dev, "ID_BUS")), TQString(udev_device_get_property_value(dev, "ID_TYPE")), (*slaveit), TQString(udev_device_get_property_value(dev, "ID_VENDOR")), TQString(udev_device_get_property_value(dev, "ID_MODEL")), TQString(udev_device_get_property_value(dev, "ID_FS_TYPE")), TQString(udev_device_get_driver(dev)));
 			}
 			udev_device_unref(slavedev);
 		}
