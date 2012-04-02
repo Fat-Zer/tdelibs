@@ -1,0 +1,9 @@
+[Conditions]
+ID_TYPE=floppy
+
+[DeviceType]
+GENTYPE=Disk
+SUBTYPE=Floppy
+
+[DeviceSettings]
+UPDATE_BLACKLISTED=false

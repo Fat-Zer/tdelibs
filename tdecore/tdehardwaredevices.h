@@ -38,6 +38,7 @@
  * @author Timothy Pearson
  */
 
+// Keep readGenericDeviceTypeFromString() in tdehardwaredevices.cpp in sync with this enum
 namespace TDEGenericDeviceType {
 enum TDEGenericDeviceType {
 	CPU,
@@ -69,8 +70,10 @@ enum TDEGenericDeviceType {
 };
 };
 
+// Keep readDiskDeviceSubtypeFromString() in tdehardwaredevices.cpp in sync with this enum
 namespace TDEDiskDeviceType {
 enum TDEDiskDeviceType {
+	Null =		0x00000000,
 	MediaDevice =	0x00000001,
 	Floppy =	0x00000002,
 	CDROM =		0x00000004,
@@ -122,6 +125,7 @@ inline TDEDiskDeviceType operator~(TDEDiskDeviceType a)
 
 namespace TDEDiskDeviceStatus {
 enum TDEDiskDeviceStatus {
+	Null =			0x00000000,
 	Mountable =		0x00000001,
 	Removable =		0x00000002,
 	Inserted =		0x00000004,
@@ -236,9 +240,39 @@ class TDECORE_EXPORT TDEGenericDevice
 		void setDeviceNode(TQString sn);
 
 		/**
+		* @return true if this device has been blacklisted for update actions
+		*/
+		bool blacklistedForUpdate();
+
+		/**
+		* @param bl true if this device has been blacklisted for update actions
+		*/
+		void setBlacklistedForUpdate(bool bl);
+
+		/**
 		* @return a TQString containing a unique identifier for this device
 		*/
 		TQString uniqueID();
+
+		/**
+		* @return a TQString with the vendor ID, if any
+		*/
+		TQString &vendorID();
+
+		/**
+		* @param a TQString with the vendor ID, if any
+		*/
+		void setVendorID(TQString id);
+
+		/**
+		* @return a TQString with the model ID, if any
+		*/
+		TQString &modelID();
+
+		/**
+		* @param a TQString with the model ID, if any
+		*/
+		void setModelID(TQString id);
 
 	private:
 		TDEGenericDeviceType::TDEGenericDeviceType m_deviceType;
@@ -249,6 +283,15 @@ class TDECORE_EXPORT TDEGenericDevice
 		TQString m_vendorModel;
 		TQString m_deviceBus;
 		TQString m_uniqueID;
+		TQString m_vendorID;
+		TQString m_modelID;
+		bool m_blacklistedForUpdate;
+
+		// Internal use only!
+		TQStringList m_externalSubtype;
+		TQString m_externalRulesFile;
+
+	friend class TDEHardwareDevices;
 };
 
 class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
@@ -495,9 +538,11 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 
 	private:
 		void rescanDeviceInformation(TDEGenericDevice* hwdevice);
+		void updateBlacklists(TDEGenericDevice* hwdevice, udev_device* dev);
 
 	private:
-		TDEGenericDevice *classifyUnknownDevice(udev_device* dev, TDEGenericDevice* existingdevice=0);
+		TDEGenericDevice *classifyUnknownDevice(udev_device* dev, TDEGenericDevice* existingdevice=0, bool force_full_classification=true);
+		TDEGenericDevice *classifyUnknownDeviceByExternalRules(udev_device* dev, TDEGenericDevice* existingdevice=0, bool classifySubDevices=false);
 
 		struct udev *m_udevStruct;
 		struct udev_monitor *m_udevMonitorStruct;
@@ -509,6 +554,7 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 
 		TQStringList m_mountTable;
 
+	friend class TDEGenericDevice;
 	friend class TDEStorageDevice;
 };
 

@@ -1,0 +1,9 @@
+[Conditions]
+DRIVER=floppy
+
+[DeviceType]
+GENTYPE=Disk
+SUBTYPE=Floppy
+
+[DeviceSettings]
+UPDATE_BLACKLISTED=false
