@@ -12,6 +12,7 @@
 add_subdirectory( malloc )
 add_subdirectory( network )
 add_subdirectory( kconfig_compiler )
+add_subdirectory( hwlibdata )
 
 if( WITH_LIBART )
   add_subdirectory( svgicons )
