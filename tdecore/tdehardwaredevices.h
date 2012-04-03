@@ -41,6 +41,7 @@
 // Keep readGenericDeviceTypeFromString() in tdehardwaredevices.cpp in sync with this enum
 namespace TDEGenericDeviceType {
 enum TDEGenericDeviceType {
+	Root,
 	CPU,
 	GPU,
 	RAM,
@@ -270,6 +271,16 @@ class TDECORE_EXPORT TDEGenericDevice
 		TQString &modelID();
 
 		/**
+		* @param a TDEGenericDevice* with the parent device, if any
+		*/
+		void setParentDevice(TDEGenericDevice* pd);
+
+		/**
+		* @return a TDEGenericDevice* with the parent device, if any
+		*/
+		TDEGenericDevice* parentDevice();
+
+		/**
 		* @param a TQString with the model ID, if any
 		*/
 		void setModelID(TQString id);
@@ -286,6 +297,7 @@ class TDECORE_EXPORT TDEGenericDevice
 		TQString m_vendorID;
 		TQString m_modelID;
 		bool m_blacklistedForUpdate;
+		TDEGenericDevice* m_parentDevice;
 
 		// Internal use only!
 		TQStringList m_externalSubtype;
@@ -506,7 +518,14 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 		*  List all hardware capabilities on all devices
 		*  @return TQPtrList<TDEGenericDevice> containing all known hardware devices
 		*/
-		TQPtrList<TDEGenericDevice> &listAllPhysicalDevices();
+		TQPtrList<TDEGenericDevice> listAllPhysicalDevices();
+
+		/**
+		*  List all hardware capabilities on all devices
+		*  @param a TDEGenericDeviceType::TDEGenericDeviceType specifying the device class
+		*  @return TQPtrList<TDEGenericDevice> containing all known hardware devices
+		*/
+		TQPtrList<TDEGenericDevice> listByDeviceClass(TDEGenericDeviceType::TDEGenericDeviceType cl);
 
 		/**
 		*  Return the device with system path @arg syspath, or 0 if no device exists for that path
@@ -543,6 +562,11 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 	private:
 		TDEGenericDevice *classifyUnknownDevice(udev_device* dev, TDEGenericDevice* existingdevice=0, bool force_full_classification=true);
 		TDEGenericDevice *classifyUnknownDeviceByExternalRules(udev_device* dev, TDEGenericDevice* existingdevice=0, bool classifySubDevices=false);
+
+		void updateParentDeviceInformation();
+		void updateParentDeviceInformation(TDEGenericDevice* hwdevice);
+
+		void addCoreSystemDevices();
 
 		struct udev *m_udevStruct;
 		struct udev_monitor *m_udevMonitorStruct;

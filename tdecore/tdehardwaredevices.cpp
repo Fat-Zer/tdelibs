@@ -44,6 +44,7 @@ TDEGenericDevice::TDEGenericDevice(TDEGenericDeviceType::TDEGenericDeviceType dt
 	m_deviceType = dt;
 	m_deviceName = dn;
 
+	m_parentDevice = 0;
 	m_blacklistedForUpdate = false;
 }
 
@@ -121,6 +122,14 @@ TQString &TDEGenericDevice::modelID() {
 
 void TDEGenericDevice::setModelID(TQString id) {
 	m_modelID = id;
+}
+
+void TDEGenericDevice::setParentDevice(TDEGenericDevice* pd) {
+	m_parentDevice = pd;
+}
+
+TDEGenericDevice* TDEGenericDevice::parentDevice() {
+	return m_parentDevice;
 }
 
 bool TDEGenericDevice::blacklistedForUpdate() {
@@ -514,6 +523,7 @@ void TDEHardwareDevices::rescanDeviceInformation(TDEGenericDevice* hwdevice) {
 	struct udev_device *dev;
 	dev = udev_device_new_from_syspath(m_udevStruct, hwdevice->systemPath().ascii());
 	classifyUnknownDevice(dev, hwdevice, false);
+	updateParentDeviceInformation(hwdevice);	// Update parent/child tables for this device
 	udev_device_unref(dev);
 }
 
@@ -572,6 +582,7 @@ void TDEHardwareDevices::processHotPluggedHardware() {
 	
 			if (device) {
 				m_deviceList.append(device);
+				updateParentDeviceInformation(device);	// Update parent/child tables for this device
 				emit hardwareAdded(device);
 			}
 		}
@@ -612,6 +623,7 @@ void TDEHardwareDevices::processHotPluggedHardware() {
 				if (hwdevice->systemPath() == systempath) {
 					if (!hwdevice->blacklistedForUpdate()) {
 						classifyUnknownDevice(dev, hwdevice, false);
+						updateParentDeviceInformation(hwdevice);	// Update parent/child tables for this device
 						emit hardwareUpdated(hwdevice);
 					}
 					break;
@@ -813,7 +825,6 @@ TDEDiskDeviceType::TDEDiskDeviceType classifyDiskType(udev_device* dev, const TQ
 		if ((TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_VCD")) == "1") || (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_SDVD")) == "1")) {
 			disktype = disktype | TDEDiskDeviceType::CDVideo;
 		}
-		disktype = disktype | TDEDiskDeviceType::Optical;
 	}
 
 	// Detect RAM and Loop devices, since udev can't seem to...
@@ -846,7 +857,10 @@ TDEGenericDeviceType::TDEGenericDeviceType readGenericDeviceTypeFromString(TQStr
 	TDEGenericDeviceType::TDEGenericDeviceType ret = TDEGenericDeviceType::Other;
 
 	// Keep this in sync with the TDEGenericDeviceType definition in the header
-	if (query == "CPU") {
+	if (query == "Root") {
+		ret = TDEGenericDeviceType::Root;
+	}
+	else if (query == "CPU") {
 		ret = TDEGenericDeviceType::CPU;
 	}
 	else if (query == "GPU") {
@@ -1182,7 +1196,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 	if (devicevendorid.isNull() || devicemodelid.isNull()) {
 		bool done = false;
 		TQString current_path = systempath;
-		TQString modalias_string = TQString::null;;
+		TQString modalias_string = TQString::null;
 
 		while (done == false) {
 			TQString malnodename = current_path;
@@ -1374,6 +1388,22 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			disktype = sdevice->diskType();						// The type can be overridden by an external rule
 		}
 
+		if ((disktype & TDEDiskDeviceType::CDROM)
+			|| (disktype & TDEDiskDeviceType::CDRW)
+			|| (disktype & TDEDiskDeviceType::DVDROM)
+			|| (disktype & TDEDiskDeviceType::DVDRAM)
+			|| (disktype & TDEDiskDeviceType::DVDRW)
+			|| (disktype & TDEDiskDeviceType::BDROM)
+			|| (disktype & TDEDiskDeviceType::BDRW)
+			|| (disktype & TDEDiskDeviceType::CDAudio)
+			|| (disktype & TDEDiskDeviceType::CDVideo)
+			|| (disktype & TDEDiskDeviceType::DVDVideo)
+			|| (disktype & TDEDiskDeviceType::BDVideo)
+			) {
+			// These drives are guaranteed to be optical
+			disktype = disktype | TDEDiskDeviceType::Optical;
+		}
+
 		if (disktype & TDEDiskDeviceType::Floppy) {
 			// Floppy drives don't work well under udev
 			// I have to look for the block device name manually
@@ -1549,6 +1579,7 @@ bool TDEHardwareDevices::queryHardwareInformation() {
 
 	// Prepare the device list for repopulation
 	m_deviceList.clear();
+	addCoreSystemDevices();
 
 	struct udev_enumerate *enumerate;
 	struct udev_list_entry *devices, *dev_list_entry;
@@ -1589,11 +1620,95 @@ bool TDEHardwareDevices::queryHardwareInformation() {
 	// Free the enumerator object
 	udev_enumerate_unref(enumerate);
 
+	// Update parent/child tables for all devices
+	updateParentDeviceInformation();
+
 	return true;
 }
 
-TDEGenericHardwareList &TDEHardwareDevices::listAllPhysicalDevices() {
-	return m_deviceList;
+void TDEHardwareDevices::updateParentDeviceInformation(TDEGenericDevice* hwdevice) {
+	// Scan for the first path up the sysfs tree that is available in the main hardware table
+	bool done = false;
+	TQString current_path = hwdevice->systemPath();
+	TDEGenericDevice* parentdevice = 0;
+
+	if (current_path.endsWith("/")) {
+		current_path.truncate(current_path.findRev("/"));
+	}
+	while (done == false) {
+		current_path.truncate(current_path.findRev("/"));
+		if (current_path.startsWith("/sys/devices")) {
+			if (current_path.endsWith("/")) {
+				current_path.truncate(current_path.findRev("/"));
+			}
+			parentdevice = findBySystemPath(current_path);
+			if (parentdevice) {
+				done = true;
+			}
+		}
+		else {
+			// Abort!
+			done = true;
+		}
+	}
+
+	hwdevice->setParentDevice(parentdevice);
+}
+
+void TDEHardwareDevices::updateParentDeviceInformation() {
+	TDEGenericDevice *hwdevice;
+
+	// We can't use m_deviceList directly as m_deviceList can only have one iterator active against it at any given time
+	TDEGenericHardwareList devList = listAllPhysicalDevices();
+	for ( hwdevice = devList.first(); hwdevice; hwdevice = devList.next() ) {
+		updateParentDeviceInformation(hwdevice);
+	}
+}
+
+void TDEHardwareDevices::addCoreSystemDevices() {
+	// Add core top-level devices in /sys/devices to the hardware listing
+	TQStringList holdingDeviceNodes;
+	TQString devicesnodename = "/sys/devices";
+	TQDir devicesdir(devicesnodename);
+	devicesdir.setFilter(TQDir::All);
+	TQString nodename;
+	TDEGenericDevice *hwdevice;
+	const TQFileInfoList *dirlist = devicesdir.entryInfoList();
+	if (dirlist) {
+		TQFileInfoListIterator devicesdirit(*dirlist);
+		TQFileInfo *dirfi;
+		while ( (dirfi = devicesdirit.current()) != 0 ) {
+			nodename = dirfi->fileName();
+			if (nodename != "." && nodename != "..") {
+				hwdevice = new TDEGenericDevice(TDEGenericDeviceType::Root);
+				hwdevice->setSystemPath(dirfi->absFilePath());
+				m_deviceList.append(hwdevice);
+			}
+			++devicesdirit;
+		}
+	}
+	
+}
+
+TQPtrList<TDEGenericDevice> TDEHardwareDevices::listByDeviceClass(TDEGenericDeviceType::TDEGenericDeviceType cl) {
+	TDEGenericHardwareList ret;
+	ret.setAutoDelete(false);
+
+	TDEGenericDevice *hwdevice;
+	for ( hwdevice = m_deviceList.first(); hwdevice; hwdevice = m_deviceList.next() ) {
+		if (hwdevice->type() == cl) {
+			ret.append(hwdevice);
+		}
+	}
+
+	return ret;
+}
+
+TDEGenericHardwareList TDEHardwareDevices::listAllPhysicalDevices() {
+	TDEGenericHardwareList ret = m_deviceList;
+	ret.setAutoDelete(false);
+
+	return ret;
 }
 
 #include "tdehardwaredevices.moc"
