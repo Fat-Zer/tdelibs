@@ -102,14 +102,14 @@ IceConn     iceConn;
 
 
 
-IceClosetStatus
+IceCloseStatus
 IceCloseConnection (iceConn)
 
 IceConn     iceConn;
 
 {
     int refCountReachedZero;
-    IceClosetStatus status;
+    IceCloseStatus status;
 
     /*
      * If this connection object was never valid, we can close
