@@ -1395,6 +1395,21 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		}
 	}
 
+	// Most of the timeudev doesn't barf up a device driver either, so go after it manually...
+	if (devicedriver.isNull()) {
+		TQString driverSymlink = udev_device_get_syspath(dev);
+		TQString driverSymlinkDir = driverSymlink;
+		driverSymlink.append("/device/driver");
+		driverSymlinkDir.append("/device/");
+		TQFileInfo dirfi(driverSymlink);
+		if (dirfi.isSymLink()) {
+			char* collapsedPath = realpath((driverSymlinkDir + dirfi.readLink()).ascii(), NULL);
+			devicedriver = TQString(collapsedPath);
+			free(collapsedPath);
+			devicedriver.remove(0, devicedriver.findRev("/")+1);
+		}
+	}
+
 	// Classify generic device type and create appropriate object
 	if ((devicetype == "disk")
 		|| (devicetype == "partition")
