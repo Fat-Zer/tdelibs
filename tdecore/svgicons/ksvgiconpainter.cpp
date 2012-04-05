@@ -2560,7 +2560,7 @@ TQColor KSVGIconPainter::parseColor(const TQString &param)
 			return TQColor(245, 255, 250);
 		else if(rgbColor == "mistyrose")
 			return TQColor(255, 228, 225);
-		else if(rgbColor == "tqmoccasin")
+		else if(rgbColor == "moccasin")
 			return TQColor(255, 228, 181);
 		else if(rgbColor == "navajowhite")
 			return TQColor(255, 222, 173);
