@@ -67,7 +67,9 @@ enum TDEGenericDeviceType {
 	OtherUSB,
 	OtherPeripheral,
 	OtherSensor,
-	Other
+	Virtual,
+	Other,
+	Last = Other
 };
 };
 
@@ -203,6 +205,14 @@ class TDECORE_EXPORT TDEGenericDevice
 		void setVendorModel(TQString vm);
 
 		/**
+		* @return a TQString with a friendly name
+		*
+		* While TDE tries very hard to generate and return a friendly name for this device,
+		* sometimes the best it will be able to do is "Unknown Device [xxxx:yyyy]"
+		*/
+		TQString friendlyName();
+
+		/**
 		* @return a TQString with the device bus name, if any
 		*/
 		TQString &deviceBus();
@@ -271,6 +281,51 @@ class TDECORE_EXPORT TDEGenericDevice
 		TQString &modelID();
 
 		/**
+		* @param a TQString with the model ID, if any
+		*/
+		void setModelID(TQString id);
+
+		/**
+		* @return a TQString with the subvendor ID, if any
+		*/
+		TQString &subVendorID();
+
+		/**
+		* @param a TQString with the subvendor ID, if any
+		*/
+		void setSubVendorID(TQString id);
+
+		/**
+		* @return a TQString with the submodel ID, if any
+		*/
+		TQString &subModelID();
+
+		/**
+		* @param a TQString with the submodel ID, if any
+		*/
+		void setSubModelID(TQString id);
+
+		/**
+		* @return a TQString with the module alias string, if any
+		*/
+		TQString &moduleAlias();
+
+		/**
+		* @param a TQString with the module alias string, if any
+		*/
+		void setModuleAlias(TQString ma);
+
+		/**
+		* @return a TQString with the module alias string, if any
+		*/
+		TQString &deviceDriver();
+
+		/**
+		* @param a TQString with the module alias string, if any
+		*/
+		void setDeviceDriver(TQString dr);
+
+		/**
 		* @param a TDEGenericDevice* with the parent device, if any
 		*/
 		void setParentDevice(TDEGenericDevice* pd);
@@ -279,11 +334,6 @@ class TDECORE_EXPORT TDEGenericDevice
 		* @return a TDEGenericDevice* with the parent device, if any
 		*/
 		TDEGenericDevice* parentDevice();
-
-		/**
-		* @param a TQString with the model ID, if any
-		*/
-		void setModelID(TQString id);
 
 	private:
 		TDEGenericDeviceType::TDEGenericDeviceType m_deviceType;
@@ -296,6 +346,11 @@ class TDECORE_EXPORT TDEGenericDevice
 		TQString m_uniqueID;
 		TQString m_vendorID;
 		TQString m_modelID;
+		TQString m_subvendorID;
+		TQString m_submodelID;
+		TQString m_modAlias;
+		TQString m_deviceDriver;
+		TQString m_friendlyName;
 		bool m_blacklistedForUpdate;
 		TDEGenericDevice* m_parentDevice;
 
@@ -484,6 +539,7 @@ class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 };
 
 typedef TQPtrList<TDEGenericDevice> TDEGenericHardwareList;
+typedef TQMap<TQString, TQString> TDEDeviceIDMap;
 
 class TQSocketNotifier;
 
@@ -545,6 +601,26 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 		*/
 		TDEStorageDevice* findDiskByUID(TQString uid);
 
+		/**
+		*  Look up the device in the system PCI database
+		*  @param vendorid a TQString containing the vendor ID in hexadecimal
+		*  @param modelid a TQString containing the model ID in hexadecimal
+		*  @param subvendorid a TQString containing the subvendor ID in hexadecimal
+		*  @param submodelid a TQString containing the submodel ID in hexadecimal
+		*  @return a TQString containing the device name, if found
+		*/
+		TQString findPCIDeviceName(TQString vendorid, TQString modelid, TQString subvendorid, TQString submodelid);
+
+		/**
+		*  Look up the device in the system USB database
+		*  @param vendorid a TQString containing the vendor ID in hexadecimal
+		*  @param modelid a TQString containing the model ID in hexadecimal
+		*  @param subvendorid a TQString containing the subvendor ID in hexadecimal
+		*  @param submodelid a TQString containing the submodel ID in hexadecimal
+		*  @return a TQString containing the device name, if found
+		*/
+		TQString findUSBDeviceName(TQString vendorid, TQString modelid, TQString subvendorid, TQString submodelid);
+
 	signals:
 		void hardwareAdded(TDEGenericDevice*);
 		void hardwareRemoved(TDEGenericDevice*);
@@ -577,6 +653,9 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 		TQSocketNotifier* m_mountScanNotifier;
 
 		TQStringList m_mountTable;
+
+		TDEDeviceIDMap* pci_id_map;
+		TDEDeviceIDMap* usb_id_map;
 
 	friend class TDEGenericDevice;
 	friend class TDEStorageDevice;
