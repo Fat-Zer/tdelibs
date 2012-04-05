@@ -1404,7 +1404,7 @@ void KateHighlighting::doHighlight ( KateTextLine *prevLine,
   const TQString& text = textLine->string();
   const int len = textLine->length();
 
-  // calc at which char the first char occurs, set it to lenght of line if never
+  // calc at which char the first char occurs, set it to length of line if never
   const int firstChar = textLine->firstChar();
   const int startNonSpace = (firstChar == -1) ? len : firstChar;
 

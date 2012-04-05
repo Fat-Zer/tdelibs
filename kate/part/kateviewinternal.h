@@ -287,7 +287,7 @@ class KateViewInternal : public TQWidget
     //
     TQMemArray<KateLineRange> lineRanges;
 
-    // maximal lenght of textlines visible from given startLine
+    // maximal length of textlines visible from given startLine
     int maxLen(uint startLine);
 
     // are we allowed to scroll columns?
