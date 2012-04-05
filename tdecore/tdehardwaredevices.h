@@ -23,6 +23,7 @@
 #include <tqstring.h>
 #include <tqptrlist.h>
 #include <tqstringlist.h>
+#include "kiconloader.h"
 #include "tdelibs_export.h"
 
 // udev includes
@@ -38,15 +39,19 @@
  * @author Timothy Pearson
  */
 
-// Keep readGenericDeviceTypeFromString() in tdehardwaredevices.cpp in sync with this enum
+// Keep readGenericDeviceTypeFromString(), getFriendlyDeviceTypeStringFromType(), and getDeviceTypeIconFromType() in tdehardwaredevices.cpp in sync with this enum
 namespace TDEGenericDeviceType {
 enum TDEGenericDeviceType {
 	Root,
 	CPU,
 	GPU,
 	RAM,
+	Bus,
+	I2C,
+	MDIO,
 	Mainboard,
 	Disk,
+	SCSI,
 	StorageController,
 	Mouse,
 	Keyboard,
@@ -55,19 +60,25 @@ enum TDEGenericDeviceType {
 	Printer,
 	Scanner,
 	Sound,
+	VideoCapture,
 	IEEE1394,
 	Camera,
 	TextIO,
+	Serial,
+	Parallel,
 	Peripheral,
 	Battery,
 	Power,
 	ThermalSensor,
 	ThermalControl,
+	Bridge,
+	Platform,
+	PNP,
 	OtherACPI,
 	OtherUSB,
 	OtherPeripheral,
 	OtherSensor,
-	Virtual,
+	OtherVirtual,
 	Other,
 	Last = Other
 };
@@ -316,14 +327,24 @@ class TDECORE_EXPORT TDEGenericDevice
 		void setModuleAlias(TQString ma);
 
 		/**
-		* @return a TQString with the module alias string, if any
+		* @return a TQString with the device driver, if any
 		*/
 		TQString &deviceDriver();
 
 		/**
-		* @param a TQString with the module alias string, if any
+		* @param a TQString with the device driver, if any
 		*/
 		void setDeviceDriver(TQString dr);
+
+		/**
+		* @return a TQString with the subsystem type, if any
+		*/
+		TQString &subsystem();
+
+		/**
+		* @param a TQString with the subsystem type, if any
+		*/
+		void setSubsystem(TQString ss);
 
 		/**
 		* @param a TDEGenericDevice* with the parent device, if any
@@ -334,6 +355,13 @@ class TDECORE_EXPORT TDEGenericDevice
 		* @return a TDEGenericDevice* with the parent device, if any
 		*/
 		TDEGenericDevice* parentDevice();
+
+		/**
+		*  Get an icon for this device
+		*  @param size a KIcon::StdSizes structure specifying the desired icon size
+		*  @return a TQPixmap containing the icon for the specified type
+		*/
+		virtual TQPixmap icon(KIcon::StdSizes size);
 
 	private:
 		TDEGenericDeviceType::TDEGenericDeviceType m_deviceType;
@@ -350,6 +378,7 @@ class TDECORE_EXPORT TDEGenericDevice
 		TQString m_submodelID;
 		TQString m_modAlias;
 		TQString m_deviceDriver;
+		TQString m_subsystem;
 		TQString m_friendlyName;
 		bool m_blacklistedForUpdate;
 		TDEGenericDevice* m_parentDevice;
@@ -620,6 +649,21 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 		*  @return a TQString containing the device name, if found
 		*/
 		TQString findUSBDeviceName(TQString vendorid, TQString modelid, TQString subvendorid, TQString submodelid);
+
+		/**
+		*  Get a friendly string describing a device type
+		*  @param query a TDEGenericDeviceType::TDEGenericDeviceType specifying a device type
+		*  @return a TQString containing the friendly type name
+		*/
+		TQString getFriendlyDeviceTypeStringFromType(TDEGenericDeviceType::TDEGenericDeviceType query);
+
+		/**
+		*  Get an icon for a device type
+		*  @param query a TDEGenericDeviceType::TDEGenericDeviceType specifying a device type
+		*  @param size a KIcon::StdSizes structure specifying the desired icon size
+		*  @return a TQPixmap containing the icon for the specified type
+		*/
+		TQPixmap getDeviceTypeIconFromType(TDEGenericDeviceType::TDEGenericDeviceType query, KIcon::StdSizes size);
 
 	signals:
 		void hardwareAdded(TDEGenericDevice*);
