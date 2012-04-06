@@ -69,6 +69,7 @@ enum TDEGenericDeviceType {
 	Peripheral,
 	Battery,
 	Power,
+	Dock,
 	ThermalSensor,
 	ThermalControl,
 	Bridge,
@@ -221,7 +222,7 @@ class TDECORE_EXPORT TDEGenericDevice
 		* While TDE tries very hard to generate and return a friendly name for this device,
 		* sometimes the best it will be able to do is "Unknown Device [xxxx:yyyy]"
 		*/
-		TQString friendlyName();
+		virtual TQString friendlyName();
 
 		/**
 		* @return a TQString with the device bus name, if any
@@ -317,6 +318,16 @@ class TDECORE_EXPORT TDEGenericDevice
 		void setSubModelID(TQString id);
 
 		/**
+		* @return a TQString with the PCI device class, if any
+		*/
+		TQString &PCIClass();
+
+		/**
+		* @param a TQString with the PCI device class, if any
+		*/
+		void setPCIClass(TQString cl);
+
+		/**
 		* @return a TQString with the module alias string, if any
 		*/
 		TQString &moduleAlias();
@@ -376,6 +387,7 @@ class TDECORE_EXPORT TDEGenericDevice
 		TQString m_modelID;
 		TQString m_subvendorID;
 		TQString m_submodelID;
+		TQString m_pciClass;
 		TQString m_modAlias;
 		TQString m_deviceDriver;
 		TQString m_subsystem;
@@ -553,6 +565,22 @@ class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 		* @return a TQString with the device size in human readable form
 		*/
 		TQString deviceFriendlySize();
+
+		/**
+		* Get an icon for this device
+		* @param size a KIcon::StdSizes structure specifying the desired icon size
+		* @return a TQPixmap containing the icon for the specified type
+		*
+		* This method overrides TDEGenericDevice::icon(KIcon::StdSizes size)
+		*/
+		TQPixmap icon(KIcon::StdSizes size);
+
+		/**
+		* @return a TQString with a friendly name
+		*
+		* This method overrides TDEGenericDevice::friendlyName()
+		*/
+		TQString friendlyName();
 
 	private:
 		TDEDiskDeviceType::TDEDiskDeviceType m_diskType;
