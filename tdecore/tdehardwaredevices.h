@@ -368,6 +368,16 @@ class TDECORE_EXPORT TDEGenericDevice
 		TDEGenericDevice* parentDevice();
 
 		/**
+		*  @return a TQString containing the friendly type name
+		*/
+		TQString friendlyDeviceType();
+
+		/**
+		*  @return a TQString containing the device bus ID, if any
+		*/
+		TQString busID();
+
+		/**
 		*  Get an icon for this device
 		*  @param size a KIcon::StdSizes structure specifying the desired icon size
 		*  @return a TQPixmap containing the icon for the specified type

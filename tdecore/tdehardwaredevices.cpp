@@ -199,6 +199,17 @@ void TDEGenericDevice::setBlacklistedForUpdate(bool bl) {
 	m_blacklistedForUpdate = bl;
 }
 
+TQString TDEGenericDevice::friendlyDeviceType() {
+	return KGlobal::hardwareDevices()->getFriendlyDeviceTypeStringFromType(type());
+}
+
+TQString TDEGenericDevice::busID() {
+	TQString busid = m_systemPath;
+	busid = busid.remove(0, busid.findRev("/")+1);
+	busid = busid.remove(0, busid.find(":")+1);
+	return busid;
+}
+
 TQString TDEGenericDevice::friendlyName() {
 	if (m_friendlyName.isNull()) {
 		if (type() == TDEGenericDeviceType::Root) {
