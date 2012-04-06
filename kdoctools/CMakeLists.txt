@@ -9,6 +9,8 @@
 #
 #################################################
 
+include( ConfigureChecks.cmake )
+
 include_directories(
   ${TQT_INCLUDE_DIRS}
   ${CMAKE_CURRENT_BINARY_DIR}
