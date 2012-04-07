@@ -24,6 +24,7 @@
 #include <tqsocketnotifier.h>
 
 #include <kglobal.h>
+#include <klocale.h>
 #include <kconfig.h>
 #include <ktempfile.h>
 #include <kstandarddirs.h>
@@ -45,6 +46,7 @@ TDEGenericDevice::TDEGenericDevice(TDEGenericDeviceType::TDEGenericDeviceType dt
 	m_deviceName = dn;
 
 	m_parentDevice = 0;
+	m_friendlyName = TQString::null;
 	m_blacklistedForUpdate = false;
 }
 
@@ -114,6 +116,7 @@ TQString &TDEGenericDevice::vendorID() {
 
 void TDEGenericDevice::setVendorID(TQString id) {
 	m_vendorID = id;
+	m_vendorID.replace("0x", "");
 }
 
 TQString &TDEGenericDevice::modelID() {
@@ -122,6 +125,58 @@ TQString &TDEGenericDevice::modelID() {
 
 void TDEGenericDevice::setModelID(TQString id) {
 	m_modelID = id;
+	m_modelID.replace("0x", "");
+}
+
+TQString &TDEGenericDevice::subVendorID() {
+	return m_subvendorID;
+}
+
+void TDEGenericDevice::setSubVendorID(TQString id) {
+	m_subvendorID = id;
+	m_subvendorID.replace("0x", "");
+}
+
+TQString &TDEGenericDevice::PCIClass() {
+	return m_pciClass;
+}
+
+void TDEGenericDevice::setPCIClass(TQString cl) {
+	m_pciClass = cl;
+	m_pciClass.replace("0x", "");
+}
+
+TQString &TDEGenericDevice::moduleAlias() {
+	return m_modAlias;
+}
+
+void TDEGenericDevice::setModuleAlias(TQString ma) {
+	m_modAlias = ma;
+}
+
+TQString &TDEGenericDevice::deviceDriver() {
+	return m_deviceDriver;
+}
+
+void TDEGenericDevice::setDeviceDriver(TQString dr) {
+	m_deviceDriver = dr;
+}
+
+TQString &TDEGenericDevice::subsystem() {
+	return m_subsystem;
+}
+
+void TDEGenericDevice::setSubsystem(TQString ss) {
+	m_subsystem = ss;
+}
+
+TQString &TDEGenericDevice::subModelID() {
+	return m_submodelID;
+}
+
+void TDEGenericDevice::setSubModelID(TQString id) {
+	m_submodelID = id;
+	m_submodelID.replace("0x", "");
 }
 
 void TDEGenericDevice::setParentDevice(TDEGenericDevice* pd) {
@@ -132,12 +187,73 @@ TDEGenericDevice* TDEGenericDevice::parentDevice() {
 	return m_parentDevice;
 }
 
+TQPixmap TDEGenericDevice::icon(KIcon::StdSizes size) {
+	return KGlobal::hardwareDevices()->getDeviceTypeIconFromType(type(), size);
+}
+
 bool TDEGenericDevice::blacklistedForUpdate() {
 	return m_blacklistedForUpdate;
 }
 
 void TDEGenericDevice::setBlacklistedForUpdate(bool bl) {
 	m_blacklistedForUpdate = bl;
+}
+
+TQString TDEGenericDevice::friendlyDeviceType() {
+	return KGlobal::hardwareDevices()->getFriendlyDeviceTypeStringFromType(type());
+}
+
+TQString TDEGenericDevice::busID() {
+	TQString busid = m_systemPath;
+	busid = busid.remove(0, busid.findRev("/")+1);
+	busid = busid.remove(0, busid.find(":")+1);
+	return busid;
+}
+
+TQString TDEGenericDevice::friendlyName() {
+	if (m_friendlyName.isNull()) {
+		if (type() == TDEGenericDeviceType::Root) {
+			TQString friendlyDriverName = m_systemPath;
+			friendlyDriverName.remove(0, friendlyDriverName.findRev("/")+1);
+			m_friendlyName = friendlyDriverName;
+		}
+		else if (m_modAlias.lower().startsWith("pci")) {
+			m_friendlyName = KGlobal::hardwareDevices()->findPCIDeviceName(m_vendorID, m_modelID, m_subvendorID, m_submodelID);
+		}
+		else if (m_modAlias.lower().startsWith("usb")) {
+			m_friendlyName = KGlobal::hardwareDevices()->findUSBDeviceName(m_vendorID, m_modelID, m_subvendorID, m_submodelID);
+		}
+	}
+
+	if (m_friendlyName.isNull()) {
+		// Could not identify based on model/vendor
+		// Guess by type
+		if (type() == TDEGenericDeviceType::CPU) {
+			m_friendlyName = name();
+		}
+		// Guess by driver
+		else if (!m_deviceDriver.isNull()) {
+			TQString friendlyDriverName = m_deviceDriver.lower();
+			friendlyDriverName[0] = friendlyDriverName[0].upper();
+			m_friendlyName = i18n("Generic %1 Device").arg(friendlyDriverName);
+		}
+		else if (m_systemPath.lower().startsWith("/sys/devices/virtual")) {
+			TQString friendlyDriverName = m_systemPath;
+			friendlyDriverName.remove(0, friendlyDriverName.findRev("/")+1);
+			if (!friendlyDriverName.isNull()) {
+				m_friendlyName = i18n("Virtual Device %1").arg(friendlyDriverName);
+			}
+			else {
+				m_friendlyName = i18n("Unknown Virtual Device");
+			}
+		}
+		else {
+			// I really have no idea what this peripheral is; say so!
+			m_friendlyName = i18n("Unknown Device") + " " + name();
+		}
+	}
+
+	return m_friendlyName;
 }
 
 TDEStorageDevice::TDEStorageDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn), m_mediaInserted(true) {
@@ -226,6 +342,130 @@ TQStringList &TDEStorageDevice::slaveDevices() {
 
 void TDEStorageDevice::setSlaveDevices(TQStringList sd) {
 	m_slaveDevices = sd;
+}
+
+TQString TDEStorageDevice::friendlyName() {
+	if (isDiskOfType(TDEDiskDeviceType::Floppy)) {
+		return friendlyDeviceType();
+	}
+
+	TQString label = diskLabel();
+	if (label.isNull()) {
+		if (deviceSize() > 0) {
+			if (checkDiskStatus(TDEDiskDeviceStatus::Removable)) {
+				label = i18n("%1 Removable Device").arg(deviceFriendlySize());
+			}
+			else {
+				label = i18n("%1 Fixed Storage Device").arg(deviceFriendlySize());
+			}
+		}
+	}
+
+	if (!label.isNull()) {
+		return label;
+	}
+
+	return friendlyDeviceType();
+}
+
+TQString TDEStorageDevice::friendlyDeviceType() {
+	TQString ret = i18n("Hard Disk Drive");
+
+	// Keep this in sync with TDEStorageDevice::icon(KIcon::StdSizes size) below
+	if (isDiskOfType(TDEDiskDeviceType::Floppy)) {
+		ret = i18n("Floppy Drive");
+	}
+	if (isDiskOfType(TDEDiskDeviceType::CDROM)) {
+		ret = i18n("CDROM Drive");
+	}
+	if (isDiskOfType(TDEDiskDeviceType::CDRW)) {
+		ret = i18n("CDRW Drive");
+	}
+	if (isDiskOfType(TDEDiskDeviceType::DVDROM)) {
+		ret = i18n("DVD Drive");
+	}
+	if (isDiskOfType(TDEDiskDeviceType::DVDRW) || isDiskOfType(TDEDiskDeviceType::DVDRAM)) {
+		ret = i18n("DVDRW Drive");
+	}
+	if (isDiskOfType(TDEDiskDeviceType::DVDRW)) {
+		ret = i18n("DVDRW Drive");
+	}
+	if (isDiskOfType(TDEDiskDeviceType::DVDRAM)) {
+		ret = i18n("DVDRAM Drive");
+	}
+	if (isDiskOfType(TDEDiskDeviceType::Zip)) {
+		ret = i18n("Zip Drive");
+	}
+
+	if (isDiskOfType(TDEDiskDeviceType::HDD)) {
+		ret = i18n("Hard Disk Drive");
+		if (checkDiskStatus(TDEDiskDeviceStatus::Removable)) {
+			ret = i18n("Removable Storage");
+		}
+		if (isDiskOfType(TDEDiskDeviceType::CompactFlash)) {
+			ret = i18n("Compact Flash");
+		}
+		if (isDiskOfType(TDEDiskDeviceType::MemoryStick)) {
+			ret = i18n("Memory Stick");
+		}
+	}
+
+	if (isDiskOfType(TDEDiskDeviceType::RAM)) {
+		ret = i18n("Random Access Memory");
+	}
+	if (isDiskOfType(TDEDiskDeviceType::Loop)) {
+		ret = i18n("Loop Device");
+	}
+
+	return ret;
+}
+
+TQPixmap TDEStorageDevice::icon(KIcon::StdSizes size) {
+	TQPixmap ret = DesktopIcon("hdd_unmount", size);
+
+	if (isDiskOfType(TDEDiskDeviceType::Floppy)) {
+		ret = DesktopIcon("3floppy_unmount", size);
+	}
+	if (isDiskOfType(TDEDiskDeviceType::CDROM)) {
+		ret = DesktopIcon("cdrom_unmount", size);
+	}
+	if (isDiskOfType(TDEDiskDeviceType::CDRW)) {
+		ret = DesktopIcon("cdwriter_unmount", size);
+	}
+	if (isDiskOfType(TDEDiskDeviceType::DVDROM)) {
+		ret = DesktopIcon("dvd_unmount", size);
+	}
+	if (isDiskOfType(TDEDiskDeviceType::DVDRW)) {
+		ret = DesktopIcon("dvd_unmount", size);
+	}
+	if (isDiskOfType(TDEDiskDeviceType::DVDRAM)) {
+		ret = DesktopIcon("dvd_unmount", size);
+	}
+	if (isDiskOfType(TDEDiskDeviceType::Zip)) {
+		ret = DesktopIcon("zip_unmount", size);
+	}
+
+	if (isDiskOfType(TDEDiskDeviceType::HDD)) {
+		ret = DesktopIcon("hdd_unmount", size);
+		if (checkDiskStatus(TDEDiskDeviceStatus::Removable)) {
+			ret = DesktopIcon("usbpendrive_unmount", size);
+		}
+		if (isDiskOfType(TDEDiskDeviceType::CompactFlash)) {
+			ret = DesktopIcon("compact_flash_unmount", size);
+		}
+		if (isDiskOfType(TDEDiskDeviceType::MemoryStick)) {
+			ret = DesktopIcon("memory_stick_unmount", size);
+		}
+	}
+
+	if (isDiskOfType(TDEDiskDeviceType::RAM)) {
+		ret = DesktopIcon("memory", size);
+	}
+	if (isDiskOfType(TDEDiskDeviceType::Loop)) {
+		ret = DesktopIcon("blockdevice", size);
+	}
+
+	return ret;
 }
 
 unsigned long TDEStorageDevice::deviceSize() {
@@ -471,6 +711,10 @@ bool TDEStorageDevice::unmountDevice(TQString* errRet, int* retcode) {
 }
 
 TDEHardwareDevices::TDEHardwareDevices() {
+	// Initialize members
+	pci_id_map = 0;
+	usb_id_map = 0;
+
 	// Set up device list
 	m_deviceList.setAutoDelete( TRUE );	// the list owns the objects
 
@@ -517,6 +761,14 @@ TDEHardwareDevices::~TDEHardwareDevices() {
 
 	// Tear down udev interface
 	udev_unref(m_udevStruct);
+
+	// Delete members
+	if (pci_id_map) {
+		delete pci_id_map;
+	}
+	if (usb_id_map) {
+		delete usb_id_map;
+	}
 }
 
 void TDEHardwareDevices::rescanDeviceInformation(TDEGenericDevice* hwdevice) {
@@ -869,11 +1121,23 @@ TDEGenericDeviceType::TDEGenericDeviceType readGenericDeviceTypeFromString(TQStr
 	else if (query == "RAM") {
 		ret = TDEGenericDeviceType::RAM;
 	}
+	else if (query == "Bus") {
+		ret = TDEGenericDeviceType::Bus;
+	}
+	else if (query == "I2C") {
+		ret = TDEGenericDeviceType::I2C;
+	}
+	else if (query == "MDIO") {
+		ret = TDEGenericDeviceType::MDIO;
+	}
 	else if (query == "Mainboard") {
 		ret = TDEGenericDeviceType::Mainboard;
 	}
 	else if (query == "Disk") {
 		ret = TDEGenericDeviceType::Disk;
+	}
+	else if (query == "SCSI") {
+		ret = TDEGenericDeviceType::SCSI;
 	}
 	else if (query == "StorageController") {
 		ret = TDEGenericDeviceType::StorageController;
@@ -899,11 +1163,20 @@ TDEGenericDeviceType::TDEGenericDeviceType readGenericDeviceTypeFromString(TQStr
 	else if (query == "Sound") {
 		ret = TDEGenericDeviceType::Sound;
 	}
+	else if (query == "VideoCapture") {
+		ret = TDEGenericDeviceType::VideoCapture;
+	}
 	else if (query == "IEEE1394") {
 		ret = TDEGenericDeviceType::IEEE1394;
 	}
 	else if (query == "Camera") {
 		ret = TDEGenericDeviceType::Camera;
+	}
+	else if (query == "Serial") {
+		ret = TDEGenericDeviceType::Serial;
+	}
+	else if (query == "Parallel") {
+		ret = TDEGenericDeviceType::Parallel;
 	}
 	else if (query == "TextIO") {
 		ret = TDEGenericDeviceType::TextIO;
@@ -917,11 +1190,23 @@ TDEGenericDeviceType::TDEGenericDeviceType readGenericDeviceTypeFromString(TQStr
 	else if (query == "Power") {
 		ret = TDEGenericDeviceType::Power;
 	}
+	else if (query == "Dock") {
+		ret = TDEGenericDeviceType::Dock;
+	}
 	else if (query == "ThermalSensor") {
 		ret = TDEGenericDeviceType::ThermalSensor;
 	}
 	else if (query == "ThermalControl") {
 		ret = TDEGenericDeviceType::ThermalControl;
+	}
+	else if (query == "Bridge") {
+		ret = TDEGenericDeviceType::Bridge;
+	}
+	else if (query == "Platform") {
+		ret = TDEGenericDeviceType::Platform;
+	}
+	else if (query == "PNP") {
+		ret = TDEGenericDeviceType::PNP;
 	}
 	else if (query == "OtherACPI") {
 		ret = TDEGenericDeviceType::OtherACPI;
@@ -929,11 +1214,17 @@ TDEGenericDeviceType::TDEGenericDeviceType readGenericDeviceTypeFromString(TQStr
 	else if (query == "OtherUSB") {
 		ret = TDEGenericDeviceType::OtherUSB;
 	}
+	else if (query == "OtherMultimedia") {
+		ret = TDEGenericDeviceType::OtherMultimedia;
+	}
 	else if (query == "OtherPeripheral") {
 		ret = TDEGenericDeviceType::OtherPeripheral;
 	}
 	else if (query == "OtherSensor") {
 		ret = TDEGenericDeviceType::OtherSensor;
+	}
+	else if (query == "OtherVirtual") {
+		ret = TDEGenericDeviceType::OtherVirtual;
 	}
 	else {
 		ret = TDEGenericDeviceType::Other;
@@ -1125,6 +1416,11 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDeviceByExternalRules(udev_
 										atleastonematch = true;
 									}
 								}
+								else if (cndit.key() == "DRIVER") {
+									if (device->deviceDriver() == (*paramit)) {
+										atleastonematch = true;
+									}
+								}
 								else if (readUdevAttribute(dev, cndit.key()) == (*paramit)) {
 									atleastonematch = true;
 								}
@@ -1174,7 +1470,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDeviceByExternalRules(udev_
 }
 
 TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TDEGenericDevice* existingdevice, bool force_full_classification) {
-	// Classify device and create TDEW device object
+	// Classify device and create TDEHW device object
 	TQString devicename(udev_device_get_sysname(dev));
 	TQString devicetype(udev_device_get_devtype(dev));
 	TQString devicedriver(udev_device_get_driver(dev));
@@ -1183,6 +1479,11 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 	TQString systempath(udev_device_get_syspath(dev));
 	TQString devicevendorid(udev_device_get_property_value(dev, "ID_VENDOR_ID"));
 	TQString devicemodelid(udev_device_get_property_value(dev, "ID_MODEL_ID"));
+	TQString devicesubvendorid(udev_device_get_property_value(dev, "ID_SUBVENDOR_ID"));
+	TQString devicesubmodelid(udev_device_get_property_value(dev, "ID_SUBMODEL_ID"));
+	TQString devicetypestring(udev_device_get_property_value(dev, "ID_TYPE"));
+	TQString devicetypestring_alt(udev_device_get_property_value(dev, "DEVTYPE"));
+	TQString devicepciclass(udev_device_get_property_value(dev, "PCI_CLASS"));
 	bool removable = false;
 	TDEGenericDevice* device = existingdevice;
 
@@ -1191,57 +1492,107 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 	// Figure out the remaining udev logic to classify the rest!
 	// Helpful file: http://www.enlightenment.org/svn/e/trunk/PROTO/enna-explorer/src/bin/udev.c
 
-	// Many devices do not provide their vendor/model ID via udev
-	// Go after it manually...
-	if (devicevendorid.isNull() || devicemodelid.isNull()) {
-		bool done = false;
-		TQString current_path = systempath;
-		TQString modalias_string = TQString::null;
+	bool done = false;
+	TQString current_path = systempath;
+	TQString devicemodalias = TQString::null;
 
-		while (done == false) {
-			TQString malnodename = current_path;
-			malnodename.append("/modalias");
-			TQFile malfile(malnodename);
-			if (malfile.open(IO_ReadOnly)) {
-				TQTextStream stream( &malfile );
-				modalias_string = stream.readLine();
-				malfile.close();
-			}
-			if (modalias_string.startsWith("pci") || modalias_string.startsWith("usb")) {
-				done = true;
-			}
-			else {
-				modalias_string = TQString::null;
-				current_path.truncate(current_path.findRev("/"));
-				if (!current_path.startsWith("/sys/devices")) {
-					// Abort!
-					done = true;
-				}
-			}
+	while (done == false) {
+		TQString malnodename = current_path;
+		malnodename.append("/modalias");
+		TQFile malfile(malnodename);
+		if (malfile.open(IO_ReadOnly)) {
+			TQTextStream stream( &malfile );
+			devicemodalias = stream.readLine();
+			malfile.close();
 		}
-
-		if (modalias_string != TQString::null) {
-			int vloc = modalias_string.find("v");
-			int dloc = modalias_string.find("d", vloc);
-			// For added fun the device string lengths differ between pci and usb
-			if (modalias_string.startsWith("pci")) {
-				devicevendorid = modalias_string.mid(vloc+1, 8).lower();
-				devicemodelid = modalias_string.mid(dloc+1, 8).lower();
-				devicevendorid.remove(0,4);
-				devicemodelid.remove(0,4);
-			}
-			if (modalias_string.startsWith("usb")) {
-				devicevendorid = modalias_string.mid(vloc+1, 4).lower();
-				devicemodelid = modalias_string.mid(dloc+1, 4).lower();
+		if (devicemodalias.startsWith("pci") || devicemodalias.startsWith("usb")) {
+			done = true;
+		}
+		else {
+			devicemodalias = TQString::null;
+			current_path.truncate(current_path.findRev("/"));
+			if (!current_path.startsWith("/sys/devices")) {
+				// Abort!
+				done = true;
 			}
 		}
 	}
 
+	// Many devices do not provide their vendor/model ID via udev
+	// Go after it manually...
+	if (devicevendorid.isNull() || devicemodelid.isNull()) {
+		if (devicemodalias != TQString::null) {
+			int vloc = devicemodalias.find("v");
+			int dloc = devicemodalias.find("d", vloc);
+			int svloc = devicemodalias.find("sv");
+			int sdloc = devicemodalias.find("sd", vloc);
+			// For added fun the device string lengths differ between pci and usb
+			if (devicemodalias.startsWith("pci")) {
+				devicevendorid = devicemodalias.mid(vloc+1, 8).lower();
+				devicemodelid = devicemodalias.mid(dloc+1, 8).lower();
+				if (svloc != -1) {
+					devicesubvendorid = devicemodalias.mid(svloc+1, 8).lower();
+					devicesubmodelid = devicemodalias.mid(sdloc+1, 8).lower();
+				}
+				devicevendorid.remove(0,4);
+				devicemodelid.remove(0,4);
+				devicesubvendorid.remove(0,4);
+				devicesubmodelid.remove(0,4);
+			}
+			if (devicemodalias.startsWith("usb")) {
+				devicevendorid = devicemodalias.mid(vloc+1, 4).lower();
+				devicemodelid = devicemodalias.mid(dloc+1, 4).lower();
+				if (svloc != -1) {
+					devicesubvendorid = devicemodalias.mid(svloc+1, 4).lower();
+					devicesubmodelid = devicemodalias.mid(sdloc+1, 4).lower();
+				}
+			}
+		}
+	}
+
+	// Most of the time udev doesn't barf up a device driver either, so go after it manually...
+	if (devicedriver.isNull()) {
+		TQString driverSymlink = udev_device_get_syspath(dev);
+		TQString driverSymlinkDir = driverSymlink;
+		driverSymlink.append("/device/driver");
+		driverSymlinkDir.append("/device/");
+		TQFileInfo dirfi(driverSymlink);
+		if (dirfi.isSymLink()) {
+			char* collapsedPath = realpath((driverSymlinkDir + dirfi.readLink()).ascii(), NULL);
+			devicedriver = TQString(collapsedPath);
+			free(collapsedPath);
+			devicedriver.remove(0, devicedriver.findRev("/")+1);
+		}
+	}
+
+	// udev removes critical leading zeroes in the PCI device class, so go after it manually...
+	TQString classnodename = systempath;
+	classnodename.append("/class");
+	TQFile classfile( classnodename );
+	if ( classfile.open( IO_ReadOnly ) ) {
+		TQTextStream stream( &classfile );
+		devicepciclass = stream.readLine();
+		devicepciclass.replace("0x", "");
+		devicepciclass = devicepciclass.lower();
+		classfile.close();
+	}
+
 	// Classify generic device type and create appropriate object
-	if ((devicetype == "disk")
+
+	// Pull out all event special devices and stuff them under Platform
+	TQString syspath_tail = systempath.lower();
+	syspath_tail.remove(0, syspath_tail.findRev("/")+1);
+	if (syspath_tail.startsWith("event")) {
+		if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+	}
+
+	// Classify specific known devices
+	if (((devicetype == "disk")
 		|| (devicetype == "partition")
 		|| (devicedriver == "floppy")
-		) {
+		|| (devicesubsystem == "scsi_disk"))
+		&& ((devicenode != "")
+		)) {
 		if (!device) device = new TDEStorageDevice(TDEGenericDeviceType::Disk);
 	}
 	else if (devicetype.isNull()) {
@@ -1274,7 +1625,12 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			}
 		}
 		else if (devicesubsystem == "tty") {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::TextIO);
+			if (devicenode.contains("/ttyS")) {
+				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Serial);
+			}
+			else {
+				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::TextIO);
+			}
 		}
 		else if (devicesubsystem == "thermal") {
 			// FIXME
@@ -1285,6 +1641,123 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			// FIXME
 			// This might pick up thermal sensors
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::OtherSensor);
+		}
+	}
+
+	// Try to at least generally classify unclassified devices
+	if (device == 0) {
+		if (systempath.lower().startsWith("/sys/devices/virtual")) {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::OtherVirtual);
+		}
+		if ((devicetypestring == "audio")
+			|| (devicesubsystem == "sound")) {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Sound);
+		}
+		if ((devicesubsystem == "video4linux")
+			|| (devicesubsystem == "dvb")) {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::VideoCapture);
+		}
+		if ((devicetypestring_alt == "scsi_target")
+			|| (devicesubsystem == "scsi_host")
+			|| (devicesubsystem == "scsi_disk")
+			|| (devicesubsystem == "scsi_device")
+			|| (devicesubsystem == "scsi_generic")
+			|| (devicesubsystem == "scsi")
+			|| (devicesubsystem == "ata_port")
+			|| (devicesubsystem == "ata_link")
+			|| (devicesubsystem == "ata_disk")
+			|| (devicesubsystem == "ata_device")
+			|| (devicesubsystem == "ata")) {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+		}
+		if (devicesubsystem == "net") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Network);
+		}
+		if (devicesubsystem == "i2c") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::I2C);
+		}
+		if (devicesubsystem == "mdio_bus") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::MDIO);
+		}
+		if ((devicesubsystem == "event_source")
+			|| (devicesubsystem == "rtc")) {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Mainboard);
+		}
+		if (devicesubsystem == "bsg") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::SCSI);
+		}
+		if (devicesubsystem == "firewire") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::IEEE1394);
+		}
+		if (devicesubsystem == "serio") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Serial);
+		}
+		if (devicesubsystem == "ppdev") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Parallel);
+		}
+		if (devicesubsystem == "bridge") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Bridge);
+		}
+		if ((devicesubsystem == "pci_bus")
+			|| (devicesubsystem == "pci_express")) {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Bus);
+		}
+		if (devicesubsystem == "platform") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+		}
+		if (devicesubsystem == "pnp") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::PNP);
+		}
+		if ((devicesubsystem == "hid")
+			|| (devicesubsystem == "hidraw")) {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::HID);
+		}
+
+		// Moderate accuracy classification, if PCI device class is available
+		// See http://www.acm.uiuc.edu/sigops/roll_your_own/7.c.1.html for codes and meanings
+		if (!devicepciclass.isNull()) {
+			// Pre PCI 2.0
+			if (devicepciclass.startsWith("0001")) {
+				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::GPU);
+			}
+			// Post PCI 2.0
+			if (devicepciclass.startsWith("01")) {
+				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::StorageController);
+			}
+			if (devicepciclass.startsWith("02")) {
+				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Network);
+			}
+			if (devicepciclass.startsWith("03")) {
+				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::GPU);
+			}
+			if (devicepciclass.startsWith("04")) {
+				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::OtherMultimedia);
+			}
+			if (devicepciclass.startsWith("05")) {
+				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::RAM);
+			}
+			if (devicepciclass.startsWith("06")) {
+				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Bridge);
+			}
+			if (devicepciclass.startsWith("0a")) {
+				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Dock);
+			}
+			if (devicepciclass.startsWith("0b")) {
+				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::CPU);
+			}
+			if (devicepciclass.startsWith("0c")) {
+				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Serial);
+			}
+		}
+
+		// Last ditch attempt at classification
+		// Likely inaccurate and sweeping
+		if ((devicesubsystem == "usb")
+			|| (devicesubsystem == "usbmon")) {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::OtherUSB);
+		}
+		if (devicesubsystem == "pci") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::OtherPeripheral);
 		}
 	}
 
@@ -1300,6 +1773,12 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 	device->setSystemPath(systempath);
 	device->setVendorID(devicevendorid);
 	device->setModelID(devicemodelid);
+	device->setSubVendorID(devicesubvendorid);
+	device->setSubModelID(devicesubmodelid);
+	device->setModuleAlias(devicemodalias);
+	device->setDeviceDriver(devicedriver);
+	device->setSubsystem(devicesubsystem);
+	device->setPCIClass(devicepciclass);
 
 	updateBlacklists(device, dev);
 
@@ -1366,7 +1845,6 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		TQString devicebus(udev_device_get_property_value(dev, "ID_BUS"));
 
 		// Get disk specific info
-		TQString disktypestring(udev_device_get_property_value(dev, "ID_TYPE"));
 		TQString disklabel(udev_device_get_property_value(dev, "ID_FS_LABEL"));
 		TQString diskuuid(udev_device_get_property_value(dev, "ID_FS_UUID"));
 		TQString filesystemtype(udev_device_get_property_value(dev, "ID_FS_TYPE"));
@@ -1382,7 +1860,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		TDEDiskDeviceStatus::TDEDiskDeviceStatus diskstatus = sdevice->diskStatus();
 
 		if (force_full_classification) {
-			disktype = classifyDiskType(dev, devicebus, disktypestring, systempath, devicevendor, devicemodel, filesystemtype, devicedriver);
+			disktype = classifyDiskType(dev, devicebus, devicetypestring, systempath, devicevendor, devicemodel, filesystemtype, devicedriver);
 			sdevice->setDiskType(disktype);
 			device = classifyUnknownDeviceByExternalRules(dev, device, true);	// Check external rules for possible subtype overrides
 			disktype = sdevice->diskType();						// The type can be overridden by an external rule
@@ -1451,7 +1929,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			}
 		}
 
-		if (disktypestring.upper() == "CD") {
+		if (devicetypestring.upper() == "CD") {
 			if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_STATE")).upper() == "BLANK") {
 				diskstatus = diskstatus | TDEDiskDeviceStatus::Blank;
 			}
@@ -1484,7 +1962,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 
 		// Set mountable flag if device is likely to be mountable
 		diskstatus = diskstatus | TDEDiskDeviceStatus::Mountable;
-		if ((!disktypestring.upper().isNull()) && (disktype & TDEDiskDeviceType::HDD)) {
+		if ((!devicetypestring.upper().isNull()) && (disktype & TDEDiskDeviceType::HDD)) {
 			diskstatus = diskstatus & ~TDEDiskDeviceStatus::Mountable;
 		}
 		if (removable) {
@@ -1551,12 +2029,23 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		sdevice->setDiskLabel(disklabel);
 	}
 
+	if (device->type() == TDEGenericDeviceType::Network) {
+		// Network devices don't have devices nodes per se, but we can at least return the Linux network name...
+		devicenode = systempath;
+		devicenode.remove(0, devicenode.findRev("/")+1);
+	}
+
 	// Set basic device information again, as some information may have changed
 	device->setName(devicename);
 	device->setDeviceNode(devicenode);
 	device->setSystemPath(systempath);
 	device->setVendorID(devicevendorid);
 	device->setModelID(devicemodelid);
+	device->setSubVendorID(devicesubvendorid);
+	device->setSubModelID(devicesubmodelid);
+	device->setDeviceDriver(devicedriver);
+	device->setSubsystem(devicesubsystem);
+	device->setPCIClass(devicepciclass);
 
 	return device;
 }
@@ -1687,7 +2176,512 @@ void TDEHardwareDevices::addCoreSystemDevices() {
 			++devicesdirit;
 		}
 	}
+
+	// Handle CPUs, which are currently handled terribly by udev
+	// Parse /proc/cpuinfo to extract some information about the CPUs
+	hwdevice = 0;
+	TQStringList lines;
+	TQFile file( "/proc/cpuinfo" );
+	if ( file.open( IO_ReadOnly ) ) {
+		TQTextStream stream( &file );
+		TQString line;
+		int processorNumber = -1;
+		while ( !stream.atEnd() ) {
+			line = stream.readLine();
+			// WARNING This routine assumes that "processor" is always the first entry in /proc/cpuinfo!
+			if (line.startsWith("processor")) {
+				line.remove(0, line.find(":")+1);
+				line = line.stripWhiteSpace();
+				processorNumber = line.toInt();
+				hwdevice = new TDEGenericDevice(TDEGenericDeviceType::CPU);
+				hwdevice->setSystemPath(TQString("/sys/devices/cpu/cpu%1").arg(processorNumber));	// FIXME: A system path is required, but I can't give a real, extant, unique path to the hardware manager due to kernel limitations
+				m_deviceList.append(hwdevice);
+			}
+			if (line.startsWith("model name")) {
+				line.remove(0, line.find(":")+1);
+				line = line.stripWhiteSpace();
+				hwdevice->setName(line);
+			}
+			lines += line;
+		}
+		file.close();
+	}
+}
+
+TQString TDEHardwareDevices::findPCIDeviceName(TQString vendorid, TQString modelid, TQString subvendorid, TQString submodelid) {
+	TQString vendorName = TQString::null;
+	TQString modelName = TQString::null;
+	TQString friendlyName = TQString::null;
+
+	if (!pci_id_map) {
+		pci_id_map = new TDEDeviceIDMap;
+
+		TQString database_filename = "/usr/share/pci.ids";
+		if (!TQFile::exists(database_filename)) {
+			database_filename = "/usr/share/misc/pci.ids";
+		}
+		if (!TQFile::exists(database_filename)) {
+			printf("[tdehardwaredevices] Unable to locate PCI information database pci.ids\n\r"); fflush(stdout);
+			return i18n("Unknown PCI Device");
+		}
 	
+		TQFile database(database_filename);
+		if (database.open(IO_ReadOnly)) {
+			TQTextStream stream(&database);
+			TQString line;
+			TQString vendorID;
+			TQString modelID;
+			TQString subvendorID;
+			TQString submodelID;
+			TQString deviceMapKey;
+			TQStringList devinfo;
+			while (!stream.atEnd()) {
+				line = stream.readLine();
+				if ((!line.upper().startsWith("\t")) && (!line.upper().startsWith("#"))) {
+					line.replace("\t", "");
+					devinfo = TQStringList::split(' ', line, false);
+					vendorID = *(devinfo.at(0));
+					vendorName = line;
+					vendorName.remove(0, vendorName.find(" "));
+					vendorName = vendorName.stripWhiteSpace();
+					modelName = TQString::null;
+					deviceMapKey = vendorID.lower() + ":::";
+				}
+				else {
+					if ((line.upper().startsWith("\t")) && (!line.upper().startsWith("\t\t"))) {
+						line.replace("\t", "");
+						devinfo = TQStringList::split(' ', line, false);
+						modelID = *(devinfo.at(0));
+						modelName = line;
+						modelName.remove(0, modelName.find(" "));
+						modelName = modelName.stripWhiteSpace();
+						deviceMapKey = vendorID.lower() + ":" + modelID.lower() + "::";
+					}
+					else {
+						if (line.upper().startsWith("\t\t")) {
+							line.replace("\t", "");
+							devinfo = TQStringList::split(' ', line, false);
+							subvendorID = *(devinfo.at(0));
+							submodelID = *(devinfo.at(1));
+							modelName = line;
+							modelName.remove(0, modelName.find(" "));
+							modelName = modelName.stripWhiteSpace();
+							modelName.remove(0, modelName.find(" "));
+							modelName = modelName.stripWhiteSpace();
+							deviceMapKey = vendorID.lower() + ":" + modelID.lower() + ":" + subvendorID.lower() + ":" + submodelID.lower();
+						}
+					}
+				}
+				if (modelName.isNull()) {
+					pci_id_map->insert(deviceMapKey, "***UNKNOWN DEVICE*** " + vendorName, true);
+				}
+				else {
+					pci_id_map->insert(deviceMapKey, vendorName + " " + modelName, true);
+				}
+			}
+			database.close();
+		}
+		else {
+			printf("[tdehardwaredevices] Unable to open PCI information database %s\n\r", database_filename.ascii()); fflush(stdout);
+		}
+	}
+
+	if (pci_id_map) {
+		TQString deviceName;
+		TQString deviceMapKey = vendorid.lower() + ":" + modelid.lower() + ":" + subvendorid.lower() + ":" + submodelid.lower();
+
+		deviceName = (*pci_id_map)[deviceMapKey];
+		if (deviceName.isNull() || deviceName.startsWith("***UNKNOWN DEVICE*** ")) {
+			deviceMapKey = vendorid.lower() + ":" + modelid.lower() + ":" + subvendorid.lower() + ":";
+			deviceName = (*pci_id_map)[deviceMapKey];
+			if (deviceName.isNull() || deviceName.startsWith("***UNKNOWN DEVICE*** ")) {
+				deviceMapKey = vendorid.lower() + ":" + modelid.lower() + "::";
+				deviceName = (*pci_id_map)[deviceMapKey];
+			}
+		}
+
+		if (deviceName.startsWith("***UNKNOWN DEVICE*** ")) {
+			deviceName.replace("***UNKNOWN DEVICE*** ", "");
+			deviceName.prepend(i18n("Unknown PCI Device") + " ");
+			if (subvendorid.isNull()) {
+				deviceName.append(TQString(" [%1:%2]").arg(vendorid.lower()).arg(modelid.lower()));
+			}
+			else {
+				deviceName.append(TQString(" [%1:%2] [%3:%4]").arg(vendorid.lower()).arg(modelid.lower()).arg(subvendorid.lower()).arg(submodelid.lower()));
+			}
+		}
+
+		return deviceName;
+	}
+	else {
+		return i18n("Unknown PCI Device");
+	}
+}
+
+TQString TDEHardwareDevices::findUSBDeviceName(TQString vendorid, TQString modelid, TQString subvendorid, TQString submodelid) {
+	TQString vendorName = TQString::null;
+	TQString modelName = TQString::null;
+	TQString friendlyName = TQString::null;
+
+	if (!usb_id_map) {
+		usb_id_map = new TDEDeviceIDMap;
+
+		TQString database_filename = "/usr/share/usb.ids";
+		if (!TQFile::exists(database_filename)) {
+			database_filename = "/usr/share/misc/usb.ids";
+		}
+		if (!TQFile::exists(database_filename)) {
+			printf("[tdehardwaredevices] Unable to locate USB information database usb.ids\n\r"); fflush(stdout);
+			return i18n("Unknown USB Device");
+		}
+	
+		TQFile database(database_filename);
+		if (database.open(IO_ReadOnly)) {
+			TQTextStream stream(&database);
+			TQString line;
+			TQString vendorID;
+			TQString modelID;
+			TQString subvendorID;
+			TQString submodelID;
+			TQString deviceMapKey;
+			TQStringList devinfo;
+			while (!stream.atEnd()) {
+				line = stream.readLine();
+				if ((!line.upper().startsWith("\t")) && (!line.upper().startsWith("#"))) {
+					line.replace("\t", "");
+					devinfo = TQStringList::split(' ', line, false);
+					vendorID = *(devinfo.at(0));
+					vendorName = line;
+					vendorName.remove(0, vendorName.find(" "));
+					vendorName = vendorName.stripWhiteSpace();
+					modelName = TQString::null;
+					deviceMapKey = vendorID.lower() + ":::";
+				}
+				else {
+					if ((line.upper().startsWith("\t")) && (!line.upper().startsWith("\t\t"))) {
+						line.replace("\t", "");
+						devinfo = TQStringList::split(' ', line, false);
+						modelID = *(devinfo.at(0));
+						modelName = line;
+						modelName.remove(0, modelName.find(" "));
+						modelName = modelName.stripWhiteSpace();
+						deviceMapKey = vendorID.lower() + ":" + modelID.lower() + "::";
+					}
+					else {
+						if (line.upper().startsWith("\t\t")) {
+							line.replace("\t", "");
+							devinfo = TQStringList::split(' ', line, false);
+							subvendorID = *(devinfo.at(0));
+							submodelID = *(devinfo.at(1));
+							modelName = line;
+							modelName.remove(0, modelName.find(" "));
+							modelName = modelName.stripWhiteSpace();
+							modelName.remove(0, modelName.find(" "));
+							modelName = modelName.stripWhiteSpace();
+							deviceMapKey = vendorID.lower() + ":" + modelID.lower() + ":" + subvendorID.lower() + ":" + submodelID.lower();
+						}
+					}
+				}
+				if (modelName.isNull()) {
+					usb_id_map->insert(deviceMapKey, "***UNKNOWN DEVICE*** " + vendorName, true);
+				}
+				else {
+					usb_id_map->insert(deviceMapKey, vendorName + " " + modelName, true);
+				}
+			}
+			database.close();
+		}
+		else {
+			printf("[tdehardwaredevices] Unable to open USB information database %s\n\r", database_filename.ascii()); fflush(stdout);
+		}
+	}
+
+	if (usb_id_map) {
+		TQString deviceName;
+		TQString deviceMapKey = vendorid.lower() + ":" + modelid.lower() + ":" + subvendorid.lower() + ":" + submodelid.lower();
+
+		deviceName = (*usb_id_map)[deviceMapKey];
+		if (deviceName.isNull() || deviceName.startsWith("***UNKNOWN DEVICE*** ")) {
+			deviceMapKey = vendorid.lower() + ":" + modelid.lower() + ":" + subvendorid.lower() + ":";
+			deviceName = (*usb_id_map)[deviceMapKey];
+			if (deviceName.isNull() || deviceName.startsWith("***UNKNOWN DEVICE*** ")) {
+				deviceMapKey = vendorid.lower() + ":" + modelid.lower() + "::";
+				deviceName = (*usb_id_map)[deviceMapKey];
+			}
+		}
+
+		if (deviceName.startsWith("***UNKNOWN DEVICE*** ")) {
+			deviceName.replace("***UNKNOWN DEVICE*** ", "");
+			deviceName.prepend(i18n("Unknown USB Device") + " ");
+			if (subvendorid.isNull()) {
+				deviceName.append(TQString(" [%1:%2]").arg(vendorid.lower()).arg(modelid.lower()));
+			}
+			else {
+				deviceName.append(TQString(" [%1:%2] [%3:%4]").arg(vendorid.lower()).arg(modelid.lower()).arg(subvendorid.lower()).arg(submodelid.lower()));
+			}
+		}
+
+		return deviceName;
+	}
+	else {
+		return i18n("Unknown USB Device");
+	}
+}
+
+TQString TDEHardwareDevices::getFriendlyDeviceTypeStringFromType(TDEGenericDeviceType::TDEGenericDeviceType query) {
+	TQString ret = "Unknown Device";
+
+	// Keep this in sync with the TDEGenericDeviceType definition in the header
+	if (query == TDEGenericDeviceType::Root) {
+		ret = i18n("Root");
+	}
+	else if (query == TDEGenericDeviceType::CPU) {
+		ret = i18n("CPU");
+	}
+	else if (query == TDEGenericDeviceType::GPU) {
+		ret = i18n("Graphics Processor");
+	}
+	else if (query == TDEGenericDeviceType::RAM) {
+		ret = i18n("RAM");
+	}
+	else if (query == TDEGenericDeviceType::Bus) {
+		ret = i18n("Bus");
+	}
+	else if (query == TDEGenericDeviceType::I2C) {
+		ret = i18n("I2C Bus");
+	}
+	else if (query == TDEGenericDeviceType::MDIO) {
+		ret = i18n("MDIO Bus");
+	}
+	else if (query == TDEGenericDeviceType::Mainboard) {
+		ret = i18n("Mainboard");
+	}
+	else if (query == TDEGenericDeviceType::Disk) {
+		ret = i18n("Disk");
+	}
+	else if (query == TDEGenericDeviceType::SCSI) {
+		ret = i18n("SCSI");
+	}
+	else if (query == TDEGenericDeviceType::StorageController) {
+		ret = i18n("Storage Controller");
+	}
+	else if (query == TDEGenericDeviceType::Mouse) {
+		ret = i18n("Mouse");
+	}
+	else if (query == TDEGenericDeviceType::Keyboard) {
+		ret = i18n("Keyboard");
+	}
+	else if (query == TDEGenericDeviceType::HID) {
+		ret = i18n("HID");
+	}
+	else if (query == TDEGenericDeviceType::Network) {
+		ret = i18n("Network");
+	}
+	else if (query == TDEGenericDeviceType::Printer) {
+		ret = i18n("Printer");
+	}
+	else if (query == TDEGenericDeviceType::Scanner) {
+		ret = i18n("Scanner");
+	}
+	else if (query == TDEGenericDeviceType::Sound) {
+		ret = i18n("Sound");
+	}
+	else if (query == TDEGenericDeviceType::VideoCapture) {
+		ret = i18n("Video Capture");
+	}
+	else if (query == TDEGenericDeviceType::IEEE1394) {
+		ret = i18n("IEEE1394");
+	}
+	else if (query == TDEGenericDeviceType::Camera) {
+		ret = i18n("Camera");
+	}
+	else if (query == TDEGenericDeviceType::TextIO) {
+		ret = i18n("Text I/O");
+	}
+	else if (query == TDEGenericDeviceType::Serial) {
+		ret = i18n("Serial Communications Controller");
+	}
+	else if (query == TDEGenericDeviceType::Parallel) {
+		ret = i18n("Parallel Port");
+	}
+	else if (query == TDEGenericDeviceType::Peripheral) {
+		ret = i18n("Peripheral");
+	}
+	else if (query == TDEGenericDeviceType::Battery) {
+		ret = i18n("Battery");
+	}
+	else if (query == TDEGenericDeviceType::Power) {
+		ret = i18n("Power Device");
+	}
+	else if (query == TDEGenericDeviceType::Dock) {
+		ret = i18n("Docking Station");
+	}
+	else if (query == TDEGenericDeviceType::ThermalSensor) {
+		ret = i18n("Thermal Sensor");
+	}
+	else if (query == TDEGenericDeviceType::ThermalControl) {
+		ret = i18n("Thermal Control");
+	}
+	else if (query == TDEGenericDeviceType::Bridge) {
+		ret = i18n("Bridge");
+	}
+	else if (query == TDEGenericDeviceType::Platform) {
+		ret = i18n("Platform");
+	}
+	else if (query == TDEGenericDeviceType::PNP) {
+		ret = i18n("Plug and Play");
+	}
+	else if (query == TDEGenericDeviceType::OtherACPI) {
+		ret = i18n("Other ACPI");
+	}
+	else if (query == TDEGenericDeviceType::OtherUSB) {
+		ret = i18n("Other USB");
+	}
+	else if (query == TDEGenericDeviceType::OtherMultimedia) {
+		ret = i18n("Other Multimedia");
+	}
+	else if (query == TDEGenericDeviceType::OtherPeripheral) {
+		ret = i18n("Other Peripheral");
+	}
+	else if (query == TDEGenericDeviceType::OtherSensor) {
+		ret = i18n("Other Sensor");
+	}
+	else if (query == TDEGenericDeviceType::OtherVirtual) {
+		ret = i18n("Other Virtual");
+	}
+	else {
+		ret = i18n("Unknown Device");
+	}
+
+	return ret;
+}
+
+TQPixmap TDEHardwareDevices::getDeviceTypeIconFromType(TDEGenericDeviceType::TDEGenericDeviceType query, KIcon::StdSizes size) {
+	TQPixmap ret = DesktopIcon("misc", size);
+
+// 	// Keep this in sync with the TDEGenericDeviceType definition in the header
+	if (query == TDEGenericDeviceType::Root) {
+		ret = DesktopIcon("kcmdevices", size);
+	}
+	else if (query == TDEGenericDeviceType::CPU) {
+		ret = DesktopIcon("kcmprocessor", size);
+	}
+	else if (query == TDEGenericDeviceType::GPU) {
+		ret = DesktopIcon("kcmpci", size);
+	}
+	else if (query == TDEGenericDeviceType::RAM) {
+		ret = DesktopIcon("memory", size);
+	}
+	else if (query == TDEGenericDeviceType::Bus) {
+		ret = DesktopIcon("kcmpci", size);
+	}
+	else if (query == TDEGenericDeviceType::I2C) {
+		ret = DesktopIcon("input_devices_settings", size);
+	}
+	else if (query == TDEGenericDeviceType::MDIO) {
+		ret = DesktopIcon("input_devices_settings", size);
+	}
+	else if (query == TDEGenericDeviceType::Mainboard) {
+		ret = DesktopIcon("kcmpci", size);	// FIXME
+	}
+	else if (query == TDEGenericDeviceType::Disk) {
+		ret = DesktopIcon("hdd_unmount", size);
+	}
+	else if (query == TDEGenericDeviceType::SCSI) {
+		ret = DesktopIcon("kcmscsi", size);
+	}
+	else if (query == TDEGenericDeviceType::StorageController) {
+		ret = DesktopIcon("kcmpci", size);
+	}
+	else if (query == TDEGenericDeviceType::Mouse) {
+		ret = DesktopIcon("mouse", size);
+	}
+	else if (query == TDEGenericDeviceType::Keyboard) {
+		ret = DesktopIcon("keyboard", size);
+	}
+	else if (query == TDEGenericDeviceType::HID) {
+		ret = DesktopIcon("kcmdevices", size);	// FIXME
+	}
+	else if (query == TDEGenericDeviceType::Network) {
+		ret = DesktopIcon("kcmpci", size);
+	}
+	else if (query == TDEGenericDeviceType::Printer) {
+		ret = DesktopIcon("printer1", size);
+	}
+	else if (query == TDEGenericDeviceType::Scanner) {
+		ret = DesktopIcon("scanner", size);
+	}
+	else if (query == TDEGenericDeviceType::Sound) {
+		ret = DesktopIcon("kcmsound", size);
+	}
+	else if (query == TDEGenericDeviceType::VideoCapture) {
+		ret = DesktopIcon("tv", size);		// FIXME
+	}
+	else if (query == TDEGenericDeviceType::IEEE1394) {
+		ret = DesktopIcon("ieee1394", size);
+	}
+	else if (query == TDEGenericDeviceType::Camera) {
+		ret = DesktopIcon("camera", size);
+	}
+	else if (query == TDEGenericDeviceType::Serial) {
+		ret = DesktopIcon("input_devices_settings", size);
+	}
+	else if (query == TDEGenericDeviceType::Parallel) {
+		ret = DesktopIcon("input_devices_settings", size);
+	}
+	else if (query == TDEGenericDeviceType::TextIO) {
+		ret = DesktopIcon("chardevice", size);
+	}
+	else if (query == TDEGenericDeviceType::Peripheral) {
+		ret = DesktopIcon("kcmpci", size);
+	}
+	else if (query == TDEGenericDeviceType::Battery) {
+		ret = DesktopIcon("energy", size);
+	}
+	else if (query == TDEGenericDeviceType::Power) {
+		ret = DesktopIcon("energy", size);
+	}
+	else if (query == TDEGenericDeviceType::Dock) {
+		ret = DesktopIcon("kcmdevices", size);	// FIXME
+	}
+	else if (query == TDEGenericDeviceType::ThermalSensor) {
+		ret = DesktopIcon("kcmdevices", size);	// FIXME
+	}
+	else if (query == TDEGenericDeviceType::ThermalControl) {
+		ret = DesktopIcon("kcmdevices", size);	// FIXME
+	}
+	else if (query == TDEGenericDeviceType::Bridge) {
+		ret = DesktopIcon("kcmpci", size);
+	}
+	else if (query == TDEGenericDeviceType::Platform) {
+		ret = DesktopIcon("kcmsystem", size);
+	}
+	else if (query == TDEGenericDeviceType::PNP) {
+		ret = DesktopIcon("kcmsystem", size);
+	}
+	else if (query == TDEGenericDeviceType::OtherACPI) {
+		ret = DesktopIcon("kcmdevices", size);	// FIXME
+	}
+	else if (query == TDEGenericDeviceType::OtherUSB) {
+		ret = DesktopIcon("usb", size);
+	}
+	else if (query == TDEGenericDeviceType::OtherMultimedia) {
+		ret = DesktopIcon("kcmsound", size);
+	}
+	else if (query == TDEGenericDeviceType::OtherPeripheral) {
+		ret = DesktopIcon("kcmpci", size);
+	}
+	else if (query == TDEGenericDeviceType::OtherSensor) {
+		ret = DesktopIcon("kcmdevices", size);	// FIXME
+	}
+	else if (query == TDEGenericDeviceType::OtherVirtual) {
+		ret = DesktopIcon("kcmsystem", size);
+	}
+	else {
+		ret = DesktopIcon("hwinfo", size);
+	}
+
+	return ret;
 }
 
 TQPtrList<TDEGenericDevice> TDEHardwareDevices::listByDeviceClass(TDEGenericDeviceType::TDEGenericDeviceType cl) {

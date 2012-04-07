@@ -1,4 +1,5 @@
 [Conditions]
+SUBSYSTEM=block
 DRIVER=floppy
 
 [DeviceType]
