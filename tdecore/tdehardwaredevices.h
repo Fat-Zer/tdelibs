@@ -149,6 +149,7 @@ enum TDEDiskDeviceStatus {
 	UsedByDevice =		0x00000010,
 	UsesDevice =		0x00000020,
 	ContainsFilesystem =	0x00000040,
+	Hotpluggable =		0x00000080,
 	Other =			0x80000000
 };
 
@@ -299,6 +300,26 @@ class TDECORE_EXPORT TDEGenericDevice
 		void setModelID(TQString id);
 
 		/**
+		* @return a TQString with the encoded vendor, if any
+		*/
+		TQString &vendorEncoded();
+
+		/**
+		* @param a TQString with the encoded vendor, if any
+		*/
+		void setVendorEncoded(TQString id);
+
+		/**
+		* @return a TQString with the encoded model, if any
+		*/
+		TQString &modelEncoded();
+
+		/**
+		* @param a TQString with the encoded model, if any
+		*/
+		void setModelEncoded(TQString id);
+
+		/**
 		* @return a TQString with the subvendor ID, if any
 		*/
 		TQString &subVendorID();
@@ -396,6 +417,8 @@ class TDECORE_EXPORT TDEGenericDevice
 		TQString m_uniqueID;
 		TQString m_vendorID;
 		TQString m_modelID;
+		TQString m_vendorenc;
+		TQString m_modelenc;
 		TQString m_subvendorID;
 		TQString m_submodelID;
 		TQString m_pciClass;
@@ -697,6 +720,13 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 		TQString findUSBDeviceName(TQString vendorid, TQString modelid, TQString subvendorid, TQString submodelid);
 
 		/**
+		*  Look up the device in the system PNP database
+		*  @param pnpid a TQString containing the PNP ID
+		*  @return a TQString containing the device name, if found
+		*/
+		TQString findPNPDeviceName(TQString pnpid);
+
+		/**
 		*  Get a friendly string describing a device type
 		*  @param query a TDEGenericDeviceType::TDEGenericDeviceType specifying a device type
 		*  @return a TQString containing the friendly type name
@@ -746,6 +776,7 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 
 		TDEDeviceIDMap* pci_id_map;
 		TDEDeviceIDMap* usb_id_map;
+		TDEDeviceIDMap* pnp_id_map;
 
 	friend class TDEGenericDevice;
 	friend class TDEStorageDevice;

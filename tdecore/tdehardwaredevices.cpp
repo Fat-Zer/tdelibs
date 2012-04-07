@@ -37,6 +37,18 @@
 #include <sys/ioctl.h>
 #include <linux/fs.h>
 
+// BEGIN BLOCK
+// Copied from include/linux/genhd.h
+#define GENHD_FL_REMOVABLE                      1
+#define GENHD_FL_MEDIA_CHANGE_NOTIFY            4
+#define GENHD_FL_CD                             8
+#define GENHD_FL_UP                             16
+#define GENHD_FL_SUPPRESS_PARTITION_INFO        32
+#define GENHD_FL_EXT_DEVT                       64
+#define GENHD_FL_NATIVE_CAPACITY                128
+#define GENHD_FL_BLOCK_EVENTS_ON_EXCL_WRITE     256
+// END BLOCK
+
 // NOTE TO DEVELOPERS
 // This command will greatly help when attempting to find properties to distinguish one device from another
 // udevadm info --query=all --path=/sys/....
@@ -126,6 +138,22 @@ TQString &TDEGenericDevice::modelID() {
 void TDEGenericDevice::setModelID(TQString id) {
 	m_modelID = id;
 	m_modelID.replace("0x", "");
+}
+
+TQString &TDEGenericDevice::vendorEncoded() {
+	return m_vendorenc;
+}
+
+void TDEGenericDevice::setVendorEncoded(TQString id) {
+	m_vendorenc = id;
+}
+
+TQString &TDEGenericDevice::modelEncoded() {
+	return m_modelenc;
+}
+
+void TDEGenericDevice::setModelEncoded(TQString id) {
+	m_modelenc = id;
 }
 
 TQString &TDEGenericDevice::subVendorID() {
@@ -222,6 +250,14 @@ TQString TDEGenericDevice::friendlyName() {
 		}
 		else if (m_modAlias.lower().startsWith("usb")) {
 			m_friendlyName = KGlobal::hardwareDevices()->findUSBDeviceName(m_vendorID, m_modelID, m_subvendorID, m_submodelID);
+		}
+		else {
+			TQString pnpgentype = systemPath();
+			pnpgentype.remove(0, pnpgentype.findRev("/")+1);
+			pnpgentype.truncate(pnpgentype.find(":"));
+			if (pnpgentype.startsWith("PNP")) {
+				m_friendlyName = KGlobal::hardwareDevices()->findPNPDeviceName(pnpgentype);
+			}
 		}
 	}
 
@@ -345,6 +381,27 @@ void TDEStorageDevice::setSlaveDevices(TQStringList sd) {
 }
 
 TQString TDEStorageDevice::friendlyName() {
+	// Return the actual storage device name
+	TQString devicevendorid = vendorEncoded();
+	TQString devicemodelid = modelEncoded();
+
+	devicevendorid.replace("\\x20", " ");
+	devicemodelid.replace("\\x20", " ");
+
+	devicevendorid = devicevendorid.stripWhiteSpace();
+	devicemodelid = devicemodelid.stripWhiteSpace();
+	devicevendorid = devicevendorid.simplifyWhiteSpace();
+	devicemodelid = devicemodelid.simplifyWhiteSpace();
+
+	TQString devicename = devicevendorid + " " + devicemodelid;
+
+	devicename = devicename.stripWhiteSpace();
+	devicename = devicename.simplifyWhiteSpace();
+
+	if (devicename != "") {
+		return devicename;
+	}
+
 	if (isDiskOfType(TDEDiskDeviceType::Floppy)) {
 		return friendlyDeviceType();
 	}
@@ -352,7 +409,7 @@ TQString TDEStorageDevice::friendlyName() {
 	TQString label = diskLabel();
 	if (label.isNull()) {
 		if (deviceSize() > 0) {
-			if (checkDiskStatus(TDEDiskDeviceStatus::Removable)) {
+			if (checkDiskStatus(TDEDiskDeviceStatus::Hotpluggable)) {
 				label = i18n("%1 Removable Device").arg(deviceFriendlySize());
 			}
 			else {
@@ -399,7 +456,7 @@ TQString TDEStorageDevice::friendlyDeviceType() {
 
 	if (isDiskOfType(TDEDiskDeviceType::HDD)) {
 		ret = i18n("Hard Disk Drive");
-		if (checkDiskStatus(TDEDiskDeviceStatus::Removable)) {
+		if (checkDiskStatus(TDEDiskDeviceStatus::Hotpluggable)) {
 			ret = i18n("Removable Storage");
 		}
 		if (isDiskOfType(TDEDiskDeviceType::CompactFlash)) {
@@ -447,7 +504,7 @@ TQPixmap TDEStorageDevice::icon(KIcon::StdSizes size) {
 
 	if (isDiskOfType(TDEDiskDeviceType::HDD)) {
 		ret = DesktopIcon("hdd_unmount", size);
-		if (checkDiskStatus(TDEDiskDeviceStatus::Removable)) {
+		if (checkDiskStatus(TDEDiskDeviceStatus::Hotpluggable)) {
 			ret = DesktopIcon("usbpendrive_unmount", size);
 		}
 		if (isDiskOfType(TDEDiskDeviceType::CompactFlash)) {
@@ -714,6 +771,7 @@ TDEHardwareDevices::TDEHardwareDevices() {
 	// Initialize members
 	pci_id_map = 0;
 	usb_id_map = 0;
+	pnp_id_map = 0;
 
 	// Set up device list
 	m_deviceList.setAutoDelete( TRUE );	// the list owns the objects
@@ -768,6 +826,9 @@ TDEHardwareDevices::~TDEHardwareDevices() {
 	}
 	if (usb_id_map) {
 		delete usb_id_map;
+	}
+	if (pnp_id_map) {
+		delete pnp_id_map;
 	}
 }
 
@@ -1479,12 +1540,13 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 	TQString systempath(udev_device_get_syspath(dev));
 	TQString devicevendorid(udev_device_get_property_value(dev, "ID_VENDOR_ID"));
 	TQString devicemodelid(udev_device_get_property_value(dev, "ID_MODEL_ID"));
+	TQString devicevendoridenc(udev_device_get_property_value(dev, "ID_VENDOR_ENC"));
+	TQString devicemodelidenc(udev_device_get_property_value(dev, "ID_MODEL_ENC"));
 	TQString devicesubvendorid(udev_device_get_property_value(dev, "ID_SUBVENDOR_ID"));
 	TQString devicesubmodelid(udev_device_get_property_value(dev, "ID_SUBMODEL_ID"));
 	TQString devicetypestring(udev_device_get_property_value(dev, "ID_TYPE"));
 	TQString devicetypestring_alt(udev_device_get_property_value(dev, "DEVTYPE"));
 	TQString devicepciclass(udev_device_get_property_value(dev, "PCI_CLASS"));
-	bool removable = false;
 	TDEGenericDevice* device = existingdevice;
 
 	// FIXME
@@ -1597,7 +1659,38 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 	}
 	else if (devicetype.isNull()) {
 		if (devicesubsystem == "acpi") {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::OtherACPI);
+			// If the ACPI device exposes a system path ending in /PNPxxxx:yy, the device type can be precisely determined
+			// See ftp://ftp.microsoft.com/developr/drg/plug-and-play/devids.txt for more information
+			TQString pnpgentype = systempath;
+			pnpgentype.remove(0, pnpgentype.findRev("/")+1);
+			pnpgentype.truncate(pnpgentype.find(":"));
+			if (pnpgentype.startsWith("PNP")) {
+				// We support a limited number of specific PNP IDs here
+				if (pnpgentype == "PNP0C0A") {
+					if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Battery);
+				}
+				else if (pnpgentype == "PNP0C0B") {
+					if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::ThermalControl);
+				}
+				else if (pnpgentype == "PNP0C0C") {
+					if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Power);
+				}
+				else if (pnpgentype == "PNP0C0D") {
+					if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Power);
+				}
+				else if (pnpgentype == "PNP0C0E") {
+					if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Power);
+				}
+				else if (pnpgentype == "PNP0C11") {
+					if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::ThermalSensor);
+				}
+				else {
+					if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::OtherACPI);
+				}
+			}
+			else {
+				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::OtherACPI);
+			}
 		}
 		else if (devicesubsystem == "input") {
 			// Figure out if this device is a mouse, keyboard, or something else
@@ -1712,6 +1805,18 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			|| (devicesubsystem == "hidraw")) {
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::HID);
 		}
+		if (devicesubsystem == "power_supply") {
+			TQString powersupplyname(udev_device_get_property_value(dev, "POWER_SUPPLY_NAME"));
+			if (powersupplyname.upper().startsWith("AC")) {
+				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Power);
+			}
+			else {
+				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Battery);
+			}
+		}
+		if (devicesubsystem == "backlight") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Power);
+		}
 
 		// Moderate accuracy classification, if PCI device class is available
 		// See http://www.acm.uiuc.edu/sigops/roll_your_own/7.c.1.html for codes and meanings
@@ -1773,6 +1878,8 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 	device->setSystemPath(systempath);
 	device->setVendorID(devicevendorid);
 	device->setModelID(devicemodelid);
+	device->setVendorEncoded(devicevendoridenc);
+	device->setModelEncoded(devicemodelidenc);
 	device->setSubVendorID(devicesubvendorid);
 	device->setSubModelID(devicesubmodelid);
 	device->setModuleAlias(devicemodalias);
@@ -1788,18 +1895,37 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 	}
 
 	if (device->type() == TDEGenericDeviceType::Disk) {
-		// Determine if disk is removable
-		TQString removablenodename = udev_device_get_syspath(dev);
-		removablenodename.append("/removable");
-		FILE *fp = fopen(removablenodename.ascii(),"r");
-		if (fp) {
-			if (fgetc(fp) == '1') {
-				removable = true;
-			}
-			fclose(fp);
+		bool removable = false;
+		bool hotpluggable = false;
+
+		// We can get the removable flag, but we have no idea if the device has the ability to notify on media insertion/removal
+		// If there is no such notification possible, then we should not set the removable flag
+		// udev can be such an amazing pain at times
+		// It exports a /capabilities node with no info on what the bits actually mean
+		// This information is very poorly documented as a set of #defines in include/linux/genhd.h
+		// We are specifically interested in GENHD_FL_REMOVABLE and GENHD_FL_MEDIA_CHANGE_NOTIFY
+		// The "removable" flag should also really be renamed to "hotpluggable", as that is far more precise...
+		TQString capabilitynodename = systempath;
+		capabilitynodename.append("/capability");
+		TQFile capabilityfile( capabilitynodename );
+		unsigned int capabilities = 0;
+		if ( capabilityfile.open( IO_ReadOnly ) ) {
+			TQTextStream stream( &capabilityfile );
+			TQString capabilitystring;
+			capabilitystring = stream.readLine();
+			capabilities = capabilitystring.toUInt();
+			capabilityfile.close();
+		}
+		if (capabilities & GENHD_FL_REMOVABLE) {
+			// FIXME
+			// For added fun this is not always true; i.e. GENHD_FL_REMOVABLE can be set when the device cannot be hotplugged (floppy drives).
+			hotpluggable = true;
+		}
+		if (capabilities & GENHD_FL_MEDIA_CHANGE_NOTIFY) {
+			removable = true;
 		}
 
-		// See if any other devices are exclusively using this device, such as the Device Mapper|
+		// See if any other devices are exclusively using this device, such as the Device Mapper
 		TQStringList holdingDeviceNodes;
 		TQString holdersnodename = udev_device_get_syspath(dev);
 		holdersnodename.append("/holders/");
@@ -1955,6 +2081,9 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		if (removable) {
 			diskstatus = diskstatus | TDEDiskDeviceStatus::Removable;
 		}
+		if (hotpluggable) {
+			diskstatus = diskstatus | TDEDiskDeviceStatus::Hotpluggable;
+		}
 
 		if ((filesystemtype.upper() != "CRYPTO_LUKS") && (filesystemtype.upper() != "CRYPTO")  && (!filesystemtype.isNull())) {
 			diskstatus = diskstatus | TDEDiskDeviceStatus::ContainsFilesystem;
@@ -1962,7 +2091,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 
 		// Set mountable flag if device is likely to be mountable
 		diskstatus = diskstatus | TDEDiskDeviceStatus::Mountable;
-		if ((!devicetypestring.upper().isNull()) && (disktype & TDEDiskDeviceType::HDD)) {
+		if ((devicetypestring.upper().isNull()) && (disktype & TDEDiskDeviceType::HDD)) {
 			diskstatus = diskstatus & ~TDEDiskDeviceStatus::Mountable;
 		}
 		if (removable) {
@@ -2041,6 +2170,8 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 	device->setSystemPath(systempath);
 	device->setVendorID(devicevendorid);
 	device->setModelID(devicemodelid);
+	device->setVendorEncoded(devicevendoridenc);
+	device->setModelEncoded(devicemodelidenc);
 	device->setSubVendorID(devicesubvendorid);
 	device->setSubModelID(devicesubmodelid);
 	device->setDeviceDriver(devicedriver);
@@ -2189,12 +2320,13 @@ void TDEHardwareDevices::addCoreSystemDevices() {
 		while ( !stream.atEnd() ) {
 			line = stream.readLine();
 			// WARNING This routine assumes that "processor" is always the first entry in /proc/cpuinfo!
+			// FIXME Parse all available information, such as frequency, etc.
 			if (line.startsWith("processor")) {
 				line.remove(0, line.find(":")+1);
 				line = line.stripWhiteSpace();
 				processorNumber = line.toInt();
 				hwdevice = new TDEGenericDevice(TDEGenericDeviceType::CPU);
-				hwdevice->setSystemPath(TQString("/sys/devices/cpu/cpu%1").arg(processorNumber));	// FIXME: A system path is required, but I can't give a real, extant, unique path to the hardware manager due to kernel limitations
+				hwdevice->setSystemPath(TQString("/sys/devices/system/cpu/cpu%1").arg(processorNumber));
 				m_deviceList.append(hwdevice);
 			}
 			if (line.startsWith("model name")) {
@@ -2206,6 +2338,9 @@ void TDEHardwareDevices::addCoreSystemDevices() {
 		}
 		file.close();
 	}
+
+	// FIXME
+	// For each CPU, look for cpufreq and parse as much information as possible
 }
 
 TQString TDEHardwareDevices::findPCIDeviceName(TQString vendorid, TQString modelid, TQString subvendorid, TQString submodelid) {
@@ -2425,6 +2560,76 @@ TQString TDEHardwareDevices::findUSBDeviceName(TQString vendorid, TQString model
 	}
 	else {
 		return i18n("Unknown USB Device");
+	}
+}
+
+TQString TDEHardwareDevices::findPNPDeviceName(TQString pnpid) {
+	TQString friendlyName = TQString::null;
+
+	if (!pnp_id_map) {
+		pnp_id_map = new TDEDeviceIDMap;
+
+		TQStringList hardware_info_directories(KGlobal::dirs()->resourceDirs("data"));
+		TQString hardware_info_directory_suffix("tdehwlib/pnpdev/");
+		TQString hardware_info_directory;
+		TQString database_filename;
+
+		for ( TQStringList::Iterator it = hardware_info_directories.begin(); it != hardware_info_directories.end(); ++it ) {
+			hardware_info_directory = (*it);
+			hardware_info_directory += hardware_info_directory_suffix;
+	
+			if (KGlobal::dirs()->exists(hardware_info_directory)) {
+				database_filename = hardware_info_directory + "pnp.ids";
+				if (TQFile::exists(database_filename)) {
+					break;
+				}
+			}
+		}
+
+		if (!TQFile::exists(database_filename)) {
+			printf("[tdehardwaredevices] Unable to locate PNP information database pnp.ids\n\r"); fflush(stdout);
+			return i18n("Unknown PNP Device");
+		}
+	
+		TQFile database(database_filename);
+		if (database.open(IO_ReadOnly)) {
+			TQTextStream stream(&database);
+			TQString line;
+			TQString pnpID;
+			TQString vendorName;
+			TQString deviceMapKey;
+			TQStringList devinfo;
+			while (!stream.atEnd()) {
+				line = stream.readLine();
+				if ((!line.upper().startsWith("\t")) && (!line.upper().startsWith("#"))) {
+					devinfo = TQStringList::split('\t', line, false);
+					if (devinfo.count() > 1) {
+						pnpID = *(devinfo.at(0));
+						vendorName = *(devinfo.at(1));;
+						vendorName = vendorName.stripWhiteSpace();
+						deviceMapKey = pnpID.upper().stripWhiteSpace();
+						if (!deviceMapKey.isNull()) {
+							pnp_id_map->insert(deviceMapKey, vendorName, true);
+						}
+					}
+				}
+			}
+			database.close();
+		}
+		else {
+			printf("[tdehardwaredevices] Unable to open PNP information database %s\n\r", database_filename.ascii()); fflush(stdout);
+		}
+	}
+
+	if (pnp_id_map) {
+		TQString deviceName;
+
+		deviceName = (*pnp_id_map)[pnpid];
+
+		return deviceName;
+	}
+	else {
+		return i18n("Unknown PNP Device");
 	}
 }
 
