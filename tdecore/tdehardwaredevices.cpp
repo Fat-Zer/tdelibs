@@ -346,17 +346,78 @@ void TDEStorageDevice::setSlaveDevices(TQStringList sd) {
 
 TQString TDEStorageDevice::friendlyName() {
 	if (isDiskOfType(TDEDiskDeviceType::Floppy)) {
-		return i18n("Floppy Drive");
+		return friendlyDeviceType();
 	}
-	else if (isDiskOfType(TDEDiskDeviceType::Zip)) {
-		return i18n("Zip Drive");
+
+	TQString label = diskLabel();
+	if (label.isNull()) {
+		if (deviceSize() > 0) {
+			if (checkDiskStatus(TDEDiskDeviceStatus::Removable)) {
+				label = i18n("%1 Removable Device").arg(deviceFriendlySize());
+			}
+			else {
+				label = i18n("%1 Fixed Storage Device").arg(deviceFriendlySize());
+			}
+		}
 	}
-	else if (isDiskOfType(TDEDiskDeviceType::Optical)) {
-		return i18n("Optical Drive");
+
+	if (!label.isNull()) {
+		return label;
 	}
-	else {
-		return TDEGenericDevice::friendlyName();
+
+	return friendlyDeviceType();
+}
+
+TQString TDEStorageDevice::friendlyDeviceType() {
+	TQString ret = i18n("Hard Disk Drive");
+
+	// Keep this in sync with TDEStorageDevice::icon(KIcon::StdSizes size) below
+	if (isDiskOfType(TDEDiskDeviceType::Floppy)) {
+		ret = i18n("Floppy Drive");
 	}
+	if (isDiskOfType(TDEDiskDeviceType::CDROM)) {
+		ret = i18n("CDROM Drive");
+	}
+	if (isDiskOfType(TDEDiskDeviceType::CDRW)) {
+		ret = i18n("CDRW Drive");
+	}
+	if (isDiskOfType(TDEDiskDeviceType::DVDROM)) {
+		ret = i18n("DVD Drive");
+	}
+	if (isDiskOfType(TDEDiskDeviceType::DVDRW) || isDiskOfType(TDEDiskDeviceType::DVDRAM)) {
+		ret = i18n("DVDRW Drive");
+	}
+	if (isDiskOfType(TDEDiskDeviceType::DVDRW)) {
+		ret = i18n("DVDRW Drive");
+	}
+	if (isDiskOfType(TDEDiskDeviceType::DVDRAM)) {
+		ret = i18n("DVDRAM Drive");
+	}
+	if (isDiskOfType(TDEDiskDeviceType::Zip)) {
+		ret = i18n("Zip Drive");
+	}
+
+	if (isDiskOfType(TDEDiskDeviceType::HDD)) {
+		ret = i18n("Hard Disk Drive");
+		if (checkDiskStatus(TDEDiskDeviceStatus::Removable)) {
+			ret = i18n("Removable Storage");
+		}
+		if (isDiskOfType(TDEDiskDeviceType::CompactFlash)) {
+			ret = i18n("Compact Flash");
+		}
+		if (isDiskOfType(TDEDiskDeviceType::MemoryStick)) {
+			ret = i18n("Memory Stick");
+		}
+	}
+
+	if (isDiskOfType(TDEDiskDeviceType::RAM)) {
+		ret = i18n("Random Access Memory");
+	}
+	if (isDiskOfType(TDEDiskDeviceType::Loop)) {
+		ret = i18n("Loop Device");
+	}
+
+	return ret;
 }
 
 TQPixmap TDEStorageDevice::icon(KIcon::StdSizes size) {
@@ -374,17 +435,14 @@ TQPixmap TDEStorageDevice::icon(KIcon::StdSizes size) {
 	if (isDiskOfType(TDEDiskDeviceType::DVDROM)) {
 		ret = DesktopIcon("dvd_unmount", size);
 	}
-	if (isDiskOfType(TDEDiskDeviceType::DVDRW) || isDiskOfType(TDEDiskDeviceType::DVDRAM)) {
+	if (isDiskOfType(TDEDiskDeviceType::DVDRW)) {
+		ret = DesktopIcon("dvd_unmount", size);
+	}
+	if (isDiskOfType(TDEDiskDeviceType::DVDRAM)) {
 		ret = DesktopIcon("dvd_unmount", size);
 	}
 	if (isDiskOfType(TDEDiskDeviceType::Zip)) {
 		ret = DesktopIcon("zip_unmount", size);
-	}
-	if (isDiskOfType(TDEDiskDeviceType::RAM)) {
-		ret = DesktopIcon("memory", size);
-	}
-	if (isDiskOfType(TDEDiskDeviceType::Loop)) {
-		ret = DesktopIcon("blockdevice", size);
 	}
 
 	if (isDiskOfType(TDEDiskDeviceType::HDD)) {
@@ -398,6 +456,13 @@ TQPixmap TDEStorageDevice::icon(KIcon::StdSizes size) {
 		if (isDiskOfType(TDEDiskDeviceType::MemoryStick)) {
 			ret = DesktopIcon("memory_stick_unmount", size);
 		}
+	}
+
+	if (isDiskOfType(TDEDiskDeviceType::RAM)) {
+		ret = DesktopIcon("memory", size);
+	}
+	if (isDiskOfType(TDEDiskDeviceType::Loop)) {
+		ret = DesktopIcon("blockdevice", size);
 	}
 
 	return ret;
@@ -1560,7 +1625,12 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			}
 		}
 		else if (devicesubsystem == "tty") {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::TextIO);
+			if (devicenode.contains("/ttyS")) {
+				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Serial);
+			}
+			else {
+				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::TextIO);
+			}
 		}
 		else if (devicesubsystem == "thermal") {
 			// FIXME

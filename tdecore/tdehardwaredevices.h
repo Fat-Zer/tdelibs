@@ -371,7 +371,7 @@ class TDECORE_EXPORT TDEGenericDevice
 		/**
 		*  @return a TQString containing the friendly type name
 		*/
-		TQString friendlyDeviceType();
+		virtual TQString friendlyDeviceType();
 
 		/**
 		*  @return a TQString containing the device bus ID, if any
@@ -592,6 +592,13 @@ class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 		* This method overrides TDEGenericDevice::friendlyName()
 		*/
 		TQString friendlyName();
+
+		/**
+		*  @return a TQString containing the friendly type name
+		*
+		* This method overrides TDEGenericDevice::friendlyDeviceType()
+		*/
+		TQString friendlyDeviceType();
 
 	private:
 		TDEDiskDeviceType::TDEDiskDeviceType m_diskType;
