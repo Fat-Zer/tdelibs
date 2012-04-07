@@ -77,6 +77,7 @@ enum TDEGenericDeviceType {
 	PNP,
 	OtherACPI,
 	OtherUSB,
+	OtherMultimedia,
 	OtherPeripheral,
 	OtherSensor,
 	OtherVirtual,

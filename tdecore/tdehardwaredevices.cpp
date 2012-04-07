@@ -1149,6 +1149,9 @@ TDEGenericDeviceType::TDEGenericDeviceType readGenericDeviceTypeFromString(TQStr
 	else if (query == "OtherUSB") {
 		ret = TDEGenericDeviceType::OtherUSB;
 	}
+	else if (query == "OtherMultimedia") {
+		ret = TDEGenericDeviceType::OtherMultimedia;
+	}
 	else if (query == "OtherPeripheral") {
 		ret = TDEGenericDeviceType::OtherPeripheral;
 	}
@@ -1658,7 +1661,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::GPU);
 			}
 			if (devicepciclass.startsWith("04")) {
-				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Sound);	// FIXME Technically this code is for "multimedia"
+				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::OtherMultimedia);
 			}
 			if (devicepciclass.startsWith("05")) {
 				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::RAM);
@@ -1954,6 +1957,12 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		}
 
 		sdevice->setDiskLabel(disklabel);
+	}
+
+	if (device->type() == TDEGenericDeviceType::Network) {
+		// Network devices don't have devices nodes per se, but we can at least return the Linux network name...
+		devicenode = systempath;
+		devicenode.remove(0, devicenode.findRev("/")+1);
 	}
 
 	// Set basic device information again, as some information may have changed
@@ -2458,6 +2467,9 @@ TQString TDEHardwareDevices::getFriendlyDeviceTypeStringFromType(TDEGenericDevic
 	else if (query == TDEGenericDeviceType::OtherUSB) {
 		ret = i18n("Other USB");
 	}
+	else if (query == TDEGenericDeviceType::OtherMultimedia) {
+		ret = i18n("Other Multimedia");
+	}
 	else if (query == TDEGenericDeviceType::OtherPeripheral) {
 		ret = i18n("Other Peripheral");
 	}
@@ -2582,6 +2594,9 @@ TQPixmap TDEHardwareDevices::getDeviceTypeIconFromType(TDEGenericDeviceType::TDE
 	}
 	else if (query == TDEGenericDeviceType::OtherUSB) {
 		ret = DesktopIcon("usb", size);
+	}
+	else if (query == TDEGenericDeviceType::OtherMultimedia) {
+		ret = DesktopIcon("kcmsound", size);
 	}
 	else if (query == TDEGenericDeviceType::OtherPeripheral) {
 		ret = DesktopIcon("kcmpci", size);
