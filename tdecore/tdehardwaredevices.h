@@ -636,10 +636,116 @@ class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 		TQStringList m_slaveDevices;
 };
 
+class TDECORE_EXPORT TDECPUDevice : public TDEGenericDevice
+{
+	public:
+		/**
+		*  Constructor.
+		*  @param Device type
+		*/
+		TDECPUDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn=TQString::null);
+		
+		/**
+		* Destructor.
+		*/
+		~TDECPUDevice();
+
+		/**
+		* @return a double with the current CPU frequency in MHz, if available
+		*/
+		double &frequency();
+
+		/**
+		* @param a double with the current CPU frequency in MHz, if available
+		*/
+		void setFrequency(double fr);
+
+		/**
+		* @return a double with the minimum CPU frequency in MHz, if available
+		*/
+		double &minFrequency();
+
+		/**
+		* @param a double with the minimum CPU frequency in MHz, if available
+		*/
+		void setMinFrequency(double fr);
+
+		/**
+		* @return a double with the maximum CPU frequency in MHz, if available
+		*/
+		double &maxFrequency();
+
+		/**
+		* @param a double with the maximum CPU frequency in MHz, if available
+		*/
+		void setMaxFrequency(double fr);
+
+		/**
+		* @return a double with the transition latency in ns, if available
+		*/
+		double &transitionLatency();
+
+		/**
+		* @param a double with the transition latency in ns, if available
+		*/
+		void setTransitionLatency(double tl);
+
+		/**
+		* @return a TQString with the current CPU governor policy, if available
+		*/
+		TQString &governor();
+
+		/**
+		* @param a TQString with the current CPU governor policy, if available
+		*/
+		void setGovernor(TQString gr);
+
+		/**
+		* @return a TQString with the current CPU scaling driver, if available
+		*/
+		TQString &scalingDriver();
+
+		/**
+		* @param a TQString with the current CPU scaling driver, if available
+		*/
+		void setScalingDriver(TQString dr);
+
+		/**
+		* @return a TQStringList with the IDs of all processors that are dependent on the frequency/power settings of this one, if available
+		*/
+		TQStringList &dependentProcessors();
+
+		/**
+		* @param a TQStringList with the IDs of all processors that are dependent on the frequency/power settings of this one, if available
+		*/
+		void setDependentProcessors(TQStringList dp);
+
+		/**
+		* @return a TQStringList with all valid scaling frequencies in Hz, if available
+		*/
+		TQStringList &availableFrequencies();
+
+		/**
+		* @param a TQStringList with all valid scaling frequencies in Hz, if available
+		*/
+		void setAvailableFrequencies(TQStringList af);
+
+	private:
+		double m_frequency;
+		double m_minfrequency;
+		double m_maxfrequency;
+		double m_transitionlatency;
+		TQString m_governor;
+		TQString m_scalingdriver;
+		TQStringList m_tiedprocs;
+		TQStringList m_frequencies;
+};
+
 typedef TQPtrList<TDEGenericDevice> TDEGenericHardwareList;
 typedef TQMap<TQString, TQString> TDEDeviceIDMap;
 
 class TQSocketNotifier;
+class KSimpleDirWatch;
 
 class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 {
@@ -750,6 +856,7 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 	private slots:
 		void processHotPluggedHardware();
 		void processModifiedMounts();
+		void processModifiedCPUs();
 
 	private:
 		void rescanDeviceInformation(TDEGenericDevice* hwdevice);
@@ -768,11 +875,14 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 		struct udev_monitor *m_udevMonitorStruct;
 		TDEGenericHardwareList m_deviceList;
 		int m_procMountsFd;
+		KSimpleDirWatch* m_cpuWatch;
+		TQTimer* m_cpuWatchTimer;
 
 		TQSocketNotifier* m_devScanNotifier;
 		TQSocketNotifier* m_mountScanNotifier;
 
 		TQStringList m_mountTable;
+		TQStringList m_cpuInfo;
 
 		TDEDeviceIDMap* pci_id_map;
 		TDEDeviceIDMap* usb_id_map;

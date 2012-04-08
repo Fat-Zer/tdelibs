@@ -27,6 +27,7 @@
 #include <klocale.h>
 #include <kconfig.h>
 #include <ktempfile.h>
+#include <ksimpledirwatch.h>
 #include <kstandarddirs.h>
 
 #include <libudev.h>
@@ -767,6 +768,76 @@ bool TDEStorageDevice::unmountDevice(TQString* errRet, int* retcode) {
 	return false;
 }
 
+TDECPUDevice::TDECPUDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
+}
+
+TDECPUDevice::~TDECPUDevice() {
+}
+
+double &TDECPUDevice::frequency() {
+	return m_frequency;
+}
+
+void TDECPUDevice::setFrequency(double fr) {
+	m_frequency = fr;
+}
+
+double &TDECPUDevice::minFrequency() {
+	return m_minfrequency;
+}
+
+void TDECPUDevice::setMinFrequency(double fr) {
+	m_minfrequency = fr;
+}
+
+double &TDECPUDevice::maxFrequency() {
+	return m_maxfrequency;
+}
+
+void TDECPUDevice::setMaxFrequency(double fr) {
+	m_maxfrequency = fr;
+}
+
+double &TDECPUDevice::transitionLatency() {
+	return m_transitionlatency;
+}
+
+void TDECPUDevice::setTransitionLatency(double tl) {
+	m_transitionlatency = tl;
+}
+
+TQString &TDECPUDevice::governor() {
+	return m_governor;
+}
+
+void TDECPUDevice::setGovernor(TQString gr) {
+	m_governor = gr;
+}
+
+TQString &TDECPUDevice::scalingDriver() {
+	return m_scalingdriver;
+}
+
+void TDECPUDevice::setScalingDriver(TQString dr) {
+	m_scalingdriver = dr;
+}
+
+TQStringList &TDECPUDevice::dependentProcessors() {
+	return m_tiedprocs;
+}
+
+void TDECPUDevice::setDependentProcessors(TQStringList dp) {
+	m_tiedprocs = dp;
+}
+
+TQStringList &TDECPUDevice::availableFrequencies() {
+	return m_frequencies;
+}
+
+void TDECPUDevice::setAvailableFrequencies(TQStringList af) {
+	m_frequencies = af;
+}
+
 TDEHardwareDevices::TDEHardwareDevices() {
 	// Initialize members
 	pci_id_map = 0;
@@ -808,12 +879,49 @@ TDEHardwareDevices::TDEHardwareDevices() {
 		m_mountScanNotifier = new TQSocketNotifier(m_procMountsFd, TQSocketNotifier::Exception, this);
 		connect( m_mountScanNotifier, TQT_SIGNAL(activated(int)), this, TQT_SLOT(processModifiedMounts()) );
 
+		// Read in the current cpu information
+		// Yes, a race condition exists between this and the cpu monitor start below, but it shouldn't be a problem 99.99% of the time
+		m_cpuInfo.clear();
+		TQFile cpufile( "/proc/cpuinfo" );
+		if ( cpufile.open( IO_ReadOnly ) ) {
+			TQTextStream stream( &cpufile );
+			while ( !stream.atEnd() ) {
+				m_cpuInfo.append(stream.readLine());
+			}
+			cpufile.close();
+		}
+
+// [FIXME 0.01]
+// Apparently the Linux kernel just does not notify userspace applications of CPU frequency changes
+// This is STUPID, as it means I have to poll the CPU information structures with a 0.5 second or so timer just to keep the information up to date
+#if 0
+		// Monitor for changed cpu information
+		// Watched directories are set up during the initial CPU scan
+		m_cpuWatch = new KSimpleDirWatch(this);
+		connect( m_cpuWatch, TQT_SIGNAL(dirty(const TQString &)), this, TQT_SLOT(processModifiedCPUs()) );
+#else
+		m_cpuWatchTimer = new TQTimer(this);
+		connect( m_cpuWatchTimer, SIGNAL(timeout()), this, SLOT(processModifiedCPUs()) );
+		TQDir nodezerocpufreq("/sys/devices/system/cpu/cpu0/cpufreq");
+		if (nodezerocpufreq.exists()) {
+			m_cpuWatchTimer->start( 500, FALSE ); // 0.5 second repeating timer
+		}
+#endif
+
 		// Update internal device information
 		queryHardwareInformation();
 	}
 }
 
 TDEHardwareDevices::~TDEHardwareDevices() {
+// [FIXME 0.01]
+#if 0
+	// Stop CPU scanning
+	m_cpuWatch->stopScan();
+#else
+	m_cpuWatchTimer->stop();
+#endif
+
 	// Stop mount scanning
 	close(m_procMountsFd);
 
@@ -942,6 +1050,158 @@ void TDEHardwareDevices::processHotPluggedHardware() {
 					break;
 				}
 			}
+		}
+	}
+}
+
+void TDEHardwareDevices::processModifiedCPUs() {
+	// Detect what changed between the old cpu information and the new information,
+	// and emit appropriate events
+
+	// Read new CPU information table
+	m_cpuInfo.clear();
+	TQFile cpufile( "/proc/cpuinfo" );
+	if ( cpufile.open( IO_ReadOnly ) ) {
+		TQTextStream stream( &cpufile );
+		while ( !stream.atEnd() ) {
+			m_cpuInfo.append(stream.readLine());
+		}
+		cpufile.close();
+	}
+
+	// Parse CPU information table
+	TDECPUDevice *cdevice;
+	cdevice = 0;
+	bool modified = false;
+
+	TQString curline;
+	int processorNumber = 0;
+	int processorCount = 0;
+	for (TQStringList::Iterator cpuit = m_cpuInfo.begin(); cpuit != m_cpuInfo.end(); ++cpuit) {
+		// WARNING This routine assumes that "processor" is always the first entry in /proc/cpuinfo!
+		curline = *cpuit;
+		if (curline.startsWith("processor")) {
+			curline.remove(0, curline.find(":")+1);
+			curline = curline.stripWhiteSpace();
+			processorNumber = curline.toInt();
+			cdevice = dynamic_cast<TDECPUDevice*>(findBySystemPath(TQString("/sys/devices/system/cpu/cpu%1").arg(processorNumber)));
+		}
+		if (curline.startsWith("model name")) {
+			curline.remove(0, curline.find(":")+1);
+			curline = curline.stripWhiteSpace();
+			if (cdevice->name() != curline) modified = true;
+			cdevice->setName(curline);
+		}
+		if (curline.startsWith("cpu MHz")) {
+			curline.remove(0, curline.find(":")+1);
+			curline = curline.stripWhiteSpace();
+			if (cdevice->frequency() != curline.toDouble()) modified = true;
+			cdevice->setFrequency(curline.toDouble());
+		}
+		if (curline.startsWith("vendor_id")) {
+			curline.remove(0, curline.find(":")+1);
+			curline = curline.stripWhiteSpace();
+			if (cdevice->vendorName() != curline) modified = true;
+			cdevice->setVendorName(curline);
+			if (cdevice->vendorEncoded() != curline) modified = true;
+			cdevice->setVendorEncoded(curline);
+		}
+	}
+
+	processorCount = processorNumber+1;
+
+	// Read in other information from cpufreq, if available
+	for (processorNumber=0; processorNumber<processorCount; processorNumber++) {
+		cdevice = dynamic_cast<TDECPUDevice*>(findBySystemPath(TQString("/sys/devices/system/cpu/cpu%1").arg(processorNumber)));
+		TQDir cpufreq_dir(TQString("/sys/devices/system/cpu/cpu%1/cpufreq").arg(processorNumber));
+		TQString scalinggovernor;
+		TQString scalingdriver;
+		double minfrequency = -1;
+		double maxfrequency = -1;
+		double trlatency = -1;
+		TQStringList affectedcpulist;
+		TQStringList frequencylist;
+		if (cpufreq_dir.exists()) {
+			TQString nodename = cpufreq_dir.path();
+			nodename.append("/scaling_governor");
+			TQFile scalinggovernorfile(nodename);
+			if (scalinggovernorfile.open(IO_ReadOnly)) {
+				TQTextStream stream( &scalinggovernorfile );
+				scalinggovernor = stream.readLine();
+				scalinggovernorfile.close();
+			}
+			nodename = cpufreq_dir.path();
+			nodename.append("/scaling_driver");
+			TQFile scalingdriverfile(nodename);
+			if (scalingdriverfile.open(IO_ReadOnly)) {
+				TQTextStream stream( &scalingdriverfile );
+				scalingdriver = stream.readLine();
+				scalingdriverfile.close();
+			}
+			nodename = cpufreq_dir.path();
+			nodename.append("/scaling_min_freq");
+			TQFile minfrequencyfile(nodename);
+			if (minfrequencyfile.open(IO_ReadOnly)) {
+				TQTextStream stream( &minfrequencyfile );
+				minfrequency = stream.readLine().toDouble()/1000.0;
+				minfrequencyfile.close();
+			}
+			nodename = cpufreq_dir.path();
+			nodename.append("/scaling_max_freq");
+			TQFile maxfrequencyfile(nodename);
+			if (maxfrequencyfile.open(IO_ReadOnly)) {
+				TQTextStream stream( &maxfrequencyfile );
+				maxfrequency = stream.readLine().toDouble()/1000.0;
+				maxfrequencyfile.close();
+			}
+			nodename = cpufreq_dir.path();
+			nodename.append("/cpuinfo_transition_latency");
+			TQFile trlatencyfile(nodename);
+			if (trlatencyfile.open(IO_ReadOnly)) {
+				TQTextStream stream( &trlatencyfile );
+				trlatency = stream.readLine().toDouble()/1000.0;
+				trlatencyfile.close();
+			}
+			nodename = cpufreq_dir.path();
+			nodename.append("/affected_cpus");
+			TQFile tiedcpusfile(nodename);
+			if (tiedcpusfile.open(IO_ReadOnly)) {
+				TQTextStream stream( &tiedcpusfile );
+				affectedcpulist = TQStringList::split(" ", stream.readLine());
+				tiedcpusfile.close();
+			}
+			nodename = cpufreq_dir.path();
+			nodename.append("/scaling_available_frequencies");
+			TQFile availfreqsfile(nodename);
+			if (availfreqsfile.open(IO_ReadOnly)) {
+				TQTextStream stream( &availfreqsfile );
+				frequencylist = TQStringList::split(" ", stream.readLine());
+				availfreqsfile.close();
+			}
+		}
+
+		// Update CPU information structure
+		if (cdevice->governor() != scalinggovernor) modified = true;
+		cdevice->setGovernor(scalinggovernor);
+		if (cdevice->scalingDriver() != scalingdriver) modified = true;
+		cdevice->setScalingDriver(scalingdriver);
+		if (cdevice->minFrequency() != minfrequency) modified = true;
+		cdevice->setMinFrequency(minfrequency);
+		if (cdevice->maxFrequency() != maxfrequency) modified = true;
+		cdevice->setMaxFrequency(maxfrequency);
+		if (cdevice->transitionLatency() != trlatency) modified = true;
+		cdevice->setTransitionLatency(trlatency);
+		if (cdevice->dependentProcessors().join(" ") != affectedcpulist.join(" ")) modified = true;
+		cdevice->setDependentProcessors(affectedcpulist);
+		if (cdevice->availableFrequencies().join(" ") != frequencylist.join(" ")) modified = true;
+		cdevice->setAvailableFrequencies(frequencylist);
+	}
+
+	if (modified) {
+		for (processorNumber=0; processorNumber<processorCount; processorNumber++) {
+			TDEGenericDevice* hwdevice = findBySystemPath(TQString("/sys/devices/system/cpu/cpu%1").arg(processorNumber));
+			// Signal new information available
+			emit hardwareUpdated(hwdevice);
 		}
 	}
 }
@@ -2325,22 +2585,23 @@ void TDEHardwareDevices::addCoreSystemDevices() {
 				line.remove(0, line.find(":")+1);
 				line = line.stripWhiteSpace();
 				processorNumber = line.toInt();
-				hwdevice = new TDEGenericDevice(TDEGenericDeviceType::CPU);
+				hwdevice = new TDECPUDevice(TDEGenericDeviceType::CPU);
 				hwdevice->setSystemPath(TQString("/sys/devices/system/cpu/cpu%1").arg(processorNumber));
 				m_deviceList.append(hwdevice);
-			}
-			if (line.startsWith("model name")) {
-				line.remove(0, line.find(":")+1);
-				line = line.stripWhiteSpace();
-				hwdevice->setName(line);
+#if 0
+				// Set up CPU information monitor
+				// The only way CPU information can be changed is if something changes in the cpufreq node
+				// This may change in the future, but for now it is a fairly good assumption
+				m_cpuWatch->addDir(TQString("/sys/devices/system/cpu/cpu%1/cpufreq").arg(processorNumber));
+#endif
 			}
 			lines += line;
 		}
 		file.close();
 	}
 
-	// FIXME
-	// For each CPU, look for cpufreq and parse as much information as possible
+	// Populate CPU information
+	processModifiedCPUs();
 }
 
 TQString TDEHardwareDevices::findPCIDeviceName(TQString vendorid, TQString modelid, TQString subvendorid, TQString submodelid) {

@@ -123,7 +123,7 @@ set( ${target}_SRCS
   ktempdir.cpp kshell.cpp kmountpoint.cpp kcalendarsystemjalali.cpp
   kprotocolinfo_tdecore.cpp kprotocolinfofactory.cpp kxerrorhandler.cpp
   kuser.cpp kconfigskeleton.cpp kconfigdialogmanager.cpp klockfile.cpp
-  kqiodevicegzip_p.cpp ktimezones.cpp tdehardwaredevices.cpp
+  kqiodevicegzip_p.cpp ktimezones.cpp tdehardwaredevices.cpp ksimpledirwatch.cpp
 )
 
 tde_add_library( ${target} SHARED AUTOMOC
