@@ -54,6 +54,15 @@
 // This command will greatly help when attempting to find properties to distinguish one device from another
 // udevadm info --query=all --path=/sys/....
 
+TDESensorCluster::TDESensorCluster() {
+	label = TQString::null;
+	current = -1;
+	minimum = -1;
+	maximum = -1;
+	warning = -1;
+	critical = -1;
+}
+
 TDEGenericDevice::TDEGenericDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) {
 	m_deviceType = dt;
 	m_deviceName = dn;
@@ -253,11 +262,17 @@ TQString TDEGenericDevice::friendlyName() {
 			m_friendlyName = KGlobal::hardwareDevices()->findUSBDeviceName(m_vendorID, m_modelID, m_subvendorID, m_submodelID);
 		}
 		else {
-			TQString pnpgentype = systemPath();
-			pnpgentype.remove(0, pnpgentype.findRev("/")+1);
+			TQString acpigentype = systemPath();
+			acpigentype.remove(0, acpigentype.findRev("/")+1);
+			TQString pnpgentype = acpigentype;
 			pnpgentype.truncate(pnpgentype.find(":"));
 			if (pnpgentype.startsWith("PNP")) {
 				m_friendlyName = KGlobal::hardwareDevices()->findPNPDeviceName(pnpgentype);
+			}
+			else if (acpigentype.startsWith("device:")) {
+				acpigentype.remove(0, acpigentype.findRev(":")+1);
+				acpigentype.prepend("0x");
+				m_friendlyName = i18n("ACPI Node %1").arg(acpigentype.toUInt(0,0));
 			}
 		}
 	}
@@ -267,6 +282,24 @@ TQString TDEGenericDevice::friendlyName() {
 		// Guess by type
 		if (type() == TDEGenericDeviceType::CPU) {
 			m_friendlyName = name();
+		}
+		else if (type() == TDEGenericDeviceType::Event) {
+			// Use parent node name
+			if (m_parentDevice) {
+				return m_parentDevice->friendlyName();
+			}
+			else {
+				m_friendlyName = i18n("Generic Event Device");
+			}
+		}
+		else if (type() == TDEGenericDeviceType::Input) {
+			// Use parent node name
+			if (m_parentDevice) {
+				return m_parentDevice->friendlyName();
+			}
+			else {
+				m_friendlyName = i18n("Generic Input Device");
+			}
 		}
 		// Guess by driver
 		else if (!m_deviceDriver.isNull()) {
@@ -836,6 +869,20 @@ TQStringList &TDECPUDevice::availableFrequencies() {
 
 void TDECPUDevice::setAvailableFrequencies(TQStringList af) {
 	m_frequencies = af;
+}
+
+TDESensorDevice::TDESensorDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
+}
+
+TDESensorDevice::~TDESensorDevice() {
+}
+
+TDESensorClusterMap TDESensorDevice::values() {
+	return m_sensorValues;
+}
+
+void TDESensorDevice::setValues(TDESensorClusterMap cl) {
+	m_sensorValues = cl;
 }
 
 TDEHardwareDevices::TDEHardwareDevices() {
@@ -1526,6 +1573,12 @@ TDEGenericDeviceType::TDEGenericDeviceType readGenericDeviceTypeFromString(TQStr
 	else if (query == "Platform") {
 		ret = TDEGenericDeviceType::Platform;
 	}
+	else if (query == "Event") {
+		ret = TDEGenericDeviceType::Event;
+	}
+	else if (query == "Input") {
+		ret = TDEGenericDeviceType::Input;
+	}
 	else if (query == "PNP") {
 		ret = TDEGenericDeviceType::PNP;
 	}
@@ -1844,12 +1897,13 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 	// Go after it manually...
 	if (devicevendorid.isNull() || devicemodelid.isNull()) {
 		if (devicemodalias != TQString::null) {
-			int vloc = devicemodalias.find("v");
-			int dloc = devicemodalias.find("d", vloc);
-			int svloc = devicemodalias.find("sv");
-			int sdloc = devicemodalias.find("sd", vloc);
 			// For added fun the device string lengths differ between pci and usb
 			if (devicemodalias.startsWith("pci")) {
+				int vloc = devicemodalias.find("v");
+				int dloc = devicemodalias.find("d", vloc);
+				int svloc = devicemodalias.find("sv");
+				int sdloc = devicemodalias.find("sd", vloc);
+
 				devicevendorid = devicemodalias.mid(vloc+1, 8).lower();
 				devicemodelid = devicemodalias.mid(dloc+1, 8).lower();
 				if (svloc != -1) {
@@ -1862,6 +1916,11 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 				devicesubmodelid.remove(0,4);
 			}
 			if (devicemodalias.startsWith("usb")) {
+				int vloc = devicemodalias.find("v");
+				int dloc = devicemodalias.find("p", vloc);
+				int svloc = devicemodalias.find("sv");
+				int sdloc = devicemodalias.find("sp", vloc);
+
 				devicevendorid = devicemodalias.mid(vloc+1, 4).lower();
 				devicemodelid = devicemodalias.mid(dloc+1, 4).lower();
 				if (svloc != -1) {
@@ -1901,11 +1960,43 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 
 	// Classify generic device type and create appropriate object
 
-	// Pull out all event special devices and stuff them under Platform
+	// Pull out all event special devices and stuff them under Event
 	TQString syspath_tail = systempath.lower();
 	syspath_tail.remove(0, syspath_tail.findRev("/")+1);
 	if (syspath_tail.startsWith("event")) {
-		if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+		if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Event);
+	}
+	// Pull out all input special devices and stuff them under Input
+	if (syspath_tail.startsWith("input")) {
+		if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Input);
+	}
+
+	// Check for keyboard
+	// Linux doesn't actually ID the keyboard device itself as such, it instead IDs the input device that is underneath the actual keyboard itseld
+	// Therefore we need to scan <syspath>/input/input* for the ID_INPUT_KEYBOARD attribute
+	bool is_keyboard = false;
+	TQString inputtopdirname = udev_device_get_syspath(dev);
+	inputtopdirname.append("/input/");
+	TQDir inputdir(inputtopdirname);
+	inputdir.setFilter(TQDir::All);
+	const TQFileInfoList *dirlist = inputdir.entryInfoList();
+	if (dirlist) {
+		TQFileInfoListIterator inputdirsit(*dirlist);
+		TQFileInfo *dirfi;
+		while ( (dirfi = inputdirsit.current()) != 0 ) {
+			if ((dirfi->fileName() != ".") && (dirfi->fileName() != "..")) {
+				struct udev_device *slavedev;
+				slavedev = udev_device_new_from_syspath(m_udevStruct, (inputtopdirname + dirfi->fileName()).ascii());
+				if (udev_device_get_property_value(slavedev, "ID_INPUT_KEYBOARD") != 0) {
+					is_keyboard = true;
+				}
+				udev_device_unref(slavedev);
+			}
+			++inputdirsit;
+		}
+	}
+	if (is_keyboard) {
+		if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Keyboard);
 	}
 
 	// Classify specific known devices
@@ -1942,7 +2033,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 					if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Power);
 				}
 				else if (pnpgentype == "PNP0C11") {
-					if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::ThermalSensor);
+					if (!device) device = new TDESensorDevice(TDEGenericDeviceType::ThermalSensor);
 				}
 				else {
 					if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::OtherACPI);
@@ -1993,7 +2084,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		else if (devicesubsystem == "hwmon") {
 			// FIXME
 			// This might pick up thermal sensors
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::OtherSensor);
+			if (!device) device = new TDESensorDevice(TDEGenericDeviceType::OtherSensor);
 		}
 	}
 
@@ -2062,7 +2153,8 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::PNP);
 		}
 		if ((devicesubsystem == "hid")
-			|| (devicesubsystem == "hidraw")) {
+			|| (devicesubsystem == "hidraw")
+			|| (devicesubsystem == "usbhid")) {
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::HID);
 		}
 		if (devicesubsystem == "power_supply") {
@@ -2422,6 +2514,57 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		// Network devices don't have devices nodes per se, but we can at least return the Linux network name...
 		devicenode = systempath;
 		devicenode.remove(0, devicenode.findRev("/")+1);
+	}
+
+	if ((device->type() == TDEGenericDeviceType::OtherSensor) || (device->type() == TDEGenericDeviceType::ThermalSensor)) {
+		// Populate all sensor values
+		TDESensorClusterMap sensors;
+		TQString valuesnodename = systempath + "/";
+		TQDir valuesdir(valuesnodename);
+		valuesdir.setFilter(TQDir::All);
+		TQString nodename;
+		const TQFileInfoList *dirlist = valuesdir.entryInfoList();
+		if (dirlist) {
+			TQFileInfoListIterator valuesdirit(*dirlist);
+			TQFileInfo *dirfi;
+			while ( (dirfi = valuesdirit.current()) != 0 ) {
+				nodename = dirfi->fileName();
+				if (nodename.contains("_")) {
+					TQFile file( valuesnodename + nodename );
+					if ( file.open( IO_ReadOnly ) ) {
+						TQTextStream stream( &file );
+						TQString line;
+						line = stream.readLine();
+						TQStringList sensornodelist = TQStringList::split("_", nodename);
+						TQString sensornodename = *(sensornodelist.at(0));
+						TQString sensornodetype = *(sensornodelist.at(1));
+						if (sensornodetype == "label") {
+							sensors[sensornodename].label = line;
+						}
+						if (sensornodetype == "input") {
+							sensors[sensornodename].current = line.toDouble();
+						}
+						if (sensornodetype == "min") {
+							sensors[sensornodename].minimum = line.toDouble();
+						}
+						if (sensornodetype == "max") {
+							sensors[sensornodename].maximum = line.toDouble();
+						}
+						if (sensornodetype == "warn") {
+							sensors[sensornodename].warning = line.toDouble();
+						}
+						if (sensornodetype == "crit") {
+							sensors[sensornodename].critical = line.toDouble();
+						}
+						file.close();
+					}
+				}
+				++valuesdirit;
+			}
+		}
+
+		TDESensorDevice* sdevice = dynamic_cast<TDESensorDevice*>(device);
+		sdevice->setValues(sensors);
 	}
 
 	// Set basic device information again, as some information may have changed
@@ -2994,6 +3137,12 @@ TQString TDEHardwareDevices::getFriendlyDeviceTypeStringFromType(TDEGenericDevic
 	else if (query == TDEGenericDeviceType::Platform) {
 		ret = i18n("Platform");
 	}
+	else if (query == TDEGenericDeviceType::Event) {
+		ret = i18n("Platform Event");
+	}
+	else if (query == TDEGenericDeviceType::Input) {
+		ret = i18n("Platform Input");
+	}
 	else if (query == TDEGenericDeviceType::PNP) {
 		ret = i18n("Plug and Play");
 	}
@@ -3120,6 +3269,12 @@ TQPixmap TDEHardwareDevices::getDeviceTypeIconFromType(TDEGenericDeviceType::TDE
 		ret = DesktopIcon("kcmpci", size);
 	}
 	else if (query == TDEGenericDeviceType::Platform) {
+		ret = DesktopIcon("kcmsystem", size);
+	}
+	else if (query == TDEGenericDeviceType::Event) {
+		ret = DesktopIcon("kcmsystem", size);
+	}
+	else if (query == TDEGenericDeviceType::Input) {
 		ret = DesktopIcon("kcmsystem", size);
 	}
 	else if (query == TDEGenericDeviceType::PNP) {

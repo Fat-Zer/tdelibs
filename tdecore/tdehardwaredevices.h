@@ -74,6 +74,8 @@ enum TDEGenericDeviceType {
 	ThermalControl,
 	Bridge,
 	Platform,
+	Event,
+	Input,
 	PNP,
 	OtherACPI,
 	OtherUSB,
@@ -167,6 +169,22 @@ inline TDEDiskDeviceStatus operator~(TDEDiskDeviceStatus a)
 {
 	return static_cast<TDEDiskDeviceStatus>(~static_cast<int>(a));
 }
+};
+
+class TDECORE_EXPORT TDESensorCluster
+{
+	public:
+		/**
+		*  Constructor.
+		*/
+		TDESensorCluster();
+
+		TQString label;
+		double current;
+		double minimum;
+		double maximum;
+		double warning;
+		double critical;
 };
 
 class TDECORE_EXPORT TDEGenericDevice
@@ -739,6 +757,36 @@ class TDECORE_EXPORT TDECPUDevice : public TDEGenericDevice
 		TQString m_scalingdriver;
 		TQStringList m_tiedprocs;
 		TQStringList m_frequencies;
+};
+
+typedef TQMap<TQString, TDESensorCluster> TDESensorClusterMap;
+
+class TDECORE_EXPORT TDESensorDevice : public TDEGenericDevice
+{
+	public:
+		/**
+		*  Constructor.
+		*  @param Device type
+		*/
+		TDESensorDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn=TQString::null);
+		
+		/**
+		* Destructor.
+		*/
+		~TDESensorDevice();
+
+		/**
+		* @return a TDESensorClusterMap with the current sensor values
+		*/
+		TDESensorClusterMap values();
+
+		/**
+		* @param a TDESensorClusterMap with the current sensor values
+		*/
+		void setValues(TDESensorClusterMap cl);
+
+	private:
+		TDESensorClusterMap m_sensorValues;
 };
 
 typedef TQPtrList<TDEGenericDevice> TDEGenericHardwareList;

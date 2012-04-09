@@ -80,13 +80,14 @@ PNP0802	Microsoft® Sound System compatible device
 PNP0900	VGA Compatible Display Controller
 PNP09FF	Plug and Play Monitor (VESA DDC)
 
-PNP0A00	ISA Bus
-PNP0A01	EISA Bus
-PNP0A02	MCA Bus
-PNP0A03	PCI Bus
+PNP0A00	ISA Root Bus
+PNP0A01	EISA Root Bus
+PNP0A02	MCA Root Bus
+PNP0A03	PCI Root Bus
 PNP0A04	VESA/VL Bus
-PNP0A05	Generic ACPI Bus
-PNP0A06	Generic ACPI Extended-IO Bus (EIO bus)
+PNP0A05	Generic ACPI Root Bus
+PNP0A06	Generic ACPI Extended-IO Root Bus (EIO Root Bus)
+PNP0A08	PCI Express Root Bus
 
 PNP0800	AT-style Speaker
 PNP0B00	AT Real-Time Clock
