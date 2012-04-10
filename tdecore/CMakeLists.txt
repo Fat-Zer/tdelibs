@@ -33,11 +33,13 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/kio/kio
   ${LIBART_INCLUDE_DIRS}
   ${LIBIDN_INCLUDE_DIRS}
+  ${GAMIN_INCLUDEDIR}
 )
 
 link_directories(
   ${TQT_LIBRARY_DIRS}
   ${LIBIDN_LIBRARY_DIRS}
+  ${GAMIN_LIBDIR}
 )
 
 
@@ -130,7 +132,7 @@ tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 4.2.0
   EMBED tdecorenetwork-static
-  LINK ltdlc-static ${KDESVGICONS} DCOP-shared tdefx-shared ${ZLIB_LIBRARIES} ${LIBIDN_LIBRARIES} ${XCOMPOSITE_LIBRARIES} ICE SM udev
+  LINK ltdlc-static ${KDESVGICONS} DCOP-shared tdefx-shared ${ZLIB_LIBRARIES} ${LIBIDN_LIBRARIES} ${XCOMPOSITE_LIBRARIES} ICE SM udev ${GAMIN_LIBRARIES}
   DEPENDENCIES dcopidl dcopidl2cpp
   DESTINATION ${LIB_INSTALL_DIR}
 )
