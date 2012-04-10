@@ -10,5 +10,8 @@
 #################################################
 
 
-add_subdirectory( classrules )
-add_subdirectory( pnpdev )
+##### other data ################################
+
+install( FILES
+    pnp.ids
+  DESTINATION ${DATA_INSTALL_DIR}/tdehwlib/pnpdev )

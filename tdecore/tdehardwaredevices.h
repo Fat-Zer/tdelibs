@@ -74,6 +74,8 @@ enum TDEGenericDeviceType {
 	ThermalControl,
 	Bridge,
 	Platform,
+	Event,
+	Input,
 	PNP,
 	OtherACPI,
 	OtherUSB,
@@ -149,6 +151,7 @@ enum TDEDiskDeviceStatus {
 	UsedByDevice =		0x00000010,
 	UsesDevice =		0x00000020,
 	ContainsFilesystem =	0x00000040,
+	Hotpluggable =		0x00000080,
 	Other =			0x80000000
 };
 
@@ -166,6 +169,22 @@ inline TDEDiskDeviceStatus operator~(TDEDiskDeviceStatus a)
 {
 	return static_cast<TDEDiskDeviceStatus>(~static_cast<int>(a));
 }
+};
+
+class TDECORE_EXPORT TDESensorCluster
+{
+	public:
+		/**
+		*  Constructor.
+		*/
+		TDESensorCluster();
+
+		TQString label;
+		double current;
+		double minimum;
+		double maximum;
+		double warning;
+		double critical;
 };
 
 class TDECORE_EXPORT TDEGenericDevice
@@ -299,6 +318,26 @@ class TDECORE_EXPORT TDEGenericDevice
 		void setModelID(TQString id);
 
 		/**
+		* @return a TQString with the encoded vendor, if any
+		*/
+		TQString &vendorEncoded();
+
+		/**
+		* @param a TQString with the encoded vendor, if any
+		*/
+		void setVendorEncoded(TQString id);
+
+		/**
+		* @return a TQString with the encoded model, if any
+		*/
+		TQString &modelEncoded();
+
+		/**
+		* @param a TQString with the encoded model, if any
+		*/
+		void setModelEncoded(TQString id);
+
+		/**
 		* @return a TQString with the subvendor ID, if any
 		*/
 		TQString &subVendorID();
@@ -396,6 +435,8 @@ class TDECORE_EXPORT TDEGenericDevice
 		TQString m_uniqueID;
 		TQString m_vendorID;
 		TQString m_modelID;
+		TQString m_vendorenc;
+		TQString m_modelenc;
 		TQString m_subvendorID;
 		TQString m_submodelID;
 		TQString m_pciClass;
@@ -613,10 +654,146 @@ class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 		TQStringList m_slaveDevices;
 };
 
+class TDECORE_EXPORT TDECPUDevice : public TDEGenericDevice
+{
+	public:
+		/**
+		*  Constructor.
+		*  @param Device type
+		*/
+		TDECPUDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn=TQString::null);
+		
+		/**
+		* Destructor.
+		*/
+		~TDECPUDevice();
+
+		/**
+		* @return a double with the current CPU frequency in MHz, if available
+		*/
+		double &frequency();
+
+		/**
+		* @param a double with the current CPU frequency in MHz, if available
+		*/
+		void setFrequency(double fr);
+
+		/**
+		* @return a double with the minimum CPU frequency in MHz, if available
+		*/
+		double &minFrequency();
+
+		/**
+		* @param a double with the minimum CPU frequency in MHz, if available
+		*/
+		void setMinFrequency(double fr);
+
+		/**
+		* @return a double with the maximum CPU frequency in MHz, if available
+		*/
+		double &maxFrequency();
+
+		/**
+		* @param a double with the maximum CPU frequency in MHz, if available
+		*/
+		void setMaxFrequency(double fr);
+
+		/**
+		* @return a double with the transition latency in ns, if available
+		*/
+		double &transitionLatency();
+
+		/**
+		* @param a double with the transition latency in ns, if available
+		*/
+		void setTransitionLatency(double tl);
+
+		/**
+		* @return a TQString with the current CPU governor policy, if available
+		*/
+		TQString &governor();
+
+		/**
+		* @param a TQString with the current CPU governor policy, if available
+		*/
+		void setGovernor(TQString gr);
+
+		/**
+		* @return a TQString with the current CPU scaling driver, if available
+		*/
+		TQString &scalingDriver();
+
+		/**
+		* @param a TQString with the current CPU scaling driver, if available
+		*/
+		void setScalingDriver(TQString dr);
+
+		/**
+		* @return a TQStringList with the IDs of all processors that are dependent on the frequency/power settings of this one, if available
+		*/
+		TQStringList &dependentProcessors();
+
+		/**
+		* @param a TQStringList with the IDs of all processors that are dependent on the frequency/power settings of this one, if available
+		*/
+		void setDependentProcessors(TQStringList dp);
+
+		/**
+		* @return a TQStringList with all valid scaling frequencies in Hz, if available
+		*/
+		TQStringList &availableFrequencies();
+
+		/**
+		* @param a TQStringList with all valid scaling frequencies in Hz, if available
+		*/
+		void setAvailableFrequencies(TQStringList af);
+
+	private:
+		double m_frequency;
+		double m_minfrequency;
+		double m_maxfrequency;
+		double m_transitionlatency;
+		TQString m_governor;
+		TQString m_scalingdriver;
+		TQStringList m_tiedprocs;
+		TQStringList m_frequencies;
+};
+
+typedef TQMap<TQString, TDESensorCluster> TDESensorClusterMap;
+
+class TDECORE_EXPORT TDESensorDevice : public TDEGenericDevice
+{
+	public:
+		/**
+		*  Constructor.
+		*  @param Device type
+		*/
+		TDESensorDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn=TQString::null);
+		
+		/**
+		* Destructor.
+		*/
+		~TDESensorDevice();
+
+		/**
+		* @return a TDESensorClusterMap with the current sensor values
+		*/
+		TDESensorClusterMap values();
+
+		/**
+		* @param a TDESensorClusterMap with the current sensor values
+		*/
+		void setValues(TDESensorClusterMap cl);
+
+	private:
+		TDESensorClusterMap m_sensorValues;
+};
+
 typedef TQPtrList<TDEGenericDevice> TDEGenericHardwareList;
 typedef TQMap<TQString, TQString> TDEDeviceIDMap;
 
 class TQSocketNotifier;
+class KSimpleDirWatch;
 
 class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 {
@@ -697,6 +874,13 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 		TQString findUSBDeviceName(TQString vendorid, TQString modelid, TQString subvendorid, TQString submodelid);
 
 		/**
+		*  Look up the device in the system PNP database
+		*  @param pnpid a TQString containing the PNP ID
+		*  @return a TQString containing the device name, if found
+		*/
+		TQString findPNPDeviceName(TQString pnpid);
+
+		/**
 		*  Get a friendly string describing a device type
 		*  @param query a TDEGenericDeviceType::TDEGenericDeviceType specifying a device type
 		*  @return a TQString containing the friendly type name
@@ -720,6 +904,7 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 	private slots:
 		void processHotPluggedHardware();
 		void processModifiedMounts();
+		void processModifiedCPUs();
 
 	private:
 		void rescanDeviceInformation(TDEGenericDevice* hwdevice);
@@ -738,14 +923,18 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 		struct udev_monitor *m_udevMonitorStruct;
 		TDEGenericHardwareList m_deviceList;
 		int m_procMountsFd;
+		KSimpleDirWatch* m_cpuWatch;
+		TQTimer* m_cpuWatchTimer;
 
 		TQSocketNotifier* m_devScanNotifier;
 		TQSocketNotifier* m_mountScanNotifier;
 
 		TQStringList m_mountTable;
+		TQStringList m_cpuInfo;
 
 		TDEDeviceIDMap* pci_id_map;
 		TDEDeviceIDMap* usb_id_map;
+		TDEDeviceIDMap* pnp_id_map;
 
 	friend class TDEGenericDevice;
 	friend class TDEStorageDevice;
