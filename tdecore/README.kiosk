@@ -566,7 +566,7 @@ The following resources are defined:
 
 autostart - share/autostart
 data - share/apps
-html - share/doc/HTML
+html - share/doc/tde/HTML
 icon - share/icon
 config - share/config
 pixmap - share/pixmaps

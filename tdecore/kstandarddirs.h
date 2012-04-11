@@ -57,7 +57,7 @@ class KStandardDirsPrivate;
  * may be even more. Under these prefixes there are several well
  * defined suffixes where specific resource types are to be found.
  * For example, for the resource type "html" the suffixes could be
- * share/doc/HTML and share/doc/kde/HTML.
+ * share/doc/HTML and share/doc/tde/HTML.
  * So the search algorithm basically appends to each prefix each registered
  * suffix and tries to locate the file there.
  * To make the thing even more complex, it's also possible to register
@@ -506,7 +506,7 @@ public:
 	 * of what this is all about.
 	 *
 	 * @li data - share/apps
-	 * @li html - share/doc/HTML
+	 * @li html - share/doc/tde/HTML
 	 * @li icon - share/icon
 	 * @li config - share/config
 	 * @li pixmap - share/pixmaps

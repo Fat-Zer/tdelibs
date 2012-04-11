@@ -1030,7 +1030,7 @@ TQString KStandardDirs::kde_default(const char *type) {
     if (!strcmp(type, "html-bundle"))
 	return "share/doc-bundle/HTML/";
     if (!strcmp(type, "html"))
-	return "share/doc/kde/HTML/";
+	return "share/doc/tde/HTML/";
     if (!strcmp(type, "icon"))
 	return "share/icons/";
     if (!strcmp(type, "config"))
