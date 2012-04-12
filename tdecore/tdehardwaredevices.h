@@ -56,19 +56,21 @@ enum TDEGenericDeviceType {
 	Mouse,
 	Keyboard,
 	HID,
+	Monitor,
 	Network,
 	Printer,
 	Scanner,
 	Sound,
 	VideoCapture,
 	IEEE1394,
+	PCMCIA,
 	Camera,
 	TextIO,
 	Serial,
 	Parallel,
 	Peripheral,
 	Battery,
-	Power,
+	PowerSupply,
 	Dock,
 	ThermalSensor,
 	ThermalControl,
@@ -235,6 +237,16 @@ class TDECORE_EXPORT TDEGenericDevice
 		* @param a TQString with the vendor model, if any
 		*/
 		void setVendorModel(TQString vm);
+
+		/**
+		* @return a TQString with the serial number, if any
+		*/
+		TQString &serialNumber();
+
+		/**
+		* @param a TQString with the serial number, if any
+		*/
+		void setSerialNumber(TQString sn);
 
 		/**
 		* @return a TQString with a friendly name
@@ -431,6 +443,7 @@ class TDECORE_EXPORT TDEGenericDevice
 		TQString m_deviceNode;
 		TQString m_vendorName;
 		TQString m_vendorModel;
+		TQString m_serialNumber;
 		TQString m_deviceBus;
 		TQString m_uniqueID;
 		TQString m_vendorID;
@@ -759,6 +772,381 @@ class TDECORE_EXPORT TDECPUDevice : public TDEGenericDevice
 		TQStringList m_frequencies;
 };
 
+class TDECORE_EXPORT TDEBatteryDevice : public TDEGenericDevice
+{
+	public:
+		/**
+		*  Constructor.
+		*  @param Device type
+		*/
+		TDEBatteryDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn=TQString::null);
+		
+		/**
+		* Destructor.
+		*/
+		~TDEBatteryDevice();
+
+		/**
+		* @return a double with the current battery voltage, if available
+		*/
+		double voltage();
+
+		/**
+		* @param a double with the current battery voltage, if available
+		*/
+		void setVoltage(double vt);
+
+		/**
+		* @return a double with the minimum battery voltage, if available
+		*/
+		double minimumVoltage();
+
+		/**
+		* @param a double with the minimum battery voltage, if available
+		*/
+		void setMinimumVoltage(double vt);
+
+		/**
+		* @return a double with the maximum battery voltage, if available
+		*/
+		double maximumVoltage();
+
+		/**
+		* @param a double with the maximum battery voltage, if available
+		*/
+		void setMaximumVoltage(double vt);
+
+		/**
+		* @return a double with the designed maximum battery voltage, if available
+		*/
+		double maximumDesignVoltage();
+
+		/**
+		* @param a double with the designed maximum battery voltage, if available
+		*/
+		void setMaximumDesignVoltage(double vt);
+
+		/**
+		* @return a double with the current battery energy in watt-hours, if available
+		*/
+		double energy();
+
+		/**
+		* @param a double with the current battery energy in watt-hours, if available
+		*/
+		void setEnergy(double vt);
+
+		/**
+		* @return a double with the current battery alarm energy in watt-hours, if available
+		*/
+		double alarmEnergy();
+
+		/**
+		* @param a double with the current battery alarm energy in watt-hours, if available
+		*/
+		void setAlarmEnergy(double vt);
+
+		/**
+		* @return a double with the maximum battery energy in watt-hours, if available
+		*/
+		double maximumEnergy();
+
+		/**
+		* @param a double with the maximum battery energy in watt-hours, if available
+		*/
+		void setMaximumEnergy(double vt);
+
+		/**
+		* @return a double with the designed maximum battery energy in watt-hours, if available
+		*/
+		double maximumDesignEnergy();
+
+		/**
+		* @param a double with the designed maximum battery energy in watt-hours, if available
+		*/
+		void setMaximumDesignEnergy(double vt);
+
+		/**
+		* @return a double with the current battery discharge rate in volt-hours, if available
+		*/
+		double dischargeRate();
+
+		/**
+		* @param a double with the current battery discharge rate in volt-hours, if available
+		*/
+		void setDischargeRate(double vt);
+
+		/**
+		* @return a TQString with the battery technology, if available
+		*/
+		TQString &technology();
+
+		/**
+		* @param a TQString with the battery technology, if available
+		*/
+		void setTechnology(TQString tc);
+
+		/**
+		* @return a TQString with the battery status, if available
+		*/
+		TQString &status();
+
+		/**
+		* @param a TQString with the battery status, if available
+		*/
+		void setStatus(TQString tc);
+
+		/**
+		* @return TRUE if the battery is installed
+		*/
+		bool installed();
+
+		/**
+		* @param TRUE if the battery is installed
+		*/
+		void setInstalled(bool tc);
+
+		/**
+		* @return a double with the current battery charge in percent, if available
+		*/
+		double chargePercent();
+
+	private:
+		double m_currentVoltage;
+		double m_minimumVoltage;
+		double m_maximumVoltage;
+		double m_maximumDesignVoltage;
+		double m_alarmEnergy;
+		double m_currentEnergy;
+		double m_maximumEnergy;
+		double m_maximumDesignEnergy;
+		double m_dischargeRate;
+		TQString m_technology;
+		TQString m_status;
+		bool m_installed;
+};
+
+class TDECORE_EXPORT TDEMainsPowerDevice : public TDEGenericDevice
+{
+	public:
+		/**
+		*  Constructor.
+		*  @param Device type
+		*/
+		TDEMainsPowerDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn=TQString::null);
+		
+		/**
+		* Destructor.
+		*/
+		~TDEMainsPowerDevice();
+
+		/**
+		* @return TRUE if power supply is online via mains power, FALSE if not
+		*/
+		bool online();
+
+		/**
+		* @param TRUE if power supply is online via mains power, FALSE if not
+		*/
+		void setOnline(bool vt);
+
+	private:
+		bool m_online;
+};
+
+class TDECORE_EXPORT TDENetworkDevice : public TDEGenericDevice
+{
+	public:
+		/**
+		*  Constructor.
+		*  @param Device type
+		*/
+		TDENetworkDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn=TQString::null);
+		
+		/**
+		* Destructor.
+		*/
+		~TDENetworkDevice();
+
+		/**
+		* @return a TQString containing the network device's MAC address
+		*/
+		TQString macAddress();
+
+		/**
+		* @param ma a TQString containing the network device's MAC address
+		*/
+		void setMacAddress(TQString ma);
+
+		/**
+		* @return a TQString containing the network device's operational state
+		*/
+		TQString state();
+
+		/**
+		* @param st a TQString containing the network device's operational state
+		*/
+		void setState(TQString st);
+
+		/**
+		* @return TRUE if carrier is present, FALSE if not
+		*/
+		bool carrierPresent();
+
+		/**
+		* @param TRUE if carrier is present, FALSE if not
+		*/
+		void setCarrierPresent(bool cp);
+
+		/**
+		* @return TRUE if device is dormant, FALSE if not
+		*/
+		bool dormant();
+
+		/**
+		* @param TRUE if device is dormant, FALSE if not
+		*/
+		void setDormant(bool dm);
+
+		/**
+		* @return a TQString containing the network device's IPv4 address
+		*/
+		TQString ipV4Address();
+
+		/**
+		* @param ad a TQString containing the network device's IPv4 address
+		*/
+		void setIpV4Address(TQString ad);
+
+		/**
+		* @return a TQString containing the network device's IPv6 address
+		*/
+		TQString ipV6Address();
+
+		/**
+		* @param ad a TQString containing the network device's IPv6 address
+		*/
+		void setIpV6Address(TQString ad);
+
+		/**
+		* @return a TQString containing the network device's IPv4 netmask
+		*/
+		TQString ipV4Netmask();
+
+		/**
+		* @param nm a TQString containing the network device's IPv4 netmask
+		*/
+		void setIpV4Netmask(TQString nm);
+
+		/**
+		* @return a TQString containing the network device's IPv6 netmask
+		*/
+		TQString ipV6Netmask();
+
+		/**
+		* @param nm a TQString containing the network device's IPv6 netmask
+		*/
+		void setIpV6Netmask(TQString nm);
+
+		/**
+		* @return a TQString containing the network device's IPv4 broadcast
+		*/
+		TQString ipV4Broadcast();
+
+		/**
+		* @param br a TQString containing the network device's IPv4 broadcast
+		*/
+		void setIpV4Broadcast(TQString br);
+
+		/**
+		* @return a TQString containing the network device's IPv6 broadcast
+		*/
+		TQString ipV6Broadcast();
+
+		/**
+		* @param br a TQString containing the network device's IPv6 broadcast
+		*/
+		void setIpV6Broadcast(TQString br);
+
+		/**
+		* @return a TQString containing the network device's IPv4 destination
+		*/
+		TQString ipV4Destination();
+
+		/**
+		* @param ds a TQString containing the network device's IPv4 destination
+		*/
+		void setIpV4Destination(TQString ds);
+
+		/**
+		* @return a TQString containing the network device's IPv6 destination
+		*/
+		TQString ipV6Destination();
+
+		/**
+		* @param ds a TQString containing the network device's IPv6 destination
+		*/
+		void setIpV6Destination(TQString ds);
+
+		/**
+		* @return a double with the number of received bytes, if available
+		*/
+		double rxBytes();
+
+		/**
+		* @param rx a double with the number of received bytes, if available
+		*/
+		void setRxBytes(double rx);
+
+		/**
+		* @return a double with the number of transmitted bytes, if available
+		*/
+		double txBytes();
+
+		/**
+		* @param tx a double with the number of transmitted bytes, if available
+		*/
+		void setTxBytes(double tx);
+
+		/**
+		* @return a double with the number of received packets, if available
+		*/
+		double rxPackets();
+
+		/**
+		* @param rx a double with the number of received packets, if available
+		*/
+		void setRxPackets(double rx);
+
+		/**
+		* @return a double with the number of transmitted packets, if available
+		*/
+		double txPackets();
+
+		/**
+		* @param tx a double with the number of transmitted packets, if available
+		*/
+		void setTxPackets(double tx);
+
+	private:
+		TQString m_macAddress;
+		TQString m_state;
+		bool m_carrier;
+		bool m_dormant;
+		TQString m_ipV4Address;
+		TQString m_ipV6Address;
+		TQString m_ipV4Netmask;
+		TQString m_ipV6Netmask;
+		TQString m_ipV4Broadcast;
+		TQString m_ipV6Broadcast;
+		TQString m_ipV4Destination;
+		TQString m_ipV6Destination;
+		double m_rxbytes;
+		double m_txbytes;
+		double m_rxpackets;
+		double m_txpackets;
+};
+
 typedef TQMap<TQString, TDESensorCluster> TDESensorClusterMap;
 
 class TDECORE_EXPORT TDESensorDevice : public TDEGenericDevice
@@ -824,16 +1212,16 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 
 		/**
 		*  List all hardware capabilities on all devices
-		*  @return TQPtrList<TDEGenericDevice> containing all known hardware devices
+		*  @return TDEGenericHardwareList containing all known hardware devices
 		*/
-		TQPtrList<TDEGenericDevice> listAllPhysicalDevices();
+		TDEGenericHardwareList listAllPhysicalDevices();
 
 		/**
 		*  List all hardware capabilities on all devices
 		*  @param a TDEGenericDeviceType::TDEGenericDeviceType specifying the device class
-		*  @return TQPtrList<TDEGenericDevice> containing all known hardware devices
+		*  @return TDEGenericHardwareList containing all known hardware devices
 		*/
-		TQPtrList<TDEGenericDevice> listByDeviceClass(TDEGenericDeviceType::TDEGenericDeviceType cl);
+		TDEGenericHardwareList listByDeviceClass(TDEGenericDeviceType::TDEGenericDeviceType cl);
 
 		/**
 		*  Return the device with system path @arg syspath, or 0 if no device exists for that path
@@ -895,6 +1283,13 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 		*/
 		TQPixmap getDeviceTypeIconFromType(TDEGenericDeviceType::TDEGenericDeviceType query, KIcon::StdSizes size);
 
+		/**
+		*  Convert a byte count to human readable form
+		*  @param bytes a double containing the number of bytes
+		*  @return a TQString containing the human readable byte count
+		*/
+		static TQString bytesToFriendlySizeString(double bytes);
+
 	signals:
 		void hardwareAdded(TDEGenericDevice*);
 		void hardwareRemoved(TDEGenericDevice*);
@@ -905,6 +1300,7 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 		void processHotPluggedHardware();
 		void processModifiedMounts();
 		void processModifiedCPUs();
+		void processStatelessDevices();
 
 	private:
 		void rescanDeviceInformation(TDEGenericDevice* hwdevice);
@@ -925,6 +1321,7 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 		int m_procMountsFd;
 		KSimpleDirWatch* m_cpuWatch;
 		TQTimer* m_cpuWatchTimer;
+		TQTimer* m_deviceWatchTimer;
 
 		TQSocketNotifier* m_devScanNotifier;
 		TQSocketNotifier* m_mountScanNotifier;
