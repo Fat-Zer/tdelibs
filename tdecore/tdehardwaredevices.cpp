@@ -38,6 +38,9 @@
 #include <sys/ioctl.h>
 #include <linux/fs.h>
 
+// Backlight devices
+#include <linux/fb.h>
+
 // Network devices
 #include <sys/types.h>
 #include <ifaddrs.h>
@@ -63,6 +66,17 @@
 // NOTE TO DEVELOPERS
 // This command will greatly help when attempting to find properties to distinguish one device from another
 // udevadm info --query=all --path=/sys/....
+
+// This routine is courtsey of an answer on "Stack Overflow"
+// It takes an LSB-first int and makes it an MSB-first int (or vice versa)
+unsigned int reverse_bits(register unsigned int x)
+{
+	x = (((x & 0xaaaaaaaa) >> 1) | ((x & 0x55555555) << 1));
+	x = (((x & 0xcccccccc) >> 2) | ((x & 0x33333333) << 2));
+	x = (((x & 0xf0f0f0f0) >> 4) | ((x & 0x0f0f0f0f) << 4));
+	x = (((x & 0xff00ff00) >> 8) | ((x & 0x00ff00ff) << 8));
+	return((x >> 16) | (x << 16));
+}
 
 TDESensorCluster::TDESensorCluster() {
 	label = TQString::null;
@@ -93,7 +107,7 @@ TQString &TDEGenericDevice::name() {
 	return m_deviceName;
 }
 
-void TDEGenericDevice::setName(TQString dn) {
+void TDEGenericDevice::internalSetName(TQString dn) {
 	m_deviceName = dn;
 }
 
@@ -101,7 +115,7 @@ TQString &TDEGenericDevice::vendorName() {
 	return m_vendorName;
 }
 
-void TDEGenericDevice::setVendorName(TQString vn) {
+void TDEGenericDevice::internalSetVendorName(TQString vn) {
 	m_vendorName = vn;
 }
 
@@ -109,7 +123,7 @@ TQString &TDEGenericDevice::vendorModel() {
 	return m_vendorModel;
 }
 
-void TDEGenericDevice::setVendorModel(TQString vm) {
+void TDEGenericDevice::internalSetVendorModel(TQString vm) {
 	m_vendorModel = vm;
 }
 
@@ -117,7 +131,7 @@ TQString &TDEGenericDevice::serialNumber() {
 	return m_serialNumber;
 }
 
-void TDEGenericDevice::setSerialNumber(TQString sn) {
+void TDEGenericDevice::internalSetSerialNumber(TQString sn) {
 	m_serialNumber = sn;
 }
 
@@ -125,7 +139,7 @@ TQString &TDEGenericDevice::systemPath() {
 	return m_systemPath;
 }
 
-void TDEGenericDevice::setSystemPath(TQString sp) {
+void TDEGenericDevice::internalSetSystemPath(TQString sp) {
 	m_systemPath = sp;
 }
 
@@ -133,7 +147,7 @@ TQString &TDEGenericDevice::deviceNode() {
 	return m_deviceNode;
 }
 
-void TDEGenericDevice::setDeviceNode(TQString sn) {
+void TDEGenericDevice::internalSetDeviceNode(TQString sn) {
 	m_deviceNode = sn;
 }
 
@@ -141,7 +155,7 @@ TQString &TDEGenericDevice::deviceBus() {
 	return m_deviceBus;
 }
 
-void TDEGenericDevice::setDeviceBus(TQString db) {
+void TDEGenericDevice::internalSetDeviceBus(TQString db) {
 	m_deviceBus = db;
 }
 
@@ -154,7 +168,7 @@ TQString &TDEGenericDevice::vendorID() {
 	return m_vendorID;
 }
 
-void TDEGenericDevice::setVendorID(TQString id) {
+void TDEGenericDevice::internalSetVendorID(TQString id) {
 	m_vendorID = id;
 	m_vendorID.replace("0x", "");
 }
@@ -163,7 +177,7 @@ TQString &TDEGenericDevice::modelID() {
 	return m_modelID;
 }
 
-void TDEGenericDevice::setModelID(TQString id) {
+void TDEGenericDevice::internalSetModelID(TQString id) {
 	m_modelID = id;
 	m_modelID.replace("0x", "");
 }
@@ -172,7 +186,7 @@ TQString &TDEGenericDevice::vendorEncoded() {
 	return m_vendorenc;
 }
 
-void TDEGenericDevice::setVendorEncoded(TQString id) {
+void TDEGenericDevice::internalSetVendorEncoded(TQString id) {
 	m_vendorenc = id;
 }
 
@@ -180,7 +194,7 @@ TQString &TDEGenericDevice::modelEncoded() {
 	return m_modelenc;
 }
 
-void TDEGenericDevice::setModelEncoded(TQString id) {
+void TDEGenericDevice::internalSetModelEncoded(TQString id) {
 	m_modelenc = id;
 }
 
@@ -188,7 +202,7 @@ TQString &TDEGenericDevice::subVendorID() {
 	return m_subvendorID;
 }
 
-void TDEGenericDevice::setSubVendorID(TQString id) {
+void TDEGenericDevice::internalSetSubVendorID(TQString id) {
 	m_subvendorID = id;
 	m_subvendorID.replace("0x", "");
 }
@@ -197,7 +211,7 @@ TQString &TDEGenericDevice::PCIClass() {
 	return m_pciClass;
 }
 
-void TDEGenericDevice::setPCIClass(TQString cl) {
+void TDEGenericDevice::internalSetPCIClass(TQString cl) {
 	m_pciClass = cl;
 	m_pciClass.replace("0x", "");
 }
@@ -206,7 +220,7 @@ TQString &TDEGenericDevice::moduleAlias() {
 	return m_modAlias;
 }
 
-void TDEGenericDevice::setModuleAlias(TQString ma) {
+void TDEGenericDevice::internalSetModuleAlias(TQString ma) {
 	m_modAlias = ma;
 }
 
@@ -214,7 +228,7 @@ TQString &TDEGenericDevice::deviceDriver() {
 	return m_deviceDriver;
 }
 
-void TDEGenericDevice::setDeviceDriver(TQString dr) {
+void TDEGenericDevice::internalSetDeviceDriver(TQString dr) {
 	m_deviceDriver = dr;
 }
 
@@ -222,7 +236,7 @@ TQString &TDEGenericDevice::subsystem() {
 	return m_subsystem;
 }
 
-void TDEGenericDevice::setSubsystem(TQString ss) {
+void TDEGenericDevice::internalSetSubsystem(TQString ss) {
 	m_subsystem = ss;
 }
 
@@ -230,12 +244,12 @@ TQString &TDEGenericDevice::subModelID() {
 	return m_submodelID;
 }
 
-void TDEGenericDevice::setSubModelID(TQString id) {
+void TDEGenericDevice::internalSetSubModelID(TQString id) {
 	m_submodelID = id;
 	m_submodelID.replace("0x", "");
 }
 
-void TDEGenericDevice::setParentDevice(TDEGenericDevice* pd) {
+void TDEGenericDevice::internalSetParentDevice(TDEGenericDevice* pd) {
 	m_parentDevice = pd;
 }
 
@@ -251,7 +265,7 @@ bool TDEGenericDevice::blacklistedForUpdate() {
 	return m_blacklistedForUpdate;
 }
 
-void TDEGenericDevice::setBlacklistedForUpdate(bool bl) {
+void TDEGenericDevice::internalSetBlacklistedForUpdate(bool bl) {
 	m_blacklistedForUpdate = bl;
 }
 
@@ -364,7 +378,7 @@ TDEDiskDeviceType::TDEDiskDeviceType TDEStorageDevice::diskType() {
 	return m_diskType;
 }
 
-void TDEStorageDevice::setDiskType(TDEDiskDeviceType::TDEDiskDeviceType dt) {
+void TDEStorageDevice::internalSetDiskType(TDEDiskDeviceType::TDEDiskDeviceType dt) {
 	m_diskType = dt;
 }
 
@@ -376,7 +390,7 @@ TDEDiskDeviceStatus::TDEDiskDeviceStatus TDEStorageDevice::diskStatus() {
 	return m_diskStatus;
 }
 
-void TDEStorageDevice::setDiskStatus(TDEDiskDeviceStatus::TDEDiskDeviceStatus st) {
+void TDEStorageDevice::internalSetDiskStatus(TDEDiskDeviceStatus::TDEDiskDeviceStatus st) {
 	m_diskStatus = st;
 }
 
@@ -388,7 +402,7 @@ TQString &TDEStorageDevice::diskLabel() {
 	return m_diskName;
 }
 
-void TDEStorageDevice::setDiskLabel(TQString dn) {
+void TDEStorageDevice::internalSetDiskLabel(TQString dn) {
 	m_diskName = dn;
 }
 
@@ -396,7 +410,7 @@ bool TDEStorageDevice::mediaInserted() {
 	return m_mediaInserted;
 }
 
-void TDEStorageDevice::setMediaInserted(bool inserted) {
+void TDEStorageDevice::internalSetMediaInserted(bool inserted) {
 	m_mediaInserted = inserted;
 }
 
@@ -404,7 +418,7 @@ TQString &TDEStorageDevice::fileSystemName() {
 	return m_fileSystemName;
 }
 
-void TDEStorageDevice::setFileSystemName(TQString fn) {
+void TDEStorageDevice::internalSetFileSystemName(TQString fn) {
 	m_fileSystemName = fn;
 }
 
@@ -412,7 +426,7 @@ TQString &TDEStorageDevice::fileSystemUsage() {
 	return m_fileSystemUsage;
 }
 
-void TDEStorageDevice::setFileSystemUsage(TQString fu) {
+void TDEStorageDevice::internalSetFileSystemUsage(TQString fu) {
 	m_fileSystemUsage = fu;
 }
 
@@ -420,7 +434,7 @@ TQString &TDEStorageDevice::diskUUID() {
 	return m_diskUUID;
 }
 
-void TDEStorageDevice::setDiskUUID(TQString id) {
+void TDEStorageDevice::internalSetDiskUUID(TQString id) {
 	m_diskUUID = id;
 }
 
@@ -428,7 +442,7 @@ TQStringList &TDEStorageDevice::holdingDevices() {
 	return m_holdingDevices;
 }
 
-void TDEStorageDevice::setHoldingDevices(TQStringList hd) {
+void TDEStorageDevice::internalSetHoldingDevices(TQStringList hd) {
 	m_holdingDevices = hd;
 }
 
@@ -436,7 +450,7 @@ TQStringList &TDEStorageDevice::slaveDevices() {
 	return m_slaveDevices;
 }
 
-void TDEStorageDevice::setSlaveDevices(TQStringList sd) {
+void TDEStorageDevice::internalSetSlaveDevices(TQStringList sd) {
 	m_slaveDevices = sd;
 }
 
@@ -813,7 +827,7 @@ double &TDECPUDevice::frequency() {
 	return m_frequency;
 }
 
-void TDECPUDevice::setFrequency(double fr) {
+void TDECPUDevice::internalSetFrequency(double fr) {
 	m_frequency = fr;
 }
 
@@ -821,7 +835,7 @@ double &TDECPUDevice::minFrequency() {
 	return m_minfrequency;
 }
 
-void TDECPUDevice::setMinFrequency(double fr) {
+void TDECPUDevice::internalSetMinFrequency(double fr) {
 	m_minfrequency = fr;
 }
 
@@ -829,7 +843,7 @@ double &TDECPUDevice::maxFrequency() {
 	return m_maxfrequency;
 }
 
-void TDECPUDevice::setMaxFrequency(double fr) {
+void TDECPUDevice::internalSetMaxFrequency(double fr) {
 	m_maxfrequency = fr;
 }
 
@@ -837,7 +851,7 @@ double &TDECPUDevice::transitionLatency() {
 	return m_transitionlatency;
 }
 
-void TDECPUDevice::setTransitionLatency(double tl) {
+void TDECPUDevice::internalSetTransitionLatency(double tl) {
 	m_transitionlatency = tl;
 }
 
@@ -845,7 +859,7 @@ TQString &TDECPUDevice::governor() {
 	return m_governor;
 }
 
-void TDECPUDevice::setGovernor(TQString gr) {
+void TDECPUDevice::internalSetGovernor(TQString gr) {
 	m_governor = gr;
 }
 
@@ -853,7 +867,7 @@ TQString &TDECPUDevice::scalingDriver() {
 	return m_scalingdriver;
 }
 
-void TDECPUDevice::setScalingDriver(TQString dr) {
+void TDECPUDevice::internalSetScalingDriver(TQString dr) {
 	m_scalingdriver = dr;
 }
 
@@ -861,7 +875,7 @@ TQStringList &TDECPUDevice::dependentProcessors() {
 	return m_tiedprocs;
 }
 
-void TDECPUDevice::setDependentProcessors(TQStringList dp) {
+void TDECPUDevice::internalSetDependentProcessors(TQStringList dp) {
 	m_tiedprocs = dp;
 }
 
@@ -869,7 +883,7 @@ TQStringList &TDECPUDevice::availableFrequencies() {
 	return m_frequencies;
 }
 
-void TDECPUDevice::setAvailableFrequencies(TQStringList af) {
+void TDECPUDevice::internalSetAvailableFrequencies(TQStringList af) {
 	m_frequencies = af;
 }
 
@@ -883,7 +897,7 @@ TDESensorClusterMap TDESensorDevice::values() {
 	return m_sensorValues;
 }
 
-void TDESensorDevice::setValues(TDESensorClusterMap cl) {
+void TDESensorDevice::internalSetValues(TDESensorClusterMap cl) {
 	m_sensorValues = cl;
 }
 
@@ -897,7 +911,7 @@ double TDEBatteryDevice::voltage() {
 	return m_currentVoltage;
 }
 
-void TDEBatteryDevice::setVoltage(double vt) {
+void TDEBatteryDevice::internalSetVoltage(double vt) {
 	m_currentVoltage = vt;
 }
 
@@ -905,7 +919,7 @@ double TDEBatteryDevice::maximumVoltage() {
 	return m_maximumVoltage;
 }
 
-void TDEBatteryDevice::setMaximumVoltage(double vt) {
+void TDEBatteryDevice::internalSetMaximumVoltage(double vt) {
 	m_maximumVoltage = vt;
 }
 
@@ -913,7 +927,7 @@ double TDEBatteryDevice::minimumVoltage() {
 	return m_minimumVoltage;
 }
 
-void TDEBatteryDevice::setMinimumVoltage(double vt) {
+void TDEBatteryDevice::internalSetMinimumVoltage(double vt) {
 	m_minimumVoltage = vt;
 }
 
@@ -921,7 +935,7 @@ double TDEBatteryDevice::maximumDesignVoltage() {
 	return m_maximumDesignVoltage;
 }
 
-void TDEBatteryDevice::setMaximumDesignVoltage(double vt) {
+void TDEBatteryDevice::internalSetMaximumDesignVoltage(double vt) {
 	m_maximumDesignVoltage = vt;
 }
 
@@ -929,7 +943,7 @@ double TDEBatteryDevice::energy() {
 	return m_currentEnergy;
 }
 
-void TDEBatteryDevice::setEnergy(double vt) {
+void TDEBatteryDevice::internalSetEnergy(double vt) {
 	m_currentEnergy = vt;
 }
 
@@ -937,7 +951,7 @@ double TDEBatteryDevice::alarmEnergy() {
 	return m_alarmEnergy;
 }
 
-void TDEBatteryDevice::setAlarmEnergy(double vt) {
+void TDEBatteryDevice::internalSetAlarmEnergy(double vt) {
 	m_alarmEnergy = vt;
 }
 
@@ -945,7 +959,7 @@ double TDEBatteryDevice::maximumEnergy() {
 	return m_maximumEnergy;
 }
 
-void TDEBatteryDevice::setMaximumEnergy(double vt) {
+void TDEBatteryDevice::internalSetMaximumEnergy(double vt) {
 	m_maximumEnergy = vt;
 }
 
@@ -953,7 +967,7 @@ double TDEBatteryDevice::maximumDesignEnergy() {
 	return m_maximumDesignEnergy;
 }
 
-void TDEBatteryDevice::setMaximumDesignEnergy(double vt) {
+void TDEBatteryDevice::internalSetMaximumDesignEnergy(double vt) {
 	m_maximumDesignEnergy = vt;
 }
 
@@ -961,7 +975,7 @@ double TDEBatteryDevice::dischargeRate() {
 	return m_dischargeRate;
 }
 
-void TDEBatteryDevice::setDischargeRate(double vt) {
+void TDEBatteryDevice::internalSetDischargeRate(double vt) {
 	m_dischargeRate = vt;
 }
 
@@ -969,7 +983,7 @@ TQString &TDEBatteryDevice::technology() {
 	return m_technology;
 }
 
-void TDEBatteryDevice::setTechnology(TQString tc) {
+void TDEBatteryDevice::internalSetTechnology(TQString tc) {
 	m_technology = tc;
 }
 
@@ -977,7 +991,7 @@ TQString &TDEBatteryDevice::status() {
 	return m_status;
 }
 
-void TDEBatteryDevice::setStatus(TQString tc) {
+void TDEBatteryDevice::internalSetStatus(TQString tc) {
 	m_status = tc;
 }
 
@@ -985,7 +999,7 @@ bool TDEBatteryDevice::installed() {
 	return m_installed;
 }
 
-void TDEBatteryDevice::setInstalled(bool tc) {
+void TDEBatteryDevice::internalSetInstalled(bool tc) {
 	m_installed = tc;
 }
 
@@ -1003,7 +1017,7 @@ bool TDEMainsPowerDevice::online() {
 	return m_online;
 }
 
-void TDEMainsPowerDevice::setOnline(bool tc) {
+void TDEMainsPowerDevice::internalSetOnline(bool tc) {
 	m_online = tc;
 }
 
@@ -1021,7 +1035,7 @@ TQString TDENetworkDevice::macAddress() {
 	return m_macAddress;
 }
 
-void TDENetworkDevice::setMacAddress(TQString ma) {
+void TDENetworkDevice::internalSetMacAddress(TQString ma) {
 	m_macAddress = ma;
 }
 
@@ -1029,7 +1043,7 @@ TQString TDENetworkDevice::state() {
 	return m_state;
 }
 
-void TDENetworkDevice::setState(TQString st) {
+void TDENetworkDevice::internalSetState(TQString st) {
 	m_state = st;
 }
 
@@ -1037,7 +1051,7 @@ bool TDENetworkDevice::carrierPresent() {
 	return m_carrier;
 }
 
-void TDENetworkDevice::setCarrierPresent(bool cp) {
+void TDENetworkDevice::internalSetCarrierPresent(bool cp) {
 	m_carrier = cp;
 }
 
@@ -1045,7 +1059,7 @@ bool TDENetworkDevice::dormant() {
 	return m_dormant;
 }
 
-void TDENetworkDevice::setDormant(bool dm) {
+void TDENetworkDevice::internalSetDormant(bool dm) {
 	m_dormant = dm;
 }
 
@@ -1053,7 +1067,7 @@ TQString TDENetworkDevice::ipV4Address() {
 	return m_ipV4Address;
 }
 
-void TDENetworkDevice::setIpV4Address(TQString ad) {
+void TDENetworkDevice::internalSetIpV4Address(TQString ad) {
 	m_ipV4Address = ad;
 }
 
@@ -1061,7 +1075,7 @@ TQString TDENetworkDevice::ipV6Address() {
 	return m_ipV6Address;
 }
 
-void TDENetworkDevice::setIpV6Address(TQString ad) {
+void TDENetworkDevice::internalSetIpV6Address(TQString ad) {
 	m_ipV6Address = ad;
 }
 
@@ -1069,7 +1083,7 @@ TQString TDENetworkDevice::ipV4Netmask() {
 	return m_ipV4Netmask;
 }
 
-void TDENetworkDevice::setIpV4Netmask(TQString nm) {
+void TDENetworkDevice::internalSetIpV4Netmask(TQString nm) {
 	m_ipV4Netmask = nm;
 }
 
@@ -1077,7 +1091,7 @@ TQString TDENetworkDevice::ipV6Netmask() {
 	return m_ipV6Netmask;
 }
 
-void TDENetworkDevice::setIpV6Netmask(TQString nm) {
+void TDENetworkDevice::internalSetIpV6Netmask(TQString nm) {
 	m_ipV6Netmask = nm;
 }
 
@@ -1085,7 +1099,7 @@ TQString TDENetworkDevice::ipV4Broadcast() {
 	return m_ipV4Broadcast;
 }
 
-void TDENetworkDevice::setIpV4Broadcast(TQString br) {
+void TDENetworkDevice::internalSetIpV4Broadcast(TQString br) {
 	m_ipV4Broadcast = br;
 }
 
@@ -1093,7 +1107,7 @@ TQString TDENetworkDevice::ipV6Broadcast() {
 	return m_ipV6Broadcast;
 }
 
-void TDENetworkDevice::setIpV6Broadcast(TQString br) {
+void TDENetworkDevice::internalSetIpV6Broadcast(TQString br) {
 	m_ipV6Broadcast = br;
 }
 
@@ -1101,7 +1115,7 @@ TQString TDENetworkDevice::ipV4Destination() {
 	return m_ipV4Destination;
 }
 
-void TDENetworkDevice::setIpV4Destination(TQString ds) {
+void TDENetworkDevice::internalSetIpV4Destination(TQString ds) {
 	m_ipV4Destination = ds;
 }
 
@@ -1109,7 +1123,7 @@ TQString TDENetworkDevice::ipV6Destination() {
 	return m_ipV6Destination;
 }
 
-void TDENetworkDevice::setIpV6Destination(TQString ds) {
+void TDENetworkDevice::internalSetIpV6Destination(TQString ds) {
 	m_ipV6Destination = ds;
 }
 
@@ -1117,7 +1131,7 @@ double TDENetworkDevice::rxBytes() {
 	return m_rxbytes;
 }
 
-void TDENetworkDevice::setRxBytes(double rx) {
+void TDENetworkDevice::internalSetRxBytes(double rx) {
 	m_rxbytes = rx;
 }
 
@@ -1125,7 +1139,7 @@ double TDENetworkDevice::txBytes() {
 	return m_txbytes;
 }
 
-void TDENetworkDevice::setTxBytes(double tx) {
+void TDENetworkDevice::internalSetTxBytes(double tx) {
 	m_txbytes = tx;
 }
 
@@ -1133,7 +1147,7 @@ double TDENetworkDevice::rxPackets() {
 	return m_rxpackets;
 }
 
-void TDENetworkDevice::setRxPackets(double rx) {
+void TDENetworkDevice::internalSetRxPackets(double rx) {
 	m_rxpackets = rx;
 }
 
@@ -1141,8 +1155,119 @@ double TDENetworkDevice::txPackets() {
 	return m_txpackets;
 }
 
-void TDENetworkDevice::setTxPackets(double tx) {
+void TDENetworkDevice::internalSetTxPackets(double tx) {
 	m_txpackets = tx;
+}
+
+TDEBacklightDevice::TDEBacklightDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
+}
+
+TDEBacklightDevice::~TDEBacklightDevice() {
+}
+
+TDEDisplayPowerLevel::TDEDisplayPowerLevel TDEBacklightDevice::powerLevel() {
+	return m_powerLevel;
+}
+
+void TDEBacklightDevice::internalSetPowerLevel(TDEDisplayPowerLevel::TDEDisplayPowerLevel pl) {
+	m_powerLevel = pl;
+}
+
+void TDEBacklightDevice::internalSetMaximumRawBrightness(int br) {
+	m_maximumBrightness = br;
+}
+
+void TDEBacklightDevice::internalSetCurrentRawBrightness(int br) {
+	m_currentBrightness = br;
+}
+
+int TDEBacklightDevice::brightnessSteps() {
+	return m_maximumBrightness + 1;
+}
+
+double TDEBacklightDevice::brightnessPercent() {
+	return (((m_currentBrightness*1.0)/m_maximumBrightness)*100.0);
+}
+
+bool TDEBacklightDevice::canSetBrightness() {
+	TQString brightnessnode = systemPath() + "/brightness";
+	int rval = access (brightnessnode.ascii(), W_OK);
+	if (rval == 0) {
+		return TRUE;
+	}
+	else {
+		return FALSE;
+	}
+}
+
+int TDEBacklightDevice::rawBrightness() {
+	return m_currentBrightness;
+}
+
+void TDEBacklightDevice::setRawBrightness(int br) {
+	TQString brightnessnode = systemPath() + "/brightness";
+	TQFile file( brightnessnode );
+	if ( file.open( IO_WriteOnly ) ) {
+		TQString brightnessCommand;
+		brightnessCommand = TQString("%1").arg(br);
+		TQTextStream stream( &file );
+		stream << brightnessCommand;
+		file.close();
+	}
+}
+
+TDEMonitorDevice::TDEMonitorDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
+}
+
+TDEMonitorDevice::~TDEMonitorDevice() {
+}
+
+bool TDEMonitorDevice::connected() {
+	return m_connected;
+}
+
+void TDEMonitorDevice::internalSetConnected(bool cn) {
+	m_connected = cn;
+}
+
+bool TDEMonitorDevice::enabled() {
+	return m_enabled;
+}
+
+void TDEMonitorDevice::internalSetEnabled(bool en) {
+	m_enabled = en;
+}
+
+TQByteArray TDEMonitorDevice::edid() {
+	return m_edid;
+}
+
+void TDEMonitorDevice::internalSetEdid(TQByteArray ed) {
+	m_edid = ed;
+}
+
+TDEResolutionList TDEMonitorDevice::resolutions() {
+	return m_resolutions;
+}
+
+void TDEMonitorDevice::internalSetResolutions(TDEResolutionList rs) {
+	m_resolutions = rs;
+}
+
+TQString TDEMonitorDevice::portType() {
+	return m_portType;
+}
+
+void TDEMonitorDevice::internalSetPortType(TQString pt) {
+	m_portType = pt;
+}
+
+TDEDisplayPowerLevel::TDEDisplayPowerLevel TDEMonitorDevice::powerLevel() {
+	return m_powerLevel;
+}
+
+void TDEMonitorDevice::internalSetPowerLevel(TDEDisplayPowerLevel::TDEDisplayPowerLevel pl) {
+	m_powerLevel = pl;
 }
 
 TDEHardwareDevices::TDEHardwareDevices() {
@@ -1150,6 +1275,7 @@ TDEHardwareDevices::TDEHardwareDevices() {
 	pci_id_map = 0;
 	usb_id_map = 0;
 	pnp_id_map = 0;
+	dpy_id_map = 0;
 
 	// Set up device list
 	m_deviceList.setAutoDelete( TRUE );	// the list owns the objects
@@ -1253,6 +1379,9 @@ TDEHardwareDevices::~TDEHardwareDevices() {
 	}
 	if (pnp_id_map) {
 		delete pnp_id_map;
+	}
+	if (dpy_id_map) {
+		delete dpy_id_map;
 	}
 }
 
@@ -1406,21 +1535,21 @@ void TDEHardwareDevices::processModifiedCPUs() {
 			curline.remove(0, curline.find(":")+1);
 			curline = curline.stripWhiteSpace();
 			if (cdevice->name() != curline) modified = true;
-			cdevice->setName(curline);
+			cdevice->internalSetName(curline);
 		}
 		if (curline.startsWith("cpu MHz")) {
 			curline.remove(0, curline.find(":")+1);
 			curline = curline.stripWhiteSpace();
 			if (cdevice->frequency() != curline.toDouble()) modified = true;
-			cdevice->setFrequency(curline.toDouble());
+			cdevice->internalSetFrequency(curline.toDouble());
 		}
 		if (curline.startsWith("vendor_id")) {
 			curline.remove(0, curline.find(":")+1);
 			curline = curline.stripWhiteSpace();
 			if (cdevice->vendorName() != curline) modified = true;
-			cdevice->setVendorName(curline);
+			cdevice->internalSetVendorName(curline);
 			if (cdevice->vendorEncoded() != curline) modified = true;
-			cdevice->setVendorEncoded(curline);
+			cdevice->internalSetVendorEncoded(curline);
 		}
 	}
 
@@ -1498,19 +1627,19 @@ void TDEHardwareDevices::processModifiedCPUs() {
 
 		// Update CPU information structure
 		if (cdevice->governor() != scalinggovernor) modified = true;
-		cdevice->setGovernor(scalinggovernor);
+		cdevice->internalSetGovernor(scalinggovernor);
 		if (cdevice->scalingDriver() != scalingdriver) modified = true;
-		cdevice->setScalingDriver(scalingdriver);
+		cdevice->internalSetScalingDriver(scalingdriver);
 		if (cdevice->minFrequency() != minfrequency) modified = true;
-		cdevice->setMinFrequency(minfrequency);
+		cdevice->internalSetMinFrequency(minfrequency);
 		if (cdevice->maxFrequency() != maxfrequency) modified = true;
-		cdevice->setMaxFrequency(maxfrequency);
+		cdevice->internalSetMaxFrequency(maxfrequency);
 		if (cdevice->transitionLatency() != trlatency) modified = true;
-		cdevice->setTransitionLatency(trlatency);
+		cdevice->internalSetTransitionLatency(trlatency);
 		if (cdevice->dependentProcessors().join(" ") != affectedcpulist.join(" ")) modified = true;
-		cdevice->setDependentProcessors(affectedcpulist);
+		cdevice->internalSetDependentProcessors(affectedcpulist);
 		if (cdevice->availableFrequencies().join(" ") != frequencylist.join(" ")) modified = true;
-		cdevice->setAvailableFrequencies(frequencylist);
+		cdevice->internalSetAvailableFrequencies(frequencylist);
 	}
 
 	if (modified) {
@@ -1865,6 +1994,9 @@ TDEGenericDeviceType::TDEGenericDeviceType readGenericDeviceTypeFromString(TQStr
 	else if (query == "Peripheral") {
 		ret = TDEGenericDeviceType::Peripheral;
 	}
+	else if (query == "Backlight") {
+		ret = TDEGenericDeviceType::Backlight;
+	}
 	else if (query == "Battery") {
 		ret = TDEGenericDeviceType::Battery;
 	}
@@ -2051,7 +2183,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDeviceByExternalRules(udev_
 					}
 					if (desiredSubdeviceType != sdevice->diskType()) {
 						printf("[tdehardwaredevices] Rules file %s used to set device subtype for device at path %s\n\r", device->m_externalRulesFile.ascii(), device->systemPath().ascii()); fflush(stdout);
-						sdevice->setDiskType(desiredSubdeviceType);
+						sdevice->internalSetDiskType(desiredSubdeviceType);
 					}
 				}
 			}
@@ -2144,7 +2276,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDeviceByExternalRules(udev_
 
 							// Process blacklist entries
 							rulesFile.setGroup("DeviceSettings");
-							device->setBlacklistedForUpdate(rulesFile.readBoolEntry("UPDATE_BLACKLISTED", device->blacklistedForUpdate()));
+							device->internalSetBlacklistedForUpdate(rulesFile.readBoolEntry("UPDATE_BLACKLISTED", device->blacklistedForUpdate()));
 						}
 					}
 					++it;
@@ -2385,6 +2517,9 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 
 	// Try to at least generally classify unclassified devices
 	if (device == 0) {
+		if (devicesubsystem == "backlight") {
+			if (!device) device = new TDEBacklightDevice(TDEGenericDeviceType::Backlight);
+		}
 		if (systempath.lower().startsWith("/sys/devices/virtual")) {
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::OtherVirtual);
 		}
@@ -2422,7 +2557,12 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::MDIO);
 		}
 		if (devicesubsystem == "graphics") {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::GPU);
+			if (devicenode.isNull()) {	// GPUs do not have associated device nodes
+				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::GPU);
+			}
+			else {
+				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+			}
 		}
 		if ((devicesubsystem == "event_source")
 			|| (devicesubsystem == "rtc")) {
@@ -2435,7 +2575,12 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::IEEE1394);
 		}
 		if (devicesubsystem == "drm") {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Monitor);
+			if (devicenode.isNull()) {	// Monitors do not have associated device nodes
+				if (!device) device = new TDEMonitorDevice(TDEGenericDeviceType::Monitor);
+			}
+			else {
+				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+			}
 		}
 		if (devicesubsystem == "serio") {
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Serial);
@@ -2482,16 +2627,18 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 				if (!device) device = new TDEBatteryDevice(TDEGenericDeviceType::Battery);
 			}
 		}
-		if (devicesubsystem == "backlight") {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::PowerSupply);
-		}
 
 		// Moderate accuracy classification, if PCI device class is available
 		// See http://www.acm.uiuc.edu/sigops/roll_your_own/7.c.1.html for codes and meanings
 		if (!devicepciclass.isNull()) {
 			// Pre PCI 2.0
 			if (devicepciclass.startsWith("0001")) {
-				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::GPU);
+				if (devicenode.isNull()) {	// GPUs do not have associated device nodes
+					if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::GPU);
+				}
+				else {
+					if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+				}
 			}
 			// Post PCI 2.0
 			if (devicepciclass.startsWith("01")) {
@@ -2501,7 +2648,12 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 				if (!device) device = new TDENetworkDevice(TDEGenericDeviceType::Network);
 			}
 			if (devicepciclass.startsWith("03")) {
-				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::GPU);
+				if (devicenode.isNull()) {	// GPUs do not have associated device nodes
+					if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::GPU);
+				}
+				else {
+					if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+				}
 			}
 			if (devicepciclass.startsWith("04")) {
 				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::OtherMultimedia);
@@ -2541,19 +2693,19 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 	}
 
 	// Set preliminary basic device information
-	device->setName(devicename);
-	device->setDeviceNode(devicenode);
-	device->setSystemPath(systempath);
-	device->setVendorID(devicevendorid);
-	device->setModelID(devicemodelid);
-	device->setVendorEncoded(devicevendoridenc);
-	device->setModelEncoded(devicemodelidenc);
-	device->setSubVendorID(devicesubvendorid);
-	device->setSubModelID(devicesubmodelid);
-	device->setModuleAlias(devicemodalias);
-	device->setDeviceDriver(devicedriver);
-	device->setSubsystem(devicesubsystem);
-	device->setPCIClass(devicepciclass);
+	device->internalSetName(devicename);
+	device->internalSetDeviceNode(devicenode);
+	device->internalSetSystemPath(systempath);
+	device->internalSetVendorID(devicevendorid);
+	device->internalSetModelID(devicemodelid);
+	device->internalSetVendorEncoded(devicevendoridenc);
+	device->internalSetModelEncoded(devicemodelidenc);
+	device->internalSetSubVendorID(devicesubvendorid);
+	device->internalSetSubModelID(devicesubmodelid);
+	device->internalSetModuleAlias(devicemodalias);
+	device->internalSetDeviceDriver(devicedriver);
+	device->internalSetSubsystem(devicesubsystem);
+	device->internalSetPCIClass(devicepciclass);
 
 	updateBlacklists(device, dev);
 
@@ -2644,9 +2796,9 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		TQString filesystemtype(udev_device_get_property_value(dev, "ID_FS_TYPE"));
 		TQString filesystemusage(udev_device_get_property_value(dev, "ID_FS_USAGE"));
 
-		device->setVendorName(devicevendor);
-		device->setVendorModel(devicemodel);
-		device->setDeviceBus(devicebus);
+		device->internalSetVendorName(devicevendor);
+		device->internalSetVendorModel(devicemodel);
+		device->internalSetDeviceBus(devicebus);
 
 		TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(device);
 
@@ -2655,7 +2807,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 
 		if (force_full_classification) {
 			disktype = classifyDiskType(dev, devicebus, devicetypestring, systempath, devicevendor, devicemodel, filesystemtype, devicedriver);
-			sdevice->setDiskType(disktype);
+			sdevice->internalSetDiskType(disktype);
 			device = classifyUnknownDeviceByExternalRules(dev, device, true);	// Check external rules for possible subtype overrides
 			disktype = sdevice->diskType();						// The type can be overridden by an external rule
 		}
@@ -2727,7 +2879,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_STATE")).upper() == "BLANK") {
 				diskstatus = diskstatus | TDEDiskDeviceStatus::Blank;
 			}
-			sdevice->setMediaInserted(!(TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA")) == "0"));
+			sdevice->internalSetMediaInserted(!(TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA")) == "0"));
 		}
 
 		if (disktype & TDEDiskDeviceType::Zip) {
@@ -2742,7 +2894,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 				namefile.close();
 			}
 			if (!zipsize.isNull()) {
-				sdevice->setMediaInserted((zipsize.toInt() != 0));
+				sdevice->internalSetMediaInserted((zipsize.toInt() != 0));
 			}
 		}
 
@@ -2792,13 +2944,13 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			udev_device_unref(slavedev);
 		}
 
-		sdevice->setDiskType(disktype);
-		sdevice->setDiskUUID(diskuuid);
-		sdevice->setDiskStatus(diskstatus);
-		sdevice->setFileSystemName(filesystemtype);
-		sdevice->setFileSystemUsage(filesystemusage);
-		sdevice->setSlaveDevices(slaveDeviceNodes);
-		sdevice->setHoldingDevices(holdingDeviceNodes);
+		sdevice->internalSetDiskType(disktype);
+		sdevice->internalSetDiskUUID(diskuuid);
+		sdevice->internalSetDiskStatus(diskstatus);
+		sdevice->internalSetFileSystemName(filesystemtype);
+		sdevice->internalSetFileSystemUsage(filesystemusage);
+		sdevice->internalSetSlaveDevices(slaveDeviceNodes);
+		sdevice->internalSetHoldingDevices(holdingDeviceNodes);
 
 		// Clean up disk label
 		if ((sdevice->isDiskOfType(TDEDiskDeviceType::CDROM))
@@ -2823,7 +2975,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			}
 		}
 
-		sdevice->setDiskLabel(disklabel);
+		sdevice->internalSetDiskLabel(disklabel);
 	}
 
 	if (device->type() == TDEGenericDeviceType::Network) {
@@ -2861,18 +3013,18 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 						TQString line;
 						line = stream.readLine();
 						if (nodename == "address") {
-							ndevice->setMacAddress(line);
+							ndevice->internalSetMacAddress(line);
 						}
 						if (nodename == "carrier") {
-							ndevice->setCarrierPresent(line.toInt());
+							ndevice->internalSetCarrierPresent(line.toInt());
 						}
 						if (nodename == "dormant") {
-							ndevice->setDormant(line.toInt());
+							ndevice->internalSetDormant(line.toInt());
 						}
 						if (nodename == "operstate") {
 							TQString friendlyState = line.lower();
 							friendlyState[0] = friendlyState[0].upper();
-							ndevice->setState(friendlyState);
+							ndevice->internalSetState(friendlyState);
 						}
 						file.close();
 					}
@@ -2899,44 +3051,44 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 								if (s == 0) {
 									TQString address(host);
 									if (family == AF_INET) {
-										ndevice->setIpV4Address(address);
+										ndevice->internalSetIpV4Address(address);
 									}
 									if (family == AF_INET6) {
 										address.truncate(address.findRev("%"));
-										ndevice->setIpV6Address(address);
+										ndevice->internalSetIpV6Address(address);
 									}
 								}
 								s = getnameinfo(ifa->ifa_netmask, (family == AF_INET) ? sizeof(struct sockaddr_in) : sizeof(struct sockaddr_in6), host, NI_MAXHOST, NULL, 0, NI_NUMERICHOST);
 								if (s == 0) {
 									TQString address(host);
 									if (family == AF_INET) {
-										ndevice->setIpV4Netmask(address);
+										ndevice->internalSetIpV4Netmask(address);
 									}
 									if (family == AF_INET6) {
 										address.truncate(address.findRev("%"));
-										ndevice->setIpV6Netmask(address);
+										ndevice->internalSetIpV6Netmask(address);
 									}
 								}
 								s = getnameinfo(ifa->ifa_ifu.ifu_broadaddr, (family == AF_INET) ? sizeof(struct sockaddr_in) : sizeof(struct sockaddr_in6), host, NI_MAXHOST, NULL, 0, NI_NUMERICHOST);
 								if (s == 0) {
 									TQString address(host);
 									if (family == AF_INET) {
-										ndevice->setIpV4Broadcast(address);
+										ndevice->internalSetIpV4Broadcast(address);
 									}
 									if (family == AF_INET6) {
 										address.truncate(address.findRev("%"));
-										ndevice->setIpV6Broadcast(address);
+										ndevice->internalSetIpV6Broadcast(address);
 									}
 								}
 								s = getnameinfo(ifa->ifa_ifu.ifu_dstaddr, (family == AF_INET) ? sizeof(struct sockaddr_in) : sizeof(struct sockaddr_in6), host, NI_MAXHOST, NULL, 0, NI_NUMERICHOST);
 								if (s == 0) {
 									TQString address(host);
 									if (family == AF_INET) {
-										ndevice->setIpV4Destination(address);
+										ndevice->internalSetIpV4Destination(address);
 									}
 									if (family == AF_INET6) {
 										address.truncate(address.findRev("%"));
-										ndevice->setIpV6Destination(address);
+										ndevice->internalSetIpV6Destination(address);
 									}
 								}
 							}
@@ -2963,16 +3115,16 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 							TQString line;
 							line = stream.readLine();
 							if (nodename == "rx_bytes") {
-								ndevice->setRxBytes(line.toDouble());
+								ndevice->internalSetRxBytes(line.toDouble());
 							}
 							if (nodename == "tx_bytes") {
-								ndevice->setTxBytes(line.toDouble());
+								ndevice->internalSetTxBytes(line.toDouble());
 							}
 							if (nodename == "rx_packets") {
-								ndevice->setRxPackets(line.toDouble());
+								ndevice->internalSetRxPackets(line.toDouble());
 							}
 							if (nodename == "tx_packets") {
-								ndevice->setTxPackets(line.toDouble());
+								ndevice->internalSetTxPackets(line.toDouble());
 							}
 							file.close();
 						}
@@ -3035,7 +3187,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		}
 
 		TDESensorDevice* sdevice = dynamic_cast<TDESensorDevice*>(device);
-		sdevice->setValues(sensors);
+		sdevice->internalSetValues(sensors);
 	}
 
 	if (device->type() == TDEGenericDeviceType::Battery) {
@@ -3057,43 +3209,43 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 					TQString line;
 					line = stream.readLine();
 					if (nodename == "alarm") {
-						bdevice->setAlarmEnergy(line.toDouble()/1000000.0);
+						bdevice->internalSetAlarmEnergy(line.toDouble()/1000000.0);
 					}
 					if (nodename == "energy_full") {
-						bdevice->setMaximumEnergy(line.toDouble()/1000000.0);
+						bdevice->internalSetMaximumEnergy(line.toDouble()/1000000.0);
 					}
 					if (nodename == "energy_full_design") {
-						bdevice->setMaximumDesignEnergy(line.toDouble()/1000000.0);
+						bdevice->internalSetMaximumDesignEnergy(line.toDouble()/1000000.0);
 					}
 					if (nodename == "energy_now") {
-						bdevice->setEnergy(line.toDouble()/1000000.0);
+						bdevice->internalSetEnergy(line.toDouble()/1000000.0);
 					}
 					if (nodename == "manufacturer") {
-						bdevice->setVendorName(line.stripWhiteSpace());
+						bdevice->internalSetVendorName(line.stripWhiteSpace());
 					}
 					if (nodename == "model_name") {
-						bdevice->setVendorModel(line.stripWhiteSpace());
+						bdevice->internalSetVendorModel(line.stripWhiteSpace());
 					}
 					if (nodename == "power_now") {
-						bdevice->setDischargeRate(line.toDouble()/1000000.0);
+						bdevice->internalSetDischargeRate(line.toDouble()/1000000.0);
 					}
 					if (nodename == "present") {
-						bdevice->setInstalled(line.toInt());
+						bdevice->internalSetInstalled(line.toInt());
 					}
 					if (nodename == "serial_number") {
-						bdevice->setSerialNumber(line.stripWhiteSpace());
+						bdevice->internalSetSerialNumber(line.stripWhiteSpace());
 					}
 					if (nodename == "status") {
-						bdevice->setStatus(line);
+						bdevice->internalSetStatus(line);
 					}
 					if (nodename == "technology") {
-						bdevice->setTechnology(line);
+						bdevice->internalSetTechnology(line);
 					}
 					if (nodename == "voltage_min_design") {
-						bdevice->setMinimumVoltage(line.toDouble()/1000000.0);
+						bdevice->internalSetMinimumVoltage(line.toDouble()/1000000.0);
 					}
 					if (nodename == "voltage_now") {
-						bdevice->setVoltage(line.toDouble()/1000000.0);
+						bdevice->internalSetVoltage(line.toDouble()/1000000.0);
 					}
 					file.close();
 				}
@@ -3121,16 +3273,16 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 					TQString line;
 					line = stream.readLine();
 					if (nodename == "manufacturer") {
-						pdevice->setVendorName(line.stripWhiteSpace());
+						pdevice->internalSetVendorName(line.stripWhiteSpace());
 					}
 					if (nodename == "model_name") {
-						pdevice->setVendorModel(line.stripWhiteSpace());
+						pdevice->internalSetVendorModel(line.stripWhiteSpace());
 					}
 					if (nodename == "online") {
-						pdevice->setOnline(line.toInt());
+						pdevice->internalSetOnline(line.toInt());
 					}
 					if (nodename == "serial_number") {
-						pdevice->setSerialNumber(line.stripWhiteSpace());
+						pdevice->internalSetSerialNumber(line.stripWhiteSpace());
 					}
 					file.close();
 				}
@@ -3139,19 +3291,147 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		}
 	}
 
+	if (device->type() == TDEGenericDeviceType::Backlight) {
+		// Populate all backlight values
+		TDEBacklightDevice* bdevice = dynamic_cast<TDEBacklightDevice*>(device);
+		TQString valuesnodename = systempath + "/";
+		TQDir valuesdir(valuesnodename);
+		valuesdir.setFilter(TQDir::All);
+		TQString nodename;
+		const TQFileInfoList *dirlist = valuesdir.entryInfoList();
+		if (dirlist) {
+			TQFileInfoListIterator valuesdirit(*dirlist);
+			TQFileInfo *dirfi;
+			while ( (dirfi = valuesdirit.current()) != 0 ) {
+				nodename = dirfi->fileName();
+				TQFile file( valuesnodename + nodename );
+				if ( file.open( IO_ReadOnly ) ) {
+					TQTextStream stream( &file );
+					TQString line;
+					line = stream.readLine();
+					if (nodename == "bl_power") {
+						TDEDisplayPowerLevel::TDEDisplayPowerLevel pl = TDEDisplayPowerLevel::On;
+						int rpl = line.toInt();
+						if (rpl == FB_BLANK_UNBLANK) {
+							pl = TDEDisplayPowerLevel::On;
+						}
+						else if (rpl == FB_BLANK_POWERDOWN) {
+							pl = TDEDisplayPowerLevel::Off;
+						}
+						bdevice->internalSetPowerLevel(pl);
+					}
+					if (nodename == "max_brightness") {
+						bdevice->internalSetMaximumRawBrightness(line.toInt());
+					}
+					if (nodename == "actual_brightness") {
+						bdevice->internalSetCurrentRawBrightness(line.toInt());
+					}
+					file.close();
+				}
+				++valuesdirit;
+			}
+		}
+	}
+
+	if (device->type() == TDEGenericDeviceType::Monitor) {
+		TDEMonitorDevice* mdevice = dynamic_cast<TDEMonitorDevice*>(device);
+		TQString valuesnodename = systempath + "/";
+		TQDir valuesdir(valuesnodename);
+		valuesdir.setFilter(TQDir::All);
+		TQString nodename;
+		const TQFileInfoList *dirlist = valuesdir.entryInfoList();
+		if (dirlist) {
+			TQFileInfoListIterator valuesdirit(*dirlist);
+			TQFileInfo *dirfi;
+			while ( (dirfi = valuesdirit.current()) != 0 ) {
+				nodename = dirfi->fileName();
+				TQFile file( valuesnodename + nodename );
+				if ( file.open( IO_ReadOnly ) ) {
+					TQTextStream stream( &file );
+					TQString line;
+					line = stream.readLine();
+					if (nodename == "status") {
+						mdevice->internalSetConnected(line.lower() == "connected");
+					}
+					if (nodename == "enabled") {
+						mdevice->internalSetEnabled(line.lower() == "enabled");
+					}
+					if (nodename == "modes") {
+						TQStringList resinfo;
+						TQStringList resolutionsStringList = line.upper();
+						while ((!stream.atEnd()) && (!line.isNull())) {
+							line = stream.readLine();
+							if (!line.isNull()) {
+								resolutionsStringList.append(line.upper());
+							}
+						}
+						TDEResolutionList resolutions;
+						resolutions.clear();
+						for (TQStringList::Iterator it = resolutionsStringList.begin(); it != resolutionsStringList.end(); ++it) {
+							resinfo = TQStringList::split('X', *it, true);
+							resolutions.append(TDEResolutionPair((*(resinfo.at(0))).toUInt(), (*(resinfo.at(1))).toUInt()));
+						}
+						mdevice->internalSetResolutions(resolutions);
+					}
+					if (nodename == "dpms") {
+						TDEDisplayPowerLevel::TDEDisplayPowerLevel pl = TDEDisplayPowerLevel::On;
+						if (line == "On") {
+							pl = TDEDisplayPowerLevel::On;
+						}
+						else if (line == "Standby") {
+							pl = TDEDisplayPowerLevel::Standby;
+						}
+						else if (line == "Suspend") {
+							pl = TDEDisplayPowerLevel::Suspend;
+						}
+						else if (line == "Off") {
+							pl = TDEDisplayPowerLevel::Off;
+						}
+						mdevice->internalSetPowerLevel(pl);
+					}
+					file.close();
+				}
+				++valuesdirit;
+			}
+		}
+
+		TQString genericPortName = mdevice->systemPath();
+		genericPortName.remove(0, genericPortName.find("-")+1);
+		genericPortName.truncate(genericPortName.findRev("-"));
+		mdevice->internalSetPortType(genericPortName);
+
+		if (mdevice->connected()) {
+			TQPair<TQString,TQString> monitor_info = getEDIDMonitorName(device->systemPath());
+			if (!monitor_info.first.isNull()) {
+				mdevice->internalSetVendorName(monitor_info.first);
+				mdevice->internalSetVendorModel(monitor_info.second);
+				mdevice->m_friendlyName = monitor_info.first + " " + monitor_info.second;
+			}
+			mdevice->internalSetEdid(getEDID(mdevice->systemPath()));
+		}
+		else {
+			mdevice->m_friendlyName = i18n("Disconnected %1 Port").arg(genericPortName);
+			mdevice->internalSetEdid(TQByteArray());
+			mdevice->internalSetResolutions(TDEResolutionList());
+		}
+
+		// FIXME
+		// Much of the code in libkrandr should be integrated into/interfaced with this library
+	}
+
 	// Set basic device information again, as some information may have changed
-	device->setName(devicename);
-	device->setDeviceNode(devicenode);
-	device->setSystemPath(systempath);
-	device->setVendorID(devicevendorid);
-	device->setModelID(devicemodelid);
-	device->setVendorEncoded(devicevendoridenc);
-	device->setModelEncoded(devicemodelidenc);
-	device->setSubVendorID(devicesubvendorid);
-	device->setSubModelID(devicesubmodelid);
-	device->setDeviceDriver(devicedriver);
-	device->setSubsystem(devicesubsystem);
-	device->setPCIClass(devicepciclass);
+	device->internalSetName(devicename);
+	device->internalSetDeviceNode(devicenode);
+	device->internalSetSystemPath(systempath);
+	device->internalSetVendorID(devicevendorid);
+	device->internalSetModelID(devicemodelid);
+	device->internalSetVendorEncoded(devicevendoridenc);
+	device->internalSetModelEncoded(devicemodelidenc);
+	device->internalSetSubVendorID(devicesubvendorid);
+	device->internalSetSubModelID(devicesubmodelid);
+	device->internalSetDeviceDriver(devicedriver);
+	device->internalSetSubsystem(devicesubsystem);
+	device->internalSetPCIClass(devicepciclass);
 
 	return device;
 }
@@ -3163,7 +3443,7 @@ void TDEHardwareDevices::updateBlacklists(TDEGenericDevice* hwdevice, udev_devic
 
 	// For "U3 System" fake CD
 	if ((hwdevice->vendorID() == "08ec") && (hwdevice->modelID() == "0020") && (TQString(udev_device_get_property_value(dev, "ID_TYPE")) == "cd")) {
-		hwdevice->setBlacklistedForUpdate(true);
+		hwdevice->internalSetBlacklistedForUpdate(true);
 	}
 }
 
@@ -3247,7 +3527,7 @@ void TDEHardwareDevices::updateParentDeviceInformation(TDEGenericDevice* hwdevic
 		}
 	}
 
-	hwdevice->setParentDevice(parentdevice);
+	hwdevice->internalSetParentDevice(parentdevice);
 }
 
 void TDEHardwareDevices::updateParentDeviceInformation() {
@@ -3276,7 +3556,7 @@ void TDEHardwareDevices::addCoreSystemDevices() {
 			nodename = dirfi->fileName();
 			if (nodename != "." && nodename != "..") {
 				hwdevice = new TDEGenericDevice(TDEGenericDeviceType::Root);
-				hwdevice->setSystemPath(dirfi->absFilePath());
+				hwdevice->internalSetSystemPath(dirfi->absFilePath());
 				m_deviceList.append(hwdevice);
 			}
 			++devicesdirit;
@@ -3301,7 +3581,7 @@ void TDEHardwareDevices::addCoreSystemDevices() {
 				line = line.stripWhiteSpace();
 				processorNumber = line.toInt();
 				hwdevice = new TDECPUDevice(TDEGenericDeviceType::CPU);
-				hwdevice->setSystemPath(TQString("/sys/devices/system/cpu/cpu%1").arg(processorNumber));
+				hwdevice->internalSetSystemPath(TQString("/sys/devices/system/cpu/cpu%1").arg(processorNumber));
 				m_deviceList.append(hwdevice);
 #if 0
 				// Set up CPU information monitor
@@ -3609,6 +3889,156 @@ TQString TDEHardwareDevices::findPNPDeviceName(TQString pnpid) {
 	}
 }
 
+TQString TDEHardwareDevices::findMonitorManufacturerName(TQString dpyid) {
+	TQString friendlyName = TQString::null;
+
+	if (!dpy_id_map) {
+		dpy_id_map = new TDEDeviceIDMap;
+
+		TQStringList hardware_info_directories(KGlobal::dirs()->resourceDirs("data"));
+		TQString hardware_info_directory_suffix("tdehwlib/pnpdev/");
+		TQString hardware_info_directory;
+		TQString database_filename;
+
+		for ( TQStringList::Iterator it = hardware_info_directories.begin(); it != hardware_info_directories.end(); ++it ) {
+			hardware_info_directory = (*it);
+			hardware_info_directory += hardware_info_directory_suffix;
+	
+			if (KGlobal::dirs()->exists(hardware_info_directory)) {
+				database_filename = hardware_info_directory + "dpy.ids";
+				if (TQFile::exists(database_filename)) {
+					break;
+				}
+			}
+		}
+
+		if (!TQFile::exists(database_filename)) {
+			printf("[tdehardwaredevices] Unable to locate monitor information database dpy.ids\n\r"); fflush(stdout);
+			return i18n("Unknown Monitor Device");
+		}
+	
+		TQFile database(database_filename);
+		if (database.open(IO_ReadOnly)) {
+			TQTextStream stream(&database);
+			TQString line;
+			TQString dpyID;
+			TQString vendorName;
+			TQString deviceMapKey;
+			TQStringList devinfo;
+			while (!stream.atEnd()) {
+				line = stream.readLine();
+				if ((!line.upper().startsWith("\t")) && (!line.upper().startsWith("#"))) {
+					devinfo = TQStringList::split('\t', line, false);
+					if (devinfo.count() > 1) {
+						dpyID = *(devinfo.at(0));
+						vendorName = *(devinfo.at(1));;
+						vendorName = vendorName.stripWhiteSpace();
+						deviceMapKey = dpyID.upper().stripWhiteSpace();
+						if (!deviceMapKey.isNull()) {
+							dpy_id_map->insert(deviceMapKey, vendorName, true);
+						}
+					}
+				}
+			}
+			database.close();
+		}
+		else {
+			printf("[tdehardwaredevices] Unable to open monitor information database %s\n\r", database_filename.ascii()); fflush(stdout);
+		}
+	}
+
+	if (dpy_id_map) {
+		TQString deviceName;
+
+		deviceName = (*dpy_id_map)[dpyid];
+
+		return deviceName;
+	}
+	else {
+		return i18n("Unknown Monitor Device");
+	}
+}
+
+TQPair<TQString,TQString> TDEHardwareDevices::getEDIDMonitorName(TQString path) {
+	TQPair<TQString,TQString> edid;
+	TQByteArray binaryedid = getEDID(path);
+	if (binaryedid.isNull()) {
+		return TQPair<TQString,TQString>(TQString::null, TQString::null);
+	}
+
+	// Get the manufacturer ID
+	unsigned char letter_1 = ((binaryedid[8]>>2) & 0x1F) + 0x40;
+	unsigned char letter_2 = (((binaryedid[8] & 0x03) << 3) | ((binaryedid[9]>>5) & 0x07)) + 0x40;
+	unsigned char letter_3 = (binaryedid[9] & 0x1F) + 0x40;
+	TQChar qletter_1 = TQChar(letter_1);
+	TQChar qletter_2 = TQChar(letter_2);
+	TQChar qletter_3 = TQChar(letter_3);
+	TQString manufacturer_id = TQString("%1%2%3").arg(qletter_1).arg(qletter_2).arg(qletter_3);
+
+	// Get the model ID
+	unsigned int raw_model_id = (((binaryedid[10] << 8) | binaryedid[11]) << 16) & 0xFFFF0000;
+	// Reverse the bit order
+	unsigned int model_id = reverse_bits(raw_model_id);
+
+	// Try to get the model name
+	bool has_friendly_name = false;
+	unsigned char descriptor_block[18];
+	int i;
+	for (i=72;i<90;i++) {
+		descriptor_block[i-72] = binaryedid[i] & 0xFF;
+	}
+	if ((descriptor_block[0] != 0) || (descriptor_block[1] != 0) || (descriptor_block[3] != 0xFC)) {
+		for (i=90;i<108;i++) {
+			descriptor_block[i-90] = binaryedid[i] & 0xFF;
+		}
+		if ((descriptor_block[0] != 0) || (descriptor_block[1] != 0) || (descriptor_block[3] != 0xFC)) {
+			for (i=108;i<126;i++) {
+				descriptor_block[i-108] = binaryedid[i] & 0xFF;
+			}
+		}
+	}
+
+	TQString monitor_name;
+	if ((descriptor_block[0] == 0) && (descriptor_block[1] == 0) && (descriptor_block[3] == 0xFC)) {
+		char* pos = strchr((char *)(descriptor_block+5), '\n');
+		if (pos) {
+			*pos = 0;
+			has_friendly_name = true;
+			monitor_name = TQString((char *)(descriptor_block+5));
+		}
+		else {
+			has_friendly_name = false;
+		}
+	}
+
+	// Look up manufacturer name
+	TQString manufacturer_name = findMonitorManufacturerName(manufacturer_id);
+	if (manufacturer_name.isNull()) {
+		manufacturer_name = manufacturer_id;
+	}
+
+	if (has_friendly_name) {
+		edid.first = TQString("%1").arg(manufacturer_name);
+		edid.second = TQString("%2").arg(monitor_name);
+	}
+	else {
+		edid.first = TQString("%1").arg(manufacturer_name);
+		edid.second = TQString("0x%2").arg(model_id, 0, 16);
+	}
+
+	return edid;
+}
+
+TQByteArray TDEHardwareDevices::getEDID(TQString path) {
+	TQFile file(TQString("%1/edid").arg(path));
+	if (!file.open (IO_ReadOnly)) {
+		return TQByteArray();
+	}
+	TQByteArray binaryedid = file.readAll();
+	file.close();
+	return binaryedid;
+}
+
 TQString TDEHardwareDevices::getFriendlyDeviceTypeStringFromType(TDEGenericDeviceType::TDEGenericDeviceType query) {
 	TQString ret = "Unknown Device";
 
@@ -3693,6 +4123,9 @@ TQString TDEHardwareDevices::getFriendlyDeviceTypeStringFromType(TDEGenericDevic
 	}
 	else if (query == TDEGenericDeviceType::Peripheral) {
 		ret = i18n("Peripheral");
+	}
+	else if (query == TDEGenericDeviceType::Backlight) {
+		ret = i18n("Backlight");
 	}
 	else if (query == TDEGenericDeviceType::Battery) {
 		ret = i18n("Battery");
@@ -3833,6 +4266,9 @@ TQPixmap TDEHardwareDevices::getDeviceTypeIconFromType(TDEGenericDeviceType::TDE
 	}
 	else if (query == TDEGenericDeviceType::Peripheral) {
 		ret = DesktopIcon("kcmpci", size);
+	}
+	else if (query == TDEGenericDeviceType::Backlight) {
+		ret = DesktopIcon("kscreensaver", size);	// FIXME
 	}
 	else if (query == TDEGenericDeviceType::Battery) {
 		ret = DesktopIcon("energy", size);

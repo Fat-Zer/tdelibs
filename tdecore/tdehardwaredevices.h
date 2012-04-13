@@ -69,6 +69,7 @@ enum TDEGenericDeviceType {
 	Serial,
 	Parallel,
 	Peripheral,
+	Backlight,
 	Battery,
 	PowerSupply,
 	Dock,
@@ -214,19 +215,9 @@ class TDECORE_EXPORT TDEGenericDevice
 		TQString &name();
 
 		/**
-		* @param a TQString with the device name, if any
-		*/
-		void setName(TQString dn);
-
-		/**
 		* @return a TQString with the vendor name, if any
 		*/
 		TQString &vendorName();
-
-		/**
-		* @param a TQString with the vendor name, if any
-		*/
-		void setVendorName(TQString vn);
 
 		/**
 		* @return a TQString with the vendor model, if any
@@ -234,19 +225,9 @@ class TDECORE_EXPORT TDEGenericDevice
 		TQString &vendorModel();
 
 		/**
-		* @param a TQString with the vendor model, if any
-		*/
-		void setVendorModel(TQString vm);
-
-		/**
 		* @return a TQString with the serial number, if any
 		*/
 		TQString &serialNumber();
-
-		/**
-		* @param a TQString with the serial number, if any
-		*/
-		void setSerialNumber(TQString sn);
 
 		/**
 		* @return a TQString with a friendly name
@@ -262,23 +243,11 @@ class TDECORE_EXPORT TDEGenericDevice
 		TQString &deviceBus();
 
 		/**
-		* @param a TQString with the device bus name, if any
-		*/
-		void setDeviceBus(TQString db);
-
-		/**
 		* @return a TQString with the system path, if any
 		*
 		* This method is non-portable, so be careful!
 		*/
 		TQString &systemPath();
-
-		/**
-		* @param a TQString with the system path, if any
-		*
-		* This method is non-portable, so be careful!
-		*/
-		void setSystemPath(TQString sp);
 
 		/**
 		* @return a TQString with the system device node, if any
@@ -288,21 +257,9 @@ class TDECORE_EXPORT TDEGenericDevice
 		TQString &deviceNode();
 
 		/**
-		* @param a TQString with the system device node, if any
-		*
-		* This method is non-portable, so be careful!
-		*/
-		void setDeviceNode(TQString sn);
-
-		/**
 		* @return true if this device has been blacklisted for update actions
 		*/
 		bool blacklistedForUpdate();
-
-		/**
-		* @param bl true if this device has been blacklisted for update actions
-		*/
-		void setBlacklistedForUpdate(bool bl);
 
 		/**
 		* @return a TQString containing a unique identifier for this device
@@ -315,19 +272,9 @@ class TDECORE_EXPORT TDEGenericDevice
 		TQString &vendorID();
 
 		/**
-		* @param a TQString with the vendor ID, if any
-		*/
-		void setVendorID(TQString id);
-
-		/**
 		* @return a TQString with the model ID, if any
 		*/
 		TQString &modelID();
-
-		/**
-		* @param a TQString with the model ID, if any
-		*/
-		void setModelID(TQString id);
 
 		/**
 		* @return a TQString with the encoded vendor, if any
@@ -335,19 +282,9 @@ class TDECORE_EXPORT TDEGenericDevice
 		TQString &vendorEncoded();
 
 		/**
-		* @param a TQString with the encoded vendor, if any
-		*/
-		void setVendorEncoded(TQString id);
-
-		/**
 		* @return a TQString with the encoded model, if any
 		*/
 		TQString &modelEncoded();
-
-		/**
-		* @param a TQString with the encoded model, if any
-		*/
-		void setModelEncoded(TQString id);
 
 		/**
 		* @return a TQString with the subvendor ID, if any
@@ -355,19 +292,9 @@ class TDECORE_EXPORT TDEGenericDevice
 		TQString &subVendorID();
 
 		/**
-		* @param a TQString with the subvendor ID, if any
-		*/
-		void setSubVendorID(TQString id);
-
-		/**
 		* @return a TQString with the submodel ID, if any
 		*/
 		TQString &subModelID();
-
-		/**
-		* @param a TQString with the submodel ID, if any
-		*/
-		void setSubModelID(TQString id);
 
 		/**
 		* @return a TQString with the PCI device class, if any
@@ -375,19 +302,9 @@ class TDECORE_EXPORT TDEGenericDevice
 		TQString &PCIClass();
 
 		/**
-		* @param a TQString with the PCI device class, if any
-		*/
-		void setPCIClass(TQString cl);
-
-		/**
 		* @return a TQString with the module alias string, if any
 		*/
 		TQString &moduleAlias();
-
-		/**
-		* @param a TQString with the module alias string, if any
-		*/
-		void setModuleAlias(TQString ma);
 
 		/**
 		* @return a TQString with the device driver, if any
@@ -395,24 +312,9 @@ class TDECORE_EXPORT TDEGenericDevice
 		TQString &deviceDriver();
 
 		/**
-		* @param a TQString with the device driver, if any
-		*/
-		void setDeviceDriver(TQString dr);
-
-		/**
 		* @return a TQString with the subsystem type, if any
 		*/
 		TQString &subsystem();
-
-		/**
-		* @param a TQString with the subsystem type, if any
-		*/
-		void setSubsystem(TQString ss);
-
-		/**
-		* @param a TDEGenericDevice* with the parent device, if any
-		*/
-		void setParentDevice(TDEGenericDevice* pd);
 
 		/**
 		* @return a TDEGenericDevice* with the parent device, if any
@@ -435,6 +337,125 @@ class TDECORE_EXPORT TDEGenericDevice
 		*  @return a TQPixmap containing the icon for the specified type
 		*/
 		virtual TQPixmap icon(KIcon::StdSizes size);
+
+	protected:
+		/**
+		* @param a TQString with the device name, if any
+		* @internal
+		*/
+		void internalSetName(TQString dn);
+
+		/**
+		* @param a TQString with the vendor name, if any
+		* @internal
+		*/
+		void internalSetVendorName(TQString vn);
+
+		/**
+		* @param a TQString with the vendor model, if any
+		* @internal
+		*/
+		void internalSetVendorModel(TQString vm);
+
+		/**
+		* @param a TQString with the serial number, if any
+		* @internal
+		*/
+		void internalSetSerialNumber(TQString sn);
+
+		/**
+		* @param a TQString with the device bus name, if any
+		* @internal
+		*/
+		void internalSetDeviceBus(TQString db);
+
+		/**
+		* @param a TQString with the system path, if any
+		* @internal
+		*
+		* This method is non-portable, so be careful!
+		*/
+		void internalSetSystemPath(TQString sp);
+
+		/**
+		* @param a TQString with the system device node, if any
+		* @internal
+		*
+		* This method is non-portable, so be careful!
+		*/
+		void internalSetDeviceNode(TQString sn);
+
+		/**
+		* @param bl true if this device has been blacklisted for update actions
+		* @internal
+		*/
+		void internalSetBlacklistedForUpdate(bool bl);
+
+		/**
+		* @param a TQString with the vendor ID, if any
+		* @internal
+		*/
+		void internalSetVendorID(TQString id);
+
+		/**
+		* @param a TQString with the model ID, if any
+		* @internal
+		*/
+		void internalSetModelID(TQString id);
+
+		/**
+		* @param a TQString with the encoded vendor, if any
+		* @internal
+		*/
+		void internalSetVendorEncoded(TQString id);
+
+		/**
+		* @param a TQString with the encoded model, if any
+		* @internal
+		*/
+		void internalSetModelEncoded(TQString id);
+
+		/**
+		* @param a TQString with the subvendor ID, if any
+		* @internal
+		*/
+		void internalSetSubVendorID(TQString id);
+
+		/**
+		* @param a TQString with the submodel ID, if any
+		* @internal
+		*/
+		void internalSetSubModelID(TQString id);
+
+		/**
+		* @param a TQString with the PCI device class, if any
+		* @internal
+		*/
+		void internalSetPCIClass(TQString cl);
+
+		/**
+		* @param a TQString with the module alias string, if any
+		* @internal
+		*/
+		void internalSetModuleAlias(TQString ma);
+
+		/**
+		* @param a TQString with the device driver, if any
+		* @internal
+		*/
+		void internalSetDeviceDriver(TQString dr);
+
+		/**
+		* @param a TQString with the subsystem type, if any
+		* @internal
+		*/
+		void internalSetSubsystem(TQString ss);
+
+		/**
+		* @param a TDEGenericDevice* with the parent device, if any
+		* @internal
+		*/
+		void internalSetParentDevice(TDEGenericDevice* pd);
 
 	private:
 		TDEGenericDeviceType::TDEGenericDeviceType m_deviceType;
@@ -487,19 +508,9 @@ class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 		TQString &diskLabel();
 
 		/**
-		* @param a TQString with the disk or partition label, if any
-		*/
-		void setDiskLabel(TQString dn);
-
-		/**
 		* @return a TQString with the disk UUID, if any
 		*/
 		TQString &diskUUID();
-
-		/**
-		* @param a TQString with the disk UUID, if any
-		*/
-		void setDiskUUID(TQString id);
 
 		/**
 		* @return an OR-ed combination of TDEDiskDeviceType::TDEDiskDeviceType type flags
@@ -507,29 +518,9 @@ class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 		TDEDiskDeviceType::TDEDiskDeviceType diskType();
 
 		/**
-		* @param an OR-ed combination of TDEDiskDeviceType::TDEDiskDeviceType type flags
-		*/
-		void setDiskType(TDEDiskDeviceType::TDEDiskDeviceType tf);
-
-		/**
-		* @param an OR-ed combination of TDEDiskDeviceType::TDEDiskDeviceType type flags
-		*/
-		bool isDiskOfType(TDEDiskDeviceType::TDEDiskDeviceType tf);
-
-		/**
 		* @return an OR-ed combination of TDEDiskDeviceStatus::TDEDiskDeviceStatus type flags
 		*/
 		TDEDiskDeviceStatus::TDEDiskDeviceStatus diskStatus();
-
-		/**
-		* @param an OR-ed combination of TDEDiskDeviceStatus::TDEDiskDeviceStatus type flags
-		*/
-		void setDiskStatus(TDEDiskDeviceStatus::TDEDiskDeviceStatus st);
-
-		/**
-		* @param an OR-ed combination of TDEDiskDeviceStatus::TDEDiskDeviceStatus type flags
-		*/
-		bool checkDiskStatus(TDEDiskDeviceStatus::TDEDiskDeviceStatus sf);
 
 		/**
 		* @return true if media inserted, false if no media available
@@ -537,19 +528,9 @@ class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 		bool mediaInserted();
 
 		/**
-		* @param a bool with the media status
-		*/
-		void setMediaInserted(bool inserted);
-
-		/**
 		* @return a TQString with the filesystem name, if any
 		*/
 		TQString &fileSystemName();
-
-		/**
-		* @param a TQString with the filesystem name, if any
-		*/
-		void setFileSystemName(TQString fn);
 
 		/**
 		* @return a TQString with the filesystem usage string, if any
@@ -557,29 +538,14 @@ class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 		TQString &fileSystemUsage();
 
 		/**
-		* @param a TQString with the filesystem usage string, if any
-		*/
-		void setFileSystemUsage(TQString fu);
-
-		/**
 		* @return a TQStringList containing system paths to all devices with a lock on this device, if any
 		*/
 		TQStringList &holdingDevices();
 
 		/**
-		* @param a TQStringList containing system paths to all devices with a lock on this device, if any
-		*/
-		void setHoldingDevices(TQStringList hd);
-
-		/**
 		* @return a TQStringList containing system paths to all devices locked by this device, if any
 		*/
 		TQStringList &slaveDevices();
-
-		/**
-		* @param a TQStringList containing system paths to all devices locked by this device, if any
-		*/
-		void setSlaveDevices(TQStringList sd);
 
 		/**
 		* Mounts the device if not encrypted
@@ -654,6 +620,71 @@ class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 		*/
 		TQString friendlyDeviceType();
 
+		/**
+		* @param an OR-ed combination of TDEDiskDeviceType::TDEDiskDeviceType type flags
+		*/
+		bool isDiskOfType(TDEDiskDeviceType::TDEDiskDeviceType tf);
+
+		/**
+		* @param an OR-ed combination of TDEDiskDeviceStatus::TDEDiskDeviceStatus type flags
+		*/
+		bool checkDiskStatus(TDEDiskDeviceStatus::TDEDiskDeviceStatus sf);
+
+	protected:
+		/**
+		* @param a TQString with the disk or partition label, if any
+		* @internal
+		*/
+		void internalSetDiskLabel(TQString dn);
+
+		/**
+		* @param a TQString with the disk UUID, if any
+		* @internal
+		*/
+		void internalSetDiskUUID(TQString id);
+
+		/**
+		* @param an OR-ed combination of TDEDiskDeviceType::TDEDiskDeviceType type flags
+		* @internal
+		*/
+		void internalSetDiskType(TDEDiskDeviceType::TDEDiskDeviceType tf);
+
+		/**
+		* @param an OR-ed combination of TDEDiskDeviceStatus::TDEDiskDeviceStatus type flags
+		* @internal
+		*/
+		void internalSetDiskStatus(TDEDiskDeviceStatus::TDEDiskDeviceStatus st);
+
+		/**
+		* @param a bool with the media status
+		* @internal
+		*/
+		void internalSetMediaInserted(bool inserted);
+
+		/**
+		* @param a TQString with the filesystem name, if any
+		* @internal
+		*/
+		void internalSetFileSystemName(TQString fn);
+
+		/**
+		* @param a TQString with the filesystem usage string, if any
+		* @internal
+		*/
+		void internalSetFileSystemUsage(TQString fu);
+
+		/**
+		* @param a TQStringList containing system paths to all devices with a lock on this device, if any
+		* @internal
+		*/
+		void internalSetHoldingDevices(TQStringList hd);
+
+		/**
+		* @param a TQStringList containing system paths to all devices locked by this device, if any
+		* @internal
+		*/
+		void internalSetSlaveDevices(TQStringList sd);
+
 	private:
 		TDEDiskDeviceType::TDEDiskDeviceType m_diskType;
 		TDEDiskDeviceStatus::TDEDiskDeviceStatus m_diskStatus;
@@ -665,6 +696,8 @@ class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 		TQString m_mountPath;
 		TQStringList m_holdingDevices;
 		TQStringList m_slaveDevices;
+
+	friend class TDEHardwareDevices;
 };
 
 class TDECORE_EXPORT TDECPUDevice : public TDEGenericDevice
@@ -687,19 +720,9 @@ class TDECORE_EXPORT TDECPUDevice : public TDEGenericDevice
 		double &frequency();
 
 		/**
-		* @param a double with the current CPU frequency in MHz, if available
-		*/
-		void setFrequency(double fr);
-
-		/**
 		* @return a double with the minimum CPU frequency in MHz, if available
 		*/
 		double &minFrequency();
-
-		/**
-		* @param a double with the minimum CPU frequency in MHz, if available
-		*/
-		void setMinFrequency(double fr);
 
 		/**
 		* @return a double with the maximum CPU frequency in MHz, if available
@@ -707,19 +730,9 @@ class TDECORE_EXPORT TDECPUDevice : public TDEGenericDevice
 		double &maxFrequency();
 
 		/**
-		* @param a double with the maximum CPU frequency in MHz, if available
-		*/
-		void setMaxFrequency(double fr);
-
-		/**
 		* @return a double with the transition latency in ns, if available
 		*/
 		double &transitionLatency();
-
-		/**
-		* @param a double with the transition latency in ns, if available
-		*/
-		void setTransitionLatency(double tl);
 
 		/**
 		* @return a TQString with the current CPU governor policy, if available
@@ -727,19 +740,9 @@ class TDECORE_EXPORT TDECPUDevice : public TDEGenericDevice
 		TQString &governor();
 
 		/**
-		* @param a TQString with the current CPU governor policy, if available
-		*/
-		void setGovernor(TQString gr);
-
-		/**
 		* @return a TQString with the current CPU scaling driver, if available
 		*/
 		TQString &scalingDriver();
-
-		/**
-		* @param a TQString with the current CPU scaling driver, if available
-		*/
-		void setScalingDriver(TQString dr);
 
 		/**
 		* @return a TQStringList with the IDs of all processors that are dependent on the frequency/power settings of this one, if available
@@ -747,19 +750,58 @@ class TDECORE_EXPORT TDECPUDevice : public TDEGenericDevice
 		TQStringList &dependentProcessors();
 
 		/**
-		* @param a TQStringList with the IDs of all processors that are dependent on the frequency/power settings of this one, if available
-		*/
-		void setDependentProcessors(TQStringList dp);
-
-		/**
 		* @return a TQStringList with all valid scaling frequencies in Hz, if available
 		*/
 		TQStringList &availableFrequencies();
 
+	protected:
+		/**
+		* @param a double with the current CPU frequency in MHz, if available
+		* @internal
+		*/
+		void internalSetFrequency(double fr);
+
+		/**
+		* @param a double with the minimum CPU frequency in MHz, if available
+		* @internal
+		*/
+		void internalSetMinFrequency(double fr);
+
+		/**
+		* @param a double with the maximum CPU frequency in MHz, if available
+		* @internal
+		*/
+		void internalSetMaxFrequency(double fr);
+
+		/**
+		* @param a double with the transition latency in ns, if available
+		* @internal
+		*/
+		void internalSetTransitionLatency(double tl);
+
+		/**
+		* @param a TQString with the current CPU governor policy, if available
+		* @internal
+		*/
+		void internalSetGovernor(TQString gr);
+
+		/**
+		* @param a TQString with the current CPU scaling driver, if available
+		* @internal
+		*/
+		void internalSetScalingDriver(TQString dr);
+
+		/**
+		* @param a TQStringList with the IDs of all processors that are dependent on the frequency/power settings of this one, if available
+		* @internal
+		*/
+		void internalSetDependentProcessors(TQStringList dp);
+
 		/**
 		* @param a TQStringList with all valid scaling frequencies in Hz, if available
+		* @internal
 		*/
-		void setAvailableFrequencies(TQStringList af);
+		void internalSetAvailableFrequencies(TQStringList af);
 
 	private:
 		double m_frequency;
@@ -770,6 +812,8 @@ class TDECORE_EXPORT TDECPUDevice : public TDEGenericDevice
 		TQString m_scalingdriver;
 		TQStringList m_tiedprocs;
 		TQStringList m_frequencies;
+
+	friend class TDEHardwareDevices;
 };
 
 class TDECORE_EXPORT TDEBatteryDevice : public TDEGenericDevice
@@ -792,19 +836,9 @@ class TDECORE_EXPORT TDEBatteryDevice : public TDEGenericDevice
 		double voltage();
 
 		/**
-		* @param a double with the current battery voltage, if available
-		*/
-		void setVoltage(double vt);
-
-		/**
 		* @return a double with the minimum battery voltage, if available
 		*/
 		double minimumVoltage();
-
-		/**
-		* @param a double with the minimum battery voltage, if available
-		*/
-		void setMinimumVoltage(double vt);
 
 		/**
 		* @return a double with the maximum battery voltage, if available
@@ -812,19 +846,9 @@ class TDECORE_EXPORT TDEBatteryDevice : public TDEGenericDevice
 		double maximumVoltage();
 
 		/**
-		* @param a double with the maximum battery voltage, if available
-		*/
-		void setMaximumVoltage(double vt);
-
-		/**
 		* @return a double with the designed maximum battery voltage, if available
 		*/
 		double maximumDesignVoltage();
-
-		/**
-		* @param a double with the designed maximum battery voltage, if available
-		*/
-		void setMaximumDesignVoltage(double vt);
 
 		/**
 		* @return a double with the current battery energy in watt-hours, if available
@@ -832,19 +856,9 @@ class TDECORE_EXPORT TDEBatteryDevice : public TDEGenericDevice
 		double energy();
 
 		/**
-		* @param a double with the current battery energy in watt-hours, if available
-		*/
-		void setEnergy(double vt);
-
-		/**
 		* @return a double with the current battery alarm energy in watt-hours, if available
 		*/
 		double alarmEnergy();
-
-		/**
-		* @param a double with the current battery alarm energy in watt-hours, if available
-		*/
-		void setAlarmEnergy(double vt);
 
 		/**
 		* @return a double with the maximum battery energy in watt-hours, if available
@@ -852,19 +866,9 @@ class TDECORE_EXPORT TDEBatteryDevice : public TDEGenericDevice
 		double maximumEnergy();
 
 		/**
-		* @param a double with the maximum battery energy in watt-hours, if available
-		*/
-		void setMaximumEnergy(double vt);
-
-		/**
 		* @return a double with the designed maximum battery energy in watt-hours, if available
 		*/
 		double maximumDesignEnergy();
-
-		/**
-		* @param a double with the designed maximum battery energy in watt-hours, if available
-		*/
-		void setMaximumDesignEnergy(double vt);
 
 		/**
 		* @return a double with the current battery discharge rate in volt-hours, if available
@@ -872,19 +876,9 @@ class TDECORE_EXPORT TDEBatteryDevice : public TDEGenericDevice
 		double dischargeRate();
 
 		/**
-		* @param a double with the current battery discharge rate in volt-hours, if available
-		*/
-		void setDischargeRate(double vt);
-
-		/**
 		* @return a TQString with the battery technology, if available
 		*/
 		TQString &technology();
-
-		/**
-		* @param a TQString with the battery technology, if available
-		*/
-		void setTechnology(TQString tc);
 
 		/**
 		* @return a TQString with the battery status, if available
@@ -892,24 +886,87 @@ class TDECORE_EXPORT TDEBatteryDevice : public TDEGenericDevice
 		TQString &status();
 
 		/**
-		* @param a TQString with the battery status, if available
-		*/
-		void setStatus(TQString tc);
-
-		/**
 		* @return TRUE if the battery is installed
 		*/
 		bool installed();
 
 		/**
-		* @param TRUE if the battery is installed
-		*/
-		void setInstalled(bool tc);
-
-		/**
 		* @return a double with the current battery charge in percent, if available
 		*/
 		double chargePercent();
+
+	protected:
+		/**
+		* @param a double with the current battery voltage, if available
+		* @internal
+		*/
+		void internalSetVoltage(double vt);
+
+		/**
+		* @param a double with the minimum battery voltage, if available
+		* @internal
+		*/
+		void internalSetMinimumVoltage(double vt);
+
+		/**
+		* @param a double with the maximum battery voltage, if available
+		* @internal
+		*/
+		void internalSetMaximumVoltage(double vt);
+
+		/**
+		* @param a double with the designed maximum battery voltage, if available
+		* @internal
+		*/
+		void internalSetMaximumDesignVoltage(double vt);
+
+		/**
+		* @param a double with the current battery energy in watt-hours, if available
+		* @internal
+		*/
+		void internalSetEnergy(double vt);
+
+		/**
+		* @param a double with the current battery alarm energy in watt-hours, if available
+		* @internal
+		*/
+		void internalSetAlarmEnergy(double vt);
+
+		/**
+		* @param a double with the maximum battery energy in watt-hours, if available
+		* @internal
+		*/
+		void internalSetMaximumEnergy(double vt);
+
+		/**
+		* @param a double with the designed maximum battery energy in watt-hours, if available
+		* @internal
+		*/
+		void internalSetMaximumDesignEnergy(double vt);
+
+		/**
+		* @param a double with the current battery discharge rate in volt-hours, if available
+		* @internal
+		*/
+		void internalSetDischargeRate(double vt);
+
+		/**
+		* @param a TQString with the battery technology, if available
+		* @internal
+		*/
+		void internalSetTechnology(TQString tc);
+
+		/**
+		* @param a TQString with the battery status, if available
+		* @internal
+		*/
+		void internalSetStatus(TQString tc);
+
+		/**
+		* @param TRUE if the battery is installed
+		* @internal
+		*/
+		void internalSetInstalled(bool tc);
 
 	private:
 		double m_currentVoltage;
@@ -924,6 +981,8 @@ class TDECORE_EXPORT TDEBatteryDevice : public TDEGenericDevice
 		TQString m_technology;
 		TQString m_status;
 		bool m_installed;
+
+	friend class TDEHardwareDevices;
 };
 
 class TDECORE_EXPORT TDEMainsPowerDevice : public TDEGenericDevice
@@ -945,13 +1004,17 @@ class TDECORE_EXPORT TDEMainsPowerDevice : public TDEGenericDevice
 		*/
 		bool online();
 
+	protected:
 		/**
 		* @param TRUE if power supply is online via mains power, FALSE if not
+		* @internal
 		*/
-		void setOnline(bool vt);
+		void internalSetOnline(bool vt);
 
 	private:
 		bool m_online;
+
+	friend class TDEHardwareDevices;
 };
 
 class TDECORE_EXPORT TDENetworkDevice : public TDEGenericDevice
@@ -974,19 +1037,9 @@ class TDECORE_EXPORT TDENetworkDevice : public TDEGenericDevice
 		TQString macAddress();
 
 		/**
-		* @param ma a TQString containing the network device's MAC address
-		*/
-		void setMacAddress(TQString ma);
-
-		/**
 		* @return a TQString containing the network device's operational state
 		*/
 		TQString state();
-
-		/**
-		* @param st a TQString containing the network device's operational state
-		*/
-		void setState(TQString st);
 
 		/**
 		* @return TRUE if carrier is present, FALSE if not
@@ -994,19 +1047,9 @@ class TDECORE_EXPORT TDENetworkDevice : public TDEGenericDevice
 		bool carrierPresent();
 
 		/**
-		* @param TRUE if carrier is present, FALSE if not
-		*/
-		void setCarrierPresent(bool cp);
-
-		/**
 		* @return TRUE if device is dormant, FALSE if not
 		*/
 		bool dormant();
-
-		/**
-		* @param TRUE if device is dormant, FALSE if not
-		*/
-		void setDormant(bool dm);
 
 		/**
 		* @return a TQString containing the network device's IPv4 address
@@ -1014,19 +1057,9 @@ class TDECORE_EXPORT TDENetworkDevice : public TDEGenericDevice
 		TQString ipV4Address();
 
 		/**
-		* @param ad a TQString containing the network device's IPv4 address
-		*/
-		void setIpV4Address(TQString ad);
-
-		/**
 		* @return a TQString containing the network device's IPv6 address
 		*/
 		TQString ipV6Address();
-
-		/**
-		* @param ad a TQString containing the network device's IPv6 address
-		*/
-		void setIpV6Address(TQString ad);
 
 		/**
 		* @return a TQString containing the network device's IPv4 netmask
@@ -1034,19 +1067,9 @@ class TDECORE_EXPORT TDENetworkDevice : public TDEGenericDevice
 		TQString ipV4Netmask();
 
 		/**
-		* @param nm a TQString containing the network device's IPv4 netmask
-		*/
-		void setIpV4Netmask(TQString nm);
-
-		/**
 		* @return a TQString containing the network device's IPv6 netmask
 		*/
 		TQString ipV6Netmask();
-
-		/**
-		* @param nm a TQString containing the network device's IPv6 netmask
-		*/
-		void setIpV6Netmask(TQString nm);
 
 		/**
 		* @return a TQString containing the network device's IPv4 broadcast
@@ -1054,19 +1077,9 @@ class TDECORE_EXPORT TDENetworkDevice : public TDEGenericDevice
 		TQString ipV4Broadcast();
 
 		/**
-		* @param br a TQString containing the network device's IPv4 broadcast
-		*/
-		void setIpV4Broadcast(TQString br);
-
-		/**
 		* @return a TQString containing the network device's IPv6 broadcast
 		*/
 		TQString ipV6Broadcast();
-
-		/**
-		* @param br a TQString containing the network device's IPv6 broadcast
-		*/
-		void setIpV6Broadcast(TQString br);
 
 		/**
 		* @return a TQString containing the network device's IPv4 destination
@@ -1074,19 +1087,9 @@ class TDECORE_EXPORT TDENetworkDevice : public TDEGenericDevice
 		TQString ipV4Destination();
 
 		/**
-		* @param ds a TQString containing the network device's IPv4 destination
-		*/
-		void setIpV4Destination(TQString ds);
-
-		/**
 		* @return a TQString containing the network device's IPv6 destination
 		*/
 		TQString ipV6Destination();
-
-		/**
-		* @param ds a TQString containing the network device's IPv6 destination
-		*/
-		void setIpV6Destination(TQString ds);
 
 		/**
 		* @return a double with the number of received bytes, if available
@@ -1094,19 +1097,9 @@ class TDECORE_EXPORT TDENetworkDevice : public TDEGenericDevice
 		double rxBytes();
 
 		/**
-		* @param rx a double with the number of received bytes, if available
-		*/
-		void setRxBytes(double rx);
-
-		/**
 		* @return a double with the number of transmitted bytes, if available
 		*/
 		double txBytes();
-
-		/**
-		* @param tx a double with the number of transmitted bytes, if available
-		*/
-		void setTxBytes(double tx);
 
 		/**
 		* @return a double with the number of received packets, if available
@@ -1114,19 +1107,106 @@ class TDECORE_EXPORT TDENetworkDevice : public TDEGenericDevice
 		double rxPackets();
 
 		/**
-		* @param rx a double with the number of received packets, if available
-		*/
-		void setRxPackets(double rx);
-
-		/**
 		* @return a double with the number of transmitted packets, if available
 		*/
 		double txPackets();
 
+	protected:
+		/**
+		* @param ma a TQString containing the network device's MAC address
+		* @internal
+		*/
+		void internalSetMacAddress(TQString ma);
+
+		/**
+		* @param st a TQString containing the network device's operational state
+		* @internal
+		*/
+		void internalSetState(TQString st);
+
+		/**
+		* @param TRUE if carrier is present, FALSE if not
+		* @internal
+		*/
+		void internalSetCarrierPresent(bool cp);
+
+		/**
+		* @param TRUE if device is dormant, FALSE if not
+		* @internal
+		*/
+		void internalSetDormant(bool dm);
+
+		/**
+		* @param ad a TQString containing the network device's IPv4 address
+		* @internal
+		*/
+		void internalSetIpV4Address(TQString ad);
+
+		/**
+		* @param ad a TQString containing the network device's IPv6 address
+		* @internal
+		*/
+		void internalSetIpV6Address(TQString ad);
+
+		/**
+		* @param nm a TQString containing the network device's IPv4 netmask
+		* @internal
+		*/
+		void internalSetIpV4Netmask(TQString nm);
+
+		/**
+		* @param nm a TQString containing the network device's IPv6 netmask
+		* @internal
+		*/
+		void internalSetIpV6Netmask(TQString nm);
+
+		/**
+		* @param br a TQString containing the network device's IPv4 broadcast
+		* @internal
+		*/
+		void internalSetIpV4Broadcast(TQString br);
+
+		/**
+		* @param br a TQString containing the network device's IPv6 broadcast
+		* @internal
+		*/
+		void internalSetIpV6Broadcast(TQString br);
+
+		/**
+		* @param ds a TQString containing the network device's IPv4 destination
+		* @internal
+		*/
+		void internalSetIpV4Destination(TQString ds);
+
+		/**
+		* @param ds a TQString containing the network device's IPv6 destination
+		* @internal
+		*/
+		void internalSetIpV6Destination(TQString ds);
+
+		/**
+		* @param rx a double with the number of received bytes, if available
+		* @internal
+		*/
+		void internalSetRxBytes(double rx);
+
+		/**
+		* @param tx a double with the number of transmitted bytes, if available
+		* @internal
+		*/
+		void internalSetTxBytes(double tx);
+
+		/**
+		* @param rx a double with the number of received packets, if available
+		* @internal
+		*/
+		void internalSetRxPackets(double rx);
+
 		/**
 		* @param tx a double with the number of transmitted packets, if available
+		* @internal
 		*/
-		void setTxPackets(double tx);
+		void internalSetTxPackets(double tx);
 
 	private:
 		TQString m_macAddress;
@@ -1145,7 +1225,185 @@ class TDECORE_EXPORT TDENetworkDevice : public TDEGenericDevice
 		double m_txbytes;
 		double m_rxpackets;
 		double m_txpackets;
+
+	friend class TDEHardwareDevices;
 };
+
+namespace TDEDisplayPowerLevel {
+enum TDEDisplayPowerLevel {
+	On,
+	Standby,
+	Suspend,
+	Off
+};
+};
+
+class TDECORE_EXPORT TDEBacklightDevice : public TDEGenericDevice
+{
+	public:
+		/**
+		*  Constructor.
+		*  @param Device type
+		*/
+		TDEBacklightDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn=TQString::null);
+		
+		/**
+		* Destructor.
+		*/
+		~TDEBacklightDevice();
+
+		/**
+		* @return a TDEDisplayPowerLevel::TDEDisplayPowerLevel with the current power level
+		*/
+		TDEDisplayPowerLevel::TDEDisplayPowerLevel powerLevel();
+
+		/**
+		* @return an integer with the number of discrete control steps available
+		*/
+		int brightnessSteps();
+
+		/**
+		* @return a double with the current brightness percentage
+		*/
+		double brightnessPercent();
+
+		/**
+		* @return TRUE if permissions allow brightness can be set, FALSE if not
+		*/
+		bool canSetBrightness();
+
+		/**
+		* @return an int with the current raw brightness
+		*/
+		int rawBrightness();
+
+		/**
+		* @param br an integer with the new raw brightness value
+		*/
+		void setRawBrightness(int br);
+
+	protected:
+		/**
+		* @param pl a TDEDisplayPowerLevel::TDEDisplayPowerLevel with the current power level
+		* @internal
+		*/
+		void internalSetPowerLevel(TDEDisplayPowerLevel::TDEDisplayPowerLevel pl);
+
+		/**
+		* @param br an integer with the maximum raw brightness value
+		* @internal
+		*/
+		void internalSetMaximumRawBrightness(int br);
+
+		/**
+		* @param br an integer with the current raw brightness value
+		* @internal
+		*/
+		void internalSetCurrentRawBrightness(int br);
+
+	private:
+		TDEDisplayPowerLevel::TDEDisplayPowerLevel m_powerLevel;
+		int m_currentBrightness;
+		int m_maximumBrightness;
+
+	friend class TDEHardwareDevices;
+};
+
+typedef TQPair<unsigned int, unsigned int> TDEResolutionPair;
+typedef TQValueList< TDEResolutionPair > TDEResolutionList;
+
+class TDECORE_EXPORT TDEMonitorDevice : public TDEGenericDevice
+{
+	public:
+		/**
+		*  Constructor.
+		*  @param Device type
+		*/
+		TDEMonitorDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn=TQString::null);
+		
+		/**
+		* Destructor.
+		*/
+		~TDEMonitorDevice();
+
+		/**
+		* @return TRUE if a monitor is connected, FALSE if not
+		*/
+		bool connected();
+
+		/**
+		* @return TRUE if this port is enabled, FALSE if not
+		*/
+		bool enabled();
+
+		/**
+		* @return a TQByteArray containing this monitor's EDID information
+		*/
+		TQByteArray edid();
+
+		/**
+		* @return a TDEResolutionList containing this monitor's supported resolutions
+		*/
+		TDEResolutionList resolutions();
+
+		/**
+		* @return a TQString containing the display port type
+		*/
+		TQString portType();
+
+		/**
+		* @return a TDEDisplayPowerLevel::TDEDisplayPowerLevel with the current power level
+		*/
+		TDEDisplayPowerLevel::TDEDisplayPowerLevel powerLevel();
+
+	protected:
+		/**
+		* @param TRUE if a monitor is connected, FALSE if not
+		* @internal
+		*/
+		void internalSetConnected(bool cn);
+
+		/**
+		* @param TRUE if this port is enabled, FALSE if not
+		* @internal
+		*/
+		void internalSetEnabled(bool en);
+
+		/**
+		* @param ed a TQByteArray containing this monitor's EDID information
+		* @internal
+		*/
+		void internalSetEdid(TQByteArray ed);
+
+		/**
+		* @param rs a TDEResolutionList containing this monitor's supported resolutions
+		* @internal
+		*/
+		void internalSetResolutions(TDEResolutionList rs);
+
+		/**
+		* @param pt a TQString containing the display port type
+		* @internal
+		*/
+		void internalSetPortType(TQString pt);
+
+		/**
+		* @param pl a TDEDisplayPowerLevel::TDEDisplayPowerLevel with the current power level
+		* @internal
+		*/
+		void internalSetPowerLevel(TDEDisplayPowerLevel::TDEDisplayPowerLevel pl);
+
+	private:
+		bool m_connected;
+		bool m_enabled;
+		TQByteArray m_edid;
+		TDEResolutionList m_resolutions;
+		TQString m_portType;
+		TDEDisplayPowerLevel::TDEDisplayPowerLevel m_powerLevel;
+
+	friend class TDEHardwareDevices;
+};
+
 
 typedef TQMap<TQString, TDESensorCluster> TDESensorClusterMap;
 
@@ -1168,13 +1426,17 @@ class TDECORE_EXPORT TDESensorDevice : public TDEGenericDevice
 		*/
 		TDESensorClusterMap values();
 
+	protected:
 		/**
 		* @param a TDESensorClusterMap with the current sensor values
+		* @internal
 		*/
-		void setValues(TDESensorClusterMap cl);
+		void internalSetValues(TDESensorClusterMap cl);
 
 	private:
 		TDESensorClusterMap m_sensorValues;
+
+	friend class TDEHardwareDevices;
 };
 
 typedef TQPtrList<TDEGenericDevice> TDEGenericHardwareList;
@@ -1269,6 +1531,13 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 		TQString findPNPDeviceName(TQString pnpid);
 
 		/**
+		*  Look up the monitor manufacturer in the system display database
+		*  @param pnpid a TQString containing the display manufacturer ID
+		*  @return a TQString containing the manufacturer name, if found
+		*/
+		TQString findMonitorManufacturerName(TQString dpyid);
+
+		/**
 		*  Get a friendly string describing a device type
 		*  @param query a TDEGenericDeviceType::TDEGenericDeviceType specifying a device type
 		*  @return a TQString containing the friendly type name
@@ -1315,6 +1584,18 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 
 		void addCoreSystemDevices();
 
+		/**
+		* Get the binary monitor EDID for the specified sysfs path
+		* @return a TQByteArray containing the EDID
+		*/
+		TQByteArray getEDID(TQString path);
+		
+		/**
+		* Get the monitor EDID name for the specified sysfs path
+		* @return a TQPair<TQString,TQString> containing the monitor vendor and model, if available
+		*/
+		TQPair<TQString,TQString> getEDIDMonitorName(TQString path);
+
 		struct udev *m_udevStruct;
 		struct udev_monitor *m_udevMonitorStruct;
 		TDEGenericHardwareList m_deviceList;
@@ -1332,6 +1613,7 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 		TDEDeviceIDMap* pci_id_map;
 		TDEDeviceIDMap* usb_id_map;
 		TDEDeviceIDMap* pnp_id_map;
+		TDEDeviceIDMap* dpy_id_map;
 
 	friend class TDEGenericDevice;
 	friend class TDEStorageDevice;

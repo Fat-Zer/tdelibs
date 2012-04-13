@@ -13,5 +13,5 @@
 ##### other data ################################
 
 install( FILES
-    pnp.ids
+    pnp.ids dpy.ids
   DESTINATION ${DATA_INSTALL_DIR}/tdehwlib/pnpdev )
