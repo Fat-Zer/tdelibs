@@ -754,54 +754,75 @@ class TDECORE_EXPORT TDECPUDevice : public TDEGenericDevice
 		*/
 		TQStringList &availableFrequencies();
 
+		/**
+		* @return a TQStringList with all available governor policies, if available
+		*/
+		TQStringList &availableGovernors();
+
+		/**
+		* @return TRUE if permissions allow the CPU governor to be set, FALSE if not
+		*/
+		bool canSetGovernor();
+
+		/**
+		* @param gv a TQString with the new CPU governor policy name
+		*/
+		void setGovernor(TQString gv);
+
 	protected:
 		/**
-		* @param a double with the current CPU frequency in MHz, if available
+		* @param fr a double with the current CPU frequency in MHz, if available
 		* @internal
 		*/
 		void internalSetFrequency(double fr);
 
 		/**
-		* @param a double with the minimum CPU frequency in MHz, if available
+		* @param fr a double with the minimum CPU frequency in MHz, if available
 		* @internal
 		*/
 		void internalSetMinFrequency(double fr);
 
 		/**
-		* @param a double with the maximum CPU frequency in MHz, if available
+		* @param fr a double with the maximum CPU frequency in MHz, if available
 		* @internal
 		*/
 		void internalSetMaxFrequency(double fr);
 
 		/**
-		* @param a double with the transition latency in ns, if available
+		* @param tl a double with the transition latency in ns, if available
 		* @internal
 		*/
 		void internalSetTransitionLatency(double tl);
 
 		/**
-		* @param a TQString with the current CPU governor policy, if available
+		* @param gr a TQString with the current CPU governor policy, if available
 		* @internal
 		*/
 		void internalSetGovernor(TQString gr);
 
 		/**
-		* @param a TQString with the current CPU scaling driver, if available
+		* @param dr a TQString with the current CPU scaling driver, if available
 		* @internal
 		*/
 		void internalSetScalingDriver(TQString dr);
 
 		/**
-		* @param a TQStringList with the IDs of all processors that are dependent on the frequency/power settings of this one, if available
+		* @param dp a TQStringList with the IDs of all processors that are dependent on the frequency/power settings of this one, if available
 		* @internal
 		*/
 		void internalSetDependentProcessors(TQStringList dp);
 
 		/**
-		* @param a TQStringList with all valid scaling frequencies in Hz, if available
+		* @param af a TQStringList with all valid scaling frequencies in Hz, if available
 		* @internal
 		*/
 		void internalSetAvailableFrequencies(TQStringList af);
+
+		/**
+		* @param gp a TQStringList with all available governor policies, if available
+		* @internal
+		*/
+		void internalSetAvailableGovernors(TQStringList gp);
 
 	private:
 		double m_frequency;
@@ -812,6 +833,7 @@ class TDECORE_EXPORT TDECPUDevice : public TDEGenericDevice
 		TQString m_scalingdriver;
 		TQStringList m_tiedprocs;
 		TQStringList m_frequencies;
+		TQStringList m_governers;
 
 	friend class TDEHardwareDevices;
 };

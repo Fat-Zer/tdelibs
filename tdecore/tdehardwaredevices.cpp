@@ -887,6 +887,35 @@ void TDECPUDevice::internalSetAvailableFrequencies(TQStringList af) {
 	m_frequencies = af;
 }
 
+TQStringList &TDECPUDevice::availableGovernors() {
+	return m_governers;
+}
+
+void TDECPUDevice::internalSetAvailableGovernors(TQStringList gp) {
+	m_governers = gp;
+}
+
+bool TDECPUDevice::canSetGovernor() {
+	TQString governornode = systemPath() + "/cpufreq/scaling_governor";
+	int rval = access (governornode.ascii(), W_OK);
+	if (rval == 0) {
+		return TRUE;
+	}
+	else {
+		return FALSE;
+	}
+}
+
+void TDECPUDevice::setGovernor(TQString gv) {
+	TQString governornode = systemPath() + "/cpufreq/scaling_governor";
+	TQFile file( governornode );
+	if ( file.open( IO_WriteOnly ) ) {
+		TQTextStream stream( &file );
+		stream << gv.lower();
+		file.close();
+	}
+}
+
 TDESensorDevice::TDESensorDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
 }
 
@@ -1566,6 +1595,7 @@ void TDEHardwareDevices::processModifiedCPUs() {
 		double trlatency = -1;
 		TQStringList affectedcpulist;
 		TQStringList frequencylist;
+		TQStringList governorlist;
 		if (cpufreq_dir.exists()) {
 			TQString nodename = cpufreq_dir.path();
 			nodename.append("/scaling_governor");
@@ -1623,6 +1653,14 @@ void TDEHardwareDevices::processModifiedCPUs() {
 				frequencylist = TQStringList::split(" ", stream.readLine());
 				availfreqsfile.close();
 			}
+			nodename = cpufreq_dir.path();
+			nodename.append("/scaling_available_governors");
+			TQFile availgvrnsfile(nodename);
+			if (availgvrnsfile.open(IO_ReadOnly)) {
+				TQTextStream stream( &availgvrnsfile );
+				governorlist = TQStringList::split(" ", stream.readLine());
+				availgvrnsfile.close();
+			}
 		}
 
 		// Update CPU information structure
@@ -1640,6 +1678,8 @@ void TDEHardwareDevices::processModifiedCPUs() {
 		cdevice->internalSetDependentProcessors(affectedcpulist);
 		if (cdevice->availableFrequencies().join(" ") != frequencylist.join(" ")) modified = true;
 		cdevice->internalSetAvailableFrequencies(frequencylist);
+		if (cdevice->availableGovernors().join(" ") != governorlist.join(" ")) modified = true;
+		cdevice->internalSetAvailableGovernors(governorlist);
 	}
 
 	if (modified) {
