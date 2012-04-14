@@ -30,6 +30,9 @@
 #include <ksimpledirwatch.h>
 #include <kstandarddirs.h>
 
+#include <kapplication.h>
+#include <dcopclient.h>
+
 #include <libudev.h>
 
 #include <fcntl.h>
@@ -103,7 +106,7 @@ TDEGenericDeviceType::TDEGenericDeviceType TDEGenericDevice::type() {
 	return m_deviceType;
 }
 
-TQString &TDEGenericDevice::name() {
+TQString TDEGenericDevice::name() {
 	return m_deviceName;
 }
 
@@ -111,7 +114,7 @@ void TDEGenericDevice::internalSetName(TQString dn) {
 	m_deviceName = dn;
 }
 
-TQString &TDEGenericDevice::vendorName() {
+TQString TDEGenericDevice::vendorName() {
 	return m_vendorName;
 }
 
@@ -119,7 +122,7 @@ void TDEGenericDevice::internalSetVendorName(TQString vn) {
 	m_vendorName = vn;
 }
 
-TQString &TDEGenericDevice::vendorModel() {
+TQString TDEGenericDevice::vendorModel() {
 	return m_vendorModel;
 }
 
@@ -127,7 +130,7 @@ void TDEGenericDevice::internalSetVendorModel(TQString vm) {
 	m_vendorModel = vm;
 }
 
-TQString &TDEGenericDevice::serialNumber() {
+TQString TDEGenericDevice::serialNumber() {
 	return m_serialNumber;
 }
 
@@ -135,7 +138,10 @@ void TDEGenericDevice::internalSetSerialNumber(TQString sn) {
 	m_serialNumber = sn;
 }
 
-TQString &TDEGenericDevice::systemPath() {
+TQString TDEGenericDevice::systemPath() {
+	if (!m_systemPath.endsWith("/")) {
+		m_systemPath += "/";
+	}
 	return m_systemPath;
 }
 
@@ -143,7 +149,7 @@ void TDEGenericDevice::internalSetSystemPath(TQString sp) {
 	m_systemPath = sp;
 }
 
-TQString &TDEGenericDevice::deviceNode() {
+TQString TDEGenericDevice::deviceNode() {
 	return m_deviceNode;
 }
 
@@ -151,7 +157,7 @@ void TDEGenericDevice::internalSetDeviceNode(TQString sn) {
 	m_deviceNode = sn;
 }
 
-TQString &TDEGenericDevice::deviceBus() {
+TQString TDEGenericDevice::deviceBus() {
 	return m_deviceBus;
 }
 
@@ -164,7 +170,7 @@ TQString TDEGenericDevice::uniqueID() {
 	return m_uniqueID;
 }
 
-TQString &TDEGenericDevice::vendorID() {
+TQString TDEGenericDevice::vendorID() {
 	return m_vendorID;
 }
 
@@ -173,7 +179,7 @@ void TDEGenericDevice::internalSetVendorID(TQString id) {
 	m_vendorID.replace("0x", "");
 }
 
-TQString &TDEGenericDevice::modelID() {
+TQString TDEGenericDevice::modelID() {
 	return m_modelID;
 }
 
@@ -182,7 +188,7 @@ void TDEGenericDevice::internalSetModelID(TQString id) {
 	m_modelID.replace("0x", "");
 }
 
-TQString &TDEGenericDevice::vendorEncoded() {
+TQString TDEGenericDevice::vendorEncoded() {
 	return m_vendorenc;
 }
 
@@ -190,7 +196,7 @@ void TDEGenericDevice::internalSetVendorEncoded(TQString id) {
 	m_vendorenc = id;
 }
 
-TQString &TDEGenericDevice::modelEncoded() {
+TQString TDEGenericDevice::modelEncoded() {
 	return m_modelenc;
 }
 
@@ -198,7 +204,7 @@ void TDEGenericDevice::internalSetModelEncoded(TQString id) {
 	m_modelenc = id;
 }
 
-TQString &TDEGenericDevice::subVendorID() {
+TQString TDEGenericDevice::subVendorID() {
 	return m_subvendorID;
 }
 
@@ -207,7 +213,7 @@ void TDEGenericDevice::internalSetSubVendorID(TQString id) {
 	m_subvendorID.replace("0x", "");
 }
 
-TQString &TDEGenericDevice::PCIClass() {
+TQString TDEGenericDevice::PCIClass() {
 	return m_pciClass;
 }
 
@@ -216,7 +222,7 @@ void TDEGenericDevice::internalSetPCIClass(TQString cl) {
 	m_pciClass.replace("0x", "");
 }
 
-TQString &TDEGenericDevice::moduleAlias() {
+TQString TDEGenericDevice::moduleAlias() {
 	return m_modAlias;
 }
 
@@ -224,7 +230,7 @@ void TDEGenericDevice::internalSetModuleAlias(TQString ma) {
 	m_modAlias = ma;
 }
 
-TQString &TDEGenericDevice::deviceDriver() {
+TQString TDEGenericDevice::deviceDriver() {
 	return m_deviceDriver;
 }
 
@@ -232,7 +238,7 @@ void TDEGenericDevice::internalSetDeviceDriver(TQString dr) {
 	m_deviceDriver = dr;
 }
 
-TQString &TDEGenericDevice::subsystem() {
+TQString TDEGenericDevice::subsystem() {
 	return m_subsystem;
 }
 
@@ -240,7 +246,7 @@ void TDEGenericDevice::internalSetSubsystem(TQString ss) {
 	m_subsystem = ss;
 }
 
-TQString &TDEGenericDevice::subModelID() {
+TQString TDEGenericDevice::subModelID() {
 	return m_submodelID;
 }
 
@@ -282,8 +288,12 @@ TQString TDEGenericDevice::busID() {
 
 TQString TDEGenericDevice::friendlyName() {
 	if (m_friendlyName.isNull()) {
-		if (type() == TDEGenericDeviceType::Root) {
-			TQString friendlyDriverName = m_systemPath;
+		if (type() == TDEGenericDeviceType::RootSystem) {
+			m_friendlyName = "Linux System";
+		}
+		else if (type() == TDEGenericDeviceType::Root) {
+			TQString friendlyDriverName = systemPath();
+			friendlyDriverName.truncate(friendlyDriverName.length()-1);
 			friendlyDriverName.remove(0, friendlyDriverName.findRev("/")+1);
 			m_friendlyName = friendlyDriverName;
 		}
@@ -295,6 +305,7 @@ TQString TDEGenericDevice::friendlyName() {
 		}
 		else {
 			TQString acpigentype = systemPath();
+			acpigentype.truncate(acpigentype.length()-1);
 			acpigentype.remove(0, acpigentype.findRev("/")+1);
 			TQString pnpgentype = acpigentype;
 			pnpgentype.truncate(pnpgentype.find(":"));
@@ -348,7 +359,8 @@ TQString TDEGenericDevice::friendlyName() {
 			m_friendlyName = i18n("Generic %1 Device").arg(friendlyDriverName);
 		}
 		else if (m_systemPath.lower().startsWith("/sys/devices/virtual")) {
-			TQString friendlyDriverName = m_systemPath;
+			TQString friendlyDriverName = systemPath();
+			friendlyDriverName.truncate(friendlyDriverName.length()-1);
 			friendlyDriverName.remove(0, friendlyDriverName.findRev("/")+1);
 			if (!friendlyDriverName.isNull()) {
 				m_friendlyName = i18n("Virtual Device %1").arg(friendlyDriverName);
@@ -398,7 +410,7 @@ bool TDEStorageDevice::checkDiskStatus(TDEDiskDeviceStatus::TDEDiskDeviceStatus 
 	return ((m_diskStatus&sf)!=(TDEDiskDeviceStatus::TDEDiskDeviceStatus)0);
 }
 
-TQString &TDEStorageDevice::diskLabel() {
+TQString TDEStorageDevice::diskLabel() {
 	return m_diskName;
 }
 
@@ -414,7 +426,7 @@ void TDEStorageDevice::internalSetMediaInserted(bool inserted) {
 	m_mediaInserted = inserted;
 }
 
-TQString &TDEStorageDevice::fileSystemName() {
+TQString TDEStorageDevice::fileSystemName() {
 	return m_fileSystemName;
 }
 
@@ -422,7 +434,7 @@ void TDEStorageDevice::internalSetFileSystemName(TQString fn) {
 	m_fileSystemName = fn;
 }
 
-TQString &TDEStorageDevice::fileSystemUsage() {
+TQString TDEStorageDevice::fileSystemUsage() {
 	return m_fileSystemUsage;
 }
 
@@ -430,7 +442,7 @@ void TDEStorageDevice::internalSetFileSystemUsage(TQString fu) {
 	m_fileSystemUsage = fu;
 }
 
-TQString &TDEStorageDevice::diskUUID() {
+TQString TDEStorageDevice::diskUUID() {
 	return m_diskUUID;
 }
 
@@ -438,7 +450,7 @@ void TDEStorageDevice::internalSetDiskUUID(TQString id) {
 	m_diskUUID = id;
 }
 
-TQStringList &TDEStorageDevice::holdingDevices() {
+TQStringList TDEStorageDevice::holdingDevices() {
 	return m_holdingDevices;
 }
 
@@ -446,7 +458,7 @@ void TDEStorageDevice::internalSetHoldingDevices(TQStringList hd) {
 	m_holdingDevices = hd;
 }
 
-TQStringList &TDEStorageDevice::slaveDevices() {
+TQStringList TDEStorageDevice::slaveDevices() {
 	return m_slaveDevices;
 }
 
@@ -823,7 +835,7 @@ TDECPUDevice::TDECPUDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQStri
 TDECPUDevice::~TDECPUDevice() {
 }
 
-double &TDECPUDevice::frequency() {
+double TDECPUDevice::frequency() {
 	return m_frequency;
 }
 
@@ -831,7 +843,7 @@ void TDECPUDevice::internalSetFrequency(double fr) {
 	m_frequency = fr;
 }
 
-double &TDECPUDevice::minFrequency() {
+double TDECPUDevice::minFrequency() {
 	return m_minfrequency;
 }
 
@@ -839,7 +851,7 @@ void TDECPUDevice::internalSetMinFrequency(double fr) {
 	m_minfrequency = fr;
 }
 
-double &TDECPUDevice::maxFrequency() {
+double TDECPUDevice::maxFrequency() {
 	return m_maxfrequency;
 }
 
@@ -847,7 +859,7 @@ void TDECPUDevice::internalSetMaxFrequency(double fr) {
 	m_maxfrequency = fr;
 }
 
-double &TDECPUDevice::transitionLatency() {
+double TDECPUDevice::transitionLatency() {
 	return m_transitionlatency;
 }
 
@@ -855,7 +867,7 @@ void TDECPUDevice::internalSetTransitionLatency(double tl) {
 	m_transitionlatency = tl;
 }
 
-TQString &TDECPUDevice::governor() {
+TQString TDECPUDevice::governor() {
 	return m_governor;
 }
 
@@ -863,7 +875,7 @@ void TDECPUDevice::internalSetGovernor(TQString gr) {
 	m_governor = gr;
 }
 
-TQString &TDECPUDevice::scalingDriver() {
+TQString TDECPUDevice::scalingDriver() {
 	return m_scalingdriver;
 }
 
@@ -871,7 +883,7 @@ void TDECPUDevice::internalSetScalingDriver(TQString dr) {
 	m_scalingdriver = dr;
 }
 
-TQStringList &TDECPUDevice::dependentProcessors() {
+TQStringList TDECPUDevice::dependentProcessors() {
 	return m_tiedprocs;
 }
 
@@ -879,7 +891,7 @@ void TDECPUDevice::internalSetDependentProcessors(TQStringList dp) {
 	m_tiedprocs = dp;
 }
 
-TQStringList &TDECPUDevice::availableFrequencies() {
+TQStringList TDECPUDevice::availableFrequencies() {
 	return m_frequencies;
 }
 
@@ -887,7 +899,7 @@ void TDECPUDevice::internalSetAvailableFrequencies(TQStringList af) {
 	m_frequencies = af;
 }
 
-TQStringList &TDECPUDevice::availableGovernors() {
+TQStringList TDECPUDevice::availableGovernors() {
 	return m_governers;
 }
 
@@ -928,6 +940,195 @@ TDESensorClusterMap TDESensorDevice::values() {
 
 void TDESensorDevice::internalSetValues(TDESensorClusterMap cl) {
 	m_sensorValues = cl;
+}
+
+TDERootSystemDevice::TDERootSystemDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
+	m_hibernationSpace = -1;
+}
+
+TDERootSystemDevice::~TDERootSystemDevice() {
+}
+
+TDESystemFormFactor::TDESystemFormFactor TDERootSystemDevice::formFactor() {
+	return m_formFactor;
+}
+
+void TDERootSystemDevice::internalSetFormFactor(TDESystemFormFactor::TDESystemFormFactor ff) {
+	m_formFactor = ff;
+}
+
+TDESystemPowerStateList TDERootSystemDevice::powerStates() {
+	return m_powerStates;
+}
+
+void TDERootSystemDevice::internalSetPowerStates(TDESystemPowerStateList ps) {
+	m_powerStates = ps;
+}
+
+TDESystemHibernationMethodList TDERootSystemDevice::hibernationMethods() {
+	return m_hibernationMethods;
+}
+
+void TDERootSystemDevice::internalSetHibernationMethods(TDESystemHibernationMethodList hm) {
+	m_hibernationMethods = hm;
+}
+
+TDESystemHibernationMethod::TDESystemHibernationMethod TDERootSystemDevice::hibernationMethod() {
+	return m_hibernationMethod;
+}
+
+void TDERootSystemDevice::internalSetHibernationMethod(TDESystemHibernationMethod::TDESystemHibernationMethod hm) {
+	m_hibernationMethod = hm;
+}
+
+unsigned long TDERootSystemDevice::diskSpaceNeededForHibernation() {
+	return m_hibernationSpace;
+}
+
+void TDERootSystemDevice::internalSetDiskSpaceNeededForHibernation(unsigned long sz) {
+	m_hibernationSpace = sz;
+}
+
+bool TDERootSystemDevice::canSetHibernationMethod() {
+	TQString hibernationnode = "/sys/power/disk";
+	int rval = access (hibernationnode.ascii(), W_OK);
+	if (rval == 0) {
+		return TRUE;
+	}
+	else {
+		return FALSE;
+	}
+}
+
+bool TDERootSystemDevice::canStandby() {
+	TQString statenode = "/sys/power/state";
+	int rval = access (statenode.ascii(), W_OK);
+	if (rval == 0) {
+		if (powerStates().contains(TDESystemPowerState::Standby)) {
+			return TRUE;
+		}
+		else {
+			return FALSE;
+		}
+	}
+	else {
+		return FALSE;
+	}
+}
+
+bool TDERootSystemDevice::canSuspend() {
+	TQString statenode = "/sys/power/state";
+	int rval = access (statenode.ascii(), W_OK);
+	if (rval == 0) {
+		if (powerStates().contains(TDESystemPowerState::Suspend)) {
+			return TRUE;
+		}
+		else {
+			return FALSE;
+		}
+	}
+	else {
+		return FALSE;
+	}
+}
+
+bool TDERootSystemDevice::canHibernate() {
+	TQString statenode = "/sys/power/state";
+	int rval = access (statenode.ascii(), W_OK);
+	if (rval == 0) {
+		if (powerStates().contains(TDESystemPowerState::Hibernate)) {
+			return TRUE;
+		}
+		else {
+			return FALSE;
+		}
+	}
+	else {
+		return FALSE;
+	}
+}
+
+bool TDERootSystemDevice::canPowerOff() {
+	// FIXME
+	// Can we power down this system?
+	// This should probably be checked via DCOP and therefore interface with KDM
+
+	KConfig *config = KGlobal::config();
+	config->reparseConfiguration(); // config may have changed in the KControl module
+	
+	config->setGroup("General" );
+	bool maysd = false;
+	if (config->readBoolEntry( "offerShutdown", true )/* && DM().canShutdown()*/) {	// FIXME
+		maysd = true;
+	}
+
+	return maysd;
+}
+
+void TDERootSystemDevice::setHibernationMethod(TDESystemHibernationMethod::TDESystemHibernationMethod hm) {
+	TQString hibernationnode = "/sys/power/disk";
+	TQFile file( hibernationnode );
+	if ( file.open( IO_WriteOnly ) ) {
+		TQString hibernationCommand;
+		if (hm == TDESystemHibernationMethod::Platform) {
+			hibernationCommand = "platform";
+		}
+		if (hm == TDESystemHibernationMethod::Shutdown) {
+			hibernationCommand = "shutdown";
+		}
+		if (hm == TDESystemHibernationMethod::Reboot) {
+			hibernationCommand = "reboot";
+		}
+		if (hm == TDESystemHibernationMethod::TestProc) {
+			hibernationCommand = "testproc";
+		}
+		if (hm == TDESystemHibernationMethod::Test) {
+			hibernationCommand = "test";
+		}
+		TQTextStream stream( &file );
+		stream << hibernationCommand;
+		file.close();
+	}
+}
+
+bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState ps) {
+	if ((ps == TDESystemPowerState::Standby) || (ps == TDESystemPowerState::Suspend) || (ps == TDESystemPowerState::Hibernate)) {
+		TQString statenode = "/sys/power/state";
+		TQFile file( statenode );
+		if ( file.open( IO_WriteOnly ) ) {
+			TQString powerCommand;
+			if (ps == TDESystemPowerState::Standby) {
+				powerCommand = "standby";
+			}
+			if (ps == TDESystemPowerState::Suspend) {
+				powerCommand = "mem";
+			}
+			if (ps == TDESystemPowerState::Hibernate) {
+				powerCommand = "disk";
+			}
+			TQTextStream stream( &file );
+			stream << powerCommand;
+			file.close();
+			return true;
+		}
+	}
+	else if (ps == TDESystemPowerState::PowerOff) {
+		// Power down the system using a DCOP command
+		// Values are explained at http://lists.kde.org/?l=kde-linux&m=115770988603387
+		TQByteArray data;
+		TQDataStream arg(data, IO_WriteOnly);
+		arg << (int)0 << (int)2 << (int)2;
+		if ( kapp->dcopClient()->send("ksmserver", "default", "logout(int,int,int)", data) ) {
+			return true;
+		}
+		return false;
+	}
+	else if (ps == TDESystemPowerState::Active) {
+		// Ummm...we're already active...
+		return true;
+	}
+
+	return false;
 }
 
 TDEBatteryDevice::TDEBatteryDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
@@ -1008,7 +1209,7 @@ void TDEBatteryDevice::internalSetDischargeRate(double vt) {
 	m_dischargeRate = vt;
 }
 
-TQString &TDEBatteryDevice::technology() {
+TQString TDEBatteryDevice::technology() {
 	return m_technology;
 }
 
@@ -1016,7 +1217,7 @@ void TDEBatteryDevice::internalSetTechnology(TQString tc) {
 	m_technology = tc;
 }
 
-TQString &TDEBatteryDevice::status() {
+TQString TDEBatteryDevice::status() {
 	return m_status;
 }
 
@@ -1299,6 +1500,20 @@ void TDEMonitorDevice::internalSetPowerLevel(TDEDisplayPowerLevel::TDEDisplayPow
 	m_powerLevel = pl;
 }
 
+TDEEventDevice::TDEEventDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
+}
+
+TDEEventDevice::~TDEEventDevice() {
+}
+
+TDEEventDeviceType::TDEEventDeviceType TDEEventDevice::eventType() {
+	return m_eventType;
+}
+
+void TDEEventDevice::internalSetEventType(TDEEventDeviceType::TDEEventDeviceType et) {
+	m_eventType = et;
+}
+
 TDEHardwareDevices::TDEHardwareDevices() {
 	// Initialize members
 	pci_id_map = 0;
@@ -1423,8 +1638,13 @@ void TDEHardwareDevices::rescanDeviceInformation(TDEGenericDevice* hwdevice) {
 }
 
 TDEGenericDevice* TDEHardwareDevices::findBySystemPath(TQString syspath) {
+	if (!syspath.endsWith("/")) {
+		syspath += "/";
+	}
 	TDEGenericDevice *hwdevice;
-	for ( hwdevice = m_deviceList.first(); hwdevice; hwdevice = m_deviceList.next() ) {
+	// We can't use m_deviceList directly as m_deviceList can only have one iterator active against it at any given time
+	TDEGenericHardwareList devList = listAllPhysicalDevices();
+	for ( hwdevice = devList.first(); hwdevice; hwdevice = devList.next() ) {
 		if (hwdevice->systemPath() == syspath) {
 			return hwdevice;
 		}
@@ -1699,7 +1919,7 @@ void TDEHardwareDevices::processStatelessDevices() {
 	// We can't use m_deviceList directly as m_deviceList can only have one iterator active against it at any given time
 	TDEGenericHardwareList devList = listAllPhysicalDevices();
 	for ( hwdevice = devList.first(); hwdevice; hwdevice = devList.next() ) {
-		if ((hwdevice->type() == TDEGenericDeviceType::Network) || (hwdevice->type() == TDEGenericDeviceType::OtherSensor)) {
+		if ((hwdevice->type() == TDEGenericDeviceType::RootSystem) || (hwdevice->type() == TDEGenericDeviceType::Network) || (hwdevice->type() == TDEGenericDeviceType::OtherSensor)) {
 			rescanDeviceInformation(hwdevice);
 			emit hardwareUpdated(hwdevice);
 		}
@@ -1955,6 +2175,9 @@ TDEGenericDeviceType::TDEGenericDeviceType readGenericDeviceTypeFromString(TQStr
 	// Keep this in sync with the TDEGenericDeviceType definition in the header
 	if (query == "Root") {
 		ret = TDEGenericDeviceType::Root;
+	}
+	else if (query == "RootSystem") {
+		ret = TDEGenericDeviceType::RootSystem;
 	}
 	else if (query == "CPU") {
 		ret = TDEGenericDeviceType::CPU;
@@ -2449,7 +2672,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 	TQString syspath_tail = systempath.lower();
 	syspath_tail.remove(0, syspath_tail.findRev("/")+1);
 	if (syspath_tail.startsWith("event")) {
-		if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Event);
+		if (!device) device = new TDEEventDevice(TDEGenericDeviceType::Event);
 	}
 	// Pull out all input special devices and stuff them under Input
 	if (syspath_tail.startsWith("input")) {
@@ -2730,6 +2953,11 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		// Unhandled
 		if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Other);
 		printf("[FIXME] UNCLASSIFIED DEVICE name: %s type: %s subsystem: %s driver: %s [Node Path: %s] [Syspath: %s] [%s:%s]\n\r", devicename.ascii(), devicetype.ascii(), devicesubsystem.ascii(), devicedriver.ascii(), devicenode.ascii(), udev_device_get_syspath(dev), devicevendorid.ascii(), devicemodelid.ascii()); fflush(stdout);
+	}
+
+	// Root devices are special
+	if ((device->type() == TDEGenericDeviceType::Root) || (device->type() == TDEGenericDeviceType::RootSystem)) {
+		systempath = device->systemPath();
 	}
 
 	// Set preliminary basic device information
@@ -3459,6 +3687,122 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		// Much of the code in libkrandr should be integrated into/interfaced with this library
 	}
 
+	if (device->type() == TDEGenericDeviceType::RootSystem) {
+		// Try to obtain as much generic information about this system as possible
+		TDERootSystemDevice* rdevice = dynamic_cast<TDERootSystemDevice*>(device);
+
+		// Guess at my form factor
+		// dmidecode would tell me this, but is somewhat unreliable
+		TDESystemFormFactor::TDESystemFormFactor formfactor = TDESystemFormFactor::Desktop;
+		if (listByDeviceClass(TDEGenericDeviceType::Backlight).count() > 0) {	// Is this really a good way to determine if a machine is a laptop?
+			formfactor = TDESystemFormFactor::Laptop;
+		}
+		rdevice->internalSetFormFactor(formfactor);
+
+		TQString valuesnodename = "/sys/power/";
+		TQDir valuesdir(valuesnodename);
+		valuesdir.setFilter(TQDir::All);
+		TQString nodename;
+		const TQFileInfoList *dirlist = valuesdir.entryInfoList();
+		if (dirlist) {
+			TQFileInfoListIterator valuesdirit(*dirlist);
+			TQFileInfo *dirfi;
+			while ( (dirfi = valuesdirit.current()) != 0 ) {
+				nodename = dirfi->fileName();
+				TQFile file( valuesnodename + nodename );
+				if ( file.open( IO_ReadOnly ) ) {
+					TQTextStream stream( &file );
+					TQString line;
+					line = stream.readLine();
+					if (nodename == "state") {
+						TDESystemPowerStateList powerstates;
+						// Always assume that these two fully on/fully off states are available
+						powerstates.append(TDESystemPowerState::Active);
+						powerstates.append(TDESystemPowerState::PowerOff);
+						if (line.contains("standby")) {
+							powerstates.append(TDESystemPowerState::Standby);
+						}
+						if (line.contains("mem")) {
+							powerstates.append(TDESystemPowerState::Suspend);
+						}
+						if (line.contains("disk")) {
+							powerstates.append(TDESystemPowerState::Hibernate);
+						}
+						rdevice->internalSetPowerStates(powerstates);
+					}
+					if (nodename == "disk") {
+						// Get list of available hibernation methods
+						TDESystemHibernationMethodList hibernationmethods;
+						if (line.contains("platform")) {
+							hibernationmethods.append(TDESystemHibernationMethod::Platform);
+						}
+						if (line.contains("shutdown")) {
+							hibernationmethods.append(TDESystemHibernationMethod::Shutdown);
+						}
+						if (line.contains("reboot")) {
+							hibernationmethods.append(TDESystemHibernationMethod::Reboot);
+						}
+						if (line.contains("testproc")) {
+							hibernationmethods.append(TDESystemHibernationMethod::TestProc);
+						}
+						if (line.contains("test")) {
+							hibernationmethods.append(TDESystemHibernationMethod::Test);
+						}
+						rdevice->internalSetHibernationMethods(hibernationmethods);
+
+						// Get current hibernation method
+						line.truncate(line.findRev("]"));
+						line.remove(0, line.findRev("[")+1);
+						TDESystemHibernationMethod::TDESystemHibernationMethod hibernationmethod = TDESystemHibernationMethod::None;
+						if (line.contains("platform")) {
+							hibernationmethod = TDESystemHibernationMethod::Platform;
+						}
+						if (line.contains("shutdown")) {
+							hibernationmethod = TDESystemHibernationMethod::Shutdown;
+						}
+						if (line.contains("reboot")) {
+							hibernationmethod = TDESystemHibernationMethod::Reboot;
+						}
+						if (line.contains("testproc")) {
+							hibernationmethod = TDESystemHibernationMethod::TestProc;
+						}
+						if (line.contains("test")) {
+							hibernationmethod = TDESystemHibernationMethod::Test;
+						}
+						rdevice->internalSetHibernationMethod(hibernationmethod);
+					}
+					if (nodename == "image_size") {
+						rdevice->internalSetDiskSpaceNeededForHibernation(line.toULong());
+					}
+					file.close();
+				}
+				++valuesdirit;
+			}
+		}
+	}
+
+	if (device->type() == TDEGenericDeviceType::Event) {
+		// Try to obtain as much generic information about this event device as possible
+		TDEEventDevice* edevice = dynamic_cast<TDEEventDevice*>(device);
+		if (edevice->systemPath().contains("PNP0C0D")) {
+			edevice->internalSetEventType(TDEEventDeviceType::ACPILidSwitch);
+		}
+		else if (edevice->systemPath().contains("PNP0C0E")) {
+			edevice->internalSetEventType(TDEEventDeviceType::ACPISleepButton);
+		}
+		else if (edevice->systemPath().contains("PNP0C0C")) {
+			edevice->internalSetEventType(TDEEventDeviceType::ACPIPowerButton);
+		}
+		else {
+			edevice->internalSetEventType(TDEEventDeviceType::Unknown);
+		}
+	}
+
+	// Root devices are still special
+	if ((device->type() == TDEGenericDeviceType::Root) || (device->type() == TDEGenericDeviceType::RootSystem)) {
+		systempath = device->systemPath();
+	}
+
 	// Set basic device information again, as some information may have changed
 	device->internalSetName(devicename);
 	device->internalSetDeviceNode(devicenode);
@@ -3581,13 +3925,20 @@ void TDEHardwareDevices::updateParentDeviceInformation() {
 }
 
 void TDEHardwareDevices::addCoreSystemDevices() {
+	TDEGenericDevice *hwdevice;
+
+	// Add the Main Root System Device, which provides all other devices
+	hwdevice = new TDERootSystemDevice(TDEGenericDeviceType::RootSystem);
+	hwdevice->internalSetSystemPath("/sys/devices");
+	m_deviceList.append(hwdevice);
+	rescanDeviceInformation(hwdevice);
+
 	// Add core top-level devices in /sys/devices to the hardware listing
 	TQStringList holdingDeviceNodes;
 	TQString devicesnodename = "/sys/devices";
 	TQDir devicesdir(devicesnodename);
 	devicesdir.setFilter(TQDir::All);
 	TQString nodename;
-	TDEGenericDevice *hwdevice;
 	const TQFileInfoList *dirlist = devicesdir.entryInfoList();
 	if (dirlist) {
 		TQFileInfoListIterator devicesdirit(*dirlist);
@@ -4086,6 +4437,9 @@ TQString TDEHardwareDevices::getFriendlyDeviceTypeStringFromType(TDEGenericDevic
 	if (query == TDEGenericDeviceType::Root) {
 		ret = i18n("Root");
 	}
+	else if (query == TDEGenericDeviceType::RootSystem) {
+		ret = i18n("System Root");
+	}
 	else if (query == TDEGenericDeviceType::CPU) {
 		ret = i18n("CPU");
 	}
@@ -4229,6 +4583,9 @@ TQPixmap TDEHardwareDevices::getDeviceTypeIconFromType(TDEGenericDeviceType::TDE
 	if (query == TDEGenericDeviceType::Root) {
 		ret = DesktopIcon("kcmdevices", size);
 	}
+	else if (query == TDEGenericDeviceType::RootSystem) {
+		ret = DesktopIcon("kcmdevices", size);
+	}
 	else if (query == TDEGenericDeviceType::CPU) {
 		ret = DesktopIcon("kcmprocessor", size);
 	}
@@ -4363,6 +4720,17 @@ TQPixmap TDEHardwareDevices::getDeviceTypeIconFromType(TDEGenericDeviceType::TDE
 	}
 
 	return ret;
+}
+
+TDERootSystemDevice* TDEHardwareDevices::rootSystemDevice() {
+	TDEGenericDevice *hwdevice;
+	for ( hwdevice = m_deviceList.first(); hwdevice; hwdevice = m_deviceList.next() ) {
+		if (hwdevice->type() == TDEGenericDeviceType::RootSystem) {
+			return dynamic_cast<TDERootSystemDevice*>(hwdevice);
+		}
+	}
+
+	return 0;
 }
 
 TQString TDEHardwareDevices::bytesToFriendlySizeString(double bytes) {

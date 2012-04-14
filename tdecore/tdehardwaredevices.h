@@ -43,6 +43,7 @@
 namespace TDEGenericDeviceType {
 enum TDEGenericDeviceType {
 	Root,
+	RootSystem,
 	CPU,
 	GPU,
 	RAM,
@@ -212,22 +213,22 @@ class TDECORE_EXPORT TDEGenericDevice
 		/**
 		* @return a TQString with the device name, if any
 		*/
-		TQString &name();
+		TQString name();
 
 		/**
 		* @return a TQString with the vendor name, if any
 		*/
-		TQString &vendorName();
+		TQString vendorName();
 
 		/**
 		* @return a TQString with the vendor model, if any
 		*/
-		TQString &vendorModel();
+		TQString vendorModel();
 
 		/**
 		* @return a TQString with the serial number, if any
 		*/
-		TQString &serialNumber();
+		TQString serialNumber();
 
 		/**
 		* @return a TQString with a friendly name
@@ -240,21 +241,21 @@ class TDECORE_EXPORT TDEGenericDevice
 		/**
 		* @return a TQString with the device bus name, if any
 		*/
-		TQString &deviceBus();
+		TQString deviceBus();
 
 		/**
 		* @return a TQString with the system path, if any
 		*
 		* This method is non-portable, so be careful!
 		*/
-		TQString &systemPath();
+		TQString systemPath();
 
 		/**
 		* @return a TQString with the system device node, if any
 		*
 		* This method is non-portable, so be careful!
 		*/
-		TQString &deviceNode();
+		TQString deviceNode();
 
 		/**
 		* @return true if this device has been blacklisted for update actions
@@ -269,52 +270,52 @@ class TDECORE_EXPORT TDEGenericDevice
 		/**
 		* @return a TQString with the vendor ID, if any
 		*/
-		TQString &vendorID();
+		TQString vendorID();
 
 		/**
 		* @return a TQString with the model ID, if any
 		*/
-		TQString &modelID();
+		TQString modelID();
 
 		/**
 		* @return a TQString with the encoded vendor, if any
 		*/
-		TQString &vendorEncoded();
+		TQString vendorEncoded();
 
 		/**
 		* @return a TQString with the encoded model, if any
 		*/
-		TQString &modelEncoded();
+		TQString modelEncoded();
 
 		/**
 		* @return a TQString with the subvendor ID, if any
 		*/
-		TQString &subVendorID();
+		TQString subVendorID();
 
 		/**
 		* @return a TQString with the submodel ID, if any
 		*/
-		TQString &subModelID();
+		TQString subModelID();
 
 		/**
 		* @return a TQString with the PCI device class, if any
 		*/
-		TQString &PCIClass();
+		TQString PCIClass();
 
 		/**
 		* @return a TQString with the module alias string, if any
 		*/
-		TQString &moduleAlias();
+		TQString moduleAlias();
 
 		/**
 		* @return a TQString with the device driver, if any
 		*/
-		TQString &deviceDriver();
+		TQString deviceDriver();
 
 		/**
 		* @return a TQString with the subsystem type, if any
 		*/
-		TQString &subsystem();
+		TQString subsystem();
 
 		/**
 		* @return a TDEGenericDevice* with the parent device, if any
@@ -505,12 +506,12 @@ class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 		/**
 		* @return a TQString with the disk or partition label, if any
 		*/
-		TQString &diskLabel();
+		TQString diskLabel();
 
 		/**
 		* @return a TQString with the disk UUID, if any
 		*/
-		TQString &diskUUID();
+		TQString diskUUID();
 
 		/**
 		* @return an OR-ed combination of TDEDiskDeviceType::TDEDiskDeviceType type flags
@@ -530,22 +531,22 @@ class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 		/**
 		* @return a TQString with the filesystem name, if any
 		*/
-		TQString &fileSystemName();
+		TQString fileSystemName();
 
 		/**
 		* @return a TQString with the filesystem usage string, if any
 		*/
-		TQString &fileSystemUsage();
+		TQString fileSystemUsage();
 
 		/**
 		* @return a TQStringList containing system paths to all devices with a lock on this device, if any
 		*/
-		TQStringList &holdingDevices();
+		TQStringList holdingDevices();
 
 		/**
 		* @return a TQStringList containing system paths to all devices locked by this device, if any
 		*/
-		TQStringList &slaveDevices();
+		TQStringList slaveDevices();
 
 		/**
 		* Mounts the device if not encrypted
@@ -717,47 +718,47 @@ class TDECORE_EXPORT TDECPUDevice : public TDEGenericDevice
 		/**
 		* @return a double with the current CPU frequency in MHz, if available
 		*/
-		double &frequency();
+		double frequency();
 
 		/**
 		* @return a double with the minimum CPU frequency in MHz, if available
 		*/
-		double &minFrequency();
+		double minFrequency();
 
 		/**
 		* @return a double with the maximum CPU frequency in MHz, if available
 		*/
-		double &maxFrequency();
+		double maxFrequency();
 
 		/**
 		* @return a double with the transition latency in ns, if available
 		*/
-		double &transitionLatency();
+		double transitionLatency();
 
 		/**
 		* @return a TQString with the current CPU governor policy, if available
 		*/
-		TQString &governor();
+		TQString governor();
 
 		/**
 		* @return a TQString with the current CPU scaling driver, if available
 		*/
-		TQString &scalingDriver();
+		TQString scalingDriver();
 
 		/**
 		* @return a TQStringList with the IDs of all processors that are dependent on the frequency/power settings of this one, if available
 		*/
-		TQStringList &dependentProcessors();
+		TQStringList dependentProcessors();
 
 		/**
 		* @return a TQStringList with all valid scaling frequencies in Hz, if available
 		*/
-		TQStringList &availableFrequencies();
+		TQStringList availableFrequencies();
 
 		/**
 		* @return a TQStringList with all available governor policies, if available
 		*/
-		TQStringList &availableGovernors();
+		TQStringList availableGovernors();
 
 		/**
 		* @return TRUE if permissions allow the CPU governor to be set, FALSE if not
@@ -900,12 +901,12 @@ class TDECORE_EXPORT TDEBatteryDevice : public TDEGenericDevice
 		/**
 		* @return a TQString with the battery technology, if available
 		*/
-		TQString &technology();
+		TQString technology();
 
 		/**
 		* @return a TQString with the battery status, if available
 		*/
-		TQString &status();
+		TQString status();
 
 		/**
 		* @return TRUE if the battery is installed
@@ -1461,6 +1462,199 @@ class TDECORE_EXPORT TDESensorDevice : public TDEGenericDevice
 	friend class TDEHardwareDevices;
 };
 
+namespace TDESystemFormFactor {
+enum TDESystemFormFactor {
+	Unclassified,
+	Desktop,
+	Laptop,
+	Server,
+	Other = 0x80000000
+};
+};
+
+namespace TDESystemPowerState {
+enum TDESystemPowerState {
+	Active,
+	Standby,
+	Suspend,
+	Hibernate,
+	PowerOff
+};
+};
+
+namespace TDESystemHibernationMethod {
+enum TDESystemHibernationMethod {
+	None,
+	Platform,
+	Shutdown,
+	Reboot,
+	TestProc,
+	Test
+};
+};
+
+typedef TQValueList<TDESystemPowerState::TDESystemPowerState> TDESystemPowerStateList;
+typedef TQValueList<TDESystemHibernationMethod::TDESystemHibernationMethod> TDESystemHibernationMethodList;
+
+class TDECORE_EXPORT TDERootSystemDevice : public TDEGenericDevice
+{
+	public:
+		/**
+		*  Constructor.
+		*  @param Device type
+		*/
+		TDERootSystemDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn=TQString::null);
+		
+		/**
+		* Destructor.
+		*/
+		~TDERootSystemDevice();
+
+		/**
+		* @return a TDESystemFormFactor::TDESystemFormFactor with the system's form factor
+		*/
+		TDESystemFormFactor::TDESystemFormFactor formFactor();
+
+		/**
+		* @return a TDESystemPowerStateList with all available power states
+		*/
+		TDESystemPowerStateList powerStates();
+
+		/**
+		* @return a TDESystemHibernationMethodList with all available hibernation methods
+		*/
+		TDESystemHibernationMethodList hibernationMethods();
+
+		/**
+		* @return a TDESystemHibernationMethod::TDESystemHibernationMethod with the current hibernation method
+		*/
+		TDESystemHibernationMethod::TDESystemHibernationMethod hibernationMethod();
+
+		/**
+		* @return an unsigned long with the number of bytes required to hibernate
+		*/
+		unsigned long diskSpaceNeededForHibernation();
+
+		/**
+		* @return TRUE if permissions allow the hibernation method to be set, FALSE if not
+		*/
+		bool canSetHibernationMethod();
+
+		/**
+		* @return TRUE if hardware and permissions allow the system to enter standby, FALSE if not
+		*/
+		bool canStandby();
+
+		/**
+		* @return TRUE if hardware and permissions allow the system to be suspended, FALSE if not
+		*/
+		bool canSuspend();
+
+		/**
+		* @return TRUE if hardware and permissions allow the system to be hibernated, FALSE if not
+		*/
+		bool canHibernate();
+
+		/**
+		* @return TRUE if permissions allow the system to be powered down, FALSE if not
+		*/
+		bool canPowerOff();
+
+		/**
+		* @param hm a TDESystemHibernationMethod::TDESystemHibernationMethod with the desired hibernation method
+		*/
+		void setHibernationMethod(TDESystemHibernationMethod::TDESystemHibernationMethod hm);
+
+		/**
+		* @param ps a TDESystemPowerState::TDESystemPowerState with the desired hibernation method
+		* @return TRUE if power state was set
+		*/
+		bool setPowerState(TDESystemPowerState::TDESystemPowerState ps);
+
+	protected:
+		/**
+		* @param ff a TDESystemFormFactor::TDESystemFormFactor with the system's form factor
+		* @internal
+		*/
+		void internalSetFormFactor(TDESystemFormFactor::TDESystemFormFactor ff);
+
+		/**
+		* @param ps a TDESystemPowerStateList with all available power states
+		* @internal
+		*/
+		void internalSetPowerStates(TDESystemPowerStateList ps);
+
+		/**
+		* @param hm a TDESystemHibernationMethodList with all available hibernation methods
+		* @internal
+		*/
+		void internalSetHibernationMethods(TDESystemHibernationMethodList hm);
+
+		/**
+		* @param hm a TDESystemHibernationMethod::TDESystemHibernationMethod with the current hibernation method
+		* @internal
+		*/
+		void internalSetHibernationMethod(TDESystemHibernationMethod::TDESystemHibernationMethod hm);
+
+		/**
+		* @param sz an unsigned long with the number of bytes required to hibernate
+		* @internal
+		*/
+		void internalSetDiskSpaceNeededForHibernation(unsigned long sz);
+
+	private:
+		TDESystemFormFactor::TDESystemFormFactor m_formFactor;
+		TDESystemPowerStateList m_powerStates;
+		TDESystemHibernationMethodList m_hibernationMethods;
+		TDESystemHibernationMethod::TDESystemHibernationMethod m_hibernationMethod;
+		unsigned long m_hibernationSpace;
+
+	friend class TDEHardwareDevices;
+};
+
+namespace TDEEventDeviceType {
+enum TDEEventDeviceType {
+	Unknown,
+	ACPILidSwitch,
+	ACPISleepButton,
+	ACPIPowerButton,
+	Other = 0x80000000
+};
+};
+
+class TDECORE_EXPORT TDEEventDevice : public TDEGenericDevice
+{
+	public:
+		/**
+		*  Constructor.
+		*  @param Device type
+		*/
+		TDEEventDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn=TQString::null);
+		
+		/**
+		* Destructor.
+		*/
+		~TDEEventDevice();
+
+		/**
+		* @return a TDEEventDeviceType::TDEEventDeviceType with the event device type, if known
+		*/
+		TDEEventDeviceType::TDEEventDeviceType eventType();
+
+	protected:
+		/**
+		* @param et a TDEEventDeviceType::TDEEventDeviceType with the event device type, if known
+		* @internal
+		*/
+		void internalSetEventType(TDEEventDeviceType::TDEEventDeviceType et);
+
+	private:
+		TDEEventDeviceType::TDEEventDeviceType m_eventType;
+
+	friend class TDEHardwareDevices;
+};
+
+
 typedef TQPtrList<TDEGenericDevice> TDEGenericHardwareList;
 typedef TQMap<TQString, TQString> TDEDeviceIDMap;
 
@@ -1573,6 +1767,12 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 		*  @return a TQPixmap containing the icon for the specified type
 		*/
 		TQPixmap getDeviceTypeIconFromType(TDEGenericDeviceType::TDEGenericDeviceType query, KIcon::StdSizes size);
+
+		/**
+		*  Convenience function to obtain the root system device
+		*  @return a pointer to a TDERootSystemDevice object
+		*/
+		TDERootSystemDevice* rootSystemDevice();
 
 		/**
 		*  Convert a byte count to human readable form
