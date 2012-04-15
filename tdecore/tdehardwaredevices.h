@@ -485,6 +485,9 @@ class TDECORE_EXPORT TDEGenericDevice
 		// Internal use only!
 		TQStringList m_externalSubtype;
 		TQString m_externalRulesFile;
+		TQString m_udevtype;
+		TQString m_udevdevicetypestring;
+		TQString udevdevicetypestring_alt;
 
 	friend class TDEHardwareDevices;
 };
@@ -1484,7 +1487,7 @@ enum TDESystemPowerState {
 
 namespace TDESystemHibernationMethod {
 enum TDESystemHibernationMethod {
-	None,
+	Unsupported,
 	Platform,
 	Shutdown,
 	Reboot,
@@ -1622,6 +1625,43 @@ enum TDEEventDeviceType {
 };
 };
 
+// Keep friendlySwitchList() in tdehardwaredevices.cpp in sync with this enum
+namespace TDESwitchType {
+enum TDESwitchType {
+	Null			= 0x00000000,
+	Lid			= 0x00000001,
+	TabletMode		= 0x00000002,
+	HeadphoneInsert		= 0x00000004,
+	RFKill			= 0x00000008,
+	Radio			= 0x00000010,
+	MicrophoneInsert	= 0x00000020,
+	Dock			= 0x00000040,
+	LineOutInsert		= 0x00000080,
+	JackPhysicalInsert	= 0x00000100,
+	VideoOutInsert		= 0x00000200,
+	CameraLensCover		= 0x00000400,
+	KeypadSlide		= 0x00000800,
+	FrontProximity		= 0x00001000,
+	RotateLock		= 0x00002000,
+	LineInInsert		= 0x00004000
+};
+
+inline TDESwitchType operator|(TDESwitchType a, TDESwitchType b)
+{
+	return static_cast<TDESwitchType>(static_cast<int>(a) | static_cast<int>(b));
+}
+
+inline TDESwitchType operator&(TDESwitchType a, TDESwitchType b)
+{
+	return static_cast<TDESwitchType>(static_cast<int>(a) & static_cast<int>(b));
+}
+
+inline TDESwitchType operator~(TDESwitchType a)
+{
+	return static_cast<TDESwitchType>(~static_cast<int>(a));
+}
+};
+
 class TDECORE_EXPORT TDEEventDevice : public TDEGenericDevice
 {
 	public:
@@ -1641,6 +1681,22 @@ class TDECORE_EXPORT TDEEventDevice : public TDEGenericDevice
 		*/
 		TDEEventDeviceType::TDEEventDeviceType eventType();
 
+		/**
+		* @return a TDESwitchType::TDESwitchType with all switches provided by this device
+		*/
+		TDESwitchType::TDESwitchType providedSwitches();
+
+		/**
+		* @return a TDESwitchType::TDESwitchType with all active switches provided by this device
+		*/
+		TDESwitchType::TDESwitchType activeSwitches();
+
+		/**
+		* @param switches a TDESwitchType::TDESwitchType with any switch flags set
+		* @return a TQStringList with friendly names for all set switch flags
+		*/
+		static TQStringList friendlySwitchList(TDESwitchType::TDESwitchType switches);
+
 	protected:
 		/**
 		* @param et a TDEEventDeviceType::TDEEventDeviceType with the event device type, if known
@@ -1648,12 +1704,69 @@ class TDECORE_EXPORT TDEEventDevice : public TDEGenericDevice
 		*/
 		void internalSetEventType(TDEEventDeviceType::TDEEventDeviceType et);
 
+		/**
+		* @param sl a TDESwitchType::TDESwitchType with all switches provided by this device
+		* @internal
+		*/
+		void internalSetProvidedSwitches(TDESwitchType::TDESwitchType sl);
+
+		/**
+		* @param sl a TDESwitchType::TDESwitchType with all active switches provided by this device
+		* @internal
+		*/
+		void internalSetActiveSwitches(TDESwitchType::TDESwitchType sl);
+
 	private:
 		TDEEventDeviceType::TDEEventDeviceType m_eventType;
+		TDESwitchType::TDESwitchType m_providedSwitches;
+		TDESwitchType::TDESwitchType m_switchActive;
+
+		int m_fd;
 
 	friend class TDEHardwareDevices;
 };
 
+namespace TDEInputDeviceType {
+enum TDEInputDeviceType {
+	Unknown,
+	ACPILidSwitch,
+	ACPISleepButton,
+	ACPIPowerButton,
+	Other = 0x80000000
+};
+};
+
+class TDECORE_EXPORT TDEInputDevice : public TDEGenericDevice
+{
+	public:
+		/**
+		*  Constructor.
+		*  @param Device type
+		*/
+		TDEInputDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn=TQString::null);
+		
+		/**
+		* Destructor.
+		*/
+		~TDEInputDevice();
+
+		/**
+		* @return a TDEInputDeviceType::TDEInputDeviceType with the input device type, if known
+		*/
+		TDEInputDeviceType::TDEInputDeviceType inputType();
+
+	protected:
+		/**
+		* @param it a TDEInputDeviceType::TDEInputDeviceType with the input device type, if known
+		* @internal
+		*/
+		void internalSetInputType(TDEInputDeviceType::TDEInputDeviceType it);
+
+	private:
+		TDEInputDeviceType::TDEInputDeviceType m_inputType;
+
+	friend class TDEHardwareDevices;
+};
 
 typedef TQPtrList<TDEGenericDevice> TDEGenericHardwareList;
 typedef TQMap<TQString, TQString> TDEDeviceIDMap;
@@ -1706,6 +1819,12 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 		*  @return TDEGenericDevice
 		*/
 		TDEGenericDevice* findBySystemPath(TQString syspath);
+
+		/**
+		*  Return the device with unique ID @arg uid, or 0 if no device exists for that uid
+		*  @return TDEGenericDevice
+		*/
+		TDEGenericDevice* findByUniqueID(TQString uid);
 
 		/**
 		*  Return the device with device node @arg devnode, or 0 if no device exists at that node

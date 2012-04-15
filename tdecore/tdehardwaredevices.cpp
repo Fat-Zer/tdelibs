@@ -44,6 +44,9 @@
 // Backlight devices
 #include <linux/fb.h>
 
+// Input devices
+#include <linux/input.h>
+
 // Network devices
 #include <sys/types.h>
 #include <ifaddrs.h>
@@ -52,7 +55,6 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include <netdb.h>
-
 
 // BEGIN BLOCK
 // Copied from include/linux/genhd.h
@@ -80,6 +82,8 @@ unsigned int reverse_bits(register unsigned int x)
 	x = (((x & 0xff00ff00) >> 8) | ((x & 0x00ff00ff) << 8));
 	return((x >> 16) | (x << 16));
 }
+
+#define BIT_IS_SET(bits, n) (bits[n >> 3] & (1 << (n & 0x7)))
 
 TDESensorCluster::TDESensorCluster() {
 	label = TQString::null;
@@ -1501,9 +1505,13 @@ void TDEMonitorDevice::internalSetPowerLevel(TDEDisplayPowerLevel::TDEDisplayPow
 }
 
 TDEEventDevice::TDEEventDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
+	m_fd = -1;
 }
 
 TDEEventDevice::~TDEEventDevice() {
+	if (m_fd >= 0) {
+		close(m_fd);
+	}
 }
 
 TDEEventDeviceType::TDEEventDeviceType TDEEventDevice::eventType() {
@@ -1512,6 +1520,89 @@ TDEEventDeviceType::TDEEventDeviceType TDEEventDevice::eventType() {
 
 void TDEEventDevice::internalSetEventType(TDEEventDeviceType::TDEEventDeviceType et) {
 	m_eventType = et;
+}
+
+TDESwitchType::TDESwitchType TDEEventDevice::providedSwitches() {
+	return m_providedSwitches;
+}
+
+void TDEEventDevice::internalSetProvidedSwitches(TDESwitchType::TDESwitchType sl) {
+	m_providedSwitches = sl;
+}
+
+TDESwitchType::TDESwitchType TDEEventDevice::activeSwitches() {
+	return m_switchActive;
+}
+
+void TDEEventDevice::internalSetActiveSwitches(TDESwitchType::TDESwitchType sl) {
+	m_switchActive = sl;
+}
+
+// Keep this in sync with the TDESwitchType definition in the header
+TQStringList TDEEventDevice::friendlySwitchList(TDESwitchType::TDESwitchType switches) {
+	TQStringList ret;
+
+	if (switches & TDESwitchType::Lid) {
+		ret.append(i18n("Lid Switch"));
+	}
+	if (switches & TDESwitchType::TabletMode) {
+		ret.append(i18n("Tablet Mode"));
+	}
+	if (switches & TDESwitchType::HeadphoneInsert) {
+		ret.append(i18n("Headphone Inserted"));
+	}
+	if (switches & TDESwitchType::RFKill) {
+		ret.append(i18n("Radio Frequency Device Kill Switch"));
+	}
+	if (switches & TDESwitchType::Radio) {
+		ret.append(i18n("Enable Radio"));
+	}
+	if (switches & TDESwitchType::MicrophoneInsert) {
+		ret.append(i18n("Microphone Inserted"));
+	}
+	if (switches & TDESwitchType::Dock) {
+		ret.append(i18n("Docked"));
+	}
+	if (switches & TDESwitchType::LineOutInsert) {
+		ret.append(i18n("Line Out Inserted"));
+	}
+	if (switches & TDESwitchType::JackPhysicalInsert) {
+		ret.append(i18n("Physical Jack Inserted"));
+	}
+	if (switches & TDESwitchType::VideoOutInsert) {
+		ret.append(i18n("Video Out Inserted"));
+	}
+	if (switches & TDESwitchType::CameraLensCover) {
+		ret.append(i18n("Camera Lens Cover"));
+	}
+	if (switches & TDESwitchType::KeypadSlide) {
+		ret.append(i18n("Keypad Slide"));
+	}
+	if (switches & TDESwitchType::FrontProximity) {
+		ret.append(i18n("Front Proximity"));
+	}
+	if (switches & TDESwitchType::RotateLock) {
+		ret.append(i18n("Rotate Lock"));
+	}
+	if (switches & TDESwitchType::LineInInsert) {
+		ret.append(i18n("Line In Inserted"));
+	}
+
+	return ret;
+}
+
+TDEInputDevice::TDEInputDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
+}
+
+TDEInputDevice::~TDEInputDevice() {
+}
+
+TDEInputDeviceType::TDEInputDeviceType TDEInputDevice::inputType() {
+	return m_inputType;
+}
+
+void TDEInputDevice::internalSetInputType(TDEInputDeviceType::TDEInputDeviceType it) {
+	m_inputType = it;
 }
 
 TDEHardwareDevices::TDEHardwareDevices() {
@@ -1646,6 +1737,19 @@ TDEGenericDevice* TDEHardwareDevices::findBySystemPath(TQString syspath) {
 	TDEGenericHardwareList devList = listAllPhysicalDevices();
 	for ( hwdevice = devList.first(); hwdevice; hwdevice = devList.next() ) {
 		if (hwdevice->systemPath() == syspath) {
+			return hwdevice;
+		}
+	}
+
+	return 0;
+}
+
+TDEGenericDevice* TDEHardwareDevices::findByUniqueID(TQString uid) {
+	TDEGenericDevice *hwdevice;
+	// We can't use m_deviceList directly as m_deviceList can only have one iterator active against it at any given time
+	TDEGenericHardwareList devList = listAllPhysicalDevices();
+	for ( hwdevice = devList.first(); hwdevice; hwdevice = devList.next() ) {
+		if (hwdevice->uniqueID() == uid) {
 			return hwdevice;
 		}
 	}
@@ -1919,7 +2023,7 @@ void TDEHardwareDevices::processStatelessDevices() {
 	// We can't use m_deviceList directly as m_deviceList can only have one iterator active against it at any given time
 	TDEGenericHardwareList devList = listAllPhysicalDevices();
 	for ( hwdevice = devList.first(); hwdevice; hwdevice = devList.next() ) {
-		if ((hwdevice->type() == TDEGenericDeviceType::RootSystem) || (hwdevice->type() == TDEGenericDeviceType::Network) || (hwdevice->type() == TDEGenericDeviceType::OtherSensor)) {
+		if ((hwdevice->type() == TDEGenericDeviceType::RootSystem) || (hwdevice->type() == TDEGenericDeviceType::Network) || (hwdevice->type() == TDEGenericDeviceType::OtherSensor) || (hwdevice->type() == TDEGenericDeviceType::Event)) {
 			rescanDeviceInformation(hwdevice);
 			emit hardwareUpdated(hwdevice);
 		}
@@ -2553,22 +2657,58 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDeviceByExternalRules(udev_
 
 TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TDEGenericDevice* existingdevice, bool force_full_classification) {
 	// Classify device and create TDEHW device object
-	TQString devicename(udev_device_get_sysname(dev));
-	TQString devicetype(udev_device_get_devtype(dev));
-	TQString devicedriver(udev_device_get_driver(dev));
-	TQString devicesubsystem(udev_device_get_subsystem(dev));
-	TQString devicenode(udev_device_get_devnode(dev));
-	TQString systempath(udev_device_get_syspath(dev));
-	TQString devicevendorid(udev_device_get_property_value(dev, "ID_VENDOR_ID"));
-	TQString devicemodelid(udev_device_get_property_value(dev, "ID_MODEL_ID"));
-	TQString devicevendoridenc(udev_device_get_property_value(dev, "ID_VENDOR_ENC"));
-	TQString devicemodelidenc(udev_device_get_property_value(dev, "ID_MODEL_ENC"));
-	TQString devicesubvendorid(udev_device_get_property_value(dev, "ID_SUBVENDOR_ID"));
-	TQString devicesubmodelid(udev_device_get_property_value(dev, "ID_SUBMODEL_ID"));
-	TQString devicetypestring(udev_device_get_property_value(dev, "ID_TYPE"));
-	TQString devicetypestring_alt(udev_device_get_property_value(dev, "DEVTYPE"));
-	TQString devicepciclass(udev_device_get_property_value(dev, "PCI_CLASS"));
+	TQString devicename;
+	TQString devicetype;
+	TQString devicedriver;
+	TQString devicesubsystem;
+	TQString devicenode;
+	TQString systempath;
+	TQString devicevendorid;
+	TQString devicemodelid;
+	TQString devicevendoridenc;
+	TQString devicemodelidenc;
+	TQString devicesubvendorid;
+	TQString devicesubmodelid;
+	TQString devicetypestring;
+	TQString devicetypestring_alt;
+	TQString devicepciclass;
 	TDEGenericDevice* device = existingdevice;
+	if (dev) {
+		devicename = (udev_device_get_sysname(dev));
+		devicetype = (udev_device_get_devtype(dev));
+		devicedriver = (udev_device_get_driver(dev));
+		devicesubsystem = (udev_device_get_subsystem(dev));
+		devicenode = (udev_device_get_devnode(dev));
+		systempath = (udev_device_get_syspath(dev));
+		devicevendorid = (udev_device_get_property_value(dev, "ID_VENDOR_ID"));
+		devicemodelid = (udev_device_get_property_value(dev, "ID_MODEL_ID"));
+		devicevendoridenc = (udev_device_get_property_value(dev, "ID_VENDOR_ENC"));
+		devicemodelidenc = (udev_device_get_property_value(dev, "ID_MODEL_ENC"));
+		devicesubvendorid = (udev_device_get_property_value(dev, "ID_SUBVENDOR_ID"));
+		devicesubmodelid = (udev_device_get_property_value(dev, "ID_SUBMODEL_ID"));
+		devicetypestring = (udev_device_get_property_value(dev, "ID_TYPE"));
+		devicetypestring_alt = (udev_device_get_property_value(dev, "DEVTYPE"));
+		devicepciclass = (udev_device_get_property_value(dev, "PCI_CLASS"));
+	}
+	else {
+		if (device) {
+			devicename = device->name();
+			devicetype = device->m_udevtype;
+			devicedriver = device->deviceDriver();
+			devicesubsystem = device->subsystem();
+			devicenode = device->deviceNode();
+			systempath = device->systemPath();
+			devicevendorid = device->vendorID();
+			devicemodelid = device->modelID();
+			devicevendoridenc = device->vendorEncoded();
+			devicemodelidenc = device->modelEncoded();
+			devicesubvendorid = device->subVendorID();
+			devicesubmodelid = device->subModelID();
+			devicetypestring = device->m_udevdevicetypestring;
+			devicetypestring_alt = device->udevdevicetypestring_alt;
+			devicepciclass = device->PCIClass();
+		}
+	}
 
 	// FIXME
 	// Only a small subset of devices are classified right now
@@ -2676,7 +2816,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 	}
 	// Pull out all input special devices and stuff them under Input
 	if (syspath_tail.startsWith("input")) {
-		if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Input);
+		if (!device) device = new TDEInputDevice(TDEGenericDeviceType::Input);
 	}
 
 	// Check for keyboard
@@ -3753,7 +3893,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 						// Get current hibernation method
 						line.truncate(line.findRev("]"));
 						line.remove(0, line.findRev("[")+1);
-						TDESystemHibernationMethod::TDESystemHibernationMethod hibernationmethod = TDESystemHibernationMethod::None;
+						TDESystemHibernationMethod::TDESystemHibernationMethod hibernationmethod = TDESystemHibernationMethod::Unsupported;
 						if (line.contains("platform")) {
 							hibernationmethod = TDESystemHibernationMethod::Platform;
 						}
@@ -3781,8 +3921,11 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		}
 	}
 
+	// NOTE
+	// Keep these two handlers (Event and Input) in sync!
+
 	if (device->type() == TDEGenericDeviceType::Event) {
-		// Try to obtain as much generic information about this event device as possible
+		// Try to obtain as much type information about this event device as possible
 		TDEEventDevice* edevice = dynamic_cast<TDEEventDevice*>(device);
 		if (edevice->systemPath().contains("PNP0C0D")) {
 			edevice->internalSetEventType(TDEEventDeviceType::ACPILidSwitch);
@@ -3796,6 +3939,135 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		else {
 			edevice->internalSetEventType(TDEEventDeviceType::Unknown);
 		}
+	}
+
+	if (device->type() == TDEGenericDeviceType::Input) {
+		// Try to obtain as much type information about this input device as possible
+		TDEInputDevice* idevice = dynamic_cast<TDEInputDevice*>(device);
+		if (idevice->systemPath().contains("PNP0C0D")) {
+			idevice->internalSetInputType(TDEInputDeviceType::ACPILidSwitch);
+		}
+		else if (idevice->systemPath().contains("PNP0C0E")) {
+			idevice->internalSetInputType(TDEInputDeviceType::ACPISleepButton);
+		}
+		else if (idevice->systemPath().contains("PNP0C0C")) {
+			idevice->internalSetInputType(TDEInputDeviceType::ACPIPowerButton);
+		}
+		else {
+			idevice->internalSetInputType(TDEInputDeviceType::Unknown);
+		}
+	}
+
+	if (device->type() == TDEGenericDeviceType::Event) {
+		// Try to obtain as much specific information about this event device as possible
+		TDEEventDevice* edevice = dynamic_cast<TDEEventDevice*>(device);
+		int r;
+		char switches[SW_CNT];
+
+		// Figure out which switch types are supported, if any
+		TDESwitchType::TDESwitchType supportedSwitches = TDESwitchType::Null;
+		if (edevice->m_fd < 0) {
+			edevice->m_fd = open(edevice->deviceNode().ascii(), O_RDONLY);
+		}
+		r = ioctl(edevice->m_fd, EVIOCGBIT(EV_SW, sizeof(switches)), switches);
+		if (r > 0) {
+			if (BIT_IS_SET(switches, SW_LID)) {
+				supportedSwitches = supportedSwitches | TDESwitchType::Lid;
+			}
+			if (BIT_IS_SET(switches, SW_TABLET_MODE)) {
+				supportedSwitches = supportedSwitches | TDESwitchType::TabletMode;
+			}
+			if (BIT_IS_SET(switches, SW_RFKILL_ALL)) {
+				supportedSwitches = supportedSwitches | TDESwitchType::RFKill;
+			}
+			if (BIT_IS_SET(switches, SW_RADIO)) {
+				supportedSwitches = supportedSwitches | TDESwitchType::Radio;
+			}
+			if (BIT_IS_SET(switches, SW_MICROPHONE_INSERT)) {
+				supportedSwitches = supportedSwitches | TDESwitchType::MicrophoneInsert;
+			}
+			if (BIT_IS_SET(switches, SW_DOCK)) {
+				supportedSwitches = supportedSwitches | TDESwitchType::Dock;
+			}
+			if (BIT_IS_SET(switches, SW_LINEOUT_INSERT)) {
+				supportedSwitches = supportedSwitches | TDESwitchType::LineOutInsert;
+			}
+			if (BIT_IS_SET(switches, SW_JACK_PHYSICAL_INSERT)) {
+				supportedSwitches = supportedSwitches | TDESwitchType::JackPhysicalInsert;
+			}
+			if (BIT_IS_SET(switches, SW_VIDEOOUT_INSERT)) {
+				supportedSwitches = supportedSwitches | TDESwitchType::VideoOutInsert;
+			}
+#if 0	// Some old kernels don't provide these defines... [FIXME]
+			if (BIT_IS_SET(switches, SW_CAMERA_LENS_COVER)) {
+				supportedSwitches = supportedSwitches | TDESwitchType::CameraLensCover;
+			}
+			if (BIT_IS_SET(switches, SW_KEYPAD_SLIDE)) {
+				supportedSwitches = supportedSwitches | TDESwitchType::KeypadSlide;
+			}
+			if (BIT_IS_SET(switches, SW_FRONT_PROXIMITY)) {
+				supportedSwitches = supportedSwitches | TDESwitchType::FrontProximity;
+			}
+			if (BIT_IS_SET(switches, SW_ROTATE_LOCK)) {
+				supportedSwitches = supportedSwitches | TDESwitchType::RotateLock;
+			}
+			if (BIT_IS_SET(switches, SW_LINEIN_INSERT)) {
+				supportedSwitches = supportedSwitches | TDESwitchType::LineInInsert;
+			}
+#endif
+		}
+		edevice->internalSetProvidedSwitches(supportedSwitches);
+
+		// Figure out which switch types are active, if any
+		TDESwitchType::TDESwitchType activeSwitches = TDESwitchType::Null;
+		r = ioctl(edevice->m_fd, EVIOCGSW(sizeof(switches)), switches);
+		if (r > 0) {
+			if (BIT_IS_SET(switches, SW_LID)) {
+				activeSwitches = activeSwitches | TDESwitchType::Lid;
+			}
+			if (BIT_IS_SET(switches, SW_TABLET_MODE)) {
+				activeSwitches = activeSwitches | TDESwitchType::TabletMode;
+			}
+			if (BIT_IS_SET(switches, SW_RFKILL_ALL)) {
+				activeSwitches = activeSwitches | TDESwitchType::RFKill;
+			}
+			if (BIT_IS_SET(switches, SW_RADIO)) {
+				activeSwitches = activeSwitches | TDESwitchType::Radio;
+			}
+			if (BIT_IS_SET(switches, SW_MICROPHONE_INSERT)) {
+				activeSwitches = activeSwitches | TDESwitchType::MicrophoneInsert;
+			}
+			if (BIT_IS_SET(switches, SW_DOCK)) {
+				activeSwitches = activeSwitches | TDESwitchType::Dock;
+			}
+			if (BIT_IS_SET(switches, SW_LINEOUT_INSERT)) {
+				activeSwitches = activeSwitches | TDESwitchType::LineOutInsert;
+			}
+			if (BIT_IS_SET(switches, SW_JACK_PHYSICAL_INSERT)) {
+				activeSwitches = activeSwitches | TDESwitchType::JackPhysicalInsert;
+			}
+			if (BIT_IS_SET(switches, SW_VIDEOOUT_INSERT)) {
+				activeSwitches = activeSwitches | TDESwitchType::VideoOutInsert;
+			}
+#if 0	// Some old kernels don't provide these defines... [FIXME]
+			if (BIT_IS_SET(switches, SW_CAMERA_LENS_COVER)) {
+				activeSwitches = activeSwitches | TDESwitchType::CameraLensCover;
+			}
+			if (BIT_IS_SET(switches, SW_KEYPAD_SLIDE)) {
+				activeSwitches = activeSwitches | TDESwitchType::KeypadSlide;
+			}
+			if (BIT_IS_SET(switches, SW_FRONT_PROXIMITY)) {
+				activeSwitches = activeSwitches | TDESwitchType::FrontProximity;
+			}
+			if (BIT_IS_SET(switches, SW_ROTATE_LOCK)) {
+				activeSwitches = activeSwitches | TDESwitchType::RotateLock;
+			}
+			if (BIT_IS_SET(switches, SW_LINEIN_INSERT)) {
+				activeSwitches = activeSwitches | TDESwitchType::LineInInsert;
+			}
+#endif
+		}
+		edevice->internalSetActiveSwitches(activeSwitches);
 	}
 
 	// Root devices are still special
@@ -3816,6 +4088,11 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 	device->internalSetDeviceDriver(devicedriver);
 	device->internalSetSubsystem(devicesubsystem);
 	device->internalSetPCIClass(devicepciclass);
+
+	// Internal use only!
+	device->m_udevtype = devicetype;
+	device->m_udevdevicetypestring = devicetypestring;
+	device->udevdevicetypestring_alt = devicetypestring_alt;
 
 	return device;
 }
