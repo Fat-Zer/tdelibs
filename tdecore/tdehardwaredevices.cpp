@@ -930,6 +930,33 @@ void TDECPUDevice::setGovernor(TQString gv) {
 		stream << gv.lower();
 		file.close();
 	}
+
+	// Force update of the device information object
+	KGlobal::hardwareDevices()->processModifiedCPUs();
+}
+
+bool TDECPUDevice::canSetMaximumScalingFrequency() {
+	TQString freqnode = systemPath() + "/cpufreq/scaling_max_freq";
+	int rval = access (freqnode.ascii(), W_OK);
+	if (rval == 0) {
+		return TRUE;
+	}
+	else {
+		return FALSE;
+	}
+}
+
+void TDECPUDevice::setMaximumScalingFrequency(double fr) {
+	TQString freqnode = systemPath() + "/cpufreq/scaling_max_freq";
+	TQFile file( freqnode );
+	if ( file.open( IO_WriteOnly ) ) {
+		TQTextStream stream( &file );
+		stream << TQString("%1").arg(fr*1000000.0, 0, 'f', 0);
+		file.close();
+	}
+
+	// Force update of the device information object
+	KGlobal::hardwareDevices()->processModifiedCPUs();
 }
 
 TDESensorDevice::TDESensorDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
@@ -1213,6 +1240,14 @@ void TDEBatteryDevice::internalSetDischargeRate(double vt) {
 	m_dischargeRate = vt;
 }
 
+double TDEBatteryDevice::timeRemaining() {
+	return m_timeRemaining;
+}
+
+void TDEBatteryDevice::internalSetTimeRemaining(double tr) {
+	m_timeRemaining = tr;
+}
+
 TQString TDEBatteryDevice::technology() {
 	return m_technology;
 }
@@ -1221,12 +1256,25 @@ void TDEBatteryDevice::internalSetTechnology(TQString tc) {
 	m_technology = tc;
 }
 
-TQString TDEBatteryDevice::status() {
+TDEBatteryStatus::TDEBatteryStatus TDEBatteryDevice::status() {
 	return m_status;
 }
 
 void TDEBatteryDevice::internalSetStatus(TQString tc) {
-	m_status = tc;
+	tc = tc.lower();
+
+	if (tc == "charging") {
+		m_status = TDEBatteryStatus::Charging;
+	}
+	else if (tc == "discharging") {
+		m_status = TDEBatteryStatus::Discharging;
+	}
+	else if (tc == "full") {
+		m_status = TDEBatteryStatus::Full;
+	}
+	else {
+		m_status = TDEBatteryStatus::Unknown;
+	}
 }
 
 bool TDEBatteryDevice::installed() {
@@ -1788,7 +1836,7 @@ void TDEHardwareDevices::processHotPluggedHardware() {
 		TQString actionevent(udev_device_get_action(dev));
 		if (actionevent == "add") {
 			TDEGenericDevice* device = classifyUnknownDevice(dev);
-	
+
 			// Make sure this device is not a duplicate
 			TDEGenericDevice *hwdevice;
 			for (hwdevice = m_deviceList.first(); hwdevice; hwdevice = m_deviceList.next()) {
@@ -1808,6 +1856,7 @@ void TDEHardwareDevices::processHotPluggedHardware() {
 		else if (actionevent == "remove") {
 			// Delete device from hardware listing
 			TQString systempath(udev_device_get_syspath(dev));
+			systempath += "/";
 			TDEGenericDevice *hwdevice;
 			for (hwdevice = m_deviceList.first(); hwdevice; hwdevice = m_deviceList.next()) {
 				if (hwdevice->systemPath() == systempath) {
@@ -1837,6 +1886,7 @@ void TDEHardwareDevices::processHotPluggedHardware() {
 		else if (actionevent == "change") {
 			// Update device and emit change event
 			TQString systempath(udev_device_get_syspath(dev));
+			systempath += "/";
 			TDEGenericDevice *hwdevice;
 			for (hwdevice = m_deviceList.first(); hwdevice; hwdevice = m_deviceList.next()) {
 				if (hwdevice->systemPath() == systempath) {
@@ -1938,7 +1988,7 @@ void TDEHardwareDevices::processModifiedCPUs() {
 				scalingdriverfile.close();
 			}
 			nodename = cpufreq_dir.path();
-			nodename.append("/scaling_min_freq");
+			nodename.append("/cpuinfo_min_freq");
 			TQFile minfrequencyfile(nodename);
 			if (minfrequencyfile.open(IO_ReadOnly)) {
 				TQTextStream stream( &minfrequencyfile );
@@ -1946,7 +1996,7 @@ void TDEHardwareDevices::processModifiedCPUs() {
 				minfrequencyfile.close();
 			}
 			nodename = cpufreq_dir.path();
-			nodename.append("/scaling_max_freq");
+			nodename.append("/cpuinfo_max_freq");
 			TQFile maxfrequencyfile(nodename);
 			if (maxfrequencyfile.open(IO_ReadOnly)) {
 				TQTextStream stream( &maxfrequencyfile );
@@ -2680,6 +2730,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		devicesubsystem = (udev_device_get_subsystem(dev));
 		devicenode = (udev_device_get_devnode(dev));
 		systempath = (udev_device_get_syspath(dev));
+		systempath += "/";
 		devicevendorid = (udev_device_get_property_value(dev, "ID_VENDOR_ID"));
 		devicemodelid = (udev_device_get_property_value(dev, "ID_MODEL_ID"));
 		devicevendoridenc = (udev_device_get_property_value(dev, "ID_VENDOR_ENC"));
@@ -3660,6 +3711,9 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 				++valuesdirit;
 			}
 		}
+
+		// Calculate time remaining
+		bdevice->internalSetTimeRemaining(bdevice->energy()*bdevice->dischargeRate()*60);
 	}
 
 	if (device->type() == TDEGenericDeviceType::PowerSupply) {

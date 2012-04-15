@@ -773,6 +773,16 @@ class TDECORE_EXPORT TDECPUDevice : public TDEGenericDevice
 		*/
 		void setGovernor(TQString gv);
 
+		/**
+		* @return TRUE if permissions allow the CPU maximum frequency to be set, FALSE if not
+		*/
+		bool canSetMaximumScalingFrequency();
+
+		/**
+		* @param gv a double with the new CPU maximum frequency in MHz
+		*/
+		void setMaximumScalingFrequency(double fr);
+
 	protected:
 		/**
 		* @param fr a double with the current CPU frequency in MHz, if available
@@ -842,6 +852,15 @@ class TDECORE_EXPORT TDECPUDevice : public TDEGenericDevice
 	friend class TDEHardwareDevices;
 };
 
+namespace TDEBatteryStatus {
+enum TDEBatteryStatus {
+	Charging,
+	Discharging,
+	Full,
+	Unknown = 0x80000000
+};
+};
+
 class TDECORE_EXPORT TDEBatteryDevice : public TDEGenericDevice
 {
 	public:
@@ -902,14 +921,19 @@ class TDECORE_EXPORT TDEBatteryDevice : public TDEGenericDevice
 		double dischargeRate();
 
 		/**
+		* @return a double with the current battery discharge time remaining in seconds, if available
+		*/
+		double timeRemaining();
+
+		/**
 		* @return a TQString with the battery technology, if available
 		*/
 		TQString technology();
 
 		/**
-		* @return a TQString with the battery status, if available
+		* @return a TDEBatteryStatus::TDEBatteryStatus with the current battery status
 		*/
-		TQString status();
+		TDEBatteryStatus::TDEBatteryStatus status();
 
 		/**
 		* @return TRUE if the battery is installed
@@ -977,6 +1001,12 @@ class TDECORE_EXPORT TDEBatteryDevice : public TDEGenericDevice
 		void internalSetDischargeRate(double vt);
 
 		/**
+		* @param a double with the current battery discharge time remaining in seconds, if available
+		* @internal
+		*/
+		void internalSetTimeRemaining(double tr);
+
+		/**
 		* @param a TQString with the battery technology, if available
 		* @internal
 		*/
@@ -1004,8 +1034,9 @@ class TDECORE_EXPORT TDEBatteryDevice : public TDEGenericDevice
 		double m_maximumEnergy;
 		double m_maximumDesignEnergy;
 		double m_dischargeRate;
+		double m_timeRemaining;
 		TQString m_technology;
-		TQString m_status;
+		TDEBatteryStatus::TDEBatteryStatus m_status;
 		bool m_installed;
 
 	friend class TDEHardwareDevices;
@@ -1569,7 +1600,7 @@ class TDECORE_EXPORT TDERootSystemDevice : public TDEGenericDevice
 		void setHibernationMethod(TDESystemHibernationMethod::TDESystemHibernationMethod hm);
 
 		/**
-		* @param ps a TDESystemPowerState::TDESystemPowerState with the desired hibernation method
+		* @param ps a TDESystemPowerState::TDESystemPowerState with the desired power state
 		* @return TRUE if power state was set
 		*/
 		bool setPowerState(TDESystemPowerState::TDESystemPowerState ps);
@@ -1894,6 +1925,13 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 		TDERootSystemDevice* rootSystemDevice();
 
 		/**
+		*  Rescan a hardware device to look for changes
+		*  WARNING: This method can be very expensive.  Use with caution!
+		*  @param hwdevice TDEGenericDevice* with the device to rescan
+		*/
+		void rescanDeviceInformation(TDEGenericDevice* hwdevice);
+
+		/**
 		*  Convert a byte count to human readable form
 		*  @param bytes a double containing the number of bytes
 		*  @return a TQString containing the human readable byte count
@@ -1913,7 +1951,6 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 		void processStatelessDevices();
 
 	private:
-		void rescanDeviceInformation(TDEGenericDevice* hwdevice);
 		void updateBlacklists(TDEGenericDevice* hwdevice, udev_device* dev);
 
 	private:
@@ -1958,6 +1995,7 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 
 	friend class TDEGenericDevice;
 	friend class TDEStorageDevice;
+	friend class TDECPUDevice;
 };
 
 #endif
