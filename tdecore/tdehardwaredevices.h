@@ -191,8 +191,10 @@ class TDECORE_EXPORT TDESensorCluster
 		double critical;
 };
 
-class TDECORE_EXPORT TDEGenericDevice
+class TDECORE_EXPORT TDEGenericDevice : public TQObject
 {
+	Q_OBJECT
+
 	public:
 		/**
 		*  Constructor.
@@ -916,7 +918,7 @@ class TDECORE_EXPORT TDEBatteryDevice : public TDEGenericDevice
 		double maximumDesignEnergy();
 
 		/**
-		* @return a double with the current battery discharge rate in volt-hours, if available
+		* @return a double with the current battery discharge rate in watt-hours, if available
 		*/
 		double dischargeRate();
 
@@ -1693,8 +1695,12 @@ inline TDESwitchType operator~(TDESwitchType a)
 }
 };
 
+class TQSocketNotifier;
+
 class TDECORE_EXPORT TDEEventDevice : public TDEGenericDevice
 {
+	Q_OBJECT
+
 	public:
 		/**
 		*  Constructor.
@@ -1747,12 +1753,31 @@ class TDECORE_EXPORT TDEEventDevice : public TDEGenericDevice
 		*/
 		void internalSetActiveSwitches(TDESwitchType::TDESwitchType sl);
 
+		/**
+		* @param hwmanager the master hardware manager
+		* @internal
+		*/
+		void internalStartFdMonitoring(TDEHardwareDevices* hwmanager);
+
+	protected slots:
+		void eventReceived();
+
+	signals:
+		/**
+		* @param keycode the code of the key that was pressed/released
+		* See include/linux/input.h for a complete list of keycodes
+		* @param device a TDEEventDevice* with the device that received the event
+		*/
+		void keyPressed(unsigned int keycode, TDEEventDevice* device);
+
 	private:
 		TDEEventDeviceType::TDEEventDeviceType m_eventType;
 		TDESwitchType::TDESwitchType m_providedSwitches;
 		TDESwitchType::TDESwitchType m_switchActive;
 
 		int m_fd;
+		bool m_fdMonitorActive;
+		TQSocketNotifier* m_eventNotifier;
 
 	friend class TDEHardwareDevices;
 };
@@ -1802,7 +1827,6 @@ class TDECORE_EXPORT TDEInputDevice : public TDEGenericDevice
 typedef TQPtrList<TDEGenericDevice> TDEGenericHardwareList;
 typedef TQMap<TQString, TQString> TDEDeviceIDMap;
 
-class TQSocketNotifier;
 class KSimpleDirWatch;
 
 class TDECORE_EXPORT TDEHardwareDevices : public TQObject
@@ -1944,11 +1968,19 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 		void hardwareUpdated(TDEGenericDevice*);
 		void mountTableModified();
 
+		/**
+		* @param keycode the code of the key that was pressed/released
+		* See include/linux/input.h for a complete list of keycodes
+		* @param device a TDEEventDevice* with the device that received the event
+		*/
+		void eventDeviceKeyPressed(unsigned int keycode, TDEEventDevice* device);
+
 	private slots:
 		void processHotPluggedHardware();
 		void processModifiedMounts();
 		void processModifiedCPUs();
 		void processStatelessDevices();
+		void processEventDeviceKeyPressed(unsigned int keycode, TDEEventDevice* edevice);
 
 	private:
 		void updateBlacklists(TDEGenericDevice* hwdevice, udev_device* dev);

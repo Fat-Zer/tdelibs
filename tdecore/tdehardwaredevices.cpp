@@ -94,7 +94,7 @@ TDESensorCluster::TDESensorCluster() {
 	critical = -1;
 }
 
-TDEGenericDevice::TDEGenericDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) {
+TDEGenericDevice::TDEGenericDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TQObject() {
 	m_deviceType = dt;
 	m_deviceName = dn;
 
@@ -1554,6 +1554,7 @@ void TDEMonitorDevice::internalSetPowerLevel(TDEDisplayPowerLevel::TDEDisplayPow
 
 TDEEventDevice::TDEEventDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
 	m_fd = -1;
+	m_fdMonitorActive = false;
 }
 
 TDEEventDevice::~TDEEventDevice() {
@@ -1637,6 +1638,29 @@ TQStringList TDEEventDevice::friendlySwitchList(TDESwitchType::TDESwitchType swi
 	}
 
 	return ret;
+}
+
+void TDEEventDevice::internalStartFdMonitoring(TDEHardwareDevices* hwmanager) {
+	if (!m_fdMonitorActive) {
+		// For security and performance reasons, only monitor known ACPI buttons
+		if (eventType() != TDEEventDeviceType::Unknown) {
+			m_eventNotifier = new TQSocketNotifier(m_fd, TQSocketNotifier::Read, this);
+			connect( m_eventNotifier, TQT_SIGNAL(activated(int)), this, TQT_SLOT(eventReceived()) );
+			connect( this, TQT_SIGNAL(keyPressed(unsigned int, TDEEventDevice*)), hwmanager, TQT_SLOT(processEventDeviceKeyPressed(unsigned int, TDEEventDevice*)) );
+		}
+		m_fdMonitorActive = true;
+	}
+}
+
+void TDEEventDevice::eventReceived() {
+	struct input_event ev;
+	int r;
+	r = read(m_fd, &ev, sizeof(struct input_event));
+	if (r > 0) {
+		if (ev.type == EV_KEY) {
+			emit keyPressed(ev.code, this);
+		}
+	}
 }
 
 TDEInputDevice::TDEInputDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
@@ -2073,11 +2097,15 @@ void TDEHardwareDevices::processStatelessDevices() {
 	// We can't use m_deviceList directly as m_deviceList can only have one iterator active against it at any given time
 	TDEGenericHardwareList devList = listAllPhysicalDevices();
 	for ( hwdevice = devList.first(); hwdevice; hwdevice = devList.next() ) {
-		if ((hwdevice->type() == TDEGenericDeviceType::RootSystem) || (hwdevice->type() == TDEGenericDeviceType::Network) || (hwdevice->type() == TDEGenericDeviceType::OtherSensor) || (hwdevice->type() == TDEGenericDeviceType::Event)) {
+		if ((hwdevice->type() == TDEGenericDeviceType::RootSystem) || (hwdevice->type() == TDEGenericDeviceType::Network) || (hwdevice->type() == TDEGenericDeviceType::OtherSensor) || (hwdevice->type() == TDEGenericDeviceType::Event) || (hwdevice->type() == TDEGenericDeviceType::Battery) || (hwdevice->type() == TDEGenericDeviceType::PowerSupply)) {
 			rescanDeviceInformation(hwdevice);
 			emit hardwareUpdated(hwdevice);
 		}
 	}
+}
+
+void TDEHardwareDevices::processEventDeviceKeyPressed(unsigned int keycode, TDEEventDevice* edevice) {
+	emit eventDeviceKeyPressed(keycode, edevice);
 }
 
 void TDEHardwareDevices::processModifiedMounts() {
@@ -2861,6 +2889,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 
 	// Pull out all event special devices and stuff them under Event
 	TQString syspath_tail = systempath.lower();
+	syspath_tail.truncate(syspath_tail.length()-1);
 	syspath_tail.remove(0, syspath_tail.findRev("/")+1);
 	if (syspath_tail.startsWith("event")) {
 		if (!device) device = new TDEEventDevice(TDEGenericDeviceType::Event);
@@ -3713,7 +3742,11 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		}
 
 		// Calculate time remaining
-		bdevice->internalSetTimeRemaining(bdevice->energy()*bdevice->dischargeRate()*60);
+		// Discharge rate is in watt-hours
+		// Energy is in watt-hours
+		// Therefore, energy/rate = time in hours
+		// Convert to seconds...
+		bdevice->internalSetTimeRemaining((bdevice->energy()/bdevice->dischargeRate())*60*60);
 	}
 
 	if (device->type() == TDEGenericDeviceType::PowerSupply) {
@@ -3987,7 +4020,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		else if (edevice->systemPath().contains("PNP0C0E")) {
 			edevice->internalSetEventType(TDEEventDeviceType::ACPISleepButton);
 		}
-		else if (edevice->systemPath().contains("PNP0C0C")) {
+		else if (edevice->systemPath().contains("PNP0C0C") || edevice->systemPath().contains("/LNXPWRBN")) {
 			edevice->internalSetEventType(TDEEventDeviceType::ACPIPowerButton);
 		}
 		else {
@@ -4122,6 +4155,8 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 #endif
 		}
 		edevice->internalSetActiveSwitches(activeSwitches);
+
+		edevice->internalStartFdMonitoring(this);
 	}
 
 	// Root devices are still special
