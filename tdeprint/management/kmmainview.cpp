@@ -210,7 +210,7 @@ void KMMainView::initActions()
 
 	new KAction(i18n("R&estart Server"),"tdeprint_restartsrv",0,TQT_TQOBJECT(this),TQT_SLOT(slotServerRestart()),m_actions,"server_restart");
 	new KAction(i18n("Configure &Server..."),"tdeprint_configsrv",0,TQT_TQOBJECT(this),TQT_SLOT(slotServerConfigure()),m_actions,"server_configure");
-	new KAction(i18n("Configure Server Access..."),"tdeprint_configsrv",0,TQT_TQOBJECT(this),TQT_SLOT(slotServerAccessConfigure()),m_actions,"server_access_configure");
+	new KAction(i18n("Configure Server Access..."),"tdeprint_configsrv",0,TQT_TQOBJECT(this),TQT_SLOT(slotServerConfigureAccess()),m_actions,"server_access_configure");
 
 	KToggleAction	*tact = new KToggleAction(i18n("Show &Toolbar"),0,m_actions,"view_toolbar");
 	tact->setCheckedState(i18n("Hide &Toolbar"));
