@@ -3007,7 +3007,8 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::OtherVirtual);
 		}
 		if ((devicetypestring == "audio")
-			|| (devicesubsystem == "sound")) {
+			|| (devicesubsystem == "sound")
+			|| (devicesubsystem == "ac97")) {
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Sound);
 		}
 		if ((devicesubsystem == "video4linux")
@@ -3066,7 +3067,15 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			}
 		}
 		if (devicesubsystem == "serio") {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Serial);
+			if (devicedriver.contains("atkbd")) {
+				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Keyboard);
+			}
+			else if (devicedriver.contains("mouse")) {
+				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Mouse);
+			}
+			else {
+				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Serial);
+			}
 		}
 		if (devicesubsystem == "ppdev") {
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Parallel);
