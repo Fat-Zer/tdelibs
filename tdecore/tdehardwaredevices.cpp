@@ -4026,7 +4026,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		if (edevice->systemPath().contains("PNP0C0D")) {
 			edevice->internalSetEventType(TDEEventDeviceType::ACPILidSwitch);
 		}
-		else if (edevice->systemPath().contains("PNP0C0E")) {
+		else if (edevice->systemPath().contains("PNP0C0E") || edevice->systemPath().contains("/LNXSLPBN")) {
 			edevice->internalSetEventType(TDEEventDeviceType::ACPISleepButton);
 		}
 		else if (edevice->systemPath().contains("PNP0C0C") || edevice->systemPath().contains("/LNXPWRBN")) {
