@@ -4043,10 +4043,10 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		if (idevice->systemPath().contains("PNP0C0D")) {
 			idevice->internalSetInputType(TDEInputDeviceType::ACPILidSwitch);
 		}
-		else if (idevice->systemPath().contains("PNP0C0E")) {
+		else if (idevice->systemPath().contains("PNP0C0E") || idevice->systemPath().contains("/LNXSLPBN")) {
 			idevice->internalSetInputType(TDEInputDeviceType::ACPISleepButton);
 		}
-		else if (idevice->systemPath().contains("PNP0C0C")) {
+		else if (idevice->systemPath().contains("PNP0C0C") || idevice->systemPath().contains("/LNXPWRBN")) {
 			idevice->internalSetInputType(TDEInputDeviceType::ACPIPowerButton);
 		}
 		else {
