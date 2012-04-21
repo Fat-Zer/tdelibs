@@ -856,7 +856,7 @@ void KApplication::init(bool GUIenabled)
      // world writable directories
      struct group *man = getgrnam("man");
      if ( !man || man->gr_gid != getegid() ){
-       fprintf(stderr, "The KDE libraries are not designed to run with suid privileges.\n");
+       fprintf(stderr, "The TDE libraries are not designed to run with suid privileges.\n");
        ::exit(127);
      }
   }
@@ -1063,7 +1063,7 @@ DCOPClient *KApplication::dcopClient()
     return s_DCOPClient;
 
   s_DCOPClient = new DCOPClient();
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs("kde");
+  KCmdLineArgs *args = KCmdLineArgs::parsedArgs("tde");
   if (args && args->isSet("dcopserver"))
   {
     s_DCOPClient->setServerAddress( args->getOption("dcopserver"));
@@ -1160,7 +1160,7 @@ void KApplication::disableSessionManagement() {
 void KApplication::enableSessionManagement() {
   bSessionManagement = true;
 #ifdef Q_WS_X11
-  // Session management support in Qt/KDE is awfully broken.
+  // Session management support in Qt/TDE is awfully broken.
   // If konqueror disables session management right after its startup,
   // and enables it later (preloading stuff), it won't be properly
   // saved on session shutdown.
@@ -1481,7 +1481,7 @@ void KApplication::dcopFailure(const TQString &msg)
          return;
 #endif
      TQString msgStr(i18n("There was an error setting up inter-process "
-                      "communications for KDE. The message returned "
+                      "communications for TDE. The message returned "
                       "by the system was:\n\n"));
      msgStr += msg;
      msgStr += i18n("\n\nPlease check that the \"dcopserver\" program is running!");
@@ -1563,12 +1563,12 @@ void
 KApplication::addCmdLineOptions()
 {
    KCmdLineArgs::addCmdLineOptions(qt_options, "Qt", "qt");
-   KCmdLineArgs::addCmdLineOptions(kde_options, "KDE", "kde");
+   KCmdLineArgs::addCmdLineOptions(kde_options, "TDE", "tde");
 }
 
 void KApplication::parseCommandLine( )
 {
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs("kde");
+    KCmdLineArgs *args = KCmdLineArgs::parsedArgs("tde");
 
     if ( !args ) return;
 
@@ -2583,7 +2583,7 @@ void KApplication::invokeHelp( const TQString& anchor,
        {
            if (Tty != kapp->type())
                TQMessageBox::critical(kapp->mainWidget(), i18n("Could not Launch Help Center"),
-               i18n("Could not launch the KDE Help Center:\n\n%1").arg(error), i18n("&OK"));
+               i18n("Could not launch the TDE Help Center:\n\n%1").arg(error), i18n("&OK"));
            else
                kdWarning() << "Could not launch help:\n" << error << endl;
 	   return;
@@ -2618,7 +2618,7 @@ void KApplication::invokeHTMLHelp( const TQString& _filename, const TQString& to
        {
            if (Tty != kapp->type())
                TQMessageBox::critical(kapp->mainWidget(), i18n("Could not Launch Help Center"),
-               i18n("Could not launch the KDE Help Center:\n\n%1").arg(error), i18n("&OK"));
+               i18n("Could not launch the TDE Help Center:\n\n%1").arg(error), i18n("&OK"));
            else
                kdWarning() << "Could not launch help:\n" << error << endl;
            return;

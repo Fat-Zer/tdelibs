@@ -86,7 +86,7 @@ public:
 void
 KUniqueApplication::addCmdLineOptions()
 {
-  KCmdLineArgs::addCmdLineOptions(kunique_options, 0, "kuniqueapp", "kde" );
+  KCmdLineArgs::addCmdLineOptions(kunique_options, 0, "kuniqueapp", "tde" );
 }
 
 bool

@@ -145,7 +145,7 @@ void
 KCmdLineArgs::initIgnore(int _argc, char **_argv, const char *_appname )
 {
    init(_argc, _argv,
-        new KAboutData(_appname, _appname, "unknown", "KDE Application", false));
+        new KAboutData(_appname, _appname, "unknown", "TDE Application", false));
    ignoreUnknown = true;
 }
 
@@ -240,9 +240,9 @@ KCmdLineArgs::saveAppArgs( TQDataStream &ds)
    if (!parsed)
       parseAllArgs();
 
-   // Remove Qt and KDE options.
+   // Remove Qt and TDE options.
    removeArgs("qt");
-   removeArgs("kde");
+   removeArgs("tde");
 
    TQCString qCwd = mCwd;
    ds << qCwd;
@@ -265,9 +265,9 @@ KCmdLineArgs::loadAppArgs( TQDataStream &ds)
 {
    parsed = true; // don't reparse argc/argv!
 
-   // Remove Qt and KDE options.
+   // Remove Qt and TDE options.
    removeArgs("qt");
-   removeArgs("kde");
+   removeArgs("tde");
 
    KCmdLineArgs *args;
    if ( argsList ) {
@@ -625,8 +625,8 @@ KCmdLineArgs::parseAllArgs()
        {
          if (!about->customAuthorTextEnabled ())
          {
-           if (about->bugAddress().isEmpty() || about->bugAddress() == "submit@bugs.kde.org" )
-             printQ( i18n( "Please use http://bugs.kde.org to report bugs.\n" ) );
+           if (about->bugAddress().isEmpty() || about->bugAddress() == "bugs.pearsoncomputing.net" )
+             printQ( i18n( "Please use http://bugs.pearsoncomputing.net to report bugs.\n" ) );
            else {
              if( about->authors().count() == 1 && about->authors().first().emailAddress() == about->bugAddress() )
                printQ( i18n( "Please report bugs to %1.\n" ).arg( about->authors().first().emailAddress() ) );
@@ -1286,12 +1286,12 @@ static const KCmdLineOptions kde_tempfile_option[] =
 void
 KCmdLineArgs::addTempFileOption()
 {
-    KCmdLineArgs::addCmdLineOptions( kde_tempfile_option, "KDE-tempfile", "kde-tempfile" );
+    KCmdLineArgs::addCmdLineOptions( kde_tempfile_option, "TDE-tempfile", "tde-tempfile" );
 }
 
 bool KCmdLineArgs::isTempFileSet()
 {
-    KCmdLineArgs* args = KCmdLineArgs::parsedArgs( "kde-tempfile" );
+    KCmdLineArgs* args = KCmdLineArgs::parsedArgs( "tde-tempfile" );
     if ( args )
         return args->isSet( "tempfile" );
     return false;
