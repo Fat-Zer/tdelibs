@@ -16,12 +16,12 @@ static const char *description = I18N_NOOP("A little program to output installat
 static KCmdLineOptions options[] =
 {
     { "expandvars", I18N_NOOP("expand ${prefix} and ${exec_prefix} in output"), 0 },
-    { "prefix",	   I18N_NOOP("Compiled in prefix for KDE libraries"), 0 },
-    { "exec-prefix", I18N_NOOP("Compiled in exec_prefix for KDE libraries"), 0 },
+    { "prefix",	   I18N_NOOP("Compiled in prefix for TDE libraries"), 0 },
+    { "exec-prefix", I18N_NOOP("Compiled in exec_prefix for TDE libraries"), 0 },
     { "libsuffix", I18N_NOOP("Compiled in library path suffix"), 0 },
     { "localprefix", I18N_NOOP("Prefix in $HOME used to write files"), 0},
-    { "version",   I18N_NOOP("Compiled in version string for KDE libraries"), 0 },
-    { "types",     I18N_NOOP("Available KDE resource types"), 0 },
+    { "version",   I18N_NOOP("Compiled in version string for TDE libraries"), 0 },
+    { "types",     I18N_NOOP("Available TDE resource types"), 0 },
     { "path type", I18N_NOOP("Search path for resource type"), 0 },
     { "userpath type", I18N_NOOP("User path: desktop|autostart|trash|document"), 0 },
     { "install type", I18N_NOOP("Prefix to install resource files to"), 0},
