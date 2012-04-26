@@ -2935,7 +2935,8 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 	if (((devicetype == "disk")
 		|| (devicetype == "partition")
 		|| (devicedriver == "floppy")
-		|| (devicesubsystem == "scsi_disk"))
+		|| (devicesubsystem == "scsi_disk")
+		|| (devicesubsystem == "scsi_tape"))
 		&& ((devicenode != "")
 		)) {
 		if (!device) device = new TDEStorageDevice(TDEGenericDeviceType::Disk);
