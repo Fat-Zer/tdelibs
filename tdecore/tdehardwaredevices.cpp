@@ -2185,7 +2185,7 @@ void TDEHardwareDevices::processModifiedMounts() {
 	emit mountTableModified();
 }
 
-TDEDiskDeviceType::TDEDiskDeviceType classifyDiskType(udev_device* dev, const TQString &devicebus, const TQString &disktypestring, const TQString &systempath, const TQString &devicevendor, const TQString &devicemodel, const TQString &filesystemtype, const TQString &devicedriver) {
+TDEDiskDeviceType::TDEDiskDeviceType classifyDiskType(udev_device* dev, const TQString devicebus, const TQString disktypestring, const TQString systempath, const TQString devicevendor, const TQString devicemodel, const TQString filesystemtype, const TQString devicedriver) {
 	// Classify a disk device type to the best of our ability
 	TDEDiskDeviceType::TDEDiskDeviceType disktype = TDEDiskDeviceType::Null;
 
@@ -2751,6 +2751,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 	TQString devicetypestring_alt;
 	TQString devicepciclass;
 	TDEGenericDevice* device = existingdevice;
+	bool temp_udev_device = !dev;
 	if (dev) {
 		devicename = (udev_device_get_sysname(dev));
 		devicetype = (udev_device_get_devtype(dev));
@@ -2787,6 +2788,9 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			devicetypestring_alt = device->udevdevicetypestring_alt;
 			devicepciclass = device->PCIClass();
 		}
+		TQString syspathudev = systempath;
+		syspathudev.truncate(syspathudev.length()-1);	// Remove trailing slash
+		dev = udev_device_new_from_syspath(m_udevStruct, syspathudev.ascii());
 	}
 
 	// FIXME
@@ -3300,7 +3304,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(device);
 
 		TDEDiskDeviceType::TDEDiskDeviceType disktype = sdevice->diskType();
-		TDEDiskDeviceStatus::TDEDiskDeviceStatus diskstatus = sdevice->diskStatus();
+		TDEDiskDeviceStatus::TDEDiskDeviceStatus diskstatus = TDEDiskDeviceStatus::Null;
 
 		if (force_full_classification) {
 			disktype = classifyDiskType(dev, devicebus, devicetypestring, systempath, devicevendor, devicemodel, filesystemtype, devicedriver);
@@ -3344,7 +3348,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 					++floppyblkdirit;
 				}
 			}
-	
+
 			// Some interesting information can be gleaned from the CMOS type file
 			// 0 : Defaults
 			// 1 : 5 1/4 DD
@@ -3376,7 +3380,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_STATE")).upper() == "BLANK") {
 				diskstatus = diskstatus | TDEDiskDeviceStatus::Blank;
 			}
-			sdevice->internalSetMediaInserted(!(TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA")) == "0"));
+			sdevice->internalSetMediaInserted((TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA")) != ""));
 		}
 
 		if (disktype & TDEDiskDeviceType::Zip) {
@@ -3416,6 +3420,12 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 				diskstatus = diskstatus | TDEDiskDeviceStatus::Inserted;
 			}
 			else {
+				diskstatus = diskstatus & ~TDEDiskDeviceStatus::Mountable;
+			}
+		}
+		// If certain disk types do not report the presence of a filesystem, they are likely not mountable
+		if ((disktype & TDEDiskDeviceType::HDD) || (disktype & TDEDiskDeviceType::Optical)) {
+			if (!(diskstatus & TDEDiskDeviceStatus::ContainsFilesystem)) {
 				diskstatus = diskstatus & ~TDEDiskDeviceStatus::Mountable;
 			}
 		}
@@ -4191,6 +4201,10 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 	device->m_udevtype = devicetype;
 	device->m_udevdevicetypestring = devicetypestring;
 	device->udevdevicetypestring_alt = devicetypestring_alt;
+
+	if (temp_udev_device) {
+		udev_device_unref(dev);
+	}
 
 	return device;
 }
