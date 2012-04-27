@@ -546,6 +546,9 @@ TQString TDEStorageDevice::friendlyDeviceType() {
 	if (isDiskOfType(TDEDiskDeviceType::Zip)) {
 		ret = i18n("Zip Drive");
 	}
+	if (isDiskOfType(TDEDiskDeviceType::Tape)) {
+		ret = i18n("Tape Drive");
+	}
 
 	if (isDiskOfType(TDEDiskDeviceType::HDD)) {
 		ret = i18n("Hard Disk Drive");
@@ -596,6 +599,9 @@ TQPixmap TDEStorageDevice::icon(KIcon::StdSizes size) {
 	}
 	if (isDiskOfType(TDEDiskDeviceType::Zip)) {
 		ret = DesktopIcon("zip_unmount", size);
+	}
+	if (isDiskOfType(TDEDiskDeviceType::Tape)) {
+		ret = DesktopIcon("tape_unmount", size);
 	}
 
 	if (isDiskOfType(TDEDiskDeviceType::HDD)) {
@@ -2250,7 +2256,7 @@ TDEDiskDeviceType::TDEDiskDeviceType classifyDiskType(udev_device* dev, const TQ
 
 	// Certain combinations of media flags should never be set at the same time as they don't make sense
 	// This block is needed as udev is more than happy to provide inconsistent data to us
-	if ((disktype & TDEDiskDeviceType::Zip) || (disktype & TDEDiskDeviceType::Floppy) || (disktype & TDEDiskDeviceType::Jaz)) {
+	if ((disktype & TDEDiskDeviceType::Zip) || (disktype & TDEDiskDeviceType::Floppy) || (disktype & TDEDiskDeviceType::Jaz) || (disktype & TDEDiskDeviceType::Tape)) {
 		disktype = disktype & ~TDEDiskDeviceType::HDD;
 	}
 
@@ -3026,6 +3032,8 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			|| (devicesubsystem == "scsi_device")
 			|| (devicesubsystem == "scsi_generic")
 			|| (devicesubsystem == "scsi")
+			|| (devicesubsystem == "spi_transport")
+			|| (devicesubsystem == "spi_host")
 			|| (devicesubsystem == "ata_port")
 			|| (devicesubsystem == "ata_link")
 			|| (devicesubsystem == "ata_disk")
