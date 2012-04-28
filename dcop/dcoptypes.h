@@ -22,6 +22,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef DCOPTYPES_H
 #define DCOPTYPES_H
 
+// generic template fallback for unknown types
+template <class T> inline const char* dcopTypeName( const T& ) { return "<unknown>"; }
+
 #include <dcopref.h>
 
 // standard c/c++ types
@@ -69,9 +72,6 @@ class TQVariant; inline const char* dcopTypeName( const TQVariant& ) { return "T
 
 // And some KDE types
 class KURL; inline const char* dcopTypeName( const KURL& ) { return "KURL"; }
-
-// generic template fallback for unknown types
-template <class T> inline const char* dcopTypeName( const T& ) { return "<unknown>"; }
 
 // type initialization for standard c/c++ types
 inline void dcopTypeInit(bool& b){b=false;}
