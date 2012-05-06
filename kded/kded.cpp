@@ -162,7 +162,7 @@ void Kded::initModules()
         kde_running = false;
      // Preload kded modules.
      KService::List kdedModules = KServiceType::offers("KDEDModule");
-     TQString version = getenv( "TDE_SESSION_VERSION" );
+     TQString version = getenv( "KDE_SESSION_VERSION" );
      TQStringList blacklist;
      if ( version >= "4" )
      {
