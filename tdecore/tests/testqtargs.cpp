@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
 
   KApplication app;
 
-  KCmdLineArgs *kdeargs = KCmdLineArgs::parsedArgs("kde");
+  KCmdLineArgs *kdeargs = KCmdLineArgs::parsedArgs("tde");
   KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
 
   // An arg set by Qt
