@@ -131,7 +131,7 @@ static TQCString readQCString(TQDataStream &ds)
    if ((bytesLeft < 0 ) || (len > (uint) bytesLeft))
    {
       tqWarning("[dcopserver] Corrupt data!\n");
-      printf("bytesLeft: %d, len: %d\n", bytesLeft, len);
+      printf("[dcopserver] bytesLeft: %d, len: %d\n", bytesLeft, len);
       return result;
    }
    result.TQByteArray::resize( (uint)len );
