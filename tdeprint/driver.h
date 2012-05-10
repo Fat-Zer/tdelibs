@@ -22,7 +22,7 @@
 #define DRIVER_H
 
 #if !defined( _TDEPRINT_COMPILE ) && defined( __GNUC__ )
-#warning internal header, do not use except if you are a KDEPrint developer
+#warning internal header, do not use except if you are a TDEPrint developer
 #endif
 
 #include <tqstring.h>
@@ -53,9 +53,9 @@ class DrPageSize;
 
 /**
  * @internal
- * This class is internal to KDEPrint and is not intended to be
+ * This class is internal to TDEPrint and is not intended to be
  * used outside it. Please do not make use of this header, except
- * if you're a KDEPrint developer. The API might change in the
+ * if you're a TDEPrint developer. The API might change in the
  * future and binary compatibility might be broken.
  */
 class TDEPRINT_EXPORT DrBase
@@ -98,9 +98,9 @@ protected:
 
 /**
  * @internal
- * This class is internal to KDEPrint and is not intended to be
+ * This class is internal to TDEPrint and is not intended to be
  * used outside it. Please do not make use of this header, except
- * if you're a KDEPrint developer. The API might change in the
+ * if you're a TDEPrint developer. The API might change in the
  * future and binary compatibility might be broken.
  */
 class TDEPRINT_EXPORT DrGroup : public DrBase
@@ -145,9 +145,9 @@ protected:
 
 /**
  * @internal
- * This class is internal to KDEPrint and is not intended to be
+ * This class is internal to TDEPrint and is not intended to be
  * used outside it. Please do not make use of this header, except
- * if you're a KDEPrint developer. The API might change in the
+ * if you're a TDEPrint developer. The API might change in the
  * future and binary compatibility might be broken.
  */
 class TDEPRINT_EXPORT DrMain : public DrGroup
@@ -177,9 +177,9 @@ protected:
 
 /**
  * @internal
- * This class is internal to KDEPrint and is not intended to be
+ * This class is internal to TDEPrint and is not intended to be
  * used outside it. Please do not make use of this header, except
- * if you're a KDEPrint developer. The API might change in the
+ * if you're a TDEPrint developer. The API might change in the
  * future and binary compatibility might be broken.
  */
 class DrChoiceGroup : public DrGroup
@@ -197,9 +197,9 @@ public:
 
 /**
  * @internal
- * This class is internal to KDEPrint and is not intended to be
+ * This class is internal to TDEPrint and is not intended to be
  * used outside it. Please do not make use of this header, except
- * if you're a KDEPrint developer. The API might change in the
+ * if you're a TDEPrint developer. The API might change in the
  * future and binary compatibility might be broken.
  */
 class TDEPRINT_EXPORT DrStringOption : public DrBase
@@ -221,9 +221,9 @@ protected:
 
 /**
  * @internal
- * This class is internal to KDEPrint and is not intended to be
+ * This class is internal to TDEPrint and is not intended to be
  * used outside it. Please do not make use of this header, except
- * if you're a KDEPrint developer. The API might change in the
+ * if you're a TDEPrint developer. The API might change in the
  * future and binary compatibility might be broken.
  */
 class TDEPRINT_EXPORT DrIntegerOption : public DrBase
@@ -246,9 +246,9 @@ protected:
 
 /**
  * @internal
- * This class is internal to KDEPrint and is not intended to be
+ * This class is internal to TDEPrint and is not intended to be
  * used outside it. Please do not make use of this header, except
- * if you're a KDEPrint developer. The API might change in the
+ * if you're a TDEPrint developer. The API might change in the
  * future and binary compatibility might be broken.
  */
 class TDEPRINT_EXPORT DrFloatOption : public DrBase
@@ -271,9 +271,9 @@ protected:
 
 /**
  * @internal
- * This class is internal to KDEPrint and is not intended to be
+ * This class is internal to TDEPrint and is not intended to be
  * used outside it. Please do not make use of this header, except
- * if you're a KDEPrint developer. The API might change in the
+ * if you're a TDEPrint developer. The API might change in the
  * future and binary compatibility might be broken.
  */
 class TDEPRINT_EXPORT DrListOption : public DrBase
@@ -303,9 +303,9 @@ protected:
 
 /**
  * @internal
- * This class is internal to KDEPrint and is not intended to be
+ * This class is internal to TDEPrint and is not intended to be
  * used outside it. Please do not make use of this header, except
- * if you're a KDEPrint developer. The API might change in the
+ * if you're a TDEPrint developer. The API might change in the
  * future and binary compatibility might be broken.
  */
 class TDEPRINT_EXPORT DrBooleanOption : public DrListOption
@@ -322,9 +322,9 @@ public:
 
 /**
  * @internal
- * This class is internal to KDEPrint and is not intended to be
+ * This class is internal to TDEPrint and is not intended to be
  * used outside it. Please do not make use of this header, except
- * if you're a KDEPrint developer. The API might change in the
+ * if you're a TDEPrint developer. The API might change in the
  * future and binary compatibility might be broken.
  */
 class DrConstraint
@@ -347,9 +347,9 @@ protected:
 
 /**
  * @internal
- * This class is internal to KDEPrint and is not intended to be
+ * This class is internal to TDEPrint and is not intended to be
  * used outside it. Please do not make use of this header, except
- * if you're a KDEPrint developer. The API might change in the
+ * if you're a TDEPrint developer. The API might change in the
  * future and binary compatibility might be broken.
  */
 class DrPageSize

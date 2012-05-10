@@ -39,9 +39,7 @@ KMWInfoPage::KMWInfoPage(TQWidget *parent, const char *name)
 		"It will guide you through the various steps of the process of installing "
 		"and configuring a printer for your printing system. At each step, you "
 		"can always go back using the <b>Back</b> button.</p><br>"
-		"<p>We hope you'll enjoy this tool!</p><br>"
-		"<p align=right><a href=\"http://printing.kde.org\"><i>"
-		"The KDE printing team</i></a>.</p>"));
+		"<p>We hope you enjoy this tool!</p><br>"));
 
 	TQVBoxLayout	*main_ = new TQVBoxLayout(this, 0, 0);
 	main_->addWidget(m_label);

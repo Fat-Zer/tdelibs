@@ -1,4 +1,4 @@
-[KDE Print Entry]
+[TDE Print Entry]
 PrintSystem=lpdunix
 Comment=Generic UNIX LPD Print System (default)
 Comment[af]=Generies Unix Lpd Druk Stelsel (verstek)

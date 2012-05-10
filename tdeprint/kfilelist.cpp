@@ -75,14 +75,14 @@ KFileList::KFileList(TQWidget *parent, const char *name)
 						" you can view or edit it before you send it to the printing"
 						" system.</p>"
 						" <p>If you open"
-						" files, KDEPrint will use the application matching the MIME type of"
+						" files, TDEPrint will use the application matching the MIME type of"
 						" the file.</p>"
 					        " </qt>" );
 
 	TQString whatsThisFileSelectionListview = i18n( " <qt> <b>File List view</b>"
                                                 " <p>This list displays all the files you selected for printing."
 						" You can see the file name(s), file path(s) and the file"
-						" (MIME) type(s) as determined by KDEPrint. You may re-arrange the "
+						" (MIME) type(s) as determined by TDEPrint. You may re-arrange the "
 						" initial order of the list "
 						" with the help of the arrow buttons on the right.</p>"
 						" <p>The files will be printed as a single job,"
@@ -91,7 +91,7 @@ KFileList::KFileList(TQWidget *parent, const char *name)
 						" locations. The files may be of multiple MIME types. The buttons on the right"
 						" side let you add more files, remove already selected files from the list, "
 						" re-order the list (by moving files up or down), and open files. If you open"
-						" files, KDEPrint will use the application matching the MIME type of"
+						" files, TDEPrint will use the application matching the MIME type of"
 						" the file.</p>"
 					        " </qt>" );
 

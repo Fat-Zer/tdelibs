@@ -22,7 +22,7 @@
 #define KMJOB_H
 
 #if !defined( _TDEPRINT_COMPILE ) && defined( __GNUC__ )
-#warning internal header, do not use except if you are a KDEPrint developer
+#warning internal header, do not use except if you are a TDEPrint developer
 #endif
 
 #include <tqstring.h>
@@ -32,9 +32,9 @@
 
 /**
  * @internal
- * This class is internal to KDEPrint and is not intended to be
+ * This class is internal to TDEPrint and is not intended to be
  * used outside it. Please do not make use of this header, except
- * if you're a KDEPrint developer. The API might change in the
+ * if you're a TDEPrint developer. The API might change in the
  * future and binary compatibility might be broken.
  */
 class TDEPRINT_EXPORT KMJob : public KMObject

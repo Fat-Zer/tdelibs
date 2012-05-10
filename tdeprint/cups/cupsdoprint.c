@@ -219,7 +219,7 @@ int main(int argc, char* argv[])
 	if (host[0] != 0) cupsSetServer(host);
 	if (port > 0) ippSetPort(port);
 	if (login[0] != 0) cupsSetUser(login);
-	if (jobname[0] == 0) strcpy(jobname,"KDE Print System");
+	if (jobname[0] == 0) strcpy(jobname,"TDE Print System");
 	cupsSetPasswordCB(getPasswordCB);
 
 	/* check for files */

@@ -72,7 +72,7 @@ void KPQtPage::init()
 			" <ul><li><b>Color</b> and</li> "
                         " <li><b>Grayscale</b></li></ul> "
 			" <b>Note:</b> This selection field may be grayed out and made inactive. "
-			" This happens if KDEPrint can not retrieve "
+			" This happens if TDEPrint can not retrieve "
 			" enough information about your print file. In this case the embedded color- or grayscale information "
 			" of your printfile, and the default handling of the printer take precedence. "
 			" </qt>" );

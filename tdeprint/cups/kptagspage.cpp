@@ -38,7 +38,7 @@ KPTagsPage::KPTagsPage(bool ro, TQWidget *parent, const char *name)
 						" There are 3 purposes for this:"
 						" <ul>"
 						" <li>Use any current or future standard CUPS job option not supported by the "
-						" KDEPrint GUI. </li>"
+						" TDEPrint GUI. </li>"
 						" <li>Control any custom job option you may want to support in custom CUPS filters "
 						" and backends plugged into the CUPS filtering chain.</li> "
 						" <li>Send short messages to the operators of your production printers in your "
@@ -70,7 +70,7 @@ KPTagsPage::KPTagsPage(bool ro, TQWidget *parent, const char *name)
 						" <p><b>Note:</b> the fields must not include spaces, tabs or quotes. You may need to "
 						" double-click on a field to edit it."
 						" <p><b>Warning:</b> Do not use such standard CUPS option names which also can be used "
-						" through the KDEPrint GUI. Results may be  unpredictable if they conflict, "
+						" through the TDEPrint GUI. Results may be  unpredictable if they conflict, "
 						" or if they are sent multiple times. For all options supported by the GUI, please do use "
 						" the GUI. (Each GUI element's  'WhatsThis' names the related CUPS option name.) </p> "
 						" </qt>" );

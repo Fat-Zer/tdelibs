@@ -173,7 +173,7 @@ bool KMManager::testPrinter(KMPrinter *prt)
 	bool		prExist = (findPrinter(prt->printerName()) != 0), result(false);
 	pr.setPrinterName(prt->printerName());
 	pr.setSearchName(prt->name());
-	pr.setDocName("KDE Print Test");
+	pr.setDocName("TDE Print Test");
 	// the printing mechanism may involve some needed operations on the
 	// printer, so temporary printers (created when testing) should be
 	// temporarily added to the printer list, then taken out.
@@ -483,7 +483,7 @@ int KMManager::addPrinterWizard(TQWidget *parent)
 {
 	KLibrary	*lib = KLibLoader::self()->library("libtdeprint_management_module");
 	if (!lib)
-		setErrorMsg(i18n("Unable to load KDE print management library: %1").arg(KLibLoader::self()->lastErrorMessage()));
+		setErrorMsg(i18n("Unable to load TDE print management library: %1").arg(KLibLoader::self()->lastErrorMessage()));
 	else
 	{
 		int (*func)(TQWidget*) = (int(*)(TQWidget*))lib->symbol("add_printer_wizard");
@@ -499,7 +499,7 @@ bool KMManager::invokeOptionsDialog(TQWidget *parent)
 {
 	KLibrary	*lib = KLibLoader::self()->library("libtdeprint_management_module");
 	if (!lib)
-		setErrorMsg(i18n("Unable to load KDE print management library: %1").arg(KLibLoader::self()->lastErrorMessage()));
+		setErrorMsg(i18n("Unable to load TDE print management library: %1").arg(KLibLoader::self()->lastErrorMessage()));
 	else
 	{
 		bool (*func)(TQWidget*) = (bool(*)(TQWidget*))lib->symbol("config_dialog");

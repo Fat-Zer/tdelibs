@@ -38,7 +38,7 @@ class KPrinterPrivate;
 class DrPageSize;
 
 /**
- * This class is the main interface to access the KDE print framework. It allows KDE
+ * This class is the main interface to access the TDE print framework. It allows TDE
  * applications to easily access the print system, through an interface that is compatible
  * with TQPrinter. So that the porting of an existing application should be as easy as
  * replacing any occurrence of TQPrinter by KPrinter. However applications that explicitly
@@ -81,7 +81,7 @@ class DrPageSize;
  * When compiling an application that uses KPrinter, you must link to -ltdeprint, which when
  * using the standard KDE build framework can be done by adding $(LIB_TDEPRINT) to _LDADD.
  *
- * @short The central interface class to access the KDE print system.
+ * @short The central interface class to access the TDE print system.
  * @author Michael Goffioul
  * @see TQPrinter, KPrintDialogPage
  */
@@ -608,7 +608,7 @@ public:
 	static void removeStandardPage(int p);
 	/**
 	 * Starts the add printer wizard. This utility function allows any application for
-	 * adding a printer using the KDEPrint powerful wizard.
+	 * adding a printer using the TDEPrint powerful wizard.
 	 * @param parent the parent widget for the wizard
 	 * @returns 1: success, 0: cancel, -1: error
 	 */

@@ -7,7 +7,7 @@
 
 static KCmdLineOptions options[] =
 {
-	{ "kdeconfig", I18N_NOOP("Configure KDE Print"), 0 },
+	{ "kdeconfig", I18N_NOOP("Configure TDE Print"), 0 },
 	{ "serverconfig", I18N_NOOP("Configure print server"), 0 },
 	KCmdLineLastOption
 };

@@ -278,7 +278,7 @@ bool KPrinterImpl::startPrinting(const TQString& cmd, KPrinter *printer, const T
 		{
 			TQString	msg = i18n("Unable to start child print process. ");
 			if (pid == 0)
-				msg += i18n("The KDE print server (<b>tdeprintd</b>) could not be contacted. Check that this server is running.");
+				msg += i18n("The TDE print server (<b>tdeprintd</b>) could not be contacted. Check that this server is running.");
 			else
 				msg += i18n("1 is the command that <files> is given to", "Check the command syntax:\n%1 <files>").arg(cmd);
 			printer->setErrorMessage(msg);

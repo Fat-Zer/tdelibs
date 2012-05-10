@@ -32,9 +32,9 @@ PluginComboBox::PluginComboBox(TQWidget *parent, const char *name)
 {
         TQString whatsThisCurrentPrintsystem = i18n(" <qt><b>Print Subsystem Selection</b>"
 						" <p>This combo box shows (and lets you select)"
-						" a print subsystem to be used by KDEPrint. (This print"
+						" a print subsystem to be used by TDEPrint. (This print"
 						" subsystem must, of course, be installed inside your"
-						" Operating System.) KDEPrint usually auto-detects the" 
+						" Operating System.) TDEPrint usually auto-detects the" 
                                                 " correct print subsystem by itself upon first startup."
 						" Most Linux distributions have \"CUPS\", the <em>Common"
 						" UNIX Printing System</em>." 

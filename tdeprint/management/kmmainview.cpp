@@ -227,8 +227,8 @@ void KMMainView::initActions()
 	tact->setChecked(KMManager::self()->isFilterEnabled());
 	connect(tact, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotToggleFilter(bool)));
 
-	new KAction( i18n( "%1 &Handbook" ).arg( "KDEPrint" ), "contents", 0, TQT_TQOBJECT(this), TQT_SLOT( slotHelp() ), m_actions, "invoke_help" );
-	new KAction( i18n( "%1 &Web Site" ).arg( "KDEPrint" ), "network", 0, TQT_TQOBJECT(this), TQT_SLOT( slotHelp() ), m_actions, "invoke_web" );
+	new KAction( i18n( "%1 &Handbook" ).arg( "TDEPrint" ), "contents", 0, TQT_TQOBJECT(this), TQT_SLOT( slotHelp() ), m_actions, "invoke_help" );
+	new KAction( i18n( "%1 &Web Site" ).arg( "TDEPrint" ), "network", 0, TQT_TQOBJECT(this), TQT_SLOT( slotHelp() ), m_actions, "invoke_web" );
 
 	KActionMenu	*mact = new KActionMenu(i18n("Pri&nter Tools"), "package_utilities", m_actions, "printer_tool");
 	mact->setDelayed(false);

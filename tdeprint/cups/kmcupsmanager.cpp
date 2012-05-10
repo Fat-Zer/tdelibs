@@ -405,7 +405,7 @@ bool KMCupsManager::testPrinter(KMPrinter *p)
 	   req.addURI(IPP_TAG_OPERATION,"printer-uri",uri);
 	   req.addMime(IPP_TAG_OPERATION,"document-format","application/postscript");
 	   if (!CupsInfos::self()->login().isEmpty()) req.addName(IPP_TAG_OPERATION,"requesting-user-name",CupsInfos::self()->login());
-	   req.addName(IPP_TAG_OPERATION,"job-name",TQString::fromLatin1("KDE Print Test"));
+	   req.addName(IPP_TAG_OPERATION,"job-name",TQString::fromLatin1("TDE Print Test"));
 	   if (req.doFileRequest("/printers/",testpage))
 	   return true;
 	   reportIppError(&req);

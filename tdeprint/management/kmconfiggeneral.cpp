@@ -51,7 +51,7 @@ KMConfigGeneral::KMConfigGeneral(TQWidget *parent)
     m_timer->setSuffix( i18n( " sec" ) );
 	m_timer->setSpecialValueText(i18n("Disabled"));
 	TQWhatsThis::add(m_timer, i18n("This time setting controls the refresh rate of various "
-			              "<b>KDE Print</b> components like the print manager "
+			              "<b>TDE Print</b> components like the print manager "
 				      "and the job viewer."));
 
 	TQGroupBox	*m_testpagebox = new TQGroupBox(0, Qt::Vertical, i18n("Test Page"), this);

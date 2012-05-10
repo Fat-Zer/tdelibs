@@ -219,7 +219,7 @@ void KXmlCommand::check(bool use_xml)
 void KXmlCommand::loadDesktop()
 {
 	KSimpleConfig	conf(locate("data", "tdeprint/filters/"+name()+".desktop"));
-	conf.setGroup("KDE Print Filter Entry");
+	conf.setGroup("TDE Print Filter Entry");
 	d->m_description = conf.readEntry("Comment");
 	d->m_outputMime = conf.readEntry("MimeTypeOut");
 	d->m_inputMime = conf.readListEntry("MimeTypeIn");
@@ -230,7 +230,7 @@ void KXmlCommand::loadDesktop()
 void KXmlCommand::saveDesktop()
 {
 	KSimpleConfig	conf(locateLocal("data", "tdeprint/filters/"+name()+".desktop"));
-	conf.setGroup("KDE Print Filter Entry");
+	conf.setGroup("TDE Print Filter Entry");
 	conf.writeEntry("Comment", d->m_description);
 	conf.writeEntry("MimeTypeIn", d->m_inputMime);
 	conf.writeEntry("MimeTypeOut", d->m_outputMime);
@@ -658,7 +658,7 @@ TQString KXmlCommandManager::selectCommand(TQWidget *parent)
 	KLibrary *lib = KLibLoader::self()->library( "libtdeprint_management_module" );
 	if ( !lib )
 	{
-		KMessageBox::error( parent, i18n( "Unable to load KDE print management library: %1" ).arg( KLibLoader::self()->lastErrorMessage() ) );
+		KMessageBox::error( parent, i18n( "Unable to load TDE print management library: %1" ).arg( KLibLoader::self()->lastErrorMessage() ) );
 		return TQString::null;
 	}
 	else

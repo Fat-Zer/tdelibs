@@ -315,7 +315,7 @@ KMFactory::PluginInfo KMFactory::pluginInfo(const TQString& name)
 	KSimpleConfig	conf(path);
 	PluginInfo	info;
 
-	conf.setGroup("KDE Print Entry");
+	conf.setGroup("TDE Print Entry");
 	info.name = conf.readEntry("PrintSystem");
 	info.comment = conf.readEntry("Comment");
 	if (info.comment.isEmpty())

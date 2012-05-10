@@ -35,7 +35,7 @@
 #include <kconfig.h>
 
 KMConfigDialog::KMConfigDialog(TQWidget *parent, const char *name)
-: KDialogBase(IconList,i18n("KDE Print Configuration"),Ok|Cancel,Ok,parent,name,true,true)
+: KDialogBase(IconList,i18n("TDE Print Configuration"),Ok|Cancel,Ok,parent,name,true,true)
 {
 	m_pages.setAutoDelete(false);
 	addConfigPage(new KMConfigGeneral(this));
