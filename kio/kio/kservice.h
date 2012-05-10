@@ -495,7 +495,7 @@ public:
   /**
    * Returns a path that can be used to create a new KService based
    * on @p suggestedName.
-   * @param showInMenu true, if the service should be shown in the KDE menu
+   * @param showInMenu true, if the service should be shown in the TDE menu
    *        false, if the service should be hidden from the menu
    * @param suggestedName name to base the file on, if a service with such
    *        name already exists, a prefix will be added to make it unique.

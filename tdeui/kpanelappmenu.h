@@ -30,7 +30,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 /**
  * DCop client menu class for the Kicker panel that will insert a submenu into
- * the %KDE menu.
+ * the %TDE menu.
  *
  * @author Daniel M. Duley <mosfet@kde.org>
  */

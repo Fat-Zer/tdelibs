@@ -413,12 +413,12 @@ editable_desktop_icons
 
 run_desktop_files
         - defines whether users may execute desktop files that are not
-          part of the default desktop, KDE menu, registered services and
+          part of the default desktop, TDE menu, registered services and
           autostarting services.
           * The default desktop includes the files under 
             $TDEDIR/share/kdesktop/Desktop but _NOT_ the files under
             $HOME/Desktop. 
-          * The KDE menu includes all files under $TDEDIR/share/applnk and
+          * The TDE menu includes all files under $TDEDIR/share/applnk and
             $XDGDIR/applications
           * Registered services includes all files under $TDEDIR/share/services. 
           * Autostarting services include all files under $TDEDIR/share/autostart 
@@ -427,8 +427,8 @@ run_desktop_files
           You probably also want to activate the following resource
           restictions:
           "appdata_kdesktop" - To restrict the default desktop.
-          "apps" - To restrict the KDE menu.
-          "xdgdata-apps" - To restrict the KDE menu.
+          "apps" - To restrict the TDE menu.
+          "xdgdata-apps" - To restrict the TDE menu.
           "services" - To restrict registered services.
           "autostart" - To restrict autostarting services.
           Otherwise users can still execute .desktop files by placing them
@@ -488,7 +488,7 @@ If this field is present the .desktop file is only considered if the action(s)
 mentioned in this field has been authorized. If multiple actions are listed
 they should be separated by commas (','). So if the .desktop file of an application
 lists one or more actions this way and the user has no authorization for one
-of these actions then the application will not appear in the KDE menu and will not
+of these actions then the application will not appear in the TDE menu and will not
 be used by KDE for opening files.
 
 IMPORTANT NOTE:
