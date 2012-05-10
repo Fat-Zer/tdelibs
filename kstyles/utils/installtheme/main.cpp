@@ -32,7 +32,7 @@
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
 
-static const char desc[] = I18N_NOOP("KDE Tool to build a cache list of all pixmap themes installed");
+static const char desc[] = I18N_NOOP("TDE Tool to build a cache list of all pixmap themes installed");
 static const char ver[] = "0.9.1";
 
 int main(int argc, char **argv)

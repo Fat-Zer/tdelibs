@@ -952,7 +952,7 @@ TQString indent(TQString text, int spaces)
 
 int main( int argc, char **argv )
 {
-  KAboutData aboutData( "kconfig_compiler", I18N_NOOP("KDE .kcfg compiler"), "0.3",
+  KAboutData aboutData( "kconfig_compiler", I18N_NOOP("TDE .kcfg compiler"), "0.3",
     I18N_NOOP("KConfig Compiler") , KAboutData::License_LGPL );
   aboutData.addAuthor( "Cornelius Schumacher", 0, "schumacher@kde.org" );
   aboutData.addAuthor( "Waldo Bastian", 0, "bastian@kde.org" );

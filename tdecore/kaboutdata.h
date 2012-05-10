@@ -41,7 +41,7 @@ class KAboutDataPrivate;
  *
  * \code
  *   KAboutData about("khello", I18N_NOOP("KHello"), "0.1",
- *                   I18N_NOOP("A KDE version of Hello, world!"),
+ *                   I18N_NOOP("A TDE version of Hello, world!"),
  *                   KAboutData::License_LGPL,
  *                   I18N_NOOP("Copyright (c) 2003 Developer"));
  *

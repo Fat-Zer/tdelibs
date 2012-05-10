@@ -237,7 +237,7 @@ static KCmdLineOptions options[] =
                 "given file(s)."), 0 },
 
     { "dialog",
-      I18N_NOOP("Opens a KDE properties dialog to allow viewing and "
+      I18N_NOOP("Opens a TDE properties dialog to allow viewing and "
                 "modifying of metadata of the given file(s)"), 0 },
 
     { "getValue <key>",

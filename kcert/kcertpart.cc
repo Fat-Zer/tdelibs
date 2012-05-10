@@ -876,7 +876,7 @@ KMessageBox::information(_frame, i18n("Certificates have been successfully impor
 
 KAboutData *KCertPart::createAboutData()
 {
-    return new KAboutData("KCertPart", I18N_NOOP("KDE Certificate Part"), "1.0");
+    return new KAboutData("KCertPart", I18N_NOOP("TDE Certificate Part"), "1.0");
 }
 
 #include "kcertpart.moc"

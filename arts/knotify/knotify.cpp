@@ -106,7 +106,7 @@ extern "C"{
 KDE_EXPORT int kdemain(int argc, char **argv)
 {
     KAboutData aboutdata("knotify", I18N_NOOP("KNotify"),
-                         "3.0", I18N_NOOP("KDE Notification Server"),
+                         "3.0", I18N_NOOP("TDE Notification Server"),
                          KAboutData::License_GPL, "(C) 1997-2003, KDE Developers");
     aboutdata.addAuthor("Carsten Pfeiffer",I18N_NOOP("Current Maintainer"),"pfeiffer@kde.org");
     aboutdata.addAuthor("Christian Esken",0,"esken@kde.org");

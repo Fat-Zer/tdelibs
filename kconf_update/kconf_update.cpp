@@ -942,7 +942,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
 {
    KAboutData aboutData("kconf_update", I18N_NOOP("KConf Update"),
                         "1.0.2",
-                        I18N_NOOP("KDE Tool for updating user configuration files"),
+                        I18N_NOOP("TDE Tool for updating user configuration files"),
                         KAboutData::License_GPL,
                         "(c) 2001, Waldo Bastian");
 

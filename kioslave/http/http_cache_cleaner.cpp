@@ -50,7 +50,7 @@ int m_maxCacheSize;
 
 static const char appName[] = "kio_http_cache_cleaner";
 
-static const char description[] = I18N_NOOP("KDE HTTP cache maintenance tool");
+static const char description[] = I18N_NOOP("TDE HTTP cache maintenance tool");
 
 static const char version[] = "1.0.0";
 
@@ -191,7 +191,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
 {
    KLocale::setMainCatalogue("tdelibs");
    KCmdLineArgs::init( argc, argv, appName,
-		       I18N_NOOP("KDE HTTP cache maintenance tool"),
+		       I18N_NOOP("TDE HTTP cache maintenance tool"),
 		       description, version, true);
 
    KCmdLineArgs::addCmdLineOptions( options );
