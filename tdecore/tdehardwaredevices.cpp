@@ -2469,6 +2469,9 @@ TDEGenericDeviceType::TDEGenericDeviceType readGenericDeviceTypeFromString(TQStr
 	else if (query == "Platform") {
 		ret = TDEGenericDeviceType::Platform;
 	}
+	else if (query == "Cryptography") {
+		ret = TDEGenericDeviceType::Cryptography;
+	}
 	else if (query == "Event") {
 		ret = TDEGenericDeviceType::Event;
 	}
@@ -3040,6 +3043,11 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			|| (devicesubsystem == "ata_device")
 			|| (devicesubsystem == "ata")) {
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+		}
+		if (devicesubsystem == "misc") {
+			if (devicedriver.startsWith("tpm_")) {
+				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Cryptography);
+			}
 		}
 		if (devicesubsystem == "leds") {
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::OtherACPI);
@@ -4940,6 +4948,9 @@ TQString TDEHardwareDevices::getFriendlyDeviceTypeStringFromType(TDEGenericDevic
 	else if (query == TDEGenericDeviceType::Platform) {
 		ret = i18n("Platform");
 	}
+	else if (query == TDEGenericDeviceType::Cryptography) {
+		ret = i18n("Cryptography");
+	}
 	else if (query == TDEGenericDeviceType::Event) {
 		ret = i18n("Platform Event");
 	}
@@ -5085,6 +5096,9 @@ TQPixmap TDEHardwareDevices::getDeviceTypeIconFromType(TDEGenericDeviceType::TDE
 	}
 	else if (query == TDEGenericDeviceType::Platform) {
 		ret = DesktopIcon("kcmsystem", size);
+	}
+	else if (query == TDEGenericDeviceType::Cryptography) {
+		ret = DesktopIcon("password", size);
 	}
 	else if (query == TDEGenericDeviceType::Event) {
 		ret = DesktopIcon("kcmsystem", size);

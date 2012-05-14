@@ -78,6 +78,7 @@ enum TDEGenericDeviceType {
 	ThermalControl,
 	Bridge,
 	Platform,
+	Cryptography,
 	Event,
 	Input,
 	PNP,
