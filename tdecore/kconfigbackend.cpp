@@ -255,8 +255,7 @@ void KConfigBackEnd::changeFileName(const TQString &_fileName,
       mLocalFileName = KGlobal::dirs()->saveLocation(resType) + mfileName;
 
    if (useKDEGlobals)
-      mGlobalFileName = KGlobal::dirs()->saveLocation("config") +
-	      TQString::fromLatin1("kdeglobals");
+      mGlobalFileName = KGlobal::dirs()->saveLocation("config", TQString(), false) + TQString::fromLatin1("kdeglobals");
    else
       mGlobalFileName = TQString::null;
 
