@@ -69,7 +69,7 @@ class TDECORE_EXPORT KInstance
      * Only for K(Unique)Application
      * Initialize from src and delete it.
      */
-     
+
     KInstance( KInstance* src );
 
     /**
@@ -94,6 +94,14 @@ class TDECORE_EXPORT KInstance
      * @return the KConfig object for the instance.
      */
     KSharedConfig      *sharedConfig() const;
+
+    /**
+     * Set a read-only flag on the configuration files
+     * This must be called before config() or dirs() to have any effect
+     * Defaults to FALSE
+     * @param ro read only if TRUE
+     */
+    void                setConfigReadOnly(bool ro);
 
     /**
      *  Returns an iconloader object.
@@ -162,6 +170,7 @@ protected:
     virtual void virtual_hook( int id, void* data );
 private:
     KInstancePrivate *d;
+    bool m_configReadOnly;
 };
 
 #endif

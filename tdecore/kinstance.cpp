@@ -72,7 +72,7 @@ KInstance::KInstance( const TQCString& name)
     _config (0L),
     _iconLoader (0L),
     _hardwaredevices (0L),
-    _name( name ), _aboutData( new KAboutData( name, "", 0 ) )
+    _name( name ), _aboutData( new KAboutData( name, "", 0 ) ), m_configReadOnly(false)
 {
     DEBUG_ADD
     Q_ASSERT(!name.isEmpty());
@@ -91,7 +91,7 @@ KInstance::KInstance( const KAboutData * aboutData )
     _config (0L),
     _iconLoader (0L),
     _hardwaredevices (0L),
-    _name( aboutData->appName() ), _aboutData( aboutData )
+    _name( aboutData->appName() ), _aboutData( aboutData ), m_configReadOnly(false)
 {
     DEBUG_ADD
     Q_ASSERT(!_name.isEmpty());
@@ -111,7 +111,7 @@ KInstance::KInstance( KInstance* src )
     _config ( src->_config ),
     _iconLoader ( src->_iconLoader ),
     _hardwaredevices ( src->_hardwaredevices ),
-    _name( src->_name ), _aboutData( src->_aboutData )
+    _name( src->_name ), _aboutData( src->_aboutData ), m_configReadOnly(false)
 {
     DEBUG_ADD
     Q_ASSERT(!_name.isEmpty());
@@ -182,6 +182,11 @@ KStandardDirs *KInstance::dirs() const
 extern bool kde_kiosk_exception;
 extern bool kde_kiosk_admin;
 
+void KInstance::setConfigReadOnly(bool ro)
+{
+    m_configReadOnly = ro;
+}
+
 KConfig	*KInstance::config() const
 {
     DEBUG_CHECK_ALIVE
@@ -206,12 +211,14 @@ KConfig	*KInstance::config() const
 
         if ( d->sharedConfig == 0 )
         {
-	    if ( !_name.isEmpty() )
-	        d->sharedConfig = KSharedConfig::openConfig( _name + "rc");
-	    else
+	    if ( !_name.isEmpty() ) {
+	        d->sharedConfig = KSharedConfig::openConfig( _name + "rc", m_configReadOnly );
+	    }
+	    else {
 	        d->sharedConfig = KSharedConfig::openConfig( TQString::null );
+	    }
 	}
-	
+
 	// Check if we are excempt from kiosk restrictions
 	if (kde_kiosk_admin && !kde_kiosk_exception && !TQCString(getenv("TDE_KIOSK_NO_RESTRICTIONS")).isEmpty())
 	{
@@ -219,7 +226,7 @@ KConfig	*KInstance::config() const
             d->sharedConfig = 0;
             return config(); // Reread...
         }
-	
+
 	_config = d->sharedConfig;
         if (_dirs)
             if (_dirs->addCustomized(_config))

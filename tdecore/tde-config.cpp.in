@@ -120,6 +120,7 @@ int main(int argc, char **argv)
     KCmdLineArgs::addCmdLineOptions( options ); // Add my own options.
 
     KInstance a("tde-config");
+    a.setConfigReadOnly(TRUE);
     (void)KGlobal::dirs(); // trigger the creation
     (void)KGlobal::config();
 

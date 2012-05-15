@@ -1139,16 +1139,18 @@ static TQString translatePath( TQString path )
 
    // return original path, if it refers to another type of URL (e.g. http:/), or
    // if the path is already relative to another directory
-   if (!startsWithFile && path[0] != '/' ||
-        startsWithFile && path[5] != '/')
+   if (((!startsWithFile) && (path[0] != '/')) || (startsWithFile && (path[5] != '/'))) {
 	return path;
+   }
 
-   if (startsWithFile)
+   if (startsWithFile) {
         path.remove(0,5); // strip leading "file:/" off the string
+   }
 
    // keep only one single '/' at the beginning - needed for cleanHomeDirPath()
-   while (path[0] == '/' && path[1] == '/')
+   while (path[0] == '/' && path[1] == '/') {
 	path.remove(0,1);
+   }
 
    // we can not use KGlobal::dirs()->relativeLocation("home", path) here,
    // since it would not recognize paths without a trailing '/'.

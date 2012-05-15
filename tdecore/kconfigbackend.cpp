@@ -247,17 +247,22 @@ void KConfigBackEnd::changeFileName(const TQString &_fileName,
    mfileName = _fileName;
    resType = _resType;
    useKDEGlobals = _useKDEGlobals;
-   if (mfileName.isEmpty())
+   if (mfileName.isEmpty()) {
       mLocalFileName = TQString::null;
-   else if (!TQDir::isRelativePath(mfileName))
+   }
+   else if (!TQDir::isRelativePath(mfileName)) {
       mLocalFileName = mfileName;
-   else
-      mLocalFileName = KGlobal::dirs()->saveLocation(resType) + mfileName;
+   }
+   else {
+      mLocalFileName = KGlobal::dirs()->saveLocation(resType, TQString(), false) + mfileName;
+   }
 
-   if (useKDEGlobals)
+   if (useKDEGlobals) {
       mGlobalFileName = KGlobal::dirs()->saveLocation("config", TQString(), false) + TQString::fromLatin1("kdeglobals");
-   else
+   }
+   else {
       mGlobalFileName = TQString::null;
+   }
 
    d->localLastModified = TQDateTime();
    d->localLastSize = 0;
