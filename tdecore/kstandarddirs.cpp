@@ -414,7 +414,7 @@ TQString KStandardDirs::findResourceDir( const char *type,
 {
 #ifndef NDEBUG
     if (filename.isEmpty()) {
-      printf("filename for type %s in KStandardDirs::findResourceDir is not supposed to be empty!!", type);
+      fprintf(stderr, "filename for type %s in KStandardDirs::findResourceDir is not supposed to be empty!!", type);
       return TQString::null;
     }
 #endif
@@ -430,7 +430,7 @@ TQString KStandardDirs::findResourceDir( const char *type,
 #ifdef Q_WS_WIN //this ensures we're using installed .la files
           if ((*it).isEmpty() && filename.right(3)==".la") {
 #ifndef NDEBUG
-              printf("KStandardDirs::findResourceDir() found .la in cwd: skipping. (fname=%s)\n", filename.ascii());
+              fprintf(stderr, "KStandardDirs::findResourceDir() found .la in cwd: skipping. (fname=%s)\n", filename.ascii());
 #endif
               continue;
           }
@@ -441,7 +441,7 @@ TQString KStandardDirs::findResourceDir( const char *type,
 
 #ifndef NDEBUG
     if(false && strcmp(type, "locale"))
-      printf("KStdDirs::findResDir(): can't find \"%s\" in type \"%s\".\n", filename.ascii(), type);
+      fprintf(stderr, "KStdDirs::findResDir(): can't find \"%s\" in type \"%s\".\n", filename.ascii(), type);
 #endif
 
     return TQString::null;
@@ -503,7 +503,7 @@ static void lookupDirectory(const TQString& path, const TQString &relPart,
 
       TQString pathfn = path + fn;
       if ( KDE_stat( TQFile::encodeName(pathfn), &buff ) != 0 ) {
-	printf("Error stat'ing %s : %d\n", pathfn.ascii(), errno);
+	fprintf(stderr, "Error stat'ing %s : %d\n", pathfn.ascii(), errno);
 	continue; // Couldn't stat (e.g. no read permissions)
       }
       if ( recursive ) {
@@ -602,7 +602,7 @@ static void lookupPrefix(const TQString& prefix, const TQString& relpath,
 		TQString rfn = relPart+fn;
 		fn = prefix + fn;
 		if ( KDE_stat( TQFile::encodeName(fn), &buff ) != 0 ) {
-		    printf("Error statting %s : %d\n", fn.ascii(), errno);
+		    fprintf(stderr, "Error statting %s : %d\n", fn.ascii(), errno);
 		    continue; // Couldn't stat (e.g. no permissions)
 		}
 		if ( S_ISDIR( buff.st_mode ))
@@ -1138,9 +1138,6 @@ TQString KStandardDirs::saveLocation(const char *type,
     KDE_struct_stat st;
     if (KDE_stat(TQFile::encodeName(fullPath), &st) != 0 || !(S_ISDIR(st.st_mode))) {
 	if(!create) {
-#ifndef NDEBUG
-	    printf("%s", TQString("save location %1 doesn't exist\n").arg(fullPath).ascii());
-#endif
 	    return fullPath;
 	}
 	if(!makeDir(fullPath, 0700)) {
@@ -1272,7 +1269,7 @@ TQString KStandardDirs::kfsstnd_defaultprefix()
    s->defaultprefix = TDEDIR;
 #endif
    if (s->defaultprefix.isEmpty()) {
-      printf("KStandardDirs::kfsstnd_defaultprefix(): default TDE prefix not found!\n");
+      fprintf(stderr, "KStandardDirs::kfsstnd_defaultprefix(): default TDE prefix not found!\n");
    }
    return s->defaultprefix;
 }
@@ -1290,7 +1287,7 @@ TQString KStandardDirs::kfsstnd_defaultbindir()
       s->defaultbindir = kfsstnd_defaultprefix() + TQString::fromLatin1("/bin");
 #endif
    if (s->defaultbindir.isEmpty()) {
-      printf("KStandardDirs::kfsstnd_defaultbindir(): default binary TDE dir not found!\n");
+      fprintf(stderr, "KStandardDirs::kfsstnd_defaultbindir(): default binary TDE dir not found!\n");
    }
   return s->defaultbindir;
 }
