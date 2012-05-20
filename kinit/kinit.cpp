@@ -1615,6 +1615,7 @@ int tdeinit_x_errhandler( Display *dpy, XErrorEvent *err )
 // another X connection for startup notification purposes
 static void setupX()
 {
+    XInitThreads();
     XSetIOErrorHandler(tdeinit_xio_errhandler);
     XSetErrorHandler(tdeinit_x_errhandler);
 }
