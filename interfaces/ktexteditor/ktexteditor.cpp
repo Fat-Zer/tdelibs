@@ -110,6 +110,7 @@ Document::Document( TQObject *parent, const char *name ) : KTextEditor::Editor (
 {
   globalDocumentNumber++;
   myDocumentNumber = globalDocumentNumber;
+  myDocumentListPosition = -1;	// Don't care
 }
 
 Document::~Document()
@@ -119,6 +120,16 @@ Document::~Document()
 unsigned int Document::documentNumber () const
 {
   return myDocumentNumber;
+}
+
+long Document::documentListPosition () const
+{
+  return myDocumentListPosition;
+}
+
+void Document::setDocumentListPosition (long pos)
+{
+  myDocumentListPosition = pos;
 }
 
 TQCString Document::documentDCOPSuffix () const

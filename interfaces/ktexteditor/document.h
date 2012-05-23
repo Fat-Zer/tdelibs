@@ -61,10 +61,21 @@ class KTEXTEDITOR_EXPORT Document : public KTextEditor::Editor
     */
     virtual TQPtrList<class View> views () const = 0;
 
+    /**
+     * Returns the list position of this document in your app, if applicable.
+     */
+    long documentListPosition () const;
+
+    /**
+     * Sets the list position of this document in your app, if applicable.
+     */
+    void setDocumentListPosition (long pos);
+
   private:
     class PrivateDocument *d;
     static unsigned int globalDocumentNumber;
     unsigned int myDocumentNumber;
+    long myDocumentListPosition;
 };
 
 KTEXTEDITOR_EXPORT Document *createDocument ( const char* libname, TQObject *parent = 0, const char *name = 0 );

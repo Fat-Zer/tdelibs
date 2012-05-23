@@ -5052,6 +5052,15 @@ uint KateDocument::documentNumber () const
   return KTextEditor::Document::documentNumber ();
 }
 
+long KateDocument::documentListPosition () const
+{
+  return KTextEditor::Document::documentListPosition ();
+}
+
+void KateDocument::setDocumentListPosition (long pos)
+{
+  KTextEditor::Document::setDocumentListPosition (pos);
+}
 
 
 

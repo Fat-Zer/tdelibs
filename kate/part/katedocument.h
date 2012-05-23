@@ -1065,6 +1065,8 @@ class KateDocument : public Kate::Document,
 
   k_dcop:
     uint documentNumber () const;
+    long documentListPosition () const;
+    void setDocumentListPosition (long pos);
 };
 
 #endif
