@@ -84,7 +84,6 @@ int main(int argc, char **argv)
             if (lSize > 254)
                 lSize = 254;
             rewind (pFile);
-            size_t result = fread (buffer, 1, lSize, pFile);
             fclose(pFile);
             kompmgrpid = atoi(buffer);
         }
@@ -97,9 +96,7 @@ int main(int argc, char **argv)
         }
     }
 
-//     app.detectCompositionManagerAvailable();
-
-//    if (!app.isCompositionManagerAvailable()) {
+     if (app.detectCompositionManagerAvailable(false, false)) {		// Perform a shallow check for the composite extension (a deep check would cause noticeable flicker)
 	KConfig config2("twinrc", true);
 	config2.setGroup( "Notification Messages" );
 	if (config2.readBoolEntry("UseTranslucency",false)) {
@@ -110,6 +107,10 @@ int main(int argc, char **argv)
 		app.detectCompositionManagerAvailable(true, false);
 		return 0;
 	}
-//    }
+     }
+     else {
+	app.detectCompositionManagerAvailable(true, false);
+	return 1;
+     }
 }
 

@@ -1804,9 +1804,7 @@ bool KApplication::isCompositionManagerAvailable() {
 
         // Now that we did all that by way of introduction...read the file!
 	FILE *pFile;
-	char buffer[255];
 	pFile = fopen(filename, "r");
-	int kompmgrpid = 0;
 	if (pFile) {
 		have_manager = true;
 		fclose(pFile);
@@ -1840,18 +1838,23 @@ bool KApplication::detectCompositionManagerAvailable(bool force_available, bool 
 			compositing_manager_available = false;
 		}
 		else {
-			Window root_window = XDefaultRootWindow(dpy);
-			XCompositeRedirectSubwindows(dpy, root_window, CompositeRedirectManual);
-			XSync(dpy, false);
-			if (x11_composite_error_generated == true) {
-				compositing_manager_available = true;
+			if (available) {		// FIXME This variable does double duty to avoid breaking the ABI for R14.0.  In reality it should be called perform_deep_check
+				Window root_window = XDefaultRootWindow(dpy);
+				XCompositeRedirectSubwindows(dpy, root_window, CompositeRedirectManual);
+				XSync(dpy, false);
+				if (x11_composite_error_generated == true) {
+					compositing_manager_available = true;
+				}
+				else {
+					XCompositeUnredirectSubwindows(dpy, root_window, CompositeRedirectManual);
+					compositing_manager_available = false;
+				}
+				XSetErrorHandler(NULL);
+				XCloseDisplay(dpy);
 			}
 			else {
-				XCompositeUnredirectSubwindows(dpy, root_window, CompositeRedirectManual);
-				compositing_manager_available = false;
+				compositing_manager_available = true;
 			}
-			XSetErrorHandler(NULL);
-			XCloseDisplay(dpy);
 		}
 	}
 	
@@ -1913,7 +1916,7 @@ Qt::HANDLE KApplication::getX11RGBAVisual(Display *dpy) {
 		return argb_x11_visual;
 	}
 	else {
-		return NULL;
+		return (Qt::HANDLE)NULL;
 	}
 }
 
@@ -1923,7 +1926,7 @@ Qt::HANDLE KApplication::getX11RGBAColormap(Display *dpy) {
 		return argb_x11_colormap;
 	}
 	else {
-		return NULL;
+		return (Qt::HANDLE)NULL;
 	}
 }
 
@@ -1997,8 +2000,20 @@ bool KApplication::detectCompositionManagerAvailable(bool force_available) {
 	strcat(filename, home);
 	strcat(filename, configfile);
 
-	/* now that we did all that by way of introduction...remove the file! */
-	unlink(filename);
+	/* now that we did all that by way of introduction...create or remove the file! */
+	if (force_available) {
+		FILE *pFile;
+		char buffer[255];
+		sprintf(buffer, "available");
+		pFile = fopen(filename, "w");
+		if (pFile) {
+			fwrite(buffer,1,strlen(buffer), pFile);
+			fclose(pFile);
+		}
+	}
+	else {
+		unlink(filename);
+	}
 
 	free(filename);
 	filename = NULL;
@@ -2886,12 +2901,15 @@ void KApplication::invokeMailer(const TQString &_to, const TQString &_cc, const 
    TQString error;
    // TODO this should check if cmd has a .desktop file, and use data from it, together
    // with sending more ASN data
-   if (tdeinitExec(cmd, cmdTokens, &error, NULL, startup_id ))
-     if (Tty != kapp->type())
+   if (tdeinitExec(cmd, cmdTokens, &error, NULL, startup_id )) {
+     if (Tty != kapp->type()) {
        TQMessageBox::critical(kapp->mainWidget(), i18n("Could not Launch Mail Client"),
              i18n("Could not launch the mail client:\n\n%1").arg(error), i18n("&OK"));
-     else
+       }
+     else {
        kdWarning() << "Could not launch mail client:\n" << error << endl;
+     }
+   }
 }
 #endif
 
@@ -3597,7 +3615,9 @@ void KApplication::sigpipeHandler(int)
 #ifndef NDEBUG
     char msg[1000];
     sprintf(msg, "*** SIGPIPE *** (ignored, pid = %ld)\n", (long) getpid());
-    write(2, msg, strlen(msg));
+    if (write(2, msg, strlen(msg)) < 0) {
+      // ERROR
+    }
 #endif
 
     // Do nothing.
