@@ -15,5 +15,5 @@
 <gentext key="LastUpdated" text="\U-6700;\U-5F8C;\U-66F4;\U-65B0;\U-65E5;\U-671F;" --BIG5 "最後更新日期"--/>
 <gentext key="Version" text="\U-7248;\U-672C;" --BIG5 "版本"--/>
 <gentext key="home-url" text="http://www.trinitydesktop.org/"/>
-<gentext key="logo-alt" text="The K Desktop Environment Logo"/>
+<gentext key="logo-alt" text="The Trinity Desktop Environment Logo"/>
 </localization>

@@ -13,5 +13,5 @@
 <gentext key="LastUpdated" text="\U-B9C8;\U-C9C0;\U-B9C9;\U-C73C;\U-B85C; \U-ACE0;\U-CE5C; \U-B0A0;" --EUC-KR "마지막으로 고친 날"--/>
 <gentext key="Version" text="\U-D310; \U-BC88;\U-D638;" --EUC-KR "판 번호"--/>
 <gentext key="home-url" text="http://www.trinitydesktop.org/"/>
-<gentext key="logo-alt" text="The K Desktop Environment Logo"/>
+<gentext key="logo-alt" text="The Trinity Desktop Environment Logo"/>
 </localization>
