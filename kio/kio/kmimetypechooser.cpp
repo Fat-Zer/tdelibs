@@ -101,7 +101,7 @@ KMimeTypeChooser::KMimeTypeChooser( const TQString &text,
              this, TQT_SLOT(slotCurrentChanged(TQListViewItem*)) );
 
     TQWhatsThis::add( d->btnEditMimeType, i18n(
-        "Click this button to display the familiar KDE mime type editor.") );
+        "Click this button to display the familiar TDE mime type editor.") );
   }
 }
 

@@ -747,10 +747,10 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
 #ifdef KBUILDSYCOCA_GUI
    silent = args->isSet("silent");
    showprogress = args->isSet("showprogress");
-   TQLabel progress( TQString("<p><br><nobr>    %1    </nobr><br>").arg( i18n("Reloading KDE configuration, please wait...") ), 0, "", Qt::WType_Dialog | Qt::WStyle_DialogBorder  | Qt::WStyle_Customize| Qt::WStyle_Title );
-   TQString capt = i18n("KDE Configuration Manager");
+   TQLabel progress( TQString("<p><br><nobr>    %1    </nobr><br>").arg( i18n("Reloading TDE configuration, please wait...") ), 0, "", Qt::WType_Dialog | Qt::WStyle_DialogBorder  | Qt::WStyle_Customize| Qt::WStyle_Title );
+   TQString capt = i18n("TDE Configuration Manager");
    if (!silent) {
-     if (KMessageBox::No == KMessageBox::questionYesNo(0, i18n("Do you want to reload KDE configuration?"), capt, i18n("Reload"), i18n("Do Not Reload")))
+     if (KMessageBox::No == KMessageBox::questionYesNo(0, i18n("Do you want to reload TDE configuration?"), capt, i18n("Reload"), i18n("Do Not Reload")))
        return 0;
    }
    if (!silent || showprogress) {

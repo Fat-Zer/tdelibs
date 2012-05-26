@@ -181,7 +181,7 @@ bool testKernel()
 	printf("\tCould not get socket name\n");
     }
 
-  printf("\tSize of KDE's internal sockaddr_in6 is %d bytes\n",
+  printf("\tSize of TDE's internal sockaddr_in6 is %d bytes\n",
 	 sizeof(kde_sockaddr_in6));
 
 # ifdef HAVE_SOCKADDR_IN6
@@ -327,10 +327,10 @@ void go()
       rf & KRF_KNOWS_AF_INET6)
     printf(" Your system probably supports full IPv6 implementation.\n"
 	   " This depends on whether your system's getaddrinfo() supports IPv6.\n"
-	   " However, KDE Libraries were compiled to use the support whenever available.\n");
+	   " However, TDE Libraries were compiled to use the support whenever available.\n");
   else if ((rf & (KRF_USING_OWN_GETADDRINFO|KRF_KNOWS_AF_INET6)) == 0)
     printf(" Your system supports partial IPv6 implementation.\n"
-	   " That is, your system has a getaddrinfo() implementation, but KDE Libraries\n"
+	   " That is, your system has a getaddrinfo() implementation, but TDE Libraries\n"
 	   " don't know how to detect an IPv6 socket. That means that only request to"
 	   " any kind of socket will use IPv6, if your getaddrinfo() returns them.");
   else if (rf & KRF_USING_OWN_GETADDRINFO)
@@ -339,10 +339,10 @@ void go()
 	{
 	  printf(" Your system supports partial IPv6 implementation.\n");
 	  if (rf & KRF_CAN_RESOLVE_IPV6)
-	    printf(" The KDE implementation of getaddrinfo() claims to be able to resolve\n"
+	    printf(" The TDE implementation of getaddrinfo() claims to be able to resolve\n"
 		   " IPv6 lookups and the value of AF_INET6 is known.\n");
 	  else
-	    printf(" The KDE implementation of getaddrinfo() cannot resolve IPv6 lookups.\n"
+	    printf(" The TDE implementation of getaddrinfo() cannot resolve IPv6 lookups.\n"
 		   " That means that IPv6 support is limited to two addresses (:: and ::1)\n");
 	}
       else

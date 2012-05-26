@@ -400,7 +400,7 @@ int KWalletD::internalOpen(const TQCString& appid, const TQString& wallet, bool 
 
 	TQCString thisApp;
 	if (appid.isEmpty()) {
-		thisApp = "KDE System";
+		thisApp = "TDE System";
 	} else {
 		thisApp = appid;
 	}
@@ -435,7 +435,7 @@ int KWalletD::internalOpen(const TQCString& appid, const TQString& wallet, bool 
 				}
 				kpd = new KPasswordDialog(KPasswordDialog::Password, false, 0);
 				if (appid.isEmpty()) {
-					kpd->setPrompt(i18n("<qt>KDE has requested to open the wallet '<b>%1</b>'. Please enter the password for this wallet below.").arg(TQStyleSheet::escape(wallet)));
+					kpd->setPrompt(i18n("<qt>TDE has requested to open the wallet '<b>%1</b>'. Please enter the password for this wallet below.").arg(TQStyleSheet::escape(wallet)));
 				} else {
 					kpd->setPrompt(i18n("<qt>The application '<b>%1</b>' has requested to open the wallet '<b>%2</b>'. Please enter the password for this wallet below.").arg(TQStyleSheet::escape(appid)).arg(TQStyleSheet::escape(wallet)));
 				}
@@ -449,16 +449,16 @@ int KWalletD::internalOpen(const TQCString& appid, const TQString& wallet, bool 
 			// Auto create these wallets.
 			kpd = new KPasswordDialog(KPasswordDialog::NewPassword, false, 0);
 			if (appid.isEmpty()) {
-				kpd->setPrompt(i18n("KDE has requested to open the wallet. This is used to store sensitive data in a secure fashion. Please enter a password to use with this wallet or click cancel to deny the application's request."));
+				kpd->setPrompt(i18n("TDE has requested to open the wallet. This is used to store sensitive data in a secure fashion. Please enter a password to use with this wallet or click cancel to deny the application's request."));
 			} else {
-				kpd->setPrompt(i18n("<qt>The application '<b>%1</b>' has requested to open the KDE wallet. This is used to store sensitive data in a secure fashion. Please enter a password to use with this wallet or click cancel to deny the application's request.").arg(TQStyleSheet::escape(appid)));
+				kpd->setPrompt(i18n("<qt>The application '<b>%1</b>' has requested to open the TDE wallet. This is used to store sensitive data in a secure fashion. Please enter a password to use with this wallet or click cancel to deny the application's request.").arg(TQStyleSheet::escape(appid)));
 			}
 			brandNew = true;
 			kpd->setButtonOK(KGuiItem(i18n("&Open"),"fileopen"));
 		} else {
 			kpd = new KPasswordDialog(KPasswordDialog::NewPassword, false, 0);
 			if (appid.length() == 0) {
-				kpd->setPrompt(i18n("<qt>KDE has requested to create a new wallet named '<b>%1</b>'. Please choose a password for this wallet, or cancel to deny the application's request.").arg(TQStyleSheet::escape(wallet)));
+				kpd->setPrompt(i18n("<qt>TDE has requested to create a new wallet named '<b>%1</b>'. Please choose a password for this wallet, or cancel to deny the application's request.").arg(TQStyleSheet::escape(wallet)));
 			} else {
 				kpd->setPrompt(i18n("<qt>The application '<b>%1</b>' has requested to create a new wallet named '<b>%2</b>'. Please choose a password for this wallet, or cancel to deny the application's request.").arg(TQStyleSheet::escape(appid)).arg(TQStyleSheet::escape(wallet)));
 			}
@@ -467,7 +467,7 @@ int KWalletD::internalOpen(const TQCString& appid, const TQString& wallet, bool 
 		}
 
 		if (kpd) {
-			kpd->setCaption(i18n("KDE Wallet Service"));
+			kpd->setCaption(i18n("TDE Wallet Service"));
 			kpd->setAllowEmptyPasswords(true);
 		}
 
@@ -545,7 +545,7 @@ bool KWalletD::isAuthorizedApp(const TQCString& appid, const TQString& wallet, W
 
 	TQCString thisApp;
 	if (appid.isEmpty()) {
-		thisApp = "KDE System";
+		thisApp = "TDE System";
 	} else {
 		thisApp = appid;
 	}
@@ -553,7 +553,7 @@ bool KWalletD::isAuthorizedApp(const TQCString& appid, const TQString& wallet, W
 	if (!implicitAllow(wallet, thisApp)) {
 		KBetterThanKDialogBase *dialog = new KBetterThanKDialogBase;
 		if (appid.isEmpty()) {
-			dialog->setLabel(i18n("<qt>KDE has requested access to the open wallet '<b>%1</b>'.").arg(TQStyleSheet::escape(wallet)));
+			dialog->setLabel(i18n("<qt>TDE has requested access to the open wallet '<b>%1</b>'.").arg(TQStyleSheet::escape(wallet)));
 		} else {
 			dialog->setLabel(i18n("<qt>The application '<b>%1</b>' has requested access to the open wallet '<b>%2</b>'.").arg(TQStyleSheet::escape(TQString(appid))).arg(TQStyleSheet::escape(wallet)));
 		}
@@ -642,7 +642,7 @@ void KWalletD::doTransactionChangePassword(const TQCString& appid, const TQStrin
 	if (!it.current()) {
 		handle = doTransactionOpen(appid, wallet, wId,false);
 		if (-1 == handle) {
-			KMessageBox::sorryWId(wId, i18n("Unable to open wallet. The wallet must be opened in order to change the password."), i18n("KDE Wallet Service"));
+			KMessageBox::sorryWId(wId, i18n("Unable to open wallet. The wallet must be opened in order to change the password."), i18n("TDE Wallet Service"));
 			return;
 		}
 
@@ -658,7 +658,7 @@ void KWalletD::doTransactionChangePassword(const TQCString& appid, const TQStrin
 	KPasswordDialog *kpd;
 	kpd = new KPasswordDialog(KPasswordDialog::NewPassword, false, 0);
 	kpd->setPrompt(i18n("<qt>Please choose a new password for the wallet '<b>%1</b>'.").arg(TQStyleSheet::escape(wallet)));
-	kpd->setCaption(i18n("KDE Wallet Service"));
+	kpd->setCaption(i18n("TDE Wallet Service"));
 	kpd->setAllowEmptyPasswords(true);
 	setupDialog( kpd, wId, appid, false );
 	if (kpd->exec() == KDialog::Accepted) {
@@ -669,12 +669,12 @@ void KWalletD::doTransactionChangePassword(const TQCString& appid, const TQStrin
 			pa.duplicate(p, strlen(p));
 			int rc = w->close(pa);
 			if (rc < 0) {
-				KMessageBox::sorryWId(wId, i18n("Error re-encrypting the wallet. Password was not changed."), i18n("KDE Wallet Service"));
+				KMessageBox::sorryWId(wId, i18n("Error re-encrypting the wallet. Password was not changed."), i18n("TDE Wallet Service"));
 				reclose = true;
 			} else {
 				rc = w->open(pa);
 				if (rc < 0) {
-					KMessageBox::sorryWId(wId, i18n("Error reopening the wallet. Data may be lost."), i18n("KDE Wallet Service"));
+					KMessageBox::sorryWId(wId, i18n("Error reopening the wallet. Data may be lost."), i18n("TDE Wallet Service"));
 					reclose = true;
 				}
 			}
@@ -1234,7 +1234,7 @@ KWallet::Backend *KWalletD::getWallet(const TQCString& appid, int handle) {
 void KWalletD::notifyFailures() {
 	if (!_showingFailureNotify) {
 		_showingFailureNotify = true;
-		KMessageBox::information(0, i18n("There have been repeated failed attempts to gain access to a wallet. An application may be misbehaving."), i18n("KDE Wallet Service"));
+		KMessageBox::information(0, i18n("There have been repeated failed attempts to gain access to a wallet. An application may be misbehaving."), i18n("TDE Wallet Service"));
 		_showingFailureNotify = false;
 	}
 }

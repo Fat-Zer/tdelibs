@@ -55,7 +55,7 @@ int main(int argc, char **argv)
 {
      if (argc < 5)
      {
-        fprintf(stderr, "Usage: kioslave <slave-lib> <protocol> <klauncher-socket> <app-socket>\n\nThis program is part of KDE.\n");
+        fprintf(stderr, "Usage: kioslave <slave-lib> <protocol> <klauncher-socket> <app-socket>\n\nThis program is part of TDE.\n");
         exit(1);
      }
      TQCString libpath = argv[1];     

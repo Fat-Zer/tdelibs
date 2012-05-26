@@ -180,7 +180,7 @@ _pkcsFrame = new TQFrame(_frame);
 
 grid = new TQGridLayout(_pkcsFrame, 13, 6, KDialog::marginHint(),
 		KDialog::spacingHint() );
-grid->addMultiCellWidget(new TQLabel(i18n("KDE Secure Certificate Import"), _pkcsFrame), 0, 0, 0, 5);
+grid->addMultiCellWidget(new TQLabel(i18n("TDE Secure Certificate Import"), _pkcsFrame), 0, 0, 0, 5);
 grid->addWidget(new TQLabel(i18n("Chain:"), _pkcsFrame), 1, 0);
 _p12_chain = new KComboBox(_pkcsFrame);
 grid->addMultiCellWidget(_p12_chain, 1, 1, 1, 4);
@@ -271,7 +271,7 @@ _x509Frame = new TQFrame(_frame);
 
 grid = new TQGridLayout(_x509Frame, 12, 6, KDialog::marginHint(),
 		KDialog::spacingHint() );
-grid->addMultiCellWidget(new TQLabel(i18n("KDE Secure Certificate Import"), _x509Frame), 0, 0, 0, 5);
+grid->addMultiCellWidget(new TQLabel(i18n("TDE Secure Certificate Import"), _x509Frame), 0, 0, 0, 5);
 
 grid->addWidget(new TQLabel(i18n("Subject:"), _x509Frame), 1, 0);
 grid->addWidget(new TQLabel(i18n("Issued by:"), _x509Frame), 1, 3);
@@ -356,7 +356,7 @@ _x509Frame->hide();
 _blankFrame = new TQFrame(_frame);
 grid = new TQGridLayout(_blankFrame, 1, 1, KDialog::marginHint(),
 		KDialog::spacingHint() );
-grid->addMultiCellWidget(new TQLabel(i18n("KDE Secure Certificate Import"), _blankFrame), 0, 0, 0, 0);
+grid->addMultiCellWidget(new TQLabel(i18n("TDE Secure Certificate Import"), _blankFrame), 0, 0, 0, 0);
 _blankFrame->show();
 
 
@@ -452,7 +452,7 @@ if (_p12) {
 
 bool KCertPart::openFile() {
 #ifndef HAVE_SSL
-	KMessageBox::sorry(_frame, i18n("You do not seem to have compiled KDE with SSL support."), i18n("Certificate Import"));
+	KMessageBox::sorry(_frame, i18n("You do not seem to have compiled TDE with SSL support."), i18n("Certificate Import"));
 	return false;
 #else
 

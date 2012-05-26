@@ -45,9 +45,9 @@ KSSLKeyGen::KSSLKeyGen(TQWidget *parent, const char *name, bool modal)
 
 #ifdef KSSL_HAVE_SSL
 	page1 = new KGWizardPage1(this, "Wizard Page 1");
-	addPage(page1, i18n("KDE Certificate Request"));
+	addPage(page1, i18n("TDE Certificate Request"));
 	page2 = new KGWizardPage2(this, "Wizard Page 2");
-	addPage(page2, i18n("KDE Certificate Request - Password"));
+	addPage(page2, i18n("TDE Certificate Request - Password"));
 	setHelpEnabled(page1, false);
 	setHelpEnabled(page2, false);
 	setFinishEnabled(page2, false);
@@ -90,7 +90,7 @@ void KSSLKeyGen::slotGenerate() {
 		bits = 512;
 		break;
 	default:
-		KMessageBox::sorry(NULL, i18n("Unsupported key size."), i18n("KDE SSL Information"));
+		KMessageBox::sorry(NULL, i18n("Unsupported key size."), i18n("TDE SSL Information"));
 		return;
 	}
 
