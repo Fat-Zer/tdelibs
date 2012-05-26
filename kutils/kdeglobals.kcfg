@@ -28,7 +28,7 @@
   <entry key="windowForeground" type="String" />
   <entry key="UseSystemBell" type="Bool" >
    <label>Use the PC speaker</label>
-   <whatsthis>If the ordinary PC speaker should be used instead of KDE's own notifications system.</whatsthis>
+   <whatsthis>If the ordinary PC speaker should be used instead of TDE's own notifications system.</whatsthis>
    <default>false</default>
   </entry>
   <entry key="TerminalApplication" type="String" >
@@ -506,7 +506,7 @@
  <group name="Socks" >
   <entry key="SOCKS_enable" type="Bool" >
     <label>Enable SOCKS support</label>
-    <whatsthis>Whether SOCKS version 4 and 5 should be enabled in KDE's sub systems</whatsthis>
+    <whatsthis>Whether SOCKS version 4 and 5 should be enabled in TDE's sub systems</whatsthis>
     <default>false</default>
   </entry>
   <entry key="SOCKS_lib" type="Path" >
