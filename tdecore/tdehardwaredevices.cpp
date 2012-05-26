@@ -1876,7 +1876,7 @@ void TDEHardwareDevices::processHotPluggedHardware() {
 					break;
 				}
 			}
-	
+
 			if (device) {
 				m_deviceList.append(device);
 				updateParentDeviceInformation(device);	// Update parent/child tables for this device
@@ -2405,6 +2405,9 @@ TDEGenericDeviceType::TDEGenericDeviceType readGenericDeviceTypeFromString(TQStr
 	}
 	else if (query == "HID") {
 		ret = TDEGenericDeviceType::HID;
+	}
+	else if (query == "Modem") {
+		ret = TDEGenericDeviceType::Modem;
 	}
 	else if (query == "Monitor") {
 		ret = TDEGenericDeviceType::Monitor;
@@ -3154,6 +3157,8 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 				}
 			}
 			// Post PCI 2.0
+			TQString devicepcisubclass = devicepciclass;
+			devicepcisubclass = devicepcisubclass.remove(0,2);
 			if (devicepciclass.startsWith("01")) {
 				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::StorageController);
 			}
@@ -3176,6 +3181,11 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			}
 			if (devicepciclass.startsWith("06")) {
 				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Bridge);
+			}
+			if (devicepciclass.startsWith("07")) {
+				if (devicepcisubclass.startsWith("03")) {
+					if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Modem);
+				}
 			}
 			if (devicepciclass.startsWith("0a")) {
 				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Dock);
@@ -4885,6 +4895,9 @@ TQString TDEHardwareDevices::getFriendlyDeviceTypeStringFromType(TDEGenericDevic
 	else if (query == TDEGenericDeviceType::HID) {
 		ret = i18n("HID");
 	}
+	else if (query == TDEGenericDeviceType::Modem) {
+		ret = i18n("Modem");
+	}
 	else if (query == TDEGenericDeviceType::Monitor) {
 		ret = i18n("Monitor and Display");
 	}
@@ -5033,6 +5046,9 @@ TQPixmap TDEHardwareDevices::getDeviceTypeIconFromType(TDEGenericDeviceType::TDE
 	}
 	else if (query == TDEGenericDeviceType::HID) {
 		ret = DesktopIcon("kcmdevices", size);	// FIXME
+	}
+	else if (query == TDEGenericDeviceType::Modem) {
+		ret = DesktopIcon("kcmpci", size);
 	}
 	else if (query == TDEGenericDeviceType::Monitor) {
 		ret = DesktopIcon("background", size);

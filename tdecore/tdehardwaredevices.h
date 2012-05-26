@@ -57,6 +57,7 @@ enum TDEGenericDeviceType {
 	Mouse,
 	Keyboard,
 	HID,
+	Modem,
 	Monitor,
 	Network,
 	Printer,

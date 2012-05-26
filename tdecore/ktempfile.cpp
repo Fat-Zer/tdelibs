@@ -117,8 +117,12 @@ KTempFile::create(const TQString &filePrefix, const TQString &fileExtension,
    // Success!
    bOpen = true;
 
-   // Set uid/gid (necessary for SUID programs)
-   fchown(mFd, getuid(), getgid());
+   uid_t uid  = getuid();
+   uid_t euid = geteuid();
+   if (uid != euid) {
+       // Set uid/gid (necessary for SUID programs)
+       fchown(mFd, getuid(), getgid());
+   }
 
    // Set close on exec
    fcntl(mFd, F_SETFD, FD_CLOEXEC);
