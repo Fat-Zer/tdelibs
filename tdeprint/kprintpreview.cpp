@@ -300,11 +300,11 @@ bool KPrintPreview::preview(const TQString& file, bool previewOnly, WId parentId
 			// could be found to view PS
 			TQString msg;
 			if ( isPS )
-				msg = i18n("Preview failed: neither the internal KDE PostScript "
+				msg = i18n("Preview failed: neither the internal TDE PostScript "
 			               "viewer (KGhostView) nor any other external PostScript "
 			               "viewer could be found.");
 			else
-				msg = i18n( "Preview failed: KDE could not find any application "
+				msg = i18n( "Preview failed: TDE could not find any application "
 						    "to preview files of type %1." ).arg( mime->name() );
 
 			return continuePrint(msg, parentW, previewOnly);

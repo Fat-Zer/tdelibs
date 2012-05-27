@@ -96,7 +96,7 @@ KSSLInfoDlg::KSSLInfoDlg(bool secureConnection, TQWidget *parent, const char *na
             }
         } else {
             d->pixmap->setPixmap(BarIcon("decrypted"));
-            d->info->setText(i18n("SSL support is not available in this build of KDE."));
+            d->info->setText(i18n("SSL support is not available in this build of TDE."));
         }
         d->m_layout->addRowSpacing( 0, 50 ); // give minimum height to look better
 
@@ -117,7 +117,7 @@ KSSLInfoDlg::KSSLInfoDlg(bool secureConnection, TQWidget *parent, const char *na
 
         button->setFocus();
 
-        setCaption(i18n("KDE SSL Information"));
+        setCaption(i18n("TDE SSL Information"));
         d->inQuestion = false;
     }
 

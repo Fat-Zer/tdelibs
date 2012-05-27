@@ -1011,7 +1011,7 @@ void KateSaveConfigTab::reload()
 {
   // encoding
   m_encoding->clear ();
-  m_encoding->insertItem (i18n("KDE Default"));
+  m_encoding->insertItem (i18n("TDE Default"));
   m_encoding->setCurrentItem(0);
   TQStringList encodings (KGlobal::charsets()->descriptiveEncodingNames());
   int insert = 1;

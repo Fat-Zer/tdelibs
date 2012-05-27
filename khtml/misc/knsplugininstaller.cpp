@@ -345,7 +345,7 @@ KNSPluginWizard::KNSPluginWizard(TQWidget *parent, const char *name, KMimeType::
 : KWizard(parent, name, true)
 , m_installEngine(mime)
 {
-    setCaption(i18n("KDE plugin wizard"));
+    setCaption(i18n("TDE plugin wizard"));
     setModal(true);
 
     // read the plugin installer configuration

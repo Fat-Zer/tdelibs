@@ -165,7 +165,7 @@ KLibFactory* KLibrary::factory()
 
     if( !m_factory )
     {
-        KLibLoader::self()->d->errorMessage = i18n( "The library %1 does not offer a KDE compatible factory." ).arg( name() );
+        KLibLoader::self()->d->errorMessage = i18n( "The library %1 does not offer a TDE compatible factory." ).arg( name() );
         kdWarning(150) << KLibLoader::self()->d->errorMessage << endl;
         return 0;
     }

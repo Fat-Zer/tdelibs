@@ -587,11 +587,11 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
   TQString sUpdate = i18n( "Update your software to the latest version. "
     "Your distribution should provide tools to update your software." );
   TQString sBugreport = i18n( "When all else fails, please consider helping the "
-    "KDE team or the third party maintainer of this software by submitting a "
+    "TDE team or the third party maintainer of this software by submitting a "
     "high quality bug report. If the software is provided by a third party, "
     "please contact them directly. Otherwise, first look to see if "
     "the same bug has been submitted by someone else by searching at the "
-    "<a href=\"http://bugs.kde.org/\">KDE bug reporting website</a>. If not, take "
+    "<a href=\"http://bugs.pearsoncomputing.net//\">TDE bug reporting website</a>. If not, take "
     "note of the details given above, and include them in your bug report, along "
     "with as many other details as you think might help." );
   TQString cNetwork = i18n( "There may have been a problem with your network "
@@ -638,7 +638,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
         "to the <strong>%1</strong> protocol could not be started. This is "
         "usually due to technical reasons." ).arg( protocol );
       causes << i18n( "The program which provides compatibility with this "
-        "protocol may not have been updated with your last update of KDE. "
+        "protocol may not have been updated with your last update of TDE. "
         "This can cause the program to be incompatible with the current version "
         "and thus not start." ) << cBug;
       solutions << sUpdate << sSysadmin;
@@ -666,12 +666,12 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
     case  KIO::ERR_UNSUPPORTED_PROTOCOL:
       errorName = i18n( "Unsupported Protocol %1" ).arg( protocol );
       description = i18n( "The protocol <strong>%1</strong> is not supported "
-        "by the KDE programs currently installed on this computer." )
+        "by the TDE programs currently installed on this computer." )
         .arg( protocol );
       causes << i18n( "The requested protocol may not be supported." )
         << i18n( "The versions of the %1 protocol supported by this computer and "
         "the server may be incompatible." ).arg( protocol );
-      solutions << i18n( "You may perform a search on the Internet for a KDE "
+      solutions << i18n( "You may perform a search on the Internet for a TDE "
         "program (called a kioslave or ioslave) which supports this protocol. "
         "Places to search include <a href=\"http://kde-apps.org/\">"
         "http://kde-apps.org/</a> and <a href=\"http://freshmeat.net/\">"
@@ -685,7 +685,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       description = i18n( "The <strong>U</strong>niform <strong>R</strong>esource "
         "<strong>L</strong>ocator (URL) that you entered did not refer to a "
         "specific resource." );
-      causes << i18n( "KDE is able to communicate through a protocol within a "
+      causes << i18n( "TDE is able to communicate through a protocol within a "
         "protocol; the protocol specified is only for use in such situations, "
         "however this is not one of these situations. This is a rare event, and "
         "is likely to indicate a programming error." );
@@ -694,12 +694,12 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
 
     case  KIO::ERR_UNSUPPORTED_ACTION:
       errorName = i18n( "Unsupported Action: %1" ).arg( errorText );
-      description = i18n( "The requested action is not supported by the KDE "
+      description = i18n( "The requested action is not supported by the TDE "
         "program which is implementing the <strong>%1</strong> protocol." )
         .arg( protocol );
-      causes << i18n( "This error is very much dependent on the KDE program. The "
+      causes << i18n( "This error is very much dependent on the TDE program. The "
         "additional information should give you more information than is available "
-        "to the KDE input/output architecture." );
+        "to the TDE input/output architecture." );
       solutions << i18n( "Attempt to find another way to accomplish the same "
         "outcome." );
       break;
@@ -793,7 +793,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       errorName = i18n( "Folder Listing Unavailable" );
       techName = i18n( "Protocol %1 is not a Filesystem" ).arg( protocol );
       description = i18n( "This means that a request was made which requires "
-        "determining the contents of the folder, and the KDE program supporting "
+        "determining the contents of the folder, and the TDE program supporting "
         "this protocol is unable to do so." );
       causes << cBug;
       solutions << sUpdate << sBugreport;
@@ -802,7 +802,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
     case  KIO::ERR_CYCLIC_LINK:
       errorName = i18n( "Cyclic Link Detected" );
       description = i18n( "UNIX environments are commonly able to link a file or "
-        "folder to a separate name and/or location. KDE detected a link or "
+        "folder to a separate name and/or location. TDE detected a link or "
         "series of links that results in an infinite loop - i.e. the file was "
         "(perhaps in a roundabout way) linked to itself." );
       solutions << i18n( "Delete one part of the loop in order that it does not "
@@ -824,7 +824,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       errorName = i18n( "Cyclic Link Detected During Copy" );
       description = i18n( "UNIX environments are commonly able to link a file or "
         "folder to a separate name and/or location. During the requested copy "
-        "operation, KDE detected a link or series of links that results in an "
+        "operation, TDE detected a link or series of links that results in an "
         "infinite loop - i.e. the file was (perhaps in a roundabout way) linked "
         "to itself." );
       solutions << i18n( "Delete one part of the loop in order that it does not "
@@ -873,7 +873,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
         "a valid mechanism of accessing the specific resource, "
         "<strong>%1%2</strong>." )
         .arg( !host.isNull() ? host + '/' : TQString::null ).arg( dir );
-      causes << i18n( "KDE is able to communicate through a protocol within a "
+      causes << i18n( "TDE is able to communicate through a protocol within a "
         "protocol. This request specified a protocol be used as such, however "
         "this protocol is not capable of such an action. This is a rare event, "
         "and is likely to indicate a programming error." );
@@ -1099,10 +1099,10 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
          .arg( errorText );
       description = i18n( "Although you may have supplied the correct "
         "authentication details, the authentication failed because the "
-        "method that the server is using is not supported by the KDE "
+        "method that the server is using is not supported by the TDE "
         "program implementing the protocol %1." ).arg( protocol );
       solutions << i18n( "Please file a bug at <a href=\"http://bugs.kde.org/\">"
-        "http://bugs.kde.org/</a> to inform the KDE team of the unsupported "
+        "http://bugs.pearsoncomputing.net/</a> to inform the TDE team of the unsupported "
         "authentication method." ) << sSysadmin;
       break;
 
@@ -1135,7 +1135,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
         "<li>Timeout for establishing a connection: %1 seconds</li>"
         "<li>Timeout for receiving a response: %2 seconds</li>"
         "<li>Timeout for accessing proxy servers: %3 seconds</li></ul>"
-        "Please note that you can alter these timeout settings in the KDE "
+        "Please note that you can alter these timeout settings in the TDE "
         "Control Center, by selecting Network -> Preferences." )
         .arg( KProtocolManager::connectTimeout() )
         .arg( KProtocolManager::responseTimeout() )
