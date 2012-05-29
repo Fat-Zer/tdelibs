@@ -105,6 +105,5 @@ Type=int
 [PropertyDef::X-KDE-RootOnly]
 Type=bool
 
-### KDE4 remove - this property is deprecated
 [PropertyDef::X-KDE-IsHiddenByDefault]
 Type=bool
