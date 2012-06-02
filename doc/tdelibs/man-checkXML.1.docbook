@@ -16,7 +16,7 @@
 
 <refnamediv>
 <refname><command>checkXML</command></refname>
-<refpurpose>An &XML; lint tool for &kde; DocBook &XML; documents.</refpurpose>
+<refpurpose>An &XML; lint tool for &tde; DocBook &XML; documents.</refpurpose>
 </refnamediv>
 
 <refsynopsisdiv>
@@ -28,11 +28,10 @@
 <refsect1>
 <title>Description</title>
 
-<para><command>checkXML</command> is a tool to check for syntax errors in &kde;
+<para><command>checkXML</command> is a tool to check for syntax errors in &tde;
 DocBook &XML; files.  It can also be used for other DocBook based
 &XML; files, but you should use the less specific xmllint(1) tool if
-you are not writing or otherwise working on &kde;
-documentation.</para>
+you are not writing or otherwise working on &tde; documentation.</para>
 </refsect1>
 
 <refsect1>

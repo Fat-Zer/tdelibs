@@ -93,7 +93,7 @@ be generated.</para>
 <varlistentry>
 <term><option>--session</option>
 <replaceable>session</replaceable></term>
-<listitem><para>Send to the given &kde; session.  This option can only
+<listitem><para>Send to the given &tde; session.  This option can only
 be used in combination with the <option>--user</option> option.</para>
 </listitem>
 </varlistentry>
@@ -108,7 +108,7 @@ options.</para>
 <varlistentry>
 <term><option>--list-sessions</option></term>
 <listitem>
-<para>List all active &kde; sessions for a user or all users.</para>
+<para>List all active &tde; sessions for a user or all users.</para>
 </listitem>
 </varlistentry>
 <varlistentry>
@@ -150,7 +150,7 @@ options.</para>
 
 <para>dcopclient(1) dcopref(1) dcopfind(1) kdcop(1)</para>
 
-<para>Inside &kde;, you can enter <userinput>help:/kdcop</userinput>
+<para>Inside &tde;, you can enter <userinput>help:/kdcop</userinput>
 in &konqueror; to see the User Manual for
 <application>kdcop</application> graphical dcop tool.</para>
 

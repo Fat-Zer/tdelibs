@@ -55,8 +55,8 @@
 <title>Description</title>
 
 <para>
-<command>kbuildsyscoca</command>, as part of the &kde; command line
-tools ensures the proper operation of &kde; by reading in all the
+<command>kbuildsyscoca</command>, as part of the &tde; command line
+tools ensures the proper operation of &tde; by reading in all the
 <literal role="extension">.desktop</literal>, <literal
 role="extension">.directory</literal>, <literal
 role="extension">.kimgio</literal> and <literal
@@ -65,12 +65,12 @@ database.
 </para>
 
 <para>
-&kde; itself accesses this databse during operation to provide
+&tde; itself accesses this databse during operation to provide
 configurational information a program needs to run.
 </para>
 
 <para>
-This tool is part of ksyscoca, which stands for &kde; System
+This tool is part of ksyscoca, which stands for &tde; System
 Configuration Cache
 </para>
 

@@ -25,7 +25,7 @@
   <refsynopsisdiv>
     <cmdsynopsis>
       <command>artsmessage</command>
-      <group><option>&kde; generic options</option></group>
+      <group><option>&tde; generic options</option></group>
       <group><option>&Qt; generic options</option></group>
       <group choice="opt">
       <option>-e, --error</option><option>-w,
@@ -42,7 +42,7 @@
   <refsect1>
     <title>Options</title>
 
-    <para><command>artsmessage</command> accepts the standard &Qt; and &kde;
+    <para><command>artsmessage</command> accepts the standard &Qt; and &tde;
     command-line options.</para>
 
 

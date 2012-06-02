@@ -20,7 +20,7 @@
 <date>2003-02-24</date>
 <releaseinfo>1.00.00</releaseinfo>
 <abstract>
-<para>&kspell; is the spelling checker used by &kde; applications such
+<para>&kspell; is the spelling checker used by &tde; applications such
 as &kate;, &kmail;, and &kword;. It is a &GUI; frontend to <application>International ISpell</application> and <application>ASpell</application>.</para>
 
 </abstract>
