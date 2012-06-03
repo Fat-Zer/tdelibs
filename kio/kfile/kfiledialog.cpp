@@ -2011,7 +2011,7 @@ void KFileDialog::updateAutoSelectExtension (void)
                     "This extension is based on the file type that you "
                     "have chosen to save in.<br>"
                     "<br>"
-                    "If you do not want KDE to supply an extension for the "
+                    "If you do not want TDE to supply an extension for the "
                     "filename, you can either turn this option off or you "
                     "can suppress it by adding a period (.) to the end of "
                     "the filename (the period will be automatically "
@@ -2275,7 +2275,7 @@ void KFileDialog::toggleBookmarks(bool show)
                                 "Click on this button to open the bookmark menu where you may add, "
                                 "edit or select a bookmark.<p>"
                                 "These bookmarks are specific to the file dialog, but otherwise operate "
-                                "like bookmarks elsewhere in KDE.</qt>"));
+                                "like bookmarks elsewhere in TDE.</qt>"));
     }
     else if (d->bookmarkHandler)
     {

@@ -157,7 +157,7 @@ public:
 	                "Other users will not see this system when browsing"
 	                " the network via zeroconf, but normal access will still work.</p>");
           case DNSSD::ServiceBrowser::Unsupported:
-            return i18n("<p>Zeroconf support is not available in this version of KDE."
+            return i18n("<p>Zeroconf support is not available in this version of TDE."
                         " See the Service Discovery Handbook for more information.<br/>"
                         "Other users will not see this system when browsing"
                         " the network via zeroconf, but normal access will still work.</p>");
