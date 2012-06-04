@@ -1,8 +1,8 @@
 /* -*- C++ -*-
    This file declares the basic personal information management class
-   used in the KDE addressbook.
+   used in the TDE addressbook.
 
-   the KDE addressbook
+   the TDE addressbook
 
    $ Author: Mirko Boehm $
    $ Copyright: (C) 1996-2001, Mirko Boehm $
@@ -102,7 +102,7 @@ class CategoriesMap : public TQMap<int, TQString>
 #define KAB_STATE   "final"
 
 // -----------------------------------------------------------------------------
-/** The class AddressBook implements the base class for the KDE addressbook. 
+/** The class AddressBook implements the base class for the TDE addressbook. 
  *  \par Overview
  *  It
  *  is used by the KabAPI to make the interface to kab files available to 
@@ -119,7 +119,7 @@ class CategoriesMap : public TQMap<int, TQString>
  *  File changes are watched by the program, so every instance will automatically
  *  update its database on a change of the opened file. 
  *
- *  \par The KDE addressbook database system
+ *  \par The TDE addressbook database system
  *  kab manages entries in address databases based on a key system where the 
  *  program assigns keys to added entries. These keys are not reused in one file, 
  *  so API users can rely on a key to be unique and identifying until the entry 

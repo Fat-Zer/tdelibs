@@ -384,7 +384,7 @@ int KPrinterImpl::doFilterFiles(KPrinter *printer, TQStringList& files, const TQ
 			if (KMessageBox::warningContinueCancel(0,
 				"<p>" + i18n("The MIME type %1 is not supported as input of the filter chain "
 				     "(this may happen with non-CUPS spoolers when performing page selection "
-				     "on a non-PostScript file). Do you want KDE to convert the file to a supported "
+				     "on a non-PostScript file). Do you want TDE to convert the file to a supported "
 				     "format?</p>").arg(mime),
 				TQString::null, i18n("Convert")) == KMessageBox::Continue)
 			{
@@ -497,14 +497,14 @@ int KPrinterImpl::autoConvertFiles(KPrinter *printer, TQStringList& files, bool 
 					       i18n("<qt>The file format <em> %1 </em> is not directly supported by the current print system. You "
 						    "now have 3 options: "
 						    "<ul> "
-						    "<li> KDE can attempt to convert this file automatically to a supported format. "
+						    "<li> TDE can attempt to convert this file automatically to a supported format. "
 						    "(Select <em>Convert</em>) </li>"
 						    "<li> You can try to send the file to the printer without any conversion. "
 						    "(Select <em>Keep</em>) </li>"
 						    "<li> You can cancel the printjob. "
 						    "(Select <em>Cancel</em>) </li>"
 						    "</ul> "
-						    "Do you want KDE to attempt and convert this file to %2?</qt>").arg(mime).arg(primaryMimeType),
+						    "Do you want TDE to attempt and convert this file to %2?</qt>").arg(mime).arg(primaryMimeType),
 					       TQString::null,
 					       i18n("Convert"),
 					       i18n("Keep"),

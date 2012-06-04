@@ -6,11 +6,11 @@ Cornelius Schumacher, February 2002.
 
 
 
-The KDE addressbook
+The TDE addressbook
 ===================
 
 This directory contains the sources for the kab API provided by "libkab.so".
-kab is the KDE addressbook, users usually know it by one of the applications
+kab is the TDE addressbook, users usually know it by one of the applications
 using the kab API, kab itselfes. But kab intends to do more, it tries to be
 a central database to store personal information for as much KDE
 applications as possible.

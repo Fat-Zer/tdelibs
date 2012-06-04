@@ -1,8 +1,8 @@
 /* -*- C++ -*-
    This file implements the basic personal information management class
-   used in the KDE addressbook.
+   used in the TDE addressbook.
 
-   the KDE addressbook
+   the TDE addressbook
 
    $ Author: Mirko Boehm $
    $ Copyright: (C) 1996-2001, Mirko Boehm $
@@ -439,7 +439,7 @@ AddressBook::AddressBook(TQWidget* parent, const char* name, bool loadit)
 		  "could not be created. kab will probably not "
 		  "work correctly without it.\n"
 		  "Make sure you have not removed write permission "
-		  "from your local KDE directory (usually ~/.kde).").arg(filename));
+		  "from your local TDE directory (usually ~/.trinity).").arg(filename));
 	  state=PermDenied;
 	}
   }
@@ -463,7 +463,7 @@ AddressBook::AddressBook(TQWidget* parent, const char* name, bool loadit)
 		  "could not be created. kab will probably not "
 		  "work correctly without it.\n"
 		  "Make sure you have not removed write permission "
-		  "from your local KDE directory (usually ~/.kde).").arg(filename));
+		  "from your local TDE directory (usually ~/.trinity).").arg(filename));
 	  state=PermDenied;
 	} else {
 	  KMessageBox::information

@@ -3,7 +3,7 @@
    for using kab's addressbook files within other programs.
    Parse it with kdoc to get the API documentation.
 
-   the KDE addressbook
+   the TDE addressbook
 
    $ Author: Mirko Boehm $
    $ Copyright: (C) 1996-2001, Mirko Boehm $

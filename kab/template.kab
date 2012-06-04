@@ -1,4 +1,4 @@
-# Template file for the KDE addressbook, version 2.
+# Template file for the TDE addressbook, version 2.
 # All new database files kab creates are copies of this file.
 [config]
   user_headline="(User fields)"

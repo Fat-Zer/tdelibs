@@ -1,6 +1,6 @@
 /* the Configuration Database library, Version II
  
-   the KDE addressbook
+   the TDE addressbook
 
    $ Author: Mirko Boehm $
    $ Copyright: (C) 1996-2001, Mirko Boehm $

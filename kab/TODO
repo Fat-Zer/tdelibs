@@ -1,4 +1,4 @@
-The KDE addressbook
+The TDE addressbook
 ================================================================================
 If you want kab to be extended, please send a mail to me. Also 
 contact me if you want to comment some of the features mentioned 
@@ -6,7 +6,7 @@ below. Send the mail to mirko@kde.org
 Thanks.
 PS: I am still looking for volunteers who try writing the import filters. 
     Most often I do not have the different other addressbook programs myselfes.
-PS1: This TODO list deals with tasks to add to the KDE addressbook
+PS1: This TODO list deals with tasks to add to the TDE addressbook
 library. If you want the application to be extended, read tdeutils/kab/TODO.
 --------------------------------------------------------------------------------
 ° [done] change mail addresses to an unlimited list with selection before

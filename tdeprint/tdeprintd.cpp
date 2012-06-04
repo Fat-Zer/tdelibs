@@ -173,7 +173,7 @@ bool KDEPrintd::checkFiles(TQString& cmd, const TQStringList& files)
 		if (::access(TQFile::encodeName(*it).data(), R_OK) != 0)
 		{
 			if (KMessageBox::warningContinueCancel(0,
-				i18n("Some of the files to print are not readable by the KDE "
+				i18n("Some of the files to print are not readable by the TDE "
 				     "print daemon. This may happen if you are trying to print "
 				     "as a different user to the one currently logged in. To continue "
 				     "printing, you need to provide root's password."),
