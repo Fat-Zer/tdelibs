@@ -28,7 +28,7 @@
 #include <kconfig.h>
 #include <kstaticdeleter.h>
 #include <tqregexp.h>
-
+#include <tqdir.h>
 
 #include <stdio.h>
 #include <unistd.h>
@@ -293,21 +293,21 @@ KConfig *cfg;
          _cryptoLib = ll->globalLibrary(libname.latin1());
    }
 #elif defined(__CYGWIN__)
-   libpaths << "/usr/bin/"             
-   		<< "/usr/local/bin"             
-   		<< "/usr/local/openssl/bin"     
-   		<< "/opt/openssl/bin"           
-   		<< "/opt/trinity/bin"              
-   		<< "";                          
-                                       
-   libnamess << "cygssl-0.9.7.dll"     
-		 << "cygssl.dll"                    
-		 << "libssl.dll"                    
-		 << "";                         
-                                       
-   libnamesc << "cygcrypto.dll"        
-		 << "libcrypto.dll"                 
-		 << "";                         
+   libpaths << "/usr/bin/"
+   		<< "/usr/local/bin"
+   		<< "/usr/local/openssl/bin"
+   		<< "/opt/openssl/bin"
+   		<< "/opt/trinity/bin"
+   		<< "";
+
+   libnamess << "cygssl-0.9.7.dll"
+		 << "cygssl.dll"
+		 << "libssl.dll"
+		 << "";
+
+   libnamesc << "cygcrypto.dll"
+		 << "libcrypto.dll"
+		 << "";
 #else
    libpaths
             #ifdef _AIX
@@ -321,7 +321,7 @@ KConfig *cfg;
 	    << "/opt/openssl/lib" KDELIBSUFF "/"
 	    << "/lib" KDELIBSUFF "/"
             << "";
-    
+
 // FIXME: #define here for the various OS types to optimize
    libnamess
 	     #ifdef hpux
@@ -372,6 +372,18 @@ KConfig *cfg;
 	 tmpStr.replace(TQRegExp("\\(.*\\)"), "");
 	 if (!access(tmpStr.latin1(), R_OK))
             _cryptoLib = ll->globalLibrary(alib.latin1());
+         if (!_cryptoLib) {
+           // Multiarch triplet search
+           TQDir madir (*it);
+           TQStringList multiarchdirs = madir.entryList("*-*-*", TQDir::Dirs);
+           for (TQStringList::Iterator mait = multiarchdirs.begin(); mait != multiarchdirs.end(); ++mait ) {
+             TQString malib = *it + *mait + "/" + *shit;
+             TQString tmpStr(malib.latin1());
+             tmpStr.replace(TQRegExp("\\(.*\\)"), "");
+             if (!access(tmpStr.latin1(), R_OK))
+               _cryptoLib = ll->globalLibrary(malib.latin1());
+           }
+         }
          if (_cryptoLib) break;
       }
       if (_cryptoLib) break;
@@ -530,6 +542,18 @@ KConfig *cfg;
 	 tmpStr.replace(TQRegExp("\\(.*\\)"), "");
 	 if (!access(tmpStr.latin1(), R_OK))
          	_sslLib = ll->globalLibrary(alib.latin1());
+         if (!_sslLib) {
+           // Multiarch triplet search
+           TQDir madir (*it);
+           TQStringList multiarchdirs = madir.entryList("*-*-*", TQDir::Dirs);
+           for (TQStringList::Iterator mait = multiarchdirs.begin(); mait != multiarchdirs.end(); ++mait ) {
+             TQString malib = *it + *mait + "/" + *shit;
+             TQString tmpStr(malib.latin1());
+             tmpStr.replace(TQRegExp("\\(.*\\)"), "");
+             if (!access(tmpStr.latin1(), R_OK))
+               _sslLib = ll->globalLibrary(malib.latin1());
+           }
+         }
          if (_sslLib) break;
       }
       if (_sslLib) break;
