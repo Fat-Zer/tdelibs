@@ -40,12 +40,12 @@
     <Name>Development</Name>
     <Directory>tde-development.directory</Directory>
     <Menu>
-      <Name>X-TDE-KDevelopIDE</Name>
+      <Name>X-TDE-TDevelopIDE</Name>
       <Directory>tde-development-tdevelop.directory</Directory>
       <Include>
         <And>
         <Category>Development</Category>
-        <Category>X-TDE-KDevelopIDE</Category>
+        <Category>X-TDE-TDevelopIDE</Category>
         </And>
       </Include>
     </Menu>
@@ -72,7 +72,7 @@
       <Include>
         <And>
         <Category>Development</Category>
-        <Not><Category>X-TDE-KDevelopIDE</Category></Not>
+        <Not><Category>X-TDE-TDevelopIDE</Category></Not>
         <Not><Category>Translation</Category></Not>
         <Not><Category>WebDevelopment</Category></Not>
         </And>
