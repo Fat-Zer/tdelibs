@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=ServiceType
-X-KDE-ServiceType=KPart
+X-TDE-ServiceType=KPart
 Comment=TDE Component
 Comment[af]=Tde Komponent
 Comment[ar]=عنصر كيدي

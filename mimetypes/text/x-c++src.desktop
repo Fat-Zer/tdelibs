@@ -85,8 +85,8 @@ Icon=source_cpp
 Type=MimeType
 MimeType=text/x-c++src
 Patterns=*.cpp;*.cxx;*.cc;*.C;*.CPP;
-X-KDE-IsAlso=text/plain
+X-TDE-IsAlso=text/plain
 
-[Property::X-KDE-text]
+[Property::X-TDE-text]
 Type=bool
 Value=true

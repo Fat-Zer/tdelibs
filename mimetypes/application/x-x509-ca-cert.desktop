@@ -85,5 +85,5 @@ Comment[zh_CN]=DER，PEM 或 Netscape 编码的 X.509 证书
 Comment[zh_HK]=DER、PEM、或 Netscape 編碼的 X.509 證書
 Comment[zh_TW]=DER、PEM、或 Netscape 編碼的 X.509 認證
 Comment[zu]=DER, PEM, noma Isitifiketi Esifakwe ikhodi se X.509
-X-KDE-AutoEmbed=true
+X-TDE-AutoEmbed=true
 

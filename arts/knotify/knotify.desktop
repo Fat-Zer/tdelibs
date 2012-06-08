@@ -116,4 +116,4 @@ Comment[zu]=Isaziso se-Daemon ye-TDE
 Icon=knotify
 ServiceTypes=KNotify
 X-DCOP-ServiceType=Unique
-X-KDE-StartupNotify=false
+X-TDE-StartupNotify=false

@@ -77,6 +77,6 @@ MimeType=application/vnd.sun.xml.draw
 Type=MimeType
 Icon=image
 Patterns=*.sxd;*.SXD;
-[Property::X-KDE-NativeExtension]
+[Property::X-TDE-NativeExtension]
 Type=TQString
 Value=.sxd

@@ -68,7 +68,7 @@ FormatFactory::FormatFactory()
 
     config.setGroup( "Plugin" );
     TQString type = config.readEntry( "Type" );
-    info->library = config.readEntry( "X-KDE-Library" );
+    info->library = config.readEntry( "X-TDE-Library" );
 
     config.setGroup( "Misc" );
     info->nameLabel = config.readEntry( "Name" );

@@ -82,7 +82,7 @@ public:
   KService::List allServices();
 
   /**
-   * @return all services which have a "X-KDE-Init" line.
+   * @return all services which have a "X-TDE-Init" line.
    */
   KService::List allInitServices();
 

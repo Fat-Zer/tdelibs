@@ -3,7 +3,7 @@ Type=MimeType
 MimeType=application/pdf
 Icon=pdf
 Patterns=*.pdf;*.PDF;
-X-KDE-PatternsAccuracy=90
+X-TDE-PatternsAccuracy=90
 Comment=PDF Document
 Comment[af]=Pdf Dokument
 Comment[ar]=مستند PDF
@@ -86,8 +86,8 @@ Comment[zh_CN]=PDF 文档
 Comment[zh_HK]=PDF 文件
 Comment[zh_TW]=PDF 文件
 Comment[zu]=Uhlu lwamafayela e-PDF
-X-KDE-AutoEmbed=true
-[Property::X-KDE-NativeExtension]
+X-TDE-AutoEmbed=true
+[Property::X-TDE-NativeExtension]
 Type=TQString
 Value=.pdf
 

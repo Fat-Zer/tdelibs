@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=ServiceType
-X-KDE-ServiceType=KScan/KScanDialog
+X-TDE-ServiceType=KScan/KScanDialog
 Name=KScan
 Name[bn]=কে-স্ক্যান
 Name[cy]=KSgan

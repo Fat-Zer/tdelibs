@@ -65,7 +65,7 @@ class TQImage;
  * ServiceTypes=ThumbCreator
  * MimeTypes=application/x-somemimetype
  * CacheThumbnail=true
- * X-KDE-Library=yourthumbcreator
+ * X-TDE-Library=yourthumbcreator
  * \endcode
  *
  * You can supply a comma-separated list of mimetypes to the MimeTypes entry,

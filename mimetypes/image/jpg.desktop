@@ -2,4 +2,4 @@
 Icon=image
 Type=MimeType
 MimeType=image/jpg
-X-KDE-IsAlso=image/jpeg
+X-TDE-IsAlso=image/jpeg

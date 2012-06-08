@@ -78,5 +78,5 @@ Comment[zh_CN]=TDE 钱包文件
 Comment[zh_HK]=TDE  公事包檔案
 Comment[zh_TW]=TDE  公事包檔案
 Patterns=*.kwl
-X-KDE-AutoEmbed=false
+X-TDE-AutoEmbed=false
 

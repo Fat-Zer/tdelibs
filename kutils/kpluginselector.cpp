@@ -254,7 +254,7 @@ TQWidget * KPluginSelectionWidget::insertKCM( TQWidget * parent,
     d->modulelist.append( module );
     TQStringList * parentComponents = new TQStringList(
             moduleinfo.service()->property(
-                "X-KDE-ParentComponents" ).toStringList() );
+                "X-TDE-ParentComponents" ).toStringList() );
     d->moduleParentComponents.insert( module, parentComponents );
     connect( module, TQT_SIGNAL( changed( bool ) ), TQT_SLOT( clientChanged( bool ) ) );
     return module;

@@ -3,7 +3,7 @@ Type=MimeType
 MimeType=application/x-krita
 Icon=krita_kra
 Patterns=*.kra;
-X-KDE-AutoEmbed=false
+X-TDE-AutoEmbed=false
 Comment=Krita Document
 Comment[af]=Krita Dokument
 Comment[ar]=مستند Krita
@@ -86,6 +86,6 @@ Comment[zh_CN]=Krita 文档
 Comment[zh_HK]=Krita 文件
 Comment[zh_TW]=Krita 文件
 Comment[zu]=Uhlu lwamafayela lwer-Krita
-[Property::X-KDE-NativeExtension]
+[Property::X-TDE-NativeExtension]
 Type=TQString
 Value=.kra

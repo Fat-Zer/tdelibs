@@ -84,6 +84,6 @@ Comment[zh_HK]=Kugar 資料檔案
 Comment[zh_TW]=Kugar 資料檔案
 Comment[zu]=Ifayela Ledata ye-Kugar
 Patterns=*.kdf;*.kud;
-[Property::X-KDE-NativeExtension]
+[Property::X-TDE-NativeExtension]
 Type=TQString
 Value=.kdf

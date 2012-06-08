@@ -96,7 +96,7 @@ TQString KCModuleInfo::factoryName() const
 {
   if( d->factoryName.isEmpty() )
   {
-    d->factoryName = _service->property("X-KDE-FactoryName", TQVariant::String).toString();
+    d->factoryName = _service->property("X-TDE-FactoryName", TQVariant::String).toString();
     if ( d->factoryName.isEmpty() )
       d->factoryName = library();
   }
@@ -155,27 +155,27 @@ KCModuleInfo::loadAll()
   _allLoaded = true;
 
   // library and factory
-  setHandle(_service->property("X-KDE-FactoryName", TQVariant::String).toString());
+  setHandle(_service->property("X-TDE-FactoryName", TQVariant::String).toString());
 
   TQVariant tmp;
 
   // read weight
-  tmp = _service->property( "X-KDE-Weight", TQVariant::Int );
+  tmp = _service->property( "X-TDE-Weight", TQVariant::Int );
   setWeight( tmp.isValid() ? tmp.toInt() : 100 );
 
   // does the module need super user privileges?
-  tmp = _service->property( "X-KDE-RootOnly", TQVariant::Bool );
+  tmp = _service->property( "X-TDE-RootOnly", TQVariant::Bool );
   setNeedsRootPrivileges( tmp.isValid() ? tmp.toBool() : false );
 
   // does the module need to be shown to root only?
   // Deprecated ! KDE 4
-  tmp = _service->property( "X-KDE-IsHiddenByDefault", TQVariant::Bool );
+  tmp = _service->property( "X-TDE-IsHiddenByDefault", TQVariant::Bool );
   setIsHiddenByDefault( tmp.isValid() ? tmp.toBool() : false );
 
   // get the documentation path
   setDocPath( _service->property( "DocPath", TQVariant::String ).toString() );
 
-  tmp = _service->property( "X-KDE-Test-Module", TQVariant::Bool );
+  tmp = _service->property( "X-TDE-Test-Module", TQVariant::Bool );
   setNeedsTest( tmp.isValid() ? tmp.asBool() : false );
 }
 

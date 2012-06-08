@@ -78,5 +78,5 @@ Comment[zh_TW]=鎖住的資料夾
 Icon=folder_locked
 Type=MimeType
 MimeType=inode/directory-locked
-X-KDE-isAlso=inode/directory
+X-TDE-isAlso=inode/directory
 Patterns=

@@ -80,6 +80,6 @@ MimeType=application/vnd.sun.xml.writer
 Type=MimeType
 Icon=wordprocessing
 Patterns=*.sxw;*.SXW;
-[Property::X-KDE-NativeExtension]
+[Property::X-TDE-NativeExtension]
 Type=TQString
 Value=.sxw

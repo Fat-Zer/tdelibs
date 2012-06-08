@@ -257,7 +257,7 @@ public:
    * and "System/Screensavers/" is the screensavers base group ("screensavers").
    * This allows moving the groups without breaking those apps.
    *
-   * The base group is defined by the X-KDE-BaseGroup key
+   * The base group is defined by the X-TDE-BaseGroup key
    * in the .directory file.
    * @return the base group name, or null if no base group
    */
@@ -291,7 +291,7 @@ public:
   static Ptr group(const TQString &relPath);
 
   /**
-   * Returns the group of services that have X-KDE-ParentApp equal
+   * Returns the group of services that have X-TDE-ParentApp equal
    * to @p parent (siblings).
    * @param parent the name of the service's parent
    * @return the services group

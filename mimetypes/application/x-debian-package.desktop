@@ -3,7 +3,7 @@ Type=MimeType
 MimeType=application/x-debian-package
 Icon=deb
 # Just an alias for x-deb, remove in KDE4
-X-KDE-IsAlso=application/x-deb
+X-TDE-IsAlso=application/x-deb
 Comment=Debian Package
 Comment[af]=Debian Pakkie
 Comment[ar]=حزمة ديبيان

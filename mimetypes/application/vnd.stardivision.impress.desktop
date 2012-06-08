@@ -80,6 +80,6 @@ Comment[zh_CN]=StarOffice Impress 演示文稿
 Comment[zh_HK]=StarOffice Impress 簡報
 Comment[zh_TW]=StarOffice Impress 簡報
 Comment[zu]=Ukunikezwa kwe-StarOffice Impress
-[Property::X-KDE-NativeExtension]
+[Property::X-TDE-NativeExtension]
 Type=TQString
 Value=.sdd

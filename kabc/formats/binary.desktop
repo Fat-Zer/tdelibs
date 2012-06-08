@@ -86,4 +86,4 @@ Name[zu]=Okuhambisana ngambili
 
 [Plugin]
 Type=binary
-X-KDE-Library=kabcformat_binary
+X-TDE-Library=kabcformat_binary

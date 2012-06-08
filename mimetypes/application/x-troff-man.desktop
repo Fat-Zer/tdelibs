@@ -85,8 +85,8 @@ Icon=man
 Type=MimeType
 MimeType=application/x-troff-man
 Patterns=*.man
-X-KDE-AutoEmbed=true
+X-TDE-AutoEmbed=true
 
-[Property::X-KDE-text]
+[Property::X-TDE-text]
 Type=bool
 Value=true

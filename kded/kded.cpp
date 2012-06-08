@@ -172,7 +172,7 @@ void Kded::initModules()
      for(KService::List::ConstIterator it = kdedModules.begin(); it != kdedModules.end(); ++it)
      {
          KService::Ptr service = *it;
-         bool autoload = service->property("X-KDE-Kded-autoload", TQVariant::Bool).toBool();
+         bool autoload = service->property("X-TDE-Kded-autoload", TQVariant::Bool).toBool();
          config->setGroup(TQString("Module-%1").arg(service->desktopEntryName()));
          autoload = config->readBoolEntry("autoload", autoload);
          for (TQStringList::Iterator module = blacklist.begin(); module != blacklist.end(); ++module)
@@ -186,7 +186,7 @@ void Kded::initModules()
          if( m_newStartup )
          {
             // see ksmserver's README for description of the phases
-            TQVariant phasev = service->property("X-KDE-Kded-phase", TQVariant::Int );
+            TQVariant phasev = service->property("X-TDE-Kded-phase", TQVariant::Int );
             int phase = phasev.isValid() ? phasev.toInt() : 2;
             bool prevent_autoload = false;
             switch( phase )
@@ -211,7 +211,7 @@ void Kded::initModules()
                loadModule(service, false);
          }
          bool dontLoad = false;
-         TQVariant p = service->property("X-KDE-Kded-load-on-demand", TQVariant::Bool);
+         TQVariant p = service->property("X-TDE-Kded-load-on-demand", TQVariant::Bool);
          if (p.isValid() && (p.toBool() == false))
             dontLoad = true;
          if (dontLoad)
@@ -230,10 +230,10 @@ void Kded::loadSecondPhase()
      for(KService::List::ConstIterator it = kdedModules.begin(); it != kdedModules.end(); ++it)
      {
          KService::Ptr service = *it;
-         bool autoload = service->property("X-KDE-Kded-autoload", TQVariant::Bool).toBool();
+         bool autoload = service->property("X-TDE-Kded-autoload", TQVariant::Bool).toBool();
          config->setGroup(TQString("Module-%1").arg(service->desktopEntryName()));
          autoload = config->readBoolEntry("autoload", autoload);
-         TQVariant phasev = service->property("X-KDE-Kded-phase", TQVariant::Int );
+         TQVariant phasev = service->property("X-TDE-Kded-phase", TQVariant::Int );
          int phase = phasev.isValid() ? phasev.toInt() : 2;
          if( phase == 2 && autoload )
             loadModule(service, false);
@@ -266,7 +266,7 @@ KDEDModule *Kded::loadModule(const KService *s, bool onDemand)
 
     if (onDemand)
     {
-      TQVariant p = s->property("X-KDE-Kded-load-on-demand", TQVariant::Bool);
+      TQVariant p = s->property("X-TDE-Kded-load-on-demand", TQVariant::Bool);
       if (p.isValid() && (p.toBool() == false))
       {
          noDemandLoad(s->desktopEntryName());
@@ -277,12 +277,12 @@ KDEDModule *Kded::loadModule(const KService *s, bool onDemand)
 
     KLibLoader *loader = KLibLoader::self();
 
-    TQVariant v = s->property("X-KDE-FactoryName", TQVariant::String);
+    TQVariant v = s->property("X-TDE-FactoryName", TQVariant::String);
     TQString factory = v.isValid() ? v.toString() : TQString::null;
     if (factory.isEmpty())
     {
        // Stay bugward compatible
-       v = s->property("X-KDE-Factory", TQVariant::String);
+       v = s->property("X-TDE-Factory", TQVariant::String);
        factory = v.isValid() ? v.toString() : TQString::null;
     }
     if (factory.isEmpty())

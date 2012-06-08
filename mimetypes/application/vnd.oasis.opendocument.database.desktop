@@ -4,6 +4,6 @@ MimeType=application/vnd.oasis.opendocument.database
 Patterns=*.odb;*.ODB
 Icon=database
 Comment=OASIS OpenDocument Database
-[Property::X-KDE-NativeExtension]
+[Property::X-TDE-NativeExtension]
 Type=TQString
 Value=.odb

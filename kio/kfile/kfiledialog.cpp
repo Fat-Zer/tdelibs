@@ -1948,8 +1948,8 @@ void KFileDialog::updateAutoSelectExtension (void)
             {
                 KMimeType::Ptr mime = KMimeType::mimeType (filter);
 
-                // first try X-KDE-NativeExtension
-                TQString nativeExtension = mime->property ("X-KDE-NativeExtension").toString ();
+                // first try X-TDE-NativeExtension
+                TQString nativeExtension = mime->property ("X-TDE-NativeExtension").toString ();
                 if (nativeExtension.at (0) == '.')
                 {
                     d->extension = nativeExtension.lower ();
@@ -1957,7 +1957,7 @@ void KFileDialog::updateAutoSelectExtension (void)
                                          << d->extension << "\'" << endl;
                 }
 
-                // no X-KDE-NativeExtension
+                // no X-TDE-NativeExtension
                 if (d->extension.isEmpty ())
                 {
                     d->extension = getExtensionFromPatternList (mime->patterns ()).lower ();

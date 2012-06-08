@@ -406,7 +406,7 @@ TQStringList KRun::processDesktopExec(const KService &_service, const KURL::List
   // FIXME: the current way of invoking kioexec disables term and su use
 
   // Check if we need "tempexec" (kioexec in fact)
-  appHasTempFileOption = tempFiles && _service.property("X-KDE-HasTempFileOption").toBool();
+  appHasTempFileOption = tempFiles && _service.property("X-TDE-HasTempFileOption").toBool();
   if( tempFiles && !appHasTempFileOption && _urls.size() ) {
     result << "kioexec" << "--tempfiles" << exec;
     result += _urls.toStringList();
@@ -616,10 +616,10 @@ bool KRun::checkStartupNotify( const TQString& /*binName*/, const KService* serv
       silent = !service->property( "StartupNotify" ).toBool();
       wmclass = service->property( "StartupWMClass" ).toString().latin1();
   }
-  else if( service && service->property( "X-KDE-StartupNotify" ).isValid())
+  else if( service && service->property( "X-TDE-StartupNotify" ).isValid())
   {
-      silent = !service->property( "X-KDE-StartupNotify" ).toBool();
-      wmclass = service->property( "X-KDE-WMClass" ).toString().latin1();
+      silent = !service->property( "X-TDE-StartupNotify" ).toBool();
+      wmclass = service->property( "X-TDE-WMClass" ).toString().latin1();
   }
   else // non-compliant app
   {
@@ -698,7 +698,7 @@ static KURL::List resolveURLs( const KURL::List& _urls, const KService& _service
 {
   // Check which protocols the application supports.
   // This can be a list of actual protocol names, or just KIO for KDE apps.
-  TQStringList supportedProtocols = _service.property("X-KDE-Protocols").toStringList();
+  TQStringList supportedProtocols = _service.property("X-TDE-Protocols").toStringList();
   KRunMX1 mx1( _service );
   TQString exec = _service.exec();
   if ( mx1.expandMacrosShellQuote( exec ) && !mx1.hasUrls ) {

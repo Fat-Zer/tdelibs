@@ -87,6 +87,6 @@ Patterns=*.lyx
 Type=MimeType
 Icon=dvi
 
-[Property::X-KDE-text]
+[Property::X-TDE-text]
 Type=bool
 Value=true

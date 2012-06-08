@@ -3,7 +3,7 @@ Type=MimeType
 MimeType=audio/vnd.rn-realaudio
 Icon=sound
 Patterns=*.ra;*.ram;*.RA;*.RAM;
-X-KDE-IsAlso=audio/x-pn-realaudio
+X-TDE-IsAlso=audio/x-pn-realaudio
 Comment=RealAudio File
 Comment[af]=RealAudio Lêer
 Comment[ar]=ملف Real Audio
@@ -81,7 +81,7 @@ Comment[wa]=Fitchî RealAudio
 Comment[zh_CN]=RealAudio 文件
 Comment[zh_HK]=RealAudio 檔案
 Comment[zh_TW]=RealAudio 檔案
-[Property::X-KDE-NativeExtension]
+[Property::X-TDE-NativeExtension]
 Type=TQString
 Value=.ra
 

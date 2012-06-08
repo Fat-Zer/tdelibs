@@ -296,7 +296,7 @@ PluginBase::PluginBase(ExecState *exec, bool loadPluginInfo)
         KTrader::OfferList::iterator it;
         for ( it = offers.begin(); it != offers.end(); ++it ) {
 
-            TQVariant pluginsinfo = (**it).property( "X-KDE-BrowserView-PluginsInfo" );
+            TQVariant pluginsinfo = (**it).property( "X-TDE-BrowserView-PluginsInfo" );
             if ( !pluginsinfo.isValid() ) {
                 // <backwards compatible>
                 if ((**it).library() == TQString("libnsplugin"))

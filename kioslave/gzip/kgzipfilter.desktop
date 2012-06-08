@@ -82,5 +82,5 @@ Name[zh_CN]=GZip 过滤程序
 Name[zh_HK]=GZip 過濾器
 Name[zh_TW]=GZip 過濾器
 Name[zu]=Ihluzo le-GZip
-X-KDE-Library=kgzipfilter
+X-TDE-Library=kgzipfilter
 ServiceTypes=KDECompressionFilter,application/x-gzip,application/x-tgz

@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=ServiceType
-X-KDE-ServiceType=KPropsDlg/Plugin
+X-TDE-ServiceType=KPropsDlg/Plugin
 Comment=Plugin for the Properties Dialog
 Comment[af]=Inprop module vir die Eienskappe Dialoog
 Comment[ar]=ملحق لمربع حوار خصائص
@@ -83,5 +83,5 @@ Comment[zh_HK]=屬性對話盒的外掛程式
 Comment[zh_TW]=屬性對話盒的外掛程式
 Comment[zu]=I-plugin Yengxoxo Yezinkomba zobunini
 
-[PropertyDef::X-KDE-Protocol]
+[PropertyDef::X-TDE-Protocol]
 Type=TQString

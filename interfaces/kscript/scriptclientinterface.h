@@ -40,7 +40,7 @@ class TQString;
 	*	{
 	*		// Create your @ref KScriptInterface here.
 	*		m_interface = KParts::ComponentFactory::createInstanceFromQuery<KScriptInterface>( 
-	*			"KScriptRunner/KScriptRunner", "([X-KDE-Script-Runner] == 'bash/shell')", this );
+	*			"KScriptRunner/KScriptRunner", "([X-TDE-Script-Runner] == 'bash/shell')", this );
 	*	}
 	*
 	*	virtual ~KScriptAction()

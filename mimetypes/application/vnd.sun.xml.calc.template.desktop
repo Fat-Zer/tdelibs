@@ -75,6 +75,6 @@ Icon=spreadsheet
 Type=MimeType
 Patterns=*.stc;*.STC;
 MimeType=application/vnd.sun.xml.calc.template
-[Property::X-KDE-NativeExtension]
+[Property::X-TDE-NativeExtension]
 Type=TQString
 Value=.stc

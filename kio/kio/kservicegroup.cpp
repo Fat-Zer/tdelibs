@@ -93,8 +93,8 @@ KServiceGroup::KServiceGroup( const TQString &configFile, const TQString & _relp
         d->m_bNoDisplay = true;
   }
 
-  m_strBaseGroupName = config.readEntry( "X-KDE-BaseGroup" );
-  d->suppressGenericNames = config.readListEntry( "X-KDE-SuppressGenericNames" );
+  m_strBaseGroupName = config.readEntry( "X-TDE-BaseGroup" );
+  d->suppressGenericNames = config.readListEntry( "X-TDE-SuppressGenericNames" );
   d->sortOrder = config.readListEntry("SortOrder");
 
   // Fill in defaults.

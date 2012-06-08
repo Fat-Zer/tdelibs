@@ -67,9 +67,9 @@ Comment[zh_CN]=W3C WML 大纲
 Icon=html
 Type=MimeType
 MimeType=application/xsd
-X-KDE-IsAlso=text/xml
+X-TDE-IsAlso=text/xml
 Patterns=*.xsd;
 
-[Property::X-KDE-text]
+[Property::X-TDE-text]
 Type=bool
 Value=true

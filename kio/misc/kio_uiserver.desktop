@@ -97,4 +97,4 @@ Comment[zu]=Umlekeleli we-UI Yolwazi Lwenqubo lwe-TDE
 ServiceTypes=
 # It is a server
 X-DCOP-ServiceType=Unique
-X-KDE-StartupNotify=false
+X-TDE-StartupNotify=false

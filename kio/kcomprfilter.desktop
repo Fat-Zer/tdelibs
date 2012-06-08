@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=ServiceType
-X-KDE-ServiceType=KDECompressionFilter
+X-TDE-ServiceType=KDECompressionFilter
 Name=TDE Compression Filter
 Name[af]=TDE Kompakteer Filter
 Name[az]=TDE Sıxışdırma Filtri

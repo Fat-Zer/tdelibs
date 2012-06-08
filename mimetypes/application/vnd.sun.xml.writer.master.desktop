@@ -73,6 +73,6 @@ MimeType=application/vnd.sun.xml.writer.master
 Type=MimeType
 Icon=wordprocessing
 Patterns=*.sxg;*.SXG;
-[Property::X-KDE-NativeExtension]
+[Property::X-TDE-NativeExtension]
 Type=TQString
 Value=.sxg

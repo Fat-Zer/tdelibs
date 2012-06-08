@@ -84,8 +84,8 @@ Icon=source_c
 Type=MimeType
 MimeType=text/x-objcsrc
 Patterns=*.m;
-X-KDE-IsAlso=text/plain
+X-TDE-IsAlso=text/plain
 
-[Property::X-KDE-text]
+[Property::X-TDE-text]
 Type=bool
 Value=true

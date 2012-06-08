@@ -2,7 +2,7 @@
 Type=MimeType
 MimeType=application/mspowerpoint
 Icon=presentation
-X-KDE-IsAlso=application/vnd.ms-powerpoint
+X-TDE-IsAlso=application/vnd.ms-powerpoint
 Patterns=*.ppz;*.PPZ;*.ppt;*.PPT;*.pps;*.PPS;
 Comment=Microsoft PowerPoint Presentation
 Comment[af]=Microsoft Powerpoint Voorlegging

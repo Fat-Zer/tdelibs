@@ -85,8 +85,8 @@ Comment[zh_CN]=Zip 归档
 Comment[zh_HK]=Zip 壓縮檔
 Comment[zh_TW]=Zip 壓縮文件
 Comment[zu]=Umqulu we-Zip
-X-KDE-IsAlso=application/x-zip
+X-TDE-IsAlso=application/x-zip
 
-[Property::X-KDE-LocalProtocol]
+[Property::X-TDE-LocalProtocol]
 Type=TQString
 Value=zip

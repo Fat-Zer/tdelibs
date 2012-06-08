@@ -83,8 +83,8 @@ Comment[zu]=Ifayela Lokungena Lomyaleli
 Type=MimeType
 Patterns=*.log;
 Icon=log
-X-KDE-IsAlso=text/plain
+X-TDE-IsAlso=text/plain
 
-[Property::X-KDE-text]
+[Property::X-TDE-text]
 Type=bool
 Value=true

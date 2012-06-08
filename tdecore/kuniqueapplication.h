@@ -40,7 +40,7 @@ class KUniqueApplicationPrivate;
  *
  * If your application is used to open files, it should also support the --tempfile
  * option (see KCmdLineArgs::addTempFileOption()), to delete tempfiles after use.
- * Add X-KDE-HasTempFileOption=true to the .desktop file to indicate this.
+ * Add X-TDE-HasTempFileOption=true to the .desktop file to indicate this.
  *
  * @see KApplication DCOPObject
  * @author Preston Brown <pbrown@kde.org>

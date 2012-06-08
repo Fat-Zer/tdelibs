@@ -85,5 +85,5 @@ Type=MimeType
 MimeType=text/x-python
 Icon=source_py
 # alias of application/x-python
-X-KDE-IsAlso=application/x-python
+X-TDE-IsAlso=application/x-python
 

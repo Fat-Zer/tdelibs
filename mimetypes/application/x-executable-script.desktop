@@ -72,4 +72,4 @@ Comment[zh_TW]=文稿（可能可執行）
 Icon=exec
 Type=MimeType
 MimeType=application/x-executable-script
-X-KDE-IsAlso=text/plain
+X-TDE-IsAlso=text/plain

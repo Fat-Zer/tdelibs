@@ -518,8 +518,8 @@ void KPropertiesDialog::insertPages()
 
   TQString query = TQString::fromLatin1(
       "('KPropsDlg/Plugin' in ServiceTypes) and "
-      "((not exist [X-KDE-Protocol]) or "
-      " ([X-KDE-Protocol] == '%1'  )   )"          ).arg(item->url().protocol());
+      "((not exist [X-TDE-Protocol]) or "
+      " ([X-TDE-Protocol] == '%1'  )   )"          ).arg(item->url().protocol());
 
   kdDebug( 250 ) << "trader query: " << query << endl;
   KTrader::OfferList offers = KTrader::self()->query( mimetype, query );
@@ -2742,8 +2742,8 @@ KBindingPropsPlugin::KBindingPropsPlugin( KPropertiesDialog *_props ) : KPropsDl
   if ( !m_sMimeStr.isEmpty() )
     mimeEdit->setText( m_sMimeStr );
   cbAutoEmbed->setTristate();
-  if ( config.hasKey( "X-KDE-AutoEmbed" ) )
-      cbAutoEmbed->setChecked( config.readBoolEntry( "X-KDE-AutoEmbed" ) );
+  if ( config.hasKey( "X-TDE-AutoEmbed" ) )
+      cbAutoEmbed->setChecked( config.readBoolEntry( "X-TDE-AutoEmbed" ) );
   else
       cbAutoEmbed->setNoChange();
 
@@ -2804,9 +2804,9 @@ void KBindingPropsPlugin::applyChanges()
 		     commentEdit->text(), true, false, true ); // for compat
   config.writeEntry( "MimeType", mimeEdit->text() );
   if ( cbAutoEmbed->state() == TQButton::NoChange )
-      config.deleteEntry( "X-KDE-AutoEmbed", false );
+      config.deleteEntry( "X-TDE-AutoEmbed", false );
   else
-      config.writeEntry( "X-KDE-AutoEmbed", cbAutoEmbed->isChecked() );
+      config.writeEntry( "X-TDE-AutoEmbed", cbAutoEmbed->isChecked() );
   config.sync();
 }
 
@@ -3154,12 +3154,12 @@ KDesktopPropsPlugin::KDesktopPropsPlugin( KPropertiesDialog *_props )
   TQString pathStr = config.readPathEntry( "Path" );
   m_terminalBool = config.readBoolEntry( "Terminal" );
   m_terminalOptionStr = config.readEntry( "TerminalOptions" );
-  m_suidBool = config.readBoolEntry( "X-KDE-SubstituteUID" );
-  m_suidUserStr = config.readEntry( "X-KDE-Username" );
+  m_suidBool = config.readBoolEntry( "X-TDE-SubstituteUID" );
+  m_suidUserStr = config.readEntry( "X-TDE-Username" );
   if( config.hasKey( "StartupNotify" ))
     m_startupBool = config.readBoolEntry( "StartupNotify", true );
   else
-    m_startupBool = config.readBoolEntry( "X-KDE-StartupNotify", true );
+    m_startupBool = config.readBoolEntry( "X-TDE-StartupNotify", true );
   m_dcopServiceType = config.readEntry("X-DCOP-ServiceType").lower();
 
   TQStringList mimeTypes = config.readListEntry( "MimeType", ';' );
@@ -3395,8 +3395,8 @@ void KDesktopPropsPlugin::applyChanges()
 
   config.writeEntry("Terminal", m_terminalBool);
   config.writeEntry("TerminalOptions", m_terminalOptionStr);
-  config.writeEntry("X-KDE-SubstituteUID", m_suidBool);
-  config.writeEntry("X-KDE-Username", m_suidUserStr);
+  config.writeEntry("X-TDE-SubstituteUID", m_suidBool);
+  config.writeEntry("X-TDE-Username", m_suidUserStr);
   config.writeEntry("StartupNotify", m_startupBool);
   config.writeEntry("X-DCOP-ServiceType", m_dcopServiceType);
   config.sync();
@@ -3734,8 +3734,8 @@ KExecPropsPlugin::KExecPropsPlugin( KPropertiesDialog *_props )
   swallowTitleStr = config.readEntry( "SwallowTitle" );
   termBool = config.readBoolEntry( "Terminal" );
   termOptionsStr = config.readEntry( "TerminalOptions" );
-  suidBool = config.readBoolEntry( "X-KDE-SubstituteUID" );
-  suidUserStr = config.readEntry( "X-KDE-Username" );
+  suidBool = config.readBoolEntry( "X-TDE-SubstituteUID" );
+  suidUserStr = config.readEntry( "X-TDE-Username" );
 
   if ( !swallowExecStr.isNull() )
     swallowExecEdit->setText( swallowExecStr );
@@ -3865,8 +3865,8 @@ void KExecPropsPlugin::applyChanges()
       temp += TQString::fromLatin1("--noclose ");
   temp = temp.stripWhiteSpace();
   config.writeEntry( "TerminalOptions", temp );
-  config.writeEntry( "X-KDE-SubstituteUID", suidCheck->isChecked() );
-  config.writeEntry( "X-KDE-Username", suidEdit->text() );
+  config.writeEntry( "X-TDE-SubstituteUID", suidCheck->isChecked() );
+  config.writeEntry( "X-TDE-Username", suidEdit->text() );
 }
 
 

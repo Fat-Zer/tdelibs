@@ -3,7 +3,7 @@ Type=MimeType
 MimeType=application/x-kspread
 Icon=kspread_ksp
 Patterns=*.ksp;
-X-KDE-AutoEmbed=false
+X-TDE-AutoEmbed=false
 Comment=KSpread Document
 Comment[af]=Kspread Dokument
 Comment[ar]=مستند KSpread
@@ -86,6 +86,6 @@ Comment[zh_CN]=KSpread 文档
 Comment[zh_HK]=KSpread 文件
 Comment[zh_TW]=KSpread 文件
 Comment[zu]=Uhlu lwamafayela lwe-KSpread
-[Property::X-KDE-NativeExtension]
+[Property::X-TDE-NativeExtension]
 Type=TQString
 Value=.ksp

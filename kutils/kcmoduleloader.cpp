@@ -240,7 +240,7 @@ bool KCModuleLoader::testModule( const KCModuleInfo& module )
     return true;
   }
 
-  bool doLoad = module.service()->property( "X-KDE-Test-Module", TQVariant::Bool ).toBool();
+  bool doLoad = module.service()->property( "X-TDE-Test-Module", TQVariant::Bool ).toBool();
   if( !doLoad )
   {
     return true;

@@ -78,6 +78,6 @@ Type=MimeType
 MimeType=application/x-webarchive
 Patterns=*.war;*.WAR
 
-[Property::X-KDE-LocalProtocol]
+[Property::X-TDE-LocalProtocol]
 Type=TQString
 Value=tar

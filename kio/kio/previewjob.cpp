@@ -208,9 +208,9 @@ void PreviewJob::startPreview()
 
             if (plugin == mimeMap.end())
             {
-                // check X-KDE-Text property
+                // check X-TDE-Text property
                 KMimeType::Ptr mimeInfo = KMimeType::mimeType(it.current()->mimetype());
-                TQVariant textProperty = mimeInfo->property("X-KDE-text");
+                TQVariant textProperty = mimeInfo->property("X-TDE-text");
                 if (textProperty.isValid() && textProperty.type() == TQVariant::Bool)
                 {
                     if (textProperty.toBool())

@@ -1,16 +1,16 @@
 [Desktop Entry]
 Type=Service
 ServiceTypes=KSpell/Client
-X-KDE-Library=kspell_ispell
-X-KDE-PluginInfo-Author=Zack Rusin
-X-KDE-PluginInfo-Email=zack@kde.org
-X-KDE-PluginInfo-Name=kspell_ispell
-X-KDE-PluginInfo-Version=0.0.1
-X-KDE-PluginInfo-Website=http://www.kde.org
-X-KDE-PluginInfo-Category=Clients
-X-KDE-PluginInfo-Depends=
-X-KDE-PluginInfo-License=LGPL
-X-KDE-PluginInfo-EnabledByDefault=true
+X-TDE-Library=kspell_ispell
+X-TDE-PluginInfo-Author=Zack Rusin
+X-TDE-PluginInfo-Email=zack@kde.org
+X-TDE-PluginInfo-Name=kspell_ispell
+X-TDE-PluginInfo-Version=0.0.1
+X-TDE-PluginInfo-Website=http://www.kde.org
+X-TDE-PluginInfo-Category=Clients
+X-TDE-PluginInfo-Depends=
+X-TDE-PluginInfo-License=LGPL
+X-TDE-PluginInfo-EnabledByDefault=true
 Name=ISpell
 Name[bn]=আই-স্পেল
 Name[hi]=आई-स्पैल

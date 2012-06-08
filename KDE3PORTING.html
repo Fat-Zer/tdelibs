@@ -624,17 +624,17 @@ The change should affect only code using hardcoded numeric values instead of usi
 <H3><A NAME="kcontrol">Changes in KControl</A></H3>
 
 <H4>Modules that require root permission</H4>
-The meaning of the <i>X-KDE-RootOnly</i> flag in the .desktop files has changed.
+The meaning of the <i>X-TDE-RootOnly</i> flag in the .desktop files has changed.
 In KControl 2.0 a message was shown if the user did not press the &quot;modify&quot;
-button. With the additional flag <i>X-KDE-HasReadOnlyMode</i> it was possible to show
+button. With the additional flag <i>X-TDE-HasReadOnlyMode</i> it was possible to show
 a disabled version of the module instead of the message. The behavior was inconsistent
 and has been changed:
 
 <ul>
-<li><i>X-KDE-HasReadOnlyMode</i> is not used anymore and is ignored by KControl &gt; 2.0.
-<li><i>X-KDE-RootOnly</i> does now show a disabled preview of the widget and a notification box.
-<li>If you want the old behavior back set <i>X-KDE-IsHiddenByDefault</i> along with
-<i>X-KDE-RootOnly</i>. Please note that this behavior is deprecated the sake of
+<li><i>X-TDE-HasReadOnlyMode</i> is not used anymore and is ignored by KControl &gt; 2.0.
+<li><i>X-TDE-RootOnly</i> does now show a disabled preview of the widget and a notification box.
+<li>If you want the old behavior back set <i>X-TDE-IsHiddenByDefault</i> along with
+<i>X-TDE-RootOnly</i>. Please note that this behavior is deprecated the sake of
 usability.
 </ul>
 

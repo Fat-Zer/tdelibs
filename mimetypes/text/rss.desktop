@@ -80,6 +80,6 @@ Icon=news
 Type=MimeType
 Patterns=*.rss;*.RSS;
 
-[Property::X-KDE-text]
+[Property::X-TDE-text]
 Type=bool
 Value=true

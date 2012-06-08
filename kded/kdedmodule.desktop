@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=ServiceType
-X-KDE-ServiceType=KDEDModule
+X-TDE-ServiceType=KDEDModule
 Comment=KDED Module
 Comment[ar]=وحدة KDED
 Comment[az]=KDED Modulu
@@ -82,9 +82,9 @@ Comment[zh_CN]=KDED 模块
 Comment[zh_HK]=KDED 模組
 Comment[zh_TW]=KDED 模組
 Comment[zu]=Ingxenye ye-KDED
-[PropertyDef::X-KDE-FactoryName]
+[PropertyDef::X-TDE-FactoryName]
 Type=TQString
-[PropertyDef::X-KDE-Kded-autoload]
+[PropertyDef::X-TDE-Kded-autoload]
 Type=bool
-[PropertyDef::X-KDE-Kded-load-on-demand]
+[PropertyDef::X-TDE-Kded-load-on-demand]
 Type=bool

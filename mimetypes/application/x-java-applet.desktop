@@ -72,4 +72,4 @@ Comment[wa]=Aplikete Java
 Comment[zh_CN]=Java 小程序
 MimeType=application/x-java-applet
 Icon=java_jar
-X-KDE-AutoEmbed=true
+X-TDE-AutoEmbed=true

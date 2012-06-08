@@ -72,7 +72,7 @@ Comment[zh_HK]=KPlato 計畫管理文件
 Comment[zh_TW]=KPlato 專案管理文件
 Type=MimeType
 Patterns=*.kplato;*.kplatot;
-X-KDE-AutoEmbed=false
-[Property::X-KDE-NativeExtension]
+X-TDE-AutoEmbed=false
+[Property::X-TDE-NativeExtension]
 Type=TQString
 Value=.kplato

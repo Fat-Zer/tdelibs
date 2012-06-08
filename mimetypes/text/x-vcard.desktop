@@ -87,6 +87,6 @@ Type=MimeType
 MimeType=text/x-vcard
 Patterns=*.vct;*.vcf;*.VCT;*.VCF
 
-[Property::X-KDE-text]
+[Property::X-TDE-text]
 Type=bool
 Value=true

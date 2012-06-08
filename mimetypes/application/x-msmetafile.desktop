@@ -2,4 +2,4 @@
 Type=MimeType
 MimeType=application/x-msmetafile
 Icon=vectorgfx
-X-KDE-IsAlso=image/x-wmf
+X-TDE-IsAlso=image/x-wmf

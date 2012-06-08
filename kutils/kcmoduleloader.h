@@ -156,7 +156,7 @@ class KUTILS_EXPORT KCModuleLoader
      * be made available, leaving the decision to the user.
      * If false is returned, the module should not be loaded in any interface.
      * 
-     * A module declares it needs to be tested by having "X-KDE-Test-Module=true" in 
+     * A module declares it needs to be tested by having "X-TDE-Test-Module=true" in 
      * its desktop file. When that line exists, the following code must be available 
      * in the module's library:
      *

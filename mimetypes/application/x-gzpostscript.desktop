@@ -86,5 +86,5 @@ Icon=tgz
 MimeType=application/x-gzpostscript
 Patterns=*.ps.gz
 Type=MimeType
-X-KDE-AutoEmbed=true
-X-KDE-IsAlso=application/x-gzip
+X-TDE-AutoEmbed=true
+X-TDE-IsAlso=application/x-gzip

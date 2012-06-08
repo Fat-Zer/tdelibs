@@ -2115,7 +2115,7 @@ void ListJob::slotFinished()
     if ( m_error == KIO::ERR_IS_FILE && m_url.isLocalFile() ) {
         KMimeType::Ptr ptr = KMimeType::findByURL( m_url, 0, true, true );
         if ( ptr ) {
-            TQString proto = ptr->property("X-KDE-LocalProtocol").toString();
+            TQString proto = ptr->property("X-TDE-LocalProtocol").toString();
             if ( !proto.isEmpty() && KProtocolInfo::isKnownProtocol(proto) ) {
                 m_redirectionURL = m_url;
                 m_redirectionURL.setProtocol( proto );

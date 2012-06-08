@@ -312,7 +312,7 @@ protected:
    * Sets the RootOnly message.
    *
    * This message will be shown at the top of the module of the
-   * corresponding desktop file contains the line X-KDE-RootOnly=true.
+   * corresponding desktop file contains the line X-TDE-RootOnly=true.
    * If no message is set, a default one will be used.
    *
    * @see KCModule::rootOnlyMsg

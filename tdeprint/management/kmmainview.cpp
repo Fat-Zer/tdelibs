@@ -239,7 +239,7 @@ void KMMainView::initActions()
 		KSimpleConfig	conf(*it);
 		conf.setGroup("Desktop Entry");
 		mact->popupMenu()->insertItem(conf.readEntry("Name", "Unnamed"), mact->popupMenu()->count());
-		m_toollist << conf.readEntry("X-KDE-Library");
+		m_toollist << conf.readEntry("X-TDE-Library");
 	}
 
 	// add actions to the toolbar

@@ -81,6 +81,6 @@ Comment[vi]=Bảng tính Calc của StarOffice
 Comment[zh_CN]=StarOffice Calc 电子表格
 Comment[zh_HK]=StarOffice Calc 電子表格
 Comment[zh_TW]=StarOffice Calc 電子表格
-[Property::X-KDE-NativeExtension]
+[Property::X-TDE-NativeExtension]
 Type=TQString
 Value=.sdc

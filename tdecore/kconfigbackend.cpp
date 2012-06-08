@@ -753,7 +753,7 @@ tqWarning("SIGBUS while reading %s", rFile.name().latin1());
        translateKey(locale, aCurrentGroup, TQCString("GenericName"));
        translateKey(locale, aCurrentGroup, TQCString("Query"));
        translateKey(locale, aCurrentGroup, TQCString("ExtraNames"));
-       translateKey(locale, aCurrentGroup, TQCString("X-KDE-Submenu"));
+       translateKey(locale, aCurrentGroup, TQCString("X-TDE-Submenu"));
      }
    }
 

@@ -57,11 +57,11 @@ namespace KSettings
    Type=Service
    ServiceTypes=KCModule
 
-   X-KDE-ModuleType=Library
-   X-KDE-Library=myapppluginconfig
-   X-KDE-FactoryName=MyAppPluginConfigFactory
-   X-KDE-ParentApp=myapp
-   X-KDE-ParentComponents=myapp
+   X-TDE-ModuleType=Library
+   X-TDE-Library=myapppluginconfig
+   X-TDE-FactoryName=MyAppPluginConfigFactory
+   X-TDE-ParentApp=myapp
+   X-TDE-ParentComponents=myapp
 
    Name=Plugins
    Comment=Select and configure your plugins:

@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=ServiceType
-X-KDE-ServiceType=KSpell/Client
-X-KDE-Derived=KPluginInfo
+X-TDE-ServiceType=KSpell/Client
+X-TDE-Derived=KPluginInfo
 Comment=KSpell Client
 Comment[af]=KSpel Klient
 Comment[be]=Кліент спраўджвання правапісу KSpell

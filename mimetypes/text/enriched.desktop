@@ -72,6 +72,6 @@ Icon=txt
 Type=MimeType
 Patterns=
 
-[Property::X-KDE-text]
+[Property::X-TDE-text]
 Type=bool
 Value=true

@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=ServiceType
-X-KDE-ServiceType=KPluginInfo
+X-TDE-ServiceType=KPluginInfo
 Name=TDE Plugin Information
 Name[af]=TDE Inprop module Informasie
 Name[ar]=معلومات ملحقات كيدي
@@ -79,29 +79,29 @@ Name[zh_CN]=TDE 打印信息
 Name[zh_HK]=TDE 外掛資訊
 Name[zh_TW]=TDE 外掛資訊
 
-[PropertyDef::X-KDE-PluginInfo-Author]
+[PropertyDef::X-TDE-PluginInfo-Author]
 Type=TQString
 
-[PropertyDef::X-KDE-PluginInfo-Email]
+[PropertyDef::X-TDE-PluginInfo-Email]
 Type=TQString
 
-[PropertyDef::X-KDE-PluginInfo-Name]
+[PropertyDef::X-TDE-PluginInfo-Name]
 Type=TQString
 
-[PropertyDef::X-KDE-PluginInfo-Version]
+[PropertyDef::X-TDE-PluginInfo-Version]
 Type=TQString
 
-[PropertyDef::X-KDE-PluginInfo-Website]
+[PropertyDef::X-TDE-PluginInfo-Website]
 Type=TQString
 
-[PropertyDef::X-KDE-PluginInfo-Category]
+[PropertyDef::X-TDE-PluginInfo-Category]
 Type=TQString
 
-[PropertyDef::X-KDE-PluginInfo-Depends]
+[PropertyDef::X-TDE-PluginInfo-Depends]
 Type=TQStringList
 
-[PropertyDef::X-KDE-PluginInfo-License]
+[PropertyDef::X-TDE-PluginInfo-License]
 Type=TQString
 
-[PropertyDef::X-KDE-PluginInfo-EnabledByDefault]
+[PropertyDef::X-TDE-PluginInfo-EnabledByDefault]
 Type=bool

@@ -51,7 +51,7 @@ bool KScriptManager::addScript( const TQString &scriptDesktopFile)
 		KDesktopFile desktop(scriptDesktopFile, true);
 		m_scripts.insert(desktop.readName(), new ScriptInfo());
 		m_scripts[desktop.readName()]->scriptType = desktop.readType();
-		TQString localpath = TQString(kapp->name()) + "/scripts/" + desktop.readEntry("X-KDE-ScriptName", "");
+		TQString localpath = TQString(kapp->name()) + "/scripts/" + desktop.readEntry("X-TDE-ScriptName", "");
 		m_scripts[desktop.readName()]->scriptFile = locate("data", localpath);
 //		m_scripts[desktop.readName()]->scriptMethod = tmpScriptMethod;
 		success = true;
@@ -86,7 +86,7 @@ void KScriptManager::runScript( const TQString &scriptName, TQObject *context, c
 	ScriptInfo *newScript = m_scripts[scriptName];
 	if (newScript)
 	{
-		TQString scriptType = "([X-KDE-Script-Runner] == '" + newScript->scriptType + "')";
+		TQString scriptType = "([X-TDE-Script-Runner] == '" + newScript->scriptType + "')";
 		kdDebug()<<"running script, type = '"<<scriptType<<"'"<<endl;
 		// See if the script is already cached...
 		if ( !m_scriptCache[scriptName] )

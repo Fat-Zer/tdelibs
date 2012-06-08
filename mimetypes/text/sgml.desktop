@@ -87,6 +87,6 @@ Icon=txt
 Type=MimeType
 Patterns=*.sgml;*.SGML;
 
-[Property::X-KDE-text]
+[Property::X-TDE-text]
 Type=bool
 Value=true

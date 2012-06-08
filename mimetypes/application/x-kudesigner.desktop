@@ -77,7 +77,7 @@ Comment[zh_TW]=Kugar 報表樣本
 Icon=kugardata
 Type=MimeType
 Patterns=*.kut;*.ktf;
-X-KDE-AutoEmbed=false
-[Property::X-KDE-NativeExtension]
+X-TDE-AutoEmbed=false
+[Property::X-TDE-NativeExtension]
 Type=TQString
 Value=.ktf

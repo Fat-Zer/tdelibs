@@ -2,7 +2,7 @@
 Type=MimeType
 MimeType=audio/x-oggflac
 Icon=sound
-X-KDE-IsAlso=application/ogg
+X-TDE-IsAlso=application/ogg
 Comment=Ogg FLAC Audio
 Comment[af]=Ogg FLAC Klank
 Comment[ar]=ملف Ogg FLAC صوتي

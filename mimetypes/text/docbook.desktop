@@ -81,6 +81,6 @@ Type=MimeType
 MimeType=text/docbook
 Patterns=*.docbook;
 
-[Property::X-KDE-text]
+[Property::X-TDE-text]
 Type=bool
 Value=true

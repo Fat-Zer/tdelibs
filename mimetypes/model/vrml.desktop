@@ -80,6 +80,6 @@ Comment[zh_HK]=VRML 模型
 Comment[zh_TW]=VRML 模型
 Patterns=*.wrl;*.wrl.gz
 
-[Property::X-KDE-text]
+[Property::X-TDE-text]
 Type=bool
 Value=true

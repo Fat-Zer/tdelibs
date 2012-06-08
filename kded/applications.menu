@@ -26,10 +26,10 @@
     <OnlyUnallocated/>
     <Include>
       <Not>
-        <!-- Don't list non-KDE core applications -->
+        <!-- Don't list non-TDE core applications -->
         <And>
           <Category>Core</Category>
-          <Not><Category>KDE</Category></Not>
+          <Not><Category>TDE</Category></Not>
         </And>
         <!-- Don't list SUSE's YaST in here -->
         <Category>X-SuSE-YaST</Category>
@@ -40,12 +40,12 @@
     <Name>Development</Name>
     <Directory>tde-development.directory</Directory>
     <Menu>
-      <Name>X-KDE-KDevelopIDE</Name>
+      <Name>X-TDE-KDevelopIDE</Name>
       <Directory>tde-development-tdevelop.directory</Directory>
       <Include>
         <And>
         <Category>Development</Category>
-        <Category>X-KDE-KDevelopIDE</Category>
+        <Category>X-TDE-KDevelopIDE</Category>
         </And>
       </Include>
     </Menu>
@@ -72,7 +72,7 @@
       <Include>
         <And>
         <Category>Development</Category>
-        <Not><Category>X-KDE-KDevelopIDE</Category></Not>
+        <Not><Category>X-TDE-KDevelopIDE</Category></Not>
         <Not><Category>Translation</Category></Not>
         <Not><Category>WebDevelopment</Category></Not>
         </And>
@@ -108,7 +108,7 @@
         <Category>Education</Category>
         <Or>
         <Category>Languages</Category>
-        <Category>X-KDE-Edu-Language</Category>
+        <Category>X-TDE-Edu-Language</Category>
         </Or>
         </And>
       </Include>
@@ -131,11 +131,11 @@
         <Category>Education</Category>
         <Not>
         <Category>Languages</Category>
-        <Category>X-KDE-Edu-Language</Category>
+        <Category>X-TDE-Edu-Language</Category>
         <Category>Math</Category>
         <Category>Science</Category>
         <Category>Teaching</Category>
-        <Category>X-KDE-Edu-Teaching</Category>
+        <Category>X-TDE-Edu-Teaching</Category>
         </Not>
         </And>
       </Include>
@@ -158,7 +158,7 @@
         <Category>Education</Category>
         <Or>
         <Category>Teaching</Category>
-        <Category>X-KDE-Edu-Teaching</Category>
+        <Category>X-TDE-Edu-Teaching</Category>
         </Or>
         </And>
       </Include>
@@ -204,7 +204,7 @@
         <And>
         <Category>Game</Category>
         <Or>
-        <Category>X-KDE-KidsGame</Category>
+        <Category>X-TDE-KidsGame</Category>
         <Category>KidsGame</Category>
         </Or>
         </And>
@@ -227,7 +227,7 @@
       <Category>ArcadeGame</Category>
       <Category>BoardGame</Category>
       <Category>CardGame</Category>
-      <Category>X-KDE-KidsGame</Category>
+      <Category>X-TDE-KidsGame</Category>
       <Category>KidsGame</Category>
       <Category>StrategyGame</Category>
       </Not>
@@ -240,7 +240,7 @@
     <Include>
       <And>
       <Category>Graphics</Category>
-      <Not><Category>X-KDE-More</Category></Not>
+      <Not><Category>X-TDE-More</Category></Not>
       <Not><Filename>ooo-draw.desktop</Filename></Not>
       </And>
     </Include>
@@ -250,7 +250,7 @@
       <Include>
         <And>
         <Category>Graphics</Category>
-        <Category>X-KDE-More</Category>
+        <Category>X-TDE-More</Category>
         </And>
       </Include>
     </Menu>
@@ -261,7 +261,7 @@
     <Include>
       <And>
       <Category>Network</Category>
-      <Not><Category>X-KDE-More</Category></Not>
+      <Not><Category>X-TDE-More</Category></Not>
       </And>
     </Include>
     <Menu>
@@ -274,7 +274,7 @@
       <Include>
         <And>
         <Category>Network</Category>
-        <Category>X-KDE-More</Category>
+        <Category>X-TDE-More</Category>
         </And>
       </Include>
     </Menu>
@@ -285,7 +285,7 @@
     <Include>
       <And>
       <Category>AudioVideo</Category>
-      <Not><Category>X-KDE-More</Category></Not>
+      <Not><Category>X-TDE-More</Category></Not>
       </And>
     </Include>
     <Menu>
@@ -294,7 +294,7 @@
       <Include>
         <And>
         <Category>AudioVideo</Category>
-        <Category>X-KDE-More</Category>
+        <Category>X-TDE-More</Category>
         </And>
       </Include>
     </Menu>
@@ -311,7 +311,7 @@
     <Include>
       <And>
       <Category>Office</Category>
-        <Not><Category>X-KDE-More</Category></Not>
+        <Not><Category>X-TDE-More</Category></Not>
       </And>
     <Filename>ooo-draw.desktop</Filename>
     </Include>
@@ -321,7 +321,7 @@
       <Include>
         <And>
           <Category>Office</Category>
-          <Category>X-KDE-More</Category>
+          <Category>X-TDE-More</Category>
         </And>
       </Include>
     </Menu>
@@ -339,7 +339,7 @@
     <Include>
       <And>
       <Category>System</Category>
-      <Not><Category>X-KDE-More</Category></Not>
+      <Not><Category>X-TDE-More</Category></Not>
       </And>
     </Include>
     <Menu>
@@ -347,8 +347,8 @@
       <Directory>tde-system-su.directory</Directory>
       <Include>
         <And>
-        <Category>X-KDE-System-su</Category>
-        <Not><Category>X-KDE-More</Category></Not>
+        <Category>X-TDE-System-su</Category>
+        <Not><Category>X-TDE-More</Category></Not>
         </And>
       </Include>
     </Menu>
@@ -358,7 +358,7 @@
       <Include>
         <And>
         <Category>System</Category>
-        <Category>X-KDE-More</Category>
+        <Category>X-TDE-More</Category>
         </And>
       </Include>
     </Menu>
@@ -378,10 +378,10 @@
       <And>
       <Category>Utility</Category>
       <Not><Category>Accessibility</Category></Not>
-      <Not><Category>X-KDE-Utilities-Desktop</Category></Not>
-      <Not><Category>X-KDE-Utilities-Peripherals</Category></Not>
-      <Not><Category>X-KDE-Utilities-PIM</Category></Not>
-      <Not><Category>X-KDE-More</Category></Not>
+      <Not><Category>X-TDE-Utilities-Desktop</Category></Not>
+      <Not><Category>X-TDE-Utilities-Peripherals</Category></Not>
+      <Not><Category>X-TDE-Utilities-PIM</Category></Not>
+      <Not><Category>X-TDE-More</Category></Not>
       </And>
     </Include>
     <Menu>
@@ -400,7 +400,7 @@
       <Include>
         <And>
         <Category>Utility</Category>
-        <Category>X-KDE-Utilities-Desktop</Category>
+        <Category>X-TDE-Utilities-Desktop</Category>
         </And>
       </Include>
     </Menu>
@@ -417,7 +417,7 @@
       <Include>
         <And>
         <Category>Utility</Category>
-        <Category>X-KDE-Utilities-PIM</Category>
+        <Category>X-TDE-Utilities-PIM</Category>
         </And>
       </Include>
     </Menu>
@@ -438,7 +438,7 @@
       <Include>
         <And>
         <Category>Utility</Category>
-        <Category>X-KDE-More</Category>
+        <Category>X-TDE-More</Category>
         </And>
       </Include>
     </Menu>
@@ -448,14 +448,14 @@
       <Include>
         <And>
         <Category>Utility</Category>
-        <Category>X-KDE-More</Category>
+        <Category>X-TDE-More</Category>
         </And>
       </Include>
     </Menu>
   </Menu>
   <Include>
     <And>
-    <Category>KDE</Category>
+    <Category>TDE</Category>
     <Category>Core</Category>
     </And>
   </Include>

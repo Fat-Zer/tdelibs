@@ -84,4 +84,4 @@ Icon=dvi
 Type=MimeType
 MimeType=application/x-dvi
 Patterns=*.dvi;*.DVI;
-X-KDE-AutoEmbed=true
+X-TDE-AutoEmbed=true

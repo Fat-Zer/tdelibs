@@ -2,7 +2,7 @@
 Icon=vectorgfx
 Type=MimeType
 MimeType=image/svg+xml
-X-KDE-IsAlso=text/xml
+X-TDE-IsAlso=text/xml
 Patterns=*.svg;*.SVG;*.svgz;*.SVGZ;
 Comment=Scalable Vector Graphics
 Comment[af]=Skaal veranderbare Vektor Grafieka
@@ -75,6 +75,6 @@ Comment[zh_HK]=SVG 圖檔
 Comment[zh_TW]=可縮放向量圖
 Comment[zu]=Imidwebo ekalekayo ye-Vector
 
-[Property::X-KDE-text]
+[Property::X-TDE-text]
 Type=bool
 Value=true

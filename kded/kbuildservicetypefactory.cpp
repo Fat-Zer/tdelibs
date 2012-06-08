@@ -85,7 +85,7 @@ KBuildServiceTypeFactory::createEntry(const TQString &file, const char *resource
 
   // TODO check Type field first
   TQString mime = desktopFile.readEntry( "MimeType" );
-  TQString service = desktopFile.readEntry( "X-KDE-ServiceType" );
+  TQString service = desktopFile.readEntry( "X-TDE-ServiceType" );
 
   if ( mime.isEmpty() && service.isEmpty() )
   {

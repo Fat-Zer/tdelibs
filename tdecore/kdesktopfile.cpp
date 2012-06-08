@@ -272,7 +272,7 @@ bool KDesktopFile::hasDeviceType() const
 
 bool KDesktopFile::tryExec() const
 {
-  // Test for TryExec and "X-KDE-AuthorizeAction" 
+  // Test for TryExec and "X-TDE-AuthorizeAction" 
   TQString te = readPathEntry("TryExec");
 
   if (!te.isEmpty()) {
@@ -299,7 +299,7 @@ bool KDesktopFile::tryExec() const
         return false;
     }
   }
-  TQStringList list = readListEntry("X-KDE-AuthorizeAction");
+  TQStringList list = readListEntry("X-TDE-AuthorizeAction");
   if (kapp && !list.isEmpty())
   {
      for(TQStringList::ConstIterator it = list.begin();
@@ -312,10 +312,10 @@ bool KDesktopFile::tryExec() const
   }
   
   // See also KService::username()
-  bool su = readBoolEntry("X-KDE-SubstituteUID");
+  bool su = readBoolEntry("X-TDE-SubstituteUID");
   if (su)
   {
-      TQString user = readEntry("X-KDE-Username");
+      TQString user = readEntry("X-TDE-Username");
       if (user.isEmpty())
         user = ::getenv("ADMIN_ACCOUNT");
       if (user.isEmpty())

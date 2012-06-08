@@ -406,7 +406,7 @@ public:
    * return the name of the parent.
    *
    * For instance a text/x-log is a special kind of text/plain,
-   * so the definition of text/x-log can say "X-KDE-IsAlso=text/plain".
+   * so the definition of text/x-log can say "X-TDE-IsAlso=text/plain".
    * Or an smb-workgroup is a special kind of inode/directory, etc.
    * This mechanism can also be used to rename mimetypes and preserve compat.
    *
@@ -570,7 +570,7 @@ public:
   /**
    * Overload of userDefinedServices but also allows you to pass a list of urls for this file.
    * This allows for the menu to be changed depending on the exact files via
-   * the X-KDE-GetActionMenu extension.
+   * the X-TDE-GetActionMenu extension.
    * @since 3.5
    */
   static TQValueList<Service> userDefinedServices( const TQString& path, KConfig& config, bool bLocalFiles,  const KURL::List & file_list);

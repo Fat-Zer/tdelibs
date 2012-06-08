@@ -6,9 +6,9 @@ Comment[te]=రిలేక్స్ NG
 Icon=html
 Type=MimeType
 MimeType=application/xml
-X-KDE-IsAlso=text/xml
+X-TDE-IsAlso=text/xml
 Patterns=*.rng;
 
-[Property::X-KDE-text]
+[Property::X-TDE-text]
 Type=bool
 Value=true

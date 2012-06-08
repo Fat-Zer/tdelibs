@@ -83,6 +83,6 @@ MimeType=text/x-xslfo
 Patterns=*.fo;*.xslfo
 Type=MimeType
 
-[Property::X-KDE-text]
+[Property::X-TDE-text]
 Type=bool
 Value=true

@@ -3,7 +3,7 @@ Type=MimeType
 MimeType=application/vnd.ms-access
 Icon=database
 Comment=Microsoft Access Database
-[Property::X-KDE-NativeExtension]
+[Property::X-TDE-NativeExtension]
 Type=TQString
 Value=.mdb
 

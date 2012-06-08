@@ -70,4 +70,4 @@ Comment[zh_HK]=FITS 圖檔
 Comment[zh_TW]=FITS 影像
 ### TODO: what file patterns, especially that application/fits has the same
 # RFC 4047 tells that image/fits are also application/fits
-X-KDE-IsAlso=application/fits
+X-TDE-IsAlso=application/fits

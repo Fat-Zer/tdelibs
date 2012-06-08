@@ -128,7 +128,7 @@ AutoStart::loadAutoStartList()
               continue;
        }
        else {
-           if (!startCondition(config.readEntry("X-KDE-autostart-condition")))
+           if (!startCondition(config.readEntry("X-TDE-autostart-condition")))
               continue;
        }
        if (!config.tryExec())
@@ -193,13 +193,13 @@ AutoStart::loadAutoStartList()
        if (config.hasKey("X-TDE-autostart-after"))
            item->startAfter = config.readEntry("X-TDE-autostart-after");
        else
-           item->startAfter = config.readEntry("X-KDE-autostart-after");
+           item->startAfter = config.readEntry("X-TDE-autostart-after");
        if( m_newStartup )
        {
           if (config.hasKey("X-TDE-autostart-phase"))
               item->phase = config.readNumEntry("X-TDE-autostart-phase", 2);
           else
-              item->phase = config.readNumEntry("X-KDE-autostart-phase", 2);
+              item->phase = config.readNumEntry("X-TDE-autostart-phase", 2);
           if (item->phase < 0)
              item->phase = 0;
        }
@@ -208,7 +208,7 @@ AutoStart::loadAutoStartList()
           if (config.hasKey("X-TDE-autostart-phase"))
               item->phase = config.readNumEntry("X-TDE-autostart-phase", 1);
           else
-              item->phase = config.readNumEntry("X-KDE-autostart-phase", 1);
+              item->phase = config.readNumEntry("X-TDE-autostart-phase", 1);
           if (item->phase < 1)
              item->phase = 1;
        }

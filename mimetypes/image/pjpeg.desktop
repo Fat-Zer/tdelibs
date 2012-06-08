@@ -3,7 +3,7 @@
 Type=MimeType
 MimeType=image/pjpeg
 Icon=image
-X-KDE-IsAlso=image/jpeg
+X-TDE-IsAlso=image/jpeg
 Comment=JPEG Image
 Comment[af]=JPEG Beeld
 Comment[ar]=صورة JPEG

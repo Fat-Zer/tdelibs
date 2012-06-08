@@ -82,8 +82,8 @@ Comment[zu]=Ama-window Aphumelelanga
 Icon=exec
 Type=MimeType
 MimeType=application/x-msdos-program
-X-KDE-IsAlso=application/x-executable
-[Property::X-KDE-NativeExtension]
+X-TDE-IsAlso=application/x-executable
+[Property::X-TDE-NativeExtension]
 Type=TQString
 Value=.exe;.EXE;.ExE;.EXe;.eXE;.exE
 

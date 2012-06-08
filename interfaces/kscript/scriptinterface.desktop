@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=ServiceType
-X-KDE-ServiceType=KScriptRunner/KScriptRunner
+X-TDE-ServiceType=KScriptRunner/KScriptRunner
 Comment=This is a generic test script engine for testing the script interface.
 Comment[af]=Hierdie is 'n generies toets skrip masjien vir toetsing die skrip koppelvlak.
 Comment[ar]=هذه آلة نصوص برمجية اختبارية لاختبار واجهة النص البرمجي.
@@ -84,6 +84,6 @@ Comment[zh_HK]=這是用來測試手稿介面用的一般性測試手稿引擎
 Comment[zh_TW]=這是用來測試手稿介面用的一般性測試手稿引擎
 Comment[zu]=Lena yinjini yesikripti sokuvivinya sawonke wonke yokuvivinya isikripti somxhumanisi.
 
-[PropertyDef::X-KDE-Script-Runner]
+[PropertyDef::X-TDE-Script-Runner]
 Type=TQString
 

@@ -28,7 +28,7 @@ m_dlg->show();
 Of course you need to have the 'KSettings::Dialog * m_dlg' member var and
 initialize it to 0 in the ctor.
 
-If your application uses KParts that don't set 'X-KDE-ParentApp=&lt;the instance
+If your application uses KParts that don't set 'X-TDE-ParentApp=&lt;the instance
 name of your application&gt;' then you need to use the second ctor of
 KSettings::Dialog:
 \code
@@ -96,12 +96,12 @@ Icon=myapp
 Type=Service
 ServiceTypes=KCModule
 
-X-KDE-ModuleType=Library
-X-KDE-Library=myappconfig
-X-KDE-FactoryName=MyAppConfigFactory
-X-KDE-ParentApp=myapp
-X-KDE-ParentComponents=myapp
-X-KDE-Weight=10
+X-TDE-ModuleType=Library
+X-TDE-Library=myappconfig
+X-TDE-FactoryName=MyAppConfigFactory
+X-TDE-ParentApp=myapp
+X-TDE-ParentComponents=myapp
+X-TDE-Weight=10
 
 Name=General
 Comment=General configuration of my app
@@ -109,23 +109,23 @@ Comment=General configuration of my app
 
 
 Some explanation for those keys:
-- You just keep 'Encoding', 'Type', 'ServiceTypes' and 'X-KDE-ModuleType' like
+- You just keep 'Encoding', 'Type', 'ServiceTypes' and 'X-TDE-ModuleType' like
   in the example. For very special needs you might add another ServiceType to
   the list...
 - Icon is the icon that will be used in the listview/iconview for your page.
-- X-KDE-Library is the name of the library where the page is in. The library
+- X-TDE-Library is the name of the library where the page is in. The library
   always needs to be prefixed with kcm_ but you don't write the prefix in the
   desktop file. For more docu on this look for the KCModule docu.
-- X-KDE-FactoryName is either the name of the Factory you used in the
+- X-TDE-FactoryName is either the name of the Factory you used in the
   KGenericFactory call or the suffix of the create_ function that you created.
   Again for more info look for the KCModule docu.
-- X-KDE-ParentApp is the name of the application this config page belongs to. It
+- X-TDE-ParentApp is the name of the application this config page belongs to. It
   is used by the first two \ref KSettings::Dialog constructors. The Dialog will
-  use all modules that set X-KDE-ParentApp to
+  use all modules that set X-TDE-ParentApp to
   KGlobal::instance()->instanceName(). It
   should be pretty easy to find out what name that is: look at the first
   argument to the KAboutData ctor.
-- X-KDE-ParentComponents is a list of the components (plugin/KPart/whatever)
+- X-TDE-ParentComponents is a list of the components (plugin/KPart/whatever)
   this config page belongs to. Normally there is only one component.
   It is used for two things:
   -# If you use KSettings::Dispatcher the dispatcher will notify all components
@@ -133,10 +133,10 @@ Some explanation for those keys:
      components then can reload the configuration and apply the changes the user
      did to the config.
   -# If your component is used by another application (that is not =
-     X-KDE-ParentApp) then it may add the name of the component to the ctor of
+     X-TDE-ParentApp) then it may add the name of the component to the ctor of
      KSettings::Dialog and the dialog will automatically include all config
      pages that have the components name in their ParentComponents list.
-- X-KDE-Weight sets the order for the modules to be inserted into the dialog.
+- X-TDE-Weight sets the order for the modules to be inserted into the dialog.
   The higher the number (heavier) the lower the module will appear in the list.
   (the default value is 100)
 - Name is the string that is shown in the listview/iconview right below the
@@ -167,14 +167,14 @@ Parent=
 \endverbatim
 
 - The group name (id) is the name you use in the .desktop file of the page:
-  If your page's .desktop file says "X-KDE-CfgDlgHierarchy=id" then it will be
+  If your page's .desktop file says "X-TDE-CfgDlgHierarchy=id" then it will be
   inserted as a child of this entry.
 - \p Name: The name of the section. It will appear in the listview.
 - \p Comment: A description of what the modules in this section are. It will
   appear in the place where the KCMs are placed when the user clicks on the item
   in the listview.
 - \p Icon: An icon for the item.
-- \p Weight: Defines the position in the listview. See X-KDE-Weight above.
+- \p Weight: Defines the position in the listview. See X-TDE-Weight above.
 - \p Parent: If this group should be a child of another group write the parent's
   group id here.
 
@@ -233,17 +233,17 @@ ServiceTypes=KPluginInfo
 Name=MyPlugin
 Comment=My plugin is cool and does foo and bar.
 
-X-KDE-PluginInfo-Name=myplugin
+X-TDE-PluginInfo-Name=myplugin
 
-X-KDE-PluginInfo-Author=<your name>
-X-KDE-PluginInfo-Email=<your email>
-X-KDE-PluginInfo-Website=http://www.myplugin.org/
-X-KDE-PluginInfo-Category=CoolPlugins
-X-KDE-PluginInfo-Version=0.1
-X-KDE-PluginInfo-License=GPL
-X-KDE-PluginInfo-EnabledByDefault=true
-X-KDE-PluginInfo-Depends=myotherplugin
-X-KDE-CfgDlgHierarchy=GroupID
+X-TDE-PluginInfo-Author=<your name>
+X-TDE-PluginInfo-Email=<your email>
+X-TDE-PluginInfo-Website=http://www.myplugin.org/
+X-TDE-PluginInfo-Category=CoolPlugins
+X-TDE-PluginInfo-Version=0.1
+X-TDE-PluginInfo-License=GPL
+X-TDE-PluginInfo-EnabledByDefault=true
+X-TDE-PluginInfo-Depends=myotherplugin
+X-TDE-CfgDlgHierarchy=GroupID
 \endverbatim
 
 Explanation:
@@ -251,23 +251,23 @@ mandatory entries:
 - leave \p Type and \p Encoding like in the example
 - \p Name
 - \p Comment
-- \p X-KDE-PluginInfo-Name is the "internal name" of the plugin.
+- \p X-TDE-PluginInfo-Name is the "internal name" of the plugin.
 - You need to have \p KPluginInfo in \p ServiceTypes but of course you may have more
   entries in there.
 
 optional entries:
 - \p Icon is the icon used for your plugin (it's shown in the pluginselector if you
   set one).
-- \p X-KDE-PluginInfo-Author and \p X-KDE-PluginInfo-Email is some information about the author of the plugin.
-- \p X-KDE-PluginInfo-Website is the address for a webpage for this plugin.
-- \p X-KDE-PluginInfo-Category is used if your application has different categories of plugins.
-- \p X-KDE-PluginInfo-Version is the version of this plugin.
-- \p X-KDE-PluginInfo-License is the license of this plugin.
-- \p X-KDE-PluginInfo-EnabledByDefault tells the program whether the plugin
+- \p X-TDE-PluginInfo-Author and \p X-TDE-PluginInfo-Email is some information about the author of the plugin.
+- \p X-TDE-PluginInfo-Website is the address for a webpage for this plugin.
+- \p X-TDE-PluginInfo-Category is used if your application has different categories of plugins.
+- \p X-TDE-PluginInfo-Version is the version of this plugin.
+- \p X-TDE-PluginInfo-License is the license of this plugin.
+- \p X-TDE-PluginInfo-EnabledByDefault tells the program whether the plugin
   should be enabled on first startup or not.
-- \p X-KDE-PluginInfo-Depends can be used to tell the application that you need to have
+- \p X-TDE-PluginInfo-Depends can be used to tell the application that you need to have
   myotherplugin enabled for your plugin to work.
-- \p X-KDE-CfgDlgHierarchy is used if you use a \p KSettings::Dialog::ConfigurableInline
+- \p X-TDE-CfgDlgHierarchy is used if you use a \p KSettings::Dialog::ConfigurableInline
   KSettings::Dialog to put the plugin checkbox into the group with the GroupID
   you set here.
 

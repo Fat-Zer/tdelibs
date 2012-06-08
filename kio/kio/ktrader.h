@@ -68,13 +68,13 @@
  * Please note that when including property names containing arithmetic operators like - or +, then you have
  * to put brackets around the property name, in order to correctly separate arithmetic operations from
  * the name. So for example a constraint expression like
- *  X-KDE-Blah < 4
+ *  X-TDE-Blah < 4
  * needs to be written as
- * [X-KDE-Blah] < 4
+ * [X-TDE-Blah] < 4
  * otherwise it could also be interpreted as
  * Substract the numeric value of the property "KDE" and "Blah" from the property "X" and make sure it
  * is less than 4.
- * Instead of the other meaning, make sure that the numeric value of "X-KDE-Blah" is less than 4.
+ * Instead of the other meaning, make sure that the numeric value of "X-TDE-Blah" is less than 4.
  *
  * See also the formal syntax defined in @ref tradersyntax .
  *
@@ -202,7 +202,7 @@ protected:
  * list of the service types it supports. Note that only properties can
  * be written as-is which start with an alphabetical character and contain
  * only alphanumerical characters. Other properties have to be enclosed in
- * brackets, e.g. <tt>[X-KDE-Init]</tt>. Properties must not contain any
+ * brackets, e.g. <tt>[X-TDE-Init]</tt>. Properties must not contain any
  * special characters other than <tt>-</tt>.
  *
  * Special property names:
@@ -214,7 +214,7 @@ protected:
  *     here for completeness, better not use it (things can be moved
  *     around).
  *   - <b>Library</b> is the property whose value is set by
- *     <tt>X-KDE-Library</tt> in the .desktop file. This renaming
+ *     <tt>X-TDE-Library</tt> in the .desktop file. This renaming
  *     happened to conform to the desktop file standard, but the
  *     property name didn't change.
  *

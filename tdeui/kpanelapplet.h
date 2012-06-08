@@ -48,12 +48,12 @@ class TQPopupMenu;
  * Besides standard keys like "Name", "Comment" and "Icon" there are
  * two panel applet specific keys:
  *
- * \b X-KDE-Library \n
+ * \b X-TDE-Library \n
  *
  * Used by the panel to locate the applet DSO (Dynamic Shared Object)
- * Example: X-KDE-Library=libexampleapplet
+ * Example: X-TDE-Library=libexampleapplet
  *
- * \b X-KDE-UniqueApplet \n
+ * \b X-TDE-UniqueApplet \n
  *
  * Similar to KApplication and KUniqueApplication there are
  * two types of panel applets. Use unique applets when it makes no
@@ -62,8 +62,8 @@ class TQPopupMenu;
  * applets when you need instance specific configuration. An example
  * is the koolclock applet where you might want to run two instances
  * in your panel, one configured as analog clock, the other one as
- * digital clock. X-KDE-UniqueApplet is a boolean key which defaults
- * to "false".  Example: X-KDE-UniqueApplet=true
+ * digital clock. X-TDE-UniqueApplet is a boolean key which defaults
+ * to "false".  Example: X-TDE-UniqueApplet=true
  *
  * Back to panel applet DSOs, the following conventions are used for %KDE:
  * Name:    lib<appletname>applet.la

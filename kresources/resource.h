@@ -199,7 +199,7 @@ Name=Example Resource
 
 [Plugin]
 Type=exchange
-X-KDE-Library=resourceexample
+X-TDE-Library=resourceexample
 \endcode
 
   <B>Makefile.am</B>

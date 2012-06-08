@@ -79,6 +79,6 @@ Comment[wa]=Fitchî årtchive Kugar
 Comment[zh_CN]=Kugar 归档文件
 Comment[zh_HK]=Kugar 壓縮檔
 Comment[zh_TW]=Kugar 壓縮檔案
-[Property::X-KDE-NativeExtension]
+[Property::X-TDE-NativeExtension]
 Type=TQString
 Value=.kug

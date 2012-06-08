@@ -75,6 +75,6 @@ MimeType=application/vnd.sun.xml.writer.template
 Type=MimeType
 Icon=wordprocessing
 Patterns=*.stw;*.STW;
-[Property::X-KDE-NativeExtension]
+[Property::X-TDE-NativeExtension]
 Type=TQString
 Value=.stw

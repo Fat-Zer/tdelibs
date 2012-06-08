@@ -934,10 +934,10 @@ KFilePlugin* KFileMetaInfoProvider::loadPlugin( const TQString& mimeType, const 
     // We need PNG fileinfo, and trash: fileinfo, but not "PNG in the trash".
     TQString queryMimeType, query;
     if ( !mimeType.isEmpty() ) {
-        query = "(not exist [X-KDE-Protocol])";
+        query = "(not exist [X-TDE-Protocol])";
         queryMimeType = mimeType;
     } else {
-        query = TQString::fromLatin1( "[X-KDE-Protocol] == '%1'" ).arg(protocol);
+        query = TQString::fromLatin1( "[X-TDE-Protocol] == '%1'" ).arg(protocol);
         // querying for a protocol: we have no mimetype, so we need to use KFilePlugin as one
         queryMimeType = "KFilePlugin";
         // hopefully using KFilePlugin as genericMimeType too isn't a problem

@@ -259,7 +259,7 @@ void Plugin::loadPlugins( TQObject *parent, KXMLGUIClient* parentGUIClient, KIns
                 KSimpleConfig desktop( desktopfile, true );
                 desktop.setDesktopGroup();
                 pluginEnabled = desktop.readBoolEntry(
-                    "X-KDE-PluginInfo-EnabledByDefault", enableNewPluginsByDefault );
+                    "X-TDE-PluginInfo-EnabledByDefault", enableNewPluginsByDefault );
             }
             else
             {

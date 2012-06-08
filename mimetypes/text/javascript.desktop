@@ -72,4 +72,4 @@ Comment[vi]=Tập tin JavaScript
 Comment[zh_CN]=JavaScript 文件
 Comment[zh_HK]=JavaScript 檔案
 Comment[zh_TW]=JavaScript 檔案
-X-KDE-IsAlso=application/x-javascript
+X-TDE-IsAlso=application/x-javascript

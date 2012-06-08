@@ -75,6 +75,6 @@ MimeType=application/vnd.sun.xml.draw.template
 Type=MimeType
 Icon=image
 Patterns=*.std;*.STD;
-[Property::X-KDE-NativeExtension]
+[Property::X-TDE-NativeExtension]
 Type=TQString
 Value=.std

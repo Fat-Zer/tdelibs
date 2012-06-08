@@ -79,6 +79,6 @@ MimeType=application/vnd.sun.xml.impress
 Type=MimeType
 Icon=presentation
 Patterns=*.sxi;*.SXI;
-[Property::X-KDE-NativeExtension]
+[Property::X-TDE-NativeExtension]
 Type=TQString
 Value=.sxi

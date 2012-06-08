@@ -74,5 +74,5 @@ Icon=tgz
 MimeType=application/x-bz2dvi
 Patterns=*.dvi.bz2
 Type=MimeType
-X-KDE-AutoEmbed=true
-X-KDE-IsAlso=application/x-bzip2
+X-TDE-AutoEmbed=true
+X-TDE-IsAlso=application/x-bzip2

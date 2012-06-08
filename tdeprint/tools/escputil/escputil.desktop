@@ -26,4 +26,4 @@ Name[zh_HK]=EPSON 噴墨印表機
 Name[zh_TW]=EPSON 噴墨印表機
 Type=Service
 
-X-KDE-Library=escputil
+X-TDE-Library=escputil

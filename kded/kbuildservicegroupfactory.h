@@ -53,7 +53,7 @@ public:
    * Adds the entry @p newEntry to the "parent group" @p parent, creating
    * the group if necassery.
    * A "parent group" is a group of services that all have the same
-   * "X-KDE-ParentApp".
+   * "X-TDE-ParentApp".
    */
   KServiceGroup *addNewChild( const TQString &parent, const char *resource, KSycocaEntry *newEntry);
  

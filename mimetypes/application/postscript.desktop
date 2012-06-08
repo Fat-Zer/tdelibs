@@ -3,7 +3,7 @@ Type=MimeType
 MimeType=application/postscript
 Icon=postscript
 Patterns=*.ps;*.PS;
-X-KDE-PatternsAccuracy=95
+X-TDE-PatternsAccuracy=95
 Comment=PostScript Document
 Comment[af]=Postscript Dokument
 Comment[ar]=مستند بوست سكريبت
@@ -88,13 +88,13 @@ Comment[zh_CN]=PostScript 文档
 Comment[zh_HK]=PostScript 文件
 Comment[zh_TW]=PostScript 文件
 Comment[zu]=Uhlu lwamafayela lwe-PostScript
-X-KDE-AutoEmbed=true
+X-TDE-AutoEmbed=true
 
-[Property::X-KDE-text]
+[Property::X-TDE-text]
 Type=bool
 Value=true
 
-[Property::X-KDE-NativeExtension]
+[Property::X-TDE-NativeExtension]
 Type=TQString
 Value=.ps
 

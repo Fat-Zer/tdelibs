@@ -40,14 +40,14 @@ ASN is useful in this case, it shouldn't be sent e.g. for system processes ).
 
 These following .desktop file entries affect ASN :
 
-X-KDE-StartupNotify=<bool>
+X-TDE-StartupNotify=<bool>
     - if true, this app/service will get app startup notify
     - if false, this app/service will _not_ get app startup notify
     - if not set
         - if it's service, it will _not_ get app startup notify
         - if it's app, it will get app startup notify, but
-            X-KDE-WMClass will be assumed to be "0" ( non-compliant )
-X-KDE-WMClass=<string>
+            X-TDE-WMClass will be assumed to be "0" ( non-compliant )
+X-TDE-WMClass=<string>
     - if set, and it's different from "0" ( without quotes ), this
         is the WMClass value for startup notification
     - if it's "0" ( without quotes ), such app is considered non-compliant,
@@ -66,21 +66,21 @@ X-KDE-WMClass=<string>
         app's binary file, in such case it doesn't need to be explicitly set )
 MapNotify=<bool>
     - this key is obsolete
-    - true is equivalent to X-KDE-StartupNotify=true and no X-KDE-WMClass set
-    - false is equivalent to X-KDE-StartupNotify=true and X-KDE-WMClass=0
+    - true is equivalent to X-TDE-StartupNotify=true and no X-TDE-WMClass set
+    - false is equivalent to X-TDE-StartupNotify=true and X-TDE-WMClass=0
         - many .desktop files in KDE ( especially in tdebase/kappfinder )
             seem to have MapNotify=false even though it's not needed, this
-            needs to be checked and replaced by the needed X-KDE-* values,
-            often just X-KDE-StartupNotify=true should be enough
+            needs to be checked and replaced by the needed X-TDE-* values,
+            often just X-TDE-StartupNotify=true should be enough
         
  The best way to check if the entries are set correctly is to start
 the application and switch to other desktop. If the startup notification
 disappears and the application appears on the desktop on which it was
-started, it's correct ( with X-KDE-WMClass=0, the start-on-desktop
+started, it's correct ( with X-TDE-WMClass=0, the start-on-desktop
 feature may not work ).
 
- Ideally, every .desktop file should have X-KDE-StartupNotify set to the correct
-value, and for apps which need it also X-KDE-WMClass should be set. This
+ Ideally, every .desktop file should have X-TDE-StartupNotify set to the correct
+value, and for apps which need it also X-TDE-WMClass should be set. This
 sometimes gives slightly better behavior than when these entries are not set.
 
 
@@ -165,9 +165,9 @@ doesn't have even the _NET_WM_PID property, WM_CLASS property is used
 then. It's usually set to two strings, and at least one of them is
 usually the binary name of the application, so it's converted
 to lowercase and compared. For applications, where such comparison
-would fail, the X-KDE-WMClass .desktop file entry should be set
+would fail, the X-TDE-WMClass .desktop file entry should be set
 to the correct WMClass value ( e.g. for XEmacs, the binary name
-is 'xemacs', but WM_CLASS is 'emacs', 'Emacs', so its X-KDE-WMClass
+is 'xemacs', but WM_CLASS is 'emacs', 'Emacs', so its X-TDE-WMClass
 in its .desktop file should be set to 'emacs' - the case doesn't
 matter ).
  The ASN identification string must be a unique string for every ASN.

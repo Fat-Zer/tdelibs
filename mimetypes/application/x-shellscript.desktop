@@ -84,8 +84,8 @@ Icon=shellscript
 Type=MimeType
 MimeType=application/x-shellscript
 Patterns=*.sh;*.csh
-X-KDE-IsAlso=application/x-executable-script
+X-TDE-IsAlso=application/x-executable-script
 
-[Property::X-KDE-text]
+[Property::X-TDE-text]
 Type=bool
 Value=true

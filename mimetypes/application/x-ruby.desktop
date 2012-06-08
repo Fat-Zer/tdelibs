@@ -79,8 +79,8 @@ Icon=source
 Type=MimeType
 MimeType=application/x-ruby
 Patterns=*.rb;*.RB;*.ruby;*.RUBY
-X-KDE-IsAlso=application/x-executable-script
+X-TDE-IsAlso=application/x-executable-script
 
-[Property::X-KDE-text]
+[Property::X-TDE-text]
 Type=bool
 Value=true

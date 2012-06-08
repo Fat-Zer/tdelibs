@@ -483,7 +483,7 @@ will be "locked down" and it will no longer be possible to select
 * kcalc - By marking the kcalcrc config file as immutable, the "Configure" button
 will not be shown
 
-Application .desktop files can have an additional field "X-KDE-AuthorizeAction".
+Application .desktop files can have an additional field "X-TDE-AuthorizeAction".
 If this field is present the .desktop file is only considered if the action(s) 
 mentioned in this field has been authorized. If multiple actions are listed
 they should be separated by commas (','). So if the .desktop file of an application

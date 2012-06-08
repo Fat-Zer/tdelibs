@@ -165,7 +165,7 @@ public:
    * Set the preferred service for opening this URL, after
    * its mimetype will have been found by KRun. IMPORTANT: the service is
    * only used if its configuration says it can handle this mimetype.
-   * This is used for instance for the X-KDE-LastOpenedWith key, for
+   * This is used for instance for the X-TDE-LastOpenedWith key, for
    * the recent documents list.
    * @param desktopEntryName the desktopEntryName of the service, e.g. "kate".
    */
@@ -374,7 +374,7 @@ public:
    * -# The mime type must inherit application/x-executable or application/x-executable-script.
    * To allow a script to run when the above rules are satisfied add the entry
    * @code
-   * X-KDE-IsAlso=application/x-executable-script
+   * X-TDE-IsAlso=application/x-executable-script
    * @endcode
    * to the mimetype's desktop file.
    * @since 3.3

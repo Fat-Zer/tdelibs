@@ -199,7 +199,7 @@ KService::init( KDesktopFile *config )
   m_strExec = config->readPathEntry( "Exec" );
   if (kde4application && !m_strExec.startsWith("/")) {
     m_strExec = "TDEHOME=$HOME/.kde XDG_DATA_DIRS=/usr/share TDEDIRS=/usr/ XDG_CONFIG_DIRS=/etc/xdg/ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:$PATH "+m_strExec;
-  } else if (config->readBoolEntry("X-KDE-SubstituteUID")) {
+  } else if (config->readBoolEntry("X-TDE-SubstituteUID")) {
     int space = m_strExec.find(" ");
     if (space==-1)
       m_strExec = KStandardDirs::findExe(m_strExec);
@@ -241,10 +241,10 @@ KService::init( KDesktopFile *config )
   entryMap.remove("Keywords");
   d->categories = config->readListEntry("Categories", ';');
   entryMap.remove("Categories");
-  m_strLibrary = config->readEntry( "X-KDE-Library" );
-  entryMap.remove("X-KDE-Library");
-  m_strInit = config->readEntry("X-KDE-Init" );
-  entryMap.remove("X-KDE-Init");
+  m_strLibrary = config->readEntry( "X-TDE-Library" );
+  entryMap.remove("X-TDE-Library");
+  m_strInit = config->readEntry("X-TDE-Init" );
+  entryMap.remove("X-TDE-Init");
 
   m_lstServiceTypes = config->readListEntry( "ServiceTypes" );
   entryMap.remove("ServiceTypes");
@@ -275,8 +275,8 @@ KService::init( KDesktopFile *config )
   m_bAllowAsDefault = config->readBoolEntry( "AllowDefault", true );
   entryMap.remove("AllowDefault");
 
-  m_initialPreference = config->readNumEntry( "X-KDE-InitialPreference", 1 );
-  entryMap.remove("X-KDE-InitialPreference");
+  m_initialPreference = config->readNumEntry( "X-TDE-InitialPreference", 1 );
+  entryMap.remove("X-TDE-InitialPreference");
   if ( m_initialPreference == 1 )
      m_initialPreference = config->readNumEntry( "InitialPreference", 1 );
   entryMap.remove("InitialPreference");
@@ -703,14 +703,14 @@ KService::List KService::allInitServices()
 }
 
 bool KService::substituteUid() const {
-  TQVariant v = property("X-KDE-SubstituteUID", TQVariant::Bool);
+  TQVariant v = property("X-TDE-SubstituteUID", TQVariant::Bool);
   return v.isValid() && v.toBool();
 }
 
 TQString KService::username() const {
   // See also KDesktopFile::tryExec()
   TQString user;
-  TQVariant v = property("X-KDE-Username", TQVariant::String);
+  TQVariant v = property("X-TDE-Username", TQVariant::String);
   user = v.isValid() ? v.toString() : TQString::null;
   if (user.isEmpty())
      user = ::getenv("ADMIN_ACCOUNT");
@@ -772,7 +772,7 @@ bool KService::SuSEunimportant() const {
 }
 
 TQString KService::parentApp() const {
-  TQMap<TQString,TQVariant>::ConstIterator it = m_mapProps.find( "X-KDE-ParentApp" );
+  TQMap<TQString,TQVariant>::ConstIterator it = m_mapProps.find( "X-TDE-ParentApp" );
   if ( (it == m_mapProps.end()) || (!it.data().isValid()))
   {
      return TQString::null;

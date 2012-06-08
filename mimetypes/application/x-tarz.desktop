@@ -87,7 +87,7 @@ Comment[zu]=Umqulu we-Tar Elicindezelwe
 Icon=tgz
 Type=MimeType
 Patterns=*.tar.Z;
-[Property::X-KDE-LocalProtocol]
+[Property::X-TDE-LocalProtocol]
 Type=TQString
 Value=tar
 

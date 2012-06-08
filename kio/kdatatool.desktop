@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=ServiceType
-X-KDE-ServiceType=KDataTool
+X-TDE-ServiceType=KDataTool
 Comment=TDE Data Tool
 Comment[af]=TDE Data Program
 Comment[ar]=أداة كيدي للبيانات

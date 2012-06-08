@@ -296,7 +296,7 @@ void KCMultiDialog::addModule(const KCModuleInfo& moduleinfo,
     {
         module = new KCModuleProxy( moduleinfo, withfallback, page );
         TQStringList parentComponents = moduleinfo.service()->property(
-                "X-KDE-ParentComponents" ).toStringList();
+                "X-TDE-ParentComponents" ).toStringList();
         moduleParentComponents.insert( module,
                 new TQStringList( parentComponents ) );
 

@@ -84,6 +84,6 @@ Comment[zh_CN]=Microsoft Excel 电子表格
 Comment[zh_HK]=微軟 Excel 表格
 Comment[zh_TW]=微軟 Excel 表格
 Comment[zu]= Ipheshana lesitayela le-Microsoft Excel
-[Property::X-KDE-NativeExtension]
+[Property::X-TDE-NativeExtension]
 Type=TQString
 Value=.xls

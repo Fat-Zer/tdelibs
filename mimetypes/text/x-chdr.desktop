@@ -85,9 +85,9 @@ Icon=source_h
 Type=MimeType
 MimeType=text/x-chdr
 Patterns=*.h;
-X-KDE-IsAlso=text/plain
-X-KDE-PatternsAccuracy=40
+X-TDE-IsAlso=text/plain
+X-TDE-PatternsAccuracy=40
 
-[Property::X-KDE-text]
+[Property::X-TDE-text]
 Type=bool
 Value=true

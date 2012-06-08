@@ -165,4 +165,4 @@ Comment[zh_CN]=从 HTTP 缓存中清除旧条目
 Comment[zh_HK]=從 HTTP 快取中清除舊的項目
 Comment[zh_TW]=從 HTTP 快取中清除舊的項目
 Comment[zu]=Ihlanza izingeniso ezindalam ezisuka kwi-cache ye-HTTP
-X-KDE-StartupNotify=false
+X-TDE-StartupNotify=false

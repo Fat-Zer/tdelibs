@@ -71,6 +71,6 @@ Icon=database
 Type=MimeType
 Patterns=*.odb;*.ODB;
 MimeType=application/vnd.sun.xml.base
-[Property::X-KDE-NativeExtension]
+[Property::X-TDE-NativeExtension]
 Type=TQString
 Value=.odb

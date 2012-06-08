@@ -3,7 +3,7 @@ Type=MimeType
 MimeType=application/x-kivio
 Icon=kivio_flw
 Patterns=*.flw;
-X-KDE-AutoEmbed=false
+X-TDE-AutoEmbed=false
 Comment=Kivio Document
 Comment[af]=Kivio Dokument
 Comment[ar]=مستند Kivio
@@ -87,6 +87,6 @@ Comment[zh_CN]=Kivio 文档
 Comment[zh_HK]=Kivio 文件
 Comment[zh_TW]=Kivio 文件
 Comment[zu]=Uhlu lwamafayela lwe-Kivio
-[Property::X-KDE-NativeExtension]
+[Property::X-TDE-NativeExtension]
 Type=TQString
 Value=.flw

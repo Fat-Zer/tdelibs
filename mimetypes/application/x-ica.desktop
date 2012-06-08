@@ -70,4 +70,4 @@ Comment[zh_TW]=Citrix ICA 客戶端設定
 Icon=wordprocessing
 Type=MimeType
 Patterns=*.ica;*.ICA;
-X-KDE-AutoEmbed=false
+X-TDE-AutoEmbed=false

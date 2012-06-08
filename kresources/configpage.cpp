@@ -178,7 +178,7 @@ void ConfigPage::load()
   KTrader::OfferList::ConstIterator it = plugins.begin();
   KTrader::OfferList::ConstIterator end = plugins.end();
   for ( ; it != end; ++it ) {
-    const TQString family = (*it)->property( "X-KDE-ResourceFamily" ).toString();
+    const TQString family = (*it)->property( "X-TDE-ResourceFamily" ).toString();
     if ( compatFamilyNames.find( family ) == compatFamilyNames.end() )
         compatFamilyNames.append( family );
   }
@@ -188,7 +188,7 @@ void ConfigPage::load()
   for( m_it = managers.begin(); m_it != managers.end(); ++m_it ) {
     TQString displayName = (*m_it)->property( "Name" ).toString();
     familyDisplayNames.append( displayName );
-    TQString family = (*m_it)->property( "X-KDE-ResourceFamily" ).toString();
+    TQString family = (*m_it)->property( "X-TDE-ResourceFamily" ).toString();
     if ( !family.isEmpty() ) {
       compatFamilyNames.remove( family );
       mFamilyMap.append( family );

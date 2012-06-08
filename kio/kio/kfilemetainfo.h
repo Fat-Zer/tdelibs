@@ -1369,7 +1369,7 @@ private:
  * - @c Type: must be @c "Service"
  * - @c Name: the name of the plugin
  * - @c ServiceTypes: must contain @c "KFilePlugin"
- * - @c X-KDE-Library: the name of the library containing the KFile plugin
+ * - @c X-TDE-Library: the name of the library containing the KFile plugin
  * - @c MimeType: the mimetype(s) which are supported by the plugin
  * - @c PreferredGroups: a comma-separated list of the most important groups.
  *   This list defines the order in which the meta information groups should be
@@ -1385,7 +1385,7 @@ private:
  *  Type=Service
  *  Name=Foo Info
  *  ServiceTypes=KFilePlugin
- *  X-KDE-Library=kfile_foo
+ *  X-TDE-Library=kfile_foo
  *  MimeType=application/x-foo
  *  PreferredGroups=FooInfo
  *  PreferredItems=Items,Size

@@ -6,6 +6,6 @@ MimeType=application/x-nzb
 Icon=bt
 Type=MimeType
 Patterns=*.nzb
-X-KDE-AutoEmbed=false
-X-KDE-isAlso=text/xml
+X-TDE-AutoEmbed=false
+X-TDE-isAlso=text/xml
 

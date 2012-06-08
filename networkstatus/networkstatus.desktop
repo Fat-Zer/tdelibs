@@ -92,9 +92,9 @@ Comment[zh_CN]=跟踪网卡的状态并为应用程序提供使用网络的通�
 Comment[zh_TW]=追蹤網路介面的狀態，並提供使用網路的應用程式的通知。
 Type=Service
 ServiceTypes=KDEDModule
-X-KDE-ModuleType=Library
-X-KDE-Library=networkstatus
-X-KDE-FactoryName=networkstatus
-X-KDE-Kded-autoload=true
-X-KDE-Kded-load-on-demand=true
+X-TDE-ModuleType=Library
+X-TDE-Library=networkstatus
+X-TDE-FactoryName=networkstatus
+X-TDE-Kded-autoload=true
+X-TDE-Kded-load-on-demand=true
 

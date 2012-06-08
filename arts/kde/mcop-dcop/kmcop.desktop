@@ -87,4 +87,4 @@ Comment[zu]=Ibhulogo le-TDE MCOP-DCOP
 Icon=kmcop
 ServiceTypes=KMCOP
 X-DCOP-ServiceType=Unique
-X-KDE-StartupNotify=false
+X-TDE-StartupNotify=false

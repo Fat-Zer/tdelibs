@@ -140,7 +140,7 @@ int main(int argc, char **argv)
   static const char
     *execs[] = { "Exec=date -u", "Exec=echo $$PWD" },
     *terms[] = { "Terminal=false", "Terminal=true\nTerminalOptions=-T \"%f - %c\"" },
-    *sus[] = { "X-KDE-SubstituteUID=false", "X-KDE-SubstituteUID=true\nX-KDE-Username=sprallo" },
+    *sus[] = { "X-TDE-SubstituteUID=false", "X-TDE-SubstituteUID=true\nX-TDE-Username=sprallo" },
     *rslts[] = {
 "'date' '-u'", // 0
 "'/bin/sh' '-c' 'echo $PWD '", // 1

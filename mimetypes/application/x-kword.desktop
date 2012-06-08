@@ -3,7 +3,7 @@ Type=MimeType
 MimeType=application/x-kword
 Icon=kword_kwd
 Patterns=*.kwd;*.kwt;
-X-KDE-AutoEmbed=false
+X-TDE-AutoEmbed=false
 Comment=KWord Document
 Comment[af]=Kword Dokument
 Comment[ar]=مستند KWord
@@ -87,6 +87,6 @@ Comment[zh_CN]=KWord 文档
 Comment[zh_HK]=KWord 文件
 Comment[zh_TW]=KWord 文件
 Comment[zu]=Uhlu lwamafayela lwe-KWord
-[Property::X-KDE-NativeExtension]
+[Property::X-TDE-NativeExtension]
 Type=TQString
 Value=.kwd

@@ -89,7 +89,7 @@ Comment[zh_HK]=Gzip 壓縮的 Tar 保存檔
 Comment[zh_TW]=Gzip 壓縮的 Tar 壓縮文件
 Comment[zu]=Umqulu we-Gzipped Tar
 
-[Property::X-KDE-LocalProtocol]
+[Property::X-TDE-LocalProtocol]
 Type=TQString
 Value=tar
 

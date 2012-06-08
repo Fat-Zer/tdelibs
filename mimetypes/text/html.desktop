@@ -80,8 +80,8 @@ Icon=html
 Type=MimeType
 MimeType=text/html
 Patterns=*.html;*.HTML;*.htm;*.HTM;*.shtml;
-X-KDE-AutoEmbed=true
+X-TDE-AutoEmbed=true
 
-[Property::X-KDE-text]
+[Property::X-TDE-text]
 Type=bool
 Value=true

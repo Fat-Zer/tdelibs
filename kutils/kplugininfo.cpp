@@ -84,16 +84,16 @@ KPluginInfo::KPluginInfo( const TQString & filename, const char* resource )
         d->name = file.readName();
         d->comment = file.readComment();
         d->icon = file.readEntry( "Icon" );
-        d->author = file.readEntry( "X-KDE-PluginInfo-Author" );
-        d->email = file.readEntry( "X-KDE-PluginInfo-Email" );
-        d->pluginName = file.readEntry( "X-KDE-PluginInfo-Name" );
-        d->version = file.readEntry( "X-KDE-PluginInfo-Version" );
-        d->website = file.readEntry( "X-KDE-PluginInfo-Website" );
-        d->category = file.readEntry( "X-KDE-PluginInfo-Category" );
-        d->license = file.readEntry( "X-KDE-PluginInfo-License" );
-        d->dependencies = file.readListEntry( "X-KDE-PluginInfo-Depends" );
+        d->author = file.readEntry( "X-TDE-PluginInfo-Author" );
+        d->email = file.readEntry( "X-TDE-PluginInfo-Email" );
+        d->pluginName = file.readEntry( "X-TDE-PluginInfo-Name" );
+        d->version = file.readEntry( "X-TDE-PluginInfo-Version" );
+        d->website = file.readEntry( "X-TDE-PluginInfo-Website" );
+        d->category = file.readEntry( "X-TDE-PluginInfo-Category" );
+        d->license = file.readEntry( "X-TDE-PluginInfo-License" );
+        d->dependencies = file.readListEntry( "X-TDE-PluginInfo-Depends" );
         d->enabledbydefault = file.readBoolEntry(
-                "X-KDE-PluginInfo-EnabledByDefault", false );
+                "X-TDE-PluginInfo-EnabledByDefault", false );
     }
     else if( filename.endsWith( TQString::fromAscii( ".plugin" ) ) )
     { // provided for noatun style .plugin files compatibility
@@ -127,16 +127,16 @@ KPluginInfo::KPluginInfo( const KService::Ptr service )
     d->name = service->name();
     d->comment = service->comment();
     d->icon = service->icon();
-    d->author = service->property( "X-KDE-PluginInfo-Author" ).toString();
-    d->email = service->property( "X-KDE-PluginInfo-Email" ).toString();
-    d->pluginName = service->property( "X-KDE-PluginInfo-Name" ).toString();
-    d->version = service->property( "X-KDE-PluginInfo-Version" ).toString();
-    d->website = service->property( "X-KDE-PluginInfo-Website" ).toString();
-    d->category = service->property( "X-KDE-PluginInfo-Category" ).toString();
-    d->license = service->property( "X-KDE-PluginInfo-License" ).toString();
+    d->author = service->property( "X-TDE-PluginInfo-Author" ).toString();
+    d->email = service->property( "X-TDE-PluginInfo-Email" ).toString();
+    d->pluginName = service->property( "X-TDE-PluginInfo-Name" ).toString();
+    d->version = service->property( "X-TDE-PluginInfo-Version" ).toString();
+    d->website = service->property( "X-TDE-PluginInfo-Website" ).toString();
+    d->category = service->property( "X-TDE-PluginInfo-Category" ).toString();
+    d->license = service->property( "X-TDE-PluginInfo-License" ).toString();
     d->dependencies =
-        service->property( "X-KDE-PluginInfo-Depends" ).toStringList();
-    TQVariant tmp = service->property( "X-KDE-PluginInfo-EnabledByDefault" );
+        service->property( "X-TDE-PluginInfo-Depends" ).toStringList();
+    TQVariant tmp = service->property( "X-TDE-PluginInfo-EnabledByDefault" );
     d->enabledbydefault = tmp.isValid() ? tmp.toBool() : false;
 }
 
@@ -277,7 +277,7 @@ const TQValueList<KService::Ptr> & KPluginInfo::kcmServices() const
     if ( !d->kcmservicesCached )
     {
         d->kcmservices = KTrader::self()->query( "KCModule", "'" + d->pluginName +
-            "' in [X-KDE-ParentComponents]" );
+            "' in [X-TDE-ParentComponents]" );
         kdDebug( 703 ) << "found " << d->kcmservices.count() << " offers for " <<
             d->pluginName << endl;
 

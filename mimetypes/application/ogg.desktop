@@ -4,8 +4,8 @@ MimeType=application/ogg
 Icon=sound
 Patterns=*.ogg;*.OGG;
 # Previous name of this mimetype
-X-KDE-IsAlso=application/x-ogg
-X-KDE-PatternsAccuracy=80
+X-TDE-IsAlso=application/x-ogg
+X-TDE-PatternsAccuracy=80
 Comment=Ogg Multimedia
 Comment[ar]=وسائط Ogg متعددة
 Comment[az]=Ogg Multimediya

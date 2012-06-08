@@ -3,7 +3,7 @@ Type=MimeType
 MimeType=application/x-kpresenter
 Icon=kpresenter_kpr
 Patterns=*.kpr;*.kpt;
-X-KDE-AutoEmbed=false
+X-TDE-AutoEmbed=false
 Comment=KPresenter Document
 Comment[af]=Kpresenter Dokument
 Comment[ar]=مستند KPresenter
@@ -86,6 +86,6 @@ Comment[zh_CN]=KPresenter 文档
 Comment[zh_HK]=KPresenter 文件
 Comment[zh_TW]=KPresenter 文件
 Comment[zu]=Uhlu lwamafayela lwe-KPresenter
-[Property::X-KDE-NativeExtension]
+[Property::X-TDE-NativeExtension]
 Type=TQString
 Value=.kpr

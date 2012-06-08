@@ -79,9 +79,9 @@ Comment[zh_TW]=XHTML Family 文件
 Type=MimeType
 Icon=html
 MimeType=application/xhtml+xml
-X-KDE-IsAlso=text/xml
+X-TDE-IsAlso=text/xml
 Patterns=*.xhtml
 
-[Property::X-KDE-text]
+[Property::X-TDE-text]
 Type=bool
 Value=true

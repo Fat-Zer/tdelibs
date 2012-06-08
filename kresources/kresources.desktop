@@ -4,10 +4,10 @@ Icon=about_kde
 Type=Application
 Terminal=false
 
-X-KDE-ModuleType=Library
-X-KDE-Library=kresources
-X-KDE-FactoryName=kresources
-X-KDE-HasReadOnlyMode=false
+X-TDE-ModuleType=Library
+X-TDE-Library=kresources
+X-TDE-FactoryName=kresources
+X-TDE-HasReadOnlyMode=false
 
 Name=TDE Resources
 Name[af]=TDE Hulpbronne
@@ -205,6 +205,6 @@ Keywords[uk]=ресурси,ресурс для konnector,ресурс конт�
 Keywords[vi]=tài nguyên,tài nguyên konnector,tài nguyên liên lạc,tài nguyên lịch,tài nguyên ghi chú,imap
 Keywords[zh_CN]=resources,konnector resource,contact resource,calendar resource,notes resource,imap资源,konnector 资源,联系人资源,日历资源,备忘资源
 
-Categories=Qt;KDE;X-KDE-settings-components;
+Categories=Qt;TDE;X-TDE-settings-components;
 OnlyShowIn=TDE;
 

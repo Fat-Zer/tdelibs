@@ -3,7 +3,7 @@ Icon=txt
 Type=MimeType
 MimeType=text/x-csv
 Patterns=*.csv;*.CSV;
-X-KDE-IsAlso=text/plain
+X-TDE-IsAlso=text/plain
 Comment=Text File with Comma Separated Values
 Comment[af]=Teks Lêer met Komma Geskeide Waardes
 Comment[ar]=ملف نصي مع قيم مفصولة عن بعضها بالفواصل
@@ -86,6 +86,6 @@ Comment[zh_HK]=用逗號分隔的文字文件
 Comment[zh_TW]=用逗號分隔值的文字文件
 Comment[zu]=Ifayela lombhalo ngamanani ahlukaniswe ngokhefane
 
-[Property::X-KDE-text]
+[Property::X-TDE-text]
 Type=bool
 Value=true

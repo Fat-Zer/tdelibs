@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=ServiceType
-X-KDE-ServiceType=DCOP/InstantMessenger
+X-TDE-ServiceType=DCOP/InstantMessenger
 Comment=Instant Messenger with a DCOP interface
 Comment[af]=Oombliklike Boodskapper met DCOP intervlak
 Comment[be]=Імгненны абвестнік з інтэрфэйсам DCOP

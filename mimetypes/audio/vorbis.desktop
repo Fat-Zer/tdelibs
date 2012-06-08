@@ -2,7 +2,7 @@
 Type=MimeType
 MimeType=audio/vorbis
 Icon=sound
-X-KDE-IsAlso=audio/x-vorbis
+X-TDE-IsAlso=audio/x-vorbis
 Comment=Ogg Vorbis Audio
 Comment[af]=Ogg Vorbis Klank
 Comment[ar]=ملف Ogg Vorbis صوتي

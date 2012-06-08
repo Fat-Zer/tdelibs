@@ -15,7 +15,7 @@ application's .desktop file must be located in a KDE autostart directory such
 as $TDEDIR/share/autostart or $TDEHOME/share/autostart. The .desktop file can
 contain the following optional entries to control its autostart:
 
-   X-KDE-autostart-condition = rcfile:group:entry:default
+   X-TDE-autostart-condition = rcfile:group:entry:default
 
          rcfile   = name of a config file (including path if necessary)
          group    = name of a group within the config file
@@ -28,17 +28,17 @@ contain the following optional entries to control its autostart:
       'default' is 'true'.
       If the entry is not within a group, the group entry can be left empty.
 
-   X-KDE-autostart-after = desktop_name
+   X-TDE-autostart-after = desktop_name
 
          desktop_name  = the name of another .desktop file excluding path and
                          the .desktop suffix. E.g. panel.desktop would appear
-                         as 'X-KDE-autostart-after=panel'
+                         as 'X-TDE-autostart-after=panel'
                       
       Waits until the .desktop file specified by 'desktop_name' has been
       autostarted. The entry is ignored if the specified application is not
       scheduled in the same autostart phase as this .desktop file.
 
-   X-KDE-autostart-phase = phase
+   X-TDE-autostart-phase = phase
 
          phase  = 1 or 2
 

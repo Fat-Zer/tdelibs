@@ -81,10 +81,10 @@ Type=MimeType
 MimeType=text/xml
 Patterns=*.xml;*.XML;
 
-[Property::X-KDE-text]
+[Property::X-TDE-text]
 Type=bool
 Value=true
 
-[Property::X-KDE-NativeExtension]
+[Property::X-TDE-NativeExtension]
 Type=TQString
 Value=.xml

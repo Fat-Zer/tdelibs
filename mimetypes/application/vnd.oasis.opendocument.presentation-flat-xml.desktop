@@ -74,6 +74,6 @@ Comment[vi]=Trình diễn OpenDocument OASIS (Flat XML)
 Comment[zh_CN]=OASIS OpenDocument 演示文稿 (Flat XML)
 Comment[zh_HK]=OASIS OpenDocument 簡報 (Flat XML)
 Comment[zh_TW]=OASIS OpenDocument 簡報 (Flat XML)
-[Property::X-KDE-NativeExtension]
+[Property::X-TDE-NativeExtension]
 Type=TQString
 Value=.fodp

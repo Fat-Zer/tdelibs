@@ -190,7 +190,7 @@ void Broker::loadPlugin( const TQString& pluginId )
 
     Client *client = KParts::ComponentFactory::createInstanceFromQuery<Client>(
         TQString::fromLatin1( "KSpell/Client" ),
-        TQString::fromLatin1( "[X-KDE-PluginInfo-Name]=='%1'" ).arg( pluginId ),
+        TQString::fromLatin1( "[X-TDE-PluginInfo-Name]=='%1'" ).arg( pluginId ),
         this, 0, TQStringList(), &error );
 
     if ( client )

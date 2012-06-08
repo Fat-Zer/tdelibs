@@ -10,4 +10,4 @@ Name=ISO9660 Image Viewer
 Name[hu]=ISO9660 Nézet
 Name[fr]=Lecteur ISO9660
 X-DCOP-ServiceType=None
-Categories=Qt;KDE;System;
+Categories=Qt;TDE;System;

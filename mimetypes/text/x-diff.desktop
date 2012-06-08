@@ -84,8 +84,8 @@ Comment[zu]=Amafayela phakathi komehluko
 Icon=txt
 Type=MimeType
 Patterns=*.dif;*.diff;*.patch
-X-KDE-IsAlso=text/plain
+X-TDE-IsAlso=text/plain
 
-[Property::X-KDE-text]
+[Property::X-TDE-text]
 Type=bool
 Value=true

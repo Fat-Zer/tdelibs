@@ -75,6 +75,6 @@ MimeType=text/vnd.abc
 Patterns=*.abc;*.ABC;
 
 
-[Property::X-KDE-text]
+[Property::X-TDE-text]
 Type=bool
 Value=true

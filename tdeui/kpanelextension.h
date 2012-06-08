@@ -49,12 +49,12 @@ class KPanelExtensionPrivate;
  * Besides standard keys like "Name", "Comment" and "Icon" there are
  * two panel extension specific keys:
  *
- * \b X-KDE-Library \n
+ * \b X-TDE-Library \n
  *
  * Used by the panel to locate the extension DSO (Dynamic Shared Object)
- * Example: X-KDE-Library=libexampleextension
+ * Example: X-TDE-Library=libexampleextension
  *
- * \b X-KDE-UniqueExtension \n
+ * \b X-TDE-UniqueExtension \n
  *
  * Similar to KApplication and KUniqueApplication there are
  * two types of panel extensions. Use unique extensions when it makes no
@@ -62,8 +62,8 @@ class KPanelExtensionPrivate;
  * good example for unique extensions is the taskbar extension.  Use normal
  * extensions when you need instance specific configuration. An example
  * is a subpanel extension where you might want to run more than one instances.
- * X-KDE-UniqueExtension is a boolean key which defaults
- * to "false".  Example: X-KDE-UniqueExtension=true
+ * X-TDE-UniqueExtension is a boolean key which defaults
+ * to "false".  Example: X-TDE-UniqueExtension=true
  *
  * Back to panel extension DSOs, the following conventions are used for KDE:
  * Name:    lib<extensionname>extension.la

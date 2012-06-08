@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=ServiceType
-X-KDE-ServiceType=DCOP/Text-to-Speech
+X-TDE-ServiceType=DCOP/Text-to-Speech
 Comment=Text-to-Speech Service with a DCOP interface
 Comment[af]=Tekste-tot-spraak diens met DCOP intervlak
 Comment[be]=Сервіс агалошвання тэксту з інтэрфэйсам DCOP

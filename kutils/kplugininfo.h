@@ -53,7 +53,7 @@ class KUTILS_EXPORT KPluginInfo
            Name=User Visible Name
            Comment=Description of what the plugin does
 
-           [X-KDE Plugin Info]
+           [X-TDE Plugin Info]
            Author=Author's Name
            Email=author@foo.bar
            PluginName=internalname
@@ -67,7 +67,7 @@ class KUTILS_EXPORT KPluginInfo
          * The first two entries in the "Desktop Entry" group always need to
          * be present.
          *
-         * The "X-KDE-PluginInfo" keys you may add further entries which
+         * The "X-TDE-PluginInfo" keys you may add further entries which
          * will be available using property(). The Website,Category,Require
          * keys are optional.
          * For EnabledByDefault look at isPluginEnabledByDefault.
@@ -90,15 +90,15 @@ class KUTILS_EXPORT KPluginInfo
            Type=Service
            ServiceTypes=KPluginInfo
 
-           X-KDE-PluginInfo-Author=Author's Name
-           X-KDE-PluginInfo-Email=author@foo.bar
-           X-KDE-PluginInfo-Name=internalname
-           X-KDE-PluginInfo-Version=1.1
-           X-KDE-PluginInfo-Website=http://www.plugin.org/
-           X-KDE-PluginInfo-Category=playlist
-           X-KDE-PluginInfo-Depends=plugin1,plugin3
-           X-KDE-PluginInfo-License=GPL
-           X-KDE-PluginInfo-EnabledByDefault=true
+           X-TDE-PluginInfo-Author=Author's Name
+           X-TDE-PluginInfo-Email=author@foo.bar
+           X-TDE-PluginInfo-Name=internalname
+           X-TDE-PluginInfo-Version=1.1
+           X-TDE-PluginInfo-Website=http://www.plugin.org/
+           X-TDE-PluginInfo-Category=playlist
+           X-TDE-PluginInfo-Depends=plugin1,plugin3
+           X-TDE-PluginInfo-License=GPL
+           X-TDE-PluginInfo-EnabledByDefault=true
 
            Name=User Visible Name
            Comment=Description of what the plugin does

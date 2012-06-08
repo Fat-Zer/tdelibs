@@ -115,7 +115,7 @@ public:
      * plugins are enabled and which are disabled. What happens by default (i.e.
      * for new plugins that are not in that config file) is controlled by
      * @p enableNewPluginsByDefault. It can be overridden by the plugin if it
-     * sets the X-KDE-PluginInfo-EnabledByDefault key in the .desktop file
+     * sets the X-TDE-PluginInfo-EnabledByDefault key in the .desktop file
      * (with the same name as the .rc file)
      *
      * If a disabled plugin is already loaded it will be removed from the GUI

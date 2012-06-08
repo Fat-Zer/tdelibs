@@ -86,6 +86,6 @@ Comment[zh_HK]=Usenet 新聞組訊息
 Comment[zh_TW]=Usenet 新聞訊息
 Comment[zu]=Umyalezo Wezindaba Zoxhumano lokusebenzisa
 
-[Property::X-KDE-text]
+[Property::X-TDE-text]
 Type=bool
 Value=true

@@ -84,8 +84,8 @@ Icon=source_p
 Type=MimeType
 MimeType=text/x-pascal
 Patterns=*.p;*.pas;*.pp;*.dpr;*.DPR;*.PP;*.PAS;*.P
-X-KDE-IsAlso=text/plain
+X-TDE-IsAlso=text/plain
 
-[Property::X-KDE-text]
+[Property::X-TDE-text]
 Type=bool
 Value=true

@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=ServiceType
-X-KDE-ServiceType=Application
+X-TDE-ServiceType=Application
 Name=Application
 Name[af]=Program
 Name[ar]=تطبيق
@@ -92,10 +92,10 @@ Type=bool
 [PropertyDef::DocPath]
 Type=TQString
 
-[PropertyDef::X-KDE-SubstituteUID]
+[PropertyDef::X-TDE-SubstituteUID]
 Type=bool
 
-[PropertyDef::X-KDE-Username]
+[PropertyDef::X-TDE-Username]
 Type=TQString
 
 [PropertyDef::StartupWMClass]
@@ -104,21 +104,21 @@ Type=TQString
 [PropertyDef::StartupNotify]
 Type=bool
 
-[PropertyDef::X-KDE-WMClass]
+[PropertyDef::X-TDE-WMClass]
 Type=TQString
 
-[PropertyDef::X-KDE-StartupNotify]
+[PropertyDef::X-TDE-StartupNotify]
 Type=bool
 
 [PropertyDef::X-DCOP-ServiceName]
 Type=TQString
 
-[PropertyDef::X-KDE-ParentApp]
+[PropertyDef::X-TDE-ParentApp]
 Type=TQString
 
-[PropertyDef::X-KDE-HasTempFileOption]
+[PropertyDef::X-TDE-HasTempFileOption]
 Type=bool
 
-[PropertyDef::X-KDE-Protocols]
+[PropertyDef::X-TDE-Protocols]
 Type=TQStringList
 

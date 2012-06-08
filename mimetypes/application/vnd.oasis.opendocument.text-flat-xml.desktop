@@ -73,6 +73,6 @@ Comment[uz@cyrillic]=OASIS OpenDocument матн ҳужжати (Flat XML)
 Comment[vi]=Văn bản OpenDocument OASIS (Flat XML)
 Comment[zh_CN]=OASIS OpenDocument 文本 (Flat XML)
 Comment[zh_TW]=OASIS OpenDocument 文字 (Flat XML)
-[Property::X-KDE-NativeExtension]
+[Property::X-TDE-NativeExtension]
 Type=TQString
 Value=.fodt

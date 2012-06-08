@@ -117,8 +117,8 @@ KPreviewWidgetBase * KFileMetaPreview::previewProviderFor( const TQString& mimeT
             parentMimeType = parentMimeInfo->parentMimeType();
         }
 
-        // check X-KDE-Text property
-        TQVariant textProperty = mimeInfo->property( "X-KDE-text" );
+        // check X-TDE-Text property
+        TQVariant textProperty = mimeInfo->property( "X-TDE-text" );
         if ( textProperty.isValid() && textProperty.type() == TQVariant::Bool )
         {
             if ( textProperty.toBool() )

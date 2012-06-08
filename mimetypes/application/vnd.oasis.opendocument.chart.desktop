@@ -71,6 +71,6 @@ Comment[uk]=Діаграма OASIS OpenDocument
 Comment[vi]=Biểu đồ OpenDocument OASIS
 Comment[zh_CN]=OASIS OpenDocument 图表
 Comment[zh_TW]=OASIS OpenDocument 圖表
-[Property::X-KDE-NativeExtension]
+[Property::X-TDE-NativeExtension]
 Type=TQString
 Value=.odc

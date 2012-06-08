@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=ServiceType
-X-KDE-ServiceType=KFilePlugin
+X-TDE-ServiceType=KFilePlugin
 Name=KFile Meta Data Plugin
 Name[af]=Klêer Meta Data Inprop module
 Name[ar]=ملحق KFile Meta Data

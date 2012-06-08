@@ -73,6 +73,6 @@ Comment[uz@cyrillic]=OASIS OpenDocument матн ҳужжати намунаси
 Comment[vi]=Biểu mẫu văn bản OpenDocument OASIS
 Comment[zh_CN]=OASIS OpenDocument 文本文档模板
 Comment[zh_TW]=OASIS OpenDocument 文字樣本
-[Property::X-KDE-NativeExtension]
+[Property::X-TDE-NativeExtension]
 Type=TQString
 Value=.ott

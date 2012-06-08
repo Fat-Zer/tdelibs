@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=ServiceType
-X-KDE-ServiceType=KParts/ReadWritePart
-X-KDE-Derived=KParts/ReadOnlyPart
+X-TDE-ServiceType=KParts/ReadWritePart
+X-TDE-Derived=KParts/ReadOnlyPart
 Comment=TDE Component
 Comment[af]=Tde Komponent
 Comment[ar]=عنصر كيدي

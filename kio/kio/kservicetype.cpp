@@ -63,7 +63,7 @@ KServiceType::init( KDesktopFile *config)
   // Or is it a servicetype ?
   if ( m_strName.isEmpty() )
   {
-    m_strName = config->readEntry( "X-KDE-ServiceType" );
+    m_strName = config->readEntry( "X-TDE-ServiceType" );
   }
 
   m_strComment = config->readComment();
@@ -72,10 +72,10 @@ KServiceType::init( KDesktopFile *config)
 
   // We store this as property to preserve BC, we can't change that
   // because KSycoca needs to remain BC between KDE 2.x and KDE 3.x
-  TQString sDerived = config->readEntry( "X-KDE-Derived" );
+  TQString sDerived = config->readEntry( "X-TDE-Derived" );
   m_bDerived = !sDerived.isEmpty();
   if ( m_bDerived )
-    m_mapProps.insert( "X-KDE-Derived", sDerived );
+    m_mapProps.insert( "X-TDE-Derived", sDerived );
 
   TQStringList tmpList = config->groupList();
   TQStringList::Iterator gIt = tmpList.begin();
@@ -129,7 +129,7 @@ KServiceType::load( TQDataStream& _str )
   _str >> m_strName >> m_strIcon >> m_strComment >> m_mapProps >> m_mapPropDefs
        >> b;
   m_bValid = b;
-  m_bDerived = m_mapProps.contains("X-KDE-Derived");
+  m_bDerived = m_mapProps.contains("X-TDE-Derived");
 }
 
 void
@@ -150,7 +150,7 @@ KServiceType::~KServiceType()
 
 TQString KServiceType::parentServiceType() const
 {
-  TQVariant v = property("X-KDE-Derived");
+  TQVariant v = property("X-TDE-Derived");
   return v.toString();
 }
 

@@ -167,4 +167,4 @@ Name[zh_TW]=可嵌入的影像檢視器
 Name[zu]=Isithombe Sombukisi Oshuthisekayo
 ServiceTypes=KParts/ReadOnlyPart,Browser/View
 InitialPreference=4
-X-KDE-Library=khtmlimagepart
+X-TDE-Library=khtmlimagepart

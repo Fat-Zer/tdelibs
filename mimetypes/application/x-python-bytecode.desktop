@@ -82,4 +82,4 @@ Comment[zh_CN]=Python 字节码
 Comment[zh_HK]=Python 位元碼
 Comment[zh_TW]=Python 位元碼
 Comment[zu]=Ikhodi le-byte le-Python
-X-KDE-IsAlso=application/x-executable
+X-TDE-IsAlso=application/x-executable

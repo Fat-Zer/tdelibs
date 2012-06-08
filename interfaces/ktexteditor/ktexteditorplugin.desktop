@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=ServiceType
-X-KDE-ServiceType=KTextEditor/Plugin
-X-KDE-Derived=
+X-TDE-ServiceType=KTextEditor/Plugin
+X-TDE-Derived=
 Comment=KTextEditor Plugin
 Comment[af]=KTextEditor Inprop Module
 Comment[ar]=مساعد برنامج KTextEditor

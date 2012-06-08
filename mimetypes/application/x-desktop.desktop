@@ -86,6 +86,6 @@ Type=MimeType
 MimeType=application/x-desktop
 Patterns=*.desktop;*.kdelnk;
 
-[Property::X-KDE-text]
+[Property::X-TDE-text]
 Type=bool
 Value=true

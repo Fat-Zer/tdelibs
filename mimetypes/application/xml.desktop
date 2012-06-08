@@ -80,8 +80,8 @@ Icon=html
 Type=MimeType
 MimeType=application/xml
 # This mimetype is an alias for text/xml. Both are referenced by the W3C.
-X-KDE-IsAlso=text/xml
+X-TDE-IsAlso=text/xml
 
-[Property::X-KDE-text]
+[Property::X-TDE-text]
 Type=bool
 Value=true

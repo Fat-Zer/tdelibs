@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=ServiceType
-X-KDE-ServiceType=KURIFilter/Plugin
+X-TDE-ServiceType=KURIFilter/Plugin
 Name=Enhanced Browsing Plugin
 Name[af]=Verbeterde Blaaiïng Inprop module
 Name[ar]=ملحقات التصفح المحسن

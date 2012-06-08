@@ -73,8 +73,8 @@ Icon=source_pl
 Type=MimeType
 MimeType=application/x-perl
 Patterns=*.pl;*.PL;*.perl;*.PERL;*.Perl
-X-KDE-IsAlso=application/x-executable-script
+X-TDE-IsAlso=application/x-executable-script
 
-[Property::X-KDE-text]
+[Property::X-TDE-text]
 Type=bool
 Value=true

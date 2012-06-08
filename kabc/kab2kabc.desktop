@@ -101,5 +101,5 @@ Comment[zh_TW]=libkab 至 libkabc 轉換工具
 Comment[zu]=Ithuluzi lokuguqula le-libkab kuyaku-libkabc
 Terminal=false
 NoDisplay=true
-X-KDE-autostart-condition=kab2kabcrc:Startup:EnableAutostart:true
+X-TDE-autostart-condition=kab2kabcrc:Startup:EnableAutostart:true
 OnlyShowIn=TDE;

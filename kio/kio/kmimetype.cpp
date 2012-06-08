@@ -334,7 +334,7 @@ KMimeType::Format KMimeType::findFormatByFileContent( const TQString &fileName )
   KMimeType::Ptr mime = findByPath(fileName);
 
   result.text = mime->name().startsWith("text/");
-  TQVariant v = mime->property("X-KDE-text");
+  TQVariant v = mime->property("X-TDE-text");
   if (v.isValid())
      result.text = v.toBool();
 
@@ -381,16 +381,16 @@ void KMimeType::init( KDesktopFile * config )
   config->setDesktopGroup();
   m_lstPatterns = config->readListEntry( "Patterns", ';' );
 
-  // Read the X-KDE-AutoEmbed setting and store it in the properties map
-  TQString XKDEAutoEmbed = TQString::fromLatin1("X-KDE-AutoEmbed");
+  // Read the X-TDE-AutoEmbed setting and store it in the properties map
+  TQString XKDEAutoEmbed = TQString::fromLatin1("X-TDE-AutoEmbed");
   if ( config->hasKey( XKDEAutoEmbed ) )
     m_mapProps.insert( XKDEAutoEmbed, TQVariant( config->readBoolEntry( XKDEAutoEmbed ), 0 ) );
 
-  TQString XKDEText = TQString::fromLatin1("X-KDE-text");
+  TQString XKDEText = TQString::fromLatin1("X-TDE-text");
   if ( config->hasKey( XKDEText ) )
     m_mapProps.insert( XKDEText, config->readBoolEntry( XKDEText ) );
 
-  TQString XKDEIsAlso = TQString::fromLatin1("X-KDE-IsAlso");
+  TQString XKDEIsAlso = TQString::fromLatin1("X-TDE-IsAlso");
   if ( config->hasKey( XKDEIsAlso ) ) {
     TQString inherits = config->readEntry( XKDEIsAlso );
     if ( inherits != name() )
@@ -399,7 +399,7 @@ void KMimeType::init( KDesktopFile * config )
         kdWarning(7009) << "Error: " << inherits << " inherits from itself!!!!" << endl;
   }
 
-  TQString XKDEPatternsAccuracy = TQString::fromLatin1("X-KDE-PatternsAccuracy");
+  TQString XKDEPatternsAccuracy = TQString::fromLatin1("X-TDE-PatternsAccuracy");
   if ( config->hasKey( XKDEPatternsAccuracy ) )
     m_mapProps.insert( XKDEPatternsAccuracy, config->readEntry( XKDEPatternsAccuracy ) );
 
@@ -552,7 +552,7 @@ TQString KMimeType::favIconForURL( const KURL& url )
 
 TQString KMimeType::parentMimeType() const
 {
-  TQVariant v = property("X-KDE-IsAlso");
+  TQVariant v = property("X-TDE-IsAlso");
   return v.toString();
 }
 
@@ -575,7 +575,7 @@ bool KMimeType::is( const TQString& mimeTypeName ) const
 }
 
 int KMimeType::patternsAccuracy() const {
-  TQVariant v = property("X-KDE-PatternsAccuracy");
+  TQVariant v = property("X-TDE-PatternsAccuracy");
   if (!v.isValid()) return 100;
   else
       return v.toInt();
@@ -880,10 +880,10 @@ pid_t KDEDesktopMimeType::runLink( const KURL& _url, const KSimpleConfig &cfg )
   KURL url ( u );
   KRun* run = new KRun(url);
 
-  // X-KDE-LastOpenedWith holds the service desktop entry name that
+  // X-TDE-LastOpenedWith holds the service desktop entry name that
   // was should be preferred for opening this URL if possible.
   // This is used by the Recent Documents menu for instance.
-  TQString lastOpenedWidth = cfg.readEntry( "X-KDE-LastOpenedWith" );
+  TQString lastOpenedWidth = cfg.readEntry( "X-TDE-LastOpenedWith" );
   if ( !lastOpenedWidth.isEmpty() )
       run->setPreferredService( lastOpenedWidth );
 
@@ -979,7 +979,7 @@ TQValueList<KDEDesktopMimeType::Service> KDEDesktopMimeType::userDefinedServices
 
   cfg.setDesktopGroup();
 
-  if ( !cfg.hasKey( "Actions" ) && !cfg.hasKey( "X-KDE-GetActionMenu") )
+  if ( !cfg.hasKey( "Actions" ) && !cfg.hasKey( "X-TDE-GetActionMenu") )
     return result;
 
   if ( cfg.hasKey( "TryExec" ) )
@@ -993,8 +993,8 @@ TQValueList<KDEDesktopMimeType::Service> KDEDesktopMimeType::userDefinedServices
 
   TQStringList keys;
 
-  if( cfg.hasKey( "X-KDE-GetActionMenu" )) {
-    TQString dcopcall = cfg.readEntry( "X-KDE-GetActionMenu" );
+  if( cfg.hasKey( "X-TDE-GetActionMenu" )) {
+    TQString dcopcall = cfg.readEntry( "X-TDE-GetActionMenu" );
     const TQCString app = TQString(dcopcall.section(' ', 0,0)).utf8();
 
     TQByteArray dataToSend;
@@ -1005,7 +1005,7 @@ TQValueList<KDEDesktopMimeType::Service> KDEDesktopMimeType::userDefinedServices
     TQCString object = TQString(dcopcall.section(' ', 1,-2)).utf8();
     TQString function = dcopcall.section(' ', -1);
     if(!function.endsWith("(KURL::List)")) {
-      kdWarning() << "Desktop file " << path << " contains an invalid X-KDE-ShowIfDcopCall - the function must take the exact parameter (KURL::List) and must be specified." << endl;
+      kdWarning() << "Desktop file " << path << " contains an invalid X-TDE-ShowIfDcopCall - the function must take the exact parameter (KURL::List) and must be specified." << endl;
     } else {
       if(kapp->dcopClient()->call( app, object,
                    function.utf8(),

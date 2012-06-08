@@ -106,7 +106,7 @@ A KDED module should install a .desktop file with
 	ServicesTypes=KDEDModule
 
 A KDED module will be loaded on KDE startup if it has a line
-	X-KDE-Kded-autoload=true
+	X-TDE-Kded-autoload=true
 
 Note that this flag doesn't cause the module to be loaded if the KDE desktop
 is not running (i.e. when running a KDE application in another environment).
@@ -114,12 +114,12 @@ is not running (i.e. when running a KDE application in another environment).
 Normally KDED modules are loaded whenever they are accessed, so you don't
 need autoloading enabled. On demand loading can be disabled by putting
 the following line in the .desktop file:
-	X-KDE-Kded-load-on-demand=false
+	X-TDE-Kded-load-on-demand=false
 
 Further it should contain:
-	X-KDE-ModuleType=Library
-	X-KDE-Library=foo
-	X-KDE-FactoryName=foo
+	X-TDE-ModuleType=Library
+	X-TDE-Library=foo
+	X-TDE-FactoryName=foo
 
 Which means that kded_foo.la is the name of the library that contains 
 the module and KDEDModule *create_foo(const QCString &) is the factory 

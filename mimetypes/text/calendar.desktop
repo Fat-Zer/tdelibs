@@ -87,6 +87,6 @@ Type=MimeType
 MimeType=text/calendar
 Patterns=*.ics
 
-[Property::X-KDE-text]
+[Property::X-TDE-text]
 Type=bool
 Value=true

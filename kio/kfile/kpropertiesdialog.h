@@ -431,7 +431,7 @@ private:
  * servicetype, as well as the mimetypes for which the plugin should be created.
  * For instance, ServiceTypes=KPropsDlg/Plugin,text/html,application/x-mymimetype.
  *
- * You can also include X-KDE-Protocol=file if you want that plugin
+ * You can also include X-TDE-Protocol=file if you want that plugin
  * to be loaded only for local files, for instance.
  */
 class KIO_EXPORT KPropsDlgPlugin : public TQObject

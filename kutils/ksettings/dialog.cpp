@@ -463,8 +463,8 @@ TQValueList<KService::Ptr> Dialog::parentComponentsServices(
 {
 	d->registeredComponents += kcdparents;
 	TQString constraint = kcdparents.join(
-			"' in [X-KDE-ParentComponents]) or ('" );
-	constraint = "('" + constraint + "' in [X-KDE-ParentComponents])";
+			"' in [X-TDE-ParentComponents]) or ('" );
+	constraint = "('" + constraint + "' in [X-TDE-ParentComponents])";
 
 	kdDebug( 700 ) << "constraint = " << constraint << endl;
 	return KTrader::self()->query( "KCModule", constraint );
@@ -479,7 +479,7 @@ bool Dialog::isPluginForKCMEnabled( KCModuleInfo * moduleinfo ) const
 		<< " KCM should be shown" << endl;
 	// for all parent components
 	TQStringList parentComponents = moduleinfo->service()->property(
-			"X-KDE-ParentComponents" ).toStringList();
+			"X-TDE-ParentComponents" ).toStringList();
 	for( TQStringList::ConstIterator pcit = parentComponents.begin();
 			pcit != parentComponents.end(); ++pcit )
 	{
@@ -550,7 +550,7 @@ void Dialog::createDialogFromServices()
 		// we create the KCModuleInfo
 		KCModuleInfo * info = new KCModuleInfo( *it );
 		TQString parentid;
-		TQVariant tmp = info->service()->property( "X-KDE-CfgDlgHierarchy",
+		TQVariant tmp = info->service()->property( "X-TDE-CfgDlgHierarchy",
 			TQVariant::String );
 		if( tmp.isValid() )
 			parentid = tmp.toString();

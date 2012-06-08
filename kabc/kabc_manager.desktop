@@ -73,4 +73,4 @@ Name[zh_TW]=聯絡人
 Type=Service
 ServiceTypes=KResources/Manager
 
-X-KDE-ResourceFamily=contact
+X-TDE-ResourceFamily=contact

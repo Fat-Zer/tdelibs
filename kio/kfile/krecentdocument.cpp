@@ -108,7 +108,7 @@ void KRecentDocument::add(const KURL& url, const TQString& desktopEntryName)
         // see if it points to the same file and application
         KSimpleConfig tmp(ddesktop);
         tmp.setDesktopGroup();
-        if(tmp.readEntry(TQString::fromLatin1("X-KDE-LastOpenedWith"))
+        if(tmp.readEntry(TQString::fromLatin1("X-TDE-LastOpenedWith"))
 	   == desktopEntryName)
 	{
             utime(TQFile::encodeName(ddesktop), NULL);
@@ -140,7 +140,7 @@ void KRecentDocument::add(const KURL& url, const TQString& desktopEntryName)
     conf.writeEntry( TQString::fromLatin1("Type"), TQString::fromLatin1("Link") );
     conf.writePathEntry( TQString::fromLatin1("URL"), openStr );
     // If you change the line below, change the test in the above loop
-    conf.writeEntry( TQString::fromLatin1("X-KDE-LastOpenedWith"), desktopEntryName );
+    conf.writeEntry( TQString::fromLatin1("X-TDE-LastOpenedWith"), desktopEntryName );
     TQString name = url.fileName();
     if (name.isEmpty())
       name = openStr;

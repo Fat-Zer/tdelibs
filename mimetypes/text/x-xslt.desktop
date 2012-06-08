@@ -82,10 +82,10 @@ Comment[zh_TW]=XSLT 樣式表格檔案
 Comment[zu]=Ifayela Lepheshana lesitayela lika-XSLT
 Icon=html
 MimeType=text/x-xslt
-X-KDE-IsAlso=text/xml
+X-TDE-IsAlso=text/xml
 Patterns=*.xslt;*.xsl;
 Type=MimeType
 
-[Property::X-KDE-text]
+[Property::X-TDE-text]
 Type=bool
 Value=true
