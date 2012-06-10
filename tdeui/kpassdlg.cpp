@@ -32,6 +32,7 @@
 #include <tqhbox.h>
 #include <tqwhatsthis.h>
 #include <tqptrdict.h>
+#include <tqtimer.h>
 
 #include <kglobal.h>
 #include <kdebug.h>
@@ -305,7 +306,7 @@ int KPasswordEdit::maxPasswordLength() const
 KPasswordDialog::KPasswordDialog(Types type, bool enableKeep, int extraBttn,
                                  TQWidget *parent, const char *name)
     : KDialogBase(parent, name, true, "", Ok|Cancel|extraBttn,
-                  Ok, true), m_Keep(enableKeep? 1 : 0), m_Type(type), d(new KPasswordDialogPrivate)
+                  Ok, true), m_Keep(enableKeep? 1 : 0), m_keepWarnLbl(0), m_Type(type), d(new KPasswordDialogPrivate)
 {
     d->iconName = "password";
     init();
@@ -314,7 +315,7 @@ KPasswordDialog::KPasswordDialog(Types type, bool enableKeep, int extraBttn,
 KPasswordDialog::KPasswordDialog(Types type, bool enableKeep, int extraBttn, const TQString& icon,
 				  TQWidget *parent, const char *name )
     : KDialogBase(parent, name, true, "", Ok|Cancel|extraBttn,
-                  Ok, true), m_Keep(enableKeep? 1 : 0), m_Type(type), d(new KPasswordDialogPrivate)
+                  Ok, true), m_Keep(enableKeep? 1 : 0), m_keepWarnLbl(0), m_Type(type), d(new KPasswordDialogPrivate)
 {
     if ( icon.stripWhiteSpace().isEmpty() )
 	d->iconName = "password";
@@ -326,7 +327,7 @@ KPasswordDialog::KPasswordDialog(Types type, bool enableKeep, int extraBttn, con
 KPasswordDialog::KPasswordDialog(int type, TQString prompt, bool enableKeep,
                                  int extraBttn)
     : KDialogBase(0L, "Password Dialog", true, "", Ok|Cancel|extraBttn,
-                  Ok, true), m_Keep(enableKeep? 1 : 0), m_Type(type), d(new KPasswordDialogPrivate)
+                  Ok, true), m_Keep(enableKeep? 1 : 0), m_keepWarnLbl(0), m_Type(type), d(new KPasswordDialogPrivate)
 {
     d->iconName = "password";
     init();
@@ -393,12 +394,20 @@ void KPasswordDialog::init()
 	m_pGrid->setRowStretch(8, 12);
 	TQCheckBox* const cb = new TQCheckBox(i18n("&Keep password"), m_pMain);
 	cb->setFixedSize(cb->sizeHint());
-	if (m_Keep > 1)
+	m_keepWarnLbl = new TQLabel(m_pMain);
+	m_keepWarnLbl->setAlignment(AlignLeft|AlignVCenter|WordBreak);
+	if (m_Keep > 1) {
 	    cb->setChecked(true);
-	else
+	    m_keepWarnLbl->show();
+	}
+	else {
 	    m_Keep = 0;
+	    m_keepWarnLbl->hide();
+	}
 	connect(cb, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotKeep(bool)));
 	m_pGrid->addWidget(cb, 9, 2, (TQ_Alignment)(AlignLeft|AlignVCenter));
+//	m_pGrid->addWidget(m_keepWarnLbl, 13, 2, (TQ_Alignment)(AlignLeft|AlignVCenter));
+	m_pGrid->addMultiCellWidget(m_keepWarnLbl, 13, 13, 0, 3);
     } else if (m_Type == NewPassword) {
 	m_pGrid->addRowSpacing(8, 10);
 	lbl = new TQLabel(m_pMain);
@@ -473,6 +482,13 @@ void KPasswordDialog::setPrompt(TQString prompt)
 {
     m_pHelpLbl->setText(prompt);
     m_pHelpLbl->setFixedSize(275, m_pHelpLbl->heightForWidth(275));
+}
+
+void KPasswordDialog::setKeepWarning(TQString warn)
+{
+    if (m_keepWarnLbl) {
+        m_keepWarnLbl->setText(warn);
+    }
 }
 
 
@@ -550,7 +566,22 @@ void KPasswordDialog::slotCancel()
 
 void KPasswordDialog::slotKeep(bool keep)
 {
+    if (m_keepWarnLbl->text() != "") {
+        if (keep) {
+            m_keepWarnLbl->show();
+        }
+        else {
+            m_keepWarnLbl->hide();
+        }
+        TQTimer::singleShot(0, this, SLOT(slotLayout()));
+    }
+
     m_Keep = keep;
+}
+
+void KPasswordDialog::slotLayout()
+{
+    resize(sizeHint());
 }
 
 

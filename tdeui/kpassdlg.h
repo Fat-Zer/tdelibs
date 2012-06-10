@@ -246,6 +246,11 @@ public:
     TQString prompt() const;
 
     /**
+     * Sets the text to be dynamically displayed when the keep checkbox is checked
+     */
+    void setKeepWarning(TQString warn);
+
+    /**
      * Adds a line of information to the dialog.
      */
     void addLine(TQString key, TQString value);
@@ -380,6 +385,7 @@ protected slots:
     void slotOk();
     void slotCancel();
     void slotKeep(bool);
+    void slotLayout();
 
 protected:
 
@@ -399,6 +405,7 @@ private:
 
     int m_Keep, m_Type, m_Row;
     TQLabel *m_pHelpLbl;
+    TQLabel *m_keepWarnLbl;
     TQGridLayout *m_pGrid;
     TQWidget *m_pMain;
     KPasswordEdit *m_pEdit, *m_pEdit2;
