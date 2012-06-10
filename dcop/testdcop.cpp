@@ -57,7 +57,7 @@ bool MyDCOPObject::process(const TQCString &fun, const TQByteArray &data,
 
     printf("Rect x = %d, y = %d, w = %d, h = %d\n", arg1.x(), arg1.y(), arg1.width(), arg1.height());
 
-    replyType = "TQRect";
+    replyType = TQRECT_OBJECT_NAME_STRING;
     TQDataStream reply( replyData, IO_WriteOnly );
     TQRect r(10,20,100,200);
     reply << r;
@@ -74,7 +74,7 @@ bool MyDCOPObject::process(const TQCString &fun, const TQByteArray &data,
 tqDebug("countDown() countDownAction = %p", countDownAction);
     if (countDownAction2)
     {
-       replyType = "TQString";
+       replyType = TQSTRING_OBJECT_NAME_STRING;
        TQDataStream reply( replyData, IO_WriteOnly );
        reply << TQString("Hey");
        return true;
@@ -104,7 +104,7 @@ void MyDCOPObject::slotTimeout()
   countDownCount--;
   if (countDownCount == 0)
   {
-     TQCString replyType = "TQString";
+     TQCString replyType = TQSTRING_OBJECT_NAME_STRING;
      TQByteArray replyData;
      TQDataStream reply( replyData, IO_WriteOnly );
      reply << TQString("Hello World");
@@ -123,7 +123,7 @@ void MyDCOPObject::slotTimeout2()
   countDownCount2--;
   if (countDownCount2 == 0)
   {
-     TQCString replyType = "TQString";
+     TQCString replyType = TQSTRING_OBJECT_NAME_STRING;
      TQByteArray replyData;
      TQDataStream reply( replyData, IO_WriteOnly );
      reply << TQString("Hello World");
@@ -139,7 +139,7 @@ void MyDCOPObject::slotTimeout2()
 QCStringList MyDCOPObject::functions()
 {
    QCStringList result = DCOPObject::functions();
-   result << "TQRect canLaunchRockets(TQRect)";
+   result << TQRECT_OBJECT_NAME_STRING " canLaunchRockets(" TQRECT_OBJECT_NAME_STRING ")";
    return result;
 }
 

@@ -47,7 +47,7 @@ TQCString& replyType, TQByteArray &replyData)
     gettimeofday(&tv, 0);
 tqWarning("%s: function('%s') %d:%06d", name(), m_remoteName.data(), tv.tv_sec % 100, tv.tv_usec);
 
-    replyType = "TQString";
+    replyType = TQSTRING_OBJECT_NAME_STRING;
     TQDataStream reply( replyData, IO_WriteOnly );
     reply << TQString("Hey");
     m_timer.start(1000, true);

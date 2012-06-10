@@ -238,7 +238,7 @@ inline TQDataStream & operator << (TQDataStream & str, const DCOPArg& arg )
  * dcopTypeName function, for example
  *
  * \code
- *	inline const char* dcopTypeName( const TQString& ) { return "TQString"; }
+ *	inline const char* dcopTypeName( const TQString& ) { return TQSTRING_OBJECT_NAME_STRING; }
  * \endcode
  *
  * If you use custom data types that do support TQDataStream but have

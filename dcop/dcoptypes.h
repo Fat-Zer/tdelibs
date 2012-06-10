@@ -37,38 +37,38 @@ inline const char* dcopTypeName( long ) { return "long int"; }
 inline const char* dcopTypeName( ulong ) { return "ulong"; }
 inline const char* dcopTypeName( double ) { return "double"; }
 inline const char* dcopTypeName( float ) { return "float"; }
-inline const char* dcopTypeName( const char* ) { return "TQCString"; }
+inline const char* dcopTypeName( const char* ) { return TQCSTRING_OBJECT_NAME_STRING; }
 
 // dcop specialities
 class DCOPRef; inline const char* dcopTypeName( const DCOPRef& ) { return "DCOPRef"; }
 
 // Qt variant types
-class TQString; inline const char* dcopTypeName( const TQString& ) { return "TQString"; }
-class TQCString; inline const char* dcopTypeName( const TQCString& ) { return "TQCString"; }
-class TQFont; inline const char* dcopTypeName( const TQFont& ) { return "TQFont"; }
-class TQPixmap; inline const char* dcopTypeName( const TQPixmap& ) { return "TQPixmap"; }
-class TQBrush; inline const char* dcopTypeName( const TQBrush& ) { return "TQBrush"; }
-class TQRect; inline const char* dcopTypeName( const TQRect& ) { return "TQRect"; }
-class TQPoint; inline const char* dcopTypeName( const TQPoint& ) { return "TQPoint"; }
-class TQImage; inline const char* dcopTypeName( const TQImage& ) { return "TQImage"; }
-class TQSize; inline const char* dcopTypeName( const TQSize& ) { return "TQSize"; }
-class TQColor; inline const char* dcopTypeName( const TQColor& ) { return "TQColor"; }
-class TQPalette; inline const char* dcopTypeName( const TQPalette& ) { return "TQPalette"; }
-class TQColorGroup; inline const char* dcopTypeName( const TQColorGroup& ) { return "TQColorGroup"; }
-class TQIconSet; inline const char* dcopTypeName( const TQIconSet& ) { return "TQIconSet"; }
-class TQDataStream; inline const char* dcopTypeName( const TQDataStream& ) { return "TQDataStream"; }
-class TQPointArray; inline const char* dcopTypeName( const TQPointArray& ) { return "TQPointArray"; }
-class TQRegion; inline const char* dcopTypeName( const TQRegion& ) { return "TQRegion"; }
-class TQBitmap; inline const char* dcopTypeName( const TQBitmap& ) { return "TQBitmap"; }
-class TQCursor; inline const char* dcopTypeName( const TQCursor& ) { return "TQCursor"; }
-class TQStringList; inline const char* dcopTypeName( const TQStringList& ) { return "TQStringList"; }
-class TQSizePolicy; inline const char* dcopTypeName( const TQSizePolicy& ) { return "TQSizePolicy"; }
-class TQDate; inline const char* dcopTypeName( const TQDate& ) { return "TQDate"; }
-class TQTime; inline const char* dcopTypeName( const TQTime& ) { return "TQTime"; }
-class TQDateTime; inline const char* dcopTypeName( const TQDateTime& ) { return "TQDateTime"; }
-class TQBitArray; inline const char* dcopTypeName( const TQBitArray& ) { return "TQBitArray"; }
-class TQKeySequence; inline const char* dcopTypeName( const TQKeySequence& ) { return "TQKeySequence"; }
-class TQVariant; inline const char* dcopTypeName( const TQVariant& ) { return "TQVariant"; }
+class TQString; inline const char* dcopTypeName( const TQString& ) { return TQSTRING_OBJECT_NAME_STRING; }
+class TQCString; inline const char* dcopTypeName( const TQCString& ) { return TQCSTRING_OBJECT_NAME_STRING; }
+class TQFont; inline const char* dcopTypeName( const TQFont& ) { return TQFONT_OBJECT_NAME_STRING; }
+class TQPixmap; inline const char* dcopTypeName( const TQPixmap& ) { return TQPIXMAP_OBJECT_NAME_STRING; }
+class TQBrush; inline const char* dcopTypeName( const TQBrush& ) { return TQBRUSH_OBJECT_NAME_STRING; }
+class TQRect; inline const char* dcopTypeName( const TQRect& ) { return TQRECT_OBJECT_NAME_STRING; }
+class TQPoint; inline const char* dcopTypeName( const TQPoint& ) { return TQPOINT_OBJECT_NAME_STRING; }
+class TQImage; inline const char* dcopTypeName( const TQImage& ) { return TQIMAGE_OBJECT_NAME_STRING; }
+class TQSize; inline const char* dcopTypeName( const TQSize& ) { return TQSIZE_OBJECT_NAME_STRING; }
+class TQColor; inline const char* dcopTypeName( const TQColor& ) { return TQCOLOR_OBJECT_NAME_STRING; }
+class TQPalette; inline const char* dcopTypeName( const TQPalette& ) { return TQPALETTE_OBJECT_NAME_STRING; }
+class TQColorGroup; inline const char* dcopTypeName( const TQColorGroup& ) { return TQCOLORGROUP_OBJECT_NAME_STRING; }
+class TQIconSet; inline const char* dcopTypeName( const TQIconSet& ) { return TQICONSET_OBJECT_NAME_STRING; }
+class TQDataStream; inline const char* dcopTypeName( const TQDataStream& ) { return TQDATASTREAM_OBJECT_NAME_STRING; }
+class TQPointArray; inline const char* dcopTypeName( const TQPointArray& ) { return TQPOINTARRAY_OBJECT_NAME_STRING; }
+class TQRegion; inline const char* dcopTypeName( const TQRegion& ) { return TQREGION_OBJECT_NAME_STRING; }
+class TQBitmap; inline const char* dcopTypeName( const TQBitmap& ) { return TQBITMAP_OBJECT_NAME_STRING; }
+class TQCursor; inline const char* dcopTypeName( const TQCursor& ) { return TQCURSOR_OBJECT_NAME_STRING; }
+class TQStringList; inline const char* dcopTypeName( const TQStringList& ) { return TQSTRINGLIST_OBJECT_NAME_STRING; }
+class TQSizePolicy; inline const char* dcopTypeName( const TQSizePolicy& ) { return TQSIZEPOLICY_OBJECT_NAME_STRING; }
+class TQDate; inline const char* dcopTypeName( const TQDate& ) { return TQDATE_OBJECT_NAME_STRING; }
+class TQTime; inline const char* dcopTypeName( const TQTime& ) { return TQTIME_OBJECT_NAME_STRING; }
+class TQDateTime; inline const char* dcopTypeName( const TQDateTime& ) { return TQDATETIME_OBJECT_NAME_STRING; }
+class TQBitArray; inline const char* dcopTypeName( const TQBitArray& ) { return TQBITARRAY_OBJECT_NAME_STRING; }
+class TQKeySequence; inline const char* dcopTypeName( const TQKeySequence& ) { return TQKEYSEQUENCE_OBJECT_NAME_STRING; }
+class TQVariant; inline const char* dcopTypeName( const TQVariant& ) { return TQVARIANT_OBJECT_NAME_STRING; }
 
 // And some KDE types
 class KURL; inline const char* dcopTypeName( const KURL& ) { return "KURL"; }

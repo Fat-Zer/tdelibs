@@ -145,31 +145,31 @@ TQCString demarshal( TQDataStream &stream, const TQString &type )
         bool b;
         stream >> b;
         result = b ? "true" : "false";
-    } else if ( type == "TQString" )
+    } else if ( type == TQSTRING_OBJECT_NAME_STRING )
     {
         TQString s;
         stream >> s;
         result = s.local8Bit();
-    } else if ( type == "TQCString" )
+    } else if ( type == TQCSTRING_OBJECT_NAME_STRING )
     {
         stream >> result;
     } else if ( type == "QCStringList" )
     {
-        return demarshal( stream, "TQValueList<TQCString>" );
-    } else if ( type == "TQStringList" )
+        return demarshal( stream, TQVALUELIST_OBJECT_NAME_STRING "<" TQCSTRING_OBJECT_NAME_STRING ">" );
+    } else if ( type == TQSTRINGLIST_OBJECT_NAME_STRING )
     {
-        return demarshal( stream, "TQValueList<TQString>" );
-    } else if ( type == "TQColor" )
+        return demarshal( stream, TQVALUELIST_OBJECT_NAME_STRING "<" TQCSTRING_OBJECT_NAME_STRING ">" );
+    } else if ( type == TQCOLOR_OBJECT_NAME_STRING )
     {
         TQColor c;
         stream >> c;
         result = TQString(c.name()).local8Bit();
-    } else if ( type == "TQSize" )
+    } else if ( type == TQSIZE_OBJECT_NAME_STRING )
     {
         TQSize s;
         stream >> s;
         result.sprintf( "%dx%d", s.width(), s.height() );
-    } else if ( type == "TQPixmap" || type == "TQImage" )
+    } else if ( type == TQPIXMAP_OBJECT_NAME_STRING || type == TQIMAGE_OBJECT_NAME_STRING )
     {
         TQImage i;
         stream >> i;
@@ -178,17 +178,17 @@ TQCString demarshal( TQDataStream &stream, const TQString &type )
         buf.open( IO_WriteOnly );
         i.save( &buf, "XPM" );
         result = buf.buffer();
-    } else if ( type == "TQPoint" )
+    } else if ( type == TQPOINT_OBJECT_NAME_STRING )
     {
         TQPoint p;
         stream >> p;
         result.sprintf( "+%d+%d", p.x(), p.y() );
-    } else if ( type == "TQRect" )
+    } else if ( type == TQRECT_OBJECT_NAME_STRING )
     {
         TQRect r;
         stream >> r;
         result.sprintf( "%dx%d+%d+%d", r.width(), r.height(), r.x(), r.y() );
-    } else if ( type == "TQVariant" )
+    } else if ( type == TQVARIANT_OBJECT_NAME_STRING )
     {
         TQ_INT32 type;
         stream >> type;
@@ -203,7 +203,7 @@ TQCString demarshal( TQDataStream &stream, const TQString &type )
         KURL r;
         stream >> r;
         result = r.url().local8Bit();
-    } else if ( type.left( 11 ) == "TQValueList<" )
+    } else if ( type.left( 11 ) == TQVALUELIST_OBJECT_NAME_STRING "<" )
     {
         if ( (uint)type.find( '>', 11 ) != type.length() - 1 )
             return result;
@@ -225,7 +225,7 @@ TQCString demarshal( TQDataStream &stream, const TQString &type )
             if ( i < count - 1 )
                 result += '\n';
         }
-    } else if ( type.left( 5 ) == "TQMap<" )
+    } else if ( type.left( 5 ) == TQMAP_OBJECT_NAME_STRING "<" )
     {
         int commaPos = type.find( ',', 5 );
 
@@ -278,10 +278,10 @@ void marshall( TQDataStream &arg, QCStringList args, uint &i, TQString type )
     }
     TQString s = TQString::fromLocal8Bit( args[ i ] );
 
-    if (type == "TQStringList")
-       type = "TQValueList<TQString>";
+    if (type == TQSTRINGLIST_OBJECT_NAME_STRING)
+       type = TQVALUELIST_OBJECT_NAME_STRING "<" TQSTRING_OBJECT_NAME_STRING ">";
     if (type == "QCStringList")
-       type = "TQValueList<TQCString>";
+       type = TQVALUELIST_OBJECT_NAME_STRING "<" TQSTRING_OBJECT_NAME_STRING ">";
 
     if ( type == "int" )
 	arg << s.toInt();
@@ -317,36 +317,36 @@ void marshall( TQDataStream &arg, QCStringList args, uint &i, TQString type )
 	arg << s.toDouble();
     else if ( type == "bool" )
 	arg << mkBool( s );
-    else if ( type == "TQString" )
+    else if ( type == TQSTRING_OBJECT_NAME_STRING )
 	arg << s;
-    else if ( type == "TQCString" )
+    else if ( type == TQCSTRING_OBJECT_NAME_STRING )
 	arg << TQCString( args[ i ] );
-    else if ( type == "TQColor" )
+    else if ( type == TQCOLOR_OBJECT_NAME_STRING )
 	arg << mkColor( s );
-    else if ( type == "TQPoint" )
+    else if ( type == TQPOINT_OBJECT_NAME_STRING )
 	arg << mkPoint( s );
-    else if ( type == "TQSize" )
+    else if ( type == TQSIZE_OBJECT_NAME_STRING )
 	arg << mkSize( s );
-    else if ( type == "TQRect" )
+    else if ( type == TQRECT_OBJECT_NAME_STRING )
 	arg << mkRect( s );
     else if ( type == "KURL" )
 	arg << KURL( s );
-    else if ( type == "TQVariant" ) {
+    else if ( type == TQVARIANT_OBJECT_NAME_STRING ) {
 	if ( s == "true" || s == "false" )
 	    arg << TQVariant( mkBool( s ), 42 );
 	else if ( s.left( 4 ) == "int(" )
 	    arg << TQVariant( s.mid(4, s.length()-5).toInt() );
-	else if ( s.left( 7 ) == "TQPoint(" )
+	else if ( s.left( 7 ) == TQPOINT_OBJECT_NAME_STRING "(" )
 	    arg << TQVariant( mkPoint( s.mid(7, s.length()-8) ) );
-	else if ( s.left( 6 ) == "TQSize(" )
+	else if ( s.left( 6 ) == TQSIZE_OBJECT_NAME_STRING "(" )
 	    arg << TQVariant( mkSize( s.mid(6, s.length()-7) ) );
-	else if ( s.left( 6 ) == "TQRect(" )
+	else if ( s.left( 6 ) == TQRECT_OBJECT_NAME_STRING "(" )
 	    arg << TQVariant( mkRect( s.mid(6, s.length()-7) ) );
-	else if ( s.left( 7 ) == "TQColor(" )
+	else if ( s.left( 7 ) == TQCOLOR_OBJECT_NAME_STRING "(" )
 	    arg << TQVariant( mkColor( s.mid(7, s.length()-8) ) );
 	else
 	    arg << TQVariant( s );
-    } else if ( type.startsWith("TQValueList<") ||
+    } else if ( type.startsWith(TQVALUELIST_OBJECT_NAME_STRING "<") ||
 	        type == "KURL::List" ) {
 	if ( type == "KURL::List" )
             type = "KURL";
