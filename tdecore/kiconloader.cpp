@@ -382,7 +382,7 @@ void KIconLoader::addExtraDesktopThemes()
     {
 	if ( d->mThemesInTree.contains(*it) )
 		continue;
-	if ( *it == TQString("default.kde") ) continue;
+	if ( *it == TQString("default.tde") ) continue;
 
 	KIconTheme *def = new KIconTheme( *it, "" );
 	KIconThemeNode* node = new KIconThemeNode(def);

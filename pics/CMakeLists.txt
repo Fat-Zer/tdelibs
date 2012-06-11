@@ -33,7 +33,7 @@ link_directories(
 
 ##### other data ################################
 
-tde_install_symlink( crystalsvg ${ICON_INSTALL_DIR}/default.kde )
+tde_install_symlink( crystalsvg ${ICON_INSTALL_DIR}/default.tde )
 
 
 ##### ksvgtopng #################################

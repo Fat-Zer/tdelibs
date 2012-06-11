@@ -13,6 +13,6 @@ ksvgtopng_LDADD =  $(LIB_TDECORE) $(top_builddir)/tdecore/svgicons/libkdesvgicon
 ksvgtopng_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
 
 install-data-local:
-	-rm -f $(DESTDIR)$(kde_icondir)/default.kde
+	-rm -f $(DESTDIR)$(kde_icondir)/default.tde
 	$(mkinstalldirs) $(DESTDIR)$(kde_icondir)
-	$(LN_S) crystalsvg $(DESTDIR)$(kde_icondir)/default.kde
+	$(LN_S) crystalsvg $(DESTDIR)$(kde_icondir)/default.tde
