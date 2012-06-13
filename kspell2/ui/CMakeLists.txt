@@ -54,12 +54,14 @@ tde_add_library( ${target} STATIC_PIC AUTOMOC
 set( target kspell2 )
 
 set( ${target}_SRCS
+  configwidget.cpp highlighter.cpp configdialog.cpp
+  kspell2ui.ui configui.ui
   dialog.cpp
 )
 
 tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 1.0.0
-  LINK kspell2-static kspell2base-static kutils-shared
+  LINK kspell2base-static kutils-shared
   DESTINATION ${LIB_INSTALL_DIR}
 )
