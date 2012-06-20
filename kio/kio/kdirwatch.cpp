@@ -1155,6 +1155,7 @@ int KDirWatchPrivate::scanEntry(Entry* e)
     if(!e->dirty) return NoChange;
     e->dirty = false;
   }
+  if (e->isDir) return Changed;
 #endif
 
   // Shouldn't happen: Ignore "unknown" notification method
@@ -1184,6 +1185,8 @@ int KDirWatchPrivate::scanEntry(Entry* e)
   if (exists) {
 
     if (e->m_status == NonExistent) {
+      // ctime is the 'creation time' on windows, but with qMax
+      // we get the latest change of any kind, on any platform.
       e->m_ctime = stat_buf.st_ctime;
       e->m_status = Normal;
       e->m_nlink = stat_buf.st_nlink;
