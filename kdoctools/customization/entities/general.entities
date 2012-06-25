@@ -389,7 +389,7 @@
 <!ENTITY TQt	"<trademark>TQt</trademark>">
 <!ENTITY TrueType	'<trademark class="registered">TrueType</trademark>'>
 <!ENTITY ubuntu	"<trademark>Ubuntu</trademark>">
-<!ENTITY UNIX	'<trademark class="registered">UNIX</trademark>'>
+<!ENTITY UNIX	'<acronym>Unix-like</acronym>'>
 <!ENTITY URL	"<acronym>URL</acronym>">
 <!ENTITY URI	"<acronym>URI</acronym>">
 <!ENTITY Visor	"<trademark>Visor</trademark>">
