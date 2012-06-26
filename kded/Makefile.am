@@ -39,7 +39,7 @@ kbuildsycoca_la_SOURCES = kbuildsycoca.cpp kbuildservicetypefactory.cpp \
 bin_PROGRAMS = kdontchangethehostname kde-menu kmimelist
 
 kdontchangethehostname_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
-kdontchangethehostname_LDADD = $(LIB_TDECORE) 
+kdontchangethehostname_LDADD = $(LIB_TDECORE)
 kdontchangethehostname_SOURCES = khostname.cpp
 
 kmimelist_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
@@ -62,7 +62,7 @@ noinst_HEADERS = kbuildsycoca.h kbuildservicetypefactory.h \
 servicetype_DATA = kdedmodule.desktop
 servicetypedir = $(kde_servicetypesdir)
 
-xdg_menu_DATA = applications.menu
+xdg_menu_DATA = applications.menu applications.menu-no-kde
 
 update_DATA = kded.upd
 updatedir = $(kde_datadir)/kconf_update
