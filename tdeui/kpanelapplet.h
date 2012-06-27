@@ -31,7 +31,7 @@ class KConfig;
 class TQPopupMenu;
 
 /**
- * @short %KDE Panel Applet class
+ * @short %TDE Panel Applet class
  *
  * Panel applets
  *   @li Are small applications living in the %TDE panel.

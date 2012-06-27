@@ -32,7 +32,7 @@ class KConfig;
 class KPanelExtensionPrivate;
 
 /**
- * @short %KDE Panel Extension class
+ * @short %TDE Panel Extension class
  *
  * Panel extensions
  *   @li Are small applications living in the Window Manager dock managed by the panel.
