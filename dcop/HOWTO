@@ -317,7 +317,7 @@ that an application that was started via KLauncher terminates.
    stream << pid;
    kapp->dcopClient()->emitDCOPSignal("clientDied(pid_t)", params);
 
-The task manager of the KDE panel connects to this signal. It uses an 
+The task manager of the TDE panel connects to this signal. It uses an 
 anonymous connection (it doesn't require that the signal is being emitted
 by KLauncher) that is non-volatile:
 

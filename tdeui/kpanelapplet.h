@@ -34,7 +34,7 @@ class TQPopupMenu;
  * @short %KDE Panel Applet class
  *
  * Panel applets
- *   @li Are small applications living in the %KDE panel.
+ *   @li Are small applications living in the %TDE panel.
  *   @li Are implemented as DSOs (Dynamic Shared Objects).
  *
  * Note: For security and stability reasons the panel won't load
