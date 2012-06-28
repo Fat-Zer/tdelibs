@@ -150,8 +150,8 @@ Type=bool
 Type=TQString
 
 # If the part has a plugin for KHTML Javascript's window.navigator.plugins
-# array, it should create a plugin info file and set this propery to the
-# file path here. The path should be relative to KDE's data dir
+# array, it should create a plugin info file and set this property to the
+# file path here. The path should be relative to TDE's data dir
 # ($TDEDIR/share/apps)
 [PropertyDef::X-TDE-BrowserView-PluginsInfo]
 Type=TQString
