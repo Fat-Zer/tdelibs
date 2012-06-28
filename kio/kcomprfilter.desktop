@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=ServiceType
-X-TDE-ServiceType=KDECompressionFilter
+X-TDE-ServiceType=TDECompressionFilter
 Name=TDE Compression Filter
 Name[af]=TDE Kompakteer Filter
 Name[az]=TDE Sıxışdırma Filtri
@@ -62,7 +62,7 @@ Name[sl]=Filter za stiskanje s TDE
 Name[sq]=Filter për Ngjeshje - TDE
 Name[sr]=TDE-ов компресиони филтер
 Name[sr@Latn]=TDE-ov kompresioni filter
-Name[ss]=Sisefo seminyenalisa se TDE 
+Name[ss]=Sisefo seminyenalisa se TDE
 Name[sv]=TDE-kompressionsfilter
 Name[ta]=கேடிஇ அழுத்த வடிகட்டி
 Name[te]=కెడిఈ సంక్షిప్తపరిచె గలని

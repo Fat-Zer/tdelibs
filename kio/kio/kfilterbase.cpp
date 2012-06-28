@@ -48,7 +48,7 @@ KFilterBase * KFilterBase::findFilterByFileName( const TQString & fileName )
 
 KFilterBase * KFilterBase::findFilterByMimeType( const TQString & mimeType )
 {
-    KTrader::OfferList offers = KTrader::self()->query( "KDECompressionFilter",
+    KTrader::OfferList offers = KTrader::self()->query( "TDECompressionFilter",
                                                         TQString("'") + mimeType + "' in ServiceTypes" );
     KTrader::OfferList::ConstIterator it = offers.begin();
     KTrader::OfferList::ConstIterator end = offers.end();
