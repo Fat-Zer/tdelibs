@@ -56,7 +56,7 @@ static const unsigned char zisofs_magic[8] = {
 
 using namespace KIO;
 
-extern "C" { int kdemain(int argc, char **argv); }
+extern "C" { KDE_EXPORT int kdemain(int argc, char **argv); }
 
 int kdemain( int argc, char **argv )
 {
