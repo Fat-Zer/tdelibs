@@ -249,7 +249,7 @@ static int mycallb(struct iso_directory_record *idr,void *udata) {
             if (!special) {
                 if (iso->joliet) {
                     for (i=0;i<(isonum_711(idr->name_len)-1);i+=2) {
-                        TQChar ch( be2me_16( idr->name[i] ) );
+                        TQChar ch( be2me_16(*((ushort*)&(idr->name[i]))) );
                         if (ch==';') break;
                         path+=ch;
                     }
