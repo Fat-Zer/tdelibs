@@ -188,7 +188,7 @@ KIso::~KIso()
 }
 
 /* callback function for libisofs */
-static int readf(char *buf, int start, int len,void *udata) {
+static int readf(char *buf, long start, long len,void *udata) {
 
     TQIODevice* dev = ( static_cast<KIso*> (udata) )->device();
 
@@ -212,7 +212,7 @@ static int mycallb(struct iso_directory_record *idr,void *udata) {
     bool special=false;
     KArchiveEntry *entry=NULL,*oldentry=NULL;
     char z_algo[2],z_params[2];
-    int z_size=0;
+    long long z_size=0;
 
     if ((idr->flags[0] & 1) && !iso->showhidden) return 0;
     if (iso->level) {
@@ -289,7 +289,8 @@ static int mycallb(struct iso_directory_record *idr,void *udata) {
 
 void KIso::addBoot(struct el_torito_boot_descriptor* bootdesc) {
 
-    int i,size;
+    int i;
+    long long size;
     boot_head boot;
     boot_entry *be;
     TQString path;
