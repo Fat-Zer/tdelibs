@@ -1,5 +1,5 @@
 /* This file is part of the KDE libraries
-    Copyright (C) 1998 Jörg Habenicht (j.habenicht@europemail.com)
+    Copyright (C) 1998 Jï¿½rg Habenicht (j.habenicht@europemail.com)
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -288,7 +288,7 @@ KLed::paintRound() // paint a ROUND RAISED led lamp
     paint.drawEllipse( scale, scale, width - scale*2, width - scale*2 );
 
     // Draw the bright light spot of the LED now, using modified "old"
-    // painter routine taken from TDEUI´s KLed widget:
+    // painter routine taken from TDEUIï¿½s KLed widget:
 
     // Setting the new width of the pen is essential to avoid "pixelized"
     // shadow like it can be observed with the old LED code
@@ -300,7 +300,7 @@ KLed::paintRound() // paint a ROUND RAISED led lamp
     light_width *= 2;
     light_width /= 3;
 
-    // Calculate the LED´s "light factor":
+    // Calculate the LEDï¿½s "light factor":
     int light_quote = (130*2/(light_width?light_width:1))+100;
 
     // Now draw the bright spot on the LED:
@@ -384,7 +384,7 @@ KLed::paintSunken() // paint a ROUND SUNKEN led lamp
     paint.drawEllipse( scale, scale, width - scale*2, width - scale*2 );
 
     // Draw the bright light spot of the LED now, using modified "old"
-    // painter routine taken from TDEUI´s KLed widget:
+    // painter routine taken from TDEUIï¿½s KLed widget:
 
     // Setting the new width of the pen is essential to avoid "pixelized"
     // shadow like it can be observed with the old LED code
@@ -396,7 +396,7 @@ KLed::paintSunken() // paint a ROUND SUNKEN led lamp
     light_width *= 2;
     light_width /= 3;
 
-    // Calculate the LED´s "light factor":
+    // Calculate the LEDï¿½s "light factor":
     int light_quote = (130*2/(light_width?light_width:1))+100;
 
     // Now draw the bright spot on the LED:
@@ -425,7 +425,7 @@ KLed::paintSunken() // paint a ROUND SUNKEN led lamp
     paint.setBrush( brush );                        // This avoids filling of the ellipse
 
     // Set the initial color value to colorGroup().light() (bright) and start
-    // drawing the shadow border at 45° (45*16 = 720).
+    // drawing the shadow border at 45ï¿½ (45*16 = 720).
 
     int angle = -720;
     color = colorGroup().light();
@@ -536,6 +536,12 @@ KLed::color() const
   return led_color;
 }
 
+TQColor
+KLed::offColor() const
+{
+  return led_off_color;
+}
+
 KLed::Look
 KLed::look() const
 {
@@ -576,6 +582,17 @@ KLed::setColor(const TQColor& col)
     if(d->off_map) { delete d->off_map; d->off_map = 0; }
     led_color = col;
     d->offcolor = col.dark(d->dark_factor);
+    update();
+  }
+}
+
+void
+KLed::setOffColor(const TQColor& col)
+{
+  if(led_off_color!=col) {
+    if(d->on_map)  { delete d->on_map; d->on_map = 0; }
+    if(d->off_map) { delete d->off_map; d->off_map = 0; }
+    d->offcolor = col;
     update();
   }
 }

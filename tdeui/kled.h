@@ -1,5 +1,5 @@
 /* This file is part of the KDE libraries
-    Copyright (C) 1998 Jörg Habenicht (j.habenicht@europemail.com)
+    Copyright (C) 1998 Jï¿½rg Habenicht (j.habenicht@europemail.com)
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -50,6 +50,7 @@ class TDEUI_EXPORT KLed : public TQWidget
     Q_PROPERTY( Shape shape READ shape WRITE setShape )
     Q_PROPERTY( Look look READ look WRITE setLook )
     Q_PROPERTY( TQColor color READ color WRITE setColor )
+    Q_PROPERTY( TQColor offColor READ color WRITE setOffColor )
     Q_PROPERTY( int darkFactor READ darkFactor WRITE setDarkFactor )
 
 public:
@@ -148,6 +149,14 @@ public:
   TQColor color() const;
 
   /**
+   * Returns the off color of the widget
+   *
+   * @see OffColor
+   * @short Returns LED off color.
+   */
+  TQColor offColor() const;
+
+  /**
    * Returns the look of the widget.
    *
    * @see Look
@@ -202,6 +211,23 @@ public:
    * @short Sets the LED color.
    */
   void setColor(const TQColor& color);
+
+  /**
+   * Set the off color of the widget.
+   * The Color is shown with the KLed::On state.
+   * The KLed::Off state is shown with this color if set
+   *
+   * The widget calls the update() method, so it will
+   * be updated when entering the main event loop.
+   *
+   * Note that calling setColor will override this value
+   *
+   * @see Color
+   *
+   * @param color New off color of the LED.
+   * @short Sets the LED off color.
+   */
+  void setOffColor(const TQColor& color);
 
   /**
    * Sets the factor to darken the LED in OFF state.
@@ -316,6 +342,7 @@ protected:
 private:
   State led_state;
   TQColor led_color;
+  TQColor led_off_color;
   Look  led_look;
   Shape led_shape;
 
