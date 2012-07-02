@@ -206,6 +206,7 @@ KIntSpinBox::KIntSpinBox(TQWidget *parent, const char *name)
 {
     editor()->setAlignment(AlignRight);
     val_base = 10;
+    setValidator(new KIntValidator(this, val_base));
     setValue(0);
 }
 
@@ -219,11 +220,16 @@ KIntSpinBox::KIntSpinBox(int lower, int upper, int step, int value, int base,
 {
     editor()->setAlignment(AlignRight);
     val_base = base;
+    setValidator(new KIntValidator(this, val_base));
     setValue(value);
 }
 
 void KIntSpinBox::setBase(int base)
 {
+    const KIntValidator* kvalidator = dynamic_cast<const KIntValidator*>(validator());
+    if (kvalidator) {
+    	const_cast<KIntValidator*>(kvalidator)->setBase(base);
+    }
     val_base = base;
 }
 
