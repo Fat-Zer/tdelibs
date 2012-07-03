@@ -50,13 +50,13 @@ typedef struct _rr_entry {
 	int		re; /* relocated */
 	char	z_algo[2]; /* zizofs algorithm */
 	char	z_params[2]; /* zizofs parameters */
-	long		z_size; /* zizofs real_size */
+	long long	z_size; /* zizofs real_size */
 } rr_entry;
 
 typedef struct _iso_vol_desc {
 	struct _iso_vol_desc	*next;
 	struct _iso_vol_desc	*prev;
-	struct iso_volume_descriptor	data;	
+	struct iso_volume_descriptor	data;
 } iso_vol_desc;
 
 typedef struct _boot_entry {
@@ -78,7 +78,7 @@ typedef struct _boot_head {
 /**
  * this callback function needs to read 'len' sectors from 'start' into 'buf' 
  */
-typedef int readfunc(char *buf,long start, long len,void *);
+typedef int readfunc(char *buf,long long start, long long len,void *);
 
 /**
  * ProcessDir uses this callback
@@ -107,7 +107,7 @@ time_t isodate_84261(char * p, int hs);
  * If the function fails, returns NULL
  * Don't forget to call FreeISO9660 after using the volume descriptor list!
  */
-iso_vol_desc *ReadISO9660(readfunc *read,long sector,void *udata);
+iso_vol_desc *ReadISO9660(readfunc *read,long long sector,void *udata);
 
 /**
  * Frees the linked list of volume descriptors
@@ -140,7 +140,7 @@ int JolietLevel(struct iso_volume_descriptor *ivd);
 /**
  * Returns the size of the boot image (in 512 byte sectors)
  */
-int BootImageSize(int media,long len);
+int BootImageSize(int media,long long len);
 
 /**
  * Frees the boot catalog entries in 'boot'. If you ever called ReadBootTable,
@@ -151,7 +151,7 @@ void FreeBootTable(boot_head *boot);
 /**
  * Reads the boot catalog into 'head'. Don't forget to call FreeBootTable!
  */
-int ReadBootTable(readfunc *read,long sector, boot_head *head, void *udata);
+int ReadBootTable(readfunc *read,long long sector, boot_head *head, void *udata);
 
 #ifdef __cplusplus
 } //extern "C"

@@ -188,7 +188,7 @@ KIso::~KIso()
 }
 
 /* callback function for libisofs */
-static int readf(char *buf, long start, long len,void *udata) {
+static int readf(char *buf, long long start, long long len,void *udata) {
 
     TQIODevice* dev = ( static_cast<KIso*> (udata) )->device();
 

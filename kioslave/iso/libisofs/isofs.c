@@ -122,7 +122,7 @@ void FreeBootTable(boot_head *boot) {
 	boot->defentry=NULL;
 }
 
-int BootImageSize(int media,long len) {
+int BootImageSize(int media,long long len) {
 	long long ret;
 
 	switch(media & 0xf) {
@@ -158,7 +158,7 @@ static boot_entry *CreateBootEntry(char *be) {
 	return entry;
 }
 
-int ReadBootTable(readfunc *read,long sector, boot_head *head, void *udata) {
+int ReadBootTable(readfunc *read,long long sector, boot_head *head, void *udata) {
 
 	char buf[2048], *c, *be;
 	int i,end=0;
@@ -221,7 +221,7 @@ err:
 /**
  * Creates the linked list of the volume descriptors
  */
-iso_vol_desc *ReadISO9660(readfunc *read,long sector,void *udata) {
+iso_vol_desc *ReadISO9660(readfunc *read,long long sector,void *udata) {
 				
 	int i;
 	struct iso_volume_descriptor buf;
@@ -577,7 +577,7 @@ int level=0,joliet=0,dirs,files;
 iconv_t iconv_d;
 int fd;
 
-int readf(char *buf, long start, long len,void *udata) {
+int readf(char *buf, long long start, long long len,void *udata) {
 	int ret;
 	
 	if ((ret=lseek64(fd, start << 11, SEEK_SET))<0) return ret;
