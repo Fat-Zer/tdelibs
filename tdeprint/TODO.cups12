@@ -113,7 +113,7 @@ kaddprinterwizard
 
 
 
-kaddprinterwizard --kdeconfig
+kaddprinterwizard --tdeconfig
 -----------------------------
 
 * add support for unix domain socket support (was added in CUPS 1.2.x)

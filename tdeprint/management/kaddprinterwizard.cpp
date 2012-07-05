@@ -7,7 +7,7 @@
 
 static KCmdLineOptions options[] =
 {
-	{ "kdeconfig", I18N_NOOP("Configure TDE Print"), 0 },
+	{ "tdeconfig", I18N_NOOP("Configure TDE Print"), 0 },
 	{ "serverconfig", I18N_NOOP("Configure print server"), 0 },
 	KCmdLineLastOption
 };
@@ -23,7 +23,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
 
 	KApplication app;
 	KCmdLineArgs	*args = KCmdLineArgs::parsedArgs();
-	bool	doConfig = args->isSet("kdeconfig");
+	bool	doConfig = args->isSet("tdeconfig");
 	bool	doSrvConfig = args->isSet("serverconfig");
 
 	if (doConfig)
