@@ -42,8 +42,8 @@ KMConfigPreview::KMConfigPreview(TQWidget *parent, const char *name)
 	m_program = new KURLRequester(box);
 	TQLabel	*lab = new TQLabel(box);
 	lab->setText(i18n("You can use an external preview program (PS viewer) instead of the "
-					  "KDE built-in preview system. Note that if the KDE default PS viewer "
-					  "(KGhostView) cannot be found, KDE tries automatically to find another "
+					  "TDE built-in preview system. Note that if the TDE default PS viewer "
+					  "(KGhostView) cannot be found, TDE tries automatically to find another "
 					  "external PostScript viewer"));
 	lab->setTextFormat(TQt::RichText);
 
