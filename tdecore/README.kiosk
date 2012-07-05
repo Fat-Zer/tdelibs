@@ -612,9 +612,9 @@ module restrictions offered by KIOSK:
 
 Some example menu-ids are:
 
-kde-display.desktop
-kde-proxy.desktop
-kde-screensaver.desktop
+tde-display.desktop
+tde-proxy.desktop
+tde-screensaver.desktop
 
 See also kcmshell --list for a list of all the base names.
 
