@@ -67,7 +67,7 @@ public:
   KService * findServiceByDesktopPath( const TQString &_name );
 
   /**
-   * Find a service ( by menu id, e.g. "kde-konsole.desktop")
+   * Find a service ( by menu id, e.g. "tde-konsole.desktop")
    */
   KService * findServiceByMenuId( const TQString &_menuId );
 

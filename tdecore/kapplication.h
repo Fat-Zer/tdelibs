@@ -1158,7 +1158,7 @@ public:
   /**
    * Returns whether access to a certain control module is authorized.
    *
-   * @param menuId identifying the control module, e.g. kde-mouse.desktop
+   * @param menuId identifying the control module, e.g. tde-mouse.desktop
    * @return true if access to the module is authorized, false otherwise.
    * @since 3.2
    */
@@ -1168,7 +1168,7 @@ public:
    * Returns whether access to a certain control modules is authorized.
    *
    * @param menuIds list of menu-ids of control module, 
-   * an example of a menu-id is kde-mouse.desktop.
+   * an example of a menu-id is tde-mouse.desktop.
    * @return Those control modules for which access has been authorized.
    * @since 3.2
    */
