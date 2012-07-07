@@ -580,7 +580,7 @@
     <Filename>ooo-draw.desktop</Filename>
     </Include>
     <Menu>
-      <Name>PIM</Name>
+      <Name>Personal Information Management</Name>
       <Directory>tde-office-pim.directory</Directory>
       <Include>
         <And>
@@ -758,7 +758,7 @@
       </Include>
     </Menu>
     <Menu>
-      <Name>PIM</Name>
+      <Name>Personal Information Management</Name>
       <Directory>tde-utilities-pim.directory</Directory>
       <Include>
         <And>
@@ -864,7 +864,7 @@
         </Include>
       </Menu>
       <Menu>
-        <Name>PIM</Name>
+        <Name>Personal Information Management</Name>
         <Directory>kde-utilities-pim.directory</Directory>
         <Include>
           <And>
