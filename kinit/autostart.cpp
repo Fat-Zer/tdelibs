@@ -214,6 +214,32 @@ AutoStart::loadAutoStartList()
        }
        m_startList->append(item);
    }
+
+   // Check for duplicate entries and remove if found
+   TQPtrListIterator<AutoStartItem> it1(*m_startList);
+   TQPtrListIterator<AutoStartItem> it2(*m_startList);
+   AutoStartItem *item1;
+   AutoStartItem *item2;
+   while ((item1 = it1.current()) != 0) {
+       bool dupfound1 = false;
+       it2.toFirst();
+       while ((item2 = it2.current()) != 0) {
+           bool dupfound2 = false;
+           if (item2 != item1) {
+               if (item1->service == item2->service) {
+                   m_startList->removeRef(item2);
+                   dupfound1 = true;
+                   dupfound2 = true;
+               }
+           }
+           if (!dupfound2) {
+               ++it2;
+           }
+       }
+       if (!dupfound1) {
+           ++it1;
+       }
+   }
 }
 
 TQString
@@ -241,7 +267,7 @@ AutoStart::startService()
      }
      m_started.remove(m_started.begin());
    }
-   
+
    // Check for items that don't depend on anything
    AutoStartItem *item;
    for(item = m_startList->first();
