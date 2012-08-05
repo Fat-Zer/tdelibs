@@ -73,14 +73,18 @@ class HighColorStyle : public KStyle
 
 		void drawKStylePrimitive( KStylePrimitive kpe,
 					TQPainter* p,
-					const TQWidget* widget,
+					TQStyleControlElementData ceData,
+					ControlElementFlags elementFlags,
 					const TQRect &r,
 					const TQColorGroup &cg,
 					SFlags flags = Style_Default,
-					const TQStyleOption& = TQStyleOption::Default ) const;
+					const TQStyleOption& = TQStyleOption::Default,
+					const TQWidget* widget = 0 ) const;
 		
-		void tqdrawPrimitive( TQ_PrimitiveElement pe,
+		void drawPrimitive( TQ_PrimitiveElement pe,
 					TQPainter* p,
+					TQStyleControlElementData ceData,
+					ControlElementFlags elementFlags,
 					const TQRect &r,
 					const TQColorGroup &cg,
 					SFlags flags = Style_Default,
@@ -88,33 +92,41 @@ class HighColorStyle : public KStyle
 
 		void drawControl( TQ_ControlElement element,
 					TQPainter *p,
-					const TQWidget *widget,
+					TQStyleControlElementData ceData,
+					ControlElementFlags elementFlags,
 					const TQRect &r,
 					const TQColorGroup &cg,
 					SFlags flags = Style_Default,
-					const TQStyleOption& = TQStyleOption::Default ) const;
+					const TQStyleOption& = TQStyleOption::Default,
+					const TQWidget *widget = 0 ) const;
 
 		void drawControlMask( TQ_ControlElement element,
 					TQPainter *p,
-					const TQWidget *widget,
+					TQStyleControlElementData ceData,
+					ControlElementFlags elementFlags,
 					const TQRect &r,
-					const TQStyleOption& = TQStyleOption::Default ) const;
+					const TQStyleOption& = TQStyleOption::Default,
+					const TQWidget *widget = 0 ) const;
 		
 		void drawComplexControl( TQ_ComplexControl control,
 					TQPainter *p,
-					const TQWidget *widget,
+					TQStyleControlElementData ceData,
+					ControlElementFlags elementFlags,
 					const TQRect &r,
 					const TQColorGroup &cg,
 					SFlags flags = Style_Default,
 					SCFlags controls = SC_All,
 					SCFlags active = SC_None,
-					const TQStyleOption& = TQStyleOption::Default ) const;
+					const TQStyleOption& = TQStyleOption::Default,
+					const TQWidget *widget = 0 ) const;
 
 		void drawComplexControlMask( TQ_ComplexControl control,
 					TQPainter *p,
-					const TQWidget *widget,
+					const TQStyleControlElementData ceData,
+					const ControlElementFlags elementFlags,
 					const TQRect &r,
-					const TQStyleOption& = TQStyleOption::Default ) const;
+					const TQStyleOption& = TQStyleOption::Default,
+					const TQWidget *widget = 0 ) const;
 
 		void drawItem( TQPainter *p,
 		                const TQRect &r,
@@ -126,21 +138,25 @@ class HighColorStyle : public KStyle
 		                int len = -1,
 		                const TQColor *penColor = 0 ) const;
 
-		int pixelMetric( PixelMetric m, 
+		int pixelMetric( PixelMetric m, TQStyleControlElementData ceData, ControlElementFlags elementFlags, 
 					const TQWidget *widget = 0 ) const;
 
-		TQSize tqsizeFromContents( ContentsType contents,
-					const TQWidget *widget,
+		TQSize sizeFromContents( ContentsType contents,
+					TQStyleControlElementData ceData,
+					ControlElementFlags elementFlags,
 					const TQSize &contentSize,
-					const TQStyleOption& opt ) const;
+					const TQStyleOption& opt,
+					const TQWidget *widget ) const;
 
-		TQRect subRect( SubRect r, 
+		TQRect subRect( SubRect r, const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, 
 					const TQWidget *widget ) const;
 
 		// Fix Qt3's wacky image positions
 		TQPixmap stylePixmap( StylePixmap stylepixmap,
-					const TQWidget *widget = 0,
-					const TQStyleOption& = TQStyleOption::Default ) const;
+					TQStyleControlElementData ceData,
+					ControlElementFlags elementFlags,
+					const TQStyleOption& = TQStyleOption::Default,
+					const TQWidget *widget = 0 ) const;
 
 	protected:
 		bool eventFilter( TQObject *object, TQEvent *event );

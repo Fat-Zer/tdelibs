@@ -1192,11 +1192,13 @@ void PlastikStyle::renderTab(TQPainter *p,
 
 void PlastikStyle::drawKStylePrimitive(KStylePrimitive kpe,
                                       TQPainter *p,
-                                      const TQWidget* widget,
+                                      TQStyleControlElementData ceData,
+                                      ControlElementFlags elementFlags,
                                       const TQRect &r,
                                       const TQColorGroup &cg,
                                       SFlags flags,
-                                      const TQStyleOption& opt) const
+                                      const TQStyleOption& opt,
+                                      const TQWidget* widget) const
 {
     // some "global" vars...
     const bool enabled = (flags & Style_Enabled);
@@ -1357,9 +1359,9 @@ void PlastikStyle::drawKStylePrimitive(KStylePrimitive kpe,
                     p->drawLine( centerx, centery - radius, centerx, centery + radius );
             } else if(_drawTriangularExpander) {
               if( flags & Style_On )
-                tqdrawPrimitive(PE_ArrowRight, p, TQRect(r.x()+1,r.y()+1,r.width(),r.height()), cg,ButtonContour, flags);
+                drawPrimitive(PE_ArrowRight, p, ceData, elementFlags, TQRect(r.x()+1,r.y()+1,r.width(),r.height()), cg,ButtonContour, flags);
               if( flags & Style_Off )
-                tqdrawPrimitive(PE_ArrowDown, p, TQRect(r.x()+1,r.y()+1,r.width(),r.height()), cg,ButtonContour, flags);
+                drawPrimitive(PE_ArrowDown, p, ceData, elementFlags, TQRect(r.x()+1,r.y()+1,r.width(),r.height()), cg,ButtonContour, flags);
             }
 
             break;
@@ -1438,13 +1440,15 @@ void PlastikStyle::drawKStylePrimitive(KStylePrimitive kpe,
     }
 
         default:
-            KStyle::drawKStylePrimitive(kpe, p, widget, r, cg, flags, opt);
+            KStyle::drawKStylePrimitive(kpe, p, ceData, elementFlags, r, cg, flags, opt, widget);
     }
 }
 
 
-void PlastikStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
+void PlastikStyle::drawPrimitive(TQ_PrimitiveElement pe,
                                 TQPainter *p,
+                                TQStyleControlElementData ceData,
+                                ControlElementFlags elementFlags,
                                 const TQRect &r,
                                 const TQColorGroup &cg,
                                 SFlags flags,
@@ -1661,7 +1665,7 @@ void PlastikStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
                     surfaceFlags);
 
             p->setPen(cg.foreground());
-            tqdrawPrimitive((horiz ? PE_ArrowLeft : PE_ArrowUp), p, r, cg, flags);
+            drawPrimitive((horiz ? PE_ArrowLeft : PE_ArrowUp), p, ceData, elementFlags, r, cg, flags);
             break;
         }
 
@@ -1687,7 +1691,7 @@ void PlastikStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
                     surfaceFlags);
 
             p->setPen(cg.foreground());
-            tqdrawPrimitive((horiz ? PE_ArrowRight : PE_ArrowDown), p, r, cg, flags);
+            drawPrimitive((horiz ? PE_ArrowRight : PE_ArrowDown), p, ceData, elementFlags, r, cg, flags);
             break;
         }
 
@@ -1716,7 +1720,7 @@ void PlastikStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
             renderSurface(p, TQRect(r.x()+1, r.y()+1, r.width()-2, r.height()-2),
                     cg.background(), contentColor, getColor(cg,MouseOverHighlight), enabled?_contrast+3:(_contrast/2), surfaceFlags);
 
-            tqdrawPrimitive(PE_CheckMark, p, r, cg, flags);
+            drawPrimitive(PE_CheckMark, p, ceData, elementFlags, r, cg, flags);
 
             break;
         }
@@ -2098,8 +2102,8 @@ void PlastikStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
             const TQWMatrix oldMatrix( p->worldMatrix() );
 
             if (flags & Style_Down) {
-                p->translate(pixelMetric(PM_ButtonShiftHorizontal),
-                                pixelMetric(PM_ButtonShiftVertical));
+                p->translate(pixelMetric(PM_ButtonShiftHorizontal, ceData, elementFlags),
+                                pixelMetric(PM_ButtonShiftVertical, ceData, elementFlags));
             }
 
             a.translate((r.x()+r.width()/2), (r.y()+r.height()/2));
@@ -2133,7 +2137,7 @@ void PlastikStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
         }
 
         default: {
-            return KStyle::tqdrawPrimitive(pe, p, r, cg, flags, opt);
+            return KStyle::drawPrimitive(pe, p, ceData, elementFlags, r, cg, flags, opt);
         }
     }
 }
@@ -2141,11 +2145,13 @@ void PlastikStyle::tqdrawPrimitive(TQ_PrimitiveElement pe,
 
 void PlastikStyle::drawControl(TQ_ControlElement element,
                               TQPainter *p,
-                              const TQWidget *widget,
+                              TQStyleControlElementData ceData,
+                              ControlElementFlags elementFlags,
                               const TQRect &r,
                               const TQColorGroup &cg,
                               SFlags flags,
-                              const TQStyleOption& opt) const
+                              const TQStyleOption& opt,
+                              const TQWidget *widget) const
 {
     const bool reverseLayout = TQApplication::reverseLayout();
 
@@ -2337,7 +2343,7 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
                     renderTab(p, r, cg, mouseOver, selected, true, pos, false, cornerWidget);
                     break;
                     default:
-                            KStyle::drawControl(element, p, widget, r, cg, flags, opt);
+                            KStyle::drawControl(element, p, ceData, elementFlags, r, cg, flags, opt, widget);
             }
 
             break;
@@ -2357,12 +2363,12 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
             TQColorGroup g2 = cg;
             if (isDefault)
                 g2.setColor(TQColorGroup::Background, cg.background().dark(120) );
-            tqdrawPrimitive(PE_ButtonBevel, p,
+            drawPrimitive(PE_ButtonBevel, p, ceData, elementFlags,
                     isDefault?TQRect(r.x()+1,r.y()+1,r.width()-2,r.height()-2):r,
                     g2, flags, TQStyleOption(button) );
 
             if (isDefault ) {
-                tqdrawPrimitive(PE_ButtonDefault, p, r, cg, flags);
+                drawPrimitive(PE_ButtonDefault, p, ceData, elementFlags, r, cg, flags);
             }
 
             break;
@@ -2380,15 +2386,15 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
             // Shift button contents if pushed.
             if ( active )
             {
-                x += pixelMetric(PM_ButtonShiftHorizontal, widget);
-                y += pixelMetric(PM_ButtonShiftVertical, widget);
+                x += pixelMetric(PM_ButtonShiftHorizontal, ceData, elementFlags, widget);
+                y += pixelMetric(PM_ButtonShiftVertical, ceData, elementFlags, widget);
                 flags |= Style_Sunken;
             }
 
             // Does the button have a popup menu?
             if ( button->isMenuButton() )
             {
-                int dx = pixelMetric( PM_MenuButtonIndicator, widget );
+                int dx = pixelMetric( PM_MenuButtonIndicator, ceData, elementFlags, widget );
                 if ( button->iconSet() && !button->iconSet()->isNull()  &&
                     (dx + button->iconSet()->pixmap (TQIconSet::Small, TQIconSet::Normal, TQIconSet::Off ).width()) >= w )
                 {
@@ -2397,7 +2403,7 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
                 else
                 {
 		    p->setPen(cg.buttonText());
-                    tqdrawPrimitive( PE_ArrowDown, p, visualRect( TQRect(x + w - dx - 8, y + 2, dx, h - 4), r ),
+                    drawPrimitive( PE_ArrowDown, p, ceData, elementFlags, visualRect( TQRect(x + w - dx - 8, y + 2, dx, h - 4), r ),
                                 cg, flags, opt );
                     w -= dx;
                 }
@@ -2423,7 +2429,7 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
                     p->drawPixmap( x + 4, y + h / 2 - pixmap.height() / 2, pixmap );
 
                 if (cornArrow) //Draw over the icon
-                    tqdrawPrimitive( PE_ArrowDown, p, visualRect( TQRect(x + w - 6, x + h - 6, 7, 7), r ),
+                    drawPrimitive( PE_ArrowDown, p, ceData, elementFlags, visualRect( TQRect(x + w - 6, x + h - 6, 7, 7), r ),
                                 cg, flags, opt );
 
 
@@ -2439,8 +2445,8 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
 
 
             if ( flags & Style_HasFocus )
-                tqdrawPrimitive( PE_FocusRect, p,
-                                visualRect( subRect( SR_PushButtonFocusRect, widget ), widget ),
+                drawPrimitive( PE_FocusRect, p, ceData, elementFlags,
+                                visualRect( subRect( SR_PushButtonFocusRect, ceData, elementFlags, widget ), ceData, elementFlags ),
                                 cg, flags );
             break;
         }
@@ -2459,9 +2465,9 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
 
             if (active && focused) {
                 if (down) {
-                    tqdrawPrimitive(PE_ButtonTool, p, r, cg, flags|Style_Down, opt);
+                    drawPrimitive(PE_ButtonTool, p, ceData, elementFlags, r, cg, flags|Style_Down, opt);
                 } else {
-                    tqdrawPrimitive(PE_ButtonTool, p, r, cg, flags, opt);
+                    drawPrimitive(PE_ButtonTool, p, ceData, elementFlags, r, cg, flags, opt);
                 }
             }
 
@@ -2490,7 +2496,7 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
             bool enabled    = mi->isEnabled();
             bool checkable  = popupmenu->isCheckable();
             bool active     = flags & Style_Active;
-            bool etchtext   = styleHint( SH_EtchDisabledText );
+            bool etchtext   = styleHint( SH_EtchDisabledText, ceData, elementFlags );
             bool reverse    = TQApplication::reverseLayout();
             if ( checkable )
                 checkcol = QMAX( checkcol, 20 );
@@ -2562,7 +2568,7 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
                 SFlags cflags = Style_On;
                 if (enabled)
                     cflags |= Style_Enabled;
-                tqdrawPrimitive( PE_CheckMark, p, cr, cg, cflags );
+                drawPrimitive( PE_CheckMark, p, ceData, elementFlags, cr, cg, cflags );
             }
 
             // Time to draw the menu item label...
@@ -2669,7 +2675,7 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
             // Does the menu item have a submenu?
             if ( mi->popup() ) {
                 TQ_PrimitiveElement arrow = reverse ? PE_ArrowLeft : PE_ArrowRight;
-                int dim = pixelMetric(PM_MenuButtonIndicator) - 1;
+                int dim = pixelMetric(PM_MenuButtonIndicator, ceData, elementFlags) - 1;
                 TQRect vr = visualRect( TQRect( r.x() + r.width() - 5 - 1 - dim,
                             r.y() + r.height() / 2 - dim / 2, dim, dim), r );
 
@@ -2681,9 +2687,9 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
                     TQColorGroup g2( discol, cg.highlight(), white, white,
                                     enabled ? white : discol, discol, white );
 
-                    tqdrawPrimitive( arrow, p, vr, g2, Style_Enabled );
+                    drawPrimitive( arrow, p, ceData, elementFlags, vr, g2, Style_Enabled );
                 } else
-                    tqdrawPrimitive( arrow, p, vr, cg,
+                    drawPrimitive( arrow, p, ceData, elementFlags, vr, cg,
                             enabled ? Style_Enabled : Style_Default );
             }
             break;
@@ -2706,15 +2712,17 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
             break;
 
         default:
-          KStyle::drawControl(element, p, widget, r, cg, flags, opt);
+          KStyle::drawControl(element, p, ceData, elementFlags, r, cg, flags, opt, widget);
     }
 }
 
 void PlastikStyle::drawControlMask(TQ_ControlElement element,
                                   TQPainter *p,
-                                  const TQWidget *w,
+                                  TQStyleControlElementData ceData,
+                                  ControlElementFlags elementFlags,
                                   const TQRect &r,
-                                  const TQStyleOption &opt) const
+                                  const TQStyleOption &opt,
+                                  const TQWidget *w) const
 {
     switch (element) {
         case CE_PushButton: {
@@ -2725,16 +2733,18 @@ void PlastikStyle::drawControlMask(TQ_ControlElement element,
         }
 
         default: {
-            KStyle::drawControlMask (element, p, w, r, opt);
+            KStyle::drawControlMask (element, p, ceData, elementFlags, r, opt, w);
         }
     }
 }
 
 void PlastikStyle::drawComplexControlMask(TQ_ComplexControl c,
                                          TQPainter *p,
-                                         const TQWidget *w,
+                                         const TQStyleControlElementData ceData,
+                                         const ControlElementFlags elementFlags,
                                          const TQRect &r,
-                                         const TQStyleOption &o) const
+                                         const TQStyleOption &o,
+                                         const TQWidget *w) const
 {
     switch (c) {
         case CC_SpinWidget:
@@ -2746,20 +2756,22 @@ void PlastikStyle::drawComplexControlMask(TQ_ComplexControl c,
             break;
         }
         default: {
-            KStyle::drawComplexControlMask (c, p, w, r, o);
+            KStyle::drawComplexControlMask (c, p, ceData, elementFlags, r, o, w);
         }
     }
 }
 
 void PlastikStyle::drawComplexControl(TQ_ComplexControl control,
                                      TQPainter *p,
-                                     const TQWidget *widget,
+                                     TQStyleControlElementData ceData,
+                                     ControlElementFlags elementFlags,
                                      const TQRect &r,
                                      const TQColorGroup &cg,
                                      SFlags flags,
                                      SCFlags controls,
                                      SCFlags active,
-                                     const TQStyleOption& opt) const
+                                     const TQStyleOption& opt,
+                                     const TQWidget *widget) const
 {
     const bool reverseLayout = TQApplication::reverseLayout();
 
@@ -2791,7 +2803,7 @@ void PlastikStyle::drawComplexControl(TQ_ComplexControl control,
             
             if (_inputFocusHighlight && hasFocus && editable && enabled)
             {
-                TQRect editField = querySubControlMetrics(control, widget, SC_ComboBoxEditField);
+                TQRect editField = querySubControlMetrics(control, ceData, elementFlags, SC_ComboBoxEditField, TQStyleOption::Default, widget);
                 TQRect editFrame = r;
                 TQRect buttonFrame = r;
                 
@@ -2873,7 +2885,7 @@ void PlastikStyle::drawComplexControl(TQ_ComplexControl control,
                                cg.background(), buttonColor, getColor(cg,MouseOverHighlight), enabled?_contrast+3:(_contrast/2),
                                surfaceFlags);
                 if (hasFocus) {
-                    tqdrawPrimitive(PE_FocusRect, p,
+                    drawPrimitive(PE_FocusRect, p, ceData, elementFlags,
                         TQRect(RcontentSurface.x() + 2,
                             RcontentSurface.y() + 2,
                             RcontentSurface.width() - 4,
@@ -2912,7 +2924,7 @@ void PlastikStyle::drawComplexControl(TQ_ComplexControl control,
             }
 
             p->setPen(cg.foreground());
-            tqdrawPrimitive(PE_SpinWidgetDown, p, RbuttonSurface, cg, Style_Default|Style_Enabled|Style_Raised);
+            drawPrimitive(PE_SpinWidgetDown, p, ceData, elementFlags, RbuttonSurface, cg, Style_Default|Style_Enabled|Style_Raised);
 
             // TQComboBox draws the text using cg.text(), we can override this
             // from here
@@ -2927,14 +2939,14 @@ void PlastikStyle::drawComplexControl(TQ_ComplexControl control,
             const TQToolButton *tb = (const TQToolButton *) widget;
 
             TQRect button, menuarea;
-            button   = querySubControlMetrics(control, widget, SC_ToolButton, opt);
-            menuarea = querySubControlMetrics(control, widget, SC_ToolButtonMenu, opt);
+            button   = querySubControlMetrics(control, ceData, elementFlags, SC_ToolButton, opt, widget);
+            menuarea = querySubControlMetrics(control, ceData, elementFlags, SC_ToolButtonMenu, opt, widget);
 
             SFlags bflags = flags,
                     mflags = flags;
 
             if (kornMode) {
-                tqdrawPrimitive(PE_ButtonTool, p, button, cg, bflags, opt);
+                drawPrimitive(PE_ButtonTool, p, ceData, elementFlags, button, cg, bflags, opt);
                 break;
             } else {
                 // don't want to have the buttoncolor as the background...
@@ -2951,7 +2963,7 @@ void PlastikStyle::drawComplexControl(TQ_ComplexControl control,
             if (controls & SC_ToolButton) {
             // If we're pressed, on, or raised...
                 if (bflags & (Style_Down | Style_On | Style_Raised) || widget==hoverWidget ) {
-                    tqdrawPrimitive(PE_ButtonTool, p, button, cg, bflags, opt);
+                    drawPrimitive(PE_ButtonTool, p, ceData, elementFlags, button, cg, bflags, opt);
                 } else if (tb->parentWidget() &&
                             tb->parentWidget()->backgroundPixmap() &&
                             !tb->parentWidget()->backgroundPixmap()->isNull()) {
@@ -2963,15 +2975,15 @@ void PlastikStyle::drawComplexControl(TQ_ComplexControl control,
             // Draw a toolbutton menu indicator if required
             if (controls & SC_ToolButtonMenu) {
                 if (mflags & (Style_Down | Style_On | Style_Raised)) {
-                    tqdrawPrimitive(PE_ButtonDropDown, p, menuarea, cg, mflags, opt);
+                    drawPrimitive(PE_ButtonDropDown, p, ceData, elementFlags, menuarea, cg, mflags, opt);
                 }
-                tqdrawPrimitive(PE_ArrowDown, p, menuarea, cg, mflags, opt);
+                drawPrimitive(PE_ArrowDown, p, ceData, elementFlags, menuarea, cg, mflags, opt);
             }
 
             if (tb->hasFocus() && !tb->focusProxy()) {
                 TQRect fr = tb->rect();
                 fr.addCoords(2, 2, -2, -2);
-                tqdrawPrimitive(PE_FocusRect, p, fr, cg);
+                drawPrimitive(PE_FocusRect, p, ceData, elementFlags, fr, cg);
             }
 
             // Set the color for the ToolButton menu indicator
@@ -3000,7 +3012,7 @@ void PlastikStyle::drawComplexControl(TQ_ComplexControl control,
             const bool heightDividable = ((r.height()%2) == 0);
             if (_inputFocusHighlight && hasFocus && enabled)
             {
-                TQRect editField = querySubControlMetrics(control, widget, SC_SpinWidgetEditField);
+                TQRect editField = querySubControlMetrics(control, ceData, elementFlags, SC_SpinWidgetEditField, TQStyleOption::Default, widget);
                 TQRect editFrame = r;
                 TQRect buttonFrame = r;
                 
@@ -3031,7 +3043,7 @@ void PlastikStyle::drawComplexControl(TQ_ComplexControl control,
             }
             else
             {
-                renderContour(p, querySubControlMetrics(control, widget, SC_SpinWidgetFrame),
+                renderContour(p, querySubControlMetrics(control, ceData, elementFlags, SC_SpinWidgetFrame, TQStyleOption::Default, widget),
                               cg.background(), getColor(cg, ButtonContour, enabled) );
             }
             p->setPen(alphaBlendColors(cg.background(), getColor(cg, ButtonContour, enabled), 50) );
@@ -3095,7 +3107,7 @@ void PlastikStyle::drawComplexControl(TQ_ComplexControl control,
             else
                 pe = PE_SpinWidgetUp;
             p->setPen(cg.foreground());
-            tqdrawPrimitive(pe, p, upRect, cg, sflags);
+            drawPrimitive(pe, p, ceData, elementFlags, upRect, cg, sflags);
 
             sflags = Style_Default | Style_Enabled;
             if (active == SC_SpinWidgetDown) {
@@ -3108,7 +3120,7 @@ void PlastikStyle::drawComplexControl(TQ_ComplexControl control,
             else
                 pe = PE_SpinWidgetDown;
             p->setPen(cg.foreground());
-            tqdrawPrimitive(pe, p, downRect, cg, sflags);
+            drawPrimitive(pe, p, ceData, elementFlags, downRect, cg, sflags);
 
             // thin frame around the input area
             const TQRect Rcontent = TQRect(reverseLayout?r.left()+1+handleWidth+1:r.left()+1, r.top()+1,
@@ -3141,19 +3153,19 @@ void PlastikStyle::drawComplexControl(TQ_ComplexControl control,
         }
 
         default:
-            KStyle::drawComplexControl(control, p, widget,
+            KStyle::drawComplexControl(control, p, ceData, elementFlags,
                                         r, cg, flags, controls,
-                                        active, opt);
+                                        active, opt, widget);
             break;
     }
 }
 
 
-TQRect PlastikStyle::subRect(SubRect r, const TQWidget *widget) const
+TQRect PlastikStyle::subRect(SubRect r, const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, const TQWidget *widget) const
 {
     switch (r) {
         case SR_ComboBoxFocusRect: {
-            return querySubControlMetrics( CC_ComboBox, widget, SC_ComboBoxEditField );
+            return querySubControlMetrics( CC_ComboBox, ceData, elementFlags, SC_ComboBoxEditField, TQStyleOption::Default, widget );
         }
 
         // Don't use KStyles progressbar subrect
@@ -3168,15 +3180,17 @@ TQRect PlastikStyle::subRect(SubRect r, const TQWidget *widget) const
         }
 
         default: {
-            return KStyle::subRect(r, widget);
+            return KStyle::subRect(r, ceData, elementFlags, widget);
         }
     }
 }
 
 TQRect PlastikStyle::querySubControlMetrics(TQ_ComplexControl control,
-                                          const TQWidget *widget,
+                                          TQStyleControlElementData ceData,
+                                          ControlElementFlags elementFlags,
                                           SubControl subcontrol,
-                                          const TQStyleOption &opt) const
+                                          const TQStyleOption &opt,
+                                          const TQWidget *widget) const
 {
     if (!widget) {
         return TQRect();
@@ -3191,7 +3205,7 @@ TQRect PlastikStyle::querySubControlMetrics(TQ_ComplexControl control,
                     return TQRect(r.left()+2, r.top()+2, r.width()-4-15-1, r.height()-4);
                 }
                 default: {
-                    return KStyle::querySubControlMetrics(control, widget, subcontrol, opt);
+                    return KStyle::querySubControlMetrics(control, ceData, elementFlags, subcontrol, opt, widget);
                 }
             }
             break;
@@ -3235,18 +3249,18 @@ TQRect PlastikStyle::querySubControlMetrics(TQ_ComplexControl control,
                     return TQRect(buttonsLeft, r.top()+1, bs.width(), r.height()-2);
                 }
                 default: {
-                    return KStyle::querySubControlMetrics(control, widget, subcontrol, opt);
+                    return KStyle::querySubControlMetrics(control, ceData, elementFlags, subcontrol, opt, widget);
                 }
             }
             break;
         }
         default: {
-            return KStyle::querySubControlMetrics(control, widget, subcontrol, opt);
+            return KStyle::querySubControlMetrics(control, ceData, elementFlags, subcontrol, opt, widget);
         }
     }
 }
 
-int PlastikStyle::pixelMetric(PixelMetric m, const TQWidget *widget) const
+int PlastikStyle::pixelMetric(PixelMetric m, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQWidget *widget) const
 {
     switch(m) {
     // TABS
@@ -3343,15 +3357,17 @@ int PlastikStyle::pixelMetric(PixelMetric m, const TQWidget *widget) const
         }
 
         default:
-            return KStyle::pixelMetric(m, widget);
+            return KStyle::pixelMetric(m, ceData, elementFlags, widget);
     }
 }
 
 
-TQSize PlastikStyle::tqsizeFromContents(ContentsType t,
-                                    const TQWidget *widget,
+TQSize PlastikStyle::sizeFromContents(ContentsType t,
+                                    TQStyleControlElementData ceData,
+                                    ControlElementFlags elementFlags,
                                     const TQSize &s,
-                                    const TQStyleOption &opt) const
+                                    const TQStyleOption &opt,
+                                    const TQWidget *widget) const
 {
     switch (t) {
         case CT_PopupMenuItem: {
@@ -3412,8 +3428,8 @@ TQSize PlastikStyle::tqsizeFromContents(ContentsType t,
         {
             const TQPushButton* btn = static_cast<const TQPushButton*>(widget);
 
-            int w = s.width() + 2 * pixelMetric(PM_ButtonMargin, widget);
-            int h = s.height() + 2 * pixelMetric(PM_ButtonMargin, widget);
+            int w = s.width() + 2 * pixelMetric(PM_ButtonMargin, ceData, elementFlags, widget);
+            int h = s.height() + 2 * pixelMetric(PM_ButtonMargin, ceData, elementFlags, widget);
             if ( btn->text().isEmpty() && s.width() < 32 ) return TQSize(w, h);
 
             return TQSize( w+25, h+5 );
@@ -3424,27 +3440,29 @@ TQSize PlastikStyle::tqsizeFromContents(ContentsType t,
             if(widget->parent() && ::tqqt_cast<TQToolBar*>(widget->parent()) )
                 return TQSize( s.width()+2*4, s.height()+2*4 );
             else
-                return KStyle::tqsizeFromContents (t, widget, s, opt);
+                return KStyle::sizeFromContents (t, ceData, elementFlags, s, opt, widget);
         }
 
         default:
-            return KStyle::tqsizeFromContents (t, widget, s, opt);
+            return KStyle::sizeFromContents (t, ceData, elementFlags, s, opt, widget);
     }
 
-    return KStyle::tqsizeFromContents (t, widget, s, opt);
+    return KStyle::sizeFromContents (t, ceData, elementFlags, s, opt, widget);
 }
 
 int PlastikStyle::styleHint( TQ_StyleHint stylehint,
-                                   const TQWidget *widget,
+                                   TQStyleControlElementData ceData,
+                                   ControlElementFlags elementFlags,
                                    const TQStyleOption &option,
-                                   TQStyleHintReturn* returnData ) const
+                                   TQStyleHintReturn* returnData,
+                                   const TQWidget *widget ) const
 {
     switch (stylehint) {
         case SH_PopupMenu_SubMenuPopupDelay:
             return 96; // Motif-like delay...
 
         default:
-            return KStyle::styleHint(stylehint, widget, option, returnData);
+            return KStyle::styleHint(stylehint, ceData, elementFlags, option, returnData, widget);
     }
 }
 

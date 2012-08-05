@@ -161,7 +161,7 @@ public:
 KDE_Q_EXPORT_PLUGIN( KThemeStylePlugin )
 
 
-void kDrawWindowsArrow ( TQPainter *p, const TQStyle* style, TQStyle::PrimitiveElement pe, bool down,
+void kDrawWindowsArrow ( TQPainter *p, const TQStyleControlElementData ceData, const TQStyle::ControlElementFlags elementFlags, const TQStyle* style, TQStyle::PrimitiveElement pe, bool down,
                          int x, int y, int w, int h,
                          const TQColorGroup &cg, bool enabled )
 {
@@ -186,8 +186,8 @@ void kDrawWindowsArrow ( TQPainter *p, const TQStyle* style, TQStyle::PrimitiveE
     p->save();
     if ( down )
     {
-        p->translate( style->pixelMetric( TQStyle::PM_ButtonShiftHorizontal ),
-                      style->pixelMetric( TQStyle::PM_ButtonShiftVertical ) );
+        p->translate( style->pixelMetric( TQStyle::PM_ButtonShiftHorizontal, ceData, elementFlags ),
+                      style->pixelMetric( TQStyle::PM_ButtonShiftVertical, ceData, elementFlags ) );
     }
 
     if ( enabled )
@@ -212,10 +212,12 @@ void kDrawWindowsArrow ( TQPainter *p, const TQStyle* style, TQStyle::PrimitiveE
 
 
 
-TQSize KThemeStyle::tqsizeFromContents( ContentsType contents,
-                                     const TQWidget* widget,
+TQSize KThemeStyle::sizeFromContents( ContentsType contents,
+                                     TQStyleControlElementData ceData,
+                                     ControlElementFlags elementFlags,
                                      const TQSize &contentSize,
-                                     const TQStyleOption& opt ) const
+                                     const TQStyleOption& opt,
+                                     const TQWidget* widget ) const
 {
     switch ( contents )
     {
@@ -226,8 +228,8 @@ TQSize KThemeStyle::tqsizeFromContents( ContentsType contents,
                 const TQPushButton * button = ( const TQPushButton* ) widget;
                 int w = contentSize.width();
                 int h = contentSize.height();
-                int bm = pixelMetric( PM_ButtonMargin, widget );
-                int fw = pixelMetric( PM_DefaultFrameWidth, widget ) * 2;
+                int bm = pixelMetric( PM_ButtonMargin, ceData, elementFlags, widget );
+                int fw = pixelMetric( PM_DefaultFrameWidth, ceData, elementFlags, widget ) * 2;
 
                 w += bm + fw + 6; // ### Add 6 to make way for bold font.
                 h += bm + fw;
@@ -304,12 +306,12 @@ TQSize KThemeStyle::tqsizeFromContents( ContentsType contents,
             }
             
         default:
-            return KThemeBase::tqsizeFromContents( contents, widget, contentSize, opt );
+            return KThemeBase::sizeFromContents( contents, ceData, elementFlags, contentSize, opt, widget );
     }
 }
 
 
-TQRect KThemeStyle::subRect(SubRect sr, const TQWidget* widget) const
+TQRect KThemeStyle::subRect(SubRect sr, const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, const TQWidget* widget) const
 {
     if (sr == SR_CheckBoxFocusRect)
     {
@@ -320,18 +322,18 @@ TQRect KThemeStyle::subRect(SubRect sr, const TQWidget* widget) const
         {
             TQRect bounding = cb->rect();
 
-            int   cw = pixelMetric(PM_IndicatorWidth, widget);
-            int   ch = pixelMetric(PM_IndicatorHeight, widget);
+            int   cw = pixelMetric(PM_IndicatorWidth, ceData, elementFlags, widget);
+            int   ch = pixelMetric(PM_IndicatorHeight, ceData, elementFlags, widget);
 
             TQRect checkbox(bounding.x() + 2, bounding.y() + 2 + (bounding.height() - ch)/2,  cw - 4, ch - 4);
 
             return checkbox;
         }
     }
-    return KStyle::subRect(sr, widget);
+    return KStyle::subRect(sr, ceData, elementFlags, widget);
 }
 
-int KThemeStyle::pixelMetric ( PixelMetric metric, const TQWidget * widget ) const
+int KThemeStyle::pixelMetric ( PixelMetric metric, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQWidget * widget ) const
 {
     switch ( metric )
     {
@@ -361,26 +363,26 @@ int KThemeStyle::pixelMetric ( PixelMetric metric, const TQWidget * widget ) con
             if ( isPixmap( ExIndicatorOn ) )
                 return ( uncached( ExIndicatorOn ) ->size().width() );
             else
-                return KThemeBase::pixelMetric ( metric, widget );
+                return KThemeBase::pixelMetric ( metric, ceData, elementFlags, widget );
 
         case PM_ExclusiveIndicatorHeight:
             if ( isPixmap( ExIndicatorOn ) )
                 return ( uncached( ExIndicatorOn ) ->size().height() );
             else
-                return KThemeBase::pixelMetric ( metric, widget );
+                return KThemeBase::pixelMetric ( metric, ceData, elementFlags, widget );
 
 
         case PM_IndicatorWidth:
             if ( isPixmap( IndicatorOn ) )
                 return ( uncached( IndicatorOn ) ->size().width() );
             else
-                return KThemeBase::pixelMetric ( metric, widget );
+                return KThemeBase::pixelMetric ( metric, ceData, elementFlags, widget );
 
         case PM_IndicatorHeight:
             if ( isPixmap( IndicatorOn ) )
                 return ( uncached( IndicatorOn ) ->size().height() );
             else
-                return KThemeBase::pixelMetric ( metric, widget );
+                return KThemeBase::pixelMetric ( metric, ceData, elementFlags, widget );
 
         case PM_SliderLength:
             return ( sliderButtonLength() );
@@ -389,7 +391,7 @@ int KThemeStyle::pixelMetric ( PixelMetric metric, const TQWidget * widget ) con
             return ( splitWidth() );
 
         default:
-            return KThemeBase::pixelMetric ( metric, widget );
+            return KThemeBase::pixelMetric ( metric, ceData, elementFlags, widget );
     }
 }
 
@@ -700,7 +702,7 @@ void KThemeStyle::drawBaseButton( TQPainter *p, int x, int y, int w, int h,
     p->setPen( oldPen );
 }
 
-void KThemeStyle::drawPrimitive ( PrimitiveElement pe, TQPainter * p, const TQRect & r, const TQColorGroup & g_base,
+void KThemeStyle::drawPrimitive ( PrimitiveElement pe, TQPainter * p, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQRect & r, const TQColorGroup & g_base,
                                   SFlags flags, const TQStyleOption & opt ) const
 {
     bool handled = false;
@@ -761,7 +763,7 @@ void KThemeStyle::drawPrimitive ( PrimitiveElement pe, TQPainter * p, const TQRe
                 // Standard arrow types
                 if ( arrowType() == MotifArrow )
                 {
-                    mtfstyle->tqdrawPrimitive( pe, p, r, g, flags, opt );
+                    mtfstyle->drawPrimitive( pe, p, ceData, elementFlags, r, g, flags, opt );
 
                     handled = true;
                 }
@@ -791,8 +793,8 @@ void KThemeStyle::drawPrimitive ( PrimitiveElement pe, TQPainter * p, const TQRe
                     p->save();
 
                     if ( flags & Style_Down )
-                        p->translate( pixelMetric( PM_ButtonShiftHorizontal ),
-                                      pixelMetric( PM_ButtonShiftVertical ) );
+                        p->translate( pixelMetric( PM_ButtonShiftHorizontal, ceData, elementFlags ),
+                                      pixelMetric( PM_ButtonShiftVertical, ceData, elementFlags ) );
 
                     if ( flags & Style_Enabled )
                     {
@@ -1006,7 +1008,7 @@ void KThemeStyle::drawPrimitive ( PrimitiveElement pe, TQPainter * p, const TQRe
                                 *colorGroup( g, down ? ScrollButtonDown : ScrollButton ),
                                 down, false, down ? ScrollButtonDown : ScrollButton );
 
-                tqdrawPrimitive( ( horizontal ) ? PE_ArrowRight : PE_ArrowDown, p ,
+                drawPrimitive( ( horizontal ) ? PE_ArrowRight : PE_ArrowDown, p, ceData, elementFlags ,
                                TQRect( r.x() + 3, r.y() + 3, r.width() - 6, r.height() - 6 ),
                                *colorGroup( g, down ? ScrollButtonDown : ScrollButton ),
                                flags );
@@ -1021,7 +1023,7 @@ void KThemeStyle::drawPrimitive ( PrimitiveElement pe, TQPainter * p, const TQRe
                                 *colorGroup( g, down ? ScrollButtonDown : ScrollButton ),
                                 down, false, down ? ScrollButtonDown : ScrollButton );
 
-                tqdrawPrimitive( ( horizontal ) ? PE_ArrowLeft : PE_ArrowUp, p ,
+                drawPrimitive( ( horizontal ) ? PE_ArrowLeft : PE_ArrowUp, p, ceData, elementFlags ,
                                TQRect( r.x() + 3, r.y() + 3, r.width() - 6, r.height() - 6 ),
                                *colorGroup( g, down ? ScrollButtonDown : ScrollButton ),
                                flags );
@@ -1069,7 +1071,7 @@ void KThemeStyle::drawPrimitive ( PrimitiveElement pe, TQPainter * p, const TQRe
     }
 
     if ( !handled )
-        KThemeBase::drawPrimitive ( pe, p, r, g,
+        KThemeBase::drawPrimitive ( pe, p, ceData, elementFlags, r, g,
                                     flags, opt );
 }
 
@@ -1099,11 +1101,13 @@ TQPixmap* KThemeStyle::makeMenuBarCache(int w, int h) const
 
 void KThemeStyle::drawControl( ControlElement element,
                                TQPainter *p,
-                               const TQWidget *widget,
+                               TQStyleControlElementData ceData,
+                               ControlElementFlags elementFlags,
                                const TQRect &r,
                                const TQColorGroup &cg,
                                SFlags how ,
-                               const TQStyleOption& opt ) const
+                               const TQStyleOption& opt,
+                               const TQWidget *widget ) const
 {
     bool handled = false;
     int x, y, w, h;
@@ -1116,7 +1120,7 @@ void KThemeStyle::drawControl( ControlElement element,
             {
                 const TQPushButton * btn = ( const TQPushButton* ) widget;
                 bool sunken = btn->isOn() || btn->isDown();
-                int diw = pixelMetric( PM_ButtonDefaultIndicator, btn );
+                int diw = pixelMetric( PM_ButtonDefaultIndicator, ceData, elementFlags, btn );
                 drawBaseButton( p, diw, diw, w - 2 * diw, h - 2 * diw,
                                 *colorGroup( btn->colorGroup(), sunken ? PushButtonDown :
                                              PushButton ), sunken, roundButton(),
@@ -1135,16 +1139,16 @@ void KThemeStyle::drawControl( ControlElement element,
                 // Shift button contents if pushed.
                 if ( active )
                 {
-                    x += pixelMetric( PM_ButtonShiftHorizontal, widget );
-                    y += pixelMetric( PM_ButtonShiftVertical, widget );
+                    x += pixelMetric( PM_ButtonShiftHorizontal, ceData, elementFlags, widget );
+                    y += pixelMetric( PM_ButtonShiftVertical, ceData, elementFlags, widget );
                     how |= Style_Sunken;
                 }
 
                 // Does the button have a popup menu?
                 if ( button->isMenuButton() )
                 {
-                    int dx = pixelMetric( PM_MenuButtonIndicator, widget );
-                    tqdrawPrimitive( PE_ArrowDown, p, TQRect( x + w - dx - 2, y + 2, dx, h - 4 ),
+                    int dx = pixelMetric( PM_MenuButtonIndicator, ceData, elementFlags, widget );
+                    drawPrimitive( PE_ArrowDown, p, ceData, elementFlags, TQRect( x + w - dx - 2, y + 2, dx, h - 4 ),
                                    cg, how, opt );
                     w -= dx;
                 }
@@ -1219,8 +1223,8 @@ void KThemeStyle::drawControl( ControlElement element,
 
                 // Draw a focus rect if the button has focus
                 if ( how & Style_HasFocus )
-                    tqdrawPrimitive( PE_FocusRect, p,
-                                   TQStyle::visualRect( subRect( SR_PushButtonFocusRect, widget ), widget ),
+                    drawPrimitive( PE_FocusRect, p, ceData, elementFlags,
+                                   TQStyle::visualRect( subRect( SR_PushButtonFocusRect, ceData, elementFlags, widget ), ceData, elementFlags ),
                                    cg, how );
                 handled = true;
                 break;
@@ -1229,7 +1233,7 @@ void KThemeStyle::drawControl( ControlElement element,
         case CE_MenuBarEmptyArea:
             {
                 //Expand to cover entire region
-                tqdrawPrimitive(PE_PanelMenuBar, p, 
+                drawPrimitive(PE_PanelMenuBar, p, ceData, elementFlags, 
                              TQRect(0,0,r.width()+r.x()*2, r.height()+r.y()*2),
                              cg, Style_Default);
                 handled = true;
@@ -1440,7 +1444,7 @@ void KThemeStyle::drawControl( ControlElement element,
                 bool enabled = (mi? mi->isEnabled():true);
                 bool checkable = popupmenu->isCheckable();
                 bool active = how & Style_Active;
-                bool etchtext = styleHint( SH_EtchDisabledText, 0 );
+                bool etchtext = styleHint( SH_EtchDisabledText, ceData, elementFlags, TQStyleOption::Default, 0, 0 );
                 bool reverse = TQApplication::reverseLayout();
 
                 const TQColorGroup& cg_ours = *colorGroup( cg, active ? MenuItemDown : MenuItem );
@@ -1531,7 +1535,7 @@ void KThemeStyle::drawControl( ControlElement element,
                     SFlags cflags = Style_Default;
                     cflags |= active ? Style_Enabled : Style_On;
 
-                    tqdrawPrimitive( PE_CheckMark, p, TQRect( cx + itemFrame, y + itemFrame,
+                    drawPrimitive( PE_CheckMark, p, ceData, elementFlags, TQRect( cx + itemFrame, y + itemFrame,
                                                            checkcol - itemFrame * 2, h - itemFrame * 2 ), cg_ours, cflags );
                 }
 
@@ -1656,10 +1660,10 @@ void KThemeStyle::drawControl( ControlElement element,
                         TQColorGroup g2( discol, cg_ours.highlight(), white, white,
                                         enabled ? white : discol, discol, white );
 
-                        tqdrawPrimitive( arrow, p, vr, g2, Style_Enabled | Style_Down );
+                        drawPrimitive( arrow, p, ceData, elementFlags, vr, g2, Style_Enabled | Style_Down );
                     }
                     else
-                        tqdrawPrimitive( arrow, p, vr, cg_ours,
+                        drawPrimitive( arrow, p, ceData, elementFlags, vr, cg_ours,
                                        enabled ? Style_Enabled : Style_Default );
                 }
                 handled = true;
@@ -1681,7 +1685,7 @@ void KThemeStyle::drawControl( ControlElement element,
         case CE_ProgressBarContents:
             {
                 const TQProgressBar* pb = (const TQProgressBar*)widget;
-                TQRect cr = subRect(SR_ProgressBarContents, widget);
+                TQRect cr = subRect(SR_ProgressBarContents, ceData, elementFlags, widget);
                 double progress = pb->progress();
                 bool reverse = TQApplication::reverseLayout();
                 int steps = pb->totalSteps();
@@ -1737,15 +1741,17 @@ void KThemeStyle::drawControl( ControlElement element,
 
     if ( !handled )
         KThemeBase::drawControl( element,
-                                 p, widget, r, cg, how, opt );
+                                 p, ceData, elementFlags, r, cg, how, opt, widget );
 }
 
 
 void KThemeStyle::drawControlMask( ControlElement element,
                                    TQPainter *p,
-                                   const TQWidget *widget,
+                                   TQStyleControlElementData ceData,
+                                   ControlElementFlags elementFlags,
                                    const TQRect &r,
-                                   const TQStyleOption& opt ) const
+                                   const TQStyleOption& opt,
+                                   const TQWidget *widget ) const
 {
     bool handled = false;
     int x, y, w, h;
@@ -1766,18 +1772,20 @@ void KThemeStyle::drawControlMask( ControlElement element,
 
     if ( !handled )
         KThemeBase::drawControlMask( element,
-                                     p, widget, r, opt );
+                                     p, ceData, elementFlags, r, opt, widget );
 
 }
 
 
 void KThemeStyle::drawKStylePrimitive( KStylePrimitive kpe,
                                        TQPainter* p,
-                                       const TQWidget* widget,
+                                       TQStyleControlElementData ceData,
+                                       ControlElementFlags elementFlags,
                                        const TQRect &r,
                                        const TQColorGroup &cg,
                                        SFlags flags,
-                                       const TQStyleOption& opt ) const
+                                       const TQStyleOption& opt,
+                                       const TQWidget* widget ) const
 {
     bool handled = false;
     int x, y, w, h;
@@ -1942,8 +1950,8 @@ void KThemeStyle::drawKStylePrimitive( KStylePrimitive kpe,
 
     if ( !handled )
     {
-        KThemeBase::drawKStylePrimitive( kpe, p, widget,
-                                         r, cg, flags, opt );
+        KThemeBase::drawKStylePrimitive( kpe, p, ceData, elementFlags,
+                                         r, cg, flags, opt, widget );
     }
 
 }
@@ -1951,10 +1959,10 @@ void KThemeStyle::drawKStylePrimitive( KStylePrimitive kpe,
 
 
 
-void KThemeStyle::drawComplexControl ( TQ_ComplexControl control, TQPainter * p, const TQWidget * widget,
+void KThemeStyle::drawComplexControl ( TQ_ComplexControl control, TQPainter * p, TQStyleControlElementData ceData, ControlElementFlags elementFlags,
                                        const TQRect & r, const TQColorGroup & g, SFlags how ,
                                        SCFlags controls, SCFlags active,
-                                       const TQStyleOption & opt ) const
+                                       const TQStyleOption & opt, const TQWidget * widget ) const
 {
     bool handled = false;
     int x, y, w, h;
@@ -1970,8 +1978,8 @@ void KThemeStyle::drawComplexControl ( TQ_ComplexControl control, TQPainter * p,
             {
                 const TQToolButton * toolbutton = ( const TQToolButton * ) widget;
                 TQRect button, menu;
-                button = querySubControlMetrics( control, widget, SC_ToolButton, opt );
-                menu = querySubControlMetrics( control, widget, SC_ToolButtonMenu, opt );
+                button = querySubControlMetrics( control, ceData, elementFlags, SC_ToolButton, opt, widget );
+                menu = querySubControlMetrics( control, ceData, elementFlags, SC_ToolButtonMenu, opt, widget );
 
 
                 if ( controls & SC_ToolButton )
@@ -1986,12 +1994,12 @@ void KThemeStyle::drawComplexControl ( TQ_ComplexControl control, TQPainter * p,
 
                 if ( controls & SC_ToolButtonMenu )
                 {
-                    tqdrawPrimitive( PE_ArrowDown, p, menu, g, how );
+                    drawPrimitive( PE_ArrowDown, p, ceData, elementFlags, menu, g, how );
                     /*                if ( enabled )
-                         kDrawWindowsArrow(p, this, PE_ArrowDown, false, menu.x(), menu.y(), menu.width(), menu.height(),
+                         kDrawWindowsArrow(p, ceData, elementFlags, this, PE_ArrowDown, false, menu.x(), menu.y(), menu.width(), menu.height(),
                                                      g, true );
                                     else
-                         kDrawWindowsArrow(p, this, PE_ArrowDown, false, menu.x(), menu.y(), menu.width(), menu.height(),
+                         kDrawWindowsArrow(p, ceData, elementFlags, this, PE_ArrowDown, false, menu.x(), menu.y(), menu.width(), menu.height(),
                                                      g, false );*/
                 }
 
@@ -1999,7 +2007,7 @@ void KThemeStyle::drawComplexControl ( TQ_ComplexControl control, TQPainter * p,
                 {
                     TQRect fr = toolbutton->rect();
                     fr.addCoords( 3, 3, -3, -3 );
-                    tqdrawPrimitive( PE_FocusRect, p, fr, g );
+                    drawPrimitive( PE_FocusRect, p, ceData, elementFlags, fr, g );
                 }
 
                 handled = true;
@@ -2024,8 +2032,8 @@ void KThemeStyle::drawComplexControl ( TQ_ComplexControl control, TQPainter * p,
                 {
                     bool sunken = ( active == SC_ComboBoxArrow );
                     TQRect ar = TQStyle::visualRect(
-                                   querySubControlMetrics( CC_ComboBox, widget, SC_ComboBoxArrow ),
-                                   widget );
+                                   querySubControlMetrics( CC_ComboBox, ceData, elementFlags, SC_ComboBoxArrow, TQStyleOption::Default, widget ),
+                                   ceData, elementFlags );
                     ar.rect( &x, &y, &w, &h );
                     WidgetType widget = sunken ? ComboBoxDown : ComboBox;
 
@@ -2042,7 +2050,7 @@ void KThemeStyle::drawComplexControl ( TQ_ComplexControl control, TQPainter * p,
                     else
                     {
 
-                        mtfstyle->tqdrawPrimitive( PE_ArrowDown, p, TQRect( x, y, w, h ), *colorGroup( g, widget ), sunken ? ( how | Style_Sunken ) : how, opt );
+                        mtfstyle->drawPrimitive( PE_ArrowDown, p, ceData, elementFlags, TQRect( x, y, w, h ), *colorGroup( g, widget ), sunken ? ( how | Style_Sunken ) : how, opt );
                         qDrawShadeRect( p, x, y, w, h, *colorGroup( g, widget ) ); //w-14, y+7+(h-15), 10, 3,
                     }
                     controls ^= SC_ComboBoxArrow;
@@ -2059,11 +2067,11 @@ void KThemeStyle::drawComplexControl ( TQ_ComplexControl control, TQPainter * p,
 
                 //Here, we don't do add page, subpage, etc.,
                 TQRect addline, subline, subline2, groove, slider;
-                subline = querySubControlMetrics( control, widget, SC_ScrollBarSubLine, opt );
-                addline = querySubControlMetrics( control, widget, SC_ScrollBarAddLine, opt );
-                groove = querySubControlMetrics( control, widget, SC_ScrollBarGroove, opt );
+                subline = querySubControlMetrics( control, ceData, elementFlags, SC_ScrollBarSubLine, opt, widget );
+                addline = querySubControlMetrics( control, ceData, elementFlags, SC_ScrollBarAddLine, opt, widget );
+                groove = querySubControlMetrics( control, ceData, elementFlags, SC_ScrollBarGroove, opt, widget );
 
-                slider = querySubControlMetrics( control, widget, SC_ScrollBarSlider, opt );
+                slider = querySubControlMetrics( control, ceData, elementFlags, SC_ScrollBarSlider, opt, widget );
                 subline2 = addline;
 
                 TQPixmap buf( sb->width(), sb->height() );
@@ -2072,7 +2080,7 @@ void KThemeStyle::drawComplexControl ( TQ_ComplexControl control, TQPainter * p,
                 if ( groove.isValid() )
                 {
                     p2.fillRect( groove, TQColor( 255, 0, 0 ) );
-                    tqdrawPrimitive( PE_ScrollBarSubPage, &p2, groove, g,
+                    drawPrimitive( PE_ScrollBarSubPage, &p2, ceData, elementFlags, groove, g,
                                    sflags | ( ( active == SC_ScrollBarSubPage ) ?
                                               Style_Down : Style_Default ) );
                 }
@@ -2081,19 +2089,19 @@ void KThemeStyle::drawComplexControl ( TQ_ComplexControl control, TQPainter * p,
                 // Draw the up/left button set
                 if ( subline.isValid() )
                 {
-                    tqdrawPrimitive( PE_ScrollBarSubLine, &p2, subline, g,
+                    drawPrimitive( PE_ScrollBarSubLine, &p2, ceData, elementFlags, subline, g,
                                    sflags | ( active == SC_ScrollBarSubLine ?
                                               Style_Down : Style_Default ) );
                 }
 
                 if ( addline.isValid() )
-                    tqdrawPrimitive( PE_ScrollBarAddLine, &p2, addline, g,
+                    drawPrimitive( PE_ScrollBarAddLine, &p2, ceData, elementFlags, addline, g,
                                    sflags | ( ( active == SC_ScrollBarAddLine ) ?
                                               Style_Down : Style_Default ) );
 
                 if ( slider.isValid() )
                 { //(controls & SC_ScrollBarSlider) &&
-                    tqdrawPrimitive( PE_ScrollBarSlider, &p2, slider, g,
+                    drawPrimitive( PE_ScrollBarSlider, &p2, ceData, elementFlags, slider, g,
                                    sflags | ( ( active == SC_ScrollBarSlider ) ?
                                               Style_Down : Style_Default ) );
                     // Draw focus rect
@@ -2101,7 +2109,7 @@ void KThemeStyle::drawComplexControl ( TQ_ComplexControl control, TQPainter * p,
                     {
                         TQRect fr( slider.x() + 2, slider.y() + 2,
                                   slider.width() - 5, slider.height() - 5 );
-                        tqdrawPrimitive( PE_FocusRect, &p2, fr, g, Style_Default );
+                        drawPrimitive( PE_FocusRect, &p2, ceData, elementFlags, fr, g, Style_Default );
                     }
                     p2.end();
                     bitBlt( p->device(), x, y, &buf );
@@ -2116,10 +2124,10 @@ void KThemeStyle::drawComplexControl ( TQ_ComplexControl control, TQPainter * p,
 
     if ( !handled )
     {
-        KThemeBase::drawComplexControl ( control, p, widget,
+        KThemeBase::drawComplexControl ( control, p, ceData, elementFlags,
                                          r, g, how ,
                                          controls, active,
-                                         opt );
+                                         opt, widget );
     }
 
 }
@@ -2185,7 +2193,7 @@ void KThemeStyle::drawBaseMask( TQPainter *p, int x, int y, int w, int h,
         p->fillRect( x, y, w, h, fillBrush );
 }
 
-int KThemeStyle::styleHint( StyleHint sh, const TQWidget *w, const TQStyleOption &opt, TQStyleHintReturn *shr ) const
+int KThemeStyle::styleHint( StyleHint sh, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQStyleOption &opt, TQStyleHintReturn *shr, const TQWidget *w ) const
 {
     switch ( sh )
     {
@@ -2207,7 +2215,7 @@ int KThemeStyle::styleHint( StyleHint sh, const TQWidget *w, const TQStyleOption
 	    return NoBackground;
 
         default:
-            return KThemeBase::styleHint( sh, w, opt, shr );
+            return KThemeBase::styleHint( sh, ceData, elementFlags, opt, shr, w );
     };
 }
 

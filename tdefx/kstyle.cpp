@@ -328,14 +328,27 @@ void KStyle::renderMenuBlendPixmap( KPixmap &pix, const TQColorGroup &cg,
 	pix.fill(cg.button());	// Just tint as the default behavior
 }
 
-
 void KStyle::drawKStylePrimitive( KStylePrimitive kpe,
 								  TQPainter* p,
 								  const TQWidget* widget,
 								  const TQRect &r,
 								  const TQColorGroup &cg,
 								  SFlags flags,
-								  const TQStyleOption& /* opt */ ) const
+								  const TQStyleOption &opt ) const
+{
+	TQStyleControlElementData ceData = populateControlElementDataFromWidget(widget, TQStyleOption());
+	drawKStylePrimitive(kpe, p, ceData, getControlElementFlagsForObject(widget, ceData.widgetObjectTypes, TQStyleOption()), r, cg, flags, opt);
+}
+
+void KStyle::drawKStylePrimitive( KStylePrimitive kpe,
+								  TQPainter* p,
+								  TQStyleControlElementData ceData,
+								  ControlElementFlags elementFlags,
+								  const TQRect &r,
+								  const TQColorGroup &cg,
+								  SFlags flags,
+								  const TQStyleOption&, /* opt */
+								  const TQWidget* widget ) const
 {
 	switch( kpe )
 	{
@@ -545,6 +558,8 @@ int KStyle::kPixelMetric( KStylePixelMetric kpm, const TQWidget* /* widget */) c
 
 //void KStyle::tqdrawPrimitive( TQ_ControlElement pe,
 //							TQPainter* p,
+// 							TQStyleControlElementData ceData,
+// 							ControlElementFlags elementFlags,
 //							const TQRect &r,
 //							const TQColorGroup &cg,
 //							SFlags flags,
@@ -554,7 +569,7 @@ int KStyle::kPixelMetric( KStylePixelMetric kpm, const TQWidget* /* widget */) c
 //	// What should "widget" be in actuality?  How should I get it?  From where?
 //	// Almost certainly it should not be null!
 //	TQWidget *widget = 0;
-//	drawControl(pe, p, widget, r, cg, flags, opt);
+//	drawControl(pe, p, ceData, elementFlags, r, cg, flags, opt, widget);
 //}
 
 // #endif // USE_QT4
@@ -563,6 +578,8 @@ int KStyle::kPixelMetric( KStylePixelMetric kpm, const TQWidget* /* widget */) c
 
 void KStyle::tqdrawPrimitive( TQ_PrimitiveElement pe,
 							TQPainter* p,
+							TQStyleControlElementData ceData,
+							ControlElementFlags elementFlags,
 							const TQRect &r,
 							const TQColorGroup &cg,
 							SFlags flags,
@@ -587,16 +604,16 @@ void KStyle::tqdrawPrimitive( TQ_PrimitiveElement pe,
 			(parent->inherits(TQMAINWINDOW_OBJECT_NAME_STRING)) ))	// Collapsed dock
 
 			// Draw a toolbar handle
-			drawKStylePrimitive( KPE_ToolBarHandle, p, widget, r, cg, flags, opt );
+			drawKStylePrimitive( KPE_ToolBarHandle, p, ceData, elementFlags, r, cg, flags, opt, widget );
 
 		else if ( widget->inherits(TQDOCKWINDOWHANDLE_OBJECT_NAME_STRING) )
 
 			// Draw a dock window handle
-			drawKStylePrimitive( KPE_DockWindowHandle, p, widget, r, cg, flags, opt );
+			drawKStylePrimitive( KPE_DockWindowHandle, p, ceData, elementFlags, r, cg, flags, opt, widget );
 
 		else
 			// General handle, probably a kicker applet handle.
-			drawKStylePrimitive( KPE_GeneralHandle, p, widget, r, cg, flags, opt );
+			drawKStylePrimitive( KPE_GeneralHandle, p, ceData, elementFlags, r, cg, flags, opt, widget );
 #if TQT_VERSION >= 0x030300
 #ifdef HAVE_XRENDER
 	} else if ( d->semiTransparentRubberband && pe == TQStyle::PE_RubberBand ) {
@@ -649,18 +666,20 @@ void KStyle::tqdrawPrimitive( TQ_PrimitiveElement pe,
 #endif
 #endif
 	} else
-		TQCommonStyle::tqdrawPrimitive( pe, p, r, cg, flags, opt );
+		TQCommonStyle::tqdrawPrimitive( pe, p, ceData, elementFlags, r, cg, flags, opt );
 }
 
 
 
 void KStyle::drawControl( TQ_ControlElement element,
 						  TQPainter* p,
-						  const TQWidget* widget,
+						  TQStyleControlElementData ceData,
+						  ControlElementFlags elementFlags,
 						  const TQRect &r,
 						  const TQColorGroup &cg,
 						  SFlags flags,
-						  const TQStyleOption &opt ) const
+						  const TQStyleOption &opt,
+						  const TQWidget* widget ) const
 {
 	switch (element)
 	{
@@ -832,8 +851,8 @@ void KStyle::drawControl( TQ_ControlElement element,
 		// ------------------------------------------------------------------------
 		case CE_PopupMenuScroller: {
 			p->fillRect(r, cg.background());
-			tqdrawPrimitive(PE_ButtonTool, p, r, cg, Style_Enabled);
-			tqdrawPrimitive((flags & Style_Up) ? PE_ArrowUp : PE_ArrowDown, p, r, cg, Style_Enabled);
+			tqdrawPrimitive(PE_ButtonTool, p, ceData, elementFlags, r, cg, Style_Enabled);
+			tqdrawPrimitive((flags & Style_Up) ? PE_ArrowUp : PE_ArrowDown, p, ceData, elementFlags, r, cg, Style_Enabled);
 			break;
 		}
 
@@ -841,15 +860,15 @@ void KStyle::drawControl( TQ_ControlElement element,
 		// PROGRESSBAR
 		// ------------------------------------------------------------------------
 		case CE_ProgressBarGroove: {
-			TQRect fr = subRect(SR_ProgressBarGroove, widget);
-			tqdrawPrimitive(PE_Panel, p, fr, cg, Style_Sunken, TQStyleOption::SO_Default);
+			TQRect fr = subRect(SR_ProgressBarGroove, ceData, elementFlags, widget);
+			tqdrawPrimitive(PE_Panel, p, ceData, elementFlags, fr, cg, Style_Sunken, TQStyleOption::SO_Default);
 			break;
 		}
 
 		case CE_ProgressBarContents: {
 			// ### Take into account totalSteps() for busy indicator
 			const TQProgressBar* pb = (const TQProgressBar*)widget;
-			TQRect cr = subRect(SR_ProgressBarContents, widget);
+			TQRect cr = subRect(SR_ProgressBarContents, ceData, elementFlags, widget);
 			double progress = pb->progress();
 			bool reverse = TQApplication::reverseLayout();
 			int steps = pb->totalSteps();
@@ -913,7 +932,7 @@ void KStyle::drawControl( TQ_ControlElement element,
 
 		case CE_ProgressBarLabel: {
 			const TQProgressBar* pb = (const TQProgressBar*)widget;
-			TQRect cr = subRect(SR_ProgressBarContents, widget);
+			TQRect cr = subRect(SR_ProgressBarContents, ceData, elementFlags, widget);
 			double progress = pb->progress();
 			bool reverse = TQApplication::reverseLayout();
 			int steps = pb->totalSteps();
@@ -952,12 +971,12 @@ void KStyle::drawControl( TQ_ControlElement element,
 		}
 
 		default:
-			TQCommonStyle::drawControl(element, p, widget, r, cg, flags, opt);
+			TQCommonStyle::drawControl(element, p, ceData, elementFlags, r, cg, flags, opt, widget);
 	}
 }
 
 
-TQRect KStyle::subRect(SubRect r, const TQWidget* widget) const
+TQRect KStyle::subRect(SubRect r, const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, const TQWidget* widget) const
 {
 	switch(r)
 	{
@@ -974,12 +993,12 @@ TQRect KStyle::subRect(SubRect r, const TQWidget* widget) const
 		}
 
 		default:
-			return TQCommonStyle::subRect(r, widget);
+			return TQCommonStyle::subRect(r, ceData, elementFlags, widget);
 	}
 }
 
 
-int KStyle::pixelMetric(PixelMetric m, const TQWidget* widget) const
+int KStyle::pixelMetric(PixelMetric m, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQWidget* widget) const
 {
 	switch(m)
 	{
@@ -1000,7 +1019,7 @@ int KStyle::pixelMetric(PixelMetric m, const TQWidget* widget) const
 				&& widget->inherits(TQDOCKWINDOWHANDLE_OBJECT_NAME_STRING) )
 					return widget->fontMetrics().lineSpacing();
 			else
-				return TQCommonStyle::pixelMetric(m, widget);
+				return TQCommonStyle::pixelMetric(m, ceData, elementFlags, widget);
 		}
 
 		// TABS
@@ -1084,10 +1103,10 @@ int KStyle::pixelMetric(PixelMetric m, const TQWidget* widget) const
 			return 0;
 
 		case PM_PopupMenuScrollerHeight:
-			return pixelMetric( PM_ScrollBarExtent, 0);
+			return pixelMetric( PM_ScrollBarExtent, ceData, elementFlags, 0);
 
 		default:
-			return TQCommonStyle::pixelMetric( m, widget );
+			return TQCommonStyle::pixelMetric( m, ceData, elementFlags, widget );
 	}
 }
 
@@ -1106,13 +1125,15 @@ static TQListViewItem* nextVisibleSibling(TQListViewItem* item)
 
 void KStyle::drawComplexControl( TQ_ComplexControl control,
 								 TQPainter* p,
-								 const TQWidget* widget,
+								 TQStyleControlElementData ceData,
+								 ControlElementFlags elementFlags,
 								 const TQRect &r,
 								 const TQColorGroup &cg,
 								 SFlags flags,
 								 SCFlags controls,
 								 SCFlags active,
-								 const TQStyleOption &opt ) const
+								 const TQStyleOption &opt,
+								 const TQWidget* widget ) const
 {
 	switch(control)
 	{
@@ -1129,13 +1150,13 @@ void KStyle::drawComplexControl( TQ_ComplexControl control,
 								 (maxedOut   ? Style_Default : Style_Enabled));
 
 			TQRect  addline, subline, subline2, addpage, subpage, slider, first, last;
-			subline = querySubControlMetrics(control, widget, SC_ScrollBarSubLine, opt);
-			addline = querySubControlMetrics(control, widget, SC_ScrollBarAddLine, opt);
-			subpage = querySubControlMetrics(control, widget, SC_ScrollBarSubPage, opt);
-			addpage = querySubControlMetrics(control, widget, SC_ScrollBarAddPage, opt);
-			slider  = querySubControlMetrics(control, widget, SC_ScrollBarSlider,  opt);
-			first   = querySubControlMetrics(control, widget, SC_ScrollBarFirst,   opt);
-			last    = querySubControlMetrics(control, widget, SC_ScrollBarLast,    opt);
+			subline = querySubControlMetrics(control, ceData, elementFlags, SC_ScrollBarSubLine, opt, widget);
+			addline = querySubControlMetrics(control, ceData, elementFlags, SC_ScrollBarAddLine, opt, widget);
+			subpage = querySubControlMetrics(control, ceData, elementFlags, SC_ScrollBarSubPage, opt, widget);
+			addpage = querySubControlMetrics(control, ceData, elementFlags, SC_ScrollBarAddPage, opt, widget);
+			slider  = querySubControlMetrics(control, ceData, elementFlags, SC_ScrollBarSlider,  opt, widget);
+			first   = querySubControlMetrics(control, ceData, elementFlags, SC_ScrollBarFirst,   opt, widget);
+			last    = querySubControlMetrics(control, ceData, elementFlags, SC_ScrollBarLast,    opt, widget);
 			subline2 = addline;
 
 			if ( useThreeButtonScrollBar ) {
@@ -1149,50 +1170,50 @@ void KStyle::drawComplexControl( TQ_ComplexControl control,
 
 			// Draw the up/left button set
 			if ((controls & SC_ScrollBarSubLine) && subline.isValid()) {
-				tqdrawPrimitive(PE_ScrollBarSubLine, p, subline, cg,
+				tqdrawPrimitive(PE_ScrollBarSubLine, p, ceData, elementFlags, subline, cg,
 							sflags | (active == SC_ScrollBarSubLine ?
 								Style_Down : Style_Default));
 
 				if (useThreeButtonScrollBar && subline2.isValid())
-					tqdrawPrimitive(PE_ScrollBarSubLine, p, subline2, cg,
+					tqdrawPrimitive(PE_ScrollBarSubLine, p, ceData, elementFlags, subline2, cg,
 							sflags | (active == SC_ScrollBarSubLine ?
 								Style_Down : Style_Default));
 			}
 
 			if ((controls & SC_ScrollBarAddLine) && addline.isValid())
-				tqdrawPrimitive(PE_ScrollBarAddLine, p, addline, cg,
+				tqdrawPrimitive(PE_ScrollBarAddLine, p, ceData, elementFlags, addline, cg,
 							sflags | ((active == SC_ScrollBarAddLine) ?
 										Style_Down : Style_Default));
 
 			if ((controls & SC_ScrollBarSubPage) && subpage.isValid())
-				tqdrawPrimitive(PE_ScrollBarSubPage, p, subpage, cg,
+				tqdrawPrimitive(PE_ScrollBarSubPage, p, ceData, elementFlags, subpage, cg,
 							sflags | ((active == SC_ScrollBarSubPage) ?
 										Style_Down : Style_Default));
 
 			if ((controls & SC_ScrollBarAddPage) && addpage.isValid())
-				tqdrawPrimitive(PE_ScrollBarAddPage, p, addpage, cg,
+				tqdrawPrimitive(PE_ScrollBarAddPage, p, ceData, elementFlags, addpage, cg,
 							sflags | ((active == SC_ScrollBarAddPage) ?
 										Style_Down : Style_Default));
 
 			if ((controls & SC_ScrollBarFirst) && first.isValid())
-				tqdrawPrimitive(PE_ScrollBarFirst, p, first, cg,
+				tqdrawPrimitive(PE_ScrollBarFirst, p, ceData, elementFlags, first, cg,
 							sflags | ((active == SC_ScrollBarFirst) ?
 										Style_Down : Style_Default));
 
 			if ((controls & SC_ScrollBarLast) && last.isValid())
-				tqdrawPrimitive(PE_ScrollBarLast, p, last, cg,
+				tqdrawPrimitive(PE_ScrollBarLast, p, ceData, elementFlags, last, cg,
 							sflags | ((active == SC_ScrollBarLast) ?
 										Style_Down : Style_Default));
 
 			if ((controls & SC_ScrollBarSlider) && slider.isValid()) {
-				tqdrawPrimitive(PE_ScrollBarSlider, p, slider, cg,
+				tqdrawPrimitive(PE_ScrollBarSlider, p, ceData, elementFlags, slider, cg,
 							sflags | ((active == SC_ScrollBarSlider) ?
 										Style_Down : Style_Default));
 				// Draw focus rect
 				if (sb->hasFocus()) {
 					TQRect fr(slider.x() + 2, slider.y() + 2,
 							 slider.width() - 5, slider.height() - 5);
-					tqdrawPrimitive(PE_FocusRect, p, fr, cg, Style_Default);
+					tqdrawPrimitive(PE_FocusRect, p, ceData, elementFlags, fr, cg, Style_Default);
 				}
 			}
 			break;
@@ -1203,8 +1224,8 @@ void KStyle::drawComplexControl( TQ_ComplexControl control,
 		// -------------------------------------------------------------------
 		case CC_Slider: {
 			const TQSlider* slider = (const TQSlider*)widget;
-			TQRect groove = querySubControlMetrics(CC_Slider, widget, SC_SliderGroove, opt);
-			TQRect handle = querySubControlMetrics(CC_Slider, widget, SC_SliderHandle, opt);
+			TQRect groove = querySubControlMetrics(CC_Slider, ceData, elementFlags, SC_SliderGroove, opt, widget);
+			TQRect handle = querySubControlMetrics(CC_Slider, ceData, elementFlags, SC_SliderHandle, opt, widget);
 
 			// Double-buffer slider for no flicker
 			TQPixmap pix(widget->size());
@@ -1221,23 +1242,23 @@ void KStyle::drawComplexControl( TQ_ComplexControl control,
 
 			// Draw slider groove
 			if ((controls & SC_SliderGroove) && groove.isValid()) {
-				drawKStylePrimitive( KPE_SliderGroove, &p2, widget, groove, cg, flags, opt );
+				drawKStylePrimitive( KPE_SliderGroove, &p2, ceData, elementFlags, groove, cg, flags, opt, widget );
 
 				// Draw the focus rect around the groove
 				if (slider->hasFocus())
-					tqdrawPrimitive(PE_FocusRect, &p2, groove, cg);
+					tqdrawPrimitive(PE_FocusRect, &p2, ceData, elementFlags, groove, cg);
 			}
 
 			// Draw the tickmarks
 			if (controls & SC_SliderTickmarks)
-				TQCommonStyle::drawComplexControl(control, &p2, widget,
-						r, cg, flags, SC_SliderTickmarks, active, opt);
+				TQCommonStyle::drawComplexControl(control, &p2, ceData, elementFlags,
+						r, cg, flags, SC_SliderTickmarks, active, opt, widget);
 
 			// Draw the slider handle
 			if ((controls & SC_SliderHandle) && handle.isValid()) {
 				if (active == SC_SliderHandle)
 					flags |= Style_Active;
-				drawKStylePrimitive( KPE_SliderHandle, &p2, widget, handle, cg, flags, opt );
+				drawKStylePrimitive( KPE_SliderHandle, &p2, ceData, elementFlags, handle, cg, flags, opt, widget );
 			}
 
 			p2.end();
@@ -1263,7 +1284,7 @@ void KStyle::drawComplexControl( TQ_ComplexControl control,
 
 			// Paint the icon and text.
 			if ( controls & SC_ListView )
-				TQCommonStyle::drawComplexControl( control, p, widget, r, cg, flags, controls, active, opt );
+				TQCommonStyle::drawComplexControl( control, p, ceData, elementFlags, r, cg, flags, controls, active, opt, widget );
 
 			// If we're have a branch or are expanded...
 			if ( controls & (SC_ListViewBranch | SC_ListViewExpand) )
@@ -1325,7 +1346,7 @@ void KStyle::drawComplexControl( TQ_ComplexControl control,
 							boxflags = child->isOpen() ? TQStyle::Style_Off : TQStyle::Style_On;
 
 							// KStyle extension: Draw the box and expand/collapse indicator
-							drawKStylePrimitive( KPE_ListViewExpander, p, NULL, boxrect, cg, boxflags, opt );
+							drawKStylePrimitive( KPE_ListViewExpander, p, ceData, elementFlags, boxrect, cg, boxflags, opt, NULL );
 
 							// dotlinery
 							p->setPen( cg.mid() );
@@ -1379,7 +1400,7 @@ void KStyle::drawComplexControl( TQ_ComplexControl control,
 						branchflags = TQStyle::Style_Horizontal;
 
 						// KStyle extension: Draw the horizontal branch
-						drawKStylePrimitive( KPE_ListViewBranch, p, NULL, branchrect, cg, branchflags, opt );
+						drawKStylePrimitive( KPE_ListViewBranch, p, ceData, elementFlags, branchrect, cg, branchflags, opt, NULL );
 
 					} else {
 						// Vertical branch
@@ -1395,7 +1416,7 @@ void KStyle::drawComplexControl( TQ_ComplexControl control,
 							branchflags = TQStyle::Style_Default;
 
 						// KStyle extension: Draw the vertical branch
-						drawKStylePrimitive( KPE_ListViewBranch, p, NULL, branchrect, cg, branchflags, opt );
+						drawKStylePrimitive( KPE_ListViewBranch, p, ceData, elementFlags, branchrect, cg, branchflags, opt, NULL );
 					}
 				}
 			}
@@ -1403,19 +1424,21 @@ void KStyle::drawComplexControl( TQ_ComplexControl control,
 		}
 
 		default:
-			TQCommonStyle::drawComplexControl( control, p, widget, r, cg,
-											  flags, controls, active, opt );
+			TQCommonStyle::drawComplexControl( control, p, ceData, elementFlags, r, cg,
+											  flags, controls, active, opt, widget );
 			break;
 	}
 }
 
 
 TQStyle::SubControl KStyle::querySubControl( TQ_ComplexControl control,
-											const TQWidget* widget,
+											TQStyleControlElementData ceData,
+											ControlElementFlags elementFlags,
 											const TQPoint &pos,
-											const TQStyleOption &opt ) const
+											const TQStyleOption &opt,
+											const TQWidget* widget ) const
 {
-	TQStyle::SubControl ret = TQCommonStyle::querySubControl(control, widget, pos, opt);
+	TQStyle::SubControl ret = TQCommonStyle::querySubControl(control, ceData, elementFlags, pos, opt, widget);
 
 	if (d->scrollbarType == ThreeButtonScrollBar) {
 		// Enable third button
@@ -1427,9 +1450,11 @@ TQStyle::SubControl KStyle::querySubControl( TQ_ComplexControl control,
 
 
 TQRect KStyle::querySubControlMetrics( TQ_ComplexControl control,
-									  const TQWidget* widget,
+									  TQStyleControlElementData ceData,
+									  ControlElementFlags elementFlags,
 									  SubControl sc,
-									  const TQStyleOption &opt ) const
+									  const TQStyleOption &opt,
+									  const TQWidget* widget ) const
 {
     TQRect ret;
 
@@ -1442,7 +1467,7 @@ TQRect KStyle::querySubControlMetrics( TQ_ComplexControl control,
 		const TQScrollBar *sb = (const TQScrollBar*)widget;
 		bool horizontal = sb->orientation() == Qt::Horizontal;
 		int sliderstart = sb->sliderStart();
-		int sbextent    = pixelMetric(PM_ScrollBarExtent, widget);
+		int sbextent    = pixelMetric(PM_ScrollBarExtent, ceData, elementFlags, widget);
 		int maxlen      = (horizontal ? sb->width() : sb->height())
 						  - (sbextent * (threeButtonScrollBar ? 3 : 2));
 		int sliderlen;
@@ -1453,7 +1478,7 @@ TQRect KStyle::querySubControlMetrics( TQ_ComplexControl control,
 			uint range = sb->maxValue() - sb->minValue();
 			sliderlen = (sb->pageStep() * maxlen) /	(range + sb->pageStep());
 
-			int slidermin = pixelMetric( PM_ScrollBarSliderMin, widget );
+			int slidermin = pixelMetric( PM_ScrollBarSliderMin, ceData, elementFlags, widget );
 			if ( sliderlen < slidermin || range > INT_MAX / 2 )
 				sliderlen = slidermin;
 			if ( sliderlen > maxlen )
@@ -1560,11 +1585,11 @@ TQRect KStyle::querySubControlMetrics( TQ_ComplexControl control,
 			}
 
 			default:
-				ret = TQCommonStyle::querySubControlMetrics(control, widget, sc, opt);
+				ret = TQCommonStyle::querySubControlMetrics(control, ceData, elementFlags, sc, opt, widget);
 				break;
 		}
 	} else
-		ret = TQCommonStyle::querySubControlMetrics(control, widget, sc, opt);
+		ret = TQCommonStyle::querySubControlMetrics(control, ceData, elementFlags, sc, opt, widget);
 
 	return ret;
 }
@@ -1812,8 +1837,10 @@ static const char* const critical_xpm[]={
 ".............aaaaaaa............"};
 
 TQPixmap KStyle::stylePixmap( StylePixmap stylepixmap,
-						  const TQWidget* widget,
-						  const TQStyleOption& opt) const
+						  TQStyleControlElementData ceData,
+						  ControlElementFlags elementFlags,
+						  const TQStyleOption& opt,
+						  const TQWidget* widget) const
 {
 	switch (stylepixmap) {
 		case SP_TitleBarShadeButton:
@@ -1839,12 +1866,12 @@ TQPixmap KStyle::stylePixmap( StylePixmap stylepixmap,
 		default:
 			break;
     }
-    return TQCommonStyle::stylePixmap(stylepixmap, widget, opt);
+    return TQCommonStyle::stylePixmap(stylepixmap, ceData, elementFlags, opt, widget);
 }
 
 
-int KStyle::styleHint( TQ_StyleHint sh, const TQWidget* w,
-					   const TQStyleOption &opt, TQStyleHintReturn* shr) const
+int KStyle::styleHint( TQ_StyleHint sh, TQStyleControlElementData ceData, ControlElementFlags elementFlags,
+					   const TQStyleOption &opt, TQStyleHintReturn* shr, const TQWidget* w) const
 {
 	switch (sh)
 	{
@@ -1858,7 +1885,7 @@ int KStyle::styleHint( TQ_StyleHint sh, const TQWidget* w,
 			return d->menuAltKeyNavigation ? 1 : 0;
 
 		case SH_PopupMenu_SubMenuPopupDelay:
-			if ( styleHint( SH_PopupMenu_SloppySubMenus, w ) )
+			if ( styleHint( SH_PopupMenu_SloppySubMenus, ceData, elementFlags, TQStyleOption::Default, 0, w ) )
 				return QMIN( 100, d->popupMenuDelay );
 			else
 				return d->popupMenuDelay;
@@ -1894,7 +1921,7 @@ int KStyle::styleHint( TQ_StyleHint sh, const TQWidget* w,
 		}
 
 		default:
-			return TQCommonStyle::styleHint(sh, w, opt, shr);
+			return TQCommonStyle::styleHint(sh, ceData, elementFlags, opt, shr, w);
 	}
 }
 

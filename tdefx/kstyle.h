@@ -237,6 +237,19 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 			KPE_ListViewBranch
 		};
 
+    // Old API
+    // DEPRECATED
+#ifdef MARK_OLD_VIRTUAL_STYLE_API_CALLS_DEPRECATED
+		__attribute__ ((deprecated))
+#endif
+		virtual void drawKStylePrimitive( KStylePrimitive kpe,
+					TQPainter* p,
+					const TQWidget* widget,
+					const TQRect &r,
+					const TQColorGroup &cg,
+					SFlags flags = Style_Default,
+					const TQStyleOption& = TQStyleOption::SO_Default ) const;
+
 		/**
 		 * This function is identical to Qt's TQStyle::tqdrawPrimitive(), except that 
 		 * it adds one further parameter, 'widget', that can be used to determine 
@@ -248,11 +261,13 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 		 */
 		virtual void drawKStylePrimitive( KStylePrimitive kpe,
 					TQPainter* p,
-					const TQWidget* widget,
+					TQStyleControlElementData ceData,
+					ControlElementFlags elementFlags,
 					const TQRect &r,
 					const TQColorGroup &cg,
 					SFlags flags = Style_Default,
-					const TQStyleOption& = TQStyleOption::SO_Default ) const;
+					const TQStyleOption& = TQStyleOption::SO_Default,
+					const TQWidget* widget = 0 ) const;
 
 
 		enum KStylePixelMetric {
@@ -277,6 +292,8 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 
 		void tqdrawPrimitive( TQ_PrimitiveElement pe,
 					TQPainter* p,
+					TQStyleControlElementData ceData,
+					ControlElementFlags elementFlags,
 					const TQRect &r,
 					const TQColorGroup &cg,
 					SFlags flags = Style_Default,
@@ -286,6 +303,8 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 
 //		void tqdrawPrimitive( TQ_ControlElement pe,
 //					TQPainter* p,
+// 					TQStyleControlElementData ceData,
+// 					ControlElementFlags elementFlags,
 //					const TQRect &r,
 //					const TQColorGroup &cg,
 //					SFlags flags = Style_Default,
@@ -295,46 +314,57 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 
 		void drawControl( TQ_ControlElement element,
 					TQPainter* p,
-					const TQWidget* widget,
+					TQStyleControlElementData ceData,
+					ControlElementFlags elementFlags,
 					const TQRect &r,
 					const TQColorGroup &cg,
 					SFlags flags = Style_Default,
-					const TQStyleOption& = TQStyleOption::SO_Default ) const;
+					const TQStyleOption& = TQStyleOption::SO_Default,
+					const TQWidget* widget = 0 ) const;
 
 		void drawComplexControl( TQ_ComplexControl control,
 					TQPainter *p,
-					const TQWidget* widget,
+					TQStyleControlElementData ceData,
+					ControlElementFlags elementFlags,
 					const TQRect &r,
 					const TQColorGroup &cg,
 					SFlags flags = Style_Default,
 					SCFlags controls = SC_All,
 					SCFlags active = SC_None,
-					const TQStyleOption& = TQStyleOption::SO_Default ) const;
-
-		SubControl querySubControl( TQ_ComplexControl control,
-					const TQWidget* widget,
-					const TQPoint &pos,
-					const TQStyleOption& = TQStyleOption::SO_Default ) const;
-
-		TQRect querySubControlMetrics( TQ_ComplexControl control,
-					const TQWidget* widget,
-					SubControl sc,
-					const TQStyleOption& = TQStyleOption::SO_Default ) const;
-
-		int pixelMetric( PixelMetric m, 
+					const TQStyleOption& = TQStyleOption::SO_Default,
 					const TQWidget* widget = 0 ) const;
 
-		TQRect subRect( SubRect r, 
-					const TQWidget* widget ) const;
+		SubControl querySubControl( TQ_ComplexControl control,
+					TQStyleControlElementData ceData,
+					ControlElementFlags elementFlags,
+					const TQPoint &pos,
+					const TQStyleOption& = TQStyleOption::SO_Default,
+					const TQWidget* widget = 0 ) const;
+
+		TQRect querySubControlMetrics( TQ_ComplexControl control,
+					TQStyleControlElementData ceData,
+					ControlElementFlags elementFlags,
+					SubControl sc,
+					const TQStyleOption& = TQStyleOption::SO_Default,
+					const TQWidget* widget = 0 ) const;
+
+		int pixelMetric( PixelMetric m, TQStyleControlElementData ceData, ControlElementFlags elementFlags, 
+					const TQWidget* widget = 0 ) const;
+
+		TQRect subRect( SubRect r, const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, 
+					const TQWidget* widget = 0 ) const;
 
 		TQPixmap stylePixmap( StylePixmap stylepixmap,
-					const TQWidget* widget = 0,
-					const TQStyleOption& = TQStyleOption::SO_Default ) const;
+					TQStyleControlElementData ceData,
+					ControlElementFlags elementFlags,
+					const TQStyleOption& = TQStyleOption::SO_Default,
+					const TQWidget* widget = 0 ) const;
 
-		int styleHint( TQ_StyleHint sh, 
-					const TQWidget* w = 0,
+		int styleHint( TQ_StyleHint sh, TQStyleControlElementData ceData,
+					ControlElementFlags elementFlags,
 					const TQStyleOption &opt = TQStyleOption::SO_Default,
-					TQStyleHintReturn* shr = 0 ) const;
+					TQStyleHintReturn* shr = 0,
+					const TQWidget* w = 0 ) const;
 
 	protected:
 		bool eventFilter( TQObject* object, TQEvent* event );

@@ -508,88 +508,100 @@ protected:
     /**
     These are included for fuuture extension purposes..
     */
-    virtual int pixelMetric ( PixelMetric metric, const TQWidget * widget = 0 ) const
+    virtual int pixelMetric ( PixelMetric metric, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQWidget * widget = 0 ) const
     {
-        return KStyle::pixelMetric( metric, widget );
+        return KStyle::pixelMetric( metric, ceData, elementFlags, widget );
     }
 
-    virtual void drawPrimitive ( PrimitiveElement pe, TQPainter * p, const TQRect & r, const TQColorGroup & cg,
+    virtual void drawPrimitive ( PrimitiveElement pe, TQPainter * p, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQRect & r, const TQColorGroup & cg,
                                  SFlags flags = Style_Default,
                                  const TQStyleOption& option = TQStyleOption::Default ) const
     {
-        KStyle::tqdrawPrimitive ( pe, p, r, cg,
+        KStyle::tqdrawPrimitive ( pe, p, ceData, elementFlags, r, cg,
                                 flags, option );
     }
 
 
     virtual void drawControl( TQ_ControlElement element,
                               TQPainter *p,
-                              const TQWidget *widget,
+                              TQStyleControlElementData ceData,
+                              ControlElementFlags elementFlags,
                               const TQRect &r,
                               const TQColorGroup &cg,
                               SFlags how = Style_Default,
-                              const TQStyleOption& opt = TQStyleOption::Default ) const
+                              const TQStyleOption& opt = TQStyleOption::Default,
+                              const TQWidget *widget = 0 ) const
     {
-        KStyle::drawControl( element, p, widget,
-                             r, cg, how, opt );
+        KStyle::drawControl( element, p, ceData, elementFlags,
+                             r, cg, how, opt, widget );
     }
 
     virtual void drawControlMask( TQ_ControlElement element,
                                   TQPainter *p,
-                                  const TQWidget *widget,
+                                  TQStyleControlElementData ceData,
+                                  ControlElementFlags elementFlags,
                                   const TQRect &r,
-                                  const TQStyleOption& opt = TQStyleOption::Default ) const
+                                  const TQStyleOption& opt = TQStyleOption::Default,
+                                  const TQWidget *widget = 0 ) const
     {
-        KStyle::drawControlMask( element, p, widget, r, opt );
+        KStyle::drawControlMask( element, p, ceData, elementFlags, r, opt, widget );
     }
 
 
     virtual void drawComplexControl( TQ_ComplexControl control,
                                      TQPainter *p,
-                                     const TQWidget* widget,
+                                     TQStyleControlElementData ceData,
+                                     ControlElementFlags elementFlags,
                                      const TQRect &r,
                                      const TQColorGroup &cg,
                                      SFlags flags = Style_Default,
                                      SCFlags controls = SC_All,
                                      SCFlags active = SC_None,
-                                     const TQStyleOption& opt = TQStyleOption::Default ) const
+                                     const TQStyleOption& opt = TQStyleOption::Default,
+                                     const TQWidget* widget = 0 ) const
     {
-        KStyle::drawComplexControl( control, p, widget, r, cg, flags, controls, active, opt );
+        KStyle::drawComplexControl( control, p, ceData, elementFlags, r, cg, flags, controls, active, opt, widget );
     }
 
 
     virtual void drawKStylePrimitive( KStylePrimitive kpe,
                                       TQPainter* p,
-                                      const TQWidget* widget,
+                                      TQStyleControlElementData ceData,
+                                      ControlElementFlags elementFlags,
                                       const TQRect &r,
                                       const TQColorGroup &cg,
                                       SFlags flags = Style_Default,
-                                      const TQStyleOption& opt = TQStyleOption::Default ) const
+                                      const TQStyleOption& opt = TQStyleOption::Default,
+                                      const TQWidget* widget = 0 ) const
     {
         KStyle::drawKStylePrimitive( kpe,
-                                     p, widget, r,
-                                     cg, flags, opt );
+                                     p, ceData, elementFlags, r,
+                                     cg, flags, opt, widget );
     }
 
 
-    virtual int styleHint( StyleHint sh,
-                           const TQWidget *widget = 0,
+    virtual int styleHint( StyleHint sh, TQStyleControlElementData ceData, ControlElementFlags elementFlags,
                            const TQStyleOption& opt = TQStyleOption::Default,
-                           TQStyleHintReturn* returnData = 0 ) const
+                           TQStyleHintReturn* returnData = 0,
+                           const TQWidget *widget = 0 ) const
     {
         return KStyle::styleHint( sh,
-                                  widget,
+                                  ceData,
+                                  elementFlags,
                                   opt,
-                                  returnData );
+                                  returnData,
+                                  widget );
     }
 
-    virtual TQSize tqsizeFromContents( ContentsType contents,
-                                    const TQWidget *widget,
+    virtual TQSize sizeFromContents( ContentsType contents,
+                                    TQStyleControlElementData ceData,
+                                    ControlElementFlags elementFlags,
                                     const TQSize &contentsSize,
-                                    const TQStyleOption& opt = TQStyleOption::Default ) const
+                                    const TQStyleOption& opt = TQStyleOption::Default,
+                                    const TQWidget *widget = 0 ) const
     {
-        return KStyle::tqsizeFromContents( contents,
-                                         widget, contentsSize, opt );
+        return KStyle::sizeFromContents( contents,
+                                         ceData, elementFlags, contentsSize, opt, widget );
     }
 
 private:

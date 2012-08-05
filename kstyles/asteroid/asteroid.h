@@ -36,18 +36,23 @@ public:
 	
 	void drawKStylePrimitive(KStylePrimitive,
 	                         TQPainter *,
-	                         const TQWidget *,
+	                         TQStyleControlElementData ceData,
+	                         ControlElementFlags elementFlags,
 	                         const TQRect &,
 	                         const TQColorGroup &,
 	                         SFlags = Style_Default,
-	                         const TQStyleOption & = TQStyleOption::Default) const;
+	                         const TQStyleOption & = TQStyleOption::Default,
+	                         const TQWidget * = 0) const;
 
-	int styleHint(TQ_StyleHint, const TQWidget * = 0,
+	int styleHint(TQ_StyleHint, TQStyleControlElementData ceData, ControlElementFlags elementFlags,
 			    const TQStyleOption & = TQStyleOption::Default,
-			    TQStyleHintReturn * = 0 ) const;
+			    TQStyleHintReturn * = 0,
+			    const TQWidget * = 0 ) const;
 
-	void tqdrawPrimitive(TQ_PrimitiveElement,
+	void drawPrimitive(TQ_PrimitiveElement,
 	                   TQPainter *,
+	                   TQStyleControlElementData ceData,
+	                   ControlElementFlags elementFlags,
 	                   const TQRect &,
 	                   const TQColorGroup &,
 	                   SFlags = Style_Default,
@@ -55,49 +60,61 @@ public:
 
 	void drawControl(TQ_ControlElement,
 	                 TQPainter *,
-	                 const TQWidget *,
+	                 TQStyleControlElementData ceData,
+	                 ControlElementFlags elementFlags,
 	                 const TQRect &,
 	                 const TQColorGroup &,
 	                 SFlags = Style_Default,
-	                 const TQStyleOption & = TQStyleOption::Default) const;
+	                 const TQStyleOption & = TQStyleOption::Default,
+	                 const TQWidget * = 0) const;
 
 	void drawControlMask(TQ_ControlElement,
 	                     TQPainter *,
-	                     const TQWidget *,
+	                     TQStyleControlElementData ceData,
+	                     ControlElementFlags elementFlags,
 	                     const TQRect &,
-	                     const TQStyleOption &) const;
+	                     const TQStyleOption &,
+	                     const TQWidget * = 0) const;
 
 	void drawComplexControl(TQ_ComplexControl,
 	                        TQPainter *,
-	                        const TQWidget *,
+	                        TQStyleControlElementData ceData,
+	                        ControlElementFlags elementFlags,
 	                        const TQRect &,
 	                        const TQColorGroup &,
 	                        SFlags = Style_Default,
 	                        SCFlags controls = SC_All,
 	                        SCFlags active = SC_None,
-	                        const TQStyleOption & = TQStyleOption::Default) const;
+	                        const TQStyleOption & = TQStyleOption::Default,
+	                        const TQWidget * = 0) const;
 
 	void drawComplexControlMask(TQ_ComplexControl,
 	                            TQPainter *,
-	                            const TQWidget *,
+	                            const TQStyleControlElementData ceData,
+	                            const ControlElementFlags elementFlags,
 	                            const TQRect &r,
-	                            const TQStyleOption & = TQStyleOption::Default) const;
+	                            const TQStyleOption & = TQStyleOption::Default,
+	                            const TQWidget * = 0) const;
 
-	int pixelMetric(PixelMetric, const TQWidget * = 0) const;
+	int pixelMetric(PixelMetric, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQWidget * = 0) const;
 
 	int kPixelMetric( KStylePixelMetric kpm, const TQWidget* /* widget */) const;
 
-	TQRect subRect(SubRect, const TQWidget *) const;
+	TQRect subRect(SubRect, const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, const TQWidget *) const;
 
 	TQRect querySubControlMetrics(TQ_ComplexControl,
-	                             const TQWidget *,
+	                             TQStyleControlElementData ceData,
+	                             ControlElementFlags elementFlags,
 	                             SubControl,
-	                             const TQStyleOption & = TQStyleOption::Default) const;
+	                             const TQStyleOption & = TQStyleOption::Default,
+	                             const TQWidget * = 0) const;
 
-	TQSize tqsizeFromContents(ContentsType,
-	                       const TQWidget *,
+	TQSize sizeFromContents(ContentsType,
+	                       TQStyleControlElementData ceData,
+	                       ControlElementFlags elementFlags,
 	                       const TQSize &,
-	                       const TQStyleOption &) const;
+	                       const TQStyleOption &,
+	                       const TQWidget * = 0) const;
 
 protected:
 	bool eventFilter(TQObject *, TQEvent *);

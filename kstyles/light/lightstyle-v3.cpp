@@ -212,8 +212,10 @@ static void drawLightBevel( TQPainter *p,
 	p->fillRect( br, *fill );
 }
 
-void LightStyleV3::tqdrawPrimitive( TQ_PrimitiveElement pe,
+void LightStyleV3::drawPrimitive( TQ_PrimitiveElement pe,
 				TQPainter *p,
+				TQStyleControlElementData ceData,
+				ControlElementFlags elementFlags,
 				const TQRect &r,
 				const TQColorGroup &cg,
 				SFlags flags,
@@ -278,7 +280,7 @@ void LightStyleV3::tqdrawPrimitive( TQ_PrimitiveElement pe,
 		br.addCoords( 1, 1, -1, -1 );
 	    }
 	    drawLightBevel( p, br, cg, flags,
-			    pixelMetric( PM_DefaultFrameWidth ) + ( etch ? 1 : 0 ),
+			    pixelMetric( PM_DefaultFrameWidth, ceData, elementFlags ) + ( etch ? 1 : 0 ),
 			    etch, true, fill );
 	    break;
 	}
@@ -294,7 +296,7 @@ void LightStyleV3::tqdrawPrimitive( TQ_PrimitiveElement pe,
 		fill = &cg.brush(TQColorGroup::Button);
 	} else
 	    fill = &cg.brush(TQColorGroup::Background);
-	drawLightBevel( p, r, cg, flags, pixelMetric( PM_DefaultFrameWidth ),
+	drawLightBevel( p, r, cg, flags, pixelMetric( PM_DefaultFrameWidth, ceData, elementFlags ),
 			false, true, fill );
 	break;
 
@@ -532,7 +534,7 @@ void LightStyleV3::tqdrawPrimitive( TQ_PrimitiveElement pe,
 
     case PE_PanelPopup:
 	drawLightBevel( p, r, cg, flags,
-			( data.isDefault() ? pixelMetric(PM_DefaultFrameWidth) :
+			( data.isDefault() ? pixelMetric(PM_DefaultFrameWidth, ceData, elementFlags) :
 			  data.lineWidth() ), false, true );
 	break;
 
@@ -545,7 +547,7 @@ void LightStyleV3::tqdrawPrimitive( TQ_PrimitiveElement pe,
 
 	    int cover = 0;
 	    int reallw = ( data.isDefault() ?
-			   pixelMetric( PM_DefaultFrameWidth ) : data.lineWidth() );
+			   pixelMetric( PM_DefaultFrameWidth, ceData, elementFlags ) : data.lineWidth() );
 	    cover = reallw - 1;
 
 	    if ( ! ( flags & Style_Sunken ) )
@@ -573,14 +575,14 @@ void LightStyleV3::tqdrawPrimitive( TQ_PrimitiveElement pe,
 
     case PE_PanelDockWindow:
 	drawLightBevel( p, r, cg, flags, ( data.isDefault() ?
-					   pixelMetric(PM_DefaultFrameWidth) :
+					   pixelMetric(PM_DefaultFrameWidth, ceData, elementFlags) :
 					   data.lineWidth() ), false, false,
 			&cg.brush( TQColorGroup::Button ) );
 	break;
 
     case PE_PanelMenuBar:
 	drawLightBevel( p, r, cg, flags, ( data.isDefault() ?
-					   pixelMetric(PM_MenuBarFrameWidth) :
+					   pixelMetric(PM_MenuBarFrameWidth, ceData, elementFlags) :
 					   data.lineWidth() ), false, false,
 			&cg.brush( TQColorGroup::Button ) );
 	break;
@@ -615,7 +617,7 @@ void LightStyleV3::tqdrawPrimitive( TQ_PrimitiveElement pe,
 
 	    if ( ! br.isValid() )
 		break;
-	    tqdrawPrimitive( pe, p, br, cg, flags );
+	    drawPrimitive( pe, p, ceData, elementFlags, br, cg, flags );
 	    break;
 	}
 
@@ -649,7 +651,7 @@ void LightStyleV3::tqdrawPrimitive( TQ_PrimitiveElement pe,
 
 	    if ( ! br.isValid() )
 		break;
-	    tqdrawPrimitive( pe, p, br, cg, flags );
+	    drawPrimitive( pe, p, ceData, elementFlags, br, cg, flags );
 	    break;
 	}
 
@@ -799,18 +801,20 @@ void LightStyleV3::tqdrawPrimitive( TQ_PrimitiveElement pe,
 	    }
 	    p->restore();
 	} else
-	    TQCommonStyle::tqdrawPrimitive(pe, p, r, cg, flags, data);
+	    TQCommonStyle::drawPrimitive(pe, p, ceData, elementFlags, r, cg, flags, data);
 	break;
     }
 }
 
 void LightStyleV3::drawControl( TQ_ControlElement control,
 			      TQPainter *p,
-			      const TQWidget *widget,
+			      TQStyleControlElementData ceData,
+			      ControlElementFlags elementFlags,
 			      const TQRect &r,
 			      const TQColorGroup &cg,
 			      SFlags flags,
-			      const TQStyleOption &data ) const
+			      const TQStyleOption &data,
+			      const TQWidget *widget ) const
 {
     switch (control) {
     case CE_TabBarTab:
@@ -893,7 +897,7 @@ void LightStyleV3::drawControl( TQ_ControlElement control,
 
 		p->fillRect( br, cg.background() );
 	    } else
-		TQCommonStyle::drawControl( control, p, widget, r, cg, flags, data );
+		TQCommonStyle::drawControl( control, p, ceData, elementFlags, r, cg, flags, data, widget );
 	    break;
 	}
 
@@ -974,7 +978,7 @@ void LightStyleV3::drawControl( TQ_ControlElement control,
 		p->setPen(cg.text());
 		p->drawPixmap(pmr.topLeft(), pixmap);
 	    } else if (popupmenu->isCheckable() && mi->isChecked())
-		tqdrawPrimitive(PE_CheckMark, p, cr, cg,
+		drawPrimitive(PE_CheckMark, p, ceData, elementFlags, cr, cg,
 			      (flags & Style_Enabled) | Style_On);
 
 	    TQColor textcolor;
@@ -1050,8 +1054,8 @@ void LightStyleV3::drawControl( TQ_ControlElement control,
 	    }
 
 	    if (mi->popup())
-		tqdrawPrimitive( (TQApplication::reverseLayout() ? PE_ArrowLeft : PE_ArrowRight),
-			       p, sr, cg, flags);
+		drawPrimitive( (TQApplication::reverseLayout() ? PE_ArrowLeft : PE_ArrowRight),
+			       p, ceData, elementFlags, sr, cg, flags);
 	    break;
 	}
 
@@ -1079,21 +1083,23 @@ void LightStyleV3::drawControl( TQ_ControlElement control,
 	}
 
     case CE_ProgressBarGroove:
-	drawLightBevel( p, r, cg, Style_Sunken, pixelMetric( PM_DefaultFrameWidth ),
+	drawLightBevel( p, r, cg, Style_Sunken, pixelMetric( PM_DefaultFrameWidth, ceData, elementFlags ),
 			true, true, &cg.brush( TQColorGroup::Background ) );
 	break;
 
     default:
-	TQCommonStyle::drawControl(control, p, widget, r, cg, flags, data);
+	TQCommonStyle::drawControl(control, p, ceData, elementFlags, r, cg, flags, data, widget);
 	break;
     }
 }
 
 void LightStyleV3::drawControlMask( TQ_ControlElement control,
 				  TQPainter *p,
-				  const TQWidget *widget,
+				  TQStyleControlElementData ceData,
+				  ControlElementFlags elementFlags,
 				  const TQRect &r,
-				  const TQStyleOption &data ) const
+				  const TQStyleOption &data,
+				  const TQWidget *widget ) const
 {
     switch (control) {
     case CE_PushButton:
@@ -1101,27 +1107,27 @@ void LightStyleV3::drawControlMask( TQ_ControlElement control,
 	break;
 
     default:
-	TQCommonStyle::drawControlMask(control, p, widget, r, data);
+	TQCommonStyle::drawControlMask(control, p, ceData, elementFlags, r, data, widget);
 	break;
     }
 }
 
-TQRect LightStyleV3::subRect(SubRect subrect, const TQWidget *widget) const
+TQRect LightStyleV3::subRect(SubRect subrect, const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, const TQWidget *widget) const
 {
     TQRect rect;
 
     switch (subrect) {
     case SR_PushButtonFocusRect:
 	{
-	    rect = TQCommonStyle::subRect( SR_PushButtonContents, widget );
-	    int bm = pixelMetric( PM_ButtonMargin, widget ), hbm = bm / 2;
+	    rect = TQCommonStyle::subRect( SR_PushButtonContents, ceData, elementFlags, widget );
+	    int bm = pixelMetric( PM_ButtonMargin, ceData, elementFlags, widget ), hbm = bm / 2;
 	    rect.addCoords( hbm, hbm, -hbm, -hbm );
   	    break;
   	}
 
     case SR_ComboBoxFocusRect:
 	{
-	    rect = TQCommonStyle::subRect( SR_ComboBoxFocusRect, widget );
+	    rect = TQCommonStyle::subRect( SR_ComboBoxFocusRect, ceData, elementFlags, widget );
 	    rect.addCoords( -1, -1, 1, 1 );
 	    break;
 	}
@@ -1144,7 +1150,7 @@ TQRect LightStyleV3::subRect(SubRect subrect, const TQWidget *widget) const
 
 
     default:
-	rect = TQCommonStyle::subRect(subrect, widget);
+	rect = TQCommonStyle::subRect(subrect, ceData, elementFlags, widget);
 	break;
     }
 
@@ -1153,13 +1159,15 @@ TQRect LightStyleV3::subRect(SubRect subrect, const TQWidget *widget) const
 
 void LightStyleV3::drawComplexControl( TQ_ComplexControl control,
 				     TQPainter* p,
-				     const TQWidget* widget,
+				     TQStyleControlElementData ceData,
+				     ControlElementFlags elementFlags,
 				     const TQRect& r,
 				     const TQColorGroup& cg,
 				     SFlags flags,
 				     SCFlags controls,
 				     SCFlags active,
-				     const TQStyleOption &data ) const
+				     const TQStyleOption &data,
+				     const TQWidget* widget ) const
 {
     switch (control) {
     case CC_ComboBox:
@@ -1167,37 +1175,37 @@ void LightStyleV3::drawComplexControl( TQ_ComplexControl control,
 	    const TQComboBox *combobox = (const TQComboBox *) widget;
 	    TQRect frame, arrow, field;
 	    frame =
-		TQStyle::visualRect(querySubControlMetrics(CC_ComboBox, widget,
-							  SC_ComboBoxFrame, data),
-				   widget);
+		TQStyle::visualRect(querySubControlMetrics(CC_ComboBox, ceData, elementFlags,
+							  SC_ComboBoxFrame, data, widget),
+				   ceData, elementFlags);
 	    arrow =
-		TQStyle::visualRect(querySubControlMetrics(CC_ComboBox, widget,
-							  SC_ComboBoxArrow, data),
-				   widget);
+		TQStyle::visualRect(querySubControlMetrics(CC_ComboBox, ceData, elementFlags,
+							  SC_ComboBoxArrow, data, widget),
+				   ceData, elementFlags);
 	    field =
-		TQStyle::visualRect(querySubControlMetrics(CC_ComboBox, widget,
-							  SC_ComboBoxEditField, data),
-				   widget);
+		TQStyle::visualRect(querySubControlMetrics(CC_ComboBox, ceData, elementFlags,
+							  SC_ComboBoxEditField, data, widget),
+				   ceData, elementFlags);
 
 	    if ((controls & SC_ComboBoxFrame) && frame.isValid())
-		tqdrawPrimitive( PE_Panel, p, frame, cg, flags | Style_Sunken );
+		drawPrimitive( PE_Panel, p, ceData, elementFlags, frame, cg, flags | Style_Sunken );
 
 	    if ((controls & SC_ComboBoxArrow) && arrow.isValid()) {
 		drawLightEtch( p, arrow, cg.button(), ( active == SC_ComboBoxArrow ) );
 		arrow.addCoords( 1, 1, -1, -1 );
 		p->fillRect( arrow, cg.brush( TQColorGroup::Button ) );
 		arrow.addCoords(3, 1, -1, -1);
-		tqdrawPrimitive(PE_ArrowDown, p, arrow, cg, flags);
+		drawPrimitive(PE_ArrowDown, p, ceData, elementFlags, arrow, cg, flags);
 	    }
 
 	    if ((controls & SC_ComboBoxEditField) && field.isValid()) {
 		if (flags & Style_HasFocus) {
 		    if (! combobox->editable()) {
 			TQRect fr =
-			    TQStyle::visualRect( subRect( SR_ComboBoxFocusRect, widget ),
-						widget );
+			    TQStyle::visualRect( subRect( SR_ComboBoxFocusRect, ceData, elementFlags, widget ),
+						ceData, elementFlags );
 			p->fillRect( fr, cg.brush( TQColorGroup::Highlight ) );
-			tqdrawPrimitive( PE_FocusRect, p, fr, cg,
+			drawPrimitive( PE_FocusRect, p, ceData, elementFlags, fr, cg,
 				       flags | Style_FocusAtBorder,
 				       TQStyleOption(cg.highlight()));
 		    }
@@ -1219,13 +1227,13 @@ void LightStyleV3::drawComplexControl( TQ_ComplexControl control,
 	    const TQSpinWidget *spinwidget = (const TQSpinWidget *) widget;
 	    TQRect frame, up, down;
 
-	    frame = querySubControlMetrics((TQ_ComplexControl)CC_SpinWidget, widget,
-					   SC_SpinWidgetFrame, data);
+	    frame = querySubControlMetrics((TQ_ComplexControl)CC_SpinWidget, ceData, elementFlags,
+					   SC_SpinWidgetFrame, data, widget);
 	    up = spinwidget->upRect();
 	    down = spinwidget->downRect();
 
 	    if ((controls & SC_SpinWidgetFrame) && frame.isValid())
-		tqdrawPrimitive( PE_Panel, p, frame, cg, flags | Style_Sunken );
+		drawPrimitive( PE_Panel, p, ceData, elementFlags, frame, cg, flags | Style_Sunken );
 
 	    if ((controls & SC_SpinWidgetUp) && up.isValid()) {
 		TQ_PrimitiveElement pe = PE_SpinWidgetUp;
@@ -1240,7 +1248,7 @@ void LightStyleV3::drawComplexControl( TQ_ComplexControl control,
 		drawLightEtch( p, up, cg.button(), ( active == SC_SpinWidgetUp ) );
 
 		up.addCoords( 1, 0, 0, 0 );
-		tqdrawPrimitive(pe, p, up, cg, flags |
+		drawPrimitive(pe, p, ceData, elementFlags, up, cg, flags |
 			      ((active == SC_SpinWidgetUp) ?
 			       Style_On | Style_Sunken : Style_Raised));
 	    }
@@ -1258,7 +1266,7 @@ void LightStyleV3::drawComplexControl( TQ_ComplexControl control,
 		drawLightEtch( p, down, cg.button(), ( active == SC_SpinWidgetDown ) );
 
 		down.addCoords( 1, 0, 0, 0 );
-		tqdrawPrimitive(pe, p, down, cg, flags |
+		drawPrimitive(pe, p, ceData, elementFlags, down, cg, flags |
 			      ((active == SC_SpinWidgetDown) ?
 			       Style_On | Style_Sunken : Style_Raised));
 	    }
@@ -1272,13 +1280,13 @@ void LightStyleV3::drawComplexControl( TQ_ComplexControl control,
 	    TQRect addline, subline, subline2, addpage, subpage, slider, first, last;
 	    bool maxedOut = (scrollbar->minValue() == scrollbar->maxValue());
 
-	    subline = querySubControlMetrics(control, widget, SC_ScrollBarSubLine, data);
-	    addline = querySubControlMetrics(control, widget, SC_ScrollBarAddLine, data);
-	    subpage = querySubControlMetrics(control, widget, SC_ScrollBarSubPage, data);
-	    addpage = querySubControlMetrics(control, widget, SC_ScrollBarAddPage, data);
-	    slider  = querySubControlMetrics(control, widget, SC_ScrollBarSlider,  data);
-	    first   = querySubControlMetrics(control, widget, SC_ScrollBarFirst,   data);
-	    last    = querySubControlMetrics(control, widget, SC_ScrollBarLast,    data);
+	    subline = querySubControlMetrics(control, ceData, elementFlags, SC_ScrollBarSubLine, data, widget);
+	    addline = querySubControlMetrics(control, ceData, elementFlags, SC_ScrollBarAddLine, data, widget);
+	    subpage = querySubControlMetrics(control, ceData, elementFlags, SC_ScrollBarSubPage, data, widget);
+	    addpage = querySubControlMetrics(control, ceData, elementFlags, SC_ScrollBarAddPage, data, widget);
+	    slider  = querySubControlMetrics(control, ceData, elementFlags, SC_ScrollBarSlider,  data, widget);
+	    first   = querySubControlMetrics(control, ceData, elementFlags, SC_ScrollBarFirst,   data, widget);
+	    last    = querySubControlMetrics(control, ceData, elementFlags, SC_ScrollBarLast,    data, widget);
 
 	    subline2 = addline;
 	    if (scrollbar->orientation() == Qt::Horizontal)
@@ -1287,52 +1295,52 @@ void LightStyleV3::drawComplexControl( TQ_ComplexControl control,
 		subline2.moveBy(0, -addline.height());
 
        	    if ((controls & SC_ScrollBarSubLine) && subline.isValid()) {
-		tqdrawPrimitive(PE_ScrollBarSubLine, p, subline, cg,
+		drawPrimitive(PE_ScrollBarSubLine, p, ceData, elementFlags, subline, cg,
 			      Style_Enabled | ((active == SC_ScrollBarSubLine) ?
 					       Style_Down : Style_Default) |
 			      ((scrollbar->orientation() == Qt::Horizontal) ?
 			       Style_Horizontal : 0));
 
 		if (subline2.isValid())
-		    tqdrawPrimitive(PE_ScrollBarSubLine, p, subline2, cg,
+		    drawPrimitive(PE_ScrollBarSubLine, p, ceData, elementFlags, subline2, cg,
 				  Style_Enabled | ((active == SC_ScrollBarSubLine) ?
 						   Style_Down : Style_Default) |
 				  ((scrollbar->orientation() == Qt::Horizontal) ?
 				   Style_Horizontal : 0));
 	    }
 	    if ((controls & SC_ScrollBarAddLine) && addline.isValid())
-		tqdrawPrimitive(PE_ScrollBarAddLine, p, addline, cg,
+		drawPrimitive(PE_ScrollBarAddLine, p, ceData, elementFlags, addline, cg,
 			      Style_Enabled | ((active == SC_ScrollBarAddLine) ?
 					       Style_Down : Style_Default) |
 			      ((scrollbar->orientation() == Qt::Horizontal) ?
 			       Style_Horizontal : 0));
 	    if ((controls & SC_ScrollBarSubPage) && subpage.isValid())
-		tqdrawPrimitive(PE_ScrollBarSubPage, p, subpage, cg,
+		drawPrimitive(PE_ScrollBarSubPage, p, ceData, elementFlags, subpage, cg,
 			      Style_Enabled | ((active == SC_ScrollBarSubPage) ?
 					       Style_Down : Style_Default) |
 			      ((scrollbar->orientation() == Qt::Horizontal) ?
 			       Style_Horizontal : 0));
 	    if ((controls & SC_ScrollBarAddPage) && addpage.isValid())
-		tqdrawPrimitive(PE_ScrollBarAddPage, p, addpage, cg,
+		drawPrimitive(PE_ScrollBarAddPage, p, ceData, elementFlags, addpage, cg,
 			      ((maxedOut) ? Style_Default : Style_Enabled) |
 			      ((active == SC_ScrollBarAddPage) ?
 			       Style_Down : Style_Default) |
 			      ((scrollbar->orientation() == Qt::Horizontal) ?
 			       Style_Horizontal : 0));
        	    if ((controls & SC_ScrollBarFirst) && first.isValid())
-		tqdrawPrimitive(PE_ScrollBarFirst, p, first, cg,
+		drawPrimitive(PE_ScrollBarFirst, p, ceData, elementFlags, first, cg,
 			      Style_Enabled | ((active == SC_ScrollBarFirst) ?
 					       Style_Down : Style_Default) |
 			      ((scrollbar->orientation() == Qt::Horizontal) ?
 			       Style_Horizontal : 0));
 	    if ((controls & SC_ScrollBarLast) && last.isValid())
-		tqdrawPrimitive(PE_ScrollBarLast, p, last, cg,
+		drawPrimitive(PE_ScrollBarLast, p, ceData, elementFlags, last, cg,
 			      Style_Enabled | ((active == SC_ScrollBarLast) ?
 					       Style_Down : Style_Default) |
 			      ((scrollbar->orientation() == Qt::Horizontal) ?
 			       Style_Horizontal : 0));
 	    if ((controls & SC_ScrollBarSlider) && slider.isValid()) {
-		tqdrawPrimitive(PE_ScrollBarSlider, p, slider, cg,
+		drawPrimitive(PE_ScrollBarSlider, p, ceData, elementFlags, slider, cg,
 			      Style_Enabled | ((active == SC_ScrollBarSlider) ?
 					       Style_Down : Style_Default) |
 			      ((scrollbar->orientation() == Qt::Horizontal) ?
@@ -1342,7 +1350,7 @@ void LightStyleV3::drawComplexControl( TQ_ComplexControl control,
 		if (scrollbar->hasFocus()) {
 		    TQRect fr(slider.x() + 2, slider.y() + 2,
 			     slider.width() - 5, slider.height() - 5);
-		    tqdrawPrimitive(PE_FocusRect, p, fr, cg, Style_Default);
+		    drawPrimitive(PE_FocusRect, p, ceData, elementFlags, fr, cg, Style_Default);
 		}
 	    }
 
@@ -1352,10 +1360,10 @@ void LightStyleV3::drawComplexControl( TQ_ComplexControl control,
     case CC_Slider:
 	{
 	    const TQSlider *slider = (const TQSlider *) widget;
-	    TQRect groove = querySubControlMetrics(CC_Slider, widget, SC_SliderGroove,
-						  data),
-		  handle = querySubControlMetrics(CC_Slider, widget, SC_SliderHandle,
-						  data);
+	    TQRect groove = querySubControlMetrics(CC_Slider, ceData, elementFlags, SC_SliderGroove,
+						  data, widget),
+		  handle = querySubControlMetrics(CC_Slider, ceData, elementFlags, SC_SliderHandle,
+						  data, widget);
 
 	    if ((controls & SC_SliderGroove) && groove.isValid()) {
 		TQColor grooveColor = cg.midlight();
@@ -1374,7 +1382,7 @@ void LightStyleV3::drawComplexControl( TQ_ComplexControl control,
 
 		if (flags & Style_HasFocus) {
 		    groove.addCoords( -2, -2, 2, 2 );
-		    tqdrawPrimitive( PE_FocusRect, p, groove, cg, flags );
+		    drawPrimitive( PE_FocusRect, p, ceData, elementFlags, groove, cg, flags );
 		}
 	    }
 
@@ -1409,36 +1417,38 @@ void LightStyleV3::drawComplexControl( TQ_ComplexControl control,
 	    }
 
 	    if (controls & SC_SliderTickmarks)
-		TQCommonStyle::drawComplexControl(control, p, widget, r, cg, flags,
-						 SC_SliderTickmarks, active, data );
+		TQCommonStyle::drawComplexControl(control, p, ceData, elementFlags, r, cg, flags,
+						 SC_SliderTickmarks, active, data, widget );
 	    break;
 	}
 
     case CC_ListView:
 	// use the base style for CC_ListView
-	basestyle->drawComplexControl(control, p, widget, r, cg, flags,
-				      controls, active, data);
+	basestyle->drawComplexControl(control, p, ceData, elementFlags, r, cg, flags,
+				      controls, active, data, widget);
 	break;
 
     default:
-	TQCommonStyle::drawComplexControl(control, p, widget, r, cg, flags,
-				      controls, active, data);
+	TQCommonStyle::drawComplexControl(control, p, ceData, elementFlags, r, cg, flags,
+				      controls, active, data, widget);
 	break;
     }
 }
 
 TQRect LightStyleV3::querySubControlMetrics( TQ_ComplexControl control,
-					  const TQWidget *widget,
+					  TQStyleControlElementData ceData,
+					  ControlElementFlags elementFlags,
 					  SubControl sc,
-					  const TQStyleOption &data ) const
+					  const TQStyleOption &data,
+					  const TQWidget *widget ) const
 {
     TQRect ret;
 
     switch (control) {
     case CC_ComboBox:
 	{
-	    int fw = pixelMetric( PM_DefaultFrameWidth, widget );
-	    int sb = pixelMetric( PM_ScrollBarExtent ); // width of the arrow
+	    int fw = pixelMetric( PM_DefaultFrameWidth, ceData, elementFlags, widget );
+	    int sb = pixelMetric( PM_ScrollBarExtent, ceData, elementFlags ); // width of the arrow
 
 	    switch ( sc ) {
 	    case SC_ComboBoxFrame:
@@ -1463,7 +1473,7 @@ TQRect LightStyleV3::querySubControlMetrics( TQ_ComplexControl control,
 	{
 	    const TQScrollBar *scrollbar = (const TQScrollBar *) widget;
 	    int sliderstart = scrollbar->sliderStart();
-	    int sbextent = pixelMetric(PM_ScrollBarExtent, widget);
+	    int sbextent = pixelMetric(PM_ScrollBarExtent, ceData, elementFlags, widget);
 	    int maxlen = ((scrollbar->orientation() == Qt::Horizontal) ?
 			  scrollbar->width() : scrollbar->height()) - (sbextent * 3);
 	    int sliderlen;
@@ -1474,7 +1484,7 @@ TQRect LightStyleV3::querySubControlMetrics( TQ_ComplexControl control,
 		sliderlen = (scrollbar->pageStep() * maxlen) /
 			    (range + scrollbar->pageStep());
 
-		int slidermin = pixelMetric( PM_ScrollBarSliderMin, widget );
+		int slidermin = pixelMetric( PM_ScrollBarSliderMin, ceData, elementFlags, widget );
 		if ( sliderlen < slidermin || range > INT_MAX / 2 )
 		    sliderlen = slidermin;
 		if ( sliderlen > maxlen )
@@ -1538,8 +1548,8 @@ TQRect LightStyleV3::querySubControlMetrics( TQ_ComplexControl control,
     case CC_Slider:
 	{
 	    const TQSlider *slider = (const TQSlider *) widget;
-	    int tickOffset = pixelMetric( PM_SliderTickmarkOffset, widget );
-	    int thickness = pixelMetric( PM_SliderControlThickness, widget );
+	    int tickOffset = pixelMetric( PM_SliderTickmarkOffset, ceData, elementFlags, widget );
+	    int thickness = pixelMetric( PM_SliderControlThickness, ceData, elementFlags, widget );
 
 	    switch ( sc ) {
 	    case SC_SliderGroove:
@@ -1552,7 +1562,7 @@ TQRect LightStyleV3::querySubControlMetrics( TQ_ComplexControl control,
 	    case SC_SliderHandle:
 		{
 		    int pos = slider->sliderStart();
-		    int len = pixelMetric( PM_SliderLength, widget );
+		    int len = pixelMetric( PM_SliderLength, ceData, elementFlags, widget );
 
 		    if ( slider->orientation() == Qt::Horizontal )
 			ret.setRect( pos + 2, tickOffset + 2, len - 4, thickness - 4 );
@@ -1562,7 +1572,7 @@ TQRect LightStyleV3::querySubControlMetrics( TQ_ComplexControl control,
 		}
 
 	    default:
-		ret = TQCommonStyle::querySubControlMetrics(control, widget, sc, data);
+		ret = TQCommonStyle::querySubControlMetrics(control, ceData, elementFlags, sc, data, widget);
 		break;
 	    }
 
@@ -1570,7 +1580,7 @@ TQRect LightStyleV3::querySubControlMetrics( TQ_ComplexControl control,
 	}
 
     default:
-	ret = TQCommonStyle::querySubControlMetrics(control, widget, sc, data);
+	ret = TQCommonStyle::querySubControlMetrics(control, ceData, elementFlags, sc, data, widget);
 	break;
     }
 
@@ -1578,12 +1588,14 @@ TQRect LightStyleV3::querySubControlMetrics( TQ_ComplexControl control,
 }
 
 TQStyle::SubControl LightStyleV3::querySubControl( TQ_ComplexControl control,
-						const TQWidget *widget,
+						TQStyleControlElementData ceData,
+						ControlElementFlags elementFlags,
 						const TQPoint &pos,
-						const TQStyleOption &data ) const
+						const TQStyleOption &data,
+						const TQWidget *widget ) const
 {
     TQStyle::SubControl ret =
-	TQCommonStyle::querySubControl(control, widget, pos, data);
+	TQCommonStyle::querySubControl(control, ceData, elementFlags, pos, data, widget);
 
     // this is an ugly hack, but i really don't care, it's the quickest way to
     // enabled the third button
@@ -1594,7 +1606,7 @@ TQStyle::SubControl LightStyleV3::querySubControl( TQ_ComplexControl control,
     return ret;
 }
 
-int LightStyleV3::pixelMetric( PixelMetric metric,
+int LightStyleV3::pixelMetric( PixelMetric metric, TQStyleControlElementData ceData, ControlElementFlags elementFlags,
 			     const TQWidget *widget ) const
 {
     int ret;
@@ -1691,25 +1703,27 @@ int LightStyleV3::pixelMetric( PixelMetric metric,
 	break;
 
     default:
-	ret = TQCommonStyle::pixelMetric(metric, widget);
+	ret = TQCommonStyle::pixelMetric(metric, ceData, elementFlags, widget);
 	break;
     }
 
     return ret;
 }
 
-TQSize LightStyleV3::tqsizeFromContents( ContentsType contents,
-				    const TQWidget *widget,
+TQSize LightStyleV3::sizeFromContents( ContentsType contents,
+				    TQStyleControlElementData ceData,
+				    ControlElementFlags elementFlags,
 				    const TQSize &contentsSize,
-				    const TQStyleOption &data ) const
+				    const TQStyleOption &data,
+				    const TQWidget *widget ) const
 {
     TQSize ret;
 
     switch (contents) {
     case CT_ComboBox:
 	{
-	    int fw = pixelMetric( PM_DefaultFrameWidth, widget ) * 2;
-	    int sb = pixelMetric( PM_ScrollBarExtent ); // width of the arrow
+	    int fw = pixelMetric( PM_DefaultFrameWidth, ceData, elementFlags, widget ) * 2;
+	    int sb = pixelMetric( PM_ScrollBarExtent, ceData, elementFlags ); // width of the arrow
 	    int w = contentsSize.width();
 	    int h = contentsSize.height();
 
@@ -1727,9 +1741,9 @@ TQSize LightStyleV3::tqsizeFromContents( ContentsType contents,
     case CT_PushButton:
 	{
 	    const TQPushButton *button = (const TQPushButton *) widget;
-	    ret = TQCommonStyle::tqsizeFromContents( contents, widget, contentsSize, data );
+	    ret = TQCommonStyle::sizeFromContents( contents, ceData, elementFlags, contentsSize, data, widget );
 	    int w = ret.width(), h = ret.height();
-	    int dbi = pixelMetric( PM_ButtonDefaultIndicator, widget ) * 2;
+	    int dbi = pixelMetric( PM_ButtonDefaultIndicator, ceData, elementFlags, widget ) * 2;
 	    int mw = 80 - dbi, mh = 25 - dbi;
 
 	    // only expand the button if we are displaying text...
@@ -1811,7 +1825,7 @@ TQSize LightStyleV3::tqsizeFromContents( ContentsType contents,
 	}    
 
     default:
-	ret = TQCommonStyle::tqsizeFromContents(contents, widget, contentsSize, data);
+	ret = TQCommonStyle::sizeFromContents(contents, ceData, elementFlags, contentsSize, data, widget);
 	break;
     }
 
@@ -1819,9 +1833,11 @@ TQSize LightStyleV3::tqsizeFromContents( ContentsType contents,
 }
 
 int LightStyleV3::styleHint( TQ_StyleHint stylehint,
-			   const TQWidget *widget,
+			   TQStyleControlElementData ceData,
+			   ControlElementFlags elementFlags,
 			   const TQStyleOption &option,
-			   TQStyleHintReturn* returnData ) const
+			   TQStyleHintReturn* returnData,
+			   const TQWidget *widget ) const
 {
     int ret;
 
@@ -1847,7 +1863,7 @@ int LightStyleV3::styleHint( TQ_StyleHint stylehint,
 	break;
 
     default:
-	ret = TQCommonStyle::styleHint(stylehint, widget, option, returnData);
+	ret = TQCommonStyle::styleHint(stylehint, ceData, elementFlags, option, returnData, widget);
 	break;
     }
 
@@ -1855,9 +1871,11 @@ int LightStyleV3::styleHint( TQ_StyleHint stylehint,
 }
 
 TQPixmap LightStyleV3::stylePixmap( StylePixmap stylepixmap,
-				   const TQWidget *widget,
-				   const TQStyleOption &data ) const
+				   TQStyleControlElementData ceData,
+				   ControlElementFlags elementFlags,
+				   const TQStyleOption &data,
+				   const TQWidget *widget ) const
 {
-    return basestyle->stylePixmap( stylepixmap, widget, data );
+    return basestyle->stylePixmap( stylepixmap, ceData, elementFlags, data, widget );
 }
 #include "lightstyle-v3.moc"

@@ -79,57 +79,69 @@ public:
     KThemeStyle( const TQString& configDir, const TQString &configFile = TQString::null );
     ~KThemeStyle();
 
-    virtual int pixelMetric ( PixelMetric metric, const TQWidget * widget = 0 ) const;
+    virtual int pixelMetric ( PixelMetric metric, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQWidget * widget = 0 ) const;
 
-    virtual void drawPrimitive ( PrimitiveElement pe, TQPainter * p, const TQRect & r, const TQColorGroup & cg,
+    virtual void drawPrimitive ( PrimitiveElement pe, TQPainter * p, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQRect & r, const TQColorGroup & cg,
                                  SFlags flags = Style_Default,
                                  const TQStyleOption& = TQStyleOption::Default ) const;
 
     virtual void drawControl( ControlElement element,
                               TQPainter *p,
-                              const TQWidget *widget,
+                              TQStyleControlElementData ceData,
+                              ControlElementFlags elementFlags,
                               const TQRect &r,
                               const TQColorGroup &cg,
                               SFlags how = Style_Default,
-                              const TQStyleOption& = TQStyleOption::Default ) const;
+                              const TQStyleOption& = TQStyleOption::Default,
+                              const TQWidget *widget = 0 ) const;
 
     virtual void drawControlMask( ControlElement element,
                                   TQPainter *p,
-                                  const TQWidget *widget,
+                                  TQStyleControlElementData ceData,
+                                  ControlElementFlags elementFlags,
                                   const TQRect &r,
-                                  const TQStyleOption& = TQStyleOption::Default ) const;
+                                  const TQStyleOption& = TQStyleOption::Default,
+                                  const TQWidget *widget = 0 ) const;
 
 
     virtual void drawComplexControl( TQ_ComplexControl control,
                                      TQPainter *p,
-                                     const TQWidget* widget,
+                                     TQStyleControlElementData ceData,
+                                     ControlElementFlags elementFlags,
                                      const TQRect &r,
                                      const TQColorGroup &cg,
                                      SFlags flags = Style_Default,
                                      SCFlags controls = SC_All,
                                      SCFlags active = SC_None,
-                                     const TQStyleOption& = TQStyleOption::Default ) const;
+                                     const TQStyleOption& = TQStyleOption::Default,
+                                     const TQWidget* widget = 0 ) const;
 
     virtual void drawKStylePrimitive( KStylePrimitive kpe,
                                       TQPainter* p,
-                                      const TQWidget* widget,
+                                      TQStyleControlElementData ceData,
+                                      ControlElementFlags elementFlags,
                                       const TQRect &r,
                                       const TQColorGroup &cg,
                                       SFlags flags = Style_Default,
-                                      const TQStyleOption& = TQStyleOption::Default ) const;
+                                      const TQStyleOption& = TQStyleOption::Default,
+                                      const TQWidget* widget = 0 ) const;
 
 
     virtual int styleHint( StyleHint sh,
-                           const TQWidget *widget = 0,
+                           TQStyleControlElementData ceData,
+                           ControlElementFlags elementFlags,
                            const TQStyleOption& = TQStyleOption::Default,
-                           TQStyleHintReturn* returnData = 0 ) const;
+                           TQStyleHintReturn* returnData = 0,
+                           const TQWidget *widget = 0 ) const;
 
-    virtual TQSize tqsizeFromContents( ContentsType contents,
-                                    const TQWidget *widget,
+    virtual TQSize sizeFromContents( ContentsType contents,
+                                    TQStyleControlElementData ceData,
+                                    ControlElementFlags elementFlags,
                                     const TQSize &contentsSize,
-                                    const TQStyleOption& = TQStyleOption::Default ) const;
+                                    const TQStyleOption& = TQStyleOption::Default,
+                                    const TQWidget *widget = 0 ) const;
 
-    virtual TQRect subRect(SubRect, const TQWidget *) const;
+    virtual TQRect subRect(SubRect, const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, const TQWidget *) const;
 
     virtual void polish( TQWidget* );
     virtual void unPolish( TQWidget* );

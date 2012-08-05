@@ -48,7 +48,7 @@ public:
 	virtual ~KeramikStyle();
 
 	void renderMenuBlendPixmap( KPixmap& pix, const TQColorGroup &cg, const TQPopupMenu* ) const;
-	TQPixmap stylePixmap(StylePixmap stylepixmap, const TQWidget* widget, const TQStyleOption& opt) const;
+	TQPixmap stylePixmap(StylePixmap stylepixmap, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQStyleOption& opt, const TQWidget* widget = 0) const;
 
 	void polish( TQWidget* widget );
 	void unPolish( TQWidget* widget );
@@ -57,14 +57,18 @@ public:
 
 	void drawKStylePrimitive( KStylePrimitive kpe,
 	                          TQPainter* p,
-	                          const TQWidget* widget,
+	                          TQStyleControlElementData ceData,
+	                          ControlElementFlags elementFlags,
 	                          const TQRect& r,
 	                          const TQColorGroup& cg,
 	                          SFlags flags = Style_Default,
-	                          const TQStyleOption& = TQStyleOption::Default ) const;
+	                          const TQStyleOption& = TQStyleOption::Default,
+	                          const TQWidget* widget = 0 ) const;
 
-	void tqdrawPrimitive( TQ_PrimitiveElement pe,
+	void drawPrimitive( TQ_PrimitiveElement pe,
 	                    TQPainter* p,
+	                    TQStyleControlElementData ceData,
+	                    ControlElementFlags elementFlags,
 	                    const TQRect& r,
 	                    const TQColorGroup& cg,
 	                    SFlags flags = Style_Default,
@@ -72,50 +76,64 @@ public:
 
 	void drawControl( TQ_ControlElement element,
 	                  TQPainter* p,
-	                  const TQWidget* widget,
+	                  TQStyleControlElementData ceData,
+	                  ControlElementFlags elementFlags,
 	                  const TQRect& r,
 	                  const TQColorGroup& cg,
 	                  SFlags flags = Style_Default,
-	                  const TQStyleOption& opt = TQStyleOption::Default ) const;
+	                  const TQStyleOption& opt = TQStyleOption::Default,
+	                  const TQWidget* widget = 0 ) const;
 
 	void drawControlMask( TQ_ControlElement element,
 	                      TQPainter* p,
-	                      const TQWidget* widget,
+	                      TQStyleControlElementData ceData,
+	                      ControlElementFlags elementFlags,
 	                      const TQRect& r,
-	                      const TQStyleOption& opt = TQStyleOption::Default ) const;
+	                      const TQStyleOption& opt = TQStyleOption::Default,
+	                      const TQWidget* widget = 0 ) const;
 
 	void drawComplexControl( TQ_ComplexControl control,
 	                         TQPainter* p,
-	                         const TQWidget* widget,
+	                         TQStyleControlElementData ceData,
+	                         ControlElementFlags elementFlags,
 	                         const TQRect& r,
 	                         const TQColorGroup& cg,
 	                         SFlags flags = Style_Default,
 	                         SCFlags controls = SC_All,
 	                         SCFlags active = SC_None,
-	                         const TQStyleOption& = TQStyleOption::Default ) const;
+	                         const TQStyleOption& = TQStyleOption::Default,
+	                         const TQWidget* widget = 0 ) const;
 
 	void drawComplexControlMask( TQ_ComplexControl control,
 	                             TQPainter* p,
-	                             const TQWidget* widget,
+	                             const TQStyleControlElementData ceData,
+	                             const ControlElementFlags elementFlags,
 	                             const TQRect& r,
-	                             const TQStyleOption& = TQStyleOption::Default ) const;
+	                             const TQStyleOption& = TQStyleOption::Default,
+	                             const TQWidget* widget = 0 ) const;
 
-	int pixelMetric( PixelMetric m, const TQWidget* widget = 0 ) const;
+	int pixelMetric( PixelMetric m, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQWidget* widget = 0 ) const;
 
-	TQSize tqsizeFromContents( ContentsType contents,
-	                        const TQWidget* widget,
+	TQSize sizeFromContents( ContentsType contents,
+	                        TQStyleControlElementData ceData,
+	                        ControlElementFlags elementFlags,
 	                        const TQSize& contentSize,
-	                        const TQStyleOption& opt ) const;
+	                        const TQStyleOption& opt,
+	                        const TQWidget* widget = 0 ) const;
 
 	SubControl querySubControl( TQ_ComplexControl control,
-	                            const TQWidget* widget,
+	                            TQStyleControlElementData ceData,
+	                            ControlElementFlags elementFlags,
 	                            const TQPoint& point,
-						        const TQStyleOption& opt = TQStyleOption::Default ) const;
+						        const TQStyleOption& opt = TQStyleOption::Default,
+	                            const TQWidget* widget = 0 ) const;
 
 	TQRect querySubControlMetrics( TQ_ComplexControl control,
-	                              const TQWidget* widget,
+	                              TQStyleControlElementData ceData,
+	                              ControlElementFlags elementFlags,
 	                              SubControl subcontrol,
-	                              const TQStyleOption& opt = TQStyleOption::Default ) const;
+	                              const TQStyleOption& opt = TQStyleOption::Default,
+	                              const TQWidget* widget = 0 ) const;
 
 private slots:
 	//Animation slots.
@@ -194,7 +212,7 @@ private:
 	// For progress bar animation
 	TQTimer *animationTimer;
 
-	TQRect subRect(SubRect r, const TQWidget *widget) const;
+	TQRect subRect(SubRect r, const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, const TQWidget *widget) const;
 
 	// Disable copy constructor and = operator
 	KeramikStyle( const KeramikStyle&  );
