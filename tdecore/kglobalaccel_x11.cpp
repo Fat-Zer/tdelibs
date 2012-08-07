@@ -41,6 +41,7 @@
 
 #include <X11/X.h>
 #include <X11/Xlib.h>
+#include <X11/XKBlib.h>
 #include <X11/keysym.h>
 #include <fixx11h.h>
 
@@ -172,7 +173,7 @@ bool KGlobalAccelPrivate::grabKey( const KKeyServer::Key& key, bool bGrab, KAcce
 	// HACK: make Alt+Print work
 	// only do this for the Xorg default keyboard keycodes,
 	// other mappings (e.g. evdev) don't need or want it
-	if( key.sym() == XK_Sys_Req && XKeycodeToKeysym( tqt_xdisplay(), 111, 0 ) == XK_Print ) {
+	if( key.sym() == XK_Sys_Req && XkbKeycodeToKeysym( tqt_xdisplay(), 111, 0, 0 ) == XK_Print ) {
 	    keyModX |= KKeyServer::modXAlt();
 	    keyCodeX = 111;
 	}
@@ -332,7 +333,7 @@ bool KGlobalAccelPrivate::x11KeyPress( const XEvent *pEvent )
 	//  e.g., KP_4 => Shift+KP_Left, and Shift+KP_4 => KP_Left.
 	if( pEvent->xkey.state & KKeyServer::modXNumLock() ) {
 		// TODO: what's the xor operator in c++?
-		uint sym = XKeycodeToKeysym( tqt_xdisplay(), codemod.code, 0 );
+		uint sym = XkbKeycodeToKeysym( tqt_xdisplay(), codemod.code, 0, 0 );
 		// If this is a keypad key,
 		if( sym >= XK_KP_Space && sym <= XK_KP_9 ) {
 			switch( sym ) {

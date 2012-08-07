@@ -40,6 +40,7 @@
 #include <X11/X.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
+#include <X11/XKBlib.h>
 #include <X11/keysymdef.h>
 #include <ctype.h>
 #endif
@@ -111,10 +112,10 @@ bool KKeyNative::init( const KKey& key )
 	// Only do this for the default Xorg layout, other keycode mappings
 	// (e.g. evdev) don't need or want it.
 	if( m_sym == XK_Print && !(m_mod & Mod1Mask) &&
-                XKeycodeToKeysym( tqt_xdisplay(), 111, 0 ) == XK_Print )
+                XkbKeycodeToKeysym( tqt_xdisplay(), 111, 0, 0 ) == XK_Print )
 		m_code = 111; // code for Print
 	else if( m_sym == XK_Break || (m_sym == XK_Pause && (m_mod & ControlMask)) &&
-                XKeycodeToKeysym( tqt_xdisplay(), 114, 0 ) == XK_Pause )
+                XkbKeycodeToKeysym( tqt_xdisplay(), 114, 0, 0 ) == XK_Pause )
 		m_code = 114;
 	else
 		m_code = XKeysymToKeycode( tqt_xdisplay(), m_sym );

@@ -42,6 +42,7 @@
 # include <X11/X.h>
 # include <X11/Xlib.h>
 # include <X11/Xutil.h>
+# include <X11/XKBlib.h>
 # include <X11/keysymdef.h>
 # define X11_ONLY(arg) arg, //allows to omit an argument
 #else
@@ -340,13 +341,13 @@ bool initializeMods()
 	for( int i = Mod2MapIndex; i < 8; i++ ) {
 		uint mask = (1 << i);
 		uint keySymX = NoSymbol;
-                // This used to be only XKeycodeToKeysym( ... , 0 ), but that fails with XFree4.3.99
-                // and X.org R6.7 , where for some reason only ( ... , 1 ) works. I have absolutely no
+                // This used to be only XkbKeycodeToKeysym( ... , 0, 0 ), but that fails with XFree4.3.99
+                // and X.org R6.7 , where for some reason only ( ... , 0, 1 ) works. I have absolutely no
                 // idea what the problem is, but searching all posibilities until something valid is
                 // found fixes the problem.
                 for( int j = 0; j < xmk->max_keypermod && keySymX == NoSymbol; ++j )
                     for( int k = 0; k < keysyms_per_keycode && keySymX == NoSymbol; ++k )
-                        keySymX = XKeycodeToKeysym( tqt_xdisplay(), xmk->modifiermap[xmk->max_keypermod * i + j], k );
+                        keySymX = XkbKeycodeToKeysym( tqt_xdisplay(), xmk->modifiermap[xmk->max_keypermod * i + j], 0, k );
 		switch( keySymX ) {
 			case XK_Num_Lock:    g_modXNumLock = mask; break;     // Normally Mod2Mask
 			case XK_Super_L:
@@ -551,13 +552,13 @@ uint Sym::getModsRequired() const
 		// need to check index 0 before the others, so that a null-mod
 		//  can take precedence over the others, in case the modified
 		//  key produces the same symbol.
-		if( m_sym == XKeycodeToKeysym( tqt_xdisplay(), code, 0 ) )
+		if( m_sym == XkbKeycodeToKeysym( tqt_xdisplay(), code, 0, 0 ) )
 			;
-		else if( m_sym == XKeycodeToKeysym( tqt_xdisplay(), code, 1 ) )
+		else if( m_sym == XkbKeycodeToKeysym( tqt_xdisplay(), code, 0, 1 ) )
 			mod = KKey::SHIFT;
-		else if( m_sym == XKeycodeToKeysym( tqt_xdisplay(), code, 2 ) )
+		else if( m_sym == XkbKeycodeToKeysym( tqt_xdisplay(), code, 0, 2 ) )
 			mod = KKeyServer::MODE_SWITCH;
-		else if( m_sym == XKeycodeToKeysym( tqt_xdisplay(), code, 3 ) )
+		else if( m_sym == XkbKeycodeToKeysym( tqt_xdisplay(), code, 0, 3 ) )
 			mod = KKey::SHIFT | KKeyServer::MODE_SWITCH;
 	}
 #endif
@@ -887,8 +888,8 @@ uint stringUserToMod( const TQString& mod )
 	//  keycode 111 & 92:  Print Sys_Req -> Sys_Req = Alt+Print
 	//  keycode 110 & 114: Pause Break   -> Break = Ctrl+Pause
 	if( (keyCodeX == 92 || keyCodeX == 111) &&
-	    XKeycodeToKeysym( tqt_xdisplay(), 92, 0 ) == XK_Print &&
-	    XKeycodeToKeysym( tqt_xdisplay(), 111, 0 ) == XK_Print )
+	    XkbKeycodeToKeysym( tqt_xdisplay(), 92, 0, 0 ) == XK_Print &&
+	    XkbKeycodeToKeysym( tqt_xdisplay(), 111, 0, 0 ) == XK_Print )
 	{
 		// If Alt is pressed, then we need keycode 92, keysym XK_Sys_Req
 		if( keyModX & keyModXAlt() ) {
@@ -902,8 +903,8 @@ uint stringUserToMod( const TQString& mod )
 		}
 	}
 	else if( (keyCodeX == 110 || keyCodeX == 114) &&
-	    XKeycodeToKeysym( tqt_xdisplay(), 110, 0 ) == XK_Pause &&
-	    XKeycodeToKeysym( tqt_xdisplay(), 114, 0 ) == XK_Pause )
+	    XkbKeycodeToKeysym( tqt_xdisplay(), 110, 0, 0 ) == XK_Pause &&
+	    XkbKeycodeToKeysym( tqt_xdisplay(), 114, 0, 0 ) == XK_Pause )
 	{
 		if( keyModX & keyModXCtrl() ) {
 			keyCodeX = 114;
