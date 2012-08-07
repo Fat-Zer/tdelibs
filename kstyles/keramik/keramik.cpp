@@ -331,86 +331,98 @@ KeramikStyle::~KeramikStyle()
 	KeramikDbCleanup();
 }
 
-void KeramikStyle::polish(TQApplication* app)
+void KeramikStyle::applicationPolish(TQStyleControlElementData ceData, ControlElementFlags, void *ptr)
 {
-	if (!qstrcmp(app->argv()[0], "kicker"))
-		kickerMode = true;
+    if (ceData.widgetObjectTypes.contains(TQAPPLICATION_OBJECT_NAME_STRING)) {
+		TQApplication *app = reinterpret_cast<TQApplication*>(ptr);
+		if (!qstrcmp(app->argv()[0], "kicker")) {
+			kickerMode = true;
+		}
+	}
 }
 
-void KeramikStyle::polish(TQWidget* widget)
+void KeramikStyle::polish(TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr)
 {
-	// Put in order of highest occurrence to maximise hit rate
-	if ( widget->inherits( TQPUSHBUTTON_OBJECT_NAME_STRING )  || widget->inherits( TQCOMBOBOX_OBJECT_NAME_STRING ) || widget->inherits(TQTOOLBUTTON_OBJECT_NAME_STRING) )
-	{
-		widget->installEventFilter(this);
-		if ( widget->inherits( TQCOMBOBOX_OBJECT_NAME_STRING ) )
+	if (ceData.widgetObjectTypes.contains(TQWIDGET_OBJECT_NAME_STRING)) {
+		TQWidget *widget = reinterpret_cast<TQWidget*>(ptr);
+
+		// Put in order of highest occurrence to maximise hit rate
+		if ( widget->inherits( TQPUSHBUTTON_OBJECT_NAME_STRING )  || widget->inherits( TQCOMBOBOX_OBJECT_NAME_STRING ) || widget->inherits(TQTOOLBUTTON_OBJECT_NAME_STRING) )
+		{
+			installObjectEventHandler(ceData, elementFlags, ptr, this);
+			if ( widget->inherits( TQCOMBOBOX_OBJECT_NAME_STRING ) )
+				widget->setBackgroundMode( NoBackground );
+		}
+		else if ( widget->inherits( TQMENUBAR_OBJECT_NAME_STRING ) || widget->inherits( TQPOPUPMENU_OBJECT_NAME_STRING ) )
 			widget->setBackgroundMode( NoBackground );
-	}
-	else if ( widget->inherits( TQMENUBAR_OBJECT_NAME_STRING ) || widget->inherits( TQPOPUPMENU_OBJECT_NAME_STRING ) )
-		widget->setBackgroundMode( NoBackground );
-
- 	else if ( widget->parentWidget() &&
-			  ( ( widget->inherits( TQLISTBOX_OBJECT_NAME_STRING ) && widget->parentWidget()->inherits( TQCOMBOBOX_OBJECT_NAME_STRING ) ) ||
-	            widget->inherits( "KCompletionBox" ) ) ) {
-		TQListBox* listbox = (TQListBox*) widget;
-		listbox->setLineWidth( 4 );
-		listbox->setBackgroundMode( NoBackground );
-		widget->installEventFilter( this );
-
-	} else if (widget->inherits("QToolBarExtensionWidget")) {
-		widget->installEventFilter(this);
-		//widget->setBackgroundMode( NoBackground );
- 	}
-	else if ( !qstrcmp( widget->name(), kdeToolbarWidget ) ) {
-		widget->setBackgroundMode( NoBackground );
-		widget->installEventFilter(this);
-	}
-
-	if (animateProgressBar && ::tqqt_cast<TQProgressBar*>(widget))
-	{
-		widget->installEventFilter(this);
-		progAnimWidgets[static_cast<TQProgressBar*>(widget)] = 0;
-		connect(widget, TQT_SIGNAL(destroyed(TQObject*)), this, TQT_SLOT(progressBarDestroyed(TQObject*)));
-		if (!animationTimer->isActive())
-			animationTimer->start( 50, false );
+	
+		else if ( widget->parentWidget() &&
+				( ( widget->inherits( TQLISTBOX_OBJECT_NAME_STRING ) && widget->parentWidget()->inherits( TQCOMBOBOX_OBJECT_NAME_STRING ) ) ||
+					widget->inherits( "KCompletionBox" ) ) ) {
+			TQListBox* listbox = (TQListBox*) widget;
+			listbox->setLineWidth( 4 );
+			listbox->setBackgroundMode( NoBackground );
+			installObjectEventHandler(ceData, elementFlags, ptr, this);
+	
+		} else if (widget->inherits("QToolBarExtensionWidget")) {
+			installObjectEventHandler(ceData, elementFlags, ptr, this);
+			//widget->setBackgroundMode( NoBackground );
+		}
+		else if ( !qstrcmp( widget->name(), kdeToolbarWidget ) ) {
+			widget->setBackgroundMode( NoBackground );
+			installObjectEventHandler(ceData, elementFlags, ptr, this);
+		}
+	
+		if (animateProgressBar && ::tqqt_cast<TQProgressBar*>(widget))
+		{
+			installObjectEventHandler(ceData, elementFlags, ptr, this);
+			progAnimWidgets[static_cast<TQProgressBar*>(widget)] = 0;
+			connect(widget, TQT_SIGNAL(destroyed(TQObject*)), this, TQT_SLOT(progressBarDestroyed(TQObject*)));
+			if (!animationTimer->isActive())
+				animationTimer->start( 50, false );
+		}
 	}
 
-	KStyle::polish(widget);
+	KStyle::polish(ceData, elementFlags, ptr);
 }
 
-void KeramikStyle::unPolish(TQWidget* widget)
+void KeramikStyle::unPolish(TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr)
 {
-	//### TODO: This needs major cleanup (and so does polish() )
-	if ( widget->inherits( TQPUSHBUTTON_OBJECT_NAME_STRING ) || widget->inherits( TQCOMBOBOX_OBJECT_NAME_STRING  ) )
-	{
-		if ( widget->inherits( TQCOMBOBOX_OBJECT_NAME_STRING ) )
-			widget->setBackgroundMode( PaletteButton );
-		widget->removeEventFilter(this);
-	}
-	else if ( widget->inherits( TQMENUBAR_OBJECT_NAME_STRING ) || widget->inherits( TQPOPUPMENU_OBJECT_NAME_STRING ) )
-		widget->setBackgroundMode( PaletteBackground );
+	if (ceData.widgetObjectTypes.contains(TQWIDGET_OBJECT_NAME_STRING)) {
+		TQWidget *widget = reinterpret_cast<TQWidget*>(ptr);
 
- 	else if ( widget->parentWidget() &&
-			  ( ( widget->inherits( TQLISTBOX_OBJECT_NAME_STRING ) && widget->parentWidget()->inherits( TQCOMBOBOX_OBJECT_NAME_STRING ) ) ||
-	            widget->inherits( "KCompletionBox" ) ) ) {
-		TQListBox* listbox = (TQListBox*) widget;
-		listbox->setLineWidth( 1 );
-		listbox->setBackgroundMode( PaletteBackground );
-		widget->removeEventFilter( this );
-		widget->clearMask();
-	} else if (widget->inherits("QToolBarExtensionWidget")) {
-		widget->removeEventFilter(this);
-	}
-	else if ( !qstrcmp( widget->name(), kdeToolbarWidget ) ) {
-		widget->setBackgroundMode( PaletteBackground );
-		widget->removeEventFilter(this);
-	}
-	else if ( ::tqqt_cast<TQProgressBar*>(widget) )
-	{
-		progAnimWidgets.remove(static_cast<TQProgressBar*>(widget));
+		//### TODO: This needs major cleanup (and so does polish() )
+		if ( widget->inherits( TQPUSHBUTTON_OBJECT_NAME_STRING ) || widget->inherits( TQCOMBOBOX_OBJECT_NAME_STRING  ) )
+		{
+			if ( widget->inherits( TQCOMBOBOX_OBJECT_NAME_STRING ) )
+				widget->setBackgroundMode( PaletteButton );
+			removeObjectEventHandler(ceData, elementFlags, ptr, this);
+		}
+		else if ( widget->inherits( TQMENUBAR_OBJECT_NAME_STRING ) || widget->inherits( TQPOPUPMENU_OBJECT_NAME_STRING ) )
+			widget->setBackgroundMode( PaletteBackground );
+	
+		else if ( widget->parentWidget() &&
+				( ( widget->inherits( TQLISTBOX_OBJECT_NAME_STRING ) && widget->parentWidget()->inherits( TQCOMBOBOX_OBJECT_NAME_STRING ) ) ||
+					widget->inherits( "KCompletionBox" ) ) ) {
+			TQListBox* listbox = (TQListBox*) widget;
+			listbox->setLineWidth( 1 );
+			listbox->setBackgroundMode( PaletteBackground );
+			removeObjectEventHandler(ceData, elementFlags, ptr, this);
+			widget->clearMask();
+		} else if (widget->inherits("QToolBarExtensionWidget")) {
+			removeObjectEventHandler(ceData, elementFlags, ptr, this);
+		}
+		else if ( !qstrcmp( widget->name(), kdeToolbarWidget ) ) {
+			widget->setBackgroundMode( PaletteBackground );
+			removeObjectEventHandler(ceData, elementFlags, ptr, this);
+		}
+		else if ( ::tqqt_cast<TQProgressBar*>(widget) )
+		{
+			progAnimWidgets.remove(static_cast<TQProgressBar*>(widget));
+		}
 	}
 
-	KStyle::unPolish(widget);
+	KStyle::unPolish(ceData, elementFlags, ptr);
 }
 
 void KeramikStyle::progressBarDestroyed(TQObject* obj)
@@ -2759,197 +2771,202 @@ TQRect KeramikStyle::querySubControlMetrics( TQ_ComplexControl control,
 #undef   KeyRelease
 #endif
 
-bool KeramikStyle::eventFilter( TQObject* object, TQEvent* event )
+bool KeramikStyle::objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *event )
 {
-	if (KStyle::eventFilter( object, event ))
+	if (KStyle::objectEventHandler( ceData, elementFlags, source, event ))
 		return true;
 
-	if ( !object->isWidgetType() ) return false;
+	if (ceData.widgetObjectTypes.contains(TQOBJECT_OBJECT_NAME_STRING)) {
+		TQObject* object = reinterpret_cast<TQObject*>(source);
 
-	//Clear hover highlight when needed
-	if ( (event->type() == TQEvent::Leave) && (TQT_BASE_OBJECT(object) == TQT_BASE_OBJECT(hoverWidget)) )
-	{
-		TQWidget* button = TQT_TQWIDGET(object);
-		hoverWidget = 0;
-		button->repaint( false );
-		return false;
-	}
-
-	//Hover highlight on buttons, toolbuttons and combos
-	if ( ::tqqt_cast<TQPushButton*>(object) || ::tqqt_cast<TQComboBox*>(object) || ::tqqt_cast<TQToolButton*>(object) )
-	{
-		if (event->type() == TQEvent::Enter && TQT_TQWIDGET(object)->isEnabled() )
+		if ( !object->isWidgetType() ) return false;
+	
+		//Clear hover highlight when needed
+		if ( (event->type() == TQEvent::Leave) && (TQT_BASE_OBJECT(object) == TQT_BASE_OBJECT(hoverWidget)) )
 		{
-			hoverWidget = TQT_TQWIDGET(object);
-			hoverWidget->repaint( false );
-		}
-		return false;
-	}
-
-	//Combo line edits get special frames
-	if ( event->type() == TQEvent::Paint && ::tqqt_cast<TQLineEdit*>(object) )
-	{
-		static bool recursion = false;
-		if (recursion )
+			TQWidget* button = TQT_TQWIDGET(object);
+			hoverWidget = 0;
+			button->repaint( false );
 			return false;
-
-		recursion = true;
-		object->event( TQT_TQPAINTEVENT( event ) );
-		TQWidget* widget = TQT_TQWIDGET( object );
-		TQPainter p( widget );
-		Keramik::RectTilePainter( keramik_frame_shadow, false, false, 2, 2 ).draw( &p, widget->rect(),
-			widget->palette().color( TQPalette::Normal, TQColorGroup::Button ),
-			Qt::black, false, Keramik::TilePainter::PaintFullBlend);
-		recursion = false;
-		return true;
-	}
-	else if ( ::tqqt_cast<TQListBox*>(object) ) 
-	{
-		//Handle combobox drop downs
-		switch (event->type())
+		}
+	
+		//Hover highlight on buttons, toolbuttons and combos
+		if ( ::tqqt_cast<TQPushButton*>(object) || ::tqqt_cast<TQComboBox*>(object) || ::tqqt_cast<TQToolButton*>(object) )
 		{
-#ifdef HAVE_X11_EXTENSIONS_SHAPE_H
-			//Combo dropdowns are shaped	
-			case TQEvent::Resize:
+			if (event->type() == TQEvent::Enter && TQT_TQWIDGET(object)->isEnabled() )
 			{
-				TQListBox* listbox = static_cast<TQListBox*>(TQT_TQWIDGET(object));
-				TQResizeEvent* resize = TQT_TQRESIZEEVENT(event);
-				if (resize->size().height() < 6)
-					return false;
-		
-				//CHECKME: Not sure the rects are perfect..
-				XRectangle rects[5] = {
-					{0, 0, resize->size().width()-2, resize->size().height()-6},
-					{0, resize->size().height()-6, resize->size().width()-2, 1},
-					{1, resize->size().height()-5, resize->size().width()-3, 1},
-					{2, resize->size().height()-4, resize->size().width()-5, 1},
-					{3, resize->size().height()-3, resize->size().width()-7, 1}
-				};
-		
-				XShapeCombineRectangles(tqt_xdisplay(), listbox->handle(), ShapeBounding, 0, 0,
-					rects, 5, ShapeSet, YXSorted);
+				hoverWidget = TQT_TQWIDGET(object);
+				hoverWidget->repaint( false );
 			}
-			break;
-#endif
-			//Combo dropdowns get fancy borders
-			case TQEvent::Paint:
-			{
-				static bool recursion = false;
-				if (recursion )
-					return false;
-				TQListBox* listbox = (TQListBox*) object;
-				TQPaintEvent* paint = (TQPaintEvent*) event;
-		
-		
-				if ( !listbox->contentsRect().contains( paint->rect() ) )
-				{
-					TQPainter p( listbox );
-					Keramik::RectTilePainter( keramik_combobox_list, false, false ).draw( &p, 0, 0, listbox->width(), listbox->height(),
-							listbox->palette().color( TQPalette::Normal, TQColorGroup::Button ),
-							listbox->palette().color( TQPalette::Normal, TQColorGroup::Background ) );
-		
-					TQPaintEvent newpaint( paint->region().intersect( listbox->contentsRect() ), paint->erased() );
-					recursion = true;
-					object->event( &newpaint );
-					recursion = false;
-					return true;
-				}
-			}
-			break;
-			
-			/**
-			 Since our popup is shown a bit overlapping the combo body, a mouse click at the bottom of the
-			 widget will result in the release going to the popup, which will cause it to close (#56435). 
-			 We solve it by filtering out the first release, if it's in the right area. To do this, we notices shows,
-			 move ourselves to front of event filter list, and then capture the first release event, and if it's
-			 in the overlap area, filter it out.
-			 */
-			case TQEvent::Show:
-				//Prioritize ourselves to see the mouse events first
-				object->removeEventFilter(this);
-				object->installEventFilter(this);
-				firstComboPopupRelease = true;
-				break;
-			
-			//We need to filter some clicks out.
-			case TQEvent::MouseButtonRelease:
-				if (firstComboPopupRelease)
-				{
-					firstComboPopupRelease = false;
-
-					TQMouseEvent* mev = TQT_TQMOUSEEVENT(event);
-					TQListBox*    box = static_cast<TQListBox*>(TQT_TQWIDGET(object));
-					
-					TQWidget* parent = box->parentWidget();
-					if (!parent)
-						return false;
-					
-					TQPoint inParCoords = parent->mapFromGlobal(mev->globalPos());
-					if (parent->rect().contains(inParCoords))
-						return true;
-				}
-				break;
-			case TQEvent::MouseButtonPress:
-			case TQEvent::MouseButtonDblClick:
-			case TQEvent::Wheel:
-			case TQEvent::KeyPress:
-			case TQEvent::KeyRelease:
-				firstComboPopupRelease = false;
-			default:
+			return false;
+		}
+	
+		//Combo line edits get special frames
+		if ( event->type() == TQEvent::Paint && ::tqqt_cast<TQLineEdit*>(object) )
+		{
+			static bool recursion = false;
+			if (recursion )
 				return false;
+	
+			recursion = true;
+			object->event( TQT_TQPAINTEVENT( event ) );
+			TQWidget* widget = TQT_TQWIDGET( object );
+			TQPainter p( widget );
+			Keramik::RectTilePainter( keramik_frame_shadow, false, false, 2, 2 ).draw( &p, widget->rect(),
+				widget->palette().color( TQPalette::Normal, TQColorGroup::Button ),
+				Qt::black, false, Keramik::TilePainter::PaintFullBlend);
+			recursion = false;
+			return true;
 		}
-	}
-	//Toolbar background gradient handling
-	else if (event->type() == TQEvent::Paint &&
-			 object->parent() && !qstrcmp(object->name(), kdeToolbarWidget) )
-	{
-		// Draw a gradient background for custom widgets in the toolbar
-		// that have specified a "kde toolbar widget" name.
-		renderToolbarWidgetBackground(0, TQT_TQWIDGET(object));
-
-		return false;	// Now draw the contents
-	}
-	else if (event->type() == TQEvent::Paint  &&  object->parent() && ::tqqt_cast<TQToolBar*>(object->parent()) 
-			&& !::tqqt_cast<TQPopupMenu*>(object) )
-	{
-		// We need to override the paint event to draw a
-		// gradient on a QToolBarExtensionWidget.
-		TQToolBar* toolbar = static_cast<TQToolBar*>(TQT_TQWIDGET(object->parent()));
-		TQWidget* widget = TQT_TQWIDGET(object);
-		TQRect wr = widget->rect (), tr = toolbar->rect();
-		TQPainter p( widget );
-
-		if ( toolbar->orientation() == Qt::Horizontal )
+		else if ( ::tqqt_cast<TQListBox*>(object) ) 
 		{
-			Keramik::GradientPainter::renderGradient( &p, wr, widget->colorGroup().button(),
-													  true /*horizontal*/, false /*not a menu*/,
-													  0, widget->y(), wr.width(), tr.height());
+			//Handle combobox drop downs
+			switch (event->type())
+			{
+#ifdef HAVE_X11_EXTENSIONS_SHAPE_H
+				//Combo dropdowns are shaped	
+				case TQEvent::Resize:
+				{
+					TQListBox* listbox = static_cast<TQListBox*>(TQT_TQWIDGET(object));
+					TQResizeEvent* resize = TQT_TQRESIZEEVENT(event);
+					if (resize->size().height() < 6)
+						return false;
+			
+					//CHECKME: Not sure the rects are perfect..
+					XRectangle rects[5] = {
+						{0, 0, resize->size().width()-2, resize->size().height()-6},
+						{0, resize->size().height()-6, resize->size().width()-2, 1},
+						{1, resize->size().height()-5, resize->size().width()-3, 1},
+						{2, resize->size().height()-4, resize->size().width()-5, 1},
+						{3, resize->size().height()-3, resize->size().width()-7, 1}
+					};
+			
+					XShapeCombineRectangles(tqt_xdisplay(), listbox->handle(), ShapeBounding, 0, 0,
+						rects, 5, ShapeSet, YXSorted);
+				}
+				break;
+#endif
+				//Combo dropdowns get fancy borders
+				case TQEvent::Paint:
+				{
+					static bool recursion = false;
+					if (recursion )
+						return false;
+					TQListBox* listbox = (TQListBox*) object;
+					TQPaintEvent* paint = (TQPaintEvent*) event;
+			
+			
+					if ( !listbox->contentsRect().contains( paint->rect() ) )
+					{
+						TQPainter p( listbox );
+						Keramik::RectTilePainter( keramik_combobox_list, false, false ).draw( &p, 0, 0, listbox->width(), listbox->height(),
+								listbox->palette().color( TQPalette::Normal, TQColorGroup::Button ),
+								listbox->palette().color( TQPalette::Normal, TQColorGroup::Background ) );
+			
+						TQPaintEvent newpaint( paint->region().intersect( listbox->contentsRect() ), paint->erased() );
+						recursion = true;
+						object->event( &newpaint );
+						recursion = false;
+						return true;
+					}
+				}
+				break;
+				
+				/**
+				Since our popup is shown a bit overlapping the combo body, a mouse click at the bottom of the
+				widget will result in the release going to the popup, which will cause it to close (#56435). 
+				We solve it by filtering out the first release, if it's in the right area. To do this, we notices shows,
+				move ourselves to front of event filter list, and then capture the first release event, and if it's
+				in the overlap area, filter it out.
+				*/
+				case TQEvent::Show:
+					//Prioritize ourselves to see the mouse events first
+					removeObjectEventHandler(ceData, elementFlags, source, this);
+					installObjectEventHandler(ceData, elementFlags, source, this);
+					firstComboPopupRelease = true;
+					break;
+				
+				//We need to filter some clicks out.
+				case TQEvent::MouseButtonRelease:
+					if (firstComboPopupRelease)
+					{
+						firstComboPopupRelease = false;
+	
+						TQMouseEvent* mev = TQT_TQMOUSEEVENT(event);
+						TQListBox*    box = static_cast<TQListBox*>(TQT_TQWIDGET(object));
+						
+						TQWidget* parent = box->parentWidget();
+						if (!parent)
+							return false;
+						
+						TQPoint inParCoords = parent->mapFromGlobal(mev->globalPos());
+						if (parent->rect().contains(inParCoords))
+							return true;
+					}
+					break;
+				case TQEvent::MouseButtonPress:
+				case TQEvent::MouseButtonDblClick:
+				case TQEvent::Wheel:
+				case TQEvent::KeyPress:
+				case TQEvent::KeyRelease:
+					firstComboPopupRelease = false;
+				default:
+					return false;
+			}
 		}
-		else
+		//Toolbar background gradient handling
+		else if (event->type() == TQEvent::Paint &&
+				object->parent() && !qstrcmp(object->name(), kdeToolbarWidget) )
 		{
-			Keramik::GradientPainter::renderGradient( &p, wr, widget->colorGroup().button(),
-													  false /*vertical*/, false /*not a menu*/,
-													  widget->x(), 0, tr.width(), wr.height());
+			// Draw a gradient background for custom widgets in the toolbar
+			// that have specified a "kde toolbar widget" name.
+			renderToolbarWidgetBackground(0, TQT_TQWIDGET(object));
+	
+			return false;	// Now draw the contents
 		}
-
-		
-		//Draw terminator line, too
-		p.setPen( toolbar->colorGroup().mid() );
-		if ( toolbar->orientation() == Qt::Horizontal )
-			p.drawLine( wr.width()-1, 0, wr.width()-1, wr.height()-1 );
-		else
-			p.drawLine( 0, wr.height()-1, wr.width()-1, wr.height()-1 );
-		return true;
-
-	}
-	// Track show events for progress bars
-	if ( animateProgressBar && ::tqqt_cast<TQProgressBar*>(object) )
-	{
-		if ((event->type() == TQEvent::Show) && !animationTimer->isActive())
+		else if (event->type() == TQEvent::Paint  &&  object->parent() && ::tqqt_cast<TQToolBar*>(object->parent()) 
+				&& !::tqqt_cast<TQPopupMenu*>(object) )
 		{
-			animationTimer->start( 50, false );
+			// We need to override the paint event to draw a
+			// gradient on a QToolBarExtensionWidget.
+			TQToolBar* toolbar = static_cast<TQToolBar*>(TQT_TQWIDGET(object->parent()));
+			TQWidget* widget = TQT_TQWIDGET(object);
+			TQRect wr = widget->rect (), tr = toolbar->rect();
+			TQPainter p( widget );
+	
+			if ( toolbar->orientation() == Qt::Horizontal )
+			{
+				Keramik::GradientPainter::renderGradient( &p, wr, widget->colorGroup().button(),
+														true /*horizontal*/, false /*not a menu*/,
+														0, widget->y(), wr.width(), tr.height());
+			}
+			else
+			{
+				Keramik::GradientPainter::renderGradient( &p, wr, widget->colorGroup().button(),
+														false /*vertical*/, false /*not a menu*/,
+														widget->x(), 0, tr.width(), wr.height());
+			}
+	
+			
+			//Draw terminator line, too
+			p.setPen( toolbar->colorGroup().mid() );
+			if ( toolbar->orientation() == Qt::Horizontal )
+				p.drawLine( wr.width()-1, 0, wr.width()-1, wr.height()-1 );
+			else
+				p.drawLine( 0, wr.height()-1, wr.width()-1, wr.height()-1 );
+			return true;
+	
+		}
+		// Track show events for progress bars
+		if ( animateProgressBar && ::tqqt_cast<TQProgressBar*>(object) )
+		{
+			if ((event->type() == TQEvent::Show) && !animationTimer->isActive())
+			{
+				animationTimer->start( 50, false );
+			}
 		}
 	}
+
 	return false;
 }
 

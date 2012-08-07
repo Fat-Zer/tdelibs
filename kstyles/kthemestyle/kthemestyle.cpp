@@ -414,10 +414,14 @@ KThemeStyle::~KThemeStyle()
 }
 
 
-void KThemeStyle::polish( TQApplication * app )
+void KThemeStyle::applicationPolish( TQStyleControlElementData ceData, ControlElementFlags, void *ptr )
 {
-    if (!qstrcmp(app->argv()[0], "kicker"))
-        kickerMode = true;
+    if (ceData.widgetObjectTypes.contains(TQAPPLICATION_OBJECT_NAME_STRING)) {
+        TQApplication *app = reinterpret_cast<TQApplication*>(ptr);
+        if (!qstrcmp(app->argv()[0], "kicker")) {
+            kickerMode = true;
+        }
+    }
 }
 
 
@@ -458,186 +462,201 @@ void KThemeStyle::paletteChanged()
 }
 
 
-void KThemeStyle::unPolish( TQApplication *app )
+void KThemeStyle::applicationUnPolish( TQStyleControlElementData ceData, ControlElementFlags, void *ptr )
 {
-    app->setPalette( oldPalette, true );
+    if (ceData.widgetObjectTypes.contains(TQAPPLICATION_OBJECT_NAME_STRING)) {
+        TQApplication *app = reinterpret_cast<TQApplication*>(ptr);
+        app->setPalette( oldPalette, true );
+    }
 }
 
-bool KThemeStyle::eventFilter( TQObject* object, TQEvent* event )
+bool KThemeStyle::objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *event )
 {
-    if( object->inherits("KActiveLabel"))
-    {
-        if(event->type() == TQEvent::Move || event->type() == TQEvent::Resize ||
-            event->type() == TQEvent::Show)
+    if (ceData.widgetObjectTypes.contains(TQOBJECT_OBJECT_NAME_STRING)) {
+        TQObject* object = reinterpret_cast<TQObject*>(source);
+
+        if( object->inherits("KActiveLabel"))
         {
-            TQWidget *w = TQT_TQWIDGET(object);
-            TQPoint pos(0, 0);
-            pos = w->mapTo(w->topLevelWidget(), pos);
-            TQPixmap pix(uncached( Background )->size());
-            TQPainter p;
-            p.begin(&pix);
-            p.drawTiledPixmap(0, 0,
-                            uncached( Background )->width(),
-                            uncached( Background )->height() ,
-                            *uncached( Background ),
-                            pos.x(), pos.y());
-            p.end();
-            TQPalette pal(w->palette());
-            TQBrush brush( pal.color( TQPalette::Normal,
-                                                    TQColorGroup::Background),
-                                pix );
-            pal.setBrush(TQColorGroup::Base, brush);
-            w->setPalette(pal);
+            if(event->type() == TQEvent::Move || event->type() == TQEvent::Resize ||
+                event->type() == TQEvent::Show)
+            {
+                TQWidget *w = TQT_TQWIDGET(object);
+                TQPoint pos(0, 0);
+                pos = w->mapTo(w->topLevelWidget(), pos);
+                TQPixmap pix(uncached( Background )->size());
+                TQPainter p;
+                p.begin(&pix);
+                p.drawTiledPixmap(0, 0,
+                                uncached( Background )->width(),
+                                uncached( Background )->height() ,
+                                *uncached( Background ),
+                                pos.x(), pos.y());
+                p.end();
+                TQPalette pal(w->palette());
+                TQBrush brush( pal.color( TQPalette::Normal,
+                                                        TQColorGroup::Background),
+                                    pix );
+                pal.setBrush(TQColorGroup::Base, brush);
+                w->setPalette(pal);
+            }
+        }
+        if (!qstrcmp(object->name(), "kde toolbar widget") && object->inherits(TQLABEL_OBJECT_NAME_STRING))
+        {
+            TQWidget* lb = TQT_TQWIDGET(object);
+            if (lb->backgroundMode() == TQt::PaletteButton)
+                lb->setBackgroundMode(TQt::PaletteBackground);
+            removeObjectEventHandler(ceData, elementFlags, source, this);
         }
     }
-    if (!qstrcmp(object->name(), "kde toolbar widget") && object->inherits(TQLABEL_OBJECT_NAME_STRING))
-    {
-        TQWidget* lb = TQT_TQWIDGET(object);
-        if (lb->backgroundMode() == TQt::PaletteButton)
-            lb->setBackgroundMode(TQt::PaletteBackground);
-        lb->removeEventFilter(this);
-    }
 
-    return KStyle::eventFilter(object, event);
+    return KStyle::objectEventHandler(ceData, elementFlags, source, event);
 }
 
-void KThemeStyle::polish( TQWidget *w )
+void KThemeStyle::polish( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr )
 {
-    if (::tqqt_cast<TQStatusBar*>(w))
-         w->setPaletteBackgroundColor(TQApplication::palette().color(TQPalette::Normal, TQColorGroup::Background));
-         
-    if (::tqqt_cast<TQLabel*>(w) && !qstrcmp(w->name(), "kde toolbar widget"))
-         w->installEventFilter(this);
+    if (ceData.widgetObjectTypes.contains(TQWIDGET_OBJECT_NAME_STRING)) {
+        TQWidget *w = reinterpret_cast<TQWidget*>(ptr);
 
-    if (w->backgroundPixmap() && !w->isTopLevel() && 
-        (!kickerMode || 
-        (!w->inherits("TaskBar") && !w->inherits("TaskBarContainer") && !w->inherits("TaskbarApplet") && !w->inherits("ContainerArea") && !w->inherits("AppletHandle"))))
-    {
-        //The brushHandle check verifies that the bg pixmap is actually the brush..
-        if (!brushHandleSet || brushHandle == w->backgroundPixmap()->handle())
+        if (::tqqt_cast<TQStatusBar*>(w))
+            w->setPaletteBackgroundColor(TQApplication::palette().color(TQPalette::Normal, TQColorGroup::Background));
+
+        if (::tqqt_cast<TQLabel*>(w) && !qstrcmp(w->name(), "kde toolbar widget"))
+            installObjectEventHandler(ceData, elementFlags, ptr, this);
+
+        if (w->backgroundPixmap() && !w->isTopLevel() && 
+            (!kickerMode || 
+            (!w->inherits("TaskBar") && !w->inherits("TaskBarContainer") && !w->inherits("TaskbarApplet") && !w->inherits("ContainerArea") && !w->inherits("AppletHandle"))))
         {
-            w->setBackgroundOrigin( TQWidget::WindowOrigin );
+            //The brushHandle check verifies that the bg pixmap is actually the brush..
+            if (!brushHandleSet || brushHandle == w->backgroundPixmap()->handle())
+            {
+                w->setBackgroundOrigin( TQWidget::WindowOrigin );
+            }
+        }
+
+        if (w->inherits("KActiveLabel"))
+        {
+            if (uncached( Background ))
+                installObjectEventHandler(ceData, elementFlags, ptr, this);
+        }
+
+        if ( w->inherits( "QTipLabel" ) )
+        {
+            polishLock = true;
+
+            TQColorGroup clrGroup( Qt::black, TQColor( 255, 255, 220 ),
+                                TQColor( 96, 96, 96 ), Qt::black, Qt::black,
+                                Qt::black, TQColor( 255, 255, 220 ) );
+            TQPalette toolTip ( clrGroup, clrGroup, clrGroup );
+
+            TQToolTip::setPalette( toolTip );
+            polishLock = false;
+        }
+
+        if ( w->inherits( "KonqIconViewWidget" ) )   //Konqueror background hack/workaround
+        {
+            w->setPalette( oldPalette );
+            return ;
+        }
+
+        if ( ::tqqt_cast<TQMenuBar*>(w) )
+        {
+            w->setBackgroundMode( TQWidget::NoBackground );
+        }
+        else if ( w->inherits( "KToolBarSeparator" ) || w->inherits( "QToolBarSeparator" ) )
+        {
+            w->setBackgroundMode( TQWidget::PaletteBackground );
+        }
+        else if ( ::tqqt_cast<TQPopupMenu*>(w) )
+        {
+            popupPalette = w->palette();
+            if ( isColor( MenuItem ) || isColor( MenuItemDown ) )
+            {
+                TQPalette newPal( w->palette() );
+                if ( isColor( MenuItem ) )
+                {
+                    newPal.setActive( *colorGroup( newPal.active(), MenuItem ) );
+                    newPal.setDisabled( *colorGroup( newPal.active(), MenuItem ) );
+                }
+                if ( isColor( MenuItemDown ) )
+                {
+                    newPal.setActive( *colorGroup( newPal.active(), MenuItemDown ) );
+                }
+                w->setPalette( newPal );
+            }
+
+            w->setBackgroundMode( TQWidget::NoBackground );
+        }
+        else if ( ::tqqt_cast<TQCheckBox*>(w) )
+        {
+            if ( isColor( IndicatorOff ) || isColor( IndicatorOn ) )
+            {
+                TQPalette newPal( w->palette() );
+                if ( isColor( IndicatorOff ) )
+                {
+                    newPal.setActive( *colorGroup( newPal.active(), IndicatorOff ) );
+                    newPal.setDisabled( *colorGroup( newPal.active(), IndicatorOff ) );
+                }
+                if ( isColor( IndicatorOn ) )
+                    newPal.setActive( *colorGroup( newPal.active(), IndicatorOn ) );
+                w->setPalette( newPal );
+            }
+        }
+        else if ( ::tqqt_cast<TQRadioButton*>(w) )
+        {
+            if ( isColor( ExIndicatorOff ) || isColor( ExIndicatorOn ) )
+            {
+                TQPalette newPal( w->palette() );
+                if ( isColor( ExIndicatorOff ) )
+                {
+                    newPal.setActive( *colorGroup( newPal.active(), ExIndicatorOff ) );
+                    newPal.setDisabled( *colorGroup( newPal.active(),
+                                                    ExIndicatorOff ) );
+                }
+                if ( isColor( ExIndicatorOn ) )
+                    newPal.setActive( *colorGroup( newPal.active(), ExIndicatorOn ) );
+                w->setPalette( newPal );
+            }
         }
     }
 
-    if (w->inherits("KActiveLabel"))
-    {
-        if (uncached( Background ))
-            w->installEventFilter(this);
-    }
-
-    if ( w->inherits( "QTipLabel" ) )
-    {
-        polishLock = true;
-
-        TQColorGroup clrGroup( Qt::black, TQColor( 255, 255, 220 ),
-                              TQColor( 96, 96, 96 ), Qt::black, Qt::black,
-                              Qt::black, TQColor( 255, 255, 220 ) );
-        TQPalette toolTip ( clrGroup, clrGroup, clrGroup );
-
-        TQToolTip::setPalette( toolTip );
-        polishLock = false;
-    }
-
-    if ( w->inherits( "KonqIconViewWidget" ) )   //Konqueror background hack/workaround
-    {
-        w->setPalette( oldPalette );
-        return ;
-    }
-
-    if ( ::tqqt_cast<TQMenuBar*>(w) )
-    {
-        w->setBackgroundMode( TQWidget::NoBackground );
-    }
-    else if ( w->inherits( "KToolBarSeparator" ) || w->inherits( "QToolBarSeparator" ) )
-    {
-        w->setBackgroundMode( TQWidget::PaletteBackground );
-    }
-    else if ( ::tqqt_cast<TQPopupMenu*>(w) )
-    {
-        popupPalette = w->palette();
-        if ( isColor( MenuItem ) || isColor( MenuItemDown ) )
-        {
-            TQPalette newPal( w->palette() );
-            if ( isColor( MenuItem ) )
-            {
-                newPal.setActive( *colorGroup( newPal.active(), MenuItem ) );
-                newPal.setDisabled( *colorGroup( newPal.active(), MenuItem ) );
-            }
-            if ( isColor( MenuItemDown ) )
-            {
-                newPal.setActive( *colorGroup( newPal.active(), MenuItemDown ) );
-            }
-            w->setPalette( newPal );
-        }
-
-        w->setBackgroundMode( TQWidget::NoBackground );
-    }
-    else if ( ::tqqt_cast<TQCheckBox*>(w) )
-    {
-        if ( isColor( IndicatorOff ) || isColor( IndicatorOn ) )
-        {
-            TQPalette newPal( w->palette() );
-            if ( isColor( IndicatorOff ) )
-            {
-                newPal.setActive( *colorGroup( newPal.active(), IndicatorOff ) );
-                newPal.setDisabled( *colorGroup( newPal.active(), IndicatorOff ) );
-            }
-            if ( isColor( IndicatorOn ) )
-                newPal.setActive( *colorGroup( newPal.active(), IndicatorOn ) );
-            w->setPalette( newPal );
-        }
-    }
-    else if ( ::tqqt_cast<TQRadioButton*>(w) )
-    {
-        if ( isColor( ExIndicatorOff ) || isColor( ExIndicatorOn ) )
-        {
-            TQPalette newPal( w->palette() );
-            if ( isColor( ExIndicatorOff ) )
-            {
-                newPal.setActive( *colorGroup( newPal.active(), ExIndicatorOff ) );
-                newPal.setDisabled( *colorGroup( newPal.active(),
-                                                 ExIndicatorOff ) );
-            }
-            if ( isColor( ExIndicatorOn ) )
-                newPal.setActive( *colorGroup( newPal.active(), ExIndicatorOn ) );
-            w->setPalette( newPal );
-        }
-    }
-
-    KStyle::polish( w );
+    KStyle::polish( ceData, elementFlags, ptr );
 }
 
-void KThemeStyle::unPolish( TQWidget* w )
+void KThemeStyle::unPolish( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr )
 {
-    if (w->backgroundPixmap() && !w->isTopLevel())
-    {
-        //The brushHandle check verifies that the bg pixmap is actually the brush..
-        if (!brushHandleSet || brushHandle ==w->backgroundPixmap()->handle())
+    if (ceData.widgetObjectTypes.contains(TQWIDGET_OBJECT_NAME_STRING)) {
+        TQWidget *w = reinterpret_cast<TQWidget*>(ptr);
+
+        if (w->backgroundPixmap() && !w->isTopLevel())
         {
-            w->setBackgroundOrigin( TQWidget::WidgetOrigin );
+            //The brushHandle check verifies that the bg pixmap is actually the brush..
+            if (!brushHandleSet || brushHandle ==w->backgroundPixmap()->handle())
+            {
+                w->setBackgroundOrigin( TQWidget::WidgetOrigin );
+            }
         }
+
+        //Toolbar labels should nornally be PaletteButton
+        if ( ::tqqt_cast<TQLabel*>(w) && !qstrcmp(w->name(), "kde toolbar widget"))
+            w->setBackgroundMode( TQWidget::PaletteButton );
+
+        //The same for menu bars, popup menus
+        else if ( ::tqqt_cast<TQMenuBar*>(w) || ::tqqt_cast<TQPopupMenu*>(w) )
+            w->setBackgroundMode( TQWidget::PaletteButton );
+
+        //For toolbar internal separators, return to button, too (can't use tqqt_cast here since don't have access to the class)
+        else if ( w->inherits( "KToolBarSeparator" ) || w->inherits( "QToolBarSeparator" ) )
+            w->setBackgroundMode( TQWidget::PaletteButton );
+
+        //For scrollbars, we don't do much, since the widget queries the style on the switch
+
+        //Drop some custom palettes. ### this really should check the serial number to be 100% correct.
+        if ( ::tqqt_cast<TQPopupMenu*>(w) || ::tqqt_cast<TQCheckBox*>(w) || ::tqqt_cast<TQRadioButton*>(w) || ::tqqt_cast<TQStatusBar*>(w) )
+         w->unsetPalette();
     }
 
-    //Toolbar labels should nornally be PaletteButton
-    if ( ::tqqt_cast<TQLabel*>(w) && !qstrcmp(w->name(), "kde toolbar widget"))
-        w->setBackgroundMode( TQWidget::PaletteButton );
-        
-    //The same for menu bars, popup menus
-    else if ( ::tqqt_cast<TQMenuBar*>(w) || ::tqqt_cast<TQPopupMenu*>(w) )
-        w->setBackgroundMode( TQWidget::PaletteButton );
-        
-    //For toolbar internal separators, return to button, too (can't use tqqt_cast here since don't have access to the class)
-    else if ( w->inherits( "KToolBarSeparator" ) || w->inherits( "QToolBarSeparator" ) )
-        w->setBackgroundMode( TQWidget::PaletteButton );
-
-    //For scrollbars, we don't do much, since the widget queries the style on the switch
-
-    //Drop some custom palettes. ### this really should check the serial number to be 100% correct.
-    if ( ::tqqt_cast<TQPopupMenu*>(w) || ::tqqt_cast<TQCheckBox*>(w) || ::tqqt_cast<TQRadioButton*>(w) || ::tqqt_cast<TQStatusBar*>(w) )
-        w->unsetPalette();
-
-    KStyle::unPolish( w );
+    KStyle::unPolish( ceData, elementFlags, ptr );
 }
 
 

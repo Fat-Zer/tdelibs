@@ -17,10 +17,10 @@ public:
 	AsteroidStyle();
 	virtual ~AsteroidStyle();
 
-	void polish(TQWidget *);
-	void unPolish(TQWidget *);
-	void polish( TQApplication* );
-	void unPolish( TQApplication* );
+	void polish(TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *);
+	void unPolish(TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *);
+	void applicationPolish(TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *);
+	void applicationUnPolish(TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *);
 
 	
 	void renderSliderHandle(TQPainter *p,
@@ -116,8 +116,7 @@ public:
 	                       const TQStyleOption &,
 	                       const TQWidget * = 0) const;
 
-protected:
-	bool eventFilter(TQObject *, TQEvent *);
+	virtual bool objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *e );
 
 protected slots:
 	void paletteChanged();

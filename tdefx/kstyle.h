@@ -286,8 +286,8 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 
 		// ---------------------------------------------------------------------------
 
-		void polish( TQWidget* widget );
-		void unPolish( TQWidget* widget );
+		void polish( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void * );
+		void unPolish( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void * );
 		void polishPopupMenu( TQPopupMenu* );
 
 		void tqdrawPrimitive( TQ_PrimitiveElement pe,
@@ -367,7 +367,7 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 					const TQWidget* w = 0 ) const;
 
 	protected:
-		bool eventFilter( TQObject* object, TQEvent* event );
+		virtual bool objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *e );
 
 	private:
 		// Disable copy constructor and = operator

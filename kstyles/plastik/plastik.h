@@ -62,9 +62,9 @@ public:
     PlastikStyle();
     virtual ~PlastikStyle();
 
-    void polish(TQApplication* app );
-    void polish(TQWidget* widget );
-    void unPolish(TQWidget* widget );
+    void applicationPolish(TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *);
+    void polish(TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *);
+    void unPolish(TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *);
 
     void drawKStylePrimitive(KStylePrimitive kpe,
                              TQPainter* p,
@@ -265,8 +265,8 @@ protected:
 
     virtual void renderMenuBlendPixmap( KPixmap& pix, const TQColorGroup& cg, 
                                         const TQPopupMenu* popup ) const;
-    
-    bool eventFilter(TQObject *, TQEvent *);
+
+    virtual bool objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *e );
 
     TQWidget* hoverWidget;
 protected slots:

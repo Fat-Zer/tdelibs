@@ -259,39 +259,45 @@ TQString KStyle::defaultStyle()
 	   return TQString("light, 3rd revision");
 }
 
-void KStyle::polish( TQWidget* widget )
+void KStyle::polish( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr )
 {
-	if ( d->useFilledFrameWorkaround )
-	{
-		if ( TQFrame *frame = ::tqqt_cast< TQFrame* >( widget ) ) {
-			TQFrame::Shape shape = frame->frameShape();
-			if (shape == TQFrame::ToolBarPanel || shape == TQFrame::MenuBarPanel)
-				widget->installEventFilter(this);
-		} 
-	}
-	if (widget->isTopLevel())
-	{
-		if (!d->menuHandler && useDropShadow(widget))
-			d->menuHandler = new TransparencyHandler(this, Disabled, 1.0, false);
+	if (ceData.widgetObjectTypes.contains(TQWIDGET_OBJECT_NAME_STRING)) {
+		TQWidget* widget = reinterpret_cast<TQWidget*>(ptr);
+		if ( d->useFilledFrameWorkaround )
+		{
+			if ( TQFrame *frame = ::tqqt_cast< TQFrame* >( widget ) ) {
+				TQFrame::Shape shape = frame->frameShape();
+				if (shape == TQFrame::ToolBarPanel || shape == TQFrame::MenuBarPanel)
+					widget->installEventFilter(this);
+			}
+		}
+		if (widget->isTopLevel())
+		{
+			if (!d->menuHandler && useDropShadow(widget))
+				d->menuHandler = new TransparencyHandler(this, Disabled, 1.0, false);
 
-		if (d->menuHandler && useDropShadow(widget))
-			widget->installEventFilter(d->menuHandler);
+			if (d->menuHandler && useDropShadow(widget))
+				widget->installEventFilter(d->menuHandler);
+		}
 	}
 }
 
 
-void KStyle::unPolish( TQWidget* widget )
+void KStyle::unPolish( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr )
 {
-	if ( d->useFilledFrameWorkaround )
-	{
-		if ( TQFrame *frame = ::tqqt_cast< TQFrame* >( widget ) ) {
-			TQFrame::Shape shape = frame->frameShape();
-			if (shape == TQFrame::ToolBarPanel || shape == TQFrame::MenuBarPanel)
-				widget->removeEventFilter(this);
+	if (ceData.widgetObjectTypes.contains(TQWIDGET_OBJECT_NAME_STRING)) {
+		TQWidget* widget = reinterpret_cast<TQWidget*>(ptr);
+		if ( d->useFilledFrameWorkaround )
+		{
+			if ( TQFrame *frame = ::tqqt_cast< TQFrame* >( widget ) ) {
+				TQFrame::Shape shape = frame->frameShape();
+				if (shape == TQFrame::ToolBarPanel || shape == TQFrame::MenuBarPanel)
+					widget->removeEventFilter(this);
+			}
 		}
+		if (widget->isTopLevel() && d->menuHandler && useDropShadow(widget))
+			widget->removeEventFilter(d->menuHandler);
 	}
-	if (widget->isTopLevel() && d->menuHandler && useDropShadow(widget))
-		widget->removeEventFilter(d->menuHandler);
 }
 
 
@@ -1926,50 +1932,53 @@ int KStyle::styleHint( TQ_StyleHint sh, TQStyleControlElementData ceData, Contro
 }
 
 
-bool KStyle::eventFilter( TQObject* object, TQEvent* event )
+bool KStyle::objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *event )
 {
-	if ( d->useFilledFrameWorkaround )
-	{
-		// Make the QMenuBar/TQToolBar paintEvent() cover a larger area to
-		// ensure that the filled frame contents are properly painted.
-		// We essentially modify the paintEvent's rect to include the
-		// panel border, which also paints the widget's interior.
-		// This is nasty, but I see no other way to properly repaint
-		// filled frames in all QMenuBars and QToolBars.
-		// -- Karol.
-		TQFrame *frame = 0;
-		if ( event->type() == TQEvent::Paint
-				&& (frame = ::tqqt_cast<TQFrame*>(object)) )
+	if (ceData.widgetObjectTypes.contains(TQOBJECT_OBJECT_NAME_STRING)) {
+		TQObject* object = reinterpret_cast<TQObject*>(source);
+		if ( d->useFilledFrameWorkaround )
 		{
-			if (frame->frameShape() != TQFrame::ToolBarPanel && frame->frameShape() != TQFrame::MenuBarPanel)
-				return false;
-				
-			bool horizontal = true;
-			TQPaintEvent* pe = (TQPaintEvent*)event;
-			TQToolBar *toolbar = ::tqqt_cast< TQToolBar *>( frame );
-			TQRect r = pe->rect();
-
-			if (toolbar && toolbar->orientation() == Qt::Vertical)
-				horizontal = false;
-
-			if (horizontal) {
-				if ( r.height() == frame->height() )
-					return false;	// Let TQFrame handle the painting now.
-
-				// Else, send a new paint event with an updated paint rect.
-				TQPaintEvent dummyPE( TQRect( r.x(), 0, r.width(), frame->height()) );
-				TQApplication::sendEvent( frame, &dummyPE );
-			}
-			else {	// Vertical
-				if ( r.width() == frame->width() )
+			// Make the QMenuBar/TQToolBar paintEvent() cover a larger area to
+			// ensure that the filled frame contents are properly painted.
+			// We essentially modify the paintEvent's rect to include the
+			// panel border, which also paints the widget's interior.
+			// This is nasty, but I see no other way to properly repaint
+			// filled frames in all QMenuBars and QToolBars.
+			// -- Karol.
+			TQFrame *frame = 0;
+			if ( event->type() == TQEvent::Paint
+					&& (frame = ::tqqt_cast<TQFrame*>(object)) )
+			{
+				if (frame->frameShape() != TQFrame::ToolBarPanel && frame->frameShape() != TQFrame::MenuBarPanel)
 					return false;
 
-				TQPaintEvent dummyPE( TQRect( 0, r.y(), frame->width(), r.height()) );
-				TQApplication::sendEvent( frame, &dummyPE );
-			}
+				bool horizontal = true;
+				TQPaintEvent* pe = (TQPaintEvent*)event;
+				TQToolBar *toolbar = ::tqqt_cast< TQToolBar *>( frame );
+				TQRect r = pe->rect();
 
-			// Discard this event as we sent a new paintEvent.
-			return true;
+				if (toolbar && toolbar->orientation() == Qt::Vertical)
+					horizontal = false;
+
+				if (horizontal) {
+					if ( r.height() == frame->height() )
+						return false;	// Let TQFrame handle the painting now.
+
+					// Else, send a new paint event with an updated paint rect.
+					TQPaintEvent dummyPE( TQRect( r.x(), 0, r.width(), frame->height()) );
+					TQApplication::sendEvent( frame, &dummyPE );
+				}
+				else {	// Vertical
+					if ( r.width() == frame->width() )
+						return false;
+	
+					TQPaintEvent dummyPE( TQRect( 0, r.y(), frame->width(), r.height()) );
+					TQApplication::sendEvent( frame, &dummyPE );
+				}
+
+				// Discard this event as we sent a new paintEvent.
+				return true;
+			}
 		}
 	}
 

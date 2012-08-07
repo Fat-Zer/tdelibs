@@ -65,8 +65,8 @@ class HighColorStyle : public KStyle
 		HighColorStyle( StyleType );
 		virtual ~HighColorStyle();
 
-		void polish( TQWidget* widget );
-		void unPolish( TQWidget* widget );
+		void polish(TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *);
+		void unPolish(TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *);
 
 		void renderMenuBlendPixmap( KPixmap& pix, const TQColorGroup &cg,
 								 	const TQPopupMenu* popup ) const;
@@ -158,8 +158,9 @@ class HighColorStyle : public KStyle
 					const TQStyleOption& = TQStyleOption::Default,
 					const TQWidget *widget = 0 ) const;
 
+		virtual bool objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *e );
+
 	protected:
-		bool eventFilter( TQObject *object, TQEvent *event );
 
 		void renderGradient( TQPainter* p, 
 					const TQRect& r, 

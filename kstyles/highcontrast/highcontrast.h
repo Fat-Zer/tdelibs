@@ -56,8 +56,8 @@ class HighContrastStyle : public KStyle
         
 		void polish( TQPalette& pal );        
 
-		void polish( TQWidget* widget );
-		void unPolish( TQWidget* widget );
+		void polish( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void * );
+		void unPolish( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void * );
 
 		void drawKStylePrimitive( KStylePrimitive kpe,
 					TQPainter* p,
@@ -150,7 +150,7 @@ class HighContrastStyle : public KStyle
 		TQRect subRect (SubRect subrect, const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, const TQWidget * widget) const;
 
 	protected:
-		bool eventFilter( TQObject *object, TQEvent *event );
+		virtual bool objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *e );
 
 		TQWidget     *hoverWidget;
 

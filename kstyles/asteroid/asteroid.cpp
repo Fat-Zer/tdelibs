@@ -104,41 +104,46 @@ AsteroidStyle::~AsteroidStyle()
  *	get deleted here. */
 }
 
-void AsteroidStyle::polish(TQWidget *w)
+void AsteroidStyle::polish(TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr)
 {
-/*	Screwing with the palette is fun! and required in order to make it feel
-	authentic. -clee */
-	TQPalette wp = w->palette();
-	//wp.setColor(TQColorGroup::Dark, wp.active().color(TQColorGroup::Button).dark(350));
-	wp.setColor(TQColorGroup::Dark, TQColor(128, 128, 128));
-	wp.setColor(TQColorGroup::Mid, wp.active().color(TQColorGroup::Button).dark(150));	// Which GUI element(s) does this correspond to?
-
-	bool isProtectedObject = false;
-	TQObject *curparent = TQT_TQOBJECT(w);
-	while (curparent) {
-		if (curparent->inherits("KonqFileTip") || curparent->inherits("AppletItem")
-			|| curparent->inherits("KJanusWidget")
-			) {
-				isProtectedObject = true;
+	if (ceData.widgetObjectTypes.contains(TQWIDGET_OBJECT_NAME_STRING)) {
+		TQWidget *w = reinterpret_cast<TQWidget*>(ptr);
+/*		Screwing with the palette is fun! and required in order to make it feel
+		authentic. -clee */
+		TQPalette wp = w->palette();
+		//wp.setColor(TQColorGroup::Dark, wp.active().color(TQColorGroup::Button).dark(350));
+		wp.setColor(TQColorGroup::Dark, TQColor(128, 128, 128));
+		wp.setColor(TQColorGroup::Mid, wp.active().color(TQColorGroup::Button).dark(150));	// Which GUI element(s) does this correspond to?
+	
+		bool isProtectedObject = false;
+		TQObject *curparent = TQT_TQOBJECT(w);
+		while (curparent) {
+			if (curparent->inherits("KonqFileTip") || curparent->inherits("AppletItem")
+				|| curparent->inherits("KJanusWidget")
+				) {
+					isProtectedObject = true;
+			}
+			curparent = curparent->parent();
 		}
-		curparent = curparent->parent();
+		if ((w->parent()) && (!w->ownPalette())) {
+			isProtectedObject = true;
+		}
+		if (!isProtectedObject) {
+			w->setPalette(wp);
+		}
 	}
-	if ((w->parent()) && (!w->ownPalette())) {
-		isProtectedObject = true;
-	}
-	if (!isProtectedObject)
-		w->setPalette(wp);
 
-	if (w->inherits(TQPUSHBUTTON_OBJECT_NAME_STRING)) {
-		w->installEventFilter(this);
-	} else {
-		KStyle::polish(w);
+	if (ceData.widgetObjectTypes.contains(TQPUSHBUTTON_OBJECT_NAME_STRING)) {
+		installObjectEventHandler(ceData, elementFlags, ptr, this);
+	}
+	else {
+		KStyle::polish(ceData, elementFlags, ptr);
 	}
 }
 
-void AsteroidStyle::unPolish(TQWidget *w)
+void AsteroidStyle::unPolish(TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr)
 {
-	KStyle::unPolish(w);
+	KStyle::unPolish(ceData, elementFlags, ptr);
 }
 
 /*!
@@ -147,7 +152,7 @@ void AsteroidStyle::unPolish(TQWidget *w)
     Changes some application-wide settings
 */
 void
-AsteroidStyle::polish( TQApplication* app)
+AsteroidStyle::applicationPolish(TQStyleControlElementData, ControlElementFlags, void *)
 {
 	TQPalette wp = TQApplication::palette();
 	wp.setColor(TQColorGroup::Dark, TQColor(128, 128, 128));
@@ -158,7 +163,7 @@ AsteroidStyle::polish( TQApplication* app)
 /*! \reimp
 */
 void
-AsteroidStyle::unPolish( TQApplication* /* app */ )
+AsteroidStyle::applicationUnPolish(TQStyleControlElementData, ControlElementFlags, void *)
 {
 
 }
@@ -1090,7 +1095,7 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 				pixelMetric( TQStyle::PM_DefaultFrameWidth, ceData, elementFlags, tb ) );
 	
 		int alignment = TQt::AlignCenter | TQt::ShowPrefix;
-		if (!styleHint(SH_UnderlineAccelerator, ceData, elementFlags, TQStyleOption::Default, 0, w))
+		if ((!styleHint(SH_UnderlineAccelerator, ceData, elementFlags, TQStyleOption::Default, 0, w)) || ((styleHint(SH_HideUnderlineAcceleratorWhenAltUp, ceData, elementFlags, TQStyleOption::Default, 0, w)) && (!acceleratorsShown())))
 			alignment |= TQt::NoAccel;
 		tr.setWidth(tr.width()+4);	// Compensate for text appearing too far to the left
 //		TQRect tr_offset = TQRect(tr.x()+ETCH_X_OFFSET, tr.y()+ETCH_Y_OFFSET, tr.width(), tr.height());
@@ -1137,7 +1142,7 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 		bool etchtext = styleHint( SH_EtchDisabledText, ceData, elementFlags );
 	
 		int alignment = TQApplication::reverseLayout() ? TQt::AlignRight : TQt::AlignLeft;
-		if (!styleHint(SH_UnderlineAccelerator, ceData, elementFlags, TQStyleOption::Default, 0, w))
+		if ((!styleHint(SH_UnderlineAccelerator, ceData, elementFlags, TQStyleOption::Default, 0, w)) || ((styleHint(SH_HideUnderlineAcceleratorWhenAltUp, ceData, elementFlags, TQStyleOption::Default, 0, w)) && (!acceleratorsShown())))
 			alignment |= TQt::NoAccel;
 
 		//TQRect r_offset = TQRect(r.x()+ETCH_X_OFFSET, r.y()+ETCH_Y_OFFSET, r.width(), r.height());
@@ -1186,7 +1191,7 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 		bool etchtext = styleHint( SH_EtchDisabledText, ceData, elementFlags );
 
 		int alignment = TQApplication::reverseLayout() ? TQt::AlignRight : TQt::AlignLeft;
-		if (!styleHint(SH_UnderlineAccelerator, ceData, elementFlags, TQStyleOption::Default, 0, w))
+		if ((!styleHint(SH_UnderlineAccelerator, ceData, elementFlags, TQStyleOption::Default, 0, w)) || ((styleHint(SH_HideUnderlineAcceleratorWhenAltUp, ceData, elementFlags, TQStyleOption::Default, 0, w)) && (!acceleratorsShown())))
 			alignment |= TQt::NoAccel;
 
 //		TQRect r_offset = TQRect(r.x()+ETCH_X_OFFSET, r.y()+ETCH_Y_OFFSET, r.width(), r.height());
@@ -2549,15 +2554,18 @@ void AsteroidStyle::paletteChanged()
 {
 }
 
-bool AsteroidStyle::eventFilter(TQObject *o, TQEvent *e)
+bool AsteroidStyle::objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *e )
 {
-	/*	Win2K has this interesting behaviour where it sets the current
-		default button to whatever pushbutton the user presses the mouse
-		on. I _think_ this emulates that properly. -clee */
-	if (o->inherits(TQPUSHBUTTON_OBJECT_NAME_STRING)) {
-		if (e->type() == TQEvent::MouseButtonPress) {
-			TQPushButton *pb = dynamic_cast<TQPushButton *>(o);
-			pb->setDefault(TRUE);
+	if (ceData.widgetObjectTypes.contains(TQOBJECT_OBJECT_NAME_STRING)) {
+		TQObject* o = reinterpret_cast<TQObject*>(source);
+		/*	Win2K has this interesting behaviour where it sets the current
+			default button to whatever pushbutton the user presses the mouse
+			on. I _think_ this emulates that properly. -clee */
+		if (o->inherits(TQPUSHBUTTON_OBJECT_NAME_STRING)) {
+			if (e->type() == TQEvent::MouseButtonPress) {
+				TQPushButton *pb = dynamic_cast<TQPushButton *>(o);
+				pb->setDefault(TRUE);
+			}
 		}
 	}
 

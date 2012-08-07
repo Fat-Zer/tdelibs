@@ -227,83 +227,95 @@ PlastikStyle::~PlastikStyle()
     delete verticalLine;
 }
 
-void PlastikStyle::polish(TQApplication* app)
+void PlastikStyle::applicationPolish(TQStyleControlElementData ceData, ControlElementFlags, void *ptr)
 {
-    if (!qstrcmp(app->argv()[0], "kicker"))
-        kickerMode = true;
-    else if (!qstrcmp(app->argv()[0], "korn"))
-        kornMode = true;
+    if (ceData.widgetObjectTypes.contains(TQAPPLICATION_OBJECT_NAME_STRING)) {
+	TQApplication *app = reinterpret_cast<TQApplication*>(ptr);
+
+	if (!qstrcmp(app->argv()[0], "kicker"))
+		kickerMode = true;
+	else if (!qstrcmp(app->argv()[0], "korn"))
+		kornMode = true;
+    }
 }
 
-void PlastikStyle::polish(TQWidget* widget)
+void PlastikStyle::polish(TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr)
 {
-    if( !strcmp(widget->name(), "__khtml") ) { // is it a khtml widget...?
-        khtmlWidgets[widget] = true;
-        connect(widget, TQT_SIGNAL(destroyed(TQObject*)), this, TQT_SLOT(khtmlWidgetDestroyed(TQObject*)));
+    if (ceData.widgetObjectTypes.contains(TQWIDGET_OBJECT_NAME_STRING)) {
+	TQWidget *widget = reinterpret_cast<TQWidget*>(ptr);
+
+	if( !strcmp(widget->name(), "__khtml") ) { // is it a khtml widget...?
+		khtmlWidgets[widget] = true;
+		connect(widget, TQT_SIGNAL(destroyed(TQObject*)), this, TQT_SLOT(khtmlWidgetDestroyed(TQObject*)));
+	}
+	
+	// use tqqt_cast where possible to check if the widget inheits one of the classes. might improve
+	// performance compared to TQObject::inherits()
+	if ( ::tqqt_cast<TQPushButton*>(widget) || ::tqqt_cast<TQComboBox*>(widget) ||
+		::tqqt_cast<TQSpinWidget*>(widget) || ::tqqt_cast<TQSlider*>(widget) ||
+		::tqqt_cast<TQCheckBox*>(widget) || ::tqqt_cast<TQRadioButton*>(widget) ||
+		::tqqt_cast<TQToolButton*>(widget) || widget->inherits(TQSPLITTERHANDLE_OBJECT_NAME_STRING) )
+	{
+	//         widget->setBackgroundMode(PaletteBackground);
+		installObjectEventHandler(ceData, elementFlags, ptr, this);
+	} else if (::tqqt_cast<TQLineEdit*>(widget)) {
+		installObjectEventHandler(ceData, elementFlags, ptr, this);
+	} else if (::tqqt_cast<TQTabBar*>(widget)) {
+		widget->setMouseTracking(true);
+		installObjectEventHandler(ceData, elementFlags, ptr, this);
+	} else if (::tqqt_cast<TQPopupMenu*>(widget)) {
+		widget->setBackgroundMode( NoBackground );
+	} else if ( !qstrcmp(widget->name(), "kde toolbar widget") ) {
+		installObjectEventHandler(ceData, elementFlags, ptr, this);
+	}
+	
+	if( _animateProgressBar && ::tqqt_cast<TQProgressBar*>(widget) )
+	{
+		installObjectEventHandler(ceData, elementFlags, ptr, this);
+		progAnimWidgets[widget] = 0;
+		connect(widget, TQT_SIGNAL(destroyed(TQObject*)), this, TQT_SLOT(progressBarDestroyed(TQObject*)));
+		if (!animationTimer->isActive())
+		animationTimer->start( 50, false );
+	}
     }
 
-    // use tqqt_cast where possible to check if the widget inheits one of the classes. might improve
-    // performance compared to TQObject::inherits()
-    if ( ::tqqt_cast<TQPushButton*>(widget) || ::tqqt_cast<TQComboBox*>(widget) ||
-            ::tqqt_cast<TQSpinWidget*>(widget) || ::tqqt_cast<TQSlider*>(widget) ||
-            ::tqqt_cast<TQCheckBox*>(widget) || ::tqqt_cast<TQRadioButton*>(widget) ||
-            ::tqqt_cast<TQToolButton*>(widget) || widget->inherits(TQSPLITTERHANDLE_OBJECT_NAME_STRING) )
-    {
-//         widget->setBackgroundMode(PaletteBackground);
-        widget->installEventFilter(this);
-    } else if (::tqqt_cast<TQLineEdit*>(widget)) {
-        widget->installEventFilter(this);
-    } else if (::tqqt_cast<TQTabBar*>(widget)) {
-        widget->setMouseTracking(true);
-        widget->installEventFilter(this);
-    } else if (::tqqt_cast<TQPopupMenu*>(widget)) {
-        widget->setBackgroundMode( NoBackground );
-    } else if ( !qstrcmp(widget->name(), "kde toolbar widget") ) {
-        widget->installEventFilter(this);
-    }
-
-    if( _animateProgressBar && ::tqqt_cast<TQProgressBar*>(widget) )
-    {
-        widget->installEventFilter(this);
-        progAnimWidgets[widget] = 0;
-        connect(widget, TQT_SIGNAL(destroyed(TQObject*)), this, TQT_SLOT(progressBarDestroyed(TQObject*)));
-        if (!animationTimer->isActive())
-            animationTimer->start( 50, false );
-    }
-
-    KStyle::polish(widget);
+    KStyle::polish(ceData, elementFlags, ptr);
 }
 
-void PlastikStyle::unPolish(TQWidget* widget)
+void PlastikStyle::unPolish(TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr)
 {
-    if( !strcmp(widget->name(), "__khtml") ) { // is it a khtml widget...?
-        khtmlWidgets.remove(widget);
+    if (ceData.widgetObjectTypes.contains(TQWIDGET_OBJECT_NAME_STRING)) {
+	TQWidget *widget = reinterpret_cast<TQWidget*>(ptr);
+
+	if( !strcmp(widget->name(), "__khtml") ) { // is it a khtml widget...?
+		khtmlWidgets.remove(widget);
+	}
+	
+	// use tqqt_cast to check if the widget inheits one of the classes.
+	if ( ::tqqt_cast<TQPushButton*>(widget) || ::tqqt_cast<TQComboBox*>(widget) ||
+		::tqqt_cast<TQSpinWidget*>(widget) || ::tqqt_cast<TQSlider*>(widget) ||
+		::tqqt_cast<TQCheckBox*>(widget) || ::tqqt_cast<TQRadioButton*>(widget) ||
+		::tqqt_cast<TQToolButton*>(widget) || ::tqqt_cast<TQLineEdit*>(widget) ||
+		widget->inherits(TQSPLITTERHANDLE_OBJECT_NAME_STRING) )
+	{
+		removeObjectEventHandler(ceData, elementFlags, ptr, this);
+	}
+	else if (::tqqt_cast<TQTabBar*>(widget)) {
+		widget->setMouseTracking(false);
+		removeObjectEventHandler(ceData, elementFlags, ptr, this);
+	} else if (::tqqt_cast<TQPopupMenu*>(widget)) {
+		widget->setBackgroundMode( PaletteBackground );
+	} else if ( !qstrcmp(widget->name(), "kde toolbar widget") ) {
+		removeObjectEventHandler(ceData, elementFlags, ptr, this);
+	}
+	
+	if ( ::tqqt_cast<TQProgressBar*>(widget) )
+	{
+		progAnimWidgets.remove(widget);
+	}
     }
 
-    // use tqqt_cast to check if the widget inheits one of the classes.
-    if ( ::tqqt_cast<TQPushButton*>(widget) || ::tqqt_cast<TQComboBox*>(widget) ||
-            ::tqqt_cast<TQSpinWidget*>(widget) || ::tqqt_cast<TQSlider*>(widget) ||
-            ::tqqt_cast<TQCheckBox*>(widget) || ::tqqt_cast<TQRadioButton*>(widget) ||
-            ::tqqt_cast<TQToolButton*>(widget) || ::tqqt_cast<TQLineEdit*>(widget) ||
-            widget->inherits(TQSPLITTERHANDLE_OBJECT_NAME_STRING) )
-    {
-        widget->removeEventFilter(this);
-    }
-    else if (::tqqt_cast<TQTabBar*>(widget)) {
-        widget->setMouseTracking(false);
-        widget->removeEventFilter(this);
-    } else if (::tqqt_cast<TQPopupMenu*>(widget)) {
-        widget->setBackgroundMode( PaletteBackground );
-    } else if ( !qstrcmp(widget->name(), "kde toolbar widget") ) {
-        widget->removeEventFilter(this);
-    }
-
-    if ( ::tqqt_cast<TQProgressBar*>(widget) )
-    {
-        progAnimWidgets.remove(widget);
-    }
-
-    KStyle::unPolish(widget);
+    KStyle::unPolish(ceData, elementFlags, ptr);
 }
 
 void PlastikStyle::khtmlWidgetDestroyed(TQObject* obj)
@@ -3466,104 +3478,108 @@ int PlastikStyle::styleHint( TQ_StyleHint stylehint,
     }
 }
 
-bool PlastikStyle::eventFilter(TQObject *obj, TQEvent *ev)
+bool PlastikStyle::objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *ev )
 {
-    if (KStyle::eventFilter(obj, ev) )
+    if (KStyle::objectEventHandler(ceData, elementFlags, source, ev) )
         return true;
 
-    if (!obj->isWidgetType() ) return false;
- 
-    // focus highlight
-    if ( ::tqqt_cast<TQLineEdit*>(obj) ) {
-        TQWidget* widget = TQT_TQWIDGET(obj);
+    if (ceData.widgetObjectTypes.contains(TQOBJECT_OBJECT_NAME_STRING)) {
+	TQObject* obj = reinterpret_cast<TQObject*>(source);
 
-        if ( ::tqqt_cast<TQSpinWidget*>(widget->parentWidget()) )
-        {
-            TQWidget* spinbox = widget->parentWidget();
-            if ((ev->type() == TQEvent::FocusIn) || (ev->type() == TQEvent::FocusOut))
-            {
-                spinbox->repaint(false);
-            }
-            return false;
-        }
-
-        if ((ev->type() == TQEvent::FocusIn) || (ev->type() == TQEvent::FocusOut))
-        {
-            widget->repaint(false);
-        }
-        return false;
-    }
-    
-    //Hover highlight... use tqqt_cast to check if the widget inheits one of the classes.
-    if ( ::tqqt_cast<TQPushButton*>(obj) || ::tqqt_cast<TQComboBox*>(obj) ||
-            ::tqqt_cast<TQSpinWidget*>(obj) || ::tqqt_cast<TQCheckBox*>(obj) ||
-            ::tqqt_cast<TQRadioButton*>(obj) || ::tqqt_cast<TQToolButton*>(obj) || obj->inherits(TQSPLITTERHANDLE_OBJECT_NAME_STRING) )
-    {
-        if ((ev->type() == TQEvent::Enter) && TQT_TQWIDGET(obj)->isEnabled())
-        {
-            TQWidget* button = TQT_TQWIDGET(obj);
-            hoverWidget = button;
-            button->repaint(false);
-        }
-        else if ((ev->type() == TQEvent::Leave) && (TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(hoverWidget)) )
-        {
-            TQWidget* button = TQT_TQWIDGET(obj);
-            hoverWidget = 0;
-            button->repaint(false);
-        }
-        return false;
-    }
-    if ( ::tqqt_cast<TQTabBar*>(obj) ) {
-        if ((ev->type() == TQEvent::Enter) && TQT_TQWIDGET(obj)->isEnabled())
-        {
-            TQWidget* tabbar = TQT_TQWIDGET(obj);
-            hoverWidget = tabbar;
-            hoverTab = 0;
-            tabbar->repaint(false);
-        }
-        else if (ev->type() == TQEvent::MouseMove)
-        {
-            TQTabBar *tabbar = dynamic_cast<TQTabBar*>(obj);
-            TQMouseEvent *me = dynamic_cast<TQMouseEvent*>(ev);
-
-            if (tabbar && me) {
-                // avoid unnecessary repaints (which otherwise would occour on every
-                // MouseMove event causing high cpu load).
-
-                bool repaint = true;
-
-                TQTab *tab = tabbar->selectTab(me->pos() );
-                if (hoverTab == tab)
-                    repaint = false;
-                hoverTab = tab;
-
-                if (repaint)
-                    tabbar->repaint(false);
-            }
-        }
-        else if (ev->type() == TQEvent::Leave)
-        {
-            TQWidget* tabbar = TQT_TQWIDGET(obj);
-            hoverWidget = 0;
-            hoverTab = 0;
-            tabbar->repaint(false);
-        }
-        return false;
-    }
-    // Track show events for progress bars
-    if ( _animateProgressBar && ::tqqt_cast<TQProgressBar*>(obj) )
-    {
-        if ((ev->type() == TQEvent::Show) && !animationTimer->isActive())
-        {
-            animationTimer->start( 50, false );
-        }
-    }
-    if ( !qstrcmp(obj->name(), "kde toolbar widget") )
-    {
-        TQWidget* lb = TQT_TQWIDGET(obj);
-        if (lb->backgroundMode() == TQt::PaletteButton)
-            lb->setBackgroundMode(TQt::PaletteBackground);
-        lb->removeEventFilter(this);
+	if (!obj->isWidgetType() ) return false;
+	
+	// focus highlight
+	if ( ::tqqt_cast<TQLineEdit*>(obj) ) {
+		TQWidget* widget = TQT_TQWIDGET(obj);
+	
+		if ( ::tqqt_cast<TQSpinWidget*>(widget->parentWidget()) )
+		{
+		TQWidget* spinbox = widget->parentWidget();
+		if ((ev->type() == TQEvent::FocusIn) || (ev->type() == TQEvent::FocusOut))
+		{
+			spinbox->repaint(false);
+		}
+		return false;
+		}
+	
+		if ((ev->type() == TQEvent::FocusIn) || (ev->type() == TQEvent::FocusOut))
+		{
+		widget->repaint(false);
+		}
+		return false;
+	}
+	
+	//Hover highlight... use tqqt_cast to check if the widget inheits one of the classes.
+	if ( ::tqqt_cast<TQPushButton*>(obj) || ::tqqt_cast<TQComboBox*>(obj) ||
+		::tqqt_cast<TQSpinWidget*>(obj) || ::tqqt_cast<TQCheckBox*>(obj) ||
+		::tqqt_cast<TQRadioButton*>(obj) || ::tqqt_cast<TQToolButton*>(obj) || obj->inherits(TQSPLITTERHANDLE_OBJECT_NAME_STRING) )
+	{
+		if ((ev->type() == TQEvent::Enter) && TQT_TQWIDGET(obj)->isEnabled())
+		{
+		TQWidget* button = TQT_TQWIDGET(obj);
+		hoverWidget = button;
+		button->repaint(false);
+		}
+		else if ((ev->type() == TQEvent::Leave) && (TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(hoverWidget)) )
+		{
+		TQWidget* button = TQT_TQWIDGET(obj);
+		hoverWidget = 0;
+		button->repaint(false);
+		}
+		return false;
+	}
+	if ( ::tqqt_cast<TQTabBar*>(obj) ) {
+		if ((ev->type() == TQEvent::Enter) && TQT_TQWIDGET(obj)->isEnabled())
+		{
+		TQWidget* tabbar = TQT_TQWIDGET(obj);
+		hoverWidget = tabbar;
+		hoverTab = 0;
+		tabbar->repaint(false);
+		}
+		else if (ev->type() == TQEvent::MouseMove)
+		{
+		TQTabBar *tabbar = dynamic_cast<TQTabBar*>(obj);
+		TQMouseEvent *me = dynamic_cast<TQMouseEvent*>(ev);
+	
+		if (tabbar && me) {
+			// avoid unnecessary repaints (which otherwise would occour on every
+			// MouseMove event causing high cpu load).
+	
+			bool repaint = true;
+	
+			TQTab *tab = tabbar->selectTab(me->pos() );
+			if (hoverTab == tab)
+			repaint = false;
+			hoverTab = tab;
+	
+			if (repaint)
+			tabbar->repaint(false);
+		}
+		}
+		else if (ev->type() == TQEvent::Leave)
+		{
+		TQWidget* tabbar = TQT_TQWIDGET(obj);
+		hoverWidget = 0;
+		hoverTab = 0;
+		tabbar->repaint(false);
+		}
+		return false;
+	}
+	// Track show events for progress bars
+	if ( _animateProgressBar && ::tqqt_cast<TQProgressBar*>(obj) )
+	{
+		if ((ev->type() == TQEvent::Show) && !animationTimer->isActive())
+		{
+		animationTimer->start( 50, false );
+		}
+	}
+	if ( !qstrcmp(obj->name(), "kde toolbar widget") )
+	{
+		TQWidget* lb = TQT_TQWIDGET(obj);
+		if (lb->backgroundMode() == TQt::PaletteButton)
+		lb->setBackgroundMode(TQt::PaletteBackground);
+		removeObjectEventHandler(ceData, elementFlags, source, this);
+	}
     }
 
     return false;

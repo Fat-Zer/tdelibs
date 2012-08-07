@@ -153,30 +153,43 @@ void HighContrastStyle::polish( TQPalette& pal )
 }
 
 
-void HighContrastStyle::polish (TQWidget* widget)
+void HighContrastStyle::polish (TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr)
 {
-	if (widget->inherits (TQBUTTON_OBJECT_NAME_STRING)
-		   || widget->inherits (TQCOMBOBOX_OBJECT_NAME_STRING)
-		   || widget->inherits (TQSPINWIDGET_OBJECT_NAME_STRING)
-		   || widget->inherits (TQLINEEDIT_OBJECT_NAME_STRING)
-		   || widget->inherits (TQTEXTEDIT_OBJECT_NAME_STRING))
-	{
-		widget->installEventFilter (this);
+	if (ceData.widgetObjectTypes.contains(TQWIDGET_OBJECT_NAME_STRING)) {
+		TQWidget *widget = reinterpret_cast<TQWidget*>(ptr);
 
-		TQSpinWidget* spinwidget = dynamic_cast<TQSpinWidget*>(widget);
-		if (spinwidget && spinwidget->editWidget())
-			spinwidget->editWidget()->installEventFilter (this);
+		if (widget->inherits (TQBUTTON_OBJECT_NAME_STRING)
+			|| widget->inherits (TQCOMBOBOX_OBJECT_NAME_STRING)
+			|| widget->inherits (TQSPINWIDGET_OBJECT_NAME_STRING)
+			|| widget->inherits (TQLINEEDIT_OBJECT_NAME_STRING)
+			|| widget->inherits (TQTEXTEDIT_OBJECT_NAME_STRING))
+		{
+			installObjectEventHandler(ceData, elementFlags, ptr, this);
+	
+			TQSpinWidget* spinwidget = dynamic_cast<TQSpinWidget*>(widget);
+			if (spinwidget && spinwidget->editWidget()) {
+				TQWidget* spinEditWidget = spinwidget->editWidget();
+				TQStyleControlElementData swCeData = populateControlElementDataFromWidget(spinEditWidget, TQStyleOption());
+				ControlElementFlags swElementFlags = getControlElementFlagsForObject(spinEditWidget, swCeData.widgetObjectTypes, TQStyleOption());
+				installObjectEventHandler(swCeData, swElementFlags, spinEditWidget, this);
+			}
+		}
 	}
 
-	KStyle::polish (widget);
+	KStyle::polish (ceData, elementFlags, ptr);
 }
 
 
-void HighContrastStyle::unPolish (TQWidget* widget)
+void HighContrastStyle::unPolish (TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr)
 {
-	if (widget->inherits (TQWIDGET_OBJECT_NAME_STRING) || widget->inherits (TQCOMBOBOX_OBJECT_NAME_STRING) || widget->inherits (TQSPINWIDGET_OBJECT_NAME_STRING) || widget->inherits (TQLINEEDIT_OBJECT_NAME_STRING) || widget->inherits (TQTEXTEDIT_OBJECT_NAME_STRING))
-		widget->removeEventFilter (this);
-	KStyle::unPolish (widget);
+	if (ceData.widgetObjectTypes.contains(TQWIDGET_OBJECT_NAME_STRING)) {
+		TQWidget *widget = reinterpret_cast<TQWidget*>(ptr);
+		if (widget->inherits (TQWIDGET_OBJECT_NAME_STRING) || widget->inherits (TQCOMBOBOX_OBJECT_NAME_STRING) || widget->inherits (TQSPINWIDGET_OBJECT_NAME_STRING) || widget->inherits (TQLINEEDIT_OBJECT_NAME_STRING) || widget->inherits (TQTEXTEDIT_OBJECT_NAME_STRING)) {
+			installObjectEventHandler(ceData, elementFlags, ptr, this);
+		}
+	}
+
+	KStyle::unPolish (ceData, elementFlags, ptr);
 }
 
 void HighContrastStyle::setColorsNormal (TQPainter* p, const TQColorGroup& cg, int flags, int highlight) const
@@ -1815,48 +1828,52 @@ TQRect HighContrastStyle::subRect (SubRect subrect, const TQStyleControlElementD
 	}
 }
 
-bool HighContrastStyle::eventFilter (TQObject *object, TQEvent *event)
+bool HighContrastStyle::objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *event )
 {
-	TQWidget* widget = dynamic_cast<TQWidget*>(object);
-	if (widget)
-	{
-		// Handle hover effects.
-		if (event->type() == TQEvent::Enter
-				&& (widget->inherits (TQBUTTON_OBJECT_NAME_STRING)
-					|| widget->inherits (TQCOMBOBOX_OBJECT_NAME_STRING)
-					|| widget->inherits (TQSPINWIDGET_OBJECT_NAME_STRING)))
+	if (ceData.widgetObjectTypes.contains(TQOBJECT_OBJECT_NAME_STRING)) {
+		TQObject* object = reinterpret_cast<TQObject*>(source);
+
+		TQWidget* widget = dynamic_cast<TQWidget*>(object);
+		if (widget)
 		{
-			hoverWidget = widget;
-			widget->repaint (false);
-		}
-		else if (event->type() == TQEvent::Leave
+			// Handle hover effects.
+			if (event->type() == TQEvent::Enter
 					&& (widget->inherits (TQBUTTON_OBJECT_NAME_STRING)
 						|| widget->inherits (TQCOMBOBOX_OBJECT_NAME_STRING)
 						|| widget->inherits (TQSPINWIDGET_OBJECT_NAME_STRING)))
-		{
-			if (TQT_BASE_OBJECT(object) == TQT_BASE_OBJECT(hoverWidget))
-				hoverWidget = 0L;
-			widget->repaint (false);
-		}
-		// Make sure the focus rectangle is shown correctly.
-		else if (event->type() == TQEvent::FocusIn || event->type() == TQEvent::FocusOut)
-		{
-			TQWidget* widgetparent = dynamic_cast<TQWidget*>(widget->parent());
-			while (widgetparent
-							&& ! widgetparent->inherits (TQCOMBOBOX_OBJECT_NAME_STRING)
-							&& ! widgetparent->inherits (TQSPINWIDGET_OBJECT_NAME_STRING))
 			{
-				widgetparent = dynamic_cast<TQWidget*>(widgetparent->parent());
-			}
-
-			if (widgetparent)
-				widgetparent->repaint (false);
-			else
+				hoverWidget = widget;
 				widget->repaint (false);
+			}
+			else if (event->type() == TQEvent::Leave
+						&& (widget->inherits (TQBUTTON_OBJECT_NAME_STRING)
+							|| widget->inherits (TQCOMBOBOX_OBJECT_NAME_STRING)
+							|| widget->inherits (TQSPINWIDGET_OBJECT_NAME_STRING)))
+			{
+				if (TQT_BASE_OBJECT(object) == TQT_BASE_OBJECT(hoverWidget))
+					hoverWidget = 0L;
+				widget->repaint (false);
+			}
+			// Make sure the focus rectangle is shown correctly.
+			else if (event->type() == TQEvent::FocusIn || event->type() == TQEvent::FocusOut)
+			{
+				TQWidget* widgetparent = dynamic_cast<TQWidget*>(widget->parent());
+				while (widgetparent
+								&& ! widgetparent->inherits (TQCOMBOBOX_OBJECT_NAME_STRING)
+								&& ! widgetparent->inherits (TQSPINWIDGET_OBJECT_NAME_STRING))
+				{
+					widgetparent = dynamic_cast<TQWidget*>(widgetparent->parent());
+				}
+	
+				if (widgetparent)
+					widgetparent->repaint (false);
+				else
+					widget->repaint (false);
+			}
 		}
 	}
 	
-	return KStyle::eventFilter (object, event);
+	return KStyle::objectEventHandler (ceData, elementFlags, source, event);
 }
 
 // vim: set noet ts=4 sw=4:

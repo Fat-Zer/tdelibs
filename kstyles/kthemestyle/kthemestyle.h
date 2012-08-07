@@ -143,15 +143,15 @@ public:
 
     virtual TQRect subRect(SubRect, const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, const TQWidget *) const;
 
-    virtual void polish( TQWidget* );
-    virtual void unPolish( TQWidget* );
-    virtual bool eventFilter( TQObject* object, TQEvent* event );
+    virtual void polish( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void * );
+    virtual void unPolish( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void * );
+    virtual bool objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *e );
     /**
      * By default this just sets the background brushes to the pixmapped
      * background.
      */
-    virtual void polish( TQApplication *app );
-    virtual void unPolish( TQApplication* );
+    virtual void applicationPolish( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void * );
+    virtual void applicationUnPolish( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void * );
 
     /** \internal */
     // to make it possible for derived classes to overload this function

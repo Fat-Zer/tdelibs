@@ -50,10 +50,10 @@ public:
 	void renderMenuBlendPixmap( KPixmap& pix, const TQColorGroup &cg, const TQPopupMenu* ) const;
 	TQPixmap stylePixmap(StylePixmap stylepixmap, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQStyleOption& opt, const TQWidget* widget = 0) const;
 
-	void polish( TQWidget* widget );
-	void unPolish( TQWidget* widget );
+	void polish( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void * );
+	void unPolish( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void * );
 	void polish( TQPalette& );
-	void polish( TQApplication *app );
+	void applicationPolish( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void * );
 
 	void drawKStylePrimitive( KStylePrimitive kpe,
 	                          TQPainter* p,
@@ -177,7 +177,7 @@ private:
 	//Animation support.
 	TQMap<TQProgressBar*, int> progAnimWidgets;
 
-	bool eventFilter( TQObject* object, TQEvent* event );
+	virtual bool objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *e );
 
 	Keramik::TilePainter::PaintMode pmode() const
 	{

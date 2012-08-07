@@ -189,43 +189,49 @@ HighColorStyle::~HighColorStyle()
 }
 
 
-void HighColorStyle::polish(TQWidget* widget)
+void HighColorStyle::polish(TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr)
 {
-	// Put in order of highest occurrence to maximise hit rate
-	if (widget->inherits(TQPUSHBUTTON_OBJECT_NAME_STRING)) {
-		widget->installEventFilter(this);
-	} else if (widget->inherits(TQMENUBAR_OBJECT_NAME_STRING) || widget->inherits(TQPOPUPMENU_OBJECT_NAME_STRING)) {
-		widget->setBackgroundMode(TQWidget::NoBackground);
-	} else if (type == HighColor && widget->inherits("QToolBarExtensionWidget")) {
-		widget->installEventFilter(this);
-	} else if ( !qstrcmp( widget->name(), kdeToolbarWidget) ) {
-		widget->setBackgroundMode( NoBackground );	// We paint the whole background.
-		widget->installEventFilter(this);
-	} else if (widget->inherits(TQTOOLBOXBUTTON_OBJECT_NAME_STRING)) {
-		TQFont font = widget->font();
-		font.setBold(true);
-		widget->setFont(font);
+	if (ceData.widgetObjectTypes.contains(TQWIDGET_OBJECT_NAME_STRING)) {
+		TQWidget *widget = reinterpret_cast<TQWidget*>(ptr);
+		// Put in order of highest occurrence to maximise hit rate
+		if (widget->inherits(TQPUSHBUTTON_OBJECT_NAME_STRING)) {
+			installObjectEventHandler(ceData, elementFlags, ptr, this);
+		} else if (widget->inherits(TQMENUBAR_OBJECT_NAME_STRING) || widget->inherits(TQPOPUPMENU_OBJECT_NAME_STRING)) {
+			widget->setBackgroundMode(TQWidget::NoBackground);
+		} else if (type == HighColor && widget->inherits("QToolBarExtensionWidget")) {
+			installObjectEventHandler(ceData, elementFlags, ptr, this);
+		} else if ( !qstrcmp( widget->name(), kdeToolbarWidget) ) {
+			widget->setBackgroundMode( NoBackground );	// We paint the whole background.
+			installObjectEventHandler(ceData, elementFlags, ptr, this);
+		} else if (widget->inherits(TQTOOLBOXBUTTON_OBJECT_NAME_STRING)) {
+			TQFont font = widget->font();
+			font.setBold(true);
+			widget->setFont(font);
+		}
 	}
 
-	KStyle::polish( widget );
+	KStyle::polish( ceData, elementFlags, ptr );
 }
 
 
-void HighColorStyle::unPolish(TQWidget* widget)
+void HighColorStyle::unPolish(TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr)
 {
-	if (widget->inherits(TQPUSHBUTTON_OBJECT_NAME_STRING)) {
-		widget->removeEventFilter(this);
-	}
-	else if (widget->inherits(TQMENUBAR_OBJECT_NAME_STRING) || widget->inherits(TQPOPUPMENU_OBJECT_NAME_STRING)) {
-		widget->setBackgroundMode(TQWidget::PaletteBackground);
-	} else if (type == HighColor && widget->inherits("QToolBarExtensionWidget")) {
-		widget->removeEventFilter(this);
-	} else if ( !qstrcmp( widget->name(), kdeToolbarWidget) ) {
-		widget->removeEventFilter(this);
-		widget->setBackgroundMode( PaletteBackground );
+	if (ceData.widgetObjectTypes.contains(TQWIDGET_OBJECT_NAME_STRING)) {
+		TQWidget *widget = reinterpret_cast<TQWidget*>(ptr);
+		if (widget->inherits(TQPUSHBUTTON_OBJECT_NAME_STRING)) {
+			removeObjectEventHandler(ceData, elementFlags, ptr, this);
+		}
+		else if (widget->inherits(TQMENUBAR_OBJECT_NAME_STRING) || widget->inherits(TQPOPUPMENU_OBJECT_NAME_STRING)) {
+			widget->setBackgroundMode(TQWidget::PaletteBackground);
+		} else if (type == HighColor && widget->inherits("QToolBarExtensionWidget")) {
+			removeObjectEventHandler(ceData, elementFlags, ptr, this);
+		} else if ( !qstrcmp( widget->name(), kdeToolbarWidget) ) {
+			removeObjectEventHandler(ceData, elementFlags, ptr, this);
+			widget->setBackgroundMode( PaletteBackground );
+		}
 	}
 
-	KStyle::unPolish( widget );
+	KStyle::unPolish( ceData, elementFlags, ptr );
 }
 
 
@@ -1960,79 +1966,83 @@ TQPixmap HighColorStyle::stylePixmap(StylePixmap stylepixmap,
 }
 
 
-bool HighColorStyle::eventFilter( TQObject *object, TQEvent *event )
+bool HighColorStyle::objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *event )
 {
-	if (KStyle::eventFilter( object, event ))
+	if (KStyle::objectEventHandler( ceData, elementFlags, source, event ))
 		return true;
 
-	TQToolBar* toolbar;
+	if (ceData.widgetObjectTypes.contains(TQOBJECT_OBJECT_NAME_STRING)) {
+		TQObject* object = reinterpret_cast<TQObject*>(source);
 
-	// Handle push button hover effects.
-	TQPushButton* button = dynamic_cast<TQPushButton*>(object);
-	if ( button )
-	{
-		if ( (event->type() == TQEvent::Enter) &&
-			 (button->isEnabled()) ) {
-			hoverWidget = button;
-			button->repaint( false );
-		} 
-		else if ( (event->type() == TQEvent::Leave) &&
-				  (TQT_BASE_OBJECT(object) == TQT_BASE_OBJECT(hoverWidget)) ) {
-			hoverWidget = 0L;
-			button->repaint( false );
-		}
-	} else if ( object->parent() && !qstrcmp( object->name(), kdeToolbarWidget ) )
-	{
-		// Draw a gradient background for custom widgets in the toolbar
-		// that have specified a "kde toolbar widget" name.
-
-		if (event->type() == TQEvent::Paint ) {
-			// Find the top-level toolbar of this widget, since it may be nested in other
-			// widgets that are on the toolbar.
-			TQWidget *widget = TQT_TQWIDGET(object);
-			TQWidget *parent = TQT_TQWIDGET(object->parent());
-			int x_offset = widget->x(), y_offset = widget->y();
-			while (parent && parent->parent() && !qstrcmp( parent->name(), kdeToolbarWidget ) )
-			{
-				x_offset += parent->x();
-				y_offset += parent->y();
-				parent = TQT_TQWIDGET(parent->parent());
+		TQToolBar* toolbar;
+	
+		// Handle push button hover effects.
+		TQPushButton* button = dynamic_cast<TQPushButton*>(object);
+		if ( button )
+		{
+			if ( (event->type() == TQEvent::Enter) &&
+				(button->isEnabled()) ) {
+				hoverWidget = button;
+				button->repaint( false );
+			} 
+			else if ( (event->type() == TQEvent::Leave) &&
+					(TQT_BASE_OBJECT(object) == TQT_BASE_OBJECT(hoverWidget)) ) {
+				hoverWidget = 0L;
+				button->repaint( false );
 			}
-
-			TQRect r  = widget->rect();
-			TQRect pr = parent->rect();
-			bool horiz_grad = pr.width() < pr.height();
-
-			// Check if the parent is a QToolbar, and use its orientation, else guess.
-			TQToolBar* tb = dynamic_cast<TQToolBar*>(parent);
-			if (tb) horiz_grad = tb->orientation() == Qt::Vertical;
-
-			TQPainter p( widget );
-			renderGradient(&p, r, parent->colorGroup().button(), horiz_grad,
-					x_offset, y_offset, pr.width(), pr.height());
-
-			return false;	// Now draw the contents
-		}
-	} else if ( object->parent() &&
-			(toolbar = dynamic_cast<TQToolBar*>(object->parent())) )
-	{
-		// We need to override the paint event to draw a 
-		// gradient on a QToolBarExtensionWidget.
-		if ( event->type() == TQEvent::Paint ) {
-			TQWidget *widget = TQT_TQWIDGET(object);
-			TQRect wr = widget->rect(), tr = toolbar->rect();
-			TQPainter p( widget );
-			renderGradient(&p, wr, toolbar->colorGroup().button(),
-					toolbar->orientation() == Qt::Vertical,
-					wr.x(), wr.y(), tr.width() - 2, tr.height() - 2);
-			
-			p.setPen( toolbar->colorGroup().dark() );
-			if ( toolbar->orientation() == Qt::Horizontal )
-				p.drawLine( wr.width()-1, 0, wr.width()-1, wr.height()-1 );
-			else
-				p.drawLine( 0, wr.height()-1, wr.width()-1, wr.height()-1 );
-			
-			return true;
+		} else if ( object->parent() && !qstrcmp( object->name(), kdeToolbarWidget ) )
+		{
+			// Draw a gradient background for custom widgets in the toolbar
+			// that have specified a "kde toolbar widget" name.
+	
+			if (event->type() == TQEvent::Paint ) {
+				// Find the top-level toolbar of this widget, since it may be nested in other
+				// widgets that are on the toolbar.
+				TQWidget *widget = TQT_TQWIDGET(object);
+				TQWidget *parent = TQT_TQWIDGET(object->parent());
+				int x_offset = widget->x(), y_offset = widget->y();
+				while (parent && parent->parent() && !qstrcmp( parent->name(), kdeToolbarWidget ) )
+				{
+					x_offset += parent->x();
+					y_offset += parent->y();
+					parent = TQT_TQWIDGET(parent->parent());
+				}
+	
+				TQRect r  = widget->rect();
+				TQRect pr = parent->rect();
+				bool horiz_grad = pr.width() < pr.height();
+	
+				// Check if the parent is a QToolbar, and use its orientation, else guess.
+				TQToolBar* tb = dynamic_cast<TQToolBar*>(parent);
+				if (tb) horiz_grad = tb->orientation() == Qt::Vertical;
+	
+				TQPainter p( widget );
+				renderGradient(&p, r, parent->colorGroup().button(), horiz_grad,
+						x_offset, y_offset, pr.width(), pr.height());
+	
+				return false;	// Now draw the contents
+			}
+		} else if ( object->parent() &&
+				(toolbar = dynamic_cast<TQToolBar*>(object->parent())) )
+		{
+			// We need to override the paint event to draw a 
+			// gradient on a QToolBarExtensionWidget.
+			if ( event->type() == TQEvent::Paint ) {
+				TQWidget *widget = TQT_TQWIDGET(object);
+				TQRect wr = widget->rect(), tr = toolbar->rect();
+				TQPainter p( widget );
+				renderGradient(&p, wr, toolbar->colorGroup().button(),
+						toolbar->orientation() == Qt::Vertical,
+						wr.x(), wr.y(), tr.width() - 2, tr.height() - 2);
+				
+				p.setPen( toolbar->colorGroup().dark() );
+				if ( toolbar->orientation() == Qt::Horizontal )
+					p.drawLine( wr.width()-1, 0, wr.width()-1, wr.height()-1 );
+				else
+					p.drawLine( 0, wr.height()-1, wr.width()-1, wr.height()-1 );
+				
+				return true;
+			}
 		}
 	}
 	
