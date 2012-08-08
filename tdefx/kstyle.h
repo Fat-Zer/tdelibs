@@ -288,7 +288,7 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 
 		void polish( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void * );
 		void unPolish( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void * );
-		void polishPopupMenu( TQPopupMenu* );
+		void polishPopupMenu( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr );
 
 		void tqdrawPrimitive( TQ_PrimitiveElement pe,
 					TQPainter* p,

@@ -83,9 +83,9 @@ LightStyleV2::~LightStyleV2()
     }
 }
 
-void LightStyleV2::polishPopupMenu( TQPopupMenu * menu )
+void LightStyleV2::polishPopupMenu( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr )
 {
-    KStyle::polishPopupMenu(menu);
+    KStyle::polishPopupMenu(ceData, elementFlags, ptr);
 }
 
 static void drawLightBevel(TQPainter *p, const TQRect &r, const TQColorGroup &cg,

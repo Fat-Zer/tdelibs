@@ -302,15 +302,22 @@ void KStyle::unPolish( TQStyleControlElementData ceData, ControlElementFlags ele
 
 
 // Style changes (should) always re-polish popups.
-void KStyle::polishPopupMenu( TQPopupMenu* p )
+void KStyle::polishPopupMenu( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr )
 {
-	if (!p->testWState( WState_Polished ))
-		p->setCheckable(true);
+    if ( !(ceData.windowState & WState_Polished ) ) {
+        widgetActionRequest(ceData, elementFlags, ptr, WAR_SetCheckable);
+    }
 
-	// Install transparency handler if the effect is enabled.
-	if ( d->menuHandler &&
-		(strcmp(p->name(), "tear off menu") != 0))
-			p->installEventFilter(d->menuHandler);
+	if (ceData.widgetObjectTypes.contains(TQWIDGET_OBJECT_NAME_STRING)) {
+		TQWidget* widget = reinterpret_cast<TQWidget*>(ptr);
+		TQPopupMenu *p = dynamic_cast<TQPopupMenu*>(widget);
+		if (p) {
+			// Install transparency handler if the effect is enabled.
+			if ( d->menuHandler && (strcmp(p->name(), "tear off menu") != 0)) {
+				p->installEventFilter(d->menuHandler);
+			}
+		}
+	}
 }
 
 

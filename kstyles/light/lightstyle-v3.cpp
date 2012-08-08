@@ -59,9 +59,9 @@ LightStyleV3::~LightStyleV3()
     delete basestyle;
 }
 
-void LightStyleV3::polishPopupMenu( TQPopupMenu * menu)
+void LightStyleV3::polishPopupMenu( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr )
 {
-    KStyle::polishPopupMenu(menu);
+    KStyle::polishPopupMenu(ceData, elementFlags, ptr);
     // empty to satisy pure virtual requirements
 }
 

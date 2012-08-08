@@ -46,7 +46,7 @@ public:
     LightStyleV3();
     virtual ~LightStyleV3();
 
-    void polishPopupMenu( TQPopupMenu * );
+    void polishPopupMenu( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr );
 
     void drawPrimitive(TQ_PrimitiveElement, TQPainter *, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQRect &, const TQColorGroup &,
 		       SFlags = Style_Default,
