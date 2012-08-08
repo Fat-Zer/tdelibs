@@ -1437,7 +1437,7 @@ void HighContrastStyle::drawComplexControl (TQ_ComplexControl control,
 				}
 
 				// Draw all the branches...
-				static int thickness = kPixelMetric( KPM_ListViewBranchThickness );
+				static int thickness = kPixelMetric( KPM_ListViewBranchThickness, ceData, elementFlags );
 				int line; // index into dotlines
 				TQRect branchrect;
 				TQStyle::StyleFlags branchflags;
@@ -1678,7 +1678,7 @@ int HighContrastStyle::pixelMetric(PixelMetric m, TQStyleControlElementData ceDa
 	}
 }
 
-int HighContrastStyle::kPixelMetric( KStylePixelMetric kpm, const TQWidget *widget ) const
+int HighContrastStyle::kPixelMetric( KStylePixelMetric kpm, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQWidget *widget ) const
 {
 	switch (kpm) {
 		case KPM_ListViewBranchThickness:
@@ -1686,7 +1686,7 @@ int HighContrastStyle::kPixelMetric( KStylePixelMetric kpm, const TQWidget *widg
 			// the drawKStylePrimitive KPE_ListViewBranch case.
 			return basicLineWidth;
 		default:
-			return KStyle::kPixelMetric(kpm, widget);
+			return KStyle::kPixelMetric(kpm, ceData, elementFlags, widget);
 	}
 }
 

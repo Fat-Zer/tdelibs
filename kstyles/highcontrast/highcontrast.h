@@ -137,7 +137,7 @@ class HighContrastStyle : public KStyle
 		int pixelMetric( PixelMetric m, TQStyleControlElementData ceData, ControlElementFlags elementFlags,
 					const TQWidget *widget = 0 ) const;
 
-		int kPixelMetric( KStylePixelMetric m,
+		int kPixelMetric( KStylePixelMetric m, TQStyleControlElementData ceData, ControlElementFlags elementFlags,
 					const TQWidget *widget = 0 ) const;
 
 		TQSize sizeFromContents( ContentsType contents,

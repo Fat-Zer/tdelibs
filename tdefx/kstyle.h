@@ -282,7 +282,7 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 			KPM_ListViewBranchThickness		= 0x00000100
 		};
 
-		int kPixelMetric( KStylePixelMetric kpm, const TQWidget* widget = 0 ) const;
+		int kPixelMetric( KStylePixelMetric kpm, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQWidget* widget = 0 ) const;
 
 		// ---------------------------------------------------------------------------
 

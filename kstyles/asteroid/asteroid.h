@@ -98,7 +98,7 @@ public:
 
 	int pixelMetric(PixelMetric, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQWidget * = 0) const;
 
-	int kPixelMetric( KStylePixelMetric kpm, const TQWidget* /* widget */) const;
+	int kPixelMetric( KStylePixelMetric kpm, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQWidget* /* widget */) const;
 
 	TQRect subRect(SubRect, const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, const TQWidget *) const;
 

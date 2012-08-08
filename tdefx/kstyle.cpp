@@ -541,7 +541,7 @@ void KStyle::drawKStylePrimitive( KStylePrimitive kpe,
 }
 
 
-int KStyle::kPixelMetric( KStylePixelMetric kpm, const TQWidget* /* widget */) const
+int KStyle::kPixelMetric( KStylePixelMetric kpm, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQWidget* /* widget */) const
 {
 	int value;
 	switch(kpm)
@@ -1389,7 +1389,7 @@ void KStyle::drawComplexControl( TQ_ComplexControl control,
 				}
 
 				// Draw all the branches...
-				static int thickness = kPixelMetric( KPM_ListViewBranchThickness );
+				static int thickness = kPixelMetric( KPM_ListViewBranchThickness, ceData, elementFlags );
 				int line; // index into dotlines
 				TQRect branchrect;
 				TQStyle::StyleFlags branchflags;
