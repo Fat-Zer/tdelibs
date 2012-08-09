@@ -76,7 +76,8 @@ install( FILES
 
 ##### other data ################################
 
-tde_install_empty_directory( ${LOCALE_INSTALL_DIR}/all_languages )
+install( FILES all_languages.desktop
+  DESTINATION ${LOCALE_INSTALL_DIR} RENAME all_languages )
 
 install( FILES 40.colors Web.colors Royal.colors Rainbow.colors
   DESTINATION ${CONFIG_INSTALL_DIR}/colors )
@@ -89,7 +90,6 @@ install( FILES kmdcodec_compat.h
 
 install( FILES eventsrc
   DESTINATION ${DATA_INSTALL_DIR}/knotify )
-
 
 ##### libtdecore ################################
 
