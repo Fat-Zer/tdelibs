@@ -36,6 +36,8 @@
 #include <kdebug.h>
 #include <kurl.h>
 
+#include "config.h"
+
 KMCupsJobManager::KMCupsJobManager(TQObject *parent, const char *name, const TQStringList & /*args*/)
 : KMJobManager(parent,name)
 {
@@ -166,10 +168,79 @@ bool KMCupsJobManager::listJobs(const TQString& prname, KMJobManager::JobType ty
 void KMCupsJobManager::parseListAnswer(IppRequest& req, KMPrinter *pr)
 {
 	ipp_attribute_t	*attr = req.first();
+	ipp_attribute_t	*nextAttr;
 	KMJob		*job = new KMJob();
 	TQString		uri;
 	while (attr)
 	{
+#ifdef HAVE_CUPS_1_6
+		TQString	name(ippGetName(attr));
+		if (name == "job-id") job->setId(ippGetInteger(attr, 0));
+		else if (name == "job-uri") job->setUri(TQString::fromLocal8Bit(ippGetString(attr, 0, NULL)));
+		else if (name == "job-name") job->setName(TQString::fromLocal8Bit(ippGetString(attr, 0, NULL)));
+		else if (name == "job-state")
+		{
+			switch (ippGetInteger(attr, 0))
+			{
+				case IPP_JOB_PENDING:
+					job->setState(KMJob::Queued);
+					break;
+				case IPP_JOB_HELD:
+					job->setState(KMJob::Held);
+					break;
+				case IPP_JOB_PROCESSING:
+					job->setState(KMJob::Printing);
+					break;
+				case IPP_JOB_STOPPED:
+					job->setState(KMJob::Error);
+					break;
+				case IPP_JOB_CANCELLED:
+					job->setState(KMJob::Cancelled);
+					break;
+				case IPP_JOB_ABORTED:
+					job->setState(KMJob::Aborted);
+					break;
+				case IPP_JOB_COMPLETED:
+					job->setState(KMJob::Completed);
+					break;
+				default:
+					job->setState(KMJob::Unknown);
+					break;
+			}
+		}
+		else if (name == "job-k-octets") job->setSize(ippGetInteger(attr, 0));
+		else if (name == "job-originating-user-name") job->setOwner(TQString::fromLocal8Bit(ippGetString(attr, 0, NULL)));
+		else if (name == "job-k-octets-completed") job->setProcessedSize(ippGetInteger(attr, 0));
+		else if (name == "job-media-sheets") job->setPages(ippGetInteger(attr, 0));
+		else if (name == "job-media-sheets-completed") job->setProcessedPages(ippGetInteger(attr, 0));
+		else if (name == "job-printer-uri" && !pr->isRemote())
+		{
+			TQString	str(ippGetString(attr, 0, NULL));
+			int	p = str.findRev('/');
+			if (p != -1)
+				job->setPrinter(str.mid(p+1));
+		}
+		else if (name == "job-priority")
+		{
+			job->setAttribute(0, TQString::fromLatin1("%1").arg(ippGetInteger(attr, 0), 3));
+		}
+		else if (name == "job-billing")
+		{
+			job->setAttributeCount(2);
+			job->setAttribute(1, TQString::fromLocal8Bit(ippGetString(attr, 0, NULL)));
+		}
+
+		nextAttr = ippNextAttribute(req.request());
+		if (name.isEmpty() || (!nextAttr))
+		{
+			if (job->printer().isEmpty())
+				job->setPrinter(pr->printerName());
+			job->setRemote(pr->isRemote());
+			addJob(job);	// don't use job after this call !!!
+			job = new KMJob();
+		}
+		attr = nextAttr;
+#else // HAVE_CUPS_1_6
 		TQString	name(attr->name);
 		if (name == "job-id") job->setId(attr->values[0].integer);
 		else if (name == "job-uri") job->setUri(TQString::fromLocal8Bit(attr->values[0].string.text));
@@ -236,6 +307,7 @@ void KMCupsJobManager::parseListAnswer(IppRequest& req, KMPrinter *pr)
 		}
 
 		attr = attr->next;
+#endif // HAVE_CUPS_1_6
 	}
 	delete job;
 }

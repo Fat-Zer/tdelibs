@@ -476,9 +476,59 @@ void KMCupsManager::loadServerPrinters()
 void KMCupsManager::processRequest(IppRequest* req)
 {
 	ipp_attribute_t	*attr = req->first();
+	ipp_attribute_t	*nextAttr;
 	KMPrinter	*printer = new KMPrinter();
 	while (attr)
 	{
+#ifdef HAVE_CUPS_1_6
+		TQString	attrname(ippGetName(attr));
+		if (attrname == "printer-name")
+		{
+			TQString	value = TQString::fromLocal8Bit(ippGetString(attr, 0, NULL));
+			printer->setName(value);
+			printer->setPrinterName(value);
+		}
+		else if (attrname == "printer-type")
+		{
+			int	value = ippGetInteger(attr, 0);
+			printer->setType(0);
+			printer->addType(((value & CUPS_PRINTER_CLASS) || (value & CUPS_PRINTER_IMPLICIT) ? KMPrinter::Class : KMPrinter::Printer));
+			if ((value & CUPS_PRINTER_REMOTE)) printer->addType(KMPrinter::Remote);
+			if ((value & CUPS_PRINTER_IMPLICIT)) printer->addType(KMPrinter::Implicit);
+
+			// convert printer-type attribute
+			printer->setPrinterCap( ( value & CUPS_PRINTER_OPTIONS ) >> 2 );
+		}
+		else if (attrname == "printer-state")
+		{
+			switch (ippGetInteger(attr, 0))
+			{
+				case IPP_PRINTER_IDLE: printer->setState(KMPrinter::Idle); break;
+				case IPP_PRINTER_PROCESSING: printer->setState(KMPrinter::Processing); break;
+				case IPP_PRINTER_STOPPED: printer->setState(KMPrinter::Stopped); break;
+			}
+		}
+		else if (attrname == "printer-uri-supported")
+		{
+			printer->setUri(KURL(ippGetString(attr, 0, NULL)));
+		}
+		else if (attrname == "printer-location")
+		{
+			printer->setLocation(TQString::fromLocal8Bit(ippGetString(attr, 0, NULL)));
+		}
+		else if (attrname == "printer-is-accepting-jobs")
+		{
+			printer->setAcceptJobs(ippGetBoolean(attr, 0));
+		}
+
+		nextAttr = ippNextAttribute(req->request());
+		if (attrname.isEmpty() || (!nextAttr))
+		{
+			addPrinter(printer);
+			printer = new KMPrinter();
+		}
+		attr = nextAttr;
+#else // HAVE_CUPS_1_6
 		TQString	attrname(attr->name);
 		if (attrname == "printer-name")
 		{
@@ -524,6 +574,7 @@ void KMCupsManager::processRequest(IppRequest* req)
 			printer = new KMPrinter();
 		}
 		attr = attr->next;
+#endif // HAVE_CUPS_1_6
 	}
 	delete printer;
 }
@@ -817,6 +868,7 @@ TQStringList KMCupsManager::detectLocalPrinters()
 {
 	TQStringList	list;
 	IppRequest	req;
+	ipp_attribute_t	*nextAttr;
 	req.setOperation(CUPS_GET_DEVICES);
 	if (req.doRequest("/"))
 	{
@@ -824,6 +876,24 @@ TQStringList KMCupsManager::detectLocalPrinters()
 		ipp_attribute_t	*attr = req.first();
 		while (attr)
 		{
+#ifdef HAVE_CUPS_1_6
+			TQString	attrname(ippGetName(attr));
+			if (attrname == "device-info") desc = ippGetString(attr, 0, NULL);
+			else if (attrname == "device-make-and-model") printer = ippGetString(attr, 0, NULL);
+			else if (attrname == "device-uri") uri = ippGetString(attr, 0, NULL);
+			else if ( attrname == "device-class" ) cl = ippGetString(attr, 0, NULL);
+			nextAttr = ippNextAttribute(req.request());
+			if (attrname.isEmpty() || (!nextAttr))
+			{
+				if (!uri.isEmpty())
+				{
+					if (printer == "Unknown") printer = TQString::null;
+					list << cl << uri << desc << printer;
+				}
+				uri = desc = printer = cl = TQString::null;
+			}
+			attr = nextAttr;
+#else // HAVE_CUPS_1_6
 			TQString	attrname(attr->name);
 			if (attrname == "device-info") desc = attr->values[0].string.text;
 			else if (attrname == "device-make-and-model") printer = attr->values[0].string.text;
@@ -839,6 +909,7 @@ TQStringList KMCupsManager::detectLocalPrinters()
 				uri = desc = printer = cl = TQString::null;
 			}
 			attr = attr->next;
+#endif // HAVE_CUPS_1_6
 		}
 	}
 	return list;

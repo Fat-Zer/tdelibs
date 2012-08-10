@@ -693,6 +693,19 @@ if( WITH_CUPS )
   set( HAVE_CUPS 1 )
   # FIXME if CUPS is at least 1.1.20, doesn't have password caching
   set( HAVE_CUPS_NO_PWD_CACHE 1 )
+
+  # save CMAKE_REQUIRED_LIBRARIES
+  set( bak_CMAKE_REQUIRED_LIBRARIES ${CMAKE_REQUIRED_LIBRARIES} )
+  set( CMAKE_REQUIRED_LIBRARIES ${CUPS_LIBRARIES} )
+  check_c_source_compiles("
+    #include <cups/cups.h>
+    #include <cups/ipp.h>
+    #include <cups/language.h>
+    int main(int argc, char *argv[]) { ipp_attribute_t *attr = 0; ippGetName(attr); return 0; } "
+    HAVE_CUPS_1_6 )
+  # restore CMAKE_REQUIRED_LIBRARIES
+  set( CMAKE_REQUIRED_LIBRARIES ${bak_CMAKE_REQUIRED_LIBRARIES} )
+  unset( bak_CMAKE_REQUIRED_LIBRARIES )
 endif( WITH_CUPS )
 
 

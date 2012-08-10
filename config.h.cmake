@@ -83,6 +83,9 @@
 /* CUPS doesn't have password caching */
 #cmakedefine HAVE_CUPS_NO_PWD_CACHE 1
 
+/* CUPS is at least version 1.6 */
+#cmakedefine HAVE_CUPS_1_6 1
+
 /* Define to 1 if you have the declaration of `getservbyname_r', and to 0 if you don't. */
 #undef HAVE_DECL_GETSERVBYNAME_R
 
