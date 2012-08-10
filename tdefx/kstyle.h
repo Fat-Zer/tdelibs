@@ -239,9 +239,6 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 
     // Old API
     // DEPRECATED
-#ifdef MARK_OLD_VIRTUAL_STYLE_API_CALLS_DEPRECATED
-		__attribute__ ((deprecated))
-#endif
 		virtual void drawKStylePrimitive( KStylePrimitive kpe,
 					TQPainter* p,
 					const TQWidget* widget,
