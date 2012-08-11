@@ -2978,7 +2978,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Mouse);
 			}
 			if (!device) {
-				// Second mouse check 
+				// Second mouse check
 				// Look for ID_INPUT_MOUSE property presence
 				if (udev_device_get_property_value(dev, "ID_INPUT_MOUSE") != 0) {
 					if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Mouse);
@@ -3002,6 +3002,9 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			else {
 				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::TextIO);
 			}
+		}
+		else if (devicesubsystem == "usb-serial") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Serial);
 		}
 		else if (devicesubsystem == "thermal") {
 			// FIXME
