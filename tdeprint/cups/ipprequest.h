@@ -27,6 +27,8 @@
 
 #include <cups/ipp.h>
 
+#include "config.h"
+
 class IppRequest
 {
 public:
@@ -72,6 +74,9 @@ public:
 	bool keyword(const TQString& name, TQStringList& value);
 	bool mime(const TQString& name, TQString& value);
 	ipp_attribute_t* first();
+#ifndef HAVE_CUPS_1_6
+	ipp_attribute_t* last();
+#endif // HAVE_CUPS_1_6
 	ipp_t* request();
 	TQMap<TQString,TQString> toMap(int group = -1);
 	void setMap(const TQMap<TQString,TQString>& opts);
@@ -177,6 +182,11 @@ inline bool IppRequest::mime(const TQString& name, TQString& value)
 
 inline bool IppRequest::doRequest(const TQString& res)
 { return doFileRequest(res); }
+
+#ifndef HAVE_CUPS_1_6
+inline ipp_attribute_t* IppRequest::last()
+{ return (request_ ? request_->last : NULL); }
+#endif // HAVE_CUPS_1_6
 
 inline void IppRequest::setHost(const TQString& host)
 { host_ = host; }
