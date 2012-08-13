@@ -165,6 +165,7 @@ struct KStylePrivate
 	bool  useFilledFrameWorkaround : 1;
 	bool  etchDisabledText         : 1;
 	bool  scrollablePopupmenus     : 1;
+	bool  autoHideAccelerators     : 0;
 	bool  menuAltKeyNavigation     : 1;
 	bool  menuDropShadow           : 1;
 	bool  sloppySubMenus           : 1;
@@ -201,6 +202,7 @@ KStyle::KStyle( KStyleFlags flags, KStyleScrollBarType sbtype )
 	d->etchDisabledText     = settings.readBoolEntry("/KStyle/Settings/EtchDisabledText", true);
 	d->menuAltKeyNavigation = settings.readBoolEntry("/KStyle/Settings/MenuAltKeyNavigation", true);
 	d->scrollablePopupmenus = settings.readBoolEntry("/KStyle/Settings/ScrollablePopupMenus", false);
+	d->autoHideAccelerators = settings.readBoolEntry("/KStyle/Settings/AutoHideAccelerators", false);
 	d->menuDropShadow       = settings.readBoolEntry("/KStyle/Settings/MenuDropShadow", false);
 	d->semiTransparentRubberband = settings.readBoolEntry("/KStyle/Settings/SemiTransparentRubberband", false);
 	d->menuHandler = NULL;
@@ -1893,6 +1895,9 @@ int KStyle::styleHint( TQ_StyleHint sh, TQStyleControlElementData ceData, Contro
 
 		case SH_PopupMenu_Scrollable:
 			return d->scrollablePopupmenus ? 1 : 0;
+
+		case SH_HideUnderlineAcceleratorWhenAltUp:
+			return d->autoHideAccelerators ? 1 : 0;
 
 		case SH_MenuBar_AltKeyNavigation:
 			return d->menuAltKeyNavigation ? 1 : 0;
