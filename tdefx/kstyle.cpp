@@ -165,7 +165,7 @@ struct KStylePrivate
 	bool  useFilledFrameWorkaround : 1;
 	bool  etchDisabledText         : 1;
 	bool  scrollablePopupmenus     : 1;
-	bool  autoHideAccelerators     : 0;
+	bool  autoHideAccelerators     : 1;
 	bool  menuAltKeyNavigation     : 1;
 	bool  menuDropShadow           : 1;
 	bool  sloppySubMenus           : 1;
