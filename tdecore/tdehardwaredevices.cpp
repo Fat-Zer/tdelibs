@@ -3518,8 +3518,10 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 	if (device->type() == TDEGenericDeviceType::Network) {
 		// Network devices don't have devices nodes per se, but we can at least return the Linux network name...
 		TQString potentialdevicenode = systempath;
+		if (potentialdevicenode.endsWith("/")) potentialdevicenode.truncate(potentialdevicenode.length()-1);
 		potentialdevicenode.remove(0, potentialdevicenode.findRev("/")+1);
 		TQString potentialparentnode = systempath;
+		if (potentialparentnode.endsWith("/")) potentialparentnode.truncate(potentialparentnode.length()-1);
 		potentialparentnode.remove(0, potentialparentnode.findRev("/", potentialparentnode.findRev("/")-1)+1);
 		if (potentialparentnode.startsWith("net/")) {
 			devicenode = potentialdevicenode;
