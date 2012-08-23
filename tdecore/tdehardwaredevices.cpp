@@ -16,6 +16,8 @@
    Boston, MA 02110-1301, USA.
 */
 
+#define USE_NETWORKMANAGER_NETWORK_BACKEND
+
 #include <tdehardwaredevices.h>
 
 #include <tqfile.h>
@@ -55,6 +57,13 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include <netdb.h>
+
+// Network connection manager
+#include "tdenetworkconnections.h"
+
+#ifdef USE_NETWORKMANAGER_NETWORK_BACKEND
+#include "networkbackends/network-manager/network-manager.h"
+#endif // USE_NETWORKMANAGER_NETWORK_BACKEND
 
 // BEGIN BLOCK
 // Copied from include/linux/genhd.h
@@ -1314,6 +1323,7 @@ TDENetworkDevice::TDENetworkDevice(TDEGenericDeviceType::TDEGenericDeviceType dt
 	m_txbytes = -1;
 	m_rxpackets = -1;
 	m_txpackets = -1;
+	m_connectionManager = NULL;
 }
 
 TDENetworkDevice::~TDENetworkDevice() {
@@ -1445,6 +1455,20 @@ double TDENetworkDevice::txPackets() {
 
 void TDENetworkDevice::internalSetTxPackets(double tx) {
 	m_txpackets = tx;
+}
+
+TDENetworkConnectionManager* TDENetworkDevice::connectionManager() {
+#ifdef USE_NETWORKMANAGER_NETWORK_BACKEND
+	if (!m_connectionManager) {
+		m_connectionManager = new TDENetworkConnectionManager_BackendNM(m_macAddress);
+	}
+#endif // USE_NETWORKMANAGER_NETWORK_BACKEND
+
+	return m_connectionManager;
+}
+
+void TDENetworkDevice::internalSetConnectionManager(TDENetworkConnectionManager* mgr) {
+	m_connectionManager = mgr;
 }
 
 TDEBacklightDevice::TDEBacklightDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
@@ -2837,8 +2861,9 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 	}
 
 	// Many devices do not provide their vendor/model ID via udev
-	// Go after it manually...
-	if (devicevendorid.isNull() || devicemodelid.isNull()) {
+	// Worse, sometimes udev provides an invalid model ID!
+	// Go after it manually if needed...
+	if (devicevendorid.isNull() || devicemodelid.isNull() || devicemodelid.contains("/")) {
 		if (devicemodalias != TQString::null) {
 			// For added fun the device string lengths differ between pci and usb
 			if (devicemodalias.startsWith("pci")) {

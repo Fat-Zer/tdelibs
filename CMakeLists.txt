@@ -83,6 +83,7 @@ OPTION( WITH_PCRE "Enable pcre regex support for kjs" ON )
 OPTION( WITH_GCC_VISIBILITY "Enable fvisibility and fvisibility-inlines-hidden" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_INOTIFY "Enable inotify support for kio" ON )
 OPTION( WITH_GAMIN "Enable FAM/GAMIN support" ${WITH_ALL_OPTIONS} )
+OPTION( WITH_NETWORK_MANAGER_BACKEND "Enable network-manager support" OFF )
 
 OPTION( WITH_ASPELL "Enable aspell support" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_HSPELL "Enable hspell support" ${WITH_ALL_OPTIONS} )
@@ -765,6 +766,31 @@ if( WITH_PCRE )
   endif( NOT LIBPCRE_FOUND )
   set( HAVE_PCREPOSIX 1 )
 endif( )
+
+
+if( WITH_NETWORK_MANAGER_BACKEND )
+  ##### check for dbus-1 ###########################
+  pkg_search_module( DBUS dbus-1 )
+  if( NOT DBUS_FOUND )
+    tde_message_fatal( "dbus-1 are required, but not found on your system" )
+  endif( )
+
+
+  ##### check for dbus-1-tqt ###########################
+  pkg_search_module( DBUS_TQT dbus-1-tqt )
+  if( DBUS_TQT_FOUND )
+    find_program( DBUSXML2QT3_EXECUTABLE NAMES dbusxml2qt3 )
+  else()
+    tde_message_fatal( "dbus-1-tqt are required, but not found on your system" )
+  endif( )
+
+
+  ##### check for libnm-util ###########################
+  pkg_search_module( NM_UTIL libnm-util )
+  if( NOT NM_UTIL_FOUND )
+    tde_message_fatal( "libnm-util are required, but not found on your system" )
+  endif( )
+endif( WITH_NETWORK_MANAGER_BACKEND )
 
 
 ##### check for gcc visibility support #########

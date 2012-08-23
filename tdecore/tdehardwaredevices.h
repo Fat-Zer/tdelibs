@@ -39,6 +39,8 @@
  * @author Timothy Pearson
  */
 
+class TDENetworkConnectionManager;
+
 // Keep readGenericDeviceTypeFromString(), getFriendlyDeviceTypeStringFromType(), and getDeviceTypeIconFromType() in tdehardwaredevices.cpp in sync with this enum
 namespace TDEGenericDeviceType {
 enum TDEGenericDeviceType {
@@ -1172,6 +1174,11 @@ class TDECORE_EXPORT TDENetworkDevice : public TDEGenericDevice
 		*/
 		double txPackets();
 
+		/**
+		* @return a pointer to a TDENetworkConnectionManager object, if available
+		*/
+		TDENetworkConnectionManager* connectionManager();
+
 	protected:
 		/**
 		* @param ma a TQString containing the network device's MAC address
@@ -1269,6 +1276,11 @@ class TDECORE_EXPORT TDENetworkDevice : public TDEGenericDevice
 		*/
 		void internalSetTxPackets(double tx);
 
+		/**
+		* @param mgr a pointer to a TDENetworkConnectionManager object, if available
+		*/
+		void internalSetConnectionManager(TDENetworkConnectionManager* mgr);
+
 	private:
 		TQString m_macAddress;
 		TQString m_state;
@@ -1286,6 +1298,7 @@ class TDECORE_EXPORT TDENetworkDevice : public TDEGenericDevice
 		double m_txbytes;
 		double m_rxpackets;
 		double m_txpackets;
+		TDENetworkConnectionManager* m_connectionManager;
 
 	friend class TDEHardwareDevices;
 };
@@ -2032,4 +2045,4 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 	friend class TDECPUDevice;
 };
 
-#endif
+#endif // _TDEHARDWAREDEVICES_H

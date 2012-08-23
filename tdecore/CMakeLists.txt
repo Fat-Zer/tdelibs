@@ -14,10 +14,17 @@ add_subdirectory( network )
 add_subdirectory( kconfig_compiler )
 add_subdirectory( hwlibdata )
 
+
 if( WITH_LIBART )
   add_subdirectory( svgicons )
   set( KDESVGICONS kdesvgicons-static )
 endif( WITH_LIBART )
+
+if( WITH_NETWORK_MANAGER_BACKEND )
+  add_subdirectory( networkbackends/network-manager/dbus )
+  set ( TDENM_LIBRARIES tdenm_dbus-static )
+  set ( TDENM_BACKEND_SOURCES networkbackends/network-manager/network-manager.cpp )
+endif( WITH_NETWORK_MANAGER_BACKEND )
 
 
 include_directories(
@@ -41,7 +48,6 @@ link_directories(
   ${LIBIDN_LIBRARY_DIRS}
   ${GAMIN_LIBDIR}
 )
-
 
 ##### headers ###################################
 
@@ -70,6 +76,7 @@ install( FILES
     kmanagerselection.h kmountpoint.h kuser.h klockfile.h
     kidna.h ktempdir.h kshell.h fixx11h.h kxerrorhandler.h
     tdelibs_export.h kde_file.h ktimezones.h tdehardwaredevices.h
+    tdenetworkconnections.h
     ${CMAKE_CURRENT_BINARY_DIR}/kdemacros.h
   DESTINATION ${INCLUDE_INSTALL_DIR} )
 
@@ -125,14 +132,16 @@ set( ${target}_SRCS
   ktempdir.cpp kshell.cpp kmountpoint.cpp kcalendarsystemjalali.cpp
   kprotocolinfo_tdecore.cpp kprotocolinfofactory.cpp kxerrorhandler.cpp
   kuser.cpp kconfigskeleton.cpp kconfigdialogmanager.cpp klockfile.cpp
-  kqiodevicegzip_p.cpp ktimezones.cpp tdehardwaredevices.cpp ksimpledirwatch.cpp
+  kqiodevicegzip_p.cpp ktimezones.cpp tdehardwaredevices.cpp tdenetworkconnections.cpp
+  ksimpledirwatch.cpp
+  ${TDENM_BACKEND_SOURCES}
 )
 
 tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 4.2.0
   EMBED tdecorenetwork-static
-  LINK ltdlc-static ${KDESVGICONS} DCOP-shared tdefx-shared ${ZLIB_LIBRARIES} ${LIBIDN_LIBRARIES} ${XCOMPOSITE_LIBRARIES} ICE SM udev ${GAMIN_LIBRARIES}
+  LINK ltdlc-static ${KDESVGICONS} DCOP-shared tdefx-shared ${ZLIB_LIBRARIES} ${LIBIDN_LIBRARIES} ${XCOMPOSITE_LIBRARIES} ICE SM udev ${GAMIN_LIBRARIES} ${TDENM_LIBRARIES}
   DEPENDENCIES dcopidl dcopidl2cpp
   DESTINATION ${LIB_INSTALL_DIR}
 )
