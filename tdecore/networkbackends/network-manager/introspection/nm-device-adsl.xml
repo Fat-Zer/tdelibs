@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <node name="/" xmlns:tp="http://telepathy.freedesktop.org/wiki/DbusSpec#extensions-v0">
-  <interface name="org.freedesktop.NetworkManager.Device.Cdma">
+  <interface name="org.freedesktop.NetworkManager.Device.Adsl">
 
     <signal name="PropertiesChanged">
         <arg name="properties" type="a{sv}" tp:type="String_Variant_Map">
@@ -10,6 +10,12 @@
             </tp:docstring>
         </arg>
     </signal>
+
+    <property name="Carrier" type="b" access="read">
+      <tp:docstring>
+        Indicates whether the physical carrier is found.
+      </tp:docstring>
+    </property>
 
   </interface>
 </node>
