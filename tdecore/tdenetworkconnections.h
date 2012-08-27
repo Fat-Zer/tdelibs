@@ -23,6 +23,7 @@
 #include <tqstring.h>
 #include <tqptrlist.h>
 #include <tqstringlist.h>
+#include <tqhostaddress.h>
 #include "kiconloader.h"
 #include "tdelibs_export.h"
 
@@ -40,10 +41,26 @@
 	inline x operator~(x a)																	\
 	{																			\
 		return static_cast<x>(~static_cast<int>(a));													\
+	}																			\
+																				\
+	inline x &operator|=(x& a, const x& b)															\
+	{																			\
+		a = static_cast<x>(static_cast<int>(a) | static_cast<int>(b));											\
+		return a;																	\
+	}																			\
+																				\
+	inline x &operator&=(x& a, const x& b)															\
+	{																			\
+		a = static_cast<x>(static_cast<int>(a) & static_cast<int>(b));											\
+		return a;																	\
 	}
+
+typedef TQValueList<TQ_UINT8> TDENetworkByteList;
+typedef TQValueList<TQHostAddress> TDENetworkAddressList;
 
 namespace TDENetworkConnectionType {
 enum TDENetworkConnectionType {
+	BackendOnly,
 	WiredEthernet,
 	WiFi,
 	Bluetooth,
@@ -139,6 +156,50 @@ namespace TDENetworkWiFiConnectionCipher {
 	};
 };
 
+namespace TDENetworkIEEE8021xType {
+	enum TDENetworkIEEE8021xType {
+		None,
+		LEAP,
+		MD5,
+		PAP,
+		CHAP,
+		MSCHAP,
+		MSCHAPV2,
+		Fast,
+		PSK,
+		PAX,
+		SAKE,
+		GPSK,
+		TLS,
+		PEAP,
+		TTLS,
+		SIM,
+		GTC,
+		OTP
+	};
+};
+
+namespace TDENetworkIEEE8021xFastFlags {
+	enum TDENetworkIEEE8021xFastFlags {
+		None			= 0x00000000,
+		AllowUnauthenticated	= 0x00000001,
+		AllowAuthenticated	= 0x00000002
+	};
+
+	CREATE_FLAG_BITWISE_MANIPULATION_FUNCTIONS(TDENetworkIEEE8021xFastFlags)
+};
+
+namespace TDENetworkPasswordHandlingFlags {
+	enum TDENetworkPasswordHandlingFlags {
+		None			= 0x00000000,
+		NoSave			= 0x00000001,
+		NoPrompt		= 0x00000002,
+		ExternalStorage		= 0x00000004
+	};
+
+	CREATE_FLAG_BITWISE_MANIPULATION_FUNCTIONS(TDENetworkPasswordHandlingFlags)
+};
+
 namespace TDENetworkConnectionStatus {
 	enum TDENetworkConnectionStatus {
 		Invalid			= 0x00000000,
@@ -146,17 +207,18 @@ namespace TDENetworkConnectionStatus {
 		Connected		= 0x00000002,
 		LinkUnavailable		= 0x00000004,
 		EstablishingLink	= 0x00000008,
-		ConfiguringProtocols	= 0x00000010,
-		Reconnecting		= 0x00000020,
-		LinkLost		= 0x00000040,
-		LinkLocalAccess		= 0x00000080,
-		SiteLocalAccess		= 0x00000100,
-		GlobalAccess		= 0x00000200,
-		UnManaged		= 0x00000400,
-		NeedAuthorization	= 0x00000800,
-		Failed			= 0x00001000,
-		VerifyingProtocols	= 0x00002000,
-		DependencyWait		= 0x00004000
+		DeactivatingLink	= 0x00000010,
+		ConfiguringProtocols	= 0x00000020,
+		Reconnecting		= 0x00000040,
+		LinkLost		= 0x00000080,
+		LinkLocalAccess		= 0x00000100,
+		SiteLocalAccess		= 0x00000200,
+		GlobalAccess		= 0x00000400,
+		UnManaged		= 0x00000800,
+		NeedAuthorization	= 0x00001000,
+		Failed			= 0x00002000,
+		VerifyingProtocols	= 0x00004000,
+		DependencyWait		= 0x00008000
 	};
 
 	CREATE_FLAG_BITWISE_MANIPULATION_FUNCTIONS(TDENetworkConnectionStatus)
@@ -164,14 +226,166 @@ namespace TDENetworkConnectionStatus {
 
 namespace TDENetworkIPConfigurationFlags {
 	enum TDENetworkIPConfigurationFlags {
-		Invalid			= 0x00000000,
-		IPV4			= 0x00000001,
-		IPV6			= 0x00000002,
-		DHCP			= 0x00000004,
-		StaticIP		= 0x00000008
+		None					= 0x00000000,
+		IPV4DHCPIP				= 0x00000001,
+		IPV4DHCPDNS				= 0x00000002,
+		IPV4DHCPRoutes				= 0x00000004,
+		IPV4LocalOnly				= 0x00000008,
+		IPV4StartConnectionSharingServer	= 0x00000010,
+		IPV4Disabled				= 0x00000020,
+		IPV4MayUseAsDefaultRoute		= 0x00000040,
+		IPV6DHCPIP				= 0x00000080,
+		IPV6DHCPDNS				= 0x00000100,
+		IPV6DHCPRoutes				= 0x00000200,
+		IPV6LocalOnly				= 0x00000400,
+		IPV6StartConnectionSharingServer	= 0x00000800,
+		IPV6Disabled				= 0x00001000,
+		IPV6MayUseAsDefaultRoute		= 0x00002000
 	};
 
 	CREATE_FLAG_BITWISE_MANIPULATION_FUNCTIONS(TDENetworkIPConfigurationFlags)
+};
+
+class TDECORE_EXPORT TDENetworkSearchDomain
+{
+	public:
+		TDENetworkSearchDomain();
+		TDENetworkSearchDomain(TQString domain, bool ipv6=false);
+		~TDENetworkSearchDomain();
+
+		TQString searchDomain();
+		void setSearchDomain(TQString domain, bool ipv6=false);
+
+		bool isIPv4();
+		bool isIPv6();
+
+	private:
+		TQString m_domain;
+		bool m_isIPV6;
+};
+
+typedef TQValueList<TDENetworkSearchDomain> TDENetworkSearchDomainList;
+
+class TDECORE_EXPORT TDENetMask
+{
+	public:
+		TDENetMask();
+		TDENetMask(TQ_UINT32 netmask);
+		TDENetMask(TQ_UINT8* netmask);
+		~TDENetMask();
+
+		void fromCIDRMask(unsigned char mask, bool ipv6=false);
+		unsigned char toCIDRMask();
+		void fromString(TQString mask);
+		TQString toString();
+
+		bool isIPv4();
+		bool isIPv6();
+
+	private:
+		TQ_UINT32 m_ipv4NetMask;
+		TQHostAddress m_ipv6NetMask;
+		bool m_isIPV6;
+};
+
+class TDECORE_EXPORT TDEMACAddress
+{
+	public:
+		TDEMACAddress();
+		TDEMACAddress(TDENetworkByteList address);
+		~TDEMACAddress();
+
+		TDENetworkByteList address();
+		void setAddress(TDENetworkByteList address);
+		TQString toString();
+		void fromString(TQString address);
+		bool isValid();
+
+	private:
+		bool m_isValid;
+		TDENetworkByteList m_macAddress;
+
+		friend bool operator==(const TDEMACAddress &a1, const TDEMACAddress &a2);
+};
+
+bool operator==(const TDEMACAddress &a1, const TDEMACAddress &a2);
+
+class TDECORE_EXPORT TDENetworkSingleIPConfiguration
+{
+	public:
+		TDENetworkSingleIPConfiguration();
+		~TDENetworkSingleIPConfiguration();
+
+		bool isIPv4();
+		bool isIPv6();
+
+	public:
+		bool valid;
+		TQHostAddress ipAddress;
+		TDENetMask networkMask;
+		TQHostAddress gateway;
+};
+
+typedef TQValueList<TDENetworkSingleIPConfiguration> TDENetworkSingleIPConfigurationList;
+
+class TDECORE_EXPORT TDENetworkSingleRouteConfiguration
+{
+	public:
+		TDENetworkSingleRouteConfiguration();
+		~TDENetworkSingleRouteConfiguration();
+
+		bool isIPv4();
+		bool isIPv6();
+
+	public:
+		bool valid;
+		TQHostAddress ipAddress;
+		TDENetMask networkMask;
+		TQHostAddress gateway;
+		TQ_UINT32 metric;
+};
+
+typedef TQValueList<TDENetworkSingleRouteConfiguration> TDENetworkSingleRouteConfigurationList;
+
+class TDENetworkIEEE8021xConfiguration
+{
+	public:
+		TDENetworkIEEE8021xConfiguration();
+		~TDENetworkIEEE8021xConfiguration();
+
+	public:
+		bool valid;
+		bool secretsValid;
+		TDENetworkIEEE8021xType::TDENetworkIEEE8021xType type;
+		TQString userName;
+		TQString anonymousUserName;
+		TQString pacFileName;
+		TQByteArray caCertificate;
+		TQString additionalCAFilesPath;
+		TQString authServerCertSubjectMatch;
+		TQStringList alternateAuthServerCertSubjectMatch;
+		TQByteArray clientCertificate;
+		TQString forcePEAPVersion;
+		TQString forcePEAPLabel;
+		TDENetworkIEEE8021xFastFlags::TDENetworkIEEE8021xFastFlags fastProvisioningFlags;
+		TQString phase2NonEAPAuthMethod;
+		TQString phase2EAPAuthMethod;
+		TQByteArray phase2CaCertificate;
+		TQString phase2CaFilesPath;
+		TQString phase2AuthServerCertSubjectMatch;
+		TQStringList phase2AlternateAuthServerCertSubjectMatch;
+		TQByteArray phase2ClientCertificate;
+		TQString password;
+		TDENetworkPasswordHandlingFlags::TDENetworkPasswordHandlingFlags passwordFlags;
+		TQByteArray binaryPassword;
+		TDENetworkPasswordHandlingFlags::TDENetworkPasswordHandlingFlags binaryPasswordFlags;
+		TQByteArray privateKey;
+		TQString privateKeyPassword;
+		TDENetworkPasswordHandlingFlags::TDENetworkPasswordHandlingFlags privateKeyPasswordFlags;
+		TQByteArray phase2PrivateKey;
+		TQString phase2PrivateKeyPassword;
+		TDENetworkPasswordHandlingFlags::TDENetworkPasswordHandlingFlags phase2PrivateKeyPasswordFlags;
+		bool forceSystemCaCertificates;
 };
 
 class TDECORE_EXPORT TDENetworkIPConfiguration
@@ -183,11 +397,13 @@ class TDECORE_EXPORT TDENetworkIPConfiguration
 	public:
 		bool valid;
 		TDENetworkIPConfigurationFlags::TDENetworkIPConfigurationFlags connectionFlags;
-		TQString ipAddress;
-		TQString networkMask;
-		TQString gateway;
-		TQString broadcast;
-		TQString destination;
+		TDENetworkSingleIPConfigurationList ipConfigurations;
+		TDENetworkSingleRouteConfigurationList routeConfigurations;
+		TQHostAddress broadcast;
+		TQHostAddress destination;
+		TDENetworkAddressList resolvers;
+		TDENetworkSearchDomainList searchDomains;
+		TQString dhcpClientIdentifier;
 };
 
 class TDECORE_EXPORT TDENetworkWiFiDeviceInfo
@@ -198,8 +414,8 @@ class TDECORE_EXPORT TDENetworkWiFiDeviceInfo
 
 	public:
 		bool valid;
-		TQString hwAddress;
-		TQString permanentHWAddress;
+		TDEMACAddress hwAddress;
+		TDEMACAddress permanentHWAddress;
 		TDEWiFiMode::TDEWiFiMode operatingMode;
 		unsigned int bitrate;
 		TQString activeAccessPointBSSID;
@@ -225,7 +441,7 @@ class TDECORE_EXPORT TDENetworkDeviceInformation
 		bool autoConnect;
 		bool firmwareMissing;
 		TDENetworkConnectionType::TDENetworkConnectionType deviceType;
-		TDENetworkWiFiDeviceInfo wirelessInfo;
+		TDENetworkWiFiDeviceInfo wiFiInfo;
 };
 
 class TDECORE_EXPORT TDENetworkHWNeighbor
@@ -245,8 +461,9 @@ class TDECORE_EXPORT TDENetworkWiFiAPInfo : public TDENetworkHWNeighbor
 		~TDENetworkWiFiAPInfo();
 
 	public:
-		TQString SSID;
-		TDENetworkWiFiAPFlags::TDENetworkWiFiAPFlags flags;
+		TQByteArray SSID;
+		TDENetworkWiFiAPFlags::TDENetworkWiFiAPFlags wpaFlags;
+		TDENetworkWiFiAPFlags::TDENetworkWiFiAPFlags rsnFlags;
 		unsigned int frequency;
 		TQString BSSID;
 		unsigned int maxBitrate;
@@ -255,28 +472,38 @@ class TDECORE_EXPORT TDENetworkWiFiAPInfo : public TDENetworkHWNeighbor
 
 typedef TQPtrList< TDENetworkHWNeighbor > TDENetworkHWNeighborList;
 
-class TDECORE_EXPORT TDENetworkConnection : public TQObject
+class TDECORE_EXPORT TDENetworkConnection
 {
-	Q_OBJECT
-
 	public:
 		TDENetworkConnection();
-		~TDENetworkConnection();
+		virtual ~TDENetworkConnection();
 
 	public:
 		TQString UUID;
 		TQString friendlyName;
 		TDENetworkIPConfiguration ipConfig;
+		TDEMACAddress lockedHWAddress;
+		TDEMACAddress manualHWAddress;
 		bool autoConnect;
+		bool fullDuplex;
+		bool requireIPV4;
+		bool requireIPV6;
+		TQ_UINT32 mtu;
+		TDENetworkIEEE8021xConfiguration eapConfig;
+};
+
+class TDECORE_EXPORT TDEWiredEthernetConnection : public TDENetworkConnection
+{
+	public:
+		TDEWiredEthernetConnection();
+		virtual ~TDEWiredEthernetConnection();
 };
 
 class TDECORE_EXPORT TDEWiFiConnection : public TDENetworkConnection
 {
-	Q_OBJECT
-
 	public:
 		TDEWiFiConnection();
-		~TDEWiFiConnection();
+		virtual ~TDEWiFiConnection();
 
 	public:
 		TQString SSID;
@@ -297,6 +524,8 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		/**
 		*  Constructor.
 		*  @param macAddress The MAC address of the hardware device
+		*  If an empty MAC address is passed, this object will make global networking backend
+		*  methods available exclusively (TDENetworkConnectionType::BackendOnly).
 		*/
 		TDENetworkConnectionManager(TQString macAddress);
 		
@@ -327,15 +556,25 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 
 		/**
 		* Loads all connection information from the configuration backend
+		* Secret information must be loaded separately via a call to
+		* loadConnectionSecrets(TQString uuid) after this method has been
+		* executed at least once.
 		*/
 		virtual void loadConnectionInformation() = 0;
 
 		/**
-		* @param connection a TDENetworkConnection object containing a
+		* @param uuid a TQString conntaining the UUID of a connection for which to
+		* load secrets from the configuration backend.
+		* @return true on success, false on failure.
+		*/
+		virtual bool loadConnectionSecrets(TQString uuid) = 0;
+
+		/**
+		* @param connection a pointer to a TDENetworkConnection object containing a
 		* connection to save to the configuration backend.
 		* @return true on success, false on failure.
 		*/
-		virtual bool saveConnection(TDENetworkConnection connection) = 0;
+		virtual bool saveConnection(TDENetworkConnection* connection) = 0;
 
 		/**
 		* @param uuid a TQString conntaining the UUID of a connection to
@@ -343,21 +582,6 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		* @return true on success, false on failure.
 		*/
 		virtual bool deleteConnection(TQString uuid) = 0;
-
-		/**
-		* @return a TDENetworkConnectionList object containing a list of all
-		* possible connections this connection manager is aware of, regardless
-		* of current state or availability.
-		*
-		* loadConnectionInformation() should be called at least once before calling
-		* this method, in order to update internal connection information from the
-		* configuration backend.
-		*
-		* Note that the returned list is internally managed and must not be deleted!
-		* Also note that pointers in the list may become invalid on subsequent calls to
-		* loadConnectionInformation(), saveConnection(), deleteConnection(), or connections().
-		*/
-		virtual TDENetworkConnectionList* connections() = 0;
 
 		/**
 		* Initiates a connection with UUID @param uuid.
@@ -390,9 +614,78 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		*/
 		virtual TDENetworkHWNeighborList* siteSurvey() = 0;
 
-	private:
+		/**
+		* @return true if networking is enabled, false if not.
+		*/
+		virtual bool networkingEnabled() = 0;
+
+		/**
+		* @return true if WiFi hardware is enabled, false if not.
+		*/
+		virtual bool wiFiHardwareEnabled() = 0;
+
+		/**
+		* @param enable true to enable WiFi, false to disable it.
+		* @return true on success, false on failure.
+		*/
+		virtual bool enableWiFi(bool enable) = 0;
+
+		/**
+		* @return true if WiFi is enabled, false if not.
+		*/
+		virtual bool wiFiEnabled() = 0;
+
+	signals:
+		/**
+		* Emitted whenever the state of the system's connection changes
+		* If previous state data was unavailable, @param previousState will contain TDENetworkConnectionStatus::Invalid
+		*/
+		void networkConnectionStateChanged(TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags newState, TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags previousState);
+
+		/**
+		* Emitted whenever the state of a device changes
+		* If previous state data was unavailable, @param previousState will contain TDENetworkConnectionStatus::Invalid
+		* If the global connection state has changed, @param hwAddress will be empty, otherwise it will contain the MAC address
+		* of the networking hardware that has changed state.
+		*/
+		void networkDeviceStateChanged(TDENetworkConnectionStatus::TDENetworkConnectionStatus newState, TDENetworkConnectionStatus::TDENetworkConnectionStatus previousState, TQString hwAddress);
+
+	public:
+		/**
+		* @return a TDENetworkConnectionList object containing a list of all
+		* possible connections this connection manager is aware of, regardless
+		* of current state or availability.
+		*
+		* loadConnectionInformation() should be called at least once before calling
+		* this method, in order to update internal connection information from the
+		* configuration backend.
+		*
+		* Note that the returned list is internally managed and must not be deleted!
+		* Also note that pointers in the list may become invalid on subsequent calls to
+		* loadConnectionInformation(), saveConnection(), deleteConnection(), or connections().
+		*/
+		virtual TDENetworkConnectionList* connections();
+
+		/**
+		* @return a pointer to a TDENetworkConnection object with the specified @param uuid,
+		* or a NULL pointer if no such connection exists.
+		*
+		* Note that the returned object is internally managed and must not be deleted!
+		*/
+		TDENetworkConnection* findConnectionByUUID(TQString uuid);
+
+	protected:
+		void clearTDENetworkConnectionList();
+		void clearTDENetworkHWNeighborList();
+		void internalNetworkConnectionStateChanged(TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags newState);
+		void internalNetworkDeviceStateChanged(TDENetworkConnectionStatus::TDENetworkConnectionStatus newState, TQString hwAddress=TQString::null);
+
+	protected:
 		TDENetworkConnectionList* m_connectionList;
+		TDENetworkHWNeighborList* m_hwNeighborList;
 		TQString m_macAddress;
+		TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags m_prevConnectionStatus;
+		TQMap<TQString, TDENetworkConnectionStatus::TDENetworkConnectionStatus> m_prevDeviceStatus;
 };
 
 #endif // _TDENETWORKCONNECTIONS_H

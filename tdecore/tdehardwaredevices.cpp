@@ -16,8 +16,6 @@
    Boston, MA 02110-1301, USA.
 */
 
-#define USE_NETWORKMANAGER_NETWORK_BACKEND
-
 #include <tdehardwaredevices.h>
 
 #include <tqfile.h>
@@ -61,9 +59,12 @@
 // Network connection manager
 #include "tdenetworkconnections.h"
 
-#ifdef USE_NETWORKMANAGER_NETWORK_BACKEND
+// Compile-time configuration
+#include "config.h"
+
+#ifdef WITH_NETWORK_MANAGER_BACKEND
 #include "networkbackends/network-manager/network-manager.h"
-#endif // USE_NETWORKMANAGER_NETWORK_BACKEND
+#endif // WITH_NETWORK_MANAGER_BACKEND
 
 // BEGIN BLOCK
 // Copied from include/linux/genhd.h
@@ -1458,11 +1459,11 @@ void TDENetworkDevice::internalSetTxPackets(double tx) {
 }
 
 TDENetworkConnectionManager* TDENetworkDevice::connectionManager() {
-#ifdef USE_NETWORKMANAGER_NETWORK_BACKEND
+#ifdef WITH_NETWORK_MANAGER_BACKEND
 	if (!m_connectionManager) {
 		m_connectionManager = new TDENetworkConnectionManager_BackendNM(m_macAddress);
 	}
-#endif // USE_NETWORKMANAGER_NETWORK_BACKEND
+#endif // WITH_NETWORK_MANAGER_BACKEND
 
 	return m_connectionManager;
 }

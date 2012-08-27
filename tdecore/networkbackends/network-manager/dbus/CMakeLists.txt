@@ -46,14 +46,15 @@ add_dbus_xml( p accesspointproxy AccessPointProxy DBus nm-access-point.xml )
 add_dbus_xml( p activeconnectionproxy ActiveConnectionProxy DBus nm-active-connection.xml )
 add_dbus_xml( p vpnconnectionproxy VPNConnectionProxy DBus nm-vpn-connection.xml )
 add_dbus_xml( p vpnpluginproxy VPNPluginProxy DBus nm-vpn-plugin.xml )
-add_dbus_xml( i networkmanagersettings SettingsInterface DBus nm-settings.xml )
-add_dbus_xml( i connectionsettings ConnectionSettingsInterface DBus nm-settings-connection.xml )
+add_dbus_xml( p networkmanagersettings SettingsInterface DBus nm-settings.xml )
+add_dbus_xml( p connectionsettings ConnectionSettingsInterface DBus nm-settings-connection.xml )
 
 
 # generate moc files
 
 set( MOCHEADERS accesspointproxy.h deviceproxy.h networkmanagerproxy.h networkmanagerpppproxy.h ethernetproxy.h
-  infinibandproxy.h wifiproxy.h wimaxproxy.h activeconnectionproxy.h vpnconnectionproxy.h vpnpluginproxy.h modemproxy.h )
+  infinibandproxy.h wifiproxy.h wimaxproxy.h activeconnectionproxy.h vpnconnectionproxy.h vpnpluginproxy.h modemproxy.h
+  networkmanagersettings.h connectionsettings.h )
 
 foreach( _header_file ${MOCHEADERS} )
   get_filename_component( _basename "${_header_file}" NAME_WE )

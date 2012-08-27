@@ -22,7 +22,15 @@ endif( WITH_LIBART )
 
 if( WITH_NETWORK_MANAGER_BACKEND )
   add_subdirectory( networkbackends/network-manager/dbus )
-  set ( TDENM_LIBRARIES tdenm_dbus-static )
+  set ( TDENM_INCLUDE_DIRECTORIES
+    ${DBUS_TQT_INCLUDE_DIRS}
+    ${NM_UTIL_INCLUDE_DIRS}
+    "${CMAKE_BINARY_DIR}/tdecore/networkbackends/network-manager/dbus"
+  )
+  set ( TDENM_LIBRARIES
+    tdenm_dbus-static
+    ${DBUS_TQT_LIBRARIES}
+  )
   set ( TDENM_BACKEND_SOURCES networkbackends/network-manager/network-manager.cpp )
 endif( WITH_NETWORK_MANAGER_BACKEND )
 
@@ -41,6 +49,7 @@ include_directories(
   ${LIBART_INCLUDE_DIRS}
   ${LIBIDN_INCLUDE_DIRS}
   ${GAMIN_INCLUDEDIR}
+  ${TDENM_INCLUDE_DIRECTORIES}
 )
 
 link_directories(
