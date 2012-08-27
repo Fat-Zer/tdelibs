@@ -19,6 +19,12 @@
 #include "tdehardwaredevices.h"
 #include "tdenetworkconnections.h"
 
+#include "config.h"
+
+#ifdef WITH_NETWORK_MANAGER_BACKEND
+#include "networkbackends/network-manager/network-manager.h"
+#endif // WITH_NETWORK_MANAGER_BACKEND
+
 #define SET_BIT(x, y) (x |= 1 << y)
 #define TEST_BIT(x, y) ((x & (1 << y)) >> y)
 
@@ -463,6 +469,96 @@ void TDENetworkConnectionManager::internalNetworkDeviceStateChanged(TDENetworkCo
 	}
 	emit(networkDeviceStateChanged(m_prevDeviceStatus[hwAddress], newState, hwAddress));
 	m_prevDeviceStatus[hwAddress] = newState;
+}
+
+/*================================================================================================*/
+/* TDEGlobalNetworkManager                                                                        */
+/*================================================================================================*/
+
+TDEGlobalNetworkManager::TDEGlobalNetworkManager() : m_internalConnectionManager(NULL) {
+#ifdef WITH_NETWORK_MANAGER_BACKEND
+	m_internalConnectionManager = new TDENetworkConnectionManager_BackendNM(TQString::null);
+#endif // WITH_NETWORK_MANAGER_BACKEND
+	connect(m_internalConnectionManager, SIGNAL(networkConnectionStateChanged(TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags, TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags)), this, SIGNAL(networkConnectionStateChanged(TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags, TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags)));
+}
+
+TDEGlobalNetworkManager::~TDEGlobalNetworkManager() {
+	delete m_internalConnectionManager;
+}
+
+TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags TDEGlobalNetworkManager::backendStatus() {
+	if (!m_internalConnectionManager) return TDENetworkGlobalManagerFlags::Unknown;
+	return m_internalConnectionManager->backendStatus();
+}
+
+void TDEGlobalNetworkManager::loadConnectionInformation() {
+	if (!m_internalConnectionManager) return;
+	return m_internalConnectionManager->loadConnectionInformation();
+}
+
+bool TDEGlobalNetworkManager::loadConnectionSecrets(TQString uuid) {
+	if (!m_internalConnectionManager) return false;
+	return m_internalConnectionManager->loadConnectionSecrets(uuid);
+}
+
+bool TDEGlobalNetworkManager::saveConnection(TDENetworkConnection* connection) {
+	if (!m_internalConnectionManager) return false;
+	return m_internalConnectionManager->saveConnection(connection);
+}
+
+bool TDEGlobalNetworkManager::deleteConnection(TQString uuid) {
+	if (!m_internalConnectionManager) return false;
+	return m_internalConnectionManager->deleteConnection(uuid);
+}
+
+TDENetworkConnectionStatus::TDENetworkConnectionStatus TDEGlobalNetworkManager::initiateConnection(TQString uuid) {
+	if (!m_internalConnectionManager) return TDENetworkConnectionStatus::Invalid;
+	return m_internalConnectionManager->initiateConnection(uuid);
+}
+
+TDENetworkConnectionStatus::TDENetworkConnectionStatus TDEGlobalNetworkManager::checkConnectionStatus(TQString uuid) {
+	if (!m_internalConnectionManager) return TDENetworkConnectionStatus::Invalid;
+	return m_internalConnectionManager->checkConnectionStatus(uuid);
+}
+
+TDENetworkConnectionStatus::TDENetworkConnectionStatus TDEGlobalNetworkManager::deactivateConnection(TQString uuid) {
+	if (!m_internalConnectionManager) return TDENetworkConnectionStatus::Invalid;
+	return m_internalConnectionManager->deactivateConnection(uuid);
+}
+
+TDENetworkHWNeighborList* TDEGlobalNetworkManager::siteSurvey() {
+	if (!m_internalConnectionManager) return NULL;
+	return m_internalConnectionManager->siteSurvey();
+}
+
+bool TDEGlobalNetworkManager::networkingEnabled() {
+	if (!m_internalConnectionManager) return false;
+	return m_internalConnectionManager->networkingEnabled();
+}
+
+bool TDEGlobalNetworkManager::wiFiHardwareEnabled() {
+	if (!m_internalConnectionManager) return false;
+	return m_internalConnectionManager->wiFiHardwareEnabled();
+}
+
+bool TDEGlobalNetworkManager::enableWiFi(bool enable) {
+	if (!m_internalConnectionManager) return false;
+	return m_internalConnectionManager->enableWiFi(enable);
+}
+
+bool TDEGlobalNetworkManager::wiFiEnabled() {
+	if (!m_internalConnectionManager) return false;
+	return m_internalConnectionManager->wiFiEnabled();
+}
+
+TDENetworkConnectionList* TDEGlobalNetworkManager::connections() {
+	if (!m_internalConnectionManager) return NULL;
+	return m_internalConnectionManager->connections();
+}
+
+TDENetworkConnection* TDEGlobalNetworkManager::findConnectionByUUID(TQString uuid) {
+	if (!m_internalConnectionManager) return NULL;
+	return m_internalConnectionManager->findConnectionByUUID(uuid);
 }
 
 /*================================================================================================*/

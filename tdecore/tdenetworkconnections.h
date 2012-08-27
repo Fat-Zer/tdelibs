@@ -688,4 +688,148 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		TQMap<TQString, TDENetworkConnectionStatus::TDENetworkConnectionStatus> m_prevDeviceStatus;
 };
 
+class TDECORE_EXPORT TDEGlobalNetworkManager : public TQObject
+{
+	Q_OBJECT
+
+	public:
+		/**
+		*  Constructor.
+		*/
+		TDEGlobalNetworkManager();
+		
+		/**
+		* Destructor.
+		*/
+		~TDEGlobalNetworkManager();
+
+		/**
+		* @return A TDENetworkGlobalManagerFlags enum value with the current status of the networking backend.
+		*/
+		virtual TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags backendStatus();
+
+		/**
+		* Loads all connection information from the configuration backend
+		* Secret information must be loaded separately via a call to
+		* loadConnectionSecrets(TQString uuid) after this method has been
+		* executed at least once.
+		*/
+		virtual void loadConnectionInformation();
+
+		/**
+		* @param uuid a TQString conntaining the UUID of a connection for which to
+		* load secrets from the configuration backend.
+		* @return true on success, false on failure.
+		*/
+		virtual bool loadConnectionSecrets(TQString uuid);
+
+		/**
+		* @param connection a pointer to a TDENetworkConnection object containing a
+		* connection to save to the configuration backend.
+		* @return true on success, false on failure.
+		*/
+		virtual bool saveConnection(TDENetworkConnection* connection);
+
+		/**
+		* @param uuid a TQString conntaining the UUID of a connection to
+		* delete from the configuration backend.
+		* @return true on success, false on failure.
+		*/
+		virtual bool deleteConnection(TQString uuid);
+
+		/**
+		* Initiates a connection with UUID @param uuid.
+		* @return A TDENetworkConnectionStatus enum value with the current connection status
+		* The client application should poll for status updates using checkConnectionStatus()
+		*/
+		virtual TDENetworkConnectionStatus::TDENetworkConnectionStatus initiateConnection(TQString uuid);
+
+		/**
+		* Checks the status of a connection with UUID @param uuid.
+		* @return A TDENetworkConnectionStatus enum value with the current connection status
+		*/
+		virtual TDENetworkConnectionStatus::TDENetworkConnectionStatus checkConnectionStatus(TQString uuid);
+
+		/**
+		* Disconnects a connection with UUID @param uuid.
+		* @return A TDENetworkConnectionStatus enum value with the current connection status
+		* The client application should poll for status updates using checkConnectionStatus()
+		*/
+		virtual TDENetworkConnectionStatus::TDENetworkConnectionStatus deactivateConnection(TQString uuid);
+
+		/**
+		* @return a TDENetworkHWNeighborList object containing the result of a site survey;
+		* i.e. all nearby access points or devices. This function only returns valid information
+		* if the underlying network device supports site surveys.
+		*
+		* Note that the returned list is internally managed and must not be deleted!
+		* Also note that pointers in the list may become invalid on subsequent calls to
+		* siteSurvey().
+		*/
+		virtual TDENetworkHWNeighborList* siteSurvey();
+
+		/**
+		* @return true if networking is enabled, false if not.
+		*/
+		virtual bool networkingEnabled();
+
+		/**
+		* @return true if WiFi hardware is enabled, false if not.
+		*/
+		virtual bool wiFiHardwareEnabled();
+
+		/**
+		* @param enable true to enable WiFi, false to disable it.
+		* @return true on success, false on failure.
+		*/
+		virtual bool enableWiFi(bool enable);
+
+		/**
+		* @return true if WiFi is enabled, false if not.
+		*/
+		virtual bool wiFiEnabled();
+
+	signals:
+		/**
+		* Emitted whenever the state of the system's connection changes
+		* If previous state data was unavailable, @param previousState will contain TDENetworkConnectionStatus::Invalid
+		*/
+		void networkConnectionStateChanged(TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags newState, TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags previousState);
+
+		/**
+		* Emitted whenever the state of a device changes
+		* If previous state data was unavailable, @param previousState will contain TDENetworkConnectionStatus::Invalid
+		* If the global connection state has changed, @param hwAddress will be empty, otherwise it will contain the MAC address
+		* of the networking hardware that has changed state.
+		*/
+		void networkDeviceStateChanged(TDENetworkConnectionStatus::TDENetworkConnectionStatus newState, TDENetworkConnectionStatus::TDENetworkConnectionStatus previousState, TQString hwAddress);
+
+	public:
+		/**
+		* @return a TDENetworkConnectionList object containing a list of all
+		* possible connections this connection manager is aware of, regardless
+		* of current state or availability.
+		*
+		* loadConnectionInformation() should be called at least once before calling
+		* this method, in order to update internal connection information from the
+		* configuration backend.
+		*
+		* Note that the returned list is internally managed and must not be deleted!
+		* Also note that pointers in the list may become invalid on subsequent calls to
+		* loadConnectionInformation(), saveConnection(), deleteConnection(), or connections().
+		*/
+		virtual TDENetworkConnectionList* connections();
+
+		/**
+		* @return a pointer to a TDENetworkConnection object with the specified @param uuid,
+		* or a NULL pointer if no such connection exists.
+		*
+		* Note that the returned object is internally managed and must not be deleted!
+		*/
+		TDENetworkConnection* findConnectionByUUID(TQString uuid);
+
+	private:
+		TDENetworkConnectionManager* m_internalConnectionManager;
+};
+
 #endif // _TDENETWORKCONNECTIONS_H

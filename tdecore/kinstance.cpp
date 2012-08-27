@@ -25,6 +25,7 @@
 #include "kcharsets.h"
 #include "kiconloader.h"
 #include "tdehardwaredevices.h"
+#include "tdenetworkconnections.h"
 #include "kaboutdata.h"
 #include "kstandarddirs.h"
 #include "kdebug.h"
@@ -72,6 +73,7 @@ KInstance::KInstance( const TQCString& name)
     _config (0L),
     _iconLoader (0L),
     _hardwaredevices (0L),
+    _networkmanager (0L),
     _name( name ), _aboutData( new KAboutData( name, "", 0 ) ), m_configReadOnly(false)
 {
     DEBUG_ADD
@@ -91,6 +93,7 @@ KInstance::KInstance( const KAboutData * aboutData )
     _config (0L),
     _iconLoader (0L),
     _hardwaredevices (0L),
+    _networkmanager (0L),
     _name( aboutData->appName() ), _aboutData( aboutData ), m_configReadOnly(false)
 {
     DEBUG_ADD
@@ -111,6 +114,7 @@ KInstance::KInstance( KInstance* src )
     _config ( src->_config ),
     _iconLoader ( src->_iconLoader ),
     _hardwaredevices ( src->_hardwaredevices ),
+    _networkmanager ( src->_networkmanager ),
     _name( src->_name ), _aboutData( src->_aboutData ), m_configReadOnly(false)
 {
     DEBUG_ADD
@@ -130,6 +134,7 @@ KInstance::KInstance( KInstance* src )
     src->_config = 0L;
     src->_iconLoader = 0L;
     src->_hardwaredevices = 0L;
+    src->_networkmanager = 0L;
     src->_aboutData = 0L;
     delete src;
 }
@@ -150,6 +155,9 @@ KInstance::~KInstance()
 
     delete _hardwaredevices;
     _hardwaredevices = 0;
+
+    delete _networkmanager;
+    _networkmanager = 0;
 
     // delete _config; // Do not delete, stored in d->sharedConfig
     _config = 0;
@@ -270,6 +278,16 @@ TDEHardwareDevices *KInstance::hardwareDevices() const
     }
 
     return _hardwaredevices;
+}
+
+TDEGlobalNetworkManager *KInstance::networkManager() const
+{
+    DEBUG_CHECK_ALIVE
+    if( _networkmanager == 0 ) {
+        _networkmanager = new TDEGlobalNetworkManager( );
+    }
+
+    return _networkmanager;
 }
 
 void KInstance::newIconLoader() const

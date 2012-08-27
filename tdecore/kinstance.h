@@ -28,6 +28,7 @@ class KInstancePrivate;
 class KMimeSourceFactory;
 class KSharedConfig;
 class TDEHardwareDevices;
+class TDEGlobalNetworkManager;
 
 #include <tqstring.h>
 #include "tdelibs_export.h"
@@ -110,10 +111,16 @@ class TDECORE_EXPORT KInstance
     KIconLoader	       *iconLoader() const;
 
     /**
-     *  Returns a hardwaredevices object.
+     *  Returns a TDEHardwareDevices object.
      * @return the hardwaredevices object.
      */
     TDEHardwareDevices	*hardwareDevices() const;
+
+    /**
+     *  Returns a TDEGlobalNetworkManager object.
+     * @return the networkmanager object.
+     */
+    TDEGlobalNetworkManager  *networkManager() const;
 
     /**
      * Re-allocate the global iconloader.
@@ -162,6 +169,8 @@ private:
     mutable KIconLoader         *_iconLoader;
 
     mutable TDEHardwareDevices  *_hardwaredevices;
+    mutable TDEGlobalNetworkManager  *_networkmanager;
+    mutable void                *_placeholder;
 
     TQCString                     _name;
     const KAboutData            *_aboutData;

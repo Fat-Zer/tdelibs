@@ -35,6 +35,7 @@
 #include <kcharsets.h>
 #include <kiconloader.h>
 #include <tdehardwaredevices.h>
+#include <tdenetworkconnections.h>
 #include <kstandarddirs.h>
 #include <kinstance.h>
 #include "kstaticdeleter.h"
@@ -85,6 +86,13 @@ TDEHardwareDevices *KGlobal::hardwareDevices()
     MYASSERT(_instance);
 
     return _instance->hardwareDevices();
+}
+
+TDEGlobalNetworkManager *KGlobal::networkManager()
+{
+    MYASSERT(_instance);
+
+    return _instance->networkManager();
 }
 
 KInstance *KGlobal::instance()

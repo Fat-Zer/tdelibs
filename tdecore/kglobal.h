@@ -26,6 +26,7 @@ class KConfig;
 class KSharedConfig;
 class KIconLoader;
 class TDEHardwareDevices;
+class TDEGlobalNetworkManager;
 class KLocale;
 class KStandardDirs;
 class KStaticDeleterBase;
@@ -79,10 +80,16 @@ public:
     static KIconLoader	        *iconLoader();
 
     /**
-     *  Returns a hardwaredevices object.
-     * @return the global hardwaredevices object
+     *  Returns a TDEHardwareDevices object.
+     * @return the global hardware devices object
      */
     static TDEHardwareDevices	*hardwareDevices();
+
+    /**
+     *  Returns a TDEGlobalNetworkManager object.
+     * @return the global network manager object
+     */
+    static TDEGlobalNetworkManager   *networkManager();
 
     /**
      * Returns the global locale object.
