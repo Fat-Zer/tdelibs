@@ -502,6 +502,10 @@ TQString TDEStorageDevice::friendlyName() {
 		return devicename;
 	}
 
+	if (isDiskOfType(TDEDiskDeviceType::Camera)) {
+		return TDEGenericDevice::friendlyName();
+	}
+
 	if (isDiskOfType(TDEDiskDeviceType::Floppy)) {
 		return friendlyDeviceType();
 	}
@@ -559,6 +563,9 @@ TQString TDEStorageDevice::friendlyDeviceType() {
 	if (isDiskOfType(TDEDiskDeviceType::Tape)) {
 		ret = i18n("Tape Drive");
 	}
+	if (isDiskOfType(TDEDiskDeviceType::Camera)) {
+		ret = i18n("Digital Camera");
+	}
 
 	if (isDiskOfType(TDEDiskDeviceType::HDD)) {
 		ret = i18n("Hard Disk Drive");
@@ -612,6 +619,9 @@ TQPixmap TDEStorageDevice::icon(KIcon::StdSizes size) {
 	}
 	if (isDiskOfType(TDEDiskDeviceType::Tape)) {
 		ret = DesktopIcon("tape_unmount", size);
+	}
+	if (isDiskOfType(TDEDiskDeviceType::Camera)) {
+		ret = DesktopIcon("camera_unmount");
 	}
 
 	if (isDiskOfType(TDEDiskDeviceType::HDD)) {
@@ -743,10 +753,7 @@ TQString TDEStorageDevice::mountDevice(TQString mediaName, TQString mountOptions
 	KTempFile passwordFile(TQString::null, "tmp", 0600);
 	passwordFile.setAutoDelete(true);
 
-	TQString command = TQString("pmount -p %1 %2 %3 2>&1").arg(passwordFile.name()).arg(mountOptions).arg(deviceNode());
-	if (!mediaName.isNull()) {
-		command.append(mediaName);
-	}
+	TQString command = TQString("pmount -p %1 %2 %3 %4 2>&1").arg(passwordFile.name()).arg(mountOptions).arg(deviceNode()).arg(mediaName);
 
 	FILE *exepipe = popen(command.ascii(), "r");
 	if (exepipe) {
@@ -790,10 +797,7 @@ TQString TDEStorageDevice::mountEncryptedDevice(TQString passphrase, TQString me
 	pwFile->writeBlock(passphrase.ascii(), passphrase.length());
 	pwFile->flush();
 
-	TQString command = TQString("pmount -p %1 %2 %3 2>&1").arg(passwordFile.name()).arg(mountOptions).arg(deviceNode());
-	if (!mediaName.isNull()) {
-		command.append(mediaName);
-	}
+	TQString command = TQString("pmount -p %1 %2 %3 %4 2>&1").arg(passwordFile.name()).arg(mountOptions).arg(deviceNode()).arg(mediaName);
 
 	FILE *exepipe = popen(command.ascii(), "r");
 	if (exepipe) {
@@ -3231,7 +3235,31 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		// Likely inaccurate and sweeping
 		if ((devicesubsystem == "usb")
 			|| (devicesubsystem == "usbmon")) {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::OtherUSB);
+				// Get USB interface protocol for further classification
+				int usbInterfaceProtocol = -1;
+				TQFile ifaceprotofile(current_path + "/bInterfaceProtocol");
+				if (ifaceprotofile.open(IO_ReadOnly)) {
+					TQTextStream stream( &ifaceprotofile );
+					usbInterfaceProtocol = stream.readLine().toUInt();
+					ifaceprotofile.close();
+				}
+				if (usbInterfaceProtocol == 1) {
+					// PictBridge
+					if (!device) {
+						device = new TDEStorageDevice(TDEGenericDeviceType::Disk);
+						TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(device);
+						sdevice->internalSetDiskType(TDEDiskDeviceType::Camera);
+						TQString parentsyspathudev = systempath;
+						parentsyspathudev.truncate(parentsyspathudev.length()-1);	// Remove trailing slash
+						parentsyspathudev.truncate(parentsyspathudev.findRev("/"));
+						struct udev_device *parentdev;
+						parentdev = udev_device_new_from_syspath(m_udevStruct, parentsyspathudev.ascii());
+						devicenode = (udev_device_get_devnode(parentdev));
+					}
+				}
+				else {
+					if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::OtherUSB);
+				}
 		}
 		if (devicesubsystem == "pci") {
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::OtherPeripheral);
@@ -3272,273 +3300,279 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 	}
 
 	if (device->type() == TDEGenericDeviceType::Disk) {
-		bool removable = false;
-		bool hotpluggable = false;
-
-		// We can get the removable flag, but we have no idea if the device has the ability to notify on media insertion/removal
-		// If there is no such notification possible, then we should not set the removable flag
-		// udev can be such an amazing pain at times
-		// It exports a /capabilities node with no info on what the bits actually mean
-		// This information is very poorly documented as a set of #defines in include/linux/genhd.h
-		// We are specifically interested in GENHD_FL_REMOVABLE and GENHD_FL_MEDIA_CHANGE_NOTIFY
-		// The "removable" flag should also really be renamed to "hotpluggable", as that is far more precise...
-		TQString capabilitynodename = systempath;
-		capabilitynodename.append("/capability");
-		TQFile capabilityfile( capabilitynodename );
-		unsigned int capabilities = 0;
-		if ( capabilityfile.open( IO_ReadOnly ) ) {
-			TQTextStream stream( &capabilityfile );
-			TQString capabilitystring;
-			capabilitystring = stream.readLine();
-			capabilities = capabilitystring.toUInt();
-			capabilityfile.close();
-		}
-		if (capabilities & GENHD_FL_REMOVABLE) {
-			// FIXME
-			// For added fun this is not always true; i.e. GENHD_FL_REMOVABLE can be set when the device cannot be hotplugged (floppy drives).
-			hotpluggable = true;
-		}
-		if (capabilities & GENHD_FL_MEDIA_CHANGE_NOTIFY) {
-			removable = true;
-		}
-
-		// See if any other devices are exclusively using this device, such as the Device Mapper
-		TQStringList holdingDeviceNodes;
-		TQString holdersnodename = udev_device_get_syspath(dev);
-		holdersnodename.append("/holders/");
-		TQDir holdersdir(holdersnodename);
-		holdersdir.setFilter(TQDir::All);
-		const TQFileInfoList *dirlist = holdersdir.entryInfoList();
-		if (dirlist) {
-			TQFileInfoListIterator holdersdirit(*dirlist);
-			TQFileInfo *dirfi;
-			while ( (dirfi = holdersdirit.current()) != 0 ) {
-				if (dirfi->isSymLink()) {
-					char* collapsedPath = realpath((holdersnodename + dirfi->readLink()).ascii(), NULL);
-					holdingDeviceNodes.append(TQString(collapsedPath));
-					free(collapsedPath);
-				}
-				++holdersdirit;
-			}
-		}
-
-		// See if any other physical devices underlie this device, for example when the Device Mapper is in use
-		TQStringList slaveDeviceNodes;
-		TQString slavesnodename = udev_device_get_syspath(dev);
-		slavesnodename.append("/slaves/");
-		TQDir slavedir(slavesnodename);
-		slavedir.setFilter(TQDir::All);
-		dirlist = slavedir.entryInfoList();
-		if (dirlist) {
-			TQFileInfoListIterator slavedirit(*dirlist);
-			TQFileInfo *dirfi;
-			while ( (dirfi = slavedirit.current()) != 0 ) {
-				if (dirfi->isSymLink()) {
-					char* collapsedPath = realpath((slavesnodename + dirfi->readLink()).ascii(), NULL);
-					slaveDeviceNodes.append(TQString(collapsedPath));
-					free(collapsedPath);
-				}
-				++slavedirit;
-			}
-		}
-
-		// Determine generic disk information
-		TQString devicevendor(udev_device_get_property_value(dev, "ID_VENDOR"));
-		TQString devicemodel(udev_device_get_property_value(dev, "ID_MODEL"));
-		TQString devicebus(udev_device_get_property_value(dev, "ID_BUS"));
-
-		// Get disk specific info
-		TQString disklabel(udev_device_get_property_value(dev, "ID_FS_LABEL"));
-		TQString diskuuid(udev_device_get_property_value(dev, "ID_FS_UUID"));
-		TQString filesystemtype(udev_device_get_property_value(dev, "ID_FS_TYPE"));
-		TQString filesystemusage(udev_device_get_property_value(dev, "ID_FS_USAGE"));
-
-		device->internalSetVendorName(devicevendor);
-		device->internalSetVendorModel(devicemodel);
-		device->internalSetDeviceBus(devicebus);
-
 		TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(device);
-
-		TDEDiskDeviceType::TDEDiskDeviceType disktype = sdevice->diskType();
-		TDEDiskDeviceStatus::TDEDiskDeviceStatus diskstatus = TDEDiskDeviceStatus::Null;
-
-		if (force_full_classification) {
-			disktype = classifyDiskType(dev, devicebus, devicetypestring, systempath, devicevendor, devicemodel, filesystemtype, devicedriver);
-			sdevice->internalSetDiskType(disktype);
-			device = classifyUnknownDeviceByExternalRules(dev, device, true);	// Check external rules for possible subtype overrides
-			disktype = sdevice->diskType();						// The type can be overridden by an external rule
+		if (sdevice->diskType() & TDEDiskDeviceType::Camera) {
+			// PictBridge cameras are special and should not be classified by standard rules
+			sdevice->internalSetDiskStatus(TDEDiskDeviceStatus::Removable);
+			sdevice->internalSetFileSystemName("pictbridge");
 		}
-
-		if ((disktype & TDEDiskDeviceType::CDROM)
-			|| (disktype & TDEDiskDeviceType::CDRW)
-			|| (disktype & TDEDiskDeviceType::DVDROM)
-			|| (disktype & TDEDiskDeviceType::DVDRAM)
-			|| (disktype & TDEDiskDeviceType::DVDRW)
-			|| (disktype & TDEDiskDeviceType::BDROM)
-			|| (disktype & TDEDiskDeviceType::BDRW)
-			|| (disktype & TDEDiskDeviceType::CDAudio)
-			|| (disktype & TDEDiskDeviceType::CDVideo)
-			|| (disktype & TDEDiskDeviceType::DVDVideo)
-			|| (disktype & TDEDiskDeviceType::BDVideo)
-			) {
-			// These drives are guaranteed to be optical
-			disktype = disktype | TDEDiskDeviceType::Optical;
-		}
-
-		if (disktype & TDEDiskDeviceType::Floppy) {
-			// Floppy drives don't work well under udev
-			// I have to look for the block device name manually
-			TQString floppyblknodename = systempath;
-			floppyblknodename.append("/block");
-			TQDir floppyblkdir(floppyblknodename);
-			floppyblkdir.setFilter(TQDir::All);
-			const TQFileInfoList *floppyblkdirlist = floppyblkdir.entryInfoList();
-			if (floppyblkdirlist) {
-				TQFileInfoListIterator floppyblkdirit(*floppyblkdirlist);
+		else {
+			bool removable = false;
+			bool hotpluggable = false;
+	
+			// We can get the removable flag, but we have no idea if the device has the ability to notify on media insertion/removal
+			// If there is no such notification possible, then we should not set the removable flag
+			// udev can be such an amazing pain at times
+			// It exports a /capabilities node with no info on what the bits actually mean
+			// This information is very poorly documented as a set of #defines in include/linux/genhd.h
+			// We are specifically interested in GENHD_FL_REMOVABLE and GENHD_FL_MEDIA_CHANGE_NOTIFY
+			// The "removable" flag should also really be renamed to "hotpluggable", as that is far more precise...
+			TQString capabilitynodename = systempath;
+			capabilitynodename.append("/capability");
+			TQFile capabilityfile( capabilitynodename );
+			unsigned int capabilities = 0;
+			if ( capabilityfile.open( IO_ReadOnly ) ) {
+				TQTextStream stream( &capabilityfile );
+				TQString capabilitystring;
+				capabilitystring = stream.readLine();
+				capabilities = capabilitystring.toUInt();
+				capabilityfile.close();
+			}
+			if (capabilities & GENHD_FL_REMOVABLE) {
+				// FIXME
+				// For added fun this is not always true; i.e. GENHD_FL_REMOVABLE can be set when the device cannot be hotplugged (floppy drives).
+				hotpluggable = true;
+			}
+			if (capabilities & GENHD_FL_MEDIA_CHANGE_NOTIFY) {
+				removable = true;
+			}
+	
+			// See if any other devices are exclusively using this device, such as the Device Mapper
+			TQStringList holdingDeviceNodes;
+			TQString holdersnodename = udev_device_get_syspath(dev);
+			holdersnodename.append("/holders/");
+			TQDir holdersdir(holdersnodename);
+			holdersdir.setFilter(TQDir::All);
+			const TQFileInfoList *dirlist = holdersdir.entryInfoList();
+			if (dirlist) {
+				TQFileInfoListIterator holdersdirit(*dirlist);
 				TQFileInfo *dirfi;
-				while ( (dirfi = floppyblkdirit.current()) != 0 ) {
-					if ((dirfi->fileName() != ".") && (dirfi->fileName() != "..")) {
-						// Does this routine work with more than one floppy drive in the system?
-						devicenode = TQString("/dev/").append(dirfi->fileName());
+				while ( (dirfi = holdersdirit.current()) != 0 ) {
+					if (dirfi->isSymLink()) {
+						char* collapsedPath = realpath((holdersnodename + dirfi->readLink()).ascii(), NULL);
+						holdingDeviceNodes.append(TQString(collapsedPath));
+						free(collapsedPath);
 					}
-					++floppyblkdirit;
+					++holdersdirit;
 				}
 			}
-
-			// Some interesting information can be gleaned from the CMOS type file
-			// 0 : Defaults
-			// 1 : 5 1/4 DD
-			// 2 : 5 1/4 HD
-			// 3 : 3 1/2 DD
-			// 4 : 3 1/2 HD
-			// 5 : 3 1/2 ED
-			// 6 : 3 1/2 ED
-			// 16 : unknown or not installed
-			TQString floppycmsnodename = systempath;
-			floppycmsnodename.append("/cmos");
-			TQFile floppycmsfile( floppycmsnodename );
-			TQString cmosstring;
-			if ( floppycmsfile.open( IO_ReadOnly ) ) {
-				TQTextStream stream( &floppycmsfile );
-				cmosstring = stream.readLine();
-				floppycmsfile.close();
-			}
-			// FIXME
-			// Do something with the information in cmosstring
-
-			if (devicenode.isNull()) {
-				// This floppy drive cannot be mounted, so ignore it
-				disktype = disktype & ~TDEDiskDeviceType::Floppy;
-			}
-		}
-
-		if (devicetypestring.upper() == "CD") {
-			if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_STATE")).upper() == "BLANK") {
-				diskstatus = diskstatus | TDEDiskDeviceStatus::Blank;
-			}
-			sdevice->internalSetMediaInserted((TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA")) != ""));
-		}
-
-		if (disktype & TDEDiskDeviceType::Zip) {
-			// A Zip drive does not advertise its status via udev, but it can be guessed from the size parameter
-			TQString zipnodename = systempath;
-			zipnodename.append("/size");
-			TQFile namefile( zipnodename );
-			TQString zipsize;
-			if ( namefile.open( IO_ReadOnly ) ) {
-				TQTextStream stream( &namefile );
-				zipsize = stream.readLine();
-				namefile.close();
-			}
-			if (!zipsize.isNull()) {
-				sdevice->internalSetMediaInserted((zipsize.toInt() != 0));
-			}
-		}
-
-		if (removable) {
-			diskstatus = diskstatus | TDEDiskDeviceStatus::Removable;
-		}
-		if (hotpluggable) {
-			diskstatus = diskstatus | TDEDiskDeviceStatus::Hotpluggable;
-		}
-
-		if ((filesystemtype.upper() != "CRYPTO_LUKS") && (filesystemtype.upper() != "CRYPTO")  && (!filesystemtype.isNull())) {
-			diskstatus = diskstatus | TDEDiskDeviceStatus::ContainsFilesystem;
-		}
-
-		// Set mountable flag if device is likely to be mountable
-		diskstatus = diskstatus | TDEDiskDeviceStatus::Mountable;
-		if ((devicetypestring.upper().isNull()) && (disktype & TDEDiskDeviceType::HDD)) {
-			diskstatus = diskstatus & ~TDEDiskDeviceStatus::Mountable;
-		}
-		if (removable) {
-			if (sdevice->mediaInserted()) {
-				diskstatus = diskstatus | TDEDiskDeviceStatus::Inserted;
-			}
-			else {
-				diskstatus = diskstatus & ~TDEDiskDeviceStatus::Mountable;
-			}
-		}
-		// If certain disk types do not report the presence of a filesystem, they are likely not mountable
-		if ((disktype & TDEDiskDeviceType::HDD) || (disktype & TDEDiskDeviceType::Optical)) {
-			if (!(diskstatus & TDEDiskDeviceStatus::ContainsFilesystem)) {
-				diskstatus = diskstatus & ~TDEDiskDeviceStatus::Mountable;
-			}
-		}
-
-		if (holdingDeviceNodes.count() > 0) {
-			diskstatus = diskstatus | TDEDiskDeviceStatus::UsedByDevice;
-		}
-
-		if (slaveDeviceNodes.count() > 0) {
-			diskstatus = diskstatus | TDEDiskDeviceStatus::UsesDevice;
-		}
-
-		// See if any slaves were crypted
-		for ( TQStringList::Iterator slaveit = slaveDeviceNodes.begin(); slaveit != slaveDeviceNodes.end(); ++slaveit ) {
-			struct udev_device *slavedev;
-			slavedev = udev_device_new_from_syspath(m_udevStruct, (*slaveit).ascii());
-			TQString slavediskfstype(udev_device_get_property_value(slavedev, "ID_FS_TYPE"));
-			if ((slavediskfstype.upper() == "CRYPTO_LUKS") || (slavediskfstype.upper() == "CRYPTO")) {
-				disktype = disktype | TDEDiskDeviceType::UnlockedCrypt;
-				// Set disk type based on parent device
-				disktype = disktype | classifyDiskType(slavedev, TQString(udev_device_get_property_value(dev, "ID_BUS")), TQString(udev_device_get_property_value(dev, "ID_TYPE")), (*slaveit), TQString(udev_device_get_property_value(dev, "ID_VENDOR")), TQString(udev_device_get_property_value(dev, "ID_MODEL")), TQString(udev_device_get_property_value(dev, "ID_FS_TYPE")), TQString(udev_device_get_driver(dev)));
-			}
-			udev_device_unref(slavedev);
-		}
-
-		sdevice->internalSetDiskType(disktype);
-		sdevice->internalSetDiskUUID(diskuuid);
-		sdevice->internalSetDiskStatus(diskstatus);
-		sdevice->internalSetFileSystemName(filesystemtype);
-		sdevice->internalSetFileSystemUsage(filesystemusage);
-		sdevice->internalSetSlaveDevices(slaveDeviceNodes);
-		sdevice->internalSetHoldingDevices(holdingDeviceNodes);
-
-		// Clean up disk label
-		if ((sdevice->isDiskOfType(TDEDiskDeviceType::CDROM))
-			|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDRW))
-			|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDROM))
-			|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRW))
-			|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDROM))
-			|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDRW))
-			|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDAudio))
-			|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDVideo))
-			|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDVideo))
-			|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDVideo))
-			) {
-			if (disklabel == "" && sdevice->diskLabel().isNull()) {
-				// Read the volume label in via volname, since udev couldn't be bothered to do this on its own
-				FILE *exepipe = popen(((TQString("volname %1").arg(devicenode).ascii())), "r");
-				if (exepipe) {
-					char buffer[8092];
-					disklabel = fgets(buffer, sizeof(buffer), exepipe);
-					pclose(exepipe);
+	
+			// See if any other physical devices underlie this device, for example when the Device Mapper is in use
+			TQStringList slaveDeviceNodes;
+			TQString slavesnodename = udev_device_get_syspath(dev);
+			slavesnodename.append("/slaves/");
+			TQDir slavedir(slavesnodename);
+			slavedir.setFilter(TQDir::All);
+			dirlist = slavedir.entryInfoList();
+			if (dirlist) {
+				TQFileInfoListIterator slavedirit(*dirlist);
+				TQFileInfo *dirfi;
+				while ( (dirfi = slavedirit.current()) != 0 ) {
+					if (dirfi->isSymLink()) {
+						char* collapsedPath = realpath((slavesnodename + dirfi->readLink()).ascii(), NULL);
+						slaveDeviceNodes.append(TQString(collapsedPath));
+						free(collapsedPath);
+					}
+					++slavedirit;
 				}
 			}
+	
+			// Determine generic disk information
+			TQString devicevendor(udev_device_get_property_value(dev, "ID_VENDOR"));
+			TQString devicemodel(udev_device_get_property_value(dev, "ID_MODEL"));
+			TQString devicebus(udev_device_get_property_value(dev, "ID_BUS"));
+	
+			// Get disk specific info
+			TQString disklabel(udev_device_get_property_value(dev, "ID_FS_LABEL"));
+			TQString diskuuid(udev_device_get_property_value(dev, "ID_FS_UUID"));
+			TQString filesystemtype(udev_device_get_property_value(dev, "ID_FS_TYPE"));
+			TQString filesystemusage(udev_device_get_property_value(dev, "ID_FS_USAGE"));
+	
+			device->internalSetVendorName(devicevendor);
+			device->internalSetVendorModel(devicemodel);
+			device->internalSetDeviceBus(devicebus);
+	
+			TDEDiskDeviceType::TDEDiskDeviceType disktype = sdevice->diskType();
+			TDEDiskDeviceStatus::TDEDiskDeviceStatus diskstatus = TDEDiskDeviceStatus::Null;
+	
+			if (force_full_classification) {
+				disktype = classifyDiskType(dev, devicebus, devicetypestring, systempath, devicevendor, devicemodel, filesystemtype, devicedriver);
+				sdevice->internalSetDiskType(disktype);
+				device = classifyUnknownDeviceByExternalRules(dev, device, true);	// Check external rules for possible subtype overrides
+				disktype = sdevice->diskType();						// The type can be overridden by an external rule
+			}
+	
+			if ((disktype & TDEDiskDeviceType::CDROM)
+				|| (disktype & TDEDiskDeviceType::CDRW)
+				|| (disktype & TDEDiskDeviceType::DVDROM)
+				|| (disktype & TDEDiskDeviceType::DVDRAM)
+				|| (disktype & TDEDiskDeviceType::DVDRW)
+				|| (disktype & TDEDiskDeviceType::BDROM)
+				|| (disktype & TDEDiskDeviceType::BDRW)
+				|| (disktype & TDEDiskDeviceType::CDAudio)
+				|| (disktype & TDEDiskDeviceType::CDVideo)
+				|| (disktype & TDEDiskDeviceType::DVDVideo)
+				|| (disktype & TDEDiskDeviceType::BDVideo)
+				) {
+				// These drives are guaranteed to be optical
+				disktype = disktype | TDEDiskDeviceType::Optical;
+			}
+	
+			if (disktype & TDEDiskDeviceType::Floppy) {
+				// Floppy drives don't work well under udev
+				// I have to look for the block device name manually
+				TQString floppyblknodename = systempath;
+				floppyblknodename.append("/block");
+				TQDir floppyblkdir(floppyblknodename);
+				floppyblkdir.setFilter(TQDir::All);
+				const TQFileInfoList *floppyblkdirlist = floppyblkdir.entryInfoList();
+				if (floppyblkdirlist) {
+					TQFileInfoListIterator floppyblkdirit(*floppyblkdirlist);
+					TQFileInfo *dirfi;
+					while ( (dirfi = floppyblkdirit.current()) != 0 ) {
+						if ((dirfi->fileName() != ".") && (dirfi->fileName() != "..")) {
+							// Does this routine work with more than one floppy drive in the system?
+							devicenode = TQString("/dev/").append(dirfi->fileName());
+						}
+						++floppyblkdirit;
+					}
+				}
+	
+				// Some interesting information can be gleaned from the CMOS type file
+				// 0 : Defaults
+				// 1 : 5 1/4 DD
+				// 2 : 5 1/4 HD
+				// 3 : 3 1/2 DD
+				// 4 : 3 1/2 HD
+				// 5 : 3 1/2 ED
+				// 6 : 3 1/2 ED
+				// 16 : unknown or not installed
+				TQString floppycmsnodename = systempath;
+				floppycmsnodename.append("/cmos");
+				TQFile floppycmsfile( floppycmsnodename );
+				TQString cmosstring;
+				if ( floppycmsfile.open( IO_ReadOnly ) ) {
+					TQTextStream stream( &floppycmsfile );
+					cmosstring = stream.readLine();
+					floppycmsfile.close();
+				}
+				// FIXME
+				// Do something with the information in cmosstring
+	
+				if (devicenode.isNull()) {
+					// This floppy drive cannot be mounted, so ignore it
+					disktype = disktype & ~TDEDiskDeviceType::Floppy;
+				}
+			}
+	
+			if (devicetypestring.upper() == "CD") {
+				if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_STATE")).upper() == "BLANK") {
+					diskstatus = diskstatus | TDEDiskDeviceStatus::Blank;
+				}
+				sdevice->internalSetMediaInserted((TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA")) != ""));
+			}
+	
+			if (disktype & TDEDiskDeviceType::Zip) {
+				// A Zip drive does not advertise its status via udev, but it can be guessed from the size parameter
+				TQString zipnodename = systempath;
+				zipnodename.append("/size");
+				TQFile namefile( zipnodename );
+				TQString zipsize;
+				if ( namefile.open( IO_ReadOnly ) ) {
+					TQTextStream stream( &namefile );
+					zipsize = stream.readLine();
+					namefile.close();
+				}
+				if (!zipsize.isNull()) {
+					sdevice->internalSetMediaInserted((zipsize.toInt() != 0));
+				}
+			}
+	
+			if (removable) {
+				diskstatus = diskstatus | TDEDiskDeviceStatus::Removable;
+			}
+			if (hotpluggable) {
+				diskstatus = diskstatus | TDEDiskDeviceStatus::Hotpluggable;
+			}
+	
+			if ((filesystemtype.upper() != "CRYPTO_LUKS") && (filesystemtype.upper() != "CRYPTO")  && (!filesystemtype.isNull())) {
+				diskstatus = diskstatus | TDEDiskDeviceStatus::ContainsFilesystem;
+			}
+	
+			// Set mountable flag if device is likely to be mountable
+			diskstatus = diskstatus | TDEDiskDeviceStatus::Mountable;
+			if ((devicetypestring.upper().isNull()) && (disktype & TDEDiskDeviceType::HDD)) {
+				diskstatus = diskstatus & ~TDEDiskDeviceStatus::Mountable;
+			}
+			if (removable) {
+				if (sdevice->mediaInserted()) {
+					diskstatus = diskstatus | TDEDiskDeviceStatus::Inserted;
+				}
+				else {
+					diskstatus = diskstatus & ~TDEDiskDeviceStatus::Mountable;
+				}
+			}
+			// If certain disk types do not report the presence of a filesystem, they are likely not mountable
+			if ((disktype & TDEDiskDeviceType::HDD) || (disktype & TDEDiskDeviceType::Optical)) {
+				if (!(diskstatus & TDEDiskDeviceStatus::ContainsFilesystem)) {
+					diskstatus = diskstatus & ~TDEDiskDeviceStatus::Mountable;
+				}
+			}
+	
+			if (holdingDeviceNodes.count() > 0) {
+				diskstatus = diskstatus | TDEDiskDeviceStatus::UsedByDevice;
+			}
+	
+			if (slaveDeviceNodes.count() > 0) {
+				diskstatus = diskstatus | TDEDiskDeviceStatus::UsesDevice;
+			}
+	
+			// See if any slaves were crypted
+			for ( TQStringList::Iterator slaveit = slaveDeviceNodes.begin(); slaveit != slaveDeviceNodes.end(); ++slaveit ) {
+				struct udev_device *slavedev;
+				slavedev = udev_device_new_from_syspath(m_udevStruct, (*slaveit).ascii());
+				TQString slavediskfstype(udev_device_get_property_value(slavedev, "ID_FS_TYPE"));
+				if ((slavediskfstype.upper() == "CRYPTO_LUKS") || (slavediskfstype.upper() == "CRYPTO")) {
+					disktype = disktype | TDEDiskDeviceType::UnlockedCrypt;
+					// Set disk type based on parent device
+					disktype = disktype | classifyDiskType(slavedev, TQString(udev_device_get_property_value(dev, "ID_BUS")), TQString(udev_device_get_property_value(dev, "ID_TYPE")), (*slaveit), TQString(udev_device_get_property_value(dev, "ID_VENDOR")), TQString(udev_device_get_property_value(dev, "ID_MODEL")), TQString(udev_device_get_property_value(dev, "ID_FS_TYPE")), TQString(udev_device_get_driver(dev)));
+				}
+				udev_device_unref(slavedev);
+			}
+	
+			sdevice->internalSetDiskType(disktype);
+			sdevice->internalSetDiskUUID(diskuuid);
+			sdevice->internalSetDiskStatus(diskstatus);
+			sdevice->internalSetFileSystemName(filesystemtype);
+			sdevice->internalSetFileSystemUsage(filesystemusage);
+			sdevice->internalSetSlaveDevices(slaveDeviceNodes);
+			sdevice->internalSetHoldingDevices(holdingDeviceNodes);
+	
+			// Clean up disk label
+			if ((sdevice->isDiskOfType(TDEDiskDeviceType::CDROM))
+				|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDRW))
+				|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDROM))
+				|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRW))
+				|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDROM))
+				|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDRW))
+				|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDAudio))
+				|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDVideo))
+				|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDVideo))
+				|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDVideo))
+				) {
+				if (disklabel == "" && sdevice->diskLabel().isNull()) {
+					// Read the volume label in via volname, since udev couldn't be bothered to do this on its own
+					FILE *exepipe = popen(((TQString("volname %1").arg(devicenode).ascii())), "r");
+					if (exepipe) {
+						char buffer[8092];
+						disklabel = fgets(buffer, sizeof(buffer), exepipe);
+						pclose(exepipe);
+					}
+				}
+			}
+	
+			sdevice->internalSetDiskLabel(disklabel);
 		}
-
-		sdevice->internalSetDiskLabel(disklabel);
 	}
 
 	if (device->type() == TDEGenericDeviceType::Network) {
