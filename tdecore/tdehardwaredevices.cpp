@@ -536,6 +536,9 @@ TQString TDEStorageDevice::friendlyDeviceType() {
 	if (isDiskOfType(TDEDiskDeviceType::Floppy)) {
 		ret = i18n("Floppy Drive");
 	}
+	if (isDiskOfType(TDEDiskDeviceType::Optical)) {
+		ret = i18n("Optical Drive");
+	}
 	if (isDiskOfType(TDEDiskDeviceType::CDROM)) {
 		ret = i18n("CDROM Drive");
 	}
@@ -545,17 +548,11 @@ TQString TDEStorageDevice::friendlyDeviceType() {
 	if (isDiskOfType(TDEDiskDeviceType::DVDROM)) {
 		ret = i18n("DVD Drive");
 	}
-	if (isDiskOfType(TDEDiskDeviceType::DVDRW) || isDiskOfType(TDEDiskDeviceType::DVDRAM)) {
-		ret = i18n("DVDRW Drive");
-	}
 	if (isDiskOfType(TDEDiskDeviceType::DVDRW)) {
 		ret = i18n("DVDRW Drive");
 	}
 	if (isDiskOfType(TDEDiskDeviceType::DVDRAM)) {
 		ret = i18n("DVDRAM Drive");
-	}
-	if (isDiskOfType(TDEDiskDeviceType::Optical)) {
-		ret = i18n("Optical Drive");
 	}
 	if (isDiskOfType(TDEDiskDeviceType::Zip)) {
 		ret = i18n("Zip Drive");
@@ -596,6 +593,9 @@ TQPixmap TDEStorageDevice::icon(KIcon::StdSizes size) {
 	if (isDiskOfType(TDEDiskDeviceType::Floppy)) {
 		ret = DesktopIcon("3floppy_unmount", size);
 	}
+	if (isDiskOfType(TDEDiskDeviceType::Optical)) {
+		ret = DesktopIcon("cdrom_unmount", size);
+	}
 	if (isDiskOfType(TDEDiskDeviceType::CDROM)) {
 		ret = DesktopIcon("cdrom_unmount", size);
 	}
@@ -610,9 +610,6 @@ TQPixmap TDEStorageDevice::icon(KIcon::StdSizes size) {
 	}
 	if (isDiskOfType(TDEDiskDeviceType::DVDRAM)) {
 		ret = DesktopIcon("dvd_unmount", size);
-	}
-	if (isDiskOfType(TDEDiskDeviceType::Optical)) {
-		ret = DesktopIcon("cdrom_unmount", size);
 	}
 	if (isDiskOfType(TDEDiskDeviceType::Zip)) {
 		ret = DesktopIcon("zip_unmount", size);
@@ -3056,6 +3053,10 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		if (systempath.lower().startsWith("/sys/devices/virtual")) {
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::OtherVirtual);
 		}
+		if (systempath.lower().startsWith("/sys/module/")
+			|| (systempath.lower().startsWith("/sys/kernel/"))) {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);	// FIXME Should go into a new kernel module category when the tdelibs ABI can be broken again
+		}
 		if ((devicetypestring == "audio")
 			|| (devicesubsystem == "sound")
 			|| (devicesubsystem == "ac97")) {
@@ -3395,12 +3396,10 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			TDEDiskDeviceType::TDEDiskDeviceType disktype = sdevice->diskType();
 			TDEDiskDeviceStatus::TDEDiskDeviceStatus diskstatus = TDEDiskDeviceStatus::Null;
 	
-			if (force_full_classification) {
-				disktype = classifyDiskType(dev, devicebus, devicetypestring, systempath, devicevendor, devicemodel, filesystemtype, devicedriver);
-				sdevice->internalSetDiskType(disktype);
-				device = classifyUnknownDeviceByExternalRules(dev, device, true);	// Check external rules for possible subtype overrides
-				disktype = sdevice->diskType();						// The type can be overridden by an external rule
-			}
+			disktype = classifyDiskType(dev, devicebus, devicetypestring, systempath, devicevendor, devicemodel, filesystemtype, devicedriver);
+			sdevice->internalSetDiskType(disktype);
+			device = classifyUnknownDeviceByExternalRules(dev, device, true);	// Check external rules for possible subtype overrides
+			disktype = sdevice->diskType();						// The type can be overridden by an external rule
 	
 			if ((disktype & TDEDiskDeviceType::CDROM)
 				|| (disktype & TDEDiskDeviceType::CDRW)
