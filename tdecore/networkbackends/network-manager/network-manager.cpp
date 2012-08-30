@@ -387,6 +387,227 @@ TQString tdeEAPFastFlagsToNMEAPFastFlags(TDENetworkIEEE8021xFastFlags::TDENetwor
 	return ret;
 }
 
+TDEWiFiMode::TDEWiFiMode nmWiFiModeToTDEWiFiMode(TQString nm) {
+	TDEWiFiMode::TDEWiFiMode ret = TDEWiFiMode::Infrastructure;
+
+	if (nm.lower() == "infrastructure") {
+		ret = TDEWiFiMode::Infrastructure;
+	}
+	else if (nm.lower() == "adhoc") {
+		ret = TDEWiFiMode::AdHoc;
+	}
+
+	return ret;
+}
+
+TQString tdeWiFiModeToNMWiFiMode(TDEWiFiMode::TDEWiFiMode mode) {
+	TQString ret;
+
+	if (mode == TDEWiFiMode::Infrastructure) {
+		ret = "infrastructure";
+	}
+	else if (mode == TDEWiFiMode::AdHoc) {
+		ret = "adhoc";
+	}
+
+	return ret;
+}
+
+TDEWiFiFrequencyBand::TDEWiFiFrequencyBand nmWiFiFrequencyBandToTDEWiFiFrequencyBand(TQString nm) {
+	TDEWiFiFrequencyBand::TDEWiFiFrequencyBand ret = TDEWiFiFrequencyBand::Other;
+
+	if (nm.lower() == "") {
+		ret = TDEWiFiFrequencyBand::None;
+	}
+	else if (nm.lower() == "bg") {
+		ret = TDEWiFiFrequencyBand::Band2_4GHz;
+	}
+	else if (nm.lower() == "a") {
+		ret = TDEWiFiFrequencyBand::Band5GHz;
+	}
+
+	return ret;
+}
+
+TQString tdeWiFiFrequencyBandToNMWiFiFrequencyBand(TDEWiFiFrequencyBand::TDEWiFiFrequencyBand mode) {
+	TQString ret;
+
+	if (mode == TDEWiFiFrequencyBand::None) {
+		ret = TQString::null;
+	}
+	else if (mode == TDEWiFiFrequencyBand::Band2_4GHz) {
+		ret = "bg";
+	}
+	else if (mode == TDEWiFiFrequencyBand::Band5GHz) {
+		ret = "a";
+	}
+
+	return ret;
+}
+
+TDENetworkWiFiKeyType::TDENetworkWiFiKeyType nmWiFiKeyTypeToTDEWiFiKeyType(TQString nm) {
+	TDENetworkWiFiKeyType::TDENetworkWiFiKeyType ret = TDENetworkWiFiKeyType::Other;
+
+	if (nm.lower() == "none") {
+		ret = TDENetworkWiFiKeyType::WEP;
+	}
+	else if (nm.lower() == "ieee8021x") {
+		ret = TDENetworkWiFiKeyType::DynamicWEP;
+	}
+	else if (nm.lower() == "wpa-none") {
+		ret = TDENetworkWiFiKeyType::WPAAdHoc;
+	}
+	else if (nm.lower() == "wpa-psk") {
+		ret = TDENetworkWiFiKeyType::WPAInfrastructure;
+	}
+	else if (nm.lower() == "wpa-eap") {
+		ret = TDENetworkWiFiKeyType::WPAEnterprise;
+	}
+
+	return ret;
+}
+
+TQString tdeWiFiKeyTypeToNMWiFiKeyType(TDENetworkWiFiKeyType::TDENetworkWiFiKeyType type) {
+	TQString ret;
+
+	if (type == TDENetworkWiFiKeyType::WEP) {
+		return "none";
+	}
+	else if (type == TDENetworkWiFiKeyType::DynamicWEP) {
+		return "ieee8021x";
+	}
+	else if (type == TDENetworkWiFiKeyType::WPAAdHoc) {
+		return "wpa-none";
+	}
+	else if (type == TDENetworkWiFiKeyType::WPAInfrastructure) {
+		return "wpa-psk";
+	}
+	else if (type == TDENetworkWiFiKeyType::WPAEnterprise) {
+		return "wpa-eap";
+	}
+
+	return ret;
+}
+
+TDENetworkWiFiAuthType::TDENetworkWiFiAuthType nmWiFiAuthTypeToTDEWiFiAuthType(TQString nm) {
+	TDENetworkWiFiAuthType::TDENetworkWiFiAuthType ret = TDENetworkWiFiAuthType::Other;
+
+	if (nm.lower() == "open") {
+		ret = TDENetworkWiFiAuthType::Open;
+	}
+	else if (nm.lower() == "shared") {
+		ret = TDENetworkWiFiAuthType::Shared;
+	}
+	else if (nm.lower() == "leap") {
+		ret = TDENetworkWiFiAuthType::LEAP;
+	}
+
+	return ret;
+}
+
+TQString tdeWiFiAuthTypeToNMWiFiAuthType(TDENetworkWiFiAuthType::TDENetworkWiFiAuthType type) {
+	TQString ret;
+
+	if (type == TDENetworkWiFiAuthType::Open) {
+		return "open";
+	}
+	else if (type == TDENetworkWiFiAuthType::Shared) {
+		return "shared";
+	}
+	else if (type == TDENetworkWiFiAuthType::LEAP) {
+		return "leap";
+	}
+
+	return ret;
+}
+
+TDENetworkWiFiWPAVersion::TDENetworkWiFiWPAVersion nmWiFiWPAVersionToTDEWiFiWPAVersion(TQStringList nm) {
+	TDENetworkWiFiWPAVersion::TDENetworkWiFiWPAVersion ret = TDENetworkWiFiWPAVersion::Other;
+
+	if ((nm.contains("wpa") && nm.contains("rsn")) || (nm.count() < 1)) {
+		ret = TDENetworkWiFiWPAVersion::Any;
+	}
+	else if (nm.contains("wpa")) {
+		ret = TDENetworkWiFiWPAVersion::WPA;
+	}
+	else if (nm.contains("rsn")) {
+		ret = TDENetworkWiFiWPAVersion::RSN;
+	}
+
+	return ret;
+}
+
+TQStringList tdeWiFiWPAVersionToNMWiFiWPAVersion(TDENetworkWiFiWPAVersion::TDENetworkWiFiWPAVersion type) {
+	TQStringList ret;
+
+	if (type == TDENetworkWiFiWPAVersion::WPA) {
+		ret.append("wpa");
+	}
+	if (type == TDENetworkWiFiWPAVersion::RSN) {
+		ret.append("rsn");
+	}
+
+	return ret;
+}
+
+TDENetworkWiFiConnectionCipher::TDENetworkWiFiConnectionCipher nmWiFiCipherToTDEWiFiCipher(TQString nm) {
+	TDENetworkWiFiConnectionCipher::TDENetworkWiFiConnectionCipher ret = TDENetworkWiFiConnectionCipher::None;
+
+	if (nm.lower() == "wep40") {
+		ret = TDENetworkWiFiConnectionCipher::CipherWEP40;
+	}
+	else if (nm.lower() == "wep104") {
+		ret = TDENetworkWiFiConnectionCipher::CipherWEP104;
+	}
+	else if (nm.lower() == "tkip") {
+		ret = TDENetworkWiFiConnectionCipher::CipherTKIP;
+	}
+	else if (nm.lower() == "ccmp") {
+		ret = TDENetworkWiFiConnectionCipher::CipherCCMP;
+	}
+
+	return ret;
+}
+
+TQString tdeWiFiCipherToNMWiFiCipher(TDENetworkWiFiConnectionCipher::TDENetworkWiFiConnectionCipher cipher) {
+	TQString ret;
+
+	if (cipher == TDENetworkWiFiConnectionCipher::CipherWEP40) {
+		ret = "wep40";
+	}
+	else if (cipher == TDENetworkWiFiConnectionCipher::CipherWEP104) {
+		ret = "wep104";
+	}
+	else if (cipher == TDENetworkWiFiConnectionCipher::CipherTKIP) {
+		ret = "tkip";
+	}
+	else if (cipher == TDENetworkWiFiConnectionCipher::CipherCCMP) {
+		ret = "ccmp";
+	}
+
+	return ret;
+}
+
+TDENetworkSlaveDeviceType::TDENetworkSlaveDeviceType nmSlaveTypeToTDESlaveType(TQString nm) {
+	TDENetworkSlaveDeviceType::TDENetworkSlaveDeviceType ret = TDENetworkSlaveDeviceType::None;
+
+	if (nm.lower() == "bond") {
+		ret = TDENetworkSlaveDeviceType::Bond;
+	}
+
+	return ret;
+}
+
+TQString tdeSlaveTypeToNMSlaveType(TDENetworkSlaveDeviceType::TDENetworkSlaveDeviceType slavetype) {
+	TQString ret;
+
+	if (slavetype == TDENetworkSlaveDeviceType::Bond) {
+		ret = "bond";
+	}
+
+	return ret;
+}
+
 TDENetworkPasswordHandlingFlags::TDENetworkPasswordHandlingFlags nmPasswordFlagsToTDEPasswordFlags(unsigned int nm) {
 	TDENetworkPasswordHandlingFlags::TDENetworkPasswordHandlingFlags ret = TDENetworkPasswordHandlingFlags::None;
 
@@ -414,6 +635,32 @@ unsigned int tdePasswordFlagsToNMPasswordFlags(TDENetworkPasswordHandlingFlags::
 	}
 	if (flags & TDENetworkPasswordHandlingFlags::NoPrompt) {
 		ret |= NM_PASSWORD_SECRET_NOTREQUIRED;
+	}
+
+	return ret;
+}
+
+TDENetworkWepKeyType::TDENetworkWepKeyType nmWepKeyTypeToTDEWepKeyType(unsigned int nm) {
+	TDENetworkWepKeyType::TDENetworkWepKeyType ret = TDENetworkWepKeyType::Hexadecimal;
+
+	if (nm == NM_WEP_TYPE_HEXADECIMAL) {
+		ret = TDENetworkWepKeyType::Hexadecimal;
+	}
+	else if (nm == NM_WEP_TYPE_PASSPHRASE) {
+		ret = TDENetworkWepKeyType::Passphrase;
+	}
+
+	return ret;
+}
+
+unsigned int tdeWepKeyTypeToNMWepKeyType(TDENetworkWepKeyType::TDENetworkWepKeyType type) {
+	unsigned int ret = 0;
+
+	if (type == TDENetworkWepKeyType::Hexadecimal) {
+		ret = NM_WEP_TYPE_HEXADECIMAL;
+	}
+	else if (type == TDENetworkWepKeyType::Passphrase) {
+		ret = NM_WEP_TYPE_PASSPHRASE;
 	}
 
 	return ret;
@@ -533,6 +780,32 @@ unsigned int tdeAPSecFlagsToNMAPSecFlags(TDENetworkWiFiAPFlags::TDENetworkWiFiAP
 	return ret;
 }
 
+TDENetworkInfinibandTransportMode::TDENetworkInfinibandTransportMode nmIBTransportToTDEIBTransport(TQString nm) {
+	TDENetworkInfinibandTransportMode::TDENetworkInfinibandTransportMode ret = TDENetworkInfinibandTransportMode::Other;
+
+	if (nm.lower() == "datagram") {
+		ret = TDENetworkInfinibandTransportMode::Datagram;
+	}
+	else if (nm.lower() == "connected") {
+		ret = TDENetworkInfinibandTransportMode::Connected;
+	}
+
+	return ret;
+}
+
+TQString tdeIBTransportToNMIBTransport(TDENetworkInfinibandTransportMode::TDENetworkInfinibandTransportMode mode) {
+	TQString ret;
+
+	if (mode == TDENetworkInfinibandTransportMode::Datagram) {
+		ret = "datagram";
+	}
+	else if (mode == TDENetworkInfinibandTransportMode::Connected) {
+		ret = "connected";
+	}
+
+	return ret;
+}
+
 TQString TDENetworkConnectionManager_BackendNM::deviceInterfaceString(TQString macAddress) {
 	if (d->m_networkManagerProxy) {
 		TQT_DBusObjectPathList devices;
@@ -554,6 +827,16 @@ TQString TDENetworkConnectionManager_BackendNM::deviceInterfaceString(TQString m
 					DBus::EthernetDeviceProxy ethernetDevice(NM_DBUS_SERVICE, (*it));
 					ethernetDevice.setConnection(TQT_DBusConnection::systemBus());
 					TQString candidateMACAddress = ethernetDevice.getPermHwAddress(error);
+					if (!error.isValid()) {
+						if (candidateMACAddress.lower() == macAddress.lower()) {
+							return (*it);
+						}
+					}
+				}
+				else if (deviceType == TDENetworkConnectionType::Infiniband) {
+					DBus::InfinibandDeviceProxy infinibandDevice(NM_DBUS_SERVICE, (*it));
+					infinibandDevice.setConnection(TQT_DBusConnection::systemBus());
+					TQString candidateMACAddress = infinibandDevice.getHwAddress(error);
 					if (!error.isValid()) {
 						if (candidateMACAddress.lower() == macAddress.lower()) {
 							return (*it);
@@ -733,10 +1016,14 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 			for (it = connections.begin(); it != connections.end(); ++it) {
 				TDENetworkConnection* connection;
 				TDEWiredEthernetConnection* ethernetConnection = NULL;
+				TDEWiredInfinibandConnection* infinibandConnection = NULL;
 				TDEWiFiConnection* wiFiConnection = NULL;
 				TDENetworkConnectionType::TDENetworkConnectionType connType = connectionType();
 				if (connType == TDENetworkConnectionType::WiredEthernet) {
 					connection = ethernetConnection = new TDEWiredEthernetConnection;
+				}
+				if (connType == TDENetworkConnectionType::Infiniband) {
+					connection = infinibandConnection = new TDEWiredInfinibandConnection;
 				}
 				if (connType == TDENetworkConnectionType::WiFi) {
 					connection = wiFiConnection = new TDEWiFiConnection;
@@ -823,10 +1110,35 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 										else if (keyValue.lower() == "uuid") {
 											connection->UUID = dataValue2.toString().lower();
 										}
+										else if (keyValue.lower() == "permissions") {
+											TQT_DBusDataValueList valueList = dataValue2.toTQValueList();
+											TQT_DBusDataValueList::const_iterator it4;
+											for (it4 = valueList.begin(); it4 != valueList.end(); ++it4) {
+												TQT_DBusData innerDataValue = *it4;
+												TQString authString = innerDataValue.toString();
+												TQStringList pieces = TQStringList::split(":", authString);
+												if (pieces[0].lower() == "user") {
+													connection->authorizedUsers.append(pieces[1]);
+												}
+											}
+										}
+										else if (keyValue.lower() == "autoconnect") {
+											connection->autoConnect = dataValue2.toBool();
+										}
+										else if (keyValue.lower() == "read-only") {
+											connection->readOnly = dataValue2.toBool();
+										}
+										else if (keyValue.lower() == "master") {
+											connection->masterConnectionUUID = dataValue2.toString().lower();
+										}
+										else if (keyValue.lower() == "slave-type") {
+											connection->slaveType = nmSlaveTypeToTDESlaveType(dataValue2.toString());
+										}
+										else if (keyValue.lower() == "timestamp") {
+											connection->lastKnownConnection.setTime_t(dataValue2.toUInt64());
+										}
 									}
 									else if (outerKeyValue.lower() == "802-1x") {
-										// FIXME
-										// Implement load+save of the remaining settings in this group!
 										if (keyValue.lower() == "eap") {
 											TQT_DBusDataValueList valueList = dataValue2.toTQValueList();
 											TQT_DBusDataValueList::const_iterator it4;
@@ -1003,6 +1315,164 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 											connection->mtu = dataValue2.toUInt32();
 										}
 									}
+									else if (outerKeyValue.lower() == "infiniband") {
+										if (keyValue.lower() == "mac-address") {
+											TQT_DBusDataValueList valueList = dataValue2.toTQValueList();
+											TQT_DBusDataValueList::const_iterator it4;
+											TDENetworkByteList macAddress;
+											for (it4 = valueList.begin(); it4 != valueList.end(); ++it4) {
+												TQT_DBusData innerDataValue = *it4;
+												macAddress.append(innerDataValue.toByte());
+											}
+											connection->lockedHWAddress.setAddress(macAddress);
+										}
+										else if (keyValue.lower() == "mtu") {
+											connection->mtu = dataValue2.toUInt32();
+										}
+										else if (keyValue.lower() == "transport-mode") {
+											infinibandConnection->transportMode = nmIBTransportToTDEIBTransport(dataValue2.toString());
+										}
+									}
+									else if (outerKeyValue.lower() == "802-11-wireless") {
+										if (keyValue.lower() == "mac-address") {
+											TQT_DBusDataValueList valueList = dataValue2.toTQValueList();
+											TQT_DBusDataValueList::const_iterator it4;
+											TDENetworkByteList macAddress;
+											for (it4 = valueList.begin(); it4 != valueList.end(); ++it4) {
+												TQT_DBusData innerDataValue = *it4;
+												macAddress.append(innerDataValue.toByte());
+											}
+											connection->lockedHWAddress.setAddress(macAddress);
+										}
+										else if (keyValue.lower() == "cloned-mac-address") {
+											TQT_DBusDataValueList valueList = dataValue2.toTQValueList();
+											TQT_DBusDataValueList::const_iterator it4;
+											TDENetworkByteList macAddress;
+											for (it4 = valueList.begin(); it4 != valueList.end(); ++it4) {
+												TQT_DBusData innerDataValue = *it4;
+												macAddress.append(innerDataValue.toByte());
+											}
+											connection->manualHWAddress.setAddress(macAddress);
+										}
+										else if (keyValue.lower() == "mtu") {
+											connection->mtu = dataValue2.toUInt32();
+										}
+										else if (keyValue.lower() == "mode") {
+											wiFiConnection->operatingMode = nmWiFiModeToTDEWiFiMode(dataValue2.toString());
+										}
+										else if (keyValue.lower() == "band") {
+											wiFiConnection->bandRestriction = nmWiFiFrequencyBandToTDEWiFiFrequencyBand(dataValue2.toString());
+										}
+										else if (keyValue.lower() == "channel") {
+											wiFiConnection->channelRestriction = dataValue2.toUInt32();
+											if (wiFiConnection->channelRestriction == 0) wiFiConnection->channelRestriction = -1;
+										}
+										else if (keyValue.lower() == "rate") {
+											wiFiConnection->bitRateRestriction = dataValue2.toUInt32()*1000;
+											if (wiFiConnection->bitRateRestriction == 0) wiFiConnection->bitRateRestriction = -1;
+										}
+										else if (keyValue.lower() == "tx-power") {
+											wiFiConnection->powerRestriction = dataValue2.toUInt32();
+											if (wiFiConnection->powerRestriction == 0) wiFiConnection->powerRestriction = -1;
+										}
+										else if (keyValue.lower() == "bssid") {
+											TQT_DBusDataValueList valueList = dataValue2.toTQValueList();
+											TQT_DBusDataValueList::const_iterator it4;
+											TDENetworkByteList macAddress;
+											for (it4 = valueList.begin(); it4 != valueList.end(); ++it4) {
+												TQT_DBusData innerDataValue = *it4;
+												macAddress.append(innerDataValue.toByte());
+											}
+											wiFiConnection->accessPointRestriction.setAddress(macAddress);
+										}
+										else if (keyValue.lower() == "mac-address-blacklist") {
+											TQT_DBusDataValueList valueList = dataValue2.toTQValueList();
+											TQT_DBusDataValueList::const_iterator it4;
+											for (it4 = valueList.begin(); it4 != valueList.end(); ++it4) {
+												TQT_DBusData innerDataValue = *it4;
+												TDEMACAddress hwAddress;
+												hwAddress.fromString(innerDataValue.toString());
+												wiFiConnection->blacklistedBSSIDs.append(hwAddress);
+											}
+										}
+										else if (keyValue.lower() == "seen-bssids") {
+											TQT_DBusDataValueList valueList = dataValue2.toTQValueList();
+											TQT_DBusDataValueList::const_iterator it4;
+											for (it4 = valueList.begin(); it4 != valueList.end(); ++it4) {
+												TQT_DBusData innerDataValue = *it4;
+												TDEMACAddress hwAddress;
+												hwAddress.fromString(innerDataValue.toString());
+												wiFiConnection->heardBSSIDs.append(hwAddress);
+											}
+										}
+										else if (keyValue.lower() == "security") {
+											TQString setting;
+											if (setting.lower() == "802-11-wireless-security") {
+												wiFiConnection->securityRequired = true;
+											}
+											else {
+												wiFiConnection->securityRequired = false;
+											}
+										}
+										else if (keyValue.lower() == "hidden") {
+											wiFiConnection->isHiddenNetwork = dataValue2.toBool();
+										}
+									}
+									else if ((outerKeyValue.lower() == "802-11-wireless-security") && (wiFiConnection)) {
+										if (keyValue.lower() == "key-mgmt") {
+											wiFiConnection->securitySettings.keyType = nmWiFiKeyTypeToTDEWiFiKeyType(dataValue2.toString());
+										}
+										else if (keyValue.lower() == "wep-tx-keyidx") {
+											wiFiConnection->securitySettings.wepKeyIndex = dataValue2.toUInt32();
+										}
+										else if (keyValue.lower() == "auth-alg") {
+											wiFiConnection->securitySettings.authType = nmWiFiAuthTypeToTDEWiFiAuthType(dataValue2.toString());
+										}
+										else if (keyValue.lower() == "proto") {
+											TQT_DBusDataValueList valueList = dataValue2.toTQValueList();
+											TQT_DBusDataValueList::const_iterator it4;
+											TQStringList strings;
+											for (it4 = valueList.begin(); it4 != valueList.end(); ++it4) {
+												TQT_DBusData innerDataValue = *it4;
+												strings.append(innerDataValue.toString());
+											}
+											wiFiConnection->securitySettings.wpaVersion = nmWiFiWPAVersionToTDEWiFiWPAVersion(strings);
+										}
+										else if (keyValue.lower() == "pairwise") {
+											TQT_DBusDataValueList valueList = dataValue2.toTQValueList();
+											TQT_DBusDataValueList::const_iterator it4;
+											TQStringList strings;
+											for (it4 = valueList.begin(); it4 != valueList.end(); ++it4) {
+												TQT_DBusData innerDataValue = *it4;
+												wiFiConnection->securitySettings.allowedPairWiseCiphers.append(nmWiFiCipherToTDEWiFiCipher(innerDataValue.toString()));
+											}
+										}
+										else if (keyValue.lower() == "group") {
+											TQT_DBusDataValueList valueList = dataValue2.toTQValueList();
+											TQT_DBusDataValueList::const_iterator it4;
+											TQStringList strings;
+											for (it4 = valueList.begin(); it4 != valueList.end(); ++it4) {
+												TQT_DBusData innerDataValue = *it4;
+												wiFiConnection->securitySettings.allowedGroupWiseCiphers.append(nmWiFiCipherToTDEWiFiCipher(innerDataValue.toString()));
+											}
+										}
+										else if (keyValue.lower() == "leap-username") {
+											wiFiConnection->securitySettings.leapUsername = dataValue2.toString();
+										}
+										else if (keyValue.lower() == "wep-key-flags") {
+											wiFiConnection->securitySettings.wepKeyFlags = nmPasswordFlagsToTDEPasswordFlags(dataValue2.toUInt32());
+										}
+										else if (keyValue.lower() == "wep-key-type") {
+											wiFiConnection->securitySettings.wepKeyType = nmWepKeyTypeToTDEWepKeyType(dataValue2.toUInt32());
+										}
+										else if (keyValue.lower() == "psk-flags") {
+											wiFiConnection->securitySettings.pskFlags = nmPasswordFlagsToTDEPasswordFlags(dataValue2.toUInt32());
+										}
+										else if (keyValue.lower() == "leap-password-flags") {
+											wiFiConnection->securitySettings.leapPasswordFlags = nmPasswordFlagsToTDEPasswordFlags(dataValue2.toUInt32());
+										}
+										wiFiConnection->securitySettings.valid = true;
+									}
 									else if (outerKeyValue.lower() == "ipv4") {
 										if (keyValue.lower() == "addresses") {
 											TQT_DBusDataValueList valueList = dataValue2.toTQValueList();
@@ -1041,8 +1511,6 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 											TQT_DBusDataValueList::const_iterator it4;
 											for (it4 = valueList.begin(); it4 != valueList.end(); ++it4) {
 												TQT_DBusData innerDataValue = *it4;
-												TQT_DBusDataValueList innerValueList = innerDataValue.toTQValueList();
-												TQT_DBusDataValueList::const_iterator it5;
 												connection->ipConfig.resolvers.append(TQHostAddress(reverseIPV4ByteOrder(innerDataValue.toUInt32())));
 											}
 										}
@@ -1051,8 +1519,6 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 											TQT_DBusDataValueList::const_iterator it4;
 											for (it4 = valueList.begin(); it4 != valueList.end(); ++it4) {
 												TQT_DBusData innerDataValue = *it4;
-												TQT_DBusDataValueList innerValueList = innerDataValue.toTQValueList();
-												TQT_DBusDataValueList::const_iterator it5;
 												connection->ipConfig.searchDomains.append(TDENetworkSearchDomain(innerDataValue.toString(), false));
 											}
 										}
@@ -1353,6 +1819,9 @@ bool TDENetworkConnectionManager_BackendNM::loadConnectionSecretsForGroup(TQStri
 		PRINT_ERROR(TQString("Unable to locate connection with uuid '%1' in local database.  Did you run loadConnectionInformation() first?"));
 		return FALSE;
 	}
+	//TDEWiredEthernetConnection* ethernetConnection = dynamic_cast<TDEWiredEthernetConnection*>(connection);
+	//TDEWiredInfinibandConnection* infinibandConnection = dynamic_cast<TDEWiredInfinibandConnection*>(connection);
+	TDEWiFiConnection* wiFiConnection = dynamic_cast<TDEWiFiConnection*>(connection);
 	TQT_DBusObjectPath existingConnection;
 	TQT_DBusError error;
 	bool ret;
@@ -1440,6 +1909,26 @@ bool TDENetworkConnectionManager_BackendNM::loadConnectionSecretsForGroup(TQStri
 								}
 								connection->eapConfig.secretsValid = true;
 							}
+							if ((outerKeyValue.lower() == "802-11-wireless-security") && (wiFiConnection)) {
+								if (keyValue.lower() == "wep-key0") {
+									wiFiConnection->securitySettings.wepKey0 = dataValue2.toString();
+								}
+								else if (keyValue.lower() == "wep-key1") {
+									wiFiConnection->securitySettings.wepKey1 = dataValue2.toString();
+								}
+								else if (keyValue.lower() == "wep-key2") {
+									wiFiConnection->securitySettings.wepKey2 = dataValue2.toString();
+								}
+								else if (keyValue.lower() == "wep-key3") {
+									wiFiConnection->securitySettings.wepKey3 = dataValue2.toString();
+								}
+								else if (keyValue.lower() == "psk") {
+									wiFiConnection->securitySettings.psk = dataValue2.toString();
+								}
+								else if (keyValue.lower() == "eap-password") {
+									wiFiConnection->securitySettings.leapPassword = dataValue2.toString();
+								}
+							}
 						}
 					}
 				}
@@ -1464,6 +1953,9 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 		PRINT_ERROR(TQString("connection cannot be NULL!"));
 		return FALSE;
 	}
+	TDEWiredEthernetConnection* ethernetConnection = dynamic_cast<TDEWiredEthernetConnection*>(connection);
+	TDEWiredInfinibandConnection* infinibandConnection = dynamic_cast<TDEWiredInfinibandConnection*>(connection);
+	TDEWiFiConnection* wiFiConnection = dynamic_cast<TDEWiFiConnection*>(connection);
 	TQT_DBusObjectPath existingConnection;
 	TQT_DBusError error;
 	bool ret;
@@ -1515,11 +2007,32 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 				settingsMap["id"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(connection->friendlyName));
 				{
 					TQString type;
-					if (dynamic_cast<TDEWiredEthernetConnection*>(connection)) type = "802-3-ethernet";
-					else if (dynamic_cast<TDEWiFiConnection*>(connection)) type = "802-11-wireless";
+					if (ethernetConnection) type = "802-3-ethernet";
+					else if (infinibandConnection) type = "infiniband";
+					else if (wiFiConnection) type = "802-11-wireless";
 					if (!type.isNull()) settingsMap["type"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(type));
 				}
 				settingsMap["uuid"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(connection->UUID));
+				{
+					TQT_DBusDataValueList valueList;
+					{
+						for (TQStringList::Iterator it = connection->authorizedUsers.begin(); it != connection->authorizedUsers.end(); ++it) {
+							TQString assembledString = TQString("user:%1:").arg(*it);
+							valueList.append(TQT_DBusData::fromString(assembledString));
+						}
+					}
+					if (valueList.count() > 0) settingsMap["permissions"] = convertDBUSDataToVariantData(TQT_DBusData::fromTQValueList(valueList));
+					else settingsMap.remove("permissions");
+				}
+				settingsMap["autoconnect"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(connection->autoConnect));
+				settingsMap["read-only"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(connection->readOnly));
+				settingsMap["master"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(connection->masterConnectionUUID));
+				{
+					TQString slaveType = tdeSlaveTypeToNMSlaveType(connection->slaveType);
+					if (slaveType != "") settingsMap["slave-type"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(slaveType));
+					else settingsMap.remove("slave-type");
+				}
+				// settingsMap["timestamp"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt64(connection->lastKnownConnection.toTime_t()));	// Probably read-only to us
 			}
 			dbusData = TQT_DBusData::fromStringKeyMap(TQT_DBusDataMap<TQString>(settingsMap));
 			groupValid = (settingsMap.count() > 0);
@@ -1532,7 +2045,6 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 			{
 				if (connection->eapConfig.valid) {
 					TQT_DBusDataValueList valueList;
-					TDENetworkSingleIPConfigurationList::iterator it;
 					{
 						// WARNING: The exact order of the data in the list is critical, therefore extreme caution should be exercised when modifying the code below!
 						// EAP type
@@ -1555,7 +2067,6 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 				}
 				if (connection->eapConfig.valid) {
 					TQT_DBusDataValueList valueList;
-					TDENetworkSingleIPConfigurationList::iterator it;
 					{
 						unsigned int count;
 						for (count=0; count<connection->eapConfig.caCertificate.count(); count++) {
@@ -1578,7 +2089,6 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 				}
 				if (connection->eapConfig.valid) {
 					TQT_DBusDataValueList valueList;
-					TDENetworkSingleIPConfigurationList::iterator it;
 					{
 						for (TQStringList::Iterator it = connection->eapConfig.alternateAuthServerCertSubjectMatch.begin(); it != connection->eapConfig.alternateAuthServerCertSubjectMatch.end(); ++it) {
 							valueList.append(TQT_DBusData::fromString(*it));
@@ -1592,7 +2102,6 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 				}
 				if (connection->eapConfig.valid) {
 					TQT_DBusDataValueList valueList;
-					TDENetworkSingleIPConfigurationList::iterator it;
 					{
 						unsigned int count;
 						for (count=0; count<connection->eapConfig.clientCertificate.count(); count++) {
@@ -1621,7 +2130,6 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 				}
 				if (connection->eapConfig.valid) {
 					TQT_DBusDataValueList valueList;
-					TDENetworkSingleIPConfigurationList::iterator it;
 					{
 						unsigned int count;
 						for (count=0; count<connection->eapConfig.phase2CaCertificate.count(); count++) {
@@ -1644,7 +2152,6 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 				}
 				if (connection->eapConfig.valid) {
 					TQT_DBusDataValueList valueList;
-					TDENetworkSingleIPConfigurationList::iterator it;
 					{
 						for (TQStringList::Iterator it = connection->eapConfig.phase2AlternateAuthServerCertSubjectMatch.begin(); it != connection->eapConfig.phase2AlternateAuthServerCertSubjectMatch.end(); ++it) {
 							valueList.append(TQT_DBusData::fromString(*it));
@@ -1658,7 +2165,6 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 				}
 				if (connection->eapConfig.valid) {
 					TQT_DBusDataValueList valueList;
-					TDENetworkSingleIPConfigurationList::iterator it;
 					{
 						unsigned int count;
 						for (count=0; count<connection->eapConfig.phase2ClientCertificate.count(); count++) {
@@ -1681,7 +2187,6 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 				}
 				if (connection->eapConfig.valid) {
 					TQT_DBusDataValueList valueList;
-					TDENetworkSingleIPConfigurationList::iterator it;
 					{
 						unsigned int count;
 						for (count=0; count<connection->eapConfig.privateKey.count(); count++) {
@@ -1702,7 +2207,6 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 				}
 				if (connection->eapConfig.valid) {
 					TQT_DBusDataValueList valueList;
-					TDENetworkSingleIPConfigurationList::iterator it;
 					{
 						unsigned int count;
 						for (count=0; count<connection->eapConfig.phase2PrivateKey.count(); count++) {
@@ -1735,7 +2239,6 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 				}
 				if (connection->eapConfig.valid) {
 					TQT_DBusDataValueList valueList;
-					TDENetworkSingleIPConfigurationList::iterator it;
 					{
 						unsigned int count;
 						for (count=0; count<connection->eapConfig.binaryPassword.count(); count++) {
@@ -1793,7 +2296,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 					settingsMap["cloned-mac-address"] = convertDBUSDataToVariantData(nmHWAddress);
 				}
 				else {
-					settingsMap.remove("mac-address");
+					settingsMap.remove("cloned-mac-address");
 				}
 				if (connection->mtu > 0) {
 					settingsMap["mtu"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(connection->mtu));
@@ -1806,6 +2309,226 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 			groupValid = (settingsMap.count() > 0);
 		}
 		if (groupValid) outerMap.insert("802-3-ethernet", dbusData, TRUE); else outerMap.remove("802-3-ethernet");
+
+		dbusData = outerMap["infiniband"];
+		{
+			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
+			{
+				if (connection->lockedHWAddress.isValid()) {
+					TDENetworkByteList address = connection->lockedHWAddress.address();
+					TQT_DBusDataValueList valueList;
+					TDENetworkByteList::iterator it;
+					for (it = address.begin(); it != address.end(); ++it) {
+						TQT_DBusData innerDataValue = TQT_DBusData::fromByte(*it);
+						valueList.append(innerDataValue);
+					}
+					TQT_DBusData nmHWAddress = TQT_DBusData::fromTQValueList(valueList);
+					settingsMap["mac-address"] = convertDBUSDataToVariantData(nmHWAddress);
+				}
+				else {
+					settingsMap.remove("mac-address");
+				}
+				if (connection->mtu > 0) {
+					settingsMap["mtu"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(connection->mtu));
+				}
+				else {
+					settingsMap.remove("mtu");
+				}
+				UPDATE_STRING_SETTING_IF_VALID(tdeIBTransportToNMIBTransport(infinibandConnection->transportMode), "transport-mode", settingsMap)
+			}
+			dbusData = TQT_DBusData::fromStringKeyMap(TQT_DBusDataMap<TQString>(settingsMap));
+			groupValid = (settingsMap.count() > 0);
+		}
+		if (groupValid) outerMap.insert("infiniband", dbusData, TRUE); else outerMap.remove("infiniband");
+
+		dbusData = outerMap["802-11-wireless"];
+		{
+			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
+			{
+				if (connection->lockedHWAddress.isValid()) {
+					TDENetworkByteList address = connection->lockedHWAddress.address();
+					TQT_DBusDataValueList valueList;
+					TDENetworkByteList::iterator it;
+					for (it = address.begin(); it != address.end(); ++it) {
+						TQT_DBusData innerDataValue = TQT_DBusData::fromByte(*it);
+						valueList.append(innerDataValue);
+					}
+					TQT_DBusData nmHWAddress = TQT_DBusData::fromTQValueList(valueList);
+					settingsMap["mac-address"] = convertDBUSDataToVariantData(nmHWAddress);
+				}
+				else {
+					settingsMap.remove("mac-address");
+				}
+				if (connection->manualHWAddress.isValid()) {
+					TDENetworkByteList address = connection->manualHWAddress.address();
+					TQT_DBusDataValueList valueList;
+					TDENetworkByteList::iterator it;
+					for (it = address.begin(); it != address.end(); ++it) {
+						TQT_DBusData innerDataValue = TQT_DBusData::fromByte(*it);
+						valueList.append(innerDataValue);
+					}
+					TQT_DBusData nmHWAddress = TQT_DBusData::fromTQValueList(valueList);
+					settingsMap["cloned-mac-address"] = convertDBUSDataToVariantData(nmHWAddress);
+				}
+				else {
+					settingsMap.remove("cloned-mac-address");
+				}
+				if (connection->mtu > 0) {
+					settingsMap["mtu"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(connection->mtu));
+				}
+				else {
+					settingsMap.remove("mtu");
+				}
+				UPDATE_STRING_SETTING_IF_VALID(tdeWiFiModeToNMWiFiMode(wiFiConnection->operatingMode), "mode", settingsMap)
+				UPDATE_STRING_SETTING_IF_VALID(tdeWiFiFrequencyBandToNMWiFiFrequencyBand(wiFiConnection->bandRestriction), "band", settingsMap)
+				if (wiFiConnection->channelRestriction > 0) {
+					settingsMap["channel"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(wiFiConnection->channelRestriction));
+				}
+				else {
+					settingsMap.remove("channel");
+				}
+				if (wiFiConnection->bitRateRestriction > 0) {
+					settingsMap["rate"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(wiFiConnection->bitRateRestriction/1000));
+				}
+				else {
+					settingsMap.remove("rate");
+				}
+				if (wiFiConnection->powerRestriction > 0) {
+					settingsMap["tx-power"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(wiFiConnection->powerRestriction));
+				}
+				else {
+					settingsMap.remove("tx-power");
+				}
+				if (wiFiConnection->accessPointRestriction.isValid()) {
+					TDENetworkByteList address = wiFiConnection->accessPointRestriction.address();
+					TQT_DBusDataValueList valueList;
+					TDENetworkByteList::iterator it;
+					for (it = address.begin(); it != address.end(); ++it) {
+						TQT_DBusData innerDataValue = TQT_DBusData::fromByte(*it);
+						valueList.append(innerDataValue);
+					}
+					TQT_DBusData nmHWAddress = TQT_DBusData::fromTQValueList(valueList);
+					settingsMap["bssid"] = convertDBUSDataToVariantData(nmHWAddress);
+				}
+				else {
+					settingsMap.remove("bssid");
+				}
+				{
+					TQT_DBusDataValueList valueList;
+					TDEMACAddressList::iterator it;
+					for (it = wiFiConnection->blacklistedBSSIDs.begin(); it != wiFiConnection->blacklistedBSSIDs.end(); ++it) {
+						valueList.append(TQT_DBusData::fromString((*it).toString()));
+					}
+					if (valueList.count() > 0) settingsMap["mac-address-blacklist"] = convertDBUSDataToVariantData(TQT_DBusData::fromTQValueList(valueList));
+				}
+				{
+					TQT_DBusDataValueList valueList;
+					TDEMACAddressList::iterator it;
+					for (it = wiFiConnection->heardBSSIDs.begin(); it != wiFiConnection->heardBSSIDs.end(); ++it) {
+						valueList.append(TQT_DBusData::fromString((*it).toString()));
+					}
+					if (valueList.count() > 0) settingsMap["seen-bssids"] = convertDBUSDataToVariantData(TQT_DBusData::fromTQValueList(valueList));
+				}
+				{
+					if (wiFiConnection->securityRequired) {
+						settingsMap["security"] = convertDBUSDataToVariantData(TQT_DBusData::fromString("802-11-wireless-security"));
+					}
+					else {
+						settingsMap.remove("security");
+					}
+				}
+				{
+					settingsMap["hidden"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(wiFiConnection->isHiddenNetwork));
+				}
+			}
+			dbusData = TQT_DBusData::fromStringKeyMap(TQT_DBusDataMap<TQString>(settingsMap));
+			groupValid = (settingsMap.count() > 0);
+		}
+		if (groupValid) outerMap.insert("802-11-wireless", dbusData, TRUE); else outerMap.remove("802-11-wireless");
+
+		dbusData = outerMap["802-11-wireless-security"];
+		if (wiFiConnection) {
+			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
+			{
+				{
+					if (wiFiConnection->securityRequired) {
+						settingsMap["key-mgmt"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(tdeWiFiKeyTypeToNMWiFiKeyType(wiFiConnection->securitySettings.keyType)));
+					}
+					else {
+						settingsMap.remove("key-mgmt");
+					}
+				}
+				if (wiFiConnection->securitySettings.wepKeyIndex > 0) {
+					settingsMap["wep-tx-keyidx"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(wiFiConnection->securitySettings.wepKeyIndex));
+				}
+				else {
+					settingsMap.remove("wep-tx-keyidx");
+				}
+				{
+					if (wiFiConnection->securityRequired) {
+						settingsMap["auth-alg"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(tdeWiFiAuthTypeToNMWiFiAuthType(wiFiConnection->securitySettings.authType)));
+					}
+					else {
+						settingsMap.remove("auth-alg");
+					}
+				}
+				{
+					TQT_DBusDataValueList valueList;
+					{
+						TQStringList strings = tdeWiFiWPAVersionToNMWiFiWPAVersion(wiFiConnection->securitySettings.wpaVersion);
+						for (TQStringList::Iterator it = strings.begin(); it != strings.end(); ++it) {
+							valueList.append(TQT_DBusData::fromString(*it));
+						}
+					}
+					if (valueList.count() > 0) settingsMap["proto"] = convertDBUSDataToVariantData(TQT_DBusData::fromTQValueList(valueList));
+					else settingsMap.remove("proto");
+				}
+				{
+					TQT_DBusDataValueList valueList;
+					{
+						for (TDENetworkWiFiConnectionCipherList::Iterator it = wiFiConnection->securitySettings.allowedPairWiseCiphers.begin(); it != wiFiConnection->securitySettings.allowedPairWiseCiphers.end(); ++it) {
+							valueList.append(TQT_DBusData::fromString(tdeWiFiCipherToNMWiFiCipher(*it)));
+						}
+					}
+					if (valueList.count() > 0) settingsMap["pairwise"] = convertDBUSDataToVariantData(TQT_DBusData::fromTQValueList(valueList));
+					else settingsMap.remove("pairwise");
+				}
+				{
+					TQT_DBusDataValueList valueList;
+					{
+						for (TDENetworkWiFiConnectionCipherList::Iterator it = wiFiConnection->securitySettings.allowedGroupWiseCiphers.begin(); it != wiFiConnection->securitySettings.allowedGroupWiseCiphers.end(); ++it) {
+							valueList.append(TQT_DBusData::fromString(tdeWiFiCipherToNMWiFiCipher(*it)));
+						}
+					}
+					if (valueList.count() > 0) settingsMap["group"] = convertDBUSDataToVariantData(TQT_DBusData::fromTQValueList(valueList));
+					else settingsMap.remove("group");
+				}
+				UPDATE_STRING_SETTING_IF_VALID(wiFiConnection->securitySettings.leapUsername, "leap-username", settingsMap)
+				settingsMap["wep-key-flags"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(tdePasswordFlagsToNMPasswordFlags(wiFiConnection->securitySettings.wepKeyFlags)));
+				settingsMap["wep-key-type"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(tdeWepKeyTypeToNMWepKeyType(wiFiConnection->securitySettings.wepKeyType)));
+				settingsMap["psk-flags"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(tdePasswordFlagsToNMPasswordFlags(wiFiConnection->securitySettings.pskFlags)));
+				settingsMap["leap-password-flags"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(tdePasswordFlagsToNMPasswordFlags(wiFiConnection->securitySettings.leapPasswordFlags)));
+				if (connection->eapConfig.secretsValid) {
+					settingsMap["wep-key0"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(wiFiConnection->securitySettings.wepKey0));
+					settingsMap["wep-key1"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(wiFiConnection->securitySettings.wepKey1));
+					settingsMap["wep-key2"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(wiFiConnection->securitySettings.wepKey2));
+					settingsMap["wep-key3"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(wiFiConnection->securitySettings.wepKey3));
+					settingsMap["psk"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(wiFiConnection->securitySettings.psk));
+					settingsMap["leap-password"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(wiFiConnection->securitySettings.leapPassword));
+				}
+				else {
+					settingsMap.remove("wep-key0");
+					settingsMap.remove("wep-key1");
+					settingsMap.remove("wep-key2");
+					settingsMap.remove("wep-key3");
+					settingsMap.remove("psk");
+					settingsMap.remove("leap-password");
+				}
+			}
+			dbusData = TQT_DBusData::fromStringKeyMap(TQT_DBusDataMap<TQString>(settingsMap));
+			groupValid = (settingsMap.count() > 0);
+		}
+		if (groupValid) outerMap.insert("802-11-wireless-security", dbusData, TRUE); else outerMap.remove("802-11-wireless-security");
 
 		dbusData = outerMap["ipv4"];
 		{
@@ -2398,7 +3121,7 @@ TDENetworkWiFiAPInfo* TDENetworkConnectionManager_BackendNM::getAccessPointDetai
 	apInfo->wpaFlags = nmAPSecFlagsToTDEAPSecFlags(accessPoint.getFlags(error), accessPoint.getWpaFlags(error));
 	apInfo->rsnFlags = nmAPSecFlagsToTDEAPSecFlags(accessPoint.getFlags(error), accessPoint.getRsnFlags(error));
 	apInfo->frequency = accessPoint.getFrequency(error);
-	apInfo->BSSID = accessPoint.getHwAddress(error);
+	apInfo->BSSID.fromString(accessPoint.getHwAddress(error));
 	apInfo->maxBitrate = accessPoint.getMaxBitrate(error);
 	apInfo->signalQuality = (accessPoint.getStrength(error)/100.0);
 
@@ -2408,12 +3131,6 @@ TDENetworkWiFiAPInfo* TDENetworkConnectionManager_BackendNM::getAccessPointDetai
 }
 
 TDENetworkHWNeighborList* TDENetworkConnectionManager_BackendNM::siteSurvey() {
-	// FIXME
-	// Implement this!
-	// WiFiDeviceProxy(const TQString& service, const TQString& path, TQObject* parent = 0, const char* name = 0);
-	// virtual bool GetAccessPoints(TQValueList<TQT_DBusObjectPath>& access_points, TQT_DBusError& error);
-	// deviceInterfaceString
-
 	TQT_DBusError error;
 	bool ret;
 

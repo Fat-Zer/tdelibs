@@ -22,6 +22,7 @@
 #include <tqobject.h>
 #include <tqstring.h>
 #include <tqptrlist.h>
+#include <tqdatetime.h>
 #include <tqstringlist.h>
 #include <tqhostaddress.h>
 #include "kiconloader.h"
@@ -59,30 +60,58 @@ typedef TQValueList<TQ_UINT8> TDENetworkByteList;
 typedef TQValueList<TQHostAddress> TDENetworkAddressList;
 
 namespace TDENetworkConnectionType {
-enum TDENetworkConnectionType {
-	BackendOnly,
-	WiredEthernet,
-	WiFi,
-	Bluetooth,
-	OLPCMesh,
-	WiMax,
-	Modem,
-	Infiniband,
-	Bond,
-	VLAN,
-	ADSL,
-	Other,
-	Last = Other
+	enum TDENetworkConnectionType {
+		BackendOnly,
+		WiredEthernet,
+		WiFi,
+		Bluetooth,
+		OLPCMesh,
+		WiMax,
+		Modem,
+		Infiniband,
+		Bond,
+		VLAN,
+		ADSL,
+		Other,
+		Last = Other
+	};
 };
+
+namespace TDENetworkInfinibandTransportMode {
+	enum TDENetworkInfinibandTransportMode {
+		Datagram,
+		Connected,
+		Other,
+		Last = Other
+	};
 };
 
 namespace TDEWiFiMode {
-enum TDEWiFiMode {
-	AdHoc,
-	Infrastructure,
-	Other,
-	Last = Other
+	enum TDEWiFiMode {
+		AdHoc,
+		Infrastructure,
+		Other,
+		Last = Other
+	};
 };
+
+namespace TDEWiFiFrequencyBand {
+	enum TDEWiFiFrequencyBand {
+		None,
+		Band2_4GHz,
+		Band5GHz,
+		Other,
+		Last = Other
+	};
+};
+
+namespace TDENetworkSlaveDeviceType {
+	enum TDENetworkSlaveDeviceType {
+		None,
+		Bond,
+		Other,
+		Last = Other
+	};
 };
 
 namespace TDENetworkGlobalManagerFlags {
@@ -153,6 +182,47 @@ namespace TDENetworkWiFiConnectionCipher {
 		CipherCCMP,
 		CipherWPA,
 		CipherRSN
+	};
+};
+
+namespace TDENetworkWepKeyType {
+	enum TDENetworkWepKeyType {
+		Hexadecimal,
+		Passphrase
+	};
+};
+
+typedef TQValueList<TDENetworkWiFiConnectionCipher::TDENetworkWiFiConnectionCipher> TDENetworkWiFiConnectionCipherList;
+
+namespace TDENetworkWiFiKeyType {
+	enum TDENetworkWiFiKeyType {
+		WEP,
+		DynamicWEP,
+		WPAAdHoc,
+		WPAInfrastructure,
+		WPAEnterprise,
+		Other,
+		Last = Other
+	};
+};
+
+namespace TDENetworkWiFiAuthType {
+	enum TDENetworkWiFiAuthType {
+		Open,
+		Shared,
+		LEAP,
+		Other,
+		Last = Other
+	};
+};
+
+namespace TDENetworkWiFiWPAVersion {
+	enum TDENetworkWiFiWPAVersion {
+		Any,
+		WPA,
+		RSN,
+		Other,
+		Last = Other
 	};
 };
 
@@ -310,6 +380,8 @@ class TDECORE_EXPORT TDEMACAddress
 
 bool operator==(const TDEMACAddress &a1, const TDEMACAddress &a2);
 
+typedef TQValueList<TDEMACAddress> TDEMACAddressList;
+
 class TDECORE_EXPORT TDENetworkSingleIPConfiguration
 {
 	public:
@@ -386,6 +458,35 @@ class TDENetworkIEEE8021xConfiguration
 		TQString phase2PrivateKeyPassword;
 		TDENetworkPasswordHandlingFlags::TDENetworkPasswordHandlingFlags phase2PrivateKeyPasswordFlags;
 		bool forceSystemCaCertificates;
+};
+
+class TDENetworkWiFiSecurityConfiguration
+{
+	public:
+		TDENetworkWiFiSecurityConfiguration();
+		~TDENetworkWiFiSecurityConfiguration();
+
+	public:
+		bool valid;
+		bool secretsValid;
+		TDENetworkWiFiKeyType::TDENetworkWiFiKeyType keyType;
+		TDENetworkWiFiAuthType::TDENetworkWiFiAuthType authType;
+		TDENetworkWiFiWPAVersion::TDENetworkWiFiWPAVersion wpaVersion;
+		TDENetworkWiFiConnectionCipher::TDENetworkWiFiConnectionCipher cipher;
+		TQString wepKey0;
+		TQString wepKey1;
+		TQString wepKey2;
+		TQString wepKey3;
+		TDENetworkPasswordHandlingFlags::TDENetworkPasswordHandlingFlags wepKeyFlags;
+		TQ_UINT32 wepKeyIndex;
+		TDENetworkWepKeyType::TDENetworkWepKeyType wepKeyType;
+		TDENetworkWiFiConnectionCipherList allowedPairWiseCiphers;
+		TDENetworkWiFiConnectionCipherList allowedGroupWiseCiphers;
+		TQString psk;
+		TDENetworkPasswordHandlingFlags::TDENetworkPasswordHandlingFlags pskFlags;
+		TQString leapUsername;
+		TQString leapPassword;
+		TDENetworkPasswordHandlingFlags::TDENetworkPasswordHandlingFlags leapPasswordFlags;
 };
 
 class TDECORE_EXPORT TDENetworkIPConfiguration
@@ -465,7 +566,7 @@ class TDECORE_EXPORT TDENetworkWiFiAPInfo : public TDENetworkHWNeighbor
 		TDENetworkWiFiAPFlags::TDENetworkWiFiAPFlags wpaFlags;
 		TDENetworkWiFiAPFlags::TDENetworkWiFiAPFlags rsnFlags;
 		unsigned int frequency;
-		TQString BSSID;
+		TDEMACAddress BSSID;
 		unsigned int maxBitrate;
 		double signalQuality;
 };
@@ -484,12 +585,17 @@ class TDECORE_EXPORT TDENetworkConnection
 		TDENetworkIPConfiguration ipConfig;
 		TDEMACAddress lockedHWAddress;
 		TDEMACAddress manualHWAddress;
+		bool readOnly;
 		bool autoConnect;
 		bool fullDuplex;
 		bool requireIPV4;
 		bool requireIPV6;
 		TQ_UINT32 mtu;
 		TDENetworkIEEE8021xConfiguration eapConfig;
+		TQStringList authorizedUsers;
+		TQString masterConnectionUUID;
+		TDENetworkSlaveDeviceType::TDENetworkSlaveDeviceType slaveType;
+		TQDateTime lastKnownConnection;
 };
 
 class TDECORE_EXPORT TDEWiredEthernetConnection : public TDENetworkConnection
@@ -507,11 +613,27 @@ class TDECORE_EXPORT TDEWiFiConnection : public TDENetworkConnection
 
 	public:
 		TQString SSID;
-		TDENetworkWiFiConnectionCipher::TDENetworkWiFiConnectionCipher cipher;
-		TQString key1;
-		TQString key2;
-		TQString key3;
-		TQString key4;
+		TDEWiFiMode::TDEWiFiMode operatingMode;
+		TDEWiFiFrequencyBand::TDEWiFiFrequencyBand bandRestriction;
+		TQ_INT32 channelRestriction;
+		TQ_INT32 bitRateRestriction;
+		TQ_INT32 powerRestriction;
+		TDEMACAddress accessPointRestriction;
+		TDEMACAddressList blacklistedBSSIDs;
+		TDEMACAddressList heardBSSIDs;
+		bool isHiddenNetwork;
+		bool securityRequired;
+		TDENetworkWiFiSecurityConfiguration securitySettings;
+};
+
+class TDECORE_EXPORT TDEWiredInfinibandConnection : public TDENetworkConnection
+{
+	public:
+		TDEWiredInfinibandConnection();
+		virtual ~TDEWiredInfinibandConnection();
+
+	public:
+		TDENetworkInfinibandTransportMode::TDENetworkInfinibandTransportMode transportMode;
 };
 
 typedef TQPtrList< TDENetworkConnection > TDENetworkConnectionList;

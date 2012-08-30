@@ -323,6 +323,27 @@ TDENetworkIPConfiguration::~TDENetworkIPConfiguration() {
 }
 
 /*================================================================================================*/
+/* TDENetworkWiFiSecurityConfiguration                                                            */
+/*================================================================================================*/
+
+TDENetworkWiFiSecurityConfiguration::TDENetworkWiFiSecurityConfiguration() {
+	valid = false;
+	secretsValid = false;
+	wepKeyIndex = 0;
+	keyType = TDENetworkWiFiKeyType::Other;
+	authType = TDENetworkWiFiAuthType::Other;
+	wpaVersion = TDENetworkWiFiWPAVersion::Any;
+	wepKeyFlags = TDENetworkPasswordHandlingFlags::None;
+	pskFlags = TDENetworkPasswordHandlingFlags::None;
+	leapPasswordFlags = TDENetworkPasswordHandlingFlags::None;
+	wepKeyType = TDENetworkWepKeyType::Hexadecimal;
+}
+
+TDENetworkWiFiSecurityConfiguration::~TDENetworkWiFiSecurityConfiguration() {
+	//
+}
+
+/*================================================================================================*/
 /* TDENetworkWiFiDeviceInfo                                                                      */
 /*================================================================================================*/
 
@@ -377,6 +398,7 @@ TDENetworkWiFiAPInfo::~TDENetworkWiFiAPInfo() {
 /*================================================================================================*/
 
 TDENetworkConnection::TDENetworkConnection() {
+	readOnly = false;
 	autoConnect = false;
 	fullDuplex = true;
 	requireIPV4 = false;
@@ -401,11 +423,29 @@ TDEWiredEthernetConnection::~TDEWiredEthernetConnection() {
 }
 
 /*================================================================================================*/
+/* TDEWiredInfinibandConnection                                                                   */
+/*================================================================================================*/
+
+TDEWiredInfinibandConnection::TDEWiredInfinibandConnection() : TDENetworkConnection() {
+	//
+}
+
+TDEWiredInfinibandConnection::~TDEWiredInfinibandConnection() {
+	//
+}
+
+/*================================================================================================*/
 /* TDEWiFiConnection                                                                              */
 /*================================================================================================*/
 
 TDEWiFiConnection::TDEWiFiConnection() : TDENetworkConnection() {
-	//
+	operatingMode = TDEWiFiMode::Other;
+	bandRestriction = TDEWiFiFrequencyBand::None;
+	channelRestriction = -1;
+	bitRateRestriction = -1;
+	powerRestriction = -1;
+	isHiddenNetwork = false;
+	securityRequired = false;
 }
 
 TDEWiFiConnection::~TDEWiFiConnection() {

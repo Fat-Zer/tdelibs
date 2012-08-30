@@ -101,6 +101,9 @@
 #define NM_ACCESS_POINT_SEC_KEY_MGMT_PSK	0x100
 #define NM_ACCESS_POINT_SEC_KEY_MGMT_802_1X	0x200
 //====================================================================================================
+#define NM_WEP_TYPE_HEXADECIMAL		1
+#define NM_WEP_TYPE_PASSPHRASE		2
+//====================================================================================================
 
 class TDENetworkConnectionManager_BackendNMPrivate;
 

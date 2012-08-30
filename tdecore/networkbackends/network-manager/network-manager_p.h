@@ -46,6 +46,7 @@
 #include "connectionsettings.h"
 #include "deviceproxy.h"
 #include "ethernetproxy.h"
+#include "infinibandproxy.h"
 #include "wifiproxy.h"
 #include "activeconnectionproxy.h"
 #include "accesspointproxy.h"
