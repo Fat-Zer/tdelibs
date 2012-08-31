@@ -59,6 +59,7 @@
 typedef TQValueList<TQ_UINT8> TDENetworkByteList;
 typedef TQValueList<TQHostAddress> TDENetworkAddressList;
 typedef TQMap<TQString, TQString> TDENetworkSettingsMap;
+typedef TQMap<TQ_UINT32, TQ_UINT32> TDENetworkPriorityMap;
 
 namespace TDENetworkDeviceType {
 	enum TDENetworkDeviceType {
@@ -209,6 +210,17 @@ namespace TDENetworkWepKeyType {
 		Hexadecimal,
 		Passphrase
 	};
+};
+
+namespace TDENetworkVLANFlags {
+	enum TDENetworkVLANFlags {
+		None			= 0x00000000,
+		ReorderPacketHeaders	= 0x00000001,
+		UseGVRP			= 0x00000002,
+		LooseBinding		= 0x00000004
+	};
+
+	CREATE_FLAG_BITWISE_MANIPULATION_FUNCTIONS(TDENetworkVLANFlags)
 };
 
 typedef TQValueList<TDENetworkWiFiConnectionCipher::TDENetworkWiFiConnectionCipher> TDENetworkWiFiConnectionCipherList;
@@ -677,6 +689,21 @@ class TDECORE_EXPORT TDEWiMaxConnection : public TDENetworkConnection
 
 	public:
 		TQString networkServiceProvider;
+};
+
+class TDECORE_EXPORT TDEVLANConnection : public TDENetworkConnection
+{
+	public:
+		TDEVLANConnection();
+		virtual ~TDEVLANConnection();
+
+	public:
+		TQString kernelName;
+		TQString parentConnectionUUID;
+		TQ_UINT32 vlanID;
+		TDENetworkVLANFlags::TDENetworkVLANFlags vlanFlags;
+		TDENetworkPriorityMap ingressPriorityMap;
+		TDENetworkPriorityMap egressPriorityMap;
 };
 
 typedef TQPtrList< TDENetworkConnection > TDENetworkConnectionList;

@@ -104,6 +104,10 @@
 #define NM_WEP_TYPE_HEXADECIMAL		1
 #define NM_WEP_TYPE_PASSPHRASE		2
 //====================================================================================================
+#define NM_VLAN_REORDER_PACKET_HEADERS	0x01
+#define NM_VLAN_USE_GVRP		0x02
+#define NM_VLAN_LOOSE_BINDING		0x04
+//====================================================================================================
 
 class TDENetworkConnectionManager_BackendNMPrivate;
 

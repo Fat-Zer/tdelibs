@@ -235,6 +235,9 @@ TDENetworkConnectionType::TDENetworkConnectionType nmConnectionTypeToTDEConnecti
 	else if (nm.lower() == "wimax") {
 		ret = TDENetworkConnectionType::WiMax;
 	}
+	else if (nm.lower() == "vlan") {
+		ret = TDENetworkConnectionType::VLAN;
+	}
 
 	return ret;
 }
@@ -256,6 +259,9 @@ TQString tdeConnectionTypeToNMConnectionType(TDENetworkConnectionType::TDENetwor
 	}
 	else if (type == TDENetworkConnectionType::WiMax) {
 		ret = "wimax";
+	}
+	else if (type == TDENetworkConnectionType::VLAN) {
+		ret = "vlan";
 	}
 
 	return ret;
@@ -679,6 +685,38 @@ unsigned int tdePasswordFlagsToNMPasswordFlags(TDENetworkPasswordHandlingFlags::
 	}
 	if (flags & TDENetworkPasswordHandlingFlags::NoPrompt) {
 		ret |= NM_PASSWORD_SECRET_NOTREQUIRED;
+	}
+
+	return ret;
+}
+
+TDENetworkVLANFlags::TDENetworkVLANFlags nmVLANFlagsToTDEVLANFlags(unsigned int nm) {
+	TDENetworkVLANFlags::TDENetworkVLANFlags ret = TDENetworkVLANFlags::None;
+
+	if (nm & NM_VLAN_REORDER_PACKET_HEADERS) {
+		ret |= TDENetworkVLANFlags::ReorderPacketHeaders;
+	}
+	if (nm & NM_VLAN_USE_GVRP) {
+		ret |= TDENetworkVLANFlags::UseGVRP;
+	}
+	if (nm & NM_VLAN_LOOSE_BINDING) {
+		ret |= TDENetworkVLANFlags::LooseBinding;
+	}
+
+	return ret;
+}
+
+unsigned int tdeVLANFlagsToNMVLANFlags(TDENetworkVLANFlags::TDENetworkVLANFlags flags) {
+	unsigned int ret = 0;
+
+	if (flags & TDENetworkVLANFlags::ReorderPacketHeaders) {
+		ret |= NM_VLAN_REORDER_PACKET_HEADERS;
+	}
+	if (flags & TDENetworkVLANFlags::UseGVRP) {
+		ret |= NM_VLAN_USE_GVRP;
+	}
+	if (flags & TDENetworkVLANFlags::LooseBinding) {
+		ret |= NM_VLAN_LOOSE_BINDING;
 	}
 
 	return ret;
@@ -1124,6 +1162,7 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 				TDEWiFiConnection* wiFiConnection = NULL;
 				TDEVPNConnection* vpnConnection = NULL;
 				TDEWiMaxConnection* wiMaxConnection = NULL;
+				TDEVLANConnection* vlanConnection = NULL;
 				TDENetworkConnectionType::TDENetworkConnectionType connType = connectionType((*it));
 				if (connType == TDENetworkConnectionType::WiredEthernet) {
 					connection = ethernetConnection = new TDEWiredEthernetConnection;
@@ -1139,6 +1178,9 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 				}
 				else if (connType == TDENetworkConnectionType::WiMax) {
 					connection = wiMaxConnection = new TDEWiMaxConnection;
+				}
+				else if (connType == TDENetworkConnectionType::VLAN) {
+					connection = vlanConnection = new TDEVLANConnection;
 				}
 				else {
 					connection = new TDENetworkConnection;
@@ -1617,6 +1659,38 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 										}
 										else if (keyValue.lower() == "network-name") {
 											wiMaxConnection->networkServiceProvider = dataValue2.toString();
+										}
+									}
+									else if (outerKeyValue.lower() == "vlan") {
+										if (keyValue.lower() == "interface-name") {
+											vlanConnection->kernelName = dataValue2.toString();
+										}
+										else if (keyValue.lower() == "parent") {
+											vlanConnection->parentConnectionUUID = dataValue2.toString();
+										}
+										else if (keyValue.lower() == "id") {
+											vlanConnection->vlanID = dataValue2.toUInt32();
+										}
+										else if (keyValue.lower() == "flags") {
+											vlanConnection->vlanFlags = nmVLANFlagsToTDEVLANFlags(dataValue2.toUInt32());
+										}
+										else if (keyValue.lower() == "ingress-priority-map") {
+											TQT_DBusDataValueList valueList = dataValue2.toTQValueList();
+											TQT_DBusDataValueList::const_iterator it4;
+											for (it4 = valueList.begin(); it4 != valueList.end(); ++it4) {
+												TQT_DBusData innerDataValue = *it4;
+												TQStringList pieces = TQStringList::split(":", innerDataValue.toString(), TRUE);
+												vlanConnection->ingressPriorityMap[pieces[0].toUInt()] = pieces[1].toUInt();;
+											}
+										}
+										else if (keyValue.lower() == "egress-priority-map") {
+											TQT_DBusDataValueList valueList = dataValue2.toTQValueList();
+											TQT_DBusDataValueList::const_iterator it4;
+											for (it4 = valueList.begin(); it4 != valueList.end(); ++it4) {
+												TQT_DBusData innerDataValue = *it4;
+												TQStringList pieces = TQStringList::split(":", innerDataValue.toString(), TRUE);
+												vlanConnection->egressPriorityMap[pieces[0].toUInt()] = pieces[1].toUInt();;
+											}
 										}
 									}
 									else if (outerKeyValue.lower() == "ipv4") {
@@ -2119,6 +2193,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 	TDEWiFiConnection* wiFiConnection = dynamic_cast<TDEWiFiConnection*>(connection);
 	TDEVPNConnection* vpnConnection = dynamic_cast<TDEVPNConnection*>(connection);
 	TDEWiMaxConnection* wiMaxConnection = dynamic_cast<TDEWiMaxConnection*>(connection);
+	TDEVLANConnection* vlanConnection = dynamic_cast<TDEVLANConnection*>(connection);
 	TQT_DBusObjectPath existingConnection;
 	TQT_DBusError error;
 	bool ret;
@@ -2175,6 +2250,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 					else if (wiFiConnection) type = "802-11-wireless";
 					else if (vpnConnection) type = "vpn";
 					else if (wiMaxConnection) type = "wimax";
+					else if (vlanConnection) type = "vlan";
 					if (!type.isNull()) settingsMap["type"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(type));
 				}
 				settingsMap["uuid"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(connection->UUID));
@@ -2749,6 +2825,36 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 			groupValid = (settingsMap.count() > 0);
 		}
 		if (groupValid) outerMap.insert("wimax", dbusData, TRUE); else outerMap.remove("wimax");
+
+		dbusData = outerMap["vlan"];
+		{
+			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
+			{
+				UPDATE_STRING_SETTING_IF_VALID(vlanConnection->kernelName, "interface-name", settingsMap)
+				UPDATE_STRING_SETTING_IF_VALID(vlanConnection->parentConnectionUUID, "parent", settingsMap)
+				settingsMap["id"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(vlanConnection->vlanID));
+				settingsMap["flags"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(tdeVLANFlagsToNMVLANFlags(vlanConnection->vlanFlags)));
+				{
+					TQT_DBusDataValueList valueList;
+					TDENetworkPriorityMap::const_iterator it;
+					for (it = vlanConnection->ingressPriorityMap.begin(); it != vlanConnection->ingressPriorityMap.end(); ++it) {
+						valueList.append(TQT_DBusData::fromString(TQString("%1:%2").arg(it.key()).arg(it.data())));
+					}
+					if (valueList.count() > 0) settingsMap["ingress-priority-map"] = convertDBUSDataToVariantData(TQT_DBusData::fromTQValueList(valueList));
+				}
+				{
+					TQT_DBusDataValueList valueList;
+					TDENetworkPriorityMap::const_iterator it;
+					for (it = vlanConnection->egressPriorityMap.begin(); it != vlanConnection->egressPriorityMap.end(); ++it) {
+						valueList.append(TQT_DBusData::fromString(TQString("%1:%2").arg(it.key()).arg(it.data())));
+					}
+					if (valueList.count() > 0) settingsMap["egress-priority-map"] = convertDBUSDataToVariantData(TQT_DBusData::fromTQValueList(valueList));
+				}
+			}
+			dbusData = TQT_DBusData::fromStringKeyMap(TQT_DBusDataMap<TQString>(settingsMap));
+			groupValid = (settingsMap.count() > 0);
+		}
+		if (groupValid) outerMap.insert("vlan", dbusData, TRUE); else outerMap.remove("vlan");
 
 		dbusData = outerMap["ipv4"];
 		{
