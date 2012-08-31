@@ -58,9 +58,10 @@
 
 typedef TQValueList<TQ_UINT8> TDENetworkByteList;
 typedef TQValueList<TQHostAddress> TDENetworkAddressList;
+typedef TQMap<TQString, TQString> TDENetworkSettingsMap;
 
-namespace TDENetworkConnectionType {
-	enum TDENetworkConnectionType {
+namespace TDENetworkDeviceType {
+	enum TDENetworkDeviceType {
 		BackendOnly,
 		WiredEthernet,
 		WiFi,
@@ -72,6 +73,24 @@ namespace TDENetworkConnectionType {
 		Bond,
 		VLAN,
 		ADSL,
+		Other,
+		Last = Other
+	};
+};
+
+namespace TDENetworkConnectionType {
+	enum TDENetworkConnectionType {
+		WiredEthernet,
+		WiFi,
+		Bluetooth,
+		OLPCMesh,
+		WiMax,
+		Modem,
+		Infiniband,
+		Bond,
+		VLAN,
+		ADSL,
+		VPN,
 		Other,
 		Last = Other
 	};
@@ -541,7 +560,7 @@ class TDECORE_EXPORT TDENetworkDeviceInformation
 		bool managed;
 		bool autoConnect;
 		bool firmwareMissing;
-		TDENetworkConnectionType::TDENetworkConnectionType deviceType;
+		TDENetworkDeviceType::TDENetworkDeviceType deviceType;
 		TDENetworkWiFiDeviceInfo wiFiInfo;
 };
 
@@ -636,6 +655,30 @@ class TDECORE_EXPORT TDEWiredInfinibandConnection : public TDENetworkConnection
 		TDENetworkInfinibandTransportMode::TDENetworkInfinibandTransportMode transportMode;
 };
 
+class TDECORE_EXPORT TDEVPNConnection : public TDENetworkConnection
+{
+	public:
+		TDEVPNConnection();
+		virtual ~TDEVPNConnection();
+
+	public:
+		TQString vpnPluginID;
+		TQString lockedUserName;
+		TDENetworkSettingsMap pluginData;
+		bool secretsValid;
+		TDENetworkSettingsMap pluginSecrets;
+};
+
+class TDECORE_EXPORT TDEWiMaxConnection : public TDENetworkConnection
+{
+	public:
+		TDEWiMaxConnection();
+		virtual ~TDEWiMaxConnection();
+
+	public:
+		TQString networkServiceProvider;
+};
+
 typedef TQPtrList< TDENetworkConnection > TDENetworkConnectionList;
 
 class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
@@ -647,7 +690,7 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		*  Constructor.
 		*  @param macAddress The MAC address of the hardware device
 		*  If an empty MAC address is passed, this object will make global networking backend
-		*  methods available exclusively (TDENetworkConnectionType::BackendOnly).
+		*  methods available exclusively (TDENetworkDeviceType::BackendOnly).
 		*/
 		TDENetworkConnectionManager(TQString macAddress);
 		
@@ -664,7 +707,7 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		/**
 		* @return the type of connection supported by this device
 		*/
-		virtual TDENetworkConnectionType::TDENetworkConnectionType connectionType() = 0;
+		virtual TDENetworkDeviceType::TDENetworkDeviceType deviceType() = 0;
 
 		/**
 		* @return A TDENetworkGlobalManagerFlags enum value with the current status of the networking backend.

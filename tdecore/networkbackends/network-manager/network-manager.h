@@ -115,7 +115,7 @@ class TDECORE_EXPORT TDENetworkConnectionManager_BackendNM : public TDENetworkCo
 		TDENetworkConnectionManager_BackendNM(TQString macAddress);
 		~TDENetworkConnectionManager_BackendNM();
 
-		virtual TDENetworkConnectionType::TDENetworkConnectionType connectionType();
+		virtual TDENetworkDeviceType::TDENetworkDeviceType deviceType();
 		virtual TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags backendStatus();
 		virtual TDENetworkDeviceInformation deviceInformation();
 
@@ -139,10 +139,11 @@ class TDECORE_EXPORT TDENetworkConnectionManager_BackendNM : public TDENetworkCo
 	private:
 		void internalProcessGlobalStateChanged(TQ_UINT32 state);
 		void internalProcessDeviceStateChanged(TQ_UINT32 newState, TQ_UINT32 oldState, TQ_UINT32 reason);
-		TDENetworkConnectionType::TDENetworkConnectionType nmDeviceTypeToTDEDeviceType(TQ_UINT32 nmType);
+		TDENetworkDeviceType::TDENetworkDeviceType nmDeviceTypeToTDEDeviceType(TQ_UINT32 nmType);
 		TQString deviceInterfaceString(TQString macAddress);
 		bool loadConnectionSecretsForGroup(TQString uuid, TQString group);
 		TDENetworkWiFiAPInfo* getAccessPointDetails(TQString dbusPath);
+		TDENetworkConnectionType::TDENetworkConnectionType connectionType(TQString dbusPath);
 
 	private:
 		TDENetworkConnectionManager_BackendNMPrivate* d;
