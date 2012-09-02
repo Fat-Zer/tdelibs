@@ -125,6 +125,25 @@ namespace TDEWiFiFrequencyBand {
 	};
 };
 
+namespace TDEBluetoothConnectionType {
+	enum TDEBluetoothConnectionType {
+		DUN,
+		PAN,
+		Other,
+		Last = Other
+	};
+};
+
+namespace TDENetworkParity {
+	enum TDENetworkParity {
+		None,
+		Even,
+		Odd,
+		Other,
+		Last = Other
+	};
+};
+
 namespace TDENetworkSlaveDeviceType {
 	enum TDENetworkSlaveDeviceType {
 		None,
@@ -158,6 +177,26 @@ namespace TDENetworkDeviceCapabilityFlags {
 	};
 
 	CREATE_FLAG_BITWISE_MANIPULATION_FUNCTIONS(TDENetworkDeviceCapabilityFlags)
+};
+
+namespace TDENetworkPPPFlags {
+	enum TDENetworkPPPFlags {
+		None			= 0x00000000,
+		DisableEAP		= 0x00000001,
+		DisablePAP		= 0x00000002,
+		DisableCHAP		= 0x00000004,
+		DisableMSCHAP		= 0x00000008,
+		DisableMSCHAPv2		= 0x00000010,
+		AllowBSDCompression	= 0x00000020,
+		AllowDeflateCompression	= 0x00000040,
+		AllowVJCompression	= 0x00000080,
+		RequireMPPE		= 0x00000100,
+		RequireMPPE128		= 0x00000200,
+		StatefulMPPE		= 0x00000400,
+		UseHardwareFlowControl	= 0x00000800
+	};
+
+	CREATE_FLAG_BITWISE_MANIPULATION_FUNCTIONS(TDENetworkPPPFlags)
 };
 
 namespace TDENetworkWiFiAPFlags {
@@ -491,6 +530,53 @@ class TDENetworkIEEE8021xConfiguration
 		bool forceSystemCaCertificates;
 };
 
+class TDECORE_EXPORT TDENetworkPPPConfiguration
+{
+	public:
+		TDENetworkPPPConfiguration();
+		virtual ~TDENetworkPPPConfiguration();
+
+	public:
+		bool valid;
+		bool requireServerAuthentication;
+		TDENetworkPPPFlags::TDENetworkPPPFlags flags;
+		TQ_UINT32 baudRate;
+		TQ_UINT32 mru;
+		TQ_UINT32 mtu;
+		TQ_UINT32 lcpEchoPingInterval;
+		TQ_UINT32 lcpEchoFailureThreshold;
+};
+
+class TDECORE_EXPORT TDENetworkPPPOEConfiguration
+{
+	public:
+		TDENetworkPPPOEConfiguration();
+		virtual ~TDENetworkPPPOEConfiguration();
+
+	public:
+		bool valid;
+		bool secretsValid;
+		TQString networkServiceProvider;
+		TQString username;
+		TQString password;
+		TDENetworkPasswordHandlingFlags::TDENetworkPasswordHandlingFlags passwordFlags;
+};
+
+class TDECORE_EXPORT TDENetworkSerialConfiguration
+{
+	public:
+		TDENetworkSerialConfiguration();
+		virtual ~TDENetworkSerialConfiguration();
+
+	public:
+		bool valid;
+		TQ_UINT32 baudRate;
+		TQ_UINT32 byteWidth;
+		TDENetworkParity::TDENetworkParity parity;
+		TQ_UINT32 stopBits;
+		TQ_UINT64 txDelay;
+};
+
 class TDENetworkWiFiSecurityConfiguration
 {
 	public:
@@ -623,6 +709,9 @@ class TDECORE_EXPORT TDENetworkConnection
 		bool requireIPV6;
 		TQ_UINT32 mtu;
 		TDENetworkIEEE8021xConfiguration eapConfig;
+		TDENetworkPPPConfiguration pppConfig;
+		TDENetworkPPPOEConfiguration pppoeConfig;
+		TDENetworkSerialConfiguration serialConfig;
 		TQStringList authorizedUsers;
 		TQString masterConnectionUUID;
 		TDENetworkSlaveDeviceType::TDENetworkSlaveDeviceType slaveType;
@@ -643,7 +732,7 @@ class TDECORE_EXPORT TDEWiFiConnection : public TDENetworkConnection
 		virtual ~TDEWiFiConnection();
 
 	public:
-		TQString SSID;
+		TQByteArray SSID;
 		TDEWiFiMode::TDEWiFiMode operatingMode;
 		TDEWiFiFrequencyBand::TDEWiFiFrequencyBand bandRestriction;
 		TQ_INT32 channelRestriction;
@@ -704,6 +793,28 @@ class TDECORE_EXPORT TDEVLANConnection : public TDENetworkConnection
 		TDENetworkVLANFlags::TDENetworkVLANFlags vlanFlags;
 		TDENetworkPriorityMap ingressPriorityMap;
 		TDENetworkPriorityMap egressPriorityMap;
+};
+
+class TDECORE_EXPORT TDEOLPCMeshConnection : public TDENetworkConnection
+{
+	public:
+		TDEOLPCMeshConnection();
+		virtual ~TDEOLPCMeshConnection();
+
+	public:
+		TQByteArray SSID;
+		TQ_INT32 channel;
+		TQByteArray anycastDHCPHWAddress;
+};
+
+class TDECORE_EXPORT TDEBluetoothConnection : public TDENetworkConnection
+{
+	public:
+		TDEBluetoothConnection();
+		virtual ~TDEBluetoothConnection();
+
+	public:
+		TDEBluetoothConnectionType::TDEBluetoothConnectionType type;
 };
 
 typedef TQPtrList< TDENetworkConnection > TDENetworkConnectionList;

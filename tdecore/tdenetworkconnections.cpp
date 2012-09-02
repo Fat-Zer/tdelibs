@@ -303,6 +303,56 @@ TDENetworkIEEE8021xConfiguration::~TDENetworkIEEE8021xConfiguration() {
 }
 
 /*================================================================================================*/
+/* TDENetworkPPPConfiguration                                                                     */
+/*================================================================================================*/
+
+TDENetworkPPPConfiguration::TDENetworkPPPConfiguration() {
+	valid = false;
+	requireServerAuthentication = false;
+	flags = TDENetworkPPPFlags::None;
+	baudRate = 115200;
+	mru = 0;
+	mtu = 0;
+	lcpEchoPingInterval = 0;
+	lcpEchoFailureThreshold = 0;
+}
+
+TDENetworkPPPConfiguration::~TDENetworkPPPConfiguration() {
+	//
+}
+
+/*================================================================================================*/
+/* TDENetworkPPPOEConfiguration                                                                   */
+/*================================================================================================*/
+
+TDENetworkPPPOEConfiguration::TDENetworkPPPOEConfiguration() {
+	valid = false;
+	secretsValid = false;
+	passwordFlags = TDENetworkPasswordHandlingFlags::None;
+}
+
+TDENetworkPPPOEConfiguration::~TDENetworkPPPOEConfiguration() {
+	//
+}
+
+/*================================================================================================*/
+/* TDENetworkSerialConfiguration                                                                  */
+/*================================================================================================*/
+
+TDENetworkSerialConfiguration::TDENetworkSerialConfiguration() {
+	valid = false;
+	baudRate = 115200;
+	byteWidth = 8;
+	parity = TDENetworkParity::None;
+	stopBits = 1;
+	txDelay = 0;
+}
+
+TDENetworkSerialConfiguration::~TDENetworkSerialConfiguration() {
+	//
+}
+
+/*================================================================================================*/
 /* TDENetworkIPConfiguration                                                                      */
 /*================================================================================================*/
 
@@ -467,6 +517,30 @@ TDEVLANConnection::TDEVLANConnection() : TDENetworkConnection() {
 }
 
 TDEVLANConnection::~TDEVLANConnection() {
+	//
+}
+
+/*================================================================================================*/
+/* TDEOLPCMeshConnection                                                                          */
+/*================================================================================================*/
+
+TDEOLPCMeshConnection::TDEOLPCMeshConnection() : TDENetworkConnection() {
+	channel = 0;
+}
+
+TDEOLPCMeshConnection::~TDEOLPCMeshConnection() {
+	//
+}
+
+/*================================================================================================*/
+/* TDEBluetoothConnection                                                                         */
+/*================================================================================================*/
+
+TDEBluetoothConnection::TDEBluetoothConnection() : TDENetworkConnection() {
+	type = TDEBluetoothConnectionType::Other;
+}
+
+TDEBluetoothConnection::~TDEBluetoothConnection() {
 	//
 }
 

@@ -238,6 +238,12 @@ TDENetworkConnectionType::TDENetworkConnectionType nmConnectionTypeToTDEConnecti
 	else if (nm.lower() == "vlan") {
 		ret = TDENetworkConnectionType::VLAN;
 	}
+	else if (nm.lower() == "802-11-olpc-mesh") {
+		ret = TDENetworkConnectionType::OLPCMesh;
+	}
+	else if (nm.lower() == "bluetooth") {
+		ret = TDENetworkConnectionType::Bluetooth;
+	}
 
 	return ret;
 }
@@ -262,6 +268,12 @@ TQString tdeConnectionTypeToNMConnectionType(TDENetworkConnectionType::TDENetwor
 	}
 	else if (type == TDENetworkConnectionType::VLAN) {
 		ret = "vlan";
+	}
+	else if (type == TDENetworkConnectionType::OLPCMesh) {
+		ret = "802-11-olpc-mesh";
+	}
+	else if (type == TDENetworkConnectionType::Bluetooth) {
+		ret = "bluetooth";
 	}
 
 	return ret;
@@ -458,6 +470,32 @@ TQString tdeWiFiModeToNMWiFiMode(TDEWiFiMode::TDEWiFiMode mode) {
 	}
 	else if (mode == TDEWiFiMode::AdHoc) {
 		ret = "adhoc";
+	}
+
+	return ret;
+}
+
+TDEBluetoothConnectionType::TDEBluetoothConnectionType nmBluetoothModeToTDEBluetoothMode(TQString nm) {
+	TDEBluetoothConnectionType::TDEBluetoothConnectionType ret = TDEBluetoothConnectionType::PAN;
+
+	if (nm.lower() == "dun") {
+		ret = TDEBluetoothConnectionType::DUN;
+	}
+	else if (nm.lower() == "panu") {
+		ret = TDEBluetoothConnectionType::PAN;
+	}
+
+	return ret;
+}
+
+TQString tdeBluetoothModeToNMBluetoothMode(TDEBluetoothConnectionType::TDEBluetoothConnectionType type) {
+	TQString ret;
+
+	if (type == TDEBluetoothConnectionType::DUN) {
+		ret = "dun";
+	}
+	else if (type == TDEBluetoothConnectionType::PAN) {
+		ret = "panu";
 	}
 
 	return ret;
@@ -722,6 +760,32 @@ unsigned int tdeVLANFlagsToNMVLANFlags(TDENetworkVLANFlags::TDENetworkVLANFlags 
 	return ret;
 }
 
+TDENetworkParity::TDENetworkParity nmParityToTDEParity(char nm) {
+	TDENetworkParity::TDENetworkParity ret = TDENetworkParity::None;
+
+	if (nm == 'E') {
+		ret = TDENetworkParity::Even;
+	}
+	else if (nm == 'o') {
+		ret = TDENetworkParity::Odd;
+	}
+
+	return ret;
+}
+
+char tdeParityToNMParity(TDENetworkParity::TDENetworkParity parity) {
+	char ret = 'n';
+
+	if (parity == TDENetworkParity::Even) {
+		ret = 'E';
+	}
+	else if (parity == TDENetworkParity::Odd) {
+		ret = 'o';
+	}
+
+	return ret;
+}
+
 TDENetworkWepKeyType::TDENetworkWepKeyType nmWepKeyTypeToTDEWepKeyType(unsigned int nm) {
 	TDENetworkWepKeyType::TDENetworkWepKeyType ret = TDENetworkWepKeyType::Hexadecimal;
 
@@ -929,6 +993,36 @@ TQString TDENetworkConnectionManager_BackendNM::deviceInterfaceString(TQString m
 					DBus::WiFiDeviceProxy wiFiDevice(NM_DBUS_SERVICE, (*it));
 					wiFiDevice.setConnection(TQT_DBusConnection::systemBus());
 					TQString candidateMACAddress = wiFiDevice.getPermHwAddress(error);
+					if (!error.isValid()) {
+						if (candidateMACAddress.lower() == macAddress.lower()) {
+							return (*it);
+						}
+					}
+				}
+				else if (deviceType == TDENetworkDeviceType::WiMax) {
+					DBus::WiMaxDeviceProxy wiMaxDevice(NM_DBUS_SERVICE, (*it));
+					wiMaxDevice.setConnection(TQT_DBusConnection::systemBus());
+					TQString candidateMACAddress = wiMaxDevice.getHwAddress(error);
+					if (!error.isValid()) {
+						if (candidateMACAddress.lower() == macAddress.lower()) {
+							return (*it);
+						}
+					}
+				}
+				else if (deviceType == TDENetworkDeviceType::OLPCMesh) {
+					DBus::OlpcMeshDeviceProxy olpcMeshDevice(NM_DBUS_SERVICE, (*it));
+					olpcMeshDevice.setConnection(TQT_DBusConnection::systemBus());
+					TQString candidateMACAddress = olpcMeshDevice.getHwAddress(error);
+					if (!error.isValid()) {
+						if (candidateMACAddress.lower() == macAddress.lower()) {
+							return (*it);
+						}
+					}
+				}
+				else if (deviceType == TDENetworkDeviceType::Bluetooth) {
+					DBus::BluetoothDeviceProxy bluetoothDevice(NM_DBUS_SERVICE, (*it));
+					bluetoothDevice.setConnection(TQT_DBusConnection::systemBus());
+					TQString candidateMACAddress = bluetoothDevice.getHwAddress(error);
 					if (!error.isValid()) {
 						if (candidateMACAddress.lower() == macAddress.lower()) {
 							return (*it);
@@ -1163,6 +1257,8 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 				TDEVPNConnection* vpnConnection = NULL;
 				TDEWiMaxConnection* wiMaxConnection = NULL;
 				TDEVLANConnection* vlanConnection = NULL;
+				TDEOLPCMeshConnection* olpcMeshConnection = NULL;
+				TDEBluetoothConnection* bluetoothConnection = NULL;
 				TDENetworkConnectionType::TDENetworkConnectionType connType = connectionType((*it));
 				if (connType == TDENetworkConnectionType::WiredEthernet) {
 					connection = ethernetConnection = new TDEWiredEthernetConnection;
@@ -1181,6 +1277,12 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 				}
 				else if (connType == TDENetworkConnectionType::VLAN) {
 					connection = vlanConnection = new TDEVLANConnection;
+				}
+				else if (connType == TDENetworkConnectionType::OLPCMesh) {
+					connection = olpcMeshConnection = new TDEOLPCMeshConnection;
+				}
+				else if (connType == TDENetworkConnectionType::Bluetooth) {
+					connection = bluetoothConnection = new TDEBluetoothConnection;
 				}
 				else {
 					connection = new TDENetworkConnection;
@@ -1488,7 +1590,18 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 										}
 									}
 									else if (outerKeyValue.lower() == "802-11-wireless") {
-										if (keyValue.lower() == "mac-address") {
+										if (keyValue.lower() == "ssid") {
+											TQT_DBusDataValueList valueList = dataValue2.toTQValueList();
+											TQT_DBusDataValueList::const_iterator it4;
+											int count = 0;
+											for (it4 = valueList.begin(); it4 != valueList.end(); ++it4) {
+												TQT_DBusData innerDataValue = *it4;
+												wiFiConnection->SSID.resize(count+1);
+												wiFiConnection->SSID[count] = innerDataValue.toByte();
+												count++;
+											}
+										}
+										else if (keyValue.lower() == "mac-address") {
 											TQT_DBusDataValueList valueList = dataValue2.toTQValueList();
 											TQT_DBusDataValueList::const_iterator it4;
 											TDENetworkByteList macAddress;
@@ -1691,6 +1804,147 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 												TQStringList pieces = TQStringList::split(":", innerDataValue.toString(), TRUE);
 												vlanConnection->egressPriorityMap[pieces[0].toUInt()] = pieces[1].toUInt();;
 											}
+										}
+									}
+									else if (outerKeyValue.lower() == "serial") {
+										if (keyValue.lower() == "baud") {
+											connection->serialConfig.baudRate = dataValue2.toUInt32();
+										}
+										else if (keyValue.lower() == "bits") {
+											connection->serialConfig.byteWidth = dataValue2.toUInt32();
+										}
+										else if (keyValue.lower() == "parity") {
+											connection->serialConfig.parity = nmParityToTDEParity(dataValue2.toByte());
+										}
+										else if (keyValue.lower() == "stopbits") {
+											connection->serialConfig.stopBits = dataValue2.toUInt32();
+										}
+										else if (keyValue.lower() == "send-delay") {
+											connection->serialConfig.txDelay = dataValue2.toUInt64();
+										}
+										connection->serialConfig.valid = true;
+									}
+									else if (outerKeyValue.lower() == "ppp") {
+										if (keyValue.lower() == "noauth") {
+											connection->pppConfig.requireServerAuthentication = !(dataValue2.toBool());
+										}
+										else if (keyValue.lower() == "refuse-eap") {
+											if (dataValue2.toBool())	connection->pppConfig.flags |=  TDENetworkPPPFlags::DisableEAP;
+											else				connection->pppConfig.flags &= ~TDENetworkPPPFlags::DisableEAP;
+										}
+										else if (keyValue.lower() == "refuse-pap") {
+											if (dataValue2.toBool())	connection->pppConfig.flags |=  TDENetworkPPPFlags::DisablePAP;
+											else				connection->pppConfig.flags &= ~TDENetworkPPPFlags::DisablePAP;
+										}
+										else if (keyValue.lower() == "refuse-chap") {
+											if (dataValue2.toBool())	connection->pppConfig.flags |=  TDENetworkPPPFlags::DisableCHAP;
+											else				connection->pppConfig.flags &= ~TDENetworkPPPFlags::DisableCHAP;
+										}
+										else if (keyValue.lower() == "refuse-mschap") {
+											if (dataValue2.toBool())	connection->pppConfig.flags |=  TDENetworkPPPFlags::DisableMSCHAP;
+											else				connection->pppConfig.flags &= ~TDENetworkPPPFlags::DisableMSCHAP;
+										}
+										else if (keyValue.lower() == "refuse-mschapv2") {
+											if (dataValue2.toBool())	connection->pppConfig.flags |=  TDENetworkPPPFlags::DisableMSCHAPv2;
+											else				connection->pppConfig.flags &= ~TDENetworkPPPFlags::DisableMSCHAPv2;
+										}
+										else if (keyValue.lower() == "nobsdcomp") {
+											if (dataValue2.toBool())	connection->pppConfig.flags &= ~TDENetworkPPPFlags::AllowBSDCompression;
+											else				connection->pppConfig.flags |=  TDENetworkPPPFlags::AllowBSDCompression;
+										}
+										else if (keyValue.lower() == "nodeflate") {
+											if (dataValue2.toBool())	connection->pppConfig.flags &= ~TDENetworkPPPFlags::AllowDeflateCompression;
+											else				connection->pppConfig.flags |=  TDENetworkPPPFlags::AllowDeflateCompression;
+										}
+										else if (keyValue.lower() == "no-vj-comp") {
+											if (dataValue2.toBool())	connection->pppConfig.flags &= ~TDENetworkPPPFlags::AllowVJCompression;
+											else				connection->pppConfig.flags |=  TDENetworkPPPFlags::AllowVJCompression;
+										}
+										else if (keyValue.lower() == "require-mppe") {
+											if (dataValue2.toBool())	connection->pppConfig.flags |=  TDENetworkPPPFlags::RequireMPPE;
+											else				connection->pppConfig.flags &= ~TDENetworkPPPFlags::RequireMPPE;
+										}
+										else if (keyValue.lower() == "require-mppe-128") {
+											if (dataValue2.toBool())	connection->pppConfig.flags |=  TDENetworkPPPFlags::RequireMPPE128;
+											else				connection->pppConfig.flags &= ~TDENetworkPPPFlags::RequireMPPE128;
+										}
+										else if (keyValue.lower() == "mppe-stateful") {
+											if (dataValue2.toBool())	connection->pppConfig.flags |=  TDENetworkPPPFlags::StatefulMPPE;
+											else				connection->pppConfig.flags &= ~TDENetworkPPPFlags::StatefulMPPE;
+										}
+										else if (keyValue.lower() == "crtscts") {
+											if (dataValue2.toBool())	connection->pppConfig.flags |=  TDENetworkPPPFlags::UseHardwareFlowControl;
+											else				connection->pppConfig.flags &= ~TDENetworkPPPFlags::UseHardwareFlowControl;
+										}
+										else if (keyValue.lower() == "baud") {
+											connection->pppConfig.baudRate = dataValue2.toUInt32();
+										}
+										else if (keyValue.lower() == "mru") {
+											connection->pppConfig.mru = dataValue2.toUInt32();
+										}
+										else if (keyValue.lower() == "mtu") {
+											connection->pppConfig.mtu = dataValue2.toUInt32();
+										}
+										else if (keyValue.lower() == "lcp-echo-interval") {
+											connection->pppConfig.lcpEchoPingInterval = dataValue2.toUInt32();
+										}
+										else if (keyValue.lower() == "lcp-echo-failure") {
+											connection->pppConfig.lcpEchoFailureThreshold = dataValue2.toUInt32();
+										}
+										connection->pppConfig.valid = true;
+									}
+									else if (outerKeyValue.lower() == "pppoe") {
+										if (keyValue.lower() == "service") {
+											connection->pppoeConfig.networkServiceProvider = dataValue2.toString();
+										}
+										else if (keyValue.lower() == "username") {
+											connection->pppoeConfig.username = dataValue2.toString();
+										}
+										else if (keyValue.lower() == "password-flags") {
+											connection->pppoeConfig.passwordFlags = nmPasswordFlagsToTDEPasswordFlags(dataValue2.toUInt32());
+										}
+										connection->pppoeConfig.secretsValid = true;
+									}
+									else if ((outerKeyValue.lower() == "802-11-olpc-mesh") && (olpcMeshConnection)) {
+										if (keyValue.lower() == "ssid") {
+											TQT_DBusDataValueList valueList = dataValue2.toTQValueList();
+											TQT_DBusDataValueList::const_iterator it4;
+											int count = 0;
+											for (it4 = valueList.begin(); it4 != valueList.end(); ++it4) {
+												TQT_DBusData innerDataValue = *it4;
+												olpcMeshConnection->SSID.resize(count+1);
+												olpcMeshConnection->SSID[count] = innerDataValue.toByte();
+												count++;
+											}
+										}
+										else if (keyValue.lower() == "channel") {
+											olpcMeshConnection->channel = dataValue2.toUInt32();
+										}
+										else if (keyValue.lower() == "dhcp-anycast-address") {
+											TQT_DBusDataValueList valueList = dataValue2.toTQValueList();
+											TQT_DBusDataValueList::const_iterator it4;
+											int count = 0;
+											for (it4 = valueList.begin(); it4 != valueList.end(); ++it4) {
+												TQT_DBusData innerDataValue = *it4;
+												olpcMeshConnection->anycastDHCPHWAddress.resize(count+1);
+												olpcMeshConnection->anycastDHCPHWAddress[count] = innerDataValue.toByte();
+												count++;
+											}
+										}
+									}
+									else if ((outerKeyValue.lower() == "bluetooth") && (bluetoothConnection)) {
+										if (keyValue.lower() == "bdaddr") {
+											TQT_DBusDataValueList valueList = dataValue2.toTQValueList();
+											TQT_DBusDataValueList::const_iterator it4;
+											TDENetworkByteList macAddress;
+											for (it4 = valueList.begin(); it4 != valueList.end(); ++it4) {
+												TQT_DBusData innerDataValue = *it4;
+												macAddress.append(innerDataValue.toByte());
+											}
+											connection->lockedHWAddress.setAddress(macAddress);
+										}
+										else if (keyValue.lower() == "type") {
+											bluetoothConnection->type = nmBluetoothModeToTDEBluetoothMode(dataValue2.toString());
 										}
 									}
 									else if (outerKeyValue.lower() == "ipv4") {
@@ -2043,6 +2297,10 @@ bool TDENetworkConnectionManager_BackendNM::loadConnectionSecretsForGroup(TQStri
 	//TDEWiredInfinibandConnection* infinibandConnection = dynamic_cast<TDEWiredInfinibandConnection*>(connection);
 	TDEWiFiConnection* wiFiConnection = dynamic_cast<TDEWiFiConnection*>(connection);
 	TDEVPNConnection* vpnConnection = dynamic_cast<TDEVPNConnection*>(connection);
+	//TDEWiMaxConnection* wiMaxConnection = dynamic_cast<TDEWiMaxConnection*>(connection);
+	//TDEVLANConnection* vlanConnection = dynamic_cast<TDEVLANConnection*>(connection);
+	//TDEOLPCMeshConnection* olpcMeshConnection = dynamic_cast<TDEVLANConnection*>(connection);
+	//TDEBluetoothConnection* bluetoothConnection = dynamic_cast<TDEBluetoothConnection*>(connection);
 	TQT_DBusObjectPath existingConnection;
 	TQT_DBusError error;
 	bool ret;
@@ -2164,6 +2422,12 @@ bool TDENetworkConnectionManager_BackendNM::loadConnectionSecretsForGroup(TQStri
 									vpnConnection->secretsValid = true;
 								}
 							}
+							if (outerKeyValue.lower() == "pppoe") {
+								if (keyValue.lower() == "username") {
+									connection->pppoeConfig.password = dataValue2.toString();
+								}
+								connection->pppoeConfig.secretsValid = true;
+							}
 						}
 					}
 				}
@@ -2194,6 +2458,8 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 	TDEVPNConnection* vpnConnection = dynamic_cast<TDEVPNConnection*>(connection);
 	TDEWiMaxConnection* wiMaxConnection = dynamic_cast<TDEWiMaxConnection*>(connection);
 	TDEVLANConnection* vlanConnection = dynamic_cast<TDEVLANConnection*>(connection);
+	TDEOLPCMeshConnection* olpcMeshConnection = dynamic_cast<TDEOLPCMeshConnection*>(connection);
+	TDEBluetoothConnection* bluetoothConnection = dynamic_cast<TDEBluetoothConnection*>(connection);
 	TQT_DBusObjectPath existingConnection;
 	TQT_DBusError error;
 	bool ret;
@@ -2251,6 +2517,8 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 					else if (vpnConnection) type = "vpn";
 					else if (wiMaxConnection) type = "wimax";
 					else if (vlanConnection) type = "vlan";
+					else if (olpcMeshConnection) type = "802-11-olpc-mesh";
+					else if (bluetoothConnection) type = "bluetooth";
 					if (!type.isNull()) settingsMap["type"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(type));
 				}
 				settingsMap["uuid"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(connection->UUID));
@@ -2507,7 +2775,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 		if (groupValid) outerMap.insert("802-1x", dbusData, TRUE); else outerMap.remove("802-1x");
 
 		dbusData = outerMap["802-3-ethernet"];
-		{
+		if (ethernetConnection) {
 			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
 			{
 				settingsMap["duplex"] = convertDBUSDataToVariantData(TQT_DBusData::fromString((connection->fullDuplex)?"full":"half"));
@@ -2552,7 +2820,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 		if (groupValid) outerMap.insert("802-3-ethernet", dbusData, TRUE); else outerMap.remove("802-3-ethernet");
 
 		dbusData = outerMap["infiniband"];
-		{
+		if (infinibandConnection) {
 			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
 			{
 				if (connection->lockedHWAddress.isValid()) {
@@ -2583,9 +2851,18 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 		if (groupValid) outerMap.insert("infiniband", dbusData, TRUE); else outerMap.remove("infiniband");
 
 		dbusData = outerMap["802-11-wireless"];
-		{
+		if (wiFiConnection) {
 			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
 			{
+				{
+					unsigned int i;
+					TQT_DBusDataValueList valueList;
+					for (i=0; i<wiFiConnection->SSID.count(); i++) {
+						TQT_DBusData innerDataValue = TQT_DBusData::fromByte(wiFiConnection->SSID[i]);
+						valueList.append(innerDataValue);
+					}
+					settingsMap["ssid"] = convertDBUSDataToVariantData(TQT_DBusData::fromTQValueList(valueList));
+				}
 				if (connection->lockedHWAddress.isValid()) {
 					TDENetworkByteList address = connection->lockedHWAddress.address();
 					TQT_DBusDataValueList valueList;
@@ -2802,7 +3079,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 		if (groupValid) outerMap.insert("vpn", dbusData, TRUE); else outerMap.remove("vpn");
 
 		dbusData = outerMap["wimax"];
-		{
+		if (wiMaxConnection) {
 			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
 			{
 				if (connection->lockedHWAddress.isValid()) {
@@ -2827,7 +3104,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 		if (groupValid) outerMap.insert("wimax", dbusData, TRUE); else outerMap.remove("wimax");
 
 		dbusData = outerMap["vlan"];
-		{
+		if (vlanConnection) {
 			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
 			{
 				UPDATE_STRING_SETTING_IF_VALID(vlanConnection->kernelName, "interface-name", settingsMap)
@@ -2855,6 +3132,139 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 			groupValid = (settingsMap.count() > 0);
 		}
 		if (groupValid) outerMap.insert("vlan", dbusData, TRUE); else outerMap.remove("vlan");
+
+		dbusData = outerMap["serial"];
+		if (connection->serialConfig.valid) {
+			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
+			{
+				settingsMap["baud"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(connection->serialConfig.baudRate));
+				settingsMap["bits"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(connection->serialConfig.byteWidth));
+				settingsMap["parity"] = convertDBUSDataToVariantData(TQT_DBusData::fromByte(tdeParityToNMParity(connection->serialConfig.parity)));
+				settingsMap["stopbits"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(connection->serialConfig.stopBits));
+				settingsMap["send-delay"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt64(connection->serialConfig.txDelay));
+			}
+			dbusData = TQT_DBusData::fromStringKeyMap(TQT_DBusDataMap<TQString>(settingsMap));
+			groupValid = (settingsMap.count() > 0);
+		}
+		if (groupValid) outerMap.insert("serial", dbusData, TRUE); else outerMap.remove("serial");
+
+		dbusData = outerMap["ppp"];
+		if (connection->pppConfig.valid) {
+			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
+			{
+				settingsMap["noauth"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(!(connection->pppConfig.requireServerAuthentication)));
+				settingsMap["refuse-eap"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(connection->pppConfig.flags & TDENetworkPPPFlags::DisableEAP));
+				settingsMap["refuse-pap"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(connection->pppConfig.flags & TDENetworkPPPFlags::DisablePAP));
+				settingsMap["refuse-chap"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(connection->pppConfig.flags & TDENetworkPPPFlags::DisableCHAP));
+				settingsMap["refuse-mschap"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(connection->pppConfig.flags & TDENetworkPPPFlags::DisableMSCHAP));
+				settingsMap["refuse-mschapv2"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(connection->pppConfig.flags & TDENetworkPPPFlags::DisableMSCHAPv2));
+				settingsMap["nobsdcomp"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(!(connection->pppConfig.flags & TDENetworkPPPFlags::AllowBSDCompression)));
+				settingsMap["nodeflate"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(!(connection->pppConfig.flags & TDENetworkPPPFlags::AllowDeflateCompression)));
+				settingsMap["no-vj-comp"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(!(connection->pppConfig.flags & TDENetworkPPPFlags::AllowVJCompression)));
+				settingsMap["require-mppe"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(connection->pppConfig.flags & TDENetworkPPPFlags::RequireMPPE));
+				settingsMap["require-mppe-128"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(connection->pppConfig.flags & TDENetworkPPPFlags::RequireMPPE128));
+				settingsMap["mppe-stateful"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(connection->pppConfig.flags & TDENetworkPPPFlags::StatefulMPPE));
+				settingsMap["crtscts"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(connection->pppConfig.flags & TDENetworkPPPFlags::UseHardwareFlowControl));
+				settingsMap["baud"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(connection->pppConfig.baudRate));
+				if (connection->pppConfig.mru > 0) {
+					settingsMap["mru"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(connection->pppConfig.mru));
+				}
+				else {
+					settingsMap.remove("mru");
+				}
+				if (connection->pppConfig.mtu > 0) {
+					settingsMap["mtu"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(connection->pppConfig.mtu));
+				}
+				else {
+					settingsMap.remove("mtu");
+				}
+				if (connection->pppConfig.mtu > 0) {
+					settingsMap["lcp-echo-interval"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(connection->pppConfig.lcpEchoPingInterval));
+				}
+				else {
+					settingsMap.remove("lcp-echo-interval");
+				}
+				if (connection->pppConfig.mtu > 0) {
+					settingsMap["lcp-echo-failure"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(connection->pppConfig.lcpEchoFailureThreshold));
+				}
+				else {
+					settingsMap.remove("lcp-echo-failure");
+				}
+			}
+			dbusData = TQT_DBusData::fromStringKeyMap(TQT_DBusDataMap<TQString>(settingsMap));
+			groupValid = (settingsMap.count() > 0);
+		}
+		if (groupValid) outerMap.insert("ppp", dbusData, TRUE); else outerMap.remove("ppp");
+
+		dbusData = outerMap["pppoe"];
+		if (connection->pppoeConfig.valid) {
+			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
+			{
+				UPDATE_STRING_SETTING_IF_VALID(connection->pppoeConfig.networkServiceProvider, "service", settingsMap)
+				UPDATE_STRING_SETTING_IF_VALID(connection->pppoeConfig.username, "username", settingsMap)
+				if (connection->pppoeConfig.secretsValid) {
+					UPDATE_STRING_SETTING_IF_VALID(connection->pppoeConfig.password, "password", settingsMap)
+				}
+				settingsMap["password-flags"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(tdePasswordFlagsToNMPasswordFlags(connection->pppoeConfig.passwordFlags)));
+			}
+			dbusData = TQT_DBusData::fromStringKeyMap(TQT_DBusDataMap<TQString>(settingsMap));
+			groupValid = (settingsMap.count() > 0);
+		}
+		if (groupValid) outerMap.insert("pppoe", dbusData, TRUE); else outerMap.remove("pppoe");
+
+		dbusData = outerMap["802-11-olpc-mesh"];
+		if (olpcMeshConnection) {
+			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
+			{
+				{
+					unsigned int i;
+					TQT_DBusDataValueList valueList;
+					for (i=0; i<olpcMeshConnection->SSID.count(); i++) {
+						TQT_DBusData innerDataValue = TQT_DBusData::fromByte(olpcMeshConnection->SSID[i]);
+						valueList.append(innerDataValue);
+					}
+					settingsMap["ssid"] = convertDBUSDataToVariantData(TQT_DBusData::fromTQValueList(valueList));
+				}
+				settingsMap["channel"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(olpcMeshConnection->channel));
+				{
+					unsigned int i;
+					TQT_DBusDataValueList valueList;
+					for (i=0; i<olpcMeshConnection->anycastDHCPHWAddress.count(); i++) {
+						TQT_DBusData innerDataValue = TQT_DBusData::fromByte(olpcMeshConnection->anycastDHCPHWAddress[i]);
+						valueList.append(innerDataValue);
+					}
+					settingsMap["dhcp-anycast-address"] = convertDBUSDataToVariantData(TQT_DBusData::fromTQValueList(valueList));
+				}
+			}
+			dbusData = TQT_DBusData::fromStringKeyMap(TQT_DBusDataMap<TQString>(settingsMap));
+			groupValid = (settingsMap.count() > 0);
+		}
+		if (groupValid) outerMap.insert("802-11-olpc-mesh", dbusData, TRUE); else outerMap.remove("802-11-olpc-mesh");
+
+		dbusData = outerMap["bluetooth"];
+		if (olpcMeshConnection) {
+			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
+			{
+				if (connection->lockedHWAddress.isValid()) {
+					TDENetworkByteList address = connection->lockedHWAddress.address();
+					TQT_DBusDataValueList valueList;
+					TDENetworkByteList::iterator it;
+					for (it = address.begin(); it != address.end(); ++it) {
+						TQT_DBusData innerDataValue = TQT_DBusData::fromByte(*it);
+						valueList.append(innerDataValue);
+					}
+					TQT_DBusData nmHWAddress = TQT_DBusData::fromTQValueList(valueList);
+					settingsMap["bdaddr"] = convertDBUSDataToVariantData(nmHWAddress);
+				}
+				else {
+					settingsMap.remove("bdaddr");
+				}
+				UPDATE_STRING_SETTING_IF_VALID(tdeBluetoothModeToNMBluetoothMode(bluetoothConnection->type), "type", settingsMap)
+			}
+			dbusData = TQT_DBusData::fromStringKeyMap(TQT_DBusDataMap<TQString>(settingsMap));
+			groupValid = (settingsMap.count() > 0);
+		}
+		if (groupValid) outerMap.insert("bluetooth", dbusData, TRUE); else outerMap.remove("bluetooth");
 
 		dbusData = outerMap["ipv4"];
 		{

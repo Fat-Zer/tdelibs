@@ -39,6 +39,8 @@ add_dbus_xml( p networkmanagerpppproxy NetworkManagerPPPProxy DBus nm-ppp-manage
 add_dbus_xml( p deviceproxy DeviceProxy DBus nm-device.xml )
 add_dbus_xml( p wifiproxy WiFiDeviceProxy DBus nm-device-wifi.xml )
 add_dbus_xml( p wimaxproxy WiMaxDeviceProxy DBus nm-device-wimax.xml )
+add_dbus_xml( p olpcmeshproxy OlpcMeshDeviceProxy DBus nm-device-olpc-mesh.xml )
+add_dbus_xml( p bluetoothproxy BluetoothDeviceProxy DBus nm-device-bt.xml )
 add_dbus_xml( p ethernetproxy EthernetDeviceProxy DBus nm-device-ethernet.xml )
 add_dbus_xml( p infinibandproxy InfinibandDeviceProxy DBus nm-device-infiniband.xml )
 add_dbus_xml( p modemproxy ModemDeviceProxy DBus nm-device-modem.xml )
@@ -52,7 +54,7 @@ add_dbus_xml( p connectionsettings ConnectionSettingsInterface DBus nm-settings-
 
 # generate moc files
 
-set( MOCHEADERS accesspointproxy.h deviceproxy.h networkmanagerproxy.h networkmanagerpppproxy.h ethernetproxy.h
+set( MOCHEADERS accesspointproxy.h deviceproxy.h networkmanagerproxy.h networkmanagerpppproxy.h bluetoothproxy.h olpcmeshproxy.h ethernetproxy.h
   infinibandproxy.h wifiproxy.h wimaxproxy.h activeconnectionproxy.h vpnconnectionproxy.h vpnpluginproxy.h modemproxy.h
   networkmanagersettings.h connectionsettings.h )
 
@@ -75,9 +77,9 @@ add_custom_command( OUTPUT mocfiles.cpp
 tde_add_library( tdenm_dbus STATIC_PIC
   SOURCES
     networkmanagerproxy.cpp networkmanagerpppproxy.cpp
-    deviceproxy.cpp ethernetproxy.cpp infinibandproxy.cpp wifiproxy.cpp
-    wimaxproxy.cpp accesspointproxy.cpp networkmanagersettings.cpp
-    connectionsettings.cpp
+    deviceproxy.cpp bluetoothproxy.cpp olpcmeshproxy.cpp ethernetproxy.cpp
+    infinibandproxy.cpp wifiproxy.cpp wimaxproxy.cpp accesspointproxy.cpp
+    networkmanagersettings.cpp connectionsettings.cpp
     mocfiles.cpp activeconnectionproxy.cpp vpnconnectionproxy.cpp
     vpnpluginproxy.cpp modemproxy.cpp
 )

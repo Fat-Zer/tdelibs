@@ -48,6 +48,9 @@
 #include "ethernetproxy.h"
 #include "infinibandproxy.h"
 #include "wifiproxy.h"
+#include "wimaxproxy.h"
+#include "bluetoothproxy.h"
+#include "olpcmeshproxy.h"
 #include "activeconnectionproxy.h"
 #include "accesspointproxy.h"
 
