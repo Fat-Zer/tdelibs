@@ -575,6 +575,12 @@ TQString TDEStorageDevice::friendlyDeviceType() {
 		if (isDiskOfType(TDEDiskDeviceType::MemoryStick)) {
 			ret = i18n("Memory Stick");
 		}
+		if (isDiskOfType(TDEDiskDeviceType::SmartMedia)) {
+			ret = i18n("Smart Media");
+		}
+		if (isDiskOfType(TDEDiskDeviceType::SDMMC)) {
+			ret = i18n("Secure Digital");
+		}
 	}
 
 	if (isDiskOfType(TDEDiskDeviceType::RAM)) {
@@ -631,6 +637,12 @@ TQPixmap TDEStorageDevice::icon(KIcon::StdSizes size) {
 		}
 		if (isDiskOfType(TDEDiskDeviceType::MemoryStick)) {
 			ret = DesktopIcon("memory_stick_unmount", size);
+		}
+		if (isDiskOfType(TDEDiskDeviceType::SmartMedia)) {
+			ret = DesktopIcon("smart_media_unmount", size);
+		}
+		if (isDiskOfType(TDEDiskDeviceType::SDMMC)) {
+			ret = DesktopIcon("sd_mmc_unmount", size);
 		}
 	}
 
@@ -1676,8 +1688,10 @@ void TDEEventDevice::internalStartFdMonitoring(TDEHardwareDevices* hwmanager) {
 	if (!m_fdMonitorActive) {
 		// For security and performance reasons, only monitor known ACPI buttons
 		if (eventType() != TDEEventDeviceType::Unknown) {
-			m_eventNotifier = new TQSocketNotifier(m_fd, TQSocketNotifier::Read, this);
-			connect( m_eventNotifier, TQT_SIGNAL(activated(int)), this, TQT_SLOT(eventReceived()) );
+			if (m_fd >= 0) {
+				m_eventNotifier = new TQSocketNotifier(m_fd, TQSocketNotifier::Read, this);
+				connect( m_eventNotifier, TQT_SIGNAL(activated(int)), this, TQT_SLOT(eventReceived()) );
+			}
 			connect( this, TQT_SIGNAL(keyPressed(unsigned int, TDEEventDevice*)), hwmanager, TQT_SLOT(processEventDeviceKeyPressed(unsigned int, TDEEventDevice*)) );
 		}
 		m_fdMonitorActive = true;
@@ -1731,8 +1745,11 @@ TDEHardwareDevices::TDEHardwareDevices() {
 		udev_monitor_filter_add_match_subsystem_devtype(m_udevMonitorStruct, NULL, NULL);
 		udev_monitor_enable_receiving(m_udevMonitorStruct);
 
-		m_devScanNotifier = new TQSocketNotifier(udev_monitor_get_fd(m_udevMonitorStruct), TQSocketNotifier::Read, this);
-		connect( m_devScanNotifier, TQT_SIGNAL(activated(int)), this, TQT_SLOT(processHotPluggedHardware()) );
+		int udevmonitorfd = udev_monitor_get_fd(m_udevMonitorStruct);
+		if (udevmonitorfd >= 0) {
+			m_devScanNotifier = new TQSocketNotifier(udevmonitorfd, TQSocketNotifier::Read, this);
+			connect( m_devScanNotifier, TQT_SIGNAL(activated(int)), this, TQT_SLOT(processHotPluggedHardware()) );
+		}
 
 		// Read in the current mount table
 		// Yes, a race condition exists between this and the mount monitor start below, but it shouldn't be a problem 99.99% of the time
@@ -1748,8 +1765,10 @@ TDEHardwareDevices::TDEHardwareDevices() {
 
 		// Monitor for changed mounts
 		m_procMountsFd = open("/proc/mounts", O_RDONLY, 0);
-		m_mountScanNotifier = new TQSocketNotifier(m_procMountsFd, TQSocketNotifier::Exception, this);
-		connect( m_mountScanNotifier, TQT_SIGNAL(activated(int)), this, TQT_SLOT(processModifiedMounts()) );
+		if (m_procMountsFd >= 0) {
+			m_mountScanNotifier = new TQSocketNotifier(m_procMountsFd, TQSocketNotifier::Exception, this);
+			connect( m_mountScanNotifier, TQT_SIGNAL(activated(int)), this, TQT_SLOT(processModifiedMounts()) );
+		}
 
 		// Read in the current cpu information
 		// Yes, a race condition exists between this and the cpu monitor start below, but it shouldn't be a problem 99.99% of the time
@@ -2243,23 +2262,30 @@ TDEDiskDeviceType::TDEDiskDeviceType classifyDiskType(udev_device* dev, const TQ
 		disktype = disktype | TDEDiskDeviceType::Tape;
 	}
 
-	if (disktypestring.upper() == "COMPACT_FLASH") {
+	if ((disktypestring.upper() == "COMPACT_FLASH")
+		|| (TQString(udev_device_get_property_value(dev, "ID_DRIVE_FLASH_CF")) == "1")) {
 		disktype = disktype | TDEDiskDeviceType::CompactFlash;
 	}
 
-	if (disktypestring.upper() == "MEMORY_STICK") {
+	if ((disktypestring.upper() == "MEMORY_STICK")
+		|| (TQString(udev_device_get_property_value(dev, "ID_DRIVE_FLASH_MS")) == "1")) {
 		disktype = disktype | TDEDiskDeviceType::MemoryStick;
 	}
 
-	if (disktypestring.upper() == "SMART_MEDIA") {
+	if ((disktypestring.upper() == "SMART_MEDIA")
+		|| (TQString(udev_device_get_property_value(dev, "ID_DRIVE_FLASH_SM")) == "1")) {
 		disktype = disktype | TDEDiskDeviceType::SmartMedia;
 	}
 
-	if (disktypestring.upper() == "SD_MMC") {
+	if ((disktypestring.upper() == "SD_MMC")
+		|| (TQString(udev_device_get_property_value(dev, "ID_DRIVE_FLASH_SD")) == "1")
+		|| (TQString(udev_device_get_property_value(dev, "ID_DRIVE_FLASH_SDHC")) == "1")
+		|| (TQString(udev_device_get_property_value(dev, "ID_DRIVE_FLASH_MMC")) == "1")) {
 		disktype = disktype | TDEDiskDeviceType::SDMMC;
 	}
 
-	if (disktypestring.upper() == "FLASHKEY") {
+	if ((disktypestring.upper() == "FLASHKEY")
+		|| (TQString(udev_device_get_property_value(dev, " ID_DRIVE_FLASH")) == "1")) {
 		disktype = disktype | TDEDiskDeviceType::Flash;
 	}
 
@@ -3092,7 +3118,8 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		if (devicesubsystem == "net") {
 			if (!device) device = new TDENetworkDevice(TDEGenericDeviceType::Network);
 		}
-		if (devicesubsystem == "i2c") {
+		if ((devicesubsystem == "i2c")
+			|| (devicesubsystem == "i2c-dev")) {
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::I2C);
 		}
 		if (devicesubsystem == "mdio_bus") {
