@@ -108,6 +108,12 @@
 #define NM_VLAN_USE_GVRP		0x02
 #define NM_VLAN_LOOSE_BINDING		0x04
 //====================================================================================================
+#define NM_GSM_3G_ALL			-1
+#define NM_GSM_3G_ONLY			0
+#define NM_GSM_GPRS_EDGE_ONLY		1
+#define NM_GSM_PREFER_3G		2
+#define NM_GSM_PREFER_2G		3
+//====================================================================================================
 
 class TDENetworkConnectionManager_BackendNMPrivate;
 

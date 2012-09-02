@@ -134,6 +134,27 @@ namespace TDEBluetoothConnectionType {
 	};
 };
 
+namespace TDEModemConnectionType {
+	enum TDEModemConnectionType {
+		CDMA,
+		GSM,
+		Other,
+		Last = Other
+	};
+};
+
+namespace TDEGSMNetworkType {
+	enum TDEGSMNetworkType {
+		Any,
+		Only3G,
+		GPRSEdge,
+		Prefer3G,
+		Prefer2G,
+		Other,
+		Last = Other
+	};
+};
+
 namespace TDENetworkParity {
 	enum TDENetworkParity {
 		None,
@@ -577,6 +598,44 @@ class TDECORE_EXPORT TDENetworkSerialConfiguration
 		TQ_UINT64 txDelay;
 };
 
+class TDECORE_EXPORT TDENetworkCDMAConfiguration
+{
+	public:
+		TDENetworkCDMAConfiguration();
+		virtual ~TDENetworkCDMAConfiguration();
+
+	public:
+		bool valid;
+		bool secretsValid;
+		TQString providerDataNumber;
+		TQString username;
+		TQString password;
+		TDENetworkPasswordHandlingFlags::TDENetworkPasswordHandlingFlags passwordFlags;
+};
+
+class TDECORE_EXPORT TDENetworkGSMConfiguration
+{
+	public:
+		TDENetworkGSMConfiguration();
+		virtual ~TDENetworkGSMConfiguration();
+
+	public:
+		bool valid;
+		bool secretsValid;
+		TQString providerDataNumber;
+		TQString username;
+		TQString password;
+		TDENetworkPasswordHandlingFlags::TDENetworkPasswordHandlingFlags passwordFlags;
+		TQString accessPointName;
+		TQString networkID;
+		TDEGSMNetworkType::TDEGSMNetworkType networkType;
+		TQString pin;
+		TDENetworkPasswordHandlingFlags::TDENetworkPasswordHandlingFlags pinFlags;
+		TQ_UINT32 allowedFrequencyBands;
+		bool allowRoaming;
+};
+		
+
 class TDENetworkWiFiSecurityConfiguration
 {
 	public:
@@ -815,6 +874,18 @@ class TDECORE_EXPORT TDEBluetoothConnection : public TDENetworkConnection
 
 	public:
 		TDEBluetoothConnectionType::TDEBluetoothConnectionType type;
+};
+
+class TDECORE_EXPORT TDEModemConnection : public TDENetworkConnection
+{
+	public:
+		TDEModemConnection();
+		virtual ~TDEModemConnection();
+
+	public:
+		TDEModemConnectionType::TDEModemConnectionType type;
+		TDENetworkCDMAConfiguration cdmaConfig;
+		TDENetworkGSMConfiguration gsmConfig;
 };
 
 typedef TQPtrList< TDENetworkConnection > TDENetworkConnectionList;

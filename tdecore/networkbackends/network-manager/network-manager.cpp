@@ -244,11 +244,17 @@ TDENetworkConnectionType::TDENetworkConnectionType nmConnectionTypeToTDEConnecti
 	else if (nm.lower() == "bluetooth") {
 		ret = TDENetworkConnectionType::Bluetooth;
 	}
+	else if (nm.lower() == "cdma") {
+		ret = TDENetworkConnectionType::Modem;
+	}
+	else if (nm.lower() == "gsm") {
+		ret = TDENetworkConnectionType::Modem;
+	}
 
 	return ret;
 }
 
-TQString tdeConnectionTypeToNMConnectionType(TDENetworkConnectionType::TDENetworkConnectionType type) {
+TQString tdeConnectionTypeToNMConnectionType(TDENetworkConnectionType::TDENetworkConnectionType type, TDEModemConnectionType::TDEModemConnectionType modemType=TDEModemConnectionType::Other) {
 	TQString ret;
 
 	if (type == TDENetworkConnectionType::WiredEthernet) {
@@ -274,6 +280,14 @@ TQString tdeConnectionTypeToNMConnectionType(TDENetworkConnectionType::TDENetwor
 	}
 	else if (type == TDENetworkConnectionType::Bluetooth) {
 		ret = "bluetooth";
+	}
+	else if (type == TDENetworkConnectionType::Modem) {
+		if (modemType == TDEModemConnectionType::CDMA) {
+			ret = "cdma";
+		}
+		else if (modemType == TDEModemConnectionType::GSM) {
+			ret = "gsm";
+		}
 	}
 
 	return ret;
@@ -496,6 +510,44 @@ TQString tdeBluetoothModeToNMBluetoothMode(TDEBluetoothConnectionType::TDEBlueto
 	}
 	else if (type == TDEBluetoothConnectionType::PAN) {
 		ret = "panu";
+	}
+
+	return ret;
+}
+
+TDEGSMNetworkType::TDEGSMNetworkType nmGSMModeToTDEGSMMode(TQ_INT32 nm) {
+	TDEGSMNetworkType::TDEGSMNetworkType ret = TDEGSMNetworkType::Any;
+
+	if (nm == NM_GSM_3G_ONLY) {
+		ret = TDEGSMNetworkType::Only3G;
+	}
+	else if (nm == NM_GSM_GPRS_EDGE_ONLY) {
+		ret = TDEGSMNetworkType::GPRSEdge;
+	}
+	else if (nm == NM_GSM_PREFER_3G) {
+		ret = TDEGSMNetworkType::Prefer3G;
+	}
+	else if (nm == NM_GSM_PREFER_2G) {
+		ret = TDEGSMNetworkType::Prefer2G;
+	}
+
+	return ret;
+}
+
+TQ_INT32 tdeGSMModeToNMGSMMode(TDEGSMNetworkType::TDEGSMNetworkType type) {
+	TQ_INT32 ret = -1;
+
+	if (type == TDEGSMNetworkType::Only3G) {
+		ret = NM_GSM_3G_ONLY;
+	}
+	else if (type == TDEGSMNetworkType::GPRSEdge) {
+		ret = NM_GSM_GPRS_EDGE_ONLY;
+	}
+	else if (type == TDEGSMNetworkType::Prefer3G) {
+		ret = NM_GSM_PREFER_3G;
+	}
+	else if (type == TDEGSMNetworkType::Prefer2G) {
+		ret = NM_GSM_PREFER_2G;
 	}
 
 	return ret;
@@ -1259,6 +1311,7 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 				TDEVLANConnection* vlanConnection = NULL;
 				TDEOLPCMeshConnection* olpcMeshConnection = NULL;
 				TDEBluetoothConnection* bluetoothConnection = NULL;
+				TDEModemConnection* modemConnection = NULL;
 				TDENetworkConnectionType::TDENetworkConnectionType connType = connectionType((*it));
 				if (connType == TDENetworkConnectionType::WiredEthernet) {
 					connection = ethernetConnection = new TDEWiredEthernetConnection;
@@ -1283,6 +1336,9 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 				}
 				else if (connType == TDENetworkConnectionType::Bluetooth) {
 					connection = bluetoothConnection = new TDEBluetoothConnection;
+				}
+				else if (connType == TDENetworkConnectionType::Modem) {
+					connection = modemConnection = new TDEModemConnection;
 				}
 				else {
 					connection = new TDENetworkConnection;
@@ -1947,6 +2003,50 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 											bluetoothConnection->type = nmBluetoothModeToTDEBluetoothMode(dataValue2.toString());
 										}
 									}
+									else if ((outerKeyValue.lower() == "cdma") && (modemConnection)) {
+										if (keyValue.lower() == "number") {
+											modemConnection->cdmaConfig.providerDataNumber = dataValue2.toString();
+										}
+										else if (keyValue.lower() == "username") {
+											modemConnection->cdmaConfig.username = dataValue2.toString();
+										}
+										else if (keyValue.lower() == "password-flags") {
+											modemConnection->cdmaConfig.passwordFlags = nmPasswordFlagsToTDEPasswordFlags(dataValue2.toUInt32());
+										}
+										modemConnection->type = TDEModemConnectionType::CDMA;
+										modemConnection->cdmaConfig.valid = true;
+									}
+									else if ((outerKeyValue.lower() == "gsm") && (modemConnection)) {
+										if (keyValue.lower() == "number") {
+											modemConnection->gsmConfig.providerDataNumber = dataValue2.toString();
+										}
+										else if (keyValue.lower() == "username") {
+											modemConnection->gsmConfig.username = dataValue2.toString();
+										}
+										else if (keyValue.lower() == "password-flags") {
+											modemConnection->gsmConfig.passwordFlags = nmPasswordFlagsToTDEPasswordFlags(dataValue2.toUInt32());
+										}
+										else if (keyValue.lower() == "apn") {
+											modemConnection->gsmConfig.accessPointName = dataValue2.toString();
+										}
+										else if (keyValue.lower() == "network-id") {
+											modemConnection->gsmConfig.networkID = dataValue2.toString();
+										}
+										else if (keyValue.lower() == "network-type") {
+											modemConnection->gsmConfig.networkType = nmGSMModeToTDEGSMMode(dataValue2.toInt32());
+										}
+										else if (keyValue.lower() == "pin-flags") {
+											modemConnection->gsmConfig.pinFlags = nmPasswordFlagsToTDEPasswordFlags(dataValue2.toUInt32());
+										}
+										else if (keyValue.lower() == "allowed-bands") {
+											modemConnection->gsmConfig.allowedFrequencyBands = dataValue2.toUInt32();
+										}
+										else if (keyValue.lower() == "home-only") {
+											modemConnection->gsmConfig.allowRoaming = !dataValue2.toBool();
+										}
+										modemConnection->type = TDEModemConnectionType::GSM;
+										modemConnection->gsmConfig.valid = true;
+									}
 									else if (outerKeyValue.lower() == "ipv4") {
 										if (keyValue.lower() == "addresses") {
 											TQT_DBusDataValueList valueList = dataValue2.toTQValueList();
@@ -2301,6 +2401,7 @@ bool TDENetworkConnectionManager_BackendNM::loadConnectionSecretsForGroup(TQStri
 	//TDEVLANConnection* vlanConnection = dynamic_cast<TDEVLANConnection*>(connection);
 	//TDEOLPCMeshConnection* olpcMeshConnection = dynamic_cast<TDEVLANConnection*>(connection);
 	//TDEBluetoothConnection* bluetoothConnection = dynamic_cast<TDEBluetoothConnection*>(connection);
+	TDEModemConnection* modemConnection = dynamic_cast<TDEModemConnection*>(connection);
 	TQT_DBusObjectPath existingConnection;
 	TQT_DBusError error;
 	bool ret;
@@ -2423,10 +2524,25 @@ bool TDENetworkConnectionManager_BackendNM::loadConnectionSecretsForGroup(TQStri
 								}
 							}
 							if (outerKeyValue.lower() == "pppoe") {
-								if (keyValue.lower() == "username") {
+								if (keyValue.lower() == "password") {
 									connection->pppoeConfig.password = dataValue2.toString();
 								}
 								connection->pppoeConfig.secretsValid = true;
+							}
+							if (outerKeyValue.lower() == "cdma") {
+								if (keyValue.lower() == "password") {
+									modemConnection->cdmaConfig.password = dataValue2.toString();
+								}
+								modemConnection->cdmaConfig.secretsValid = true;
+							}
+							if (outerKeyValue.lower() == "gsm") {
+								if (keyValue.lower() == "password") {
+									modemConnection->gsmConfig.password = dataValue2.toString();
+								}
+								else if (keyValue.lower() == "pin") {
+									modemConnection->gsmConfig.pin = dataValue2.toString();
+								}
+								modemConnection->gsmConfig.secretsValid = true;
 							}
 						}
 					}
@@ -2460,6 +2576,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 	TDEVLANConnection* vlanConnection = dynamic_cast<TDEVLANConnection*>(connection);
 	TDEOLPCMeshConnection* olpcMeshConnection = dynamic_cast<TDEOLPCMeshConnection*>(connection);
 	TDEBluetoothConnection* bluetoothConnection = dynamic_cast<TDEBluetoothConnection*>(connection);
+	TDEModemConnection* modemConnection = dynamic_cast<TDEModemConnection*>(connection);
 	TQT_DBusObjectPath existingConnection;
 	TQT_DBusError error;
 	bool ret;
@@ -2504,6 +2621,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 	TQT_DBusData innerDbusData;
 	TQMap<TQString, TQT_DBusData> outerMap = connectionSettingsMap.toTQMap();
 	{
+		groupValid = false;
 		dbusData = outerMap["connection"];
 		{
 			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
@@ -2519,6 +2637,14 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 					else if (vlanConnection) type = "vlan";
 					else if (olpcMeshConnection) type = "802-11-olpc-mesh";
 					else if (bluetoothConnection) type = "bluetooth";
+					else if (modemConnection) {
+						if (modemConnection->type == TDEModemConnectionType::CDMA) {
+							type = "cdma";
+						}
+						else if (modemConnection->type == TDEModemConnectionType::GSM) {
+							type = "gsm";
+						}
+					}
 					if (!type.isNull()) settingsMap["type"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(type));
 				}
 				settingsMap["uuid"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(connection->UUID));
@@ -2548,6 +2674,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 		}
 		if (groupValid) outerMap.insert("connection", dbusData, TRUE); else outerMap.remove("connection");
 
+		groupValid = false;
 		dbusData = outerMap["802-1x"];
 		{
 			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
@@ -2774,6 +2901,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 		}
 		if (groupValid) outerMap.insert("802-1x", dbusData, TRUE); else outerMap.remove("802-1x");
 
+		groupValid = false;
 		dbusData = outerMap["802-3-ethernet"];
 		if (ethernetConnection) {
 			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
@@ -2819,6 +2947,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 		}
 		if (groupValid) outerMap.insert("802-3-ethernet", dbusData, TRUE); else outerMap.remove("802-3-ethernet");
 
+		groupValid = false;
 		dbusData = outerMap["infiniband"];
 		if (infinibandConnection) {
 			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
@@ -2850,6 +2979,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 		}
 		if (groupValid) outerMap.insert("infiniband", dbusData, TRUE); else outerMap.remove("infiniband");
 
+		groupValid = false;
 		dbusData = outerMap["802-11-wireless"];
 		if (wiFiConnection) {
 			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
@@ -2964,6 +3094,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 		}
 		if (groupValid) outerMap.insert("802-11-wireless", dbusData, TRUE); else outerMap.remove("802-11-wireless");
 
+		groupValid = false;
 		dbusData = outerMap["802-11-wireless-security"];
 		if (wiFiConnection) {
 			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
@@ -3048,6 +3179,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 		}
 		if (groupValid) outerMap.insert("802-11-wireless-security", dbusData, TRUE); else outerMap.remove("802-11-wireless-security");
 
+		groupValid = false;
 		dbusData = outerMap["vpn"];
 		if (vpnConnection) {
 			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
@@ -3078,6 +3210,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 		}
 		if (groupValid) outerMap.insert("vpn", dbusData, TRUE); else outerMap.remove("vpn");
 
+		groupValid = false;
 		dbusData = outerMap["wimax"];
 		if (wiMaxConnection) {
 			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
@@ -3103,6 +3236,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 		}
 		if (groupValid) outerMap.insert("wimax", dbusData, TRUE); else outerMap.remove("wimax");
 
+		groupValid = false;
 		dbusData = outerMap["vlan"];
 		if (vlanConnection) {
 			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
@@ -3133,6 +3267,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 		}
 		if (groupValid) outerMap.insert("vlan", dbusData, TRUE); else outerMap.remove("vlan");
 
+		groupValid = false;
 		dbusData = outerMap["serial"];
 		if (connection->serialConfig.valid) {
 			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
@@ -3148,6 +3283,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 		}
 		if (groupValid) outerMap.insert("serial", dbusData, TRUE); else outerMap.remove("serial");
 
+		groupValid = false;
 		dbusData = outerMap["ppp"];
 		if (connection->pppConfig.valid) {
 			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
@@ -3196,6 +3332,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 		}
 		if (groupValid) outerMap.insert("ppp", dbusData, TRUE); else outerMap.remove("ppp");
 
+		groupValid = false;
 		dbusData = outerMap["pppoe"];
 		if (connection->pppoeConfig.valid) {
 			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
@@ -3212,6 +3349,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 		}
 		if (groupValid) outerMap.insert("pppoe", dbusData, TRUE); else outerMap.remove("pppoe");
 
+		groupValid = false;
 		dbusData = outerMap["802-11-olpc-mesh"];
 		if (olpcMeshConnection) {
 			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
@@ -3241,6 +3379,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 		}
 		if (groupValid) outerMap.insert("802-11-olpc-mesh", dbusData, TRUE); else outerMap.remove("802-11-olpc-mesh");
 
+		groupValid = false;
 		dbusData = outerMap["bluetooth"];
 		if (olpcMeshConnection) {
 			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
@@ -3266,6 +3405,50 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 		}
 		if (groupValid) outerMap.insert("bluetooth", dbusData, TRUE); else outerMap.remove("bluetooth");
 
+		groupValid = false;
+		dbusData = outerMap["cdma"];
+		if ((modemConnection) && (modemConnection->type == TDEModemConnectionType::CDMA)) {
+			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
+			{
+				UPDATE_STRING_SETTING_IF_VALID(modemConnection->cdmaConfig.providerDataNumber, "number", settingsMap)
+				UPDATE_STRING_SETTING_IF_VALID(modemConnection->cdmaConfig.username, "username", settingsMap)
+				if (connection->pppoeConfig.secretsValid) {
+					UPDATE_STRING_SETTING_IF_VALID(modemConnection->cdmaConfig.password, "password", settingsMap)
+				}
+				settingsMap["password-flags"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(tdePasswordFlagsToNMPasswordFlags(modemConnection->cdmaConfig.passwordFlags)));
+			}
+			dbusData = TQT_DBusData::fromStringKeyMap(TQT_DBusDataMap<TQString>(settingsMap));
+			groupValid = (settingsMap.count() > 0);
+		}
+		if (groupValid) outerMap.insert("cdma", dbusData, TRUE); else outerMap.remove("cdma");
+
+		groupValid = false;
+		dbusData = outerMap["gsm"];
+		if ((modemConnection) && (modemConnection->type == TDEModemConnectionType::GSM)) {
+			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
+			{
+				UPDATE_STRING_SETTING_IF_VALID(modemConnection->gsmConfig.providerDataNumber, "number", settingsMap)
+				UPDATE_STRING_SETTING_IF_VALID(modemConnection->gsmConfig.username, "username", settingsMap)
+				if (connection->pppoeConfig.secretsValid) {
+					UPDATE_STRING_SETTING_IF_VALID(modemConnection->gsmConfig.password, "password", settingsMap)
+				}
+				settingsMap["password-flags"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(tdePasswordFlagsToNMPasswordFlags(modemConnection->gsmConfig.passwordFlags)));
+				UPDATE_STRING_SETTING_IF_VALID(modemConnection->gsmConfig.accessPointName, "apn", settingsMap)
+				UPDATE_STRING_SETTING_IF_VALID(modemConnection->gsmConfig.networkID, "network-id", settingsMap)
+				settingsMap["network-type"] = convertDBUSDataToVariantData(TQT_DBusData::fromInt32(tdeGSMModeToNMGSMMode(modemConnection->gsmConfig.networkType)));
+				if (connection->pppoeConfig.secretsValid) {
+					UPDATE_STRING_SETTING_IF_VALID(modemConnection->gsmConfig.pin, "pin", settingsMap)
+				}
+				settingsMap["pin-flags"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(tdePasswordFlagsToNMPasswordFlags(modemConnection->gsmConfig.pinFlags)));
+				settingsMap["allowed-bands"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(modemConnection->gsmConfig.allowedFrequencyBands));
+				settingsMap["home-only"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(!(modemConnection->gsmConfig.allowRoaming)));
+			}
+			dbusData = TQT_DBusData::fromStringKeyMap(TQT_DBusDataMap<TQString>(settingsMap));
+			groupValid = (settingsMap.count() > 0);
+		}
+		if (groupValid) outerMap.insert("gsm", dbusData, TRUE); else outerMap.remove("gsm");
+
+		groupValid = false;
 		dbusData = outerMap["ipv4"];
 		{
 			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
@@ -3393,6 +3576,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 		}
 		if (groupValid) outerMap.insert("ipv4", dbusData, TRUE); else outerMap.remove("ipv4");
 
+		groupValid = false;
 		dbusData = outerMap["ipv6"];
 		{
 			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();

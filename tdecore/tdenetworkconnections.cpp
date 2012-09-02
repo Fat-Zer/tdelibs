@@ -353,6 +353,37 @@ TDENetworkSerialConfiguration::~TDENetworkSerialConfiguration() {
 }
 
 /*================================================================================================*/
+/* TDENetworkCDMAConfiguration                                                                    */
+/*================================================================================================*/
+
+TDENetworkCDMAConfiguration::TDENetworkCDMAConfiguration() {
+	valid = false;
+	secretsValid = false;
+	passwordFlags = TDENetworkPasswordHandlingFlags::None;
+}
+
+TDENetworkCDMAConfiguration::~TDENetworkCDMAConfiguration() {
+	//
+}
+
+/*================================================================================================*/
+/* TDENetworkGSMConfiguration                                                                     */
+/*================================================================================================*/
+
+TDENetworkGSMConfiguration::TDENetworkGSMConfiguration() {
+	valid = false;
+	secretsValid = false;
+	passwordFlags = TDENetworkPasswordHandlingFlags::None;
+	networkType = TDEGSMNetworkType::Any;
+	pinFlags = TDENetworkPasswordHandlingFlags::None;
+	allowRoaming = false;
+}
+
+TDENetworkGSMConfiguration::~TDENetworkGSMConfiguration() {
+	//
+}
+
+/*================================================================================================*/
 /* TDENetworkIPConfiguration                                                                      */
 /*================================================================================================*/
 
@@ -541,6 +572,18 @@ TDEBluetoothConnection::TDEBluetoothConnection() : TDENetworkConnection() {
 }
 
 TDEBluetoothConnection::~TDEBluetoothConnection() {
+	//
+}
+
+/*================================================================================================*/
+/* TDEModemConnection                                                                             */
+/*================================================================================================*/
+
+TDEModemConnection::TDEModemConnection() : TDENetworkConnection() {
+	type = TDEModemConnectionType::Other;
+}
+
+TDEModemConnection::~TDEModemConnection() {
 	//
 }
 
