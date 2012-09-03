@@ -723,7 +723,9 @@ TQString TDEStorageDevice::mountPath() {
 			TQString testNode = *mountInfo.at(0);
 			// Check for match
 			if ((testNode == deviceNode()) || (testNode == dmaltname)) {
-				return *mountInfo.at(1);
+				TQString ret = *mountInfo.at(1);
+				ret.replace("\\040", " ");
+				return ret;
 			}
 			lines += line;
 		}
@@ -762,7 +764,12 @@ TQString TDEStorageDevice::mountDevice(TQString mediaName, TQString mountOptions
 	KTempFile passwordFile(TQString::null, "tmp", 0600);
 	passwordFile.setAutoDelete(true);
 
-	TQString command = TQString("pmount -p %1 %2 %3 %4 2>&1").arg(passwordFile.name()).arg(mountOptions).arg(deviceNode()).arg(mediaName);
+	TQString passFileName = passwordFile.name();
+	TQString devNode = deviceNode();
+	passFileName.replace("'", "'\\''");
+	devNode.replace("'", "'\\''");
+	mediaName.replace("'", "'\\''");
+	TQString command = TQString("pmount -p '%1' %2 '%3' '%4' 2>&1").arg(passFileName).arg(mountOptions).arg(devNode).arg(mediaName);
 
 	FILE *exepipe = popen(command.ascii(), "r");
 	if (exepipe) {
@@ -806,7 +813,12 @@ TQString TDEStorageDevice::mountEncryptedDevice(TQString passphrase, TQString me
 	pwFile->writeBlock(passphrase.ascii(), passphrase.length());
 	pwFile->flush();
 
-	TQString command = TQString("pmount -p %1 %2 %3 %4 2>&1").arg(passwordFile.name()).arg(mountOptions).arg(deviceNode()).arg(mediaName);
+	TQString passFileName = passwordFile.name();
+	TQString devNode = deviceNode();
+	passFileName.replace("'", "'\\''");
+	devNode.replace("'", "'\\''");
+	mediaName.replace("'", "'\\''");
+	TQString command = TQString("pmount -p '%1' %2 '%3' '%4' 2>&1").arg(passFileName).arg(mountOptions).arg(devNode).arg(mediaName);
 
 	FILE *exepipe = popen(command.ascii(), "r");
 	if (exepipe) {
@@ -839,7 +851,8 @@ bool TDEStorageDevice::unmountDevice(TQString* errRet, int* retcode) {
 		return true;
 	}
 
-	TQString command = TQString("pumount %1 2>&1").arg(mountpoint);
+	mountpoint.replace("'", "'\\''");
+	TQString command = TQString("pumount '%1' 2>&1").arg(mountpoint);
 	FILE *exepipe = popen(command.ascii(), "r");
 	if (exepipe) {
 		TQString pmount_output;
