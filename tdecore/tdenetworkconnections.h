@@ -994,6 +994,12 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		virtual bool networkingEnabled() = 0;
 
 		/**
+		* @param enable true to enable networking, false to disable it.
+		* @return true on success, false on failure.
+		*/
+		virtual bool enableNetworking(bool enable) = 0;
+
+		/**
 		* @return true if WiFi hardware is enabled, false if not.
 		*/
 		virtual bool wiFiHardwareEnabled() = 0;
@@ -1146,6 +1152,12 @@ class TDECORE_EXPORT TDEGlobalNetworkManager : public TQObject
 		* @return true if networking is enabled, false if not.
 		*/
 		virtual bool networkingEnabled();
+
+		/**
+		* @param enable true to enable networking, false to disable it.
+		* @return true on success, false on failure.
+		*/
+		virtual bool enableNetworking(bool enable);
 
 		/**
 		* @return true if WiFi hardware is enabled, false if not.

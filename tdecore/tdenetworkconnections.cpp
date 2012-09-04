@@ -729,6 +729,11 @@ bool TDEGlobalNetworkManager::networkingEnabled() {
 	return m_internalConnectionManager->networkingEnabled();
 }
 
+bool TDEGlobalNetworkManager::enableNetworking(bool enable) {
+	if (!m_internalConnectionManager) return false;
+	return m_internalConnectionManager->enableNetworking(enable);
+}
+
 bool TDEGlobalNetworkManager::wiFiHardwareEnabled() {
 	if (!m_internalConnectionManager) return false;
 	return m_internalConnectionManager->wiFiHardwareEnabled();

@@ -4117,6 +4117,30 @@ bool TDENetworkConnectionManager_BackendNM::wiFiHardwareEnabled() {
 	}
 }
 
+bool TDENetworkConnectionManager_BackendNM::enableNetworking(bool enable) {
+	// FIXME
+	// Yes, this abuses the Sleep command
+	// Is there a better way to do it?
+	if (d->m_networkManagerProxy) {
+		int asynccallid;
+		TQT_DBusError error;
+		d->m_networkManagerProxy->SleepAsync(asynccallid, !enable, error);
+		if (error.isValid()) {
+			// Error!
+			PRINT_ERROR(error.name())
+			return FALSE;
+		}
+		else {
+			// FIXME
+			// Wait for async reply before returning...
+			return TRUE;
+		}
+	}
+	else {
+		return FALSE;
+	}
+}
+
 bool TDENetworkConnectionManager_BackendNM::enableWiFi(bool enable) {
 	if (d->m_networkManagerProxy) {
 		TQT_DBusError error;

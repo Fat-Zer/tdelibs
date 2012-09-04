@@ -143,6 +143,7 @@ class TDECORE_EXPORT TDENetworkConnectionManager_BackendNM : public TDENetworkCo
 		virtual bool networkingEnabled();
 		virtual bool wiFiHardwareEnabled();
 
+		virtual bool enableNetworking(bool enable);
 		virtual bool enableWiFi(bool enable);
 		virtual bool wiFiEnabled();
 
