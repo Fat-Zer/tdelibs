@@ -56,6 +56,8 @@
 		return a;																	\
 	}
 
+class TDENetworkDevice;
+
 typedef TQValueList<TQ_UINT8> TDENetworkByteList;
 typedef TQValueList<TQHostAddress> TDENetworkAddressList;
 typedef TQMap<TQString, TQString> TDENetworkSettingsMap;
@@ -990,6 +992,13 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		virtual TDENetworkHWNeighborList* siteSurvey() = 0;
 
 		/**
+		* @return a TQStringList containing the UUIDs of all physical devices used by this connection
+		* This function may return an empty list if the connection is inactive, this behaviour is
+		* dependend on the specific network backend in use.
+		*/
+		virtual TQStringList connectionPhysicalDeviceUUIDs(TQString uuid) = 0;
+
+		/**
 		* @return true if networking is enabled, false if not.
 		*/
 		virtual bool networkingEnabled() = 0;
@@ -1054,6 +1063,14 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		* Note that the returned object is internally managed and must not be deleted!
 		*/
 		TDENetworkConnection* findConnectionByUUID(TQString uuid);
+
+		/**
+		* @return a pointer to a TDENetworkDevice object with the specified @param uuid,
+		* or a NULL pointer if no such connection exists.
+		*
+		* Note that the returned object is internally managed and must not be deleted!
+		*/
+		TDENetworkDevice* findDeviceByUUID(TQString uuid);
 
 	protected:
 		void clearTDENetworkConnectionList();
@@ -1150,6 +1167,13 @@ class TDECORE_EXPORT TDEGlobalNetworkManager : public TQObject
 		virtual TDENetworkHWNeighborList* siteSurvey();
 
 		/**
+		* @return a TQStringList containing the UUIDs of all physical devices used by this connection
+		* This function may return an empty list if the connection is inactive, this behaviour is
+		* dependend on the specific network backend in use.
+		*/
+		virtual TQStringList connectionPhysicalDeviceUUIDs(TQString uuid);
+
+		/**
 		* @return true if networking is enabled, false if not.
 		*/
 		virtual bool networkingEnabled();
@@ -1214,6 +1238,14 @@ class TDECORE_EXPORT TDEGlobalNetworkManager : public TQObject
 		* Note that the returned object is internally managed and must not be deleted!
 		*/
 		TDENetworkConnection* findConnectionByUUID(TQString uuid);
+
+		/**
+		* @return a pointer to a TDENetworkDevice object with the specified @param uuid,
+		* or a NULL pointer if no such connection exists.
+		*
+		* Note that the returned object is internally managed and must not be deleted!
+		*/
+		TDENetworkDevice* findDeviceByUUID(TQString uuid);
 
 	private:
 		TDENetworkConnectionManager* m_internalConnectionManager;

@@ -635,6 +635,27 @@ TDENetworkConnection* TDENetworkConnectionManager::findConnectionByUUID(TQString
 	return NULL;
 }
 
+TDENetworkDevice* TDENetworkConnectionManager::findDeviceByUUID(TQString uuid) {
+	TDEHardwareDevices *hwdevices = KGlobal::hardwareDevices();
+	if (!hwdevices) return NULL;
+
+	TDEGenericHardwareList devices = hwdevices->listByDeviceClass(TDEGenericDeviceType::Network);
+	for (TDEGenericHardwareList::iterator it = devices.begin(); it != devices.end(); ++it)
+	{
+		TDENetworkDevice* dev = dynamic_cast<TDENetworkDevice*>(*it);
+		if (dev) {
+			TDENetworkConnectionManager* deviceConnectionManager = dev->connectionManager();
+			if (deviceConnectionManager) {
+				if (deviceConnectionManager->deviceInformation().UUID == uuid) {
+					return dev;
+				}
+			}
+		}
+	}
+
+	return NULL;
+}
+
 void TDENetworkConnectionManager::clearTDENetworkConnectionList() {
 	TDENetworkConnection *connection;
 	for (connection = m_connectionList->first(); connection; connection = m_connectionList->next()) {
@@ -724,6 +745,11 @@ TDENetworkHWNeighborList* TDEGlobalNetworkManager::siteSurvey() {
 	return m_internalConnectionManager->siteSurvey();
 }
 
+TQStringList TDEGlobalNetworkManager::connectionPhysicalDeviceUUIDs(TQString uuid) {
+	if (!m_internalConnectionManager) return TQStringList();
+	return m_internalConnectionManager->connectionPhysicalDeviceUUIDs(uuid);
+}
+
 bool TDEGlobalNetworkManager::networkingEnabled() {
 	if (!m_internalConnectionManager) return false;
 	return m_internalConnectionManager->networkingEnabled();
@@ -757,6 +783,11 @@ TDENetworkConnectionList* TDEGlobalNetworkManager::connections() {
 TDENetworkConnection* TDEGlobalNetworkManager::findConnectionByUUID(TQString uuid) {
 	if (!m_internalConnectionManager) return NULL;
 	return m_internalConnectionManager->findConnectionByUUID(uuid);
+}
+
+TDENetworkDevice* TDEGlobalNetworkManager::findDeviceByUUID(TQString uuid) {
+	if (!m_internalConnectionManager) return NULL;
+	return m_internalConnectionManager->findDeviceByUUID(uuid);
 }
 
 /*================================================================================================*/

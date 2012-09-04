@@ -3965,6 +3965,41 @@ TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManag
 	}
 }
 
+TQStringList TDENetworkConnectionManager_BackendNM::connectionPhysicalDeviceUUIDs(TQString uuid) {
+	if (deviceType() == TDENetworkDeviceType::BackendOnly) {
+		return TQStringList();
+	}
+
+	TQT_DBusObjectPath existingConnection;
+	TQT_DBusError error;
+	if (d->m_networkManagerProxy) {
+		TQT_DBusObjectPathList activeConnections = d->m_networkManagerProxy->getActiveConnections(error);
+		TQT_DBusObjectPathList::iterator it;
+		TQStringList ret;
+		for (it = activeConnections.begin(); it != activeConnections.end(); ++it) {
+			DBus::ActiveConnectionProxy activeConnection(NM_DBUS_SERVICE, (*it));
+			activeConnection.setConnection(TQT_DBusConnection::systemBus());
+			if (activeConnection.getUuid(error) == uuid) {
+				TQValueList<TQT_DBusObjectPath> deviceList = activeConnection.getDevices(error);
+				TQT_DBusObjectPathList::iterator it2;
+				for (it2 = deviceList.begin(); it2 != deviceList.end(); ++it2) {
+					DBus::DeviceProxy underlyingNetworkDeviceProxy(NM_DBUS_SERVICE, *it2);
+					underlyingNetworkDeviceProxy.setConnection(TQT_DBusConnection::systemBus());
+					TQString devUUID = underlyingNetworkDeviceProxy.getUdi(error);
+					if (devUUID != "") {
+						ret.append(devUUID);
+					}
+				}
+			}
+		}
+		return ret;
+	}
+	else {
+		PRINT_ERROR(TQString("invalid internal network-manager settings proxy object").arg(uuid));
+		return TQStringList();
+	}
+}
+
 TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManager_BackendNM::deactivateConnection(TQString uuid) {
 	TQT_DBusObjectPath existingConnection;
 	TQT_DBusError error;

@@ -139,6 +139,7 @@ class TDECORE_EXPORT TDENetworkConnectionManager_BackendNM : public TDENetworkCo
 		virtual TDENetworkConnectionStatus::TDENetworkConnectionStatus deactivateConnection(TQString uuid);
 
 		virtual TDENetworkHWNeighborList* siteSurvey();
+		virtual TQStringList connectionPhysicalDeviceUUIDs(TQString uuid);
 
 		virtual bool networkingEnabled();
 		virtual bool wiFiHardwareEnabled();
