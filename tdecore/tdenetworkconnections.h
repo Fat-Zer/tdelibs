@@ -185,6 +185,7 @@ namespace TDENetworkGlobalManagerFlags {
 		SiteLocalAccess		= 0x00000020,
 		GlobalAccess		= 0x00000040,
 		Sleeping		= 0x00000080,
+		BackendUnavailable	= 0x00000100
 	};
 
 	CREATE_FLAG_BITWISE_MANIPULATION_FUNCTIONS(TDENetworkGlobalManagerFlags)

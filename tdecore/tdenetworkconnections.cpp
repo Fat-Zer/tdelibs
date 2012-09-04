@@ -680,7 +680,7 @@ TDEGlobalNetworkManager::~TDEGlobalNetworkManager() {
 }
 
 TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags TDEGlobalNetworkManager::backendStatus() {
-	if (!m_internalConnectionManager) return TDENetworkGlobalManagerFlags::Unknown;
+	if (!m_internalConnectionManager) return TDENetworkGlobalManagerFlags::BackendUnavailable;
 	return m_internalConnectionManager->backendStatus();
 }
 

@@ -1240,14 +1240,14 @@ TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags TDENetworkConnectionM
 		if (error.isValid()) {
 			// Error!
 			PRINT_ERROR(error.name())
-			return TDENetworkGlobalManagerFlags::Unknown;
+			return TDENetworkGlobalManagerFlags::BackendUnavailable;
 		}
 		else {
 			return nmGlobalStateToTDEGlobalState(ret);
 		}
 	}
 	else {
-		return TDENetworkGlobalManagerFlags::Unknown;
+		return TDENetworkGlobalManagerFlags::BackendUnavailable;
 	}
 }
 
