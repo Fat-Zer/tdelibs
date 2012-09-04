@@ -1268,6 +1268,18 @@ TDENetworkDeviceInformation TDENetworkConnectionManager_BackendNM::deviceInforma
 		ret.firmwareMissing = d->m_networkDeviceProxy->getFirmwareMissing(error);
 		ret.deviceType = nmDeviceTypeToTDEDeviceType(d->m_networkDeviceProxy->getDeviceType(error));
 		// FIXME wiFiInfo is not filled in
+
+		// Get active connection UUID
+		TQT_DBusObjectPath connectionPath = d->m_networkDeviceProxy->getActiveConnection(error);
+		if (!error.isValid()) {
+			DBus::ActiveConnectionProxy activeConnection(NM_DBUS_SERVICE, connectionPath);
+			activeConnection.setConnection(TQT_DBusConnection::systemBus());
+			ret.activeConnectionUUID = activeConnection.getUuid(error);
+			if (!error.isValid()) {
+				ret.activeConnectionUUID = TQString::null;
+			}
+		}
+
 		ret.valid = true;
 	}
 

@@ -721,6 +721,7 @@ class TDECORE_EXPORT TDENetworkDeviceInformation
 		bool autoConnect;
 		bool firmwareMissing;
 		TDENetworkDeviceType::TDENetworkDeviceType deviceType;
+		TQString activeConnectionUUID;
 		TDENetworkWiFiDeviceInfo wiFiInfo;
 };
 
