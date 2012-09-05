@@ -698,7 +698,7 @@ class TDECORE_EXPORT TDENetworkWiFiDeviceInfo
 		TDEMACAddress permanentHWAddress;
 		TDEWiFiMode::TDEWiFiMode operatingMode;
 		unsigned int bitrate;
-		TQString activeAccessPointBSSID;
+		TDEMACAddress activeAccessPointBSSID;
 		TDENetworkWiFiClientFlags::TDENetworkWiFiClientFlags wirelessFlags;
 };
 

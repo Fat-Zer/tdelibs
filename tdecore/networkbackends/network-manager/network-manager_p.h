@@ -68,12 +68,13 @@ class TDENetworkConnectionManager_BackendNMPrivate : public TQObject
 	Q_OBJECT
 
 	public:
-		TDENetworkConnectionManager_BackendNMPrivate() : m_networkManagerProxy(NULL), m_networkManagerSettings(NULL), m_networkDeviceProxy(NULL) {}
+		TDENetworkConnectionManager_BackendNMPrivate() : m_networkManagerProxy(NULL), m_networkManagerSettings(NULL), m_networkDeviceProxy(NULL), m_wiFiDeviceProxy(NULL) {}
 
 	public:
 		DBus::NetworkManagerProxy* m_networkManagerProxy;
 		DBus::SettingsInterface* m_networkManagerSettings;
 		DBus::DeviceProxy* m_networkDeviceProxy;
+		DBus::WiFiDeviceProxy* m_wiFiDeviceProxy;
 		NMAsyncCallIDMap nmConnectionSettingsAsyncCallWaiting;
 		NMAsyncSettingsResponseMap nmConnectionSettingsAsyncSettingsResponse;
 		NMAddConnectionAsyncResponseMap nmAddConnectionAsyncResponse;

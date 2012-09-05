@@ -114,6 +114,18 @@
 #define NM_GSM_PREFER_3G		2
 #define NM_GSM_PREFER_2G		3
 //====================================================================================================
+#define NM_802_11_MODE_UNKNOWN		0
+#define NM_802_11_MODE_ADHOC		1
+#define NM_802_11_MODE_INFRASTRUCTURE	2
+//====================================================================================================
+#define NM_802_11_DEVICE_CAP_NONE		0x0
+#define NM_802_11_DEVICE_CAP_CIPHER_WEP40	0x1
+#define NM_802_11_DEVICE_CAP_CIPHER_WEP104	0x2
+#define NM_802_11_DEVICE_CAP_CIPHER_TKIP	0x4
+#define NM_802_11_DEVICE_CAP_CIPHER_CCMP	0x8
+#define NM_802_11_DEVICE_CAP_WPA		0x10
+#define NM_802_11_DEVICE_CAP_RSN		0x20
+//====================================================================================================
 
 class TDENetworkConnectionManager_BackendNMPrivate;
 

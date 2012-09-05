@@ -489,6 +489,44 @@ TQString tdeWiFiModeToNMWiFiMode(TDEWiFiMode::TDEWiFiMode mode) {
 	return ret;
 }
 
+TDEWiFiMode::TDEWiFiMode nmWiFiModeToTDEWiFiMode(TQ_UINT32 nm) {
+	TDEWiFiMode::TDEWiFiMode ret = TDEWiFiMode::Infrastructure;
+
+	if (nm == NM_802_11_MODE_INFRASTRUCTURE) {
+		ret = TDEWiFiMode::Infrastructure;
+	}
+	else if (nm == NM_802_11_MODE_ADHOC) {
+		ret = TDEWiFiMode::AdHoc;
+	}
+
+	return ret;
+}
+
+TDENetworkWiFiClientFlags::TDENetworkWiFiClientFlags tdeWiFiFlagsToNMWiFiFlags(TQ_UINT32 nm) {
+	TDENetworkWiFiClientFlags::TDENetworkWiFiClientFlags ret = TDENetworkWiFiClientFlags::None;
+
+	if (nm & NM_802_11_DEVICE_CAP_CIPHER_WEP40) {
+		ret | TDENetworkWiFiClientFlags::CipherWEP40;
+	}
+	if (nm & NM_802_11_DEVICE_CAP_CIPHER_WEP104) {
+		ret | TDENetworkWiFiClientFlags::CipherWEP104;
+	}
+	if (nm & NM_802_11_DEVICE_CAP_CIPHER_TKIP) {
+		ret | TDENetworkWiFiClientFlags::CipherTKIP;
+	}
+	if (nm & NM_802_11_DEVICE_CAP_CIPHER_CCMP) {
+		ret | TDENetworkWiFiClientFlags::CipherCCMP;
+	}
+	if (nm & NM_802_11_DEVICE_CAP_WPA) {
+		ret | TDENetworkWiFiClientFlags::CipherWPA;
+	}
+	if (nm & NM_802_11_DEVICE_CAP_RSN) {
+		ret | TDENetworkWiFiClientFlags::CipherRSN;
+	}
+
+	return ret;
+}
+
 TDEBluetoothConnectionType::TDEBluetoothConnectionType nmBluetoothModeToTDEBluetoothMode(TQString nm) {
 	TDEBluetoothConnectionType::TDEBluetoothConnectionType ret = TDEBluetoothConnectionType::PAN;
 
@@ -1110,6 +1148,10 @@ TDENetworkConnectionManager_BackendNM::TDENetworkConnectionManager_BackendNM(TQS
 	if (dbusDeviceString != "") {
 		d->m_networkDeviceProxy = new DBus::DeviceProxy(NM_DBUS_SERVICE, dbusDeviceString);
 		d->m_networkDeviceProxy->setConnection(TQT_DBusConnection::systemBus());
+		if (deviceType() == TDENetworkDeviceType::WiFi) {
+			d->m_wiFiDeviceProxy = new DBus::WiFiDeviceProxy(NM_DBUS_SERVICE, dbusDeviceString);
+			d->m_wiFiDeviceProxy->setConnection(TQT_DBusConnection::systemBus());
+		}
 	}
 
 	// Connect global signals
@@ -1267,7 +1309,24 @@ TDENetworkDeviceInformation TDENetworkConnectionManager_BackendNM::deviceInforma
 		ret.autoConnect = d->m_networkDeviceProxy->getAutoconnect(error);
 		ret.firmwareMissing = d->m_networkDeviceProxy->getFirmwareMissing(error);
 		ret.deviceType = nmDeviceTypeToTDEDeviceType(d->m_networkDeviceProxy->getDeviceType(error));
-		// FIXME wiFiInfo is not filled in
+
+		// Populate wiFiInfo
+		if ((deviceType() == TDENetworkDeviceType::WiFi) && (d->m_wiFiDeviceProxy)) {
+			ret.wiFiInfo.valid = true;
+			ret.wiFiInfo.hwAddress.fromString(d->m_wiFiDeviceProxy->getHwAddress(error));
+			ret.wiFiInfo.permanentHWAddress.fromString(d->m_wiFiDeviceProxy->getPermHwAddress(error));
+			ret.wiFiInfo.operatingMode = nmWiFiModeToTDEWiFiMode(d->m_wiFiDeviceProxy->getMode(error));
+			ret.wiFiInfo.bitrate = d->m_wiFiDeviceProxy->getBitrate(error);
+			TDENetworkWiFiAPInfo* apInfo = getAccessPointDetails(d->m_wiFiDeviceProxy->getActiveAccessPoint(error));
+			if (apInfo) {
+				ret.wiFiInfo.activeAccessPointBSSID = apInfo->BSSID;
+				delete apInfo;
+			}
+			ret.wiFiInfo.wirelessFlags = tdeWiFiFlagsToNMWiFiFlags(d->m_wiFiDeviceProxy->getWirelessCapabilities(error));
+		}
+		else {
+			ret.wiFiInfo.valid = false;
+		}
 
 		// Get active connection UUID
 		TQT_DBusObjectPath connectionPath = d->m_networkDeviceProxy->getActiveConnection(error);
