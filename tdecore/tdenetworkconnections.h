@@ -742,6 +742,9 @@ class TDECORE_EXPORT TDENetworkWiFiAPInfo : public TDENetworkHWNeighbor
 		virtual ~TDENetworkWiFiAPInfo();
 
 	public:
+		TQString friendlySSID();
+
+	public:
 		TQByteArray SSID;
 		TDENetworkWiFiAPFlags::TDENetworkWiFiAPFlags wpaFlags;
 		TDENetworkWiFiAPFlags::TDENetworkWiFiAPFlags rsnFlags;

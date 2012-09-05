@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+#include <klocale.h>
+
 #ifdef WITH_NETWORK_MANAGER_BACKEND
 #include "networkbackends/network-manager/network-manager.h"
 #endif // WITH_NETWORK_MANAGER_BACKEND
@@ -472,6 +474,17 @@ TDENetworkWiFiAPInfo::TDENetworkWiFiAPInfo() : TDENetworkHWNeighbor() {
 
 TDENetworkWiFiAPInfo::~TDENetworkWiFiAPInfo() {
 	//
+}
+
+TQString TDENetworkWiFiAPInfo::friendlySSID() {
+	TQString ret;
+
+	ret = TQString(SSID);
+	if (ret == "") {
+		ret = "<" + i18n("hidden") + ">";
+	}
+
+	return ret;
 }
 
 /*================================================================================================*/
