@@ -1136,7 +1136,7 @@ TQString TDENetworkConnectionManager_BackendNM::deviceInterfaceString(TQString m
 }
 
 TDENetworkConnectionManager_BackendNM::TDENetworkConnectionManager_BackendNM(TQString macAddress) : TDENetworkConnectionManager(macAddress) {
-	d = new TDENetworkConnectionManager_BackendNMPrivate();
+	d = new TDENetworkConnectionManager_BackendNMPrivate(this);
 
 	// Set up proxy interfaces
 	d->m_networkManagerProxy = new DBus::NetworkManagerProxy(NM_DBUS_SERVICE, NM_DBUS_PATH);
@@ -1155,11 +1155,15 @@ TDENetworkConnectionManager_BackendNM::TDENetworkConnectionManager_BackendNM(TQS
 	}
 
 	// Connect global signals
-	connect(d->m_networkManagerProxy, SIGNAL(StateChanged(TQ_UINT32)), this, SLOT(internalProcessGlobalStateChanged(TQ_UINT32)));
+	connect(d->m_networkManagerProxy, SIGNAL(StateChanged(TQ_UINT32)), d, SLOT(internalProcessGlobalStateChanged(TQ_UINT32)));
 
 	// Connect local signals
 	if (d->m_networkDeviceProxy) {
-		connect(d->m_networkDeviceProxy, SIGNAL(StateChanged(TQ_UINT32, TQ_UINT32, TQ_UINT32)), this, SLOT(internalProcessDeviceStateChanged(TQ_UINT32, TQ_UINT32, TQ_UINT32)));
+		connect(d->m_networkDeviceProxy, SIGNAL(StateChanged(TQ_UINT32, TQ_UINT32, TQ_UINT32)), d, SLOT(internalProcessDeviceStateChanged(TQ_UINT32, TQ_UINT32, TQ_UINT32)));
+	}
+	if (d->m_wiFiDeviceProxy) {
+		connect(d->m_wiFiDeviceProxy, SIGNAL(AccessPointAdded(const TQT_DBusObjectPath&)), d, SLOT(internalProcessWiFiAccessPointAdded(const TQT_DBusObjectPath&)));
+		connect(d->m_wiFiDeviceProxy, SIGNAL(AccessPointRemoved(const TQT_DBusObjectPath&)), d, SLOT(internalProcessWiFiAccessPointRemoved(const TQT_DBusObjectPath&)));
 	}
 
 	// Create public lists
@@ -1182,14 +1186,30 @@ TDENetworkConnectionManager_BackendNM::~TDENetworkConnectionManager_BackendNM() 
 	delete d;
 }
 
-void TDENetworkConnectionManager_BackendNM::internalProcessGlobalStateChanged(TQ_UINT32 state) {
-	internalNetworkConnectionStateChanged(nmGlobalStateToTDEGlobalState(state));
+void TDENetworkConnectionManager_BackendNMPrivate::internalProcessGlobalStateChanged(TQ_UINT32 state) {
+	m_parent->internalNetworkConnectionStateChanged(nmGlobalStateToTDEGlobalState(state));
 }
 
-void TDENetworkConnectionManager_BackendNM::internalProcessDeviceStateChanged(TQ_UINT32 newState, TQ_UINT32 oldState, TQ_UINT32 reason) {
+void TDENetworkConnectionManager_BackendNMPrivate::internalProcessDeviceStateChanged(TQ_UINT32 newState, TQ_UINT32 oldState, TQ_UINT32 reason) {
 	Q_UNUSED(oldState)
 	Q_UNUSED(reason)
-	internalNetworkDeviceStateChanged(nmDeviceStateToTDEDeviceState(newState), m_macAddress);
+	m_parent->internalNetworkDeviceStateChanged(nmDeviceStateToTDEDeviceState(newState), m_parent->m_macAddress);
+}
+
+void TDENetworkConnectionManager_BackendNMPrivate::internalProcessWiFiAccessPointAdded(const TQT_DBusObjectPath& dbuspath) {
+	TDENetworkWiFiAPInfo* apInfo = m_parent->getAccessPointDetails(dbuspath);
+	if (apInfo) {
+		m_parent->internalAccessPointVisibilityChanged(apInfo->BSSID, TRUE);
+		delete apInfo;
+	}
+}
+
+void TDENetworkConnectionManager_BackendNMPrivate::internalProcessWiFiAccessPointRemoved(const TQT_DBusObjectPath& dbuspath) {
+	TDENetworkWiFiAPInfo* apInfo = m_parent->getAccessPointDetails(dbuspath);
+	if (apInfo) {
+		m_parent->internalAccessPointVisibilityChanged(apInfo->BSSID, FALSE);
+		delete apInfo;
+	}
 }
 
 TDENetworkDeviceType::TDENetworkDeviceType TDENetworkConnectionManager_BackendNM::deviceType() {

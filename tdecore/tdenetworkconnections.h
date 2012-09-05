@@ -729,7 +729,7 @@ class TDECORE_EXPORT TDENetworkHWNeighbor
 {
 	public:
 		TDENetworkHWNeighbor();
-		~TDENetworkHWNeighbor();
+		virtual ~TDENetworkHWNeighbor();
 
 	public:
 		bool valid;
@@ -739,7 +739,7 @@ class TDECORE_EXPORT TDENetworkWiFiAPInfo : public TDENetworkHWNeighbor
 {
 	public:
 		TDENetworkWiFiAPInfo();
-		~TDENetworkWiFiAPInfo();
+		virtual ~TDENetworkWiFiAPInfo();
 
 	public:
 		TQByteArray SSID;
@@ -1041,6 +1041,12 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		*/
 		void networkDeviceStateChanged(TDENetworkConnectionStatus::TDENetworkConnectionStatus newState, TDENetworkConnectionStatus::TDENetworkConnectionStatus previousState, TQString hwAddress);
 
+		/**
+		* Emitted whenever a wireless access point is detected or lost
+		* If a new access point was detected, @param detected will be set to TRUE, otherwise if lost it will be set to FALSE
+		*/
+		void accessPointVisibilityChanged(TDEMACAddress BSSID, bool detected);
+
 	public:
 		/**
 		* @return a TDENetworkConnectionList object containing a list of all
@@ -1073,11 +1079,20 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		*/
 		TDENetworkDevice* findDeviceByUUID(TQString uuid);
 
+		/**
+		* @return a pointer to a TDENetworkWiFiAPInfo object with the specified @param bssid,
+		* or a NULL pointer if no such access point exists.
+		*
+		* Note that the returned object is internally managed and must not be deleted!
+		*/
+		TDENetworkWiFiAPInfo* findAccessPointByBSSID(TDEMACAddress bssid);
+
 	protected:
 		void clearTDENetworkConnectionList();
 		void clearTDENetworkHWNeighborList();
 		void internalNetworkConnectionStateChanged(TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags newState);
 		void internalNetworkDeviceStateChanged(TDENetworkConnectionStatus::TDENetworkConnectionStatus newState, TQString hwAddress=TQString::null);
+		void internalAccessPointVisibilityChanged(TDEMACAddress BSSID, bool detected);
 
 	protected:
 		TDENetworkConnectionList* m_connectionList;
@@ -1216,6 +1231,12 @@ class TDECORE_EXPORT TDEGlobalNetworkManager : public TQObject
 		*/
 		void networkDeviceStateChanged(TDENetworkConnectionStatus::TDENetworkConnectionStatus newState, TDENetworkConnectionStatus::TDENetworkConnectionStatus previousState, TQString hwAddress);
 
+		/**
+		* Emitted whenever a wireless access point is detected or lost
+		* If a new access point was detected, @param detected will be set to TRUE, otherwise if lost it will be set to FALSE
+		*/
+		void accessPointVisibilityChanged(TDEMACAddress BSSID, bool detected);
+
 	public:
 		/**
 		* @return a TDENetworkConnectionList object containing a list of all
@@ -1247,6 +1268,14 @@ class TDECORE_EXPORT TDEGlobalNetworkManager : public TQObject
 		* Note that the returned object is internally managed and must not be deleted!
 		*/
 		TDENetworkDevice* findDeviceByUUID(TQString uuid);
+
+		/**
+		* @return a pointer to a TDENetworkWiFiAPInfo object with the specified @param bssid,
+		* or a NULL pointer if no such access point exists.
+		*
+		* Note that the returned object is internally managed and must not be deleted!
+		*/
+		TDENetworkWiFiAPInfo* findAccessPointByBSSID(TDEMACAddress bssid);
 
 	private:
 		TDENetworkConnectionManager* m_internalConnectionManager;

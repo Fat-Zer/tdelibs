@@ -656,6 +656,20 @@ TDENetworkDevice* TDENetworkConnectionManager::findDeviceByUUID(TQString uuid) {
 	return NULL;
 }
 
+TDENetworkWiFiAPInfo* TDENetworkConnectionManager::findAccessPointByBSSID(TDEMACAddress bssid) {
+	TDENetworkHWNeighbor *neighbor;
+	for (neighbor = m_hwNeighborList->first(); neighbor; neighbor = m_hwNeighborList->next()) {
+		TDENetworkWiFiAPInfo* apInfo = dynamic_cast<TDENetworkWiFiAPInfo*>(neighbor);
+		if (!apInfo) {
+			continue;
+		}
+		if (apInfo->BSSID == bssid) {
+			return apInfo;
+		}
+	}
+	return NULL;
+}
+
 void TDENetworkConnectionManager::clearTDENetworkConnectionList() {
 	TDENetworkConnection *connection;
 	for (connection = m_connectionList->first(); connection; connection = m_connectionList->next()) {
@@ -683,6 +697,10 @@ void TDENetworkConnectionManager::internalNetworkDeviceStateChanged(TDENetworkCo
 	}
 	emit(networkDeviceStateChanged(m_prevDeviceStatus[hwAddress], newState, hwAddress));
 	m_prevDeviceStatus[hwAddress] = newState;
+}
+
+void TDENetworkConnectionManager::internalAccessPointVisibilityChanged(TDEMACAddress BSSID, bool detected) {
+	emit(accessPointVisibilityChanged(BSSID, detected));
 }
 
 /*================================================================================================*/
@@ -788,6 +806,11 @@ TDENetworkConnection* TDEGlobalNetworkManager::findConnectionByUUID(TQString uui
 TDENetworkDevice* TDEGlobalNetworkManager::findDeviceByUUID(TQString uuid) {
 	if (!m_internalConnectionManager) return NULL;
 	return m_internalConnectionManager->findDeviceByUUID(uuid);
+}
+
+TDENetworkWiFiAPInfo* TDEGlobalNetworkManager::findAccessPointByBSSID(TDEMACAddress bssid) {
+	if (!m_internalConnectionManager) return NULL;
+	return m_internalConnectionManager->findAccessPointByBSSID(bssid);
 }
 
 /*================================================================================================*/

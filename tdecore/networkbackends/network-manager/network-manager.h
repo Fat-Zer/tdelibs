@@ -161,8 +161,6 @@ class TDECORE_EXPORT TDENetworkConnectionManager_BackendNM : public TDENetworkCo
 		virtual bool wiFiEnabled();
 
 	private:
-		void internalProcessGlobalStateChanged(TQ_UINT32 state);
-		void internalProcessDeviceStateChanged(TQ_UINT32 newState, TQ_UINT32 oldState, TQ_UINT32 reason);
 		TDENetworkDeviceType::TDENetworkDeviceType nmDeviceTypeToTDEDeviceType(TQ_UINT32 nmType);
 		TQString deviceInterfaceString(TQString macAddress);
 		bool loadConnectionSecretsForGroup(TQString uuid, TQString group);
@@ -171,6 +169,7 @@ class TDECORE_EXPORT TDENetworkConnectionManager_BackendNM : public TDENetworkCo
 
 	private:
 		TDENetworkConnectionManager_BackendNMPrivate* d;
+		friend class TDENetworkConnectionManager_BackendNMPrivate;
 };
 
 #endif // _TDENETWORKBACKEND_NETWORKMANAGER_H

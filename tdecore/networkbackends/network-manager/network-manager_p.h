@@ -63,12 +63,14 @@ typedef TQMap<uint, TQT_DBusObjectPath> NMAddConnectionAsyncResponseMap;
 
 typedef TQValueList<TQT_DBusObjectPath> TQT_DBusObjectPathList;
 
+class TDENetworkConnectionManager_BackendNM;
+
 class TDENetworkConnectionManager_BackendNMPrivate : public TQObject
 {
 	Q_OBJECT
 
 	public:
-		TDENetworkConnectionManager_BackendNMPrivate() : m_networkManagerProxy(NULL), m_networkManagerSettings(NULL), m_networkDeviceProxy(NULL), m_wiFiDeviceProxy(NULL) {}
+		TDENetworkConnectionManager_BackendNMPrivate(TDENetworkConnectionManager_BackendNM* parent) : m_networkManagerProxy(NULL), m_networkManagerSettings(NULL), m_networkDeviceProxy(NULL), m_wiFiDeviceProxy(NULL), m_parent(parent) {}
 
 	public:
 		DBus::NetworkManagerProxy* m_networkManagerProxy;
@@ -83,6 +85,14 @@ class TDENetworkConnectionManager_BackendNMPrivate : public TQObject
 		void processConnectionSettingsAsyncReply(int, const TQT_DBusDataMap<TQString>&);
 		void processConnectionSettingsUpdateAsyncReply(int);
 		void processAddConnectionAsyncReply(int, const TQT_DBusObjectPath&);
+
+		void internalProcessGlobalStateChanged(TQ_UINT32 state);
+		void internalProcessDeviceStateChanged(TQ_UINT32 newState, TQ_UINT32 oldState, TQ_UINT32 reason);
+		void internalProcessWiFiAccessPointAdded(const TQT_DBusObjectPath&);
+		void internalProcessWiFiAccessPointRemoved(const TQT_DBusObjectPath&);
+
+	private:
+		TDENetworkConnectionManager_BackendNM* m_parent;
 };
 
 #endif // _TDENETWORKBACKEND_NETWORKMANAGER_P_H
