@@ -1342,6 +1342,9 @@ TDENetworkDeviceInformation TDENetworkConnectionManager_BackendNM::deviceInforma
 				ret.wiFiInfo.activeAccessPointBSSID = apInfo->BSSID;
 				delete apInfo;
 			}
+			else {
+				ret.wiFiInfo.activeAccessPointBSSID = TDEMACAddress();
+			}
 			ret.wiFiInfo.wirelessFlags = tdeWiFiFlagsToNMWiFiFlags(d->m_wiFiDeviceProxy->getWirelessCapabilities(error));
 		}
 		else {

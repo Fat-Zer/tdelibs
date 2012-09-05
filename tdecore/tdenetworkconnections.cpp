@@ -657,6 +657,10 @@ TDENetworkDevice* TDENetworkConnectionManager::findDeviceByUUID(TQString uuid) {
 }
 
 TDENetworkWiFiAPInfo* TDENetworkConnectionManager::findAccessPointByBSSID(TDEMACAddress bssid) {
+	if (!bssid.isValid()) {
+		return NULL;
+	}
+
 	TDENetworkHWNeighbor *neighbor;
 	for (neighbor = m_hwNeighborList->first(); neighbor; neighbor = m_hwNeighborList->next()) {
 		TDENetworkWiFiAPInfo* apInfo = dynamic_cast<TDENetworkWiFiAPInfo*>(neighbor);
