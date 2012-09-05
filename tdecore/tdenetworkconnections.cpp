@@ -716,8 +716,8 @@ void TDENetworkConnectionManager::internalNetworkDeviceStateChanged(TDENetworkCo
 	m_prevDeviceStatus[hwAddress] = newState;
 }
 
-void TDENetworkConnectionManager::internalAccessPointVisibilityChanged(TDEMACAddress BSSID, bool detected) {
-	emit(accessPointVisibilityChanged(BSSID, detected));
+void TDENetworkConnectionManager::internalAccessPointStatusChanged(TDEMACAddress BSSID, TDENetworkAPEventType::TDENetworkAPEventType event) {
+	emit(accessPointStatusChanged(BSSID, event));
 }
 
 /*================================================================================================*/

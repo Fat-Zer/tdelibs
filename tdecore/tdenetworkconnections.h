@@ -176,6 +176,16 @@ namespace TDENetworkSlaveDeviceType {
 	};
 };
 
+namespace TDENetworkAPEventType {
+	enum TDENetworkAPEventType {
+		Discovered,
+		Lost,
+		SignalStrengthChanged,
+		Other,
+		Last = Other
+	};
+};
+
 namespace TDENetworkGlobalManagerFlags {
 	enum TDENetworkGlobalManagerFlags {
 		Unknown			= 0x00000000,
@@ -1045,10 +1055,10 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		void networkDeviceStateChanged(TDENetworkConnectionStatus::TDENetworkConnectionStatus newState, TDENetworkConnectionStatus::TDENetworkConnectionStatus previousState, TQString hwAddress);
 
 		/**
-		* Emitted whenever a wireless access point is detected or lost
-		* If a new access point was detected, @param detected will be set to TRUE, otherwise if lost it will be set to FALSE
+		* Emitted whenever the status of a wireless access point changes
+		* The event type that caused the signal is available in @param event
 		*/
-		void accessPointVisibilityChanged(TDEMACAddress BSSID, bool detected);
+		void accessPointStatusChanged(TDEMACAddress BSSID, TDENetworkAPEventType::TDENetworkAPEventType event);
 
 	public:
 		/**
@@ -1095,7 +1105,7 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		void clearTDENetworkHWNeighborList();
 		void internalNetworkConnectionStateChanged(TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags newState);
 		void internalNetworkDeviceStateChanged(TDENetworkConnectionStatus::TDENetworkConnectionStatus newState, TQString hwAddress=TQString::null);
-		void internalAccessPointVisibilityChanged(TDEMACAddress BSSID, bool detected);
+		void internalAccessPointStatusChanged(TDEMACAddress BSSID, TDENetworkAPEventType::TDENetworkAPEventType event);
 
 	protected:
 		TDENetworkConnectionList* m_connectionList;
@@ -1235,10 +1245,10 @@ class TDECORE_EXPORT TDEGlobalNetworkManager : public TQObject
 		void networkDeviceStateChanged(TDENetworkConnectionStatus::TDENetworkConnectionStatus newState, TDENetworkConnectionStatus::TDENetworkConnectionStatus previousState, TQString hwAddress);
 
 		/**
-		* Emitted whenever a wireless access point is detected or lost
-		* If a new access point was detected, @param detected will be set to TRUE, otherwise if lost it will be set to FALSE
+		* Emitted whenever the status of a wireless access point changes
+		* The event type that caused the signal is available in @param event
 		*/
-		void accessPointVisibilityChanged(TDEMACAddress BSSID, bool detected);
+		void accessPointStatusChanged(TDEMACAddress BSSID, TDENetworkAPEventType::TDENetworkAPEventType event);
 
 	public:
 		/**

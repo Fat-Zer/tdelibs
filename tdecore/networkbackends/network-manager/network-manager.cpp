@@ -1199,7 +1199,7 @@ void TDENetworkConnectionManager_BackendNMPrivate::internalProcessDeviceStateCha
 void TDENetworkConnectionManager_BackendNMPrivate::internalProcessWiFiAccessPointAdded(const TQT_DBusObjectPath& dbuspath) {
 	TDENetworkWiFiAPInfo* apInfo = m_parent->getAccessPointDetails(dbuspath);
 	if (apInfo) {
-		m_parent->internalAccessPointVisibilityChanged(apInfo->BSSID, TRUE);
+		m_parent->internalAccessPointStatusChanged(apInfo->BSSID, TDENetworkAPEventType::Discovered);
 		delete apInfo;
 	}
 }
@@ -1207,10 +1207,15 @@ void TDENetworkConnectionManager_BackendNMPrivate::internalProcessWiFiAccessPoin
 void TDENetworkConnectionManager_BackendNMPrivate::internalProcessWiFiAccessPointRemoved(const TQT_DBusObjectPath& dbuspath) {
 	TDENetworkWiFiAPInfo* apInfo = m_parent->getAccessPointDetails(dbuspath);
 	if (apInfo) {
-		m_parent->internalAccessPointVisibilityChanged(apInfo->BSSID, FALSE);
+		m_parent->internalAccessPointStatusChanged(apInfo->BSSID, TDENetworkAPEventType::Lost);
 		delete apInfo;
 	}
 }
+
+// FIXME
+// If access point strength changes, this must be called:
+// m_parent->internalAccessPointStatusChanged(apInfo->BSSID, TDENetworkAPEventType::Lost);
+// How do I get NetworkManager to notify me when an access point changes strength?  Do I have to poll it for this information?
 
 TDENetworkDeviceType::TDENetworkDeviceType TDENetworkConnectionManager_BackendNM::deviceType() {
 	if (m_macAddress == "") {
