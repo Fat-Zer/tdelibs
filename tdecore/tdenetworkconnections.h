@@ -246,7 +246,9 @@ namespace TDENetworkWiFiAPFlags {
 		GroupTKIP		= 0x00000080,
 		GroupCCMP		= 0x00000100,
 		KeyManagementPSK	= 0x00000200,
-		KeyManagement80211	= 0x00000400
+		KeyManagement80211	= 0x00000400,
+		GeneralFlagsMask	= 0x00000001,
+		EncryptionFlagsMask	= 0xfffffffe
 	};
 
 	CREATE_FLAG_BITWISE_MANIPULATION_FUNCTIONS(TDENetworkWiFiAPFlags)
@@ -752,7 +754,7 @@ class TDECORE_EXPORT TDENetworkWiFiAPInfo : public TDENetworkHWNeighbor
 		virtual ~TDENetworkWiFiAPInfo();
 
 	public:
-		TQString friendlySSID();
+		TQString friendlySSID() const;
 
 	public:
 		TQByteArray SSID;
@@ -771,6 +773,9 @@ class TDECORE_EXPORT TDENetworkConnection
 	public:
 		TDENetworkConnection();
 		virtual ~TDENetworkConnection();
+
+	public:
+		TDENetworkConnectionType::TDENetworkConnectionType type();
 
 	public:
 		TQString UUID;
@@ -978,6 +983,8 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		* Initiates a connection with UUID @param uuid.
 		* @return A TDENetworkConnectionStatus enum value with the current connection status
 		* The client application should poll for status updates using checkConnectionStatus()
+		* Note that if this manager's type is not TDENetworkDeviceType::BackendOnly, the connection
+		* will be initiated on the internal device specified when this object was created
 		*/
 		virtual TDENetworkConnectionStatus::TDENetworkConnectionStatus initiateConnection(TQString uuid) = 0;
 
@@ -1099,6 +1106,11 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		* Note that the returned object is internally managed and must not be deleted!
 		*/
 		TDENetworkWiFiAPInfo* findAccessPointByBSSID(TDEMACAddress bssid);
+
+		/**
+		* @return a string containing the friendly name of the connection type @param type given
+		*/
+		static TQString friendlyConnectionTypeName(TDENetworkConnectionType::TDENetworkConnectionType type);
 
 	protected:
 		void clearTDENetworkConnectionList();

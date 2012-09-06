@@ -476,7 +476,7 @@ TDENetworkWiFiAPInfo::~TDENetworkWiFiAPInfo() {
 	//
 }
 
-TQString TDENetworkWiFiAPInfo::friendlySSID() {
+TQString TDENetworkWiFiAPInfo::friendlySSID() const {
 	TQString ret;
 
 	ret = TQString(SSID);
@@ -504,8 +504,41 @@ TDENetworkConnection::~TDENetworkConnection() {
 	//
 }
 
+TDENetworkConnectionType::TDENetworkConnectionType TDENetworkConnection::type() {
+	if (dynamic_cast<TDEWiredEthernetConnection*>(this)) {
+		return TDENetworkConnectionType::WiredEthernet;
+	}
+	else if (dynamic_cast<TDEWiredInfinibandConnection*>(this)) {
+		return TDENetworkConnectionType::Infiniband;
+	}
+	else if (dynamic_cast<TDEVPNConnection*>(this)) {
+		return TDENetworkConnectionType::VPN;
+	}
+	else if (dynamic_cast<TDEWiMaxConnection*>(this)) {
+		return TDENetworkConnectionType::WiMax;
+	}
+	else if (dynamic_cast<TDEVLANConnection*>(this)) {
+		return TDENetworkConnectionType::VLAN;
+	}
+	else if (dynamic_cast<TDEOLPCMeshConnection*>(this)) {
+		return TDENetworkConnectionType::OLPCMesh;
+	}
+	else if (dynamic_cast<TDEBluetoothConnection*>(this)) {
+		return TDENetworkConnectionType::Bluetooth;
+	}
+	else if (dynamic_cast<TDEModemConnection*>(this)) {
+		return TDENetworkConnectionType::Modem;
+	}
+	else if (dynamic_cast<TDEWiFiConnection*>(this)) {
+		return TDENetworkConnectionType::WiFi;
+	}
+	else {
+		return TDENetworkConnectionType::Other;
+	}
+}
+
 /*================================================================================================*/
-/* TDEWiredEthernetConnection                                                                              */
+/* TDEWiredEthernetConnection                                                                     */
 /*================================================================================================*/
 
 TDEWiredEthernetConnection::TDEWiredEthernetConnection() : TDENetworkConnection() {
@@ -685,6 +718,48 @@ TDENetworkWiFiAPInfo* TDENetworkConnectionManager::findAccessPointByBSSID(TDEMAC
 		}
 	}
 	return NULL;
+}
+
+TQString TDENetworkConnectionManager::friendlyConnectionTypeName(TDENetworkConnectionType::TDENetworkConnectionType type) {
+	if (type == TDENetworkConnectionType::WiredEthernet) {
+		return i18n("Wired Ethernet");
+	}
+	else if (type == TDENetworkConnectionType::WiFi) {
+		return i18n("802.11 WiFi");
+	}
+	else if (type == TDENetworkConnectionType::Bluetooth) {
+		return i18n("Bluetooth");
+	}
+	else if (type == TDENetworkConnectionType::OLPCMesh) {
+		return i18n("OLPC Mesh");
+	}
+	else if (type == TDENetworkConnectionType::WiMax) {
+		return i18n("WiMax");
+	}
+	else if (type == TDENetworkConnectionType::Modem) {
+		return i18n("Cellular Modem");
+	}
+	else if (type == TDENetworkConnectionType::Infiniband) {
+		return i18n("Infiniband");
+	}
+	else if (type == TDENetworkConnectionType::Bond) {
+		return i18n("Bond");
+	}
+	else if (type == TDENetworkConnectionType::VLAN) {
+		return i18n("Virtual LAN");
+	}
+	else if (type == TDENetworkConnectionType::ADSL) {
+		return i18n("ADSL");
+	}
+	else if (type == TDENetworkConnectionType::VPN) {
+		return i18n("Virtual Private Network");
+	}
+	else if (type == TDENetworkConnectionType::Other) {
+		return i18n("Other");
+	}
+	else {
+		return TQString::null;
+	}
 }
 
 void TDENetworkConnectionManager::clearTDENetworkConnectionList() {
