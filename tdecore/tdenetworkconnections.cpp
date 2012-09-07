@@ -796,6 +796,10 @@ void TDENetworkConnectionManager::internalAccessPointStatusChanged(TDEMACAddress
 	emit(accessPointStatusChanged(BSSID, event));
 }
 
+void TDENetworkConnectionManager::internalNetworkManagementEvent(TDENetworkGlobalEventType::TDENetworkGlobalEventType event) {
+	emit(networkManagementEvent(event));
+}
+
 /*================================================================================================*/
 /* TDEGlobalNetworkManager                                                                        */
 /*================================================================================================*/
@@ -804,7 +808,10 @@ TDEGlobalNetworkManager::TDEGlobalNetworkManager() : m_internalConnectionManager
 #ifdef WITH_NETWORK_MANAGER_BACKEND
 	m_internalConnectionManager = new TDENetworkConnectionManager_BackendNM(TQString::null);
 #endif // WITH_NETWORK_MANAGER_BACKEND
-	connect(m_internalConnectionManager, SIGNAL(networkConnectionStateChanged(TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags, TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags)), this, SIGNAL(networkConnectionStateChanged(TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags, TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags)));
+	if (m_internalConnectionManager) {
+		connect(m_internalConnectionManager, SIGNAL(networkConnectionStateChanged(TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags, TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags)), this, SIGNAL(networkConnectionStateChanged(TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags, TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags)));
+		connect(m_internalConnectionManager, SIGNAL(networkManagementEvent(TDENetworkGlobalEventType::TDENetworkGlobalEventType)), this, SIGNAL(networkManagementEvent(TDENetworkGlobalEventType::TDENetworkGlobalEventType)));
+	}
 }
 
 TDEGlobalNetworkManager::~TDEGlobalNetworkManager() {

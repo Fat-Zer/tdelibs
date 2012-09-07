@@ -176,6 +176,14 @@ namespace TDENetworkSlaveDeviceType {
 	};
 };
 
+namespace TDENetworkGlobalEventType {
+	enum TDENetworkGlobalEventType {
+		ConnectionListChanged,
+		Other,
+		Last = Other
+	};
+};
+
 namespace TDENetworkAPEventType {
 	enum TDENetworkAPEventType {
 		Discovered,
@@ -1089,6 +1097,12 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		*/
 		void accessPointStatusChanged(TDEMACAddress BSSID, TDENetworkAPEventType::TDENetworkAPEventType event);
 
+		/**
+		* Emitted whenever a global network management event occurs
+		* The event type that caused the signal is available in @param event
+		*/
+		void networkManagementEvent(TDENetworkGlobalEventType::TDENetworkGlobalEventType event);
+
 	public:
 		/**
 		* @return a TDENetworkConnectionList object containing a list of all
@@ -1140,6 +1154,7 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		void internalNetworkConnectionStateChanged(TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags newState);
 		void internalNetworkDeviceStateChanged(TDENetworkConnectionStatus::TDENetworkConnectionStatus newState, TQString hwAddress=TQString::null);
 		void internalAccessPointStatusChanged(TDEMACAddress BSSID, TDENetworkAPEventType::TDENetworkAPEventType event);
+		void internalNetworkManagementEvent(TDENetworkGlobalEventType::TDENetworkGlobalEventType event);
 
 	protected:
 		TDENetworkConnectionList* m_connectionList;
@@ -1290,6 +1305,12 @@ class TDECORE_EXPORT TDEGlobalNetworkManager : public TQObject
 		* The event type that caused the signal is available in @param event
 		*/
 		void accessPointStatusChanged(TDEMACAddress BSSID, TDENetworkAPEventType::TDENetworkAPEventType event);
+
+		/**
+		* Emitted whenever a global network management event occurs
+		* The event type that caused the signal is available in @param event
+		*/
+		void networkManagementEvent(TDENetworkGlobalEventType::TDENetworkGlobalEventType event);
 
 	public:
 		/**
