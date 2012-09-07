@@ -276,7 +276,8 @@ namespace TDENetworkWiFiConnectionCipher {
 		CipherTKIP,
 		CipherCCMP,
 		CipherWPA,
-		CipherRSN
+		CipherRSN,
+		Any
 	};
 };
 
@@ -322,16 +323,6 @@ namespace TDENetworkWiFiAuthType {
 	};
 };
 
-namespace TDENetworkWiFiWPAVersion {
-	enum TDENetworkWiFiWPAVersion {
-		Any,
-		WPA,
-		RSN,
-		Other,
-		Last = Other
-	};
-};
-
 namespace TDENetworkIEEE8021xType {
 	enum TDENetworkIEEE8021xType {
 		None,
@@ -355,6 +346,8 @@ namespace TDENetworkIEEE8021xType {
 	};
 };
 
+typedef TQValueList<TDENetworkIEEE8021xType::TDENetworkIEEE8021xType> TDENetworkIEEE8021xTypeList;
+
 namespace TDENetworkIEEE8021xFastFlags {
 	enum TDENetworkIEEE8021xFastFlags {
 		None			= 0x00000000,
@@ -363,6 +356,17 @@ namespace TDENetworkIEEE8021xFastFlags {
 	};
 
 	CREATE_FLAG_BITWISE_MANIPULATION_FUNCTIONS(TDENetworkIEEE8021xFastFlags)
+};
+
+namespace TDENetworkWiFiWPAVersionFlags {
+	enum TDENetworkWiFiWPAVersionFlags {
+		None			= 0x00000000,
+		WPA			= 0x00000001,
+		RSN			= 0x00000002,
+		Any			= 0x00000003
+	};
+
+	CREATE_FLAG_BITWISE_MANIPULATION_FUNCTIONS(TDENetworkWiFiWPAVersionFlags)
 };
 
 namespace TDENetworkPasswordHandlingFlags {
@@ -484,7 +488,7 @@ class TDECORE_EXPORT TDEMACAddress
 		friend bool operator==(const TDEMACAddress &a1, const TDEMACAddress &a2);
 };
 
-bool operator==(const TDEMACAddress &a1, const TDEMACAddress &a2);
+TDECORE_EXPORT bool operator==(const TDEMACAddress &a1, const TDEMACAddress &a2);
 
 typedef TQValueList<TDEMACAddress> TDEMACAddressList;
 
@@ -533,6 +537,7 @@ class TDENetworkIEEE8021xConfiguration
 
 	public:
 		bool valid;
+		bool allowedValid;
 		bool secretsValid;
 		TDENetworkIEEE8021xType::TDENetworkIEEE8021xType type;
 		TQString userName;
@@ -546,8 +551,10 @@ class TDENetworkIEEE8021xConfiguration
 		TQString forcePEAPVersion;
 		TQString forcePEAPLabel;
 		TDENetworkIEEE8021xFastFlags::TDENetworkIEEE8021xFastFlags fastProvisioningFlags;
-		TQString phase2NonEAPAuthMethod;
-		TQString phase2EAPAuthMethod;
+		TDENetworkIEEE8021xType::TDENetworkIEEE8021xType phase2NonEAPAuthMethod;
+		TDENetworkIEEE8021xType::TDENetworkIEEE8021xType phase2EAPAuthMethod;
+		TDENetworkIEEE8021xTypeList allowedPhase2NonEAPMethods;
+		TDENetworkIEEE8021xTypeList allowedPhase2EAPMethods;
 		TQByteArray phase2CaCertificate;
 		TQString phase2CaFilesPath;
 		TQString phase2AuthServerCertSubjectMatch;
@@ -662,7 +669,7 @@ class TDENetworkWiFiSecurityConfiguration
 		bool secretsValid;
 		TDENetworkWiFiKeyType::TDENetworkWiFiKeyType keyType;
 		TDENetworkWiFiAuthType::TDENetworkWiFiAuthType authType;
-		TDENetworkWiFiWPAVersion::TDENetworkWiFiWPAVersion wpaVersion;
+		TDENetworkWiFiWPAVersionFlags::TDENetworkWiFiWPAVersionFlags wpaVersion;
 		TDENetworkWiFiConnectionCipher::TDENetworkWiFiConnectionCipher cipher;
 		TQString wepKey0;
 		TQString wepKey1;
@@ -959,6 +966,14 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		virtual void loadConnectionInformation() = 0;
 
 		/**
+		* @param connection a pointer to a TDENetworkConnection object containing a
+		* connection in which to load the values allowed by the backend.
+		* This is normally called as part of loadConnectionInformation(), but should
+		* manually be called immediately after creation of a new TDENetworkConnection object.
+		*/
+		virtual void loadConnectionAllowedValues(TDENetworkConnection* connection) = 0;
+
+		/**
 		* @param uuid a TQString conntaining the UUID of a connection for which to
 		* load secrets from the configuration backend.
 		* @return true on success, false on failure.
@@ -978,6 +993,13 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		* @return true on success, false on failure.
 		*/
 		virtual bool deleteConnection(TQString uuid) = 0;
+
+		/**
+		* @param connection a pointer to a TDENetworkConnection object containing a
+		* connection for which to verify integrity of all settings.
+		* @return true on success, false if invalid settings are detected.
+		*/
+		virtual bool verifyConnectionSettings(TDENetworkConnection* connection) = 0;
 
 		/**
 		* Initiates a connection with UUID @param uuid.
@@ -1175,6 +1197,13 @@ class TDECORE_EXPORT TDEGlobalNetworkManager : public TQObject
 		* @return true on success, false on failure.
 		*/
 		virtual bool deleteConnection(TQString uuid);
+
+		/**
+		* @param connection a pointer to a TDENetworkConnection object containing a
+		* connection for which to verify integrity of all settings.
+		* @return true on success, false if invalid settings are detected.
+		*/
+		virtual bool verifyConnectionSettings(TDENetworkConnection* connection);
 
 		/**
 		* Initiates a connection with UUID @param uuid.

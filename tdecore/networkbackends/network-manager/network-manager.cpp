@@ -699,29 +699,29 @@ TQString tdeWiFiAuthTypeToNMWiFiAuthType(TDENetworkWiFiAuthType::TDENetworkWiFiA
 	return ret;
 }
 
-TDENetworkWiFiWPAVersion::TDENetworkWiFiWPAVersion nmWiFiWPAVersionToTDEWiFiWPAVersion(TQStringList nm) {
-	TDENetworkWiFiWPAVersion::TDENetworkWiFiWPAVersion ret = TDENetworkWiFiWPAVersion::Other;
+TDENetworkWiFiWPAVersionFlags::TDENetworkWiFiWPAVersionFlags nmWiFiWPAVersionToTDEWiFiWPAVersion(TQStringList nm) {
+	TDENetworkWiFiWPAVersionFlags::TDENetworkWiFiWPAVersionFlags ret = TDENetworkWiFiWPAVersionFlags::None;
 
 	if ((nm.contains("wpa") && nm.contains("rsn")) || (nm.count() < 1)) {
-		ret = TDENetworkWiFiWPAVersion::Any;
+		ret |= TDENetworkWiFiWPAVersionFlags::Any;
 	}
 	else if (nm.contains("wpa")) {
-		ret = TDENetworkWiFiWPAVersion::WPA;
+		ret |= TDENetworkWiFiWPAVersionFlags::WPA;
 	}
 	else if (nm.contains("rsn")) {
-		ret = TDENetworkWiFiWPAVersion::RSN;
+		ret |= TDENetworkWiFiWPAVersionFlags::RSN;
 	}
 
 	return ret;
 }
 
-TQStringList tdeWiFiWPAVersionToNMWiFiWPAVersion(TDENetworkWiFiWPAVersion::TDENetworkWiFiWPAVersion type) {
+TQStringList tdeWiFiWPAVersionToNMWiFiWPAVersion(TDENetworkWiFiWPAVersionFlags::TDENetworkWiFiWPAVersionFlags type) {
 	TQStringList ret;
 
-	if (type == TDENetworkWiFiWPAVersion::WPA) {
+	if (type & TDENetworkWiFiWPAVersionFlags::WPA) {
 		ret.append("wpa");
 	}
-	if (type == TDENetworkWiFiWPAVersion::RSN) {
+	if (type & TDENetworkWiFiWPAVersionFlags::RSN) {
 		ret.append("rsn");
 	}
 
@@ -1868,6 +1868,12 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 												TQT_DBusData innerDataValue = *it4;
 												wiFiConnection->securitySettings.allowedPairWiseCiphers.append(nmWiFiCipherToTDEWiFiCipher(innerDataValue.toString()));
 											}
+											if ((wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherWEP40))
+												|| (wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherWEP104))
+												|| (wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherTKIP))
+												|| (wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherCCMP))) {
+												wiFiConnection->securitySettings.allowedPairWiseCiphers.append(TDENetworkWiFiConnectionCipher::Any);
+											}
 										}
 										else if (keyValue.lower() == "group") {
 											TQT_DBusDataValueList valueList = dataValue2.toTQValueList();
@@ -1876,6 +1882,12 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 											for (it4 = valueList.begin(); it4 != valueList.end(); ++it4) {
 												TQT_DBusData innerDataValue = *it4;
 												wiFiConnection->securitySettings.allowedGroupWiseCiphers.append(nmWiFiCipherToTDEWiFiCipher(innerDataValue.toString()));
+											}
+											if ((wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherWEP40))
+												|| (wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherWEP104))
+												|| (wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherTKIP))
+												|| (wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherCCMP))) {
+												wiFiConnection->securitySettings.allowedGroupWiseCiphers.append(TDENetworkWiFiConnectionCipher::Any);
 											}
 										}
 										else if (keyValue.lower() == "leap-username") {
@@ -2244,7 +2256,7 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 												connection->ipConfig.connectionFlags &= ~TDENetworkIPConfigurationFlags::IPV4MayUseAsDefaultRoute;
 											}
 										}
-										if (keyValue.lower() == "routes") {
+										else if (keyValue.lower() == "routes") {
 											TQT_DBusDataValueList valueList = dataValue2.toTQValueList();
 											TQT_DBusDataValueList::const_iterator it4;
 											for (it4 = valueList.begin(); it4 != valueList.end(); ++it4) {
@@ -2277,6 +2289,7 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 												connection->ipConfig.routeConfigurations.append(routeConfig);
 											}
 										}
+										connection->ipConfig.valid = true;
 									}
 									else if (outerKeyValue.lower() == "ipv6") {
 										if (keyValue.lower() == "addresses") {
@@ -2399,7 +2412,7 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 												connection->ipConfig.connectionFlags &= ~TDENetworkIPConfigurationFlags::IPV6MayUseAsDefaultRoute;
 											}
 										}
-										if (keyValue.lower() == "routes") {
+										else if (keyValue.lower() == "routes") {
 											TQT_DBusDataValueList valueList = dataValue2.toTQValueList();
 											TQT_DBusDataValueList::const_iterator it4;
 											for (it4 = valueList.begin(); it4 != valueList.end(); ++it4) {
@@ -2445,6 +2458,7 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 												connection->ipConfig.routeConfigurations.append(routeConfig);
 											}
 										}
+										connection->ipConfig.valid = true;
 									}
 								}
 								else {
@@ -2460,7 +2474,7 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 					// If the connection's MAC matches my MAC, or if the connection is not locked to any MAC address,
 					// or if this manager object is not locked to a device, then add this connection to the list
 					if ((deviceMACAddress == connection->lockedHWAddress) || (!connection->lockedHWAddress.isValid()) || (!deviceMACAddress.isValid())) {
-						connection->ipConfig.valid = true;
+						loadConnectionAllowedValues(connection);
 						m_connectionList->append(connection);
 					}
 				}
@@ -2474,6 +2488,29 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 			// Error!
 			PRINT_ERROR(error.name())
 		}
+	}
+}
+
+void TDENetworkConnectionManager_BackendNM::loadConnectionAllowedValues(TDENetworkConnection* connection) {
+	if (connection) {
+		// Insert all allowed EAP phase 2 methods
+		connection->eapConfig.allowedPhase2NonEAPMethods.clear();
+		connection->eapConfig.allowedPhase2NonEAPMethods.append(TDENetworkIEEE8021xType::MD5);
+		connection->eapConfig.allowedPhase2NonEAPMethods.append(TDENetworkIEEE8021xType::MSCHAPV2);
+		connection->eapConfig.allowedPhase2NonEAPMethods.append(TDENetworkIEEE8021xType::OTP);
+		connection->eapConfig.allowedPhase2NonEAPMethods.append(TDENetworkIEEE8021xType::GTC);
+		connection->eapConfig.allowedPhase2NonEAPMethods.append(TDENetworkIEEE8021xType::TLS);
+
+		connection->eapConfig.allowedPhase2EAPMethods.clear();
+		connection->eapConfig.allowedPhase2EAPMethods.append(TDENetworkIEEE8021xType::PAP);
+		connection->eapConfig.allowedPhase2EAPMethods.append(TDENetworkIEEE8021xType::CHAP);
+		connection->eapConfig.allowedPhase2EAPMethods.append(TDENetworkIEEE8021xType::MSCHAP);
+		connection->eapConfig.allowedPhase2EAPMethods.append(TDENetworkIEEE8021xType::MSCHAPV2);
+		connection->eapConfig.allowedPhase2EAPMethods.append(TDENetworkIEEE8021xType::OTP);
+		connection->eapConfig.allowedPhase2EAPMethods.append(TDENetworkIEEE8021xType::GTC);
+		connection->eapConfig.allowedPhase2EAPMethods.append(TDENetworkIEEE8021xType::TLS);
+
+		connection->eapConfig.allowedValid = true;
 	}
 }
 
@@ -2853,13 +2890,17 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 					UPDATE_STRING_SETTING_IF_VALID(connection->eapConfig.forcePEAPVersion, "phase1-peapver", settingsMap)
 					UPDATE_STRING_SETTING_IF_VALID(connection->eapConfig.forcePEAPLabel, "phase1-peaplabel", settingsMap)
 					UPDATE_STRING_SETTING_IF_VALID(tdeEAPFastFlagsToNMEAPFastFlags(connection->eapConfig.fastProvisioningFlags), "phase1-fast-provisioning", settingsMap)
-					UPDATE_STRING_SETTING_IF_VALID(connection->eapConfig.phase2NonEAPAuthMethod, "phase2-auth", settingsMap)
-					UPDATE_STRING_SETTING_IF_VALID(connection->eapConfig.phase2EAPAuthMethod, "phase2-autheap", settingsMap)
 				}
 				else {
 					settingsMap.remove("phase1-peapver");
 					settingsMap.remove("phase1-peaplabel");
 					settingsMap.remove("phase1-fast-provisioning");
+				}
+				if (connection->eapConfig.valid) {
+					settingsMap["phase2-auth"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(tdeEAPTypeToNMEAPType(connection->eapConfig.phase2NonEAPAuthMethod)));
+					settingsMap["phase2-autheap"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(tdeEAPTypeToNMEAPType(connection->eapConfig.phase2EAPAuthMethod)));
+				}
+				else {
 					settingsMap.remove("phase2-auth");
 					settingsMap.remove("phase2-autheap");
 				}
@@ -3234,6 +3275,12 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 				{
 					TQT_DBusDataValueList valueList;
 					{
+						if (wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(TDENetworkWiFiConnectionCipher::Any)) {
+							if (!wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherWEP40)) wiFiConnection->securitySettings.allowedPairWiseCiphers.append(TDENetworkWiFiConnectionCipher::CipherWEP40);
+							if (!wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherWEP104)) wiFiConnection->securitySettings.allowedPairWiseCiphers.append(TDENetworkWiFiConnectionCipher::CipherWEP104);
+							if (!wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherTKIP)) wiFiConnection->securitySettings.allowedPairWiseCiphers.append(TDENetworkWiFiConnectionCipher::CipherTKIP);
+							if (!wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherCCMP)) wiFiConnection->securitySettings.allowedPairWiseCiphers.append(TDENetworkWiFiConnectionCipher::CipherCCMP);
+						}
 						for (TDENetworkWiFiConnectionCipherList::Iterator it = wiFiConnection->securitySettings.allowedPairWiseCiphers.begin(); it != wiFiConnection->securitySettings.allowedPairWiseCiphers.end(); ++it) {
 							valueList.append(TQT_DBusData::fromString(tdeWiFiCipherToNMWiFiCipher(*it)));
 						}
@@ -3244,6 +3291,12 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 				{
 					TQT_DBusDataValueList valueList;
 					{
+						if (wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(TDENetworkWiFiConnectionCipher::Any)) {
+							if (!wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherWEP40)) wiFiConnection->securitySettings.allowedGroupWiseCiphers.append(TDENetworkWiFiConnectionCipher::CipherWEP40);
+							if (!wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherWEP104)) wiFiConnection->securitySettings.allowedGroupWiseCiphers.append(TDENetworkWiFiConnectionCipher::CipherWEP104);
+							if (!wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherTKIP)) wiFiConnection->securitySettings.allowedGroupWiseCiphers.append(TDENetworkWiFiConnectionCipher::CipherTKIP);
+							if (!wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherCCMP)) wiFiConnection->securitySettings.allowedGroupWiseCiphers.append(TDENetworkWiFiConnectionCipher::CipherCCMP);
+						}
 						for (TDENetworkWiFiConnectionCipherList::Iterator it = wiFiConnection->securitySettings.allowedGroupWiseCiphers.begin(); it != wiFiConnection->securitySettings.allowedGroupWiseCiphers.end(); ++it) {
 							valueList.append(TQT_DBusData::fromString(tdeWiFiCipherToNMWiFiCipher(*it)));
 						}
@@ -3986,6 +4039,12 @@ bool TDENetworkConnectionManager_BackendNM::deleteConnection(TQString uuid) {
 		PRINT_ERROR(TQString("invalid internal network-manager settings proxy object").arg(uuid));
 		return FALSE;
 	}
+}
+
+bool TDENetworkConnectionManager_BackendNM::verifyConnectionSettings(TDENetworkConnection* connection) {
+	// FIXME
+	// This should actually attempt to validate the settings!
+	return TRUE;
 }
 
 TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManager_BackendNM::initiateConnection(TQString uuid) {

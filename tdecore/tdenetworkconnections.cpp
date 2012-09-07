@@ -293,6 +293,7 @@ bool TDENetworkSingleRouteConfiguration::isIPv6() {
 
 TDENetworkIEEE8021xConfiguration::TDENetworkIEEE8021xConfiguration() {
 	valid = false;
+	allowedValid = false;
 	secretsValid = false;
 	fastProvisioningFlags = TDENetworkIEEE8021xFastFlags::None;
 	passwordFlags = TDENetworkPasswordHandlingFlags::None;
@@ -415,7 +416,7 @@ TDENetworkWiFiSecurityConfiguration::TDENetworkWiFiSecurityConfiguration() {
 	wepKeyIndex = 0;
 	keyType = TDENetworkWiFiKeyType::Other;
 	authType = TDENetworkWiFiAuthType::Other;
-	wpaVersion = TDENetworkWiFiWPAVersion::Any;
+	wpaVersion = TDENetworkWiFiWPAVersionFlags::Any;
 	wepKeyFlags = TDENetworkPasswordHandlingFlags::None;
 	pskFlags = TDENetworkPasswordHandlingFlags::None;
 	leapPasswordFlags = TDENetworkPasswordHandlingFlags::None;
@@ -833,6 +834,11 @@ bool TDEGlobalNetworkManager::saveConnection(TDENetworkConnection* connection) {
 bool TDEGlobalNetworkManager::deleteConnection(TQString uuid) {
 	if (!m_internalConnectionManager) return false;
 	return m_internalConnectionManager->deleteConnection(uuid);
+}
+
+bool TDEGlobalNetworkManager::verifyConnectionSettings(TDENetworkConnection* connection) {
+	if (!m_internalConnectionManager) return false;
+	return m_internalConnectionManager->verifyConnectionSettings(connection);
 }
 
 TDENetworkConnectionStatus::TDENetworkConnectionStatus TDEGlobalNetworkManager::initiateConnection(TQString uuid) {

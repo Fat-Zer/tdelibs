@@ -142,9 +142,11 @@ class TDECORE_EXPORT TDENetworkConnectionManager_BackendNM : public TDENetworkCo
 		virtual TDENetworkDeviceInformation deviceInformation();
 
 		virtual void loadConnectionInformation();
+		virtual void loadConnectionAllowedValues(TDENetworkConnection* connection);
 		virtual bool loadConnectionSecrets(TQString uuid);
 		virtual bool saveConnection(TDENetworkConnection* connection);
 		virtual bool deleteConnection(TQString uuid);
+		virtual bool verifyConnectionSettings(TDENetworkConnection* connection);
 
 		virtual TDENetworkConnectionStatus::TDENetworkConnectionStatus initiateConnection(TQString uuid);
 		virtual TDENetworkConnectionStatus::TDENetworkConnectionStatus checkConnectionStatus(TQString uuid);
