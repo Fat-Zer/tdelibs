@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+#include <tquuid.h>
+
 #include <klocale.h>
 
 #ifdef WITH_NETWORK_MANAGER_BACKEND
@@ -499,6 +501,11 @@ TDENetworkConnection::TDENetworkConnection() {
 	requireIPV4 = false;
 	requireIPV6 = false;
 	mtu = 0;
+
+	// Create a UUID for the new connection
+	// This may be overridden later on if connection information
+	// is loaded into this object from another source
+	UUID = TQUuid::createUuid().toString();
 }
 
 TDENetworkConnection::~TDENetworkConnection() {
