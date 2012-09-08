@@ -41,6 +41,18 @@
 
 class TDENetworkConnectionManager;
 
+namespace TDEHardwareEvent {
+enum TDEHardwareEvent {
+	HardwareListModified,
+	MountTableModified,
+	HardwareAdded,
+	HardwareRemoved,
+	HardwareUpdated,
+	Other,
+	Last = Other
+};
+};
+
 // Keep readGenericDeviceTypeFromString(), getFriendlyDeviceTypeStringFromType(), and getDeviceTypeIconFromType() in tdehardwaredevices.cpp in sync with this enum
 namespace TDEGenericDeviceType {
 enum TDEGenericDeviceType {
@@ -1982,6 +1994,7 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 		void hardwareRemoved(TDEGenericDevice*);
 		void hardwareUpdated(TDEGenericDevice*);
 		void mountTableModified();
+		void hardwareEvent(TDEHardwareEvent::TDEHardwareEvent, TQString uuid);
 
 		/**
 		* @param keycode the code of the key that was pressed/released

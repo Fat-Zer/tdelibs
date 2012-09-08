@@ -1354,6 +1354,9 @@ TDENetworkDevice::TDENetworkDevice(TDEGenericDeviceType::TDEGenericDeviceType dt
 }
 
 TDENetworkDevice::~TDENetworkDevice() {
+	if (m_connectionManager) {
+		delete m_connectionManager;
+	}
 }
 
 TQString TDENetworkDevice::macAddress() {
@@ -1939,6 +1942,7 @@ void TDEHardwareDevices::processHotPluggedHardware() {
 				m_deviceList.append(device);
 				updateParentDeviceInformation(device);	// Update parent/child tables for this device
 				emit hardwareAdded(device);
+				emit hardwareEvent(TDEHardwareEvent::HardwareAdded, device->uniqueID());
 			}
 		}
 		else if (actionevent == "remove") {
@@ -1949,6 +1953,7 @@ void TDEHardwareDevices::processHotPluggedHardware() {
 			for (hwdevice = m_deviceList.first(); hwdevice; hwdevice = m_deviceList.next()) {
 				if (hwdevice->systemPath() == systempath) {
 					emit hardwareRemoved(hwdevice);
+					emit hardwareEvent(TDEHardwareEvent::HardwareRemoved, hwdevice->uniqueID());
 
 					// If the device is a storage device and has a slave, update it as well
 					if (hwdevice->type() == TDEGenericDeviceType::Disk) {
@@ -1960,6 +1965,7 @@ void TDEHardwareDevices::processHotPluggedHardware() {
 							if (slavedevice) {
 								rescanDeviceInformation(slavedevice);
 								emit hardwareUpdated(slavedevice);
+								emit hardwareEvent(TDEHardwareEvent::HardwareUpdated, slavedevice->uniqueID());
 							}
 						}
 					}
@@ -1982,6 +1988,7 @@ void TDEHardwareDevices::processHotPluggedHardware() {
 						classifyUnknownDevice(dev, hwdevice, false);
 						updateParentDeviceInformation(hwdevice);	// Update parent/child tables for this device
 						emit hardwareUpdated(hwdevice);
+						emit hardwareEvent(TDEHardwareEvent::HardwareUpdated, hwdevice->uniqueID());
 					}
 					break;
 				}
@@ -2149,6 +2156,7 @@ void TDEHardwareDevices::processModifiedCPUs() {
 			TDEGenericDevice* hwdevice = findBySystemPath(TQString("/sys/devices/system/cpu/cpu%1").arg(processorNumber));
 			// Signal new information available
 			emit hardwareUpdated(hwdevice);
+			emit hardwareEvent(TDEHardwareEvent::HardwareUpdated, hwdevice->uniqueID());
 		}
 	}
 }
@@ -2164,6 +2172,7 @@ void TDEHardwareDevices::processStatelessDevices() {
 		if ((hwdevice->type() == TDEGenericDeviceType::RootSystem) || (hwdevice->type() == TDEGenericDeviceType::Network) || (hwdevice->type() == TDEGenericDeviceType::OtherSensor) || (hwdevice->type() == TDEGenericDeviceType::Event) || (hwdevice->type() == TDEGenericDeviceType::Battery) || (hwdevice->type() == TDEGenericDeviceType::PowerSupply)) {
 			rescanDeviceInformation(hwdevice);
 			emit hardwareUpdated(hwdevice);
+			emit hardwareEvent(TDEHardwareEvent::HardwareUpdated, hwdevice->uniqueID());
 		}
 	}
 }
@@ -2213,6 +2222,7 @@ void TDEHardwareDevices::processModifiedMounts() {
 		TDEGenericDevice* hwdevice = findByDeviceNode(*mountInfo.at(0));
 		if (hwdevice) {
 			emit hardwareUpdated(hwdevice);
+			emit hardwareEvent(TDEHardwareEvent::HardwareUpdated, hwdevice->uniqueID());
 			// If the device is a storage device and has a slave, update it as well
 			if (hwdevice->type() == TDEGenericDeviceType::Disk) {
 				TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(hwdevice);
@@ -2221,6 +2231,7 @@ void TDEHardwareDevices::processModifiedMounts() {
 					TDEGenericDevice* slavedevice = findBySystemPath(*slaveit);
 					if (slavedevice) {
 						emit hardwareUpdated(slavedevice);
+						emit hardwareEvent(TDEHardwareEvent::HardwareUpdated, slavedevice->uniqueID());
 					}
 				}
 			}
@@ -2232,6 +2243,7 @@ void TDEHardwareDevices::processModifiedMounts() {
 		TDEGenericDevice* hwdevice = findByDeviceNode(*mountInfo.at(0));
 		if (hwdevice) {
 			emit hardwareUpdated(hwdevice);
+			emit hardwareEvent(TDEHardwareEvent::HardwareUpdated, hwdevice->uniqueID());
 			// If the device is a storage device and has a slave, update it as well
 			if (hwdevice->type() == TDEGenericDeviceType::Disk) {
 				TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(hwdevice);
@@ -2240,6 +2252,7 @@ void TDEHardwareDevices::processModifiedMounts() {
 					TDEGenericDevice* slavedevice = findBySystemPath(*slaveit);
 					if (slavedevice) {
 						emit hardwareUpdated(slavedevice);
+						emit hardwareEvent(TDEHardwareEvent::HardwareUpdated, slavedevice->uniqueID());
 					}
 				}
 			}
@@ -2247,6 +2260,7 @@ void TDEHardwareDevices::processModifiedMounts() {
 	}
 
 	emit mountTableModified();
+	emit hardwareEvent(TDEHardwareEvent::MountTableModified, TQString());
 }
 
 TDEDiskDeviceType::TDEDiskDeviceType classifyDiskType(udev_device* dev, const TQString devicebus, const TQString disktypestring, const TQString systempath, const TQString devicevendor, const TQString devicemodel, const TQString filesystemtype, const TQString devicedriver) {
@@ -4401,6 +4415,8 @@ bool TDEHardwareDevices::queryHardwareInformation() {
 
 	// Update parent/child tables for all devices
 	updateParentDeviceInformation();
+
+	emit hardwareEvent(TDEHardwareEvent::HardwareListModified, TQString());
 
 	return true;
 }

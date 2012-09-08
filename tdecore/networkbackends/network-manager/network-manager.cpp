@@ -2488,7 +2488,7 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 			// Error!
 			PRINT_ERROR(error.name())
 		}
-		m_parent->internalNetworkManagementEvent(TDENetworkGlobalEventType::ConnectionListChanged);
+		internalNetworkManagementEvent(TDENetworkGlobalEventType::ConnectionListChanged);
 	}
 }
 
