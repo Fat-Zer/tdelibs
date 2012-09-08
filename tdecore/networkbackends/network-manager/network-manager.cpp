@@ -1200,7 +1200,16 @@ void TDENetworkConnectionManager_BackendNMPrivate::internalProcessDeviceStateCha
 void TDENetworkConnectionManager_BackendNMPrivate::internalProcessWiFiAccessPointAdded(const TQT_DBusObjectPath& dbuspath) {
 	TDENetworkWiFiAPInfo* apInfo = m_parent->getAccessPointDetails(dbuspath);
 	if (apInfo) {
-		m_parent->internalAccessPointStatusChanged(apInfo->BSSID, TDENetworkAPEventType::Discovered);
+		if (!m_accessPointProxyList.contains(dbuspath)) {
+			// Set up monitoring object
+			DBus::AccessPointProxy* apProxy = new DBus::AccessPointProxy(NM_DBUS_SERVICE, dbuspath);
+			apProxy->setConnection(TQT_DBusConnection::systemBus());
+			connect(apProxy, SIGNAL(PropertiesChanged(const TQMap<TQString, TQT_DBusVariant>&)), this, SLOT(internalProcessAPPropertiesChanged(const TQMap<TQString, TQT_DBusVariant>&)));
+			m_accessPointProxyList[dbuspath] = (apProxy);
+
+			// Notify client applications
+			m_parent->internalAccessPointStatusChanged(apInfo->BSSID, TDENetworkAPEventType::Discovered);
+		}
 		delete apInfo;
 	}
 }
@@ -1208,8 +1217,16 @@ void TDENetworkConnectionManager_BackendNMPrivate::internalProcessWiFiAccessPoin
 void TDENetworkConnectionManager_BackendNMPrivate::internalProcessWiFiAccessPointRemoved(const TQT_DBusObjectPath& dbuspath) {
 	TDENetworkWiFiAPInfo* apInfo = m_parent->getAccessPointDetails(dbuspath);
 	if (apInfo) {
+		// Notify client applications
 		m_parent->internalAccessPointStatusChanged(apInfo->BSSID, TDENetworkAPEventType::Lost);
 		delete apInfo;
+
+		// Destroy related monitoring object
+		DBus::AccessPointProxy* apProxy = m_accessPointProxyList[dbuspath];
+		m_accessPointProxyList.remove(dbuspath);
+		if (apProxy) {
+			delete apProxy;
+		}
 	}
 }
 
@@ -1228,10 +1245,17 @@ void TDENetworkConnectionManager_BackendNMPrivate::internalProcessWiFiProperties
 	}
 }
 
-// FIXME
-// If access point strength changes, this must be called:
-// m_parent->internalAccessPointStatusChanged(apInfo->BSSID, TDENetworkAPEventType::SignalStrengthChanged);
-// How do I get NetworkManager to notify me when an access point changes strength?  Do I have to poll it for this information?
+void TDENetworkConnectionManager_BackendNMPrivate::internalProcessAPPropertiesChanged(const TQMap<TQString, TQT_DBusVariant>& props) {
+	const DBus::AccessPointProxy* apProxy = dynamic_cast<const DBus::AccessPointProxy*>(sender());
+	if (apProxy) {
+		TQT_DBusError error;
+		TDEMACAddress BSSID;
+		BSSID.fromString(apProxy->getHwAddress(error));
+		if (props.contains("Strength")) {
+			m_parent->internalAccessPointStatusChanged(BSSID, TDENetworkAPEventType::SignalStrengthChanged);
+		}
+	}
+}
 
 TDENetworkDeviceType::TDENetworkDeviceType TDENetworkConnectionManager_BackendNM::deviceType() {
 	if (m_macAddress == "") {
@@ -4257,6 +4281,10 @@ TDENetworkWiFiAPInfo* TDENetworkConnectionManager_BackendNM::getAccessPointDetai
 
 	apInfo->valid = true;
 
+	// Ensure that this AP is monitored for changes
+	TQT_DBusObjectPath apDBUSPath(TQCString(dbusPath.ascii()));
+	d->internalProcessWiFiAccessPointAdded(apDBUSPath);
+
 	return apInfo;
 }
 
@@ -4386,6 +4414,21 @@ bool TDENetworkConnectionManager_BackendNM::wiFiEnabled() {
 	else {
 		return FALSE;
 	}
+}
+
+TDENetworkConnectionManager_BackendNMPrivate::TDENetworkConnectionManager_BackendNMPrivate(TDENetworkConnectionManager_BackendNM* parent) : m_networkManagerProxy(NULL), m_networkManagerSettings(NULL), m_networkDeviceProxy(NULL), m_wiFiDeviceProxy(NULL), m_parent(parent) {
+	//
+}
+
+TDENetworkConnectionManager_BackendNMPrivate::~TDENetworkConnectionManager_BackendNMPrivate() {
+	TQMap<TQString, DBus::AccessPointProxy*>::iterator it;
+	for (it = m_accessPointProxyList.begin(); it != m_accessPointProxyList.end(); ++it) {
+		DBus::AccessPointProxy *apProxy = it.data();
+		if (apProxy) {
+			delete apProxy;
+		}
+	}
+	m_accessPointProxyList.clear();
 }
 
 #include "network-manager.moc"
