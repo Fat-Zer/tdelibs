@@ -19,13 +19,20 @@
 #include "network-manager.h"
 #include "network-manager_p.h"
 
+// #define DEBUG_NETWORK_MANAGER_COMMUNICATIONS
+
 #define PRINT_ERROR(x) printf("[TDE NM Backend ERROR] %s\n\r", x.ascii());
+
+#ifdef DEBUG_NETWORK_MANAGER_COMMUNICATIONS
+#define PRINT_WARNING(x) printf("[TDE NM Backend WARNING] %s\n\r", x.ascii());
+#else
+#define PRINT_WARNING(x)
+#endif
+
 #define UPDATE_STRING_SETTING_IF_VALID(string, key, settingsMap)	if (!string.isNull()) settingsMap[key] = convertDBUSDataToVariantData(TQT_DBusData::fromString(string));	\
 									else settingsMap.remove(key);
 
 #define NM_ASYNC_TIMEOUT_MS 1000
-
-#define DEBUG_NETWORK_MANAGER_COMMUNICATIONS
 
 TQ_UINT32 reverseIPV4ByteOrder(TQ_UINT32 address) {
 	TQ_UINT32 ret;
@@ -1170,6 +1177,9 @@ TDENetworkConnectionManager_BackendNM::TDENetworkConnectionManager_BackendNM(TQS
 	// Create public lists
 	m_connectionList = new TDENetworkConnectionList;
 	m_hwNeighborList = new TDENetworkHWNeighborList;
+
+	// Run site survey to populate neighbor list with initial data
+	siteSurvey();
 }
 
 TDENetworkConnectionManager_BackendNM::~TDENetworkConnectionManager_BackendNM() {
@@ -2733,7 +2743,7 @@ bool TDENetworkConnectionManager_BackendNM::loadConnectionSecretsForGroup(TQStri
 		}
 	}
 	else {
-		PRINT_ERROR(TQString("connection for provided uuid '%1' was not found").arg(uuid));
+		PRINT_WARNING(TQString("connection for provided uuid '%1' was not found").arg(uuid));
 		return FALSE;
 	}
 }
@@ -4072,7 +4082,7 @@ bool TDENetworkConnectionManager_BackendNM::deleteConnection(TQString uuid) {
 			}
 		}
 		else {
-			PRINT_ERROR(TQString("connection for provided uuid '%1' was not found").arg(uuid));
+			PRINT_WARNING(TQString("connection for provided uuid '%1' was not found").arg(uuid));
 			return FALSE;
 		}
 	}
@@ -4132,7 +4142,7 @@ TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManag
 			}
 		}
 		else {
-			PRINT_ERROR(TQString("connection for provided uuid '%1' was not found").arg(uuid));
+			PRINT_WARNING(TQString("connection for provided uuid '%1' was not found").arg(uuid));
 			return TDENetworkConnectionStatus::Invalid;
 		}
 	}
@@ -4155,7 +4165,7 @@ TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManag
 				return nmDeviceStateToTDEDeviceState(activeConnection.getState(error));
 			}
 		}
-		PRINT_ERROR(TQString("active connection for provided uuid '%1' was not found").arg(uuid));
+		PRINT_WARNING(TQString("active connection for provided uuid '%1' was not found").arg(uuid));
 		return TDENetworkConnectionStatus::Invalid;
 	}
 	else {
@@ -4242,7 +4252,7 @@ TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManag
 			}
 		}
 		else {
-			PRINT_ERROR(TQString("connection for provided uuid '%1' was not found").arg(uuid));
+			PRINT_WARNING(TQString("connection for provided uuid '%1' was not found").arg(uuid));
 			return TDENetworkConnectionStatus::Invalid;
 		}
 	}
@@ -4253,6 +4263,10 @@ TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManag
 }
 
 TDENetworkWiFiAPInfo* TDENetworkConnectionManager_BackendNM::getAccessPointDetails(TQString dbusPath) {
+	if (dbusPath == "") {
+		return NULL;
+	}
+
 	TDENetworkWiFiAPInfo* apInfo = new TDENetworkWiFiAPInfo;
 	TQT_DBusError error;
 	unsigned int index;
@@ -4281,10 +4295,6 @@ TDENetworkWiFiAPInfo* TDENetworkConnectionManager_BackendNM::getAccessPointDetai
 
 	apInfo->valid = true;
 
-	// Ensure that this AP is monitored for changes
-	TQT_DBusObjectPath apDBUSPath(TQCString(dbusPath.ascii()));
-	d->internalProcessWiFiAccessPointAdded(apDBUSPath);
-
 	return apInfo;
 }
 
@@ -4309,6 +4319,8 @@ TDENetworkHWNeighborList* TDENetworkConnectionManager_BackendNM::siteSurvey() {
 				TDENetworkWiFiAPInfo* apInfo = getAccessPointDetails(TQString(*it));
 				if (apInfo) {
 					m_hwNeighborList->append(apInfo);
+					// Ensure that this AP is monitored for changes
+					d->internalProcessWiFiAccessPointAdded(*it);
 				}
 			}
 		}
