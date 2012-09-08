@@ -390,23 +390,24 @@ namespace TDENetworkPasswordHandlingFlags {
 
 namespace TDENetworkConnectionStatus {
 	enum TDENetworkConnectionStatus {
-		Invalid			= 0x00000000,
-		Disconnected		= 0x00000001,
-		Connected		= 0x00000002,
-		LinkUnavailable		= 0x00000004,
-		EstablishingLink	= 0x00000008,
-		DeactivatingLink	= 0x00000010,
-		ConfiguringProtocols	= 0x00000020,
-		Reconnecting		= 0x00000040,
-		LinkLost		= 0x00000080,
-		LinkLocalAccess		= 0x00000100,
-		SiteLocalAccess		= 0x00000200,
-		GlobalAccess		= 0x00000400,
-		UnManaged		= 0x00000800,
-		NeedAuthorization	= 0x00001000,
-		Failed			= 0x00002000,
-		VerifyingProtocols	= 0x00004000,
-		DependencyWait		= 0x00008000
+		None			= 0x00000000,
+		Invalid			= 0x00000001,
+		Disconnected		= 0x00000002,
+		Connected		= 0x00000004,
+		LinkUnavailable		= 0x00000008,
+		EstablishingLink	= 0x00000010,
+		DeactivatingLink	= 0x00000020,
+		ConfiguringProtocols	= 0x00000040,
+		Reconnecting		= 0x00000080,
+		LinkLost		= 0x00000100,
+		LinkLocalAccess		= 0x00000200,
+		SiteLocalAccess		= 0x00000400,
+		GlobalAccess		= 0x00000800,
+		UnManaged		= 0x00001000,
+		NeedAuthorization	= 0x00002000,
+		Failed			= 0x00004000,
+		VerifyingProtocols	= 0x00008000,
+		DependencyWait		= 0x00010000
 	};
 
 	CREATE_FLAG_BITWISE_MANIPULATION_FUNCTIONS(TDENetworkConnectionStatus)

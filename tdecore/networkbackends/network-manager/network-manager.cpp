@@ -119,7 +119,7 @@ TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags nmGlobalStateToTDEGlo
 }
 
 TDENetworkConnectionStatus::TDENetworkConnectionStatus nmDeviceStateToTDEDeviceState(TQ_UINT32 nmType) {
-	TDENetworkConnectionStatus::TDENetworkConnectionStatus ret = TDENetworkConnectionStatus::Invalid;
+	TDENetworkConnectionStatus::TDENetworkConnectionStatus ret = TDENetworkConnectionStatus::None;
 
 	if (nmType == NM_DEVICE_STATE_UNKNOWN) {
 		ret |= TDENetworkConnectionStatus::Invalid;
