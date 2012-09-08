@@ -796,6 +796,10 @@ void TDENetworkConnectionManager::internalAccessPointStatusChanged(TDEMACAddress
 	emit(accessPointStatusChanged(BSSID, event));
 }
 
+void TDENetworkConnectionManager::internalNetworkDeviceEvent(TDENetworkDeviceEventType::TDENetworkDeviceEventType event) {
+	emit(networkDeviceEvent(event));
+}
+
 void TDENetworkConnectionManager::internalNetworkManagementEvent(TDENetworkGlobalEventType::TDENetworkGlobalEventType event) {
 	emit(networkManagementEvent(event));
 }

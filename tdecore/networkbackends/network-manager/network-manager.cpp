@@ -1164,6 +1164,7 @@ TDENetworkConnectionManager_BackendNM::TDENetworkConnectionManager_BackendNM(TQS
 	if (d->m_wiFiDeviceProxy) {
 		connect(d->m_wiFiDeviceProxy, SIGNAL(AccessPointAdded(const TQT_DBusObjectPath&)), d, SLOT(internalProcessWiFiAccessPointAdded(const TQT_DBusObjectPath&)));
 		connect(d->m_wiFiDeviceProxy, SIGNAL(AccessPointRemoved(const TQT_DBusObjectPath&)), d, SLOT(internalProcessWiFiAccessPointRemoved(const TQT_DBusObjectPath&)));
+		connect(d->m_wiFiDeviceProxy, SIGNAL(PropertiesChanged(const TQMap<TQString, TQT_DBusVariant>&)), d, SLOT(internalProcessWiFiPropertiesChanged(const TQMap<TQString, TQT_DBusVariant>&)));
 	}
 
 	// Create public lists
@@ -1212,9 +1213,24 @@ void TDENetworkConnectionManager_BackendNMPrivate::internalProcessWiFiAccessPoin
 	}
 }
 
+void TDENetworkConnectionManager_BackendNMPrivate::internalProcessWiFiPropertiesChanged(const TQMap<TQString, TQT_DBusVariant>& props) {
+	if (m_wiFiDeviceProxy) {
+		if (props.contains("ActiveAccessPoint")) {
+			TQT_DBusError error;
+			TDENetworkWiFiAPInfo* apInfo = m_parent->getAccessPointDetails(m_wiFiDeviceProxy->getActiveAccessPoint(error));
+			if (apInfo) {
+				m_parent->internalAccessPointStatusChanged(apInfo->BSSID, TDENetworkAPEventType::AccessPointChanged);
+			}
+		}
+		else if (props.contains("Bitrate")) {
+			m_parent->internalNetworkDeviceEvent(TDENetworkDeviceEventType::BitRateChanged);
+		}
+	}
+}
+
 // FIXME
 // If access point strength changes, this must be called:
-// m_parent->internalAccessPointStatusChanged(apInfo->BSSID, TDENetworkAPEventType::Lost);
+// m_parent->internalAccessPointStatusChanged(apInfo->BSSID, TDENetworkAPEventType::SignalStrengthChanged);
 // How do I get NetworkManager to notify me when an access point changes strength?  Do I have to poll it for this information?
 
 TDENetworkDeviceType::TDENetworkDeviceType TDENetworkConnectionManager_BackendNM::deviceType() {

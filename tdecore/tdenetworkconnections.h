@@ -184,11 +184,20 @@ namespace TDENetworkGlobalEventType {
 	};
 };
 
+namespace TDENetworkDeviceEventType {
+	enum TDENetworkDeviceEventType {
+		BitRateChanged,
+		Other,
+		Last = Other
+	};
+};
+
 namespace TDENetworkAPEventType {
 	enum TDENetworkAPEventType {
 		Discovered,
 		Lost,
 		SignalStrengthChanged,
+		AccessPointChanged,
 		Other,
 		Last = Other
 	};
@@ -1099,6 +1108,12 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		void accessPointStatusChanged(TDEMACAddress BSSID, TDENetworkAPEventType::TDENetworkAPEventType event);
 
 		/**
+		* Emitted whenever a network device event occurs
+		* The event type that caused the signal is available in @param event
+		*/
+		void networkDeviceEvent(TDENetworkDeviceEventType::TDENetworkDeviceEventType event);
+
+		/**
 		* Emitted whenever a global network management event occurs
 		* The event type that caused the signal is available in @param event
 		*/
@@ -1150,11 +1165,44 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		static TQString friendlyConnectionTypeName(TDENetworkConnectionType::TDENetworkConnectionType type);
 
 	protected:
+		/**
+		* @internal Safely clears out the master connection list and deletes all member objects
+		*/
 		void clearTDENetworkConnectionList();
+		
+		/**
+		* @internal Safely clears out the neighboring devices list and deletes all member objects
+		*/
 		void clearTDENetworkHWNeighborList();
+
+		/**
+		* @internal This method must be called by the network backend whenever a connection changes state
+		* It emits the appropriate signals to notify client applications of the state change
+		*/
 		void internalNetworkConnectionStateChanged(TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags newState);
+
+		/**
+		* @internal This method must be called by the network backend whenever a device changes state
+		* It emits the appropriate signals to notify client applications of the state change
+		*/
 		void internalNetworkDeviceStateChanged(TDENetworkConnectionStatus::TDENetworkConnectionStatus newState, TQString hwAddress=TQString::null);
+
+		/**
+		* @internal This method must be called by the network backend whenever a wireless access point changes state
+		* It emits the appropriate signals to notify client applications of the state change
+		*/
 		void internalAccessPointStatusChanged(TDEMACAddress BSSID, TDENetworkAPEventType::TDENetworkAPEventType event);
+
+		/**
+		* @internal This method must be called by the network backend whenever a device event occurs
+		* It emits the appropriate signals to notify client applications of the network device event
+		*/
+		void internalNetworkDeviceEvent(TDENetworkDeviceEventType::TDENetworkDeviceEventType event);
+
+		/**
+		* @internal This method must be called by the network backend whenever it changes state
+		* It emits the appropriate signals to notify client applications of the state change
+		*/
 		void internalNetworkManagementEvent(TDENetworkGlobalEventType::TDENetworkGlobalEventType event);
 
 	protected:

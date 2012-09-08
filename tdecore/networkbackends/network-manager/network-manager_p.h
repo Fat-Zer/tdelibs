@@ -90,6 +90,7 @@ class TDENetworkConnectionManager_BackendNMPrivate : public TQObject
 		void internalProcessDeviceStateChanged(TQ_UINT32 newState, TQ_UINT32 oldState, TQ_UINT32 reason);
 		void internalProcessWiFiAccessPointAdded(const TQT_DBusObjectPath&);
 		void internalProcessWiFiAccessPointRemoved(const TQT_DBusObjectPath&);
+		void internalProcessWiFiPropertiesChanged(const TQMap<TQString, TQT_DBusVariant>&);
 
 	private:
 		TDENetworkConnectionManager_BackendNM* m_parent;
