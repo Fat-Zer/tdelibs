@@ -1193,6 +1193,14 @@ class TDECORE_EXPORT TDEGlobalNetworkManager : public TQObject
 		virtual void loadConnectionInformation();
 
 		/**
+		* @param connection a pointer to a TDENetworkConnection object containing a
+		* connection in which to load the values allowed by the backend.
+		* This is normally called as part of loadConnectionInformation(), but should
+		* manually be called immediately after creation of a new TDENetworkConnection object.
+		*/
+		virtual void loadConnectionAllowedValues(TDENetworkConnection* connection);
+
+		/**
 		* @param uuid a TQString conntaining the UUID of a connection for which to
 		* load secrets from the configuration backend.
 		* @return true on success, false on failure.

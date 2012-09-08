@@ -828,6 +828,11 @@ void TDEGlobalNetworkManager::loadConnectionInformation() {
 	return m_internalConnectionManager->loadConnectionInformation();
 }
 
+void TDEGlobalNetworkManager::loadConnectionAllowedValues(TDENetworkConnection* connection) {
+	if (!m_internalConnectionManager) return;
+	return m_internalConnectionManager->loadConnectionAllowedValues(connection);
+}
+
 bool TDEGlobalNetworkManager::loadConnectionSecrets(TQString uuid) {
 	if (!m_internalConnectionManager) return false;
 	return m_internalConnectionManager->loadConnectionSecrets(uuid);
