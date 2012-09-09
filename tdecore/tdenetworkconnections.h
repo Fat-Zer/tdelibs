@@ -504,9 +504,11 @@ class TDECORE_EXPORT TDEMACAddress
 		TDENetworkByteList m_macAddress;
 
 		friend bool operator==(const TDEMACAddress &a1, const TDEMACAddress &a2);
+		friend bool operator<(const TDEMACAddress &a1, const TDEMACAddress &a2);
 };
 
 TDECORE_EXPORT bool operator==(const TDEMACAddress &a1, const TDEMACAddress &a2);
+TDECORE_EXPORT bool operator<(const TDEMACAddress &a1, const TDEMACAddress &a2);
 
 typedef TQValueList<TDEMACAddress> TDEMACAddressList;
 

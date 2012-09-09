@@ -247,6 +247,24 @@ bool operator==(const TDEMACAddress &a1, const TDEMACAddress &a2) {
 	}
 }
 
+bool operator<(const TDEMACAddress &a1, const TDEMACAddress &a2) {
+	if (a1.m_macAddress.count() < a2.m_macAddress.count()) {
+		return true;
+	}
+	else {
+		unsigned int i;
+		for (i=0; i<a1.m_macAddress.count(); i++) {
+			if (a1.m_macAddress[i] < a2.m_macAddress[i]) {
+				return true;
+			}
+			if (a1.m_macAddress[i] > a2.m_macAddress[i]) {
+				return false;
+			}
+		}
+		return false;
+	}
+}
+
 /*================================================================================================*/
 /* TDENetworkSingleIPConfiguration                                                                */
 /*================================================================================================*/
@@ -923,8 +941,22 @@ TDENetworkDevice* TDEGlobalNetworkManager::findDeviceByUUID(TQString uuid) {
 }
 
 TDENetworkWiFiAPInfo* TDEGlobalNetworkManager::findAccessPointByBSSID(TDEMACAddress bssid) {
-	if (!m_internalConnectionManager) return NULL;
-	return m_internalConnectionManager->findAccessPointByBSSID(bssid);
+	TDEHardwareDevices *hwdevices = KGlobal::hardwareDevices();
+	if (!hwdevices) {
+		return NULL;
+	}
+
+	TDENetworkWiFiAPInfo* ret = NULL;
+	TDEGenericHardwareList devices = hwdevices->listByDeviceClass(TDEGenericDeviceType::Network);
+	for (TDEGenericHardwareList::iterator it = devices.begin(); it != devices.end(); ++it) {
+		TDENetworkDevice* dev = dynamic_cast<TDENetworkDevice*>(*it);
+		if (dev) {
+			TDENetworkConnectionManager* deviceConnMan = dev->connectionManager();
+			ret = deviceConnMan->findAccessPointByBSSID(bssid);
+		}
+	}
+
+	return ret;
 }
 
 /*================================================================================================*/

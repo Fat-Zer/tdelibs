@@ -1532,6 +1532,10 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 									TDENetworkIPConfigurationFlags::IPV6DHCPRoutes			| \
 									TDENetworkIPConfigurationFlags::IPV6MayUseAsDefaultRoute;
 
+				if (wiFiConnection) {
+					wiFiConnection->securitySettings.authType = TDENetworkWiFiAuthType::Open;
+				}
+
 #ifdef DEBUG_NETWORK_MANAGER_COMMUNICATIONS
 				printf("[network-manager comm debug] %s\n\r", (*it).data()); fflush(stdout);
 #endif // DEBUG_NETWORK_MANAGER_COMMUNICATIONS
@@ -3321,7 +3325,12 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 					}
 				}
 				{
-					settingsMap["hidden"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(wiFiConnection->isHiddenNetwork));
+					if (wiFiConnection->isHiddenNetwork) {
+						settingsMap["hidden"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(true));
+					}
+					else {
+						settingsMap.remove("hidden");
+					}
 				}
 			}
 			dbusData = TQT_DBusData::fromStringKeyMap(TQT_DBusDataMap<TQString>(settingsMap));
@@ -3348,14 +3357,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 				else {
 					settingsMap.remove("wep-tx-keyidx");
 				}
-				{
-					if (wiFiConnection->securityRequired) {
-						settingsMap["auth-alg"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(tdeWiFiAuthTypeToNMWiFiAuthType(wiFiConnection->securitySettings.authType)));
-					}
-					else {
-						settingsMap.remove("auth-alg");
-					}
-				}
+				UPDATE_STRING_SETTING_IF_VALID(tdeWiFiAuthTypeToNMWiFiAuthType(wiFiConnection->securitySettings.authType), "auth-alg", settingsMap)
 				{
 					TQT_DBusDataValueList valueList;
 					{
