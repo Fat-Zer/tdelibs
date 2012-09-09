@@ -56,14 +56,44 @@ TQT_DBusData convertDBUSDataToVariantData(TQT_DBusData object) {
 	return TQT_DBusData::fromVariant(variant);
 }
 
-void printDBUSObjectStructure(TQT_DBusData object, int level=0) {
+void printDBUSObjectStructure(TQT_DBusData object, int level=0, TQString mapKey=TQString::null) {
 	int i;
 	TQString levelIndent = "";
 	for (i=0; i<level; i++) {
 		levelIndent = levelIndent + " ";
 	}
 	TQCString signature = object.buildDBusSignature();
-	printf("%s%s\n\r", levelIndent.ascii(), signature.data()); fflush(stdout);
+
+	if (object.type() == TQT_DBusData::String) {
+		printf("%s%s\t%s%s'%s'\n\r", levelIndent.ascii(), signature.data(), (mapKey.isNull())?"":mapKey.ascii(), (mapKey.isNull())?"":" = ", object.toString().ascii()); fflush(stdout);
+	}
+	else if (object.type() == TQT_DBusData::Bool) {
+		printf("%s%s\t%s%s'%s'\n\r", levelIndent.ascii(), signature.data(), (mapKey.isNull())?"":mapKey.ascii(), (mapKey.isNull())?"":" = ", (object.toBool())?"true":"false"); fflush(stdout);
+	}
+	else if (object.type() == TQT_DBusData::Byte) {
+		printf("%s%s\t%s%s'%d'\n\r", levelIndent.ascii(), signature.data(), (mapKey.isNull())?"":mapKey.ascii(), (mapKey.isNull())?"":" = ", object.toByte()); fflush(stdout);
+	}
+	else if (object.type() == TQT_DBusData::Int16) {
+		printf("%s%s\t%s%s'%d'\n\r", levelIndent.ascii(), signature.data(), (mapKey.isNull())?"":mapKey.ascii(), (mapKey.isNull())?"":" = ", object.toInt16()); fflush(stdout);
+	}
+	else if (object.type() == TQT_DBusData::UInt16) {
+		printf("%s%s\t%s%s'%d'\n\r", levelIndent.ascii(), signature.data(), (mapKey.isNull())?"":mapKey.ascii(), (mapKey.isNull())?"":" = ", object.toUInt16()); fflush(stdout);
+	}
+	else if (object.type() == TQT_DBusData::Int32) {
+		printf("%s%s\t%s%s'%d'\n\r", levelIndent.ascii(), signature.data(), (mapKey.isNull())?"":mapKey.ascii(), (mapKey.isNull())?"":" = ", object.toInt32()); fflush(stdout);
+	}
+	else if (object.type() == TQT_DBusData::UInt32) {
+		printf("%s%s\t%s%s'%d'\n\r", levelIndent.ascii(), signature.data(), (mapKey.isNull())?"":mapKey.ascii(), (mapKey.isNull())?"":" = ", object.toUInt32()); fflush(stdout);
+	}
+	else if (object.type() == TQT_DBusData::Int64) {
+		printf("%s%s\t%s%s'%lld'\n\r", levelIndent.ascii(), signature.data(), (mapKey.isNull())?"":mapKey.ascii(), (mapKey.isNull())?"":" = ", object.toInt64()); fflush(stdout);
+	}
+	else if (object.type() == TQT_DBusData::UInt64) {
+		printf("%s%s\t%s%s'%lld'\n\r", levelIndent.ascii(), signature.data(), (mapKey.isNull())?"":mapKey.ascii(), (mapKey.isNull())?"":" = ", object.toUInt64()); fflush(stdout);
+	}
+	else {
+		printf("%s%s\n\r", levelIndent.ascii(), signature.data()); fflush(stdout);
+	}
 
 	if (object.type() == TQT_DBusData::Map) {
 		// HACK
@@ -71,10 +101,10 @@ void printDBUSObjectStructure(TQT_DBusData object, int level=0) {
 		TQMap<TQString, TQT_DBusData> outerMap = object.toStringKeyMap().toTQMap();
 		TQMap<TQString, TQT_DBusData>::const_iterator it;
         	for (it = outerMap.begin(); it != outerMap.end(); ++it) {
-			printDBUSObjectStructure(*it, level+1);
+			printDBUSObjectStructure(*it, level+1, it.key());
 		}
 	}
-	if (object.type() == TQT_DBusData::List) {
+	else if (object.type() == TQT_DBusData::List) {
 		TQT_DBusDataValueList valueList = object.toTQValueList();
 		TQT_DBusDataValueList::const_iterator it;
 		for (it = valueList.begin(); it != valueList.end(); ++it) {
@@ -84,7 +114,7 @@ void printDBUSObjectStructure(TQT_DBusData object, int level=0) {
 	else if (object.type() == TQT_DBusData::Variant) {
 		TQT_DBusVariant dataValueVariant = object.toVariant();
 		TQT_DBusData dataValue = dataValueVariant.value;
-		printDBUSObjectStructure(dataValue, level+1);
+		printDBUSObjectStructure(dataValue, level+1, mapKey);
 	}
 }
 
@@ -2749,12 +2779,26 @@ bool TDENetworkConnectionManager_BackendNM::loadConnectionSecretsForGroup(TQStri
 }
 
 bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection* connection) {
-	// Find path for connection with specified UUID, if it exists
-	// This is so that any settings that we are not aware of can be loaded now and preserved through the update operation
 	if (!connection) {
 		PRINT_ERROR(TQString("connection cannot be NULL!"));
 		return FALSE;
 	}
+
+	// If the UUID is blank, generate a new UUID for this connection and also guarantee that it it truly unique
+	if (connection->UUID == "") {
+		bool unique = false;
+		while (!unique) {
+			connection->UUID = TQUuid::createUuid().toString();
+			connection->UUID.replace("{", "");
+			connection->UUID.replace("}", "");
+			if (!findConnectionByUUID(connection->UUID)) {
+				unique = true;
+			}
+		}
+	}
+
+	// Find path for connection with specified UUID, if it exists
+	// This is so that any settings that we are not aware of can be loaded now and preserved through the update operation
 	TDEWiredEthernetConnection* ethernetConnection = dynamic_cast<TDEWiredEthernetConnection*>(connection);
 	TDEWiredInfinibandConnection* infinibandConnection = dynamic_cast<TDEWiredInfinibandConnection*>(connection);
 	TDEWiFiConnection* wiFiConnection = dynamic_cast<TDEWiFiConnection*>(connection);
@@ -2848,7 +2892,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 				}
 				settingsMap["autoconnect"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(connection->autoConnect));
 				settingsMap["read-only"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(connection->readOnly));
-				settingsMap["master"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(connection->masterConnectionUUID));
+				UPDATE_STRING_SETTING_IF_VALID(connection->masterConnectionUUID, "master", settingsMap)
 				{
 					TQString slaveType = tdeSlaveTypeToNMSlaveType(connection->slaveType);
 					if (slaveType != "") settingsMap["slave-type"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(slaveType));

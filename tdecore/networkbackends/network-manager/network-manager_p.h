@@ -23,6 +23,7 @@
 #include <tqvaluelist.h>
 #include <tqapplication.h>
 #include <tqtimer.h>
+#include <tquuid.h>
 
 /* TDE headers */
 #include <kdebug.h>
