@@ -861,6 +861,11 @@ TDEGlobalNetworkManager::~TDEGlobalNetworkManager() {
 	delete m_internalConnectionManager;
 }
 
+TQString TDEGlobalNetworkManager::backendName() {
+	if (!m_internalConnectionManager) return TQString::null;
+	return m_internalConnectionManager->backendName();
+}
+
 TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags TDEGlobalNetworkManager::backendStatus() {
 	if (!m_internalConnectionManager) return TDENetworkGlobalManagerFlags::BackendUnavailable;
 	return m_internalConnectionManager->backendStatus();
@@ -924,6 +929,11 @@ TDENetworkHWNeighborList* TDEGlobalNetworkManager::siteSurvey() {
 TQStringList TDEGlobalNetworkManager::connectionPhysicalDeviceUUIDs(TQString uuid) {
 	if (!m_internalConnectionManager) return TQStringList();
 	return m_internalConnectionManager->connectionPhysicalDeviceUUIDs(uuid);
+}
+
+TDENetworkVPNTypeList TDEGlobalNetworkManager::availableVPNTypes() {
+	if (!m_internalConnectionManager) return TDENetworkVPNTypeList();
+	return m_internalConnectionManager->availableVPNTypes();
 }
 
 bool TDEGlobalNetworkManager::networkingEnabled() {

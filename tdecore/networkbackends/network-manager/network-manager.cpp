@@ -1478,6 +1478,10 @@ TDENetworkConnectionType::TDENetworkConnectionType TDENetworkConnectionManager_B
 	return connType;
 }
 
+TQString TDENetworkConnectionManager_BackendNM::backendName() {
+	return i18n("NetworkManager");
+}
+
 TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags TDENetworkConnectionManager_BackendNM::backendStatus() {
 	if (d->m_networkManagerProxy) {
 		TQ_UINT32 ret;
@@ -4533,6 +4537,19 @@ TQStringList TDENetworkConnectionManager_BackendNM::connectionPhysicalDeviceUUID
 		PRINT_ERROR(TQString("invalid internal network-manager settings proxy object"));
 		return TQStringList();
 	}
+}
+
+TDENetworkVPNTypeList TDENetworkConnectionManager_BackendNM::availableVPNTypes() {
+	TDENetworkVPNTypeList ret;
+
+	// FIXME
+	// This backend should query NetworkManager to verify plugin availability before claiming support for a VPN type!
+	ret.append(TDENetworkVPNType::OpenVPN);
+	ret.append(TDENetworkVPNType::PPTP);
+	ret.append(TDENetworkVPNType::StrongSwan);
+	ret.append(TDENetworkVPNType::VPNC);
+
+	return ret;
 }
 
 TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManager_BackendNM::deactivateConnection(TQString uuid) {

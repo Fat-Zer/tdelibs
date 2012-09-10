@@ -137,6 +137,7 @@ class TDECORE_EXPORT TDENetworkConnectionManager_BackendNM : public TDENetworkCo
 		TDENetworkConnectionManager_BackendNM(TQString macAddress);
 		~TDENetworkConnectionManager_BackendNM();
 
+		virtual TQString backendName();
 		virtual TDENetworkDeviceType::TDENetworkDeviceType deviceType();
 		virtual TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags backendStatus();
 		virtual TDENetworkDeviceInformation deviceInformation();
@@ -155,6 +156,7 @@ class TDECORE_EXPORT TDENetworkConnectionManager_BackendNM : public TDENetworkCo
 
 		virtual TDENetworkHWNeighborList* siteSurvey();
 		virtual TQStringList connectionPhysicalDeviceUUIDs(TQString uuid);
+		virtual TDENetworkVPNTypeList availableVPNTypes();
 
 		virtual bool networkingEnabled();
 		virtual bool wiFiHardwareEnabled();

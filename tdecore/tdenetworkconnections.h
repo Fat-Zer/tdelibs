@@ -302,6 +302,19 @@ namespace TDENetworkWiFiClientFlags {
 	CREATE_FLAG_BITWISE_MANIPULATION_FUNCTIONS(TDENetworkWiFiClientFlags)
 };
 
+namespace TDENetworkVPNType {
+	enum TDENetworkVPNType {
+		OpenVPN,
+		PPTP,
+		StrongSwan,
+		VPNC,
+		Other,
+		Last = Other
+	};
+};
+
+typedef TQValueList<TDENetworkVPNType::TDENetworkVPNType> TDENetworkVPNTypeList;
+
 namespace TDENetworkWiFiConnectionCipher {
 	enum TDENetworkWiFiConnectionCipher {
 		None,
@@ -314,6 +327,8 @@ namespace TDENetworkWiFiConnectionCipher {
 		Any
 	};
 };
+
+typedef TQValueList<TDENetworkWiFiConnectionCipher::TDENetworkWiFiConnectionCipher> TDENetworkWiFiConnectionCipherList;
 
 namespace TDENetworkWepKeyType {
 	enum TDENetworkWepKeyType {
@@ -333,8 +348,6 @@ namespace TDENetworkVLANFlags {
 
 	CREATE_FLAG_BITWISE_MANIPULATION_FUNCTIONS(TDENetworkVLANFlags)
 };
-
-typedef TQValueList<TDENetworkWiFiConnectionCipher::TDENetworkWiFiConnectionCipher> TDENetworkWiFiConnectionCipherList;
 
 namespace TDENetworkWiFiKeyType {
 	enum TDENetworkWiFiKeyType {
@@ -976,9 +989,9 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		~TDENetworkConnectionManager();
 
 		/**
-		* @return the MAC address of this device
+		* @return a TQString containing the name of the backend in use
 		*/
-		TQString deviceMACAddress();
+		virtual TQString backendName() = 0;
 
 		/**
 		* @return the type of connection supported by this device
@@ -1092,6 +1105,12 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		virtual TQStringList connectionPhysicalDeviceUUIDs(TQString uuid) = 0;
 
 		/**
+		* @return a TDENetworkVPNTypeList object containing all supported VPN types
+		* If a type is not in this list, it is not supported by the backend in use
+		*/
+		virtual TDENetworkVPNTypeList availableVPNTypes() = 0;
+
+		/**
 		* @return true if networking is enabled, false if not.
 		*/
 		virtual bool networkingEnabled() = 0;
@@ -1172,6 +1191,11 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		* loadConnectionInformation(), saveConnection(), deleteConnection(), or connections().
 		*/
 		virtual TDENetworkConnectionList* connections();
+
+		/**
+		* @return the MAC address of this device
+		*/
+		TQString deviceMACAddress();
 
 		/**
 		* @return a pointer to a TDENetworkConnection object with the specified @param uuid,
@@ -1277,6 +1301,11 @@ class TDECORE_EXPORT TDEGlobalNetworkManager : public TQObject
 		~TDEGlobalNetworkManager();
 
 		/**
+		* @return a TQString containing the name of the backend in use
+		*/
+		virtual TQString backendName();
+
+		/**
 		* @return A TDENetworkGlobalManagerFlags enum value with the current status of the networking backend.
 		*/
 		virtual TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags backendStatus();
@@ -1374,6 +1403,12 @@ class TDECORE_EXPORT TDEGlobalNetworkManager : public TQObject
 		* dependend on the specific network backend in use.
 		*/
 		virtual TQStringList connectionPhysicalDeviceUUIDs(TQString uuid);
+
+		/**
+		* @return a TDENetworkVPNTypeList object containing all supported VPN types
+		* If a type is not in this list, it is not supported by the backend in use
+		*/
+		virtual TDENetworkVPNTypeList availableVPNTypes();
 
 		/**
 		* @return true if networking is enabled, false if not.
