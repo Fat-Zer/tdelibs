@@ -126,6 +126,8 @@
 #define NM_802_11_DEVICE_CAP_WPA		0x10
 #define NM_802_11_DEVICE_CAP_RSN		0x20
 //====================================================================================================
+#define NM_PLUGIN_SERVICE_DIR	"/etc/NetworkManager/VPN"
+//====================================================================================================
 
 class TDENetworkConnectionManager_BackendNMPrivate;
 

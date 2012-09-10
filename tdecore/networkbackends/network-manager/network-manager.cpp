@@ -16,6 +16,9 @@
    Boston, MA 02110-1301, USA.
 */
 
+#include <tqdir.h>
+
+#include "kconfig.h"
 #include "tdehardwaredevices.h"
 
 #include "network-manager.h"
@@ -4542,12 +4545,36 @@ TQStringList TDENetworkConnectionManager_BackendNM::connectionPhysicalDeviceUUID
 TDENetworkVPNTypeList TDENetworkConnectionManager_BackendNM::availableVPNTypes() {
 	TDENetworkVPNTypeList ret;
 
-	// FIXME
-	// This backend should query NetworkManager to verify plugin availability before claiming support for a VPN type!
-	ret.append(TDENetworkVPNType::OpenVPN);
-	ret.append(TDENetworkVPNType::PPTP);
-	ret.append(TDENetworkVPNType::StrongSwan);
-	ret.append(TDENetworkVPNType::VPNC);
+	// Query NetworkManager to verify plugin availability before claiming support for a VPN type
+	TQDir serviceDir(NM_PLUGIN_SERVICE_DIR, TQString(), TQDir::Name|TQDir::IgnoreCase, TQDir::Files);
+	TQStringList services = serviceDir.entryList ().grep (".name", true);
+
+	if (services.count () > 0) {
+		// read in all available Services
+		for (TQStringList::Iterator i = services.begin (); i != services.end (); ++i) {
+			TQString service = NM_PLUGIN_SERVICE_DIR + TQString ("/") + *i;
+			KConfig* kconfig = new KConfig (service, true, true, "config");
+			kconfig->setGroup ("VPN Connection");
+
+			TQString serviceName = kconfig->readEntry("name", TQString());
+			serviceName = serviceName.lower();
+
+			if (serviceName == "openvpn") {
+				ret.append(TDENetworkVPNType::OpenVPN);
+			}
+			if (serviceName == "pptp") {
+				ret.append(TDENetworkVPNType::PPTP);
+			}
+			if (serviceName == "strongswan") {
+				ret.append(TDENetworkVPNType::StrongSwan);
+			}
+			if (serviceName == "vpnc") {
+				ret.append(TDENetworkVPNType::VPNC);
+			}
+
+			delete kconfig;
+		}
+	}
 
 	return ret;
 }
