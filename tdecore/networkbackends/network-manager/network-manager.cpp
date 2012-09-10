@@ -16,6 +16,8 @@
    Boston, MA 02110-1301, USA.
 */
 
+#include "tdehardwaredevices.h"
+
 #include "network-manager.h"
 #include "network-manager_p.h"
 
@@ -913,11 +915,21 @@ char tdeParityToNMParity(TDENetworkParity::TDENetworkParity parity) {
 	return ret;
 }
 
-TDENetworkWepKeyType::TDENetworkWepKeyType nmWepKeyTypeToTDEWepKeyType(unsigned int nm) {
+TDENetworkWepKeyType::TDENetworkWepKeyType nmWepKeyTypeToTDEWepKeyType(unsigned int nm, TQString key=TQString::null) {
 	TDENetworkWepKeyType::TDENetworkWepKeyType ret = TDENetworkWepKeyType::Hexadecimal;
 
 	if (nm == NM_WEP_TYPE_HEXADECIMAL) {
-		ret = TDENetworkWepKeyType::Hexadecimal;
+		if (key.isNull()) {
+			ret = TDENetworkWepKeyType::Hexadecimal;
+		}
+		else {
+			if ((key.length() == 10) || (key.length() == 26)) {
+				ret = TDENetworkWepKeyType::Hexadecimal;
+			}
+			else {
+				ret = TDENetworkWepKeyType::Ascii;
+			}
+		}
 	}
 	else if (nm == NM_WEP_TYPE_PASSPHRASE) {
 		ret = TDENetworkWepKeyType::Passphrase;
@@ -930,6 +942,9 @@ unsigned int tdeWepKeyTypeToNMWepKeyType(TDENetworkWepKeyType::TDENetworkWepKeyT
 	unsigned int ret = 0;
 
 	if (type == TDENetworkWepKeyType::Hexadecimal) {
+		ret = NM_WEP_TYPE_HEXADECIMAL;
+	}
+	else if (type == TDENetworkWepKeyType::Ascii) {
 		ret = NM_WEP_TYPE_HEXADECIMAL;
 	}
 	else if (type == TDENetworkWepKeyType::Passphrase) {
@@ -1170,6 +1185,90 @@ TQString TDENetworkConnectionManager_BackendNM::deviceInterfaceString(TQString m
 	else {
 		return "";
 	}
+}
+
+TQString macAddressForGenericDevice(TQT_DBusObjectPath path) {
+	TQT_DBusError error;
+
+	DBus::DeviceProxy genericDevice(NM_DBUS_SERVICE, path);
+	genericDevice.setConnection(TQT_DBusConnection::systemBus());
+	TQ_UINT32 deviceType = genericDevice.getDeviceType(error);
+	if (error.isValid()) {
+		// Error!
+		PRINT_ERROR(error.name())
+		return TQString();
+	}
+	else if (deviceType == NM_DEVICE_TYPE_ETHERNET) {
+		DBus::EthernetDeviceProxy ethernetDevice(NM_DBUS_SERVICE, path);
+		ethernetDevice.setConnection(TQT_DBusConnection::systemBus());
+		TQString candidateMACAddress = ethernetDevice.getPermHwAddress(error);
+		if (!error.isValid()) {
+			return candidateMACAddress.lower();
+		}
+	}
+	else if (deviceType == NM_DEVICE_TYPE_INFINIBAND) {
+		DBus::InfinibandDeviceProxy infinibandDevice(NM_DBUS_SERVICE, path);
+		infinibandDevice.setConnection(TQT_DBusConnection::systemBus());
+		TQString candidateMACAddress = infinibandDevice.getHwAddress(error);
+		if (!error.isValid()) {
+			return candidateMACAddress.lower();
+		}
+	}
+	else if (deviceType == NM_DEVICE_TYPE_WIFI) {
+		DBus::WiFiDeviceProxy wiFiDevice(NM_DBUS_SERVICE, path);
+		wiFiDevice.setConnection(TQT_DBusConnection::systemBus());
+		TQString candidateMACAddress = wiFiDevice.getPermHwAddress(error);
+		if (!error.isValid()) {
+			return candidateMACAddress.lower();
+		}
+	}
+	else if (deviceType == NM_DEVICE_TYPE_WIMAX) {
+		DBus::WiMaxDeviceProxy wiMaxDevice(NM_DBUS_SERVICE, path);
+		wiMaxDevice.setConnection(TQT_DBusConnection::systemBus());
+		TQString candidateMACAddress = wiMaxDevice.getHwAddress(error);
+		if (!error.isValid()) {
+			return candidateMACAddress.lower();
+		}
+	}
+	else if (deviceType == NM_DEVICE_TYPE_OLPC_MESH) {
+		DBus::OlpcMeshDeviceProxy olpcMeshDevice(NM_DBUS_SERVICE, path);
+		olpcMeshDevice.setConnection(TQT_DBusConnection::systemBus());
+		TQString candidateMACAddress = olpcMeshDevice.getHwAddress(error);
+		if (!error.isValid()) {
+			return candidateMACAddress.lower();
+		}
+	}
+	else if (deviceType == NM_DEVICE_TYPE_BT) {
+		DBus::BluetoothDeviceProxy bluetoothDevice(NM_DBUS_SERVICE, path);
+		bluetoothDevice.setConnection(TQT_DBusConnection::systemBus());
+		TQString candidateMACAddress = bluetoothDevice.getHwAddress(error);
+		if (!error.isValid()) {
+			return candidateMACAddress.lower();
+		}
+	}
+	// FIXME
+	// Add other supported device types here
+
+	return TQString::null;
+}
+
+TQString tdeDeviceUUIDForMACAddress(TQString macAddress) {
+	TDEHardwareDevices *hwdevices = KGlobal::hardwareDevices();
+	if (!hwdevices) {
+		return TQString::null;
+	}
+
+	TDEGenericHardwareList devices = hwdevices->listByDeviceClass(TDEGenericDeviceType::Network);
+	for (TDEGenericHardwareList::iterator it = devices.begin(); it != devices.end(); ++it) {
+		TDENetworkDevice* dev = dynamic_cast<TDENetworkDevice*>(*it);
+		if (dev) {
+			if (macAddress.lower() == dev->macAddress().lower()) {
+				return dev->uniqueID();
+			}
+		}
+	}
+
+	return TQString::null;
 }
 
 TDENetworkConnectionManager_BackendNM::TDENetworkConnectionManager_BackendNM(TQString macAddress) : TDENetworkConnectionManager(macAddress) {
@@ -2603,8 +2702,34 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionAllowedValues(TDENetwo
 // While this separate separate routine is needed to get the secrets, note that secrets must
 // be saved using the same connection map save routine that all other settings use above.
 bool TDENetworkConnectionManager_BackendNM::loadConnectionSecrets(TQString uuid) {
+	TDENetworkConnection* connection = findConnectionByUUID(uuid);
+	if (!connection) {
+		PRINT_ERROR(TQString("Unable to locate connection with uuid '%1' in local database.  Did you run loadConnectionInformation() first?"));
+		return FALSE;
+	}
+	//TDEWiredEthernetConnection* ethernetConnection = dynamic_cast<TDEWiredEthernetConnection*>(connection);
+	//TDEWiredInfinibandConnection* infinibandConnection = dynamic_cast<TDEWiredInfinibandConnection*>(connection);
+	TDEWiFiConnection* wiFiConnection = dynamic_cast<TDEWiFiConnection*>(connection);
+	TDEVPNConnection* vpnConnection = dynamic_cast<TDEVPNConnection*>(connection);
+	//TDEWiMaxConnection* wiMaxConnection = dynamic_cast<TDEWiMaxConnection*>(connection);
+	//TDEVLANConnection* vlanConnection = dynamic_cast<TDEVLANConnection*>(connection);
+	//TDEOLPCMeshConnection* olpcMeshConnection = dynamic_cast<TDEVLANConnection*>(connection);
+	//TDEBluetoothConnection* bluetoothConnection = dynamic_cast<TDEBluetoothConnection*>(connection);
+	TDEModemConnection* modemConnection = dynamic_cast<TDEModemConnection*>(connection);
+
 	bool ret = TRUE;
 	ret = ret && loadConnectionSecretsForGroup(uuid, "802-1x");
+	if (wiFiConnection) {
+		ret = ret && loadConnectionSecretsForGroup(uuid, "802-11-wireless-security");
+	}
+	if (vpnConnection) {
+		ret = ret && loadConnectionSecretsForGroup(uuid, "vpn");
+	}
+	ret = ret && loadConnectionSecretsForGroup(uuid, "pppoe");
+	if (modemConnection) {
+		ret = ret && loadConnectionSecretsForGroup(uuid, "cdma");
+		ret = ret && loadConnectionSecretsForGroup(uuid, "gsm");
+	}
 	return ret;
 }
 
@@ -2713,15 +2838,19 @@ bool TDENetworkConnectionManager_BackendNM::loadConnectionSecretsForGroup(TQStri
 							if ((outerKeyValue.lower() == "802-11-wireless-security") && (wiFiConnection)) {
 								if (keyValue.lower() == "wep-key0") {
 									wiFiConnection->securitySettings.wepKey0 = dataValue2.toString();
+									wiFiConnection->securitySettings.wepKeyType = nmWepKeyTypeToTDEWepKeyType(tdeWepKeyTypeToNMWepKeyType(wiFiConnection->securitySettings.wepKeyType), wiFiConnection->securitySettings.wepKey0);
 								}
 								else if (keyValue.lower() == "wep-key1") {
 									wiFiConnection->securitySettings.wepKey1 = dataValue2.toString();
+									wiFiConnection->securitySettings.wepKeyType = nmWepKeyTypeToTDEWepKeyType(tdeWepKeyTypeToNMWepKeyType(wiFiConnection->securitySettings.wepKeyType), wiFiConnection->securitySettings.wepKey1);
 								}
 								else if (keyValue.lower() == "wep-key2") {
 									wiFiConnection->securitySettings.wepKey2 = dataValue2.toString();
+									wiFiConnection->securitySettings.wepKeyType = nmWepKeyTypeToTDEWepKeyType(tdeWepKeyTypeToNMWepKeyType(wiFiConnection->securitySettings.wepKeyType), wiFiConnection->securitySettings.wepKey2);
 								}
 								else if (keyValue.lower() == "wep-key3") {
 									wiFiConnection->securitySettings.wepKey3 = dataValue2.toString();
+									wiFiConnection->securitySettings.wepKeyType = nmWepKeyTypeToTDEWepKeyType(tdeWepKeyTypeToNMWepKeyType(wiFiConnection->securitySettings.wepKeyType), wiFiConnection->securitySettings.wepKey3);
 								}
 								else if (keyValue.lower() == "psk") {
 									wiFiConnection->securitySettings.psk = dataValue2.toString();
@@ -3406,13 +3535,13 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 				settingsMap["wep-key-type"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(tdeWepKeyTypeToNMWepKeyType(wiFiConnection->securitySettings.wepKeyType)));
 				settingsMap["psk-flags"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(tdePasswordFlagsToNMPasswordFlags(wiFiConnection->securitySettings.pskFlags)));
 				settingsMap["leap-password-flags"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(tdePasswordFlagsToNMPasswordFlags(wiFiConnection->securitySettings.leapPasswordFlags)));
-				if (connection->eapConfig.secretsValid) {
-					settingsMap["wep-key0"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(wiFiConnection->securitySettings.wepKey0));
-					settingsMap["wep-key1"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(wiFiConnection->securitySettings.wepKey1));
-					settingsMap["wep-key2"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(wiFiConnection->securitySettings.wepKey2));
-					settingsMap["wep-key3"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(wiFiConnection->securitySettings.wepKey3));
-					settingsMap["psk"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(wiFiConnection->securitySettings.psk));
-					settingsMap["leap-password"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(wiFiConnection->securitySettings.leapPassword));
+				if (wiFiConnection->securitySettings.secretsValid) {
+					UPDATE_STRING_SETTING_IF_VALID(wiFiConnection->securitySettings.wepKey0, "wep-key0", settingsMap)
+					UPDATE_STRING_SETTING_IF_VALID(wiFiConnection->securitySettings.wepKey1, "wep-key1", settingsMap)
+					UPDATE_STRING_SETTING_IF_VALID(wiFiConnection->securitySettings.wepKey2, "wep-key2", settingsMap)
+					UPDATE_STRING_SETTING_IF_VALID(wiFiConnection->securitySettings.wepKey3, "wep-key3", settingsMap)
+					UPDATE_STRING_SETTING_IF_VALID(wiFiConnection->securitySettings.psk, "psk", settingsMap)
+					UPDATE_STRING_SETTING_IF_VALID(wiFiConnection->securitySettings.leapPassword, "leap-password", settingsMap)
 				}
 				else {
 					settingsMap.remove("wep-key0");
@@ -4133,14 +4262,166 @@ bool TDENetworkConnectionManager_BackendNM::deleteConnection(TQString uuid) {
 		}
 	}
 	else {
-		PRINT_ERROR(TQString("invalid internal network-manager settings proxy object").arg(uuid));
+		PRINT_ERROR(TQString("invalid internal network-manager settings proxy object"));
 		return FALSE;
 	}
 }
 
-bool TDENetworkConnectionManager_BackendNM::verifyConnectionSettings(TDENetworkConnection* connection) {
+bool TDENetworkConnectionManager_BackendNM::verifyConnectionSettings(TDENetworkConnection* connection, TDENetworkConnectionErrorFlags::TDENetworkConnectionErrorFlags* type, TDENetworkErrorStringMap* reason) {
 	// FIXME
-	// This should actually attempt to validate the settings!
+	// This should actually attempt to validate all the settings!
+
+	if (!connection) {
+		return false;
+	}
+
+	if (connection->friendlyName == "") {
+		if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidConnectionSetting] = i18n("Connection name is invalid");
+		if (type) *type |= TDENetworkConnectionErrorFlags::InvalidConnectionSetting;
+		return false;
+	}
+
+	if (connection->ipConfig.valid) {
+		// Iterate over all addresses
+		TDENetworkSingleIPConfigurationList::iterator it;
+		for (it = connection->ipConfig.ipConfigurations.begin(); it != connection->ipConfig.ipConfigurations.end(); ++it) {
+			if ((*it).isIPv4()) {
+				if (!(connection->ipConfig.connectionFlags & TDENetworkIPConfigurationFlags::IPV4DHCPIP)) {
+					if (!TDENetworkConnectionManager::validateIPAddress((*it).ipAddress)) {
+						if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidIPv4Setting] = i18n("IPv4 address is invalid");
+						if (type) *type |= TDENetworkConnectionErrorFlags::InvalidIPv4Setting;
+						return false;
+					}
+				}
+			}
+			else if ((*it).isIPv6()) {
+				if (!(connection->ipConfig.connectionFlags & TDENetworkIPConfigurationFlags::IPV6DHCPIP)) {
+					if (!TDENetworkConnectionManager::validateIPAddress((*it).ipAddress)) {
+						if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidIPv6Setting] = i18n("IPv6 address is invalid");
+						if (type) *type |= TDENetworkConnectionErrorFlags::InvalidIPv6Setting;
+						return false;
+					}
+				}
+			}
+		}
+	}
+
+	TDEWiFiConnection* wiFiConnection = dynamic_cast<TDEWiFiConnection*>(connection);
+	if (wiFiConnection) {
+		if (wiFiConnection->SSID.count() < 1) {
+			if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidWirelessSetting] = i18n("No SSID provided");
+			if (type) *type |= TDENetworkConnectionErrorFlags::InvalidWirelessSetting;
+			return false;
+		}
+		if (wiFiConnection->securityRequired) {
+			if (wiFiConnection->securitySettings.secretsValid) {
+				if ((wiFiConnection->securitySettings.keyType == TDENetworkWiFiKeyType::WEP) || ((wiFiConnection->securitySettings.keyType == TDENetworkWiFiKeyType::DynamicWEP) && ((wiFiConnection->securitySettings.authType == TDENetworkWiFiAuthType::Open) || (wiFiConnection->securitySettings.authType == TDENetworkWiFiAuthType::Shared)))) {
+					if (wiFiConnection->securitySettings.wepKeyType == TDENetworkWepKeyType::Hexadecimal) {
+						if (wiFiConnection->securitySettings.wepKey0 != "") {
+							if ((wiFiConnection->securitySettings.wepKey0.length() != 10) && (wiFiConnection->securitySettings.wepKey0.length() != 26)) {
+								if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("WEP key 0 has invalid length");
+								if (type) *type |= TDENetworkConnectionErrorFlags::InvalidWirelessKey;
+								return false;
+							}
+						}
+						if (wiFiConnection->securitySettings.wepKey1 != "") {
+							if ((wiFiConnection->securitySettings.wepKey1.length() != 10) && (wiFiConnection->securitySettings.wepKey1.length() != 26)) {
+								if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("WEP key 1 has invalid length");
+								if (type) *type |= TDENetworkConnectionErrorFlags::InvalidWirelessKey;
+								return false;
+							}
+						}
+						if (wiFiConnection->securitySettings.wepKey2 != "") {
+							if ((wiFiConnection->securitySettings.wepKey2.length() != 10) && (wiFiConnection->securitySettings.wepKey2.length() != 26)) {
+								if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("WEP key 2 has invalid length");
+								if (type) *type |= TDENetworkConnectionErrorFlags::InvalidWirelessKey;
+								return false;
+							}
+						}
+						if (wiFiConnection->securitySettings.wepKey3 != "") {
+							if ((wiFiConnection->securitySettings.wepKey3.length() != 10) && (wiFiConnection->securitySettings.wepKey3.length() != 26)) {
+								if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("WEP key 3 has invalid length");
+								if (type) *type |= TDENetworkConnectionErrorFlags::InvalidWirelessKey;
+								return false;
+							}
+						}
+						if ((wiFiConnection->securitySettings.wepKey0 == "") && (wiFiConnection->securitySettings.wepKey1 == "") && (wiFiConnection->securitySettings.wepKey2 == "") && (wiFiConnection->securitySettings.wepKey3 == "")) {
+							if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("No WEP key(s) provided");
+							if (type) *type |= TDENetworkConnectionErrorFlags::InvalidWirelessKey;
+							return false;
+						}
+					}
+					else if (wiFiConnection->securitySettings.wepKeyType == TDENetworkWepKeyType::Ascii) {
+						if (wiFiConnection->securitySettings.wepKey0 != "") {
+							if ((wiFiConnection->securitySettings.wepKey0.length() != 5) && (wiFiConnection->securitySettings.wepKey0.length() != 13)) {
+								if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("WEP key 0 has invalid length");
+								if (type) *type |= TDENetworkConnectionErrorFlags::InvalidWirelessKey;
+								return false;
+							}
+						}
+						if (wiFiConnection->securitySettings.wepKey1 != "") {
+							if ((wiFiConnection->securitySettings.wepKey1.length() != 5) && (wiFiConnection->securitySettings.wepKey1.length() != 13)) {
+								if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("WEP key 1 has invalid length");
+								if (type) *type |= TDENetworkConnectionErrorFlags::InvalidWirelessKey;
+								return false;
+							}
+						}
+						if (wiFiConnection->securitySettings.wepKey2 != "") {
+							if ((wiFiConnection->securitySettings.wepKey2.length() != 5) && (wiFiConnection->securitySettings.wepKey2.length() != 13)) {
+								if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("WEP key 2 has invalid length");
+								if (type) *type |= TDENetworkConnectionErrorFlags::InvalidWirelessKey;
+								return false;
+							}
+						}
+						if (wiFiConnection->securitySettings.wepKey3 != "") {
+							if ((wiFiConnection->securitySettings.wepKey3.length() != 5) && (wiFiConnection->securitySettings.wepKey3.length() != 13)) {
+								if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("WEP key 3 has invalid length");
+								if (type) *type |= TDENetworkConnectionErrorFlags::InvalidWirelessKey;
+								return false;
+							}
+						}
+						if ((wiFiConnection->securitySettings.wepKey0 == "") && (wiFiConnection->securitySettings.wepKey1 == "") && (wiFiConnection->securitySettings.wepKey2 == "") && (wiFiConnection->securitySettings.wepKey3 == "")) {
+							if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("No WEP key(s) provided");
+							if (type) *type |= TDENetworkConnectionErrorFlags::InvalidWirelessKey;
+							return false;
+						}
+					}
+					else if (wiFiConnection->securitySettings.wepKeyType == TDENetworkWepKeyType::Ascii) {
+						if ((wiFiConnection->securitySettings.wepKey0 == "") && (wiFiConnection->securitySettings.wepKey1 == "") && (wiFiConnection->securitySettings.wepKey2 == "") && (wiFiConnection->securitySettings.wepKey3 == "")) {
+							if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("No WEP key(s) provided");
+							if (type) *type |= TDENetworkConnectionErrorFlags::InvalidWirelessKey;
+							return false;
+						}
+					}
+				}
+				else if ((wiFiConnection->securitySettings.keyType == TDENetworkWiFiKeyType::DynamicWEP) && (wiFiConnection->securitySettings.authType == TDENetworkWiFiAuthType::LEAP)) {
+					if ((wiFiConnection->securitySettings.leapUsername.length() < 1) || (wiFiConnection->securitySettings.leapPassword.length() < 1)) {
+						if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("LEAP username and/or password not provided");
+						if (type) *type |= TDENetworkConnectionErrorFlags::InvalidWirelessKey;
+						return false;
+					}
+				}
+				else if ((wiFiConnection->securitySettings.keyType == TDENetworkWiFiKeyType::WPAAdHoc) || (wiFiConnection->securitySettings.keyType == TDENetworkWiFiKeyType::WPAInfrastructure) || (wiFiConnection->securitySettings.keyType == TDENetworkWiFiKeyType::WPAEnterprise)) {
+					if (wiFiConnection->securitySettings.psk.length() == 64) {
+						// Verify that only hex characters are present in the string
+						bool ok;
+						wiFiConnection->securitySettings.psk.toULongLong(&ok, 16);
+						if (!ok) {
+							if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("Hexadecimal length PSK contains non-hexadecimal characters");
+							if (type) *type |= TDENetworkConnectionErrorFlags::InvalidWirelessKey;
+							return false;
+						}
+					}
+					else if ((wiFiConnection->securitySettings.psk.length() < 8) || (wiFiConnection->securitySettings.psk.length() > 63)) {
+						if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("No PSK provided");
+						if (type) *type |= TDENetworkConnectionErrorFlags::InvalidWirelessKey;
+						return false;
+					}
+				}
+			}
+		}
+	}
+
 	return TRUE;
 }
 
@@ -4193,7 +4474,7 @@ TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManag
 		}
 	}
 	else {
-		PRINT_ERROR(TQString("invalid internal network-manager settings proxy object").arg(uuid));
+		PRINT_ERROR(TQString("invalid internal network-manager settings proxy object"));
 		return TDENetworkConnectionStatus::Invalid;
 	}
 }
@@ -4215,7 +4496,7 @@ TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManag
 		return TDENetworkConnectionStatus::Invalid;
 	}
 	else {
-		PRINT_ERROR(TQString("invalid internal network-manager settings proxy object").arg(uuid));
+		PRINT_ERROR(TQString("invalid internal network-manager settings proxy object"));
 		return TDENetworkConnectionStatus::Invalid;
 	}
 }
@@ -4238,9 +4519,8 @@ TQStringList TDENetworkConnectionManager_BackendNM::connectionPhysicalDeviceUUID
 				TQValueList<TQT_DBusObjectPath> deviceList = activeConnection.getDevices(error);
 				TQT_DBusObjectPathList::iterator it2;
 				for (it2 = deviceList.begin(); it2 != deviceList.end(); ++it2) {
-					DBus::DeviceProxy underlyingNetworkDeviceProxy(NM_DBUS_SERVICE, *it2);
-					underlyingNetworkDeviceProxy.setConnection(TQT_DBusConnection::systemBus());
-					TQString devUUID = underlyingNetworkDeviceProxy.getUdi(error);
+					TQString macAddress = macAddressForGenericDevice(*it2);
+					TQString devUUID = tdeDeviceUUIDForMACAddress(macAddress);
 					if (devUUID != "") {
 						ret.append(devUUID);
 					}
@@ -4250,7 +4530,7 @@ TQStringList TDENetworkConnectionManager_BackendNM::connectionPhysicalDeviceUUID
 		return ret;
 	}
 	else {
-		PRINT_ERROR(TQString("invalid internal network-manager settings proxy object").arg(uuid));
+		PRINT_ERROR(TQString("invalid internal network-manager settings proxy object"));
 		return TQStringList();
 	}
 }
@@ -4303,7 +4583,7 @@ TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManag
 		}
 	}
 	else {
-		PRINT_ERROR(TQString("invalid internal network-manager settings proxy object").arg(uuid));
+		PRINT_ERROR(TQString("invalid internal network-manager settings proxy object"));
 		return TDENetworkConnectionStatus::Invalid;
 	}
 }
@@ -4471,6 +4751,43 @@ bool TDENetworkConnectionManager_BackendNM::wiFiEnabled() {
 	}
 	else {
 		return FALSE;
+	}
+}
+
+TQStringList TDENetworkConnectionManager_BackendNM::defaultNetworkDevices() {
+	// Cycle through all available connections and see which one is default, then find all devices for that connection...
+	TQStringList ret;
+
+	TQT_DBusObjectPath existingConnection;
+	TQT_DBusError error;
+	if (d->m_networkManagerProxy) {
+		TQT_DBusObjectPathList activeConnections = d->m_networkManagerProxy->getActiveConnections(error);
+		TQT_DBusObjectPathList::iterator it;
+		for (it = activeConnections.begin(); it != activeConnections.end(); ++it) {
+			DBus::ActiveConnectionProxy activeConnection(NM_DBUS_SERVICE, (*it));
+			activeConnection.setConnection(TQT_DBusConnection::systemBus());
+			if (activeConnection.getDefault(error)) {
+				// This is the default ipv4 connection
+				TQString uuid = activeConnection.getUuid(error);
+				TQStringList devices = connectionPhysicalDeviceUUIDs(uuid);
+				for (TQStringList::Iterator it2 = devices.begin(); it2 != devices.end(); ++it2) {
+					ret.append(*it);
+				}
+			}
+			else if (activeConnection.getDefault6(error)) {
+				// This is the default ipv6 connection
+				TQString uuid = activeConnection.getUuid(error);
+				TQStringList devices = connectionPhysicalDeviceUUIDs(uuid);
+				for (TQStringList::Iterator it2 = devices.begin(); it2 != devices.end(); ++it2) {
+					ret.append(*it);
+				}
+			}
+		}
+		return ret;
+	}
+	else {
+		PRINT_ERROR(TQString("invalid internal network-manager settings proxy object"));
+		return TQStringList();
 	}
 }
 

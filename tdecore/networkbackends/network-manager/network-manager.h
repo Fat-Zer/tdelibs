@@ -146,7 +146,7 @@ class TDECORE_EXPORT TDENetworkConnectionManager_BackendNM : public TDENetworkCo
 		virtual bool loadConnectionSecrets(TQString uuid);
 		virtual bool saveConnection(TDENetworkConnection* connection);
 		virtual bool deleteConnection(TQString uuid);
-		virtual bool verifyConnectionSettings(TDENetworkConnection* connection);
+		virtual bool verifyConnectionSettings(TDENetworkConnection* connection, TDENetworkConnectionErrorFlags::TDENetworkConnectionErrorFlags* type=NULL, TDENetworkErrorStringMap* reason=NULL);
 
 		virtual TDENetworkConnectionStatus::TDENetworkConnectionStatus initiateConnection(TQString uuid);
 		virtual TDENetworkConnectionStatus::TDENetworkConnectionStatus checkConnectionStatus(TQString uuid);
@@ -161,6 +161,8 @@ class TDECORE_EXPORT TDENetworkConnectionManager_BackendNM : public TDENetworkCo
 		virtual bool enableNetworking(bool enable);
 		virtual bool enableWiFi(bool enable);
 		virtual bool wiFiEnabled();
+
+		virtual TQStringList defaultNetworkDevices();
 
 	private:
 		TDENetworkDeviceType::TDENetworkDeviceType nmDeviceTypeToTDEDeviceType(TQ_UINT32 nmType);

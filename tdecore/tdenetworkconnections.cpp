@@ -781,6 +781,27 @@ TQString TDENetworkConnectionManager::friendlyConnectionTypeName(TDENetworkConne
 	}
 }
 
+bool TDENetworkConnectionManager::validateIPAddress(TQHostAddress address) {
+	if (address.isIPv4Address()) {
+		TQ_UINT32 rawaddress = address.toIPv4Address();
+		if ((((rawaddress & 0xff000000) >> 24) == 0) || ((rawaddress & 0x000000ff) == 0) || ((rawaddress & 0x000000ff) == 255)) {
+			return false;
+		}
+	}
+	else if (address.isIPv6Address()) {
+		Q_IPV6ADDR rawaddress = address.toIPv6Address();
+		if (rawaddress.c[0] == 0xff) {
+			return false;
+		}
+	}
+	return true;
+}
+
+bool TDENetworkConnectionManager::validateIPNeworkMask(TQHostAddress netmask) {
+	Q_UNUSED(netmask);
+	return TRUE;
+}
+
 void TDENetworkConnectionManager::clearTDENetworkConnectionList() {
 	TDENetworkConnection *connection;
 	for (connection = m_connectionList->first(); connection; connection = m_connectionList->next()) {
@@ -870,9 +891,9 @@ bool TDEGlobalNetworkManager::deleteConnection(TQString uuid) {
 	return m_internalConnectionManager->deleteConnection(uuid);
 }
 
-bool TDEGlobalNetworkManager::verifyConnectionSettings(TDENetworkConnection* connection) {
+bool TDEGlobalNetworkManager::verifyConnectionSettings(TDENetworkConnection* connection, TDENetworkConnectionErrorFlags::TDENetworkConnectionErrorFlags* type, TDENetworkErrorStringMap* reason) {
 	if (!m_internalConnectionManager) return false;
-	return m_internalConnectionManager->verifyConnectionSettings(connection);
+	return m_internalConnectionManager->verifyConnectionSettings(connection, type, reason);
 }
 
 TDENetworkConnectionStatus::TDENetworkConnectionStatus TDEGlobalNetworkManager::initiateConnection(TQString uuid) {
@@ -923,6 +944,11 @@ bool TDEGlobalNetworkManager::enableWiFi(bool enable) {
 bool TDEGlobalNetworkManager::wiFiEnabled() {
 	if (!m_internalConnectionManager) return false;
 	return m_internalConnectionManager->wiFiEnabled();
+}
+
+TQStringList TDEGlobalNetworkManager::defaultNetworkDevices() {
+	if (!m_internalConnectionManager) return NULL;
+	return m_internalConnectionManager->defaultNetworkDevices();
 }
 
 TDENetworkConnectionList* TDEGlobalNetworkManager::connections() {

@@ -99,6 +99,23 @@ namespace TDENetworkConnectionType {
 	};
 };
 
+namespace TDENetworkConnectionErrorFlags {
+	enum TDENetworkConnectionErrorFlags {
+		NoError				= 0x00000000,
+		InvalidConnectionSetting	= 0x00000001,
+		InvalidIPv4Setting		= 0x00000002,
+		InvalidIPv6Setting		= 0x00000004,
+		InvalidEAPSetting		= 0x00000008,
+		InvalidEAPKey			= 0x00000010,
+		InvalidWirelessSetting		= 0x00000020,
+		InvalidWirelessKey		= 0x00000040
+	};
+
+	CREATE_FLAG_BITWISE_MANIPULATION_FUNCTIONS(TDENetworkConnectionErrorFlags)
+};
+
+typedef TQMap<TDENetworkConnectionErrorFlags::TDENetworkConnectionErrorFlags, TQString> TDENetworkErrorStringMap;
+
 namespace TDENetworkInfinibandTransportMode {
 	enum TDENetworkInfinibandTransportMode {
 		Datagram,
@@ -301,6 +318,7 @@ namespace TDENetworkWiFiConnectionCipher {
 namespace TDENetworkWepKeyType {
 	enum TDENetworkWepKeyType {
 		Hexadecimal,
+		Ascii,
 		Passphrase
 	};
 };
@@ -1017,9 +1035,13 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		/**
 		* @param connection a pointer to a TDENetworkConnection object containing a
 		* connection for which to verify integrity of all settings.
+		* @param type a pointer to an TDENetworkConnectionErrorFlags::TDENetworkConnectionErrorFlags
+		* which will be filled with the generic error type code if provided.
+		* @param reason a pointer to a TDENetworkErrorStringMap which will be filled with translated
+		* strings containing the reason for the failure if provided.
 		* @return true on success, false if invalid settings are detected.
 		*/
-		virtual bool verifyConnectionSettings(TDENetworkConnection* connection) = 0;
+		virtual bool verifyConnectionSettings(TDENetworkConnection* connection, TDENetworkConnectionErrorFlags::TDENetworkConnectionErrorFlags* type=NULL, TDENetworkErrorStringMap* reason=NULL) = 0;
 
 		/**
 		* Initiates a connection with UUID @param uuid.
@@ -1055,7 +1077,8 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		virtual TDENetworkHWNeighborList* siteSurvey() = 0;
 
 		/**
-		* @return a TQStringList containing the UUIDs of all physical devices used by this connection
+		* @return a TQStringList containing the UUIDs of all physical devices used by the connection
+		* with UUID @param uuid.
 		* This function may return an empty list if the connection is inactive, this behaviour is
 		* dependend on the specific network backend in use.
 		*/
@@ -1087,6 +1110,12 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		* @return true if WiFi is enabled, false if not.
 		*/
 		virtual bool wiFiEnabled() = 0;
+
+		/**
+		* @return a list of UUIDs of the default network devices, or an empty list if no such devices exist.
+		* The default network devices are normally the devices holding the highest priority default route.
+		*/
+		virtual TQStringList defaultNetworkDevices() = 0;
 
 	signals:
 		/**
@@ -1147,7 +1176,7 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 
 		/**
 		* @return a pointer to a TDENetworkDevice object with the specified @param uuid,
-		* or a NULL pointer if no such connection exists.
+		* or a NULL pointer if no such device exists.
 		*
 		* Note that the returned object is internally managed and must not be deleted!
 		*/
@@ -1165,6 +1194,16 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		* @return a string containing the friendly name of the connection type @param type given
 		*/
 		static TQString friendlyConnectionTypeName(TDENetworkConnectionType::TDENetworkConnectionType type);
+
+		/**
+		* @return true if @param address is valid, false if not
+		*/
+		static bool validateIPAddress(TQHostAddress address);
+
+		/**
+		* @return true if @param netmask is valid, false if not
+		*/
+		static bool validateIPNeworkMask(TQHostAddress netmask);
 
 	protected:
 		/**
@@ -1275,9 +1314,13 @@ class TDECORE_EXPORT TDEGlobalNetworkManager : public TQObject
 		/**
 		* @param connection a pointer to a TDENetworkConnection object containing a
 		* connection for which to verify integrity of all settings.
+		* @param type a pointer to an TDENetworkConnectionErrorFlags::TDENetworkConnectionErrorFlags
+		* which will be filled with the generic error type code if provided.
+		* @param reason a pointer to a TDENetworkErrorStringMap which will be filled with translated
+		* strings containing the reason for the failure if provided.
 		* @return true on success, false if invalid settings are detected.
 		*/
-		virtual bool verifyConnectionSettings(TDENetworkConnection* connection);
+		virtual bool verifyConnectionSettings(TDENetworkConnection* connection, TDENetworkConnectionErrorFlags::TDENetworkConnectionErrorFlags* type=NULL, TDENetworkErrorStringMap* reason=NULL);
 
 		/**
 		* Initiates a connection with UUID @param uuid.
@@ -1311,7 +1354,8 @@ class TDECORE_EXPORT TDEGlobalNetworkManager : public TQObject
 		virtual TDENetworkHWNeighborList* siteSurvey();
 
 		/**
-		* @return a TQStringList containing the UUIDs of all physical devices used by this connection
+		* @return a TQStringList containing the UUIDs of all physical devices used by the connection
+		* with UUID @param uuid.
 		* This function may return an empty list if the connection is inactive, this behaviour is
 		* dependend on the specific network backend in use.
 		*/
@@ -1343,6 +1387,12 @@ class TDECORE_EXPORT TDEGlobalNetworkManager : public TQObject
 		* @return true if WiFi is enabled, false if not.
 		*/
 		virtual bool wiFiEnabled();
+
+		/**
+		* @return a list of UUIDs of the default network devices, or an empty list if no such devices exist.
+		* The default network devices are normally the devices holding the highest priority default route.
+		*/
+		virtual TQStringList defaultNetworkDevices();
 
 	signals:
 		/**
@@ -1397,7 +1447,7 @@ class TDECORE_EXPORT TDEGlobalNetworkManager : public TQObject
 
 		/**
 		* @return a pointer to a TDENetworkDevice object with the specified @param uuid,
-		* or a NULL pointer if no such connection exists.
+		* or a NULL pointer if no such device exists.
 		*
 		* Note that the returned object is internally managed and must not be deleted!
 		*/
