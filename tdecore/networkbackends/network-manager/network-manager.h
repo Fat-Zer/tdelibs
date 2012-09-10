@@ -151,6 +151,7 @@ class TDECORE_EXPORT TDENetworkConnectionManager_BackendNM : public TDENetworkCo
 		virtual TDENetworkConnectionStatus::TDENetworkConnectionStatus initiateConnection(TQString uuid);
 		virtual TDENetworkConnectionStatus::TDENetworkConnectionStatus checkConnectionStatus(TQString uuid);
 		virtual TDENetworkConnectionStatus::TDENetworkConnectionStatus deactivateConnection(TQString uuid);
+		virtual TQStringList validSettings();
 
 		virtual TDENetworkHWNeighborList* siteSurvey();
 		virtual TQStringList connectionPhysicalDeviceUUIDs(TQString uuid);

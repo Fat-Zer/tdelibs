@@ -4588,6 +4588,193 @@ TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManag
 	}
 }
 
+TQStringList TDENetworkConnectionManager_BackendNM::validSettings() {
+	TQStringList ret;
+
+	ret.append("TDENetworkSingleIPConfiguration::ipAddress");
+	ret.append("TDENetworkSingleIPConfiguration::networkMask");
+	ret.append("TDENetworkSingleIPConfiguration::gateway");
+
+	ret.append("TDENetworkSingleRouteConfiguration::ipAddress");
+	ret.append("TDENetworkSingleRouteConfiguration::networkMask");
+	ret.append("TDENetworkSingleRouteConfiguration::gateway");
+
+	ret.append("TDENetworkIEEE8021xConfiguration::valid");
+	ret.append("TDENetworkIEEE8021xConfiguration::allowedValid");
+	ret.append("TDENetworkIEEE8021xConfiguration::secretsValid");
+	ret.append("TDENetworkIEEE8021xConfiguration::type");
+	ret.append("TDENetworkIEEE8021xConfiguration::userName");
+	ret.append("TDENetworkIEEE8021xConfiguration::anonymousUserName");
+	ret.append("TDENetworkIEEE8021xConfiguration::pacFileName");
+	ret.append("TDENetworkIEEE8021xConfiguration::caCertificate");
+	ret.append("TDENetworkIEEE8021xConfiguration::additionalCAFilesPath");
+	ret.append("TDENetworkIEEE8021xConfiguration::authServerCertSubjectMatch");
+	ret.append("TDENetworkIEEE8021xConfiguration::alternateAuthServerCertSubjectMatch");
+	ret.append("TDENetworkIEEE8021xConfiguration::clientCertificate");
+	ret.append("TDENetworkIEEE8021xConfiguration::forcePEAPVersion");
+	ret.append("TDENetworkIEEE8021xConfiguration::forcePEAPLabel");
+	ret.append("TDENetworkIEEE8021xConfiguration::fastProvisioningFlags");
+	ret.append("TDENetworkIEEE8021xConfiguration::phase2NonEAPAuthMethod");
+	ret.append("TDENetworkIEEE8021xConfiguration::phase2EAPAuthMethod");
+	ret.append("TDENetworkIEEE8021xConfiguration::allowedPhase2NonEAPMethods");
+	ret.append("TDENetworkIEEE8021xConfiguration::allowedPhase2EAPMethods");
+	ret.append("TDENetworkIEEE8021xConfiguration::phase2CaCertificate");
+	ret.append("TDENetworkIEEE8021xConfiguration::phase2CaFilesPath");
+	ret.append("TDENetworkIEEE8021xConfiguration::phase2AuthServerCertSubjectMatch");
+	ret.append("TDENetworkIEEE8021xConfiguration::phase2AlternateAuthServerCertSubjectMatch");
+	ret.append("TDENetworkIEEE8021xConfiguration::phase2ClientCertificate");
+	ret.append("TDENetworkIEEE8021xConfiguration::password");
+	ret.append("TDENetworkIEEE8021xConfiguration::passwordFlags");
+	ret.append("TDENetworkIEEE8021xConfiguration::binaryPassword");
+	ret.append("TDENetworkIEEE8021xConfiguration::binaryPasswordFlags");
+	ret.append("TDENetworkIEEE8021xConfiguration::privateKey");
+	ret.append("TDENetworkIEEE8021xConfiguration::privateKeyPassword");
+	ret.append("TDENetworkIEEE8021xConfiguration::privateKeyPasswordFlags");
+	ret.append("TDENetworkIEEE8021xConfiguration::phase2PrivateKey");
+	ret.append("TDENetworkIEEE8021xConfiguration::phase2PrivateKeyPassword");
+	ret.append("TDENetworkIEEE8021xConfiguration::phase2PrivateKeyPasswordFlags");
+	ret.append("TDENetworkIEEE8021xConfiguration::forceSystemCaCertificates");
+
+	ret.append("TDENetworkPPPConfiguration::valid");
+	ret.append("TDENetworkPPPConfiguration::requireServerAuthentication");
+	ret.append("TDENetworkPPPConfiguration::flags");
+	ret.append("TDENetworkPPPConfiguration::baudRate");
+	ret.append("TDENetworkPPPConfiguration::mru");
+	ret.append("TDENetworkPPPConfiguration::mtu");
+	ret.append("TDENetworkPPPConfiguration::lcpEchoPingInterval");
+	ret.append("TDENetworkPPPConfiguration::lcpEchoFailureThreshold");
+
+	ret.append("TDENetworkPPPOEConfiguration::valid");
+	ret.append("TDENetworkPPPOEConfiguration::secretsValid");
+	ret.append("TDENetworkPPPOEConfiguration::networkServiceProvider");
+	ret.append("TDENetworkPPPOEConfiguration::username");
+	ret.append("TDENetworkPPPOEConfiguration::password");
+	ret.append("TDENetworkPPPOEConfiguration::passwordFlags");
+
+	ret.append("TDENetworkSerialConfiguration::valid");
+	ret.append("TDENetworkSerialConfiguration::baudRate");
+	ret.append("TDENetworkSerialConfiguration::byteWidth");
+	ret.append("TDENetworkSerialConfiguration::parity");
+	ret.append("TDENetworkSerialConfiguration::stopBits");
+	ret.append("TDENetworkSerialConfiguration::txDelay");
+
+	ret.append("TDENetworkCDMAConfiguration::valid");
+	ret.append("TDENetworkCDMAConfiguration::secretsValid");
+	ret.append("TDENetworkCDMAConfiguration::providerDataNumber");
+	ret.append("TDENetworkCDMAConfiguration::username");
+	ret.append("TDENetworkCDMAConfiguration::password");
+	ret.append("TDENetworkCDMAConfiguration::passwordFlags");
+
+	ret.append("TDENetworkGSMConfiguration::valid");
+	ret.append("TDENetworkGSMConfiguration::secretsValid");
+	ret.append("TDENetworkGSMConfiguration::providerDataNumber");
+	ret.append("TDENetworkGSMConfiguration::username");
+	ret.append("TDENetworkGSMConfiguration::password");
+	ret.append("TDENetworkGSMConfiguration::passwordFlags");
+	ret.append("TDENetworkGSMConfiguration::accessPointName");
+	ret.append("TDENetworkGSMConfiguration::networkID");
+	ret.append("TDENetworkGSMConfiguration::networkType");
+	ret.append("TDENetworkGSMConfiguration::pin");
+	ret.append("TDENetworkGSMConfiguration::pinFlags");
+	ret.append("TDENetworkGSMConfiguration::allowedFrequencyBands");
+	ret.append("TDENetworkGSMConfiguration::allowRoaming");
+
+	ret.append("TDENetworkWiFiSecurityConfiguration::valid");
+	ret.append("TDENetworkWiFiSecurityConfiguration::secretsValid");
+	ret.append("TDENetworkWiFiSecurityConfiguration::keyType");
+	ret.append("TDENetworkWiFiSecurityConfiguration::authType");
+	ret.append("TDENetworkWiFiSecurityConfiguration::wpaVersion");
+	ret.append("TDENetworkWiFiSecurityConfiguration::cipher");
+	ret.append("TDENetworkWiFiSecurityConfiguration::wepKey0");
+	ret.append("TDENetworkWiFiSecurityConfiguration::wepKey1");
+	ret.append("TDENetworkWiFiSecurityConfiguration::wepKey2");
+	ret.append("TDENetworkWiFiSecurityConfiguration::wepKey3");
+	ret.append("TDENetworkWiFiSecurityConfiguration::wepKeyFlags");
+	ret.append("TDENetworkWiFiSecurityConfiguration::wepKeyIndex");
+	ret.append("TDENetworkWiFiSecurityConfiguration::wepKeyType");
+	ret.append("TDENetworkWiFiSecurityConfiguration::allowedPairWiseCiphers");
+	ret.append("TDENetworkWiFiSecurityConfiguration::allowedGroupWiseCiphers");
+	ret.append("TDENetworkWiFiSecurityConfiguration::psk");
+	ret.append("TDENetworkWiFiSecurityConfiguration::pskFlags");
+	ret.append("TDENetworkWiFiSecurityConfiguration::leapUsername");
+	ret.append("TDENetworkWiFiSecurityConfiguration::leapPassword");
+	ret.append("TDENetworkWiFiSecurityConfiguration::leapPasswordFlags");
+
+	ret.append("TDENetworkIPConfiguration::valid");
+	ret.append("TDENetworkIPConfiguration::connectionFlags");
+	ret.append("TDENetworkIPConfiguration::ipConfigurations");
+	ret.append("TDENetworkIPConfiguration::routeConfigurations");
+	ret.append("TDENetworkIPConfiguration::broadcast");
+	ret.append("TDENetworkIPConfiguration::destination");
+	ret.append("TDENetworkIPConfiguration::resolvers");
+	ret.append("TDENetworkIPConfiguration::searchDomains");
+	ret.append("TDENetworkIPConfiguration::dhcpClientIdentifier");
+
+	ret.append("TDENetworkConnection::UUID");
+	ret.append("TDENetworkConnection::friendlyName");
+	ret.append("TDENetworkConnection::ipConfig");
+	ret.append("TDENetworkConnection::lockedHWAddress");
+	ret.append("TDENetworkConnection::manualHWAddress");
+	ret.append("TDENetworkConnection::readOnly");
+	ret.append("TDENetworkConnection::autoConnect");
+	ret.append("TDENetworkConnection::fullDuplex");
+	ret.append("TDENetworkConnection::requireIPV4");
+	ret.append("TDENetworkConnection::requireIPV6");
+	ret.append("TDENetworkConnection::mtu");
+	ret.append("TDENetworkConnection::eapConfig");
+	ret.append("TDENetworkConnection::pppConfig");
+	ret.append("TDENetworkConnection::pppoeConfig");
+	ret.append("TDENetworkConnection::serialConfig");
+	ret.append("TDENetworkConnection::authorizedUsers");
+	ret.append("TDENetworkConnection::masterConnectionUUID");
+	ret.append("TDENetworkConnection::slaveType");
+	ret.append("TDENetworkConnection::lastKnownConnection");
+
+	ret.append("TDEWiFiConnection::SSID");
+	ret.append("TDEWiFiConnection::operatingMode");
+	ret.append("TDEWiFiConnection::bandRestriction");
+	ret.append("TDEWiFiConnection::channelRestriction");
+	ret.append("TDEWiFiConnection::bitRateRestriction");
+	ret.append("TDEWiFiConnection::powerRestriction");
+	ret.append("TDEWiFiConnection::accessPointRestriction");
+	ret.append("TDEWiFiConnection::blacklistedBSSIDs");
+	ret.append("TDEWiFiConnection::heardBSSIDs");
+	ret.append("TDEWiFiConnection::isHiddenNetwork");
+	ret.append("TDEWiFiConnection::securityRequired");
+	ret.append("TDEWiFiConnection::securitySettings");
+
+	ret.append("TDEWiredInfinibandConnection::transportMode");
+
+	ret.append("TDEVPNConnection::vpnPluginID");
+	ret.append("TDEVPNConnection::lockedUserName");
+	ret.append("TDEVPNConnection::pluginData");
+	ret.append("TDEVPNConnection::secretsValid");
+	ret.append("TDEVPNConnection::pluginSecrets");
+
+	ret.append("TDEWiMaxConnection::networkServiceProvider");
+
+	ret.append("TDEVLANConnection::kernelName");
+	ret.append("TDEVLANConnection::parentConnectionUUID");
+	ret.append("TDEVLANConnection::vlanID");
+	ret.append("TDEVLANConnection::vlanFlags");
+	ret.append("TDEVLANConnection::ingressPriorityMap");
+	ret.append("TDEVLANConnection::egressPriorityMap");
+
+	ret.append("TDEOLPCMeshConnection::SSID");
+	ret.append("TDEOLPCMeshConnection::channel");
+	ret.append("TDEOLPCMeshConnection::anycastDHCPHWAddress");
+
+	ret.append("TDEBluetoothConnection::type");
+
+	ret.append("TDEModemConnection::type");
+	ret.append("TDEModemConnection::cdmaConfig");
+	ret.append("TDEModemConnection::gsmConfig");
+
+	ret.append("TDEWiredInfinibandConnection::transportMode");
+
+	return ret;
+}
+
 TDENetworkWiFiAPInfo* TDENetworkConnectionManager_BackendNM::getAccessPointDetails(TQString dbusPath) {
 	if (dbusPath == "") {
 		return NULL;

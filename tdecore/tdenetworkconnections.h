@@ -1066,6 +1066,13 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		virtual TDENetworkConnectionStatus::TDENetworkConnectionStatus deactivateConnection(TQString uuid) = 0;
 
 		/**
+		* @return a TQStringList object containing all valid network settings
+		* Each string has the form "TDENetworkConfigObject::member"
+		* If a setting is not in this list, it is not supported by the backend in use
+		*/
+		virtual TQStringList validSettings() = 0;
+
+		/**
 		* @return a TDENetworkHWNeighborList object containing the result of a site survey;
 		* i.e. all nearby access points or devices. This function only returns valid information
 		* if the underlying network device supports site surveys.
@@ -1341,6 +1348,13 @@ class TDECORE_EXPORT TDEGlobalNetworkManager : public TQObject
 		* The client application should poll for status updates using checkConnectionStatus()
 		*/
 		virtual TDENetworkConnectionStatus::TDENetworkConnectionStatus deactivateConnection(TQString uuid);
+
+		/**
+		* @return a TQStringList object containing all valid network settings
+		* Each string has the form "TDENetworkConfigObject::member"
+		* If a setting is not in this list, it is not supported by the backend in use
+		*/
+		virtual TQStringList validSettings();
 
 		/**
 		* @return a TDENetworkHWNeighborList object containing the result of a site survey;

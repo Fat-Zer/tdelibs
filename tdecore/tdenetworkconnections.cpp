@@ -824,10 +824,10 @@ void TDENetworkConnectionManager::internalNetworkConnectionStateChanged(TDENetwo
 }
 
 void TDENetworkConnectionManager::internalNetworkDeviceStateChanged(TDENetworkConnectionStatus::TDENetworkConnectionStatus newState, TQString hwAddress) {
-	if (!m_prevDeviceStatus.contains("hwAddress")) {
+	if (!m_prevDeviceStatus.contains(hwAddress)) {
 		m_prevDeviceStatus[hwAddress] = TDENetworkConnectionStatus::Invalid;
 	}
-	emit(networkDeviceStateChanged(m_prevDeviceStatus[hwAddress], newState, hwAddress));
+	emit(networkDeviceStateChanged(newState, m_prevDeviceStatus[hwAddress], hwAddress));
 	m_prevDeviceStatus[hwAddress] = newState;
 }
 
@@ -911,6 +911,11 @@ TDENetworkConnectionStatus::TDENetworkConnectionStatus TDEGlobalNetworkManager::
 	return m_internalConnectionManager->deactivateConnection(uuid);
 }
 
+TQStringList TDEGlobalNetworkManager::validSettings() {
+	if (!m_internalConnectionManager) return TQStringList();
+	return m_internalConnectionManager->validSettings();
+}
+
 TDENetworkHWNeighborList* TDEGlobalNetworkManager::siteSurvey() {
 	if (!m_internalConnectionManager) return NULL;
 	return m_internalConnectionManager->siteSurvey();
@@ -947,7 +952,7 @@ bool TDEGlobalNetworkManager::wiFiEnabled() {
 }
 
 TQStringList TDEGlobalNetworkManager::defaultNetworkDevices() {
-	if (!m_internalConnectionManager) return NULL;
+	if (!m_internalConnectionManager) return TQStringList();
 	return m_internalConnectionManager->defaultNetworkDevices();
 }
 
