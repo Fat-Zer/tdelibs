@@ -839,6 +839,10 @@ void TDENetworkConnectionManager::internalNetworkDeviceEvent(TDENetworkDeviceEve
 	emit(networkDeviceEvent(event));
 }
 
+void TDENetworkConnectionManager::internalVpnEvent(TDENetworkVPNEventType::TDENetworkVPNEventType event, TQString message) {
+	emit(vpnEvent(event, message));
+}
+
 void TDENetworkConnectionManager::internalNetworkManagementEvent(TDENetworkGlobalEventType::TDENetworkGlobalEventType event) {
 	emit(networkManagementEvent(event));
 }
@@ -853,6 +857,7 @@ TDEGlobalNetworkManager::TDEGlobalNetworkManager() : m_internalConnectionManager
 #endif // WITH_NETWORK_MANAGER_BACKEND
 	if (m_internalConnectionManager) {
 		connect(m_internalConnectionManager, SIGNAL(networkConnectionStateChanged(TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags, TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags)), this, SIGNAL(networkConnectionStateChanged(TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags, TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags)));
+		connect(m_internalConnectionManager, SIGNAL(vpnEvent(TDENetworkVPNEventType::TDENetworkVPNEventType, TQString)), this, SIGNAL(vpnEvent(TDENetworkVPNEventType::TDENetworkVPNEventType, TQString)));
 		connect(m_internalConnectionManager, SIGNAL(networkManagementEvent(TDENetworkGlobalEventType::TDENetworkGlobalEventType)), this, SIGNAL(networkManagementEvent(TDENetworkGlobalEventType::TDENetworkGlobalEventType)));
 	}
 }

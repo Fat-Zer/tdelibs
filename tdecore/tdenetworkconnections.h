@@ -201,6 +201,15 @@ namespace TDENetworkGlobalEventType {
 	};
 };
 
+namespace TDENetworkVPNEventType {
+	enum TDENetworkVPNEventType {
+		LoginBanner,
+		Failure,
+		Other,
+		Last = Other
+	};
+};
+
 namespace TDENetworkDeviceEventType {
 	enum TDENetworkDeviceEventType {
 		BitRateChanged,
@@ -231,7 +240,17 @@ namespace TDENetworkGlobalManagerFlags {
 		SiteLocalAccess		= 0x00000020,
 		GlobalAccess		= 0x00000040,
 		Sleeping		= 0x00000080,
-		BackendUnavailable	= 0x00000100
+		BackendUnavailable	= 0x00000100,
+		VPNUnknown		= 0x00000200,
+		VPNEstablishingLink	= 0x00000400,
+		VPNNeedAuthorization	= 0x00000800,
+		VPNConfiguringProtocols	= 0x00001000,
+		VPNVerifyingProtocols	= 0x00002000,
+		VPNConnected		= 0x00004000,
+		VPNFailed		= 0x00008000,
+		VPNDisconnected		= 0x00010000,
+		GlobalMask		= 0x000001ff,
+		VPNMask			= 0x0001fe00
 	};
 
 	CREATE_FLAG_BITWISE_MANIPULATION_FUNCTIONS(TDENetworkGlobalManagerFlags)
@@ -1171,6 +1190,13 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		void networkDeviceEvent(TDENetworkDeviceEventType::TDENetworkDeviceEventType event);
 
 		/**
+		* Emitted whenever a VPN-related event occurs
+		* The event type that caused the signal is available in @param event
+		* @param message contains additional information if available
+		*/
+		void vpnEvent(TDENetworkVPNEventType::TDENetworkVPNEventType event, TQString message);
+
+		/**
 		* Emitted whenever a global network management event occurs
 		* The event type that caused the signal is available in @param event
 		*/
@@ -1270,6 +1296,12 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		* It emits the appropriate signals to notify client applications of the network device event
 		*/
 		void internalNetworkDeviceEvent(TDENetworkDeviceEventType::TDENetworkDeviceEventType event);
+
+		/**
+		* @internal This method must be called by the network backend whenever a VPN event occurs
+		* It emits the appropriate signals to notify client applications of the network device event
+		*/
+		void internalVpnEvent(TDENetworkVPNEventType::TDENetworkVPNEventType event, TQString message);
 
 		/**
 		* @internal This method must be called by the network backend whenever it changes state
@@ -1463,6 +1495,13 @@ class TDECORE_EXPORT TDEGlobalNetworkManager : public TQObject
 		* The event type that caused the signal is available in @param event
 		*/
 		void accessPointStatusChanged(TDEMACAddress BSSID, TDENetworkAPEventType::TDENetworkAPEventType event);
+
+		/**
+		* Emitted whenever a VPN-related event occurs
+		* The event type that caused the signal is available in @param event
+		* @param message contains additional information if available
+		*/
+		void vpnEvent(TDENetworkVPNEventType::TDENetworkVPNEventType event, TQString message);
 
 		/**
 		* Emitted whenever a global network management event occurs

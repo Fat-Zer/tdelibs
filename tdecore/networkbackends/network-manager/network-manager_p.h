@@ -54,6 +54,7 @@
 #include "olpcmeshproxy.h"
 #include "activeconnectionproxy.h"
 #include "accesspointproxy.h"
+#include "vpnpluginproxy.h"
 
 typedef TQT_DBusDataMap<TQString> TQT_DBusTQStringDataMap;
 typedef TQValueList<TQT_DBusData> TQT_DBusDataValueList;
@@ -79,6 +80,7 @@ class TDENetworkConnectionManager_BackendNMPrivate : public TQObject
 		DBus::SettingsInterface* m_networkManagerSettings;
 		DBus::DeviceProxy* m_networkDeviceProxy;
 		DBus::WiFiDeviceProxy* m_wiFiDeviceProxy;
+		DBus::VPNPluginProxy* m_vpnProxy;
 		NMAsyncCallIDMap nmConnectionSettingsAsyncCallWaiting;
 		NMAsyncSettingsResponseMap nmConnectionSettingsAsyncSettingsResponse;
 		NMAddConnectionAsyncResponseMap nmAddConnectionAsyncResponse;
@@ -89,6 +91,9 @@ class TDENetworkConnectionManager_BackendNMPrivate : public TQObject
 		void processAddConnectionAsyncReply(int, const TQT_DBusObjectPath&);
 
 		void internalProcessGlobalStateChanged(TQ_UINT32 state);
+		void internalProcessVPNStateChanged(TQ_UINT32 state);
+		void internalProcessVPNLoginBanner(const TQString& banner);
+		void internalProcessVPNFailure(TQ_UINT32 reason);
 		void internalProcessDeviceStateChanged(TQ_UINT32 newState, TQ_UINT32 oldState, TQ_UINT32 reason);
 		void internalProcessWiFiAccessPointAdded(const TQT_DBusObjectPath&);
 		void internalProcessWiFiAccessPointRemoved(const TQT_DBusObjectPath&);

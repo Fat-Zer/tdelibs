@@ -160,6 +160,42 @@ TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags nmGlobalStateToTDEGlo
 	return ret;
 }
 
+TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags nmVPNStateToTDEGlobalState(TQ_UINT32 nmType) {
+	TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags ret = TDENetworkGlobalManagerFlags::Unknown;
+
+	if (nmType == NM_VPN_STATE_UNKNOWN) {
+		ret |= TDENetworkGlobalManagerFlags::VPNUnknown;
+	}
+	else if (nmType == NM_VPN_STATE_PREPARE) {
+		ret |= TDENetworkGlobalManagerFlags::VPNDisconnected;
+		ret |= TDENetworkGlobalManagerFlags::VPNEstablishingLink;
+	}
+	else if (nmType == NM_VPN_STATE_NEED_AUTH) {
+		ret |= TDENetworkGlobalManagerFlags::VPNDisconnected;
+		ret |= TDENetworkGlobalManagerFlags::VPNNeedAuthorization;
+	}
+	else if (nmType == NM_VPN_STATE_CONNECT) {
+		ret |= TDENetworkGlobalManagerFlags::VPNDisconnected;
+		ret |= TDENetworkGlobalManagerFlags::VPNConfiguringProtocols;
+	}
+	else if (nmType == NM_VPN_STATE_IP_CONFIG_GET) {
+		ret |= TDENetworkGlobalManagerFlags::VPNDisconnected;
+		ret |= TDENetworkGlobalManagerFlags::VPNVerifyingProtocols;
+	}
+	else if (nmType == NM_VPN_STATE_ACTIVATED) {
+		ret |= TDENetworkGlobalManagerFlags::VPNConnected;
+	}
+	else if (nmType == NM_VPN_STATE_FAILED) {
+		ret |= TDENetworkGlobalManagerFlags::VPNDisconnected;
+		ret |= TDENetworkGlobalManagerFlags::VPNFailed;
+	}
+	else if (nmType == NM_VPN_STATE_DISCONNECTED) {
+		ret |= TDENetworkGlobalManagerFlags::VPNDisconnected;
+	}
+
+	return ret;
+}
+
 TDENetworkConnectionStatus::TDENetworkConnectionStatus nmDeviceStateToTDEDeviceState(TQ_UINT32 nmType) {
 	TDENetworkConnectionStatus::TDENetworkConnectionStatus ret = TDENetworkConnectionStatus::None;
 
@@ -1282,6 +1318,8 @@ TDENetworkConnectionManager_BackendNM::TDENetworkConnectionManager_BackendNM(TQS
 	d->m_networkManagerProxy->setConnection(TQT_DBusConnection::systemBus());
 	d->m_networkManagerSettings = new DBus::SettingsInterface(NM_DBUS_SERVICE, NM_DBUS_PATH_SETTINGS);
 	d->m_networkManagerSettings->setConnection(TQT_DBusConnection::systemBus());
+	d->m_vpnProxy = new DBus::VPNPluginProxy(NM_VPN_DBUS_PLUGIN_SERVICE, NM_VPN_DBUS_PLUGIN_PATH);
+	d->m_vpnProxy->setConnection(TQT_DBusConnection::systemBus());
 
 	TQString dbusDeviceString = deviceInterfaceString(macAddress);
 	if (dbusDeviceString != "") {
@@ -1295,6 +1333,13 @@ TDENetworkConnectionManager_BackendNM::TDENetworkConnectionManager_BackendNM(TQS
 
 	// Connect global signals
 	connect(d->m_networkManagerProxy, SIGNAL(StateChanged(TQ_UINT32)), d, SLOT(internalProcessGlobalStateChanged(TQ_UINT32)));
+
+	// Connect VPN signals
+	if (d->m_vpnProxy) {
+		connect(d->m_vpnProxy, SIGNAL(StateChanged(TQ_UINT32)), d, SLOT(internalProcessVPNStateChanged(TQ_UINT32)));
+		connect(d->m_vpnProxy, SIGNAL(LoginBanner(const TQString&)), d, SLOT(internalProcessVPNLoginBanner(const TQString&)));
+		connect(d->m_vpnProxy, SIGNAL(Failure(TQ_UINT32)), d, SLOT(internalProcessVPNFailure(TQ_UINT32)));
+	}
 
 	// Connect local signals
 	if (d->m_networkDeviceProxy) {
@@ -1330,7 +1375,21 @@ TDENetworkConnectionManager_BackendNM::~TDENetworkConnectionManager_BackendNM() 
 }
 
 void TDENetworkConnectionManager_BackendNMPrivate::internalProcessGlobalStateChanged(TQ_UINT32 state) {
-	m_parent->internalNetworkConnectionStateChanged(nmGlobalStateToTDEGlobalState(state));
+	m_parent->internalNetworkConnectionStateChanged(m_parent->backendStatus());
+}
+
+void TDENetworkConnectionManager_BackendNMPrivate::internalProcessVPNStateChanged(TQ_UINT32 state) {
+	m_parent->internalNetworkConnectionStateChanged(m_parent->backendStatus());
+}
+
+void TDENetworkConnectionManager_BackendNMPrivate::internalProcessVPNLoginBanner(const TQString& banner) {
+	m_parent->internalVpnEvent(TDENetworkVPNEventType::LoginBanner, banner);
+}
+
+void TDENetworkConnectionManager_BackendNMPrivate::internalProcessVPNFailure(TQ_UINT32 reason) {
+	// FIXME
+	// This should provide a plain-text interpretation of the NetworkManager-specific error code
+	m_parent->internalVpnEvent(TDENetworkVPNEventType::Failure, TQString("%1").arg(reason));
 }
 
 void TDENetworkConnectionManager_BackendNMPrivate::internalProcessDeviceStateChanged(TQ_UINT32 newState, TQ_UINT32 oldState, TQ_UINT32 reason) {
@@ -1496,7 +1555,20 @@ TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags TDENetworkConnectionM
 			return TDENetworkGlobalManagerFlags::BackendUnavailable;
 		}
 		else {
-			return nmGlobalStateToTDEGlobalState(ret);
+			TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags globalFlags = nmGlobalStateToTDEGlobalState(ret);
+			TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags vpnFlags = TDENetworkGlobalManagerFlags::Unknown;
+			if (d->m_vpnProxy) {
+				ret = d->m_vpnProxy->getState(error);
+				if (error.isValid()) {
+					// Error!
+					PRINT_ERROR(error.name())
+					vpnFlags = TDENetworkGlobalManagerFlags::VPNUnknown;
+				}
+				else {
+					vpnFlags = nmVPNStateToTDEGlobalState(ret);
+				}
+			}
+			return globalFlags | vpnFlags;
 		}
 	}
 	else {
@@ -5032,7 +5104,7 @@ TQStringList TDENetworkConnectionManager_BackendNM::defaultNetworkDevices() {
 	}
 }
 
-TDENetworkConnectionManager_BackendNMPrivate::TDENetworkConnectionManager_BackendNMPrivate(TDENetworkConnectionManager_BackendNM* parent) : m_networkManagerProxy(NULL), m_networkManagerSettings(NULL), m_networkDeviceProxy(NULL), m_wiFiDeviceProxy(NULL), m_parent(parent) {
+TDENetworkConnectionManager_BackendNMPrivate::TDENetworkConnectionManager_BackendNMPrivate(TDENetworkConnectionManager_BackendNM* parent) : m_networkManagerProxy(NULL), m_networkManagerSettings(NULL), m_networkDeviceProxy(NULL), m_wiFiDeviceProxy(NULL), m_vpnProxy(NULL), m_parent(parent) {
 	//
 }
 

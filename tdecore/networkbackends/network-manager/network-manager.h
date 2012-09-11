@@ -26,10 +26,12 @@
 #define	NM_DBUS_PATH				"/org/freedesktop/NetworkManager"
 #define NM_DBUS_PATH_SETTINGS			"/org/freedesktop/NetworkManager/Settings"
 #define NM_DBUS_PATH_SETTINGS_CONNECTION	"/org/freedesktop/NetworkManager/Settings/Connection"
+#define NM_VPN_DBUS_PLUGIN_PATH			"/org/freedesktop/NetworkManager/VPN/Plugin"
 
 #define	NM_DBUS_SERVICE				"org.freedesktop.NetworkManager"
 #define NM_DBUS_SETTINGS_SERVICE		"org.freedesktop.NetworkManager.Settings"
 #define NM_DBUS_SETTINGS_CONNECTION_SERVICE	"org.freedesktop.NetworkManager.Settings.Connection"
+#define NM_VPN_DBUS_PLUGIN_SERVICE		"org.freedesktop.NetworkManager.VPN.Plugin"
 //====================================================================================================
 
 //====================================================================================================
@@ -71,6 +73,15 @@
 #define NM_DEVICE_STATE_ACTIVATED	100
 #define NM_DEVICE_STATE_DEACTIVATING	110
 #define NM_DEVICE_STATE_FAILED		120
+//====================================================================================================
+#define NM_VPN_STATE_UNKNOWN		0
+#define NM_VPN_STATE_PREPARE		1
+#define NM_VPN_STATE_NEED_AUTH		2
+#define NM_VPN_STATE_CONNECT		3
+#define NM_VPN_STATE_IP_CONFIG_GET	4
+#define NM_VPN_STATE_ACTIVATED		5
+#define NM_VPN_STATE_FAILED		6
+#define NM_VPN_STATE_DISCONNECTED	7
 //====================================================================================================
 #define NM_DEVICE_CAP_NONE		0
 #define NM_DEVICE_CAP_NM_SUPPORTED	1
