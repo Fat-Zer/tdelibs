@@ -2099,19 +2099,22 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 									}
 									else if (outerKeyValue.lower() == "vpn") {
 										if (keyValue.lower() == "service-type") {
-											vpnConnection->vpnPluginID = dataValue2.toString();
+											TQString plugin = dataValue2.toString();
+											plugin.replace("org.freedesktop.NetworkManager.", "");
+											vpnConnection->vpnPluginID = plugin;
 										}
 										else if (keyValue.lower() == "user-name") {
 											vpnConnection->lockedUserName = dataValue2.toString();
 										}
 										else if (keyValue.lower() == "data") {
+											vpnConnection->pluginData.clear();
 											TQT_DBusTQStringDataMap nestedConnectionSettingsMap = dataValue2.toStringKeyMap();
 											TQT_DBusTQStringDataMap::const_iterator it4;
 											for (it4 = nestedConnectionSettingsMap.begin(); it4 != nestedConnectionSettingsMap.end(); ++it4) {
 												TQString keyValue4 = it4.key();
 												TQT_DBusData dataValue4 = it4.data();
 												if (dataValue4.type() == TQT_DBusData::String) {
-													vpnConnection->pluginData[keyValue] = dataValue4.toString();
+													vpnConnection->pluginData[keyValue4] = dataValue4.toString();
 												}
 											}
 										}
@@ -2871,10 +2874,11 @@ bool TDENetworkConnectionManager_BackendNM::loadConnectionSecretsForGroup(TQStri
 									TQT_DBusTQStringDataMap nestedConnectionSettingsMap = dataValue2.toStringKeyMap();
 									TQT_DBusTQStringDataMap::const_iterator it4;
 									for (it3 = nestedConnectionSettingsMap.begin(); it4 != nestedConnectionSettingsMap.end(); ++it4) {
+										vpnConnection->pluginSecrets.clear();
 										TQString keyValue4 = it4.key();
 										TQT_DBusData dataValue4 = it4.data();
 										if (dataValue4.type() == TQT_DBusData::String) {
-											vpnConnection->pluginSecrets[keyValue] = dataValue4.toString();
+											vpnConnection->pluginSecrets[keyValue4] = dataValue4.toString();
 										}
 									}
 									vpnConnection->secretsValid = true;
@@ -3569,7 +3573,13 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 		if (vpnConnection) {
 			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
 			{
-				UPDATE_STRING_SETTING_IF_VALID(vpnConnection->vpnPluginID, "service-type", settingsMap)
+				{
+					TQString pluginService = vpnConnection->vpnPluginID;
+					if (pluginService != "") {
+						pluginService = "org.freedesktop.NetworkManager." + pluginService;
+					}
+					UPDATE_STRING_SETTING_IF_VALID(pluginService, "service-type", settingsMap)
+				}
 				UPDATE_STRING_SETTING_IF_VALID(vpnConnection->lockedUserName, "user-name", settingsMap)
 				{
 					TQMap<TQString, TQT_DBusData> nestedConnectionSettingsMap;
@@ -3577,7 +3587,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 					for (it = vpnConnection->pluginData.begin(); it != vpnConnection->pluginData.end(); ++it) {
 						nestedConnectionSettingsMap[it.key()] = TQT_DBusData::fromString(it.data());
 					}
-					if (nestedConnectionSettingsMap.count() > 0) settingsMap["data"] = TQT_DBusData::fromStringKeyMap(TQT_DBusDataMap<TQString>(nestedConnectionSettingsMap));
+					if (nestedConnectionSettingsMap.count() > 0) settingsMap["data"] = convertDBUSDataToVariantData(TQT_DBusData::fromStringKeyMap(TQT_DBusDataMap<TQString>(nestedConnectionSettingsMap)));
 					else settingsMap.remove("data");
 				}
 				if (vpnConnection->secretsValid) {
@@ -3586,7 +3596,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 					for (it = vpnConnection->pluginSecrets.begin(); it != vpnConnection->pluginSecrets.end(); ++it) {
 						nestedConnectionSettingsMap[it.key()] = TQT_DBusData::fromString(it.data());
 					}
-					if (nestedConnectionSettingsMap.count() > 0) settingsMap["secrets"] = TQT_DBusData::fromStringKeyMap(TQT_DBusDataMap<TQString>(nestedConnectionSettingsMap));
+					if (nestedConnectionSettingsMap.count() > 0) settingsMap["secrets"] = convertDBUSDataToVariantData(TQT_DBusData::fromStringKeyMap(TQT_DBusDataMap<TQString>(nestedConnectionSettingsMap)));
 					else settingsMap.remove("secrets");
 				}
 			}
@@ -3766,7 +3776,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 
 		groupValid = false;
 		dbusData = outerMap["bluetooth"];
-		if (olpcMeshConnection) {
+		if (bluetoothConnection) {
 			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
 			{
 				if (connection->lockedHWAddress.isValid()) {
