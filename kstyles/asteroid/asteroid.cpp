@@ -225,13 +225,12 @@ void AsteroidStyle::drawKStylePrimitive(KStylePrimitive ksp,
 
 			const TQSlider* slider = (const TQSlider*)w;
 			int x, y, x2, y2, xmin, xmax, ymin, ymax, v, h;
-			int pcenter, gcenter;
+			int pcenter;
 			r.coords(&xmin, &ymin, &xmax, &ymax);
 			r.rect(&x, &y, &v, &h);
 			bool horizontal = slider->orientation() ==Qt::Horizontal;
 
 			if (horizontal) {
-				gcenter = h / 2;
 				x  = v / 5 + xmin;
 				x2 = v * 4 / 5 + xmin;
 				if (((x2 - x) % 2)) x2--;
@@ -257,9 +256,8 @@ void AsteroidStyle::drawKStylePrimitive(KStylePrimitive ksp,
 				p->drawLine(x2, y, x2, y2);
 				p->drawLine(x2, y2, pcenter+1, ymax);
 
-			} else {
-
-				gcenter = v / 2;
+			}
+			else {
 				y  = h / 5 + ymin;
 				y2 = h * 4 / 5 + ymin;
 				if (((y2 - y) % 2)) y2--;
@@ -874,7 +872,8 @@ void AsteroidStyle::drawPrimitive(TQ_PrimitiveElement pe,
 			break;
 		}
 
-
+		case PE_SpinWidgetUp:
+		case PE_SpinWidgetDown:
 		case PE_HeaderArrow:
 		case PE_ArrowUp:
 		case PE_ArrowDown:
@@ -884,11 +883,13 @@ void AsteroidStyle::drawPrimitive(TQ_PrimitiveElement pe,
 
 			switch (pe) {
 
+				case PE_SpinWidgetUp:
 				case PE_ArrowUp: {
 					a.setPoints(7, u_arrow);
 					break;
 				}
 
+				case PE_SpinWidgetDown:
 				case PE_ArrowDown: {
 					a.setPoints(7, d_arrow);
 					break;
@@ -2118,7 +2119,7 @@ void AsteroidStyle::drawComplexControl(TQ_ComplexControl cc,
 			TQRect arrowup(x2-aw, y+2, aw, h/2-1);
 			TQRect arrowdn(x2-aw, h/2+1, aw, h/2-2);
 
-			//	Draw the frame around the text
+			// Draw the frame around the text
 			p->setPen(cg.mid());
 			p->setBrush(cg.dark());
 			p->drawRect(r);
@@ -2128,13 +2129,26 @@ void AsteroidStyle::drawComplexControl(TQ_ComplexControl cc,
 			p->setPen(cg.background());
 			p->drawLine(x2-1, y2-1, x2-1, y+2);
 			p->drawLine(x2-1, y2-1, x+1, y2-1);
-
-			//	Draw the arrow buttons
 			p->drawLine(x2-aw-1, y+2, x2-aw-1, y2-1);
-			drawPrimitive(PE_ButtonBevel, p, ceData, elementFlags, arrowup, cg, sf, o);
-			drawPrimitive(PE_ButtonBevel, p, ceData, elementFlags, arrowdn, cg, sf, o);
-			drawPrimitive(PE_SpinWidgetUp, p, ceData, elementFlags, arrowup, cg, sf, o);
-			drawPrimitive(PE_SpinWidgetDown, p, ceData, elementFlags, arrowdn, cg, sf, o);
+
+			// Draw the arrow buttons
+			SFlags upflags = Style_Default | Style_Enabled;
+			SFlags downflags = Style_Default | Style_Enabled;
+			if (sa == SC_SpinWidgetUp) {
+				upflags |= Style_On;
+				upflags |= Style_Sunken;
+				downflags |= Style_Raised;
+			}
+			else if (sa == SC_SpinWidgetDown) {
+				downflags |= Style_On;
+				downflags |= Style_Sunken;
+				upflags |= Style_Raised;
+			}
+
+			drawPrimitive(PE_ButtonBevel, p, ceData, elementFlags, arrowup, cg, upflags, o);
+			drawPrimitive(PE_ButtonBevel, p, ceData, elementFlags, arrowdn, cg, downflags, o);
+			drawPrimitive(PE_SpinWidgetUp, p, ceData, elementFlags, arrowup, cg, upflags, o);
+			drawPrimitive(PE_SpinWidgetDown, p, ceData, elementFlags, arrowdn, cg, downflags, o);
 
 			break;
 
