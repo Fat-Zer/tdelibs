@@ -2132,22 +2132,32 @@ void AsteroidStyle::drawComplexControl(TQ_ComplexControl cc,
 			p->drawLine(x2-aw-1, y+2, x2-aw-1, y2-1);
 
 			// Draw the arrow buttons
-			SFlags upflags = Style_Default | Style_Enabled;
-			SFlags downflags = Style_Default | Style_Enabled;
+			SFlags upflags = Style_Default;
+			SFlags downflags = Style_Default;
+			if (ceData.spinWidgetData.upEnabled) {
+				upflags |= Style_Enabled;
+			}
+			if (ceData.spinWidgetData.downEnabled) {
+				downflags |= Style_Enabled;
+			}
 			if (sa == SC_SpinWidgetUp) {
 				upflags |= Style_On;
 				upflags |= Style_Sunken;
 				downflags |= Style_Raised;
 			}
-			else if (sa == SC_SpinWidgetDown) {
+			if (sa == SC_SpinWidgetDown) {
 				downflags |= Style_On;
 				downflags |= Style_Sunken;
 				upflags |= Style_Raised;
 			}
 
+			p->setPen(TQt::NoPen);
 			drawPrimitive(PE_ButtonBevel, p, ceData, elementFlags, arrowup, cg, upflags, o);
+			p->setPen(TQt::NoPen);
 			drawPrimitive(PE_ButtonBevel, p, ceData, elementFlags, arrowdn, cg, downflags, o);
+			p->setPen(TQt::NoPen);
 			drawPrimitive(PE_SpinWidgetUp, p, ceData, elementFlags, arrowup, cg, upflags, o);
+			p->setPen(TQt::NoPen);
 			drawPrimitive(PE_SpinWidgetDown, p, ceData, elementFlags, arrowdn, cg, downflags, o);
 
 			break;
