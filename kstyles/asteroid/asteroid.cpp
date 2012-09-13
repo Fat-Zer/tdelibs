@@ -54,6 +54,8 @@
 #define ETCH_X_OFFSET 1
 #define ETCH_Y_OFFSET 1
 
+#define SPINBOX_BUTTON_WIDTH 12
+
 //#define POPUPMENUITEM_TEXT_ETCH_CONDITIONS ( etchtext && !enabled && !active )
 #define POPUPMENUITEM_TEXT_ETCH_CONDITIONS ( etchtext && !enabled )
 
@@ -2112,7 +2114,7 @@ void AsteroidStyle::drawComplexControl(TQ_ComplexControl cc,
 
 		case CC_SpinWidget: {
 			int x, y, x2, y2, w, h;
-			int aw = 12;  // arrow button width
+			int aw = SPINBOX_BUTTON_WIDTH;  // arrow button width
 			r.coords(&x, &y, &x2, &y2);
 			r.rect(&x, &y, &w, &h);
 
@@ -2429,6 +2431,39 @@ TQRect AsteroidStyle::querySubControlMetrics(TQ_ComplexControl cc,
 				default: {
 					return KStyle::querySubControlMetrics(cc, ceData, elementFlags, sc, o, w);
 				}
+			}
+
+			break;
+		}
+
+		case CC_SpinWidget: {
+			int fw = pixelMetric(PM_SpinBoxFrameWidth, ceData, elementFlags, w);
+			TQSize bs;
+			bs.setHeight(ceData.rect.height()/2 - fw);
+			if (bs.height() < 8) {
+				bs.setHeight(8);
+			}
+			bs.setWidth(SPINBOX_BUTTON_WIDTH);
+			bs = bs.expandedTo(TQApplication::globalStrut());
+			int y = fw;
+			int x, lx, rx;
+			x = ceData.rect.width() - y - bs.width();
+			lx = fw;
+			rx = x - fw;
+			switch ( sc ) {
+				case SC_SpinWidgetUp:
+					return TQRect(x, y, bs.width(), bs.height());
+				case SC_SpinWidgetDown:
+					return TQRect(x, y + bs.height(), bs.width(), bs.height());
+				case SC_SpinWidgetButtonField:
+					return TQRect(x, y, bs.width(), ceData.rect.height() - (2*fw));
+				case SC_SpinWidgetEditField:
+					return TQRect(lx, fw, rx, ceData.rect.height() - (2*fw));
+				case SC_SpinWidgetFrame:
+					return ceData.rect;
+				default:
+					return KStyle::querySubControlMetrics(cc, ceData, elementFlags, sc, o, w);
+					break;
 			}
 
 			break;
