@@ -992,6 +992,7 @@ void KFileDialog::init(const TQString& startDir, const TQString& filter, TQWidge
     d->locationLabel = new TQLabel(i18n("&Location:"), d->mainWidget);
     locationEdit = new KURLComboBox(KURLComboBox::Files, true,
                                     d->mainWidget, "LocationEdit");
+    locationEdit->setSizePolicy(TQSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Fixed));
     connect( locationEdit, TQT_SIGNAL( textChanged( const TQString& ) ),
              TQT_SLOT( slotLocationChanged( const TQString& )) );
 
@@ -1024,6 +1025,7 @@ void KFileDialog::init(const TQString& startDir, const TQString& filter, TQWidge
     TQWhatsThis::add(d->filterLabel, whatsThisText);
     filterWidget = new KFileFilterCombo(d->mainWidget,
                                         "KFileDialog::filterwidget");
+    filterWidget->setSizePolicy(TQSizePolicy(TQSizePolicy::Expanding, TQSizePolicy::Fixed));
     TQWhatsThis::add(filterWidget, whatsThisText);
     setFilter(filter);
     d->filterLabel->setBuddy(filterWidget);
