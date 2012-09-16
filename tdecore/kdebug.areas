@@ -520,18 +520,18 @@
 38000        karbon
 39001        kformula
 40000        kformula
-41000        krita (tiles)
-41001        krita (core) 
-41002        krita (registry)
-41003        krita (tools)
-41004        krita (color management system)
-41005        krita (filters)
-41006        krita (plugins)
-41007        krita (user interface)
-41008        krita (file handling)
-41009        krita (math)
-41010        krita (render)
-41011        krita (scripting)
+41000        chalk (tiles)
+41001        chalk (core) 
+41002        chalk (registry)
+41003        chalk (tools)
+41004        chalk (color management system)
+41005        chalk (filters)
+41006        chalk (plugins)
+41007        chalk (user interface)
+41008        chalk (file handling)
+41009        chalk (math)
+41010        chalk (render)
+41011        chalk (scripting)
 42000        kplato
 43000        kivio
 44000        KexiDB
