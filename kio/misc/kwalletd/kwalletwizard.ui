@@ -499,13 +499,13 @@
     </connection>
     <connection>
         <sender>_pass1</sender>
-        <signal>textChanged(const QString&amp;)</signal>
+        <signal>textChanged(const TQString&amp;)</signal>
         <receiver>KWalletWizard</receiver>
         <slot>passwordPageUpdate()</slot>
     </connection>
     <connection>
         <sender>_pass2</sender>
-        <signal>textChanged(const QString&amp;)</signal>
+        <signal>textChanged(const TQString&amp;)</signal>
         <receiver>KWalletWizard</receiver>
         <slot>passwordPageUpdate()</slot>
     </connection>
