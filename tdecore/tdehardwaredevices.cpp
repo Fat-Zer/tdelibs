@@ -2133,22 +2133,24 @@ void TDEHardwareDevices::processModifiedCPUs() {
 		}
 
 		// Update CPU information structure
-		if (cdevice->governor() != scalinggovernor) modified = true;
-		cdevice->internalSetGovernor(scalinggovernor);
-		if (cdevice->scalingDriver() != scalingdriver) modified = true;
-		cdevice->internalSetScalingDriver(scalingdriver);
-		if (cdevice->minFrequency() != minfrequency) modified = true;
-		cdevice->internalSetMinFrequency(minfrequency);
-		if (cdevice->maxFrequency() != maxfrequency) modified = true;
-		cdevice->internalSetMaxFrequency(maxfrequency);
-		if (cdevice->transitionLatency() != trlatency) modified = true;
-		cdevice->internalSetTransitionLatency(trlatency);
-		if (cdevice->dependentProcessors().join(" ") != affectedcpulist.join(" ")) modified = true;
-		cdevice->internalSetDependentProcessors(affectedcpulist);
-		if (cdevice->availableFrequencies().join(" ") != frequencylist.join(" ")) modified = true;
-		cdevice->internalSetAvailableFrequencies(frequencylist);
-		if (cdevice->availableGovernors().join(" ") != governorlist.join(" ")) modified = true;
-		cdevice->internalSetAvailableGovernors(governorlist);
+		if (cdevice) {
+			if (cdevice->governor() != scalinggovernor) modified = true;
+			cdevice->internalSetGovernor(scalinggovernor);
+			if (cdevice->scalingDriver() != scalingdriver) modified = true;
+			cdevice->internalSetScalingDriver(scalingdriver);
+			if (cdevice->minFrequency() != minfrequency) modified = true;
+			cdevice->internalSetMinFrequency(minfrequency);
+			if (cdevice->maxFrequency() != maxfrequency) modified = true;
+			cdevice->internalSetMaxFrequency(maxfrequency);
+			if (cdevice->transitionLatency() != trlatency) modified = true;
+			cdevice->internalSetTransitionLatency(trlatency);
+			if (cdevice->dependentProcessors().join(" ") != affectedcpulist.join(" ")) modified = true;
+			cdevice->internalSetDependentProcessors(affectedcpulist);
+			if (cdevice->availableFrequencies().join(" ") != frequencylist.join(" ")) modified = true;
+			cdevice->internalSetAvailableFrequencies(frequencylist);
+			if (cdevice->availableGovernors().join(" ") != governorlist.join(" ")) modified = true;
+			cdevice->internalSetAvailableGovernors(governorlist);
+		}
 	}
 
 	if (modified) {
