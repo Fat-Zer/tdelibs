@@ -3190,6 +3190,10 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		else if (devicesubsystem == "usb-serial") {
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Serial);
 		}
+		else if ((devicesubsystem == "spi_master")
+			|| (devicesubsystem == "spidev")) {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Serial);
+		}
 		else if (devicesubsystem == "thermal") {
 			// FIXME
 			// Figure out a way to differentiate between ThermalControl (fans and coolers) and ThermalSensor types
@@ -3263,6 +3267,12 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			else {
 				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
 			}
+		}
+		if (devicesubsystem == "mmc_host") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::StorageController);
+		}
+		if (devicesubsystem == "mmc") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
 		}
 		if ((devicesubsystem == "event_source")
 			|| (devicesubsystem == "rtc")) {
@@ -3393,16 +3403,39 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		// Last ditch attempt at classification
 		// Likely inaccurate and sweeping
 		if ((devicesubsystem == "usb")
+			|| (devicesubsystem == "usb_device")
 			|| (devicesubsystem == "usbmon")) {
+				// Get USB interface class for further classification
+				int usbInterfaceClass = -1;
+				{
+					TQFile ifaceprotofile(current_path + "/bInterfaceClass");
+					if (ifaceprotofile.open(IO_ReadOnly)) {
+						TQTextStream stream( &ifaceprotofile );
+						usbInterfaceClass = stream.readLine().toUInt();
+						ifaceprotofile.close();
+					}
+				}
+				// Get USB interface subclass for further classification
+				int usbInterfaceSubClass = -1;
+				{
+					TQFile ifaceprotofile(current_path + "/bInterfaceSubClass");
+					if (ifaceprotofile.open(IO_ReadOnly)) {
+						TQTextStream stream( &ifaceprotofile );
+						usbInterfaceSubClass = stream.readLine().toUInt();
+						ifaceprotofile.close();
+					}
+				}
 				// Get USB interface protocol for further classification
 				int usbInterfaceProtocol = -1;
-				TQFile ifaceprotofile(current_path + "/bInterfaceProtocol");
-				if (ifaceprotofile.open(IO_ReadOnly)) {
-					TQTextStream stream( &ifaceprotofile );
-					usbInterfaceProtocol = stream.readLine().toUInt();
-					ifaceprotofile.close();
+				{
+					TQFile ifaceprotofile(current_path + "/bInterfaceProtocol");
+					if (ifaceprotofile.open(IO_ReadOnly)) {
+						TQTextStream stream( &ifaceprotofile );
+						usbInterfaceProtocol = stream.readLine().toUInt();
+						ifaceprotofile.close();
+					}
 				}
-				if (usbInterfaceProtocol == 1) {
+				if ((usbInterfaceClass == 6) && (usbInterfaceSubClass == 1) && (usbInterfaceProtocol == 1)) {
 					// PictBridge
 					if (!device) {
 						device = new TDEStorageDevice(TDEGenericDeviceType::Disk);
