@@ -2012,6 +2012,49 @@ void TDEHardwareDevices::processModifiedCPUs() {
 		cpufile.close();
 	}
 
+	// Ensure "processor" is the first entry in each block and determine which cpuinfo type is in use
+	bool cpuinfo_format_x86 = true;
+	bool cpuinfo_format_arm = false;
+
+	TQString curline1;
+	TQString curline2;
+	int blockNumber = 0;
+	TQStringList::Iterator blockBegin = m_cpuInfo.begin();
+	for (TQStringList::Iterator cpuit1 = m_cpuInfo.begin(); cpuit1 != m_cpuInfo.end(); ++cpuit1) {
+		curline1 = *cpuit1;
+		curline1 = curline1.stripWhiteSpace();
+		if (!(*blockBegin).startsWith("processor")) {
+			bool found = false;
+			TQStringList::Iterator cpuit2;
+			for (cpuit2 = blockBegin; cpuit2 != m_cpuInfo.end(); ++cpuit2) {
+				curline2 = *cpuit2;
+				curline2 = curline2.stripWhiteSpace();
+				if (curline2.startsWith("processor")) {
+					found = true;
+					break;
+				}
+				else if (curline2 == "") {
+					break;
+				}
+			}
+			if (found) {
+				m_cpuInfo.insert(blockBegin, (*cpuit2));
+			}
+			else {
+				m_cpuInfo.insert(blockBegin, "processor : 0");
+			}
+		}
+		if (curline1 == "") {
+			blockNumber++;
+			blockBegin = cpuit1;
+			blockBegin++;
+		}
+		if (curline1.startsWith("Processor")) {
+			cpuinfo_format_x86 = false;
+			cpuinfo_format_arm = true;
+		}
+	}
+
 	// Parse CPU information table
 	TDECPUDevice *cdevice;
 	cdevice = 0;
@@ -2020,34 +2063,93 @@ void TDEHardwareDevices::processModifiedCPUs() {
 	TQString curline;
 	int processorNumber = 0;
 	int processorCount = 0;
-	for (TQStringList::Iterator cpuit = m_cpuInfo.begin(); cpuit != m_cpuInfo.end(); ++cpuit) {
-		// WARNING This routine assumes that "processor" is always the first entry in /proc/cpuinfo!
-		curline = *cpuit;
-		if (curline.startsWith("processor")) {
-			curline.remove(0, curline.find(":")+1);
+
+	if (cpuinfo_format_x86) {
+		// ===================================================================================================================================
+		// x86/x86_64
+		// ===================================================================================================================================
+		TQStringList::Iterator cpuit;
+		for (cpuit = m_cpuInfo.begin(); cpuit != m_cpuInfo.end(); ++cpuit) {
+			curline = *cpuit;
+			if (curline.startsWith("processor")) {
+				curline.remove(0, curline.find(":")+1);
+				curline = curline.stripWhiteSpace();
+				processorNumber = curline.toInt();
+				if (!cdevice) cdevice = dynamic_cast<TDECPUDevice*>(findBySystemPath(TQString("/sys/devices/system/cpu/cpu%1").arg(processorNumber)));
+			}
+			if (curline.startsWith("model name")) {
+				curline.remove(0, curline.find(":")+1);
+				curline = curline.stripWhiteSpace();
+				if (cdevice) {
+					if (cdevice->name() != curline) modified = true;
+					cdevice->internalSetName(curline);
+				}
+			}
+			if (curline.startsWith("cpu MHz")) {
+				curline.remove(0, curline.find(":")+1);
+				curline = curline.stripWhiteSpace();
+				if (cdevice) {
+					if (cdevice->frequency() != curline.toDouble()) modified = true;
+					cdevice->internalSetFrequency(curline.toDouble());
+				}
+			}
+			if (curline.startsWith("vendor_id")) {
+				curline.remove(0, curline.find(":")+1);
+				curline = curline.stripWhiteSpace();
+				if (cdevice) {
+					if (cdevice->vendorName() != curline) modified = true;
+					cdevice->internalSetVendorName(curline);
+					if (cdevice->vendorEncoded() != curline) modified = true;
+					cdevice->internalSetVendorEncoded(curline);
+				}
+			}
 			curline = curline.stripWhiteSpace();
-			processorNumber = curline.toInt();
-			cdevice = dynamic_cast<TDECPUDevice*>(findBySystemPath(TQString("/sys/devices/system/cpu/cpu%1").arg(processorNumber)));
+			if (curline == "") {
+				cdevice = 0;
+			}
 		}
-		if (curline.startsWith("model name")) {
-			curline.remove(0, curline.find(":")+1);
-			curline = curline.stripWhiteSpace();
-			if (cdevice->name() != curline) modified = true;
-			cdevice->internalSetName(curline);
+	}
+	else if (cpuinfo_format_arm) {
+		// ===================================================================================================================================
+		// ARM
+		// ===================================================================================================================================
+		TQStringList::Iterator cpuit;
+		TQString modelName;
+		TQString vendorName;
+		for (cpuit = m_cpuInfo.begin(); cpuit != m_cpuInfo.end(); ++cpuit) {
+			curline = *cpuit;
+			if (curline.startsWith("Processor")) {
+				curline.remove(0, curline.find(":")+1);
+				curline = curline.stripWhiteSpace();
+				modelName = curline;
+			}
+			if (curline.startsWith("Hardware")) {
+				curline.remove(0, curline.find(":")+1);
+				curline = curline.stripWhiteSpace();
+				vendorName = curline;
+			}
 		}
-		if (curline.startsWith("cpu MHz")) {
-			curline.remove(0, curline.find(":")+1);
+		for (TQStringList::Iterator cpuit = m_cpuInfo.begin(); cpuit != m_cpuInfo.end(); ++cpuit) {
+			curline = *cpuit;
+			if (curline.startsWith("processor")) {
+				curline.remove(0, curline.find(":")+1);
+				curline = curline.stripWhiteSpace();
+				processorNumber = curline.toInt();
+				if (!cdevice) {
+					cdevice = dynamic_cast<TDECPUDevice*>(findBySystemPath(TQString("/sys/devices/system/cpu/cpu%1").arg(processorNumber)));
+					// Set up CPU information structures
+					if (cdevice->name() != modelName) modified = true;
+					cdevice->internalSetName(modelName);
+					if (cdevice->vendorName() != vendorName) modified = true;
+					cdevice->internalSetVendorName(vendorName);
+					if (cdevice->vendorEncoded() != vendorName) modified = true;
+					cdevice->internalSetVendorEncoded(vendorName);
+				}
+			}
 			curline = curline.stripWhiteSpace();
-			if (cdevice->frequency() != curline.toDouble()) modified = true;
-			cdevice->internalSetFrequency(curline.toDouble());
-		}
-		if (curline.startsWith("vendor_id")) {
-			curline.remove(0, curline.find(":")+1);
-			curline = curline.stripWhiteSpace();
-			if (cdevice->vendorName() != curline) modified = true;
-			cdevice->internalSetVendorName(curline);
-			if (cdevice->vendorEncoded() != curline) modified = true;
-			cdevice->internalSetVendorEncoded(curline);
+			if (curline == "") {
+				cdevice = 0;
+			}
 		}
 	}
 
