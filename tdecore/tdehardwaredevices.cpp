@@ -2137,13 +2137,15 @@ void TDEHardwareDevices::processModifiedCPUs() {
 				processorNumber = curline.toInt();
 				if (!cdevice) {
 					cdevice = dynamic_cast<TDECPUDevice*>(findBySystemPath(TQString("/sys/devices/system/cpu/cpu%1").arg(processorNumber)));
-					// Set up CPU information structures
-					if (cdevice->name() != modelName) modified = true;
-					cdevice->internalSetName(modelName);
-					if (cdevice->vendorName() != vendorName) modified = true;
-					cdevice->internalSetVendorName(vendorName);
-					if (cdevice->vendorEncoded() != vendorName) modified = true;
-					cdevice->internalSetVendorEncoded(vendorName);
+					if (cdevice) {
+						// Set up CPU information structures
+						if (cdevice->name() != modelName) modified = true;
+						cdevice->internalSetName(modelName);
+						if (cdevice->vendorName() != vendorName) modified = true;
+						cdevice->internalSetVendorName(vendorName);
+						if (cdevice->vendorEncoded() != vendorName) modified = true;
+						cdevice->internalSetVendorEncoded(vendorName);
+					}
 				}
 			}
 			curline = curline.stripWhiteSpace();
@@ -4630,33 +4632,24 @@ void TDEHardwareDevices::addCoreSystemDevices() {
 	// Handle CPUs, which are currently handled terribly by udev
 	// Parse /proc/cpuinfo to extract some information about the CPUs
 	hwdevice = 0;
-	TQStringList lines;
-	TQFile file( "/proc/cpuinfo" );
-	if ( file.open( IO_ReadOnly ) ) {
-		TQTextStream stream( &file );
-		TQString line;
-		int processorNumber = -1;
-		while ( !stream.atEnd() ) {
-			line = stream.readLine();
-			// WARNING This routine assumes that "processor" is always the first entry in /proc/cpuinfo!
-			// FIXME Parse all available information, such as frequency, etc.
-			if (line.startsWith("processor")) {
-				line.remove(0, line.find(":")+1);
-				line = line.stripWhiteSpace();
-				processorNumber = line.toInt();
+	TQDir d("/sys/devices/system/cpu/");
+	d.setFilter( TQDir::Dirs );
+	const TQFileInfoList *list = d.entryInfoList();
+	TQFileInfoListIterator it( *list );
+	TQFileInfo *fi;
+	while ((fi = it.current()) != 0) {
+		TQString directoryName = fi->fileName();
+		if (directoryName.startsWith("cpu")) {
+			directoryName = directoryName.remove(0,3);
+			bool isInt;
+			int processorNumber = directoryName.toUInt(&isInt, 10);
+			if (isInt) {
 				hwdevice = new TDECPUDevice(TDEGenericDeviceType::CPU);
 				hwdevice->internalSetSystemPath(TQString("/sys/devices/system/cpu/cpu%1").arg(processorNumber));
 				m_deviceList.append(hwdevice);
-#if 0
-				// Set up CPU information monitor
-				// The only way CPU information can be changed is if something changes in the cpufreq node
-				// This may change in the future, but for now it is a fairly good assumption
-				m_cpuWatch->addDir(TQString("/sys/devices/system/cpu/cpu%1/cpufreq").arg(processorNumber));
-#endif
 			}
-			lines += line;
 		}
-		file.close();
+		++it;
 	}
 
 	// Populate CPU information
