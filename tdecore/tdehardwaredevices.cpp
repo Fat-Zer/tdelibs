@@ -2118,6 +2118,7 @@ void TDEHardwareDevices::processModifiedCPUs() {
 		TQStringList::Iterator cpuit;
 		TQString modelName;
 		TQString vendorName;
+		TQString serialNumber;
 		for (cpuit = m_cpuInfo.begin(); cpuit != m_cpuInfo.end(); ++cpuit) {
 			curline = *cpuit;
 			if (curline.startsWith("Processor")) {
@@ -2129,6 +2130,11 @@ void TDEHardwareDevices::processModifiedCPUs() {
 				curline.remove(0, curline.find(":")+1);
 				curline = curline.stripWhiteSpace();
 				vendorName = curline;
+			}
+			if (curline.startsWith("Serial")) {
+				curline.remove(0, curline.find(":")+1);
+				curline = curline.stripWhiteSpace();
+				serialNumber = curline;
 			}
 		}
 		for (TQStringList::Iterator cpuit = m_cpuInfo.begin(); cpuit != m_cpuInfo.end(); ++cpuit) {
@@ -2147,6 +2153,8 @@ void TDEHardwareDevices::processModifiedCPUs() {
 						cdevice->internalSetVendorName(vendorName);
 						if (cdevice->vendorEncoded() != vendorName) modified = true;
 						cdevice->internalSetVendorEncoded(vendorName);
+						if (cdevice->serialNumber() != serialNumber) modified = true;
+						cdevice->internalSetSerialNumber(serialNumber);
 					}
 				}
 			}
