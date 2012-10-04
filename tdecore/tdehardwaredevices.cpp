@@ -2059,6 +2059,7 @@ void TDEHardwareDevices::processModifiedCPUs() {
 	TDECPUDevice *cdevice;
 	cdevice = 0;
 	bool modified = false;
+	bool have_frequency = false;
 
 	TQString curline;
 	int processorNumber = 0;
@@ -2091,6 +2092,7 @@ void TDEHardwareDevices::processModifiedCPUs() {
 				if (cdevice) {
 					if (cdevice->frequency() != curline.toDouble()) modified = true;
 					cdevice->internalSetFrequency(curline.toDouble());
+					have_frequency = true;
 				}
 			}
 			if (curline.startsWith("vendor_id")) {
@@ -2233,6 +2235,43 @@ void TDEHardwareDevices::processModifiedCPUs() {
 				TQTextStream stream( &availgvrnsfile );
 				governorlist = TQStringList::split(" ", stream.readLine());
 				availgvrnsfile.close();
+			}
+
+			if (!have_frequency) {
+				nodename = cpufreq_dir.path();
+				nodename.append("/cpuinfo_cur_freq");
+				TQFile cpufreqfile(nodename);
+				if (cpufreqfile.open(IO_ReadOnly)) {
+					TQTextStream stream( &cpufreqfile );
+					if (cdevice) cdevice->internalSetFrequency(stream.readLine().toDouble()/1000.0);
+					cpufreqfile.close();
+					have_frequency = true;
+				}
+			}
+
+			bool frequencyFound;
+			TQStringList::Iterator freqit;
+			frequencyFound = false;
+			for ( freqit = frequencylist.begin(); freqit != frequencylist.end(); ++freqit ) {
+				double thisfrequency = (*freqit).toDouble()/1000.0;
+				if (thisfrequency == minfrequency) {
+					frequencyFound = true;
+				}
+			}
+			if (!frequencyFound) {
+				int minFrequencyInt = (minfrequency*1000.0);
+				frequencylist.prepend(TQString("%1").arg(minFrequencyInt));
+			}
+			frequencyFound = false;
+			for ( freqit = frequencylist.begin(); freqit != frequencylist.end(); ++freqit ) {
+				double thisfrequency = (*freqit).toDouble()/1000.0;
+				if (thisfrequency == maxfrequency) {
+					frequencyFound = true;
+				}
+			}
+			if (!frequencyFound) {
+				int maxfrequencyInt = (maxfrequency*1000.0);
+				frequencylist.append(TQString("%1").arg(maxfrequencyInt));
 			}
 		}
 
@@ -3195,6 +3234,9 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		else if ((devicesubsystem == "spi_master")
 			|| (devicesubsystem == "spidev")) {
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Serial);
+		}
+		else if (devicesubsystem == "spi") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
 		}
 		else if (devicesubsystem == "thermal") {
 			// FIXME
