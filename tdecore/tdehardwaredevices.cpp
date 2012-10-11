@@ -2300,6 +2300,14 @@ void TDEHardwareDevices::processModifiedCPUs() {
 				frequencylist.append(TQString("%1").arg(maxfrequencyInt));
 			}
 		}
+		else {
+			if (have_frequency) {
+				if (cdevice) {
+					minfrequency = cdevice->frequency();
+					maxfrequency = cdevice->frequency();
+				}
+			}
+		}
 
 		// Update CPU information structure
 		if (cdevice) {
