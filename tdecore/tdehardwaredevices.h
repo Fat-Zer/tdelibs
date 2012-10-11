@@ -801,6 +801,11 @@ class TDECORE_EXPORT TDECPUDevice : public TDEGenericDevice
 		*/
 		void setMaximumScalingFrequency(double fr);
 
+		/**
+		* @return an integer with the core number, starting at 0
+		*/
+		int coreNumber();
+
 	protected:
 		/**
 		* @param fr a double with the current CPU frequency in MHz, if available
@@ -856,6 +861,12 @@ class TDECORE_EXPORT TDECPUDevice : public TDEGenericDevice
 		*/
 		void internalSetAvailableGovernors(TQStringList gp);
 
+		/**
+		* @param cn an integer with the core number, starting at 0
+		* @internal
+		*/
+		void internalSetCoreNumber(int cn);
+
 	private:
 		double m_frequency;
 		double m_minfrequency;
@@ -866,6 +877,7 @@ class TDECORE_EXPORT TDECPUDevice : public TDEGenericDevice
 		TQStringList m_tiedprocs;
 		TQStringList m_frequencies;
 		TQStringList m_governers;
+		int m_corenumber;
 
 	friend class TDEHardwareDevices;
 };

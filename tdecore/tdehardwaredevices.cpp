@@ -876,6 +876,10 @@ bool TDEStorageDevice::unmountDevice(TQString* errRet, int* retcode) {
 }
 
 TDECPUDevice::TDECPUDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
+	m_frequency = -1;
+	m_minfrequency = -1;
+	m_maxfrequency = -1;
+	m_corenumber = -1;
 }
 
 TDECPUDevice::~TDECPUDevice() {
@@ -953,6 +957,10 @@ void TDECPUDevice::internalSetAvailableGovernors(TQStringList gp) {
 	m_governers = gp;
 }
 
+void TDECPUDevice::internalSetCoreNumber(int cn) {
+	m_corenumber = cn;
+}
+
 bool TDECPUDevice::canSetGovernor() {
 	TQString governornode = systemPath() + "/cpufreq/scaling_governor";
 	int rval = access (governornode.ascii(), W_OK);
@@ -999,6 +1007,10 @@ void TDECPUDevice::setMaximumScalingFrequency(double fr) {
 
 	// Force update of the device information object
 	KGlobal::hardwareDevices()->processModifiedCPUs();
+}
+
+int TDECPUDevice::coreNumber() {
+	return m_corenumber;
 }
 
 TDESensorDevice::TDESensorDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
@@ -2077,6 +2089,10 @@ void TDEHardwareDevices::processModifiedCPUs() {
 				curline = curline.stripWhiteSpace();
 				processorNumber = curline.toInt();
 				if (!cdevice) cdevice = dynamic_cast<TDECPUDevice*>(findBySystemPath(TQString("/sys/devices/system/cpu/cpu%1").arg(processorNumber)));
+				if (cdevice) {
+					if (cdevice->coreNumber() != processorNumber) modified = true;
+					cdevice->internalSetCoreNumber(processorNumber);
+				}
 			}
 			if (curline.startsWith("model name")) {
 				curline.remove(0, curline.find(":")+1);
@@ -2147,6 +2163,8 @@ void TDEHardwareDevices::processModifiedCPUs() {
 					cdevice = dynamic_cast<TDECPUDevice*>(findBySystemPath(TQString("/sys/devices/system/cpu/cpu%1").arg(processorNumber)));
 					if (cdevice) {
 						// Set up CPU information structures
+						if (cdevice->coreNumber() != processorNumber) modified = true;
+						cdevice->internalSetCoreNumber(processorNumber);
 						if (cdevice->name() != modelName) modified = true;
 						cdevice->internalSetName(modelName);
 						if (cdevice->vendorName() != vendorName) modified = true;
