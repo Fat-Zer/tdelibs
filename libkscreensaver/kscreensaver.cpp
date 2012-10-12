@@ -47,6 +47,8 @@ KScreenSaver::KScreenSaver( WId id ) : TQWidget()
     unsigned int w = 0;
     unsigned int h = 0;
 
+    XSync(tqt_xdisplay(), false);
+
     d = new KScreenSaverPrivate;
     d->owner = TQT_TQWIDGET(find( id ));
     if ( d->owner )

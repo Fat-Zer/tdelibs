@@ -234,8 +234,9 @@ void KRootPixmap::repaint(bool force)
     m_Rect = TQRect(p1, p2);
 #ifdef Q_WS_X11
     m_Desk = KWin::windowInfo(m_pWidget->topLevelWidget()->winId()).desktop();
-    if (m_Desk == NET::OnAllDesktops)
+    if ((m_Desk == NET::OnAllDesktops) || (m_Desk == 0)) {
 	m_Desk = currentDesktop();
+    }
 
     // KSharedPixmap will correctly generate a tile for us.
     m_pPixmap->loadFromShared(pixmapName(m_Desk), m_Rect);
