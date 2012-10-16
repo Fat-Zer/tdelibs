@@ -284,7 +284,6 @@ KeramikStyle::KeramikStyle()
 		toolbarBlendWidget(0), titleBarMode(None), flatMode(false), customScrollMode(false), kickerMode(false)
 {
 	forceSmallMode = false;
-	hoverWidget    = 0;
 
 	TQSettings settings;
 
@@ -1368,9 +1367,6 @@ void KeramikStyle::drawControl( TQ_ControlElement element,
 			if (isFormWidget(btn))
 				formMode = true;
 
-			if ( widget == hoverWidget )
-				flags |= Style_MouseOver;
-
 			if ( btn->isFlat( ) )
 				flatMode = true;
 
@@ -2037,9 +2033,6 @@ void KeramikStyle::drawComplexControl( TQ_ComplexControl control,
 				if (toolbarMode)
 					toolbarBlendWidget = widget;
 
-				if ( widget == hoverWidget )
-					flags |= Style_MouseOver;
-					
 				drawPrimitive( PE_ButtonCommand, p2, ceData, elementFlags, br, cg, flags );
 
 				toolbarBlendWidget = 0;
@@ -2258,10 +2251,6 @@ void KeramikStyle::drawComplexControl( TQ_ComplexControl control,
 				bflags |= Style_Down;
 			if (active & SC_ToolButtonMenu)
 				mflags |= Style_Down;
-
-			if ( widget == hoverWidget )
-				bflags |= Style_MouseOver;
-
 
 			if (onToolbar &&  static_cast<TQToolBar*>(TQT_TQWIDGET(widget->parent()))->orientation() == Qt::Horizontal)
 				bflags |= Style_Horizontal;
@@ -2780,26 +2769,6 @@ bool KeramikStyle::objectEventHandler( TQStyleControlElementData ceData, Control
 		TQObject* object = reinterpret_cast<TQObject*>(source);
 
 		if ( !object->isWidgetType() ) return false;
-	
-		//Clear hover highlight when needed
-		if ( (event->type() == TQEvent::Leave) && (TQT_BASE_OBJECT(object) == TQT_BASE_OBJECT(hoverWidget)) )
-		{
-			TQWidget* button = TQT_TQWIDGET(object);
-			hoverWidget = 0;
-			button->repaint( false );
-			return false;
-		}
-	
-		//Hover highlight on buttons, toolbuttons and combos
-		if ( ::tqqt_cast<TQPushButton*>(object) || ::tqqt_cast<TQComboBox*>(object) || ::tqqt_cast<TQToolButton*>(object) )
-		{
-			if (event->type() == TQEvent::Enter && TQT_TQWIDGET(object)->isEnabled() )
-			{
-				hoverWidget = TQT_TQWIDGET(object);
-				hoverWidget->repaint( false );
-			}
-			return false;
-		}
 	
 		//Combo line edits get special frames
 		if ( event->type() == TQEvent::Paint && ::tqqt_cast<TQLineEdit*>(object) )

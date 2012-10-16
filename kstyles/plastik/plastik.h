@@ -268,7 +268,6 @@ protected:
 
     virtual bool objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *e );
 
-    TQWidget* hoverWidget;
 protected slots:
     void khtmlWidgetDestroyed(TQObject* w);
 
@@ -300,8 +299,6 @@ private:
     TQColor _overHighlightColor;
     TQColor _focusHighlightColor;
     TQColor _checkMarkColor;
-
-    TQTab *hoverTab;
 
     // track khtml widgets.
     TQMap<const TQWidget*,bool> khtmlWidgets;

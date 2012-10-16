@@ -2615,16 +2615,12 @@ void AsteroidStyle::paletteChanged()
 
 bool AsteroidStyle::objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *e )
 {
-	if (ceData.widgetObjectTypes.contains(TQOBJECT_OBJECT_NAME_STRING)) {
-		TQObject* o = reinterpret_cast<TQObject*>(source);
-		/*	Win2K has this interesting behaviour where it sets the current
-			default button to whatever pushbutton the user presses the mouse
-			on. I _think_ this emulates that properly. -clee */
-		if (o->inherits(TQPUSHBUTTON_OBJECT_NAME_STRING)) {
-			if (e->type() == TQEvent::MouseButtonPress) {
-				TQPushButton *pb = dynamic_cast<TQPushButton *>(o);
-				pb->setDefault(TRUE);
-			}
+	/*	Win2K has this interesting behaviour where it sets the current
+		default button to whatever pushbutton the user presses the mouse
+		on. I _think_ this emulates that properly. -clee */
+	if (ceData.widgetObjectTypes.contains(TQPUSHBUTTON_OBJECT_NAME_STRING)) {
+		if (e->type() == TQEvent::MouseButtonPress) {
+			widgetActionRequest(ceData, elementFlags, source, WAR_SetDefault);
 		}
 	}
 

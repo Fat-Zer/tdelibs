@@ -118,7 +118,6 @@ HighContrastStyle::HighContrastStyle()
 	TQSettings settings;
 	settings.beginGroup("/highcontraststyle/Settings/");
 	bool useWideLines = settings.readBoolEntry("wideLines", false);
-	hoverWidget = 0L;
 	basicLineWidth = useWideLines ? 4 : 2;
 }
 
@@ -665,9 +664,6 @@ void HighContrastStyle::drawKStylePrimitive (KStylePrimitive kpe,
 										const TQStyleOption &opt,
 										const TQWidget* widget ) const
 {
-	if ( widget == hoverWidget )
-		flags |= Style_MouseOver;
-
 	switch ( kpe )
 	{
 		// TOOLBAR HANDLE
@@ -760,9 +756,6 @@ void HighContrastStyle::drawControl (TQ_ControlElement element,
 								const TQStyleOption& opt,
 								const TQWidget *widget ) const
 {
-	if ( widget == hoverWidget )
-		flags |= Style_MouseOver;
-
 	switch (element)
 	{
 		// TABS
@@ -1213,9 +1206,6 @@ void HighContrastStyle::drawComplexControl (TQ_ComplexControl control,
 									const TQStyleOption& opt,
 									const TQWidget *widget ) const
 {
-	if ( widget == hoverWidget )
-		flags |= Style_MouseOver;
-
 	switch(control)
 	{
 		// COMBOBOX
@@ -1830,49 +1820,6 @@ TQRect HighContrastStyle::subRect (SubRect subrect, const TQStyleControlElementD
 
 bool HighContrastStyle::objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *event )
 {
-	if (ceData.widgetObjectTypes.contains(TQOBJECT_OBJECT_NAME_STRING)) {
-		TQObject* object = reinterpret_cast<TQObject*>(source);
-
-		TQWidget* widget = dynamic_cast<TQWidget*>(object);
-		if (widget)
-		{
-			// Handle hover effects.
-			if (event->type() == TQEvent::Enter
-					&& (widget->inherits (TQBUTTON_OBJECT_NAME_STRING)
-						|| widget->inherits (TQCOMBOBOX_OBJECT_NAME_STRING)
-						|| widget->inherits (TQSPINWIDGET_OBJECT_NAME_STRING)))
-			{
-				hoverWidget = widget;
-				widget->repaint (false);
-			}
-			else if (event->type() == TQEvent::Leave
-						&& (widget->inherits (TQBUTTON_OBJECT_NAME_STRING)
-							|| widget->inherits (TQCOMBOBOX_OBJECT_NAME_STRING)
-							|| widget->inherits (TQSPINWIDGET_OBJECT_NAME_STRING)))
-			{
-				if (TQT_BASE_OBJECT(object) == TQT_BASE_OBJECT(hoverWidget))
-					hoverWidget = 0L;
-				widget->repaint (false);
-			}
-			// Make sure the focus rectangle is shown correctly.
-			else if (event->type() == TQEvent::FocusIn || event->type() == TQEvent::FocusOut)
-			{
-				TQWidget* widgetparent = dynamic_cast<TQWidget*>(widget->parent());
-				while (widgetparent
-								&& ! widgetparent->inherits (TQCOMBOBOX_OBJECT_NAME_STRING)
-								&& ! widgetparent->inherits (TQSPINWIDGET_OBJECT_NAME_STRING))
-				{
-					widgetparent = dynamic_cast<TQWidget*>(widgetparent->parent());
-				}
-	
-				if (widgetparent)
-					widgetparent->repaint (false);
-				else
-					widget->repaint (false);
-			}
-		}
-	}
-	
 	return KStyle::objectEventHandler (ceData, elementFlags, source, event);
 }
 

@@ -152,8 +152,6 @@ class HighContrastStyle : public KStyle
 	protected:
 		virtual bool objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *e );
 
-		TQWidget     *hoverWidget;
-
 	private:
 		void setColorsNormal (TQPainter* p, const TQColorGroup& cg, int flags = Style_Enabled, int highlight = Style_Down|Style_MouseOver) const;
 		void setColorsButton (TQPainter* p, const TQColorGroup& cg, int flags = Style_Enabled, int highlight = Style_Down|Style_MouseOver) const;
