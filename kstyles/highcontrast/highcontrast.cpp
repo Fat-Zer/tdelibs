@@ -770,8 +770,7 @@ void HighContrastStyle::drawControl (TQ_ControlElement element,
 			setColorsNormal (p, cg, flags, Style_Selected);
 			drawRoundRect (p, r);
 			
-			const TQTabBar *tb = static_cast< const TQTabBar * >(widget);
-            TQTabBar::Shape shape = tb->shape();
+            TQTabBar::Shape shape = ceData.tabBarData.shape;
 			if (shape == TQTabBar::TriangularBelow || 
 				shape == TQTabBar::RoundedBelow) {
 				p->fillRect (r.left(), r.top(), 
@@ -1001,14 +1000,13 @@ void HighContrastStyle::drawControl (TQ_ControlElement element,
 			setColorsNormal (p, cg, flags, Style_Active|Style_MouseOver);
 			p->fillRect (r, p->backgroundColor ());
 
-			const TQPopupMenu *popupmenu = (const TQPopupMenu *) widget;
 			TQMenuItem *mi = opt.menuItem();
 			if (!mi)
 				break;
 
 			int  tab        = opt.tabWidth();
 			int  checkcol   = opt.maxIconWidth();
-			bool checkable  = popupmenu->isCheckable();
+			bool checkable  = (elementFlags & CEF_IsCheckable);
 			bool reverse    = TQApplication::reverseLayout();
 			int x, y, w, h;
 			r.rect( &x, &y, &w, &h );

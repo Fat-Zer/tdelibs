@@ -2306,25 +2306,19 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
     // TABS
     // ----
         case CE_TabBarTab: {
-            const TQTabBar * tb = (const TQTabBar *) widget;
             bool cornerWidget = false;
-            if( ::tqqt_cast<TQTabWidget*>(tb->parent()) ) {
-                const TQTabWidget *tw = (const TQTabWidget*)tb->parent();
-                // is there a corner widget in the (top) left edge?
-                TQWidget *cw = tw->cornerWidget(TQt::TopLeft);
-                if(cw) {
-                    cornerWidget = true;
-                }
+            if (!ceData.tabBarData.cornerWidgets[TQStyleControlElementTabBarData::CWL_TopLeft].widgetObjectTypes.isEmpty()) {
+                cornerWidget = true;
             }
-            TQTabBar::Shape tbs = tb->shape();
+            TQTabBar::Shape tbs = ceData.tabBarData.shape;
             bool selected = false;
             if (flags & Style_Selected) selected = true;
             TabPosition pos;
-            if (tb->count() == 1) {
+            if (ceData.tabBarData.tabCount == 1) {
                 pos = Single;
-            } else if ((tb->indexOf(opt.tab()->identifier()) == 0)) {
+            } else if (ceData.tabBarData.identIndexMap[opt.tab()->identifier()] == 0) {
                 pos = First;
-            } else if (tb->indexOf(opt.tab()->identifier()) == tb->count() - 1) {
+            } else if (ceData.tabBarData.identIndexMap[opt.tab()->identifier()] == (ceData.tabBarData.tabCount - 1)) {
                 pos = Last;
             } else {
                 pos = Middle;
@@ -2485,7 +2479,6 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
     // POPUPMENU ITEM (highlighted on mouseover)
     // ------------------------------------------
         case CE_PopupMenuItem: {
-            const TQPopupMenu *popupmenu = static_cast< const TQPopupMenu * >( widget );
             TQMenuItem *mi = opt.menuItem();
 
             if ( !mi )
@@ -2500,7 +2493,7 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
             int  tab        = opt.tabWidth();
             int  checkcol   = opt.maxIconWidth();
             bool enabled    = mi->isEnabled();
-            bool checkable  = popupmenu->isCheckable();
+            bool checkable  = (elementFlags & CEF_IsCheckable);
             bool active     = flags & Style_Active;
             bool etchtext   = styleHint( SH_EtchDisabledText, ceData, elementFlags );
             bool reverse    = TQApplication::reverseLayout();
@@ -3272,9 +3265,8 @@ int PlastikStyle::pixelMetric(PixelMetric m, TQStyleControlElementData ceData, C
     // TABS
     // ----
         case PM_TabBarTabVSpace: {
-            const TQTabBar * tb = (const TQTabBar *) widget;
-            if (tb->shape() == TQTabBar::RoundedAbove ||
-                tb->shape() == TQTabBar::RoundedBelow)
+            if (ceData.tabBarData.shape == TQTabBar::RoundedAbove ||
+                ceData.tabBarData.shape == TQTabBar::RoundedBelow)
                 return 12;
             else
                 return 4;

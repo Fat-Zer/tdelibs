@@ -1261,11 +1261,10 @@ void KThemeStyle::drawControl( ControlElement element,
 
         case CE_TabBarTab:
             {
-                const TQTabBar* tb = ( const TQTabBar* ) widget;
-                TQTabBar::Shape tbs = tb->shape();
+                TQTabBar::Shape tbs = ceData.tabBarData.shape;
                 bool selected = how & Style_Selected;
                 WidgetType widget = selected ? ActiveTab : InactiveTab;
-                const TQColorGroup *cg = colorGroup( tb->colorGroup(), widget );
+                const TQColorGroup *cg = colorGroup( ceData.colorGroup, widget );
                 int i;
                 int x2 = x + w - 1, y2 = y + h - 1;
                 int bWidth = borderWidth( widget );
@@ -1276,7 +1275,7 @@ void KThemeStyle::drawControl( ControlElement element,
                     if ( !selected )
                     {
                         p->fillRect( x, y, x2 - x + 1, 2,
-                                     tb->palette().active().brush( TQColorGroup::Background ) );
+                                     ceData.palette.active().brush( TQColorGroup::Background ) );
                         y += 2;
                     }
                     p->setPen( cg->text() );
@@ -1338,8 +1337,8 @@ void KThemeStyle::drawControl( ControlElement element,
                     else
                         p->fillRect( x, y, x2 - x + 1, y2 - y + 1, cg->background() );
                 }
-                else if ( tb->shape() == TQTabBar::RoundedBelow ||
-                        tb->shape() == TQTabBar::TriangularBelow )
+                else if ( ceData.tabBarData.shape == TQTabBar::RoundedBelow ||
+                        ceData.tabBarData.shape == TQTabBar::TriangularBelow )
                 {
                     if ( widget == ActiveTab )
                         widget = RotActiveTab;
@@ -1349,7 +1348,7 @@ void KThemeStyle::drawControl( ControlElement element,
                     if ( !selected )
                     {
                         p->fillRect( x, y2 - 2, x2 - x + 1, 2,
-                                     tb->palette().active().brush( TQColorGroup::Background ) );
+                                     ceData.palette.active().brush( TQColorGroup::Background ) );
                         y2 -= 2;
                     }
                     p->setPen( cg->text() );
@@ -1451,7 +1450,6 @@ void KThemeStyle::drawControl( ControlElement element,
                 int x, y, w, h;
                 r.rect( &x, &y, &w, &h );
 
-                const TQPopupMenu *popupmenu = ( const TQPopupMenu * ) widget;
                 TQMenuItem *mi = opt.menuItem();
                 if ( mi )
                 {
@@ -1461,7 +1459,7 @@ void KThemeStyle::drawControl( ControlElement element,
                 int tab = opt.tabWidth();
                 int checkcol = opt.maxIconWidth();
                 bool enabled = (mi? mi->isEnabled():true);
-                bool checkable = popupmenu->isCheckable();
+                bool checkable = (elementFlags & CEF_IsCheckable);
                 bool active = how & Style_Active;
                 bool etchtext = styleHint( SH_EtchDisabledText, ceData, elementFlags, TQStyleOption::Default, 0, 0 );
                 bool reverse = TQApplication::reverseLayout();

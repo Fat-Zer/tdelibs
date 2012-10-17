@@ -1289,8 +1289,6 @@ void HighColorStyle::drawControl( TQ_ControlElement element,
 		// POPUPMENU ITEM
 		// -------------------------------------------------------------------
 		case CE_PopupMenuItem: {
-			const TQPopupMenu *popupmenu = (const TQPopupMenu *) widget;
-
 			TQMenuItem *mi = opt.menuItem();
 			if ( !mi ) {
 				// Don't leave blank holes if we set NoBackground for the TQPopupMenu.
@@ -1303,7 +1301,7 @@ void HighColorStyle::drawControl( TQ_ControlElement element,
 			int  tab        = opt.tabWidth();
 			int  checkcol   = opt.maxIconWidth();
 			bool enabled    = mi->isEnabled();
-			bool checkable  = popupmenu->isCheckable();
+			bool checkable  = (elementFlags & CEF_IsCheckable);
 			bool active     = flags & Style_Active;
 			bool etchtext   = styleHint( SH_EtchDisabledText, ceData, elementFlags );
 			bool reverse    = TQApplication::reverseLayout();

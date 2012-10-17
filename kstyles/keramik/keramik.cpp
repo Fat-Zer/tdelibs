@@ -1510,28 +1510,26 @@ void KeramikStyle::drawControl( TQ_ControlElement element,
 
 		case CE_TabBarTab:
 		{
-			const TQTabBar* tabBar = static_cast< const TQTabBar* >( widget );
-
-			bool bottom = tabBar->shape() == TQTabBar::RoundedBelow ||
-			              tabBar->shape() == TQTabBar::TriangularBelow;
+			bool bottom = ceData.tabBarData.shape == TQTabBar::RoundedBelow ||
+			              ceData.tabBarData.shape == TQTabBar::TriangularBelow;
 
 			if ( flags & Style_Selected )
 			{
 				TQRect tabRect = r;
 				//If not the right-most tab, readjust the painting to be one pixel wider
 				//to avoid a doubled line
-				int rightMost = TQApplication::reverseLayout() ? 0 : tabBar->count() - 1;
+				int rightMost = TQApplication::reverseLayout() ? 0 : ceData.tabBarData.tabCount - 1;
 
-				if (tabBar->indexOf( opt.tab()->identifier() ) != rightMost)
+				if (ceData.tabBarData.identIndexMap[opt.tab()->identifier()] != rightMost)
 					tabRect.setWidth( tabRect.width() + 1);
-				Keramik::ActiveTabPainter( bottom ).draw( p, tabRect, cg.button().light(110), cg.background(), !tabBar->isEnabled(), pmode());
+				Keramik::ActiveTabPainter( bottom ).draw( p, tabRect, cg.button().light(110), cg.background(), !(elementFlags & CEF_IsEnabled), pmode());
 			}
 			else
 			{
 				Keramik::InactiveTabPainter::Mode mode;
-				int index = tabBar->indexOf( opt.tab()->identifier() );
+				int index = ceData.tabBarData.identIndexMap[opt.tab()->identifier()];
 				if ( index == 0 ) mode = Keramik::InactiveTabPainter::First;
-				else if ( index == tabBar->count() - 1 ) mode = Keramik::InactiveTabPainter::Last;
+				else if ( index == ceData.tabBarData.tabCount - 1 ) mode = Keramik::InactiveTabPainter::Last;
 				else mode = Keramik::InactiveTabPainter::Middle;
 
 				if ( bottom )
@@ -1606,7 +1604,6 @@ void KeramikStyle::drawControl( TQ_ControlElement element,
 		// POPUPMENU ITEM
 		// -------------------------------------------------------------------
 		case CE_PopupMenuItem: {
-			const TQPopupMenu *popupmenu = static_cast< const TQPopupMenu * >( widget );
 			TQRect main = r;
 
 			TQMenuItem *mi = opt.menuItem();
@@ -1623,7 +1620,7 @@ void KeramikStyle::drawControl( TQ_ControlElement element,
 			int  tab        = opt.tabWidth();
 			int  checkcol   = opt.maxIconWidth();
 			bool enabled    = mi->isEnabled();
-			bool checkable  = popupmenu->isCheckable();
+			bool checkable  = (elementFlags & CEF_IsCheckable);
 			bool active     = flags & Style_Active;
 			bool etchtext   = styleHint( SH_EtchDisabledText, ceData, elementFlags );
 			bool reverse    = TQApplication::reverseLayout();
@@ -2409,11 +2406,10 @@ int KeramikStyle::pixelMetric(PixelMetric m, TQStyleControlElementData ceData, C
 			
 		case PM_TabBarTabShiftVertical:
 		{
-			const TQTabBar* tb = ::tqqt_cast<const TQTabBar*>(widget);
-			if (tb)
+			if (ceData.widgetObjectTypes.contains(TQTABBAR_OBJECT_NAME_STRING))
 			{
-				if (tb->shape() == TQTabBar::RoundedBelow || 
-					tb->shape() == TQTabBar::TriangularBelow)
+				if (ceData.tabBarData.shape == TQTabBar::RoundedBelow || 
+					ceData.tabBarData.shape == TQTabBar::TriangularBelow)
 					return 0;
 			}
 			
