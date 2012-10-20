@@ -109,7 +109,7 @@
       <item> Q_DECLARE_PUBLIC </item>
       <item> Q_D </item>
       <item> Q_Q </item>
-      <item> TQ_DISABLE_COPY </item>
+      <item> Q_DISABLE_COPY </item>
       <item> Q_INTERFACES </item>
       <item> Q_FLAGS </item>
       <item> Q_SCRIPTABLE </item>

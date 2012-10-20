@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE language SYSTEM "language.dtd">
-<language name="QMake" section="Other" extensions="*.pro;*.pri;" mimetype="" version="1.1" kateversion="2.0" author="Milian Wolff (mail@milianw.de)" license="LGPL">
+<language name="QMake" section="Other" extensions="*.pro;*.pri;*.prf;" mimetype="" version="1.2" kateversion="2.0" author="Milian Wolff (mail@milianw.de)" license="LGPL">
 
 <highlighting>
   <list name="variables">
@@ -38,6 +38,10 @@
     <item>UI_DIR</item>
     <item>MOC_DIR</item>
     <item>OBJECTS_DIR</item>
+    <item>VPATH</item>
+    <!--TODO: add all items from the right panel on
+              http://doc.qt.nokia.com/stable/qmake-variable-reference.html
+    -->
   </list>
   <list name="functions">
     <item>contains</item>

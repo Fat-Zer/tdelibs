@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE language SYSTEM "language.dtd">
 <language name="C++" section="Sources"
-          version="1.49" kateversion="2.4"
+          version="1.55" kateversion="2.4"
           indenter="cstyle"
           mimetype="text/x-c++src;text/x-c++hdr;text/x-chdr"
           extensions="*.c++;*.cxx;*.cpp;*.cc;*.C;*.h;*.hh;*.H;*.h++;*.hxx;*.hpp;*.hcc;*.moc"
@@ -34,6 +34,7 @@
       <item> export </item>
       <item> extern </item>
       <item> false </item>
+      <item> final </item>
       <item> friend </item>
       <item> for </item>
       <item> goto </item>
@@ -41,8 +42,10 @@
       <item> inline </item>
       <item> namespace </item>
       <item> new </item>
+      <item> noexcept </item>
       <item> nullptr </item>
       <item> operator </item>
+      <item> override </item>
       <item> private </item>
       <item> protected </item>
       <item> public </item>
@@ -87,7 +90,7 @@
       <item> Q_ARG </item>
       <item> Q_ASSERT </item>
       <item> Q_ASSERT_X </item>
-      <item> TQ_CHECK_PTR </item>
+      <item> Q_CHECK_PTR </item>
       <item> Q_CLASSINFO </item>
       <item> Q_CLEANUP_RESOURCE </item>
       <item> Q_D </item>
@@ -100,7 +103,8 @@
       <item> Q_DECLARE_PUBLIC </item>
       <item> Q_DECLARE_SHARED </item>
       <item> Q_DECLARE_TYPEINFO </item>
-      <item> TQ_DISABLE_COPY </item>
+      <item> Q_DISABLE_COPY </item>
+      <item> Q_EMIT </item>
       <item> Q_ENUMS </item>
       <item> Q_EXPORT </item>
       <item> Q_FLAGS </item>
@@ -114,7 +118,6 @@
       <item> Q_INVOKABLE </item>
       <item> Q_NOREPLY </item>
       <item> Q_OBJECT </item>
-      <item> TQ_OBJECT </item>
       <item> Q_OVERRIDE </item>
       <item> Q_PRIVATE_SLOT </item>
       <item> Q_PROPERTY </item>
@@ -129,6 +132,51 @@
       <item> SLOT </item>
       <item> TRUE </item>
       <item> FALSE </item>
+      <item> TQ_ARG </item>
+      <item> TQ_ASSERT </item>
+      <item> TQ_ASSERT_X </item>
+      <item> TQ_CHECK_PTR </item>
+      <item> TQ_CLASSINFO </item>
+      <item> TQ_CLEANUP_RESOURCE </item>
+      <item> TQ_D </item>
+      <item> TQ_DECLARE_FLAGS </item>
+      <item> TQ_DECLARE_INTERFACE </item>
+      <item> TQ_DECLARE_METATYPE </item>
+      <item> TQ_DECLARE_OPERATORS_FOR_FLAGS </item>
+      <item> TQ_DECLARE_PRIVATE </item>
+      <item> TQ_DECLARE_PUBLIC </item>
+      <item> TQ_DECLARE_SHARED </item>
+      <item> TQ_DECLARE_TYPEINFO </item>
+      <item> TQ_DISABLE_COPY </item>
+      <item> TQ_EMIT </item>
+      <item> TQ_ENUMS </item>
+      <item> TQ_EXPORT </item>
+      <item> TQ_FLAGS </item>
+      <item> TQ_FOREACH </item>
+      <item> TQ_FOREVER </item>
+      <item> TQ_GADGET </item>
+      <item> TQ_GLOBAL_STATIC </item>
+      <item> TQ_GLOBAL_STATIC_WITH_ARGS </item>
+      <item> TQ_INIT_RESOURCE </item>
+      <item> TQ_INTERFACES </item>
+      <item> TQ_INVOKABLE </item>
+      <item> TQ_NOREPLY </item>
+      <item> TQ_OBJECT </item>
+      <item> TQ_OVERRIDE </item>
+      <item> TQ_PRIVATE_SLOT </item>
+      <item> TQ_PROPERTY </item>
+      <item> TQ_Q </item>
+      <item> TQ_RETURN_ARG </item>
+      <item> TQ_SCRIPTABLE </item>
+      <item> TQ_SETS </item>
+      <item> TQ_SIGNAL </item>
+      <item> TQ_SIGNALS </item>
+      <item> TQ_SLOT </item>
+      <item> TQ_SLOTS </item>
+      <item> TQ_UNUSED </item>
+      <item> TQT_SIGNAL </item>
+      <item> TQT_SLOT </item>
+      <item> TQT_TQOBJECT </item>
       <item> connect </item>
       <item> disconnect </item>
       <item> emit </item>
@@ -136,7 +184,6 @@
       <item> slots </item>
       <item> foreach </item>
       <item> forever </item>
-      <item> tqt_dynamic_cast</item>
 
       <item> qint8 </item>
       <item> qint16 </item>
