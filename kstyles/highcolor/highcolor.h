@@ -171,7 +171,6 @@ class HighColorStyle : public KStyle
 					int pwidth=-1,
 					int pheight=-1 ) const;
 
-		TQWidget     *hoverWidget;
 		StyleType    type;
 		bool         highcolor;
 		mutable bool selectionBackground;

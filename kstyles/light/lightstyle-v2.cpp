@@ -631,7 +631,6 @@ void LightStyleV2::drawControl( TQ_ControlElement control,
     switch (control) {
     case CE_TabBarTab:
 	{
-	    const TQTabBar* tb = static_cast<const TQTabBar*>(widget);
 	    bool below = false;
 	    TQRect tr(r);
 	    TQRect fr(r);
@@ -639,7 +638,7 @@ void LightStyleV2::drawControl( TQ_ControlElement control,
 	    tr.addCoords(0, 0,  0, -1);
 	    fr.addCoords(2, 2, -2, -2);
 	    
-	    if ( tb->shape() == TQTabBar::RoundedBelow || tb->shape() == TQTabBar::TriangularBelow) {
+	    if ( ceData.tabBarData.shape == TQTabBar::RoundedBelow || ceData.tabBarData.shape == TQTabBar::TriangularBelow) {
 		tr = r; tr.addCoords(0, 1, 0, 0);
 		fr = r; fr.addCoords(2, 2,-2, -4);
 		below = true;
@@ -784,7 +783,6 @@ void LightStyleV2::drawControl( TQ_ControlElement control,
 	    if (! widget || data.isDefault())
 		break;
 
-	    const TQPopupMenu *popupmenu = (const TQPopupMenu *) widget;
 	    TQMenuItem *mi = data.menuItem();
 	    int tab = data.tabWidth();
 	    int maxpmw = data.maxIconWidth();
@@ -847,7 +845,7 @@ void LightStyleV2::drawControl( TQ_ControlElement control,
 		if ((flags & Style_Active) && (flags & Style_Enabled))
 		    mode = TQIconSet::Active;
 		TQPixmap pixmap;
-		if (popupmenu->isCheckable() && mi->isChecked())
+		if ((elementFlags & CEF_IsCheckable) && mi->isChecked())
 		    pixmap =
 			mi->iconSet()->pixmap( TQIconSet::Small, mode, TQIconSet::On );
 		else
@@ -857,7 +855,7 @@ void LightStyleV2::drawControl( TQ_ControlElement control,
 		pmr.moveCenter(cr.center());
 		p->setPen(cg.text());
 		p->drawPixmap(pmr.topLeft(), pixmap);
-	    } else if (popupmenu->isCheckable() && mi->isChecked())
+	    } else if ((elementFlags & CEF_IsCheckable) && mi->isChecked())
 		drawPrimitive(PE_CheckMark, p, ceData, elementFlags, cr, cg,
 			      (flags & Style_Enabled) | Style_On);
 
@@ -1538,7 +1536,6 @@ TQSize LightStyleV2::sizeFromContents( ContentsType contents,
 		break;
 
 	    TQMenuItem *mi = data.menuItem();
-	    const TQPopupMenu *popupmenu = (const TQPopupMenu *) widget;
 	    int maxpmw = data.maxIconWidth();
 	    int w = contentsSize.width(), h = contentsSize.height();
 
@@ -1558,7 +1555,7 @@ TQSize LightStyleV2::sizeFromContents( ContentsType contents,
 		if (mi->pixmap())
 		    h = QMAX(h, mi->pixmap()->height());
 		else if (! mi->text().isNull())
-		    h = QMAX(h, popupmenu->fontMetrics().height() + 2);
+		    h = QMAX(h, TQFontMetrics(ceData.font).height() + 2);
 		if (mi->iconSet() != 0)
 		    h = QMAX(h, mi->iconSet()->pixmap(TQIconSet::Small,
 						      TQIconSet::Normal).height());

@@ -204,9 +204,6 @@ private:
 		return maskMode?Keramik::TilePainter::PaintMask : Keramik::TilePainter::PaintFullBlend;
 	}
 
-	TQWidget* hoverWidget;
-
-
 	bool kickerMode;
 	
 	// For progress bar animation

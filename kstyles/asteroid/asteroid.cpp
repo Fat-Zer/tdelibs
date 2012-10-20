@@ -987,17 +987,16 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 		if ( !w || !w->parentWidget() || !o.tab() )
 			break;
 	
-		const TQTabBar * tb = (const TQTabBar *) w;
 		const TQTab * t = o.tab();
 		bool selected = sf & Style_Selected;
-		bool lastTab = (tb->indexOf( t->identifier() ) == tb->count()-1) ?
+		bool lastTab = (ceData.tabBarData.identIndexMap[t->identifier()] == ceData.tabBarData.tabCount-1) ?
 				TRUE : FALSE;
 		TQRect r2( r );
-		if ( tb->shape() == TQTabBar::RoundedAbove ) {
+		if ( ceData.tabBarData.shape == TQTabBar::RoundedAbove ) {
 			p->setPen( cg.light() );
 			p->drawLine( r2.left(), r2.bottom()-1, r2.right(), r2.bottom()-1 );
 			if ( r2.left() == 0 )
-			p->drawPoint( tb->rect().bottomLeft() );
+			p->drawPoint( ceData.rect.bottomLeft() );
 	
 			if ( selected ) {
 			p->fillRect( TQRect( r2.left()+1, r2.bottom()-1, r2.width()-3, 2),
@@ -1031,9 +1030,9 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 			x2++;
 			p->drawLine( x2, r2.top() + 2, x2, r2.bottom() -
 				(selected ? (lastTab ? 0:1) :2));
-		} else if ( tb->shape() == TQTabBar::RoundedBelow ) {
-			bool rightAligned = styleHint( SH_TabBar_Alignment, ceData, elementFlags, TQStyleOption::Default, 0, tb ) == TQt::AlignRight;
-			bool firstTab = tb->indexOf( t->identifier() ) == 0;
+		} else if ( ceData.tabBarData.shape == TQTabBar::RoundedBelow ) {
+			bool rightAligned = styleHint( SH_TabBar_Alignment, ceData, elementFlags, TQStyleOption::Default, 0, w ) == TQt::AlignRight;
+			bool firstTab = ceData.tabBarData.identIndexMap[t->identifier()] == 0;
 			if ( selected ) {
 			p->fillRect( TQRect( r2.left()+1, r2.top(), r2.width()-3, 1),
 					cg.brush( TQColorGroup::Background ));
@@ -1086,16 +1085,15 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 		if ( o.isDefault() )
 			break;
 	
-		const TQTabBar * tb = (const TQTabBar *) w;
 		TQTab * t = o.tab();
 
 		const bool enabled = sf & Style_Enabled;
 		bool etchtext = styleHint( SH_EtchDisabledText, ceData, elementFlags );
 	
 		TQRect tr = r;
-		if ( t->identifier() == tb->currentTab() )
+		if ( t->identifier() == ceData.tabBarData.currentTabIndex )
 			tr.setBottom( tr.bottom() -
-				pixelMetric( TQStyle::PM_DefaultFrameWidth, ceData, elementFlags, tb ) );
+				pixelMetric( TQStyle::PM_DefaultFrameWidth, ceData, elementFlags, w ) );
 	
 		int alignment = TQt::AlignCenter | TQt::ShowPrefix;
 		if ((!styleHint(SH_UnderlineAccelerator, ceData, elementFlags, TQStyleOption::Default, 0, w)) || ((styleHint(SH_HideUnderlineAcceleratorWhenAltUp, ceData, elementFlags, TQStyleOption::Default, 0, w)) && (!acceleratorsShown())))
@@ -1515,7 +1513,6 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 				return;
 			}
 
-			const TQPopupMenu *pum = dynamic_cast<const TQPopupMenu *>(w);
 			static const int itemFrame = 2;
 			static const int itemHMargin = 3;
 			static const int itemVMargin = 3;
@@ -1527,15 +1524,15 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 
 			bool active = sf & Style_Active;
 			bool disabled = !mi->isEnabled();
-			bool checkable = pum->isCheckable();
+			bool checkable = (elementFlags & CEF_IsCheckable);
 			bool enabled = mi->isEnabled();
 			bool etchtext = styleHint( SH_EtchDisabledText, ceData, elementFlags );
 
 			int xpos = x;
 			int xm = itemFrame + checkcol + itemHMargin;
 
-			if (pum->erasePixmap() && !pum->erasePixmap()->isNull()) {
-				p->drawPixmap(x, y, *pum->erasePixmap(), x, y, sw, sh);
+			if (!ceData.bgPixmap.isNull()) {
+				p->drawPixmap(x, y, ceData.bgPixmap, x, y, sw, sh);
 			} else {
 				p->fillRect(x, y, sw, sh, cg.background());
 			}
@@ -2615,16 +2612,12 @@ void AsteroidStyle::paletteChanged()
 
 bool AsteroidStyle::objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *e )
 {
-	if (ceData.widgetObjectTypes.contains(TQOBJECT_OBJECT_NAME_STRING)) {
-		TQObject* o = reinterpret_cast<TQObject*>(source);
-		/*	Win2K has this interesting behaviour where it sets the current
-			default button to whatever pushbutton the user presses the mouse
-			on. I _think_ this emulates that properly. -clee */
-		if (o->inherits(TQPUSHBUTTON_OBJECT_NAME_STRING)) {
-			if (e->type() == TQEvent::MouseButtonPress) {
-				TQPushButton *pb = dynamic_cast<TQPushButton *>(o);
-				pb->setDefault(TRUE);
-			}
+	/*	Win2K has this interesting behaviour where it sets the current
+		default button to whatever pushbutton the user presses the mouse
+		on. I _think_ this emulates that properly. -clee */
+	if (ceData.widgetObjectTypes.contains(TQPUSHBUTTON_OBJECT_NAME_STRING)) {
+		if (e->type() == TQEvent::MouseButtonPress) {
+			widgetActionRequest(ceData, elementFlags, source, WAR_SetDefault);
 		}
 	}
 

@@ -701,8 +701,7 @@ void KStyle::drawControl( TQ_ControlElement element,
 		// TABS
 		// ------------------------------------------------------------------------
 		case CE_TabBarTab: {
-			const TQTabBar* tb  = (const TQTabBar*) widget;
-			TQTabBar::Shape tbs = tb->shape();
+			TQTabBar::Shape tbs = ceData.tabBarData.shape;
 			bool selected      = flags & Style_Selected;
 			int x = r.x(), y=r.y(), bottom=r.bottom(), right=r.right();
 
@@ -1043,17 +1042,15 @@ int KStyle::pixelMetric(PixelMetric m, TQStyleControlElementData ceData, Control
 			return 24;
 
 		case PM_TabBarTabVSpace: {
-			const TQTabBar * tb = (const TQTabBar *) widget;
-			if ( tb->shape() == TQTabBar::RoundedAbove ||
-				 tb->shape() == TQTabBar::RoundedBelow )
+			if ( ceData.tabBarData.shape == TQTabBar::RoundedAbove ||
+				 ceData.tabBarData.shape == TQTabBar::RoundedBelow )
 				return 10;
 			else
 				return 4;
 		}
 
 		case PM_TabBarTabOverlap: {
-			const TQTabBar* tb = (const TQTabBar*)widget;
-			TQTabBar::Shape tbs = tb->shape();
+			TQTabBar::Shape tbs = ceData.tabBarData.shape;
 
 			if ( (tbs == TQTabBar::RoundedAbove) ||
 				 (tbs == TQTabBar::RoundedBelow) )

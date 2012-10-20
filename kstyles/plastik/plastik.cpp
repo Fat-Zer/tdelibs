@@ -156,10 +156,6 @@ PlastikStyle::PlastikStyle() : KStyle( AllowMenuTransparency, ThreeButtonScrollB
     kornMode(false),
     flatMode(false)
 {
-    hoverWidget = 0;
-    hoverTab = 0;
-
-
     horizontalLine = 0;
     verticalLine = 0;
 
@@ -1472,7 +1468,7 @@ void PlastikStyle::drawPrimitive(TQ_PrimitiveElement pe,
     bool horiz  = flags & Style_Horizontal;
     const bool enabled = flags & Style_Enabled;
     const bool mouseOver = flags & Style_MouseOver;
-    
+
     bool hasFocus = flags & Style_HasFocus;
 
     int x = r.x();
@@ -1835,7 +1831,7 @@ void PlastikStyle::drawPrimitive(TQ_PrimitiveElement pe,
     // --------------
         case PE_Splitter: {
             // highlight on mouse over
-            TQColor color = (static_cast<TQPaintDevice*>(static_cast<TQWidget*>(hoverWidget)) == static_cast<TQPaintDevice*>(p->device()))?TQColor(cg.background().light(100+_contrast)):cg.background();
+            TQColor color = (mouseOver)?TQColor(cg.background().light(100+_contrast)):cg.background();
             p->fillRect(r, color);
             if (w > h) {
                 if (h > 4) {
@@ -2310,31 +2306,26 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
     // TABS
     // ----
         case CE_TabBarTab: {
-            const TQTabBar * tb = (const TQTabBar *) widget;
             bool cornerWidget = false;
-            if( ::tqqt_cast<TQTabWidget*>(tb->parent()) ) {
-                const TQTabWidget *tw = (const TQTabWidget*)tb->parent();
-                // is there a corner widget in the (top) left edge?
-                TQWidget *cw = tw->cornerWidget(TQt::TopLeft);
-                if(cw)
-                    cornerWidget = true;
+            if (!ceData.tabBarData.cornerWidgets[TQStyleControlElementTabBarData::CWL_TopLeft].widgetObjectTypes.isEmpty()) {
+                cornerWidget = true;
             }
-            TQTabBar::Shape tbs = tb->shape();
+            TQTabBar::Shape tbs = ceData.tabBarData.shape;
             bool selected = false;
             if (flags & Style_Selected) selected = true;
             TabPosition pos;
-            if (tb->count() == 1) {
+            if (ceData.tabBarData.tabCount == 1) {
                 pos = Single;
-            } else if ((tb->indexOf(opt.tab()->identifier()) == 0)) {
+            } else if (ceData.tabBarData.identIndexMap[opt.tab()->identifier()] == 0) {
                 pos = First;
-            } else if (tb->indexOf(opt.tab()->identifier()) == tb->count() - 1) {
+            } else if (ceData.tabBarData.identIndexMap[opt.tab()->identifier()] == (ceData.tabBarData.tabCount - 1)) {
                 pos = Last;
             } else {
                 pos = Middle;
             }
 
             bool mouseOver = false;
-            if (opt.tab() == hoverTab) {
+            if (opt.tab() == opt.hoverTab()) {
                 mouseOver = true;
                 flags |= Style_MouseOver;
             }
@@ -2368,9 +2359,6 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
 
             if (button->isFlat() )
                 flatMode = true;
-
-            if (widget == hoverWidget)
-                flags |= Style_MouseOver;
 
             TQColorGroup g2 = cg;
             if (isDefault)
@@ -2491,7 +2479,6 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
     // POPUPMENU ITEM (highlighted on mouseover)
     // ------------------------------------------
         case CE_PopupMenuItem: {
-            const TQPopupMenu *popupmenu = static_cast< const TQPopupMenu * >( widget );
             TQMenuItem *mi = opt.menuItem();
 
             if ( !mi )
@@ -2506,7 +2493,7 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
             int  tab        = opt.tabWidth();
             int  checkcol   = opt.maxIconWidth();
             bool enabled    = mi->isEnabled();
-            bool checkable  = popupmenu->isCheckable();
+            bool checkable  = (elementFlags & CEF_IsCheckable);
             bool active     = flags & Style_Active;
             bool etchtext   = styleHint( SH_EtchDisabledText, ceData, elementFlags );
             bool reverse    = TQApplication::reverseLayout();
@@ -2872,7 +2859,7 @@ void PlastikStyle::drawComplexControl(TQ_ComplexControl control,
                 surfaceFlags |= Round_UpperRight|Round_BottomRight;
             }
 
-            if ((widget == hoverWidget) || (flags & Style_MouseOver)) {
+            if (flags & Style_MouseOver) {
                 surfaceFlags |= Is_Highlight;
                 if(editable) surfaceFlags |= Highlight_Left|Highlight_Right;
                 surfaceFlags |= Highlight_Top|Highlight_Bottom;
@@ -2889,7 +2876,7 @@ void PlastikStyle::drawComplexControl(TQ_ComplexControl control,
                     surfaceFlags |= Round_UpperLeft|Round_BottomLeft;
                 }
 
-                if ((widget == hoverWidget) || (flags & Style_MouseOver)) {
+                if (flags & Style_MouseOver) {
                     surfaceFlags |= Is_Highlight;
                     surfaceFlags |= Highlight_Top|Highlight_Bottom;
                 }
@@ -2974,7 +2961,7 @@ void PlastikStyle::drawComplexControl(TQ_ComplexControl control,
 
             if (controls & SC_ToolButton) {
             // If we're pressed, on, or raised...
-                if (bflags & (Style_Down | Style_On | Style_Raised) || widget==hoverWidget ) {
+                if (bflags & (Style_Down | Style_On | Style_Raised) || (flags & Style_MouseOver) ) {
                     drawPrimitive(PE_ButtonTool, p, ceData, elementFlags, button, cg, bflags, opt);
                 } else if (tb->parentWidget() &&
                             tb->parentWidget()->backgroundPixmap() &&
@@ -3084,7 +3071,7 @@ void PlastikStyle::drawComplexControl(TQ_ComplexControl control,
             } else {
                 surfaceFlags |= Round_UpperRight;
             }
-            if ((widget == hoverWidget) || (sflags & Style_MouseOver)) {
+            if (sflags & Style_MouseOver) {
                 surfaceFlags |= Is_Highlight;
                 surfaceFlags |= Highlight_Top|Highlight_Left|Highlight_Right;
             }
@@ -3098,7 +3085,7 @@ void PlastikStyle::drawComplexControl(TQ_ComplexControl control,
             } else {
                 surfaceFlags |= Round_BottomRight;
             }
-            if ((widget == hoverWidget) || (sflags & Style_MouseOver)) {
+            if (sflags & Style_MouseOver) {
                 surfaceFlags |= Is_Highlight;
                 surfaceFlags |= Highlight_Bottom|Highlight_Left|Highlight_Right;
             }
@@ -3278,9 +3265,8 @@ int PlastikStyle::pixelMetric(PixelMetric m, TQStyleControlElementData ceData, C
     // TABS
     // ----
         case PM_TabBarTabVSpace: {
-            const TQTabBar * tb = (const TQTabBar *) widget;
-            if (tb->shape() == TQTabBar::RoundedAbove ||
-                tb->shape() == TQTabBar::RoundedBelow)
+            if (ceData.tabBarData.shape == TQTabBar::RoundedAbove ||
+                ceData.tabBarData.shape == TQTabBar::RoundedBelow)
                 return 12;
             else
                 return 4;
@@ -3487,84 +3473,7 @@ bool PlastikStyle::objectEventHandler( TQStyleControlElementData ceData, Control
 	TQObject* obj = reinterpret_cast<TQObject*>(source);
 
 	if (!obj->isWidgetType() ) return false;
-	
-	// focus highlight
-	if ( ::tqqt_cast<TQLineEdit*>(obj) ) {
-		TQWidget* widget = TQT_TQWIDGET(obj);
-	
-		if ( ::tqqt_cast<TQSpinWidget*>(widget->parentWidget()) )
-		{
-		TQWidget* spinbox = widget->parentWidget();
-		if ((ev->type() == TQEvent::FocusIn) || (ev->type() == TQEvent::FocusOut))
-		{
-			spinbox->repaint(false);
-		}
-		return false;
-		}
-	
-		if ((ev->type() == TQEvent::FocusIn) || (ev->type() == TQEvent::FocusOut))
-		{
-		widget->repaint(false);
-		}
-		return false;
-	}
-	
-	//Hover highlight... use tqqt_cast to check if the widget inheits one of the classes.
-	if ( ::tqqt_cast<TQPushButton*>(obj) || ::tqqt_cast<TQComboBox*>(obj) ||
-		::tqqt_cast<TQSpinWidget*>(obj) || ::tqqt_cast<TQCheckBox*>(obj) ||
-		::tqqt_cast<TQRadioButton*>(obj) || ::tqqt_cast<TQToolButton*>(obj) || obj->inherits(TQSPLITTERHANDLE_OBJECT_NAME_STRING) )
-	{
-		if ((ev->type() == TQEvent::Enter) && TQT_TQWIDGET(obj)->isEnabled())
-		{
-		TQWidget* button = TQT_TQWIDGET(obj);
-		hoverWidget = button;
-		button->repaint(false);
-		}
-		else if ((ev->type() == TQEvent::Leave) && (TQT_BASE_OBJECT(obj) == TQT_BASE_OBJECT(hoverWidget)) )
-		{
-		TQWidget* button = TQT_TQWIDGET(obj);
-		hoverWidget = 0;
-		button->repaint(false);
-		}
-		return false;
-	}
-	if ( ::tqqt_cast<TQTabBar*>(obj) ) {
-		if ((ev->type() == TQEvent::Enter) && TQT_TQWIDGET(obj)->isEnabled())
-		{
-		TQWidget* tabbar = TQT_TQWIDGET(obj);
-		hoverWidget = tabbar;
-		hoverTab = 0;
-		tabbar->repaint(false);
-		}
-		else if (ev->type() == TQEvent::MouseMove)
-		{
-		TQTabBar *tabbar = dynamic_cast<TQTabBar*>(obj);
-		TQMouseEvent *me = dynamic_cast<TQMouseEvent*>(ev);
-	
-		if (tabbar && me) {
-			// avoid unnecessary repaints (which otherwise would occour on every
-			// MouseMove event causing high cpu load).
-	
-			bool repaint = true;
-	
-			TQTab *tab = tabbar->selectTab(me->pos() );
-			if (hoverTab == tab)
-			repaint = false;
-			hoverTab = tab;
-	
-			if (repaint)
-			tabbar->repaint(false);
-		}
-		}
-		else if (ev->type() == TQEvent::Leave)
-		{
-		TQWidget* tabbar = TQT_TQWIDGET(obj);
-		hoverWidget = 0;
-		hoverTab = 0;
-		tabbar->repaint(false);
-		}
-		return false;
-	}
+
 	// Track show events for progress bars
 	if ( _animateProgressBar && ::tqqt_cast<TQProgressBar*>(obj) )
 	{

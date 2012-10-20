@@ -179,7 +179,6 @@ HighColorStyle::HighColorStyle( StyleType styleType )
 	type = styleType;
 	highcolor = (type == HighColor && TQPixmap::defaultDepth() > 8);
 	gDict.setAutoDelete(true);
-	hoverWidget = 0L;
 	selectionBackground = false;
 }
 
@@ -1121,9 +1120,6 @@ void HighColorStyle::drawControl( TQ_ControlElement element,
 		// PUSHBUTTON
 		// -------------------------------------------------------------------
 		case CE_PushButton: {
-			if ( widget == hoverWidget )
-				flags |= Style_MouseOver;
-			
 			if ( type != HighColor ) {
 				TQPushButton *button = (TQPushButton*) widget;
 				TQRect br = r;
@@ -1293,8 +1289,6 @@ void HighColorStyle::drawControl( TQ_ControlElement element,
 		// POPUPMENU ITEM
 		// -------------------------------------------------------------------
 		case CE_PopupMenuItem: {
-			const TQPopupMenu *popupmenu = (const TQPopupMenu *) widget;
-
 			TQMenuItem *mi = opt.menuItem();
 			if ( !mi ) {
 				// Don't leave blank holes if we set NoBackground for the TQPopupMenu.
@@ -1307,7 +1301,7 @@ void HighColorStyle::drawControl( TQ_ControlElement element,
 			int  tab        = opt.tabWidth();
 			int  checkcol   = opt.maxIconWidth();
 			bool enabled    = mi->isEnabled();
-			bool checkable  = popupmenu->isCheckable();
+			bool checkable  = (elementFlags & CEF_IsCheckable);
 			bool active     = flags & Style_Active;
 			bool etchtext   = styleHint( SH_EtchDisabledText, ceData, elementFlags );
 			bool reverse    = TQApplication::reverseLayout();
@@ -1971,31 +1965,22 @@ bool HighColorStyle::objectEventHandler( TQStyleControlElementData ceData, Contr
 	if (KStyle::objectEventHandler( ceData, elementFlags, source, event ))
 		return true;
 
-	if (ceData.widgetObjectTypes.contains(TQOBJECT_OBJECT_NAME_STRING)) {
+	TQToolBar* toolbar;
+
+	if (ceData.widgetObjectTypes.contains(TQOBJECT_OBJECT_NAME_STRING))
+	{
 		TQObject* object = reinterpret_cast<TQObject*>(source);
 
-		TQToolBar* toolbar;
-	
-		// Handle push button hover effects.
-		TQPushButton* button = dynamic_cast<TQPushButton*>(object);
-		if ( button )
-		{
-			if ( (event->type() == TQEvent::Enter) &&
-				(button->isEnabled()) ) {
-				hoverWidget = button;
-				button->repaint( false );
-			} 
-			else if ( (event->type() == TQEvent::Leave) &&
-					(TQT_BASE_OBJECT(object) == TQT_BASE_OBJECT(hoverWidget)) ) {
-				hoverWidget = 0L;
-				button->repaint( false );
-			}
-		} else if ( object->parent() && !qstrcmp( object->name(), kdeToolbarWidget ) )
+		if ( object->parent() && !qstrcmp( object->name(), kdeToolbarWidget ) )
 		{
 			// Draw a gradient background for custom widgets in the toolbar
 			// that have specified a "kde toolbar widget" name.
+			// FIXME
+			// This currently requires direct widget access
+			// Is there any way to do this without it?
 	
 			if (event->type() == TQEvent::Paint ) {
+
 				// Find the top-level toolbar of this widget, since it may be nested in other
 				// widgets that are on the toolbar.
 				TQWidget *widget = TQT_TQWIDGET(object);
@@ -2023,11 +2008,16 @@ bool HighColorStyle::objectEventHandler( TQStyleControlElementData ceData, Contr
 				return false;	// Now draw the contents
 			}
 		} else if ( object->parent() &&
-				(toolbar = dynamic_cast<TQToolBar*>(object->parent())) )
+			(toolbar = dynamic_cast<TQToolBar*>(object->parent())) )
 		{
 			// We need to override the paint event to draw a 
 			// gradient on a QToolBarExtensionWidget.
+			// FIXME
+			// This currently requires direct widget access
+			// Is there any way to do this without it?
+	
 			if ( event->type() == TQEvent::Paint ) {
+
 				TQWidget *widget = TQT_TQWIDGET(object);
 				TQRect wr = widget->rect(), tr = toolbar->rect();
 				TQPainter p( widget );
