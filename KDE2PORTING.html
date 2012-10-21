@@ -18,7 +18,7 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
 <UL>
 <LI><A HREF="#gettingstarted">Getting Started</A></LI>
 <LI><A HREF="#general">Global changes</A></LI>
-<LI><A HREF="#autotqmoc">autotqmoc/am_edit, Makefile.am tags</A></LI>
+<LI><A HREF="#automoc">automoc/am_edit, Makefile.am tags</A></LI>
 <LI><A HREF="#KApplication">KApplication</A></LI>
 <LI><A HREF="#KCmdLineArgs">KCmdLineArgs</A></LI>
 <LI><A HREF="#KLocale">KLocale</A></LI>
@@ -95,12 +95,12 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
-<H3><A NAME="autotqmoc">autotqmoc/am_edit, Makefile.am tags</A></H3>
+<H3><A NAME="automoc">automoc/am_edit, Makefile.am tags</A></H3>
 
-  On the subject of the compilation framework, autotqmoc has been removed from
+  On the subject of the compilation framework, automoc has been removed from
   the admin directory. It has been replaced by am_edit which provides a lot of
   additional features.<P>
-  METASOURCES=AUTO still does the job of generating the appropriate tqmoc files,
+  METASOURCES=AUTO still does the job of generating the appropriate moc files,
   but in addition, you should use KDE_ICON for the icons representing the application
   (and naming those icons conforming to lo16-app-&lt;appname&gt;.png), and install
   the application-specific icons under $(kde_datadir)/&lt;appname&gt;/pics.
