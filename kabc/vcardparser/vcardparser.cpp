@@ -106,7 +106,7 @@ VCard::List VCardParser::parseVCards( const TQString& text )
           for ( ++paramIt; paramIt != params.end(); ++paramIt ) {
             TQStringList pair = TQStringList::split( '=', *paramIt );
             if ( pair.size() == 1 ) {
-              // correct the fucking 2.1 'standard'
+              // correct the 2.1 'standard'
               if ( pair[0].lower() == "quoted-printable" ) {
                 pair[0] = "encoding";
                 pair[1] = "quoted-printable";
