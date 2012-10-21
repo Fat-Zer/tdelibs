@@ -36,11 +36,11 @@ class KTabWidgetPrivate;
 class TDEUI_EXPORT KTabWidget : public TQTabWidget
 {
     Q_OBJECT
-    Q_PROPERTY( bool tabReorderingEnabled READ isTabReorderingEnabled WRITE setTabReorderingEnabled )
-    Q_PROPERTY( bool hoverCloseButton READ hoverCloseButton WRITE setHoverCloseButton )
-    Q_PROPERTY( bool hoverCloseButtonDelayed READ hoverCloseButtonDelayed WRITE setHoverCloseButtonDelayed )
-    Q_PROPERTY( bool tabCloseActivatePrevious READ tabCloseActivatePrevious WRITE setTabCloseActivatePrevious )
-    Q_PROPERTY( bool automaticResizeTabs READ automaticResizeTabs WRITE setAutomaticResizeTabs )
+    TQ_PROPERTY( bool tabReorderingEnabled READ isTabReorderingEnabled WRITE setTabReorderingEnabled )
+    TQ_PROPERTY( bool hoverCloseButton READ hoverCloseButton WRITE setHoverCloseButton )
+    TQ_PROPERTY( bool hoverCloseButtonDelayed READ hoverCloseButtonDelayed WRITE setHoverCloseButtonDelayed )
+    TQ_PROPERTY( bool tabCloseActivatePrevious READ tabCloseActivatePrevious WRITE setTabCloseActivatePrevious )
+    TQ_PROPERTY( bool automaticResizeTabs READ automaticResizeTabs WRITE setAutomaticResizeTabs )
 
 public:
     KTabWidget( TQWidget *parent = 0, const char *name = 0, WFlags f = 0 );

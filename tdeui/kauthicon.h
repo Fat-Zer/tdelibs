@@ -135,7 +135,7 @@ class KWritePermsIconPrivate;
 class TDEUI_EXPORT KWritePermsIcon : public KAuthIcon
 {
   Q_OBJECT
-  Q_PROPERTY( TQString fileName READ fileName WRITE setFileName )
+  TQ_PROPERTY( TQString fileName READ fileName WRITE setFileName )
 
 public:
   KWritePermsIcon(const TQString & fileName, TQWidget *parent = 0, const char *name = 0);

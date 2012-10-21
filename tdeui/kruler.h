@@ -71,21 +71,21 @@
 class TDEUI_EXPORT KRuler : public TQFrame
 {
   Q_OBJECT
-  Q_PROPERTY( int minValue READ minValue WRITE setMinValue )
-  Q_PROPERTY( int maxValue READ maxValue WRITE setMaxValue )
-  Q_PROPERTY( int value READ value WRITE setValue )
-  Q_PROPERTY( bool showTinyMarks READ showTinyMarks WRITE setShowTinyMarks )
-  Q_PROPERTY( bool showLittleMarks READ showLittleMarks WRITE setShowLittleMarks )
-  Q_PROPERTY( bool showMediumMarks READ showMediumMarks WRITE setShowMediumMarks )
-  Q_PROPERTY( bool showBigMarks READ showBigMarks WRITE setShowBigMarks )
-  Q_PROPERTY( bool showPointer READ showPointer WRITE setShowPointer )
-  Q_PROPERTY( bool showEndLabel READ showEndLabel WRITE setShowEndLabel )
-  Q_PROPERTY( int tinyMarkDistance READ tinyMarkDistance WRITE setTinyMarkDistance )
-  Q_PROPERTY( int littleMarkDistance READ littleMarkDistance WRITE setLittleMarkDistance )
-  Q_PROPERTY( int mediumMarkDistance READ mediumMarkDistance WRITE setBigMarkDistance )
-  Q_PROPERTY( int bigMarkDistance READ bigMarkDistance WRITE setBigMarkDistance )
-  Q_PROPERTY( double pixelPerMark READ pixelPerMark WRITE setPixelPerMark )
-  Q_PROPERTY( bool lengthFixed READ lengthFixed WRITE setLengthFixed )
+  TQ_PROPERTY( int minValue READ minValue WRITE setMinValue )
+  TQ_PROPERTY( int maxValue READ maxValue WRITE setMaxValue )
+  TQ_PROPERTY( int value READ value WRITE setValue )
+  TQ_PROPERTY( bool showTinyMarks READ showTinyMarks WRITE setShowTinyMarks )
+  TQ_PROPERTY( bool showLittleMarks READ showLittleMarks WRITE setShowLittleMarks )
+  TQ_PROPERTY( bool showMediumMarks READ showMediumMarks WRITE setShowMediumMarks )
+  TQ_PROPERTY( bool showBigMarks READ showBigMarks WRITE setShowBigMarks )
+  TQ_PROPERTY( bool showPointer READ showPointer WRITE setShowPointer )
+  TQ_PROPERTY( bool showEndLabel READ showEndLabel WRITE setShowEndLabel )
+  TQ_PROPERTY( int tinyMarkDistance READ tinyMarkDistance WRITE setTinyMarkDistance )
+  TQ_PROPERTY( int littleMarkDistance READ littleMarkDistance WRITE setLittleMarkDistance )
+  TQ_PROPERTY( int mediumMarkDistance READ mediumMarkDistance WRITE setBigMarkDistance )
+  TQ_PROPERTY( int bigMarkDistance READ bigMarkDistance WRITE setBigMarkDistance )
+  TQ_PROPERTY( double pixelPerMark READ pixelPerMark WRITE setPixelPerMark )
+  TQ_PROPERTY( bool lengthFixed READ lengthFixed WRITE setLengthFixed )
 
 public:
 

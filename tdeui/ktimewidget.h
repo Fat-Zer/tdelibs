@@ -37,7 +37,7 @@
 class TDEUI_EXPORT KTimeWidget : public TQWidget
 {
   Q_OBJECT
-  Q_PROPERTY( TQTime time READ time WRITE setTime )
+  TQ_PROPERTY( TQTime time READ time WRITE setTime )
 
 public:
   /**

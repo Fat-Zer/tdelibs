@@ -84,13 +84,13 @@
       <item> K_DCOP </item>
       <item> SLOT </item>
       <item> SIGNAL </item>
-      <item> Q_CLASSINFO </item>
-      <item> Q_ENUMS </item>
+      <item> TQ_CLASSINFO </item>
+      <item> TQ_ENUMS </item>
       <item> Q_EXPORT </item>
       <item> Q_OBJECT </item>
-      <item> Q_OVERRIDE </item>
-      <item> Q_PROPERTY </item>
-      <item> Q_SETS </item>
+      <item> TQ_OVERRIDE </item>
+      <item> TQ_PROPERTY </item>
+      <item> TQ_SETS </item>
       <item> Q_SIGNALS </item>
       <item> Q_SLOTS </item>
       <item> Q_FOREACH </item>

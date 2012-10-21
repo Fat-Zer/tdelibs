@@ -217,19 +217,19 @@ class KHTML_EXPORT KHTMLPart : public KParts::ReadOnlyPart
   friend class KHTMLPartFunction;
   friend class KHTMLPopupGUIClient;
 
-  Q_PROPERTY( bool javaScriptEnabled READ jScriptEnabled WRITE setJScriptEnabled )
-  Q_PROPERTY( bool javaEnabled READ javaEnabled WRITE setJavaEnabled )
-  Q_PROPERTY( bool autoloadImages READ autoloadImages WRITE setAutoloadImages )
-  Q_PROPERTY( bool dndEnabled READ dndEnabled WRITE setDNDEnabled )
-  Q_PROPERTY( bool pluginsEnabled READ pluginsEnabled WRITE setPluginsEnabled )
+  TQ_PROPERTY( bool javaScriptEnabled READ jScriptEnabled WRITE setJScriptEnabled )
+  TQ_PROPERTY( bool javaEnabled READ javaEnabled WRITE setJavaEnabled )
+  TQ_PROPERTY( bool autoloadImages READ autoloadImages WRITE setAutoloadImages )
+  TQ_PROPERTY( bool dndEnabled READ dndEnabled WRITE setDNDEnabled )
+  TQ_PROPERTY( bool pluginsEnabled READ pluginsEnabled WRITE setPluginsEnabled )
 
   /*
    *
    * Don't add setOnlyLocalReferences here. It shouldn't be accessible via DCOP.
    *
    **/
-  Q_PROPERTY( TQCString dcopObjectId READ dcopObjectId )
-  Q_PROPERTY( bool modified READ isModified )
+  TQ_PROPERTY( TQCString dcopObjectId READ dcopObjectId )
+  TQ_PROPERTY( bool modified READ isModified )
 
 public:
   enum GUIProfile { DefaultGUI, BrowserViewGUI /* ... */ };

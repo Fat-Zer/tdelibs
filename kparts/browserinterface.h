@@ -26,7 +26,7 @@ namespace KParts
  *
  * Qt properties:
  * <code>
- * Q_PROPERTY( uint historyLength READ historyLength );
+ * TQ_PROPERTY( uint historyLength READ historyLength );
  * </code>
  *
  * Callable methods:

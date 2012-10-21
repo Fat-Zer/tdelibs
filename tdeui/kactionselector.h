@@ -78,15 +78,15 @@ class KActionSelectorPrivate;
 
 class TDEUI_EXPORT KActionSelector : public TQWidget {
   Q_OBJECT
-  Q_ENUMS( ButtonIconSize InsertionPolicy )
-  Q_PROPERTY( bool moveOnDoubleClick READ moveOnDoubleClick WRITE setMoveOnDoubleClick )
-  Q_PROPERTY( bool keyboardEnabled READ keyboardEnabled WRITE setKeyboardEnabled )
-  Q_PROPERTY( TQString availableLabel READ availableLabel WRITE setAvailableLabel )
-  Q_PROPERTY( TQString selectedLabel READ selectedLabel WRITE setSelectedLabel )
-  Q_PROPERTY( ButtonIconSize buttonIconSize READ buttonIconSize WRITE setButtonIconSize )
-  Q_PROPERTY( InsertionPolicy availableInsertionPolicy READ availableInsertionPolicy WRITE setAvailableInsertionPolicy )
-  Q_PROPERTY( InsertionPolicy selectedInsertionPolicy READ selectedInsertionPolicy WRITE setSelectedInsertionPolicy )
-  Q_PROPERTY( bool showUpDownButtons READ showUpDownButtons WRITE setShowUpDownButtons )
+  TQ_ENUMS( ButtonIconSize InsertionPolicy )
+  TQ_PROPERTY( bool moveOnDoubleClick READ moveOnDoubleClick WRITE setMoveOnDoubleClick )
+  TQ_PROPERTY( bool keyboardEnabled READ keyboardEnabled WRITE setKeyboardEnabled )
+  TQ_PROPERTY( TQString availableLabel READ availableLabel WRITE setAvailableLabel )
+  TQ_PROPERTY( TQString selectedLabel READ selectedLabel WRITE setSelectedLabel )
+  TQ_PROPERTY( ButtonIconSize buttonIconSize READ buttonIconSize WRITE setButtonIconSize )
+  TQ_PROPERTY( InsertionPolicy availableInsertionPolicy READ availableInsertionPolicy WRITE setAvailableInsertionPolicy )
+  TQ_PROPERTY( InsertionPolicy selectedInsertionPolicy READ selectedInsertionPolicy WRITE setSelectedInsertionPolicy )
+  TQ_PROPERTY( bool showUpDownButtons READ showUpDownButtons WRITE setShowUpDownButtons )
 
 public:
   KActionSelector( TQWidget *parent=0, const char *name=0 );

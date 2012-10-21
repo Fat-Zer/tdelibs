@@ -151,10 +151,10 @@ class KURL;
 class TDEUI_EXPORT KComboBox : public TQComboBox, public KCompletionBase
 {
   Q_OBJECT
-  Q_PROPERTY( bool autoCompletion READ autoCompletion WRITE setAutoCompletion )
-  Q_PROPERTY( bool contextMenuEnabled READ isContextMenuEnabled WRITE setContextMenuEnabled )
-  Q_PROPERTY( bool urlDropsEnabled READ isURLDropsEnabled WRITE setURLDropsEnabled )
-  Q_PROPERTY( bool trapReturnKey READ trapReturnKey WRITE setTrapReturnKey )
+  TQ_PROPERTY( bool autoCompletion READ autoCompletion WRITE setAutoCompletion )
+  TQ_PROPERTY( bool contextMenuEnabled READ isContextMenuEnabled WRITE setContextMenuEnabled )
+  TQ_PROPERTY( bool urlDropsEnabled READ isURLDropsEnabled WRITE setURLDropsEnabled )
+  TQ_PROPERTY( bool trapReturnKey READ trapReturnKey WRITE setTrapReturnKey )
 
 public:
 
@@ -540,7 +540,7 @@ class KPixmapProvider;
 class TDEUI_EXPORT KHistoryCombo : public KComboBox
 {
     Q_OBJECT
-    Q_PROPERTY( TQStringList historyItems READ historyItems WRITE setHistoryItems )
+    TQ_PROPERTY( TQStringList historyItems READ historyItems WRITE setHistoryItems )
 
 public:
     /**

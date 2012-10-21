@@ -140,10 +140,10 @@ private:
 class TDEUI_EXPORT KCharSelect : public TQVBox
 {
     Q_OBJECT
-    Q_PROPERTY( TQString fontFamily READ font WRITE setFont )
-    Q_PROPERTY( int tableNum READ tableNum WRITE setTableNum )
-    Q_PROPERTY( bool fontComboEnabled READ isFontComboEnabled WRITE enableFontCombo )
-    Q_PROPERTY( bool tableSpinBoxEnabled READ isTableSpinBoxEnabled WRITE enableTableSpinBox )
+    TQ_PROPERTY( TQString fontFamily READ font WRITE setFont )
+    TQ_PROPERTY( int tableNum READ tableNum WRITE setTableNum )
+    TQ_PROPERTY( bool fontComboEnabled READ isFontComboEnabled WRITE enableFontCombo )
+    TQ_PROPERTY( bool tableSpinBoxEnabled READ isTableSpinBoxEnabled WRITE enableTableSpinBox )
 
 public:
     /**

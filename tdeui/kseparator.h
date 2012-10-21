@@ -33,7 +33,7 @@
 class TDEUI_EXPORT KSeparator : public TQFrame
 {
   Q_OBJECT
-  Q_PROPERTY( int orientation READ orientation WRITE setOrientation )
+  TQ_PROPERTY( int orientation READ orientation WRITE setOrientation )
  public:
   /**
    * Constructor.

@@ -43,8 +43,8 @@
 class TDEUI_EXPORT KXYSelector : public TQWidget
 {
   Q_OBJECT
-  Q_PROPERTY( int xValue READ xValue WRITE setXValue )
-  Q_PROPERTY( int yValue READ yValue WRITE setYValue )
+  TQ_PROPERTY( int xValue READ xValue WRITE setXValue )
+  TQ_PROPERTY( int yValue READ yValue WRITE setYValue )
   
 public:
   /**
@@ -159,9 +159,9 @@ private:
 class TDEUI_EXPORT KSelector : public TQWidget, public TQRangeControl
 {
   Q_OBJECT
-  Q_PROPERTY( int value READ value WRITE setValue )
-  Q_PROPERTY( int minValue READ minValue WRITE setMinValue )
-  Q_PROPERTY( int maxValue READ maxValue WRITE setMaxValue )
+  TQ_PROPERTY( int value READ value WRITE setValue )
+  TQ_PROPERTY( int minValue READ minValue WRITE setMinValue )
+  TQ_PROPERTY( int maxValue READ maxValue WRITE setMaxValue )
 public:
 
   /**
@@ -294,10 +294,10 @@ class TDEUI_EXPORT KGradientSelector : public KSelector
 {
   Q_OBJECT
 
-  Q_PROPERTY( TQColor firstColor READ firstColor WRITE setFirstColor )
-  Q_PROPERTY( TQColor secondColor READ secondColor WRITE setSecondColor )
-  Q_PROPERTY( TQString firstText READ firstText WRITE setFirstText )
-  Q_PROPERTY( TQString secondText READ secondText WRITE setSecondText )
+  TQ_PROPERTY( TQColor firstColor READ firstColor WRITE setFirstColor )
+  TQ_PROPERTY( TQColor secondColor READ secondColor WRITE setSecondColor )
+  TQ_PROPERTY( TQString firstText READ firstText WRITE setFirstText )
+  TQ_PROPERTY( TQString secondText READ secondText WRITE setSecondText )
 
 public:
   /**

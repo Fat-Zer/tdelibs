@@ -56,19 +56,19 @@ class TDEUI_EXPORT KListView : public TQListView
 
   Q_OBJECT
   
-  Q_ENUMS( SelectionModeExt )
-  Q_PROPERTY( bool fullWidth READ fullWidth WRITE setFullWidth )
-  Q_PROPERTY( bool itemsMovable READ itemsMovable WRITE setItemsMovable )
-  Q_PROPERTY( bool itemsRenameable READ itemsRenameable WRITE setItemsRenameable )
-  Q_PROPERTY( bool dragEnabled READ dragEnabled  WRITE  setDragEnabled )
-  Q_PROPERTY( bool autoOpen READ autoOpen WRITE setAutoOpen )
-  Q_PROPERTY( bool dropVisualizer READ dropVisualizer WRITE setDropVisualizer )
-  Q_PROPERTY( int tooltipColumn READ tooltipColumn WRITE  setTooltipColumn )
-  Q_PROPERTY( int dropVisualizerWidth READ dropVisualizerWidth WRITE  setDropVisualizerWidth )
-  Q_PROPERTY( TQColor alternateBackground READ alternateBackground WRITE  setAlternateBackground )
-  Q_PROPERTY( bool shadeSortColumn READ shadeSortColumn WRITE setShadeSortColumn )
+  TQ_ENUMS( SelectionModeExt )
+  TQ_PROPERTY( bool fullWidth READ fullWidth WRITE setFullWidth )
+  TQ_PROPERTY( bool itemsMovable READ itemsMovable WRITE setItemsMovable )
+  TQ_PROPERTY( bool itemsRenameable READ itemsRenameable WRITE setItemsRenameable )
+  TQ_PROPERTY( bool dragEnabled READ dragEnabled  WRITE  setDragEnabled )
+  TQ_PROPERTY( bool autoOpen READ autoOpen WRITE setAutoOpen )
+  TQ_PROPERTY( bool dropVisualizer READ dropVisualizer WRITE setDropVisualizer )
+  TQ_PROPERTY( int tooltipColumn READ tooltipColumn WRITE  setTooltipColumn )
+  TQ_PROPERTY( int dropVisualizerWidth READ dropVisualizerWidth WRITE  setDropVisualizerWidth )
+  TQ_PROPERTY( TQColor alternateBackground READ alternateBackground WRITE  setAlternateBackground )
+  TQ_PROPERTY( bool shadeSortColumn READ shadeSortColumn WRITE setShadeSortColumn )
 
-  Q_OVERRIDE( SelectionModeExt selectionMode READ selectionModeExt WRITE setSelectionModeExt )
+  TQ_OVERRIDE( SelectionModeExt selectionMode READ selectionModeExt WRITE setSelectionModeExt )
 
 public:
   /**

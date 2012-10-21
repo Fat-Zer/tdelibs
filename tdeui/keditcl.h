@@ -59,9 +59,9 @@ private:
 class TDEUI_EXPORT KEdFind : public KDialogBase
 {
     Q_OBJECT
-    Q_PROPERTY( TQString text READ getText WRITE setText )
-    Q_PROPERTY( bool caseSensitivity READ case_sensitive WRITE setCaseSensitive )
-    Q_PROPERTY( bool direction READ get_direction WRITE setDirection )
+    TQ_PROPERTY( TQString text READ getText WRITE setText )
+    TQ_PROPERTY( bool caseSensitivity READ case_sensitive WRITE setCaseSensitive )
+    TQ_PROPERTY( bool direction READ get_direction WRITE setDirection )
 public:
 
     KEdFind( TQWidget *parent = 0, const char *name=0, bool modal=true);

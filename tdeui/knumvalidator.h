@@ -180,7 +180,7 @@ class TDEUI_EXPORT KFloatValidator : public TQValidator {
 
 class TDEUI_EXPORT KDoubleValidator : public TQDoubleValidator {
   Q_OBJECT
-  Q_PROPERTY( bool acceptLocalizedNumbers READ acceptLocalizedNumbers WRITE setAcceptLocalizedNumbers )
+  TQ_PROPERTY( bool acceptLocalizedNumbers READ acceptLocalizedNumbers WRITE setAcceptLocalizedNumbers )
 public:
   /** Constuct a locale-aware KDoubleValidator with default range
       (whatever TQDoubleValidator uses for that) and parent @p

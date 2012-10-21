@@ -105,12 +105,12 @@ class TDEUI_EXPORT KToolBar : public TQToolBar
 {
     Q_OBJECT
     
-    Q_ENUMS( IconText BarPosition )
-    Q_PROPERTY( IconText iconText READ iconText WRITE setIconText )
-    Q_PROPERTY( BarPosition barPos READ barPos WRITE setBarPos )
-    Q_PROPERTY( bool fullSize READ fullSize WRITE setFullSize )
-    Q_PROPERTY( int iconSize READ iconSize WRITE setIconSize )
-    Q_PROPERTY( TQString text READ text WRITE setText )
+    TQ_ENUMS( IconText BarPosition )
+    TQ_PROPERTY( IconText iconText READ iconText WRITE setIconText )
+    TQ_PROPERTY( BarPosition barPos READ barPos WRITE setBarPos )
+    TQ_PROPERTY( bool fullSize READ fullSize WRITE setFullSize )
+    TQ_PROPERTY( int iconSize READ iconSize WRITE setIconSize )
+    TQ_PROPERTY( TQString text READ text WRITE setText )
 
 public:
     enum IconText{IconOnly = 0, IconTextRight, TextOnly, IconTextBottom};

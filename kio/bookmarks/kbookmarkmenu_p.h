@@ -54,8 +54,8 @@ class KPopupMenu;
 
 class KImportedBookmarksActionMenu : public KActionMenu {
   Q_OBJECT
-  Q_PROPERTY( TQString type READ type WRITE setType )
-  Q_PROPERTY( TQString location READ location WRITE setLocation )
+  TQ_PROPERTY( TQString type READ type WRITE setType )
+  TQ_PROPERTY( TQString location READ location WRITE setLocation )
 public:
   const TQString type() const { return m_type; }
   void setType(const TQString &type) { m_type = type; }
@@ -75,9 +75,9 @@ public:
 
 class KBookmarkActionMenu : public KActionMenu {
   Q_OBJECT
-  Q_PROPERTY( TQString url READ url WRITE setUrl )
-  Q_PROPERTY( TQString address READ address WRITE setAddress )
-  Q_PROPERTY( bool readOnly READ readOnly WRITE setReadOnly )
+  TQ_PROPERTY( TQString url READ url WRITE setUrl )
+  TQ_PROPERTY( TQString address READ address WRITE setAddress )
+  TQ_PROPERTY( bool readOnly READ readOnly WRITE setReadOnly )
 public:
   const TQString url() const { return m_url; }
   void setUrl(const TQString &url) { m_url = url; }
@@ -100,8 +100,8 @@ public:
 
 class KBookmarkAction : public KAction {
   Q_OBJECT
-  Q_PROPERTY( TQString url READ url WRITE setUrl )
-  Q_PROPERTY( TQString address READ address WRITE setAddress )
+  TQ_PROPERTY( TQString url READ url WRITE setUrl )
+  TQ_PROPERTY( TQString address READ address WRITE setAddress )
 public:
   const TQString url() const { return m_url; }
   void setUrl(const TQString &url) { m_url = url; }

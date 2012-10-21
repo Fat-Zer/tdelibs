@@ -59,9 +59,9 @@
  **/
 class TDEUI_EXPORT KStringListValidator : public TQValidator {
   Q_OBJECT
-  Q_PROPERTY( TQStringList stringList READ stringList WRITE setStringList )
-  Q_PROPERTY( bool rejecting READ isRejecting WRITE setRejecting )
-  Q_PROPERTY( bool fixupEnabled READ isFixupEnabled WRITE setFixupEnabled )
+  TQ_PROPERTY( TQStringList stringList READ stringList WRITE setStringList )
+  TQ_PROPERTY( bool rejecting READ isRejecting WRITE setRejecting )
+  TQ_PROPERTY( bool fixupEnabled READ isFixupEnabled WRITE setFixupEnabled )
 public:
   /** Construct a new validator.
    *

@@ -54,7 +54,7 @@ class KIntNumInput;
 class TDEUI_EXPORT KFontChooser : public TQWidget
 {
   Q_OBJECT
-  Q_PROPERTY( TQFont font READ font WRITE setFont )
+  TQ_PROPERTY( TQFont font READ font WRITE setFont )
 
 public:
   /**

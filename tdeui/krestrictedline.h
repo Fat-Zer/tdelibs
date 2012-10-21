@@ -44,7 +44,7 @@
 class TDEUI_EXPORT KRestrictedLine : public KLineEdit
 {
   Q_OBJECT
-  Q_PROPERTY( TQString validChars READ validChars WRITE setValidChars )
+  TQ_PROPERTY( TQString validChars READ validChars WRITE setValidChars )
 
 public:
 

@@ -43,8 +43,8 @@ class TDEUI_EXPORT KIconView : public TQIconView
 {
   friend class KIconViewItem;
   Q_OBJECT
-  Q_ENUMS( Mode )
-  Q_PROPERTY( Mode mode READ mode WRITE setMode )
+  TQ_ENUMS( Mode )
+  TQ_PROPERTY( Mode mode READ mode WRITE setMode )
 
 public:
   KIconView( TQWidget *parent = 0, const char *name = 0, WFlags f = 0 );

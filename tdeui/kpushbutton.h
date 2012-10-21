@@ -37,8 +37,8 @@ class TQDragObject;
 class TDEUI_EXPORT KPushButton : public TQPushButton
 {
     Q_OBJECT
-    Q_PROPERTY(int stdItem READ guiItm WRITE setGuiItm )
-    Q_PROPERTY(bool isDragEnabled READ isDragEnabled WRITE setDragEnabled)
+    TQ_PROPERTY(int stdItem READ guiItm WRITE setGuiItm )
+    TQ_PROPERTY(bool isDragEnabled READ isDragEnabled WRITE setDragEnabled)
 
 public:
 

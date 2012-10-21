@@ -56,10 +56,10 @@ class TQTimer;
 class KIO_EXPORT KURLRequester : public TQHBox
 {
     Q_OBJECT
-    Q_PROPERTY( TQString url READ url WRITE setURL )
-    Q_PROPERTY( bool showLocalProtocol READ showLocalProtocol WRITE setShowLocalProtocol )
-    Q_PROPERTY( TQString filter READ filter WRITE setFilter )
-    Q_PROPERTY( uint mode READ mode WRITE setMode )
+    TQ_PROPERTY( TQString url READ url WRITE setURL )
+    TQ_PROPERTY( bool showLocalProtocol READ showLocalProtocol WRITE setShowLocalProtocol )
+    TQ_PROPERTY( TQString filter READ filter WRITE setFilter )
+    TQ_PROPERTY( uint mode READ mode WRITE setMode )
 
 public:
     /**

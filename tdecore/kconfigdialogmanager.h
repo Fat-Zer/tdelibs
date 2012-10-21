@@ -50,14 +50,14 @@ class TQSqlPropertyMap;
  * database, it simply uses the functionality that is built into the
  * TQSqlPropertyMap class.  New widgets can be added to the map using
  * TQSqlPropertyMap::installDefaultMap().  Note that you can't just add any
- * class.  The class must have a matching Q_PROPERTY(...) macro defined.
+ * class.  The class must have a matching TQ_PROPERTY(...) macro defined.
  *
  * For example (note that KColorButton is already added and it doesn't need to
  * manually added):
  *
  * kcolorbutton.h defines the following property:
  * \code
- * Q_PROPERTY( TQColor color READ color WRITE setColor )
+ * TQ_PROPERTY( TQColor color READ color WRITE setColor )
  * \endcode
  *
  * To add KColorButton the following code would be inserted in the main.
