@@ -41,15 +41,15 @@
 #include <kaboutdialog_private.h>
 #include <kdebug.h>
 
-//TQMOC_SKIP_BEGIN
+//MOC_SKIP_BEGIN
 template class TQPtrList<KAboutContributor>;
-//TQMOC_SKIP_END
+//MOC_SKIP_END
 
 #define WORKTEXT_IDENTATION 16
 #define Grid 3
 
 // ##############################################################
-// TQMOC OUTPUT FILES:
+// MOC OUTPUT FILES:
 #include "kaboutdialog.moc"
 #include "kaboutdialog_private.moc"
 // ##############################################################
@@ -928,7 +928,7 @@ void KAboutContainer::addImage( const TQString &fileName, int alignment )
 }
 
 #if 0
-//TQMOC_SKIP_BEGIN
+//MOC_SKIP_BEGIN
 
 /** Every person displayed is stored in a KAboutContributor object.
  *  Every contributor, the author and/or the maintainer of the application are
@@ -1181,7 +1181,7 @@ KAboutContributor::paintEvent(TQPaintEvent* e)
   paint.drawText(WORKTEXT_IDENTATION, cy, w, h, AlignLeft | WordBreak, work);
   // ############################################################################
 }
-// TQMOC_SKIP_END
+// MOC_SKIP_END
 #endif
 
 

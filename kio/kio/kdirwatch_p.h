@@ -1,6 +1,6 @@
 /* Private Header for class of KDirWatchPrivate
  *
- * this separate header file is needed for TQMOC processing
+ * this separate header file is needed for MOC processing
  * because KDirWatchPrivate has signals and slots
  */
 

@@ -140,7 +140,7 @@ KMdi::TabWidgetVisibility KMdiDocumentViewTabWidget::tabWidgetVisibility( )
 }
 
 
-#ifndef NO_INCLUDE_TQMOCFILES
+#ifndef NO_INCLUDE_MOCFILES
 #include "kmdidocumentviewtabwidget.moc"
 #endif
 

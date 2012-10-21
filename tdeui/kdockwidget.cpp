@@ -3326,6 +3326,6 @@ void KDockArea::virtual_hook( int, void* )
 { /*KMainWindow::virtual_hook( id, data );*/ }
 
 
-#ifndef NO_INCLUDE_TQMOCFILES // for Qt-only projects, because tmake doesn't take this name
+#ifndef NO_INCLUDE_MOCFILES // for Qt-only projects, because tmake doesn't take this name
 #include "kdockwidget.moc"
 #endif

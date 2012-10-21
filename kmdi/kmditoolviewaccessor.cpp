@@ -262,7 +262,7 @@ void KMdiToolViewAccessor::show()
 }
 
 
-#ifndef NO_INCLUDE_TQMOCFILES
+#ifndef NO_INCLUDE_MOCFILES
 #include "kmditoolviewaccessor.moc"
 #endif 
 // kate: space-indent off; tab-width 4; replace-tabs off; indent-mode csands;

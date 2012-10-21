@@ -1,6 +1,6 @@
 /* Private Header for class of KSimpleDirWatchPrivate
  *
- * this separate header file is needed for TQMOC processing
+ * this separate header file is needed for MOC processing
  * because KSimpleDirWatchPrivate has signals and slots
  *
  * KSimpleDirWatch is a basic copy of KDirWatch
