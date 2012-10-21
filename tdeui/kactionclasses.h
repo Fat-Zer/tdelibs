@@ -69,8 +69,8 @@ class TDEUI_EXPORT KToggleAction : public KAction
 {
     Q_OBJECT
     
-    Q_PROPERTY( bool checked READ isChecked WRITE setChecked )
-    Q_PROPERTY( TQString exclusiveGroup READ exclusiveGroup WRITE setExclusiveGroup )
+    TQ_PROPERTY( bool checked READ isChecked WRITE setChecked )
+    TQ_PROPERTY( TQString exclusiveGroup READ exclusiveGroup WRITE setExclusiveGroup )
 public:
 
     /**
@@ -332,12 +332,12 @@ class TDEUI_EXPORT KSelectAction : public KAction
 {
     Q_OBJECT
     
-    Q_PROPERTY( int currentItem READ currentItem WRITE setCurrentItem )
-    Q_PROPERTY( TQStringList items READ items WRITE setItems )
-    Q_PROPERTY( bool editable READ isEditable WRITE setEditable )
-    Q_PROPERTY( int comboWidth READ comboWidth WRITE setComboWidth )
-    Q_PROPERTY( TQString currentText READ currentText )
-    Q_PROPERTY( bool menuAccelsEnabled READ menuAccelsEnabled WRITE setMenuAccelsEnabled )
+    TQ_PROPERTY( int currentItem READ currentItem WRITE setCurrentItem )
+    TQ_PROPERTY( TQStringList items READ items WRITE setItems )
+    TQ_PROPERTY( bool editable READ isEditable WRITE setEditable )
+    TQ_PROPERTY( int comboWidth READ comboWidth WRITE setComboWidth )
+    TQ_PROPERTY( TQString currentText READ currentText )
+    TQ_PROPERTY( bool menuAccelsEnabled READ menuAccelsEnabled WRITE setMenuAccelsEnabled )
 public:
 
     /**
@@ -701,7 +701,7 @@ class TDEUI_EXPORT KRecentFilesAction : public KListAction  // TODO public KSele
 {
   Q_OBJECT
   
-  Q_PROPERTY( uint maxItems READ maxItems WRITE setMaxItems )
+  TQ_PROPERTY( uint maxItems READ maxItems WRITE setMaxItems )
 public:
   /**
    *  @param text The text that will be displayed.
@@ -911,7 +911,7 @@ class TDEUI_EXPORT KFontAction : public KSelectAction
 {
     Q_OBJECT
     
-    Q_PROPERTY( TQString font READ font WRITE setFont )
+    TQ_PROPERTY( TQString font READ font WRITE setFont )
 public:
     KFontAction( const TQString& text, const KShortcut& cut = KShortcut(), TQObject* parent = 0,
                  const char* name = 0 );
@@ -962,7 +962,7 @@ class TDEUI_EXPORT KFontSizeAction : public KSelectAction
 {
     Q_OBJECT
     
-    Q_PROPERTY( int fontSize READ fontSize WRITE setFontSize )
+    TQ_PROPERTY( int fontSize READ fontSize WRITE setFontSize )
 public:
     KFontSizeAction( const TQString& text, const KShortcut& cut = KShortcut(), TQObject* parent = 0,
                      const char* name = 0 );
@@ -1021,8 +1021,8 @@ class TDEUI_EXPORT KActionMenu : public KAction
 {
   Q_OBJECT
   
-  Q_PROPERTY( bool delayed READ delayed WRITE setDelayed )
-  Q_PROPERTY( bool stickyMenu READ stickyMenu WRITE setStickyMenu )
+  TQ_PROPERTY( bool delayed READ delayed WRITE setDelayed )
+  TQ_PROPERTY( bool stickyMenu READ stickyMenu WRITE setStickyMenu )
 
 public:
     KActionMenu( const TQString& text, TQObject* parent = 0,
@@ -1095,8 +1095,8 @@ class TDEUI_EXPORT KToolBarPopupAction : public KAction
 {
   Q_OBJECT
   
-  Q_PROPERTY( bool delayed READ delayed WRITE setDelayed )
-  Q_PROPERTY( bool stickyMenu READ stickyMenu WRITE setStickyMenu )
+  TQ_PROPERTY( bool delayed READ delayed WRITE setDelayed )
+  TQ_PROPERTY( bool stickyMenu READ stickyMenu WRITE setStickyMenu )
 
 public:
     //Not all constructors - because we need an icon, since this action only makes

@@ -71,13 +71,13 @@ class TQPixmap;
 class TDEUI_EXPORT KURLLabel : public TQLabel
 {
   Q_OBJECT
-  Q_PROPERTY (TQString url READ url WRITE setURL)
-  Q_PROPERTY (TQString tipText READ tipText WRITE setTipText )
-  Q_PROPERTY (TQPixmap altPixmap READ altPixmap WRITE setAltPixmap)
-  Q_PROPERTY (bool glowEnabled READ isGlowEnabled WRITE setGlow )
-  Q_PROPERTY (bool floatEnabled READ isFloatEnabled WRITE setFloat )
-  Q_PROPERTY (bool useTips READ useTips WRITE setUseTips )
-  Q_PROPERTY (bool useCursor READ useCursor WRITE setUseCursor )
+  TQ_PROPERTY (TQString url READ url WRITE setURL)
+  TQ_PROPERTY (TQString tipText READ tipText WRITE setTipText )
+  TQ_PROPERTY (TQPixmap altPixmap READ altPixmap WRITE setAltPixmap)
+  TQ_PROPERTY (bool glowEnabled READ isGlowEnabled WRITE setGlow )
+  TQ_PROPERTY (bool floatEnabled READ isFloatEnabled WRITE setFloat )
+  TQ_PROPERTY (bool useTips READ useTips WRITE setUseTips )
+  TQ_PROPERTY (bool useCursor READ useCursor WRITE setUseCursor )
 
 public:
   /**

@@ -428,10 +428,10 @@ LOOP:
 #			);
 #
 
-		next if ( $p =~ /^\s*Q_ENUMS/			# ignore Q_ENUMS
-						|| $p =~ /^\s*Q_PROPERTY/		# and Q_PROPERTY
-						|| $p =~ /^\s*Q_OVERRIDE/		# and Q_OVERRIDE
-						|| $p =~ /^\s*Q_SETS/
+		next if ( $p =~ /^\s*TQ_ENUMS/			# ignore TQ_ENUMS
+						|| $p =~ /^\s*TQ_PROPERTY/		# and TQ_PROPERTY
+						|| $p =~ /^\s*TQ_OVERRIDE/		# and TQ_OVERRIDE
+						|| $p =~ /^\s*TQ_SETS/
 						|| $p =~ /^\s*Q_DUMMY_COMPARISON_OPERATOR/
 						|| $p =~ /^\s*K_SYCOCATYPE/		# and K_SYCOCA stuff
 						|| $p =~ /^\s*K_SYCOCAFACTORY/	#

@@ -147,12 +147,12 @@ class TDEUI_EXPORT KLineEdit : public TQLineEdit, public KCompletionBase
     friend class KComboBox;
 
     Q_OBJECT
-    Q_PROPERTY( bool contextMenuEnabled READ isContextMenuEnabled WRITE setContextMenuEnabled )
-    Q_PROPERTY( bool urlDropsEnabled READ isURLDropsEnabled WRITE setURLDropsEnabled )
-    Q_PROPERTY( bool trapEnterKeyEvent READ trapReturnKey WRITE setTrapReturnKey )
-    Q_PROPERTY( bool enableSqueezedText READ isSqueezedTextEnabled WRITE setEnableSqueezedText )
+    TQ_PROPERTY( bool contextMenuEnabled READ isContextMenuEnabled WRITE setContextMenuEnabled )
+    TQ_PROPERTY( bool urlDropsEnabled READ isURLDropsEnabled WRITE setURLDropsEnabled )
+    TQ_PROPERTY( bool trapEnterKeyEvent READ trapReturnKey WRITE setTrapReturnKey )
+    TQ_PROPERTY( bool enableSqueezedText READ isSqueezedTextEnabled WRITE setEnableSqueezedText )
     // @since 3.5.4
-    Q_PROPERTY( TQString clickMessage READ clickMessage WRITE setClickMessage )
+    TQ_PROPERTY( TQString clickMessage READ clickMessage WRITE setClickMessage )
 
 public:
 

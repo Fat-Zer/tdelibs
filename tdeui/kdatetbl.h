@@ -263,8 +263,8 @@ public:
 class TDEUI_EXPORT KDateTable : public TQGridView
 {
     Q_OBJECT
-    Q_PROPERTY( TQDate date READ getDate WRITE setDate )
-    Q_PROPERTY( bool popupMenu READ popupMenuEnabled WRITE setPopupMenuEnabled )
+    TQ_PROPERTY( TQDate date READ getDate WRITE setDate )
+    TQ_PROPERTY( bool popupMenu READ popupMenuEnabled WRITE setPopupMenuEnabled )
 
 public:
     /**

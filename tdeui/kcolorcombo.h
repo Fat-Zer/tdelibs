@@ -39,7 +39,7 @@ class KColorComboInternal;
 class TDEUI_EXPORT KColorCombo : public TQComboBox
 {
     Q_OBJECT
-    Q_PROPERTY( TQColor color READ color WRITE setColor )
+    TQ_PROPERTY( TQColor color READ color WRITE setColor )
 
 public:
     /**

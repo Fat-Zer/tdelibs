@@ -68,8 +68,8 @@ class TQVBox;
 class TDEUI_EXPORT KPassivePopup : public TQFrame
 {
     Q_OBJECT
-    Q_PROPERTY (bool autoDelete READ autoDelete WRITE setAutoDelete )
-    Q_PROPERTY (int timeout READ timeout WRITE setTimeout )
+    TQ_PROPERTY (bool autoDelete READ autoDelete WRITE setAutoDelete )
+    TQ_PROPERTY (int timeout READ timeout WRITE setTimeout )
 
 public:
     /**

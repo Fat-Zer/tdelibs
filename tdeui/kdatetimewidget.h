@@ -40,7 +40,7 @@
 class TDEUI_EXPORT KDateTimeWidget : public TQWidget
 {
   Q_OBJECT
-  Q_PROPERTY( TQDateTime dateTime READ dateTime WRITE setDateTime )
+  TQ_PROPERTY( TQDateTime dateTime READ dateTime WRITE setDateTime )
 
 public:
   /**

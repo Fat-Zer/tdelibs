@@ -308,7 +308,7 @@ class BrowserExtensionPrivate;
 class KPARTS_EXPORT BrowserExtension : public TQObject
 {
   Q_OBJECT
-  Q_PROPERTY( bool urlDropHandling READ isURLDropHandlingEnabled WRITE setURLDropHandlingEnabled )
+  TQ_PROPERTY( bool urlDropHandling READ isURLDropHandlingEnabled WRITE setURLDropHandlingEnabled )
 public:
   /**
    * Constructor

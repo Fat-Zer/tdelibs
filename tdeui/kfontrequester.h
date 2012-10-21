@@ -45,9 +45,9 @@ class TDEUI_EXPORT KFontRequester : public TQWidget
 {
   Q_OBJECT
 
-  Q_PROPERTY( TQString title READ title WRITE setTitle )
-  Q_PROPERTY( TQString sampleText READ sampleText WRITE setSampleText )
-  Q_PROPERTY( TQFont font READ font WRITE setFont )
+  TQ_PROPERTY( TQString title READ title WRITE setTitle )
+  TQ_PROPERTY( TQString sampleText READ sampleText WRITE setSampleText )
+  TQ_PROPERTY( TQFont font READ font WRITE setFont )
 
   public:
 

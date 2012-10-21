@@ -48,11 +48,11 @@ class TQBitmap;
 class TDEUI_EXPORT KDualColorButton : public TQWidget
 {
     Q_OBJECT
-    Q_ENUMS( DualColor )
-    Q_PROPERTY( TQColor foreground READ foreground WRITE setForeground )
-    Q_PROPERTY( TQColor background READ background WRITE setBackground )
-    Q_PROPERTY( TQColor currentColor READ currentColor WRITE setCurrentColor STORED false DESIGNABLE false )
-    Q_PROPERTY( DualColor current READ current WRITE setCurrent )
+    TQ_ENUMS( DualColor )
+    TQ_PROPERTY( TQColor foreground READ foreground WRITE setForeground )
+    TQ_PROPERTY( TQColor background READ background WRITE setBackground )
+    TQ_PROPERTY( TQColor currentColor READ currentColor WRITE setCurrentColor STORED false DESIGNABLE false )
+    TQ_PROPERTY( DualColor current READ current WRITE setCurrent )
 
 public:
 

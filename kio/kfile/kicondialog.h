@@ -257,9 +257,9 @@ private:
 class KIO_EXPORT KIconButton: public TQPushButton
 {
     Q_OBJECT
-    Q_PROPERTY( TQString icon READ icon WRITE setIcon RESET resetIcon )
-    Q_PROPERTY( int iconSize READ iconSize WRITE setIconSize)
-    Q_PROPERTY( bool strictIconSize READ strictIconSize WRITE setStrictIconSize )
+    TQ_PROPERTY( TQString icon READ icon WRITE setIcon RESET resetIcon )
+    TQ_PROPERTY( int iconSize READ iconSize WRITE setIconSize)
+    TQ_PROPERTY( bool strictIconSize READ strictIconSize WRITE setStrictIconSize )
 
 public:
     /**

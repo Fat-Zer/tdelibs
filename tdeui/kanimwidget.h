@@ -55,8 +55,8 @@ class KAnimWidgetPrivate;
 class TDEUI_EXPORT KAnimWidget : public TQFrame
 {
   Q_OBJECT
-  Q_PROPERTY( int size READ size WRITE setSize )
-  Q_PROPERTY( TQString icons READ icons WRITE setIcons )
+  TQ_PROPERTY( int size READ size WRITE setSize )
+  TQ_PROPERTY( TQString icons READ icons WRITE setIcons )
 
 public:
   /**

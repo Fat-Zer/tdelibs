@@ -43,9 +43,9 @@ class TQEvent;
 class TDEUI_EXPORT KCompletionBox : public KListBox
 {
     Q_OBJECT
-    Q_PROPERTY( bool isTabHandling READ isTabHandling WRITE setTabHandling )
-    Q_PROPERTY(TQString cancelledText READ cancelledText WRITE setCancelledText)
-    Q_PROPERTY( bool activateOnSelect READ activateOnSelect WRITE setActivateOnSelect )
+    TQ_PROPERTY( bool isTabHandling READ isTabHandling WRITE setTabHandling )
+    TQ_PROPERTY(TQString cancelledText READ cancelledText WRITE setCancelledText)
+    TQ_PROPERTY( bool activateOnSelect READ activateOnSelect WRITE setActivateOnSelect )
 
 public:
     /**

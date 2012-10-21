@@ -91,7 +91,7 @@
       <item> Q_ASSERT </item>
       <item> Q_ASSERT_X </item>
       <item> Q_CHECK_PTR </item>
-      <item> Q_CLASSINFO </item>
+      <item> TQ_CLASSINFO </item>
       <item> Q_CLEANUP_RESOURCE </item>
       <item> Q_D </item>
       <item> Q_DECLARE_FLAGS </item>
@@ -105,7 +105,7 @@
       <item> Q_DECLARE_TYPEINFO </item>
       <item> Q_DISABLE_COPY </item>
       <item> Q_EMIT </item>
-      <item> Q_ENUMS </item>
+      <item> TQ_ENUMS </item>
       <item> Q_EXPORT </item>
       <item> Q_FLAGS </item>
       <item> Q_FOREACH </item>
@@ -118,13 +118,13 @@
       <item> Q_INVOKABLE </item>
       <item> Q_NOREPLY </item>
       <item> Q_OBJECT </item>
-      <item> Q_OVERRIDE </item>
+      <item> TQ_OVERRIDE </item>
       <item> Q_PRIVATE_SLOT </item>
-      <item> Q_PROPERTY </item>
+      <item> TQ_PROPERTY </item>
       <item> Q_Q </item>
       <item> Q_RETURN_ARG </item>
       <item> Q_SCRIPTABLE </item>
-      <item> Q_SETS </item>
+      <item> TQ_SETS </item>
       <item> Q_SIGNALS </item>
       <item> Q_SLOTS </item>
       <item> Q_UNUSED </item>

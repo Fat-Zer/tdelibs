@@ -42,7 +42,7 @@
 class TDEUI_EXPORT KTextBrowser : public TQTextBrowser
 {
   Q_OBJECT
-  Q_PROPERTY( bool notifyClick READ isNotifyClick WRITE setNotifyClick )
+  TQ_PROPERTY( bool notifyClick READ isNotifyClick WRITE setNotifyClick )
 
   public:
     /**

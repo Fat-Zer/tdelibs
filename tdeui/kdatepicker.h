@@ -51,9 +51,9 @@ class KDateTable;
 class TDEUI_EXPORT KDatePicker: public TQFrame
 {
   Q_OBJECT
-  Q_PROPERTY( TQDate date READ date WRITE setDate)
-  Q_PROPERTY( bool closeButton READ hasCloseButton WRITE setCloseButton )
-  Q_PROPERTY( int fontSize READ fontSize WRITE setFontSize )
+  TQ_PROPERTY( TQDate date READ date WRITE setDate)
+  TQ_PROPERTY( bool closeButton READ hasCloseButton WRITE setCloseButton )
+  TQ_PROPERTY( int fontSize READ fontSize WRITE setFontSize )
 
 public:
   /** The usual constructor.  The given date will be displayed

@@ -37,8 +37,8 @@ class KColorButtonPrivate;
 class TDEUI_EXPORT KColorButton : public TQPushButton
 {
     Q_OBJECT
-    Q_PROPERTY( TQColor color READ color WRITE setColor )
-    Q_PROPERTY( TQColor defaultColor READ defaultColor WRITE setDefaultColor )
+    TQ_PROPERTY( TQColor color READ color WRITE setColor )
+    TQ_PROPERTY( TQColor defaultColor READ defaultColor WRITE setDefaultColor )
 
 public:
     /**

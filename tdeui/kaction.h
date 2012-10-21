@@ -203,15 +203,15 @@ class TDEUI_EXPORT KAction : public TQObject
 {
   friend class KActionCollection;
   Q_OBJECT
-  Q_PROPERTY( int containerCount READ containerCount )
-  Q_PROPERTY( TQString plainText READ plainText )
-  Q_PROPERTY( TQString text READ text WRITE setText )
-  Q_PROPERTY( TQString shortcut READ shortcutText WRITE setShortcutText )
-  Q_PROPERTY( bool enabled READ isEnabled WRITE setEnabled )
-  Q_PROPERTY( TQString group READ group WRITE setGroup )
-  Q_PROPERTY( TQString whatsThis READ whatsThis WRITE setWhatsThis )
-  Q_PROPERTY( TQString toolTip READ toolTip WRITE setToolTip )
-  Q_PROPERTY( TQString icon READ icon WRITE setIcon )
+  TQ_PROPERTY( int containerCount READ containerCount )
+  TQ_PROPERTY( TQString plainText READ plainText )
+  TQ_PROPERTY( TQString text READ text WRITE setText )
+  TQ_PROPERTY( TQString shortcut READ shortcutText WRITE setShortcutText )
+  TQ_PROPERTY( bool enabled READ isEnabled WRITE setEnabled )
+  TQ_PROPERTY( TQString group READ group WRITE setGroup )
+  TQ_PROPERTY( TQString whatsThis READ whatsThis WRITE setWhatsThis )
+  TQ_PROPERTY( TQString toolTip READ toolTip WRITE setToolTip )
+  TQ_PROPERTY( TQString icon READ icon WRITE setIcon )
 public:
     /**
      * Constructs an action with text, potential keyboard
@@ -436,7 +436,7 @@ public:
      */
     virtual const KShortcut& shortcutDefault() const;
 
-    // These two methods are for Q_PROPERTY
+    // These two methods are for TQ_PROPERTY
     TQString shortcutText() const;
     void setShortcutText( const TQString& );
 

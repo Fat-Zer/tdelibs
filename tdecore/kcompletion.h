@@ -131,10 +131,10 @@ class TQPopupMenu;
  */
 class TDECORE_EXPORT KCompletion : public TQObject
 {
-    Q_ENUMS( CompOrder )
-    Q_PROPERTY( CompOrder order READ order WRITE setOrder )
-    Q_PROPERTY( bool ignoreCase READ ignoreCase WRITE setIgnoreCase )
-    Q_PROPERTY( TQStringList items READ items WRITE setItems )
+    TQ_ENUMS( CompOrder )
+    TQ_PROPERTY( CompOrder order READ order WRITE setOrder )
+    TQ_PROPERTY( bool ignoreCase READ ignoreCase WRITE setIgnoreCase )
+    TQ_PROPERTY( TQStringList items READ items WRITE setItems )
     Q_OBJECT
 
 public:

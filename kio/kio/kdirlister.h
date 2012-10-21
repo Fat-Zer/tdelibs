@@ -59,12 +59,12 @@ class KIO_EXPORT KDirLister : public TQObject
   friend class KDirListerCache;
 
   Q_OBJECT
-  Q_PROPERTY( bool autoUpdate READ autoUpdate WRITE setAutoUpdate )
-  Q_PROPERTY( bool showingDotFiles READ showingDotFiles WRITE setShowingDotFiles )
-  Q_PROPERTY( bool dirOnlyMode READ dirOnlyMode WRITE setDirOnlyMode )
-  Q_PROPERTY( bool autoErrorHandlingEnabled READ autoErrorHandlingEnabled )
-  Q_PROPERTY( TQString nameFilter READ nameFilter WRITE setNameFilter )
-  Q_PROPERTY( TQStringList mimeFilter READ mimeFilters WRITE setMimeFilter RESET clearMimeFilter )
+  TQ_PROPERTY( bool autoUpdate READ autoUpdate WRITE setAutoUpdate )
+  TQ_PROPERTY( bool showingDotFiles READ showingDotFiles WRITE setShowingDotFiles )
+  TQ_PROPERTY( bool dirOnlyMode READ dirOnlyMode WRITE setDirOnlyMode )
+  TQ_PROPERTY( bool autoErrorHandlingEnabled READ autoErrorHandlingEnabled )
+  TQ_PROPERTY( TQString nameFilter READ nameFilter WRITE setNameFilter )
+  TQ_PROPERTY( TQStringList mimeFilter READ mimeFilters WRITE setMimeFilter RESET clearMimeFilter )
 
 public:
   /**

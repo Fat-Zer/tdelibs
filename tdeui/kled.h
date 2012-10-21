@@ -45,13 +45,13 @@ class TQColor;
 class TDEUI_EXPORT KLed : public TQWidget
 {
     Q_OBJECT
-    Q_ENUMS( State Shape Look )
-    Q_PROPERTY( State state READ state WRITE setState )
-    Q_PROPERTY( Shape shape READ shape WRITE setShape )
-    Q_PROPERTY( Look look READ look WRITE setLook )
-    Q_PROPERTY( TQColor color READ color WRITE setColor )
-    Q_PROPERTY( TQColor offColor READ color WRITE setOffColor )
-    Q_PROPERTY( int darkFactor READ darkFactor WRITE setDarkFactor )
+    TQ_ENUMS( State Shape Look )
+    TQ_PROPERTY( State state READ state WRITE setState )
+    TQ_PROPERTY( Shape shape READ shape WRITE setShape )
+    TQ_PROPERTY( Look look READ look WRITE setLook )
+    TQ_PROPERTY( TQColor color READ color WRITE setColor )
+    TQ_PROPERTY( TQColor offColor READ color WRITE setOffColor )
+    TQ_PROPERTY( int darkFactor READ darkFactor WRITE setDarkFactor )
 
 public:
 

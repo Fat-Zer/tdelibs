@@ -35,12 +35,12 @@
 class TDEUI_EXPORT KFontCombo : public KComboBox
 {
     Q_OBJECT
-    Q_PROPERTY(TQString family READ currentFont WRITE setCurrentFont)
-    Q_PROPERTY(bool bold READ bold WRITE setBold DESIGNABLE true)
-    Q_PROPERTY(bool italic READ italic WRITE setItalic DESIGNABLE true)
-    Q_PROPERTY(bool underline READ underline WRITE setUnderline DESIGNABLE true)
-    Q_PROPERTY(bool strikeOut READ strikeOut WRITE setStrikeOut DESIGNABLE true)
-    Q_PROPERTY(int fontSize READ size WRITE setSize DESIGNABLE true)
+    TQ_PROPERTY(TQString family READ currentFont WRITE setCurrentFont)
+    TQ_PROPERTY(bool bold READ bold WRITE setBold DESIGNABLE true)
+    TQ_PROPERTY(bool italic READ italic WRITE setItalic DESIGNABLE true)
+    TQ_PROPERTY(bool underline READ underline WRITE setUnderline DESIGNABLE true)
+    TQ_PROPERTY(bool strikeOut READ strikeOut WRITE setStrikeOut DESIGNABLE true)
+    TQ_PROPERTY(int fontSize READ size WRITE setSize DESIGNABLE true)
 public:
     /**
      * Constructor

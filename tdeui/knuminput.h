@@ -50,7 +50,7 @@ class TDEUI_EXPORT KNumInput : public TQWidget
 {
     Q_OBJECT
     
-    Q_PROPERTY( TQString label READ label WRITE setLabel )
+    TQ_PROPERTY( TQString label READ label WRITE setLabel )
 public:
     /**
      * Default constructor
@@ -189,14 +189,14 @@ class TDEUI_EXPORT KIntNumInput : public KNumInput
 {
     Q_OBJECT
     
-    Q_PROPERTY( int value READ value WRITE setValue )
-    Q_PROPERTY( int minValue READ minValue WRITE setMinValue )
-    Q_PROPERTY( int maxValue READ maxValue WRITE setMaxValue )
-    Q_PROPERTY( int referencePoint READ referencePoint WRITE setReferencePoint )
-    Q_PROPERTY( double relativeValue READ relativeValue WRITE setRelativeValue )
-    Q_PROPERTY( TQString suffix READ suffix WRITE setSuffix )
-    Q_PROPERTY( TQString prefix READ prefix WRITE setPrefix )
-    Q_PROPERTY( TQString specialValueText READ specialValueText WRITE setSpecialValueText )
+    TQ_PROPERTY( int value READ value WRITE setValue )
+    TQ_PROPERTY( int minValue READ minValue WRITE setMinValue )
+    TQ_PROPERTY( int maxValue READ maxValue WRITE setMaxValue )
+    TQ_PROPERTY( int referencePoint READ referencePoint WRITE setReferencePoint )
+    TQ_PROPERTY( double relativeValue READ relativeValue WRITE setRelativeValue )
+    TQ_PROPERTY( TQString suffix READ suffix WRITE setSuffix )
+    TQ_PROPERTY( TQString prefix READ prefix WRITE setPrefix )
+    TQ_PROPERTY( TQString specialValueText READ specialValueText WRITE setSpecialValueText )
 
 public:
     /**
@@ -435,15 +435,15 @@ class TDEUI_EXPORT KDoubleNumInput : public KNumInput
 {
     Q_OBJECT
     
-    Q_PROPERTY( double value READ value WRITE setValue )
-    Q_PROPERTY( double minValue READ minValue WRITE setMinValue )
-    Q_PROPERTY( double maxValue READ maxValue WRITE setMaxValue )
-    Q_PROPERTY( TQString suffix READ suffix WRITE setSuffix )
-    Q_PROPERTY( TQString prefix READ prefix WRITE setPrefix )
-    Q_PROPERTY( TQString specialValueText READ specialValueText WRITE setSpecialValueText )
-    Q_PROPERTY( int precision READ precision WRITE setPrecision )
-    Q_PROPERTY( double referencePoint READ referencePoint WRITE setReferencePoint )
-    Q_PROPERTY( double relativeValue READ relativeValue  WRITE setRelativeValue )
+    TQ_PROPERTY( double value READ value WRITE setValue )
+    TQ_PROPERTY( double minValue READ minValue WRITE setMinValue )
+    TQ_PROPERTY( double maxValue READ maxValue WRITE setMaxValue )
+    TQ_PROPERTY( TQString suffix READ suffix WRITE setSuffix )
+    TQ_PROPERTY( TQString prefix READ prefix WRITE setPrefix )
+    TQ_PROPERTY( TQString specialValueText READ specialValueText WRITE setSpecialValueText )
+    TQ_PROPERTY( int precision READ precision WRITE setPrecision )
+    TQ_PROPERTY( double referencePoint READ referencePoint WRITE setReferencePoint )
+    TQ_PROPERTY( double relativeValue READ relativeValue  WRITE setRelativeValue )
 
 public:
     /**
@@ -708,7 +708,7 @@ class TDEUI_EXPORT KIntSpinBox : public TQSpinBox
 {
     Q_OBJECT
     
-    Q_PROPERTY( int base READ base WRITE setBase )
+    TQ_PROPERTY( int base READ base WRITE setBase )
 
 public:
 
@@ -838,12 +838,12 @@ private:
 class TDEUI_EXPORT KDoubleSpinBox : public TQSpinBox {
   Q_OBJECT
   
-  Q_PROPERTY( bool acceptLocalizedNumbers READ acceptLocalizedNumbers WRITE setAcceptLocalizedNumbers )
-  Q_OVERRIDE( double maxValue READ maxValue WRITE setMaxValue )
-  Q_OVERRIDE( double minValue READ minValue WRITE setMinValue )
-  Q_OVERRIDE( double lineStep READ lineStep WRITE setLineStep )
-  Q_OVERRIDE( double value READ value WRITE setValue )
-  Q_PROPERTY( int precision READ precision WRITE setPrecision )
+  TQ_PROPERTY( bool acceptLocalizedNumbers READ acceptLocalizedNumbers WRITE setAcceptLocalizedNumbers )
+  TQ_OVERRIDE( double maxValue READ maxValue WRITE setMaxValue )
+  TQ_OVERRIDE( double minValue READ minValue WRITE setMinValue )
+  TQ_OVERRIDE( double lineStep READ lineStep WRITE setLineStep )
+  TQ_OVERRIDE( double value READ value WRITE setValue )
+  TQ_PROPERTY( int precision READ precision WRITE setPrecision )
 
 public:
   /** Constructs a KDoubleSpinBox with parent @p parent and
