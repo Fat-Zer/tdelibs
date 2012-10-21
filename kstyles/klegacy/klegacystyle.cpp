@@ -866,7 +866,7 @@ GtkObject *GtkObject::find(TQRegExp &r) const {
     while ((o = ot.current()) != 0) {
 	++ot;
 
-	// this would be nice if tqmoc could parse this file :/
+	// this would be nice if moc could parse this file :/
 	//
 	// if (o->className() != "GtkObject") {
 	//     tqDebug("object is not a GtkObject (className = '%s')",
