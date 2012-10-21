@@ -67,7 +67,7 @@
 
 #endif /*_KDELIBS_EXPORT_H*/
 
-/* workaround for tdecore: stupid tqmoc's grammar doesn't accept two macros
+/* workaround for tdecore: stupid moc's grammar doesn't accept two macros
    between 'class' keyword and <classname>: */
 #ifdef KDE_DEPRECATED
 # ifndef TDECORE_EXPORT_DEPRECATED

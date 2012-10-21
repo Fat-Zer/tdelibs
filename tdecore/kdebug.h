@@ -281,7 +281,7 @@ class TDECORE_EXPORT kdbgstream {
      ;
 
     /** Operator to print out basic information about a TQWidget.
-     *  Output of class names only works if the class is tqmoc'ified.
+     *  Output of class names only works if the class is moc'ified.
      * @param widget the widget to print
      * @return this stream
      */

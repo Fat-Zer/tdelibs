@@ -67,7 +67,7 @@ class TDEUI_EXPORT KArrowButton : public TQPushButton
 		*/
 		Qt::ArrowType arrowType() const;
 
-		// hacks for tqmoc braindamages with enums
+		// hacks for moc braindamages with enums
 		int arrowTp() const { return (int) arrowType(); }
 		void setArrowTp( int tp ) { setArrowType( (Qt::ArrowType) tp ); }
 	public slots:

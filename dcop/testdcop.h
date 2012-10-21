@@ -35,7 +35,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <stdio.h>
 /**
- $QTDIR/bin/tqmoc testdcop.cpp -o testdcop.moc
+ $QTDIR/bin/moc testdcop.cpp -o testdcop.moc
  g++ -o testdcop testdcop.cpp -I$QTDIR/include -L$QTDIR/lib
  @internal
 

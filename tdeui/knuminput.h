@@ -876,7 +876,7 @@ public:
   int precision() const;
 
   /** Equivalent to setPrecision( @p precision, @p false ); Needed
-      since Qt's tqmoc doesn't ignore trailing parameters with default
+      since Qt's moc doesn't ignore trailing parameters with default
       args when searching for a property setter method. */
   void setPrecision( int precision );
 

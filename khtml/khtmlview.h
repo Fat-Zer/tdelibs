@@ -231,7 +231,7 @@ protected slots:
 #ifndef NO_SMOOTH_SCROLL_HACK
     void scrollTick();
 #else
-    void scrollTick() {}; // tqmoc cannot handle #if
+    void scrollTick() {}; // moc cannot handle #if
 #endif
 
 private slots:
