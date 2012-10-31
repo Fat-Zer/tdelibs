@@ -390,6 +390,12 @@ int KThemeStyle::pixelMetric ( PixelMetric metric, TQStyleControlElementData ceD
         case PM_SplitterWidth:
             return ( splitWidth() );
 
+        case PM_MenuIndicatorFrameHBorder:
+        case PM_MenuIndicatorFrameVBorder:
+        case PM_MenuIconIndicatorFrameHBorder:
+        case PM_MenuIconIndicatorFrameVBorder:
+            return 0;
+
         default:
             return KThemeBase::pixelMetric ( metric, ceData, elementFlags, widget );
     }
@@ -1096,7 +1102,11 @@ void KThemeStyle::drawPrimitive ( PrimitiveElement pe, TQPainter * p, TQStyleCon
             {
                 int x, y, w, h;
                 r.rect( &x, &y, &w, &h );
-                TQRect cr = visualRect( TQRect( x, y, w, h ), r );
+                int checkcol = styleHint(SH_MenuIndicatorColumnWidth, ceData, elementFlags, opt, NULL, NULL);
+                bool reverse = TQApplication::reverseLayout();
+
+                int cx = reverse ? x + w - checkcol : x;
+                TQRect cr = visualRect( TQRect( x, y, checkcol, h ), r );
                 const TQColorGroup& cg_ours = *colorGroup( g_base, active ? MenuItemDown : MenuItem );
                 drawBaseButton( p, cr.x(), cr.y(), cr.width(), cr.height(), *colorGroup( cg_ours, BevelDown ), true, false, BevelDown );
                 break;
@@ -1105,13 +1115,17 @@ void KThemeStyle::drawPrimitive ( PrimitiveElement pe, TQPainter * p, TQStyleCon
             {
                 int x, y, w, h;
                 r.rect( &x, &y, &w, &h );
-                TQRect cr = visualRect( TQRect( x, y, w, h ), r );
+                int checkcol = styleHint(SH_MenuIndicatorColumnWidth, ceData, elementFlags, opt, NULL, NULL);
+                bool reverse = TQApplication::reverseLayout();
+
+                int cx = reverse ? x + w - checkcol : x;
+                TQRect cr = visualRect( TQRect( x, y, checkcol, h ), r );
                 const TQColorGroup& cg_ours = *colorGroup( g_base, active ? MenuItemDown : MenuItem );
 
                 SFlags cflags = Style_Default;
                 cflags |= active ? Style_Enabled : Style_On;
 
-                drawPrimitive( PE_CheckMark, p, ceData, elementFlags, TQRect( x + itemFrame, y + itemFrame, w - itemFrame * 2, h - itemFrame * 2 ), cg_ours, cflags );
+                drawPrimitive( PE_CheckMark, p, ceData, elementFlags, TQRect( x + itemFrame, y + itemFrame, checkcol - itemFrame * 2, h - itemFrame * 2 ), cg_ours, cflags );
                 break;
             }
         default:
@@ -1554,7 +1568,7 @@ void KThemeStyle::drawControl( ControlElement element,
                     // Do we have an icon and are checked at the same time?
                     // Then draw a "pressed" background behind the icon
                     if ( checkable && mi->isChecked() )  //!active && -- ??
-                        drawPrimitive(PE_MenuItemIndicatorIconFrame, p, ceData, elementFlags, TQRect(x, y, checkcol, h), cg, how);
+                        drawPrimitive(PE_MenuItemIndicatorIconFrame, p, ceData, elementFlags, r, cg, how, opt);
 
                     // Draw the icon
                     TQPixmap pixmap = mi->iconSet() ->pixmap( TQIconSet::Small, mode );
@@ -1569,8 +1583,6 @@ void KThemeStyle::drawControl( ControlElement element,
                 // Are we checked? (This time without an icon)
                 else if ( checkable && mi->isChecked() )
                 {
-                    int cx = reverse ? x + w - checkcol : x;
-
                     // We only have to draw the background if the menu item is inactive -
                     // if it's active the "pressed" background is already drawn
                     //if ( ! active )
@@ -1578,7 +1590,7 @@ void KThemeStyle::drawControl( ControlElement element,
                     //     &cg_ours.brush(TQColorGroup::Midlight) );
 
                     // Draw the checkmark
-                    drawPrimitive(PE_MenuItemIndicatorCheck, p, ceData, elementFlags, TQRect(cx, y, checkcol, h), cg, how);
+                    drawPrimitive(PE_MenuItemIndicatorCheck, p, ceData, elementFlags, r, cg, how, opt);
                 }
 
                 // Time to draw the menu item label...
@@ -2255,6 +2267,18 @@ int KThemeStyle::styleHint( StyleHint sh, TQStyleControlElementData ceData, Cont
 
 	case SH_ScrollBar_BackgroundMode:
 	    return NoBackground;
+
+    case SH_MenuIndicatorColumnWidth:
+        {
+            int checkcol = opt.maxIconWidth();
+            bool checkable = (elementFlags & CEF_IsCheckable);
+
+            if ( checkable )
+                    checkcol = QMAX( checkcol, 20 );
+
+            return checkcol;
+            break;
+        }
 
         default:
             return KThemeBase::styleHint( sh, ceData, elementFlags, opt, shr, w );

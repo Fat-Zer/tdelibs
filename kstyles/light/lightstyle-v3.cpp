@@ -751,12 +751,24 @@ void LightStyleV3::drawPrimitive( TQ_PrimitiveElement pe,
     case PE_MenuItemIndicatorFrame:
     case PE_MenuItemIndicatorIconFrame:
 	{
-	    qDrawShadePanel(p, r, cg, true, 1, &cg.brush(TQColorGroup::Midlight));
+	    int checkcol = styleHint(SH_MenuIndicatorColumnWidth, ceData, elementFlags, data, NULL, NULL);
+	    TQRect cr(r.left(), r.top(), checkcol, r.height());
+	    bool reverse = TQApplication::reverseLayout();
+	    if ( reverse ) {
+		cr = visualRect( cr, r );
+	    }
+	    qDrawShadePanel(p, cr, cg, true, 1, &cg.brush(TQColorGroup::Midlight));
 	}
 	break;
     case PE_MenuItemIndicatorCheck:
 	{
-	    drawPrimitive(PE_CheckMark, p, ceData, elementFlags, r, cg, (flags & Style_Enabled) | Style_On);
+	    int checkcol = styleHint(SH_MenuIndicatorColumnWidth, ceData, elementFlags, data, NULL, NULL);
+	    TQRect cr(r.left(), r.top(), checkcol, r.height());
+	    bool reverse = TQApplication::reverseLayout();
+	    if ( reverse ) {
+		cr = visualRect( cr, r );
+	    }
+	    drawPrimitive(PE_CheckMark, p, ceData, elementFlags, cr, cg, (flags & Style_Enabled) | Style_On);
 	}
 	break;
 
@@ -969,7 +981,7 @@ void LightStyleV3::drawControl( TQ_ControlElement control,
 	    if (mi->isChecked() &&
 		! (flags & Style_Active) &
 		(flags & Style_Enabled))
-		drawPrimitive(PE_MenuItemIndicatorFrame, p, ceData, elementFlags, cr, cg, flags);
+		drawPrimitive(PE_MenuItemIndicatorFrame, p, ceData, elementFlags, r, cg, flags, data);
 
 	    if (mi->iconSet()) {
 		TQIconSet::Mode mode =
@@ -988,7 +1000,7 @@ void LightStyleV3::drawControl( TQ_ControlElement control,
 		p->setPen(cg.text());
 		p->drawPixmap(pmr.topLeft(), pixmap);
 	    } else if ((elementFlags & CEF_IsCheckable) && mi->isChecked())
-		drawPrimitive(PE_MenuItemIndicatorCheck, p, ceData, elementFlags, cr, cg, flags);
+		drawPrimitive(PE_MenuItemIndicatorCheck, p, ceData, elementFlags, r, cg, flags, data);
 
 	    TQColor textcolor;
 	    TQColor embosscolor;
@@ -1711,6 +1723,13 @@ int LightStyleV3::pixelMetric( PixelMetric metric, TQStyleControlElementData ceD
 	ret = -1;
 	break;
 
+    case PM_MenuIndicatorFrameHBorder:
+    case PM_MenuIndicatorFrameVBorder:
+    case PM_MenuIconIndicatorFrameHBorder:
+    case PM_MenuIconIndicatorFrameVBorder:
+	ret = 0;
+	break;
+
     default:
 	ret = TQCommonStyle::pixelMetric(metric, ceData, elementFlags, widget);
 	break;
@@ -1868,6 +1887,15 @@ int LightStyleV3::styleHint( TQ_StyleHint stylehint,
 
     case SH_ScrollBar_BackgroundMode:
 	ret = NoBackground;
+	break;
+
+    case SH_MenuIndicatorColumnWidth:
+	{
+		int maxpmw = option.maxIconWidth();
+		maxpmw = QMAX(maxpmw, 16);
+	
+		ret = maxpmw;
+	}
 	break;
 
     default:

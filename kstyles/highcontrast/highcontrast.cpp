@@ -642,7 +642,8 @@ void HighContrastStyle::drawPrimitive (TQ_PrimitiveElement pe,
 			{
 				int x, y, w, h;
 				r.rect( &x, &y, &w, &h );
-				TQRect cr = visualRect( TQRect(x, y, w, h), r );
+				int checkcol = styleHint(SH_MenuIndicatorColumnWidth, ceData, elementFlags, opt, NULL, NULL);
+				TQRect cr = visualRect( TQRect(x, y, checkcol, h), r );
 				drawRect (p, cr, 0, false);
 				break;
 			}
@@ -650,9 +651,12 @@ void HighContrastStyle::drawPrimitive (TQ_PrimitiveElement pe,
 			{
 				int x, y, w, h;
 				r.rect( &x, &y, &w, &h );
-				TQRect cr = visualRect( TQRect(x, y, w, h), r );
+				int checkcol = styleHint(SH_MenuIndicatorColumnWidth, ceData, elementFlags, opt, NULL, NULL);
 
-				TQRect rc (x, y, w, h);
+				TQRect cr = visualRect( TQRect(x, y, checkcol, h), r );
+				bool reverse = TQApplication::reverseLayout();
+				int cx = reverse ? x+w - checkcol : x;
+				TQRect rc (cx, y, checkcol, h);
 				addOffset (&rc, 2*basicLineWidth);
 				TQPoint center = rc.center();
 				if (rc.width() > rc.height())
@@ -1078,15 +1082,13 @@ void HighContrastStyle::drawControl (TQ_ControlElement element,
 				// Then draw a square border around the icon
 				if ( checkable && mi->isChecked() )
 				{
-					drawPrimitive(PE_MenuItemIndicatorIconFrame, p, ceData, elementFlags, TQRect(x, y, checkcol, h), cg, flags);
+					drawPrimitive(PE_MenuItemIndicatorIconFrame, p, ceData, elementFlags, r, cg, flags, opt);
 				}
 			}
 
 			// Are we checked? (This time without an icon)
 			else if ( checkable && mi->isChecked() ) {
-				int cx = reverse ? x+w - checkcol : x;
-
-				drawPrimitive(PE_MenuItemIndicatorCheck, p, ceData, elementFlags, TQRect(cx, y, checkcol, h), cg, flags);
+				drawPrimitive(PE_MenuItemIndicatorCheck, p, ceData, elementFlags, r, cg, flags, opt);
 			}
 
 			// Time to draw the menu item label...
@@ -1686,6 +1688,12 @@ int HighContrastStyle::pixelMetric(PixelMetric m, TQStyleControlElementData ceDa
 				return 5*basicLineWidth;
 		}
 
+		case PM_MenuIndicatorFrameHBorder:
+		case PM_MenuIndicatorFrameVBorder:
+		case PM_MenuIconIndicatorFrameHBorder:
+		case PM_MenuIconIndicatorFrameVBorder:
+			return 0;
+
 		default:
 			return KStyle::pixelMetric(m, ceData, elementFlags, widget);
 	}
@@ -1844,6 +1852,31 @@ TQRect HighContrastStyle::subRect (SubRect subrect, const TQStyleControlElementD
 bool HighContrastStyle::objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *event )
 {
 	return KStyle::objectEventHandler (ceData, elementFlags, source, event);
+}
+
+/*! \reimp */
+int HighContrastStyle::styleHint(StyleHint sh, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQStyleOption &opt, TQStyleHintReturn *returnData, const TQWidget *w) const
+{
+	int ret;
+
+	switch (sh) {
+		case SH_MenuIndicatorColumnWidth:
+			{
+				int  checkcol  = opt.maxIconWidth();
+				bool checkable = (elementFlags & CEF_IsCheckable);
+			
+				if ( checkable )
+					checkcol = QMAX( checkcol, 20 );
+			
+				ret = checkcol;
+			}
+			break;
+		default:
+			ret = TQCommonStyle::styleHint(sh, ceData, elementFlags, opt, returnData, w);
+			break;
+	}
+
+	return ret;
 }
 
 // vim: set noet ts=4 sw=4:

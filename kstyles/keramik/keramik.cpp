@@ -1140,7 +1140,8 @@ void KeramikStyle::drawPrimitive( TQ_PrimitiveElement pe,
 			{
 				int x, y, w, h;
 				r.rect( &x, &y, &w, &h );
-				TQRect cr = visualRect( TQRect( x + 2, y + 2, w - 1, h - 4 ), r );
+				int checkcol = styleHint(SH_MenuIndicatorColumnWidth, ceData, elementFlags, opt, NULL, NULL);
+				TQRect cr = visualRect( TQRect( x + 2, y + 2, checkcol - 1, h - 4 ), r );
 				qDrawShadePanel( p, cr.x(), cr.y(), cr.width(), cr.height(), cg, true, 1, &cg.brush(TQColorGroup::Midlight) );
 			}
 			break;
@@ -1148,7 +1149,8 @@ void KeramikStyle::drawPrimitive( TQ_PrimitiveElement pe,
 			{
 				int x, y, w, h;
 				r.rect( &x, &y, &w, &h );
-				TQRect cr = visualRect( TQRect( x + 2, y + 2, w - 1, h - 4 ), r );
+				int checkcol = styleHint(SH_MenuIndicatorColumnWidth, ceData, elementFlags, opt, NULL, NULL);
+				TQRect cr = visualRect( TQRect( x + 2, y + 2, checkcol - 1, h - 4 ), r );
 				qDrawShadePanel( p, cr.x(), cr.y(), cr.width(), cr.height(), cg, true, 1, &cg.brush(TQColorGroup::Midlight) );
 			}
 			break;
@@ -1156,7 +1158,8 @@ void KeramikStyle::drawPrimitive( TQ_PrimitiveElement pe,
 			{
 				int x, y, w, h;
 				r.rect( &x, &y, &w, &h );
-				TQRect cr = visualRect( TQRect( x + 2, y + 2, w - 1, h - 4 ), r );
+				int checkcol = styleHint(SH_MenuIndicatorColumnWidth, ceData, elementFlags, opt, NULL, NULL);
+				TQRect cr = visualRect( TQRect( x + 2, y + 2, checkcol - 1, h - 4 ), r );
 
 				SFlags cflags = Style_Default;
 				cflags |= active ? Style_Enabled : Style_On;
@@ -1707,7 +1710,7 @@ void KeramikStyle::drawControl( TQ_ControlElement element,
 				// Do we have an icon and are checked at the same time?
 				// Then draw a "pressed" background behind the icon
 				if ( checkable && /*!active &&*/ mi->isChecked() )
-					drawPrimitive(PE_MenuItemIndicatorIconFrame, p, ceData, elementFlags, TQRect(x, y, checkcol, h), cg, flags);
+					drawPrimitive(PE_MenuItemIndicatorIconFrame, p, ceData, elementFlags, r, cg, flags, opt);
 				// Draw the icon
 				TQPixmap pixmap = mi->iconSet()->pixmap( TQIconSet::Small, mode );
 				TQRect pmr( 0, 0, pixmap.width(), pixmap.height() );
@@ -1721,9 +1724,9 @@ void KeramikStyle::drawControl( TQ_ControlElement element,
 				// We only have to draw the background if the menu item is inactive -
 				// if it's active the "pressed" background is already drawn
 			//	if ( ! active )
-					drawPrimitive(PE_MenuItemIndicatorFrame, p, ceData, elementFlags, TQRect(x, y, checkcol, h), cg, flags);
+					drawPrimitive(PE_MenuItemIndicatorFrame, p, ceData, elementFlags, r, cg, flags, opt);
 				// Draw the checkmark
-				drawPrimitive(PE_MenuItemIndicatorCheck, p, ceData, elementFlags, TQRect(x, y, checkcol, h), cg, flags);
+				drawPrimitive(PE_MenuItemIndicatorCheck, p, ceData, elementFlags, r, cg, flags, opt);
 			}
 
 			// Time to draw the menu item label...
@@ -2448,6 +2451,12 @@ int KeramikStyle::pixelMetric(PixelMetric m, TQStyleControlElementData ceData, C
 		case PM_TitleBarHeight:
 			return titleBarH;
 
+		case PM_MenuIndicatorFrameHBorder:
+		case PM_MenuIndicatorFrameVBorder:
+		case PM_MenuIconIndicatorFrameHBorder:
+		case PM_MenuIconIndicatorFrameVBorder:
+			return 2;
+
 		default:
 			return KStyle::pixelMetric(m, ceData, elementFlags, widget);
 	}
@@ -2960,6 +2969,31 @@ bool KeramikStyle::objectEventHandler( TQStyleControlElementData ceData, Control
 	}
 
 	return false;
+}
+
+/*! \reimp */
+int KeramikStyle::styleHint(StyleHint sh, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQStyleOption &opt, TQStyleHintReturn *returnData, const TQWidget *w) const
+{
+	int ret;
+
+	switch (sh) {
+		case SH_MenuIndicatorColumnWidth:
+			{
+				int  checkcol   = opt.maxIconWidth();
+				bool checkable = (elementFlags & CEF_IsCheckable);
+
+				if ( checkable )
+					checkcol = QMAX( checkcol, 20 );
+			
+				ret = checkcol;
+			}
+			break;
+		default:
+			ret = TQCommonStyle::styleHint(sh, ceData, elementFlags, opt, returnData, w);
+			break;
+	}
+
+	return ret;
 }
 
 // vim: ts=4 sw=4 noet

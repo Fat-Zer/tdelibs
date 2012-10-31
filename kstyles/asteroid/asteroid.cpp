@@ -316,6 +316,10 @@ int AsteroidStyle::styleHint( TQ_StyleHint stylehint,
 // 		case SH_ComboBox_ListMouseTracking:
 // 		case SH_ScrollBar_StopMouseOverSlider:
 			return 1;
+
+		case SH_MenuIndicatorColumnWidth: {
+			return TQMAX(option.maxIconWidth(), 12);
+		}
 		
 		default:
 			return KStyle::styleHint(stylehint, ceData, elementFlags, option, returnData, widget);
@@ -937,9 +941,16 @@ void AsteroidStyle::drawPrimitive(TQ_PrimitiveElement pe,
 			break;
 		}
 
+		case PE_MenuItemIndicatorIconFrame:
+		case PE_MenuItemIndicatorFrame: {
+			// Draw nothing
+			break;
+		}
+
 		case PE_MenuItemIndicatorCheck: {
 			int x, y, w, h;
 			r.rect( &x, &y, &w, &h );
+			int checkcol = styleHint(SH_MenuIndicatorColumnWidth, ceData, elementFlags, o, NULL, NULL);
 
 			bool active = sf & Style_Active;
 			bool disabled = !(sf & Style_Enabled);
@@ -955,7 +966,7 @@ void AsteroidStyle::drawPrimitive(TQ_PrimitiveElement pe,
 
 			p->setPen(active ? cg.highlightedText() : cg.buttonText());
 
-			TQRect rr = TQRect(xp, y, w, h);
+			TQRect rr = TQRect(xp, y, checkcol, h);
 			if (backwards) {
 				rr = visualRect(rr, r);
 			}
@@ -1600,7 +1611,7 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 				p->drawPixmap(pmr.topLeft(), pixmap);
 			} else if (checkable) {
 				if (mi->isChecked()) {
-					drawPrimitive(PE_MenuItemIndicatorCheck, p, ceData, elementFlags, TQRect(x, y, checkcol, sh), cg, sf);
+					drawPrimitive(PE_MenuItemIndicatorCheck, p, ceData, elementFlags, r, cg, sf, o);
 				}
 			}
 
@@ -2326,6 +2337,12 @@ int AsteroidStyle::pixelMetric(PixelMetric pm, TQStyleControlElementData ceData,
 
 		case PM_SplitterWidth:
 			return TQMAX( 4, TQApplication::globalStrut().width() );
+
+		case PM_MenuIndicatorFrameHBorder:
+		case PM_MenuIndicatorFrameVBorder:
+		case PM_MenuIconIndicatorFrameHBorder:
+		case PM_MenuIconIndicatorFrameVBorder:
+			return 0;
 
 		default: {
 			return KStyle::pixelMetric(pm, ceData, elementFlags, w);

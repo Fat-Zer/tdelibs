@@ -149,6 +149,10 @@ class HighContrastStyle : public KStyle
 
 		TQRect subRect (SubRect subrect, const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, const TQWidget * widget) const;
 
+		int styleHint(TQ_StyleHint, TQStyleControlElementData ceData, ControlElementFlags elementFlags,
+					const TQStyleOption & = TQStyleOption::Default,
+					TQStyleHintReturn * = 0, const TQWidget * = 0 ) const;
+
 	protected:
 		virtual bool objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *e );
 

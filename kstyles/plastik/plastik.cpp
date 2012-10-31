@@ -2074,7 +2074,8 @@ void PlastikStyle::drawPrimitive(TQ_PrimitiveElement pe,
 		{
 			int x, y, w, h;
 			r.rect( &x, &y, &w, &h );
-			TQRect cr = visualRect( TQRect( x + 2, y + 2, w - 1, h - 4 ), r );
+			int checkcol = styleHint(SH_MenuIndicatorColumnWidth, ceData, elementFlags, opt, NULL, NULL);
+			TQRect cr = visualRect( TQRect( x + 2, y + 2, checkcol - 1, h - 4 ), r );
 			qDrawShadePanel( p, cr.x(), cr.y(), cr.width(), cr.height(), cg, true, 1, &cg.brush(TQColorGroup::Midlight) );
 			break;
 		}
@@ -2082,7 +2083,8 @@ void PlastikStyle::drawPrimitive(TQ_PrimitiveElement pe,
 		{
 			int x, y, w, h;
 			r.rect( &x, &y, &w, &h );
-			TQRect cr = visualRect( TQRect( x + 2, y + 2, w - 1, h - 4 ), r );
+			int checkcol = styleHint(SH_MenuIndicatorColumnWidth, ceData, elementFlags, opt, NULL, NULL);
+			TQRect cr = visualRect( TQRect( x + 2, y + 2, checkcol - 1, h - 4 ), r );
 			qDrawShadePanel( p, cr.x(), cr.y(), cr.width(), cr.height(), cg, true, 1, &cg.brush(TQColorGroup::Midlight) );
 			break;
 		}
@@ -2090,7 +2092,8 @@ void PlastikStyle::drawPrimitive(TQ_PrimitiveElement pe,
 		{
 			int x, y, w, h;
 			r.rect( &x, &y, &w, &h );
-			TQRect cr = visualRect( TQRect( x + 2, y + 2, w - 1, h - 4 ), r );;
+			int checkcol = styleHint(SH_MenuIndicatorColumnWidth, ceData, elementFlags, opt, NULL, NULL);
+			TQRect cr = visualRect( TQRect( x + 2, y + 2, checkcol - 1, h - 4 ), r );
 			// Draw the checkmark
 			SFlags cflags = Style_On;
 			if (enabled)
@@ -2574,7 +2577,7 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
                 // Do we have an icon and are checked at the same time?
                 // Then draw a "pressed" background behind the icon
                 if ( checkable && /*!active &&*/ mi->isChecked() )
-                    drawPrimitive(PE_MenuItemIndicatorIconFrame, p, ceData, elementFlags, TQRect(r.x(), r.y(), checkcol, r.height()), cg, flags);
+                    drawPrimitive(PE_MenuItemIndicatorIconFrame, p, ceData, elementFlags, r, cg, flags, opt);
                 // Draw the icon
                 TQPixmap pixmap = mi->iconSet()->pixmap(TQIconSet::Small, mode);
                 TQRect pmr( 0, 0, pixmap.width(), pixmap.height() );
@@ -2588,9 +2591,9 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
                 // We only have to draw the background if the menu item is inactive -
                 // if it's active the "pressed" background is already drawn
             // if ( ! active )
-                    drawPrimitive(PE_MenuItemIndicatorFrame, p, ceData, elementFlags, TQRect(r.x(), r.y(), checkcol, r.height()), cg, flags);
+                    drawPrimitive(PE_MenuItemIndicatorFrame, p, ceData, elementFlags, r, cg, flags, opt);
 
-                drawPrimitive(PE_MenuItemIndicatorCheck, p, ceData, elementFlags, TQRect(r.x(), r.y(), checkcol, r.height()), cg, flags);
+                drawPrimitive(PE_MenuItemIndicatorCheck, p, ceData, elementFlags, r, cg, flags, opt);
             }
 
             // Time to draw the menu item label...
@@ -3373,6 +3376,12 @@ int PlastikStyle::pixelMetric(PixelMetric m, TQStyleControlElementData ceData, C
             return 1;
         }
 
+        case PM_MenuIndicatorFrameHBorder:
+        case PM_MenuIndicatorFrameVBorder:
+        case PM_MenuIconIndicatorFrameHBorder:
+        case PM_MenuIconIndicatorFrameVBorder:
+            return 2;
+
         default:
             return KStyle::pixelMetric(m, ceData, elementFlags, widget);
     }
@@ -3477,6 +3486,17 @@ int PlastikStyle::styleHint( TQ_StyleHint stylehint,
     switch (stylehint) {
         case SH_PopupMenu_SubMenuPopupDelay:
             return 96; // Motif-like delay...
+
+	case SH_MenuIndicatorColumnWidth:
+	{
+		int  checkcol   = option.maxIconWidth();
+		bool checkable = (elementFlags & CEF_IsCheckable);
+	
+		if ( checkable )
+                	checkcol = QMAX( checkcol, 20 );
+	
+		return checkcol;
+	}
 
         default:
             return KStyle::styleHint(stylehint, ceData, elementFlags, option, returnData, widget);

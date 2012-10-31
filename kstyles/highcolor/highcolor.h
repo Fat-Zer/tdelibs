@@ -158,6 +158,10 @@ class HighColorStyle : public KStyle
 					const TQStyleOption& = TQStyleOption::Default,
 					const TQWidget *widget = 0 ) const;
 
+		int styleHint(TQ_StyleHint, TQStyleControlElementData ceData, ControlElementFlags elementFlags,
+				const TQStyleOption & = TQStyleOption::Default,
+				TQStyleHintReturn * = 0, const TQWidget * = 0 ) const;
+
 		virtual bool objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *e );
 
 	protected:
