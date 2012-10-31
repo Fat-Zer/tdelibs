@@ -1155,9 +1155,8 @@ void KStyle::drawComplexControl( TQ_ComplexControl control,
 			// Many thanks to Brad Hughes for contributing this code.
 			bool useThreeButtonScrollBar = (d->scrollbarType & ThreeButtonScrollBar);
 
-			const TQScrollBar *sb = (const TQScrollBar*)widget;
-			bool   maxedOut   = (sb->minValue()    == sb->maxValue());
-			bool   horizontal = (sb->orientation() == Qt::Horizontal);
+			bool   maxedOut   = (ceData.minSteps    == ceData.maxSteps);
+			bool   horizontal = (ceData.orientation == TQt::Horizontal);
 			SFlags sflags     = ((horizontal ? Style_Horizontal : Style_Default) |
 								 (maxedOut   ? Style_Default : Style_Enabled));
 
@@ -1222,7 +1221,7 @@ void KStyle::drawComplexControl( TQ_ComplexControl control,
 							sflags | ((active == SC_ScrollBarSlider) ?
 										Style_Down : Style_Default));
 				// Draw focus rect
-				if (sb->hasFocus()) {
+				if (elementFlags & CEF_HasFocus) {
 					TQRect fr(slider.x() + 2, slider.y() + 2,
 							 slider.width() - 5, slider.height() - 5);
 					tqdrawPrimitive(PE_FocusRect, p, ceData, elementFlags, fr, cg, Style_Default);
@@ -1235,7 +1234,6 @@ void KStyle::drawComplexControl( TQ_ComplexControl control,
 		// SLIDER
 		// -------------------------------------------------------------------
 		case CC_Slider: {
-			const TQSlider* slider = (const TQSlider*)widget;
 			TQRect groove = querySubControlMetrics(CC_Slider, ceData, elementFlags, SC_SliderGroove, opt, widget);
 			TQRect handle = querySubControlMetrics(CC_Slider, ceData, elementFlags, SC_SliderHandle, opt, widget);
 
@@ -1244,11 +1242,10 @@ void KStyle::drawComplexControl( TQ_ComplexControl control,
 			TQPainter p2;
 			p2.begin(&pix);
 
-			if ( slider->parentWidget() &&
-				 slider->parentWidget()->backgroundPixmap() &&
-				 !slider->parentWidget()->backgroundPixmap()->isNull() ) {
-				TQPixmap pixmap = *(slider->parentWidget()->backgroundPixmap());
-				p2.drawTiledPixmap(r, pixmap, slider->pos());
+			if ( (elementFlags & CEF_HasParentWidget) &&
+				 !ceData.parentWidgetData.bgPixmap.isNull() ) {
+				TQPixmap pixmap = ceData.parentWidgetData.bgPixmap;
+				p2.drawTiledPixmap(r, pixmap, ceData.pos);
 			} else
 				pix.fill(cg.background());
 
@@ -1257,8 +1254,9 @@ void KStyle::drawComplexControl( TQ_ComplexControl control,
 				drawKStylePrimitive( KPE_SliderGroove, &p2, ceData, elementFlags, groove, cg, flags, opt, widget );
 
 				// Draw the focus rect around the groove
-				if (slider->hasFocus())
+				if (elementFlags & CEF_HasFocus) {
 					tqdrawPrimitive(PE_FocusRect, &p2, ceData, elementFlags, groove, cg);
+				}
 			}
 
 			// Draw the tickmarks
@@ -1476,19 +1474,18 @@ TQRect KStyle::querySubControlMetrics( TQ_ComplexControl control,
 		bool platinumScrollBar    = d->scrollbarType & PlatinumStyleScrollBar;
 		bool nextScrollBar        = d->scrollbarType & NextStyleScrollBar;
 
-		const TQScrollBar *sb = (const TQScrollBar*)widget;
-		bool horizontal = sb->orientation() == Qt::Horizontal;
-		int sliderstart = sb->sliderStart();
+		bool horizontal = ceData.orientation == Qt::Horizontal;
+		int sliderstart = ceData.startStep;
 		int sbextent    = pixelMetric(PM_ScrollBarExtent, ceData, elementFlags, widget);
-		int maxlen      = (horizontal ? sb->width() : sb->height())
+		int maxlen      = (horizontal ? ceData.rect.width() : ceData.rect.height())
 						  - (sbextent * (threeButtonScrollBar ? 3 : 2));
 		int sliderlen;
 
 		// calculate slider length
-		if (sb->maxValue() != sb->minValue())
+		if (ceData.maxSteps != ceData.minSteps)
 		{
-			uint range = sb->maxValue() - sb->minValue();
-			sliderlen = (sb->pageStep() * maxlen) /	(range + sb->pageStep());
+			uint range = ceData.maxSteps - ceData.minSteps;
+			sliderlen = (ceData.pageStep * maxlen) /	(range + ceData.pageStep);
 
 			int slidermin = pixelMetric( PM_ScrollBarSliderMin, ceData, elementFlags, widget );
 			if ( sliderlen < slidermin || range > INT_MAX / 2 )
@@ -1505,9 +1502,9 @@ TQRect KStyle::querySubControlMetrics( TQ_ComplexControl control,
 				// top/left button
 				if (platinumScrollBar) {
 					if (horizontal)
-						ret.setRect(sb->width() - 2 * sbextent, 0, sbextent, sbextent);
+						ret.setRect(ceData.rect.width() - 2 * sbextent, 0, sbextent, sbextent);
 					else
-						ret.setRect(0, sb->height() - 2 * sbextent, sbextent, sbextent);
+						ret.setRect(0, ceData.rect.height() - 2 * sbextent, sbextent, sbextent);
 				} else
 					ret.setRect(0, 0, sbextent, sbextent);
 				break;
@@ -1522,9 +1519,9 @@ TQRect KStyle::querySubControlMetrics( TQ_ComplexControl control,
 						ret.setRect(0, sbextent, sbextent, sbextent);
 				} else {
 					if (horizontal)
-						ret.setRect(sb->width() - sbextent, 0, sbextent, sbextent);
+						ret.setRect(ceData.rect.width() - sbextent, 0, sbextent, sbextent);
 					else
-						ret.setRect(0, sb->height() - sbextent, sbextent, sbextent);
+						ret.setRect(0, ceData.rect.height() - sbextent, sbextent, sbextent);
 				}
 				break;
 			}
@@ -1582,9 +1579,9 @@ TQRect KStyle::querySubControlMetrics( TQ_ComplexControl control,
 					fudge = sbextent;
 
 				if (horizontal)
-					ret.setRect(fudge, 0, sb->width() - sbextent * multi, sb->height());
+					ret.setRect(fudge, 0, ceData.rect.width() - sbextent * multi, ceData.rect.height());
 				else
-					ret.setRect(0, fudge, sb->width(), sb->height() - sbextent * multi);
+					ret.setRect(0, fudge, ceData.rect.width(), ceData.rect.height() - sbextent * multi);
 				break;
 			}
 

@@ -337,7 +337,7 @@ void HighContrastStyle::drawArrow (TQPainter* p, TQRect r, TQ_PrimitiveElement a
 }
 
 // This function draws primitive elements
-void HighContrastStyle::tqdrawPrimitive (TQ_PrimitiveElement pe,
+void HighContrastStyle::drawPrimitive (TQ_PrimitiveElement pe,
 								TQPainter *p,
 								TQStyleControlElementData ceData,
 								ControlElementFlags elementFlags,
@@ -630,6 +630,41 @@ void HighContrastStyle::tqdrawPrimitive (TQ_PrimitiveElement pe,
 				p->drawLine (r.left()+basicLineWidth, r.center().y(), r.right()-basicLineWidth, r.center().y());
 			break;
 		}
+
+
+		case PE_MenuItemIndicatorFrame:
+			{
+				// Draw nothing
+				break;
+			}
+			break;
+		case PE_MenuItemIndicatorIconFrame:
+			{
+				int x, y, w, h;
+				r.rect( &x, &y, &w, &h );
+				TQRect cr = visualRect( TQRect(x, y, w, h), r );
+				drawRect (p, cr, 0, false);
+				break;
+			}
+		case PE_MenuItemIndicatorCheck:
+			{
+				int x, y, w, h;
+				r.rect( &x, &y, &w, &h );
+				TQRect cr = visualRect( TQRect(x, y, w, h), r );
+
+				TQRect rc (x, y, w, h);
+				addOffset (&rc, 2*basicLineWidth);
+				TQPoint center = rc.center();
+				if (rc.width() > rc.height())
+					rc.setWidth (rc.height());
+				else
+					rc.setHeight (rc.width());
+				rc.moveCenter (center);
+					
+				p->drawLine (rc.topLeft(), rc.bottomRight());
+				p->drawLine (rc.topRight(), rc.bottomLeft());
+				break;
+			}
 
 
 		// ARROWS
@@ -1043,7 +1078,7 @@ void HighContrastStyle::drawControl (TQ_ControlElement element,
 				// Then draw a square border around the icon
 				if ( checkable && mi->isChecked() )
 				{
-					drawRect (p, cr, 0, false);
+					drawPrimitive(PE_MenuItemIndicatorIconFrame, p, ceData, elementFlags, TQRect(x, y, checkcol, h), cg, flags);
 				}
 			}
 
@@ -1051,17 +1086,7 @@ void HighContrastStyle::drawControl (TQ_ControlElement element,
 			else if ( checkable && mi->isChecked() ) {
 				int cx = reverse ? x+w - checkcol : x;
 
-				TQRect rc (cx, y, checkcol, h);
-				addOffset (&rc, 2*basicLineWidth);
-				TQPoint center = rc.center();
-				if (rc.width() > rc.height())
-					rc.setWidth (rc.height());
-				else
-					rc.setHeight (rc.width());
-				rc.moveCenter (center);
-					
-				p->drawLine (rc.topLeft(), rc.bottomRight());
-				p->drawLine (rc.topRight(), rc.bottomLeft());
+				drawPrimitive(PE_MenuItemIndicatorCheck, p, ceData, elementFlags, TQRect(cx, y, checkcol, h), cg, flags);
 			}
 
 			// Time to draw the menu item label...

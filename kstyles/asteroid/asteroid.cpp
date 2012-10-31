@@ -937,6 +937,34 @@ void AsteroidStyle::drawPrimitive(TQ_PrimitiveElement pe,
 			break;
 		}
 
+		case PE_MenuItemIndicatorCheck: {
+			int x, y, w, h;
+			r.rect( &x, &y, &w, &h );
+
+			bool active = sf & Style_Active;
+			bool disabled = !(sf & Style_Enabled);
+		
+			int xp = x;
+
+			SFlags cflags = Style_Default;
+			if (disabled) {
+				cflags |= Style_On;
+			} else {
+				cflags |= Style_Enabled;
+			}
+
+			p->setPen(active ? cg.highlightedText() : cg.buttonText());
+
+			TQRect rr = TQRect(xp, y, w, h);
+			if (backwards) {
+				rr = visualRect(rr, r);
+			}
+
+			drawPrimitive(PE_CheckMark, p, ceData, elementFlags, rr, cg, cflags);
+
+			break;
+		}
+
 		default: {
 			KStyle::drawPrimitive(pe, p, ceData, elementFlags, r, cg, sf, o);
 		}
@@ -1572,23 +1600,7 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 				p->drawPixmap(pmr.topLeft(), pixmap);
 			} else if (checkable) {
 				if (mi->isChecked()) {
-					int xp = xpos;
-
-					SFlags cflags = Style_Default;
-					if (disabled) {
-						cflags |= Style_On;
-					} else {
-						cflags |= Style_Enabled;
-					}
-
-					p->setPen(active ? cg.highlightedText() : cg.buttonText());
-
-					TQRect rr = TQRect(xp, y, checkcol, sh);
-					if (backwards) {
-						rr = visualRect(rr, r);
-					}
-
-					drawPrimitive(PE_CheckMark, p, ceData, elementFlags, rr, cg, cflags);
+					drawPrimitive(PE_MenuItemIndicatorCheck, p, ceData, elementFlags, TQRect(x, y, checkcol, sh), cg, sf);
 				}
 			}
 

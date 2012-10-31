@@ -555,8 +555,9 @@ void KeramikStyle::drawPrimitive( TQ_PrimitiveElement pe,
 									SFlags flags,
 									const TQStyleOption& opt ) const
 {
-	bool down = flags & Style_Down;
-	bool on   = flags & Style_On;
+	bool down     = flags & Style_Down;
+	bool on       = flags & Style_On;
+	bool active   = flags & Style_Active;
 	bool disabled = ( flags & Style_Enabled ) == 0;
 	int  x, y, w, h;
 	r.rect(&x, &y, &w, &h);
@@ -1129,6 +1130,41 @@ void KeramikStyle::drawPrimitive( TQ_PrimitiveElement pe,
 			break;
 		}
 
+		case PE_PanelScrollBar:
+		{
+			Keramik::ScrollBarPainter( KeramikGroove1, 2, (ceData.orientation == TQt::Horizontal)?true:false ).draw( p, r, cg.button(), cg.background(), (( flags & Style_Enabled ) == 0)?true:false );
+			break;
+		}
+
+		case PE_MenuItemIndicatorFrame:
+			{
+				int x, y, w, h;
+				r.rect( &x, &y, &w, &h );
+				TQRect cr = visualRect( TQRect( x + 2, y + 2, w - 1, h - 4 ), r );
+				qDrawShadePanel( p, cr.x(), cr.y(), cr.width(), cr.height(), cg, true, 1, &cg.brush(TQColorGroup::Midlight) );
+			}
+			break;
+		case PE_MenuItemIndicatorIconFrame:
+			{
+				int x, y, w, h;
+				r.rect( &x, &y, &w, &h );
+				TQRect cr = visualRect( TQRect( x + 2, y + 2, w - 1, h - 4 ), r );
+				qDrawShadePanel( p, cr.x(), cr.y(), cr.width(), cr.height(), cg, true, 1, &cg.brush(TQColorGroup::Midlight) );
+			}
+			break;
+		case PE_MenuItemIndicatorCheck:
+			{
+				int x, y, w, h;
+				r.rect( &x, &y, &w, &h );
+				TQRect cr = visualRect( TQRect( x + 2, y + 2, w - 1, h - 4 ), r );
+
+				SFlags cflags = Style_Default;
+				cflags |= active ? Style_Enabled : Style_On;
+
+				drawPrimitive( PE_CheckMark, p, ceData, elementFlags, cr, cg, cflags );
+			}
+			break;
+
 		default:
 		{
 			// ARROWS
@@ -1204,12 +1240,11 @@ void KeramikStyle::drawKStylePrimitive( KStylePrimitive kpe,
 		// -------------------------------------------------------------------
 		case KPE_SliderGroove:
 		{
-			const TQSlider* slider = static_cast< const TQSlider* >( widget );
-			bool horizontal = slider->orientation() == Qt::Horizontal;
+			bool horizontal = ceData.orientation == TQt::Horizontal;
 			
 			Keramik::TilePainter::PaintMode pmod = Keramik::TilePainter::PaintNormal;
 			
-			if (slider->erasePixmap() && !slider->erasePixmap()->isNull())
+			if (!ceData.bgPixmap.isNull())
 				pmod = Keramik::TilePainter::PaintFullBlend;
 
 			if ( horizontal )
@@ -1224,8 +1259,7 @@ void KeramikStyle::drawKStylePrimitive( KStylePrimitive kpe,
 		// -------------------------------------------------------------------
 		case KPE_SliderHandle:
 			{
-				const TQSlider* slider = static_cast< const TQSlider* >( widget );
-				bool horizontal = slider->orientation() == Qt::Horizontal;
+				bool horizontal = ceData.orientation == TQt::Horizontal;
 
 				TQColor hl = cg.highlight();
 				if (!disabled && flags & Style_Active)
@@ -1673,8 +1707,7 @@ void KeramikStyle::drawControl( TQ_ControlElement element,
 				// Do we have an icon and are checked at the same time?
 				// Then draw a "pressed" background behind the icon
 				if ( checkable && /*!active &&*/ mi->isChecked() )
-					qDrawShadePanel( p, cr.x(), cr.y(), cr.width(), cr.height(),
-									 cg, true, 1, &cg.brush(TQColorGroup::Midlight) );
+					drawPrimitive(PE_MenuItemIndicatorIconFrame, p, ceData, elementFlags, TQRect(x, y, checkcol, h), cg, flags);
 				// Draw the icon
 				TQPixmap pixmap = mi->iconSet()->pixmap( TQIconSet::Small, mode );
 				TQRect pmr( 0, 0, pixmap.width(), pixmap.height() );
@@ -1688,14 +1721,9 @@ void KeramikStyle::drawControl( TQ_ControlElement element,
 				// We only have to draw the background if the menu item is inactive -
 				// if it's active the "pressed" background is already drawn
 			//	if ( ! active )
-					qDrawShadePanel( p, cr.x(), cr.y(), cr.width(), cr.height(), cg, true, 1,
-					                 &cg.brush(TQColorGroup::Midlight) );
-
+					drawPrimitive(PE_MenuItemIndicatorFrame, p, ceData, elementFlags, TQRect(x, y, checkcol, h), cg, flags);
 				// Draw the checkmark
-				SFlags cflags = Style_Default;
-				cflags |= active ? Style_Enabled : Style_On;
-
-				drawPrimitive( PE_CheckMark, p, ceData, elementFlags, cr, cg, cflags );
+				drawPrimitive(PE_MenuItemIndicatorCheck, p, ceData, elementFlags, TQRect(x, y, checkcol, h), cg, flags);
 			}
 
 			// Time to draw the menu item label...
@@ -2620,27 +2648,26 @@ TQRect KeramikStyle::querySubControlMetrics( TQ_ComplexControl control,
 
 		case CC_ScrollBar:
 		{
-			const TQScrollBar* sb = static_cast< const TQScrollBar* >( widget );
-			bool horizontal = sb->orientation() == Qt::Horizontal;
+			bool horizontal = ceData.orientation == TQt::Horizontal;
 			int addline, subline, sliderpos, sliderlen, maxlen, slidermin;
 			if ( horizontal )
 			{
 				subline = loader.size( keramik_scrollbar_hbar_arrow1 ).width();
 				addline = loader.size( keramik_scrollbar_hbar_arrow2 ).width();
-				maxlen = sb->width() - subline - addline + 2;
+				maxlen = ceData.rect.width() - subline - addline + 2;
 			}
 			else
 			{
 				subline = loader.size( keramik_scrollbar_vbar_arrow1 ).height();
 				addline = loader.size( keramik_scrollbar_vbar_arrow2 ).height();
-				maxlen = sb->height() - subline - addline + 2;
+				maxlen = ceData.rect.height() - subline - addline + 2;
 			}
-			sliderpos = sb->sliderStart();
-			if ( sb->minValue() != sb->maxValue() )
+			sliderpos = ceData.startStep;
+			if ( ceData.minSteps != ceData.maxSteps )
 			{
-				int range = sb->maxValue() - sb->minValue();
-				sliderlen = ( sb->pageStep() * maxlen ) / ( range + sb->pageStep() );
-				slidermin = pixelMetric( PM_ScrollBarSliderMin, ceData, elementFlags, sb );
+				int range = ceData.maxSteps - ceData.minSteps;
+				sliderlen = ( ceData.pageStep * maxlen ) / ( range + ceData.pageStep );
+				slidermin = pixelMetric( PM_ScrollBarSliderMin, ceData, elementFlags, widget );
 				if ( sliderlen < slidermin ) sliderlen = slidermin;
 				if ( sliderlen > maxlen ) sliderlen = maxlen;
 			}
@@ -2649,28 +2676,28 @@ TQRect KeramikStyle::querySubControlMetrics( TQ_ComplexControl control,
 			switch ( subcontrol )
 			{
 				case SC_ScrollBarGroove:
-					if ( horizontal ) return TQRect( subline, 0, maxlen, sb->height() );
-					else return TQRect( 0, subline, sb->width(), maxlen );
+					if ( horizontal ) return TQRect( subline, 0, maxlen, ceData.rect.height() );
+					else return TQRect( 0, subline, ceData.rect.width(), maxlen );
 
 				case SC_ScrollBarSlider:
-					if (horizontal) return TQRect( sliderpos, 0, sliderlen, sb->height() );
-					else return TQRect( 0, sliderpos, sb->width(), sliderlen );
+					if (horizontal) return TQRect( sliderpos, 0, sliderlen, ceData.rect.height() );
+					else return TQRect( 0, sliderpos, ceData.rect.width(), sliderlen );
 
 				case SC_ScrollBarSubLine:
-					if ( horizontal ) return TQRect( 0, 0, subline, sb->height() );
-					else return TQRect( 0, 0, sb->width(), subline );
+					if ( horizontal ) return TQRect( 0, 0, subline, ceData.rect.height() );
+					else return TQRect( 0, 0, ceData.rect.width(), subline );
 
 				case SC_ScrollBarAddLine:
-					if ( horizontal ) return TQRect( sb->width() - addline, 0, addline, sb->height() );
-					else return TQRect( 0, sb->height() - addline, sb->width(), addline );
+					if ( horizontal ) return TQRect( ceData.rect.width() - addline, 0, addline, ceData.rect.height() );
+					else return TQRect( 0, ceData.rect.height() - addline, ceData.rect.width(), addline );
 
 				case SC_ScrollBarSubPage:
-					if ( horizontal ) return TQRect( subline, 0, sliderpos - subline, sb->height() );
-					else return TQRect( 0, subline, sb->width(), sliderpos - subline );
+					if ( horizontal ) return TQRect( subline, 0, sliderpos - subline, ceData.rect.height() );
+					else return TQRect( 0, subline, ceData.rect.width(), sliderpos - subline );
 
 				case SC_ScrollBarAddPage:
-					if ( horizontal ) return TQRect( sliderpos + sliderlen, 0, sb->width() - addline  - (sliderpos + sliderlen) , sb->height() );
-					else return TQRect( 0, sliderpos + sliderlen, sb->width(), sb->height() - addline - (sliderpos + sliderlen)
+					if ( horizontal ) return TQRect( sliderpos + sliderlen, 0, ceData.rect.width() - addline  - (sliderpos + sliderlen) , ceData.rect.height() );
+					else return TQRect( 0, sliderpos + sliderlen, ceData.rect.width(), ceData.rect.height() - addline - (sliderpos + sliderlen)
                     /*maxlen - sliderpos - sliderlen + subline - 5*/ );
 
 				default: break;

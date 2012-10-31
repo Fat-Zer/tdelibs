@@ -732,6 +732,7 @@ void KThemeStyle::drawPrimitive ( PrimitiveElement pe, TQPainter * p, TQStyleCon
     bool enabled = ( flags & Style_Enabled );
     bool down = ( flags & Style_Down );
     bool on = flags & Style_On;
+    bool active = flags & Style_Active;
     TQColorGroup g = g_base;
 
     switch ( pe )
@@ -1084,6 +1085,34 @@ void KThemeStyle::drawPrimitive ( PrimitiveElement pe, TQPainter * p, TQStyleCon
                 handled = true;
                 break;
 
+            }
+
+        case PE_MenuItemIndicatorFrame:
+            {
+                // Draw nothing
+                break;
+            }
+        case PE_MenuItemIndicatorIconFrame:
+            {
+                int x, y, w, h;
+                r.rect( &x, &y, &w, &h );
+                TQRect cr = visualRect( TQRect( x, y, w, h ), r );
+                const TQColorGroup& cg_ours = *colorGroup( g_base, active ? MenuItemDown : MenuItem );
+                drawBaseButton( p, cr.x(), cr.y(), cr.width(), cr.height(), *colorGroup( cg_ours, BevelDown ), true, false, BevelDown );
+                break;
+            }
+        case PE_MenuItemIndicatorCheck:
+            {
+                int x, y, w, h;
+                r.rect( &x, &y, &w, &h );
+                TQRect cr = visualRect( TQRect( x, y, w, h ), r );
+                const TQColorGroup& cg_ours = *colorGroup( g_base, active ? MenuItemDown : MenuItem );
+
+                SFlags cflags = Style_Default;
+                cflags |= active ? Style_Enabled : Style_On;
+
+                drawPrimitive( PE_CheckMark, p, ceData, elementFlags, TQRect( x + itemFrame, y + itemFrame, w - itemFrame * 2, h - itemFrame * 2 ), cg_ours, cflags );
+                break;
             }
         default:
             handled = false;
@@ -1525,7 +1554,7 @@ void KThemeStyle::drawControl( ControlElement element,
                     // Do we have an icon and are checked at the same time?
                     // Then draw a "pressed" background behind the icon
                     if ( checkable && mi->isChecked() )  //!active && -- ??
-                        drawBaseButton( p, cr.x(), cr.y(), cr.width(), cr.height(), *colorGroup( cg_ours, BevelDown ), true, false, BevelDown );
+                        drawPrimitive(PE_MenuItemIndicatorIconFrame, p, ceData, elementFlags, TQRect(x, y, checkcol, h), cg, how);
 
                     // Draw the icon
                     TQPixmap pixmap = mi->iconSet() ->pixmap( TQIconSet::Small, mode );
@@ -1549,11 +1578,7 @@ void KThemeStyle::drawControl( ControlElement element,
                     //     &cg_ours.brush(TQColorGroup::Midlight) );
 
                     // Draw the checkmark
-                    SFlags cflags = Style_Default;
-                    cflags |= active ? Style_Enabled : Style_On;
-
-                    drawPrimitive( PE_CheckMark, p, ceData, elementFlags, TQRect( cx + itemFrame, y + itemFrame,
-                                                           checkcol - itemFrame * 2, h - itemFrame * 2 ), cg_ours, cflags );
+                    drawPrimitive(PE_MenuItemIndicatorCheck, p, ceData, elementFlags, TQRect(cx, y, checkcol, h), cg, how);
                 }
 
                 // Time to draw the menu item label...

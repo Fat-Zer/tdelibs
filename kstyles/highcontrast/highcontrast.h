@@ -69,7 +69,7 @@ class HighContrastStyle : public KStyle
 					const TQStyleOption& = TQStyleOption::Default,
 					const TQWidget* widget = 0 ) const;
 
-		void tqdrawPrimitive( TQ_PrimitiveElement pe,
+		void drawPrimitive( TQ_PrimitiveElement pe,
 					TQPainter* p,
 					TQStyleControlElementData ceData,
 					ControlElementFlags elementFlags,

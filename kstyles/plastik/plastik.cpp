@@ -2070,6 +2070,35 @@ void PlastikStyle::drawPrimitive(TQ_PrimitiveElement pe,
             break;
         }
 
+	case PE_MenuItemIndicatorFrame:
+		{
+			int x, y, w, h;
+			r.rect( &x, &y, &w, &h );
+			TQRect cr = visualRect( TQRect( x + 2, y + 2, w - 1, h - 4 ), r );
+			qDrawShadePanel( p, cr.x(), cr.y(), cr.width(), cr.height(), cg, true, 1, &cg.brush(TQColorGroup::Midlight) );
+			break;
+		}
+	case PE_MenuItemIndicatorIconFrame:
+		{
+			int x, y, w, h;
+			r.rect( &x, &y, &w, &h );
+			TQRect cr = visualRect( TQRect( x + 2, y + 2, w - 1, h - 4 ), r );
+			qDrawShadePanel( p, cr.x(), cr.y(), cr.width(), cr.height(), cg, true, 1, &cg.brush(TQColorGroup::Midlight) );
+			break;
+		}
+	case PE_MenuItemIndicatorCheck:
+		{
+			int x, y, w, h;
+			r.rect( &x, &y, &w, &h );
+			TQRect cr = visualRect( TQRect( x + 2, y + 2, w - 1, h - 4 ), r );;
+			// Draw the checkmark
+			SFlags cflags = Style_On;
+			if (enabled)
+				cflags |= Style_Enabled;
+			drawPrimitive( PE_CheckMark, p, ceData, elementFlags, cr, cg, cflags );
+			break;
+		}
+
         case PE_SpinWidgetUp:
         case PE_SpinWidgetDown:
         case PE_HeaderArrow:
@@ -2485,7 +2514,7 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
             {
                 // Don't leave blank holes if we set NoBackground for the TQPopupMenu.
                 // This only happens when the popupMenu spans more than one column.
-                if (! ( widget->erasePixmap() && !widget->erasePixmap()->isNull() ) )
+                if ( ceData.bgPixmap.isNull() )
                     p->fillRect( r, cg.background().light( 105 ) );
 
                 break;
@@ -2507,16 +2536,16 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
                             _contrast+3, Draw_Top|Draw_Bottom|Is_Horizontal);
                 }
                 else {
-                    if ( widget->erasePixmap() && !widget->erasePixmap()->isNull() )
-                        p->drawPixmap( r.topLeft(), *widget->erasePixmap(), r );
+                    if ( ceData.bgPixmap.isNull() )
+                        p->drawPixmap( r.topLeft(), ceData.bgPixmap, r );
                     else p->fillRect( r, cg.background().light(105) );
                     if(_drawFocusRect)
                         p->drawWinFocusRect( r );
                 }
             }
             // Draw the transparency pixmap
-            else if ( widget->erasePixmap() && !widget->erasePixmap()->isNull() )
-                p->drawPixmap( r.topLeft(), *widget->erasePixmap(), r );
+            else if ( !ceData.bgPixmap.isNull() )
+                p->drawPixmap( r.topLeft(), ceData.bgPixmap, r );
             // Draw a solid background
             else
                 p->fillRect( r, cg.background().light( 105 ) );
@@ -2545,8 +2574,7 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
                 // Do we have an icon and are checked at the same time?
                 // Then draw a "pressed" background behind the icon
                 if ( checkable && /*!active &&*/ mi->isChecked() )
-                    qDrawShadePanel( p, cr.x(), cr.y(), cr.width(), cr.height(),
-                                        cg, true, 1, &cg.brush(TQColorGroup::Midlight) );
+                    drawPrimitive(PE_MenuItemIndicatorIconFrame, p, ceData, elementFlags, TQRect(r.x(), r.y(), checkcol, r.height()), cg, flags);
                 // Draw the icon
                 TQPixmap pixmap = mi->iconSet()->pixmap(TQIconSet::Small, mode);
                 TQRect pmr( 0, 0, pixmap.width(), pixmap.height() );
@@ -2560,14 +2588,9 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
                 // We only have to draw the background if the menu item is inactive -
                 // if it's active the "pressed" background is already drawn
             // if ( ! active )
-                    qDrawShadePanel( p, cr.x(), cr.y(), cr.width(), cr.height(), cg, true, 1,
-                                        &cg.brush(TQColorGroup::Midlight) );
+                    drawPrimitive(PE_MenuItemIndicatorFrame, p, ceData, elementFlags, TQRect(r.x(), r.y(), checkcol, r.height()), cg, flags);
 
-                // Draw the checkmark
-                SFlags cflags = Style_On;
-                if (enabled)
-                    cflags |= Style_Enabled;
-                drawPrimitive( PE_CheckMark, p, ceData, elementFlags, cr, cg, cflags );
+                drawPrimitive(PE_MenuItemIndicatorCheck, p, ceData, elementFlags, TQRect(r.x(), r.y(), checkcol, r.height()), cg, flags);
             }
 
             // Time to draw the menu item label...
@@ -3191,11 +3214,7 @@ TQRect PlastikStyle::querySubControlMetrics(TQ_ComplexControl control,
                                           const TQStyleOption &opt,
                                           const TQWidget *widget) const
 {
-    if (!widget) {
-        return TQRect();
-    }
-
-    TQRect r(widget->rect());
+    TQRect r(ceData.rect);
     switch (control) {
         case CC_ComboBox: {
             switch (subcontrol) {
