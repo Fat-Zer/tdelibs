@@ -571,7 +571,7 @@ int KStyle::kPixelMetric( KStylePixelMetric kpm, TQStyleControlElementData ceDat
 
 // #ifdef USE_QT4 // tdebindings / smoke needs this function declaration available at all times.  Furthermore I don't think it would hurt to have the declaration available at all times...so leave these commented out for now
 
-//void KStyle::tqdrawPrimitive( TQ_ControlElement pe,
+//void KStyle::drawPrimitive( TQ_ControlElement pe,
 //							TQPainter* p,
 // 							TQStyleControlElementData ceData,
 // 							ControlElementFlags elementFlags,
@@ -591,7 +591,7 @@ int KStyle::kPixelMetric( KStylePixelMetric kpm, TQStyleControlElementData ceDat
 
 // -----------------------------------------------------------------------------
 
-void KStyle::tqdrawPrimitive( TQ_PrimitiveElement pe,
+void KStyle::drawPrimitive( TQ_PrimitiveElement pe,
 							TQPainter* p,
 							TQStyleControlElementData ceData,
 							ControlElementFlags elementFlags,
@@ -621,7 +621,7 @@ void KStyle::tqdrawPrimitive( TQ_PrimitiveElement pe,
 			// Draw a toolbar handle
 			drawKStylePrimitive( KPE_ToolBarHandle, p, ceData, elementFlags, r, cg, flags, opt, widget );
 
-		else if ( widget->inherits(TQDOCKWINDOWHANDLE_OBJECT_NAME_STRING) )
+		else if (ceData.widgetObjectTypes.contains(TQDOCKWINDOWHANDLE_OBJECT_NAME_STRING))
 
 			// Draw a dock window handle
 			drawKStylePrimitive( KPE_DockWindowHandle, p, ceData, elementFlags, r, cg, flags, opt, widget );
@@ -681,7 +681,7 @@ void KStyle::tqdrawPrimitive( TQ_PrimitiveElement pe,
 #endif
 #endif
 	} else
-		TQCommonStyle::tqdrawPrimitive( pe, p, ceData, elementFlags, r, cg, flags, opt );
+		TQCommonStyle::drawPrimitive( pe, p, ceData, elementFlags, r, cg, flags, opt );
 }
 
 
@@ -865,8 +865,8 @@ void KStyle::drawControl( TQ_ControlElement element,
 		// ------------------------------------------------------------------------
 		case CE_PopupMenuScroller: {
 			p->fillRect(r, cg.background());
-			tqdrawPrimitive(PE_ButtonTool, p, ceData, elementFlags, r, cg, Style_Enabled);
-			tqdrawPrimitive((flags & Style_Up) ? PE_ArrowUp : PE_ArrowDown, p, ceData, elementFlags, r, cg, Style_Enabled);
+			drawPrimitive(PE_ButtonTool, p, ceData, elementFlags, r, cg, Style_Enabled);
+			drawPrimitive((flags & Style_Up) ? PE_ArrowUp : PE_ArrowDown, p, ceData, elementFlags, r, cg, Style_Enabled);
 			break;
 		}
 
@@ -875,7 +875,7 @@ void KStyle::drawControl( TQ_ControlElement element,
 		// ------------------------------------------------------------------------
 		case CE_ProgressBarGroove: {
 			TQRect fr = subRect(SR_ProgressBarGroove, ceData, elementFlags, widget);
-			tqdrawPrimitive(PE_Panel, p, ceData, elementFlags, fr, cg, Style_Sunken, TQStyleOption::SO_Default);
+			drawPrimitive(PE_Panel, p, ceData, elementFlags, fr, cg, Style_Sunken, TQStyleOption::SO_Default);
 			break;
 		}
 
@@ -997,12 +997,12 @@ TQRect KStyle::subRect(SubRect r, const TQStyleControlElementData ceData, const 
 		// KDE2 look smooth progress bar
 		// ------------------------------------------------------------------------
 		case SR_ProgressBarGroove:
-			return widget->rect();
+			return ceData.rect;
 
 		case SR_ProgressBarContents:
 		case SR_ProgressBarLabel: {
 			// ### take into account indicatorFollowsStyle()
-			TQRect rt = widget->rect();
+			TQRect rt = ceData.rect;
 			return TQRect(rt.x()+2, rt.y()+2, rt.width()-4, rt.height()-4);
 		}
 
@@ -1027,10 +1027,10 @@ int KStyle::pixelMetric(PixelMetric m, TQStyleControlElementData ceData, Control
 			TQWidget* parent = 0;
 			// Check that we are not a normal toolbar or a hidden dockwidget,
 			// in which case we need to adjust the height for font size
-			if (widget && (parent = widget->parentWidget() )
-				&& !parent->inherits(TQTOOLBAR_OBJECT_NAME_STRING)
-				&& !parent->inherits(TQMAINWINDOW_OBJECT_NAME_STRING)
-				&& widget->inherits(TQDOCKWINDOWHANDLE_OBJECT_NAME_STRING) )
+			if (widget
+				&& !(ceData.parentWidgetData.widgetObjectTypes.contains(TQTOOLBAR_OBJECT_NAME_STRING))
+				&& !(ceData.parentWidgetData.widgetObjectTypes.contains(TQMAINWINDOW_OBJECT_NAME_STRING))
+				&& (ceData.widgetObjectTypes.contains(TQDOCKWINDOWHANDLE_OBJECT_NAME_STRING)) )
 					return widget->fontMetrics().lineSpacing();
 			else
 				return TQCommonStyle::pixelMetric(m, ceData, elementFlags, widget);
@@ -1070,10 +1070,9 @@ int KStyle::pixelMetric(PixelMetric m, TQStyleControlElementData ceData, Control
 		// Determines how much space to leave for the actual non-tickmark
 		// portion of the slider.
 		case PM_SliderControlThickness: {
-			const TQSlider* slider   = (const TQSlider*)widget;
-			TQSlider::TickSetting ts = slider->tickmarks();
-			int thickness = (slider->orientation() == Qt::Horizontal) ?
-							 slider->height() : slider->width();
+			TQSlider::TickSetting ts = (TQSlider::TickSetting)ceData.tickMarkSetting;
+			int thickness = (ceData.orientation == TQt::Horizontal) ?
+							 ceData.rect.height() : ceData.rect.width();
 			switch (ts) {
 				case TQSlider::NoMarks:				// Use total area.
 					break;
@@ -1090,7 +1089,7 @@ int KStyle::pixelMetric(PixelMetric m, TQStyleControlElementData ceData, Control
 		// SPLITTER
 		// ------------------------------------------------------------------------
 		case PM_SplitterWidth:
-			if (widget && widget->inherits("QDockWindowResizeHandle"))
+			if (ceData.widgetObjectTypes.contains(TQDOCKWINDOWRESIZEHANDLE_OBJECT_NAME_STRING))
 				return 8;	// ### why do we need 2pix extra?
 			else
 				return 6;
@@ -1181,50 +1180,50 @@ void KStyle::drawComplexControl( TQ_ComplexControl control,
 
 			// Draw the up/left button set
 			if ((controls & SC_ScrollBarSubLine) && subline.isValid()) {
-				tqdrawPrimitive(PE_ScrollBarSubLine, p, ceData, elementFlags, subline, cg,
+				drawPrimitive(PE_ScrollBarSubLine, p, ceData, elementFlags, subline, cg,
 							sflags | (active == SC_ScrollBarSubLine ?
 								Style_Down : Style_Default));
 
 				if (useThreeButtonScrollBar && subline2.isValid())
-					tqdrawPrimitive(PE_ScrollBarSubLine, p, ceData, elementFlags, subline2, cg,
+					drawPrimitive(PE_ScrollBarSubLine, p, ceData, elementFlags, subline2, cg,
 							sflags | (active == SC_ScrollBarSubLine ?
 								Style_Down : Style_Default));
 			}
 
 			if ((controls & SC_ScrollBarAddLine) && addline.isValid())
-				tqdrawPrimitive(PE_ScrollBarAddLine, p, ceData, elementFlags, addline, cg,
+				drawPrimitive(PE_ScrollBarAddLine, p, ceData, elementFlags, addline, cg,
 							sflags | ((active == SC_ScrollBarAddLine) ?
 										Style_Down : Style_Default));
 
 			if ((controls & SC_ScrollBarSubPage) && subpage.isValid())
-				tqdrawPrimitive(PE_ScrollBarSubPage, p, ceData, elementFlags, subpage, cg,
+				drawPrimitive(PE_ScrollBarSubPage, p, ceData, elementFlags, subpage, cg,
 							sflags | ((active == SC_ScrollBarSubPage) ?
 										Style_Down : Style_Default));
 
 			if ((controls & SC_ScrollBarAddPage) && addpage.isValid())
-				tqdrawPrimitive(PE_ScrollBarAddPage, p, ceData, elementFlags, addpage, cg,
+				drawPrimitive(PE_ScrollBarAddPage, p, ceData, elementFlags, addpage, cg,
 							sflags | ((active == SC_ScrollBarAddPage) ?
 										Style_Down : Style_Default));
 
 			if ((controls & SC_ScrollBarFirst) && first.isValid())
-				tqdrawPrimitive(PE_ScrollBarFirst, p, ceData, elementFlags, first, cg,
+				drawPrimitive(PE_ScrollBarFirst, p, ceData, elementFlags, first, cg,
 							sflags | ((active == SC_ScrollBarFirst) ?
 										Style_Down : Style_Default));
 
 			if ((controls & SC_ScrollBarLast) && last.isValid())
-				tqdrawPrimitive(PE_ScrollBarLast, p, ceData, elementFlags, last, cg,
+				drawPrimitive(PE_ScrollBarLast, p, ceData, elementFlags, last, cg,
 							sflags | ((active == SC_ScrollBarLast) ?
 										Style_Down : Style_Default));
 
 			if ((controls & SC_ScrollBarSlider) && slider.isValid()) {
-				tqdrawPrimitive(PE_ScrollBarSlider, p, ceData, elementFlags, slider, cg,
+				drawPrimitive(PE_ScrollBarSlider, p, ceData, elementFlags, slider, cg,
 							sflags | ((active == SC_ScrollBarSlider) ?
 										Style_Down : Style_Default));
 				// Draw focus rect
 				if (elementFlags & CEF_HasFocus) {
 					TQRect fr(slider.x() + 2, slider.y() + 2,
 							 slider.width() - 5, slider.height() - 5);
-					tqdrawPrimitive(PE_FocusRect, p, ceData, elementFlags, fr, cg, Style_Default);
+					drawPrimitive(PE_FocusRect, p, ceData, elementFlags, fr, cg, Style_Default);
 				}
 			}
 			break;
@@ -1238,7 +1237,7 @@ void KStyle::drawComplexControl( TQ_ComplexControl control,
 			TQRect handle = querySubControlMetrics(CC_Slider, ceData, elementFlags, SC_SliderHandle, opt, widget);
 
 			// Double-buffer slider for no flicker
-			TQPixmap pix(widget->size());
+			TQPixmap pix(ceData.rect.size());
 			TQPainter p2;
 			p2.begin(&pix);
 
@@ -1255,7 +1254,7 @@ void KStyle::drawComplexControl( TQ_ComplexControl control,
 
 				// Draw the focus rect around the groove
 				if (elementFlags & CEF_HasFocus) {
-					tqdrawPrimitive(PE_FocusRect, &p2, ceData, elementFlags, groove, cg);
+					drawPrimitive(PE_FocusRect, &p2, ceData, elementFlags, groove, cg);
 				}
 			}
 

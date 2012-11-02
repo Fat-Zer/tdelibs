@@ -287,7 +287,7 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 		void unPolish( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void * );
 		void polishPopupMenu( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr );
 
-		void tqdrawPrimitive( TQ_PrimitiveElement pe,
+		void drawPrimitive( TQ_PrimitiveElement pe,
 					TQPainter* p,
 					TQStyleControlElementData ceData,
 					ControlElementFlags elementFlags,
@@ -298,7 +298,7 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 
 // #ifdef USE_QT4 // tdebindings / smoke needs this function declaration available at all times.  Furthermore I don't think it would hurt to have the declaration available at all times...so leave these commented out for now
 
-//		void tqdrawPrimitive( TQ_ControlElement pe,
+//		void drawPrimitive( TQ_ControlElement pe,
 //					TQPainter* p,
 // 					TQStyleControlElementData ceData,
 // 					ControlElementFlags elementFlags,
