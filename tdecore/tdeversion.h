@@ -23,12 +23,14 @@
 #include "tdelibs_export.h"
 
 /*
-    R <ABI VERSION> . <BUGFIX REVISION> . <SECURITY PATCHLEVEL>
-    Security patchlevel is not present on initial release
-    It is added on the first security release, starting with ".a"
-    ".a" would correspond to a TDE_VERSION_RELEASE of 1, ".b" would be 2, etc.
-    A new bugfix revision resets the security level
-    A new ABI version resets both the bugfix revision and the security level
+    R <ABI VERSION> . <FEATURE REVISION> . <BUG AND SECURITY PATCH LEVEL>
+    Initial release is always R<ABI VERSION>.0.0.
+    BUG AND SECURITY PATCH LEVEL is always updated with a point release.
+    FEATURE REVISION is updated when new features are introduced or existing
+    features are significantly updated.
+    A FEATURE REVISION release does NOT include ABI changes.
+    A new FEATURE REVISION level always resets the BUG AND SECURITY PATCHLEVEL.
+    A new ABI version resets both the FEATURE REVISION and BUG AND SECURITY PATCH LEVEL.
 */
 #define TDE_VERSION_STRING "R14.0.0 [DEVELOPMENT]"
 #define TDE_VERSION_MAJOR 14
