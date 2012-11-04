@@ -804,7 +804,7 @@ void LightStyleV2::drawControl( TQ_ControlElement control,
 
     case CE_PopupMenuItem:
 	{
-	    if (! widget || data.isDefault())
+	    if (data.isDefault())
 		break;
 
 	    TQMenuItem *mi = data.menuItem();
@@ -813,8 +813,8 @@ void LightStyleV2::drawControl( TQ_ControlElement control,
 
 	    if ( mi && mi->isSeparator() ) {
 		// draw separator (bg first, though)      
-		if ( widget->erasePixmap() && !widget->erasePixmap()->isNull() )
-		    p->drawPixmap( r.topLeft(), *widget->erasePixmap(), r );
+		if ( !ceData.bgPixmap.isNull() )
+		    p->drawPixmap( r.topLeft(), ceData.bgPixmap, r );
 		else
 		    p->fillRect(r, cg.brush(TQColorGroup::Button));
 	    
@@ -830,8 +830,8 @@ void LightStyleV2::drawControl( TQ_ControlElement control,
 	    if (flags & Style_Active)
 		qDrawShadePanel(p, r, cg, true, 1,
 				&cg.brush(TQColorGroup::Midlight));
-	    else if ( widget->erasePixmap() && !widget->erasePixmap()->isNull() )
-		p->drawPixmap( r.topLeft(), *widget->erasePixmap(), r );
+	    else if ( !ceData.bgPixmap.isNull() )
+		p->drawPixmap( r.topLeft(), ceData.bgPixmap, r );
 	    else 
 		p->fillRect(r, cg.brush(TQColorGroup::Button));
 
@@ -1020,14 +1020,13 @@ void LightStyleV2::drawControlMask( TQ_ControlElement control,
 
 TQRect LightStyleV2::subRect(SubRect subrect, const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, const TQWidget *widget) const
 {
-    TQRect rect, wrect(widget->rect());
+    TQRect rect, wrect(ceData.rect);
 
     switch (subrect) {
     case SR_PushButtonFocusRect:
  	{
- 	    const TQPushButton *button = (const TQPushButton *) widget;
  	    int dbw1 = 0, dbw2 = 0;
- 	    if (button->isDefault() || button->autoDefault()) {
+ 	    if ((elementFlags & CEF_IsDefault) || (elementFlags & CEF_AutoDefault)) {
  		dbw1 = pixelMetric(PM_ButtonDefaultIndicator, ceData, elementFlags, widget);
  		dbw2 = dbw1 * 2;
  	    }
@@ -1089,7 +1088,7 @@ void LightStyleV2::drawComplexControl( TQ_ComplexControl control,
 
 	    if ((controls & SC_ComboBoxEditField) && field.isValid()) {
 		p->setPen(cg.dark());
-		if (combobox->editable()) {
+		if (elementFlags & CEF_IsEditable) {
 		    field.addCoords(-1, -1, 1, 1);
 		    p->drawRect(field);
 		} else
@@ -1097,7 +1096,7 @@ void LightStyleV2::drawComplexControl( TQ_ComplexControl control,
 				field.right() + 1, field.bottom());
 
 		if (flags & Style_HasFocus) {
-		    if (! combobox->editable()) {
+		    if (! (elementFlags & CEF_IsEditable)) {
 			p->fillRect( field, cg.brush( TQColorGroup::Highlight ) );
 			TQRect fr =
 			    TQStyle::visualRect( subRect( SR_ComboBoxFocusRect, ceData, elementFlags, widget ),
@@ -1122,8 +1121,8 @@ void LightStyleV2::drawComplexControl( TQ_ComplexControl control,
 
 	    frame = querySubControlMetrics((TQ_ComplexControl)CC_SpinWidget, ceData, elementFlags,
 					   SC_SpinWidgetFrame, data, widget);
-	    up = spinwidget->upRect();
-	    down = spinwidget->downRect();
+	    up = ceData.spinWidgetData.upRect;
+	    down = ceData.spinWidgetData.downRect;
 
 	    if ((controls & SC_SpinWidgetFrame) && frame.isValid())
 		drawLightBevel(p, frame, cg, flags | Style_Sunken,
@@ -1131,7 +1130,7 @@ void LightStyleV2::drawComplexControl( TQ_ComplexControl control,
 
 	    if ((controls & SC_SpinWidgetUp) && up.isValid()) {
 		TQ_PrimitiveElement pe = PE_SpinWidgetUp;
-		if ( spinwidget->buttonSymbols() == TQSpinWidget::PlusMinus )
+		if ( ceData.spinWidgetData.buttonSymbols == TQSpinWidget::PlusMinus )
 		    pe = PE_SpinWidgetPlus;
 
 		p->setPen(cg.dark());
@@ -1164,7 +1163,7 @@ void LightStyleV2::drawComplexControl( TQ_ComplexControl control,
 
 	    if ((controls & SC_SpinWidgetDown) && down.isValid()) {
 		TQ_PrimitiveElement pe = PE_SpinWidgetDown;
-		if ( spinwidget->buttonSymbols() == TQSpinWidget::PlusMinus )
+		if ( ceData.spinWidgetData.buttonSymbols == TQSpinWidget::PlusMinus )
 		    pe = PE_SpinWidgetMinus;
 
 		p->setPen(cg.dark());
@@ -1200,9 +1199,8 @@ void LightStyleV2::drawComplexControl( TQ_ComplexControl control,
 
     case CC_ScrollBar:
 	{
-	    const TQScrollBar *scrollbar = (const TQScrollBar *) widget;
 	    TQRect addline, subline, subline2, addpage, subpage, slider, first, last;
-	    bool maxedOut = (scrollbar->minValue() == scrollbar->maxValue());
+	    bool maxedOut = (ceData.minSteps == ceData.maxSteps);
 
 	    subline = querySubControlMetrics(control, ceData, elementFlags, SC_ScrollBarSubLine, data, widget);
 	    addline = querySubControlMetrics(control, ceData, elementFlags, SC_ScrollBarAddLine, data, widget);
@@ -1213,7 +1211,7 @@ void LightStyleV2::drawComplexControl( TQ_ComplexControl control,
 	    last    = querySubControlMetrics(control, ceData, elementFlags, SC_ScrollBarLast,    data, widget);
 
 	    subline2 = addline;
-	    if (scrollbar->orientation() == Qt::Horizontal)
+	    if (ceData.orientation == TQt::Horizontal)
 		subline2.moveBy(-addline.width(), 0);
 	    else
 		subline2.moveBy(0, -addline.height());
@@ -1222,56 +1220,56 @@ void LightStyleV2::drawComplexControl( TQ_ComplexControl control,
 		drawPrimitive(PE_ScrollBarSubLine, p, ceData, elementFlags, subline, cg,
 			      Style_Enabled | ((active == SC_ScrollBarSubLine) ?
 					       Style_Down : Style_Default) |
-			      ((scrollbar->orientation() == Qt::Horizontal) ?
+			      ((ceData.orientation == TQt::Horizontal) ?
 			       Style_Horizontal : 0));
 
 		if (subline2.isValid())
 		    drawPrimitive(PE_ScrollBarSubLine, p, ceData, elementFlags, subline2, cg,
 				  Style_Enabled | ((active == SC_ScrollBarSubLine) ?
 						   Style_Down : Style_Default) |
-				  ((scrollbar->orientation() == Qt::Horizontal) ?
+				  ((ceData.orientation == TQt::Horizontal) ?
 				   Style_Horizontal : 0));
 	    }
 	    if ((controls & SC_ScrollBarAddLine) && addline.isValid())
 		drawPrimitive(PE_ScrollBarAddLine, p, ceData, elementFlags, addline, cg,
 			      Style_Enabled | ((active == SC_ScrollBarAddLine) ?
 					       Style_Down : Style_Default) |
-			      ((scrollbar->orientation() == Qt::Horizontal) ?
+			      ((ceData.orientation == TQt::Horizontal) ?
 			       Style_Horizontal : 0));
 	    if ((controls & SC_ScrollBarSubPage) && subpage.isValid())
 		drawPrimitive(PE_ScrollBarSubPage, p, ceData, elementFlags, subpage, cg,
 			      Style_Enabled | ((active == SC_ScrollBarSubPage) ?
 					       Style_Down : Style_Default) |
-			      ((scrollbar->orientation() == Qt::Horizontal) ?
+			      ((ceData.orientation == TQt::Horizontal) ?
 			       Style_Horizontal : 0));
 	    if ((controls & SC_ScrollBarAddPage) && addpage.isValid())
 		drawPrimitive(PE_ScrollBarAddPage, p, ceData, elementFlags, addpage, cg,
 			      ((maxedOut) ? Style_Default : Style_Enabled) |
 			      ((active == SC_ScrollBarAddPage) ?
 			       Style_Down : Style_Default) |
-			      ((scrollbar->orientation() == Qt::Horizontal) ?
+			      ((ceData.orientation == TQt::Horizontal) ?
 			       Style_Horizontal : 0));
        	    if ((controls & SC_ScrollBarFirst) && first.isValid())
 		drawPrimitive(PE_ScrollBarFirst, p, ceData, elementFlags, first, cg,
 			      Style_Enabled | ((active == SC_ScrollBarFirst) ?
 					       Style_Down : Style_Default) |
-			      ((scrollbar->orientation() == Qt::Horizontal) ?
+			      ((ceData.orientation == TQt::Horizontal) ?
 			       Style_Horizontal : 0));
 	    if ((controls & SC_ScrollBarLast) && last.isValid())
 		drawPrimitive(PE_ScrollBarLast, p, ceData, elementFlags, last, cg,
 			      Style_Enabled | ((active == SC_ScrollBarLast) ?
 					       Style_Down : Style_Default) |
-			      ((scrollbar->orientation() == Qt::Horizontal) ?
+			      ((ceData.orientation == TQt::Horizontal) ?
 			       Style_Horizontal : 0));
 	    if ((controls & SC_ScrollBarSlider) && slider.isValid()) {
 		drawPrimitive(PE_ScrollBarSlider, p, ceData, elementFlags, slider, cg,
 			      Style_Enabled | ((active == SC_ScrollBarSlider) ?
 					       Style_Down : Style_Default) |
-			      ((scrollbar->orientation() == Qt::Horizontal) ?
+			      ((ceData.orientation == TQt::Horizontal) ?
 			       Style_Horizontal : 0));
 
 		// ### perhaps this should not be able to accept focus if maxedOut?
-		if (scrollbar->hasFocus()) {
+		if (elementFlags & CEF_HasFocus) {
 		    TQRect fr(slider.x() + 2, slider.y() + 2,
 			     slider.width() - 5, slider.height() - 5);
 		    drawPrimitive(PE_FocusRect, p, ceData, elementFlags, fr, cg, Style_Default);
@@ -1283,7 +1281,6 @@ void LightStyleV2::drawComplexControl( TQ_ComplexControl control,
 
     case CC_Slider:
 	{
-	    const TQSlider *slider = (const TQSlider *) widget;
 	    TQRect groove = querySubControlMetrics(CC_Slider, ceData, elementFlags, SC_SliderGroove,
 						  data, widget),
 		  handle = querySubControlMetrics(CC_Slider, ceData, elementFlags, SC_SliderHandle,
@@ -1293,7 +1290,7 @@ void LightStyleV2::drawComplexControl( TQ_ComplexControl control,
 		if (flags & Style_HasFocus)
 		    drawPrimitive( PE_FocusRect, p, ceData, elementFlags, groove, cg );
 
-		if (slider->orientation() == Qt::Horizontal) {
+		if (ceData.orientation == TQt::Horizontal) {
 		    int dh = (groove.height() - 5) / 2;
 		    groove.addCoords(0, dh, 0, -dh);
 		} else {
@@ -1344,18 +1341,17 @@ TQRect LightStyleV2::querySubControlMetrics( TQ_ComplexControl control,
     switch (control) {
     case CC_ScrollBar:
 	{
-	    const TQScrollBar *scrollbar = (const TQScrollBar *) widget;
-	    int sliderstart = scrollbar->sliderStart();
+	    int sliderstart = ceData.startStep;
 	    int sbextent = pixelMetric(PM_ScrollBarExtent, ceData, elementFlags, widget);
-	    int maxlen = ((scrollbar->orientation() == Qt::Horizontal) ?
-			  scrollbar->width() : scrollbar->height()) - (sbextent * 3);
+	    int maxlen = ((ceData.orientation == TQt::Horizontal) ?
+			  ceData.rect.width() : ceData.rect.height()) - (sbextent * 3);
 	    int sliderlen;
 
 	    // calculate slider length
-	    if (scrollbar->maxValue() != scrollbar->minValue()) {
-		uint range = scrollbar->maxValue() - scrollbar->minValue();
-		sliderlen = (scrollbar->pageStep() * maxlen) /
-			    (range + scrollbar->pageStep());
+	    if (ceData.maxSteps != ceData.minSteps) {
+		uint range = ceData.maxSteps - ceData.minSteps;
+		sliderlen = (ceData.pageStep * maxlen) /
+			    (range + ceData.pageStep);
 
 		int slidermin = pixelMetric( PM_ScrollBarSliderMin, ceData, elementFlags, widget );
 		if ( sliderlen < slidermin || range > INT_MAX / 2 )
@@ -1373,15 +1369,15 @@ TQRect LightStyleV2::querySubControlMetrics( TQ_ComplexControl control,
 
 	    case SC_ScrollBarAddLine:
 		// bottom/right button
-		if (scrollbar->orientation() == Qt::Horizontal)
-		    ret.setRect(scrollbar->width() - sbextent, 0, sbextent, sbextent);
+		if (ceData.orientation == TQt::Horizontal)
+		    ret.setRect(ceData.rect.width() - sbextent, 0, sbextent, sbextent);
 		else
-		    ret.setRect(0, scrollbar->height() - sbextent, sbextent, sbextent);
+		    ret.setRect(0, ceData.rect.height() - sbextent, sbextent, sbextent);
 		break;
 
 	    case SC_ScrollBarSubPage:
 		// between top/left button and slider
-		if (scrollbar->orientation() == Qt::Horizontal)
+		if (ceData.orientation == TQt::Horizontal)
 		    ret.setRect(sbextent, 0, sliderstart - sbextent, sbextent);
 		else
 		    ret.setRect(0, sbextent, sbextent, sliderstart - sbextent);
@@ -1389,7 +1385,7 @@ TQRect LightStyleV2::querySubControlMetrics( TQ_ComplexControl control,
 
 	    case SC_ScrollBarAddPage:
 		// between bottom/right button and slider
-		if (scrollbar->orientation() == Qt::Horizontal)
+		if (ceData.orientation == TQt::Horizontal)
 		    ret.setRect(sliderstart + sliderlen, 0,
 				maxlen - sliderstart - sliderlen + sbextent, sbextent);
 		else
@@ -1398,16 +1394,16 @@ TQRect LightStyleV2::querySubControlMetrics( TQ_ComplexControl control,
 		break;
 
 	    case SC_ScrollBarGroove:
-		if (scrollbar->orientation() == Qt::Horizontal)
-		    ret.setRect(sbextent, 0, scrollbar->width() - sbextent * 3,
-				scrollbar->height());
+		if (ceData.orientation == TQt::Horizontal)
+		    ret.setRect(sbextent, 0, ceData.rect.width() - sbextent * 3,
+				ceData.rect.height());
 		else
-		    ret.setRect(0, sbextent, scrollbar->width(),
-				scrollbar->height() - sbextent * 3);
+		    ret.setRect(0, sbextent, ceData.rect.width(),
+				ceData.rect.height() - sbextent * 3);
 		break;
 
 	    case SC_ScrollBarSlider:
-		if (scrollbar->orientation() == Qt::Horizontal)
+		if (ceData.orientation == TQt::Horizontal)
 		    ret.setRect(sliderstart, 0, sliderlen, sbextent);
 		else
 		    ret.setRect(0, sliderstart, sbextent, sliderlen);
@@ -1541,7 +1537,7 @@ TQSize LightStyleV2::sizeFromContents( ContentsType contents,
 
 	    // only expand the button if we are displaying text...
 	    if ( ! button->text().isEmpty() ) {
-		if ( button->isDefault() || button->autoDefault() ) {
+		if ( (elementFlags & CEF_IsDefault) || button->autoDefault() ) {
 		    // default button minimum size
 		    if ( w < 80 )
 			w = 80;
@@ -1562,7 +1558,7 @@ TQSize LightStyleV2::sizeFromContents( ContentsType contents,
 
     case CT_PopupMenuItem:
 	{
-	    if (! widget || data.isDefault())
+	    if (data.isDefault())
 		break;
 
 	    TQMenuItem *mi = data.menuItem();
@@ -1606,22 +1602,20 @@ TQSize LightStyleV2::sizeFromContents( ContentsType contents,
 	}
     case CT_ProgressBar:
 	{
-	    const TQProgressBar* pb = static_cast<const TQProgressBar*>(widget);
-	    
 	    //If we have to display the indicator, and we do it on RHS, give some more room
 	    //for it. This tries to match the logic and the spacing in SR_ProgressBarGroove/Contents
 	    //sizing in TQCommonStyle.
-	    if (pb->percentageVisible() && 
-	        (pb->indicatorFollowsStyle() || ! pb->centerIndicator()))
+	    if (ceData.percentageVisible && 
+	        ((elementFlags & CEF_IndicatorFollowsStyle) || ! (elementFlags & CEF_CenterIndicator)))
 	    {
-		int addw = pb->fontMetrics().width("100%") + 6;
+		int addw = TQFontMetrics(ceData.font).width("100%") + 6;
 		return TQSize(contentsSize.width() + addw, contentsSize.height());
 	    }
 	    else
 	    	return contentsSize; //Otherwise leave unchanged
-	    
+
 	    break;
-	}    
+	}
 
     default:
 	ret = TQCommonStyle::sizeFromContents(contents, ceData, elementFlags, contentsSize, data, widget);

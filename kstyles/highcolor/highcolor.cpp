@@ -1054,8 +1054,7 @@ void HighColorStyle::drawKStylePrimitive( KStylePrimitive kpe,
 		// SLIDER GROOVE
 		// -------------------------------------------------------------------
 		case KPE_SliderGroove: {
-			const TQSlider* slider = (const TQSlider*)widget;
-			bool horizontal = slider->orientation() == Qt::Horizontal;
+			bool horizontal = ceData.orientation == TQt::Horizontal;
 			int gcenter = (horizontal ? r.height() : r.width()) / 2;
 
 			TQRect gr;
@@ -1074,7 +1073,7 @@ void HighColorStyle::drawKStylePrimitive( KStylePrimitive kpe,
 			p->drawLine(x+2, y, x2-2, y);
 			p->drawLine(x, y+2, x, y2-2);
 			p->fillRect(x+2,y+2,w-4, h-4, 
-				slider->isEnabled() ? cg.dark() : cg.mid());
+				(elementFlags & CEF_IsEnabled) ? cg.dark() : cg.mid());
 			p->setPen(cg.shadow());
 			p->drawRect(x+1, y+1, w-2, h-2);
 			p->setPen(cg.light());
@@ -1088,8 +1087,7 @@ void HighColorStyle::drawKStylePrimitive( KStylePrimitive kpe,
 		// SLIDER HANDLE
 		// -------------------------------------------------------------------
 		case KPE_SliderHandle: {
-			const TQSlider* slider = (const TQSlider*)widget;
-			bool horizontal = slider->orientation() == Qt::Horizontal;
+			bool horizontal = ceData.orientation == TQt::Horizontal;
 			int x,y,w,h;
 			r.rect(&x, &y, &w, &h);
 			int x2 = x+w-1;
@@ -1123,7 +1121,7 @@ void HighColorStyle::drawKStylePrimitive( KStylePrimitive kpe,
 				p->drawLine(x+5, y+4, x+5, y2-4);
 				p->drawLine(x+8, y+4, x+8, y2-4);
 				p->drawLine(x+11,y+4, x+11, y2-4);
-				p->setPen(slider->isEnabled() ? cg.shadow(): cg.mid());
+				p->setPen((elementFlags & CEF_IsEnabled) ? cg.shadow(): cg.mid());
 				p->drawLine(x+6, y+4, x+6, y2-4);
 				p->drawLine(x+9, y+4, x+9, y2-4);
 				p->drawLine(x+12,y+4, x+12, y2-4);
@@ -1132,7 +1130,7 @@ void HighColorStyle::drawKStylePrimitive( KStylePrimitive kpe,
 				p->drawLine(x+4, y+5, x2-4, y+5);
 				p->drawLine(x+4, y+8, x2-4, y+8);
 				p->drawLine(x+4, y+11, x2-4, y+11);
-				p->setPen(slider->isEnabled() ? cg.shadow() : cg.mid());
+				p->setPen((elementFlags & CEF_IsEnabled) ? cg.shadow() : cg.mid());
 				p->drawLine(x+4, y+6, x2-4, y+6);
 				p->drawLine(x+4, y+9, x2-4, y+9);
 				p->drawLine(x+4, y+12, x2-4, y+12);
@@ -1162,11 +1160,10 @@ void HighColorStyle::drawControl( TQ_ControlElement element,
 		// -------------------------------------------------------------------
 		case CE_PushButton: {
 			if ( type != HighColor ) {
-				TQPushButton *button = (TQPushButton*) widget;
 				TQRect br = r;
-				bool btnDefault = button->isDefault();
+				bool btnDefault = (elementFlags & CEF_IsDefault);
 				
-				if ( btnDefault || button->autoDefault() ) {
+				if ( btnDefault || (elementFlags & CEF_AutoDefault) ) {
 					// Compensate for default indicator
 					static int di = pixelMetric( PM_ButtonDefaultIndicator, ceData, elementFlags );
 					br.addCoords( di, di, -di, -di );
@@ -1187,8 +1184,7 @@ void HighColorStyle::drawControl( TQ_ControlElement element,
 		// PUSHBUTTON LABEL
 		// -------------------------------------------------------------------
 		case CE_PushButtonLabel: {
-			const TQPushButton* button = (const TQPushButton*)widget;
-			bool active = button->isOn() || button->isDown();
+			bool active = ((elementFlags & CEF_IsOn) || (elementFlags & CEF_IsDown));
 			int x, y, w, h;
 			r.rect( &x, &y, &w, &h );
 
@@ -1200,7 +1196,7 @@ void HighColorStyle::drawControl( TQ_ControlElement element,
 			}
 
 			// Does the button have a popup menu?
-			if ( button->isMenuButton() ) {
+			if ( elementFlags & CEF_IsMenuWidget ) {
 				int dx = pixelMetric( PM_MenuButtonIndicator, ceData, elementFlags, widget );
 				drawPrimitive( PE_ArrowDown, p, ceData, elementFlags, TQRect(x + w - dx - 2, y + 2, dx, h - 4),
 							   cg, flags, opt );
@@ -1208,19 +1204,19 @@ void HighColorStyle::drawControl( TQ_ControlElement element,
 			}
 
 			// Draw the icon if there is one
-			if ( button->iconSet() && !button->iconSet()->isNull() ) {
+			if ( !ceData.iconSet.isNull() ) {
 				TQIconSet::Mode  mode  = TQIconSet::Disabled;
 				TQIconSet::State state = TQIconSet::Off;
 
-				if (button->isEnabled())
-					mode = button->hasFocus() ? TQIconSet::Active : TQIconSet::Normal;
-				if (button->isToggleButton() && button->isOn())
+				if (elementFlags & CEF_IsEnabled)
+					mode = (elementFlags & CEF_HasFocus) ? TQIconSet::Active : TQIconSet::Normal;
+				if ((elementFlags & CEF_BiState) && (elementFlags & CEF_IsOn))
 					state = TQIconSet::On;
 
-				TQPixmap pixmap = button->iconSet()->pixmap( TQIconSet::Small, mode, state );
+				TQPixmap pixmap = ceData.iconSet.pixmap( TQIconSet::Small, mode, state );
 
 				// Center the iconset if there's no text or pixmap
-				if (button->text().isEmpty() && !button->pixmap())
+				if (ceData.text.isEmpty() && ceData.fgPixmap.isNull())
 					p->drawPixmap( x + (w - pixmap.width())  / 2, 
 								   y + (h - pixmap.height()) / 2, pixmap );
 				else
@@ -1232,30 +1228,31 @@ void HighColorStyle::drawControl( TQ_ControlElement element,
 			}
 
 			// Make the label indicate if the button is a default button or not
-			if ( active || button->isDefault() ) {
+			if ( active || (elementFlags & CEF_IsDefault) ) {
 				// Draw "fake" bold text  - this enables the font metrics to remain
 				// the same as computed in TQPushButton::sizeHint(), but gives
 				// a reasonable bold effect.
 				int i;
 
 				// Text shadow
-				if (button->isEnabled()) // Don't draw double-shadow when disabled
+				if (elementFlags & CEF_IsEnabled) // Don't draw double-shadow when disabled
 					for(i=0; i<2; i++)
 						drawItem( p, TQRect(x+i+1, y+1, w, h), AlignCenter | ShowPrefix, 
-								button->colorGroup(), button->isEnabled(), NULL,
-								button->text(), -1,	
-								active ? &button->colorGroup().dark() : &button->colorGroup().mid() );
+								ceData.colorGroup, (elementFlags & CEF_IsEnabled), NULL,
+								ceData.text, -1,	
+								(active ? &ceData.colorGroup.dark() : &ceData.colorGroup.mid()) );
 
 				// Normal Text
 				for(i=0; i<2; i++)
 					drawItem( p, TQRect(x+i, y, w, h), AlignCenter | ShowPrefix, 
-							button->colorGroup(), button->isEnabled(), i == 0 ? button->pixmap() : NULL,
-							button->text(), -1,
-							active ? &button->colorGroup().light() : &button->colorGroup().buttonText() );
-			} else
-				drawItem( p, TQRect(x, y, w, h), AlignCenter | ShowPrefix, button->colorGroup(),
-						button->isEnabled(), button->pixmap(), button->text(), -1,
-						active ? &button->colorGroup().light() : &button->colorGroup().buttonText() );
+							ceData.colorGroup, (elementFlags & CEF_IsEnabled), ((i == 0) ? (ceData.fgPixmap.isNull())?NULL:&ceData.fgPixmap : NULL),
+							ceData.text, -1,
+							(active ? &ceData.colorGroup.light() : &ceData.colorGroup.buttonText()) );
+			} else {
+				drawItem( p, TQRect(x, y, w, h), AlignCenter | ShowPrefix, ceData.colorGroup,
+						(elementFlags & CEF_IsEnabled), (ceData.fgPixmap.isNull())?NULL:&ceData.fgPixmap, ceData.text, -1,
+						(active ? &ceData.colorGroup.light() : &ceData.colorGroup.buttonText()) );
+			}
 
 			// Draw a focus rect if the button has focus
 			if ( flags & Style_HasFocus )
@@ -1334,7 +1331,7 @@ void HighColorStyle::drawControl( TQ_ControlElement element,
 			if ( !mi ) {
 				// Don't leave blank holes if we set NoBackground for the TQPopupMenu.
 				// This only happens when the popupMenu spans more than one column.
-				if (! (widget->erasePixmap() && !widget->erasePixmap()->isNull()) )
+				if (! (!ceData.bgPixmap.isNull()) )
 					p->fillRect(r, cg.brush(TQColorGroup::Button) );
 				break;
 			}
@@ -1366,8 +1363,8 @@ void HighColorStyle::drawControl( TQ_ControlElement element,
 				qDrawShadePanel( p, x, y, w, h, cg, true, 1,
 				                 &cg.brush(TQColorGroup::Midlight) );
 			// Draw the transparency pixmap
-			else if ( widget->erasePixmap() && !widget->erasePixmap()->isNull() )
-				p->drawPixmap( x, y, *widget->erasePixmap(), x, y, w, h );
+			else if ( !ceData.bgPixmap.isNull() )
+				p->drawPixmap( x, y, ceData.bgPixmap, x, y, w, h );
 			// Draw a solid background
 			else
 				p->fillRect( r, cg.button() );
@@ -1609,7 +1606,7 @@ void HighColorStyle::drawComplexControl( TQ_ComplexControl control,
 					ceData, elementFlags );
 
 				// Are we enabled?
-				if ( widget->isEnabled() )
+				if ( elementFlags & CEF_IsEnabled )
 					flags |= Style_Enabled;
 
 				// Are we "pushed" ?
@@ -1628,13 +1625,13 @@ void HighColorStyle::drawComplexControl( TQ_ComplexControl control,
 						                    SC_ComboBoxEditField, TQStyleOption::Default, widget), ceData, elementFlags );
 
 				// Draw the indent
-				if (cb->editable()) {
+				if ( elementFlags & CEF_IsEditable ) {
 					p->setPen( cg.dark() );
 					p->drawLine( re.x(), re.y()-1, re.x()+re.width(), re.y()-1 );
 					p->drawLine( re.x()-1, re.y(), re.x()-1, re.y()+re.height() );
 				}
 
-				if ( cb->hasFocus() ) {
+				if ( elementFlags & CEF_HasFocus ) {
 					p->setPen( cg.highlightedText() );
 					p->setBackgroundColor( cg.highlight() );
 				} else {
@@ -1642,7 +1639,7 @@ void HighColorStyle::drawComplexControl( TQ_ComplexControl control,
 					p->setBackgroundColor( cg.button() );
 				}
 
-				if ( cb->hasFocus() && !cb->editable() ) {
+				if (  (elementFlags & CEF_HasFocus) && !(elementFlags & CEF_IsEditable) ) {
 					// Draw the contents
 					p->fillRect( re.x(), re.y(), re.width(), re.height(),
 								 cg.brush( TQColorGroup::Highlight ) );
@@ -1660,8 +1657,6 @@ void HighColorStyle::drawComplexControl( TQ_ComplexControl control,
 		// TOOLBUTTON
 		// -------------------------------------------------------------------
 		case CC_ToolButton: {
-			const TQToolButton *toolbutton = (const TQToolButton *) widget;
-
 			TQRect button, menuarea;
 			button   = querySubControlMetrics(control, ceData, elementFlags, SC_ToolButton, opt, widget);
 			menuarea = querySubControlMetrics(control, ceData, elementFlags, SC_ToolButtonMenu, opt, widget);
@@ -1681,16 +1676,14 @@ void HighColorStyle::drawComplexControl( TQ_ComplexControl control,
 					drawPrimitive(PE_ButtonTool, p, ceData, elementFlags, button, cg, bflags, opt);
 
 				// Check whether to draw a background pixmap
-				else if ( toolbutton->parentWidget() &&
-						  toolbutton->parentWidget()->backgroundPixmap() &&
-						  !toolbutton->parentWidget()->backgroundPixmap()->isNull() )
+				else if ( !ceData.parentWidgetData.bgPixmap.isNull() )
 				{
-					TQPixmap pixmap = *(toolbutton->parentWidget()->backgroundPixmap());
-					p->drawTiledPixmap( r, pixmap, toolbutton->pos() );
+					TQPixmap pixmap = ceData.parentWidgetData.bgPixmap;
+					p->drawTiledPixmap( r, pixmap, ceData.pos );
 				}
-				else if (widget->parent())
+				else if (!ceData.parentWidgetData.widgetObjectTypes.isEmpty())
 				{
-					if (widget->parent()->inherits(TQTOOLBAR_OBJECT_NAME_STRING))
+					if (ceData.parentWidgetData.widgetObjectTypes.contains(TQTOOLBAR_OBJECT_NAME_STRING))
 					{
 						TQToolBar* parent = (TQToolBar*)widget->parent();
 						TQRect pr = parent->rect();
@@ -1699,7 +1692,7 @@ void HighColorStyle::drawComplexControl( TQ_ComplexControl control,
 									parent->orientation() == Qt::Vertical,
 									r.x(), r.y(), pr.width()-2, pr.height()-2);
 					}
-					else if (widget->parent()->inherits("QToolBarExtensionWidget"))
+					else if (ceData.parentWidgetData.widgetObjectTypes.contains("QToolBarExtensionWidget"))
 					{
 						TQWidget* parent = (TQWidget*)widget->parent();
 						TQToolBar* toolbar = (TQToolBar*)parent->parent();
@@ -1724,8 +1717,8 @@ void HighColorStyle::drawComplexControl( TQ_ComplexControl control,
 				drawPrimitive(PE_ArrowDown, p, ceData, elementFlags, menuarea, cg, mflags, opt);
 			}
 
-			if (toolbutton->hasFocus() && !toolbutton->focusProxy()) {
-				TQRect fr = toolbutton->rect();
+			if ((elementFlags & CEF_HasFocus) && !(elementFlags & CEF_HasFocusProxy)) {
+				TQRect fr = ceData.rect;
 				fr.addCoords(3, 3, -3, -3);
 				drawPrimitive(PE_FocusRect, p, ceData, elementFlags, fr, cg);
 			}
@@ -1804,11 +1797,10 @@ TQRect HighColorStyle::subRect(SubRect r, const TQStyleControlElementData ceData
 	// the Qt3 defaults to be similar to Qt 2's defaults.
 	// -------------------------------------------------------------------
 	if (r == SR_PushButtonFocusRect ) {
-		const TQPushButton* button = (const TQPushButton*) widget;
-		TQRect wrect(widget->rect());
+		TQRect wrect(ceData.rect);
 		int dbw1 = 0, dbw2 = 0;
 
-		if (button->isDefault() || button->autoDefault()) {
+		if ((elementFlags & CEF_IsDefault) || (elementFlags & CEF_AutoDefault)) {
 			dbw1 = pixelMetric(PM_ButtonDefaultIndicator, ceData, elementFlags, widget);
 			dbw2 = dbw1 * 2;
 		}
@@ -1886,7 +1878,7 @@ int HighColorStyle::styleHint(StyleHint sh, TQStyleControlElementData ceData, Co
 			}
 			break;
 		default:
-			ret = TQCommonStyle::styleHint(sh, ceData, elementFlags, opt, returnData, w);
+			ret = KStyle::styleHint(sh, ceData, elementFlags, opt, returnData, w);
 			break;
 	}
 
@@ -1905,7 +1897,6 @@ TQSize HighColorStyle::sizeFromContents( ContentsType contents,
 		// PUSHBUTTON SIZE
 		// ------------------------------------------------------------------
 		case CT_PushButton: {
-			const TQPushButton* button = (const TQPushButton*) widget;
 			int w  = contentSize.width();
 			int h  = contentSize.height();
 			int bm = pixelMetric( PM_ButtonMargin, ceData, elementFlags, widget );
@@ -1915,8 +1906,8 @@ TQSize HighColorStyle::sizeFromContents( ContentsType contents,
 			h += bm + fw;
 
 			// Ensure we stick to standard width and heights.
-			if ( button->isDefault() || button->autoDefault() ) {
-				if ( w < 80 && !button->text().isEmpty() )
+			if ((elementFlags & CEF_IsDefault) || (elementFlags & CEF_AutoDefault)) {
+				if ( w < 80 && !ceData.text.isEmpty() )
 					w = 80;
 
 				if ( type != HighColor ) {
@@ -2043,7 +2034,7 @@ bool HighColorStyle::objectEventHandler( TQStyleControlElementData ceData, Contr
 				// widgets that are on the toolbar.
 				TQWidget *widget = TQT_TQWIDGET(object);
 				TQWidget *parent = TQT_TQWIDGET(object->parent());
-				int x_offset = widget->x(), y_offset = widget->y();
+				int x_offset = ceData.rect.x(), y_offset = ceData.rect.y();
 				while (parent && parent->parent() && !qstrcmp( parent->name(), kdeToolbarWidget ) )
 				{
 					x_offset += parent->x();
@@ -2051,8 +2042,8 @@ bool HighColorStyle::objectEventHandler( TQStyleControlElementData ceData, Contr
 					parent = TQT_TQWIDGET(parent->parent());
 				}
 	
-				TQRect r  = widget->rect();
-				TQRect pr = parent->rect();
+				TQRect r  = ceData.rect;
+				TQRect pr = ceData.parentWidgetData.rect;
 				bool horiz_grad = pr.width() < pr.height();
 	
 				// Check if the parent is a QToolbar, and use its orientation, else guess.
@@ -2077,7 +2068,7 @@ bool HighColorStyle::objectEventHandler( TQStyleControlElementData ceData, Contr
 			if ( event->type() == TQEvent::Paint ) {
 
 				TQWidget *widget = TQT_TQWIDGET(object);
-				TQRect wr = widget->rect(), tr = toolbar->rect();
+				TQRect wr = ceData.rect, tr = ceData.parentWidgetData.rect;
 				TQPainter p( widget );
 				renderGradient(&p, wr, toolbar->colorGroup().button(),
 						toolbar->orientation() == Qt::Vertical,

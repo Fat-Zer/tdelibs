@@ -1215,8 +1215,7 @@ void PlastikStyle::drawKStylePrimitive(KStylePrimitive kpe,
 //  ------
     switch( kpe ) {
         case KPE_SliderGroove: {
-            const TQSlider* slider = (const TQSlider*)widget;
-            bool horizontal = slider->orientation() == Qt::Horizontal;
+            bool horizontal = ceData.orientation == TQt::Horizontal;
 
             if (horizontal) {
                 int center = r.y()+r.height()/2;
@@ -1233,8 +1232,7 @@ void PlastikStyle::drawKStylePrimitive(KStylePrimitive kpe,
         }
 
         case KPE_SliderHandle: {
-                const TQSlider* slider = (const TQSlider*)widget;
-                bool horizontal = slider->orientation() == Qt::Horizontal;
+                bool horizontal = ceData.orientation == TQt::Horizontal;
 
                 const bool pressed = (flags&Style_Active);
                 const WidgetState s = enabled?(pressed?IsPressed:IsEnabled):IsDisabled;
@@ -2214,15 +2212,14 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
         }
 
         case CE_ProgressBarContents: {
-            const TQProgressBar *pb = dynamic_cast<const TQProgressBar*>(widget);
-            int steps = pb->totalSteps();
+            int steps = ceData.totalSteps;
 
             const TQColor bg = enabled?cg.base():cg.background(); // background
             const TQColor fg = enabled?cg.highlight():TQColor(cg.background().dark(110)); // foreground
 
             if( steps == 0 ) { // Busy indicator
                 static const int barWidth = 10;
-                int progress = pb->progress() % (2*(r.width()-barWidth));
+                int progress = ceData.currentStep % (2*(r.width()-barWidth));
                 if( progress < 0)
                     progress = 0;
                 if( progress > r.width()-barWidth )
@@ -2239,7 +2236,7 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
                                         Round_UpperRight|Round_BottomRight|
                                         Round_UpperLeft|Round_BottomLeft|Is_Horizontal);
             } else {
-                double percent = static_cast<double>(pb->progress()) / static_cast<double>(steps);
+                double percent = static_cast<double>(ceData.currentStep) / static_cast<double>(steps);
 
                 int w = static_cast<int>(r.width() * percent);
                 // renderContour/renderSurface handle small sizes not very well, so set a minimal
@@ -3196,11 +3193,11 @@ TQRect PlastikStyle::subRect(SubRect r, const TQStyleControlElementData ceData, 
         // Don't use KStyles progressbar subrect
         // TODO:
         case SR_ProgressBarGroove: {
-            return TQRect(widget->rect());
+            return TQRect(ceData.rect);
         }
         case SR_ProgressBarContents:
         case SR_ProgressBarLabel: {
-            TQRect rw = widget->rect();
+            TQRect rw = ceData.rect;
             return TQRect(rw.left()+2, rw.top()+2, rw.width()-4, rw.height()-4 );
         }
 

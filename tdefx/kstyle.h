@@ -237,8 +237,8 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 			KPE_ListViewBranch
 		};
 
-    // Old API
-    // DEPRECATED
+		// Old API
+		// DEPRECATED
 		virtual void drawKStylePrimitive( KStylePrimitive kpe,
 					TQPainter* p,
 					const TQWidget* widget,

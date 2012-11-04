@@ -881,11 +881,10 @@ void KStyle::drawControl( TQ_ControlElement element,
 
 		case CE_ProgressBarContents: {
 			// ### Take into account totalSteps() for busy indicator
-			const TQProgressBar* pb = (const TQProgressBar*)widget;
 			TQRect cr = subRect(SR_ProgressBarContents, ceData, elementFlags, widget);
-			double progress = pb->progress();
+			double progress = ceData.currentStep;
 			bool reverse = TQApplication::reverseLayout();
-			int steps = pb->totalSteps();
+			int steps = ceData.totalSteps;
 
 			if (!cr.isValid())
 				return;
@@ -945,11 +944,10 @@ void KStyle::drawControl( TQ_ControlElement element,
 		}
 
 		case CE_ProgressBarLabel: {
-			const TQProgressBar* pb = (const TQProgressBar*)widget;
 			TQRect cr = subRect(SR_ProgressBarContents, ceData, elementFlags, widget);
-			double progress = pb->progress();
+			double progress = ceData.currentStep;
 			bool reverse = TQApplication::reverseLayout();
-			int steps = pb->totalSteps();
+			int steps = ceData.totalSteps;
 
 			if (!cr.isValid())
 				return;
@@ -969,16 +967,16 @@ void KStyle::drawControl( TQ_ControlElement element,
 					crect.setRect(cr.x()+width, cr.y(), cr.width(), cr.height());
 					
 				p->save();
-				p->setPen(pb->isEnabled() ? (reverse ? cg.text() : cg.highlightedText()) : cg.text());
-				p->drawText(r, AlignCenter, pb->progressString());
+				p->setPen((elementFlags & CEF_IsEnabled) ? (reverse ? cg.text() : cg.highlightedText()) : cg.text());
+				p->drawText(r, AlignCenter, ceData.progressText);
 				p->setClipRect(crect);
 				p->setPen(reverse ? cg.highlightedText() : cg.text());
-				p->drawText(r, AlignCenter, pb->progressString());
+				p->drawText(r, AlignCenter, ceData.progressText);
 				p->restore();
 
 			} else {
 				p->setPen(cg.text());
-				p->drawText(r, AlignCenter, pb->progressString());
+				p->drawText(r, AlignCenter, ceData.progressText);
 			}
 
 			break;
