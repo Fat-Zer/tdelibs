@@ -192,10 +192,9 @@ void AsteroidStyle::drawKStylePrimitive(KStylePrimitive ksp,
 	switch (ksp) {
 
         	case KPE_SliderGroove: {
-			const TQSlider* slider = (const TQSlider*)w;
 			int x, y, v, h;
 			r.rect(&x, &y, &v, &h);
-			bool horizontal = slider->orientation() ==Qt::Horizontal;
+			bool horizontal = ceData.orientation == TQt::Horizontal;
 			int gcenter = (horizontal ? h : v) / 2;
 			int pad = 3;
 
@@ -225,12 +224,11 @@ void AsteroidStyle::drawKStylePrimitive(KStylePrimitive ksp,
 
 		case KPE_SliderHandle: {
 
-			const TQSlider* slider = (const TQSlider*)w;
 			int x, y, x2, y2, xmin, xmax, ymin, ymax, v, h;
 			int pcenter;
 			r.coords(&xmin, &ymin, &xmax, &ymax);
 			r.rect(&x, &y, &v, &h);
-			bool horizontal = slider->orientation() ==Qt::Horizontal;
+			bool horizontal = ceData.orientation == TQt::Horizontal;
 
 			if (horizontal) {
 				x  = v / 5 + xmin;
@@ -1023,7 +1021,7 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 #ifndef TQT_NO_TABBAR
 	case CE_TabBarTab:
 		{
-		if ( !w || !w->parentWidget() || !o.tab() )
+		if ( ceData.parentWidgetData.widgetObjectTypes.isEmpty() || !o.tab() )
 			break;
 	
 		const TQTab * t = o.tab();
@@ -1280,11 +1278,10 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 
 
 			// ### Take into account totalSteps() for busy indicator
-			const TQProgressBar* pb = (const TQProgressBar*)w;
 			TQRect cr = subRect(SR_ProgressBarContents, ceData, elementFlags, w);
-			double progress = pb->progress();
+			double progress = ceData.currentStep;
 			bool reverse = TQApplication::reverseLayout();
-			int steps = pb->totalSteps();
+			int steps = ceData.totalSteps;
 
 			if (!cr.isValid())
 				return;
@@ -1356,10 +1353,8 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 		}
 
 		case CE_PushButton: {
-			const TQPushButton *pb = dynamic_cast<const TQPushButton *>(w);
-
 			// Get rid of ugliness in Konqueror and KDevelop tab bar buttons, respectively
-			if ( w->inherits("KMultiTabBarButton") || w->inherits("Ideal::Button")) {
+			if ( ceData.widgetObjectTypes.contains("KMultiTabBarButton") || ceData.widgetObjectTypes.contains("Ideal::Button")) {
 				p->setPen(cg.mid());
 				p->setBrush(cg.background());
 				p->drawRect(r);
@@ -1380,7 +1375,7 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 				}
 			}
 			else {
-				if (pb->isDefault()) {
+				if (elementFlags & CEF_IsDefault) {
 					drawPrimitive(PE_ButtonDefault, p, ceData, elementFlags, r, cg, sf);
 					drawPrimitive(PE_ButtonBevel, p, ceData, elementFlags, TQRect(x+1, y+1, sw-2, sh-2), cg, sf);
 				} else {
@@ -1508,15 +1503,12 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 
 	/*	Note: This is very poorly documented by TT. I'm disappointed. -clee */
 		case CE_HeaderLabel: {
-			const TQHeader *hw = dynamic_cast<const TQHeader *>(w);
-			int hs = o.headerSection();
 			const bool enabled = sf & Style_Enabled;
 			bool etchtext = styleHint( SH_EtchDisabledText, ceData, elementFlags );
 			const int text_flags = AlignVCenter | ShowPrefix | DontClip | SingleLine;
 
-			TQIconSet *is = hw->iconSet(hs);
-			if (is) {
-				TQPixmap pm = is->pixmap(TQIconSet::Small, sf & Style_Enabled ? TQIconSet::Normal : TQIconSet::Disabled);
+			if (!ceData.iconSet.isNull()) {
+				TQPixmap pm = ceData.iconSet.pixmap(TQIconSet::Small, sf & Style_Enabled ? TQIconSet::Normal : TQIconSet::Disabled);
 				TQRect pr(0, 0, pm.width(), pm.height());
 				pr.moveCenter(r.center());
 				pr.setLeft(r.center().y() - (pm.height() - 1) / 2);
@@ -1527,20 +1519,20 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 					p->setPen( cg.dark()) ;
 					TQPen savePen = p->pen();
 					p->setPen( cg.light() );
-					p->drawText(pr_offset, text_flags, hw->label(hs));
+					p->drawText(pr_offset, text_flags, ceData.textLabel);
 					p->setPen(savePen);
 				}
-				p->drawText(pr, text_flags, hw->label(hs));
+				p->drawText(pr, text_flags, ceData.textLabel);
 			} else {
 				p->setPen( POPUPMENUITEM_TEXT_ETCH_CONDITIONS?cg.dark():cg.buttonText() );
 				TQRect r_offset = TQRect(r.x()+ETCH_X_OFFSET, r.y()+ETCH_Y_OFFSET, r.width(), r.height());
 				if HEADER_TEXT_ETCH_CONDITIONS {
 					TQPen savePen = p->pen();
 					p->setPen( cg.light() );
-					p->drawText(r_offset, text_flags, hw->label(hs));
+					p->drawText(r_offset, text_flags, ceData.textLabel);
 					p->setPen(savePen);
 				}
-				p->drawText(r, text_flags, hw->label(hs));
+				p->drawText(r, text_flags, ceData.textLabel);
 			}
 			break;
 		}
@@ -1962,7 +1954,6 @@ void AsteroidStyle::drawComplexControl(TQ_ComplexControl cc,
 
 		case CC_ComboBox: {
 			int x, y, x2, y2, sw, sh;
-			const TQComboBox *cb = dynamic_cast<const TQComboBox *>(w);
 			r.rect(&x, &y, &sw, &sh);
 			r.coords(&x, &y, &x2, &y2);
 
@@ -2005,8 +1996,8 @@ void AsteroidStyle::drawComplexControl(TQ_ComplexControl cc,
 			p->drawRect(hr);
 
 			bool draw_skinny_frame = false;
-// 			if (!cb) draw_skinny_frame = true;
-			if ((cb) && (cb->listBox() && cb->listBox()->isVisible())) draw_skinny_frame = true;
+// 			if (!ceData.widgetObjectTypes.contains(TQCOMBOBOX_OBJECT_NAME_STRING)) draw_skinny_frame = true;
+			if (ceData.comboBoxListBoxFlags & CEF_IsVisible) draw_skinny_frame = true;
 			if (draw_skinny_frame) {
 				p->setPen(cg.mid());
 				p->drawRect(hr);
@@ -2027,7 +2018,7 @@ void AsteroidStyle::drawComplexControl(TQ_ComplexControl cc,
 			TQRect cr(sw - handle_offset-1, y+2, handle_width, sh - 4);
 			TQRect pmr(0, 0, 7, 4);
 			pmr.moveCenter(cr.center());
-			if ((cb) && (cb->listBox() && cb->listBox()->isVisible())) {
+			if (ceData.comboBoxListBoxFlags & CEF_IsVisible) {
 				pmr.moveBy(1, 1);
 			}
 
@@ -2042,11 +2033,9 @@ void AsteroidStyle::drawComplexControl(TQ_ComplexControl cc,
 #ifndef TQT_NO_TOOLBUTTON
 		case CC_ToolButton:
 		{
-			const TQToolButton *toolbutton = (const TQToolButton *) w;
-		
 			TQColorGroup c = cg;
-			if ( toolbutton->backgroundMode() != TQt::PaletteButton )
-				c.setBrush( TQColorGroup::Button, toolbutton->paletteBackgroundColor() );
+			if ( ceData.backgroundMode != TQt::PaletteButton )
+				c.setBrush( TQColorGroup::Button, ceData.paletteBgColor );
 			TQRect button, menuarea;
 			button   = visualRect( querySubControlMetrics(cc, ceData, elementFlags, SC_ToolButton, o, w), ceData, elementFlags );
 			menuarea = visualRect( querySubControlMetrics(cc, ceData, elementFlags, SC_ToolButtonMenu, o, w), ceData, elementFlags );
@@ -2062,11 +2051,10 @@ void AsteroidStyle::drawComplexControl(TQ_ComplexControl cc,
 			if (sc & SC_ToolButton) {
 				if (bflags & (Style_Down | Style_On | Style_Raised)) {
 					drawPrimitive(TQStyle::PE_ButtonTool, p, ceData, elementFlags, button, c, bflags, o);
-				} else if ( toolbutton->parentWidget() && toolbutton->parentWidget()->backgroundPixmap() && ! toolbutton->parentWidget()->backgroundPixmap()->isNull() ) {
-					TQPixmap pixmap =
-					*(toolbutton->parentWidget()->backgroundPixmap());
+				} else if ( ! ceData.parentWidgetData.bgPixmap.isNull() ) {
+					TQPixmap pixmap = ceData.parentWidgetData.bgPixmap;
 			
-					p->drawTiledPixmap( r, pixmap, toolbutton->pos() );
+					p->drawTiledPixmap( r, pixmap, ceData.pos );
 				}
 			}
 		
@@ -2076,8 +2064,8 @@ void AsteroidStyle::drawComplexControl(TQ_ComplexControl cc,
 				drawPrimitive(TQStyle::PE_ArrowDown, p, ceData, elementFlags, menuarea, c, mflags, o);
 			}
 		
-			if (toolbutton->hasFocus() && !toolbutton->focusProxy()) {
-				TQRect fr = toolbutton->rect();
+			if ((elementFlags & CEF_HasFocus) && !(elementFlags & CEF_HasFocusProxy)) {
+				TQRect fr = ceData.rect;
 				fr.addCoords(3, 3, -3, -3);
 				drawPrimitive(TQStyle::PE_FocusRect, p, ceData, elementFlags, fr, c);
 			}
@@ -2087,20 +2075,17 @@ void AsteroidStyle::drawComplexControl(TQ_ComplexControl cc,
 #endif // TQT_NO_TOOLBUTTON
 
 		case CC_Slider: {
-			const TQSlider* slider = (const TQSlider*)w;
 			TQRect groove = querySubControlMetrics(CC_Slider, ceData, elementFlags, SC_SliderGroove, o, w);
 			TQRect handle = querySubControlMetrics(CC_Slider, ceData, elementFlags, SC_SliderHandle, o, w);
 
 			// Double-buffer slider for no flicker
-			TQPixmap pix(w->size());
+			TQPixmap pix(ceData.rect.size());
 			TQPainter p2;
 			p2.begin(&pix);
 
-			if ( slider->parentWidget() &&
-				 slider->parentWidget()->backgroundPixmap() &&
-				 !slider->parentWidget()->backgroundPixmap()->isNull() ) {
-				TQPixmap pixmap = *(slider->parentWidget()->backgroundPixmap());
-				p2.drawTiledPixmap(r, pixmap, slider->pos());
+			if ( !ceData.parentWidgetData.bgPixmap.isNull() ) {
+				TQPixmap pixmap = ceData.parentWidgetData.bgPixmap;
+				p2.drawTiledPixmap(r, pixmap, ceData.pos);
 			} else
 				pix.fill(cg.background());
 
@@ -2109,7 +2094,7 @@ void AsteroidStyle::drawComplexControl(TQ_ComplexControl cc,
 				drawKStylePrimitive( KPE_SliderGroove, &p2, ceData, elementFlags, groove, cg, sf, o, w );
 
 				// Draw the focus rect around the groove
-				if (slider->hasFocus())
+				if (elementFlags & CEF_HasFocus)
 					drawPrimitive(PE_FocusRect, &p2, ceData, elementFlags, groove, cg);
 			}
 
@@ -2310,7 +2295,7 @@ int AsteroidStyle::pixelMetric(PixelMetric pm, TQStyleControlElementData ceData,
 		}
 
 		case PM_DefaultFrameWidth: {
-			if (w && w->inherits(TQPOPUPMENU_OBJECT_NAME_STRING)) {
+			if (ceData.widgetObjectTypes.contains(TQPOPUPMENU_OBJECT_NAME_STRING)) {
 				return 3;
 			} else {
 				return KStyle::pixelMetric(pm, ceData, elementFlags, w);
@@ -2448,7 +2433,7 @@ TQRect AsteroidStyle::querySubControlMetrics(TQ_ComplexControl cc,
 				return TQRect();
 			}
 
-			TQRect r(w->rect());
+			TQRect r(ceData.rect);
 
 			switch (sc) {
 				case SC_ComboBoxEditField: {
@@ -2589,7 +2574,7 @@ TQSize AsteroidStyle::sizeFromContents(ContentsType ct,
 					sh = TQMAX(sh, mi->iconSet()->pixmap(TQIconSet::Small, TQIconSet::Normal).height() + 2);
 				}
 
-				sh = TQMAX(sh, w->fontMetrics().height() + 4);
+				sh = TQMAX(sh, TQFontMetrics(ceData.font).height() + 4);
 			}
 
 			if (!mi->text().isNull()) {
@@ -2624,7 +2609,7 @@ TQSize AsteroidStyle::sizeFromContents(ContentsType ct,
 		case CT_Header: {
 			// Fall through is intentional
 // 			const TQHeader *hw = dynamic_cast<const TQHeader *>(w);
-// 			int sh = TQFontInfo(hw->font()).pixelSize() + 8;
+// 			int sh = TQFontInfo(ceData.font).pixelSize() + 8;
 // 			int sw = 10;
 // 			return TQSize(sw, sh);
 		}

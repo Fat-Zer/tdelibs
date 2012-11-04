@@ -724,10 +724,9 @@ void HighContrastStyle::drawKStylePrimitive (KStylePrimitive kpe,
 		case KPE_SliderGroove: {
 			setColorsText (p, cg, flags);
 			TQRect r2 (r);
-			const TQSlider *slider = dynamic_cast<const TQSlider*>(widget);
-			if (slider != 0)
+			if (ceData.widgetObjectTypes.contains(TQSLIDER_OBJECT_NAME_STRING))
 			{
-				if (slider->orientation() == Qt::Horizontal)
+				if (ceData.orientation == TQt::Horizontal)
 				{
 					if (r2.height() > 5*basicLineWidth)
 					{
@@ -1565,12 +1564,12 @@ TQRect HighContrastStyle::querySubControlMetrics( TQ_ComplexControl control,
 			switch (subcontrol)
 			{
 				case SC_ComboBoxFrame:
-					return TQRect (0, 0, widget->width(), widget->height());
+					return TQRect (0, 0, ceData.rect.width(), ceData.rect.height());
 				case SC_ComboBoxArrow:
-					return TQRect (widget->width() - arrow, 0, arrow, widget->height());
+					return TQRect (ceData.rect.width() - arrow, 0, arrow, ceData.rect.height());
 				case SC_ComboBoxEditField:
 					return TQRect (2*basicLineWidth, 2*basicLineWidth,
-								widget->width() - arrow - 3*basicLineWidth, widget->height() - 4*basicLineWidth);
+								ceData.rect.width() - arrow - 3*basicLineWidth, ceData.rect.height() - 4*basicLineWidth);
 	
 				default: break;
 			}
@@ -1581,17 +1580,17 @@ TQRect HighContrastStyle::querySubControlMetrics( TQ_ComplexControl control,
 			switch (subcontrol)
 			{
 				case SC_SpinWidgetFrame:
-					return TQRect (0, 0, widget->width(), widget->height());
+					return TQRect (0, 0, ceData.rect.width(), ceData.rect.height());
 				case SC_SpinWidgetButtonField:
-					return TQRect (widget->width() - arrow, 0, arrow, widget->height());
+					return TQRect (ceData.rect.width() - arrow, 0, arrow, ceData.rect.height());
 				case SC_SpinWidgetUp:
-					return TQRect (widget->width() - arrow, 0, arrow, widget->height()/2);
+					return TQRect (ceData.rect.width() - arrow, 0, arrow, ceData.rect.height()/2);
 				case SC_SpinWidgetDown:
-					return TQRect (widget->width() - arrow, widget->height()/2,
-							arrow, widget->height()-widget->height()/2);
+					return TQRect (ceData.rect.width() - arrow, ceData.rect.height()/2,
+							arrow, ceData.rect.height()-ceData.rect.height()/2);
 				case SC_SpinWidgetEditField:
 					return TQRect (2*basicLineWidth, 2*basicLineWidth,
-							widget->width() - arrow - 3*basicLineWidth, widget->height() - 4*basicLineWidth);
+							ceData.rect.width() - arrow - 3*basicLineWidth, ceData.rect.height() - 4*basicLineWidth);
 	
 				default: break;
 			}
@@ -1616,7 +1615,7 @@ int HighContrastStyle::pixelMetric(PixelMetric m, TQStyleControlElementData ceDa
 			return 2*basicLineWidth;
 
 		case PM_ButtonDefaultIndicator: {
-			if ((widget != 0) && !widget->isEnabled())
+			if ((widget != 0) && !(elementFlags & CEF_IsEnabled))
 				return 0;
 			else
 				return 2*basicLineWidth;
@@ -1629,7 +1628,7 @@ int HighContrastStyle::pixelMetric(PixelMetric m, TQStyleControlElementData ceDa
 		case PM_ScrollBarExtent: {
 			int h = 0;
 			if (widget != 0)
-				h = (2*widget->fontMetrics().lineSpacing())/3;
+				h = (2*TQFontMetrics(ceData.font).lineSpacing())/3;
 			
 			if (h > 9*basicLineWidth+4)
 				return h;
@@ -1638,7 +1637,7 @@ int HighContrastStyle::pixelMetric(PixelMetric m, TQStyleControlElementData ceDa
 		}
 
 		case PM_DefaultFrameWidth: {
-			if (widget && (widget->inherits (TQLINEEDIT_OBJECT_NAME_STRING) || widget->inherits (TQTEXTEDIT_OBJECT_NAME_STRING)))
+			if (widget && (ceData.widgetObjectTypes.contains (TQLINEEDIT_OBJECT_NAME_STRING) || ceData.widgetObjectTypes.contains (TQTEXTEDIT_OBJECT_NAME_STRING)))
 				return 2*basicLineWidth;
 			else 
 				return basicLineWidth;
@@ -1651,7 +1650,7 @@ int HighContrastStyle::pixelMetric(PixelMetric m, TQStyleControlElementData ceDa
 		case PM_MenuButtonIndicator: {		// Arrow width
 			int h = 0;
 			if (widget != 0)
-				h = widget->fontMetrics().lineSpacing()/2;
+				h = TQFontMetrics(ceData.font).lineSpacing()/2;
 			
 			if (h > 3*basicLineWidth)
 				return h;
@@ -1667,7 +1666,7 @@ int HighContrastStyle::pixelMetric(PixelMetric m, TQStyleControlElementData ceDa
 		case PM_IndicatorHeight: {
 			int h = 0;
 			if (widget != 0)
-				h = widget->fontMetrics().lineSpacing()-2*basicLineWidth;
+				h = TQFontMetrics(ceData.font).lineSpacing()-2*basicLineWidth;
 			
 			if (h > 6*basicLineWidth)
 				return h;
@@ -1681,7 +1680,7 @@ int HighContrastStyle::pixelMetric(PixelMetric m, TQStyleControlElementData ceDa
 		case PM_DockWindowHandleExtent: {
 			int w = 0;
 			if (widget != 0)
-				w = widget->fontMetrics().lineSpacing()/4;
+				w = TQFontMetrics(ceData.font).lineSpacing()/4;
 			if (w > 5*basicLineWidth)
 				return w;
 			else
@@ -1843,7 +1842,7 @@ TQRect HighContrastStyle::subRect (SubRect subrect, const TQStyleControlElementD
 		case SR_ProgressBarGroove:
 		case SR_ProgressBarContents:
 		case SR_ProgressBarLabel:
-			return widget->rect();
+			return ceData.rect;
 		default:
 			return KStyle::subRect (subrect, ceData, elementFlags, widget);
 	}
@@ -1872,7 +1871,7 @@ int HighContrastStyle::styleHint(StyleHint sh, TQStyleControlElementData ceData,
 			}
 			break;
 		default:
-			ret = TQCommonStyle::styleHint(sh, ceData, elementFlags, opt, returnData, w);
+			ret = KStyle::styleHint(sh, ceData, elementFlags, opt, returnData, w);
 			break;
 	}
 

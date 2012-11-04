@@ -198,10 +198,9 @@ TQRect KeramikStyle::subRect(SubRect r, const TQStyleControlElementData ceData, 
 	{
 		case SR_PushButtonFocusRect:
 		{
-			const TQPushButton* button = (const TQPushButton*) widget;
-			TQRect wrect(widget->rect());
+			TQRect wrect(ceData.rect);
 
-			if (button->isDefault() || button->autoDefault())
+			if ((elementFlags & CEF_IsDefault) || (elementFlags & CEF_AutoDefault))
 			{
 				return TQRect(wrect.x() + 6, wrect.y() + 5, wrect.width() - 12,  wrect.height() - 10);
 			}
@@ -220,12 +219,10 @@ TQRect KeramikStyle::subRect(SubRect r, const TQStyleControlElementData ceData, 
 
 		case SR_CheckBoxFocusRect:
 		{
-			const TQCheckBox* cb = static_cast<const TQCheckBox*>(widget);
-
 			//Only checkbox, no label
-			if (cb->text().isEmpty() && (cb->pixmap() == 0) )
+			if (ceData.text.isEmpty() && (ceData.fgPixmap.isNull()) )
 			{
-				TQRect bounding = cb->rect();
+				TQRect bounding = ceData.rect;
 				TQSize checkDim = loader.size( keramik_checkbox_on);
 				int   cw = checkDim.width();
 				int   ch = checkDim.height();
@@ -1357,26 +1354,29 @@ void KeramikStyle::drawKStylePrimitive( KStylePrimitive kpe,
 	}
 }
 
-bool KeramikStyle::isFormWidget(const TQWidget* widget) const
+bool KeramikStyle::isFormWidget(const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, const TQWidget* widget) const
 {
-	//Form widgets are in the KHTMLView, but that has 2 further inner levels
-	//of widgets - QClipperWidget, and outside of that, QViewportWidget
-	TQWidget* potentialClipPort = widget->parentWidget();
-	if ( !potentialClipPort || potentialClipPort->isTopLevel() )
-	return false;
-
-	TQWidget* potentialViewPort = potentialClipPort->parentWidget();
-	if (!potentialViewPort || potentialViewPort->isTopLevel() ||
-			qstrcmp(potentialViewPort->name(), "qt_viewport") )
-		return false;
-
-	TQWidget* potentialKHTML  = potentialViewPort->parentWidget();
-	if (!potentialKHTML || potentialKHTML->isTopLevel() ||
-			qstrcmp(potentialKHTML->className(), "KHTMLView") )
-		return false;
-
-
-	return true;
+	if (widget) {
+		//Form widgets are in the KHTMLView, but that has 2 further inner levels
+		//of widgets - QClipperWidget, and outside of that, QViewportWidget
+		TQWidget* potentialClipPort = widget->parentWidget();
+		if ((ceData.parentWidgetData.widgetObjectTypes.isEmpty()) && (ceData.parentWidgetFlags & CEF_IsTopLevel)) {
+			return false;
+		}
+	
+		TQWidget* potentialViewPort = potentialClipPort->parentWidget();
+		if (!potentialViewPort || potentialViewPort->isTopLevel() ||
+				qstrcmp(potentialViewPort->name(), "qt_viewport") )
+			return false;
+	
+		TQWidget* potentialKHTML  = potentialViewPort->parentWidget();
+		if (!potentialKHTML || potentialKHTML->isTopLevel() ||
+				qstrcmp(potentialKHTML->className(), "KHTMLView") )
+			return false;
+	
+	
+		return true;
+	}
 }
 
 void KeramikStyle::drawControl( TQ_ControlElement element,
@@ -1401,7 +1401,7 @@ void KeramikStyle::drawControl( TQ_ControlElement element,
 		{
 			const TQPushButton* btn = static_cast< const TQPushButton* >( widget );
 
-			if (isFormWidget(btn))
+			if (isFormWidget(ceData, elementFlags, btn))
 				formMode = true;
 
 			if ( btn->isFlat( ) )
@@ -1649,7 +1649,7 @@ void KeramikStyle::drawControl( TQ_ControlElement element,
 			{
 				// Don't leave blank holes if we set NoBackground for the TQPopupMenu.
 				// This only happens when the popupMenu spans more than one column.
-				if (! ( widget->erasePixmap() && !widget->erasePixmap()->isNull() ) )
+				if (! ( !ceData.bgPixmap.isNull() ) )
 					p->fillRect( r, cg.background().light( 105 ) );
 
 				break;
@@ -1670,15 +1670,15 @@ void KeramikStyle::drawControl( TQ_ControlElement element,
 				if ( enabled )
 					Keramik::RowPainter( keramik_menuitem ).draw( p, main, cg.highlight(), cg.background() );
 				else {
-					if ( widget->erasePixmap() && !widget->erasePixmap()->isNull() )
-						p->drawPixmap( main.topLeft(), *widget->erasePixmap(), main );
+					if ( !ceData.bgPixmap.isNull() )
+						p->drawPixmap( main.topLeft(), ceData.bgPixmap, main );
 					else p->fillRect( main, cg.background().light( 105 ) );
 					p->drawWinFocusRect( r );
 				}
 			}
 			// Draw the transparency pixmap
-			else if ( widget->erasePixmap() && !widget->erasePixmap()->isNull() )
-				p->drawPixmap( main.topLeft(), *widget->erasePixmap(), main );
+			else if ( !ceData.bgPixmap.isNull() )
+				p->drawPixmap( main.topLeft(), ceData.bgPixmap, main );
 			// Draw a solid background
 			else
 				p->fillRect( main, cg.background().light( 105 ) );
@@ -1853,11 +1853,10 @@ void KeramikStyle::drawControl( TQ_ControlElement element,
 			break;
 		}
 		case CE_ProgressBarContents: {
-			const TQProgressBar* pb = (const TQProgressBar*)widget;
 			TQRect cr = subRect(SR_ProgressBarContents, ceData, elementFlags, widget);
-			double progress = pb->progress();
+			double progress = ceData.currentStep;
 			bool reverse = TQApplication::reverseLayout();
-			int steps = pb->totalSteps();
+			int steps = ceData.totalSteps;
 
 			if (!cr.isValid())
 				return;
@@ -1908,6 +1907,7 @@ void KeramikStyle::drawControl( TQ_ControlElement element,
 				//////////////////////////////////////
 				if (animateProgressBar)
 				{
+					const TQProgressBar* pb = (const TQProgressBar*)widget;
 					int progAnimShift = progAnimWidgets[const_cast<TQProgressBar*>(pb)];
 					if (reverse)
 					{
@@ -1978,16 +1978,22 @@ void KeramikStyle::drawControlMask( TQ_ControlElement element,
 	maskMode = false;
 }
 
-bool KeramikStyle::isSizeConstrainedCombo(const TQComboBox* combo) const
+bool KeramikStyle::isSizeConstrainedCombo(const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, const TQComboBox* combo) const
 {
-	if (combo->width() >= 80)
+	if (ceData.rect.width() >= 80)
 		return false;
-	int suggestedWidth = combo->sizeHint().width();
-	
-	if (combo->width() - suggestedWidth < -5)
-		return true;
 
-	return false;
+	if (combo) {
+		int suggestedWidth = combo->sizeHint().width();
+
+		if (ceData.rect.width() - suggestedWidth < -5)
+			return true;
+
+		return false;
+	}
+	else {
+		return true;
+	}
 }
 
 void KeramikStyle::drawComplexControl( TQ_ComplexControl control,
@@ -2010,10 +2016,10 @@ void KeramikStyle::drawComplexControl( TQ_ComplexControl control,
 		case CC_ComboBox:
 		{
 			bool             toolbarMode = false;
-			const TQComboBox* cb          = static_cast< const TQComboBox* >( widget );
-			bool             compact     = isSizeConstrainedCombo(cb);
+			const TQComboBox* cb         = dynamic_cast< const TQComboBox* >( widget );
+			bool             compact     = isSizeConstrainedCombo(ceData, elementFlags, cb);
 
-			if (isFormWidget(cb))
+			if (isFormWidget(ceData, elementFlags, cb))
 				formMode = true;
 
 			TQPixmap * buf = 0;
@@ -2114,7 +2120,7 @@ void KeramikStyle::drawComplexControl( TQ_ComplexControl control,
 
 			if ( controls & SC_ComboBoxEditField )
 			{
-				if ( cb->editable() )
+				if ( elementFlags & CEF_IsEditable )
 				{
 					TQRect er = visualRect( querySubControlMetrics( CC_ComboBox, ceData, elementFlags, SC_ComboBoxEditField, TQStyleOption::Default, widget ), ceData, elementFlags );
 					er.addCoords( -2, -2, 2, 2 );
@@ -2123,7 +2129,7 @@ void KeramikStyle::drawComplexControl( TQ_ComplexControl control,
 					Keramik::RectTilePainter( keramik_frame_shadow, false, false, 2, 2 ).draw( p2, er, cg.button(),
 						Qt::black, false, pmodeFullBlend() );
 				}
-				else if ( cb->hasFocus() )
+				else if ( elementFlags & CEF_HasFocus )
 				{
 					TQRect re = TQStyle::visualRect(subRect(SR_ComboBoxFocusRect, ceData, elementFlags, cb), ceData, elementFlags);
 					if ( compact )
@@ -2133,7 +2139,7 @@ void KeramikStyle::drawComplexControl( TQ_ComplexControl control,
 					Style_FocusAtBorder, TQStyleOption( cg.highlight() ) );
 				}
 				// TQComboBox draws the text on its own and uses the painter's current colors
-				if ( cb->hasFocus() )
+				if ( elementFlags & CEF_HasFocus )
 				{
 					p->setPen( cg.highlightedText() );
 					p->setBackgroundColor( cg.highlight() );
@@ -2280,7 +2286,7 @@ void KeramikStyle::drawComplexControl( TQ_ComplexControl control,
 			if (active & SC_ToolButtonMenu)
 				mflags |= Style_Down;
 
-			if (onToolbar &&  static_cast<TQToolBar*>(TQT_TQWIDGET(widget->parent()))->orientation() == Qt::Horizontal)
+			if (onToolbar &&  ceData.toolBarData.orientation == TQt::Horizontal)
 				bflags |= Style_Horizontal;
 
 			if (controls & SC_ToolButton)
@@ -2297,11 +2303,9 @@ void KeramikStyle::drawComplexControl( TQ_ComplexControl control,
 				}
 
 				// Check whether to draw a background pixmap
-				else if ( toolbutton->parentWidget() &&
-						  toolbutton->parentWidget()->backgroundPixmap() &&
-						  !toolbutton->parentWidget()->backgroundPixmap()->isNull() )
+				else if ( !ceData.parentWidgetData.bgPixmap.isNull() )
 				{
-					TQPixmap pixmap = *(toolbutton->parentWidget()->backgroundPixmap());
+					TQPixmap pixmap = ceData.parentWidgetData.bgPixmap;
 					p->drawTiledPixmap( r, pixmap, toolbutton->pos() );
 				}
 				else if (onToolbar)
@@ -2314,8 +2318,8 @@ void KeramikStyle::drawComplexControl( TQ_ComplexControl control,
 					//(so if we're on an extender, we're not floating)
 					TQWidget*  parent  = static_cast<TQWidget*> (TQT_TQWIDGET(widget->parent()));
 					TQToolBar* toolbar = static_cast<TQToolBar*>(TQT_TQWIDGET(parent->parent()));
-					TQRect tr    = toolbar->rect();
-					bool  horiz = toolbar->orientation() == Qt::Horizontal;
+					TQRect tr    = ceData.parentWidgetData.rect;
+					bool  horiz = ceData.toolBarData.orientation == TQt::Horizontal;
 
 					//Calculate offset. We do this by translating our coordinates,
 					//which are relative to the parent, to be relative to the toolbar.
@@ -2507,8 +2511,7 @@ TQSize KeramikStyle::sizeFromContents( ContentsType contents,
 
 		case CT_ComboBox: {
 			int arrow = 11 + loader.size( keramik_ripple ).width();
-			const TQComboBox *cb = static_cast<const TQComboBox*>( widget );
-			return TQSize( contentSize.width() + arrow + (cb->editable() ? 26 : 22),
+			return TQSize( contentSize.width() + arrow + ((elementFlags & CEF_IsEditable) ? 26 : 22),
 					contentSize.height() + 10 );
 		}
 
@@ -2608,7 +2611,7 @@ TQRect KeramikStyle::querySubControlMetrics( TQ_ComplexControl control,
 		{
 			int arrow;
 			bool compact = false;
-			if ( isSizeConstrainedCombo(static_cast<const TQComboBox*>(widget) ) ) //### constant
+			if ( isSizeConstrainedCombo(ceData, elementFlags, dynamic_cast<const TQComboBox*>(widget)) ) //### constant
 				compact = true;
 				
 			if ( compact )
@@ -2715,10 +2718,9 @@ TQRect KeramikStyle::querySubControlMetrics( TQ_ComplexControl control,
 		}
 		case CC_Slider:
 		{
-			const TQSlider* sl = static_cast< const TQSlider* >( widget );
-			bool horizontal = sl->orientation() == Qt::Horizontal;
-			TQSlider::TickSetting ticks = sl->tickmarks();
-			int pos = sl->sliderStart();
+			bool horizontal = ceData.orientation == TQt::Horizontal;
+			TQSlider::TickSetting ticks = (TQSlider::TickSetting)ceData.tickMarkSetting;
+			int pos = ceData.startStep;
 			int size = pixelMetric( PM_SliderControlThickness, ceData, elementFlags, widget );
 			int handleSize = pixelMetric( PM_SliderThickness, ceData, elementFlags, widget );
 			int len = pixelMetric( PM_SliderLength, ceData, elementFlags, widget );
@@ -2726,9 +2728,9 @@ TQRect KeramikStyle::querySubControlMetrics( TQ_ComplexControl control,
 			//Shrink the metrics if the widget is too small
 			//to fit our normal values for them.
 			if (horizontal)
-				handleSize = QMIN(handleSize, sl->height());
+				handleSize = QMIN(handleSize, ceData.rect.height());
 			else
-				handleSize = QMIN(handleSize, sl->width());
+				handleSize = QMIN(handleSize, ceData.rect.width());
 
 			size = QMIN(size, handleSize);
 
@@ -2738,34 +2740,34 @@ TQRect KeramikStyle::querySubControlMetrics( TQ_ComplexControl control,
 					if ( horizontal )
 					{
 						if ( ticks == TQSlider::Both )
-							return TQRect( 0, ( sl->height() - size ) / 2, sl->width(), size );
+							return TQRect( 0, ( ceData.rect.height() - size ) / 2, ceData.rect.width(), size );
 						else if ( ticks == TQSlider::Above )
-							return TQRect( 0, sl->height() - size - ( handleSize - size ) / 2, sl->width(), size );
-						return TQRect( 0, ( handleSize - size ) / 2, sl->width(), size );
+							return TQRect( 0, ceData.rect.height() - size - ( handleSize - size ) / 2, ceData.rect.width(), size );
+						return TQRect( 0, ( handleSize - size ) / 2, ceData.rect.width(), size );
 					}
 					else
 					{
 						if ( ticks == TQSlider::Both )
-							return TQRect( ( sl->width() - size ) / 2, 0, size, sl->height() );
+							return TQRect( ( ceData.rect.width() - size ) / 2, 0, size, ceData.rect.height() );
 						else if ( ticks == TQSlider::Above )
-							return TQRect( sl->width() - size - ( handleSize - size ) / 2, 0, size, sl->height() );
-						return TQRect( ( handleSize - size ) / 2, 0, size, sl->height() );
+							return TQRect( ceData.rect.width() - size - ( handleSize - size ) / 2, 0, size, ceData.rect.height() );
+						return TQRect( ( handleSize - size ) / 2, 0, size, ceData.rect.height() );
 					}
 				case SC_SliderHandle:
 					if ( horizontal )
 					{
 						if ( ticks == TQSlider::Both )
-							return TQRect( pos, ( sl->height() - handleSize ) / 2, len, handleSize );
+							return TQRect( pos, ( ceData.rect.height() - handleSize ) / 2, len, handleSize );
 						else if ( ticks == TQSlider::Above )
-							return TQRect( pos, sl->height() - handleSize, len, handleSize );
+							return TQRect( pos, ceData.rect.height() - handleSize, len, handleSize );
 						return TQRect( pos, 0, len, handleSize );
 					}
 					else
 					{
 						if ( ticks == TQSlider::Both )
-							return TQRect( ( sl->width() - handleSize ) / 2, pos, handleSize, len );
+							return TQRect( ( ceData.rect.width() - handleSize ) / 2, pos, handleSize, len );
 						else if ( ticks == TQSlider::Above )
-							return TQRect( sl->width() - handleSize, pos, handleSize, len );
+							return TQRect( ceData.rect.width() - handleSize, pos, handleSize, len );
 						return TQRect( 0, pos, handleSize, len );
 					}
 				default: break;
@@ -2925,6 +2927,9 @@ bool KeramikStyle::objectEventHandler( TQStyleControlElementData ceData, Control
 	
 			return false;	// Now draw the contents
 		}
+#if 0	// FIXME
+		// This does not work on modern systems
+		// Rather than resorting to hacks like this, which can stop working at any time, the required functionality should simply be added to TQt3!
 		else if (event->type() == TQEvent::Paint  &&  object->parent() && ::tqqt_cast<TQToolBar*>(object->parent()) 
 				&& !::tqqt_cast<TQPopupMenu*>(object) )
 		{
@@ -2958,6 +2963,7 @@ bool KeramikStyle::objectEventHandler( TQStyleControlElementData ceData, Control
 			return true;
 	
 		}
+#endif
 		// Track show events for progress bars
 		if ( animateProgressBar && ::tqqt_cast<TQProgressBar*>(object) )
 		{
@@ -2988,8 +2994,11 @@ int KeramikStyle::styleHint(StyleHint sh, TQStyleControlElementData ceData, Cont
 				ret = checkcol;
 			}
 			break;
+		case SH_ScrollBar_CombineAddLineRegionDrawingAreas:
+			ret = 1;
+			break;
 		default:
-			ret = TQCommonStyle::styleHint(sh, ceData, elementFlags, opt, returnData, w);
+			ret = KStyle::styleHint(sh, ceData, elementFlags, opt, returnData, w);
 			break;
 	}
 

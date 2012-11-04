@@ -146,8 +146,8 @@ private slots:
 
 private:
 
-	bool isSizeConstrainedCombo(const TQComboBox* combo) const;
-	bool isFormWidget          (const TQWidget*   widget) const;
+	bool isSizeConstrainedCombo(const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, const TQComboBox* widget) const;
+	bool isFormWidget          (const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, const TQWidget* widget) const;
 
 	///Configuration settings
 	bool animateProgressBar;
