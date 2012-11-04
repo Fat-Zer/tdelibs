@@ -1398,7 +1398,7 @@ void KFilePropsPlugin::slotCopyFinished( KIO::Job * job )
   assert( properties->item() );
   assert( !properties->item()->url().isEmpty() );
 
-  // Save the file where we can -> usually in ~/.kde/...
+  // Save the file where we can -> usually in ~/.trinity/...
   if (KBindingPropsPlugin::supports(properties->items()) && !m_sRelativePath.isEmpty())
   {
     KURL newURL;

@@ -108,7 +108,7 @@ KIOExec::KIOExec()
                 TQString fileName = KIO::encodeFileName( url.fileName() );
                 if ( !suggestedFileName.isEmpty() )
                     fileName = suggestedFileName;
-                // Build the destination filename, in ~/.kde/cache-*/krun/
+                // Build the destination filename, in ~/.trinity/cache-*/krun/
                 // Unlike KDE-1.1, we put the filename at the end so that the extension is kept
                 // (Some programs rely on it)
                 TQString tmp = KGlobal::dirs()->saveLocation( "cache", "krun/" ) +

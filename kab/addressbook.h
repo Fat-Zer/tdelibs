@@ -113,9 +113,9 @@ class CategoriesMap : public TQMap<int, TQString>
  *  instances of the program may use different data files.  Read-only addressbook
  *  files are possible. <BR>
  *  Only one configuration file per user is used, it is <BR>
- *  <TT>   ~/.kde/share/apps/kab/kab.config </TT> <BR>
+ *  <TT>   ~/.trinity/share/apps/kab/kab.config </TT> <BR>
  *  A standard user file will automatically be created as <BR> 
- *  <TT>   ~/.kde/share/apps/kab/addressbook.kab </TT> <BR>
+ *  <TT>   ~/.trinity/share/apps/kab/addressbook.kab </TT> <BR>
  *  File changes are watched by the program, so every instance will automatically
  *  update its database on a change of the opened file. 
  *
@@ -564,7 +564,7 @@ public:
   /**
    * Creates the local configuration file. The filename is fixed to
    * \c kab.config, it will be created in the local kab directory
-   * (\c $HOME/.kde/share/apps/kab). Adapt the global configuration template
+   * (\c $HOME/.trinity/share/apps/kab). Adapt the global configuration template
    * file (\c $TDEDIR/share/apps/kab/template.config) for unusual site-specific
    * settings.
    * The method does not load the new config file.

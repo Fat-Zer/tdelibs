@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
 
 TQString JobTest::homeTmpDir() const
 {
-    return TQDir::homeDirPath() + "/.kde/jobtest/";
+    return TQDir::homeDirPath() + "/.trinity/jobtest/";
 }
 
 TQString JobTest::otherTmpDir() const
@@ -89,12 +89,12 @@ TQString JobTest::otherTmpDir() const
 
 KURL JobTest::systemTmpDir() const
 {
-    return "system:/home/.kde/jobtest-system/";
+    return "system:/home/.trinity/jobtest-system/";
 }
 
 TQString JobTest::realSystemPath() const
 {
-    return TQDir::homeDirPath() + "/.kde/jobtest-system/";
+    return TQDir::homeDirPath() + "/.trinity/jobtest-system/";
 }
 
 void JobTest::setup()

@@ -1782,7 +1782,7 @@ int main(int argc, char **argv, char **envp)
    if (keep_running)
    {
       /*
-       * Create ~/.kde/tmp-<hostname>/tdeinit-<display> socket for incoming wrapper
+       * Create ~/.trinity/tmp-<hostname>/tdeinit-<display> socket for incoming wrapper
        * requests.
        */
       init_tdeinit_socket();

@@ -155,7 +155,7 @@ int main(int argc, char **argv)
 {
     // Ensure that user configuration doesn't change the results of those tests
     // TDEHOME needs to be writable though, for a ksycoca database
-    setenv( "TDEHOME", TQFile::encodeName( TQDir::homeDirPath() + "/.kde-kurifiltertest" ), true );
+    setenv( "TDEHOME", TQFile::encodeName( TQDir::homeDirPath() + "/.tde-kurifiltertest" ), true );
     setenv( "TDE_FORK_SLAVES", "yes", true ); // simpler, for the final cleanup
 
     KAboutData aboutData(appName, programName, version, description);
@@ -297,10 +297,10 @@ int main(int argc, char **argv)
     filter( "$QTDIR/doc/html/functions.html#s", TQCString("file://")+qtdir+"/doc/html/functions.html#s", KURIFilterData::LOCAL_FILE );
     filter( "http://www.kde.org/$USER", "http://www.kde.org/$USER", KURIFilterData::NET_PROTOCOL ); // no expansion
 
-    // Assume the default (~/.kde) if
+    // Assume the default (~/.trinity) if
     if (tdehome.isEmpty())
     {
-      tdehome += "$HOME/.kde";
+      tdehome += "$HOME/.trinity";
       setenv("TDEHOME", tdehome.data(), 0);
     }
 

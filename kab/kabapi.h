@@ -82,7 +82,7 @@ public:
   KabAPI(TQWidget* parent=0, const char* name=0);
   /**
    * You must call init before accessing the database. init opens the
-   * database file (usually $HOME/.kde/share/apps/kab/addressbook.database)
+   * database file (usually $HOME/.trinity/share/apps/kab/addressbook.database)
    * and loads its contents.
    * @return NoError if all succeeded or a valid ErrorCode.
    * @see AddressBook::ErrorCode

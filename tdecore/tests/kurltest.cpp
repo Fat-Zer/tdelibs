@@ -189,7 +189,7 @@ int main(int argc, char *argv[])
   url1= "KDE";
   check("KURL::isValid()", url1.isValid()?"TRUE":"FALSE", "FALSE" );
 
-  url1= "$HOME/.kde/share/config";
+  url1= "$HOME/.trinity/share/config";
   check("KURL::isValid()", url1.isValid()?"TRUE":"FALSE", "FALSE" );
 
   u1 = "file:/opt/kde2/qt2/doc/html/showimg-main-cpp.html#TQObject::connect";

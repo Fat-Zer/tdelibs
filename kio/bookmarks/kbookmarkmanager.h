@@ -64,7 +64,7 @@ protected:
      * called.
      *
      * @param bookmarksFile full path to the bookmarks file,
-     * Use ~/.kde/share/apps/konqueror/bookmarks.xml for the konqueror bookmarks
+     * Use ~/.trinity/share/apps/konqueror/bookmarks.xml for the konqueror bookmarks
      *
      * @param bImportDesktopFiles if true, and if the bookmarksFile
      * doesn't already exist, import bookmarks from desktop files
@@ -200,7 +200,7 @@ public:
      * instantiate it before this method is ever called.
      *
      * @param bookmarksFile full path to the bookmarks file,
-     * Use ~/.kde/share/apps/konqueror/bookmarks.xml for the konqueror bookmarks
+     * Use ~/.trinity/share/apps/konqueror/bookmarks.xml for the konqueror bookmarks
      *
      * @param bImportDesktopFiles if true, and if the bookmarksFile
      * doesn't already exist, import bookmarks from desktop files

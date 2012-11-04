@@ -211,9 +211,9 @@ The easiest is to not install the kconf_update script in the first place, but
 manually call it through a pipe. If you want to test the update script for
 your application KHello's config file khellorc, you can test by using
 
-    cat ~/.kde/share/config/khellorc | khello_conf_update.sh
+    cat ~/.trinity/share/config/khellorc | khello_conf_update.sh
 
-(assuming khello_conf_update.sh is the kconf_update script and ~/.kde is your
+(assuming khello_conf_update.sh is the kconf_update script and ~/.trinity is your
 $TDEHOME). This is easier than making install every time, but has the obvious
 downside that you need to 'parse' your script's output yourself instead of
 letting kconf_update do it and check the resulting output file.

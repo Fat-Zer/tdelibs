@@ -166,7 +166,7 @@ See also the file DEBUG.
 Upgrading
 ---------
 If you have an tdebase older than 3.0 installed, just copy all your .k*rc
-files from $HOME to $HOME/.kde/share/config. In the other case, default
+files from $HOME to $HOME/.trinity/share/config. In the other case, default
 values are used for most apps.
 
 

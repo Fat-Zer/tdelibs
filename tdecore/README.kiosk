@@ -25,7 +25,7 @@ sounds, menu-descriptions and configuration files.
 
 In KDE1 there were two locations were resources could be located: The 
 resources provided by the system were located under $TDEDIR and user-
-specific resources were located under $HOME/.kde.
+specific resources were located under $HOME/.trinity.
 
 In KDE2 resource management has been largely abstracted by the introduction
 of the KStandardDirs class and has become much more flexible. The user /
@@ -33,7 +33,7 @@ administrator can now specify a variable number of locations where resources
 can be found. A list of locations can either be specified via $TDEDIRS
 (notice the extra 'S'), via /etc/kderc and even via the kdeglobals config 
 file. The location where user-specific resources can be found can be
-set with $TDEHOME (The default is $HOME/.kde). Changes made by the user
+set with $TDEHOME (The default is $HOME/.trinity). Changes made by the user
 are always written back to $TDEHOME.
 
 Both KDE1 and KDE2 feature so called "cascading configuration files": There
@@ -102,8 +102,8 @@ To make the configration file of kicker (the panel) immutable one could for
 example use the commands below.
 
 Example:
-chown root.root /home/user/.kde/share/config/kickerrc
-chmod 644 /home/user/.kde/share/config/kickerrc
+chown root.root /home/user/.trinity/share/config/kickerrc
+chmod 644 /home/user/.trinity/share/config/kickerrc
 
 If you do this, the user will be warned that the configuration file is not
 writable. Since you will normally not want that, you can add the following

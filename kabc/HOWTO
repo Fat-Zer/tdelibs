@@ -344,7 +344,7 @@ In the first line a KABC::DistributionListManager is created. The manager takes
 a pointer to a KABC::AddressBook, because he has to resolve the stored uids to
 currently available email addresses.
 In line 4 the manager loads all distribution lists from the central config file
-$HOME/.kde/share/apps/kabc/distlists.
+$HOME/.trinity/share/apps/kabc/distlists.
 The next line queries the names of all available distribution lists, which are
 used in line 9 to retrieve a pointer to the specific list.
 Now that you have a KABC::DistributionList object, you can performe the

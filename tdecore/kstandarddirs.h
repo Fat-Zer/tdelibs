@@ -53,7 +53,7 @@ class KStandardDirsPrivate;
  * The main idea behind KStandardDirs is that there are several
  * toplevel prefixes below which the files lie. One of these prefixes is
  * the one where the user installed tdelibs, one is where the
- * application was installed, and one is $HOME/.kde, but there
+ * application was installed, and one is $HOME/.trinity, but there
  * may be even more. Under these prefixes there are several well
  * defined suffixes where specific resource types are to be found.
  * For example, for the resource type "html" the suffixes could be
@@ -63,7 +63,7 @@ class KStandardDirsPrivate;
  * To make the thing even more complex, it's also possible to register
  * absolute paths that KStandardDirs looks up after not finding anything
  * in the former steps. They can be useful if the user wants to provide
- * specific directories that aren't in his $HOME/.kde directory for,
+ * specific directories that aren't in his $HOME/.trinity directory for,
  * for example, icons.
  *
  * <b>Standard resources that tdelibs allocates are:</b>\n
@@ -114,10 +114,10 @@ class KStandardDirsPrivate;
  *          ignored.
  * @li TDEHOME: The directory where changes are saved to. This directory is
  *          used to search for resources first. If TDEHOME is not
- *          specified it defaults to "$HOME/.kde"
+ *          specified it defaults to "$HOME/.trinity"
  * @li TDEROOTHOME: Like TDEHOME, but used for the root user.
  *          If TDEROOTHOME is not set it defaults to the .kde directory in the
- *          home directory of root, usually "/root/.kde".
+ *          home directory of root, usually "/root/.trinity".
  *          Note that the setting of $HOME is ignored in this case.
  *
  * @see KGlobalSettings
@@ -263,7 +263,7 @@ public:
 	 * specified type and a relative path. So would
 	 * findDirs("apps", "Settings") return
 	 * @li /opt/kde/share/applnk/Settings/
-	 * @li /home/joe/.kde/share/applnk/Settings/
+	 * @li /home/joe/.trinity/share/applnk/Settings/
 	 *
 	 * Note that it appends / to the end of the directories,
 	 * so you can use this right away as directory names.
@@ -546,7 +546,7 @@ public:
 
 	/**
 	 * Returns the toplevel directory in which KStandardDirs
-	 * will store things. Most likely $HOME/.kde
+	 * will store things. Most likely $HOME/.trinity
 	 * Don't use this function if you can use locateLocal
 	 * @return the toplevel directory
 	 */
