@@ -2384,9 +2384,9 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
         case CE_PushButton: {
             TQPushButton *button = (TQPushButton *)widget;
 
-            const bool isDefault = enabled && button->isDefault();
+            const bool isDefault = enabled && (elementFlags & CEF_IsDefault);
 
-            if (button->isFlat() )
+            if ( elementFlags & CEF_IsFlat )
                 flatMode = true;
 
             TQColorGroup g2 = cg;
@@ -2409,7 +2409,7 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
             r.rect( &x, &y, &w, &h );
 
             const TQPushButton* button = static_cast<const TQPushButton *>( widget );
-            bool active = button->isOn() || button->isDown();
+            bool active = (elementFlags & CEF_IsOn) || (elementFlags & CEF_IsDown);
             bool cornArrow = false;
 
             // Shift button contents if pushed.
@@ -2421,11 +2421,11 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
             }
 
             // Does the button have a popup menu?
-            if ( button->isMenuButton() )
+            if ( elementFlags & CEF_IsMenuWidget )
             {
                 int dx = pixelMetric( PM_MenuButtonIndicator, ceData, elementFlags, widget );
-                if ( button->iconSet() && !button->iconSet()->isNull()  &&
-                    (dx + button->iconSet()->pixmap (TQIconSet::Small, TQIconSet::Normal, TQIconSet::Off ).width()) >= w )
+                if ( !ceData.iconSet.isNull() &&
+                    (dx + ceData.iconSet.pixmap (TQIconSet::Small, TQIconSet::Normal, TQIconSet::Off ).width()) >= w )
                 {
                     cornArrow = true; //To little room. Draw the arrow in the corner, don't adjust the widget
                 }
@@ -2439,19 +2439,19 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
             }
 
             // Draw the icon if there is one
-            if ( button->iconSet() && !button->iconSet()->isNull() )
+            if ( !ceData.iconSet.isNull() )
             {
                 TQIconSet::Mode  mode  = TQIconSet::Disabled;
                 TQIconSet::State state = TQIconSet::Off;
 
-                if (button->isEnabled())
-                    mode = button->hasFocus() ? TQIconSet::Active : TQIconSet::Normal;
-                if (button->isToggleButton() && button->isOn())
+                if (elementFlags & CEF_IsEnabled)
+                    mode = (elementFlags & CEF_HasFocus) ? TQIconSet::Active : TQIconSet::Normal;
+                if ((elementFlags & CEF_BiState) && (elementFlags & CEF_IsOn))
                     state = TQIconSet::On;
 
-                TQPixmap pixmap = button->iconSet()->pixmap( TQIconSet::Small, mode, state );
+                TQPixmap pixmap = ceData.iconSet.pixmap( TQIconSet::Small, mode, state );
 
-                if (button->text().isEmpty() && !button->pixmap())
+                if (ceData.text.isEmpty() && ceData.fgPixmap.isNull())
                     p->drawPixmap( x + w/2 - pixmap.width()/2, y + h / 2 - pixmap.height() / 2,
                                     pixmap );
                 else
@@ -2468,9 +2468,9 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
             }
 
             // Make the label indicate if the button is a default button or not
-            drawItem( p, TQRect(x, y, w, h), AlignCenter|ShowPrefix, button->colorGroup(),
-                        button->isEnabled(), button->pixmap(), button->text(), -1,
-                        &button->colorGroup().buttonText() );
+            drawItem( p, TQRect(x, y, w, h), AlignCenter|ShowPrefix, ceData.colorGroup,
+                        (elementFlags & CEF_IsEnabled), (ceData.fgPixmap.isNull())?NULL:&ceData.fgPixmap, ceData.text, -1,
+                        &ceData.colorGroup.buttonText() );
 
 
             if ( flags & Style_HasFocus )

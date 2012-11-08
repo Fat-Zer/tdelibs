@@ -838,15 +838,15 @@ void HighContrastStyle::drawControl (TQ_ControlElement element,
 		case CE_PushButton: {
 			TQPushButton *button = (TQPushButton*) widget;
 			TQRect br = r;
-			bool btnDefault = button->isDefault();
+			bool btnDefault = (elementFlags & CEF_IsDefault);
 
-			if (( btnDefault || button->autoDefault() ) && (button->isEnabled())) {
+			if (( btnDefault || (elementFlags & CEF_AutoDefault) ) && (elementFlags & CEF_IsEnabled)) {
 				// Compensate for default indicator
 				static int di = pixelMetric( PM_ButtonDefaultIndicator, ceData, elementFlags );
 				addOffset (&br, di);
 			}
 
-			if ( btnDefault && (button->isEnabled()))
+			if ( btnDefault && (elementFlags & CEF_IsEnabled))
 				tqdrawPrimitive( PE_ButtonDefault, p, ceData, elementFlags, r, cg, flags );
 
 			tqdrawPrimitive( PE_ButtonCommand, p, ceData, elementFlags, br, cg, flags );
@@ -875,8 +875,7 @@ void HighContrastStyle::drawControl (TQ_ControlElement element,
 			r.rect( &x, &y, &w, &h );
 			
 			if (element == CE_ProgressBarLabel) {
-				TQProgressBar* progressbar = (TQProgressBar*) widget;
-				text = progressbar->progressString();
+				text = ceData.progressText;
 				setColorsNormal (p, cg, flags);
 			}
 			else if (element == CE_TabBarLabel) {
@@ -887,27 +886,24 @@ void HighContrastStyle::drawControl (TQ_ControlElement element,
 				setColorsNormal (p, cg, flags, Style_Selected);
 			}
 			else if (element == CE_ToolButtonLabel) {
-				TQToolButton* toolbutton = (TQToolButton*) widget;
-				text = toolbutton->text();
-				pixmap = toolbutton->pixmap();
-				if (!toolbutton->iconSet().isNull())
-					icon = toolbutton->iconSet().pixmap (TQIconSet::Small, mode, state);
-				popup = toolbutton->popup();
+				text = ceData.text;
+				pixmap = (ceData.fgPixmap.isNull())?NULL:&ceData.fgPixmap;
+				if (!ceData.iconSet.isNull())
+					icon = ceData.iconSet.pixmap (TQIconSet::Small, mode, state);
+				popup = (elementFlags & CEF_HasPopupMenu);
 				setColorsButton (p, cg, flags);
 			}
 			else if (element == CE_PushButtonLabel) {
-				TQPushButton* pushbutton = (TQPushButton*) widget;
-				text = pushbutton->text();
-				pixmap = pushbutton->pixmap();
-				if (pushbutton->iconSet() && !pushbutton->iconSet()->isNull())
-					icon = pushbutton->iconSet()->pixmap (TQIconSet::Small, mode, state);
-				popup = pushbutton->popup();
+				text = ceData.text;
+				pixmap = (ceData.fgPixmap.isNull())?NULL:&ceData.fgPixmap;
+				if (!ceData.iconSet.isNull())
+					icon = ceData.iconSet.pixmap (TQIconSet::Small, mode, state);
+				popup = (elementFlags & CEF_HasPopupMenu);
 				setColorsButton (p, cg, flags);
 			}
 			else {
-				const TQButton* button = (const TQButton*)widget;
-				pixmap = button->pixmap();
-				text = button->text();
+				pixmap = (ceData.fgPixmap.isNull())?NULL:&ceData.fgPixmap;
+				text = ceData.text;
 				setColorsNormal (p, cg);
 			}
 
@@ -1331,8 +1327,8 @@ void HighContrastStyle::drawComplexControl (TQ_ComplexControl control,
 				drawArrow (p, menuarea, PE_ArrowDown);
 			}
 
-			if (toolbutton->hasFocus() && !toolbutton->focusProxy()) {
-				TQRect fr = toolbutton->rect();
+			if ((elementFlags & CEF_HasFocus) && !(elementFlags & CEF_HasFocusProxy)) {
+				TQRect fr = ceData.rect;
 				addOffset (&fr, 3);
 				tqdrawPrimitive(PE_FocusRect, p, ceData, elementFlags, fr, cg, flags, TQStyleOption (p->backgroundColor()));
 			}

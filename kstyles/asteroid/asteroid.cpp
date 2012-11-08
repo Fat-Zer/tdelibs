@@ -2113,7 +2113,12 @@ void AsteroidStyle::drawComplexControl(TQ_ComplexControl cc,
 			}
 
 			p2.end();
-			bitBlt((TQWidget*)w, r.x(), r.y(), &pix);
+			if (w) {
+				bitBlt((TQWidget*)w, r.x(), r.y(), &pix);
+			}
+			else {
+				p->drawPixmap(r.topLeft(), pix);
+			}
 			break;
 		}
 
@@ -2429,10 +2434,6 @@ TQRect AsteroidStyle::querySubControlMetrics(TQ_ComplexControl cc,
 		SC_ListViewExpand
 	 */
 		case CC_ComboBox: {
-			if (!w) {
-				return TQRect();
-			}
-
 			TQRect r(ceData.rect);
 
 			switch (sc) {
@@ -2552,12 +2553,11 @@ TQSize AsteroidStyle::sizeFromContents(ContentsType ct,
 		}
 
 		case CT_PopupMenuItem: {
-			if (!w || o.isDefault()) {
+			if (o.isDefault()) {
 				return TQSize(0, 0);
 			}
 
 			int sw = s.width(), sh = s.height();
-			const TQPopupMenu *popup = dynamic_cast<const TQPopupMenu *>(w);
 			TQMenuItem *mi = o.menuItem();
 
 			if (mi->custom()) {
@@ -2588,7 +2588,7 @@ TQSize AsteroidStyle::sizeFromContents(ContentsType ct,
 			int miw = o.maxIconWidth();
 			if (miw) {
 				sw += miw;
-				if (popup->isCheckable()) {
+				if (elementFlags & CEF_IsCheckable) {
 					sw += 20 - miw;
 				}
 			}

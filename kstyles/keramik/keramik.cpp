@@ -479,7 +479,7 @@ static void renderToolbarEntryBackground(TQPainter* paint,
 		toolWidth, toolHeight);
 }
 
-static void renderToolbarWidgetBackground(TQPainter* painter, const TQWidget* widget)
+static void renderToolbarWidgetBackground(TQPainter* painter, const TQStyleControlElementData ceData, const TQStyle::ControlElementFlags elementFlags, const TQWidget* widget)
 {
 	// Draw a gradient background for custom widgets in the toolbar
 	// that have specified a "kde toolbar widget" name, or
@@ -487,8 +487,8 @@ static void renderToolbarWidgetBackground(TQPainter* painter, const TQWidget* wi
 
 	// Find the top-level toolbar of this widget, since it may be nested in other
 	// widgets that are on the toolbar.
-	TQWidget *parent = TQT_TQWIDGET(widget->parentWidget());
-	int x_offset = widget->x(), y_offset = widget->y();
+	TQWidget *parent = (widget)?TQT_TQWIDGET(widget->parentWidget()):(TQWidget*)NULL;
+	int x_offset = ceData.rect.x(), y_offset = ceData.rect.y();
 	while (parent && parent->parent() && !qstrcmp( parent->name(), kdeToolbarWidget ) )
 	{
 		x_offset += parent->x();
@@ -496,18 +496,18 @@ static void renderToolbarWidgetBackground(TQPainter* painter, const TQWidget* wi
 		parent = TQT_TQWIDGET(parent->parent());
 	}
 
-	TQRect pr = parent->rect();
+	TQRect pr = ceData.parentWidgetData.rect;
 	bool horiz_grad = pr.width() > pr.height();
 
-	int  toolHeight = parent->height();
-	int  toolWidth  = parent->width ();
+	int  toolHeight = ceData.parentWidgetData.rect.height();
+	int  toolWidth  = ceData.parentWidgetData.rect.width ();
 
 	// Check if the parent is a QToolbar, and use its orientation, else guess.
 	//Also, get the height to use in the gradient from it.
 	TQToolBar* tb = dynamic_cast<TQToolBar*>(parent);
 	if (tb)
 	{
-		horiz_grad = tb->orientation() == Qt::Horizontal;
+		horiz_grad = ceData.orientation == TQt::Horizontal;
 
 		//If floating, we need to skip the titlebar.
 		if (tb->place() == TQDockWindow::OutsideDock)
@@ -518,26 +518,26 @@ static void renderToolbarWidgetBackground(TQPainter* painter, const TQWidget* wi
 			//the bottom edge, minus the frame (except we use the current y_offset
 			// to map to parent coordinates)
 			int needToTouchBottom = tb->height() - tb->frameWidth() -
-									(widget->rect().bottom() + y_offset);
+									(ceData.rect.bottom() + y_offset);
 
 			//Now, with that, we can see which portion to skip in the full-height
 			//gradient -- which is the stuff other than the extended
 			//widget
-			y_offset = toolHeight - (widget->height() + needToTouchBottom) - 1;
+			y_offset = toolHeight - (ceData.rect.height() + needToTouchBottom) - 1;
 		}
 	}
 
 	if (painter)
 	{
-		Keramik::GradientPainter::renderGradient( painter, widget->rect(),
-			 widget->colorGroup().button(), horiz_grad, false,
+		Keramik::GradientPainter::renderGradient( painter, ceData.rect,
+			 ceData.colorGroup.button(), horiz_grad, false,
 			 x_offset, y_offset, toolWidth, toolHeight);
 	}
 	else
 	{
 		TQPainter p( widget );
-		Keramik::GradientPainter::renderGradient( &p, widget->rect(),
-			 widget->colorGroup().button(), horiz_grad, false,
+		Keramik::GradientPainter::renderGradient( &p, ceData.rect,
+			 ceData.colorGroup.button(), horiz_grad, false,
 			 x_offset, y_offset, toolWidth, toolHeight);
 	}
 }
@@ -679,7 +679,7 @@ void KeramikStyle::drawPrimitive( TQ_PrimitiveElement pe,
 			if (toolbarBlendWidget && !flatMode )
 			{
 				//Render the toolbar gradient.
-				renderToolbarWidgetBackground(p, toolbarBlendWidget);
+				renderToolbarWidgetBackground(p, ceData, elementFlags, toolbarBlendWidget);
 
 				//Draw and blend the actual bevel..
 				Keramik::RectTilePainter( name, false ).draw(p, r, cg.button(), cg.background(),
@@ -1399,21 +1399,21 @@ void KeramikStyle::drawControl( TQ_ControlElement element,
 		// -------------------------------------------------------------------
 		case CE_PushButton:
 		{
-			const TQPushButton* btn = static_cast< const TQPushButton* >( widget );
+			const TQPushButton* btn = dynamic_cast< const TQPushButton* >( widget );
 
 			if (isFormWidget(ceData, elementFlags, btn))
 				formMode = true;
 
-			if ( btn->isFlat( ) )
+			if ( elementFlags & CEF_IsFlat )
 				flatMode = true;
 
-			if ( btn->isDefault( ) && !flatMode )
+			if ( (elementFlags & CEF_IsDefault) && !flatMode )
 			{
 				drawPrimitive( PE_ButtonDefault, p, ceData, elementFlags, r, cg, flags );
 			}
 			else
 			{
-				if (widget->parent() && widget->parent()->inherits(TQTOOLBAR_OBJECT_NAME_STRING))
+				if (ceData.parentWidgetData.widgetObjectTypes.contains(TQTOOLBAR_OBJECT_NAME_STRING))
 					toolbarBlendWidget = widget;
 
 				drawPrimitive( PE_ButtonCommand, p, ceData, elementFlags, r, cg, flags );
@@ -1429,8 +1429,8 @@ void KeramikStyle::drawControl( TQ_ControlElement element,
 		// -------------------------------------------------------------------
 		case CE_PushButtonLabel:
 		{
-			const TQPushButton* button = static_cast<const TQPushButton *>( widget );
-			bool active = button->isOn() || button->isDown();
+			const TQPushButton* button = dynamic_cast<const TQPushButton *>( widget );
+			bool active = ((elementFlags & CEF_IsOn) || (elementFlags & CEF_IsDown));
 			bool cornArrow = false;
 
 			// Shift button contents if pushed.
@@ -1442,11 +1442,11 @@ void KeramikStyle::drawControl( TQ_ControlElement element,
 			}
 
 			// Does the button have a popup menu?
-			if ( button->isMenuButton() )
+			if (elementFlags & CEF_IsMenuWidget)
 			{
 				int dx = pixelMetric( PM_MenuButtonIndicator, ceData, elementFlags, widget );
-				if ( button->iconSet() && !button->iconSet()->isNull()  &&
-					(dx + button->iconSet()->pixmap (TQIconSet::Small, TQIconSet::Normal, TQIconSet::Off ).width()) >= w )
+				if ( !ceData.iconSet.isNull()  &&
+					(dx + ceData.iconSet.pixmap (TQIconSet::Small, TQIconSet::Normal, TQIconSet::Off ).width()) >= w )
 				{
 					cornArrow = true; //To little room. Draw the arrow in the corner, don't adjust the widget
 				}
@@ -1459,26 +1459,26 @@ void KeramikStyle::drawControl( TQ_ControlElement element,
 			}
 
 			// Draw the icon if there is one
-			if ( button->iconSet() && !button->iconSet()->isNull() )
+			if ( !ceData.iconSet.isNull() )
 			{
 				TQIconSet::Mode  mode  = TQIconSet::Disabled;
 				TQIconSet::State state = TQIconSet::Off;
 
-				if (button->isEnabled())
-					mode = button->hasFocus() ? TQIconSet::Active : TQIconSet::Normal;
-				if (button->isToggleButton() && button->isOn())
+				if (elementFlags & CEF_IsEnabled)
+					mode = (elementFlags & CEF_HasFocus) ? TQIconSet::Active : TQIconSet::Normal;
+				if ((elementFlags & CEF_BiState) && (elementFlags & CEF_IsOn))
 					state = TQIconSet::On;
 
-				TQPixmap icon = button->iconSet()->pixmap( TQIconSet::Small, mode, state );
+				TQPixmap icon = ceData.iconSet.pixmap( TQIconSet::Small, mode, state );
 
-				if (!button->text().isEmpty())
+				if (!ceData.text.isEmpty())
 				{
 					const int TextToIconMargin = 6;
 					//Center text + icon w/margin in between..
 					
 					//Calculate length of both.
 					int length = icon.width() + TextToIconMargin
-					              + p->fontMetrics().size(ShowPrefix, button->text()).width();
+					              + p->fontMetrics().size(ShowPrefix, ceData.text).width();
 					
 					//Calculate offset.
 					int offset = (w - length)/2;
@@ -1493,11 +1493,11 @@ void KeramikStyle::drawControl( TQ_ControlElement element,
 				else
 				{
 					//Icon only. Center it. 
-					if (!button->pixmap())
+					if (ceData.fgPixmap.isNull())
 						p->drawPixmap( x + w/2 - icon.width()/2, y + h / 2 - icon.height() / 2,
 										icon );
 					else  //icon + pixmap. Ugh. 
-						p->drawPixmap( x + button->isDefault() ? 8 : 4 , y + h / 2 - icon.height() / 2, icon );
+						p->drawPixmap( x + (elementFlags & CEF_IsDefault) ? 8 : 4 , y + h / 2 - icon.height() / 2, icon );
 				}
 
 				if (cornArrow) //Draw over the icon
@@ -1506,9 +1506,9 @@ void KeramikStyle::drawControl( TQ_ControlElement element,
 			}
 
 			// Make the label indicate if the button is a default button or not
-			drawItem( p, TQRect(x, y, w, h), AlignCenter | ShowPrefix, button->colorGroup(),
-						button->isEnabled(), button->pixmap(), button->text(), -1,
-						&button->colorGroup().buttonText() );
+			drawItem( p, TQRect(x, y, w, h), AlignCenter | ShowPrefix, ceData.colorGroup,
+						(elementFlags & CEF_IsEnabled),  (ceData.fgPixmap.isNull())?NULL:&ceData.fgPixmap, ceData.text, -1,
+						&ceData.colorGroup.buttonText() );
 
 			if ( flags & Style_HasFocus )
 				drawPrimitive( PE_FocusRect, p, ceData, elementFlags,
@@ -1519,17 +1519,15 @@ void KeramikStyle::drawControl( TQ_ControlElement element,
 
 		case CE_ToolButtonLabel:
 		{
-		    //const TQToolButton *toolbutton = static_cast<const TQToolButton * >(widget);
-			bool onToolbar = widget->parentWidget() && widget->parentWidget()->inherits( TQTOOLBAR_OBJECT_NAME_STRING );
+			bool onToolbar = ceData.parentWidgetData.widgetObjectTypes.contains( TQTOOLBAR_OBJECT_NAME_STRING );
 			TQRect nr = r;
 
 			if (!onToolbar)
 			{
-				if (widget->parentWidget() &&
-				 !qstrcmp(widget->parentWidget()->name(),"qt_maxcontrols" ) )
+				if (!qstrcmp(ceData.parentWidgetData.name.ascii(),"qt_maxcontrols" ) )
 				{
 					//Make sure we don't cut into the endline
-					if (!qstrcmp(widget->name(), "close"))
+					if (!qstrcmp(ceData.name.ascii(), "close"))
 					{
 						nr.addCoords(0,0,-1,0);
 						p->setPen(cg.dark());
@@ -1589,7 +1587,7 @@ void KeramikStyle::drawControl( TQ_ControlElement element,
 		case CE_DockWindowEmptyArea:
 		{
 			TQRect pr = r;
-			if (widget && widget->inherits(TQTOOLBAR_OBJECT_NAME_STRING))
+			if (ceData.widgetObjectTypes.contains(TQTOOLBAR_OBJECT_NAME_STRING))
 			{
 				const TQToolBar* tb = static_cast<const TQToolBar*>(widget);
 				if (tb->place() == TQDockWindow::OutsideDock)
@@ -2030,8 +2028,7 @@ void KeramikStyle::drawComplexControl( TQ_ComplexControl control,
 			if (controls == SC_All)
 			{
 				//Double-buffer only when we are in the slower full-blend mode
-				if (widget->parent() &&
-						( widget->parent()->inherits(TQTOOLBAR_OBJECT_NAME_STRING)|| !qstrcmp(widget->parent()->name(), kdeToolbarWidget) ) )
+				if ( ceData.parentWidgetData.widgetObjectTypes.contains(TQTOOLBAR_OBJECT_NAME_STRING) || !qstrcmp(ceData.parentWidgetData.name.ascii(), kdeToolbarWidget) )
 				{
 					buf = new TQPixmap( r.width(), r.height() );
 					br.setX(0);
@@ -2260,15 +2257,14 @@ void KeramikStyle::drawComplexControl( TQ_ComplexControl control,
 		// TOOLBUTTON
 		// -------------------------------------------------------------------
 		case CC_ToolButton: {
-			const TQToolButton *toolbutton = (const TQToolButton *) widget;
-			bool onToolbar = widget->parentWidget() && widget->parentWidget()->inherits( TQTOOLBAR_OBJECT_NAME_STRING );
+			bool onToolbar = ceData.parentWidgetData.widgetObjectTypes.contains(TQTOOLBAR_OBJECT_NAME_STRING);
 			bool onExtender = !onToolbar &&
-				widget->parentWidget() && widget->parentWidget()->inherits( "QToolBarExtensionWidget") &&
-				widget->parentWidget()->parentWidget()->inherits( TQTOOLBAR_OBJECT_NAME_STRING );
+				ceData.parentWidgetData.widgetObjectTypes.contains( "QToolBarExtensionWidget") &&
+				widget && widget->parentWidget()->parentWidget()->inherits( TQTOOLBAR_OBJECT_NAME_STRING );
 
 			bool onControlButtons = false;
-			if (!onToolbar && !onExtender && widget->parentWidget() &&
-				 !qstrcmp(widget->parentWidget()->name(),"qt_maxcontrols" ) )
+			if (!onToolbar && !onExtender && !ceData.parentWidgetData.widgetObjectTypes.isEmpty() &&
+				 !qstrcmp(ceData.parentWidgetData.name.ascii(),"qt_maxcontrols" ) )
 			{
 				onControlButtons = true;
 				titleBarMode = Maximized;
@@ -2306,11 +2302,11 @@ void KeramikStyle::drawComplexControl( TQ_ComplexControl control,
 				else if ( !ceData.parentWidgetData.bgPixmap.isNull() )
 				{
 					TQPixmap pixmap = ceData.parentWidgetData.bgPixmap;
-					p->drawTiledPixmap( r, pixmap, toolbutton->pos() );
+					p->drawTiledPixmap( r, pixmap, ceData.pos );
 				}
 				else if (onToolbar)
 				{
-					renderToolbarWidgetBackground(p, widget);
+					renderToolbarWidgetBackground(p, ceData, elementFlags, widget);
 				}
 				else if (onExtender)
 				{
@@ -2325,9 +2321,9 @@ void KeramikStyle::drawComplexControl( TQ_ComplexControl control,
 					//which are relative to the parent, to be relative to the toolbar.
 					int xoff = 0, yoff = 0;
 					if (horiz)
-						yoff = parent->mapToParent(widget->pos()).y();
+						yoff = parent->mapToParent(ceData.pos).y();
 					else
-						xoff = parent->mapToParent(widget->pos()).x();
+						xoff = parent->mapToParent(ceData.pos).x();
 
 					Keramik::GradientPainter::renderGradient( p, r, cg.button(),
 							horiz, false, /*Not a menubar*/
@@ -2344,8 +2340,8 @@ void KeramikStyle::drawComplexControl( TQ_ComplexControl control,
 				drawPrimitive(PE_ArrowDown, p, ceData, elementFlags, menuarea, cg, mflags, opt);
 			}
 
-			if (toolbutton->hasFocus() && !toolbutton->focusProxy()) {
-				TQRect fr = toolbutton->rect();
+			if ((elementFlags & CEF_HasFocus) && !(elementFlags & CEF_HasFocusProxy)) {
+				TQRect fr = ceData.rect;
 				fr.addCoords(3, 3, -3, -3);
 				drawPrimitive(PE_FocusRect, p, ceData, elementFlags, fr, cg);
 			}
@@ -2480,15 +2476,15 @@ TQSize KeramikStyle::sizeFromContents( ContentsType contents,
 		// ------------------------------------------------------------------
 		case CT_PushButton:
 		{
-			const TQPushButton* btn = static_cast< const TQPushButton* >( widget );
+			const TQPushButton* btn = dynamic_cast< const TQPushButton* >( widget );
 
 			int w = contentSize.width() + 2 * pixelMetric( PM_ButtonMargin, ceData, elementFlags, widget );
 			int h = contentSize.height() + 2 * pixelMetric( PM_ButtonMargin, ceData, elementFlags, widget );
-			if ( btn->text().isEmpty() && contentSize.width() < 32 ) return TQSize( w, h );
+			if ( ceData.text.isEmpty() && contentSize.width() < 32 ) return TQSize( w, h );
 
 
 			//For some reason kcontrol no longer does this...
-			//if ( btn->isDefault() || btn->autoDefault() )
+			//if ( (elementFlags & CEF_IsDefault) || (elementFlags & CEF_AutoDefault) )
 			//            w = QMAX( w, 40 );
 
 			return TQSize( w + 30, h + 5 ); //MX: No longer blank space -- can make a bit smaller
@@ -2623,20 +2619,20 @@ TQRect KeramikStyle::querySubControlMetrics( TQ_ComplexControl control,
 			{
 				case SC_ComboBoxArrow:
 					if ( compact )
-						return TQRect( widget->width() - arrow - 7, 0, arrow + 6, widget->height() );
+						return TQRect( ceData.rect.width() - arrow - 7, 0, arrow + 6, ceData.rect.height() );
 					else
-						return TQRect( widget->width() - arrow - 14, 0, arrow + 13, widget->height() );
+						return TQRect( ceData.rect.width() - arrow - 14, 0, arrow + 13, ceData.rect.height() );
 
 				case SC_ComboBoxEditField:
 				{
 					if ( compact )
-						return TQRect( 2, 4, widget->width() - arrow - 2 - 7, widget->height() - 8 );
-					else if ( widget->width() < 36 || widget->height() < 22 )
-						return TQRect( 4, 3, widget->width() - arrow - 20, widget->height() - 6 );
-					else if ( static_cast< const TQComboBox* >( widget )->editable() )
-						return TQRect( 8, 4, widget->width() - arrow - 26, widget->height() - 11 );
+						return TQRect( 2, 4, ceData.rect.width() - arrow - 2 - 7, ceData.rect.height() - 8 );
+					else if ( ceData.rect.width() < 36 || ceData.rect.height() < 22 )
+						return TQRect( 4, 3, ceData.rect.width() - arrow - 20, ceData.rect.height() - 6 );
+					else if ( elementFlags & CEF_IsEditable )
+						return TQRect( 8, 4, ceData.rect.width() - arrow - 26, ceData.rect.height() - 11 );
 					else
-						return TQRect( 6, 4, widget->width() - arrow - 22, widget->height() - 9 );
+						return TQRect( 6, 4, ceData.rect.width() - arrow - 22, ceData.rect.height() - 9 );
 				}
 
 				case SC_ComboBoxListBoxPopup:
@@ -2815,7 +2811,7 @@ bool KeramikStyle::objectEventHandler( TQStyleControlElementData ceData, Control
 			object->event( TQT_TQPAINTEVENT( event ) );
 			TQWidget* widget = TQT_TQWIDGET( object );
 			TQPainter p( widget );
-			Keramik::RectTilePainter( keramik_frame_shadow, false, false, 2, 2 ).draw( &p, widget->rect(),
+			Keramik::RectTilePainter( keramik_frame_shadow, false, false, 2, 2 ).draw( &p, ceData.rect,
 				widget->palette().color( TQPalette::Normal, TQColorGroup::Button ),
 				Qt::black, false, Keramik::TilePainter::PaintFullBlend);
 			recursion = false;
@@ -2923,7 +2919,7 @@ bool KeramikStyle::objectEventHandler( TQStyleControlElementData ceData, Control
 		{
 			// Draw a gradient background for custom widgets in the toolbar
 			// that have specified a "kde toolbar widget" name.
-			renderToolbarWidgetBackground(0, TQT_TQWIDGET(object));
+			renderToolbarWidgetBackground(0, ceData, elementFlags, TQT_TQWIDGET(object));
 	
 			return false;	// Now draw the contents
 		}
