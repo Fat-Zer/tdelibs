@@ -2184,15 +2184,14 @@ void KeramikStyle::drawComplexControl( TQ_ComplexControl control,
 		}
 		case CC_ScrollBar:
 		{
-			const TQScrollBar* sb = static_cast< const TQScrollBar* >( widget );
-			if (highlightScrollBar && sb->parentWidget()) //Don't do the check if not highlighting anyway
+			if (highlightScrollBar && (elementFlags & CEF_HasParentWidget)) //Don't do the check if not highlighting anyway
 			{
-				if (sb->parentWidget()->colorGroup().button() != sb->colorGroup().button())
+				if (ceData.parentWidgetData.colorGroup.button() != ceData.colorGroup.button())
 					customScrollMode = true;
 			}
-			bool horizontal = sb->orientation() == Qt::Horizontal;
+			bool horizontal = ceData.orientation == TQt::Horizontal;
 			TQRect slider, subpage, addpage, subline, addline;
-			if ( sb->minValue() == sb->maxValue() ) flags &= ~Style_Enabled;
+			if ( ceData.minSteps == ceData.maxSteps ) flags &= ~Style_Enabled;
 
 			slider = querySubControlMetrics( control, ceData, elementFlags, SC_ScrollBarSlider, opt, widget );
 			subpage = querySubControlMetrics( control, ceData, elementFlags, SC_ScrollBarSubPage, opt, widget );
@@ -2208,9 +2207,9 @@ void KeramikStyle::drawComplexControl( TQ_ComplexControl control,
 			if ( controls & SC_ScrollBarSubPage ) clip |= subpage;
 			if ( controls & SC_ScrollBarAddPage ) clip |= addpage;
 			if ( horizontal )
-				clip |= TQRect( slider.x(), 0, slider.width(), sb->height() );
+				clip |= TQRect( slider.x(), 0, slider.width(), ceData.rect.height() );
 			else
-				clip |= TQRect( 0, slider.y(), sb->width(), slider.height() );
+				clip |= TQRect( 0, slider.y(), ceData.rect.width(), slider.height() );
 			clip ^= slider;
 
 			p->setClipRegion( clip );

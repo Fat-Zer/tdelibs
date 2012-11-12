@@ -2958,8 +2958,6 @@ void PlastikStyle::drawComplexControl(TQ_ComplexControl control,
     // TOOLBUTTON
     // ----------
         case CC_ToolButton: {
-            const TQToolButton *tb = (const TQToolButton *) widget;
-
             TQRect button, menuarea;
             button   = querySubControlMetrics(control, ceData, elementFlags, SC_ToolButton, opt, widget);
             menuarea = querySubControlMetrics(control, ceData, elementFlags, SC_ToolButtonMenu, opt, widget);
@@ -2986,11 +2984,10 @@ void PlastikStyle::drawComplexControl(TQ_ComplexControl control,
             // If we're pressed, on, or raised...
                 if (bflags & (Style_Down | Style_On | Style_Raised) || (flags & Style_MouseOver) ) {
                     drawPrimitive(PE_ButtonTool, p, ceData, elementFlags, button, cg, bflags, opt);
-                } else if (tb->parentWidget() &&
-                            tb->parentWidget()->backgroundPixmap() &&
-                            !tb->parentWidget()->backgroundPixmap()->isNull()) {
-                    TQPixmap pixmap = *(tb->parentWidget()->backgroundPixmap());
-                    p->drawTiledPixmap( r, pixmap, tb->pos() );
+                } else if ((elementFlags & CEF_HasParentWidget) &&
+                            !ceData.parentWidgetData.bgPixmap.isNull()) {
+                    TQPixmap pixmap = ceData.parentWidgetData.bgPixmap;
+                    p->drawTiledPixmap( r, pixmap, ceData.pos );
                 }
             }
 
@@ -3002,8 +2999,8 @@ void PlastikStyle::drawComplexControl(TQ_ComplexControl control,
                 drawPrimitive(PE_ArrowDown, p, ceData, elementFlags, menuarea, cg, mflags, opt);
             }
 
-            if (tb->hasFocus() && !tb->focusProxy()) {
-                TQRect fr = tb->rect();
+            if ((elementFlags & CEF_HasFocus) && !(elementFlags & CEF_HasFocusProxy)) {
+                TQRect fr = ceData.rect;
                 fr.addCoords(2, 2, -2, -2);
                 drawPrimitive(PE_FocusRect, p, ceData, elementFlags, fr, cg);
             }

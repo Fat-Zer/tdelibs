@@ -588,7 +588,7 @@ void HighContrastStyle::drawPrimitive (TQ_PrimitiveElement pe,
 			setColorsText (p, cg, flags, 0);
 			drawRoundRect (p, r);
 			if (flags & (Style_HasFocus | Style_Active))
-				tqdrawPrimitive (PE_FocusRect, p, ceData, elementFlags, r, cg, flags, TQStyleOption (p->backgroundColor()));
+				drawPrimitive (PE_FocusRect, p, ceData, elementFlags, r, cg, flags, TQStyleOption (p->backgroundColor()));
 			break;
 		}
 		case PE_PanelTabWidget:
@@ -687,7 +687,7 @@ void HighContrastStyle::drawPrimitive (TQ_PrimitiveElement pe,
 		}
 
 		default: {
-			KStyle::tqdrawPrimitive( pe, p, ceData, elementFlags, r, cg, flags, opt );
+			KStyle::drawPrimitive( pe, p, ceData, elementFlags, r, cg, flags, opt );
 		}
 	}
 }
@@ -847,9 +847,9 @@ void HighContrastStyle::drawControl (TQ_ControlElement element,
 			}
 
 			if ( btnDefault && (elementFlags & CEF_IsEnabled))
-				tqdrawPrimitive( PE_ButtonDefault, p, ceData, elementFlags, r, cg, flags );
+				drawPrimitive( PE_ButtonDefault, p, ceData, elementFlags, r, cg, flags );
 
-			tqdrawPrimitive( PE_ButtonCommand, p, ceData, elementFlags, br, cg, flags );
+			drawPrimitive( PE_ButtonCommand, p, ceData, elementFlags, br, cg, flags );
 
 			break;
 		}
@@ -931,7 +931,7 @@ void HighContrastStyle::drawControl (TQ_ControlElement element,
 
 			// Draw a focus rect if the button has focus
 			if (flags & Style_HasFocus)
-				tqdrawPrimitive (PE_FocusRect, p, ceData, elementFlags, r, cg, flags, TQStyleOption (p->backgroundColor()));
+				drawPrimitive (PE_FocusRect, p, ceData, elementFlags, r, cg, flags, TQStyleOption (p->backgroundColor()));
 
 			// Draw the label itself
 			TQColor color = p->pen().color();
@@ -976,14 +976,14 @@ void HighContrastStyle::drawControl (TQ_ControlElement element,
 		// CHECKBOX
 		// -------------------------------------------------------------------
 		case CE_CheckBox: {
-			tqdrawPrimitive (PE_Indicator, p, ceData, elementFlags, r, cg, flags);
+			drawPrimitive (PE_Indicator, p, ceData, elementFlags, r, cg, flags);
 			break;
 		}
 
 		// RADIOBUTTON
 		// -------------------------------------------------------------------
 		case CE_RadioButton: {
-			tqdrawPrimitive (PE_ExclusiveIndicator, p, ceData, elementFlags, r, cg, flags);
+			drawPrimitive (PE_ExclusiveIndicator, p, ceData, elementFlags, r, cg, flags);
 			break;
 		}
 
@@ -991,40 +991,33 @@ void HighContrastStyle::drawControl (TQ_ControlElement element,
 		// -------------------------------------------------------------------
 		case CE_ProgressBarGroove: {
 			setColorsText (p, cg, flags);
-			const TQProgressBar *progressbar = dynamic_cast<const TQProgressBar*>(widget);
-			if (progressbar) {
-				TQRect r2 (r);
-				r2.setLeft (p->boundingRect (r, AlignVCenter|AlignLeft|ShowPrefix, progressbar->progressString()).right()
-						+ 4*basicLineWidth);
-				drawRoundRect (p, r2);
-			}
+			TQRect r2 (r);
+			r2.setLeft (p->boundingRect (r, AlignVCenter|AlignLeft|ShowPrefix, ceData.progressText).right()
+					+ 4*basicLineWidth);
+			drawRoundRect (p, r2);
 			break;
 		}
 		case CE_ProgressBarContents: {
-			const TQProgressBar *progressbar = dynamic_cast<const TQProgressBar*>(widget);
-			if (progressbar)
+			TQRect r2 (r);
+			r2.setLeft (p->boundingRect (r, AlignVCenter|AlignLeft|ShowPrefix, ceData.progressText).right()
+					+ 4*basicLineWidth);
+			long progress = r2.width() * ceData.currentStep;
+			if (ceData.totalSteps > 0)
 			{
-				TQRect r2 (r);
-				r2.setLeft (p->boundingRect (r, AlignVCenter|AlignLeft|ShowPrefix, progressbar->progressString()).right()
-						+ 4*basicLineWidth);
-				long progress = r2.width() * progressbar->progress();
-				if (progressbar->totalSteps() > 0)
-				{
-					r2.setWidth (progress / progressbar->totalSteps());
-				}
-				else
-				{
-					int width = r2.width() / 5;
-					int left = progressbar->progress() % (2*(r2.width() - width));
-					if (left > r2.width() - width)
-						left = 2*(r2.width() - width) - left;
-					r2.setLeft (r2.left() + left);
-					r2.setWidth (width);
-				}
-				setColorsHighlight (p, cg, flags);
-				if (r2.width() > 0)
-					drawRoundRect (p, r2);
+				r2.setWidth (progress / ceData.totalSteps);
 			}
+			else
+			{
+				int width = r2.width() / 5;
+				int left = ceData.currentStep % (2*(r2.width() - width));
+				if (left > r2.width() - width)
+					left = 2*(r2.width() - width) - left;
+				r2.setLeft (r2.left() + left);
+				r2.setWidth (width);
+			}
+			setColorsHighlight (p, cg, flags);
+			if (r2.width() > 0)
+				drawRoundRect (p, r2);
 			break;
 		}
 
@@ -1242,7 +1235,7 @@ void HighContrastStyle::drawComplexControl (TQ_ComplexControl control,
 				else
 					r3.setLeft (r2.right()-basicLineWidth+1);
 
-				tqdrawPrimitive (PE_FocusRect, p, ceData, elementFlags, r3, cg, flags, TQStyleOption (p->backgroundColor()));
+				drawPrimitive (PE_FocusRect, p, ceData, elementFlags, r3, cg, flags, TQStyleOption (p->backgroundColor()));
 			}
 			
 			setColorsButton (p, cg, flags);
@@ -1263,7 +1256,7 @@ void HighContrastStyle::drawComplexControl (TQ_ComplexControl control,
 				setColorsText (p, cg, flags);
 				drawRoundRect (p, r);
 				if (flags & Style_HasFocus)
-					tqdrawPrimitive(PE_FocusRect, p, ceData, elementFlags, r, cg, flags, TQStyleOption (p->backgroundColor()));
+					drawPrimitive(PE_FocusRect, p, ceData, elementFlags, r, cg, flags, TQStyleOption (p->backgroundColor()));
 			}
 			
 			setColorsButton (p, cg, flags);
@@ -1286,8 +1279,6 @@ void HighContrastStyle::drawComplexControl (TQ_ComplexControl control,
 		// TOOLBUTTON
 		// -------------------------------------------------------------------
 		case CC_ToolButton: {
-			const TQToolButton *toolbutton = (const TQToolButton *) widget;
-
 			setColorsButton (p, cg, flags);
 			p->fillRect (r, p->backgroundColor ());
 
@@ -1307,15 +1298,13 @@ void HighContrastStyle::drawComplexControl (TQ_ComplexControl control,
 			{
 				// If we're pressed, on, or raised...
 				if (bflags & (Style_Down | Style_On | Style_Raised))
-					tqdrawPrimitive(PE_ButtonTool, p, ceData, elementFlags, button, cg, bflags, opt);
+					drawPrimitive(PE_ButtonTool, p, ceData, elementFlags, button, cg, bflags, opt);
 
 				// Check whether to draw a background pixmap
-				else if ( toolbutton->parentWidget() &&
-						  toolbutton->parentWidget()->backgroundPixmap() &&
-						  !toolbutton->parentWidget()->backgroundPixmap()->isNull() )
+				else if ( !ceData.parentWidgetData.bgPixmap.isNull() )
 				{
-					TQPixmap pixmap = *(toolbutton->parentWidget()->backgroundPixmap());
-					p->drawTiledPixmap( r, pixmap, toolbutton->pos() );
+					TQPixmap pixmap = ceData.parentWidgetData.bgPixmap;
+					p->drawTiledPixmap( r, pixmap, ceData.pos );
 				}
 			}
 
@@ -1323,14 +1312,14 @@ void HighContrastStyle::drawComplexControl (TQ_ComplexControl control,
 			if (controls & SC_ToolButtonMenu)
 			{
 				if (mflags & (Style_Down | Style_On | Style_Raised))
-					tqdrawPrimitive(PE_ButtonDropDown, p, ceData, elementFlags, menuarea, cg, mflags, opt);
+					drawPrimitive(PE_ButtonDropDown, p, ceData, elementFlags, menuarea, cg, mflags, opt);
 				drawArrow (p, menuarea, PE_ArrowDown);
 			}
 
 			if ((elementFlags & CEF_HasFocus) && !(elementFlags & CEF_HasFocusProxy)) {
 				TQRect fr = ceData.rect;
 				addOffset (&fr, 3);
-				tqdrawPrimitive(PE_FocusRect, p, ceData, elementFlags, fr, cg, flags, TQStyleOption (p->backgroundColor()));
+				drawPrimitive(PE_FocusRect, p, ceData, elementFlags, fr, cg, flags, TQStyleOption (p->backgroundColor()));
 			}
 
 			break;

@@ -1471,7 +1471,7 @@ TQRect KStyle::querySubControlMetrics( TQ_ComplexControl control,
 		bool platinumScrollBar    = d->scrollbarType & PlatinumStyleScrollBar;
 		bool nextScrollBar        = d->scrollbarType & NextStyleScrollBar;
 
-		bool horizontal = ceData.orientation == Qt::Horizontal;
+		bool horizontal = ceData.orientation == TQt::Horizontal;
 		int sliderstart = ceData.startStep;
 		int sbextent    = pixelMetric(PM_ScrollBarExtent, ceData, elementFlags, widget);
 		int maxlen      = (horizontal ? ceData.rect.width() : ceData.rect.height())
