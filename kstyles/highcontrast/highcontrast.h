@@ -56,12 +56,12 @@ class HighContrastStyle : public KStyle
         
 		void polish( TQPalette& pal );        
 
-		void polish( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void * );
-		void unPolish( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void * );
+		void polish( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void * );
+		void unPolish( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void * );
 
 		void drawKStylePrimitive( KStylePrimitive kpe,
 					TQPainter* p,
-					TQStyleControlElementData ceData,
+					const TQStyleControlElementData &ceData,
 					ControlElementFlags elementFlags,
 					const TQRect &r,
 					const TQColorGroup &cg,
@@ -71,7 +71,7 @@ class HighContrastStyle : public KStyle
 
 		void drawPrimitive( TQ_PrimitiveElement pe,
 					TQPainter* p,
-					TQStyleControlElementData ceData,
+					const TQStyleControlElementData &ceData,
 					ControlElementFlags elementFlags,
 					const TQRect &r,
 					const TQColorGroup &cg,
@@ -80,7 +80,7 @@ class HighContrastStyle : public KStyle
 
 		void drawControl( TQ_ControlElement element,
 					TQPainter *p,
-					TQStyleControlElementData ceData,
+					const TQStyleControlElementData &ceData,
 					ControlElementFlags elementFlags,
 					const TQRect &r,
 					const TQColorGroup &cg,
@@ -90,7 +90,7 @@ class HighContrastStyle : public KStyle
 
 		void drawControlMask( TQ_ControlElement element,
 					TQPainter *p,
-					TQStyleControlElementData ceData,
+					const TQStyleControlElementData &ceData,
 					ControlElementFlags elementFlags,
 					const TQRect &r,
 					const TQStyleOption& = TQStyleOption::Default,
@@ -98,7 +98,7 @@ class HighContrastStyle : public KStyle
 
 		void drawComplexControl( TQ_ComplexControl control,
 					TQPainter *p,
-					TQStyleControlElementData ceData,
+					const TQStyleControlElementData &ceData,
 					ControlElementFlags elementFlags,
 					const TQRect &r,
 					const TQColorGroup &cg,
@@ -110,14 +110,14 @@ class HighContrastStyle : public KStyle
 
 		void drawComplexControlMask( TQ_ComplexControl control,
 					TQPainter *p,
-					const TQStyleControlElementData ceData,
+					const TQStyleControlElementData &ceData,
 					const ControlElementFlags elementFlags,
 					const TQRect &r,
 					const TQStyleOption& = TQStyleOption::Default,
 					const TQWidget *widget = 0 ) const;
 
 		TQRect querySubControlMetrics( TQ_ComplexControl control,
-					TQStyleControlElementData ceData,
+					const TQStyleControlElementData &ceData,
 					ControlElementFlags elementFlags,
 					SubControl subcontrol,
 					const TQStyleOption& opt = TQStyleOption::Default,
@@ -134,27 +134,27 @@ class HighContrastStyle : public KStyle
 					int len = -1,
 					const TQColor *penColor = 0 ) const;
 
-		int pixelMetric( PixelMetric m, TQStyleControlElementData ceData, ControlElementFlags elementFlags,
+		int pixelMetric( PixelMetric m, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags,
 					const TQWidget *widget = 0 ) const;
 
-		int kPixelMetric( KStylePixelMetric m, TQStyleControlElementData ceData, ControlElementFlags elementFlags,
+		int kPixelMetric( KStylePixelMetric m, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags,
 					const TQWidget *widget = 0 ) const;
 
 		TQSize sizeFromContents( ContentsType contents,
-					TQStyleControlElementData ceData,
+					const TQStyleControlElementData &ceData,
 					ControlElementFlags elementFlags,
 					const TQSize &contentSize,
 					const TQStyleOption& opt,
 					const TQWidget *widget = 0 ) const;
 
-		TQRect subRect (SubRect subrect, const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, const TQWidget * widget) const;
+		TQRect subRect (SubRect subrect, const TQStyleControlElementData &ceData, const ControlElementFlags elementFlags, const TQWidget * widget) const;
 
-		int styleHint(TQ_StyleHint, TQStyleControlElementData ceData, ControlElementFlags elementFlags,
+		int styleHint(TQ_StyleHint, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags,
 					const TQStyleOption & = TQStyleOption::Default,
 					TQStyleHintReturn * = 0, const TQWidget * = 0 ) const;
 
 	protected:
-		virtual bool objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *e );
+		virtual bool objectEventHandler( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void* source, TQEvent *e );
 
 	private:
 		void setColorsNormal (TQPainter* p, const TQColorGroup& cg, int flags = Style_Enabled, int highlight = Style_Down|Style_MouseOver) const;

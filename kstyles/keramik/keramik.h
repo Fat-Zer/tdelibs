@@ -48,16 +48,16 @@ public:
 	virtual ~KeramikStyle();
 
 	void renderMenuBlendPixmap( KPixmap& pix, const TQColorGroup &cg, const TQPopupMenu* ) const;
-	TQPixmap stylePixmap(StylePixmap stylepixmap, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQStyleOption& opt, const TQWidget* widget = 0) const;
+	TQPixmap stylePixmap(StylePixmap stylepixmap, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQStyleOption& opt, const TQWidget* widget = 0) const;
 
-	void polish( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void * );
-	void unPolish( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void * );
+	void polish( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void * );
+	void unPolish( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void * );
 	void polish( TQPalette& );
-	void applicationPolish( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void * );
+	void applicationPolish( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void * );
 
 	void drawKStylePrimitive( KStylePrimitive kpe,
 	                          TQPainter* p,
-	                          TQStyleControlElementData ceData,
+	                          const TQStyleControlElementData &ceData,
 	                          ControlElementFlags elementFlags,
 	                          const TQRect& r,
 	                          const TQColorGroup& cg,
@@ -67,7 +67,7 @@ public:
 
 	void drawPrimitive( TQ_PrimitiveElement pe,
 	                    TQPainter* p,
-	                    TQStyleControlElementData ceData,
+	                    const TQStyleControlElementData &ceData,
 	                    ControlElementFlags elementFlags,
 	                    const TQRect& r,
 	                    const TQColorGroup& cg,
@@ -76,7 +76,7 @@ public:
 
 	void drawControl( TQ_ControlElement element,
 	                  TQPainter* p,
-	                  TQStyleControlElementData ceData,
+	                  const TQStyleControlElementData &ceData,
 	                  ControlElementFlags elementFlags,
 	                  const TQRect& r,
 	                  const TQColorGroup& cg,
@@ -86,7 +86,7 @@ public:
 
 	void drawControlMask( TQ_ControlElement element,
 	                      TQPainter* p,
-	                      TQStyleControlElementData ceData,
+	                      const TQStyleControlElementData &ceData,
 	                      ControlElementFlags elementFlags,
 	                      const TQRect& r,
 	                      const TQStyleOption& opt = TQStyleOption::Default,
@@ -94,7 +94,7 @@ public:
 
 	void drawComplexControl( TQ_ComplexControl control,
 	                         TQPainter* p,
-	                         TQStyleControlElementData ceData,
+	                         const TQStyleControlElementData &ceData,
 	                         ControlElementFlags elementFlags,
 	                         const TQRect& r,
 	                         const TQColorGroup& cg,
@@ -106,36 +106,36 @@ public:
 
 	void drawComplexControlMask( TQ_ComplexControl control,
 	                             TQPainter* p,
-	                             const TQStyleControlElementData ceData,
+	                             const TQStyleControlElementData &ceData,
 	                             const ControlElementFlags elementFlags,
 	                             const TQRect& r,
 	                             const TQStyleOption& = TQStyleOption::Default,
 	                             const TQWidget* widget = 0 ) const;
 
-	int pixelMetric( PixelMetric m, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQWidget* widget = 0 ) const;
+	int pixelMetric( PixelMetric m, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQWidget* widget = 0 ) const;
 
 	TQSize sizeFromContents( ContentsType contents,
-	                        TQStyleControlElementData ceData,
+	                        const TQStyleControlElementData &ceData,
 	                        ControlElementFlags elementFlags,
 	                        const TQSize& contentSize,
 	                        const TQStyleOption& opt,
 	                        const TQWidget* widget = 0 ) const;
 
 	SubControl querySubControl( TQ_ComplexControl control,
-	                            TQStyleControlElementData ceData,
+	                            const TQStyleControlElementData &ceData,
 	                            ControlElementFlags elementFlags,
 	                            const TQPoint& point,
 						        const TQStyleOption& opt = TQStyleOption::Default,
 	                            const TQWidget* widget = 0 ) const;
 
 	TQRect querySubControlMetrics( TQ_ComplexControl control,
-	                              TQStyleControlElementData ceData,
+	                              const TQStyleControlElementData &ceData,
 	                              ControlElementFlags elementFlags,
 	                              SubControl subcontrol,
 	                              const TQStyleOption& opt = TQStyleOption::Default,
 	                              const TQWidget* widget = 0 ) const;
 
-	int styleHint(TQ_StyleHint, TQStyleControlElementData ceData, ControlElementFlags elementFlags,
+	int styleHint(TQ_StyleHint, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags,
 			const TQStyleOption & = TQStyleOption::Default,
 			TQStyleHintReturn * = 0, const TQWidget * = 0 ) const;
 
@@ -146,8 +146,8 @@ private slots:
 
 private:
 
-	bool isSizeConstrainedCombo(const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, const TQComboBox* widget) const;
-	bool isFormWidget          (const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, const TQWidget* widget) const;
+	bool isSizeConstrainedCombo(const TQStyleControlElementData &ceData, const ControlElementFlags elementFlags, const TQComboBox* widget) const;
+	bool isFormWidget          (const TQStyleControlElementData &ceData, const ControlElementFlags elementFlags, const TQWidget* widget) const;
 
 	///Configuration settings
 	bool animateProgressBar;
@@ -181,7 +181,7 @@ private:
 	//Animation support.
 	TQMap<TQProgressBar*, int> progAnimWidgets;
 
-	virtual bool objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *e );
+	virtual bool objectEventHandler( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void* source, TQEvent *e );
 
 	Keramik::TilePainter::PaintMode pmode() const
 	{
@@ -213,7 +213,7 @@ private:
 	// For progress bar animation
 	TQTimer *animationTimer;
 
-	TQRect subRect(SubRect r, const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, const TQWidget *widget) const;
+	TQRect subRect(SubRect r, const TQStyleControlElementData &ceData, const ControlElementFlags elementFlags, const TQWidget *widget) const;
 
 	// Disable copy constructor and = operator
 	KeramikStyle( const KeramikStyle&  );

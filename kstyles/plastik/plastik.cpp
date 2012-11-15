@@ -223,7 +223,7 @@ PlastikStyle::~PlastikStyle()
     delete verticalLine;
 }
 
-void PlastikStyle::applicationPolish(TQStyleControlElementData ceData, ControlElementFlags, void *ptr)
+void PlastikStyle::applicationPolish(const TQStyleControlElementData &ceData, ControlElementFlags, void *ptr)
 {
     if (ceData.widgetObjectTypes.contains(TQAPPLICATION_OBJECT_NAME_STRING)) {
 	TQApplication *app = reinterpret_cast<TQApplication*>(ptr);
@@ -235,7 +235,7 @@ void PlastikStyle::applicationPolish(TQStyleControlElementData ceData, ControlEl
     }
 }
 
-void PlastikStyle::polish(TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr)
+void PlastikStyle::polish(const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *ptr)
 {
     if (ceData.widgetObjectTypes.contains(TQWIDGET_OBJECT_NAME_STRING)) {
 	TQWidget *widget = reinterpret_cast<TQWidget*>(ptr);
@@ -278,7 +278,7 @@ void PlastikStyle::polish(TQStyleControlElementData ceData, ControlElementFlags 
     KStyle::polish(ceData, elementFlags, ptr);
 }
 
-void PlastikStyle::unPolish(TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr)
+void PlastikStyle::unPolish(const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *ptr)
 {
     if (ceData.widgetObjectTypes.contains(TQWIDGET_OBJECT_NAME_STRING)) {
 	TQWidget *widget = reinterpret_cast<TQWidget*>(ptr);
@@ -1200,7 +1200,7 @@ void PlastikStyle::renderTab(TQPainter *p,
 
 void PlastikStyle::drawKStylePrimitive(KStylePrimitive kpe,
                                       TQPainter *p,
-                                      TQStyleControlElementData ceData,
+                                      const TQStyleControlElementData &ceData,
                                       ControlElementFlags elementFlags,
                                       const TQRect &r,
                                       const TQColorGroup &cg,
@@ -1453,7 +1453,7 @@ void PlastikStyle::drawKStylePrimitive(KStylePrimitive kpe,
 
 void PlastikStyle::drawPrimitive(TQ_PrimitiveElement pe,
                                 TQPainter *p,
-                                TQStyleControlElementData ceData,
+                                const TQStyleControlElementData &ceData,
                                 ControlElementFlags elementFlags,
                                 const TQRect &r,
                                 const TQColorGroup &cg,
@@ -2183,7 +2183,7 @@ void PlastikStyle::drawPrimitive(TQ_PrimitiveElement pe,
 
 void PlastikStyle::drawControl(TQ_ControlElement element,
                               TQPainter *p,
-                              TQStyleControlElementData ceData,
+                              const TQStyleControlElementData &ceData,
                               ControlElementFlags elementFlags,
                               const TQRect &r,
                               const TQColorGroup &cg,
@@ -2740,7 +2740,7 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
 
 void PlastikStyle::drawControlMask(TQ_ControlElement element,
                                   TQPainter *p,
-                                  TQStyleControlElementData ceData,
+                                  const TQStyleControlElementData &ceData,
                                   ControlElementFlags elementFlags,
                                   const TQRect &r,
                                   const TQStyleOption &opt,
@@ -2762,7 +2762,7 @@ void PlastikStyle::drawControlMask(TQ_ControlElement element,
 
 void PlastikStyle::drawComplexControlMask(TQ_ComplexControl c,
                                          TQPainter *p,
-                                         const TQStyleControlElementData ceData,
+                                         const TQStyleControlElementData &ceData,
                                          const ControlElementFlags elementFlags,
                                          const TQRect &r,
                                          const TQStyleOption &o,
@@ -2785,7 +2785,7 @@ void PlastikStyle::drawComplexControlMask(TQ_ComplexControl c,
 
 void PlastikStyle::drawComplexControl(TQ_ComplexControl control,
                                      TQPainter *p,
-                                     TQStyleControlElementData ceData,
+                                     const TQStyleControlElementData &ceData,
                                      ControlElementFlags elementFlags,
                                      const TQRect &r,
                                      const TQColorGroup &cg,
@@ -3180,7 +3180,7 @@ void PlastikStyle::drawComplexControl(TQ_ComplexControl control,
 }
 
 
-TQRect PlastikStyle::subRect(SubRect r, const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, const TQWidget *widget) const
+TQRect PlastikStyle::subRect(SubRect r, const TQStyleControlElementData &ceData, const ControlElementFlags elementFlags, const TQWidget *widget) const
 {
     switch (r) {
         case SR_ComboBoxFocusRect: {
@@ -3205,7 +3205,7 @@ TQRect PlastikStyle::subRect(SubRect r, const TQStyleControlElementData ceData, 
 }
 
 TQRect PlastikStyle::querySubControlMetrics(TQ_ComplexControl control,
-                                          TQStyleControlElementData ceData,
+                                          const TQStyleControlElementData &ceData,
                                           ControlElementFlags elementFlags,
                                           SubControl subcontrol,
                                           const TQStyleOption &opt,
@@ -3275,7 +3275,7 @@ TQRect PlastikStyle::querySubControlMetrics(TQ_ComplexControl control,
     }
 }
 
-int PlastikStyle::pixelMetric(PixelMetric m, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQWidget *widget) const
+int PlastikStyle::pixelMetric(PixelMetric m, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQWidget *widget) const
 {
     switch(m) {
     // TABS
@@ -3383,7 +3383,7 @@ int PlastikStyle::pixelMetric(PixelMetric m, TQStyleControlElementData ceData, C
 
 
 TQSize PlastikStyle::sizeFromContents(ContentsType t,
-                                    TQStyleControlElementData ceData,
+                                    const TQStyleControlElementData &ceData,
                                     ControlElementFlags elementFlags,
                                     const TQSize &s,
                                     const TQStyleOption &opt,
@@ -3471,7 +3471,7 @@ TQSize PlastikStyle::sizeFromContents(ContentsType t,
 }
 
 int PlastikStyle::styleHint( TQ_StyleHint stylehint,
-                                   TQStyleControlElementData ceData,
+                                   const TQStyleControlElementData &ceData,
                                    ControlElementFlags elementFlags,
                                    const TQStyleOption &option,
                                    TQStyleHintReturn* returnData,
@@ -3497,7 +3497,7 @@ int PlastikStyle::styleHint( TQ_StyleHint stylehint,
     }
 }
 
-bool PlastikStyle::objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *ev )
+bool PlastikStyle::objectEventHandler( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void* source, TQEvent *ev )
 {
     if (KStyle::objectEventHandler(ceData, elementFlags, source, ev) )
         return true;

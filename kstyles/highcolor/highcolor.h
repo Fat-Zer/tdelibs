@@ -65,15 +65,15 @@ class HighColorStyle : public KStyle
 		HighColorStyle( StyleType );
 		virtual ~HighColorStyle();
 
-		void polish(TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *);
-		void unPolish(TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *);
+		void polish(const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *);
+		void unPolish(const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *);
 
 		void renderMenuBlendPixmap( KPixmap& pix, const TQColorGroup &cg,
 								 	const TQPopupMenu* popup ) const;
 
 		void drawKStylePrimitive( KStylePrimitive kpe,
 					TQPainter* p,
-					TQStyleControlElementData ceData,
+					const TQStyleControlElementData &ceData,
 					ControlElementFlags elementFlags,
 					const TQRect &r,
 					const TQColorGroup &cg,
@@ -83,7 +83,7 @@ class HighColorStyle : public KStyle
 		
 		void drawPrimitive( TQ_PrimitiveElement pe,
 					TQPainter* p,
-					TQStyleControlElementData ceData,
+					const TQStyleControlElementData &ceData,
 					ControlElementFlags elementFlags,
 					const TQRect &r,
 					const TQColorGroup &cg,
@@ -92,7 +92,7 @@ class HighColorStyle : public KStyle
 
 		void drawControl( TQ_ControlElement element,
 					TQPainter *p,
-					TQStyleControlElementData ceData,
+					const TQStyleControlElementData &ceData,
 					ControlElementFlags elementFlags,
 					const TQRect &r,
 					const TQColorGroup &cg,
@@ -102,7 +102,7 @@ class HighColorStyle : public KStyle
 
 		void drawControlMask( TQ_ControlElement element,
 					TQPainter *p,
-					TQStyleControlElementData ceData,
+					const TQStyleControlElementData &ceData,
 					ControlElementFlags elementFlags,
 					const TQRect &r,
 					const TQStyleOption& = TQStyleOption::Default,
@@ -110,7 +110,7 @@ class HighColorStyle : public KStyle
 		
 		void drawComplexControl( TQ_ComplexControl control,
 					TQPainter *p,
-					TQStyleControlElementData ceData,
+					const TQStyleControlElementData &ceData,
 					ControlElementFlags elementFlags,
 					const TQRect &r,
 					const TQColorGroup &cg,
@@ -122,7 +122,7 @@ class HighColorStyle : public KStyle
 
 		void drawComplexControlMask( TQ_ComplexControl control,
 					TQPainter *p,
-					const TQStyleControlElementData ceData,
+					const TQStyleControlElementData &ceData,
 					const ControlElementFlags elementFlags,
 					const TQRect &r,
 					const TQStyleOption& = TQStyleOption::Default,
@@ -138,31 +138,31 @@ class HighColorStyle : public KStyle
 		                int len = -1,
 		                const TQColor *penColor = 0 ) const;
 
-		int pixelMetric( PixelMetric m, TQStyleControlElementData ceData, ControlElementFlags elementFlags, 
+		int pixelMetric( PixelMetric m, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, 
 					const TQWidget *widget = 0 ) const;
 
 		TQSize sizeFromContents( ContentsType contents,
-					TQStyleControlElementData ceData,
+					const TQStyleControlElementData &ceData,
 					ControlElementFlags elementFlags,
 					const TQSize &contentSize,
 					const TQStyleOption& opt,
 					const TQWidget *widget ) const;
 
-		TQRect subRect( SubRect r, const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, 
+		TQRect subRect( SubRect r, const TQStyleControlElementData &ceData, const ControlElementFlags elementFlags, 
 					const TQWidget *widget ) const;
 
 		// Fix Qt3's wacky image positions
 		TQPixmap stylePixmap( StylePixmap stylepixmap,
-					TQStyleControlElementData ceData,
+					const TQStyleControlElementData &ceData,
 					ControlElementFlags elementFlags,
 					const TQStyleOption& = TQStyleOption::Default,
 					const TQWidget *widget = 0 ) const;
 
-		int styleHint(TQ_StyleHint, TQStyleControlElementData ceData, ControlElementFlags elementFlags,
+		int styleHint(TQ_StyleHint, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags,
 				const TQStyleOption & = TQStyleOption::Default,
 				TQStyleHintReturn * = 0, const TQWidget * = 0 ) const;
 
-		virtual bool objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *e );
+		virtual bool objectEventHandler( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void* source, TQEvent *e );
 
 	protected:
 

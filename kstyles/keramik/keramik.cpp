@@ -189,7 +189,7 @@ void KeramikStyle::renderMenuBlendPixmap( KPixmap& pix, const TQColorGroup &cg,
 }
 
 // XXX
-TQRect KeramikStyle::subRect(SubRect r, const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, const TQWidget *widget) const
+TQRect KeramikStyle::subRect(SubRect r, const TQStyleControlElementData &ceData, const ControlElementFlags elementFlags, const TQWidget *widget) const
 {
 	// We want the focus rect for buttons to be adjusted from
 	// the Qt3 defaults to be similar to Qt 2's defaults.
@@ -243,7 +243,7 @@ TQRect KeramikStyle::subRect(SubRect r, const TQStyleControlElementData ceData, 
 
 
 TQPixmap KeramikStyle::stylePixmap(StylePixmap stylepixmap,
-									TQStyleControlElementData ceData,
+									const TQStyleControlElementData &ceData,
 									ControlElementFlags elementFlags,
 									const TQStyleOption& opt,
 									const TQWidget* widget) const
@@ -327,7 +327,7 @@ KeramikStyle::~KeramikStyle()
 	KeramikDbCleanup();
 }
 
-void KeramikStyle::applicationPolish(TQStyleControlElementData ceData, ControlElementFlags, void *ptr)
+void KeramikStyle::applicationPolish(const TQStyleControlElementData &ceData, ControlElementFlags, void *ptr)
 {
     if (ceData.widgetObjectTypes.contains(TQAPPLICATION_OBJECT_NAME_STRING)) {
 		TQApplication *app = reinterpret_cast<TQApplication*>(ptr);
@@ -337,7 +337,7 @@ void KeramikStyle::applicationPolish(TQStyleControlElementData ceData, ControlEl
 	}
 }
 
-void KeramikStyle::polish(TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr)
+void KeramikStyle::polish(const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *ptr)
 {
 	if (ceData.widgetObjectTypes.contains(TQWIDGET_OBJECT_NAME_STRING)) {
 		TQWidget *widget = reinterpret_cast<TQWidget*>(ptr);
@@ -382,7 +382,7 @@ void KeramikStyle::polish(TQStyleControlElementData ceData, ControlElementFlags 
 	KStyle::polish(ceData, elementFlags, ptr);
 }
 
-void KeramikStyle::unPolish(TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr)
+void KeramikStyle::unPolish(const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *ptr)
 {
 	if (ceData.widgetObjectTypes.contains(TQWIDGET_OBJECT_NAME_STRING)) {
 		TQWidget *widget = reinterpret_cast<TQWidget*>(ptr);
@@ -479,7 +479,7 @@ static void renderToolbarEntryBackground(TQPainter* paint,
 		toolWidth, toolHeight);
 }
 
-static void renderToolbarWidgetBackground(TQPainter* painter, const TQStyleControlElementData ceData, const TQStyle::ControlElementFlags elementFlags, const TQWidget* widget)
+static void renderToolbarWidgetBackground(TQPainter* painter, const TQStyleControlElementData &ceData, const TQStyle::ControlElementFlags elementFlags, const TQWidget* widget)
 {
 	// Draw a gradient background for custom widgets in the toolbar
 	// that have specified a "kde toolbar widget" name, or
@@ -545,7 +545,7 @@ static void renderToolbarWidgetBackground(TQPainter* painter, const TQStyleContr
 // This function draws primitive elements as well as their masks.
 void KeramikStyle::drawPrimitive( TQ_PrimitiveElement pe,
 									TQPainter *p,
-									TQStyleControlElementData ceData,
+									const TQStyleControlElementData &ceData,
 									ControlElementFlags elementFlags,
 									const TQRect &r,
 									const TQColorGroup &cg,
@@ -1222,7 +1222,7 @@ void KeramikStyle::drawPrimitive( TQ_PrimitiveElement pe,
 
 void KeramikStyle::drawKStylePrimitive( KStylePrimitive kpe,
 										  TQPainter* p,
-										  TQStyleControlElementData ceData,
+										  const TQStyleControlElementData &ceData,
 										  ControlElementFlags elementFlags,
 										  const TQRect &r,
 										  const TQColorGroup &cg,
@@ -1354,7 +1354,7 @@ void KeramikStyle::drawKStylePrimitive( KStylePrimitive kpe,
 	}
 }
 
-bool KeramikStyle::isFormWidget(const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, const TQWidget* widget) const
+bool KeramikStyle::isFormWidget(const TQStyleControlElementData &ceData, const ControlElementFlags elementFlags, const TQWidget* widget) const
 {
 	if (widget) {
 		//Form widgets are in the KHTMLView, but that has 2 further inner levels
@@ -1381,7 +1381,7 @@ bool KeramikStyle::isFormWidget(const TQStyleControlElementData ceData, const Co
 
 void KeramikStyle::drawControl( TQ_ControlElement element,
 								  TQPainter *p,
-								  TQStyleControlElementData ceData,
+								  const TQStyleControlElementData &ceData,
 								  ControlElementFlags elementFlags,
 								  const TQRect &r,
 								  const TQColorGroup &cg,
@@ -1964,7 +1964,7 @@ void KeramikStyle::drawControl( TQ_ControlElement element,
 
 void KeramikStyle::drawControlMask( TQ_ControlElement element,
 								    TQPainter *p,
-								    TQStyleControlElementData ceData,
+								    const TQStyleControlElementData &ceData,
 								    ControlElementFlags elementFlags,
 								    const TQRect &r,
 								    const TQStyleOption& opt,
@@ -1976,7 +1976,7 @@ void KeramikStyle::drawControlMask( TQ_ControlElement element,
 	maskMode = false;
 }
 
-bool KeramikStyle::isSizeConstrainedCombo(const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, const TQComboBox* combo) const
+bool KeramikStyle::isSizeConstrainedCombo(const TQStyleControlElementData &ceData, const ControlElementFlags elementFlags, const TQComboBox* combo) const
 {
 	if (ceData.rect.width() >= 80)
 		return false;
@@ -1996,7 +1996,7 @@ bool KeramikStyle::isSizeConstrainedCombo(const TQStyleControlElementData ceData
 
 void KeramikStyle::drawComplexControl( TQ_ComplexControl control,
                                          TQPainter *p,
-                                         TQStyleControlElementData ceData,
+                                         const TQStyleControlElementData &ceData,
                                          ControlElementFlags elementFlags,
                                          const TQRect &r,
                                          const TQColorGroup &cg,
@@ -2362,7 +2362,7 @@ void KeramikStyle::drawComplexControl( TQ_ComplexControl control,
 
 void KeramikStyle::drawComplexControlMask( TQ_ComplexControl control,
                                          TQPainter *p,
-                                         const TQStyleControlElementData ceData,
+                                         const TQStyleControlElementData &ceData,
                                          const ControlElementFlags elementFlags,
                                          const TQRect &r,
                                          const TQStyleOption& opt,
@@ -2382,7 +2382,7 @@ void KeramikStyle::drawComplexControlMask( TQ_ComplexControl control,
 
 }
 
-int KeramikStyle::pixelMetric(PixelMetric m, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQWidget *widget) const
+int KeramikStyle::pixelMetric(PixelMetric m, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQWidget *widget) const
 {
 	switch(m)
 	{
@@ -2463,7 +2463,7 @@ int KeramikStyle::pixelMetric(PixelMetric m, TQStyleControlElementData ceData, C
 
 
 TQSize KeramikStyle::sizeFromContents( ContentsType contents,
-										TQStyleControlElementData ceData,
+										const TQStyleControlElementData &ceData,
 										ControlElementFlags elementFlags,
 										const TQSize &contentSize,
 										const TQStyleOption& opt,
@@ -2574,7 +2574,7 @@ TQSize KeramikStyle::sizeFromContents( ContentsType contents,
 
 
 TQStyle::SubControl KeramikStyle::querySubControl( TQ_ComplexControl control,
-                                                  TQStyleControlElementData ceData,
+                                                  const TQStyleControlElementData &ceData,
                                                   ControlElementFlags elementFlags,
                                                   const TQPoint& point,
                                                   const TQStyleOption& opt,
@@ -2594,7 +2594,7 @@ TQStyle::SubControl KeramikStyle::querySubControl( TQ_ComplexControl control,
 }
 
 TQRect KeramikStyle::querySubControlMetrics( TQ_ComplexControl control,
-	                              TQStyleControlElementData ceData,
+	                              const TQStyleControlElementData &ceData,
 	                              ControlElementFlags elementFlags,
 	                              SubControl subcontrol,
 	                              const TQStyleOption& opt,
@@ -2789,7 +2789,7 @@ TQRect KeramikStyle::querySubControlMetrics( TQ_ComplexControl control,
 #undef   KeyRelease
 #endif
 
-bool KeramikStyle::objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *event )
+bool KeramikStyle::objectEventHandler( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void* source, TQEvent *event )
 {
 	if (KStyle::objectEventHandler( ceData, elementFlags, source, event ))
 		return true;
@@ -2973,7 +2973,7 @@ bool KeramikStyle::objectEventHandler( TQStyleControlElementData ceData, Control
 }
 
 /*! \reimp */
-int KeramikStyle::styleHint(StyleHint sh, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQStyleOption &opt, TQStyleHintReturn *returnData, const TQWidget *w) const
+int KeramikStyle::styleHint(StyleHint sh, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQStyleOption &opt, TQStyleHintReturn *returnData, const TQWidget *w) const
 {
 	int ret;
 

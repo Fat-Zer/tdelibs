@@ -79,15 +79,15 @@ public:
     KThemeStyle( const TQString& configDir, const TQString &configFile = TQString::null );
     ~KThemeStyle();
 
-    virtual int pixelMetric ( PixelMetric metric, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQWidget * widget = 0 ) const;
+    virtual int pixelMetric ( PixelMetric metric, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQWidget * widget = 0 ) const;
 
-    virtual void drawPrimitive ( PrimitiveElement pe, TQPainter * p, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQRect & r, const TQColorGroup & cg,
+    virtual void drawPrimitive ( PrimitiveElement pe, TQPainter * p, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQRect & r, const TQColorGroup & cg,
                                  SFlags flags = Style_Default,
                                  const TQStyleOption& = TQStyleOption::Default ) const;
 
     virtual void drawControl( ControlElement element,
                               TQPainter *p,
-                              TQStyleControlElementData ceData,
+                              const TQStyleControlElementData &ceData,
                               ControlElementFlags elementFlags,
                               const TQRect &r,
                               const TQColorGroup &cg,
@@ -97,7 +97,7 @@ public:
 
     virtual void drawControlMask( ControlElement element,
                                   TQPainter *p,
-                                  TQStyleControlElementData ceData,
+                                  const TQStyleControlElementData &ceData,
                                   ControlElementFlags elementFlags,
                                   const TQRect &r,
                                   const TQStyleOption& = TQStyleOption::Default,
@@ -106,7 +106,7 @@ public:
 
     virtual void drawComplexControl( TQ_ComplexControl control,
                                      TQPainter *p,
-                                     TQStyleControlElementData ceData,
+                                     const TQStyleControlElementData &ceData,
                                      ControlElementFlags elementFlags,
                                      const TQRect &r,
                                      const TQColorGroup &cg,
@@ -118,7 +118,7 @@ public:
 
     virtual void drawKStylePrimitive( KStylePrimitive kpe,
                                       TQPainter* p,
-                                      TQStyleControlElementData ceData,
+                                      const TQStyleControlElementData &ceData,
                                       ControlElementFlags elementFlags,
                                       const TQRect &r,
                                       const TQColorGroup &cg,
@@ -128,30 +128,30 @@ public:
 
 
     virtual int styleHint( StyleHint sh,
-                           TQStyleControlElementData ceData,
+                           const TQStyleControlElementData &ceData,
                            ControlElementFlags elementFlags,
                            const TQStyleOption& = TQStyleOption::Default,
                            TQStyleHintReturn* returnData = 0,
                            const TQWidget *widget = 0 ) const;
 
     virtual TQSize sizeFromContents( ContentsType contents,
-                                    TQStyleControlElementData ceData,
+                                    const TQStyleControlElementData &ceData,
                                     ControlElementFlags elementFlags,
                                     const TQSize &contentsSize,
                                     const TQStyleOption& = TQStyleOption::Default,
                                     const TQWidget *widget = 0 ) const;
 
-    virtual TQRect subRect(SubRect, const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, const TQWidget *) const;
+    virtual TQRect subRect(SubRect, const TQStyleControlElementData &ceData, const ControlElementFlags elementFlags, const TQWidget *) const;
 
-    virtual void polish( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void * );
-    virtual void unPolish( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void * );
-    virtual bool objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *e );
+    virtual void polish( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void * );
+    virtual void unPolish( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void * );
+    virtual bool objectEventHandler( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void* source, TQEvent *e );
     /**
      * By default this just sets the background brushes to the pixmapped
      * background.
      */
-    virtual void applicationPolish( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void * );
-    virtual void applicationUnPolish( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void * );
+    virtual void applicationPolish( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void * );
+    virtual void applicationUnPolish( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void * );
 
     /** \internal */
     // to make it possible for derived classes to overload this function

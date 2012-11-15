@@ -152,7 +152,7 @@ void HighContrastStyle::polish( TQPalette& pal )
 }
 
 
-void HighContrastStyle::polish (TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr)
+void HighContrastStyle::polish (const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *ptr)
 {
 	if (ceData.widgetObjectTypes.contains(TQWIDGET_OBJECT_NAME_STRING)) {
 		TQWidget *widget = reinterpret_cast<TQWidget*>(ptr);
@@ -179,7 +179,7 @@ void HighContrastStyle::polish (TQStyleControlElementData ceData, ControlElement
 }
 
 
-void HighContrastStyle::unPolish (TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr)
+void HighContrastStyle::unPolish (const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *ptr)
 {
 	if (ceData.widgetObjectTypes.contains(TQWIDGET_OBJECT_NAME_STRING)) {
 		TQWidget *widget = reinterpret_cast<TQWidget*>(ptr);
@@ -339,7 +339,7 @@ void HighContrastStyle::drawArrow (TQPainter* p, TQRect r, TQ_PrimitiveElement a
 // This function draws primitive elements
 void HighContrastStyle::drawPrimitive (TQ_PrimitiveElement pe,
 								TQPainter *p,
-								TQStyleControlElementData ceData,
+								const TQStyleControlElementData &ceData,
 								ControlElementFlags elementFlags,
 								const TQRect &r,
 								const TQColorGroup &cg,
@@ -695,7 +695,7 @@ void HighContrastStyle::drawPrimitive (TQ_PrimitiveElement pe,
 
 void HighContrastStyle::drawKStylePrimitive (KStylePrimitive kpe,
 										TQPainter* p,
-										TQStyleControlElementData ceData,
+										const TQStyleControlElementData &ceData,
 										ControlElementFlags elementFlags,
 										const TQRect &r,
 										const TQColorGroup &cg,
@@ -786,7 +786,7 @@ void HighContrastStyle::drawKStylePrimitive (KStylePrimitive kpe,
 
 void HighContrastStyle::drawControl (TQ_ControlElement element,
 								TQPainter *p,
-								TQStyleControlElementData ceData,
+								const TQStyleControlElementData &ceData,
 								ControlElementFlags elementFlags,
 								const TQRect &r,
 								const TQColorGroup &cg,
@@ -1164,7 +1164,7 @@ void HighContrastStyle::drawControl (TQ_ControlElement element,
 
 void HighContrastStyle::drawControlMask (TQ_ControlElement element,
 										TQPainter *p,
-										TQStyleControlElementData ceData,
+										const TQStyleControlElementData &ceData,
 										ControlElementFlags elementFlags,
 										const TQRect &r,
 										const TQStyleOption &opt,
@@ -1209,7 +1209,7 @@ static TQListViewItem* nextVisibleSibling(TQListViewItem* item)
 
 void HighContrastStyle::drawComplexControl (TQ_ComplexControl control,
 									TQPainter *p,
-									TQStyleControlElementData ceData,
+									const TQStyleControlElementData &ceData,
 									ControlElementFlags elementFlags,
 									const TQRect &r,
 									const TQColorGroup &cg,
@@ -1492,7 +1492,7 @@ void HighContrastStyle::drawComplexControl (TQ_ComplexControl control,
 
 void HighContrastStyle::drawComplexControlMask(TQ_ComplexControl c,
 											   TQPainter *p,
-											   const TQStyleControlElementData ceData,
+											   const TQStyleControlElementData &ceData,
 											   const ControlElementFlags elementFlags,
 											   const TQRect &r,
 											   const TQStyleOption &o,
@@ -1536,7 +1536,7 @@ void HighContrastStyle::drawItem( TQPainter *p,
 }
 
 TQRect HighContrastStyle::querySubControlMetrics( TQ_ComplexControl control,
-								  TQStyleControlElementData ceData,
+								  const TQStyleControlElementData &ceData,
 								  ControlElementFlags elementFlags,
 								  SubControl subcontrol,
 								  const TQStyleOption& opt,
@@ -1589,7 +1589,7 @@ TQRect HighContrastStyle::querySubControlMetrics( TQ_ComplexControl control,
 }
 
 
-int HighContrastStyle::pixelMetric(PixelMetric m, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQWidget *widget) const
+int HighContrastStyle::pixelMetric(PixelMetric m, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQWidget *widget) const
 {
 	//### TODO: Use the tab metrics changes from Ker.
 	switch(m)
@@ -1683,7 +1683,7 @@ int HighContrastStyle::pixelMetric(PixelMetric m, TQStyleControlElementData ceDa
 	}
 }
 
-int HighContrastStyle::kPixelMetric( KStylePixelMetric kpm, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQWidget *widget ) const
+int HighContrastStyle::kPixelMetric( KStylePixelMetric kpm, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQWidget *widget ) const
 {
 	switch (kpm) {
 		case KPM_ListViewBranchThickness:
@@ -1696,7 +1696,7 @@ int HighContrastStyle::kPixelMetric( KStylePixelMetric kpm, TQStyleControlElemen
 }
 
 TQSize HighContrastStyle::sizeFromContents( ContentsType contents,
-										TQStyleControlElementData ceData,
+										const TQStyleControlElementData &ceData,
 										ControlElementFlags elementFlags,
 										const TQSize &contentSize,
 										const TQStyleOption& opt,
@@ -1821,7 +1821,7 @@ TQSize HighContrastStyle::sizeFromContents( ContentsType contents,
 	}
 }
 
-TQRect HighContrastStyle::subRect (SubRect subrect, const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, const TQWidget * widget) const
+TQRect HighContrastStyle::subRect (SubRect subrect, const TQStyleControlElementData &ceData, const ControlElementFlags elementFlags, const TQWidget * widget) const
 {
 	switch (subrect) {
 		case SR_ProgressBarGroove:
@@ -1833,13 +1833,13 @@ TQRect HighContrastStyle::subRect (SubRect subrect, const TQStyleControlElementD
 	}
 }
 
-bool HighContrastStyle::objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *event )
+bool HighContrastStyle::objectEventHandler( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void* source, TQEvent *event )
 {
 	return KStyle::objectEventHandler (ceData, elementFlags, source, event);
 }
 
 /*! \reimp */
-int HighContrastStyle::styleHint(StyleHint sh, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQStyleOption &opt, TQStyleHintReturn *returnData, const TQWidget *w) const
+int HighContrastStyle::styleHint(StyleHint sh, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQStyleOption &opt, TQStyleHintReturn *returnData, const TQWidget *w) const
 {
 	int ret;
 

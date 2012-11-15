@@ -258,7 +258,7 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 		 */
 		virtual void drawKStylePrimitive( KStylePrimitive kpe,
 					TQPainter* p,
-					TQStyleControlElementData ceData,
+					const TQStyleControlElementData &ceData,
 					ControlElementFlags elementFlags,
 					const TQRect &r,
 					const TQColorGroup &cg,
@@ -279,17 +279,17 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 			KPM_ListViewBranchThickness		= 0x00000100
 		};
 
-		int kPixelMetric( KStylePixelMetric kpm, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQWidget* widget = 0 ) const;
+		int kPixelMetric( KStylePixelMetric kpm, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQWidget* widget = 0 ) const;
 
 		// ---------------------------------------------------------------------------
 
-		void polish( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void * );
-		void unPolish( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void * );
-		void polishPopupMenu( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr );
+		void polish( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void * );
+		void unPolish( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void * );
+		void polishPopupMenu( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *ptr );
 
 		void drawPrimitive( TQ_PrimitiveElement pe,
 					TQPainter* p,
-					TQStyleControlElementData ceData,
+					const TQStyleControlElementData &ceData,
 					ControlElementFlags elementFlags,
 					const TQRect &r,
 					const TQColorGroup &cg,
@@ -300,7 +300,7 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 
 //		void drawPrimitive( TQ_ControlElement pe,
 //					TQPainter* p,
-// 					TQStyleControlElementData ceData,
+// 					const TQStyleControlElementData &ceData,
 // 					ControlElementFlags elementFlags,
 //					const TQRect &r,
 //					const TQColorGroup &cg,
@@ -311,7 +311,7 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 
 		void drawControl( TQ_ControlElement element,
 					TQPainter* p,
-					TQStyleControlElementData ceData,
+					const TQStyleControlElementData &ceData,
 					ControlElementFlags elementFlags,
 					const TQRect &r,
 					const TQColorGroup &cg,
@@ -321,7 +321,7 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 
 		void drawComplexControl( TQ_ComplexControl control,
 					TQPainter *p,
-					TQStyleControlElementData ceData,
+					const TQStyleControlElementData &ceData,
 					ControlElementFlags elementFlags,
 					const TQRect &r,
 					const TQColorGroup &cg,
@@ -332,39 +332,39 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 					const TQWidget* widget = 0 ) const;
 
 		SubControl querySubControl( TQ_ComplexControl control,
-					TQStyleControlElementData ceData,
+					const TQStyleControlElementData &ceData,
 					ControlElementFlags elementFlags,
 					const TQPoint &pos,
 					const TQStyleOption& = TQStyleOption::SO_Default,
 					const TQWidget* widget = 0 ) const;
 
 		TQRect querySubControlMetrics( TQ_ComplexControl control,
-					TQStyleControlElementData ceData,
+					const TQStyleControlElementData &ceData,
 					ControlElementFlags elementFlags,
 					SubControl sc,
 					const TQStyleOption& = TQStyleOption::SO_Default,
 					const TQWidget* widget = 0 ) const;
 
-		int pixelMetric( PixelMetric m, TQStyleControlElementData ceData, ControlElementFlags elementFlags, 
+		int pixelMetric( PixelMetric m, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, 
 					const TQWidget* widget = 0 ) const;
 
-		TQRect subRect( SubRect r, const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, 
+		TQRect subRect( SubRect r, const TQStyleControlElementData &ceData, const ControlElementFlags elementFlags, 
 					const TQWidget* widget = 0 ) const;
 
 		TQPixmap stylePixmap( StylePixmap stylepixmap,
-					TQStyleControlElementData ceData,
+					const TQStyleControlElementData &ceData,
 					ControlElementFlags elementFlags,
 					const TQStyleOption& = TQStyleOption::SO_Default,
 					const TQWidget* widget = 0 ) const;
 
-		int styleHint( TQ_StyleHint sh, TQStyleControlElementData ceData,
+		int styleHint( TQ_StyleHint sh, const TQStyleControlElementData &ceData,
 					ControlElementFlags elementFlags,
 					const TQStyleOption &opt = TQStyleOption::SO_Default,
 					TQStyleHintReturn* shr = 0,
 					const TQWidget* w = 0 ) const;
 
 	protected:
-		virtual bool objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *e );
+		virtual bool objectEventHandler( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void* source, TQEvent *e );
 
 	private:
 		// Disable copy constructor and = operator

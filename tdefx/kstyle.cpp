@@ -261,7 +261,7 @@ TQString KStyle::defaultStyle()
 	   return TQString("light, 3rd revision");
 }
 
-void KStyle::polish( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr )
+void KStyle::polish( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *ptr )
 {
 	if (ceData.widgetObjectTypes.contains(TQWIDGET_OBJECT_NAME_STRING)) {
 		TQWidget* widget = reinterpret_cast<TQWidget*>(ptr);
@@ -285,7 +285,7 @@ void KStyle::polish( TQStyleControlElementData ceData, ControlElementFlags eleme
 }
 
 
-void KStyle::unPolish( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr )
+void KStyle::unPolish( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *ptr )
 {
 	if (ceData.widgetObjectTypes.contains(TQWIDGET_OBJECT_NAME_STRING)) {
 		TQWidget* widget = reinterpret_cast<TQWidget*>(ptr);
@@ -304,7 +304,7 @@ void KStyle::unPolish( TQStyleControlElementData ceData, ControlElementFlags ele
 
 
 // Style changes (should) always re-polish popups.
-void KStyle::polishPopupMenu( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr )
+void KStyle::polishPopupMenu( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *ptr )
 {
     if ( !(ceData.windowState & WState_Polished ) ) {
         widgetActionRequest(ceData, elementFlags, ptr, WAR_SetCheckable);
@@ -357,7 +357,7 @@ void KStyle::drawKStylePrimitive( KStylePrimitive kpe,
 
 void KStyle::drawKStylePrimitive( KStylePrimitive kpe,
 								  TQPainter* p,
-								  TQStyleControlElementData ceData,
+								  const TQStyleControlElementData &ceData,
 								  ControlElementFlags elementFlags,
 								  const TQRect &r,
 								  const TQColorGroup &cg,
@@ -543,7 +543,7 @@ void KStyle::drawKStylePrimitive( KStylePrimitive kpe,
 }
 
 
-int KStyle::kPixelMetric( KStylePixelMetric kpm, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQWidget* /* widget */) const
+int KStyle::kPixelMetric( KStylePixelMetric kpm, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQWidget* /* widget */) const
 {
 	int value;
 	switch(kpm)
@@ -573,7 +573,7 @@ int KStyle::kPixelMetric( KStylePixelMetric kpm, TQStyleControlElementData ceDat
 
 //void KStyle::drawPrimitive( TQ_ControlElement pe,
 //							TQPainter* p,
-// 							TQStyleControlElementData ceData,
+// 							const TQStyleControlElementData &ceData,
 // 							ControlElementFlags elementFlags,
 //							const TQRect &r,
 //							const TQColorGroup &cg,
@@ -593,7 +593,7 @@ int KStyle::kPixelMetric( KStylePixelMetric kpm, TQStyleControlElementData ceDat
 
 void KStyle::drawPrimitive( TQ_PrimitiveElement pe,
 							TQPainter* p,
-							TQStyleControlElementData ceData,
+							const TQStyleControlElementData &ceData,
 							ControlElementFlags elementFlags,
 							const TQRect &r,
 							const TQColorGroup &cg,
@@ -688,7 +688,7 @@ void KStyle::drawPrimitive( TQ_PrimitiveElement pe,
 
 void KStyle::drawControl( TQ_ControlElement element,
 						  TQPainter* p,
-						  TQStyleControlElementData ceData,
+						  const TQStyleControlElementData &ceData,
 						  ControlElementFlags elementFlags,
 						  const TQRect &r,
 						  const TQColorGroup &cg,
@@ -988,7 +988,7 @@ void KStyle::drawControl( TQ_ControlElement element,
 }
 
 
-TQRect KStyle::subRect(SubRect r, const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, const TQWidget* widget) const
+TQRect KStyle::subRect(SubRect r, const TQStyleControlElementData &ceData, const ControlElementFlags elementFlags, const TQWidget* widget) const
 {
 	switch(r)
 	{
@@ -1010,7 +1010,7 @@ TQRect KStyle::subRect(SubRect r, const TQStyleControlElementData ceData, const 
 }
 
 
-int KStyle::pixelMetric(PixelMetric m, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQWidget* widget) const
+int KStyle::pixelMetric(PixelMetric m, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQWidget* widget) const
 {
 	switch(m)
 	{
@@ -1134,7 +1134,7 @@ static TQListViewItem* nextVisibleSibling(TQListViewItem* item)
 
 void KStyle::drawComplexControl( TQ_ComplexControl control,
 								 TQPainter* p,
-								 TQStyleControlElementData ceData,
+								 const TQStyleControlElementData &ceData,
 								 ControlElementFlags elementFlags,
 								 const TQRect &r,
 								 const TQColorGroup &cg,
@@ -1439,7 +1439,7 @@ void KStyle::drawComplexControl( TQ_ComplexControl control,
 
 
 TQStyle::SubControl KStyle::querySubControl( TQ_ComplexControl control,
-											TQStyleControlElementData ceData,
+											const TQStyleControlElementData &ceData,
 											ControlElementFlags elementFlags,
 											const TQPoint &pos,
 											const TQStyleOption &opt,
@@ -1457,7 +1457,7 @@ TQStyle::SubControl KStyle::querySubControl( TQ_ComplexControl control,
 
 
 TQRect KStyle::querySubControlMetrics( TQ_ComplexControl control,
-									  TQStyleControlElementData ceData,
+									  const TQStyleControlElementData &ceData,
 									  ControlElementFlags elementFlags,
 									  SubControl sc,
 									  const TQStyleOption &opt,
@@ -1843,7 +1843,7 @@ static const char* const critical_xpm[]={
 ".............aaaaaaa............"};
 
 TQPixmap KStyle::stylePixmap( StylePixmap stylepixmap,
-						  TQStyleControlElementData ceData,
+						  const TQStyleControlElementData &ceData,
 						  ControlElementFlags elementFlags,
 						  const TQStyleOption& opt,
 						  const TQWidget* widget) const
@@ -1876,7 +1876,7 @@ TQPixmap KStyle::stylePixmap( StylePixmap stylepixmap,
 }
 
 
-int KStyle::styleHint( TQ_StyleHint sh, TQStyleControlElementData ceData, ControlElementFlags elementFlags,
+int KStyle::styleHint( TQ_StyleHint sh, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags,
 					   const TQStyleOption &opt, TQStyleHintReturn* shr, const TQWidget* w) const
 {
 	switch (sh)
@@ -1935,7 +1935,7 @@ int KStyle::styleHint( TQ_StyleHint sh, TQStyleControlElementData ceData, Contro
 }
 
 
-bool KStyle::objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *event )
+bool KStyle::objectEventHandler( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void* source, TQEvent *event )
 {
 	if (ceData.widgetObjectTypes.contains(TQOBJECT_OBJECT_NAME_STRING)) {
 		TQObject* object = reinterpret_cast<TQObject*>(source);

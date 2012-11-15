@@ -161,7 +161,7 @@ public:
 KDE_Q_EXPORT_PLUGIN( KThemeStylePlugin )
 
 
-void kDrawWindowsArrow ( TQPainter *p, const TQStyleControlElementData ceData, const TQStyle::ControlElementFlags elementFlags, const TQStyle* style, TQStyle::PrimitiveElement pe, bool down,
+void kDrawWindowsArrow ( TQPainter *p, const TQStyleControlElementData &ceData, const TQStyle::ControlElementFlags elementFlags, const TQStyle* style, TQStyle::PrimitiveElement pe, bool down,
                          int x, int y, int w, int h,
                          const TQColorGroup &cg, bool enabled )
 {
@@ -213,7 +213,7 @@ void kDrawWindowsArrow ( TQPainter *p, const TQStyleControlElementData ceData, c
 
 
 TQSize KThemeStyle::sizeFromContents( ContentsType contents,
-                                     TQStyleControlElementData ceData,
+                                     const TQStyleControlElementData &ceData,
                                      ControlElementFlags elementFlags,
                                      const TQSize &contentSize,
                                      const TQStyleOption& opt,
@@ -311,7 +311,7 @@ TQSize KThemeStyle::sizeFromContents( ContentsType contents,
 }
 
 
-TQRect KThemeStyle::subRect(SubRect sr, const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, const TQWidget* widget) const
+TQRect KThemeStyle::subRect(SubRect sr, const TQStyleControlElementData &ceData, const ControlElementFlags elementFlags, const TQWidget* widget) const
 {
     if (sr == SR_CheckBoxFocusRect)
     {
@@ -333,7 +333,7 @@ TQRect KThemeStyle::subRect(SubRect sr, const TQStyleControlElementData ceData, 
     return KStyle::subRect(sr, ceData, elementFlags, widget);
 }
 
-int KThemeStyle::pixelMetric ( PixelMetric metric, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQWidget * widget ) const
+int KThemeStyle::pixelMetric ( PixelMetric metric, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQWidget * widget ) const
 {
     switch ( metric )
     {
@@ -420,7 +420,7 @@ KThemeStyle::~KThemeStyle()
 }
 
 
-void KThemeStyle::applicationPolish( TQStyleControlElementData ceData, ControlElementFlags, void *ptr )
+void KThemeStyle::applicationPolish( const TQStyleControlElementData &ceData, ControlElementFlags, void *ptr )
 {
     if (ceData.widgetObjectTypes.contains(TQAPPLICATION_OBJECT_NAME_STRING)) {
         TQApplication *app = reinterpret_cast<TQApplication*>(ptr);
@@ -468,7 +468,7 @@ void KThemeStyle::paletteChanged()
 }
 
 
-void KThemeStyle::applicationUnPolish( TQStyleControlElementData ceData, ControlElementFlags, void *ptr )
+void KThemeStyle::applicationUnPolish( const TQStyleControlElementData &ceData, ControlElementFlags, void *ptr )
 {
     if (ceData.widgetObjectTypes.contains(TQAPPLICATION_OBJECT_NAME_STRING)) {
         TQApplication *app = reinterpret_cast<TQApplication*>(ptr);
@@ -476,7 +476,7 @@ void KThemeStyle::applicationUnPolish( TQStyleControlElementData ceData, Control
     }
 }
 
-bool KThemeStyle::objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *event )
+bool KThemeStyle::objectEventHandler( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void* source, TQEvent *event )
 {
     if (ceData.widgetObjectTypes.contains(TQOBJECT_OBJECT_NAME_STRING)) {
         TQObject* object = reinterpret_cast<TQObject*>(source);
@@ -518,7 +518,7 @@ bool KThemeStyle::objectEventHandler( TQStyleControlElementData ceData, ControlE
     return KStyle::objectEventHandler(ceData, elementFlags, source, event);
 }
 
-void KThemeStyle::polish( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr )
+void KThemeStyle::polish( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *ptr )
 {
     if (ceData.widgetObjectTypes.contains(TQWIDGET_OBJECT_NAME_STRING)) {
         TQWidget *w = reinterpret_cast<TQWidget*>(ptr);
@@ -629,7 +629,7 @@ void KThemeStyle::polish( TQStyleControlElementData ceData, ControlElementFlags 
     KStyle::polish( ceData, elementFlags, ptr );
 }
 
-void KThemeStyle::unPolish( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr )
+void KThemeStyle::unPolish( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *ptr )
 {
     if (ceData.widgetObjectTypes.contains(TQWIDGET_OBJECT_NAME_STRING)) {
         TQWidget *w = reinterpret_cast<TQWidget*>(ptr);
@@ -727,7 +727,7 @@ void KThemeStyle::drawBaseButton( TQPainter *p, int x, int y, int w, int h,
     p->setPen( oldPen );
 }
 
-void KThemeStyle::drawPrimitive ( PrimitiveElement pe, TQPainter * p, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQRect & r, const TQColorGroup & g_base,
+void KThemeStyle::drawPrimitive ( PrimitiveElement pe, TQPainter * p, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQRect & r, const TQColorGroup & g_base,
                                   SFlags flags, const TQStyleOption & opt ) const
 {
     bool handled = false;
@@ -1163,7 +1163,7 @@ TQPixmap* KThemeStyle::makeMenuBarCache(int w, int h) const
 
 void KThemeStyle::drawControl( ControlElement element,
                                TQPainter *p,
-                               TQStyleControlElementData ceData,
+                               const TQStyleControlElementData &ceData,
                                ControlElementFlags elementFlags,
                                const TQRect &r,
                                const TQColorGroup &cg,
@@ -1801,7 +1801,7 @@ void KThemeStyle::drawControl( ControlElement element,
 
 void KThemeStyle::drawControlMask( ControlElement element,
                                    TQPainter *p,
-                                   TQStyleControlElementData ceData,
+                                   const TQStyleControlElementData &ceData,
                                    ControlElementFlags elementFlags,
                                    const TQRect &r,
                                    const TQStyleOption& opt,
@@ -1833,7 +1833,7 @@ void KThemeStyle::drawControlMask( ControlElement element,
 
 void KThemeStyle::drawKStylePrimitive( KStylePrimitive kpe,
                                        TQPainter* p,
-                                       TQStyleControlElementData ceData,
+                                       const TQStyleControlElementData &ceData,
                                        ControlElementFlags elementFlags,
                                        const TQRect &r,
                                        const TQColorGroup &cg,
@@ -2013,7 +2013,7 @@ void KThemeStyle::drawKStylePrimitive( KStylePrimitive kpe,
 
 
 
-void KThemeStyle::drawComplexControl ( TQ_ComplexControl control, TQPainter * p, TQStyleControlElementData ceData, ControlElementFlags elementFlags,
+void KThemeStyle::drawComplexControl ( TQ_ComplexControl control, TQPainter * p, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags,
                                        const TQRect & r, const TQColorGroup & g, SFlags how ,
                                        SCFlags controls, SCFlags active,
                                        const TQStyleOption & opt, const TQWidget * widget ) const
@@ -2247,7 +2247,7 @@ void KThemeStyle::drawBaseMask( TQPainter *p, int x, int y, int w, int h,
         p->fillRect( x, y, w, h, fillBrush );
 }
 
-int KThemeStyle::styleHint( StyleHint sh, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQStyleOption &opt, TQStyleHintReturn *shr, const TQWidget *w ) const
+int KThemeStyle::styleHint( StyleHint sh, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQStyleOption &opt, TQStyleHintReturn *shr, const TQWidget *w ) const
 {
     switch ( sh )
     {

@@ -508,12 +508,12 @@ protected:
     /**
     These are included for fuuture extension purposes..
     */
-    virtual int pixelMetric ( PixelMetric metric, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQWidget * widget = 0 ) const
+    virtual int pixelMetric ( PixelMetric metric, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQWidget * widget = 0 ) const
     {
         return KStyle::pixelMetric( metric, ceData, elementFlags, widget );
     }
 
-    virtual void drawPrimitive ( PrimitiveElement pe, TQPainter * p, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQRect & r, const TQColorGroup & cg,
+    virtual void drawPrimitive ( PrimitiveElement pe, TQPainter * p, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQRect & r, const TQColorGroup & cg,
                                  SFlags flags = Style_Default,
                                  const TQStyleOption& option = TQStyleOption::Default ) const
     {
@@ -524,7 +524,7 @@ protected:
 
     virtual void drawControl( TQ_ControlElement element,
                               TQPainter *p,
-                              TQStyleControlElementData ceData,
+                              const TQStyleControlElementData &ceData,
                               ControlElementFlags elementFlags,
                               const TQRect &r,
                               const TQColorGroup &cg,
@@ -538,7 +538,7 @@ protected:
 
     virtual void drawControlMask( TQ_ControlElement element,
                                   TQPainter *p,
-                                  TQStyleControlElementData ceData,
+                                  const TQStyleControlElementData &ceData,
                                   ControlElementFlags elementFlags,
                                   const TQRect &r,
                                   const TQStyleOption& opt = TQStyleOption::Default,
@@ -550,7 +550,7 @@ protected:
 
     virtual void drawComplexControl( TQ_ComplexControl control,
                                      TQPainter *p,
-                                     TQStyleControlElementData ceData,
+                                     const TQStyleControlElementData &ceData,
                                      ControlElementFlags elementFlags,
                                      const TQRect &r,
                                      const TQColorGroup &cg,
@@ -566,7 +566,7 @@ protected:
 
     virtual void drawKStylePrimitive( KStylePrimitive kpe,
                                       TQPainter* p,
-                                      TQStyleControlElementData ceData,
+                                      const TQStyleControlElementData &ceData,
                                       ControlElementFlags elementFlags,
                                       const TQRect &r,
                                       const TQColorGroup &cg,
@@ -580,7 +580,7 @@ protected:
     }
 
 
-    virtual int styleHint( StyleHint sh, TQStyleControlElementData ceData, ControlElementFlags elementFlags,
+    virtual int styleHint( StyleHint sh, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags,
                            const TQStyleOption& opt = TQStyleOption::Default,
                            TQStyleHintReturn* returnData = 0,
                            const TQWidget *widget = 0 ) const
@@ -594,7 +594,7 @@ protected:
     }
 
     virtual TQSize sizeFromContents( ContentsType contents,
-                                    TQStyleControlElementData ceData,
+                                    const TQStyleControlElementData &ceData,
                                     ControlElementFlags elementFlags,
                                     const TQSize &contentsSize,
                                     const TQStyleOption& opt = TQStyleOption::Default,

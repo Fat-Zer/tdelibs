@@ -83,7 +83,7 @@ LightStyleV2::~LightStyleV2()
     }
 }
 
-void LightStyleV2::polishPopupMenu( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr )
+void LightStyleV2::polishPopupMenu( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *ptr )
 {
     KStyle::polishPopupMenu(ceData, elementFlags, ptr);
 }
@@ -131,7 +131,7 @@ static void drawLightBevel(TQPainter *p, const TQRect &r, const TQColorGroup &cg
 
 void LightStyleV2::drawPrimitive( TQ_PrimitiveElement pe,
 				TQPainter *p,
-				TQStyleControlElementData ceData,
+				const TQStyleControlElementData &ceData,
 				ControlElementFlags elementFlags,
 				const TQRect &r,
 				const TQColorGroup &cg,
@@ -644,7 +644,7 @@ void LightStyleV2::drawPrimitive( TQ_PrimitiveElement pe,
 
 void LightStyleV2::drawControl( TQ_ControlElement control,
 			      TQPainter *p,
-			      TQStyleControlElementData ceData,
+			      const TQStyleControlElementData &ceData,
 			      ControlElementFlags elementFlags,
 			      const TQRect &r,
 			      const TQColorGroup &cg,
@@ -1001,7 +1001,7 @@ void LightStyleV2::drawControl( TQ_ControlElement control,
 
 void LightStyleV2::drawControlMask( TQ_ControlElement control,
 				  TQPainter *p,
-				  TQStyleControlElementData ceData,
+				  const TQStyleControlElementData &ceData,
 				  ControlElementFlags elementFlags,
 				  const TQRect &r,
 				  const TQStyleOption &data,
@@ -1018,7 +1018,7 @@ void LightStyleV2::drawControlMask( TQ_ControlElement control,
     }
 }
 
-TQRect LightStyleV2::subRect(SubRect subrect, const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, const TQWidget *widget) const
+TQRect LightStyleV2::subRect(SubRect subrect, const TQStyleControlElementData &ceData, const ControlElementFlags elementFlags, const TQWidget *widget) const
 {
     TQRect rect, wrect(ceData.rect);
 
@@ -1047,7 +1047,7 @@ TQRect LightStyleV2::subRect(SubRect subrect, const TQStyleControlElementData ce
 
 void LightStyleV2::drawComplexControl( TQ_ComplexControl control,
 				     TQPainter* p,
-				     TQStyleControlElementData ceData,
+				     const TQStyleControlElementData &ceData,
 				     ControlElementFlags elementFlags,
 				     const TQRect& r,
 				     const TQColorGroup& cg,
@@ -1330,7 +1330,7 @@ void LightStyleV2::drawComplexControl( TQ_ComplexControl control,
 }
 
 TQRect LightStyleV2::querySubControlMetrics( TQ_ComplexControl control,
-					  TQStyleControlElementData ceData,
+					  const TQStyleControlElementData &ceData,
 					  ControlElementFlags elementFlags,
 					  SubControl sc,
 					  const TQStyleOption &data,
@@ -1425,7 +1425,7 @@ TQRect LightStyleV2::querySubControlMetrics( TQ_ComplexControl control,
 }
 
 TQStyle::SubControl LightStyleV2::querySubControl( TQ_ComplexControl control,
-						TQStyleControlElementData ceData,
+						const TQStyleControlElementData &ceData,
 						ControlElementFlags elementFlags,
 						const TQPoint &pos,
 						const TQStyleOption &data,
@@ -1442,7 +1442,7 @@ TQStyle::SubControl LightStyleV2::querySubControl( TQ_ComplexControl control,
     return ret;
 }
 
-int LightStyleV2::pixelMetric( PixelMetric metric, TQStyleControlElementData ceData, ControlElementFlags elementFlags,
+int LightStyleV2::pixelMetric( PixelMetric metric, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags,
 			     const TQWidget *widget ) const
 {
     int ret;
@@ -1520,7 +1520,7 @@ int LightStyleV2::pixelMetric( PixelMetric metric, TQStyleControlElementData ceD
 }
 
 TQSize LightStyleV2::sizeFromContents( ContentsType contents,
-				    TQStyleControlElementData ceData,
+				    const TQStyleControlElementData &ceData,
 				    ControlElementFlags elementFlags,
 				    const TQSize &contentsSize,
 				    const TQStyleOption &data,
@@ -1626,7 +1626,7 @@ TQSize LightStyleV2::sizeFromContents( ContentsType contents,
 }
 
 int LightStyleV2::styleHint( TQ_StyleHint stylehint,
-			   TQStyleControlElementData ceData,
+			   const TQStyleControlElementData &ceData,
 			   ControlElementFlags elementFlags,
 			   const TQStyleOption &option,
 			   TQStyleHintReturn* returnData,
@@ -1669,7 +1669,7 @@ int LightStyleV2::styleHint( TQ_StyleHint stylehint,
 }
 
 TQPixmap LightStyleV2::stylePixmap( StylePixmap stylepixmap,
-				   TQStyleControlElementData ceData,
+				   const TQStyleControlElementData &ceData,
 				   ControlElementFlags elementFlags,
 				   const TQStyleOption &data,
 				   const TQWidget *widget ) const

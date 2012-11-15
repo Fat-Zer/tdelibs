@@ -188,7 +188,7 @@ HighColorStyle::~HighColorStyle()
 }
 
 
-void HighColorStyle::polish(TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr)
+void HighColorStyle::polish(const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *ptr)
 {
 	if (ceData.widgetObjectTypes.contains(TQWIDGET_OBJECT_NAME_STRING)) {
 		TQWidget *widget = reinterpret_cast<TQWidget*>(ptr);
@@ -213,7 +213,7 @@ void HighColorStyle::polish(TQStyleControlElementData ceData, ControlElementFlag
 }
 
 
-void HighColorStyle::unPolish(TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr)
+void HighColorStyle::unPolish(const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *ptr)
 {
 	if (ceData.widgetObjectTypes.contains(TQWIDGET_OBJECT_NAME_STRING)) {
 		TQWidget *widget = reinterpret_cast<TQWidget*>(ptr);
@@ -253,7 +253,7 @@ void HighColorStyle::renderMenuBlendPixmap( KPixmap& pix, const TQColorGroup &cg
 // This function draws primitive elements as well as their masks.
 void HighColorStyle::drawPrimitive( TQ_PrimitiveElement pe,
 									TQPainter *p,
-									TQStyleControlElementData ceData,
+									const TQStyleControlElementData &ceData,
 									ControlElementFlags elementFlags,
 									const TQRect &r,
 									const TQColorGroup &cg,
@@ -967,7 +967,7 @@ void HighColorStyle::drawPrimitive( TQ_PrimitiveElement pe,
 
 void HighColorStyle::drawKStylePrimitive( KStylePrimitive kpe,
 										  TQPainter* p,
-										  TQStyleControlElementData ceData,
+										  const TQStyleControlElementData &ceData,
 										  ControlElementFlags elementFlags,
 										  const TQRect &r,
 										  const TQColorGroup &cg,
@@ -1146,7 +1146,7 @@ void HighColorStyle::drawKStylePrimitive( KStylePrimitive kpe,
 
 void HighColorStyle::drawControl( TQ_ControlElement element,
 								  TQPainter *p,
-								  TQStyleControlElementData ceData,
+								  const TQStyleControlElementData &ceData,
 								  ControlElementFlags elementFlags,
 								  const TQRect &r,
 								  const TQColorGroup &cg,
@@ -1522,7 +1522,7 @@ void HighColorStyle::drawControl( TQ_ControlElement element,
 
 void HighColorStyle::drawControlMask( TQ_ControlElement element,
 								  	  TQPainter *p,
-								  	  TQStyleControlElementData ceData,
+								  	  const TQStyleControlElementData &ceData,
 								  	  ControlElementFlags elementFlags,
 								  	  const TQRect &r,
 								  	  const TQStyleOption& opt,
@@ -1550,7 +1550,7 @@ void HighColorStyle::drawControlMask( TQ_ControlElement element,
 
 void HighColorStyle::drawComplexControl( TQ_ComplexControl control,
                                          TQPainter *p,
-                                         TQStyleControlElementData ceData,
+                                         const TQStyleControlElementData &ceData,
                                          ControlElementFlags elementFlags,
                                          const TQRect &r,
                                          const TQColorGroup &cg,
@@ -1737,7 +1737,7 @@ void HighColorStyle::drawComplexControl( TQ_ComplexControl control,
 
 void HighColorStyle::drawComplexControlMask( TQ_ComplexControl control,
 											 TQPainter *p,
-											 const TQStyleControlElementData ceData,
+											 const TQStyleControlElementData &ceData,
 											 const ControlElementFlags elementFlags,
 											 const TQRect &r,
 											 const TQStyleOption& opt,
@@ -1791,7 +1791,7 @@ void HighColorStyle::drawItem( TQPainter *p,
 }
 
 
-TQRect HighColorStyle::subRect(SubRect r, const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, const TQWidget *widget) const
+TQRect HighColorStyle::subRect(SubRect r, const TQStyleControlElementData &ceData, const ControlElementFlags elementFlags, const TQWidget *widget) const
 {
 	// We want the focus rect for buttons to be adjusted from
 	// the Qt3 defaults to be similar to Qt 2's defaults.
@@ -1817,7 +1817,7 @@ TQRect HighColorStyle::subRect(SubRect r, const TQStyleControlElementData ceData
 }
 
 
-int HighColorStyle::pixelMetric(PixelMetric m, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQWidget *widget) const
+int HighColorStyle::pixelMetric(PixelMetric m, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQWidget *widget) const
 {
 	switch(m)
 	{
@@ -1861,7 +1861,7 @@ int HighColorStyle::pixelMetric(PixelMetric m, TQStyleControlElementData ceData,
 }
 
 /*! \reimp */
-int HighColorStyle::styleHint(StyleHint sh, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQStyleOption &opt, TQStyleHintReturn *returnData, const TQWidget *w) const
+int HighColorStyle::styleHint(StyleHint sh, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQStyleOption &opt, TQStyleHintReturn *returnData, const TQWidget *w) const
 {
 	int ret;
 
@@ -1886,7 +1886,7 @@ int HighColorStyle::styleHint(StyleHint sh, TQStyleControlElementData ceData, Co
 }
 
 TQSize HighColorStyle::sizeFromContents( ContentsType contents,
-										TQStyleControlElementData ceData,
+										const TQStyleControlElementData &ceData,
 										ControlElementFlags elementFlags,
 										const TQSize &contentSize,
 										const TQStyleOption& opt,
@@ -1991,7 +1991,7 @@ TQSize HighColorStyle::sizeFromContents( ContentsType contents,
 
 // Fix Qt's wacky image alignment
 TQPixmap HighColorStyle::stylePixmap(StylePixmap stylepixmap,
-									TQStyleControlElementData ceData,
+									const TQStyleControlElementData &ceData,
 									ControlElementFlags elementFlags,
 									const TQStyleOption& opt,
 									const TQWidget* widget) const
@@ -2009,7 +2009,7 @@ TQPixmap HighColorStyle::stylePixmap(StylePixmap stylepixmap,
 }
 
 
-bool HighColorStyle::objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *event )
+bool HighColorStyle::objectEventHandler( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void* source, TQEvent *event )
 {
 	if (KStyle::objectEventHandler( ceData, elementFlags, source, event ))
 		return true;

@@ -106,7 +106,7 @@ AsteroidStyle::~AsteroidStyle()
  *	get deleted here. */
 }
 
-void AsteroidStyle::polish(TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr)
+void AsteroidStyle::polish(const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *ptr)
 {
 	if (ceData.widgetObjectTypes.contains(TQWIDGET_OBJECT_NAME_STRING)) {
 		TQWidget *w = reinterpret_cast<TQWidget*>(ptr);
@@ -143,7 +143,7 @@ void AsteroidStyle::polish(TQStyleControlElementData ceData, ControlElementFlags
 	}
 }
 
-void AsteroidStyle::unPolish(TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *ptr)
+void AsteroidStyle::unPolish(const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *ptr)
 {
 	KStyle::unPolish(ceData, elementFlags, ptr);
 }
@@ -154,7 +154,7 @@ void AsteroidStyle::unPolish(TQStyleControlElementData ceData, ControlElementFla
     Changes some application-wide settings
 */
 void
-AsteroidStyle::applicationPolish(TQStyleControlElementData, ControlElementFlags, void *)
+AsteroidStyle::applicationPolish(const TQStyleControlElementData&, ControlElementFlags, void *)
 {
 	TQPalette wp = TQApplication::palette();
 	wp.setColor(TQColorGroup::Dark, TQColor(128, 128, 128));
@@ -165,7 +165,7 @@ AsteroidStyle::applicationPolish(TQStyleControlElementData, ControlElementFlags,
 /*! \reimp
 */
 void
-AsteroidStyle::applicationUnPolish(TQStyleControlElementData, ControlElementFlags, void *)
+AsteroidStyle::applicationUnPolish(const TQStyleControlElementData&, ControlElementFlags, void *)
 {
 
 }
@@ -181,7 +181,7 @@ void AsteroidStyle::renderMenuBlendPixmap(KPixmap &pix,
 
 void AsteroidStyle::drawKStylePrimitive(KStylePrimitive ksp,
                                         TQPainter *p,
-                                        TQStyleControlElementData ceData,
+                                        const TQStyleControlElementData &ceData,
                                         ControlElementFlags elementFlags,
                                         const TQRect &r,
                                         const TQColorGroup &cg,
@@ -295,7 +295,7 @@ void AsteroidStyle::drawKStylePrimitive(KStylePrimitive ksp,
 }
 
 int AsteroidStyle::styleHint( TQ_StyleHint stylehint,
-                                   TQStyleControlElementData ceData,
+                                   const TQStyleControlElementData &ceData,
                                    ControlElementFlags elementFlags,
                                    const TQStyleOption &option,
                                    TQStyleHintReturn* returnData,
@@ -326,7 +326,7 @@ int AsteroidStyle::styleHint( TQ_StyleHint stylehint,
 
 void AsteroidStyle::drawPrimitive(TQ_PrimitiveElement pe,
                                   TQPainter *p,
-                                  TQStyleControlElementData ceData,
+                                  const TQStyleControlElementData &ceData,
                                   ControlElementFlags elementFlags,
                                   const TQRect &r,
                                   const TQColorGroup &cg,
@@ -982,7 +982,7 @@ void AsteroidStyle::drawPrimitive(TQ_PrimitiveElement pe,
 
 void AsteroidStyle::drawControl(TQ_ControlElement ce,
                                 TQPainter *p,
-                                TQStyleControlElementData ceData,
+                                const TQStyleControlElementData &ceData,
                                 ControlElementFlags elementFlags,
                                 const TQRect &r,
                                 const TQColorGroup &cg,
@@ -1723,7 +1723,7 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 
 void AsteroidStyle::drawControlMask(TQ_ControlElement ce,
                                     TQPainter *p,
-                                    TQStyleControlElementData ceData,
+                                    const TQStyleControlElementData &ceData,
                                     ControlElementFlags elementFlags,
                                     const TQRect &r,
                                     const TQStyleOption &o,
@@ -1770,7 +1770,7 @@ void AsteroidStyle::drawControlMask(TQ_ControlElement ce,
 
 void AsteroidStyle::drawComplexControl(TQ_ComplexControl cc,
                                        TQPainter *p,
-                                       TQStyleControlElementData ceData,
+                                       const TQStyleControlElementData &ceData,
                                        ControlElementFlags elementFlags,
                                        const TQRect &r,
                                        const TQColorGroup &cg,
@@ -2186,7 +2186,7 @@ void AsteroidStyle::drawComplexControl(TQ_ComplexControl cc,
 
 void AsteroidStyle::drawComplexControlMask(TQ_ComplexControl cc,
                                            TQPainter *p,
-                                           const TQStyleControlElementData ceData,
+                                           const TQStyleControlElementData &ceData,
                                            const ControlElementFlags elementFlags,
                                            const TQRect &r,
                                            const TQStyleOption &o,
@@ -2209,7 +2209,7 @@ void AsteroidStyle::drawComplexControlMask(TQ_ComplexControl cc,
 	}
 }
 
-int AsteroidStyle::pixelMetric(PixelMetric pm, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQWidget *w) const
+int AsteroidStyle::pixelMetric(PixelMetric pm, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQWidget *w) const
 {
 	switch (pm) {
 	/*	PixelMetrics available are:
@@ -2340,7 +2340,7 @@ int AsteroidStyle::pixelMetric(PixelMetric pm, TQStyleControlElementData ceData,
 	}
 }
 
-TQRect AsteroidStyle::subRect(SubRect sr, const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, const TQWidget *w) const
+TQRect AsteroidStyle::subRect(SubRect sr, const TQStyleControlElementData &ceData, const ControlElementFlags elementFlags, const TQWidget *w) const
 {
 	switch (sr) {
 	/*	SubRects to calculate are:
@@ -2385,7 +2385,7 @@ TQRect AsteroidStyle::subRect(SubRect sr, const TQStyleControlElementData ceData
 }
 
 TQRect AsteroidStyle::querySubControlMetrics(TQ_ComplexControl cc,
-                                            TQStyleControlElementData ceData,
+                                            const TQStyleControlElementData &ceData,
                                             ControlElementFlags elementFlags,
                                             SubControl sc,
                                             const TQStyleOption &o,
@@ -2488,7 +2488,7 @@ TQRect AsteroidStyle::querySubControlMetrics(TQ_ComplexControl cc,
 }
 
 TQSize AsteroidStyle::sizeFromContents(ContentsType ct,
-                                      TQStyleControlElementData ceData,
+                                      const TQStyleControlElementData &ceData,
                                       ControlElementFlags elementFlags,
                                       const TQSize &s,
                                       const TQStyleOption &o,
@@ -2624,7 +2624,7 @@ void AsteroidStyle::paletteChanged()
 {
 }
 
-bool AsteroidStyle::objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *e )
+bool AsteroidStyle::objectEventHandler( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void* source, TQEvent *e )
 {
 	/*	Win2K has this interesting behaviour where it sets the current
 		default button to whatever pushbutton the user presses the mouse

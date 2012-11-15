@@ -17,10 +17,10 @@ public:
 	AsteroidStyle();
 	virtual ~AsteroidStyle();
 
-	void polish(TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *);
-	void unPolish(TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *);
-	void applicationPolish(TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *);
-	void applicationUnPolish(TQStyleControlElementData ceData, ControlElementFlags elementFlags, void *);
+	void polish(const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *);
+	void unPolish(const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *);
+	void applicationPolish(const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *);
+	void applicationUnPolish(const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *);
 
 	
 	void renderSliderHandle(TQPainter *p,
@@ -36,7 +36,7 @@ public:
 	
 	void drawKStylePrimitive(KStylePrimitive,
 	                         TQPainter *,
-	                         TQStyleControlElementData ceData,
+	                         const TQStyleControlElementData &ceData,
 	                         ControlElementFlags elementFlags,
 	                         const TQRect &,
 	                         const TQColorGroup &,
@@ -44,14 +44,14 @@ public:
 	                         const TQStyleOption & = TQStyleOption::Default,
 	                         const TQWidget * = 0) const;
 
-	int styleHint(TQ_StyleHint, TQStyleControlElementData ceData, ControlElementFlags elementFlags,
+	int styleHint(TQ_StyleHint, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags,
 			    const TQStyleOption & = TQStyleOption::Default,
 			    TQStyleHintReturn * = 0,
 			    const TQWidget * = 0 ) const;
 
 	void drawPrimitive(TQ_PrimitiveElement,
 	                   TQPainter *,
-	                   TQStyleControlElementData ceData,
+	                   const TQStyleControlElementData &ceData,
 	                   ControlElementFlags elementFlags,
 	                   const TQRect &,
 	                   const TQColorGroup &,
@@ -60,7 +60,7 @@ public:
 
 	void drawControl(TQ_ControlElement,
 	                 TQPainter *,
-	                 TQStyleControlElementData ceData,
+	                 const TQStyleControlElementData &ceData,
 	                 ControlElementFlags elementFlags,
 	                 const TQRect &,
 	                 const TQColorGroup &,
@@ -70,7 +70,7 @@ public:
 
 	void drawControlMask(TQ_ControlElement,
 	                     TQPainter *,
-	                     TQStyleControlElementData ceData,
+	                     const TQStyleControlElementData &ceData,
 	                     ControlElementFlags elementFlags,
 	                     const TQRect &,
 	                     const TQStyleOption &,
@@ -78,7 +78,7 @@ public:
 
 	void drawComplexControl(TQ_ComplexControl,
 	                        TQPainter *,
-	                        TQStyleControlElementData ceData,
+	                        const TQStyleControlElementData &ceData,
 	                        ControlElementFlags elementFlags,
 	                        const TQRect &,
 	                        const TQColorGroup &,
@@ -90,33 +90,33 @@ public:
 
 	void drawComplexControlMask(TQ_ComplexControl,
 	                            TQPainter *,
-	                            const TQStyleControlElementData ceData,
+	                            const TQStyleControlElementData &ceData,
 	                            const ControlElementFlags elementFlags,
 	                            const TQRect &r,
 	                            const TQStyleOption & = TQStyleOption::Default,
 	                            const TQWidget * = 0) const;
 
-	int pixelMetric(PixelMetric, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQWidget * = 0) const;
+	int pixelMetric(PixelMetric, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQWidget * = 0) const;
 
-	int kPixelMetric( KStylePixelMetric kpm, TQStyleControlElementData ceData, ControlElementFlags elementFlags, const TQWidget* /* widget */) const;
+	int kPixelMetric( KStylePixelMetric kpm, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQWidget* /* widget */) const;
 
-	TQRect subRect(SubRect, const TQStyleControlElementData ceData, const ControlElementFlags elementFlags, const TQWidget *) const;
+	TQRect subRect(SubRect, const TQStyleControlElementData &ceData, const ControlElementFlags elementFlags, const TQWidget *) const;
 
 	TQRect querySubControlMetrics(TQ_ComplexControl,
-	                             TQStyleControlElementData ceData,
+	                             const TQStyleControlElementData &ceData,
 	                             ControlElementFlags elementFlags,
 	                             SubControl,
 	                             const TQStyleOption & = TQStyleOption::Default,
 	                             const TQWidget * = 0) const;
 
 	TQSize sizeFromContents(ContentsType,
-	                       TQStyleControlElementData ceData,
+	                       const TQStyleControlElementData &ceData,
 	                       ControlElementFlags elementFlags,
 	                       const TQSize &,
 	                       const TQStyleOption &,
 	                       const TQWidget * = 0) const;
 
-	virtual bool objectEventHandler( TQStyleControlElementData ceData, ControlElementFlags elementFlags, void* source, TQEvent *e );
+	virtual bool objectEventHandler( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void* source, TQEvent *e );
 
 protected slots:
 	void paletteChanged();
