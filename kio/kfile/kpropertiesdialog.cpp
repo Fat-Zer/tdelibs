@@ -876,7 +876,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
       else
 	iconButton->setIconType( KIcon::Desktop, KIcon::Application );
     } else
-      iconButton->setIconType( KIcon::Desktop, KIcon::FileSystem );
+      iconButton->setIconType( KIcon::Desktop, KIcon::Place );
     iconButton->setIcon(iconStr);
     iconArea = iconButton;
     connect( iconButton, TQT_SIGNAL( iconChanged(TQString) ),
