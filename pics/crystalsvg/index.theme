@@ -115,7 +115,7 @@ SmallDefault=16
 SmallSizes=16
 PanelDefault=32
 PanelSizes=16,22,32,48,64,128
-Directories=16x16/actions,16x16/apps,16x16/devices,16x16/filesystems,16x16/mimetypes,22x22/actions,22x22/apps,22x22/devices,22x22/filesystems,22x22/mimetypes,32x32/actions,32x32/apps,32x32/devices,32x32/filesystems,32x32/mimetypes,48x48/actions,48x48/apps,48x48/devices,48x48/filesystems,48x48/mimetypes,64x64/actions,64x64/apps,64x64/devices,64x64/filesystems,64x64/mimetypes,128x128/actions,128x128/apps,128x128/devices,128x128/filesystems,128x128/mimetypes
+Directories=16x16/actions,16x16/apps,16x16/devices,16x16/places,16x16/mimetypes,22x22/actions,22x22/apps,22x22/devices,22x22/places,22x22/mimetypes,32x32/actions,32x32/apps,32x32/devices,32x32/places,32x32/mimetypes,48x48/actions,48x48/apps,48x48/devices,48x48/places,48x48/mimetypes,64x64/actions,64x64/apps,64x64/devices,64x64/places,64x64/mimetypes,128x128/actions,128x128/apps,128x128/devices,128x128/places,128x128/mimetypes
 [16x16/actions]
 Size=16
 Context=Actions
@@ -128,7 +128,7 @@ Type=Threshold
 Size=16
 Context=Devices
 Type=Threshold
-[16x16/filesystems]
+[16x16/places]
 Size=16
 Context=FileSystems
 Type=Threshold
@@ -148,7 +148,7 @@ Type=Threshold
 Size=22
 Context=Devices
 Type=Threshold
-[22x22/filesystems]
+[22x22/places]
 Size=22
 Context=FileSystems
 Type=Threshold
@@ -168,7 +168,7 @@ Type=Threshold
 Size=32
 Context=Devices
 Type=Threshold
-[32x32/filesystems]
+[32x32/places]
 Size=32
 Context=FileSystems
 Type=Threshold
@@ -188,7 +188,7 @@ Type=Threshold
 Size=48
 Context=Devices
 Type=Threshold
-[48x48/filesystems]
+[48x48/places]
 Size=48
 Context=FileSystems
 Type=Threshold
@@ -208,7 +208,7 @@ Type=Threshold
 Size=64
 Context=Devices
 Type=Threshold
-[64x64/filesystems]
+[64x64/places]
 Size=64
 Context=FileSystems
 Type=Threshold
@@ -228,7 +228,7 @@ Type=Threshold
 Size=128
 Context=Devices
 Type=Threshold
-[128x128/filesystems]
+[128x128/places]
 Size=128
 Context=FileSystems
 Type=Threshold
