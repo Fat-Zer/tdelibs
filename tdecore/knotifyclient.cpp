@@ -31,6 +31,14 @@
 #include <kdebug.h>
 #include <kstaticdeleter.h>
 
+#ifdef Q_WS_X11
+#include <X11/X.h>
+#include <X11/Xlib.h>
+#include <X11/XKBlib.h>
+#include <X11/keysym.h>
+#include <fixx11h.h>
+#endif
+
 static const char daemonName[] = "knotify";
 
 static bool canAvoidStartupEvent( const TQString& event, const TQString& appname, int present )
@@ -67,6 +75,11 @@ static int sendNotifyEvent(const TQString &message, const TQString &text,
                             const TQString &file, int winId )
 {
   if (!kapp) return 0;
+
+  // ensure tray icon is shown and positioned before sending event to notification daemon
+#ifdef Q_WS_X11
+  XFlush(tqt_xdisplay());
+#endif
 
   DCOPClient *client=kapp->dcopClient();
   if (!client->isAttached())
