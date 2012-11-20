@@ -154,7 +154,7 @@ Type=Threshold
 
 [16x16/places]
 Size=16
-Context=FileSystems
+Context=Places
 Type=Threshold
 
 [16x16/mimetypes]
@@ -179,7 +179,7 @@ Type=Threshold
 
 [22x22/places]
 Size=22
-Context=FileSystems
+Context=Places
 Type=Threshold
 
 [22x22/mimetypes]
@@ -209,7 +209,7 @@ Type=Threshold
 
 [32x32/places]
 Size=32
-Context=FileSystems
+Context=Places
 Type=Threshold
 
 [32x32/mimetypes]
@@ -239,7 +239,7 @@ Type=Threshold
 
 [48x48/places]
 Size=48
-Context=FileSystems
+Context=Places
 Type=Threshold
 
 [48x48/mimetypes]
@@ -264,7 +264,7 @@ Type=Threshold
 
 [64x64/places]
 Size=64
-Context=FileSystems
+Context=Places
 Type=Threshold
 
 [64x64/mimetypes]
@@ -294,7 +294,7 @@ Type=Threshold
 
 [96x96/places]
 Size=96
-Context=FileSystems
+Context=Places
 Type=Threshold
 
 [96x96/mimetypes]
@@ -319,7 +319,7 @@ Type=Threshold
 
 [128x128/places]
 Size=128
-Context=FileSystems
+Context=Places
 Type=Threshold
 
 [128x128/mimetypes]
@@ -357,7 +357,7 @@ Type=Scalable
 MinSize=1
 Size=128
 MaxSize=256
-Context=FileSystems
+Context=Places
 Type=Scalable
 
 [scalable/mimetypes]

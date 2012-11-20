@@ -130,7 +130,7 @@ Context=Devices
 Type=Threshold
 [16x16/places]
 Size=16
-Context=FileSystems
+Context=Places
 Type=Threshold
 [16x16/mimetypes]
 Size=16
@@ -150,7 +150,7 @@ Context=Devices
 Type=Threshold
 [22x22/places]
 Size=22
-Context=FileSystems
+Context=Places
 Type=Threshold
 [22x22/mimetypes]
 Size=22
@@ -170,7 +170,7 @@ Context=Devices
 Type=Threshold
 [32x32/places]
 Size=32
-Context=FileSystems
+Context=Places
 Type=Threshold
 [32x32/mimetypes]
 Size=32
@@ -190,7 +190,7 @@ Context=Devices
 Type=Threshold
 [48x48/places]
 Size=48
-Context=FileSystems
+Context=Places
 Type=Threshold
 [48x48/mimetypes]
 Size=48
@@ -210,7 +210,7 @@ Context=Devices
 Type=Threshold
 [64x64/places]
 Size=64
-Context=FileSystems
+Context=Places
 Type=Threshold
 [64x64/mimetypes]
 Size=64
@@ -230,7 +230,7 @@ Context=Devices
 Type=Threshold
 [128x128/places]
 Size=128
-Context=FileSystems
+Context=Places
 Type=Threshold
 [128x128/mimetypes]
 Size=128
