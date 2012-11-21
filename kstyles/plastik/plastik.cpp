@@ -2806,14 +2806,10 @@ void PlastikStyle::drawComplexControl(TQ_ComplexControl control,
             static const unsigned int handleWidth = 15;
 
             const TQComboBox *cb = dynamic_cast<const TQComboBox *>(widget);
-            // at the moment cb is only needed to check if the combo box is editable or not.
-            // if cb doesn't exist, just assume false and the app (gideon! ;) ) at least doesn't crash.
             bool editable = false;
             bool hasFocus = false;
-            if (cb) {
-                editable = cb->editable();
-                hasFocus = cb->hasFocus();
-            }
+            editable = (elementFlags & CEF_IsEditable);
+            hasFocus = (elementFlags & CEF_HasFocus);
 
             const TQColor buttonColor = enabled?cg.button():cg.background();
             const TQColor inputColor = enabled?(editable?cg.base():cg.button())
