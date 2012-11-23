@@ -75,8 +75,8 @@ TQString capitalizeString(TQString in) {
 }
 
 TQString KRandrSimpleAPI::getIccFileName(TQString profileName, TQString screenName, TQString kde_confdir) {
-	KSimpleConfig *t_config;
-	KSimpleConfig *t_systemconfig;
+	KSimpleConfig *t_config = NULL;
+	KSimpleConfig *t_systemconfig = NULL;
 	int t_numberOfProfiles;
 	TQStringList t_cfgProfiles;
 	TQString retval;
@@ -109,10 +109,14 @@ TQString KRandrSimpleAPI::getIccFileName(TQString profileName, TQString screenNa
 	}
 
 	if (profileName != "") {
-		delete t_config;
+		if (t_config) {
+			delete t_config;
+		}
 	}
 	else {
-		delete t_systemconfig;
+		if (t_systemconfig) {
+			delete t_systemconfig;
+		}
 	}
 
 	return retval;
