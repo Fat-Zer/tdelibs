@@ -2963,7 +2963,7 @@ bool TDENetworkConnectionManager_BackendNM::loadConnectionSecretsForGroup(TQStri
 								if (keyValue.lower() == "secrets") {
 									TQT_DBusTQStringDataMap nestedConnectionSettingsMap = dataValue2.toStringKeyMap();
 									TQT_DBusTQStringDataMap::const_iterator it4;
-									for (it3 = nestedConnectionSettingsMap.begin(); it4 != nestedConnectionSettingsMap.end(); ++it4) {
+									for (it4 = nestedConnectionSettingsMap.begin(); it4 != nestedConnectionSettingsMap.end(); ++it4) {
 										vpnConnection->pluginSecrets.clear();
 										TQString keyValue4 = it4.key();
 										TQT_DBusData dataValue4 = it4.data();
