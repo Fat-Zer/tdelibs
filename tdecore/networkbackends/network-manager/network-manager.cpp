@@ -26,10 +26,10 @@
 
 // #define DEBUG_NETWORK_MANAGER_COMMUNICATIONS
 
-#define PRINT_ERROR(x) printf("[TDE NM Backend ERROR] %s\n\r", x.ascii());
+#define PRINT_ERROR(x) printf("[TDE NM Backend ERROR] [%s:%d] %s\n\r", __FILE__, __LINE__, x.ascii());
 
 #ifdef DEBUG_NETWORK_MANAGER_COMMUNICATIONS
-#define PRINT_WARNING(x) printf("[TDE NM Backend WARNING] %s\n\r", x.ascii());
+#define PRINT_WARNING(x) printf("[TDE NM Backend WARNING] [%s:%d] %s\n\r", __FILE__, __LINE__, x.ascii());
 #else
 #define PRINT_WARNING(x)
 #endif
@@ -1592,6 +1592,9 @@ TDENetworkDeviceInformation TDENetworkConnectionManager_BackendNM::deviceInforma
 		ret.autoConnect = d->m_networkDeviceProxy->getAutoconnect(error);
 		ret.firmwareMissing = d->m_networkDeviceProxy->getFirmwareMissing(error);
 		ret.deviceType = nmDeviceTypeToTDEDeviceType(d->m_networkDeviceProxy->getDeviceType(error));
+		if (error.isValid()) {
+			PRINT_ERROR(error.name())
+		}
 
 		// Populate wiFiInfo
 		if ((deviceType() == TDENetworkDeviceType::WiFi) && (d->m_wiFiDeviceProxy)) {
@@ -1601,8 +1604,15 @@ TDENetworkDeviceInformation TDENetworkConnectionManager_BackendNM::deviceInforma
 			ret.wiFiInfo.operatingMode = nmWiFiModeToTDEWiFiMode(d->m_wiFiDeviceProxy->getMode(error));
 			ret.wiFiInfo.bitrate = d->m_wiFiDeviceProxy->getBitrate(error);
 			TDENetworkWiFiAPInfo* apInfo = getAccessPointDetails(d->m_wiFiDeviceProxy->getActiveAccessPoint(error));
+			if (error.isValid()) {
+				PRINT_ERROR(error.name())
+			}
 			if (apInfo) {
 				ret.wiFiInfo.activeAccessPointBSSID = apInfo->BSSID;
+				TDENetworkWiFiAPInfo* neighborListAPInfo = findAccessPointByBSSID(ret.wiFiInfo.activeAccessPointBSSID);
+				if (neighborListAPInfo) {
+					*neighborListAPInfo = *apInfo;
+				}
 				delete apInfo;
 			}
 			else {
@@ -1646,6 +1656,10 @@ void TDENetworkConnectionManager_BackendNMPrivate::processAddConnectionAsyncRepl
 }
 
 void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
+	if (d->nonReentrantCallActive) return;
+
+	d->nonReentrantCallActive = true;
+
 	TDEMACAddress deviceMACAddress;
 	deviceMACAddress.fromString(m_macAddress);
 
@@ -2755,6 +2769,8 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 		}
 		internalNetworkManagementEvent(TDENetworkGlobalEventType::ConnectionListChanged);
 	}
+
+	d->nonReentrantCallActive = false;
 }
 
 void TDENetworkConnectionManager_BackendNM::loadConnectionAllowedValues(TDENetworkConnection* connection) {
@@ -4590,6 +4606,28 @@ TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManag
 	}
 }
 
+TQCString TDENetworkConnectionManager_BackendNM::getActiveConnectionPath(TQString uuid) {
+	TQT_DBusObjectPath existingConnection;
+	TQT_DBusError error;
+	if (d->m_networkManagerProxy) {
+		TQT_DBusObjectPathList activeConnections = d->m_networkManagerProxy->getActiveConnections(error);
+		TQT_DBusObjectPathList::iterator it;
+		for (it = activeConnections.begin(); it != activeConnections.end(); ++it) {
+			DBus::ActiveConnectionProxy activeConnection(NM_DBUS_SERVICE, (*it));
+			activeConnection.setConnection(TQT_DBusConnection::systemBus());
+			if (activeConnection.getUuid(error) == uuid) {
+				return (*it);
+			}
+		}
+		PRINT_WARNING(TQString("active connection for provided uuid '%1' was not found").arg(uuid));
+		return TQT_DBusObjectPath();
+	}
+	else {
+		PRINT_ERROR(TQString("invalid internal network-manager settings proxy object"));
+		return TQT_DBusObjectPath();
+	}
+}
+
 TQStringList TDENetworkConnectionManager_BackendNM::connectionPhysicalDeviceUUIDs(TQString uuid) {
 	if (deviceType() == TDENetworkDeviceType::BackendOnly) {
 		return TQStringList();
@@ -4666,8 +4704,8 @@ TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManag
 	TQT_DBusError error;
 	bool ret;
 	if ((d->m_networkManagerSettings) && (d->m_networkManagerProxy)) {
-		ret = d->m_networkManagerSettings->GetConnectionByUuid(uuid, existingConnection, error);
-		if (ret) {
+		existingConnection = getActiveConnectionPath(uuid);
+		if (existingConnection.isValid()) {
 			TQString dbusDeviceString;
 			if (m_macAddress == "") {
 				dbusDeviceString = "/";
@@ -5104,7 +5142,7 @@ TQStringList TDENetworkConnectionManager_BackendNM::defaultNetworkDevices() {
 	}
 }
 
-TDENetworkConnectionManager_BackendNMPrivate::TDENetworkConnectionManager_BackendNMPrivate(TDENetworkConnectionManager_BackendNM* parent) : m_networkManagerProxy(NULL), m_networkManagerSettings(NULL), m_networkDeviceProxy(NULL), m_wiFiDeviceProxy(NULL), m_vpnProxy(NULL), m_parent(parent) {
+TDENetworkConnectionManager_BackendNMPrivate::TDENetworkConnectionManager_BackendNMPrivate(TDENetworkConnectionManager_BackendNM* parent) : m_networkManagerProxy(NULL), m_networkManagerSettings(NULL), m_networkDeviceProxy(NULL), m_wiFiDeviceProxy(NULL), m_vpnProxy(NULL), nonReentrantCallActive(false), m_parent(parent) {
 	//
 }
 

@@ -29,6 +29,10 @@
 #define NM_VPN_DBUS_PLUGIN_PATH			"/org/freedesktop/NetworkManager/VPN/Plugin"
 
 #define	NM_DBUS_SERVICE				"org.freedesktop.NetworkManager"
+#define NM_DBUS_ACTIVE_CONNECTION_SERVICE	"org.freedesktop.NetworkManager.Connection.Active"
+#define NM_DBUS_DEVICE_SERVICE			"org.freedesktop.NetworkManager.Device"
+#define NM_DBUS_WIRED_DEVICE_SERVICE		"org.freedesktop.NetworkManager.Device.Wired"
+#define NM_DBUS_WIRELESS_DEVICE_SERVICE		"org.freedesktop.NetworkManager.Device.Wireless"
 #define NM_DBUS_SETTINGS_SERVICE		"org.freedesktop.NetworkManager.Settings"
 #define NM_DBUS_SETTINGS_CONNECTION_SERVICE	"org.freedesktop.NetworkManager.Settings.Connection"
 #define NM_VPN_DBUS_PLUGIN_SERVICE		"org.freedesktop.NetworkManager.VPN.Plugin"
@@ -186,6 +190,7 @@ class TDECORE_EXPORT TDENetworkConnectionManager_BackendNM : public TDENetworkCo
 		bool loadConnectionSecretsForGroup(TQString uuid, TQString group);
 		TDENetworkWiFiAPInfo* getAccessPointDetails(TQString dbusPath);
 		TDENetworkConnectionType::TDENetworkConnectionType connectionType(TQString dbusPath);
+		TQCString getActiveConnectionPath(TQString uuid);
 
 	private:
 		TDENetworkConnectionManager_BackendNMPrivate* d;

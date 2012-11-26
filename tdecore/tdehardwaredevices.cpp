@@ -2724,6 +2724,9 @@ TDEGenericDeviceType::TDEGenericDeviceType readGenericDeviceTypeFromString(TQStr
 	else if (query == "ThermalControl") {
 		ret = TDEGenericDeviceType::ThermalControl;
 	}
+	else if (query == "BlueTooth") {
+		ret = TDEGenericDeviceType::BlueTooth;
+	}
 	else if (query == "Bridge") {
 		ret = TDEGenericDeviceType::Bridge;
 	}
@@ -3261,6 +3264,9 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			else {
 				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::TextIO);
 			}
+		}
+		else if (devicesubsystem == "bluetooth") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::BlueTooth);
 		}
 		else if (devicesubsystem == "usb-serial") {
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Serial);
@@ -5281,6 +5287,9 @@ TQString TDEHardwareDevices::getFriendlyDeviceTypeStringFromType(TDEGenericDevic
 	else if (query == TDEGenericDeviceType::ThermalControl) {
 		ret = i18n("Thermal Control");
 	}
+	else if (query == TDEGenericDeviceType::BlueTooth) {
+		ret = i18n("BlueTooth");
+	}
 	else if (query == TDEGenericDeviceType::Bridge) {
 		ret = i18n("Bridge");
 	}
@@ -5432,6 +5441,9 @@ TQPixmap TDEHardwareDevices::getDeviceTypeIconFromType(TDEGenericDeviceType::TDE
 	}
 	else if (query == TDEGenericDeviceType::ThermalControl) {
 		ret = DesktopIcon("kcmdevices", size);	// FIXME
+	}
+	else if (query == TDEGenericDeviceType::BlueTooth) {
+		ret = DesktopIcon("kcmpci", size);	// FIXME
 	}
 	else if (query == TDEGenericDeviceType::Bridge) {
 		ret = DesktopIcon("kcmpci", size);

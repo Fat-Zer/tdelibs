@@ -84,6 +84,7 @@ class TDENetworkConnectionManager_BackendNMPrivate : public TQObject
 		NMAsyncCallIDMap nmConnectionSettingsAsyncCallWaiting;
 		NMAsyncSettingsResponseMap nmConnectionSettingsAsyncSettingsResponse;
 		NMAddConnectionAsyncResponseMap nmAddConnectionAsyncResponse;
+		bool nonReentrantCallActive;
 
 	public slots:
 		void processConnectionSettingsAsyncReply(int, const TQT_DBusDataMap<TQString>&);

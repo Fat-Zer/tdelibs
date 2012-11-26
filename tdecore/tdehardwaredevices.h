@@ -91,6 +91,7 @@ enum TDEGenericDeviceType {
 	Dock,
 	ThermalSensor,
 	ThermalControl,
+	BlueTooth,
 	Bridge,
 	Platform,
 	Cryptography,

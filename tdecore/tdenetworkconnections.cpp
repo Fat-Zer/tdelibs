@@ -208,7 +208,16 @@ void TDEMACAddress::setAddress(TDENetworkByteList address) {
 }
 
 bool TDEMACAddress::isValid() {
-	return m_isValid;
+	if (!m_isValid) {
+		return false;
+	}
+
+	if (m_macAddress.count() > 0) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 void TDEMACAddress::fromString(TQString address) {
