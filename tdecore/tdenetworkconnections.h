@@ -599,7 +599,7 @@ class TDECORE_EXPORT TDENetworkSingleRouteConfiguration
 
 typedef TQValueList<TDENetworkSingleRouteConfiguration> TDENetworkSingleRouteConfigurationList;
 
-class TDENetworkIEEE8021xConfiguration
+class TDECORE_EXPORT TDENetworkIEEE8021xConfiguration
 {
 	public:
 		TDENetworkIEEE8021xConfiguration();

@@ -37,7 +37,9 @@
 #define UPDATE_STRING_SETTING_IF_VALID(string, key, settingsMap)	if (!string.isNull()) settingsMap[key] = convertDBUSDataToVariantData(TQT_DBusData::fromString(string));	\
 									else settingsMap.remove(key);
 
-#define NM_ASYNC_TIMEOUT_MS 1000
+//#define NM_ASYNC_TIMEOUT_MS 1000
+// Give the user 5 minutes to authenticate to DBUS before timing out
+#define NM_ASYNC_TIMEOUT_MS (5*60*1000)
 
 TQ_UINT32 reverseIPV4ByteOrder(TQ_UINT32 address) {
 	TQ_UINT32 ret;
