@@ -36,6 +36,7 @@
 #define NM_DBUS_SETTINGS_SERVICE		"org.freedesktop.NetworkManager.Settings"
 #define NM_DBUS_SETTINGS_CONNECTION_SERVICE	"org.freedesktop.NetworkManager.Settings.Connection"
 #define NM_VPN_DBUS_PLUGIN_SERVICE		"org.freedesktop.NetworkManager.VPN.Plugin"
+#define NM_VPN_DBUS_CONNECTION_SERVICE		"org.freedesktop.NetworkManager.VPN.Connection"
 //====================================================================================================
 
 //====================================================================================================

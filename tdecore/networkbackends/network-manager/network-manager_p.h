@@ -66,6 +66,22 @@ typedef TQMap<uint, TQT_DBusObjectPath> NMAddConnectionAsyncResponseMap;
 typedef TQValueList<TQT_DBusObjectPath> TQT_DBusObjectPathList;
 
 class TDENetworkConnectionManager_BackendNM;
+class TDENetworkConnectionManager_BackendNMPrivate;
+
+class TDENetworkConnectionManager_BackendNM_DBusSignalReceiver : public TQObject
+{
+	Q_OBJECT
+
+	public:
+		TDENetworkConnectionManager_BackendNM_DBusSignalReceiver(TDENetworkConnectionManager_BackendNMPrivate*);
+		~TDENetworkConnectionManager_BackendNM_DBusSignalReceiver();
+
+	public slots:
+		void dbusSignal(const TQT_DBusMessage&);
+
+	private:
+		TDENetworkConnectionManager_BackendNMPrivate* m_parent;
+};
 
 class TDENetworkConnectionManager_BackendNMPrivate : public TQObject
 {
@@ -104,6 +120,10 @@ class TDENetworkConnectionManager_BackendNMPrivate : public TQObject
 	private:
 		TDENetworkConnectionManager_BackendNM* m_parent;
 		TQMap<TQString, DBus::AccessPointProxy*> m_accessPointProxyList;
+		TQT_DBusConnection *m_dbusSignalConnection;
+		TDENetworkConnectionManager_BackendNM_DBusSignalReceiver *m_dbusSignalReceiver;
+
+		friend class TDENetworkConnectionManager_BackendNM_DBusSignalReceiver;
 };
 
 #endif // _TDENETWORKBACKEND_NETWORKMANAGER_P_H

@@ -18,6 +18,8 @@
 
 #include <tqdir.h>
 
+#include <tqdbusmessage.h>
+
 #include "kconfig.h"
 #include "tdehardwaredevices.h"
 
@@ -1312,6 +1314,36 @@ TQString tdeDeviceUUIDForMACAddress(TQString macAddress) {
 	return TQString::null;
 }
 
+TDENetworkConnectionManager_BackendNM_DBusSignalReceiver::TDENetworkConnectionManager_BackendNM_DBusSignalReceiver(TDENetworkConnectionManager_BackendNMPrivate* parent) : m_parent(parent) {
+	//
+}
+
+TDENetworkConnectionManager_BackendNM_DBusSignalReceiver::~TDENetworkConnectionManager_BackendNM_DBusSignalReceiver() {
+	//
+}
+
+void TDENetworkConnectionManager_BackendNM_DBusSignalReceiver::dbusSignal(const TQT_DBusMessage& message) {
+	if (message.type() == TQT_DBusMessage::SignalMessage) {
+		TQString interface = message.interface();
+		TQString sender = message.sender();
+		TQString member = message.member();
+		TQString path = message.path();
+
+// 		printf("[DEBUG] In dbusSignal: sender: %s, member: %s, interface: %s, path: %s\n\r", sender.ascii(), member.ascii(), interface.ascii(), path.ascii()); fflush(stdout);
+
+		if (interface == NM_VPN_DBUS_CONNECTION_SERVICE) {
+			if (member == "VpnStateChanged") {
+				// Demarshal data
+				TQ_UINT32 state = message[0].toUInt32();
+				TQ_UINT32 reason = message[1].toUInt32();
+				if (state == NM_VPN_STATE_FAILED) {
+					m_parent->internalProcessVPNFailure(reason);
+				}
+			}
+		}
+	}
+}
+
 TDENetworkConnectionManager_BackendNM::TDENetworkConnectionManager_BackendNM(TQString macAddress) : TDENetworkConnectionManager(macAddress) {
 	d = new TDENetworkConnectionManager_BackendNMPrivate(this);
 
@@ -1391,7 +1423,7 @@ void TDENetworkConnectionManager_BackendNMPrivate::internalProcessVPNLoginBanner
 void TDENetworkConnectionManager_BackendNMPrivate::internalProcessVPNFailure(TQ_UINT32 reason) {
 	// FIXME
 	// This should provide a plain-text interpretation of the NetworkManager-specific error code
-	m_parent->internalVpnEvent(TDENetworkVPNEventType::Failure, TQString("%1").arg(reason));
+	m_parent->internalVpnEvent(TDENetworkVPNEventType::Failure, TQString("VPN connection attempt failed!<br>NetworkManager returned error %1.").arg(reason));
 }
 
 void TDENetworkConnectionManager_BackendNMPrivate::internalProcessDeviceStateChanged(TQ_UINT32 newState, TQ_UINT32 oldState, TQ_UINT32 reason) {
@@ -5145,10 +5177,18 @@ TQStringList TDENetworkConnectionManager_BackendNM::defaultNetworkDevices() {
 }
 
 TDENetworkConnectionManager_BackendNMPrivate::TDENetworkConnectionManager_BackendNMPrivate(TDENetworkConnectionManager_BackendNM* parent) : m_networkManagerProxy(NULL), m_networkManagerSettings(NULL), m_networkDeviceProxy(NULL), m_wiFiDeviceProxy(NULL), m_vpnProxy(NULL), nonReentrantCallActive(false), m_parent(parent) {
-	//
+	// Set up global signal handler
+	m_dbusSignalConnection = new TQT_DBusConnection(TQT_DBusConnection::systemBus());
+	m_dbusSignalReceiver = new TDENetworkConnectionManager_BackendNM_DBusSignalReceiver(this);
+	m_dbusSignalConnection->connect(m_dbusSignalReceiver, TQT_SLOT(dbusSignal(const TQT_DBusMessage&)));
 }
 
 TDENetworkConnectionManager_BackendNMPrivate::~TDENetworkConnectionManager_BackendNMPrivate() {
+	// Destroy global signal handler
+	if (m_dbusSignalConnection) delete m_dbusSignalConnection;
+	if (m_dbusSignalReceiver) delete m_dbusSignalReceiver;
+
+	// Destroy proxy objects
 	TQMap<TQString, DBus::AccessPointProxy*>::iterator it;
 	for (it = m_accessPointProxyList.begin(); it != m_accessPointProxyList.end(); ++it) {
 		DBus::AccessPointProxy *apProxy = it.data();
