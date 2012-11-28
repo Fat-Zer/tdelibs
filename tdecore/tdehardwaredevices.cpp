@@ -2724,7 +2724,7 @@ TDEGenericDeviceType::TDEGenericDeviceType readGenericDeviceTypeFromString(TQStr
 	else if (query == "ThermalControl") {
 		ret = TDEGenericDeviceType::ThermalControl;
 	}
-	else if (query == "BlueTooth") {
+	else if (query == "Bluetooth") {
 		ret = TDEGenericDeviceType::BlueTooth;
 	}
 	else if (query == "Bridge") {
@@ -3215,6 +3215,11 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		)) {
 		if (!device) device = new TDEStorageDevice(TDEGenericDeviceType::Disk);
 	}
+	else if (devicetype == "host") {
+		if (devicesubsystem == "bluetooth") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::BlueTooth);
+		}
+	}
 	else if (devicetype.isNull()) {
 		if (devicesubsystem == "acpi") {
 			// If the ACPI device exposes a system path ending in /PNPxxxx:yy, the device type can be precisely determined
@@ -3264,9 +3269,6 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			else {
 				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::TextIO);
 			}
-		}
-		else if (devicesubsystem == "bluetooth") {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::BlueTooth);
 		}
 		else if (devicesubsystem == "usb-serial") {
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Serial);
@@ -5288,7 +5290,7 @@ TQString TDEHardwareDevices::getFriendlyDeviceTypeStringFromType(TDEGenericDevic
 		ret = i18n("Thermal Control");
 	}
 	else if (query == TDEGenericDeviceType::BlueTooth) {
-		ret = i18n("BlueTooth");
+		ret = i18n("Bluetooth");
 	}
 	else if (query == TDEGenericDeviceType::Bridge) {
 		ret = i18n("Bridge");

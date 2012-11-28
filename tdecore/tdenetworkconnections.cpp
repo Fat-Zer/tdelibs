@@ -844,8 +844,8 @@ void TDENetworkConnectionManager::internalAccessPointStatusChanged(TDEMACAddress
 	emit(accessPointStatusChanged(BSSID, event));
 }
 
-void TDENetworkConnectionManager::internalNetworkDeviceEvent(TDENetworkDeviceEventType::TDENetworkDeviceEventType event) {
-	emit(networkDeviceEvent(event));
+void TDENetworkConnectionManager::internalNetworkDeviceEvent(TDENetworkDeviceEventType::TDENetworkDeviceEventType event, TQString message) {
+	emit(networkDeviceEvent(event, message));
 }
 
 void TDENetworkConnectionManager::internalVpnEvent(TDENetworkVPNEventType::TDENetworkVPNEventType event, TQString message) {

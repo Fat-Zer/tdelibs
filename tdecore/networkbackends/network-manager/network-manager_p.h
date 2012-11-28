@@ -101,6 +101,7 @@ class TDENetworkConnectionManager_BackendNMPrivate : public TQObject
 		NMAsyncSettingsResponseMap nmConnectionSettingsAsyncSettingsResponse;
 		NMAddConnectionAsyncResponseMap nmAddConnectionAsyncResponse;
 		bool nonReentrantCallActive;
+		TQString m_dbusDeviceString;
 
 	public slots:
 		void processConnectionSettingsAsyncReply(int, const TQT_DBusDataMap<TQString>&);
@@ -122,6 +123,7 @@ class TDENetworkConnectionManager_BackendNMPrivate : public TQObject
 		TQMap<TQString, DBus::AccessPointProxy*> m_accessPointProxyList;
 		TQT_DBusConnection *m_dbusSignalConnection;
 		TDENetworkConnectionManager_BackendNM_DBusSignalReceiver *m_dbusSignalReceiver;
+		int m_prevDeviceState;
 
 		friend class TDENetworkConnectionManager_BackendNM_DBusSignalReceiver;
 };

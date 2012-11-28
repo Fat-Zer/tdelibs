@@ -213,6 +213,7 @@ namespace TDENetworkVPNEventType {
 namespace TDENetworkDeviceEventType {
 	enum TDENetworkDeviceEventType {
 		BitRateChanged,
+		Failure,
 		Other,
 		Last = Other
 	};
@@ -1186,8 +1187,9 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		/**
 		* Emitted whenever a network device event occurs
 		* The event type that caused the signal is available in @param event
+		* @param message contains additional information if available
 		*/
-		void networkDeviceEvent(TDENetworkDeviceEventType::TDENetworkDeviceEventType event);
+		void networkDeviceEvent(TDENetworkDeviceEventType::TDENetworkDeviceEventType event, TQString message);
 
 		/**
 		* Emitted whenever a VPN-related event occurs
@@ -1295,7 +1297,7 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		* @internal This method must be called by the network backend whenever a device event occurs
 		* It emits the appropriate signals to notify client applications of the network device event
 		*/
-		void internalNetworkDeviceEvent(TDENetworkDeviceEventType::TDENetworkDeviceEventType event);
+		void internalNetworkDeviceEvent(TDENetworkDeviceEventType::TDENetworkDeviceEventType event, TQString message);
 
 		/**
 		* @internal This method must be called by the network backend whenever a VPN event occurs
