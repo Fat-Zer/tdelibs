@@ -39,9 +39,12 @@
 #define UPDATE_STRING_SETTING_IF_VALID(string, key, settingsMap)	if (!string.isNull()) settingsMap[key] = convertDBUSDataToVariantData(TQT_DBusData::fromString(string));	\
 									else settingsMap.remove(key);
 
-//#define NM_ASYNC_TIMEOUT_MS 1000
+#define NM_ASYNC_TIMEOUT_MS 1000
 // Give the user 5 minutes to authenticate to DBUS before timing out
-#define NM_ASYNC_TIMEOUT_MS (5*60*1000)
+#define NM_ASYNC_SECRETS_INTERACTION_TIMEOUT_MS (5*60*1000)
+
+// #define WAIT_FOR_OPERATION_BEFORE_RETURNING 1
+#define USE_ASYNC_DBUS_CONNECTION_COMMAND_CALLS 1
 
 TQ_UINT32 reverseIPV4ByteOrder(TQ_UINT32 address) {
 	TQ_UINT32 ret;
@@ -1329,7 +1332,7 @@ void TDENetworkConnectionManager_BackendNM_DBusSignalReceiver::dbusSignal(const 
 		TQString member = message.member();
 		TQString path = message.path();
 
-// 		printf("[DEBUG] In dbusSignal: sender: %s, member: %s, interface: %s, path: %s\n\r", sender.ascii(), member.ascii(), interface.ascii(), path.ascii()); fflush(stdout);
+// 		printf("[DEBUG] In dbusSignal: sender: %s, member: %s, interface: %s, path: %s, parent path: %s\n\r", sender.ascii(), member.ascii(), interface.ascii(), path.ascii(), m_parent->m_dbusDeviceString.ascii()); fflush(stdout);
 
 		if (interface == NM_VPN_DBUS_CONNECTION_SERVICE) {
 			if (member == "VpnStateChanged") {
@@ -1338,6 +1341,17 @@ void TDENetworkConnectionManager_BackendNM_DBusSignalReceiver::dbusSignal(const 
 				TQ_UINT32 reason = message[1].toUInt32();
 				if (state == NM_VPN_STATE_FAILED) {
 					m_parent->internalProcessVPNFailure(reason);
+				}
+			}
+		}
+		else if (interface == NM_DBUS_DEVICE_SERVICE) {
+			if (path == m_parent->m_dbusDeviceString) {
+				if (member == "StateChanged") {
+					// Demarshal data
+					TQ_UINT32 new_state = message[0].toUInt32();
+					TQ_UINT32 old_state = message[1].toUInt32();
+					TQ_UINT32 reason = message[2].toUInt32();
+					m_parent->internalProcessDeviceStateChanged(new_state, old_state, reason);
 				}
 			}
 		}
@@ -1355,12 +1369,12 @@ TDENetworkConnectionManager_BackendNM::TDENetworkConnectionManager_BackendNM(TQS
 	d->m_vpnProxy = new DBus::VPNPluginProxy(NM_VPN_DBUS_PLUGIN_SERVICE, NM_VPN_DBUS_PLUGIN_PATH);
 	d->m_vpnProxy->setConnection(TQT_DBusConnection::systemBus());
 
-	TQString dbusDeviceString = deviceInterfaceString(macAddress);
-	if (dbusDeviceString != "") {
-		d->m_networkDeviceProxy = new DBus::DeviceProxy(NM_DBUS_SERVICE, dbusDeviceString);
+	d->m_dbusDeviceString = deviceInterfaceString(macAddress);
+	if (d->m_dbusDeviceString != "") {
+		d->m_networkDeviceProxy = new DBus::DeviceProxy(NM_DBUS_SERVICE, d->m_dbusDeviceString);
 		d->m_networkDeviceProxy->setConnection(TQT_DBusConnection::systemBus());
 		if (deviceType() == TDENetworkDeviceType::WiFi) {
-			d->m_wiFiDeviceProxy = new DBus::WiFiDeviceProxy(NM_DBUS_SERVICE, dbusDeviceString);
+			d->m_wiFiDeviceProxy = new DBus::WiFiDeviceProxy(NM_DBUS_SERVICE, d->m_dbusDeviceString);
 			d->m_wiFiDeviceProxy->setConnection(TQT_DBusConnection::systemBus());
 		}
 	}
@@ -1428,7 +1442,16 @@ void TDENetworkConnectionManager_BackendNMPrivate::internalProcessVPNFailure(TQ_
 
 void TDENetworkConnectionManager_BackendNMPrivate::internalProcessDeviceStateChanged(TQ_UINT32 newState, TQ_UINT32 oldState, TQ_UINT32 reason) {
 	Q_UNUSED(oldState)
-	Q_UNUSED(reason)
+
+	if (m_prevDeviceState == newState) return;
+	m_prevDeviceState = newState;
+
+	if (newState == NM_DEVICE_STATE_FAILED) {
+		// FIXME
+		// This should provide a plain-text interpretation of the NetworkManager-specific error code
+		m_parent->internalNetworkDeviceEvent(TDENetworkDeviceEventType::Failure, TQString("Connection attempt failed!<br>NetworkManager returned error %1.").arg(reason));
+	}
+
 	m_parent->internalNetworkDeviceStateChanged(nmDeviceStateToTDEDeviceState(newState), m_parent->m_macAddress);
 }
 
@@ -1475,7 +1498,7 @@ void TDENetworkConnectionManager_BackendNMPrivate::internalProcessWiFiProperties
 			}
 		}
 		else if (props.contains("Bitrate")) {
-			m_parent->internalNetworkDeviceEvent(TDENetworkDeviceEventType::BitRateChanged);
+			m_parent->internalNetworkDeviceEvent(TDENetworkDeviceEventType::BitRateChanged, TQString::null);
 		}
 	}
 }
@@ -1499,8 +1522,8 @@ TDENetworkDeviceType::TDENetworkDeviceType TDENetworkConnectionManager_BackendNM
 	else {
 		// Query NM for the device type
 		TQT_DBusError error;
-		TQString dbusDeviceString = deviceInterfaceString(m_macAddress);
-		DBus::DeviceProxy genericDevice(NM_DBUS_SERVICE, dbusDeviceString);
+		d->m_dbusDeviceString = deviceInterfaceString(m_macAddress);
+		DBus::DeviceProxy genericDevice(NM_DBUS_SERVICE, d->m_dbusDeviceString);
 		genericDevice.setConnection(TQT_DBusConnection::systemBus());
 		TDENetworkDeviceType::TDENetworkDeviceType ret = nmDeviceTypeToTDEDeviceType(genericDevice.getDeviceType(error));
 		if (error.isValid()) {
@@ -1519,6 +1542,18 @@ TDENetworkConnectionType::TDENetworkConnectionType TDENetworkConnectionManager_B
 	TQ_UINT32 ret;
 	TQT_DBusError error;
 
+#ifndef USE_ASYNC_DBUS_CALLS
+	// Obtain connection settings from the path specified
+	DBus::ConnectionSettingsInterface connectionSettings(NM_DBUS_SERVICE, dbusPath);
+	connectionSettings.setConnection(TQT_DBusConnection::systemBus());
+	TQT_DBusTQStringDataMap connectionSettingsMap;
+	ret = connectionSettings.GetSettings(connectionSettingsMap, error);
+	if (ret && error.isValid()) {
+		ret = 0;
+		PRINT_ERROR(error.name())
+	}
+	if (ret) {
+#else // USE_ASYNC_DBUS_CALLS
 	// Obtain connection settings from the path specified
 	DBus::ConnectionSettingsInterface connectionSettings(NM_DBUS_SERVICE, dbusPath);
 	connectionSettings.setConnection(TQT_DBusConnection::systemBus());
@@ -1544,6 +1579,7 @@ TDENetworkConnectionType::TDENetworkConnectionType TDENetworkConnectionManager_B
 		TQT_DBusTQStringDataMap connectionSettingsMap = d->nmConnectionSettingsAsyncSettingsResponse[asyncCallID];
 		d->nmConnectionSettingsAsyncCallWaiting.remove(asyncCallID);
 		d->nmConnectionSettingsAsyncSettingsResponse.remove(asyncCallID);
+#endif // USE_ASYNC_DBUS_CALLS
 
 		// Parse settings to find connection type
 		TQT_DBusTQStringDataMap::const_iterator it2;
@@ -1675,6 +1711,31 @@ TDENetworkDeviceInformation TDENetworkConnectionManager_BackendNM::deviceInforma
 	return ret;
 }
 
+TDENetworkDeviceInformation TDENetworkConnectionManager_BackendNM::deviceStatus() {
+	TQT_DBusError error;
+	TDENetworkDeviceInformation ret;
+
+	if (d->m_networkDeviceProxy) {
+		ret.statusFlags = nmDeviceStateToTDEDeviceState(d->m_networkDeviceProxy->getState(error));
+		ret.UUID = d->m_networkDeviceProxy->getUdi(error);
+
+		// Get active connection UUID
+		TQT_DBusObjectPath connectionPath = d->m_networkDeviceProxy->getActiveConnection(error);
+		if (!error.isValid()) {
+			DBus::ActiveConnectionProxy activeConnection(NM_DBUS_SERVICE, connectionPath);
+			activeConnection.setConnection(TQT_DBusConnection::systemBus());
+			ret.activeConnectionUUID = activeConnection.getUuid(error);
+			if (!error.isValid()) {
+				ret.activeConnectionUUID = TQString::null;
+			}
+		}
+
+		ret.valid = true;
+	}
+
+	return ret;
+}
+
 void TDENetworkConnectionManager_BackendNMPrivate::processConnectionSettingsAsyncReply(int asyncCallId, const TQT_DBusDataMap<TQString>& settings) {
 	nmConnectionSettingsAsyncCallWaiting[asyncCallId] = false;
 	nmConnectionSettingsAsyncSettingsResponse[asyncCallId] = settings;
@@ -1766,6 +1827,18 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 				printf("[network-manager comm debug] %s\n\r", (*it).data()); fflush(stdout);
 #endif // DEBUG_NETWORK_MANAGER_COMMUNICATIONS
 
+#ifndef USE_ASYNC_DBUS_CALLS
+				// Obtain connection settings from the path specified
+				DBus::ConnectionSettingsInterface connectionSettings(NM_DBUS_SERVICE, (*it));
+				connectionSettings.setConnection(TQT_DBusConnection::systemBus());
+				TQT_DBusTQStringDataMap connectionSettingsMap;
+				ret = connectionSettings.GetSettings(connectionSettingsMap, error);
+				if (ret && error.isValid()) {
+					ret = 0;
+					PRINT_ERROR(error.name())
+				}
+				if (ret) {
+#else // USE_ASYNC_DBUS_CALLS
 				// Obtain connection settings from the path specified
 				DBus::ConnectionSettingsInterface connectionSettings(NM_DBUS_SERVICE, (*it));
 				connectionSettings.setConnection(TQT_DBusConnection::systemBus());
@@ -1791,6 +1864,7 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 					TQT_DBusTQStringDataMap connectionSettingsMap = d->nmConnectionSettingsAsyncSettingsResponse[asyncCallID];
 					d->nmConnectionSettingsAsyncCallWaiting.remove(asyncCallID);
 					d->nmConnectionSettingsAsyncSettingsResponse.remove(asyncCallID);
+#endif // USE_ASYNC_DBUS_CALLS
 
 #ifdef DEBUG_NETWORK_MANAGER_COMMUNICATIONS
 					printf("[network-manager comm debug] received DBUS object structure map follows:\n\r"); fflush(stdout);
@@ -2886,6 +2960,17 @@ bool TDENetworkConnectionManager_BackendNM::loadConnectionSecretsForGroup(TQStri
 	TQT_DBusTQStringDataMap connectionSecretsMap(TQT_DBusData::String);
 	ret = d->m_networkManagerSettings->GetConnectionByUuid(uuid, existingConnection, error);
 	if (ret) {
+#ifndef USE_ASYNC_DBUS_CALLS
+		// Obtain connection settings from the path specified
+		DBus::ConnectionSettingsInterface connectionSettings(NM_DBUS_SERVICE, existingConnection);
+		connectionSettings.setConnection(TQT_DBusConnection::systemBus());
+		ret = connectionSettings.GetSecrets(group, connectionSecretsMap, error);
+		if (ret && error.isValid()) {
+			ret = 0;
+			PRINT_ERROR(error.name())
+		}
+		if (ret) {
+#else // USE_ASYNC_DBUS_CALLS
 		// Obtain connection secrets from the path specified
 		DBus::ConnectionSettingsInterface connectionSettings(NM_DBUS_SERVICE, existingConnection);
 		connectionSettings.setConnection(TQT_DBusConnection::systemBus());
@@ -2900,7 +2985,7 @@ bool TDENetworkConnectionManager_BackendNM::loadConnectionSecretsForGroup(TQStri
 			// Wait for the asynchronous call to return...
 			d->nmConnectionSettingsAsyncCallWaiting[asyncCallID] = true;
 			TQTimer nmCallTimeoutTimer;
-			nmCallTimeoutTimer.start(NM_ASYNC_TIMEOUT_MS, TRUE);
+			nmCallTimeoutTimer.start(NM_ASYNC_SECRETS_INTERACTION_TIMEOUT_MS, TRUE);
 			while (d->nmConnectionSettingsAsyncCallWaiting[asyncCallID]) {
 				tqApp->processEvents();
 				if (!nmCallTimeoutTimer.isActive()) {
@@ -2911,6 +2996,7 @@ bool TDENetworkConnectionManager_BackendNM::loadConnectionSecretsForGroup(TQStri
 			connectionSecretsMap = d->nmConnectionSettingsAsyncSettingsResponse[asyncCallID];
 			d->nmConnectionSettingsAsyncCallWaiting.remove(asyncCallID);
 			d->nmConnectionSettingsAsyncSettingsResponse.remove(asyncCallID);
+#endif // USE_ASYNC_DBUS_CALLS
 
 #ifdef DEBUG_NETWORK_MANAGER_COMMUNICATIONS
 			printf("[network-manager comm debug] received DBUS object structure map follows:\n\r"); fflush(stdout);
@@ -3082,6 +3168,18 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 	existing = false;
 	ret = d->m_networkManagerSettings->GetConnectionByUuid(connection->UUID, existingConnection, error);
 	if (ret) {
+#ifndef USE_ASYNC_DBUS_CALLS
+		// Obtain connection settings from the path specified
+		DBus::ConnectionSettingsInterface connectionSettings(NM_DBUS_SERVICE, existingConnection);
+		connectionSettings.setConnection(TQT_DBusConnection::systemBus());
+		connectionSettingsMap;
+		ret = connectionSettings.GetSettings(connectionSettingsMap, error);
+		if (ret && error.isValid()) {
+			ret = 0;
+			PRINT_ERROR(error.name())
+		}
+		if (ret) {
+#else // USE_ASYNC_DBUS_CALLS
 		// Obtain connection settings from the path specified
 		DBus::ConnectionSettingsInterface connectionSettings(NM_DBUS_SERVICE, existingConnection);
 		connectionSettings.setConnection(TQT_DBusConnection::systemBus());
@@ -3105,9 +3203,10 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 				}
 			}
 			connectionSettingsMap = d->nmConnectionSettingsAsyncSettingsResponse[asyncCallID];
-			existing = true;
 			d->nmConnectionSettingsAsyncCallWaiting.remove(asyncCallID);
 			d->nmConnectionSettingsAsyncSettingsResponse.remove(asyncCallID);
+#endif // USE_ASYNC_DBUS_CALLS
+			existing = true;
 		}
 	}
 
@@ -4571,20 +4670,31 @@ TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManag
 	if ((d->m_networkManagerSettings) && (d->m_networkManagerProxy)) {
 		ret = d->m_networkManagerSettings->GetConnectionByUuid(uuid, existingConnection, error);
 		if (ret) {
-			TQString dbusDeviceString;
 			if (m_macAddress == "") {
-				dbusDeviceString = "/";
+				d->m_dbusDeviceString = "/";
 			}
 			else {
-				dbusDeviceString = deviceInterfaceString(m_macAddress);
+				d->m_dbusDeviceString = deviceInterfaceString(m_macAddress);
 			}
-			connect(d->m_networkManagerProxy, SIGNAL(ActivateConnectionAsyncReply(int, const TQT_DBusObjectPath&)), d, SLOT(processAddConnectionAsyncReply(int, const TQT_DBusObjectPath&)));
-			int asyncCallID;
-			ret = d->m_networkManagerProxy->ActivateConnectionAsync(asyncCallID, existingConnection, TQT_DBusObjectPath(dbusDeviceString.ascii()), TQT_DBusObjectPath("/"), error);
+#ifndef USE_ASYNC_DBUS_CONNECTION_COMMAND_CALLS
+			TQT_DBusObjectPath active_connection;
+			ret = d->m_networkManagerProxy->ActivateConnection(existingConnection, TQT_DBusObjectPath(d->m_dbusDeviceString.ascii()), TQT_DBusObjectPath("/"), active_connection, error);
 			if (ret && error.isValid()) {
 				ret = 0;
 				PRINT_ERROR(error.name())
 			}
+			return checkConnectionStatus(uuid);
+#else // USE_ASYNC_DBUS_CONNECTION_COMMAND_CALLS
+#ifdef WAIT_FOR_OPERATION_BEFORE_RETURNING
+			connect(d->m_networkManagerProxy, SIGNAL(ActivateConnectionAsyncReply(int, const TQT_DBusObjectPath&)), d, SLOT(processAddConnectionAsyncReply(int, const TQT_DBusObjectPath&)));
+#endif // WAIT_FOR_OPERATION_BEFORE_RETURNING
+			int asyncCallID;
+			ret = d->m_networkManagerProxy->ActivateConnectionAsync(asyncCallID, existingConnection, TQT_DBusObjectPath(d->m_dbusDeviceString.ascii()), TQT_DBusObjectPath("/"), error);
+			if (ret && error.isValid()) {
+				ret = 0;
+				PRINT_ERROR(error.name())
+			}
+#ifdef WAIT_FOR_OPERATION_BEFORE_RETURNING
 			if (ret) {
 				// Wait for the asynchronous call to return...
 				d->nmConnectionSettingsAsyncCallWaiting[asyncCallID] = true;
@@ -4606,6 +4716,10 @@ TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManag
 				PRINT_ERROR(error.name())
 				return checkConnectionStatus(uuid);
 			}
+#else
+			return checkConnectionStatus(uuid);
+#endif
+#endif // USE_ASYNC_DBUS_CONNECTION_COMMAND_CALLS
 		}
 		else {
 			PRINT_WARNING(TQString("connection for provided uuid '%1' was not found").arg(uuid));
@@ -4740,20 +4854,30 @@ TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManag
 	if ((d->m_networkManagerSettings) && (d->m_networkManagerProxy)) {
 		existingConnection = getActiveConnectionPath(uuid);
 		if (existingConnection.isValid()) {
-			TQString dbusDeviceString;
 			if (m_macAddress == "") {
-				dbusDeviceString = "/";
+				d->m_dbusDeviceString = "/";
 			}
 			else {
-				dbusDeviceString = deviceInterfaceString(m_macAddress);
+				d->m_dbusDeviceString = deviceInterfaceString(m_macAddress);
 			}
+#ifndef USE_ASYNC_DBUS_CONNECTION_COMMAND_CALLS
+			ret = d->m_networkManagerProxy->DeactivateConnection(existingConnection, error);
+			if (ret && error.isValid()) {
+				ret = 0;
+				PRINT_ERROR(error.name())
+			}
+			return checkConnectionStatus(uuid);
+#else // USE_ASYNC_DBUS_CONNECTION_COMMAND_CALLS
+#ifdef WAIT_FOR_OPERATION_BEFORE_RETURNING
 			connect(d->m_networkManagerProxy, SIGNAL(DeactivateConnectionAsyncReply(int)), d, SLOT(processConnectionSettingsUpdateAsyncReply(int)));
+#endif // WAIT_FOR_OPERATION_BEFORE_RETURNING
 			int asyncCallID;
 			ret = d->m_networkManagerProxy->DeactivateConnectionAsync(asyncCallID, existingConnection, error);
 			if (ret && error.isValid()) {
 				ret = 0;
 				PRINT_ERROR(error.name())
 			}
+#ifdef WAIT_FOR_OPERATION_BEFORE_RETURNING
 			if (ret) {
 				// Wait for the asynchronous call to return...
 				d->nmConnectionSettingsAsyncCallWaiting[asyncCallID] = true;
@@ -4774,6 +4898,10 @@ TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManag
 				PRINT_ERROR(error.name())
 				return checkConnectionStatus(uuid);
 			}
+#else
+			return checkConnectionStatus(uuid);
+#endif
+#endif // USE_ASYNC_DBUS_CONNECTION_COMMAND_CALLS
 		}
 		else {
 			PRINT_WARNING(TQString("connection for provided uuid '%1' was not found").arg(uuid));
@@ -5014,11 +5142,11 @@ TDENetworkHWNeighborList* TDENetworkConnectionManager_BackendNM::siteSurvey() {
 	bool ret;
 
 	TDENetworkDeviceType::TDENetworkDeviceType myDeviceType = deviceType();
-	TQString dbusDeviceString = deviceInterfaceString(m_macAddress);
+	d->m_dbusDeviceString = deviceInterfaceString(m_macAddress);
 	clearTDENetworkHWNeighborList();
 
 	if (myDeviceType == TDENetworkDeviceType::WiFi) {
-		DBus::WiFiDeviceProxy wiFiDevice(NM_DBUS_SERVICE, dbusDeviceString);
+		DBus::WiFiDeviceProxy wiFiDevice(NM_DBUS_SERVICE, d->m_dbusDeviceString);
 		wiFiDevice.setConnection(TQT_DBusConnection::systemBus());
 		// FIXME
 		// Should call wiFiDevice.RequestScanAsync first to rescan all access points
@@ -5176,7 +5304,7 @@ TQStringList TDENetworkConnectionManager_BackendNM::defaultNetworkDevices() {
 	}
 }
 
-TDENetworkConnectionManager_BackendNMPrivate::TDENetworkConnectionManager_BackendNMPrivate(TDENetworkConnectionManager_BackendNM* parent) : m_networkManagerProxy(NULL), m_networkManagerSettings(NULL), m_networkDeviceProxy(NULL), m_wiFiDeviceProxy(NULL), m_vpnProxy(NULL), nonReentrantCallActive(false), m_parent(parent) {
+TDENetworkConnectionManager_BackendNMPrivate::TDENetworkConnectionManager_BackendNMPrivate(TDENetworkConnectionManager_BackendNM* parent) : m_networkManagerProxy(NULL), m_networkManagerSettings(NULL), m_networkDeviceProxy(NULL), m_wiFiDeviceProxy(NULL), m_vpnProxy(NULL), nonReentrantCallActive(false), m_parent(parent), m_prevDeviceState(-1) {
 	// Set up global signal handler
 	m_dbusSignalConnection = new TQT_DBusConnection(TQT_DBusConnection::systemBus());
 	m_dbusSignalReceiver = new TDENetworkConnectionManager_BackendNM_DBusSignalReceiver(this);

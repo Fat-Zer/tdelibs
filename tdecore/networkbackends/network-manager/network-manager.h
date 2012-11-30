@@ -159,6 +159,7 @@ class TDECORE_EXPORT TDENetworkConnectionManager_BackendNM : public TDENetworkCo
 		virtual TDENetworkDeviceType::TDENetworkDeviceType deviceType();
 		virtual TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags backendStatus();
 		virtual TDENetworkDeviceInformation deviceInformation();
+		virtual TDENetworkDeviceInformation deviceStatus();
 
 		virtual void loadConnectionInformation();
 		virtual void loadConnectionAllowedValues(TDENetworkConnection* connection);
