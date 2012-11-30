@@ -990,6 +990,29 @@ class TDECORE_EXPORT TDEModemConnection : public TDENetworkConnection
 
 typedef TQPtrList< TDENetworkConnection > TDENetworkConnectionList;
 
+/**
+* INTERNAL CLASS
+*/
+class TDENetworkEventQueueEvent_Private
+{
+	public:
+		int eventType;
+		TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags newState;
+		TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags previousState;
+		TDENetworkConnectionStatus::TDENetworkConnectionStatus newConnStatus;
+		TDENetworkConnectionStatus::TDENetworkConnectionStatus previousConnStatus;
+		TDEMACAddress BSSID;
+		TQString message;
+		TQString hwAddress;
+		TDENetworkAPEventType::TDENetworkAPEventType apevent;
+		TDENetworkDeviceEventType::TDENetworkDeviceEventType ndevent;
+		TDENetworkVPNEventType::TDENetworkVPNEventType vpnevent;
+		TDENetworkGlobalEventType::TDENetworkGlobalEventType globalevent;
+};
+typedef TQValueList<TDENetworkEventQueueEvent_Private> TDENetworkEventQueueEvent_PrivateList;
+
+class TQTimer;
+
 class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 {
 	Q_OBJECT
@@ -1024,9 +1047,19 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		virtual TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags backendStatus() = 0;
 
 		/**
-		* @return A TDENetworkDeviceInformation object containing the current status of the network device.
+		* @return A TDENetworkDeviceInformation object containing the current configuration and status of the network device.
 		*/
 		virtual TDENetworkDeviceInformation deviceInformation() = 0;
+
+		/**
+		* @return A TDENetworkDeviceInformation object containing a (limited) current status of the network device.
+		* Only the following object fields are populated:
+		* statusFlags
+		* UUID
+		* activeConnectionUUID
+		* valid
+		*/
+		virtual TDENetworkDeviceInformation deviceStatus() = 0;
 
 		/**
 		* Loads all connection information from the configuration backend
@@ -1311,12 +1344,17 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		*/
 		void internalNetworkManagementEvent(TDENetworkGlobalEventType::TDENetworkGlobalEventType event);
 
+	protected slots:
+		void emitQueuedSignals();
+
 	protected:
 		TDENetworkConnectionList* m_connectionList;
 		TDENetworkHWNeighborList* m_hwNeighborList;
 		TQString m_macAddress;
 		TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags m_prevConnectionStatus;
 		TQMap<TQString, TDENetworkConnectionStatus::TDENetworkConnectionStatus> m_prevDeviceStatus;
+		TQTimer* m_emissionTimer;
+		TDENetworkEventQueueEvent_PrivateList m_globalEventQueueEventList;
 };
 
 class TDECORE_EXPORT TDEGlobalNetworkManager : public TQObject

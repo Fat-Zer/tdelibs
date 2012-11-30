@@ -1332,7 +1332,7 @@ void TDENetworkConnectionManager_BackendNM_DBusSignalReceiver::dbusSignal(const 
 		TQString member = message.member();
 		TQString path = message.path();
 
-// 		printf("[DEBUG] In dbusSignal: sender: %s, member: %s, interface: %s, path: %s\n\r", sender.ascii(), member.ascii(), interface.ascii(), path.ascii()); fflush(stdout);
+// 		printf("[DEBUG] In dbusSignal: sender: %s, member: %s, interface: %s, path: %s, parent path: %s\n\r", sender.ascii(), member.ascii(), interface.ascii(), path.ascii(), m_parent->m_dbusDeviceString.ascii()); fflush(stdout);
 
 		if (interface == NM_VPN_DBUS_CONNECTION_SERVICE) {
 			if (member == "VpnStateChanged") {
@@ -1693,6 +1693,31 @@ TDENetworkDeviceInformation TDENetworkConnectionManager_BackendNM::deviceInforma
 		else {
 			ret.wiFiInfo.valid = false;
 		}
+
+		// Get active connection UUID
+		TQT_DBusObjectPath connectionPath = d->m_networkDeviceProxy->getActiveConnection(error);
+		if (!error.isValid()) {
+			DBus::ActiveConnectionProxy activeConnection(NM_DBUS_SERVICE, connectionPath);
+			activeConnection.setConnection(TQT_DBusConnection::systemBus());
+			ret.activeConnectionUUID = activeConnection.getUuid(error);
+			if (!error.isValid()) {
+				ret.activeConnectionUUID = TQString::null;
+			}
+		}
+
+		ret.valid = true;
+	}
+
+	return ret;
+}
+
+TDENetworkDeviceInformation TDENetworkConnectionManager_BackendNM::deviceStatus() {
+	TQT_DBusError error;
+	TDENetworkDeviceInformation ret;
+
+	if (d->m_networkDeviceProxy) {
+		ret.statusFlags = nmDeviceStateToTDEDeviceState(d->m_networkDeviceProxy->getState(error));
+		ret.UUID = d->m_networkDeviceProxy->getUdi(error);
 
 		// Get active connection UUID
 		TQT_DBusObjectPath connectionPath = d->m_networkDeviceProxy->getActiveConnection(error);
@@ -4660,7 +4685,9 @@ TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManag
 			}
 			return checkConnectionStatus(uuid);
 #else // USE_ASYNC_DBUS_CONNECTION_COMMAND_CALLS
+#ifdef WAIT_FOR_OPERATION_BEFORE_RETURNING
 			connect(d->m_networkManagerProxy, SIGNAL(ActivateConnectionAsyncReply(int, const TQT_DBusObjectPath&)), d, SLOT(processAddConnectionAsyncReply(int, const TQT_DBusObjectPath&)));
+#endif // WAIT_FOR_OPERATION_BEFORE_RETURNING
 			int asyncCallID;
 			ret = d->m_networkManagerProxy->ActivateConnectionAsync(asyncCallID, existingConnection, TQT_DBusObjectPath(d->m_dbusDeviceString.ascii()), TQT_DBusObjectPath("/"), error);
 			if (ret && error.isValid()) {
@@ -4841,7 +4868,9 @@ TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManag
 			}
 			return checkConnectionStatus(uuid);
 #else // USE_ASYNC_DBUS_CONNECTION_COMMAND_CALLS
+#ifdef WAIT_FOR_OPERATION_BEFORE_RETURNING
 			connect(d->m_networkManagerProxy, SIGNAL(DeactivateConnectionAsyncReply(int)), d, SLOT(processConnectionSettingsUpdateAsyncReply(int)));
+#endif // WAIT_FOR_OPERATION_BEFORE_RETURNING
 			int asyncCallID;
 			ret = d->m_networkManagerProxy->DeactivateConnectionAsync(asyncCallID, existingConnection, error);
 			if (ret && error.isValid()) {

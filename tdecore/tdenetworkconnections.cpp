@@ -21,7 +21,11 @@
 
 #include "config.h"
 
+#include <tqtimer.h>
+
 #include <klocale.h>
+
+// #define DEBUG_SIGNAL_QUEUE 1
 
 #ifdef WITH_NETWORK_MANAGER_BACKEND
 #include "networkbackends/network-manager/network-manager.h"
@@ -684,11 +688,14 @@ TDEWiFiConnection::~TDEWiFiConnection() {
 /*================================================================================================*/
 
 TDENetworkConnectionManager::TDENetworkConnectionManager(TQString macAddress) : TQObject(), m_connectionList(NULL), m_hwNeighborList(NULL), m_macAddress(macAddress), m_prevConnectionStatus(TDENetworkGlobalManagerFlags::Unknown) {
-	//
+	m_emissionTimer = new TQTimer();
+	connect(m_emissionTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(emitQueuedSignals()));
+	if (!m_emissionTimer->isActive()) m_emissionTimer->start(0, TRUE);
 }
 
 TDENetworkConnectionManager::~TDENetworkConnectionManager() {
-	//
+	m_emissionTimer->stop();
+	delete m_emissionTimer;
 }
 
 TQString TDENetworkConnectionManager::deviceMACAddress() {
@@ -828,7 +835,13 @@ void TDENetworkConnectionManager::clearTDENetworkHWNeighborList() {
 }
 
 void TDENetworkConnectionManager::internalNetworkConnectionStateChanged(TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags newState) {
-	emit(networkConnectionStateChanged(m_prevConnectionStatus, newState));
+	TDENetworkEventQueueEvent_Private queuedEvent;
+	queuedEvent.eventType = 0;
+	queuedEvent.newState = newState;
+	queuedEvent.previousState = m_prevConnectionStatus;
+	m_globalEventQueueEventList.append(queuedEvent);
+	if (!m_emissionTimer->isActive()) m_emissionTimer->start(0, TRUE);
+
 	m_prevConnectionStatus = newState;
 }
 
@@ -836,24 +849,86 @@ void TDENetworkConnectionManager::internalNetworkDeviceStateChanged(TDENetworkCo
 	if (!m_prevDeviceStatus.contains(hwAddress)) {
 		m_prevDeviceStatus[hwAddress] = TDENetworkConnectionStatus::Invalid;
 	}
-	emit(networkDeviceStateChanged(newState, m_prevDeviceStatus[hwAddress], hwAddress));
+
+	TDENetworkEventQueueEvent_Private queuedEvent;
+	queuedEvent.eventType = 1;
+	queuedEvent.newConnStatus = newState;
+	queuedEvent.previousConnStatus = m_prevDeviceStatus[hwAddress];
+	queuedEvent.hwAddress = hwAddress;
+	m_globalEventQueueEventList.append(queuedEvent);
+	if (!m_emissionTimer->isActive()) m_emissionTimer->start(0, TRUE);
+
 	m_prevDeviceStatus[hwAddress] = newState;
 }
 
 void TDENetworkConnectionManager::internalAccessPointStatusChanged(TDEMACAddress BSSID, TDENetworkAPEventType::TDENetworkAPEventType event) {
-	emit(accessPointStatusChanged(BSSID, event));
+	TDENetworkEventQueueEvent_Private queuedEvent;
+	queuedEvent.eventType = 2;
+	queuedEvent.BSSID = BSSID;
+	queuedEvent.apevent = event;
+	m_globalEventQueueEventList.append(queuedEvent);
+	if (!m_emissionTimer->isActive()) m_emissionTimer->start(0, TRUE);
 }
 
 void TDENetworkConnectionManager::internalNetworkDeviceEvent(TDENetworkDeviceEventType::TDENetworkDeviceEventType event, TQString message) {
-	emit(networkDeviceEvent(event, message));
+	TDENetworkEventQueueEvent_Private queuedEvent;
+	queuedEvent.eventType = 3;
+	queuedEvent.ndevent = event;
+	queuedEvent.message = message;
+	m_globalEventQueueEventList.append(queuedEvent);
+	if (!m_emissionTimer->isActive()) m_emissionTimer->start(0, TRUE);
 }
 
 void TDENetworkConnectionManager::internalVpnEvent(TDENetworkVPNEventType::TDENetworkVPNEventType event, TQString message) {
-	emit(vpnEvent(event, message));
+	TDENetworkEventQueueEvent_Private queuedEvent;
+	queuedEvent.eventType = 4;
+	queuedEvent.vpnevent = event;
+	queuedEvent.message = message;
+	m_globalEventQueueEventList.append(queuedEvent);
+	if (!m_emissionTimer->isActive()) m_emissionTimer->start(0, TRUE);
 }
 
 void TDENetworkConnectionManager::internalNetworkManagementEvent(TDENetworkGlobalEventType::TDENetworkGlobalEventType event) {
-	emit(networkManagementEvent(event));
+	TDENetworkEventQueueEvent_Private queuedEvent;
+	queuedEvent.eventType = 5;
+	queuedEvent.globalevent = event;
+	m_globalEventQueueEventList.append(queuedEvent);
+	if (!m_emissionTimer->isActive()) m_emissionTimer->start(0, TRUE);
+}
+
+void TDENetworkConnectionManager::emitQueuedSignals() {
+	if (!m_globalEventQueueEventList.isEmpty()) {
+#ifdef DEBUG_SIGNAL_QUEUE
+		kdDebug() << "TDENetworkConnectionManager::emitQueuedSignals: Going to dequeue " << m_globalEventQueueEventList.count() << " events..." << endl;
+#endif // DEBUG_SIGNAL_QUEUE
+		TDENetworkEventQueueEvent_PrivateList::Iterator it;
+		it = m_globalEventQueueEventList.begin();
+		while (it != m_globalEventQueueEventList.end()) {
+			TDENetworkEventQueueEvent_Private event = (*it);
+			it = m_globalEventQueueEventList.remove(it);
+			if (event.eventType == 0) {
+				emit(networkConnectionStateChanged(event.newState, event.previousState));
+			}
+			else if (event.eventType == 1) {
+				emit(networkDeviceStateChanged(event.newConnStatus, event.previousConnStatus, event.hwAddress));
+			}
+			else if (event.eventType == 2) {
+				emit(accessPointStatusChanged(event.BSSID, event.apevent));
+			}
+			else if (event.eventType == 3) {
+				emit(networkDeviceEvent(event.ndevent, event.message));
+			}
+			else if (event.eventType == 4) {
+				emit(vpnEvent(event.vpnevent, event.message));
+			}
+			else if (event.eventType == 5) {
+				emit(networkManagementEvent(event.globalevent));
+			}
+		}
+#ifdef DEBUG_SIGNAL_QUEUE
+		kdDebug() << "TDENetworkConnectionManager::emitQueuedSignals: " << m_globalEventQueueEventList.count() << " events remain in queue" << endl;
+#endif // DEBUG_SIGNAL_QUEUE
+	}
 }
 
 /*================================================================================================*/
