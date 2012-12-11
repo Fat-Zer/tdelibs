@@ -162,6 +162,13 @@ bool KSharedPixmap::x11Event(XEvent *event)
 
     Status status = XGetGeometry(tqt_xdisplay(), pixmap, &root, &dummy, &dummy, &width, &height, &udummy, &udummy);
 
+    // HACK
+    // XGetGeometry can return bogus values on some systems, leading to a SIGFPE
+    // See http://bugs.trinitydesktop.org/show_bug.cgi?id=1161 for details
+    // Work around that here...
+    if ((width < 1) || (height < 1))
+        return false;
+
     if (status == BadDrawable)
         return false;
 
