@@ -1858,6 +1858,52 @@ namespace KIO {
 	class DeleteJobPrivate* d;
     };
 
+    /**
+     * A KIO job that finds a local URL
+     * @see KIO::localURL()
+     * @since R14.0.0
+     */
+    class KIO_EXPORT LocalURLJob : public SimpleJob {
+
+    Q_OBJECT
+
+    public:
+        /**
+	 * Do not use this constructor to create a LocalURLJob, use KIO::localURL() instead.
+	 * @param url the url of the file or directory to check
+	 * @param command the command to issue
+	 * @param packedArgs the arguments
+	 * @param showProgressInfo true to show progress information to the user
+	 */
+        LocalURLJob(const KURL& url, int command, const TQByteArray &packedArgs, bool showProgressInfo);
+
+        /**
+	 * @internal
+         * Called by the scheduler when a @p slave gets to
+         * work on this job.
+	 * @param slave the slave that starts working on this job
+         */
+        virtual void start( Slave *slave );
+
+    signals:
+        /**
+	 * @param job the job that emitted this signal
+	 * @param url the local url
+	 * @param isLocal true if the returned URL is local, false if not
+         */
+        void localURL( KIO::Job *job, const KURL &url, bool isLocal );
+
+    protected slots:
+        void slotLocalURL( const KURL &url, bool isLocal );
+        virtual void slotFinished();
+
+    protected:
+	virtual void virtual_hook( int id, void* data );
+    private:
+        class LocalURLJobPrivate;
+        LocalURLJobPrivate *d;
+    };
+
 }
 
 #endif

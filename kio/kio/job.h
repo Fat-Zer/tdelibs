@@ -129,6 +129,14 @@ namespace KIO {
     KIO_EXPORT SimpleJob *unmount( const TQString & point, bool showProgressInfo = true );
 
     /**
+     * Retrieve local URL if available
+     *
+     * @param remoteURL the remote URL to get the local URL for
+     * @return the job handling the operation.
+     */
+    KIO_EXPORT LocalURLJob *localURL( const KURL& remoteUrl );
+
+    /**
      * HTTP cache update
      *
      * @param url Url to update, protocol must be "http".

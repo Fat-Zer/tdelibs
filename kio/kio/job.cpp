@@ -808,6 +808,40 @@ SimpleJob *KIO::unmount( const TQString& point, bool showProgressInfo )
     return job;
 }
 
+//////////
+LocalURLJob::LocalURLJob( const KURL& url, int command,
+                    const TQByteArray &packedArgs, bool showProgressInfo )
+    : SimpleJob(url, command, packedArgs, showProgressInfo)
+{
+
+}
+
+void LocalURLJob::start(Slave *slave)
+{
+    connect( slave, TQT_SIGNAL( localURL(const KURL &, bool) ),
+             TQT_SLOT( slotLocalURL(const KURL &, bool) ) );
+
+    SimpleJob::start(slave);
+}
+
+// Slave sent a response!
+void LocalURLJob::slotLocalURL(const KURL &url, bool isLocal)
+{
+     kdDebug(7007) << "LocalURLJob::slotLocalURL(" << url << ")" << endl;
+     emit localURL(this, url, isLocal);
+}
+
+void LocalURLJob::slotFinished()
+{
+    // Return slave to the scheduler
+    SimpleJob::slotFinished();
+}
+
+LocalURLJob *KIO::localURL( const KURL& remoteUrl )
+{
+    KIO_ARGS << remoteUrl;
+    return new LocalURLJob(remoteUrl, CMD_LOCALURL, packedArgs, false);
+}
 
 
 //////////
@@ -4771,6 +4805,9 @@ void CopyJob::virtual_hook( int id, void* data )
 { Job::virtual_hook( id, data ); }
 
 void DeleteJob::virtual_hook( int id, void* data )
+{ Job::virtual_hook( id, data ); }
+
+void LocalURLJob::virtual_hook( int id, void* data )
 { Job::virtual_hook( id, data ); }
 
 

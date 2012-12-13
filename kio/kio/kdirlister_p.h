@@ -111,6 +111,10 @@ public:
   TQPtrList<TQRegExp> lstFilters, oldFilters;
   TQStringList mimeFilter, oldMimeFilter;
   TQStringList mimeExcludeFilter, oldMimeExcludeFilter;
+
+  bool localURLSlotFired;
+  KURL localURLResultURL;
+  bool localURLResultIsLocal;
 };
 
 /**

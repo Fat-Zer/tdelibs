@@ -119,6 +119,8 @@ public:
 
     virtual void del(const KURL &url, bool isfile);
 
+    virtual void localURL(const KURL& remoteURL);
+
 protected:
     /**
      * Rewrite an url to it's forwarded counterpart. It should return
@@ -170,6 +172,7 @@ private:
     void connectSimpleJob(SimpleJob *job);
     void connectListJob(ListJob *job);
     void connectTransferJob(TransferJob *job);
+    void connectLocalURLJob(LocalURLJob *job);
 
 private slots:
     // KIO::Job
@@ -191,6 +194,9 @@ private slots:
     void slotDataReq(KIO::Job *job, TQByteArray &data);
     void slotMimetype (KIO::Job *job, const TQString &type);
     void slotCanResume (KIO::Job *job, KIO::filesize_t offset);
+
+    // KIO::LocalURLJob
+    void slotLocalURL(KIO::Job *, const KURL&, bool);
 };
 
 }

@@ -54,7 +54,8 @@ class SlaveInterfacePrivate;
    INF_INFOMESSAGE,
    INF_META_DATA,
    INF_NETWORK_STATUS,
-   INF_MESSAGEBOX
+   INF_MESSAGEBOX,
+   INF_LOCALURL
    // add new ones here once a release is done, to avoid breaking binary compatibility
  };
 
@@ -136,6 +137,7 @@ signals:
     void totalSize( KIO::filesize_t ) ;
     void processedSize( KIO::filesize_t ) ;
     void redirection( const KURL& ) ;
+    void localURL( const KURL&, bool ) ;
 
     void speed( unsigned long ) ;
     void errorPage() ;

@@ -515,6 +515,12 @@ public:
      */
     virtual void reparseConfiguration();
 
+    /**
+      * For use with for ForwardingSlaveBase
+      * Returns the local URL of the given remote URL if possible
+      * @since R14.0.0
+      */
+    virtual void localURL( const KURL& remoteURL );
 
     /**
      * @return timeout value for connecting to remote host.

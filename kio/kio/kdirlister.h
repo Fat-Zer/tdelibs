@@ -609,6 +609,8 @@ private slots:
   void slotTotalSize( KIO::Job *, KIO::filesize_t );
   void slotProcessedSize( KIO::Job *, KIO::filesize_t );
   void slotSpeed( KIO::Job *, unsigned long );
+  void slotLocalURL( KIO::Job *, const KURL&, bool );
+  void slotLocalURLKIODestroyed( );
 
 private:
   void jobStarted( KIO::ListJob * );

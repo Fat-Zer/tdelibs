@@ -375,6 +375,13 @@ bool SlaveInterface::dispatch( int _cmd, const TQByteArray &rawdata )
         metaData(meta_data);
         break;
     }
+    case INF_LOCALURL: {
+        TQ_INT8 islocal;
+        KURL url;
+        stream >> islocal >> url;
+        emit localURL( url, islocal );
+        break;
+    }
     case MSG_NET_REQUEST: {
         TQString host;
 	TQString slaveid;
