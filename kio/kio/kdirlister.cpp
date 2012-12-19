@@ -24,6 +24,7 @@
 #include <tqregexp.h>
 #include <tqptrlist.h>
 #include <tqtimer.h>
+#include <tqeventloop.h>
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -38,6 +39,7 @@
 #include "kdirlister_p.h"
 
 #include <assert.h>
+#include <unistd.h>
 
 KDirListerCache* KDirListerCache::s_pSelf = 0;
 static KStaticDeleter<KDirListerCache> sd_KDirListerCache;
@@ -1862,7 +1864,39 @@ bool KDirLister::openURL( const KURL& _url, bool _keep, bool _reload )
 
   d->changes = NONE;
 
-  return s_pCache->listDir( this, _url, _keep, _reload );
+  // If a local path is available, monitor that instead of the given remote URL...
+  KURL realURL = _url;
+  if (!realURL.isLocalFile()) {
+      KIO::LocalURLJob* localURLJob = KIO::localURL(_url);
+      if (localURLJob) {
+          connect(localURLJob, TQT_SIGNAL(localURL(KIO::Job*, const KURL&, bool)), this, TQT_SLOT(slotLocalURL(KIO::Job*, const KURL&, bool)));
+          connect(localURLJob, TQT_SIGNAL(destroyed()), this, TQT_SLOT(slotLocalURLKIODestroyed()));
+          d->localURLSlotFired = false;
+          while (!d->localURLSlotFired) {
+              tqApp->eventLoop()->processEvents(TQEventLoop::ExcludeUserInput);
+              usleep(1000);
+          }
+          if (d->localURLResultIsLocal) {
+              realURL = d->localURLResultURL;
+          }
+      }
+  }
+
+  return s_pCache->listDir( this, realURL, _keep, _reload );
+}
+
+void KDirLister::slotLocalURL(KIO::Job *job, const KURL& url, bool isLocal) {
+  d->localURLSlotFired = true;
+  d->localURLResultURL = url;
+  d->localURLResultIsLocal = isLocal;
+}
+
+void KDirLister::slotLocalURLKIODestroyed() {
+  if (!d->localURLSlotFired) {
+    d->localURLSlotFired = true;
+    d->localURLResultURL = KURL();
+    d->localURLResultIsLocal = false;
+  }
 }
 
 void KDirLister::stop()

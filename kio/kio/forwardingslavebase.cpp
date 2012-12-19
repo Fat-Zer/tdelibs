@@ -284,6 +284,24 @@ void ForwardingSlaveBase::del(const KURL &url, bool isfile)
     }
 }
 
+void ForwardingSlaveBase::localURL(const KURL& remoteURL)
+{
+    kdDebug() << "ForwardingSlaveBase::localURL: " << remoteURL << endl;
+
+    KURL new_url;
+    if ( internalRewriteURL(remoteURL, new_url) )
+    {
+        KIO::LocalURLJob *job = KIO::localURL(new_url);
+        connectLocalURLJob(job);
+
+        tqApp->eventLoop()->enterLoop();
+    }
+    else
+    {
+        // Let the slave base emit the required signals
+        SlaveBase::localURL(remoteURL);
+    }
+}
 
 //////////////////////////////////////////////////////////////////////////////
 
@@ -341,6 +359,13 @@ void ForwardingSlaveBase::connectTransferJob(KIO::TransferJob *job)
              this, TQT_SLOT( slotMimetype(KIO::Job *, const TQString &) ) );
     connect( job, TQT_SIGNAL( canResume(KIO::Job *, KIO::filesize_t) ),
              this, TQT_SLOT( slotCanResume(KIO::Job *, KIO::filesize_t) ) );
+}
+
+void ForwardingSlaveBase::connectLocalURLJob(KIO::LocalURLJob *job)
+{
+    connectJob(job);
+    connect( job, TQT_SIGNAL( localURL(KIO::Job *, const KURL&, bool) ),
+             this, TQT_SLOT( slotLocalURL(KIO::Job *, const KURL&, bool) ) );
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -437,6 +462,11 @@ void ForwardingSlaveBase::slotMimetype (KIO::Job* /*job*/, const TQString &type)
 void ForwardingSlaveBase::slotCanResume (KIO::Job* /*job*/, KIO::filesize_t offset)
 {
     canResume(offset);
+}
+
+void ForwardingSlaveBase::slotLocalURL(KIO::Job *, const KURL& url, bool)
+{
+    SlaveBase::localURL(url);
 }
 
 }

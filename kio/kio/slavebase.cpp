@@ -809,6 +809,23 @@ void SlaveBase::reparseConfiguration()
 {
 }
 
+void SlaveBase::localURL(const KURL& remoteURL)
+{
+    bool local = remoteURL.isLocalFile();
+    TQ_INT8 islocal;
+    KURL retURL;
+    if (local) {
+        islocal = true;
+        retURL = remoteURL;
+    }
+    else {
+        islocal = false;
+        retURL = remoteURL;
+    }
+    KIO_DATA << islocal << retURL;
+    m_pConnection->send( INF_LOCALURL, data );
+}
+
 bool SlaveBase::dispatch()
 {
     assert( m_pConnection );
@@ -1130,6 +1147,11 @@ void SlaveBase::dispatch( int command, const TQByteArray &data )
     case CMD_MULTI_GET:
         multiGet( data );
         break;
+    case CMD_LOCALURL:
+    {
+        stream >> url;
+        localURL( url );
+    } break;
     default:
         // Some command we don't understand.
         // Just ignore it, it may come from some future version of KDE.
