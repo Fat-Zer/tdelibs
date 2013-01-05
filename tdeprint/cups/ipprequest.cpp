@@ -21,6 +21,7 @@
 #include "cupsinfos.h"
 
 #include <stdlib.h>
+#include <string>
 #include <cups/language.h>
 #include <kdebug.h>
 #include <kglobal.h>
@@ -227,14 +228,19 @@ void IppRequest::addStringList_p(int group, int type, const TQString& name, cons
 {
 	if (!name.isEmpty())
 	{
-		ipp_attribute_t	*attr = ippAddStrings(request_,(ipp_tag_t)group,(ipp_tag_t)type,name.latin1(),(int)(values.count()),NULL,NULL);
-		int	i(0);
-		for (TQStringList::ConstIterator it=values.begin(); it != values.end(); ++it, i++)
-#ifdef HAVE_CUPS_1_6
-			ippSetString(request_, &attr, i, strdup((*it).local8Bit()));
-#else // HAVE_CUPS_1_6
-			attr->values[i].string.text = strdup((*it).local8Bit());
-#endif // HAVE_CUPS_1_6
+		//> Values buffer and references offset prepare
+		const char *vlsRefs[values.count()];
+		std::string vlsBuf;
+		for(unsigned i_vl = 0; i_vl < values.count(); i_vl++)
+		{
+		    vlsRefs[i_vl] = (const char*)vlsBuf.size();
+		    vlsBuf += values[i_vl].local8Bit();
+		    vlsBuf += (char)0;
+		}
+		//> References update to pointers
+		for(unsigned i_vl = 0; i_vl < values.count(); i_vl++)
+		    vlsRefs[i_vl] = vlsBuf.data()+(intptr_t)vlsRefs[i_vl];
+		ippAddStrings(request_,(ipp_tag_t)group,(ipp_tag_t)type,name.latin1(),(int)(values.count()),NULL,(const char**)&vlsRefs);
 	}
 }
 
