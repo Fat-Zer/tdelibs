@@ -118,8 +118,10 @@ public:
      *
      * @param withfallback Try harder to load the module. Might result
      *                     in the module appearing outside the dialog.
+     *
+     * @param args   List of arguments to pass to the module.
      **/
-    void addModule(const TQString& module, bool withfallback=true);
+    void addModule(const TQString& module, bool withfallback=true, TQStringList args = TQStringList());
 
     /**
      * Add a module.
@@ -135,9 +137,11 @@ public:
      *
      * @param withfallback Try harder to load the module. Might result
      *                     in the module appearing outside the dialog.
+     *
+     * @param args   List of arguments to pass to the module.
      **/
     void addModule(const KCModuleInfo& moduleinfo, TQStringList
-            parentmodulenames = TQStringList(), bool withfallback=false);
+            parentmodulenames = TQStringList(), bool withfallback=false, TQStringList args = TQStringList());
 
     /**
      * Remove all modules from the dialog.

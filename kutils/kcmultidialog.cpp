@@ -219,7 +219,7 @@ void KCMultiDialog::clientChanged(bool state)
     enableButton( Apply, false );
 }
 
-void KCMultiDialog::addModule(const TQString& path, bool withfallback)
+void KCMultiDialog::addModule(const TQString& path, bool withfallback, TQStringList args)
 {
     TQString complete = path;
 
@@ -228,11 +228,11 @@ void KCMultiDialog::addModule(const TQString& path, bool withfallback)
 
     KService::Ptr service = KService::serviceByStorageId( complete );
 
-    addModule( KCModuleInfo( service ), TQStringList(), withfallback);
+    addModule( KCModuleInfo( service ), TQStringList(), withfallback, args );
 }
 
 void KCMultiDialog::addModule(const KCModuleInfo& moduleinfo,
-        TQStringList parentmodulenames, bool withfallback)
+        TQStringList parentmodulenames, bool withfallback, TQStringList args)
 {
     kdDebug(710) << "KCMultiDialog::addModule " 
         << moduleinfo.moduleName() << endl;
@@ -294,7 +294,7 @@ void KCMultiDialog::addModule(const KCModuleInfo& moduleinfo,
     }
     else
     {
-        module = new KCModuleProxy( moduleinfo, withfallback, page );
+        module = new KCModuleProxy( moduleinfo, withfallback, page, 0, args );
         TQStringList parentComponents = moduleinfo.service()->property(
                 "X-TDE-ParentComponents" ).toStringList();
         moduleParentComponents.insert( module,
