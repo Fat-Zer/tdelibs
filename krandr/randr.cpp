@@ -40,6 +40,45 @@
 #undef INT32
 #include <X11/extensions/Xrandr.h>
 
+SingleScreenData::SingleScreenData()
+{
+TQString screenFriendlyName;
+	generic_screen_detected = false;
+	screen_connected = false;
+
+	current_resolution_index = 0;
+	current_refresh_rate_index = 0;
+	current_color_depth_index = 0;
+
+	gamma_red = 0.0;
+	gamma_green = 0.0;
+	gamma_blue = 0.0;
+
+	current_rotation_index = 0;
+	current_orientation_mask = 0;
+	has_x_flip = false;
+	has_y_flip = false;
+	supports_transformations = false;
+
+	is_primary = false;
+	is_extended = false;
+	absolute_x_position = 0;
+	absolute_y_position = 0;
+	current_x_pixel_count = 0;
+	current_y_pixel_count = 0;
+
+	has_dpms = false;
+	enable_dpms = false;
+	dpms_standby_delay = 0;
+	dpms_suspend_delay = 0;
+	dpms_off_delay = 0;
+}
+
+SingleScreenData::~SingleScreenData()
+{
+	//
+}
+
 class RandRScreenPrivate
 {
 public:

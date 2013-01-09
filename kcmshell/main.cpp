@@ -282,7 +282,9 @@ extern "C" KDE_EXPORT int kdemain(int _argc, char *_argv[])
         return 0;
     }
 
-    KDialogBase::DialogType dtype = KDialogBase::Plain;
+    //KDialogBase::DialogType dtype = KDialogBase::Plain;      // FIXME
+    KDialogBase::DialogType dtype = KDialogBase::IconList;     // Work around a bug whereby several kcontrol modules (such as displayconfig) use an incorrect size when loaded with kcmshell in the Plain mode
+                                                               // This bug is possibly related to kcmultidialog.cpp:266 [( new TQHBoxLayout( page ) )->setAutoAdd( true );]
 
     if ( modules.count() < 1 )
         return 0;

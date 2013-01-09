@@ -180,16 +180,20 @@ TQString KRandrSimpleAPI::applyIccFile(TQString screenName, TQString fileName) {
 				printf("Xcalib pipe error\n\r");
 			}
 			else {
-				fgets(xcalib_result, 2048, pipe_xcalib);
-				pclose(pipe_xcalib);
-				for (i=1;i<2048;i++) {
-					if (xcalib_result[i] == 0) {
-						xcalib_result[i-1]=0;
-						i=2048;
+				if (fgets(xcalib_result, 2048, pipe_xcalib)) {
+					pclose(pipe_xcalib);
+					for (i=1;i<2048;i++) {
+						if (xcalib_result[i] == 0) {
+							xcalib_result[i-1]=0;
+							i=2048;
+						}
+					}
+					if (strlen(xcalib_result) > 2) {
+						return xcalib_result;
 					}
 				}
-				if (strlen(xcalib_result) > 2) {
-					return xcalib_result;
+				else {
+					printf("Xcalib pipe error\n\r");
 				}
 			}
 		}
@@ -245,16 +249,20 @@ TQString KRandrSimpleAPI::applyIccFile(TQString screenName, TQString fileName) {
 				printf("Xcalib pipe error\n\r");
 			}
 			else {
-				fgets(xcalib_result, 2048, pipe_xcalib);
-				pclose(pipe_xcalib);
-				for (i=1;i<2048;i++) {
-					if (xcalib_result[i] == 0) {
-						xcalib_result[i-1]=0;
-						i=2048;
+				if (fgets(xcalib_result, 2048, pipe_xcalib)) {
+					pclose(pipe_xcalib);
+					for (i=1;i<2048;i++) {
+						if (xcalib_result[i] == 0) {
+							xcalib_result[i-1]=0;
+							i=2048;
+						}
+					}
+					if (strlen(xcalib_result) > 2) {
+						return xcalib_result;
 					}
 				}
-				if (strlen(xcalib_result) > 2) {
-					return xcalib_result;
+				else {
+					printf("Xcalib pipe error\n\r");
 				}
 			}
 		}
@@ -396,16 +404,20 @@ TQString KRandrSimpleAPI::applySystemWideIccConfiguration(TQString kde_confdir) 
 		printf("Xcalib pipe error\n\r");
 	}
 	else {
-		fgets(xcalib_result, 2048, pipe_xcalib);
-		pclose(pipe_xcalib);
-		for (i=1;i<2048;i++) {
-			if (xcalib_result[i] == 0) {
-				xcalib_result[i-1]=0;
-				i=2048;
+		if (fgets(xcalib_result, 2048, pipe_xcalib)) {
+			pclose(pipe_xcalib);
+			for (i=1;i<2048;i++) {
+				if (xcalib_result[i] == 0) {
+					xcalib_result[i-1]=0;
+					i=2048;
+				}
+			}
+			if (strlen(xcalib_result) > 2) {
+				return xcalib_result;
 			}
 		}
-		if (strlen(xcalib_result) > 2) {
-			return xcalib_result;
+		else {
+			printf("Xcalib pipe error\n\r");
 		}
 	}
 	return "";
@@ -1109,28 +1121,36 @@ TQPtrList<SingleScreenData> KRandrSimpleAPI::readCurrentDisplayConfiguration() {
 				screendata->rotations.append(i18n("Rotate 90 degrees"));
 				screendata->rotations.append(i18n("Rotate 180 degrees"));
 				screendata->rotations.append(i18n("Rotate 270 degrees"));
-				screendata->current_orientation_mask = cur_screen->proposedRotation();
-				switch (screendata->current_orientation_mask & RandRScreen::RotateMask) {
-					case RandRScreen::Rotate0:
-						screendata->current_rotation_index = 0;
-						break;
-					case RandRScreen::Rotate90:
-						screendata->current_rotation_index = 1;
-						break;
-					case RandRScreen::Rotate180:
-						screendata->current_rotation_index = 2;
-						break;
-					case RandRScreen::Rotate270:
-						screendata->current_rotation_index = 3;
-						break;
-					default:
-						// Shouldn't hit this one
-						Q_ASSERT(screendata->current_orientation_mask & RandRScreen::RotateMask);
-						break;
-				}
-				screendata->has_x_flip = (screendata->current_orientation_mask & RandRScreen::ReflectX);
-				screendata->has_y_flip = (screendata->current_orientation_mask & RandRScreen::ReflectY);
 				screendata->supports_transformations = (cur_screen->rotations() != RandRScreen::Rotate0);
+				if (screendata->supports_transformations) {
+					screendata->current_orientation_mask = cur_screen->proposedRotation();
+					switch (screendata->current_orientation_mask & RandRScreen::RotateMask) {
+						case RandRScreen::Rotate0:
+							screendata->current_rotation_index = 0;
+							break;
+						case RandRScreen::Rotate90:
+							screendata->current_rotation_index = 1;
+							break;
+						case RandRScreen::Rotate180:
+							screendata->current_rotation_index = 2;
+							break;
+						case RandRScreen::Rotate270:
+							screendata->current_rotation_index = 3;
+							break;
+						default:
+							// Shouldn't hit this one
+							Q_ASSERT(screendata->current_orientation_mask & RandRScreen::RotateMask);
+							screendata->current_rotation_index = 0;
+							break;
+					}
+					screendata->has_x_flip = (screendata->current_orientation_mask & RandRScreen::ReflectX);
+					screendata->has_y_flip = (screendata->current_orientation_mask & RandRScreen::ReflectY);
+				}
+				else {
+					screendata->has_x_flip = false;
+					screendata->has_y_flip = false;
+					screendata->current_rotation_index = 0;
+				}
 
 				// Determine if this display is primary and/or extended
 				RROutput primaryoutput = XRRGetOutputPrimary(tqt_xdisplay(), DefaultRootWindow(tqt_xdisplay()));
@@ -1279,16 +1299,20 @@ TQString KRandrSimpleAPI::clearIccConfiguration() {
 		printf("Xcalib pipe error\n\r");
 	}
 	else {
-		fgets(xcalib_result, 2048, pipe_xcalib);
-		pclose(pipe_xcalib);
-		for (i=1;i<2048;i++) {
-			if (xcalib_result[i] == 0) {
-				xcalib_result[i-1]=0;
-				i=2048;
+		if (fgets(xcalib_result, 2048, pipe_xcalib)) {
+			pclose(pipe_xcalib);
+			for (i=1;i<2048;i++) {
+				if (xcalib_result[i] == 0) {
+					xcalib_result[i-1]=0;
+					i=2048;
+				}
+			}
+			if (strlen(xcalib_result) > 2) {
+				return xcalib_result;
 			}
 		}
-		if (strlen(xcalib_result) > 2) {
-			return xcalib_result;
+		else {
+			printf("Xcalib pipe error\n\r");
 		}
 	}
 	return "";
