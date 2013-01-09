@@ -2002,7 +2002,18 @@ void TDEHardwareDevices::processHotPluggedHardware() {
 						emit hardwareUpdated(hwdevice);
 						emit hardwareEvent(TDEHardwareEvent::HardwareUpdated, hwdevice->uniqueID());
 					}
-					break;
+				}
+				else if ((hwdevice->type() == TDEGenericDeviceType::Monitor)
+						&& (hwdevice->systemPath().contains(systempath))) {
+					if (!hwdevice->blacklistedForUpdate()) {
+						struct udev_device *slavedev;
+						slavedev = udev_device_new_from_syspath(m_udevStruct, hwdevice->systemPath().ascii());
+						classifyUnknownDevice(slavedev, hwdevice, false);
+						udev_device_unref(slavedev);
+						updateParentDeviceInformation(hwdevice);	// Update parent/child tables for this device
+						emit hardwareUpdated(hwdevice);
+						emit hardwareEvent(TDEHardwareEvent::HardwareUpdated, hwdevice->uniqueID());
+					}
 				}
 			}
 		}
@@ -4288,6 +4299,9 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 				mdevice->internalSetVendorName(monitor_info.first);
 				mdevice->internalSetVendorModel(monitor_info.second);
 				mdevice->m_friendlyName = monitor_info.first + " " + monitor_info.second;
+			}
+			else {
+				mdevice->m_friendlyName = i18n("Generic %1 Device").arg(genericPortName);
 			}
 			mdevice->internalSetEdid(getEDID(mdevice->systemPath()));
 		}

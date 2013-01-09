@@ -35,6 +35,11 @@
 #include <ksimpleconfig.h>
 #include <tdelibs_export.h>
 
+#define ROTATION_0_DEGREES_STRING "0 degrees"
+#define ROTATION_90_DEGREES_STRING "90 degrees"
+#define ROTATION_180_DEGREES_STRING "180 degrees"
+#define ROTATION_270_DEGREES_STRING "270 degrees"
+
 /**
  * Simple API covering most of the uses of libkrandr.
  *
@@ -157,6 +162,11 @@ class KRANDR_EXPORT KRandrSimpleAPI : public RandRDisplay
      * Applies all previously configured settings to the specified screen.
      */
     int main_low_apply (ScreenInfo *screen_info);
+
+    /**
+     * Sets the primary output device to the specified output_id
+     */
+    void set_primary_output (ScreenInfo *screen_info, RROutput output_id);
 
     /**
     * Gets the binary monitor EDID for the specified card and display

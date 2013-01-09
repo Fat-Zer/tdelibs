@@ -177,7 +177,7 @@ TQString KRandrSimpleAPI::applyIccFile(TQString screenName, TQString fileName) {
 			icc_command = TQString("xcalib \"%1\"").arg(fileName);
 			if ((pipe_xcalib = popen(icc_command.ascii(), "r")) == NULL)
 			{
-				printf("Xcalib pipe error\n\r");
+				printf("Xcalib pipe error\n\r [xcalib apply]");
 			}
 			else {
 				if (fgets(xcalib_result, 2048, pipe_xcalib)) {
@@ -193,7 +193,7 @@ TQString KRandrSimpleAPI::applyIccFile(TQString screenName, TQString fileName) {
 					}
 				}
 				else {
-					printf("Xcalib pipe error\n\r");
+					return "";
 				}
 			}
 		}
@@ -246,7 +246,7 @@ TQString KRandrSimpleAPI::applyIccFile(TQString screenName, TQString fileName) {
 			icc_command = TQString("xcalib -c");
 			if ((pipe_xcalib = popen(icc_command.ascii(), "r")) == NULL)
 			{
-				printf("Xcalib pipe error\n\r");
+				printf("Xcalib pipe error\n\r [xcalib clear]");
 			}
 			else {
 				if (fgets(xcalib_result, 2048, pipe_xcalib)) {
@@ -262,7 +262,7 @@ TQString KRandrSimpleAPI::applyIccFile(TQString screenName, TQString fileName) {
 					}
 				}
 				else {
-					printf("Xcalib pipe error\n\r");
+					return "";
 				}
 			}
 		}
@@ -401,7 +401,7 @@ TQString KRandrSimpleAPI::applySystemWideIccConfiguration(TQString kde_confdir) 
 	icc_command = TQString("xcalib \"%1\"").arg(getIccFileName(NULL, "Default", kde_confdir));
 	if ((pipe_xcalib = popen(icc_command.ascii(), "r")) == NULL)
 	{
-		printf("Xcalib pipe error\n\r");
+		printf("Xcalib pipe error [xcalib apply]\n\r");
 	}
 	else {
 		if (fgets(xcalib_result, 2048, pipe_xcalib)) {
@@ -417,7 +417,7 @@ TQString KRandrSimpleAPI::applySystemWideIccConfiguration(TQString kde_confdir) 
 			}
 		}
 		else {
-			printf("Xcalib pipe error\n\r");
+			return "";
 		}
 	}
 	return "";
@@ -569,16 +569,16 @@ TQPtrList<SingleScreenData> KRandrSimpleAPI::loadSystemwideDisplayConfiguration(
 int KRandrSimpleAPI::getHardwareRotationFlags(SingleScreenData* screendata) {
 	int rotationFlags = 0;
 	TQString rotationDesired = *screendata->rotations.at(screendata->current_rotation_index);
-	if (rotationDesired == "Normal") {
+	if (rotationDesired == ROTATION_0_DEGREES_STRING) {
 		rotationFlags = rotationFlags | RandRScreen::Rotate0;
 	}
-	else if (rotationDesired == "Rotate 90 degrees") {
+	else if (rotationDesired == ROTATION_90_DEGREES_STRING) {
 		rotationFlags = rotationFlags | RandRScreen::Rotate90;
 	}
-	else if (rotationDesired == "Rotate 180 degrees") {
+	else if (rotationDesired == ROTATION_180_DEGREES_STRING) {
 		rotationFlags = rotationFlags | RandRScreen::Rotate180;
 	}
-	else if (rotationDesired == "Rotate 270 degrees") {
+	else if (rotationDesired == ROTATION_270_DEGREES_STRING) {
 		rotationFlags = rotationFlags | RandRScreen::Rotate270;
 	}
 	if (screendata->has_x_flip) {
@@ -656,21 +656,6 @@ bool KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQPtrList<SingleScreen
 				destroyScreenInformationObject(oldconfig);
 				KMessageBox::sorry(0, xrandr_command_output, i18n("XRandR encountered a problem"));
 				return accepted;
-			}
-		}
-
-		// HACK
-		// This is needed because Qt does not properly generate screen
-		// resize events when switching screens, so KDE gets stuck in the old resolution
-		// This only seems to happen with more than one screen, so check for that condition...
-		// FIXME: This also only occurs when the primary display has been changed
-		// FIXME: Check for that condition as well!
-		if (kapp->desktop()->numScreens() > 1) {
-			for (i = 0; i < screenInfoArray.count(); i++) {
-				screendata = screenInfoArray.at(i);
-				if (screendata->is_primary == true) {
-					kapp->desktop()->emitResizedSignal(i);
-				}
 			}
 		}
 #else
@@ -804,8 +789,9 @@ void KRandrSimpleAPI::ensureMonitorDataConsistency(TQPtrList<SingleScreenData> s
 	bool has_primary_monitor = false;
 	for (i=0;i<numberOfScreens;i++) {
 		screendata = screenInfoArray.at(i);
-		if (screendata->is_primary)
+		if (screendata->is_primary) {
 			has_primary_monitor = true;
+		}
 	}
 	if (!has_primary_monitor) {
 		for (i=0;i<numberOfScreens;i++) {
@@ -1117,10 +1103,10 @@ TQPtrList<SingleScreenData> KRandrSimpleAPI::readCurrentDisplayConfiguration() {
 				// RandRScreen::ReflectX
 				// RandRScreen::ReflectY
 
-				screendata->rotations.append(i18n("Normal"));
-				screendata->rotations.append(i18n("Rotate 90 degrees"));
-				screendata->rotations.append(i18n("Rotate 180 degrees"));
-				screendata->rotations.append(i18n("Rotate 270 degrees"));
+				screendata->rotations.append(i18n(ROTATION_0_DEGREES_STRING));
+				screendata->rotations.append(i18n(ROTATION_90_DEGREES_STRING));
+				screendata->rotations.append(i18n(ROTATION_180_DEGREES_STRING));
+				screendata->rotations.append(i18n(ROTATION_270_DEGREES_STRING));
 				screendata->supports_transformations = (cur_screen->rotations() != RandRScreen::Rotate0);
 				if (screendata->supports_transformations) {
 					screendata->current_orientation_mask = cur_screen->proposedRotation();
@@ -1154,13 +1140,16 @@ TQPtrList<SingleScreenData> KRandrSimpleAPI::readCurrentDisplayConfiguration() {
 
 				// Determine if this display is primary and/or extended
 				RROutput primaryoutput = XRRGetOutputPrimary(tqt_xdisplay(), DefaultRootWindow(tqt_xdisplay()));
-				if (primaryoutput == randr_screen_info->outputs[i]->id)
+				if (primaryoutput == randr_screen_info->outputs[i]->id) {
 					screendata->is_primary = false;
-				else
+				}
+				else {
 					screendata->is_primary = true;
+				}
 				screendata->is_extended = screen_active;
-				if (!screendata->is_extended)
+				if (!screendata->is_extended) {
 					screendata->is_primary = false;
+				}
 
 				// Get this screen's absolute position
 				screendata->absolute_x_position = 0;
@@ -1277,10 +1266,21 @@ TQPtrList<SingleScreenData> KRandrSimpleAPI::readCurrentDisplayConfiguration() {
 		numberOfScreens++;
 	}
 
-	// [FIXME]
-	// Set this on the real primary monitor only!
-	screendata = screenInfoArray.at(0);
-	screendata->is_primary = true;
+	bool primary_set = false;
+	for ( screendata=screenInfoArray.first(); screendata; screendata=screenInfoArray.next() ) {
+		if (screendata->is_primary) {
+			primary_set = true;
+			break;
+		}
+	}
+	// If there is no primary monitor set, xrandr is probably not functioning correctly!
+	Q_ASSERT(primary_set);
+	if (!primary_set) {
+		// [FIXME]
+		// Set this on the real primary monitor only!
+		screendata = screenInfoArray.at(0);
+		screendata->is_primary = true;
+	}
 
 	return screenInfoArray;
 }
@@ -1296,7 +1296,7 @@ TQString KRandrSimpleAPI::clearIccConfiguration() {
 	icc_command = TQString("xcalib -c");
 	if ((pipe_xcalib = popen(icc_command.ascii(), "r")) == NULL)
 	{
-		printf("Xcalib pipe error\n\r");
+		printf("Xcalib pipe error [xcalib clear]\n\r");
 	}
 	else {
 		if (fgets(xcalib_result, 2048, pipe_xcalib)) {
@@ -1312,7 +1312,7 @@ TQString KRandrSimpleAPI::clearIccConfiguration() {
 			}
 		}
 		else {
-			printf("Xcalib pipe error\n\r");
+			return "";
 		}
 	}
 	return "";
@@ -1386,6 +1386,11 @@ Status KRandrSimpleAPI::crtc_disable (CrtcInfo *crtc)
 int KRandrSimpleAPI::main_low_apply (ScreenInfo *screen_info)
 {
     return internal_main_low_apply (screen_info);
+}
+
+void KRandrSimpleAPI::set_primary_output (ScreenInfo *screen_info, RROutput output_id)
+{
+    internal_output_set_primary(screen_info, output_id);
 }
 
 bool KRandrSimpleAPI::kRandrHasRandr(void)

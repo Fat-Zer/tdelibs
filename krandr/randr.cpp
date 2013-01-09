@@ -85,8 +85,9 @@ public:
 	RandRScreenPrivate() : config(0L) {};
 	~RandRScreenPrivate()
 	{
-		if (config)
+		if (config) {
 			XRRFreeScreenConfigInfo(config);
+		}
 	}
 
 	XRRScreenConfiguration* config;
@@ -108,8 +109,9 @@ KDE_EXPORT RandRScreen::~RandRScreen()
 
 KDE_EXPORT void RandRScreen::loadSettings()
 {
-	if (d->config)
+	if (d->config) {
 		XRRFreeScreenConfigInfo(d->config);
+	}
 
 	d->config = XRRGetScreenInfo(tqt_xdisplay(), RootWindow(tqt_xdisplay(), m_screen));
 
@@ -141,9 +143,11 @@ KDE_EXPORT void RandRScreen::loadSettings()
 		ScreenInfo *screeninfo = internal_read_screen_info(tqt_xdisplay());
 		XRROutputInfo *output_info = screeninfo->outputs[m_screen]->info;
 		CrtcInfo *current_crtc = screeninfo->outputs[m_screen]->cur_crtc;
-		int numSizes = screeninfo->res->nmode;
+		int numSizes = output_info->nmode;
 		for (int i = 0; i < numSizes; i++) {
-			TQSize newSize = TQSize(screeninfo->res->modes[i].width, screeninfo->res->modes[i].height);
+			XRRModeInfo *xrrmode;
+			xrrmode = internal_find_mode_by_xid (screeninfo, output_info->modes[i]);
+			TQSize newSize = TQSize(xrrmode->width, xrrmode->height);
 			if (!m_pixelSizes.contains(newSize)) {
 				m_pixelSizes.append(newSize);
 				m_mmSizes.append(TQSize(output_info->mm_width, output_info->mm_height));
