@@ -179,42 +179,80 @@ class KRANDR_EXPORT KRandrSimpleAPI : public RandRDisplay
     TQString getEDIDMonitorName(int card, TQString displayname);
 
     /**
+    * Returns a HotPlugRulesList containing all hotplug rules from the specified configuration directory
+    */
+    HotPlugRulesList getHotplugRules(TQString kde_confdir);
+
+    /**
+    * Saves a HotPlugRulesList containing all hotplug rules to the specified configuration directory
+    */
+    void saveHotplugRules(HotPlugRulesList rules, TQString kde_confdir);
+
+    /**
+    * Applies all hotplug rules in the specified configuration directory to the current display configuration
+    */
+    void applyHotplugRules(TQString kde_confdir);
+
+    /**
+    * Returns a list of all profiles available in the specified configuration directory
+    * This list does not include the default ("") profile
+    */
+    TQStringList getDisplayConfigurationProfiles(TQString kde_confdir);
+
+    /**
+    * Deletes the specified profile from the specified configuration directory
+    * Returns true on success, false on failure
+    */
+    bool deleteDisplayConfiguration(TQString profilename, TQString kde_confdir);
+
+    /**
+    * Renames the specified profile in the specified configuration directory
+    * Returns true on success, false on failure
+    */
+    bool renameDisplayConfiguration(TQString profilename, TQString newprofilename, TQString kde_confdir);
+
+    /**
     * Saves the systemwide display configuration screenInfoArray to the specified profile
     * If profilename is empty, the default profile is utilized
     * If enable is set to true, the default profile will be applied at system startup
     */
-    void saveSystemwideDisplayConfiguration(bool enable, TQString profilename, TQString kde_confdir, TQPtrList<SingleScreenData> screenInfoArray);
+    void saveDisplayConfiguration(bool enable, TQString profilename, TQString defaultprofilename, TQString kde_confdir, TQPtrList<SingleScreenData> screenInfoArray);
 
     /**
     * Reads the systemwide display configuration screenInfoArray from the specified profile
     * If profilename is empty, the default profile is utilized
     * WARNING: The calling application must free the returned objects when it is done using them
     */
-    TQPtrList<SingleScreenData> loadSystemwideDisplayConfiguration(TQString profilename, TQString kde_confdir);
+    TQPtrList<SingleScreenData> loadDisplayConfiguration(TQString profilename, TQString kde_confdir);
 
     /**
     * Applies the systemwide display configuration screenInfoArray from the specified profile
     * If profilename is empty, the default profile is utilized
     * Returns the offset of the primary screen's top left corner
     */
-    TQPoint applySystemwideDisplayConfiguration(TQString profilename, TQString kde_confdir);
+    TQPoint applyDisplayConfiguration(TQString profilename, TQString kde_confdir);
 
     /**
     * Applies the systemwide display configuration screenInfoArray to the hardware
     * If test is true, the new configuration will be loaded for a short period of time, then reverted automatically
     * Returns true if configuration was accepted; false if not
     */
-    bool applySystemwideDisplayConfiguration(TQPtrList<SingleScreenData> screenInfoArray, bool test=TRUE, TQString kde_confdir="");
+    bool applyDisplayConfiguration(TQPtrList<SingleScreenData> screenInfoArray, bool test=TRUE, TQString kde_confdir="");
 
     /**
     * Applies the gamma contained within the systemwide display configuration screenInfoArray to the hardware
     */
-    void applySystemwideDisplayGamma(TQPtrList<SingleScreenData> screenInfoArray);
+    void applyDisplayGamma(TQPtrList<SingleScreenData> screenInfoArray);
 
     /**
     * Applies the DPMS settings contained within the systemwide display configuration screenInfoArray to the hardware
     */
-    void applySystemwideDisplayDPMS(TQPtrList<SingleScreenData> screenInfoArray);
+    void applyDisplayDPMS(TQPtrList<SingleScreenData> screenInfoArray);
+
+    /**
+    * Copies a screen information object
+    */
+    TQPtrList<SingleScreenData> copyScreenInformationObject(TQPtrList<SingleScreenData> screenInfoArray);
 
     /**
     * Destroys a screen information object

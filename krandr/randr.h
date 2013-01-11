@@ -29,12 +29,33 @@
 class KTimerDialog;
 class RandRScreenPrivate;
 
-class SingleScreenData {
+class KRANDR_EXPORT HotPlugRule {
+	public:
+		enum states {
+			AnyState		= 0,
+			Connected		= 1,
+			Disconnected		= 2
+		};
+
+	public:
+		HotPlugRule();
+		virtual ~HotPlugRule();
+
+	public:
+		TQStringList outputs;
+		TQValueList< int > states;
+		TQString profileName;
+};
+
+typedef TQValueList< HotPlugRule > HotPlugRulesList;
+
+class KRANDR_EXPORT SingleScreenData {
 	public:
 		SingleScreenData();
 		virtual ~SingleScreenData();
 	
 	public:
+		TQString screenUniqueName;
 		TQString screenFriendlyName;
 		bool generic_screen_detected;
 		bool screen_connected;

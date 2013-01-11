@@ -22,6 +22,7 @@
 
 ***************************************************************************/
 
+#include <tqdir.h>
 #include <tqtimer.h>
 #include <tqstringlist.h>
 
@@ -30,6 +31,7 @@
 #include <kapplication.h>
 
 #include <stdlib.h>
+#include <unistd.h>
 #include <cmath>
 
 #include "libkrandr.h"
@@ -423,7 +425,43 @@ TQString KRandrSimpleAPI::applySystemWideIccConfiguration(TQString kde_confdir) 
 	return "";
 }
 
-void KRandrSimpleAPI::saveSystemwideDisplayConfiguration(bool enable, TQString profilename, TQString kde_confdir, TQPtrList<SingleScreenData> screenInfoArray) {
+TQStringList KRandrSimpleAPI::getDisplayConfigurationProfiles(TQString kde_confdir) {
+	TQStringList ret;
+
+	TQDir d(kde_confdir + "/displayconfig/");
+	d.setFilter(TQDir::Files);
+	d.setSorting(TQDir::Name);
+
+	const TQFileInfoList *list = d.entryInfoList();
+	TQFileInfoListIterator it(*list);
+	TQFileInfo *fi;
+
+	while ((fi = it.current()) != 0) {
+		if (fi->fileName() != "default") {
+			ret.append(fi->fileName());
+		}
+		++it;
+	}
+
+	return ret;
+}
+
+bool KRandrSimpleAPI::deleteDisplayConfiguration(TQString profilename, TQString kde_confdir) {
+	TQString fileName = kde_confdir + "/displayconfig/";
+	fileName.append(profilename);
+	return (!unlink(fileName.ascii()));
+}
+
+bool KRandrSimpleAPI::renameDisplayConfiguration(TQString profilename, TQString newprofilename, TQString kde_confdir) {
+	TQString fileName = kde_confdir + "/displayconfig/";
+	TQString newFileName = fileName;
+	fileName.append(profilename);
+	newFileName.append(newprofilename);
+	TQDir d(kde_confdir + "/displayconfig/");
+	return (d.rename(fileName, newFileName));
+}
+
+void KRandrSimpleAPI::saveDisplayConfiguration(bool enable, TQString profilename, TQString defaultprofilename, TQString kde_confdir, TQPtrList<SingleScreenData> screenInfoArray) {
 	int i;
 
 	TQString filename;
@@ -433,6 +471,7 @@ void KRandrSimpleAPI::saveSystemwideDisplayConfiguration(bool enable, TQString p
 	KSimpleConfig* display_config = new KSimpleConfig( filename );
 	display_config->setGroup("General");
 	display_config->writeEntry("ApplySettingsOnStart", enable);
+	display_config->writeEntry("StartupProfileName", defaultprofilename);
 	display_config->sync();
 	delete display_config;
 
@@ -447,6 +486,7 @@ void KRandrSimpleAPI::saveSystemwideDisplayConfiguration(bool enable, TQString p
 	SingleScreenData *screendata;
 	for ( screendata=screenInfoArray.first(); screendata; screendata=screenInfoArray.next() ) {
 		display_config->setGroup(TQString("SCREEN %1").arg(i));
+		display_config->writeEntry("ScreenUniqueName", screendata->screenUniqueName);
 		display_config->writeEntry("ScreenFriendlyName", screendata->screenFriendlyName);
 		display_config->writeEntry("GenericScreenDetected", screendata->generic_screen_detected);
 		display_config->writeEntry("ScreenConnected", screendata->screen_connected);
@@ -483,7 +523,7 @@ void KRandrSimpleAPI::saveSystemwideDisplayConfiguration(bool enable, TQString p
 	delete display_config;
 }
 
-TQPoint KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQString profilename, TQString kde_confdir) {
+TQPoint KRandrSimpleAPI::applyDisplayConfiguration(TQString profilename, TQString kde_confdir) {
 	TQPoint ret;
 
 	TQString filename = "displayglobals";
@@ -491,13 +531,16 @@ TQPoint KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQString profilenam
 	KSimpleConfig* display_config = new KSimpleConfig( filename );
 	display_config->setGroup("General");
 	bool enabled = display_config->readBoolEntry("ApplySettingsOnStart", false);
+	if (profilename == "") {
+		profilename = display_config->readEntry("StartupProfileName", "");
+	}
 	delete display_config;
 
 	if (enabled) {
 		TQPtrList<SingleScreenData> screenInfoArray;
-		screenInfoArray = loadSystemwideDisplayConfiguration(profilename, kde_confdir);
+		screenInfoArray = loadDisplayConfiguration(profilename, kde_confdir);
 		if (screenInfoArray.count() > 0) {
-			applySystemwideDisplayConfiguration(screenInfoArray, FALSE, kde_confdir);
+			applyDisplayConfiguration(screenInfoArray, FALSE, kde_confdir);
 		}
 		destroyScreenInformationObject(screenInfoArray);
 		screenInfoArray = readCurrentDisplayConfiguration();
@@ -509,13 +552,14 @@ TQPoint KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQString profilenam
 	return ret;
 }
 
-TQPtrList<SingleScreenData> KRandrSimpleAPI::loadSystemwideDisplayConfiguration(TQString profilename, TQString kde_confdir) {
+TQPtrList<SingleScreenData> KRandrSimpleAPI::loadDisplayConfiguration(TQString profilename, TQString kde_confdir) {
 	int i;
 
 	TQString filename;
 	filename = profilename;
-	if (filename == "")
+	if (filename == "") {
 		filename = "default";
+	}
 	filename.prepend(kde_confdir.append("/displayconfig/"));
 
 	KSimpleConfig* display_config = new KSimpleConfig( filename );
@@ -529,6 +573,7 @@ TQPtrList<SingleScreenData> KRandrSimpleAPI::loadSystemwideDisplayConfiguration(
 			i = ((*it).remove("SCREEN ")).toInt();
 			screendata = new SingleScreenData;
 			screenInfoArray.append(screendata);
+			screendata->screenUniqueName = display_config->readEntry("ScreenUniqueName");
 			screendata->screenFriendlyName = display_config->readEntry("ScreenFriendlyName");
 			screendata->generic_screen_detected = display_config->readBoolEntry("GenericScreenDetected");
 			screendata->screen_connected = display_config->readBoolEntry("ScreenConnected");
@@ -592,7 +637,7 @@ int KRandrSimpleAPI::getHardwareRotationFlags(SingleScreenData* screendata) {
 
 #define USE_XRANDR_PROGRAM
 
-bool KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQPtrList<SingleScreenData> screenInfoArray, bool test, TQString kde_confdir) {
+bool KRandrSimpleAPI::applyDisplayConfiguration(TQPtrList<SingleScreenData> screenInfoArray, bool test, TQString kde_confdir) {
 	int i;
 	int j;
 	bool accepted = true;
@@ -651,7 +696,7 @@ bool KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQPtrList<SingleScreen
 		xrandr_command_output = xrandr_command_output.stripWhiteSpace();
 		if (test) {
 			if (xrandr_command_output != "") {
-				applySystemwideDisplayConfiguration(oldconfig, FALSE, kde_confdir);
+				applyDisplayConfiguration(oldconfig, FALSE, kde_confdir);
 				accepted = false;
 				destroyScreenInformationObject(oldconfig);
 				KMessageBox::sorry(0, xrandr_command_output, i18n("XRandR encountered a problem"));
@@ -746,8 +791,8 @@ bool KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQPtrList<SingleScreen
 #endif
 	}
 
-	applySystemwideDisplayGamma(screenInfoArray);
-	applySystemwideDisplayDPMS(screenInfoArray);
+	applyDisplayGamma(screenInfoArray);
+	applyDisplayDPMS(screenInfoArray);
 	TQString current_icc_profile = getCurrentProfile();
 	applySystemWideIccConfiguration(kde_confdir);
 	applyIccConfiguration(current_icc_profile, kde_confdir);
@@ -755,13 +800,25 @@ bool KRandrSimpleAPI::applySystemwideDisplayConfiguration(TQPtrList<SingleScreen
 	if (test == TRUE) {
 		int ret = showTestConfigurationDialog();
 		if (!ret) {
-			applySystemwideDisplayConfiguration(oldconfig, FALSE, kde_confdir);
+			applyDisplayConfiguration(oldconfig, FALSE, kde_confdir);
 			accepted = false;
 		}
 		destroyScreenInformationObject(oldconfig);
 	}
 
 	return accepted;
+}
+
+TQPtrList<SingleScreenData> KRandrSimpleAPI::copyScreenInformationObject(TQPtrList<SingleScreenData> screenInfoArray) {
+	SingleScreenData *origscreendata;
+	SingleScreenData *copyscreendata;
+	TQPtrList<SingleScreenData> retArray;
+	for ( origscreendata = screenInfoArray.first(); origscreendata; origscreendata = screenInfoArray.next() ) {
+		copyscreendata = new SingleScreenData;
+		*copyscreendata = *origscreendata;
+		retArray.append(copyscreendata);
+	}
+	return retArray;
 }
 
 void KRandrSimpleAPI::destroyScreenInformationObject(TQPtrList<SingleScreenData> screenInfoArray) {
@@ -891,7 +948,110 @@ TQPoint KRandrSimpleAPI::primaryScreenOffsetFromTLC(TQPtrList<SingleScreenData> 
 	return TQPoint(primary_offset_x, primary_offset_y);
 }
 
-void KRandrSimpleAPI::applySystemwideDisplayGamma(TQPtrList<SingleScreenData> screenInfoArray) {
+HotPlugRulesList KRandrSimpleAPI::getHotplugRules(TQString kde_confdir) {
+	int i;
+	TQString filename;
+	HotPlugRulesList ret;
+
+	filename = "displayglobals";
+	filename.prepend(kde_confdir.append("/"));
+	KSimpleConfig* display_config = new KSimpleConfig( filename );
+
+	TQStringList grouplist = display_config->groupList();
+	for ( TQStringList::Iterator it = grouplist.begin(); it != grouplist.end(); ++it ) {
+		if (!(*it).startsWith("Hotplug-Rule")) {
+			continue;
+		}
+		HotPlugRule rule;
+		display_config->setGroup(*it);
+		rule.outputs = display_config->readListEntry("Outputs");
+		rule.states = display_config->readIntListEntry("States");
+		rule.profileName = display_config->readEntry("Profile");
+		ret.append(rule);
+	}
+	delete display_config;
+
+	return ret;
+}
+
+void KRandrSimpleAPI::saveHotplugRules(HotPlugRulesList rules, TQString kde_confdir) {
+	int i;
+	TQString filename;
+
+	filename = "displayglobals";
+	filename.prepend(kde_confdir.append("/"));
+	KSimpleConfig* display_config = new KSimpleConfig( filename );
+	TQStringList grouplist = display_config->groupList();
+	for ( TQStringList::Iterator it = grouplist.begin(); it != grouplist.end(); ++it ) {
+		if (!(*it).startsWith("Hotplug-Rule")) {
+			continue;
+		}
+		display_config->deleteGroup(*it, true, false);
+	}
+	HotPlugRulesList::Iterator it;
+	i=0;
+	for (it=rules.begin(); it != rules.end(); ++it) {
+		display_config->setGroup(TQString("Hotplug-Rule%1").arg(i));
+		display_config->writeEntry("Outputs", (*it).outputs);
+		display_config->writeEntry("States", (*it).states);
+		display_config->writeEntry("Profile", (*it).profileName);
+		i++;
+	}
+	display_config->sync();
+	delete display_config;
+}
+
+void KRandrSimpleAPI::applyHotplugRules(TQString kde_confdir) {
+	HotPlugRulesList rules = getHotplugRules(kde_confdir);
+	TQPtrList<SingleScreenData> screenInfoArray = readCurrentDisplayConfiguration();
+
+	int i;
+	int j;
+	TQString bestRule;
+	int bestRuleMatchCount = 0;
+	SingleScreenData *screendata = NULL;
+	HotPlugRulesList::Iterator it;
+	for (it=rules.begin(); it != rules.end(); ++it) {
+		// Compare each rule against the current display configuration
+		// It an output matches the state given in the rule, increment matchCount
+		HotPlugRule rule = *it;
+		int matchCount = 0;
+		int numberOfScreens = screenInfoArray.count();
+		for (i=0;i<numberOfScreens;i++) {
+			screendata = screenInfoArray.at(i);
+			for (j=0; j<(*it).outputs.count(); j++) {
+				if ((*it).outputs[j] != screendata->screenUniqueName) {
+					continue;
+				}
+				if ((*it).states[j] == HotPlugRule::Connected) {
+					if (screendata->screen_connected) {
+						matchCount++;
+					}
+				}
+				else if ((*it).states[j] == HotPlugRule::Disconnected) {
+					if (!screendata->screen_connected) {
+						matchCount++;
+					}
+				}
+			}
+		}
+
+		if (matchCount > bestRuleMatchCount) {
+			bestRuleMatchCount = matchCount;
+			bestRule = rule.profileName;
+		}
+	}
+
+	destroyScreenInformationObject(screenInfoArray);
+
+	if (bestRuleMatchCount > 0) {
+		// At least one rule matched...
+		// Apply the profile name in bestRule to the display hardware
+		applyDisplayConfiguration(bestRule, kde_confdir);
+	}
+}
+
+void KRandrSimpleAPI::applyDisplayGamma(TQPtrList<SingleScreenData> screenInfoArray) {
 	int i;
 	Display *randr_display;
 	XRROutputInfo *output_info;
@@ -943,7 +1103,7 @@ void KRandrSimpleAPI::applySystemwideDisplayGamma(TQPtrList<SingleScreenData> sc
 	}
 }
 
-void KRandrSimpleAPI::applySystemwideDisplayDPMS(TQPtrList<SingleScreenData> screenInfoArray) {
+void KRandrSimpleAPI::applyDisplayDPMS(TQPtrList<SingleScreenData> screenInfoArray) {
 	int i;
 	Display *randr_display;
 	XRROutputInfo *output_info;
@@ -1017,6 +1177,7 @@ TQPtrList<SingleScreenData> KRandrSimpleAPI::readCurrentDisplayConfiguration() {
 			// Create new data object
 			screendata = new SingleScreenData;
 			screenInfoArray.append(screendata);
+			screendata->screenUniqueName = TQString(i18n("%1:%2")).arg(":0").arg(capitalizeString(output_info->name));	// [FIXME] How can I get the name of the Xorg graphics driver currently in use?
 			screendata->screenFriendlyName = TQString(i18n("%1. %2 output on %3")).arg(i+1).arg(capitalizeString(output_info->name)).arg(":0");	// [FIXME] How can I get the name of the Xorg graphics driver currently in use?
 			screendata->generic_screen_detected = false;
 

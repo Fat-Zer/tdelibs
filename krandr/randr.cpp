@@ -40,9 +40,18 @@
 #undef INT32
 #include <X11/extensions/Xrandr.h>
 
+HotPlugRule::HotPlugRule()
+{
+	//
+}
+
+HotPlugRule::~HotPlugRule()
+{
+	//
+}
+
 SingleScreenData::SingleScreenData()
 {
-TQString screenFriendlyName;
 	generic_screen_detected = false;
 	screen_connected = false;
 
