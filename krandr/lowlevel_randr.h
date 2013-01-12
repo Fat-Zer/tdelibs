@@ -85,6 +85,7 @@ struct ScreenInfo* internal_read_screen_info (Display *);
 int internal_set_screen_size (struct ScreenInfo *screen_info);
 void internal_output_auto (struct ScreenInfo *screen_info, struct OutputInfo *output_info);
 void internal_output_off (struct ScreenInfo *screen_info, struct OutputInfo *output);
+void internal_output_set_primary (struct ScreenInfo *screen_info, RROutput output_id);
 struct CrtcInfo* internal_auto_find_crtc (struct ScreenInfo *screen_info, struct OutputInfo *output_info);
 
 XRRModeInfo *internal_find_mode_by_xid (struct ScreenInfo *screen_info, RRMode mode_id);

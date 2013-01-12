@@ -195,9 +195,10 @@ KCModule * KCModuleProxy::realModule() const
 
 		d->topLayout->addWidget( d->kcm );
 
-		if ( !d->rootInfo && /* If it's already done */
-				moduleInfo().needsRootPrivileges() /* root, anyone? */ && 
-				!KUser().isSuperUser() ) /* Not necessary if we're root */
+		if ( !d->rootInfo && /* If the message was not yet created */
+				d->kcm->useRootOnlyMsg() /* and the module requests the message */ &&
+				moduleInfo().needsRootPrivileges() /* and the module wants root access */ && 
+				!KUser().isSuperUser() ) /* and we are not currently root */
 		{
 
 			d->rootInfo = new TQLabel( that, "rootInfo" );

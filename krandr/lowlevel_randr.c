@@ -673,3 +673,8 @@ void internal_output_off (struct ScreenInfo *screen_info, struct OutputInfo *out
 	screen_info->cur_crtc = NULL;
 	output->off_set = 1;
 }
+
+void internal_output_set_primary (struct ScreenInfo *screen_info, RROutput output_id)
+{
+	XRRSetOutputPrimary(screen_info->dpy, screen_info->window, output_id);
+}
