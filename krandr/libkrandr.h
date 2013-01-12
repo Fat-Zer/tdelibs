@@ -179,6 +179,21 @@ class KRANDR_EXPORT KRandrSimpleAPI : public RandRDisplay
     TQString getEDIDMonitorName(int card, TQString displayname);
 
     /**
+    * Returns true if the specified configuration directory has enabled display configuration
+    */
+    bool getDisplayConfigurationEnabled(TQString kde_confdir);
+
+    /**
+    * Returns true if the specified configuration directory has enabled automatic profile application on startup
+    */
+    bool getDisplayConfigurationStartupAutoApplyEnabled(TQString kde_confdir);
+
+    /**
+    * Returns the name of the automatically applied startup profile in the specified configuration directory
+    */
+    TQString getDisplayConfigurationStartupAutoApplyName(TQString kde_confdir);
+
+    /**
     * Returns a HotPlugRulesList containing all hotplug rules from the specified configuration directory
     */
     HotPlugRulesList getHotplugRules(TQString kde_confdir);
@@ -216,7 +231,7 @@ class KRANDR_EXPORT KRandrSimpleAPI : public RandRDisplay
     * If profilename is empty, the default profile is utilized
     * If enable is set to true, the default profile will be applied at system startup
     */
-    void saveDisplayConfiguration(bool enable, TQString profilename, TQString defaultprofilename, TQString kde_confdir, TQPtrList<SingleScreenData> screenInfoArray);
+    void saveDisplayConfiguration(bool enable, bool applyonstart, TQString profilename, TQString defaultprofilename, TQString kde_confdir, TQPtrList<SingleScreenData> screenInfoArray);
 
     /**
     * Reads the systemwide display configuration screenInfoArray from the specified profile
@@ -224,6 +239,12 @@ class KRANDR_EXPORT KRandrSimpleAPI : public RandRDisplay
     * WARNING: The calling application must free the returned objects when it is done using them
     */
     TQPtrList<SingleScreenData> loadDisplayConfiguration(TQString profilename, TQString kde_confdir);
+
+    /**
+    * Applies the startup display configuration profile if enabled
+    * Returns the offset of the primary screen's top left corner
+    */
+    TQPoint applyStartupDisplayConfiguration(TQString kde_confdir);
 
     /**
     * Applies the systemwide display configuration screenInfoArray from the specified profile

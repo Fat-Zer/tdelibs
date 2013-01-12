@@ -461,7 +461,7 @@ bool KRandrSimpleAPI::renameDisplayConfiguration(TQString profilename, TQString 
 	return (d.rename(fileName, newFileName));
 }
 
-void KRandrSimpleAPI::saveDisplayConfiguration(bool enable, TQString profilename, TQString defaultprofilename, TQString kde_confdir, TQPtrList<SingleScreenData> screenInfoArray) {
+void KRandrSimpleAPI::saveDisplayConfiguration(bool enable, bool applyonstart, TQString profilename, TQString defaultprofilename, TQString kde_confdir, TQPtrList<SingleScreenData> screenInfoArray) {
 	int i;
 
 	TQString filename;
@@ -470,14 +470,16 @@ void KRandrSimpleAPI::saveDisplayConfiguration(bool enable, TQString profilename
 	filename.prepend(kde_confdir.append("/"));
 	KSimpleConfig* display_config = new KSimpleConfig( filename );
 	display_config->setGroup("General");
-	display_config->writeEntry("ApplySettingsOnStart", enable);
+	display_config->writeEntry("EnableDisplayControl", enable);
+	display_config->writeEntry("ApplySettingsOnStart", applyonstart);
 	display_config->writeEntry("StartupProfileName", defaultprofilename);
 	display_config->sync();
 	delete display_config;
 
 	filename = profilename;
-	if (filename == "")
+	if (filename == "") {
 		filename = "default";
+	}
 	filename.prepend(kde_confdir.append("/displayconfig/"));
 
 	display_config = new KSimpleConfig( filename );
@@ -523,18 +525,24 @@ void KRandrSimpleAPI::saveDisplayConfiguration(bool enable, TQString profilename
 	delete display_config;
 }
 
+TQPoint KRandrSimpleAPI::applyStartupDisplayConfiguration(TQString kde_confdir) {
+	bool applyonstart = getDisplayConfigurationStartupAutoApplyEnabled(kde_confdir);
+	if (applyonstart) {
+		TQString profilename = getDisplayConfigurationStartupAutoApplyName(kde_confdir);
+		return applyDisplayConfiguration(profilename, kde_confdir);
+	}
+	else {
+		return TQPoint();
+	}
+}
+
 TQPoint KRandrSimpleAPI::applyDisplayConfiguration(TQString profilename, TQString kde_confdir) {
 	TQPoint ret;
 
-	TQString filename = "displayglobals";
-	filename.prepend(kde_confdir.append("/"));
-	KSimpleConfig* display_config = new KSimpleConfig( filename );
-	display_config->setGroup("General");
-	bool enabled = display_config->readBoolEntry("ApplySettingsOnStart", false);
+	bool enabled = getDisplayConfigurationEnabled(kde_confdir);
 	if (profilename == "") {
-		profilename = display_config->readEntry("StartupProfileName", "");
+		profilename = "default";
 	}
-	delete display_config;
 
 	if (enabled) {
 		TQPtrList<SingleScreenData> screenInfoArray;
@@ -1001,7 +1009,45 @@ void KRandrSimpleAPI::saveHotplugRules(HotPlugRulesList rules, TQString kde_conf
 	delete display_config;
 }
 
+bool KRandrSimpleAPI::getDisplayConfigurationEnabled(TQString kde_confdir) {
+	TQString filename = "displayglobals";
+	filename.prepend(kde_confdir.append("/"));
+	KSimpleConfig* display_config = new KSimpleConfig( filename );
+	display_config->setGroup("General");
+	bool enabled = display_config->readBoolEntry("EnableDisplayControl", false);
+	delete display_config;
+
+	return enabled;
+}
+
+bool KRandrSimpleAPI::getDisplayConfigurationStartupAutoApplyEnabled(TQString kde_confdir) {
+	TQString filename = "displayglobals";
+	filename.prepend(kde_confdir.append("/"));
+	KSimpleConfig* display_config = new KSimpleConfig( filename );
+	display_config->setGroup("General");
+	bool applyonstart = display_config->readBoolEntry("ApplySettingsOnStart", false);
+	delete display_config;
+
+	return applyonstart;
+}
+
+TQString KRandrSimpleAPI::getDisplayConfigurationStartupAutoApplyName(TQString kde_confdir) {
+	TQString filename = "displayglobals";
+	filename.prepend(kde_confdir.append("/"));
+	KSimpleConfig* display_config = new KSimpleConfig( filename );
+	display_config->setGroup("General");
+	TQString profilename = display_config->readEntry("StartupProfileName", "");
+	delete display_config;
+
+	return profilename;
+}
+
 void KRandrSimpleAPI::applyHotplugRules(TQString kde_confdir) {
+	bool enabled = getDisplayConfigurationEnabled(kde_confdir);
+	if (!enabled) {
+		return;
+	}
+
 	HotPlugRulesList rules = getHotplugRules(kde_confdir);
 	TQPtrList<SingleScreenData> screenInfoArray = readCurrentDisplayConfiguration();
 
