@@ -63,7 +63,16 @@
 #include "config.h"
 
 #ifdef WITH_NETWORK_MANAGER_BACKEND
-#include "networkbackends/network-manager/network-manager.h"
+	#include "networkbackends/network-manager/network-manager.h"
+#endif // WITH_NETWORK_MANAGER_BACKEND
+
+// uPower integration
+#ifdef WITH_UPOWER
+	#include <tqdbusdata.h>
+	#include <tqdbusmessage.h>
+	#include <tqdbusproxy.h>
+	#include <tqdbusvariant.h>
+	#include <tqdbusconnection.h>
 #endif // WITH_NETWORK_MANAGER_BACKEND
 
 // BEGIN BLOCK
@@ -1113,7 +1122,25 @@ bool TDERootSystemDevice::canSuspend() {
 		}
 	}
 	else {
+#ifdef WITH_UPOWER
+		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+		if (dbusConn.isConnected()) {
+			TQT_DBusProxy upowerProperties("org.freedesktop.UPower", "/org/freedesktop/UPower", "org.freedesktop.DBus.Properties", dbusConn);
+	
+			// can suspend?
+			TQValueList<TQT_DBusData> params;
+			params << TQT_DBusData::fromString(upowerProperties.interface()) << TQT_DBusData::fromString("CanSuspend");
+			TQT_DBusMessage reply = upowerProperties.sendWithReply("Get", params);
+			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+				return reply[0].toVariant().value.toBool();
+			}
+		}
+		else {
+			return FALSE;
+		}
+#else // WITH_UPOWER
 		return FALSE;
+#endif// WITH_UPOWER
 	}
 }
 
@@ -1129,7 +1156,25 @@ bool TDERootSystemDevice::canHibernate() {
 		}
 	}
 	else {
+#ifdef WITH_UPOWER
+		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+		if (dbusConn.isConnected()) {
+			TQT_DBusProxy upowerProperties("org.freedesktop.UPower", "/org/freedesktop/UPower", "org.freedesktop.DBus.Properties", dbusConn);
+	
+			// can hibernate?
+			TQValueList<TQT_DBusData> params;
+			params << TQT_DBusData::fromString(upowerProperties.interface()) << TQT_DBusData::fromString("CanHibernate");
+			TQT_DBusMessage reply = upowerProperties.sendWithReply("Get", params);
+			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+				return reply[0].toVariant().value.toBool();
+			}
+		}
+		else {
+			return FALSE;
+		}
+#else // WITH_UPOWER
 		return FALSE;
+#endif// WITH_UPOWER
 	}
 }
 
@@ -1195,6 +1240,40 @@ bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState
 			stream << powerCommand;
 			file.close();
 			return true;
+		}
+		else {
+#ifdef WITH_UPOWER
+			TQT_DBusConnection dbusConn;
+			dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+			if ( dbusConn.isConnected() ) {
+				if (ps == TDESystemPowerState::Suspend) {
+					TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
+								"org.freedesktop.UPower",
+								"/org/freedesktop/UPower",
+								"org.freedesktop.UPower",
+								"Suspend");
+					dbusConn.sendWithReply(msg);
+					return true;
+				}
+				else if (ps == TDESystemPowerState::Hibernate) {
+					TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
+								"org.freedesktop.UPower",
+								"/org/freedesktop/UPower",
+								"org.freedesktop.UPower",
+								"Hibernate");
+					dbusConn.sendWithReply(msg);
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
+			else {
+				return false;
+			}
+#else // WITH_UPOWER
+			return false;
+#endif // WITH_UPOWER
 		}
 	}
 	else if (ps == TDESystemPowerState::PowerOff) {

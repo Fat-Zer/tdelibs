@@ -83,6 +83,7 @@ OPTION( WITH_PCRE "Enable pcre regex support for kjs" ON )
 OPTION( WITH_GCC_VISIBILITY "Enable fvisibility and fvisibility-inlines-hidden" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_INOTIFY "Enable inotify support for kio" ON )
 OPTION( WITH_GAMIN "Enable FAM/GAMIN support" ${WITH_ALL_OPTIONS} )
+option( WITH_UPOWER "Enable UPOWER support" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_NETWORK_MANAGER_BACKEND "Enable network-manager support" OFF )
 OPTION( WITH_SUDO_TDESU_BACKEND "Use sudo as backend for tdesu (default is su)" OFF )
 

@@ -1099,7 +1099,6 @@ double KDoubleSpinBox::minValue() const {
 void KDoubleSpinBox::setMinValue( double value ) {
   bool ok = false;
   int min = d->mapToInt( value, &ok );
-  if ( !ok ) return;
   base::setMinValue( min );
   updateValidator();
 }
@@ -1112,7 +1111,6 @@ double KDoubleSpinBox::maxValue() const {
 void KDoubleSpinBox::setMaxValue( double value ) {
   bool ok = false;
   int max = d->mapToInt( value, &ok );
-  if ( !ok ) return;
   base::setMaxValue( max );
   updateValidator();
 }
