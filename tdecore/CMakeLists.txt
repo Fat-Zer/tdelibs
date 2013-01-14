@@ -14,6 +14,13 @@ add_subdirectory( network )
 add_subdirectory( kconfig_compiler )
 add_subdirectory( hwlibdata )
 
+if( NOT DBUS_SYSTEM_BUS )
+  set( DBUS_SYSTEM_BUS "unix:path=/var/run/dbus/system_bus_socket" CACHE INTERNAL "" FORCE )
+endif()
+
+if( WITH_UPOWER )
+  add_definitions( -DWITH_UPOWER )
+endif( )
 
 if( WITH_LIBART )
   add_subdirectory( svgicons )
