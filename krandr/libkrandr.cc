@@ -433,14 +433,16 @@ TQStringList KRandrSimpleAPI::getDisplayConfigurationProfiles(TQString kde_confd
 	d.setSorting(TQDir::Name);
 
 	const TQFileInfoList *list = d.entryInfoList();
-	TQFileInfoListIterator it(*list);
-	TQFileInfo *fi;
+	if (list) {
+		TQFileInfoListIterator it(*list);
+		TQFileInfo *fi;
 
-	while ((fi = it.current()) != 0) {
-		if (fi->fileName() != "default") {
-			ret.append(fi->fileName());
+		while ((fi = it.current()) != 0) {
+			if (fi->fileName() != "default") {
+				ret.append(fi->fileName());
+			}
+			++it;
 		}
-		++it;
 	}
 
 	return ret;
