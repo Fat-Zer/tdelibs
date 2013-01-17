@@ -829,7 +829,13 @@ KDE_EXPORT void RandRDisplay::applyProposed(bool confirm)
 
 KDE_EXPORT bool RandRDisplay::showTestConfigurationDialog()
 {
-	return screen(0)->showTestConfigurationDialog();
+	RandRScreen* firstScreen = screen(0);
+	if (firstScreen) {
+		return firstScreen->showTestConfigurationDialog();
+	}
+	else {
+		return false;
+	}
 }
 
 KDE_EXPORT bool RandRScreen::showTestConfigurationDialog()
