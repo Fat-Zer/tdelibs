@@ -3131,6 +3131,8 @@ bool TDENetworkConnectionManager_BackendNM::loadConnectionSecretsForGroup(TQStri
 }
 
 bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection* connection) {
+	bool timed_out = FALSE;
+
 	if (!connection) {
 		PRINT_ERROR(TQString("connection cannot be NULL!"));
 		return FALSE;
@@ -3199,6 +3201,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 				tqApp->processEvents();
 				if (!nmCallTimeoutTimer.isActive()) {
 					PRINT_ERROR(TQString("DBUS asynchronous call timed out!"))
+					timed_out = true;
 					break;
 				}
 			}
@@ -4409,11 +4412,12 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 				tqApp->processEvents();
 				if (!nmCallTimeoutTimer.isActive()) {
 					PRINT_ERROR(TQString("DBUS asynchronous call timed out!"))
+					timed_out = true;
 					break;
 				}
 			}
 			d->nmConnectionSettingsAsyncCallWaiting.remove(asyncCallID);
-			return TRUE;
+			return !timed_out;
 		}
 		else {
 			// Error!
@@ -4441,13 +4445,14 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 			while (d->nmConnectionSettingsAsyncCallWaiting[asyncCallID]) {
 				if (!nmCallTimeoutTimer.isActive()) {
 					PRINT_ERROR(TQString("DBUS asynchronous call timed out!"))
+					timed_out = true;
 					break;
 				}
 				tqApp->processEvents();
 			}
 			d->nmConnectionSettingsAsyncCallWaiting.remove(asyncCallID);
 			d->nmAddConnectionAsyncResponse.remove(asyncCallID);
-			return TRUE;
+			return !timed_out;
 		}
 		else {
 			// Error!
@@ -4460,6 +4465,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 bool TDENetworkConnectionManager_BackendNM::deleteConnection(TQString uuid) {
 	TQT_DBusObjectPath existingConnection;
 	TQT_DBusError error;
+	bool timed_out = false;
 	bool ret;
 	if (d->m_networkManagerSettings) {
 		ret = d->m_networkManagerSettings->GetConnectionByUuid(uuid, existingConnection, error);
@@ -4483,11 +4489,12 @@ bool TDENetworkConnectionManager_BackendNM::deleteConnection(TQString uuid) {
 					tqApp->processEvents();
 					if (!nmCallTimeoutTimer.isActive()) {
 						PRINT_ERROR(TQString("DBUS asynchronous call timed out!"))
+						timed_out = true;
 						break;
 					}
 				}
 				d->nmConnectionSettingsAsyncCallWaiting.remove(asyncCallID);
-				return TRUE;
+				return !timed_out;
 			}
 			else {
 				PRINT_ERROR(TQString("Unable to remove connection with uuid '%1'").arg(uuid))
