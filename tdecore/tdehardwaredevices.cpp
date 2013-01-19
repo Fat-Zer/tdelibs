@@ -977,7 +977,25 @@ bool TDECPUDevice::canSetGovernor() {
 		return TRUE;
 	}
 	else {
+#ifdef WITH_UPOWER
+		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+		if (dbusConn.isConnected()) {
+			TQT_DBusProxy hardwareControl("org.trinitydesktop.hardwarecontrol", "/org/trinitydesktop/hardwarecontrol", "org.trinitydesktop.hardwarecontrol,CPUGovernor", dbusConn);
+	
+			// can set brightness?
+			TQValueList<TQT_DBusData> params;
+			params << TQT_DBusData::fromInt32(coreNumber());
+			TQT_DBusMessage reply = hardwareControl.sendWithReply("CanSetCPUGovernor", params);
+			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+				return reply[0].toVariant().value.toBool();
+			}
+		}
+		else {
+			return FALSE;
+		}
+#else // WITH_UPOWER
 		return FALSE;
+#endif// WITH_UPOWER
 	}
 }
 
@@ -989,6 +1007,22 @@ void TDECPUDevice::setGovernor(TQString gv) {
 		stream << gv.lower();
 		file.close();
 	}
+#ifdef WITH_UPOWER
+	else {
+		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+		if (dbusConn.isConnected()) {
+			TQT_DBusProxy hardwareControl("org.trinitydesktop.hardwarecontrol", "/org/trinitydesktop/hardwarecontrol", "org.trinitydesktop.hardwarecontrol.CPUGovernor", dbusConn);
+	
+			// set brightness
+			TQValueList<TQT_DBusData> params;
+			params << TQT_DBusData::fromInt32(coreNumber()) << TQT_DBusData::fromString(gv.lower());
+			hardwareControl.sendWithReply("SetCPUGovernor", params);
+		}
+		else {
+			return;
+		}
+	}
+#endif // WITH_UPOWER
 
 	// Force update of the device information object
 	KGlobal::hardwareDevices()->processModifiedCPUs();
@@ -1629,7 +1663,25 @@ bool TDEBacklightDevice::canSetBrightness() {
 		return TRUE;
 	}
 	else {
+#ifdef WITH_UPOWER
+		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+		if (dbusConn.isConnected()) {
+			TQT_DBusProxy hardwareControl("org.trinitydesktop.hardwarecontrol", "/org/trinitydesktop/hardwarecontrol", "org.trinitydesktop.hardwarecontrol,Brightness", dbusConn);
+	
+			// can set brightness?
+			TQValueList<TQT_DBusData> params;
+			params << TQT_DBusData::fromString(brightnessnode);
+			TQT_DBusMessage reply = hardwareControl.sendWithReply("CanSetBrightness", params);
+			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+				return reply[0].toVariant().value.toBool();
+			}
+		}
+		else {
+			return FALSE;
+		}
+#else // WITH_UPOWER
 		return FALSE;
+#endif// WITH_UPOWER
 	}
 }
 
@@ -1639,14 +1691,29 @@ int TDEBacklightDevice::rawBrightness() {
 
 void TDEBacklightDevice::setRawBrightness(int br) {
 	TQString brightnessnode = systemPath() + "/brightness";
+	TQString brightnessCommand = TQString("%1").arg(br);
 	TQFile file( brightnessnode );
 	if ( file.open( IO_WriteOnly ) ) {
-		TQString brightnessCommand;
-		brightnessCommand = TQString("%1").arg(br);
 		TQTextStream stream( &file );
 		stream << brightnessCommand;
 		file.close();
 	}
+#ifdef WITH_UPOWER
+	else {
+		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+		if (dbusConn.isConnected()) {
+			TQT_DBusProxy hardwareControl("org.trinitydesktop.hardwarecontrol", "/org/trinitydesktop/hardwarecontrol", "org.trinitydesktop.hardwarecontrol.Brightness", dbusConn);
+	
+			// set brightness
+			TQValueList<TQT_DBusData> params;
+			params << TQT_DBusData::fromString(brightnessnode) << TQT_DBusData::fromString(brightnessCommand);
+			hardwareControl.sendWithReply("SetBrightness", params);
+		}
+		else {
+			return;
+		}
+	}
+#endif // WITH_UPOWER
 }
 
 TDEMonitorDevice::TDEMonitorDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {

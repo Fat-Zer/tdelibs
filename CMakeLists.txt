@@ -770,6 +770,19 @@ if( WITH_PCRE )
 endif( )
 
 
+##### set DBUS file locations ##################
+
+if( NOT DEFINED DBUS_SYSTEM_CONF_DIRECTORY )
+  set (DBUS_SYSTEM_CONF_DIRECTORY "/etc/dbus-1/system.d/" )
+  message( STATUS "Using " ${DBUS_SYSTEM_CONF_DIRECTORY} " for DBUS configuration files" )
+endif( NOT DEFINED DBUS_SYSTEM_CONF_DIRECTORY )
+
+if( NOT DEFINED DBUS_SERVICE_DIRECTORY )
+  set (DBUS_SERVICE_DIRECTORY "/usr/share/dbus-1/system-services/" )
+  message( STATUS "Using " ${DBUS_SERVICE_DIRECTORY} " for DBUS service files" )
+endif( NOT DEFINED DBUS_SERVICE_DIRECTORY )
+
+
 if( WITH_NETWORK_MANAGER_BACKEND )
   ##### check for dbus-1 ###########################
   pkg_search_module( DBUS dbus-1 )

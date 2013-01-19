@@ -13,6 +13,7 @@ add_subdirectory( malloc )
 add_subdirectory( network )
 add_subdirectory( kconfig_compiler )
 add_subdirectory( hwlibdata )
+add_subdirectory( hwlibdaemons )
 
 if( NOT DBUS_SYSTEM_BUS )
   set( DBUS_SYSTEM_BUS "unix:path=/var/run/dbus/system_bus_socket" CACHE INTERNAL "" FORCE )
