@@ -74,18 +74,18 @@ compiler later.
 Establishing the Connection:
 ----------------------------
 
-KApplication has gained a method called "KApplication::dcopClient()"
+TDEApplication has gained a method called "TDEApplication::dcopClient()"
 which returns a pointer to a DCOPClient instance.  The first time this
 method is called, the client class will be created.  DCOPClients have
 unique identifiers attached to them which are based on what
-KApplication::name() returns.  In fact, if there is only a single
+TDEApplication::name() returns.  In fact, if there is only a single
 instance of the program running, the appId will be equal to
-KApplication::name().
+TDEApplication::name().
 
 To actually enable DCOP communication to begin, you must use
 DCOPClient::attach().  This will attempt to attach to the DCOP server.
 If no server is found or there is any other type of error, attach()
-will return false. KApplication will catch a dcop signal and display an
+will return false. TDEApplication will catch a dcop signal and display an
 appropriate error message box in that case.
 
 After connecting with the server via DCOPClient::attach(), you need to
@@ -100,7 +100,7 @@ case:
  */
 appId = client->registerAs(kApp->name());
 
-If you never retrieve the DCOPClient pointer from KApplication, the
+If you never retrieve the DCOPClient pointer from TDEApplication, the
 object will not be created and thus there will be no memory overhead.
 
 You may also detach from the server by calling DCOPClient::detach().
@@ -495,9 +495,9 @@ Code:
 
 int main(int argc, char **argv)
 {
-  KApplication *app;
+  TDEApplication *app;
 
-  app = new KApplication(argc, argv, "testit");
+  app = new TDEApplication(argc, argv, "testit");
   return app->exec();
 }
 
@@ -515,7 +515,7 @@ VmStk:        20 kB
 VmExe:         4 kB
 VmLib:      6588 kB
 
-If I create the KApplication's DCOPClient, and call attach() and
+If I create the TDEApplication's DCOPClient, and call attach() and
 registerAs(), it changes to this:
 
 VmSize:     8080 kB
@@ -531,8 +531,8 @@ resident, but no more data or stack.  So this will be shared between all
 processes, right?  100k to enable DCOP in all apps doesn't seem bad at
 all. :)
 
-OK now for some timings.  Just creating a KApplication and then exiting
-(i.e. removing the call to KApplication::exec) takes this much time:
+OK now for some timings.  Just creating a TDEApplication and then exiting
+(i.e. removing the call to TDEApplication::exec) takes this much time:
 
 0.28user 0.02system 0:00.32elapsed 92%CPU (0avgtext+0avgdata 0maxresident)k
 0inputs+0outputs (1084major+62minor)pagefaults 0swaps

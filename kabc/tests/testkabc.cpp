@@ -23,7 +23,7 @@ int main(int argc,char **argv)
     KAboutData aboutData("testkabc",I18N_NOOP("TestKabc"),"0.1");
     TDECmdLineArgs::init(argc, argv, &aboutData);
 
-    KApplication app( false, false );
+    TDEApplication app( false, false );
     AddressBook *ab = StdAddressBook::self();
 
 #define READ

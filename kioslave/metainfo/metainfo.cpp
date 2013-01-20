@@ -42,7 +42,7 @@ extern "C"
 
 int kdemain(int argc, char **argv)
 {
-    KApplication app(argc, argv, "kio_metainfo", false, true);
+    TDEApplication app(argc, argv, "kio_metainfo", false, true);
 
     if (argc != 4)
     {

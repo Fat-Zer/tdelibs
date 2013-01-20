@@ -245,7 +245,7 @@ void Slave::hold(const KURL &url)
       pid_t pid = m_pid;
       stream << pid;
 
-      TQCString launcher = KApplication::launcher();
+      TQCString launcher = TDEApplication::launcher();
       client->call(launcher, launcher, "waitForSlave(pid_t)",
 	    params, replyType, reply);
    }
@@ -431,7 +431,7 @@ Slave* Slave::createSlave( const TQString &protocol, const KURL& url, int& error
     TQDataStream stream(params, IO_WriteOnly);
     stream << protocol << url.host() << socketfile.name();
 
-    TQCString launcher = KApplication::launcher();
+    TQCString launcher = TDEApplication::launcher();
     if (!client->call(launcher, launcher, "requestSlave(TQString,TQString,TQString)",
 	    params, replyType, reply)) {
 	error_text = i18n("Cannot talk to klauncher");
@@ -491,7 +491,7 @@ Slave* Slave::holdSlave( const TQString &protocol, const KURL& url )
     TQDataStream stream(params, IO_WriteOnly);
     stream << url << socketfile.name();
 
-    TQCString launcher = KApplication::launcher();
+    TQCString launcher = TDEApplication::launcher();
     if (!client->call(launcher, launcher, "requestHoldSlave(KURL,TQString)",
         params, replyType, reply)) {
         delete slave;

@@ -67,7 +67,7 @@ int main( int argc, char *argv[] )
 {
 	KAboutData aboutData( "kwalletboth", "kwalletboth", "version" );
 	TDECmdLineArgs::init( argc, argv, &aboutData );
-	KApplication app( "kwalletboth" );
+	TDEApplication app( "kwalletboth" );
 
 	// register with DCOP
 	_out << "DCOP registration returned " << app.dcopClient()->registerAs(app.name()) << endl;

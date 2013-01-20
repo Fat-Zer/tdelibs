@@ -169,7 +169,7 @@ int main(int argc,char **argv)
   TDECmdLineArgs::init(argc,argv,&aboutData);
   TDECmdLineArgs::addCmdLineOptions( options );
 
-  KApplication app;
+  TDEApplication app;
 
   TQString identifier;
 

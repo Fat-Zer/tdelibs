@@ -98,7 +98,7 @@ KDE_EXPORT int main(int argc, char *argv[])
 
     TDECmdLineArgs::addCmdLineOptions(options);
 
-    KApplication app;
+    TDEApplication app;
 
     KCrash::setCrashHandler( crashHandler );
     KGlobal::locale()->insertCatalogue("klock");

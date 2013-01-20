@@ -45,7 +45,7 @@ ManagerImpl::ManagerImpl( ManagerNotifier *notifier, const TQString &family )
 {
   kdDebug(5650) << "ManagerImpl::ManagerImpl()" << endl;
 
-  mId = KApplication::randomString( 8 );
+  mId = TDEApplication::randomString( 8 );
 
   // Register with DCOP
   if ( !kapp->dcopClient()->isRegistered() ) {

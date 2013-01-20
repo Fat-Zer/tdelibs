@@ -21,7 +21,7 @@ bool check(TQString txt, time_t a, time_t b)
 
 int main(int argc, char *argv[])
 {
-  KApplication app(argc,argv,"kurltest",false,false);
+  TDEApplication app(argc,argv,"kurltest",false,false);
 
   time_t a;
   time_t b;

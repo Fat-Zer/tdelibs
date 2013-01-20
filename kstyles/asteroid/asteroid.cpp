@@ -93,7 +93,7 @@ TQ_EXPORT_PLUGIN(AsteroidStylePlugin);
 
 AsteroidStyle::AsteroidStyle() : KStyle(AllowMenuTransparency)
 {
-	if (tqApp->inherits("KApplication")) {
+	if (tqApp->inherits("TDEApplication")) {
 		connect(tqApp, TQT_SIGNAL(kdisplayPaletteChanged()), TQT_SLOT(paletteChanged()));
 	}
 

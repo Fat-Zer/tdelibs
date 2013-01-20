@@ -61,7 +61,7 @@ protected:
     virtual void activate();
     virtual void setOpen( bool o );
 
-    friend class KApplicationTree;
+    friend class TDEApplicationTree;
 };
 
 /* ------------------------------------------------------------------------- */
@@ -69,11 +69,11 @@ protected:
 /**
  * @internal
  */
-class KApplicationTree : public KListView
+class TDEApplicationTree : public KListView
 {
     Q_OBJECT
 public:
-    KApplicationTree( TQWidget *parent );
+    TDEApplicationTree( TQWidget *parent );
 
     /**
      * Add a group of .desktop/.kdelnk entries

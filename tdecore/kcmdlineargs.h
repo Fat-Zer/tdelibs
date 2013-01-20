@@ -68,7 +68,7 @@ struct TDECORE_EXPORT KCmdLineOptions
 #define KCmdLineLastOption { 0, 0, 0 }
 
 class TDECmdLineArgsList;
-class KApplication;
+class TDEApplication;
 class KUniqueApplication;
 class KCmdLineParsedOptions;
 class KCmdLineParsedArgs;
@@ -107,7 +107,7 @@ class TDECmdLineArgsPrivate;
  *     ....
  *
  *     // Handle our own options/arguments
- *     // A KApplication will usually do this in main but this is not
+ *     // A TDEApplication will usually do this in main but this is not
  *     // necessary.
  *     // A KUniqueApplication might want to handle it in newInstance().
  *
@@ -221,7 +221,7 @@ class TDECmdLineArgsPrivate;
  */
 class TDECORE_EXPORT TDECmdLineArgs
 {
-  friend class KApplication;
+  friend class TDEApplication;
   friend class KUniqueApplication;
   friend class TQPtrList<TDECmdLineArgs>;
 public:
@@ -242,7 +242,7 @@ public:
    * @param _description A short description of what your application is about.
    * @param _version A version.
    * @param noKApp Set this true to not add commandline options for
-   *        TQApplication / KApplication
+   *        TQApplication / TDEApplication
    *
    * @since 3.2
    */
@@ -270,7 +270,7 @@ public:
    * @param _argv As passed to @p main(...).
    * @param about A KAboutData object describing your program.
    * @param noKApp Set this true to not add commandline options for
-   *        TQApplication / KApplication
+   *        TQApplication / TDEApplication
    */
   static void init(int _argc, char **_argv,
                    const KAboutData *about, bool noKApp = false);
@@ -522,8 +522,8 @@ public:
 
   /**
    *  Reset all option definitions, i.e. cancel all addCmdLineOptions calls.
-   *  Note that KApplication's options are removed too, you might want to
-   *  call KApplication::addCmdLineOptions if you want them back.
+   *  Note that TDEApplication's options are removed too, you might want to
+   *  call TDEApplication::addCmdLineOptions if you want them back.
    *
    *  You usually don't want to call this method.
    */
@@ -582,14 +582,14 @@ private:
   static void parseAllArgs();
 
   /**
-   * @internal for KApplication only:
+   * @internal for TDEApplication only:
    *
    * Return argc
    */
   static int *tqt_argc();
 
   /**
-   * @internal for KApplication only:
+   * @internal for TDEApplication only:
    *
    * Return argv
    */
@@ -648,7 +648,7 @@ private:
   void load( TQDataStream &);
 
   /**
-   * @internal for KApplication only
+   * @internal for TDEApplication only
    *
    * Initialize class.
    *

@@ -461,7 +461,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    KApplication a;
+    TDEApplication a;
     a.disableAutoDcopRegistration();
     a.setStyle("windows");
     KSimpleConfig cfg( "testkateregressionrc" );

@@ -27,7 +27,7 @@
 
 #ifndef NO_KDE
 # include <kapplication.h>
- KApplication* theApp;
+ TDEApplication* theApp;
 #else
 # include <tqapplication.h>
  TQApplication* theApp;
@@ -42,7 +42,7 @@
 int main( int argc, char **argv )
 {
 #ifndef NO_KDE
-   KApplication a(argc,argv,"KFourChildren");
+   TDEApplication a(argc,argv,"KFourChildren");
 #else
    TQApplication a(argc,argv);
 #endif

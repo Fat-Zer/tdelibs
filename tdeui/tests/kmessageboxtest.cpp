@@ -63,7 +63,7 @@ void showResult(int test, int i)
 int main( int argc, char *argv[] )
 {
     int i, test;
-    new KApplication( argc, argv, "MyApplication" );
+    new TDEApplication( argc, argv, "MyApplication" );
 
     ExampleWidget *w = new ExampleWidget();
     w->show();    

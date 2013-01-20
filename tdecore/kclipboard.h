@@ -40,7 +40,7 @@ class TDECORE_EXPORT KClipboardSynchronizer : public TQObject
 public:
     /** Systray widget for manipulating the clipboard. */
     friend class KlipperWidget;
-    friend class KApplication;
+    friend class TDEApplication;
 
     /**
      * Returns the KClipboardSynchronizer singleton object.
@@ -115,7 +115,7 @@ private:
 private:
     // needed by klipper
     enum Configuration { Synchronize = 1 };
-    // called by KApplication upon kipc message, invoked by klipper
+    // called by TDEApplication upon kipc message, invoked by klipper
     static void newConfiguration( int config );
 
 };

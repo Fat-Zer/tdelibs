@@ -176,7 +176,7 @@ KCrash::defaultCrashHandler (int sig)
           // we have already tested this
           argv[i++] = "--appname";
           argv[i++] = appName;
-          if (KApplication::loadedByKdeinit)
+          if (TDEApplication::loadedByKdeinit)
             argv[i++] = "--tdeinit";
 
           // only add apppath if it's not NULL

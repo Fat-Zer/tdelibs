@@ -230,7 +230,7 @@ namespace KIO {
 
         /**
          * Updates the last user action timestamp to the given time.
-         * See KApplication::updateUserTimestamp() .
+         * See TDEApplication::updateUserTimestamp() .
          * @since 3.5.6
          */
         void updateUserTimestamp( unsigned long time );

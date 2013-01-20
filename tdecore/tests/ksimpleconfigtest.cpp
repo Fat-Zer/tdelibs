@@ -20,7 +20,7 @@
 
 int main( int argc, char **argv )
 {
-  KApplication  a( argc, argv, "kconfigtest" );
+  TDEApplication  a( argc, argv, "kconfigtest" );
 
   KSimpleConfig aConfig( _PATH_TMP"/simpleconfig.cfg" );
 

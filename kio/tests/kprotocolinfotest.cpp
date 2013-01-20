@@ -30,7 +30,7 @@ int main(int argc, char **argv) {
                         "1.0");
 
     TDECmdLineArgs::init(argc, argv, &aboutData);
-    KApplication app;
+    TDEApplication app;
 
     KURL url;
     url.setPath("/tmp");

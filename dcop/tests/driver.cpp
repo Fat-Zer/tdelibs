@@ -54,7 +54,7 @@ int main(int argc, char** argv)
 	const char* appname = strdup( argv[ 1 ] );
 	argv[ 1 ] = 0; // sue me
 	TDECmdLineArgs::init( argc, argv, "TestAppDriver", "Tests the dcop familly of tools + libraries", "1.0" ); // FIXME
-	KApplication app;
+	TDEApplication app;
 	app.dcopClient()->attach(  );
 	app.dcopClient()->registerAs( "TestAppDriver" );
 	Driver * object = new Driver( appname );

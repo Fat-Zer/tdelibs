@@ -631,7 +631,7 @@ KSSLCertificateHome::KSSLAuthAction aa;
         d->dcc = new DCOPClient;
         d->dcc->attach();
         if (!d->dcc->isApplicationRegistered("kio_uiserver")) {
-           KApplication::startServiceByDesktopPath("kio_uiserver.desktop",
+           TDEApplication::startServiceByDesktopPath("kio_uiserver.desktop",
                                                    TQStringList() );
         }
     }
@@ -895,7 +895,7 @@ int TCPSlaveBase::verifyCertificate()
                       d->dcc = new DCOPClient;
                       d->dcc->attach();
                       if (!d->dcc->isApplicationRegistered("kio_uiserver")) {
-                         KApplication::startServiceByDesktopPath("kio_uiserver.desktop",
+                         TDEApplication::startServiceByDesktopPath("kio_uiserver.desktop",
                          TQStringList() );
                       }
 
@@ -1023,7 +1023,7 @@ int TCPSlaveBase::verifyCertificate()
                       d->dcc = new DCOPClient;
                       d->dcc->attach();
                       if (!d->dcc->isApplicationRegistered("kio_uiserver")) {
-                         KApplication::startServiceByDesktopPath("kio_uiserver.desktop",
+                         TDEApplication::startServiceByDesktopPath("kio_uiserver.desktop",
                          TQStringList() );
                       }
                    }
@@ -1107,7 +1107,7 @@ int TCPSlaveBase::verifyCertificate()
              d->dcc = new DCOPClient;
              d->dcc->attach();
              if (!d->dcc->isApplicationRegistered("kio_uiserver")) {
-                KApplication::startServiceByDesktopPath("kio_uiserver.desktop",
+                TDEApplication::startServiceByDesktopPath("kio_uiserver.desktop",
                 TQStringList() );
              }
           }

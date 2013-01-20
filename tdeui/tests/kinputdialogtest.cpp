@@ -12,7 +12,7 @@
 
 int main( int argc, char *argv[] )
 {
-  KApplication app( argc, argv, "kinputdialogtest" );
+  TDEApplication app( argc, argv, "kinputdialogtest" );
 
   bool ok;
   TQString svalue;

@@ -6,7 +6,7 @@
 
 int main(int argc, char **argv)
 {
-  KApplication a(argc, argv, "whatever", false);
+  TDEApplication a(argc, argv, "whatever", false);
   KStandardDirs t;
   KConfig config; // to add custom entries - a bit tricky :/
 

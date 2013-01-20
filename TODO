@@ -11,8 +11,8 @@ that we would like to make for the next binary incompatible release.
   help prevent mistakes where developers forget to delete the pointer. Maybe make use of
   Qt4 helper macros? 
 
-- Move all utility functions away from KApplication. TBD: Make KApplication 
-  a very thin wrapper around QApplication. Ideally, KApplication should go 
+- Move all utility functions away from TDEApplication. TBD: Make TDEApplication 
+  a very thin wrapper around QApplication. Ideally, TDEApplication should go 
   away completely. The kapp pointer references everywhere must die. Find a 
   way to make that possible
 
@@ -95,7 +95,7 @@ that we would like to make for the next binary incompatible release.
   Keep source compatibility.
 
 - Sort out reference counting of applications and KMainWindows: Add a setRefCountEnabled()
-  function to KApplication; deref()ing the last reference should only quit the application
+  function to TDEApplication; deref()ing the last reference should only quit the application
   if reference counts are enabled, and the reference count should be disabled by default
   so apps that don't use a KMainWindow mostly continue to work. Make the KMainWindow
   constructor call setRefCountEnabled(true), and make each KMainWindow hold its own

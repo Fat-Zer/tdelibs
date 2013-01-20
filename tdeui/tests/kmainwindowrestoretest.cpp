@@ -14,7 +14,7 @@
 
 int main( int argc, char * argv[] ) {
 
-  KApplication app( argc, argv, "kmainwindowrestoretest" );
+  TDEApplication app( argc, argv, "kmainwindowrestoretest" );
 
   if ( kapp->isRestored() ) {
     kRestoreMainWindows< MainWin1, MainWin2, MainWin3 >();

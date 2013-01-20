@@ -242,7 +242,7 @@ void DockApplication::gSetPix2() {
 }
 
 int main(int argc, char* argv[]) {
-  KApplication a(argc,argv, "kdockdemoapp1");
+  TDEApplication a(argc,argv, "kdockdemoapp1");
   DockApplication* ap = new DockApplication("DockWidget demo");
   ap->setCaption("DockWidget demo");
   a.setMainWidget(ap);

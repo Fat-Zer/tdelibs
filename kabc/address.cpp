@@ -37,13 +37,13 @@ static KStaticDeleter< TQMap<TQString, TQString> > isoMapDeleter;
 Address::Address() :
   mEmpty( true ), mType( 0 )
 {
-  mId = KApplication::randomString( 10 );
+  mId = TDEApplication::randomString( 10 );
 }
 
 Address::Address( int type ) :
   mEmpty( true ), mType( type )
 {
-  mId = KApplication::randomString( 10 );
+  mId = TDEApplication::randomString( 10 );
 }
 
 bool Address::operator==( const Address &a ) const

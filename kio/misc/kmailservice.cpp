@@ -32,7 +32,7 @@ int main( int argc, char **argv )
     TDECmdLineArgs::init( argc, argv, "kmailservice", I18N_NOOP("KMailService"), I18N_NOOP("Mail service"), "unknown" );
     TDECmdLineArgs::addCmdLineOptions( options );
 
-    KApplication a( false, false );
+    TDEApplication a( false, false );
 
     TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 

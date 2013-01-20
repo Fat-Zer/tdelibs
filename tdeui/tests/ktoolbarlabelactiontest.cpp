@@ -84,7 +84,7 @@ public:
 
 int main( int argc, char **argv )
 {
-  KApplication app( argc, argv, "ktoolbarlabelactiontest" );
+  TDEApplication app( argc, argv, "ktoolbarlabelactiontest" );
 
   KGlobal::instance()->dirs()->addResourceDir("data", ".");
 

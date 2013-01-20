@@ -186,7 +186,7 @@ TQStringList Form1::defaultItems() const
 
 int main(int argc, char **argv )
 {
-    KApplication app( argc, argv, "kcompletiontest" );
+    TDEApplication app( argc, argv, "kcompletiontest" );
 
     Form1 *form = new Form1();
     form->show();

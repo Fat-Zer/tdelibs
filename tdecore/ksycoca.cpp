@@ -333,7 +333,7 @@ TQDataStream * KSycoca::findFactory(KSycocaFactoryId id)
          {
            triedLaunchingKdeinit = true;
            kdDebug(7011) << "findFactory: we have no database.... launching tdeinit" << endl;
-           KApplication::startKdeinit();
+           TDEApplication::startKdeinit();
            // Ok, the new database should be here now, open it.
          }
          if (!openDatabase(false))

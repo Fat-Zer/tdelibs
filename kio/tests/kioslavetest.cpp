@@ -496,7 +496,7 @@ static KCmdLineOptions options[] =
 int main(int argc, char **argv) {
   TDECmdLineArgs::init( argc, argv, "kioslavetest", description, version );
   TDECmdLineArgs::addCmdLineOptions( options );
-  KApplication app;
+  TDEApplication app;
 
   TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 

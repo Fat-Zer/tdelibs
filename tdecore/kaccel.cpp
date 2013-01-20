@@ -71,11 +71,11 @@
 // 2) If another widget accepts the AccelOverride, it will expect to get a normal
 // Qt generated KeyPress event afterwards. So we let Qt handle the X11 keyboard event
 // again. However, this will first generate an AccelOverride event, and we already
-// had send that one. To compnesate for this, the global event filter in KApplication
+// had send that one. To compnesate for this, the global event filter in TDEApplication
 // is instructed to eat the next AccelOveride event. Qt will then send a normal KeyPress
 // event and from then on everything is normal again.
 //
-// kde_g_bKillAccelOverride is used to tell KApplication::notify to eat the next
+// kde_g_bKillAccelOverride is used to tell TDEApplication::notify to eat the next
 // AccelOverride event.
 
 bool kde_g_bKillAccelOverride = false;
@@ -147,7 +147,7 @@ bool KAccelEventHandler::x11Event( XEvent* pEvent )
 		kapp->sendEvent( kapp->focusWidget(), &ke );
 
 		// If the Override event was accepted from a non-KAccel widget,
-		//  then kill the next AccelOverride in KApplication::notify.
+		//  then kill the next AccelOverride in TDEApplication::notify.
 		if( ke.isAccepted() && !g_bAccelActivated )
 			kde_g_bKillAccelOverride = true;
 

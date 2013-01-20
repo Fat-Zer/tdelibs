@@ -34,7 +34,7 @@ KListBox::KListBox( TQWidget *parent, const char *name, WFlags f )
 	     this, TQT_SLOT( slotOnViewport() ) );
     connect( this, TQT_SIGNAL( onItem( TQListBoxItem * ) ),
 	     this, TQT_SLOT( slotOnItem( TQListBoxItem * ) ) );
-    slotSettingsChanged(KApplication::SETTINGS_MOUSE);
+    slotSettingsChanged(TDEApplication::SETTINGS_MOUSE);
     if (kapp)
     {
         connect( kapp, TQT_SIGNAL( settingsChanged(int) ), TQT_SLOT( slotSettingsChanged(int) ) );
@@ -71,7 +71,7 @@ void KListBox::slotOnViewport()
 
 void KListBox::slotSettingsChanged(int category)
 {
-    if (category != KApplication::SETTINGS_MOUSE)
+    if (category != TDEApplication::SETTINGS_MOUSE)
         return;
     m_bUseSingle = KGlobalSettings::singleClick();
 
@@ -116,7 +116,7 @@ void KListBox::slotAutoSelect()
   if( !hasFocus() )
     setFocus();
 
-  ButtonState keybstate = KApplication::keyboardMouseState();
+  ButtonState keybstate = TDEApplication::keyboardMouseState();
 
   TQListBoxItem* previousItem = item( currentItem() ); 
   setCurrentItem( m_pCurrentItem );
@@ -178,7 +178,7 @@ void KListBox::slotAutoSelect()
 
 void KListBox::emitExecute( TQListBoxItem *item, const TQPoint &pos )
 {
-  ButtonState keybstate = KApplication::keyboardMouseState();
+  ButtonState keybstate = TDEApplication::keyboardMouseState();
     
   m_pAutoSelect->stop();
   

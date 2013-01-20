@@ -31,10 +31,10 @@ main(int argc, char *argv[])
    KAboutData about("kapptest", "kapptest", "version");
    TDECmdLineArgs::init(argc, argv, &about);
 
-   KApplication a;
+   TDEApplication a;
 
    KSycoca *s = KSycoca::self();
   
    tqWarning("s->language() %s", s->language().latin1());
-   tqWarning("Offset of aIconName: %ld", (long) &(static_cast<KApplication *>(0)->aIconName));
+   tqWarning("Offset of aIconName: %ld", (long) &(static_cast<TDEApplication *>(0)->aIconName));
 }

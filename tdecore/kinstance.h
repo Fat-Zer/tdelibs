@@ -55,12 +55,12 @@ class TDECORE_EXPORT KInstance
 
     /**
      *  Constructor.
-     *  When building a KInstance that is not your KApplication,
+     *  When building a KInstance that is not your TDEApplication,
      *  make sure that the KAboutData and the KInstance have the same life time.
      *  You have to destroy both, since the instance doesn't own the about data.
      *  Don't build a KAboutData on the stack in this case !
      *  Building a KAboutData on the stack is only ok for usage with
-     *  TDECmdLineArgs and KApplication (not destroyed until the app exits).
+     *  TDECmdLineArgs and TDEApplication (not destroyed until the app exits).
      *  @param aboutData data about this instance (see KAboutData)
      */
     KInstance( const KAboutData * aboutData );

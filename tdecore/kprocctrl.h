@@ -32,7 +32,7 @@ class TQSocketNotifier;
  * @author Christian Czezatke <e9025461@student.tuwien.ac.at>
  *
  *  A class for internal use by KProcess only. -- Exactly one instance
- *  of this class is created by KApplication.
+ *  of this class is created by TDEApplication.
  *
  * This class takes care of the actual (UN*X) signal handling.
  */
@@ -43,13 +43,13 @@ class TDECORE_EXPORT KProcessController : public TQObject
 public:
   /**
    * Create an instance if none exists yet.
-   * Called by KApplication::KApplication()
+   * Called by TDEApplication::TDEApplication()
    */
   static void ref();
 
   /**
    * Destroy the instance if one exists and it is not referenced any more.
-   * Called by KApplication::~KApplication()
+   * Called by TDEApplication::~TDEApplication()
    */
   static void deref();
 

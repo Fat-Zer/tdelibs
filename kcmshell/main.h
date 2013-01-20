@@ -28,9 +28,9 @@
 #include <kcmultidialog.h>
 
 /**
- * The KApplication instance for kcmshell.
+ * The TDEApplication instance for kcmshell.
  */
-class KCMShell : public KApplication
+class KCMShell : public TDEApplication
 {
     Q_OBJECT
 

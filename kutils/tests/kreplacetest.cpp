@@ -253,7 +253,7 @@ static void testReplacementHistory()
 int main( int argc, char **argv )
 {
     TDECmdLineArgs::init(argc, argv, "kreplacetest", 0, 0);
-    KApplication app;
+    TDEApplication app;
 
     testReplacementHistory(); // #130831
 

@@ -438,7 +438,7 @@ KListView::KListView( TQWidget *parent, const char *name )
   connect (this, TQT_SIGNAL(contentsMoving(int,int)),
                    this, TQT_SLOT(cleanItemHighlighter()));
 
-  slotSettingsChanged(KApplication::SETTINGS_MOUSE);
+  slotSettingsChanged(TDEApplication::SETTINGS_MOUSE);
   if (kapp)
   {
     connect( kapp, TQT_SIGNAL( settingsChanged(int) ), TQT_SLOT( slotSettingsChanged(int) ) );
@@ -543,7 +543,7 @@ void KListView::slotSettingsChanged(int category)
 {
   switch (category)
   {
-  case KApplication::SETTINGS_MOUSE:
+  case TDEApplication::SETTINGS_MOUSE:
     d->dragDelay =  KGlobalSettings::dndEventDelay();
     d->bUseSingle = KGlobalSettings::singleClick();
 
@@ -563,7 +563,7 @@ void KListView::slotSettingsChanged(int category)
 
     break;
 
-  case KApplication::SETTINGS_POPUPMENU:
+  case TDEApplication::SETTINGS_POPUPMENU:
     d->contextMenuKey = KGlobalSettings::contextMenuKey ();
     d->showContextMenusOnPress = KGlobalSettings::showContextMenusOnPress ();
 
@@ -604,7 +604,7 @@ void KListView::slotAutoSelect()
   if( !hasFocus() )
     setFocus();
 
-  ButtonState keybstate = KApplication::keyboardMouseState();
+  ButtonState keybstate = TDEApplication::keyboardMouseState();
 
   TQListViewItem* previousItem = currentItem();
   setCurrentItem( d->pCurrentItem );
@@ -646,7 +646,7 @@ void KListView::slotAutoSelect()
       if( selectionMode() == TQListView::Single )
                 emit selectionChanged( d->pCurrentItem );
     }
-    else if( (keybstate & KApplication::ControlModifier) )
+    else if( (keybstate & TDEApplication::ControlModifier) )
       setSelected( d->pCurrentItem, !d->pCurrentItem->isSelected() );
     else {
       bool block = signalsBlocked();
@@ -691,7 +691,7 @@ void KListView::emitExecute( TQListViewItem *item, const TQPoint &pos, int c )
         }
         else
         {
-            ButtonState keybstate = KApplication::keyboardMouseState();
+            ButtonState keybstate = TDEApplication::keyboardMouseState();
 
             d->autoSelect.stop();
 

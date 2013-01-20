@@ -543,15 +543,15 @@ private:
      */
     static void initColors();
     /**
-     * drop cached values for fonts (called by KApplication)
+     * drop cached values for fonts (called by TDEApplication)
      */
     static void rereadFontSettings();
     /**
-     * drop cached values for paths (called by KApplication)
+     * drop cached values for paths (called by TDEApplication)
      */
     static void rereadPathSettings();
     /**
-     * drop cached values for mouse settings (called by KApplication)
+     * drop cached values for mouse settings (called by TDEApplication)
      */
     static void rereadMouseSettings();
 
@@ -578,7 +578,7 @@ private:
     static TQColor * alternateColor;
     static KMouseSettings *s_mouseSettings;
 
-    friend class KApplication;
+    friend class TDEApplication;
 };
 
 #endif

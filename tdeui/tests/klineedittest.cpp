@@ -120,9 +120,9 @@ int main ( int argc, char **argv)
 {
     KAboutData aboutData( "klineedittest", "klineedittest", "1.0" );
     TDECmdLineArgs::init(argc, argv, &aboutData);
-    KApplication::addCmdLineOptions();
+    TDEApplication::addCmdLineOptions();
     
-    KApplication a;    
+    TDEApplication a;    
     KLineEditTest *t = new KLineEditTest();
     //t->lineEdit()->setTrapReturnKey( true );
     //t->lineEdit()->completionBox()->setTabHandling( false );

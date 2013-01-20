@@ -188,7 +188,7 @@ TDECmdLineArgs::init(int _argc, char **_argv, const KAboutData *_about, bool noK
    win32_slashify(mCwd, PATH_MAX);
 #endif
    if (!noKApp)
-      KApplication::addCmdLineOptions();
+      TDEApplication::addCmdLineOptions();
 }
 
 TQString TDECmdLineArgs::cwd()
@@ -671,7 +671,7 @@ TDECmdLineArgs::parseAllArgs()
 }
 
 /**
- * For KApplication only:
+ * For TDEApplication only:
  *
  * Return argc
  */
@@ -679,7 +679,7 @@ int *
 TDECmdLineArgs::tqt_argc()
 {
    if (!argsList)
-      KApplication::addCmdLineOptions(); // Lazy bastards!
+      TDEApplication::addCmdLineOptions(); // Lazy bastards!
 
    static int tqt_argc = -1;
    if( tqt_argc != -1 )
@@ -702,7 +702,7 @@ TDECmdLineArgs::tqt_argc()
 }
 
 /**
- * For KApplication only:
+ * For TDEApplication only:
  *
  * Return argv
  */
@@ -710,7 +710,7 @@ char ***
 TDECmdLineArgs::tqt_argv()
 {
    if (!argsList)
-      KApplication::addCmdLineOptions(); // Lazy bastards!
+      TDEApplication::addCmdLineOptions(); // Lazy bastards!
 
    static char** tqt_argv;
    if( tqt_argv != NULL )

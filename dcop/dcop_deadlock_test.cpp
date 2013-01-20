@@ -71,8 +71,8 @@ tqWarning("%s: Got result '%s' %d:%06d", name(), result.latin1(), tv.tv_sec % 10
 
 int main(int argc, char **argv)
 {
-  TQCString myName = KApplication::dcopClient()->registerAs("testdcop", false);
-  KApplication app(argc, argv, "testdcop");
+  TQCString myName = TDEApplication::dcopClient()->registerAs("testdcop", false);
+  TDEApplication app(argc, argv, "testdcop");
 
   tqWarning("%d:I am '%s'", getpid(), app.dcopClient()->appId().data());
   

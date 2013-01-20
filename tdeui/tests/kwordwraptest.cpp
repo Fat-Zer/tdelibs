@@ -23,7 +23,7 @@
 
 int main(int argc, char *argv[])
 {
-	KApplication app(argc, argv, "KWordWrapTest");
+	TDEApplication app(argc, argv, "KWordWrapTest");
 	
 	TQFont font( "helvetica", 12 ); // let's hope we all have the same...
 	TQFontMetrics fm( font );

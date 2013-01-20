@@ -254,7 +254,7 @@ KDE_EXPORT bool RandRScreen::confirm()
 	// FIXME remember to put the dialog on the right screen
 
 	KTimerDialog acceptDialog ( 15000, KTimerDialog::CountDown,
-                KApplication::kApplication()->mainWidget(),
+                TDEApplication::kApplication()->mainWidget(),
 											"mainKTimerDialog",
 											true,
 											i18n("Confirm Display Setting Change"),
@@ -846,7 +846,7 @@ KDE_EXPORT bool RandRScreen::showTestConfigurationDialog()
 	// FIXME remember to put the dialog on the right screen
 
 	KTimerDialog acceptDialog ( 15000, KTimerDialog::CountDown,
-                KApplication::kApplication()->mainWidget(),
+                TDEApplication::kApplication()->mainWidget(),
 											"mainKTimerDialog",
 											true,
 											i18n("Confirm Display Settings"),

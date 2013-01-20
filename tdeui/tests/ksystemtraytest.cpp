@@ -3,7 +3,7 @@
 
 int main(int argc, char **argv)
 {
-	KApplication app( argc, argv, "ksystemtraytest" );
+	TDEApplication app( argc, argv, "ksystemtraytest" );
 	TQLabel *l = new TQLabel("System Tray Main Window", 0L);
 	KSystemTray *tray = new KSystemTray( l );
     tray->setText("Test");

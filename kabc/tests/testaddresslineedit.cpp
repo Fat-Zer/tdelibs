@@ -14,7 +14,7 @@ int main( int argc,char **argv )
                         I18N_NOOP( "Test Address LineEdit" ), "0.1" );
   TDECmdLineArgs::init( argc, argv, &aboutData );
 
-  KApplication app;
+  TDEApplication app;
 
   AddressLineEdit *lineEdit = new AddressLineEdit( 0 );
 

@@ -7,7 +7,7 @@
 
 int main(int argc, char** argv)
 {
-  KApplication app(argc, argv, "JanusWidgetTest");
+  TDEApplication app(argc, argv, "JanusWidgetTest");
   // -----
   KJanusWidget* janus = new KJanusWidget( 0, 0, KJanusWidget::IconList );
 

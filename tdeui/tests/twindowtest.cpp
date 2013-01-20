@@ -55,7 +55,7 @@ setAutoSaveSettings();
     menuBar->insertItem ("&File", fileMenu);
     // We insert item "Exit" with accelerator ALT-Q, and connect
     // it to application's exit-slot.
-    fileMenu->insertItem ("&Exit", KApplication::kApplication(),
+    fileMenu->insertItem ("&Exit", TDEApplication::kApplication(),
                           TQT_SLOT( quit() ), ALT + Key_Q );
 
     // Another popup...
@@ -148,7 +148,7 @@ setAutoSaveSettings();
 
     // Now add another button and align it right
     pix = BarIcon("exit");
-    tb->insertButton(pix, 6, TQT_SIGNAL(clicked()), KApplication::kApplication(),
+    tb->insertButton(pix, 6, TQT_SIGNAL(clicked()), TDEApplication::kApplication(),
                           TQT_SLOT( quit() ), true, "Exit");
     tb->alignItemRight (6);
 
@@ -408,7 +408,7 @@ void testWindow::slotExit ()
    {
      TQPixmap pix;
      pix = BarIcon("exit");
-     tb->insertButton(pix, 6, TQT_SIGNAL(clicked()), KApplication::kApplication(),
+     tb->insertButton(pix, 6, TQT_SIGNAL(clicked()), TDEApplication::kApplication(),
                            TQT_SLOT( quit() ), true, "Exit");
      tb->alignItemRight (6);
      exitB = true;
@@ -504,7 +504,7 @@ int main( int argc, char *argv[] )
     int i;
     TDECmdLineArgs::init(argc, argv, "KWindowTest", "description", "version");
 
-    KApplication *myApp = new KApplication();
+    TDEApplication *myApp = new TDEApplication();
     testWindow *test = new testWindow;
 
     myApp->setMainWidget(test);

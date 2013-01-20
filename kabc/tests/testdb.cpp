@@ -15,8 +15,8 @@ int main(int argc,char **argv)
   KAboutData aboutData("testdb","TestKabcDB","0.1");
   TDECmdLineArgs::init(argc,argv,&aboutData);
 
-//  KApplication app( false, false );
-  KApplication app;
+//  TDEApplication app( false, false );
+  TDEApplication app;
 
   AddressBook ab;
   

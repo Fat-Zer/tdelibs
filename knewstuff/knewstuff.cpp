@@ -72,7 +72,7 @@ void KNewStuff::download()
 TQString KNewStuff::downloadDestination( Entry * )
 {
   return KGlobal::dirs()->saveLocation( "tmp" ) +
-         KApplication::randomString( 10 );
+         TDEApplication::randomString( 10 );
 }
 
 void KNewStuff::upload()

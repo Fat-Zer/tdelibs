@@ -88,7 +88,7 @@ public:
      * Usually, you use the default iconloader, which can be accessed via
      * KGlobal::iconLoader(), so you hardly ever have to create an
      * iconloader object yourself. That one is the current KInstance's
-     * (typically KApplication's) iconloader.
+     * (typically TDEApplication's) iconloader.
      * @see KGlobal::iconLoader()
      * @see KInstance::iconLoader()
      */

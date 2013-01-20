@@ -32,7 +32,7 @@ class KInstance;
  * An extension to TQMimeSourceFactory that uses KIconLoader to
  * find images.
  *
- * Normally you don't have to instantiate this class at all, KApplication does that for
+ * Normally you don't have to instantiate this class at all, TDEApplication does that for
  * you automagically and sets TQMimeSourceFactory::setDefaultFactory().
  *
  * @author Peter Putzer <putzer@kde.org>

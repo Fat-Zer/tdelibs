@@ -96,7 +96,7 @@ public:
      * KNotifyDialog can handle events for multiple applications (i.e. eventsrc files).
      * Successive calls with a different @p appName will add them.
      * @param appName The application's name, i.e. the name passed to the 
-     *                KApplication constructor or KAboutData.
+     *                TDEApplication constructor or KAboutData.
      * @see clearApplicationEvents()
      */
     virtual void addApplicationEvents( const char *appName );

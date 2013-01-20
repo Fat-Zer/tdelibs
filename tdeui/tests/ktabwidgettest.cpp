@@ -355,7 +355,7 @@ void Test::toggleLabels(bool state)
 int main(int argc, char** argv )
 {
     TDECmdLineArgs::init(argc, argv, "ktabwidgettest", "ktabwidget test app", "1.0");
-    KApplication app(argc, argv);
+    TDEApplication app(argc, argv);
     Test *t = new Test();
 
     app.setMainWidget( t );

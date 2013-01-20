@@ -152,7 +152,7 @@ SampleTest - 1 test passed, 1 test failed
  *
  *     TDECmdLineArgs::init(argc, argv, &about);
  *     TDECmdLineArgs::addCmdLineOptions( options );
- *     KApplication app;
+ *     TDEApplication app;
  *
  *     KUnitTest::RunnerGUI runner(0);
  *     runner.show();

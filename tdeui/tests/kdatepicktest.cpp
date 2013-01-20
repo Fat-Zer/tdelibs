@@ -6,7 +6,7 @@
 int main(int argc, char** argv)
 {
   KLocale::setMainCatalogue("tdelibs");
-  KApplication app(argc, argv, "KDatePickertest");
+  TDEApplication app(argc, argv, "KDatePickertest");
   KDatePicker picker;
   app.setMainWidget(&picker);
   picker.show();

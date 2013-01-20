@@ -595,7 +595,7 @@ void KKeyChooser::readGlobalKeys( TQMap< TQString, KShortcut >& map )
 
 void KKeyChooser::slotSettingsChanged( int category )
 {
-    if( category == KApplication::SETTINGS_SHORTCUTS )
+    if( category == TDEApplication::SETTINGS_SHORTCUTS )
         readGlobalKeys(); // reread
 }
 

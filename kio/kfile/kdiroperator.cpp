@@ -1383,11 +1383,11 @@ void KDirOperator::setupMenu(int whichActions)
     if (whichActions & FileActions)
     {
         actionMenu->insert( mkdirAction );
-        if (currUrl.isLocalFile() && !(KApplication::keyboardMouseState() & TQt::ShiftButton))
+        if (currUrl.isLocalFile() && !(TDEApplication::keyboardMouseState() & TQt::ShiftButton))
             actionMenu->insert( myActionCollection->action( "trash" ) );
         KConfig *globalconfig = KGlobal::config();
         KConfigGroupSaver cs( globalconfig, TQString::fromLatin1("KDE") );
-        if (!currUrl.isLocalFile() || (KApplication::keyboardMouseState() & TQt::ShiftButton) ||
+        if (!currUrl.isLocalFile() || (TDEApplication::keyboardMouseState() & TQt::ShiftButton) ||
             globalconfig->readBoolEntry("ShowDeleteCommand", false))
             actionMenu->insert( myActionCollection->action( "delete" ) );
         actionMenu->insert( actionSeparator );

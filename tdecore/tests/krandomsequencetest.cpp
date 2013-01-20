@@ -26,7 +26,7 @@
 int
 main(int argc, char *argv[])
 {
-   KApplication a(argc, argv, "krandomsequencetest");
+   TDEApplication a(argc, argv, "krandomsequencetest");
 
    long seed;
    KRandomSequence seq;

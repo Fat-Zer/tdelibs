@@ -110,7 +110,7 @@ int main(int argc,char **argv)
   KAboutData aboutData("knewstufftest","KNewStuff Test","0.1");
   TDECmdLineArgs::init(argc,argv,&aboutData);
 
-  KApplication app;
+  TDEApplication app;
 
   MyWidget wid;
   app.setMainWidget( &wid );

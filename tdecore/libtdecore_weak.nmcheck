@@ -1,7 +1,7 @@
 # KDE namespace check file
 
 # tdelibs classes
-KApplication::*
+TDEApplication::*
 
 # these should preferably go in some namespace in KDE4
 kDebugPrivate::*

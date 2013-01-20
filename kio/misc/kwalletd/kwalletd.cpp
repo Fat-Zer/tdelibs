@@ -95,7 +95,7 @@ KWalletD::KWalletD(const TQCString &name)
 	connect(_timeouts, TQT_SIGNAL(timedOut(int)), this, TQT_SLOT(timedOut(int)));
 	reconfigure();
 	KGlobal::dirs()->addResourceType("kwallet", "share/apps/kwallet");
-	connect(KApplication::dcopClient(),
+	connect(TDEApplication::dcopClient(),
 		TQT_SIGNAL(applicationRemoved(const TQCString&)),
 		this,
 		TQT_SLOT(slotAppUnregistered(const TQCString&)));
@@ -526,7 +526,7 @@ int KWalletD::internalOpen(const TQCString& appid, const TQString& wallet, bool 
 		}
 		emitDCOPSignal("walletOpened(TQString)", data);
 		if (_wallets.count() == 1 && _launchManager) {
-			KApplication::startServiceByDesktopName("kwalletmanager-kwalletd");
+			TDEApplication::startServiceByDesktopName("kwalletmanager-kwalletd");
 		}
 	} else {
 		if (!_handles[appid].contains(rc) && _openPrompt && !isAuthorizedApp(appid, wallet, w)) {

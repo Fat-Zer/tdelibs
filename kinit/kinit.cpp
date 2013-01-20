@@ -1764,7 +1764,7 @@ int main(int argc, char **argv, char **envp)
    // don't change envvars before tdeinit_initsetproctitle()
    unsetenv("LD_BIND_NOW");
    unsetenv("DYLD_BIND_AT_LAUNCH");
-   KApplication::loadedByKdeinit = true;
+   TDEApplication::loadedByKdeinit = true;
 
    d.maxname = strlen(argv[0]);
    d.launcher_pid = 0;

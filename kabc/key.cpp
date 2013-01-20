@@ -28,7 +28,7 @@ using namespace KABC;
 Key::Key( const TQString &text, int type )
   : mTextData( text ), mIsBinary( false ), mType( type )
 {
-  mId = KApplication::randomString(8);
+  mId = TDEApplication::randomString(8);
 }
 
 Key::~Key()

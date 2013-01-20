@@ -266,7 +266,7 @@ TQColor KGlobalSettings::buttonTextColor()
 
 // IMPORTANT:
 //  This function should be kept in sync with
-//   KApplication::kdisplaySetPalette()
+//   TDEApplication::kdisplaySetPalette()
 TQColor KGlobalSettings::baseColor()
 {
     KConfigGroup g( KGlobal::config(), "General" );
@@ -275,7 +275,7 @@ TQColor KGlobalSettings::baseColor()
 
 // IMPORTANT:
 //  This function should be kept in sync with
-//   KApplication::kdisplaySetPalette()
+//   TDEApplication::kdisplaySetPalette()
 TQColor KGlobalSettings::textColor()
 {
     KConfigGroup g( KGlobal::config(), "General" );
@@ -284,7 +284,7 @@ TQColor KGlobalSettings::textColor()
 
 // IMPORTANT:
 //  This function should be kept in sync with
-//   KApplication::kdisplaySetPalette()
+//   TDEApplication::kdisplaySetPalette()
 TQColor KGlobalSettings::highlightedTextColor()
 {
     KConfigGroup g( KGlobal::config(), "General" );
@@ -293,7 +293,7 @@ TQColor KGlobalSettings::highlightedTextColor()
 
 // IMPORTANT:
 //  This function should be kept in sync with
-//   KApplication::kdisplaySetPalette()
+//   TDEApplication::kdisplaySetPalette()
 TQColor KGlobalSettings::highlightColor()
 {
     initColors();

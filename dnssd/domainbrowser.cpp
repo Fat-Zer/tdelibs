@@ -86,7 +86,7 @@ DomainBrowser::DomainBrowser(TQObject *parent) : TQObject(parent)
 		d->m_domains+="local.";
 		d->m_browseLAN=true;
 	}
- 	connect(KApplication::kApplication(),TQT_SIGNAL(kipcMessage(int,int)),this,
+ 	connect(TDEApplication::kApplication(),TQT_SIGNAL(kipcMessage(int,int)),this,
  	        TQT_SLOT(domainListChanged(int,int)));
 }
 

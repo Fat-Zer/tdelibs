@@ -28,7 +28,7 @@ using namespace KSpell2;
 
 int main( int argc, char** argv )
 {
-    KApplication app(argc, argv, "Filter");
+    TDEApplication app(argc, argv, "Filter");
 
     TQString buffer = TQString( "This is     a sample buffer.      Please test me." );
 

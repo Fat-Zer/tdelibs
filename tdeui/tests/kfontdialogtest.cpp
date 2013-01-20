@@ -31,7 +31,7 @@
 
  int main( int argc, char **argv )
 {
-  KApplication app( argc, argv, "KFontDialogTest" );
+  TDEApplication app( argc, argv, "KFontDialogTest" );
 
   KConfig aConfig;
   aConfig.setGroup( "KFontDialog-test" );

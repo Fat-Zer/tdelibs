@@ -217,7 +217,7 @@ namespace KNotifyClient
 	 * placed appropriately.
 	 *
 	 * Call it by KNotifyClient::event(widget->winId(), "EventName");
-	 * It will use KApplication::kApplication->dcopClient() to communicate to
+	 * It will use TDEApplication::kApplication->dcopClient() to communicate to
 	 * the server
 	 * @param winId The winId() of the widget where the event originates
 	 * @param message The name of the event

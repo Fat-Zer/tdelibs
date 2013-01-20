@@ -155,12 +155,12 @@ class KateStyleListCaption : public TQListViewItem
 //BEGIN KateSchemaManager
 TQString KateSchemaManager::normalSchema ()
 {
-  return KApplication::kApplication()->aboutData()->appName () + TQString (" - Normal");
+  return TDEApplication::kApplication()->aboutData()->appName () + TQString (" - Normal");
 }
 
 TQString KateSchemaManager::printingSchema ()
 {
-  return KApplication::kApplication()->aboutData()->appName () + TQString (" - Printing");
+  return TDEApplication::kApplication()->aboutData()->appName () + TQString (" - Printing");
 }
 
 KateSchemaManager::KateSchemaManager ()
@@ -865,7 +865,7 @@ KateSchemaConfigPage::KateSchemaConfigPage( TQWidget *parent, KateDocument *doc 
   hbHl = new TQHBox( this );
   layout->add (hbHl);
   hbHl->setSpacing( KDialog::spacingHint() );
-  lHl = new TQLabel( i18n("&Default schema for %1:").arg(KApplication::kApplication()->aboutData()->programName ()), hbHl );
+  lHl = new TQLabel( i18n("&Default schema for %1:").arg(TDEApplication::kApplication()->aboutData()->programName ()), hbHl );
   defaultSchemaCombo = new TQComboBox( false, hbHl );
   lHl->setBuddy( defaultSchemaCombo );
 

@@ -45,7 +45,7 @@ int main( int argc, char *argv[] )
 {
 	KAboutData aboutData( "kwalletasync", "kwalletasync", "version" );
 	TDECmdLineArgs::init( argc, argv, &aboutData );
-	KApplication app( "kwalletasync" );
+	TDEApplication app( "kwalletasync" );
 
 	// register with DCOP
 	_out << "DCOP registration returned " << app.dcopClient()->registerAs(app.name()) << endl;

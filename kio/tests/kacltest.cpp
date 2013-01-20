@@ -67,9 +67,9 @@ static bool check(const TQString& txt, T a, T b)
 
 int main(int argc, char *argv[])
 {
-    KApplication::disableAutoDcopRegistration();
+    TDEApplication::disableAutoDcopRegistration();
     TDECmdLineArgs::init(argc,argv,"kacltest", 0, 0, 0, 0);
-    KApplication app;
+    TDEApplication app;
 
     KACLTest test;
     test.setup();

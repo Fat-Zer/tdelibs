@@ -28,7 +28,7 @@ int main( int argc, char *argv[] )
 
 	KLocale::setMainCatalogue("tdelibs");
 	TQApplication::setColorMode( TQApplication::CustomColors );
-	KApplication a( argc, argv, "KColorDialogTest" );
+	TDEApplication a( argc, argv, "KColorDialogTest" );
         KConfig aConfig;
         aConfig.setGroup( "KColorDialog-test" );
     

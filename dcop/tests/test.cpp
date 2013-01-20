@@ -32,7 +32,7 @@ int main(int argc, char** argv)
 		return 0;
 	}
 	TDECmdLineArgs::init( argc, argv, "TestApp", "Tests the dcop familly of tools + libraries", "1.0" ); // FIXME
-	KApplication app;
+	TDEApplication app;
 	if(!app.dcopClient()->attach(  ))
 		return 1;
 

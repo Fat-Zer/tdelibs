@@ -14,7 +14,7 @@
 
 int main(int argc, char *argv[])
 {
-   KApplication k(argc,argv,"blurb",false);
+   TDEApplication k(argc,argv,"blurb",false);
 
    KMimeType::List mtl = KMimeType::allMimeTypes( );
    assert( mtl.count() );

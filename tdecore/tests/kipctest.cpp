@@ -18,7 +18,7 @@ MyObject::MyObject()
 
 int main(int argc, char **argv)
 {
-    KApplication app(argc, argv, "kipc");
+    TDEApplication app(argc, argv, "kipc");
 
     if (argc == 3) 
     {

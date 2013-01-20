@@ -296,7 +296,7 @@ TQString KPrinterImpl::tempFile()
 {
 	TQString	f;
 	// be sure the file doesn't exist
-	do f = locateLocal("tmp","tdeprint_") + KApplication::randomString(8); while (TQFile::exists(f));
+	do f = locateLocal("tmp","tdeprint_") + TDEApplication::randomString(8); while (TQFile::exists(f));
 	return f;
 }
 

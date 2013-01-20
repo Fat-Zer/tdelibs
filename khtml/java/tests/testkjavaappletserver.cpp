@@ -21,7 +21,7 @@ int main(int argc, char **argv)
 
     TDECmdLineArgs::addCmdLineOptions( options );
 
-    KApplication app;
+    TDEApplication app;
 
     TQString path_to_tdelibs = "/build/wynnw/kde-src";
 

@@ -509,7 +509,7 @@ bool RenderFrameSet::userResize( MouseEventImpl *evt )
   if(!m_resizing && evt->id() == EventImpl::MOUSEDOWN_EVENT)
   {
       setResizing(true);
-      KApplication::setOverrideCursor(TQCursor(m_cursor));
+      TDEApplication::setOverrideCursor(TQCursor(m_cursor));
       m_vSplitPos = _x;
       m_hSplitPos = _y;
       m_oldpos = -1;
@@ -519,7 +519,7 @@ bool RenderFrameSet::userResize( MouseEventImpl *evt )
   if(m_resizing && evt->id() == EventImpl::MOUSEUP_EVENT)
   {
     setResizing(false);
-    KApplication::restoreOverrideCursor();
+    TDEApplication::restoreOverrideCursor();
 
     if(m_vSplit != -1 )
     {

@@ -15,7 +15,7 @@ int main(int argc, char**argv)
 {
   TDECmdLineArgs::init(argc, argv, "test", "test" ,"test" ,"1.0");
   TDECmdLineArgs::addCmdLineOptions( options );
-  KApplication app("test");
+  TDEApplication app("test");
 
   TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
   if (args->count()!=1)

@@ -637,7 +637,7 @@ void KHTMLView::viewportResizeEvent (TQResizeEvent* e)
     }/*end if*/
 #endif
 
-    KApplication::sendPostedEvents(viewport(), TQEvent::Paint);
+    TDEApplication::sendPostedEvents(viewport(), TQEvent::Paint);
 }
 
 // this is to get rid of a compiler virtual overload mismatch warning. do not remove
@@ -1730,7 +1730,7 @@ void KHTMLView::keyReleaseEvent(TQKeyEvent *_ke)
     if( d->scrollSuspendPreActivate && _ke->key() != Key_Shift )
         d->scrollSuspendPreActivate = false;
     if( _ke->key() == Key_Shift && d->scrollSuspendPreActivate && _ke->state() == TQt::ShiftButton
-        && !(KApplication::keyboardMouseState() & TQt::ShiftButton))
+        && !(TDEApplication::keyboardMouseState() & TQt::ShiftButton))
     {
         if (d->scrollTimerId)
         {
@@ -1746,7 +1746,7 @@ void KHTMLView::keyReleaseEvent(TQKeyEvent *_ke)
     {
         if (d->accessKeysPreActivate && _ke->key() != Key_Control)
             d->accessKeysPreActivate=false;
-        if (d->accessKeysPreActivate && _ke->state() == TQt::ControlButton && !(KApplication::keyboardMouseState() & TQt::ControlButton))
+        if (d->accessKeysPreActivate && _ke->state() == TQt::ControlButton && !(TDEApplication::keyboardMouseState() & TQt::ControlButton))
         {
 	    displayAccessKeys();
 	    m_part->setStatusBarText(i18n("Access Keys activated"),KHTMLPart::BarOverrideText);

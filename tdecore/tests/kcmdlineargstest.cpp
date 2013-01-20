@@ -31,7 +31,7 @@ main(int argc, char *argv[])
 
    // MyWidget::addCmdLineOptions();
 
-   KApplication k( false, false /*true, true*/ );
+   TDEApplication k( false, false /*true, true*/ );
 
    // Get application specific arguments
    TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs(); 
@@ -81,7 +81,7 @@ main(int argc, char *argv[])
 {
    TDECmdLineArgs::init( argc, argv, "testapp", description, version);
 
-   KApplication k( true, true );
+   TDEApplication k( true, true );
 
    k.exec();
    return 0;

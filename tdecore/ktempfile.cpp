@@ -93,7 +93,7 @@ KTempFile::create(const TQString &filePrefix, const TQString &fileExtension,
 		  int mode)
 {
    // make sure the random seed is randomized
-   (void) KApplication::random();
+   (void) TDEApplication::random();
 
    TQCString ext = TQFile::encodeName(fileExtension);
    TQCString nme = TQFile::encodeName(filePrefix) + "XXXXXX" + ext;

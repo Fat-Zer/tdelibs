@@ -1,5 +1,5 @@
 Matthias Kalle Dalheimer <kalle@kde.org>:
-classes KConfig, KTextStream, KColorSet, KApplication
+classes KConfig, KTextStream, KColorSet, TDEApplication
 automake, autoconf, maintenance
 
 Richard Moore <moorer@cs.man.ac.uk>:
@@ -40,7 +40,7 @@ Christian Czezatke <e9025461@student.tuwien.ac.at>
 KProcess class
 
 Matthias Ettrich <ettrich@kde.org>
-KWM, Changes to KApplication and KIconLoader
+KWM, Changes to TDEApplication and KIconLoader
 
 Stephan Kulow <coolo@kde.org>
 heavy modifications to KURL, autoconf and automake stuff

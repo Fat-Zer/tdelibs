@@ -3887,14 +3887,14 @@ void KExecPropsPlugin::slotBrowseExec()
     execEdit->setText( path );
 }
 
-class KApplicationPropsPlugin::KApplicationPropsPluginPrivate
+class TDEApplicationPropsPlugin::TDEApplicationPropsPluginPrivate
 {
 public:
-  KApplicationPropsPluginPrivate()
+  TDEApplicationPropsPluginPrivate()
   {
       m_kdesktopMode = TQCString(tqApp->name()) == "kdesktop"; // nasty heh?
   }
-  ~KApplicationPropsPluginPrivate()
+  ~TDEApplicationPropsPluginPrivate()
   {
   }
 
@@ -3902,10 +3902,10 @@ public:
   bool m_kdesktopMode;
 };
 
-KApplicationPropsPlugin::KApplicationPropsPlugin( KPropertiesDialog *_props )
+TDEApplicationPropsPlugin::TDEApplicationPropsPlugin( KPropertiesDialog *_props )
   : KPropsDlgPlugin( _props )
 {
-  d = new KApplicationPropsPluginPrivate;
+  d = new TDEApplicationPropsPluginPrivate;
   d->m_frame = properties->addPage(i18n("&Application"));
   TQVBoxLayout *toplayout = new TQVBoxLayout( d->m_frame, 0, KDialog::spacingHint());
 
@@ -4043,23 +4043,23 @@ KApplicationPropsPlugin::KApplicationPropsPlugin( KPropertiesDialog *_props )
            this, TQT_SIGNAL( changed() ) );
 }
 
-KApplicationPropsPlugin::~KApplicationPropsPlugin()
+TDEApplicationPropsPlugin::~TDEApplicationPropsPlugin()
 {
   delete d;
 }
 
-// TQString KApplicationPropsPlugin::tabName () const
+// TQString TDEApplicationPropsPlugin::tabName () const
 // {
 //   return i18n ("&Application");
 // }
 
-void KApplicationPropsPlugin::updateButton()
+void TDEApplicationPropsPlugin::updateButton()
 {
     addExtensionButton->setEnabled(availableExtensionsList->currentItem()>-1);
     delExtensionButton->setEnabled(extensionsList->currentItem()>-1);
 }
 
-void KApplicationPropsPlugin::addMimeType( const TQString & name )
+void TDEApplicationPropsPlugin::addMimeType( const TQString & name )
 {
   // Add a mimetype to the list of available mime types if not in the extensionsList
 
@@ -4076,13 +4076,13 @@ void KApplicationPropsPlugin::addMimeType( const TQString & name )
   }
 }
 
-bool KApplicationPropsPlugin::supports( KFileItemList _items )
+bool TDEApplicationPropsPlugin::supports( KFileItemList _items )
 {
   // same constraints as KExecPropsPlugin : desktop file with Type = Application
   return KExecPropsPlugin::supports( _items );
 }
 
-void KApplicationPropsPlugin::applyChanges()
+void TDEApplicationPropsPlugin::applyChanges()
 {
   TQString path = properties->kurl().path();
 
@@ -4121,7 +4121,7 @@ void KApplicationPropsPlugin::applyChanges()
   config.sync();
 }
 
-void KApplicationPropsPlugin::slotAddExtension()
+void TDEApplicationPropsPlugin::slotAddExtension()
 {
   TQListBoxItem *item = availableExtensionsList->firstItem();
   TQListBoxItem *nextItem;
@@ -4143,7 +4143,7 @@ void KApplicationPropsPlugin::slotAddExtension()
   updateButton();
 }
 
-void KApplicationPropsPlugin::slotDelExtension()
+void TDEApplicationPropsPlugin::slotDelExtension()
 {
   TQListBoxItem *item = extensionsList->firstItem();
   TQListBoxItem *nextItem;

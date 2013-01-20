@@ -30,7 +30,7 @@ main(int argc, char *argv[])
    KAboutData about("kapptest", "kapptest", "version");
    TDECmdLineArgs::init(argc, argv, &about);
 
-   KApplication a;
+   TDEApplication a;
 
    TQString error;
    TQCString dcopService;

@@ -49,7 +49,7 @@ int main(int argc, char **argv)
     TDECmdLineArgs::init(argc, argv, &about);
     TDECmdLineArgs::addCmdLineOptions( options );
 
-    KApplication app;
+    TDEApplication app;
 
     KConfig config("twinrc", true);
     config.setGroup( "Notification Messages" );

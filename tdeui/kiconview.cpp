@@ -65,7 +65,7 @@ KIconView::KIconView( TQWidget *parent, const char *name, WFlags f )
              this, TQT_SLOT( slotOnViewport() ) );
     connect( this, TQT_SIGNAL( onItem( TQIconViewItem * ) ),
              this, TQT_SLOT( slotOnItem( TQIconViewItem * ) ) );
-    slotSettingsChanged( KApplication::SETTINGS_MOUSE );
+    slotSettingsChanged( TDEApplication::SETTINGS_MOUSE );
     if ( kapp ) { // maybe null when used inside designer
         connect( kapp, TQT_SIGNAL( settingsChanged(int) ), TQT_SLOT( slotSettingsChanged(int) ) );
         kapp->addKipcEventMask( KIPC::SettingsChanged );
@@ -123,7 +123,7 @@ void KIconView::slotOnViewport()
 
 void KIconView::slotSettingsChanged(int category)
 {
-    if ( category != KApplication::SETTINGS_MOUSE )
+    if ( category != TDEApplication::SETTINGS_MOUSE )
       return;
     m_bUseSingle = KGlobalSettings::singleClick();
     //kdDebug() << "KIconView::slotSettingsChanged for mouse, usesingle=" << m_bUseSingle << endl;
@@ -167,7 +167,7 @@ void KIconView::slotAutoSelect()
   if( !hasFocus() )
     setFocus();
 
-  ButtonState keybstate = KApplication::keyboardMouseState();
+  ButtonState keybstate = TDEApplication::keyboardMouseState();
   TQIconViewItem* previousItem = currentItem();
   setCurrentItem( m_pCurrentItem );
 
@@ -243,7 +243,7 @@ void KIconView::emitExecute( TQIconViewItem *item, const TQPoint &pos )
     return;
   }
 
-  ButtonState keybstate = KApplication::keyboardMouseState();
+  ButtonState keybstate = TDEApplication::keyboardMouseState();
 
   m_pAutoSelect->stop();
 

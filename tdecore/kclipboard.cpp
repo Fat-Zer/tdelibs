@@ -189,7 +189,7 @@ void KClipboardSynchronizer::setReverseSynchronizing( bool enable )
     self()->setupSignals();
 }
 
-// private, called by KApplication
+// private, called by TDEApplication
 void KClipboardSynchronizer::newConfiguration( int config )
 {
     s_sync = (config & Synchronize);

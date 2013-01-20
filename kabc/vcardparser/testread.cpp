@@ -42,7 +42,7 @@ static const KCmdLineOptions options[] =
 
 int main( int argc, char **argv )
 {
-  KApplication::disableAutoDcopRegistration();
+  TDEApplication::disableAutoDcopRegistration();
 
   KAboutData aboutData( "testread", "vCard test reader", "0.1" );
   aboutData.addAuthor( "Cornelius Schumacher", 0, "schumacher@kde.org" );
@@ -50,7 +50,7 @@ int main( int argc, char **argv )
   TDECmdLineArgs::init( argc, argv, &aboutData );
   TDECmdLineArgs::addCmdLineOptions( options );
 
-  KApplication app( false, false );
+  TDEApplication app( false, false );
 
   TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 

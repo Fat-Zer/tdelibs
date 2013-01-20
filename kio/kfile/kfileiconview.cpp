@@ -362,7 +362,7 @@ void KFileIconView::slotActivate( TQIconViewItem *item )
 
 void KFileIconView::selected( TQIconViewItem *item )
 {
-    if ( !item || (KApplication::keyboardMouseState() & (ShiftButton | ControlButton)) != 0 )
+    if ( !item || (TDEApplication::keyboardMouseState() & (ShiftButton | ControlButton)) != 0 )
 	return;
 
     if ( KGlobalSettings::singleClick() ) {

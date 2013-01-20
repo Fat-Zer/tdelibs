@@ -11,7 +11,7 @@ int main(int argc,char **argv)
   KAboutData aboutData("testwrite",I18N_NOOP("TestWritevCard"),"0.1");
   TDECmdLineArgs::init(argc,argv,&aboutData);
 
-  KApplication app;
+  TDEApplication app;
   
   kdDebug() << "Test Write VCard" << endl;
 

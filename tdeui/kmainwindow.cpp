@@ -92,7 +92,7 @@ public:
     }
     bool saveState( TQSessionManager& )
     {
-        KConfig* config = KApplication::kApplication()->sessionConfig();
+        KConfig* config = TDEApplication::kApplication()->sessionConfig();
         if ( KMainWindow::memberList->first() ){
             // According to Jochen Wilhelmy <digisnap@cs.tu-berlin.de>, this
             // hook is useful for better document orientation
@@ -303,9 +303,9 @@ void KMainWindow::parseGeometry(bool parsewidth)
         if ( parsewidth && !(m & YValue) )
             y = geometry().y();
         if ( (m & XNegative) )
-            x = KApplication::desktop()->width()  + x - w;
+            x = TDEApplication::desktop()->width()  + x - w;
         if ( (m & YNegative) )
-            y = KApplication::desktop()->height() + y - h;
+            y = TDEApplication::desktop()->height() + y - h;
         move(x, y);
     }
 #endif
@@ -1226,7 +1226,7 @@ void KMainWindow::setIcon( const TQPixmap& p )
 {
     TQMainWindow::setIcon( p );
 #ifdef Q_WS_X11 
-    // Qt3 doesn't support _NET_WM_ICON, but KApplication::setTopWidget(), which
+    // Qt3 doesn't support _NET_WM_ICON, but TDEApplication::setTopWidget(), which
     // is used by KMainWindow, sets it
     KWin::setIcons( winId(), p, TQPixmap());
 #endif

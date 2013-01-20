@@ -100,7 +100,7 @@ void Test::createFields()
 int main( int argc, char ** argv )
 {
   KLocale::setMainCatalogue("tdelibs");
-  KApplication a( argc, argv, "klocaletest" );
+  TDEApplication a( argc, argv, "klocaletest" );
 
   KGlobal::locale()->setLanguage(TQString::fromLatin1("en_US"));
   KGlobal::locale()->setCountry(TQString::fromLatin1("C"));

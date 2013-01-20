@@ -42,7 +42,7 @@ int main(int argc, char **argv)
 			   I18N_NOOP("telnet protocol handler"), "unknown");
 	TDECmdLineArgs::addCmdLineOptions(options);
 
-	KApplication app;
+	TDEApplication app;
 
 	TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 	

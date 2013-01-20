@@ -265,7 +265,7 @@ TQByteArray KNTLM::getLMv2Response( const TQString &target, const TQString &user
   TQByteArray hash = ntlmv2Hash( target, user, password );
   TQByteArray clientChallenge( 8 );
   for ( uint i = 0; i<8; i++ ) {
-    clientChallenge.data()[i] = KApplication::random() % 0xff;
+    clientChallenge.data()[i] = TDEApplication::random() % 0xff;
   }
   return lmv2Response( hash, clientChallenge, challenge );
 }
@@ -304,7 +304,7 @@ TQByteArray KNTLM::createBlob( const TQByteArray &targetinfo )
   now *= (TQ_UINT64)10000000;
   bl->timestamp = KFromToLittleEndian( now );
   for ( uint i = 0; i<8; i++ ) {
-    bl->challenge[i] = KApplication::random() % 0xff;
+    bl->challenge[i] = TDEApplication::random() % 0xff;
   }
   memcpy( blob.data() + sizeof(Blob), targetinfo.data(), targetinfo.size() );
   return blob;

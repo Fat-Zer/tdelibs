@@ -981,7 +981,7 @@ KMessageBox::about(TQWidget *parent, const TQString &text,
                                 parent, "about", true, true,
                                 KStdGuiItem::ok() );
     
-    TQPixmap ret = KApplication::kApplication()->icon();
+    TQPixmap ret = TDEApplication::kApplication()->icon();
     if (ret.isNull())
         ret = TQMessageBox::standardIcon(TQMessageBox::Information);
     dialog->setIcon(ret);

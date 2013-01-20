@@ -72,7 +72,7 @@ bool
 KTempDir::create(const TQString &directoryPrefix, int mode)
 {
    // make sure the random seed is randomized
-   (void) KApplication::random();
+   (void) TDEApplication::random();
 
    TQCString nme = TQFile::encodeName(directoryPrefix) + "XXXXXX";
    char *realName;

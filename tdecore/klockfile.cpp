@@ -336,7 +336,7 @@ KLockFile::LockResult KLockFile::lock(int options)
      
      struct timeval tv;
      tv.tv_sec = 0;
-     tv.tv_usec = n*((KApplication::random() % 200)+100);
+     tv.tv_usec = n*((TDEApplication::random() % 200)+100);
      if (n < 2000)
         n = n * 2;
      

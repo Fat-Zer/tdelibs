@@ -3,7 +3,7 @@
 
 int main( int argc, char **argv )
 {
-    KApplication app( argc, argv, "kicondialogtest" );
+    TDEApplication app( argc, argv, "kicondialogtest" );
 
 //    KIconDialog::getIcon(); 
 

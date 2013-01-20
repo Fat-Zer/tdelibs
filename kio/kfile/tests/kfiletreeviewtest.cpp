@@ -134,7 +134,7 @@ void testFrame::slotSetChildCount( KFileTreeViewItem *item, int c )
 
 int main(int argc, char **argv)
 {
-    KApplication a(argc, argv, "kfiletreeviewtest");
+    TDEApplication a(argc, argv, "kfiletreeviewtest");
     TQString name1;
     TQStringList names;
 

@@ -59,9 +59,9 @@ main(int argc, char *argv[])
 {
    KAboutData about("socktest", "SockTest", "version");
    TDECmdLineArgs::init(argc, argv, &about);
-   KApplication::addCmdLineOptions();
+   TDEApplication::addCmdLineOptions();
 
-   KApplication app;
+   TDEApplication app;
 
    TQString host, port;
 

@@ -339,7 +339,7 @@ int main (int argc, char *argv[])
     TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
     int count = args->count();
 
-    KApplication app;
+    TDEApplication app;
 
     if (!count)
     {

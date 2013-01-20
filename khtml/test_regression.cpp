@@ -511,7 +511,7 @@ int main(int argc, char *argv[])
         setenv( "DISPLAY", ":47", 1 );
     }
 
-    KApplication a;
+    TDEApplication a;
     a.disableAutoDcopRegistration();
     a.setStyle( "windows" );
     KSimpleConfig sc1( "cryptodefaults" );

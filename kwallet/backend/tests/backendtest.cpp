@@ -7,7 +7,7 @@
 #include "kwalletbackend.h"
 
 int main(int argc, char **argv) {
-   KApplication a(argc, argv, "kwalletbackendtest");
+   TDEApplication a(argc, argv, "kwalletbackendtest");
 
    KWallet::Backend be("ktestwallet");
    printf("KWalletBackend constructed\n");

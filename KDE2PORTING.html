@@ -19,7 +19,7 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
 <LI><A HREF="#gettingstarted">Getting Started</A></LI>
 <LI><A HREF="#general">Global changes</A></LI>
 <LI><A HREF="#automoc">automoc/am_edit, Makefile.am tags</A></LI>
-<LI><A HREF="#KApplication">KApplication</A></LI>
+<LI><A HREF="#TDEApplication">TDEApplication</A></LI>
 <LI><A HREF="#TDECmdLineArgs">TDECmdLineArgs</A></LI>
 <LI><A HREF="#KLocale">KLocale</A></LI>
 <LI><A HREF="#KGlobal">KGlobal: access to KDE global objects.</A></LI>
@@ -107,7 +107,7 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
-<H3><A NAME="KApplication">KApplication</A></H3>
+<H3><A NAME="TDEApplication">TDEApplication</A></H3>
 
   doesn't hold any longer a KLocale instance. With this getLocale()
   and isLocaleInstantiated are now replaced by KGlobal::locale()<P>
@@ -128,7 +128,7 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
   KGlobal::dirs()-&gt;findResource.<P>
 
   Use locateLocal to get the path of a writable file. For instance,
-  KApplication::localconfigdir()+filename is now locateLocal( "config", filename ),
+  TDEApplication::localconfigdir()+filename is now locateLocal( "config", filename ),
   but for most cases, simply using KGlobal::config() is enough, if you're happy
   with saving the application's configuration into appnamerc, or
   KSimpleConfig cfg("anothercfgfile") to create a config file with another name.<P>
@@ -146,8 +146,8 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
   appHelpActivated() have all been removed See section for KMainWindow
   for more info.<P>
 
-  The KApplication constructor has changed. Command line arguments and
-  program name should no longer be passed to KApplication but to 
+  The TDEApplication constructor has changed. Command line arguments and
+  program name should no longer be passed to TDEApplication but to 
   TDECmdLineArgs. TDECmdLineArgs performs command line parsing and a command
   line help. See below for more info.<P>
 
@@ -166,7 +166,7 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
   </UL>
  
   TDECmdLineArgs itself will add the command line options supported by Qt 
-  and KApplication.<P>
+  and TDEApplication.<P>
 
   You can also use the KAboutData class to specify name, description and 
   version.<P>
@@ -183,7 +183,7 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
 
   i18n is no longer a macro<P>
 
-  KApplication::getApplication()-&gt;getLocale()-&gt;translate<P>
+  TDEApplication::getApplication()-&gt;getLocale()-&gt;translate<P>
 
   but a function on its own. klocale is obsolete and replace every call
   to klocale-&gt;translate with i18n.<P>
@@ -199,7 +199,7 @@ KGlobal allows centralized access to KDE global objects without including
 extraneous headers. object creation is deferred if possible.<P>
 
 All methods are static and headers for returned types are not included. You
-must have created a KApplication object before the methods can be used.<P>
+must have created a TDEApplication object before the methods can be used.<P>
 <TABLE BORDER="0">
 <TR>
   <TD COLSPAN="2">
@@ -271,7 +271,7 @@ mainViewGeometry() instead.<P>
 
 <H3><A NAME="KHelpMenu">KHelpMenu</A></H3>
 
-helpMenu() has been moved to KMainWindow from KApplication (kapp).<P>
+helpMenu() has been moved to KMainWindow from TDEApplication (kapp).<P>
 
 Both the "About KDE" and the "About &lt;Application&gt;" dialog boxes
 are now modeless. "About KDE" is a completely new widget.<P>
@@ -281,7 +281,7 @@ If you used in the toplevel window (that is derived from KMainWindow)
 you must now change this to "helpMenu( TQString )". The TQString defaults
 to TQString::null so it is sufficient to write helpMenu().<P>
 
-The old aboutKDE(), aboutApp() and appHelpActivated() of KApplication
+The old aboutKDE(), aboutApp() and appHelpActivated() of TDEApplication
 have all been removed. If you need direct access to these or need
 access to a help menu in a class that is not derived from
 KMainWindow then allocate an instance of the new class KHelpMenu.
@@ -792,7 +792,7 @@ Matthias Hoelzer-Kluepfel &lt;<A HREF="mailto:hoelzer@kde.org">hoelzer@kde.org</
 The KWMModuleApplication has been removed. Instead, use the class
 KWinModule in libtdecore. The API is a bit cleaner but very similar,
 so you will feel comfortable immediately. One of the advantages of
-KWinModule is that it doesn't require a special KApplication
+KWinModule is that it doesn't require a special TDEApplication
 subclass. This lead to many problems and misunderstandings in the
 past. KWinModule is now just an object that emits fancy signals (and
 provides some useful lists, like the list of all managed windows).

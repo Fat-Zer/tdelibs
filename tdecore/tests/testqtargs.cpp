@@ -73,7 +73,7 @@ int main(int argc, char *argv[])
     tqDebug("qt arg[%d] = %s", i, qtargs->arg(i));
   }
 
-  KApplication app;
+  TDEApplication app;
 
   TDECmdLineArgs *kdeargs = TDECmdLineArgs::parsedArgs("tde");
   TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();

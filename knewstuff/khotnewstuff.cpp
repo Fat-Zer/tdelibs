@@ -42,7 +42,7 @@ int main(int argc, char **argv)
 	TDECmdLineArgs::addCmdLineOptions(op);
 	args = TDECmdLineArgs::parsedArgs();
 
-	KApplication i;
+	TDEApplication i;
 
 	KNS::DownloadDialog d;
 	if(args->isSet("type")) d.setType(args->getOption("type"));

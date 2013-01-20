@@ -91,12 +91,12 @@ class KStandardDirsPrivate;
  * @li socket - UNIX Sockets (specific for both current host and current user)
  * @li emoticons - Emoticons themes  (Since KDE 3.4)
  *
- * A type that is added by the class KApplication if you use it, is
+ * A type that is added by the class TDEApplication if you use it, is
  * appdata. This one makes the use of the type data a bit easier as it
  * appends the name of the application.
  * So while you had to ::locate("data", "appname/filename") so you can
- * also write ::locate("appdata", "filename") if your KApplication instance
- * is called "appname" (as set via KApplication's constructor or KAboutData, if
+ * also write ::locate("appdata", "filename") if your TDEApplication instance
+ * is called "appname" (as set via TDEApplication's constructor or KAboutData, if
  * you use the global KStandardDirs object KGlobal::dirs()).
  * Please note though that you cannot use the "appdata"
  * type if you intend to use it in an applet for Kicker because 'appname' would

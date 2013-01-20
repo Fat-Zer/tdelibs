@@ -246,7 +246,7 @@ DCOPClient *SlaveBase::dcopClient()
 {
     if (!d->dcopClient)
     {
-       d->dcopClient = KApplication::dcopClient();
+       d->dcopClient = TDEApplication::dcopClient();
        if (!d->dcopClient->isAttached())
           d->dcopClient->attach();
        d->dcopClient->setDaemonMode( true );

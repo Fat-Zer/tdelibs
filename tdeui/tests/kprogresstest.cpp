@@ -46,7 +46,7 @@ void MyWidget::timerEvent(TQTimerEvent *)
 
 int main(int argc, char *argv[])
 {
-	KApplication app(argc, argv, "KProgressTest");
+	TDEApplication app(argc, argv, "KProgressTest");
 	MyWidget w;
 	
 	app.setMainWidget(&w);

@@ -43,7 +43,7 @@ int main( int argc, char **argv )
 
   TDECmdLineArgs::init( argc, argv, &aboutData );
 
-  KApplication app;
+  TDEApplication app;
 
   ExamplePrefsBase configSkeleton( "dummy1", "dummy2" );
   configSkeleton.readConfig();

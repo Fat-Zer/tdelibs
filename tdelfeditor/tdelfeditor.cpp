@@ -536,10 +536,10 @@ int main_console(int argc, char **argv)
 		case MODE_TDE_AUTOADD_ICON:
 		{
 			printf("Searching for standard icon for name %s in the following directories:\n\r", argv[PARAM_ICON_NAME]);
-			KApplication::disableAutoDcopRegistration();
+			TDEApplication::disableAutoDcopRegistration();
 			KAboutData aboutd("tdelfeditor", "tdelfeditor", "0.0.1");
 			TDECmdLineArgs::init(&aboutd);
-			KApplication app(false, false);
+			TDEApplication app(false, false);
 
 			TQStringList rds = KGlobal::dirs()->resourceDirs("icon");
 			for ( TQStringList::Iterator it = rds.begin(); it != rds.end(); ++it ) {

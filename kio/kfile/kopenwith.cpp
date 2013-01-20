@@ -131,7 +131,7 @@ void KAppTreeListItem::activate()
 void KAppTreeListItem::setOpen( bool o )
 {
     if( o && !parsed ) { // fill the children before opening
-        ((KApplicationTree *) parent())->addDesktopGroup( path, this );
+        ((TDEApplicationTree *) parent())->addDesktopGroup( path, this );
         parsed = true;
     }
     TQListViewItem::setOpen( o );
@@ -144,7 +144,7 @@ bool KAppTreeListItem::isDirectory()
 
 // ----------------------------------------------------------------------
 
-KApplicationTree::KApplicationTree( TQWidget *parent )
+TDEApplicationTree::TDEApplicationTree( TQWidget *parent )
     : KListView( parent ), currentitem(0)
 {
     addColumn( i18n("Known Applications") );
@@ -161,7 +161,7 @@ KApplicationTree::KApplicationTree( TQWidget *parent )
 
 // ----------------------------------------------------------------------
 
-bool KApplicationTree::isDirSel()
+bool TDEApplicationTree::isDirSel()
 {
     if (!currentitem) return false; // if currentitem isn't set
     return currentitem->isDirectory();
@@ -182,7 +182,7 @@ static TQPixmap appIcon(const TQString &iconName)
     return normal;
 }
 
-void KApplicationTree::addDesktopGroup( const TQString &relPath, KAppTreeListItem *item)
+void TDEApplicationTree::addDesktopGroup( const TQString &relPath, KAppTreeListItem *item)
 {
    KServiceGroup::Ptr root = KServiceGroup::group(relPath);
    if (!root || !root->isValid()) return;
@@ -244,7 +244,7 @@ void KApplicationTree::addDesktopGroup( const TQString &relPath, KAppTreeListIte
 
 // ----------------------------------------------------------------------
 
-void KApplicationTree::slotItemHighlighted(TQListViewItem* i)
+void TDEApplicationTree::slotItemHighlighted(TQListViewItem* i)
 {
     // i may be 0 (see documentation)
     if(!i)
@@ -261,7 +261,7 @@ void KApplicationTree::slotItemHighlighted(TQListViewItem* i)
 
 // ----------------------------------------------------------------------
 
-void KApplicationTree::slotSelectionChanged(TQListViewItem* i)
+void TDEApplicationTree::slotSelectionChanged(TQListViewItem* i)
 {
     // i may be 0 (see documentation)
     if(!i)
@@ -277,7 +277,7 @@ void KApplicationTree::slotSelectionChanged(TQListViewItem* i)
 
 // ----------------------------------------------------------------------
 
-void KApplicationTree::resizeEvent( TQResizeEvent * e)
+void TDEApplicationTree::resizeEvent( TQResizeEvent * e)
 {
     setColumnWidth(0, width()-TQApplication::style().pixelMetric(TQStyle::PM_ScrollBarExtent)
                          -2*TQApplication::style().pixelMetric(TQStyle::PM_DefaultFrameWidth));
@@ -285,7 +285,7 @@ void KApplicationTree::resizeEvent( TQResizeEvent * e)
 }
 
 // Prune empty directories from the tree
-void KApplicationTree::cleanupTree()
+void TDEApplicationTree::cleanupTree()
 {
 	TQListViewItem *item=firstChild();
 	while(item!=0)
@@ -456,7 +456,7 @@ void KOpenWithDlg::init( const TQString& _text, const TQString& _value )
   connect ( edit, TQT_SIGNAL(returnPressed()), TQT_SLOT(slotOK()) );
   connect ( edit, TQT_SIGNAL(textChanged(const TQString&)), TQT_SLOT(slotTextChanged()) );
 
-  m_pTree = new KApplicationTree( this );
+  m_pTree = new TDEApplicationTree( this );
   topLayout->addWidget(m_pTree);
 
   connect( m_pTree, TQT_SIGNAL( selected( const TQString&, const TQString& ) ),

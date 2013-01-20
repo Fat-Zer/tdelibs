@@ -78,7 +78,7 @@ void KRandomSequence::setSeed( long lngSeed1 )
   }
   else if (lngSeed1 == 0)
   {
-    m_lngSeed1 = -((KApplication::random() & ~1)+1);
+    m_lngSeed1 = -((TDEApplication::random() & ~1)+1);
   }
   else
   {

@@ -450,7 +450,7 @@ public:
    * Java and Plugins support. This might change in the future if the security model
    * is becoming more sophisticated, so don't rely on this behaviour.
    *
-   * ( default false - everything is loaded unless forbidden by KApplication::authorizeURLAction).
+   * ( default false - everything is loaded unless forbidden by TDEApplication::authorizeURLAction).
    */
   void setOnlyLocalReferences( bool enable );
 

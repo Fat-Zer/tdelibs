@@ -187,9 +187,9 @@ int main( int argc, char **argv )
     TDECmdLineArgs::addCmdLineOptions( options );
 
     // Add options from other components
-    KApplication::addCmdLineOptions();
+    TDEApplication::addCmdLineOptions();
     
-    KApplication app;
+    TDEApplication app;
 
     TDECmdLineArgs* args = TDECmdLineArgs::parsedArgs();
 

@@ -37,7 +37,7 @@ int main( int argc, char **argv )
 
   TDECmdLineArgs::init( argc, argv, &aboutData );
 
-  KApplication app;
+  TDEApplication app;
 
   ExamplePrefsBase *prefs = new ExamplePrefsBase("Trans1", "Folder2");
   

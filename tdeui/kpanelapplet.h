@@ -55,7 +55,7 @@ class TQPopupMenu;
  *
  * \b X-TDE-UniqueApplet \n
  *
- * Similar to KApplication and KUniqueApplication there are
+ * Similar to TDEApplication and KUniqueApplication there are
  * two types of panel applets. Use unique applets when it makes no
  * sence to run more than one instance of a applet in the panel. A
  * good example for unique applets is the taskbar applet.  Use normal

@@ -30,7 +30,7 @@ ASNs which will stay too long until a timeout ). For improving the quality
 of ASN and reducing the number of ASNs that don't detect when the application
 has started, some .desktop file entries may be helpful ( see below ).
  If you want to start an application in your code, prefer using KRun or
-KApplication::startServiceByXXX() calls. Classes like KProcess don't create
+TDEApplication::startServiceByXXX() calls. Classes like KProcess don't create
 ASN, so if you need to use it, you have to send it manually ( only in case
 ASN is useful in this case, it shouldn't be sent e.g. for system processes ).
  
@@ -148,8 +148,8 @@ forks into background, it sends the PID change. That's how compliant
 applications should work, and this support for ASN should be provided
 by toolkits. All KDE application should be compliant by now, since
 tdelibs do all the necessary things. The KDE_STARTUP_ENV variable
-is read and unset in KApplication constructor, and _KDE_STARTUP_ID
-is set on every toplevel window in KApplication::setTopWidget().
+is read and unset in TDEApplication constructor, and _KDE_STARTUP_ID
+is set on every toplevel window in TDEApplication::setTopWidget().
  However, majority of applications aren't compliant now, and even
 if I succeed making this thing a standard ( part of NETWM_SPEC
 or whatever ), there still will be old applications that won't behave

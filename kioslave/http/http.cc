@@ -5011,7 +5011,7 @@ void HTTPProtocol::cleanCache()
    {
       // Touch file.
       utime(TQFile::encodeName(cleanFile), 0);
-      KApplication::startServiceByDesktopPath("http_cache_cleaner.desktop");
+      TDEApplication::startServiceByDesktopPath("http_cache_cleaner.desktop");
    }
 }
 
@@ -5789,7 +5789,7 @@ TQString HTTPProtocol::createDigestAuth ( bool isForProxy )
   info.qop = "";
 
   // cnonce is recommended to contain about 64 bits of entropy
-  info.cnonce = KApplication::randomString(16).latin1();
+  info.cnonce = TDEApplication::randomString(16).latin1();
 
   // HACK: Should be fixed according to RFC 2617 section 3.2.2
   info.nc = "00000001";

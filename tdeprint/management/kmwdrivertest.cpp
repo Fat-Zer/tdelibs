@@ -133,7 +133,7 @@ void KMWDriverTest::slotTest()
 {
 	if (!m_printer) return;
 
-	TQString	name = "tmpprinter_"+KApplication::randomString(8);
+	TQString	name = "tmpprinter_"+TDEApplication::randomString(8);
 	// save printer name (can be non empty when modifying a printer)
 	TQString	oldname = m_printer->name();
 

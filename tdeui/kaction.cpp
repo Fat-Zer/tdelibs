@@ -1133,7 +1133,7 @@ void KAction::slotPopupActivated()
             state = kpm->state();
         else { // just a QPopupMenu? We'll ask for the state now then (small race condition?)
             kdDebug(129) << "KAction::slotPopupActivated not a KPopupMenu -> using keyboardMouseState()" << endl;
-            state = KApplication::keyboardMouseState();
+            state = TDEApplication::keyboardMouseState();
         }
         emit activated( KAction::PopupMenuActivation, state );
         slotActivated();

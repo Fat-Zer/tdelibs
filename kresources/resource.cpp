@@ -61,7 +61,7 @@ Resource::Resource( const KConfig* config )
     d->mName = i18n("resource");
     d->mReadOnly = false;
     d->mActive = true;
-    d->mIdentifier = KApplication::randomString( 10 );
+    d->mIdentifier = TDEApplication::randomString( 10 );
   }
 }
 

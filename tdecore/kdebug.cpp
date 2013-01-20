@@ -81,7 +81,7 @@ static TQCString getDescrFromNum(unsigned int _num)
 {
   if (!KDebugCache) {
     kdd.setObject(KDebugCache, new TQIntDict<KDebugEntry>( 601 ));
-    // Do not call this deleter from ~KApplication
+    // Do not call this deleter from ~TDEApplication
     KGlobal::unregisterStaticDeleter(&kdd);
     KDebugCache->setAutoDelete(true);
   }
@@ -175,7 +175,7 @@ static void kDebugBackend( unsigned short nLevel, unsigned int nArea, const char
   if ( !kDebug_data )
   {
       pcd.setObject(kDebug_data, new kDebugPrivate());
-      // Do not call this deleter from ~KApplication
+      // Do not call this deleter from ~TDEApplication
       KGlobal::unregisterStaticDeleter(&pcd);
 
       // create the dcop interface if it has not been created yet

@@ -22,7 +22,7 @@ testWindow::testWindow (TQWidget *, const char *name)
     menuBar = new KMenuBar (this);
     fileMenu = new TQPopupMenu;
     menuBar->insertItem ("&File", fileMenu);
-    fileMenu->insertItem ("&Exit", KApplication::kApplication(),
+    fileMenu->insertItem ("&Exit", TDEApplication::kApplication(),
                           TQT_SLOT( quit() ), ALT + Key_Q );
     statusbar = new KStatusBar (this);
     statusbar->insertItem("Zoom: XXXX", 0);
@@ -41,7 +41,7 @@ testWindow::testWindow (TQWidget *, const char *name)
 
     setCentralWidget(widget);
 
-    setCaption( KApplication::kApplication()->caption() );
+    setCaption( TDEApplication::kApplication()->caption() );
 
     smenu = new TQPopupMenu;
   
@@ -104,7 +104,7 @@ testWindow::~testWindow ()
 
 int main( int argc, char *argv[] )
 {
-        KApplication *myApp = new KApplication( argc, argv, "KStatusBarTest" );
+        TDEApplication *myApp = new TDEApplication( argc, argv, "KStatusBarTest" );
         testWindow *test = new testWindow;
 
         myApp->setMainWidget(test);

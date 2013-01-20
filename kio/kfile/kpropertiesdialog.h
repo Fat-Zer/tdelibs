@@ -878,15 +878,15 @@ private:
  * @deprecated replaced with KDesktopPropsPlugin
  */
  /// Remove in KDE4
-class KIO_EXPORT_DEPRECATED KApplicationPropsPlugin : public KPropsDlgPlugin
+class KIO_EXPORT_DEPRECATED TDEApplicationPropsPlugin : public KPropsDlgPlugin
 {
   Q_OBJECT
 public:
   /**
    * Constructor
    */
-  KApplicationPropsPlugin( KPropertiesDialog *_props );
-  virtual ~KApplicationPropsPlugin();
+  TDEApplicationPropsPlugin( KPropertiesDialog *_props );
+  virtual ~TDEApplicationPropsPlugin();
 
   virtual void applyChanges();
 
@@ -910,8 +910,8 @@ private:
   TQPushButton *addExtensionButton;
   TQPushButton *delExtensionButton;
 
-  class KApplicationPropsPluginPrivate;
-  KApplicationPropsPluginPrivate *d;
+  class TDEApplicationPropsPluginPrivate;
+  TDEApplicationPropsPluginPrivate *d;
 };
 
 #endif

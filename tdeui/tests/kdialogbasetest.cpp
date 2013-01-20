@@ -6,7 +6,7 @@
 
 int main(int argc, char** argv)
 {
-  KApplication app(argc, argv, "DialogBaseTest");
+  TDEApplication app(argc, argv, "DialogBaseTest");
   // -----
   TQString text= // the explanation shown by the example dialog
     "<center><h1>DialogBase Example</h1></center><hr><br>"

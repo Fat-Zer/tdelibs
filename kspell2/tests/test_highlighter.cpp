@@ -29,7 +29,7 @@
 
 int main( int argc, char** argv )
 {
-    KApplication app(argc, argv, "KSpell2Test");
+    TDEApplication app(argc, argv, "KSpell2Test");
 
     TQTextEdit *test = new TQTextEdit();
     KSpell2::Highlighter *hl = new KSpell2::Highlighter( test );

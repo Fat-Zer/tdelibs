@@ -44,7 +44,7 @@ int main(int argc, char **argv) {
 
         TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
-	KApplication app(false, false);
+	TDEApplication app(false, false);
 
         TQStringList lst = KCalendarSystemFactory::calendarSystems();
 	kdDebug() << "Supported calendar types: " << endl;

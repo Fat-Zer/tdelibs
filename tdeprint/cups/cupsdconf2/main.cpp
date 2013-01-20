@@ -36,7 +36,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
 			   I18N_NOOP("A CUPS configuration tool"),
 			   I18N_NOOP("A CUPS configuration tool"),"0.0.1");
 	TDECmdLineArgs::addCmdLineOptions(options);
-	KApplication	app;
+	TDEApplication	app;
 	TDECmdLineArgs	*args = TDECmdLineArgs::parsedArgs();
 
 	KURL	configfile;

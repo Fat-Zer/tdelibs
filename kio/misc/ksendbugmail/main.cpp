@@ -68,7 +68,7 @@ int main(int argc, char **argv) {
     TDECmdLineArgs::addCmdLineOptions(options);
     TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
-    KApplication a(false, false);
+    TDEApplication a(false, false);
 
     TQCString recipient = args->getOption("recipient");
     if (recipient.isEmpty())

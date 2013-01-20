@@ -187,7 +187,7 @@ KUniqueApplication::start()
 #ifdef Q_WS_X11
            // say we're up and running ( probably no new window will appear )
            KStartupInfoId id;
-           if( kapp != NULL ) // KApplication constructor unsets the env. variable
+           if( kapp != NULL ) // TDEApplication constructor unsets the env. variable
                id.initId( kapp->startupId());
            else
                id = KStartupInfo::currentStartupIdEnv();
@@ -211,7 +211,7 @@ KUniqueApplication::start()
      {
 #ifdef Q_WS_X11
          KStartupInfoId id;
-         if( kapp != NULL ) // KApplication constructor unsets the env. variable
+         if( kapp != NULL ) // TDEApplication constructor unsets the env. variable
              id.initId( kapp->startupId());
          else
              id = KStartupInfo::currentStartupIdEnv();
@@ -274,7 +274,7 @@ KUniqueApplication::start()
      TQCString new_asn_id;
 #if defined Q_WS_X11
      KStartupInfoId id;
-     if( kapp != NULL ) // KApplication constructor unsets the env. variable
+     if( kapp != NULL ) // TDEApplication constructor unsets the env. variable
          id.initId( kapp->startupId());
      else
          id = KStartupInfo::currentStartupIdEnv();
@@ -315,7 +315,7 @@ KUniqueApplication::start()
 
 
 KUniqueApplication::KUniqueApplication(bool allowStyles, bool GUIenabled, bool configUnique)
-  : KApplication( allowStyles, GUIenabled, initHack( configUnique )),
+  : TDEApplication( allowStyles, GUIenabled, initHack( configUnique )),
     DCOPObject(TDECmdLineArgs::about->appName())
 {
   d = new KUniqueApplicationPrivate;
@@ -331,7 +331,7 @@ KUniqueApplication::KUniqueApplication(bool allowStyles, bool GUIenabled, bool c
 #ifdef Q_WS_X11
 KUniqueApplication::KUniqueApplication(Display *display, Qt::HANDLE visual,
 		Qt::HANDLE colormap, bool allowStyles, bool configUnique)
-  : KApplication( display, visual, colormap, allowStyles, initHack( configUnique )),
+  : TDEApplication( display, visual, colormap, allowStyles, initHack( configUnique )),
     DCOPObject(TDECmdLineArgs::about->appName())
 {
   d = new KUniqueApplicationPrivate;
@@ -489,7 +489,7 @@ void KUniqueApplication::setHandleAutoStarted()
 }
 
 void KUniqueApplication::virtual_hook( int id, void* data )
-{ KApplication::virtual_hook( id, data );
+{ TDEApplication::virtual_hook( id, data );
   DCOPObject::virtual_hook( id, data ); }
 
 #include "kuniqueapplication.moc"

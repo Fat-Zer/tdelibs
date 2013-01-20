@@ -818,7 +818,7 @@ pid_t KRun::run( const KService& _service, const KURL::List& _urls, TQWidget* wi
     }
   }
 
-  int i = KApplication::startServiceByDesktopPath(
+  int i = TDEApplication::startServiceByDesktopPath(
         _service.desktopEntryPath(), urls.toStringList(), &error, 0L, &pid, myasn
         );
 

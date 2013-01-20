@@ -1136,7 +1136,7 @@ void KHTMLPart::launchJSErrorDialog() {
 void KHTMLPart::launchJSConfigDialog() {
   TQStringList args;
   args << "khtml_java_js";
-  KApplication::tdeinitExec( "kcmshell", args );
+  TDEApplication::tdeinitExec( "kcmshell", args );
 }
 
 TQVariant KHTMLPart::executeScript(const TQString& filename, int baseLine, const DOM::Node& n, const TQString& script)
@@ -7299,7 +7299,7 @@ void KHTMLPart::launchWalletManager()
 {
 #ifndef KHTML_NO_WALLET
   if (!DCOPClient::mainClient()->isApplicationRegistered("kwalletmanager")) {
-    KApplication::startServiceByDesktopName("kwalletmanager_show");
+    TDEApplication::startServiceByDesktopName("kwalletmanager_show");
   } else {
     DCOPRef r("kwalletmanager", "kwalletmanager-mainwindow#1");
     r.send("show");

@@ -89,7 +89,7 @@ void KBlendWidget::paintEvent(TQPaintEvent */*ev*/)
 
 int main(int argc, char **argv)
 {
-    KApplication app(argc, argv, "KBlendTest");
+    TDEApplication app(argc, argv, "KBlendTest");
     KBlendWidget w;
     app.setMainWidget(&w);
     w.show();

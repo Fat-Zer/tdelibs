@@ -248,8 +248,8 @@ class TDECORE_EXPORT KStartupInfo
 
 	/**
 	 * Returns the current startup notification identification for the current
-	 * startup notification environment variable. Note that KApplication constructor
-	 * unsets the variable and you have to use KApplication::startupId .
+	 * startup notification environment variable. Note that TDEApplication constructor
+	 * unsets the variable and you have to use TDEApplication::startupId .
 	 * @return the current startup notification identification
 	 */
         static KStartupInfoId currentStartupIdEnv();

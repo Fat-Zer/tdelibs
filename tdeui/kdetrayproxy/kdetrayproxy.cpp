@@ -186,7 +186,7 @@ void KDETrayProxy::withdrawWindow( Window w )
 int main( int argc, char* argv[] )
     {
     TDECmdLineArgs::init( argc, argv, "a", "b", "c", "d" );
-    KApplication app( false ); // no styles
+    TDEApplication app( false ); // no styles
     app.disableSessionManagement();
     KDETrayProxy proxy;
     return app.exec();

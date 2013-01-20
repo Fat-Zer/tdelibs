@@ -358,10 +358,10 @@ KRulerTest::slotSetYTrans(double d)
 /* --- MAIN -----------------------*/
 int main(int argc, char **argv)
 {
-  KApplication *testapp;
+  TDEApplication *testapp;
   KRulerTest   *window;
 
-  testapp = new KApplication(argc, argv,"krulertest");
+  testapp = new TDEApplication(argc, argv,"krulertest");
   testapp->setFont(TQFont("Helvetica",12),true);
 
   window = new KRulerTest("main");

@@ -12,7 +12,7 @@
 
 int main( int argc, char **argv )
 {
-    KApplication a( argc, argv, "KPalettetest" );
+    TDEApplication a( argc, argv, "KPalettetest" );
 
     TQStringList palettes = KPalette::getPaletteList();
     for(TQStringList::ConstIterator it = palettes.begin(); 

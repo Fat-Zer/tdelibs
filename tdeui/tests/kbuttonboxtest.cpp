@@ -24,7 +24,7 @@
 #include <tqpushbutton.h>
 
 int main(int argc, char **argv) {
-  KApplication a(argc, argv, "dummy");
+  TDEApplication a(argc, argv, "dummy");
 
   // example 1
   {

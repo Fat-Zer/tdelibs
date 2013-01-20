@@ -16,7 +16,7 @@
 
 int main(int argc, char** argv)
 {
-  (void)new KApplication(argc, argv, "KAboutDialogTest");
+  (void)new TDEApplication(argc, argv, "KAboutDialogTest");
   TQImage logo;
   TQImage bg;
   TQPixmap pix;

@@ -241,7 +241,7 @@ bool KNotifyClient::startDaemon()
   if (!kapp->dcopClient()->isApplicationRegistered(daemonName)) {
     if( firstTry ) {
       firstTry = false;
-      return KApplication::startServiceByDesktopName(daemonName) == 0;
+      return TDEApplication::startServiceByDesktopName(daemonName) == 0;
     }
     return false;
   }
@@ -296,7 +296,7 @@ public:
 		else if (!m_instances.isEmpty())
 		{
 			kdWarning(160) << "Tried to remove an Instance that is not the current," << endl;
-			kdWarning(160) << "Resetting to the main KApplication." << endl;
+			kdWarning(160) << "Resetting to the main TDEApplication." << endl;
 			m_instances.clear();
 		}
 		else

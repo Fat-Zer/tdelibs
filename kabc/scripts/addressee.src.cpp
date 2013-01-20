@@ -105,7 +105,7 @@ void Addressee::detach()
     mData->empty = true;
     mData->changed = false;
     mData->resource = 0;
-    mData->uid = KApplication::randomString( 10 );
+    mData->uid = TDEApplication::randomString( 10 );
     return;
   } else if ( mData.count() == 1 ) return;
 

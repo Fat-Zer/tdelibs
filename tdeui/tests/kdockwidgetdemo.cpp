@@ -768,7 +768,7 @@ TQString DirectoryView::selectedDir()
 /**********************************************************************************************/
 
 int main(int argc, char* argv[]) {
-  KApplication app(argc,argv,"kdockwidgetdemo");
+  TDEApplication app(argc,argv,"kdockwidgetdemo");
 
 #if 0
   SFileDialog* openfile = new SFileDialog();

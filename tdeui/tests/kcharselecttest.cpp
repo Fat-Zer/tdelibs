@@ -4,7 +4,7 @@
 
 int main (int argc,char **argv)
 {
-    KApplication app( argc, argv, "kcharselecttest" );
+    TDEApplication app( argc, argv, "kcharselecttest" );
 
     KCharSelect selector( 0, "char selector" );
     selector.resize( selector.sizeHint() );

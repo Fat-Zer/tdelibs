@@ -6,7 +6,7 @@
 
 int main( int argc, char **argv )
 {
-	KApplication app( argc, argv, "klistviewtest" );
+	TDEApplication app( argc, argv, "klistviewtest" );
 	KDialogBase dialog;
 	KListView *view = new KListView( dialog.makeVBoxMainWidget() );
 	view->setSelectionModeExt( KListView::FileManager );

@@ -358,7 +358,7 @@ void KHostName::changeSessionManager()
       delete client;
       return;
    }
-   TQCString launcher = KApplication::launcher();
+   TQCString launcher = TDEApplication::launcher();
    client->send(launcher, launcher, "setLaunchEnv(TQCString,TQCString)", params);
    delete client;
 }

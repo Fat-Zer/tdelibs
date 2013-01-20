@@ -28,7 +28,7 @@
 
 int main(int argc, char **argv)
 {
-    KApplication app(argc, argv, "kopenwithtest");
+    TDEApplication app(argc, argv, "kopenwithtest");
     KURL::List list;
 
     list += KURL("file:///tmp/testfile.txt");

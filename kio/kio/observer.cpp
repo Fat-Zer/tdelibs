@@ -61,7 +61,7 @@ Observer::Observer() : DCOPObject("KIO::Observer")
     {
         kdDebug(KDEBUG_OBSERVER) << "Starting kio_uiserver" << endl;
         TQString error;
-        int ret = KApplication::startServiceByDesktopPath( "kio_uiserver.desktop",
+        int ret = TDEApplication::startServiceByDesktopPath( "kio_uiserver.desktop",
                                                              TQStringList(), &error );
         if ( ret > 0 )
         {

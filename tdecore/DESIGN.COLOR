@@ -25,7 +25,7 @@ contrast at all which can lead to a completely unreadable UI.
 Color schemes are supported by Qt (see TQColorGroup) and can be
 configured on a KDE wide basis from the Control Panel. The settings
 are stored in the global KDE configuration file under the "General"
-setting. The KApplication class takes care that the configured
+setting. The TDEApplication class takes care that the configured
 settings are passed on to Qt. Application developers can just use the
 values provided by TQColorGroup.
 

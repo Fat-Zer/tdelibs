@@ -134,7 +134,7 @@ KLedTest::timeout()
 
 int main( int argc, char **argv )
 {
-    KApplication a( argc, argv, "KLedTest" );
+    TDEApplication a( argc, argv, "KLedTest" );
     KLedTest widget;
     // -----
     /*

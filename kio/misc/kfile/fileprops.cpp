@@ -423,7 +423,7 @@ int main( int argc, char **argv )
     TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
     bool useGUI = args->isSet( "dialog" );
 
-    KApplication app( useGUI, useGUI );
+    TDEApplication app( useGUI, useGUI );
 
     TQPtrList<FileProps> m_props;
     m_props.setAutoDelete( true );

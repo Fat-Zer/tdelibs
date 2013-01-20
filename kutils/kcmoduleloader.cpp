@@ -177,7 +177,7 @@ KCModule* KCModuleLoader::loadModule(const KCModuleInfo &mod, ErrorReporting rep
    */
   if(withfallback)
   {
-    KApplication::startServiceByDesktopPath(mod.fileName(), TQString::null);
+    TDEApplication::startServiceByDesktopPath(mod.fileName(), TQString::null);
   }
   else
   {

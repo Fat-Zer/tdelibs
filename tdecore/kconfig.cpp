@@ -294,7 +294,7 @@ void KConfig::checkUpdate(const TQString &id, const TQString &updateFile)
   {
      TQStringList args;
      args << "--check" << updateFile;
-     KApplication::tdeinitExecWait("kconf_update", args);
+     TDEApplication::tdeinitExecWait("kconf_update", args);
      reparseConfiguration();
   }
   setGroup(oldGroup);

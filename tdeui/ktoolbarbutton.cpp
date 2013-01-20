@@ -670,7 +670,7 @@ void KToolBarButton::slotClicked()
 
   // emit buttonClicked when the button was clicked while being in an extension popupmenu
   if ( d->m_parent && !d->m_parent->rect().contains( geometry().center() ) ) {
-    ButtonState state = KApplication::keyboardMouseState();
+    ButtonState state = TDEApplication::keyboardMouseState();
     if ( ( state & Qt::MouseButtonMask ) == Qt::NoButton )
       state = ButtonState( Qt::LeftButton | state );
     emit buttonClicked( d->m_id, state ); // Doesn't work with MidButton

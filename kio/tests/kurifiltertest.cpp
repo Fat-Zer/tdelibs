@@ -162,7 +162,7 @@ int main(int argc, char **argv)
     TDECmdLineArgs::init(argc, argv, &aboutData);
     TDECmdLineArgs::addCmdLineOptions( options );
 
-    KApplication app;
+    TDEApplication app;
     app.disableAutoDcopRegistration();
 
     // Allow testing of the search engine using both delimiters...

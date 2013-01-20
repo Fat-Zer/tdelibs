@@ -21,7 +21,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
 	
 	KGlobal::locale()->setMainCatalogue("tdelibs");
 
-	KApplication app;
+	TDEApplication app;
 	TDECmdLineArgs	*args = TDECmdLineArgs::parsedArgs();
 	bool	doConfig = args->isSet("tdeconfig");
 	bool	doSrvConfig = args->isSet("serverconfig");

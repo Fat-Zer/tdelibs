@@ -60,7 +60,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char**argv )
       return 1;
    }
 
-   TQCString cname = KApplication::launcher();
+   TQCString cname = TDEApplication::launcher();
    char *name = cname.data();
    TDECmdLineArgs::init(argc, argv, name, "KLauncher", "A service launcher.",
                        "v1.0");
@@ -79,7 +79,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char**argv )
    int maxTry = 3;
    while(true)
    {
-      TQCString dcopName = KApplication::dcopClient()->registerAs(name, false);
+      TQCString dcopName = TDEApplication::dcopClient()->registerAs(name, false);
       if (dcopName.isEmpty())
       {
          kdWarning() << "[klauncher] DCOP communication problem!" << endl;

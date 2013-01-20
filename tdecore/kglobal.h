@@ -242,7 +242,7 @@ int TDECORE_EXPORT kasciistricmp( const char *str1, const char *str2 );
  * of other (but no less important) things.
  *
  * All KDE applications should link to the tdecore library. Also, using a
- * KApplication derived class instead of TQApplication is almost
+ * TDEApplication derived class instead of TQApplication is almost
  * mandatory if you expect your application to behave nicely within the
  * KDE environment.
  */

@@ -54,7 +54,7 @@ static const char * item_xpm[] = {
 "        ......        "};
 
 
-KApplication *app;
+TDEApplication *app;
 
 TopLevel::TopLevel(TQWidget *parent, const char *name)
     : TQWidget(parent, name)
@@ -212,7 +212,7 @@ void TopLevel::slotToggleSingleColumn( bool b )
 
 int main( int argc, char ** argv )
 {
-    app = new KApplication ( argc, argv, "ItemContainerTest" );
+    app = new TDEApplication ( argc, argv, "ItemContainerTest" );
 
     TopLevel *toplevel = new TopLevel(0, "itemcontainertest");
 

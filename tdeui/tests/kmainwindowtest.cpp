@@ -24,7 +24,7 @@ void MainWindow::showMessage()
 
 int main( int argc, char **argv )
 {
-    KApplication app( argc, argv, "kmainwindowtest" );
+    TDEApplication app( argc, argv, "kmainwindowtest" );
 
     MainWindow* mw = new MainWindow; // deletes itself when closed
     mw->show();

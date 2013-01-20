@@ -121,8 +121,8 @@ int main(int argc, char **argv)
    TDECmdLineArgs::init(argc, argv, &d);
    TDECmdLineArgs::addCmdLineOptions(options);
 
-//   KApplication k(false, false);
-   KApplication k(false);
+//   TDEApplication k(false, false);
+   TDEApplication k(false);
    k.disableSessionManagement();
 
    // this program is in tdelibs so it uses tdelibs as catalog
@@ -147,7 +147,7 @@ int main(int argc, char **argv)
       args.append("--incremental");
       args.append("--checkstamps");
       TQString command = "kbuildsycoca";
-      TQCString _launcher = KApplication::launcher();
+      TQCString _launcher = TDEApplication::launcher();
       if (!DCOPRef(_launcher, _launcher).call("tdeinit_exec_wait", command, args).isValid())
       {
          tqWarning("Can't talk to klauncher!");

@@ -50,7 +50,7 @@ public:
    * 
    * @param lngSeed Seed to initialize the sequence with.
    * If lngSeed is 0, the sequence is initialized with a value from
-   * KApplication::random().
+   * TDEApplication::random().
    */
   KRandomSequence( long lngSeed = 0 );
 
@@ -73,7 +73,7 @@ public:
    * Restart the sequence based on lngSeed.
    * @param lngSeed Seed to initialize the sequence with.
    * If lngSeed is 0, the sequence is initialized with a value from
-   * KApplication::random().
+   * TDEApplication::random().
    */
   void setSeed( long lngSeed = 0 );
 

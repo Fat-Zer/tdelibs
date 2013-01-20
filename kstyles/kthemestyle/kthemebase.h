@@ -6,7 +6,7 @@
 
  KDE3 port (C) 2001 Maksim Orlovich <mo002j@mail.rochester.edu>
 
- Palette setup code is from KApplication,
+ Palette setup code is from TDEApplication,
 Copyright (C) 1997 Matthias Kalle Dalheimer (kalle@kde.org)
 Copyright (C) 1998, 1999, 2000 KDE Team
 

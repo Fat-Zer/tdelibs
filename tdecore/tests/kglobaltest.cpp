@@ -53,9 +53,9 @@ void testkasciistricmp()
 
 int main(int argc, char *argv[])
 {
-  KApplication::disableAutoDcopRegistration();
+  TDEApplication::disableAutoDcopRegistration();
   TDECmdLineArgs::init( argc, argv, "kglobaltest", 0, 0, 0, 0 );
-  KApplication app( false, false );
+  TDEApplication app( false, false );
 
   testkasciistricmp();
 

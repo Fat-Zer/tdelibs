@@ -28,8 +28,8 @@
 int
 main(int argc, char *argv[])
 {
-   KApplication a(argc, argv, "ktempfiletest");
-   printf("Making tempfile after KApplication constructor.\n");
+   TDEApplication a(argc, argv, "ktempfiletest");
+   printf("Making tempfile after TDEApplication constructor.\n");
    KTempFile f4;
    printf("Filename = %s\n", f4.name().ascii());
 

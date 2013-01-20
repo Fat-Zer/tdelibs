@@ -192,7 +192,7 @@ void KConfigTestView::writeButtonClicked()
 
 int main( int argc, char **argv )
 {
-  KApplication a( argc, argv, "bla" );
+  TDEApplication a( argc, argv, "bla" );
 
   KConfigTestView *w = new KConfigTestView();
   a.setMainWidget( w );

@@ -6,7 +6,7 @@
 int main(int argc, char** argv)
 {
   KLocale::setMainCatalogue("tdelibs");
-  KApplication app(argc, argv, "KDateWidgettest");
+  TDEApplication app(argc, argv, "KDateWidgettest");
   KDateWidget dateWidget;
   app.setMainWidget(&dateWidget);
   dateWidget.show();

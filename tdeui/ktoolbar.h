@@ -96,7 +96,7 @@ private:
   *
   * KToolBar uses a global config group to load toolbar settings on
   * construction. It will reread this config group on a
-  * KApplication::appearanceChanged() signal.
+  * TDEApplication::appearanceChanged() signal.
   *
   * @author Reginald Stadlbauer <reggie@kde.org>, Stephan Kulow <coolo@kde.org>, Sven Radej <radej@kde.org>.
   */

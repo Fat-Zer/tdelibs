@@ -175,10 +175,10 @@ KDE_EXPORT bool kde_have_kipc = true; // magic hook to disable kipc in tdm
 bool kde_kiosk_exception = false; // flag to disable kiosk restrictions
 bool kde_kiosk_admin = false;
 
-KApplication* KApplication::KApp = 0L;
-bool KApplication::loadedByKdeinit = false;
-DCOPClient *KApplication::s_DCOPClient = 0L;
-bool KApplication::s_dcopClientNeedsPostInit = false;
+TDEApplication* TDEApplication::KApp = 0L;
+bool TDEApplication::loadedByKdeinit = false;
+DCOPClient *TDEApplication::s_DCOPClient = 0L;
+bool TDEApplication::s_dcopClientNeedsPostInit = false;
 
 #ifdef Q_WS_X11
 static Atom atom_DesktopWindow;
@@ -230,7 +230,7 @@ static void kde_ice_ioerrorhandler( IceConn conn )
 #endif
 
 #ifdef Q_WS_WIN
-void KApplication_init_windows(bool GUIenabled);
+void TDEApplication_init_windows(bool GUIenabled);
 
 class QAssistantClient;
 #endif
@@ -238,10 +238,10 @@ class QAssistantClient;
 /*
   Private data to make keeping binary compatibility easier
  */
-class KApplicationPrivate
+class TDEApplicationPrivate
 {
 public:
-  KApplicationPrivate()
+  TDEApplicationPrivate()
     :   actionRestrictions( false ),
 	refCount( 1 ),
 	oldIceIOErrorHandler( 0 ),
@@ -260,7 +260,7 @@ public:
   {
   }
 
-  ~KApplicationPrivate()
+  ~TDEApplicationPrivate()
   {
 #ifdef Q_WS_WIN
      delete qassistantclient;
@@ -439,7 +439,7 @@ public:
 static TQPtrList<TQWidget>*x11Filter = 0;
 static bool autoDcopRegistration = true;
 
-void KApplication::installX11EventFilter( TQWidget* filter )
+void TDEApplication::installX11EventFilter( TQWidget* filter )
 {
     if ( !filter )
         return;
@@ -449,12 +449,12 @@ void KApplication::installX11EventFilter( TQWidget* filter )
     x11Filter->append( filter );
 }
 
-void KApplication::x11FilterDestroyed()
+void TDEApplication::x11FilterDestroyed()
 {
     removeX11EventFilter( static_cast< const TQWidget* >( sender()));
 }
 
-void KApplication::removeX11EventFilter( const TQWidget* filter )
+void TDEApplication::removeX11EventFilter( const TQWidget* filter )
 {
     if ( !x11Filter || !filter )
         return;
@@ -471,7 +471,7 @@ void KApplication::removeX11EventFilter( const TQWidget* filter )
 // in KAccelEventHandler so that the AccelOverride isn't sent twice. -- ellis, 19/10/02
 extern bool kde_g_bKillAccelOverride;
 
-bool KApplication::notify(TQObject *receiver, TQEvent *event)
+bool TDEApplication::notify(TQObject *receiver, TQEvent *event)
 {
     TQEvent::Type t = event->type();
     if (kde_g_bKillAccelOverride)
@@ -583,7 +583,7 @@ bool KApplication::notify(TQObject *receiver, TQEvent *event)
     return TQApplication::notify(receiver, event);
 }
 
-void KApplication::checkAppStartedSlot()
+void TDEApplication::checkAppStartedSlot()
 {
 #if defined Q_WS_X11
     KStartupInfo::handleAutoAppStartedSending();
@@ -604,7 +604,7 @@ static TQPtrList<KSessionManaged>* sessionClients()
   instance specific config object.
   Syntax:  "session/<appname>_<sessionId>"
  */
-TQString KApplication::sessionConfigName() const
+TQString TDEApplication::sessionConfigName() const
 {
     TQString sessKey = sessionKey();
     if ( sessKey.isEmpty() && !d->sessionKey.isEmpty() )
@@ -621,14 +621,14 @@ static SmcConn tmpSmcConnection = 0;
 #endif
 static TQTime* smModificationTime = 0;
 
-KApplication::KApplication( int& argc, char** argv, const TQCString& rAppName,
+TDEApplication::TDEApplication( int& argc, char** argv, const TQCString& rAppName,
                             bool allowStyles, bool GUIenabled ) :
   TQApplication( argc, argv, GUIenabled ), KInstance(rAppName),
 #ifdef Q_WS_X11
   display(0L),
   argb_visual(false),
 #endif
-  d (new KApplicationPrivate())
+  d (new TDEApplicationPrivate())
 {
     aIconPixmap.pm.icon = 0L;
     aIconPixmap.pm.miniIcon = 0L;
@@ -646,7 +646,7 @@ KApplication::KApplication( int& argc, char** argv, const TQCString& rAppName,
     d->m_KAppDCOPInterface = new KAppDCOPInterface(this);
 }
 
-KApplication::KApplication( bool allowStyles, bool GUIenabled ) :
+TDEApplication::TDEApplication( bool allowStyles, bool GUIenabled ) :
 //  TQApplication( *TDECmdLineArgs::tqt_argc(), *TDECmdLineArgs::tqt_argv(), TRUE ),	// Qt4 requires that there always be a GUI
   TQApplication( *TDECmdLineArgs::tqt_argc(), *TDECmdLineArgs::tqt_argv(), GUIenabled ),	// We need to be able to run command line apps
   KInstance( TDECmdLineArgs::about),
@@ -654,7 +654,7 @@ KApplication::KApplication( bool allowStyles, bool GUIenabled ) :
   display(0L),
   argb_visual(false),
 #endif
-  d (new KApplicationPrivate)
+  d (new TDEApplicationPrivate)
 {
     aIconPixmap.pm.icon = 0L;
     aIconPixmap.pm.miniIcon = 0L;
@@ -671,10 +671,10 @@ KApplication::KApplication( bool allowStyles, bool GUIenabled ) :
 }
 
 #ifdef Q_WS_X11
-KApplication::KApplication( Display *dpy, bool allowStyles ) :
+TDEApplication::TDEApplication( Display *dpy, bool allowStyles ) :
   TQApplication( dpy, *TDECmdLineArgs::tqt_argc(), *TDECmdLineArgs::tqt_argv(),
                 getX11RGBAVisual(dpy), getX11RGBAColormap(dpy) ),
-  KInstance( TDECmdLineArgs::about), display(0L), d (new KApplicationPrivate)
+  KInstance( TDECmdLineArgs::about), display(0L), d (new TDEApplicationPrivate)
 {
     aIconPixmap.pm.icon = 0L;
     aIconPixmap.pm.miniIcon = 0L;
@@ -687,10 +687,10 @@ KApplication::KApplication( Display *dpy, bool allowStyles ) :
     d->m_KAppDCOPInterface = new KAppDCOPInterface(this);
 }
 
-KApplication::KApplication( Display *dpy, bool disable_argb, Qt::HANDLE visual, Qt::HANDLE colormap, bool allowStyles ) :
+TDEApplication::TDEApplication( Display *dpy, bool disable_argb, Qt::HANDLE visual, Qt::HANDLE colormap, bool allowStyles ) :
   TQApplication( dpy, *TDECmdLineArgs::tqt_argc(), *TDECmdLineArgs::tqt_argv(),
                 disable_argb?visual:getX11RGBAVisual(dpy), disable_argb?colormap:getX11RGBAColormap(dpy) ),
-  KInstance( TDECmdLineArgs::about), display(0L), d (new KApplicationPrivate)
+  KInstance( TDECmdLineArgs::about), display(0L), d (new TDEApplicationPrivate)
 {
     aIconPixmap.pm.icon = 0L;
     aIconPixmap.pm.miniIcon = 0L;
@@ -704,11 +704,11 @@ KApplication::KApplication( Display *dpy, bool disable_argb, Qt::HANDLE visual, 
     d->m_KAppDCOPInterface = new KAppDCOPInterface(this);
 }
 
-KApplication::KApplication( Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap,
+TDEApplication::TDEApplication( Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap,
 		            bool allowStyles ) :
   TQApplication( dpy, *TDECmdLineArgs::tqt_argc(), *TDECmdLineArgs::tqt_argv(),
                 visual?visual:getX11RGBAVisual(dpy), colormap?colormap:getX11RGBAColormap(dpy) ),
-  KInstance( TDECmdLineArgs::about), display(0L), d (new KApplicationPrivate)
+  KInstance( TDECmdLineArgs::about), display(0L), d (new TDEApplicationPrivate)
 {
     if ((visual) && (colormap))
         getX11RGBAInformation(dpy);
@@ -723,11 +723,11 @@ KApplication::KApplication( Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap
     d->m_KAppDCOPInterface = new KAppDCOPInterface(this);
 }
 
-KApplication::KApplication( Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap,
+TDEApplication::TDEApplication( Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap,
 		            bool allowStyles, KInstance * _instance ) :
   TQApplication( dpy, *TDECmdLineArgs::tqt_argc(), *TDECmdLineArgs::tqt_argv(),
                 visual?visual:getX11RGBAVisual(dpy), colormap?colormap:getX11RGBAColormap(dpy) ),
-  KInstance( _instance ), display(0L), d (new KApplicationPrivate)
+  KInstance( _instance ), display(0L), d (new TDEApplicationPrivate)
 {
     if ((visual) && (colormap))
         getX11RGBAInformation(dpy);
@@ -743,7 +743,7 @@ KApplication::KApplication( Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap
 }
 #endif
 
-KApplication::KApplication( bool allowStyles, bool GUIenabled, KInstance* _instance ) :
+TDEApplication::TDEApplication( bool allowStyles, bool GUIenabled, KInstance* _instance ) :
   TQApplication( *TDECmdLineArgs::tqt_argc(), *TDECmdLineArgs::tqt_argv(),
                 GUIenabled ),
   KInstance( _instance ),
@@ -751,7 +751,7 @@ KApplication::KApplication( bool allowStyles, bool GUIenabled, KInstance* _insta
   display(0L),
 #endif
   argb_visual(false),
-  d (new KApplicationPrivate)
+  d (new TDEApplicationPrivate)
 {
     aIconPixmap.pm.icon = 0L;
     aIconPixmap.pm.miniIcon = 0L;
@@ -768,12 +768,12 @@ KApplication::KApplication( bool allowStyles, bool GUIenabled, KInstance* _insta
 }
 
 #ifdef Q_WS_X11
-KApplication::KApplication(Display *display, int& argc, char** argv, const TQCString& rAppName,
+TDEApplication::TDEApplication(Display *display, int& argc, char** argv, const TQCString& rAppName,
                            bool allowStyles, bool GUIenabled ) :
   TQApplication( display ), KInstance(rAppName),
   display(0L),
   argb_visual(false),
-  d (new KApplicationPrivate())
+  d (new TDEApplicationPrivate())
 {
     aIconPixmap.pm.icon = 0L;
     aIconPixmap.pm.miniIcon = 0L;
@@ -793,7 +793,7 @@ KApplication::KApplication(Display *display, int& argc, char** argv, const TQCSt
 }
 #endif
 
-int KApplication::xioErrhandler( Display* dpy )
+int TDEApplication::xioErrhandler( Display* dpy )
 {
     if(kapp)
     {
@@ -808,7 +808,7 @@ int KApplication::xioErrhandler( Display* dpy )
     return 0;
 }
 
-int KApplication::xErrhandler( Display* dpy, void* err_ )
+int TDEApplication::xErrhandler( Display* dpy, void* err_ )
 { // no idea how to make forward decl. for XErrorEvent
 #ifdef Q_WS_X11
     XErrorEvent* err = static_cast< XErrorEvent* >( err_ );
@@ -821,7 +821,7 @@ int KApplication::xErrhandler( Display* dpy, void* err_ )
     return 0;
 }
 
-void KApplication::iceIOErrorHandler( _IceConn *conn )
+void TDEApplication::iceIOErrorHandler( _IceConn *conn )
 {
     emit shutDown();
 
@@ -846,7 +846,7 @@ public:
   }
 };
 
-void KApplication::init(bool GUIenabled)
+void TDEApplication::init(bool GUIenabled)
 {
   d->guiEnabled = GUIenabled;
   if ((getuid() != geteuid()) ||
@@ -1030,7 +1030,7 @@ void KApplication::init(bool GUIenabled)
   }
   d->oldIceIOErrorHandler = IceSetIOErrorHandler( kde_ice_ioerrorhandler );
 #elif defined(Q_WS_WIN)
-  KApplication_init_windows(GUIenabled);
+  TDEApplication_init_windows(GUIenabled);
 #else
   // FIXME(E): Implement for Qt Embedded
 #endif
@@ -1057,7 +1057,7 @@ static int my_system (const char *command) {
 }
 
 
-DCOPClient *KApplication::dcopClient()
+DCOPClient *TDEApplication::dcopClient()
 {
   if (s_DCOPClient)
     return s_DCOPClient;
@@ -1081,7 +1081,7 @@ DCOPClient *KApplication::dcopClient()
   return s_DCOPClient;
 }
 
-void KApplication::dcopClientPostInit()
+void TDEApplication::dcopClientPostInit()
 {
   if( s_dcopClientNeedsPostInit )
     {
@@ -1092,7 +1092,7 @@ void KApplication::dcopClientPostInit()
     }
 }
 
-void KApplication::dcopAutoRegistration()
+void TDEApplication::dcopAutoRegistration()
 {
   if (autoDcopRegistration)
      {
@@ -1102,12 +1102,12 @@ void KApplication::dcopAutoRegistration()
      }
 }
 
-void KApplication::disableAutoDcopRegistration()
+void TDEApplication::disableAutoDcopRegistration()
 {
   autoDcopRegistration = false;
 }
 
-KConfig* KApplication::sessionConfig()
+KConfig* TDEApplication::sessionConfig()
 {
     if (pSessionConfig)
         return pSessionConfig;
@@ -1117,16 +1117,16 @@ KConfig* KApplication::sessionConfig()
     return pSessionConfig;
 }
 
-void KApplication::ref()
+void TDEApplication::ref()
 {
     d->refCount++;
-    //kdDebug() << "KApplication::ref() : refCount = " << d->refCount << endl;
+    //kdDebug() << "TDEApplication::ref() : refCount = " << d->refCount << endl;
 }
 
-void KApplication::deref()
+void TDEApplication::deref()
 {
     d->refCount--;
-    //kdDebug() << "KApplication::deref() : refCount = " << d->refCount << endl;
+    //kdDebug() << "TDEApplication::deref() : refCount = " << d->refCount << endl;
     if ( d->refCount <= 0 )
         quit();
 }
@@ -1153,11 +1153,11 @@ bool KSessionManaged::commitData(TQSessionManager&)
 }
 
 
-void KApplication::disableSessionManagement() {
+void TDEApplication::disableSessionManagement() {
   bSessionManagement = false;
 }
 
-void KApplication::enableSessionManagement() {
+void TDEApplication::enableSessionManagement() {
   bSessionManagement = true;
 #ifdef Q_WS_X11
   // Session management support in Qt/TDE is awfully broken.
@@ -1181,7 +1181,7 @@ void KApplication::enableSessionManagement() {
 }
 
 
-bool KApplication::requestShutDown(
+bool TDEApplication::requestShutDown(
     ShutdownConfirm confirm, ShutdownType sdtype, ShutdownMode sdmode )
 {
 #ifdef Q_WS_X11
@@ -1244,7 +1244,7 @@ bool KApplication::requestShutDown(
 #endif
 }
 
-void KApplication::propagateSessionManager()
+void TDEApplication::propagateSessionManager()
 {
 #ifdef Q_WS_X11
     TQCString fName = TQFile::encodeName(locateLocal("socket", "KSMserver"));
@@ -1279,7 +1279,7 @@ void KApplication::propagateSessionManager()
 #endif
 }
 
-void KApplication::commitData( TQSessionManager& sm )
+void TDEApplication::commitData( TQSessionManager& sm )
 {
     d->session_save = true;
     bool canceled = false;
@@ -1352,7 +1352,7 @@ static void checkRestartVersion( TQSessionManager& sm )
     sm.setRestartCommand( restartCommand );
 }
 
-void KApplication::saveState( TQSessionManager& sm )
+void TDEApplication::saveState( TQSessionManager& sm )
 {
     d->session_save = true;
 #ifdef Q_WS_X11
@@ -1434,12 +1434,12 @@ void KApplication::saveState( TQSessionManager& sm )
     d->session_save = false;
 }
 
-bool KApplication::sessionSaving() const
+bool TDEApplication::sessionSaving() const
 {
     return d->session_save;
 }
 
-void KApplication::startKdeinit()
+void TDEApplication::startKdeinit()
 {
 #ifndef Q_WS_WIN //TODO
   KInstance inst( "starttdeinitlock" );
@@ -1464,7 +1464,7 @@ void KApplication::startKdeinit()
 #endif
 }
 
-void KApplication::dcopFailure(const TQString &msg)
+void TDEApplication::dcopFailure(const TQString &msg)
 {
   static int failureCount = 0;
   failureCount++;
@@ -1560,13 +1560,13 @@ static const KCmdLineOptions kde_options[] =
 };
 
 void
-KApplication::addCmdLineOptions()
+TDEApplication::addCmdLineOptions()
 {
    TDECmdLineArgs::addCmdLineOptions(qt_options, "Qt", "qt");
    TDECmdLineArgs::addCmdLineOptions(kde_options, "TDE", "tde");
 }
 
-void KApplication::parseCommandLine( )
+void TDEApplication::parseCommandLine( )
 {
     TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs("tde");
 
@@ -1686,12 +1686,12 @@ void KApplication::parseCommandLine( )
 
 }
 
-TQString KApplication::geometryArgument() const
+TQString TDEApplication::geometryArgument() const
 {
     return d->geometry_arg;
 }
 
-TQPixmap KApplication::icon() const
+TQPixmap TDEApplication::icon() const
 {
   if( !aIconPixmap.pm.icon) {
       aIconPixmap.pm.icon = new TQPixmap;
@@ -1702,12 +1702,12 @@ TQPixmap KApplication::icon() const
   return *aIconPixmap.pm.icon;
 }
 
-TQString KApplication::iconName() const
+TQString TDEApplication::iconName() const
 {
   return aIconName.isNull() ? (TQString)instanceName() : aIconName;
 }
 
-TQPixmap KApplication::miniIcon() const
+TQPixmap TDEApplication::miniIcon() const
 {
   if (!aIconPixmap.pm.miniIcon) {
       aIconPixmap.pm.miniIcon = new TQPixmap;
@@ -1718,14 +1718,14 @@ TQPixmap KApplication::miniIcon() const
   return *aIconPixmap.pm.miniIcon;
 }
 
-TQString KApplication::miniIconName() const
+TQString TDEApplication::miniIconName() const
 {
   return aMiniIconName.isNull() ? (TQString)instanceName() : aMiniIconName;
 }
 
 extern void kDebugCleanup();
 
-KApplication::~KApplication()
+TDEApplication::~TDEApplication()
 {
   delete aIconPixmap.pm.miniIcon;
   aIconPixmap.pm.miniIcon = 0L;
@@ -1784,7 +1784,7 @@ public:
 #endif
 
 #if defined(Q_WS_X11) && defined(COMPOSITE)
-bool KApplication::isCompositionManagerAvailable() {
+bool TDEApplication::isCompositionManagerAvailable() {
 	bool have_manager = false;
 	const char *home;
 	struct passwd *p;
@@ -1816,7 +1816,7 @@ bool KApplication::isCompositionManagerAvailable() {
 	return have_manager;
 }
 
-bool KApplication::detectCompositionManagerAvailable(bool force_available, bool available) {
+bool TDEApplication::detectCompositionManagerAvailable(bool force_available, bool available) {
 	bool compositing_manager_available;
 	if (force_available) {
 		compositing_manager_available = available;
@@ -1895,7 +1895,7 @@ bool KApplication::detectCompositionManagerAvailable(bool force_available, bool 
 	return compositing_manager_available;
 }
 
-Display* KApplication::openX11RGBADisplay() {
+Display* TDEApplication::openX11RGBADisplay() {
 	TDECmdLineArgs *qtargs = TDECmdLineArgs::parsedArgs("qt");
 	char *display = 0;
 	if ( qtargs->isSet("display"))
@@ -1910,9 +1910,9 @@ Display* KApplication::openX11RGBADisplay() {
 	return dpy;
 }
 
-Qt::HANDLE KApplication::getX11RGBAVisual(Display *dpy) {
+Qt::HANDLE TDEApplication::getX11RGBAVisual(Display *dpy) {
 	getX11RGBAInformation(dpy);
-	if (KApplication::isCompositionManagerAvailable() == true) {
+	if (TDEApplication::isCompositionManagerAvailable() == true) {
 		return argb_x11_visual;
 	}
 	else {
@@ -1920,9 +1920,9 @@ Qt::HANDLE KApplication::getX11RGBAVisual(Display *dpy) {
 	}
 }
 
-Qt::HANDLE KApplication::getX11RGBAColormap(Display *dpy) {
+Qt::HANDLE TDEApplication::getX11RGBAColormap(Display *dpy) {
 	getX11RGBAInformation(dpy);
-	if (KApplication::isCompositionManagerAvailable() == true) {
+	if (TDEApplication::isCompositionManagerAvailable() == true) {
 		return argb_x11_colormap;
 	}
 	else {
@@ -1930,11 +1930,11 @@ Qt::HANDLE KApplication::getX11RGBAColormap(Display *dpy) {
 	}
 }
 
-bool KApplication::isX11CompositionAvailable() {
+bool TDEApplication::isX11CompositionAvailable() {
 	return (argb_visual & isCompositionManagerAvailable());
 }
 
-void KApplication::getX11RGBAInformation(Display *dpy) {
+void TDEApplication::getX11RGBAInformation(Display *dpy) {
 	if ( !dpy ) {
 		argb_visual = false;
 		return;
@@ -1976,14 +1976,14 @@ void KApplication::getX11RGBAInformation(Display *dpy) {
 	return;
 }
 #else
-void KApplication::getX11RGBAInformation(Display *dpy) {
+void TDEApplication::getX11RGBAInformation(Display *dpy) {
 }
 
-bool KApplication::isCompositionManagerAvailable() {
+bool TDEApplication::isCompositionManagerAvailable() {
 	return false;
 }
 
-bool KApplication::detectCompositionManagerAvailable(bool force_available) {
+bool TDEApplication::detectCompositionManagerAvailable(bool force_available) {
 	const char *home;
 	struct passwd *p;
 	p = getpwuid(getuid());
@@ -2021,36 +2021,36 @@ bool KApplication::detectCompositionManagerAvailable(bool force_available) {
 	return false;
 }
 
-Display* KApplication::openX11RGBADisplay() {
+Display* TDEApplication::openX11RGBADisplay() {
 	return 0;
 }
 
-Qt::HANDLE KApplication::getX11RGBAVisual(char *display) {
+Qt::HANDLE TDEApplication::getX11RGBAVisual(char *display) {
 	return 0;
 }
 
-Qt::HANDLE KApplication::getX11RGBAColormap(char *display) {
+Qt::HANDLE TDEApplication::getX11RGBAColormap(char *display) {
 	return 0;
 }
 
-bool KApplication::isX11CompositionAvailable() {
+bool TDEApplication::isX11CompositionAvailable() {
 	return false;
 }
 
-KApplication KApplication::KARGBApplication( bool allowStyles ) {
-	return KApplication::KApplication(allowStyles, true);
+TDEApplication TDEApplication::KARGBApplication( bool allowStyles ) {
+	return TDEApplication::TDEApplication(allowStyles, true);
 }
 #endif
 
 static bool kapp_block_user_input = false;
 
-void KApplication::dcopBlockUserInput( bool b )
+void TDEApplication::dcopBlockUserInput( bool b )
 {
     kapp_block_user_input = b;
 }
 
 #ifdef Q_WS_X11
-bool KApplication::x11EventFilter( XEvent *_event )
+bool TDEApplication::x11EventFilter( XEvent *_event )
 {
     switch ( _event->type ) {
         case ClientMessage:
@@ -2185,7 +2185,7 @@ bool KApplication::x11EventFilter( XEvent *_event )
 }
 #endif // Q_WS_X11
 
-void KApplication::updateUserTimestamp( unsigned long time )
+void TDEApplication::updateUserTimestamp( unsigned long time )
 {
 #if defined Q_WS_X11
     if( time == 0 )
@@ -2205,7 +2205,7 @@ void KApplication::updateUserTimestamp( unsigned long time )
 #endif
 }
 
-unsigned long KApplication::userTimestamp() const
+unsigned long TDEApplication::userTimestamp() const
 {
 #if defined Q_WS_X11
     return GET_QT_X_USER_TIME();
@@ -2214,7 +2214,7 @@ unsigned long KApplication::userTimestamp() const
 #endif
 }
 
-void KApplication::updateRemoteUserTimestamp( const TQCString& dcopId, unsigned long time )
+void TDEApplication::updateRemoteUserTimestamp( const TQCString& dcopId, unsigned long time )
 {
 #if defined Q_WS_X11
     if( time == 0 )
@@ -2223,7 +2223,7 @@ void KApplication::updateRemoteUserTimestamp( const TQCString& dcopId, unsigned 
 #endif
 }
 
-void KApplication::invokeEditSlot( const char *slot )
+void TDEApplication::invokeEditSlot( const char *slot )
 {
   TQObject *object = TQT_TQOBJECT(focusWidget());
   if( !object )
@@ -2238,7 +2238,7 @@ void KApplication::invokeEditSlot( const char *slot )
   object->tqt_invoke( idx, 0 );
 }
 
-void KApplication::addKipcEventMask(int id)
+void TDEApplication::addKipcEventMask(int id)
 {
     if (id >= 32)
     {
@@ -2248,7 +2248,7 @@ void KApplication::addKipcEventMask(int id)
     kipcEventMask |= (1 << id);
 }
 
-void KApplication::removeKipcEventMask(int id)
+void TDEApplication::removeKipcEventMask(int id)
 {
     if (id >= 32)
     {
@@ -2258,7 +2258,7 @@ void KApplication::removeKipcEventMask(int id)
     kipcEventMask &= ~(1 << id);
 }
 
-void KApplication::enableStyles()
+void TDEApplication::enableStyles()
 {
     if (!useStyles)
     {
@@ -2267,12 +2267,12 @@ void KApplication::enableStyles()
     }
 }
 
-void KApplication::disableStyles()
+void TDEApplication::disableStyles()
 {
     useStyles = false;
 }
 
-void KApplication::applyGUIStyle()
+void TDEApplication::applyGUIStyle()
 {
     if ( !useStyles ) return;
 
@@ -2299,7 +2299,7 @@ void KApplication::applyGUIStyle()
     kdisplaySetPalette();
 }
 
-TQString KApplication::caption() const
+TQString TDEApplication::caption() const
 {
   // Caption set from command line ?
   if( !aCaption.isNull() )
@@ -2318,7 +2318,7 @@ TQString KApplication::caption() const
 // 1999-09-20: Espen Sand
 // An attempt to simplify consistent captions.
 //
-TQString KApplication::makeStdCaption( const TQString &userCaption,
+TQString TDEApplication::makeStdCaption( const TQString &userCaption,
                                       bool withAppName, bool modified ) const
 {
   TQString s = userCaption.isEmpty() ? caption() : userCaption;
@@ -2337,14 +2337,14 @@ TQString KApplication::makeStdCaption( const TQString &userCaption,
   return s;
 }
 
-TQPalette KApplication::createApplicationPalette()
+TQPalette TDEApplication::createApplicationPalette()
 {
     KConfig *config = KGlobal::config();
     KConfigGroupSaver saver( config, "General" );
     return createApplicationPalette( config, KGlobalSettings::contrast() );
 }
 
-TQPalette KApplication::createApplicationPalette( KConfig *config, int contrast_ )
+TQPalette TDEApplication::createApplicationPalette( KConfig *config, int contrast_ )
 {
     TQColor trinity4Background( 239, 239, 239 );
     TQColor trinity4Blue( 103,141,178 );
@@ -2435,7 +2435,7 @@ TQPalette KApplication::createApplicationPalette( KConfig *config, int contrast_
 }
 
 
-void KApplication::kdisplaySetPalette()
+void TDEApplication::kdisplaySetPalette()
 {
 #ifdef Q_WS_MACX
     //Can I have this on other platforms, please!? --Sam
@@ -2453,7 +2453,7 @@ void KApplication::kdisplaySetPalette()
 }
 
 
-void KApplication::kdisplaySetFont()
+void TDEApplication::kdisplaySetFont()
 {
     TQApplication::setFont(KGlobalSettings::generalFont(), true);
     TQApplication::setFont(KGlobalSettings::menuFont(), true, TQMENUBAR_OBJECT_NAME_STRING);
@@ -2471,7 +2471,7 @@ void KApplication::kdisplaySetFont()
 }
 
 
-void KApplication::kdisplaySetStyle()
+void TDEApplication::kdisplaySetStyle()
 {
     if (useStyles)
     {
@@ -2482,7 +2482,7 @@ void KApplication::kdisplaySetStyle()
 }
 
 
-void KApplication::propagateSettings(SettingsCategory arg)
+void TDEApplication::propagateSettings(SettingsCategory arg)
 {
     KConfigBase* config = KGlobal::config();
     KConfigGroupSaver saver( config, "KDE" );
@@ -2524,7 +2524,7 @@ void KApplication::propagateSettings(SettingsCategory arg)
     emit settingsChanged(arg);
 }
 
-void KApplication::installKDEPropertyMap()
+void TDEApplication::installKDEPropertyMap()
 {
 #ifndef QT_NO_SQL
     static bool installed = false;
@@ -2566,7 +2566,7 @@ void KApplication::installKDEPropertyMap()
 #endif
 }
 
-void KApplication::invokeHelp( const TQString& anchor,
+void TDEApplication::invokeHelp( const TQString& anchor,
                                const TQString& _appname) const
 {
     return invokeHelp( anchor, _appname, "" );
@@ -2575,7 +2575,7 @@ void KApplication::invokeHelp( const TQString& anchor,
 #ifndef Q_WS_WIN
 // for win32 we're using simple help tools like Qt Assistant,
 // see kapplication_win.cpp
-void KApplication::invokeHelp( const TQString& anchor,
+void TDEApplication::invokeHelp( const TQString& anchor,
                                const TQString& _appname,
                                const TQCString& startup_id ) const
 {
@@ -2609,7 +2609,7 @@ void KApplication::invokeHelp( const TQString& anchor,
 }
 #endif
 
-void KApplication::invokeHTMLHelp( const TQString& _filename, const TQString& topic ) const
+void TDEApplication::invokeHTMLHelp( const TQString& _filename, const TQString& topic ) const
 {
    kdWarning() << "invoking HTML help is deprecated! use docbook and invokeHelp!\n";
 
@@ -2644,28 +2644,28 @@ void KApplication::invokeHTMLHelp( const TQString& _filename, const TQString& to
 }
 
 
-void KApplication::invokeMailer(const TQString &address, const TQString &subject)
+void TDEApplication::invokeMailer(const TQString &address, const TQString &subject)
 {
     return invokeMailer(address,subject,"");
 }
 
-void KApplication::invokeMailer(const TQString &address, const TQString &subject, const TQCString& startup_id)
+void TDEApplication::invokeMailer(const TQString &address, const TQString &subject, const TQCString& startup_id)
 {
    invokeMailer(address, TQString::null, TQString::null, subject, TQString::null, TQString::null,
        TQStringList(), startup_id );
 }
 
-void KApplication::invokeMailer(const KURL &mailtoURL)
+void TDEApplication::invokeMailer(const KURL &mailtoURL)
 {
     return invokeMailer( mailtoURL, "" );
 }
 
-void KApplication::invokeMailer(const KURL &mailtoURL, const TQCString& startup_id )
+void TDEApplication::invokeMailer(const KURL &mailtoURL, const TQCString& startup_id )
 {
     return invokeMailer( mailtoURL, startup_id, false);
 }
 
-void KApplication::invokeMailer(const KURL &mailtoURL, const TQCString& startup_id, bool allowAttachments )
+void TDEApplication::invokeMailer(const KURL &mailtoURL, const TQCString& startup_id, bool allowAttachments )
 {
    TQString address = KURL::decode_string(mailtoURL.path()), subject, cc, bcc, body;
    TQStringList queries = TQStringList::split('&', mailtoURL.query().mid(1));
@@ -2698,7 +2698,7 @@ void KApplication::invokeMailer(const KURL &mailtoURL, const TQCString& startup_
    invokeMailer( address, cc, bcc, subject, body, TQString::null, attachURLs, startup_id );
 }
 
-void KApplication::invokeMailer(const TQString &to, const TQString &cc, const TQString &bcc,
+void TDEApplication::invokeMailer(const TQString &to, const TQString &cc, const TQString &bcc,
                                 const TQString &subject, const TQString &body,
                                 const TQString & messageFile, const TQStringList &attachURLs)
 {
@@ -2780,7 +2780,7 @@ static TQStringList splitEmailAddressList( const TQString & aStr )
   return list;
 }
 
-void KApplication::invokeMailer(const TQString &_to, const TQString &_cc, const TQString &_bcc,
+void TDEApplication::invokeMailer(const TQString &_to, const TQString &_cc, const TQString &_bcc,
                                 const TQString &subject, const TQString &body,
                                 const TQString & /*messageFile TODO*/, const TQStringList &attachURLs,
                                 const TQCString& startup_id )
@@ -2913,7 +2913,7 @@ void KApplication::invokeMailer(const TQString &_to, const TQString &_cc, const 
 }
 #endif
 
-void KApplication::invokeBrowser( const TQString &url )
+void TDEApplication::invokeBrowser( const TQString &url )
 {
     return invokeBrowser( url, "" );
 }
@@ -2921,7 +2921,7 @@ void KApplication::invokeBrowser( const TQString &url )
 #ifndef Q_WS_WIN
 // on win32, for invoking browser we're using win32 API
 // see kapplication_win.cpp
-void KApplication::invokeBrowser( const TQString &url, const TQCString& startup_id )
+void TDEApplication::invokeBrowser( const TQString &url, const TQCString& startup_id )
 {
    TQString error;
 
@@ -2937,38 +2937,38 @@ void KApplication::invokeBrowser( const TQString &url, const TQCString& startup_
 }
 #endif
 
-void KApplication::cut()
+void TDEApplication::cut()
 {
   invokeEditSlot( TQT_SLOT( cut() ) );
 }
 
-void KApplication::copy()
+void TDEApplication::copy()
 {
   invokeEditSlot( TQT_SLOT( copy() ) );
 }
 
-void KApplication::paste()
+void TDEApplication::paste()
 {
   invokeEditSlot( TQT_SLOT( paste() ) );
 }
 
-void KApplication::clear()
+void TDEApplication::clear()
 {
   invokeEditSlot( TQT_SLOT( clear() ) );
 }
 
-void KApplication::selectAll()
+void TDEApplication::selectAll()
 {
   invokeEditSlot( TQT_SLOT( selectAll() ) );
 }
 
-void KApplication::broadcastKeyCode(unsigned int keyCode)
+void TDEApplication::broadcastKeyCode(unsigned int keyCode)
 {
   emit coreFakeKeyPress(keyCode);
 }
 
 TQCString
-KApplication::launcher()
+TDEApplication::launcher()
 {
    return "klauncher";
 }
@@ -3010,7 +3010,7 @@ startServiceInternal( const TQCString &function,
    stream << _name << URLs;
    TQCString replyType;
    TQByteArray replyData;
-   TQCString _launcher = KApplication::launcher();
+   TQCString _launcher = TDEApplication::launcher();
    TQValueList<TQCString> envs;
 #ifdef Q_WS_X11
    if (tqt_xdisplay()) {
@@ -3057,7 +3057,7 @@ startServiceInternal( const TQCString &function,
 }
 
 int
-KApplication::startServiceByName( const TQString& _name, const TQString &URL,
+TDEApplication::startServiceByName( const TQString& _name, const TQString &URL,
                   TQString *error, TQCString *dcopService, int *pid, const TQCString& startup_id, bool noWait )
 {
    TQStringList URLs;
@@ -3069,7 +3069,7 @@ KApplication::startServiceByName( const TQString& _name, const TQString &URL,
 }
 
 int
-KApplication::startServiceByName( const TQString& _name, const TQStringList &URLs,
+TDEApplication::startServiceByName( const TQString& _name, const TQStringList &URLs,
                   TQString *error, TQCString *dcopService, int *pid, const TQCString& startup_id, bool noWait )
 {
    return startServiceInternal(
@@ -3078,7 +3078,7 @@ KApplication::startServiceByName( const TQString& _name, const TQStringList &URL
 }
 
 int
-KApplication::startServiceByDesktopPath( const TQString& _name, const TQString &URL,
+TDEApplication::startServiceByDesktopPath( const TQString& _name, const TQString &URL,
                   TQString *error, TQCString *dcopService, int *pid, const TQCString& startup_id, bool noWait )
 {
    TQStringList URLs;
@@ -3090,7 +3090,7 @@ KApplication::startServiceByDesktopPath( const TQString& _name, const TQString &
 }
 
 int
-KApplication::startServiceByDesktopPath( const TQString& _name, const TQStringList &URLs,
+TDEApplication::startServiceByDesktopPath( const TQString& _name, const TQStringList &URLs,
                   TQString *error, TQCString *dcopService, int *pid, const TQCString& startup_id, bool noWait )
 {
    return startServiceInternal(
@@ -3099,7 +3099,7 @@ KApplication::startServiceByDesktopPath( const TQString& _name, const TQStringLi
 }
 
 int
-KApplication::startServiceByDesktopName( const TQString& _name, const TQString &URL,
+TDEApplication::startServiceByDesktopName( const TQString& _name, const TQString &URL,
                   TQString *error, TQCString *dcopService, int *pid, const TQCString& startup_id, bool noWait )
 {
    TQStringList URLs;
@@ -3111,7 +3111,7 @@ KApplication::startServiceByDesktopName( const TQString& _name, const TQString &
 }
 
 int
-KApplication::startServiceByDesktopName( const TQString& _name, const TQStringList &URLs,
+TDEApplication::startServiceByDesktopName( const TQString& _name, const TQStringList &URLs,
                   TQString *error, TQCString *dcopService, int *pid, const TQCString& startup_id, bool noWait )
 {
    return startServiceInternal(
@@ -3120,14 +3120,14 @@ KApplication::startServiceByDesktopName( const TQString& _name, const TQStringLi
 }
 
 int
-KApplication::tdeinitExec( const TQString& name, const TQStringList &args,
+TDEApplication::tdeinitExec( const TQString& name, const TQStringList &args,
                            TQString *error, int *pid )
 {
     return tdeinitExec( name, args, error, pid, "" );
 }
 
 int
-KApplication::tdeinitExec( const TQString& name, const TQStringList &args,
+TDEApplication::tdeinitExec( const TQString& name, const TQStringList &args,
                            TQString *error, int *pid, const TQCString& startup_id )
 {
    return startServiceInternal("tdeinit_exec(TQString,TQStringList,TQValueList<TQCString>,TQCString)",
@@ -3135,27 +3135,27 @@ KApplication::tdeinitExec( const TQString& name, const TQStringList &args,
 }
 
 int
-KApplication::tdeinitExecWait( const TQString& name, const TQStringList &args,
+TDEApplication::tdeinitExecWait( const TQString& name, const TQStringList &args,
                            TQString *error, int *pid )
 {
     return tdeinitExecWait( name, args, error, pid, "" );
 }
 
 int
-KApplication::tdeinitExecWait( const TQString& name, const TQStringList &args,
+TDEApplication::tdeinitExecWait( const TQString& name, const TQStringList &args,
                            TQString *error, int *pid, const TQCString& startup_id )
 {
    return startServiceInternal("tdeinit_exec_wait(TQString,TQStringList,TQValueList<TQCString>,TQCString)",
         name, args, error, 0, pid, startup_id, false);
 }
 
-TQString KApplication::tempSaveName( const TQString& pFilename ) const
+TQString TDEApplication::tempSaveName( const TQString& pFilename ) const
 {
   TQString aFilename;
 
   if( TQDir::isRelativePath(pFilename) )
     {
-      kdWarning(101) << "Relative filename passed to KApplication::tempSaveName" << endl;
+      kdWarning(101) << "Relative filename passed to TDEApplication::tempSaveName" << endl;
       aFilename = TQFileInfo( TQDir( "." ), pFilename ).absFilePath();
     }
   else
@@ -3177,14 +3177,14 @@ TQString KApplication::tempSaveName( const TQString& pFilename ) const
 }
 
 
-TQString KApplication::checkRecoverFile( const TQString& pFilename,
+TQString TDEApplication::checkRecoverFile( const TQString& pFilename,
         bool& bRecover ) const
 {
   TQString aFilename;
 
   if( TQDir::isRelativePath(pFilename) )
     {
-      kdWarning(101) << "Relative filename passed to KApplication::tempSaveName" << endl;
+      kdWarning(101) << "Relative filename passed to TDEApplication::tempSaveName" << endl;
       aFilename = TQFileInfo( TQDir( "." ), pFilename ).absFilePath();
     }
   else
@@ -3249,7 +3249,7 @@ bool checkAccess(const TQString& pathname, int mode)
     return false; // No
 }
 
-void KApplication::setTopWidget( TQWidget *topWidget )
+void TDEApplication::setTopWidget( TQWidget *topWidget )
 {
   if( !topWidget )
       return;
@@ -3270,12 +3270,12 @@ void KApplication::setTopWidget( TQWidget *topWidget )
 #endif
 }
 
-TQCString KApplication::startupId() const
+TQCString TDEApplication::startupId() const
 {
     return d->startup_id;
 }
 
-void KApplication::setStartupId( const TQCString& startup_id )
+void TDEApplication::setStartupId( const TQCString& startup_id )
 {
     if( startup_id == d->startup_id )
         return;
@@ -3299,7 +3299,7 @@ void KApplication::setStartupId( const TQCString& startup_id )
 
 // read the startup notification env variable, save it and unset it in order
 // not to propagate it to processes started from this app
-void KApplication::read_app_startup_id()
+void TDEApplication::read_app_startup_id()
 {
 #if defined Q_WS_X11
     KStartupInfoId id = KStartupInfo::currentStartupIdEnv();
@@ -3308,7 +3308,7 @@ void KApplication::read_app_startup_id()
 #endif
 }
 
-int KApplication::random()
+int TDEApplication::random()
 {
    static bool init = false;
    if (!init)
@@ -3328,7 +3328,7 @@ int KApplication::random()
    return rand();
 }
 
-TQString KApplication::randomString(int length)
+TQString TDEApplication::randomString(int length)
 {
    if (length <=0 ) return TQString::null;
 
@@ -3346,7 +3346,7 @@ TQString KApplication::randomString(int length)
    return str;
 }
 
-bool KApplication::authorize(const TQString &genericAction)
+bool TDEApplication::authorize(const TQString &genericAction)
 {
    if (!d->actionRestrictions)
       return true;
@@ -3356,7 +3356,7 @@ bool KApplication::authorize(const TQString &genericAction)
    return config->readBoolEntry(genericAction, true);
 }
 
-bool KApplication::authorizeKAction(const char *action)
+bool TDEApplication::authorizeKAction(const char *action)
 {
    if (!d->actionRestrictions || !action)
       return true;
@@ -3366,7 +3366,7 @@ bool KApplication::authorizeKAction(const char *action)
    return authorize(action_prefix + action);
 }
 
-bool KApplication::authorizeControlModule(const TQString &menuId)
+bool TDEApplication::authorizeControlModule(const TQString &menuId)
 {
    if (menuId.isEmpty() || kde_kiosk_exception)
       return true;
@@ -3375,7 +3375,7 @@ bool KApplication::authorizeControlModule(const TQString &menuId)
    return config->readBoolEntry(menuId, true);
 }
 
-TQStringList KApplication::authorizeControlModules(const TQStringList &menuIds)
+TQStringList TDEApplication::authorizeControlModules(const TQStringList &menuIds)
 {
    KConfig *config = KGlobal::config();
    KConfigGroupSaver saver( config, "TDE Control Module Restrictions" );
@@ -3389,41 +3389,41 @@ TQStringList KApplication::authorizeControlModules(const TQStringList &menuIds)
    return result;
 }
 
-void KApplication::initUrlActionRestrictions()
+void TDEApplication::initUrlActionRestrictions()
 {
   d->urlActionRestrictions.setAutoDelete(true);
   d->urlActionRestrictions.clear();
-  d->urlActionRestrictions.append( new KApplicationPrivate::URLActionRule
+  d->urlActionRestrictions.append( new TDEApplicationPrivate::URLActionRule
   ("open", TQString::null, TQString::null, TQString::null, TQString::null, TQString::null, TQString::null, true));
-  d->urlActionRestrictions.append( new KApplicationPrivate::URLActionRule
+  d->urlActionRestrictions.append( new TDEApplicationPrivate::URLActionRule
   ("list", TQString::null, TQString::null, TQString::null, TQString::null, TQString::null, TQString::null, true));
 // TEST:
-//  d->urlActionRestrictions.append( new KApplicationPrivate::URLActionRule
+//  d->urlActionRestrictions.append( new TDEApplicationPrivate::URLActionRule
 //  ("list", TQString::null, TQString::null, TQString::null, TQString::null, TQString::null, TQString::null, false));
-//  d->urlActionRestrictions.append( new KApplicationPrivate::URLActionRule
+//  d->urlActionRestrictions.append( new TDEApplicationPrivate::URLActionRule
 //  ("list", TQString::null, TQString::null, TQString::null, "file", TQString::null, TQDir::homeDirPath(), true));
-  d->urlActionRestrictions.append( new KApplicationPrivate::URLActionRule
+  d->urlActionRestrictions.append( new TDEApplicationPrivate::URLActionRule
   ("link", TQString::null, TQString::null, TQString::null, ":internet", TQString::null, TQString::null, true));
-  d->urlActionRestrictions.append( new KApplicationPrivate::URLActionRule
+  d->urlActionRestrictions.append( new TDEApplicationPrivate::URLActionRule
   ("redirect", TQString::null, TQString::null, TQString::null, ":internet", TQString::null, TQString::null, true));
 
   // We allow redirections to file: but not from internet protocols, redirecting to file:
   // is very popular among io-slaves and we don't want to break them
-  d->urlActionRestrictions.append( new KApplicationPrivate::URLActionRule
+  d->urlActionRestrictions.append( new TDEApplicationPrivate::URLActionRule
   ("redirect", TQString::null, TQString::null, TQString::null, "file", TQString::null, TQString::null, true));
-  d->urlActionRestrictions.append( new KApplicationPrivate::URLActionRule
+  d->urlActionRestrictions.append( new TDEApplicationPrivate::URLActionRule
   ("redirect", ":internet", TQString::null, TQString::null, "file", TQString::null, TQString::null, false));
 
   // local protocols may redirect everywhere
-  d->urlActionRestrictions.append( new KApplicationPrivate::URLActionRule
+  d->urlActionRestrictions.append( new TDEApplicationPrivate::URLActionRule
   ("redirect", ":local", TQString::null, TQString::null, TQString::null, TQString::null, TQString::null, true));
 
   // Anyone may redirect to about:
-  d->urlActionRestrictions.append( new KApplicationPrivate::URLActionRule
+  d->urlActionRestrictions.append( new TDEApplicationPrivate::URLActionRule
   ("redirect", TQString::null, TQString::null, TQString::null, "about", TQString::null, TQString::null, true));
 
   // Anyone may redirect to itself, cq. within it's own group
-  d->urlActionRestrictions.append( new KApplicationPrivate::URLActionRule
+  d->urlActionRestrictions.append( new TDEApplicationPrivate::URLActionRule
   ("redirect", TQString::null, TQString::null, TQString::null, "=", TQString::null, TQString::null, true));
 
   KConfig *config = KGlobal::config();
@@ -3461,22 +3461,22 @@ void KApplication::initUrlActionRestrictions()
     if (urlPath.startsWith("$TMP"))
        urlPath.replace(0, 4, KGlobal::dirs()->saveLocation("tmp"));
 
-    d->urlActionRestrictions.append(new KApplicationPrivate::URLActionRule
+    d->urlActionRestrictions.append(new TDEApplicationPrivate::URLActionRule
     	( action, refProt, refHost, refPath, urlProt, urlHost, urlPath, bEnabled));
   }
 }
 
-void KApplication::allowURLAction(const TQString &action, const KURL &_baseURL, const KURL &_destURL)
+void TDEApplication::allowURLAction(const TQString &action, const KURL &_baseURL, const KURL &_destURL)
 {
   if (authorizeURLAction(action, _baseURL, _destURL))
      return;
 
-  d->urlActionRestrictions.append(new KApplicationPrivate::URLActionRule
+  d->urlActionRestrictions.append(new TDEApplicationPrivate::URLActionRule
         ( action, _baseURL.protocol(), _baseURL.host(), _baseURL.path(-1),
                   _destURL.protocol(), _destURL.host(), _destURL.path(-1), true));
 }
 
-bool KApplication::authorizeURLAction(const TQString &action, const KURL &_baseURL, const KURL &_destURL)
+bool TDEApplication::authorizeURLAction(const TQString &action, const KURL &_baseURL, const KURL &_destURL)
 {
   if (_destURL.isEmpty())
      return true;
@@ -3492,7 +3492,7 @@ bool KApplication::authorizeURLAction(const TQString &action, const KURL &_baseU
   destURL.setPath(TQDir::cleanDirPath(destURL.path()));
   TQString destClass = KProtocolInfo::protocolClass(destURL.protocol());
 
-  for(KApplicationPrivate::URLActionRule *rule = d->urlActionRestrictions.first();
+  for(TDEApplicationPrivate::URLActionRule *rule = d->urlActionRestrictions.first();
       rule; rule = d->urlActionRestrictions.next())
   {
      if ((result != rule->permission) && // No need to check if it doesn't make a difference
@@ -3507,7 +3507,7 @@ bool KApplication::authorizeURLAction(const TQString &action, const KURL &_baseU
 }
 
 
-uint KApplication::keyboardModifiers()
+uint TDEApplication::keyboardModifiers()
 {
 #ifdef Q_WS_X11
     Window root;
@@ -3525,7 +3525,7 @@ uint KApplication::keyboardModifiers()
 #endif
 }
 
-uint KApplication::mouseState()
+uint TDEApplication::mouseState()
 {
     uint mousestate;
 #ifdef Q_WS_X11
@@ -3550,7 +3550,7 @@ uint KApplication::mouseState()
     return mousestate & 0xff00;
 }
 
-TQ_ButtonState KApplication::keyboardMouseState()
+TQ_ButtonState TDEApplication::keyboardMouseState()
 {
     int ret = 0;
 #ifdef Q_WS_X11
@@ -3597,7 +3597,7 @@ TQ_ButtonState KApplication::keyboardMouseState()
     return static_cast< ButtonState >( ret );
 }
 
-void KApplication::installSigpipeHandler()
+void TDEApplication::installSigpipeHandler()
 {
 #ifdef Q_OS_UNIX
     struct sigaction act;
@@ -3608,7 +3608,7 @@ void KApplication::installSigpipeHandler()
 #endif
 }
 
-void KApplication::sigpipeHandler(int)
+void TDEApplication::sigpipeHandler(int)
 {
     int saved_errno = errno;
     // Using kdDebug from a signal handler is not a good idea.
@@ -3624,12 +3624,12 @@ void KApplication::sigpipeHandler(int)
     errno = saved_errno;
 }
 
-bool KApplication::guiEnabled()
+bool TDEApplication::guiEnabled()
 {
     return kapp && kapp->d->guiEnabled;
 }
 
-void KApplication::virtual_hook( int id, void* data )
+void TDEApplication::virtual_hook( int id, void* data )
 { KInstance::virtual_hook( id, data ); }
 
 void KSessionManaged::virtual_hook( int, void* )

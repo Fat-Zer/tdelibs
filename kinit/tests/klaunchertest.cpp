@@ -28,9 +28,9 @@
 
 int main(int argc, char *argv[])
 {
-   KApplication::tdeinitExec("konsole");
+   TDEApplication::tdeinitExec("konsole");
 
-   KApplication k(argc, argv, "klaunchertest");
+   TDEApplication k(argc, argv, "klaunchertest");
  
    kapp->dcopClient()->registerAs( kapp->name()) ;
 
@@ -38,13 +38,13 @@ int main(int argc, char *argv[])
    TQString error;
    TQCString dcopService;
    int pid;
-   int result = KApplication::startServiceByDesktopName(
+   int result = TDEApplication::startServiceByDesktopName(
 		TQString::fromLatin1("konsole"), TQString::null, &error, &dcopService, &pid );
 
    printf("Result = %d, error = \"%s\", dcopService = \"%s\", pid = %d\n",
       result, error.ascii(), dcopService.data(), pid);
 
-   result = KApplication::startServiceByDesktopName(
+   result = TDEApplication::startServiceByDesktopName(
 		TQString::fromLatin1("konqueror"), TQString::null,  &error, &dcopService, &pid );
 
    printf("Result = %d, error = \"%s\", dcopService = \"%s\", pid = %d\n",

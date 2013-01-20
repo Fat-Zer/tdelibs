@@ -255,7 +255,7 @@ public:
 
     /**
      * @internal
-     * Internal Method, called by the KApplication destructor.
+     * Internal Method, called by the TDEApplication destructor.
      * Do not call it.
      * This is what makes it possible to rely on ~KLibFactory
      * being called in all cases, whether the library is unloaded

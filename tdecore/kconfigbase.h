@@ -1887,7 +1887,7 @@ protected:
   /**
    * Reads the locale and put in the configuration data struct.
    * Note that this should be done in the constructor, but this is not
-   * possible due to some mutual dependencies in KApplication::init()
+   * possible due to some mutual dependencies in TDEApplication::init()
    */
   void setLocale();
 

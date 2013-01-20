@@ -73,7 +73,7 @@ class DCOPObject;
  * not supported.
 *
  * KMainWindow will set icon, mini icon and caption, which it gets
- * from KApplication. It provides full session management, and
+ * from TDEApplication. It provides full session management, and
  * will save its position, geometry and positions of toolbars and
  * menubar on logout. If you want to save additional data, reimplement
  * saveProperties() and (to read them again on next login)
@@ -90,7 +90,7 @@ class DCOPObject;
  *  window is closed. If you do not want this behavior, specify 0 as
  *  widget flag in the constructor.
  *
- * @see KApplication
+ * @see TDEApplication
  * @author Reginald Stadlbauer (reggie@kde.org) Stephan Kulow (coolo@kde.org), Matthias Ettrich (ettrich@kde.org), Chris Schlaeger (cs@kde.org), Sven Radej (radej@kde.org). Maintained by Sven Radej (radej@kde.org)
 
  */
@@ -798,9 +798,9 @@ protected:
     // would be useful only for the annoying 'really quit' dialog, which
     // also doesn't make sense in apps with multiple mainwindows.
     // And saving configuration in something called queryExit()? IMHO
-    // one can e.g. use KApplication::shutDown(), which if nothing else
+    // one can e.g. use TDEApplication::shutDown(), which if nothing else
     // has at least better fitting name.
-    // See also KApplication::sessionSaving().
+    // See also TDEApplication::sessionSaving().
     // This stuff should get changed somehow, so that it at least doesn't
     // mess with session management.
     /**
@@ -820,15 +820,15 @@ protected:
 
        If you need to do serious things on exit (like shutting a
        dial-up connection down), connect to the signal
- KApplication::shutDown().
+ TDEApplication::shutDown().
 
        Default implementation returns @p true. Returning @p false will
        cancel the exiting. In the latter case, the last window will
-       remain visible. If KApplication::sessionSaving() is true, refusing
+       remain visible. If TDEApplication::sessionSaving() is true, refusing
        the exit will also cancel KDE logout.
 
        @see queryClose()
-       @see KApplication::sessionSaving()
+       @see TDEApplication::sessionSaving()
      */
     virtual bool queryExit();
 
@@ -840,7 +840,7 @@ protected:
        safe to close it, i.e. without the user losing some data.
 
        Default implementation returns true. Returning @p false will cancel
-       the closing, and, if KApplication::sessionSaving() is true, it will also
+       the closing, and, if TDEApplication::sessionSaving() is true, it will also
        cancel KDE logout.
 
        Reimplement this function to prevent the user from losing data.
@@ -864,7 +864,7 @@ protected:
        may be canceled, in which case the document should remain open.
 
        @see queryExit()
-       @see KApplication::sessionSaving()
+       @see TDEApplication::sessionSaving()
     */
     virtual bool queryClose();
 

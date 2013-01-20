@@ -163,8 +163,8 @@ IdleSlave::age(time_t now)
 }
 
 KLauncher::KLauncher(int _tdeinitSocket, bool new_startup)
-//  : KApplication( false, false ), // No Styles, No GUI
-  : KApplication( false, true ),	// TQClipboard tries to construct a QWidget so a GUI is technically needed, even though it is not used
+//  : TDEApplication( false, false ), // No Styles, No GUI
+  : TDEApplication( false, true ),	// TQClipboard tries to construct a QWidget so a GUI is technically needed, even though it is not used
     DCOPObject("klauncher"),
     tdeinitSocket(_tdeinitSocket), mAutoStart( new_startup ),
     dontBlockReading(false), newStartup( new_startup )

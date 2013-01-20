@@ -354,9 +354,9 @@ KDE_EXPORT void TQApplication::setPalette( const TQPalette &, bool ,
 }
 
 #include <kapplication.h>
-void KApplication::dcopFailure( const TQString & )
+void TDEApplication::dcopFailure( const TQString & )
 {
-    tqDebug( "KApplication::dcopFailure" );
+    tqDebug( "TDEApplication::dcopFailure" );
 }
 
 #include <kparts/historyprovider.h>

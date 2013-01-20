@@ -5,7 +5,7 @@
 
 int main( int argc, char **argv )
 {
-    KApplication app( argc, argv, "kurlrequestertest" );
+    TDEApplication app( argc, argv, "kurlrequestertest" );
     KURL url = KURLRequesterDlg::getURL( "ftp://ftp.kde.org" );
     tqDebug( "Selected url: %s", url.url().latin1());
 

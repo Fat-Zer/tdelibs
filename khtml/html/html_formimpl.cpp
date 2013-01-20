@@ -83,7 +83,7 @@ HTMLFormElementImpl::HTMLFormElementImpl(DocumentImpl *doc, bool implicit)
     m_doingsubmit = false;
     m_inreset = false;
     m_enctype = "application/x-www-form-urlencoded";
-    m_boundary = "----------" + KApplication::randomString( 42 + 13 );
+    m_boundary = "----------" + TDEApplication::randomString( 42 + 13 );
     m_acceptcharset = "UNKNOWN";
     m_malformed = false;
 }

@@ -17,7 +17,7 @@
 
 int main( int argc, char ** argv )
 {
-    KApplication a(argc, argv, "helpviewer");
+    TDEApplication a(argc, argv, "helpviewer");
 
     TQString home;
     if (argc > 1)

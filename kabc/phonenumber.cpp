@@ -45,7 +45,7 @@ PhoneNumber::~PhoneNumber()
 
 void PhoneNumber::init()
 {
-  mId = KApplication::randomString( 8 );
+  mId = TDEApplication::randomString( 8 );
 }
 
 void PhoneNumber::validateNumber( const TQString &number )

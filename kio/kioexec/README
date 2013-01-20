@@ -14,7 +14,7 @@ so we have no way to know when the user finished editing the file...
 
 Conclusion: if the application has network transparency built-in, it should
 put "%u" in its desktop file - and kfmexec isn't used -. If it doesn't, either
-it's a KApplication and kfmexec does its job, or it's a KUniqueApplication
+it's a TDEApplication and kfmexec does its job, or it's a KUniqueApplication
 and... kfmexec can't see modifications to the file. Be warned.
 
 From Waldo: "The program doesn't return _at once_. It returns

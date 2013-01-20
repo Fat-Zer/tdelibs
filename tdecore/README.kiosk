@@ -657,7 +657,7 @@ Host[$e]=$(hostname)
 KDE3 Kiosk Application API
 ==========================
 
-Three new methods have been added to KApplication:
+Three new methods have been added to TDEApplication:
 
 - bool authorize(QString action); // Generic actions
 - bool authorizeKAction(QString action); // For KActions exclusively

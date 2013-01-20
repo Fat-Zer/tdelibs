@@ -37,7 +37,7 @@ int main( int argc, char **argv )
 
   TDECmdLineArgs::addCmdLineOptions( options );
 
-  KApplication app( false, false ); // no GUI
+  TDEApplication app( false, false ); // no GUI
 
   TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 

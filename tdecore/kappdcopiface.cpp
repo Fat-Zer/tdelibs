@@ -24,10 +24,10 @@
 #include <kconfig.h>
 
 
-KAppDCOPInterface::KAppDCOPInterface(KApplication * theKApp)
+KAppDCOPInterface::KAppDCOPInterface(TDEApplication * theKApp)
 	: DCOPObject( "MainApplication-Interface")
 {
-	m_KApplication = theKApp;
+	m_TDEApplication = theKApp;
 }
 
 KAppDCOPInterface::~KAppDCOPInterface()
@@ -51,12 +51,12 @@ TQCString KAppDCOPInterface::caption()
 
 void KAppDCOPInterface::quit()
 {
-	m_KApplication->quit();
+	m_TDEApplication->quit();
 }
 
 void KAppDCOPInterface::updateUserTimestamp( ulong time )
 {
-	m_KApplication->updateUserTimestamp( time );
+	m_TDEApplication->updateUserTimestamp( time );
 }
 
 void KAppDCOPInterface::reparseConfiguration()
@@ -65,6 +65,6 @@ void KAppDCOPInterface::reparseConfiguration()
 }
 
 void KAppDCOPInterface::sendFakeKey( unsigned int keyCode) {
-	m_KApplication->broadcastKeyCode(keyCode);
+	m_TDEApplication->broadcastKeyCode(keyCode);
 }
 

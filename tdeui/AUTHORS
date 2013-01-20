@@ -10,7 +10,7 @@ Maintainer of KPixmapEffect, KStyle, KThemeStyle, and KThemeBase - as well as
 general misc coding here and there. 
 
 Matthias Kalle Dalheimer <kalle@kde.org>:
-classes KApplication, KConfig, KTextStream, KColorSet, 
+classes TDEApplication, KConfig, KTextStream, KColorSet, 
 automake, autoconf, maintenance
 
 Richard Moore <moorer@cs.man.ac.uk>:

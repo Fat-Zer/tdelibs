@@ -35,7 +35,7 @@ int main( int argc, char** argv )
 {
     KAboutData* about = new KAboutData( "tetest", "TETest", "0.1" );
     TDECmdLineArgs::init( argc, argv, about );
-    KApplication a;
+    TDEApplication a;
     Win* win = new Win();
     win->show();
     return a.exec();

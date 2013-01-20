@@ -362,7 +362,7 @@ bool KMManager::uncompressFile(const TQString& filename, TQString& destname)
 		if ((uchar)(buf[0]) == 037 && (uchar)(buf[1]) == 0213)
 		{
 			f.close();
-			destname = locateLocal("tmp","tdeprint_") + KApplication::randomString(8);
+			destname = locateLocal("tmp","tdeprint_") + TDEApplication::randomString(8);
 			f.setName(destname);
 
 			if (f.open(IO_WriteOnly))

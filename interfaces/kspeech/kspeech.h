@@ -219,7 +219,7 @@
      client->attach();
      if (!client->isApplicationRegistered("kttsd")) {
          TQString error;
-         if (KApplication::startServiceByDesktopName("kttsd", TQStringList(), &error))
+         if (TDEApplication::startServiceByDesktopName("kttsd", TQStringList(), &error))
              cout << "Starting KTTSD failed with message " << error << endl;
      }
    @endverbatim

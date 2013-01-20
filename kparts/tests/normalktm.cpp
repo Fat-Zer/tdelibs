@@ -108,7 +108,7 @@ void Shell::slotFileEdit()
 
 int main( int argc, char **argv )
 {
-  KApplication app( argc, argv, "kpartstest" ); // we cheat and call ourselves kpartstest for Shell::slotFileOpen()
+  TDEApplication app( argc, argv, "kpartstest" ); // we cheat and call ourselves kpartstest for Shell::slotFileOpen()
 
   Shell *shell = new Shell;
 

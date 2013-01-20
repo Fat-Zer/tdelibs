@@ -39,7 +39,7 @@ int main( int argc, char **argv )
 
   TDECmdLineArgs::init( argc, argv, &aboutData );
 
-  KApplication app( false, false );
+  TDEApplication app( false, false );
   
 
   KABC::Addressee addressee;

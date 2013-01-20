@@ -17,7 +17,7 @@ int main(int argc,char **argv)
   KAboutData aboutData("bigwrite","BigWriteKabc","0.1");
   TDECmdLineArgs::init(argc,argv,&aboutData);
 
-  KApplication app( false, false );
+  TDEApplication app( false, false );
 
   AddressBook ab;
   ResourceFile r( "my.kabc", "vcard" );

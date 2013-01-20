@@ -124,7 +124,7 @@ void KFindTest::slotHighlight(int id, int index, int matchedLength)
 int main(int argc, char **argv)
 {
 	TDECmdLineArgs::init(argc, argv, "kfindtest", "KFindTest", 0, 0, false);
-	KApplication app;
+	TDEApplication app;
 
 	TQString text = "This file is part of the KDE project.\n"
 	               "This library is free software; you can redistribute it and/or\n"

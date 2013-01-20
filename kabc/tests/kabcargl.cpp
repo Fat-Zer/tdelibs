@@ -40,7 +40,7 @@ int main(int argc,char **argv)
 
   TDECmdLineArgs::init(argc,argv,&aboutData);
 
-  KApplication app;
+  TDEApplication app;
 
   TQString filename = StdAddressBook::fileName();
   

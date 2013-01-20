@@ -73,19 +73,19 @@ static void runBuildSycoca(TQObject *callBackObj=0, const char *callBackSlot=0)
       TQByteArray data;
       TQDataStream dataStream( data, IO_WriteOnly );
       dataStream << TQString("kbuildsycoca") << args;
-      TQCString _launcher = KApplication::launcher();
+      TQCString _launcher = TDEApplication::launcher();
 
       kapp->dcopClient()->callAsync(_launcher, _launcher, "tdeinit_exec_wait(TQString,TQStringList)", data, callBackObj, callBackSlot);
    }
    else
    {
-      KApplication::tdeinitExecWait( "kbuildsycoca", args );
+      TDEApplication::tdeinitExecWait( "kbuildsycoca", args );
    }
 }
 
 static void runKonfUpdate()
 {
-   KApplication::tdeinitExecWait( "kconf_update", TQStringList(), 0, 0, "0" /*no startup notification*/ );
+   TDEApplication::tdeinitExecWait( "kconf_update", TQStringList(), 0, 0, "0" /*no startup notification*/ );
 }
 
 static void runDontChangeHostname(const TQCString &oldName, const TQCString &newName)
@@ -93,7 +93,7 @@ static void runDontChangeHostname(const TQCString &oldName, const TQCString &new
    TQStringList args;
    args.append(TQFile::decodeName(oldName));
    args.append(TQFile::decodeName(newName));
-   KApplication::tdeinitExecWait( "kdontchangethehostname", args );
+   TDEApplication::tdeinitExecWait( "kdontchangethehostname", args );
 }
 
 Kded::Kded(bool checkUpdates, bool new_startup)
@@ -876,7 +876,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
         "$Id$",
         I18N_NOOP("TDE Daemon - triggers Sycoca database updates when needed"));
 
-     KApplication::installSigpipeHandler();
+     TDEApplication::installSigpipeHandler();
 
      TDECmdLineArgs::init(argc, argv, &aboutData);
 

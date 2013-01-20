@@ -6,7 +6,7 @@
 
 int main(int argc, char** argv)
 {
-  KApplication app(argc, argv, "klineedittest");
+  TDEApplication app(argc, argv, "klineedittest");
   KLineEditDlg dialog( "_text", "_value", 0L );
   if(dialog.exec())
     {

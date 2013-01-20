@@ -103,7 +103,7 @@ int main( int argc, char **argv )
 {
   TDECmdLineArgs::init(argc, argv, "ghostviewtest", description, version);
   TDECmdLineArgs::addCmdLineOptions( options ); // Add my own options.
-  KApplication app;
+  TDEApplication app;
   TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
   Shell *shell = new Shell;
   if ( args->count() == 1 )

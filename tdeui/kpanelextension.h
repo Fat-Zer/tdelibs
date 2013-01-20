@@ -56,7 +56,7 @@ class KPanelExtensionPrivate;
  *
  * \b X-TDE-UniqueExtension \n
  *
- * Similar to KApplication and KUniqueApplication there are
+ * Similar to TDEApplication and KUniqueApplication there are
  * two types of panel extensions. Use unique extensions when it makes no
  * sence to run more than one instance of an extension in the panel. A
  * good example for unique extensions is the taskbar extension.  Use normal

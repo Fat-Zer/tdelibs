@@ -155,7 +155,7 @@ void HTMLDocumentImpl::setCookie( const DOMString & value )
                                   "addCookies(TQString,TQCString,long int)", params))
     {
          // Maybe it wasn't running (e.g. we're opening local html files)
-         KApplication::startServiceByDesktopName( "kcookiejar");
+         TDEApplication::startServiceByDesktopName( "kcookiejar");
          if (!kapp->dcopClient()->send("kcookiejar", "kcookiejar",
                                        "addCookies(TQString,TQCString,long int)", params))
              kdWarning(6010) << "Can't communicate with cookiejar!" << endl;

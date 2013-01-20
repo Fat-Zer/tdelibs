@@ -121,7 +121,7 @@ void Shell::slotFileEdit()
 
 int main( int argc, char **argv )
 {
-  KApplication app( argc, argv, "kpartstest" );
+  TDEApplication app( argc, argv, "kpartstest" );
 
   Shell *shell = new Shell;
 

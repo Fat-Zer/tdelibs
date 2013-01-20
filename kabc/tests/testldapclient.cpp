@@ -29,9 +29,9 @@
 
 int main(int argc, char *argv[])
 {
-  KApplication::disableAutoDcopRegistration();
+  TDEApplication::disableAutoDcopRegistration();
   TDECmdLineArgs::init(argc,argv,"testldapclient", 0, 0, 0, 0);
-  KApplication app;
+  TDEApplication app;
 
   TestLDAPClient test;
   test.setup();

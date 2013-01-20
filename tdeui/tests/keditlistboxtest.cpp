@@ -4,7 +4,7 @@
 
 int main( int argc, char **argv )
 {
-    KApplication app( argc, argv, "keditlistboxtest" );
+    TDEApplication app( argc, argv, "keditlistboxtest" );
 
     KEditListBox::CustomEditor editor( new KComboBox( true, 0L, "test" ) );
     KEditListBox *box = new KEditListBox( TQString::fromLatin1("KEditListBox"),

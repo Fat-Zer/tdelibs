@@ -23,8 +23,8 @@ static bool check(TQString txt, TQString a, TQString b)
 
 int main(int argc, char *argv[])
 {
-  KApplication::disableAutoDcopRegistration();
-  KApplication app(argc,argv,"kstdacceltest",false,false);
+  TDEApplication::disableAutoDcopRegistration();
+  TDEApplication app(argc,argv,"kstdacceltest",false,false);
 
   check( "shortcutDefault FullScreen", KStdAccel::shortcutDefault( KStdAccel::FullScreen ).toString(), "Ctrl+Shift+F" );
   check( "shortcutDefault BeginningOfLine", KStdAccel::shortcutDefault( KStdAccel::BeginningOfLine ).toString(), "Home" );

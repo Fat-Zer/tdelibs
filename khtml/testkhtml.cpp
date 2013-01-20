@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
             "a basic web browser using the KHTML library", "1.0");
     TDECmdLineArgs::addCmdLineOptions(options);
 
-    KApplication a;
+    TDEApplication a;
     TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs( );
     if ( args->count() == 0 ) {
 	TDECmdLineArgs::usage();

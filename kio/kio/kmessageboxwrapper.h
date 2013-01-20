@@ -34,7 +34,7 @@ public:
                     const TQString &text, 
                     const TQString &caption = TQString::null)
     {
-	if (KApplication::guiEnabled()) {
+	if (TDEApplication::guiEnabled()) {
      	  kapp->enableStyles();
       	  KMessageBox::error( parent, text, caption );
 	} else 
@@ -45,7 +45,7 @@ public:
                     const TQString &text,
                     const TQString &caption = TQString::null)
     {
-      if (KApplication::guiEnabled()) {
+      if (TDEApplication::guiEnabled()) {
 	 kapp->enableStyles();
          KMessageBox::sorry( parent, text, caption );
       } else

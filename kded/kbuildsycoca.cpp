@@ -736,11 +736,11 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
      setenv("TDEROOTHOME", "-", 1);
    }
 
-   KApplication::disableAutoDcopRegistration();
+   TDEApplication::disableAutoDcopRegistration();
 #ifdef KBUILDSYCOCA_GUI
-   KApplication k;
+   TDEApplication k;
 #else
-   KApplication k(false, false);
+   TDEApplication k(false, false);
 #endif
    k.disableSessionManagement();
 

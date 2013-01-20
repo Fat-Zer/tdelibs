@@ -129,9 +129,9 @@ KStartupInfo::KStartupInfo( bool clean_on_cantdetect_P, TQObject* parent_P, cons
 void KStartupInfo::init( int flags_P )
     {
     // d == NULL means "disabled"
-    if( !KApplication::kApplication())
+    if( !TDEApplication::kApplication())
         return;
-    if( !KApplication::kApplication()->getDisplay())
+    if( !TDEApplication::kApplication()->getDisplay())
         return;
 
     d = new KStartupInfoPrivate( flags_P );
@@ -171,7 +171,7 @@ void KStartupInfo::got_message( const TQString& msg_P )
 // if the application stops responding for a while, KWinModule may get
 // the information about the already mapped window before KXMessages
 // actually gets the info about the started application (depends
-// on their order in X11 event filter in KApplication)
+// on their order in X11 event filter in TDEApplication)
 // simply delay info from KWinModule a bit
 // SELI???
 namespace
@@ -494,7 +494,7 @@ bool KStartupInfo::sendFinishX( Display* disp_P, const KStartupInfoId& id_P,
 
 void KStartupInfo::appStarted()
     {
-    if( kapp != NULL )  // KApplication constructor unsets the env. variable
+    if( kapp != NULL )  // TDEApplication constructor unsets the env. variable
         appStarted( kapp->startupId());
     else
         appStarted( KStartupInfo::currentStartupIdEnv().id());

@@ -42,10 +42,10 @@ class KUniqueApplicationPrivate;
  * option (see TDECmdLineArgs::addTempFileOption()), to delete tempfiles after use.
  * Add X-TDE-HasTempFileOption=true to the .desktop file to indicate this.
  *
- * @see KApplication DCOPObject
+ * @see TDEApplication DCOPObject
  * @author Preston Brown <pbrown@kde.org>
  */
-class TDECORE_EXPORT KUniqueApplication : public KApplication, public DCOPObject
+class TDECORE_EXPORT KUniqueApplication : public TDEApplication, public DCOPObject
 {
   Q_OBJECT
 public:
@@ -56,7 +56,7 @@ public:
    * styles. This is only useful to applications that do not display a GUI
    * normally. If you do create an application with @p allowStyles set to false
    * it normally runs in the background but under special circumstances
-   * displays widgets.  Call KApplication::enableStyles() before 
+   * displays widgets.  Call TDEApplication::enableStyles() before 
    * displaying any widgets.
    * @param GUIenabled Set to false to disable all GUI stuff. This implies
    * no styles either.
@@ -82,7 +82,7 @@ public:
    * styles. This is only useful to applications that do not display a GUI
    * normally. If you do create an application with @p allowStyles set to false
    * it normally runs in the background but under special circumstances
-   * displays widgets.  Call KApplication::enableStyles() before 
+   * displays widgets.  Call TDEApplication::enableStyles() before 
    * displaying any widgets.
    * @param configUnique If true, the uniqueness of the application will
    *                 depend on the value of the "MultipleInstances"

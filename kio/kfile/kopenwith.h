@@ -26,7 +26,7 @@
 #include <krun.h>
 #include <kservice.h>
 
-class KApplicationTree;
+class TDEApplicationTree;
 class KURLRequester;
 
 class TQWidget;
@@ -161,7 +161,7 @@ protected:
     KURLRequester * edit;
     TQString m_command;
 
-    KApplicationTree* m_pTree;
+    TDEApplicationTree* m_pTree;
     TQLabel *label;
 
     TQString qName, qServiceType;

@@ -217,7 +217,7 @@ void KComboBoxTest::quitApp()
 
 int main ( int argc, char **argv)
 {
-  KApplication a(argc, argv, "kcomboboxtest");
+  TDEApplication a(argc, argv, "kcomboboxtest");
   KComboBoxTest* t= new KComboBoxTest;
   a.setMainWidget (t);
   t->show ();

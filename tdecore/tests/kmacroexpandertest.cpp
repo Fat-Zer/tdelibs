@@ -52,7 +52,7 @@ protected:
 int main(int argc, char *argv[])
 {
   TDECmdLineArgs::init(argc, argv, ":", "", "", "");
-  KApplication app(false,false);
+  TDEApplication app(false,false);
   TQString s, s2;
 
   TQMap<TQChar,TQStringList> map1;

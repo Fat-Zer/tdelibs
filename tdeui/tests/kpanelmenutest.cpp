@@ -57,7 +57,7 @@ void TestWidget::slotSubMenuCalled(int id)
 
 int main(int argc, char **argv)
 {
-    KApplication *app = new KApplication(argc, argv, "menutest");
+    TDEApplication *app = new TDEApplication(argc, argv, "menutest");
     
     TestWidget w;
     app->setMainWidget(&w);

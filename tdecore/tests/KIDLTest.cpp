@@ -18,7 +18,7 @@ TQString KIDLTest::hello( const TQString& name )
 
 int main( int argc, char** argv )
 {
-    KApplication app( argc, argv, "kidlservertest", false /* No GUI */ );
+    TDEApplication app( argc, argv, "kidlservertest", false /* No GUI */ );
 
     app.dcopClient()->attach();
     app.dcopClient()->registerAs( "kidlservertest" );

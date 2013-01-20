@@ -60,7 +60,7 @@ int main(int argc, char **argv) {
 	KGlobal::locale()->setMainCatalogue("tdelibs");
 	TDECmdLineArgs::init(argc, argv, &aboutData);
 	TDECmdLineArgs::addCmdLineOptions(options);
-	KApplication app;
+	TDEApplication app;
 	
 	TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 	TQString msg;

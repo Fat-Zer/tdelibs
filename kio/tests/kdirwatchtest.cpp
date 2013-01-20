@@ -28,9 +28,9 @@ int main (int argc, char **argv)
   TDECmdLineArgs::init(argc, argv, "KDirWatchTest",
 		     "Test for KDirWatch", "1.0");
   TDECmdLineArgs::addCmdLineOptions( options );
-  KApplication::addCmdLineOptions();
+  TDEApplication::addCmdLineOptions();
 
-  KApplication a;
+  TDEApplication a;
   TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
   myTest testObject;

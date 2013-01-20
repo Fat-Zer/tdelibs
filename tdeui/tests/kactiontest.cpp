@@ -8,7 +8,7 @@
 
 int main( int argc, char **argv )
 {
-    KApplication app( argc, argv, "kactiontest" );
+    TDEApplication app( argc, argv, "kactiontest" );
 
     KActionCollection coll( static_cast<TQObject *>( 0 ) );
 

@@ -48,9 +48,9 @@ class KSessionManaged;
 class KStyle;
 class KURL;
 
-#define kapp KApplication::kApplication()
+#define kapp TDEApplication::kApplication()
 
-class KApplicationPrivate;
+class TDEApplicationPrivate;
 
 /**
 * Controls and provides information to all KDE applications.
@@ -68,10 +68,10 @@ class KApplicationPrivate;
 * @li Installs a signal handler for the SIGCHLD signal in order to
 * avoid zombie children. If you want to catch this signal yourself or
 * don't want it to be caught at all, you have set a new signal handler
-* (or SIG_IGN) after KApplication's constructor has run.
+* (or SIG_IGN) after TDEApplication's constructor has run.
 * @li Installs an empty signal handler for the SIGPIPE signal using
 * installSigpipeHandler(). If you want to catch this signal
-* yourself, you have set a new signal handler after KApplication's
+* yourself, you have set a new signal handler after TDEApplication's
 * constructor has run.
 * @li It can start new services
 *
@@ -93,7 +93,7 @@ class KApplicationPrivate;
 * @short Controls and provides information to all KDE applications.
 * @author Matthias Kalle Dalheimer <kalle@kde.org>
 */
-class TDECORE_EXPORT KApplication : public TQApplication, public KInstance
+class TDECORE_EXPORT TDEApplication : public TQApplication, public KInstance
 {
 
   Q_OBJECT
@@ -115,9 +115,9 @@ public:
    *
    * If ARGB (transparent) widgets are to be used in your application,
    * please use
-   * KApplication app(KApplication::openX11RGBADisplay());
+   * TDEApplication app(TDEApplication::openX11RGBADisplay());
    * or
-   * KApplication app(KApplication::openX11RGBADisplay(), useStyles);
+   * TDEApplication app(TDEApplication::openX11RGBADisplay(), useStyles);
    *
    * @param allowStyles Set to false to disable the loading on plugin based
    * styles. This is only useful to applications that do not display a GUI
@@ -128,7 +128,7 @@ public:
    * @param GUIenabled Set to false to disable all GUI stuff. This implies
    * no styles either.
    */
-  KApplication( bool allowStyles=true, bool GUIenabled=true);
+  TDEApplication( bool allowStyles=true, bool GUIenabled=true);
 
 #ifdef Q_WS_X11
   /**
@@ -148,7 +148,7 @@ public:
    * 
    * @see RGBADisplay()
    */
-  KApplication(Display *display, bool allowStyles);
+  TDEApplication(Display *display, bool allowStyles);
 
   /**
    * Constructor. Parses command-line arguments. Use this constructor when you
@@ -177,7 +177,7 @@ public:
    * 
    * @see RGBADisplay()
    */
-  KApplication(Display *display, bool disable_argb, Qt::HANDLE visual, Qt::HANDLE colormap, bool allowStyles);
+  TDEApplication(Display *display, bool disable_argb, Qt::HANDLE visual, Qt::HANDLE colormap, bool allowStyles);
 
   /**
    * Constructor. Parses command-line arguments. Use this constructor when you
@@ -202,11 +202,11 @@ public:
    *
    * @since KDE 3.3
    */
-  KApplication(Display *display, Qt::HANDLE visual = 0, Qt::HANDLE colormap = 0,
+  TDEApplication(Display *display, Qt::HANDLE visual = 0, Qt::HANDLE colormap = 0,
                bool allowStyles=true);
 
   /**
-   * Constructor. Parses command-line arguments. Use this constructor to use KApplication
+   * Constructor. Parses command-line arguments. Use this constructor to use TDEApplication
    * in a Motif or Xt program.
    *
    * @param display Will be passed to Qt as the X display. The display must be valid and already
@@ -229,7 +229,7 @@ public:
    * @param GUIenabled Set to false to disable all GUI stuff. This implies
    * no styles either.
    */
-  KApplication(Display *display, int& argc, char** argv, const TQCString& rAppName,
+  TDEApplication(Display *display, int& argc, char** argv, const TQCString& rAppName,
                bool allowStyles=true, bool GUIenabled=true);
 #endif
 
@@ -257,7 +257,7 @@ public:
    */
   // REMOVE FOR KDE 4.0 - using it only gives crashing applications because
   // TDECmdLineArgs::init isn't called
- KApplication(int& argc, char** argv,
+ TDEApplication(int& argc, char** argv,
               const TQCString& rAppName, bool allowStyles=true, bool GUIenabled=true) KDE_DEPRECATED;
 
   /**
@@ -265,19 +265,19 @@ public:
     */
   static void addCmdLineOptions();
 
-  virtual ~KApplication();
+  virtual ~TDEApplication();
 
   /**
    * Returns the current application object.
    *
    * This is similar to the global TQApplication pointer tqApp. It
-   * allows access to the single global KApplication object, since
+   * allows access to the single global TDEApplication object, since
    * more than one cannot be created in the same application. It
    * saves you the trouble of having to pass the pointer explicitly
    * to every function that may require it.
    * @return the current application object
    */
-  static KApplication* kApplication() { return KApp; }
+  static TDEApplication* kApplication() { return KApp; }
 
   /**
    * Returns the application session config object.
@@ -450,7 +450,7 @@ public:
 
   /**
    * Disable automatic dcop registration
-   * Must be called before creating a KApplication instance to have an effect.
+   * Must be called before creating a TDEApplication instance to have an effect.
    */
   static void disableAutoDcopRegistration();
 
@@ -951,10 +951,10 @@ public:
   /**
    * @internal
    * Opens the display
-   * This can be used to initialize a KApplication with RGBA support like this:
-   * KApplication app(KApplication::openX11RGBADisplay());
+   * This can be used to initialize a TDEApplication with RGBA support like this:
+   * TDEApplication app(TDEApplication::openX11RGBADisplay());
    * or
-   * KApplication app(KApplication::openX11RGBADisplay(), useStyles);
+   * TDEApplication app(TDEApplication::openX11RGBADisplay(), useStyles);
    */
    static Display* openX11RGBADisplay();
 
@@ -978,7 +978,7 @@ public:
    * You must first call getX11RGBAInformation()
    * 
    * Note that getX11RGBAInformation() has already
-   * been called if you used the default KApplication
+   * been called if you used the default TDEApplication
    * constructor.
    *
    * Additionally, at least one application must have called
@@ -994,7 +994,7 @@ public:
    * Enables style plugins.
    *
    * This is useful only to applications that normally
-   * do not display a GUI and create the KApplication with
+   * do not display a GUI and create the TDEApplication with
    * allowStyles set to false.
    */
   void enableStyles();
@@ -1215,7 +1215,7 @@ public:
 
 public slots:
   /**
-   * Tells KApplication about one more operation that should be finished
+   * Tells TDEApplication about one more operation that should be finished
    * before the application exits. The standard behavior is to exit on the
    * "last window closed" event, but some events should outlive the last window closed
    * (e.g. a file copy for a file manager, or 'compacting folders on exit' for a mail client).
@@ -1223,7 +1223,7 @@ public slots:
   void ref();
 
   /**
-   * Tells KApplication that one operation such as those described in ref() just finished.
+   * Tells TDEApplication that one operation such as those described in ref() just finished.
    * The application exits if the counter is back to 0.
    */
   void deref();
@@ -1232,13 +1232,13 @@ protected:
   /**
    * @internal Used by KUniqueApplication
    */
-  KApplication( bool allowStyles, bool GUIenabled, KInstance* _instance );
+  TDEApplication( bool allowStyles, bool GUIenabled, KInstance* _instance );
 
 #ifdef Q_WS_X11
   /**
    * @internal Used by KUniqueApplication
    */
-  KApplication( Display *display, Qt::HANDLE visual, Qt::HANDLE colormap,
+  TDEApplication( Display *display, Qt::HANDLE visual, Qt::HANDLE colormap,
 		  bool allowStyles, KInstance* _instance );
 
   /**
@@ -1252,7 +1252,7 @@ protected:
   int kipcEventMask;
 
   /// Current application object.
-  static KApplication *KApp;
+  static TDEApplication *KApp;
   int pArgc;
 
   /**
@@ -1261,8 +1261,8 @@ protected:
    *
    * @param slot is the slot as returned using the TQT_SLOT() macro, for example TQT_SLOT( cut() )
    *
-   * This method can be used in KApplication subclasses to implement application wide
-   * edit actions not supported by the KApplication class.  For example (in your subclass):
+   * This method can be used in TDEApplication subclasses to implement application wide
+   * edit actions not supported by the TDEApplication class.  For example (in your subclass):
    *
    * \code
    * void MyApplication::deselect()
@@ -1386,7 +1386,7 @@ public:
    * Installs a handler for the SIGPIPE signal. It is thrown when you write to
    * a pipe or socket that has been closed.
    * The handler is installed automatically in the constructor, but you may
-   * need it if your application or component does not have a KApplication
+   * need it if your application or component does not have a TDEApplication
    * instance.
    */
   static void installSigpipeHandler();
@@ -1401,7 +1401,7 @@ public:
 
 signals:
   /**
-   * Emitted when KApplication has changed its palette due to a KControl request.
+   * Emitted when TDEApplication has changed its palette due to a KControl request.
    *
    * Normally, widgets will update their palette automatically, but you
    * should connect to this to program special behavior.
@@ -1409,7 +1409,7 @@ signals:
   void kdisplayPaletteChanged();
 
   /**
-   * Emitted when KApplication has changed its GUI style in response to a KControl request.
+   * Emitted when TDEApplication has changed its GUI style in response to a KControl request.
    *
    * Normally, widgets will update their styles automatically (as they would
    * respond to an explicit setGUIStyle() call), but you should connect to
@@ -1418,7 +1418,7 @@ signals:
   void kdisplayStyleChanged();
 
   /**
-   * Emitted when KApplication has changed its font in response to a KControl request.
+   * Emitted when TDEApplication has changed its font in response to a KControl request.
    *
    * Normally widgets will update their fonts automatically, but you should
    * connect to this to monitor global font changes, especially if you are
@@ -1431,7 +1431,7 @@ signals:
   void kdisplayFontChanged();
 
   /**
-   * Emitted when KApplication has changed either its GUI style, its font or its palette
+   * Emitted when TDEApplication has changed either its GUI style, its font or its palette
    * in response to a kdisplay request. Normally, widgets will update their styles
    * automatically, but you should connect to this to program special
    * behavior. */
@@ -1451,7 +1451,7 @@ signals:
 
   /**
    * Emitted when the global settings have been changed - see KGlobalSettings
-   * KApplication takes care of calling reparseConfiguration on KGlobal::config()
+   * TDEApplication takes care of calling reparseConfiguration on KGlobal::config()
    * so that applications/classes using this only have to re-read the configuration
    * @param category the category among the enum above
    */
@@ -1536,12 +1536,12 @@ private:
 
   int captionLayout;
 
-  KApplication(const KApplication&);
-  KApplication& operator=(const KApplication&);
+  TDEApplication(const TDEApplication&);
+  TDEApplication& operator=(const TDEApplication&);
 protected:
   virtual void virtual_hook( int id, void* data );
 private:
-  KApplicationPrivate* d;
+  TDEApplicationPrivate* d;
 };
 
 
@@ -1572,7 +1572,7 @@ class KSessionManagedPrivate;
 
    KSessionManaged makes it possible to provide implementations for
  TQApplication::commitData() and TQApplication::saveState(), without
-   subclassing KApplication. KMainWindow internally makes use of this.
+   subclassing TDEApplication. KMainWindow internally makes use of this.
 
    You don't need to do anything with this class when using
    KMainWindow. Instead, use KMainWindow::saveProperties(),
@@ -1591,7 +1591,7 @@ public:
     /**
        See TQApplication::saveState() for documentation.
 
-       This function is just a convenience version to avoid subclassing KApplication.
+       This function is just a convenience version to avoid subclassing TDEApplication.
 
        Return true to indicate a successful state save or false to
        indicate a problem and to halt the shutdown process (will
@@ -1601,7 +1601,7 @@ public:
     /**
        See TQApplication::commitData() for documentation.
 
-       This function is just a convenience version to avoid subclassing KApplication.
+       This function is just a convenience version to avoid subclassing TDEApplication.
 
        Return true to indicate a successful commit of data or false to
        indicate a problem and to halt the shutdown process (will

@@ -30,7 +30,7 @@ public:
 
 int main(int argc, char **argv)
 {
-    KApplication app(argc, argv, "kpopupmenutest");
+    TDEApplication app(argc, argv, "kpopupmenutest");
     DemoWidget w;
     app.setMainWidget(&w);
     w.setFont(TQFont("helvetica", 12, TQFont::Bold), true);
