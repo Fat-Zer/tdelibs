@@ -647,8 +647,8 @@ KApplication::KApplication( int& argc, char** argv, const TQCString& rAppName,
 }
 
 KApplication::KApplication( bool allowStyles, bool GUIenabled ) :
-//  TQApplication( *KCmdLineArgs::qt_argc(), *KCmdLineArgs::qt_argv(), TRUE ),	// Qt4 requires that there always be a GUI
-  TQApplication( *KCmdLineArgs::qt_argc(), *KCmdLineArgs::qt_argv(), GUIenabled ),	// We need to be able to run command line apps
+//  TQApplication( *KCmdLineArgs::tqt_argc(), *KCmdLineArgs::tqt_argv(), TRUE ),	// Qt4 requires that there always be a GUI
+  TQApplication( *KCmdLineArgs::tqt_argc(), *KCmdLineArgs::tqt_argv(), GUIenabled ),	// We need to be able to run command line apps
   KInstance( KCmdLineArgs::about),
 #ifdef Q_WS_X11
   display(0L),
@@ -672,7 +672,7 @@ KApplication::KApplication( bool allowStyles, bool GUIenabled ) :
 
 #ifdef Q_WS_X11
 KApplication::KApplication( Display *dpy, bool allowStyles ) :
-  TQApplication( dpy, *KCmdLineArgs::qt_argc(), *KCmdLineArgs::qt_argv(),
+  TQApplication( dpy, *KCmdLineArgs::tqt_argc(), *KCmdLineArgs::tqt_argv(),
                 getX11RGBAVisual(dpy), getX11RGBAColormap(dpy) ),
   KInstance( KCmdLineArgs::about), display(0L), d (new KApplicationPrivate)
 {
@@ -688,7 +688,7 @@ KApplication::KApplication( Display *dpy, bool allowStyles ) :
 }
 
 KApplication::KApplication( Display *dpy, bool disable_argb, Qt::HANDLE visual, Qt::HANDLE colormap, bool allowStyles ) :
-  TQApplication( dpy, *KCmdLineArgs::qt_argc(), *KCmdLineArgs::qt_argv(),
+  TQApplication( dpy, *KCmdLineArgs::tqt_argc(), *KCmdLineArgs::tqt_argv(),
                 disable_argb?visual:getX11RGBAVisual(dpy), disable_argb?colormap:getX11RGBAColormap(dpy) ),
   KInstance( KCmdLineArgs::about), display(0L), d (new KApplicationPrivate)
 {
@@ -706,7 +706,7 @@ KApplication::KApplication( Display *dpy, bool disable_argb, Qt::HANDLE visual, 
 
 KApplication::KApplication( Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap,
 		            bool allowStyles ) :
-  TQApplication( dpy, *KCmdLineArgs::qt_argc(), *KCmdLineArgs::qt_argv(),
+  TQApplication( dpy, *KCmdLineArgs::tqt_argc(), *KCmdLineArgs::tqt_argv(),
                 visual?visual:getX11RGBAVisual(dpy), colormap?colormap:getX11RGBAColormap(dpy) ),
   KInstance( KCmdLineArgs::about), display(0L), d (new KApplicationPrivate)
 {
@@ -725,7 +725,7 @@ KApplication::KApplication( Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap
 
 KApplication::KApplication( Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap,
 		            bool allowStyles, KInstance * _instance ) :
-  TQApplication( dpy, *KCmdLineArgs::qt_argc(), *KCmdLineArgs::qt_argv(),
+  TQApplication( dpy, *KCmdLineArgs::tqt_argc(), *KCmdLineArgs::tqt_argv(),
                 visual?visual:getX11RGBAVisual(dpy), colormap?colormap:getX11RGBAColormap(dpy) ),
   KInstance( _instance ), display(0L), d (new KApplicationPrivate)
 {
@@ -744,7 +744,7 @@ KApplication::KApplication( Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap
 #endif
 
 KApplication::KApplication( bool allowStyles, bool GUIenabled, KInstance* _instance ) :
-  TQApplication( *KCmdLineArgs::qt_argc(), *KCmdLineArgs::qt_argv(),
+  TQApplication( *KCmdLineArgs::tqt_argc(), *KCmdLineArgs::tqt_argv(),
                 GUIenabled ),
   KInstance( _instance ),
 #ifdef Q_WS_X11

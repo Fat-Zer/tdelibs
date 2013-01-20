@@ -80,7 +80,7 @@ are interested in and verify that we have found the correct source line:
 216     }
 217
 218     KApplication::KApplication( bool allowStyles, bool GUIenabled ) :
-219       QApplication( *KCmdLineArgs::qt_argc(), *KCmdLineArgs::qt_argv(),
+219       QApplication( *KCmdLineArgs::tqt_argc(), *KCmdLineArgs::tqt_argv(),
 220                     GUIenabled ),
 221       KInstance( KCmdLineArgs::about),
 222       d (new KApplicationPrivate)

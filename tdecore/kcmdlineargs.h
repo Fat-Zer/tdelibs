@@ -586,7 +586,7 @@ private:
    *
    * Return argc
    */
-  static int *qt_argc();
+  static int *tqt_argc();
 
   /**
    * @internal for KApplication only:
@@ -594,7 +594,7 @@ private:
    * Return argv
    */
 
-  static char ***qt_argv();
+  static char ***tqt_argv();
 
   /**
    * @internal
