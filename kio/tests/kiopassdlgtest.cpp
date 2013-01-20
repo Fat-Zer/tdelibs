@@ -9,7 +9,7 @@
 int main ( int argc, char** argv )
 {
     KAboutData aboutData("kiopassdlgtest", "KIO Password Dialog Test", "1.0");
-    KCmdLineArgs::init(argc, argv, &aboutData);
+    TDECmdLineArgs::init(argc, argv, &aboutData);
     KApplication app;
 
     TQString usr, pass, comment, label;

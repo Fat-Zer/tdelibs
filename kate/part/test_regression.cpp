@@ -410,11 +410,11 @@ int main(int argc, char *argv[])
 
 //     signal( SIGALRM, signal_handler );
 
-    KCmdLineArgs::init(argc, argv, "testregression", "TestRegression",
+    TDECmdLineArgs::init(argc, argv, "testregression", "TestRegression",
                        "Regression tester for kate", "1.0");
-    KCmdLineArgs::addCmdLineOptions(options);
+    TDECmdLineArgs::addCmdLineOptions(options);
 
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs( );
+    TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs( );
 
     TQCString baseDir = args->getOption("base");
     TQCString baseDirConfigFile(::getenv("HOME") + TQCString(BASE_DIR_CONFIG));
@@ -440,7 +440,7 @@ int main(int argc, char *argv[])
                "\techo \"<root-path>\" > %s\n"
                "You may override the location by specifying the root explicitly on the\n"
                "command line with option -b\n"
-               "", KCmdLineArgs::appName(),
+               "", TDECmdLineArgs::appName(),
                (const char *)baseDirConfigFile,
                (const char *)baseDirConfigFile);
 	::exit( 1 );

@@ -44,7 +44,7 @@ void WalletReceiver::walletOpened( bool got )
 int main( int argc, char *argv[] )
 {
 	KAboutData aboutData( "kwalletasync", "kwalletasync", "version" );
-	KCmdLineArgs::init( argc, argv, &aboutData );
+	TDECmdLineArgs::init( argc, argv, &aboutData );
 	KApplication app( "kwalletasync" );
 
 	// register with DCOP

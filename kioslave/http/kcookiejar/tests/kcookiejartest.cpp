@@ -250,15 +250,15 @@ int main(int argc, char *argv[])
    nextYear = new TQCString(TQString(" expires=Fri, 04-May-%1 01:00:00 GMT").arg(TQDate::currentDate().year()+1).utf8());
 
    KAboutData about("kcookietest", "kcookietest", "1.0", description, KAboutData::License_GPL, "(C) 2004 Waldo Bastian");
-   KCmdLineArgs::init( argc, argv, &about);
+   TDECmdLineArgs::init( argc, argv, &about);
 
-   KCmdLineArgs::addCmdLineOptions( options );
+   TDECmdLineArgs::addCmdLineOptions( options );
 
    KInstance a("kcookietest");
    
-   KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+   TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
    if (args->count() != 1)
-      KCmdLineArgs::usage();
+      TDECmdLineArgs::usage();
 
    jar = new KCookieJar;
 

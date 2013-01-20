@@ -123,7 +123,7 @@ void KFindTest::slotHighlight(int id, int index, int matchedLength)
 
 int main(int argc, char **argv)
 {
-	KCmdLineArgs::init(argc, argv, "kfindtest", "KFindTest", 0, 0, false);
+	TDECmdLineArgs::init(argc, argv, "kfindtest", "KFindTest", 0, 0, false);
 	KApplication app;
 
 	TQString text = "This file is part of the KDE project.\n"

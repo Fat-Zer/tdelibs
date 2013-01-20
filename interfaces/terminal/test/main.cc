@@ -34,7 +34,7 @@ Win::Win()
 int main( int argc, char** argv )
 {
     KAboutData* about = new KAboutData( "tetest", "TETest", "0.1" );
-    KCmdLineArgs::init( argc, argv, about );
+    TDECmdLineArgs::init( argc, argv, about );
     KApplication a;
     Win* win = new Win();
     win->show();

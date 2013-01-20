@@ -58,11 +58,11 @@ KAboutData aboutData("artsmessage", I18N_NOOP("artsmessage"), "0.1",
 int main(int argc, char **argv) {
 	aboutData.addAuthor("Jeff Tranter", 0, "tranter@kde.org");
 	KGlobal::locale()->setMainCatalogue("tdelibs");
-	KCmdLineArgs::init(argc, argv, &aboutData);
-	KCmdLineArgs::addCmdLineOptions(options);
+	TDECmdLineArgs::init(argc, argv, &aboutData);
+	TDECmdLineArgs::addCmdLineOptions(options);
 	KApplication app;
 	
-	KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+	TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 	TQString msg;
 
 	// must be at least one argument

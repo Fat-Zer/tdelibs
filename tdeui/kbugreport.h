@@ -35,7 +35,7 @@ class KBugReportPrivate;
  * (program name, version, bug-report address, etc.)
  * comes from the KAboutData class.
  * Make sure you create an instance of KAboutData and pass it
- * to KCmdLineArgs.
+ * to TDECmdLineArgs.
  *
  * @author David Faure <faure@kde.org>
  */

@@ -118,8 +118,8 @@ int main(int argc, char **argv)
                 KAboutData::License_GPL, "(c) 2003 Waldo Bastian");
    d.addAuthor("Waldo Bastian", I18N_NOOP("Author"), "bastian@kde.org");
 
-   KCmdLineArgs::init(argc, argv, &d);
-   KCmdLineArgs::addCmdLineOptions(options);
+   TDECmdLineArgs::init(argc, argv, &d);
+   TDECmdLineArgs::addCmdLineOptions(options);
 
 //   KApplication k(false, false);
    KApplication k(false);
@@ -128,9 +128,9 @@ int main(int argc, char **argv)
    // this program is in tdelibs so it uses tdelibs as catalog
    KLocale::setMainCatalogue("tdelibs");
 
-   KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+   TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
    if (args->count() != 1)
-      KCmdLineArgs::usage(i18n("You must specify an application-id such as 'tde-konsole.desktop'"));
+      TDECmdLineArgs::usage(i18n("You must specify an application-id such as 'tde-konsole.desktop'"));
 
    utf8 = args->isSet("utf8");
 
@@ -139,7 +139,7 @@ int main(int argc, char **argv)
    bHighlight = args->isSet("highlight");
 
    if (!bPrintMenuId && !bPrintMenuName && !bHighlight)
-      KCmdLineArgs::usage(i18n("You must specify at least one of --print-menu-id, --print-menu-name or --highlight"));
+      TDECmdLineArgs::usage(i18n("You must specify at least one of --print-menu-id, --print-menu-name or --highlight"));
 
    if (args->isSet("cache-update"))
    {

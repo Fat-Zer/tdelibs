@@ -12,7 +12,7 @@ int main( int argc,char **argv )
 {
   KAboutData aboutData( "testaddresslineedit",
                         I18N_NOOP( "Test Address LineEdit" ), "0.1" );
-  KCmdLineArgs::init( argc, argv, &aboutData );
+  TDECmdLineArgs::init( argc, argv, &aboutData );
 
   KApplication app;
 

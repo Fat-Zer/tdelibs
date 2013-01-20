@@ -54,7 +54,7 @@
 #endif
 
 template class TQAsciiDict<TQCString>;
-template class TQPtrList<KCmdLineArgs>;
+template class TQPtrList<TDECmdLineArgs>;
 
 class KCmdLineParsedOptions : public TQAsciiDict<TQCString>
 {
@@ -104,27 +104,27 @@ public:
 };
 
 
-class KCmdLineArgsList: public TQPtrList<KCmdLineArgs>
+class TDECmdLineArgsList: public TQPtrList<TDECmdLineArgs>
 {
 public:
-   KCmdLineArgsList() { }
+   TDECmdLineArgsList() { }
 };
 
-KCmdLineArgsList *KCmdLineArgs::argsList = 0;
-int KCmdLineArgs::argc = 0;
-char **KCmdLineArgs::argv = 0;
-char *KCmdLineArgs::mCwd = 0;
+TDECmdLineArgsList *TDECmdLineArgs::argsList = 0;
+int TDECmdLineArgs::argc = 0;
+char **TDECmdLineArgs::argv = 0;
+char *TDECmdLineArgs::mCwd = 0;
 static KStaticDeleter <char> mCwdd;
-const KAboutData *KCmdLineArgs::about = 0;
-bool KCmdLineArgs::parsed = false;
-bool KCmdLineArgs::ignoreUnknown = false;
+const KAboutData *TDECmdLineArgs::about = 0;
+bool TDECmdLineArgs::parsed = false;
+bool TDECmdLineArgs::ignoreUnknown = false;
 
 //
 // Static functions
 //
 
 void
-KCmdLineArgs::init(int _argc, char **_argv, const char *_appname, const char* programName,
+TDECmdLineArgs::init(int _argc, char **_argv, const char *_appname, const char* programName,
                    const char *_description, const char *_version, bool noKApp)
 {
    init(_argc, _argv,
@@ -133,7 +133,7 @@ KCmdLineArgs::init(int _argc, char **_argv, const char *_appname, const char* pr
 }
 
 void
-KCmdLineArgs::init(int _argc, char **_argv, const char *_appname,
+TDECmdLineArgs::init(int _argc, char **_argv, const char *_appname,
                    const char *_description, const char *_version, bool noKApp)
 {
    init(_argc, _argv,
@@ -142,7 +142,7 @@ KCmdLineArgs::init(int _argc, char **_argv, const char *_appname,
 }
 
 void
-KCmdLineArgs::initIgnore(int _argc, char **_argv, const char *_appname )
+TDECmdLineArgs::initIgnore(int _argc, char **_argv, const char *_appname )
 {
    init(_argc, _argv,
         new KAboutData(_appname, _appname, "unknown", "TDE Application", false));
@@ -150,7 +150,7 @@ KCmdLineArgs::initIgnore(int _argc, char **_argv, const char *_appname )
 }
 
 void
-KCmdLineArgs::init(const KAboutData* ab)
+TDECmdLineArgs::init(const KAboutData* ab)
 {
    char **_argv = (char **) malloc(sizeof(char *));
    _argv[0] = (char *) ab->appName();
@@ -159,14 +159,14 @@ KCmdLineArgs::init(const KAboutData* ab)
 
 
 void
-KCmdLineArgs::init(int _argc, char **_argv, const KAboutData *_about, bool noKApp)
+TDECmdLineArgs::init(int _argc, char **_argv, const KAboutData *_about, bool noKApp)
 {
    argc = _argc;
    argv = _argv;
 
    if (!argv)
    {
-      fprintf(stderr, "\n\nFAILURE (KCmdLineArgs):\n");
+      fprintf(stderr, "\n\nFAILURE (TDECmdLineArgs):\n");
       fprintf(stderr, "Passing null-pointer to 'argv' is not allowed.\n\n");
 
       assert( 0 );
@@ -191,30 +191,30 @@ KCmdLineArgs::init(int _argc, char **_argv, const KAboutData *_about, bool noKAp
       KApplication::addCmdLineOptions();
 }
 
-TQString KCmdLineArgs::cwd()
+TQString TDECmdLineArgs::cwd()
 {
    return TQFile::decodeName(TQCString(mCwd));
 }
 
-const char * KCmdLineArgs::appName()
+const char * TDECmdLineArgs::appName()
 {
    if (!argc) return 0;
    return argv[0];
 }
 
 void
-KCmdLineArgs::addCmdLineOptions( const KCmdLineOptions *options, const char *name,
+TDECmdLineArgs::addCmdLineOptions( const KCmdLineOptions *options, const char *name,
          const char *id, const char *afterId)
 {
    if (!argsList)
-      argsList = new KCmdLineArgsList();
+      argsList = new TDECmdLineArgsList();
 
    int pos = argsList->count();
 
    if (pos && id && argsList->last() && !argsList->last()->name)
       pos--;
 
-   KCmdLineArgs *args;
+   TDECmdLineArgs *args;
    int i = 0;
    for(args = argsList->first(); args; args = argsList->next(), i++)
    {
@@ -230,12 +230,12 @@ KCmdLineArgs::addCmdLineOptions( const KCmdLineOptions *options, const char *nam
 
    assert( parsed == false ); // You must add _ALL_ cmd line options
                               // before accessing the arguments!
-   args = new KCmdLineArgs(options, name, id);
+   args = new TDECmdLineArgs(options, name, id);
    argsList->insert(pos, args);
 }
 
 void
-KCmdLineArgs::saveAppArgs( TQDataStream &ds)
+TDECmdLineArgs::saveAppArgs( TQDataStream &ds)
 {
    if (!parsed)
       parseAllArgs();
@@ -252,7 +252,7 @@ KCmdLineArgs::saveAppArgs( TQDataStream &ds)
 
    if (!count) return;
 
-   KCmdLineArgs *args;
+   TDECmdLineArgs *args;
    for(args = argsList->first(); args; args = argsList->next())
    {
       ds << TQCString(args->id);
@@ -261,7 +261,7 @@ KCmdLineArgs::saveAppArgs( TQDataStream &ds)
 }
 
 void
-KCmdLineArgs::loadAppArgs( TQDataStream &ds)
+TDECmdLineArgs::loadAppArgs( TQDataStream &ds)
 {
    parsed = true; // don't reparse argc/argv!
 
@@ -269,7 +269,7 @@ KCmdLineArgs::loadAppArgs( TQDataStream &ds)
    removeArgs("qt");
    removeArgs("tde");
 
-   KCmdLineArgs *args;
+   TDECmdLineArgs *args;
    if ( argsList ) {
       for(args = argsList->first(); args; args = argsList->next())
       {
@@ -307,9 +307,9 @@ KCmdLineArgs::loadAppArgs( TQDataStream &ds)
    parsed = true;
 }
 
-KCmdLineArgs *KCmdLineArgs::parsedArgs(const char *id)
+TDECmdLineArgs *TDECmdLineArgs::parsedArgs(const char *id)
 {
-   KCmdLineArgs *args = argsList ? argsList->first() : 0;
+   TDECmdLineArgs *args = argsList ? argsList->first() : 0;
    while(args)
    {
       if ((id && ::qstrcmp(args->id, id) == 0) || (!id && !args->id))
@@ -324,9 +324,9 @@ KCmdLineArgs *KCmdLineArgs::parsedArgs(const char *id)
    return args;
 }
 
-void KCmdLineArgs::removeArgs(const char *id)
+void TDECmdLineArgs::removeArgs(const char *id)
 {
-   KCmdLineArgs *args = argsList ? argsList->first() : 0;
+   TDECmdLineArgs *args = argsList ? argsList->first() : 0;
    while(args)
    {
       if (args->id && id && ::qstrcmp(args->id, id) == 0)
@@ -426,9 +426,9 @@ findOption(const KCmdLineOptions *options, TQCString &opt,
 
 
 void
-KCmdLineArgs::findOption(const char *_opt, TQCString opt, int &i, bool _enabled, bool &moreOptions)
+TDECmdLineArgs::findOption(const char *_opt, TQCString opt, int &i, bool _enabled, bool &moreOptions)
 {
-   KCmdLineArgs *args = argsList->first();
+   TDECmdLineArgs *args = argsList->first();
    const char *opt_name;
    const char *def;
    TQCString argument;
@@ -534,19 +534,19 @@ KCmdLineArgs::findOption(const char *_opt, TQCString opt, int &i, bool _enabled,
 }
 
 void
-KCmdLineArgs::printQ(const TQString &msg)
+TDECmdLineArgs::printQ(const TQString &msg)
 {
    TQCString localMsg = msg.local8Bit();
    fprintf(stdout, "%s", localMsg.data());
 }
 
 void
-KCmdLineArgs::parseAllArgs()
+TDECmdLineArgs::parseAllArgs()
 {
    bool allowArgs = false;
    bool inOptions = true;
    bool everythingAfterArgIsArgs = false;
-   KCmdLineArgs *appOptions = argsList->last();
+   TDECmdLineArgs *appOptions = argsList->last();
    if (!appOptions->id)
    {
      const KCmdLineOptions *option = appOptions->options;
@@ -676,7 +676,7 @@ KCmdLineArgs::parseAllArgs()
  * Return argc
  */
 int *
-KCmdLineArgs::tqt_argc()
+TDECmdLineArgs::tqt_argc()
 {
    if (!argsList)
       KApplication::addCmdLineOptions(); // Lazy bastards!
@@ -685,12 +685,12 @@ KCmdLineArgs::tqt_argc()
    if( tqt_argc != -1 )
       return &tqt_argc;
 
-   KCmdLineArgs *args = parsedArgs("qt");
+   TDECmdLineArgs *args = parsedArgs("qt");
    assert(args); // No qt options have been added!
    if (!argv)
    {
-      fprintf(stderr, "\n\nFAILURE (KCmdLineArgs):\n");
-      fprintf(stderr, "Application has not called KCmdLineArgs::init(...).\n\n");
+      fprintf(stderr, "\n\nFAILURE (TDECmdLineArgs):\n");
+      fprintf(stderr, "Application has not called TDECmdLineArgs::init(...).\n\n");
 
       assert( 0 );
       exit(255);
@@ -707,7 +707,7 @@ KCmdLineArgs::tqt_argc()
  * Return argv
  */
 char ***
-KCmdLineArgs::tqt_argv()
+TDECmdLineArgs::tqt_argv()
 {
    if (!argsList)
       KApplication::addCmdLineOptions(); // Lazy bastards!
@@ -716,12 +716,12 @@ KCmdLineArgs::tqt_argv()
    if( tqt_argv != NULL )
       return &tqt_argv;
 
-   KCmdLineArgs *args = parsedArgs("qt");
+   TDECmdLineArgs *args = parsedArgs("qt");
    assert(args); // No qt options have been added!
    if (!argv)
    {
-      fprintf(stderr, "\n\nFAILURE (KCmdLineArgs):\n");
-      fprintf(stderr, "Application has not called KCmdLineArgs::init(...).\n\n");
+      fprintf(stderr, "\n\nFAILURE (TDECmdLineArgs):\n");
+      fprintf(stderr, "Application has not called TDECmdLineArgs::init(...).\n\n");
 
       assert( 0 );
       exit(255);
@@ -740,7 +740,7 @@ KCmdLineArgs::tqt_argv()
 }
 
 void
-KCmdLineArgs::enable_i18n()
+TDECmdLineArgs::enable_i18n()
 {
     // called twice or too late
     if (KGlobal::_locale)
@@ -754,7 +754,7 @@ KCmdLineArgs::enable_i18n()
 }
 
 void
-KCmdLineArgs::usage(const TQString &error)
+TDECmdLineArgs::usage(const TQString &error)
 {
     assert(KGlobal::_locale);
     TQCString localError = error.local8Bit();
@@ -769,7 +769,7 @@ KCmdLineArgs::usage(const TQString &error)
 }
 
 void
-KCmdLineArgs::usage(const char *id)
+TDECmdLineArgs::usage(const char *id)
 {
    enable_i18n();
    assert(argsList != 0); // It's an error to call usage(...) without
@@ -781,7 +781,7 @@ KCmdLineArgs::usage(const char *id)
    TQString tmp;
    TQString usage;
 
-   KCmdLineArgs *args = argsList->last();
+   TDECmdLineArgs *args = argsList->last();
 
    if (!(args->id) && (args->options) &&
        (args->options->name) && (args->options->name[0] != '+'))
@@ -798,7 +798,7 @@ KCmdLineArgs::usage(const char *id)
       args = argsList->prev();
    }
 
-   KCmdLineArgs *appOptions = argsList->last();
+   TDECmdLineArgs *appOptions = argsList->last();
    if (!appOptions->id)
    {
      const KCmdLineOptions *option = appOptions->options;
@@ -986,7 +986,7 @@ KCmdLineArgs::usage(const char *id)
  *
  *  The given arguments are assumed to be constants.
  */
-KCmdLineArgs::KCmdLineArgs( const KCmdLineOptions *_options,
+TDECmdLineArgs::TDECmdLineArgs( const KCmdLineOptions *_options,
                             const char *_name, const char *_id)
   : options(_options), name(_name), id(_id)
 {
@@ -998,7 +998,7 @@ KCmdLineArgs::KCmdLineArgs( const KCmdLineOptions *_options,
 /**
  *  Destructor.
  */
-KCmdLineArgs::~KCmdLineArgs()
+TDECmdLineArgs::~TDECmdLineArgs()
 {
   delete parsedOptionList;
   delete parsedArgList;
@@ -1007,7 +1007,7 @@ KCmdLineArgs::~KCmdLineArgs()
 }
 
 void
-KCmdLineArgs::clear()
+TDECmdLineArgs::clear()
 {
    delete parsedArgList;
    parsedArgList = 0;
@@ -1016,7 +1016,7 @@ KCmdLineArgs::clear()
 }
 
 void
-KCmdLineArgs::reset()
+TDECmdLineArgs::reset()
 {
    if ( argsList ) {
       argsList->setAutoDelete( true );
@@ -1028,7 +1028,7 @@ KCmdLineArgs::reset()
 }
 
 void
-KCmdLineArgs::save( TQDataStream &ds) const
+TDECmdLineArgs::save( TQDataStream &ds) const
 {
    uint count = 0;
    if (parsedOptionList)
@@ -1043,7 +1043,7 @@ KCmdLineArgs::save( TQDataStream &ds) const
 }
 
 void
-KCmdLineArgs::load( TQDataStream &ds)
+TDECmdLineArgs::load( TQDataStream &ds)
 {
    if (!parsedOptionList) parsedOptionList = new KCmdLineParsedOptions;
    if (!parsedArgList) parsedArgList = new KCmdLineParsedArgs;
@@ -1064,7 +1064,7 @@ KCmdLineArgs::load( TQDataStream &ds)
 }
 
 void
-KCmdLineArgs::setOption(const TQCString &opt, bool enabled)
+TDECmdLineArgs::setOption(const TQCString &opt, bool enabled)
 {
    if (isQt)
    {
@@ -1087,7 +1087,7 @@ KCmdLineArgs::setOption(const TQCString &opt, bool enabled)
 }
 
 void
-KCmdLineArgs::setOption(const TQCString &opt, const char *value)
+TDECmdLineArgs::setOption(const TQCString &opt, const char *value)
 {
    if (isQt)
    {
@@ -1114,7 +1114,7 @@ KCmdLineArgs::setOption(const TQCString &opt, const char *value)
 }
 
 TQCString
-KCmdLineArgs::getOption(const char *_opt) const
+TDECmdLineArgs::getOption(const char *_opt) const
 {
    TQCString *value = 0;
    if (parsedOptionList)
@@ -1134,7 +1134,7 @@ KCmdLineArgs::getOption(const char *_opt) const
 
    if (result != 3)
    {
-      fprintf(stderr, "\n\nFAILURE (KCmdLineArgs):\n");
+      fprintf(stderr, "\n\nFAILURE (TDECmdLineArgs):\n");
       fprintf(stderr, "Application requests for getOption(\"%s\") but the \"%s\" option\n",
                       _opt, _opt);
       fprintf(stderr, "has never been specified via addCmdLineOptions( ... )\n\n");
@@ -1146,7 +1146,7 @@ KCmdLineArgs::getOption(const char *_opt) const
 }
 
 QCStringList
-KCmdLineArgs::getOptionList(const char *_opt) const
+TDECmdLineArgs::getOptionList(const char *_opt) const
 {
    QCStringList result;
    if (!parsedOptionList)
@@ -1176,7 +1176,7 @@ KCmdLineArgs::getOptionList(const char *_opt) const
 }
 
 bool
-KCmdLineArgs::isSet(const char *_opt) const
+TDECmdLineArgs::isSet(const char *_opt) const
 {
    // Look up the default.
    const char *opt_name;
@@ -1187,7 +1187,7 @@ KCmdLineArgs::isSet(const char *_opt) const
 
    if (result == 0)
    {
-      fprintf(stderr, "\n\nFAILURE (KCmdLineArgs):\n");
+      fprintf(stderr, "\n\nFAILURE (TDECmdLineArgs):\n");
       fprintf(stderr, "Application requests for isSet(\"%s\") but the \"%s\" option\n",
                       _opt, _opt);
       fprintf(stderr, "has never been specified via addCmdLineOptions( ... )\n\n");
@@ -1219,7 +1219,7 @@ KCmdLineArgs::isSet(const char *_opt) const
 }
 
 int
-KCmdLineArgs::count() const
+TDECmdLineArgs::count() const
 {
    if (!parsedArgList)
       return 0;
@@ -1227,11 +1227,11 @@ KCmdLineArgs::count() const
 }
 
 const char *
-KCmdLineArgs::arg(int n) const
+TDECmdLineArgs::arg(int n) const
 {
    if (!parsedArgList || (n >= (int) parsedArgList->count()))
    {
-      fprintf(stderr, "\n\nFAILURE (KCmdLineArgs): Argument out of bounds\n");
+      fprintf(stderr, "\n\nFAILURE (TDECmdLineArgs): Argument out of bounds\n");
       fprintf(stderr, "Application requests for arg(%d) without checking count() first.\n",
                       n);
 
@@ -1243,12 +1243,12 @@ KCmdLineArgs::arg(int n) const
 }
 
 KURL
-KCmdLineArgs::url(int n) const
+TDECmdLineArgs::url(int n) const
 {
    return makeURL( arg(n) );
 }
 
-KURL KCmdLineArgs::makeURL(const char *_urlArg)
+KURL TDECmdLineArgs::makeURL(const char *_urlArg)
 {
    const TQString urlArg = TQFile::decodeName(_urlArg);
    TQFileInfo fileInfo(urlArg);
@@ -1269,7 +1269,7 @@ KURL KCmdLineArgs::makeURL(const char *_urlArg)
 }
 
 void
-KCmdLineArgs::addArgument(const char *argument)
+TDECmdLineArgs::addArgument(const char *argument)
 {
    if (!parsedArgList)
       parsedArgList = new KCmdLineParsedArgs;
@@ -1284,14 +1284,14 @@ static const KCmdLineOptions kde_tempfile_option[] =
 };
 
 void
-KCmdLineArgs::addTempFileOption()
+TDECmdLineArgs::addTempFileOption()
 {
-    KCmdLineArgs::addCmdLineOptions( kde_tempfile_option, "TDE-tempfile", "tde-tempfile" );
+    TDECmdLineArgs::addCmdLineOptions( kde_tempfile_option, "TDE-tempfile", "tde-tempfile" );
 }
 
-bool KCmdLineArgs::isTempFileSet()
+bool TDECmdLineArgs::isTempFileSet()
 {
-    KCmdLineArgs* args = KCmdLineArgs::parsedArgs( "tde-tempfile" );
+    TDECmdLineArgs* args = TDECmdLineArgs::parsedArgs( "tde-tempfile" );
     if ( args )
         return args->isSet( "tempfile" );
     return false;

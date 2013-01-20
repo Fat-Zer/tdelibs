@@ -128,9 +128,9 @@ int main( int argc, char **argv ) {
 
     KAboutData about( "makekdewidgets", I18N_NOOP( "makekdewidgets" ), version, description, KAboutData::License_GPL, "(C) 2004-2005 ian reinhart geiser", 0, 0, "geiseri@kde.org" );
     about.addAuthor( "ian reinhart geiser", 0, "geiseri@kde.org" );
-    KCmdLineArgs::init( argc, argv, &about );
-    KCmdLineArgs::addCmdLineOptions( options );
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+    TDECmdLineArgs::init( argc, argv, &about );
+    TDECmdLineArgs::addCmdLineOptions( options );
+    TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
     if ( args->count() < 1 ) {
         args->usage();
         return ( 1 );

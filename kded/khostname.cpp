@@ -65,7 +65,7 @@ protected:
 
 KHostName::KHostName()
 {
-   KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+   TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
    if (args->count() != 2)
       args->usage();
    oldName = args->arg(0);
@@ -371,8 +371,8 @@ int main(int argc, char **argv)
                 KAboutData::License_GPL, "(c) 2001 Waldo Bastian");
    d.addAuthor("Waldo Bastian", I18N_NOOP("Author"), "bastian@kde.org");
 
-   KCmdLineArgs::init(argc, argv, &d);
-   KCmdLineArgs::addCmdLineOptions(options);
+   TDECmdLineArgs::init(argc, argv, &d);
+   TDECmdLineArgs::addCmdLineOptions(options);
 
    KInstance k(&d);
 

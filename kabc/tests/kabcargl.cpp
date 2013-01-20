@@ -38,7 +38,7 @@ int main(int argc,char **argv)
   KAboutData aboutData("kabcargl","Fix broken pre3.0rc3 format","0.1");
   aboutData.addAuthor("Cornelius Schumacher", 0, "schumacher@kde.org");
 
-  KCmdLineArgs::init(argc,argv,&aboutData);
+  TDECmdLineArgs::init(argc,argv,&aboutData);
 
   KApplication app;
 

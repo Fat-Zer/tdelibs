@@ -23,12 +23,12 @@ static const KCmdLineOptions options[] =
 int main(int argc,char **argv)
 {
   KAboutData aboutData("testdistlist",I18N_NOOP("Test Distribution Lists"),"0.1");
-  KCmdLineArgs::init(argc,argv,&aboutData);
-  KCmdLineArgs::addCmdLineOptions( options );
+  TDECmdLineArgs::init(argc,argv,&aboutData);
+  TDECmdLineArgs::addCmdLineOptions( options );
 
   KApplication app;
 
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+  TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
   if (args->isSet("list")) {
     TQString name = args->getOption("list");
     

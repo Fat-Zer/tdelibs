@@ -724,9 +724,9 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
    d.addAuthor("David Faure", I18N_NOOP("Author"), "faure@kde.org");
    d.addAuthor("Waldo Bastian", I18N_NOOP("Author"), "bastian@kde.org");
 
-   KCmdLineArgs::init(argc, argv, &d);
-   KCmdLineArgs::addCmdLineOptions(options);
-   KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+   TDECmdLineArgs::init(argc, argv, &d);
+   TDECmdLineArgs::addCmdLineOptions(options);
+   TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
    bGlobalDatabase = args->isSet("global");
    bMenuTest = args->isSet("menutest");
 

@@ -62,11 +62,11 @@ extern "C" KDE_EXPORT int kdemain( int argc, char**argv )
 
    TQCString cname = KApplication::launcher();
    char *name = cname.data();
-   KCmdLineArgs::init(argc, argv, name, "KLauncher", "A service launcher.",
+   TDECmdLineArgs::init(argc, argv, name, "KLauncher", "A service launcher.",
                        "v1.0");
 
    KLauncher::addCmdLineOptions();
-   KCmdLineArgs::addCmdLineOptions( options );
+   TDECmdLineArgs::addCmdLineOptions( options );
 
    // WABA: Make sure not to enable session management.
    putenv(strdup("SESSION_MANAGER="));
@@ -74,7 +74,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char**argv )
    // Allow the locale to initialize properly
    KLocale::setMainCatalogue("tdelibs");
 
-   KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+   TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
    int maxTry = 3;
    while(true)

@@ -51,7 +51,7 @@ protected:
 
 int main(int argc, char *argv[])
 {
-  KCmdLineArgs::init(argc, argv, ":", "", "", "");
+  TDECmdLineArgs::init(argc, argv, ":", "", "", "");
   KApplication app(false,false);
   TQString s, s2;
 

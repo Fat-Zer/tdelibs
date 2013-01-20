@@ -181,17 +181,17 @@ void removeGroup(KFileMetaInfo& info, TQString group)
 int main( int argc, char **argv )
 {
     // Initialize command line args
-    KCmdLineArgs::init(argc, argv, "kfilemetatest", "testing kfilmetainfo", "X");
+    TDECmdLineArgs::init(argc, argv, "kfilemetatest", "testing kfilmetainfo", "X");
 
     // Tell which options are supported
-    KCmdLineArgs::addCmdLineOptions( options );
+    TDECmdLineArgs::addCmdLineOptions( options );
 
     // Add options from other components
     KApplication::addCmdLineOptions();
     
     KApplication app;
 
-    KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
+    TDECmdLineArgs* args = TDECmdLineArgs::parsedArgs();
 
     TQCString ov;
     ov = args->getOption("mimetypeinfo");

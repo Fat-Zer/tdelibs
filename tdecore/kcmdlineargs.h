@@ -31,11 +31,11 @@ typedef TQValueList<TQCString> QCStringList;
 /**
  * @short Structure that holds command line options.
  *
- * This class is intended to be used with the KCmdLineArgs class, which
+ * This class is intended to be used with the TDECmdLineArgs class, which
  * provides convenient and powerful command line argument parsing and
  * handling functionality.
  *
- * @see KCmdLineArgs for additional usage information
+ * @see TDECmdLineArgs for additional usage information
  */
 struct TDECORE_EXPORT KCmdLineOptions
 {
@@ -49,7 +49,7 @@ struct TDECORE_EXPORT KCmdLineOptions
     * <i>myapp --nofoo</i> is called:
     *
     * \code
-    * KCmdLineArgs::parsedArgs()->isSet("foo"); // false
+    * TDECmdLineArgs::parsedArgs()->isSet("foo"); // false
     * \endcode
     */
    const char *name;
@@ -67,34 +67,34 @@ struct TDECORE_EXPORT KCmdLineOptions
 
 #define KCmdLineLastOption { 0, 0, 0 }
 
-class KCmdLineArgsList;
+class TDECmdLineArgsList;
 class KApplication;
 class KUniqueApplication;
 class KCmdLineParsedOptions;
 class KCmdLineParsedArgs;
 class KAboutData;
-class KCmdLineArgsPrivate;
+class TDECmdLineArgsPrivate;
 
 /**
  *  @short A class for command-line argument handling.
  *
- *  KCmdLineArgs provides simple access to the command-line arguments
+ *  TDECmdLineArgs provides simple access to the command-line arguments
  *  for an application. It takes into account Qt-specific options,
  *  KDE-specific options and application specific options.
  *
  *  This class is used in %main() via the static method
  *  init().
  *
- *  A typical %KDE application using %KCmdLineArgs should look like this:
+ *  A typical %KDE application using %TDECmdLineArgs should look like this:
  *
  *  \code
  *  int main(int argc, char *argv[])
  *  {
  *     // Initialize command line args
- *     KCmdLineArgs::init(argc, argv, appName, programName, description, version);
+ *     TDECmdLineArgs::init(argc, argv, appName, programName, description, version);
  *
  *     // Tell which options are supported
- *     KCmdLineArgs::addCmdLineOptions( options );
+ *     TDECmdLineArgs::addCmdLineOptions( options );
  *
  *     // Add options from other components
  *     KUniqueApplication::addCmdLineOptions();
@@ -111,7 +111,7 @@ class KCmdLineArgsPrivate;
  *     // necessary.
  *     // A KUniqueApplication might want to handle it in newInstance().
  *
- *     KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+ *     TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
  *
  *     // A binary option (on / off)
  *     if (args->isSet("some-option"))
@@ -165,7 +165,7 @@ class KCmdLineArgsPrivate;
  *  \endcode
  *
  *  The I18N_NOOP macro is used to indicate that these strings should be
- *  marked for translation. The actual translation is done by KCmdLineArgs.
+ *  marked for translation. The actual translation is done by TDECmdLineArgs.
  *  You can't use i18n() here because we are setting up a static data
  *  structure and can't do translations at compile time.
  *
@@ -219,11 +219,11 @@ class KCmdLineArgsPrivate;
  *  @author Waldo Bastian
  *  @version 0.0.4
  */
-class TDECORE_EXPORT KCmdLineArgs
+class TDECORE_EXPORT TDECmdLineArgs
 {
   friend class KApplication;
   friend class KUniqueApplication;
-  friend class TQPtrList<KCmdLineArgs>;
+  friend class TQPtrList<TDECmdLineArgs>;
 public:
   // Static functions:
 
@@ -321,8 +321,8 @@ public:
    *     true. If required, you must check yourself the number of arguments
    *     specified by the user:
    *     \code
-   *       KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
-   *       if (args->count() == 0) KCmdLineArgs::usage(i18n("No file specified!"));
+   *       TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
+   *       if (args->count() == 0) TDECmdLineArgs::usage(i18n("No file specified!"));
    *     \endcode
    *
    * In BNF:
@@ -367,7 +367,7 @@ public:
    *
    * @param id The name of the options you are interested in, can be 0.
    */
-  static KCmdLineArgs *parsedArgs(const char *id=0);
+  static TDECmdLineArgs *parsedArgs(const char *id=0);
 
   /**
    * Get the CWD (Current Working Directory) associated with the
@@ -501,14 +501,14 @@ public:
 
   /**
    * Used by url().
-   * Made public for apps that don't use KCmdLineArgs
+   * Made public for apps that don't use TDECmdLineArgs
    * @param urlArg the argument
    * @return the url.
    */
   static KURL makeURL( const char * urlArg );
 
   /**
-   * Made public for apps that don't use KCmdLineArgs
+   * Made public for apps that don't use TDECmdLineArgs
    * To be done before makeURL, to set the current working
    * directory in case makeURL needs it.
    * @param cwd the new working directory
@@ -553,7 +553,7 @@ protected:
    * @internal
    *  Constructor.
    */
-  KCmdLineArgs( const KCmdLineOptions *_options, const char *_name,
+  TDECmdLineArgs( const KCmdLineOptions *_options, const char *_name,
                 const char *_id);
 
   /**
@@ -563,7 +563,7 @@ protected:
    *
    *  Destructor.
    */
-  ~KCmdLineArgs();
+  ~TDECmdLineArgs();
 
 private:
   /**
@@ -659,7 +659,7 @@ private:
    * @param appname The untranslated name of your application. This should
    *                match with @p argv[0].
    *
-   * This function makes KCmdLineArgs ignore all unknown options as well as
+   * This function makes TDECmdLineArgs ignore all unknown options as well as
    * all arguments.
    */
   static void initIgnore(int _argc, char **_argv, const char *_appname);
@@ -673,7 +673,7 @@ private:
   KCmdLineParsedArgs *parsedArgList;
   bool isQt;
 
-  static KCmdLineArgsList *argsList; // All options.
+  static TDECmdLineArgsList *argsList; // All options.
   static const KAboutData *about;
 
   static int argc; // The original argc
@@ -683,7 +683,7 @@ private:
   static char *mCwd; // Current working directory. Important for KUnqiueApp!
   static bool parseArgs;
 
-  KCmdLineArgsPrivate *d;
+  TDECmdLineArgsPrivate *d;
 };
 
 #endif

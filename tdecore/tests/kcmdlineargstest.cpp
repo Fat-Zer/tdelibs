@@ -25,16 +25,16 @@ int
 main(int argc, char *argv[])
 {
    KLocale::setMainCatalogue("tdelibs");
-   KCmdLineArgs::init( argc, argv, "testapp", description, version);
+   TDECmdLineArgs::init( argc, argv, "testapp", description, version);
 
-   KCmdLineArgs::addCmdLineOptions( options ); // Add my own options.
+   TDECmdLineArgs::addCmdLineOptions( options ); // Add my own options.
 
    // MyWidget::addCmdLineOptions();
 
    KApplication k( false, false /*true, true*/ );
 
    // Get application specific arguments
-   KCmdLineArgs *args = KCmdLineArgs::parsedArgs(); 
+   TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs(); 
    // Check if an option is set
    if (args->isSet("test"))
    {
@@ -79,7 +79,7 @@ main(int argc, char *argv[])
 int
 main(int argc, char *argv[])
 {
-   KCmdLineArgs::init( argc, argv, "testapp", description, version);
+   TDECmdLineArgs::init( argc, argv, "testapp", description, version);
 
    KApplication k( true, true );
 

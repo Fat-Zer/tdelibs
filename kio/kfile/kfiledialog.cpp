@@ -2322,7 +2322,7 @@ KURL KFileDialog::getStartURL( const TQString& startDir,
         }
         else
         {
-            ret = KCmdLineArgs::makeURL( TQFile::encodeName(startDir) );
+            ret = TDECmdLineArgs::makeURL( TQFile::encodeName(startDir) );
             // If we won't be able to list it (e.g. http), then use default
             if ( !KProtocolInfo::supportsListing( ret ) )
                 useDefaultStartDir = true;

@@ -1,5 +1,5 @@
 /*
- testqtargs -- is there really a bug in KCmdLineArgs or am I on crack?
+ testqtargs -- is there really a bug in TDECmdLineArgs or am I on crack?
 
   I used the following compile options:
 
@@ -64,10 +64,10 @@ int main(int argc, char *argv[])
     "1.0", I18N_NOOP("testqtargs"), KAboutData::License_GPL,
     "", "", "", "");
 
-  KCmdLineArgs::init(argc, argv, &aboutData);
-  KCmdLineArgs::addCmdLineOptions(options);
+  TDECmdLineArgs::init(argc, argv, &aboutData);
+  TDECmdLineArgs::addCmdLineOptions(options);
 
-  KCmdLineArgs *qtargs = KCmdLineArgs::parsedArgs("qt");
+  TDECmdLineArgs *qtargs = TDECmdLineArgs::parsedArgs("qt");
   for (int i = 0; i < qtargs->count(); i++)
   {
     tqDebug("qt arg[%d] = %s", i, qtargs->arg(i));
@@ -75,8 +75,8 @@ int main(int argc, char *argv[])
 
   KApplication app;
 
-  KCmdLineArgs *kdeargs = KCmdLineArgs::parsedArgs("tde");
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+  TDECmdLineArgs *kdeargs = TDECmdLineArgs::parsedArgs("tde");
+  TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
   // An arg set by Qt
   if(qtargs->isSet("background"))

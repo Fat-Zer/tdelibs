@@ -116,7 +116,7 @@ KonfUpdate::KonfUpdate()
    config = new KConfig("kconf_updaterc");
 
    TQStringList updateFiles;
-   KCmdLineArgs *args=KCmdLineArgs::parsedArgs();
+   TDECmdLineArgs *args=TDECmdLineArgs::parsedArgs();
    
    debug = args->isSet("debug");
 
@@ -139,7 +139,7 @@ KonfUpdate::KonfUpdate()
       {
          KURL url = args->url(i);
          if (!url.isLocalFile())
-            KCmdLineArgs::usage(i18n("Only local files are supported."));
+            TDECmdLineArgs::usage(i18n("Only local files are supported."));
          updateFiles.append(url.path());
       }
    }
@@ -948,8 +948,8 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
 
    aboutData.addAuthor("Waldo Bastian", 0, "bastian@kde.org");
 
-   KCmdLineArgs::init(argc, argv, &aboutData);
-   KCmdLineArgs::addCmdLineOptions(options);
+   TDECmdLineArgs::init(argc, argv, &aboutData);
+   TDECmdLineArgs::addCmdLineOptions(options);
 
    KInstance instance(&aboutData);
 

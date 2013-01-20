@@ -39,7 +39,7 @@ class KUniqueApplicationPrivate;
  * see kapplication.h
  *
  * If your application is used to open files, it should also support the --tempfile
- * option (see KCmdLineArgs::addTempFileOption()), to delete tempfiles after use.
+ * option (see TDECmdLineArgs::addTempFileOption()), to delete tempfiles after use.
  * Add X-TDE-HasTempFileOption=true to the .desktop file to indicate this.
  *
  * @see KApplication DCOPObject
@@ -50,7 +50,7 @@ class TDECORE_EXPORT KUniqueApplication : public KApplication, public DCOPObject
   Q_OBJECT
 public:
   /**
-   * Constructor. Takes command line arguments from KCmdLineArgs
+   * Constructor. Takes command line arguments from TDECmdLineArgs
    *
    * @param allowStyles Set to false to disable the loading on plugin based
    * styles. This is only useful to applications that do not display a GUI
@@ -70,7 +70,7 @@ public:
 
 #ifdef Q_WS_X11
   /**
-   * Constructor. Takes command line arguments from KCmdLineArgs
+   * Constructor. Takes command line arguments from TDECmdLineArgs
    *
    * @param display Will be passed to Qt as the X display. The display
    * must be valid and already opened.
@@ -114,8 +114,8 @@ public:
    * \code
    * int main(int argc, char **argv) {
    *    KAboutData about("myappname", "myAppName", .....);
-   *    KCmdLineArgs::init(argc, argv, &about);
-   *    KCmdLineArgs::addCmdLineOptions( myCmdOptions );
+   *    TDECmdLineArgs::init(argc, argv, &about);
+   *    TDECmdLineArgs::addCmdLineOptions( myCmdOptions );
    *    KUniqueApplication::addCmdLineOptions();
    *
    *    if (!KUniqueApplication::start()) {
@@ -162,7 +162,7 @@ public:
    * application asking for a new window to be created, possibly with
    * some data already loaded based on the arguments received.
    *
-   * Command line arguments have been passed to KCmdLineArgs before this
+   * Command line arguments have been passed to TDECmdLineArgs before this
    * function is called and can be checked in the usual way.
    *
    * The default implementation ensures the mainwindow of the already

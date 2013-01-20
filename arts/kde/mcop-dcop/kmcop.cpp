@@ -53,7 +53,7 @@ int main(int argc, char **argv)
                          KAboutData::License_GPL, "(C) 2001, Nikolas Zimmermann");
     aboutdata.addAuthor("Nikolas Zimmermann", I18N_NOOP("Author"), "wildfox@kde.org");
 
-    KCmdLineArgs::init(argc, argv, &aboutdata);
+    TDECmdLineArgs::init(argc, argv, &aboutdata);
     KUniqueApplication::addCmdLineOptions();
 
     if(!KUniqueApplication::start())

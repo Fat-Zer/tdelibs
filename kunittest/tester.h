@@ -150,8 +150,8 @@ SampleTest - 1 test passed, 1 test failed
  *     KAboutData about("SampleTests", I18N_NOOP("SampleTests"), version, description,
  *                     KAboutData::License_BSD, "(C) 2005 You!", 0, 0, "mail@provider");
  *
- *     KCmdLineArgs::init(argc, argv, &about);
- *     KCmdLineArgs::addCmdLineOptions( options );
+ *     TDECmdLineArgs::init(argc, argv, &about);
+ *     TDECmdLineArgs::addCmdLineOptions( options );
  *     KApplication app;
  *
  *     KUnitTest::RunnerGUI runner(0);

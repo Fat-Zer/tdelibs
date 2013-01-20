@@ -13,11 +13,11 @@ static const KCmdLineOptions options[] =
 
 int main(int argc, char**argv)
 {
-  KCmdLineArgs::init(argc, argv, "test", "test" ,"test" ,"1.0");
-  KCmdLineArgs::addCmdLineOptions( options );
+  TDECmdLineArgs::init(argc, argv, "test", "test" ,"test" ,"1.0");
+  TDECmdLineArgs::addCmdLineOptions( options );
   KApplication app("test");
 
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+  TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
   if (args->count()!=1)
   {
     std::cout << "Usage: kpixmapregionselectordialogtest <imageFile>" << std::endl;

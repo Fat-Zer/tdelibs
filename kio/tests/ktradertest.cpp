@@ -33,16 +33,16 @@ static KCmdLineOptions options[] =
 
 int main( int argc, char **argv )
 {
-  KCmdLineArgs::init( argc, argv, "ktradertest", "KTradertest", "A KTrader testing tool", "0.0" );
+  TDECmdLineArgs::init( argc, argv, "ktradertest", "KTradertest", "A KTrader testing tool", "0.0" );
 
-  KCmdLineArgs::addCmdLineOptions( options );
+  TDECmdLineArgs::addCmdLineOptions( options );
 
   KApplication app( false, false ); // no GUI
 
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+  TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
   if ( args->count() < 1 )
-      KCmdLineArgs::usage();
+      TDECmdLineArgs::usage();
 
   TQString query = TQString::fromLocal8Bit( args->arg( 0 ) );
 

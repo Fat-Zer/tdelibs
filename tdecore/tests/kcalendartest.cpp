@@ -39,10 +39,10 @@ int main(int argc, char **argv) {
   	aboutData.addAuthor("Carlos Moro",0, "cfmoro@correo.uniovi.es");
 	
 
-        KCmdLineArgs::init( argc, argv, &aboutData );
-        KCmdLineArgs::addCmdLineOptions( options ); // Add our own options.
+        TDECmdLineArgs::init( argc, argv, &aboutData );
+        TDECmdLineArgs::addCmdLineOptions( options ); // Add our own options.
 
-        KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+        TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
 	KApplication app(false, false);
 

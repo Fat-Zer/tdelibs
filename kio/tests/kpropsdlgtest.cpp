@@ -14,14 +14,14 @@ static KCmdLineOptions options[] =
 int main ( int argc, char** argv )
 {
     KAboutData aboutData("kpropertiesdialogtest", "KIO Properties Dialog Test", "1.0");
-    KCmdLineArgs::init(argc, argv, &aboutData);
-    KCmdLineArgs::addCmdLineOptions( options );
+    TDECmdLineArgs::init(argc, argv, &aboutData);
+    TDECmdLineArgs::addCmdLineOptions( options );
 
     KApplication app;
 
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+    TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
     if ( args->count() < 1 )
-        KCmdLineArgs::usage();
+        TDECmdLineArgs::usage();
     KURL u = args->url( 0 );
 
     // This is the test for the KPropertiesDialog constructor that is now

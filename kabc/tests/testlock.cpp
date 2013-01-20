@@ -166,14 +166,14 @@ static const KCmdLineOptions options[] =
 int main(int argc,char **argv)
 {
   KAboutData aboutData("testlock",I18N_NOOP("Test libkabc Lock"),"0.1");
-  KCmdLineArgs::init(argc,argv,&aboutData);
-  KCmdLineArgs::addCmdLineOptions( options );
+  TDECmdLineArgs::init(argc,argv,&aboutData);
+  TDECmdLineArgs::addCmdLineOptions( options );
 
   KApplication app;
 
   TQString identifier;
 
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+  TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
   if ( args->count() == 1 ) {
     identifier = args->arg( 0 );
   } else if ( args->count() != 0 ) {

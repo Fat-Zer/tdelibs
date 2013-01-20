@@ -36,11 +36,11 @@ static const KCmdLineOptions op[] =
 int main(int argc, char **argv)
 {
 	KAboutData about("khotnewstuff", "KHotNewStuff", "0.2");
-	KCmdLineArgs *args;
+	TDECmdLineArgs *args;
 
-	KCmdLineArgs::init(argc, argv, &about);
-	KCmdLineArgs::addCmdLineOptions(op);
-	args = KCmdLineArgs::parsedArgs();
+	TDECmdLineArgs::init(argc, argv, &about);
+	TDECmdLineArgs::addCmdLineOptions(op);
+	args = TDECmdLineArgs::parsedArgs();
 
 	KApplication i;
 

@@ -53,7 +53,7 @@ int main(int argc, char** argv)
 	if ( argc < 2 ) { tqWarning("Usage: driver <appid>"); return 1; }
 	const char* appname = strdup( argv[ 1 ] );
 	argv[ 1 ] = 0; // sue me
-	KCmdLineArgs::init( argc, argv, "TestAppDriver", "Tests the dcop familly of tools + libraries", "1.0" ); // FIXME
+	TDECmdLineArgs::init( argc, argv, "TestAppDriver", "Tests the dcop familly of tools + libraries", "1.0" ); // FIXME
 	KApplication app;
 	app.dcopClient()->attach(  );
 	app.dcopClient()->registerAs( "TestAppDriver" );

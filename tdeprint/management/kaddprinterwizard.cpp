@@ -14,15 +14,15 @@ static KCmdLineOptions options[] =
 
 extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
 {
-	KCmdLineArgs::init(argc, argv, "kaddprinterwizard",
+	TDECmdLineArgs::init(argc, argv, "kaddprinterwizard",
 			I18N_NOOP("Start the add printer wizard"),
 			"0.1");
-	KCmdLineArgs::addCmdLineOptions(options);
+	TDECmdLineArgs::addCmdLineOptions(options);
 	
 	KGlobal::locale()->setMainCatalogue("tdelibs");
 
 	KApplication app;
-	KCmdLineArgs	*args = KCmdLineArgs::parsedArgs();
+	TDECmdLineArgs	*args = TDECmdLineArgs::parsedArgs();
 	bool	doConfig = args->isSet("tdeconfig");
 	bool	doSrvConfig = args->isSet("serverconfig");
 

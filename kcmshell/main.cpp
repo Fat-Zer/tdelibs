@@ -213,11 +213,11 @@ extern "C" KDE_EXPORT int kdemain(int _argc, char *_argv[])
     
     KGlobal::locale()->setMainCatalogue("kcmshell");
 
-    KCmdLineArgs::init(_argc, _argv, &aboutData);
-    KCmdLineArgs::addCmdLineOptions( options ); // Add our own options.
+    TDECmdLineArgs::init(_argc, _argv, &aboutData);
+    TDECmdLineArgs::addCmdLineOptions( options ); // Add our own options.
     KCMShell app;
 
-    const KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+    const TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
     const TQCString lang = args->getOption("lang");
     if( !lang.isNull() )

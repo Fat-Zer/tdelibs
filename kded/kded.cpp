@@ -878,11 +878,11 @@ extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
 
      KApplication::installSigpipeHandler();
 
-     KCmdLineArgs::init(argc, argv, &aboutData);
+     TDECmdLineArgs::init(argc, argv, &aboutData);
 
      KUniqueApplication::addCmdLineOptions();
 
-     KCmdLineArgs::addCmdLineOptions( options );
+     TDECmdLineArgs::addCmdLineOptions( options );
 
      // this program is in tdelibs so it uses tdelibs as catalog
      KLocale::setMainCatalogue("tdelibs");
@@ -891,7 +891,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
      putenv(strdup("SESSION_MANAGER="));
 
      // Parse command line before checking DCOP
-     KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+     TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
      // Check DCOP communication.
      {

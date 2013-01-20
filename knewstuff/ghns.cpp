@@ -79,7 +79,7 @@ void GhnsWidget::downloadWallpapers()
 int main(int argc,char **argv)
 {
   KAboutData aboutData("ghns","Get Hot New Stuff","0.1");
-  KCmdLineArgs::init(argc,argv,&aboutData);
+  TDECmdLineArgs::init(argc,argv,&aboutData);
 
   KApplication app;
 

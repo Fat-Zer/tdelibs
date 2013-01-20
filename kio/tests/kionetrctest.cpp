@@ -44,9 +44,9 @@ int main(int argc, char **argv)
         KCmdLineLastOption
     };
 
-    KCmdLineArgs::init( argc, argv, "kionetrctest", description, version );
-    KCmdLineArgs::addCmdLineOptions( options );
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+    TDECmdLineArgs::init( argc, argv, "kionetrctest", description, version );
+    TDECmdLineArgs::addCmdLineOptions( options );
+    TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
     int count = args->count();
     KApplication app;
 

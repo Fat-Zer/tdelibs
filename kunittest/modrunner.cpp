@@ -54,9 +54,9 @@ int main( int argc, char **argv )
                      KAboutData::License_BSD, "(C) 2005 Jeroen Wijnhout", 0, 0,
                      "Jeroen.Wijnhout@kdemail.net");
 
-    KCmdLineArgs::init(argc, argv, &about);
-    KCmdLineArgs::addCmdLineOptions( options );
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+    TDECmdLineArgs::init(argc, argv, &about);
+    TDECmdLineArgs::addCmdLineOptions( options );
+    TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
     KUnitTest::Runner::loadModules(args->getOption("folder"), args->getOption("query"));
     KUnitTest::Runner::setDebugCapturingEnabled(args->isSet("enable-dbgcap"));

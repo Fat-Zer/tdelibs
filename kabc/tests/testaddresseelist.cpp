@@ -20,11 +20,11 @@ static const KCmdLineOptions options[] =
 int main(int /*argc*/,char /* **argv*/)
 {
 /*  KAboutData aboutData("testaddresseelist","TestAddresseeList","0.1");
-  KCmdLineArgs::init(argc, argv, &aboutData);
-  KCmdLineArgs::addCmdLineOptions(options);
+  TDECmdLineArgs::init(argc, argv, &aboutData);
+  TDECmdLineArgs::addCmdLineOptions(options);
 
   KApplication app;
-  KCmdLineArgs* args = KCmdLineArgs::parsedArgs(); */
+  TDECmdLineArgs* args = TDECmdLineArgs::parsedArgs(); */
 
   kdDebug() << "Creating addressees" << endl;
   Addressee a, b, c, d, e, f;

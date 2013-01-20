@@ -82,7 +82,7 @@ void testAdjustPath()
 int main(int argc, char *argv[])
 {
   KApplication::disableAutoDcopRegistration();
-  KCmdLineArgs::init( argc, argv, "kurltest", 0, 0, 0, 0 );
+  TDECmdLineArgs::init( argc, argv, "kurltest", 0, 0, 0, 0 );
   KApplication app( false, false );
 
   KURL::List lst;

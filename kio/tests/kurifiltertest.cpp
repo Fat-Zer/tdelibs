@@ -159,14 +159,14 @@ int main(int argc, char **argv)
     setenv( "TDE_FORK_SLAVES", "yes", true ); // simpler, for the final cleanup
 
     KAboutData aboutData(appName, programName, version, description);
-    KCmdLineArgs::init(argc, argv, &aboutData);
-    KCmdLineArgs::addCmdLineOptions( options );
+    TDECmdLineArgs::init(argc, argv, &aboutData);
+    TDECmdLineArgs::addCmdLineOptions( options );
 
     KApplication app;
     app.disableAutoDcopRegistration();
 
     // Allow testing of the search engine using both delimiters...
-    char delimiter = KCmdLineArgs::parsedArgs()->isSet("s") ? ' ' : ':';
+    char delimiter = TDECmdLineArgs::parsedArgs()->isSet("s") ? ' ' : ':';
 
     // Many tests check the "default search engine" feature.
     // There is no default search engine by default (since it was annoying when making typos),

@@ -68,9 +68,9 @@ KIOExec::KIOExec()
     jobList = new TQPtrList<KIO::Job>;
     jobList->setAutoDelete( false ); // jobs autodelete themselves
 
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+    TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
     if (args->count() < 1)
-        KCmdLineArgs::usage(i18n("'command' expected.\n"));
+        TDECmdLineArgs::usage(i18n("'command' expected.\n"));
 
     tempfiles = args->isSet("tempfiles");
     if ( args->isSet( "suggestedfilename" ) )
@@ -280,8 +280,8 @@ int main( int argc, char **argv )
     aboutData.addAuthor("Waldo Bastian",0, "bastian@kde.org");
     aboutData.addAuthor("Oswald Buddenhagen",0, "ossi@kde.org");
 
-    KCmdLineArgs::init( argc, argv, &aboutData );
-    KCmdLineArgs::addCmdLineOptions( options );
+    TDECmdLineArgs::init( argc, argv, &aboutData );
+    TDECmdLineArgs::addCmdLineOptions( options );
 
     KApplication app;
 

@@ -538,7 +538,7 @@ int main_console(int argc, char **argv)
 			printf("Searching for standard icon for name %s in the following directories:\n\r", argv[PARAM_ICON_NAME]);
 			KApplication::disableAutoDcopRegistration();
 			KAboutData aboutd("tdelfeditor", "tdelfeditor", "0.0.1");
-			KCmdLineArgs::init(&aboutd);
+			TDECmdLineArgs::init(&aboutd);
 			KApplication app(false, false);
 
 			TQStringList rds = KGlobal::dirs()->resourceDirs("icon");

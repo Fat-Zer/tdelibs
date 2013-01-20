@@ -13,7 +13,7 @@ using namespace KABC;
 int main(int argc,char **argv)
 {
   KAboutData aboutData("testdb","TestKabcDB","0.1");
-  KCmdLineArgs::init(argc,argv,&aboutData);
+  TDECmdLineArgs::init(argc,argv,&aboutData);
 
 //  KApplication app( false, false );
   KApplication app;

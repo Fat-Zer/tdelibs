@@ -449,16 +449,16 @@ int main(int argc, char *argv[])
     // workaround various Qt crashes by always enforcing a TrueColor visual
     TQApplication::setColorSpec( TQApplication::ManyColor );
 
-    KCmdLineArgs::init(argc, argv, "testregression", "TestRegression",
+    TDECmdLineArgs::init(argc, argv, "testregression", "TestRegression",
                        "Regression tester for khtml", "1.0");
-    KCmdLineArgs::addCmdLineOptions(options);
+    TDECmdLineArgs::addCmdLineOptions(options);
 
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs( );
+    TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs( );
 
     TQCString baseDir = args->getOption("base");
 
     if ( args->count() < 1 && baseDir.isEmpty() ) {
-	KCmdLineArgs::usage();
+	TDECmdLineArgs::usage();
 	::exit( 1 );
     }
 

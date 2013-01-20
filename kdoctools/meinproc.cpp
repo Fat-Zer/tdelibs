@@ -95,15 +95,15 @@ int main(int argc, char **argv) {
 	"$Revision$",
 	I18N_NOOP("TDE Translator for XML"));
 
-    KCmdLineArgs::init(argc, argv, &aboutData);
-    KCmdLineArgs::addCmdLineOptions( options );
+    TDECmdLineArgs::init(argc, argv, &aboutData);
+    TDECmdLineArgs::addCmdLineOptions( options );
 
     KLocale::setMainCatalogue("kio_help");
     KInstance ins("meinproc");
     KGlobal::locale();
 
 
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+    TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
     if ( args->count() != 1 ) {
         args->usage();
         return ( 1 );

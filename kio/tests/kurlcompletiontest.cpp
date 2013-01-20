@@ -165,7 +165,7 @@ void KURLCompletionTest::testLocalURL()
 int main( int argc, char **argv )
 {
     KApplication::disableAutoDcopRegistration();
-    KCmdLineArgs::init(argc,argv,"kurlcompletiontest", 0, 0, 0, 0);
+    TDECmdLineArgs::init(argc,argv,"kurlcompletiontest", 0, 0, 0, 0);
     KApplication app;
 
     {

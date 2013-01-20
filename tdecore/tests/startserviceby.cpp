@@ -28,7 +28,7 @@ int
 main(int argc, char *argv[])
 {
    KAboutData about("kapptest", "kapptest", "version");
-   KCmdLineArgs::init(argc, argv, &about);
+   TDECmdLineArgs::init(argc, argv, &about);
 
    KApplication a;
 

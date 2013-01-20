@@ -494,11 +494,11 @@ static KCmdLineOptions options[] =
 };
 
 int main(int argc, char **argv) {
-  KCmdLineArgs::init( argc, argv, "kioslavetest", description, version );
-  KCmdLineArgs::addCmdLineOptions( options );
+  TDECmdLineArgs::init( argc, argv, "kioslavetest", description, version );
+  TDECmdLineArgs::addCmdLineOptions( options );
   KApplication app;
 
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+  TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
   TQString src = args->getOption("src");
   TQString dest = args->getOption("dest");
@@ -529,7 +529,7 @@ int main(int argc, char **argv) {
     op = KioslaveTest::Shred;
   } else if ( tmps == "mkdir") {
     op = KioslaveTest::Mkdir;
-  } else KCmdLineArgs::usage("unknown operation");
+  } else TDECmdLineArgs::usage("unknown operation");
 
   tmps = args->getOption("progress");
   if ( tmps == "none") {
@@ -538,7 +538,7 @@ int main(int argc, char **argv) {
     pr = KioslaveTest::ProgressDefault;
   } else if ( tmps == "status") {
     pr = KioslaveTest::ProgressStatus;
-  } else KCmdLineArgs::usage("unknown progress mode");
+  } else TDECmdLineArgs::usage("unknown progress mode");
 
   args->clear(); // Free up memory
 

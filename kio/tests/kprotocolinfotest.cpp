@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
     KAboutData aboutData("kprotocolinfotest", "KProtocolinfo Test",
                         "1.0");
 
-    KCmdLineArgs::init(argc, argv, &aboutData);
+    TDECmdLineArgs::init(argc, argv, &aboutData);
     KApplication app;
 
     KURL url;

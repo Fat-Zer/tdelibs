@@ -31,13 +31,13 @@ static KCmdLineOptions options[] =
 
 int main(int argc, char *argv[])
 {
-  KCmdLineArgs::init( argc, argv, "kmimefromext", "A mimetype testing tool, gives the mimetype for a given filename", "0.0" );
+  TDECmdLineArgs::init( argc, argv, "kmimefromext", "A mimetype testing tool, gives the mimetype for a given filename", "0.0" );
 
-  KCmdLineArgs::addCmdLineOptions( options );
+  TDECmdLineArgs::addCmdLineOptions( options );
 
   KApplication app;
 
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+  TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
   TQString fileName = args->arg( 0 );
 
   // The "true" here means only the filename will be looked at.

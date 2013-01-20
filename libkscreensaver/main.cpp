@@ -94,9 +94,9 @@ typedef WId Window;
 KDE_EXPORT int main(int argc, char *argv[])
 {
     KLocale::setMainCatalogue("libkscreensaver");
-    KCmdLineArgs::init(argc, argv, kss_applicationName, kss_description, kss_version);
+    TDECmdLineArgs::init(argc, argv, kss_applicationName, kss_description, kss_version);
 
-    KCmdLineArgs::addCmdLineOptions(options);
+    TDECmdLineArgs::addCmdLineOptions(options);
 
     KApplication app;
 
@@ -108,7 +108,7 @@ KDE_EXPORT int main(int argc, char *argv[])
     Window saveWin = 0;
     KScreenSaver *target;
 
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+    TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
     if (args->isSet("setup"))
     {

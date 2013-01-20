@@ -1387,8 +1387,8 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
     aboutdata.addAuthor("David Faure",I18N_NOOP("Developer"),"faure@kde.org");
     aboutdata.addAuthor("Matej Koss",I18N_NOOP("Developer"),"koss@miesto.sk");
 
-    KCmdLineArgs::init( argc, argv, &aboutdata );
-    // KCmdLineArgs::addCmdLineOptions( options );
+    TDECmdLineArgs::init( argc, argv, &aboutdata );
+    // TDECmdLineArgs::addCmdLineOptions( options );
     KUniqueApplication::addCmdLineOptions();
 
     if (!KUniqueApplication::start())

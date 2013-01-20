@@ -280,7 +280,7 @@ static void printSupportedMimeTypes()
 }
 
 // caller needs to delete the returned list!
-static KFileItemList * fileItemList( const KCmdLineArgs *args )
+static KFileItemList * fileItemList( const TDECmdLineArgs *args )
 {
     KFileItemList * items = new KFileItemList();
     items->setAutoDelete( true );
@@ -291,14 +291,14 @@ static KFileItemList * fileItemList( const KCmdLineArgs *args )
     return items;
 }
 
-static void showPropertiesDialog( const KCmdLineArgs *args )
+static void showPropertiesDialog( const TDECmdLineArgs *args )
 {
     KFileItemList *items = fileItemList( args );
     new KPropertiesDialog( *items, 0L, "props dialog", true );
     delete items;
 }
 
-static void printMimeTypes( const KCmdLineArgs *args )
+static void printMimeTypes( const TDECmdLineArgs *args )
 {
     for ( int i = 0; i < args->count(); i++ )
     {
@@ -318,7 +318,7 @@ static void printList( const TQStringList& list )
 }
 
 static void processMetaDataOptions( const TQPtrList<FileProps> propList,
-                                    KCmdLineArgs *args )
+                                    TDECmdLineArgs *args )
 {
 // kfile --mimetype --supportedMimetypes --listsupported --listavailable --listpreferred --listwritable --getValue "key" --setValue "key=value" --allValues --preferredValues --dialog --quiet file [file...]
 // "key" may be a list of keys, separated by commas
@@ -416,11 +416,11 @@ int main( int argc, char **argv )
     about.addAuthor( "Carsten Pfeiffer", 0, "pfeiffer@kde.org",
 		     "http://devel-home.kde.org/~pfeiffer/" );
 
-    KCmdLineArgs::init( argc, argv, &about );
+    TDECmdLineArgs::init( argc, argv, &about );
 
-    KCmdLineArgs::addCmdLineOptions( options );
+    TDECmdLineArgs::addCmdLineOptions( options );
 
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+    TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
     bool useGUI = args->isSet( "dialog" );
 
     KApplication app( useGUI, useGUI );
@@ -435,7 +435,7 @@ int main( int argc, char **argv )
 
     int files = args->count();
     if ( files == 0 )
-        KCmdLineArgs::usage( i18n("No files specified") ); // exit()s
+        TDECmdLineArgs::usage( i18n("No files specified") ); // exit()s
 
     if ( args->isSet( "dialog" ) )
     {

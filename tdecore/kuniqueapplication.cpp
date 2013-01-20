@@ -86,7 +86,7 @@ public:
 void
 KUniqueApplication::addCmdLineOptions()
 {
-  KCmdLineArgs::addCmdLineOptions(kunique_options, 0, "kuniqueapp", "tde" );
+  TDECmdLineArgs::addCmdLineOptions(kunique_options, 0, "kuniqueapp", "tde" );
 }
 
 bool
@@ -99,12 +99,12 @@ KUniqueApplication::start()
 #ifdef Q_WS_WIN
   s_nofork = true;
 #else
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs("kuniqueapp");
+  TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs("kuniqueapp");
   s_nofork = !args->isSet("fork");
   delete args;
 #endif
 
-  TQCString appName = KCmdLineArgs::about->appName();
+  TQCString appName = TDECmdLineArgs::about->appName();
 
   if (s_nofork)
   {
@@ -285,14 +285,14 @@ KUniqueApplication::start()
      TQByteArray data, reply;
      TQDataStream ds(data, IO_WriteOnly);
 
-     KCmdLineArgs::saveAppArgs(ds);
+     TDECmdLineArgs::saveAppArgs(ds);
      ds << new_asn_id;
 
      dc->setPriorityCall(true);
      TQCString replyType;
-     if (!dc->call(appName, KCmdLineArgs::about->appName(), "newInstance()", data, replyType, reply))
+     if (!dc->call(appName, TDECmdLineArgs::about->appName(), "newInstance()", data, replyType, reply))
      {
-        kdError() << "Communication problem with " << KCmdLineArgs::about->appName() << ", it probably crashed." << endl;
+        kdError() << "Communication problem with " << TDECmdLineArgs::about->appName() << ", it probably crashed." << endl;
         delete dc;	// Clean up DCOP commmunication
         ::exit(255);
      }
@@ -316,7 +316,7 @@ KUniqueApplication::start()
 
 KUniqueApplication::KUniqueApplication(bool allowStyles, bool GUIenabled, bool configUnique)
   : KApplication( allowStyles, GUIenabled, initHack( configUnique )),
-    DCOPObject(KCmdLineArgs::about->appName())
+    DCOPObject(TDECmdLineArgs::about->appName())
 {
   d = new KUniqueApplicationPrivate;
   d->processingRequest = false;
@@ -332,7 +332,7 @@ KUniqueApplication::KUniqueApplication(bool allowStyles, bool GUIenabled, bool c
 KUniqueApplication::KUniqueApplication(Display *display, Qt::HANDLE visual,
 		Qt::HANDLE colormap, bool allowStyles, bool configUnique)
   : KApplication( display, visual, colormap, allowStyles, initHack( configUnique )),
-    DCOPObject(KCmdLineArgs::about->appName())
+    DCOPObject(TDECmdLineArgs::about->appName())
 {
   d = new KUniqueApplicationPrivate;
   d->processingRequest = false;
@@ -353,7 +353,7 @@ KUniqueApplication::~KUniqueApplication()
 // this gets called before even entering TQApplication::TQApplication()
 KInstance* KUniqueApplication::initHack( bool configUnique )
 {
-  KInstance* inst = new KInstance( KCmdLineArgs::about );
+  KInstance* inst = new KInstance( TDECmdLineArgs::about );
   if (configUnique)
   {
     KConfigGroupSaver saver( inst->config(), "KDE" );
@@ -433,7 +433,7 @@ KUniqueApplication::processDelayed()
      if (request->fun == "newInstance()") {
        dcopClient()->setPriorityCall(false);
        TQDataStream ds(request->data, IO_ReadOnly);
-       KCmdLineArgs::loadAppArgs(ds);
+       TDECmdLineArgs::loadAppArgs(ds);
        if( !ds.atEnd()) // backwards compatibility
        {
            TQCString asn_id;

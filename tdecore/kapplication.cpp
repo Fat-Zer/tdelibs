@@ -640,16 +640,16 @@ KApplication::KApplication( int& argc, char** argv, const TQCString& rAppName,
     setName(rAppName);
 
     installSigpipeHandler();
-    KCmdLineArgs::initIgnore(argc, argv, rAppName.data());
+    TDECmdLineArgs::initIgnore(argc, argv, rAppName.data());
     parseCommandLine( );
     init(GUIenabled);
     d->m_KAppDCOPInterface = new KAppDCOPInterface(this);
 }
 
 KApplication::KApplication( bool allowStyles, bool GUIenabled ) :
-//  TQApplication( *KCmdLineArgs::tqt_argc(), *KCmdLineArgs::tqt_argv(), TRUE ),	// Qt4 requires that there always be a GUI
-  TQApplication( *KCmdLineArgs::tqt_argc(), *KCmdLineArgs::tqt_argv(), GUIenabled ),	// We need to be able to run command line apps
-  KInstance( KCmdLineArgs::about),
+//  TQApplication( *TDECmdLineArgs::tqt_argc(), *TDECmdLineArgs::tqt_argv(), TRUE ),	// Qt4 requires that there always be a GUI
+  TQApplication( *TDECmdLineArgs::tqt_argc(), *TDECmdLineArgs::tqt_argv(), GUIenabled ),	// We need to be able to run command line apps
+  KInstance( TDECmdLineArgs::about),
 #ifdef Q_WS_X11
   display(0L),
   argb_visual(false),
@@ -672,9 +672,9 @@ KApplication::KApplication( bool allowStyles, bool GUIenabled ) :
 
 #ifdef Q_WS_X11
 KApplication::KApplication( Display *dpy, bool allowStyles ) :
-  TQApplication( dpy, *KCmdLineArgs::tqt_argc(), *KCmdLineArgs::tqt_argv(),
+  TQApplication( dpy, *TDECmdLineArgs::tqt_argc(), *TDECmdLineArgs::tqt_argv(),
                 getX11RGBAVisual(dpy), getX11RGBAColormap(dpy) ),
-  KInstance( KCmdLineArgs::about), display(0L), d (new KApplicationPrivate)
+  KInstance( TDECmdLineArgs::about), display(0L), d (new KApplicationPrivate)
 {
     aIconPixmap.pm.icon = 0L;
     aIconPixmap.pm.miniIcon = 0L;
@@ -688,9 +688,9 @@ KApplication::KApplication( Display *dpy, bool allowStyles ) :
 }
 
 KApplication::KApplication( Display *dpy, bool disable_argb, Qt::HANDLE visual, Qt::HANDLE colormap, bool allowStyles ) :
-  TQApplication( dpy, *KCmdLineArgs::tqt_argc(), *KCmdLineArgs::tqt_argv(),
+  TQApplication( dpy, *TDECmdLineArgs::tqt_argc(), *TDECmdLineArgs::tqt_argv(),
                 disable_argb?visual:getX11RGBAVisual(dpy), disable_argb?colormap:getX11RGBAColormap(dpy) ),
-  KInstance( KCmdLineArgs::about), display(0L), d (new KApplicationPrivate)
+  KInstance( TDECmdLineArgs::about), display(0L), d (new KApplicationPrivate)
 {
     aIconPixmap.pm.icon = 0L;
     aIconPixmap.pm.miniIcon = 0L;
@@ -706,9 +706,9 @@ KApplication::KApplication( Display *dpy, bool disable_argb, Qt::HANDLE visual, 
 
 KApplication::KApplication( Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap,
 		            bool allowStyles ) :
-  TQApplication( dpy, *KCmdLineArgs::tqt_argc(), *KCmdLineArgs::tqt_argv(),
+  TQApplication( dpy, *TDECmdLineArgs::tqt_argc(), *TDECmdLineArgs::tqt_argv(),
                 visual?visual:getX11RGBAVisual(dpy), colormap?colormap:getX11RGBAColormap(dpy) ),
-  KInstance( KCmdLineArgs::about), display(0L), d (new KApplicationPrivate)
+  KInstance( TDECmdLineArgs::about), display(0L), d (new KApplicationPrivate)
 {
     if ((visual) && (colormap))
         getX11RGBAInformation(dpy);
@@ -725,7 +725,7 @@ KApplication::KApplication( Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap
 
 KApplication::KApplication( Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap,
 		            bool allowStyles, KInstance * _instance ) :
-  TQApplication( dpy, *KCmdLineArgs::tqt_argc(), *KCmdLineArgs::tqt_argv(),
+  TQApplication( dpy, *TDECmdLineArgs::tqt_argc(), *TDECmdLineArgs::tqt_argv(),
                 visual?visual:getX11RGBAVisual(dpy), colormap?colormap:getX11RGBAColormap(dpy) ),
   KInstance( _instance ), display(0L), d (new KApplicationPrivate)
 {
@@ -744,7 +744,7 @@ KApplication::KApplication( Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap
 #endif
 
 KApplication::KApplication( bool allowStyles, bool GUIenabled, KInstance* _instance ) :
-  TQApplication( *KCmdLineArgs::tqt_argc(), *KCmdLineArgs::tqt_argv(),
+  TQApplication( *TDECmdLineArgs::tqt_argc(), *TDECmdLineArgs::tqt_argv(),
                 GUIenabled ),
   KInstance( _instance ),
 #ifdef Q_WS_X11
@@ -786,7 +786,7 @@ KApplication::KApplication(Display *display, int& argc, char** argv, const TQCSt
     setName(rAppName);
 
     installSigpipeHandler();
-    KCmdLineArgs::initIgnore(argc, argv, rAppName.data());
+    TDECmdLineArgs::initIgnore(argc, argv, rAppName.data());
     parseCommandLine( );
     init(GUIenabled);
     d->m_KAppDCOPInterface = new KAppDCOPInterface(this);
@@ -977,7 +977,7 @@ void KApplication::init(bool GUIenabled)
 
 #ifdef Q_WS_MACX
   if (GUIenabled) {
-      TQPixmap pixmap = KGlobal::iconLoader()->loadIcon( KCmdLineArgs::appName(),
+      TQPixmap pixmap = KGlobal::iconLoader()->loadIcon( TDECmdLineArgs::appName(),
               KIcon::NoGroup, KIcon::SizeLarge, KIcon::DefaultState, 0L, false );
       if (!pixmap.isNull()) {
           TQImage i = pixmap.convertToImage().convertDepth(32).smoothScale(40, 40);
@@ -1063,7 +1063,7 @@ DCOPClient *KApplication::dcopClient()
     return s_DCOPClient;
 
   s_DCOPClient = new DCOPClient();
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs("tde");
+  TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs("tde");
   if (args && args->isSet("dcopserver"))
   {
     s_DCOPClient->setServerAddress( args->getOption("dcopserver"));
@@ -1562,13 +1562,13 @@ static const KCmdLineOptions kde_options[] =
 void
 KApplication::addCmdLineOptions()
 {
-   KCmdLineArgs::addCmdLineOptions(qt_options, "Qt", "qt");
-   KCmdLineArgs::addCmdLineOptions(kde_options, "TDE", "tde");
+   TDECmdLineArgs::addCmdLineOptions(qt_options, "Qt", "qt");
+   TDECmdLineArgs::addCmdLineOptions(kde_options, "TDE", "tde");
 }
 
 void KApplication::parseCommandLine( )
 {
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs("tde");
+    TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs("tde");
 
     if ( !args ) return;
 
@@ -1823,7 +1823,7 @@ bool KApplication::detectCompositionManagerAvailable(bool force_available, bool 
 	}
 	else {
 		// See if compositing has been enabled
-		KCmdLineArgs *qtargs = KCmdLineArgs::parsedArgs("qt");
+		TDECmdLineArgs *qtargs = TDECmdLineArgs::parsedArgs("qt");
 		char *displayname = 0;
 		if ( qtargs->isSet("display"))
 			displayname = qtargs->getOption( "display" ).data();
@@ -1896,7 +1896,7 @@ bool KApplication::detectCompositionManagerAvailable(bool force_available, bool 
 }
 
 Display* KApplication::openX11RGBADisplay() {
-	KCmdLineArgs *qtargs = KCmdLineArgs::parsedArgs("qt");
+	TDECmdLineArgs *qtargs = TDECmdLineArgs::parsedArgs("qt");
 	char *display = 0;
 	if ( qtargs->isSet("display"))
 		display = qtargs->getOption( "display" ).data();

@@ -43,16 +43,16 @@ static const KCmdLineOptions options[] =
 extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
 {
    KLocale::setMainCatalogue("tdelibs");
-   KCmdLineArgs::init(argc, argv, "kcookiejar", I18N_NOOP("HTTP cookie daemon"),
+   TDECmdLineArgs::init(argc, argv, "kcookiejar", I18N_NOOP("HTTP cookie daemon"),
 		      description, version);
 
-   KCmdLineArgs::addCmdLineOptions( options );
+   TDECmdLineArgs::addCmdLineOptions( options );
 
    KInstance a("kcookiejar");
    
    kapp->dcopClient()->attach();
 
-   KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+   TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
    TQCString replyType;
    TQByteArray replyData;
    if (args->isSet("remove-all"))

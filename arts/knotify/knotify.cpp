@@ -113,7 +113,7 @@ KDE_EXPORT int kdemain(int argc, char **argv)
     aboutdata.addAuthor("Stefan Westerfeld",I18N_NOOP("Sound support"),"stefan@space.twc.de");
     aboutdata.addAuthor("Charles Samuels",I18N_NOOP("Previous Maintainer"),"charles@kde.org");
 
-    KCmdLineArgs::init( argc, argv, &aboutdata );
+    TDECmdLineArgs::init( argc, argv, &aboutdata );
     KUniqueApplication::addCmdLineOptions();
 
 

@@ -962,12 +962,12 @@ int main( int argc, char **argv )
   aboutData.addCredit( "Duncan Mac-Vicar P.", "dpointer support",
       "duncan@kde.org", "http://www.mac-vicar.com/~duncan" );
 
-  KCmdLineArgs::init( argc, argv, &aboutData );
-  KCmdLineArgs::addCmdLineOptions( options );
+  TDECmdLineArgs::init( argc, argv, &aboutData );
+  TDECmdLineArgs::addCmdLineOptions( options );
 
   KInstance app( &aboutData );
 
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+  TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
   if ( args->count() < 2 ) {
     kdError() << "Too few arguments." << endl;

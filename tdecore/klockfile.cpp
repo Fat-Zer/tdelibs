@@ -125,7 +125,7 @@ static KLockFile::LockResult lockFile(const TQString &lockFile, KDE_struct_stat 
   hostname[0] = 0;
   gethostname(hostname, 255);
   hostname[255] = 0;
-  TQCString instanceName = KCmdLineArgs::appName();
+  TQCString instanceName = TDECmdLineArgs::appName();
 
   (*(uniqueFile.textStream())) << TQString::number(getpid()) << endl
       << instanceName << endl

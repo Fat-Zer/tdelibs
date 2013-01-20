@@ -24,7 +24,7 @@ void openWallet()
 int main( int argc, char *argv[] )
 {
 	KAboutData aboutData( "kwalletsync", "kwalletsync", "version" );
-	KCmdLineArgs::init( argc, argv, &aboutData );
+	TDECmdLineArgs::init( argc, argv, &aboutData );
 	KApplication app( "kwalletsync" );
 
 	// register with DCOP

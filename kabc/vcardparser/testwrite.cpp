@@ -37,7 +37,7 @@ int main( int argc, char **argv )
 {
   KAboutData aboutData( "testwrite", "vCard test writer", "0.1" );
 
-  KCmdLineArgs::init( argc, argv, &aboutData );
+  TDECmdLineArgs::init( argc, argv, &aboutData );
 
   KApplication app( false, false );
   

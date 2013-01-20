@@ -60,7 +60,7 @@ class TDECORE_EXPORT KInstance
      *  You have to destroy both, since the instance doesn't own the about data.
      *  Don't build a KAboutData on the stack in this case !
      *  Building a KAboutData on the stack is only ok for usage with
-     *  KCmdLineArgs and KApplication (not destroyed until the app exits).
+     *  TDECmdLineArgs and KApplication (not destroyed until the app exits).
      *  @param aboutData data about this instance (see KAboutData)
      */
     KInstance( const KAboutData * aboutData );

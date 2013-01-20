@@ -64,9 +64,9 @@ int main(int argc, char **argv) {
                  KAboutData::License_GPL, "(c) 2000 Stephan Kulow");
     d.addAuthor("Stephan Kulow", I18N_NOOP("Author"), "coolo@kde.org");
 
-    KCmdLineArgs::init(argc, argv, &d);
-    KCmdLineArgs::addCmdLineOptions(options);
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+    TDECmdLineArgs::init(argc, argv, &d);
+    TDECmdLineArgs::addCmdLineOptions(options);
+    TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
     KApplication a(false, false);
 

@@ -31,7 +31,7 @@ int main(int argc, char** argv)
 		batch();
 		return 0;
 	}
-	KCmdLineArgs::init( argc, argv, "TestApp", "Tests the dcop familly of tools + libraries", "1.0" ); // FIXME
+	TDECmdLineArgs::init( argc, argv, "TestApp", "Tests the dcop familly of tools + libraries", "1.0" ); // FIXME
 	KApplication app;
 	if(!app.dcopClient()->attach(  ))
 		return 1;

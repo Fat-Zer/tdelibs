@@ -115,9 +115,9 @@ int main(int argc, char **argv)
 {
     KLocale::setMainCatalogue("tdelibs");
     KAboutData about("tde-config", "tde-config", "1.0", description, KAboutData::License_GPL, "(C) 2000 Stephan Kulow");
-    KCmdLineArgs::init( argc, argv, &about);
+    TDECmdLineArgs::init( argc, argv, &about);
 
-    KCmdLineArgs::addCmdLineOptions( options ); // Add my own options.
+    TDECmdLineArgs::addCmdLineOptions( options ); // Add my own options.
 
     KInstance a("tde-config");
     a.setConfigReadOnly(TRUE);
@@ -125,7 +125,7 @@ int main(int argc, char **argv)
     (void)KGlobal::config();
 
     // Get application specific arguments
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+    TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
     _expandvars = args->isSet("expandvars");
 

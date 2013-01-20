@@ -19,12 +19,12 @@ static const KCmdLineOptions options[] =
 int main(int argc,char **argv)
 {
   KAboutData aboutData("testkabcdlg",I18N_NOOP("TestKabc"),"0.1");
-  KCmdLineArgs::init(argc,argv,&aboutData);
-  KCmdLineArgs::addCmdLineOptions( options );
+  TDECmdLineArgs::init(argc,argv,&aboutData);
+  TDECmdLineArgs::addCmdLineOptions( options );
 
   KApplication app;
 
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+  TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
   if (args->isSet("multiple")) {
     Addressee::List al = AddresseeDialog::getAddressees( 0 );
     Addressee::List::ConstIterator it;

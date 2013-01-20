@@ -29,12 +29,12 @@ static const KCmdLineOptions options[] =
 int main( int argc, char **argv )
 {
     KLocale::setMainCatalogue("tdelibs");
-    KCmdLineArgs::init( argc, argv, "kmailservice", I18N_NOOP("KMailService"), I18N_NOOP("Mail service"), "unknown" );
-    KCmdLineArgs::addCmdLineOptions( options );
+    TDECmdLineArgs::init( argc, argv, "kmailservice", I18N_NOOP("KMailService"), I18N_NOOP("Mail service"), "unknown" );
+    TDECmdLineArgs::addCmdLineOptions( options );
 
     KApplication a( false, false );
 
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+    TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
     if ( args->count() != 1 )
         return 1;

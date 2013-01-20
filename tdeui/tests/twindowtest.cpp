@@ -502,7 +502,7 @@ void testWindow::slotMakeItem3Current()
 int main( int argc, char *argv[] )
 {
     int i;
-    KCmdLineArgs::init(argc, argv, "KWindowTest", "description", "version");
+    TDECmdLineArgs::init(argc, argv, "KWindowTest", "description", "version");
 
     KApplication *myApp = new KApplication();
     testWindow *test = new testWindow;

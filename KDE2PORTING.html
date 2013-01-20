@@ -20,7 +20,7 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
 <LI><A HREF="#general">Global changes</A></LI>
 <LI><A HREF="#automoc">automoc/am_edit, Makefile.am tags</A></LI>
 <LI><A HREF="#KApplication">KApplication</A></LI>
-<LI><A HREF="#KCmdLineArgs">KCmdLineArgs</A></LI>
+<LI><A HREF="#TDECmdLineArgs">TDECmdLineArgs</A></LI>
 <LI><A HREF="#KLocale">KLocale</A></LI>
 <LI><A HREF="#KGlobal">KGlobal: access to KDE global objects.</A></LI>
 <LI><A HREF="#KIconLoader">KIconLoader</A></LI>
@@ -148,14 +148,14 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
 
   The KApplication constructor has changed. Command line arguments and
   program name should no longer be passed to KApplication but to 
-  KCmdLineArgs. KCmdLineArgs performs command line parsing and a command
+  TDECmdLineArgs. TDECmdLineArgs performs command line parsing and a command
   line help. See below for more info.<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
-<H3><A NAME="KCmdLineArgs">KCmdLineArgs</A></H3>
+<H3><A NAME="TDECmdLineArgs">TDECmdLineArgs</A></H3>
 
-  KCmdLineArgs is a new class that handles command line parsing and
+  TDECmdLineArgs is a new class that handles command line parsing and
   command line help. It is now required that your application
   specifies at least:<P>
   <UL>
@@ -165,13 +165,13 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
 	<LI>All command line options that it supports.
   </UL>
  
-  KCmdLineArgs itself will add the command line options supported by Qt 
+  TDECmdLineArgs itself will add the command line options supported by Qt 
   and KApplication.<P>
 
   You can also use the KAboutData class to specify name, description and 
   version.<P>
 
-  In return for this information you can query KCmdLineArgs whether an 
+  In return for this information you can query TDECmdLineArgs whether an 
   certain option was specified on the command line and your application 
   now automatically supports --help and --version. It aborts with a
   useful error message when the command line contains a syntax error.

@@ -190,13 +190,13 @@ void scanDirectory(FileInfoList &fileEntries, const TQString &name, const TQStri
 extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
 {
    KLocale::setMainCatalogue("tdelibs");
-   KCmdLineArgs::init( argc, argv, appName,
+   TDECmdLineArgs::init( argc, argv, appName,
 		       I18N_NOOP("TDE HTTP cache maintenance tool"),
 		       description, version, true);
 
-   KCmdLineArgs::addCmdLineOptions( options );
+   TDECmdLineArgs::addCmdLineOptions( options );
 
-   KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+   TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
    bool deleteAll = args->isSet("clear-all");
 

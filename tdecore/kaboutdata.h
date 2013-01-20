@@ -48,7 +48,7 @@ class KAboutDataPrivate;
  *   about.addAuthor("Joe Developer", I18N_NOOP("developer"), "joe@host.com", 0);
  *   about.addCredit("Joe User", I18N_NOOP("A lot of bug reports"),
  *                   "joe.user@host.org", 0);
- *   KCmdLineArgs::init(argc, argv, &about);
+ *   TDECmdLineArgs::init(argc, argv, &about);
  * \endcode
  */
 class TDECORE_EXPORT KAboutPerson
@@ -173,7 +173,7 @@ private:
  *
  * Currently, the values set here are shown by the "About" box
  * (see KAboutDialog), used by the bug report dialog (see KBugReport),
- * and by the help shown on command line (see KCmdLineArgs).
+ * and by the help shown on command line (see TDECmdLineArgs).
  *
  * @short Holds information needed by the "About" box and other
  * classes.

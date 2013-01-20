@@ -111,7 +111,7 @@ public:
 
   /**
    * This constructor takes aboutData and command line
-   *  arguments from KCmdLineArgs.
+   *  arguments from TDECmdLineArgs.
    *
    * If ARGB (transparent) widgets are to be used in your application,
    * please use
@@ -234,7 +234,7 @@ public:
 #endif
 
   /**
-   * @deprecated do not use it at all, it will make your application crash, use KCmdLineArgs
+   * @deprecated do not use it at all, it will make your application crash, use TDECmdLineArgs
    *
    * Constructor. Parses command-line arguments.
    *
@@ -256,12 +256,12 @@ public:
    * no styles either.
    */
   // REMOVE FOR KDE 4.0 - using it only gives crashing applications because
-  // KCmdLineArgs::init isn't called
+  // TDECmdLineArgs::init isn't called
  KApplication(int& argc, char** argv,
               const TQCString& rAppName, bool allowStyles=true, bool GUIenabled=true) KDE_DEPRECATED;
 
   /**
-    * Add Qt and KDE command line options to KCmdLineArgs.
+    * Add Qt and KDE command line options to TDECmdLineArgs.
     */
   static void addCmdLineOptions();
 
@@ -1315,7 +1315,7 @@ private:
 
   void init( bool GUIenabled );
 
-  void parseCommandLine( ); // Handle KDE arguments (Using KCmdLineArgs)
+  void parseCommandLine( ); // Handle KDE arguments (Using TDECmdLineArgs)
 
   void read_app_startup_id();
 
