@@ -146,6 +146,7 @@ KHttpCookie::KHttpCookie(const TQString &_host,
        mExpireDate(_expireDate),
        mProtocolVersion(_protocolVersion),
        mSecure(_secure),
+       mCrossDomain(false),
        mHttpOnly(_httpOnly),
        mExplicitPath(_explicitPath)
 {
