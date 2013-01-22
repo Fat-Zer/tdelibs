@@ -80,9 +80,9 @@ are interested in and verify that we have found the correct source line:
 216     }
 217
 218     TDEApplication::TDEApplication( bool allowStyles, bool GUIenabled ) :
-219       QApplication( *KCmdLineArgs::tqt_argc(), *KCmdLineArgs::tqt_argv(),
+219       QApplication( *TDECmdLineArgs::tqt_argc(), *TDECmdLineArgs::tqt_argv(),
 220                     GUIenabled ),
-221       KInstance( KCmdLineArgs::about),
+221       KInstance( TDECmdLineArgs::about),
 222       d (new TDEApplicationPrivate)
 223     {
 224         if (!GUIenabled)
