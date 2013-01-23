@@ -62,7 +62,7 @@ TQString get_entry( TQString* ll )
 
 int main()
     {
-    KInstance inst( "kdostartupconfig" );
+    TDEInstance inst( "kdostartupconfig" );
     kdDebug() << "Running kdostartupconfig." << endl;
     TQString keysname = locateLocal( "config", "startupconfigkeys" );
     TQFile keys( keysname );

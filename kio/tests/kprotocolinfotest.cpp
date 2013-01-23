@@ -26,7 +26,7 @@
 #include <assert.h>
 
 int main(int argc, char **argv) {
-    KAboutData aboutData("kprotocolinfotest", "KProtocolinfo Test",
+    TDEAboutData aboutData("kprotocolinfotest", "KProtocolinfo Test",
                         "1.0");
 
     TDECmdLineArgs::init(argc, argv, &aboutData);

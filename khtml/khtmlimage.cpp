@@ -36,11 +36,11 @@
 
 K_EXPORT_COMPONENT_FACTORY( khtmlimagefactory /*NOT the part name, see Makefile.am*/, KHTMLImageFactory )
 
-KInstance *KHTMLImageFactory::s_instance = 0;
+TDEInstance *KHTMLImageFactory::s_instance = 0;
 
 KHTMLImageFactory::KHTMLImageFactory()
 {
-    s_instance = new KInstance( "khtmlimage" );
+    s_instance = new TDEInstance( "khtmlimage" );
 }
 
 KHTMLImageFactory::~KHTMLImageFactory()

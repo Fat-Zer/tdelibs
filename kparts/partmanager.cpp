@@ -486,7 +486,7 @@ void PartManager::setActivePart( Part *part, TQWidget *widget )
   emit activePartChanged( d->m_activePart );
 }
 
-void PartManager::setActiveInstance( KInstance * instance )
+void PartManager::setActiveInstance( TDEInstance * instance )
 {
   // It's a separate method to allow redefining this behavior
   KGlobal::_activeInstance = instance;

@@ -1380,9 +1380,9 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
     KLocale::setMainCatalogue("tdelibs");
     //  GS 5/2001 - I changed the name to "TDE" to make it look better
     //              in the titles of dialogs which are displayed.
-    KAboutData aboutdata("kio_uiserver", I18N_NOOP("TDE"),
+    TDEAboutData aboutdata("kio_uiserver", I18N_NOOP("TDE"),
                          "0.8", I18N_NOOP("TDE Progress Information UI Server"),
-                         KAboutData::License_GPL, "(C) 2000, David Faure & Matt Koss");
+                         TDEAboutData::License_GPL, "(C) 2000, David Faure & Matt Koss");
     // Who's the maintainer ? :)
     aboutdata.addAuthor("David Faure",I18N_NOOP("Developer"),"faure@kde.org");
     aboutdata.addAuthor("Matej Koss",I18N_NOOP("Developer"),"koss@miesto.sk");

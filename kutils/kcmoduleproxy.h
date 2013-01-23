@@ -27,10 +27,10 @@
 #include <kservice.h>
 #include <tdelibs_export.h>
 
-class KAboutData;
+class TDEAboutData;
 class KCModule;
 class KCModuleInfo;
-class KInstance;
+class TDEInstance;
 class KProcess;
 
 /**
@@ -155,7 +155,7 @@ public:
 	/**
 	 * @return the module's aboutData()
 	 */
-	const KAboutData * aboutData() const;
+	const TDEAboutData * aboutData() const;
 
 	/**
 	 * @return what buttons the module
@@ -181,11 +181,11 @@ public:
 	// this one's available via moduleInfo()-> and realModule()->
 
 	/**
-	 * Returns the embedded KCModule's KInstance.
-	 * @return The module's KInstance.
+	 * Returns the embedded KCModule's TDEInstance.
+	 * @return The module's TDEInstance.
 	 * @deprecated
 	 */
-	KInstance * instance() const;
+	TDEInstance * instance() const;
 	//KDE4 remove. There's a limit for convenience functions,
 	// this one's available via realModule()
 

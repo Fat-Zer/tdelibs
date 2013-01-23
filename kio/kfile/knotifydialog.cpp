@@ -152,14 +152,14 @@ namespace KNotify
 
 
 int KNotifyDialog::configure( TQWidget *parent, const char *name,
-                              const KAboutData *aboutData )
+                              const TDEAboutData *aboutData )
 {
     KNotifyDialog dialog( parent, name, true, aboutData );
     return dialog.exec();
 }
 
 KNotifyDialog::KNotifyDialog( TQWidget *parent, const char *name, bool modal,
-                              const KAboutData *aboutData )
+                              const TDEAboutData *aboutData )
     : KDialogBase(parent, name, modal, i18n("Notification Settings"),
                   Ok | Apply | Cancel | Default, Ok, true )
 {

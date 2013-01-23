@@ -118,7 +118,7 @@ void KLineEditTest::slotHide()
 
 int main ( int argc, char **argv)
 {
-    KAboutData aboutData( "klineedittest", "klineedittest", "1.0" );
+    TDEAboutData aboutData( "klineedittest", "klineedittest", "1.0" );
     TDECmdLineArgs::init(argc, argv, &aboutData);
     TDEApplication::addCmdLineOptions();
     

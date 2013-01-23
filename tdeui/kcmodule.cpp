@@ -44,8 +44,8 @@ public:
         _unmanagedWidgetChangeState( false )
         { }
 
-    KInstance *_instance;
-    KAboutData *_about;
+    TDEInstance *_instance;
+    TDEAboutData *_about;
     TQString _rootOnlyMsg;
     bool _useRootOnlyMsg;
     bool _hasOwnInstance;
@@ -64,17 +64,17 @@ KCModule::KCModule(TQWidget *parent, const char *name, const TQStringList &)
 {
     init();
     if (name && strlen(name)) {
-        d->_instance = new KInstance(name);
+        d->_instance = new TDEInstance(name);
         KGlobal::locale()->insertCatalogue(name);
     } else
-        d->_instance = new KInstance("kcmunnamed");
+        d->_instance = new TDEInstance("kcmunnamed");
     KGlobal::setActiveInstance(this->instance());
 
     d->managers.setAutoDelete( true );
 
 }
 
-KCModule::KCModule(KInstance *instance, TQWidget *parent, const TQStringList & )
+KCModule::KCModule(TDEInstance *instance, TQWidget *parent, const TQStringList & )
     : TQWidget(parent, instance ? instance->instanceName().data() : 0)
 {
     init();
@@ -156,12 +156,12 @@ void KCModule::unmanagedWidgetChangeState(bool changed)
     widgetChanged();
 }
 
-const KAboutData *KCModule::aboutData() const
+const TDEAboutData *KCModule::aboutData() const
 {
     return d->_about;
 }
 
-void KCModule::setAboutData( KAboutData* about )
+void KCModule::setAboutData( TDEAboutData* about )
 {
     delete d->_about;
     d->_about = about;
@@ -192,7 +192,7 @@ void KCModule::changed()
     emit changed(true);
 }
 
-KInstance *KCModule::instance() const
+TDEInstance *KCModule::instance() const
 {
     return d->_instance;
 }

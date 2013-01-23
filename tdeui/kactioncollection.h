@@ -49,7 +49,7 @@ class KAccelActions;
 class KConfig;
 class KConfigBase;
 class KURL;
-class KInstance;
+class TDEInstance;
 class KToolBar;
 class KActionCollection;
 class KPopupMenu;
@@ -83,13 +83,13 @@ class TDEUI_EXPORT KActionCollection : public TQObject
   Q_OBJECT
 
 public:
-  KActionCollection( TQWidget *parent, const char *name = 0, KInstance *instance = 0 );
+  KActionCollection( TQWidget *parent, const char *name = 0, TDEInstance *instance = 0 );
   /**
    * Use this constructor if you want the collection's actions to restrict
    * their accelerator keys to @p watch rather than the @p parent.  If
    * you don't require shortcuts, you can pass a null to the @p watch parameter.
    */
-  KActionCollection( TQWidget *watch, TQObject* parent, const char *name = 0, KInstance *instance = 0 );
+  KActionCollection( TQWidget *watch, TQObject* parent, const char *name = 0, TDEInstance *instance = 0 );
 #ifndef KDE_NO_COMPAT
   KActionCollection( const KActionCollection &copy );
 #endif
@@ -197,9 +197,9 @@ public:
    */
   bool writeShortcutSettings( const TQString& sConfigGroup = TQString::null, KConfigBase* pConfig = 0 ) const;
 
-  void setInstance( KInstance *instance );
+  void setInstance( TDEInstance *instance );
   /** The instance with which this class is associated. */
-  KInstance *instance() const;
+  TDEInstance *instance() const;
 
   /**
    * @deprecated
@@ -335,7 +335,7 @@ private:
 
 #ifndef KDE_NO_COMPAT
 public:
-  KActionCollection( TQObject *parent, const char *name = 0, KInstance *instance = 0 );
+  KActionCollection( TQObject *parent, const char *name = 0, TDEInstance *instance = 0 );
 #endif
 
 public:

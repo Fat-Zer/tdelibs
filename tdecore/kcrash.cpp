@@ -196,8 +196,8 @@ KCrash::defaultCrashHandler (int sig)
           argv[i++] = "--pid";
           argv[i++] = pidtxt;
 
-          const KInstance *instance = KGlobal::_instance;
-          const KAboutData *about = instance ? instance->aboutData() : 0;
+          const TDEInstance *instance = KGlobal::_instance;
+          const TDEAboutData *about = instance ? instance->aboutData() : 0;
           if (about) {
             if (about->internalVersion()) {
               argv[i++] = "--appversion";

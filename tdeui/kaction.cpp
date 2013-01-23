@@ -658,7 +658,7 @@ int KAction::plug( TQWidget *w, int index )
 
     if ( d->hasIcon() )
     {
-        KInstance *instance;
+        TDEInstance *instance;
         if ( m_parentCollection )
           instance = m_parentCollection->instance();
         else
@@ -698,7 +698,7 @@ int KAction::plug( TQWidget *w, int index )
     KToolBar *bar = static_cast<KToolBar *>( w );
 
     int id_ = getToolButtonID();
-    KInstance *instance;
+    TDEInstance *instance;
     if ( m_parentCollection )
       instance = m_parentCollection->instance();
     else

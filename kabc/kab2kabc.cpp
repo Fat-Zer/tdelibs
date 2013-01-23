@@ -432,7 +432,7 @@ void importKab( KABC::AddressBook *ab, bool override, bool quiet )
 
 int main( int argc, char **argv )
 {
-  KAboutData aboutData( "kab2kabc", I18N_NOOP( "Kab to Kabc Converter" ), "0.1" );
+  TDEAboutData aboutData( "kab2kabc", I18N_NOOP( "Kab to Kabc Converter" ), "0.1" );
   aboutData.addAuthor( "Cornelius Schumacher", 0, "schumacher@kde.org" );
 
   TDECmdLineArgs::init( argc, argv, &aboutData );

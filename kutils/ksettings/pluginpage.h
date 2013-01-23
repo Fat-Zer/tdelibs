@@ -84,7 +84,7 @@ class KUTILS_EXPORT PluginPage : public KCModule
          * Standart KCModule constructor. Automatically creates the the
          * KPluginSelector widget.
          */
-        PluginPage( KInstance * instance, TQWidget * parent = 0, const TQStringList & args = TQStringList() );
+        PluginPage( TDEInstance * instance, TQWidget * parent = 0, const TQStringList & args = TQStringList() );
 
         ~PluginPage();
 

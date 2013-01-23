@@ -43,7 +43,7 @@ KAboutApplication::KAboutApplication( TQWidget *parent, const char *name,
   buildDialog(KGlobal::instance()->aboutData());
 }
 
-KAboutApplication::KAboutApplication( const KAboutData *aboutData, TQWidget *parent,
+KAboutApplication::KAboutApplication( const TDEAboutData *aboutData, TQWidget *parent,
                                       const char *name, bool modal )
   :KAboutDialog( AbtTabbed|AbtProduct, aboutData->programName(), Close, Close,
      parent, name, modal )
@@ -51,7 +51,7 @@ KAboutApplication::KAboutApplication( const KAboutData *aboutData, TQWidget *par
   buildDialog(aboutData);
 }
 
-void KAboutApplication::buildDialog( const KAboutData *aboutData )
+void KAboutApplication::buildDialog( const TDEAboutData *aboutData )
 {
   if( !aboutData )
   {
@@ -65,7 +65,7 @@ void KAboutApplication::buildDialog( const KAboutData *aboutData )
 
     TQString appPageText =
       i18n("No information available.\n"
-     "The supplied KAboutData object does not exist.");
+     "The supplied TDEAboutData object does not exist.");
     TQLabel *appPageLabel = new TQLabel( "\n\n\n\n"+appPageText+"\n\n\n\n", 0 );
     appPage->addWidget( appPageLabel );
     return;
@@ -172,7 +172,7 @@ void KAboutApplication::buildDialog( const KAboutData *aboutData )
      .arg((*it).emailAddress());
       }
 
-      text += KAboutData::aboutTranslationTeam() + "</qt>";
+      text += TDEAboutData::aboutTranslationTeam() + "</qt>";
       addTextPage( i18n("T&ranslation"), text, true);
   }
 

@@ -618,7 +618,7 @@ void KPluginSelector::addPluginsInternal( const TQValueList<KPluginInfo*> plugin
     d->pswidgets += w;
 }
 
-void KPluginSelector::addPlugins( const KInstance * instance, const TQString &
+void KPluginSelector::addPlugins( const TDEInstance * instance, const TQString &
         catname, const TQString & category, KConfig * config )
 {
     if ( !config )

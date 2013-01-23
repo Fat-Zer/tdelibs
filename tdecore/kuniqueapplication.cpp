@@ -351,9 +351,9 @@ KUniqueApplication::~KUniqueApplication()
 }
 
 // this gets called before even entering TQApplication::TQApplication()
-KInstance* KUniqueApplication::initHack( bool configUnique )
+TDEInstance* KUniqueApplication::initHack( bool configUnique )
 {
-  KInstance* inst = new KInstance( TDECmdLineArgs::about );
+  TDEInstance* inst = new TDEInstance( TDECmdLineArgs::about );
   if (configUnique)
   {
     KConfigGroupSaver saver( inst->config(), "KDE" );

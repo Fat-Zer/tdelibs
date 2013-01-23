@@ -29,7 +29,7 @@
 class TQWidget;
 class KAction;
 class KActionCollection;
-class KInstance;
+class TDEInstance;
 class KXMLGUIClientPrivate;
 class KXMLGUIFactory;
 class KXMLGUIBuilder;
@@ -95,9 +95,9 @@ public:
   virtual KActionCollection* actionCollection() const;
 
   /**
-   * @return The instance ( KInstance ) for this GUI client.
+   * @return The instance ( TDEInstance ) for this GUI client.
    */
-  virtual KInstance *instance() const;
+  virtual TDEInstance *instance() const;
 
   /**
    * @return The parsed XML in a TQDomDocument, set by
@@ -271,12 +271,12 @@ protected:
   //bool addSuperClient( KXMLGUIClient * );
 
   /**
-   * Sets the instance ( KInstance) for this part.
+   * Sets the instance ( TDEInstance) for this part.
    *
    * Call this first in the inherited class constructor.
    * (At least before setXMLFile().)
    */
-  virtual void setInstance( KInstance *instance );
+  virtual void setInstance( TDEInstance *instance );
 
   /**
    * Sets the name of the rc file containing the XML for the part.

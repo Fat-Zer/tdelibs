@@ -586,12 +586,12 @@ TQString KCModuleProxy::quickHelp() const
 	}
 }
 
-const KAboutData * KCModuleProxy::aboutData() const
+const TDEAboutData * KCModuleProxy::aboutData() const
 {
 	if( !d->rootMode )
 		return realModule() ? realModule()->aboutData() : 0;
 	else
-	/* This needs fixing, perhaps cache a KAboutData copy 
+	/* This needs fixing, perhaps cache a TDEAboutData copy 
 	 * while in root mode? */
 		return 0;
 		
@@ -614,7 +614,7 @@ bool KCModuleProxy::useRootOnlyMsg() const
 	return realModule() ? realModule()->useRootOnlyMsg() : true;
 }
 
-KInstance * KCModuleProxy::instance() const
+TDEInstance * KCModuleProxy::instance() const
 {
 	return realModule() ? realModule()->instance() : 0;
 }

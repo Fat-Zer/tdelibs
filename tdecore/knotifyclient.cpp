@@ -277,7 +277,7 @@ void KNotifyClient::beep(const TQString& reason)
 }
 
 
-KInstance * KNotifyClient::instance() {
+TDEInstance * KNotifyClient::instance() {
     return KNotifyClient::Instance::current();
 }
 
@@ -322,11 +322,11 @@ static KStaticDeleter<KNotifyClient::InstanceStack > instancesDeleter;
 
 struct KNotifyClient::InstancePrivate
 {
-    KInstance *instance;
+    TDEInstance *instance;
     bool useSystemBell;
 };
 
-KNotifyClient::Instance::Instance(KInstance *instance)
+KNotifyClient::Instance::Instance(TDEInstance *instance)
 {
     d = new InstancePrivate;
     d->instance = instance;
@@ -360,7 +360,7 @@ bool KNotifyClient::Instance::useSystemBell() const
 // static methods
 
 // We always return a valid KNotifyClient::Instance here. If no special one
-// is available, we have a default-instance with kapp as KInstance.
+// is available, we have a default-instance with kapp as TDEInstance.
 // We make sure to always have that default-instance in the stack, because
 // the stack might have gotten cleared in the destructor.
 // We can't use QStack::setAutoDelete( true ), because no instance besides
@@ -370,7 +370,7 @@ KNotifyClient::Instance * KNotifyClient::Instance::currentInstance()
 	return instances()->currentInstance();
 }
 
-KInstance *KNotifyClient::Instance::current()
+TDEInstance *KNotifyClient::Instance::current()
 {
     return currentInstance()->d->instance;
 }

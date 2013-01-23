@@ -5,7 +5,7 @@
 
 int main(int argc, char *argv[]) 
 {
-  KInstance instance("ktimezonestest");
+  TDEInstance instance("ktimezonestest");
 
   if ((argc==2) && (strcmp(argv[1], "local")==0))
   {

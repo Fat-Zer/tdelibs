@@ -29,11 +29,11 @@
 
 class TQStringList;
 
-class KAboutData;
+class TDEAboutData;
 class KConfigDialogManager;
 class KConfigSkeleton;
 class KCModulePrivate;
-class KInstance;
+class TDEInstance;
 
 /**
  * The base class for control center modules.
@@ -91,7 +91,7 @@ public:
    */
   KCModule(TQWidget *parent=0, const char *name=0, const TQStringList &args=TQStringList() );
 
-  KCModule(KInstance *instance, TQWidget *parent=0, const TQStringList &args=TQStringList() );
+  KCModule(TDEInstance *instance, TQWidget *parent=0, const TQStringList &args=TQStringList() );
 
   /*
    * Destroys the module.
@@ -182,15 +182,15 @@ public:
    * If you override you should  have it return a pointer to a constant.
    *
    *
-   * @returns the KAboutData for this module
+   * @returns the TDEAboutData for this module
    */
-  virtual const KAboutData *aboutData() const;
+  virtual const TDEAboutData *aboutData() const;
   
   /**
-   * This sets the KAboutData returned by aboutData()
+   * This sets the TDEAboutData returned by aboutData()
    * @since 3.3
    */
-   void setAboutData( KAboutData* about );
+   void setAboutData( TDEAboutData* about );
 
   /**
    * Indicate which buttons will be used.
@@ -228,7 +228,7 @@ public:
    */
   bool useRootOnlyMsg() const;
 
-  KInstance *instance() const;
+  TDEInstance *instance() const;
 
   /**
    * @return a list of @ref KConfigDialogManager's in use, if any.

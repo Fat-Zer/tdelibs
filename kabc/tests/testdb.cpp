@@ -12,7 +12,7 @@ using namespace KABC;
 
 int main(int argc,char **argv)
 {
-  KAboutData aboutData("testdb","TestKabcDB","0.1");
+  TDEAboutData aboutData("testdb","TestKabcDB","0.1");
   TDECmdLineArgs::init(argc,argv,&aboutData);
 
 //  TDEApplication app( false, false );

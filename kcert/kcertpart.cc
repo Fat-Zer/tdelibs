@@ -131,7 +131,7 @@ KCertPart::KCertPart(TQWidget *parentWidget, const char *widgetName,
                      TQObject *parent, const char *name,
 		     const TQStringList & /*args*/ ) 
           : KParts::ReadWritePart(parent, name) {
-KInstance *instance = new KInstance("KCertPart");
+TDEInstance *instance = new TDEInstance("KCertPart");
 TQGridLayout *grid;
 setInstance(instance);
 
@@ -874,9 +874,9 @@ KMessageBox::information(_frame, i18n("Certificates have been successfully impor
 }
 
 
-KAboutData *KCertPart::createAboutData()
+TDEAboutData *KCertPart::createAboutData()
 {
-    return new KAboutData("KCertPart", I18N_NOOP("TDE Certificate Part"), "1.0");
+    return new TDEAboutData("KCertPart", I18N_NOOP("TDE Certificate Part"), "1.0");
 }
 
 #include "kcertpart.moc"

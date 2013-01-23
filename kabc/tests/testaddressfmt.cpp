@@ -19,7 +19,7 @@ static const KCmdLineOptions options[] =
 
 int main(int argc,char **argv)
 {
-  KAboutData aboutData("testaddressfmt","TestAddressFormat","0.1");
+  TDEAboutData aboutData("testaddressfmt","TestAddressFormat","0.1");
   TDECmdLineArgs::init(argc, argv, &aboutData);
   TDECmdLineArgs::addCmdLineOptions(options);
 

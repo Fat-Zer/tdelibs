@@ -27,7 +27,7 @@
 int
 main(int argc, char *argv[])
 {
-   KAboutData about("kapptest", "kapptest", "version");
+   TDEAboutData about("kapptest", "kapptest", "version");
    TDECmdLineArgs::init(argc, argv, &about);
 
    TDEApplication a;

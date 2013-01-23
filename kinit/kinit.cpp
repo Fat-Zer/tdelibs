@@ -113,7 +113,7 @@ static Display *X11display = 0;
 static int X11_startup_notify_fd = -1;
 static Display *X11_startup_notify_display = 0;
 #endif
-static const KInstance *s_instance = 0;
+static const TDEInstance *s_instance = 0;
 #define MAX_SOCK_FILE 255
 static char sock_file[MAX_SOCK_FILE];
 static char sock_file_old[MAX_SOCK_FILE];
@@ -1752,14 +1752,14 @@ int main(int argc, char **argv, char **envp)
       setsid();
 
    /** Create our instance **/
-   s_instance = new KInstance("tdeinit");
+   s_instance = new TDEInstance("tdeinit");
 
    /** Prepare to change process name **/
    tdeinit_initsetproctitle(argc, argv, envp);
    tdeinit_library_path();
    // Don't make our instance the global instance
    // (do it only after tdeinit_library_path, that one indirectly uses KConfig,
-   // which seems to be buggy and always use KGlobal instead of the maching KInstance)
+   // which seems to be buggy and always use KGlobal instead of the maching TDEInstance)
    KGlobal::_instance = 0L;
    // don't change envvars before tdeinit_initsetproctitle()
    unsetenv("LD_BIND_NOW");

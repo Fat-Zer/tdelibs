@@ -29,7 +29,7 @@ class TestSubResource : public TestResource
 
 int main( int argc, char **argv )
 {
-  KAboutData aboutData( "testresources", "Kresource Test", "0" );
+  TDEAboutData aboutData( "testresources", "Kresource Test", "0" );
   TDECmdLineArgs::init( argc, argv, &aboutData );
 
   TDEApplication app;

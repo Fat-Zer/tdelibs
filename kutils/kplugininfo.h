@@ -133,7 +133,7 @@ class KUTILS_EXPORT KPluginInfo
         /**
          * @return A list of KPluginInfo objects for the KParts plugins of an
          * instance. You only need the name of the instance not a pointer to the
-         * KInstance object.
+         * TDEInstance object.
          */
         static KPluginInfo::List fromKPartsInstanceName( const TQString &, KConfig * config = 0, const TQString & group = TQString::null );
 

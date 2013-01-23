@@ -30,7 +30,7 @@ int main( int argc, char** argv )
              "Usage : ./kmimemagictest file\n");
       return 1;
   }
-  KInstance blah("kmimemagictest");
+  TDEInstance blah("kmimemagictest");
 
   TQString file = TQString::fromLocal8Bit( argv[1] );
 

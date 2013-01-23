@@ -1687,19 +1687,19 @@ TQString KStandardDirs::localxdgconfdir() const
 
 // just to make code more readable without macros
 TQString locate( const char *type,
-		const TQString& filename, const KInstance* inst )
+		const TQString& filename, const TDEInstance* inst )
 {
     return inst->dirs()->findResource(type, filename);
 }
 
 TQString locateLocal( const char *type,
-	             const TQString& filename, const KInstance* inst )
+	             const TQString& filename, const TDEInstance* inst )
 {
     return locateLocal(type, filename, true, inst);
 }
 
 TQString locateLocal( const char *type,
-	             const TQString& filename, bool createDir, const KInstance* inst )
+	             const TQString& filename, bool createDir, const TDEInstance* inst )
 {
     // try to find slashes. If there are some, we have to
     // create the subdir first

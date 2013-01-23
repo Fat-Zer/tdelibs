@@ -32,13 +32,13 @@ namespace KParts
             s_self = 0;
         }
 
-        static KInstance *instance();
-        static KAboutData *aboutData();
+        static TDEInstance *instance();
+        static TDEAboutData *aboutData();
 
     protected:
-        virtual KInstance *createInstance()
+        virtual TDEInstance *createInstance()
         {
-            return new KInstance( aboutData() );
+            return new TDEInstance( aboutData() );
         }
 
         virtual void virtual_hook( int id, void *data )
@@ -54,30 +54,30 @@ namespace KParts
 
     private:
         static GenericFactoryBase<T> *s_self;
-        static KInstance *s_instance;
-        static KAboutData *s_aboutData;
+        static TDEInstance *s_instance;
+        static TDEAboutData *s_aboutData;
     };
 
     /**
      * A template for a KParts::Factory implementation. It implements the pure virtual
      * createPartObject method by instantiating the template argument when requested
-     * through the className field. In addition it is a container for a part's KInstance
-     * object, by providing a static KInstance *instance() method.
+     * through the className field. In addition it is a container for a part's TDEInstance
+     * object, by providing a static TDEInstance *instance() method.
      *
      * The template argument has to inherit from KParts::Part and has to implement two methods:
      *  1) There needs to be a public constructor with the following signature:
      *         MyPart( TQWidget *parentWidget, const char *widgetName, TQObject *parent, const char *name, const TQStringList& args )
      *
-     *  2) It needs to provide one static method to create a KAboutData object per
+     *  2) It needs to provide one static method to create a TDEAboutData object per
      *     request, holding information about the component's name, its authors, license, etc.
      *     The signature of that static method has to be
-     *         KAboutData *createAboutData()
+     *         TDEAboutData *createAboutData()
      *
-     * The template will take care of memory management of the KInstance and the KAboutData object,
+     * The template will take care of memory management of the TDEInstance and the TDEAboutData object,
      * meaning ownership of what createAboutData returns is passed to the caller (this template) .
      *
      * For advanced use you can also inherit from the template and re-implement additionally the
-     * virtual KInstance *createInstance() method, for example in case you want to extend the
+     * virtual TDEInstance *createInstance() method, for example in case you want to extend the
      * paths of your instance's KStandardDirs object.
      *
      * If a KParts::ReadOnlyPart is requested through this factory and the template argument
@@ -159,26 +159,26 @@ namespace KParts
      * @internal
      */
     template <class T>
-    KInstance *GenericFactoryBase<T>::s_instance = 0;
+    TDEInstance *GenericFactoryBase<T>::s_instance = 0;
 
     /**
      * @internal
      */
     template <class T>
-    KAboutData *GenericFactoryBase<T>::s_aboutData = 0;
+    TDEAboutData *GenericFactoryBase<T>::s_aboutData = 0;
 
     /**
      * @internal
      */
     template <class T>
-    KInstance *GenericFactoryBase<T>::instance()
+    TDEInstance *GenericFactoryBase<T>::instance()
     {
         if ( !s_instance )
         {
             if ( s_self )
                 s_instance = s_self->createInstance();
             else
-                s_instance = new KInstance( aboutData() );
+                s_instance = new TDEInstance( aboutData() );
         }
         return s_instance;
     }
@@ -187,7 +187,7 @@ namespace KParts
      * @internal
      */
     template <class T>
-    KAboutData *GenericFactoryBase<T>::aboutData()
+    TDEAboutData *GenericFactoryBase<T>::aboutData()
     {
         if ( !s_aboutData )
             s_aboutData = T::createAboutData();

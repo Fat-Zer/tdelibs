@@ -50,7 +50,7 @@ public:
   {
   }
 
-  KInstance *m_instance;
+  TDEInstance *m_instance;
 
   TQDomDocument m_doc;
   KActionCollection *m_actionCollection;
@@ -120,7 +120,7 @@ KAction *KXMLGUIClient::action( const TQDomElement &element ) const
   return actionCollection()->action( element.attribute( attrName ).latin1() );
 }
 
-KInstance *KXMLGUIClient::instance() const
+TDEInstance *KXMLGUIClient::instance() const
 {
   return d->m_instance;
 }
@@ -154,7 +154,7 @@ void KXMLGUIClient::reloadXML()
         setXMLFile( file );
 }
 
-void KXMLGUIClient::setInstance( KInstance *instance )
+void KXMLGUIClient::setInstance( TDEInstance *instance )
 {
   d->m_instance = instance;
   actionCollection()->setInstance( instance );

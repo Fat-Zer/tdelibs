@@ -48,10 +48,10 @@ static KCmdLineOptions options[] =
 
 int main( int argc, char **argv )
 {    
-    KInstance instance("modrunner");
+    TDEInstance instance("modrunner");
 
-    KAboutData about("KUnitTest Module Runner", I18N_NOOP("KUnitTest ModRunner"), version, description,
-                     KAboutData::License_BSD, "(C) 2005 Jeroen Wijnhout", 0, 0,
+    TDEAboutData about("KUnitTest Module Runner", I18N_NOOP("KUnitTest ModRunner"), version, description,
+                     TDEAboutData::License_BSD, "(C) 2005 Jeroen Wijnhout", 0, 0,
                      "Jeroen.Wijnhout@kdemail.net");
 
     TDECmdLineArgs::init(argc, argv, &about);

@@ -20,7 +20,7 @@ static KCmdLineOptions options[] =
 
 int main(int argc, char **argv)
 {
-	KAboutData aboutData( "kiotest", I18N_NOOP("KIOTest"), I18N_NOOP("0.1"), "", KAboutData::License_GPL, "");
+	TDEAboutData aboutData( "kiotest", I18N_NOOP("KIOTest"), I18N_NOOP("0.1"), "", TDEAboutData::License_GPL, "");
 							  
 	TDECmdLineArgs::init(argc,argv,&aboutData);
 	TDECmdLineArgs::addCmdLineOptions(options); 	

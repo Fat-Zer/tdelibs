@@ -1291,95 +1291,95 @@ TQPixmap* KIconFactory::createPixmap( const TQIconSet&, TQIconSet::Size, TQIconS
 // Easy access functions
 
 TQPixmap DesktopIcon(const TQString& name, int force_size, int state,
-	KInstance *instance)
+	TDEInstance *instance)
 {
     KIconLoader *loader = instance->iconLoader();
     return loader->loadIcon(name, KIcon::Desktop, force_size, state);
 }
 
-TQPixmap DesktopIcon(const TQString& name, KInstance *instance)
+TQPixmap DesktopIcon(const TQString& name, TDEInstance *instance)
 {
     return DesktopIcon(name, 0, KIcon::DefaultState, instance);
 }
 
-TQIconSet DesktopIconSet(const TQString& name, int force_size, KInstance *instance)
+TQIconSet DesktopIconSet(const TQString& name, int force_size, TDEInstance *instance)
 {
     KIconLoader *loader = instance->iconLoader();
     return loader->loadIconSet( name, KIcon::Desktop, force_size );
 }
 
 TQPixmap BarIcon(const TQString& name, int force_size, int state,
-	KInstance *instance)
+	TDEInstance *instance)
 {
     KIconLoader *loader = instance->iconLoader();
     return loader->loadIcon(name, KIcon::Toolbar, force_size, state);
 }
 
-TQPixmap BarIcon(const TQString& name, KInstance *instance)
+TQPixmap BarIcon(const TQString& name, TDEInstance *instance)
 {
     return BarIcon(name, 0, KIcon::DefaultState, instance);
 }
 
-TQIconSet BarIconSet(const TQString& name, int force_size, KInstance *instance)
+TQIconSet BarIconSet(const TQString& name, int force_size, TDEInstance *instance)
 {
     KIconLoader *loader = instance->iconLoader();
     return loader->loadIconSet( name, KIcon::Toolbar, force_size );
 }
 
 TQPixmap SmallIcon(const TQString& name, int force_size, int state,
-	KInstance *instance)
+	TDEInstance *instance)
 {
     KIconLoader *loader = instance->iconLoader();
     return loader->loadIcon(name, KIcon::Small, force_size, state);
 }
 
-TQPixmap SmallIcon(const TQString& name, KInstance *instance)
+TQPixmap SmallIcon(const TQString& name, TDEInstance *instance)
 {
     return SmallIcon(name, 0, KIcon::DefaultState, instance);
 }
 
-TQIconSet SmallIconSet(const TQString& name, int force_size, KInstance *instance)
+TQIconSet SmallIconSet(const TQString& name, int force_size, TDEInstance *instance)
 {
     KIconLoader *loader = instance->iconLoader();
     return loader->loadIconSet( name, KIcon::Small, force_size );
 }
 
 TQPixmap MainBarIcon(const TQString& name, int force_size, int state,
-	KInstance *instance)
+	TDEInstance *instance)
 {
     KIconLoader *loader = instance->iconLoader();
     return loader->loadIcon(name, KIcon::MainToolbar, force_size, state);
 }
 
-TQPixmap MainBarIcon(const TQString& name, KInstance *instance)
+TQPixmap MainBarIcon(const TQString& name, TDEInstance *instance)
 {
     return MainBarIcon(name, 0, KIcon::DefaultState, instance);
 }
 
-TQIconSet MainBarIconSet(const TQString& name, int force_size, KInstance *instance)
+TQIconSet MainBarIconSet(const TQString& name, int force_size, TDEInstance *instance)
 {
     KIconLoader *loader = instance->iconLoader();
     return loader->loadIconSet( name, KIcon::MainToolbar, force_size );
 }
 
-TQPixmap UserIcon(const TQString& name, int state, KInstance *instance)
+TQPixmap UserIcon(const TQString& name, int state, TDEInstance *instance)
 {
     KIconLoader *loader = instance->iconLoader();
     return loader->loadIcon(name, KIcon::User, 0, state);
 }
 
-TQPixmap UserIcon(const TQString& name, KInstance *instance)
+TQPixmap UserIcon(const TQString& name, TDEInstance *instance)
 {
     return UserIcon(name, KIcon::DefaultState, instance);
 }
 
-TQIconSet UserIconSet(const TQString& name, KInstance *instance)
+TQIconSet UserIconSet(const TQString& name, TDEInstance *instance)
 {
     KIconLoader *loader = instance->iconLoader();
     return loader->loadIconSet( name, KIcon::User );
 }
 
-int IconSize(KIcon::Group group, KInstance *instance)
+int IconSize(KIcon::Group group, TDEInstance *instance)
 {
     KIconLoader *loader = instance->iconLoader();
     return loader->currentSize(group);

@@ -38,26 +38,26 @@
 #ifndef NDEBUG
   #include <assert.h>
   #include <tqptrdict.h>
-  static TQPtrList<KInstance> *allInstances = 0;
+  static TQPtrList<TDEInstance> *allInstances = 0;
   static TQPtrDict<TQCString> *allOldInstances = 0;
-  #define DEBUG_ADD do { if (!allInstances) { allInstances = new TQPtrList<KInstance>(); allOldInstances = new TQPtrDict<TQCString>(); } allInstances->append(this); allOldInstances->insert( this, new TQCString( _name)); } while (false);
+  #define DEBUG_ADD do { if (!allInstances) { allInstances = new TQPtrList<TDEInstance>(); allOldInstances = new TQPtrDict<TQCString>(); } allInstances->append(this); allOldInstances->insert( this, new TQCString( _name)); } while (false);
   #define DEBUG_REMOVE do { allInstances->removeRef(this); } while (false);
-  #define DEBUG_CHECK_ALIVE do { if (!allInstances->contains((KInstance*)this)) { TQCString *old = allOldInstances->find((KInstance*)this); tqWarning("ACCESSING DELETED KINSTANCE! (%s)", old ? old->data() : "<unknown>"); assert(false); } } while (false);
+  #define DEBUG_CHECK_ALIVE do { if (!allInstances->contains((TDEInstance*)this)) { TQCString *old = allOldInstances->find((TDEInstance*)this); tqWarning("ACCESSING DELETED KINSTANCE! (%s)", old ? old->data() : "<unknown>"); assert(false); } } while (false);
 #else
   #define DEBUG_ADD
   #define DEBUG_REMOVE
   #define DEBUG_CHECK_ALIVE
 #endif
 
-class KInstancePrivate
+class TDEInstancePrivate
 {
 public:
-    KInstancePrivate ()
+    TDEInstancePrivate ()
     {
         mimeSourceFactory = 0L;
     }
 
-    ~KInstancePrivate ()
+    ~TDEInstancePrivate ()
     {
         delete mimeSourceFactory;
     }
@@ -68,13 +68,13 @@ public:
     KSharedConfig::Ptr sharedConfig;
 };
 
-KInstance::KInstance( const TQCString& name)
+TDEInstance::TDEInstance( const TQCString& name)
   : _dirs (0L),
     _config (0L),
     _iconLoader (0L),
     _hardwaredevices (0L),
     _networkmanager (0L),
-    _name( name ), _aboutData( new KAboutData( name, "", 0 ) ), m_configReadOnly(false)
+    _name( name ), _aboutData( new TDEAboutData( name, "", 0 ) ), m_configReadOnly(false)
 {
     DEBUG_ADD
     Q_ASSERT(!name.isEmpty());
@@ -84,11 +84,11 @@ KInstance::KInstance( const TQCString& name)
       KGlobal::setActiveInstance(this);
     }
 
-    d = new KInstancePrivate ();
+    d = new TDEInstancePrivate ();
     d->ownAboutdata = true;
 }
 
-KInstance::KInstance( const KAboutData * aboutData )
+TDEInstance::TDEInstance( const TDEAboutData * aboutData )
   : _dirs (0L),
     _config (0L),
     _iconLoader (0L),
@@ -105,11 +105,11 @@ KInstance::KInstance( const KAboutData * aboutData )
       KGlobal::setActiveInstance(this);
     }
 
-    d = new KInstancePrivate ();
+    d = new TDEInstancePrivate ();
     d->ownAboutdata = false;
 }
 
-KInstance::KInstance( KInstance* src )
+TDEInstance::TDEInstance( TDEInstance* src )
   : _dirs ( src->_dirs ),
     _config ( src->_config ),
     _iconLoader ( src->_iconLoader ),
@@ -126,7 +126,7 @@ KInstance::KInstance( KInstance* src )
       KGlobal::setActiveInstance(this);
     }
 
-    d = new KInstancePrivate ();
+    d = new TDEInstancePrivate ();
     d->ownAboutdata = src->d->ownAboutdata;
     d->sharedConfig = src->d->sharedConfig;
 
@@ -139,7 +139,7 @@ KInstance::KInstance( KInstance* src )
     delete src;
 }
 
-KInstance::~KInstance()
+TDEInstance::~TDEInstance()
 {
     DEBUG_CHECK_ALIVE
 
@@ -172,7 +172,7 @@ KInstance::~KInstance()
 }
 
 
-KStandardDirs *KInstance::dirs() const
+KStandardDirs *TDEInstance::dirs() const
 {
     DEBUG_CHECK_ALIVE
     if( _dirs == 0 ) {
@@ -190,12 +190,12 @@ KStandardDirs *KInstance::dirs() const
 extern bool kde_kiosk_exception;
 extern bool kde_kiosk_admin;
 
-void KInstance::setConfigReadOnly(bool ro)
+void TDEInstance::setConfigReadOnly(bool ro)
 {
     m_configReadOnly = ro;
 }
 
-KConfig	*KInstance::config() const
+KConfig	*TDEInstance::config() const
 {
     DEBUG_CHECK_ALIVE
     if( _config == 0 ) {
@@ -244,7 +244,7 @@ KConfig	*KInstance::config() const
     return _config;
 }
 
-KSharedConfig *KInstance::sharedConfig() const
+KSharedConfig *TDEInstance::sharedConfig() const
 {
     DEBUG_CHECK_ALIVE
     if (_config == 0)
@@ -253,13 +253,13 @@ KSharedConfig *KInstance::sharedConfig() const
     return d->sharedConfig;
 }
 
-void KInstance::setConfigName(const TQString &configName)
+void TDEInstance::setConfigName(const TQString &configName)
 {
     DEBUG_CHECK_ALIVE
     d->configName = configName;
 }
 
-KIconLoader *KInstance::iconLoader() const
+KIconLoader *TDEInstance::iconLoader() const
 {
     DEBUG_CHECK_ALIVE
     if( _iconLoader == 0 ) {
@@ -270,7 +270,7 @@ KIconLoader *KInstance::iconLoader() const
     return _iconLoader;
 }
 
-TDEHardwareDevices *KInstance::hardwareDevices() const
+TDEHardwareDevices *TDEInstance::hardwareDevices() const
 {
     DEBUG_CHECK_ALIVE
     if( _hardwaredevices == 0 ) {
@@ -280,7 +280,7 @@ TDEHardwareDevices *KInstance::hardwareDevices() const
     return _hardwaredevices;
 }
 
-TDEGlobalNetworkManager *KInstance::networkManager() const
+TDEGlobalNetworkManager *TDEInstance::networkManager() const
 {
     DEBUG_CHECK_ALIVE
     if( _networkmanager == 0 ) {
@@ -290,37 +290,37 @@ TDEGlobalNetworkManager *KInstance::networkManager() const
     return _networkmanager;
 }
 
-void KInstance::newIconLoader() const
+void TDEInstance::newIconLoader() const
 {
     DEBUG_CHECK_ALIVE
     KIconTheme::reconfigure();
     _iconLoader->reconfigure( _name, dirs() );
 }
 
-const KAboutData * KInstance::aboutData() const
+const TDEAboutData * TDEInstance::aboutData() const
 {
     DEBUG_CHECK_ALIVE
     return _aboutData;
 }
 
-TQCString KInstance::instanceName() const
+TQCString TDEInstance::instanceName() const
 {
     DEBUG_CHECK_ALIVE
     return _name;
 }
 
-KMimeSourceFactory* KInstance::mimeSourceFactory () const
+KMimeSourceFactory* TDEInstance::mimeSourceFactory () const
 {
   DEBUG_CHECK_ALIVE
   if (!d->mimeSourceFactory)
   {
     d->mimeSourceFactory = new KMimeSourceFactory(_iconLoader);
-    d->mimeSourceFactory->setInstance(const_cast<KInstance *>(this));
+    d->mimeSourceFactory->setInstance(const_cast<TDEInstance *>(this));
   }
 
   return d->mimeSourceFactory;
 }
 
-void KInstance::virtual_hook( int, void* )
+void TDEInstance::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 

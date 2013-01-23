@@ -255,7 +255,7 @@ void KToolBar::init( bool readConfig, bool honorStyle )
 }
 
 int KToolBar::insertButton(const TQString& icon, int id, bool enabled,
-                            const TQString& text, int index, KInstance *_instance )
+                            const TQString& text, int index, TDEInstance *_instance )
 {
     KToolBarButton *button = new KToolBarButton( icon, id, this, 0, text, _instance );
 
@@ -268,7 +268,7 @@ int KToolBar::insertButton(const TQString& icon, int id, bool enabled,
 
 int KToolBar::insertButton(const TQString& icon, int id, const char *signal,
                             const TQObject *receiver, const char *slot,
-                            bool enabled, const TQString& text, int index, KInstance *_instance )
+                            bool enabled, const TQString& text, int index, TDEInstance *_instance )
 {
     KToolBarButton *button = new KToolBarButton( icon, id, this, 0, text, _instance);
     insertWidgetInternal( button, index, id );

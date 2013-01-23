@@ -87,7 +87,7 @@ class KateFactory
      * public accessor to the instance
      * @return instance
      */
-    inline KInstance *instance () { return &m_instance; };
+    inline TDEInstance *instance () { return &m_instance; };
 
     /**
      * register document at the factory
@@ -221,12 +221,12 @@ class KateFactory
     /**
      * about data (authors and more)
      */
-    KAboutData m_aboutData;
+    TDEAboutData m_aboutData;
 
     /**
      * our kinstance
      */
-    KInstance m_instance;
+    TDEInstance m_instance;
 
     /**
      * registered docs

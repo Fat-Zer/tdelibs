@@ -72,7 +72,7 @@ class TDEApplication;
 class KUniqueApplication;
 class KCmdLineParsedOptions;
 class KCmdLineParsedArgs;
-class KAboutData;
+class TDEAboutData;
 class TDECmdLineArgsPrivate;
 
 /**
@@ -263,17 +263,17 @@ public:
    * Initialize class.
    *
    * This function should be called as the very first thing in
-   *  your application. It uses KAboutData to replace some of the
+   *  your application. It uses TDEAboutData to replace some of the
    *  arguments that would otherwise be required.
    *
    * @param _argc As passed to @p main(...).
    * @param _argv As passed to @p main(...).
-   * @param about A KAboutData object describing your program.
+   * @param about A TDEAboutData object describing your program.
    * @param noKApp Set this true to not add commandline options for
    *        TQApplication / TDEApplication
    */
   static void init(int _argc, char **_argv,
-                   const KAboutData *about, bool noKApp = false);
+                   const TDEAboutData *about, bool noKApp = false);
 
   /**
    * Initialize Class
@@ -281,14 +281,14 @@ public:
    * This function should be called as the very first thing in your
    * application. This method will rarely be used, since it doesn't
    * provide any argument parsing. It does provide access to the
-   * KAboutData information.
+   * TDEAboutData information.
    * This method is exactly the same as calling
-   * init(0,0, const KAboutData *about, true).
+   * init(0,0, const TDEAboutData *about, true).
    *
    * @param about the about data.
-   * \see KAboutData
+   * \see TDEAboutData
    */
-  static void init(const KAboutData *about);
+  static void init(const TDEAboutData *about);
 
   /**
    * Add options to your application.
@@ -674,7 +674,7 @@ private:
   bool isQt;
 
   static TDECmdLineArgsList *argsList; // All options.
-  static const KAboutData *about;
+  static const TDEAboutData *about;
 
   static int argc; // The original argc
   static char **argv; // The original argv

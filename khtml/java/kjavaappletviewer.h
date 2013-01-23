@@ -39,8 +39,8 @@ class TQTable;
 class TQLabel;
 class KJavaProcess;
 class KJavaAppletViewer;
-class KAboutData;
-class KInstance;
+class TDEAboutData;
+class TDEInstance;
 class KConfig;
 class CoverWidget;
 
@@ -86,7 +86,7 @@ public:
               TQObject * parent, const char * name, const TQStringList &args);
     ~KJavaAppletViewer ();
     CoverWidget * view () const { return m_view; }
-    static KAboutData* createAboutData ();
+    static TDEAboutData* createAboutData ();
 
     KJavaAppletViewerBrowserExtension * browserextension() const
         { return m_browserextension; }
@@ -126,9 +126,9 @@ public:
         (TQWidget *wparent, const char *wname,
          TQObject *parent, const char *name,
          const char *className, const TQStringList &args);
-    static KInstance * instance () { return s_instance; }
+    static TDEInstance * instance () { return s_instance; }
 private:
-    static KInstance * s_instance;
+    static TDEInstance * s_instance;
 };
 
 class AppletParameterDialog : public KDialogBase {

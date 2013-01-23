@@ -64,9 +64,9 @@ KAction* create( StdAction id, const char *name, const TQObject *recvr, const ch
 		 case Preferences:
 		 case HelpContents:
 			{
-			const KAboutData *aboutData = KGlobal::instance()->aboutData();
+			const TDEAboutData *aboutData = KGlobal::instance()->aboutData();
 			/* TODO KDE4
-			const KAboutData *aboutData;
+			const TDEAboutData *aboutData;
 			if ( parent )
 			    aboutData = parent->instance()->aboutData();
 			else

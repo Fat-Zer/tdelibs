@@ -8,7 +8,7 @@
 
 int main ( int argc, char** argv )
 {
-    KAboutData aboutData("kiopassdlgtest", "KIO Password Dialog Test", "1.0");
+    TDEAboutData aboutData("kiopassdlgtest", "KIO Password Dialog Test", "1.0");
     TDECmdLineArgs::init(argc, argv, &aboutData);
     TDEApplication app;
 

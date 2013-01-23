@@ -28,7 +28,7 @@ class TQCString;
 class TQSignal;
 class TQStrList;
 template<class T> class KStaticDeleter;
-class KInstance;
+class TDEInstance;
 class KConfig;
 
 namespace KSettings
@@ -61,17 +61,17 @@ class KUTILS_EXPORT Dispatcher : public TQObject
 
         /**
          * Register a slot to be called when the configuration for the instance
-         * has changed. @p instance is the KInstance object
+         * has changed. @p instance is the TDEInstance object
          * that is passed to KGenericFactory (if it is used). You can query
          * it with KGenericFactory<YourClassName>::instance().
          * instance->instanceName() is also the same name that is put into the
          * .desktop file of the KCMs for the X-TDE-ParentComponents.
          *
-         * @param instance     The KInstance object
+         * @param instance     The TDEInstance object
          * @param recv         The object that should receive the signal
          * @param slot         The slot to be called: TQT_SLOT( slotName() )
          */
-        void registerInstance( KInstance * instance, TQObject * recv, const char * slot );
+        void registerInstance( TDEInstance * instance, TQObject * recv, const char * slot );
 
         /**
          * @return the KConfig object that belongs to the instanceName
@@ -85,10 +85,10 @@ class KUTILS_EXPORT Dispatcher : public TQObject
         TQStrList instanceNames() const;
 
 //X         /**
-//X          * @return The KInstance object belonging to the instance name you pass
+//X          * @return The TDEInstance object belonging to the instance name you pass
 //X          * (only works for registered instances of course).
 //X          */
-//X         KInstance * instanceForName( const TQCString & instanceName );
+//X         TDEInstance * instanceForName( const TQCString & instanceName );
 
     public slots:
         /**
@@ -116,7 +116,7 @@ class KUTILS_EXPORT Dispatcher : public TQObject
         static Dispatcher * m_self;
 
         struct InstanceInfo {
-            KInstance * instance;
+            TDEInstance * instance;
             TQSignal * signal;
             int count;
         };

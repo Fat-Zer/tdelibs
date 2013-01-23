@@ -99,7 +99,7 @@ extern "C" {
 int kdemain( int argc, char **argv )
 {
   KLocale::setMainCatalogue("tdelibs");
-  KInstance instance( "kio_http" );
+  TDEInstance instance( "kio_http" );
   ( void ) KGlobal::locale();
 
   if (argc != 4)

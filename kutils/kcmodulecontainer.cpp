@@ -182,7 +182,7 @@ void KCModuleContainer::tabSwitched( TQWidget * module )
 		d->btnRootMode->setEnabled( false );
 
 	setQuickHelp( mod->quickHelp() );
-	setAboutData( const_cast<KAboutData*>(mod->aboutData()) );
+	setAboutData( const_cast<TDEAboutData*>(mod->aboutData()) );
 
 }
 

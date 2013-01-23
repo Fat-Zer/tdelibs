@@ -60,8 +60,8 @@ int main(int argc, char *argv[])
   {
     tqDebug("argv[%d] = %s", i, argv[i]);
   }
-  KAboutData aboutData( "testqtargs", I18N_NOOP("testqtargs"),
-    "1.0", I18N_NOOP("testqtargs"), KAboutData::License_GPL,
+  TDEAboutData aboutData( "testqtargs", I18N_NOOP("testqtargs"),
+    "1.0", I18N_NOOP("testqtargs"), TDEAboutData::License_GPL,
     "", "", "", "");
 
   TDECmdLineArgs::init(argc, argv, &aboutData);

@@ -41,7 +41,7 @@ public:
   }
 
   KIconLoader *m_iconLoader;
-  KInstance *m_instance;
+  TDEInstance *m_instance;
 };
 
 KMimeSourceFactory::KMimeSourceFactory (KIconLoader* loader)
@@ -96,7 +96,7 @@ TQString KMimeSourceFactory::makeAbsolute (const TQString& absOrRelName, const T
   return result;
 }
 
-void KMimeSourceFactory::setInstance(KInstance *instance)
+void KMimeSourceFactory::setInstance(TDEInstance *instance)
 {
   d->m_instance = instance;
 }

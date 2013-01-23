@@ -5,7 +5,7 @@
 #include <kparts/genericfactory.h>
 #include <kparts/part.h>
 
-class KAboutData;
+class TDEAboutData;
 class TQMultiLineEdit;
 
 /**
@@ -24,7 +24,7 @@ public:
 
   virtual void setReadWrite( bool rw );
 
-  static KAboutData* createAboutData();
+  static TDEAboutData* createAboutData();
 
 protected:
   virtual bool openFile();

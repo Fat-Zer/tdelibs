@@ -312,7 +312,7 @@ KActionCollection* KSystemTray::actionCollection()
     return d->actionCollection;
 }
 
-TQPixmap KSystemTray::loadIcon( const TQString &icon, KInstance *instance )
+TQPixmap KSystemTray::loadIcon( const TQString &icon, TDEInstance *instance )
 {
     KConfig *appCfg = kapp->config();
     KConfigGroupSaver configSaver(appCfg, "System Tray");
@@ -320,7 +320,7 @@ TQPixmap KSystemTray::loadIcon( const TQString &icon, KInstance *instance )
     return instance->iconLoader()->loadIcon( icon, KIcon::Panel, iconWidth );
 }
 
-TQPixmap KSystemTray::loadSizedIcon( const TQString &icon, int iconWidth, KInstance *instance )
+TQPixmap KSystemTray::loadSizedIcon( const TQString &icon, int iconWidth, TDEInstance *instance )
 {
     return instance->iconLoader()->loadIcon( icon, KIcon::Panel, iconWidth );
 }

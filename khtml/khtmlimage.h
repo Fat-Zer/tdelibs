@@ -27,7 +27,7 @@
 #include "misc/loader_client.h"
 
 class KHTMLPart;
-class KInstance;
+class TDEInstance;
 
 namespace khtml
 {
@@ -48,10 +48,10 @@ public:
                                             TQObject *parent, const char *name,
                                             const char *className, const TQStringList &args );
 
-    static KInstance *instance() { return s_instance; }
+    static TDEInstance *instance() { return s_instance; }
 
 private:
-    static KInstance *s_instance;
+    static TDEInstance *s_instance;
 };
 
 /**

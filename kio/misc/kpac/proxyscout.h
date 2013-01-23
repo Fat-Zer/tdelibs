@@ -29,7 +29,7 @@
 #include <time.h>
 
 class DCOPClientTransaction;
-class KInstance;
+class TDEInstance;
 
 namespace KPAC
 {
@@ -56,7 +56,7 @@ namespace KPAC
         bool startDownload();
         TQString handleRequest( const KURL& url );
 
-        KInstance* m_instance;
+        TDEInstance* m_instance;
         Downloader* m_downloader;
         Script* m_script;
 

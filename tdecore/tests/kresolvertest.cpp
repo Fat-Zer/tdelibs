@@ -410,7 +410,7 @@ int TestApp::newInstance(TQValueList<TQCString> /*params*/)
 
 int main(int argc, char **argv)
 {
-  KAboutData about("socktest2", "SockTest", "1.0");
+  TDEAboutData about("socktest2", "SockTest", "1.0");
   TDECmdLineArgs::init(argc, argv, &about);
   KUniqueApplication::addCmdLineOptions();
 

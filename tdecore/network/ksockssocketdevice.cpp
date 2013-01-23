@@ -469,7 +469,7 @@ void KSocksSocketDevice::initSocks()
 
   if (kapp == 0L)
     return;			// no TDEApplication, so don't initialise
-                                // this should, however, test for KInstance
+                                // this should, however, test for TDEInstance
 
   init = true;
 

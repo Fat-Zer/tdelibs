@@ -25,7 +25,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 int main( int, char*[] )
 {
-  KInstance i("test");
+  TDEInstance i("test");
   Test9 *t = new Test9( TQString::null, TQString::null );
 
   TQStringList myPathsList2 = t->myPathsList2();

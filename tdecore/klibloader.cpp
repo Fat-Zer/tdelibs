@@ -346,7 +346,7 @@ static inline TQCString makeLibName( const char* name )
 }
 
 //static
-TQString KLibLoader::findLibrary( const char * name, const KInstance * instance )
+TQString KLibLoader::findLibrary( const char * name, const TDEInstance * instance )
 {
     TQCString libname = makeLibName( name );
 

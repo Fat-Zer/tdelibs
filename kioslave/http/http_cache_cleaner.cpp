@@ -200,7 +200,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
 
    bool deleteAll = args->isSet("clear-all");
 
-   KInstance ins( appName );
+   TDEInstance ins( appName );
 
    if (!deleteAll)
    {

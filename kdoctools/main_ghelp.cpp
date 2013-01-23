@@ -25,7 +25,7 @@ extern "C"
 {
     KDE_EXPORT int kdemain( int argc, char **argv )
     {
-        KInstance instance( "kio_ghelp" );
+        TDEInstance instance( "kio_ghelp" );
         fillInstance(instance);
         (void)instance.config(); // we need this one to make sure system globals are read
 

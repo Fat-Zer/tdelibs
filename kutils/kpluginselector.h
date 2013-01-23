@@ -25,7 +25,7 @@
 
 #include <tdelibs_export.h>
 
-class KInstance;
+class TDEInstance;
 class KPluginInfo;
 class TQWidgetStack;
 class KConfig;
@@ -78,7 +78,7 @@ class KUTILS_EXPORT KPluginSelector : public TQWidget
          * The information about the plugins will be loaded from the
          * share/apps/&lt;instancename&gt;/kpartplugins directory.
          *
-         * @param instanceName The name of the KInstance of the plugin's parent.
+         * @param instanceName The name of the TDEInstance of the plugin's parent.
          * @param catname      The translated name of the category. This is the
          *                     name that is shown in the TabWidget if there is
          *                     more than one category.
@@ -107,7 +107,7 @@ class KUTILS_EXPORT KPluginSelector : public TQWidget
          * Add a list of KParts plugins. Convenience method for the one above.
          * If not set explicitely, @p config is set to instance->config().
          */
-        void addPlugins( const KInstance * instance,
+        void addPlugins( const TDEInstance * instance,
                 const TQString & catname = TQString::null,
                 const TQString & category = TQString::null,
                 KConfig * config = 0 );

@@ -24,7 +24,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 int main( int, char*[] )
 {
-  KInstance i("test");
+  TDEInstance i("test");
   Test7 *t = new Test7(42);
   delete t;
 }

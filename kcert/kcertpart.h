@@ -40,7 +40,7 @@ class KSSLPKCS12;
 class KSSLCertificate;
 class TQTabWidget;
 class TQMultiLineEdit;
-class KAboutData;
+class TDEAboutData;
 class TQGridLayout;
 
 
@@ -75,7 +75,7 @@ public:
 
   virtual void setReadWrite(bool readwrite);
 
-  static KAboutData *createAboutData();
+  static TDEAboutData *createAboutData();
 
 protected slots:
   void slotChain(int c);
@@ -115,7 +115,7 @@ protected:
 
 
   // The rest
-  KInstance *_instance;
+  TDEInstance *_instance;
   TQButton *_import, *_save, *_done, *_launch, *_importAll;
   // Store the pointer to the current item
   KSSLPKCS12 *_p12;

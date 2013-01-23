@@ -35,7 +35,7 @@
 
 int main( int argc, char **argv )
 {
-  KAboutData aboutData( "testwrite", "vCard test writer", "0.1" );
+  TDEAboutData aboutData( "testwrite", "vCard test writer", "0.1" );
 
   TDECmdLineArgs::init( argc, argv, &aboutData );
 

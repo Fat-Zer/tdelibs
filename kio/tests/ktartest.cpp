@@ -50,7 +50,7 @@ int main( int argc, char** argv )
  " ./ktartest iodevice /path/to/existing_file.tar.gz   tests KArchiveFile::device()\n");
     return 1;
   }
-  KInstance instance("ktartest");
+  TDEInstance instance("ktartest");
   TQString command = argv[1];
   if ( command == "list" )
   {

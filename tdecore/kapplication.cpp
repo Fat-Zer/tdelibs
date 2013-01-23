@@ -623,7 +623,7 @@ static TQTime* smModificationTime = 0;
 
 TDEApplication::TDEApplication( int& argc, char** argv, const TQCString& rAppName,
                             bool allowStyles, bool GUIenabled ) :
-  TQApplication( argc, argv, GUIenabled ), KInstance(rAppName),
+  TQApplication( argc, argv, GUIenabled ), TDEInstance(rAppName),
 #ifdef Q_WS_X11
   display(0L),
   argb_visual(false),
@@ -649,7 +649,7 @@ TDEApplication::TDEApplication( int& argc, char** argv, const TQCString& rAppNam
 TDEApplication::TDEApplication( bool allowStyles, bool GUIenabled ) :
 //  TQApplication( *TDECmdLineArgs::tqt_argc(), *TDECmdLineArgs::tqt_argv(), TRUE ),	// Qt4 requires that there always be a GUI
   TQApplication( *TDECmdLineArgs::tqt_argc(), *TDECmdLineArgs::tqt_argv(), GUIenabled ),	// We need to be able to run command line apps
-  KInstance( TDECmdLineArgs::about),
+  TDEInstance( TDECmdLineArgs::about),
 #ifdef Q_WS_X11
   display(0L),
   argb_visual(false),
@@ -674,7 +674,7 @@ TDEApplication::TDEApplication( bool allowStyles, bool GUIenabled ) :
 TDEApplication::TDEApplication( Display *dpy, bool allowStyles ) :
   TQApplication( dpy, *TDECmdLineArgs::tqt_argc(), *TDECmdLineArgs::tqt_argv(),
                 getX11RGBAVisual(dpy), getX11RGBAColormap(dpy) ),
-  KInstance( TDECmdLineArgs::about), display(0L), d (new TDEApplicationPrivate)
+  TDEInstance( TDECmdLineArgs::about), display(0L), d (new TDEApplicationPrivate)
 {
     aIconPixmap.pm.icon = 0L;
     aIconPixmap.pm.miniIcon = 0L;
@@ -690,7 +690,7 @@ TDEApplication::TDEApplication( Display *dpy, bool allowStyles ) :
 TDEApplication::TDEApplication( Display *dpy, bool disable_argb, Qt::HANDLE visual, Qt::HANDLE colormap, bool allowStyles ) :
   TQApplication( dpy, *TDECmdLineArgs::tqt_argc(), *TDECmdLineArgs::tqt_argv(),
                 disable_argb?visual:getX11RGBAVisual(dpy), disable_argb?colormap:getX11RGBAColormap(dpy) ),
-  KInstance( TDECmdLineArgs::about), display(0L), d (new TDEApplicationPrivate)
+  TDEInstance( TDECmdLineArgs::about), display(0L), d (new TDEApplicationPrivate)
 {
     aIconPixmap.pm.icon = 0L;
     aIconPixmap.pm.miniIcon = 0L;
@@ -708,7 +708,7 @@ TDEApplication::TDEApplication( Display *dpy, Qt::HANDLE visual, Qt::HANDLE colo
 		            bool allowStyles ) :
   TQApplication( dpy, *TDECmdLineArgs::tqt_argc(), *TDECmdLineArgs::tqt_argv(),
                 visual?visual:getX11RGBAVisual(dpy), colormap?colormap:getX11RGBAColormap(dpy) ),
-  KInstance( TDECmdLineArgs::about), display(0L), d (new TDEApplicationPrivate)
+  TDEInstance( TDECmdLineArgs::about), display(0L), d (new TDEApplicationPrivate)
 {
     if ((visual) && (colormap))
         getX11RGBAInformation(dpy);
@@ -724,10 +724,10 @@ TDEApplication::TDEApplication( Display *dpy, Qt::HANDLE visual, Qt::HANDLE colo
 }
 
 TDEApplication::TDEApplication( Display *dpy, Qt::HANDLE visual, Qt::HANDLE colormap,
-		            bool allowStyles, KInstance * _instance ) :
+		            bool allowStyles, TDEInstance * _instance ) :
   TQApplication( dpy, *TDECmdLineArgs::tqt_argc(), *TDECmdLineArgs::tqt_argv(),
                 visual?visual:getX11RGBAVisual(dpy), colormap?colormap:getX11RGBAColormap(dpy) ),
-  KInstance( _instance ), display(0L), d (new TDEApplicationPrivate)
+  TDEInstance( _instance ), display(0L), d (new TDEApplicationPrivate)
 {
     if ((visual) && (colormap))
         getX11RGBAInformation(dpy);
@@ -743,10 +743,10 @@ TDEApplication::TDEApplication( Display *dpy, Qt::HANDLE visual, Qt::HANDLE colo
 }
 #endif
 
-TDEApplication::TDEApplication( bool allowStyles, bool GUIenabled, KInstance* _instance ) :
+TDEApplication::TDEApplication( bool allowStyles, bool GUIenabled, TDEInstance* _instance ) :
   TQApplication( *TDECmdLineArgs::tqt_argc(), *TDECmdLineArgs::tqt_argv(),
                 GUIenabled ),
-  KInstance( _instance ),
+  TDEInstance( _instance ),
 #ifdef Q_WS_X11
   display(0L),
 #endif
@@ -770,7 +770,7 @@ TDEApplication::TDEApplication( bool allowStyles, bool GUIenabled, KInstance* _i
 #ifdef Q_WS_X11
 TDEApplication::TDEApplication(Display *display, int& argc, char** argv, const TQCString& rAppName,
                            bool allowStyles, bool GUIenabled ) :
-  TQApplication( display ), KInstance(rAppName),
+  TQApplication( display ), TDEInstance(rAppName),
   display(0L),
   argb_visual(false),
   d (new TDEApplicationPrivate())
@@ -1442,7 +1442,7 @@ bool TDEApplication::sessionSaving() const
 void TDEApplication::startKdeinit()
 {
 #ifndef Q_WS_WIN //TODO
-  KInstance inst( "starttdeinitlock" );
+  TDEInstance inst( "starttdeinitlock" );
   KLockFile lock( locateLocal( "tmp", "starttdeinitlock", &inst ));
   if( lock.lock( KLockFile::LockNoBlock ) != KLockFile::LockOK ) {
      lock.lock();
@@ -3630,7 +3630,7 @@ bool TDEApplication::guiEnabled()
 }
 
 void TDEApplication::virtual_hook( int id, void* data )
-{ KInstance::virtual_hook( id, data ); }
+{ TDEInstance::virtual_hook( id, data ); }
 
 void KSessionManaged::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }

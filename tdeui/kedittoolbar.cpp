@@ -214,7 +214,7 @@ public:
      * In a KParts application we let create a KXMLGUIClient create a dummy one,
      * but it probably isn't used.
      */
-  KEditToolbarWidgetPrivate(KInstance *instance, KActionCollection* collection)
+  KEditToolbarWidgetPrivate(TDEInstance *instance, KActionCollection* collection)
       : m_collection( collection )
   {
     m_instance = instance;
@@ -339,7 +339,7 @@ public:
 
   //TQValueList<KAction*> m_actionList;
   KActionCollection* m_collection;
-  KInstance         *m_instance;
+  TDEInstance         *m_instance;
 
   XmlData*     m_currentXmlData;
   TQDomElement m_currentToolbarElem;
@@ -466,7 +466,7 @@ void KEditToolbar::slotDefault()
 
             if (TQDir::isRelativePath(file))
             {
-                const KInstance *instance = client->instance() ? client->instance() : KGlobal::instance();
+                const TDEInstance *instance = client->instance() ? client->instance() : KGlobal::instance();
                 file = locateLocal("data", TQString::fromLatin1( instance->instanceName() + '/' ) + file);
             }
             else

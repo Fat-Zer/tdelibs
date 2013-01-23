@@ -26,7 +26,7 @@
 
 class TQVariant;
 class KConfigBase;
-class KInstance;
+class TDEInstance;
 class KKeySequence;
 class KShortcut;
 
@@ -137,10 +137,10 @@ class TDECORE_EXPORT KShortcutList
 	virtual int index( const KKeySequence& keySeq ) const;
 
 	/**
-	 * The KInstance.
-	 * @return the KInstance of the list, can be 0 if not available
+	 * The TDEInstance.
+	 * @return the TDEInstance of the list, can be 0 if not available
 	 */
-	virtual const KInstance* instance() const;
+	virtual const TDEInstance* instance() const;
 
 	// These are here in order to handle expansion.
 	enum Other { };

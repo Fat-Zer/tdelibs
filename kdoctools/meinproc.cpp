@@ -91,7 +91,7 @@ int main(int argc, char **argv) {
 
     // xsltSetGenericDebugFunc(stderr, NULL);
 
-    KAboutData aboutData( "meinproc", I18N_NOOP("XML-Translator" ),
+    TDEAboutData aboutData( "meinproc", I18N_NOOP("XML-Translator" ),
 	"$Revision$",
 	I18N_NOOP("TDE Translator for XML"));
 
@@ -99,7 +99,7 @@ int main(int argc, char **argv) {
     TDECmdLineArgs::addCmdLineOptions( options );
 
     KLocale::setMainCatalogue("kio_help");
-    KInstance ins("meinproc");
+    TDEInstance ins("meinproc");
     KGlobal::locale();
 
 

@@ -27,7 +27,7 @@
 
 class KXMLGUIBuilderPrivate;
 class TQWidget;
-class KInstance;
+class TDEInstance;
 class KXMLGUIClient;
 
 /**
@@ -48,9 +48,9 @@ class TDEUI_EXPORT KXMLGUIBuilder
   /* @internal */
   void setBuilderClient( KXMLGUIClient *client );
   /* @internal */
-  KInstance *builderInstance() const;
+  TDEInstance *builderInstance() const;
   /* @internal */
-  void setBuilderInstance( KInstance *instance );
+  void setBuilderInstance( TDEInstance *instance );
   /* @internal */
   TQWidget *widget();
 

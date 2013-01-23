@@ -30,7 +30,7 @@
 class KDataTool;
 class TQPixmap;
 class TQStringList;
-class KInstance;
+class TDEInstance;
 
 // If you're only looking at implementing a data-tool, skip directly to the last
 // class definition, KDataTool.
@@ -56,7 +56,7 @@ public:
      * @param service the corresponding service
      * @param instance the instance to use
      */
-    KDataToolInfo( const KService::Ptr& service, KInstance* instance );
+    KDataToolInfo( const KService::Ptr& service, TDEInstance* instance );
     /**
      * Copy constructor.
      */
@@ -154,7 +154,7 @@ public:
      * The instance of the service.
      * @return the instance
      */
-    KInstance* instance() const { return m_instance; }
+    TDEInstance* instance() const { return m_instance; }
 
     /**
      * A DataToolInfo may be invalid if the KService passed to its constructor does
@@ -171,11 +171,11 @@ public:
      * and also used if the tool wants to read its configuration in the app's config file).
      * @return the list of results
      */
-    static TQValueList<KDataToolInfo> query( const TQString& datatype, const TQString& mimetype, KInstance * instance );
+    static TQValueList<KDataToolInfo> query( const TQString& datatype, const TQString& mimetype, TDEInstance * instance );
 
 private:
     KService::Ptr m_service;
-    KInstance* m_instance;
+    TDEInstance* m_instance;
 private:
     class KDataToolInfoPrivate* d;
 };
@@ -267,14 +267,14 @@ public:
     /**
      * @internal. Do not use under any circumstance (including bad weather).
      */
-    void setInstance( KInstance* instance ) { m_instance = instance; }
+    void setInstance( TDEInstance* instance ) { m_instance = instance; }
 
     /**
      * Returns the instance of the part that created this tool.
      * Usually used if the tool wants to read its configuration in the app's config file.
      * @return the instance of the part that created this tool.
      */
-    KInstance* instance() const;
+    TDEInstance* instance() const;
 
     /**
      * Interface for 'running' this tool.
@@ -292,7 +292,7 @@ public:
     virtual bool run( const TQString& command, void* data, const TQString& datatype, const TQString& mimetype) = 0;
 
 private:
-    KInstance * m_instance;
+    TDEInstance * m_instance;
 protected:
     virtual void virtual_hook( int id, void* data );
 private:

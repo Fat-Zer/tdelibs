@@ -157,7 +157,7 @@ namespace KJS {
    *
    * There is only one debug window per program. This can be obtained by calling #instance
    */
-  class KJSDebugWin : public KMainWindow, public Debugger, public KInstance
+  class KJSDebugWin : public KMainWindow, public Debugger, public TDEInstance
   {
     Q_OBJECT
     friend class SourceDisplay;

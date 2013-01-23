@@ -65,7 +65,7 @@ void WalletReceiver::walletOpened( bool got )
 
 int main( int argc, char *argv[] )
 {
-	KAboutData aboutData( "kwalletboth", "kwalletboth", "version" );
+	TDEAboutData aboutData( "kwalletboth", "kwalletboth", "version" );
 	TDECmdLineArgs::init( argc, argv, &aboutData );
 	TDEApplication app( "kwalletboth" );
 

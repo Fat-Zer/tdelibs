@@ -537,7 +537,7 @@ int main_console(int argc, char **argv)
 		{
 			printf("Searching for standard icon for name %s in the following directories:\n\r", argv[PARAM_ICON_NAME]);
 			TDEApplication::disableAutoDcopRegistration();
-			KAboutData aboutd("tdelfeditor", "tdelfeditor", "0.0.1");
+			TDEAboutData aboutd("tdelfeditor", "tdelfeditor", "0.0.1");
 			TDECmdLineArgs::init(&aboutd);
 			TDEApplication app(false, false);
 

@@ -32,7 +32,7 @@ class KAction;
 class KXMLGUIFactoryPrivate;
 class KXMLGUIClient;
 class KXMLGUIBuilder;
-class KInstance;
+class TDEInstance;
 
 namespace KXMLGUI
 {
@@ -79,10 +79,10 @@ class TDEUI_EXPORT KXMLGUIFactory : public TQObject
   ~KXMLGUIFactory();
 
   // XXX move to somewhere else? (Simon)
-  static TQString readConfigFile( const TQString &filename, bool never_null, const KInstance *instance = 0 );
-  static TQString readConfigFile( const TQString &filename, const KInstance *instance = 0 );
+  static TQString readConfigFile( const TQString &filename, bool never_null, const TDEInstance *instance = 0 );
+  static TQString readConfigFile( const TQString &filename, const TDEInstance *instance = 0 );
   static bool saveConfigFile( const TQDomDocument& doc, const TQString& filename,
-                              const KInstance *instance = 0 );
+                              const TDEInstance *instance = 0 );
 
   static TQString documentToXML( const TQDomDocument& doc );
   static TQString elementToXML( const TQDomElement& elem );

@@ -59,7 +59,7 @@ public:
         delete mSwitchApplicationLanguage;
     }
 
-    const KAboutData *mAboutData;
+    const TDEAboutData *mAboutData;
     KSwitchLanguageDialog *mSwitchApplicationLanguage;
 };
 
@@ -74,7 +74,7 @@ KHelpMenu::KHelpMenu( TQWidget *parent, const TQString &aboutAppText,
   d->mAboutData = 0;
 }
 
-KHelpMenu::KHelpMenu( TQWidget *parent, const KAboutData *aboutData,
+KHelpMenu::KHelpMenu( TQWidget *parent, const TDEAboutData *aboutData,
 		      bool showWhatsThis, KActionCollection *actions )
   : TQObject(parent), mMenu(0), mAboutApp(0), mAboutKDE(0), mBugReport(0),
     d(new KHelpMenuPrivate)
@@ -118,7 +118,7 @@ KPopupMenu* KHelpMenu::menu()
     // I use hardcoded menu id's here. Reason is to stay backward
     // compatible.
     //
-    const KAboutData *aboutData = d->mAboutData ? d->mAboutData : KGlobal::instance()->aboutData();
+    const TDEAboutData *aboutData = d->mAboutData ? d->mAboutData : KGlobal::instance()->aboutData();
     TQString appName = (aboutData)? aboutData->programName() : TQString::fromLatin1(tqApp->name());
 
     mMenu = new KPopupMenu();

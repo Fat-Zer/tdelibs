@@ -71,10 +71,10 @@ TQString KAboutTranslator::emailAddress() const
     return mEmail;
 }
 
-class KAboutDataPrivate
+class TDEAboutDataPrivate
 {
 public:
-    KAboutDataPrivate()
+    TDEAboutDataPrivate()
         : translatorName("_: NAME OF TRANSLATORS\nYour names")
         , translatorEmail("_: EMAIL OF TRANSLATORS\nYour emails")
         , productName(0)
@@ -82,7 +82,7 @@ public:
         , customAuthorTextEnabled(false)
         , mTranslatedProgramName( 0 )
         {}
-    ~KAboutDataPrivate()
+    ~TDEAboutDataPrivate()
         {
              delete programLogo;
              delete[] mTranslatedProgramName;
@@ -96,9 +96,9 @@ public:
     const char *mTranslatedProgramName;
 };
 
-const char *KAboutData::defaultBugTracker = "http://bugs.trinitydesktop.org";
+const char *TDEAboutData::defaultBugTracker = "http://bugs.trinitydesktop.org";
 
-KAboutData::KAboutData( const char *appName,
+TDEAboutData::TDEAboutData( const char *appName,
                         const char *programName,
                         const char *version,
                         const char *shortDescription,
@@ -118,7 +118,7 @@ KAboutData::KAboutData( const char *appName,
   mBugEmailAddress( (bugsEmailAddress!=0)?bugsEmailAddress:defaultBugTracker ),
   mLicenseText (0)
 {
-   d = new KAboutDataPrivate;
+   d = new TDEAboutDataPrivate;
 
    if( appName ) {
      const char *p = strrchr(appName, '/');
@@ -130,7 +130,7 @@ KAboutData::KAboutData( const char *appName,
      mAppName = 0;
 }
 
-KAboutData::~KAboutData()
+TDEAboutData::~TDEAboutData()
 {
     if (mLicenseKey == License_File)
         delete [] mLicenseText;
@@ -138,109 +138,109 @@ KAboutData::~KAboutData()
 }
 
 void
-KAboutData::addAuthor( const char *name, const char *task,
+TDEAboutData::addAuthor( const char *name, const char *task,
 		    const char *emailAddress, const char *webAddress )
 {
   mAuthorList.append(KAboutPerson(name,task,emailAddress,webAddress));
 }
 
 void
-KAboutData::addCredit( const char *name, const char *task,
+TDEAboutData::addCredit( const char *name, const char *task,
 		    const char *emailAddress, const char *webAddress )
 {
   mCreditList.append(KAboutPerson(name,task,emailAddress,webAddress));
 }
 
 void
-KAboutData::setTranslator( const char *name, const char *emailAddress)
+TDEAboutData::setTranslator( const char *name, const char *emailAddress)
 {
   d->translatorName=name;
   d->translatorEmail=emailAddress;
 }
 
 void
-KAboutData::setLicenseText( const char *licenseText )
+TDEAboutData::setLicenseText( const char *licenseText )
 {
   mLicenseText = licenseText;
   mLicenseKey = License_Custom;
 }
 
 void
-KAboutData::setLicenseTextFile( const TQString &file )
+TDEAboutData::setLicenseTextFile( const TQString &file )
 {
   mLicenseText = tqstrdup(TQFile::encodeName(file));
   mLicenseKey = License_File;
 }
 
 void
-KAboutData::setAppName( const char *appName )
+TDEAboutData::setAppName( const char *appName )
 {
   mAppName = appName;
 }
 
 void
-KAboutData::setProgramName( const char* programName )
+TDEAboutData::setProgramName( const char* programName )
 {
   mProgramName = programName;
   translateInternalProgramName();
 }
 
 void
-KAboutData::setVersion( const char* version )
+TDEAboutData::setVersion( const char* version )
 {
   mVersion = version;
 }
 
 void
-KAboutData::setShortDescription( const char *shortDescription )
+TDEAboutData::setShortDescription( const char *shortDescription )
 {
   mShortDescription = shortDescription;
 }
 
 void
-KAboutData::setLicense( LicenseKey licenseKey)
+TDEAboutData::setLicense( LicenseKey licenseKey)
 {
   mLicenseKey = licenseKey;
 }
 
 void
-KAboutData::setCopyrightStatement( const char *copyrightStatement )
+TDEAboutData::setCopyrightStatement( const char *copyrightStatement )
 {
   mCopyrightStatement = copyrightStatement;
 }
 
 void
-KAboutData::setOtherText( const char *otherText )
+TDEAboutData::setOtherText( const char *otherText )
 {
   mOtherText = otherText;
 }
 
 void
-KAboutData::setHomepage( const char *homepage )
+TDEAboutData::setHomepage( const char *homepage )
 {
   mHomepageAddress = homepage;
 }
 
 void
-KAboutData::setBugAddress( const char *bugAddress )
+TDEAboutData::setBugAddress( const char *bugAddress )
 {
   mBugEmailAddress = bugAddress;
 }
 
 void
-KAboutData::setProductName( const char *productName )
+TDEAboutData::setProductName( const char *productName )
 {
   d->productName = productName;
 }
 
 const char *
-KAboutData::appName() const
+TDEAboutData::appName() const
 {
    return mAppName;
 }
 
 const char *
-KAboutData::productName() const
+TDEAboutData::productName() const
 {
    if (d->productName)
       return d->productName;
@@ -249,7 +249,7 @@ KAboutData::productName() const
 }
 
 TQString
-KAboutData::programName() const
+TDEAboutData::programName() const
 {
    if (mProgramName && *mProgramName)
       return i18n(mProgramName);
@@ -258,7 +258,7 @@ KAboutData::programName() const
 }
 
 const char*
-KAboutData::internalProgramName() const
+TDEAboutData::internalProgramName() const
 {
    if (d->mTranslatedProgramName)
       return d->mTranslatedProgramName;
@@ -270,7 +270,7 @@ KAboutData::internalProgramName() const
 // because it may deadlock. Since i18n() needs it, when KLocale is available
 // the i18n() call will be done here in advance.
 void
-KAboutData::translateInternalProgramName() const
+TDEAboutData::translateInternalProgramName() const
 {
   delete[] d->mTranslatedProgramName;
   d->mTranslatedProgramName = 0;
@@ -279,13 +279,13 @@ KAboutData::translateInternalProgramName() const
 }
 
 TQImage
-KAboutData::programLogo() const
+TDEAboutData::programLogo() const
 {
     return d->programLogo ? (*d->programLogo) : TQImage();
 }
 
 void
-KAboutData::setProgramLogo(const TQImage& image)
+TDEAboutData::setProgramLogo(const TQImage& image)
 {
     if (!d->programLogo)
        d->programLogo = new TQImage( image );
@@ -294,13 +294,13 @@ KAboutData::setProgramLogo(const TQImage& image)
 }
 
 TQString
-KAboutData::version() const
+TDEAboutData::version() const
 {
    return TQString::fromLatin1(mVersion);
 }
 
 TQString
-KAboutData::shortDescription() const
+TDEAboutData::shortDescription() const
 {
    if (mShortDescription && *mShortDescription)
       return i18n(mShortDescription);
@@ -309,31 +309,31 @@ KAboutData::shortDescription() const
 }
 
 TQString
-KAboutData::homepage() const
+TDEAboutData::homepage() const
 {
    return TQString::fromLatin1(mHomepageAddress);
 }
 
 TQString
-KAboutData::bugAddress() const
+TDEAboutData::bugAddress() const
 {
    return TQString::fromLatin1(mBugEmailAddress);
 }
 
 const TQValueList<KAboutPerson>
-KAboutData::authors() const
+TDEAboutData::authors() const
 {
    return mAuthorList;
 }
 
 const TQValueList<KAboutPerson>
-KAboutData::credits() const
+TDEAboutData::credits() const
 {
    return mCreditList;
 }
 
 const TQValueList<KAboutTranslator>
-KAboutData::translators() const
+TDEAboutData::translators() const
 {
     TQValueList<KAboutTranslator> personList;
 
@@ -382,7 +382,7 @@ KAboutData::translators() const
 }
 
 TQString
-KAboutData::aboutTranslationTeam()
+TDEAboutData::aboutTranslationTeam()
 {
     return i18n("replace this with information about your translation team",
             "<p>KDE is translated into many languages thanks to the work "
@@ -393,7 +393,7 @@ KAboutData::aboutTranslationTeam()
 }
 
 TQString
-KAboutData::otherText() const
+TDEAboutData::otherText() const
 {
    if (mOtherText && *mOtherText)
       return i18n(mOtherText);
@@ -403,7 +403,7 @@ KAboutData::otherText() const
 
 
 TQString
-KAboutData::license() const
+TDEAboutData::license() const
 {
   TQString result;
   if (!copyrightStatement().isEmpty())
@@ -466,7 +466,7 @@ KAboutData::license() const
 }
 
 TQString
-KAboutData::copyrightStatement() const
+TDEAboutData::copyrightStatement() const
 {
   if (mCopyrightStatement && *mCopyrightStatement)
      return i18n(mCopyrightStatement);
@@ -475,25 +475,25 @@ KAboutData::copyrightStatement() const
 }
 
 TQString
-KAboutData::customAuthorPlainText() const
+TDEAboutData::customAuthorPlainText() const
 {
   return d->customAuthorPlainText;
 }
 
 TQString
-KAboutData::customAuthorRichText() const
+TDEAboutData::customAuthorRichText() const
 {
   return d->customAuthorRichText;
 }
 
 bool
-KAboutData::customAuthorTextEnabled() const
+TDEAboutData::customAuthorTextEnabled() const
 {
   return d->customAuthorTextEnabled;
 }
     
 void
-KAboutData::setCustomAuthorText(const TQString &plainText, const TQString &richText)
+TDEAboutData::setCustomAuthorText(const TQString &plainText, const TQString &richText)
 {
   d->customAuthorPlainText = plainText;
   d->customAuthorRichText = richText;
@@ -502,7 +502,7 @@ KAboutData::setCustomAuthorText(const TQString &plainText, const TQString &richT
 }
     
 void
-KAboutData::unsetCustomAuthorText()
+TDEAboutData::unsetCustomAuthorText()
 {
   d->customAuthorPlainText = TQString::null;
   d->customAuthorRichText = TQString::null;

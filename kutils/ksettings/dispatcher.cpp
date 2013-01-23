@@ -58,10 +58,10 @@ Dispatcher::~Dispatcher()
     //delete d;
 }
 
-void Dispatcher::registerInstance( KInstance * instance, TQObject * recv, const char * slot )
+void Dispatcher::registerInstance( TDEInstance * instance, TQObject * recv, const char * slot )
 {
     assert( instance != 0 );
-    // keep the KInstance around and call
+    // keep the TDEInstance around and call
     // instance->config()->reparseConfiguration when the app should reparse
     TQCString instanceName = instance->instanceName();
     kdDebug( 701 ) << k_funcinfo << instanceName << endl;
@@ -88,7 +88,7 @@ KConfig * Dispatcher::configForInstanceName( const TQCString & instanceName )
     kdDebug( 701 ) << k_funcinfo << endl;
     if( m_instanceInfo.contains( instanceName ) )
     {
-        KInstance * inst = m_instanceInfo[ instanceName ].instance;
+        TDEInstance * inst = m_instanceInfo[ instanceName ].instance;
         if( inst )
             return inst->config();
     }
@@ -145,7 +145,7 @@ void Dispatcher::unregisterInstance( TQObject * obj )
     }
 }
 
-//X KInstance * Dispatcher::instanceForName( const TQCString & instanceName )
+//X TDEInstance * Dispatcher::instanceForName( const TQCString & instanceName )
 //X {
 //X     return m_instanceInfo[ instanceName ].instance;
 //X }

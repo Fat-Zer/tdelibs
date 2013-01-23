@@ -249,12 +249,12 @@ int main(int argc, char *argv[])
    lastYear = new TQCString(TQString("Fri, 04-May-%1 01:00:00 GMT").arg(TQDate::currentDate().year()-1).utf8());
    nextYear = new TQCString(TQString(" expires=Fri, 04-May-%1 01:00:00 GMT").arg(TQDate::currentDate().year()+1).utf8());
 
-   KAboutData about("kcookietest", "kcookietest", "1.0", description, KAboutData::License_GPL, "(C) 2004 Waldo Bastian");
+   TDEAboutData about("kcookietest", "kcookietest", "1.0", description, TDEAboutData::License_GPL, "(C) 2004 Waldo Bastian");
    TDECmdLineArgs::init( argc, argv, &about);
 
    TDECmdLineArgs::addCmdLineOptions( options );
 
-   KInstance a("kcookietest");
+   TDEInstance a("kcookietest");
    
    TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
    if (args->count() != 1)

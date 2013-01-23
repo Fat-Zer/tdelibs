@@ -157,7 +157,7 @@ void KDataToolPluginView::aboutToShow()
 		}
 	}
 
-	KInstance *inst=instance();
+	TDEInstance *inst=instance();
 
 	TQValueList<KDataToolInfo> tools;
 	tools += KDataToolInfo::query( TQSTRING_OBJECT_NAME_STRING, "text/plain", inst );

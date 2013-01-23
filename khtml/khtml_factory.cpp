@@ -58,8 +58,8 @@ extern "C" KDE_EXPORT void *init_libkhtml()
 
 KHTMLFactory *KHTMLFactory::s_self = 0;
 unsigned long int KHTMLFactory::s_refcnt = 0;
-KInstance *KHTMLFactory::s_instance = 0;
-KAboutData *KHTMLFactory::s_about = 0;
+TDEInstance *KHTMLFactory::s_instance = 0;
+TDEAboutData *KHTMLFactory::s_about = 0;
 KHTMLSettings *KHTMLFactory::s_settings = 0;
 TQPtrList<KHTMLPart> *KHTMLFactory::s_parts = 0;
 TQString *KHTMLSettings::avFamilies = 0;
@@ -119,7 +119,7 @@ void KHTMLFactory::ref()
         // we can't use a staticdeleter here, because that would mean
         // that the factory gets deleted from within a qPostRoutine, called
         // from the TQApplication destructor. That however is too late, because
-        // we want to destruct a KInstance object, which involves destructing
+        // we want to destruct a TDEInstance object, which involves destructing
         // a KConfig object, which might call KGlobal::dirs() (in sync()) which
         // probably is not going to work ;-)
         // well, perhaps I'm wrong here, but as I'm unsure I try to stay on the
@@ -168,15 +168,15 @@ void KHTMLFactory::deregisterPart( KHTMLPart *part )
     }
 }
 
-KInstance *KHTMLFactory::instance()
+TDEInstance *KHTMLFactory::instance()
 {
   assert( s_self );
 
   if ( !s_instance )
   {
-    s_about = new KAboutData( "khtml", I18N_NOOP( "KHTML" ), "4.0",
+    s_about = new TDEAboutData( "khtml", I18N_NOOP( "KHTML" ), "4.0",
                               I18N_NOOP( "Embeddable HTML component" ),
-                              KAboutData::License_LGPL );
+                              TDEAboutData::License_LGPL );
     s_about->addAuthor( "Lars Knoll", 0, "knoll@kde.org" );
     s_about->addAuthor( "Antti Koivisto", 0, "koivisto@kde.org" );
     s_about->addAuthor( "Waldo Bastian", 0, "bastian@kde.org" );
@@ -187,7 +187,7 @@ KInstance *KHTMLFactory::instance()
     s_about->addAuthor( "Simon Hausmann", 0, "hausmann@kde.org" );
     s_about->addAuthor( "Tobias Anton", 0, "anton@stud.fbi.fh-darmstadt.de" );
 
-    s_instance = new KInstance( s_about );
+    s_instance = new TDEInstance( s_about );
   }
 
   return s_instance;

@@ -36,7 +36,7 @@ int main( int argc, char **argv )
     KXMLGUIFactory *factory = new KXMLGUIFactory( builder );
 
     Client *shell = new Client;
-    shell->setInstance( new KInstance( "konqueror" ) );
+    shell->setInstance( new TDEInstance( "konqueror" ) );
     shell->instance()->dirs()->addResourceDir( "data", TQDir::currentDirPath() );
 
     (void)new KAction( "Split", "view_left_right", 0, 0, 0, shell->actionCollection(), "splitviewh" );

@@ -32,8 +32,8 @@ int main(int argc, char **argv) {
 	TQDate date;
 	TQString calType, option;
 	
-        KAboutData aboutData( "kcalendartest", "KCalendarTest" ,
-                        "0.1", description, KAboutData::License_GPL,
+        TDEAboutData aboutData( "kcalendartest", "KCalendarTest" ,
+                        "0.1", description, TDEAboutData::License_GPL,
                         "(c) 2002, Carlos Moro", 0, 0,
                         "cfmoro@correo.uniovi.es");
   	aboutData.addAuthor("Carlos Moro",0, "cfmoro@correo.uniovi.es");

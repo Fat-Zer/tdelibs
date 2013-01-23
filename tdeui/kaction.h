@@ -48,7 +48,7 @@ class KAccelActions;
 class KConfig;
 class KConfigBase;
 class KURL;
-class KInstance;
+class TDEInstance;
 class KToolBar;
 class KActionCollection;
 class KPopupMenu;

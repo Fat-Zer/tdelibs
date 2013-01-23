@@ -940,10 +940,10 @@ void KonfUpdate::resetOptions()
 
 extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
 {
-   KAboutData aboutData("kconf_update", I18N_NOOP("KConf Update"),
+   TDEAboutData aboutData("kconf_update", I18N_NOOP("KConf Update"),
                         "1.0.2",
                         I18N_NOOP("TDE Tool for updating user configuration files"),
-                        KAboutData::License_GPL,
+                        TDEAboutData::License_GPL,
                         "(c) 2001, Waldo Bastian");
 
    aboutData.addAuthor("Waldo Bastian", 0, "bastian@kde.org");
@@ -951,7 +951,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
    TDECmdLineArgs::init(argc, argv, &aboutData);
    TDECmdLineArgs::addCmdLineOptions(options);
 
-   KInstance instance(&aboutData);
+   TDEInstance instance(&aboutData);
 
    KonfUpdate konfUpdate;
 

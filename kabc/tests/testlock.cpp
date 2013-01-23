@@ -165,7 +165,7 @@ static const KCmdLineOptions options[] =
 
 int main(int argc,char **argv)
 {
-  KAboutData aboutData("testlock",I18N_NOOP("Test libkabc Lock"),"0.1");
+  TDEAboutData aboutData("testlock",I18N_NOOP("Test libkabc Lock"),"0.1");
   TDECmdLineArgs::init(argc,argv,&aboutData);
   TDECmdLineArgs::addCmdLineOptions( options );
 

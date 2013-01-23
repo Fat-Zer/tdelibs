@@ -98,7 +98,7 @@ int main( int argc, char** argv )
  " ./kziptest iodevice /path/to/existing_file.zip   tests KArchiveFile::device()\n");
     return 1;
   }
-  KInstance instance("kziptest");
+  TDEInstance instance("kziptest");
   TQString command = argv[1];
   if ( command == "list" )
   {

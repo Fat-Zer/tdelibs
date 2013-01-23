@@ -1278,7 +1278,7 @@ int KRecentFilesAction::plug( TQWidget *widget, int index )
 
     int id_ = KAction::getToolButtonID();
 
-    KInstance * instance;
+    TDEInstance * instance;
     if ( m_parentCollection )
         instance = m_parentCollection->instance();
     else
@@ -1827,7 +1827,7 @@ int KActionMenu::plug( TQWidget* widget, int index )
                          index );
     else
     {
-      KInstance *instance;
+      TDEInstance *instance;
 
       if ( m_parentCollection )
         instance = m_parentCollection->instance();
@@ -1954,7 +1954,7 @@ int KToolBarPopupAction::plug( TQWidget *widget, int index )
                            isEnabled(), plainText(),
                            index );
     } else {
-        KInstance * instance;
+        TDEInstance * instance;
         if ( m_parentCollection )
             instance = m_parentCollection->instance();
         else
@@ -2290,7 +2290,7 @@ int KPasteTextAction::plug( TQWidget *widget, int index )
 
     int id_ = KAction::getToolButtonID();
 
-    KInstance * instance;
+    TDEInstance * instance;
     if ( m_parentCollection )
         instance = m_parentCollection->instance();
     else

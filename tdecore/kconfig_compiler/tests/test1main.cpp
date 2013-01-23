@@ -23,7 +23,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 int main( int, char*[] )
 {
-  KInstance i("test");
+  TDEInstance i("test");
   Test1 *t = new Test1( TQString::null, TQString::null );
   delete t;
 }

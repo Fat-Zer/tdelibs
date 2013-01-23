@@ -14,7 +14,7 @@ using namespace KABC;
 
 int main(int argc,char **argv)
 {
-  KAboutData aboutData("bigwrite","BigWriteKabc","0.1");
+  TDEAboutData aboutData("bigwrite","BigWriteKabc","0.1");
   TDECmdLineArgs::init(argc,argv,&aboutData);
 
   TDEApplication app( false, false );

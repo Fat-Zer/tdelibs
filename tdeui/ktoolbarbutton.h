@@ -31,7 +31,7 @@
 
 class KToolBar;
 class KToolBarButtonPrivate;
-class KInstance;
+class TDEInstance;
 class TQEvent;
 class TQPopupMenu;
 class TQPainter;
@@ -61,7 +61,7 @@ public:
    */
   KToolBarButton(const TQString& icon, int id, TQWidget *parent,
                  const char *name=0L, const TQString &txt=TQString::null,
-                 KInstance *_instance = KGlobal::instance());
+                 TDEInstance *_instance = KGlobal::instance());
 
   /**
    * Construct a button with an existing pixmap.  It is not

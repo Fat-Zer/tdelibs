@@ -2006,7 +2006,7 @@ void KLocale::initInstance()
   if (KGlobal::_locale)
     return;
 
-  KInstance *app = KGlobal::instance();
+  TDEInstance *app = KGlobal::instance();
   if (app) {
     KGlobal::_locale = new KLocale(TQString::fromLatin1(app->instanceName()));
 

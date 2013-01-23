@@ -158,7 +158,7 @@ int main(int argc, char **argv)
     setenv( "TDEHOME", TQFile::encodeName( TQDir::homeDirPath() + "/.tde-kurifiltertest" ), true );
     setenv( "TDE_FORK_SLAVES", "yes", true ); // simpler, for the final cleanup
 
-    KAboutData aboutData(appName, programName, version, description);
+    TDEAboutData aboutData(appName, programName, version, description);
     TDECmdLineArgs::init(argc, argv, &aboutData);
     TDECmdLineArgs::addCmdLineOptions( options );
 

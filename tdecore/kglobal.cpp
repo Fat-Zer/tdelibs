@@ -44,7 +44,7 @@
 
 #ifndef NDEBUG
 #define MYASSERT(x) if (!x) \
-   tqFatal("Fatal error: you need to have a KInstance object before\n" \
+   tqFatal("Fatal error: you need to have a TDEInstance object before\n" \
          "you do anything that requires it! Examples of this are config\n" \
          "objects, standard directories or translations.");
 #else
@@ -95,7 +95,7 @@ TDEGlobalNetworkManager *KGlobal::networkManager()
     return _instance->networkManager();
 }
 
-KInstance *KGlobal::instance()
+TDEInstance *KGlobal::instance()
 {
     MYASSERT(_instance);
     return _instance;
@@ -127,7 +127,7 @@ KCharsets *KGlobal::charsets()
     return _charsets;
 }
 
-void KGlobal::setActiveInstance(KInstance *i)
+void KGlobal::setActiveInstance(TDEInstance *i)
 {
     _activeInstance = i;
     if (i && _locale)
@@ -215,8 +215,8 @@ KGlobal::deleteStaticDeleters()
 // The Variables
 
 KStringDict     *KGlobal::_stringDict   = 0;
-KInstance       *KGlobal::_instance     = 0;
-KInstance       *KGlobal::_activeInstance = 0;
+TDEInstance       *KGlobal::_instance     = 0;
+TDEInstance       *KGlobal::_activeInstance = 0;
 KLocale         *KGlobal::_locale	= 0;
 KCharsets       *KGlobal::_charsets	= 0;
 KStaticDeleterList *KGlobal::_staticDeleters = 0;

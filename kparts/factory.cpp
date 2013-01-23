@@ -47,7 +47,7 @@ Part *Factory::createPart( TQWidget *parentWidget, const char *widgetName, TQObj
     return part;
 }
 
-const KInstance *Factory::partInstance()
+const TDEInstance *Factory::partInstance()
 {
     QueryInstanceParams params;
     params.instance = 0;
@@ -55,7 +55,7 @@ const KInstance *Factory::partInstance()
     return params.instance;
 }
 
-const KInstance *Factory::partInstanceFromLibrary( const TQCString &libraryName )
+const TDEInstance *Factory::partInstanceFromLibrary( const TQCString &libraryName )
 {
     KLibrary *library = KLibLoader::self()->library( libraryName );
     if ( !library )

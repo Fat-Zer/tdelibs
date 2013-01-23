@@ -115,7 +115,7 @@ int TDECmdLineArgs::argc = 0;
 char **TDECmdLineArgs::argv = 0;
 char *TDECmdLineArgs::mCwd = 0;
 static KStaticDeleter <char> mCwdd;
-const KAboutData *TDECmdLineArgs::about = 0;
+const TDEAboutData *TDECmdLineArgs::about = 0;
 bool TDECmdLineArgs::parsed = false;
 bool TDECmdLineArgs::ignoreUnknown = false;
 
@@ -128,7 +128,7 @@ TDECmdLineArgs::init(int _argc, char **_argv, const char *_appname, const char* 
                    const char *_description, const char *_version, bool noKApp)
 {
    init(_argc, _argv,
-        new KAboutData(_appname, programName, _version, _description),
+        new TDEAboutData(_appname, programName, _version, _description),
         noKApp);
 }
 
@@ -137,7 +137,7 @@ TDECmdLineArgs::init(int _argc, char **_argv, const char *_appname,
                    const char *_description, const char *_version, bool noKApp)
 {
    init(_argc, _argv,
-        new KAboutData(_appname, _appname, _version, _description),
+        new TDEAboutData(_appname, _appname, _version, _description),
         noKApp);
 }
 
@@ -145,12 +145,12 @@ void
 TDECmdLineArgs::initIgnore(int _argc, char **_argv, const char *_appname )
 {
    init(_argc, _argv,
-        new KAboutData(_appname, _appname, "unknown", "TDE Application", false));
+        new TDEAboutData(_appname, _appname, "unknown", "TDE Application", false));
    ignoreUnknown = true;
 }
 
 void
-TDECmdLineArgs::init(const KAboutData* ab)
+TDECmdLineArgs::init(const TDEAboutData* ab)
 {
    char **_argv = (char **) malloc(sizeof(char *));
    _argv[0] = (char *) ab->appName();
@@ -159,7 +159,7 @@ TDECmdLineArgs::init(const KAboutData* ab)
 
 
 void
-TDECmdLineArgs::init(int _argc, char **_argv, const KAboutData *_about, bool noKApp)
+TDECmdLineArgs::init(int _argc, char **_argv, const TDEAboutData *_about, bool noKApp)
 {
    argc = _argc;
    argv = _argv;
@@ -747,7 +747,7 @@ TDECmdLineArgs::enable_i18n()
       return;
 
     if (!KGlobal::_instance) {
-  KInstance *instance = new KInstance(about);
+  TDEInstance *instance = new TDEInstance(about);
   (void) instance->config();
   // Don't delete instance!
     }

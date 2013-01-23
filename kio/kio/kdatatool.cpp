@@ -42,7 +42,7 @@ KDataToolInfo::KDataToolInfo()
     m_service = 0;
 }
 
-KDataToolInfo::KDataToolInfo( const KService::Ptr& service, KInstance* instance )
+KDataToolInfo::KDataToolInfo( const KService::Ptr& service, TDEInstance* instance )
 {
     m_service = service;
     m_instance = instance;
@@ -159,7 +159,7 @@ KService::Ptr KDataToolInfo::service() const
     return m_service;
 }
 
-TQValueList<KDataToolInfo> KDataToolInfo::query( const TQString& datatype, const TQString& mimetype, KInstance* instance )
+TQValueList<KDataToolInfo> KDataToolInfo::query( const TQString& datatype, const TQString& mimetype, TDEInstance* instance )
 {
     TQValueList<KDataToolInfo> lst;
 
@@ -271,7 +271,7 @@ KDataTool::KDataTool( TQObject* parent, const char* name )
 {
 }
 
-KInstance* KDataTool::instance() const
+TDEInstance* KDataTool::instance() const
 {
    return m_instance;
 }

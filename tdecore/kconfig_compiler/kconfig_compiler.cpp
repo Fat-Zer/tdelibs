@@ -952,8 +952,8 @@ TQString indent(TQString text, int spaces)
 
 int main( int argc, char **argv )
 {
-  KAboutData aboutData( "kconfig_compiler", I18N_NOOP("TDE .kcfg compiler"), "0.3",
-    I18N_NOOP("KConfig Compiler") , KAboutData::License_LGPL );
+  TDEAboutData aboutData( "kconfig_compiler", I18N_NOOP("TDE .kcfg compiler"), "0.3",
+    I18N_NOOP("KConfig Compiler") , TDEAboutData::License_LGPL );
   aboutData.addAuthor( "Cornelius Schumacher", 0, "schumacher@kde.org" );
   aboutData.addAuthor( "Waldo Bastian", 0, "bastian@kde.org" );
   aboutData.addAuthor( "Zack Rusin", 0, "zack@kde.org" );
@@ -965,7 +965,7 @@ int main( int argc, char **argv )
   TDECmdLineArgs::init( argc, argv, &aboutData );
   TDECmdLineArgs::addCmdLineOptions( options );
 
-  KInstance app( &aboutData );
+  TDEInstance app( &aboutData );
 
   TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 

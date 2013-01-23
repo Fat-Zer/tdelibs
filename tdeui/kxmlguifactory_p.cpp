@@ -805,7 +805,7 @@ TQWidget *BuildHelper::createContainer( TQWidget *parent, int index,
         }
     }
 
-    KInstance *oldInstance = m_state.builder->builderInstance();
+    TDEInstance *oldInstance = m_state.builder->builderInstance();
     KXMLGUIClient *oldClient = m_state.builder->builderClient();
 
     m_state.builder->setBuilderClient( m_state.guiClient );

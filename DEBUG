@@ -82,7 +82,7 @@ are interested in and verify that we have found the correct source line:
 218     TDEApplication::TDEApplication( bool allowStyles, bool GUIenabled ) :
 219       QApplication( *TDECmdLineArgs::tqt_argc(), *TDECmdLineArgs::tqt_argv(),
 220                     GUIenabled ),
-221       KInstance( TDECmdLineArgs::about),
+221       TDEInstance( TDECmdLineArgs::about),
 222       d (new TDEApplicationPrivate)
 223     {
 224         if (!GUIenabled)

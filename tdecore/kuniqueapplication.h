@@ -113,7 +113,7 @@ public:
    * Typically this is used like:
    * \code
    * int main(int argc, char **argv) {
-   *    KAboutData about("myappname", "myAppName", .....);
+   *    TDEAboutData about("myappname", "myAppName", .....);
    *    TDECmdLineArgs::init(argc, argv, &about);
    *    TDECmdLineArgs::addCmdLineOptions( myCmdOptions );
    *    KUniqueApplication::addCmdLineOptions();
@@ -204,7 +204,7 @@ private slots:
 
   void newInstanceNoFork();
   
-  static KInstance* initHack( bool configUnique );
+  static TDEInstance* initHack( bool configUnique );
  
 private:
   static bool s_nofork;

@@ -20,7 +20,7 @@ using namespace KABC;
 
 int main(int argc,char **argv)
 {
-    KAboutData aboutData("testkabc",I18N_NOOP("TestKabc"),"0.1");
+    TDEAboutData aboutData("testkabc",I18N_NOOP("TestKabc"),"0.1");
     TDECmdLineArgs::init(argc, argv, &aboutData);
 
     TDEApplication app( false, false );

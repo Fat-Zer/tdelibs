@@ -8,7 +8,7 @@
 
 int main(int argc,char **argv)
 {
-  KAboutData aboutData("testwrite",I18N_NOOP("TestWritevCard"),"0.1");
+  TDEAboutData aboutData("testwrite",I18N_NOOP("TestWritevCard"),"0.1");
   TDECmdLineArgs::init(argc,argv,&aboutData);
 
   TDEApplication app;

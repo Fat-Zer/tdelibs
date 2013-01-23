@@ -32,7 +32,7 @@
 
 int main( int argc, char **argv )
 {
-  KAboutData aboutData( "example", I18N_NOOP("cfgc example"), "0.1" );
+  TDEAboutData aboutData( "example", I18N_NOOP("cfgc example"), "0.1" );
   aboutData.addAuthor( "Cornelius Schumacher", 0, "schumacher@kde.org" );
 
   TDECmdLineArgs::init( argc, argv, &aboutData );

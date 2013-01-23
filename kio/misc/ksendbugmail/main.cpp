@@ -59,9 +59,9 @@ void BugMailer::slotSend() {
 int main(int argc, char **argv) {
 
     KLocale::setMainCatalogue("tdelibs");
-    KAboutData d("ksendbugmail", I18N_NOOP("KSendBugMail"), "1.0",
+    TDEAboutData d("ksendbugmail", I18N_NOOP("KSendBugMail"), "1.0",
                  I18N_NOOP("Sends a short bug report to submit@bugs.kde.org"),
-                 KAboutData::License_GPL, "(c) 2000 Stephan Kulow");
+                 TDEAboutData::License_GPL, "(c) 2000 Stephan Kulow");
     d.addAuthor("Stephan Kulow", I18N_NOOP("Author"), "coolo@kde.org");
 
     TDECmdLineArgs::init(argc, argv, &d);

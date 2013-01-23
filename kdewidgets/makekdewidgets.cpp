@@ -124,9 +124,9 @@ static void buildFile( TQTextStream &stream, const TQString& group, const TQStri
 static TQString buildPixmap( const TQString &name, KConfig &input, const TQString &iconPath );
 
 int main( int argc, char **argv ) {
-    new KInstance( "makekdewidgets" );
+    new TDEInstance( "makekdewidgets" );
 
-    KAboutData about( "makekdewidgets", I18N_NOOP( "makekdewidgets" ), version, description, KAboutData::License_GPL, "(C) 2004-2005 ian reinhart geiser", 0, 0, "geiseri@kde.org" );
+    TDEAboutData about( "makekdewidgets", I18N_NOOP( "makekdewidgets" ), version, description, TDEAboutData::License_GPL, "(C) 2004-2005 ian reinhart geiser", 0, 0, "geiseri@kde.org" );
     about.addAuthor( "ian reinhart geiser", 0, "geiseri@kde.org" );
     TDECmdLineArgs::init( argc, argv, &about );
     TDECmdLineArgs::addCmdLineOptions( options );

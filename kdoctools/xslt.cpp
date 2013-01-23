@@ -179,7 +179,7 @@ TQString splitOut(const TQString &parsed, int index)
     return filedata;
 }
 
-void fillInstance(KInstance &ins, const TQString &srcdir) {
+void fillInstance(TDEInstance &ins, const TQString &srcdir) {
     TQString catalogs;
 
     if ( srcdir.isEmpty() ) {

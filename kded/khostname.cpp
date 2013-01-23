@@ -366,15 +366,15 @@ void KHostName::changeSessionManager()
 int main(int argc, char **argv)
 {
    KLocale::setMainCatalogue("tdelibs");
-   KAboutData d(appName, I18N_NOOP("KDontChangeTheHostName"), appVersion,
+   TDEAboutData d(appName, I18N_NOOP("KDontChangeTheHostName"), appVersion,
                 I18N_NOOP("Informs TDE about a change in hostname"),
-                KAboutData::License_GPL, "(c) 2001 Waldo Bastian");
+                TDEAboutData::License_GPL, "(c) 2001 Waldo Bastian");
    d.addAuthor("Waldo Bastian", I18N_NOOP("Author"), "bastian@kde.org");
 
    TDECmdLineArgs::init(argc, argv, &d);
    TDECmdLineArgs::addCmdLineOptions(options);
 
-   KInstance k(&d);
+   TDEInstance k(&d);
 
    KHostName hn;
 

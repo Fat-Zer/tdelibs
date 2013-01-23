@@ -24,7 +24,7 @@ class TDEUI_EXPORT KActionShortcutList : public KShortcutList
 	virtual bool isConfigurable( uint index ) const;
 	virtual bool setShortcut( uint index, const KShortcut& shortcut );
 
-	virtual const KInstance* instance() const;
+	virtual const TDEInstance* instance() const;
 
 	virtual TQVariant getOther( Other, uint index ) const;
 	virtual bool setOther( Other, uint index, TQVariant );

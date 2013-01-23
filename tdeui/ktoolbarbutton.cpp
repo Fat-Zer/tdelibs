@@ -93,7 +93,7 @@ public:
 
   TQPoint m_mousePressPos;
 
-  KInstance  *m_instance;
+  TDEInstance  *m_instance;
 };
 
 // This will construct a separator
@@ -109,7 +109,7 @@ KToolBarButton::KToolBarButton( TQWidget *_parent, const char *_name )
 
 KToolBarButton::KToolBarButton( const TQString& _icon, int _id,
                                 TQWidget *_parent, const char *_name,
-                                const TQString &_txt, KInstance *_instance )
+                                const TQString &_txt, TDEInstance *_instance )
     : TQToolButton( _parent, _name ), d( 0 )
 {
   d = new KToolBarButtonPrivate;

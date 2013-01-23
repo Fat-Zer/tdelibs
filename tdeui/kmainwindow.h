@@ -189,7 +189,7 @@ public:
      *
      * @param aboutAppText The string that is used in the application
      *        specific dialog box. If you leave this string empty the
-     *        information in the global KAboutData of the
+     *        information in the global TDEAboutData of the
      *        application will be used to make a standard dialog box.
      *
      * @param showWhatsThis Set this to false if you do not want to include

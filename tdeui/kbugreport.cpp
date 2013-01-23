@@ -65,7 +65,7 @@ public:
     KURL url;
 };
 
-KBugReport::KBugReport( TQWidget * parentw, bool modal, const KAboutData *aboutData )
+KBugReport::KBugReport( TQWidget * parentw, bool modal, const TDEAboutData *aboutData )
   : KDialogBase( Plain,
                  i18n("Submit Bug Report"),
                  Ok | Cancel,

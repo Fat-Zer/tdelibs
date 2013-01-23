@@ -45,7 +45,7 @@ class Plugin::PluginPrivate
 public:
     PluginPrivate() : m_parentInstance( 0 ) {}
 
-    const KInstance *m_parentInstance;
+    const TDEInstance *m_parentInstance;
     TQString m_library; // filename of the library
 };
 
@@ -86,7 +86,7 @@ TQString Plugin::localXMLFile() const
 }
 
 //static
-TQValueList<Plugin::PluginInfo> Plugin::pluginInfos( const KInstance * instance )
+TQValueList<Plugin::PluginInfo> Plugin::pluginInfos( const TDEInstance * instance )
 {
   if ( !instance )
     kdError(1000) << "No instance ???" << endl;
@@ -138,12 +138,12 @@ TQValueList<Plugin::PluginInfo> Plugin::pluginInfos( const KInstance * instance 
   return plugins;
 }
 
-void Plugin::loadPlugins( TQObject *parent, const KInstance *instance )
+void Plugin::loadPlugins( TQObject *parent, const TDEInstance *instance )
 {
   loadPlugins( parent, pluginInfos( instance ), instance );
 }
 
-void Plugin::loadPlugins( TQObject *parent, const TQValueList<PluginInfo> &pluginInfos, const KInstance *instance )
+void Plugin::loadPlugins( TQObject *parent, const TQValueList<PluginInfo> &pluginInfos, const TDEInstance *instance )
 {
    TQValueList<PluginInfo>::ConstIterator pIt = pluginInfos.begin();
    TQValueList<PluginInfo>::ConstIterator pEnd = pluginInfos.end();
@@ -218,13 +218,13 @@ bool Plugin::hasPlugin( TQObject* parent, const TQString& library )
   return false;
 }
 
-void Plugin::setInstance( KInstance *instance )
+void Plugin::setInstance( TDEInstance *instance )
 {
     KGlobal::locale()->insertCatalogue( instance->instanceName() );
     KXMLGUIClient::setInstance( instance );
 }
 
-void Plugin::loadPlugins( TQObject *parent, KXMLGUIClient* parentGUIClient, KInstance* instance, bool enableNewPluginsByDefault )
+void Plugin::loadPlugins( TQObject *parent, KXMLGUIClient* parentGUIClient, TDEInstance* instance, bool enableNewPluginsByDefault )
 {
     KConfigGroup cfgGroup( instance->config(), "KParts Plugins" );
     TQValueList<PluginInfo> plugins = pluginInfos( instance );

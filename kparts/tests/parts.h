@@ -21,7 +21,7 @@ protected:
 
 protected:
   TQMultiLineEdit * m_edit;
-  KInstance *m_instance;
+  TDEInstance *m_instance;
 };
 
 class Part2 : public KParts::Part
@@ -37,7 +37,7 @@ protected:
   // (i.e. in a part manager)
   // There is a default impl for ReadOnlyPart...
   virtual void guiActivateEvent( KParts::GUIActivateEvent * );
-  KInstance *m_instance;
+  TDEInstance *m_instance;
 };
 
 #endif

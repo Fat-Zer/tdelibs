@@ -75,12 +75,12 @@ public:
 
      /**
       * If you have a part contained in a shared library you might want to query
-      * for meta-information like the about-data, or the KInstance in general.
+      * for meta-information like the about-data, or the TDEInstance in general.
       * If the part is exported using KParts::GenericFactory then this method will
       * return the instance that belongs to the part without the need to instantiate
       * the part component.
       */
-     const KInstance *partInstance();
+     const TDEInstance *partInstance();
 
      /**
       * A convenience method for partInstance() that takes care of retrieving
@@ -88,7 +88,7 @@ public:
       *
       * @param libraryName name of the library to query the instance from
       */
-     static const KInstance *partInstanceFromLibrary( const TQCString &libraryName );
+     static const TDEInstance *partInstanceFromLibrary( const TQCString &libraryName );
 
 protected:
 
@@ -129,7 +129,7 @@ protected:
     enum { VIRTUAL_QUERY_INSTANCE_PARAMS = 0x10 };
     struct QueryInstanceParams
     {
-        const KInstance *instance;
+        const TDEInstance *instance;
     };
 };
 

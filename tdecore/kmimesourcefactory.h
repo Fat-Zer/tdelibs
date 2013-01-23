@@ -26,7 +26,7 @@
 #include <kglobal.h>
 
 class KMimeSourceFactoryPrivate;
-class KInstance;
+class TDEInstance;
 
 /**
  * An extension to TQMimeSourceFactory that uses KIconLoader to
@@ -74,10 +74,10 @@ protected:
 private:
   /**
    * @internal
-   * Associate with a KInstance so we can pull its iconLoader() when need arises.
+   * Associate with a TDEInstance so we can pull its iconLoader() when need arises.
    */
-  friend class KInstance;
-  void setInstance(KInstance *);
+  friend class TDEInstance;
+  void setInstance(TDEInstance *);
 
   KMimeSourceFactoryPrivate* d;
 };

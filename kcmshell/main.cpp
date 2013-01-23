@@ -198,10 +198,10 @@ static void setIcon(TQWidget *w, const TQString &iconName)
 
 extern "C" KDE_EXPORT int kdemain(int _argc, char *_argv[])
 {
-    KAboutData aboutData( "kcmshell", I18N_NOOP("TDE Control Module"),
+    TDEAboutData aboutData( "kcmshell", I18N_NOOP("TDE Control Module"),
                           0,
                           I18N_NOOP("A tool to start single TDE control modules"),
-                          KAboutData::License_GPL,
+                          TDEAboutData::License_GPL,
                           I18N_NOOP("(c) 1999-2004, The KDE Developers") );
 
     aboutData.addAuthor("Frans Englich", I18N_NOOP("Maintainer"), "frans.englich@kde.org");

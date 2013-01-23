@@ -8,7 +8,7 @@
 
 int main (int argc, char **argv)
 {
-	KInstance ins("kmfitest");
+	TDEInstance ins("kmfitest");
 
 	if (argc < 2) {
 		printf("usage: %s <file>\n", argv[0]);

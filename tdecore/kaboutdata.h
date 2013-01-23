@@ -28,21 +28,21 @@
 #define _KABOUTDATA_H_
 
 class KAboutPersonPrivate;
-class KAboutDataPrivate;
+class TDEAboutDataPrivate;
 
 /**
  * This structure is used to store information about a person or developer.
  * It can store the person's name, a task, an email address and a
  * link to a home page. This class is intended for use in the
- * KAboutData class, but it can be used elsewhere as well.
+ * TDEAboutData class, but it can be used elsewhere as well.
  * Normally you should at least define the person's name.
  *
  * Example Usage within a main():
  *
  * \code
- *   KAboutData about("khello", I18N_NOOP("KHello"), "0.1",
+ *   TDEAboutData about("khello", I18N_NOOP("KHello"), "0.1",
  *                   I18N_NOOP("A TDE version of Hello, world!"),
- *                   KAboutData::License_LGPL,
+ *                   TDEAboutData::License_LGPL,
  *                   I18N_NOOP("Copyright (c) 2003 Developer"));
  *
  *   about.addAuthor("Joe Developer", I18N_NOOP("developer"), "joe@host.com", 0);
@@ -122,7 +122,7 @@ class KAboutTranslatorPrivate;
 /**
  * This structure is used to store information about a translator.
  * It can store the translator's name and an email address.
- * This class is intended for use in the KAboutData class,
+ * This class is intended for use in the TDEAboutData class,
  * but it can be used elsewhere as well.
  * Normally you should at least define the translator's name.
  *
@@ -179,7 +179,7 @@ private:
  * classes.
  * @author Espen Sand (espen@kde.org), David Faure (faure@kde.org)
  */
-class TDECORE_EXPORT KAboutData
+class TDECORE_EXPORT TDEAboutData
 {
   public:
   /**
@@ -235,7 +235,7 @@ class TDECORE_EXPORT KAboutData
      *        This defaults to the trinitydesktop.org bug system.
      *
      */
-    KAboutData( const char *appName,
+    TDEAboutData( const char *appName,
                 const char *programName,
 		const char *version,
 		const char *shortDescription = 0,
@@ -246,7 +246,7 @@ class TDECORE_EXPORT KAboutData
 		const char *bugsEmailAddress = 0
 		);
 
-     ~KAboutData();
+     ~TDEAboutData();
 
     /**
      * Defines an author. You can call this function as many times you
@@ -623,7 +623,7 @@ class TDECORE_EXPORT KAboutData
     const char *mLicenseText;
     static const char *defaultBugTracker;
 
-    KAboutDataPrivate *d;
+    TDEAboutDataPrivate *d;
 };
 
 #endif

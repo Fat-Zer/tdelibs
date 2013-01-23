@@ -31,7 +31,7 @@ class KActionCollection;
 class KPopupMenu;
 class TQWidget;
 
-class KAboutData;
+class TDEAboutData;
 class KAboutKDE;
 class KBugReport;
 class KDialogBase;
@@ -175,7 +175,7 @@ class TDEUI_EXPORT KHelpMenu : public TQObject
      *        standard actions.
      *
      */
-    KHelpMenu( TQWidget *parent, const KAboutData *aboutData,
+    KHelpMenu( TQWidget *parent, const TDEAboutData *aboutData,
 	       bool showWhatsThis=true, KActionCollection *actions = 0 );
 
     /**

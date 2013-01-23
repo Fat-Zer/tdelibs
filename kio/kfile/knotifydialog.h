@@ -63,14 +63,14 @@ public:
      * @param parent The parent widget for the dialog
      * @param name The widget name
      * @param modal If true, this will be a modal dialog, otherwise non-modal.
-     * @param aboutData A pointer to a KAboutData object. KAboutData::appName()
+     * @param aboutData A pointer to a TDEAboutData object. TDEAboutData::appName()
      *                  will be used to find the KNotify events (in the eventsrc file).
      *                  Set this to 0L if you want to add all events yourself with
      * addApplicationEvents().
      */
     KNotifyDialog( TQWidget *parent = 0, const char *name = 0,
                    bool modal = true,
-                   const KAboutData *aboutData =
+                   const TDEAboutData *aboutData =
                    KGlobal::instance()->aboutData() );
     /**
      * Destroys the KNotifyDialog
@@ -82,13 +82,13 @@ public:
      *
      * @param parent The parent widget for the dialog
      * @param name The widget name
-     * @param aboutData A pointer to a KAboutData object. KAboutData::appName()
+     * @param aboutData A pointer to a TDEAboutData object. TDEAboutData::appName()
      *                  will be used to find the KNotify events (in the eventsrc file).
      * @see exec for the return values.
      * @return The value of TQDialog::exec()
      */
     static int configure( TQWidget *parent = 0, const char *name = 0,
-                          const KAboutData *aboutData = KGlobal::instance()->aboutData() );
+                          const TDEAboutData *aboutData = KGlobal::instance()->aboutData() );
 
     /**
      * With this method, you can add the KNotify events of one eventsrc
@@ -96,7 +96,7 @@ public:
      * KNotifyDialog can handle events for multiple applications (i.e. eventsrc files).
      * Successive calls with a different @p appName will add them.
      * @param appName The application's name, i.e. the name passed to the 
-     *                TDEApplication constructor or KAboutData.
+     *                TDEApplication constructor or TDEAboutData.
      * @see clearApplicationEvents()
      */
     virtual void addApplicationEvents( const char *appName );

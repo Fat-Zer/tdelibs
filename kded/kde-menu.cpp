@@ -113,9 +113,9 @@ int main(int argc, char **argv)
    "The --highlight option can be used to visually indicate to the user where\n"
    "in the TDE menu a specific application is located.");
    
-   KAboutData d(appName, I18N_NOOP("kde-menu"), appVersion,
+   TDEAboutData d(appName, I18N_NOOP("kde-menu"), appVersion,
                 description,
-                KAboutData::License_GPL, "(c) 2003 Waldo Bastian");
+                TDEAboutData::License_GPL, "(c) 2003 Waldo Bastian");
    d.addAuthor("Waldo Bastian", I18N_NOOP("Author"), "bastian@kde.org");
 
    TDECmdLineArgs::init(argc, argv, &d);

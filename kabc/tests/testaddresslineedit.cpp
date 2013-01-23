@@ -10,7 +10,7 @@ using namespace KABC;
 
 int main( int argc,char **argv )
 {
-  KAboutData aboutData( "testaddresslineedit",
+  TDEAboutData aboutData( "testaddresslineedit",
                         I18N_NOOP( "Test Address LineEdit" ), "0.1" );
   TDECmdLineArgs::init( argc, argv, &aboutData );
 

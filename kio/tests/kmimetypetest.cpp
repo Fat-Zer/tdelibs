@@ -38,7 +38,7 @@ static void checkIcon( const KURL& url, const TQString& expectedIcon )
 
 int main( int argc, char** argv )
 {
-  KInstance blah("kmimetypetest");
+  TDEInstance blah("kmimetypetest");
 
   // Obviously those tests will need to be fixed if we ever change the name of the icons
   // but at least they unit-test KMimeType::iconForURL.

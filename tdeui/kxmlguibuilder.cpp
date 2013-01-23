@@ -61,7 +61,7 @@ public:
 
     TQString attrIcon;
 
-    KInstance *m_instance;
+    TDEInstance *m_instance;
     KXMLGUIClient *m_client;
 };
 
@@ -174,7 +174,7 @@ TQWidget *KXMLGUIBuilder::createContainer( TQWidget *parent, int index, const TQ
 
     if ( !icon.isEmpty() )
     {
-      KInstance *instance = d->m_instance;
+      TDEInstance *instance = d->m_instance;
       if ( !instance )
         instance = KGlobal::instance();
 
@@ -371,7 +371,7 @@ int KXMLGUIBuilder::createCustomElement( TQWidget *parent, int index, const TQDo
 
       if ( !icon.isEmpty() )
       {
-        KInstance *instance = d->m_instance;
+        TDEInstance *instance = d->m_instance;
         if ( !instance )
           instance = KGlobal::instance();
 
@@ -409,12 +409,12 @@ void KXMLGUIBuilder::setBuilderClient( KXMLGUIClient *client )
       setBuilderInstance( client->instance() );
 }
 
-KInstance *KXMLGUIBuilder::builderInstance() const
+TDEInstance *KXMLGUIBuilder::builderInstance() const
 {
   return d->m_instance;
 }
 
-void KXMLGUIBuilder::setBuilderInstance( KInstance *instance )
+void KXMLGUIBuilder::setBuilderInstance( TDEInstance *instance )
 {
   d->m_instance = instance;
 }

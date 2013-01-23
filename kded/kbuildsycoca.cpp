@@ -718,9 +718,9 @@ public:
 extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
 {
    KLocale::setMainCatalogue("tdelibs");
-   KAboutData d(appName, I18N_NOOP("KBuildSycoca"), appVersion,
+   TDEAboutData d(appName, I18N_NOOP("KBuildSycoca"), appVersion,
                 I18N_NOOP("Rebuilds the system configuration cache."),
-                KAboutData::License_GPL, "(c) 1999-2002 KDE Developers");
+                TDEAboutData::License_GPL, "(c) 1999-2002 KDE Developers");
    d.addAuthor("David Faure", I18N_NOOP("Author"), "faure@kde.org");
    d.addAuthor("Waldo Bastian", I18N_NOOP("Author"), "bastian@kde.org");
 

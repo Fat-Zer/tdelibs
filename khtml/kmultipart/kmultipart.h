@@ -29,7 +29,7 @@
 #include <tqdatetime.h>
 
 class KHTMLPart;
-class KInstance;
+class TDEInstance;
 class KTempFile;
 class KLineParser;
 
@@ -49,7 +49,7 @@ public:
 
     virtual bool closeURL();
 
-    static KAboutData* createAboutData();
+    static TDEAboutData* createAboutData();
 
 protected:
     virtual void guiActivateEvent( KParts::GUIActivateEvent *e );

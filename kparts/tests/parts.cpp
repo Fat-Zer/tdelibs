@@ -21,7 +21,7 @@
 Part1::Part1( TQObject *parent, TQWidget * parentWidget )
  : KParts::ReadOnlyPart( parent, "Part1" )
 {
-  m_instance = new KInstance( "kpartstestpart" );
+  m_instance = new TDEInstance( "kpartstestpart" );
   setInstance( m_instance );
   m_edit = new TQMultiLineEdit( parentWidget );
   setWidget( m_edit );
@@ -59,7 +59,7 @@ bool Part1::openFile()
 Part2::Part2( TQObject *parent, TQWidget * parentWidget )
  : KParts::Part( parent, "Part2" )
 {
-  m_instance = new KInstance( "part2" );
+  m_instance = new TDEInstance( "part2" );
   setInstance( m_instance );
   TQWidget * w = new TQWidget( parentWidget, "Part2Widget" );
   setWidget( w );

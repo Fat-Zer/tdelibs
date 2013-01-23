@@ -27,7 +27,7 @@
 
 #include <kxmlguiclient.h>
 
-class KInstance;
+class TDEInstance;
 class TQWidget;
 class KAction;
 class KActionCollection;
@@ -79,24 +79,24 @@ public:
 
 protected:
   /**
-   * Set the instance ( KInstance) for this part.
+   * Set the instance ( TDEInstance) for this part.
    *
    * Call this *first* in the inherited class constructor,
    * because it loads the i18n catalogues.
    */
-  virtual void setInstance( KInstance *instance );
+  virtual void setInstance( TDEInstance *instance );
 
   /**
-   * Set the instance ( KInstance) for this part.
+   * Set the instance ( TDEInstance) for this part.
    *
    * Call this *first* in the inherited class constructor,
    * because it loads the i18n catalogues.
    */
-  virtual void setInstance( KInstance *instance, bool loadPlugins );
+  virtual void setInstance( TDEInstance *instance, bool loadPlugins );
 
   /**
    * We have three different policies, whether to load new plugins or not. The
-   * value in the KConfig object of the KInstance object always overrides
+   * value in the KConfig object of the TDEInstance object always overrides
    * LoadPlugins and LoadPluginsIfEnabled.
    */
   enum PluginLoadingMode {
@@ -140,7 +140,7 @@ protected:
    * }
    * \endcode
    */
-  void loadPlugins( TQObject *parent, KXMLGUIClient *parentGUIClient, KInstance *instance );
+  void loadPlugins( TQObject *parent, KXMLGUIClient *parentGUIClient, TDEInstance *instance );
 
   /**
    * For a KParts::Part: call this before setInstance().

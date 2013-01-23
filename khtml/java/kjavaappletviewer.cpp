@@ -48,10 +48,10 @@
 
 K_EXPORT_COMPONENT_FACTORY (kjavaappletviewer, KJavaAppletViewerFactory)
 
-KInstance *KJavaAppletViewerFactory::s_instance = 0;
+TDEInstance *KJavaAppletViewerFactory::s_instance = 0;
 
 KJavaAppletViewerFactory::KJavaAppletViewerFactory () {
-    s_instance = new KInstance ("kjava");
+    s_instance = new TDEInstance ("kjava");
 }
 
 KJavaAppletViewerFactory::~KJavaAppletViewerFactory () {
@@ -447,8 +447,8 @@ void KJavaAppletViewer::infoMessage (const TQString & msg) {
     m_browserextension->infoMessage(msg);
 }
 
-KAboutData* KJavaAppletViewer::createAboutData () {
-    return new KAboutData("KJavaAppletViewer", I18N_NOOP("TDE Java Applet Plugin"), "1.0");
+TDEAboutData* KJavaAppletViewer::createAboutData () {
+    return new TDEAboutData("KJavaAppletViewer", I18N_NOOP("TDE Java Applet Plugin"), "1.0");
 }
 
 //---------------------------------------------------------------------

@@ -872,7 +872,7 @@ public:
 
 extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
 {
-     KAboutData aboutData( "kded", I18N_NOOP("TDE Daemon"),
+     TDEAboutData aboutData( "kded", I18N_NOOP("TDE Daemon"),
         "$Id$",
         I18N_NOOP("TDE Daemon - triggers Sycoca database updates when needed"));
 
@@ -904,7 +904,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
         }
      }
 
-     KInstance *instance = new KInstance(&aboutData);
+     TDEInstance *instance = new TDEInstance(&aboutData);
      KConfig *config = instance->config(); // Enable translations.
 
      if (args->isSet("check"))

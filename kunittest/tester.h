@@ -147,8 +147,8 @@ SampleTest - 1 test passed, 1 test failed
  *
  * int main( int argc, char** argv )
  * {
- *     KAboutData about("SampleTests", I18N_NOOP("SampleTests"), version, description,
- *                     KAboutData::License_BSD, "(C) 2005 You!", 0, 0, "mail@provider");
+ *     TDEAboutData about("SampleTests", I18N_NOOP("SampleTests"), version, description,
+ *                     TDEAboutData::License_BSD, "(C) 2005 You!", 0, 0, "mail@provider");
  *
  *     TDECmdLineArgs::init(argc, argv, &about);
  *     TDECmdLineArgs::addCmdLineOptions( options );

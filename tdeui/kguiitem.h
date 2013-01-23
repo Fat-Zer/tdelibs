@@ -61,10 +61,10 @@ public:
     TQString text() const;
     TQString plainText() const;
 #ifndef KDE_NO_COMPAT
-    TQIconSet iconSet( KIcon::Group, int size = 0, KInstance* instance = KGlobal::instance()) const;
+    TQIconSet iconSet( KIcon::Group, int size = 0, TDEInstance* instance = KGlobal::instance()) const;
     TQIconSet iconSet() const { return iconSet( KIcon::Small ); }
 #else
-    TQIconSet iconSet( KIcon::Group=KIcon::Small, int size = 0, KInstance* instance = KGlobal::instance()) const;
+    TQIconSet iconSet( KIcon::Group=KIcon::Small, int size = 0, TDEInstance* instance = KGlobal::instance()) const;
 #endif
 
     TQString iconName() const;

@@ -56,7 +56,7 @@ public:
     m_parentGUIClient = 0L;
   }
 
-  KInstance *m_instance;
+  TDEInstance *m_instance;
   TQString m_sXMLFile;
   bool m_bAutoConnectShortcuts;
   //bool m_bOneKAccelOnly;
@@ -77,7 +77,7 @@ public:
 };
 
 KActionCollection::KActionCollection( TQWidget *parent, const char *name,
-                                      KInstance *instance )
+                                      TDEInstance *instance )
   : TQObject( parent, name )
 {
   kdDebug(129) << "KActionCollection::KActionCollection( " << parent << ", " << name << " ): this = " << this << endl; // ellis
@@ -90,7 +90,7 @@ KActionCollection::KActionCollection( TQWidget *parent, const char *name,
 
 
 KActionCollection::KActionCollection( TQWidget *watch, TQObject* parent, const char *name,
-                                      KInstance *instance )
+                                      TDEInstance *instance )
   : TQObject( parent, name )
 {
   kdDebug(129) << "KActionCollection::KActionCollection( " << watch << ", " << parent << ", " << name << " ): this = " << this << endl; //ellis
@@ -104,10 +104,10 @@ KActionCollection::KActionCollection( TQWidget *watch, TQObject* parent, const c
 #ifndef KDE_NO_COMPAT
 // KDE 4: remove
 KActionCollection::KActionCollection( TQObject *parent, const char *name,
-                                      KInstance *instance )
+                                      TDEInstance *instance )
   : TQObject( parent, name )
 {
-  kdWarning(129) << "KActionCollection::KActionCollection( TQObject *parent, const char *name, KInstance *instance )" << endl; //ellis
+  kdWarning(129) << "KActionCollection::KActionCollection( TQObject *parent, const char *name, TDEInstance *instance )" << endl; //ellis
   kdDebug(129) << kdBacktrace() << endl;
   d = new KActionCollectionPrivate;
   TQWidget* w = tqt_dynamic_cast<TQWidget*>( parent );
@@ -457,7 +457,7 @@ KActionPtrList KActionCollection::actions() const
   return lst;
 }
 
-void KActionCollection::setInstance( KInstance *instance )
+void KActionCollection::setInstance( TDEInstance *instance )
 {
   if ( instance )
     d->m_instance = instance;
@@ -465,7 +465,7 @@ void KActionCollection::setInstance( KInstance *instance )
     d->m_instance = KGlobal::instance();
 }
 
-KInstance *KActionCollection::instance() const
+TDEInstance *KActionCollection::instance() const
 {
   return d->m_instance;
 }
@@ -695,7 +695,7 @@ bool KActionShortcutList::isConfigurable( uint i ) const
 	{ return m_actions.action(i)->isShortcutConfigurable(); }
 bool KActionShortcutList::setShortcut( uint i, const KShortcut& cut )
 	{ return m_actions.action(i)->setShortcut( cut ); }
-const KInstance* KActionShortcutList::instance() const
+const TDEInstance* KActionShortcutList::instance() const
 	{ return m_actions.instance(); }
 TQVariant KActionShortcutList::getOther( Other, uint ) const
 	{ return TQVariant(); }

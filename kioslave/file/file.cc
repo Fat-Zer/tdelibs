@@ -113,7 +113,7 @@ extern "C" { KDE_EXPORT int kdemain(int argc, char **argv); }
 int kdemain( int argc, char **argv )
 {
   KLocale::setMainCatalogue("tdelibs");
-  KInstance instance( "kio_file" );
+  TDEInstance instance( "kio_file" );
   ( void ) KGlobal::locale();
 
   kdDebug(7101) << "Starting " << getpid() << endl;

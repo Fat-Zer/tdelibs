@@ -102,12 +102,12 @@ TQObject *PartBase::partObject() const
   return m_obj;
 }
 
-void PartBase::setInstance( KInstance *inst )
+void PartBase::setInstance( TDEInstance *inst )
 {
   setInstance( inst, true );
 }
 
-void PartBase::setInstance( KInstance *inst, bool bLoadPlugins )
+void PartBase::setInstance( TDEInstance *inst, bool bLoadPlugins )
 {
   KXMLGUIClient::setInstance( inst );
   KGlobal::locale()->insertCatalogue( inst->instanceName() );
@@ -119,7 +119,7 @@ void PartBase::setInstance( KInstance *inst, bool bLoadPlugins )
     loadPlugins( m_obj, this, instance() );
 }
 
-void PartBase::loadPlugins( TQObject *parent, KXMLGUIClient *parentGUIClient, KInstance *instance )
+void PartBase::loadPlugins( TQObject *parent, KXMLGUIClient *parentGUIClient, TDEInstance *instance )
 {
   if( d->m_pluginLoadingMode != DoNotLoadPlugins )
     Plugin::loadPlugins( parent, parentGUIClient, instance, d->m_pluginLoadingMode == LoadPlugins );

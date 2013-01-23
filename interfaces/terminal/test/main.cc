@@ -33,7 +33,7 @@ Win::Win()
 
 int main( int argc, char** argv )
 {
-    KAboutData* about = new KAboutData( "tetest", "TETest", "0.1" );
+    TDEAboutData* about = new TDEAboutData( "tetest", "TETest", "0.1" );
     TDECmdLineArgs::init( argc, argv, about );
     TDEApplication a;
     Win* win = new Win();

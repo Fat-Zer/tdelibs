@@ -35,7 +35,7 @@ static const KCmdLineOptions op[] =
 
 int main(int argc, char **argv)
 {
-	KAboutData about("khotnewstuff", "KHotNewStuff", "0.2");
+	TDEAboutData about("khotnewstuff", "KHotNewStuff", "0.2");
 	TDECmdLineArgs *args;
 
 	TDECmdLineArgs::init(argc, argv, &about);

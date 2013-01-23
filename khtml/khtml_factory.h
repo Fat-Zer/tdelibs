@@ -25,8 +25,8 @@
 #include <tqptrlist.h>
 #include <kurl.h>
 
-class KInstance;
-class KAboutData;
+class TDEInstance;
+class TDEAboutData;
 class HistoryProvider;
 class KHTMLSettings;
 class KHTMLPart;
@@ -52,7 +52,7 @@ public:
 
   static TQPtrList<KHTMLPart> *partList() { return s_parts; }
 
-  static KInstance *instance();
+  static TDEInstance *instance();
 
   static KHTMLSettings *defaultHTMLSettings();
 
@@ -67,8 +67,8 @@ protected:
 private:
   static unsigned long s_refcnt;
   static KHTMLFactory *s_self;
-  static KInstance *s_instance;
-  static KAboutData *s_about;
+  static TDEInstance *s_instance;
+  static TDEAboutData *s_about;
   static KHTMLSettings *s_settings;
   static TQPtrList<KHTMLPart> *s_parts;
 };

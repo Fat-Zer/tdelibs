@@ -105,7 +105,7 @@ public:
 
     /**
      * Changes the tray's text description (which can be seen e.g. in the systray
-     * configuration dialog). The default value is KAboutData::programName().
+     * configuration dialog). The default value is TDEAboutData::programName().
      */
     virtual void setCaption( const TQString& title );
 
@@ -117,7 +117,7 @@ public:
      *
      * @since 3.2
      */
-    static TQPixmap loadIcon( const TQString &icon, KInstance *instance=KGlobal::instance() );
+    static TQPixmap loadIcon( const TQString &icon, TDEInstance *instance=KGlobal::instance() );
 
     /**
      * Loads an icon @p icon using the icon loader class of the given instance @p instance.
@@ -128,7 +128,7 @@ public:
      *
      * @since 3.5.12
      */
-    static TQPixmap loadSizedIcon( const TQString &icon, int iconWidth, KInstance *instance=KGlobal::instance() );
+    static TQPixmap loadSizedIcon( const TQString &icon, int iconWidth, TDEInstance *instance=KGlobal::instance() );
 
 signals:
     /**

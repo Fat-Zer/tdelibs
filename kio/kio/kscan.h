@@ -213,17 +213,17 @@ protected:
      */
     void setName( const TQCString& instanceName ) {
 	delete m_instance;
-	m_instance = new KInstance( instanceName );
+	m_instance = new TDEInstance( instanceName );
     }
 
     /**
      * Returns the instance.
-     * @return the KInstance
+     * @return the TDEInstance
      */
-    KInstance *instance() const { return m_instance; }
+    TDEInstance *instance() const { return m_instance; }
 
 private:
-    KInstance *m_instance;
+    TDEInstance *m_instance;
 protected:
     virtual void virtual_hook( int id, void* data );
 private:
@@ -349,17 +349,17 @@ protected:
      */
     void setName( const TQCString& instanceName ) {
 	delete m_instance;
-	m_instance = new KInstance( instanceName );
+	m_instance = new TDEInstance( instanceName );
     }
 
     /**
      * Returns the instance.
-     * @return the KInstance
+     * @return the TDEInstance
      */
-    KInstance *instance() const { return m_instance; }
+    TDEInstance *instance() const { return m_instance; }
 
 private:
-    KInstance *m_instance;
+    TDEInstance *m_instance;
 protected:
     virtual void virtual_hook( int id, void* data );
 private:

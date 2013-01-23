@@ -24,7 +24,7 @@
 #include <kaction.h>
 #include <kxmlguiclient.h>
 
-class KInstance;
+class TDEInstance;
 
 namespace KParts
 {
@@ -86,7 +86,7 @@ public:
      * It is recommended to use the last loadPlugins method instead,
      * to support enabling and disabling of plugins.
      */
-    static void loadPlugins( TQObject *parent, const KInstance * instance );
+    static void loadPlugins( TQObject *parent, const TDEInstance * instance );
 
     /**
      * Load the plugin libraries specified by the list @p docs and make the
@@ -104,7 +104,7 @@ public:
      * It is recommended to use the last loadPlugins method instead,
      * to support enabling and disabling of plugins.
      */
-    static void loadPlugins( TQObject *parent, const TQValueList<PluginInfo> &pluginInfos, const KInstance * instance );
+    static void loadPlugins( TQObject *parent, const TQValueList<PluginInfo> &pluginInfos, const TDEInstance * instance );
 
     /**
      * Load the plugin libraries for the given @p instance, make the
@@ -140,7 +140,7 @@ public:
      * }
      * \endcode
      */
-    static void loadPlugins( TQObject *parent, KXMLGUIClient* parentGUIClient, KInstance* instance, bool enableNewPluginsByDefault = true );
+    static void loadPlugins( TQObject *parent, KXMLGUIClient* parentGUIClient, TDEInstance* instance, bool enableNewPluginsByDefault = true );
 
     /**
      * Returns a list of plugin objects loaded for @p parent. This
@@ -156,7 +156,7 @@ protected:
      *
      * @return A list of TQDomDocument s, containing the parsed xml documents returned by plugins.
      */
-    static TQValueList<Plugin::PluginInfo> pluginInfos( const KInstance * instance );
+    static TQValueList<Plugin::PluginInfo> pluginInfos( const TDEInstance * instance );
 
     /**
      * @internal
@@ -164,7 +164,7 @@ protected:
      */
     static Plugin* loadPlugin( TQObject * parent, const char* libname );
 
-    virtual void setInstance( KInstance *instance );
+    virtual void setInstance( TDEInstance *instance );
 
 private:
     static bool hasPlugin( TQObject* parent, const TQString& library );

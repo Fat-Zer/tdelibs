@@ -22,7 +22,7 @@ static const KCmdLineOptions options[] =
 
 int main(int argc,char **argv)
 {
-  KAboutData aboutData("testdistlist",I18N_NOOP("Test Distribution Lists"),"0.1");
+  TDEAboutData aboutData("testdistlist",I18N_NOOP("Test Distribution Lists"),"0.1");
   TDECmdLineArgs::init(argc,argv,&aboutData);
   TDECmdLineArgs::addCmdLineOptions( options );
 

@@ -23,7 +23,7 @@ void openWallet()
 
 int main( int argc, char *argv[] )
 {
-	KAboutData aboutData( "kwalletsync", "kwalletsync", "version" );
+	TDEAboutData aboutData( "kwalletsync", "kwalletsync", "version" );
 	TDECmdLineArgs::init( argc, argv, &aboutData );
 	TDEApplication app( "kwalletsync" );
 

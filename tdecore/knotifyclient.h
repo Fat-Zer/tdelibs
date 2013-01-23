@@ -20,7 +20,7 @@
 #include <tqstring.h>
 #include "tdelibs_export.h"
 
-class KInstance;
+class TDEInstance;
 #undef None // X11 headers...
 
 /**
@@ -82,7 +82,7 @@ namespace KNotifyClient
 	class InstanceStack;
 
     /**
-     * Makes it possible to use KNotifyClient with a KInstance
+     * Makes it possible to use KNotifyClient with a TDEInstance
      * that is not the application.
      *
      * Use like this:
@@ -91,20 +91,20 @@ namespace KNotifyClient
      * KNotifyClient::event("MyEvent");
      * \endcode
      *
-     * @short Enables KNotifyClient to use a different KInstance
+     * @short Enables KNotifyClient to use a different TDEInstance
      */
     class TDECORE_EXPORT Instance
     {
     public:
         /**
          * Constructs a KNotifyClient::Instance to make KNotifyClient use
-         * the specified KInstance for the event configuration.
+         * the specified TDEInstance for the event configuration.
 	 * @param instance the instance for the event configuration
          */
-        Instance(KInstance *instance);
+        Instance(TDEInstance *instance);
         /**
          * Destructs the KNotifyClient::Instance and resets KNotifyClient
-         * to the previously used KInstance.
+         * to the previously used TDEInstance.
          */
         ~Instance();
 	/**
@@ -114,13 +114,13 @@ namespace KNotifyClient
 	 */
 	bool useSystemBell() const;
         /**
-         * Returns the currently active KInstance.
-	 * @return the active KInstance
+         * Returns the currently active TDEInstance.
+	 * @return the active TDEInstance
          */
-        static KInstance *current();
+        static TDEInstance *current();
 
 	/**
-	 * Returns the current KNotifyClient::Instance (not the KInstance).
+	 * Returns the current KNotifyClient::Instance (not the TDEInstance).
 	 * @return the active Instance
 	 */
 	static Instance *currentInstance();
@@ -317,9 +317,9 @@ namespace KNotifyClient
 
 	/**
 	 * Shortcut to KNotifyClient::Instance::current() :)
-	 * @returns the current KInstance.
+	 * @returns the current TDEInstance.
 	 */
-	TDECORE_EXPORT KInstance * instance();
+	TDECORE_EXPORT TDEInstance * instance();
 }
 
 #endif

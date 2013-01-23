@@ -43,7 +43,7 @@ TestApp::newInstance( )
 int
 main(int argc, char *argv[])
 {
-   KAboutData about("kuniqueapptest", "kuniqueapptest", "version");
+   TDEAboutData about("kuniqueapptest", "kuniqueapptest", "version");
    TDECmdLineArgs::init(argc, argv, &about);
    KUniqueApplication::addCmdLineOptions();
 

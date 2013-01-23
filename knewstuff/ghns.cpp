@@ -78,7 +78,7 @@ void GhnsWidget::downloadWallpapers()
 
 int main(int argc,char **argv)
 {
-  KAboutData aboutData("ghns","Get Hot New Stuff","0.1");
+  TDEAboutData aboutData("ghns","Get Hot New Stuff","0.1");
   TDECmdLineArgs::init(argc,argv,&aboutData);
 
   TDEApplication app;

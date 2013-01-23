@@ -19,7 +19,7 @@
 #define _KGLOBAL_H
 
 #include "tdelibs_export.h"
-#include <kinstance.h> // KDE4: class KInstance is enough here
+#include <kinstance.h> // KDE4: class TDEInstance is enough here
 
 class KCharsets;
 class KConfig;
@@ -53,7 +53,7 @@ public:
      * cases the application itself).
      * @return the global instance
      */
-    static KInstance            *instance();
+    static TDEInstance            *instance();
 
     /**
      *  Returns the application standard dirs object.
@@ -167,7 +167,7 @@ public:
 
     //private:
     static  KStringDict         *_stringDict;
-    static  KInstance           *_instance;
+    static  TDEInstance           *_instance;
     static  KLocale             *_locale;
     static  KCharsets	        *_charsets;
     static  KStaticDeleterList  *_staticDeleters;
@@ -178,10 +178,10 @@ public:
      * Don't use this - it's mainly for KAboutDialog and KBugReport.
      * @internal
      */
-    static void setActiveInstance(KInstance *d);
-    static KInstance *activeInstance() { return _activeInstance; }
+    static void setActiveInstance(TDEInstance *d);
+    static TDEInstance *activeInstance() { return _activeInstance; }
 
-    static  KInstance           *_activeInstance;
+    static  TDEInstance           *_activeInstance;
 };
 
 /**

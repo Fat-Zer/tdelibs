@@ -88,7 +88,7 @@ void test_textstream(  const TQString & fileName )
 
 int main()
 {
-    KInstance instance("kfiltertest");
+    TDEInstance instance("kfiltertest");
 
     char currentdir[PATH_MAX+1];
     getcwd( currentdir, PATH_MAX );

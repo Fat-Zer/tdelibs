@@ -41,7 +41,7 @@ namespace KPAC
 
     ProxyScout::ProxyScout( const TQCString& name )
         : KDEDModule( name ),
-          m_instance( new KInstance( "proxyscout" ) ),
+          m_instance( new TDEInstance( "proxyscout" ) ),
           m_downloader( 0 ),
           m_script( 0 ),
           m_suspendTime( 0 )

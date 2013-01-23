@@ -46,9 +46,9 @@ void NotepadPart::setReadWrite( bool rw )
     ReadWritePart::setReadWrite( rw );
 }
 
-KAboutData* NotepadPart::createAboutData()
+TDEAboutData* NotepadPart::createAboutData()
 {
-  return new KAboutData( "notepadpart", I18N_NOOP( "Notepad" ), "2.0" );
+  return new TDEAboutData( "notepadpart", I18N_NOOP( "Notepad" ), "2.0" );
 }
 
 bool NotepadPart::openFile()

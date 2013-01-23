@@ -57,7 +57,7 @@ bool check(TQString txt, TQString a, TQString b)
 int
 main(int argc, char *argv[])
 {
-   KAboutData about("socktest", "SockTest", "version");
+   TDEAboutData about("socktest", "SockTest", "version");
    TDECmdLineArgs::init(argc, argv, &about);
    TDEApplication::addCmdLineOptions();
 

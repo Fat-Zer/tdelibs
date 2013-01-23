@@ -48,9 +48,9 @@ public:
 
 int main(int argc, char **argv)
 {
-    KAboutData aboutdata("kmcop", I18N_NOOP("KMCOP"),
+    TDEAboutData aboutdata("kmcop", I18N_NOOP("KMCOP"),
                          "0.1", I18N_NOOP("TDE MCOP-DCOP Bridge"),
-                         KAboutData::License_GPL, "(C) 2001, Nikolas Zimmermann");
+                         TDEAboutData::License_GPL, "(C) 2001, Nikolas Zimmermann");
     aboutdata.addAuthor("Nikolas Zimmermann", I18N_NOOP("Author"), "wildfox@kde.org");
 
     TDECmdLineArgs::init(argc, argv, &aboutdata);

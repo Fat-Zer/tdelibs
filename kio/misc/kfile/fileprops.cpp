@@ -406,10 +406,10 @@ static void processMetaDataOptions( const TQPtrList<FileProps> propList,
 
 int main( int argc, char **argv )
 {
-    KAboutData about(
+    TDEAboutData about(
 	  "kfile", I18N_NOOP( "kfile" ), KFILEVERSION,
 	  I18N_NOOP("A commandline tool to read and modify metadata of files." ),
-	  KAboutData::License_LGPL, "(c) 2002, Carsten Pfeiffer",
+	  TDEAboutData::License_LGPL, "(c) 2002, Carsten Pfeiffer",
 	  0 /*text*/, "http://devel-home.kde.org/~pfeiffer/",
 	  "pfeiffer@kde.org" );
 

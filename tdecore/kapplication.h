@@ -93,7 +93,7 @@ class TDEApplicationPrivate;
 * @short Controls and provides information to all KDE applications.
 * @author Matthias Kalle Dalheimer <kalle@kde.org>
 */
-class TDECORE_EXPORT TDEApplication : public TQApplication, public KInstance
+class TDECORE_EXPORT TDEApplication : public TQApplication, public TDEInstance
 {
 
   Q_OBJECT
@@ -1232,14 +1232,14 @@ protected:
   /**
    * @internal Used by KUniqueApplication
    */
-  TDEApplication( bool allowStyles, bool GUIenabled, KInstance* _instance );
+  TDEApplication( bool allowStyles, bool GUIenabled, TDEInstance* _instance );
 
 #ifdef Q_WS_X11
   /**
    * @internal Used by KUniqueApplication
    */
   TDEApplication( Display *display, Qt::HANDLE visual, Qt::HANDLE colormap,
-		  bool allowStyles, KInstance* _instance );
+		  bool allowStyles, TDEInstance* _instance );
 
   /**
    * Used to catch X11 events

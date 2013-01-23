@@ -55,7 +55,7 @@ void KConvertTest::slotRawStreamFinished()
 
 int main(int argc, char **argv)
 {
-	KAboutData aboutData("kconverttest", I18N_NOOP("KConvertTest"), I18N_NOOP("0.1"), "", KAboutData::License_GPL, "");
+	TDEAboutData aboutData("kconverttest", I18N_NOOP("KConvertTest"), I18N_NOOP("0.1"), "", TDEAboutData::License_GPL, "");
 							  
 	TDECmdLineArgs::init(argc, argv, &aboutData);
 	TDECmdLineArgs::addCmdLineOptions(options); 	

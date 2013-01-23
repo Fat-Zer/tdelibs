@@ -114,12 +114,12 @@ void printResult(const TQString &s)
 int main(int argc, char **argv)
 {
     KLocale::setMainCatalogue("tdelibs");
-    KAboutData about("tde-config", "tde-config", "1.0", description, KAboutData::License_GPL, "(C) 2000 Stephan Kulow");
+    TDEAboutData about("tde-config", "tde-config", "1.0", description, TDEAboutData::License_GPL, "(C) 2000 Stephan Kulow");
     TDECmdLineArgs::init( argc, argv, &about);
 
     TDECmdLineArgs::addCmdLineOptions( options ); // Add my own options.
 
-    KInstance a("tde-config");
+    TDEInstance a("tde-config");
     a.setConfigReadOnly(TRUE);
     (void)KGlobal::dirs(); // trigger the creation
     (void)KGlobal::config();

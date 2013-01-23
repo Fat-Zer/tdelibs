@@ -306,7 +306,7 @@ public:
 	 * Simply call insert with the action collections of each one in turn.
          *
          * @param title the title associated with the collection (if null, the
-         * KAboutData::progName() of the collection's instance is used)
+         * TDEAboutData::progName() of the collection's instance is used)
          * @return true :)
 	 * @since 3.1
 	 */

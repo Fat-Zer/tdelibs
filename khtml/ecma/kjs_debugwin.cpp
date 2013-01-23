@@ -347,7 +347,7 @@ void EvalMultiLineEdit::keyPressEvent(TQKeyEvent * e)
 }
 //-------------------------------------------------------------------------
 KJSDebugWin::KJSDebugWin(TQWidget *parent, const char *name)
-  : KMainWindow(parent, name, (WFlags)WType_TopLevel), KInstance("kjs_debugger")
+  : KMainWindow(parent, name, (WFlags)WType_TopLevel), TDEInstance("kjs_debugger")
 {
   m_breakpoints = 0;
   m_breakpointCount = 0;

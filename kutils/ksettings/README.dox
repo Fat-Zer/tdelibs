@@ -124,7 +124,7 @@ Some explanation for those keys:
   use all modules that set X-TDE-ParentApp to
   KGlobal::instance()->instanceName(). It
   should be pretty easy to find out what name that is: look at the first
-  argument to the KAboutData ctor.
+  argument to the TDEAboutData ctor.
 - X-TDE-ParentComponents is a list of the components (plugin/KPart/whatever)
   this config page belongs to. Normally there is only one component.
   It is used for two things:

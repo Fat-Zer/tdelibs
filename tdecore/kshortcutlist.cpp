@@ -53,7 +53,7 @@ int KShortcutList::index( const KKeySequence& seq ) const
 	return -1;
 }
 
-const KInstance* KShortcutList::instance() const
+const TDEInstance* KShortcutList::instance() const
 {
 	return 0;
 }

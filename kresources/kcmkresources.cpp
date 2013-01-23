@@ -40,10 +40,10 @@ KCMKResources::KCMKResources( TQWidget *parent, const char *name, const TQString
   layout->addWidget( mConfigPage );
   connect( mConfigPage, TQT_SIGNAL( changed( bool ) ), TQT_SIGNAL( changed( bool ) ) );
   setButtons( Help | Apply );
-  KAboutData *about =
-   new KAboutData( I18N_NOOP( "kcmkresources" ),
+  TDEAboutData *about =
+   new TDEAboutData( I18N_NOOP( "kcmkresources" ),
                    I18N_NOOP( "TDE Resources configuration module" ),
-                   0, 0, KAboutData::License_GPL,
+                   0, 0, TDEAboutData::License_GPL,
                    I18N_NOOP( "(c) 2003 Tobias Koenig" ) );
 
   about->addAuthor( "Tobias Koenig", 0, "tokoe@kde.org" );

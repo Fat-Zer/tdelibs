@@ -96,14 +96,14 @@ public:
     BuildStateStack m_stateStack;
 };
 
-TQString KXMLGUIFactory::readConfigFile( const TQString &filename, const KInstance *instance )
+TQString KXMLGUIFactory::readConfigFile( const TQString &filename, const TDEInstance *instance )
 {
     return readConfigFile( filename, false, instance );
 }
 
-TQString KXMLGUIFactory::readConfigFile( const TQString &filename, bool never_null, const KInstance *_instance )
+TQString KXMLGUIFactory::readConfigFile( const TQString &filename, bool never_null, const TDEInstance *_instance )
 {
-    const KInstance *instance = _instance ? _instance : KGlobal::instance();
+    const TDEInstance *instance = _instance ? _instance : KGlobal::instance();
     TQString xml_file;
 
     if (!TQDir::isRelativePath(filename))
@@ -140,9 +140,9 @@ TQString KXMLGUIFactory::readConfigFile( const TQString &filename, bool never_nu
 }
 
 bool KXMLGUIFactory::saveConfigFile( const TQDomDocument& doc,
-                                     const TQString& filename, const KInstance *_instance )
+                                     const TQString& filename, const TDEInstance *_instance )
 {
-    const KInstance *instance = _instance ? _instance : KGlobal::instance();
+    const TDEInstance *instance = _instance ? _instance : KGlobal::instance();
     TQString xml_file(filename);
 
     if (TQDir::isRelativePath(xml_file))

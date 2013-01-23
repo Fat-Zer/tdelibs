@@ -46,7 +46,7 @@ class PluginPage::PluginPagePrivate
     connect( d->selwid, TQT_SIGNAL( changed( bool ) ), this, TQT_SIGNAL( changed( bool ) ) );
 }
 
-    PluginPage::PluginPage( KInstance * instance, TQWidget * parent, const TQStringList & args )
+    PluginPage::PluginPage( TDEInstance * instance, TQWidget * parent, const TQStringList & args )
     : KCModule( instance, parent, args )
     , d( new PluginPagePrivate )
 {
