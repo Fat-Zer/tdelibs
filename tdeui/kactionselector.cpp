@@ -423,8 +423,9 @@ void KActionSelector::buttonAddClicked()
       d->selectedListBox->insertItem( item, insertionIndex( d->selectedListBox, d->selectedInsertionPolicy ) );
       d->selectedListBox->setCurrentItem( item );
       emit added( item );
-    }
-    item = item->next();
+      item = d->availableListBox->firstItem();
+    } else
+      item = item->next();
   }
   if ( d->selectedInsertionPolicy == Sorted )
     d->selectedListBox->sort();
@@ -441,8 +442,9 @@ void KActionSelector::buttonRemoveClicked()
       d->availableListBox->insertItem( item, insertionIndex( d->availableListBox, d->availableInsertionPolicy ) );
       d->availableListBox->setCurrentItem( item );
       emit removed( item );
-    }
-    item = item->next();
+      item = d->selectedListBox->firstItem();
+    } else
+      item = item->next();
   }
   if ( d->availableInsertionPolicy == Sorted )
     d->availableListBox->sort();
