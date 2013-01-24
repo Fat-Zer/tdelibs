@@ -656,7 +656,7 @@ void KDialogBase::makeButtonBox( int buttonMask, ButtonCode defaultButton,
     }
   }
 
-  setButtonStyle( KGlobalSettings::buttonLayout() );
+  setButtonStyle( TDEGlobalSettings::buttonLayout() );
 }
 
 
@@ -1740,7 +1740,7 @@ void KDialogBase::showTile( bool state )
 
 TQSize KDialogBase::configDialogSize( const TQString& groupName ) const
 {
-   return configDialogSize( *KGlobal::config(), groupName );
+   return configDialogSize( *TDEGlobal::config(), groupName );
 }
 
 
@@ -1764,7 +1764,7 @@ TQSize KDialogBase::configDialogSize( KConfig& config,
 
 void KDialogBase::saveDialogSize( const TQString& groupName, bool global )
 {
-   saveDialogSize( *KGlobal::config(), groupName, global );
+   saveDialogSize( *TDEGlobal::config(), groupName, global );
 }
 
 

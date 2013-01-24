@@ -124,12 +124,12 @@ int KDEPrintd::print(const TQString& cmd, const TQStringList& files, bool remfla
 		if ( !url.isLocalFile() )
 		{
 			TQString tmpFilename = locateLocal( "tmp", "tdeprint_" + kapp->randomString( 8 ) );
-			command.replace( re, KProcess::quote( tmpFilename ) );
+			command.replace( re, TDEProcess::quote( tmpFilename ) );
 			proc->setOutput( re.cap( 1 ) );
 			proc->setTempOutput( tmpFilename );
 		}
 		else
-			command.replace( re, KProcess::quote( re.cap( 1 ) ) );
+			command.replace( re, TDEProcess::quote( re.cap( 1 ) ) );
 	}
 
 	if ( checkFiles( command, files ) )
@@ -181,7 +181,7 @@ bool KDEPrintd::checkFiles(TQString& cmd, const TQStringList& files)
 				i18n("Provide root's Password"),
 				"provideRootsPassword") == KMessageBox::Continue)
 			{
-				cmd = ("tdesu -c " + KProcess::quote(cmd));
+				cmd = ("tdesu -c " + TDEProcess::quote(cmd));
 				break;
 			}
 			else

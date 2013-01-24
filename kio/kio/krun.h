@@ -30,7 +30,7 @@
 #include <kurl.h>
 #include <kstartupinfo.h>
 
-class KProcess;
+class TDEProcess;
 class KService;
 namespace KIO {
    class Job;
@@ -475,34 +475,34 @@ public:
  * It sends a notification when the process exits (for the taskbar)
  * and it will show an error message if necessary (e.g. "program not found").
  */
-class KIO_EXPORT KProcessRunner : public TQObject
+class KIO_EXPORT TDEProcessRunner : public TQObject
 {
   Q_OBJECT
 
   public:
 
-    static pid_t run(KProcess *, const TQString & binName);
+    static pid_t run(TDEProcess *, const TQString & binName);
 #ifdef Q_WS_X11 // We don't have KStartupInfo in Qt/Embedded
-    static pid_t run(KProcess *, const TQString & binName, const KStartupInfoId& id );
+    static pid_t run(TDEProcess *, const TQString & binName, const KStartupInfoId& id );
 #endif
 
-    virtual ~KProcessRunner();
+    virtual ~TDEProcessRunner();
 
     pid_t pid() const;
 
   protected slots:
 
-    void slotProcessExited(KProcess *);
+    void slotProcessExited(TDEProcess *);
 
   private:
 
-    KProcessRunner(KProcess *, const TQString & binName);
+    TDEProcessRunner(TDEProcess *, const TQString & binName);
 #ifdef Q_WS_X11 // We don't have KStartupInfo in Qt/Embedded
-    KProcessRunner(KProcess *, const TQString & binName, const KStartupInfoId& id );
+    TDEProcessRunner(TDEProcess *, const TQString & binName, const KStartupInfoId& id );
 #endif
-    KProcessRunner();
+    TDEProcessRunner();
 
-    KProcess * process_;
+    TDEProcess * process_;
     TQString binName;
 #ifdef Q_WS_X11 // We don't have KStartupInfo in Qt/Embedded
     KStartupInfoId id_;

@@ -97,7 +97,7 @@ void Decoder::setEncoding(const char *_encoding, EncodingType type)
     if(enc == "visual") // hebrew visually ordered
         enc = "iso8859-8";
     bool b;
-    TQTextCodec *codec = KGlobal::charsets()->codecForName(enc, b);
+    TQTextCodec *codec = TDEGlobal::charsets()->codecForName(enc, b);
     if (!b)
         codec = 0;
 

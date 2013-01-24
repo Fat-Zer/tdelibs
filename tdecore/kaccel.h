@@ -51,7 +51,7 @@ class KAccelPrivate;
  * has precedence over any KAccel objects created before it.
  * When a shortcut pressed, KAccel calls the slot to which it has been
  * connected. If you want to set global accelerators, independent of the window
- * which has the focus, use KGlobalAccel.
+ * which has the focus, use TDEGlobalAccel.
  *
  * Reconfiguration of a given shortcut can be prevented by specifying
  * that an accelerator item is not configurable when it is inserted. A special
@@ -84,7 +84,7 @@ class KAccelPrivate;
  * \endcode
  *
  * @short Configurable shortcut support for widgets.
- * @see KGlobalAccel
+ * @see TDEGlobalAccel
  * @see KAccelShortcutList
  * @see KKeyChooser
  * @see KKeyDialog
@@ -281,7 +281,7 @@ class TDECORE_EXPORT KAccel : public TQAccel
 	/**
 	 * Read all shortcuts from @p pConfig, or (if @p pConfig
 	 * is zero) from the application's configuration file
-	 * KGlobal::config().
+	 * TDEGlobal::config().
 	 *
 	 * The group in which the configuration is stored can be
 	 * set with setConfigGroup().

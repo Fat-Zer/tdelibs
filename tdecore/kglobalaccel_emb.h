@@ -4,10 +4,10 @@
 #include "kaccelbase.h"
 #include "kshortcut.h"
 
-class KGlobalAccelPrivate
+class TDEGlobalAccelPrivate
 {
 public:
-	KGlobalAccelPrivate();
+	TDEGlobalAccelPrivate();
 
 	virtual void setEnabled( bool bEnabled );
 

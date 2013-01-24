@@ -430,7 +430,7 @@ KXMLGUIFactory *KMainWindow::guiFactory()
 
 int KMainWindow::configureToolbars()
 {
-    saveMainWindowSettings(KGlobal::config());
+    saveMainWindowSettings(TDEGlobal::config());
     KEditToolbar dlg(actionCollection(), xmlFile(), true, this);
     connect(&dlg, TQT_SIGNAL(newToolbarConfig()), TQT_SLOT(saveNewToolbarConfig()));
     return dlg.exec();
@@ -439,7 +439,7 @@ int KMainWindow::configureToolbars()
 void KMainWindow::saveNewToolbarConfig()
 {
     createGUI(xmlFile());
-    applyMainWindowSettings( KGlobal::config() );
+    applyMainWindowSettings( TDEGlobal::config() );
 }
 
 void KMainWindow::setupGUI( int options, const TQString & xmlfile ) {
@@ -1026,7 +1026,7 @@ void KMainWindow::setAutoSaveSettings( const TQString & groupName, bool saveWind
              this, TQT_SLOT( setSettingsDirty() ) );
 
     // Now read the previously saved settings
-    applyMainWindowSettings( KGlobal::config(), groupName );
+    applyMainWindowSettings( TDEGlobal::config(), groupName );
 }
 
 void KMainWindow::resetAutoSaveSettings()
@@ -1050,8 +1050,8 @@ void KMainWindow::saveAutoSaveSettings()
 {
     Q_ASSERT( d->autoSaveSettings );
     //kdDebug(200) << "KMainWindow::saveAutoSaveSettings -> saving settings" << endl;
-    saveMainWindowSettings( KGlobal::config(), d->autoSaveGroup );
-    KGlobal::config()->sync();
+    saveMainWindowSettings( TDEGlobal::config(), d->autoSaveGroup );
+    TDEGlobal::config()->sync();
     d->settingsDirty = false;
     if ( d->settingsTimer )
         d->settingsTimer->stop();

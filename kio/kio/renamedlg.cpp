@@ -253,14 +253,14 @@ RenameDlg::RenameDlg(TQWidget *parent, const TQString & _caption,
             if ( ctimeDest != (time_t)-1 )
             {
                 TQDateTime dctime; dctime.setTime_t( ctimeDest );
-                TQLabel * lb = new TQLabel( i18n("created on %1").arg( KGlobal::locale()->formatDateTime(dctime) ), this );
+                TQLabel * lb = new TQLabel( i18n("created on %1").arg( TDEGlobal::locale()->formatDateTime(dctime) ), this );
                 gridLayout->addWidget( lb, row, 1 );
                 row++;
             }
             if ( mtimeDest != (time_t)-1 )
             {
                 TQDateTime dmtime; dmtime.setTime_t( mtimeDest );
-                TQLabel * lb = new TQLabel( i18n("modified on %1").arg( KGlobal::locale()->formatDateTime(dmtime) ), this );
+                TQLabel * lb = new TQLabel( i18n("modified on %1").arg( TDEGlobal::locale()->formatDateTime(dmtime) ), this );
                 gridLayout->addWidget( lb, row, 1 );
                 row++;
             }
@@ -288,14 +288,14 @@ RenameDlg::RenameDlg(TQWidget *parent, const TQString & _caption,
                 if ( ctimeSrc != (time_t)-1 )
                 {
                     TQDateTime dctime; dctime.setTime_t( ctimeSrc );
-                    TQLabel * lb = new TQLabel( i18n("created on %1").arg( KGlobal::locale()->formatDateTime(dctime) ), this );
+                    TQLabel * lb = new TQLabel( i18n("created on %1").arg( TDEGlobal::locale()->formatDateTime(dctime) ), this );
                     gridLayout->addWidget( lb, row, 1 );
                     row++;
                 }
                 if ( mtimeSrc != (time_t)-1 )
                 {
                     TQDateTime dmtime; dmtime.setTime_t( mtimeSrc );
-                    TQLabel * lb = new TQLabel( i18n("modified on %1").arg( KGlobal::locale()->formatDateTime(dmtime) ), this );
+                    TQLabel * lb = new TQLabel( i18n("modified on %1").arg( TDEGlobal::locale()->formatDateTime(dmtime) ), this );
                     gridLayout->addWidget( lb, row, 1 );
                     row++;
                 }

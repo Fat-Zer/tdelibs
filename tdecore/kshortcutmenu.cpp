@@ -34,7 +34,7 @@ KShortcutMenu::KShortcutMenu( TQWidget* pParent, KAccelActions* pActions, KKeySe
 {
 	kdDebug() << seq.toStringInternal() << endl;
 	
-	TQFont fontTitle = KGlobalSettings::menuFont();
+	TQFont fontTitle = TDEGlobalSettings::menuFont();
 	fontTitle.setBold( true );
 	
 	pTitle = new TQLabel( "", (TQWidget*)0 );

@@ -885,7 +885,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
     TQLabel *iconLabel = new TQLabel( d->m_frame );
     int bsize = 66 + 2 * iconLabel->style().pixelMetric(TQStyle::PM_ButtonMargin);
     iconLabel->setFixedSize(bsize, bsize);
-    iconLabel->setPixmap( KGlobal::iconLoader()->loadIcon( iconStr, KIcon::Desktop, 48) );
+    iconLabel->setPixmap( TDEGlobal::iconLoader()->loadIcon( iconStr, KIcon::Desktop, 48) );
     iconArea = iconLabel;
   }
   grid->addWidget(iconArea, curRow, 0, Qt::AlignLeft);
@@ -1041,7 +1041,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
       grid->addWidget(l, curRow, 0);
 
       dt.setTime_t( tim );
-      l = new TQLabel(KGlobal::locale()->formatDateTime(dt), d->m_frame );
+      l = new TQLabel(TDEGlobal::locale()->formatDateTime(dt), d->m_frame );
       grid->addWidget(l, curRow++, 2);
     }
 
@@ -1052,7 +1052,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
       grid->addWidget(l, curRow, 0);
 
       dt.setTime_t( tim );
-      l = new TQLabel(KGlobal::locale()->formatDateTime(dt), d->m_frame );
+      l = new TQLabel(TDEGlobal::locale()->formatDateTime(dt), d->m_frame );
       grid->addWidget(l, curRow++, 2);
     }
 
@@ -1063,7 +1063,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
       grid->addWidget(l, curRow, 0);
 
       dt.setTime_t( tim );
-      l = new TQLabel(KGlobal::locale()->formatDateTime(dt), d->m_frame );
+      l = new TQLabel(TDEGlobal::locale()->formatDateTime(dt), d->m_frame );
       grid->addWidget(l, curRow++, 2);
     }
   }
@@ -1139,7 +1139,7 @@ void KFilePropsPlugin::slotEditFileType()
   TQString keditfiletype = TQString::fromLatin1("keditfiletype");
   KRun::runCommand( keditfiletype
                     + " --parent " + TQString::number( (ulong)properties->topLevelWidget()->winId())
-                    + " " + KProcess::quote(mime),
+                    + " " + TDEProcess::quote(mime),
                     keditfiletype, keditfiletype /*unused*/);
 #endif
 }
@@ -1162,16 +1162,16 @@ void KFilePropsPlugin::determineRelativePath( const TQString & path )
     TQStringList dirs;
     if (KBindingPropsPlugin::supports(properties->items()))
     {
-       m_sRelativePath =KGlobal::dirs()->relativeLocation("mime", path);
+       m_sRelativePath =TDEGlobal::dirs()->relativeLocation("mime", path);
        if (m_sRelativePath.startsWith("/"))
           m_sRelativePath = TQString::null;
     }
     else
     {
-       m_sRelativePath =KGlobal::dirs()->relativeLocation("apps", path);
+       m_sRelativePath =TDEGlobal::dirs()->relativeLocation("apps", path);
        if (m_sRelativePath.startsWith("/"))
        {
-          m_sRelativePath =KGlobal::dirs()->relativeLocation("xdgdata-apps", path);
+          m_sRelativePath =TDEGlobal::dirs()->relativeLocation("xdgdata-apps", path);
           if (m_sRelativePath.startsWith("/"))
              m_sRelativePath = TQString::null;
           else
@@ -1220,7 +1220,7 @@ void KFilePropsPlugin::slotDirSizeUpdate()
          KIO::filesize_t totalSubdirs = d->dirSizeJob->totalSubdirs();
     m_sizeLabel->setText( i18n("Calculating... %1 (%2)\n%3, %4")
 			  .arg(KIO::convertSize(totalSize))
-                         .arg(KGlobal::locale()->formatNumber(totalSize, 0))
+                         .arg(TDEGlobal::locale()->formatNumber(totalSize, 0))
         .arg(i18n("1 file","%n files",totalFiles))
         .arg(i18n("1 sub-folder","%n sub-folders",totalSubdirs)));
 }
@@ -1236,7 +1236,7 @@ void KFilePropsPlugin::slotDirSizeFinished( KIO::Job * job )
 	KIO::filesize_t totalSubdirs = static_cast<KDirSize*>(job)->totalSubdirs();
     m_sizeLabel->setText( TQString::fromLatin1("%1 (%2)\n%3, %4")
 			  .arg(KIO::convertSize(totalSize))
-			  .arg(KGlobal::locale()->formatNumber(totalSize, 0))
+			  .arg(TDEGlobal::locale()->formatNumber(totalSize, 0))
         .arg(i18n("1 file","%n files",totalFiles))
         .arg(i18n("1 sub-folder","%n sub-folders",totalSubdirs)));
   }
@@ -1755,8 +1755,8 @@ KFilePermissionsPropsPlugin::KFilePermissionsPropsPlugin( KPropertiesDialog *_pr
     for (i=0; ((user = getpwent()) != 0L) && (i < maxEntries); i++)
       kcom->addItem(TQString::fromLatin1(user->pw_name));
     endpwent();
-    usrEdit->setCompletionMode((i < maxEntries) ? KGlobalSettings::CompletionAuto :
-                               KGlobalSettings::CompletionNone);
+    usrEdit->setCompletionMode((i < maxEntries) ? TDEGlobalSettings::CompletionAuto :
+                               TDEGlobalSettings::CompletionNone);
     usrEdit->setText(strOwner);
     gl->addWidget(usrEdit, 1, 1);
     connect( usrEdit, TQT_SIGNAL( textChanged( const TQString & ) ),
@@ -1833,7 +1833,7 @@ KFilePermissionsPropsPlugin::KFilePermissionsPropsPlugin( KPropertiesDialog *_pr
     kcom->setItems(groupList);
     grpEdit->setCompletionObject(kcom, true);
     grpEdit->setAutoDeleteCompletionObject( true );
-    grpEdit->setCompletionMode(KGlobalSettings::CompletionAuto);
+    grpEdit->setCompletionMode(TDEGlobalSettings::CompletionAuto);
     grpEdit->setText(strGroup);
     gl->addWidget(grpEdit, 2, 1);
     connect( grpEdit, TQT_SIGNAL( textChanged( const TQString & ) ),
@@ -3402,11 +3402,11 @@ void KDesktopPropsPlugin::applyChanges()
   config.sync();
 
   // KSycoca update needed?
-  TQString sycocaPath = KGlobal::dirs()->relativeLocation("apps", path);
+  TQString sycocaPath = TDEGlobal::dirs()->relativeLocation("apps", path);
   bool updateNeeded = !sycocaPath.startsWith("/");
   if (!updateNeeded)
   {
-     sycocaPath = KGlobal::dirs()->relativeLocation("xdgdata-apps", path);
+     sycocaPath = TDEGlobal::dirs()->relativeLocation("xdgdata-apps", path);
      updateNeeded = !sycocaPath.startsWith("/");
   }
   if (updateNeeded)
@@ -3446,7 +3446,7 @@ void KDesktopPropsPlugin::slotAdvanced()
 
   // check to see if we use konsole if not do not add the nocloseonexit
   // because we don't know how to do this on other terminal applications
-  KConfigGroup confGroup( KGlobal::config(), TQString::fromLatin1("General") );
+  KConfigGroup confGroup( TDEGlobal::config(), TQString::fromLatin1("General") );
   TQString preferredTerminal = confGroup.readPathEntry("TerminalApplication",
 						  TQString::fromLatin1("konsole"));
 
@@ -3499,7 +3499,7 @@ void KDesktopPropsPlugin::slotAdvanced()
   {
     w->suidEdit->setCompletionObject(kcom, true);
     w->suidEdit->setAutoDeleteCompletionObject( true );
-    w->suidEdit->setCompletionMode(KGlobalSettings::CompletionAuto);
+    w->suidEdit->setCompletionMode(TDEGlobalSettings::CompletionAuto);
   }
   else
   {
@@ -3672,7 +3672,7 @@ KExecPropsPlugin::KExecPropsPlugin( KPropertiesDialog *_props )
 
   // check to see if we use konsole if not do not add the nocloseonexit
   // because we don't know how to do this on other terminal applications
-  KConfigGroup confGroup( KGlobal::config(), TQString::fromLatin1("General") );
+  KConfigGroup confGroup( TDEGlobal::config(), TQString::fromLatin1("General") );
   TQString preferredTerminal = confGroup.readPathEntry("TerminalApplication",
 						  TQString::fromLatin1("konsole"));
 
@@ -3773,7 +3773,7 @@ KExecPropsPlugin::KExecPropsPlugin( KPropertiesDialog *_props )
   {
     suidEdit->setCompletionObject(kcom, true);
     suidEdit->setAutoDeleteCompletionObject( true );
-    suidEdit->setCompletionMode(KGlobalSettings::CompletionAuto);
+    suidEdit->setCompletionMode(TDEGlobalSettings::CompletionAuto);
   }
   else
   {

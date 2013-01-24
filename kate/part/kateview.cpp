@@ -709,8 +709,8 @@ void KateView::slotStatusMsg ()
   uint r = cursorLine() + 1;
   uint c = cursorColumn() + 1;
 
-  TQString s1 = i18n(" Line: %1").arg(KGlobal::locale()->formatNumber(r, 0));
-  TQString s2 = i18n(" Col: %1").arg(KGlobal::locale()->formatNumber(c, 0));
+  TQString s1 = i18n(" Line: %1").arg(TDEGlobal::locale()->formatNumber(r, 0));
+  TQString s2 = i18n(" Col: %1").arg(TDEGlobal::locale()->formatNumber(c, 0));
 
   TQString modstr = m_doc->isModified() ? TQString (" * ") : TQString ("   ");
   TQString blockstr = blockSelectionMode() ? i18n(" BLK ") : i18n(" NORM ");

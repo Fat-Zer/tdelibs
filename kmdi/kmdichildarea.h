@@ -188,8 +188,8 @@ public:
 	 * This method is useful not only for KMDI child windows.
 	 * Colors are returned via activeBG, activeFG, inactiveBG, inactiveFG references.
 	 *
-	 * @deprecated Use KGlobalSettings::activeTitleColor(), KGlobalSettings::activeTextColor(),
-	 * KGlobalSettings::inactiveTitleColor() and KGlobalSettings::inactiveTextColor() instead.
+	 * @deprecated Use TDEGlobalSettings::activeTitleColor(), TDEGlobalSettings::activeTextColor(),
+	 * TDEGlobalSettings::inactiveTitleColor() and TDEGlobalSettings::inactiveTextColor() instead.
 	 */
 	static void getCaptionColors( const TQPalette &pal, TQColor &activeBG, TQColor &activeFG,
 	                              TQColor &inactiveBG, TQColor &inactiveFG ) KDE_DEPRECATED;

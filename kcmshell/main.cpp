@@ -211,7 +211,7 @@ extern "C" KDE_EXPORT int kdemain(int _argc, char *_argv[])
     aboutData.addAuthor("Matthias Ettrich",0, "ettrich@kde.org");
     aboutData.addAuthor("Waldo Bastian",0, "bastian@kde.org");
     
-    KGlobal::locale()->setMainCatalogue("kcmshell");
+    TDEGlobal::locale()->setMainCatalogue("kcmshell");
 
     TDECmdLineArgs::init(_argc, _argv, &aboutData);
     TDECmdLineArgs::addCmdLineOptions( options ); // Add our own options.
@@ -221,7 +221,7 @@ extern "C" KDE_EXPORT int kdemain(int _argc, char *_argv[])
 
     const TQCString lang = args->getOption("lang");
     if( !lang.isNull() )
-        KGlobal::locale()->setLanguage(lang);
+        TDEGlobal::locale()->setLanguage(lang);
 
     if (args->isSet("list"))
     {

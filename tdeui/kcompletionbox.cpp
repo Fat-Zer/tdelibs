@@ -275,7 +275,7 @@ void KCompletionBox::sizeAndPosition()
     int x = currentPos.x(), y = currentPos.y();
     if ( d->m_parent ) {
       if ( !isVisible() ) {
-        TQRect screenSize = KGlobalSettings::desktopGeometry(d->m_parent);
+        TQRect screenSize = TDEGlobalSettings::desktopGeometry(d->m_parent);
 
         TQPoint orig = d->m_parent->mapToGlobal( TQPoint(0, d->m_parent->height()) );
         x = orig.x() + geom.x();

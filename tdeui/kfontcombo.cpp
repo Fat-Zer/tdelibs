@@ -373,8 +373,8 @@ void KFontCombo::updateFonts()
 
 bool KFontCombo::displayFonts()
 {
-    KConfigGroupSaver saver(KGlobal::config(), "KDE");
-    return KGlobal::config()->readBoolEntry("DisplayFontItems", true);
+    KConfigGroupSaver saver(TDEGlobal::config(), "KDE");
+    return TDEGlobal::config()->readBoolEntry("DisplayFontItems", true);
 }
 
 void KFontCombo::virtual_hook( int id, void* data )

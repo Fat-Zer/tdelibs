@@ -95,7 +95,7 @@ class KUTILS_EXPORT Dialog : public TQObject
 
         /**
          * Construct a new Preferences Dialog for the application. It uses all
-         * KCMs with X-TDE-ParentApp set to KGlobal::instance()->instanceName().
+         * KCMs with X-TDE-ParentApp set to TDEGlobal::instance()->instanceName().
          *
          * @param parent       The parent is only used as the parent for the
          *                     dialog - centering the dialog over the parent
@@ -106,7 +106,7 @@ class KUTILS_EXPORT Dialog : public TQObject
 
         /**
          * Construct a new Preferences Dialog for the application. It uses all
-         * KCMs with X-TDE-ParentApp set to KGlobal::instance()->instanceName().
+         * KCMs with X-TDE-ParentApp set to TDEGlobal::instance()->instanceName().
          *
          * @param content      Select whether you want a static or configurable
          *                     config dialog.

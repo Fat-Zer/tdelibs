@@ -40,16 +40,16 @@ public:
 	bool status() const	{ return m_status; }
 
 protected slots:
-	void slotReceivedStdout(KProcess *p, char *bufm, int len);
-	void slotReceivedStderr(KProcess *p, char *bufm, int len);
-	void slotProcessExited(KProcess *p);
+	void slotReceivedStdout(TDEProcess *p, char *bufm, int len);
+	void slotReceivedStderr(TDEProcess *p, char *bufm, int len);
+	void slotProcessExited(TDEProcess *p);
 	void slotCancelled();
 
 signals:
 	void dbCreated();
 
 private:
-	KProcess	m_proc;
+	TDEProcess	m_proc;
 	TQProgressDialog	*m_dlg;
 	bool		m_status;
 	bool		m_firstflag;

@@ -670,7 +670,7 @@ public:
   {
   public:
     ItemFont(const TQString & group, const TQString & key, TQFont & reference,
-             const TQFont & defaultValue = KGlobalSettings::generalFont());
+             const TQFont & defaultValue = TDEGlobalSettings::generalFont());
 
     void readConfig(KConfig * config);
     void setProperty(const TQVariant & p);
@@ -1059,7 +1059,7 @@ public:
    */
   ItemFont *addItemFont(const TQString & name, TQFont & reference,
                         const TQFont & defaultValue =
-                        KGlobalSettings::generalFont(),
+                        TDEGlobalSettings::generalFont(),
                         const TQString & key = TQString::null);
 
   /**

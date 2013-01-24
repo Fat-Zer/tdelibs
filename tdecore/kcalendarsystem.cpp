@@ -49,7 +49,7 @@ const KLocale * KCalendarSystem::locale() const
   if ( d->locale )
     return d->locale;
 
-  return KGlobal::locale();
+  return TDEGlobal::locale();
 }
 
 TQString KCalendarSystem::dayString(const TQDate & pDate, bool bShort) const

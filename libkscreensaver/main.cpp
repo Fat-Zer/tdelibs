@@ -101,8 +101,8 @@ KDE_EXPORT int main(int argc, char *argv[])
     TDEApplication app;
 
     KCrash::setCrashHandler( crashHandler );
-    KGlobal::locale()->insertCatalogue("klock");
-    KGlobal::locale()->insertCatalogue("kscreensaver");
+    TDEGlobal::locale()->insertCatalogue("klock");
+    TDEGlobal::locale()->insertCatalogue("kscreensaver");
 
     DemoWindow *demoWidget = 0;
     Window saveWin = 0;

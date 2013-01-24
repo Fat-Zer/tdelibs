@@ -913,9 +913,9 @@ int KToolBar::iconSize() const
 int KToolBar::iconSizeDefault() const
 {
 	if (!::qstrcmp(name(), "mainToolBar"))
-		return KGlobal::iconLoader()->currentSize(KIcon::MainToolbar);
+		return TDEGlobal::iconLoader()->currentSize(KIcon::MainToolbar);
 
-	return KGlobal::iconLoader()->currentSize(KIcon::Toolbar);
+	return TDEGlobal::iconLoader()->currentSize(KIcon::Toolbar);
 }
 
 void KToolBar::setEnableContextMenu(bool enable )
@@ -1020,7 +1020,7 @@ void KToolBar::saveState()
     }
 
     // if that didn't work, we save to the config file
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
     saveSettings(config, TQString::null);
     config->sync();
 }
@@ -1469,13 +1469,13 @@ void KToolBar::slotReadConfig()
     // Read appearance settings (hmm, we used to do both here,
     // but a well behaved application will call applyMainWindowSettings
     // anyway, right ?)
-    applyAppearanceSettings(KGlobal::config(), TQString::null );
+    applyAppearanceSettings(TDEGlobal::config(), TQString::null );
 }
 
 void KToolBar::slotAppearanceChanged()
 {
     // Read appearance settings from global file.
-    applyAppearanceSettings(KGlobal::config(), TQString::null, true /* lose local settings */ );
+    applyAppearanceSettings(TDEGlobal::config(), TQString::null, true /* lose local settings */ );
 
     // And remember to save the new look later
     KMainWindow *kmw = tqt_dynamic_cast<KMainWindow *>(mainWindow());
@@ -1487,24 +1487,24 @@ void KToolBar::slotAppearanceChanged()
 bool KToolBar::highlightSetting()
 {
     TQString grpToolbar(TQString::fromLatin1("Toolbar style"));
-    KConfigGroupSaver saver(KGlobal::config(), grpToolbar);
-    return KGlobal::config()->readBoolEntry(TQString::fromLatin1("Highlighting"),true);
+    KConfigGroupSaver saver(TDEGlobal::config(), grpToolbar);
+    return TDEGlobal::config()->readBoolEntry(TQString::fromLatin1("Highlighting"),true);
 }
 
 //static
 bool KToolBar::transparentSetting()
 {
     TQString grpToolbar(TQString::fromLatin1("Toolbar style"));
-    KConfigGroupSaver saver(KGlobal::config(), grpToolbar);
-    return KGlobal::config()->readBoolEntry(TQString::fromLatin1("TransparentMoving"),true);
+    KConfigGroupSaver saver(TDEGlobal::config(), grpToolbar);
+    return TDEGlobal::config()->readBoolEntry(TQString::fromLatin1("TransparentMoving"),true);
 }
 
 //static
 KToolBar::IconText KToolBar::iconTextSetting()
 {
     TQString grpToolbar(TQString::fromLatin1("Toolbar style"));
-    KConfigGroupSaver saver(KGlobal::config(), grpToolbar);
-    TQString icontext = KGlobal::config()->readEntry(TQString::fromLatin1("IconText"),TQString::fromLatin1("IconOnly"));
+    KConfigGroupSaver saver(TDEGlobal::config(), grpToolbar);
+    TQString icontext = TDEGlobal::config()->readEntry(TQString::fromLatin1("IconText"),TQString::fromLatin1("IconOnly"));
     if ( icontext == "IconTextRight" )
         return IconTextRight;
     else if ( icontext == "IconTextBottom" )
@@ -1527,12 +1527,12 @@ void KToolBar::applyAppearanceSettings(KConfig *config, const TQString &_configG
     // This is the reason for the xmlgui tests below.
     bool xmlgui = d->m_xmlguiClient && !d->m_xmlguiClient->xmlFile().isEmpty();
 
-    KConfig *gconfig = KGlobal::config();
+    KConfig *gconfig = TDEGlobal::config();
 
-    static const TQString &attrIconText  = KGlobal::staticQString("IconText");
-    static const TQString &attrHighlight = KGlobal::staticQString("Highlighting");
-    static const TQString &attrTrans     = KGlobal::staticQString("TransparentMoving");
-    static const TQString &attrIconSize  = KGlobal::staticQString("IconSize");
+    static const TQString &attrIconText  = TDEGlobal::staticQString("IconText");
+    static const TQString &attrHighlight = TDEGlobal::staticQString("Highlighting");
+    static const TQString &attrTrans     = TDEGlobal::staticQString("TransparentMoving");
+    static const TQString &attrIconSize  = TDEGlobal::staticQString("IconSize");
 
     // we actually do this in two steps.
     // First, we read in the global styles [Toolbar style] (from the KControl module).
@@ -1670,11 +1670,11 @@ void KToolBar::applySettings(KConfig *config, const TQString &_configGroup, bool
     {
         KConfigGroupSaver cgs(config, configGroup);
 
-        static const TQString &attrPosition  = KGlobal::staticQString("Position");
-        static const TQString &attrIndex  = KGlobal::staticQString("Index");
-        static const TQString &attrOffset  = KGlobal::staticQString("Offset");
-        static const TQString &attrNewLine  = KGlobal::staticQString("NewLine");
-        static const TQString &attrHidden  = KGlobal::staticQString("Hidden");
+        static const TQString &attrPosition  = TDEGlobal::staticQString("Position");
+        static const TQString &attrIndex  = TDEGlobal::staticQString("Index");
+        static const TQString &attrOffset  = TDEGlobal::staticQString("Offset");
+        static const TQString &attrNewLine  = TDEGlobal::staticQString("NewLine");
+        static const TQString &attrHidden  = TDEGlobal::staticQString("Hidden");
 
         TQString position = config->readEntry(attrPosition, d->PositionDefault);
         int index = config->readNumEntry(attrIndex, -1);
@@ -2062,7 +2062,7 @@ KPopupMenu *KToolBar::contextMenu()
   KPopupMenu *size = new KPopupMenu( context, "size" );
   size->insertItem( i18n("Default"), CONTEXT_ICONSIZES );
   // Query the current theme for available sizes
-  KIconTheme *theme = KGlobal::instance()->iconLoader()->theme();
+  KIconTheme *theme = TDEGlobal::instance()->iconLoader()->theme();
   TQValueList<int> avSizes;
   if (theme)
   {

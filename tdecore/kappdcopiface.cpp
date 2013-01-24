@@ -61,7 +61,7 @@ void KAppDCOPInterface::updateUserTimestamp( ulong time )
 
 void KAppDCOPInterface::reparseConfiguration()
 {
-	KGlobal::config()->reparseConfiguration();
+	TDEGlobal::config()->reparseConfiguration();
 }
 
 void KAppDCOPInterface::sendFakeKey( unsigned int keyCode) {

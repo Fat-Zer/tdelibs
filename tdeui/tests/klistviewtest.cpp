@@ -28,12 +28,12 @@ int main( int argc, char **argv )
 	new KListViewItem( view, "Item 1");
 	new KListViewItem( view, "Item 2", "Some more", "Hi Mom :)" );
 
-	view->restoreLayout( KGlobal::config(), "ListView" );
+	view->restoreLayout( TDEGlobal::config(), "ListView" );
 
 	new KListViewItem( view, "Item 3" );
 
 	dialog.exec();
-	view->saveLayout( KGlobal::config(), "ListView" );
+	view->saveLayout( TDEGlobal::config(), "ListView" );
 
 	return 0;
 }

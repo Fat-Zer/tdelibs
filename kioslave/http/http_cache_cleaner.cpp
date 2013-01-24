@@ -220,7 +220,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
    if (deleteAll)
       m_maxCacheSize = -1;
 
-   TQString strCacheDir = KGlobal::dirs()->saveLocation("cache", "http");
+   TQString strCacheDir = TDEGlobal::dirs()->saveLocation("cache", "http");
 
    TQDir cacheDir( strCacheDir );
    if (!cacheDir.exists())

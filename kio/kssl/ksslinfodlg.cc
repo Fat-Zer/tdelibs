@@ -127,9 +127,9 @@ KSSLInfoDlg::~KSSLInfoDlg() {
 }
 
 void KSSLInfoDlg::launchConfig() {
-    KProcess p;
+    TDEProcess p;
     p << "kcmshell" << "crypto";
-    p.start(KProcess::DontCare);
+    p.start(TDEProcess::DontCare);
 }
 
 

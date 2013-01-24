@@ -46,20 +46,20 @@ private:
     bool processKilled;
 };
 
-KJavaProcess::KJavaProcess() : KProcess()
+KJavaProcess::KJavaProcess() : TDEProcess()
 {
     d = new KJavaProcessPrivate;
     d->BufferList.setAutoDelete( true );
     d->processKilled = false;
 
-    javaProcess = this; //new KProcess();
+    javaProcess = this; //new TDEProcess();
 
-    connect( javaProcess, TQT_SIGNAL( wroteStdin( KProcess * ) ),
+    connect( javaProcess, TQT_SIGNAL( wroteStdin( TDEProcess * ) ),
              this, TQT_SLOT( slotWroteData() ) );
     connect( javaProcess, TQT_SIGNAL( receivedStdout( int, int& ) ),
              this, TQT_SLOT( slotReceivedData(int, int&) ) );
-    connect( javaProcess, TQT_SIGNAL( processExited (KProcess *) ),
-             this, TQT_SLOT( slotExited (KProcess *) ) );
+    connect( javaProcess, TQT_SIGNAL( processExited (TDEProcess *) ),
+             this, TQT_SLOT( slotExited (TDEProcess *) ) );
 
     d->jvmPath = "java";
     d->mainClass = "-help";
@@ -303,11 +303,11 @@ bool KJavaProcess::invokeJVM()
     tqCopy( args.begin(), args.end(), TQTextOStreamIterator<TQCString>( stream, " " ) );
     kdDebug(6100) << argStr << endl;
 
-    KProcess::Communication flags =  (KProcess::Communication)
-                                     (KProcess::Stdin | KProcess::Stdout |
-                                      KProcess::NoRead);
+    TDEProcess::Communication flags =  (TDEProcess::Communication)
+                                     (TDEProcess::Stdin | TDEProcess::Stdout |
+                                      TDEProcess::NoRead);
 
-    const bool rval = javaProcess->start( KProcess::NotifyOnExit, flags );
+    const bool rval = javaProcess->start( TDEProcess::NotifyOnExit, flags );
     if( rval )
         javaProcess->resume(); //start processing stdout on the java process
     else
@@ -382,7 +382,7 @@ void KJavaProcess::slotReceivedData( int fd, int& len )
     len = num_bytes + num_bytes_msg;
 }
 
-void KJavaProcess::slotExited( KProcess *process )
+void KJavaProcess::slotExited( TDEProcess *process )
 {
   if (process == javaProcess) {
     int status = -1;

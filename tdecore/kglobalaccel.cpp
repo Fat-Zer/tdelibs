@@ -36,45 +36,45 @@
 
 //----------------------------------------------------
 
-KGlobalAccel::KGlobalAccel( TQObject* pParent, const char* psName )
+TDEGlobalAccel::TDEGlobalAccel( TQObject* pParent, const char* psName )
 : TQObject( pParent, psName )
 {
-	kdDebug(125) << "KGlobalAccel(): this = " << this << endl;
-	d = new KGlobalAccelPrivate();
+	kdDebug(125) << "TDEGlobalAccel(): this = " << this << endl;
+	d = new TDEGlobalAccelPrivate();
 }
 
-KGlobalAccel::~KGlobalAccel()
+TDEGlobalAccel::~TDEGlobalAccel()
 {
-	kdDebug(125) << "~KGlobalAccel(): this = " << this << endl;
+	kdDebug(125) << "~TDEGlobalAccel(): this = " << this << endl;
 	delete d;
 }
 
 /*
-void KGlobalAccel::clear()
+void TDEGlobalAccel::clear()
 	{ d->clearActions(); }
 */
-KAccelActions& KGlobalAccel::actions()
+KAccelActions& TDEGlobalAccel::actions()
 	{ return d->KAccelBase::actions(); }
 
-const KAccelActions& KGlobalAccel::actions() const
+const KAccelActions& TDEGlobalAccel::actions() const
 	{ return d->KAccelBase::actions(); }
 
-bool KGlobalAccel::isEnabled()
+bool TDEGlobalAccel::isEnabled()
 	{ return ((KAccelBase*)d)->isEnabled(); }
 
-void KGlobalAccel::setEnabled( bool bEnabled )
+void TDEGlobalAccel::setEnabled( bool bEnabled )
 	{ d->setEnabled( bEnabled ); }
 
-void KGlobalAccel::suspend( bool s )
+void TDEGlobalAccel::suspend( bool s )
 	{ d->suspend( s ); }
 
-void KGlobalAccel::blockShortcuts( bool block )
-        { KGlobalAccelPrivate::blockShortcuts( block ); }
+void TDEGlobalAccel::blockShortcuts( bool block )
+        { TDEGlobalAccelPrivate::blockShortcuts( block ); }
 
-void KGlobalAccel::disableBlocking( bool disable )
+void TDEGlobalAccel::disableBlocking( bool disable )
         { d->disableBlocking( disable ); }
 
-KAccelAction* KGlobalAccel::insert( const TQString& sAction, const TQString& sDesc, const TQString& sHelp,
+KAccelAction* TDEGlobalAccel::insert( const TQString& sAction, const TQString& sDesc, const TQString& sHelp,
 		const KShortcut& cutDef3, const KShortcut& cutDef4,
 		const TQObject* pObjSlot, const char* psMethodSlot,
 		bool bConfigurable, bool bEnabled )
@@ -85,55 +85,55 @@ KAccelAction* KGlobalAccel::insert( const TQString& sAction, const TQString& sDe
 		bConfigurable, bEnabled );
 }
 
-KAccelAction* KGlobalAccel::insert( const TQString& sName, const TQString& sDesc )
+KAccelAction* TDEGlobalAccel::insert( const TQString& sName, const TQString& sDesc )
 	{ return d->insert( sName, sDesc ); }
-bool KGlobalAccel::updateConnections()
+bool TDEGlobalAccel::updateConnections()
 	{ return d->updateConnections(); }
 
-bool KGlobalAccel::remove( const TQString& sAction )
+bool TDEGlobalAccel::remove( const TQString& sAction )
         { return d->remove( sAction ); }
 
-const KShortcut& KGlobalAccel::shortcut( const TQString& sAction ) const
+const KShortcut& TDEGlobalAccel::shortcut( const TQString& sAction ) const
 {
 	const KAccelAction* pAction = d->KAccelBase::actions().actionPtr( sAction );
 	return (pAction) ? pAction->shortcut() : KShortcut::null();
 }
 
-bool KGlobalAccel::setShortcut( const TQString& sAction, const KShortcut& cut )
+bool TDEGlobalAccel::setShortcut( const TQString& sAction, const KShortcut& cut )
 	{ return d->setShortcut( sAction, cut ); }
-bool KGlobalAccel::setSlot( const TQString& sAction, const TQObject* pObjSlot, const char* psMethodSlot )
+bool TDEGlobalAccel::setSlot( const TQString& sAction, const TQObject* pObjSlot, const char* psMethodSlot )
 	{ return d->setActionSlot( sAction, pObjSlot, psMethodSlot ); }
-TQString KGlobalAccel::label( const TQString& sAction ) const
+TQString TDEGlobalAccel::label( const TQString& sAction ) const
 {
 	const KAccelAction* pAction = d->KAccelBase::actions().actionPtr( sAction );
 	return (pAction) ? pAction->label() : TQString();
 }
-bool KGlobalAccel::setActionEnabled( const TQString& sAction, bool bEnable )
+bool TDEGlobalAccel::setActionEnabled( const TQString& sAction, bool bEnable )
 {
         return d->setActionEnabled( sAction, bEnable );
 }
 
-const TQString& KGlobalAccel::configGroup() const
+const TQString& TDEGlobalAccel::configGroup() const
 	{ return d->configGroup(); }
 // for tdemultimedia/kmix
-void KGlobalAccel::setConfigGroup( const TQString& s )
+void TDEGlobalAccel::setConfigGroup( const TQString& s )
 	{ d->setConfigGroup( s ); }
 
-bool KGlobalAccel::readSettings( KConfigBase* pConfig )
+bool TDEGlobalAccel::readSettings( KConfigBase* pConfig )
 	{ d->readSettings( pConfig ); return true; }
-bool KGlobalAccel::writeSettings( KConfigBase* pConfig ) const
+bool TDEGlobalAccel::writeSettings( KConfigBase* pConfig ) const
 	{ d->writeSettings( pConfig ); return true; }
-bool KGlobalAccel::writeSettings( KConfigBase* pConfig, bool bGlobal ) const
+bool TDEGlobalAccel::writeSettings( KConfigBase* pConfig, bool bGlobal ) const
 {
 	d->setConfigGlobal( bGlobal );
 	d->writeSettings( pConfig );
 	return true;
 }
 
-bool KGlobalAccel::useFourModifierKeys()
+bool TDEGlobalAccel::useFourModifierKeys()
 	{ return KAccelAction::useFourModifierKeys(); }
 
-void KGlobalAccel::virtual_hook( int, void* )
+void TDEGlobalAccel::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
 #include "kglobalaccel.moc"

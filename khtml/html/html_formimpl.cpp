@@ -238,7 +238,7 @@ TQByteArray HTMLFormElementImpl::formData(bool& ok)
                 if(view && view->part())
                     enc = view->part()->encoding();
             }
-            if((codec = KGlobal::charsets()->codecForName(enc.latin1())))
+            if((codec = TDEGlobal::charsets()->codecForName(enc.latin1())))
                 break;
         }
     }
@@ -305,8 +305,8 @@ TQByteArray HTMLFormElementImpl::formData(bool& ok)
                         TQString val = static_cast<HTMLInputElementImpl*>(current)->value().string().stripWhiteSpace();
                         if (!val.isEmpty() &&
                             TQDir::isRelativePath(val) &&
-                            TQFile::exists(KGlobalSettings::documentPath() + val)) {
-                            path.setPath(KGlobalSettings::documentPath() + val);
+                            TQFile::exists(TDEGlobalSettings::documentPath() + val)) {
+                            path.setPath(TDEGlobalSettings::documentPath() + val);
                         } else {
                             path = KURL::fromPathOrURL(val);
                         }
@@ -1609,8 +1609,8 @@ bool HTMLInputElementImpl::encoding(const TQTextCodec* codec, khtml::encodingLis
             TQString val = value().string();
             if (!val.isEmpty() &&
                 TQDir::isRelativePath(val) &&
-                TQFile::exists(KGlobalSettings::documentPath() + val)) {
-                fileurl.setPath(KGlobalSettings::documentPath() + val);
+                TQFile::exists(TDEGlobalSettings::documentPath() + val)) {
+                fileurl.setPath(TDEGlobalSettings::documentPath() + val);
             } else {
                 fileurl = KURL::fromPathOrURL(val);
             }

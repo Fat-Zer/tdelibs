@@ -225,7 +225,7 @@ DrMain* MaticHandler::loadDriver(KMPrinter*, PrintcapEntry *entry, bool)
 	// changing printer name), the template would be also removed
 	TQString	origfilename = maticFile(entry);
 	TQString	filename = locateLocal("tmp", "foomatic_" + kapp->randomString(8));
-	::system(TQFile::encodeName("cp " + KProcess::quote(origfilename) + " " + KProcess::quote(filename)));
+	::system(TQFile::encodeName("cp " + TDEProcess::quote(origfilename) + " " + TDEProcess::quote(filename)));
 	DrMain	*driver = Foomatic2Loader::loadDriver(filename);
 	if (driver)
 	{
@@ -258,11 +258,11 @@ DrMain* MaticHandler::loadDbDriver(const TQString& path)
 
 	KPipeProcess	in;
 	TQFile		out(tmpFile);
-	TQString cmd = KProcess::quote(exe);
+	TQString cmd = TDEProcess::quote(exe);
 	cmd += " -t lpd -d ";
-	cmd += KProcess::quote(comps[2]);
+	cmd += TDEProcess::quote(comps[2]);
 	cmd += " -p ";
-	cmd += KProcess::quote(comps[1]);
+	cmd += TDEProcess::quote(comps[1]);
 	if (in.open(cmd) && out.open(IO_WriteOnly))
 	{
 		TQTextStream	tin(&in), tout(&out);
@@ -329,7 +329,7 @@ bool MaticHandler::savePrinterDriver(KMPrinter *prt, PrintcapEntry *entry, DrMai
 		inFile.close();
 		tmpFile.close();
 
-		TQString	cmd = "mv " + KProcess::quote(tmpFile.name()) + " " + KProcess::quote(outFile);
+		TQString	cmd = "mv " + TDEProcess::quote(tmpFile.name()) + " " + TDEProcess::quote(outFile);
 		int	status = ::system(TQFile::encodeName(cmd).data());
 		TQFile::remove(tmpFile.name());
 		result = (status != -1 && WEXITSTATUS(status) == 0);

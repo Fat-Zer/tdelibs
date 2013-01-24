@@ -44,8 +44,8 @@ namespace KSettings
  * MyAppPluginConfig( TQWidget * parent, const char *, const TQStringList & args )
  *     : PluginPage( MyAppPluginConfigFactory::instance(), parent, args )
  * {
- *     pluginSelector()->addPlugins( KGlobal::instance()->instanceName(), i18n( "General Plugins" ), "General" );
- *     pluginSelector()->addPlugins( KGlobal::instance()->instanceName(), i18n( "Effects" ), "Effects" );
+ *     pluginSelector()->addPlugins( TDEGlobal::instance()->instanceName(), i18n( "General Plugins" ), "General" );
+ *     pluginSelector()->addPlugins( TDEGlobal::instance()->instanceName(), i18n( "Effects" ), "Effects" );
  * }
  * \endcode
  *

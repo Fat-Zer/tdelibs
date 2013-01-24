@@ -1759,8 +1759,8 @@ int main(int argc, char **argv, char **envp)
    tdeinit_library_path();
    // Don't make our instance the global instance
    // (do it only after tdeinit_library_path, that one indirectly uses KConfig,
-   // which seems to be buggy and always use KGlobal instead of the maching TDEInstance)
-   KGlobal::_instance = 0L;
+   // which seems to be buggy and always use TDEGlobal instead of the maching TDEInstance)
+   TDEGlobal::_instance = 0L;
    // don't change envvars before tdeinit_initsetproctitle()
    unsetenv("LD_BIND_NOW");
    unsetenv("DYLD_BIND_AT_LAUNCH");

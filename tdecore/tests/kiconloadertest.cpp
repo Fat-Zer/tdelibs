@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 {
   TDEApplication app(argc,argv,"kiconloadertest"/*,false,false*/);
 
-  KIconLoader * mpLoader = KGlobal::iconLoader();
+  KIconLoader * mpLoader = TDEGlobal::iconLoader();
   KIcon::Context mContext = KIcon::Application;
   TQTime dt;
   dt.start();

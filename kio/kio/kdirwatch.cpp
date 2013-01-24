@@ -226,7 +226,7 @@ KDirWatchPrivate::KDirWatchPrivate()
   delayRemove = false;
   m_ref = 0;
 
-  KConfigGroup config(KGlobal::config(), TQCString("DirWatch"));
+  KConfigGroup config(TDEGlobal::config(), TQCString("DirWatch"));
   m_nfsPollInterval = config.readNumEntry("NFSPollInterval", 5000);
   m_PollInterval = config.readNumEntry("PollInterval", 500);
 

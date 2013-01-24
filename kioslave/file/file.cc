@@ -114,7 +114,7 @@ int kdemain( int argc, char **argv )
 {
   KLocale::setMainCatalogue("tdelibs");
   TDEInstance instance( "kio_file" );
-  ( void ) KGlobal::locale();
+  ( void ) TDEGlobal::locale();
 
   kdDebug(7101) << "Starting " << getpid() << endl;
 
@@ -1406,24 +1406,24 @@ void FileProtocol::mount( bool _ro, const char *_fstype, const TQString& _dev, c
     if ( _dev.startsWith( "LABEL=" ) ) { // turn LABEL=foo into -L foo (#71430)
         TQString labelName = _dev.mid( 6 );
         dev = "-L ";
-        dev += TQFile::encodeName( KProcess::quote( labelName ) ); // is it correct to assume same encoding as filesystem?
+        dev += TQFile::encodeName( TDEProcess::quote( labelName ) ); // is it correct to assume same encoding as filesystem?
     } else if ( _dev.startsWith( "UUID=" ) ) { // and UUID=bar into -U bar
         TQString uuidName = _dev.mid( 5 );
         dev = "-U ";
-        dev += TQFile::encodeName( KProcess::quote( uuidName ) );
+        dev += TQFile::encodeName( TDEProcess::quote( uuidName ) );
     }
     else
-        dev = TQFile::encodeName( KProcess::quote(_dev) ); // get those ready to be given to a shell
+        dev = TQFile::encodeName( TDEProcess::quote(_dev) ); // get those ready to be given to a shell
 
-    TQCString point = TQFile::encodeName( KProcess::quote(_point) );
+    TQCString point = TQFile::encodeName( TDEProcess::quote(_point) );
     bool fstype_empty = !_fstype || !*_fstype;
-    TQCString fstype = KProcess::quote(_fstype).latin1(); // good guess
+    TQCString fstype = TDEProcess::quote(_fstype).latin1(); // good guess
     TQCString readonly = _ro ? "-r" : "";
     TQString epath = TQString::fromLatin1(getenv("PATH"));
     TQString path = TQString::fromLatin1("/sbin:/bin");
     if(!epath.isEmpty())
         path += TQString::fromLatin1(":") + epath;
-    TQString mountProg = KGlobal::dirs()->findExe("mount", path);
+    TQString mountProg = TDEGlobal::dirs()->findExe("mount", path);
     if (mountProg.isEmpty()){
       error( KIO::ERR_COULD_NOT_MOUNT, i18n("Could not find program \"mount\""));
       return;
@@ -1572,7 +1572,7 @@ void FileProtocol::unmount( const TQString& _point )
 		 */
 		ptr = strrchr( devname, '/' );
 		*ptr = '\0';
-                TQCString qdevname(TQFile::encodeName(KProcess::quote(TQFile::decodeName(TQCString(devname)))).data());
+                TQCString qdevname(TQFile::encodeName(TDEProcess::quote(TQFile::decodeName(TQCString(devname)))).data());
 		buffer.sprintf( "/usr/bin/eject %s 2>%s", qdevname.data(), tmp );
 		kdDebug(7101) << "VOLMGT: eject " << qdevname << endl;
 
@@ -1607,13 +1607,13 @@ void FileProtocol::unmount( const TQString& _point )
     TQString path = TQString::fromLatin1("/sbin:/bin");
     if (!epath.isEmpty())
        path += ":" + epath;
-    TQString umountProg = KGlobal::dirs()->findExe("umount", path);
+    TQString umountProg = TDEGlobal::dirs()->findExe("umount", path);
 
     if (umountProg.isEmpty()) {
         error( KIO::ERR_COULD_NOT_UNMOUNT, i18n("Could not find program \"umount\""));
         return;
     }
-    buffer.sprintf( "%s %s 2>%s", umountProg.latin1(), TQFile::encodeName(KProcess::quote(_point)).data(), tmp );
+    buffer.sprintf( "%s %s 2>%s", umountProg.latin1(), TQFile::encodeName(TDEProcess::quote(_point)).data(), tmp );
     system( buffer.data() );
 #endif /* HAVE_VOLMGT */
 
@@ -1661,14 +1661,14 @@ bool FileProtocol::pmount(const TQString &dev)
     TQString path = TQString::fromLatin1("/sbin:/bin");
     if (!epath.isEmpty())
         path += ":" + epath;
-    TQString pmountProg = KGlobal::dirs()->findExe("pmount", path);
+    TQString pmountProg = TDEGlobal::dirs()->findExe("pmount", path);
 
     if (pmountProg.isEmpty())
         return false;
 
     TQCString buffer;
     buffer.sprintf( "%s %s", TQFile::encodeName(pmountProg).data(),
-                    TQFile::encodeName(KProcess::quote(dev)).data() );
+                    TQFile::encodeName(TDEProcess::quote(dev)).data() );
 
     int res = system( buffer.data() );
 
@@ -1703,14 +1703,14 @@ bool FileProtocol::pumount(const TQString &point)
     TQString path = TQString::fromLatin1("/sbin:/bin");
     if (!epath.isEmpty())
         path += ":" + epath;
-    TQString pumountProg = KGlobal::dirs()->findExe("pumount", path);
+    TQString pumountProg = TDEGlobal::dirs()->findExe("pumount", path);
 
     if (pumountProg.isEmpty())
         return false;
 
     TQCString buffer;
     buffer.sprintf( "%s %s", TQFile::encodeName(pumountProg).data(),
-                    TQFile::encodeName(KProcess::quote(dev)).data() );
+                    TQFile::encodeName(TDEProcess::quote(dev)).data() );
 
     int res = system( buffer.data() );
 

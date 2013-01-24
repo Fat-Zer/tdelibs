@@ -207,7 +207,7 @@ public:
    */
     int insertButton(const TQString& icon, int id, bool enabled = true,
 		     const TQString& text = TQString::null, int index=-1,
-		     TDEInstance *_instance = KGlobal::instance());
+		     TDEInstance *_instance = TDEGlobal::instance());
 
    /**
    * This is the same as above, but with specified signals and
@@ -230,7 +230,7 @@ public:
     int insertButton(const TQString& icon, int id, const char *signal,
 		     const TQObject *receiver, const char *slot,
 		     bool enabled = true, const TQString& text = TQString::null,
-		     int index=-1, TDEInstance *_instance = KGlobal::instance() );
+		     int index=-1, TDEInstance *_instance = TDEGlobal::instance() );
 
   /**
    * Inserts a button (a KToolBarButton) with the specified

@@ -928,7 +928,7 @@ void RegressionTest::doFailureReport( const TQString& test, int failures )
 
     TQString relOutputDir = makeRelativePath(m_baseDir, m_outputDir);
 
-    // are blocking reads possible with KProcess?
+    // are blocking reads possible with TDEProcess?
     char pwd[PATH_MAX];
     (void) getcwd( pwd, PATH_MAX );
     chdir( TQFile::encodeName( m_baseDir ) );

@@ -233,7 +233,7 @@ void KMMainView::initActions()
 	KActionMenu	*mact = new KActionMenu(i18n("Pri&nter Tools"), "package_utilities", m_actions, "printer_tool");
 	mact->setDelayed(false);
 	connect(mact->popupMenu(), TQT_SIGNAL(activated(int)), TQT_SLOT(slotToolSelected(int)));
-	TQStringList	files = KGlobal::dirs()->findAllResources("data", "tdeprint/tools/*.desktop");
+	TQStringList	files = TDEGlobal::dirs()->findAllResources("data", "tdeprint/tools/*.desktop");
 	for (TQStringList::ConstIterator it=files.begin(); it!=files.end(); ++it)
 	{
 		KSimpleConfig	conf(*it);
@@ -698,9 +698,9 @@ void KMMainView::slotServerConfigure()
 
 void KMMainView::slotServerConfigureAccess()
 {
-	KProcess *proc = new KProcess;
+	TDEProcess *proc = new TDEProcess;
 	*proc << "/usr/bin/system-config-printer-kde";
-	proc->start(KProcess::DontCare);
+	proc->start(TDEProcess::DontCare);
 }
 
 void KMMainView::slotToggleToolBar(bool on)

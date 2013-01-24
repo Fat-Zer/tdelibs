@@ -52,7 +52,7 @@ KComboBoxTest::KComboBoxTest(TQWidget* widget, const char* name )
 
   m_ro = new KComboBox(hbox, "ReadOnlyCombo" );
   lbl->setBuddy (m_ro);
-  m_ro->setCompletionMode( KGlobalSettings::CompletionAuto );
+  m_ro->setCompletionMode( TDEGlobalSettings::CompletionAuto );
   TQObject::connect (m_ro, TQT_SIGNAL(activated(int)), TQT_SLOT(slotActivated(int)));
   TQObject::connect (m_ro, TQT_SIGNAL(activated(const TQString&)), TQT_SLOT (slotActivated(const TQString&)));
   vbox->addWidget (hbox);
@@ -142,7 +142,7 @@ KComboBoxTest::KComboBoxTest(TQWidget* widget, const char* name )
   KCompletion * s_pCompletion = new KCompletion;
   s_pCompletion->setOrder( KCompletion::Weighted );
   s_pCompletion->setItems( historyConfig.readListEntry( "ComboContents" ) );
-  s_pCompletion->setCompletionMode( KGlobalSettings::completionMode() );
+  s_pCompletion->setCompletionMode( TDEGlobalSettings::completionMode() );
   m_konqc->setCompletionObject( s_pCompletion );
 
   TQPixmap pix = SmallIcon("www");

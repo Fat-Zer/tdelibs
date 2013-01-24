@@ -272,7 +272,7 @@ void RenderWidget::updateFromElement()
         if ( color.isValid() || backgroundColor.isValid() ) {
             TQPalette pal(TQApplication::palette(m_widget));
 
-            int contrast_ = KGlobalSettings::contrast();
+            int contrast_ = TDEGlobalSettings::contrast();
             int highlightVal = 100 + (2*contrast_+4)*16/10;
             int lowlightVal = 100 + (2*contrast_+4)*10;
 

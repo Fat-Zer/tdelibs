@@ -361,7 +361,7 @@ bool initializeMods()
 
 	XFreeModifiermap( xmk );
 
-	//KConfigGroupSaver cgs( KGlobal::config(), "Keyboard" );
+	//KConfigGroupSaver cgs( TDEGlobal::config(), "Keyboard" );
 	// read in mod that win should be attached to
 
 	g_bInitializedMods = true;
@@ -380,11 +380,11 @@ static void initializeVariations()
 
 static void intializeKKeyLabels()
 {
-	KConfigGroupSaver cgs( KGlobal::config(), "Keyboard" );
-	g_rgModInfo[0].sLabel = KGlobal::config()->readEntry( "Label Shift", i18n(g_rgModInfo[0].psName) );
-	g_rgModInfo[1].sLabel = KGlobal::config()->readEntry( "Label Ctrl", i18n(g_rgModInfo[1].psName) );
-	g_rgModInfo[2].sLabel = KGlobal::config()->readEntry( "Label Alt", i18n(g_rgModInfo[2].psName) );
-	g_rgModInfo[3].sLabel = KGlobal::config()->readEntry( "Label Win", i18n(g_rgModInfo[3].psName) );
+	KConfigGroupSaver cgs( TDEGlobal::config(), "Keyboard" );
+	g_rgModInfo[0].sLabel = TDEGlobal::config()->readEntry( "Label Shift", i18n(g_rgModInfo[0].psName) );
+	g_rgModInfo[1].sLabel = TDEGlobal::config()->readEntry( "Label Ctrl", i18n(g_rgModInfo[1].psName) );
+	g_rgModInfo[2].sLabel = TDEGlobal::config()->readEntry( "Label Alt", i18n(g_rgModInfo[2].psName) );
+	g_rgModInfo[3].sLabel = TDEGlobal::config()->readEntry( "Label Win", i18n(g_rgModInfo[3].psName) );
 	g_bMacLabels = (g_rgModInfo[2].sLabel == "Command");
 	g_bInitializedKKeyLabels = true;
 }

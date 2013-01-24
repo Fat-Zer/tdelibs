@@ -80,7 +80,7 @@ class KURL;
  * second argument.
  *
  * If @p EchoMode for this widget is set to something other than @p TQLineEdit::Normal,
- * the completion mode will always be defaulted to KGlobalSettings::CompletionNone.
+ * the completion mode will always be defaulted to TDEGlobalSettings::CompletionNone.
  * This is done purposefully to guard against protected entries such as passwords being
  * cached in KCompletion's list. Hence, if the @p EchoMode is not TQLineEdit::Normal, the
  * completion mode is automatically disabled.
@@ -204,7 +204,7 @@ public:
      *
      * See KCompletionBase::setCompletionMode
      */
-    virtual void setCompletionMode( KGlobalSettings::Completion mode );
+    virtual void setCompletionMode( TDEGlobalSettings::Completion mode );
 
    /**
     * Enables/disables the popup (context) menu.
@@ -269,7 +269,7 @@ public:
 
     /**
      * @returns the completion-box, that is used in completion mode
-     * KGlobalSettings::CompletionPopup.
+     * TDEGlobalSettings::CompletionPopup.
      * This method will create a completion-box if none is there, yet.
      *
      * @param create Set this to false if you don't want the box to be created
@@ -320,7 +320,7 @@ public:
 
     /**
      * Set the completion-box to be used in completion mode
-     * KGlobalSettings::CompletionPopup.
+     * TDEGlobalSettings::CompletionPopup.
      * This will do nothing if a completion-box already exists.
      *
      * @param box The KCompletionBox to set
@@ -382,7 +382,7 @@ signals:
      * @p setKeyBinding for details.
      *
      * Note that this signal is @em not emitted if the completion
-     * mode is set to @p KGlobalSettings::CompletionNone or
+     * mode is set to @p TDEGlobalSettings::CompletionNone or
      * @p echoMode() is @em not  normal.
      */
     void textRotation( KCompletionBase::KeyBindingType );
@@ -391,7 +391,7 @@ signals:
      * Emitted when the user changed the completion mode by using the
      * popupmenu.
      */
-    void completionModeChanged( KGlobalSettings::Completion );
+    void completionModeChanged( TDEGlobalSettings::Completion );
 
     /**
      * Emitted before the context menu is displayed.

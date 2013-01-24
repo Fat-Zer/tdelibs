@@ -40,7 +40,7 @@ KAboutApplication::KAboutApplication( TQWidget *parent, const char *name,
                  Close, Close,
      parent, name, modal )
 {
-  buildDialog(KGlobal::instance()->aboutData());
+  buildDialog(TDEGlobal::instance()->aboutData());
 }
 
 KAboutApplication::KAboutApplication( const TDEAboutData *aboutData, TQWidget *parent,

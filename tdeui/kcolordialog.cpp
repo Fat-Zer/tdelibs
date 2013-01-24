@@ -429,7 +429,7 @@ void KColorCells::mouseMoveEvent( TQMouseEvent *e )
     if( !(e->state() & Qt::LeftButton)) return;
 
     if(inMouse) {
-        int delay = KGlobalSettings::dndEventDelay();
+        int delay = TDEGlobalSettings::dndEventDelay();
         if(e->x() > mPos.x()+delay || e->x() < mPos.x()-delay ||
            e->y() > mPos.y()+delay || e->y() < mPos.y()-delay){
             // Drag color object
@@ -645,7 +645,7 @@ KPaletteTable::readNamedColor( void )
     return; // Strings already present
   }
 
-  KGlobal::locale()->insertCatalogue("tdelibs_colors");
+  TDEGlobal::locale()->insertCatalogue("tdelibs_colors");
 
   //
   // Code somewhat inspired by KPalette.
@@ -1254,7 +1254,7 @@ void KColorDialog::slotDefaultColorClicked()
 void
 KColorDialog::readSettings()
 {
-  KConfigGroup group( KGlobal::config(), "Colors" );
+  KConfigGroup group( TDEGlobal::config(), "Colors" );
 
   TQString palette = group.readEntry("CurrentPalette");
   d->table->setPalette(palette);
@@ -1263,7 +1263,7 @@ KColorDialog::readSettings()
 void
 KColorDialog::slotWriteSettings()
 {
-  KConfigGroup group( KGlobal::config(), "Colors" );
+  KConfigGroup group( TDEGlobal::config(), "Colors" );
 
   TQString palette = d->table->palette();
   if (!group.hasDefault("CurrentPalette") &&

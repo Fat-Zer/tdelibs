@@ -94,7 +94,7 @@ UploadDialog::UploadDialog( Engine *engine, TQWidget *parent ) :
   topLayout->addWidget( languageLabel, 6, 0 );
   mLanguageCombo = new TQComboBox( topPage );
   topLayout->addWidget( mLanguageCombo, 6, 1 );
-  mLanguageCombo->insertStringList( KGlobal::locale()->languageList() );
+  mLanguageCombo->insertStringList( TDEGlobal::locale()->languageList() );
 
   TQLabel *previewLabel = new TQLabel( i18n("Preview URL:"), topPage );
   topLayout->addWidget( previewLabel, 7, 0 );

@@ -274,7 +274,7 @@ TDEAboutData::translateInternalProgramName() const
 {
   delete[] d->mTranslatedProgramName;
   d->mTranslatedProgramName = 0;
-  if( KGlobal::locale() )
+  if( TDEGlobal::locale() )
       d->mTranslatedProgramName = tqstrdup( programName().utf8());
 }
 

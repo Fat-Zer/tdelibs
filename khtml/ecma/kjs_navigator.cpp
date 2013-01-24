@@ -240,7 +240,7 @@ Value Navigator::getValueProperty(ExecState *exec, int token) const
   case BrowserLanguage:
   case Language:
   case UserLanguage:
-    return String(KGlobal::locale()->language());
+    return String(TDEGlobal::locale()->language());
   case UserAgent:
     return String(userAgent);
   case Platform:

@@ -2986,7 +2986,7 @@ void KateViewInternal::mouseMoveEvent( TQMouseEvent* e )
       TQPoint p( e->pos() - dragInfo.start );
 
       // we've left the drag square, we can start a real drag operation now
-      if( p.manhattanLength() > KGlobalSettings::dndEventDelay() )
+      if( p.manhattanLength() > TDEGlobalSettings::dndEventDelay() )
         doDrag();
 
       return;

@@ -176,7 +176,7 @@ TQWidget *KXMLGUIBuilder::createContainer( TQWidget *parent, int index, const TQ
     {
       TDEInstance *instance = d->m_instance;
       if ( !instance )
-        instance = KGlobal::instance();
+        instance = TDEGlobal::instance();
 
       pix = SmallIconSet( icon, 16, instance );
     }
@@ -351,7 +351,7 @@ int KXMLGUIBuilder::createCustomElement( TQWidget *parent, int index, const TQDo
   }
   else if ( element.tagName().lower() == d->tagTearOffHandle )
   {
-    if ( ::tqqt_cast<TQPopupMenu *>( parent )  && KGlobalSettings::insertTearOffHandle())
+    if ( ::tqqt_cast<TQPopupMenu *>( parent )  && TDEGlobalSettings::insertTearOffHandle())
       return static_cast<TQPopupMenu *>(parent)->insertTearOffHandle( -1, index );
   }
   else if ( element.tagName().lower() == d->tagMenuTitle )
@@ -373,7 +373,7 @@ int KXMLGUIBuilder::createCustomElement( TQWidget *parent, int index, const TQDo
       {
         TDEInstance *instance = d->m_instance;
         if ( !instance )
-          instance = KGlobal::instance();
+          instance = TDEGlobal::instance();
 
         pix = SmallIcon( icon, instance );
       }

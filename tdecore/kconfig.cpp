@@ -71,7 +71,7 @@ KConfig::KConfig( const TQString& fileName,
   // config object.
   // Since this makes only sense for config directories, addCustomized
   // returns true only if new config directories appeared.
-  if (KGlobal::dirs()->addCustomized(this))
+  if (TDEGlobal::dirs()->addCustomized(this))
       reparseConfiguration();
 }
 

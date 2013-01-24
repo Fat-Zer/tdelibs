@@ -30,7 +30,7 @@ class TQTextCodec;
  * KProcIO
  *
  * This class provides a slightly simpler interface to the communication
- *  functions provided by KProcess.  The simplifications are:
+ *  functions provided by TDEProcess.  The simplifications are:
  *    @li The buffer for a write is copied to an internal KProcIO
  *        buffer and maintained/freed appropriately.  There is no need
  *        to be concerned with wroteStdin() signals _at_all_.
@@ -40,14 +40,14 @@ class TQTextCodec;
  * Basically, KProcIO gives you buffered I/O similar to fgets()/fputs().
  *
  * Aside from these, and the fact that start() takes different
- * parameters, use this class just like KProcess.
+ * parameters, use this class just like TDEProcess.
  *
  * @author David Sweet
- * @short A slightly simpler interface to KProcess
+ * @short A slightly simpler interface to TDEProcess
  **/
 
 
-class TDECORE_EXPORT KProcIO : public KProcess
+class TDECORE_EXPORT KProcIO : public TDEProcess
 {
   Q_OBJECT
 
@@ -63,10 +63,10 @@ public:
   ~KProcIO();
 
   /**
-   * Sets the communication mode to be passed to KProcess::start()
-   * by start(). The default communication mode is KProcess::All.
+   * Sets the communication mode to be passed to TDEProcess::start()
+   * by start(). The default communication mode is TDEProcess::All.
    * You probably want to use this function in conjunction with
-   * KProcess::setUsePty().
+   * TDEProcess::setUsePty().
    * @param comm the communication mode
    */
   void setComm (Communication comm);
@@ -80,7 +80,7 @@ public:
    *
    *  @param runmode For a detailed description of the
    *  various run modes, have a look at the
-   *  general description of the KProcess class.
+   *  general description of the TDEProcess class.
    *  @param includeStderr If true, data from both stdout and stderr is
    *  listened to. If false, only stdout is listened to.
    *  @return true on success, false on error.
@@ -204,8 +204,8 @@ protected:
   void controlledEmission ();
 
 protected slots:
-  void received (KProcess *proc, char *buffer, int buflen);
-  void sent (KProcess *);
+  void received (TDEProcess *proc, char *buffer, int buflen);
+  void sent (TDEProcess *);
 
 protected:
   virtual void virtual_hook( int id, void* data );

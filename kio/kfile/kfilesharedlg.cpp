@@ -45,7 +45,7 @@ class KFileSharePropsPlugin::Private
 {
 public:
     TQVBox *m_vBox;
-    KProcess *m_configProc;
+    TDEProcess *m_configProc;
     bool m_bAllShared;
     bool m_bAllUnshared;
     bool m_bAllReadOnly;
@@ -86,7 +86,7 @@ bool KFileSharePropsPlugin::supports( const KFileItemList& items )
         if ( !(*it)->isDir() || !isLocal )
             return false;
         // And sharing the trash doesn't make sense
-        if ( isLocal && (*it)->url().path( 1 ) == KGlobalSettings::trashPath() )
+        if ( isLocal && (*it)->url().path( 1 ) == TDEGlobalSettings::trashPath() )
             return false;
     }
     return true;
@@ -236,15 +236,15 @@ void KFileSharePropsPlugin::slotConfigureFileSharing()
 {
     if (d->m_configProc) return;
 
-    d->m_configProc = new KProcess(this);
+    d->m_configProc = new TDEProcess(this);
     (*d->m_configProc) << KStandardDirs::findExe("tdesu") << locate("exe", "kcmshell") << "fileshare";
-    if (!d->m_configProc->start( KProcess::NotifyOnExit ))
+    if (!d->m_configProc->start( TDEProcess::NotifyOnExit ))
     {
        delete d->m_configProc;
        d->m_configProc = 0;
        return;
     }
-    connect(d->m_configProc, TQT_SIGNAL(processExited(KProcess *)),
+    connect(d->m_configProc, TQT_SIGNAL(processExited(TDEProcess *)),
             this, TQT_SLOT(slotConfigureFileSharingDone()));
     m_pbConfig->setEnabled(false);
 }

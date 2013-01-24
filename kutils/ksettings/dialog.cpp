@@ -428,7 +428,7 @@ KCMultiDialog * Dialog::dialog()
 TQValueList<KService::Ptr> Dialog::instanceServices() const
 {
 	kdDebug( 700 ) << k_funcinfo << endl;
-	TQString instanceName = KGlobal::instance()->instanceName();
+	TQString instanceName = TDEGlobal::instance()->instanceName();
 	d->registeredComponents.append( instanceName );
 	kdDebug( 700 ) << "calling KServiceGroup::childGroup( " << instanceName
 		<< " )" << endl;
@@ -533,8 +533,8 @@ void Dialog::createDialogFromServices()
 {
 	// read .setdlg files
 	TQString setdlgpath = locate( "appdata",
-			KGlobal::instance()->instanceName() + ".setdlg" );
-	TQStringList setdlgaddon = KGlobal::dirs()->findAllResources( "appdata",
+			TDEGlobal::instance()->instanceName() + ".setdlg" );
+	TQStringList setdlgaddon = TDEGlobal::dirs()->findAllResources( "appdata",
 			"ksettingsdialog/*.setdlg" );
 	if( ! setdlgpath.isNull() )
 		parseGroupFile( setdlgpath );

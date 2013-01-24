@@ -82,7 +82,7 @@ static TQPixmap themedMessageBoxIcon(TQMessageBox::Icon icon)
         break;
     }
 
-   TQPixmap ret = KGlobal::iconLoader()->loadIcon(icon_name, KIcon::NoGroup, KIcon::SizeMedium, KIcon::DefaultState, 0, true);
+   TQPixmap ret = TDEGlobal::iconLoader()->loadIcon(icon_name, KIcon::NoGroup, KIcon::SizeMedium, KIcon::DefaultState, 0, true);
 
    if (ret.isNull())
        return TQMessageBox::standardIcon(icon);
@@ -174,7 +174,7 @@ int KMessageBox::createKMessageBox(KDialogBase *dialog, TQPixmap icon,
     // Calculate a proper size for the text.
     {
        TQSimpleRichText rt(qt_text, dialog->font());
-       TQRect d = KGlobalSettings::desktopGeometry(dialog);
+       TQRect d = TDEGlobalSettings::desktopGeometry(dialog);
 
        pref_width = d.width() / 3;
        rt.setWidth(pref_width);
@@ -343,7 +343,7 @@ KMessageBox::shouldBeShownYesNo(const TQString &dontShowAgainName,
 {
     if ( dontShowAgainName.isEmpty() ) return true;
     TQString grpNotifMsgs = TQString::fromLatin1("Notification Messages");
-    KConfig *config = againConfig ? againConfig : KGlobal::config();
+    KConfig *config = againConfig ? againConfig : TDEGlobal::config();
     KConfigGroupSaver saver( config, grpNotifMsgs );
     TQString dontAsk = config->readEntry(dontShowAgainName).lower();
     if (dontAsk == "yes") {
@@ -362,7 +362,7 @@ KMessageBox::shouldBeShownContinue(const TQString &dontShowAgainName)
 {
     if ( dontShowAgainName.isEmpty() ) return true;
     TQString grpNotifMsgs = TQString::fromLatin1("Notification Messages");
-    KConfig *config = againConfig ? againConfig : KGlobal::config();
+    KConfig *config = againConfig ? againConfig : TDEGlobal::config();
     KConfigGroupSaver saver( config, grpNotifMsgs );
     return config->readBoolEntry(dontShowAgainName,  true);
 }
@@ -373,7 +373,7 @@ KMessageBox::saveDontShowAgainYesNo(const TQString &dontShowAgainName,
 {
     if ( dontShowAgainName.isEmpty() ) return;
     TQString grpNotifMsgs = TQString::fromLatin1("Notification Messages");
-    KConfig *config = againConfig ? againConfig : KGlobal::config();
+    KConfig *config = againConfig ? againConfig : TDEGlobal::config();
     KConfigGroupSaver saver( config, grpNotifMsgs );
     config->writeEntry( dontShowAgainName, result==Yes ? "yes" : "no", true, (dontShowAgainName[0] == ':'));
     config->sync();
@@ -384,7 +384,7 @@ KMessageBox::saveDontShowAgainContinue(const TQString &dontShowAgainName)
 {
     if ( dontShowAgainName.isEmpty() ) return;
     TQString grpNotifMsgs = TQString::fromLatin1("Notification Messages");
-    KConfig *config = againConfig ? againConfig : KGlobal::config();
+    KConfig *config = againConfig ? againConfig : TDEGlobal::config();
     KConfigGroupSaver saver( config, grpNotifMsgs );
     config->writeEntry( dontShowAgainName, false, true, (dontShowAgainName[0] == ':'));
     config->sync();
@@ -935,7 +935,7 @@ KMessageBox::informationListWId(WId parent_id,const TQString &text, const TQStri
 void
 KMessageBox::enableAllMessages()
 {
-   KConfig *config = againConfig ? againConfig : KGlobal::config();
+   KConfig *config = againConfig ? againConfig : TDEGlobal::config();
    TQString grpNotifMsgs = TQString::fromLatin1("Notification Messages");
    if (!config->hasGroup(grpNotifMsgs))
       return;
@@ -955,7 +955,7 @@ KMessageBox::enableAllMessages()
 void
 KMessageBox::enableMessage(const TQString &dontShowAgainName)
 {
-   KConfig *config = againConfig ? againConfig : KGlobal::config();
+   KConfig *config = againConfig ? againConfig : TDEGlobal::config();
    TQString grpNotifMsgs = TQString::fromLatin1("Notification Messages");
    if (!config->hasGroup(grpNotifMsgs))
       return;

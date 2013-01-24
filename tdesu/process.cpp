@@ -74,7 +74,7 @@ int PtyProcess::waitMS(int fd,int ms)
 */
 bool PtyProcess::checkPid(pid_t pid)
 {
-	KConfig* config = KGlobal::config();
+	KConfig* config = TDEGlobal::config();
 	config->setGroup("super-user-command");
 	TQString superUserCommand = config->readEntry("super-user-command", DEFAULT_SUPER_USER_COMMAND);
 	//sudo does not accept signals from user so we except it

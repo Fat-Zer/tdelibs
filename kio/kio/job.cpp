@@ -298,7 +298,7 @@ void Job::showErrorDialog( TQWidget * parent )
   // Show a message box, except for "user canceled" or "no content"
   if ( (m_error != ERR_USER_CANCELED) && (m_error != ERR_NO_CONTENT) ) {
     //old plain error message
-    //kdDebug(7007) << "Default language: " << KGlobal::locale()->defaultLanguage() << endl;
+    //kdDebug(7007) << "Default language: " << TDEGlobal::locale()->defaultLanguage() << endl;
     if ( 1 )
       KMessageBox::queuedMessageBox( parent, KMessageBox::Error, errorString() );
 #if 0

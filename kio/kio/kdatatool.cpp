@@ -98,7 +98,7 @@ TQPixmap KDataToolInfo::icon() const
         return TQPixmap();
 
     TQPixmap pix;
-    TQStringList lst = KGlobal::dirs()->resourceDirs("icon");
+    TQStringList lst = TDEGlobal::dirs()->resourceDirs("icon");
     TQStringList::ConstIterator it = lst.begin();
     while (!pix.load( *it + "/" + m_service->icon() ) && it != lst.end() )
         it++;
@@ -112,7 +112,7 @@ TQPixmap KDataToolInfo::miniIcon() const
         return TQPixmap();
 
     TQPixmap pix;
-    TQStringList lst = KGlobal::dirs()->resourceDirs("mini");
+    TQStringList lst = TDEGlobal::dirs()->resourceDirs("mini");
     TQStringList::ConstIterator it = lst.begin();
     while (!pix.load( *it + "/" + m_service->icon() ) && it != lst.end() )
         it++;

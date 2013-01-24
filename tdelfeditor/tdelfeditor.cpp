@@ -541,13 +541,13 @@ int main_console(int argc, char **argv)
 			TDECmdLineArgs::init(&aboutd);
 			TDEApplication app(false, false);
 
-			TQStringList rds = KGlobal::dirs()->resourceDirs("icon");
+			TQStringList rds = TDEGlobal::dirs()->resourceDirs("icon");
 			for ( TQStringList::Iterator it = rds.begin(); it != rds.end(); ++it ) {
 				printf(" * %s\n\r", (*it).ascii()); fflush(stdout);
 			}
-			TQString systemIcon = KGlobal::iconLoader()->iconPath(argv[PARAM_ICON_NAME], 0, true);
+			TQString systemIcon = TDEGlobal::iconLoader()->iconPath(argv[PARAM_ICON_NAME], 0, true);
 			if (systemIcon.isNull()) {
-				systemIcon = KGlobal::iconLoader()->iconPath(argv[PARAM_ICON_NAME], 0, false);
+				systemIcon = TDEGlobal::iconLoader()->iconPath(argv[PARAM_ICON_NAME], 0, false);
 				printf("NOT FOUND, refusing to add unknown icon (this message is harmless)\n\r");
 				section = ICON_SECTION;
 				clear_resource(handle, section);

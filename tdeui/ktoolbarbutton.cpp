@@ -69,7 +69,7 @@ public:
     m_iconSize    = 0;
 
     m_parent   = 0;
-    m_instance = KGlobal::instance();
+    m_instance = TDEGlobal::instance();
   }
   ~KToolBarButtonPrivate()
   {
@@ -209,7 +209,7 @@ void KToolBarButton::modeChange()
   if (d->m_iconText != KToolBar::IconOnly)
   {
     // okay, we have to deal with fonts.  let's get our information now
-    TQFont tmp_font = KGlobalSettings::toolBarFont();
+    TQFont tmp_font = TDEGlobalSettings::toolBarFont();
 
     // now parse out our font sizes from our chosen font
     TQFontMetrics fm(tmp_font);
@@ -421,7 +421,7 @@ bool KToolBarButton::eventFilter(TQObject *o, TQEvent *ev)
       {
         TQMouseEvent* mev = TQT_TQMOUSEEVENT(ev);
         if ((mev->pos() - d->m_mousePressPos).manhattanLength()
-              > KGlobalSettings::dndEventDelay())
+              > TDEGlobalSettings::dndEventDelay())
         {
           openPopup();
           return true;
@@ -498,7 +498,7 @@ void KToolBarButton::drawButton( TQPainter *_painter )
 	colorGroup(), flags, TQStyle::SC_ToolButton, active, TQStyleOption());
 
   int dx, dy;
-  TQFont tmp_font(KGlobalSettings::toolBarFont());
+  TQFont tmp_font(TDEGlobalSettings::toolBarFont());
   TQFontMetrics fm(tmp_font);
   TQRect textRect;
   int textFlags = 0;
@@ -606,11 +606,11 @@ void KToolBarButton::drawButton( TQPainter *_painter )
   // Draw the text at the position given by textRect, and using textFlags
   if (!textLabel().isNull() && !textRect.isNull())
   {
-      _painter->setFont(KGlobalSettings::toolBarFont());
+      _painter->setFont(TDEGlobalSettings::toolBarFont());
       if (!isEnabled())
         _painter->setPen(palette().disabled().dark());
       else if(d->m_isRaised)
-        _painter->setPen(KGlobalSettings::toolBarHighlightColor());
+        _painter->setPen(TDEGlobalSettings::toolBarHighlightColor());
       else
 	_painter->setPen( colorGroup().buttonText() );
       _painter->drawText(textRect, textFlags, textLabel());

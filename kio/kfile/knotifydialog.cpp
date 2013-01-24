@@ -864,8 +864,8 @@ void KNotifyWidget::openSoundDialog( KURLRequester *requester )
     // find the first "sound"-resource that contains files
     const Application *app = currentEvent()->application();
     TQStringList soundDirs =
-        KGlobal::dirs()->findDirs("data", app->appName() + "/sounds");
-    soundDirs += KGlobal::dirs()->resourceDirs( "sound" );
+        TDEGlobal::dirs()->findDirs("data", app->appName() + "/sounds");
+    soundDirs += TDEGlobal::dirs()->resourceDirs( "sound" );
 
     if ( !soundDirs.isEmpty() ) {
         KURL soundURL;
@@ -920,8 +920,8 @@ void KNotifyWidget::playSound()
 
         // find the first "sound"-resource that contains files
         const Application *app = currentEvent()->application();
-        TQStringList soundDirs = KGlobal::dirs()->findDirs("data", app->appName() + "/sounds");
-        soundDirs += KGlobal::dirs()->resourceDirs( "sound" );
+        TQStringList soundDirs = TDEGlobal::dirs()->findDirs("data", app->appName() + "/sounds");
+        soundDirs += TDEGlobal::dirs()->resourceDirs( "sound" );
 
         if ( !soundDirs.isEmpty() ) {
            TQDir dir;

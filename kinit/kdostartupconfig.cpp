@@ -126,7 +126,7 @@ int main()
             }
         startupconfigfiles << line << endl;
         // use even currently non-existing paths in $TDEDIRS
-        TQStringList dirs = TQStringList::split( KPATH_SEPARATOR, KGlobal::dirs()->kfsstnd_prefixes());
+        TQStringList dirs = TQStringList::split( KPATH_SEPARATOR, TDEGlobal::dirs()->kfsstnd_prefixes());
         for( TQStringList::ConstIterator it = dirs.begin();
              it != dirs.end();
              ++it )

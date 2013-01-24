@@ -112,7 +112,7 @@ class KDE_EXPORT DownloadDialog : public KDialogBase
       a previously set type.
 
       @param providerList the URl to the list of providers; if empty
-             we first try the ProvidersUrl from KGlobal::config, then we
+             we first try the ProvidersUrl from TDEGlobal::config, then we
              fall back to a hardcoded value.
     */
     void load(TQString providerList); // KDE4: merge with load() above

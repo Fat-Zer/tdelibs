@@ -57,9 +57,9 @@ void Security::readKeys()
   m_keys.clear();
   KProcIO *readProcess=new KProcIO();
   *readProcess << "gpg"<<"--no-secmem-warning"<<"--no-tty"<<"--with-colon"<<"--list-keys";
-  connect(readProcess, TQT_SIGNAL(processExited(KProcess *)), this, TQT_SLOT(slotProcessExited(KProcess *)));
+  connect(readProcess, TQT_SIGNAL(processExited(TDEProcess *)), this, TQT_SLOT(slotProcessExited(TDEProcess *)));
   connect(readProcess, TQT_SIGNAL(readReady(KProcIO *)) ,this, TQT_SLOT(slotDataArrived(KProcIO *)));
-  if (!readProcess->start(KProcess::NotifyOnExit, true))
+  if (!readProcess->start(TDEProcess::NotifyOnExit, true))
     KMessageBox::error(0L, i18n("<qt>Cannot start <i>gpg</i> and retrieve the available keys. Make sure that <i>gpg</i> is installed, otherwise verification of downloaded resources will not be possible.</qt>"));
   else
     m_gpgRunning = true;
@@ -75,13 +75,13 @@ void Security::readSecretKeys()
   m_runMode = ListSecret;
   KProcIO *readProcess=new KProcIO();
   *readProcess << "gpg"<<"--no-secmem-warning"<<"--no-tty"<<"--with-colon"<<"--list-secret-keys";
-  connect(readProcess, TQT_SIGNAL(processExited(KProcess *)), this, TQT_SLOT(slotProcessExited(KProcess *)));
+  connect(readProcess, TQT_SIGNAL(processExited(TDEProcess *)), this, TQT_SLOT(slotProcessExited(TDEProcess *)));
   connect(readProcess, TQT_SIGNAL(readReady(KProcIO *)) ,this, TQT_SLOT(slotDataArrived(KProcIO *)));
-  if (readProcess->start(KProcess::NotifyOnExit, true))
+  if (readProcess->start(TDEProcess::NotifyOnExit, true))
     m_gpgRunning = true;  
 }
 
-void Security::slotProcessExited(KProcess *process)
+void Security::slotProcessExited(TDEProcess *process)
 {
   switch (m_runMode)
    {
@@ -248,9 +248,9 @@ void Security::slotCheckValidity()
   //verify the signature
   KProcIO *verifyProcess=new KProcIO();
   *verifyProcess<<"gpg"<<"--no-secmem-warning"<<"--status-fd=2"<<"--command-fd=0"<<"--verify" << f.dirPath() + "/signature"<< m_fileName;
-  connect(verifyProcess, TQT_SIGNAL(processExited(KProcess *)),this, TQT_SLOT(slotProcessExited(KProcess *)));
+  connect(verifyProcess, TQT_SIGNAL(processExited(TDEProcess *)),this, TQT_SLOT(slotProcessExited(TDEProcess *)));
   connect(verifyProcess, TQT_SIGNAL(readReady(KProcIO *)),this, TQT_SLOT(slotDataArrived(KProcIO *)));
-  if (verifyProcess->start(KProcess::NotifyOnExit,true))
+  if (verifyProcess->start(TDEProcess::NotifyOnExit,true))
       m_gpgRunning = true;
   else
   {
@@ -328,10 +328,10 @@ void Security::slotSignFile()
   //verify the signature
   KProcIO *signProcess=new KProcIO();
   *signProcess<<"gpg"<<"--no-secmem-warning"<<"--status-fd=2"<<"--command-fd=0"<<"--no-tty"<<"--detach-sign" << "-u" << m_secretKey << "-o" << f.dirPath() + "/signature" << m_fileName;
-  connect(signProcess, TQT_SIGNAL(processExited(KProcess *)),this, TQT_SLOT(slotProcessExited(KProcess *)));
+  connect(signProcess, TQT_SIGNAL(processExited(TDEProcess *)),this, TQT_SLOT(slotProcessExited(TDEProcess *)));
   connect(signProcess, TQT_SIGNAL(readReady(KProcIO *)),this, TQT_SLOT(slotDataArrived(KProcIO *)));
   m_runMode = Sign;
-  if (signProcess->start(KProcess::NotifyOnExit,true))
+  if (signProcess->start(TDEProcess::NotifyOnExit,true))
     m_gpgRunning = true;
   else
   {

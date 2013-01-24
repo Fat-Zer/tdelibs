@@ -72,7 +72,7 @@ TQString Entry::name( const TQString &lang ) const
 
   if ( !d(this)->mNameMap[ lang ].isEmpty() ) return d(this)->mNameMap[ lang ];
   else {
-    TQStringList langs = KGlobal::locale()->languageList();
+    TQStringList langs = TDEGlobal::locale()->languageList();
     for(TQStringList::Iterator it = langs.begin(); it != langs.end(); ++it)
       if( !d(this)->mNameMap[ *it ].isEmpty() ) return d(this)->mNameMap[ *it ];
   }
@@ -175,7 +175,7 @@ TQString Entry::summary( const TQString &lang ) const
 
   if ( !mSummaryMap[ lang ].isEmpty() ) return mSummaryMap[ lang ];
   else {
-    TQStringList langs = KGlobal::locale()->languageList();
+    TQStringList langs = TDEGlobal::locale()->languageList();
     for(TQStringList::Iterator it = langs.begin(); it != langs.end(); ++it)
       if( !mSummaryMap[ *it ].isEmpty() ) return mSummaryMap[ *it ];
   }
@@ -228,7 +228,7 @@ KURL Entry::payload( const TQString &lang ) const
 {
   KURL payload = mPayloadMap[ lang ];
   if ( payload.isEmpty() ) {
-    TQStringList langs = KGlobal::locale()->languageList();
+    TQStringList langs = TDEGlobal::locale()->languageList();
     for(TQStringList::Iterator it = langs.begin(); it != langs.end(); ++it)
       if( !mPayloadMap[ *it ].isEmpty() ) return mPayloadMap[ *it ];
   }
@@ -251,7 +251,7 @@ KURL Entry::preview( const TQString &lang ) const
 {
   KURL preview = mPreviewMap[ lang ];
   if ( preview.isEmpty() ) {
-    TQStringList langs = KGlobal::locale()->languageList();
+    TQStringList langs = TDEGlobal::locale()->languageList();
     for(TQStringList::Iterator it = langs.begin(); it != langs.end(); ++it)
       if( !mPreviewMap[ *it ].isEmpty() ) return mPreviewMap[ *it ];
   }

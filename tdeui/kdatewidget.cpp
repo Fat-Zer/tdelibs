@@ -72,7 +72,7 @@ KDateWidget::KDateWidget( TQDate date, TQWidget *parent,
 void KDateWidget::init()
 {
   d = new KDateWidgetPrivate;
-  KLocale *locale = KGlobal::locale();
+  KLocale *locale = TDEGlobal::locale();
   TQHBoxLayout *layout = new TQHBoxLayout(this, 0, KDialog::spacingHint());
   layout->setAutoAdd(true);
   d->m_day = new KDateWidgetSpinBox(1, 1, this);
@@ -96,7 +96,7 @@ void KDateWidget::init()
 void KDateWidget::init(const TQDate& date)
 {
   d = new KDateWidgetPrivate;
-  KLocale *locale = KGlobal::locale();
+  KLocale *locale = TDEGlobal::locale();
   TQHBoxLayout *layout = new TQHBoxLayout(this, 0, KDialog::spacingHint());
   layout->setAutoAdd(true);
   d->m_day = new KDateWidgetSpinBox(1, 1, this);
@@ -125,7 +125,7 @@ KDateWidget::~KDateWidget()
 // ### HPB change TQDate to const TQDate & in KDE 4.0
 void KDateWidget::setDate( TQDate date )
 {
-  const KCalendarSystem * calendar = KGlobal::locale()->calendar();
+  const KCalendarSystem * calendar = TDEGlobal::locale()->calendar();
 
   d->m_day->blockSignals(true);
   d->m_month->blockSignals(true);
@@ -151,7 +151,7 @@ TQDate KDateWidget::date() const
 
 void KDateWidget::slotDateChanged( )
 {
-  const KCalendarSystem * calendar = KGlobal::locale()->calendar();
+  const KCalendarSystem * calendar = TDEGlobal::locale()->calendar();
 
   TQDate date;
   int y,m,day;

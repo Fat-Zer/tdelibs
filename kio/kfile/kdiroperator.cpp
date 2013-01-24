@@ -812,7 +812,7 @@ bool KDirOperator::checkPreviewSupport()
     KToggleAction *previewAction = static_cast<KToggleAction*>( myActionCollection->action( "preview" ));
 
     bool hasPreviewSupport = false;
-    KConfig *kc = KGlobal::config();
+    KConfig *kc = TDEGlobal::config();
     KConfigGroupSaver cs( kc, ConfigGroup );
     if ( kc->readBoolEntry( "Show Default Preview", true ) )
         hasPreviewSupport = checkPreviewInternal();
@@ -1385,7 +1385,7 @@ void KDirOperator::setupMenu(int whichActions)
         actionMenu->insert( mkdirAction );
         if (currUrl.isLocalFile() && !(TDEApplication::keyboardMouseState() & TQt::ShiftButton))
             actionMenu->insert( myActionCollection->action( "trash" ) );
-        KConfig *globalconfig = KGlobal::config();
+        KConfig *globalconfig = TDEGlobal::config();
         KConfigGroupSaver cs( globalconfig, TQString::fromLatin1("KDE") );
         if (!currUrl.isLocalFile() || (TDEApplication::keyboardMouseState() & TQt::ShiftButton) ||
             globalconfig->readBoolEntry("ShowDeleteCommand", false))

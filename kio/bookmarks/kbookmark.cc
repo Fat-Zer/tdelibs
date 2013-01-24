@@ -89,9 +89,9 @@ KBookmark KBookmarkGroup::next( const KBookmark & current ) const
 // firstElement() and lastElement()
 TQDomElement KBookmarkGroup::nextKnownTag( TQDomElement start, bool goNext ) const
 {
-    static const TQString & bookmark = KGlobal::staticQString("bookmark");
-    static const TQString & folder = KGlobal::staticQString("folder");
-    static const TQString & separator = KGlobal::staticQString("separator");
+    static const TQString & bookmark = TDEGlobal::staticQString("bookmark");
+    static const TQString & folder = TDEGlobal::staticQString("folder");
+    static const TQString & separator = TDEGlobal::staticQString("separator");
 
     for( TQDomNode n = start; !n.isNull(); )
     {

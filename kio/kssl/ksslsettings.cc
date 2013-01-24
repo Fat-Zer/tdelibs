@@ -98,7 +98,7 @@ KSSLSettings::KSSLSettings(bool readConfig) {
   d = new KSSLSettingsPrivate;
   m_cfg = new KConfig("cryptodefaults", false, false);
 
-  if (!KGlobal::dirs()->addResourceType("kssl", KStandardDirs::kde_default("data") + "kssl")) {
+  if (!TDEGlobal::dirs()->addResourceType("kssl", KStandardDirs::kde_default("data") + "kssl")) {
     //kdDebug(7029) << "Error adding (kssl, share/apps/kssl)" << endl;
   }
 
@@ -316,7 +316,7 @@ void KSSLSettings::save() {
   m_cfg->sync();
  
   // insure proper permissions -- contains sensitive data
-  TQString cfgName(KGlobal::dirs()->findResource("config", "cryptodefaults"));
+  TQString cfgName(TDEGlobal::dirs()->findResource("config", "cryptodefaults"));
   if (!cfgName.isEmpty())
     ::chmod(TQFile::encodeName(cfgName), 0600);
 #endif

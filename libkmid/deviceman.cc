@@ -109,7 +109,7 @@ DeviceManager::DeviceManager(int def)
   if (def==-1)
   {
     TDEInstance *tmp_instance=0L;
-    if (!KGlobal::_instance) tmp_instance=new TDEInstance("nonKDEapp");
+    if (!TDEGlobal::_instance) tmp_instance=new TDEInstance("nonKDEapp");
     KConfig *config = new KConfig("kcmmidirc", true);
 
     config->setGroup("Configuration");

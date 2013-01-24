@@ -200,7 +200,7 @@ class TDECORE_EXPORT KAccelBase
 	/**
 	 * Read all key associations from @p config, or (if @p config
 	 * is zero) from the application's configuration file
-	 * KGlobal::config().
+	 * TDEGlobal::config().
 	 *
 	 * The group in which the configuration is stored can be
 	 * set with setConfigGroup().

@@ -56,7 +56,7 @@ FormatFactory::FormatFactory()
   info->descriptionLabel = i18n( "vCard Format" );
   mFormatList.insert( "vcard", info );
 
-  const TQStringList list = KGlobal::dirs()->findAllResources( "data" ,"kabc/formats/*.desktop", true, true );
+  const TQStringList list = TDEGlobal::dirs()->findAllResources( "data" ,"kabc/formats/*.desktop", true, true );
   for ( TQStringList::ConstIterator it = list.begin(); it != list.end(); ++it )
   {
     KSimpleConfig config( *it, true );

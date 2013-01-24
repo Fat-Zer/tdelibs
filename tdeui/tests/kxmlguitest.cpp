@@ -22,7 +22,7 @@ int main( int argc, char **argv )
 
     // KXMLGUIClient looks in the "data" resource for the .rc files
     // Let's add $PWD (ideally $srcdir instead...) to it
-    KGlobal::dirs()->addResourceDir( "data", TQDir::currentDirPath() );
+    TDEGlobal::dirs()->addResourceDir( "data", TQDir::currentDirPath() );
 
     KMainWindow *mainwindow = new KMainWindow;
 

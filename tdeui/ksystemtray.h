@@ -117,7 +117,7 @@ public:
      *
      * @since 3.2
      */
-    static TQPixmap loadIcon( const TQString &icon, TDEInstance *instance=KGlobal::instance() );
+    static TQPixmap loadIcon( const TQString &icon, TDEInstance *instance=TDEGlobal::instance() );
 
     /**
      * Loads an icon @p icon using the icon loader class of the given instance @p instance.
@@ -128,7 +128,7 @@ public:
      *
      * @since 3.5.12
      */
-    static TQPixmap loadSizedIcon( const TQString &icon, int iconWidth, TDEInstance *instance=KGlobal::instance() );
+    static TQPixmap loadSizedIcon( const TQString &icon, int iconWidth, TDEInstance *instance=TDEGlobal::instance() );
 
 signals:
     /**

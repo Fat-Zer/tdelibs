@@ -85,10 +85,10 @@
 // private data //
 //////////////////
 
-class KProcessPrivate {
+class TDEProcessPrivate {
 public:
-   KProcessPrivate() : 
-     usePty(KProcess::NoCommunication),
+   TDEProcessPrivate() : 
+     usePty(TDEProcess::NoCommunication),
      addUtmp(false), useShell(false),
 #ifdef Q_OS_UNIX
      pty(0),
@@ -97,7 +97,7 @@ public:
    {
    }
 
-   KProcess::Communication usePty;
+   TDEProcess::Communication usePty;
    bool addUtmp : 1;
    bool useShell : 1;
 
@@ -117,7 +117,7 @@ public:
 // public member functions //
 /////////////////////////////
 
-KProcess::KProcess( TQObject* parent, const char *name )
+TDEProcess::TDEProcess( TQObject* parent, const char *name )
   : TQObject( parent, name ),
     run_mode(NotifyOnExit),
     runs(false),
@@ -132,17 +132,17 @@ KProcess::KProcess( TQObject* parent, const char *name )
     input_sent(0),
     input_total(0)
 {
-  KProcessController::ref();
-  KProcessController::theKProcessController->addKProcess(this);
+  TDEProcessController::ref();
+  TDEProcessController::theTDEProcessController->addTDEProcess(this);
 
-  d = new KProcessPrivate;
+  d = new TDEProcessPrivate;
 
   out[0] = out[1] = -1;
   in[0] = in[1] = -1;
   err[0] = err[1] = -1;
 }
 
-KProcess::KProcess()
+TDEProcess::TDEProcess()
   : TQObject(),
     run_mode(NotifyOnExit),
     runs(false),
@@ -157,10 +157,10 @@ KProcess::KProcess()
     input_sent(0),
     input_total(0)
 {
-  KProcessController::ref();
-  KProcessController::theKProcessController->addKProcess(this);
+  TDEProcessController::ref();
+  TDEProcessController::theTDEProcessController->addTDEProcess(this);
 
-  d = new KProcessPrivate;
+  d = new TDEProcessPrivate;
 
   out[0] = out[1] = -1;
   in[0] = in[1] = -1;
@@ -168,19 +168,19 @@ KProcess::KProcess()
 }
 
 void
-KProcess::setEnvironment(const TQString &name, const TQString &value)
+TDEProcess::setEnvironment(const TQString &name, const TQString &value)
 {
    d->env.insert(name, value);
 }
 
 void
-KProcess::setWorkingDirectory(const TQString &dir)
+TDEProcess::setWorkingDirectory(const TQString &dir)
 {
    d->wd = dir;   
 } 
 
 void 
-KProcess::setupEnvironment()
+TDEProcess::setupEnvironment()
 {
    TQMap<TQString,TQString>::Iterator it;
    for(it = d->env.begin(); it != d->env.end(); ++it)
@@ -195,19 +195,19 @@ KProcess::setupEnvironment()
 }
 
 void
-KProcess::setRunPrivileged(bool keepPrivileges)
+TDEProcess::setRunPrivileged(bool keepPrivileges)
 {
    keepPrivs = keepPrivileges;
 }
 
 bool
-KProcess::runPrivileged() const
+TDEProcess::runPrivileged() const
 {
    return keepPrivs;
 }
 
 bool
-KProcess::setPriority(int prio)
+TDEProcess::setPriority(int prio)
 {
 #ifdef Q_OS_UNIX
     if (runs) {
@@ -222,7 +222,7 @@ KProcess::setPriority(int prio)
     return true;
 }
 
-KProcess::~KProcess()
+TDEProcess::~TDEProcess()
 {
   if (run_mode != DontCare)
     kill(SIGKILL);
@@ -233,26 +233,26 @@ KProcess::~KProcess()
 #endif
   delete d;
 
-  KProcessController::theKProcessController->removeKProcess(this);
-  KProcessController::deref();
+  TDEProcessController::theTDEProcessController->removeTDEProcess(this);
+  TDEProcessController::deref();
 }
 
-void KProcess::detach()
+void TDEProcess::detach()
 {
   if (runs) {
-    KProcessController::theKProcessController->addProcess(pid_);
+    TDEProcessController::theTDEProcessController->addProcess(pid_);
     runs = false;
     pid_ = 0; // close without draining
     commClose(); // Clean up open fd's and socket notifiers.
   }
 }
 
-void KProcess::setBinaryExecutable(const char *filename)
+void TDEProcess::setBinaryExecutable(const char *filename)
 {
    d->executable = filename;
 }
 
-bool KProcess::setExecutable(const TQString& proc)
+bool TDEProcess::setExecutable(const TQString& proc)
 {
   if (runs) return false;
 
@@ -265,7 +265,7 @@ bool KProcess::setExecutable(const TQString& proc)
   return true;
 }
 
-KProcess &KProcess::operator<<(const TQStringList& args)
+TDEProcess &TDEProcess::operator<<(const TQStringList& args)
 {
   TQStringList::ConstIterator it = args.begin();
   for ( ; it != args.end() ; ++it )
@@ -273,29 +273,29 @@ KProcess &KProcess::operator<<(const TQStringList& args)
   return *this;
 }
 
-KProcess &KProcess::operator<<(const TQCString& arg)
+TDEProcess &TDEProcess::operator<<(const TQCString& arg)
 {
   return operator<< (arg.data());
 }
 
-KProcess &KProcess::operator<<(const char* arg)
+TDEProcess &TDEProcess::operator<<(const char* arg)
 {
   arguments.append(arg);
   return *this;
 }
 
-KProcess &KProcess::operator<<(const TQString& arg)
+TDEProcess &TDEProcess::operator<<(const TQString& arg)
 {
   arguments.append(TQFile::encodeName(arg));
   return *this;
 }
 
-void KProcess::clearArguments()
+void TDEProcess::clearArguments()
 {
   arguments.clear();
 }
 
-bool KProcess::start(RunMode runmode, Communication comm)
+bool TDEProcess::start(RunMode runmode, Communication comm)
 {
   if (runs) {
     kdDebug(175) << "Attempted to start an already running process" << endl;
@@ -454,11 +454,11 @@ bool KProcess::start(RunMode runmode, Communication comm)
       if (!runs)
       {
         // commClose detected data on the process exit notifification pipe
-        KProcessController::theKProcessController->unscheduleCheck();
+        TDEProcessController::theTDEProcessController->unscheduleCheck();
         if (waitpid(pid_, &status, WNOHANG) != 0) // error finishes, too
         {
           commClose(); // this time for real (runs is false)
-          KProcessController::theKProcessController->rescheduleCheck();
+          TDEProcessController::theTDEProcessController->rescheduleCheck();
           break;
         }
         runs = true; // for next commClose() iteration
@@ -490,7 +490,7 @@ bool KProcess::start(RunMode runmode, Communication comm)
 
 
 
-bool KProcess::kill(int signo)
+bool TDEProcess::kill(int signo)
 {
 #ifdef Q_OS_UNIX
   if (runs && pid_ > 0 && !::kill(run_mode == OwnGroup ? -pid_ : pid_, signo))
@@ -501,14 +501,14 @@ bool KProcess::kill(int signo)
 
 
 
-bool KProcess::isRunning() const
+bool TDEProcess::isRunning() const
 {
   return runs;
 }
 
 
 
-pid_t KProcess::pid() const
+pid_t TDEProcess::pid() const
 {
   return pid_;
 }
@@ -525,7 +525,7 @@ pid_t KProcess::pid() const
   } while (0)
 #endif
 
-bool KProcess::wait(int timeout)
+bool TDEProcess::wait(int timeout)
 {
   if (!runs)
     return true;
@@ -549,7 +549,7 @@ bool KProcess::wait(int timeout)
   }
 
 #ifdef Q_OS_UNIX
-  int fd = KProcessController::theKProcessController->notifierFd();
+  int fd = TDEProcessController::theTDEProcessController->notifierFd();
   for(;;)
   {
     fd_set fds;
@@ -573,14 +573,14 @@ bool KProcess::wait(int timeout)
         break;
       // fall through; should happen if tvp->tv_sec < 0
     case 0:
-      KProcessController::theKProcessController->rescheduleCheck();
+      TDEProcessController::theTDEProcessController->rescheduleCheck();
       return false;
     default:
-      KProcessController::theKProcessController->unscheduleCheck();
+      TDEProcessController::theTDEProcessController->unscheduleCheck();
       if (waitpid(pid_, &status, WNOHANG) != 0) // error finishes, too
       {
         processHasExited(status);
-        KProcessController::theKProcessController->rescheduleCheck();
+        TDEProcessController::theTDEProcessController->rescheduleCheck();
         return true;
       }
     }
@@ -591,19 +591,19 @@ bool KProcess::wait(int timeout)
 
 
 
-bool KProcess::normalExit() const
+bool TDEProcess::normalExit() const
 {
   return (pid_ != 0) && !runs && WIFEXITED(status);
 }
 
 
-bool KProcess::signalled() const
+bool TDEProcess::signalled() const
 {
   return (pid_ != 0) && !runs && WIFSIGNALED(status);
 }
 
 
-bool KProcess::coreDumped() const
+bool TDEProcess::coreDumped() const
 {
 #ifdef WCOREDUMP
   return signalled() && WCOREDUMP(status);
@@ -613,19 +613,19 @@ bool KProcess::coreDumped() const
 }
 
 
-int KProcess::exitStatus() const
+int TDEProcess::exitStatus() const
 {
   return WEXITSTATUS(status);
 }
 
 
-int KProcess::exitSignal() const
+int TDEProcess::exitSignal() const
 {
   return WTERMSIG(status);
 }
 
 
-bool KProcess::writeStdin(const char *buffer, int buflen)
+bool TDEProcess::writeStdin(const char *buffer, int buflen)
 {
   // if there is still data pending, writing new data
   // to stdout is not allowed (since it could also confuse
@@ -645,19 +645,19 @@ bool KProcess::writeStdin(const char *buffer, int buflen)
     return false;
 }
 
-void KProcess::suspend()
+void TDEProcess::suspend()
 {
   if (outnot)
      outnot->setEnabled(false);
 }
 
-void KProcess::resume()
+void TDEProcess::resume()
 {
   if (outnot)
      outnot->setEnabled(true);
 }
 
-bool KProcess::closeStdin()
+bool TDEProcess::closeStdin()
 {
   if (communication & Stdin) {
     communication = (Communication) (communication & ~Stdin);
@@ -671,7 +671,7 @@ bool KProcess::closeStdin()
     return false;
 }
 
-bool KProcess::closeStdout()
+bool TDEProcess::closeStdout()
 {
   if (communication & Stdout) {
     communication = (Communication) (communication & ~Stdout);
@@ -685,7 +685,7 @@ bool KProcess::closeStdout()
     return false;
 }
 
-bool KProcess::closeStderr()
+bool TDEProcess::closeStderr()
 {
   if (communication & Stderr) {
     communication = (Communication) (communication & ~Stderr);
@@ -699,7 +699,7 @@ bool KProcess::closeStderr()
     return false;
 }
 
-bool KProcess::closePty()
+bool TDEProcess::closePty()
 {
 #ifdef Q_OS_UNIX
   if (d->pty && d->pty->masterFd() >= 0) {
@@ -714,7 +714,7 @@ bool KProcess::closePty()
 #endif
 }
 
-void KProcess::closeAll()
+void TDEProcess::closeAll()
 {
   closeStdin();
   closeStdout();
@@ -728,21 +728,21 @@ void KProcess::closeAll()
 
 
 
-void KProcess::slotChildOutput(int fdno)
+void TDEProcess::slotChildOutput(int fdno)
 {
   if (!childOutput(fdno))
      closeStdout();
 }
 
 
-void KProcess::slotChildError(int fdno)
+void TDEProcess::slotChildError(int fdno)
 {
   if (!childError(fdno))
      closeStderr();
 }
 
 
-void KProcess::slotSendData(int)
+void TDEProcess::slotSendData(int)
 {
   if (input_sent == input_total) {
     innot->setEnabled(false);
@@ -762,7 +762,7 @@ void KProcess::slotSendData(int)
   }
 }
 
-void KProcess::setUseShell(bool useShell, const char *shell)
+void TDEProcess::setUseShell(bool useShell, const char *shell)
 {
   d->useShell = useShell;
   if (shell && *shell)
@@ -787,7 +787,7 @@ void KProcess::setUseShell(bool useShell, const char *shell)
 }
 
 #ifdef Q_OS_UNIX
-void KProcess::setUsePty(Communication usePty, bool addUtmp)
+void TDEProcess::setUsePty(Communication usePty, bool addUtmp)
 {
   d->usePty = usePty;
   d->addUtmp = addUtmp;
@@ -800,13 +800,13 @@ void KProcess::setUsePty(Communication usePty, bool addUtmp)
   }
 }
 
-KPty *KProcess::pty() const
+KPty *TDEProcess::pty() const
 {
   return d->pty;
 }
 #endif //Q_OS_UNIX
 
-TQString KProcess::quote(const TQString &arg)
+TQString TDEProcess::quote(const TQString &arg)
 {
     TQChar q('\'');
     return TQString(arg).replace(q, "'\\''").prepend(q).append(q);
@@ -818,7 +818,7 @@ TQString KProcess::quote(const TQString &arg)
 //////////////////////////////
 
 
-void KProcess::processHasExited(int state)
+void TDEProcess::processHasExited(int state)
 {
     // only successfully run NotifyOnExit processes ever get here
 
@@ -833,7 +833,7 @@ void KProcess::processHasExited(int state)
 
 
 
-int KProcess::childOutput(int fdno)
+int TDEProcess::childOutput(int fdno)
 {
   if (communication & NoRead) {
      int len = -1;
@@ -856,7 +856,7 @@ int KProcess::childOutput(int fdno)
   }
 }
 
-int KProcess::childError(int fdno)
+int TDEProcess::childError(int fdno)
 {
   char buffer[1025];
   int len;
@@ -871,7 +871,7 @@ int KProcess::childError(int fdno)
 }
 
 
-int KProcess::setupCommunication(Communication comm)
+int TDEProcess::setupCommunication(Communication comm)
 {
 #ifdef Q_OS_UNIX
   // PTY stuff //
@@ -939,7 +939,7 @@ int KProcess::setupCommunication(Communication comm)
 
 
 
-int KProcess::commSetupDoneP()
+int TDEProcess::commSetupDoneP()
 {
   int rcomm = communication & ~d->usePty;
   if (rcomm & Stdin)
@@ -984,7 +984,7 @@ int KProcess::commSetupDoneP()
 
 
 
-int KProcess::commSetupDoneC()
+int TDEProcess::commSetupDoneC()
 {
   int ok = 1;
 #ifdef Q_OS_UNIX
@@ -1034,7 +1034,7 @@ int KProcess::commSetupDoneC()
 
 
 
-void KProcess::commClose()
+void TDEProcess::commClose()
 {
   closeStdin();
 
@@ -1044,7 +1044,7 @@ void KProcess::commClose()
     // buffer doesn't fill up whilst we are waiting for data on the other
     // (causing a deadlock). Hence we need to use select.
 
-    int notfd = KProcessController::theKProcessController->notifierFd();
+    int notfd = TDEProcessController::theTDEProcessController->notifierFd();
 
     while ((communication & (Stdout | Stderr)) || runs) {
       fd_set rfds;
@@ -1104,7 +1104,7 @@ void KProcess::commClose()
 }
 
 
-void KProcess::virtual_hook( int, void* )
+void TDEProcess::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
 
@@ -1113,7 +1113,7 @@ void KProcess::virtual_hook( int, void* )
 ///////////////////////////
 
 KShellProcess::KShellProcess(const char *shellname):
-  KProcess()
+  TDEProcess()
 {
   setUseShell( true, shellname ? shellname : getenv("SHELL") );
 }
@@ -1123,15 +1123,15 @@ KShellProcess::~KShellProcess() {
 
 TQString KShellProcess::quote(const TQString &arg)
 {
-    return KProcess::quote(arg);
+    return TDEProcess::quote(arg);
 }
 
 bool KShellProcess::start(RunMode runmode, Communication comm)
 {
-  return KProcess::start(runmode, comm);
+  return TDEProcess::start(runmode, comm);
 }
 
 void KShellProcess::virtual_hook( int id, void* data )
-{ KProcess::virtual_hook( id, data ); }
+{ TDEProcess::virtual_hook( id, data ); }
 
 #include "kprocess.moc"

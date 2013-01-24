@@ -144,7 +144,7 @@ extern "C" {
 ///////////////////////
 
 #ifdef HAVE_UTEMPTER
-class KProcess_Utmp : public KProcess
+class TDEProcess_Utmp : public TDEProcess
 {
 public:
    int commSetupDoneC()
@@ -440,12 +440,12 @@ void KPty::setCTty()
 void KPty::login(const char *user, const char *remotehost)
 {
 #ifdef HAVE_UTEMPTER
-    KProcess_Utmp utmp;
+    TDEProcess_Utmp utmp;
     utmp.cmdFd = d->masterFd;
     utmp << "/usr/lib/utempter/utempter" << "add";
     if (remotehost)
       utmp << remotehost;
-    utmp.start(KProcess::Block);
+    utmp.start(TDEProcess::Block);
     Q_UNUSED(user);
     Q_UNUSED(remotehost);
 #elif defined(USE_LOGIN)
@@ -485,10 +485,10 @@ void KPty::login(const char *user, const char *remotehost)
 void KPty::logout()
 {
 #ifdef HAVE_UTEMPTER
-    KProcess_Utmp utmp;
+    TDEProcess_Utmp utmp;
     utmp.cmdFd = d->masterFd;
     utmp << "/usr/lib/utempter/utempter" << "del";
-    utmp.start(KProcess::Block);
+    utmp.start(TDEProcess::Block);
 #elif defined(USE_LOGIN)
     const char *str_ptr = d->ttyName.data();
     if (!memcmp(str_ptr, "/dev/", 5))
@@ -572,8 +572,8 @@ int KPty::slaveFd() const
 // private
 bool KPty::chownpty(bool grant)
 {
-  KProcess proc;
+  TDEProcess proc;
   proc << locate("exe", BASE_CHOWN) << (grant?"--grant":"--revoke") << TQString::number(d->masterFd);
-  return proc.start(KProcess::Block) && proc.normalExit() && !proc.exitStatus();
+  return proc.start(TDEProcess::Block) && proc.normalExit() && !proc.exitStatus();
 }
 

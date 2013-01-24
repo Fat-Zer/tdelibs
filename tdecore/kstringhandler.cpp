@@ -654,7 +654,7 @@ TQString KStringHandler::from8Bit( const char *str )
   if (!str)
     return TQString::null;
   if (!*str) {
-    static const TQString &emptyString = KGlobal::staticQString("");
+    static const TQString &emptyString = TDEGlobal::staticQString("");
     return emptyString;
   }
   return KStringHandler::isUtf8( str ) ?

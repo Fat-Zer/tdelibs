@@ -196,10 +196,10 @@ void KCMultiDialog::slotHelp()
     KURL url( KURL("help:/"), docPath );
 
     if (url.protocol() == "help" || url.protocol() == "man" || url.protocol() == "info") {
-        KProcess process;
+        TDEProcess process;
         process << "khelpcenter"
                 << url.url();
-        process.start(KProcess::DontCare);
+        process.start(TDEProcess::DontCare);
 		process.detach();
     } else {
         new KRun(url);

@@ -30,7 +30,7 @@
 #include "tdelibs_export.h"
 
 class TQSocketNotifier;
-class KProcessPrivate;
+class TDEProcessPrivate;
 
 #ifdef Q_OS_UNIX
 #include <kpty.h>
@@ -60,15 +60,15 @@ class KPty;
  * @li  NotifyOnExit -- The child process is invoked and both the
  * child and the parent process run concurrently.
  *
- * When the child process exits, the KProcess instance
+ * When the child process exits, the TDEProcess instance
  * corresponding to it emits the Qt signal processExited().
  * Since this signal is @em not emitted from within a UN*X
  * signal handler, arbitrary function calls can be made.
  *
- * Be aware: When the KProcess object gets destructed, the child
+ * Be aware: When the TDEProcess object gets destructed, the child
  * process will be killed if it is still running!
  * This means in particular, that it usually makes no sense to use
- * a KProcess on the stack with NotifyOnExit.
+ * a TDEProcess on the stack with NotifyOnExit.
  *
  * @li  OwnGroup -- like NotifyOnExit, but the child process is started
  * in an own process group (and an own session, FWIW). The behavior of
@@ -84,7 +84,7 @@ class KPty;
  * In this mode the parent can read the child's output, but can't send it any
  * input.
  *
- * KProcess also provides several functions for determining the exit status
+ * TDEProcess also provides several functions for determining the exit status
  * and the pid of the child process it represents.
  *
  * Furthermore it is possible to supply command-line arguments to the process
@@ -92,12 +92,12 @@ class KPty;
  *
  * A small usage example:
  * \code
- *   KProcess *proc = new KProcess;
+ *   TDEProcess *proc = new TDEProcess;
  *
  *   *proc << "my_executable";
  *   *proc << "These" << "are" << "the" << "command" << "line" << "args";
- *   TQApplication::connect(proc, TQT_SIGNAL(processExited(KProcess *)),
- *                         pointer_to_my_object, TQT_SLOT(my_objects_slot(KProcess *)));
+ *   TQApplication::connect(proc, TQT_SIGNAL(processExited(TDEProcess *)),
+ *                         pointer_to_my_object, TQT_SLOT(my_objects_slot(TDEProcess *)));
  *   proc->start();
  * \endcode
  *
@@ -107,7 +107,7 @@ class KPty;
  *
  * <b>Communication with the child process:</b>\n
  *
- * KProcess supports communication with the child process through
+ * TDEProcess supports communication with the child process through
  * stdin/stdout/stderr.
  *
  * The following functions are provided for getting data from the child
@@ -127,7 +127,7 @@ class KPty;
  * @author Christian Czezatke e9025461@student.tuwien.ac.at
  *
  **/
-class TDECORE_EXPORT KProcess : public TQObject
+class TDECORE_EXPORT TDEProcess : public TQObject
 {
   Q_OBJECT
 
@@ -191,12 +191,12 @@ public:
    * Constructor
    * @since 3.2
    */
-  KProcess( TQObject* parent, const char *name = 0 );
+  TDEProcess( TQObject* parent, const char *name = 0 );
 
   /**
    * Constructor
    */ // KDE4 merge with the above
-  KProcess();
+  TDEProcess();
 
   /**
    *Destructor:
@@ -206,13 +206,13 @@ public:
    *  only if the run mode is not of type @p DontCare.
    *  Processes started as @p DontCare keep running anyway.
   */
-  virtual ~KProcess();
+  virtual ~TDEProcess();
 
   /**
      @deprecated
      Use operator<<() instead.
 
-	 Sets the executable to be started with this KProcess object.
+	 Sets the executable to be started with this TDEProcess object.
 	 Returns false if the process is currently running (in that
 	 case the executable remains unchanged).
 
@@ -227,33 +227,33 @@ public:
    *
    * For example, doing an "ls -l /usr/local/bin" can be achieved by:
    *  \code
-   *  KProcess p;
+   *  TDEProcess p;
    *  ...
    *  p << "ls" << "-l" << "/usr/local/bin"
    *  \endcode
    *
    * @param arg the argument to add
-   * @return a reference to this KProcess
+   * @return a reference to this TDEProcess
    **/
-  KProcess &operator<<(const TQString& arg);
+  TDEProcess &operator<<(const TQString& arg);
   /**
    * Similar to previous method, takes a char *, supposed to be in locale 8 bit already.
    */
-  KProcess &operator<<(const char * arg);
+  TDEProcess &operator<<(const char * arg);
   /**
    * Similar to previous method, takes a TQCString, supposed to be in locale 8 bit already.
    * @param arg the argument to add
-   * @return a reference to this KProcess
+   * @return a reference to this TDEProcess
    */
-  KProcess &operator<<(const TQCString & arg);
+  TDEProcess &operator<<(const TQCString & arg);
 
   /**
    * Sets the executable and the command line argument list for this process,
    * in a single method call, or add a list of arguments.
    * @param args the arguments to add
-   * @return a reference to this KProcess
+   * @return a reference to this TDEProcess
    **/
-  KProcess &operator<<(const TQStringList& args);
+  TDEProcess &operator<<(const TQStringList& args);
 
   /**
    * Clear a command line argument list that has been set by using
@@ -265,7 +265,7 @@ public:
    *  Starts the process.
    *  For a detailed description of the
    *  various run modes and communication semantics, have a look at the
-   *  general description of the KProcess class. Note that if you use
+   *  general description of the TDEProcess class. Note that if you use
    * setUsePty( Stdout | Stderr, \<bool\> ), you cannot use Stdout | Stderr
    *  here - instead, use Stdout only to receive the mixed output.
    *
@@ -308,10 +308,10 @@ public:
    *
    * If it is called after
    * the process has exited, it returns the process id of the last
-   *  child process that was created by this instance of KProcess.
+   *  child process that was created by this instance of TDEProcess.
    *
    *  Calling it before any child process has been started by this
-   *  KProcess instance causes pid() to return 0.
+   *  TDEProcess instance causes pid() to return 0.
    * @return the pid of the process or 0 if no process has been started yet.
    **/
   pid_t pid() const;
@@ -535,9 +535,9 @@ public:
   static TQString quote(const TQString &arg);
 
   /**
-   * Detaches KProcess from child process. All communication is closed.
+   * Detaches TDEProcess from child process. All communication is closed.
    * No exit notification is emitted any more for the child process.
-   * Deleting the KProcess will no longer kill the child process.
+   * Deleting the TDEProcess will no longer kill the child process.
    * Note that the current process remains the parent process of the
    * child process.
    */
@@ -588,7 +588,7 @@ signals:
    * start() ) or the Block mode.
    * @param proc a pointer to the process that has exited
    **/
-  void processExited(KProcess *proc);
+  void processExited(TDEProcess *proc);
 
 
   /**
@@ -609,7 +609,7 @@ signals:
    *     TQString myBuf = TQString::fromLatin1(buffer, buflen);
    * \endcode
    **/
-  void receivedStdout(KProcess *proc, char *buffer, int buflen);
+  void receivedStdout(TDEProcess *proc, char *buffer, int buflen);
 
   /**
    * Emitted when output from the child process has
@@ -646,7 +646,7 @@ signals:
    * @param buffer The data received.
    * @param buflen The number of bytes that are available.
    **/
-  void receivedStderr(KProcess *proc, char *buffer, int buflen);
+  void receivedStderr(TDEProcess *proc, char *buffer, int buflen);
 
   /**
    * Emitted after all the data that has been
@@ -654,7 +654,7 @@ signals:
    * written to the child process.
    * @param proc a pointer to the process
    **/
-  void wroteStdin(KProcess *proc);
+  void wroteStdin(TDEProcess *proc);
 
 
 protected slots:
@@ -703,7 +703,7 @@ protected:
    * true if the process is currently running. You should not
    * modify this data member directly from derived classes. Please use
    * isRunning() for reading the value of this data member since it
-   * will probably be made private in later versions of KProcess.
+   * will probably be made private in later versions of TDEProcess.
    */
   bool runs;
 
@@ -712,7 +712,7 @@ protected:
    * You should not modify this data member in derived classes.
    * Please use pid() instead of directly accessing this
    * member since it will probably be made private in
-   * later versions of KProcess.
+   * later versions of TDEProcess.
    */
   pid_t pid_;
 
@@ -721,7 +721,7 @@ protected:
    * modify the value of this data member from derived classes. You should
    * rather use exitStatus() than accessing this data member directly
    * since it will probably be made private in further versions of
-   * KProcess.
+   * TDEProcess.
    */
   int status;
 
@@ -736,7 +736,7 @@ protected:
   /**
    * This function is called from start() right before a fork() takes
    * place. According to the @p comm parameter this function has to initialize
-   * the in, out and err data members of KProcess.
+   * the in, out and err data members of TDEProcess.
    *
    * This function should return 1 if setting the needed communication channels
    * was successful.
@@ -754,7 +754,7 @@ protected:
    *
    * Furthermore, it must also create the TQSocketNotifiers innot,
    * outnot and errnot and connect their Qt signals to the respective
-   * KProcess slots.
+   * TDEProcess slots.
    *
    * For a more detailed explanation, it is best to have a look at the default
    * implementation in kprocess.cpp.
@@ -788,12 +788,12 @@ protected:
    *  before closing them.
    * @li if pid() returns non-zero and runs is true, the communication
    *  links should be monitored for data until the file handle returned by
-   *  KProcessController::theKProcessController->notifierFd() becomes ready
+   *  TDEProcessController::theTDEProcessController->notifierFd() becomes ready
    *  for reading - when it triggers, runs should be reset to false, and
    *  the function should be immediately left without closing anything.
    *
    * The previous semantics of this function are forward-compatible, but should
-   * be avoided, as they are prone to race conditions and can cause KProcess
+   * be avoided, as they are prone to race conditions and can cause TDEProcess
    * (and thus the whole program) to lock up under certain circumstances. At the
    * end the function closes the communication links in any case. Additionally
    * @li if runs is true, the communication links are monitored for data
@@ -879,15 +879,15 @@ protected:
   int input_total;
 
   /**
-   * KProcessController is a friend of KProcess because it has to have
+   * TDEProcessController is a friend of TDEProcess because it has to have
    * access to various data members.
    */
-  friend class KProcessController;
+  friend class TDEProcessController;
 
 protected:
   virtual void virtual_hook( int id, void* data );
 private:
-  KProcessPrivate *d;
+  TDEProcessPrivate *d;
 };
 
 class KShellProcessPrivate;
@@ -895,13 +895,13 @@ class KShellProcessPrivate;
 /**
 * @obsolete
 *
-* Use KProcess and KProcess::setUseShell(true) instead.
+* Use TDEProcess and TDEProcess::setUseShell(true) instead.
 *
-*   @short A class derived from KProcess to start child
+*   @short A class derived from TDEProcess to start child
 *   	processes through a shell.
 *   @author Christian Czezatke <e9025461@student.tuwien.ac.at>
 */
-class TDECORE_EXPORT KShellProcess: public KProcess
+class TDECORE_EXPORT KShellProcess: public TDEProcess
 {
   Q_OBJECT
 

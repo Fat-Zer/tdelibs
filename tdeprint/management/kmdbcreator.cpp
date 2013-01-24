@@ -35,9 +35,9 @@ KMDBCreator::KMDBCreator(TQObject *parent, const char *name)
 	m_dlg = 0;
 	m_status = true;
 
-	connect(&m_proc,TQT_SIGNAL(receivedStdout(KProcess*,char*,int)),TQT_SLOT(slotReceivedStdout(KProcess*,char*,int)));
-	connect(&m_proc,TQT_SIGNAL(receivedStderr(KProcess*,char*,int)),TQT_SLOT(slotReceivedStderr(KProcess*,char*,int)));
-	connect(&m_proc,TQT_SIGNAL(processExited(KProcess*)),TQT_SLOT(slotProcessExited(KProcess*)));
+	connect(&m_proc,TQT_SIGNAL(receivedStdout(TDEProcess*,char*,int)),TQT_SLOT(slotReceivedStdout(TDEProcess*,char*,int)));
+	connect(&m_proc,TQT_SIGNAL(receivedStderr(TDEProcess*,char*,int)),TQT_SLOT(slotReceivedStderr(TDEProcess*,char*,int)));
+	connect(&m_proc,TQT_SIGNAL(processExited(TDEProcess*)),TQT_SLOT(slotProcessExited(TDEProcess*)));
 }
 
 KMDBCreator::~KMDBCreator()
@@ -95,7 +95,7 @@ bool KMDBCreator::createDriverDB(const TQString& dirname, const TQString& filena
 		msg = i18n("The executable %1 could not be found in your "
 		           "PATH. Check that this program exists and is "
 			   "accessible in your PATH variable.").arg(exestr);
-	else if (!m_proc.start(KProcess::NotifyOnExit, KProcess::AllOutput))
+	else if (!m_proc.start(TDEProcess::NotifyOnExit, TDEProcess::AllOutput))
 		msg = i18n("Unable to start the creation of the driver "
 		           "database. The execution of %1 failed.").arg(exestr);
 	if (!msg.isEmpty())
@@ -124,7 +124,7 @@ bool KMDBCreator::createDriverDB(const TQString& dirname, const TQString& filena
 	return started;
 }
 
-void KMDBCreator::slotReceivedStdout(KProcess*, char *buf, int len)
+void KMDBCreator::slotReceivedStdout(TDEProcess*, char *buf, int len)
 {
 	// save buffer
 	TQString	str( TQCString(buf, len) );
@@ -151,12 +151,12 @@ void KMDBCreator::slotReceivedStdout(KProcess*, char *buf, int len)
 	}
 }
 
-void KMDBCreator::slotReceivedStderr(KProcess*, char*, int)
+void KMDBCreator::slotReceivedStderr(TDEProcess*, char*, int)
 {
 	// just discard it for the moment
 }
 
-void KMDBCreator::slotProcessExited(KProcess*)
+void KMDBCreator::slotProcessExited(TDEProcess*)
 {
 	// delete the progress dialog
 	if (m_dlg)

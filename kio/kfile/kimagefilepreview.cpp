@@ -35,7 +35,7 @@ KImageFilePreview::KImageFilePreview( TQWidget *parent )
     : KPreviewWidgetBase( parent ),
       m_job( 0L )
 {
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
     KConfigGroupSaver cs( config, ConfigGroup );
     autoMode = config->readBoolEntry( "Automatic Preview", true );
 
@@ -70,7 +70,7 @@ KImageFilePreview::~KImageFilePreview()
     if ( m_job )
         m_job->kill();
 
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
     KConfigGroupSaver cs( config, ConfigGroup );
     config->writeEntry( "Automatic Preview", autoPreview->isChecked() );
 }

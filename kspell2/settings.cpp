@@ -207,7 +207,7 @@ void Settings::loadConfig()
     d->defaultClient = conf.readEntry( "defaultClient",
                                         TQString::null );
     d->defaultLanguage = conf.readEntry(
-        "defaultLanguage", KGlobal::locale()->language() );
+        "defaultLanguage", TDEGlobal::locale()->language() );
 
     //same defaults are in the default filter (filter.cpp)
     d->checkUppercase = conf.readBoolEntry(

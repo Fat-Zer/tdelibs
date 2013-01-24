@@ -84,7 +84,7 @@ void KBlacklistWorker::init()
   // HACK!
   // FIXME KDE4: How do I detect there is an instance, without triggering
   // its creation or an assertion fault?
-  if (!KGlobal::_instance)
+  if (!TDEGlobal::_instance)
     return;
 
   static bool beenhere = false;
@@ -99,7 +99,7 @@ void KBlacklistWorker::init()
 void KBlacklistWorker::loadBlacklist()
 {
   TQMutexLocker locker(&blacklistMutex);
-  TQStringList filelist = KGlobal::dirs()->findAllResources("config", "ipv6blacklist");
+  TQStringList filelist = TDEGlobal::dirs()->findAllResources("config", "ipv6blacklist");
 
   TQStringList::ConstIterator it = filelist.constBegin(),
     end = filelist.constEnd();

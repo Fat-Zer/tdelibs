@@ -889,7 +889,7 @@ KConfigSkeleton::KConfigSkeleton( const TQString &configname )
   }
   else
   {
-    mConfig = KGlobal::sharedConfig();
+    mConfig = TDEGlobal::sharedConfig();
   }
 }
 

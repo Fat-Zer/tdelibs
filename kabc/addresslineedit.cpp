@@ -326,16 +326,16 @@ void AddressLineEdit::doCompletion(bool ctrlT)
         return;
     }
     
-    KGlobalSettings::Completion  mode = completionMode();
+    TDEGlobalSettings::Completion  mode = completionMode();
     
     switch ( mode )
     {
-        case KGlobalSettings::CompletionPopupAuto:
+        case TDEGlobalSettings::CompletionPopupAuto:
         {
             if (s.isEmpty())
                 break;
         }
-        case KGlobalSettings::CompletionPopup:        
+        case TDEGlobalSettings::CompletionPopup:        
         {
             m_previousAddresses = prevAddr;
             TQStringList items = s_completion->allMatches( s );
@@ -368,7 +368,7 @@ void AddressLineEdit::doCompletion(bool ctrlT)
                 // completion (suggestion) since it does not know how to deal
                 // with providing proper completions for different items on the 
                 // same line, e.g. comma-separated list of email addresses.
-                bool autoSuggest = (mode != KGlobalSettings::CompletionPopupAuto);                                
+                bool autoSuggest = (mode != TDEGlobalSettings::CompletionPopupAuto);                                
                 setCompletedItems( items, autoSuggest );
                 
                 if (!autoSuggest)
@@ -385,7 +385,7 @@ void AddressLineEdit::doCompletion(bool ctrlT)
             break;
         }
 
-        case KGlobalSettings::CompletionShell:
+        case TDEGlobalSettings::CompletionShell:
         {
             TQString match = s_completion->makeCompletion( s );
             if ( !match.isNull() && match != s )
@@ -396,8 +396,8 @@ void AddressLineEdit::doCompletion(bool ctrlT)
             break;
         }
 
-        case KGlobalSettings::CompletionMan: // Short-Auto in fact
-        case KGlobalSettings::CompletionAuto:
+        case TDEGlobalSettings::CompletionMan: // Short-Auto in fact
+        case TDEGlobalSettings::CompletionAuto:
         {
             if (!s.isEmpty())
             {              
@@ -410,7 +410,7 @@ void AddressLineEdit::doCompletion(bool ctrlT)
                 break;
             }
         }        
-        case KGlobalSettings::CompletionNone:
+        case TDEGlobalSettings::CompletionNone:
         default: // fall through        
             break;
     }
@@ -496,7 +496,7 @@ void AddressLineEdit::slotLDAPSearchData( const TQStringList& adrs )
     
     if( hasFocus() || completionBox()->hasFocus())
     {
-        if( completionMode() != KGlobalSettings::CompletionNone )
+        if( completionMode() != TDEGlobalSettings::CompletionNone )
         {
             doCompletion( false );
         }

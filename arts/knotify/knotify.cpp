@@ -78,7 +78,7 @@ public:
     TQMap<TQString, KConfig*> events;
     TQMap<TQString, KConfig*> configs;
     TQString externalPlayer;
-    KProcess *externalPlayerProc;
+    TDEProcess *externalPlayerProc;
 
 #ifndef WITHOUT_ARTS
     TQPtrList<KDE::PlayObject> playObjects;
@@ -136,7 +136,7 @@ KDE_EXPORT int kdemain(int argc, char **argv)
     // abort this.
 
 #ifndef WITHOUT_ARTS
-    KConfigGroup config( KGlobal::config(), "StartProgress" );
+    KConfigGroup config( TDEGlobal::config(), "StartProgress" );
     KConfig artsKCMConfig( "kcmartsrc" );
     artsKCMConfig.setGroup( "Arts" );
     bool useArts = artsKCMConfig.readBoolEntry( "StartServer", true );
@@ -285,7 +285,7 @@ KNotify::~KNotify()
 
 void KNotify::loadConfig() {
     // load external player settings
-    KConfig *kc = KGlobal::config();
+    KConfig *kc = TDEGlobal::config();
     kc->setGroup("Misc");
     d->useExternal = kc->readBoolEntry( "Use external player", false );
     d->externalPlayer = kc->readPathEntry("External player");
@@ -452,7 +452,7 @@ bool KNotify::notifyBySound( const TQString &sound, const TQString &appname, int
     if ( TQFileInfo(sound).isRelative() )
     {
         TQString search = TQString("%1/sounds/%2").arg(appname).arg(sound);
-        soundFile = KGlobal::instance()->dirs()->findResource("data", search);
+        soundFile = TDEGlobal::instance()->dirs()->findResource("data", search);
         if ( soundFile.isEmpty() )
             soundFile = locate( "sound", sound );
     }
@@ -537,12 +537,12 @@ bool KNotify::notifyBySound( const TQString &sound, const TQString &appname, int
 
     } else if(!d->externalPlayer.isEmpty()) {
         // use an external player to play the sound
-        KProcess *proc = d->externalPlayerProc;
+        TDEProcess *proc = d->externalPlayerProc;
         if (!proc)
         {
-           proc = d->externalPlayerProc = new KProcess;
-           connect( proc, TQT_SIGNAL( processExited( KProcess * )),
-                    TQT_SLOT( slotPlayerProcessExited( KProcess * )));
+           proc = d->externalPlayerProc = new TDEProcess;
+           connect( proc, TQT_SIGNAL( processExited( TDEProcess * )),
+                    TQT_SLOT( slotPlayerProcessExited( TDEProcess * )));
         }
         if (proc->isRunning())
         {
@@ -552,7 +552,7 @@ bool KNotify::notifyBySound( const TQString &sound, const TQString &appname, int
         proc->clearArguments();
         (*proc) << d->externalPlayer << TQFile::encodeName( soundFile ).data();
         d->externalPlayerEventId = eventId;
-        proc->start(KProcess::NotifyOnExit);
+        proc->start(TDEProcess::NotifyOnExit);
         return true;
     }
 
@@ -619,10 +619,10 @@ bool KNotify::notifyByExecute(const TQString &command, const TQString& event,
         if ( execLine.isEmpty() )
             execLine = command; // fallback
 
-	KProcess p;
+	TDEProcess p;
 	p.setUseShell(true);
 	p << execLine;
-	p.start(KProcess::DontCare);
+	p.start(TDEProcess::DontCare);
 	return true;
     }
     return false;
@@ -721,7 +721,7 @@ bool KNotify::isPlaying( const TQString& soundFile ) const
     return false;
 }
 
-void KNotify::slotPlayerProcessExited( KProcess *proc )
+void KNotify::slotPlayerProcessExited( TDEProcess *proc )
 {
     soundFinished( d->externalPlayerEventId,
                    (proc->normalExit() && proc->exitStatus() == 0) ? PlayedOK : Unknown );

@@ -94,7 +94,7 @@ KLocale::KLocale( const TQString & catalog, KConfig * config )
 
   KConfig *cfg = d->config;
   this_klocale = this;
-  if (!cfg) cfg = KGlobal::instance()->config();
+  if (!cfg) cfg = TDEGlobal::instance()->config();
   this_klocale = 0;
   Q_ASSERT( cfg );
 
@@ -298,7 +298,7 @@ void KLocale::doFormatInit() const
 void KLocale::initFormat()
 {
   KConfig *config = d->config;
-  if (!config) config = KGlobal::instance()->config();
+  if (!config) config = TDEGlobal::instance()->config();
   Q_ASSERT( config );
 
   kdDebug(173) << "KLocale::initFormat" << endl;
@@ -306,8 +306,8 @@ void KLocale::initFormat()
   // make sure the config files are read using the correct locale
   // ### Why not add a KConfigBase::setLocale( const KLocale * )?
   // ### Then we could remove this hack
-  KLocale *lsave = KGlobal::_locale;
-  KGlobal::_locale = this;
+  KLocale *lsave = TDEGlobal::_locale;
+  TDEGlobal::_locale = this;
 
   KConfigGroupSaver saver(config, "Locale");
 
@@ -385,7 +385,7 @@ void KLocale::initFormat()
 		       d->dateMonthNamePossessive);
 
   // end of hack
-  KGlobal::_locale = lsave;
+  TDEGlobal::_locale = lsave;
 }
 
 bool KLocale::setCountry(const TQString & country)
@@ -695,7 +695,7 @@ void KLocale::removeCatalogue(const TQString &catalog)
 {
   if ( d->catalogNames.contains( catalog )) {
     d->catalogNames.remove( catalog );
-    if (KGlobal::_instance)
+    if (TDEGlobal::_instance)
       updateCatalogues();  // walk through the KCatalogue instances and weed out everything we no longer need
   }
 }
@@ -1976,7 +1976,7 @@ TQString KLocale::formatDateTime(const TQDateTime &pDateTime,
 
 TQString i18n(const char* text)
 {
-  register KLocale *instance = KGlobal::locale();
+  register KLocale *instance = TDEGlobal::locale();
   if (instance)
     return instance->translate(text);
   return TQString::fromUtf8(text);
@@ -1984,7 +1984,7 @@ TQString i18n(const char* text)
 
 TQString i18n(const char* index, const char *text)
 {
-  register KLocale *instance = KGlobal::locale();
+  register KLocale *instance = TDEGlobal::locale();
   if (instance)
     return instance->translate(index, text);
   return TQString::fromUtf8(text);
@@ -1992,7 +1992,7 @@ TQString i18n(const char* index, const char *text)
 
 TQString i18n(const char* singular, const char* plural, unsigned long n)
 {
-  register KLocale *instance = KGlobal::locale();
+  register KLocale *instance = TDEGlobal::locale();
   if (instance)
     return instance->translate(singular, plural, n);
   if (n == 1)
@@ -2003,15 +2003,15 @@ TQString i18n(const char* singular, const char* plural, unsigned long n)
 
 void KLocale::initInstance()
 {
-  if (KGlobal::_locale)
+  if (TDEGlobal::_locale)
     return;
 
-  TDEInstance *app = KGlobal::instance();
+  TDEInstance *app = TDEGlobal::instance();
   if (app) {
-    KGlobal::_locale = new KLocale(TQString::fromLatin1(app->instanceName()));
+    TDEGlobal::_locale = new KLocale(TQString::fromLatin1(app->instanceName()));
 
     // only do this for the global instance
-    TQTextCodec::setCodecForLocale(KGlobal::_locale->codecForEncoding());
+    TQTextCodec::setCodecForLocale(TDEGlobal::_locale->codecForEncoding());
   }
   else
     kdDebug(173) << "no app name available using KLocale - nothing to do\n";
@@ -2022,12 +2022,12 @@ TQString KLocale::langLookup(const TQString &fname, const char *rtype)
   TQStringList search;
 
   // assemble the local search paths
-  const TQStringList localDoc = KGlobal::dirs()->resourceDirs(rtype);
+  const TQStringList localDoc = TDEGlobal::dirs()->resourceDirs(rtype);
 
   // look up the different languages
   for (int id=localDoc.count()-1; id >= 0; --id)
     {
-      TQStringList langs = KGlobal::locale()->languageList();
+      TQStringList langs = TDEGlobal::locale()->languageList();
       langs.append( "en" );
       langs.remove( defaultLanguage() );
       TQStringList::ConstIterator lang;
@@ -2380,7 +2380,7 @@ TQString KLocale::twoAlphaToLanguageName(const TQString &code) const
 TQStringList KLocale::allCountriesTwoAlpha() const
 {
   TQStringList countries;
-  TQStringList paths = KGlobal::dirs()->findAllResources("locale", "l10n/*/entry.desktop");
+  TQStringList paths = TDEGlobal::dirs()->findAllResources("locale", "l10n/*/entry.desktop");
   for(TQStringList::ConstIterator it = paths.begin();
       it != paths.end(); ++it)
   {

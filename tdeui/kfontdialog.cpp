@@ -290,7 +290,7 @@ KFontChooser::KFontChooser(TQWidget *parent, const char *name,
 
   row ++;
   sampleEdit = new TQLineEdit( page, "sampleEdit");
-  TQFont tmpFont( KGlobalSettings::generalFont().family(), 64, TQFont::Black );
+  TQFont tmpFont( TDEGlobalSettings::generalFont().family(), 64, TQFont::Black );
   sampleEdit->setFont(tmpFont);
   //i18n: This is a classical test phrase. (It contains all letters from A to Z.)
   sampleEdit->setText(i18n("The Quick Brown Fox Jumps Over The Lazy Dog"));
@@ -325,12 +325,12 @@ KFontChooser::KFontChooser(TQWidget *parent, const char *name,
   vbox->addWidget( xlfdEdit );
 
   // lets initialize the display if possible
-  setFont( KGlobalSettings::generalFont(), usingFixed );
+  setFont( TDEGlobalSettings::generalFont(), usingFixed );
   // check or uncheck or gray out the "relative" checkbox
   if( sizeIsRelativeState && sizeIsRelativeCheckBox )
     setSizeIsRelative( *sizeIsRelativeState );
 
-  KConfig *config = KGlobal::config();
+  KConfig *config = TDEGlobal::config();
   KConfigGroupSaver saver(config, TQString::fromLatin1("General"));
   showXLFDArea(config->readBoolEntry(TQString::fromLatin1("fontSelectorShowXLFD"), false));
 }

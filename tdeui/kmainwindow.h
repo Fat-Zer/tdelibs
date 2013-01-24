@@ -428,7 +428,7 @@ public:
      * Call this to enable "auto-save" of toolbar/menubar/statusbar settings
      * (and optionally window size).
      * If the *bars were moved around/shown/hidden when the window is closed,
-     * saveMainWindowSettings( KGlobal::config(), groupName ) will be called.
+     * saveMainWindowSettings( TDEGlobal::config(), groupName ) will be called.
      *
      * @param groupName a name that identifies this "type of window".
      * You can have several types of window in the same application.
@@ -731,7 +731,7 @@ public slots:
      * Example (adding a help button to the first toolbar):
      *
      * \code
-     * KIconLoader &loader = *KGlobal::iconLoader();
+     * KIconLoader &loader = *TDEGlobal::iconLoader();
      * TQPixmap pixmap = loader.loadIcon( "help" );
      * toolBar(0)->insertButton( pixmap, 0, TQT_SIGNAL(clicked()),
      *   this, TQT_SLOT(appHelpActivated()), true, i18n("Help") );

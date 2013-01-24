@@ -42,8 +42,8 @@
 */
 void TDEApplication_init_windows(bool /*GUIenabled*/)
 {
-	TQString qt_transl_file = ::locate( "locale", KGlobal::locale()->language() 
-		+ "/LC_MESSAGES/qt_" + KGlobal::locale()->language() + ".qm" );
+	TQString qt_transl_file = ::locate( "locale", TDEGlobal::locale()->language() 
+		+ "/LC_MESSAGES/qt_" + TDEGlobal::locale()->language() + ".qm" );
 	QTranslator *qt_transl = new QTranslator();
 	if (qt_transl->load( qt_transl_file, ""))
 		kapp->installTranslator( qt_transl );

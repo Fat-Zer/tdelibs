@@ -56,7 +56,7 @@ using namespace KWallet;
 
 static void initKWalletDir()
 {
-    KGlobal::dirs()->addResourceType("kwallet", "share/apps/kwallet");
+    TDEGlobal::dirs()->addResourceType("kwallet", "share/apps/kwallet");
 }
 
 Backend::Backend(const TQString& name, bool isPath) : _name(name), _ref(0) {
@@ -64,7 +64,7 @@ Backend::Backend(const TQString& name, bool isPath) : _name(name), _ref(0) {
 	if (isPath) {
 		_path = name;
 	} else {
-		_path = KGlobal::dirs()->saveLocation("kwallet") + "/" + _name + ".kwl";
+		_path = TDEGlobal::dirs()->saveLocation("kwallet") + "/" + _name + ".kwl";
 	}
 
 	_open = false;
@@ -245,7 +245,7 @@ static int password2hash(const TQByteArray& password, TQByteArray& hash) {
 
 bool Backend::exists(const TQString& wallet) {
 	initKWalletDir();
-	TQString path = KGlobal::dirs()->saveLocation("kwallet") + "/" + wallet + ".kwl";
+	TQString path = TDEGlobal::dirs()->saveLocation("kwallet") + "/" + wallet + ".kwl";
 	// Note: 60 bytes is presently the minimum size of a wallet file.
 	//       Anything smaller is junk.
 return TQFile::exists(path) && TQFileInfo(path).size() >= 60;

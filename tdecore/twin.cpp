@@ -483,7 +483,7 @@ TQPixmap KWin::icon( WId win, int width, int height, bool scale, int flags )
 	    if( XGetClassHint( tqt_xdisplay(), win, &hint ) ) {
 	        TQString className = hint.res_class;
 
-	        TQPixmap pm = KGlobal::instance()->iconLoader()->loadIcon( className.lower(), KIcon::Small, iconWidth,
+	        TQPixmap pm = TDEGlobal::instance()->iconLoader()->loadIcon( className.lower(), KIcon::Small, iconWidth,
 								          KIcon::DefaultState, 0, true );
 	        if( scale && !pm.isNull() )
 		    result.convertFromImage( TQImage(pm.convertToImage()).smoothScale( width, height ) );
@@ -500,7 +500,7 @@ TQPixmap KWin::icon( WId win, int width, int height, bool scale, int flags )
 	// If the icon is still a null pixmap, load the 'xapp' icon
 	// as a last resort:
 	if ( result.isNull() ) {
-	    TQPixmap pm = KGlobal::instance()->iconLoader()->loadIcon(  "xapp", KIcon::Small, iconWidth,
+	    TQPixmap pm = TDEGlobal::instance()->iconLoader()->loadIcon(  "xapp", KIcon::Small, iconWidth,
 								       KIcon::DefaultState, 0, true );
 	    if( scale && !pm.isNull() )
 		result.convertFromImage( TQImage(pm.convertToImage()).smoothScale( width, height ) );

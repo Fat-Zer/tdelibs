@@ -77,11 +77,11 @@ using namespace khtml;
 
 SourceDisplay::SourceDisplay(KJSDebugWin *debugWin, TQWidget *parent, const char *name)
   : TQScrollView(parent,name), m_currentLine(-1), m_sourceFile(0), m_debugWin(debugWin),
-    m_font(KGlobalSettings::fixedFont())
+    m_font(TDEGlobalSettings::fixedFont())
 {
   verticalScrollBar()->setLineStep(TQFontMetrics(m_font).height());
   viewport()->setBackgroundMode(TQt::NoBackground);
-  m_breakpointIcon = KGlobal::iconLoader()->loadIcon("stop",KIcon::Small);
+  m_breakpointIcon = TDEGlobal::iconLoader()->loadIcon("stop",KIcon::Small);
 }
 
 SourceDisplay::~SourceDisplay()
@@ -296,7 +296,7 @@ KJSErrorDialog::KJSErrorDialog(TQWidget *parent, const TQString& errorMessage, b
   setMainWidget(page);
 
   TQLabel *iconLabel = new TQLabel("",page);
-  iconLabel->setPixmap(KGlobal::iconLoader()->loadIcon("messagebox_critical",
+  iconLabel->setPixmap(TDEGlobal::iconLoader()->loadIcon("messagebox_critical",
 						       KIcon::NoGroup,KIcon::SizeMedium,
 						       KIcon::DefaultState,0,true));
 
@@ -361,7 +361,7 @@ KJSDebugWin::KJSDebugWin(TQWidget *parent, const char *name)
   m_execsAlloc = 0;
   m_steppingDepth = 0;
 
-  m_stopIcon = KGlobal::iconLoader()->loadIcon("stop",KIcon::Small);
+  m_stopIcon = TDEGlobal::iconLoader()->loadIcon("stop",KIcon::Small);
   m_emptyIcon = TQPixmap(m_stopIcon.width(),m_stopIcon.height());
   TQBitmap emptyMask(m_stopIcon.width(),m_stopIcon.height(),true);
   m_emptyIcon.setMask(emptyMask);
@@ -376,7 +376,7 @@ KJSDebugWin::KJSDebugWin(TQWidget *parent, const char *name)
   // frame list & code
   TQSplitter *hsplitter = new TQSplitter(Qt::Vertical,mainWidget);
   TQSplitter *vsplitter = new TQSplitter(hsplitter);
-  TQFont font(KGlobalSettings::fixedFont());
+  TQFont font(TDEGlobalSettings::fixedFont());
 
   TQWidget *contextContainer = new TQWidget(vsplitter);
 

@@ -65,7 +65,7 @@ class KConfigBase;
  * \endcode
  * @short An accelerator action
  * @see KAccel
- * @see KGlobalAccel
+ * @see TDEGlobalAccel
  * @see KKeyChooser
  * @see KKeyDialog
  */

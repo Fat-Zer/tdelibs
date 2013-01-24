@@ -68,7 +68,7 @@ that we would like to make for the next binary incompatible release.
   KGuiItem has one of these dangerous ctors, too. KUser has a whole bunch
   of them.
 
-- Solve need for casting when using bitfield enums (e.g. KProcess::Communication),
+- Solve need for casting when using bitfield enums (e.g. TDEProcess::Communication),
   if Simon's solution works.
 
 - Merge tdelibs/tdecore/kuser.h and tdeadmin/kuser/kuser.h.
@@ -133,7 +133,7 @@ that we would like to make for the next binary incompatible release.
 - kpassdlg.h needs to be renamed to kpassworddialog.h - consistent with other classes(it won't 
   break many apps). The class needs a facelift - see the comments in kpassdlg.{h,cpp}
 
-- KProcess needs a major facelift. Not all of these items need to be BIC, but not needing to
+- TDEProcess needs a major facelift. Not all of these items need to be BIC, but not needing to
   worry about legacy will certainly allow an overall cleaner solution.
   - the internals need to be encapsulated properly. many of the virtuals shouldn't be virtual;
     lots of protected members should be accessible only via accessors. the current model is
@@ -149,7 +149,7 @@ that we would like to make for the next binary incompatible release.
   - do something about the NoRead comm mode
   - add setComm(); remove comm arg from start(). as a side effect, this will allow for using
     writeStdin() in Block mode.
-  - merge KProcIO into KProcess; add setBuffered() for separate channels.
+  - merge KProcIO into TDEProcess; add setBuffered() for separate channels.
   - use QByteArray for writeStdin(). better than the buf+len arg, as it is ref-counted.
 
 - To discuss: Migrate the about dialog to use qhtml or khtml rather then the current

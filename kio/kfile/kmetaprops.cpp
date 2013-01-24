@@ -250,7 +250,7 @@ bool KFileMetaPropsPlugin::supports( KFileItemList _items )
   if (KExecPropsPlugin::supports(_items) || KURLPropsPlugin::supports(_items))
      return false; // Having both is redundant.
 
-  bool metaDataEnabled = KGlobalSettings::showFilePreview(_items.first()->url());
+  bool metaDataEnabled = TDEGlobalSettings::showFilePreview(_items.first()->url());
   return _items.count() == 1 && metaDataEnabled;
 }
 

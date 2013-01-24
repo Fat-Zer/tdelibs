@@ -34,7 +34,7 @@
 
 static void recentdirs_done(KConfig *config)
 {
-   if (config == KGlobal::config())
+   if (config == TDEGlobal::config())
    {
       config->sync();
    }
@@ -57,14 +57,14 @@ static KConfig *recentdirs_readList(TQString &key, TQStringList &result, bool re
    else
    {
       key = key.mid(1);
-      config = KGlobal::config();
+      config = TDEGlobal::config();
       config->setGroup(TQString::fromLatin1("Recent Dirs"));
    }
 
    result=config->readPathListEntry(key);
    if (result.isEmpty())
    {
-      result.append(KGlobalSettings::documentPath());
+      result.append(TDEGlobalSettings::documentPath());
    }
    return config;
 }

@@ -142,7 +142,7 @@ void KURLBarItem::setIcon( const TQString& icon, KIcon::Group group )
     if ( icon.isEmpty() )
         m_pixmap = KMimeType::pixmapForURL( m_url, 0, group, iconSize() );
     else
-        m_pixmap = KGlobal::iconLoader()->loadIcon( icon, group, iconSize(),
+        m_pixmap = TDEGlobal::iconLoader()->loadIcon( icon, group, iconSize(),
                                                     KIcon::DefaultState );
 }
 
@@ -585,7 +585,7 @@ void KURLBar::readConfig( KConfig *appConfig, const TQString& itemGroup )
     m_iconSize = appConfig->readNumEntry( "Speedbar IconSize", m_iconSize );
 
     if ( m_useGlobal ) { // read global items
-        KConfig *globalConfig = KGlobal::config();
+        KConfig *globalConfig = TDEGlobal::config();
         KConfigGroupSaver cs( globalConfig, (TQString)(itemGroup +" (Global)"));
         int num = globalConfig->readNumEntry( "Number of Entries" );
         for ( int i = 0; i < num; i++ ) {
@@ -977,10 +977,10 @@ KURLBarItemDialog::KURLBarItemDialog( bool allowGlobal, const KURL& url,
 
     if ( allowGlobal ) {
         TQString appName;
-        if ( KGlobal::instance()->aboutData() )
-            appName = KGlobal::instance()->aboutData()->programName();
+        if ( TDEGlobal::instance()->aboutData() )
+            appName = TDEGlobal::instance()->aboutData()->programName();
         if ( appName.isEmpty() )
-            appName = TQString::fromLatin1( KGlobal::instance()->instanceName() );
+            appName = TQString::fromLatin1( TDEGlobal::instance()->instanceName() );
         m_appLocal = new TQCheckBox( i18n("&Only show when using this application (%1)").arg( appName ), box );
         m_appLocal->setChecked( appLocal );
         TQWhatsThis::add( m_appLocal,

@@ -363,7 +363,7 @@ Slave* Slave::createSlave( const TQString &protocol, const KURL& url, int& error
     if (!client->isAttached())
 	client->attach();
 
-    TQString prefix = locateLocal("socket", KGlobal::instance()->instanceName());
+    TQString prefix = locateLocal("socket", TDEGlobal::instance()->instanceName());
     KTempFile socketfile(prefix, TQString::fromLatin1(".slave-socket"));
     if ( socketfile.status() != 0 )
     {
@@ -388,7 +388,7 @@ Slave* Slave::createSlave( const TQString &protocol, const KURL& url, int& error
     // klauncher for a slave, because the slave might have that other uid
     // as well, which might either be a) undesired or b) make it impossible
     // for the slave to connect to the application.
-    // In such case we start the slave via KProcess.
+    // In such case we start the slave via TDEProcess.
     // It's possible to force this by setting the env. variable
     // TDE_FORK_SLAVES, Clearcase seems to require this.
     static bool bForkSlaves = !TQCString(getenv("TDE_FORK_SLAVES")).isEmpty();
@@ -411,12 +411,12 @@ Slave* Slave::createSlave( const TQString &protocol, const KURL& url, int& error
           return 0;
        }
 
-       KProcess proc;
+       TDEProcess proc;
 
        proc << locate("exe", "kioslave") << lib_path << protocol << "" << socketfile.name();
        kdDebug(7002) << "kioslave" << ", " << lib_path << ", " << protocol << ", " << TQString::null << ", " << socketfile.name() << endl;
 
-       proc.start(KProcess::DontCare);
+       proc.start(TDEProcess::DontCare);
 
 #ifndef Q_WS_WIN
        slave->setPID(proc.pid());
@@ -468,7 +468,7 @@ Slave* Slave::holdSlave( const TQString &protocol, const KURL& url )
     if (!client->isAttached())
 	client->attach();
 
-    TQString prefix = locateLocal("socket", KGlobal::instance()->instanceName());
+    TQString prefix = locateLocal("socket", TDEGlobal::instance()->instanceName());
     KTempFile socketfile(prefix, TQString::fromLatin1(".slave-socket"));
     if ( socketfile.status() != 0 )
 	return 0;

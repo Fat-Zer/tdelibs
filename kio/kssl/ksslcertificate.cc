@@ -93,7 +93,7 @@ public:
 KSSLCertificate::KSSLCertificate() {
 	d = new KSSLCertificatePrivate;
 	d->m_stateCached = false;
-	KGlobal::dirs()->addResourceType("kssl", KStandardDirs::kde_default("data") + "kssl");
+	TDEGlobal::dirs()->addResourceType("kssl", KStandardDirs::kde_default("data") + "kssl");
 	#ifdef KSSL_HAVE_SSL
 		d->m_cert = NULL;
 	#endif
@@ -103,7 +103,7 @@ KSSLCertificate::KSSLCertificate() {
 KSSLCertificate::KSSLCertificate(const KSSLCertificate& x) {
 	d = new KSSLCertificatePrivate;
 	d->m_stateCached = false;
-	KGlobal::dirs()->addResourceType("kssl", KStandardDirs::kde_default("data") + "kssl");
+	TDEGlobal::dirs()->addResourceType("kssl", KStandardDirs::kde_default("data") + "kssl");
 	#ifdef KSSL_HAVE_SSL
 		d->m_cert = NULL;
 		setCert(KOSSL::self()->X509_dup(const_cast<KSSLCertificate&>(x).getCert()));
@@ -637,7 +637,7 @@ KSSLCertificate::KSSLValidationList KSSLCertificate::validateVerbose(KSSLCertifi
 		return errors;
 	}
 
-	TQStringList qsl = KGlobal::dirs()->resourceDirs("kssl");
+	TQStringList qsl = TDEGlobal::dirs()->resourceDirs("kssl");
 
 	if (qsl.isEmpty()) {
 		errors << KSSLCertificate::NoCARoot;

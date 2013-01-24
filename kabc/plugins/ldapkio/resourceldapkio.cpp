@@ -110,7 +110,7 @@ ResourceLDAPKIO::ResourceLDAPKIO( const KConfig *config )
     d->mCachePolicy = Cache_No;
     d->mAutoCache = true;
   }
-  d->mCacheDst = KGlobal::dirs()->saveLocation("cache", "ldapkio") + "/" +
+  d->mCacheDst = TDEGlobal::dirs()->saveLocation("cache", "ldapkio") + "/" +
     type() + "_" + identifier();
   init(); 
 }

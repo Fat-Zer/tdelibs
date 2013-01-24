@@ -28,7 +28,7 @@
 
 class TQTextCodec;
 class KProcIO;
-class KProcess;
+class TDEProcess;
 class KSpellDlg;
 
 /**
@@ -461,9 +461,9 @@ protected slots:
   void suggestWord( KProcIO * );
 
   void slotStopCancel (int);
-  void ispellExit (KProcess *);
+  void ispellExit (TDEProcess *);
   void emitDeath();
-  void ispellErrors (KProcess *, char *, int);
+  void ispellErrors (TDEProcess *, char *, int);
   void checkNext();
 
 private slots:

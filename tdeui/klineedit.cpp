@@ -62,7 +62,7 @@ public:
 
         if ( !initialized )
         {
-            KConfigGroup config( KGlobal::config(), "General" );
+            KConfigGroup config( TDEGlobal::config(), "General" );
             backspacePerformsCompletion = config.readBoolEntry( "Backspace performs completion", false );
 
             initialized = true;
@@ -132,10 +132,10 @@ void KLineEdit::init()
     KCursor::setAutoHideCursor( this, true, true );
     installEventFilter( this );
 
-    KGlobalSettings::Completion mode = completionMode();
-    d->autoSuggest = (mode == KGlobalSettings::CompletionMan ||
-                      mode == KGlobalSettings::CompletionPopupAuto ||
-                      mode == KGlobalSettings::CompletionAuto);
+    TDEGlobalSettings::Completion mode = completionMode();
+    d->autoSuggest = (mode == TDEGlobalSettings::CompletionMan ||
+                      mode == TDEGlobalSettings::CompletionPopupAuto ||
+                      mode == TDEGlobalSettings::CompletionAuto);
     connect( this, TQT_SIGNAL(selectionChanged()), this, TQT_SLOT(slotRestoreSelectionColors()));
 
     TQPalette p = palette();
@@ -147,26 +147,26 @@ void KLineEdit::init()
     d->drawClickMsg = false;
 }
 
-void KLineEdit::setCompletionMode( KGlobalSettings::Completion mode )
+void KLineEdit::setCompletionMode( TDEGlobalSettings::Completion mode )
 {
-    KGlobalSettings::Completion oldMode = completionMode();
+    TDEGlobalSettings::Completion oldMode = completionMode();
 
-    if ( oldMode != mode && (oldMode == KGlobalSettings::CompletionPopup ||
-         oldMode == KGlobalSettings::CompletionPopupAuto ) &&
+    if ( oldMode != mode && (oldMode == TDEGlobalSettings::CompletionPopup ||
+         oldMode == TDEGlobalSettings::CompletionPopupAuto ) &&
          d->completionBox && d->completionBox->isVisible() )
       d->completionBox->hide();
 
     // If the widgets echo mode is not Normal, no completion
     // feature will be enabled even if one is requested.
     if ( echoMode() != TQLineEdit::Normal )
-        mode = KGlobalSettings::CompletionNone; // Override the request.
+        mode = TDEGlobalSettings::CompletionNone; // Override the request.
 
     if ( kapp && !kapp->authorize("lineedit_text_completion") )
-        mode = KGlobalSettings::CompletionNone;
+        mode = TDEGlobalSettings::CompletionNone;
 
-    if ( mode == KGlobalSettings::CompletionPopupAuto ||
-         mode == KGlobalSettings::CompletionAuto ||
-         mode == KGlobalSettings::CompletionMan )
+    if ( mode == TDEGlobalSettings::CompletionPopupAuto ||
+         mode == TDEGlobalSettings::CompletionAuto ||
+         mode == TDEGlobalSettings::CompletionMan )
         d->autoSuggest = true;
     else
         d->autoSuggest = false;
@@ -194,11 +194,11 @@ void KLineEdit::setCompletedText( const TQString& t, bool marked )
 
 void KLineEdit::setCompletedText( const TQString& text )
 {
-    KGlobalSettings::Completion mode = completionMode();
-    bool marked = ( mode == KGlobalSettings::CompletionAuto ||
-                    mode == KGlobalSettings::CompletionMan ||
-                    mode == KGlobalSettings::CompletionPopup ||
-                    mode == KGlobalSettings::CompletionPopupAuto );
+    TDEGlobalSettings::Completion mode = completionMode();
+    bool marked = ( mode == TDEGlobalSettings::CompletionAuto ||
+                    mode == TDEGlobalSettings::CompletionMan ||
+                    mode == TDEGlobalSettings::CompletionPopup ||
+                    mode == TDEGlobalSettings::CompletionPopupAuto );
     setCompletedText( text, marked );
 }
 
@@ -226,15 +226,15 @@ void KLineEdit::rotateText( KCompletionBase::KeyBindingType type )
 void KLineEdit::makeCompletion( const TQString& text )
 {
     KCompletion *comp = compObj();
-    KGlobalSettings::Completion mode = completionMode();
+    TDEGlobalSettings::Completion mode = completionMode();
 
-    if ( !comp || mode == KGlobalSettings::CompletionNone )
+    if ( !comp || mode == TDEGlobalSettings::CompletionNone )
         return;  // No completion object...
 
     TQString match = comp->makeCompletion( text );
 
-    if ( mode == KGlobalSettings::CompletionPopup ||
-         mode == KGlobalSettings::CompletionPopupAuto )
+    if ( mode == TDEGlobalSettings::CompletionPopup ||
+         mode == TDEGlobalSettings::CompletionPopupAuto )
     {
         if ( match.isNull() )
         {
@@ -254,7 +254,7 @@ void KLineEdit::makeCompletion( const TQString& text )
         if ( match.isNull() || match == text )
             return;
 
-        if ( mode != KGlobalSettings::CompletionShell )
+        if ( mode != TDEGlobalSettings::CompletionShell )
             setUserSelection(false);
 
         if ( d->autoSuggest )
@@ -522,17 +522,17 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
     // Filter key-events if EchoMode is normal and
     // completion mode is not set to CompletionNone
     if ( echoMode() == TQLineEdit::Normal &&
-         completionMode() != KGlobalSettings::CompletionNone )
+         completionMode() != TDEGlobalSettings::CompletionNone )
     {
         KeyBindingMap keys = getKeyBindings();
-        KGlobalSettings::Completion mode = completionMode();
+        TDEGlobalSettings::Completion mode = completionMode();
         bool noModifier = (e->state() == Qt::NoButton ||
                            e->state() == TQt::ShiftButton ||
                            e->state() == TQt::Keypad);
 
-        if ( (mode == KGlobalSettings::CompletionAuto ||
-              mode == KGlobalSettings::CompletionPopupAuto ||
-              mode == KGlobalSettings::CompletionMan) && noModifier )
+        if ( (mode == TDEGlobalSettings::CompletionAuto ||
+              mode == TDEGlobalSettings::CompletionPopupAuto ||
+              mode == TDEGlobalSettings::CompletionMan) && noModifier )
         {
             if ( !d->userSelection && hasSelectedText() &&
                  ( e->key() == Key_Right || e->key() == Key_Left ) &&
@@ -571,8 +571,8 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
 
         }
 
-        if ( (mode == KGlobalSettings::CompletionAuto ||
-              mode == KGlobalSettings::CompletionMan) && noModifier )
+        if ( (mode == TDEGlobalSettings::CompletionAuto ||
+              mode == TDEGlobalSettings::CompletionMan) && noModifier )
         {
             TQString keycode = e->text();
             if ( !keycode.isEmpty() && (keycode.unicode()->isPrint() ||
@@ -639,8 +639,8 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
 
         }
 
-        else if (( mode == KGlobalSettings::CompletionPopup ||
-                   mode == KGlobalSettings::CompletionPopupAuto ) &&
+        else if (( mode == TDEGlobalSettings::CompletionPopup ||
+                   mode == TDEGlobalSettings::CompletionPopupAuto ) &&
                    noModifier && !e->text().isEmpty() )
         {
             TQString old_txt = text();
@@ -709,7 +709,7 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
                 }
 
                 if ( (e->key() == Key_Backspace || e->key() == Key_Delete ) &&
-                    mode == KGlobalSettings::CompletionPopupAuto )
+                    mode == TDEGlobalSettings::CompletionPopupAuto )
                   d->autoSuggest=true;
 
                 e->accept();
@@ -720,7 +720,7 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
             return;
         }
 
-        else if ( mode == KGlobalSettings::CompletionShell )
+        else if ( mode == TDEGlobalSettings::CompletionShell )
         {
             // Handles completion.
             KShortcut cut;
@@ -749,7 +749,7 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
         }
 
         // handle rotation
-        if ( mode != KGlobalSettings::CompletionNone )
+        if ( mode != TDEGlobalSettings::CompletionNone )
         {
             // Handles previous match
             KShortcut cut;
@@ -895,20 +895,20 @@ TQPopupMenu *KLineEdit::createPopupMenu()
 
         subMenu->setAccel( KStdAccel::completion(), ShellCompletion );
 
-        KGlobalSettings::Completion mode = completionMode();
+        TDEGlobalSettings::Completion mode = completionMode();
         subMenu->setItemChecked( NoCompletion,
-                                 mode == KGlobalSettings::CompletionNone );
+                                 mode == TDEGlobalSettings::CompletionNone );
         subMenu->setItemChecked( ShellCompletion,
-                                 mode == KGlobalSettings::CompletionShell );
+                                 mode == TDEGlobalSettings::CompletionShell );
         subMenu->setItemChecked( PopupCompletion,
-                                 mode == KGlobalSettings::CompletionPopup );
+                                 mode == TDEGlobalSettings::CompletionPopup );
         subMenu->setItemChecked( AutoCompletion,
-                                 mode == KGlobalSettings::CompletionAuto );
+                                 mode == TDEGlobalSettings::CompletionAuto );
         subMenu->setItemChecked( ShortAutoCompletion,
-                                 mode == KGlobalSettings::CompletionMan );
+                                 mode == TDEGlobalSettings::CompletionMan );
         subMenu->setItemChecked( PopupAutoCompletion,
-                                 mode == KGlobalSettings::CompletionPopupAuto );
-        if ( mode != KGlobalSettings::completionMode() )
+                                 mode == TDEGlobalSettings::CompletionPopupAuto );
+        if ( mode != TDEGlobalSettings::completionMode() )
         {
             subMenu->insertSeparator();
             subMenu->insertItem( i18n("Default"), Default );
@@ -925,30 +925,30 @@ TQPopupMenu *KLineEdit::createPopupMenu()
 
 void KLineEdit::completionMenuActivated( int id )
 {
-    KGlobalSettings::Completion oldMode = completionMode();
+    TDEGlobalSettings::Completion oldMode = completionMode();
 
     switch ( id )
     {
         case Default:
-           setCompletionMode( KGlobalSettings::completionMode() );
+           setCompletionMode( TDEGlobalSettings::completionMode() );
            break;
         case NoCompletion:
-           setCompletionMode( KGlobalSettings::CompletionNone );
+           setCompletionMode( TDEGlobalSettings::CompletionNone );
            break;
         case AutoCompletion:
-            setCompletionMode( KGlobalSettings::CompletionAuto );
+            setCompletionMode( TDEGlobalSettings::CompletionAuto );
             break;
         case ShortAutoCompletion:
-            setCompletionMode( KGlobalSettings::CompletionMan );
+            setCompletionMode( TDEGlobalSettings::CompletionMan );
             break;
         case ShellCompletion:
-            setCompletionMode( KGlobalSettings::CompletionShell );
+            setCompletionMode( TDEGlobalSettings::CompletionShell );
             break;
         case PopupCompletion:
-            setCompletionMode( KGlobalSettings::CompletionPopup );
+            setCompletionMode( TDEGlobalSettings::CompletionPopup );
             break;
         case PopupAutoCompletion:
-            setCompletionMode( KGlobalSettings::CompletionPopupAuto );
+            setCompletionMode( TDEGlobalSettings::CompletionPopupAuto );
             break;
         default:
             return;
@@ -956,8 +956,8 @@ void KLineEdit::completionMenuActivated( int id )
 
     if ( oldMode != completionMode() )
     {
-        if ( (oldMode == KGlobalSettings::CompletionPopup ||
-              oldMode == KGlobalSettings::CompletionPopupAuto ) &&
+        if ( (oldMode == TDEGlobalSettings::CompletionPopup ||
+              oldMode == TDEGlobalSettings::CompletionPopupAuto ) &&
               d->completionBox && d->completionBox->isVisible() )
             d->completionBox->hide();
         emit completionModeChanged( completionMode() );
@@ -1101,7 +1101,7 @@ void KLineEdit::setCompletionBox( KCompletionBox *box )
 
 void KLineEdit::userCancelled(const TQString & cancelText)
 {
-    if ( completionMode() != KGlobalSettings::CompletionPopupAuto )
+    if ( completionMode() != TDEGlobalSettings::CompletionPopupAuto )
     {
       // TODO: this sets modified==false. But maybe it was true before...
       setText(cancelText);

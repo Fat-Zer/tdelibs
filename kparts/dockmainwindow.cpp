@@ -97,7 +97,7 @@ void DockMainWindow::createGUI( Part * part )
 
   if ( !d->m_bShellGUIActivated )
   {
-    loadPlugins( TQT_TQOBJECT(this), this, KGlobal::instance() );
+    loadPlugins( TQT_TQOBJECT(this), this, TDEGlobal::instance() );
     createShellGUI();
     d->m_bShellGUIActivated = true;
   }

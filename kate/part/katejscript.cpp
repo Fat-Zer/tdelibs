@@ -653,7 +653,7 @@ void KateJScriptManager::collectScripts (bool force)
   }
 
   // Let's get a list of all the .js files
-  TQStringList list = KGlobal::dirs()->findAllResources("data","katepart/scripts/*.js",false,true);
+  TQStringList list = TDEGlobal::dirs()->findAllResources("data","katepart/scripts/*.js",false,true);
 
   // Let's iterate through the list and build the Mode List
   for ( TQStringList::Iterator it = list.begin(); it != list.end(); ++it )
@@ -1028,7 +1028,7 @@ void KateIndentJScriptManager::collectScripts (bool force)
 #endif
 
   // Let's get a list of all the .js files
-  TQStringList list = KGlobal::dirs()->findAllResources("data","katepart/scripts/indent/*.js",false,true);
+  TQStringList list = TDEGlobal::dirs()->findAllResources("data","katepart/scripts/indent/*.js",false,true);
 
   // Let's iterate through the list and build the Mode List
   for ( TQStringList::Iterator it = list.begin(); it != list.end(); ++it )

@@ -95,7 +95,7 @@ KSystemTray::KSystemTray( TQWidget* parent, const char* name )
     {
         d->on_all_desktops = false;
     }
-    setCaption( KGlobal::instance()->aboutData()->programName());
+    setCaption( TDEGlobal::instance()->aboutData()->programName());
     setAlignment( alignment() | Qt::AlignVCenter | Qt::AlignHCenter );
 
     // Handle the possibility that the requested system tray size is something other than 22x22 pixels, per the Free Desktop specifications

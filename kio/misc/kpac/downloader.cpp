@@ -71,7 +71,7 @@ namespace KPAC
         if ( !job->error() && !static_cast< KIO::TransferJob* >( job )->isErrorPage() )
         {
             bool dummy;
-            m_script = KGlobal::charsets()->codecForName(
+            m_script = TDEGlobal::charsets()->codecForName(
                 job->queryMetaData( "charset" ), dummy )->toUnicode( m_data );
             emit result( true );
         }

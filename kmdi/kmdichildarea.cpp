@@ -52,10 +52,10 @@ KMdiChildArea::KMdiChildArea( TQWidget *parent )
 	m_captionFont = TQFont();
 	TQFontMetrics fm( m_captionFont );
 	m_captionFontLineSpacing = fm.lineSpacing();
-	m_captionActiveBackColor = KGlobalSettings::activeTitleColor();
-	m_captionActiveForeColor = KGlobalSettings::activeTextColor();
-	m_captionInactiveBackColor = KGlobalSettings::inactiveTitleColor();
-	m_captionInactiveForeColor = KGlobalSettings::inactiveTextColor();
+	m_captionActiveBackColor = TDEGlobalSettings::activeTitleColor();
+	m_captionActiveForeColor = TDEGlobalSettings::activeTextColor();
+	m_captionInactiveBackColor = TDEGlobalSettings::inactiveTitleColor();
+	m_captionInactiveForeColor = TDEGlobalSettings::inactiveTextColor();
 	m_pZ = new TQPtrList<KMdiChildFrm>;
 	m_pZ->setAutoDelete( true );
 	setFocusPolicy( TQ_ClickFocus );
@@ -784,10 +784,10 @@ void KMdiChildArea::setMdiCaptionInactiveBackColor( const TQColor& clr )
 void KMdiChildArea::getCaptionColors( const TQPalette& /*pal*/, TQColor& activeBG,
                                       TQColor& activeFG, TQColor& inactiveBG, TQColor& inactiveFG )
 {
-	activeBG = KGlobalSettings::activeTitleColor();
-	activeFG = KGlobalSettings::activeTextColor();
-	inactiveBG = KGlobalSettings::inactiveTitleColor();
-	inactiveFG = KGlobalSettings::inactiveTextColor();
+	activeBG = TDEGlobalSettings::activeTitleColor();
+	activeFG = TDEGlobalSettings::activeTextColor();
+	inactiveBG = TDEGlobalSettings::inactiveTitleColor();
+	inactiveFG = TDEGlobalSettings::inactiveTextColor();
 }
 
 // kate: space-indent off; replace-tabs off; tab-width 4; indent-mode csands;

@@ -254,8 +254,8 @@ public:
    */
   ToolbarList findToolbars(TQDomNode n)
   {
-    static const TQString &tagToolbar = KGlobal::staticQString( "ToolBar" );
-    static const TQString &attrNoEdit = KGlobal::staticQString( "noEdit" );
+    static const TQString &tagToolbar = TDEGlobal::staticQString( "ToolBar" );
+    static const TQString &attrNoEdit = TDEGlobal::staticQString( "noEdit" );
     ToolbarList list;
 
     for( ; !n.isNull(); n = n.nextSibling() )
@@ -278,9 +278,9 @@ public:
    */
   TQString toolbarName( const XmlData& xmlData, const TQDomElement& it ) const
   {
-      static const TQString &tagText = KGlobal::staticQString( "text" );
-      static const TQString &tagText2 = KGlobal::staticQString( "Text" );
-      static const TQString &attrName = KGlobal::staticQString( "name" );
+      static const TQString &tagText = TDEGlobal::staticQString( "text" );
+      static const TQString &tagText2 = TDEGlobal::staticQString( "Text" );
+      static const TQString &attrName = TDEGlobal::staticQString( "name" );
 
       TQString name;
       TQCString txt( it.namedItem( tagText ).toElement().text().utf8() );
@@ -306,7 +306,7 @@ public:
    */
   TQDomElement findElementForToolbarItem( const ToolbarItem* item ) const
   {
-    static const TQString &attrName    = KGlobal::staticQString( "name" );
+    static const TQString &attrName    = TDEGlobal::staticQString( "name" );
     for(TQDomNode n = m_currentToolbarElem.firstChild(); !n.isNull(); n = n.nextSibling())
     {
       TQDomElement elem = n.toElement();
@@ -466,7 +466,7 @@ void KEditToolbar::slotDefault()
 
             if (TQDir::isRelativePath(file))
             {
-                const TDEInstance *instance = client->instance() ? client->instance() : KGlobal::instance();
+                const TDEInstance *instance = client->instance() ? client->instance() : TDEGlobal::instance();
                 file = locateLocal("data", TQString::fromLatin1( instance->instanceName() + '/' ) + file);
             }
             else
@@ -488,7 +488,7 @@ void KEditToolbar::slotDefault()
         int slash = d->m_file.findRev('/')+1;
         if (slash)
             d->m_file = d->m_file.mid(slash);
-        TQString xml_file = locateLocal("data", TQString::fromLatin1( KGlobal::instance()->instanceName() + '/' ) + d->m_file);
+        TQString xml_file = locateLocal("data", TQString::fromLatin1( TDEGlobal::instance()->instanceName() + '/' ) + d->m_file);
 
         if ( TQFile::exists( xml_file ) )
             if ( !TQFile::remove( xml_file ) )
@@ -903,7 +903,7 @@ void KEditToolbarWidget::setupLayout()
 
 void KEditToolbarWidget::loadToolbarCombo(const TQString& defaultToolbar)
 {
-  static const TQString &attrName = KGlobal::staticQString( "name" );
+  static const TQString &attrName = TDEGlobal::staticQString( "name" );
   // just in case, we clear our combo
   m_toolbarCombo->clear();
 
@@ -942,11 +942,11 @@ void KEditToolbarWidget::loadToolbarCombo(const TQString& defaultToolbar)
 
 void KEditToolbarWidget::loadActionList(TQDomElement& elem)
 {
-  static const TQString &tagSeparator = KGlobal::staticQString( "Separator" );
-  static const TQString &tagMerge     = KGlobal::staticQString( "Merge" );
-  static const TQString &tagActionList= KGlobal::staticQString( "ActionList" );
-  static const TQString &attrName     = KGlobal::staticQString( "name" );
-  static const TQString &attrLineSeparator = KGlobal::staticQString( "lineSeparator" );
+  static const TQString &tagSeparator = TDEGlobal::staticQString( "Separator" );
+  static const TQString &tagMerge     = TDEGlobal::staticQString( "Merge" );
+  static const TQString &tagActionList= TDEGlobal::staticQString( "ActionList" );
+  static const TQString &attrName     = TDEGlobal::staticQString( "name" );
+  static const TQString &attrLineSeparator = TDEGlobal::staticQString( "lineSeparator" );
 
   int     sep_num = 0;
   TQString sep_name("separator_%1");
@@ -966,7 +966,7 @@ void KEditToolbarWidget::loadActionList(TQDomElement& elem)
   TQMap<TQString, bool> active_list;
 
   // see if our current action is in this toolbar
-  KIconLoader *loader = KGlobal::instance()->iconLoader();
+  KIconLoader *loader = TDEGlobal::instance()->iconLoader();
   TQDomNode n = elem.lastChild();
   for( ; !n.isNull(); n = n.previousSibling() )
   {
@@ -1108,7 +1108,7 @@ void KEditToolbarWidget::slotActiveSelected(TQListViewItem *item)
   ToolbarItem* toolitem = static_cast<ToolbarItem *>(item);
   m_removeAction->setEnabled( item );
 
-  static const TQString &tagAction = KGlobal::staticQString( "Action" );
+  static const TQString &tagAction = TDEGlobal::staticQString( "Action" );
   d->m_changeIcon->setEnabled( item &&
                                d->m_hasKDialog &&
                                toolitem->internalTag() == tagAction );
@@ -1191,11 +1191,11 @@ void KEditToolbarWidget::insertActive(ToolbarItem *item, TQListViewItem *before,
   if (!item)
     return;
 
-  static const TQString &tagAction    = KGlobal::staticQString( "Action" );
-  static const TQString &tagSeparator = KGlobal::staticQString( "Separator" );
-  static const TQString &attrName     = KGlobal::staticQString( "name" );
-  static const TQString &attrLineSeparator = KGlobal::staticQString( "lineSeparator" );
-  static const TQString &attrNoMerge  = KGlobal::staticQString( "noMerge" );
+  static const TQString &tagAction    = TDEGlobal::staticQString( "Action" );
+  static const TQString &tagSeparator = TDEGlobal::staticQString( "Separator" );
+  static const TQString &attrName     = TDEGlobal::staticQString( "name" );
+  static const TQString &attrLineSeparator = TDEGlobal::staticQString( "lineSeparator" );
+  static const TQString &attrNoMerge  = TDEGlobal::staticQString( "noMerge" );
 
   TQDomElement new_item;
   // let's handle the separator specially
@@ -1238,7 +1238,7 @@ void KEditToolbarWidget::removeActive(ToolbarItem *item)
   if (!item)
     return;
 
-  static const TQString &attrNoMerge = KGlobal::staticQString( "noMerge" );
+  static const TQString &attrNoMerge = TDEGlobal::staticQString( "noMerge" );
 
   // we're modified, so let this change
   emit enableOk(true);
@@ -1306,7 +1306,7 @@ void KEditToolbarWidget::moveActive( ToolbarItem* item, TQListViewItem* before )
     d->m_currentToolbarElem.insertAfter(e, d->findElementForToolbarItem( (ToolbarItem*)before ));
 
   // and set this container as a noMerge
-  static const TQString &attrNoMerge = KGlobal::staticQString( "noMerge" );
+  static const TQString &attrNoMerge = TDEGlobal::staticQString( "noMerge" );
   d->m_currentToolbarElem.setAttribute( attrNoMerge, "1");
 
   // update the local doc
@@ -1330,7 +1330,7 @@ void KEditToolbarWidget::slotDownButton()
 
 void KEditToolbarWidget::updateLocal(TQDomElement& elem)
 {
-  static const TQString &attrName = KGlobal::staticQString( "name" );
+  static const TQString &attrName = TDEGlobal::staticQString( "name" );
 
   XmlDataList::Iterator xit = d->m_xmlFiles.begin();
   for ( ; xit != d->m_xmlFiles.end(); ++xit)
@@ -1389,7 +1389,7 @@ void KEditToolbarWidget::slotChangeIcon()
   (*d->m_kdialogProcess) << "--geticon";
   (*d->m_kdialogProcess) << "Toolbar";
   (*d->m_kdialogProcess) << "Actions";
-  if ( !d->m_kdialogProcess->start( KProcess::NotifyOnExit ) ) {
+  if ( !d->m_kdialogProcess->start( TDEProcess::NotifyOnExit ) ) {
     kdError(240) << "Can't run " << kdialogExe << endl;
     delete d->m_kdialogProcess;
     d->m_kdialogProcess = 0;
@@ -1399,11 +1399,11 @@ void KEditToolbarWidget::slotChangeIcon()
   m_activeList->setEnabled( false ); // don't change the current item
   m_toolbarCombo->setEnabled( false ); // don't change the current toolbar
 
-  connect( d->m_kdialogProcess, TQT_SIGNAL( processExited( KProcess* ) ),
-           this, TQT_SLOT( slotProcessExited( KProcess* ) ) );
+  connect( d->m_kdialogProcess, TQT_SIGNAL( processExited( TDEProcess* ) ),
+           this, TQT_SLOT( slotProcessExited( TDEProcess* ) ) );
 }
 
-void KEditToolbarWidget::slotProcessExited( KProcess* )
+void KEditToolbarWidget::slotProcessExited( TDEProcess* )
 {
   m_activeList->setEnabled( true );
   m_toolbarCombo->setEnabled( true );

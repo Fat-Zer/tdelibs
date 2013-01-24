@@ -439,7 +439,7 @@ KPrintDialog::KPrintDialog(TQWidget *parent, const char *name)
 	}
 	else
 	{
-		KConfig	*config = KGlobal::config();
+		KConfig	*config = TDEGlobal::config();
 		config->setGroup("KPrinter Settings");
 		expandDialog(!config->readBoolEntry("DialogReduced", (KMFactory::self()->settings()->application != KPrinter::StandAlone)));
 	}
@@ -447,7 +447,7 @@ KPrintDialog::KPrintDialog(TQWidget *parent, const char *name)
 
 KPrintDialog::~KPrintDialog()
 {
-	KConfig	*config = KGlobal::config();
+	KConfig	*config = TDEGlobal::config();
 	config->setGroup("KPrinter Settings");
 	config->writeEntry("DialogReduced", d->m_reduced);
 

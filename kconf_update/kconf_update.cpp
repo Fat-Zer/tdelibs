@@ -209,7 +209,7 @@ KonfUpdate::log()
 TQStringList KonfUpdate::findUpdateFiles(bool dirtyOnly)
 {
    TQStringList result;
-   TQStringList list = KGlobal::dirs()->findAllResources("data", "kconf_update/*.upd", false, true);
+   TQStringList list = TDEGlobal::dirs()->findAllResources("data", "kconf_update/*.upd", false, true);
    for(TQStringList::ConstIterator it = list.begin();
        it != list.end();
        ++it)

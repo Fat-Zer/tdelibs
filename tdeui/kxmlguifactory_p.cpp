@@ -220,7 +220,7 @@ void ContainerNode::plugActionList( BuildState &state )
 
 void ContainerNode::plugActionList( BuildState &state, const MergingIndexList::Iterator &mergingIdxIt )
 {
-    static const TQString &tagActionList = KGlobal::staticQString( "actionlist" );
+    static const TQString &tagActionList = TDEGlobal::staticQString( "actionlist" );
 
     MergingIndex mergingIdx = *mergingIdxIt;
 
@@ -262,7 +262,7 @@ void ContainerNode::unplugActionList( BuildState &state )
 
 void ContainerNode::unplugActionList( BuildState &state, const MergingIndexList::Iterator &mergingIdxIt )
 {
-    static const TQString &tagActionList = KGlobal::staticQString( "actionlist" );
+    static const TQString &tagActionList = TDEGlobal::staticQString( "actionlist" );
 
     MergingIndex mergingIdx = *mergingIdxIt;
 
@@ -365,7 +365,7 @@ void ContainerNode::destructChildren( const TQDomElement &element, BuildState &s
 TQDomElement ContainerNode::findElementForChild( const TQDomElement &baseElement,
                                                 ContainerNode *childNode )
 {
-    static const TQString &attrName = KGlobal::staticQString( "name" );
+    static const TQString &attrName = TDEGlobal::staticQString( "name" );
 
     // ### slow
     for ( TQDomNode n = baseElement.firstChild(); !n.isNull();
@@ -412,7 +412,7 @@ void ContainerNode::unplugActions( BuildState &state )
 
 void ContainerNode::unplugClient( ContainerClient *client )
 {
-    static const TQString &tagActionList = KGlobal::staticQString( "actionlist" );
+    static const TQString &tagActionList = TDEGlobal::staticQString( "actionlist" );
 
     assert( builder );
 
@@ -497,7 +497,7 @@ int ContainerNode::calcMergingIndex( const TQString &mergingName,
 
 int BuildHelper::calcMergingIndex( const TQDomElement &element, MergingIndexList::Iterator &it, TQString &group )
 {
-    static const TQString &attrGroup = KGlobal::staticQString( "group" );
+    static const TQString &attrGroup = TDEGlobal::staticQString( "group" );
 
     bool haveGroup = false;
     group = element.attribute( attrGroup );
@@ -521,7 +521,7 @@ BuildHelper::BuildHelper( BuildState &state, ContainerNode *node )
     : containerClient( 0 ), ignoreDefaultMergingIndex( false ), m_state( state ),
       parentNode( node )
 {
-    static const TQString &defaultMergingName = KGlobal::staticQString( "<default>" );
+    static const TQString &defaultMergingName = TDEGlobal::staticQString( "<default>" );
 
     // create a list of supported container and custom tags
     customTags = m_state.builderCustomTags;
@@ -556,12 +556,12 @@ void BuildHelper::build( const TQDomElement &element )
 void BuildHelper::processElement( const TQDomElement &e )
 {
     // some often used QStrings
-    static const TQString &tagAction = KGlobal::staticQString( "action" );
-    static const TQString &tagMerge = KGlobal::staticQString( "merge" );
-    static const TQString &tagState = KGlobal::staticQString( "state" );
-    static const TQString &tagDefineGroup = KGlobal::staticQString( "definegroup" );
-    static const TQString &tagActionList = KGlobal::staticQString( "actionlist" );
-    static const TQString &attrName = KGlobal::staticQString( "name" );
+    static const TQString &tagAction = TDEGlobal::staticQString( "action" );
+    static const TQString &tagMerge = TDEGlobal::staticQString( "merge" );
+    static const TQString &tagState = TDEGlobal::staticQString( "state" );
+    static const TQString &tagDefineGroup = TDEGlobal::staticQString( "definegroup" );
+    static const TQString &tagActionList = TDEGlobal::staticQString( "actionlist" );
+    static const TQString &attrName = TDEGlobal::staticQString( "name" );
 
     TQString tag( e.tagName().lower() );
     TQString currName( e.attribute( attrName ) );
@@ -670,10 +670,10 @@ void BuildHelper::processStateElement( const TQDomElement &element )
 
 void BuildHelper::processMergeElement( const TQString &tag, const TQString &name, const TQDomElement &e )
 {
-    static const TQString &tagDefineGroup = KGlobal::staticQString( "definegroup" );
-    static const TQString &tagActionList = KGlobal::staticQString( "actionlist" );
-    static const TQString &defaultMergingName = KGlobal::staticQString( "<default>" );
-    static const TQString &attrGroup = KGlobal::staticQString( "group" );
+    static const TQString &tagDefineGroup = TDEGlobal::staticQString( "definegroup" );
+    static const TQString &tagActionList = TDEGlobal::staticQString( "actionlist" );
+    static const TQString &defaultMergingName = TDEGlobal::staticQString( "<default>" );
+    static const TQString &attrGroup = TDEGlobal::staticQString( "group" );
 
     TQString mergingName( name );
     if ( mergingName.isEmpty() )
@@ -734,7 +734,7 @@ void BuildHelper::processMergeElement( const TQString &tag, const TQString &name
 void BuildHelper::processContainerElement( const TQDomElement &e, const TQString &tag,
                                            const TQString &name )
 {
-    static const TQString &defaultMergingName = KGlobal::staticQString( "<default>" );
+    static const TQString &defaultMergingName = TDEGlobal::staticQString( "<default>" );
 
     ContainerNode *containerNode = parentNode->findContainer( name, tag,
                                                               &containerList,

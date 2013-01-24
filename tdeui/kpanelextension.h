@@ -80,7 +80,7 @@ class KPanelExtensionPrivate;
  * {
  *     KPanelExtension* init(TQWidget *parent, const TQString& configFile)
  *     {
- *         KGlobal::locale()->insertCatalogue("exampleextension");
+ *         TDEGlobal::locale()->insertCatalogue("exampleextension");
  *         return new ExampleExtension(configFile, KPanelExtension::Normal,
  *                       KPanelExtension::About | KPanelExtension::Help | KPanelExtension::Preferences,
  *                       parent, "exampleextension");

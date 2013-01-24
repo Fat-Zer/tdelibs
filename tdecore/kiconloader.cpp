@@ -184,11 +184,11 @@ void KIconLoader::init( const TQString& _appname, KStandardDirs *_dirs )
     if (_dirs)
         d->mpDirs = _dirs;
     else
-        d->mpDirs = KGlobal::dirs();
+        d->mpDirs = TDEGlobal::dirs();
 
     TQString appname = _appname;
     if (appname.isEmpty())
-        appname = KGlobal::instance()->instanceName();
+        appname = TDEGlobal::instance()->instanceName();
 
     // Add the default theme and its base themes to the theme tree
     KIconTheme *def = new KIconTheme(KIconTheme::current(), appname);
@@ -214,7 +214,7 @@ void KIconLoader::init( const TQString& _appname, KStandardDirs *_dirs )
 
     // These have to match the order in kicontheme.h
     static const char * const groups[] = { "Desktop", "Toolbar", "MainToolbar", "Small", "Panel", 0L };
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
     KConfigGroupSaver cs(config, "dummy");
 
     // loading config and default sizes
@@ -349,7 +349,7 @@ void KIconLoader::addExtraDesktopThemes()
     if ( d->extraDesktopIconsLoaded ) return;
 
     TQStringList list;
-    TQStringList icnlibs = KGlobal::dirs()->resourceDirs("icon");
+    TQStringList icnlibs = TDEGlobal::dirs()->resourceDirs("icon");
     TQStringList::ConstIterator it;
     char buf[1000];
     int r;
@@ -406,15 +406,15 @@ TQString KIconLoader::removeIconExtension(const TQString &name) const
 
     TQString ext = name.right(4);
 
-    static const TQString &png_ext = KGlobal::staticQString(".png");
-    static const TQString &xpm_ext = KGlobal::staticQString(".xpm");
+    static const TQString &png_ext = TDEGlobal::staticQString(".png");
+    static const TQString &xpm_ext = TDEGlobal::staticQString(".xpm");
     if (ext == png_ext || ext == xpm_ext)
       extensionLength=4;
 #ifdef HAVE_LIBART
     else
     {
-	static const TQString &svgz_ext = KGlobal::staticQString(".svgz");
-	static const TQString &svg_ext = KGlobal::staticQString(".svg");
+	static const TQString &svgz_ext = TDEGlobal::staticQString(".svgz");
+	static const TQString &svg_ext = TDEGlobal::staticQString(".svg");
 
 	if (name.right(5) == svgz_ext)
 	    extensionLength=5;
@@ -437,7 +437,7 @@ TQString KIconLoader::removeIconExtensionInternal(const TQString &name) const
 #ifndef NDEBUG
     if (name != name_noext)
     {
-	kdDebug(264) << "Application " << KGlobal::instance()->instanceName()
+	kdDebug(264) << "Application " << TDEGlobal::instance()->instanceName()
 		     << " loads icon " << name << " with extension." << endl;
     }
 #endif
@@ -451,15 +451,15 @@ KIcon KIconLoader::findMatchingIcon(const TQString& name, int size) const
 
     const TQString *ext[4];
     int count=0;
-    static const TQString &png_ext = KGlobal::staticQString(".png");
+    static const TQString &png_ext = TDEGlobal::staticQString(".png");
     ext[count++]=&png_ext;
 #ifdef HAVE_LIBART
-    static const TQString &svgz_ext = KGlobal::staticQString(".svgz");
+    static const TQString &svgz_ext = TDEGlobal::staticQString(".svgz");
     ext[count++]=&svgz_ext;
-    static const TQString &svg_ext = KGlobal::staticQString(".svg");
+    static const TQString &svg_ext = TDEGlobal::staticQString(".svg");
     ext[count++]=&svg_ext;
 #endif
-    static const TQString &xpm_ext = KGlobal::staticQString(".xpm");
+    static const TQString &xpm_ext = TDEGlobal::staticQString(".xpm");
     ext[count++]=&xpm_ext;
 
     /* JRT: To follow the XDG spec, the order in which we look for an
@@ -495,7 +495,7 @@ KIcon KIconLoader::findMatchingIcon(const TQString& name, int size) const
 
 inline TQString KIconLoader::unknownIconPath( int size ) const
 {
-    static const TQString &str_unknown = KGlobal::staticQString("unknown");
+    static const TQString &str_unknown = TDEGlobal::staticQString("unknown");
 
     KIcon icon = findMatchingIcon(str_unknown, size);
     if (!icon.isValid())
@@ -523,13 +523,13 @@ TQString KIconLoader::iconPath(const TQString& _name, int group_or_size,
     TQString path;
     if (group_or_size == KIcon::User)
     {
-	static const TQString &png_ext = KGlobal::staticQString(".png");
-	static const TQString &xpm_ext = KGlobal::staticQString(".xpm");
+	static const TQString &png_ext = TDEGlobal::staticQString(".png");
+	static const TQString &xpm_ext = TDEGlobal::staticQString(".xpm");
 	path = d->mpDirs->findResource("appicon", name + png_ext);
 
 #ifdef HAVE_LIBART
-	static const TQString &svgz_ext = KGlobal::staticQString(".svgz");
-	static const TQString &svg_ext = KGlobal::staticQString(".svg");
+	static const TQString &svgz_ext = TDEGlobal::staticQString(".svgz");
+	static const TQString &svg_ext = TDEGlobal::staticQString(".svg");
 	if (path.isEmpty())
 	    path = d->mpDirs->findResource("appicon", name + svgz_ext);
 	if (path.isEmpty())
@@ -595,7 +595,7 @@ TQPixmap KIconLoader::loadIcon(const TQString& _name, KIcon::Group group, int si
     }
     if (!TQDir::isRelativePath(name)) absolutePath=true;
 
-    static const TQString &str_unknown = KGlobal::staticQString("unknown");
+    static const TQString &str_unknown = TDEGlobal::staticQString("unknown");
 
     // Special case for "User" icons.
     if (group == KIcon::User)
@@ -1241,7 +1241,7 @@ TQPixmap* KIconFactory::createPixmap( const TQIconSet&, TQIconSet::Size, TQIconS
             if( !(*it).valid )
                 {
 #ifdef NDEBUG
-                loader = KGlobal::iconLoader();
+                loader = TDEGlobal::iconLoader();
                 iconName = "no_way_man_you_will_get_broken_icon";
 #else
                 kdWarning() << "Using already destroyed KIconLoader for loading an icon!" << endl;
@@ -1260,7 +1260,7 @@ TQPixmap* KIconFactory::createPixmap( const TQIconSet&, TQIconSet::Size, TQIconS
     if( !found )
         {
 #ifdef NDEBUG
-        loader = KGlobal::iconLoader();
+        loader = TDEGlobal::iconLoader();
         iconName = "no_way_man_you_will_get_broken_icon";
 #else
         kdWarning() << "Using unknown KIconLoader for loading an icon!" << endl;
@@ -1391,7 +1391,7 @@ TQPixmap KIconLoader::unknown()
     if ( TQPixmapCache::find("unknown", pix) )
             return pix;
 
-    TQString path = KGlobal::iconLoader()->iconPath("unknown", KIcon::Small, true);
+    TQString path = TDEGlobal::iconLoader()->iconPath("unknown", KIcon::Small, true);
     if (path.isEmpty())
     {
 	kdDebug(264) << "Warning: Cannot find \"unknown\" icon." << endl;

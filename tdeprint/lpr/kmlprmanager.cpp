@@ -137,7 +137,7 @@ void KMLprManager::initHandlers()
 	insertHandler(new LPRngToolHandler(this));
 
 	// now load external handlers
-	TQStringList	l = KGlobal::dirs()->findAllResources("data", "tdeprint/lpr/*.la");
+	TQStringList	l = TDEGlobal::dirs()->findAllResources("data", "tdeprint/lpr/*.la");
 	for (TQStringList::ConstIterator it=l.begin(); it!=l.end(); ++it)
 	{
 		KLibrary	*library = KLibLoader::self()->library(TQFile::encodeName(*it));
@@ -405,7 +405,7 @@ bool KMLprManager::removePrinter(KMPrinter *prt)
 			{
 				// printcap file saved, entry can be deleted now
 				delete entry;
-				status =  (::system(TQFile::encodeName("rm -rf " + KProcess::quote(sd))) == 0);
+				status =  (::system(TQFile::encodeName("rm -rf " + TDEProcess::quote(sd))) == 0);
 				if (!status)
 					setErrorMsg(i18n("Unable to remove spool directory %1. "
 					                 "Check that you have write permissions "

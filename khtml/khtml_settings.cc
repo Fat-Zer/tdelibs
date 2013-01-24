@@ -292,7 +292,7 @@ void KHTMLSettings::init()
   KConfig global( "khtmlrc", true, false );
   init( &global, true );
 
-  KConfig *local = KGlobal::config();
+  KConfig *local = TDEGlobal::config();
   if ( !local )
     return;
 
@@ -369,8 +369,8 @@ void KHTMLSettings::init( KConfig * config, bool reset )
     // Fonts and colors
     if( reset ) {
         d->defaultFonts = TQStringList();
-        d->defaultFonts.append( config->readEntry( "StandardFont", KGlobalSettings::generalFont().family() ) );
-        d->defaultFonts.append( config->readEntry( "FixedFont", KGlobalSettings::fixedFont().family() ) );
+        d->defaultFonts.append( config->readEntry( "StandardFont", TDEGlobalSettings::generalFont().family() ) );
+        d->defaultFonts.append( config->readEntry( "FixedFont", TDEGlobalSettings::fixedFont().family() ) );
         d->defaultFonts.append( config->readEntry( "SerifFont", HTML_DEFAULT_VIEW_SERIF_FONT ) );
         d->defaultFonts.append( config->readEntry( "SansSerifFont", HTML_DEFAULT_VIEW_SANSSERIF_FONT ) );
         d->defaultFonts.append( config->readEntry( "CursiveFont", HTML_DEFAULT_VIEW_CURSIVE_FONT ) );
@@ -1027,7 +1027,7 @@ void KHTMLSettings::setJSErrorsEnabled(bool enabled)
 {
   d->m_jsErrorsEnabled = enabled;
   // save it
-  KConfig *config = KGlobal::config();
+  KConfig *config = TDEGlobal::config();
   config->setGroup("HTML Settings");
   config->writeEntry("ReportJSErrors", enabled);
   config->sync();
@@ -1052,7 +1052,7 @@ void KHTMLSettings::setJSPopupBlockerPassivePopup(bool enabled)
 {
     d->m_jsPopupBlockerPassivePopup = enabled;
     // save it
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
     config->setGroup("Java/JavaScript Settings");
     config->writeEntry("PopupBlockerPassivePopup", enabled);
     config->sync();

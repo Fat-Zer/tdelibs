@@ -287,7 +287,7 @@ TDEGenericDevice* TDEGenericDevice::parentDevice() {
 }
 
 TQPixmap TDEGenericDevice::icon(KIcon::StdSizes size) {
-	return KGlobal::hardwareDevices()->getDeviceTypeIconFromType(type(), size);
+	return TDEGlobal::hardwareDevices()->getDeviceTypeIconFromType(type(), size);
 }
 
 bool TDEGenericDevice::blacklistedForUpdate() {
@@ -299,7 +299,7 @@ void TDEGenericDevice::internalSetBlacklistedForUpdate(bool bl) {
 }
 
 TQString TDEGenericDevice::friendlyDeviceType() {
-	return KGlobal::hardwareDevices()->getFriendlyDeviceTypeStringFromType(type());
+	return TDEGlobal::hardwareDevices()->getFriendlyDeviceTypeStringFromType(type());
 }
 
 TQString TDEGenericDevice::busID() {
@@ -321,10 +321,10 @@ TQString TDEGenericDevice::friendlyName() {
 			m_friendlyName = friendlyDriverName;
 		}
 		else if (m_modAlias.lower().startsWith("pci")) {
-			m_friendlyName = KGlobal::hardwareDevices()->findPCIDeviceName(m_vendorID, m_modelID, m_subvendorID, m_submodelID);
+			m_friendlyName = TDEGlobal::hardwareDevices()->findPCIDeviceName(m_vendorID, m_modelID, m_subvendorID, m_submodelID);
 		}
 		else if (m_modAlias.lower().startsWith("usb")) {
-			m_friendlyName = KGlobal::hardwareDevices()->findUSBDeviceName(m_vendorID, m_modelID, m_subvendorID, m_submodelID);
+			m_friendlyName = TDEGlobal::hardwareDevices()->findUSBDeviceName(m_vendorID, m_modelID, m_subvendorID, m_submodelID);
 		}
 		else {
 			TQString acpigentype = systemPath();
@@ -333,7 +333,7 @@ TQString TDEGenericDevice::friendlyName() {
 			TQString pnpgentype = acpigentype;
 			pnpgentype.truncate(pnpgentype.find(":"));
 			if (pnpgentype.startsWith("PNP")) {
-				m_friendlyName = KGlobal::hardwareDevices()->findPNPDeviceName(pnpgentype);
+				m_friendlyName = TDEGlobal::hardwareDevices()->findPNPDeviceName(pnpgentype);
 			}
 			else if (acpigentype.startsWith("device:")) {
 				acpigentype.remove(0, acpigentype.findRev(":")+1);
@@ -706,7 +706,7 @@ TQString TDEStorageDevice::mountPath() {
 	// where <something> is listed in <system path>/dm/name
 
 	// First, ensure that all device information (mainly holders/slaves) is accurate
-	KGlobal::hardwareDevices()->rescanDeviceInformation(this);
+	TDEGlobal::hardwareDevices()->rescanDeviceInformation(this);
 
 	TQString dmnodename = systemPath();
 	dmnodename.append("/dm/name");
@@ -746,7 +746,7 @@ TQString TDEStorageDevice::mountPath() {
 	TQStringList slaveDeviceList = holdingDevices();
 	for ( TQStringList::Iterator slavedevit = slaveDeviceList.begin(); slavedevit != slaveDeviceList.end(); ++slavedevit ) {
 		// Try to locate this device path in the TDE device tree
-		TDEHardwareDevices *hwdevices = KGlobal::hardwareDevices();
+		TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
 		TDEGenericDevice *hwdevice = hwdevices->findBySystemPath(*slavedevit);
 		if ((hwdevice) && (hwdevice->type() == TDEGenericDeviceType::Disk)) {
 			TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(hwdevice);
@@ -792,7 +792,7 @@ TQString TDEStorageDevice::mountDevice(TQString mediaName, TQString mountOptions
 	}
 
 	// Update internal mount data
-	KGlobal::hardwareDevices()->processModifiedMounts();
+	TDEGlobal::hardwareDevices()->processModifiedMounts();
 
 	ret = mountPath();
 
@@ -841,7 +841,7 @@ TQString TDEStorageDevice::mountEncryptedDevice(TQString passphrase, TQString me
 	}
 
 	// Update internal mount data
-	KGlobal::hardwareDevices()->processModifiedMounts();
+	TDEGlobal::hardwareDevices()->processModifiedMounts();
 
 	ret = mountPath();
 
@@ -879,7 +879,7 @@ bool TDEStorageDevice::unmountDevice(TQString* errRet, int* retcode) {
 	}
 
 	// Update internal mount data
-	KGlobal::hardwareDevices()->processModifiedMounts();
+	TDEGlobal::hardwareDevices()->processModifiedMounts();
 
 	return false;
 }
@@ -1025,7 +1025,7 @@ void TDECPUDevice::setGovernor(TQString gv) {
 #endif // WITH_UPOWER
 
 	// Force update of the device information object
-	KGlobal::hardwareDevices()->processModifiedCPUs();
+	TDEGlobal::hardwareDevices()->processModifiedCPUs();
 }
 
 bool TDECPUDevice::canSetMaximumScalingFrequency() {
@@ -1049,7 +1049,7 @@ void TDECPUDevice::setMaximumScalingFrequency(double fr) {
 	}
 
 	// Force update of the device information object
-	KGlobal::hardwareDevices()->processModifiedCPUs();
+	TDEGlobal::hardwareDevices()->processModifiedCPUs();
 }
 
 int TDECPUDevice::coreNumber() {
@@ -1217,7 +1217,7 @@ bool TDERootSystemDevice::canPowerOff() {
 	// Can we power down this system?
 	// This should probably be checked via DCOP and therefore interface with KDM
 
-	KConfig *config = KGlobal::config();
+	KConfig *config = TDEGlobal::config();
 	config->reparseConfiguration(); // config may have changed in the KControl module
 	
 	config->setGroup("General" );
@@ -3065,7 +3065,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDeviceByExternalRules(udev_
 		}
 	}
 	else {
-		TQStringList hardware_info_directories(KGlobal::dirs()->resourceDirs("data"));
+		TQStringList hardware_info_directories(TDEGlobal::dirs()->resourceDirs("data"));
 		TQString hardware_info_directory_suffix("tdehwlib/deviceclasses/");
 		TQString hardware_info_directory;
 	
@@ -3079,7 +3079,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDeviceByExternalRules(udev_
 			hardware_info_directory = (*it);
 			hardware_info_directory += hardware_info_directory_suffix;
 	
-			if (KGlobal::dirs()->exists(hardware_info_directory)) {
+			if (TDEGlobal::dirs()->exists(hardware_info_directory)) {
 				TQDir d(hardware_info_directory);
 				d.setFilter( TQDir::Files | TQDir::Hidden );
 				
@@ -5126,7 +5126,7 @@ TQString TDEHardwareDevices::findPNPDeviceName(TQString pnpid) {
 	if (!pnp_id_map) {
 		pnp_id_map = new TDEDeviceIDMap;
 
-		TQStringList hardware_info_directories(KGlobal::dirs()->resourceDirs("data"));
+		TQStringList hardware_info_directories(TDEGlobal::dirs()->resourceDirs("data"));
 		TQString hardware_info_directory_suffix("tdehwlib/pnpdev/");
 		TQString hardware_info_directory;
 		TQString database_filename;
@@ -5135,7 +5135,7 @@ TQString TDEHardwareDevices::findPNPDeviceName(TQString pnpid) {
 			hardware_info_directory = (*it);
 			hardware_info_directory += hardware_info_directory_suffix;
 	
-			if (KGlobal::dirs()->exists(hardware_info_directory)) {
+			if (TDEGlobal::dirs()->exists(hardware_info_directory)) {
 				database_filename = hardware_info_directory + "pnp.ids";
 				if (TQFile::exists(database_filename)) {
 					break;
@@ -5196,7 +5196,7 @@ TQString TDEHardwareDevices::findMonitorManufacturerName(TQString dpyid) {
 	if (!dpy_id_map) {
 		dpy_id_map = new TDEDeviceIDMap;
 
-		TQStringList hardware_info_directories(KGlobal::dirs()->resourceDirs("data"));
+		TQStringList hardware_info_directories(TDEGlobal::dirs()->resourceDirs("data"));
 		TQString hardware_info_directory_suffix("tdehwlib/pnpdev/");
 		TQString hardware_info_directory;
 		TQString database_filename;
@@ -5205,7 +5205,7 @@ TQString TDEHardwareDevices::findMonitorManufacturerName(TQString dpyid) {
 			hardware_info_directory = (*it);
 			hardware_info_directory += hardware_info_directory_suffix;
 	
-			if (KGlobal::dirs()->exists(hardware_info_directory)) {
+			if (TDEGlobal::dirs()->exists(hardware_info_directory)) {
 				database_filename = hardware_info_directory + "dpy.ids";
 				if (TQFile::exists(database_filename)) {
 					break;

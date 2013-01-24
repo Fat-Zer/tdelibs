@@ -23,7 +23,7 @@
 #include <tqframe.h>
 #include <tqvaluelist.h>
 
-class KProcess;
+class TDEProcess;
 
 class PosterPreview : public TQFrame
 {
@@ -55,15 +55,15 @@ protected:
 	void emitSelectedPages();
 
 protected slots:
-	void slotProcessStderr( KProcess*, char*, int );
-	void slotProcessExited( KProcess* );
+	void slotProcessStderr( TDEProcess*, char*, int );
+	void slotProcessExited( TDEProcess* );
 
 private:
 	int m_rows, m_cols;
 	int m_pw, m_ph; // page size
 	int m_mw, m_mh; // cur margins
 	TQRect m_posterbb; // poster bounding box (without any margin)
-	KProcess *m_process;
+	TDEProcess *m_process;
 	TQString m_buffer;
 	TQString m_postersize, m_mediasize;
 	int m_cutmargin;

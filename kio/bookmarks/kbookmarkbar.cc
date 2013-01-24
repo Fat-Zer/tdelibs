@@ -223,8 +223,8 @@ void KBookmarkBar::fillBookmarkBar(KBookmarkGroup & parent)
             action->setDelayed( false );
 
             // this flag doesn't have any UI yet
-            KGlobal::config()->setGroup( "Settings" );
-            bool addEntriesBookmarkBar = KGlobal::config()->readBoolEntry("AddEntriesBookmarkBar",true);
+            TDEGlobal::config()->setGroup( "Settings" );
+            bool addEntriesBookmarkBar = TDEGlobal::config()->readBoolEntry("AddEntriesBookmarkBar",true);
 
             KBookmarkMenu *menu = new KBookmarkMenu(CURRENT_MANAGER(), m_pOwner, action->popupMenu(),
                                                     m_actionCollection, false, addEntriesBookmarkBar,

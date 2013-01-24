@@ -3040,7 +3040,7 @@ void KLegacyStyle::drawKickerTaskButton(TQPainter *p, int x, int y, int w, int h
 
     TQString s(title);
 
-    static const TQString &modStr = KGlobal::staticQString(
+    static const TQString &modStr = TDEGlobal::staticQString(
         TQString::fromUtf8("[") + i18n("modified") + TQString::fromUtf8("]"));
 
     int modStrPos = s.find(modStr);

@@ -35,24 +35,24 @@
 KFileSpeedBar::KFileSpeedBar( TQWidget *parent, const char *name )
     : KURLBar( true, parent, name )
 {
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
     KConfigGroupSaver cs( config, ConfigGroup );
     m_initializeSpeedbar = config->readBoolEntry( "Set speedbar defaults",
                                                    true );
     setIconSize(KIcon::SizeSmallMedium);
-    readConfig( KGlobal::config(), "KFileDialog Speedbar" );
+    readConfig( TDEGlobal::config(), "KFileDialog Speedbar" );
 
     if ( m_initializeSpeedbar )
     {
         KURL u;
-        u.setPath( KGlobalSettings::desktopPath() );
+        u.setPath( TDEGlobalSettings::desktopPath() );
         insertItem( u, i18n("Desktop"), false );
 
 //TODO: win32
-        if ((KGlobalSettings::documentPath() != (TQDir::homeDirPath()+"/")) &&
-            TQDir(KGlobalSettings::documentPath()).exists())
+        if ((TDEGlobalSettings::documentPath() != (TQDir::homeDirPath()+"/")) &&
+            TQDir(TDEGlobalSettings::documentPath()).exists())
         {
-            u.setPath( KGlobalSettings::documentPath() );
+            u.setPath( TDEGlobalSettings::documentPath() );
             insertItem( u, i18n("Documents"), false, "folder_txt" );
         }
 

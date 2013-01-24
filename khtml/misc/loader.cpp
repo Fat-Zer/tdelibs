@@ -194,7 +194,7 @@ TQTextCodec* CachedObject::codecForBuffer( const TQString& charset, const TQByte
     // Link or @charset
     if(!charset.isEmpty())
     {
-	TQTextCodec* c = KGlobal::charsets()->codecForName(charset);
+	TQTextCodec* c = TDEGlobal::charsets()->codecForName(charset);
         if(c->mibEnum() == 11)  {
             // iso8859-8 (visually ordered)
             c = TQTextCodec::codecForName("iso8859-8-i");
@@ -256,7 +256,7 @@ void CachedCSSStyleSheet::data( TQBuffer &buffer, bool eof )
 //     TQString charset = checkCharset( buffer.buffer() );
     TQTextCodec* c = 0;
     if (!m_charset.isEmpty()) {
-        c = KGlobal::charsets()->codecForName(m_charset);
+        c = TDEGlobal::charsets()->codecForName(m_charset);
         if(c->mibEnum() == 11)  c = TQTextCodec::codecForName("iso8859-8-i");
     }
     else {
@@ -469,7 +469,7 @@ static TQString buildAcceptHeader()
 CachedImage::CachedImage(DocLoader* dl, const DOMString &url, KIO::CacheControl _cachePolicy, const char*)
     : TQObject(), CachedObject(url, Image, _cachePolicy, 0)
 {
-    static const TQString &acceptHeader = KGlobal::staticQString( buildAcceptHeader() );
+    static const TQString &acceptHeader = TDEGlobal::staticQString( buildAcceptHeader() );
 
     m = 0;
     p = 0;

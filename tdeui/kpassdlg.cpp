@@ -110,7 +110,7 @@ KPasswordEdit::KPasswordEdit(TQWidget *parent, const char *name)
 {
     init();
 
-    KConfig* const cfg = KGlobal::config();
+    KConfig* const cfg = TDEGlobal::config();
     KConfigGroupSaver saver(cfg, "Passwords");
 
     const TQString val = cfg->readEntry("EchoMode", "OneStar");
@@ -338,7 +338,7 @@ void KPasswordDialog::init()
 {
     m_Row = 0;
 
-    KConfig* const cfg = KGlobal::config();
+    KConfig* const cfg = TDEGlobal::config();
     const KConfigGroupSaver saver(cfg, "Passwords");
     bool def = ( qstrcmp( tqAppName(), "tdesu" ) == 0 ? defKeep : false );
     if (m_Keep && cfg->readBoolEntry("Keep", def))
@@ -351,7 +351,7 @@ void KPasswordDialog::init()
 
     // Row 1: pixmap + prompt
     TQLabel *lbl;
-    const TQPixmap pix( KGlobal::iconLoader()->loadIcon( d->iconName, KIcon::NoGroup, KIcon::SizeHuge, 0, 0, true));
+    const TQPixmap pix( TDEGlobal::iconLoader()->loadIcon( d->iconName, KIcon::NoGroup, KIcon::SizeHuge, 0, 0, true));
     if (!pix.isNull()) {
 	lbl = new TQLabel(m_pMain);
 	lbl->setPixmap(pix);

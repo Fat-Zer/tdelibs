@@ -1,5 +1,5 @@
 //
-//  DUMMY -- A dummy class with a slot to demonstrate KProcess signals
+//  DUMMY -- A dummy class with a slot to demonstrate TDEProcess signals
 //
 //  version 0.2, Aug 2nd 1997
 //
@@ -20,20 +20,20 @@ class Dummy : public TQObject
  Q_OBJECT
 
  public slots:
-   void printMessage(KProcess *proc)
+   void printMessage(TDEProcess *proc)
    {
      printf("Process %d exited!\n", (int)proc->getPid()); 
    } 
  
-   void gotOutput(KProcess*, char *buffer, int len)
+   void gotOutput(TDEProcess*, char *buffer, int len)
    {
-    char result[1025];             // this is ugly since it relys on the internal buffer size of KProcess,
+    char result[1025];             // this is ugly since it relys on the internal buffer size of TDEProcess,
     memcpy(result, buffer, len);   // NEVER do that in your own application... ;-) 
     result[len] = '\0';
     printf("OUTPUT>>%s", result);
    }
 
-   void outputDone(KProcess *proc)
+   void outputDone(TDEProcess *proc)
      /*
        Slot Procedure for the "sort" example. -- If it is indicated that the "sort" command has
        absorbed all its input, we send an "EOF" to it to indicate that there is no more

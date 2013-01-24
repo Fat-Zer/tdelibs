@@ -203,7 +203,7 @@ void KPQtPage::init()
 		for (int i=0; i<KPrinter::NPageSize-1; i++)
 			m_pagesize->insertItem(i18n(page_sizes[i].text));
 		// default page size to locale settings
-		m_pagesize->setCurrentItem(findIndex((KPrinter::PageSize)(KGlobal::locale()->pageSize())));
+		m_pagesize->setCurrentItem(findIndex((KPrinter::PageSize)(TDEGlobal::locale()->pageSize())));
 	}
 	else
 	{

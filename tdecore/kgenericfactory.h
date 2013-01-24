@@ -49,7 +49,7 @@ public:
     virtual ~KGenericFactoryBase()
     {
         if ( s_instance )
-            KGlobal::locale()->removeCatalogue( TQString::fromAscii( s_instance->instanceName() ) );
+            TDEGlobal::locale()->removeCatalogue( TQString::fromAscii( s_instance->instanceName() ) );
         delete s_instance;
         s_instance = 0;
         s_self = 0;
@@ -72,7 +72,7 @@ protected:
     virtual void setupTranslations( void )
     {
         if ( instance() )
-            KGlobal::locale()->insertCatalogue( TQString::fromAscii( instance()->instanceName() ) );
+            TDEGlobal::locale()->insertCatalogue( TQString::fromAscii( instance()->instanceName() ) );
     }
 
     void initializeMessageCatalogue()

@@ -78,7 +78,7 @@ AddresseeDialog::AddresseeDialog( TQWidget *parent, bool multiple ) :
            TQT_SLOT( updateEdit( TQListViewItem * ) ) );
 
   mAddresseeEdit = new KLineEdit( topWidget );
-  mAddresseeEdit->setCompletionMode( KGlobalSettings::CompletionAuto );
+  mAddresseeEdit->setCompletionMode( TDEGlobalSettings::CompletionAuto );
   connect( mAddresseeEdit->completionObject(), TQT_SIGNAL( match( const TQString & ) ),
            TQT_SLOT( selectItem( const TQString & ) ) );
   mAddresseeEdit->setFocus();

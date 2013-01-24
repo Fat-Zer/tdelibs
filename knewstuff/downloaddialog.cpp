@@ -88,7 +88,7 @@ class DateSortListViewItem : public KListViewItem
     if (col == 2)
     {
       TQString s;
-      TQDate date = KGlobal::locale()->readDate(text(col));
+      TQDate date = TDEGlobal::locale()->readDate(text(col));
       s.sprintf("%08d", date.year() * 366 + date.dayOfYear());
       return s;
     }
@@ -242,11 +242,11 @@ void DownloadDialog::addProvider(Provider *p)
     }
     else
     {
-      pix = KGlobal::iconLoader()->loadIcon(p->icon().path(), KIcon::Panel);
+      pix = TDEGlobal::iconLoader()->loadIcon(p->icon().path(), KIcon::Panel);
       ret = true;
     }
   }
-  if(!ret) pix = KGlobal::iconLoader()->loadIcon("knewstuff", KIcon::Panel);
+  if(!ret) pix = TDEGlobal::iconLoader()->loadIcon("knewstuff", KIcon::Panel);
   frame = addPage(p->name(), p->name(), pix);
   m_frame = frame;
 
@@ -392,7 +392,7 @@ int DownloadDialog::installStatus(Entry *entry)
   TQString datestring;
   int installed;
 
-  TQString lang = KGlobal::locale()->language();
+  TQString lang = TDEGlobal::locale()->language();
 
   kapp->config()->setGroup("KNewStuffStatus");
   datestring = kapp->config()->readEntry(entry->name(lang));
@@ -415,11 +415,11 @@ void DownloadDialog::addEntry(Entry *entry, const TQStringList& variants)
 
   installed = installStatus(entry);
 
-  if(installed > 0) pix = KGlobal::iconLoader()->loadIcon("ok", KIcon::Small);
-  else if(installed < 0) pix = KGlobal::iconLoader()->loadIcon("history", KIcon::Small);
+  if(installed > 0) pix = TDEGlobal::iconLoader()->loadIcon("ok", KIcon::Small);
+  else if(installed < 0) pix = TDEGlobal::iconLoader()->loadIcon("history", KIcon::Small);
   else pix = TQPixmap();
 
-  TQString lang = KGlobal::locale()->language();
+  TQString lang = TDEGlobal::locale()->language();
 
   if(variants.contains("score"))
   {
@@ -436,7 +436,7 @@ void DownloadDialog::addEntry(Entry *entry, const TQStringList& variants)
   if(variants.contains("latest"))
   {
     KListViewItem *tmp_l = new DateSortListViewItem(lv_l,
-      entry->name(lang), entry->version(), KGlobal::locale()->formatDate(entry->releaseDate()));
+      entry->name(lang), entry->version(), TDEGlobal::locale()->formatDate(entry->releaseDate()));
     tmp_l->setPixmap(0, pix);
   }
 
@@ -470,7 +470,7 @@ void DownloadDialog::slotDetails()
   Entry *e = getEntry();
   if(!e) return;
 
-  TQString lang = KGlobal::locale()->language();
+  TQString lang = TDEGlobal::locale()->language();
 
   TQString info = i18n
   (
@@ -490,7 +490,7 @@ void DownloadDialog::slotDetails()
     ).arg(e->release()
     ).arg(e->rating()
     ).arg(e->downloads()
-    ).arg(KGlobal::locale()->formatDate(e->releaseDate())
+    ).arg(TDEGlobal::locale()->formatDate(e->releaseDate())
     ).arg(e->summary(lang)
   );
 
@@ -550,9 +550,9 @@ void DownloadDialog::install(Entry *e)
   kapp->config()->writeEntry(m_entryname, TQString(e->releaseDate().toString(Qt::ISODate)));
   kapp->config()->sync();
 
-  TQPixmap pix = KGlobal::iconLoader()->loadIcon("ok", KIcon::Small);
+  TQPixmap pix = TDEGlobal::iconLoader()->loadIcon("ok", KIcon::Small);
 
-  TQString lang = KGlobal::locale()->language();
+  TQString lang = TDEGlobal::locale()->language();
   
   if(m_entryitem)
   {
@@ -640,12 +640,12 @@ void DownloadDialog::slotSelected()
   TQString tmp;
   bool enabled;
   Entry *e = getEntry();
-  TQString lang = KGlobal::locale()->language();
+  TQString lang = TDEGlobal::locale()->language();
   bool ret;
 
   if(e)
   {
-    TQString lang = KGlobal::locale()->language();
+    TQString lang = TDEGlobal::locale()->language();
 
     TQListViewItem *item;
     if(m_curtab != 0)
@@ -685,7 +685,7 @@ void DownloadDialog::slotSelected()
     {
       desc += TQString("%1").arg(e->author());
     }
-    desc += TQString("<br>%1").arg(KGlobal::locale()->formatDate(e->releaseDate()));
+    desc += TQString("<br>%1").arg(TDEGlobal::locale()->formatDate(e->releaseDate()));
     desc += TQString("<br><br>");
     if(ret)
     {
@@ -728,7 +728,7 @@ Entry *DownloadDialog::getEntry()
 
   TQString entryName = entryItem->text(0);
 
-  TQString lang = KGlobal::locale()->language();
+  TQString lang = TDEGlobal::locale()->language();
 
   for(Entry *e = m_entries.first(); e; e = m_entries.next())
     if(e->name(lang) == entryName)

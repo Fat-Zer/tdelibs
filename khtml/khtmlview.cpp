@@ -975,13 +975,13 @@ void KHTMLView::viewportMousePressEvent( TQMouseEvent *_mouse )
             pixmap.fill( TQColor( tqRgba( 127, 127, 127, 127 ) ) );
 
             TQPainter p( &pixmap );
-            icon = KGlobal::iconLoader()->loadIcon( "1uparrow", KIcon::Small );
+            icon = TDEGlobal::iconLoader()->loadIcon( "1uparrow", KIcon::Small );
             p.drawPixmap( 16, 0, icon );
-            icon = KGlobal::iconLoader()->loadIcon( "1leftarrow", KIcon::Small );
+            icon = TDEGlobal::iconLoader()->loadIcon( "1leftarrow", KIcon::Small );
             p.drawPixmap( 0, 16, icon );
-            icon = KGlobal::iconLoader()->loadIcon( "1downarrow", KIcon::Small );
+            icon = TDEGlobal::iconLoader()->loadIcon( "1downarrow", KIcon::Small );
             p.drawPixmap( 16, 32,icon  );
-            icon = KGlobal::iconLoader()->loadIcon( "1rightarrow", KIcon::Small );
+            icon = TDEGlobal::iconLoader()->loadIcon( "1rightarrow", KIcon::Small );
             p.drawPixmap( 32, 16, icon );
             p.drawEllipse( 23, 23, 2, 2 );
 
@@ -994,7 +994,7 @@ void KHTMLView::viewportMousePressEvent( TQMouseEvent *_mouse )
         bool hasHorBar = visibleWidth() < contentsWidth();
         bool hasVerBar = visibleHeight() < contentsHeight();
 
-        KConfig *config = KGlobal::config();
+        KConfig *config = TDEGlobal::config();
         KConfigGroupSaver saver( config, "HTML Settings" );
         if ( config->readBoolEntry( "ShowMouseScrollIndicator", true ) ) {
             d->m_mouseScrollIndicator->show();
@@ -1269,7 +1269,7 @@ void KHTMLView::viewportMouseMoveEvent( TQMouseEvent * _mouse )
 
     if ( ( mailtoCursor || newWindowCursor ) && isVisible() && hasFocus() ) {
 #ifdef Q_WS_X11
-        TQPixmap icon_pixmap = KGlobal::iconLoader()->loadIcon( mailtoCursor ? "mail_generic" : "window_new", KIcon::Small, 0, KIcon::DefaultState, 0, true );
+        TQPixmap icon_pixmap = TDEGlobal::iconLoader()->loadIcon( mailtoCursor ? "mail_generic" : "window_new", KIcon::Small, 0, KIcon::DefaultState, 0, true );
 
         if (d->cursor_icon_widget) {
             const TQPixmap *pm = d->cursor_icon_widget->backgroundPixmap();
@@ -2839,7 +2839,7 @@ void KHTMLView::print(bool quick)
         int headerHeight = 0;
         TQFont headerFont("Sans Serif", 8);
 
-        TQString headerLeft = KGlobal::locale()->formatDate(TQDate::currentDate(),true);
+        TQString headerLeft = TDEGlobal::locale()->formatDate(TQDate::currentDate(),true);
         TQString headerMid = docname;
         TQString headerRight;
 
@@ -4517,7 +4517,7 @@ static const int SCROLL_TICK = 20;
 
 void KHTMLView::scrollBy(int dx, int dy)
 {
-    KConfigGroup cfg( KGlobal::config(), "KDE" );
+    KConfigGroup cfg( TDEGlobal::config(), "KDE" );
     if( !cfg.readBoolEntry( "SmoothScrolling", false )) {
         TQScrollView::scrollBy( dx, dy );
         return;

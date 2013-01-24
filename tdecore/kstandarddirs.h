@@ -97,7 +97,7 @@ class KStandardDirsPrivate;
  * So while you had to ::locate("data", "appname/filename") so you can
  * also write ::locate("appdata", "filename") if your TDEApplication instance
  * is called "appname" (as set via TDEApplication's constructor or TDEAboutData, if
- * you use the global KStandardDirs object KGlobal::dirs()).
+ * you use the global KStandardDirs object TDEGlobal::dirs()).
  * Please note though that you cannot use the "appdata"
  * type if you intend to use it in an applet for Kicker because 'appname' would
  * be "Kicker" instead of the applet's name. Therefore, for applets, you've got
@@ -120,7 +120,7 @@ class KStandardDirsPrivate;
  *          home directory of root, usually "/root/.trinity".
  *          Note that the setting of $HOME is ignored in this case.
  *
- * @see KGlobalSettings
+ * @see TDEGlobalSettings
  */
 class TDECORE_EXPORT KStandardDirs
 {
@@ -175,7 +175,7 @@ public:
 	 * The later a suffix is added, the higher its priority. Note, that the
 	 * suffix should end with / but doesn't have to start with one (as prefixes
 	 * should end with one). So adding a suffix for app_pics would look
-	 * like KGlobal::dirs()->addResourceType("app_pics", "share/app/pics");
+	 * like TDEGlobal::dirs()->addResourceType("app_pics", "share/app/pics");
 	 *
 	 * @param type Specifies a short descriptive string to access
 	 * files of this type.
@@ -414,7 +414,7 @@ public:
 	 * It's a series of addResourceTypes()
 	 * and addPrefix() calls.
 	 * You normally wouldn't call this function because it's called
-	 * for you from KGlobal.
+	 * for you from TDEGlobal.
 	 */
 	void addKDEDefaults();
 
@@ -700,7 +700,7 @@ public:
  * This function is just for convenience. It simply calls
  *instance->dirs()->\link KStandardDirs::findResource() findResource\endlink(type, filename).
  **/
-TDECORE_EXPORT TQString locate( const char *type, const TQString& filename, const TDEInstance* instance = KGlobal::instance() );
+TDECORE_EXPORT TQString locate( const char *type, const TQString& filename, const TDEInstance* instance = TDEGlobal::instance() );
 
 /*!
  * \relates KStandardDirs
@@ -711,7 +711,7 @@ TDECORE_EXPORT TQString locate( const char *type, const TQString& filename, cons
  * specific file, filename must have a trailing slash.
  *
  **/
-TDECORE_EXPORT TQString locateLocal( const char *type, const TQString& filename, const TDEInstance* instance = KGlobal::instance() );
+TDECORE_EXPORT TQString locateLocal( const char *type, const TQString& filename, const TDEInstance* instance = TDEGlobal::instance() );
 
 /*!
  * \relates KStandardDirs
@@ -722,7 +722,7 @@ TDECORE_EXPORT TQString locateLocal( const char *type, const TQString& filename,
  * filename must have a trailing slash.
  *
  **/
-TDECORE_EXPORT TQString locateLocal( const char *type, const TQString& filename, bool createDir, const TDEInstance* instance = KGlobal::instance() );
+TDECORE_EXPORT TQString locateLocal( const char *type, const TQString& filename, bool createDir, const TDEInstance* instance = TDEGlobal::instance() );
 
 /*! @} */
 

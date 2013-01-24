@@ -41,7 +41,7 @@ class KXMLGUIClientPrivate
 public:
   KXMLGUIClientPrivate()
   {
-    m_instance = KGlobal::instance();
+    m_instance = TDEGlobal::instance();
     m_parent = 0L;
     m_builder = 0L;
     m_actionCollection = 0;
@@ -116,7 +116,7 @@ KActionCollection *KXMLGUIClient::actionCollection() const
 
 KAction *KXMLGUIClient::action( const TQDomElement &element ) const
 {
-  static const TQString &attrName = KGlobal::staticQString( "name" );
+  static const TQString &attrName = TDEGlobal::staticQString( "name" );
   return actionCollection()->action( element.attribute( attrName ).latin1() );
 }
 
@@ -250,17 +250,17 @@ void KXMLGUIClient::setDOMDocument( const TQDomDocument &document, bool merge )
 
 bool KXMLGUIClient::mergeXML( TQDomElement &base, const TQDomElement &additive, KActionCollection *actionCollection )
 {
-  static const TQString &tagAction = KGlobal::staticQString( "Action" );
-  static const TQString &tagMerge = KGlobal::staticQString( "Merge" );
-  static const TQString &tagSeparator = KGlobal::staticQString( "Separator" );
-  static const TQString &attrName = KGlobal::staticQString( "name" );
-  static const TQString &attrAppend = KGlobal::staticQString( "append" );
-  static const TQString &attrWeakSeparator = KGlobal::staticQString( "weakSeparator" );
-  static const TQString &tagMergeLocal = KGlobal::staticQString( "MergeLocal" );
-  static const TQString &tagText = KGlobal::staticQString( "text" );
-  static const TQString &attrAlreadyVisited = KGlobal::staticQString( "alreadyVisited" );
-  static const TQString &attrNoMerge = KGlobal::staticQString( "noMerge" );
-  static const TQString &attrOne = KGlobal::staticQString( "1" );
+  static const TQString &tagAction = TDEGlobal::staticQString( "Action" );
+  static const TQString &tagMerge = TDEGlobal::staticQString( "Merge" );
+  static const TQString &tagSeparator = TDEGlobal::staticQString( "Separator" );
+  static const TQString &attrName = TDEGlobal::staticQString( "name" );
+  static const TQString &attrAppend = TDEGlobal::staticQString( "append" );
+  static const TQString &attrWeakSeparator = TDEGlobal::staticQString( "weakSeparator" );
+  static const TQString &tagMergeLocal = TDEGlobal::staticQString( "MergeLocal" );
+  static const TQString &tagText = TDEGlobal::staticQString( "text" );
+  static const TQString &attrAlreadyVisited = TDEGlobal::staticQString( "alreadyVisited" );
+  static const TQString &attrNoMerge = TDEGlobal::staticQString( "noMerge" );
+  static const TQString &attrOne = TDEGlobal::staticQString( "1" );
 
   // there is a possibility that we don't want to merge in the
   // additive.. rather, we might want to *replace* the base with the
@@ -501,9 +501,9 @@ bool KXMLGUIClient::mergeXML( TQDomElement &base, const TQDomElement &additive, 
 
 TQDomElement KXMLGUIClient::findMatchingElement( const TQDomElement &base, const TQDomElement &additive )
 {
-  static const TQString &tagAction = KGlobal::staticQString( "Action" );
-  static const TQString &tagMergeLocal = KGlobal::staticQString( "MergeLocal" );
-  static const TQString &attrName = KGlobal::staticQString( "name" );
+  static const TQString &tagAction = TDEGlobal::staticQString( "Action" );
+  static const TQString &tagMergeLocal = TDEGlobal::staticQString( "MergeLocal" );
+  static const TQString &attrName = TDEGlobal::staticQString( "name" );
 
   TQDomNode n = additive.firstChild();
   while ( !n.isNull() )

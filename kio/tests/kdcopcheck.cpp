@@ -44,7 +44,7 @@ TestService::TestService(const TQString &exec)
            this, TQT_SLOT(newApp(const TQCString&)));
    connect(kapp->dcopClient(), TQT_SIGNAL( applicationRemoved(const TQCString&)),
            this, TQT_SLOT(endApp(const TQCString&)));
-   connect(&proc, TQT_SIGNAL(processExited(KProcess *)),
+   connect(&proc, TQT_SIGNAL(processExited(TDEProcess *)),
            this, TQT_SLOT(appExit()));
 
    TQTimer::singleShot(20*1000, this, TQT_SLOT(stop()));

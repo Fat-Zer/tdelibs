@@ -662,7 +662,7 @@ int KAction::plug( TQWidget *w, int index )
         if ( m_parentCollection )
           instance = m_parentCollection->instance();
         else
-          instance = KGlobal::instance();
+          instance = TDEGlobal::instance();
         id = menu->insertItem( d->iconSet( KIcon::Small, 0, instance ), d->text(), this,//dsweet
                                  TQT_SLOT( slotPopupActivated() ), keyQt,
                                  -1, index );
@@ -702,7 +702,7 @@ int KAction::plug( TQWidget *w, int index )
     if ( m_parentCollection )
       instance = m_parentCollection->instance();
     else
-      instance = KGlobal::instance();
+      instance = TDEGlobal::instance();
 
     if ( icon().isEmpty() && !iconSet().pixmap().isNull() ) // old code using TQIconSet directly
     {

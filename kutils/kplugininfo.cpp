@@ -179,7 +179,7 @@ TQValueList<KPluginInfo*> KPluginInfo::fromFiles( const TQStringList & files, KC
 
 TQValueList<KPluginInfo*> KPluginInfo::fromKPartsInstanceName( const TQString & name, KConfig * config, const TQString & group )
 {
-    TQStringList files = KGlobal::dirs()->findAllResources( "data", name +
+    TQStringList files = TDEGlobal::dirs()->findAllResources( "data", name +
             "/kpartplugins/*.desktop", true, false );
     return fromFiles( files, config, group );
 }

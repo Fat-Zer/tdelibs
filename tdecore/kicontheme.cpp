@@ -95,7 +95,7 @@ KIconTheme::KIconTheme(const TQString& name, const TQString& appName)
     if (!appName.isEmpty() &&
        ( name == "crystalsvg" || name== "hicolor" || name == "locolor" ) )
     {
-	icnlibs = KGlobal::dirs()->resourceDirs("data");
+	icnlibs = TDEGlobal::dirs()->resourceDirs("data");
 	for (it=icnlibs.begin(); it!=icnlibs.end(); ++it)
 	{
 	    cDir = *it + appName + "/icons/" + name;
@@ -105,11 +105,11 @@ KIconTheme::KIconTheme(const TQString& name, const TQString& appName)
     }
     // Find the theme description file. These are always global.
 
-    icnlibs = KGlobal::dirs()->resourceDirs("icon");
-    icnlibs += KGlobal::dirs()->resourceDirs("xdgdata-icon");
+    icnlibs = TDEGlobal::dirs()->resourceDirs("icon");
+    icnlibs += TDEGlobal::dirs()->resourceDirs("xdgdata-icon");
     icnlibs += "/usr/share/pixmaps";
     // These are not in the icon spec, but e.g. GNOME puts some icons there anyway.
-    icnlibs += KGlobal::dirs()->resourceDirs("xdgdata-pixmap");
+    icnlibs += TDEGlobal::dirs()->resourceDirs("xdgdata-pixmap");
     for (it=icnlibs.begin(); it!=icnlibs.end(); ++it)
     {
         cDir = *it + name + "/";
@@ -448,7 +448,7 @@ TQString KIconTheme::current()
         return *_theme;
 
     _theme = new TQString();
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
     KConfigGroupSaver saver(config, "Icons");
     *_theme = config->readEntry("Theme",defaultThemeName());
     if ( *_theme == TQString::fromLatin1("hicolor") ) *_theme = defaultThemeName();
@@ -470,11 +470,11 @@ TQStringList KIconTheme::list()
         return *_theme_list;
 
     _theme_list = new TQStringList();
-    TQStringList icnlibs = KGlobal::dirs()->resourceDirs("icon");
-    icnlibs += (KGlobal::dirs()->resourceDirs("xdgdata-icon"));
+    TQStringList icnlibs = TDEGlobal::dirs()->resourceDirs("icon");
+    icnlibs += (TDEGlobal::dirs()->resourceDirs("xdgdata-icon"));
     icnlibs += "/usr/share/pixmaps";
     // These are not in the icon spec, but e.g. GNOME puts some icons there anyway.
-    icnlibs += KGlobal::dirs()->resourceDirs("xdgdata-pixmap");
+    icnlibs += TDEGlobal::dirs()->resourceDirs("xdgdata-pixmap");
     TQStringList::ConstIterator it;
     for (it=icnlibs.begin(); it!=icnlibs.end(); ++it)
     {

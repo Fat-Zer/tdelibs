@@ -301,7 +301,7 @@ bool KMdiDockContainer::eventFilter( TQObject *obj, TQEvent *event )
 		if ( m_movingState == WaitingForMoveStart )
 		{
 			TQPoint p( ( ( TQMouseEvent* ) event )->pos() - m_startEvent->pos() );
-			if ( p.manhattanLength() > KGlobalSettings::dndEventDelay() )
+			if ( p.manhattanLength() > TDEGlobalSettings::dndEventDelay() )
 			{
 				m_dockManager->eventFilter( m_dragPanel, TQT_TQEVENT(m_startEvent) );
 				m_dockManager->eventFilter( m_dragPanel, event );

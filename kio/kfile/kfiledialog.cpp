@@ -185,7 +185,7 @@ KFileDialog::~KFileDialog()
 {
     hide();
 
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
 
     if (d->urlBar)
         d->urlBar->save( config );
@@ -672,7 +672,7 @@ void KFileDialog::accept()
         locationEdit->insertItem( file, 1 );
     }
 
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
     config->setForceGlobal( true );
     writeConfig( config, ConfigGroup );
     config->setForceGlobal( false );
@@ -751,7 +751,7 @@ void KFileDialog::multiSelectionChanged()
         return;
     }
 
-    static const TQString &begin = KGlobal::staticQString(" \"");
+    static const TQString &begin = TDEGlobal::staticQString(" \"");
     KFileItemListIterator it ( *list );
     TQString text;
     while ( (item = it.current()) ) {
@@ -857,7 +857,7 @@ void KFileDialog::init(const TQString& startDir, const TQString& filter, TQWidge
                                  text );
 
     KURL docPath;
-    docPath.setPath( KGlobalSettings::documentPath() );
+    docPath.setPath( TDEGlobalSettings::documentPath() );
     if ( (u.path(+1) != docPath.path(+1)) &&
          TQDir(docPath.path(+1)).exists() )
     {
@@ -867,7 +867,7 @@ void KFileDialog::init(const TQString& startDir, const TQString& filter, TQWidge
                                      text );
     }
 
-    u.setPath( KGlobalSettings::desktopPath() );
+    u.setPath( TDEGlobalSettings::desktopPath() );
     text = i18n("Desktop: %1").arg( u.path( +1 ) );
     d->pathCombo->addDefaultURL( u,
                                  KMimeType::pixmapForURL( u, 0, KIcon::Small ),
@@ -1038,7 +1038,7 @@ void KFileDialog::init(const TQString& startDir, const TQString& filter, TQWidge
 
     initGUI(); // activate GM
 
-    KConfig* config = KGlobal::config();
+    KConfig* config = TDEGlobal::config();
     readRecentFiles( config );
 
     adjustSize();
@@ -1474,7 +1474,7 @@ KURL::List& KFileDialog::parseSelectedURLs() const
 
     d->urlList.clear();
     if ( d->filenames.contains( '/' )) { // assume _one_ absolute filename
-        static const TQString &prot = KGlobal::staticQString(":/");
+        static const TQString &prot = TDEGlobal::staticQString(":/");
         KURL u;
         if ( d->filenames.find( prot ) != -1 )
             u = d->filenames;
@@ -1717,16 +1717,16 @@ void KFileDialog::readConfig( KConfig *kc, const TQString& group )
     autoDirectoryFollowing = kc->readBoolEntry( AutoDirectoryFollowing,
                                                 DefaultDirectoryFollowing );
 
-    KGlobalSettings::Completion cm = (KGlobalSettings::Completion)
+    TDEGlobalSettings::Completion cm = (TDEGlobalSettings::Completion)
                                       kc->readNumEntry( PathComboCompletionMode,
-                                      KGlobalSettings::completionMode() );
-    if ( cm != KGlobalSettings::completionMode() )
+                                      TDEGlobalSettings::completionMode() );
+    if ( cm != TDEGlobalSettings::completionMode() )
         combo->setCompletionMode( cm );
 
-    cm = (KGlobalSettings::Completion)
+    cm = (TDEGlobalSettings::Completion)
          kc->readNumEntry( LocationComboCompletionMode,
-                           KGlobalSettings::completionMode() );
-    if ( cm != KGlobalSettings::completionMode() )
+                           TDEGlobalSettings::completionMode() );
+    if ( cm != TDEGlobalSettings::completionMode() )
         locationEdit->setCompletionMode( cm );
 
     // show or don't show the speedbar
@@ -1816,7 +1816,7 @@ void KFileDialog::slotCancel()
     ops->close();
     KDialogBase::slotCancel();
 
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
     config->setForceGlobal( true );
     writeConfig( config, ConfigGroup );
     config->setForceGlobal( false );
@@ -2332,7 +2332,7 @@ KURL KFileDialog::getStartURL( const TQString& startDir,
     if ( useDefaultStartDir )
     {
         if (lastDirectory->isEmpty()) {
-            lastDirectory->setPath(KGlobalSettings::documentPath());
+            lastDirectory->setPath(TDEGlobalSettings::documentPath());
             KURL home;
             home.setPath( TQDir::homeDirPath() );
             // if there is no docpath set (== home dir), we prefer the current

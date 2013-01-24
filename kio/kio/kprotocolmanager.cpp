@@ -189,7 +189,7 @@ KIO::CacheControl KProtocolManager::cacheControl()
 TQString KProtocolManager::cacheDir()
 {
   KConfig *cfg = http_config();
-  return cfg->readPathEntry("CacheDir", KGlobal::dirs()->saveLocation("cache","http"));
+  return cfg->readPathEntry("CacheDir", TDEGlobal::dirs()->saveLocation("cache","http"));
 }
 
 int KProtocolManager::maxCacheAge()
@@ -470,7 +470,7 @@ TQString KProtocolManager::defaultUserAgent( const TQString &_modifiers )
     }
     if( modifiers.contains('l') )
     {
-      TQStringList languageList = KGlobal::locale()->languageList();
+      TQStringList languageList = TDEGlobal::locale()->languageList();
       TQStringList::Iterator it = languageList.find( TQString::fromLatin1("C") );
       if( it != languageList.end() )
       {

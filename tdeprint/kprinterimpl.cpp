@@ -158,9 +158,9 @@ bool KPrinterImpl::printFiles(KPrinter *p, const TQStringList& f, bool flag)
 				}
 				else
 				{
-					KProcess proc;
+					TDEProcess proc;
 					proc << (flag?"mv":"cp") << f[0] << p->outputFileName();
-					if (!proc.start(KProcess::Block) || !proc.normalExit() || proc.exitStatus() != 0)
+					if (!proc.start(TDEProcess::Block) || !proc.normalExit() || proc.exitStatus() != 0)
 					{
 						p->setErrorMessage(i18n("Cannot save print file to %1. Check that you have write access to it.").arg(p->outputFileName()));
 						return false;
@@ -573,7 +573,7 @@ bool KPrinterImpl::setupSpecialCommand(TQString& cmd, KPrinter *p, const TQStrin
 }
 
 TQString KPrinterImpl::quote(const TQString& s)
-{ return KProcess::quote(s); }
+{ return TDEProcess::quote(s); }
 
 void KPrinterImpl::saveOptions(const TQMap<TQString,TQString>& opts)
 {
@@ -583,7 +583,7 @@ void KPrinterImpl::saveOptions(const TQMap<TQString,TQString>& opts)
 
 void KPrinterImpl::loadAppOptions()
 {
-	KConfig	*conf = KGlobal::config();
+	KConfig	*conf = TDEGlobal::config();
 	conf->setGroup("KPrinter Settings");
 	TQStringList	opts = conf->readListEntry("ApplicationOptions");
 	for (uint i=0; i<opts.count(); i+=2)
@@ -598,7 +598,7 @@ void KPrinterImpl::saveAppOptions()
 		if (it.key().startsWith("app-"))
 			optlist << it.key() << it.data();
 
-	KConfig	*conf = KGlobal::config();
+	KConfig	*conf = TDEGlobal::config();
 	conf->setGroup("KPrinter Settings");
 	conf->writeEntry("ApplicationOptions", optlist);
 }

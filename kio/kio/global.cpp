@@ -45,7 +45,7 @@
 KIO_EXPORT TQString KIO::convertSizeWithBytes( KIO::filesize_t size )
 {
     if ( size >= 1024 )
-        return convertSize( size ) + " (" + i18n( "%1 B" ).arg( KGlobal::locale()->formatNumber(size, 0) ) + ")";
+        return convertSize( size ) + " (" + i18n( "%1 B" ).arg( TDEGlobal::locale()->formatNumber(size, 0) ) + ")";
     else
 	return convertSize( size );
 }
@@ -59,26 +59,26 @@ KIO_EXPORT TQString KIO::convertSize( KIO::filesize_t size )
     {
         fsize /= 1073741824.0;
         if ( fsize > 1024 ) // Tera-byte
-            s = i18n( "%1 TB" ).arg( KGlobal::locale()->formatNumber(fsize / 1024.0, 1));
+            s = i18n( "%1 TB" ).arg( TDEGlobal::locale()->formatNumber(fsize / 1024.0, 1));
         else
-            s = i18n( "%1 GB" ).arg( KGlobal::locale()->formatNumber(fsize, 1));
+            s = i18n( "%1 GB" ).arg( TDEGlobal::locale()->formatNumber(fsize, 1));
     }
     // Mega-byte
     else if ( size >= 1048576 )
     {
         fsize /= 1048576.0;
-        s = i18n( "%1 MB" ).arg( KGlobal::locale()->formatNumber(fsize, 1));
+        s = i18n( "%1 MB" ).arg( TDEGlobal::locale()->formatNumber(fsize, 1));
     }
     // Kilo-byte
     else if ( size >= 1024 )
     {
         fsize /= 1024.0;
-        s = i18n( "%1 KB" ).arg( KGlobal::locale()->formatNumber(fsize, 1));
+        s = i18n( "%1 KB" ).arg( TDEGlobal::locale()->formatNumber(fsize, 1));
     }
     // Just byte
     else if ( size > 0 )
     {
-        s = i18n( "%1 B" ).arg( KGlobal::locale()->formatNumber(fsize, 0));
+        s = i18n( "%1 B" ).arg( TDEGlobal::locale()->formatNumber(fsize, 0));
     }
     // Nothing
     else
@@ -117,7 +117,7 @@ KIO_EXPORT TQString KIO::convertSeconds( unsigned int seconds )
   seconds            = (seconds - (days * 86400) - (hours * 3600) - (mins * 60));
 
   const TQTime time(hours, mins, seconds);
-  const TQString timeStr( KGlobal::locale()->formatTime(time, true /*with seconds*/, true /*duration*/) );
+  const TQString timeStr( TDEGlobal::locale()->formatTime(time, true /*with seconds*/, true /*duration*/) );
   if ( days > 0 )
     return i18n("1 day %1", "%n days %1", days).arg(timeStr);
   else
@@ -477,7 +477,7 @@ KIO_EXPORT TQStringList KIO::Job::detailedErrorStrings( const KURL *reqUrl /*= 0
     url = i18n( "(unknown)" );
   }
 
-  datetime = KGlobal::locale()->formatDateTime( TQDateTime::currentDateTime(),
+  datetime = TDEGlobal::locale()->formatDateTime( TQDateTime::currentDateTime(),
                                                 false );
 
   ret << errorName;
@@ -559,7 +559,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
     protocol = i18n( "(unknown)" );
   }
 
-  datetime = KGlobal::locale()->formatDateTime( TQDateTime::currentDateTime(),
+  datetime = TDEGlobal::locale()->formatDateTime( TQDateTime::currentDateTime(),
                                                 false );
 
   TQString errorName, techName, description;
@@ -1666,7 +1666,7 @@ static TQString get_mount_info(const TQString& filename,
        gotDevice = true;
        if (stat_buf.st_dev == rootDevice)
        {
-          static const TQString &root = KGlobal::staticQString("/");
+          static const TQString &root = TDEGlobal::staticQString("/");
           isautofs = Wrong;
           isslow = Wrong;
           ismanual = Wrong;

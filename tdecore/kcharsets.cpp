@@ -535,7 +535,7 @@ TQTextCodec *KCharsets::codecForName(const TQString &n, bool &ok) const
         return codec; // cache hit, return
 
     if (n.isEmpty()) {
-        codec = KGlobal::locale()->codecForEncoding();
+        codec = TDEGlobal::locale()->codecForEncoding();
         d->codecForNameDict.replace("->locale<-", codec);
         return codec;
     }
@@ -572,8 +572,8 @@ TQTextCodec *KCharsets::codecForName(const TQString &n, bool &ok) const
 
     TQString dir;
     {
-    KConfigGroupSaver cfgsav( KGlobal::config(), "i18n" );
-    dir = KGlobal::config()->readPathEntry("i18ndir", TQString::fromLatin1("/usr/share/i18n/charmaps"));
+    KConfigGroupSaver cfgsav( TDEGlobal::config(), "i18n" );
+    dir = TDEGlobal::config()->readPathEntry("i18ndir", TQString::fromLatin1("/usr/share/i18n/charmaps"));
     }
 
     // these are codecs not included in Qt. They can be build up if the corresponding charmap

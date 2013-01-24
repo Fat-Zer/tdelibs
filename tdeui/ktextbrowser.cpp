@@ -112,7 +112,7 @@ void KTextBrowser::viewportMouseMoveEvent( TQMouseEvent* e)
 
 void KTextBrowser::contentsWheelEvent( TQWheelEvent *e )
 {
-    if ( KGlobalSettings::wheelMouseZooms() )
+    if ( TDEGlobalSettings::wheelMouseZooms() )
         TQTextBrowser::contentsWheelEvent( e );
     else // thanks, we don't want to zoom, so skip QTextEdit's impl.
         TQScrollView::contentsWheelEvent( e );

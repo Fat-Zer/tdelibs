@@ -31,7 +31,7 @@ class TDEAboutData;
 class KCModule;
 class KCModuleInfo;
 class TDEInstance;
-class KProcess;
+class TDEProcess;
 
 /**
  * @ingroup kcmodule

@@ -106,7 +106,7 @@ Kded::Kded(bool checkUpdates, bool new_startup)
   TQCString cPath;
   TQCString ksycoca_env = getenv("TDESYCOCA");
   if (ksycoca_env.isEmpty())
-     cPath = TQFile::encodeName(KGlobal::dirs()->saveLocation("tmp")+"ksycoca");
+     cPath = TQFile::encodeName(TDEGlobal::dirs()->saveLocation("tmp")+"ksycoca");
   else
      cPath = ksycoca_env;
   m_pTimer = new TQTimer(this);
@@ -665,7 +665,7 @@ KUpdateD::KUpdateD()
     TQObject::connect( m_pDirWatch, TQT_SIGNAL(dirty(const TQString&)),
            this, TQT_SLOT(slotNewUpdateFile()));
 
-    TQStringList dirs = KGlobal::dirs()->findDirs("data", "kconf_update");
+    TQStringList dirs = TDEGlobal::dirs()->findDirs("data", "kconf_update");
     for( TQStringList::ConstIterator it = dirs.begin();
          it != dirs.end();
          ++it )

@@ -743,10 +743,10 @@ void
 TDECmdLineArgs::enable_i18n()
 {
     // called twice or too late
-    if (KGlobal::_locale)
+    if (TDEGlobal::_locale)
       return;
 
-    if (!KGlobal::_instance) {
+    if (!TDEGlobal::_instance) {
   TDEInstance *instance = new TDEInstance(about);
   (void) instance->config();
   // Don't delete instance!
@@ -756,7 +756,7 @@ TDECmdLineArgs::enable_i18n()
 void
 TDECmdLineArgs::usage(const TQString &error)
 {
-    assert(KGlobal::_locale);
+    assert(TDEGlobal::_locale);
     TQCString localError = error.local8Bit();
     if (localError[error.length()-1] == '\n')
   localError = localError.left(error.length()-1);

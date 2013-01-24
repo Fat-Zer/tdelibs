@@ -64,13 +64,13 @@ KAction* create( StdAction id, const char *name, const TQObject *recvr, const ch
 		 case Preferences:
 		 case HelpContents:
 			{
-			const TDEAboutData *aboutData = KGlobal::instance()->aboutData();
+			const TDEAboutData *aboutData = TDEGlobal::instance()->aboutData();
 			/* TODO KDE4
 			const TDEAboutData *aboutData;
 			if ( parent )
 			    aboutData = parent->instance()->aboutData();
 			else
-			    aboutData = KGlobal::instance()->aboutData();
+			    aboutData = TDEGlobal::instance()->aboutData();
 			*/
 			TQString appName = (aboutData) ? aboutData->programName() : TQString::fromLatin1(tqApp->name());
 			sLabel = i18n(pInfo->psLabel).arg(appName);

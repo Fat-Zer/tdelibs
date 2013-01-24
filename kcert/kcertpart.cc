@@ -775,7 +775,7 @@ void KCertPart::slotDone() {
 void KCertPart::slotLaunch() {
 KShellProcess p;
 p << "kcmshell" << "crypto";
-p.start(KProcess::DontCare);
+p.start(TDEProcess::DontCare);
 }
 
 

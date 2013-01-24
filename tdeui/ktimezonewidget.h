@@ -98,7 +98,7 @@ public:
      * transformed via an i18n lookup, so the caller should previously have
      * set the timezone catalogue:
      * \code
-     * KGlobal::locale()->insertCatalogue("timezones");
+     * TDEGlobal::locale()->insertCatalogue("timezones");
      * \endcode
      *
      * @return formatted timezone name.

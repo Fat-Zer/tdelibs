@@ -60,7 +60,7 @@ void KMConfigDialog::addConfigPage(KMConfigPage *page)
 {
 	if (page)
 	{
-		TQPixmap icon = KGlobal::instance()->iconLoader()->loadIcon(
+		TQPixmap icon = TDEGlobal::instance()->iconLoader()->loadIcon(
 		                                                           page->pagePixmap(),
 		                                                           KIcon::NoGroup,
                         	                                           KIcon::SizeMedium

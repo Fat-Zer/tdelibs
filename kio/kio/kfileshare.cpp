@@ -181,7 +181,7 @@ void KFileShare::readShareList()
     }
     KProcIO proc;
     proc << exe;
-    if ( !proc.start( KProcess::Block ) ) {
+    if ( !proc.start( TDEProcess::Block ) ) {
         kdError() << "Can't run " << exe << endl;
         s_authorization = ErrorNotFound;
         return;
@@ -264,11 +264,11 @@ bool KFileShare::SuSEsetShared( const TQString& path, bool shared, bool rw )
         return false;
 
     // we want to share, so we kick it first - just to be sure
-    KProcess proc;
+    TDEProcess proc;
     proc << exe;
     proc << "--remove";
     proc << path;
-    proc.start( KProcess::Block );
+    proc.start( TDEProcess::Block );
     proc.clearArguments();
         
     proc << exe;
@@ -279,7 +279,7 @@ bool KFileShare::SuSEsetShared( const TQString& path, bool shared, bool rw )
     else
         proc << "--remove";
     proc << path;
-    proc.start( KProcess::Block ); // should be ok, the perl script terminates fast
+    proc.start( TDEProcess::Block ); // should be ok, the perl script terminates fast
     bool ok = proc.normalExit() && (proc.exitStatus() == 0);
     kdDebug(7000) << "KFileSharePropsPlugin::setShared normalExit=" 
                   << proc.normalExit() << endl;

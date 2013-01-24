@@ -1635,7 +1635,7 @@ KDockManager::KDockManager( TQWidget* mainWindow , const char* name )
   d->mainDockWidget=0;
 
 #ifndef NO_KDE2
-  d->splitterOpaqueResize = KGlobalSettings::opaqueResize();
+  d->splitterOpaqueResize = TDEGlobalSettings::opaqueResize();
 #else
   d->splitterOpaqueResize = false;
 #endif
@@ -2531,7 +2531,7 @@ void KDockManager::setReadDockConfigMode(int mode)
 void KDockManager::writeConfig( KConfig* c, TQString group )
 {
   //debug("BEGIN Write Config");
-  if ( !c ) c = KGlobal::config();
+  if ( !c ) c = TDEGlobal::config();
   if ( group.isEmpty() ) group = "dock_setting_default";
 
   c->setGroup( group );
@@ -2672,7 +2672,7 @@ void KDockManager::writeConfig( KConfig* c, TQString group )
 #include <tqmessagebox.h>
 void KDockManager::readConfig( KConfig* c, TQString group )
 {
-  if ( !c ) c = KGlobal::config();
+  if ( !c ) c = TDEGlobal::config();
   if ( group.isEmpty() ) group = "dock_setting_default";
 
   c->setGroup( group );

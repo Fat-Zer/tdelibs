@@ -436,7 +436,7 @@ void KAboutContainerBase::fontChange( const TQFont &/*oldFont*/ )
 {
   if( mTitleLabel )
   {
-    TQFont f( KGlobalSettings::generalFont() );
+    TQFont f( TDEGlobalSettings::generalFont() );
     f.setBold( true );
     int fs = f.pointSize();
     if (fs == -1)
@@ -447,7 +447,7 @@ void KAboutContainerBase::fontChange( const TQFont &/*oldFont*/ )
 
   if( mVersionLabel )
   {
-    TQFont f( KGlobalSettings::generalFont() );
+    TQFont f( TDEGlobalSettings::generalFont() );
     f.setBold( true );
     mVersionLabel->setFont(f);
     mAuthorLabel->setFont(f);
@@ -502,7 +502,7 @@ TQFrame *KAboutContainerBase::addLicensePage( const TQString &title,
   TQVBoxLayout* const vbox = new TQVBoxLayout( page, KDialog::spacingHint() );
 
   KTextEdit* const textEdit = new KTextEdit( page, "license" );
-  textEdit->setFont( KGlobalSettings::fixedFont() );
+  textEdit->setFont( TDEGlobalSettings::fixedFont() );
   textEdit->setReadOnly( true );
   textEdit->setWordWrap( TQTextEdit::NoWrap );
   textEdit->setText( text );

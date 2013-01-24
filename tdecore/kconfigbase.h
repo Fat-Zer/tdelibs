@@ -62,7 +62,7 @@ class KConfigGroup;
  * a group name.
  *
  * @author Kalle Dalheimer <kalle@kde.org>, Preston Brown <pbrown@kde.org>
- * @see KGlobal#config()
+ * @see TDEGlobal#config()
  * @see KConfig
  * @see KSimpleConfig
  * @see KSharedConfig

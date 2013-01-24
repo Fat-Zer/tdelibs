@@ -102,7 +102,7 @@ public:
 
     /**
      * Sets the Icon Set for this button. It also takes into account hte
-     * KGlobalSettings::showIconsOnPushButtons() setting.
+     * TDEGlobalSettings::showIconsOnPushButtons() setting.
      */
     void setIconSet( const TQIconSet &iconSet );
 

@@ -42,10 +42,10 @@
 #include <kmimetype.h>
 
 KPreviewProc::KPreviewProc()
-: KProcess()
+: TDEProcess()
 {
 	m_bOk = false;
-	connect(this, TQT_SIGNAL(processExited(KProcess*)), TQT_SLOT(slotProcessExited(KProcess*)));
+	connect(this, TQT_SIGNAL(processExited(TDEProcess*)), TQT_SLOT(slotProcessExited(TDEProcess*)));
 }
 
 KPreviewProc::~KPreviewProc()
@@ -63,7 +63,7 @@ bool KPreviewProc::startPreview()
 		return false;
 }
 
-void KPreviewProc::slotProcessExited(KProcess* proc)
+void KPreviewProc::slotProcessExited(TDEProcess* proc)
 {
 	kapp->exit_loop();
 	if ( proc->normalExit() && proc->exitStatus() == 0 )

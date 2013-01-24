@@ -186,7 +186,7 @@ TQString KURIFilterData::iconName()
                 if (service && service->icon() != TQString::fromLatin1( "unknown" )) {
                     m_strIconName = service->icon();
                 }
-                else if ( !KGlobal::iconLoader()->loadIcon( exeName, KIcon::NoGroup, 16, KIcon::DefaultState, 0, true ).isNull() ) {
+                else if ( !TDEGlobal::iconLoader()->loadIcon( exeName, KIcon::NoGroup, 16, KIcon::DefaultState, 0, true ).isNull() ) {
                     m_strIconName = exeName;
                 }
                 else {
@@ -200,7 +200,7 @@ TQString KURIFilterData::iconName()
 		if (service && service->icon() != TQString::fromLatin1( "unknown" )) {
 			m_strIconName = service->icon();
 		}
-		else if ( !KGlobal::iconLoader()->loadIcon( exeName, KIcon::NoGroup, 16, KIcon::DefaultState, 0, true ).isNull() ) {
+		else if ( !TDEGlobal::iconLoader()->loadIcon( exeName, KIcon::NoGroup, 16, KIcon::DefaultState, 0, true ).isNull() ) {
 			m_strIconName = exeName;
 		}
 		else {
@@ -239,7 +239,7 @@ TQString KURIFilterData::iconName()
 					// See if there is a system icon we can use
 					TQString sysIconName = elf_get_resource(handle, ".metadata_sysicon");
 					if (!sysIconName.isEmpty()) {
-						if (KGlobal::iconLoader()->iconPath(sysIconName.ascii(), 0, true) != "") {
+						if (TDEGlobal::iconLoader()->iconPath(sysIconName.ascii(), 0, true) != "") {
 							m_strIconName = sysIconName;
 						}
 					}
@@ -255,7 +255,7 @@ TQString KURIFilterData::iconName()
 							// Try loading this icon as fallback
 							icon = libr_icon_geticon_byname(handle, entry->name);
 						}
-						if (KGlobal::iconLoader()->iconPath(entry->name, 0, true) != "") {
+						if (TDEGlobal::iconLoader()->iconPath(entry->name, 0, true) != "") {
 							iconresnamefound = 1;
 							m_strIconName = entry->name;
 							break;

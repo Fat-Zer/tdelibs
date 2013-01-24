@@ -55,7 +55,7 @@ void KServiceTypeProfile::initStatic()
 
   KConfig config( "profilerc", true, false);
 
-  static const TQString & defaultGroup = KGlobal::staticQString("<default>");
+  static const TQString & defaultGroup = TDEGlobal::staticQString("<default>");
 
   TQStringList tmpList = config.groupList();
   for (TQStringList::Iterator aIt = tmpList.begin();
@@ -243,7 +243,7 @@ bool KServiceTypeProfile::allowAsDefault( const TQString& _service ) const
 KServiceTypeProfile* KServiceTypeProfile::serviceTypeProfile( const TQString& _servicetype, const TQString& _genericServiceType )
 {
   initStatic();
-  static const TQString& app_str = KGlobal::staticQString("Application");
+  static const TQString& app_str = TDEGlobal::staticQString("Application");
 
   const TQString &_genservicetype  = ((!_genericServiceType.isEmpty()) ? _genericServiceType : app_str);
 

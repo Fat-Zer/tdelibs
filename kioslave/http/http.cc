@@ -100,7 +100,7 @@ int kdemain( int argc, char **argv )
 {
   KLocale::setMainCatalogue("tdelibs");
   TDEInstance instance( "kio_http" );
-  ( void ) KGlobal::locale();
+  ( void ) TDEGlobal::locale();
 
   if (argc != 4)
   {
@@ -5120,7 +5120,7 @@ void HTTPProtocol::configAuth( char *p, bool isForProxy )
     {
       //for sites like lib.homelinux.org
       TQTextCodec* oldCodec=TQTextCodec::codecForCStrings();
-      if (KGlobal::locale()->language().contains("ru"))
+      if (TDEGlobal::locale()->language().contains("ru"))
         TQTextCodec::setCodecForCStrings(TQTextCodec::codecForName("CP1251"));
 
       p += 6;

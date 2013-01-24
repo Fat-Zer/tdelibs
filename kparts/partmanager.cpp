@@ -479,7 +479,7 @@ void PartManager::setActivePart( Part *part, TQWidget *widget )
       TQApplication::sendEvent( d->m_activeWidget, &ev );
     }
   }
-  // Set the new active instance in KGlobal
+  // Set the new active instance in TDEGlobal
   setActiveInstance( d->m_activePart ? d->m_activePart->instance() : 0L );
 
   kdDebug(1000) << this << " emitting activePartChanged " << d->m_activePart << endl;
@@ -489,7 +489,7 @@ void PartManager::setActivePart( Part *part, TQWidget *widget )
 void PartManager::setActiveInstance( TDEInstance * instance )
 {
   // It's a separate method to allow redefining this behavior
-  KGlobal::_activeInstance = instance;
+  TDEGlobal::_activeInstance = instance;
 }
 
 Part *PartManager::activePart() const

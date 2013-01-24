@@ -45,7 +45,7 @@ int main(int argc, char **argv) {
 
     assert( KProtocolInfo::showFilePreview( "file" ) == true );
     assert( KProtocolInfo::showFilePreview( "audiocd" ) == false );
-    assert( KGlobalSettings::showFilePreview( "audiocd:/" ) == false );
+    assert( TDEGlobalSettings::showFilePreview( "audiocd:/" ) == false );
 
     TQString proxy;
     TQString protocol = KProtocolManager::slaveProtocol( "http://bugs.kde.org", proxy );

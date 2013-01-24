@@ -462,7 +462,7 @@ void KActionCollection::setInstance( TDEInstance *instance )
   if ( instance )
     d->m_instance = instance;
   else
-    d->m_instance = KGlobal::instance();
+    d->m_instance = TDEGlobal::instance();
 }
 
 TDEInstance *KActionCollection::instance() const

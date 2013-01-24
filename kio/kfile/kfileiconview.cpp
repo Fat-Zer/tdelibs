@@ -365,7 +365,7 @@ void KFileIconView::selected( TQIconViewItem *item )
     if ( !item || (TDEApplication::keyboardMouseState() & (ShiftButton | ControlButton)) != 0 )
 	return;
 
-    if ( KGlobalSettings::singleClick() ) {
+    if ( TDEGlobalSettings::singleClick() ) {
 	const KFileItem *fi = ( (KFileIconViewItem*)item )->fileInfo();
 	if ( fi && (fi->isDir() || !onlyDoubleClickSelectsFiles()) )
 	    sig->activate( fi );
@@ -547,7 +547,7 @@ void KFileIconView::slotLargeRows()
     // setIconSize() all call arrangeItemsInGrid() :( Prevent this.
     d->noArrangement = true; // stop arrangeItemsInGrid()!
 
-    setGridX( KGlobal::iconLoader()->currentSize( KIcon::Desktop ) + 50 );
+    setGridX( TDEGlobal::iconLoader()->currentSize( KIcon::Desktop ) + 50 );
     setItemTextPos( Bottom );
     setArrangement( LeftToRight );
     setWordWrapIconText( true );

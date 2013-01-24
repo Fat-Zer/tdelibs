@@ -186,7 +186,7 @@ class KDE_EXPORT ProviderLoader : public TQObject
      *
      * @param type data type such as 'kdesktop/wallpaper'.
      * @param providerList the URl to the list of providers; if empty
-     *    we first try the ProvidersUrl from KGlobal::config, then we
+     *    we first try the ProvidersUrl from TDEGlobal::config, then we
      *    fall back to a hardcoded value.
      */
     void load( const TQString &type, const TQString &providerList = TQString::null );

@@ -135,7 +135,7 @@ KHTMLImage::~KHTMLImage()
 
 bool KHTMLImage::openURL( const KURL &url )
 {
-    static const TQString &html = KGlobal::staticQString( "<html><body><img src=\"%1\"></body></html>" );
+    static const TQString &html = TDEGlobal::staticQString( "<html><body><img src=\"%1\"></body></html>" );
 
     disposeImage();
 

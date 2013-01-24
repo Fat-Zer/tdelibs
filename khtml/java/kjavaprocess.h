@@ -39,7 +39,7 @@
  */
 
 class KJavaProcessPrivate;
-class KJavaProcess : public KProcess //QObject
+class KJavaProcess : public TDEProcess //QObject
 {
 Q_OBJECT
 
@@ -64,7 +64,7 @@ public:
 
     /**
      * Returns the status of the java Process- true if it's ok, false if it has died.
-     * It calls KProcess::isRunning()
+     * It calls TDEProcess::isRunning()
      */
     bool isRunning();
 
@@ -139,7 +139,7 @@ protected slots:
     /**
      * This slot is called when the Java Process exited.
      */
-    void slotExited( KProcess *process );
+    void slotExited( TDEProcess *process );
 
 protected:
     virtual bool invokeJVM();
@@ -150,7 +150,7 @@ protected:
     void        sendBuffer( TQByteArray* buff );
     void        storeSize( TQByteArray* buff );
 
-    KProcess* javaProcess;
+    TDEProcess* javaProcess;
 
 signals:
     void received( const TQByteArray& );

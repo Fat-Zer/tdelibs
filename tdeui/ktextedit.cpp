@@ -252,7 +252,7 @@ TQPopupMenu *KTextEdit::createPopupMenu()
 
 void KTextEdit::contentsWheelEvent( TQWheelEvent *e )
 {
-    if ( KGlobalSettings::wheelMouseZooms() )
+    if ( TDEGlobalSettings::wheelMouseZooms() )
         TQTextEdit::contentsWheelEvent( e );
     else // thanks, we don't want to zoom, so skip QTextEdit's impl.
         TQScrollView::contentsWheelEvent( e );

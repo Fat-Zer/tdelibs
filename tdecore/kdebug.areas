@@ -19,7 +19,7 @@
 172        tdecore (KStartupInfo)
 173        tdecore (KLocale)
 174        tdecore (KProcIO)
-175        tdecore (KProcess)
+175        tdecore (TDEProcess)
 176        tdecore (KWin)
 177        tdecore (KConfigSkeleton)
 178        tdecore (KConfigDialogManager)

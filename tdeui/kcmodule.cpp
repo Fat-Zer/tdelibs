@@ -65,10 +65,10 @@ KCModule::KCModule(TQWidget *parent, const char *name, const TQStringList &)
     init();
     if (name && strlen(name)) {
         d->_instance = new TDEInstance(name);
-        KGlobal::locale()->insertCatalogue(name);
+        TDEGlobal::locale()->insertCatalogue(name);
     } else
         d->_instance = new TDEInstance("kcmunnamed");
-    KGlobal::setActiveInstance(this->instance());
+    TDEGlobal::setActiveInstance(this->instance());
 
     d->managers.setAutoDelete( true );
 
@@ -82,11 +82,11 @@ KCModule::KCModule(TDEInstance *instance, TQWidget *parent, const TQStringList &
 
     if (instance)
     {
-        KGlobal::locale()->insertCatalogue(instance->instanceName());
+        TDEGlobal::locale()->insertCatalogue(instance->instanceName());
     }
 
     d->_hasOwnInstance = false;
-    KGlobal::setActiveInstance(this->instance());
+    TDEGlobal::setActiveInstance(this->instance());
 }
 
 void KCModule::init()

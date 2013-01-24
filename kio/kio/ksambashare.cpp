@@ -151,7 +151,7 @@ bool KSambaSharePrivate::readSmbConf() {
       TQString name = completeLine.left(i).stripWhiteSpace().lower();
       TQString value = completeLine.mid(i+1).stripWhiteSpace();
 
-      if (name == KGlobal::staticQString("path")) {
+      if (name == TDEGlobal::staticQString("path")) {
         // Handle quotation marks
         if ( value[0] == '"' )
           value.remove(0,1);

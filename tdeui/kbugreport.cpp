@@ -79,11 +79,11 @@ KBugReport::KBugReport( TQWidget * parentw, bool modal, const TDEAboutData *abou
   d = new KBugReportPrivate;
 
   // Use supplied aboutdata, otherwise the one from the active instance
-  // otherwise the KGlobal one. _activeInstance should neved be 0L in theory.
+  // otherwise the TDEGlobal one. _activeInstance should neved be 0L in theory.
   m_aboutData = aboutData
     ? aboutData
-    : ( KGlobal::_activeInstance ? KGlobal::_activeInstance->aboutData()
-                                 : KGlobal::instance()->aboutData() );
+    : ( TDEGlobal::_activeInstance ? TDEGlobal::_activeInstance->aboutData()
+                                 : TDEGlobal::instance()->aboutData() );
   m_process = 0;
   TQWidget * parent = plainPage();
   d->submitBugButton = 0;
@@ -318,9 +318,9 @@ void KBugReport::appChanged(int i)
 void KBugReport::slotConfigureEmail()
 {
   if (m_process) return;
-  m_process = new KProcess;
+  m_process = new TDEProcess;
   *m_process << TQString::fromLatin1("kcmshell") << TQString::fromLatin1("kcm_useraccount");
-  connect(m_process, TQT_SIGNAL(processExited(KProcess *)), TQT_SLOT(slotSetFrom()));
+  connect(m_process, TQT_SIGNAL(processExited(TDEProcess *)), TQT_SLOT(slotSetFrom()));
   if (!m_process->start())
   {
     kdDebug() << "Couldn't start kcmshell.." << endl;
@@ -460,9 +460,9 @@ TQString KBugReport::text() const
      bodyText += line;
   }
 
-  if (severity == TQString::fromLatin1("i18n") && KGlobal::locale()->language() != KLocale::defaultLanguage()) {
+  if (severity == TQString::fromLatin1("i18n") && TDEGlobal::locale()->language() != KLocale::defaultLanguage()) {
       // Case 1 : i18n bug
-      TQString package = TQString::fromLatin1("i18n_%1").arg(KGlobal::locale()->language());
+      TQString package = TQString::fromLatin1("i18n_%1").arg(TDEGlobal::locale()->language());
       package = package.replace(TQString::fromLatin1("_"), TQString::fromLatin1("-"));
       return TQString::fromLatin1("Package: %1").arg(package) +
           TQString::fromLatin1("\n"
@@ -498,11 +498,11 @@ bool KBugReport::sendBugReport()
 
   TQString subject = m_subject->text();
   command += " --subject ";
-  command += KProcess::quote(subject);
+  command += TDEProcess::quote(subject);
   command += " --recipient ";
-  command += KProcess::quote(recipient);
+  command += TDEProcess::quote(recipient);
   command += " > ";
-  command += KProcess::quote(outputfile.name());
+  command += TDEProcess::quote(outputfile.name());
 
   fflush(stdin);
   fflush(stderr);

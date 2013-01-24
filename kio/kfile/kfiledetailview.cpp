@@ -234,7 +234,7 @@ void KFileDetailView::selected( TQListViewItem *item )
     if ( !item )
         return;
 
-    if ( KGlobalSettings::singleClick() ) {
+    if ( TDEGlobalSettings::singleClick() ) {
         const KFileItem *fi = ( (KFileListViewItem*)item )->fileInfo();
         if ( fi && (fi->isDir() || !onlyDoubleClickSelectsFiles()) )
             sig->activate( fi );
@@ -671,7 +671,7 @@ void KFileListViewItem::init()
     KFileListViewItem::setPixmap( COL_NAME, inf->pixmap(KIcon::SizeSmall));
 
     setText( COL_NAME, inf->text() );
-    setText( COL_SIZE, KGlobal::locale()->formatNumber( inf->size(), 0));
+    setText( COL_SIZE, TDEGlobal::locale()->formatNumber( inf->size(), 0));
     setText( COL_DATE,  inf->timeString() );
     setText( COL_PERM,  inf->permissionsString() );
     setText( COL_OWNER, inf->user() );

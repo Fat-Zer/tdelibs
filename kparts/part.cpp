@@ -110,9 +110,9 @@ void PartBase::setInstance( TDEInstance *inst )
 void PartBase::setInstance( TDEInstance *inst, bool bLoadPlugins )
 {
   KXMLGUIClient::setInstance( inst );
-  KGlobal::locale()->insertCatalogue( inst->instanceName() );
+  TDEGlobal::locale()->insertCatalogue( inst->instanceName() );
   // install 'instancename'data resource type
-  KGlobal::dirs()->addResourceType( inst->instanceName() + "data",
+  TDEGlobal::dirs()->addResourceType( inst->instanceName() + "data",
                                     KStandardDirs::kde_default( "data" )
                                     + TQString::fromLatin1( inst->instanceName() ) + '/' );
   if ( bLoadPlugins )

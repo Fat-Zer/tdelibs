@@ -29,10 +29,10 @@ class KAccelAction;
 class KAccelActions;
 class KConfigBase;
 
-class KGlobalAccelPrivate;
+class TDEGlobalAccelPrivate;
 
 /**
-* KGlobalAccel allows you to have global accelerators that are independent of
+* TDEGlobalAccel allows you to have global accelerators that are independent of
 * the focused window. Unlike KAccel it does not matter which window is 
 * currently active.
 *
@@ -42,28 +42,28 @@ class KGlobalAccelPrivate;
 * @see KKeyDialog
 * @short Configurable global shortcut support
 */
-class TDECORE_EXPORT KGlobalAccel : public TQObject
+class TDECORE_EXPORT TDEGlobalAccel : public TQObject
 {
 	Q_OBJECT
  public:
 	/**
-	 * Creates a new KGlobalAccel object with the given pParent and
+	 * Creates a new TDEGlobalAccel object with the given pParent and
 	 * psName.
 	 * @param pParent the parent of the QObject
 	 * @param psName the name of the QObject
 	 */
-	KGlobalAccel( TQObject* pParent, const char* psName = 0 );
-	virtual ~KGlobalAccel();
+	TDEGlobalAccel( TQObject* pParent, const char* psName = 0 );
+	virtual ~TDEGlobalAccel();
 
 	/**
 	 * Checks whether the accelerators are enabled.
-	 * @return true if the KGlobalAccel is enabled
+	 * @return true if the TDEGlobalAccel is enabled
 	 */
 	bool isEnabled();
 	
 	/**
-	 * Enables or disables the KGlobalAccel
-	 * @param bEnabled true if the KGlobalAccel should be enabled, false if it
+	 * Enables or disables the TDEGlobalAccel
+	 * @param bEnabled true if the TDEGlobalAccel should be enabled, false if it
 	 *  should be disabled.
 	 */
 	void setEnabled( bool bEnabled );
@@ -171,7 +171,7 @@ class TDECORE_EXPORT KGlobalAccel : public TQObject
 	/**
 	 * Read all shortcuts from @p pConfig, or (if @p pConfig
 	 * is zero) from the application's configuration file
-	 * KGlobal::config().
+	 * TDEGlobal::config().
 	 * @param pConfig the configuration file to read from, or 0 for the application
 	 *                 configuration file
 	 * @return true if successful, false otherwise
@@ -219,7 +219,7 @@ class TDECORE_EXPORT KGlobalAccel : public TQObject
         /**
          * @internal
          */
-        // like setEnabled(), but doesn't ungrab (see in KGlobalAccelPrivate)
+        // like setEnabled(), but doesn't ungrab (see in TDEGlobalAccelPrivate)
         void suspend( bool s );
 
 private:
@@ -227,13 +227,13 @@ private:
 	KAccelActions& actions();
 	const KAccelActions& actions() const;
 
-	friend class KGlobalAccelPrivate;
+	friend class TDEGlobalAccelPrivate;
 	friend class KAccelShortcutList;
 protected:
 	/** \internal */
 	virtual void virtual_hook( int id, void* data );
 private:
-	class KGlobalAccelPrivate* d;
+	class TDEGlobalAccelPrivate* d;
 };
 
 #endif // _KGLOBALACCEL_H_

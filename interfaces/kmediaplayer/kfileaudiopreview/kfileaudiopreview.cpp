@@ -56,7 +56,7 @@ public:
 KFileAudioPreview::KFileAudioPreview( TQWidget *parent, const char *name )
     : KPreviewWidgetBase( parent, name )
 {
-    KGlobal::locale()->insertCatalogue("kfileaudiopreview");    
+    TDEGlobal::locale()->insertCatalogue("kfileaudiopreview");    
 
     TQStringList formats = KDE::PlayObjectFactory::mimeTypes();
     // ###
@@ -91,14 +91,14 @@ KFileAudioPreview::KFileAudioPreview( TQWidget *parent, const char *name )
     }
 
     m_autoPlay = new TQCheckBox( i18n("Play &automatically"), box );
-    KConfigGroup config( KGlobal::config(), ConfigGroup );
+    KConfigGroup config( TDEGlobal::config(), ConfigGroup );
     m_autoPlay->setChecked( config.readBoolEntry( "Autoplay sounds", true ) );
     connect( m_autoPlay, TQT_SIGNAL(toggled(bool)), TQT_SLOT(toggleAuto(bool)) );
 }
 
 KFileAudioPreview::~KFileAudioPreview()
 {
-    KConfigGroup config( KGlobal::config(), ConfigGroup );
+    KConfigGroup config( TDEGlobal::config(), ConfigGroup );
     config.writeEntry( "Autoplay sounds", m_autoPlay->isChecked() );
 
     delete d;

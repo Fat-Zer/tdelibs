@@ -111,7 +111,7 @@ KIOExec::KIOExec()
                 // Build the destination filename, in ~/.trinity/cache-*/krun/
                 // Unlike KDE-1.1, we put the filename at the end so that the extension is kept
                 // (Some programs rely on it)
-                TQString tmp = KGlobal::dirs()->saveLocation( "cache", "krun/" ) +
+                TQString tmp = TDEGlobal::dirs()->saveLocation( "cache", "krun/" ) +
                               TQString("%1.%2.%3").arg(getpid()).arg(jobCounter++).arg(fileName);
                 fileInfo file;
                 file.path = tmp;
@@ -211,9 +211,9 @@ void KIOExec::slotRunApp()
     id.setupStartupEnv();
 #endif
 
-    KProcess proc;
+    TDEProcess proc;
     proc << params;
-    proc.start( KProcess::Block );
+    proc.start( TDEProcess::Block );
 
 #ifdef Q_WS_X11
     KStartupInfo::resetStartupEnv();

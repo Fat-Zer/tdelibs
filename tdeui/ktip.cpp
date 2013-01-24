@@ -59,7 +59,7 @@ KTipDatabase::KTipDatabase(const TQString &_tipFile)
 {
     TQString tipFile = _tipFile;
     if (tipFile.isEmpty())
-	tipFile = TQString::fromLatin1(KGlobal::instance()->aboutData()->appName()) + "/tips";
+	tipFile = TQString::fromLatin1(TDEGlobal::instance()->aboutData()->appName()) + "/tips";
 
     loadTips(tipFile);
 
@@ -72,7 +72,7 @@ KTipDatabase::KTipDatabase( const TQStringList& tipsFiles )
 {
    if ( tipsFiles.isEmpty() || ( ( tipsFiles.count() == 1 ) && tipsFiles.first().isEmpty() ) )
    {
-       addTips(TQString::fromLatin1(KGlobal::instance()->aboutData()->appName()) + "/tips");
+       addTips(TQString::fromLatin1(TDEGlobal::instance()->aboutData()->appName()) + "/tips");
    }
    else
    {
@@ -180,7 +180,7 @@ KTipDialog::KTipDialog(KTipDatabase *db, TQWidget *parent, const char *name)
     TQImage img;
     int h,s,v;
 
-    mBlendedColor = KGlobalSettings::activeTitleColor();
+    mBlendedColor = TDEGlobalSettings::activeTitleColor();
     mBlendedColor.hsv(&h,&s,&v);
     mBlendedColor.setHsv(h, int(s*(71/76.0)), int(v*(67/93.0)));
 
@@ -194,11 +194,11 @@ KTipDialog::KTipDialog(KTipDatabase *db, TQWidget *parent, const char *name)
 	mBlendedColor = TQColor(tqRed(colPixel),tqGreen(colPixel),tqBlue(colPixel));
     }
 
-    mBaseColor = KGlobalSettings::alternateBackgroundColor();
+    mBaseColor = TDEGlobalSettings::alternateBackgroundColor();
     mBaseColor.hsv(&h,&s,&v);
     mBaseColor.setHsv(h, int(s*(10/6.0)), int(v*(93/99.0)));
 
-    mTextColor = KGlobalSettings::textColor();
+    mTextColor = TDEGlobalSettings::textColor();
 
 
     mDatabase = db;
@@ -206,8 +206,8 @@ KTipDialog::KTipDialog(KTipDatabase *db, TQWidget *parent, const char *name)
     setCaption(i18n("Tip of the Day"));
 #ifdef Q_WS_X11
     KWin::setIcons( winId(),
-                    KGlobal::iconLoader()->loadIcon( "idea", KIcon::NoGroup, 32 ),
-                    KGlobal::iconLoader()->loadIcon( "idea", KIcon::NoGroup, 16 ) );
+                    TDEGlobal::iconLoader()->loadIcon( "idea", KIcon::NoGroup, 32 ),
+                    TDEGlobal::iconLoader()->loadIcon( "idea", KIcon::NoGroup, 16 ) );
 #endif
     TQVBoxLayout *vbox = new TQVBoxLayout(this, marginHint(), spacingHint());
 
@@ -222,7 +222,7 @@ KTipDialog::KTipDialog(KTipDatabase *db, TQWidget *parent, const char *name)
 	TQLabel *titlePane = new TQLabel(this);
 	titlePane->setBackgroundPixmap(locate("data", "tdeui/pics/ktip-background.png"));
 	titlePane->setText(i18n("Did you know...?\n"));
-	titlePane->setFont(TQFont(KGlobalSettings::generalFont().family(), 20, TQFont::Bold));
+	titlePane->setFont(TQFont(TDEGlobalSettings::generalFont().family(), 20, TQFont::Bold));
 	titlePane->setAlignment(TQLabel::AlignCenter);
 	pl->addWidget(titlePane, 100);
     }
@@ -244,7 +244,7 @@ KTipDialog::KTipDialog(KTipDatabase *db, TQWidget *parent, const char *name)
 
     mTipText->setWrapPolicy( TQTextEdit::AtWordOrDocumentBoundary );
     mTipText->mimeSourceFactory()->addFilePath(
-	KGlobal::dirs()->findResourceDir("data", "kdewizard/pics")+"kdewizard/pics/");
+	TDEGlobal::dirs()->findResourceDir("data", "kdewizard/pics")+"kdewizard/pics/");
     mTipText->setFrameStyle(TQFrame::NoFrame | TQFrame::Plain);
     mTipText->setHScrollBarMode(TQScrollView::AlwaysOff);
     mTipText->setLinkUnderline(false);
@@ -258,7 +258,7 @@ KTipDialog::KTipDialog(KTipDatabase *db, TQWidget *parent, const char *name)
     pal.setColor( TQPalette::Inactive, TQColorGroup::Link, mBlendedColor );
     mTipText->setPalette(pal);
 
-    TQStringList icons = KGlobal::dirs()->resourceDirs("icon");
+    TQStringList icons = TDEGlobal::dirs()->resourceDirs("icon");
     TQStringList::Iterator it;
     for (it = icons.begin(); it != icons.end(); ++it)
         mTipText->mimeSourceFactory()->addFilePath(*it);
@@ -273,7 +273,7 @@ KTipDialog::KTipDialog(KTipDatabase *db, TQWidget *parent, const char *name)
 	resize(550, 230);
         TQSize sh = size();
 
-        TQRect rect = KGlobalSettings::splashScreenDesktopGeometry();
+        TQRect rect = TDEGlobalSettings::splashScreenDesktopGeometry();
 
         move(rect.x() + (rect.width() - sh.width())/2,
 	rect.y() + (rect.height() - sh.height())/2);
@@ -374,7 +374,7 @@ static TQString fixTip(TQString tip)
     if (iconRegExp.search(tip)>-1) {
       TQString iconName = iconRegExp.cap(1);
       if (!iconName.isEmpty())
-         if (KGlobal::dirs()->findResource("icon", iconName).isEmpty())
+         if (TDEGlobal::dirs()->findResource("icon", iconName).isEmpty())
            tip.replace("crystalsvg","hicolor");
     }
 

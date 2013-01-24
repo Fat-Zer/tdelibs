@@ -1033,7 +1033,7 @@ public:
   KDockWidget* getDockWidgetFromName( const TQString& dockName );
 
   /**
-   * Enables opaque resizing. Opaque resizing defaults to KGlobalSettings::opaqueResize().
+   * Enables opaque resizing. Opaque resizing defaults to TDEGlobalSettings::opaqueResize().
    * Call this method before you create any dock widgets!
    */
   void setSplitterOpaqueResize(bool b=true);

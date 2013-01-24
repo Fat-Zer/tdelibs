@@ -60,7 +60,7 @@ KSSLCertDlg::KSSLCertDlg(TQWidget *parent, const char *name, bool modal)
    _certs = new TQListView(this);
    _certs->addColumn(i18n("Certificate"));
    _certs->setResizeMode(TQListView::LastColumn);
-   TQFontMetrics fm( KGlobalSettings::generalFont() );
+   TQFontMetrics fm( TDEGlobalSettings::generalFont() );
    _certs->setMinimumHeight(4*fm.height());
    grid->addWidget(_certs);
 

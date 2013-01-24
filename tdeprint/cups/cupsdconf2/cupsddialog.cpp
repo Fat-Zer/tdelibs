@@ -113,8 +113,8 @@ const char* getPassword(const char*)
 CupsdDialog::CupsdDialog(TQWidget *parent, const char *name)
 	: KDialogBase(IconList, "", Ok|Cancel|User1, Ok, parent, name, true, true, KGuiItem(i18n("Short Help"), "help"))
 {
-	KGlobal::iconLoader()->addAppDir("tdeprint");
-	KGlobal::locale()->insertCatalogue("cupsdconf");
+	TDEGlobal::iconLoader()->addAppDir("tdeprint");
+	TDEGlobal::locale()->insertCatalogue("cupsdconf");
 
 	setShowIconsInTreeList(true);
 	setRootIsDecorated(false);
@@ -136,7 +136,7 @@ CupsdDialog::~CupsdDialog()
 
 void CupsdDialog::addConfPage(CupsdPage *page)
 {
-	TQPixmap icon = KGlobal::instance()->iconLoader()->loadIcon(
+	TQPixmap icon = TDEGlobal::instance()->iconLoader()->loadIcon(
 	                                                           page->pixmap(),
                                                                    KIcon::NoGroup,
                                                                    KIcon::SizeMedium
@@ -207,9 +207,9 @@ bool CupsdDialog::restartServer(TQString& msg)
 	else
 	{
                 bool success = false;
-		KProcess proc;
+		TDEProcess proc;
 		proc << "tdesu" << "-c" << "/etc/init.d/cupsys restart";
-		success = proc.start( KProcess::Block ) && proc.normalExit();
+		success = proc.start( TDEProcess::Block ) && proc.normalExit();
                 if( !success )    
 			msg = i18n("Unable to restart CUPS server (pid = %1)").arg(serverPid);
 	}
@@ -256,7 +256,7 @@ bool CupsdDialog::configure(const TQString& filename, TQWidget *parent, TQString
 	}
 	else
 	{
-		KGlobal::locale()->insertCatalogue("cupsdconf"); // Must be before dialog is created to translate "Short Help"
+		TDEGlobal::locale()->insertCatalogue("cupsdconf"); // Must be before dialog is created to translate "Short Help"
 		CupsdDialog	dlg(parent);
 		if (dlg.setConfigFile(fn) && dlg.exec())
 		{

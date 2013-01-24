@@ -44,9 +44,9 @@ public:
 	static bool exportDest(const TQString& dest, const TQString& datadir);
 
 protected slots:
-	void slotReceived(KProcess*, char*, int);
+	void slotReceived(TDEProcess*, char*, int);
 	void doNextAction();
-	void slotProcessExited(KProcess*);
+	void slotProcessExited(TDEProcess*);
 	void slotActionClicked();
 
 protected:
@@ -58,7 +58,7 @@ protected:
 	void showError(const TQString& msg);
 
 private:
-	KProcess	m_proc;
+	TDEProcess	m_proc;
 	TQStringList	m_buffer;
 	int			m_state;
 	TQStringList	m_actions;

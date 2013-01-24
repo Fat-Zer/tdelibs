@@ -71,7 +71,7 @@ public:
     : pCurrentItem (0),
       autoSelectDelay(0),
       dragOverItem(0),
-      dragDelay (KGlobalSettings::dndEventDelay()),
+      dragDelay (TDEGlobalSettings::dndEventDelay()),
       editor (new KListViewLineEdit (listview)),
       cursorInExecuteArea(false),
       itemsMovable (true),
@@ -94,14 +94,14 @@ public:
       selectionDirection(0),
       tooltipColumn (0),
       selectionMode (Single),
-      contextMenuKey (KGlobalSettings::contextMenuKey()),
-      showContextMenusOnPress (KGlobalSettings::showContextMenusOnPress()),
+      contextMenuKey (TDEGlobalSettings::contextMenuKey()),
+      showContextMenusOnPress (TDEGlobalSettings::showContextMenusOnPress()),
       mDropVisualizerWidth (4),
       paintAbove (0),
       paintCurrent (0),
       paintBelow (0),
       painting (false),
-      shadeSortColumn(KGlobalSettings::shadeSortColumn())
+      shadeSortColumn(TDEGlobalSettings::shadeSortColumn())
   {
       renameable.append(0);
       connect(editor, TQT_SIGNAL(done(TQListViewItem*,int)), listview, TQT_SLOT(doneEditing(TQListViewItem*,int)));
@@ -464,7 +464,7 @@ KListView::KListView( TQWidget *parent, const char *name )
 
   connect (this, TQT_SIGNAL (menuShortCutPressed (KListView*, TQListViewItem*)),
                    this, TQT_SLOT (emitContextMenu (KListView*, TQListViewItem*)));
-  d->alternateBackground = KGlobalSettings::alternateBackgroundColor();
+  d->alternateBackground = TDEGlobalSettings::alternateBackgroundColor();
 }
 
 KListView::~KListView()
@@ -544,8 +544,8 @@ void KListView::slotSettingsChanged(int category)
   switch (category)
   {
   case TDEApplication::SETTINGS_MOUSE:
-    d->dragDelay =  KGlobalSettings::dndEventDelay();
-    d->bUseSingle = KGlobalSettings::singleClick();
+    d->dragDelay =  TDEGlobalSettings::dndEventDelay();
+    d->bUseSingle = TDEGlobalSettings::singleClick();
 
     disconnect(this, TQT_SIGNAL (mouseButtonClicked (int, TQListViewItem*, const TQPoint &, int)),
                this, TQT_SLOT (slotMouseButtonClicked (int, TQListViewItem*, const TQPoint &, int)));
@@ -554,9 +554,9 @@ void KListView::slotSettingsChanged(int category)
       connect (this, TQT_SIGNAL (mouseButtonClicked (int, TQListViewItem*, const TQPoint &, int)),
                this, TQT_SLOT (slotMouseButtonClicked( int, TQListViewItem*, const TQPoint &, int)));
 
-    d->bChangeCursorOverItem = KGlobalSettings::changeCursorOverIcon();
+    d->bChangeCursorOverItem = TDEGlobalSettings::changeCursorOverIcon();
     if ( !d->disableAutoSelection )
-      d->autoSelectDelay = KGlobalSettings::autoSelectDelay();
+      d->autoSelectDelay = TDEGlobalSettings::autoSelectDelay();
 
     if( !d->bUseSingle || !d->bChangeCursorOverItem )
        viewport()->unsetCursor();
@@ -564,8 +564,8 @@ void KListView::slotSettingsChanged(int category)
     break;
 
   case TDEApplication::SETTINGS_POPUPMENU:
-    d->contextMenuKey = KGlobalSettings::contextMenuKey ();
-    d->showContextMenusOnPress = KGlobalSettings::showContextMenusOnPress ();
+    d->contextMenuKey = TDEGlobalSettings::contextMenuKey ();
+    d->showContextMenusOnPress = TDEGlobalSettings::showContextMenusOnPress ();
 
     if (d->showContextMenusOnPress)
     {
@@ -753,7 +753,7 @@ void KListView::leaveEvent( TQEvent *e )
 bool KListView::event( TQEvent *e )
 {
   if (e->type() == TQEvent::ApplicationPaletteChange)
-    d->alternateBackground=KGlobalSettings::alternateBackgroundColor();
+    d->alternateBackground=TDEGlobalSettings::alternateBackgroundColor();
 
   return TQListView::event(e);
 }
@@ -2135,7 +2135,7 @@ void KListView::resetAutoSelection()
     return;
 
   d->disableAutoSelection = false;
-  d->autoSelectDelay = KGlobalSettings::autoSelectDelay();
+  d->autoSelectDelay = TDEGlobalSettings::autoSelectDelay();
 }
 
 void KListView::doubleClicked( TQListViewItem *item, const TQPoint &pos, int c )

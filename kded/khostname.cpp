@@ -166,15 +166,15 @@ void KHostName::changeX()
       // don't nuke the xauth when XAUTHLOCALHOSTNAME points to it
       if (!xauthlocalhostname || oldNetId != xauthlocalhostname)
       {
-        cmd = "xauth -n remove "+KProcess::quote(netId);
+        cmd = "xauth -n remove "+TDEProcess::quote(netId);
         system(TQFile::encodeName(cmd));
       }
       cmd = "xauth -n add ";
-      cmd += KProcess::quote(newNetId);
+      cmd += TDEProcess::quote(newNetId);
       cmd += " ";
-      cmd += KProcess::quote(authName);
+      cmd += TDEProcess::quote(authName);
       cmd += " ";
-      cmd += KProcess::quote(authKey);
+      cmd += TDEProcess::quote(authKey);
       system(TQFile::encodeName(cmd));
    }
 }
@@ -236,7 +236,7 @@ void KHostName::changeDcop()
       ::symlink(fname.data(), compatLink.data()); // Compatibility link
 
       // Update .ICEauthority
-      TQString cmd = "iceauth list "+KProcess::quote("netid="+oldNetId);
+      TQString cmd = "iceauth list "+TDEProcess::quote("netid="+oldNetId);
       FILE *iceFile = popen(TQFile::encodeName(cmd), "r");
       if (!iceFile)
       {
@@ -272,13 +272,13 @@ void KHostName::changeDcop()
             continue;
 
          cmd = "iceauth add ";
-         cmd += KProcess::quote(protName);
+         cmd += TDEProcess::quote(protName);
          cmd += " '' ";
-         cmd += KProcess::quote(newNetId);
+         cmd += TDEProcess::quote(newNetId);
          cmd += " ";
-         cmd += KProcess::quote(authName);
+         cmd += TDEProcess::quote(authName);
          cmd += " ";
-         cmd += KProcess::quote(authKey);
+         cmd += TDEProcess::quote(authKey);
          system(TQFile::encodeName(cmd));
       }
    }
@@ -288,7 +288,7 @@ void KHostName::changeDcop()
    char* xauthlocalhostname = getenv("XAUTHLOCALHOSTNAME");
    if (!xauthlocalhostname || !oldNetId.contains(xauthlocalhostname))
    {
-      TQString cmd = "iceauth remove "+KProcess::quote("netid="+oldNetId);
+      TQString cmd = "iceauth remove "+TDEProcess::quote("netid="+oldNetId);
       system(TQFile::encodeName(cmd));
       unlink(origFName.data());
       origFName = DCOPClient::dcopServerFileOld(oldName); // Compatibility link
@@ -299,8 +299,8 @@ void KHostName::changeDcop()
 void KHostName::changeStdDirs(const TQCString &type)
 {
    // We make links to the old dirs cause we can't delete the old dirs.
-   TQCString oldDir = TQFile::encodeName(TQString("%1%2-%3").arg(KGlobal::dirs()->localtdedir()).arg(type.data()).arg(oldName.data()));
-   TQCString newDir = TQFile::encodeName(TQString("%1%2-%3").arg(KGlobal::dirs()->localtdedir()).arg(type.data()).arg(newName.data()));
+   TQCString oldDir = TQFile::encodeName(TQString("%1%2-%3").arg(TDEGlobal::dirs()->localtdedir()).arg(type.data()).arg(oldName.data()));
+   TQCString newDir = TQFile::encodeName(TQString("%1%2-%3").arg(TDEGlobal::dirs()->localtdedir()).arg(type.data()).arg(newName.data()));
 
    KDE_struct_stat st_buf;
 

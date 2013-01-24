@@ -1634,11 +1634,11 @@ TQString KFileMimeTypeInfo::ItemInfo::string(const TQVariant& value, bool mangle
                 return KIO::convertSizeFromKB(value.toInt());
             }
             else
-                s = KGlobal::locale()->formatNumber( value.toInt() , 0);
+                s = TDEGlobal::locale()->formatNumber( value.toInt() , 0);
             break;
 
         case TQVariant::LongLong :
-            s = KGlobal::locale()->formatNumber( value.toLongLong(), 0 );
+            s = TDEGlobal::locale()->formatNumber( value.toLongLong(), 0 );
             break;
 
 	case TQVariant::ULongLong :
@@ -1647,27 +1647,27 @@ TQString KFileMimeTypeInfo::ItemInfo::string(const TQVariant& value, bool mangle
             else if ( unit() == KFileMimeTypeInfo::KiloBytes )
                 return KIO::convertSizeFromKB( value.toULongLong() );
             else
-                s = KGlobal::locale()->formatNumber( value.toULongLong(), 0 );
+                s = TDEGlobal::locale()->formatNumber( value.toULongLong(), 0 );
             break;
 
         case TQVariant::UInt :
-            s = KGlobal::locale()->formatNumber( value.toUInt() , 0);
+            s = TDEGlobal::locale()->formatNumber( value.toUInt() , 0);
             break;
 
         case TQVariant::Double :
-            s = KGlobal::locale()->formatNumber( value.toDouble(), 3);
+            s = TDEGlobal::locale()->formatNumber( value.toDouble(), 3);
             break;
 
         case TQVariant::Date :
-            s = KGlobal::locale()->formatDate( value.toDate(), true );
+            s = TDEGlobal::locale()->formatDate( value.toDate(), true );
             break;
 
         case TQVariant::Time :
-            s = KGlobal::locale()->formatTime( value.toTime(), true );
+            s = TDEGlobal::locale()->formatTime( value.toTime(), true );
             break;
 
         case TQVariant::DateTime :
-            s = KGlobal::locale()->formatDateTime( value.toDateTime(),
+            s = TDEGlobal::locale()->formatDateTime( value.toDateTime(),
                                                    true, true );
             break;
 

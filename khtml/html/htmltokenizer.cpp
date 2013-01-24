@@ -129,7 +129,7 @@ HTMLTokenizer::HTMLTokenizer(DOM::DocumentImpl *_doc, KHTMLView *_view)
     buffer = 0;
     scriptCode = 0;
     scriptCodeSize = scriptCodeMaxSize = scriptCodeResync = 0;
-    charsets = KGlobal::charsets();
+    charsets = TDEGlobal::charsets();
     parser = new KHTMLParser(_view, _doc);
     m_executingScript = 0;
     m_autoCloseTimer = 0;
@@ -144,7 +144,7 @@ HTMLTokenizer::HTMLTokenizer(DOM::DocumentImpl *_doc, DOM::DocumentFragmentImpl 
     buffer = 0;
     scriptCode = 0;
     scriptCodeSize = scriptCodeMaxSize = scriptCodeResync = 0;
-    charsets = KGlobal::charsets();
+    charsets = TDEGlobal::charsets();
     parser = new KHTMLParser( i, _doc );
     m_executingScript = 0;
     m_autoCloseTimer = 0;

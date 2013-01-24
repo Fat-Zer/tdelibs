@@ -111,13 +111,13 @@ void KComboBox::setAutoCompletion( bool autocomplete )
     {
         if ( autocomplete )
         {
-            d->klineEdit->setCompletionMode( KGlobalSettings::CompletionAuto );
-            setCompletionMode( KGlobalSettings::CompletionAuto );
+            d->klineEdit->setCompletionMode( TDEGlobalSettings::CompletionAuto );
+            setCompletionMode( TDEGlobalSettings::CompletionAuto );
         }
         else
         {
-            d->klineEdit->setCompletionMode( KGlobalSettings::completionMode() );
-            setCompletionMode( KGlobalSettings::completionMode() );
+            d->klineEdit->setCompletionMode( TDEGlobalSettings::completionMode() );
+            setCompletionMode( TDEGlobalSettings::completionMode() );
         }
     }
 }
@@ -290,8 +290,8 @@ void KComboBox::setLineEdit( TQLineEdit *edit )
                  TQT_SIGNAL( textRotation( KCompletionBase::KeyBindingType )) );
 
         connect( d->klineEdit,
-                 TQT_SIGNAL( completionModeChanged( KGlobalSettings::Completion )),
-                 TQT_SIGNAL( completionModeChanged( KGlobalSettings::Completion)));
+                 TQT_SIGNAL( completionModeChanged( TDEGlobalSettings::Completion )),
+                 TQT_SIGNAL( completionModeChanged( TDEGlobalSettings::Completion)));
 
         connect( d->klineEdit,
                  TQT_SIGNAL( aboutToShowContextMenu( TQPopupMenu * )),

@@ -1101,7 +1101,7 @@ void KRecentFilesAction::addURL( const KURL& url )
 
 void KRecentFilesAction::addURL( const KURL& url, const TQString& name )
 {
-    if ( url.isLocalFile() && !KGlobal::dirs()->relativeLocation("tmp", url.path()).startsWith("/"))
+    if ( url.isLocalFile() && !TDEGlobal::dirs()->relativeLocation("tmp", url.path()).startsWith("/"))
        return;
     const TQString file = url.pathOrURL();
     TQStringList lst = KSelectAction::items();
@@ -1282,7 +1282,7 @@ int KRecentFilesAction::plug( TQWidget *widget, int index )
     if ( m_parentCollection )
         instance = m_parentCollection->instance();
     else
-        instance = KGlobal::instance();
+        instance = TDEGlobal::instance();
 
     bar->insertButton( icon(), id_, TQT_SIGNAL( clicked() ), this,
                        TQT_SLOT( slotClicked() ), isEnabled(), plainText(),
@@ -1832,7 +1832,7 @@ int KActionMenu::plug( TQWidget* widget, int index )
       if ( m_parentCollection )
         instance = m_parentCollection->instance();
       else
-        instance = KGlobal::instance();
+        instance = TDEGlobal::instance();
 
       bar->insertButton( icon(), id_, TQT_SIGNAL( clicked() ), this,
                          TQT_SLOT( slotActivated() ), isEnabled(), plainText(),
@@ -1958,7 +1958,7 @@ int KToolBarPopupAction::plug( TQWidget *widget, int index )
         if ( m_parentCollection )
             instance = m_parentCollection->instance();
         else
-            instance = KGlobal::instance();
+            instance = TDEGlobal::instance();
 
         bar->insertButton( icon(), id_, TQT_SIGNAL( buttonClicked(int, TQt::ButtonState) ), this,
                            TQT_SLOT( slotButtonClicked(int, TQt::ButtonState) ),
@@ -2294,7 +2294,7 @@ int KPasteTextAction::plug( TQWidget *widget, int index )
     if ( m_parentCollection )
         instance = m_parentCollection->instance();
     else
-        instance = KGlobal::instance();
+        instance = TDEGlobal::instance();
 
     bar->insertButton( icon(), id_, TQT_SIGNAL( clicked() ), this,
                        TQT_SLOT( slotActivated() ), isEnabled(), plainText(),

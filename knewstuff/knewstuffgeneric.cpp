@@ -40,7 +40,7 @@ using namespace std;
 KNewStuffGeneric::KNewStuffGeneric( const TQString &type, TQWidget *parent )
   : KNewStuff( type, parent )
 {
-  mConfig = KGlobal::config();
+  mConfig = TDEGlobal::config();
 }
 
 KNewStuffGeneric::~KNewStuffGeneric()
@@ -72,9 +72,9 @@ bool KNewStuffGeneric::install( const TQString &fileName )
     for ( TQStringList::iterator it = list.begin(); it != list.end(); ++it ) {
         list2 << (*it).replace("%f", fileName);
     }
-    KProcess proc;
+    TDEProcess proc;
     proc << list2;
-    proc.start( KProcess::Block );
+    proc.start( TDEProcess::Block );
   }
 
   return true;

@@ -703,7 +703,7 @@ void KJanusWidget::slotFontChanged()
 {
   if( mTitleLabel )
   {
-    mTitleLabel->setFont( KGlobalSettings::generalFont() );
+    mTitleLabel->setFont( TDEGlobalSettings::generalFont() );
     TQFont titleFont( mTitleLabel->font() );
     titleFont.setBold( true );
     mTitleLabel->setFont( titleFont );

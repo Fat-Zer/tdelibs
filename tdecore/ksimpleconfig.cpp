@@ -43,7 +43,7 @@ KSimpleConfig::KSimpleConfig(const TQString &fileName, bool bReadOnly)
   // the difference between KConfig and KSimpleConfig is just that
   // for KSimpleConfig an absolute filename is guaranteed
   if (!fileName.isNull() && TQDir::isRelativePath(fileName)) {
-     backEnd->changeFileName( KGlobal::dirs()->
+     backEnd->changeFileName( TDEGlobal::dirs()->
 	saveLocation("config", TQString::null, !bReadOnly)+fileName, "config", false);
   } else {
      backEnd->changeFileName(fileName, "config", false);

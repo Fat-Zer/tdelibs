@@ -38,7 +38,7 @@ class TDEGlobalNetworkManager;
  * Access to KDE global objects for use in shared libraries.  In
  * practical terms, this class is used in KDE components.  This allows
  * components to store things that normally would be accessed by
- * KGlobal.
+ * TDEGlobal.
  *
  * @author Torben Weis
  */

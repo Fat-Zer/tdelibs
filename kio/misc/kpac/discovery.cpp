@@ -54,7 +54,7 @@ namespace KPAC
           m_helper( new KProcIO )
     {
         connect( m_helper, TQT_SIGNAL( readReady( KProcIO* ) ), TQT_SLOT( helperOutput() ) );
-        connect( m_helper, TQT_SIGNAL( processExited( KProcess* ) ), TQT_SLOT( failed() ) );
+        connect( m_helper, TQT_SIGNAL( processExited( TDEProcess* ) ), TQT_SLOT( failed() ) );
         *m_helper << "kpac_dhcp_helper";
 
         if ( !m_helper->start() )

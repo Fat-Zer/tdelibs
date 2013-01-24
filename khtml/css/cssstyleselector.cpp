@@ -2089,7 +2089,7 @@ static TQColor colorForCSSValue( int css_value )
     TQColor c = pal.color( uicol->group, uicol->role );
 #ifndef APPLE_CHANGES
     if ( uicol->configEntry ) {
-	KConfig *globalConfig = KGlobal::config();
+	KConfig *globalConfig = TDEGlobal::config();
 	globalConfig->setGroup( uicol->configGroup );
 	c = globalConfig->readColorEntry( uicol->configEntry, &c );
     }

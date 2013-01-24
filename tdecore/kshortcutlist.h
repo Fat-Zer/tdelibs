@@ -40,7 +40,7 @@ class KShortcut;
  * KAccelShortcutList and KStdAccel::ShortcutList. It gives
  * you an unified interface for accessing the accelerator lists
  * of KAccel (using KAccelShortcutList),
- * KGlobalAccel (using KAccelShortcutList), and
+ * TDEGlobalAccel (using KAccelShortcutList), and
  * KStdAccel (using KStdAccel::ShortcutList).
  *
  * @short Base class for accessing accelerator lists
@@ -189,11 +189,11 @@ class TDECORE_EXPORT KShortcutList
 
 class KAccel;
 class KAccelActions;
-class KGlobalAccel;
+class TDEGlobalAccel;
 
 /**
  * KShortcutList implementation to access KAccel and
- * KGlobalAccel lists.
+ * TDEGlobalAccel lists.
  */
 class TDECORE_EXPORT KAccelShortcutList : public KShortcutList
 {
@@ -206,10 +206,10 @@ class TDECORE_EXPORT KAccelShortcutList : public KShortcutList
 
         /**
 	 * Creates a new KShortcutList that accesses the given
-	 * KGlobalAccel.
+	 * TDEGlobalAccel.
 	 * @param accel the accelerators to access
 	 */
-	KAccelShortcutList( KGlobalAccel* accel );
+	KAccelShortcutList( TDEGlobalAccel* accel );
 
         /**
 	 * @internal

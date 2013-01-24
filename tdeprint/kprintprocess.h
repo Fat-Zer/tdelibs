@@ -50,8 +50,8 @@ signals:
 	void printError( KPrintProcess*, const TQString& );
 
 protected slots:
-	void slotReceivedStderr(KProcess*, char*, int);
-	void slotExited( KProcess* );
+	void slotReceivedStderr(TDEProcess*, char*, int);
+	void slotExited( TDEProcess* );
 
 private:
 	QString	m_buffer;

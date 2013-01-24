@@ -166,9 +166,9 @@ int KSSLKeyGen::generateCSR(const TQString& name, const TQString& pass, int bits
 	// back from there.  Yes it's inefficient, but it doesn't happen
 	// often and this way things are uniform.
   
-	KGlobal::dirs()->addResourceType("kssl", KStandardDirs::kde_default("data") + "kssl");
+	TDEGlobal::dirs()->addResourceType("kssl", KStandardDirs::kde_default("data") + "kssl");
 
-	TQString path = KGlobal::dirs()->saveLocation("kssl");
+	TQString path = TDEGlobal::dirs()->saveLocation("kssl");
 	KTempFile csrFile(path + "csr_", ".der");
 
 	if (!csrFile.fstream()) {

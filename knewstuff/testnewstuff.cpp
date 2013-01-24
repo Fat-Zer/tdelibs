@@ -54,9 +54,9 @@ bool TestNewStuff::install( const TQString &fileName )
 
 bool TestNewStuff::createUploadFile( const TQString &fileName )
 {
-  KProcess p;
+  TDEProcess p;
   p << "touch" << fileName;
-  p.start(KProcess::Block);
+  p.start(TDEProcess::Block);
   kdDebug() << "TestNewStuff::createUploadFile(): " << fileName << endl;
   return true;
 }

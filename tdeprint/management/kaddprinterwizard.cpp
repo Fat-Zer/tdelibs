@@ -19,7 +19,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
 			"0.1");
 	TDECmdLineArgs::addCmdLineOptions(options);
 	
-	KGlobal::locale()->setMainCatalogue("tdelibs");
+	TDEGlobal::locale()->setMainCatalogue("tdelibs");
 
 	TDEApplication app;
 	TDECmdLineArgs	*args = TDECmdLineArgs::parsedArgs();

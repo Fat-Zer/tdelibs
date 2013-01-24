@@ -27,7 +27,7 @@
 
 KSplashScreen::KSplashScreen(const TQPixmap &pixmap, WFlags f): TQSplashScreen(pixmap, f)
 {
-	TQRect desk = KGlobalSettings::splashScreenDesktopGeometry();
+	TQRect desk = TDEGlobalSettings::splashScreenDesktopGeometry();
 	resize(pixmap.width(), pixmap.height());
   setGeometry( ( desk.width() / 2 ) - ( width() / 2 ) + desk.left(),
       ( desk.height() / 2 ) - ( height() / 2 ) + desk.top(),

@@ -68,7 +68,7 @@ bool Lock::writeLockFile( const TQString &filename )
   TQFile file( filename );
   if ( !file.open( IO_WriteOnly ) ) return false;
   TQTextStream t( &file );
-  t << ::getpid() << endl << TQString( KGlobal::instance()->instanceName() );
+  t << ::getpid() << endl << TQString( TDEGlobal::instance()->instanceName() );
 
   return true;
 }

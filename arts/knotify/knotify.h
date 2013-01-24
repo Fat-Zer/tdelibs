@@ -25,7 +25,7 @@
 #include <dcopobject.h>
 
 class KNotifyPrivate;
-class KProcess;
+class TDEProcess;
 class KConfig;
 
 class KNotify : public TQObject, public DCOPObject
@@ -98,7 +98,7 @@ private:
 
 private slots:
     void playTimeout();
-    void slotPlayerProcessExited( KProcess *proc );
+    void slotPlayerProcessExited( TDEProcess *proc );
     void restartedArtsd();
 
 private:

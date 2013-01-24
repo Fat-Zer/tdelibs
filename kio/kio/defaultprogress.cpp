@@ -89,8 +89,8 @@ void DefaultProgress::init()
 #ifdef Q_WS_X11 //FIXME(E): Remove once all the KWin::foo calls have been ported to QWS
   // Set a useful icon for this window!
   KWin::setIcons( winId(),
-          KGlobal::iconLoader()->loadIcon( "filesave", KIcon::NoGroup, 32 ),
-          KGlobal::iconLoader()->loadIcon( "filesave", KIcon::NoGroup, 16 ) );
+          TDEGlobal::iconLoader()->loadIcon( "filesave", KIcon::NoGroup, 32 ),
+          TDEGlobal::iconLoader()->loadIcon( "filesave", KIcon::NoGroup, 16 ) );
 #endif
 
   TQVBoxLayout *topLayout = new TQVBoxLayout( this, KDialog::marginHint(),
@@ -470,7 +470,7 @@ void DefaultProgress::checkDestination(const KURL& dest) {
   bool ok = true;
   if ( dest.isLocalFile() ) {
       TQString path = dest.path( -1 );
-      TQStringList tmpDirs = KGlobal::dirs()->resourceDirs( "tmp" );
+      TQStringList tmpDirs = TDEGlobal::dirs()->resourceDirs( "tmp" );
       for ( TQStringList::Iterator it = tmpDirs.begin() ; ok && it != tmpDirs.end() ; ++it )
           if ( path.contains( *it ) )
               ok = false; // it's in the tmp resource
@@ -486,17 +486,17 @@ void DefaultProgress::checkDestination(const KURL& dest) {
 
 void DefaultProgress::slotOpenFile()
 {
-  KProcess proc;
+  TDEProcess proc;
   proc << "konqueror" << d->location.prettyURL();
-  proc.start(KProcess::DontCare);
+  proc.start(TDEProcess::DontCare);
 }
 
 void DefaultProgress::slotOpenLocation()
 {
-  KProcess proc;
+  TDEProcess proc;
   d->location.setFileName("");
   proc << "konqueror" << d->location.prettyURL();
-  proc.start(KProcess::DontCare);
+  proc.start(TDEProcess::DontCare);
 }
 
 void DefaultProgress::virtual_hook( int id, void* data )

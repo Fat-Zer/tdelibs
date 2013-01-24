@@ -261,7 +261,7 @@ void KFileItem::readUDSEntry( bool _urlIsDirectory )
   }
 
   // avoid creating these QStrings again and again
-  static const TQString& dot = KGlobal::staticQString(".");
+  static const TQString& dot = TDEGlobal::staticQString(".");
   if ( _urlIsDirectory && !UDS_URL_seen && !m_strName.isEmpty() && m_strName != dot )
     m_url.addPath( m_strName );
 }
@@ -602,7 +602,7 @@ TQPixmap KFileItem::pixmap( int _size, int _state ) const
   if ( !m_pMimeType )
   {
     static const TQString & defaultFolderIcon =
-       KGlobal::staticQString(KMimeType::mimeType( "inode/directory" )->KServiceType::icon());
+       TDEGlobal::staticQString(KMimeType::mimeType( "inode/directory" )->KServiceType::icon());
 
     if ( S_ISDIR( m_fileMode ) )
      return DesktopIcon( defaultFolderIcon, _size, _state );
@@ -672,7 +672,7 @@ TQPixmap KFileItem::pixmap( int _size, int _state ) const
 		// See if there is a system icon we can use
 		TQString sysIconName = elf_get_resource(handle, ".metadata_sysicon");
 		if (!sysIconName.isEmpty()) {
-			if (KGlobal::iconLoader()->iconPath(sysIconName.ascii(), 0, true) != "") {
+			if (TDEGlobal::iconLoader()->iconPath(sysIconName.ascii(), 0, true) != "") {
 				p = DesktopIcon( sysIconName.ascii(), _size, _state );
 			}
 		}
@@ -688,7 +688,7 @@ TQPixmap KFileItem::pixmap( int _size, int _state ) const
 				// Try loading this icon as fallback
 				icon = libr_icon_geticon_byname(handle, entry->name);
 			}
-			if (KGlobal::iconLoader()->iconPath(entry->name, 0, true) != "") {
+			if (TDEGlobal::iconLoader()->iconPath(entry->name, 0, true) != "") {
 				iconresnamefound = 1;
 				p = DesktopIcon( entry->name, _size, _state );
 				break;
@@ -1137,7 +1137,7 @@ TQString KFileItem::timeString( unsigned int which ) const
 
     TQDateTime t;
     t.setTime_t( time_);
-    return KGlobal::locale()->formatDateTime( t );
+    return TDEGlobal::locale()->formatDateTime( t );
 }
 
 void KFileItem::setMetaInfo( const KFileMetaInfo & info )
@@ -1151,7 +1151,7 @@ const KFileMetaInfo & KFileItem::metaInfo(bool autoget, int) const
     KURL url = mostLocalURL(isLocalURL);
 
     if ( autoget && !m_metaInfo.isValid() &&
-         KGlobalSettings::showFilePreview(url) )
+         TDEGlobalSettings::showFilePreview(url) )
     {
         m_metaInfo = KFileMetaInfo( url, mimetype() );
     }

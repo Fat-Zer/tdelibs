@@ -86,10 +86,10 @@ public:
      * @param dirs the KStandardDirs object to use. If null the global one is used
      *
      * Usually, you use the default iconloader, which can be accessed via
-     * KGlobal::iconLoader(), so you hardly ever have to create an
+     * TDEGlobal::iconLoader(), so you hardly ever have to create an
      * iconloader object yourself. That one is the current TDEInstance's
      * (typically TDEApplication's) iconloader.
-     * @see KGlobal::iconLoader()
+     * @see TDEGlobal::iconLoader()
      * @see TDEInstance::iconLoader()
      */
     KIconLoader(const TQString& appname=TQString::null, KStandardDirs *dirs = 0);
@@ -299,7 +299,7 @@ public:
      * Called by TDEInstance::newIconLoader to reconfigure the icon loader.
      * @param _appname the new application name
      * @param _dirs the new standard directories. If 0, the directories
-     *              from KGlobal will be taken.
+     *              from TDEGlobal will be taken.
      */
     void reconfigure( const TQString& _appname, KStandardDirs *_dirs );
 
@@ -447,7 +447,7 @@ public:
  */
 TDECORE_EXPORT TQPixmap DesktopIcon(const TQString& name, int size=0,
 		    int state=KIcon::DefaultState,
-		    TDEInstance *instance=KGlobal::instance());
+		    TDEInstance *instance=TDEGlobal::instance());
 
 /**
  * \relates KIconLoader
@@ -460,14 +460,14 @@ TDECORE_EXPORT TQPixmap DesktopIcon(const TQString& name, TDEInstance *instance)
  * Load a desktop icon, and apply the necessary effects to get an IconSet.
  */
 TDECORE_EXPORT TQIconSet DesktopIconSet(const TQString& name, int size=0,
-		    TDEInstance *instance=KGlobal::instance());
+		    TDEInstance *instance=TDEGlobal::instance());
 
 /**
  * \relates KIconLoader
  * Load a toolbar icon.
  */
 TDECORE_EXPORT TQPixmap BarIcon(const TQString& name, int size=0, int state=KIcon::DefaultState,
-	TDEInstance *instance=KGlobal::instance());
+	TDEInstance *instance=TDEGlobal::instance());
 
 /**
  * \relates KIconLoader
@@ -480,7 +480,7 @@ TDECORE_EXPORT TQPixmap BarIcon(const TQString& name, TDEInstance *instance);
  * Load a toolbar icon, and apply the necessary effects to get an IconSet.
  */
 TDECORE_EXPORT TQIconSet BarIconSet(const TQString& name, int size=0,
-		    TDEInstance *instance=KGlobal::instance());
+		    TDEInstance *instance=TDEGlobal::instance());
 
 /**
  * \relates KIconLoader
@@ -488,7 +488,7 @@ TDECORE_EXPORT TQIconSet BarIconSet(const TQString& name, int size=0,
  */
 TDECORE_EXPORT TQPixmap SmallIcon(const TQString& name, int size=0,
 		  int state=KIcon::DefaultState,
-		  TDEInstance *instance=KGlobal::instance());
+		  TDEInstance *instance=TDEGlobal::instance());
 
 /**
  * \relates KIconLoader
@@ -501,7 +501,7 @@ TDECORE_EXPORT TQPixmap SmallIcon(const TQString& name, TDEInstance *instance);
  * Load a small icon, and apply the necessary effects to get an IconSet.
  */
 TDECORE_EXPORT TQIconSet SmallIconSet(const TQString& name, int size=0,
-		    TDEInstance *instance=KGlobal::instance());
+		    TDEInstance *instance=TDEGlobal::instance());
 
 /**
  * \relates KIconLoader
@@ -509,7 +509,7 @@ TDECORE_EXPORT TQIconSet SmallIconSet(const TQString& name, int size=0,
  */
 TDECORE_EXPORT TQPixmap MainBarIcon(const TQString& name, int size=0,
 		    int state=KIcon::DefaultState,
-		    TDEInstance *instance=KGlobal::instance());
+		    TDEInstance *instance=TDEGlobal::instance());
 
 /**
  * \relates KIconLoader
@@ -522,14 +522,14 @@ TDECORE_EXPORT TQPixmap MainBarIcon(const TQString& name, TDEInstance *instance)
  * Load a main toolbar icon, and apply the effects to get an IconSet.
  */
 TDECORE_EXPORT TQIconSet MainBarIconSet(const TQString& name, int size=0,
-		    TDEInstance *instance=KGlobal::instance());
+		    TDEInstance *instance=TDEGlobal::instance());
 
 /**
  * \relates KIconLoader
  * Load a user icon. User icons are searched in $appdir/pics.
  */
 TDECORE_EXPORT TQPixmap UserIcon(const TQString& name, int state=KIcon::DefaultState,
-	TDEInstance *instance=KGlobal::instance());
+	TDEInstance *instance=TDEGlobal::instance());
 
 /**
  * \relates KIconLoader
@@ -542,12 +542,12 @@ TDECORE_EXPORT TQPixmap UserIcon(const TQString& name, TDEInstance *instance);
  * Load a user icon, and apply the effects to get an IconSet.
  */
 TDECORE_EXPORT TQIconSet UserIconSet(const TQString& name,
-	TDEInstance *instance=KGlobal::instance());
+	TDEInstance *instance=TDEGlobal::instance());
 
 /**
  * \relates KIconLoader
  * Returns the current icon size for a specific group.
  */
-TDECORE_EXPORT int IconSize(KIcon::Group group, TDEInstance *instance=KGlobal::instance());
+TDECORE_EXPORT int IconSize(KIcon::Group group, TDEInstance *instance=TDEGlobal::instance());
 
 #endif // __KIconLoader_h_Included__

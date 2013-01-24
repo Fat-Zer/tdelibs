@@ -138,7 +138,7 @@ int main(int argc, char *argv[])
 
 void Dummy::doBenchmark()
 {
-    KConfigGroup settings(KGlobal::config(), "bench");
+    KConfigGroup settings(TDEGlobal::config(), "bench");
     results.clear();
 
     TQString directory = KFileDialog::getExistingDirectory(settings.readPathEntry("path"), m_part->view(), 

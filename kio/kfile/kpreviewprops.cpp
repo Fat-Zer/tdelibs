@@ -66,7 +66,7 @@ bool KPreviewPropsPlugin::supports( KFileItemList _items )
 {
     if ( _items.count() != 1)
         return false;
-    if( !KGlobalSettings::showFilePreview(_items.first()->url()))
+    if( !TDEGlobalSettings::showFilePreview(_items.first()->url()))
         return false;
     KMimeType::Ptr mt = KMimeType::findByURL( _items.first()->url() );
     if ( mt->inherits("inode/directory") || mt->name() == "application/octet-stream" )

@@ -666,7 +666,7 @@ TQString defaultValue( const TQString &type )
 {
     if ( type == "String" )           return "\"\""; // Use empty string, not null string!
     else if ( type == "StringList" )  return "TQStringList()";
-    else if ( type == "Font" )        return "KGlobalSettings::generalFont()";
+    else if ( type == "Font" )        return "TDEGlobalSettings::generalFont()";
     else if ( type == "Rect" )        return "TQRect()";
     else if ( type == "Size" )        return "TQSize()";
     else if ( type == "Color" )       return "TQColor(128, 128, 128)";
@@ -1220,7 +1220,7 @@ int main( int argc, char **argv )
   if ( !singleton ) {
     h << "    " << className << "(";
     if (cfgFileNameArg)
-       h << " KSharedConfig::Ptr config" << (parameters.isEmpty() ? " = KGlobal::sharedConfig()" : ", ");
+       h << " KSharedConfig::Ptr config" << (parameters.isEmpty() ? " = TDEGlobal::sharedConfig()" : ", ");
     for (TQValueList<Param>::ConstIterator it = parameters.begin();
          it != parameters.end(); ++it)
     {

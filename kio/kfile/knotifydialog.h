@@ -71,7 +71,7 @@ public:
     KNotifyDialog( TQWidget *parent = 0, const char *name = 0,
                    bool modal = true,
                    const TDEAboutData *aboutData =
-                   KGlobal::instance()->aboutData() );
+                   TDEGlobal::instance()->aboutData() );
     /**
      * Destroys the KNotifyDialog
      */
@@ -88,7 +88,7 @@ public:
      * @return The value of TQDialog::exec()
      */
     static int configure( TQWidget *parent = 0, const char *name = 0,
-                          const TDEAboutData *aboutData = KGlobal::instance()->aboutData() );
+                          const TDEAboutData *aboutData = TDEGlobal::instance()->aboutData() );
 
     /**
      * With this method, you can add the KNotify events of one eventsrc

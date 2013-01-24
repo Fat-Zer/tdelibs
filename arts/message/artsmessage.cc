@@ -57,7 +57,7 @@ TDEAboutData aboutData("artsmessage", I18N_NOOP("artsmessage"), "0.1",
 
 int main(int argc, char **argv) {
 	aboutData.addAuthor("Jeff Tranter", 0, "tranter@kde.org");
-	KGlobal::locale()->setMainCatalogue("tdelibs");
+	TDEGlobal::locale()->setMainCatalogue("tdelibs");
 	TDECmdLineArgs::init(argc, argv, &aboutData);
 	TDECmdLineArgs::addCmdLineOptions(options);
 	TDEApplication app;

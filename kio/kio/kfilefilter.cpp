@@ -79,8 +79,8 @@ void KSimpleFileFilter::setModeFilter( mode_t mode )
 
 bool KSimpleFileFilter::passesFilter( const KFileItem *item ) const
 {
-    static const TQString& dot    = KGlobal::staticQString(".");
-    static const TQString& dotdot = KGlobal::staticQString("..");
+    static const TQString& dot    = TDEGlobal::staticQString(".");
+    static const TQString& dotdot = TDEGlobal::staticQString("..");
 
     const TQString& name = item->name();
 

@@ -68,10 +68,10 @@ int KateFontMetrics::width(TQChar c)
 //
 
 KateFontStruct::KateFontStruct()
-: myFont(KGlobalSettings::fixedFont()),
-  myFontBold(KGlobalSettings::fixedFont()),
-  myFontItalic(KGlobalSettings::fixedFont()),
-  myFontBI(KGlobalSettings::fixedFont()),
+: myFont(TDEGlobalSettings::fixedFont()),
+  myFontBold(TDEGlobalSettings::fixedFont()),
+  myFontItalic(TDEGlobalSettings::fixedFont()),
+  myFontBI(TDEGlobalSettings::fixedFont()),
   myFontMetrics(myFont),
   myFontMetricsBold(myFontBold),
   myFontMetricsItalic(myFontItalic),

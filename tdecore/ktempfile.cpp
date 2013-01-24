@@ -71,7 +71,7 @@ KTempFile::KTempFile(TQString filePrefix, TQString fileExtension, int mode)
       fileExtension = ".tmp";
    if (filePrefix.isEmpty())
    {
-      filePrefix = locateLocal("tmp", KGlobal::instance()->instanceName());
+      filePrefix = locateLocal("tmp", TDEGlobal::instance()->instanceName());
    }
    (void) create(filePrefix, fileExtension, mode);
 }

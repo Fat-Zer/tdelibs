@@ -36,14 +36,14 @@ class TQString;
 
 /**
  * Access to the KDE global objects.
- * KGlobal provides you with pointers of many central
+ * TDEGlobal provides you with pointers of many central
  * objects that exist only once in the process. It is also
  * responsible for managing instances of KStaticDeleterBase.
  *
  * @see KStaticDeleterBase
  * @author Sirtaj Singh Kang (taj@kde.org)
  */
-class TDECORE_EXPORT KGlobal
+class TDECORE_EXPORT TDEGlobal
 {
 public:
 
@@ -108,12 +108,12 @@ public:
      *
      * To be used inside functions(!) like:
      * \code
-     * static const TQString &myString = KGlobal::staticQString("myText");
+     * static const TQString &myString = TDEGlobal::staticQString("myText");
      * \endcode
      *
      * !!! Do _NOT_ use: !!!
      * \code
-     * static TQString myString = KGlobal::staticQString("myText");
+     * static TQString myString = TDEGlobal::staticQString("myText");
      * \endcode
      * This creates a static object (instead of a static reference)
      * and as you know static objects are EVIL.
@@ -127,12 +127,12 @@ public:
      *
      * To be used inside functions(!) like:
      * \code
-     * static const TQString &myString = KGlobal::staticQString(i18n("My Text"));
+     * static const TQString &myString = TDEGlobal::staticQString(i18n("My Text"));
      * \endcode
      *
      * !!! Do _NOT_ use: !!!
      * \code
-     * static TQString myString = KGlobal::staticQString(i18n("myText"));
+     * static TQString myString = TDEGlobal::staticQString(i18n("myText"));
      * \endcode
      * This creates a static object (instead of a static reference)
      * and as you know static objects are EVIL.
@@ -185,22 +185,22 @@ public:
 };
 
 /**
- * \relates KGlobal
+ * \relates TDEGlobal
  * A typesafe function to find the minimum of the two arguments.
  */
 #define KMIN(a,b)	kMin(a,b)
 /**
- * \relates KGlobal
+ * \relates TDEGlobal
  * A typesafe function to find the maximum of the two arguments.
  */
 #define KMAX(a,b)	kMax(a,b)
 /**
- * \relates KGlobal
+ * \relates TDEGlobal
  * A typesafe function to determine the absolute value of the argument.
  */
 #define KABS(a)	kAbs(a)
 /**
- * \relates KGlobal
+ * \relates TDEGlobal
  * A typesafe function that returns x if it's between low and high values.
  * low if x is smaller than then low and high if x is bigger than high.
  */

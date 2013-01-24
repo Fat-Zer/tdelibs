@@ -244,7 +244,7 @@ void PreviewJob::startPreview()
     }
 
   // Read configuration value for the maximum allowed size
-    KConfig * config = KGlobal::config();
+    KConfig * config = TDEGlobal::config();
     KConfigGroupSaver cgs( config, "PreviewSettings" );
     d->maximumSize = config->readNumEntry( "MaximumSize", 1024*1024 /* 1MB */ );
 

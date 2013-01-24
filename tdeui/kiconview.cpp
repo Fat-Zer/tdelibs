@@ -125,7 +125,7 @@ void KIconView::slotSettingsChanged(int category)
 {
     if ( category != TDEApplication::SETTINGS_MOUSE )
       return;
-    m_bUseSingle = KGlobalSettings::singleClick();
+    m_bUseSingle = TDEGlobalSettings::singleClick();
     //kdDebug() << "KIconView::slotSettingsChanged for mouse, usesingle=" << m_bUseSingle << endl;
 
     disconnect( this, TQT_SIGNAL( mouseButtonClicked( int, TQIconViewItem *,
@@ -150,8 +150,8 @@ void KIconView::slotSettingsChanged(int category)
 // 					  const TQPoint & ) ) );
     }
 
-    m_bChangeCursorOverItem = KGlobalSettings::changeCursorOverIcon();
-    m_autoSelectDelay = m_bUseSingle ? KGlobalSettings::autoSelectDelay() : -1;
+    m_bChangeCursorOverItem = TDEGlobalSettings::changeCursorOverIcon();
+    m_autoSelectDelay = m_bUseSingle ? TDEGlobalSettings::autoSelectDelay() : -1;
 
     if( !m_bUseSingle || !m_bChangeCursorOverItem )
         viewport()->unsetCursor();
@@ -467,7 +467,7 @@ KIconViewItem::~KIconViewItem()
 
 void KIconViewItem::calcRect( const TQString& text_ )
 {
-    bool drawRoundedRect = KGlobalSettings::iconUseRoundedRect();
+    bool drawRoundedRect = TDEGlobalSettings::iconUseRoundedRect();
 
     Q_ASSERT( iconView() );
     if ( !iconView() )
@@ -704,7 +704,7 @@ void KIconViewItem::paintPixmap( TQPainter *p, const TQColorGroup &cg )
 
 void KIconViewItem::paintText( TQPainter *p, const TQColorGroup &cg )
 {
-    bool drawRoundedRect = KGlobalSettings::iconUseRoundedRect();
+    bool drawRoundedRect = TDEGlobalSettings::iconUseRoundedRect();
     int textX;
     if (drawRoundedRect == true)
       textX = textRect( false ).x() + 4;

@@ -196,7 +196,7 @@ KCrash::defaultCrashHandler (int sig)
           argv[i++] = "--pid";
           argv[i++] = pidtxt;
 
-          const TDEInstance *instance = KGlobal::_instance;
+          const TDEInstance *instance = TDEGlobal::_instance;
           const TDEAboutData *about = instance ? instance->aboutData() : 0;
           if (about) {
             if (about->internalVersion()) {

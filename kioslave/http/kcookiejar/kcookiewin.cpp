@@ -357,7 +357,7 @@ void KCookieDetail::slotNextCookie()
         TQDateTime cookiedate;
         cookiedate.setTime_t( m_cookie->expireDate() );
         if ( m_cookie->expireDate() )
-          m_expires->setText( KGlobal::locale()->formatDateTime(cookiedate) );
+          m_expires->setText( TDEGlobal::locale()->formatDateTime(cookiedate) );
         else
           m_expires->setText( i18n("End of Session") );
         TQString sec;

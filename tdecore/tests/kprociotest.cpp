@@ -1,5 +1,5 @@
 //
-//  MAIN -- a little demo of the capabilities of the "KProcess" class
+//  MAIN -- a little demo of the capabilities of the "TDEProcess" class
 //
 //  version 0.2, Aug 2nd 1997
 //  $Id$
@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
  
  p << "rev";
  
- p.connect(&p, TQT_SIGNAL(processExited(KProcess*)), &dummy, TQT_SLOT(printMessage(KProcess*)));
+ p.connect(&p, TQT_SIGNAL(processExited(TDEProcess*)), &dummy, TQT_SLOT(printMessage(TDEProcess*)));
  p.connect(&p, TQT_SIGNAL(readReady(KProcIO*)), &dummy, TQT_SLOT(gotOutput(KProcIO*)));
 
  bool b;

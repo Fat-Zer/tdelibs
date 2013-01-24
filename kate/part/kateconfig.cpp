@@ -422,11 +422,11 @@ TQTextCodec *KateDocumentConfig::codec ()
   if (m_encodingSet || isGlobal())
   {
     if (m_encoding.isEmpty() && isGlobal())
-      return KGlobal::charsets()->codecForName (TQString::fromLatin1(KGlobal::locale()->encoding()));
+      return TDEGlobal::charsets()->codecForName (TQString::fromLatin1(TDEGlobal::locale()->encoding()));
     else if (m_encoding.isEmpty())
       return s_global->codec ();
     else
-      return KGlobal::charsets()->codecForName (m_encoding);
+      return TDEGlobal::charsets()->codecForName (m_encoding);
   }
 
   return s_global->codec ();
@@ -439,7 +439,7 @@ void KateDocumentConfig::setEncoding (const TQString &encoding)
   if (!enc.isEmpty())
   {
     bool found = false;
-    TQTextCodec *codec = KGlobal::charsets()->codecForName (encoding, found);
+    TQTextCodec *codec = TDEGlobal::charsets()->codecForName (encoding, found);
 
     if (!found || !codec)
       return;
@@ -1127,12 +1127,12 @@ void KateRendererConfig::setSchemaInternal( int schema )
 
   KConfig *config (KateFactory::self()->schemaManager()->schema(schema));
 
-  TQColor tmp0 (KGlobalSettings::baseColor());
-  TQColor tmp1 (KGlobalSettings::highlightColor());
-  TQColor tmp2 (KGlobalSettings::alternateBackgroundColor());
+  TQColor tmp0 (TDEGlobalSettings::baseColor());
+  TQColor tmp1 (TDEGlobalSettings::highlightColor());
+  TQColor tmp2 (TDEGlobalSettings::alternateBackgroundColor());
   TQColor tmp3 ( "#FFFF99" );
   TQColor tmp4 (tmp2.dark());
-  TQColor tmp5 ( KGlobalSettings::textColor() );
+  TQColor tmp5 ( TDEGlobalSettings::textColor() );
   TQColor tmp6 ( "#EAE9E8" );
   TQColor tmp7 ( "#000000" );
 
@@ -1170,7 +1170,7 @@ void KateRendererConfig::setSchemaInternal( int schema )
     m_lineMarkerColor[index] = col;
   }
 
-  TQFont f (KGlobalSettings::fixedFont());
+  TQFont f (TDEGlobalSettings::fixedFont());
 
   if (!m_fontSet)
   {

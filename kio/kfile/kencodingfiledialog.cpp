@@ -54,14 +54,14 @@ KEncodingFileDialog::KEncodingFileDialog(const TQString& startDir, const TQStrin
   d->encoding->clear ();
   TQString sEncoding = encoding;
   if (sEncoding.isEmpty())
-     sEncoding = TQString::fromLatin1(KGlobal::locale()->encoding());
+     sEncoding = TQString::fromLatin1(TDEGlobal::locale()->encoding());
   
-  TQStringList encodings (KGlobal::charsets()->availableEncodingNames());
+  TQStringList encodings (TDEGlobal::charsets()->availableEncodingNames());
   int insert = 0;
   for (uint i=0; i < encodings.count(); i++)
   {
     bool found = false;
-    TQTextCodec *codecForEnc = KGlobal::charsets()->codecForName(encodings[i], found);
+    TQTextCodec *codecForEnc = TDEGlobal::charsets()->codecForName(encodings[i], found);
 
     if (found)
     {

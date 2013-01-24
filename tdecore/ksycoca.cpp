@@ -114,7 +114,7 @@ bool KSycoca::openDatabase( bool openDummyIfNotFound )
    TQString path;
    TQCString ksycoca_env = getenv("TDESYCOCA");
    if (ksycoca_env.isEmpty())
-      path = KGlobal::dirs()->saveLocation("cache") + "ksycoca";
+      path = TDEGlobal::dirs()->saveLocation("cache") + "ksycoca";
    else
       path = TQFile::decodeName(ksycoca_env);
 
@@ -424,7 +424,7 @@ TQStringList KSycoca::allResourceDirs()
 TQString KSycoca::determineRelativePath( const TQString & _fullpath, const char *_resource )
 {
   TQString sRelativeFilePath;
-  TQStringList dirs = KGlobal::dirs()->resourceDirs( _resource );
+  TQStringList dirs = TDEGlobal::dirs()->resourceDirs( _resource );
   TQStringList::ConstIterator dirsit = dirs.begin();
   for ( ; dirsit != dirs.end() && sRelativeFilePath.isEmpty(); ++dirsit ) {
     // might need canonicalPath() ...

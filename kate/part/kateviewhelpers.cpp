@@ -1175,7 +1175,7 @@ KateViewEncodingAction::KateViewEncodingAction(KateDocument *_doc, KateView *_vi
 
 void KateViewEncodingAction::slotAboutToShow()
 {
-  TQStringList modes (KGlobal::charsets()->descriptiveEncodingNames());
+  TQStringList modes (TDEGlobal::charsets()->descriptiveEncodingNames());
 
   popupMenu()->clear ();
   for (uint z=0; z<modes.size(); ++z)
@@ -1183,7 +1183,7 @@ void KateViewEncodingAction::slotAboutToShow()
     popupMenu()->insertItem ( modes[z], this, TQT_SLOT(setMode(int)), 0,  z);
 
     bool found = false;
-    TQTextCodec *codecForEnc = KGlobal::charsets()->codecForName(KGlobal::charsets()->encodingForName(modes[z]), found);
+    TQTextCodec *codecForEnc = TDEGlobal::charsets()->codecForName(TDEGlobal::charsets()->encodingForName(modes[z]), found);
 
     if (found && codecForEnc)
     {
@@ -1195,8 +1195,8 @@ void KateViewEncodingAction::slotAboutToShow()
 
 void KateViewEncodingAction::setMode (int mode)
 {
-  TQStringList modes (KGlobal::charsets()->descriptiveEncodingNames());
-  doc->config()->setEncoding( KGlobal::charsets()->encodingForName( modes[mode] ) );
+  TQStringList modes (TDEGlobal::charsets()->descriptiveEncodingNames());
+  doc->config()->setEncoding( TDEGlobal::charsets()->encodingForName( modes[mode] ) );
   // now we don't want the encoding changed again unless the user does so using the menu.
   doc->setEncodingSticky( true );
   doc->reloadFile();

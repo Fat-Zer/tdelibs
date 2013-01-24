@@ -74,7 +74,7 @@ void PasswordDialog::init( const TQString& prompt, const TQString& user,
     d->nRow = 0;
     d->keepCheckBox = 0;
 
-    KConfig* cfg = KGlobal::config();
+    KConfig* cfg = TDEGlobal::config();
     KConfigGroupSaver saver( cfg, "Passwords" );
 
     d->layout = new TQGridLayout( main, 9, 3, spacingHint(), marginHint());
@@ -82,7 +82,7 @@ void PasswordDialog::init( const TQString& prompt, const TQString& user,
 
     // Row 0: pixmap  prompt
     TQLabel* lbl;
-    TQPixmap pix( KGlobal::iconLoader()->loadIcon( "password", KIcon::NoGroup, KIcon::SizeHuge, 0, 0, true));
+    TQPixmap pix( TDEGlobal::iconLoader()->loadIcon( "password", KIcon::NoGroup, KIcon::SizeHuge, 0, 0, true));
     if ( !pix.isNull() )
     {
         lbl = new TQLabel( main );
@@ -198,7 +198,7 @@ static void calculateLabelSize(TQLabel *label)
    // Calculate a proper size for the text.
    {
        TQSimpleRichText rt(qt_text, label->font());
-       TQRect d = KGlobalSettings::desktopGeometry(label->topLevelWidget());
+       TQRect d = TDEGlobalSettings::desktopGeometry(label->topLevelWidget());
 
        pref_width = d.width() / 4;
        rt.setWidth(pref_width-10);

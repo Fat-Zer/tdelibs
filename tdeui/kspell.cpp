@@ -296,11 +296,11 @@ KSpell::startIspell()
 
   if (trystart == 0) //don't connect these multiple times
   {
-    connect( proc, TQT_SIGNAL(receivedStderr(KProcess *, char *, int)),
-             this, TQT_SLOT(ispellErrors(KProcess *, char *, int)) );
+    connect( proc, TQT_SIGNAL(receivedStderr(TDEProcess *, char *, int)),
+             this, TQT_SLOT(ispellErrors(TDEProcess *, char *, int)) );
 
-    connect( proc, TQT_SIGNAL(processExited(KProcess *)),
-             this, TQT_SLOT(ispellExit (KProcess *)) );
+    connect( proc, TQT_SIGNAL(processExited(TDEProcess *)),
+             this, TQT_SLOT(ispellExit (TDEProcess *)) );
 
     OUTPUT(KSpell2);
   }
@@ -313,7 +313,7 @@ KSpell::startIspell()
 }
 
 void
-KSpell::ispellErrors( KProcess *, char *buffer, int buflen )
+KSpell::ispellErrors( TDEProcess *, char *buffer, int buflen )
 {
   buffer[buflen-1] = '\0';
   //  kdDebug(750) << "ispellErrors [" << buffer << "]\n" << endl;
@@ -1313,7 +1313,7 @@ void KSpell::cleanUp()
   proc->closeStdin();
 }
 
-void KSpell::ispellExit( KProcess* )
+void KSpell::ispellExit( TDEProcess* )
 {
   kdDebug() << "KSpell::ispellExit() " << m_status << endl;
 

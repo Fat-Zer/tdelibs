@@ -638,11 +638,11 @@ DrMain* KMCupsManager::loadMaticDriver(const TQString& drname)
 
 	KPipeProcess	in;
 	TQFile		out(tmpFile);
-	TQString cmd = KProcess::quote(exe);
+	TQString cmd = TDEProcess::quote(exe);
 	cmd += " -t cups -d ";
-	cmd += KProcess::quote(comps[2]);
+	cmd += TDEProcess::quote(comps[2]);
 	cmd += " -p ";
-	cmd += KProcess::quote(comps[1]);
+	cmd += TDEProcess::quote(comps[1]);
 	if (in.open(cmd) && out.open(IO_WriteOnly))
 	{
 		TQTextStream	tin(&in), tout(&out);

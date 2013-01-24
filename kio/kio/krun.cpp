@@ -184,7 +184,7 @@ pid_t KRun::runURL( const KURL& u, const TQString& _mimetype, TQWidget* window, 
   KURL::List lst;
   lst.append( u );
 
-  static const TQString& app_str = KGlobal::staticQString("Application");
+  static const TQString& app_str = TDEGlobal::staticQString("Application");
 
   KService::Ptr offer = KServiceTypeProfile::preferredService( _mimetype, app_str );
 
@@ -476,8 +476,8 @@ TQStringList KRun::processDesktopExec(const KService &_service, const KURL::List
 */
 
   if (_service.terminal()) {
-    KConfigGroupSaver gs(KGlobal::config(), "General");
-    TQString terminal = KGlobal::config()->readPathEntry("TerminalApplication", "konsole");
+    KConfigGroupSaver gs(TDEGlobal::config(), "General");
+    TQString terminal = TDEGlobal::config()->readPathEntry("TerminalApplication", "konsole");
     if (terminal == "konsole")
       terminal += " -caption=%c %i %m";
     terminal += " ";
@@ -549,7 +549,7 @@ TQString KRun::binaryName( const TQString & execLine, bool removePath )
   return TQString();
 }
 
-static pid_t runCommandInternal( KProcess* proc, const KService* service, const TQString& binName,
+static pid_t runCommandInternal( TDEProcess* proc, const KService* service, const TQString& binName,
     const TQString &execName, const TQString & iconName, TQWidget* window, TQCString asn )
 {
   if (service && !service->desktopEntryPath().isEmpty()
@@ -590,7 +590,7 @@ static pid_t runCommandInternal( KProcess* proc, const KService* service, const 
           data.setLaunchedBy( window->winId());
       KStartupInfo::sendStartup( id, data );
   }
-  pid_t pid = KProcessRunner::run( proc, binName, id );
+  pid_t pid = TDEProcessRunner::run( proc, binName, id );
   if( startup_notify && pid )
   {
       KStartupInfoData data;
@@ -602,7 +602,7 @@ static pid_t runCommandInternal( KProcess* proc, const KService* service, const 
 #else
   Q_UNUSED( execName );
   Q_UNUSED( iconName );
-  return KProcessRunner::run( proc, bin );
+  return TDEProcessRunner::run( proc, bin );
 #endif
 }
 
@@ -681,9 +681,9 @@ static pid_t runTempService( const KService& _service, const KURL::List& _urls, 
   {
       args = KRun::processDesktopExec(_service, _urls, false, tempFiles, suggestedFileName);
   }
-  kdDebug(7010) << "runTempService: KProcess args=" << args << endl;
+  kdDebug(7010) << "runTempService: TDEProcess args=" << args << endl;
 
-  KProcess * proc = new KProcess;
+  TDEProcess * proc = new TDEProcess;
   *proc << args;
 
   if (!_service.path().isEmpty())
@@ -856,7 +856,7 @@ pid_t KRun::runCommand( const TQString& cmd, const TQString &execName, const TQS
     TQWidget* window, const TQCString& asn )
 {
   kdDebug(7010) << "runCommand " << cmd << "," << execName << endl;
-  KProcess * proc = new KProcess;
+  TDEProcess * proc = new TDEProcess;
   proc->setUseShell(true);
   *proc << cmd;
   KService::Ptr service = KService::serviceByDesktopName( binaryName( execName, true ) );
@@ -1440,7 +1440,7 @@ void KRun::abort()
 void KRun::setEnableExternalBrowser(bool b)
 {
    if (b)
-      d->m_externalBrowser = KConfigGroup(KGlobal::config(), "General").readEntry("BrowserApplication");
+      d->m_externalBrowser = KConfigGroup(TDEGlobal::config(), "General").readEntry("BrowserApplication");
    else
       d->m_externalBrowser = TQString::null;
 }
@@ -1477,27 +1477,27 @@ bool KRun::isExecutable( const TQString& serviceType )
 /****************/
 
 pid_t
-KProcessRunner::run(KProcess * p, const TQString & binName)
+TDEProcessRunner::run(TDEProcess * p, const TQString & binName)
 {
-  return (new KProcessRunner(p, binName))->pid();
+  return (new TDEProcessRunner(p, binName))->pid();
 }
 
 #ifdef Q_WS_X11
 pid_t
-KProcessRunner::run(KProcess * p, const TQString & binName, const KStartupInfoId& id )
+TDEProcessRunner::run(TDEProcess * p, const TQString & binName, const KStartupInfoId& id )
 {
-  return (new KProcessRunner(p, binName, id))->pid();
+  return (new TDEProcessRunner(p, binName, id))->pid();
 }
 #endif
 
-KProcessRunner::KProcessRunner(KProcess * p, const TQString & _binName )
+TDEProcessRunner::TDEProcessRunner(TDEProcess * p, const TQString & _binName )
   : TQObject(),
     process_(p),
     binName( _binName )
 {
   TQObject::connect(
-      process_, TQT_SIGNAL(processExited(KProcess *)),
-      this,     TQT_SLOT(slotProcessExited(KProcess *)));
+      process_, TQT_SIGNAL(processExited(TDEProcess *)),
+      this,     TQT_SLOT(slotProcessExited(TDEProcess *)));
 
   process_->start();
   if ( !process_->pid() )
@@ -1505,15 +1505,15 @@ KProcessRunner::KProcessRunner(KProcess * p, const TQString & _binName )
 }
 
 #ifdef Q_WS_X11
-KProcessRunner::KProcessRunner(KProcess * p, const TQString & _binName, const KStartupInfoId& id )
+TDEProcessRunner::TDEProcessRunner(TDEProcess * p, const TQString & _binName, const KStartupInfoId& id )
   : TQObject(),
     process_(p),
     binName( _binName ),
     id_( id )
 {
   TQObject::connect(
-      process_, TQT_SIGNAL(processExited(KProcess *)),
-      this,     TQT_SLOT(slotProcessExited(KProcess *)));
+      process_, TQT_SIGNAL(processExited(TDEProcess *)),
+      this,     TQT_SLOT(slotProcessExited(TDEProcess *)));
 
   process_->start();
   if ( !process_->pid() )
@@ -1521,19 +1521,19 @@ KProcessRunner::KProcessRunner(KProcess * p, const TQString & _binName, const KS
 }
 #endif
 
-KProcessRunner::~KProcessRunner()
+TDEProcessRunner::~TDEProcessRunner()
 {
   delete process_;
 }
 
   pid_t
-KProcessRunner::pid() const
+TDEProcessRunner::pid() const
 {
   return process_->pid();
 }
 
   void
-KProcessRunner::slotProcessExited(KProcess * p)
+TDEProcessRunner::slotProcessExited(TDEProcess * p)
 {
   if (p != process_)
     return; // Eh ?

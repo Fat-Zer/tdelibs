@@ -16,7 +16,7 @@
    Boston, MA 02110-1301, USA.
 */
 /*
-* kglobal.cpp -- Implementation of class KGlobal.
+* kglobal.cpp -- Implementation of class TDEGlobal.
 * Author:	Sirtaj Singh Kang
 * Version:	$Id$
 * Generated:	Sat May  1 02:08:43 EST 1999
@@ -53,55 +53,55 @@
 
 static void kglobal_init();
 
-KStandardDirs *KGlobal::dirs()
+KStandardDirs *TDEGlobal::dirs()
 {
     MYASSERT(_instance);
 
     return _instance->dirs();
 }
 
-KConfig	*KGlobal::config()
+KConfig	*TDEGlobal::config()
 {
     MYASSERT(_instance);
 
     return _instance->config();
 }
 
-KSharedConfig *KGlobal::sharedConfig()
+KSharedConfig *TDEGlobal::sharedConfig()
 {
     MYASSERT(_instance);
 
     return _instance->sharedConfig();
 }
 
-KIconLoader *KGlobal::iconLoader()
+KIconLoader *TDEGlobal::iconLoader()
 {
     MYASSERT(_instance);
 
     return _instance->iconLoader();
 }
 
-TDEHardwareDevices *KGlobal::hardwareDevices()
+TDEHardwareDevices *TDEGlobal::hardwareDevices()
 {
     MYASSERT(_instance);
 
     return _instance->hardwareDevices();
 }
 
-TDEGlobalNetworkManager *KGlobal::networkManager()
+TDEGlobalNetworkManager *TDEGlobal::networkManager()
 {
     MYASSERT(_instance);
 
     return _instance->networkManager();
 }
 
-TDEInstance *KGlobal::instance()
+TDEInstance *TDEGlobal::instance()
 {
     MYASSERT(_instance);
     return _instance;
 }
 
-KLocale	*KGlobal::locale()
+KLocale	*TDEGlobal::locale()
 {
     if( _locale == 0 ) {
 	if (!_instance)
@@ -117,7 +117,7 @@ KLocale	*KGlobal::locale()
     return _locale;
 }
 
-KCharsets *KGlobal::charsets()
+KCharsets *TDEGlobal::charsets()
 {
     if( _charsets == 0 ) {
         _charsets =new KCharsets();
@@ -127,7 +127,7 @@ KCharsets *KGlobal::charsets()
     return _charsets;
 }
 
-void KGlobal::setActiveInstance(TDEInstance *i)
+void TDEGlobal::setActiveInstance(TDEInstance *i)
 {
     _activeInstance = i;
     if (i && _locale)
@@ -138,10 +138,10 @@ void KGlobal::setActiveInstance(TDEInstance *i)
  * Create a static QString
  *
  * To be used inside functions(!) like:
- * static const TQString &myString = KGlobal::staticQString("myText");
+ * static const TQString &myString = TDEGlobal::staticQString("myText");
  */
 const TQString &
-KGlobal::staticQString(const char *str)
+TDEGlobal::staticQString(const char *str)
 {
    return staticQString(TQString::fromLatin1(str));
 }
@@ -156,10 +156,10 @@ public:
  * Create a static QString
  *
  * To be used inside functions(!) like:
- * static const TQString &myString = KGlobal::staticQString(i18n("My Text"));
+ * static const TQString &myString = TDEGlobal::staticQString(i18n("My Text"));
  */
 const TQString &
-KGlobal::staticQString(const TQString &str)
+TDEGlobal::staticQString(const TQString &str)
 {
     if (!_stringDict) {
       _stringDict = new KStringDict;
@@ -182,7 +182,7 @@ public:
 };
 
 void
-KGlobal::registerStaticDeleter(KStaticDeleterBase *obj)
+TDEGlobal::registerStaticDeleter(KStaticDeleterBase *obj)
 {
    if (!_staticDeleters)
       kglobal_init();
@@ -191,16 +191,16 @@ KGlobal::registerStaticDeleter(KStaticDeleterBase *obj)
 }
 
 void
-KGlobal::unregisterStaticDeleter(KStaticDeleterBase *obj)
+TDEGlobal::unregisterStaticDeleter(KStaticDeleterBase *obj)
 {
    if (_staticDeleters)
       _staticDeleters->removeRef(obj);
 }
 
 void
-KGlobal::deleteStaticDeleters()
+TDEGlobal::deleteStaticDeleters()
 {
-    if (!KGlobal::_staticDeleters)
+    if (!TDEGlobal::_staticDeleters)
         return;
 
     for(;_staticDeleters->count();)
@@ -208,18 +208,18 @@ KGlobal::deleteStaticDeleters()
         _staticDeleters->take(0)->destructObject();
     }
 
-    delete KGlobal::_staticDeleters;
-    KGlobal::_staticDeleters = 0;
+    delete TDEGlobal::_staticDeleters;
+    TDEGlobal::_staticDeleters = 0;
 }
 
 // The Variables
 
-KStringDict     *KGlobal::_stringDict   = 0;
-TDEInstance       *KGlobal::_instance     = 0;
-TDEInstance       *KGlobal::_activeInstance = 0;
-KLocale         *KGlobal::_locale	= 0;
-KCharsets       *KGlobal::_charsets	= 0;
-KStaticDeleterList *KGlobal::_staticDeleters = 0;
+KStringDict     *TDEGlobal::_stringDict   = 0;
+TDEInstance       *TDEGlobal::_instance     = 0;
+TDEInstance       *TDEGlobal::_activeInstance = 0;
+KLocale         *TDEGlobal::_locale	= 0;
+KCharsets       *TDEGlobal::_charsets	= 0;
+KStaticDeleterList *TDEGlobal::_staticDeleters = 0;
 
 #ifdef WIN32
 #include <windows.h>
@@ -235,23 +235,23 @@ __attribute__((destructor))
 #endif
 static void kglobal_freeAll()
 {
-    delete KGlobal::_locale;
-    KGlobal::_locale = 0;
-    delete KGlobal::_charsets;
-    KGlobal::_charsets = 0;
-    delete KGlobal::_stringDict;
-    KGlobal::_stringDict = 0;
-    KGlobal::deleteStaticDeleters();
+    delete TDEGlobal::_locale;
+    TDEGlobal::_locale = 0;
+    delete TDEGlobal::_charsets;
+    TDEGlobal::_charsets = 0;
+    delete TDEGlobal::_stringDict;
+    TDEGlobal::_stringDict = 0;
+    TDEGlobal::deleteStaticDeleters();
     // so that we don't hold a reference and see memory leaks :/
-    KGlobal::setActiveInstance(0);
+    TDEGlobal::setActiveInstance(0);
 }
 
 static void kglobal_init()
 {
-    if (KGlobal::_staticDeleters)
+    if (TDEGlobal::_staticDeleters)
         return;
 
-    KGlobal::_staticDeleters = new KStaticDeleterList;
+    TDEGlobal::_staticDeleters = new KStaticDeleterList;
 }
 
 int kasciistricmp( const char *str1, const char *str2 )

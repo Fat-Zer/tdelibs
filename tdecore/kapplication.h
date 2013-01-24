@@ -662,7 +662,7 @@ public slots:
   /**
    * Broadcast a received keycode to all listening KDE applications
    * The primary use for this feature is to connect hotkeys such as
-   * XF86Display to their respective KGlobalAccel functions while
+   * XF86Display to their respective TDEGlobalAccel functions while
    * the screen is locked by kdesktop_lock.
    */
   void broadcastKeyCode(unsigned int keyCode);
@@ -1450,8 +1450,8 @@ signals:
   void backgroundChanged(int desk);
 
   /**
-   * Emitted when the global settings have been changed - see KGlobalSettings
-   * TDEApplication takes care of calling reparseConfiguration on KGlobal::config()
+   * Emitted when the global settings have been changed - see TDEGlobalSettings
+   * TDEApplication takes care of calling reparseConfiguration on TDEGlobal::config()
    * so that applications/classes using this only have to re-read the configuration
    * @param category the category among the enum above
    */
@@ -1522,7 +1522,7 @@ signals:
 
   /**
    * @internal
-   * Used to send KGlobalAccel objects a new keypress from physical hotkeys.
+   * Used to send TDEGlobalAccel objects a new keypress from physical hotkeys.
    */
   void coreFakeKeyPress(unsigned int keyCode);
 
@@ -1546,7 +1546,7 @@ private:
 
 
 /**
- * \relates KGlobal
+ * \relates TDEGlobal
  * Check, if a file may be accessed in a given mode.
  * This is a wrapper around the access() system call.
  * checkAccess() calls access() with the given parameters.

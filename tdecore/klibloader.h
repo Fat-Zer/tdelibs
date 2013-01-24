@@ -273,7 +273,7 @@ public:
      *             ".la" will be appended.
      * @param instance a TDEInstance used to get the standard paths
      */
-    static TQString findLibrary( const char * name, const TDEInstance * instance = KGlobal::instance() );
+    static TQString findLibrary( const char * name, const TDEInstance * instance = TDEGlobal::instance() );
 
 protected:
     KLibLoader( TQObject* parent = 0, const char* name = 0 );
@@ -311,7 +311,7 @@ private:
  * \code
  *     s_global = new TDEInstance( "kspread" );
  * \endcode
- * This TDEInstance is comparable to KGlobal used by normal applications.
+ * This TDEInstance is comparable to TDEGlobal used by normal applications.
  * It allows you to find resource files (images, XML, sound etc.) belonging
  * to the library.
  *

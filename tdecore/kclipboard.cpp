@@ -38,7 +38,7 @@
  *  especially the second one.
  */
 
-class KClipboardSynchronizer::MimeSource : public TQMimeSource
+class TDEClipboardSynchronizer::MimeSource : public TQMimeSource
 {
 public:
     MimeSource( const TQMimeSource * src )
@@ -89,25 +89,25 @@ private:
 };
 
 
-KClipboardSynchronizer * KClipboardSynchronizer::s_self = 0L;
-bool KClipboardSynchronizer::s_sync = false;
-bool KClipboardSynchronizer::s_reverse_sync = false;
-bool KClipboardSynchronizer::s_blocked = false;
+TDEClipboardSynchronizer * TDEClipboardSynchronizer::s_self = 0L;
+bool TDEClipboardSynchronizer::s_sync = false;
+bool TDEClipboardSynchronizer::s_reverse_sync = false;
+bool TDEClipboardSynchronizer::s_blocked = false;
 
-KClipboardSynchronizer * KClipboardSynchronizer::self()
+TDEClipboardSynchronizer * TDEClipboardSynchronizer::self()
 {
     if ( !s_self )
-        s_self = new KClipboardSynchronizer( TQT_TQOBJECT(kapp), "KDE Clipboard" );
+        s_self = new TDEClipboardSynchronizer( TQT_TQOBJECT(kapp), "KDE Clipboard" );
 
     return s_self;
 }
 
-KClipboardSynchronizer::KClipboardSynchronizer( TQObject *parent, const char *name )
+TDEClipboardSynchronizer::TDEClipboardSynchronizer( TQObject *parent, const char *name )
     : TQObject( parent, name )
 {
     s_self = this;
 
-    KConfigGroup config( KGlobal::config(), "General" );
+    KConfigGroup config( TDEGlobal::config(), "General" );
     s_sync = config.readBoolEntry( "SynchronizeClipboardAndSelection", s_sync);
     s_reverse_sync = config.readBoolEntry( "ClipboardSetSelection",
                                                 s_reverse_sync );
@@ -115,13 +115,13 @@ KClipboardSynchronizer::KClipboardSynchronizer( TQObject *parent, const char *na
     setupSignals();
 }
 
-KClipboardSynchronizer::~KClipboardSynchronizer()
+TDEClipboardSynchronizer::~TDEClipboardSynchronizer()
 {
     if ( s_self == this )
         s_self = 0L;
 }
 
-void KClipboardSynchronizer::setupSignals()
+void TDEClipboardSynchronizer::setupSignals()
 {
     TQClipboard *clip = TQApplication::clipboard();
     disconnect( clip, NULL, this, NULL );
@@ -133,7 +133,7 @@ void KClipboardSynchronizer::setupSignals()
                  TQT_SLOT( slotClipboardChanged() ));
 }
 
-void KClipboardSynchronizer::slotSelectionChanged()
+void TDEClipboardSynchronizer::slotSelectionChanged()
 {
     TQClipboard *clip = TQApplication::clipboard();
 
@@ -145,7 +145,7 @@ void KClipboardSynchronizer::slotSelectionChanged()
                   TQClipboard::Clipboard );
 }
 
-void KClipboardSynchronizer::slotClipboardChanged()
+void TDEClipboardSynchronizer::slotClipboardChanged()
 {
     TQClipboard *clip = TQApplication::clipboard();
 
@@ -157,7 +157,7 @@ void KClipboardSynchronizer::slotClipboardChanged()
                   TQClipboard::Selection );
 }
 
-void KClipboardSynchronizer::setClipboard( TQMimeSource *data, TQClipboard::Mode mode )
+void TDEClipboardSynchronizer::setClipboard( TQMimeSource *data, TQClipboard::Mode mode )
 {
 //     tqDebug("---> setting clipboard: %p", data);
 
@@ -177,20 +177,20 @@ void KClipboardSynchronizer::setClipboard( TQMimeSource *data, TQClipboard::Mode
     s_blocked = false;
 }
 
-void KClipboardSynchronizer::setSynchronizing( bool sync )
+void TDEClipboardSynchronizer::setSynchronizing( bool sync )
 {
     s_sync = sync;
     self()->setupSignals();
 }
 
-void KClipboardSynchronizer::setReverseSynchronizing( bool enable )
+void TDEClipboardSynchronizer::setReverseSynchronizing( bool enable )
 {
     s_reverse_sync = enable;
     self()->setupSignals();
 }
 
 // private, called by TDEApplication
-void KClipboardSynchronizer::newConfiguration( int config )
+void TDEClipboardSynchronizer::newConfiguration( int config )
 {
     s_sync = (config & Synchronize);
     self()->setupSignals();

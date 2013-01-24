@@ -1094,7 +1094,7 @@ public:
 
     /**
      * Use @p cfg for all settings related to the dontShowAgainName feature.
-     * If @p cfg is 0 (default) KGlobal::config() will be used.
+     * If @p cfg is 0 (default) TDEGlobal::config() will be used.
      * @since 3.2
      */    
     static void setDontShowAskAgainConfig(KConfig* cfg);

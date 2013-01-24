@@ -300,13 +300,13 @@ void KHTMLPart::init( KHTMLView *view, GUIProfile prof )
 
 
   d->m_manualDetection = new KSelectAction( i18n( "short for Manual Detection", "Manual" ), 0, this, TQT_SLOT( slotSetEncoding() ), actionCollection(), "manualDetection" );
-  TQStringList encodings = KGlobal::charsets()->descriptiveEncodingNames();
+  TQStringList encodings = TDEGlobal::charsets()->descriptiveEncodingNames();
   d->m_manualDetection->setItems( encodings );
   d->m_manualDetection->setCurrentItem( -1 );
   d->m_paSetEncoding->insert( d->m_manualDetection );
 
 
-  KConfig *config = KGlobal::config();
+  KConfig *config = TDEGlobal::config();
   if ( config->hasGroup( "HTML Settings" ) ) {
     config->setGroup( "HTML Settings" );
     khtml::Decoder::AutoDetectLanguage language;
@@ -460,16 +460,16 @@ void KHTMLPart::init( KHTMLView *view, GUIProfile prof )
   //        loadPlugins( partObject(), this, instance() );
 
   // "khtml" catalog does not exist, our translations are in tdelibs.
-  // removing this catalog from KGlobal::locale() prevents problems
+  // removing this catalog from TDEGlobal::locale() prevents problems
   // with changing the language in applications at runtime -Thomas Reitelbach
-  KGlobal::locale()->removeCatalogue("khtml");
+  TDEGlobal::locale()->removeCatalogue("khtml");
 }
 
 KHTMLPart::~KHTMLPart()
 {
   //kdDebug(6050) << "KHTMLPart::~KHTMLPart " << this << endl;
 
-  KConfig *config = KGlobal::config();
+  KConfig *config = TDEGlobal::config();
   config->setGroup( "HTML Settings" );
   config->writeEntry( "AutomaticDetectionLanguage", d->m_autoDetectLanguage );
 
@@ -1086,7 +1086,7 @@ KJSErrorDlg *KHTMLPart::jsErrorExtension() {
   if (!d->m_jsedlg) {
     d->m_jsedlg = new KJSErrorDlg;
     d->m_jsedlg->setURL(m_url.prettyURL());
-    if (KGlobalSettings::showIconsOnPushButtons()) {
+    if (TDEGlobalSettings::showIconsOnPushButtons()) {
       d->m_jsedlg->_clear->setIconSet(SmallIconSet("locationbar_erase"));
       d->m_jsedlg->_close->setIconSet(SmallIconSet("fileclose"));
     }
@@ -1757,7 +1757,7 @@ void KHTMLPart::htmlError( int errorCode, const TQString& text, const KURL& reqU
   TQString url, protocol, datetime;
   url = reqUrl.prettyURL();
   protocol = reqUrl.protocol();
-  datetime = KGlobal::locale()->formatDateTime( TQDateTime::currentDateTime(),
+  datetime = TDEGlobal::locale()->formatDateTime( TQDateTime::currentDateTime(),
                                                 false );
 
   TQString doc = TQString::fromLatin1( "<html><head><title>" );
@@ -2500,7 +2500,7 @@ TQString KHTMLPart::defaultEncoding() const
   if ( url().protocol().startsWith( "http" ) )
     return "iso-8859-1";
   else
-    return KGlobal::locale()->encoding();
+    return TDEGlobal::locale()->encoding();
 }
 
 void KHTMLPart::setUserStyleSheet(const KURL &url)
@@ -3800,7 +3800,7 @@ void KHTMLPart::overURL( const TQString &url, const TQString &target, bool /*shi
       else
       {
         float d = (float) buff.st_size/1024.0;
-        text = i18n("%2 (%1 K)").arg(KGlobal::locale()->formatNumber(d, 2)).arg(text2); // was %.2f
+        text = i18n("%2 (%1 K)").arg(TDEGlobal::locale()->formatNumber(d, 2)).arg(text2); // was %.2f
       }
       text += "  ";
       text += com;
@@ -4222,7 +4222,7 @@ void KHTMLPart::slotSetEncoding()
   d->m_paSetEncoding->popupMenu()->setItemChecked( 0, false );
   d->m_paSetEncoding->popupMenu()->setItemChecked( d->m_paSetEncoding->popupMenu()->idAt( 2 ), true );
 
-  TQString enc = KGlobal::charsets()->encodingForName( d->m_manualDetection->currentText() );
+  TQString enc = TDEGlobal::charsets()->encodingForName( d->m_manualDetection->currentText() );
   setEncoding( enc, true );
 }
 
@@ -6390,7 +6390,7 @@ void KHTMLPart::khtmlMouseMoveEvent( khtml::MouseMoveEvent *event )
   if( d->m_bDnd && d->m_bMousePressed &&
       ( (!d->m_strSelectedURL.isEmpty() && !isEditable())
         || (!d->m_mousePressNode.isNull() && d->m_mousePressNode.elementId() == ID_IMG) ) ) {
-    if ( ( d->m_dragStartPos - _mouse->pos() ).manhattanLength() <= KGlobalSettings::dndEventDelay() )
+    if ( ( d->m_dragStartPos - _mouse->pos() ).manhattanLength() <= TDEGlobalSettings::dndEventDelay() )
       return;
 
     TQPixmap pix;

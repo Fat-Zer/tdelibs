@@ -253,7 +253,7 @@ TQByteArray KURLDrag::encodedData( const char* mime ) const
 KURL KURLDrag::stringToUrl(const TQCString &s)
 {
     if (strncmp(s.data(), "file:", 5) == 0)
-       return KURL(s, KGlobal::locale()->fileEncodingMib());
+       return KURL(s, TDEGlobal::locale()->fileEncodingMib());
 
     return KURL(s, 106); // 106 is mib enum for utf8 codec;
 }
@@ -263,12 +263,12 @@ TQString KURLDrag::urlToString(const KURL &url)
     if (url.isLocalFile())
     {
 #if 1
-        return url.url(0, KGlobal::locale()->fileEncodingMib());
+        return url.url(0, TDEGlobal::locale()->fileEncodingMib());
 #else
         // According to the XDND spec, file:/ URLs for DND must have
         // the hostname part. But in really it just breaks many apps,
         // so it's disabled for now.
-        TQString s = url.url(0, KGlobal::locale()->fileEncodingMib());
+        TQString s = url.url(0, TDEGlobal::locale()->fileEncodingMib());
         if( !s.startsWith( "file://" ))
         {
             char hostname[257];

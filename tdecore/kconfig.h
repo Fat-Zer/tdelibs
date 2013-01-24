@@ -37,7 +37,7 @@ class KConfigPrivate;
 * This class implements KDE's default configuration system.
 *
 * @author Kalle Dalheimer <kalle@kde.org>, Preston Brown <pbrown@kde.org>
-* @see KGlobal::config(), KConfigBase, KSimpleConfig
+* @see TDEGlobal::config(), KConfigBase, KSimpleConfig
 * @short KDE Configuration Management class
 */
 class TDECORE_EXPORT KConfig : public KConfigBase

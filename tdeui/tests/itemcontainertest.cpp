@@ -94,7 +94,7 @@ TopLevel::TopLevel(TQWidget *parent, const char *name)
     connect( cbListView, TQT_SIGNAL( toggled( bool ) ),
 	     this, TQT_SLOT( slotToggleSingleColumn( bool ) ) );
 
-    KGlobal::config()->reparseConfiguration();
+    TDEGlobal::config()->reparseConfiguration();
 
     //Create IconView
     TQGroupBox* gbIconView = new TQGroupBox( 1, Qt::Horizontal, "KIconView", this);

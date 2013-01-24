@@ -36,11 +36,11 @@ public:
 	void run(TQObject *context = 0, const TQVariant &arg = 0);
 	void kill();
 private slots:
-	void Exit(KProcess *proc);
-	void stdErr(KProcess *proc, char *buffer, int buflen);
-	void stdOut(KProcess *proc, char *buffer, int buflen);
+	void Exit(TDEProcess *proc);
+	void stdErr(TDEProcess *proc, char *buffer, int buflen);
+	void stdOut(TDEProcess *proc, char *buffer, int buflen);
 private:
-	KProcess *m_script;
+	TDEProcess *m_script;
 	KScriptClientInterface *ScriptClientInterface;
 	TQString m_scriptName;
 };

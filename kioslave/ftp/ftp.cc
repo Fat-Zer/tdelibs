@@ -141,7 +141,7 @@ int kdemain( int argc, char **argv )
 {
   KLocale::setMainCatalogue("tdelibs");
   TDEInstance instance( "kio_ftp" );
-  ( void ) KGlobal::locale();
+  ( void ) TDEGlobal::locale();
 
   kdDebug(7102) << "Starting " << getpid() << endl;
 

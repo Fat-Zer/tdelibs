@@ -36,7 +36,7 @@ class KURLLabel::Private
 public:
   Private (const TQString& url, KURLLabel* label)
     : URL (url),
-      LinkColor (KGlobalSettings::linkColor()),
+      LinkColor (TDEGlobalSettings::linkColor()),
       HighlightedLinkColor (Qt::red),
       Tip(url),
       Cursor (0L),
@@ -358,7 +358,7 @@ bool KURLLabel::event (TQEvent *e)
     p.setBrush(TQColorGroup::Base, p.brush(TQPalette::Normal, TQColorGroup::Background));
     p.setColor(TQColorGroup::Foreground, palette().active().foreground());
     setPalette(p);
-    d->LinkColor = KGlobalSettings::linkColor();
+    d->LinkColor = TDEGlobalSettings::linkColor();
     setLinkColor(d->LinkColor);
     return true;
   }

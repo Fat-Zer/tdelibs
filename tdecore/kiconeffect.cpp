@@ -63,7 +63,7 @@ KIconEffect::~KIconEffect()
 
 void KIconEffect::init()
 {
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
 
     int i, j, effect=-1;
     TQStringList groups;
@@ -190,7 +190,7 @@ TQImage KIconEffect::apply(TQImage image, int group, int state) const
 
 TQImage KIconEffect::apply(TQImage image, int effect, float value, const TQColor col, bool trans) const
 {
-    return apply (image, effect, value, col, KGlobalSettings::baseColor(), trans);
+    return apply (image, effect, value, col, TDEGlobalSettings::baseColor(), trans);
 }
 
 TQImage KIconEffect::apply(TQImage image, int effect, float value, const TQColor col, const TQColor col2, bool trans) const
@@ -248,7 +248,7 @@ TQPixmap KIconEffect::apply(TQPixmap pixmap, int group, int state) const
 TQPixmap KIconEffect::apply(TQPixmap pixmap, int effect, float value,
 	const TQColor col, bool trans) const
 {
-    return apply (pixmap, effect, value, col, KGlobalSettings::baseColor(), trans);
+    return apply (pixmap, effect, value, col, TDEGlobalSettings::baseColor(), trans);
 }
 
 TQPixmap KIconEffect::apply(TQPixmap pixmap, int effect, float value,
@@ -706,10 +706,10 @@ void KIconEffect::overlay(TQImage &src, TQImage &overlay)
     void
 KIconEffect::visualActivate(TQWidget * widget, TQRect rect)
 {
-    if (!KGlobalSettings::visualActivate())
+    if (!TDEGlobalSettings::visualActivate())
         return;
 
-    uint actSpeed = KGlobalSettings::visualActivateSpeed();
+    uint actSpeed = TDEGlobalSettings::visualActivateSpeed();
 
     uint actCount = QMIN(rect.width(), rect.height()) / 2;
 
@@ -774,7 +774,7 @@ KIconEffect::visualActivate(TQWidget * widget, TQRect rect)
 void
 KIconEffect::visualActivate(TQWidget * widget, TQRect rect, TQPixmap *pixmap)
 {
-    if (!KGlobalSettings::visualActivate())
+    if (!TDEGlobalSettings::visualActivate())
         return;
 
     // Image too big to display smoothly
@@ -783,7 +783,7 @@ KIconEffect::visualActivate(TQWidget * widget, TQRect rect, TQPixmap *pixmap)
 	return;
     }
 
-    uint actSpeed = KGlobalSettings::visualActivateSpeed();
+    uint actSpeed = TDEGlobalSettings::visualActivateSpeed();
     uint actCount = TQMIN(rect.width(), rect.height()) / 4;
 
 

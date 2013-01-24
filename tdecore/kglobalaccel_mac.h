@@ -6,10 +6,10 @@
 #include "kshortcut.h"
 #include "kaccelbase.h"
 
-class KGlobalAccelPrivate: public KAccelBase
+class TDEGlobalAccelPrivate: public KAccelBase
 {
 public:
-    KGlobalAccelPrivate()
+    TDEGlobalAccelPrivate()
         : KAccelBase(KAccelBase::NATIVE_KEYS)
     {}
 

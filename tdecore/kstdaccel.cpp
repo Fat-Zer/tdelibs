@@ -126,7 +126,7 @@ static KStdAccelInfo* infoPtr( StdAccel id )
 */
 static void initialize( StdAccel id )
 {
-	KConfigGroupSaver saver( KGlobal::config(), "Shortcuts" );
+	KConfigGroupSaver saver( TDEGlobal::config(), "Shortcuts" );
 	KStdAccelInfo* pInfo = infoPtr( id );
 
 	if( !pInfo ) {

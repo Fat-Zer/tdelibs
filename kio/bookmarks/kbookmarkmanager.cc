@@ -311,7 +311,7 @@ void KBookmarkManager::convertAttribute( TQDomElement elem, const TQString & old
 void KBookmarkManager::importDesktopFiles()
 {
     KBookmarkImporter importer( const_cast<TQDomDocument *>(&internalDocument()) );
-    TQString path(KGlobal::dirs()->saveLocation("data", "kfm/bookmarks", true));
+    TQString path(TDEGlobal::dirs()->saveLocation("data", "kfm/bookmarks", true));
     importer.import( path );
     //kdDebug(7043) << internalDocument().toCString() << endl;
 
@@ -613,23 +613,23 @@ void KBookmarkManager::setEditorOptions( const TQString& caption, bool browser )
 
 void KBookmarkManager::slotEditBookmarks()
 {
-    KProcess proc;
+    TDEProcess proc;
     proc << TQString::fromLatin1("keditbookmarks");
     if (!dptr()->m_editorCaption.isNull())
        proc << TQString::fromLatin1("--customcaption") << dptr()->m_editorCaption;
     if (!dptr()->m_browserEditor)
        proc << TQString::fromLatin1("--nobrowser");
     proc << m_bookmarksFile;
-    proc.start(KProcess::DontCare);
+    proc.start(TDEProcess::DontCare);
 }
 
 void KBookmarkManager::slotEditBookmarksAtAddress( const TQString& address )
 {
-    KProcess proc;
+    TDEProcess proc;
     proc << TQString::fromLatin1("keditbookmarks")
          << TQString::fromLatin1("--address") << address
          << m_bookmarksFile;
-    proc.start(KProcess::DontCare);
+    proc.start(TDEProcess::DontCare);
 }
 
 ///////

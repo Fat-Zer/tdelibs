@@ -30,13 +30,13 @@
 /**
  * @internal
  */
-class KGlobalAccelPrivate : public TQWidget, public KAccelBase
+class TDEGlobalAccelPrivate : public TQWidget, public KAccelBase
 {
-	friend class KGlobalAccel;
+	friend class TDEGlobalAccel;
 	Q_OBJECT
  public:
-	KGlobalAccelPrivate();
-	virtual ~KGlobalAccelPrivate();
+	TDEGlobalAccelPrivate();
+	virtual ~TDEGlobalAccelPrivate();
 
 	virtual void setEnabled( bool bEnabled );
 

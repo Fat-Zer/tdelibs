@@ -428,7 +428,7 @@ void Field::deleteFields()
 void Field::saveFields( const TQString &identifier,
                         const Field::List &fields )
 {
-  KConfig *cfg = KGlobal::config();
+  KConfig *cfg = TDEGlobal::config();
   KConfigGroupSaver( cfg, "KABCFields" );
 
   saveFields( cfg, identifier, fields );
@@ -458,7 +458,7 @@ void Field::saveFields( KConfig *cfg, const TQString &identifier,
 
 Field::List Field::restoreFields( const TQString &identifier )
 {
-  KConfig *cfg = KGlobal::config();
+  KConfig *cfg = TDEGlobal::config();
   KConfigGroupSaver( cfg, "KABCFields" );
  
   return restoreFields( cfg, identifier );

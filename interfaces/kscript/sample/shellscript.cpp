@@ -30,10 +30,10 @@ K_EXPORT_COMPONENT_FACTORY( libshellscript, ShellScriptFactory( "ShellScript" ) 
 
 ShellScript::ShellScript(KScriptClientInterface *parent, const char *, const TQStringList & ) : ScriptClientInterface(parent)
 {
-	m_script =  new KProcess();
-	connect ( m_script, TQT_SIGNAL(processExited(KProcess *)), TQT_SLOT(Exit(KProcess *)));
-	connect ( m_script, TQT_SIGNAL(receivedStdout(KProcess *, char *, int)), TQT_SLOT(stdOut(KProcess *, char *, int )));
-	connect ( m_script, TQT_SIGNAL(receivedStderr(KProcess *, char *, int)), TQT_SLOT(stdErr(KProcess *, char *, int )));
+	m_script =  new TDEProcess();
+	connect ( m_script, TQT_SIGNAL(processExited(TDEProcess *)), TQT_SLOT(Exit(TDEProcess *)));
+	connect ( m_script, TQT_SIGNAL(receivedStdout(TDEProcess *, char *, int)), TQT_SLOT(stdOut(TDEProcess *, char *, int )));
+	connect ( m_script, TQT_SIGNAL(receivedStderr(TDEProcess *, char *, int)), TQT_SLOT(stdErr(TDEProcess *, char *, int )));
 	// Connect feedback signals and slots
 	//kdDebug() << "Building new script engine" << endl;
 }
@@ -60,7 +60,7 @@ void ShellScript::setScript( const TQString &, const TQString & )
 
 void ShellScript::run(TQObject *, const TQVariant &)
 {
-	 m_script->start(KProcess::NotifyOnExit,KProcess::All);
+	 m_script->start(TDEProcess::NotifyOnExit,TDEProcess::All);
 }
 void ShellScript::kill()
 {
@@ -68,16 +68,16 @@ void ShellScript::kill()
 		m_script->kill(9);	// Kill it harder
 }
 
-void ShellScript::Exit(KProcess *proc)
+void ShellScript::Exit(TDEProcess *proc)
 {
 	ScriptClientInterface->done((KScriptClientInterface::Result)proc->exitStatus(), "");
 }
 
-void ShellScript::stdErr(KProcess *, char *buffer, int)
+void ShellScript::stdErr(TDEProcess *, char *buffer, int)
 {
 	ScriptClientInterface->error(buffer);
 }
-void ShellScript::stdOut(KProcess *, char *buffer, int)
+void ShellScript::stdOut(TDEProcess *, char *buffer, int)
 {
 	ScriptClientInterface->output(buffer);
 }

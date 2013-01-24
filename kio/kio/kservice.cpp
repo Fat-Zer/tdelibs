@@ -310,7 +310,7 @@ KService::~KService()
 
 TQPixmap KService::pixmap( KIcon::Group _group, int _force_size, int _state, TQString * _path ) const
 {
-  KIconLoader *iconLoader=KGlobal::iconLoader();
+  KIconLoader *iconLoader=TDEGlobal::iconLoader();
   if (!iconLoader->extraDesktopThemesAdded())
   {
       TQPixmap pixmap=iconLoader->loadIcon( m_strIcon, _group, _force_size, _state, _path, true );

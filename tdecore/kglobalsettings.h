@@ -45,7 +45,7 @@ class KURL;
  *
  * @author David Faure <faure@kde.org>
  */
-class TDECORE_EXPORT KGlobalSettings
+class TDECORE_EXPORT TDEGlobalSettings
 {
   public:
 
@@ -74,7 +74,7 @@ class TDECORE_EXPORT KGlobalSettings
      * {
      *    if( !(e->state() && LeftButton)) return;
      *
-     *    int delay = KGlobalSettings::dndEventDelay();
+     *    int delay = TDEGlobalSettings::dndEventDelay();
      *    TQPoint newPos = e->pos();
      *    if(newPos.x() > mOldPos.x()+delay || newPos.x() < mOldPos.x()-delay ||
      *       newPos.y() > mOldPos.y()+delay || newPos.y() < mOldPos.y()-delay)

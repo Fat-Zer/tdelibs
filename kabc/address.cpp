@@ -338,7 +338,7 @@ TQString Address::formattedAddress( const TQString &realName,
     ciso = countryToISO( country() );
   } else {
     // fall back to our own country
-    ciso = KGlobal::locale()->country();
+    ciso = TDEGlobal::locale()->country();
   }
   KSimpleConfig entry( locate( "locale", 
         TQString( "l10n/" ) + ciso + TQString( "/entry.desktop" ) ) );
@@ -369,7 +369,7 @@ TQString Address::formattedAddress( const TQString &realName,
   // the rules of our own system country )
   if ( !country().isEmpty() ) {
     KSimpleConfig entry( locate( "locale", TQString( "l10n/" )
-          + KGlobal::locale()->country() + TQString( "/entry.desktop" ) ) );
+          + TDEGlobal::locale()->country() + TQString( "/entry.desktop" ) ) );
     entry.setGroup( "KCM Locale" );
     TQString cpos = entry.readEntry( "AddressCountryPosition" );
     if ( "BELOW" == cpos || cpos.isEmpty() ) {
@@ -520,7 +520,7 @@ TQString Address::countryToISO( const TQString &cname )
   if ( it != mISOMap->end() )
     return it.data();
 
-  TQString mapfile = KGlobal::dirs()->findResource( "data", 
+  TQString mapfile = TDEGlobal::dirs()->findResource( "data", 
           TQString::fromLatin1( "kabc/countrytransl.map" ) );
 
   TQFile file( mapfile );
@@ -540,8 +540,8 @@ TQString Address::countryToISO( const TQString &cname )
   }
   
   // fall back to system country
-  mISOMap->insert( cname, KGlobal::locale()->country() );
-  return KGlobal::locale()->country();
+  mISOMap->insert( cname, TDEGlobal::locale()->country() );
+  return TDEGlobal::locale()->country();
 }
 
 TQString Address::ISOtoCountry( const TQString &ISOname )
@@ -550,7 +550,7 @@ TQString Address::ISOtoCountry( const TQString &ISOname )
   if ( ISOname.simplifyWhiteSpace().isEmpty() )
     return TQString::null;
 
-  TQString mapfile = KGlobal::dirs()->findResource( "data", 
+  TQString mapfile = TDEGlobal::dirs()->findResource( "data", 
           TQString::fromLatin1( "kabc/countrytransl.map" ) );
 
   TQFile file( mapfile );

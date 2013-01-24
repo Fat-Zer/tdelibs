@@ -104,13 +104,13 @@ static TQString sycocaPath()
 
   if (bGlobalDatabase)
   {
-     path = KGlobal::dirs()->saveLocation("services")+"ksycoca";
+     path = TDEGlobal::dirs()->saveLocation("services")+"ksycoca";
   }
   else
   {
      TQCString ksycoca_env = getenv("TDESYCOCA");
      if (ksycoca_env.isEmpty())
-        path = KGlobal::dirs()->saveLocation("cache")+"ksycoca";
+        path = TDEGlobal::dirs()->saveLocation("cache")+"ksycoca";
      else
         path = TQFile::decodeName(ksycoca_env);
   }
@@ -122,7 +122,7 @@ static TQString oldSycocaPath()
 {
   TQCString ksycoca_env = getenv("TDESYCOCA");
   if (ksycoca_env.isEmpty())
-     return KGlobal::dirs()->saveLocation("tmp")+"ksycoca";
+     return TDEGlobal::dirs()->saveLocation("tmp")+"ksycoca";
 
   return TQString::null;
 }
@@ -189,7 +189,7 @@ KSycocaEntry *KBuildSycoca::createEntry(const TQString &file, bool addToFactory)
    TQ_UINT32 timeStamp = g_ctimeInfo->ctime(file);
    if (!timeStamp)
    {
-      timeStamp = KGlobal::dirs()->calcResourceHash( g_resource, file, true);
+      timeStamp = TDEGlobal::dirs()->calcResourceHash( g_resource, file, true);
    }
    KSycocaEntry* entry = 0;
    if (g_allEntries)
@@ -317,7 +317,7 @@ bool KBuildSycoca::build()
 
      TQStringList relFiles;
 
-     (void) KGlobal::dirs()->findAllResources( g_resource,
+     (void) TDEGlobal::dirs()->findAllResources( g_resource,
                                                TQString::null,
                                                true, // Recursive!
                                                true, // uniq
@@ -417,7 +417,7 @@ void KBuildSycoca::createMenu(TQString caption, TQString name, VFolderMenu::SubM
      TQ_UINT32 timeStamp = g_ctimeInfo->ctime(directoryFile);
      if (!timeStamp)
      {
-        timeStamp = KGlobal::dirs()->calcResourceHash( g_resource, directoryFile, true);
+        timeStamp = TDEGlobal::dirs()->calcResourceHash( g_resource, directoryFile, true);
      }
 
      KServiceGroup* entry = 0;
@@ -563,10 +563,10 @@ void KBuildSycoca::save()
    }
    (*m_str) << (TQ_INT32) 0; // No more factories.
    // Write TDEDIRS
-   (*m_str) << KGlobal::dirs()->kfsstnd_prefixes();
+   (*m_str) << TDEGlobal::dirs()->kfsstnd_prefixes();
    (*m_str) << newTimestamp;
-   (*m_str) << KGlobal::locale()->language();
-   (*m_str) << KGlobal::dirs()->calcResourceHash("services", "update_ksycoca", true);
+   (*m_str) << TDEGlobal::locale()->language();
+   (*m_str) << TDEGlobal::dirs()->calcResourceHash("services", "update_ksycoca", true);
    (*m_str) << (*g_allResourceDirs);
 
    // Write factory data....
@@ -673,7 +673,7 @@ TQStringList KBuildSycoca::existingResourceDirs()
    while( !resources.empty())
    {
       TQString res = resources.front();
-      *dirs += KGlobal::dirs()->resourceDirs( res.latin1());
+      *dirs += TDEGlobal::dirs()->resourceDirs( res.latin1());
       resources.remove( res ); // remove this 'res' and all its duplicates
    }
 
@@ -767,8 +767,8 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
    KLocale::setMainCatalogue("tdelibs");
    // force generating of KLocale object. if not, the database will get
    // be translated
-   KGlobal::locale();
-   KGlobal::dirs()->addResourceType("app-reg", "share/application-registry" );
+   TDEGlobal::locale();
+   TDEGlobal::dirs()->addResourceType("app-reg", "share/application-registry" );
 
    DCOPClient *dcopClient = new DCOPClient();
 
@@ -804,9 +804,9 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
    if (incremental || !checkfiles)
    {
      KSycoca::self()->disableAutoRebuild(); // Prevent deadlock
-     TQString current_language = KGlobal::locale()->language();
+     TQString current_language = TDEGlobal::locale()->language();
      TQString ksycoca_language = KSycoca::self()->language();
-     TQ_UINT32 current_update_sig = KGlobal::dirs()->calcResourceHash("services", "update_ksycoca", true);
+     TQ_UINT32 current_update_sig = TDEGlobal::dirs()->calcResourceHash("services", "update_ksycoca", true);
      TQ_UINT32 ksycoca_update_sig = KSycoca::self()->updateSignature();
 
      if ((current_update_sig != ksycoca_update_sig) ||
@@ -914,9 +914,9 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
       {
         // These directories may have been created with 0700 permission
         // better delete them if they are empty
-        TQString applnkDir = KGlobal::dirs()->saveLocation("apps", TQString::null, false);
+        TQString applnkDir = TDEGlobal::dirs()->saveLocation("apps", TQString::null, false);
         ::rmdir(TQFile::encodeName(applnkDir));
-        TQString servicetypesDir = KGlobal::dirs()->saveLocation("servicetypes", TQString::null, false);
+        TQString servicetypesDir = TDEGlobal::dirs()->saveLocation("servicetypes", TQString::null, false);
         ::rmdir(TQFile::encodeName(servicetypesDir));
       }
    }

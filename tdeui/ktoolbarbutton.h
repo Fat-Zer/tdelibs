@@ -61,7 +61,7 @@ public:
    */
   KToolBarButton(const TQString& icon, int id, TQWidget *parent,
                  const char *name=0L, const TQString &txt=TQString::null,
-                 TDEInstance *_instance = KGlobal::instance());
+                 TDEInstance *_instance = TDEGlobal::instance());
 
   /**
    * Construct a button with an existing pixmap.  It is not

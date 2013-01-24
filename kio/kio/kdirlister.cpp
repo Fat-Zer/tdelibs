@@ -951,8 +951,8 @@ void KDirListerCache::slotEntries( KIO::Job *job, const KIO::UDSEntryList &entri
     delayedMimeTypes = delayedMimeTypes && kdl->d->delayedMimeTypes;
 
   // avoid creating these QStrings again and again
-  static const TQString& dot = KGlobal::staticQString(".");
-  static const TQString& dotdot = KGlobal::staticQString("..");
+  static const TQString& dot = TDEGlobal::staticQString(".");
+  static const TQString& dotdot = TDEGlobal::staticQString("..");
 
   KIO::UDSEntryListConstIterator it = entries.begin();
   KIO::UDSEntryListConstIterator end = entries.end();
@@ -1539,8 +1539,8 @@ void KDirListerCache::slotUpdateResult( KIO::Job * j )
     fileItems.insert( (*kit)->url().url(), *kit );
   }
 
-  static const TQString& dot = KGlobal::staticQString(".");
-  static const TQString& dotdot = KGlobal::staticQString("..");
+  static const TQString& dot = TDEGlobal::staticQString(".");
+  static const TQString& dotdot = TDEGlobal::staticQString("..");
 
   KFileItem *item = 0, *tmp;
 
@@ -1979,8 +1979,8 @@ void KDirLister::emitChanges()
   if ( d->changes == NONE )
     return;
 
-  static const TQString& dot = KGlobal::staticQString(".");
-  static const TQString& dotdot = KGlobal::staticQString("..");
+  static const TQString& dot = TDEGlobal::staticQString(".");
+  static const TQString& dotdot = TDEGlobal::staticQString("..");
 
   for ( KURL::List::Iterator it = d->lstDirs.begin();
         it != d->lstDirs.end(); ++it )
@@ -2180,7 +2180,7 @@ bool KDirLister::matchesMimeFilter( const TQString& mime ) const
 bool KDirLister::matchesFilter( const KFileItem *item ) const
 {
   Q_ASSERT( item );
-  static const TQString& dotdot = KGlobal::staticQString("..");
+  static const TQString& dotdot = TDEGlobal::staticQString("..");
 
   if ( item->text() == dotdot )
     return false;

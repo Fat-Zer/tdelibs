@@ -117,7 +117,7 @@ KSSLD::KSSLD(const TQCString &name) : KDEDModule(name)
 	if (2 != cfg->readNumEntry("policies version", 0)) {
 		::updatePoliciesConfig(cfg);
 	}
-	KGlobal::dirs()->addResourceType("kssl", KStandardDirs::kde_default("data") + "kssl");
+	TDEGlobal::dirs()->addResourceType("kssl", KStandardDirs::kde_default("data") + "kssl");
 	caVerifyUpdate();
 	cacheLoadDefaultPolicies();
 	certList.setAutoDelete(false);
@@ -195,7 +195,7 @@ KSSLCNode *node;
 	cfg->sync();
 
 	// insure proper permissions -- contains sensitive data
-	TQString cfgName(KGlobal::dirs()->findResource("config", "ksslpolicies"));
+	TQString cfgName(TDEGlobal::dirs()->findResource("config", "ksslpolicies"));
 
 	if (!cfgName.isEmpty()) {
 		::chmod(TQFile::encodeName(cfgName), 0600);
@@ -618,12 +618,12 @@ return false;
 ///////////////////////////////////////////////////////////////////////////
 
 void KSSLD::caVerifyUpdate() {
-	TQString path = KGlobal::dirs()->saveLocation("kssl") + "/ca-bundle.crt";
+	TQString path = TDEGlobal::dirs()->saveLocation("kssl") + "/ca-bundle.crt";
 	if (!TQFile::exists(path))
 		return;
 	
 	cfg->setGroup(TQString::null);
-	TQ_UINT32 newStamp = KGlobal::dirs()->calcResourceHash("config", "ksslcalist", true);
+	TQ_UINT32 newStamp = TDEGlobal::dirs()->calcResourceHash("config", "ksslcalist", true);
 	TQ_UINT32 oldStamp = cfg->readUnsignedNumEntry("ksslcalistStamp");
 	if (oldStamp != newStamp)
 	{
@@ -634,7 +634,7 @@ void KSSLD::caVerifyUpdate() {
 }
 
 bool KSSLD::caRegenerate() {
-TQString path = KGlobal::dirs()->saveLocation("kssl") + "/ca-bundle.crt";
+TQString path = TDEGlobal::dirs()->saveLocation("kssl") + "/ca-bundle.crt";
 
 TQFile out(path);
 

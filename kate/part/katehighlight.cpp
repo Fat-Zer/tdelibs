@@ -2094,7 +2094,7 @@ bool KateHighlighting::isInWord( TQChar c, int attrib ) const
 
 bool KateHighlighting::canBreakAt( TQChar c, int attrib ) const
 {
-  static const TQString& sq = KGlobal::staticQString("\"'");
+  static const TQString& sq = TDEGlobal::staticQString("\"'");
   return (m_additionalData[ hlKeyForAttrib( attrib ) ]->wordWrapDeliminator.find(c) != -1) && (sq.find(c) == -1);
 }
 

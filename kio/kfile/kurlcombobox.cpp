@@ -81,7 +81,7 @@ void KURLComboBox::init( Mode mode )
 TQStringList KURLComboBox::urls() const
 {
     kdDebug(250) << "::urls()" << endl;
-    //static const TQString &fileProt = KGlobal::staticQString("file:");
+    //static const TQString &fileProt = TDEGlobal::staticQString("file:");
     TQStringList list;
     TQString url;
     for ( int i = defaultList.count(); i < count(); i++ ) {

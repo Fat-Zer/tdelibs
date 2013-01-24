@@ -219,7 +219,7 @@ void ProviderLoader::load( const TQString &type, const TQString &providersList )
   mProviders.clear();
   mJobData = "";
 
-  KConfig *cfg = KGlobal::config();
+  KConfig *cfg = TDEGlobal::config();
   cfg->setGroup("KNewStuff");
 
   TQString providersUrl = providersList;

@@ -155,5 +155,5 @@ static void mapToCupsOptions(const TQMap<TQString,TQString>& opts, TQString& cmd
 		}
 	}
 	if (!optstr.isEmpty())
-		cmd.append(" -o ").append( KProcess::quote( optstr ) );
+		cmd.append(" -o ").append( TDEProcess::quote( optstr ) );
 }

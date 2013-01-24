@@ -171,7 +171,7 @@ void KFileView::sortReversed()
 #if 0
 int KFileView::compareItems(const KFileItem *fi1, const KFileItem *fi2) const
 {
-    static const TQString &dirup = KGlobal::staticQString("..");
+    static const TQString &dirup = TDEGlobal::staticQString("..");
     bool bigger = true;
     bool keepFirst = false;
     bool dirsFirst = ((m_sorting & TQDir::DirsFirst) == TQDir::DirsFirst);

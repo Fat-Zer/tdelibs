@@ -73,7 +73,7 @@ void KListBox::slotSettingsChanged(int category)
 {
     if (category != TDEApplication::SETTINGS_MOUSE)
         return;
-    m_bUseSingle = KGlobalSettings::singleClick();
+    m_bUseSingle = TDEGlobalSettings::singleClick();
 
     disconnect( this, TQT_SIGNAL( mouseButtonClicked( int, TQListBoxItem *,
 						  const TQPoint & ) ),
@@ -99,8 +99,8 @@ void KListBox::slotSettingsChanged(int category)
 // 					  const TQPoint & ) ) );
     }
 
-    m_bChangeCursorOverItem = KGlobalSettings::changeCursorOverIcon();
-    m_autoSelectDelay = KGlobalSettings::autoSelectDelay();
+    m_bChangeCursorOverItem = TDEGlobalSettings::changeCursorOverIcon();
+    m_autoSelectDelay = TDEGlobalSettings::autoSelectDelay();
 
     if( !m_bUseSingle || !m_bChangeCursorOverItem )
         viewport()->unsetCursor();

@@ -204,7 +204,7 @@ KMimeType::Ptr KMimeType::findByURL( const KURL& _url, mode_t _mode,
 
   TQString fileName ( _url.fileName() );
 
-  static const TQString& slash = KGlobal::staticQString("/");
+  static const TQString& slash = TDEGlobal::staticQString("/");
   if ( ! fileName.isNull() && !path.endsWith( slash ) )
   {
       // Try to find it out by looking at the filename
@@ -230,9 +230,9 @@ KMimeType::Ptr KMimeType::findByURL( const KURL& _url, mode_t _mode,
         }
       }
 
-      static const TQString& dotdesktop = KGlobal::staticQString(".desktop");
-      static const TQString& dotkdelnk = KGlobal::staticQString(".kdelnk");
-      static const TQString& dotdirectory = KGlobal::staticQString(".directory");
+      static const TQString& dotdesktop = TDEGlobal::staticQString(".desktop");
+      static const TQString& dotkdelnk = TDEGlobal::staticQString(".kdelnk");
+      static const TQString& dotdirectory = TDEGlobal::staticQString(".directory");
 
       // Another filename binding, hardcoded, is .desktop:
       if ( fileName.endsWith( dotdesktop ) )
@@ -453,7 +453,7 @@ KMimeType::~KMimeType()
 TQPixmap KMimeType::pixmap( KIcon::Group _group, int _force_size, int _state,
                            TQString * _path ) const
 {
-  KIconLoader *iconLoader=KGlobal::iconLoader();
+  KIconLoader *iconLoader=TDEGlobal::iconLoader();
   TQString iconName=icon( TQString::null, false );
   if (!iconLoader->extraDesktopThemesAdded())
   {
@@ -469,7 +469,7 @@ TQPixmap KMimeType::pixmap( KIcon::Group _group, int _force_size, int _state,
 TQPixmap KMimeType::pixmap( const KURL& _url, KIcon::Group _group, int _force_size,
                            int _state, TQString * _path ) const
 {
-  KIconLoader *iconLoader=KGlobal::iconLoader();
+  KIconLoader *iconLoader=TDEGlobal::iconLoader();
   TQString iconName=icon( _url, _url.isLocalFile() );
   if (!iconLoader->extraDesktopThemesAdded())
   {
@@ -485,7 +485,7 @@ TQPixmap KMimeType::pixmap( const KURL& _url, KIcon::Group _group, int _force_si
 TQPixmap KMimeType::pixmapForURL( const KURL & _url, mode_t _mode, KIcon::Group _group,
                                  int _force_size, int _state, TQString * _path )
 {
-  KIconLoader *iconLoader=KGlobal::iconLoader();
+  KIconLoader *iconLoader=TDEGlobal::iconLoader();
   TQString iconName = iconForURL( _url, _mode );
 
   if (!iconLoader->extraDesktopThemesAdded())
@@ -504,7 +504,7 @@ TQString KMimeType::iconForURL( const KURL & _url, mode_t _mode )
 {
     const KMimeType::Ptr mt = findByURL( _url, _mode, _url.isLocalFile(),
                                          false /*HACK*/);
-    static const TQString& unknown = KGlobal::staticQString("unknown");
+    static const TQString& unknown = TDEGlobal::staticQString("unknown");
     const TQString mimeTypeIcon = mt->icon( _url, _url.isLocalFile() );
     TQString i = mimeTypeIcon;
 
@@ -533,7 +533,7 @@ TQString KMimeType::favIconForURL( const KURL& url )
     static bool check = true;
     if ( check ) {
         check = false;
-        KConfig *config = KGlobal::config();
+        KConfig *config = TDEGlobal::config();
         KConfigGroupSaver cs( config, "HTML Settings" );
         useFavIcons = config->readBoolEntry( "EnableFavicon", true );
     }
@@ -749,10 +749,10 @@ TQPixmap KDEDesktopMimeType::pixmap( const KURL& _url, KIcon::Group _group, int 
                                     int _state, TQString * _path ) const
 {
   TQString _icon = icon( _url, _url.isLocalFile() );
-  TQPixmap pix = KGlobal::iconLoader()->loadIcon( _icon, _group,
+  TQPixmap pix = TDEGlobal::iconLoader()->loadIcon( _icon, _group,
         _force_size, _state, _path, false );
   if ( pix.isNull() )
-      pix = KGlobal::iconLoader()->loadIcon( "unknown", _group,
+      pix = TDEGlobal::iconLoader()->loadIcon( "unknown", _group,
         _force_size, _state, _path, false );
   return pix;
 }
@@ -903,9 +903,9 @@ pid_t KDEDesktopMimeType::runMimeType( const KURL& url , const KSimpleConfig & )
   if ( !TDEApplication::tdeinitExec("kfmclient", args, 0, &pid) )
       return pid;
 
-  KProcess p;
+  TDEProcess p;
   p << "kfmclient" << args;
-  p.start(KProcess::DontCare);
+  p.start(TDEProcess::DontCare);
   return p.pid();
 }
 
@@ -1152,7 +1152,7 @@ void KDEDesktopMimeType::executeService( const KURL::List& urls, KDEDesktopMimeT
 const TQString & KMimeType::defaultMimeType()
 {
     static const TQString & s_strDefaultMimeType =
-        KGlobal::staticQString( "application/octet-stream" );
+        TDEGlobal::staticQString( "application/octet-stream" );
     return s_strDefaultMimeType;
 }
 

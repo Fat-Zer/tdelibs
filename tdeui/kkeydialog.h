@@ -35,17 +35,17 @@ class KAccel;
 class KAccelActions;
 class KActionCollection;
 class KConfigBase;
-class KGlobalAccel;
+class TDEGlobalAccel;
 class KKeySequence;
 class KShortcut;
 class KShortcutList;
 class KKeyChooserItem;
 
 /**
- * @short Widget for configuration of KAccel and KGlobalAccel.
+ * @short Widget for configuration of KAccel and TDEGlobalAccel.
  *
  * Configure dictionaries of key/action associations for KAccel and
- * KGlobalAccel.
+ * TDEGlobalAccel.
  *
  * The class takes care of all aspects of configuration, including
  * handling key conflicts internally. Connect to the allDefault()
@@ -80,7 +80,7 @@ class TDEUI_EXPORT KKeyChooser : public TQWidget
 	KKeyChooser( KActionCollection* coll, TQWidget* parent, bool bAllowLetterShortcuts = true );
 
     KKeyChooser( KAccel* actions, TQWidget* parent, bool bAllowLetterShortcuts = true );
-	KKeyChooser( KGlobalAccel* actions, TQWidget* parent );
+	KKeyChooser( TDEGlobalAccel* actions, TQWidget* parent );
 	KKeyChooser( KShortcutList*, TQWidget* parent, ActionType type = Application, bool bAllowLetterShortcuts = true );
 
 	virtual ~KKeyChooser();
@@ -169,7 +169,7 @@ class TDEUI_EXPORT KKeyChooser : public TQWidget
 
 	void initGUI( ActionType type, bool bAllowLetterShortcuts );
 	bool insert( KAccel* );
-	bool insert( KGlobalAccel* );
+	bool insert( TDEGlobalAccel* );
 	bool insert( KShortcutList* );
 	/// @since 3.1
 	void buildListView( uint iList, const TQString &title = TQString::null );
@@ -234,7 +234,7 @@ private slots:
 	/**
 	 * @obsolete
 	 */
-	KKeyChooser( KGlobalAccel* actions, TQWidget* parent,
+	KKeyChooser( TDEGlobalAccel* actions, TQWidget* parent,
 			bool bCheckAgainstStdKeys,
 			bool bAllowLetterShortcuts,
 			bool bAllowWinKey = false );
@@ -256,10 +256,10 @@ private slots:
 typedef KKeyChooser KKeyChooser;
 
 /**
- * @short Dialog for configuration of KActionCollection, KAccel, and KGlobalAccel.
+ * @short Dialog for configuration of KActionCollection, KAccel, and TDEGlobalAccel.
  *
  * The KKeyDialog class is used for configuring dictionaries of key/action
- * associations for KActionCollection, KAccel, and KGlobalAccel. It uses the KKeyChooser widget
+ * associations for KActionCollection, KAccel, and TDEGlobalAccel. It uses the KKeyChooser widget
  * and offers buttons to set all keys to defaults and invoke on-line help.
  *
  * Several static methods are supplied which provide the most convenient interface
@@ -345,7 +345,7 @@ public:
 	 * This is an overloaded member function, provided for convenience.
 	 * It behaves essentially like the above function.
 	 */
-	static int configure( KGlobalAccel* keys, TQWidget* parent = 0, bool bSaveSettings = true );
+	static int configure( TDEGlobalAccel* keys, TQWidget* parent = 0, bool bSaveSettings = true );
 
 
 	/**
@@ -371,7 +371,7 @@ public:
 	 * This is an overloaded member function, provided for convenience.
 	 * It behaves essentially like the above function.
 	 **/
-	static int configure( KGlobalAccel* keys, bool bAllowLetterShortcuts, TQWidget* parent = 0, bool bSaveSettings = true ); // BCI: merge with bAllowLetterShortcuts = true
+	static int configure( TDEGlobalAccel* keys, bool bAllowLetterShortcuts, TQWidget* parent = 0, bool bSaveSettings = true ); // BCI: merge with bAllowLetterShortcuts = true
 
 	/**
 	 * @deprecated Obsolete.
@@ -383,7 +383,7 @@ public:
 	 * @deprecated Obsolete.
 	 * Please use KKeyDialog::configure instead
 	 */
-	static KDE_DEPRECATED int configureKeys( KGlobalAccel* keys, bool save_settings = true, TQWidget* parent = 0 )
+	static KDE_DEPRECATED int configureKeys( TDEGlobalAccel* keys, bool save_settings = true, TQWidget* parent = 0 )
 		{ return configure( keys, parent, save_settings ); }
 	/**
 	 * @deprecated Obsolete.

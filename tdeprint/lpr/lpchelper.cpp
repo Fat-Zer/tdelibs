@@ -235,7 +235,7 @@ bool LpcHelper::changeState(const TQString& printer, const TQString& op, TQStrin
 		msg = i18n("The executable %1 couldn't be found in your PATH.").arg("lpc");
 		return false;
 	}
-	TQString	result = execute(m_exepath + " " + op + " " + KProcess::quote(printer));
+	TQString	result = execute(m_exepath + " " + op + " " + TDEProcess::quote(printer));
 	int	status;
 
 	switch (LprSettings::self()->mode())
@@ -273,7 +273,7 @@ bool LpcHelper::removeJob(KMJob *job, TQString& msg)
 		msg = i18n("The executable %1 couldn't be found in your PATH.").arg("lprm");
 		return false;
 	}
-	TQString	result = execute(m_lprmpath + " -P " + KProcess::quote(job->printer()) + " " + TQString::number(job->id()));
+	TQString	result = execute(m_lprmpath + " -P " + TDEProcess::quote(job->printer()) + " " + TQString::number(job->id()));
 	if (result.find("dequeued") != -1)
 		return true;
 	else if (result.find("Permission denied") != -1 || result.find("no permissions") != -1)
@@ -291,7 +291,7 @@ bool LpcHelper::changeJobState(KMJob *job, int state, TQString& msg)
 		msg = i18n("The executable %1 couldn't be found in your PATH.").arg("lpc");
 		return false;
 	}
-	TQString	result = execute(m_exepath + (state == KMJob::Held ? " hold " : " release ") + KProcess::quote(job->printer()) + " " + TQString::number(job->id()));
+	TQString	result = execute(m_exepath + (state == KMJob::Held ? " hold " : " release ") + TDEProcess::quote(job->printer()) + " " + TQString::number(job->id()));
 	TQString	answer = lprngAnswer(result, job->printer());
 	if (answer == "no")
 	{

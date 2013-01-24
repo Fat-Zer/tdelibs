@@ -519,7 +519,7 @@ void KURLCompletion::init()
 	d->mode = KURLCompletion::FileCompletion;
 
 	// Read settings
-	KConfig *c = KGlobal::config();
+	KConfig *c = TDEGlobal::config();
 	KConfigGroupSaver cgs( c, "URLCompletion" );
 
 	d->url_auto_completion = c->readBoolEntry("alwaysAutoComplete", true);
@@ -736,10 +736,10 @@ bool KURLCompletion::isListedURL( int complType,
  */
 bool KURLCompletion::isAutoCompletion()
 {
-	return completionMode() == KGlobalSettings::CompletionAuto
-	       || completionMode() == KGlobalSettings::CompletionPopup
-	       || completionMode() == KGlobalSettings::CompletionMan
-	       || completionMode() == KGlobalSettings::CompletionPopupAuto;
+	return completionMode() == TDEGlobalSettings::CompletionAuto
+	       || completionMode() == TDEGlobalSettings::CompletionPopup
+	       || completionMode() == TDEGlobalSettings::CompletionMan
+	       || completionMode() == TDEGlobalSettings::CompletionPopupAuto;
 }
 //////////////////////////////////////////////////
 //////////////////////////////////////////////////
@@ -963,7 +963,7 @@ bool KURLCompletion::fileCompletion(const MyURL &url, TQString *match)
 		if (url.url().length() == 1)
 		{
 			*match =
-				( completionMode() == KGlobalSettings::CompletionMan )? "." : "..";
+				( completionMode() == TDEGlobalSettings::CompletionMan )? "." : "..";
 			return true;
 		}
 		if (url.url().length() == 2 && url.url()[1]=='.')
@@ -1008,8 +1008,8 @@ bool KURLCompletion::fileCompletion(const MyURL &url, TQString *match)
 
 		// Append '/' to directories in Popup mode?
 		bool append_slash = ( d->popup_append_slash
-	    	&& (completionMode() == KGlobalSettings::CompletionPopup ||
-		    completionMode() == KGlobalSettings::CompletionPopupAuto ) );
+	    	&& (completionMode() == TDEGlobalSettings::CompletionPopup ||
+		    completionMode() == TDEGlobalSettings::CompletionPopupAuto ) );
 
 		bool only_dir = ( d->mode == DirCompletion );
 

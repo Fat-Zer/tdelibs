@@ -300,7 +300,7 @@ void KPassivePopup::moveNear( TQRect target )
     int w = width();
     int h = height();
 
-    TQRect r = KGlobalSettings::desktopGeometry(TQPoint(x+w/2,y+h/2));
+    TQRect r = TDEGlobalSettings::desktopGeometry(TQPoint(x+w/2,y+h/2));
 
     if( d->popupStyle == Balloon )
     {
@@ -359,7 +359,7 @@ void KPassivePopup::updateMask()
 {
     // get screen-geometry for screen our anchor is on
     // (geometry can differ from screen to screen!
-    TQRect deskRect = KGlobalSettings::desktopGeometry(d->anchor);
+    TQRect deskRect = TDEGlobalSettings::desktopGeometry(d->anchor);
 
     int xh = 70, xl = 40;
     if( width() < 80 )

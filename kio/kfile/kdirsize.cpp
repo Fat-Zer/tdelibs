@@ -79,8 +79,8 @@ void KDirSize::startNextJob( const KURL & url )
 
 void KDirSize::slotEntries( KIO::Job*, const KIO::UDSEntryList & list )
 {
-    static const TQString& dot = KGlobal::staticQString( "." );
-    static const TQString& dotdot = KGlobal::staticQString( ".." );
+    static const TQString& dot = TDEGlobal::staticQString( "." );
+    static const TQString& dotdot = TDEGlobal::staticQString( ".." );
     KIO::UDSEntryListConstIterator it = list.begin();
     KIO::UDSEntryListConstIterator end = list.end();
     for (; it != end; ++it) {

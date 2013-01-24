@@ -346,7 +346,7 @@ void KateSyntaxDocument::setupModeList (bool force)
   }
 
   // Let's get a list of all the xml files for hl
-  TQStringList list = KGlobal::dirs()->findAllResources("data","katepart/syntax/*.xml",false,true);
+  TQStringList list = TDEGlobal::dirs()->findAllResources("data","katepart/syntax/*.xml",false,true);
 
   // Let's iterate through the list and build the Mode List
   for ( TQStringList::Iterator it = list.begin(); it != list.end(); ++it )

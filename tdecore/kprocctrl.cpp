@@ -33,29 +33,29 @@
 
 #include <tqsocketnotifier.h>
 
-KProcessController *KProcessController::theKProcessController;
-int KProcessController::refCount;
+TDEProcessController *TDEProcessController::theTDEProcessController;
+int TDEProcessController::refCount;
 
-void KProcessController::ref()
+void TDEProcessController::ref()
 {
   if( !refCount ) {
-    theKProcessController = new KProcessController;
+    theTDEProcessController = new TDEProcessController;
     setupHandlers();
   }
   refCount++;
 }
 
-void KProcessController::deref()
+void TDEProcessController::deref()
 {
   refCount--;
   if( !refCount ) {
     resetHandlers();
-    delete theKProcessController;
-    theKProcessController = 0;
+    delete theTDEProcessController;
+    theTDEProcessController = 0;
   }
 }
 
-KProcessController::KProcessController()
+TDEProcessController::TDEProcessController()
   : needcheck( false )
 {
   if( pipe( fd ) )
@@ -75,7 +75,7 @@ KProcessController::KProcessController()
                     TQT_SLOT(slotDoHousekeeping()));
 }
 
-KProcessController::~KProcessController()
+TDEProcessController::~TDEProcessController()
 {
   delete notifier;
 
@@ -87,16 +87,16 @@ KProcessController::~KProcessController()
 extern "C" {
 static void theReaper( int num )
 {
-  KProcessController::theSigCHLDHandler( num );
+  TDEProcessController::theSigCHLDHandler( num );
 }
 }
 
 #ifdef Q_OS_UNIX
-struct sigaction KProcessController::oldChildHandlerData;
+struct sigaction TDEProcessController::oldChildHandlerData;
 #endif
-bool KProcessController::handlerSet = false;
+bool TDEProcessController::handlerSet = false;
 
-void KProcessController::setupHandlers()
+void TDEProcessController::setupHandlers()
 {
   if( handlerSet )
       return;
@@ -127,7 +127,7 @@ void KProcessController::setupHandlers()
 #endif
 }
 
-void KProcessController::resetHandlers()
+void TDEProcessController::resetHandlers()
 {
   if( !handlerSet )
       return;
@@ -144,12 +144,12 @@ void KProcessController::resetHandlers()
 // the pipe is needed to sync the child reaping with our event processing,
 // as otherwise there are race conditions, locking requirements, and things
 // generally get harder
-void KProcessController::theSigCHLDHandler( int arg )
+void TDEProcessController::theSigCHLDHandler( int arg )
 {
   int saved_errno = errno;
 
   char dummy = 0;
-  ::write( theKProcessController->fd[1], &dummy, 1 );
+  ::write( theTDEProcessController->fd[1], &dummy, 1 );
 
 #ifdef Q_OS_UNIX
   if( oldChildHandlerData.sa_handler != SIG_IGN &&
@@ -162,12 +162,12 @@ void KProcessController::theSigCHLDHandler( int arg )
   errno = saved_errno;
 }
 
-int KProcessController::notifierFd() const
+int TDEProcessController::notifierFd() const
 {
   return fd[0];
 }
 
-void KProcessController::unscheduleCheck()
+void TDEProcessController::unscheduleCheck()
 {
   char dummy[16]; // somewhat bigger - just in case several have queued up
   if( ::read( fd[0], dummy, sizeof(dummy) ) > 0 )
@@ -175,7 +175,7 @@ void KProcessController::unscheduleCheck()
 }
 
 void
-KProcessController::rescheduleCheck()
+TDEProcessController::rescheduleCheck()
 {
   if( needcheck )
   {
@@ -185,23 +185,23 @@ KProcessController::rescheduleCheck()
   }
 }
 
-void KProcessController::slotDoHousekeeping()
+void TDEProcessController::slotDoHousekeeping()
 {
   char dummy[16]; // somewhat bigger - just in case several have queued up
   ::read( fd[0], dummy, sizeof(dummy) );
 
   int status;
  again:
-  TQValueListIterator<KProcess*> it( kProcessList.begin() );
-  TQValueListIterator<KProcess*> eit( kProcessList.end() );
+  TQValueListIterator<TDEProcess*> it( kProcessList.begin() );
+  TQValueListIterator<TDEProcess*> eit( kProcessList.end() );
   while( it != eit )
   {
-    KProcess *prc = *it;
+    TDEProcess *prc = *it;
     if( prc->runs && waitpid( prc->pid_, &status, WNOHANG ) > 0 )
     {
       prc->processHasExited( status );
       // the callback can nuke the whole process list and even 'this'
-      if (!theKProcessController)
+      if (!theTDEProcessController)
         return;
       goto again;
     }
@@ -220,7 +220,7 @@ void KProcessController::slotDoHousekeeping()
   }
 }
 
-bool KProcessController::waitForProcessExit( int timeout )
+bool TDEProcessController::waitForProcessExit( int timeout )
 {
 #ifdef Q_OS_UNIX
   for(;;)
@@ -258,20 +258,20 @@ bool KProcessController::waitForProcessExit( int timeout )
 #endif
 }
 
-void KProcessController::addKProcess( KProcess* p )
+void TDEProcessController::addTDEProcess( TDEProcess* p )
 {
   kProcessList.append( p );
 }
 
-void KProcessController::removeKProcess( KProcess* p )
+void TDEProcessController::removeTDEProcess( TDEProcess* p )
 {
   kProcessList.remove( p );
 }
 
-void KProcessController::addProcess( int pid )
+void TDEProcessController::addProcess( int pid )
 {
   unixProcessList.append( pid );
-  ref(); // make sure we stay around when the KProcess goes away
+  ref(); // make sure we stay around when the TDEProcess goes away
 }
 
 #include "kprocctrl.moc"

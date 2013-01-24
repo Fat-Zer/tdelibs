@@ -1127,7 +1127,7 @@ void DocumentImpl::recalcStyle( StyleChange change )
         // ### make the font stuff _really_ work!!!!
 
 	khtml::FontDef fontDef;
-	TQFont f = KGlobalSettings::generalFont();
+	TQFont f = TDEGlobalSettings::generalFont();
 	fontDef.family = f.family();
 	fontDef.italic = f.italic();
 	fontDef.weight = f.weight();

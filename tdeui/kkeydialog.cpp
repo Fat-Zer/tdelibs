@@ -171,7 +171,7 @@ KKeyChooser::KKeyChooser( KAccel* pAccel, TQWidget* parent, bool bAllowLetterSho
 	insert( pAccel );
 }
 
-KKeyChooser::KKeyChooser( KGlobalAccel* pAccel, TQWidget* parent )
+KKeyChooser::KKeyChooser( TDEGlobalAccel* pAccel, TQWidget* parent )
 : TQWidget( parent )
 {
 	initGUI( ApplicationGlobal, false );
@@ -201,7 +201,7 @@ KKeyChooser::KKeyChooser( KAccel* actions, TQWidget* parent,
 	insert( actions );
 }
 
-KKeyChooser::KKeyChooser( KGlobalAccel* actions, TQWidget* parent,
+KKeyChooser::KKeyChooser( TDEGlobalAccel* actions, TQWidget* parent,
 			bool bCheckAgainstStdKeys,
 			bool bAllowLetterShortcuts,
 			bool /*bAllowWinKey*/ )
@@ -256,7 +256,7 @@ bool KKeyChooser::insert( KAccel* pAccel )
 	return insert( pList );
 }
 
-bool KKeyChooser::insert( KGlobalAccel* pAccel )
+bool KKeyChooser::insert( TDEGlobalAccel* pAccel )
 {
 	KShortcutList* pList = new KAccelShortcutList( pAccel );
 	d->rgpListsAllocated.append( pList );
@@ -296,7 +296,7 @@ void KKeyChooser::initGUI( ActionType type, bool bAllowLetterShortcuts )
   m_type = type;
   d->bAllowLetterShortcuts = bAllowLetterShortcuts;
 
-  d->bPreferFourModifierKeys = KGlobalAccel::useFourModifierKeys();
+  d->bPreferFourModifierKeys = TDEGlobalAccel::useFourModifierKeys();
 
   //
   // TOP LAYOUT MANAGER
@@ -587,7 +587,7 @@ void KKeyChooser::readGlobalKeys()
 
 void KKeyChooser::readGlobalKeys( TQMap< TQString, KShortcut >& map )
 {
-	TQMap<TQString, TQString> mapEntry = KGlobal::config()->entryMap( "Global Shortcuts" );
+	TQMap<TQString, TQString> mapEntry = TDEGlobal::config()->entryMap( "Global Shortcuts" );
 	TQMap<TQString, TQString>::Iterator it( mapEntry.begin() );
 	for( uint i = 0; it != mapEntry.end(); ++it, i++ )
 		map[it.key()] = KShortcut(*it);
@@ -679,7 +679,7 @@ void KKeyChooser::syncToConfig( const TQString& sConfigGroup, KConfigBase* pConf
 {
 	kdDebug(125) << "KKeyChooser::syncToConfig( \"" << sConfigGroup << "\", " << pConfig << " ) start" << endl;
 	if( !pConfig )
-		pConfig = KGlobal::config();
+		pConfig = TDEGlobal::config();
 	KConfigGroupSaver cgs( pConfig, sConfigGroup );
 
 	TQListViewItemIterator it( d->pList );
@@ -1094,7 +1094,7 @@ KKeyDialog::KKeyDialog( KKeyChooser::ActionType type, bool bAllowLetterShortcuts
 	setMainWidget( m_pKeyChooser );
 	connect( this, TQT_SIGNAL(defaultClicked()), m_pKeyChooser, TQT_SLOT(allDefault()) );
 
-	KConfigGroup group( KGlobal::config(), "KKeyDialog Settings" );
+	KConfigGroup group( TDEGlobal::config(), "KKeyDialog Settings" );
 	TQSize sz = size();
 	resize( group.readSizeEntry( "Dialog Size", &sz ) );
 }
@@ -1106,14 +1106,14 @@ KKeyDialog::KKeyDialog( bool bAllowLetterShortcuts, TQWidget *parent, const char
 	setMainWidget( m_pKeyChooser );
 	connect( this, TQT_SIGNAL(defaultClicked()), m_pKeyChooser, TQT_SLOT(allDefault()) );
 
-	KConfigGroup group( KGlobal::config(), "KKeyDialog Settings" );
+	KConfigGroup group( TDEGlobal::config(), "KKeyDialog Settings" );
 	TQSize sz = size();
 	resize( group.readSizeEntry( "Dialog Size", &sz ) );
 }
 
 KKeyDialog::~KKeyDialog()
 {
-	KConfigGroup group( KGlobal::config(), "KKeyDialog Settings" );
+	KConfigGroup group( TDEGlobal::config(), "KKeyDialog Settings" );
 	group.writeEntry( "Dialog Size", size(), true, true );
 }
 
@@ -1154,7 +1154,7 @@ int KKeyDialog::configure( KAccel* keys, TQWidget* parent, bool bSaveSettings )
 	return configure( keys, true, parent, bSaveSettings);
 }
 
-int KKeyDialog::configure( KGlobalAccel* keys, TQWidget* parent, bool bSaveSettings )
+int KKeyDialog::configure( TDEGlobalAccel* keys, TQWidget* parent, bool bSaveSettings )
 {
 	return configure( keys, true, parent, bSaveSettings);
 }
@@ -1169,7 +1169,7 @@ int KKeyDialog::configure( KAccel* keys, bool bAllowLetterShortcuts, TQWidget *p
 	return b;
 }
 
-int KKeyDialog::configure( KGlobalAccel* keys, bool bAllowLetterShortcuts, TQWidget *parent, bool bSaveSettings )
+int KKeyDialog::configure( TDEGlobalAccel* keys, bool bAllowLetterShortcuts, TQWidget *parent, bool bSaveSettings )
 {
 	KKeyDialog dlg( KKeyChooser::ApplicationGlobal, bAllowLetterShortcuts, parent );
 	dlg.m_pKeyChooser->insert( keys );

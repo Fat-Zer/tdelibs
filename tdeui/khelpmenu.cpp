@@ -118,7 +118,7 @@ KPopupMenu* KHelpMenu::menu()
     // I use hardcoded menu id's here. Reason is to stay backward
     // compatible.
     //
-    const TDEAboutData *aboutData = d->mAboutData ? d->mAboutData : KGlobal::instance()->aboutData();
+    const TDEAboutData *aboutData = d->mAboutData ? d->mAboutData : TDEGlobal::instance()->aboutData();
     TQString appName = (aboutData)? aboutData->programName() : TQString::fromLatin1(tqApp->name());
 
     mMenu = new KPopupMenu();

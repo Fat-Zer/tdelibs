@@ -80,7 +80,7 @@ class TQPopupMenu;
  * {
  *     KPanelApplet* init(TQWidget *parent, const TQString& configFile)
  *     {
- *         KGlobal::locale()->insertCatalogue("exampleapplet");
+ *         TDEGlobal::locale()->insertCatalogue("exampleapplet");
  *         return new ExampleApplet(configFile, KPanelApplet::Normal,
  *                       KPanelApplet::About | KPanelApplet::Help | KPanelApplet::Preferences,
  *                       parent, "exampleapplet");

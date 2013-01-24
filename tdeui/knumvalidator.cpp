@@ -214,13 +214,13 @@ TQValidator::State KFloatValidator::validate ( TQString &str, int & ) const
       ok = false;
     else
       return TQValidator::Acceptable;
-  else if (newStr == TQString::fromLatin1(".") || (d->acceptLocalizedNumbers && newStr==KGlobal::locale()->decimalSymbol())) // another special case
+  else if (newStr == TQString::fromLatin1(".") || (d->acceptLocalizedNumbers && newStr==TDEGlobal::locale()->decimalSymbol())) // another special case
     return TQValidator::Acceptable;
   else if (newStr.length())
   {
     val = newStr.toDouble(&ok);
     if(!ok && d->acceptLocalizedNumbers)
-       val= KGlobal::locale()->readNumber(newStr,&ok);
+       val= TDEGlobal::locale()->readNumber(newStr,&ok);
   }
   else {
     val = 0;
@@ -326,7 +326,7 @@ void KDoubleValidator::setAcceptLocalizedNumbers( bool accept ) {
 TQValidator::State KDoubleValidator::validate( TQString & input, int & p ) const {
   TQString s = input;
   if ( acceptLocalizedNumbers() ) {
-    KLocale * l = KGlobal::locale();
+    KLocale * l = TDEGlobal::locale();
     // ok, we have to re-format the number to have:
     // 1. decimalSymbol == '.'
     // 2. negativeSign  == '-'

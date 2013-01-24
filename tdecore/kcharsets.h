@@ -25,7 +25,7 @@
 #include <tqptrlist.h>
 #include "tdelibs_export.h"
 
-class KGlobal;
+class TDEGlobal;
 class KCharsetsPrivate;
 
 class TQTextCodec;
@@ -42,11 +42,11 @@ class TQTextCodec;
  */
 class TDECORE_EXPORT KCharsets
 {
-    friend class KGlobal;
+    friend class TDEGlobal;
 
 protected:
     /** Protected constructor. If you need the kcharsets object, use
- KGlobal::charsets() instead.
+ TDEGlobal::charsets() instead.
     */
     KCharsets();
 

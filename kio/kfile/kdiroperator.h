@@ -82,7 +82,7 @@ namespace KIO {
  *   connect(op, TQT_SIGNAL(finishedLoading()),
  *           TQT_SLOT(slotLoadingFinished()));
  *
- *   op->readConfig( KGlobal::config(), "Your KDiroperator ConfigGroup" );
+ *   op->readConfig( TDEGlobal::config(), "Your KDiroperator ConfigGroup" );
  *   op->setView(KFile::Default);
  * \endcode
  *
@@ -400,7 +400,7 @@ class KIO_EXPORT KDirOperator : public TQWidget
      * instantiation can make use of it already.
      *
      * Note that KDirOperator does NOT take ownership of that object (typically
-     * it's KGlobal::config() anyway.
+     * it's TDEGlobal::config() anyway.
      *
      * @see viewConfig
      * @see viewConfigGroup

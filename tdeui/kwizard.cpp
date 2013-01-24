@@ -31,7 +31,7 @@
 KWizard::KWizard( TQWidget *parent, const char *name, bool modal, WFlags f )
             : TQWizard( parent, name, modal, f )
 {
-  bool useIcons = KGlobalSettings::showIconsOnPushButtons();
+  bool useIcons = TDEGlobalSettings::showIconsOnPushButtons();
 
   if ( useIcons )
   {

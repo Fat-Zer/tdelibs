@@ -251,7 +251,7 @@ void readKAddressBookEntries( const TQString &dataString, Addressee &a )
     } else if ( fieldName == "ROLE" ) {
       a.setRole( fieldValue );
     } else if ( fieldName == "BDAY" ) {
-      a.setBirthday( KGlobal::locale()->readDate( fieldValue ) );
+      a.setBirthday( TDEGlobal::locale()->readDate( fieldValue ) );
     } else if ( fieldName == "WEBPAGE" ) {
       a.setUrl( KURL( fieldValue ) );
     } else if ( fieldName == "N" ) {
@@ -280,7 +280,7 @@ void readKAddressBookEntries( const TQString &dataString, Addressee &a )
 
 void importKab( KABC::AddressBook *ab, bool override, bool quiet )
 {
-  TQString fileName = KGlobal::dirs()->saveLocation( "data", "kab/" );
+  TQString fileName = TDEGlobal::dirs()->saveLocation( "data", "kab/" );
   fileName += "addressbook.kab";
   if ( !TQFile::exists( fileName ) ) {
     if ( !quiet ) {

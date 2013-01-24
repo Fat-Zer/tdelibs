@@ -115,7 +115,7 @@ void MainWindow::createGUI( Part * part )
 
   if ( !d->m_bShellGUIActivated )
   {
-    loadPlugins( TQT_TQOBJECT(this), this, KGlobal::instance() );
+    loadPlugins( TQT_TQOBJECT(this), this, TDEGlobal::instance() );
     createShellGUI();
     d->m_bShellGUIActivated = true;
   }
@@ -134,7 +134,7 @@ void MainWindow::createGUI( Part * part )
     TQApplication::sendEvent( part, &ev );
 
     if ( autoSaveSettings() )
-        applyMainWindowSettings( KGlobal::config(), autoSaveGroup() );
+        applyMainWindowSettings( TDEGlobal::config(), autoSaveGroup() );
   }
 
   setUpdatesEnabled( true );
@@ -185,7 +185,7 @@ void MainWindow::createShellGUI( bool create )
 void KParts::MainWindow::saveNewToolbarConfig()
 {
     createGUI( d->m_activePart );
-    applyMainWindowSettings( KGlobal::config() );
+    applyMainWindowSettings( TDEGlobal::config() );
 }
 
 #include "mainwindow.moc"

@@ -22,7 +22,7 @@ public slots:
 protected:  
     int result;
     TQString m_exec;
-    KProcess proc;
+    TDEProcess proc;
 };
 
 #endif

@@ -133,7 +133,7 @@ KDirSelectDialog::KDirSelectDialog(const TQString &startDir, bool localOnly,
     if ( localOnly && !d->startURL.isLocalFile() )
     {
         d->startURL = KURL();
-        TQString docPath = KGlobalSettings::documentPath();
+        TQString docPath = TDEGlobalSettings::documentPath();
         if (TQDir(docPath).exists())
             d->startURL.setPath( docPath );
         else
@@ -146,7 +146,7 @@ KDirSelectDialog::KDirSelectDialog(const TQString &startDir, bool localOnly,
 
     d->branch = createBranch( root );
 
-    readConfig( KGlobal::config(), "DirSelect Dialog" );
+    readConfig( TDEGlobal::config(), "DirSelect Dialog" );
 
     m_mainLayout->addWidget( m_treeView, 1 );
     m_mainLayout->addWidget( d->urlCombo, 0 );
@@ -314,7 +314,7 @@ void KDirSelectDialog::accept()
     KFileDialog::setStartDir( url() );
 
     KDialogBase::accept();
-    saveConfig( KGlobal::config(), "DirSelect Dialog" );
+    saveConfig( TDEGlobal::config(), "DirSelect Dialog" );
 }
 
 

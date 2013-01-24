@@ -31,7 +31,7 @@
 
 #include <tdelibs_export.h>
 
-class KProcess;
+class TDEProcess;
 
 /**
  * This class parses the output of "df" to find the disk usage
@@ -72,11 +72,11 @@ signals:
    void done();
 
 private slots:
-   void receivedDFStdErrOut(KProcess *, char *data, int len);
+   void receivedDFStdErrOut(TDEProcess *, char *data, int len);
    void dfDone();
 
 private:
-  KProcess         *dfProc;
+  TDEProcess         *dfProc;
   TQCString          dfStringErrOut;
   TQString           m_mountPoint;
   bool              readingDFStdErrOut;

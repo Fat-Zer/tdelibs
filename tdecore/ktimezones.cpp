@@ -400,7 +400,7 @@ const KTimezones::ZoneMap KTimezones::allZones()
                     "/bin/awk" << "'{print \"??\\t+9999+99999\\t\" $2}'";
                 // Note the use of blocking here...it is a trivial amount of data!
                 temp.close();
-                reader.start(KProcess::Block);
+                reader.start(TDEProcess::Block);
                 f.setName(temp.name());
                 if (!temp.status() || !f.open(IO_ReadOnly))
                 {

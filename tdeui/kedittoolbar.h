@@ -23,7 +23,7 @@
 #include <kxmlguiclient.h>
 #include <kdialogbase.h>
 
-class KProcess;
+class TDEProcess;
 class KActionCollection;
 class TQComboBox;
 class TQToolButton;
@@ -66,7 +66,7 @@ namespace
  * \code
  * void MyClass::slotConfigureToolbars()
  * {
- *   saveMainWindowSettings( KGlobal::config(), "MainWindow" );
+ *   saveMainWindowSettings( TDEGlobal::config(), "MainWindow" );
  *   KEditToolbar dlg(actionCollection());
  *   connect(&dlg,TQT_SIGNAL(newToolbarConfig()),this,TQT_SLOT(slotNewToolbarConfig()));
  *   dlg.exec();
@@ -76,7 +76,7 @@ namespace
  * {
  *    ...if you use any action list, use plugActionList on each here...
  *    createGUI();
- *    applyMainWindowSettings( KGlobal::config(), "MainWindow" );
+ *    applyMainWindowSettings( TDEGlobal::config(), "MainWindow" );
  * }
  * \endcode
  *
@@ -91,7 +91,7 @@ namespace
  * An example would be:
  *
  * \code
- * saveMainWindowSettings( KGlobal::config(), "MainWindow" );
+ * saveMainWindowSettings( TDEGlobal::config(), "MainWindow" );
  * KEditToolbar dlg(factory());
  * connect(&dlg,TQT_SIGNAL(newToolbarConfig()),this,TQT_SLOT(slotNewToolbarConfig()));
  * dlg.exec();
@@ -100,7 +100,7 @@ namespace
  * {
  *    ...if you use any action list, use plugActionList on each here...
  *    // Do NOT call createGUI()!
- *    applyMainWindowSettings( KGlobal::config(), "MainWindow" );
+ *    applyMainWindowSettings( TDEGlobal::config(), "MainWindow" );
  * }
  * \endcode
  *
@@ -406,7 +406,7 @@ protected slots:
   void slotChangeIcon();
 
 private slots:
-  void slotProcessExited( KProcess* );
+  void slotProcessExited( TDEProcess* );
 
 protected: // KDE4: make private
   void setupLayout();

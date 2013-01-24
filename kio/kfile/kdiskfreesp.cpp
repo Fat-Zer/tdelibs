@@ -46,11 +46,11 @@
 KDiskFreeSp::KDiskFreeSp(TQObject *parent, const char *name)
     : TQObject(parent,name)
 {
-    dfProc = new KProcess(); TQ_CHECK_PTR(dfProc);
+    dfProc = new TDEProcess(); TQ_CHECK_PTR(dfProc);
     dfProc->setEnvironment("LANGUAGE", "C");
-    connect( dfProc, TQT_SIGNAL(receivedStdout(KProcess *, char *, int) ),
-             this, TQT_SLOT (receivedDFStdErrOut(KProcess *, char *, int)) );
-    connect(dfProc,TQT_SIGNAL(processExited(KProcess *) ),
+    connect( dfProc, TQT_SIGNAL(receivedStdout(TDEProcess *, char *, int) ),
+             this, TQT_SLOT (receivedDFStdErrOut(TDEProcess *, char *, int)) );
+    connect(dfProc,TQT_SIGNAL(processExited(TDEProcess *) ),
             this, TQT_SLOT(dfDone() ) );
 
     readingDFStdErrOut=false;
@@ -68,7 +68,7 @@ KDiskFreeSp::~KDiskFreeSp()
 /***************************************************************************
   * is called, when the df-command writes on StdOut
 **/
-void KDiskFreeSp::receivedDFStdErrOut(KProcess *, char *data, int len)
+void KDiskFreeSp::receivedDFStdErrOut(TDEProcess *, char *data, int len)
 {
   TQCString tmp(data,len+1);  // adds a zero-byte
   dfStringErrOut.append(tmp);
@@ -85,7 +85,7 @@ int KDiskFreeSp::readDF( const TQString & mountPoint )
   dfStringErrOut=""; // yet no data received
   dfProc->clearArguments();
   (*dfProc) << TQString::fromLocal8Bit(DF_COMMAND) << TQString::fromLocal8Bit(DF_ARGS);
-  if (!dfProc->start( KProcess::NotifyOnExit, KProcess::AllOutput ))
+  if (!dfProc->start( TDEProcess::NotifyOnExit, TDEProcess::AllOutput ))
      kdError() << "could not execute ["<< DF_COMMAND << "]" << endl;
   return 1;
 }

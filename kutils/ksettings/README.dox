@@ -77,7 +77,7 @@ MyAppConfig::MyAppConfig( QWidget *parent, const char *, const QStringList &args
 \endcode
 
 For the KConfig object you can either use
-KGlobal::config() (I don't recommend it) or KSimpleConfig( "myapprc" ).
+TDEGlobal::config() (I don't recommend it) or KSimpleConfig( "myapprc" ).
 I added a method to KSettings::Dispatcher that gives you the KConfig
 object for every registered instance name: \ref KSettings::Dispatcher::configForInstanceName
 
@@ -122,7 +122,7 @@ Some explanation for those keys:
 - X-TDE-ParentApp is the name of the application this config page belongs to. It
   is used by the first two \ref KSettings::Dialog constructors. The Dialog will
   use all modules that set X-TDE-ParentApp to
-  KGlobal::instance()->instanceName(). It
+  TDEGlobal::instance()->instanceName(). It
   should be pretty easy to find out what name that is: look at the first
   argument to the TDEAboutData ctor.
 - X-TDE-ParentComponents is a list of the components (plugin/KPart/whatever)

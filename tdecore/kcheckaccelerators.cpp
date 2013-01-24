@@ -80,15 +80,15 @@ KCheckAccelerators::KCheckAccelerators( TQObject* parent )
     : TQObject( parent, "kapp_accel_filter" ), key(0), block( false ), drklash(0)
 {
     parent->installEventFilter( this );
-    KConfigGroupSaver saver( KGlobal::config(), "Development" );
-    TQString sKey = KGlobal::config()->readEntry( "CheckAccelerators" ).stripWhiteSpace();
+    KConfigGroupSaver saver( TDEGlobal::config(), "Development" );
+    TQString sKey = TDEGlobal::config()->readEntry( "CheckAccelerators" ).stripWhiteSpace();
     if( !sKey.isEmpty() ) {
       KShortcut cuts( sKey );
       if( cuts.count() > 0 )
         key = int(cuts.seq(0).qt());
     }
-    alwaysShow = KGlobal::config()->readBoolEntry( "AlwaysShowCheckAccelerators", false );
-    autoCheck = KGlobal::config()->readBoolEntry( "AutoCheckAccelerators", true );
+    alwaysShow = TDEGlobal::config()->readBoolEntry( "AlwaysShowCheckAccelerators", false );
+    autoCheck = TDEGlobal::config()->readBoolEntry( "AutoCheckAccelerators", true );
     connect( &autoCheckTimer, TQT_SIGNAL( timeout()), TQT_SLOT( autoCheckSlot()));
 }
 

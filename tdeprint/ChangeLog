@@ -108,7 +108,7 @@ Since 2.2 release, Michael Goffioul <tdeprint@swing.be>
   * tdeprintfax: added possibility to view files being faxed and
     file action (remove and view) are enabled only when needed.
   * KPrinter: when printing to a file, support encoding and spaces
-    in file names + system --> KProcess.
+    in file names + system --> TDEProcess.
 
 07/11/2001 Michael Goffioul <tdeprint@swing.be>
   * tdeprint: fixed some problems:

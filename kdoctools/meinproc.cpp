@@ -100,7 +100,7 @@ int main(int argc, char **argv) {
 
     KLocale::setMainCatalogue("kio_help");
     TDEInstance ins("meinproc");
-    KGlobal::locale();
+    TDEGlobal::locale();
 
 
     TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
@@ -171,7 +171,7 @@ int main(int argc, char **argv) {
             chdir( TQFile::encodeName( file.dirPath( true ) ) );
             TQString cmd = exe;
             cmd += " --catalogs --valid --noout ";
-            cmd += KProcess::quote(file.fileName());
+            cmd += TDEProcess::quote(file.fileName());
             cmd += " 2>&1";
             FILE *xmllint = popen( TQFile::encodeName( cmd ), "r");
             char buf[ 512 ];

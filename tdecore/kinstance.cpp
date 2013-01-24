@@ -78,10 +78,10 @@ TDEInstance::TDEInstance( const TQCString& name)
 {
     DEBUG_ADD
     Q_ASSERT(!name.isEmpty());
-    if (!KGlobal::_instance)
+    if (!TDEGlobal::_instance)
     {
-      KGlobal::_instance = this;
-      KGlobal::setActiveInstance(this);
+      TDEGlobal::_instance = this;
+      TDEGlobal::setActiveInstance(this);
     }
 
     d = new TDEInstancePrivate ();
@@ -99,10 +99,10 @@ TDEInstance::TDEInstance( const TDEAboutData * aboutData )
     DEBUG_ADD
     Q_ASSERT(!_name.isEmpty());
 
-    if (!KGlobal::_instance)
+    if (!TDEGlobal::_instance)
     {
-      KGlobal::_instance = this;
-      KGlobal::setActiveInstance(this);
+      TDEGlobal::_instance = this;
+      TDEGlobal::setActiveInstance(this);
     }
 
     d = new TDEInstancePrivate ();
@@ -120,10 +120,10 @@ TDEInstance::TDEInstance( TDEInstance* src )
     DEBUG_ADD
     Q_ASSERT(!_name.isEmpty());
 
-    if (!KGlobal::_instance || KGlobal::_instance == src )
+    if (!TDEGlobal::_instance || TDEGlobal::_instance == src )
     {
-      KGlobal::_instance = this;
-      KGlobal::setActiveInstance(this);
+      TDEGlobal::_instance = this;
+      TDEGlobal::setActiveInstance(this);
     }
 
     d = new TDEInstancePrivate ();
@@ -164,10 +164,10 @@ TDEInstance::~TDEInstance()
     delete _dirs;
     _dirs = 0;
 
-    if (KGlobal::_instance == this)
-        KGlobal::_instance = 0;
-    if (KGlobal::activeInstance() == this)
-        KGlobal::setActiveInstance(0);
+    if (TDEGlobal::_instance == this)
+        TDEGlobal::_instance = 0;
+    if (TDEGlobal::activeInstance() == this)
+        TDEGlobal::setActiveInstance(0);
     DEBUG_REMOVE
 }
 

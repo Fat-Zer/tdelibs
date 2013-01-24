@@ -575,7 +575,7 @@ static TQValueList<KPluginInfo*> kpartsPluginInfos( const TQString& instanceName
     if( instanceName.isNull() )
         return TQValueList<KPluginInfo*>(); //nothing
 
-    const TQStringList desktopfilenames = KGlobal::dirs()->findAllResources( "data",
+    const TQStringList desktopfilenames = TDEGlobal::dirs()->findAllResources( "data",
             instanceName + "/kpartplugins/*.desktop", true, false );
     return KPluginInfo::fromFiles( desktopfilenames );
 }
@@ -631,7 +631,7 @@ void KPluginSelector::addPlugins( const TQValueList<KPluginInfo*> & plugininfos,
 {
     checkNeedForTabWidget();
     // the KConfigGroup becomes owned by KPluginSelectionWidget
-    KConfigGroup * cfgGroup = new KConfigGroup( config ? config : KGlobal::config(), "Plugins" );
+    KConfigGroup * cfgGroup = new KConfigGroup( config ? config : TDEGlobal::config(), "Plugins" );
     kdDebug( 702 ) << k_funcinfo << "cfgGroup = " << cfgGroup << endl;
     addPluginsInternal( plugininfos, catname, category, cfgGroup );
 }

@@ -94,13 +94,13 @@ KWalletD::KWalletD(const TQCString &name)
 	_idleTime = 0;
 	connect(_timeouts, TQT_SIGNAL(timedOut(int)), this, TQT_SLOT(timedOut(int)));
 	reconfigure();
-	KGlobal::dirs()->addResourceType("kwallet", "share/apps/kwallet");
+	TDEGlobal::dirs()->addResourceType("kwallet", "share/apps/kwallet");
 	connect(TDEApplication::dcopClient(),
 		TQT_SIGNAL(applicationRemoved(const TQCString&)),
 		this,
 		TQT_SLOT(slotAppUnregistered(const TQCString&)));
 	_dw = new KDirWatch(this, "KWallet Directory Watcher");
-	_dw->addDir(KGlobal::dirs()->saveLocation("kwallet"));
+	_dw->addDir(TDEGlobal::dirs()->saveLocation("kwallet"));
 	_dw->startScan(true);
 	connect(_dw, TQT_SIGNAL(dirty(const TQString&)), this, TQT_SLOT(emitWalletListDirty()));
 }
@@ -593,7 +593,7 @@ bool KWalletD::isAuthorizedApp(const TQCString& appid, const TQString& wallet, W
 
 
 int KWalletD::deleteWallet(const TQString& wallet) {
-	TQString path = KGlobal::dirs()->saveLocation("kwallet") + TQDir::separator() + wallet + ".kwl";
+	TQString path = TDEGlobal::dirs()->saveLocation("kwallet") + TQDir::separator() + wallet + ".kwl";
 
 	if (TQFile::exists(path)) {
 		close(wallet, true);
@@ -806,7 +806,7 @@ bool KWalletD::isOpen(int handle) {
 
 
 TQStringList KWalletD::wallets() const {
-	TQString path = KGlobal::dirs()->saveLocation("kwallet");
+	TQString path = TDEGlobal::dirs()->saveLocation("kwallet");
 	TQDir dir(path, "*.kwl");
 	TQStringList rc;
 

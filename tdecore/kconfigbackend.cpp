@@ -254,11 +254,11 @@ void KConfigBackEnd::changeFileName(const TQString &_fileName,
       mLocalFileName = mfileName;
    }
    else {
-      mLocalFileName = KGlobal::dirs()->saveLocation(resType, TQString(), false) + mfileName;
+      mLocalFileName = TDEGlobal::dirs()->saveLocation(resType, TQString(), false) + mfileName;
    }
 
    if (useKDEGlobals) {
-      mGlobalFileName = KGlobal::dirs()->saveLocation("config", TQString(), false) + TQString::fromLatin1("kdeglobals");
+      mGlobalFileName = TDEGlobal::dirs()->saveLocation("config", TQString(), false) + TQString::fromLatin1("kdeglobals");
    }
    else {
       mGlobalFileName = TQString::null;
@@ -350,7 +350,7 @@ bool KConfigINIBackEnd::parseConfigFiles()
 
   // Parse the general config files
   if (useKDEGlobals) {
-    TQStringList kdercs = KGlobal::dirs()->
+    TQStringList kdercs = TDEGlobal::dirs()->
       findAllResources("config", TQString::fromLatin1("kdeglobals"));
 
 #ifdef Q_WS_WIN
@@ -362,7 +362,7 @@ bool KConfigINIBackEnd::parseConfigFiles()
     if (checkAccess(etc_kderc, R_OK))
       kdercs += etc_kderc;
 
-    kdercs += KGlobal::dirs()->
+    kdercs += TDEGlobal::dirs()->
       findAllResources("config", TQString::fromLatin1("system.kdeglobals"));
 
     TQStringList::ConstIterator it;
@@ -383,7 +383,7 @@ bool KConfigINIBackEnd::parseConfigFiles()
   while(bReadFile) {
     bReadFile = false;
     TQString bootLanguage;
-    if (useKDEGlobals && localeString.isEmpty() && !KGlobal::_locale) {
+    if (useKDEGlobals && localeString.isEmpty() && !TDEGlobal::_locale) {
        // Boot strap language
        bootLanguage = KLocale::_initLanguage(pConfig);
        setLocaleString(bootLanguage.utf8());
@@ -394,7 +394,7 @@ bool KConfigINIBackEnd::parseConfigFiles()
     if ( !TQDir::isRelativePath(mfileName) )
        list << mfileName;
     else
-       list = KGlobal::dirs()->findAllResources(resType, mfileName);
+       list = TDEGlobal::dirs()->findAllResources(resType, mfileName);
 
     TQStringList::ConstIterator it;
 
@@ -410,7 +410,7 @@ bool KConfigINIBackEnd::parseConfigFiles()
             break;
       }
     }
-    if (KGlobal::dirs()->isRestrictedResource(resType, mfileName))
+    if (TDEGlobal::dirs()->isRestrictedResource(resType, mfileName))
        bFileImmutable = true;
     TQString currentLanguage;
     if (!bootLanguage.isEmpty())
@@ -1181,9 +1181,9 @@ bool KConfigBackEnd::checkConfigFilesWritable(bool warnUser)
     TDEApplication *app = kapp;
     if (!cmdToExec.isEmpty() && app)
     {
-      KProcess lprocess;
+      TDEProcess lprocess;
       lprocess << cmdToExec << "--title" << app->instanceName() << "--msgbox" << TQCString(errorMsg.local8Bit());
-      lprocess.start( KProcess::Block );
+      lprocess.start( TDEProcess::Block );
     }
   }
   return allWritable;

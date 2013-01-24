@@ -63,8 +63,8 @@ void KConfigBase::setLocale()
 {
   bLocaleInitialized = true;
 
-  if (KGlobal::locale())
-    aLocaleString = KGlobal::locale()->language().utf8();
+  if (TDEGlobal::locale())
+    aLocaleString = TDEGlobal::locale()->language().utf8();
   else
     aLocaleString = KLocale::defaultLanguage().utf8();
   if (backEnd)
@@ -231,7 +231,7 @@ TQString KConfigBase::readEntry( const char *pKey,
   // because calling locale() will create a locale object if it
   // doesn't exist, which requires KConfig, which will create a infinite
   // loop, and nobody likes those.
-  if (!bLocaleInitialized && KGlobal::_locale) {
+  if (!bLocaleInitialized && TDEGlobal::_locale) {
     // get around const'ness.
     KConfigBase *that = const_cast<KConfigBase *>(this);
     that->setLocale();
@@ -259,7 +259,7 @@ TQString KConfigBase::readEntry( const char *pKey,
       aValue = TQString::fromUtf8(aEntryData.mValue.data());
       if (aValue.isNull())
       {
-        static const TQString &emptyString = KGlobal::staticQString("");
+        static const TQString &emptyString = TDEGlobal::staticQString("");
         aValue = emptyString;
       }
       expand = aEntryData.bExpand;
@@ -526,7 +526,7 @@ TQStringList KConfigBase::readListEntry( const TQString& pKey, char sep ) const
 
 TQStringList KConfigBase::readListEntry( const char *pKey, char sep ) const
 {
-  static const TQString& emptyString = KGlobal::staticQString("");
+  static const TQString& emptyString = TDEGlobal::staticQString("");
 
   TQStringList list;
   if( !hasKey( pKey ) )
@@ -1081,7 +1081,7 @@ void KConfigBase::writeEntry( const char *pKey, const TQString& value,
   if( bPersistent )
     setDirty(true);
 
-  if (!bLocaleInitialized && KGlobal::locale())
+  if (!bLocaleInitialized && TDEGlobal::locale())
     setLocale();
 
   KEntryKey entryKey(mGroup, pKey);
@@ -1152,7 +1152,7 @@ static TQString translatePath( TQString path )
 	path.remove(0,1);
    }
 
-   // we can not use KGlobal::dirs()->relativeLocation("home", path) here,
+   // we can not use TDEGlobal::dirs()->relativeLocation("home", path) here,
    // since it would not recognize paths without a trailing '/'.
    // All of the 3 following functions to return the user's home directory
    // can return different paths. We have to test all them.
@@ -1222,7 +1222,7 @@ void KConfigBase::deleteEntry( const char *pKey,
   // possible but minimized.
   setDirty(true);
 
-  if (!bLocaleInitialized && KGlobal::locale())
+  if (!bLocaleInitialized && TDEGlobal::locale())
     setLocale();
 
   KEntryKey entryKey(mGroup, pKey);
@@ -1750,7 +1750,7 @@ void KConfigBase::writeEntry( const char *pKey, const TQDateTime& rDateTime,
 
 void KConfigBase::parseConfigFiles()
 {
-  if (!bLocaleInitialized && KGlobal::_locale) {
+  if (!bLocaleInitialized && TDEGlobal::_locale) {
     setLocale();
   }
   if (backEnd)

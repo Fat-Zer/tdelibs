@@ -999,7 +999,7 @@ void KateSaveConfigTab::apply()
 
   KateDocumentConfig::global()->setConfigFlags(configFlags);
 
-  KateDocumentConfig::global()->setEncoding((m_encoding->currentItem() == 0) ? "" : KGlobal::charsets()->encodingForName(m_encoding->currentText()));
+  KateDocumentConfig::global()->setEncoding((m_encoding->currentItem() == 0) ? "" : TDEGlobal::charsets()->encodingForName(m_encoding->currentText()));
 
   KateDocumentConfig::global()->setEol(m_eol->currentItem());
   KateDocumentConfig::global()->setAllowEolDetection(allowEolDetection->isChecked());
@@ -1013,12 +1013,12 @@ void KateSaveConfigTab::reload()
   m_encoding->clear ();
   m_encoding->insertItem (i18n("TDE Default"));
   m_encoding->setCurrentItem(0);
-  TQStringList encodings (KGlobal::charsets()->descriptiveEncodingNames());
+  TQStringList encodings (TDEGlobal::charsets()->descriptiveEncodingNames());
   int insert = 1;
   for (uint i=0; i < encodings.count(); i++)
   {
     bool found = false;
-    TQTextCodec *codecForEnc = KGlobal::charsets()->codecForName(KGlobal::charsets()->encodingForName(encodings[i]), found);
+    TQTextCodec *codecForEnc = TDEGlobal::charsets()->codecForName(TDEGlobal::charsets()->encodingForName(encodings[i]), found);
 
     if (found)
     {
@@ -1529,7 +1529,7 @@ void KateHlDownloadDialog::listDataReceived(KIO::Job *, const TQByteArray &data)
 
 void KateHlDownloadDialog::slotUser1()
 {
-  TQString destdir=KGlobal::dirs()->saveLocation("data","katepart/syntax/");
+  TQString destdir=TDEGlobal::dirs()->saveLocation("data","katepart/syntax/");
   for (TQListViewItem *it=list->firstChild();it;it=it->nextSibling())
   {
     if (list->isSelected(it))
@@ -1640,16 +1640,16 @@ KateModOnHdPrompt::~KateModOnHdPrompt()
 
 void KateModOnHdPrompt::slotDiff()
 {
-  // Start a KProcess that creates a diff
+  // Start a TDEProcess that creates a diff
   KProcIO *p = new KProcIO();
-  p->setComm( KProcess::All );
+  p->setComm( TDEProcess::All );
   *p << "diff" << "-u" << "-" <<  m_doc->url().path();
-  connect( p, TQT_SIGNAL(processExited(KProcess*)), this, TQT_SLOT(slotPDone(KProcess*)) );
+  connect( p, TQT_SIGNAL(processExited(TDEProcess*)), this, TQT_SLOT(slotPDone(TDEProcess*)) );
   connect( p, TQT_SIGNAL(readReady(KProcIO*)), this, TQT_SLOT(slotPRead(KProcIO*)) );
 
   setCursor( WaitCursor );
 
-  p->start( KProcess::NotifyOnExit, true );
+  p->start( TDEProcess::NotifyOnExit, true );
 
   uint lastln =  m_doc->numLines();
   for ( uint l = 0; l <  lastln; l++ )
@@ -1678,7 +1678,7 @@ void KateModOnHdPrompt::slotPRead( KProcIO *p)
     p->ackRead();
 }
 
-void KateModOnHdPrompt::slotPDone( KProcess *p )
+void KateModOnHdPrompt::slotPDone( TDEProcess *p )
 {
   setCursor( ArrowCursor );
   if( ! m_tmpfile )

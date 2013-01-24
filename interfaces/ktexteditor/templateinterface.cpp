@@ -113,23 +113,23 @@ bool TemplateInterface::expandMacros( TQMap<TQString, TQString> &map, TQWidget *
       }
       else if ( placeholder == "date" )
       {
-        map[ placeholder ] = KGlobal::locale() ->formatDate( date, true );
+        map[ placeholder ] = TDEGlobal::locale() ->formatDate( date, true );
       }
       else if ( placeholder == "time" )
       {
-        map[ placeholder ] = KGlobal::locale() ->formatTime( time, true, false );
+        map[ placeholder ] = TDEGlobal::locale() ->formatTime( time, true, false );
       }
       else if ( placeholder == "year" )
       {
-        map[ placeholder ] = KGlobal::locale() ->calendar() ->yearString( date, false );
+        map[ placeholder ] = TDEGlobal::locale() ->calendar() ->yearString( date, false );
       }
       else if ( placeholder == "month" )
       {
-        map[ placeholder ] = TQString::number( KGlobal::locale() ->calendar() ->month( date ) );
+        map[ placeholder ] = TQString::number( TDEGlobal::locale() ->calendar() ->month( date ) );
       }
       else if ( placeholder == "day" )
       {
-        map[ placeholder ] = TQString::number( KGlobal::locale() ->calendar() ->day( date ) );
+        map[ placeholder ] = TQString::number( TDEGlobal::locale() ->calendar() ->day( date ) );
       }
       else if ( placeholder == "hostname" )
       {

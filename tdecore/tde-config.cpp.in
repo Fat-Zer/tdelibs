@@ -121,8 +121,8 @@ int main(int argc, char **argv)
 
     TDEInstance a("tde-config");
     a.setConfigReadOnly(TRUE);
-    (void)KGlobal::dirs(); // trigger the creation
-    (void)KGlobal::config();
+    (void)TDEGlobal::dirs(); // trigger the creation
+    (void)TDEGlobal::config();
 
     // Get application specific arguments
     TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
@@ -151,7 +151,7 @@ int main(int argc, char **argv)
 
     if (args->isSet("localprefix"))
     {
-        printResult(KGlobal::dirs()->localtdedir());
+        printResult(TDEGlobal::dirs()->localtdedir());
         return 0;
     }
 
@@ -163,7 +163,7 @@ int main(int argc, char **argv)
 
     if (args->isSet("types"))
     {
-        TQStringList types = KGlobal::dirs()->allTypes();
+        TQStringList types = TDEGlobal::dirs()->allTypes();
         types.sort();
         const char *helptexts[] = {
             "apps", I18N_NOOP("Applications menu (.desktop files)"),
@@ -210,7 +210,7 @@ int main(int argc, char **argv)
     TQString type = args->getOption("path");
     if (!type.isEmpty())
     {
-        printResult(KGlobal::dirs()->resourceDirs(type.latin1()).join(":"));
+        printResult(TDEGlobal::dirs()->resourceDirs(type.latin1()).join(":"));
         return 0;
     }
 
@@ -218,13 +218,13 @@ int main(int argc, char **argv)
     if (!type.isEmpty())
     {
         if ( type == "desktop" )
-            printResult(KGlobalSettings::desktopPath());
+            printResult(TDEGlobalSettings::desktopPath());
         else if ( type == "autostart" )
-            printResult(KGlobalSettings::autostartPath());
+            printResult(TDEGlobalSettings::autostartPath());
         else if ( type == "trash" )
-            printResult(KGlobalSettings::trashPath());
+            printResult(TDEGlobalSettings::trashPath());
         else if ( type == "document" )
-            printResult(KGlobalSettings::documentPath());
+            printResult(TDEGlobalSettings::documentPath());
         else
             fprintf(stderr, "%s", TQString(i18n("%1 - unknown type of userpath\n").arg(type)).local8Bit().data() );
         return 0;

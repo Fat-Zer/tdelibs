@@ -57,7 +57,7 @@ int main(int argc, char **argv)
 
     if (argv1 == TQString::fromLatin1("diroperator")) {
 	KDirOperator *op = new KDirOperator(startDir, 0, "operator");
-	op->setViewConfig( KGlobal::config(), "TestGroup" );
+	op->setViewConfig( TDEGlobal::config(), "TestGroup" );
 	op->setView(KFile::Simple);
 	op->show();
 	a.setMainWidget(op);

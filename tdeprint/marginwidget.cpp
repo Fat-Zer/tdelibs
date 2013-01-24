@@ -206,7 +206,7 @@ MarginWidget::MarginWidget(TQWidget *parent, const char* name, bool allowMetricU
 
 	if ( allowMetricUnit )
 	{
-		int	mode = (KGlobal::locale()->measureSystem() == KLocale::Metric ? 2 : 1);
+		int	mode = (TDEGlobal::locale()->measureSystem() == KLocale::Metric ? 2 : 1);
 		m_top->setMode(mode);
 		m_bottom->setMode(mode);
 		m_left->setMode(mode);

@@ -529,7 +529,7 @@ public:
 
         // The trick is that we also don't want the user to override globally set
         // directories. So we have to misuse KStandardDirs :}
-        TQStringList confDirs = KGlobal::dirs()->resourceDirs( "config" );
+        TQStringList confDirs = TDEGlobal::dirs()->resourceDirs( "config" );
         if ( !confDirs.isEmpty() )
         {
             TQString globalConf = confDirs.last() + "kmimemagicrc";
@@ -2121,7 +2121,7 @@ KMimeMagic::KMimeMagic()
     TQString mimefile = locate( "mime", "magic" );
     init( mimefile );
     // Add snippets from share/config/magic/*
-    TQStringList snippets = KGlobal::dirs()->findAllResources( "config", "magic/*.magic", true );
+    TQStringList snippets = TDEGlobal::dirs()->findAllResources( "config", "magic/*.magic", true );
     for ( TQStringList::Iterator it = snippets.begin() ; it != snippets.end() ; ++it )
         if ( !mergeConfig( *it ) )
             kdWarning() << k_funcinfo << "Failed to parse " << *it << endl;

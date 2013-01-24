@@ -360,7 +360,7 @@ class KateHlDownloadDialog: public KDialogBase
 };
 
 class KProcIO;
-class KProcess;
+class TDEProcess;
 /**
  * This dialog will prompt the user for what do with a file that is
  * modified on disk.
@@ -394,7 +394,7 @@ class KateModOnHdPrompt : public KDialogBase
 
   private slots:
     void slotPRead(KProcIO*); ///< Read from the diff process
-    void slotPDone(KProcess*); ///< Runs the diff file when done
+    void slotPDone(TDEProcess*); ///< Runs the diff file when done
 
   private:
     KateDocument *m_doc;

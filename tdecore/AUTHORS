@@ -37,7 +37,7 @@ Michael Will <Michael.Will@student.uni-tuebingen.de>
 loading routine in KPixmap
 
 Christian Czezatke <e9025461@student.tuwien.ac.at>
-KProcess class
+TDEProcess class
 
 Matthias Ettrich <ettrich@kde.org>
 KWM, Changes to TDEApplication and KIconLoader

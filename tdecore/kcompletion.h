@@ -77,8 +77,8 @@ class TQPopupMenu;
  *     of manual and auto-completion is therefore only visible in UI classes,
  *     KCompletion needs to know whether to deliver partial matches
  *     (shell completion) or whole matches (auto/manual completion), therefore
- * KGlobalSettings::CompletionMan and
- * KGlobalSettings::CompletionAuto have the exact same effect in
+ * TDEGlobalSettings::CompletionMan and
+ * TDEGlobalSettings::CompletionAuto have the exact same effect in
  *     KCompletion.
  *
  * @li shell completion works like how shells complete filenames:
@@ -90,7 +90,7 @@ class TQPopupMenu;
  * You don't have to worry much about that though, KCompletion handles
  * that for you, according to the setting setCompletionMode().
  * The default setting is globally configured by the user and read
- * from KGlobalSettings::completionMode().
+ * from TDEGlobalSettings::completionMode().
  *
  * A short example:
  * \code
@@ -251,22 +251,22 @@ public:
     /**
      * Sets the completion mode to Auto/Manual, Shell or None.
      * If you don't set the mode explicitly, the global default value
-     * KGlobalSettings::completionMode() is used.
-     * KGlobalSettings::CompletionNone disables completion.
+     * TDEGlobalSettings::completionMode() is used.
+     * TDEGlobalSettings::CompletionNone disables completion.
      * @param mode the completion mode
      * @see completionMode
-     * @see KGlobalSettings::completionMode
+     * @see TDEGlobalSettings::completionMode
      */
-    virtual void setCompletionMode( KGlobalSettings::Completion mode );
+    virtual void setCompletionMode( TDEGlobalSettings::Completion mode );
 
     /**
      * Return the current completion mode.
-     * May be different from KGlobalSettings::completionMode(), if you
+     * May be different from TDEGlobalSettings::completionMode(), if you
      * explicitly called setCompletionMode().
      * @return the current completion mode
      * @see setCompletionMode
      */
-    KGlobalSettings::Completion completionMode() const {
+    TDEGlobalSettings::Completion completionMode() const {
         return myCompletionMode;
     }
 
@@ -570,7 +570,7 @@ private:
     enum        BeepMode { NoMatch, PartialMatch, Rotation };
     void        doBeep( BeepMode ) const;
 
-    KGlobalSettings::Completion myCompletionMode;
+    TDEGlobalSettings::Completion myCompletionMode;
 
     CompOrder       myOrder;
     TQString         myLastString;
@@ -825,7 +825,7 @@ public:
      * Sets the type of completion to be used.
      *
      * The completion modes supported are those defined in
-     * KGlobalSettings().  See below.
+     * TDEGlobalSettings().  See below.
      *
      * @param mode Completion type:
      *   @li CompletionNone:  Disables completion feature.
@@ -841,17 +841,17 @@ public:
      *   @li CompletionPopup: Shows all available completions at once,
      *                        in a listbox popping up.
      */
-    virtual void setCompletionMode( KGlobalSettings::Completion mode );
+    virtual void setCompletionMode( TDEGlobalSettings::Completion mode );
 
     /**
      * Returns the current completion mode.
      *
-     * The return values are of type KGlobalSettings::Completion.
+     * The return values are of type TDEGlobalSettings::Completion.
      * See setCompletionMode() for details.
      *
      * @return the completion mode.
      */
-    KGlobalSettings::Completion completionMode() const {
+    TDEGlobalSettings::Completion completionMode() const {
         return m_delegate ? m_delegate->completionMode() : m_iCompletionMode;
     }
 
@@ -908,7 +908,7 @@ public:
      *
      * This method changes the values of the key bindings for
      * rotation and completion features to the default values
-     * provided in KGlobalSettings.
+     * provided in TDEGlobalSettings.
      *
      * NOTE: By default inheriting widgets should uses the
      * global key-bindings so that there will be no need to
@@ -992,7 +992,7 @@ private:
     // Determines whether this widget fires rotation signals
     bool m_bEmitSignals;
     // Stores the completion mode locally.
-    KGlobalSettings::Completion m_iCompletionMode;
+    TDEGlobalSettings::Completion m_iCompletionMode;
     // Pointer to Completion object.
     TQGuardedPtr<KCompletion> m_pCompObj;
     // Keybindings

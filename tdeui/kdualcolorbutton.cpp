@@ -224,7 +224,7 @@ void KDualColorButton::mousePressEvent(TQMouseEvent *ev)
 void KDualColorButton::mouseMoveEvent(TQMouseEvent *ev)
 {
     if(!miniCtlFlag){
-        int delay = KGlobalSettings::dndEventDelay();
+        int delay = TDEGlobalSettings::dndEventDelay();
         if(ev->x() >= mPos.x()+delay || ev->x() <= mPos.x()-delay ||
            ev->y() >= mPos.y()+delay || ev->y() <= mPos.y()-delay) {
             KColorDrag *d = new KColorDrag( curColor == Foreground ?

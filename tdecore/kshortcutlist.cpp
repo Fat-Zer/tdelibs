@@ -72,7 +72,7 @@ bool KShortcutList::readSettings( const TQString& sConfigGroup, KConfigBase* pCo
 {
 	kdDebug(125) << "KShortcutList::readSettings( \"" << sConfigGroup << "\", " << pConfig << " ) start" << endl;
 	if( !pConfig )
-		pConfig = KGlobal::config();
+		pConfig = TDEGlobal::config();
 	TQString sGroup = (!sConfigGroup.isEmpty()) ? sConfigGroup : TQString("Shortcuts");
 
 	// If the config file still has the old group name:
@@ -110,7 +110,7 @@ bool KShortcutList::writeSettings( const TQString &sConfigGroup, KConfigBase* pC
 {
 	kdDebug(125) << "KShortcutList::writeSettings( " << sConfigGroup << ", " << pConfig << ", " << bWriteAll << ", " << bGlobal << " )" << endl;
 	if( !pConfig )
-		pConfig = KGlobal::config();
+		pConfig = TDEGlobal::config();
 
 	TQString sGroup = (!sConfigGroup.isEmpty()) ? sConfigGroup : TQString("Shortcuts");
 
@@ -166,7 +166,7 @@ KAccelShortcutList::KAccelShortcutList( KAccel* pAccel )
 	d->m_configGroup=pAccel->configGroup();
 }
 
-KAccelShortcutList::KAccelShortcutList( KGlobalAccel* pAccel )
+KAccelShortcutList::KAccelShortcutList( TDEGlobalAccel* pAccel )
 : m_actions( pAccel->actions() )
 {
 	d=new KAccelShortcutListPrivate;

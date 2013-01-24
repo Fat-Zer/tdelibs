@@ -138,7 +138,7 @@ public:
                           const Field::List &fields );
   /**
    * This is the same as above, with the difference, that
-   * the list is stored in KGlobal::config() in group "KABCFields".
+   * the list is stored in TDEGlobal::config() in group "KABCFields".
    */
   static void saveFields( const TQString &identifier,
                           const Field::List &fields );
@@ -153,7 +153,7 @@ public:
 
   /**
    * This is the same as above, with the difference, that
-   * the list is loaded from KGlobal::config() from group "KABCFields".
+   * the list is loaded from TDEGlobal::config() from group "KABCFields".
    */
   static Field::List restoreFields( const TQString &identifier );
 

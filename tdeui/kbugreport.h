@@ -24,7 +24,7 @@
 class TQMultiLineEdit;
 class TQLineEdit;
 class TQHButtonGroup;
-class KProcess;
+class TDEProcess;
 class TDEAboutData;
 class KBugReportPrivate;
 
@@ -100,7 +100,7 @@ protected:
    */
   bool sendBugReport();
 
-  KProcess * m_process;
+  TDEProcess * m_process;
   const TDEAboutData * m_aboutData;
 
   TQMultiLineEdit * m_lineedit;

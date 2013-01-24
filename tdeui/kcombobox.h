@@ -251,7 +251,7 @@ public:
     * @return @p true when completion mode is automatic.
     */
     bool autoCompletion() const {
-        return completionMode() == KGlobalSettings::CompletionAuto;
+        return completionMode() == TDEGlobalSettings::CompletionAuto;
     }
 
     /**
@@ -331,7 +331,7 @@ public:
 
     /**
      * @returns the completion-box, that is used in completion mode
-     * KGlobalSettings::CompletionPopup and KGlobalSettings::CompletionPopupAuto.
+     * TDEGlobalSettings::CompletionPopup and TDEGlobalSettings::CompletionPopupAuto.
      * This method will create a completion-box by calling
      * KLineEdit::completionBox, if none is there, yet.
      *
@@ -373,7 +373,7 @@ signals:
     * The argument is the current text being edited.
     *
     * Note that this signal is @em not available when the widget is non-editable
-    * or the completion mode is set to @p KGlobalSettings::CompletionNone.
+    * or the completion mode is set to @p TDEGlobalSettings::CompletionNone.
     */
     void completion( const TQString& );
 
@@ -399,7 +399,7 @@ signals:
      * Emitted whenever the completion mode is changed by the user
      * through the context menu.
      */
-    void completionModeChanged( KGlobalSettings::Completion );
+    void completionModeChanged( TDEGlobalSettings::Completion );
 
     /**
      * Emitted before the context menu is displayed.

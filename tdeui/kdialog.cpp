@@ -342,7 +342,7 @@ KSMModalDialogHeader::KSMModalDialogHeader(TQWidget* parent)
 	seperatorbox->setMargin(0);
 
 	TQWidget* ticon = new TQWidget( frame );
-	KIconLoader * ldr = KGlobal::iconLoader();
+	KIconLoader * ldr = TDEGlobal::iconLoader();
 	TQPixmap trinityPixmap = ldr->loadIcon("kmenu", KIcon::Panel, KIcon::SizeLarge, KIcon::DefaultState, 0L, true);
 
 	// Manually draw the alpha portions of the icon onto the widget background color...
@@ -431,7 +431,7 @@ KSMModalDialog::KSMModalDialog(TQWidget* parent)
 
 	// Center the dialog
 	TQSize sh = sizeHint();
-	TQRect rect = KGlobalSettings::desktopGeometry(TQCursor::pos());
+	TQRect rect = TDEGlobalSettings::desktopGeometry(TQCursor::pos());
 	move(rect.x() + (rect.width() - sh.width())/2, rect.y() + (rect.height() - sh.height())/2);
 
 	show();

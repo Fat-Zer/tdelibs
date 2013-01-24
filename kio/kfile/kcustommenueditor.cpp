@@ -60,7 +60,7 @@ public:
       // to accelators, replace them with two ampersands.
       serviceName.replace("&", "&&");
 
-      TQPixmap normal = KGlobal::instance()->iconLoader()->loadIcon(s->icon(), KIcon::Small,
+      TQPixmap normal = TDEGlobal::instance()->iconLoader()->loadIcon(s->icon(), KIcon::Small,
                               0, KIcon::DefaultState, 0L, true);
 
       // make sure they are not larger than 16x16
@@ -164,7 +164,7 @@ KCustomMenuEditor::save(KConfigBase *cfg)
    {
       i++;
       TQString path = item->s->desktopEntryPath();
-      if (TQDir::isRelativePath(path) || TQDir::isRelativePath(KGlobal::dirs()->relativeLocation("xdgdata-apps", path)))
+      if (TQDir::isRelativePath(path) || TQDir::isRelativePath(TDEGlobal::dirs()->relativeLocation("xdgdata-apps", path)))
          path = item->s->desktopEntryName();
       cfg->writePathEntry(TQString("Item%1").arg(i), path);
       item = (Item *) item->nextSibling();

@@ -220,7 +220,7 @@ bool Plugin::hasPlugin( TQObject* parent, const TQString& library )
 
 void Plugin::setInstance( TDEInstance *instance )
 {
-    KGlobal::locale()->insertCatalogue( instance->instanceName() );
+    TDEGlobal::locale()->insertCatalogue( instance->instanceName() );
     KXMLGUIClient::setInstance( instance );
 }
 

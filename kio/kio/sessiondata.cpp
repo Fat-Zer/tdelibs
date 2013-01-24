@@ -252,7 +252,7 @@ void SessionData::configDataFor( MetaData &configData, const TQString &proto,
     if ( configData["Charsets"].isEmpty() )
         configData["Charsets"] = d->charsets;
     if ( configData["CacheDir"].isEmpty() )
-        configData["CacheDir"] = KGlobal::dirs()->saveLocation("cache", "http");
+        configData["CacheDir"] = TDEGlobal::dirs()->saveLocation("cache", "http");
     if ( configData["UserAgent"].isEmpty() )
     {
       configData["UserAgent"] = KProtocolManager::defaultUserAgent();
@@ -269,10 +269,10 @@ void SessionData::reset()
     d->useCookie = cfg->readBoolEntry( "Cookies", true );
     delete cfg;
 
-    static const TQString & english = KGlobal::staticQString( "en" );
+    static const TQString & english = TDEGlobal::staticQString( "en" );
 
     // Get language settings...
-    TQStringList languageList = KGlobal::locale()->languagesTwoAlpha();
+    TQStringList languageList = TDEGlobal::locale()->languagesTwoAlpha();
     TQStringList::Iterator it = languageList.find( TQString::fromLatin1("C") );
     if ( it != languageList.end() )
     {

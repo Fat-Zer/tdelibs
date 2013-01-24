@@ -817,9 +817,9 @@ int main(int argc, char *argv[])
   check("path",ulong.path(),"/servlet/CookieAccepted");
 
 #if TQT_VERSION < 300
-  qt_set_locale_codec( KGlobal::charsets()->codecForName( "iso-8859-1" ) );
+  qt_set_locale_codec( TDEGlobal::charsets()->codecForName( "iso-8859-1" ) );
 #else
-  TQTextCodec::setCodecForLocale( KGlobal::charsets()->codecForName( "iso-8859-1" ) );
+  TQTextCodec::setCodecForLocale( TDEGlobal::charsets()->codecForName( "iso-8859-1" ) );
 #endif
   TQString raw = "data:text/html,%00%2540%00";
   check("data URL: encode-decode of %00", KURL(raw).url(), raw );
@@ -862,9 +862,9 @@ int main(int argc, char *argv[])
   testAdjustPath();
 
 #if TQT_VERSION < 300
-  qt_set_locale_codec( KGlobal::charsets()->codecForName( "koi8-r" ) );
+  qt_set_locale_codec( TDEGlobal::charsets()->codecForName( "koi8-r" ) );
 #else
-  TQTextCodec::setCodecForLocale( KGlobal::charsets()->codecForName( "koi8-r" ) );
+  TQTextCodec::setCodecForLocale( TDEGlobal::charsets()->codecForName( "koi8-r" ) );
 #endif
   baseURL = "file:/home/coolo";
   KURL russian = baseURL.directory(false, true) + TQString::fromLocal8Bit( "ÆÇÎ7" );

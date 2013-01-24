@@ -61,7 +61,7 @@ Shell::~Shell()
 
 void Shell::slotFileOpen()
 {
-  if ( ! m_part1->openURL( locate("data", KGlobal::instance()->instanceName()+"/kpartstest_shell.rc" ) ) )
+  if ( ! m_part1->openURL( locate("data", TDEGlobal::instance()->instanceName()+"/kpartstest_shell.rc" ) ) )
     KMessageBox::error(this,"Couldn't open file !");
 }
 

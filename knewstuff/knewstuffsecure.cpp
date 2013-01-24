@@ -144,7 +144,7 @@ void KNewStuffSecure::slotValidated(int result)
      emit installFinished();
   } else
   {
-    KConfig *cfg = KGlobal::config();
+    KConfig *cfg = TDEGlobal::config();
     cfg->deleteGroup("KNewStuffStatus");
     cfg->setGroup("KNewStuffStatus");
     for (TQMap<TQString, TQString>::ConstIterator it = m_installedResources.constBegin(); it != m_installedResources.constEnd(); ++it)
@@ -159,7 +159,7 @@ void KNewStuffSecure::slotValidated(int result)
 
 void KNewStuffSecure::downloadResource()
 {
-  KConfig *cfg = KGlobal::config();
+  KConfig *cfg = TDEGlobal::config();
   m_installedResources = cfg->entryMap("KNewStuffStatus");
   engine()->ignoreInstallResult(true);
   KNewStuff::download();

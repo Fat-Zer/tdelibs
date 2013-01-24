@@ -241,7 +241,7 @@ KIconDialog::KIconDialog(TQWidget *parent, const char *name)
     : KDialogBase(parent, name, true, i18n("Select Icon"), Ok|Cancel, Ok)
 {
     d = new KIconDialogPrivate;
-    mpLoader = KGlobal::iconLoader();
+    mpLoader = TDEGlobal::iconLoader();
     init();
 }
 
@@ -259,7 +259,7 @@ void KIconDialog::init()
     mGroupOrSize = KIcon::Desktop;
     mContext = KIcon::Any;
     mType = 0;
-    mFileList = KGlobal::dirs()->findAllResources("appicon", TQString::fromLatin1("*.png"));
+    mFileList = TDEGlobal::dirs()->findAllResources("appicon", TQString::fromLatin1("*.png"));
 
     TQWidget *main = new TQWidget( this );
     setMainWidget(main);
@@ -660,7 +660,7 @@ class KIconButton::KIconButtonPrivate
 KIconButton::KIconButton(TQWidget *parent, const char *name)
     : TQPushButton(parent, name)
 {
-    init( KGlobal::iconLoader() );
+    init( TDEGlobal::iconLoader() );
 }
 
 KIconButton::KIconButton(KIconLoader *loader,

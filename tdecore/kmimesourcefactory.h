@@ -46,7 +46,7 @@ public:
    *
    * @param loader is the iconloader used to find images.
    */
-  KMimeSourceFactory (KIconLoader* loader = KGlobal::iconLoader());
+  KMimeSourceFactory (KIconLoader* loader = TDEGlobal::iconLoader());
 
   /**
    * Destructor.

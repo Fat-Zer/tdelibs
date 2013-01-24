@@ -165,7 +165,7 @@ Value Screen::getValueProperty(ExecState *exec, int token) const
   KWinModule info(0, KWinModule::INFO_DESKTOP);
 #endif
   TQWidget *thisWidget = Window::retrieveActive(exec)->part()->widget();
-  TQRect sg = KGlobalSettings::desktopGeometry(thisWidget);
+  TQRect sg = TDEGlobalSettings::desktopGeometry(thisWidget);
 
   switch( token ) {
   case Height:
@@ -882,14 +882,14 @@ Value Window::get(ExecState *exec, const Identifier &p) const
     case ScreenX: {
       if (!part->view())
         return Undefined();
-      TQRect sg = KGlobalSettings::desktopGeometry(part->view());
+      TQRect sg = TDEGlobalSettings::desktopGeometry(part->view());
       return Number(part->view()->mapToGlobal(TQPoint(0,0)).x() + sg.x());
     }
     case ScreenTop:
     case ScreenY: {
       if (!part->view())
         return Undefined();
-      TQRect sg = KGlobalSettings::desktopGeometry(part->view());
+      TQRect sg = TDEGlobalSettings::desktopGeometry(part->view());
       return Number(part->view()->mapToGlobal(TQPoint(0,0)).y() + sg.y());
     }
     case ScrollX: {
@@ -1504,7 +1504,7 @@ void KJS::Window::resizeTo(TQWidget* tl, int width, int height)
     return;
   }
 
-  TQRect sg = KGlobalSettings::desktopGeometry(tl);
+  TQRect sg = TDEGlobalSettings::desktopGeometry(tl);
 
   if ( width > sg.width() || height > sg.height() ) {
     kdDebug(6070) << "Window::resizeTo refused, window would be too big ("<<width<<","<<height<<")" << endl;
@@ -1622,7 +1622,7 @@ Value Window::executeOpenWindow(ExecState *exec, const KURL& url, const TQString
         if (pos >= 0) {
           key = s.left(pos).stripWhiteSpace().lower();
           val = s.mid(pos + 1).stripWhiteSpace().lower();
-          TQRect screen = KGlobalSettings::desktopGeometry(widget->topLevelWidget());
+          TQRect screen = TDEGlobalSettings::desktopGeometry(widget->topLevelWidget());
 
           if (key == "left" || key == "screenx") {
             winargs.x = (int)val.toFloat() + screen.x();
@@ -1951,7 +1951,7 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
       KParts::BrowserExtension *ext = part->browserExtension();
       if (ext) {
         TQWidget * tl = widget->topLevelWidget();
-        TQRect sg = KGlobalSettings::desktopGeometry(tl);
+        TQRect sg = TDEGlobalSettings::desktopGeometry(tl);
 
         TQPoint dest = tl->pos() + TQPoint( args[0].toInt32(exec), args[1].toInt32(exec) );
         // Security check (the spec talks about UniversalBrowserWrite to disable this check...)
@@ -1971,7 +1971,7 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
       KParts::BrowserExtension *ext = part->browserExtension();
       if (ext) {
         TQWidget * tl = widget->topLevelWidget();
-        TQRect sg = KGlobalSettings::desktopGeometry(tl);
+        TQRect sg = TDEGlobalSettings::desktopGeometry(tl);
 
         TQPoint dest( args[0].toInt32(exec)+sg.x(), args[1].toInt32(exec)+sg.y() );
         // Security check (the spec talks about UniversalBrowserWrite to disable this check...)

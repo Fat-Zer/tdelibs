@@ -26,7 +26,7 @@ KCompletionBase::KCompletionBase()
 {
     m_delegate = 0L;
     // Assign the default completion type to use.
-    m_iCompletionMode = KGlobalSettings::completionMode();
+    m_iCompletionMode = TDEGlobalSettings::completionMode();
 
     // Initialize all key-bindings to 0 by default so that
     // the event filter will use the global settings.
@@ -98,7 +98,7 @@ void KCompletionBase::setHandleSignals( bool handle )
         m_bHandleSignals = handle;
 }
 
-void KCompletionBase::setCompletionMode( KGlobalSettings::Completion mode )
+void KCompletionBase::setCompletionMode( TDEGlobalSettings::Completion mode )
 {
     if ( m_delegate ) {
         m_delegate->setCompletionMode( mode );
@@ -108,7 +108,7 @@ void KCompletionBase::setCompletionMode( KGlobalSettings::Completion mode )
     m_iCompletionMode = mode;
     // Always sync up KCompletion mode with ours as long as we
     // are performing completions.
-    if( m_pCompObj && m_iCompletionMode != KGlobalSettings::CompletionNone )
+    if( m_pCompObj && m_iCompletionMode != TDEGlobalSettings::CompletionNone )
         m_pCompObj->setCompletionMode( m_iCompletionMode );
 }
 

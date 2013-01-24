@@ -9,10 +9,10 @@ Test8a::Test8a(  KSharedConfig::Ptr config  )
   setCurrentGroup( TQString::fromLatin1( "Group" ) );
 
   KConfigSkeleton::ItemFont  *itemFont;
-  itemFont = new KConfigSkeleton::ItemFont( currentGroup(), TQString::fromLatin1( "Font" ), mFont, KGlobalSettings::generalFont() );
+  itemFont = new KConfigSkeleton::ItemFont( currentGroup(), TQString::fromLatin1( "Font" ), mFont, TDEGlobalSettings::generalFont() );
   addItem( itemFont, TQString::fromLatin1( "Font" ) );
   KConfigSkeleton::ItemFont  *itemTitleFont;
-  itemTitleFont = new KConfigSkeleton::ItemFont( currentGroup(), TQString::fromLatin1( "TitleFont" ), mTitleFont, KGlobalSettings::windowTitleFont() );
+  itemTitleFont = new KConfigSkeleton::ItemFont( currentGroup(), TQString::fromLatin1( "TitleFont" ), mTitleFont, TDEGlobalSettings::windowTitleFont() );
   addItem( itemTitleFont, TQString::fromLatin1( "TitleFont" ) );
 }
 

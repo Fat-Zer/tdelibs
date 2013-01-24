@@ -569,7 +569,7 @@ bool TDEApplication::notify(TQObject *receiver, TQEvent *event)
             // icon() cannot be null pixmap, it'll be the "unknown" icon - so check if there is this application icon
             static TQPixmap* ic = NULL;
             if( ic == NULL )
-                ic = new TQPixmap( KGlobal::iconLoader()->loadIcon( iconName(),
+                ic = new TQPixmap( TDEGlobal::iconLoader()->loadIcon( iconName(),
                     KIcon::NoGroup, 0, KIcon::DefaultState, NULL, true ));
             if( !ic->isNull())
             {
@@ -841,7 +841,7 @@ public:
 					 const char* message) const
   {
     TQTranslatorMessage res;
-    res.setTranslation(KGlobal::locale()->translateQt(context, sourceText, message));
+    res.setTranslation(TDEGlobal::locale()->translateQt(context, sourceText, message));
     return res;
   }
 };
@@ -861,9 +861,9 @@ void TDEApplication::init(bool GUIenabled)
      }
   }
 
-  KProcessController::ref();
+  TDEProcessController::ref();
 
-  (void) KClipboardSynchronizer::self();
+  (void) TDEClipboardSynchronizer::self();
 
   TQApplication::setDesktopSettingsAware( false );
 
@@ -912,9 +912,9 @@ void TDEApplication::init(bool GUIenabled)
 #endif
 
   // Trigger creation of locale.
-  (void) KGlobal::locale();
+  (void) TDEGlobal::locale();
 
-  KConfig* config = KGlobal::config();
+  KConfig* config = TDEGlobal::config();
   d->actionRestrictions = config->hasGroup("KDE Action Restrictions" ) && !kde_kiosk_exception;
   // For brain-dead configurations where the user's local config file is not writable.
   // * We use kdialog to warn the user, so we better not generate warnings from
@@ -945,7 +945,7 @@ void TDEApplication::init(bool GUIenabled)
 #endif
 
     {
-        TQStringList plugins = KGlobal::dirs()->resourceDirs( "qtplugins" );
+        TQStringList plugins = TDEGlobal::dirs()->resourceDirs( "qtplugins" );
         TQStringList::Iterator it = plugins.begin();
         while (it != plugins.end()) {
             addLibraryPath( *it );
@@ -977,7 +977,7 @@ void TDEApplication::init(bool GUIenabled)
 
 #ifdef Q_WS_MACX
   if (GUIenabled) {
-      TQPixmap pixmap = KGlobal::iconLoader()->loadIcon( TDECmdLineArgs::appName(),
+      TQPixmap pixmap = TDEGlobal::iconLoader()->loadIcon( TDECmdLineArgs::appName(),
               KIcon::NoGroup, KIcon::SizeLarge, KIcon::DefaultState, 0L, false );
       if (!pixmap.isNull()) {
           TQImage i = pixmap.convertToImage().convertDepth(32).smoothScale(40, 40);
@@ -1013,7 +1013,7 @@ void TDEApplication::init(bool GUIenabled)
 	setReverseLayout( !rtl );
 
   // install appdata resource type
-  KGlobal::dirs()->addResourceType("appdata", KStandardDirs::kde_default("data")
+  TDEGlobal::dirs()->addResourceType("appdata", KStandardDirs::kde_default("data")
                                    + TQString::fromLatin1(name()) + '/');
   pSessionConfig = 0L;
   bSessionManagement = true;
@@ -1453,7 +1453,7 @@ void TDEApplication::startKdeinit()
   // Try to launch tdeinit.
   TQString srv = KStandardDirs::findExe(TQString::fromLatin1("tdeinit"));
   if (srv.isEmpty())
-     srv = KStandardDirs::findExe(TQString::fromLatin1("tdeinit"), KGlobal::dirs()->kfsstnd_defaultbindir());
+     srv = KStandardDirs::findExe(TQString::fromLatin1("tdeinit"), TDEGlobal::dirs()->kfsstnd_defaultbindir());
   if (srv.isEmpty())
      return;
   if (kapp && (Tty != kapp->type()))
@@ -1476,8 +1476,8 @@ void TDEApplication::dcopFailure(const TQString &msg)
   if (failureCount == 2)
   {
 #ifdef Q_WS_WIN
-     KGlobal::config()->setGroup("General");
-     if (KGlobal::config()->readBoolEntry("ignoreDCOPFailures", false))
+     TDEGlobal::config()->setGroup("General");
+     if (TDEGlobal::config()->readBoolEntry("ignoreDCOPFailures", false))
          return;
 #endif
      TQString msgStr(i18n("There was an error setting up inter-process "
@@ -1581,7 +1581,7 @@ void TDEApplication::parseCommandLine( )
     if (args->isSet("style"))
     {
 
-        TQStringList plugins = KGlobal::dirs()->resourceDirs( "qtplugins" );
+        TQStringList plugins = TDEGlobal::dirs()->resourceDirs( "qtplugins" );
         TQStringList::Iterator itp = plugins.begin();
         while (itp != plugins.end()) {
             addLibraryPath( *itp );
@@ -1736,7 +1736,7 @@ TDEApplication::~TDEApplication()
   // First call the static deleters and then call KLibLoader::cleanup()
   // The static deleters may delete libraries for which they need KLibLoader.
   // KLibLoader will take care of the remaining ones.
-  KGlobal::deleteStaticDeleters();
+  TDEGlobal::deleteStaticDeleters();
   KLibLoader::cleanUp();
 
   delete smw;
@@ -1745,7 +1745,7 @@ TDEApplication::~TDEApplication()
   delete s_DCOPClient;
   s_DCOPClient = 0L;
 
-  KProcessController::deref();
+  TDEProcessController::deref();
 
 #ifdef Q_WS_X11
   if ( d->oldXErrorHandler != NULL )
@@ -2123,24 +2123,24 @@ bool TDEApplication::x11EventFilter( XEvent *_event )
             switch (id)
             {
             case KIPC::StyleChanged:
-                KGlobal::config()->reparseConfiguration();
+                TDEGlobal::config()->reparseConfiguration();
                 kdisplaySetStyle();
                 break;
 
             case KIPC::ToolbarStyleChanged:
-                KGlobal::config()->reparseConfiguration();
+                TDEGlobal::config()->reparseConfiguration();
                 if (useStyles)
                     emit toolbarAppearanceChanged(arg);
                 break;
 
             case KIPC::PaletteChanged:
-                KGlobal::config()->reparseConfiguration();
+                TDEGlobal::config()->reparseConfiguration();
                 kdisplaySetPalette();
                 break;
 
             case KIPC::FontChanged:
-                KGlobal::config()->reparseConfiguration();
-                KGlobalSettings::rereadFontSettings();
+                TDEGlobal::config()->reparseConfiguration();
+                TDEGlobalSettings::rereadFontSettings();
                 kdisplaySetFont();
                 break;
 
@@ -2149,28 +2149,28 @@ bool TDEApplication::x11EventFilter( XEvent *_event )
                 break;
 
             case KIPC::SettingsChanged:
-                KGlobal::config()->reparseConfiguration();
+                TDEGlobal::config()->reparseConfiguration();
                 if (arg == SETTINGS_PATHS)
-                    KGlobalSettings::rereadPathSettings();
+                    TDEGlobalSettings::rereadPathSettings();
                 else if (arg == SETTINGS_MOUSE)
-                    KGlobalSettings::rereadMouseSettings();
+                    TDEGlobalSettings::rereadMouseSettings();
                 propagateSettings((SettingsCategory)arg);
                 break;
 
             case KIPC::IconChanged:
                 TQPixmapCache::clear();
-                KGlobal::config()->reparseConfiguration();
-                KGlobal::instance()->newIconLoader();
+                TDEGlobal::config()->reparseConfiguration();
+                TDEGlobal::instance()->newIconLoader();
                 emit updateIconLoaders();
                 emit iconChanged(arg);
                 break;
 
             case KIPC::ClipboardConfigChanged:
-                KClipboardSynchronizer::newConfiguration(arg);
+                TDEClipboardSynchronizer::newConfiguration(arg);
                 break;
                 
             case KIPC::BlockShortcuts:
-                KGlobalAccel::blockShortcuts(arg);
+                TDEGlobalAccel::blockShortcuts(arg);
                 emit kipcMessage(id, arg); // some apps may do additional things
                 break;
             }
@@ -2276,7 +2276,7 @@ void TDEApplication::applyGUIStyle()
 {
     if ( !useStyles ) return;
 
-    KConfigGroup pConfig (KGlobal::config(), "General");
+    KConfigGroup pConfig (TDEGlobal::config(), "General");
     TQString defaultStyle = KStyle::defaultStyle();
     TQString styleStr = pConfig.readEntry("widgetStyle", defaultStyle);
 
@@ -2306,8 +2306,8 @@ TQString TDEApplication::caption() const
         return aCaption;
   else
       // We have some about data ?
-      if ( KGlobal::instance()->aboutData() )
-        return KGlobal::instance()->aboutData()->programName();
+      if ( TDEGlobal::instance()->aboutData() )
+        return TDEGlobal::instance()->aboutData()->programName();
       else
         // Last resort : application name
         return name();
@@ -2339,9 +2339,9 @@ TQString TDEApplication::makeStdCaption( const TQString &userCaption,
 
 TQPalette TDEApplication::createApplicationPalette()
 {
-    KConfig *config = KGlobal::config();
+    KConfig *config = TDEGlobal::config();
     KConfigGroupSaver saver( config, "General" );
-    return createApplicationPalette( config, KGlobalSettings::contrast() );
+    return createApplicationPalette( config, TDEGlobalSettings::contrast() );
 }
 
 TQPalette TDEApplication::createApplicationPalette( KConfig *config, int contrast_ )
@@ -2440,7 +2440,7 @@ void TDEApplication::kdisplaySetPalette()
 #ifdef Q_WS_MACX
     //Can I have this on other platforms, please!? --Sam
     {
-        KConfig *config = KGlobal::config();
+        KConfig *config = TDEGlobal::config();
         KConfigGroupSaver saver( config, "General" );
         bool do_not_set_palette = FALSE;
         if(config->readBoolEntry("nopaletteChange", &do_not_set_palette))
@@ -2455,16 +2455,16 @@ void TDEApplication::kdisplaySetPalette()
 
 void TDEApplication::kdisplaySetFont()
 {
-    TQApplication::setFont(KGlobalSettings::generalFont(), true);
-    TQApplication::setFont(KGlobalSettings::menuFont(), true, TQMENUBAR_OBJECT_NAME_STRING);
-    TQApplication::setFont(KGlobalSettings::menuFont(), true, TQPOPUPMENU_OBJECT_NAME_STRING);
-    TQApplication::setFont(KGlobalSettings::menuFont(), true, "KPopupTitle");
+    TQApplication::setFont(TDEGlobalSettings::generalFont(), true);
+    TQApplication::setFont(TDEGlobalSettings::menuFont(), true, TQMENUBAR_OBJECT_NAME_STRING);
+    TQApplication::setFont(TDEGlobalSettings::menuFont(), true, TQPOPUPMENU_OBJECT_NAME_STRING);
+    TQApplication::setFont(TDEGlobalSettings::menuFont(), true, "KPopupTitle");
 
     // "patch" standard TQStyleSheet to follow our fonts
     TQStyleSheet* sheet = TQStyleSheet::defaultSheet();
-    sheet->item ("pre")->setFontFamily (KGlobalSettings::fixedFont().family());
-    sheet->item ("code")->setFontFamily (KGlobalSettings::fixedFont().family());
-    sheet->item ("tt")->setFontFamily (KGlobalSettings::fixedFont().family());
+    sheet->item ("pre")->setFontFamily (TDEGlobalSettings::fixedFont().family());
+    sheet->item ("code")->setFontFamily (TDEGlobalSettings::fixedFont().family());
+    sheet->item ("tt")->setFontFamily (TDEGlobalSettings::fixedFont().family());
 
     emit kdisplayFontChanged();
     emit appearanceChanged();
@@ -2484,7 +2484,7 @@ void TDEApplication::kdisplaySetStyle()
 
 void TDEApplication::propagateSettings(SettingsCategory arg)
 {
-    KConfigBase* config = KGlobal::config();
+    KConfigBase* config = TDEGlobal::config();
     KConfigGroupSaver saver( config, "KDE" );
 
 #ifdef QT_HAVE_MAX_IMAGE_SIZE
@@ -2821,7 +2821,7 @@ void TDEApplication::invokeMailer(const TQString &_to, const TQString &_cc, cons
 
    if (config.readBoolEntry("TerminalClient", false))
    {
-     KConfigGroup confGroup( KGlobal::config(), "General" );
+     KConfigGroup confGroup( TDEGlobal::config(), "General" );
      TQString preferredTerminal = confGroup.readPathEntry("TerminalApplication", "konsole");
      command = preferredTerminal + " -e " + command;
    }
@@ -3167,7 +3167,7 @@ TQString TDEApplication::tempSaveName( const TQString& pFilename ) const
       if( !aAutosaveDir.mkdir( aAutosaveDir.absPath() ) )
         {
           // Last chance: use temp dir
-          aAutosaveDir.setPath( KGlobal::dirs()->saveLocation("tmp") );
+          aAutosaveDir.setPath( TDEGlobal::dirs()->saveLocation("tmp") );
         }
     }
 
@@ -3196,7 +3196,7 @@ TQString TDEApplication::checkRecoverFile( const TQString& pFilename,
       if( !aAutosaveDir.mkdir( aAutosaveDir.absPath() ) )
         {
           // Last chance: use temp dir
-          aAutosaveDir.setPath( KGlobal::dirs()->saveLocation("tmp") );
+          aAutosaveDir.setPath( TDEGlobal::dirs()->saveLocation("tmp") );
         }
     }
 
@@ -3351,7 +3351,7 @@ bool TDEApplication::authorize(const TQString &genericAction)
    if (!d->actionRestrictions)
       return true;
 
-   KConfig *config = KGlobal::config();
+   KConfig *config = TDEGlobal::config();
    KConfigGroupSaver saver( config, "KDE Action Restrictions" );
    return config->readBoolEntry(genericAction, true);
 }
@@ -3361,7 +3361,7 @@ bool TDEApplication::authorizeKAction(const char *action)
    if (!d->actionRestrictions || !action)
       return true;
 
-   static const TQString &action_prefix = KGlobal::staticQString( "action/" );
+   static const TQString &action_prefix = TDEGlobal::staticQString( "action/" );
 
    return authorize(action_prefix + action);
 }
@@ -3370,14 +3370,14 @@ bool TDEApplication::authorizeControlModule(const TQString &menuId)
 {
    if (menuId.isEmpty() || kde_kiosk_exception)
       return true;
-   KConfig *config = KGlobal::config();
+   KConfig *config = TDEGlobal::config();
    KConfigGroupSaver saver( config, "TDE Control Module Restrictions" );
    return config->readBoolEntry(menuId, true);
 }
 
 TQStringList TDEApplication::authorizeControlModules(const TQStringList &menuIds)
 {
-   KConfig *config = KGlobal::config();
+   KConfig *config = TDEGlobal::config();
    KConfigGroupSaver saver( config, "TDE Control Module Restrictions" );
    TQStringList result;
    for(TQStringList::ConstIterator it = menuIds.begin();
@@ -3426,7 +3426,7 @@ void TDEApplication::initUrlActionRestrictions()
   d->urlActionRestrictions.append( new TDEApplicationPrivate::URLActionRule
   ("redirect", TQString::null, TQString::null, TQString::null, "=", TQString::null, TQString::null, true));
 
-  KConfig *config = KGlobal::config();
+  KConfig *config = TDEGlobal::config();
   KConfigGroupSaver saver( config, "KDE URL Restrictions" );
   int count = config->readNumEntry("rule_count");
   TQString keyFormat = TQString("rule_%1");
@@ -3457,9 +3457,9 @@ void TDEApplication::initUrlActionRestrictions()
        urlPath.replace(0, 1, TQDir::homeDirPath());
 
     if (refPath.startsWith("$TMP"))
-       refPath.replace(0, 4, KGlobal::dirs()->saveLocation("tmp"));
+       refPath.replace(0, 4, TDEGlobal::dirs()->saveLocation("tmp"));
     if (urlPath.startsWith("$TMP"))
-       urlPath.replace(0, 4, KGlobal::dirs()->saveLocation("tmp"));
+       urlPath.replace(0, 4, TDEGlobal::dirs()->saveLocation("tmp"));
 
     d->urlActionRestrictions.append(new TDEApplicationPrivate::URLActionRule
     	( action, refProt, refHost, refPath, urlProt, urlHost, urlPath, bEnabled));

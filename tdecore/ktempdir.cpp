@@ -63,7 +63,7 @@ KTempDir::KTempDir(TQString directoryPrefix, int mode)
    mError=0;
    if (directoryPrefix.isEmpty())
    {
-      directoryPrefix = locateLocal("tmp", KGlobal::instance()->instanceName());
+      directoryPrefix = locateLocal("tmp", TDEGlobal::instance()->instanceName());
    }
    (void) create(directoryPrefix , mode);
 }

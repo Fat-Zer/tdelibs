@@ -1461,8 +1461,8 @@ void KStandardDirs::addKDEDefaults()
 
 void KStandardDirs::checkConfig() const
 {
-    if (!addedCustoms && KGlobal::_instance && KGlobal::_instance->_config)
-        const_cast<KStandardDirs*>(this)->addCustomized(KGlobal::_instance->_config);
+    if (!addedCustoms && TDEGlobal::_instance && TDEGlobal::_instance->_config)
+        const_cast<KStandardDirs*>(this)->addCustomized(TDEGlobal::_instance->_config);
 }
 
 static TQStringList lookupProfiles(const TQString &mapFile)

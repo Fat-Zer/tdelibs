@@ -151,7 +151,7 @@ int main(int argc, char **argv)
       if (!DCOPRef(_launcher, _launcher).call("tdeinit_exec_wait", command, args).isValid())
       {
          tqWarning("Can't talk to klauncher!");
-         command = KGlobal::dirs()->findExe(command);
+         command = TDEGlobal::dirs()->findExe(command);
          command += " " + args.join(" ");
          system(command.local8Bit());
       }

@@ -783,7 +783,7 @@ RenderFileButton::RenderFileButton(HTMLInputElementImpl *element)
     KURLRequester* w = new KURLRequester( view()->viewport(), "__khtml" );
 
     w->setMode(KFile::File | KFile::ExistingOnly);
-    w->completionObject()->setDir(KGlobalSettings::documentPath());
+    w->completionObject()->setDir(TDEGlobalSettings::documentPath());
 
     connect(w->lineEdit(), TQT_SIGNAL(returnPressed()), this, TQT_SLOT(slotReturnPressed()));
     connect(w->lineEdit(), TQT_SIGNAL(textChanged(const TQString &)),this,TQT_SLOT(slotTextChanged(const TQString &)));

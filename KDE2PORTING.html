@@ -22,7 +22,7 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
 <LI><A HREF="#TDEApplication">TDEApplication</A></LI>
 <LI><A HREF="#TDECmdLineArgs">TDECmdLineArgs</A></LI>
 <LI><A HREF="#KLocale">KLocale</A></LI>
-<LI><A HREF="#KGlobal">KGlobal: access to KDE global objects.</A></LI>
+<LI><A HREF="#TDEGlobal">TDEGlobal: access to KDE global objects.</A></LI>
 <LI><A HREF="#KIconLoader">KIconLoader</A></LI>
 <LI><A HREF="#KTMainWindow">KTMainWindow</A></LI>
 <LI><A HREF="#KHelpMenu">KHelpMenu</A></LI>
@@ -37,7 +37,7 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
 <LI><A HREF="#kcharsets">kcharsets</A></LI>
 <LI><A HREF="#KWizard">KWizard, KNoteBook</A></LI>
 <LI><A HREF="#KSpinBox">KSpinBox, KNumericSpinBox</A></LI>
-<LI><A HREF="#KClipboard">KClipboard</A></LI>
+<LI><A HREF="#TDEClipboard">TDEClipboard</A></LI>
 <LI><A HREF="#KPanner">KPanner, KNewPanner</A></LI>
 <LI><A HREF="#KTreeList">KTreeList, KTreeListItem</A></LI>
 <LI><A HREF="#KMsgBox">KMsgBox</A></LI>
@@ -110,11 +110,11 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
 <H3><A NAME="TDEApplication">TDEApplication</A></H3>
 
   doesn't hold any longer a KLocale instance. With this getLocale()
-  and isLocaleInstantiated are now replaced by KGlobal::locale()<P>
+  and isLocaleInstantiated are now replaced by TDEGlobal::locale()<P>
 
   it also doesn't hold a KiconLoader instance. As this also getIconLoader()
   has been removed. Replace kapp-&gt;getIconLoader()-&gt;loadIcon() with
-  BarIcon() or use KGlobal::iconLoader() instead of getIconLoader()<P>
+  BarIcon() or use TDEGlobal::iconLoader() instead of getIconLoader()<P>
 
   kde_*dir() have been removed as they require a unique top level directory
   for all applications (TDEDIR). This concept doesn't exist in KDE 2.0
@@ -125,16 +125,16 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
   Replace code that uses kde_*dir() + filename with calls to
   locate(filetype, filename) where filetype is what * used to be
   in kde_*dir(). locate is defined as function in kstddirs.h to call
-  KGlobal::dirs()-&gt;findResource.<P>
+  TDEGlobal::dirs()-&gt;findResource.<P>
 
   Use locateLocal to get the path of a writable file. For instance,
   TDEApplication::localconfigdir()+filename is now locateLocal( "config", filename ),
-  but for most cases, simply using KGlobal::config() is enough, if you're happy
+  but for most cases, simply using TDEGlobal::config() is enough, if you're happy
   with saving the application's configuration into appnamerc, or
   KSimpleConfig cfg("anothercfgfile") to create a config file with another name.<P>
 
   generalFont() and fixedFont() are deprecated and will be removed soon.
-  Please use KGlobalSettings::generalFont() and KGlobalSettings::fixedFont() instead.<P>
+  Please use TDEGlobalSettings::generalFont() and TDEGlobalSettings::fixedFont() instead.<P>
 
   appName() is deprecated. Please use TQApplication::name() or instanceName
   instead.<P>
@@ -193,9 +193,9 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
-<H3><A NAME="KGlobal">KGlobal: access to KDE global objects.</A></H3>
+<H3><A NAME="TDEGlobal">TDEGlobal: access to KDE global objects.</A></H3>
 
-KGlobal allows centralized access to KDE global objects without including
+TDEGlobal allows centralized access to KDE global objects without including
 extraneous headers. object creation is deferred if possible.<P>
 
 All methods are static and headers for returned types are not included. You
@@ -215,11 +215,11 @@ must have created a TDEApplication object before the methods can be used.<P>
   <TD>
     <PRE>
     ...
-        	KConfig *appcfg = KGlobal::config();
+        	KConfig *appcfg = TDEGlobal::config();
 	        TQString mystr	 = i18n( "This is a string" );
 
 
-		KIconLoader *loader = KGlobal::iconLoader();
+		KIconLoader *loader = TDEGlobal::iconLoader();
     </PRE>
   </TD>
 </TR>
@@ -309,9 +309,9 @@ you should or should not use them.
 <H4>1. fork + exec</H4>
 <P>
 You never want to use this unless you have a very good reason why it is 
-impossible to use KProcess.
+impossible to use TDEProcess.
 </P>
-<H4>2. KProcess</H4>
+<H4>2. TDEProcess</H4>
 <P>
 You want to use this if you need to start a new process which needs to be a 
 child of your process, e.g. because you want to catch stdout/stderr or need 
@@ -323,7 +323,7 @@ off with KProcIO
 
 <H4>3. KProcIO</H4>
 <P>
-Like KProcess. Unlike KProcess, this class actually makes it easy to 
+Like TDEProcess. Unlike TDEProcess, this class actually makes it easy to 
 send data to and receive data from the process.
 
 </P>
@@ -534,7 +534,7 @@ The kcharsets class has been completely rewritten, and most of it has
 vanished, since support for it moved to Qt.<P>
 
 Most applications will only need to replace kapp-&gt;getKCharsets() with
-KGlobal::charsets().<P>
+TDEGlobal::charsets().<P>
 
 For conversion of various input formats to QStrings, please have a
 look at TQTextCodec and classes derived from it.<P>
@@ -570,9 +570,9 @@ HINTS:<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
-<H3><A NAME="KClipboard">KClipboard</A></H3>
+<H3><A NAME="TDEClipboard">TDEClipboard</A></H3>
 
-KClipboard has been removed. In case you've been using KClipboard,
+TDEClipboard has been removed. In case you've been using TDEClipboard,
 QClipboard is the way to go now, as it has all the functionality the K
 version had, and more.<P>
 

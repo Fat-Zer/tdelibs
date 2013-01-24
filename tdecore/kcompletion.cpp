@@ -42,7 +42,7 @@ KCompletion::KCompletion()
 {
     d = new KCompletionPrivate;
 
-    myCompletionMode = KGlobalSettings::completionMode();
+    myCompletionMode = TDEGlobalSettings::completionMode();
     myTreeRoot = new KCompTreeNode;
     myBeep       = true;
     myIgnoreCase = false;
@@ -188,7 +188,7 @@ void KCompletion::clear()
 
 TQString KCompletion::makeCompletion( const TQString& string )
 {
-    if ( myCompletionMode == KGlobalSettings::CompletionNone )
+    if ( myCompletionMode == TDEGlobalSettings::CompletionNone )
         return TQString::null;
 
     //kdDebug(0) << "KCompletion: completing: " << string << endl;
@@ -200,7 +200,7 @@ TQString KCompletion::makeCompletion( const TQString& string )
 
     // in Shell-completion-mode, emit all matches when we get the same
     // complete-string twice
-    if ( myCompletionMode == KGlobalSettings::CompletionShell &&
+    if ( myCompletionMode == TDEGlobalSettings::CompletionShell &&
          string == myLastString ) {
         // Don't use d->matches since calling postProcessMatches()
         // on d->matches here would interfere with call to
@@ -219,8 +219,8 @@ TQString KCompletion::makeCompletion( const TQString& string )
 
     TQString completion;
     // in case-insensitive popup mode, we search all completions at once
-    if ( myCompletionMode == KGlobalSettings::CompletionPopup ||
-         myCompletionMode == KGlobalSettings::CompletionPopupAuto ) {
+    if ( myCompletionMode == TDEGlobalSettings::CompletionPopup ||
+         myCompletionMode == TDEGlobalSettings::CompletionPopupAuto ) {
         findAllCompletions( string, &d->matches, myHasMultipleMatches );
         if ( !d->matches.isEmpty() )
             completion = d->matches.first();
@@ -288,7 +288,7 @@ TQStringList KCompletion::substringCompletion( const TQString& string ) const
 }
 
 
-void KCompletion::setCompletionMode( KGlobalSettings::Completion mode )
+void KCompletion::setCompletionMode( TDEGlobalSettings::Completion mode )
 {
     myCompletionMode = mode;
 }
@@ -442,7 +442,7 @@ TQString KCompletion::findCompletion( const TQString& string )
     if ( node && node->childrenCount() > 1 ) {
         myHasMultipleMatches = true;
     
-        if ( myCompletionMode == KGlobalSettings::CompletionAuto ) {
+        if ( myCompletionMode == TDEGlobalSettings::CompletionAuto ) {
             myRotationIndex = 1;
             if (myOrder != Weighted) {
                 while ( (node = node->firstChild()) ) {
@@ -632,14 +632,14 @@ void KCompletion::doBeep( BeepMode mode ) const
             text = i18n("You reached the end of the list\nof matching items.\n");
             break;
         case PartialMatch:
-            if ( myCompletionMode == KGlobalSettings::CompletionShell ||
-                 myCompletionMode == KGlobalSettings::CompletionMan ) {
+            if ( myCompletionMode == TDEGlobalSettings::CompletionShell ||
+                 myCompletionMode == TDEGlobalSettings::CompletionMan ) {
                 event = TQString::fromLatin1("Textcompletion: partial match");
                 text = i18n("The completion is ambiguous, more than one\nmatch is available.\n");
             }
             break;
         case NoMatch:
-            if ( myCompletionMode == KGlobalSettings::CompletionShell ) {
+            if ( myCompletionMode == TDEGlobalSettings::CompletionShell ) {
                 event = TQString::fromLatin1("Textcompletion: no match");
                 text = i18n("There is no matching item available.\n");
             }

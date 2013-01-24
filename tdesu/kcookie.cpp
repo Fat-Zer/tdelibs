@@ -100,7 +100,7 @@ void KCookie::getXCookie()
     if (!memcmp(disp.data(), "localhost:", 10))
        disp.remove(0, 9);
 
-    TQString cmd = "xauth list "+KProcess::quote(disp);
+    TQString cmd = "xauth list "+TDEProcess::quote(disp);
     blockSigChild(); // pclose uses waitpid()
     if (!(f = popen(TQFile::encodeName(cmd), "r"))) 
     {
@@ -163,7 +163,7 @@ void KCookie::getICECookie()
         if (strncmp((*it).data(), m_dcopTransport.data(), m_dcopTransport.length()) != 0)
             continue;
         m_DCOPSrv = *it;
-	TQCString cmd = DCOPClient::iceauthPath()+" list netid="+TQFile::encodeName(KProcess::quote(m_DCOPSrv));
+	TQCString cmd = DCOPClient::iceauthPath()+" list netid="+TQFile::encodeName(TDEProcess::quote(m_DCOPSrv));
 	blockSigChild();
 	if (!(f = popen(cmd, "r")))
 	{

@@ -93,7 +93,7 @@ class KCModuleProxy::KCModuleProxyPrivate
 		TQStringList							args;
 		KCModule							*kcm;
 		QXEmbed								*embedWidget;
-		KProcess							*rootProcess;
+		TDEProcess							*rootProcess;
 		TQVBox								*embedFrame;
 		KCModuleProxyIfaceImpl  					*dcopObject;
 		DCOPClient							*dcopClient;
@@ -359,17 +359,17 @@ void KCModuleProxy::runAsRoot()
 	if (!tdesu.isEmpty())
 	{
 
-		d->rootProcess = new KProcess;
+		d->rootProcess = new TDEProcess;
 
 		*d->rootProcess << tdesu;
 		*d->rootProcess << "--nonewdcop" << "-n" << "-d" << TQString( "-i%1" ).arg(moduleInfo().icon());
 
 		*d->rootProcess << TQString("%1 %2 --embed-proxy %3 --lang %4").arg(locate("exe", "kcmshell"))
-			.arg(cmd).arg(d->embedWidget->winId()).arg(KGlobal::locale()->language());
+			.arg(cmd).arg(d->embedWidget->winId()).arg(TDEGlobal::locale()->language());
 
-		connect(d->rootProcess, TQT_SIGNAL(processExited(KProcess*)), TQT_SLOT(rootExited()));
+		connect(d->rootProcess, TQT_SIGNAL(processExited(TDEProcess*)), TQT_SLOT(rootExited()));
 
-		if ( !d->rootProcess->start( KProcess::NotifyOnExit ))
+		if ( !d->rootProcess->start( TDEProcess::NotifyOnExit ))
 		{
 			d->rootMode = false;
 			rootExited();

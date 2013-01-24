@@ -63,9 +63,9 @@ KAccelBase::~KAccelBase()
 uint KAccelBase::actionCount() const { return m_rgActions.count(); }
 KAccelActions& KAccelBase::actions() { return m_rgActions; }
 bool KAccelBase::isEnabled() const { return m_bEnabled; }
-// see KGlobalAccel::blockShortcuts() stuff - it's to temporarily block
+// see TDEGlobalAccel::blockShortcuts() stuff - it's to temporarily block
 // all global shortcuts, so that the key grabs are released, but from the app's
-// point of view the KGlobalAccel is still enabled, so KGlobalAccel needs
+// point of view the TDEGlobalAccel is still enabled, so TDEGlobalAccel needs
 // to disable key grabbing even if enabled
 bool KAccelBase::isEnabledInternal() const { return isEnabled(); }
 

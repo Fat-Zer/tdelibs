@@ -198,7 +198,7 @@ void KMimeTypeChooser::editMimeType()
   TQString keditfiletype = TQString::fromLatin1("keditfiletype");
   KRun::runCommand( keditfiletype
                     + " --parent " + TQString::number( (ulong)topLevelWidget()->winId())
-                    + " " + KProcess::quote(mt),
+                    + " " + TDEProcess::quote(mt),
                     keditfiletype, keditfiletype /*unused*/);
 }
 
@@ -261,7 +261,7 @@ KMimeTypeChooserDialog::KMimeTypeChooserDialog(
                                   this, "chooser" );
   setMainWidget(m_chooser);
 
-  KConfigGroup group( KGlobal::config(), "KMimeTypeChooserDialog");
+  KConfigGroup group( TDEGlobal::config(), "KMimeTypeChooserDialog");
   TQSize defaultSize( 400, 300 );
   resize( group.readSizeEntry("size", &defaultSize) );
 }
@@ -280,7 +280,7 @@ KMimeTypeChooserDialog::KMimeTypeChooserDialog(
                                   this, "chooser" );
   setMainWidget(m_chooser);
 
-  KConfigGroup group( KGlobal::config(), "KMimeTypeChooserDialog");
+  KConfigGroup group( TDEGlobal::config(), "KMimeTypeChooserDialog");
   TQSize defaultSize( 400, 300 );
   resize( group.readSizeEntry("size", &defaultSize) );
 }
@@ -288,7 +288,7 @@ KMimeTypeChooserDialog::KMimeTypeChooserDialog(
 
 KMimeTypeChooserDialog::~KMimeTypeChooserDialog()
 {
-  KConfigGroup group( KGlobal::config(), "KMimeTypeChooserDialog");
+  KConfigGroup group( TDEGlobal::config(), "KMimeTypeChooserDialog");
   group.writeEntry("size", size());
 }
 

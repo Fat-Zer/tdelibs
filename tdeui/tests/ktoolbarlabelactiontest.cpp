@@ -86,7 +86,7 @@ int main( int argc, char **argv )
 {
   TDEApplication app( argc, argv, "ktoolbarlabelactiontest" );
 
-  KGlobal::instance()->dirs()->addResourceDir("data", ".");
+  TDEGlobal::instance()->dirs()->addResourceDir("data", ".");
 
   MainWindow* mw = new MainWindow;
   app.setMainWidget(mw);

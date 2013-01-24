@@ -1299,7 +1299,7 @@ TQString macAddressForGenericDevice(TQT_DBusObjectPath path) {
 }
 
 TQString tdeDeviceUUIDForMACAddress(TQString macAddress) {
-	TDEHardwareDevices *hwdevices = KGlobal::hardwareDevices();
+	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
 	if (!hwdevices) {
 		return TQString::null;
 	}

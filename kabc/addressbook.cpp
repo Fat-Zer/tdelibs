@@ -673,7 +673,7 @@ bool AddressBook::addCustomField( const TQString &label, int category,
     d->mAllFields = Field::allFields();
   }
 
-  TQString a = app.isNull() ? KGlobal::instance()->instanceName() : app;
+  TQString a = app.isNull() ? TDEGlobal::instance()->instanceName() : app;
   TQString k = key.isNull() ? label : key;
 
   Field *field = Field::createCustomField( label, category, k, a );

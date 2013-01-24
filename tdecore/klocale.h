@@ -31,7 +31,7 @@ class TQDate;
 class TQTime;
 class TQDateTime;
 
-class KGlobal;
+class TDEGlobal;
 class KConfig;
 class KConfigBase;
 class KLocalePrivate;
@@ -123,7 +123,7 @@ inline TQString tr2i18n(const char* message, const char* =0) {
   */
 class TDECORE_EXPORT KLocale
 {
-  friend class KGlobal; // for initInstance()
+  friend class TDEGlobal; // for initInstance()
 public:
   /**
    * Constructs a KLocale with the given catalog name.
@@ -1173,7 +1173,7 @@ private:
 
 protected:
   /**
-   * @internal Creates a KLocale object for KGlobal and inits the locale
+   * @internal Creates a KLocale object for TDEGlobal and inits the locale
    * pointer.
    */
   static void initInstance();
