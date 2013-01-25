@@ -30,15 +30,15 @@ class TDEConfig;
 
 namespace KABC {
 
-class KABC_EXPORT ResourceLDAPKIO : public Resource
+class KABC_EXPORT ResourceLDAPTDEIO : public Resource
 {
   Q_OBJECT
 
   public:
     enum CachePolicy{ Cache_No, Cache_NoConnection, Cache_Always };
 
-    ResourceLDAPKIO( const TDEConfig* );
-    virtual ~ResourceLDAPKIO();
+    ResourceLDAPTDEIO( const TDEConfig* );
+    virtual ~ResourceLDAPTDEIO();
     /**
      *  Call this after you used one of the set... methods 
      */
@@ -162,8 +162,8 @@ protected slots:
     bool AddresseeToLDIF( TQByteArray &ldif, const Addressee &addr, 
       const TQString &olddn );
     
-    class ResourceLDAPKIOPrivate;
-    ResourceLDAPKIOPrivate *d;
+    class ResourceLDAPTDEIOPrivate;
+    ResourceLDAPTDEIOPrivate *d;
 };
 
 }

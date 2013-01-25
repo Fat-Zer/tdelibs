@@ -47,7 +47,7 @@ using namespace KABC;
 void tqt_enter_modal( TQWidget *widget );
 void tqt_leave_modal( TQWidget *widget );
 
-class ResourceLDAPTDEIO::ResourceLDAPKIOPrivate 
+class ResourceLDAPTDEIO::ResourceLDAPTDEIOPrivate 
 {
   public:
     LDIF mLdif;
@@ -69,10 +69,10 @@ class ResourceLDAPTDEIO::ResourceLDAPKIOPrivate
     KTempFile *mTmp;
 };
 
-ResourceLDAPTDEIO::ResourceLDAPKIO( const TDEConfig *config )
+ResourceLDAPTDEIO::ResourceLDAPTDEIO( const TDEConfig *config )
   : Resource( config )
 {
-  d = new ResourceLDAPKIOPrivate;
+  d = new ResourceLDAPTDEIOPrivate;
   if ( config ) {
     TQMap<TQString, TQString> attrList;
     TQStringList attributes = config->readListEntry( "LdapAttributes" );
@@ -115,7 +115,7 @@ ResourceLDAPTDEIO::ResourceLDAPKIO( const TDEConfig *config )
   init(); 
 }
 
-ResourceLDAPTDEIO::~ResourceLDAPKIO() 
+ResourceLDAPTDEIO::~ResourceLDAPTDEIO() 
 {
   delete d;
 }
@@ -549,10 +549,10 @@ bool ResourceLDAPTDEIO::load()
     enter_loop();
   }
   if ( mErrorMsg.isEmpty() ) {
-    kdDebug(7125) << "ResourceLDAPKIO load ok!" << endl; 
+    kdDebug(7125) << "ResourceLDAPTDEIO load ok!" << endl; 
     return true;
   } else {
-    kdDebug(7125) << "ResourceLDAPKIO load finished with error: " << mErrorMsg << endl; 
+    kdDebug(7125) << "ResourceLDAPTDEIO load finished with error: " << mErrorMsg << endl; 
     addressBook()->error( mErrorMsg );
     return false;
   }
@@ -726,7 +726,7 @@ void ResourceLDAPTDEIO::result( TDEIO::Job *job )
 
 bool ResourceLDAPTDEIO::save( Ticket* )
 {
-  kdDebug(7125) << "ResourceLDAPKIO save" << endl;
+  kdDebug(7125) << "ResourceLDAPTDEIO save" << endl;
   
   d->mSaveIt = begin();
   TDEIO::Job *job = TDEIO::put( d->mLDAPUrl, -1, true, false, false );
@@ -736,10 +736,10 @@ bool ResourceLDAPTDEIO::save( Ticket* )
     this, TQT_SLOT( syncLoadSaveResult( TDEIO::Job* ) ) );
   enter_loop();
   if ( mErrorMsg.isEmpty() ) {
-    kdDebug(7125) << "ResourceLDAPKIO save ok!" << endl; 
+    kdDebug(7125) << "ResourceLDAPTDEIO save ok!" << endl; 
     return true;
   } else {
-    kdDebug(7125) << "ResourceLDAPKIO finished with error: " << mErrorMsg << endl; 
+    kdDebug(7125) << "ResourceLDAPTDEIO finished with error: " << mErrorMsg << endl; 
     addressBook()->error( mErrorMsg );
     return false;
   }
@@ -747,7 +747,7 @@ bool ResourceLDAPTDEIO::save( Ticket* )
 
 bool ResourceLDAPTDEIO::asyncSave( Ticket* )
 {
-  kdDebug(7125) << "ResourceLDAPKIO asyncSave" << endl;
+  kdDebug(7125) << "ResourceLDAPTDEIO asyncSave" << endl;
   d->mSaveIt = begin();
   TDEIO::Job *job = TDEIO::put( d->mLDAPUrl, -1, true, false, false );
   connect( job, TQT_SIGNAL( dataReq( TDEIO::Job*, TQByteArray& ) ),
@@ -784,15 +784,15 @@ void ResourceLDAPTDEIO::saveData( TDEIO::Job*, TQByteArray& data )
        !(*d->mSaveIt).changed() ) d->mSaveIt++;
 
   if ( d->mSaveIt == end() ) {
-    kdDebug(7125) << "ResourceLDAPKIO endData" << endl;
+    kdDebug(7125) << "ResourceLDAPTDEIO endData" << endl;
     data.resize(0);
     return;
   }
   
-  kdDebug(7125) << "ResourceLDAPKIO saveData: " << (*d->mSaveIt).assembledName() << endl;
+  kdDebug(7125) << "ResourceLDAPTDEIO saveData: " << (*d->mSaveIt).assembledName() << endl;
   
   AddresseeToLDIF( data, *d->mSaveIt, findUid( (*d->mSaveIt).uid() ) );  
-//  kdDebug(7125) << "ResourceLDAPKIO save LDIF: " << TQString::fromUtf8(data) << endl;
+//  kdDebug(7125) << "ResourceLDAPTDEIO save LDIF: " << TQString::fromUtf8(data) << endl;
   // mark as unchanged
   (*d->mSaveIt).setChanged( false );
 
@@ -803,14 +803,14 @@ void ResourceLDAPTDEIO::removeAddressee( const Addressee& addr )
 {
   TQString dn = findUid( addr.uid() );
   
-  kdDebug(7125) << "ResourceLDAPKIO: removeAddressee: " << dn << endl;
+  kdDebug(7125) << "ResourceLDAPTDEIO: removeAddressee: " << dn << endl;
 
   if ( !mErrorMsg.isEmpty() ) {
     addressBook()->error( mErrorMsg );
     return;
   }
   if ( !dn.isEmpty() ) {
-    kdDebug(7125) << "ResourceLDAPKIO: found uid: " << dn << endl;
+    kdDebug(7125) << "ResourceLDAPTDEIO: found uid: " << dn << endl;
     LDAPUrl url( d->mLDAPUrl );
     url.setPath( "/" + dn );
     url.setExtension( "x-dir", "base" );

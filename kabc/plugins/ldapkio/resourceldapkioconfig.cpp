@@ -64,7 +64,7 @@ ResourceLDAPTDEIOConfig::ResourceLDAPTDEIOConfig( TQWidget* parent,  const char*
 
 void ResourceLDAPTDEIOConfig::loadSettings( KRES::Resource *res )
 {
-  ResourceLDAPKIO *resource = dynamic_cast<ResourceLDAPKIO*>( res );
+  ResourceLDAPTDEIO *resource = dynamic_cast<ResourceLDAPTDEIO*>( res );
   
   if ( !resource ) {
     kdDebug(5700) << "ResourceLDAPTDEIOConfig::loadSettings(): cast failed" << endl;
@@ -100,7 +100,7 @@ void ResourceLDAPTDEIOConfig::loadSettings( KRES::Resource *res )
 
 void ResourceLDAPTDEIOConfig::saveSettings( KRES::Resource *res )
 {
-  ResourceLDAPKIO *resource = dynamic_cast<ResourceLDAPKIO*>( res );
+  ResourceLDAPTDEIO *resource = dynamic_cast<ResourceLDAPTDEIO*>( res );
   
   if ( !resource ) {
     kdDebug(5700) << "ResourceLDAPTDEIOConfig::saveSettings(): cast failed" << endl;
