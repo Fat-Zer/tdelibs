@@ -33,7 +33,7 @@ class TDECModuleProxy;
 class TDECModuleInfo;
 
 /**
- * @ingroup kcmodule
+ * @ingroup tdecmodule
  * @short A method that offers a KDialogBase containing arbitrary
  *        KControl Modules.
  *

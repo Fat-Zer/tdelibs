@@ -15,7 +15,7 @@ install( FILES
     klineedit.png ktextbrowser.png kpasswordedit.png kdatewidget.png
     kfontrequester.png kurlrequester.png kcombobox.png kiconview.png
     kintspinbox.png kled.png ksqueezedtextlabel.png  kprogress.png
-    kurllabel.png kruler.png kcmodule.png kdoublespinbox.png
+    kurllabel.png kruler.png tdecmodule.png kdoublespinbox.png
     kdoublenuminput.png klistbox.png klistview.png kactivelabel.png
     kiconbutton.png kcolorcombo.png khsselector.png kcolorbutton.png
     kgradientselector.png kdualcolorbutton.png ktimewidget.png

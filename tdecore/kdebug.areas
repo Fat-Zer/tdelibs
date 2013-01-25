@@ -95,7 +95,7 @@
 1402        khc_indexbuilder
 
 1420        kikbd
-1421        ki18b_keys (kcmodule)
+1421        ki18b_keys (tdecmodule)
 
 1430        nspluginviewer (Qt/Xt)
 1431        nspluginviewer (plugin)

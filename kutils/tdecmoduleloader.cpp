@@ -31,7 +31,7 @@
 #include <kmessagebox.h>
 #include <kparts/componentfactory.h>
 
-#include "kcmoduleloader.h"
+#include "tdecmoduleloader.h"
 
 
 /***************************************************************/

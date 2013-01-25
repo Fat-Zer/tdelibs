@@ -30,9 +30,9 @@
 #include <kaboutdata.h>
 #include <kapplication.h>
 #include <kcmdlineargs.h>
-#include <kcmoduleinfo.h>
-#include <kcmoduleloader.h>
-#include <kcmoduleproxy.h>
+#include <tdecmoduleinfo.h>
+#include <tdecmoduleloader.h>
+#include <tdecmoduleproxy.h>
 #include <kcmultidialog.h>
 #include <kdebug.h>
 #include <kdialogbase.h>

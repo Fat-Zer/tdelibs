@@ -38,8 +38,8 @@
 #include <kstdguiitem.h>
 #include <kuser.h>
 
-#include "kcmoduleloader.h"
-#include "kcmoduleproxy.h"
+#include "tdecmoduleloader.h"
+#include "tdecmoduleproxy.h"
 #include "kcmultidialog.h"
 #include "kcmultidialog.moc"
 

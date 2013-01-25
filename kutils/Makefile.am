@@ -7,19 +7,19 @@ libkutils_la_LDFLAGS = $(all_libraries) -no-undefined -version-info 3:0:2
 libkutils_la_LIBADD  = ../kio/libkio.la ksettings/libksettings.la $(LIB_QT) $(top_builddir)/dcop/libDCOP.la $(LIB_TDEUI) $(LIB_TDECORE) $(LIB_X11)
 
 libkutils_la_SOURCES = kfind.cpp kfinddialog.cpp kreplace.cpp \
-                       kreplacedialog.cpp kcmoduleinfo.cpp kcmoduleloader.cpp \
+                       kreplacedialog.cpp tdecmoduleinfo.cpp tdecmoduleloader.cpp \
                        kcmultidialog.cpp kmultitabbar.cpp kplugininfo.cpp \
-                       kcmoduleproxy.cpp kpluginselector.cpp \
-                       kcmodulecontainer.cpp kcmoduleproxyIface.skel \
-                       kcmoduleproxyIfaceImpl.cpp
+                       tdecmoduleproxy.cpp kpluginselector.cpp \
+                       tdecmodulecontainer.cpp tdecmoduleproxyIface.skel \
+                       tdecmoduleproxyIfaceImpl.cpp
 
 include_HEADERS = kfind.h kfinddialog.h kreplace.h kreplacedialog.h \
-                  kcmoduleinfo.h kcmoduleloader.h kcmultidialog.h \
-                  kmultitabbar.h kplugininfo.h kcmoduleproxy.h \
-                  kpluginselector.h kcmodulecontainer.h
+                  tdecmoduleinfo.h tdecmoduleloader.h kcmultidialog.h \
+                  kmultitabbar.h kplugininfo.h tdecmoduleproxy.h \
+                  kpluginselector.h tdecmodulecontainer.h
 
 noinst_HEADERS = kmultitabbar_p.h kpluginselector_p.h \
-                 kcmoduleproxyIface.h kcmoduleproxyIfaceImpl.h
+                 tdecmoduleproxyIface.h tdecmoduleproxyIfaceImpl.h
 
 kde_servicetypes_DATA = kplugininfo.desktop
 

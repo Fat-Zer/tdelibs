@@ -30,7 +30,7 @@ kbugreport.cpp \
 kbuttonbox.cpp \
 kcharselect.cpp \
 kcmenumngr.cpp \
-kcmodule.cpp \
+tdecmodule.cpp \
 kcolorbutton.cpp \
 kcolorcombo.cpp \
 kcolordialog.cpp \

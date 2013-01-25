@@ -58,7 +58,7 @@ install( FILES
     kdualcolorbtn.h kdualcolorbutton.h ktoolbarbutton.h
     ktoolbarradiogroup.h ktextbrowser.h
     kaction.h kactioncollection.h kactionclasses.h khelpmenu.h kswitchlanguagedialog.h
-    kcmodule.h kcmenumngr.h kpanelmenu.h kpanelappmenu.h
+    tdecmodule.h kcmenumngr.h kpanelmenu.h kpanelappmenu.h
     kactionshortcutlist.h kstdaction.h kcombobox.h
     kiconview.h klistview.h klistbox.h kbugreport.h kpassdlg.h
     kxmlguiclient.h kxmlgui.h kxmlguibuilder.h kxmlguifactory.h
@@ -129,7 +129,7 @@ set( ${target}_SRCS
   kanimwidget.cpp krootpixmap.cpp kaboutkde.cpp
   kaboutapplication.cpp kpanelapplet.cpp kdcopactionproxy.cpp
   kcolorcombo.cpp kpushbutton.cpp kpanelextension.cpp
-  kcompletionbox.cpp ksqueezedtextlabel.cpp kcmodule.cpp
+  kcompletionbox.cpp ksqueezedtextlabel.cpp tdecmodule.cpp
   kcommand.cpp twindowlistmenu.cpp kfontcombo.cpp ktip.cpp
   kdatewidget.cpp karrowbutton.cpp kmainwindowiface.cpp
   kmainwindowiface.skel kguiitem.cpp kstdguiitem.cpp

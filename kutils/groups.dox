@@ -27,7 +27,7 @@ namespace description for an overview.
 */
 
 /**
-@defgroup kcmodule KControl module classes
+@defgroup tdecmodule KControl module classes
 
 Thwse classes provide the KControl module API.
 */

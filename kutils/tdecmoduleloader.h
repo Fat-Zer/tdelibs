@@ -21,14 +21,14 @@
 #ifndef MODLOADER_H
 #define MODLOADER_H
 
-#include <kcmodule.h>
-#include <kcmoduleinfo.h>
+#include <tdecmodule.h>
+#include <tdecmoduleinfo.h>
 
 class TQWidget;
 class KLibLoader;
 
 /**
- * @ingroup kcmodule
+ * @ingroup tdecmodule
  * @brief Loads a KControl Module.
  *
  * TDECModuleLoader tries in several ways 

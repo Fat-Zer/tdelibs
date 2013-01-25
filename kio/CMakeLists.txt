@@ -41,7 +41,7 @@ install( FILES magic DESTINATION ${MIME_INSTALL_DIR} )
 install( FILES
     application.desktop kurifilterplugin.desktop
     kcomprfilter.desktop kscan.desktop kdatatool.desktop
-    kfileplugin.desktop kcmodule.desktop
+    kfileplugin.desktop tdecmodule.desktop
   DESTINATION ${SERVICETYPES_INSTALL_DIR} )
 
 install( FILES kioslave.upd DESTINATION ${KCONF_UPDATE_INSTALL_DIR} )

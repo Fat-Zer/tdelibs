@@ -19,7 +19,7 @@
 #ifndef __KCMODULEPROXYIFACEIMPL_H__
 #define __KCMODULEPROXYIFACEIMPL_H__
 
-#include "kcmoduleproxyIface.h"
+#include "tdecmoduleproxyIface.h"
 
 class TDECModuleProxy;
 

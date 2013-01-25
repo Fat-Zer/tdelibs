@@ -22,7 +22,7 @@
 #ifndef KRESOURCES_KCMKRESOURCES_H
 #define KRESOURCES_KCMKRESOURCES_H
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 
 class KRESOURCES_EXPORT KCMKResources : public TDECModule
 {

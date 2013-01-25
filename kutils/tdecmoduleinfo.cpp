@@ -29,7 +29,7 @@
 #include <kstandarddirs.h>
 #include <klocale.h>
 
-#include "kcmoduleinfo.h"
+#include "tdecmoduleinfo.h"
 
 class TDECModuleInfo::TDECModuleInfoPrivate
 {

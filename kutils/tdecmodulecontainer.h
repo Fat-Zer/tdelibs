@@ -24,8 +24,8 @@
 #include <tqstring.h>
 #include <tqstringlist.h>
 
-#include <kcmodule.h>
-#include <kcmoduleloader.h>
+#include <tdecmodule.h>
+#include <tdecmoduleloader.h>
 
 class TQTabWidget;
 class TQWidget;
@@ -34,7 +34,7 @@ class TQVBoxLayout;
 class TDECModuleProxy;
 
 /**
- * @ingroup kcmodule
+ * @ingroup tdecmodule
  * @brief TDECModuleContainer is a convenience class encapsulating several TDECModules.
  *
  * The TDECModuleContainer class is a convenience class for organizing a multiple set
@@ -170,7 +170,7 @@ class KUTILS_EXPORT TDECModuleContainer : public TDECModule
 };
 
 /**
- * @ingroup kcmodule
+ * @ingroup tdecmodule
  * This macro creates an factory declaration which when run creates an TDECModule with specified
  * modules. For example:
  * \code

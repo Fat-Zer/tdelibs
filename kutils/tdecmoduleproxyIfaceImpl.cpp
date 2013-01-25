@@ -22,10 +22,10 @@
 #include <dcopclient.h>
 
 #include <kapplication.h>
-#include <kcmoduleproxy.h>
+#include <tdecmoduleproxy.h>
 #include <kdebug.h>
 
-#include "kcmoduleproxyIfaceImpl.h"
+#include "tdecmoduleproxyIfaceImpl.h"
 
 
 #include <tqmessagebox.h>
@@ -126,4 +126,4 @@ void TDECModuleProxyRootCommunicatorImpl::quickHelpChanged()
 	p->emitQuickHelpChanged();
 }
 
-#include "kcmoduleproxyIfaceImpl.moc"
+#include "tdecmoduleproxyIfaceImpl.moc"

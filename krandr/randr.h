@@ -23,7 +23,7 @@
 #include <tqstringlist.h>
 #include <tqptrlist.h>
 
-#include <kcmodule.h>
+#include <tdecmodule.h>
 #include <kconfig.h>
 
 class KTimerDialog;

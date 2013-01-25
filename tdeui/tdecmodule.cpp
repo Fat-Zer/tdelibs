@@ -31,8 +31,8 @@
 #include <kinstance.h>
 #include <klocale.h>
 
-#include "kcmodule.h"
-#include "kcmodule.moc"
+#include "tdecmodule.h"
+#include "tdecmodule.moc"
 
 class TDECModulePrivate
 {

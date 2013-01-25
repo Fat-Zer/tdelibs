@@ -33,9 +33,9 @@ link_directories(
 
 install( FILES
     kfind.h kfinddialog.h kreplace.h kreplacedialog.h
-    kcmoduleinfo.h kcmoduleloader.h kcmultidialog.h
-    kmultitabbar.h kplugininfo.h kcmoduleproxy.h
-    kpluginselector.h kcmodulecontainer.h
+    tdecmoduleinfo.h tdecmoduleloader.h kcmultidialog.h
+    kmultitabbar.h kplugininfo.h tdecmoduleproxy.h
+    kpluginselector.h tdecmodulecontainer.h
   DESTINATION ${INCLUDE_INSTALL_DIR} )
 
 
@@ -50,10 +50,10 @@ set( target kutils )
 
 set( ${target}_SRCS
   kfind.cpp kfinddialog.cpp kreplace.cpp
-  kreplacedialog.cpp kcmoduleinfo.cpp kcmoduleloader.cpp
+  kreplacedialog.cpp tdecmoduleinfo.cpp tdecmoduleloader.cpp
   kcmultidialog.cpp kmultitabbar.cpp kplugininfo.cpp
-  kcmoduleproxy.cpp kpluginselector.cpp kcmodulecontainer.cpp
-  kcmoduleproxyIface.skel kcmoduleproxyIfaceImpl.cpp
+  tdecmoduleproxy.cpp kpluginselector.cpp tdecmodulecontainer.cpp
+  tdecmoduleproxyIface.skel tdecmoduleproxyIfaceImpl.cpp
 )
 
 tde_add_library( ${target} SHARED AUTOMOC

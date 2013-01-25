@@ -23,7 +23,7 @@
 #include <dcopobject.h>
 
 /**
- * @ingroup kcmodule
+ * @ingroup tdecmodule
  * @brief DCOP Interface for TDECModule.
  * 
  * A module (which is loaded via TDECModuleProxy) does always have 
@@ -90,7 +90,7 @@ k_dcop_signals:
 };
 
 /**
- * @ingroup kcmodule
+ * @ingroup tdecmodule
  * @brief DCOP interface for communicating with the real module running in root mode.
  * 
  * When a TDECModuleProxy tells kcmshell to load "itself" and embed into the 

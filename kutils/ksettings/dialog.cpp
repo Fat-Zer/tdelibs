@@ -33,7 +33,7 @@
 #include <kiconloader.h>
 #include <tqvbox.h>
 #include <tqlabel.h>
-#include "kcmoduleinfo.h"
+#include "tdecmoduleinfo.h"
 
 namespace KSettings
 {

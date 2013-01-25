@@ -34,7 +34,7 @@ class TDEInstance;
 class TDEProcess;
 
 /**
- * @ingroup kcmodule
+ * @ingroup tdecmodule
  *
  * @brief Encapsulates a TDECModule for embedding.
  *

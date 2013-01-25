@@ -24,10 +24,10 @@
 #include <tqtooltip.h>
 #include <tqvaluelist.h>
 
-#include <kcmodule.h>
-#include <kcmoduleinfo.h>
-#include <kcmoduleloader.h>
-#include <kcmoduleproxy.h>
+#include <tdecmodule.h>
+#include <tdecmoduleinfo.h>
+#include <tdecmoduleloader.h>
+#include <tdecmoduleproxy.h>
 #include <kdebug.h>
 #include <kdialog.h>
 #include <kglobal.h>
@@ -36,8 +36,8 @@
 #include <kservice.h>
 #include <kstdguiitem.h>
 
-#include "kcmodulecontainer.h"
-#include "kcmodulecontainer.moc"
+#include "tdecmodulecontainer.h"
+#include "tdecmodulecontainer.moc"
 
 /***********************************************************************/
 class TDECModuleContainer::TDECModuleContainerPrivate

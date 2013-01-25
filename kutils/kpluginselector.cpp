@@ -43,22 +43,22 @@
 #include <kglobalsettings.h>
 #include <kstandarddirs.h>
 #include <ktabctl.h>
-#include <kcmoduleinfo.h>
+#include <tdecmoduleinfo.h>
 #include <tqvaluelist.h>
 #include <kservice.h>
 #include <ktrader.h>
 #include <ktabwidget.h>
 #include <kiconloader.h>
-#include <kcmodule.h>
-#include "kcmoduleinfo.h"
-#include "kcmoduleloader.h"
+#include <tdecmodule.h>
+#include "tdecmoduleinfo.h"
+#include "tdecmoduleloader.h"
 #include <tqsplitter.h>
 #include <tqframe.h>
 #include "kplugininfo.h"
 #include <kinstance.h>
 #include <tqptrdict.h>
 #include <tqstringlist.h>
-#include "kcmoduleproxy.h"
+#include "tdecmoduleproxy.h"
 
 /*
     QCheckListViewItem that holds a pointer to the KPluginInfo object.

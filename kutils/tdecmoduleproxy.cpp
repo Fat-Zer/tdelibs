@@ -37,9 +37,9 @@
 
 #include <kapplication.h>
 #include <kaboutdata.h>
-#include <kcmodule.h>
-#include <kcmoduleinfo.h>
-#include <kcmoduleloader.h>
+#include <tdecmodule.h>
+#include <tdecmoduleinfo.h>
+#include <tdecmoduleloader.h>
 #include <kdebug.h>
 #include <kdialog.h>
 #include <klocale.h>
@@ -50,9 +50,9 @@
 
 #include <X11/Xlib.h>
 
-#include "kcmoduleproxy.h"
-#include "kcmoduleproxyIface.h"
-#include "kcmoduleproxyIfaceImpl.h"
+#include "tdecmoduleproxy.h"
+#include "tdecmoduleproxyIface.h"
+#include "tdecmoduleproxyIfaceImpl.h"
 
 /***************************************************************/
 class TDECModuleProxy::TDECModuleProxyPrivate
@@ -645,6 +645,6 @@ void TDECModuleProxy::emitQuickHelpChanged()
 }
 
 /***************************************************************/
-#include "kcmoduleproxy.moc"
+#include "tdecmoduleproxy.moc"
 
 // vim: sw=4 ts=4 noet

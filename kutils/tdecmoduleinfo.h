@@ -31,7 +31,7 @@ class TQString;
 class TQStringList;
 
 /**
- * @ingroup kcmodule
+ * @ingroup tdecmodule
  * A class that provides information about a TDECModule
  *
  * TDECModuleInfo provides various technical information, such as icon, library
