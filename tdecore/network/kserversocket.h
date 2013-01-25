@@ -95,13 +95,13 @@ class TDEServerSocketPrivate;
  *
  * It is important to note that @ref accept can return either an
  * object of type KNetwork::KStreamSocket or
- * KNetwork::KBufferedSocket (default). If you want to accept a
+ * KNetwork::TDEBufferedSocket (default). If you want to accept a
  * non-buffered socket, you must first call setAcceptBuffered.
  *
  * @warning If you use TDEServerSocket in an auxiliary (non-GUI) thread,
  *          you need to accept only KNetwork::KStreamSocket objects.
  *
- * @see KNetwork::KStreamSocket, KNetwork::KBufferedSocket
+ * @see KNetwork::KStreamSocket, KNetwork::TDEBufferedSocket
  * @author Thiago Macieira <thiago@kde.org>
  */
 class TDECORE_EXPORT TDEServerSocket: public TQObject, public KPassiveSocketBase
@@ -338,7 +338,7 @@ public:
    * Toggles whether the accepted socket will be buffered or not.
    * That is, the @ref accept function will always return a KStreamSocket
    * object or descended from it. If buffering is enabled, the class
-   * to be returned will be KBufferedSocket.
+   * to be returned will be TDEBufferedSocket.
    *
    * By default, this flag is set to true.
    *
@@ -361,7 +361,7 @@ public:
    *       the base class for active sockets, but it is guaranteed
    *       that the object will be a KStreamSocket or derived from it.
    *
-   * @sa KBufferedSocket
+   * @sa TDEBufferedSocket
    * @sa setAcceptBuffered
    */
   virtual KActiveSocketBase* accept();

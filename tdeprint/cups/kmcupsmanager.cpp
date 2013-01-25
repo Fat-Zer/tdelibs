@@ -992,7 +992,7 @@ void KMCupsManager::checkUpdatePossibleInternal()
 {
 	kdDebug(500) << "Checking for update possible" << endl;
 	delete m_socket;
-        m_socket = new KNetwork::KBufferedSocket;
+        m_socket = new KNetwork::TDEBufferedSocket;
 	m_socket->setTimeout( 1500 );
 	connect( m_socket, TQT_SIGNAL( connected(const KResolverEntry&) ), 
                 TQT_SLOT( slotConnectionSuccess() ) );

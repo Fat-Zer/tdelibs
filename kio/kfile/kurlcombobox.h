@@ -38,7 +38,7 @@
  * @short A combo box showing a number of recent URLs/directories
  * @author Carsten Pfeiffer <pfeiffer@kde.org>
  */
-class KIO_EXPORT KURLComboBox : public KComboBox
+class TDEIO_EXPORT KURLComboBox : public KComboBox
 {
     Q_OBJECT
     TQ_PROPERTY(TQStringList urls READ urls WRITE setURLs DESIGNABLE true)

@@ -29,7 +29,7 @@ class KFileMetaPreview;
  * This plugin displays a preview of the given file
  * @since 3.5
  */
-class KIO_EXPORT KPreviewPropsPlugin : public KPropsDlgPlugin
+class TDEIO_EXPORT KPreviewPropsPlugin : public KPropsDlgPlugin
 {
   Q_OBJECT
 

@@ -37,7 +37,7 @@ class TQLabel;
  * An item for the iconview, that has a reference to its corresponding
  * KFileItem.
  */
-class KIO_EXPORT KFileIconViewItem : public KIconViewItem
+class TDEIO_EXPORT KFileIconViewItem : public KIconViewItem
 {
 public:
     KFileIconViewItem( TQIconView *parent, const TQString &text,
@@ -80,7 +80,7 @@ namespace TDEIO {
  * @see KCombiView
  * @see KFileDetailView
  */
-class KIO_EXPORT KFileIconView : public KIconView, public KFileView
+class TDEIO_EXPORT KFileIconView : public KIconView, public KFileView
 {
     Q_OBJECT
 

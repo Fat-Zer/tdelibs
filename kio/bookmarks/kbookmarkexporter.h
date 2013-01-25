@@ -29,7 +29,7 @@
 /**
  * @since 3.2
  */
-class KIO_EXPORT KBookmarkExporterBase
+class TDEIO_EXPORT KBookmarkExporterBase
 {
 public:
     KBookmarkExporterBase(KBookmarkManager* mgr, const TQString & fileName)

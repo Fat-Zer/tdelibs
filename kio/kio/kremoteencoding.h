@@ -41,7 +41,7 @@ class KRemoteEncodingPrivate;
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  * @since 3.3
  */
-class KIO_EXPORT KRemoteEncoding
+class TDEIO_EXPORT KRemoteEncoding
 {
 public:
   /**

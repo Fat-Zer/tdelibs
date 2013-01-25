@@ -85,7 +85,7 @@ class ForwardingSlaveBasePrivate;
  * @since 3.4
  * @author Kevin Ottens <ervin@ipsquad.net>
  */
-class KIO_EXPORT ForwardingSlaveBase : public TQObject, public SlaveBase
+class TDEIO_EXPORT ForwardingSlaveBase : public TQObject, public SlaveBase
 {
 Q_OBJECT
 public:

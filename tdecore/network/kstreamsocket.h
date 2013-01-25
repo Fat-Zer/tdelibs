@@ -35,7 +35,7 @@ namespace KNetwork {
 class KResolverEntry;
 class KResolverResults;
 class TDEServerSocket;
-class KBufferedSocket;
+class TDEBufferedSocket;
 
 class KStreamSocketPrivate;
 /** @class KStreamSocket kstreamsocket.h kstreamsocket.h
@@ -50,7 +50,7 @@ class KStreamSocketPrivate;
  *
  * KStreamSocket objects are thread-safe and can be used in auxiliary
  * threads (i.e., not the thread in which the Qt event loop runs in).
- * Note that KBufferedSocket cannot be used reliably in an auxiliary thread.
+ * Note that TDEBufferedSocket cannot be used reliably in an auxiliary thread.
  *
  * Sample usage:
  * \code
@@ -91,7 +91,7 @@ class KStreamSocketPrivate;
  *  }
  * \endcode
  *
- * @see KNetwork::KBufferedSocket, KNetwork::TDEServerSocket
+ * @see KNetwork::TDEBufferedSocket, KNetwork::TDEServerSocket
  * @author Thiago Macieira <thiago@kde.org>
  */
 class TDECORE_EXPORT KStreamSocket: public KClientSocketBase
@@ -242,7 +242,7 @@ private:
   KStreamSocketPrivate *d;
 
   friend class TDEServerSocket;
-  friend class KBufferedSocket;
+  friend class TDEBufferedSocket;
 };
 
 } 				// namespace KNetwork

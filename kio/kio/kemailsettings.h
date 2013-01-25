@@ -43,7 +43,7 @@ class KEMailSettingsPrivate;
   *
   * @author Alex Zepeda zipzippy@sonic.net
   **/
-class KIO_EXPORT KEMailSettings {
+class TDEIO_EXPORT KEMailSettings {
 public:
 	/**
 	  * The list of settings that I thought of when I wrote this 

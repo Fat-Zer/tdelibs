@@ -31,7 +31,7 @@
  * Separated from KBookmarkManager to save memory (we throw this one
  * out once the import is done)
  */
-class KIO_EXPORT KBookmarkImporter
+class TDEIO_EXPORT KBookmarkImporter
 {
 public:
     KBookmarkImporter( TQDomDocument * doc ) : m_pDoc(doc) {}

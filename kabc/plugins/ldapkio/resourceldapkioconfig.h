@@ -42,12 +42,12 @@ class KLineEdit;
 
 namespace KABC {
 
-class KABC_EXPORT ResourceLDAPKIOConfig : public KRES::ConfigWidget
+class KABC_EXPORT ResourceLDAPTDEIOConfig : public KRES::ConfigWidget
 { 
   Q_OBJECT
 
   public:
-    ResourceLDAPKIOConfig( TQWidget* parent = 0, const char* name = 0 );
+    ResourceLDAPTDEIOConfig( TQWidget* parent = 0, const char* name = 0 );
 
   public slots:
     void loadSettings( KRES::Resource* );

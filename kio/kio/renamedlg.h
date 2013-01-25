@@ -45,7 +45,7 @@ enum RenameDlg_Result { R_RESUME = 6, R_RESUME_ALL = 7, R_OVERWRITE = 4, R_OVERW
  * @short A dialog for renaming files.
  * @since 3.1
  */
-class KIO_EXPORT RenameDlg : public TQDialog
+class TDEIO_EXPORT RenameDlg : public TQDialog
 {
   Q_OBJECT
 public:
@@ -135,7 +135,7 @@ private:
    * @param mtimeDest modification time of destination file
    * @return the result
    */
-KIO_EXPORT RenameDlg_Result open_RenameDlg( const TQString & caption,
+TDEIO_EXPORT RenameDlg_Result open_RenameDlg( const TQString & caption,
                                  // KDE4: make those KURLs
                                  const TQString& src, const TQString & dest,
                                  RenameDlg_Mode mode, TQString& newDestPath,

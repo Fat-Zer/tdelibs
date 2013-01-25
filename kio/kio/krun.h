@@ -55,7 +55,7 @@ namespace TDEIO {
  *
  * @short Opens files with their associated applications in KDE
  */
-class KIO_EXPORT KRun : public TQObject
+class TDEIO_EXPORT KRun : public TQObject
 {
   Q_OBJECT
 public:
@@ -461,7 +461,7 @@ private:
  * KRun can open the openwith dialog directly now.
  * Use KRun::displayOpenWithDialog() if you were using KOpenWithHandler directly.
  */
-class KIO_EXPORT_DEPRECATED KOpenWithHandler
+class TDEIO_EXPORT_DEPRECATED KOpenWithHandler
 {
 public:
   KOpenWithHandler() {}
@@ -475,7 +475,7 @@ public:
  * It sends a notification when the process exits (for the taskbar)
  * and it will show an error message if necessary (e.g. "program not found").
  */
-class KIO_EXPORT TDEProcessRunner : public TQObject
+class TDEIO_EXPORT TDEProcessRunner : public TQObject
 {
   Q_OBJECT
 

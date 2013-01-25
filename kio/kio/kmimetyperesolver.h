@@ -31,7 +31,7 @@
  * A baseclass for KMimeTypeResolver, with the interface,
  * KMimeTypeResolverHelper uses.
  */
-class KIO_EXPORT KMimeTypeResolverBase
+class TDEIO_EXPORT KMimeTypeResolverBase
 {
 public:
     virtual void slotViewportAdjusted() = 0;
@@ -46,7 +46,7 @@ protected:
  * itself. So an object of this class is used to handle signals, slots etc.
  * and forwards them to the KMimeTypeResolver instance.
  */
-class KIO_EXPORT KMimeTypeResolverHelper : public TQObject
+class TDEIO_EXPORT KMimeTypeResolverHelper : public TQObject
 {
     Q_OBJECT
 

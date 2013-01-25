@@ -63,7 +63,7 @@ class KOpenSSLProxyPrivate;
  * @short KDE OpenSSL Wrapper
  * @internal
  */
-class KIO_EXPORT KOpenSSLProxy {
+class TDEIO_EXPORT KOpenSSLProxy {
 friend class KStaticDeleter<KOpenSSLProxy>;
 public:
 

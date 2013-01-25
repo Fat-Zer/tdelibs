@@ -41,11 +41,11 @@ class KActiveSocketBase;
  * @class TDESocketBuffer tdesocketbuffer_p.h tdesocketbuffer_p.h
  * @brief generic socket buffering code
  *
- * This class implements generic buffering used by @ref KBufferedSocket.
+ * This class implements generic buffering used by @ref TDEBufferedSocket.
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class TDESocketBuffer: public KIOBufferBase
+class TDESocketBuffer: public TDEIOBufferBase
 {
 public:
   /**

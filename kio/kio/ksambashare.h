@@ -31,7 +31,7 @@ class KSambaSharePrivate;
  * any suid script.
  * Singleton class, call instance() to get an instance.
  */
-class KIO_EXPORT KSambaShare : public TQObject 
+class TDEIO_EXPORT KSambaShare : public TQObject 
 {
 Q_OBJECT
 public:

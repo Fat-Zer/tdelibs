@@ -34,7 +34,7 @@
  * A class for importing NS bookmarks
  * @deprecated
  */
-class KIO_EXPORT_DEPRECATED KNSBookmarkImporter : public TQObject
+class TDEIO_EXPORT_DEPRECATED KNSBookmarkImporter : public TQObject
 {
     Q_OBJECT
 public:
@@ -64,7 +64,7 @@ protected:
  * utf8 defaults to off
  * @since 3.2
  */
-class KIO_EXPORT KNSBookmarkImporterImpl : public KBookmarkImporterBase
+class TDEIO_EXPORT KNSBookmarkImporterImpl : public KBookmarkImporterBase
 {
 public:
     KNSBookmarkImporterImpl() : m_utf8(false) { }
@@ -81,7 +81,7 @@ private:
  * utf8 defaults to on
  * @since 3.2
  */
-class KIO_EXPORT KMozillaBookmarkImporterImpl : public KNSBookmarkImporterImpl
+class TDEIO_EXPORT KMozillaBookmarkImporterImpl : public KNSBookmarkImporterImpl
 {
 public:
     KMozillaBookmarkImporterImpl() { setUtf8(true); }
@@ -94,7 +94,7 @@ private:
  * Warning, it overwrites the existing bookmarks.html file !
  * @deprecated
  */
-class KIO_EXPORT_DEPRECATED KNSBookmarkExporter
+class TDEIO_EXPORT_DEPRECATED KNSBookmarkExporter
 {
 public:
     KNSBookmarkExporter(KBookmarkManager* mgr, const TQString & fileName)
@@ -113,7 +113,7 @@ protected:
 /**
  * @since 3.2
  */
-class KIO_EXPORT KNSBookmarkExporterImpl : public KBookmarkExporterBase
+class TDEIO_EXPORT KNSBookmarkExporterImpl : public KBookmarkExporterBase
 {
 public:
     KNSBookmarkExporterImpl(KBookmarkManager* mgr, const TQString & fileName)

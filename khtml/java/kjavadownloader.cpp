@@ -41,9 +41,9 @@ static const int KJAS_STOP = 0;
 static const int KJAS_HOLD = 1;
 static const int KJAS_RESUME = 2;
 
-KJavaKIOJob::~KJavaKIOJob() {}
+KJavaTDEIOJob::~KJavaTDEIOJob() {}
 
-void KJavaKIOJob::data( const TQByteArray& )
+void KJavaTDEIOJob::data( const TQByteArray& )
 {
     kdError(6100) << "Job id mixup" << endl;
 }

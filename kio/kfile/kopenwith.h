@@ -43,7 +43,7 @@ class KOpenWithDlgPrivate;
  *
  * @author David Faure <faure@kde.org>
  */
-class KIO_EXPORT KOpenWithDlg : public TQDialog //#TODO: Use KDialogBase for KDE4
+class TDEIO_EXPORT KOpenWithDlg : public TQDialog //#TODO: Use KDialogBase for KDE4
 {
     Q_OBJECT
 public:
@@ -189,7 +189,7 @@ protected:
  *
  *
  */
-class KIO_EXPORT_DEPRECATED KFileOpenWithHandler : public KOpenWithHandler
+class TDEIO_EXPORT_DEPRECATED KFileOpenWithHandler : public KOpenWithHandler
 {
 public:
   KFileOpenWithHandler() : KOpenWithHandler() {}

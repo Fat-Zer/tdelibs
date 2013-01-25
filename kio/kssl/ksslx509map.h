@@ -36,7 +36,7 @@
  * @see KSSL, KSSLCertificate
  * @short X.509 Map Parser
  */
-class KIO_EXPORT KSSLX509Map {
+class TDEIO_EXPORT KSSLX509Map {
 public:
 	/**
 	 *  Construct an X.509 Map

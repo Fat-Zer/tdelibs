@@ -92,7 +92,7 @@ class KExtendedSocketPrivate;
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  * @short an extended socket
  */
-class TDECORE_EXPORT KExtendedSocket: public KBufferedIO // public TQObject, public QIODevice
+class TDECORE_EXPORT KExtendedSocket: public TDEBufferedIO // public TQObject, public QIODevice
 {
   Q_OBJECT
   
@@ -582,7 +582,7 @@ public:
    * @li #closed() will only be sent if we are indeed reading from the input
    *    stream. That is, if this socket is buffering the input. See setBufferSize
    *
-   * Note that, in general, functions inherited/overridden from KBufferedIO will only
+   * Note that, in general, functions inherited/overridden from TDEBufferedIO will only
    * work on buffered sockets, like bytesAvailable and bytesToWrite.
    * @return    The return values are:
    * @li 0: success

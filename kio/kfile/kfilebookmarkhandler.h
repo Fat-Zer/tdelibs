@@ -26,7 +26,7 @@ class TQTextStream;
 class KPopupMenu;
 
 
-class KIO_EXPORT KFileBookmarkHandler : public TQObject, public KBookmarkOwner
+class TDEIO_EXPORT KFileBookmarkHandler : public TQObject, public KBookmarkOwner
 {
     Q_OBJECT
 

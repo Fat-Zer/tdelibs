@@ -143,7 +143,7 @@ static TDEIO::CopyJob* chooseAndPaste( const KURL& u, TQMimeSource* data,
 #endif
 
 // KDE4: remove
-KIO_EXPORT bool TDEIO::isClipboardEmpty()
+TDEIO_EXPORT bool TDEIO::isClipboardEmpty()
 {
 #ifndef QT_NO_MIMECLIPBOARD
   TQMimeSource *data = TQApplication::clipboard()->data();
@@ -207,7 +207,7 @@ TDEIO::CopyJob* TDEIO::pasteMimeSource( TQMimeSource* data, const KURL& dest_url
 #endif
 
 // The main method for pasting
-KIO_EXPORT TDEIO::Job *TDEIO::pasteClipboard( const KURL& dest_url, bool move )
+TDEIO_EXPORT TDEIO::Job *TDEIO::pasteClipboard( const KURL& dest_url, bool move )
 {
   if ( !dest_url.isValid() ) {
     KMessageBox::error( 0L, i18n( "Malformed URL\n%1" ).arg( dest_url.url() ) );
@@ -256,7 +256,7 @@ KIO_EXPORT TDEIO::Job *TDEIO::pasteClipboard( const KURL& dest_url, bool move )
 }
 
 
-KIO_EXPORT void TDEIO::pasteData( const KURL& u, const TQByteArray& _data )
+TDEIO_EXPORT void TDEIO::pasteData( const KURL& u, const TQByteArray& _data )
 {
     KURL new_url = getNewFileName( u, TQString::null );
     // We could use TDEIO::put here, but that would require a class
@@ -273,12 +273,12 @@ KIO_EXPORT void TDEIO::pasteData( const KURL& u, const TQByteArray& _data )
     (void) TDEIO::NetAccess::upload( tempFile.name(), new_url, 0 );
 }
 
-KIO_EXPORT TDEIO::CopyJob* TDEIO::pasteDataAsync( const KURL& u, const TQByteArray& _data )
+TDEIO_EXPORT TDEIO::CopyJob* TDEIO::pasteDataAsync( const KURL& u, const TQByteArray& _data )
 {
     return pasteDataAsync( u, _data, TQString::null );
 }
 
-KIO_EXPORT TDEIO::CopyJob* TDEIO::pasteDataAsync( const KURL& u, const TQByteArray& _data, const TQString& text )
+TDEIO_EXPORT TDEIO::CopyJob* TDEIO::pasteDataAsync( const KURL& u, const TQByteArray& _data, const TQString& text )
 {
     KURL new_url = getNewFileName( u, text );
 
@@ -288,7 +288,7 @@ KIO_EXPORT TDEIO::CopyJob* TDEIO::pasteDataAsync( const KURL& u, const TQByteArr
     return pasteDataAsyncTo( new_url, _data );
 }
 
-KIO_EXPORT TQString TDEIO::pasteActionText()
+TDEIO_EXPORT TQString TDEIO::pasteActionText()
 {
     TQMimeSource *data = TQApplication::clipboard()->data();
     KURL::List urls;

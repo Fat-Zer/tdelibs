@@ -94,7 +94,7 @@ namespace TDEIO {
  * @short A widget for displaying files and browsing directories.
  * @author Stephan Kulow <coolo@kde.org>, Carsten Pfeiffer <pfeiffer@kde.org>
  */
-class KIO_EXPORT KDirOperator : public TQWidget
+class TDEIO_EXPORT KDirOperator : public TQWidget
 {
     Q_OBJECT
 

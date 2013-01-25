@@ -50,7 +50,7 @@
  * </xbel>
  * \endcode
  */
-class KIO_EXPORT KBookmarkManager : public TQObject, public DCOPObject
+class TDEIO_EXPORT KBookmarkManager : public TQObject, public DCOPObject
 {
     Q_OBJECT
     K_DCOP
@@ -314,7 +314,7 @@ private:
  * If you wish to use your own editor or allow the user to add
  * bookmarks, you must overload this class.
  */
-class KIO_EXPORT KBookmarkOwner
+class TDEIO_EXPORT KBookmarkOwner
 {
 public:
   /**
@@ -350,7 +350,7 @@ protected:
 /**
  * @since 3.2
  */
-class KIO_EXPORT KExtendedBookmarkOwner : public TQObject, virtual public KBookmarkOwner
+class TDEIO_EXPORT KExtendedBookmarkOwner : public TQObject, virtual public KBookmarkOwner
 {
     Q_OBJECT
 public:

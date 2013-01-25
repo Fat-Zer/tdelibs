@@ -39,7 +39,7 @@ class KSSLSession;
  * @see KExtendedSocket, TCPSlaveBase
  * @short KDE SSL Class
  */
-class KIO_EXPORT KSSL {
+class TDEIO_EXPORT KSSL {
 public:
 	/**
 	 *  Construct a KSSL object

@@ -38,7 +38,7 @@
  * (UDSEntry isn't very friendly to use).
  * It includes many file attributes such as mimetype, icon, text, mode, link...
  */
-class KIO_EXPORT KFileItem
+class TDEIO_EXPORT KFileItem
 {
 public:
   enum { Unknown = (mode_t) - 1 };
@@ -650,8 +650,8 @@ protected:
 private:
   class KFileItemPrivate;
   KFileItemPrivate * d;
-  KIO_EXPORT friend TQDataStream & operator<< ( TQDataStream & s, const KFileItem & a );
-  KIO_EXPORT friend TQDataStream & operator>> ( TQDataStream & s, KFileItem & a );
+  TDEIO_EXPORT friend TQDataStream & operator<< ( TQDataStream & s, const KFileItem & a );
+  TDEIO_EXPORT friend TQDataStream & operator>> ( TQDataStream & s, KFileItem & a );
 };
 
 /**
@@ -664,8 +664,8 @@ typedef TQPtrList<KFileItem> KFileItemList;
  */
 typedef TQPtrListIterator<KFileItem> KFileItemListIterator;
 
-KIO_EXPORT TQDataStream & operator<< ( TQDataStream & s, const KFileItem & a );
-KIO_EXPORT TQDataStream & operator>> ( TQDataStream & s, KFileItem & a );
+TDEIO_EXPORT TQDataStream & operator<< ( TQDataStream & s, const KFileItem & a );
+TDEIO_EXPORT TQDataStream & operator>> ( TQDataStream & s, KFileItem & a );
 
 
 #endif

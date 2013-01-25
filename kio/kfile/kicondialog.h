@@ -32,7 +32,7 @@ class KIconLoader;
 /**
  * Icon canvas for KIconDialog.
  */
-class KIO_EXPORT KIconCanvas: public KIconView
+class TDEIO_EXPORT KIconCanvas: public KIconView
 {
     Q_OBJECT
 
@@ -88,7 +88,7 @@ private:
  *
  * @short An icon selection dialog.
  */
-class KIO_EXPORT KIconDialog: public KDialogBase
+class TDEIO_EXPORT KIconDialog: public KDialogBase
 {
     Q_OBJECT
 
@@ -254,7 +254,7 @@ private:
  * @see KIconDialog
  * @short A push button that allows selection of an icon.
  */
-class KIO_EXPORT KIconButton: public TQPushButton
+class TDEIO_EXPORT KIconButton: public TQPushButton
 {
     Q_OBJECT
     TQ_PROPERTY( TQString icon READ icon WRITE setIcon RESET resetIcon )

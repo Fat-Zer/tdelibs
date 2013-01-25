@@ -23,7 +23,7 @@
 
 class TDEConfig;
 
-class KIO_EXPORT KFileSpeedBar : public KURLBar
+class TDEIO_EXPORT KFileSpeedBar : public KURLBar
 {
     Q_OBJECT
 public:

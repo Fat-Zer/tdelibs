@@ -45,7 +45,7 @@ class KFileTreeView;
  *
  */
 
-class KIO_EXPORT KFileTreeBranch : public KDirLister
+class TDEIO_EXPORT KFileTreeBranch : public KDirLister
 {
    Q_OBJECT
 public:

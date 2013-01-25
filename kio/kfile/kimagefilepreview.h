@@ -28,7 +28,7 @@ namespace TDEIO { class Job; class PreviewJob; }
 /**
  * Image preview widget for the file dialog.
  */
-class KIO_EXPORT KImageFilePreview : public KPreviewWidgetBase
+class TDEIO_EXPORT KImageFilePreview : public KPreviewWidgetBase
 {
 	Q_OBJECT
 

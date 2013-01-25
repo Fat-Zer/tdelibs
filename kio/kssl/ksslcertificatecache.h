@@ -28,7 +28,7 @@ class KSSLCertificate;
 
 #include <tdelibs_export.h>
 
-class KIO_EXPORT KSSLCertificateCache {
+class TDEIO_EXPORT KSSLCertificateCache {
 public:
 
 enum KSSLCertificatePolicy { Unknown, Reject, Accept, Prompt, Ambiguous };
@@ -101,7 +101,7 @@ private:
 };
 
 
-KIO_EXPORT TQDataStream& operator<<(TQDataStream& s, const KSSLCertificateCache::KSSLCertificatePolicy& p);
-KIO_EXPORT TQDataStream& operator>>(TQDataStream& s, KSSLCertificateCache::KSSLCertificatePolicy& p);
+TDEIO_EXPORT TQDataStream& operator<<(TQDataStream& s, const KSSLCertificateCache::KSSLCertificatePolicy& p);
+TDEIO_EXPORT TQDataStream& operator>>(TQDataStream& s, KSSLCertificateCache::KSSLCertificatePolicy& p);
 
 #endif

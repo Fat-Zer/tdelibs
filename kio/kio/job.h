@@ -38,7 +38,7 @@ namespace TDEIO {
      *                    directory (unix-style), -1 for default permissions.
      * @return A pointer to the job handling the operation.
      */
-    KIO_EXPORT SimpleJob * mkdir( const KURL& url, int permissions = -1 );
+    TDEIO_EXPORT SimpleJob * mkdir( const KURL& url, int permissions = -1 );
 
     /**
      * Removes a single directory.
@@ -50,7 +50,7 @@ namespace TDEIO {
      * @param url The URL of the directory to remove.
      * @return A pointer to the job handling the operation.
      */
-    KIO_EXPORT SimpleJob * rmdir( const KURL& url );
+    TDEIO_EXPORT SimpleJob * rmdir( const KURL& url );
 
     /**
      * Changes permissions on a file or directory.
@@ -61,7 +61,7 @@ namespace TDEIO {
      * @param permissions The permissions to set.
      * @return the job handling the operation.
      */
-    KIO_EXPORT SimpleJob * chmod( const KURL& url, int permissions );
+    TDEIO_EXPORT SimpleJob * chmod( const KURL& url, int permissions );
 
     /**
      * Rename a file or directory.
@@ -74,7 +74,7 @@ namespace TDEIO {
      * @param overwrite whether to automatically overwrite if the dest exists
      * @return the job handling the operation.
      */
-    KIO_EXPORT SimpleJob * rename( const KURL& src, const KURL & dest, bool overwrite );
+    TDEIO_EXPORT SimpleJob * rename( const KURL& src, const KURL & dest, bool overwrite );
 
     /**
      * Create or move a symlink.
@@ -87,7 +87,7 @@ namespace TDEIO {
      * @param showProgressInfo true to show progress information
      * @return the job handling the operation.
      */
-    KIO_EXPORT SimpleJob * symlink( const TQString & target, const KURL& dest, bool overwrite, bool showProgressInfo = true );
+    TDEIO_EXPORT SimpleJob * symlink( const TQString & target, const KURL& dest, bool overwrite, bool showProgressInfo = true );
 
     /**
      * Execute any command that is specific to one slave (protocol).
@@ -101,7 +101,7 @@ namespace TDEIO {
      * @param showProgressInfo true to show progress information
      * @return the job handling the operation.
      */
-    KIO_EXPORT SimpleJob * special( const KURL& url, const TQByteArray & data, bool showProgressInfo = true );
+    TDEIO_EXPORT SimpleJob * special( const KURL& url, const TQByteArray & data, bool showProgressInfo = true );
 
     /**
      * Mount filesystem.
@@ -115,7 +115,7 @@ namespace TDEIO {
      * @param showProgressInfo true to show progress information
      * @return the job handling the operation.
      */
-    KIO_EXPORT SimpleJob *mount( bool ro, const char *fstype, const TQString& dev, const TQString& point, bool showProgressInfo = true );
+    TDEIO_EXPORT SimpleJob *mount( bool ro, const char *fstype, const TQString& dev, const TQString& point, bool showProgressInfo = true );
 
     /**
      * Unmount filesystem.
@@ -126,7 +126,7 @@ namespace TDEIO {
      * @param showProgressInfo true to show progress information
      * @return the job handling the operation.
      */
-    KIO_EXPORT SimpleJob *unmount( const TQString & point, bool showProgressInfo = true );
+    TDEIO_EXPORT SimpleJob *unmount( const TQString & point, bool showProgressInfo = true );
 
     /**
      * Retrieve local URL if available
@@ -134,7 +134,7 @@ namespace TDEIO {
      * @param remoteURL the remote URL to get the local URL for
      * @return the job handling the operation.
      */
-    KIO_EXPORT LocalURLJob *localURL( const KURL& remoteUrl );
+    TDEIO_EXPORT LocalURLJob *localURL( const KURL& remoteUrl );
 
     /**
      * HTTP cache update
@@ -145,7 +145,7 @@ namespace TDEIO {
      * supposed to expire.
      * @return the job handling the operation.
      */
-    KIO_EXPORT SimpleJob *http_update_cache( const KURL& url, bool no_cache, time_t expireDate);
+    TDEIO_EXPORT SimpleJob *http_update_cache( const KURL& url, bool no_cache, time_t expireDate);
 
     /**
      * Find all details for one file or directory.
@@ -154,7 +154,7 @@ namespace TDEIO {
      * @param showProgressInfo true to show progress information
      * @return the job handling the operation.
      */
-    KIO_EXPORT StatJob * stat( const KURL& url, bool showProgressInfo = true );
+    TDEIO_EXPORT StatJob * stat( const KURL& url, bool showProgressInfo = true );
     /**
      * Find all details for one file or directory.
      * This version of the call includes two additional booleans, @p sideIsSource and @p details.
@@ -182,7 +182,7 @@ namespace TDEIO {
      * @param showProgressInfo true to show progress information
      * @return the job handling the operation.
      */
-    KIO_EXPORT StatJob * stat( const KURL& url, bool sideIsSource, short int details, bool showProgressInfo = true );
+    TDEIO_EXPORT StatJob * stat( const KURL& url, bool sideIsSource, short int details, bool showProgressInfo = true );
 
     /**
      * Get (a.k.a. read).
@@ -193,7 +193,7 @@ namespace TDEIO {
      * @param showProgressInfo true to show progress information
      * @return the job handling the operation.
      */
-    KIO_EXPORT TransferJob *get( const KURL& url, bool reload=false, bool showProgressInfo = true );
+    TDEIO_EXPORT TransferJob *get( const KURL& url, bool reload=false, bool showProgressInfo = true );
 
     /**
      * Put (a.k.a. write)
@@ -207,7 +207,7 @@ namespace TDEIO {
      * @return the job handling the operation.
      * @see multi_get()
      */
-    KIO_EXPORT TransferJob *put( const KURL& url, int permissions,
+    TDEIO_EXPORT TransferJob *put( const KURL& url, int permissions,
                       bool overwrite, bool resume, bool showProgressInfo = true );
 
     /**
@@ -238,7 +238,7 @@ namespace TDEIO {
      * @param showProgressInfo true to display
      * @return the job handling the operation.
      */
-    KIO_EXPORT TransferJob *http_post( const KURL& url, const TQByteArray &postData,
+    TDEIO_EXPORT TransferJob *http_post( const KURL& url, const TQByteArray &postData,
                             bool showProgressInfo = true );
 
     /**
@@ -251,7 +251,7 @@ namespace TDEIO {
      * @return the job handling the operation.
      * @since 3.3
      */
-    KIO_EXPORT StoredTransferJob *storedGet( const KURL& url, bool reload=false, bool showProgressInfo = true );
+    TDEIO_EXPORT StoredTransferJob *storedGet( const KURL& url, bool reload=false, bool showProgressInfo = true );
 
     /**
      * Put (a.k.a. write) data from a single TQByteArray.
@@ -267,7 +267,7 @@ namespace TDEIO {
      * @return the job handling the operation.
      * @since 3.3
      */
-    KIO_EXPORT StoredTransferJob *storedPut( const TQByteArray& arr, const KURL& url, int permissions,
+    TDEIO_EXPORT StoredTransferJob *storedPut( const TQByteArray& arr, const KURL& url, int permissions,
                                   bool overwrite, bool resume, bool showProgressInfo = true );
 
     /**
@@ -280,7 +280,7 @@ namespace TDEIO {
      * @return the job handling the operation.
      * @see get()
      */
-    KIO_EXPORT MultiGetJob *multi_get( long id, const KURL &url, const MetaData &metaData);
+    TDEIO_EXPORT MultiGetJob *multi_get( long id, const KURL &url, const MetaData &metaData);
 
     /**
      * Find mimetype for one file or directory.
@@ -289,7 +289,7 @@ namespace TDEIO {
      * @param showProgressInfo true to show progress information
      * @return the job handling the operation.
      */
-    KIO_EXPORT MimetypeJob * mimetype( const KURL& url,
+    TDEIO_EXPORT MimetypeJob * mimetype( const KURL& url,
                             bool showProgressInfo = true );
 
     /**
@@ -308,7 +308,7 @@ namespace TDEIO {
      * @param showProgressInfo true to show progress information
      * @return the job handling the operation.
      */
-    KIO_EXPORT FileCopyJob *file_copy( const KURL& src, const KURL& dest, int permissions=-1,
+    TDEIO_EXPORT FileCopyJob *file_copy( const KURL& src, const KURL& dest, int permissions=-1,
                             bool overwrite=false, bool resume=false,
                             bool showProgressInfo = true);
 
@@ -327,7 +327,7 @@ namespace TDEIO {
      * @param showProgressInfo true to show progress information
      * @return the job handling the operation.
      */
-    KIO_EXPORT FileCopyJob *file_move( const KURL& src, const KURL& dest, int permissions=-1,
+    TDEIO_EXPORT FileCopyJob *file_move( const KURL& src, const KURL& dest, int permissions=-1,
                             bool overwrite=false, bool resume=false,
                             bool showProgressInfo = true);
 
@@ -338,7 +338,7 @@ namespace TDEIO {
      * @param showProgressInfo true to show progress information
      * @return the job handling the operation.
      */
-    KIO_EXPORT SimpleJob *file_delete( const KURL& src, bool showProgressInfo = true);
+    TDEIO_EXPORT SimpleJob *file_delete( const KURL& src, bool showProgressInfo = true);
 
     /**
      * List the contents of @p url, which is assumed to be a directory.
@@ -352,7 +352,7 @@ namespace TDEIO {
      *                      files/dirs (whose names start with dot)
      * @return the job handling the operation.
      */
-    KIO_EXPORT ListJob *listDir( const KURL& url, bool showProgressInfo = true,
+    TDEIO_EXPORT ListJob *listDir( const KURL& url, bool showProgressInfo = true,
                       bool includeHidden = true );
 
     /**
@@ -368,7 +368,7 @@ namespace TDEIO {
      *                      files/dirs (whose names start with dot)
      * @return the job handling the operation.
      */
-    KIO_EXPORT ListJob *listRecursive( const KURL& url, bool showProgressInfo = true,
+    TDEIO_EXPORT ListJob *listRecursive( const KURL& url, bool showProgressInfo = true,
                             bool includeHidden = true );
 
     /**
@@ -384,7 +384,7 @@ namespace TDEIO {
      * @return the job handling the operation
      * @see copyAs()
      */
-    KIO_EXPORT CopyJob *copy( const KURL& src, const KURL& dest, bool showProgressInfo = true );
+    TDEIO_EXPORT CopyJob *copy( const KURL& src, const KURL& dest, bool showProgressInfo = true );
 
     /**
      * Copy a file or directory @p src into the destination @p dest,
@@ -399,7 +399,7 @@ namespace TDEIO {
      * @param showProgressInfo true to show progress information
      * @return the job handling the operation
      */
-    KIO_EXPORT CopyJob *copyAs( const KURL& src, const KURL& dest, bool showProgressInfo = true );
+    TDEIO_EXPORT CopyJob *copyAs( const KURL& src, const KURL& dest, bool showProgressInfo = true );
 
     /**
      * Copy a list of file/dirs @p src into a destination directory @p dest.
@@ -409,7 +409,7 @@ namespace TDEIO {
      * @param showProgressInfo true to show progress information
      * @return the job handling the operation
      */
-    KIO_EXPORT CopyJob *copy( const KURL::List& src, const KURL& dest, bool showProgressInfo = true );
+    TDEIO_EXPORT CopyJob *copy( const KURL::List& src, const KURL& dest, bool showProgressInfo = true );
 
     /**
      * Moves a file or directory @p src to the given destination @p dest.
@@ -421,7 +421,7 @@ namespace TDEIO {
      * @see copy()
      * @see moveAs()
      */
-    KIO_EXPORT CopyJob *move( const KURL& src, const KURL& dest, bool showProgressInfo = true );
+    TDEIO_EXPORT CopyJob *move( const KURL& src, const KURL& dest, bool showProgressInfo = true );
     /**
      * Moves a file or directory @p src to the given destination @p dest. Unlike move()
      * this operation will fail when the directory already exists.
@@ -432,7 +432,7 @@ namespace TDEIO {
      * @return the job handling the operation
      * @see copyAs()
      */
-    KIO_EXPORT CopyJob *moveAs( const KURL& src, const KURL& dest, bool showProgressInfo = true );
+    TDEIO_EXPORT CopyJob *moveAs( const KURL& src, const KURL& dest, bool showProgressInfo = true );
     /**
      * Moves a list of files or directories @p src to the given destination @p dest.
      *
@@ -442,7 +442,7 @@ namespace TDEIO {
      * @return the job handling the operation
      * @see copy()
      */
-    KIO_EXPORT CopyJob *move( const KURL::List& src, const KURL& dest, bool showProgressInfo = true );
+    TDEIO_EXPORT CopyJob *move( const KURL::List& src, const KURL& dest, bool showProgressInfo = true );
 
     /**
      * Create a link.
@@ -454,7 +454,7 @@ namespace TDEIO {
      * @param showProgressInfo true to show progress information
      * @return the job handling the operation
      */
-    KIO_EXPORT CopyJob *link( const KURL& src, const KURL& destDir, bool showProgressInfo = true );
+    TDEIO_EXPORT CopyJob *link( const KURL& src, const KURL& destDir, bool showProgressInfo = true );
 
     /**
      * Create several links
@@ -467,7 +467,7 @@ namespace TDEIO {
      * @return the job handling the operation
      * @see link()
      */
-    KIO_EXPORT CopyJob *link( const KURL::List& src, const KURL& destDir, bool showProgressInfo = true );
+    TDEIO_EXPORT CopyJob *link( const KURL::List& src, const KURL& destDir, bool showProgressInfo = true );
 
     /**
      * Create a link. Unlike link() this operation will fail when the directory already
@@ -482,7 +482,7 @@ namespace TDEIO {
      * @see link ()
      * @see copyAs()
      */
-    KIO_EXPORT CopyJob *linkAs( const KURL& src, const KURL& dest, bool showProgressInfo = true );
+    TDEIO_EXPORT CopyJob *linkAs( const KURL& src, const KURL& dest, bool showProgressInfo = true );
 
     /**
      * Trash a file or directory.
@@ -494,7 +494,7 @@ namespace TDEIO {
      * @return the job handling the operation
      * @since 3.4
      */
-    KIO_EXPORT CopyJob *trash( const KURL& src, bool showProgressInfo = true );
+    TDEIO_EXPORT CopyJob *trash( const KURL& src, bool showProgressInfo = true );
 
     /**
      * Trash a list of files or directories.
@@ -505,7 +505,7 @@ namespace TDEIO {
      * @return the job handling the operation
      * @since 3.4
      */
-    KIO_EXPORT CopyJob *trash( const KURL::List& src, bool showProgressInfo = true );
+    TDEIO_EXPORT CopyJob *trash( const KURL::List& src, bool showProgressInfo = true );
 
     /**
      * Delete a file or directory.
@@ -515,7 +515,7 @@ namespace TDEIO {
      * @param showProgressInfo true to show progress information
      * @return the job handling the operation
      */
-    KIO_EXPORT DeleteJob *del( const KURL& src, bool shred = false, bool showProgressInfo = true );
+    TDEIO_EXPORT DeleteJob *del( const KURL& src, bool shred = false, bool showProgressInfo = true );
 
     /**
      * Deletes a list of files or directories.
@@ -525,7 +525,7 @@ namespace TDEIO {
      * @param showProgressInfo true to show progress information
      * @return the job handling the operation
      */
-    KIO_EXPORT DeleteJob *del( const KURL::List& src, bool shred = false, bool showProgressInfo = true );
+    TDEIO_EXPORT DeleteJob *del( const KURL::List& src, bool shred = false, bool showProgressInfo = true );
 }
 
 #endif

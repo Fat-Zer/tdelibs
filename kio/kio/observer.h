@@ -52,7 +52,7 @@ namespace TDEIO {
  * @short Observer for TDEIO::Job progress information
  * @author David Faure <faure@kde.org>
  */
-class KIO_EXPORT Observer : public TQObject, public DCOPObject {
+class TDEIO_EXPORT Observer : public TQObject, public DCOPObject {
 
   K_DCOP
   Q_OBJECT

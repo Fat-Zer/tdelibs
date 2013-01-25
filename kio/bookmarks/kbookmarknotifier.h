@@ -28,7 +28,7 @@
  * DCOP interface for a bookmark notifier (an object which emits signals
  * upon changes to the bookmarks)
  */
-class KIO_EXPORT KBookmarkNotifier : virtual public DCOPObject
+class TDEIO_EXPORT KBookmarkNotifier : virtual public DCOPObject
 {
   K_DCOP
 

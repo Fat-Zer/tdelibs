@@ -56,7 +56,7 @@ namespace TDEIO {
    *
    * @short Provides an easy, synchronous interface to KIO file operations.
    */
-class KIO_EXPORT NetAccess : public TQObject
+class TDEIO_EXPORT NetAccess : public TQObject
 {
   Q_OBJECT
 

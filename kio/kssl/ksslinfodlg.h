@@ -47,7 +47,7 @@ class KSSLCertChain;
  * @see KSSL
  * @short KDE SSL Information Dialog
  */
-class KIO_EXPORT KSSLInfoDlg : public KDialog {
+class TDEIO_EXPORT KSSLInfoDlg : public KDialog {
 	Q_OBJECT
 public:
 	/**
@@ -146,7 +146,7 @@ private slots:
  * @see KSSLInfoDlg
  * @short KDE SSL Certificate Box
  */
-class KIO_EXPORT KSSLCertBox : public TQScrollView {
+class TDEIO_EXPORT KSSLCertBox : public TQScrollView {
 public:
 	/**
 	 *  Construct a certificate box

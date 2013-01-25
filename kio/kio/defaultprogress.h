@@ -34,7 +34,7 @@ namespace TDEIO {
  * A default implementation of the progress dialog ProgressBase.
  * ProgressBase
  */
-class KIO_EXPORT DefaultProgress : public ProgressBase {
+class TDEIO_EXPORT DefaultProgress : public ProgressBase {
 
   Q_OBJECT
 

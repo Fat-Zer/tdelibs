@@ -31,14 +31,14 @@
 
 namespace Arts {
 
-class KIOInputStream_impl : public TQObject, virtual public KIOInputStream_skel, 
+class TDEIOInputStream_impl : public TQObject, virtual public TDEIOInputStream_skel, 
 					    virtual public InputStream_skel,
 					    virtual public StdSynthModule
 {
 Q_OBJECT
 public:
-	KIOInputStream_impl();
-	~KIOInputStream_impl();
+	TDEIOInputStream_impl();
+	~TDEIOInputStream_impl();
 	
 	void streamStart();	
 	void streamEnd();

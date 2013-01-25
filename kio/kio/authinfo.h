@@ -48,10 +48,10 @@ namespace TDEIO {
  * @short A two way messaging class for passing authentication information.
  * @author Dawit Alemayehu <adawit@kde.org>
  */
-class KIO_EXPORT AuthInfo
+class TDEIO_EXPORT AuthInfo
 {
-    KIO_EXPORT friend TQDataStream& operator<< (TQDataStream& s, const AuthInfo& a);
-    KIO_EXPORT friend TQDataStream& operator>> (TQDataStream& s, AuthInfo& a);
+    TDEIO_EXPORT friend TQDataStream& operator<< (TQDataStream& s, const AuthInfo& a);
+    TDEIO_EXPORT friend TQDataStream& operator>> (TQDataStream& s, AuthInfo& a);
 
 public:
    /**
@@ -225,8 +225,8 @@ private:
     class AuthInfoPrivate* d;
 };
 
-KIO_EXPORT TQDataStream& operator<< (TQDataStream& s, const AuthInfo& a);
-KIO_EXPORT TQDataStream& operator>> (TQDataStream& s, AuthInfo& a);
+TDEIO_EXPORT TQDataStream& operator<< (TQDataStream& s, const AuthInfo& a);
+TDEIO_EXPORT TQDataStream& operator>> (TQDataStream& s, AuthInfo& a);
 
 /**
  * A Singleton class that provides access to passwords
@@ -237,7 +237,7 @@ KIO_EXPORT TQDataStream& operator>> (TQDataStream& s, AuthInfo& a);
  * @short An interface to the ftp .netrc files
  * @author Dawit Alemayehu <adawit@kde.org>
  */
-class KIO_EXPORT NetRC
+class TDEIO_EXPORT NetRC
 {
 public:
 

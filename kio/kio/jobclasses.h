@@ -65,7 +65,7 @@ namespace TDEIO {
      * @see TDEIO::Scheduler
      * @see TDEIO::Slave
      */
-    class KIO_EXPORT Job : public TQObject {
+    class TDEIO_EXPORT Job : public TQObject {
         Q_OBJECT
 
     protected:
@@ -525,7 +525,7 @@ namespace TDEIO {
      * Other jobs are high-level jobs (CopyJob, DeleteJob, FileCopyJob...)
      * that manage subjobs but aren't scheduled directly.
      */
-    class KIO_EXPORT SimpleJob : public TDEIO::Job {
+    class TDEIO_EXPORT SimpleJob : public TDEIO::Job {
     Q_OBJECT
 
     public:
@@ -685,7 +685,7 @@ namespace TDEIO {
      * A KIO job that retrieves information about a file or directory.
      * @see TDEIO::stat()
      */
-    class KIO_EXPORT StatJob : public SimpleJob {
+    class TDEIO_EXPORT StatJob : public SimpleJob {
 
     Q_OBJECT
 
@@ -777,7 +777,7 @@ namespace TDEIO {
      * @see TDEIO::mkdir()
      * @since 3.3
      */
-    class KIO_EXPORT MkdirJob : public SimpleJob {
+    class TDEIO_EXPORT MkdirJob : public SimpleJob {
 
     Q_OBJECT
 
@@ -836,7 +836,7 @@ namespace TDEIO {
      * @internal
      * Used for direct copy from or to the local filesystem (i.e. SlaveBase::copy())
      */
-    class KIO_EXPORT DirectCopyJob : public SimpleJob {
+    class TDEIO_EXPORT DirectCopyJob : public SimpleJob {
     Q_OBJECT
 
     public:
@@ -872,7 +872,7 @@ namespace TDEIO {
      * If data coming from the slave can not be handled, the
      * reading of data from the slave should be suspended.
      */
-    class KIO_EXPORT TransferJob : public SimpleJob {
+    class TDEIO_EXPORT TransferJob : public SimpleJob {
     Q_OBJECT
 
     public:
@@ -1072,7 +1072,7 @@ namespace TDEIO {
      *
      * @since 3.3
      */
-    class KIO_EXPORT StoredTransferJob : public TDEIO::TransferJob {
+    class TDEIO_EXPORT StoredTransferJob : public TDEIO::TransferJob {
         Q_OBJECT
 
     public:
@@ -1117,7 +1117,7 @@ namespace TDEIO {
      * but use TDEIO::multi_get() instead.
      * @see TDEIO::multi_get()
      */
-    class KIO_EXPORT MultiGetJob : public TransferJob {
+    class TDEIO_EXPORT MultiGetJob : public TransferJob {
     Q_OBJECT
 
     public:
@@ -1205,7 +1205,7 @@ namespace TDEIO {
      * but use TDEIO::mimetype() instead.
      * @see TDEIO::mimetype()
      */
-    class KIO_EXPORT MimetypeJob : public TransferJob {
+    class TDEIO_EXPORT MimetypeJob : public TransferJob {
     Q_OBJECT
 
     public:
@@ -1247,7 +1247,7 @@ namespace TDEIO {
      * @see TDEIO::file_copy()
      * @see TDEIO::file_move()
      */
-    class KIO_EXPORT FileCopyJob : public Job {
+    class TDEIO_EXPORT FileCopyJob : public Job {
     Q_OBJECT
 
     public:
@@ -1389,7 +1389,7 @@ namespace TDEIO {
      * @see TDEIO::listRecursive()
      * @see TDEIO::listDir()
      */
-    class KIO_EXPORT ListJob : public SimpleJob {
+    class TDEIO_EXPORT ListJob : public SimpleJob {
     Q_OBJECT
 
     public:
@@ -1481,7 +1481,7 @@ namespace TDEIO {
     };
 
     /// @internal
-    struct KIO_EXPORT CopyInfo
+    struct TDEIO_EXPORT CopyInfo
     {
         KURL uSource;
         KURL uDest;
@@ -1505,7 +1505,7 @@ namespace TDEIO {
      * @see TDEIO::link()
      * @see TDEIO::linkAs()
      */
-    class KIO_EXPORT CopyJob : public Job {
+    class TDEIO_EXPORT CopyJob : public Job {
     Q_OBJECT
 
     public:
@@ -1760,7 +1760,7 @@ namespace TDEIO {
      *
      * @see TDEIO::del()
      */
-    class KIO_EXPORT DeleteJob : public Job {
+    class TDEIO_EXPORT DeleteJob : public Job {
     Q_OBJECT
 
     public:
@@ -1863,7 +1863,7 @@ namespace TDEIO {
      * @see TDEIO::localURL()
      * @since R14.0.0
      */
-    class KIO_EXPORT LocalURLJob : public SimpleJob {
+    class TDEIO_EXPORT LocalURLJob : public SimpleJob {
 
     Q_OBJECT
 

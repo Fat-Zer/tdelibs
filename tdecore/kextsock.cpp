@@ -1570,7 +1570,7 @@ qint64 KExtendedSocket::bytesAvailable() const
   // as of now, we don't do any extra processing
   // we only work in input-buffered sockets
   if (d->flags & inputBufferedSocket)
-    return KBufferedIO::bytesAvailable();
+    return TDEBufferedIO::bytesAvailable();
 
   return 0;			// TODO: FIONREAD ioctl
 }
@@ -2246,6 +2246,6 @@ const char* KAddressInfo::canonname() const
 }
 
 void KExtendedSocket::virtual_hook( int id, void* data )
-{ KBufferedIO::virtual_hook( id, data ); }
+{ TDEBufferedIO::virtual_hook( id, data ); }
 
 #include "kextsock.moc"

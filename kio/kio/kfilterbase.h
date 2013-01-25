@@ -35,7 +35,7 @@ class TQIODevice;
  * such as gzip and bzip2. It's pretty much internal.
  * Don't use directly, use KFilterDev instead.
  */
-class KIO_EXPORT KFilterBase : public TQObject // needs to inherit TQObject for KLibFactory::create
+class TDEIO_EXPORT KFilterBase : public TQObject // needs to inherit TQObject for KLibFactory::create
 {
     Q_OBJECT
 public:

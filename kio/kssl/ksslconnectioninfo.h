@@ -37,7 +37,7 @@ class KSSL;
  * @see KSSL
  * @short KDE SSL Connection Information
  */
-class KIO_EXPORT KSSLConnectionInfo {
+class TDEIO_EXPORT KSSLConnectionInfo {
 friend class KSSL;
 public:
 	/**

@@ -87,7 +87,7 @@
 
 class JSStackFrame;
 
-typedef TQMap< int, KJavaKIOJob* > KIOJobMap;
+typedef TQMap< int, KJavaTDEIOJob* > TDEIOJobMap;
 typedef TQMap< int, JSStackFrame* > JSStack;
 
 class JSStackFrame {
@@ -121,7 +121,7 @@ private:
    TQMap< int, TQGuardedPtr<KJavaAppletContext> > contexts;
    TQString appletLabel;
    JSStack jsstack;
-   KIOJobMap kiojobs;
+   TDEIOJobMap kiojobs;
    bool javaProcessFailed;
    bool useKIO;
    KSSL * kssl;
@@ -448,7 +448,7 @@ void KJavaAppletServer::sendURLData( int loaderID, int code, const TQByteArray& 
 
 void KJavaAppletServer::removeDataJob( int loaderID )
 {
-    const KIOJobMap::iterator it = d->kiojobs.find( loaderID );
+    const TDEIOJobMap::iterator it = d->kiojobs.find( loaderID );
     if (it != d->kiojobs.end()) {
         it.data()->deleteLater();
         d->kiojobs.erase( it );
@@ -502,7 +502,7 @@ void KJavaAppletServer::slotJavaRequest( const TQByteArray& qb )
     if (cmd_code == KJAS_PUT_DATA) {
         // rest of the data is for kio put
         if (ok) {
-            KIOJobMap::iterator it = d->kiojobs.find( ID_num );
+            TDEIOJobMap::iterator it = d->kiojobs.find( ID_num );
             if (ok && it != d->kiojobs.end()) {
                 TQByteArray qba;
                 qba.setRawData(qb.data() + index, qb.size() - index - 1);
@@ -565,7 +565,7 @@ void KJavaAppletServer::slotJavaRequest( const TQByteArray& qb )
         case KJAS_DATA_COMMAND:
             if (ok && !args.empty()) {
                 const int cmd = args.first().toInt( &ok );
-                KIOJobMap::iterator it = d->kiojobs.find( ID_num );
+                TDEIOJobMap::iterator it = d->kiojobs.find( ID_num );
                 if (ok && it != d->kiojobs.end())
                     it.data()->jobCommand( cmd );
                 kdDebug(6100) << "KIO Data command: " << ID_num << " " << args.first() << endl;

@@ -76,7 +76,7 @@ class TDECModule;
 * @author Dawit Alemayehu <adawit at kde.org>
 */
 
-class KIO_EXPORT KURIFilterData
+class TDEIO_EXPORT KURIFilterData
 {
 friend class KURIFilterPlugin;
 
@@ -360,7 +360,7 @@ private:
  *
  * @short Abstract class for URI filter plugins.
  */
-class KIO_EXPORT KURIFilterPlugin : public TQObject
+class TDEIO_EXPORT KURIFilterPlugin : public TQObject
 {
     Q_OBJECT
     
@@ -460,7 +460,7 @@ private:
 /**
  * A list of filter plugins.
  */
-class KIO_EXPORT KURIFilterPluginList : public TQPtrList<KURIFilterPlugin>
+class TDEIO_EXPORT KURIFilterPluginList : public TQPtrList<KURIFilterPlugin>
 {
 public:
     virtual int compareItems(Item a, Item b)
@@ -545,7 +545,7 @@ private:
  * @short Filters a given URL into its proper format whenever possible.
  */
 
-class KIO_EXPORT KURIFilter
+class TDEIO_EXPORT KURIFilter
 {
 public:
     /**

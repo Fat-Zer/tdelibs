@@ -2152,7 +2152,7 @@ bool HTTPProtocol::httpOpenConnection()
  * data to be sent in addition to the header (POST requests) and there is no
  * way for this function to get that data.  This function is called in the
  * slotPut() or slotGet() functions which, in turn, are called (indirectly) as
- * a result of a KIOJob::put() or KIOJob::get().  It is those latter functions
+ * a result of a TDEIOJob::put() or TDEIOJob::get().  It is those latter functions
  * which are responsible for starting up this ioslave in the first place.
  * This means that 'httpOpen' is called (essentially) as soon as the ioslave
  * is created -- BEFORE any data gets to this slave.
@@ -4317,7 +4317,7 @@ void HTTPProtocol::slotData(const TQByteArray &_d)
 /**
  * This function is our "receive" function.  It is responsible for
  * downloading the message (not the header) from the HTTP server.  It
- * is called either as a response to a client's KIOJob::dataEnd()
+ * is called either as a response to a client's TDEIOJob::dataEnd()
  * (meaning that the client is done sending data) or by 'httpOpen()'
  * (if we are in the process of a PUT/POST request). It can also be
  * called by a webDAV function, to receive stat/list/property/etc.

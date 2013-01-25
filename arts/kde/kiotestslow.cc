@@ -96,7 +96,7 @@ int main(int argc, char **argv)
 	QIOManager qiomanager;
 	Dispatcher dispatcher(&qiomanager);
 #ifndef USE_FILEINPUTSTREAM
-	KIOInputStream stream;
+	TDEIOInputStream stream;
 #else
 	FileInputStream stream;
 #endif

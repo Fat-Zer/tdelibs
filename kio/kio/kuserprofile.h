@@ -37,7 +37,7 @@
  * @see KService
  * @short Holds the user's preference of a service.
  */
-class KIO_EXPORT KServiceOffer
+class TDEIO_EXPORT KServiceOffer
 {
 public:
   /**
@@ -114,7 +114,7 @@ private:
  * @see KTrader
  * @short Represents the user's preferences for services of a service type
  */
-class KIO_EXPORT KServiceTypeProfile
+class TDEIO_EXPORT KServiceTypeProfile
 {
 public:
   typedef TQValueList<KServiceOffer> OfferList;

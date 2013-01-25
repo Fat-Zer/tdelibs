@@ -29,12 +29,12 @@ namespace TDEIO {
 
   enum SkipDlg_Result { S_SKIP = 1, S_AUTO_SKIP = 2, S_CANCEL = 0 };
 
-  KIO_EXPORT SkipDlg_Result open_SkipDlg( bool _multi, const TQString& _error_text = TQString::null );
+  TDEIO_EXPORT SkipDlg_Result open_SkipDlg( bool _multi, const TQString& _error_text = TQString::null );
 
 /**
  * @internal
  */
-class KIO_EXPORT SkipDlg : public KDialog
+class TDEIO_EXPORT SkipDlg : public KDialog
 {
   Q_OBJECT
 public:

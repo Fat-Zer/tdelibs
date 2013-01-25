@@ -28,7 +28,7 @@
 class KBookmarkManager;
 class KBookmarkGroup;
 
-class KIO_EXPORT KBookmark
+class TDEIO_EXPORT KBookmark
 {
     friend class KBookmarkGroup;
 public:
@@ -196,7 +196,7 @@ private:
 /**
  * A group of bookmarks
  */
-class KIO_EXPORT KBookmarkGroup : public KBookmark
+class TDEIO_EXPORT KBookmarkGroup : public KBookmark
 {
 public:
     /**
@@ -315,7 +315,7 @@ private:
 /**
  * @since 3.2
  */
-class KIO_EXPORT KBookmarkGroupTraverser {
+class TDEIO_EXPORT KBookmarkGroupTraverser {
 protected:
     virtual ~KBookmarkGroupTraverser() { ; }
     void traverse(const KBookmarkGroup &);

@@ -30,7 +30,7 @@ class TDEConfigBase;
   * @author Waldo Bastian (bastian@kde.org)
   * @since 3.1
   */
-class KIO_EXPORT KCustomMenuEditor : public KDialogBase
+class TDEIO_EXPORT KCustomMenuEditor : public KDialogBase
 {
     Q_OBJECT
 public:

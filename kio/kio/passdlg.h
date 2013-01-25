@@ -33,7 +33,7 @@ namespace TDEIO {
  * instead of directly instantiating this dialog.
  * @short dialog for requesting login and password from the end user
  */
-class KIO_EXPORT PasswordDialog : public KDialogBase
+class TDEIO_EXPORT PasswordDialog : public KDialogBase
 {
     Q_OBJECT
 

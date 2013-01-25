@@ -27,7 +27,7 @@
 /**
  * @since 3.2
  */
-class KIO_EXPORT KBookmarkDomBuilder : public TQObject {
+class TDEIO_EXPORT KBookmarkDomBuilder : public TQObject {
    Q_OBJECT
 public:
    KBookmarkDomBuilder(const KBookmarkGroup &group, KBookmarkManager *);

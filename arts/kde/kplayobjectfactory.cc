@@ -75,7 +75,7 @@ KPlayObject *KPlayObjectFactory::createPlayObject(const KURL& _url, const TQStri
 	{
 		if(mimetype == "application/octet-stream" && m_allowStreaming)
 		{
-			Arts::KIOInputStream instream;
+			Arts::TDEIOInputStream instream;
 			instream.openURL(url.url().latin1());
 
 			m_stream = true;

@@ -38,7 +38,7 @@ class KFileItem;
  * reimplement passesFilter().
  * @short Base class for file filters.
  */
-class KIO_EXPORT KFileFilter
+class TDEIO_EXPORT KFileFilter
 {
 public:
     /**
@@ -56,7 +56,7 @@ protected:
  * by mime type and by mode.
  * @short A simple file filter.
  */
-class KIO_EXPORT KSimpleFileFilter : public KFileFilter
+class TDEIO_EXPORT KSimpleFileFilter : public KFileFilter
 {
 public:
     /**

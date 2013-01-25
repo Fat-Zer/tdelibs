@@ -40,7 +40,7 @@ class TQPushButton;
  * @see KSSL
  * @short KDE X.509 Certificate Dialog
  */
-class KIO_EXPORT KSSLCertDlg : public KDialog {
+class TDEIO_EXPORT KSSLCertDlg : public KDialog {
 	Q_OBJECT
 public:
 	/**
@@ -119,7 +119,7 @@ private:
 };
 
 
-class KIO_EXPORT KSSLCertDlgRet {
+class TDEIO_EXPORT KSSLCertDlgRet {
 public:
    bool ok;
    TQString choice;
@@ -131,8 +131,8 @@ protected:
    KSSLCertDlgRetPrivate *d;
 };
 
-KIO_EXPORT TQDataStream& operator<<(TQDataStream& s, const KSSLCertDlgRet& r);
-KIO_EXPORT TQDataStream& operator>>(TQDataStream& s, KSSLCertDlgRet& r);
+TDEIO_EXPORT TQDataStream& operator<<(TQDataStream& s, const KSSLCertDlgRet& r);
+TDEIO_EXPORT TQDataStream& operator>>(TQDataStream& s, KSSLCertDlgRet& r);
 
 #endif
 

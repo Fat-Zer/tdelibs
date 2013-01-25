@@ -180,7 +180,7 @@ What do you think ? Did I overlook something ?
 
 (Simon) I don't think there's a problem with the async stuff
 	(BrowserView/KReadOnlyPart) . Mosfet's KGhostView browserview or
-	his dviview are both 100% like KReadOnlyPart (yes, they launch KIOJob::copy()
+	his dviview are both 100% like KReadOnlyPart (yes, they launch TDEIOJob::copy()
 	and copy the file to some local temp) . It works :-) and noone complains :-))
 	-> I see no problem with that :-)
 (David) Sure - but does that answer the question : KReadOnlyPart==KBrowserPart ?

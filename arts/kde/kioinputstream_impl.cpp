@@ -41,9 +41,9 @@
 
 using namespace Arts;
 
-const unsigned int KIOInputStream_impl::PACKET_COUNT = 10;
+const unsigned int TDEIOInputStream_impl::PACKET_COUNT = 10;
 
-KIOInputStream_impl::KIOInputStream_impl() : m_packetSize(2048)
+TDEIOInputStream_impl::TDEIOInputStream_impl() : m_packetSize(2048)
 {
 	m_job = 0;
 	m_finished = false;
@@ -55,13 +55,13 @@ KIOInputStream_impl::KIOInputStream_impl() : m_packetSize(2048)
 	m_size = 0;
 }
 
-KIOInputStream_impl::~KIOInputStream_impl()
+TDEIOInputStream_impl::~TDEIOInputStream_impl()
 {
 	if(m_job != 0)
 	    m_job->kill();
 }
 
-void KIOInputStream_impl::streamStart()
+void TDEIOInputStream_impl::streamStart()
 {
 	// prevent kill/reconnect
 	if (m_streamStarted) {
@@ -92,7 +92,7 @@ void KIOInputStream_impl::streamStart()
 	m_streamStarted = true;
 }
 
-void KIOInputStream_impl::streamEnd()
+void TDEIOInputStream_impl::streamEnd()
 {
 	kdDebug( 400 ) << "streamEnd()\n";
 
@@ -117,14 +117,14 @@ void KIOInputStream_impl::streamEnd()
 	m_streamStarted = false;
 }
 
-bool KIOInputStream_impl::openURL(const std::string& url)
+bool TDEIOInputStream_impl::openURL(const std::string& url)
 {
 	m_url = KURL(url.c_str());
 	m_size = 0;
 	return true;
 }
 
-void KIOInputStream_impl::slotData(TDEIO::Job *, const TQByteArray &data)
+void TDEIOInputStream_impl::slotData(TDEIO::Job *, const TQByteArray &data)
 {
 	if(m_finished)
 	    m_finished = false;
@@ -136,7 +136,7 @@ void KIOInputStream_impl::slotData(TDEIO::Job *, const TQByteArray &data)
 	processQueue();
 }
 
-void KIOInputStream_impl::slotResult(TDEIO::Job *job)
+void TDEIOInputStream_impl::slotResult(TDEIO::Job *job)
 {
 	// jobs delete themselves after emitting their result
 	m_finished = true;
@@ -151,38 +151,38 @@ void KIOInputStream_impl::slotResult(TDEIO::Job *job)
 	}
 }
 
-void KIOInputStream_impl::slotScanMimeType(TDEIO::Job *, const TQString &mimetype)
+void TDEIOInputStream_impl::slotScanMimeType(TDEIO::Job *, const TQString &mimetype)
 {
 	kdDebug( 400 ) << "got mimetype: " << mimetype << endl;
 	emit mimeTypeFound(mimetype);
 }
 
-void KIOInputStream_impl::slotTotalSize(TDEIO::Job *, TDEIO::filesize_t size)
+void TDEIOInputStream_impl::slotTotalSize(TDEIO::Job *, TDEIO::filesize_t size)
 {
 	m_size = size;
 }
 
-bool KIOInputStream_impl::eof()
+bool TDEIOInputStream_impl::eof()
 {
 	return (m_finished && m_data.size() == 0);
 }
 
-bool KIOInputStream_impl::seekOk()
+bool TDEIOInputStream_impl::seekOk()
 {
 	return false;
 }
 
-long KIOInputStream_impl::size()
+long TDEIOInputStream_impl::size()
 {
 	return m_size ? m_size : m_data.size();
 }
 
-long KIOInputStream_impl::seek(long)
+long TDEIOInputStream_impl::seek(long)
 {
 	return -1;
 }
 
-void KIOInputStream_impl::processQueue()
+void TDEIOInputStream_impl::processQueue()
 {
 	if(m_job != 0)
 	{
@@ -210,7 +210,7 @@ void KIOInputStream_impl::processQueue()
 	}
 }
 
-void KIOInputStream_impl::request_outdata(DataPacket<mcopbyte> *packet)
+void TDEIOInputStream_impl::request_outdata(DataPacket<mcopbyte> *packet)
 {
 	processQueue();
 	packet->size = std::min(m_packetSize, (unsigned int)m_data.size());
@@ -233,4 +233,4 @@ void KIOInputStream_impl::request_outdata(DataPacket<mcopbyte> *packet)
 	packet->send();
 }
 
-REGISTER_IMPLEMENTATION(KIOInputStream_impl);
+REGISTER_IMPLEMENTATION(TDEIOInputStream_impl);

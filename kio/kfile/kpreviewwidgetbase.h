@@ -41,7 +41,7 @@ class KURL;
  * @short Abstract baseclass for all preview widgets.
  * @author Frerich Raabe <raabe@kde.org>
  */
-class KIO_EXPORT KPreviewWidgetBase : public TQWidget
+class TDEIO_EXPORT KPreviewWidgetBase : public TQWidget
 {
     Q_OBJECT
 

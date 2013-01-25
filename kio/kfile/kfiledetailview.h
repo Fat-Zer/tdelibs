@@ -34,7 +34,7 @@ class TQKeyEvent;
  * An item for the listiew, that has a reference to its corresponding
  * KFileItem.
  */
-class KIO_EXPORT KFileListViewItem : public KListViewItem
+class TDEIO_EXPORT KFileListViewItem : public KListViewItem
 {
 public:
     KFileListViewItem( TQListView *parent, const TQString &text,
@@ -106,7 +106,7 @@ private:
  * @see KCombiView
  * @see KFileIconView
  */
-class KIO_EXPORT KFileDetailView : public KListView, public KFileView
+class TDEIO_EXPORT KFileDetailView : public KListView, public KFileView
 {
     Q_OBJECT
 

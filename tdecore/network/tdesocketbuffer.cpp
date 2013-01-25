@@ -39,7 +39,7 @@ TDESocketBuffer::TDESocketBuffer(TQ_LONG size)
 }
 
 TDESocketBuffer::TDESocketBuffer(const TDESocketBuffer& other)
-  : KIOBufferBase(other), m_mutex(true)
+  : TDEIOBufferBase(other), m_mutex(true)
 {
   *this = other;
 }
@@ -54,7 +54,7 @@ TDESocketBuffer& TDESocketBuffer::operator=(const TDESocketBuffer& other)
   TQMutexLocker locker1(&m_mutex);
   TQMutexLocker locker2(&other.m_mutex);
 
-  KIOBufferBase::operator=(other);
+  TDEIOBufferBase::operator=(other);
 
   m_list = other.m_list;	// copy-on-write
   m_offset = other.m_offset;

@@ -34,7 +34,7 @@ class KActionCollection;
  * internal class to make easier to use signals possible
  * @internal
  **/
-class KIO_EXPORT KFileViewSignaler : public TQObject
+class TDEIO_EXPORT KFileViewSignaler : public TQObject
 {
     Q_OBJECT
 
@@ -95,7 +95,7 @@ signals:
   * @short A base class for views of the KDE file selector
   * @author Stephan Kulow <coolo@kde.org>
   **/
-class KIO_EXPORT KFileView {
+class TDEIO_EXPORT KFileView {
 
 public:
     KFileView();

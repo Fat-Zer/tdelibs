@@ -72,7 +72,7 @@ class X509;
  * @see KSSL
  * @short KDE X.509 Certificate
  */
-class KIO_EXPORT KSSLCertificate {
+class TDEIO_EXPORT KSSLCertificate {
 friend class KSSL;
 friend class KSSLCertificateHome;
 friend class KSSLCertificateFactory;
@@ -350,8 +350,8 @@ public:
 	static TQString getMD5DigestFromKDEKey(const TQString& k);
 
 private:
-	KIO_EXPORT friend int operator!=(KSSLCertificate& x, KSSLCertificate& y);
-	KIO_EXPORT friend int operator==(KSSLCertificate& x, KSSLCertificate& y);
+	TDEIO_EXPORT friend int operator!=(KSSLCertificate& x, KSSLCertificate& y);
+	TDEIO_EXPORT friend int operator==(KSSLCertificate& x, KSSLCertificate& y);
 
 	KSSLCertificatePrivate *d;
 	int purposeToOpenSSL(KSSLPurpose p) const;
@@ -365,11 +365,11 @@ protected:
 	KSSLValidation processError(int ec);
 };
 
-KIO_EXPORT TQDataStream& operator<<(TQDataStream& s, const KSSLCertificate& r);
-KIO_EXPORT TQDataStream& operator>>(TQDataStream& s, KSSLCertificate& r);
+TDEIO_EXPORT TQDataStream& operator<<(TQDataStream& s, const KSSLCertificate& r);
+TDEIO_EXPORT TQDataStream& operator>>(TQDataStream& s, KSSLCertificate& r);
 
-KIO_EXPORT int operator==(KSSLCertificate& x, KSSLCertificate& y);
-KIO_EXPORT inline int operator!=(KSSLCertificate& x, KSSLCertificate& y)
+TDEIO_EXPORT int operator==(KSSLCertificate& x, KSSLCertificate& y);
+TDEIO_EXPORT inline int operator!=(KSSLCertificate& x, KSSLCertificate& y)
 { return !(x == y); }
 
 #endif

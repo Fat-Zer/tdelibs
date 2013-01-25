@@ -31,7 +31,7 @@
  * @short Base class for RenameDlg plugins. 
  * @since 3.1
  */
-class KIO_EXPORT RenameDlgPlugin : public TQWidget
+class TDEIO_EXPORT RenameDlgPlugin : public TQWidget
 {
 public:
   /**

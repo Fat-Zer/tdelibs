@@ -51,7 +51,7 @@ class TQIconViewItem;
  * @see KFileDetailView
  * @see KDirOperator
  */
-class KIO_EXPORT KCombiView : public TQSplitter,
+class TDEIO_EXPORT KCombiView : public TQSplitter,
 		   public KFileView
 {
     Q_OBJECT

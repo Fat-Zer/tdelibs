@@ -228,7 +228,7 @@
 7004        kio (KDirListerCache)
 7005        kio (Filter)
 7006        kio (Scheduler)
-7007        kio (KIOJob)
+7007        kio (TDEIOJob)
 7009        kio (KMimeType)
 7010        kio (KRun)
 7011        kio (KSycoca)

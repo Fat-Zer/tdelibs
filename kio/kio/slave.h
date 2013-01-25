@@ -41,7 +41,7 @@ namespace TDEIO {
     * do *not* use connection() or slaveconn but the respective TDEIO::Slave
     * accessor methods. Otherwise classes derived from Slave might break. (LS)
     */
-    class KIO_EXPORT Slave : public TDEIO::SlaveInterface
+    class TDEIO_EXPORT Slave : public TDEIO::SlaveInterface
     {
 	Q_OBJECT
 	

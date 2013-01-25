@@ -35,28 +35,28 @@
 using namespace KNetwork;
 using namespace KNetwork::Internal;
 
-class KNetwork::KBufferedSocketPrivate
+class KNetwork::TDEBufferedSocketPrivate
 {
 public:
   mutable TDESocketBuffer *input, *output;
 
-  KBufferedSocketPrivate()
+  TDEBufferedSocketPrivate()
   {
     input = 0L;
     output = 0L;
   }
 };
 
-KBufferedSocket::KBufferedSocket(const TQString& host, const TQString& service,
+TDEBufferedSocket::TDEBufferedSocket(const TQString& host, const TQString& service,
 				 TQObject *parent, const char *name)
   : KStreamSocket(host, service, parent, name),
-    d(new KBufferedSocketPrivate)
+    d(new TDEBufferedSocketPrivate)
 {
   setInputBuffering(true);
   setOutputBuffering(true);
 }
 
-KBufferedSocket::~KBufferedSocket()
+TDEBufferedSocket::~TDEBufferedSocket()
 {
   closeNow();
   delete d->input;
@@ -64,13 +64,13 @@ KBufferedSocket::~KBufferedSocket()
   delete d;
 }
 
-void KBufferedSocket::setSocketDevice(TDESocketDevice* device)
+void TDEBufferedSocket::setSocketDevice(TDESocketDevice* device)
 {
   KStreamSocket::setSocketDevice(device);
   device->setBlocking(false);
 }
 
-bool KBufferedSocket::setSocketOptions(int opts)
+bool TDEBufferedSocket::setSocketOptions(int opts)
 {
   if (opts == Blocking)
     return false;
@@ -79,7 +79,7 @@ bool KBufferedSocket::setSocketOptions(int opts)
   return KStreamSocket::setSocketOptions(opts);
 }
 
-void KBufferedSocket::close()
+void TDEBufferedSocket::close()
 {
   if (!d->output || d->output->isEmpty())
     closeNow();
@@ -94,10 +94,10 @@ void KBufferedSocket::close()
 }
 
 #ifdef USE_QT3
-TQ_LONG KBufferedSocket::bytesAvailable() const
+TQ_LONG TDEBufferedSocket::bytesAvailable() const
 #endif
 #ifdef USE_QT4
-qint64 KBufferedSocket::bytesAvailable() const
+qint64 TDEBufferedSocket::bytesAvailable() const
 #endif
 {
   if (!d->input)
@@ -106,7 +106,7 @@ qint64 KBufferedSocket::bytesAvailable() const
   return d->input->length();
 }
 
-TQ_LONG KBufferedSocket::waitForMore(int msecs, bool *timeout)
+TQ_LONG TDEBufferedSocket::waitForMore(int msecs, bool *timeout)
 {
   TQ_LONG retval = KStreamSocket::waitForMore(msecs, timeout);
   if (d->input)
@@ -118,7 +118,7 @@ TQ_LONG KBufferedSocket::waitForMore(int msecs, bool *timeout)
   return retval;
 }
 
-TQT_TQIO_LONG KBufferedSocket::tqreadBlock(char *data, TQT_TQIO_ULONG maxlen)
+TQT_TQIO_LONG TDEBufferedSocket::tqreadBlock(char *data, TQT_TQIO_ULONG maxlen)
 {
   if (d->input)
     {
@@ -134,13 +134,13 @@ TQT_TQIO_LONG KBufferedSocket::tqreadBlock(char *data, TQT_TQIO_ULONG maxlen)
   return KStreamSocket::tqreadBlock(data, maxlen);
 }
 
-TQT_TQIO_LONG KBufferedSocket::tqreadBlock(char *data, TQT_TQIO_ULONG maxlen, TDESocketAddress& from)
+TQT_TQIO_LONG TDEBufferedSocket::tqreadBlock(char *data, TQT_TQIO_ULONG maxlen, TDESocketAddress& from)
 {
   from = peerAddress();
   return tqreadBlock(data, maxlen);
 }
 
-TQ_LONG KBufferedSocket::peekBlock(char *data, TQ_ULONG maxlen)
+TQ_LONG TDEBufferedSocket::peekBlock(char *data, TQ_ULONG maxlen)
 {
   if (d->input)
     {
@@ -156,13 +156,13 @@ TQ_LONG KBufferedSocket::peekBlock(char *data, TQ_ULONG maxlen)
   return KStreamSocket::peekBlock(data, maxlen);
 }
 
-TQ_LONG KBufferedSocket::peekBlock(char *data, TQ_ULONG maxlen, TDESocketAddress& from)
+TQ_LONG TDEBufferedSocket::peekBlock(char *data, TQ_ULONG maxlen, TDESocketAddress& from)
 {
   from = peerAddress();
   return peekBlock(data, maxlen);
 }
 
-TQT_TQIO_LONG KBufferedSocket::tqwriteBlock(const char *data, TQT_TQIO_ULONG len)
+TQT_TQIO_LONG TDEBufferedSocket::tqwriteBlock(const char *data, TQT_TQIO_ULONG len)
 {
   if (state() != Connected)
     {
@@ -192,14 +192,14 @@ TQT_TQIO_LONG KBufferedSocket::tqwriteBlock(const char *data, TQT_TQIO_ULONG len
   return KStreamSocket::tqwriteBlock(data, len);
 }
 
-TQT_TQIO_LONG KBufferedSocket::tqwriteBlock(const char *data, TQT_TQIO_ULONG maxlen,
+TQT_TQIO_LONG TDEBufferedSocket::tqwriteBlock(const char *data, TQT_TQIO_ULONG maxlen,
 				   const TDESocketAddress&)
 {
   // ignore the third parameter
   return tqwriteBlock(data, maxlen);
 }
 
-void KBufferedSocket::enableRead(bool enable)
+void TDEBufferedSocket::enableRead(bool enable)
 {
   KStreamSocket::enableRead(enable);
   if (!enable && d->input)
@@ -216,7 +216,7 @@ void KBufferedSocket::enableRead(bool enable)
     TQTimer::singleShot(0, this, TQT_SLOT(slotReadActivity()));
 }
 
-void KBufferedSocket::enableWrite(bool enable)
+void TDEBufferedSocket::enableWrite(bool enable)
 {
   KStreamSocket::enableWrite(enable);
   if (!enable && d->output && !d->output->isEmpty())
@@ -228,7 +228,7 @@ void KBufferedSocket::enableWrite(bool enable)
     }
 }
 
-void KBufferedSocket::stateChanging(SocketState newState)
+void TDEBufferedSocket::stateChanging(SocketState newState)
 {
   if (newState == Connecting || newState == Connected)
     {
@@ -246,7 +246,7 @@ void KBufferedSocket::stateChanging(SocketState newState)
   KStreamSocket::stateChanging(newState);
 }
 
-void KBufferedSocket::setInputBuffering(bool enable)
+void TDEBufferedSocket::setInputBuffering(bool enable)
 {
   TQMutexLocker locker(mutex());
   if (!enable)
@@ -260,12 +260,12 @@ void KBufferedSocket::setInputBuffering(bool enable)
     }
 }
 
-KIOBufferBase* KBufferedSocket::inputBuffer()
+TDEIOBufferBase* TDEBufferedSocket::inputBuffer()
 {
   return d->input;
 }
 
-void KBufferedSocket::setOutputBuffering(bool enable)
+void TDEBufferedSocket::setOutputBuffering(bool enable)
 {
   TQMutexLocker locker(mutex());
   if (!enable)
@@ -279,16 +279,16 @@ void KBufferedSocket::setOutputBuffering(bool enable)
     }
 }
 
-KIOBufferBase* KBufferedSocket::outputBuffer()
+TDEIOBufferBase* TDEBufferedSocket::outputBuffer()
 {
   return d->output;
 }
 
 #ifdef USE_QT3
-TQ_ULONG KBufferedSocket::bytesToWrite() const
+TQ_ULONG TDEBufferedSocket::bytesToWrite() const
 #endif
 #ifdef USE_QT4
-qint64 KBufferedSocket::bytesToWrite() const
+qint64 TDEBufferedSocket::bytesToWrite() const
 #endif
 {
   if (!d->output)
@@ -297,14 +297,14 @@ qint64 KBufferedSocket::bytesToWrite() const
   return d->output->length();
 }
 
-void KBufferedSocket::closeNow()
+void TDEBufferedSocket::closeNow()
 {
   KStreamSocket::close();
   if (d->output)
     d->output->clear();
 }
 
-bool KBufferedSocket::canReadLine() const
+bool TDEBufferedSocket::canReadLine() const
 {
   if (!d->input)
     return false;
@@ -312,12 +312,12 @@ bool KBufferedSocket::canReadLine() const
   return d->input->canReadLine();
 }
 
-TQCString KBufferedSocket::readLine()
+TQCString TDEBufferedSocket::readLine()
 {
   return d->input->readLine();
 }
 
-void KBufferedSocket::waitForConnect()
+void TDEBufferedSocket::waitForConnect()
 {
   if (state() != Connecting)
     return;			// nothing to be waited on
@@ -327,7 +327,7 @@ void KBufferedSocket::waitForConnect()
   KStreamSocket::setSocketOptions(socketOptions() & ~Blocking);
 }
 
-void KBufferedSocket::slotReadActivity()
+void TDEBufferedSocket::slotReadActivity()
 {
   if (d->input && state() == Connected)
     {
@@ -374,7 +374,7 @@ void KBufferedSocket::slotReadActivity()
     }
 }
 
-void KBufferedSocket::slotWriteActivity()
+void TDEBufferedSocket::slotWriteActivity()
 {
   if (d->output && !d->output->isEmpty() &&
       (state() == Connected || state() == Closing))

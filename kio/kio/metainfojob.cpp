@@ -169,12 +169,12 @@ TQStringList MetaInfoJob::supportedMimeTypes()
     return result;
 }
 
-KIO_EXPORT MetaInfoJob *TDEIO::fileMetaInfo( const KFileItemList &items)
+TDEIO_EXPORT MetaInfoJob *TDEIO::fileMetaInfo( const KFileItemList &items)
 {
     return new MetaInfoJob(items, false);
 }
 
-KIO_EXPORT MetaInfoJob *TDEIO::fileMetaInfo( const KURL::List &items)
+TDEIO_EXPORT MetaInfoJob *TDEIO::fileMetaInfo( const KURL::List &items)
 {
     KFileItemList fileItems;
     for (KURL::List::ConstIterator it = items.begin(); it != items.end(); ++it)

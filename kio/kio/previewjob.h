@@ -34,7 +34,7 @@ namespace TDEIO {
      * This class catches a preview (thumbnail) for files.
      * @short KIO Job to get a thumbnail picture
      */
-    class KIO_EXPORT PreviewJob : public TDEIO::Job
+    class TDEIO_EXPORT PreviewJob : public TDEIO::Job
     {
         Q_OBJECT
     public:
@@ -154,7 +154,7 @@ namespace TDEIO {
      * @return the new PreviewJob
      * @see PreviewJob::availablePlugins()
      */
-    KIO_EXPORT PreviewJob *filePreview( const KFileItemList &items, int width, int height = 0, int iconSize = 0, int iconAlpha = 70, bool scale = true, bool save = true, const TQStringList *enabledPlugins = 0 );
+    TDEIO_EXPORT PreviewJob *filePreview( const KFileItemList &items, int width, int height = 0, int iconSize = 0, int iconAlpha = 70, bool scale = true, bool save = true, const TQStringList *enabledPlugins = 0 );
 
     /**
      * Creates a PreviewJob to generate or retrieve a preview image 
@@ -176,7 +176,7 @@ namespace TDEIO {
      * @return the new PreviewJob
      * @see PreviewJob::availablePlugins()
      */
-    KIO_EXPORT PreviewJob *filePreview( const KURL::List &items, int width, int height = 0, int iconSize = 0, int iconAlpha = 70, bool scale = true, bool save = true, const TQStringList *enabledPlugins = 0 );
+    TDEIO_EXPORT PreviewJob *filePreview( const KURL::List &items, int width, int height = 0, int iconSize = 0, int iconAlpha = 70, bool scale = true, bool save = true, const TQStringList *enabledPlugins = 0 );
 }
 
 #endif

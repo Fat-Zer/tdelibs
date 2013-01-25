@@ -27,7 +27,7 @@
  * Computes a directory size (similar to "du", but doesn't give the same results
  * since we simply sum up the dir and file sizes, whereas du speaks disk blocks)
  */
-class KIO_EXPORT KDirSize : public TDEIO::Job
+class TDEIO_EXPORT KDirSize : public TDEIO::Job
 {
   Q_OBJECT
 protected:

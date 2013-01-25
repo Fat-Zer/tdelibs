@@ -32,7 +32,7 @@ class KNFSSharePrivate;
  * It parses the /etc/exports file to get its information.
  * Singleton class, call instance() to get an instance.
  */
-class KIO_EXPORT KNFSShare : public TQObject 
+class TDEIO_EXPORT KNFSShare : public TQObject 
 {
 Q_OBJECT
 public:

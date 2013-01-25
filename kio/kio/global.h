@@ -44,7 +44,7 @@ namespace TDEIO
    * @param  size  size in bytes
    * @return converted size as a string - e.g. 123.4 kB , 12.0 MB
    */
-  KIO_EXPORT TQString convertSize( TDEIO::filesize_t size );
+  TDEIO_EXPORT TQString convertSize( TDEIO::filesize_t size );
 
   /**
    * Converts @p size from bytes to a string representation with includes
@@ -53,7 +53,7 @@ namespace TDEIO
    * @param  size  size in bytes
    * @return converted size as a string - e.g. 1.4 KB (1495 B), 45 B
    */
-  KIO_EXPORT TQString convertSizeWithBytes( TDEIO::filesize_t size );
+  TDEIO_EXPORT TQString convertSizeWithBytes( TDEIO::filesize_t size );
   /**
    * Converts a size to a string representation
    * Not unlike TQString::number(...)
@@ -61,7 +61,7 @@ namespace TDEIO
    * @param size size in bytes
    * @return  converted size as a string - e.g. 123456789
    */
-  KIO_EXPORT TQString number( TDEIO::filesize_t size );
+  TDEIO_EXPORT TQString number( TDEIO::filesize_t size );
 
   /**
    * Converts size from kilo-bytes to the string representation.
@@ -69,7 +69,7 @@ namespace TDEIO
    * @param  kbSize  size in kilo-bytes
    * @return converted size as a string - e.g. 123.4 kB , 12.0 MB
    */
-   KIO_EXPORT TQString convertSizeFromKB( TDEIO::filesize_t kbSize );
+   TDEIO_EXPORT TQString convertSizeFromKB( TDEIO::filesize_t kbSize );
 
   /**
    * Calculates remaining time in seconds from total size, processed size and speed.
@@ -81,7 +81,7 @@ namespace TDEIO
    *
    * @since 3.4
    */
-  KIO_EXPORT unsigned int calculateRemainingSeconds( TDEIO::filesize_t totalSize,
+  TDEIO_EXPORT unsigned int calculateRemainingSeconds( TDEIO::filesize_t totalSize,
                                                      TDEIO::filesize_t processedSize, TDEIO::filesize_t speed );
 
   /**
@@ -92,7 +92,7 @@ namespace TDEIO
    *
    * @since 3.4
    */
-  KIO_EXPORT TQString convertSeconds( unsigned int seconds );
+  TDEIO_EXPORT TQString convertSeconds( unsigned int seconds );
 
   /**
    * Calculates remaining time from total size, processed size and speed.
@@ -103,7 +103,7 @@ namespace TDEIO
    * @param  speed          speed in bytes per second
    * @return calculated remaining time
    */
-  KIO_EXPORT TQTime calculateRemaining( TDEIO::filesize_t totalSize, TDEIO::filesize_t processedSize, TDEIO::filesize_t speed ) KDE_DEPRECATED;
+  TDEIO_EXPORT TQTime calculateRemaining( TDEIO::filesize_t totalSize, TDEIO::filesize_t processedSize, TDEIO::filesize_t speed ) KDE_DEPRECATED;
 
   /**
    * Helper for showing information about a set of files and directories
@@ -114,7 +114,7 @@ namespace TDEIO
    * @param showSize whether to show the size in the result
    * @return the summary string
    */
-  KIO_EXPORT TQString itemsSummaryString(uint items, uint files, uint dirs, TDEIO::filesize_t size, bool showSize);
+  TDEIO_EXPORT TQString itemsSummaryString(uint items, uint files, uint dirs, TDEIO::filesize_t size, bool showSize);
 
   /**
    * Encodes (from the text displayed to the real filename)
@@ -123,14 +123,14 @@ namespace TDEIO
    * @param str the file name to encode
    * @return the encoded file name
    */
-  KIO_EXPORT TQString encodeFileName( const TQString & str );
+  TDEIO_EXPORT TQString encodeFileName( const TQString & str );
   /**
    * Decodes (from the filename to the text displayed)
    * This translates %2[fF] into / and %% into %
    * @param str the file name to decode
    * @return the decoded file name
    */
-  KIO_EXPORT TQString decodeFileName( const TQString & str );
+  TDEIO_EXPORT TQString decodeFileName( const TQString & str );
 
   /**
    * Commands that can be invoked by a job.
@@ -258,7 +258,7 @@ namespace TDEIO
    * @param errorText the additional error text
    * @return the created error string
    */
-  KIO_EXPORT TQString buildErrorString(int errorCode, const TQString &errorText);
+  TDEIO_EXPORT TQString buildErrorString(int errorCode, const TQString &errorText);
 
   /**
    * Returns a translated html error message for @p errorCode using the
@@ -270,7 +270,7 @@ namespace TDEIO
    * @param method the ioslave method
    * @return the created error string
    */
-  KIO_EXPORT TQString buildHTMLErrorString(int errorCode, const TQString &errorText,
+  TDEIO_EXPORT TQString buildHTMLErrorString(int errorCode, const TQString &errorText,
                                 const KURL *reqUrl = 0L, int method = -1 );
 
   /**
@@ -289,7 +289,7 @@ namespace TDEIO
    * @li TQStringList causes - a list of possible causes of the error
    * @li TQStringList solutions - a liso of solutions for the error
    */
-  KIO_EXPORT TQByteArray rawErrorDetail(int errorCode, const TQString &errorText,
+  TDEIO_EXPORT TQByteArray rawErrorDetail(int errorCode, const TQString &errorText,
                                 const KURL *reqUrl = 0L, int method = -1 );
 
   /**
@@ -300,7 +300,7 @@ namespace TDEIO
    * @see enum Command
    * @since 3.2
    */
-  KIO_EXPORT TQString unsupportedActionErrorString(const TQString &protocol, int cmd);
+  TDEIO_EXPORT TQString unsupportedActionErrorString(const TQString &protocol, int cmd);
 
   /**
    * Constants used to specify the type of a KUDSAtom.
@@ -401,7 +401,7 @@ namespace TDEIO
    * @return the cache control value
    * @see getCacheControlString()
    */
-  KIO_EXPORT TDEIO::CacheControl parseCacheControl(const TQString &cacheControl);
+  TDEIO_EXPORT TDEIO::CacheControl parseCacheControl(const TQString &cacheControl);
 
   /**
    * Returns a string representation of the given cache control method.
@@ -410,14 +410,14 @@ namespace TDEIO
    * @return the string representation
    * @see parseCacheControl()
    */
-  KIO_EXPORT TQString getCacheControlString(TDEIO::CacheControl cacheControl);
+  TDEIO_EXPORT TQString getCacheControlString(TDEIO::CacheControl cacheControl);
 
   /**
    * Returns the mount point where @p device is mounted
    * right now. This means, it has to be mounted, not just
    * defined in fstab.
    */
-  KIO_EXPORT TQString findDeviceMountPoint( const TQString& device );
+  TDEIO_EXPORT TQString findDeviceMountPoint( const TQString& device );
 
   /**
    * Returns the mount point on which resides @p filename.
@@ -426,7 +426,7 @@ namespace TDEIO
    * @param filename the file name to check
    * @return the mount point of the given @p filename
    */
-  KIO_EXPORT TQString findPathMountPoint( const TQString & filename );
+  TDEIO_EXPORT TQString findPathMountPoint( const TQString & filename );
 
   /**
    * Checks if the path belongs to a filesystem that is probably
@@ -435,7 +435,7 @@ namespace TDEIO
    * @param filename the file name to check
    * @return true if the filesystem is probably slow
    */
-  KIO_EXPORT bool probably_slow_mounted(const TQString& filename);
+  TDEIO_EXPORT bool probably_slow_mounted(const TQString& filename);
 
   /**
    * Checks if the path belongs to a filesystem that is manually
@@ -443,7 +443,7 @@ namespace TDEIO
    * @param filename the file name to check
    * @return true if the filesystem is manually mounted
    */
-  KIO_EXPORT bool manually_mounted(const TQString& filename);
+  TDEIO_EXPORT bool manually_mounted(const TQString& filename);
 
   enum FileSystemFlag { SupportsChmod, SupportsChown, SupportsUTime,
                         SupportsSymlinks, CaseInsensitive };
@@ -467,7 +467,7 @@ namespace TDEIO
    * "foo" and "FOO" as being the same file (true for msdos systems)
    *
    */
-  KIO_EXPORT bool testFileSystemFlag(const TQString& filename, FileSystemFlag flag);
+  TDEIO_EXPORT bool testFileSystemFlag(const TQString& filename, FileSystemFlag flag);
 
 
 /************
@@ -483,7 +483,7 @@ namespace TDEIO
  *
  * Each atom contains a specific bit of information for the file
  */
-class KIO_EXPORT UDSAtom
+class TDEIO_EXPORT UDSAtom
 {
 public:
   /**
@@ -512,7 +512,7 @@ typedef TQValueListConstIterator<UDSEntry> UDSEntryListConstIterator;
 /**
  * MetaData is a simple map of key/value strings.
  */
-class KIO_EXPORT MetaData : public TQMap<TQString, TQString>
+class TDEIO_EXPORT MetaData : public TQMap<TQString, TQString>
 {
 public:
   /**

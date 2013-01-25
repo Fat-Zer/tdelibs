@@ -47,7 +47,7 @@ class KFileMetaInfoGroup;
  * @author Rolf Magnus
  * @author Carsten Pfeiffer
  */
-class KIO_EXPORT KFileMimeTypeInfo
+class TDEIO_EXPORT KFileMimeTypeInfo
 {
     // the plugin needs to be a friend because it puts the data into the object,
     // and it should be the only one allowed to do this.
@@ -135,7 +135,7 @@ public:
      *  It contains, among other things, the information about the group's name
      *  and a list of supported items.
      */
-    class KIO_EXPORT GroupInfo
+    class TDEIO_EXPORT GroupInfo
     {
 
     friend class KFilePlugin;
@@ -247,7 +247,7 @@ public:
      *  It contains every information about a KFileMetaInfoItem that this
      *  item has in common for each file of a specific mimetype.
      **/
-    class KIO_EXPORT ItemInfo
+    class TDEIO_EXPORT ItemInfo
     {
     friend class KFilePlugin;
     friend class GroupInfo;
@@ -493,7 +493,7 @@ protected:
  * This is one item of the meta information about a file (see
  * KFileMetaInfo).
  */
-class KIO_EXPORT KFileMetaInfoItem
+class TDEIO_EXPORT KFileMetaInfoItem
 {
 public:
     class Data;
@@ -660,9 +660,9 @@ public:
      */
     bool isValid() const;
 
-    KIO_EXPORT friend TQDataStream& operator >>(TQDataStream& s, KFileMetaInfoItem& );
-    KIO_EXPORT friend TQDataStream& operator >>(TQDataStream& s, KFileMetaInfoGroup& );
-    KIO_EXPORT friend TQDataStream& operator <<(TQDataStream& s, const KFileMetaInfoItem& );
+    TDEIO_EXPORT friend TQDataStream& operator >>(TQDataStream& s, KFileMetaInfoItem& );
+    TDEIO_EXPORT friend TQDataStream& operator >>(TQDataStream& s, KFileMetaInfoGroup& );
+    TDEIO_EXPORT friend TQDataStream& operator <<(TQDataStream& s, const KFileMetaInfoItem& );
     friend class KFileMetaInfoGroup;
 
 protected:
@@ -681,12 +681,12 @@ protected:
  * This is one group of meta information items about a file (see
  * KFileMetaInfo).
  */
-class KIO_EXPORT KFileMetaInfoGroup
+class TDEIO_EXPORT KFileMetaInfoGroup
 {
   friend class KFilePlugin;
   friend class KFileMetaInfo;
-  KIO_EXPORT friend TQDataStream& operator >>(TQDataStream& s, KFileMetaInfoGroup& );
-  KIO_EXPORT friend TQDataStream& operator <<(TQDataStream& s, const KFileMetaInfoGroup& );
+  TDEIO_EXPORT friend TQDataStream& operator >>(TQDataStream& s, KFileMetaInfoGroup& );
+  TDEIO_EXPORT friend TQDataStream& operator <<(TQDataStream& s, const KFileMetaInfoGroup& );
 
 public:
     class Data;
@@ -923,7 +923,7 @@ protected:
  * The groups and the What enum are not yet supported, but already added to
  * the interface so that adding support doesn't break compatibility.
  */
-class KIO_EXPORT KFileMetaInfo
+class TDEIO_EXPORT KFileMetaInfo
 {
 public:
     typedef KFileMimeTypeInfo::Hint Hint;
@@ -1223,8 +1223,8 @@ public:
      */
     KURL url() const;
 
-    KIO_EXPORT friend TQDataStream& operator >>(TQDataStream& s, KFileMetaInfo& );
-    KIO_EXPORT friend TQDataStream& operator <<(TQDataStream& s, const KFileMetaInfo& );
+    TDEIO_EXPORT friend TQDataStream& operator >>(TQDataStream& s, KFileMetaInfo& );
+    TDEIO_EXPORT friend TQDataStream& operator <<(TQDataStream& s, const KFileMetaInfo& );
     friend class KFilePlugin;
 
 protected:
@@ -1391,7 +1391,7 @@ private:
  *  PreferredItems=Items,Size
  *  @endcode
  **/
-class KIO_EXPORT KFilePlugin : public TQObject
+class TDEIO_EXPORT KFilePlugin : public TQObject
 {
     Q_OBJECT
 
@@ -1643,7 +1643,7 @@ private:
  *  supported and which groups and items are provided for it, you can ask
  *  the KFileMetainfoProvider for it.
  **/
-class KIO_EXPORT KFileMetaInfoProvider: private QObject
+class TDEIO_EXPORT KFileMetaInfoProvider: private QObject
 {
     friend class KFilePlugin;
 
@@ -1725,14 +1725,14 @@ private:
 
 };
 
-KIO_EXPORT TQDataStream& operator <<(TQDataStream& s, const KFileMetaInfoItem& );
-KIO_EXPORT TQDataStream& operator >>(TQDataStream& s, KFileMetaInfoItem& );
+TDEIO_EXPORT TQDataStream& operator <<(TQDataStream& s, const KFileMetaInfoItem& );
+TDEIO_EXPORT TQDataStream& operator >>(TQDataStream& s, KFileMetaInfoItem& );
 
-KIO_EXPORT TQDataStream& operator <<(TQDataStream& s, const KFileMetaInfoGroup& );
-KIO_EXPORT TQDataStream& operator >>(TQDataStream& s, KFileMetaInfoGroup& );
+TDEIO_EXPORT TQDataStream& operator <<(TQDataStream& s, const KFileMetaInfoGroup& );
+TDEIO_EXPORT TQDataStream& operator >>(TQDataStream& s, KFileMetaInfoGroup& );
 
-KIO_EXPORT TQDataStream& operator <<(TQDataStream& s, const KFileMetaInfo& );
-KIO_EXPORT TQDataStream& operator >>(TQDataStream& s, KFileMetaInfo& );
+TDEIO_EXPORT TQDataStream& operator <<(TQDataStream& s, const KFileMetaInfo& );
+TDEIO_EXPORT TQDataStream& operator >>(TQDataStream& s, KFileMetaInfo& );
 
 
 #endif // KILEMETAINFO_H

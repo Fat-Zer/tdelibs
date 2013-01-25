@@ -36,7 +36,7 @@ class KSSLSettingsPrivate;
  * @see KSSL
  * @short KDE SSL Settings
  */
-class KIO_EXPORT KSSLSettings {
+class TDEIO_EXPORT KSSLSettings {
 public:
 	/**
 	 *  Construct a KSSL Settings object

@@ -28,7 +28,7 @@
  * construct a KFile object itself.
  */
 
-class KIO_EXPORT KFile
+class TDEIO_EXPORT KFile
 {
 public:
     /**

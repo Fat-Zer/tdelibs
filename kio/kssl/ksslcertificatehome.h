@@ -28,7 +28,7 @@ class KSSLPKCS12;
 
 #include <tdelibs_export.h>
 
-class KIO_EXPORT KSSLCertificateHome {
+class TDEIO_EXPORT KSSLCertificateHome {
  
 public:
 

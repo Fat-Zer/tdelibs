@@ -42,7 +42,7 @@ class TQStringList;
  * @see KSSL, KSSLCertificate, KSSLPeerInfo
  * @short KDE X.509 Certificate Chain
  */
-class KIO_EXPORT KSSLCertChain {
+class TDEIO_EXPORT KSSLCertChain {
 friend class KSSL;
 friend class KSSLPeerInfo;
 

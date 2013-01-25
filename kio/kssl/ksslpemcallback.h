@@ -23,7 +23,7 @@
 
 #include <tdelibs_export.h>
 
-int KIO_EXPORT KSSLPemCallback(char *buf, int size, int rwflag, void *userdata);
+int TDEIO_EXPORT KSSLPemCallback(char *buf, int size, int rwflag, void *userdata);
 
 #endif
 

@@ -1705,7 +1705,7 @@ TQString KFileMimeTypeInfo::ItemInfo::string(const TQVariant& value, bool mangle
    first a bool that says if the items is valid, and if yes,
    all the elements of the Data
 */
-KIO_EXPORT TQDataStream& operator <<(TQDataStream& s, const KFileMetaInfoItem& item )
+TDEIO_EXPORT TQDataStream& operator <<(TQDataStream& s, const KFileMetaInfoItem& item )
 {
 
      KFileMetaInfoItem::Data* d = item.d;
@@ -1725,7 +1725,7 @@ KIO_EXPORT TQDataStream& operator <<(TQDataStream& s, const KFileMetaInfoItem& i
 }
 
 
-KIO_EXPORT TQDataStream& operator >>(TQDataStream& s, KFileMetaInfoItem& item )
+TDEIO_EXPORT TQDataStream& operator >>(TQDataStream& s, KFileMetaInfoItem& item )
 {
      bool isValid;
      s >> isValid;
@@ -1758,7 +1758,7 @@ KIO_EXPORT TQDataStream& operator >>(TQDataStream& s, KFileMetaInfoItem& item )
 // serialization of a KFileMetaInfoGroup
 // we serialize the name of the mimetype here instead of the mimetype info
 // on the other side, we can simply use this to ask the provider for the info
-KIO_EXPORT TQDataStream& operator <<(TQDataStream& s, const KFileMetaInfoGroup& group )
+TDEIO_EXPORT TQDataStream& operator <<(TQDataStream& s, const KFileMetaInfoGroup& group )
 {
     KFileMetaInfoGroup::Data* d = group.d;
 
@@ -1775,7 +1775,7 @@ KIO_EXPORT TQDataStream& operator <<(TQDataStream& s, const KFileMetaInfoGroup& 
     return s;
 }
 
-KIO_EXPORT TQDataStream& operator >>(TQDataStream& s, KFileMetaInfoGroup& group )
+TDEIO_EXPORT TQDataStream& operator >>(TQDataStream& s, KFileMetaInfoGroup& group )
 {
     TQString mimeType;
     bool isValid;
@@ -1812,7 +1812,7 @@ KIO_EXPORT TQDataStream& operator >>(TQDataStream& s, KFileMetaInfoGroup& group 
 // serialization of a KFileMetaInfo object
 // we serialize the name of the mimetype here instead of the mimetype info
 // on the other side, we can simply use this to ask the provider for the info
-KIO_EXPORT TQDataStream& operator <<(TQDataStream& s, const KFileMetaInfo& info )
+TDEIO_EXPORT TQDataStream& operator <<(TQDataStream& s, const KFileMetaInfo& info )
 {
     KFileMetaInfo::Data* d = info.d;
 
@@ -1830,7 +1830,7 @@ KIO_EXPORT TQDataStream& operator <<(TQDataStream& s, const KFileMetaInfo& info 
     return s;
 }
 
-KIO_EXPORT TQDataStream& operator >>(TQDataStream& s, KFileMetaInfo& info )
+TDEIO_EXPORT TQDataStream& operator >>(TQDataStream& s, KFileMetaInfo& info )
 {
     TQString mimeType;
     bool isValid;

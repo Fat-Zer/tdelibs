@@ -44,7 +44,7 @@ class TDEInstance;
  * described by the service.
  * @see KDataTool
  */
-class KIO_EXPORT KDataToolInfo
+class TDEIO_EXPORT KDataToolInfo
 {
 public:
     /**
@@ -191,7 +191,7 @@ private:
  * The slot defined for step 2 is called when the action is activated, and
  * that's where the tool should be created and run.
  */
-class KIO_EXPORT KDataToolAction : public KAction
+class TDEIO_EXPORT KDataToolAction : public KAction
 {
     Q_OBJECT
     
@@ -251,7 +251,7 @@ private:
  * @see KDataToolAction, and for activating a tool, passing it the data
  * (and possibly getting modified data from it).
  */
-class KIO_EXPORT KDataTool : public TQObject
+class TDEIO_EXPORT KDataTool : public TQObject
 {
     Q_OBJECT
     

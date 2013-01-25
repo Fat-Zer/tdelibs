@@ -32,41 +32,41 @@
 class TQIODevice;
 
 /**
- * @class KIOBufferBase kiobuffer.h kiobuffer.h
+ * @class TDEIOBufferBase kiobuffer.h kiobuffer.h
  * @brief base for I/O buffer implementation
  *
  * This class declares the base methods to interface with an I/O buffer.
  * Most applications will not need to access this class directly, since
- * it is all handled by @ref KNetwork::KBufferedSocket and other buffering
+ * it is all handled by @ref KNetwork::TDEBufferedSocket and other buffering
  * classes.
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KIOBufferBase
+class TDEIOBufferBase
 {
 public:
   /**
    * Default constructor. Does nothing.
    */
-  KIOBufferBase()
+  TDEIOBufferBase()
   { }
 
   /**
    * Copy constructor. Does nothing here.
    */
-  KIOBufferBase(const KIOBufferBase& )
+  TDEIOBufferBase(const TDEIOBufferBase& )
   { }
 
   /**
    * Virtual destructor. Does nothing.
    */
-  virtual ~KIOBufferBase()
+  virtual ~TDEIOBufferBase()
   { }
 
   /**
    * Assignment operator. Does nothing.
    */
-  KIOBufferBase& operator=(const KIOBufferBase& )
+  TDEIOBufferBase& operator=(const TDEIOBufferBase& )
   { return *this; }
 
   /**

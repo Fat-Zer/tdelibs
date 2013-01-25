@@ -67,7 +67,7 @@ namespace TDEIO { class Job; }
  * If you are looking for more flexibility, see KFileMetaInfo and
  * KFileMetaInfoWidget.
  */
-class KIO_EXPORT KPropertiesDialog : public KDialogBase
+class TDEIO_EXPORT KPropertiesDialog : public KDialogBase
 {
   Q_OBJECT
 
@@ -434,7 +434,7 @@ private:
  * You can also include X-TDE-Protocol=file if you want that plugin
  * to be loaded only for local files, for instance.
  */
-class KIO_EXPORT KPropsDlgPlugin : public TQObject
+class TDEIO_EXPORT KPropsDlgPlugin : public TQObject
 {
   Q_OBJECT
 public:
@@ -492,7 +492,7 @@ private:
  *  This plugin displays the name of the file, its size and access times.
  * @internal
  */
-class KIO_EXPORT KFilePropsPlugin : public KPropsDlgPlugin
+class TDEIO_EXPORT KFilePropsPlugin : public KPropsDlgPlugin
 {
   Q_OBJECT
 public:
@@ -568,7 +568,7 @@ private:
  * the owner of a file.
  * @internal
  */
-class KIO_EXPORT KFilePermissionsPropsPlugin : public KPropsDlgPlugin
+class TDEIO_EXPORT KFilePermissionsPropsPlugin : public KPropsDlgPlugin
 {
   Q_OBJECT
 public:
@@ -654,7 +654,7 @@ private:
  * Such files are used to represent a program in kicker and konqueror.
  * @internal
  */
-class KIO_EXPORT KURLPropsPlugin : public KPropsDlgPlugin
+class TDEIO_EXPORT KURLPropsPlugin : public KPropsDlgPlugin
 {
   Q_OBJECT
 public:
@@ -689,7 +689,7 @@ private:
  * Type=MimeType
  * @internal
  */
-class KIO_EXPORT KBindingPropsPlugin : public KPropsDlgPlugin
+class TDEIO_EXPORT KBindingPropsPlugin : public KPropsDlgPlugin
 {
   Q_OBJECT
 public:
@@ -719,7 +719,7 @@ private:
  * Properties plugin for device .desktop files
  * @internal
  */
-class KIO_EXPORT KDevicePropsPlugin : public KPropsDlgPlugin
+class TDEIO_EXPORT KDevicePropsPlugin : public KPropsDlgPlugin
 {
   Q_OBJECT
 public:
@@ -771,7 +771,7 @@ class KPropertiesDesktopBase;
  * Such files are used to represent a program in kicker and konqueror.
  * @internal
  */
-class KIO_EXPORT KDesktopPropsPlugin : public KPropsDlgPlugin
+class TDEIO_EXPORT KDesktopPropsPlugin : public KPropsDlgPlugin
 {
   Q_OBJECT
 public:
@@ -822,7 +822,7 @@ private:
  * @deprecated replaced with KDesktopPropsPlugin
  */
  /// Remove in KDE4
-class KIO_EXPORT_DEPRECATED KExecPropsPlugin : public KPropsDlgPlugin
+class TDEIO_EXPORT_DEPRECATED KExecPropsPlugin : public KPropsDlgPlugin
 {
   Q_OBJECT
 public:
@@ -878,7 +878,7 @@ private:
  * @deprecated replaced with KDesktopPropsPlugin
  */
  /// Remove in KDE4
-class KIO_EXPORT_DEPRECATED TDEApplicationPropsPlugin : public KPropsDlgPlugin
+class TDEIO_EXPORT_DEPRECATED TDEApplicationPropsPlugin : public KPropsDlgPlugin
 {
   Q_OBJECT
 public:

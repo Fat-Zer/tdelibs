@@ -54,7 +54,7 @@ namespace TDEIO {
      * @see TDEIO::davSearch()
      * @since 3.1
      */
-    class KIO_EXPORT DavJob : public TransferJob {
+    class TDEIO_EXPORT DavJob : public TransferJob {
     Q_OBJECT
 
     public:
@@ -95,7 +95,7 @@ namespace TDEIO {
     * @param showProgressInfo true to show progress information
     * @return the new DavJob
     */
-   KIO_EXPORT DavJob* davPropFind( const KURL& url, const TQDomDocument& properties, TQString depth, bool showProgressInfo=true );
+   TDEIO_EXPORT DavJob* davPropFind( const KURL& url, const TQDomDocument& properties, TQString depth, bool showProgressInfo=true );
 
    /**
     * Creates a new DavJob that issues a PROPPATCH command. PROPPATCH sets
@@ -107,7 +107,7 @@ namespace TDEIO {
     * @param showProgressInfo true to show progress information
     * @return the new DavJob
     */
-   KIO_EXPORT DavJob* davPropPatch( const KURL& url, const TQDomDocument& properties, bool showProgressInfo=true );
+   TDEIO_EXPORT DavJob* davPropPatch( const KURL& url, const TQDomDocument& properties, bool showProgressInfo=true );
 
    /**
     * Creates a new DavJob that issues a SEARCH command.
@@ -119,7 +119,7 @@ namespace TDEIO {
     * @param showProgressInfo true to show progress information
     * @return the new DavJob
     */
-   KIO_EXPORT DavJob* davSearch( const KURL &url, const TQString& nsURI, const TQString& qName, const TQString& query, bool showProgressInfo=true ); 
+   TDEIO_EXPORT DavJob* davSearch( const KURL &url, const TQString& nsURI, const TQString& qName, const TQString& query, bool showProgressInfo=true ); 
 
 }
 

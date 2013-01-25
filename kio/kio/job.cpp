@@ -2307,7 +2307,7 @@ void CopyJob::slotStart()
 }
 
 // For unit test purposes
-KIO_EXPORT bool kio_resolve_local_urls = true;
+TDEIO_EXPORT bool kio_resolve_local_urls = true;
 
 void CopyJob::slotResultStating( Job *job )
 {

@@ -42,7 +42,7 @@
 #include <volmgt.h>
 #endif
 
-KIO_EXPORT TQString TDEIO::convertSizeWithBytes( TDEIO::filesize_t size )
+TDEIO_EXPORT TQString TDEIO::convertSizeWithBytes( TDEIO::filesize_t size )
 {
     if ( size >= 1024 )
         return convertSize( size ) + " (" + i18n( "%1 B" ).arg( TDEGlobal::locale()->formatNumber(size, 0) ) + ")";
@@ -50,7 +50,7 @@ KIO_EXPORT TQString TDEIO::convertSizeWithBytes( TDEIO::filesize_t size )
 	return convertSize( size );
 }
 
-KIO_EXPORT TQString TDEIO::convertSize( TDEIO::filesize_t size )
+TDEIO_EXPORT TQString TDEIO::convertSize( TDEIO::filesize_t size )
 {
     double fsize = size;
     TQString s;
@@ -88,19 +88,19 @@ KIO_EXPORT TQString TDEIO::convertSize( TDEIO::filesize_t size )
     return s;
 }
 
-KIO_EXPORT TQString TDEIO::convertSizeFromKB( TDEIO::filesize_t kbSize )
+TDEIO_EXPORT TQString TDEIO::convertSizeFromKB( TDEIO::filesize_t kbSize )
 {
     return convertSize(kbSize * 1024);
 }
 
-KIO_EXPORT TQString TDEIO::number( TDEIO::filesize_t size )
+TDEIO_EXPORT TQString TDEIO::number( TDEIO::filesize_t size )
 {
     char charbuf[256];
     sprintf(charbuf, "%lld", size);
     return TQString::fromLatin1(charbuf);
 }
 
-KIO_EXPORT unsigned int TDEIO::calculateRemainingSeconds( TDEIO::filesize_t totalSize,
+TDEIO_EXPORT unsigned int TDEIO::calculateRemainingSeconds( TDEIO::filesize_t totalSize,
                                                         TDEIO::filesize_t processedSize, TDEIO::filesize_t speed )
 {
   if ( (speed != 0) && (totalSize != 0) )
@@ -109,7 +109,7 @@ KIO_EXPORT unsigned int TDEIO::calculateRemainingSeconds( TDEIO::filesize_t tota
     return 0;
 }
 
-KIO_EXPORT TQString TDEIO::convertSeconds( unsigned int seconds )
+TDEIO_EXPORT TQString TDEIO::convertSeconds( unsigned int seconds )
 {
   unsigned int days  = seconds / 86400;
   unsigned int hours = (seconds - (days * 86400)) / 3600;
@@ -124,7 +124,7 @@ KIO_EXPORT TQString TDEIO::convertSeconds( unsigned int seconds )
     return timeStr;
 }
 
-KIO_EXPORT TQTime TDEIO::calculateRemaining( TDEIO::filesize_t totalSize, TDEIO::filesize_t processedSize, TDEIO::filesize_t speed )
+TDEIO_EXPORT TQTime TDEIO::calculateRemaining( TDEIO::filesize_t totalSize, TDEIO::filesize_t processedSize, TDEIO::filesize_t speed )
 {
   TQTime remainingTime;
 
@@ -147,7 +147,7 @@ KIO_EXPORT TQTime TDEIO::calculateRemaining( TDEIO::filesize_t totalSize, TDEIO:
   return remainingTime;
 }
 
-KIO_EXPORT TQString TDEIO::itemsSummaryString(uint items, uint files, uint dirs, TDEIO::filesize_t size, bool showSize)
+TDEIO_EXPORT TQString TDEIO::itemsSummaryString(uint items, uint files, uint dirs, TDEIO::filesize_t size, bool showSize)
 {
     TQString text = items == 0 ? i18n( "No Items" ) : i18n( "One Item", "%n Items", items );
     text += " - ";
@@ -162,7 +162,7 @@ KIO_EXPORT TQString TDEIO::itemsSummaryString(uint items, uint files, uint dirs,
     return text;
 }
 
-KIO_EXPORT TQString TDEIO::encodeFileName( const TQString & _str )
+TDEIO_EXPORT TQString TDEIO::encodeFileName( const TQString & _str )
 {
   TQString str( _str );
 
@@ -177,7 +177,7 @@ KIO_EXPORT TQString TDEIO::encodeFileName( const TQString & _str )
   return str;
 }
 
-KIO_EXPORT TQString TDEIO::decodeFileName( const TQString & _str )
+TDEIO_EXPORT TQString TDEIO::decodeFileName( const TQString & _str )
 {
   TQString str;
 
@@ -205,12 +205,12 @@ KIO_EXPORT TQString TDEIO::decodeFileName( const TQString & _str )
   return str;
 }
 
-KIO_EXPORT TQString TDEIO::Job::errorString() const
+TDEIO_EXPORT TQString TDEIO::Job::errorString() const
 {
   return TDEIO::buildErrorString(m_error, m_errorText);
 }
 
-KIO_EXPORT TQString TDEIO::buildErrorString(int errorCode, const TQString &errorText)
+TDEIO_EXPORT TQString TDEIO::buildErrorString(int errorCode, const TQString &errorText)
 {
   TQString result;
 
@@ -419,7 +419,7 @@ KIO_EXPORT TQString TDEIO::buildErrorString(int errorCode, const TQString &error
   return result;
 }
 
-KIO_EXPORT TQString TDEIO::unsupportedActionErrorString(const TQString &protocol, int cmd) {
+TDEIO_EXPORT TQString TDEIO::unsupportedActionErrorString(const TQString &protocol, int cmd) {
   switch (cmd) {
     case CMD_CONNECT:
       return i18n("Opening connections is not supported with the protocol %1." ).arg(protocol);
@@ -458,7 +458,7 @@ KIO_EXPORT TQString TDEIO::unsupportedActionErrorString(const TQString &protocol
   }/*end switch*/
 }
 
-KIO_EXPORT TQStringList TDEIO::Job::detailedErrorStrings( const KURL *reqUrl /*= 0L*/,
+TDEIO_EXPORT TQStringList TDEIO::Job::detailedErrorStrings( const KURL *reqUrl /*= 0L*/,
                                             int method /*= -1*/ ) const
 {
   TQString errorName, techName, description, ret2;
@@ -508,7 +508,7 @@ KIO_EXPORT TQStringList TDEIO::Job::detailedErrorStrings( const KURL *reqUrl /*=
   return ret;
 }
 
-KIO_EXPORT TQByteArray TDEIO::rawErrorDetail(int errorCode, const TQString &errorText,
+TDEIO_EXPORT TQByteArray TDEIO::rawErrorDetail(int errorCode, const TQString &errorText,
                                const KURL *reqUrl /*= 0L*/, int /*method = -1*/ )
 {
   TQString url, host, protocol, datetime, domain, path, dir, filename;

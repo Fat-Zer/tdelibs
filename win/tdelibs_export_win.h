@@ -63,11 +63,11 @@
 # define TDEPRINT_EXPORT KDE_IMPORT
 #endif
 
-#ifndef KIO_EXPORT
+#ifndef TDEIO_EXPORT
 # ifdef MAKE_KIO_LIB
-#  define KIO_EXPORT KDE_EXPORT
+#  define TDEIO_EXPORT KDE_EXPORT
 # else
-#  define KIO_EXPORT KDE_IMPORT
+#  define TDEIO_EXPORT KDE_IMPORT
 # endif
 #endif
 

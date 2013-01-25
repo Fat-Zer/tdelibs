@@ -40,7 +40,7 @@ class DCOPClient;
  * @see KSSL, KSSLCertificate
  * @short KDE SSL Signer Database
  */
-class KIO_EXPORT KSSLSigners {
+class TDEIO_EXPORT KSSLSigners {
 public:
 	/**
 	 *  Construct a KSSLSigner object.

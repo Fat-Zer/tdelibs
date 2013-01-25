@@ -42,7 +42,7 @@ namespace TDEIO {
    * @return the job that handles the operation
    * @see pasteData()
    */
-  KIO_EXPORT Job *pasteClipboard( const KURL& destURL, bool move = false );
+  TDEIO_EXPORT Job *pasteClipboard( const KURL& destURL, bool move = false );
 
   /**
    * Pastes the given @p data to the given destination URL.
@@ -54,7 +54,7 @@ namespace TDEIO {
    * @param data the data to copy
    * @see pasteClipboard()
    */
-  KIO_EXPORT void pasteData( const KURL& destURL, const TQByteArray& data );
+  TDEIO_EXPORT void pasteData( const KURL& destURL, const TQByteArray& data );
 
   /**
    * Pastes the given @p data to the given destination URL.
@@ -66,7 +66,7 @@ namespace TDEIO {
    * @param data the data to copy
    * @see pasteClipboard()
    */
-  KIO_EXPORT CopyJob *pasteDataAsync( const KURL& destURL, const TQByteArray& data );
+  TDEIO_EXPORT CopyJob *pasteDataAsync( const KURL& destURL, const TQByteArray& data );
 
   /**
    * Pastes the given @p data to the given destination URL.
@@ -79,7 +79,7 @@ namespace TDEIO {
    * @param dialogText the text to show in the dialog
    * @see pasteClipboard()
    */
-  KIO_EXPORT CopyJob *pasteDataAsync( const KURL& destURL, const TQByteArray& data, const TQString& dialogText ); // KDE4: merge with above
+  TDEIO_EXPORT CopyJob *pasteDataAsync( const KURL& destURL, const TQByteArray& data, const TQString& dialogText ); // KDE4: merge with above
 
 
   /**
@@ -100,7 +100,7 @@ namespace TDEIO {
    *
    * @since 3.5
    */
-  KIO_EXPORT CopyJob* pasteMimeSource( TQMimeSource* data, const KURL& destURL,
+  TDEIO_EXPORT CopyJob* pasteMimeSource( TQMimeSource* data, const KURL& destURL,
                                        const TQString& dialogText, TQWidget* widget,
                                        bool clipboard = false );
 
@@ -109,7 +109,7 @@ namespace TDEIO {
    * @return true if not
    * Not used anymore, wrong method name, so it will disappear in KDE4.
    */
-  KIO_EXPORT_DEPRECATED bool isClipboardEmpty();
+  TDEIO_EXPORT_DEPRECATED bool isClipboardEmpty();
 
   /**
    * Returns the text to use for the Paste action, when the application supports
@@ -119,7 +119,7 @@ namespace TDEIO {
    *
    * @since 3.5
    */
-  KIO_EXPORT TQString pasteActionText();
+  TDEIO_EXPORT TQString pasteActionText();
 }
 
 #endif

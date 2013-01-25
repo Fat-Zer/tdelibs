@@ -49,7 +49,7 @@ namespace KNotify
  * @since 3.1
  * @author Carsten Pfeiffer <pfeiffer@kde.org>
  */
-class KIO_EXPORT KNotifyDialog : public KDialogBase
+class TDEIO_EXPORT KNotifyDialog : public KDialogBase
 {
     Q_OBJECT
 
@@ -148,7 +148,7 @@ namespace KNotify
     /**
      * @internal
      */
-    class KIO_EXPORT Application
+    class TDEIO_EXPORT Application
     {
     public:
         Application( const TQString &path );
@@ -173,7 +173,7 @@ namespace KNotify
     };
 
 
-    class KIO_EXPORT ApplicationList : public TQPtrList<Application>
+    class TDEIO_EXPORT ApplicationList : public TQPtrList<Application>
     {
         virtual int compareItems ( TQPtrCollection::Item item1,
                                    TQPtrCollection::Item item2 )
@@ -186,7 +186,7 @@ namespace KNotify
     /**
      * @internal
      */
-    class KIO_EXPORT KNotifyWidget : public KNotifyWidgetBase
+    class TDEIO_EXPORT KNotifyWidget : public KNotifyWidgetBase
     {
         Q_OBJECT
 

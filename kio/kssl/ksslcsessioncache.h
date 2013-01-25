@@ -26,7 +26,7 @@
 class KURL;
 class TQString;
 
-class KIO_EXPORT KSSLCSessionCache {
+class TDEIO_EXPORT KSSLCSessionCache {
  public:
 
     /**

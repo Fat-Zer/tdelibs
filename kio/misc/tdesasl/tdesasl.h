@@ -69,7 +69,7 @@ class TQStrIList;
  * @version $Id$
  */
 
-class KIO_EXPORT KDESasl
+class TDEIO_EXPORT KDESasl
 {
 
 public:

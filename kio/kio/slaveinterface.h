@@ -90,7 +90,7 @@ class SlaveInterfacePrivate;
  *
  * A call to foo() results in a call to slotFoo() on the other end.
  */
-class KIO_EXPORT SlaveInterface : public TQObject
+class TDEIO_EXPORT SlaveInterface : public TQObject
 {
     Q_OBJECT
 
@@ -284,7 +284,7 @@ inline TQDataStream &operator <<(TQDataStream &s, const TDEIO::UDSAtom &a )
     return s;
 }
 
-KIO_EXPORT TQDataStream &operator <<(TQDataStream &s, const TDEIO::UDSEntry &e );
-KIO_EXPORT TQDataStream &operator >>(TQDataStream &s, TDEIO::UDSEntry &e );
+TDEIO_EXPORT TQDataStream &operator <<(TQDataStream &s, const TDEIO::UDSEntry &e );
+TDEIO_EXPORT TQDataStream &operator >>(TQDataStream &s, TDEIO::UDSEntry &e );
 
 #endif

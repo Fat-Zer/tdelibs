@@ -40,16 +40,16 @@ namespace TDEIO {
 class KJavaDownloaderPrivate;
 class KJavaUploaderPrivate;
 
-class KJavaKIOJob : public TQObject
+class KJavaTDEIOJob : public TQObject
 {
 Q_OBJECT
 public:
-    virtual ~KJavaKIOJob();
+    virtual ~KJavaTDEIOJob();
     virtual void jobCommand( int cmd ) = 0;
     virtual void data( const TQByteArray& qb );
 };
 
-class KJavaDownloader : public KJavaKIOJob
+class KJavaDownloader : public KJavaTDEIOJob
 {
 Q_OBJECT
 
@@ -69,7 +69,7 @@ private:
 
 };
 
-class KJavaUploader : public KJavaKIOJob
+class KJavaUploader : public KJavaTDEIOJob
 {
 Q_OBJECT
 

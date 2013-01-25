@@ -48,7 +48,7 @@ protected slots: // this is why this class needs to be in the .h
  * (communication with the backend)
  * @since 3.1
  */
-class KIO_EXPORT KFileShare
+class TDEIO_EXPORT KFileShare
 {
 
   

@@ -42,7 +42,7 @@ namespace TDEIO {
  *
  * A call to foo() results in a call to slotFoo() on the other end.
  */
-class KIO_EXPORT TCPSlaveBase : public SlaveBase
+class TDEIO_EXPORT TCPSlaveBase : public SlaveBase
 {
 public:
     TCPSlaveBase(unsigned short int defaultPort, const TQCString &protocol,

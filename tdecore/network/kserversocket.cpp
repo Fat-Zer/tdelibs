@@ -47,11 +47,11 @@ public:
   int backlog;
   int timeout;
 
-  bool bindWhenFound : 1, listenWhenBound : 1, useKBufferedSocket : 1;
+  bool bindWhenFound : 1, listenWhenBound : 1, useTDEBufferedSocket : 1;
 
   TDEServerSocketPrivate()
     : state(None), timeout(0), bindWhenFound(false), listenWhenBound(false),
-      useKBufferedSocket(true)
+      useTDEBufferedSocket(true)
   { 
     resolver.setFlags(KResolver::Passive);
     resolver.setFamily(KResolver::KnownFamily);
@@ -277,7 +277,7 @@ void TDEServerSocket::close()
 
 void TDEServerSocket::setAcceptBuffered(bool enable)
 {
-  d->useKBufferedSocket = enable;
+  d->useTDEBufferedSocket = enable;
 }
 
 KActiveSocketBase* TDEServerSocket::accept()
@@ -319,8 +319,8 @@ KActiveSocketBase* TDEServerSocket::accept()
     }
 
   KStreamSocket* streamsocket;
-  if (d->useKBufferedSocket)
-    streamsocket = new KBufferedSocket();
+  if (d->useTDEBufferedSocket)
+    streamsocket = new TDEBufferedSocket();
   else
     streamsocket = new KStreamSocket();
   streamsocket->setSocketDevice(accepted);

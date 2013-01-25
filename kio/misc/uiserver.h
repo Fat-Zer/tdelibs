@@ -55,7 +55,7 @@ struct ListProgressColumnConfig
 * List view in the UIServer.
 * @internal
 */
-class KIO_EXPORT ListProgress : public KListView {
+class TDEIO_EXPORT ListProgress : public KListView {
 
   Q_OBJECT
 
@@ -103,7 +103,7 @@ protected:
 * One item in the ListProgress
 * @internal
 */
-class KIO_EXPORT ProgressItem : public TQObject, public TQListViewItem {
+class TDEIO_EXPORT ProgressItem : public TQObject, public TQListViewItem {
 
   Q_OBJECT
 
@@ -214,7 +214,7 @@ class UIServerSystemTray;
  *
  * @internal
  */
-class KIO_EXPORT UIServer : public KMainWindow, public DCOPObject {
+class TDEIO_EXPORT UIServer : public KMainWindow, public DCOPObject {
 
   K_DCOP
   Q_OBJECT

@@ -42,7 +42,7 @@ class SlaveBasePrivate;
  *
  * A call to foo() results in a call to slotFoo() on the other end.
  */
-class KIO_EXPORT SlaveBase
+class TDEIO_EXPORT SlaveBase
 {
 public:
     SlaveBase( const TQCString &protocol, const TQCString &pool_socket, const TQCString &app_socket);

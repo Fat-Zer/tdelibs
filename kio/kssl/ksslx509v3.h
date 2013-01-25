@@ -35,7 +35,7 @@
  * @see KExtendedSocket, TCPSlaveBase
  * @short KDE SSL Class
  */
-class KIO_EXPORT KSSLX509V3 {
+class TDEIO_EXPORT KSSLX509V3 {
 friend class KSSLCertificate;
 friend class KSSLCertificatePrivate;
 public:

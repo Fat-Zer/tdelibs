@@ -39,7 +39,7 @@ class KArchiveFile;
  * @short generic class for reading/writing archives
  * @author David Faure <faure@kde.org>
  */
-class KIO_EXPORT KArchive
+class TDEIO_EXPORT KArchive
 {
 protected:
     /**
@@ -392,7 +392,7 @@ private:
  * @see KArchiveFile
  * @see KArchiveDirectory
  */
-class KIO_EXPORT KArchiveEntry
+class TDEIO_EXPORT KArchiveEntry
 {
 public:
     /**
@@ -487,7 +487,7 @@ private:
  * @see KArchive
  * @see KArchiveDirectory
  */
-class KIO_EXPORT KArchiveFile : public KArchiveEntry
+class TDEIO_EXPORT KArchiveFile : public KArchiveEntry
 {
 public:
     /**
@@ -570,7 +570,7 @@ private:
  * @see KArchive
  * @see KArchiveFile
  */
-class KIO_EXPORT KArchiveDirectory : public KArchiveEntry
+class TDEIO_EXPORT KArchiveDirectory : public KArchiveEntry
 {
 public:
     /**

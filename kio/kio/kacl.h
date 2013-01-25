@@ -39,7 +39,7 @@ typedef TQValueListConstIterator<ACLGroupPermissions> ACLGroupPermissionsConstIt
  * @short a POSIX ACL encapsulation
  * @author Till Adam <adam@kde.org>
  */
-class KIO_EXPORT KACL
+class TDEIO_EXPORT KACL
 {
 public:
   /**
@@ -197,11 +197,11 @@ protected:
 private:
   class KACLPrivate;
   KACLPrivate * d;
-  KIO_EXPORT friend TQDataStream & operator<< ( TQDataStream & s, const KACL & a );
-  KIO_EXPORT friend TQDataStream & operator>> ( TQDataStream & s, KACL & a );
+  TDEIO_EXPORT friend TQDataStream & operator<< ( TQDataStream & s, const KACL & a );
+  TDEIO_EXPORT friend TQDataStream & operator>> ( TQDataStream & s, KACL & a );
 };
 
-KIO_EXPORT TQDataStream & operator<< ( TQDataStream & s, const KACL & a );
-KIO_EXPORT TQDataStream & operator>> ( TQDataStream & s, KACL & a );
+TDEIO_EXPORT TQDataStream & operator<< ( TQDataStream & s, const KACL & a );
+TDEIO_EXPORT TQDataStream & operator>> ( TQDataStream & s, KACL & a );
 
 #endif

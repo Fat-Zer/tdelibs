@@ -66,7 +66,7 @@
  * @see KImageIO, TQPixmap, TQImage, QImageIO
  * @author Sirtaj Singh Kang
  */
-class KIO_EXPORT KImageIO
+class TDEIO_EXPORT KImageIO
 {
 public:
   /**

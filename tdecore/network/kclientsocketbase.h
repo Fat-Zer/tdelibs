@@ -46,7 +46,7 @@ class KClientSocketBasePrivate;
  * such as, and especially, name resolution and signals.
  *
  * @note This class is abstract. If you're looking for a normal,
- *       client socket class, see @ref KStreamSocket and KBufferedSocket
+ *       client socket class, see @ref KStreamSocket and TDEBufferedSocket
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */

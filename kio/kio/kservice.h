@@ -45,7 +45,7 @@ class TQWidget;
  * @see KServiceGroup
  * @author Torben Weis <weis@kde.org>
  */
-class KIO_EXPORT KService : public KSycocaEntry
+class TDEIO_EXPORT KService : public KSycocaEntry
 {
   K_SYCOCATYPE( KST_KService, KSycocaEntry )
 

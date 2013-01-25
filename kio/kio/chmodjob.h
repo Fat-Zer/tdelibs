@@ -35,7 +35,7 @@ namespace TDEIO {
      * optionally in a recursive manner.
      * @see TDEIO::chmod()
      */
-    class KIO_EXPORT ChmodJob : public TDEIO::Job
+    class TDEIO_EXPORT ChmodJob : public TDEIO::Job
     {
         Q_OBJECT
     public:
@@ -100,7 +100,7 @@ namespace TDEIO {
      * @param showProgressInfo true to show progess information
      * @return The job handling the operation.
      */
-    KIO_EXPORT ChmodJob * chmod( const KFileItemList& lstItems, int permissions, int mask,
+    TDEIO_EXPORT ChmodJob * chmod( const KFileItemList& lstItems, int permissions, int mask,
                       TQString newOwner, TQString newGroup,
                       bool recursive, bool showProgressInfo = true );
 

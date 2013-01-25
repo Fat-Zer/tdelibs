@@ -31,12 +31,12 @@
 #include "kstreamsocket.h"
 #include <tdelibs_export.h>
 
-class KIOBufferBase;
+class TDEIOBufferBase;
 
 namespace KNetwork {
 
-class KBufferedSocketPrivate;
-/** @class KBufferedSocket kbufferedsocket.h kbufferedsocket.h
+class TDEBufferedSocketPrivate;
+/** @class TDEBufferedSocket kbufferedsocket.h kbufferedsocket.h
  *  @brief Buffered stream sockets.
  *
  * This class allows the user to create and operate buffered stream sockets
@@ -55,7 +55,7 @@ class KBufferedSocketPrivate;
  * @see KNetwork::KStreamSocket, KNetwork::TDEServerSocket
  * @author Thiago Macieira <thiago@kde.org>
  */
-class TDECORE_EXPORT KBufferedSocket: public KStreamSocket
+class TDECORE_EXPORT TDEBufferedSocket: public KStreamSocket
 {
   Q_OBJECT
   
@@ -68,13 +68,13 @@ public:
    * @param parent      the parent object for this object
    * @param name        the internal name for this object
    */
-  KBufferedSocket(const TQString& node = TQString::null, const TQString& service = TQString::null,
+  TDEBufferedSocket(const TQString& node = TQString::null, const TQString& service = TQString::null,
 		  TQObject* parent = 0L, const char *name = 0L);
 
   /**
    * Destructor.
    */
-  virtual ~KBufferedSocket();
+  virtual ~TDEBufferedSocket();
 
   /**
    * Be sure to catch new devices.
@@ -168,7 +168,7 @@ public:
   /**
    * Retrieves the input buffer object.
    */
-  KIOBufferBase* inputBuffer();
+  TDEIOBufferBase* inputBuffer();
 
   /**
    * Sets the use of output buffering.
@@ -178,7 +178,7 @@ public:
   /**
    * Retrieves the output buffer object.
    */
-  KIOBufferBase* outputBuffer();
+  TDEIOBufferBase* outputBuffer();
 
   /**
    * Returns the length of the output buffer.
@@ -240,10 +240,10 @@ signals:
   void bytesWritten(int bytes);
 
 private:
-  KBufferedSocket(const KBufferedSocket&);
-  KBufferedSocket& operator=(const KBufferedSocket&);
+  TDEBufferedSocket(const TDEBufferedSocket&);
+  TDEBufferedSocket& operator=(const TDEBufferedSocket&);
 
-  KBufferedSocketPrivate *d;
+  TDEBufferedSocketPrivate *d;
 
 public:
   // KDE4: remove this function
@@ -253,7 +253,7 @@ public:
    *
    * This function is provided to ease porting from KExtendedSocket,
    * which required a call to reset() in order to be able to connect again
-   * using the same device. This is not necessary in KBufferedSocket any more.
+   * using the same device. This is not necessary in TDEBufferedSocket any more.
    */
 #ifdef USE_QT3
   inline void reset()

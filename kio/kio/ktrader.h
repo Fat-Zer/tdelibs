@@ -82,7 +82,7 @@
  *        applications or components.
  * @author Torben Weis <weis@kde.org>
  */
-class KIO_EXPORT KTrader : public TQObject
+class TDEIO_EXPORT KTrader : public TQObject
 {
     Q_OBJECT
 public:

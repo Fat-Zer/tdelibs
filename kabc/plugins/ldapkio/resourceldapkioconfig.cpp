@@ -45,7 +45,7 @@
 
 using namespace KABC;
 
-ResourceLDAPKIOConfig::ResourceLDAPKIOConfig( TQWidget* parent,  const char* name )
+ResourceLDAPTDEIOConfig::ResourceLDAPTDEIOConfig( TQWidget* parent,  const char* name )
   : KRES::ConfigWidget( parent, name )
 {
   TQBoxLayout *mainLayout = new TQVBoxLayout( this );
@@ -62,12 +62,12 @@ ResourceLDAPKIOConfig::ResourceLDAPKIOConfig( TQWidget* parent,  const char* nam
   connect( mCacheButton, TQT_SIGNAL( clicked() ), TQT_SLOT( editCache() ) );
 }
 
-void ResourceLDAPKIOConfig::loadSettings( KRES::Resource *res )
+void ResourceLDAPTDEIOConfig::loadSettings( KRES::Resource *res )
 {
   ResourceLDAPKIO *resource = dynamic_cast<ResourceLDAPKIO*>( res );
   
   if ( !resource ) {
-    kdDebug(5700) << "ResourceLDAPKIOConfig::loadSettings(): cast failed" << endl;
+    kdDebug(5700) << "ResourceLDAPTDEIOConfig::loadSettings(): cast failed" << endl;
     return;
   }
 
@@ -98,12 +98,12 @@ void ResourceLDAPKIOConfig::loadSettings( KRES::Resource *res )
   mAutoCache = resource->autoCache();
 }
 
-void ResourceLDAPKIOConfig::saveSettings( KRES::Resource *res )
+void ResourceLDAPTDEIOConfig::saveSettings( KRES::Resource *res )
 {
   ResourceLDAPKIO *resource = dynamic_cast<ResourceLDAPKIO*>( res );
   
   if ( !resource ) {
-    kdDebug(5700) << "ResourceLDAPKIOConfig::saveSettings(): cast failed" << endl;
+    kdDebug(5700) << "ResourceLDAPTDEIOConfig::saveSettings(): cast failed" << endl;
     return;
   }
 
@@ -131,7 +131,7 @@ void ResourceLDAPKIOConfig::saveSettings( KRES::Resource *res )
 
 }
 
-void ResourceLDAPKIOConfig::editAttributes()
+void ResourceLDAPTDEIOConfig::editAttributes()
 {
   AttributesDialog dlg( mAttributes, mRDNPrefix, this );
   if ( dlg.exec() ) {
@@ -140,7 +140,7 @@ void ResourceLDAPKIOConfig::editAttributes()
   }
 }
 
-void ResourceLDAPKIOConfig::editCache()
+void ResourceLDAPTDEIOConfig::editCache()
 {
   LDAPUrl src;
   TQStringList attr;

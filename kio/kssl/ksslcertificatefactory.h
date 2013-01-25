@@ -29,7 +29,7 @@ class KSSLCertificate;
 
 typedef enum {KEYTYPE_UNKNOWN, KEYTYPE_RSA, KEYTYPE_DSA} KSSLKeyType;
 
-class KIO_EXPORT KSSLCertificateFactory {
+class TDEIO_EXPORT KSSLCertificateFactory {
  
 public:
 

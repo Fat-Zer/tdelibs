@@ -51,7 +51,7 @@ class TDEConfig;
  * @author Dawit Alemayehu <adawit@kde.org>
  * @see KPAC
  */
-class KIO_EXPORT KProtocolManager
+class TDEIO_EXPORT KProtocolManager
 {
 public:
 

@@ -108,7 +108,7 @@ namespace TDEIO {
      * @see TDEIO::Job
      **/
 
-    class KIO_EXPORT Scheduler : public TQObject, virtual public DCOPObject {
+    class TDEIO_EXPORT Scheduler : public TQObject, virtual public DCOPObject {
         Q_OBJECT
 
     public:

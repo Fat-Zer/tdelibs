@@ -227,7 +227,7 @@ void ChmodJob::slotResult( TDEIO::Job * job )
 }
 
 // antlarr: KDE 4: Make owner and group be const TQString &
-KIO_EXPORT ChmodJob *TDEIO::chmod( const KFileItemList& lstItems, int permissions, int mask,
+TDEIO_EXPORT ChmodJob *TDEIO::chmod( const KFileItemList& lstItems, int permissions, int mask,
                       TQString owner, TQString group,
                       bool recursive, bool showProgressInfo )
 {

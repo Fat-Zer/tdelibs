@@ -33,7 +33,7 @@
  * A class for importing IE bookmarks
  * @deprecated
  */
-class KIO_EXPORT_DEPRECATED KIEBookmarkImporter : public TQObject
+class TDEIO_EXPORT_DEPRECATED KIEBookmarkImporter : public TQObject
 {
     Q_OBJECT
 public:
@@ -62,7 +62,7 @@ protected:
  * A class for importing IE bookmarks
  * @since 3.2
  */
-class KIO_EXPORT KIEBookmarkImporterImpl : public KBookmarkImporterBase
+class TDEIO_EXPORT KIEBookmarkImporterImpl : public KBookmarkImporterBase
 {
 public:
     KIEBookmarkImporterImpl() { }
@@ -75,7 +75,7 @@ private:
 /*
  * @since 3.2
  */
-class KIO_EXPORT KIEBookmarkExporterImpl : public KBookmarkExporterBase
+class TDEIO_EXPORT KIEBookmarkExporterImpl : public KBookmarkExporterBase
 {
 public:
     KIEBookmarkExporterImpl(KBookmarkManager* mgr, const TQString & path)

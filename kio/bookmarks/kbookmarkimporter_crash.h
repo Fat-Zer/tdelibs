@@ -34,7 +34,7 @@
  * A class for importing all crash sessions as bookmarks
  * @deprecated
  */
-class KIO_EXPORT_DEPRECATED KCrashBookmarkImporter : public TQObject
+class TDEIO_EXPORT_DEPRECATED KCrashBookmarkImporter : public TQObject
 {
     Q_OBJECT
 public:
@@ -57,7 +57,7 @@ protected:
  * A class for importing all crash sessions as bookmarks
  * @since 3.2
  */
-class KIO_EXPORT KCrashBookmarkImporterImpl : public KBookmarkImporterBase
+class TDEIO_EXPORT KCrashBookmarkImporterImpl : public KBookmarkImporterBase
 {
 public:
     KCrashBookmarkImporterImpl() : m_shouldDelete(false) { }

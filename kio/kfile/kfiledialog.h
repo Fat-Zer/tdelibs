@@ -74,7 +74,7 @@ struct KFileDialogPrivate;
  *
  * @author Richard J. Moore <rich@kde.org>, Carsten Pfeiffer <pfeiffer@kde.org>
  */
-class KIO_EXPORT KFileDialog : public KDialogBase
+class TDEIO_EXPORT KFileDialog : public KDialogBase
 {
     Q_OBJECT
 

@@ -35,7 +35,7 @@ class TQSocketNotifier;
 
 namespace TDEIO {
 
-    struct KIO_EXPORT Task {
+    struct TDEIO_EXPORT Task {
 	int cmd;
 	TQByteArray data;
     };
@@ -46,7 +46,7 @@ namespace TDEIO {
      * It handles a queue of commands to be sent which makes it possible to
      * queue data before an actual connection has been established.
      */
-    class KIO_EXPORT Connection : public TQObject
+    class TDEIO_EXPORT Connection : public TQObject
     {
 	Q_OBJECT
     public:

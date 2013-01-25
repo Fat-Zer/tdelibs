@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 	TDEApplication app;
 	QIOManager qiomanager;
 	Dispatcher dispatcher(&qiomanager);
-	KIOInputStream stream;
+	TDEIOInputStream stream;
 	StdoutWriter writer;
 
 	TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();

@@ -33,7 +33,7 @@ class KFilterBase;
  *
  * @author David Faure <faure@kde.org>
  */
-class KIO_EXPORT KFilterDev : public TQIODevice
+class TDEIO_EXPORT KFilterDev : public TQIODevice
 {
 public:
     /**

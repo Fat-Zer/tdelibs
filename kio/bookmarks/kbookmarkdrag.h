@@ -25,7 +25,7 @@
 #include <kbookmark.h>
 
 // Clipboard/dnd data : URLs + XML for bookmarks
-class KIO_EXPORT KBookmarkDrag : public TQUriDrag
+class TDEIO_EXPORT KBookmarkDrag : public TQUriDrag
 {
 public:
     static KBookmarkDrag * newDrag( const TQValueList<KBookmark> & bookmarks,

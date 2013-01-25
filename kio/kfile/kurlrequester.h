@@ -53,7 +53,7 @@ class TQTimer;
  * @short A widget to request a filename/url from the user
  * @author Carsten Pfeiffer <pfeiffer@kde.org>
  */
-class KIO_EXPORT KURLRequester : public TQHBox
+class TDEIO_EXPORT KURLRequester : public TQHBox
 {
     Q_OBJECT
     TQ_PROPERTY( TQString url READ url WRITE setURL )
@@ -287,7 +287,7 @@ private:
 /**
  * URL requester with a combo box, for use in Designer
  */
-class KIO_EXPORT KURLComboRequester : public KURLRequester
+class TDEIO_EXPORT KURLComboRequester : public KURLRequester
 {
     Q_OBJECT
 public:

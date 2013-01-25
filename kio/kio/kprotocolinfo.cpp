@@ -18,8 +18,8 @@
 */
 
 #ifdef MAKE_TDECORE_LIB //needed for proper linkage (win32)
-#undef KIO_EXPORT
-#define KIO_EXPORT KDE_EXPORT
+#undef TDEIO_EXPORT
+#define TDEIO_EXPORT KDE_EXPORT
 #endif
 
 #include "kprotocolinfo.h"

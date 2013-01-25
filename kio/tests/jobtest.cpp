@@ -551,7 +551,7 @@ void JobTest::copyFileToSystem()
 void JobTest::copyFileToSystem( bool resolve_local_urls )
 {
     kdDebug() << k_funcinfo << resolve_local_urls << endl;
-    extern KIO_EXPORT bool kio_resolve_local_urls;
+    extern TDEIO_EXPORT bool kio_resolve_local_urls;
     kio_resolve_local_urls = resolve_local_urls;
 
     const TQString src = homeTmpDir() + "fileFromHome";

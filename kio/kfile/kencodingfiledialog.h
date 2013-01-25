@@ -36,7 +36,7 @@ struct KEncodingFileDialogPrivate;
  * can easily add children that will be incorporated into the layout.
  */
 
-class KIO_EXPORT KEncodingFileDialog : public KFileDialog
+class TDEIO_EXPORT KEncodingFileDialog : public KFileDialog
 {
     Q_OBJECT
 

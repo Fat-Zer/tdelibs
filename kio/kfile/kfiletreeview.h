@@ -37,7 +37,7 @@ class TQTimer;
 
 
 
-class KIO_EXPORT KFileTreeViewToolTip : public TQToolTip
+class TDEIO_EXPORT KFileTreeViewToolTip : public TQToolTip
 {
 public:
     KFileTreeViewToolTip( TQListView *view ) : TQToolTip( view ), m_view( view ) {}
@@ -63,7 +63,7 @@ private:
  * 3. retrieve the root item with KFileTreeBranch::root() and set it open
  *    if desired. That starts the listing.
  */
-class KIO_EXPORT KFileTreeView : public KListView
+class TDEIO_EXPORT KFileTreeView : public KListView
 {
     Q_OBJECT
 public:

@@ -14,7 +14,7 @@
 #include <kurl.h>
 
 
-class KIO_EXPORT KDirNotify_stub : virtual public DCOPStub
+class TDEIO_EXPORT KDirNotify_stub : virtual public DCOPStub
 {
 public:
     KDirNotify_stub( const TQCString& app, const TQCString& id );

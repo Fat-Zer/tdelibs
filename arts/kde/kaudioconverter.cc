@@ -81,12 +81,12 @@ void KAudioConverter::requestPlayObject(const KURL &url)
 {	
 	string queryInterface = "Arts::PlayObject";
 	
-	Arts::KIOInputStream inputStream;
+	Arts::TDEIOInputStream inputStream;
 	
 	if(!url.isLocalFile())
 	{
-		Arts::KIOInputStream_impl *inputStreamImpl = new Arts::KIOInputStream_impl();
-		inputStream = Arts::KIOInputStream::_from_base(inputStreamImpl);
+		Arts::TDEIOInputStream_impl *inputStreamImpl = new Arts::TDEIOInputStream_impl();
+		inputStream = Arts::TDEIOInputStream::_from_base(inputStreamImpl);
 
 		TQObject::connect(inputStreamImpl, TQT_SIGNAL(mimeTypeFound(const TQString &)), TQT_SLOT(slotMimeType(const TQString &)));
 

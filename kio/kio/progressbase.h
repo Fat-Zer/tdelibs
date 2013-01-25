@@ -67,7 +67,7 @@ namespace TDEIO
 * @short Base class for IO progress dialogs.
 * @author Matej Koss <koss@miesto.sk>
 */
-class KIO_EXPORT ProgressBase : public TQWidget {
+class TDEIO_EXPORT ProgressBase : public TQWidget {
 
   Q_OBJECT
 

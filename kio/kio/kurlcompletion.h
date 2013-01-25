@@ -38,7 +38,7 @@ class KURLCompletionPrivate;
  * @short Completion of a single URL
  * @author David Smith <dsmith@algonet.se>
  */
-class KIO_EXPORT KURLCompletion : public KCompletion
+class TDEIO_EXPORT KURLCompletion : public KCompletion
 {
 	Q_OBJECT
 
