@@ -36,7 +36,7 @@
 using namespace KRES;
 
 ConfigDialog::ConfigDialog( TQWidget *parent, const TQString& resourceFamily,
-    /*const TQString& type,*/ Resource* resource, /*KConfig *config, */const char *name )
+    /*const TQString& type,*/ Resource* resource, /*TDEConfig *config, */const char *name )
   : KDialogBase( parent, name, true, i18n( "Resource Configuration" ),
     Ok|Cancel, Ok, false )/*, mConfig( config )*/, mResource( resource )
 {

@@ -25,7 +25,7 @@
 #include "tdelibs_export.h"
 
 class TQVariant;
-class KConfigBase;
+class TDEConfigBase;
 class TDEInstance;
 class KKeySequence;
 class KShortcut;
@@ -162,7 +162,7 @@ class TDECORE_EXPORT KShortcutList
 	 * @param pConfig the configuration file to load from
 	 * @return true if successful, false otherwise
 	 */
-	virtual bool readSettings( const TQString& sConfigGroup = TQString::null, KConfigBase* pConfig = 0 );
+	virtual bool readSettings( const TQString& sConfigGroup = TQString::null, TDEConfigBase* pConfig = 0 );
 
 	/**
 	 * Writes the shortcuts to the given configuration file.
@@ -173,7 +173,7 @@ class TDECORE_EXPORT KShortcutList
 	 * @param bGlobal true to write to the global configuration file
 	 * @return true if successful, false otherwise
 	 */
-	virtual bool writeSettings( const TQString& sConfigGroup = TQString::null, KConfigBase* pConfig = 0,
+	virtual bool writeSettings( const TQString& sConfigGroup = TQString::null, TDEConfigBase* pConfig = 0,
 			bool bWriteAll = false, bool bGlobal = false ) const;
 
  protected:

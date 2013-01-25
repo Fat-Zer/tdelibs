@@ -6,7 +6,7 @@
 #include <kconfigskeleton.h>
 #include <kdebug.h>
 
-class Test4 : public KConfigSkeleton
+class Test4 : public TDEConfigSkeleton
 {
   public:
     class EnumMouseAction
@@ -115,7 +115,7 @@ class Test4 : public KConfigSkeleton
     static
     void writeConfig()
     {
-      static_cast<KConfigSkeleton*>(self())->writeConfig();
+      static_cast<TDEConfigSkeleton*>(self())->writeConfig();
     }
   protected:
     Test4();

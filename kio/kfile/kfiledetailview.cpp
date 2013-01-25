@@ -130,12 +130,12 @@ KFileDetailView::~KFileDetailView()
     delete d;
 }
 
-void KFileDetailView::readConfig( KConfig *config, const TQString& group )
+void KFileDetailView::readConfig( TDEConfig *config, const TQString& group )
 {
     restoreLayout( config, group );
 }
 
-void KFileDetailView::writeConfig( KConfig *config, const TQString& group )
+void KFileDetailView::writeConfig( TDEConfig *config, const TQString& group )
 {
     saveLayout( config, group );
 }
@@ -327,7 +327,7 @@ void KFileDetailView::setSortingKey( KFileListViewItem *item,
     TQDir::SortSpec spec = KFileView::sorting();
 
     if ( spec & TQDir::Time )
-        item->setKey( sortingKey( i->time( KIO::UDS_MODIFICATION_TIME ),
+        item->setKey( sortingKey( i->time( TDEIO::UDS_MODIFICATION_TIME ),
                                   i->isDir(), spec ));
     else if ( spec & TQDir::Size )
         item->setKey( sortingKey( i->size(), i->isDir(), spec ));
@@ -399,7 +399,7 @@ void KFileDetailView::slotSortingChanged( int col )
 
     if ( sortSpec & TQDir::Time ) {
         for ( ; (item = it.current()); ++it )
-            viewItem(item)->setKey( sortingKey( item->time( KIO::UDS_MODIFICATION_TIME ), item->isDir(), sortSpec ));
+            viewItem(item)->setKey( sortingKey( item->time( TDEIO::UDS_MODIFICATION_TIME ), item->isDir(), sortSpec ));
     }
 
     else if ( sortSpec & TQDir::Size ) {

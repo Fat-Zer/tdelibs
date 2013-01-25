@@ -854,22 +854,22 @@ protected:
     /**
      * Reads configuration and applies it (size, recent directories, ...)
      */
-    virtual void readConfig( KConfig *, const TQString& group = TQString::null );
+    virtual void readConfig( TDEConfig *, const TQString& group = TQString::null );
 
     /**
      * Saves the current configuration
      */
-    virtual void writeConfig( KConfig *, const TQString& group = TQString::null );
+    virtual void writeConfig( TDEConfig *, const TQString& group = TQString::null );
 
     /**
      * Reads the recent used files and inserts them into the location combobox
      */
-    virtual void readRecentFiles( KConfig * );
+    virtual void readRecentFiles( TDEConfig * );
 
     /**
      * Saves the entries from the location combobox.
      */
-    virtual void saveRecentFiles( KConfig * );
+    virtual void saveRecentFiles( TDEConfig * );
 
     /**
      * Parses the string "line" for files. If line doesn't contain any ", the
@@ -929,7 +929,7 @@ protected slots:
     void slotFilterChanged();
     void fileHighlighted(const KFileItem *i);
     void fileSelected(const KFileItem *i);
-    void slotStatResult(KIO::Job* job);
+    void slotStatResult(TDEIO::Job* job);
     void slotLoadingFinished();
 
     void fileCompletion( const TQString& );

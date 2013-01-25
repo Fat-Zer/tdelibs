@@ -290,8 +290,8 @@ KDictSpellingHighlighter::KDictSpellingHighlighter( TQTextEdit *textEdit,
     d->checksDone = 0;
     d->completeRehighlightRequired = false;
 
-    KConfig *config = TDEGlobal::config();
-    KConfigGroupSaver cs( config, "KSpell" );
+    TDEConfig *config = TDEGlobal::config();
+    TDEConfigGroupSaver cs( config, "KSpell" );
     d->disablePercentage = config->readNumEntry( "KSpell_AsYouTypeDisablePercentage", 42 );
     d->disablePercentage = QMIN( d->disablePercentage, 101 );
     d->disableWordCount = config->readNumEntry( "KSpell_AsYouTypeDisableWordCount", 100 );
@@ -335,7 +335,7 @@ KDictSpellingHighlighter::~KDictSpellingHighlighter()
 void KDictSpellingHighlighter::slotSpellReady( KSpell *spell )
 {
     kdDebug(0) << "KDictSpellingHighlighter::slotSpellReady( " << spell << " )" << endl;
-    KConfigGroup cg( TDEGlobal::config(),"KSpell" );
+    TDEConfigGroup cg( TDEGlobal::config(),"KSpell" );
     if ( cg.readEntry("KSpell_DoSpellChecking") != "0" )
     {
       if ( d->globalConfig ) {
@@ -539,8 +539,8 @@ void KDictSpellingHighlighter::slotLocalSpellConfigChanged()
 
 TQString KDictSpellingHighlighter::spellKey()
 {
-    KConfig *config = TDEGlobal::config();
-    KConfigGroupSaver cs( config, "KSpell" );
+    TDEConfig *config = TDEGlobal::config();
+    TDEConfigGroupSaver cs( config, "KSpell" );
     config->reparseConfiguration();
     TQString key;
     key += TQString::number( config->readNumEntry( "KSpell_NoRootAffix", 0 ));

@@ -15,7 +15,7 @@ int main ( int argc, char** argv )
     TQString usr, pass, comment, label;
     label = "Site:";
     comment = "<b>localhost</b>";
-    int res = KIO::PasswordDialog::getNameAndPassword( usr, pass, 0L,
+    int res = TDEIO::PasswordDialog::getNameAndPassword( usr, pass, 0L,
                                                        TQString::null, false,
                                                        TQString::null, comment,
                                                        label );

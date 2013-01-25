@@ -306,7 +306,7 @@ PluginBase::PluginBase(ExecState *exec, bool loadPluginInfo)
                     continue;
             }
             // read configuration
-            KConfig kc( locate ("data", pluginsinfo.toString()) );
+            TDEConfig kc( locate ("data", pluginsinfo.toString()) );
             unsigned num = (unsigned int) kc.readNumEntry("number");
             for ( unsigned n = 0; n < num; n++ ) {
                 kc.setGroup( TQString::number(n) );

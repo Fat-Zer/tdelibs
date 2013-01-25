@@ -111,7 +111,7 @@ TQString KMCupsManager::driverDirectory()
 
 TQString KMCupsManager::cupsInstallDir()
 {
-	KConfig	*conf=  KMFactory::self()->printConfig();
+	TDEConfig	*conf=  KMFactory::self()->printConfig();
 	conf->setGroup("CUPS");
 	TQString	dir = conf->readPathEntry("InstallDir");
 	return dir;
@@ -1055,14 +1055,14 @@ void KMCupsManager::slotConnectionFailed( int errcode )
     TQString einfo;
 
     switch (errcode) {
-    case KNetwork::KSocketBase::ConnectionRefused:
-    case KNetwork::KSocketBase::ConnectionTimedOut:
+    case KNetwork::TDESocketBase::ConnectionRefused:
+    case KNetwork::TDESocketBase::ConnectionTimedOut:
         einfo = i18n("connection refused") + TQString(" (%1)").arg(errcode);
         break;
-    case KNetwork::KSocketBase::LookupFailure:
+    case KNetwork::TDESocketBase::LookupFailure:
         einfo = i18n("host not found") + TQString(" (%1)").arg(errcode);
         break;
-    case KNetwork::KSocketBase::WouldBlock:
+    case KNetwork::TDESocketBase::WouldBlock:
     default:
         einfo = i18n("read failed (%1)").arg(errcode);
         break;

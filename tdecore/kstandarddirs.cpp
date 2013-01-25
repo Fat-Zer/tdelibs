@@ -1534,13 +1534,13 @@ static TQStringList lookupProfiles(const TQString &mapFile)
 
 extern bool kde_kiosk_admin;
 
-bool KStandardDirs::addCustomized(KConfig *config)
+bool KStandardDirs::addCustomized(TDEConfig *config)
 {
     if (addedCustoms && !d->checkRestrictions) // there are already customized entries
         return false; // we just quit and hope they are the right ones
 
     // save the numbers of config directories. If this changes,
-    // we will return true to give KConfig a chance to reparse
+    // we will return true to give TDEConfig a chance to reparse
     uint configdirs = resourceDirs("config").count();
 
     // Remember original group

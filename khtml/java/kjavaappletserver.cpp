@@ -193,7 +193,7 @@ void KJavaAppletServer::freeJavaServer()
         //instead of immediately quitting here, set a timer to kill us
         //if there are still no servers- give us one minute
         //this is to prevent repeated loading and unloading of the jvm
-        KConfig config( "konquerorrc", true );
+        TDEConfig config( "konquerorrc", true );
         config.setGroup( "Java/JavaScript Settings" );
         if( config.readBoolEntry( "ShutdownAppletServer", true )  )
         {
@@ -214,7 +214,7 @@ void KJavaAppletServer::checkShutdown()
 
 void KJavaAppletServer::setupJava( KJavaProcess *p )
 {
-    KConfig config ( "konquerorrc", true );
+    TDEConfig config ( "konquerorrc", true );
     config.setGroup( "Java/JavaScript Settings" );
 
     TQString jvm_path = "java";

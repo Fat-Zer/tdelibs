@@ -20,7 +20,7 @@
 #ifndef __konq_htmlsettings_h__
 #define __konq_htmlsettings_h__
 
-class KConfig;
+class TDEConfig;
 #include <tqcolor.h>
 #include <tqstring.h>
 #include <tqstringlist.h>
@@ -108,11 +108,11 @@ public:
     void init();
 
     /** Read settings from @p config.
-     * @param config is a pointer to KConfig object.
+     * @param config is a pointer to TDEConfig object.
      * @param reset if true, settings are always set; if false,
      *  settings are only set if the config file has a corresponding key.
      */
-    void init( KConfig * config, bool reset = true );
+    void init( TDEConfig * config, bool reset = true );
 
     /**
      * Destructor. Don't delete any instance by yourself.
@@ -193,13 +193,13 @@ public:
 
     /** reads from @p config's current group, forcing initialization
       * if @p reset is true.
-      * @param config is a pointer to KConfig object.
+      * @param config is a pointer to TDEConfig object.
       * @param reset true if initialization is to be forced.
       * @param global true if the global domain is to be read.
       * @param pd_settings will be initialised with the computed (inherited)
       *		settings.
       */
-    void readDomainSettings(KConfig *config, bool reset,
+    void readDomainSettings(TDEConfig *config, bool reset,
 			bool global, KPerDomainSettings &pd_settings);
 
     TQString settingsToCSS() const;

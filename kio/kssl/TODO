@@ -15,7 +15,7 @@
 
 - <keygen> is not working.
 
-- Namespace it all to KIO::SSL:: in KDE4
+- Namespace it all to TDEIO::SSL:: in KDE4
 
 - Remove SSLv2
 

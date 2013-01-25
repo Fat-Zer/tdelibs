@@ -170,12 +170,12 @@ void ISearchPluginView::setView( KTextEditor::View* view )
 
 void ISearchPluginView::readConfig()
 {
-    // KConfig* config = instance()->config();
+    // TDEConfig* config = instance()->config();
 }
 
 void ISearchPluginView::writeConfig()
 {
-    // KConfig* config = instance()->config();
+    // TDEConfig* config = instance()->config();
 }
 
 void ISearchPluginView::setCaseSensitive( bool caseSensitive )

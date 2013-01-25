@@ -33,7 +33,7 @@
 {
   TDEApplication app( argc, argv, "KFontDialogTest" );
 
-  KConfig aConfig;
+  TDEConfig aConfig;
   aConfig.setGroup( "KFontDialog-test" );
 
   app.setFont(TQFont("Helvetica",12));

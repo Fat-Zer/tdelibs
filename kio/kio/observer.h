@@ -32,12 +32,12 @@
 class UIServer_stub;
 class KURL;
 
-namespace KIO {
+namespace TDEIO {
   class Job;
 }
 
 /**
- * Observer for KIO::Job progress information.
+ * Observer for TDEIO::Job progress information.
  *
  * This class, of which there is always only one instance,
  * "observes" what jobs do and forwards this information
@@ -47,9 +47,9 @@ namespace KIO {
  * kill method when the user presses Cancel.
  *
  * Usually jobs are automatically registered by the
- * KIO::Scheduler, so you do not have to care about that.
+ * TDEIO::Scheduler, so you do not have to care about that.
  *
- * @short Observer for KIO::Job progress information
+ * @short Observer for TDEIO::Job progress information
  * @author David Faure <faure@kde.org>
  */
 class KIO_EXPORT Observer : public TQObject, public DCOPObject {
@@ -75,7 +75,7 @@ public:
    * @param showProgress true to show progress, false otherwise
    * @return the progress ID assigned by the UI Server to the Job.
    */
-  int newJob( KIO::Job * job, bool showProgress );
+  int newJob( TDEIO::Job * job, bool showProgress );
 
   /**
    * Called by the job destructor, to tell the UI Server that
@@ -85,7 +85,7 @@ public:
   void jobFinished( int progressId );
 
   /**
-   * @deprecated use KIO::AutoInfo
+   * @deprecated use TDEIO::AutoInfo
    */
   bool openPassDlg( const TQString& prompt, TQString& user, TQString& pass,
                     bool readOnly );
@@ -95,10 +95,10 @@ public:
    * @param info the authentication information
    * @return true if successful ("ok" clicked), false otherwise
    */
-  bool openPassDlg( KIO::AuthInfo& info );
+  bool openPassDlg( TDEIO::AuthInfo& info );
 
   /**
-   * Popup a message box. See KIO::SlaveBase.
+   * Popup a message box. See TDEIO::SlaveBase.
    * This doesn't use DCOP anymore, it shows the dialog in the application's process.
    * Otherwise, other apps would block when trying to communicate with UIServer.
    * @param progressId the progress ID of the job, as returned by newJob()
@@ -112,7 +112,7 @@ public:
                          const TQString &buttonYes, const TQString &buttonNo );
 
   /**
-   * Popup a message box. See KIO::SlaveBase.
+   * Popup a message box. See TDEIO::SlaveBase.
    * This doesn't use DCOP anymore, it shows the dialog in the application's process.
    * Otherwise, other apps would block when trying to communicate with UIServer.
    * @param progressId the progress ID of the job, as returned by newJob()
@@ -132,13 +132,13 @@ public:
    * @internal
    * See renamedlg.h
    */
-  KIO::RenameDlg_Result open_RenameDlg( KIO::Job * job,
+  TDEIO::RenameDlg_Result open_RenameDlg( TDEIO::Job * job,
                                         const TQString & caption,
                                         const TQString& src, const TQString & dest,
-                                        KIO::RenameDlg_Mode mode,
+                                        TDEIO::RenameDlg_Mode mode,
                                         TQString& newDest,
-                                        KIO::filesize_t sizeSrc = (KIO::filesize_t) -1,
-                                        KIO::filesize_t sizeDest = (KIO::filesize_t) -1,
+                                        TDEIO::filesize_t sizeSrc = (TDEIO::filesize_t) -1,
+                                        TDEIO::filesize_t sizeDest = (TDEIO::filesize_t) -1,
                                         time_t ctimeSrc = (time_t) -1,
                                         time_t ctimeDest = (time_t) -1,
                                         time_t mtimeSrc = (time_t) -1,
@@ -149,7 +149,7 @@ public:
    * @internal
    * See skipdlg.h
    */
-  KIO::SkipDlg_Result open_SkipDlg( KIO::Job * job,
+  TDEIO::SkipDlg_Result open_SkipDlg( TDEIO::Job * job,
                                     bool multi,
                                     const TQString & error_text );
 
@@ -164,7 +164,7 @@ k_dcop:
    * Called by the UI Server (using DCOP) to get all the metadata of the job
    * @param progressId the progress IDof the job, as returned by newJob()
    */
-  KIO::MetaData metadata( int progressId );
+  TDEIO::MetaData metadata( int progressId );
 
 protected:
 
@@ -174,35 +174,35 @@ protected:
 
   UIServer_stub * m_uiserver;
 
-  TQIntDict< KIO::Job > m_dctJobs;
+  TQIntDict< TDEIO::Job > m_dctJobs;
 
 public slots:
 
-  void slotTotalSize( KIO::Job*, KIO::filesize_t size );
-  void slotTotalFiles( KIO::Job*, unsigned long files );
-  void slotTotalDirs( KIO::Job*, unsigned long dirs );
+  void slotTotalSize( TDEIO::Job*, TDEIO::filesize_t size );
+  void slotTotalFiles( TDEIO::Job*, unsigned long files );
+  void slotTotalDirs( TDEIO::Job*, unsigned long dirs );
 
-  void slotProcessedSize( KIO::Job*, KIO::filesize_t size );
-  void slotProcessedFiles( KIO::Job*, unsigned long files );
-  void slotProcessedDirs( KIO::Job*, unsigned long dirs );
+  void slotProcessedSize( TDEIO::Job*, TDEIO::filesize_t size );
+  void slotProcessedFiles( TDEIO::Job*, unsigned long files );
+  void slotProcessedDirs( TDEIO::Job*, unsigned long dirs );
 
-  void slotSpeed( KIO::Job*, unsigned long speed );
-  void slotPercent( KIO::Job*, unsigned long percent );
-  void slotInfoMessage( KIO::Job*, const TQString & msg );
+  void slotSpeed( TDEIO::Job*, unsigned long speed );
+  void slotPercent( TDEIO::Job*, unsigned long percent );
+  void slotInfoMessage( TDEIO::Job*, const TQString & msg );
 
-  void slotCopying( KIO::Job*, const KURL& from, const KURL& to );
-  void slotMoving( KIO::Job*, const KURL& from, const KURL& to );
-  void slotDeleting( KIO::Job*, const KURL& url );
+  void slotCopying( TDEIO::Job*, const KURL& from, const KURL& to );
+  void slotMoving( TDEIO::Job*, const KURL& from, const KURL& to );
+  void slotDeleting( TDEIO::Job*, const KURL& url );
   /// @since 3.1
-  void slotTransferring( KIO::Job*, const KURL& url );
-  void slotCreatingDir( KIO::Job*, const KURL& dir );
+  void slotTransferring( TDEIO::Job*, const KURL& url );
+  void slotCreatingDir( TDEIO::Job*, const KURL& dir );
   // currently unused
-  void slotCanResume( KIO::Job*, KIO::filesize_t offset );
+  void slotCanResume( TDEIO::Job*, TDEIO::filesize_t offset );
 
 public:
-  void stating( KIO::Job*, const KURL& url );
-  void mounting( KIO::Job*, const TQString & dev, const TQString & point );
-  void unmounting( KIO::Job*, const TQString & point );
+  void stating( TDEIO::Job*, const KURL& url );
+  void mounting( TDEIO::Job*, const TQString & dev, const TQString & point );
+  void unmounting( TDEIO::Job*, const TQString & point );
 protected:
   virtual void virtual_hook( int id, void* data );
 private:

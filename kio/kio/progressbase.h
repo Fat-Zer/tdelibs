@@ -24,13 +24,13 @@
 #include <kio/global.h>
 
 class KURL;
-namespace KIO {
+namespace TDEIO {
   class Job;
   class CopyJob;
   class DeleteJob;
 }
 
-namespace KIO
+namespace TDEIO
 {
   enum Progress {
     DEFAULT = 1,
@@ -53,7 +53,7 @@ namespace KIO
 * Custom progress dialog will be used like this :
 * \code
 * // create job
-* CopyJob* job = KIO::copy(...);
+* CopyJob* job = TDEIO::copy(...);
 * // create a dialog
 * MyCustomProgress *customProgress;
 * customProgress = new MyCustomProgress();
@@ -81,20 +81,20 @@ public:
   ~ProgressBase() {}
 
   /**
-   * Assign a KIO::Job to this progress dialog.
+   * Assign a TDEIO::Job to this progress dialog.
    * @param job the job to assign
    */
-  void setJob( KIO::Job *job );
+  void setJob( TDEIO::Job *job );
   /**
-   * Assign a KIO::Job to this progress dialog.
+   * Assign a TDEIO::Job to this progress dialog.
    * @param job the job to assign
    */
-  void setJob( KIO::CopyJob *job );
+  void setJob( TDEIO::CopyJob *job );
   /**
-   * Assign a KIO::Job to this progress dialog.
+   * Assign a TDEIO::Job to this progress dialog.
    * @param job the job to assign
    */
-  void setJob( KIO::DeleteJob *job );
+  void setJob( TDEIO::DeleteJob *job );
 
   // should we stop the job when the dialog is closed ?
   void setStopOnClose( bool stopOnClose ) { m_bStopOnClose = stopOnClose; }
@@ -103,7 +103,7 @@ public:
   // should we delete the dialog or just clean it when the job is finished ?
   /**
    * This controls whether the dialog should be deleted or only cleaned when
-   * the KIO::Job is finished (or canceled).
+   * the TDEIO::Job is finished (or canceled).
    *
    * If your dialog is an embedded widget and not a separate window, you should
    * setOnlyClean(true) in the constructor of your custom dialog.
@@ -143,101 +143,101 @@ public slots:
   // progress slots
   /**
    * Called to set the total size.
-   * @param job the KIO::Job
+   * @param job the TDEIO::Job
    * @param size the total size in bytes
    */
-  virtual void slotTotalSize( KIO::Job* job, KIO::filesize_t size ) {
+  virtual void slotTotalSize( TDEIO::Job* job, TDEIO::filesize_t size ) {
     Q_UNUSED(job);Q_UNUSED(size);}
   /**
    * Called to set the total number of files.
-   * @param job the KIO::Job
+   * @param job the TDEIO::Job
    * @param files the number of files
    */
-  virtual void slotTotalFiles( KIO::Job* job, unsigned long files ) {
+  virtual void slotTotalFiles( TDEIO::Job* job, unsigned long files ) {
     Q_UNUSED(job);Q_UNUSED(files);}
   /**
    * Called to set the total number of directories.
-   * @param job the KIO::Job
+   * @param job the TDEIO::Job
    * @param dirs the number of directories
    */
-  virtual void slotTotalDirs( KIO::Job* job, unsigned long dirs ) {
+  virtual void slotTotalDirs( TDEIO::Job* job, unsigned long dirs ) {
     Q_UNUSED(job);Q_UNUSED(dirs);}
 
   /**
    * Called to set the processed size.
-   * @param job the KIO::Job
+   * @param job the TDEIO::Job
    * @param bytes the processed size in bytes
    */
-  virtual void slotProcessedSize( KIO::Job* job, KIO::filesize_t bytes ) {
+  virtual void slotProcessedSize( TDEIO::Job* job, TDEIO::filesize_t bytes ) {
     Q_UNUSED(job);Q_UNUSED(bytes);}
   /**
    * Called to set the number of processed files.
-   * @param job the KIO::Job
+   * @param job the TDEIO::Job
    * @param files the number of files
    */
-  virtual void slotProcessedFiles( KIO::Job* job, unsigned long files ) {
+  virtual void slotProcessedFiles( TDEIO::Job* job, unsigned long files ) {
     Q_UNUSED(job);Q_UNUSED(files);}
   /**
    * Called to set the number of processed directories.
-   * @param job the KIO::Job
+   * @param job the TDEIO::Job
    * @param dirs the number of directories
    */
-  virtual void slotProcessedDirs( KIO::Job* job, unsigned long dirs ) {
+  virtual void slotProcessedDirs( TDEIO::Job* job, unsigned long dirs ) {
     Q_UNUSED(job);Q_UNUSED(dirs);}
 
   /**
    * Called to set the speed.
-   * @param job the KIO::Job
+   * @param job the TDEIO::Job
    * @param speed the speed in bytes/second
    */
-  virtual void slotSpeed( KIO::Job* job, unsigned long speed ) {
+  virtual void slotSpeed( TDEIO::Job* job, unsigned long speed ) {
     Q_UNUSED(job);Q_UNUSED(speed);}
 
   /**
    * Called to set the percentage.
-   * @param job the KIO::Job
+   * @param job the TDEIO::Job
    * @param percent the percentage
    */
-  virtual void slotPercent( KIO::Job* job, unsigned long percent ) {
+  virtual void slotPercent( TDEIO::Job* job, unsigned long percent ) {
     Q_UNUSED(job);Q_UNUSED(percent);}
 
   /**
    * Called when the job is copying.
-   * @param job the KIO::Job
+   * @param job the TDEIO::Job
    * @param src the source of the operation
    * @param dest the destination of the operation
    */
-  virtual void slotCopying( KIO::Job* job, const KURL& src, const KURL& dest ) {
+  virtual void slotCopying( TDEIO::Job* job, const KURL& src, const KURL& dest ) {
     Q_UNUSED(job);Q_UNUSED(src);Q_UNUSED(dest);}
   /**
    * Called when the job is moving.
-   * @param job the KIO::Job
+   * @param job the TDEIO::Job
    * @param src the source of the operation
    * @param dest the destination of the operation
    */
-  virtual void slotMoving( KIO::Job* job, const KURL& src, const KURL& dest ) {
+  virtual void slotMoving( TDEIO::Job* job, const KURL& src, const KURL& dest ) {
     Q_UNUSED(job);Q_UNUSED(src);Q_UNUSED(dest);}
   /**
    * Called when the job is deleting.
-   * @param job the KIO::Job
+   * @param job the TDEIO::Job
    * @param url the URL to delete
    */
-  virtual void slotDeleting( KIO::Job* job, const KURL& url) {
+  virtual void slotDeleting( TDEIO::Job* job, const KURL& url) {
     Q_UNUSED(job);Q_UNUSED(url);}
   /**
    * Called when the job is creating a directory.
-   * @param job the KIO::Job
+   * @param job the TDEIO::Job
    * @param dir the URL of the directory to create
    */
-  virtual void slotCreatingDir( KIO::Job* job, const KURL& dir ) {
+  virtual void slotCreatingDir( TDEIO::Job* job, const KURL& dir ) {
     Q_UNUSED(job);Q_UNUSED(dir);}
 
   /**
    * Called when the job is resuming..
-   * @param job the KIO::Job
+   * @param job the TDEIO::Job
    * @param from the position to resume from in bytes
    */
-  virtual void slotCanResume( KIO::Job* job, KIO::filesize_t from) {
+  virtual void slotCanResume( TDEIO::Job* job, TDEIO::filesize_t from) {
     Q_UNUSED(job);Q_UNUSED(from);}
 
 signals:
@@ -247,13 +247,13 @@ signals:
   void stopped();
 
 protected slots:
-  void slotFinished( KIO::Job* );
+  void slotFinished( TDEIO::Job* );
 
 protected:
 
   virtual void closeEvent( TQCloseEvent * );
 
-  KIO::Job* m_pJob;
+  TDEIO::Job* m_pJob;
 
 private:
   bool m_bOnlyClean;

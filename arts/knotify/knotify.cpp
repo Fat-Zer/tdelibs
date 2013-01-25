@@ -73,10 +73,10 @@
 class KNotifyPrivate
 {
 public:
-    KConfig* globalEvents;
-    KConfig* globalConfig;
-    TQMap<TQString, KConfig*> events;
-    TQMap<TQString, KConfig*> configs;
+    TDEConfig* globalEvents;
+    TDEConfig* globalConfig;
+    TQMap<TQString, TDEConfig*> events;
+    TQMap<TQString, TDEConfig*> configs;
     TQString externalPlayer;
     TDEProcess *externalPlayerProc;
 
@@ -136,8 +136,8 @@ KDE_EXPORT int kdemain(int argc, char **argv)
     // abort this.
 
 #ifndef WITHOUT_ARTS
-    KConfigGroup config( TDEGlobal::config(), "StartProgress" );
-    KConfig artsKCMConfig( "kcmartsrc" );
+    TDEConfigGroup config( TDEGlobal::config(), "StartProgress" );
+    TDEConfig artsKCMConfig( "kcmartsrc" );
     artsKCMConfig.setGroup( "Arts" );
     bool useArts = artsKCMConfig.readBoolEntry( "StartServer", true );
     if (useArts)
@@ -245,8 +245,8 @@ KNotify::KNotify( bool useArts )
     : TQObject(), DCOPObject("Notify")
 {
     d = new KNotifyPrivate;
-    d->globalEvents = new KConfig("knotify/eventsrc", true, false, "data");
-    d->globalConfig = new KConfig("knotify.eventsrc", true, false);
+    d->globalEvents = new TDEConfig("knotify/eventsrc", true, false, "data");
+    d->globalConfig = new TDEConfig("knotify.eventsrc", true, false);
     d->externalPlayerProc = 0;
     d->useArts = useArts;
     d->inStartup = true;
@@ -285,7 +285,7 @@ KNotify::~KNotify()
 
 void KNotify::loadConfig() {
     // load external player settings
-    KConfig *kc = TDEGlobal::config();
+    TDEConfig *kc = TDEGlobal::config();
     kc->setGroup("Misc");
     d->useExternal = kc->readBoolEntry( "Use external player", false );
     d->externalPlayer = kc->readPathEntry("External player");
@@ -313,7 +313,7 @@ void KNotify::reconfigure()
 
     // clear loaded config files
     d->globalConfig->reparseConfiguration();
-    for ( TQMapIterator<TQString,KConfig*> it = d->configs.begin(); it != d->configs.end(); ++it )
+    for ( TQMapIterator<TQString,TDEConfig*> it = d->configs.begin(); it != d->configs.end(); ++it )
         delete it.data();
     d->configs.clear();
 }
@@ -344,8 +344,8 @@ void KNotify::notify(const TQString &event, const TQString &fromApp,
     }
 
     TQString commandline;
-    KConfig *eventsFile = NULL;
-    KConfig *configFile = NULL;
+    TDEConfig *eventsFile = NULL;
+    TDEConfig *configFile = NULL;
 
     // check for valid events
     if ( !event.isEmpty() ) {
@@ -354,13 +354,13 @@ void KNotify::notify(const TQString &event, const TQString &fromApp,
         if ( d->events.contains( fromApp ) ) {
             eventsFile = d->events[fromApp];
         } else {
-            eventsFile=new KConfig(locate("data", fromApp+"/eventsrc"),true,false);
+            eventsFile=new TDEConfig(locate("data", fromApp+"/eventsrc"),true,false);
             d->events.insert( fromApp, eventsFile );
         }
         if ( d->configs.contains( fromApp) ) {
             configFile = d->configs[fromApp];
         } else {
-            configFile=new KConfig(fromApp+".eventsrc",true,false);
+            configFile=new TDEConfig(fromApp+".eventsrc",true,false);
             d->configs.insert( fromApp, configFile );
         }
 
@@ -588,12 +588,12 @@ bool KNotify::notifyByMessagebox(const TQString &text, int level, WId winId)
 
 bool KNotify::notifyByPassivePopup( const TQString &text,
                                     const TQString &appName,
-                                    KConfig* eventsFile,
+                                    TDEConfig* eventsFile,
                                     WId senderWinId )
 {
     KIconLoader iconLoader( appName );
     if ( eventsFile != NULL ) {
-        KConfigGroup config( eventsFile, "!Global!" );
+        TDEConfigGroup config( eventsFile, "!Global!" );
         TQString iconName = config.readEntry( "IconName", appName );
         TQPixmap icon = iconLoader.loadIcon( iconName, KIcon::Small );
         TQString title = config.readEntry( "Comment", appName );

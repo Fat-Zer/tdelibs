@@ -40,7 +40,7 @@
 // Note that this header file is installed, so think twice
 // before breaking binary compatibility (read: it is forbidden :)
 
-class FileProtocol : public TQObject, public KIO::SlaveBase
+class FileProtocol : public TQObject, public TDEIO::SlaveBase
 {
   Q_OBJECT
 public:
@@ -76,12 +76,12 @@ public:
   bool pmount( const TQString &dev );
 
 protected slots:
-  void slotProcessedSize( KIO::filesize_t _bytes );
+  void slotProcessedSize( TDEIO::filesize_t _bytes );
   void slotInfoMessage( const TQString & msg );
 
 protected:
 
-  bool createUDSEntry( const TQString & filename, const TQCString & path, KIO::UDSEntry & entry, 
+  bool createUDSEntry( const TQString & filename, const TQCString & path, TDEIO::UDSEntry & entry, 
                        short int details, bool withACL );
   int setACL( const char *path, mode_t perm, bool _directoryDefault );
   

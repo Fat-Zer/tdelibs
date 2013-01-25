@@ -28,7 +28,7 @@
 
 class KLineEdit;
 
-namespace KIO {
+namespace TDEIO {
 
 /*
  * A default implementation of the progress dialog ProgressBase.
@@ -58,59 +58,59 @@ public:
 
   /// Shared with uiserver.cpp
   static TQString makePercentString( unsigned long percent,
-                                    KIO::filesize_t totalSize,
+                                    TDEIO::filesize_t totalSize,
                                     unsigned long totalFiles );
 
 public slots:
-  virtual void slotTotalSize( KIO::Job *job, KIO::filesize_t size );
-  virtual void slotTotalFiles( KIO::Job *job, unsigned long files );
-  virtual void slotTotalDirs( KIO::Job *job, unsigned long dirs );
+  virtual void slotTotalSize( TDEIO::Job *job, TDEIO::filesize_t size );
+  virtual void slotTotalFiles( TDEIO::Job *job, unsigned long files );
+  virtual void slotTotalDirs( TDEIO::Job *job, unsigned long dirs );
 
-  virtual void slotProcessedSize( KIO::Job *job, KIO::filesize_t bytes );
-  virtual void slotProcessedFiles( KIO::Job *job, unsigned long files );
-  virtual void slotProcessedDirs( KIO::Job *job, unsigned long dirs );
+  virtual void slotProcessedSize( TDEIO::Job *job, TDEIO::filesize_t bytes );
+  virtual void slotProcessedFiles( TDEIO::Job *job, unsigned long files );
+  virtual void slotProcessedDirs( TDEIO::Job *job, unsigned long dirs );
 
-  virtual void slotSpeed( KIO::Job *job, unsigned long speed );
-  virtual void slotPercent( KIO::Job *job, unsigned long percent );
+  virtual void slotSpeed( TDEIO::Job *job, unsigned long speed );
+  virtual void slotPercent( TDEIO::Job *job, unsigned long percent );
   /**
    * Called to set an information message.
-   * @param job the KIO::Job
+   * @param job the TDEIO::Job
    * @param msg the message to set
    */
-  virtual void slotInfoMessage( KIO::Job *job, const TQString & msg );
+  virtual void slotInfoMessage( TDEIO::Job *job, const TQString & msg );
 
-  virtual void slotCopying( KIO::Job* job, const KURL& src, const KURL& dest );
-  virtual void slotMoving( KIO::Job* job, const KURL& src, const KURL& dest );
-  virtual void slotDeleting( KIO::Job* job, const KURL& url );
+  virtual void slotCopying( TDEIO::Job* job, const KURL& src, const KURL& dest );
+  virtual void slotMoving( TDEIO::Job* job, const KURL& src, const KURL& dest );
+  virtual void slotDeleting( TDEIO::Job* job, const KURL& url );
   /**
    * Called when the job is transferring.
-   * @param job the KIO::Job
+   * @param job the TDEIO::Job
    * @param url the url to transfer
    * @since 3.1
    */
-  void slotTransferring( KIO::Job* job, const KURL& url );
-  virtual void slotCreatingDir( KIO::Job* job, const KURL& dir );
+  void slotTransferring( TDEIO::Job* job, const KURL& url );
+  virtual void slotCreatingDir( TDEIO::Job* job, const KURL& dir );
   /**
    * Called when the job is requesting a stat.
-   * @param job the KIO::Job
+   * @param job the TDEIO::Job
    * @param dir the dir to stat
    * @since 3.1
    */
-  virtual void slotStating( KIO::Job* job, const KURL& dir );
+  virtual void slotStating( TDEIO::Job* job, const KURL& dir );
   /**
    * Called when the job is mounting.
-   * @param job the KIO::Job
+   * @param job the TDEIO::Job
    * @param dev the device to mount
    * @param point the mount point
    */
-  virtual void slotMounting( KIO::Job* job, const TQString & dev, const TQString & point );
+  virtual void slotMounting( TDEIO::Job* job, const TQString & dev, const TQString & point );
   /**
    * Called when the job is unmounting.
-   * @param job the KIO::Job
+   * @param job the TDEIO::Job
    * @param point the mount point
    */
-  virtual void slotUnmounting( KIO::Job* job, const TQString & point );
-  virtual void slotCanResume( KIO::Job* job, KIO::filesize_t from);
+  virtual void slotUnmounting( TDEIO::Job* job, const TQString & point );
+  virtual void slotCanResume( TDEIO::Job* job, TDEIO::filesize_t from);
 
   /**
    * Called when the job is cleaned.
@@ -136,11 +136,11 @@ protected:
 
   KProgress* m_pProgressBar;
 
-  KIO::filesize_t m_iTotalSize;
+  TDEIO::filesize_t m_iTotalSize;
   unsigned long m_iTotalFiles;
   unsigned long m_iTotalDirs;
 
-  KIO::filesize_t m_iProcessedSize;
+  TDEIO::filesize_t m_iProcessedSize;
   unsigned long m_iProcessedDirs;
   unsigned long m_iProcessedFiles;
 

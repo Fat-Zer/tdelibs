@@ -31,9 +31,9 @@
 
 #include "slaveconfig.h"
 
-using namespace KIO;
+using namespace TDEIO;
 
-namespace KIO {
+namespace TDEIO {
 
 class SlaveConfigProtocol
 {
@@ -47,10 +47,10 @@ public:
 public:
   MetaData global;
   TQDict<MetaData> host;
-  KConfig *configFile;
+  TDEConfig *configFile;
 };
 
-static void readConfig(KConfig *config, const TQString & group, MetaData *metaData)
+static void readConfig(TDEConfig *config, const TQString & group, MetaData *metaData)
 {
    *metaData += config->entryMap(group);
 }
@@ -71,7 +71,7 @@ void SlaveConfigPrivate::readGlobalConfig()
 {
    global.clear();
    // Read stuff...
-   KConfig *config = KProtocolManager::config();
+   TDEConfig *config = KProtocolManager::config();
    readConfig(TDEGlobal::config(), "Socks", &global); // Socks settings.
    if ( config )
        readConfig(config, "<default>", &global);
@@ -84,7 +84,7 @@ SlaveConfigProtocol* SlaveConfigPrivate::readProtocolConfig(const TQString &_pro
    {
       TQString filename = KProtocolInfo::config(_protocol);
       scp = new SlaveConfigProtocol;
-      scp->configFile = new KConfig(filename, true, false);
+      scp->configFile = new TDEConfig(filename, true, false);
       protocol.insert(_protocol, scp);
    }
    // Read global stuff...

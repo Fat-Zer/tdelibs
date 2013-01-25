@@ -314,8 +314,8 @@ KActionCollection* KSystemTray::actionCollection()
 
 TQPixmap KSystemTray::loadIcon( const TQString &icon, TDEInstance *instance )
 {
-    KConfig *appCfg = kapp->config();
-    KConfigGroupSaver configSaver(appCfg, "System Tray");
+    TDEConfig *appCfg = kapp->config();
+    TDEConfigGroupSaver configSaver(appCfg, "System Tray");
     int iconWidth = appCfg->readNumEntry("systrayIconWidth", 22);
     return instance->iconLoader()->loadIcon( icon, KIcon::Panel, iconWidth );
 }

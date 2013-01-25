@@ -914,7 +914,7 @@ void TDEApplication::init(bool GUIenabled)
   // Trigger creation of locale.
   (void) TDEGlobal::locale();
 
-  KConfig* config = TDEGlobal::config();
+  TDEConfig* config = TDEGlobal::config();
   d->actionRestrictions = config->hasGroup("KDE Action Restrictions" ) && !kde_kiosk_exception;
   // For brain-dead configurations where the user's local config file is not writable.
   // * We use kdialog to warn the user, so we better not generate warnings from
@@ -923,7 +923,7 @@ void TDEApplication::init(bool GUIenabled)
   TQCString readOnly = getenv("TDE_HOME_READONLY");
   if (readOnly.isEmpty() && (tqstrcmp(name(), "kdialog") != 0))
   {
-    KConfigGroupSaver saver(config, "KDE Action Restrictions");
+    TDEConfigGroupSaver saver(config, "KDE Action Restrictions");
     if (config->readBoolEntry("warn_unwritable_config",true))
        config->checkConfigFilesWritable(true);
   }
@@ -1107,13 +1107,13 @@ void TDEApplication::disableAutoDcopRegistration()
   autoDcopRegistration = false;
 }
 
-KConfig* TDEApplication::sessionConfig()
+TDEConfig* TDEApplication::sessionConfig()
 {
     if (pSessionConfig)
         return pSessionConfig;
 
     // create an instance specific config object
-    pSessionConfig = new KConfig( sessionConfigName(), false, false);
+    pSessionConfig = new TDEConfig( sessionConfigName(), false, false);
     return pSessionConfig;
 }
 
@@ -2276,7 +2276,7 @@ void TDEApplication::applyGUIStyle()
 {
     if ( !useStyles ) return;
 
-    KConfigGroup pConfig (TDEGlobal::config(), "General");
+    TDEConfigGroup pConfig (TDEGlobal::config(), "General");
     TQString defaultStyle = KStyle::defaultStyle();
     TQString styleStr = pConfig.readEntry("widgetStyle", defaultStyle);
 
@@ -2339,12 +2339,12 @@ TQString TDEApplication::makeStdCaption( const TQString &userCaption,
 
 TQPalette TDEApplication::createApplicationPalette()
 {
-    KConfig *config = TDEGlobal::config();
-    KConfigGroupSaver saver( config, "General" );
+    TDEConfig *config = TDEGlobal::config();
+    TDEConfigGroupSaver saver( config, "General" );
     return createApplicationPalette( config, TDEGlobalSettings::contrast() );
 }
 
-TQPalette TDEApplication::createApplicationPalette( KConfig *config, int contrast_ )
+TQPalette TDEApplication::createApplicationPalette( TDEConfig *config, int contrast_ )
 {
     TQColor trinity4Background( 239, 239, 239 );
     TQColor trinity4Blue( 103,141,178 );
@@ -2440,8 +2440,8 @@ void TDEApplication::kdisplaySetPalette()
 #ifdef Q_WS_MACX
     //Can I have this on other platforms, please!? --Sam
     {
-        KConfig *config = TDEGlobal::config();
-        KConfigGroupSaver saver( config, "General" );
+        TDEConfig *config = TDEGlobal::config();
+        TDEConfigGroupSaver saver( config, "General" );
         bool do_not_set_palette = FALSE;
         if(config->readBoolEntry("nopaletteChange", &do_not_set_palette))
             return;
@@ -2484,8 +2484,8 @@ void TDEApplication::kdisplaySetStyle()
 
 void TDEApplication::propagateSettings(SettingsCategory arg)
 {
-    KConfigBase* config = TDEGlobal::config();
-    KConfigGroupSaver saver( config, "KDE" );
+    TDEConfigBase* config = TDEGlobal::config();
+    TDEConfigGroupSaver saver( config, "KDE" );
 
 #ifdef QT_HAVE_MAX_IMAGE_SIZE
     TQSize maxImageSize(4096, 4096);
@@ -2532,7 +2532,7 @@ void TDEApplication::installKDEPropertyMap()
     installed = true;
     /**
      * If you are adding a widget that was missing please
-     * make sure to also add it to KConfigDialogManager's retrieveSettings()
+     * make sure to also add it to TDEConfigDialogManager's retrieveSettings()
      * function.
      * Thanks.
      */
@@ -2785,7 +2785,7 @@ void TDEApplication::invokeMailer(const TQString &_to, const TQString &_cc, cons
                                 const TQString & /*messageFile TODO*/, const TQStringList &attachURLs,
                                 const TQCString& startup_id )
 {
-   KConfig config("emaildefaults");
+   TDEConfig config("emaildefaults");
 
    config.setGroup("Defaults");
    TQString group = config.readEntry("Profile","Default");
@@ -2821,7 +2821,7 @@ void TDEApplication::invokeMailer(const TQString &_to, const TQString &_cc, cons
 
    if (config.readBoolEntry("TerminalClient", false))
    {
-     KConfigGroup confGroup( TDEGlobal::config(), "General" );
+     TDEConfigGroup confGroup( TDEGlobal::config(), "General" );
      TQString preferredTerminal = confGroup.readPathEntry("TerminalApplication", "konsole");
      command = preferredTerminal + " -e " + command;
    }
@@ -3351,8 +3351,8 @@ bool TDEApplication::authorize(const TQString &genericAction)
    if (!d->actionRestrictions)
       return true;
 
-   KConfig *config = TDEGlobal::config();
-   KConfigGroupSaver saver( config, "KDE Action Restrictions" );
+   TDEConfig *config = TDEGlobal::config();
+   TDEConfigGroupSaver saver( config, "KDE Action Restrictions" );
    return config->readBoolEntry(genericAction, true);
 }
 
@@ -3370,15 +3370,15 @@ bool TDEApplication::authorizeControlModule(const TQString &menuId)
 {
    if (menuId.isEmpty() || kde_kiosk_exception)
       return true;
-   KConfig *config = TDEGlobal::config();
-   KConfigGroupSaver saver( config, "TDE Control Module Restrictions" );
+   TDEConfig *config = TDEGlobal::config();
+   TDEConfigGroupSaver saver( config, "TDE Control Module Restrictions" );
    return config->readBoolEntry(menuId, true);
 }
 
 TQStringList TDEApplication::authorizeControlModules(const TQStringList &menuIds)
 {
-   KConfig *config = TDEGlobal::config();
-   KConfigGroupSaver saver( config, "TDE Control Module Restrictions" );
+   TDEConfig *config = TDEGlobal::config();
+   TDEConfigGroupSaver saver( config, "TDE Control Module Restrictions" );
    TQStringList result;
    for(TQStringList::ConstIterator it = menuIds.begin();
        it != menuIds.end(); ++it)
@@ -3426,8 +3426,8 @@ void TDEApplication::initUrlActionRestrictions()
   d->urlActionRestrictions.append( new TDEApplicationPrivate::URLActionRule
   ("redirect", TQString::null, TQString::null, TQString::null, "=", TQString::null, TQString::null, true));
 
-  KConfig *config = TDEGlobal::config();
-  KConfigGroupSaver saver( config, "KDE URL Restrictions" );
+  TDEConfig *config = TDEGlobal::config();
+  TDEConfigGroupSaver saver( config, "KDE URL Restrictions" );
   int count = config->readNumEntry("rule_count");
   TQString keyFormat = TQString("rule_%1");
   for(int i = 1; i <= count; i++)

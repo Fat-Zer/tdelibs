@@ -30,13 +30,13 @@ void PreviewTest::slotGenerate()
 {
     KURL::List urls;
     urls.append(m_url->text());
-    KIO::PreviewJob *job = KIO::filePreview(urls, m_preview->width(), m_preview->height(), true, 48);
-    connect(job, TQT_SIGNAL(result(KIO::Job*)), TQT_SLOT(slotResult(KIO::Job*)));
+    TDEIO::PreviewJob *job = TDEIO::filePreview(urls, m_preview->width(), m_preview->height(), true, 48);
+    connect(job, TQT_SIGNAL(result(TDEIO::Job*)), TQT_SLOT(slotResult(TDEIO::Job*)));
     connect(job, TQT_SIGNAL(gotPreview(const KFileItem *, const TQPixmap &)), TQT_SLOT(slotPreview(const KFileItem *, const TQPixmap &)));
     connect(job, TQT_SIGNAL(failed(const KFileItem *)), TQT_SLOT(slotFailed()));
 }
 
-void PreviewTest::slotResult(KIO::Job*)
+void PreviewTest::slotResult(TDEIO::Job*)
 {
     kdDebug() << "PreviewTest::slotResult(...)" << endl;
 }

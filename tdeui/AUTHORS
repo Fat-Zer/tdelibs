@@ -10,7 +10,7 @@ Maintainer of KPixmapEffect, KStyle, KThemeStyle, and KThemeBase - as well as
 general misc coding here and there. 
 
 Matthias Kalle Dalheimer <kalle@kde.org>:
-classes TDEApplication, KConfig, KTextStream, KColorSet, 
+classes TDEApplication, TDEConfig, KTextStream, KColorSet, 
 automake, autoconf, maintenance
 
 Richard Moore <moorer@cs.man.ac.uk>:
@@ -23,7 +23,7 @@ Steffen Hansen <stefh@dit.ou.dk>:
 KURL class
 
 Torben Weis <weis@stud.uni-frankfurt.de>
-DnD stuff, KSocket and KServerSocket classes, KPixmap
+DnD stuff, TDESocket and TDEServerSocket classes, KPixmap
 
 Alexander Sanda <alex@darkstar.ping.at>
 Read and write numerical config entries, KPanner, KTabControl,

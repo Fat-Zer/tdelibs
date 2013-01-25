@@ -35,8 +35,8 @@
 KFileSpeedBar::KFileSpeedBar( TQWidget *parent, const char *name )
     : KURLBar( true, parent, name )
 {
-    KConfig *config = TDEGlobal::config();
-    KConfigGroupSaver cs( config, ConfigGroup );
+    TDEConfig *config = TDEGlobal::config();
+    TDEConfigGroupSaver cs( config, ConfigGroup );
     m_initializeSpeedbar = config->readBoolEntry( "Set speedbar defaults",
                                                    true );
     setIconSize(KIcon::SizeSmallMedium);
@@ -121,11 +121,11 @@ KFileSpeedBar::~KFileSpeedBar()
 {
 }
 
-void KFileSpeedBar::save( KConfig *config )
+void KFileSpeedBar::save( TDEConfig *config )
 {
     if ( m_initializeSpeedbar && isModified() )
     {
-        KConfigGroup conf( config, ConfigGroup );
+        TDEConfigGroup conf( config, ConfigGroup );
         // write to kdeglobals
         conf.writeEntry( "Set speedbar defaults", false, true, true );
     }

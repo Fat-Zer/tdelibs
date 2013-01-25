@@ -93,8 +93,8 @@ public:
 
     virtual void setSorting( TQDir::SortSpec sort );
 
-    virtual void readConfig( KConfig *, const TQString& group = TQString::null );
-    virtual void writeConfig( KConfig *, const TQString& group = TQString::null);
+    virtual void readConfig( TDEConfig *, const TQString& group = TQString::null );
+    virtual void writeConfig( TDEConfig *, const TQString& group = TQString::null);
 
     void ensureItemVisible( const KFileItem * );
 

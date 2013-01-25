@@ -42,9 +42,9 @@
 
 KDesktopFile::KDesktopFile(const TQString &fileName, bool bReadOnly,
 			   const char * resType)
-  : KConfig(TQString::fromLatin1(""), bReadOnly, false)
+  : TDEConfig(TQString::fromLatin1(""), bReadOnly, false)
 {
-  // KConfigBackEnd will try to locate the filename that is provided
+  // TDEConfigBackEnd will try to locate the filename that is provided
   // based on the resource type specified, _only_ if the filename
   // is not an absolute path.
   backEnd->changeFileName(fileName, resType, false);
@@ -346,7 +346,7 @@ KDesktopFile::sortOrder() const
 }
 
 void KDesktopFile::virtual_hook( int id, void* data )
-{ KConfig::virtual_hook( id, data ); }
+{ TDEConfig::virtual_hook( id, data ); }
 
 TQString KDesktopFile::readDocPath() const
 {
@@ -361,7 +361,7 @@ TQString KDesktopFile::readDocPath() const
 KDesktopFile* KDesktopFile::copyTo(const TQString &file) const
 {
   KDesktopFile *config = new KDesktopFile(TQString::null, false);
-  KConfig::copyTo(file, config);
+  TDEConfig::copyTo(file, config);
   config->setDesktopGroup();
   return config;
 }

@@ -88,22 +88,22 @@ public:
 	void hideIfNeeded();
 
 	/**
-	 * Save the config using a KConfig object
+	 * Save the config using a TDEConfig object
 	 *
 	 * The combination of the group_or_prefix variable and the parent
 	 * dockwidget's name will be the group the configuration is saved in
 	 * \param group_or_prefix the prefix to append to the parent dockwidget's name
 	 */
-	virtual void save( KConfig *, const TQString& group_or_prefix );
+	virtual void save( TDEConfig *, const TQString& group_or_prefix );
 
 	/**
-	 * Load the config using a KConfig object
+	 * Load the config using a TDEConfig object
 	 * 
 	 * The combination of the group_or_prefix variable and the parent
 	 * dockwidget's name will be the group the configuration is loaded from
 	 * \param group_or_prefix the prefix to append to the parent dockwidget's name
 	 */
-	virtual void load( KConfig *, const TQString& group_or_prefix );
+	virtual void load( TDEConfig *, const TQString& group_or_prefix );
 
 	/**
 	 * Save the config to a QDomElement

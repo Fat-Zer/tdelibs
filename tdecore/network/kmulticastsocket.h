@@ -78,14 +78,14 @@ public:
    * @param group	the multicast group to join
    * @returns true on success
    */
-  virtual bool joinGroup(const KSocketAddress& group);
+  virtual bool joinGroup(const TDESocketAddress& group);
 
   /**
    * @overload
    * Joins a multicast group. This function also specifies the network interface
    * to be used.
    */
-  virtual bool joinGroup(const KSocketAddress& group, 
+  virtual bool joinGroup(const TDESocketAddress& group, 
 			 const KNetworkInterface& iface);
 
   /**
@@ -95,13 +95,13 @@ public:
    * @param group	the group to leave
    * @returns true on successful leaving the group
    */
-  virtual bool leaveGroup(const KSocketAddress& group);
+  virtual bool leaveGroup(const TDESocketAddress& group);
 
   /**
    * @overload
    * Leaves a multicast group.
    */
-  virtual bool leaveGroup(const KSocketAddress& group,
+  virtual bool leaveGroup(const TDESocketAddress& group,
 			  const KNetworkInterface& iface);
 
 private:

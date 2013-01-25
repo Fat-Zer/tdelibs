@@ -37,7 +37,7 @@
 
 #include <assert.h>
 
-class KConfigDialogManager::Private {
+class TDEConfigDialogManager::Private {
 
 public:
   Private() : insideGroupBox(false) { }
@@ -48,7 +48,7 @@ public:
   bool insideGroupBox;
 };
 
-KConfigDialogManager::KConfigDialogManager(TQWidget *parent, KConfigSkeleton *conf, const char *name)
+TDEConfigDialogManager::TDEConfigDialogManager(TQWidget *parent, TDEConfigSkeleton *conf, const char *name)
  : TQObject(parent, name), m_conf(conf), m_dialog(parent)
 {
   d = new Private();
@@ -59,12 +59,12 @@ KConfigDialogManager::KConfigDialogManager(TQWidget *parent, KConfigSkeleton *co
   init(true);
 }
 
-KConfigDialogManager::~KConfigDialogManager()
+TDEConfigDialogManager::~TDEConfigDialogManager()
 {
   delete d;
 }
 
-void KConfigDialogManager::init(bool trackChanges)
+void TDEConfigDialogManager::init(bool trackChanges)
 {
   if(trackChanges)
   {
@@ -121,12 +121,12 @@ void KConfigDialogManager::init(bool trackChanges)
   (void) parseChildren(m_dialog, trackChanges);
 }
 
-void KConfigDialogManager::addWidget(TQWidget *widget)
+void TDEConfigDialogManager::addWidget(TQWidget *widget)
 {
   (void) parseChildren(widget, true);
 }
 
-void KConfigDialogManager::setupWidget(TQWidget *widget, KConfigSkeletonItem *item)
+void TDEConfigDialogManager::setupWidget(TQWidget *widget, TDEConfigSkeletonItem *item)
 {
   TQVariant minValue = item->minValue();
   if (minValue.isValid())
@@ -150,7 +150,7 @@ void KConfigDialogManager::setupWidget(TQWidget *widget, KConfigSkeletonItem *it
   }
 }
 
-bool KConfigDialogManager::parseChildren(const TQWidget *widget, bool trackChanges)
+bool TDEConfigDialogManager::parseChildren(const TQWidget *widget, bool trackChanges)
 {
   bool valueChanged = false;
   const TQObjectList listOfChildren = widget->childrenListObject();
@@ -174,7 +174,7 @@ bool KConfigDialogManager::parseChildren(const TQWidget *widget, bool trackChang
     {
       // This is one of our widgets!
       TQString configId = widgetName+5;
-      KConfigSkeletonItem *item = m_conf->findItem(configId);
+      TDEConfigSkeletonItem *item = m_conf->findItem(configId);
       if (item)
       {
         d->knownWidget.insert(configId, childWidget);
@@ -187,7 +187,7 @@ bool KConfigDialogManager::parseChildren(const TQWidget *widget, bool trackChang
         {
 		   // If the class name of the widget wasn't in the monitored widgets map, then look for 
 		   // it again using the super class name. This fixes a problem with using QtRuby/Korundum 
-		   // widgets with KConfigXT where 'Qt::Widget' wasn't being seen a the real deal, even 
+		   // widgets with TDEConfigXT where 'Qt::Widget' wasn't being seen a the real deal, even 
 		   // though it was a 'QWidget'.
           changedIt = changedMap.find(childWidget->metaObject()->superClassName());
         }
@@ -256,7 +256,7 @@ bool KConfigDialogManager::parseChildren(const TQWidget *widget, bool trackChang
   return valueChanged;
 }
 
-void KConfigDialogManager::updateWidgets()
+void TDEConfigDialogManager::updateWidgets()
 {
   bool changed = false;
   bool bSignalsBlocked = signalsBlocked();
@@ -266,7 +266,7 @@ void KConfigDialogManager::updateWidgets()
   for( TQDictIterator<TQWidget> it( d->knownWidget );
        (widget = it.current()); ++it )
   {
-     KConfigSkeletonItem *item = m_conf->findItem(it.currentKey());
+     TDEConfigSkeletonItem *item = m_conf->findItem(it.currentKey());
      if (!item)
      {
         kdWarning(178) << "The setting '" << it.currentKey() << "' has disappeared!" << endl;
@@ -294,14 +294,14 @@ void KConfigDialogManager::updateWidgets()
     TQTimer::singleShot(0, this, TQT_SIGNAL(widgetModified()));
 }
 
-void KConfigDialogManager::updateWidgetsDefault()
+void TDEConfigDialogManager::updateWidgetsDefault()
 {
   bool bUseDefaults = m_conf->useDefaults(true);
   updateWidgets();
   m_conf->useDefaults(bUseDefaults);
 }
 
-void KConfigDialogManager::updateSettings()
+void TDEConfigDialogManager::updateSettings()
 {
   bool changed = false;
 
@@ -309,7 +309,7 @@ void KConfigDialogManager::updateSettings()
   for( TQDictIterator<TQWidget> it( d->knownWidget );
        (widget = it.current()); ++it )
   {
-     KConfigSkeletonItem *item = m_conf->findItem(it.currentKey());
+     TDEConfigSkeletonItem *item = m_conf->findItem(it.currentKey());
      if (!item)
      {
         kdWarning(178) << "The setting '" << it.currentKey() << "' has disappeared!" << endl;
@@ -330,7 +330,7 @@ void KConfigDialogManager::updateSettings()
   }
 }
 
-void KConfigDialogManager::setProperty(TQWidget *w, const TQVariant &v)
+void TDEConfigDialogManager::setProperty(TQWidget *w, const TQVariant &v)
 {
   TQButtonGroup *bg = dynamic_cast<TQButtonGroup *>(w);
   if (bg)
@@ -349,7 +349,7 @@ void KConfigDialogManager::setProperty(TQWidget *w, const TQVariant &v)
   propertyMap->setProperty(w, v);
 }
 
-TQVariant KConfigDialogManager::property(TQWidget *w)
+TQVariant TDEConfigDialogManager::property(TQWidget *w)
 {
   TQButtonGroup *bg = dynamic_cast<TQButtonGroup *>(w);
   if (bg)
@@ -362,14 +362,14 @@ TQVariant KConfigDialogManager::property(TQWidget *w)
   return propertyMap->property(w);
 }
 
-bool KConfigDialogManager::hasChanged()
+bool TDEConfigDialogManager::hasChanged()
 {
 
   TQWidget *widget;
   for( TQDictIterator<TQWidget> it( d->knownWidget );
        (widget = it.current()); ++it )
   {
-     KConfigSkeletonItem *item = m_conf->findItem(it.currentKey());
+     TDEConfigSkeletonItem *item = m_conf->findItem(it.currentKey());
      if (!item)
      {
         kdWarning(178) << "The setting '" << it.currentKey() << "' has disappeared!" << endl;
@@ -386,7 +386,7 @@ bool KConfigDialogManager::hasChanged()
   return false;
 }
 
-bool KConfigDialogManager::isDefault()
+bool TDEConfigDialogManager::isDefault()
 {
   bool bUseDefaults = m_conf->useDefaults(true);
   bool result = !hasChanged();

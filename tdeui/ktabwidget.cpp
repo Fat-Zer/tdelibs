@@ -42,7 +42,7 @@ public:
 
     KTabWidgetPrivate() {
         m_automaticResizeTabs = false;
-        KConfigGroupSaver groupsaver(TDEGlobal::config(), "General");
+        TDEConfigGroupSaver groupsaver(TDEGlobal::config(), "General");
         m_maxLength = TDEGlobal::config()->readNumEntry("MaximumTabLength", 30);
         m_minLength = TDEGlobal::config()->readNumEntry("MinimumTabLength", 3);
         m_CurrentMaxLength = m_minLength;

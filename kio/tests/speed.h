@@ -5,7 +5,7 @@
 #include <kio/global.h>
 #include <kurl.h>
 
-namespace KIO {
+namespace TDEIO {
     class Job;
 }
 
@@ -16,8 +16,8 @@ public:
     SpeedTest(const KURL & url);
 
 private slots:
-    void entries( KIO::Job *, const KIO::UDSEntryList& );
-    void finished( KIO::Job *job );
+    void entries( TDEIO::Job *, const TDEIO::UDSEntryList& );
+    void finished( TDEIO::Job *job );
 
 };
 

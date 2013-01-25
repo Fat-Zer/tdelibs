@@ -37,7 +37,7 @@ class KSqueezedTextLabel;
 class ProgressItem;
 class UIServer;
 
-namespace KIO {
+namespace TDEIO {
   class Job;
   class DefaultProgress;
 }
@@ -122,11 +122,11 @@ public:
   void setDefaultProgressVisible( bool visible );
   bool isVisible() const { return m_visible; }
 
-  void setTotalSize( KIO::filesize_t bytes );
+  void setTotalSize( TDEIO::filesize_t bytes );
   void setTotalFiles( unsigned long files );
   void setTotalDirs( unsigned long dirs );
 
-  void setProcessedSize( KIO::filesize_t size );
+  void setProcessedSize( TDEIO::filesize_t size );
   void setProcessedFiles( unsigned long files );
   void setProcessedDirs( unsigned long dirs );
 
@@ -143,11 +143,11 @@ public:
   void setMounting( const TQString & dev, const TQString & point );
   void setUnmounting( const TQString & point );
 
-  void setCanResume( KIO::filesize_t offset );
+  void setCanResume( TDEIO::filesize_t offset );
 
-  KIO::filesize_t totalSize() { return m_iTotalSize; }
+  TDEIO::filesize_t totalSize() { return m_iTotalSize; }
   unsigned long totalFiles() { return m_iTotalFiles; }
-  KIO::filesize_t processedSize() { return m_iProcessedSize; }
+  TDEIO::filesize_t processedSize() { return m_iProcessedSize; }
   unsigned long processedFiles() { return m_iProcessedFiles; }
   unsigned long speed() { return m_iSpeed; }
   unsigned int remainingSeconds() { return m_remainingSeconds; }
@@ -179,12 +179,12 @@ protected:
   ListProgress *listProgress;
 
   // associated default progress dialog
-  KIO::DefaultProgress *defaultProgress;
+  TDEIO::DefaultProgress *defaultProgress;
 
   // we store these values for calculation of totals ( for statusbar )
-  KIO::filesize_t m_iTotalSize;
+  TDEIO::filesize_t m_iTotalSize;
   unsigned long m_iTotalFiles;
-  KIO::filesize_t m_iProcessedSize;
+  TDEIO::filesize_t m_iProcessedSize;
   unsigned long m_iProcessedFiles;
   unsigned long m_iSpeed;
   int m_remainingSeconds;
@@ -230,7 +230,7 @@ k_dcop:
   /**
    * Signal a new job
    * @param appId the DCOP application id of the job's parent application
-   * @see KIO::Observer::newJob
+   * @see TDEIO::Observer::newJob
    * @param showProgress whether to popup the progress for the job.
    *   Usually true, but may be false when we use kio_uiserver for
    *   other things, like SSL dialogs.
@@ -241,12 +241,12 @@ k_dcop:
   ASYNC jobFinished( int id );
 
   ASYNC totalSize( int id, unsigned long size );
-  ASYNC totalSize64( int id, KIO::filesize_t size );
+  ASYNC totalSize64( int id, TDEIO::filesize_t size );
   ASYNC totalFiles( int id, unsigned long files );
   ASYNC totalDirs( int id, unsigned long dirs );
 
   ASYNC processedSize( int id, unsigned long bytes );
-  ASYNC processedSize64( int id, KIO::filesize_t bytes );
+  ASYNC processedSize64( int id, TDEIO::filesize_t bytes );
   ASYNC processedFiles( int id, unsigned long files );
   ASYNC processedDirs( int id, unsigned long dirs );
 
@@ -265,14 +265,14 @@ k_dcop:
   ASYNC unmounting( int id, TQString point );
 
   ASYNC canResume( int id, unsigned long offset );
-  ASYNC canResume64( int id, KIO::filesize_t offset );
+  ASYNC canResume64( int id, TDEIO::filesize_t offset );
 
   /**
    * @deprecated (it blocks other apps).
-   * Use KIO::PasswordDialog::getNameAndPassword instead.
+   * Use TDEIO::PasswordDialog::getNameAndPassword instead.
    * To be removed in KDE 4.0.
    */
-  TQByteArray openPassDlg( const KIO::AuthInfo &info );
+  TQByteArray openPassDlg( const TDEIO::AuthInfo &info );
 
   /**
    * Popup a message box.
@@ -296,15 +296,15 @@ k_dcop:
 
   /**
    * @deprecated (it blocks other apps).
-   * Use KIO::open_RenameDlg instead.
+   * Use TDEIO::open_RenameDlg instead.
    * To be removed in KDE 4.0.
    */
   TQByteArray open_RenameDlg64( int id,
                              const TQString & caption,
                              const TQString& src, const TQString & dest,
-                             int /* KIO::RenameDlg_Mode */ mode,
-                             KIO::filesize_t sizeSrc,
-                             KIO::filesize_t sizeDest,
+                             int /* TDEIO::RenameDlg_Mode */ mode,
+                             TDEIO::filesize_t sizeSrc,
+                             TDEIO::filesize_t sizeDest,
                              unsigned long /* time_t */ ctimeSrc,
                              unsigned long /* time_t */ ctimeDest,
                              unsigned long /* time_t */ mtimeSrc,
@@ -312,13 +312,13 @@ k_dcop:
                              );
   /**
    * @deprecated (it blocks other apps).
-   * Use KIO::open_RenameDlg instead.
+   * Use TDEIO::open_RenameDlg instead.
    * To be removed in KDE 4.0.
    */
   TQByteArray open_RenameDlg( int id,
                              const TQString & caption,
                              const TQString& src, const TQString & dest,
-                             int /* KIO::RenameDlg_Mode */ mode,
+                             int /* TDEIO::RenameDlg_Mode */ mode,
                              unsigned long sizeSrc,
                              unsigned long sizeDest,
                              unsigned long /* time_t */ ctimeSrc,
@@ -329,7 +329,7 @@ k_dcop:
 
   /**
    * @deprecated (it blocks other apps).
-   * Use KIO::open_SkipDlg instead.
+   * Use TDEIO::open_SkipDlg instead.
    * To be removed in KDE 4.0.
    */
   int open_SkipDlg( int id,
@@ -350,12 +350,12 @@ k_dcop:
   /**
    * Show a SSL Information Dialog
    */
-  void showSSLInfoDialog(const TQString &url, const KIO::MetaData &data, int mainwindow);
+  void showSSLInfoDialog(const TQString &url, const TDEIO::MetaData &data, int mainwindow);
 
   /**
    * @deprecated
    */
-  void showSSLInfoDialog(const TQString &url, const KIO::MetaData &data);
+  void showSSLInfoDialog(const TQString &url, const TDEIO::MetaData &data);
 
   /*
    * Show an SSL Certificate Selection Dialog

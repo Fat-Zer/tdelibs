@@ -33,7 +33,7 @@
 // mimeType     - the mime type of the file, so we need not extra determine it
 // what         - what to load
  
-using namespace KIO;
+using namespace TDEIO;
 
 extern "C"
 {

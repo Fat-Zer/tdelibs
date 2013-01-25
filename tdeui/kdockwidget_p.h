@@ -50,9 +50,9 @@ public:
   virtual void showWidget(KDockWidget *);
   virtual void removeWidget(KDockWidget*);
   virtual void undockWidget(KDockWidget*);
-  virtual void save(KConfig *cfg,const TQString& group_or_prefix);
+  virtual void save(TDEConfig *cfg,const TQString& group_or_prefix);
   virtual void save(TQDomElement& dockElement);
-  virtual void load(KConfig *cfg,const TQString& group_or_prefix);
+  virtual void load(TDEConfig *cfg,const TQString& group_or_prefix);
   virtual void load(TQDomElement& dockElement);
   virtual void setToolTip (KDockWidget *, TQString &);
   virtual void  setPixmap(KDockWidget*,const TQPixmap&);

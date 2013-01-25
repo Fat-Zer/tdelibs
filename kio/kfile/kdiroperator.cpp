@@ -90,7 +90,7 @@ public:
     KActionSeparator *viewActionSeparator;
     int dropOptions;
 
-    KConfig *config;
+    TDEConfig *config;
     TQString configGroup;
 };
 
@@ -388,13 +388,13 @@ void KDirOperator::mkdir()
     TQString where = url().pathOrURL();
     TQString name = i18n( "New Folder" );
     if ( url().isLocalFile() && TQFileInfo( url().path(+1) + name ).exists() )
-         name = KIO::RenameDlg::suggestName( url(), name );
+         name = TDEIO::RenameDlg::suggestName( url(), name );
 
     TQString dir = KInputDialog::getText( i18n( "New Folder" ),
                                          i18n( "Create new folder in:\n%1" ).arg( where ),
                                          name, &ok, this);
     if (ok)
-      mkdir( KIO::encodeFileName( dir ), true );
+      mkdir( TDEIO::encodeFileName( dir ), true );
 }
 
 bool KDirOperator::mkdir( const TQString& directory, bool enterDirectory )
@@ -413,8 +413,8 @@ bool KDirOperator::mkdir( const TQString& directory, bool enterDirectory )
     for ( ; it != dirs.end(); ++it )
     {
         url.addPath( *it );
-        exists = KIO::NetAccess::exists( url, false, 0 );
-        writeOk = !exists && KIO::NetAccess::mkdir( url, topLevelWidget() );
+        exists = TDEIO::NetAccess::exists( url, false, 0 );
+        writeOk = !exists && TDEIO::NetAccess::mkdir( url, topLevelWidget() );
     }
 
     if ( exists ) // url was already existant
@@ -433,13 +433,13 @@ bool KDirOperator::mkdir( const TQString& directory, bool enterDirectory )
     return writeOk;
 }
 
-KIO::DeleteJob * KDirOperator::del( const KFileItemList& items,
+TDEIO::DeleteJob * KDirOperator::del( const KFileItemList& items,
                                     bool ask, bool showProgress )
 {
     return del( items, this, ask, showProgress );
 }
 
-KIO::DeleteJob * KDirOperator::del( const KFileItemList& items,
+TDEIO::DeleteJob * KDirOperator::del( const KFileItemList& items,
                                     TQWidget *parent,
                                     bool ask, bool showProgress )
 {
@@ -483,7 +483,7 @@ KIO::DeleteJob * KDirOperator::del( const KFileItemList& items,
     }
 
     if ( doIt ) {
-        KIO::DeleteJob *job = KIO::del( urls, false, showProgress );
+        TDEIO::DeleteJob *job = TDEIO::del( urls, false, showProgress );
         job->setWindow (topLevelWidget());
         job->setAutoErrorHandlingEnabled( true, parent );
         return job;
@@ -502,7 +502,7 @@ void KDirOperator::deleteSelected()
         del( *list );
 }
 
-KIO::CopyJob * KDirOperator::trash( const KFileItemList& items,
+TDEIO::CopyJob * KDirOperator::trash( const KFileItemList& items,
                                     TQWidget *parent,
                                     bool ask, bool showProgress )
 {
@@ -546,7 +546,7 @@ KIO::CopyJob * KDirOperator::trash( const KFileItemList& items,
     }
 
     if ( doIt ) {
-        KIO::CopyJob *job = KIO::trash( urls, showProgress );
+        TDEIO::CopyJob *job = TDEIO::trash( urls, showProgress );
         job->setWindow (topLevelWidget());
         job->setAutoErrorHandlingEnabled( true, parent );
         return job;
@@ -718,7 +718,7 @@ void KDirOperator::pathChanged()
     // it may be, that we weren't ready at this time
     TQApplication::restoreOverrideCursor();
 
-    // when KIO::Job emits finished, the slot will restore the cursor
+    // when TDEIO::Job emits finished, the slot will restore the cursor
     TQApplication::setOverrideCursor( tqwaitCursor );
 
     if ( !isReadable( currUrl )) {
@@ -812,8 +812,8 @@ bool KDirOperator::checkPreviewSupport()
     KToggleAction *previewAction = static_cast<KToggleAction*>( myActionCollection->action( "preview" ));
 
     bool hasPreviewSupport = false;
-    KConfig *kc = TDEGlobal::config();
-    KConfigGroupSaver cs( kc, ConfigGroup );
+    TDEConfig *kc = TDEGlobal::config();
+    TDEConfigGroupSaver cs( kc, ConfigGroup );
     if ( kc->readBoolEntry( "Show Default Preview", true ) )
         hasPreviewSupport = checkPreviewInternal();
 
@@ -823,7 +823,7 @@ bool KDirOperator::checkPreviewSupport()
 
 bool KDirOperator::checkPreviewInternal() const
 {
-    TQStringList supported = KIO::PreviewJob::supportedMimeTypes();
+    TQStringList supported = TDEIO::PreviewJob::supportedMimeTypes();
     // no preview support for directories?
     if ( dirOnlyMode() && supported.findIndex( "inode/directory" ) == -1 )
         return false;
@@ -1385,8 +1385,8 @@ void KDirOperator::setupMenu(int whichActions)
         actionMenu->insert( mkdirAction );
         if (currUrl.isLocalFile() && !(TDEApplication::keyboardMouseState() & TQt::ShiftButton))
             actionMenu->insert( myActionCollection->action( "trash" ) );
-        KConfig *globalconfig = TDEGlobal::config();
-        KConfigGroupSaver cs( globalconfig, TQString::fromLatin1("KDE") );
+        TDEConfig *globalconfig = TDEGlobal::config();
+        TDEConfigGroupSaver cs( globalconfig, TQString::fromLatin1("KDE") );
         if (!currUrl.isLocalFile() || (TDEApplication::keyboardMouseState() & TQt::ShiftButton) ||
             globalconfig->readBoolEntry("ShowDeleteCommand", false))
             actionMenu->insert( myActionCollection->action( "delete" ) );
@@ -1439,7 +1439,7 @@ void KDirOperator::updateViewActions()
     detailedAction->setChecked( KFile::isDetailView( fv ));
 }
 
-void KDirOperator::readConfig( KConfig *kc, const TQString& group )
+void KDirOperator::readConfig( TDEConfig *kc, const TQString& group )
 {
     if ( !kc )
         return;
@@ -1495,7 +1495,7 @@ void KDirOperator::readConfig( KConfig *kc, const TQString& group )
     kc->setGroup( oldGroup );
 }
 
-void KDirOperator::writeConfig( KConfig *kc, const TQString& group )
+void KDirOperator::writeConfig( TDEConfig *kc, const TQString& group )
 {
     if ( !kc )
         return;
@@ -1718,13 +1718,13 @@ void KDirOperator::slotRefreshItems( const KFileItemList& items )
         m_fileView->updateView( it.current() );
 }
 
-void KDirOperator::setViewConfig( KConfig *config, const TQString& group )
+void KDirOperator::setViewConfig( TDEConfig *config, const TQString& group )
 {
     d->config = config;
     d->configGroup = group;
 }
 
-KConfig * KDirOperator::viewConfig()
+TDEConfig * KDirOperator::viewConfig()
 {
     return d->config;
 }

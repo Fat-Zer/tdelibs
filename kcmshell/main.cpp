@@ -106,7 +106,7 @@ static KService::Ptr locateModule(const TQCString& module)
     if ( module.left( 4 ) != "kde-" && service->library().isEmpty() )
         return locateModule( "kde-" + module );
 
-    if(!KCModuleLoader::testModule( module ))
+    if(!TDECModuleLoader::testModule( module ))
     {
         kdDebug(780) << "According to \"" << module << "\"'s test function, it should Not be loaded." << endl;
         return 0;
@@ -301,7 +301,7 @@ extern "C" KDE_EXPORT int kdemain(int _argc, char *_argv[])
         id = args->getOption( "embed-proxy" ).toInt(&idValid);    
         if( idValid )
         {
-            KCModuleProxy *module = new KCModuleProxy( modules.first()->desktopEntryName() );
+            TDECModuleProxy *module = new TDECModuleProxy( modules.first()->desktopEntryName() );
             module->realModule();
             QXEmbed::embedClientIntoWindow( module, id);
             app.exec();
@@ -318,7 +318,7 @@ extern "C" KDE_EXPORT int kdemain(int _argc, char *_argv[])
             i18n("Configure - %1").arg(kapp->caption()), 0, "", true );
 
     for (KService::List::ConstIterator it = modules.begin(); it != modules.end(); ++it)
-        dlg->addModule(KCModuleInfo(*it));
+        dlg->addModule(TDECModuleInfo(*it));
 
     if ( args->isSet( "embed" ))
     {
@@ -339,7 +339,7 @@ extern "C" KDE_EXPORT int kdemain(int _argc, char *_argv[])
         if (kapp->iconName() != kapp->name())
             setIcon(dlg, kapp->iconName());
         else if ( modules.count() == 1 )
-            setIcon(dlg, KCModuleInfo( modules.first()).icon());
+            setIcon(dlg, TDECModuleInfo( modules.first()).icon());
 
         dlg->exec();
         delete dlg;

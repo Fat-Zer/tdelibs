@@ -346,8 +346,8 @@ public:
 
     KFileViewSignaler * signaler() const { return sig; }
 
-    virtual void readConfig( KConfig *, const TQString& group = TQString::null );
-    virtual void writeConfig( KConfig *, const TQString& group = TQString::null);
+    virtual void readConfig( TDEConfig *, const TQString& group = TQString::null );
+    virtual void writeConfig( TDEConfig *, const TQString& group = TQString::null);
 
     /**
      * Various options for drag and drop support. 
@@ -392,10 +392,10 @@ public:
     /**
      * An overloaded method that takes not a TQString, but a number as sort
      * criterion. You can use this for file-sizes or dates/times for example.
-     * If you use a time_t, you need to cast that to KIO::filesize_t because
+     * If you use a time_t, you need to cast that to TDEIO::filesize_t because
      * of ambiguity problems.
      */
-    static TQString sortingKey( KIO::filesize_t value, bool isDir,int sortSpec);
+    static TQString sortingKey( TDEIO::filesize_t value, bool isDir,int sortSpec);
 
     /**
      * @internal

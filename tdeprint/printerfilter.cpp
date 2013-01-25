@@ -38,7 +38,7 @@ PrinterFilter::~PrinterFilter()
 
 void PrinterFilter::update()
 {
-	KConfig	*conf = KMFactory::self()->printConfig();
+	TDEConfig	*conf = KMFactory::self()->printConfig();
 	conf->setGroup("Filter");
 	m_locationRe.setPattern(conf->readEntry("LocationRe"));
 	m_printers = conf->readListEntry("Printers");
@@ -52,7 +52,7 @@ void PrinterFilter::update()
 void PrinterFilter::setEnabled(bool on)
 {
 	m_enabled = on;
-	KConfig	*conf = TDEGlobal::config();
+	TDEConfig	*conf = TDEGlobal::config();
 	conf->setGroup("KPrinter Settings");
 	conf->writeEntry("FilterEnabled", m_enabled);
 }

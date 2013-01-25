@@ -138,8 +138,8 @@ private:
     KMimeType::Ptr m_mime;
     KURL m_pluginsListFileURL;
     TQString m_tmpPluginFileName;
-    KIO::CopyJob *m_downloadJob;
-    KIO::CopyJob *m_installFileJob;
+    TDEIO::CopyJob *m_downloadJob;
+    TDEIO::CopyJob *m_installFileJob;
     KNSPluginInfo m_toInstallPluginInfo;
     TQProcess *m_scanProc;
     
@@ -151,12 +151,12 @@ signals:
    
 private slots:
     // Used to monitor the plugin downloading
-    void slotDownLoadProgress(KIO::Job *job, unsigned long percent);
-    void slotDownloadResult(KIO::Job *job);
+    void slotDownLoadProgress(TDEIO::Job *job, unsigned long percent);
+    void slotDownloadResult(TDEIO::Job *job);
     
     // Used to monitor the plugin installation
-    void slotCopyProgress(KIO::Job *job, unsigned long percent);
-    void slotCopyResult(KIO::Job *job);
+    void slotCopyProgress(TDEIO::Job *job, unsigned long percent);
+    void slotCopyResult(TDEIO::Job *job);
 
     // Used to monitor the plugins scan
     void readScanProcFromStdout();

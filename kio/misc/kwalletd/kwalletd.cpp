@@ -314,7 +314,7 @@ int KWalletD::doTransactionOpen(const TQCString& appid, const TQString& wallet, 
 		setupDialog( wiz, wId, appid, modal );
 		int rc = wiz->exec();
 		if (rc == TQDialog::Accepted) {
-			KConfig cfg("kwalletrc");
+			TDEConfig cfg("kwalletrc");
 			cfg.setGroup("Wallet");
 			cfg.writeEntry("First Use", false);
 			cfg.writeEntry("Enabled", wiz->_useWallet->isChecked());
@@ -344,7 +344,7 @@ int KWalletD::doTransactionOpen(const TQCString& appid, const TQString& wallet, 
 			return -1;
 		}
 	} else if (_firstUse) {
-		KConfig cfg("kwalletrc");
+		TDEConfig cfg("kwalletrc");
 		_firstUse = false;
 		cfg.setGroup("Wallet");
 		cfg.writeEntry("First Use", false);
@@ -564,7 +564,7 @@ bool KWalletD::isAuthorizedApp(const TQCString& appid, const TQString& wallet, W
 
 	if (response == 0 || response == 1) {
 		if (response == 1) {
-			KConfig cfg("kwalletrc");
+			TDEConfig cfg("kwalletrc");
 			cfg.setGroup("Auto Allow");
 			TQStringList apps = cfg.readListEntry(wallet);
 			if (!apps.contains(thisApp)) {
@@ -575,7 +575,7 @@ bool KWalletD::isAuthorizedApp(const TQCString& appid, const TQString& wallet, W
 			}
 		}
 	} else if (response == 3) {
-		KConfig cfg("kwalletrc");
+		TDEConfig cfg("kwalletrc");
 		cfg.setGroup("Auto Deny");
 		TQStringList apps = cfg.readListEntry(wallet);
 		if (!apps.contains(thisApp)) {
@@ -1343,7 +1343,7 @@ void KWalletD::emitWalletListDirty() {
 
 
 void KWalletD::reconfigure() {
-	KConfig cfg("kwalletrc");
+	TDEConfig cfg("kwalletrc");
 	cfg.setGroup("Wallet");
 	_firstUse = cfg.readBoolEntry("First Use", true);
 	_enabled = cfg.readBoolEntry("Enabled", true);

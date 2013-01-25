@@ -107,7 +107,7 @@ TDEClipboardSynchronizer::TDEClipboardSynchronizer( TQObject *parent, const char
 {
     s_self = this;
 
-    KConfigGroup config( TDEGlobal::config(), "General" );
+    TDEConfigGroup config( TDEGlobal::config(), "General" );
     s_sync = config.readBoolEntry( "SynchronizeClipboardAndSelection", s_sync);
     s_reverse_sync = config.readBoolEntry( "ClipboardSetSelection",
                                                 s_reverse_sync );

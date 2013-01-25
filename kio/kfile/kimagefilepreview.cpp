@@ -35,8 +35,8 @@ KImageFilePreview::KImageFilePreview( TQWidget *parent )
     : KPreviewWidgetBase( parent ),
       m_job( 0L )
 {
-    KConfig *config = TDEGlobal::config();
-    KConfigGroupSaver cs( config, ConfigGroup );
+    TDEConfig *config = TDEGlobal::config();
+    TDEConfigGroupSaver cs( config, ConfigGroup );
     autoMode = config->readBoolEntry( "Automatic Preview", true );
 
     TQVBoxLayout *vb = new TQVBoxLayout( this, 0, KDialog::spacingHint() );
@@ -62,7 +62,7 @@ KImageFilePreview::KImageFilePreview( TQWidget *parent )
     timer = new TQTimer( this );
     connect( timer, TQT_SIGNAL(timeout()), TQT_SLOT(showPreview()) );
 
-    setSupportedMimeTypes( KIO::PreviewJob::supportedMimeTypes() );
+    setSupportedMimeTypes( TDEIO::PreviewJob::supportedMimeTypes() );
 }
 
 KImageFilePreview::~KImageFilePreview()
@@ -70,8 +70,8 @@ KImageFilePreview::~KImageFilePreview()
     if ( m_job )
         m_job->kill();
 
-    KConfig *config = TDEGlobal::config();
-    KConfigGroupSaver cs( config, ConfigGroup );
+    TDEConfig *config = TDEGlobal::config();
+    TDEConfigGroupSaver cs( config, ConfigGroup );
     config->writeEntry( "Automatic Preview", autoPreview->isChecked() );
 }
 
@@ -109,8 +109,8 @@ void KImageFilePreview::showPreview( const KURL &url, bool force )
             if ( force ) // explicitly requested previews shall always be generated!
                 m_job->setIgnoreMaximumSize( true );
             
-            connect( m_job, TQT_SIGNAL( result( KIO::Job * )),
-                     this, TQT_SLOT( slotResult( KIO::Job * )));
+            connect( m_job, TQT_SIGNAL( result( TDEIO::Job * )),
+                     this, TQT_SLOT( slotResult( TDEIO::Job * )));
             connect( m_job, TQT_SIGNAL( gotPreview( const KFileItem*,
                                                 const TQPixmap& )),
                      TQT_SLOT( gotPreview( const KFileItem*, const TQPixmap& ) ));
@@ -142,11 +142,11 @@ TQSize KImageFilePreview::sizeHint() const
     return TQSize( 20, 200 ); // otherwise it ends up huge???
 }
 
-KIO::PreviewJob * KImageFilePreview::createJob( const KURL& url, int w, int h )
+TDEIO::PreviewJob * KImageFilePreview::createJob( const KURL& url, int w, int h )
 {
     KURL::List urls;
     urls.append( url );
-    return KIO::filePreview( urls, w, h, 0, 0, true, false );
+    return TDEIO::filePreview( urls, w, h, 0, 0, true, false );
 }
 
 void KImageFilePreview::gotPreview( const KFileItem* item, const TQPixmap& pm )
@@ -164,7 +164,7 @@ void KImageFilePreview::slotFailed( const KFileItem* item )
                                           KIcon::DisabledState ));
 }
 
-void KImageFilePreview::slotResult( KIO::Job *job )
+void KImageFilePreview::slotResult( TDEIO::Job *job )
 {
     if ( job == m_job )
         m_job = 0L;

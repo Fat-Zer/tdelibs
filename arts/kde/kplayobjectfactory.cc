@@ -69,7 +69,7 @@ KPlayObject *KPlayObjectFactory::createPlayObject(const KURL& _url, const TQStri
 	// I hate it
 	// It sucks
 	// kio_media please die
-	KURL url = KIO::NetAccess::mostLocalURL(_url, 0);
+	KURL url = TDEIO::NetAccess::mostLocalURL(_url, 0);
 
 	if(!m_server.isNull())
 	{
@@ -140,7 +140,7 @@ KDE::PlayObject *KDE::PlayObjectFactory::createPlayObject(const KURL& _url, cons
 	// I hate it
 	// It sucks
 	// kio_media please die
-	KURL url = KIO::NetAccess::mostLocalURL(_url, 0);
+	KURL url = TDEIO::NetAccess::mostLocalURL(_url, 0);
 	
 	// return a NULL playobject if the server is NULL
 	if ( d->server.isNull() || url.isEmpty() )

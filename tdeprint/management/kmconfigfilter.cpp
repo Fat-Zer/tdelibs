@@ -88,7 +88,7 @@ KMConfigFilter::KMConfigFilter(TQWidget *parent, const char *name)
 	m_remove->setEnabled(false);
 }
 
-void KMConfigFilter::loadConfig(KConfig *conf)
+void KMConfigFilter::loadConfig(TDEConfig *conf)
 {
 	conf->setGroup("Filter");
 	TQStringList	m_plist = conf->readListEntry("Printers");
@@ -106,7 +106,7 @@ void KMConfigFilter::loadConfig(KConfig *conf)
 	m_locationre->setText(conf->readEntry("LocationRe"));
 }
 
-void KMConfigFilter::saveConfig(KConfig *conf)
+void KMConfigFilter::saveConfig(TDEConfig *conf)
 {
 	conf->setGroup("Filter");
 	TQStringList	plist;

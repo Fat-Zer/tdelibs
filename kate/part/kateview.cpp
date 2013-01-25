@@ -930,12 +930,12 @@ void KateView::joinLines()
   m_doc->joinLines( first, last );
 }
 
-void KateView::readSessionConfig(KConfig *config)
+void KateView::readSessionConfig(TDEConfig *config)
 {
   setCursorPositionInternal (config->readNumEntry("CursorLine"), config->readNumEntry("CursorColumn"), 1);
 }
 
-void KateView::writeSessionConfig(KConfig *config)
+void KateView::writeSessionConfig(TDEConfig *config)
 {
   config->writeEntry("CursorLine",m_viewInternal->cursor.line());
   config->writeEntry("CursorColumn",m_viewInternal->cursor.col());
@@ -1839,7 +1839,7 @@ void KateView::exportAsHTML ()
   if ( url.isLocalFile() )
       return;
 
-  KIO::NetAccess::upload( filename, url, 0 );
+  TDEIO::NetAccess::upload( filename, url, 0 );
 }
 //END
 

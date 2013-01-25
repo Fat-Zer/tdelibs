@@ -335,7 +335,7 @@ void KateSyntaxDocument::setupModeList (bool force)
     return;
 
   // We'll store the ModeList in katesyntaxhighlightingrc
-  KConfig config("katesyntaxhighlightingrc", false, false);
+  TDEConfig config("katesyntaxhighlightingrc", false, false);
 
   // figure our if the kate install is too new
   config.setGroup ("General");

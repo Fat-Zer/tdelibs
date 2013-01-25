@@ -174,7 +174,7 @@ void KPrinter::loadSettings()
 	setSearchName(option("kde-searchname"));
 	d->m_options.remove("kde-searchname");
 
-	KConfig	*conf = TDEGlobal::config(), *pconf = KMFactory::self()->printConfig();
+	TDEConfig	*conf = TDEGlobal::config(), *pconf = KMFactory::self()->printConfig();
 	conf->setGroup("KPrinter Settings");
 	pconf->setGroup("General");
 
@@ -199,7 +199,7 @@ void KPrinter::saveSettings()
 	}
 
 	// save latest used printer to config file
-	KConfig	*conf = TDEGlobal::config();
+	TDEConfig	*conf = TDEGlobal::config();
 	conf->setGroup("KPrinter Settings");
 	conf->writeEntry("Printer",searchName());
 	// latest used print command

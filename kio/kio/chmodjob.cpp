@@ -38,12 +38,12 @@
 
 #include <kdirnotify_stub.h>
 
-using namespace KIO;
+using namespace TDEIO;
 
 ChmodJob::ChmodJob( const KFileItemList& lstItems, int permissions, int mask,
                     int newOwner, int newGroup,
                     bool recursive, bool showProgressInfo )
-    : KIO::Job( showProgressInfo ), state( STATE_LISTING ),
+    : TDEIO::Job( showProgressInfo ), state( STATE_LISTING ),
       m_permissions( permissions ), m_mask( mask ),
       m_newOwner( newOwner ), m_newGroup( newGroup ),
       m_recursive( recursive ), m_lstItems( lstItems )
@@ -76,11 +76,11 @@ void ChmodJob::processList()
             if ( item->isDir() && m_recursive )
             {
                 //kdDebug(7007) << "ChmodJob::processList dir -> listing" << endl;
-                KIO::ListJob * listJob = KIO::listRecursive( item->url(), false /* no GUI */ );
-                connect( listJob, TQT_SIGNAL(entries( KIO::Job *,
-                                                  const KIO::UDSEntryList& )),
-                         TQT_SLOT( slotEntries( KIO::Job*,
-                                            const KIO::UDSEntryList& )));
+                TDEIO::ListJob * listJob = TDEIO::listRecursive( item->url(), false /* no GUI */ );
+                connect( listJob, TQT_SIGNAL(entries( TDEIO::Job *,
+                                                  const TDEIO::UDSEntryList& )),
+                         TQT_SLOT( slotEntries( TDEIO::Job*,
+                                            const TDEIO::UDSEntryList& )));
                 addSubjob( listJob );
                 return; // we'll come back later, when this one's finished
             }
@@ -93,28 +93,28 @@ void ChmodJob::processList()
     chmodNextFile();
 }
 
-void ChmodJob::slotEntries( KIO::Job*, const KIO::UDSEntryList & list )
+void ChmodJob::slotEntries( TDEIO::Job*, const TDEIO::UDSEntryList & list )
 {
-    KIO::UDSEntryListConstIterator it = list.begin();
-    KIO::UDSEntryListConstIterator end = list.end();
+    TDEIO::UDSEntryListConstIterator it = list.begin();
+    TDEIO::UDSEntryListConstIterator end = list.end();
     for (; it != end; ++it) {
-        KIO::UDSEntry::ConstIterator it2 = (*it).begin();
+        TDEIO::UDSEntry::ConstIterator it2 = (*it).begin();
         mode_t permissions = 0;
         bool isDir = false;
         bool isLink = false;
         TQString relativePath;
         for( ; it2 != (*it).end(); it2++ ) {
           switch( (*it2).m_uds ) {
-            case KIO::UDS_NAME:
+            case TDEIO::UDS_NAME:
               relativePath = (*it2).m_str;
               break;
-            case KIO::UDS_FILE_TYPE:
+            case TDEIO::UDS_FILE_TYPE:
               isDir = S_ISDIR((*it2).m_long);
               break;
-            case KIO::UDS_LINK_DEST:
+            case TDEIO::UDS_LINK_DEST:
               isLink = !(*it2).m_str.isEmpty();
               break;
-            case KIO::UDS_ACCESS:
+            case TDEIO::UDS_ACCESS:
               permissions = (mode_t)((*it2).m_long);
               break;
             default:
@@ -182,7 +182,7 @@ void ChmodJob::chmodNextFile()
 
         kdDebug(7007) << "ChmodJob::chmodNextFile chmod'ing " << info.url.prettyURL()
                       << " to " << TQString::number(info.permissions,8) << endl;
-        KIO::SimpleJob * job = KIO::chmod( info.url, info.permissions );
+        TDEIO::SimpleJob * job = TDEIO::chmod( info.url, info.permissions );
         // copy the metadata for acl and default acl
         const TQString aclString = queryMetaData( "ACL_STRING" );
         const TQString defaultAclString = queryMetaData( "DEFAULT_ACL_STRING" );
@@ -197,7 +197,7 @@ void ChmodJob::chmodNextFile()
         emitResult();
 }
 
-void ChmodJob::slotResult( KIO::Job * job )
+void ChmodJob::slotResult( TDEIO::Job * job )
 {
     if ( job->error() )
     {
@@ -206,7 +206,7 @@ void ChmodJob::slotResult( KIO::Job * job )
         emitResult();
         return;
     }
-    //kdDebug(7007) << " ChmodJob::slotResult( KIO::Job * job ) m_lstItems:" << m_lstItems.count() << endl;
+    //kdDebug(7007) << " ChmodJob::slotResult( TDEIO::Job * job ) m_lstItems:" << m_lstItems.count() << endl;
     switch ( state )
     {
         case STATE_LISTING:
@@ -227,7 +227,7 @@ void ChmodJob::slotResult( KIO::Job * job )
 }
 
 // antlarr: KDE 4: Make owner and group be const TQString &
-KIO_EXPORT ChmodJob *KIO::chmod( const KFileItemList& lstItems, int permissions, int mask,
+KIO_EXPORT ChmodJob *TDEIO::chmod( const KFileItemList& lstItems, int permissions, int mask,
                       TQString owner, TQString group,
                       bool recursive, bool showProgressInfo )
 {
@@ -253,6 +253,6 @@ KIO_EXPORT ChmodJob *KIO::chmod( const KFileItemList& lstItems, int permissions,
 }
 
 void ChmodJob::virtual_hook( int id, void* data )
-{ KIO::Job::virtual_hook( id, data ); }
+{ TDEIO::Job::virtual_hook( id, data ); }
 
 #include "chmodjob.moc"

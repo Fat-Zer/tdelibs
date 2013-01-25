@@ -350,7 +350,7 @@ class KateHlManager : public TQObject
 
     static KateHlManager *self();
 
-    inline KConfig *getKConfig() { return &m_config; };
+    inline TDEConfig *getTDEConfig() { return &m_config; };
 
     KateHighlighting *getHl(int n);
     int nameFind(const TQString &name);
@@ -396,7 +396,7 @@ class KateHlManager : public TQObject
 
     static KateHlManager *s_self;
 
-    KConfig m_config;
+    TDEConfig m_config;
     TQStringList commonSuffixes;
 
     KateSyntaxDocument *syntax;

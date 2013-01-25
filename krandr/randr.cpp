@@ -649,7 +649,7 @@ KDE_EXPORT bool RandRScreen::proposeSize(int newSize)
 	return false;
 }
 
-KDE_EXPORT void RandRScreen::load(KConfig& config)
+KDE_EXPORT void RandRScreen::load(TDEConfig& config)
 {
 	config.setGroup(TQString("Screen%1").arg(m_screen));
 
@@ -659,7 +659,7 @@ KDE_EXPORT void RandRScreen::load(KConfig& config)
 	proposeRotation(rotationDegreeToIndex(config.readNumEntry("rotation", 0)) + (config.readBoolEntry("reflectX") ? ReflectX : 0) + (config.readBoolEntry("reflectY") ? ReflectY : 0));
 }
 
-KDE_EXPORT void RandRScreen::save(KConfig& config) const
+KDE_EXPORT void RandRScreen::save(TDEConfig& config) const
 {
 	config.setGroup(TQString("Screen%1").arg(m_screen));
 	config.writeEntry("width", currentPixelWidth());
@@ -782,7 +782,7 @@ KDE_EXPORT RandRScreen* RandRDisplay::currentScreen()
 	return m_currentScreen;
 }
 
-KDE_EXPORT bool RandRDisplay::loadDisplay(KConfig& config, bool loadScreens)
+KDE_EXPORT bool RandRDisplay::loadDisplay(TDEConfig& config, bool loadScreens)
 {
 	if (loadScreens)
 		for (RandRScreen* s = m_screens.first(); s; s = m_screens.next())
@@ -791,19 +791,19 @@ KDE_EXPORT bool RandRDisplay::loadDisplay(KConfig& config, bool loadScreens)
 	return applyOnStartup(config);
 }
 
-KDE_EXPORT bool RandRDisplay::applyOnStartup(KConfig& config)
+KDE_EXPORT bool RandRDisplay::applyOnStartup(TDEConfig& config)
 {
 	config.setGroup("Display");
 	return config.readBoolEntry("ApplyOnStartup", false);
 }
 
-KDE_EXPORT bool RandRDisplay::syncTrayApp(KConfig& config)
+KDE_EXPORT bool RandRDisplay::syncTrayApp(TDEConfig& config)
 {
 	config.setGroup("Display");
 	return config.readBoolEntry("SyncTrayApp", false);
 }
 
-KDE_EXPORT void RandRDisplay::saveDisplay(KConfig& config, bool applyOnStartup, bool syncTrayApp)
+KDE_EXPORT void RandRDisplay::saveDisplay(TDEConfig& config, bool applyOnStartup, bool syncTrayApp)
 {
 	Q_ASSERT(!config.isReadOnly());
 

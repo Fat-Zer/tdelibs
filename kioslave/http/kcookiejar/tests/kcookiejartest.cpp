@@ -36,7 +36,7 @@ static const char *description = "KCookiejar regression test";
 static KCookieJar *jar;
 static TQCString *lastYear;
 static TQCString *nextYear;
-static KConfig *config = 0;
+static TDEConfig *config = 0;
 
 
 static KCmdLineOptions options[] =
@@ -87,7 +87,7 @@ static void clearConfig()
    delete config;
    TQString file = locateLocal("config", "kcookiejar-testconfig");
    TQFile::remove(file);
-   config = new KConfig(file);
+   config = new TDEConfig(file);
    config->setGroup("Cookie Policy");
    config->writeEntry("RejectCrossDomainCookies", false);
    config->writeEntry("AcceptSessionCookies", false);

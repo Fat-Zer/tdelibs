@@ -48,7 +48,7 @@ class TQComboBox;
 
 #define KPropsPage KPropsDlgPlugin
 
-namespace KIO { class Job; }
+namespace TDEIO { class Job; }
 
 /**
  * The main properties dialog class.
@@ -142,7 +142,7 @@ public:
    * @param name is the internal name.
    * @param modal tells the dialog whether it should be modal.
    * IMPORTANT: This constructor, together with modal=true, leads to a grave
-   * display bug (due to KIO::stat() being run before the dialog has all the
+   * display bug (due to TDEIO::stat() being run before the dialog has all the
    * necessary information). Do not use this combination for now.
    * For local files with a known mimetype, simply create a KFileItem and pass
    * it to the other constructor.
@@ -412,7 +412,7 @@ private:
   TQPtrList<KPropsDlgPlugin> m_pageList;
 
 private slots:
-  void slotStatResult( KIO::Job * ); // No longer used
+  void slotStatResult( TDEIO::Job * ); // No longer used
 protected:
   virtual void virtual_hook( int id, void* data );
 private:
@@ -523,10 +523,10 @@ public:
 
 protected slots:
   void slotEditFileType();
-  void slotCopyFinished( KIO::Job * );
-  void slotFileRenamed( KIO::Job *, const KURL &, const KURL & );
+  void slotCopyFinished( TDEIO::Job * );
+  void slotFileRenamed( TDEIO::Job *, const KURL &, const KURL & );
   void slotDirSizeUpdate();
-  void slotDirSizeFinished( KIO::Job * );
+  void slotDirSizeFinished( TDEIO::Job * );
   void slotFoundMountPoint( const TQString& mp, unsigned long kBSize,
 			    unsigned long kBUsed, unsigned long kBAvail );
   void slotSizeStop();
@@ -600,7 +600,7 @@ public:
 
 private slots:
 
-  void slotChmodResult( KIO::Job * );
+  void slotChmodResult( TDEIO::Job * );
   void slotShowAdvancedPermissions();
 
 private:

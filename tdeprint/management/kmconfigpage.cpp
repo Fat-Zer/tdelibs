@@ -26,11 +26,11 @@ KMConfigPage::KMConfigPage(TQWidget *parent, const char *name)
 	m_header = "Header";
 }
 
-void KMConfigPage::loadConfig(KConfig*)
+void KMConfigPage::loadConfig(TDEConfig*)
 {
 }
 
-void KMConfigPage::saveConfig(KConfig*)
+void KMConfigPage::saveConfig(TDEConfig*)
 {
 }
 #include "kmconfigpage.moc"

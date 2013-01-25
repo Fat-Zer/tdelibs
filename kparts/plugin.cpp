@@ -226,7 +226,7 @@ void Plugin::setInstance( TDEInstance *instance )
 
 void Plugin::loadPlugins( TQObject *parent, KXMLGUIClient* parentGUIClient, TDEInstance* instance, bool enableNewPluginsByDefault )
 {
-    KConfigGroup cfgGroup( instance->config(), "KParts Plugins" );
+    TDEConfigGroup cfgGroup( instance->config(), "KParts Plugins" );
     TQValueList<PluginInfo> plugins = pluginInfos( instance );
     TQValueList<PluginInfo>::ConstIterator pIt = plugins.begin();
     TQValueList<PluginInfo>::ConstIterator pEnd = plugins.end();

@@ -241,7 +241,7 @@ class TDECORE_EXPORT TDEGlobalSettings
     /**
      * DEPRECATED (starting from kde-3.4).
      * This isn't where the trash contents is, anymore.
-     * Use KIO::trash() to trash files, "trash:/" to list the trash contents.
+     * Use TDEIO::trash() to trash files, "trash:/" to list the trash contents.
      */
     static TQString trashPath() { initStatic(); return *s_trashPath; }
     // KDE4: if you want to remove the above, move it to kdesktop/init.cc, which needs

@@ -45,8 +45,8 @@ class KToolBar;
 
 class KAccel;
 class KAccelActions;
-class KConfig;
-class KConfigBase;
+class TDEConfig;
+class TDEConfigBase;
 class KURL;
 class TDEInstance;
 class KToolBar;

@@ -168,8 +168,8 @@ namespace KNotify
         TQString m_appname;
         EventList *m_events;
 
-        KConfig *kc; // The file that defines the events.
-        KConfig *config; // The file that contains the settings for the events
+        TDEConfig *kc; // The file that defines the events.
+        TDEConfig *config; // The file that contains the settings for the events
     };
 
 

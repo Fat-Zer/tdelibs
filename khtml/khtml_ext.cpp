@@ -437,7 +437,7 @@ KHTMLPopupGUIClient::KHTMLPopupGUIClient( KHTMLPart *khtml, const TQString &doc,
 
 
       // Fill search provider entries
-      KConfig config("kuriikwsfilterrc");
+      TDEConfig config("kuriikwsfilterrc");
       config.setGroup("General");
       const TQString defaultEngine = config.readEntry("DefaultSearchEngine", "google");
       const char keywordDelimiter = config.readNumEntry("KeywordDelimiter", ':');
@@ -648,7 +648,7 @@ KHTMLPopupGUIClient::~KHTMLPopupGUIClient()
 
 void KHTMLPopupGUIClient::slotSaveLinkAs()
 {
-  KIO::MetaData metaData;
+  TDEIO::MetaData metaData;
   metaData["referrer"] = d->m_khtml->referrer();
   saveURL( d->m_khtml->widget(), i18n( "Save Link As" ), d->m_url, metaData );
 }
@@ -668,7 +668,7 @@ void KHTMLPopupGUIClient::slotSendImage()
 
 void KHTMLPopupGUIClient::slotSaveImageAs()
 {
-  KIO::MetaData metaData;
+  TDEIO::MetaData metaData;
   metaData["referrer"] = d->m_khtml->referrer();
   saveURL( d->m_khtml->widget(), i18n( "Save Image As" ), d->m_imageURL, metaData, TQString::null, 0, d->m_suggestedFilename );
 }
@@ -824,7 +824,7 @@ void KHTMLPopupGUIClient::saveURL( TQWidget *parent, const TQString &caption,
       {
         TQFileInfo info( destURL.path() );
         if( info.exists() ) {
-          // TODO: use KIO::RenameDlg (shows more information)
+          // TODO: use TDEIO::RenameDlg (shows more information)
           query = KMessageBox::warningContinueCancel( parent, i18n( "A file named \"%1\" already exists. " "Are you sure you want to overwrite it?" ).arg( info.fileName() ), i18n( "Overwrite File?" ), i18n( "Overwrite" ) );
         }
        }
@@ -862,7 +862,7 @@ void KHTMLPopupGUIClient::saveURL( const KURL &url, const KURL &destURL,
                     destFile.close();
                     KURL url2 = KURL();
                     url2.setPath(destFile.name());
-                    KIO::file_move(url2, destURL, -1, true /*overwrite*/);
+                    TDEIO::file_move(url2, destURL, -1, true /*overwrite*/);
                     saved = true;
                 }
             }
@@ -876,7 +876,7 @@ void KHTMLPopupGUIClient::saveURL( const KURL &url, const KURL &destURL,
           bool downloadViaKIO = true;
           if ( !url.isLocalFile() )
           {
-            KConfig cfg("konquerorrc", false, false);
+            TDEConfig cfg("konquerorrc", false, false);
             cfg.setGroup("HTML Settings");
             TQString downloadManger = cfg.readPathEntry("DownloadManager");
             if (!downloadManger.isEmpty())
@@ -907,7 +907,7 @@ void KHTMLPopupGUIClient::saveURL( const KURL &url, const KURL &destURL,
 
           if ( downloadViaKIO )
           {
-              KIO::Job *job = KIO::file_copy( url, destURL, -1, true /*overwrite*/ );
+              TDEIO::Job *job = TDEIO::file_copy( url, destURL, -1, true /*overwrite*/ );
               job->setMetaData(metadata);
               job->addMetaData("MaxCacheSize", "0"); // Don't store in http cache.
               job->addMetaData("cache", "cache"); // Use entry from cache if available.

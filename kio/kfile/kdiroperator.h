@@ -41,7 +41,7 @@ class KActionSeparator;
 class KActionMenu;
 class TQWidgetStack;
 class KProgress;
-namespace KIO {
+namespace TDEIO {
   class CopyJob;
   class DeleteJob;
 }
@@ -60,7 +60,7 @@ namespace KIO {
  * show either a simple or detailed view and additionally a preview widget
  * (see setPreviewWidget()). KImageFilePreview is one implementation
  * of a preview widget, that displays previews for all supported filetypes
- * utilizing KIO::PreviewJob.
+ * utilizing TDEIO::PreviewJob.
  *
  * Currently, those classes don't support Drag&Drop out of the box -- there
  * you have to use your own view-classes. You can use some DnD-aware views
@@ -407,16 +407,16 @@ class KIO_EXPORT KDirOperator : public TQWidget
      * @since 3.1
      */
 	// ### KDE4: make virtual
-    void setViewConfig( KConfig *config, const TQString& group );
+    void setViewConfig( TDEConfig *config, const TQString& group );
 
     /**
-     * Returns the KConfig object used for saving and restoring view's
+     * Returns the TDEConfig object used for saving and restoring view's
      * configuration.
-     * @returns the KConfig object used for saving and restoring view's
+     * @returns the TDEConfig object used for saving and restoring view's
      * configuration.
      * @since 3.1
      */
-    KConfig *viewConfig();
+    TDEConfig *viewConfig();
 
     /**
      * Returns the group name used for saving and restoring view's
@@ -440,7 +440,7 @@ class KIO_EXPORT KDirOperator : public TQWidget
      * @see setViewConfig
      * @see writeConfig
      */
-    virtual void readConfig( KConfig *, const TQString& group = TQString::null );
+    virtual void readConfig( TDEConfig *, const TQString& group = TQString::null );
 
     /**
      * Saves the current settings like sorting, simple or detailed view.
@@ -448,7 +448,7 @@ class KIO_EXPORT KDirOperator : public TQWidget
      * @see readConfig
      * @see setViewConfig
      */
-    virtual void writeConfig( KConfig *, const TQString& group = TQString::null );
+    virtual void writeConfig( TDEConfig *, const TQString& group = TQString::null );
 
 
     /**
@@ -482,18 +482,18 @@ class KIO_EXPORT KDirOperator : public TQWidget
     bool mkdir( const TQString& directory, bool enterDirectory = true );
 
     /**
-     * Starts and returns a KIO::DeleteJob to delete the given @p items.
+     * Starts and returns a TDEIO::DeleteJob to delete the given @p items.
      *
      * @param items the list of items to be deleted
      * @param ask specifies whether a confirmation dialog should be shown
      * @param showProgress passed to the DeleteJob to show a progress dialog
      */
 	// ### KDE4: make virtual
-    KIO::DeleteJob * del( const KFileItemList& items,
+    TDEIO::DeleteJob * del( const KFileItemList& items,
                           bool ask = true, bool showProgress = true );
 
     /**
-     * Starts and returns a KIO::DeleteJob to delete the given @p items.
+     * Starts and returns a TDEIO::DeleteJob to delete the given @p items.
      *
      * @param items the list of items to be deleted
      * @param parent the parent widget used for the confirmation dialog
@@ -502,7 +502,7 @@ class KIO_EXPORT KDirOperator : public TQWidget
      * @since 3.1
      */
 	// ### KDE4: make virtual
-    KIO::DeleteJob * del( const KFileItemList& items, TQWidget *parent,
+    TDEIO::DeleteJob * del( const KFileItemList& items, TQWidget *parent,
                           bool ask = true, bool showProgress = true );
 
     /**
@@ -563,7 +563,7 @@ class KIO_EXPORT KDirOperator : public TQWidget
     void setDropOptions(int options);
 
     /**
-     * Starts and returns a KIO::CopyJob to trash the given @p items.
+     * Starts and returns a TDEIO::CopyJob to trash the given @p items.
      *
      * @param items the list of items to be trashed
      * @param parent the parent widget used for the confirmation dialog
@@ -572,7 +572,7 @@ class KIO_EXPORT KDirOperator : public TQWidget
      * @since 3.4
      */
      // ### KDE4: make virtual
-    KIO::CopyJob * trash( const KFileItemList& items, TQWidget *parent,
+    TDEIO::CopyJob * trash( const KFileItemList& items, TQWidget *parent,
                        bool ask = true, bool showProgress = true );
 
 protected:
@@ -634,7 +634,7 @@ protected:
     void prepareCompletionObjects();
 
     /**
-     * Checks if there support from KIO::PreviewJob for the currently
+     * Checks if there support from TDEIO::PreviewJob for the currently
      * shown files, taking mimeFilter() and nameFilter() into account
      * Enables/disables the preview-action accordingly.
      */

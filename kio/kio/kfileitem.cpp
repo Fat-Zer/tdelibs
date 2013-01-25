@@ -58,7 +58,7 @@ class KFileItem::KFileItemPrivate {
 		TQString iconName;
 };
 
-KFileItem::KFileItem( const KIO::UDSEntry& _entry, const KURL& _url,
+KFileItem::KFileItem( const TDEIO::UDSEntry& _entry, const KURL& _url,
                       bool _determineMimeTypeOnDemand, bool _urlIsDirectory ) :
   m_entry( _entry ),
   m_url( _url ),
@@ -80,7 +80,7 @@ KFileItem::KFileItem( mode_t _mode, mode_t _permissions, const KURL& _url, bool 
   m_entry(), // warning !
   m_url( _url ),
   m_strName( _url.fileName() ),
-  m_strText( KIO::decodeFileName( m_strName ) ),
+  m_strText( TDEIO::decodeFileName( m_strName ) ),
   m_pMimeType( 0 ),
   m_fileMode ( _mode ),
   m_permissions( _permissions ),
@@ -97,7 +97,7 @@ KFileItem::KFileItem( mode_t _mode, mode_t _permissions, const KURL& _url, bool 
 KFileItem::KFileItem( const KURL &url, const TQString &mimeType, mode_t mode )
 :  m_url( url ),
   m_strName( url.fileName() ),
-  m_strText( KIO::decodeFileName( m_strName ) ),
+  m_strText( TDEIO::decodeFileName( m_strName ) ),
   m_pMimeType( 0 ),
   m_fileMode( mode ),
   m_permissions( KFileItem::Unknown ),
@@ -134,7 +134,7 @@ KFileItem::~KFileItem()
 void KFileItem::init( bool _determineMimeTypeOnDemand )
 {
   m_access = TQString::null;
-  m_size = (KIO::filesize_t) -1;
+  m_size = (TDEIO::filesize_t) -1;
   //  metaInfo = KFileMetaInfo();
   for ( int i = 0; i < NumFlags; i++ )
       m_time[i] = (time_t) -1;
@@ -195,63 +195,63 @@ void KFileItem::init( bool _determineMimeTypeOnDemand )
 
 void KFileItem::readUDSEntry( bool _urlIsDirectory )
 {
-  // extract the mode and the filename from the KIO::UDS Entry
+  // extract the mode and the filename from the TDEIO::UDS Entry
   bool UDS_URL_seen = false;
 
   if (&m_entry == NULL) return;
 
-  KIO::UDSEntry::ConstIterator it = m_entry.begin();
+  TDEIO::UDSEntry::ConstIterator it = m_entry.begin();
   for( ; it != m_entry.end(); ++it ) {
     switch ((*it).m_uds) {
 
-      case KIO::UDS_FILE_TYPE:
+      case TDEIO::UDS_FILE_TYPE:
         m_fileMode = (mode_t)((*it).m_long);
         break;
 
-      case KIO::UDS_ACCESS:
+      case TDEIO::UDS_ACCESS:
         m_permissions = (mode_t)((*it).m_long);
         break;
 
-      case KIO::UDS_USER:
+      case TDEIO::UDS_USER:
         m_user = ((*it).m_str);
         break;
 
-      case KIO::UDS_GROUP:
+      case TDEIO::UDS_GROUP:
         m_group = ((*it).m_str);
         break;
 
-      case KIO::UDS_NAME:
+      case TDEIO::UDS_NAME:
         m_strName = (*it).m_str;
-        m_strText = KIO::decodeFileName( m_strName );
+        m_strText = TDEIO::decodeFileName( m_strName );
         break;
 
-      case KIO::UDS_URL:
+      case TDEIO::UDS_URL:
         UDS_URL_seen = true;
         m_url = KURL((*it).m_str);
         if ( m_url.isLocalFile() )
            m_bIsLocalURL = true;
         break;
 
-      case KIO::UDS_MIME_TYPE:
+      case TDEIO::UDS_MIME_TYPE:
         m_pMimeType = KMimeType::mimeType((*it).m_str);
         m_bMimeTypeKnown = true;
         break;
 
-      case KIO::UDS_GUESSED_MIME_TYPE:
+      case TDEIO::UDS_GUESSED_MIME_TYPE:
         m_guessedMimeType = (*it).m_str;
         break;
 
-      case KIO::UDS_LINK_DEST:
+      case TDEIO::UDS_LINK_DEST:
         m_bLink = !(*it).m_str.isEmpty(); // we don't store the link dest
         break;
 
-      case KIO::UDS_ICON_NAME:
+      case TDEIO::UDS_ICON_NAME:
         if ( !d )
           d = new KFileItemPrivate();
         d->iconName = (*it).m_str;
         break;
 
-      case KIO::UDS_HIDDEN:
+      case TDEIO::UDS_HIDDEN:
         if ( (*it).m_long )
           m_hidden = Hidden;
         else
@@ -280,7 +280,7 @@ void KFileItem::refresh()
   // Everything could have changed...
   // Clearing m_entry makes it possible to detect changes in the size of the file,
   // the time information, etc.
-  m_entry = KIO::UDSEntry();
+  m_entry = TDEIO::UDSEntry();
   init( false );
 }
 
@@ -299,19 +299,19 @@ void KFileItem::setURL( const KURL &url )
 void KFileItem::setName( const TQString& name )
 {
   m_strName = name;
-  m_strText = KIO::decodeFileName( m_strName );
+  m_strText = TDEIO::decodeFileName( m_strName );
 }
 
 TQString KFileItem::linkDest() const
 {
   if (&m_entry == NULL) return TQString::null;
 
-  // Extract it from the KIO::UDSEntry
-  KIO::UDSEntry::ConstIterator it = m_entry.begin();
+  // Extract it from the TDEIO::UDSEntry
+  TDEIO::UDSEntry::ConstIterator it = m_entry.begin();
   for( ; it != m_entry.end(); ++it )
-    if ( (*it).m_uds == KIO::UDS_LINK_DEST )
+    if ( (*it).m_uds == TDEIO::UDS_LINK_DEST )
       return (*it).m_str;
-  // If not in the KIO::UDSEntry, or if UDSEntry empty, use readlink() [if local URL]
+  // If not in the TDEIO::UDSEntry, or if UDSEntry empty, use readlink() [if local URL]
   if ( m_bIsLocalURL )
   {
     char buf[1000];
@@ -335,33 +335,33 @@ TQString KFileItem::localPath() const
   {
     if (&m_entry == NULL) return TQString::null;
 
-    // Extract the local path from the KIO::UDSEntry
-    KIO::UDSEntry::ConstIterator it = m_entry.begin();
-    const KIO::UDSEntry::ConstIterator end = m_entry.end();
+    // Extract the local path from the TDEIO::UDSEntry
+    TDEIO::UDSEntry::ConstIterator it = m_entry.begin();
+    const TDEIO::UDSEntry::ConstIterator end = m_entry.end();
     for( ; it != end; ++it )
-      if ( (*it).m_uds == KIO::UDS_LOCAL_PATH )
+      if ( (*it).m_uds == TDEIO::UDS_LOCAL_PATH )
         return (*it).m_str;
   }
 
   return TQString::null;
 }
 
-KIO::filesize_t KFileItem::size(bool &exists) const
+TDEIO::filesize_t KFileItem::size(bool &exists) const
 {
   exists = true;
-  if ( m_size != (KIO::filesize_t) -1 )
+  if ( m_size != (TDEIO::filesize_t) -1 )
     return m_size;
 
   if (&m_entry == NULL) return 0L;
 
-  // Extract it from the KIO::UDSEntry
-  KIO::UDSEntry::ConstIterator it = m_entry.begin();
+  // Extract it from the TDEIO::UDSEntry
+  TDEIO::UDSEntry::ConstIterator it = m_entry.begin();
   for( ; it != m_entry.end(); ++it )
-    if ( (*it).m_uds == KIO::UDS_SIZE ) {
+    if ( (*it).m_uds == TDEIO::UDS_SIZE ) {
       m_size = (*it).m_long;
       return m_size;
     }
-  // If not in the KIO::UDSEntry, or if UDSEntry empty, use stat() [if local URL]
+  // If not in the TDEIO::UDSEntry, or if UDSEntry empty, use stat() [if local URL]
   if ( m_bIsLocalURL )
   {
     KDE_struct_stat buf;
@@ -375,9 +375,9 @@ KIO::filesize_t KFileItem::size(bool &exists) const
 bool KFileItem::hasExtendedACL() const
 {
   if (&m_entry == NULL) return false;
-  KIO::UDSEntry::ConstIterator it = m_entry.begin();
+  TDEIO::UDSEntry::ConstIterator it = m_entry.begin();
   for( ; it != m_entry.end(); it++ )
-    if ( (*it).m_uds == KIO::UDS_EXTENDED_ACL ) {
+    if ( (*it).m_uds == TDEIO::UDS_EXTENDED_ACL ) {
       return true;
     }
   return false;
@@ -388,10 +388,10 @@ KACL KFileItem::ACL() const
   if ( hasExtendedACL() ) {
     if (&m_entry == NULL) return KACL( m_permissions );
 
-    // Extract it from the KIO::UDSEntry
-    KIO::UDSEntry::ConstIterator it = m_entry.begin();
+    // Extract it from the TDEIO::UDSEntry
+    TDEIO::UDSEntry::ConstIterator it = m_entry.begin();
     for( ; it != m_entry.end(); ++it )
-      if ( (*it).m_uds == KIO::UDS_ACL_STRING )
+      if ( (*it).m_uds == TDEIO::UDS_ACL_STRING )
         return KACL((*it).m_str);
   }
   // create one from the basic permissions
@@ -402,15 +402,15 @@ KACL KFileItem::defaultACL() const
 {
   if (&m_entry == NULL) return KACL();
 
-  // Extract it from the KIO::UDSEntry
-  KIO::UDSEntry::ConstIterator it = m_entry.begin();
+  // Extract it from the TDEIO::UDSEntry
+  TDEIO::UDSEntry::ConstIterator it = m_entry.begin();
   for( ; it != m_entry.end(); ++it )
-    if ( (*it).m_uds == KIO::UDS_DEFAULT_ACL_STRING )
+    if ( (*it).m_uds == TDEIO::UDS_DEFAULT_ACL_STRING )
       return KACL((*it).m_str);
   return KACL();
 }
 
-KIO::filesize_t KFileItem::size() const
+TDEIO::filesize_t KFileItem::size() const
 {
   bool exists;
   return size(exists);
@@ -427,13 +427,13 @@ time_t KFileItem::time( unsigned int which, bool &hasTime ) const
   unsigned int mappedWhich = 0;
 
   switch( which ) {
-    case KIO::UDS_MODIFICATION_TIME:
+    case TDEIO::UDS_MODIFICATION_TIME:
       mappedWhich = Modification;
       break;
-    case KIO::UDS_ACCESS_TIME:
+    case TDEIO::UDS_ACCESS_TIME:
       mappedWhich = Access;
       break;
-    case KIO::UDS_CREATION_TIME:
+    case TDEIO::UDS_CREATION_TIME:
       mappedWhich = Creation;
       break;
   }
@@ -443,29 +443,29 @@ time_t KFileItem::time( unsigned int which, bool &hasTime ) const
 
   if (&m_entry == NULL) return static_cast<time_t>(0);
 
-  // Extract it from the KIO::UDSEntry
-  KIO::UDSEntry::ConstIterator it = m_entry.begin();
+  // Extract it from the TDEIO::UDSEntry
+  TDEIO::UDSEntry::ConstIterator it = m_entry.begin();
   for( ; it != m_entry.end(); ++it )
     if ( (*it).m_uds == which ) {
       m_time[mappedWhich] = static_cast<time_t>((*it).m_long);
       return m_time[mappedWhich];
     }
 
-  // If not in the KIO::UDSEntry, or if UDSEntry empty, use stat() [if local URL]
+  // If not in the TDEIO::UDSEntry, or if UDSEntry empty, use stat() [if local URL]
   if ( m_bIsLocalURL )
   {
     KDE_struct_stat buf;
     if ( KDE_stat( TQFile::encodeName(m_url.path(-1)), &buf ) == 0 )
     {
-	if(which == KIO::UDS_CREATION_TIME) {
+	if(which == TDEIO::UDS_CREATION_TIME) {
 	    // We can't determine creation time for local files
 	    hasTime = false;
             m_time[mappedWhich] = static_cast<time_t>(0);
 	    return m_time[mappedWhich];
 	}
-        m_time[mappedWhich] = (which == KIO::UDS_MODIFICATION_TIME) ?
+        m_time[mappedWhich] = (which == TDEIO::UDS_MODIFICATION_TIME) ?
                                buf.st_mtime :
-                               /* which == KIO::UDS_ACCESS_TIME)*/
+                               /* which == TDEIO::UDS_ACCESS_TIME)*/
 			       buf.st_atime;
         return m_time[mappedWhich];
     }
@@ -843,9 +843,9 @@ TQString KFileItem::getStatusBarInfo()
   else if ( S_ISREG( m_fileMode ) )
   {
       bool hasSize;
-      KIO::filesize_t sizeValue = size(hasSize);
+      TDEIO::filesize_t sizeValue = size(hasSize);
       if(hasSize)
-        text += TQString(" (%1)  ").arg( KIO::convertSize( sizeValue ) );
+        text += TQString(" (%1)  ").arg( TDEIO::convertSize( sizeValue ) );
       text += mimeComment();
   }
   else if ( S_ISDIR ( m_fileMode ) )
@@ -887,12 +887,12 @@ TQString KFileItem::getToolTipText(int maxcount)
 
   if ( !S_ISDIR ( m_fileMode ) ) {
     bool hasSize;
-    KIO::filesize_t sizeValue = size(hasSize);
+    TDEIO::filesize_t sizeValue = size(hasSize);
     if(hasSize)
       tip += start + i18n("Size:") + mid +
-             KIO::convertSizeWithBytes(sizeValue) + end;
+             TDEIO::convertSizeWithBytes(sizeValue) + end;
   }
-  TQString timeStr = timeString( KIO::UDS_MODIFICATION_TIME);
+  TQString timeStr = timeString( TDEIO::UDS_MODIFICATION_TIME);
   if(!timeStr.isEmpty())
     tip += start + i18n("Modified:") + mid +
            timeStr + end;
@@ -966,7 +966,7 @@ bool KFileItem::cmp( const KFileItem & item )
              && m_hidden == item.m_hidden
              && size(hasSize1) == item.size(hasSize2)
 	     && hasSize1 == hasSize2
-             && time(KIO::UDS_MODIFICATION_TIME, hasTime1) == item.time(KIO::UDS_MODIFICATION_TIME, hasTime2)
+             && time(TDEIO::UDS_MODIFICATION_TIME, hasTime1) == item.time(TDEIO::UDS_MODIFICATION_TIME, hasTime2)
 	     && hasTime1 == hasTime2
              && (!d || !item.d || d->iconName == item.d->iconName) );
 
@@ -1014,7 +1014,7 @@ void KFileItem::assign( const KFileItem & item )
     }
 }
 
-void KFileItem::setUDSEntry( const KIO::UDSEntry& _entry, const KURL& _url,
+void KFileItem::setUDSEntry( const TDEIO::UDSEntry& _entry, const KURL& _url,
     bool _determineMimeTypeOnDemand, bool _urlIsDirectory )
 {
   m_entry = _entry;

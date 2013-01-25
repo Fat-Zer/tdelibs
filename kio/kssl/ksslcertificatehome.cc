@@ -186,7 +186,7 @@ KSimpleConfig cfg("ksslauthmap", false);
 
 
 TQString KSSLCertificateHome::getDefaultCertificateName(KSSLAuthAction *aa) {
-KConfig cfg("cryptodefaults", false);
+TDEConfig cfg("cryptodefaults", false);
 
    cfg.setGroup("Auth");
    if (aa) {

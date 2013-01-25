@@ -1369,7 +1369,7 @@ void KateHlConfigPage::apply ()
   for ( TQIntDictIterator<KateHlData> it( hlDataDict ); it.current(); ++it )
     KateHlManager::self()->getHl( it.currentKey() )->setData( it.current() );
 
-  KateHlManager::self()->getKConfig()->sync ();
+  KateHlManager::self()->getTDEConfig()->sync ();
 }
 
 void KateHlConfigPage::reload ()
@@ -1453,20 +1453,20 @@ KateHlDownloadDialog::KateHlDownloadDialog(TQWidget *parent, const char *name, b
   new TQLabel(i18n("<b>Note:</b> New versions are selected automatically."), vbox);
   actionButton (User1)->setIconSet(SmallIconSet("ok"));
 
-  transferJob = KIO::get(
+  transferJob = TDEIO::get(
     KURL(TQString(HLDOWNLOADPATH)
        + TQString("update-")
        + TQString(KATEPART_VERSION)
        + TQString(".xml")), true, true );
-  connect(transferJob, TQT_SIGNAL(data(KIO::Job *, const TQByteArray &)),
-    this, TQT_SLOT(listDataReceived(KIO::Job *, const TQByteArray &)));
-//        void data( KIO::Job *, const TQByteArray &data);
+  connect(transferJob, TQT_SIGNAL(data(TDEIO::Job *, const TQByteArray &)),
+    this, TQT_SLOT(listDataReceived(TDEIO::Job *, const TQByteArray &)));
+//        void data( TDEIO::Job *, const TQByteArray &data);
   resize(450, 400);
 }
 
 KateHlDownloadDialog::~KateHlDownloadDialog(){}
 
-void KateHlDownloadDialog::listDataReceived(KIO::Job *, const TQByteArray &data)
+void KateHlDownloadDialog::listDataReceived(TDEIO::Job *, const TQByteArray &data)
 {
   if (!transferJob || transferJob->isErrorPage())
   {
@@ -1538,7 +1538,7 @@ void KateHlDownloadDialog::slotUser1()
       TQString filename=src.fileName(false);
       TQString dest = destdir+filename;
 
-      KIO::NetAccess::download(src,dest, this);
+      TDEIO::NetAccess::download(src,dest, this);
     }
   }
 

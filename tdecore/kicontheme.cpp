@@ -52,7 +52,7 @@ public:
 class KIconThemeDir
 {
 public:
-    KIconThemeDir(const TQString& dir, const KConfigBase *config);
+    KIconThemeDir(const TQString& dir, const TDEConfigBase *config);
 
     bool isValid() const { return mbValid; }
     TQString iconPath(const TQString& name) const;
@@ -139,7 +139,7 @@ KIconTheme::KIconTheme(const TQString& name, const TQString& appName)
     // Use KSharedConfig to avoid parsing the file many times, from each kinstance.
     // Need to keep a ref to it to make this useful
     d->sharedConfig = KSharedConfig::openConfig( fileName, true /*readonly*/, false /*useKDEGlobals*/ );
-    KConfig& cfg = *d->sharedConfig;
+    TDEConfig& cfg = *d->sharedConfig;
     //was: KSimpleConfig cfg(fileName);
 
     cfg.setGroup(mainSection);
@@ -448,8 +448,8 @@ TQString KIconTheme::current()
         return *_theme;
 
     _theme = new TQString();
-    KConfig *config = TDEGlobal::config();
-    KConfigGroupSaver saver(config, "Icons");
+    TDEConfig *config = TDEGlobal::config();
+    TDEConfigGroupSaver saver(config, "Icons");
     *_theme = config->readEntry("Theme",defaultThemeName());
     if ( *_theme == TQString::fromLatin1("hicolor") ) *_theme = defaultThemeName();
 /*    if (_theme->isEmpty())
@@ -516,7 +516,7 @@ TQString KIconTheme::defaultThemeName()
 
 /*** KIconThemeDir ***/
 
-KIconThemeDir::KIconThemeDir(const TQString& dir, const KConfigBase *config)
+KIconThemeDir::KIconThemeDir(const TQString& dir, const TDEConfigBase *config)
 {
     mbValid = false;
     mDir = dir;

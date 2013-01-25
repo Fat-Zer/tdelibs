@@ -1718,7 +1718,7 @@ void DocumentImpl::processHttpEquiv(const DOMString &equiv, const DOMString &con
         KURL url = v->part()->url();
         if ((str == "no-cache") && url.protocol().startsWith("http"))
         {
-           KIO::http_update_cache(url, true, 0);
+           TDEIO::http_update_cache(url, true, 0);
         }
     }
     else if( (strcasecmp(equiv, "set-cookie") == 0))
@@ -2491,7 +2491,7 @@ void DocumentImpl::error(int err, const TQString &text)
     int exceptioncode = 0;
     EventImpl *evt = new EventImpl(EventImpl::ERROR_EVENT,false,false);
     if (err != 0)
-      evt->setMessage(KIO::buildErrorString(err,text));
+      evt->setMessage(TDEIO::buildErrorString(err,text));
     else
       evt->setMessage(text);
     evt->ref();

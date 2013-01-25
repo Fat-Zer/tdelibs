@@ -123,7 +123,7 @@ struct KPluginSelectionWidget::KPluginSelectionWidgetPrivate
 {
     KPluginSelectionWidgetPrivate( KPluginSelector * _kps,
                                    const TQString & _cat,
-                                   KConfigGroup * _config )
+                                   TDEConfigGroup * _config )
      : widgetstack( 0 )
         , kps( _kps )
         , config( _config )
@@ -146,14 +146,14 @@ struct KPluginSelectionWidget::KPluginSelectionWidgetPrivate
 
     TQWidgetStack * widgetstack;
     KPluginSelector * kps;
-    KConfigGroup * config;
+    TDEConfigGroup * config;
     KPluginListViewToolTip *tooltip;
 
-    TQDict<KCModuleInfo> pluginconfigmodules;
+    TQDict<TDECModuleInfo> pluginconfigmodules;
     TQMap<TQString, int> widgetIDs;
     TQMap<KPluginInfo*, bool> plugincheckedchanged;
     TQString catname;
-    TQValueList<KCModuleProxy*> modulelist;
+    TQValueList<TDECModuleProxy*> modulelist;
     TQPtrDict<TQStringList> moduleParentComponents;
 
     KPluginInfo * currentplugininfo;
@@ -165,7 +165,7 @@ struct KPluginSelectionWidget::KPluginSelectionWidgetPrivate
 KPluginSelectionWidget::KPluginSelectionWidget(
         const TQValueList<KPluginInfo*> & plugininfos, KPluginSelector * kps,
         TQWidget * parent, const TQString & catname, const TQString & category,
-        KConfigGroup * config, const char * name )
+        TDEConfigGroup * config, const char * name )
     : TQWidget( parent, name )
     , d( new KPluginSelectionWidgetPrivate( kps, catname, config ) )
 {
@@ -238,9 +238,9 @@ bool KPluginSelectionWidget::pluginIsLoaded( const TQString & pluginName ) const
 
 
 TQWidget * KPluginSelectionWidget::insertKCM( TQWidget * parent,
-        const KCModuleInfo & moduleinfo )
+        const TDECModuleInfo & moduleinfo )
 {
-    KCModuleProxy * module = new KCModuleProxy( moduleinfo, false,
+    TDECModuleProxy * module = new TDECModuleProxy( moduleinfo, false,
             parent );
     if( !module->realModule() )
     {
@@ -281,7 +281,7 @@ void KPluginSelectionWidget::embeddPluginKCMs( KPluginInfo * plugininfo, bool ch
         {
             if( !( *it )->noDisplay() )
             {
-                KCModuleInfo moduleinfo( *it );
+                TDECModuleInfo moduleinfo( *it );
                 TQWidget * module = insertKCM( tabwidget, moduleinfo );
                 tabwidget->addTab( module, moduleinfo.moduleName() );
             }
@@ -291,7 +291,7 @@ void KPluginSelectionWidget::embeddPluginKCMs( KPluginInfo * plugininfo, bool ch
     {
         if( !plugininfo->kcmServices().front()->noDisplay() )
         {
-            KCModuleInfo moduleinfo(
+            TDECModuleInfo moduleinfo(
                     plugininfo->kcmServices().front() );
             TQWidget * module = insertKCM( d->widgetstack, moduleinfo );
             module->setEnabled( checked );
@@ -431,7 +431,7 @@ void KPluginSelectionWidget::load()
             d->currentchecked = info->isPluginEnabled();
     }
 
-    for( TQValueList<KCModuleProxy*>::Iterator it = d->modulelist.begin();
+    for( TQValueList<TDECModuleProxy*>::Iterator it = d->modulelist.begin();
             it != d->modulelist.end(); ++it )
         if( ( *it )->changed() )
             ( *it )->load();
@@ -454,7 +454,7 @@ void KPluginSelectionWidget::save()
         d->plugincheckedchanged[ info ] = false;
     }
     TQStringList updatedModules;
-    for( TQValueList<KCModuleProxy*>::Iterator it = d->modulelist.begin();
+    for( TQValueList<TDECModuleProxy*>::Iterator it = d->modulelist.begin();
             it != d->modulelist.end(); ++it )
         if( ( *it )->changed() )
         {
@@ -581,7 +581,7 @@ static TQValueList<KPluginInfo*> kpartsPluginInfos( const TQString& instanceName
 }
 
 void KPluginSelector::addPlugins( const TQString & instanceName,
-        const TQString & catname, const TQString & category, KConfig * config )
+        const TQString & catname, const TQString & category, TDEConfig * config )
 {
     const TQValueList<KPluginInfo*> plugininfos = kpartsPluginInfos( instanceName );
     if ( plugininfos.isEmpty() )
@@ -590,14 +590,14 @@ void KPluginSelector::addPlugins( const TQString & instanceName,
     Q_ASSERT( config ); // please set config, or use addPlugins( instance, ... ) which takes care of it
     if ( !config ) // KDE4: ensure that config is always set; make it second in the arg list?
         config = new KSimpleConfig(  instanceName ); // memleak!
-    KConfigGroup * cfgGroup = new KConfigGroup( config, "KParts Plugins" );
+    TDEConfigGroup * cfgGroup = new TDEConfigGroup( config, "KParts Plugins" );
     kdDebug( 702 ) << k_funcinfo << "cfgGroup = " << cfgGroup << endl;
     addPluginsInternal( plugininfos, catname, category, cfgGroup );
 }
 
 void KPluginSelector::addPluginsInternal( const TQValueList<KPluginInfo*> plugininfos,
                                           const TQString & catname, const TQString & category,
-                                          KConfigGroup* cfgGroup )
+                                          TDEConfigGroup* cfgGroup )
 {
     KPluginSelectionWidget * w;
     if( d->tabwidget )
@@ -619,7 +619,7 @@ void KPluginSelector::addPluginsInternal( const TQValueList<KPluginInfo*> plugin
 }
 
 void KPluginSelector::addPlugins( const TDEInstance * instance, const TQString &
-        catname, const TQString & category, KConfig * config )
+        catname, const TQString & category, TDEConfig * config )
 {
     if ( !config )
         config = instance->config();
@@ -627,11 +627,11 @@ void KPluginSelector::addPlugins( const TDEInstance * instance, const TQString &
 }
 
 void KPluginSelector::addPlugins( const TQValueList<KPluginInfo*> & plugininfos,
-        const TQString & catname, const TQString & category, KConfig * config )
+        const TQString & catname, const TQString & category, TDEConfig * config )
 {
     checkNeedForTabWidget();
-    // the KConfigGroup becomes owned by KPluginSelectionWidget
-    KConfigGroup * cfgGroup = new KConfigGroup( config ? config : TDEGlobal::config(), "Plugins" );
+    // the TDEConfigGroup becomes owned by KPluginSelectionWidget
+    TDEConfigGroup * cfgGroup = new TDEConfigGroup( config ? config : TDEGlobal::config(), "Plugins" );
     kdDebug( 702 ) << k_funcinfo << "cfgGroup = " << cfgGroup << endl;
     addPluginsInternal( plugininfos, catname, category, cfgGroup );
 }
@@ -696,10 +696,10 @@ void KPluginSelector::defaults()
     // tabwidget - defaults() will be called for all of them)
 
     TQWidget * pluginconfig = d->widgetstack->visibleWidget();
-    KCModuleProxy * kcm = ::tqqt_cast<KCModuleProxy*>(pluginconfig);
+    TDECModuleProxy * kcm = ::tqqt_cast<TDECModuleProxy*>(pluginconfig);
     if( kcm )
     {
-        kdDebug( 702 ) << "call KCModule::defaults() for the plugins KCM"
+        kdDebug( 702 ) << "call TDECModule::defaults() for the plugins KCM"
             << endl;
         kcm->defaults();
         return;
@@ -707,14 +707,14 @@ void KPluginSelector::defaults()
 
     // if we get here the visible Widget must be a tabwidget holding more than
     // one KCM
-    TQObjectList * kcms = pluginconfig->queryList( "KCModuleProxy",
+    TQObjectList * kcms = pluginconfig->queryList( "TDECModuleProxy",
             0, false, false );
     TQObjectListIt it( *kcms );
     TQObject * obj;
     while( ( obj = it.current() ) != 0 )
     {
         ++it;
-        ( ( KCModule* )obj )->defaults();
+        ( ( TDECModule* )obj )->defaults();
     }
     delete kcms;
     // FIXME: update changed state

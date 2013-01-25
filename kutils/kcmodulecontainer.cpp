@@ -40,10 +40,10 @@
 #include "kcmodulecontainer.moc"
 
 /***********************************************************************/
-class KCModuleContainer::KCModuleContainerPrivate
+class TDECModuleContainer::TDECModuleContainerPrivate
 {
 	public:
-		KCModuleContainerPrivate( const TQStringList& mods )
+		TDECModuleContainerPrivate( const TQStringList& mods )
 			: modules( mods )
 			, tabWidget( 0 )
 			, buttons( 0 )
@@ -70,22 +70,22 @@ class KCModuleContainer::KCModuleContainerPrivate
 
 
 /***********************************************************************/
-KCModuleContainer::KCModuleContainer( TQWidget* parent, const char* name, 
+TDECModuleContainer::TDECModuleContainer( TQWidget* parent, const char* name, 
 	const TQString& mods )
-	: KCModule( parent, name )
+	: TDECModule( parent, name )
 {
-	d = new KCModuleContainerPrivate( TQStringList::split( ",", TQString(mods).remove( " " )) );
+	d = new TDECModuleContainerPrivate( TQStringList::split( ",", TQString(mods).remove( " " )) );
 	init();
 }
 
-KCModuleContainer::KCModuleContainer( TQWidget* parent, const char* name, 
+TDECModuleContainer::TDECModuleContainer( TQWidget* parent, const char* name, 
 	const TQStringList& mods )
-	: KCModule( parent, name ), d( new KCModuleContainerPrivate( mods ) )
+	: TDECModule( parent, name ), d( new TDECModuleContainerPrivate( mods ) )
 {
 	init();
 }
 
-void KCModuleContainer::init()
+void TDECModuleContainer::init()
 {
 	d->topLayout = new TQVBoxLayout( this, 0, KDialog::spacingHint(), "topLayout" );
 	d->tabWidget = new TQTabWidget(this, "tabWidget");
@@ -104,7 +104,7 @@ void KCModuleContainer::init()
 
 }
 
-void KCModuleContainer::finalize()
+void TDECModuleContainer::finalize()
 {
 	setButtons( d->buttons );
 	if ( d->hasRootKCM ) /* Add a root mode button */
@@ -121,7 +121,7 @@ void KCModuleContainer::finalize()
 	}
 }
 
-void KCModuleContainer::addModule( const TQString& module )
+void TDECModuleContainer::addModule( const TQString& module )
 {
 	/* In case it doesn't exist we just silently drop it.
 	 * This allows people to easily extend containers.
@@ -129,15 +129,15 @@ void KCModuleContainer::addModule( const TQString& module )
 	 */
 	if ( !KService::serviceByDesktopName( module ) )
 	{
-		kdDebug(713) << "KCModuleContainer: module '" << 
+		kdDebug(713) << "TDECModuleContainer: module '" << 
 			module << "' was not found and thus not loaded" << endl;
 		return;
 	}
 
-	if( !KCModuleLoader::testModule( module ))
+	if( !TDECModuleLoader::testModule( module ))
 		return;
 
-	KCModuleProxy* proxy = new KCModuleProxy( module, false, d->tabWidget, module.latin1());
+	TDECModuleProxy* proxy = new TDECModuleProxy( module, false, d->tabWidget, module.latin1());
 	allModules.append( proxy );
 
 	d->tabWidget->addTab( proxy, TQIconSet(TDEGlobal::iconLoader()->loadIcon(
@@ -147,7 +147,7 @@ void KCModuleContainer::addModule( const TQString& module )
 
 	d->tabWidget->setTabToolTip( proxy, proxy->moduleInfo().comment() );
 
-	connect( proxy, TQT_SIGNAL(changed(KCModuleProxy *)), TQT_SLOT(moduleChanged(KCModuleProxy *)));
+	connect( proxy, TQT_SIGNAL(changed(TDECModuleProxy *)), TQT_SLOT(moduleChanged(TDECModuleProxy *)));
 
 	/* Collect our buttons - we go for the common deliminator */
 	d->buttons = d->buttons | proxy->realModule()->buttons();
@@ -159,7 +159,7 @@ void KCModuleContainer::addModule( const TQString& module )
 
 }
 
-void KCModuleContainer::tabSwitched( TQWidget * module )
+void TDECModuleContainer::tabSwitched( TQWidget * module )
 {
 	if ( !d->hasRootKCM )
 		return;
@@ -168,7 +168,7 @@ void KCModuleContainer::tabSwitched( TQWidget * module )
 	disconnect( d->btnRootMode, 0, 0, 0 );
 	/* Welcome to the real world huh baby? */
 	
-	KCModuleProxy* mod = (KCModuleProxy *) module;
+	TDECModuleProxy* mod = (TDECModuleProxy *) module;
 
 	if ( mod->moduleInfo().needsRootPrivileges() && !mod->rootMode() )
 	{
@@ -186,20 +186,20 @@ void KCModuleContainer::tabSwitched( TQWidget * module )
 
 }
 
-void KCModuleContainer::runAsRoot()
+void TDECModuleContainer::runAsRoot()
 {
 	if ( d->tabWidget->currentPage() )
-		( (KCModuleProxy *) d->tabWidget->currentPage() )->runAsRoot();
+		( (TDECModuleProxy *) d->tabWidget->currentPage() )->runAsRoot();
 	d->btnRootMode->setEnabled( false );
 }
 
-void KCModuleContainer::rootExited()
+void TDECModuleContainer::rootExited()
 {
 	connect( d->btnRootMode, TQT_SIGNAL( clicked() ), TQT_SLOT( runAsRoot() ));
 	d->btnRootMode->setEnabled( true );
 }
 
-void KCModuleContainer::save()
+void TDECModuleContainer::save()
 {
 	ModuleList list = changedModules;
 	ModuleList::iterator it;
@@ -212,7 +212,7 @@ void KCModuleContainer::save()
 
 }
 
-void KCModuleContainer::load()
+void TDECModuleContainer::load()
 {
 	ModuleList list = allModules;
 	ModuleList::iterator it;
@@ -224,7 +224,7 @@ void KCModuleContainer::load()
 	emit changed( false );
 }
 
-void KCModuleContainer::defaults()
+void TDECModuleContainer::defaults()
 {
 	ModuleList list = allModules;
 	ModuleList::iterator it;
@@ -237,7 +237,7 @@ void KCModuleContainer::defaults()
 }
 
 
-void KCModuleContainer::moduleChanged(KCModuleProxy * proxy)
+void TDECModuleContainer::moduleChanged(TDECModuleProxy * proxy)
 {
 	changedModules.append( proxy );
 	if( changedModules.isEmpty() )
@@ -246,7 +246,7 @@ void KCModuleContainer::moduleChanged(KCModuleProxy * proxy)
 	emit changed(true);
 }
 
-KCModuleContainer::~KCModuleContainer()
+TDECModuleContainer::~TDECModuleContainer()
 {
 	delete d;
 }

@@ -25,7 +25,7 @@
 #include "tdeversion.h"
 #include "tdelibs_export.h"
 
-class KConfig;
+class TDEConfig;
 class KCharsets;
 class DCOPClient;
 class DCOPObject;
@@ -63,7 +63,7 @@ class TDEApplicationPrivate;
 *
 * @li It controls the event queue (see TQApplication ).
 * @li It provides the application with KDE resources such as
-* accelerators, common menu entries, a KConfig object. session
+* accelerators, common menu entries, a TDEConfig object. session
 * management events, help invocation etc.
 * @li Installs a signal handler for the SIGCHLD signal in order to
 * avoid zombie children. If you want to catch this signal yourself or
@@ -283,10 +283,10 @@ public:
    * Returns the application session config object.
    *
    * @return A pointer to the application's instance specific
-   * KConfig object.
-   * @see KConfig
+   * TDEConfig object.
+   * @see TDEConfig
    */
-  KConfig* sessionConfig();
+  TDEConfig* sessionConfig();
 
   /**
    * Is the application restored from the session manager?
@@ -1296,7 +1296,7 @@ private slots:
 
 private:
   TQString sessionConfigName() const;
-  KConfig* pSessionConfig; //instance specific application config object
+  TDEConfig* pSessionConfig; //instance specific application config object
   static DCOPClient *s_DCOPClient; // app specific application communication client
   static bool s_dcopClientNeedsPostInit;
   TQString aCaption; // the name for the window title
@@ -1380,7 +1380,7 @@ public:
    * @internal
    * Raw access for use by TDM.
    */
-  static TQPalette createApplicationPalette( KConfig *config, int contrast );
+  static TQPalette createApplicationPalette( TDEConfig *config, int contrast );
 
   /**
    * Installs a handler for the SIGPIPE signal. It is thrown when you write to
@@ -1494,7 +1494,7 @@ signals:
      manipulate the UI in that slot, it is blocked by the session
      manager.
 
-     Use the sessionConfig() KConfig object to store all your
+     Use the sessionConfig() TDEConfig object to store all your
      instance specific data.
 
      Do not do any closing at this point! The user may still select

@@ -418,7 +418,7 @@ bool KMManager::configureServer(TQWidget*)
 
 TQString KMManager::testPage()
 {
-	KConfig	*conf = KMFactory::self()->printConfig();
+	TDEConfig	*conf = KMFactory::self()->printConfig();
 	conf->setGroup("General");
 	QString	tpage = conf->readPathEntry("TestPage");
 	if (tpage.isEmpty())

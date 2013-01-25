@@ -280,7 +280,7 @@ public:
         Background, RotSliderGroove, RotInactiveTab, RotActiveTab, WIDGETS};
 
     /**
-     * The scaling type specified by the KConfig file.
+     * The scaling type specified by the TDEConfig file.
      *
      * @param widget A Widgets enum value.
      *
@@ -288,7 +288,7 @@ public:
      */
     ScaleHint scaleHint( WidgetType widget ) const;
     /**
-     * The gradient type specified by the KConfig file.
+     * The gradient type specified by the TDEConfig file.
      *
      * @param widget A Widgets enum value.
      *

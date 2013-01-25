@@ -42,11 +42,11 @@ class DCOPClient;
 class TQDomElement;
 class TQDomNodeList;
 
-namespace KIO {
+namespace TDEIO {
     class AuthInfo;
 }
 
-class HTTPProtocol : public TQObject, public KIO::TCPSlaveBase
+class HTTPProtocol : public TQObject, public TDEIO::TCPSlaveBase
 {
   Q_OBJECT
 public:
@@ -103,7 +103,7 @@ public:
     HTTPRequest ()
     {
       port = 0;
-      method = KIO::HTTP_UNKNOWN;
+      method = TDEIO::HTTP_UNKNOWN;
       offset = 0;
       doProxy = false;
       allowCompressedPage = false;
@@ -128,9 +128,9 @@ public:
     TQString passwd;
     TQString path;
     TQString query;
-    KIO::HTTP_METHOD method;
-    KIO::CacheControl cache;
-    KIO::filesize_t offset;
+    TDEIO::HTTP_METHOD method;
+    TDEIO::CacheControl cache;
+    TDEIO::filesize_t offset;
     bool doProxy;
     KURL url;
     TQString window;                 // Window Id this request is related to.
@@ -205,7 +205,7 @@ public:
   bool davHostOk();
 
   // send generic DAV request
-  void davGeneric( const KURL& url, KIO::HTTP_METHOD method );
+  void davGeneric( const KURL& url, TDEIO::HTTP_METHOD method );
 
   // Send requests to lock and unlock resources
   void davLock( const KURL& url, const TQString& scope,
@@ -307,7 +307,7 @@ protected:
    */
   void davSetRequest( const TQCString& requestXML );
   void davStatList( const KURL& url, bool stat = true );
-  void davParsePropstats( const TQDomNodeList& propstats, KIO::UDSEntry& entry );
+  void davParsePropstats( const TQDomNodeList& propstats, TDEIO::UDSEntry& entry );
   void davParseActiveLocks( const TQDomNodeList& activeLocks,
                             uint& lockCount );
 
@@ -463,7 +463,7 @@ protected:
   /**
    * Creates authorization prompt info.
    */
-  void promptInfo( KIO::AuthInfo& info );
+  void promptInfo( TDEIO::AuthInfo& info );
 
 protected:
   HTTPState m_state;
@@ -481,9 +481,9 @@ protected:
 
   // Processing related
   bool m_bChunked; // Chunked tranfer encoding
-  KIO::filesize_t m_iSize; // Expected size of message
-  KIO::filesize_t m_iBytesLeft; // # of bytes left to receive in this message.
-  KIO::filesize_t m_iContentLeft; // # of content bytes left
+  TDEIO::filesize_t m_iSize; // Expected size of message
+  TDEIO::filesize_t m_iBytesLeft; // # of bytes left to receive in this message.
+  TDEIO::filesize_t m_iContentLeft; // # of content bytes left
   TQByteArray m_bufReceive; // Receive buffer
   bool m_dataInternal; // Data is for internal consumption
   char m_lineBuf[1024];

@@ -197,7 +197,7 @@ bool Resource::ConstIterator::operator!=( const ConstIterator &it )
 }
 
 
-Resource::Resource( const KConfig *config )
+Resource::Resource( const TDEConfig *config )
   : KRES::Resource( config ), mAddressBook( 0 )
 {
 }
@@ -236,7 +236,7 @@ Resource::ConstIterator Resource::end() const
   return it;
 }
 
-void Resource::writeConfig( KConfig *config )
+void Resource::writeConfig( TDEConfig *config )
 {
   KRES::Resource::writeConfig( config );
 }

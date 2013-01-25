@@ -30,7 +30,7 @@
 #include "klineedit.h"
 #include "kcompletion.h"
 
-class KConfig;
+class TDEConfig;
 
 namespace KABC {
 
@@ -61,7 +61,7 @@ public:
    */
   virtual void setFont( const TQFont& );
 
-  static KConfig *config();
+  static TDEConfig *config();
 
 public slots:
   /**
@@ -112,7 +112,7 @@ private:
   static LdapSearch *s_LDAPSearch;
   static TQString *s_LDAPText;
   static AddressLineEdit *s_LDAPLineEdit;
-  static KConfig *s_config;
+  static TDEConfig *s_config;
 
 private:
   class AddressLineEditPrivate* d;

@@ -30,10 +30,10 @@
 
 #include <tqmessagebox.h>
 
-KCModuleProxyIfaceImpl::KCModuleProxyIfaceImpl( const TQCString& name, 
-		KCModuleProxy* const client )
+TDECModuleProxyIfaceImpl::TDECModuleProxyIfaceImpl( const TQCString& name, 
+		TDECModuleProxy* const client )
 	: DCOPObject( name ), TQObject( 0, name ),
-		p( const_cast<KCModuleProxy *>( client ))
+		p( const_cast<TDECModuleProxy *>( client ))
 { 
 	connect( p, TQT_SIGNAL( changed(bool)), 
 			TQT_SLOT( changedRelay(bool)));
@@ -41,40 +41,40 @@ KCModuleProxyIfaceImpl::KCModuleProxyIfaceImpl( const TQCString& name,
 			TQT_SLOT( quickHelpRelay()));
 }
 
-void KCModuleProxyIfaceImpl::save()
+void TDECModuleProxyIfaceImpl::save()
 {
 	kdDebug(711) << k_funcinfo << endl;
 	p->save();
 }
 
-void KCModuleProxyIfaceImpl::load()
+void TDECModuleProxyIfaceImpl::load()
 {
 	kdDebug(711) << k_funcinfo << endl;
 	p->load();
 }
 
-void KCModuleProxyIfaceImpl::defaults()
+void TDECModuleProxyIfaceImpl::defaults()
 {
 	kdDebug(711) << k_funcinfo << endl;
 	p->defaults();
 }
 
-TQString KCModuleProxyIfaceImpl::applicationName()
+TQString TDECModuleProxyIfaceImpl::applicationName()
 {
 	return kapp->caption();
 }
 
-TQString KCModuleProxyIfaceImpl::quickHelp()
+TQString TDECModuleProxyIfaceImpl::quickHelp()
 {
 	return p->quickHelp();
 }
 
-bool KCModuleProxyIfaceImpl::changed()
+bool TDECModuleProxyIfaceImpl::changed()
 {
 	return p->changed();
 }
 
-void KCModuleProxyIfaceImpl::changedRelay( bool c )
+void TDECModuleProxyIfaceImpl::changedRelay( bool c )
 {
 	TQByteArray data;
 	TQDataStream stream(data, IO_WriteOnly);
@@ -82,7 +82,7 @@ void KCModuleProxyIfaceImpl::changedRelay( bool c )
 	emitDCOPSignal( "changed(bool)", data );
 }
 
-void KCModuleProxyIfaceImpl::quickHelpRelay()
+void TDECModuleProxyIfaceImpl::quickHelpRelay()
 {
 	TQByteArray data;
 	emitDCOPSignal( "quickHelpChanged()", data );
@@ -94,18 +94,18 @@ void KCModuleProxyIfaceImpl::quickHelpRelay()
 
 
 /***************************************************************/
-KCModuleProxyRootCommunicatorImpl::KCModuleProxyRootCommunicatorImpl
-		( const TQCString& name, KCModuleProxy* const client )
+TDECModuleProxyRootCommunicatorImpl::TDECModuleProxyRootCommunicatorImpl
+		( const TQCString& name, TDECModuleProxy* const client )
 	: DCOPObject( name ), TQObject( 0, name ), 
-		p( const_cast<KCModuleProxy *>( client ))
+		p( const_cast<TDECModuleProxy *>( client ))
 { 
 	/*
-	 * Connect kcmshell's KCModuleProxy's change signal 
+	 * Connect kcmshell's TDECModuleProxy's change signal 
 	 * to us, such that we act as a proxy for 
-	 * KCModuleProxy's API.
+	 * TDECModuleProxy's API.
 	 */
 
-	/* Note, we don't use KCModuleProxy::d->dcopClient */
+	/* Note, we don't use TDECModuleProxy::d->dcopClient */
 	kapp->dcopClient()->connectDCOPSignal( 0, p->dcopName(), 
 			"changed(bool)", objId(), "changed(bool)", false );
 
@@ -114,13 +114,13 @@ KCModuleProxyRootCommunicatorImpl::KCModuleProxyRootCommunicatorImpl
 }
 
 /* Reimplementations of DCOP members */
-void KCModuleProxyRootCommunicatorImpl::changed( bool c )
+void TDECModuleProxyRootCommunicatorImpl::changed( bool c )
 {
 	kdDebug(711) << k_funcinfo << endl;
 	p->moduleChanged( c );
 }
 
-void KCModuleProxyRootCommunicatorImpl::quickHelpChanged()
+void TDECModuleProxyRootCommunicatorImpl::quickHelpChanged()
 {
 	kdDebug(711) << k_funcinfo << endl;
 	p->emitQuickHelpChanged();

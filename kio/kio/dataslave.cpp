@@ -28,7 +28,7 @@
 
 #include <tqtimer.h>
 
-using namespace KIO;
+using namespace TDEIO;
 
 #define KIO_DATA_POLL_INTERVAL 0
 
@@ -198,12 +198,12 @@ void DataSlave::virtual_hook( int id, void* data ) {
       return;
     }
     default:
-      KIO::Slave::virtual_hook( id, data );
+      TDEIO::Slave::virtual_hook( id, data );
   }
 }
 
 DISPATCH_IMPL1(mimeType, const TQString &, s)
-DISPATCH_IMPL1(totalSize, KIO::filesize_t, size)
+DISPATCH_IMPL1(totalSize, TDEIO::filesize_t, size)
 DISPATCH_IMPL(sendMetaData)
 DISPATCH_IMPL1(data, const TQByteArray &, ba)
 

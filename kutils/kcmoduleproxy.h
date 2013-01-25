@@ -28,56 +28,56 @@
 #include <tdelibs_export.h>
 
 class TDEAboutData;
-class KCModule;
-class KCModuleInfo;
+class TDECModule;
+class TDECModuleInfo;
 class TDEInstance;
 class TDEProcess;
 
 /**
  * @ingroup kcmodule
  *
- * @brief Encapsulates a KCModule for embedding.
+ * @brief Encapsulates a TDECModule for embedding.
  *
- * KCModuleProxy is a wrapper for KCModule intended for cases where
+ * TDECModuleProxy is a wrapper for TDECModule intended for cases where
  * modules are to be displayed. It ensures layout is consistent, handles
  * root/administrator modules and in general takes care of the details
- * needed for making a module available in an interface. A KCModuleProxy
+ * needed for making a module available in an interface. A TDECModuleProxy
  * can be treated as a TQWidget, without worrying about the details specific
- * for modules such as library loading. KCModuleProxy is not a sub class of KCModule
- * but its API closely resembles KCModule's.\n
+ * for modules such as library loading. TDECModuleProxy is not a sub class of TDECModule
+ * but its API closely resembles TDECModule's.\n
  * Usually, an instance is created by passing one of the constructors a KService::Ptr,
- * KCModuleInfo or simply the name of the module and then added to the layout as any
+ * TDECModuleInfo or simply the name of the module and then added to the layout as any
  * other widget. \n
- * When the user have changed the module, changed( bool ) as well as changed ( KCModuleProxy * )
- * is emitted. KCModuleProxy does not take care of prompting for saving - if the object is deleted while
+ * When the user have changed the module, changed( bool ) as well as changed ( TDECModuleProxy * )
+ * is emitted. TDECModuleProxy does not take care of prompting for saving - if the object is deleted while
  * changes is not saved the changes will be lost. changed() returns true if changes are unsaved. \n
  * \n
- * KCModuleProxy does not take care of authorization of KCModules. \n
- * KCModuleProxy do lazy loading, meaning the library will not be loaded or
+ * TDECModuleProxy does not take care of authorization of TDECModules. \n
+ * TDECModuleProxy do lazy loading, meaning the library will not be loaded or
  * any other initialization done before its show() function is called. This means
  * modules will only be loaded when they are actually needed as well as it is possible to
- * load many KCModuleProxy without any speed penalty.
+ * load many TDECModuleProxy without any speed penalty.
  *
- * KCModuleProxy should be used in all cases where modules are embedded in order to
+ * TDECModuleProxy should be used in all cases where modules are embedded in order to
  * promote code efficiency and usability consistency.
  *
  * @author Frans Englich <frans.englich@telia.com>
  * @author Matthias Kretz <kretz@kde.org>
  *
  */
-class KUTILS_EXPORT KCModuleProxy : public TQWidget
+class KUTILS_EXPORT TDECModuleProxy : public TQWidget
 {
 Q_OBJECT
 
 
-	friend class KCModuleProxyRootCommunicatorImpl;
+	friend class TDECModuleProxyRootCommunicatorImpl;
 
 public:
 
 	/**
-	 * Constructs a KCModuleProxy from a KCModuleInfo class.
+	 * Constructs a TDECModuleProxy from a TDECModuleInfo class.
 	 *
-	 * @param info The KCModuleInfo to construct the module from.
+	 * @param info The TDECModuleInfo to construct the module from.
 	 * @param withFallback If set to true and loading of the module fails,
 	 * a alternative will be tried, resulting in the module appearing in its
 	 * own window, if at all.
@@ -87,12 +87,12 @@ public:
 	 * @param args This is used in the implementation and is internal.
 	 * Use the default.
 	 */
-	KCModuleProxy( const KCModuleInfo & info, bool withFallback = true,
+	TDECModuleProxy( const TDECModuleInfo & info, bool withFallback = true,
 			TQWidget * parent = 0, const char * name = 0,
 			const TQStringList & args = TQStringList() );
 
 	/**
-	 * Constructs a KCModuleProxy from a module's service name, which is
+	 * Constructs a TDECModuleProxy from a module's service name, which is
 	 * equivalent to the desktop file for the kcm without the ".desktop" part.
 	 * Otherwise equal to the one above.
 	 *
@@ -106,12 +106,12 @@ public:
 	 * @param args This is used in the implementation and is internal.
 	 * Use the default.
 	 */
-	KCModuleProxy( const TQString& serviceName, bool withFallback = true,
+	TDECModuleProxy( const TQString& serviceName, bool withFallback = true,
 			TQWidget * parent = 0, const char * name = 0,
 			const TQStringList & args = TQStringList() );
 
 	/**
-	 * Constructs a KCModuleProxy from KService. Otherwise equal to the one above.
+	 * Constructs a TDECModuleProxy from KService. Otherwise equal to the one above.
 	 *
 	 * @param service The KService to construct from.
 	 * @param withFallback If set to true and loading of the module fails,
@@ -123,14 +123,14 @@ public:
 	 * @param args This is used in the implementation and is internal.
 	 * Use the default.
 	 */
-	KCModuleProxy( const KService::Ptr& service, bool withFallback = true,
+	TDECModuleProxy( const KService::Ptr& service, bool withFallback = true,
 			TQWidget  * parent = 0, const char * name = 0,
 			const TQStringList & args = TQStringList() );
 
 	/**
 	 * Default destructor
 	 */
-	~KCModuleProxy();
+	~TDECModuleProxy();
 
 	/**
 	 * Calling it will cause the contained module to
@@ -181,7 +181,7 @@ public:
 	// this one's available via moduleInfo()-> and realModule()->
 
 	/**
-	 * Returns the embedded KCModule's TDEInstance.
+	 * Returns the embedded TDECModule's TDEInstance.
 	 * @return The module's TDEInstance.
 	 * @deprecated
 	 */
@@ -215,13 +215,13 @@ public:
 	 *
 	 * @return the encapsulated module.
 	 */
-	KCModule* realModule() const;
+	TDECModule* realModule() const;
 
 	/**
-	 * @return a KCModuleInfo for the encapsulated
+	 * @return a TDECModuleInfo for the encapsulated
 	 * module
 	 */
-	const KCModuleInfo& moduleInfo() const;
+	const TDECModuleInfo& moduleInfo() const;
 
 	/**
 	 * Returns the DCOP the module's DCOPClient
@@ -250,7 +250,7 @@ public slots:
 	/**
 	 * Calling this, results in deleting the contained
 	 * module, and unregistering from DCOP. A similar result is achieved
-	 * by deleting the KCModuleProxy itself.
+	 * by deleting the TDECModuleProxy itself.
 	 *
 	 * @since 3.4
 	 */
@@ -265,11 +265,11 @@ signals:
 
 	/**
 	 * This is emitted in the same situations as in the one above. Practical
-	 * when several KCModuleProxys are loaded.
+	 * when several TDECModuleProxys are loaded.
 	 *
 	 * @since 3.4
 	 */
-	void changed( KCModuleProxy* mod );
+	void changed( TDECModuleProxy* mod );
 
 	/**
 	 * When a module running with root privileges and exits, returns to normal mode, the
@@ -301,7 +301,7 @@ protected:
 	 * @internal
 	 * @since 3.4
 	 */
-	void init( const KCModuleInfo& info );
+	void init( const TDECModuleInfo& info );
 
 
 	/**
@@ -313,7 +313,7 @@ protected:
 private slots:
 
    /**
-	* Calls the function @p function of the root module's KCModuleProxy
+	* Calls the function @p function of the root module's TDECModuleProxy
 	* DCOP interface.
 	*
 	* @param function the function signature of the function to call.
@@ -350,8 +350,8 @@ private slots:
 
 private:
 
-	class KCModuleProxyPrivate;
-	KCModuleProxyPrivate * d;
+	class TDECModuleProxyPrivate;
+	TDECModuleProxyPrivate * d;
 };
 
 #endif // KCMODULEPROXY_H

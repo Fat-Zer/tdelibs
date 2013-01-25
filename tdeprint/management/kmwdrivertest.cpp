@@ -105,7 +105,7 @@ void KMWDriverTest::initPrinter(KMPrinter *p)
 	{
 		m_driver = KMFactory::self()->manager()->loadFileDriver(drfile);
 		/* remove the temp file if it has been downloaded */
-		KIO::NetAccess::removeTempFile( drfile );
+		TDEIO::NetAccess::removeTempFile( drfile );
 	}
 	else if (p->dbEntry() != NULL)
 		m_driver = KMFactory::self()->manager()->loadDbDriver(p->dbEntry());

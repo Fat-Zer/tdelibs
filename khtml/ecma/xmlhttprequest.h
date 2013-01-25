@@ -75,12 +75,12 @@ namespace KJS {
     XMLHttpRequestQObject *qObject;
 
 #ifdef APPLE_CHANGES
-    void slotData( KIO::Job* job, const char *data, int size );
+    void slotData( TDEIO::Job* job, const char *data, int size );
 #else
-    void slotData( KIO::Job* job, const TQByteArray &data );
+    void slotData( TDEIO::Job* job, const TQByteArray &data );
 #endif
-    void slotFinished( KIO::Job* );
-    void slotRedirection( KIO::Job*, const KURL& );
+    void slotFinished( TDEIO::Job* );
+    void slotRedirection( TDEIO::Job*, const KURL& );
 
     void processSyncLoadResults(const TQByteArray &data, const KURL &finalURL, const TQString &headers);
 
@@ -103,7 +103,7 @@ namespace KJS {
     TQString m_mimeTypeOverride;
     TQString contentType;
 
-    KIO::TransferJob * job;
+    TDEIO::TransferJob * job;
 
     XMLHttpRequestState state;
     JSEventListener *onReadyStateChangeListener;
@@ -129,9 +129,9 @@ namespace KJS {
     XMLHttpRequestQObject(XMLHttpRequest *_jsObject);
 
   public slots:
-    void slotData( KIO::Job* job, const TQByteArray &data );
-    void slotFinished( KIO::Job* job );
-    void slotRedirection( KIO::Job* job, const KURL& url);
+    void slotData( TDEIO::Job* job, const TQByteArray &data );
+    void slotFinished( TDEIO::Job* job );
+    void slotRedirection( TDEIO::Job* job, const KURL& url);
 
   private:
     XMLHttpRequest *jsObject;

@@ -38,14 +38,14 @@ class KActiveSocketBase;
 
 /**
  * @internal
- * @class KSocketBuffer tdesocketbuffer_p.h tdesocketbuffer_p.h
+ * @class TDESocketBuffer tdesocketbuffer_p.h tdesocketbuffer_p.h
  * @brief generic socket buffering code
  *
  * This class implements generic buffering used by @ref KBufferedSocket.
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KSocketBuffer: public KIOBufferBase
+class TDESocketBuffer: public KIOBufferBase
 {
 public:
   /**
@@ -53,22 +53,22 @@ public:
    *
    * @param size	the maximum size of the buffer
    */
-  KSocketBuffer(TQ_LONG size = -1);
+  TDESocketBuffer(TQ_LONG size = -1);
 
   /**
    * Copy constructor.
    */
-  KSocketBuffer(const KSocketBuffer& other);
+  TDESocketBuffer(const TDESocketBuffer& other);
 
   /**
    * Virtual destructor. Frees the buffer and discards its contents.
    */
-  virtual ~KSocketBuffer();
+  virtual ~TDESocketBuffer();
 
   /**
    * Assignment operator.
    */
-  KSocketBuffer& operator=(const KSocketBuffer& other);
+  TDESocketBuffer& operator=(const TDESocketBuffer& other);
 
   /**
    * Returns true if a line can be read from the buffer.

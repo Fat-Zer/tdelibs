@@ -36,15 +36,15 @@
 #include <kconfig.h>
 
 //
-// KConfigTestView contains lots of Qt widgets.
+// TDEConfigTestView contains lots of Qt widgets.
 //
 
-class KConfigTestView : public TQDialog
+class TDEConfigTestView : public TQDialog
 {
   Q_OBJECT
 public:
-  KConfigTestView( TQWidget *parent=0, const char *name=0 );
-  ~KConfigTestView();
+  TDEConfigTestView( TQWidget *parent=0, const char *name=0 );
+  ~TDEConfigTestView();
 
 private slots:
   void appConfigEditReturnPressed();
@@ -64,7 +64,7 @@ private:
   TQLabel* pInfoLabel1, *pInfoLabel2;
   TQPushButton* pQuitButton;
 
-  KConfig* pConfig;
+  TDEConfig* pConfig;
   TQFile* pFile;
   TQTextStream* pStream;
 };

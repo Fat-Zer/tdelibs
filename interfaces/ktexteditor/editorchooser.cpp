@@ -47,7 +47,7 @@ EditorChooser::EditorChooser(TQWidget *parent,const char *name) :
 
 
 	KTrader::OfferList offers = KTrader::self()->query("text/plain", "'KTextEditor/Document' in ServiceTypes");
-	KConfig *config=new KConfig("default_components");
+	TDEConfig *config=new TDEConfig("default_components");
   	config->setGroup("KTextEditor");
   	TQString editor = config->readPathEntry("embeddedEditor");
 
@@ -75,7 +75,7 @@ EditorChooser:: ~EditorChooser(){
 }
 
 void EditorChooser::readAppSetting(const TQString& postfix){
-	KConfig *cfg=kapp->config();
+	TDEConfig *cfg=kapp->config();
 	TQString previousGroup=cfg->group();
 	cfg->setGroup("KTEXTEDITOR:"+postfix);
 	TQString editor=cfg->readPathEntry("editor");
@@ -90,7 +90,7 @@ void EditorChooser::readAppSetting(const TQString& postfix){
 }
 
 void EditorChooser::writeAppSetting(const TQString& postfix){
-	KConfig *cfg=kapp->config();
+	TDEConfig *cfg=kapp->config();
 	TQString previousGroup=cfg->group();
 	cfg->setGroup("KTEXTEDITOR:"+postfix);
 	cfg->writeEntry("DEVELOPER_INFO","NEVER TRY TO USE VALUES FROM THAT GROUP, THEY ARE SUBJECT TO CHANGES");
@@ -105,14 +105,14 @@ KTextEditor::Document *EditorChooser::createDocument(TQObject *parent,const char
 
 	KTextEditor::Document *tmpDoc=0;
 
-	KConfig *cfg=kapp->config();
+	TDEConfig *cfg=kapp->config();
         TQString previousGroup=cfg->group();
         cfg->setGroup("KTEXTEDITOR:"+postfix);
         TQString editor=cfg->readPathEntry("editor");
 	cfg->setGroup(previousGroup);
 	if (editor.isEmpty())
 	{
-		KConfig *config=new KConfig("default_components");
+		TDEConfig *config=new TDEConfig("default_components");
   		config->setGroup("KTextEditor");
 	  	editor = config->readPathEntry("embeddedEditor", "katepart");
 		delete config;
@@ -135,14 +135,14 @@ KTextEditor::Editor *EditorChooser::createEditor(TQWidget *parentWidget,TQObject
 
         KTextEditor::Editor *tmpEd=0;
 
-        KConfig *cfg=kapp->config();
+        TDEConfig *cfg=kapp->config();
         TQString previousGroup=cfg->group();
         cfg->setGroup("KTEXTEDITOR:"+postfix);
         TQString editor=cfg->readPathEntry("editor");
         cfg->setGroup(previousGroup);
         if (editor.isEmpty())
         {
-                KConfig *config=new KConfig("default_components");
+                TDEConfig *config=new TDEConfig("default_components");
                 config->setGroup("KTextEditor");
                 editor = config->readPathEntry("embeddedEditor", "katepart");
                 delete config;

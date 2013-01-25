@@ -84,7 +84,7 @@ void KHTMLRun::save( const KURL & url, const TQString & suggestedFilename )
 }
 
 // KDE4: remove
-void KHTMLRun::handleError( KIO::Job *job )
+void KHTMLRun::handleError( TDEIO::Job *job )
 {
     KParts::BrowserRun::handleError( job );
 }

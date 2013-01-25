@@ -46,7 +46,7 @@
 
 namespace KTextEditor { class Plugin; }
 
-namespace KIO { class TransferJob; }
+namespace TDEIO { class TransferJob; }
 
 class KateUndoGroup;
 class KateCmd;
@@ -439,10 +439,10 @@ class KateDocument : public Kate::Document,
   public slots:
     void readConfig ();
     void writeConfig ();
-    void readConfig (KConfig *);
-    void writeConfig (KConfig *);
-    void readSessionConfig (KConfig *);
-    void writeSessionConfig (KConfig *);
+    void readConfig (TDEConfig *);
+    void writeConfig (TDEConfig *);
+    void readSessionConfig (TDEConfig *);
+    void writeSessionConfig (TDEConfig *);
     void configDialog ();
 
   //
@@ -555,7 +555,7 @@ class KateDocument : public Kate::Document,
     /* Anders: Reimplemented to do kate specific stuff */
     bool saveAs( const KURL &url );
 
-    bool openFile (KIO::Job * job);
+    bool openFile (TDEIO::Job * job);
     bool openFile ();
 
     bool saveFile ();
@@ -565,8 +565,8 @@ class KateDocument : public Kate::Document,
     void setModified( bool m );
 
   private slots:
-    void slotDataKate ( KIO::Job* kio_job, const TQByteArray &data );
-    void slotFinishedKate ( KIO::Job * job );
+    void slotDataKate ( TDEIO::Job* kio_job, const TQByteArray &data );
+    void slotFinishedKate ( TDEIO::Job * job );
 
   private:
     void abortLoadKate();
@@ -1004,7 +1004,7 @@ class KateDocument : public Kate::Document,
     static TQRegExp kvLineMime;
     static TQRegExp kvVar;
 
-    KIO::TransferJob *m_job;
+    TDEIO::TransferJob *m_job;
     KTempFile *m_tempFile;
 
   // TemplateInterface

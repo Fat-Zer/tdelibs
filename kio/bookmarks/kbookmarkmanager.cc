@@ -702,7 +702,7 @@ KBookmarkSettings* KBookmarkSettings::s_self = 0;
 
 void KBookmarkSettings::readSettings()
 {
-   KConfig config("kbookmarkrc", false, false);
+   TDEConfig config("kbookmarkrc", false, false);
    config.setGroup("Bookmarks");
 
    // add bookmark dialog usage - no reparse

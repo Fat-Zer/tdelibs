@@ -64,7 +64,7 @@ that haven't explicitly changed the affected settings to something else.
 Starting with KDE3, configuration entries can be marked "immutable". When a
 configuration entry is immutable it means that configuration files that are
 read later will not be able to override its value. Immutable entries cannot
-be changed via KConfig and if the entry is present under $TDEHOME it will 
+be changed via TDEConfig and if the entry is present under $TDEHOME it will 
 be ignored.
 
 Entries can be marked immutable on 4 different levels:

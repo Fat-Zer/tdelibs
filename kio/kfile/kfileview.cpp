@@ -212,8 +212,8 @@ sort_by_name:
                     break;
                 case TQDir::Time:
                 {
-                    time_t t1 = fi1->time( KIO::UDS_MODIFICATION_TIME );
-                    time_t t2 = fi2->time( KIO::UDS_MODIFICATION_TIME );
+                    time_t t1 = fi1->time( TDEIO::UDS_MODIFICATION_TIME );
+                    time_t t2 = fi2->time( TDEIO::UDS_MODIFICATION_TIME );
                     if ( t1 != t2 ) {
                         bigger = (t1 > t2);
                         break;
@@ -228,8 +228,8 @@ sort_by_name:
                 }
                 case TQDir::Size:
                 {
-                    KIO::filesize_t s1 = fi1->size();
-                    KIO::filesize_t s2 = fi2->size();
+                    TDEIO::filesize_t s1 = fi1->size();
+                    TDEIO::filesize_t s2 = fi2->size();
                     if ( s1 != s2 ) {
                         bigger = (s1 > s2);
                         break;
@@ -369,11 +369,11 @@ KActionCollection * KFileView::actionCollection() const
     return d->actions;
 }
 
-void KFileView::readConfig( KConfig *, const TQString&  )
+void KFileView::readConfig( TDEConfig *, const TQString&  )
 {
 }
 
-void KFileView::writeConfig( KConfig *, const TQString& )
+void KFileView::writeConfig( TDEConfig *, const TQString& )
 {
 }
 
@@ -386,12 +386,12 @@ TQString KFileView::sortingKey( const TQString& value, bool isDir, int sortSpec 
     return result.prepend( start );
 }
 
-TQString KFileView::sortingKey( KIO::filesize_t value, bool isDir, int sortSpec)
+TQString KFileView::sortingKey( TDEIO::filesize_t value, bool isDir, int sortSpec)
 {
     bool reverse = sortSpec & TQDir::Reversed;
     bool dirsFirst = sortSpec & TQDir::DirsFirst;
     char start = (isDir && dirsFirst) ? (reverse ? '2' : '0') : '1';
-    return KIO::number( value ).rightJustify( 24, '0' ).prepend( start );
+    return TDEIO::number( value ).rightJustify( 24, '0' ).prepend( start );
 }
 
 void KFileView::setDropOptions(int options)

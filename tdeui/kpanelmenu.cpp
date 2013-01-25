@@ -63,7 +63,7 @@ void KPanelMenu::init(const TQString& path)
     connect(this, TQT_SIGNAL(aboutToShow()), TQT_SLOT(slotAboutToShow()));
 
     // setup cache timer
-    KConfig *config = TDEGlobal::config();
+    TDEConfig *config = TDEGlobal::config();
     config->setGroup("menus");
     d->clearDelay = config->readNumEntry("MenuCacheTime", 60000); // 1 minute
 

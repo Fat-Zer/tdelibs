@@ -129,7 +129,7 @@ struct KPARTS_EXPORT URLArgs
 
   /**
    * Meta-data to associate with the next KIO operation
-   * @see KIO::TransferJob etc.
+   * @see TDEIO::TransferJob etc.
    */
   TQMap<TQString, TQString> &metaData();
 
@@ -569,7 +569,7 @@ signals:
    * Since the part emits the jobid in the started() signal,
    * progress information is automatically displayed.
    *
-   * However, if you don't use a KIO::Job in the part,
+   * However, if you don't use a TDEIO::Job in the part,
    * you can use loadingProgress() and speedProgress()
    * to display progress information.
    */

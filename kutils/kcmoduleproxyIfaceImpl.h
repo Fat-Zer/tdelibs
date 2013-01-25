@@ -21,14 +21,14 @@
 
 #include "kcmoduleproxyIface.h"
 
-class KCModuleProxy;
+class TDECModuleProxy;
 
 /***************************************************************/
 /** @internal
     @ingroup internal */
-class KCModuleProxyIfaceImpl: public TQObject, virtual public KCModuleProxyIface
+class TDECModuleProxyIfaceImpl: public TQObject, virtual public TDECModuleProxyIface
 {
-	/* KDE4 Merge KCModuleProxyIfaceImpl with KCModuleProxy(MI)
+	/* KDE4 Merge TDECModuleProxyIfaceImpl with TDECModuleProxy(MI)
 	 * if it doesn't break what DCOPClient it binds to.
 	 * Update: This is probably not possible, since we don't want the DCOPObject when 
 	 * we're running in root mode. */
@@ -38,7 +38,7 @@ class KCModuleProxyIfaceImpl: public TQObject, virtual public KCModuleProxyIface
 public:
 
 	/* Reimplementations of DCOP members */
-	KCModuleProxyIfaceImpl( const TQCString& name, KCModuleProxy* const client );
+	TDECModuleProxyIfaceImpl( const TQCString& name, TDECModuleProxy* const client );
 
 	virtual void save();
 
@@ -59,14 +59,14 @@ public slots:
 	void changedRelay( bool c );
 
 	/**
-	 * Simply relays KCModuleProxy's signal with the same name.
+	 * Simply relays TDECModuleProxy's signal with the same name.
 	 */
 	void quickHelpRelay();
 	
 
 private:
 
-	KCModuleProxy* p;
+	TDECModuleProxy* p;
 };
 /***************************************************************/
 
@@ -76,20 +76,20 @@ private:
 /***************************************************************/
 /** @internal
     @ingroup internal */
-class KCModuleProxyRootCommunicatorImpl: public TQObject, 
-	virtual public KCModuleProxyRootDispatcher
+class TDECModuleProxyRootCommunicatorImpl: public TQObject, 
+	virtual public TDECModuleProxyRootDispatcher
 {
 	Q_OBJECT
 
 public:
-	KCModuleProxyRootCommunicatorImpl( const TQCString& name, KCModuleProxy* const client );
+	TDECModuleProxyRootCommunicatorImpl( const TQCString& name, TDECModuleProxy* const client );
 
 	/* Reimplementations of DCOP members */
 	virtual void changed( bool c );
 
 	virtual void quickHelpChanged();
 
-KCModuleProxy* p;
+TDECModuleProxy* p;
 };
 /***************************************************************/
 

@@ -194,7 +194,7 @@ void KateSchemaManager::update (bool readfromfile)
 // get the right group
 // special handling of the default schemas ;)
 //
-KConfig *KateSchemaManager::schema (uint number)
+TDEConfig *KateSchemaManager::schema (uint number)
 {
   if ((number>1) && (number < m_schemas.count()))
     m_config.setGroup (m_schemas[number]);
@@ -440,7 +440,7 @@ void KateSchemaConfigColorTab::schemaChanged ( int newSchema )
     mark[6] = Qt::red;
 
     SchemaColors c;
-    KConfig *config = KateFactory::self()->schemaManager()->schema(newSchema);
+    TDEConfig *config = KateFactory::self()->schemaManager()->schema(newSchema);
 
     c.back= config->readColorEntry("Color Background", &tmp0);
     c.selected = config->readColorEntry("Color Selection", &tmp1);
@@ -493,7 +493,7 @@ void KateSchemaConfigColorTab::apply ()
   for ( it =  m_schemas.begin(); it !=  m_schemas.end(); ++it )
   {
     kdDebug(13030)<<"APPLY scheme = "<<it.key()<<endl;
-    KConfig *config = KateFactory::self()->schemaManager()->schema( it.key() );
+    TDEConfig *config = KateFactory::self()->schemaManager()->schema( it.key() );
     kdDebug(13030)<<"Using config group "<<config->group()<<endl;
     SchemaColors c = it.data();
 
@@ -759,7 +759,7 @@ void KateSchemaConfigHighlightTab::schemaChanged (uint schema)
 
   // Set listview colors
   // We do that now, because we can now get the "normal text" color.
-  // TODO this reads of the KConfig object, which should be changed when
+  // TODO this reads of the TDEConfig object, which should be changed when
   // the color tab is fixed.
   TQPalette p ( m_styles->palette() );
   TQColor _c ( TDEGlobalSettings::baseColor() );
@@ -905,7 +905,7 @@ void KateSchemaConfigPage::apply()
   KateRendererConfig::global()->reloadSchema();
 
   // sync the hl config for real
-  KateHlManager::self()->getKConfig()->sync ();
+  KateHlManager::self()->getTDEConfig()->sync ();
 }
 
 void KateSchemaConfigPage::reload()

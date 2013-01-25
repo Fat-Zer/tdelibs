@@ -24,17 +24,17 @@ Test8b::Test8b(  )
   mSelf = this;
   setCurrentGroup( TQString::fromLatin1( "Group8b1" ) );
 
-  KConfigSkeleton::ItemUInt  *itemSomething;
-  itemSomething = new KConfigSkeleton::ItemUInt( currentGroup(), TQString::fromLatin1( "Something" ), mSomething, 60 );
+  TDEConfigSkeleton::ItemUInt  *itemSomething;
+  itemSomething = new TDEConfigSkeleton::ItemUInt( currentGroup(), TQString::fromLatin1( "Something" ), mSomething, 60 );
   addItem( itemSomething, TQString::fromLatin1( "Something" ) );
 
   setCurrentGroup( TQString::fromLatin1( "Group8b2" ) );
 
-  KConfigSkeleton::ItemBool  *itemFooBoo;
-  itemFooBoo = new KConfigSkeleton::ItemBool( currentGroup(), TQString::fromLatin1( "FooBoo" ), mFooBoo, false );
+  TDEConfigSkeleton::ItemBool  *itemFooBoo;
+  itemFooBoo = new TDEConfigSkeleton::ItemBool( currentGroup(), TQString::fromLatin1( "FooBoo" ), mFooBoo, false );
   addItem( itemFooBoo, TQString::fromLatin1( "FooBoo" ) );
-  KConfigSkeleton::ItemUInt  *itemPort;
-  itemPort = new KConfigSkeleton::ItemUInt( currentGroup(), TQString::fromLatin1( "Port" ), mPort, 1000 );
+  TDEConfigSkeleton::ItemUInt  *itemPort;
+  itemPort = new TDEConfigSkeleton::ItemUInt( currentGroup(), TQString::fromLatin1( "Port" ), mPort, 1000 );
   addItem( itemPort, TQString::fromLatin1( "Port" ) );
 }
 

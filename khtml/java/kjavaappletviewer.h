@@ -41,7 +41,7 @@ class KJavaProcess;
 class KJavaAppletViewer;
 class TDEAboutData;
 class TDEInstance;
-class KConfig;
+class TDEConfig;
 class CoverWidget;
 
 class KJavaAppletViewerBrowserExtension : public KParts::BrowserExtension {
@@ -107,7 +107,7 @@ private slots:
     void delayedCreateTimeOut ();
 private:
     TQGuardedPtr <CoverWidget> m_view;
-    KConfig * m_config;
+    TDEConfig * m_config;
     KJavaProcess * process;
     KJavaAppletViewerBrowserExtension * m_browserextension;
     KJavaAppletViewerLiveConnectExtension * m_liveconnect;

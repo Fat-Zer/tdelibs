@@ -96,7 +96,7 @@
 #include <kglobal.h>
 #include <kmimetype.h>
 
-using namespace KIO;
+using namespace TDEIO;
 
 #define MAX_IPC_SIZE (1024*32)
 
@@ -192,16 +192,16 @@ void FileProtocol::chmod( const KURL& url, int permissions )
         switch (errno) {
             case EPERM:
             case EACCES:
-                error( KIO::ERR_ACCESS_DENIED, url.path() );
+                error( TDEIO::ERR_ACCESS_DENIED, url.path() );
                 break;
             case ENOTSUP:
-                error( KIO::ERR_UNSUPPORTED_ACTION, url.path() );
+                error( TDEIO::ERR_UNSUPPORTED_ACTION, url.path() );
                 break;
             case ENOSPC:
-                error( KIO::ERR_DISK_FULL, url.path() );
+                error( TDEIO::ERR_DISK_FULL, url.path() );
                 break;
             default:
-                error( KIO::ERR_CANNOT_CHMOD, url.path() );
+                error( TDEIO::ERR_CANNOT_CHMOD, url.path() );
         }
     } else
         finished();
@@ -217,13 +217,13 @@ void FileProtocol::mkdir( const KURL& url, int permissions )
     if ( KDE_stat( _path.data(), &buff ) == -1 ) {
         if ( ::mkdir( _path.data(), 0777 /*umask will be applied*/ ) != 0 ) {
             if ( errno == EACCES ) {
-          error( KIO::ERR_ACCESS_DENIED, url.path() );
+          error( TDEIO::ERR_ACCESS_DENIED, url.path() );
           return;
             } else if ( errno == ENOSPC ) {
-          error( KIO::ERR_DISK_FULL, url.path() );
+          error( TDEIO::ERR_DISK_FULL, url.path() );
           return;
             } else {
-          error( KIO::ERR_COULD_NOT_MKDIR, url.path() );
+          error( TDEIO::ERR_COULD_NOT_MKDIR, url.path() );
           return;
             }
         } else {
@@ -237,10 +237,10 @@ void FileProtocol::mkdir( const KURL& url, int permissions )
 
     if ( S_ISDIR( buff.st_mode ) ) {
         kdDebug(7101) << "ERR_DIR_ALREADY_EXIST" << endl;
-        error( KIO::ERR_DIR_ALREADY_EXIST, url.path() );
+        error( TDEIO::ERR_DIR_ALREADY_EXIST, url.path() );
         return;
     }
-    error( KIO::ERR_FILE_ALREADY_EXIST, url.path() );
+    error( TDEIO::ERR_FILE_ALREADY_EXIST, url.path() );
     return;
 }
 
@@ -258,24 +258,24 @@ void FileProtocol::get( const KURL& url )
     KDE_struct_stat buff;
     if ( KDE_stat( _path.data(), &buff ) == -1 ) {
         if ( errno == EACCES )
-           error( KIO::ERR_ACCESS_DENIED, url.path() );
+           error( TDEIO::ERR_ACCESS_DENIED, url.path() );
         else
-           error( KIO::ERR_DOES_NOT_EXIST, url.path() );
+           error( TDEIO::ERR_DOES_NOT_EXIST, url.path() );
         return;
     }
 
     if ( S_ISDIR( buff.st_mode ) ) {
-        error( KIO::ERR_IS_DIRECTORY, url.path() );
+        error( TDEIO::ERR_IS_DIRECTORY, url.path() );
         return;
     }
     if ( !S_ISREG( buff.st_mode ) ) {
-        error( KIO::ERR_CANNOT_OPEN_FOR_READING, url.path() );
+        error( TDEIO::ERR_CANNOT_OPEN_FOR_READING, url.path() );
         return;
     }
 
     int fd = KDE_open( _path.data(), O_RDONLY);
     if ( fd < 0 ) {
-        error( KIO::ERR_CANNOT_OPEN_FOR_READING, url.path() );
+        error( TDEIO::ERR_CANNOT_OPEN_FOR_READING, url.path() );
         return;
     }
 
@@ -288,20 +288,20 @@ void FileProtocol::get( const KURL& url )
     KMimeType::Ptr mt = KMimeType::findByURL( url, buff.st_mode, true /* local URL */ );
     emit mimeType( mt->name() );
 
-    KIO::filesize_t processed_size = 0;
+    TDEIO::filesize_t processed_size = 0;
 
     TQString resumeOffset = metaData("resume");
     if ( !resumeOffset.isEmpty() )
     {
         bool ok;
-        KIO::fileoffset_t offset = resumeOffset.toLongLong(&ok);
+        TDEIO::fileoffset_t offset = resumeOffset.toLongLong(&ok);
         if (ok && (offset > 0) && (offset < buff.st_size))
         {
             if (KDE_lseek(fd, offset, SEEK_SET) == offset)
             {
                 canResume ();
                 processed_size = offset;
-                kdDebug( 7101 ) << "Resume offset: " << KIO::number(offset) << endl;
+                kdDebug( 7101 ) << "Resume offset: " << TDEIO::number(offset) << endl;
             }
         }
     }
@@ -318,7 +318,7 @@ void FileProtocol::get( const KURL& url )
        {
           if (errno == EINTR)
               continue;
-          error( KIO::ERR_COULD_NOT_READ, url.path());
+          error( TDEIO::ERR_COULD_NOT_READ, url.path());
           close(fd);
           return;
        }
@@ -332,7 +332,7 @@ void FileProtocol::get( const KURL& url )
        processed_size += n;
        processedSize( processed_size );
 
-       //kdDebug( 7101 ) << "Processed: " << KIO::number (processed_size) << endl;
+       //kdDebug( 7101 ) << "Processed: " << TDEIO::number (processed_size) << endl;
     }
 
     data( TQByteArray() );
@@ -395,7 +395,7 @@ void FileProtocol::put( const KURL& url, int _mode, bool _overwrite, bool _resum
         if (bPartExists && !_resume && !_overwrite && buff_part.st_size > 0 && S_ISREG(buff_part.st_mode))
         {
             kdDebug(7101) << "FileProtocol::put : calling canResume with "
-                          << KIO::number(buff_part.st_size) << endl;
+                          << TDEIO::number(buff_part.st_size) << endl;
 
             // Maybe we can use this partial file for resuming
             // Tell about the size we have, and the app will tell us
@@ -409,9 +409,9 @@ void FileProtocol::put( const KURL& url, int _mode, bool _overwrite, bool _resum
     if ( bOrigExists && !_overwrite && !_resume)
     {
         if (S_ISDIR(buff_orig.st_mode))
-            error( KIO::ERR_DIR_ALREADY_EXIST, dest_orig );
+            error( TDEIO::ERR_DIR_ALREADY_EXIST, dest_orig );
         else
-            error( KIO::ERR_FILE_ALREADY_EXIST, dest_orig );
+            error( TDEIO::ERR_FILE_ALREADY_EXIST, dest_orig );
         return;
     }
 
@@ -479,9 +479,9 @@ void FileProtocol::put( const KURL& url, int _mode, bool _overwrite, bool _resum
                     kdDebug(7101) << "####################### COULD NOT WRITE " << dest << " _mode=" << _mode << endl;
                     kdDebug(7101) << "errno==" << errno << "(" << strerror(errno) << ")" << endl;
                     if ( errno == EACCES )
-                        error( KIO::ERR_WRITE_ACCESS_DENIED, dest );
+                        error( TDEIO::ERR_WRITE_ACCESS_DENIED, dest );
                     else
-                        error( KIO::ERR_CANNOT_OPEN_FOR_WRITING, dest );
+                        error( TDEIO::ERR_CANNOT_OPEN_FOR_WRITING, dest );
                     return;
                 }
             }
@@ -490,13 +490,13 @@ void FileProtocol::put( const KURL& url, int _mode, bool _overwrite, bool _resum
             {
                 if ( errno == ENOSPC ) // disk full
                 {
-                  error( KIO::ERR_DISK_FULL, dest_orig);
+                  error( TDEIO::ERR_DISK_FULL, dest_orig);
                   result = -2; // means: remove dest file
                 }
                 else
                 {
                   kdWarning(7101) << "Couldn't write. Error:" << strerror(errno) << endl;
-                  error( KIO::ERR_COULD_NOT_WRITE, dest_orig);
+                  error( TDEIO::ERR_COULD_NOT_WRITE, dest_orig);
                   result = -1;
                 }
             }
@@ -534,7 +534,7 @@ void FileProtocol::put( const KURL& url, int _mode, bool _overwrite, bool _resum
     if ( close(fd) )
     {
         kdWarning(7101) << "Error when closing file descriptor:" << strerror(errno) << endl;
-        error( KIO::ERR_COULD_NOT_WRITE, dest_orig);
+        error( TDEIO::ERR_COULD_NOT_WRITE, dest_orig);
         return;
     }
 
@@ -550,7 +550,7 @@ void FileProtocol::put( const KURL& url, int _mode, bool _overwrite, bool _resum
         if ( ::rename( _dest.data(), _dest_orig.data() ) )
         {
             kdWarning(7101) << " Couldn't rename " << _dest << " to " << _dest_orig << endl;
-            error( KIO::ERR_CANNOT_RENAME_PARTIAL, dest_orig );
+            error( TDEIO::ERR_CANNOT_RENAME_PARTIAL, dest_orig );
             return;
         }
     }
@@ -561,7 +561,7 @@ void FileProtocol::put( const KURL& url, int _mode, bool _overwrite, bool _resum
         if (::chmod(_dest_orig.data(), _mode) != 0)
         {
             // couldn't chmod. Eat the error if the filesystem apparently doesn't support it.
-            if ( KIO::testFileSystemFlag( _dest_orig, KIO::SupportsChmod ) )
+            if ( TDEIO::testFileSystemFlag( _dest_orig, TDEIO::SupportsChmod ) )
                  warning( i18n( "Could not change permissions for\n%1" ).arg( dest_orig ) );
         }
     }
@@ -602,18 +602,18 @@ void FileProtocol::copy( const KURL &src, const KURL &dest,
 
     if ( KDE_stat( _src.data(), &buff_src ) == -1 ) {
         if ( errno == EACCES )
-           error( KIO::ERR_ACCESS_DENIED, src.path() );
+           error( TDEIO::ERR_ACCESS_DENIED, src.path() );
         else
-           error( KIO::ERR_DOES_NOT_EXIST, src.path() );
+           error( TDEIO::ERR_DOES_NOT_EXIST, src.path() );
 	return;
     }
 
     if ( S_ISDIR( buff_src.st_mode ) ) {
-	error( KIO::ERR_IS_DIRECTORY, src.path() );
+	error( TDEIO::ERR_IS_DIRECTORY, src.path() );
 	return;
     }
     if ( S_ISFIFO( buff_src.st_mode ) || S_ISSOCK ( buff_src.st_mode ) ) {
-	error( KIO::ERR_CANNOT_OPEN_FOR_READING, src.path() );
+	error( TDEIO::ERR_CANNOT_OPEN_FOR_READING, src.path() );
 	return;
     }
 
@@ -623,19 +623,19 @@ void FileProtocol::copy( const KURL &src, const KURL &dest,
     {
         if (S_ISDIR(buff_dest.st_mode))
         {
-           error( KIO::ERR_DIR_ALREADY_EXIST, dest.path() );
+           error( TDEIO::ERR_DIR_ALREADY_EXIST, dest.path() );
            return;
         }
 
 	if ( same_inode( buff_dest, buff_src) ) 
 	{
-	    error( KIO::ERR_IDENTICAL_FILES, dest.path() );
+	    error( TDEIO::ERR_IDENTICAL_FILES, dest.path() );
 	    return;
 	}
 
         if (!_overwrite)
         {
-           error( KIO::ERR_FILE_ALREADY_EXIST, dest.path() );
+           error( TDEIO::ERR_FILE_ALREADY_EXIST, dest.path() );
            return;
         }
 
@@ -651,7 +651,7 @@ void FileProtocol::copy( const KURL &src, const KURL &dest,
 
     int src_fd = KDE_open( _src.data(), O_RDONLY);
     if ( src_fd < 0 ) {
-	error( KIO::ERR_CANNOT_OPEN_FOR_READING, src.path() );
+	error( TDEIO::ERR_CANNOT_OPEN_FOR_READING, src.path() );
 	return;
     }
 
@@ -670,9 +670,9 @@ void FileProtocol::copy( const KURL &src, const KURL &dest,
     if ( dest_fd < 0 ) {
 	kdDebug(7101) << "###### COULD NOT WRITE " << dest.url() << endl;
         if ( errno == EACCES ) {
-            error( KIO::ERR_WRITE_ACCESS_DENIED, dest.path() );
+            error( TDEIO::ERR_WRITE_ACCESS_DENIED, dest.path() );
         } else {
-            error( KIO::ERR_CANNOT_OPEN_FOR_WRITING, dest.path() );
+            error( TDEIO::ERR_CANNOT_OPEN_FOR_WRITING, dest.path() );
         }
         close(src_fd);
         return;
@@ -692,7 +692,7 @@ void FileProtocol::copy( const KURL &src, const KURL &dest,
 #endif
     totalSize( buff_src.st_size );
 
-    KIO::filesize_t processed_size = 0;
+    TDEIO::filesize_t processed_size = 0;
     char buffer[ MAX_IPC_SIZE ];
     int n;
 #ifdef USE_SENDFILE
@@ -723,17 +723,17 @@ void FileProtocol::copy( const KURL &src, const KURL &dest,
             kdDebug(7101) << "sendfile() error:" << strerror(errno) << endl;
             if ( errno == ENOSPC ) // disk full
             {
-                error( KIO::ERR_DISK_FULL, dest.path());
+                error( TDEIO::ERR_DISK_FULL, dest.path());
                 remove( _dest.data() );
             }
             else {
-                error( KIO::ERR_SLAVE_DEFINED,
+                error( TDEIO::ERR_SLAVE_DEFINED,
                         i18n("Cannot copy file from %1 to %2. (Errno: %3)")
                         .arg( src.path() ).arg( dest.path() ).arg( errno ) );
             }
           } else
 #endif
-          error( KIO::ERR_COULD_NOT_READ, src.path());
+          error( TDEIO::ERR_COULD_NOT_READ, src.path());
           close(src_fd);
           close(dest_fd);
 #ifdef USE_POSIX_ACL
@@ -753,13 +753,13 @@ void FileProtocol::copy( const KURL &src, const KURL &dest,
 
            if ( errno == ENOSPC ) // disk full
            {
-              error( KIO::ERR_DISK_FULL, dest.path());
+              error( TDEIO::ERR_DISK_FULL, dest.path());
               remove( _dest.data() );
            }
            else
            {
               kdWarning(7101) << "Couldn't write[2]. Error:" << strerror(errno) << endl;
-              error( KIO::ERR_COULD_NOT_WRITE, dest.path());
+              error( TDEIO::ERR_COULD_NOT_WRITE, dest.path());
            }
 #ifdef USE_POSIX_ACL
            if (acl) acl_free(acl);
@@ -778,7 +778,7 @@ void FileProtocol::copy( const KURL &src, const KURL &dest,
     if (close( dest_fd))
     {
         kdWarning(7101) << "Error when closing file descriptor[2]:" << strerror(errno) << endl;
-        error( KIO::ERR_COULD_NOT_WRITE, dest.path());
+        error( TDEIO::ERR_COULD_NOT_WRITE, dest.path());
 #ifdef USE_POSIX_ACL
         if (acl) acl_free(acl);
 #endif
@@ -795,7 +795,7 @@ void FileProtocol::copy( const KURL &src, const KURL &dest,
         )
        {
         // Eat the error if the filesystem apparently doesn't support chmod.
-        if ( KIO::testFileSystemFlag( _dest, KIO::SupportsChmod ) )
+        if ( TDEIO::testFileSystemFlag( _dest, TDEIO::SupportsChmod ) )
             warning( i18n( "Could not change permissions for\n%1" ).arg( dest.path() ) );
        }
     }
@@ -824,9 +824,9 @@ void FileProtocol::rename( const KURL &src, const KURL &dest,
     KDE_struct_stat buff_src;
     if ( KDE_lstat( _src.data(), &buff_src ) == -1 ) {
         if ( errno == EACCES )
-           error( KIO::ERR_ACCESS_DENIED, src.path() );
+           error( TDEIO::ERR_ACCESS_DENIED, src.path() );
         else
-           error( KIO::ERR_DOES_NOT_EXIST, src.path() );
+           error( TDEIO::ERR_DOES_NOT_EXIST, src.path() );
         return;
     }
 
@@ -836,19 +836,19 @@ void FileProtocol::rename( const KURL &src, const KURL &dest,
     {
         if (S_ISDIR(buff_dest.st_mode))
         {
-           error( KIO::ERR_DIR_ALREADY_EXIST, dest.path() );
+           error( TDEIO::ERR_DIR_ALREADY_EXIST, dest.path() );
            return;
         }
 
 	if ( same_inode( buff_dest, buff_src) ) 
 	{
-	    error( KIO::ERR_IDENTICAL_FILES, dest.path() );
+	    error( TDEIO::ERR_IDENTICAL_FILES, dest.path() );
 	    return;
 	}
 
         if (!_overwrite)
         {
-           error( KIO::ERR_FILE_ALREADY_EXIST, dest.path() );
+           error( TDEIO::ERR_FILE_ALREADY_EXIST, dest.path() );
            return;
         }
     }
@@ -856,16 +856,16 @@ void FileProtocol::rename( const KURL &src, const KURL &dest,
     if ( ::rename( _src.data(), _dest.data()))
     {
         if (( errno == EACCES ) || (errno == EPERM)) {
-            error( KIO::ERR_ACCESS_DENIED, dest.path() );
+            error( TDEIO::ERR_ACCESS_DENIED, dest.path() );
         }
         else if (errno == EXDEV) {
-           error( KIO::ERR_UNSUPPORTED_ACTION, TQString::fromLatin1("rename"));
+           error( TDEIO::ERR_UNSUPPORTED_ACTION, TQString::fromLatin1("rename"));
         }
         else if (errno == EROFS) { // The file is on a read-only filesystem
-           error( KIO::ERR_CANNOT_DELETE, src.path() );
+           error( TDEIO::ERR_CANNOT_DELETE, src.path() );
         }
         else {
-           error( KIO::ERR_CANNOT_RENAME, src.path() );
+           error( TDEIO::ERR_CANNOT_RENAME, src.path() );
         }
         return;
     }
@@ -886,7 +886,7 @@ void FileProtocol::symlink( const TQString &target, const KURL &dest, bool overw
                 // Try to delete the destination
                 if ( unlink( TQFile::encodeName( dest.path() ) ) != 0 )
                 {
-                    error( KIO::ERR_CANNOT_DELETE, dest.path() );
+                    error( TDEIO::ERR_CANNOT_DELETE, dest.path() );
                     return;
                 }
                 // Try again - this won't loop forever since unlink succeeded
@@ -897,16 +897,16 @@ void FileProtocol::symlink( const TQString &target, const KURL &dest, bool overw
                 KDE_struct_stat buff_dest;
                 KDE_lstat( TQFile::encodeName( dest.path() ), &buff_dest );
                 if (S_ISDIR(buff_dest.st_mode))
-                    error( KIO::ERR_DIR_ALREADY_EXIST, dest.path() );
+                    error( TDEIO::ERR_DIR_ALREADY_EXIST, dest.path() );
                 else
-                    error( KIO::ERR_FILE_ALREADY_EXIST, dest.path() );
+                    error( TDEIO::ERR_FILE_ALREADY_EXIST, dest.path() );
                 return;
             }
         }
         else
         {
             // Some error occurred while we tried to symlink
-            error( KIO::ERR_CANNOT_SYMLINK, dest.path() );
+            error( TDEIO::ERR_CANNOT_SYMLINK, dest.path() );
             return;
         }
     }
@@ -927,11 +927,11 @@ void FileProtocol::del( const KURL& url, bool isfile)
 
 	if ( unlink( _path.data() ) == -1 ) {
             if ((errno == EACCES) || (errno == EPERM))
-               error( KIO::ERR_ACCESS_DENIED, url.path());
+               error( TDEIO::ERR_ACCESS_DENIED, url.path());
             else if (errno == EISDIR)
-               error( KIO::ERR_IS_DIRECTORY, url.path());
+               error( TDEIO::ERR_IS_DIRECTORY, url.path());
             else
-               error( KIO::ERR_CANNOT_DELETE, url.path() );
+               error( TDEIO::ERR_CANNOT_DELETE, url.path() );
 	    return;
 	}
     } else {
@@ -944,10 +944,10 @@ void FileProtocol::del( const KURL& url, bool isfile)
 
       if ( ::rmdir( _path.data() ) == -1 ) {
 	if ((errno == EACCES) || (errno == EPERM))
-	  error( KIO::ERR_ACCESS_DENIED, url.path());
+	  error( TDEIO::ERR_ACCESS_DENIED, url.path());
 	else {
 	  kdDebug( 7101 ) << "could not rmdir " << perror << endl;
-	  error( KIO::ERR_COULD_NOT_RMDIR, url.path() );
+	  error( TDEIO::ERR_COULD_NOT_RMDIR, url.path() );
 	  return;
 	}
       }
@@ -1001,7 +1001,7 @@ bool FileProtocol::createUDSEntry( const TQString & filename, const TQCString & 
     // because there's no real performance penalty in kio_file for returning the complete
     // details. Please consider doing it in your kioslave if you're using this one as a model :)
     UDSAtom atom;
-    atom.m_uds = KIO::UDS_NAME;
+    atom.m_uds = TDEIO::UDS_NAME;
     atom.m_str = filename;
     entry.append( atom );
 
@@ -1019,7 +1019,7 @@ bool FileProtocol::createUDSEntry( const TQString & filename, const TQCString & 
                 buffer2[ n ] = 0;
             }
 
-            atom.m_uds = KIO::UDS_LINK_DEST;
+            atom.m_uds = TDEIO::UDS_LINK_DEST;
             atom.m_str = TQFile::decodeName( buffer2 );
             entry.append( atom );
 
@@ -1029,15 +1029,15 @@ bool FileProtocol::createUDSEntry( const TQString & filename, const TQCString & 
                 type = S_IFMT - 1;
                 access = S_IRWXU | S_IRWXG | S_IRWXO;
 
-                atom.m_uds = KIO::UDS_FILE_TYPE;
+                atom.m_uds = TDEIO::UDS_FILE_TYPE;
                 atom.m_long = type;
                 entry.append( atom );
 
-                atom.m_uds = KIO::UDS_ACCESS;
+                atom.m_uds = TDEIO::UDS_ACCESS;
                 atom.m_long = access;
                 entry.append( atom );
 
-                atom.m_uds = KIO::UDS_SIZE;
+                atom.m_uds = TDEIO::UDS_SIZE;
                 atom.m_long = 0L;
                 entry.append( atom );
 
@@ -1053,15 +1053,15 @@ bool FileProtocol::createUDSEntry( const TQString & filename, const TQCString & 
     type = buff.st_mode & S_IFMT; // extract file type
     access = buff.st_mode & 07777; // extract permissions
 
-    atom.m_uds = KIO::UDS_FILE_TYPE;
+    atom.m_uds = TDEIO::UDS_FILE_TYPE;
     atom.m_long = type;
     entry.append( atom );
 
-    atom.m_uds = KIO::UDS_ACCESS;
+    atom.m_uds = TDEIO::UDS_ACCESS;
     atom.m_long = access;
     entry.append( atom );
 
-    atom.m_uds = KIO::UDS_SIZE;
+    atom.m_uds = TDEIO::UDS_SIZE;
     atom.m_long = buff.st_size;
     entry.append( atom );
 
@@ -1073,19 +1073,19 @@ bool FileProtocol::createUDSEntry( const TQString & filename, const TQCString & 
 #endif
 
  notype:
-    atom.m_uds = KIO::UDS_MODIFICATION_TIME;
+    atom.m_uds = TDEIO::UDS_MODIFICATION_TIME;
     atom.m_long = buff.st_mtime;
     entry.append( atom );
 
-    atom.m_uds = KIO::UDS_USER;
+    atom.m_uds = TDEIO::UDS_USER;
     atom.m_str = getUserName( buff.st_uid );
     entry.append( atom );
 
-    atom.m_uds = KIO::UDS_GROUP;
+    atom.m_uds = TDEIO::UDS_GROUP;
     atom.m_str = getGroupName( buff.st_gid );
     entry.append( atom );
 
-    atom.m_uds = KIO::UDS_ACCESS_TIME;
+    atom.m_uds = TDEIO::UDS_ACCESS_TIME;
     atom.m_long = buff.st_atime;
     entry.append( atom );
 
@@ -1123,40 +1123,40 @@ void FileProtocol::stat( const KURL & url )
     UDSEntry entry;
     if ( !createUDSEntry( url.fileName(), _path, entry, details, true /*with acls*/ ) )
     {
-        error( KIO::ERR_DOES_NOT_EXIST, url.path(-1) );
+        error( TDEIO::ERR_DOES_NOT_EXIST, url.path(-1) );
         return;
     }
 #if 0
 ///////// debug code
-    KIO::UDSEntry::ConstIterator it = entry.begin();
+    TDEIO::UDSEntry::ConstIterator it = entry.begin();
     for( ; it != entry.end(); it++ ) {
         switch ((*it).m_uds) {
-            case KIO::UDS_FILE_TYPE:
+            case TDEIO::UDS_FILE_TYPE:
                 kdDebug(7101) << "File Type : " << (mode_t)((*it).m_long) << endl;
                 break;
-            case KIO::UDS_ACCESS:
+            case TDEIO::UDS_ACCESS:
                 kdDebug(7101) << "Access permissions : " << (mode_t)((*it).m_long) << endl;
                 break;
-            case KIO::UDS_USER:
+            case TDEIO::UDS_USER:
                 kdDebug(7101) << "User : " << ((*it).m_str.ascii() ) << endl;
                 break;
-            case KIO::UDS_GROUP:
+            case TDEIO::UDS_GROUP:
                 kdDebug(7101) << "Group : " << ((*it).m_str.ascii() ) << endl;
                 break;
-            case KIO::UDS_NAME:
+            case TDEIO::UDS_NAME:
                 kdDebug(7101) << "Name : " << ((*it).m_str.ascii() ) << endl;
                 //m_strText = decodeFileName( (*it).m_str );
                 break;
-            case KIO::UDS_URL:
+            case TDEIO::UDS_URL:
                 kdDebug(7101) << "URL : " << ((*it).m_str.ascii() ) << endl;
                 break;
-            case KIO::UDS_MIME_TYPE:
+            case TDEIO::UDS_MIME_TYPE:
                 kdDebug(7101) << "MimeType : " << ((*it).m_str.ascii() ) << endl;
                 break;
-            case KIO::UDS_LINK_DEST:
+            case TDEIO::UDS_LINK_DEST:
                 kdDebug(7101) << "LinkDest : " << ((*it).m_str.ascii() ) << endl;
                 break;
-            case KIO::UDS_EXTENDED_ACL:
+            case TDEIO::UDS_EXTENDED_ACL:
                 kdDebug(7101) << "Contains extended ACL " << endl;
                 break;
         }
@@ -1188,12 +1188,12 @@ void FileProtocol::listDir( const KURL& url)
 
     KDE_struct_stat buff;
     if ( KDE_stat( _path.data(), &buff ) == -1 ) {
-	error( KIO::ERR_DOES_NOT_EXIST, url.path() );
+	error( TDEIO::ERR_DOES_NOT_EXIST, url.path() );
 	return;
     }
 
     if ( !S_ISDIR( buff.st_mode ) ) {
-	error( KIO::ERR_IS_FILE, url.path() );
+	error( TDEIO::ERR_IS_FILE, url.path() );
 	return;
     }
 
@@ -1211,7 +1211,7 @@ void FileProtocol::listDir( const KURL& url)
             break;
 #endif
         default:
-            error( KIO::ERR_CANNOT_ENTER_DIRECTORY, url.path() );
+            error( TDEIO::ERR_CANNOT_ENTER_DIRECTORY, url.path() );
             break;
         }
 	return;
@@ -1280,7 +1280,7 @@ void FileProtocol::testDir( const TQString& path )
     TQCString _path( TQFile::encodeName(path));
     KDE_struct_stat buff;
     if ( KDE_stat( _path.data(), &buff ) == -1 ) {
-	error( KIO::ERR_DOES_NOT_EXIST, path );
+	error( TDEIO::ERR_DOES_NOT_EXIST, path );
 	return;
     }
 
@@ -1335,12 +1335,12 @@ void FileProtocol::special( const TQByteArray &data)
       TQString filename;
       stream >> filename;
       KShred shred( filename );
-      connect( &shred, TQT_SIGNAL( processedSize( KIO::filesize_t ) ),
-               this, TQT_SLOT( slotProcessedSize( KIO::filesize_t ) ) );
+      connect( &shred, TQT_SIGNAL( processedSize( TDEIO::filesize_t ) ),
+               this, TQT_SLOT( slotProcessedSize( TDEIO::filesize_t ) ) );
       connect( &shred, TQT_SIGNAL( infoMessage( const TQString & ) ),
                this, TQT_SLOT( slotInfoMessage( const TQString & ) ) );
       if (!shred.shred())
-          error( KIO::ERR_CANNOT_DELETE, filename );
+          error( TDEIO::ERR_CANNOT_DELETE, filename );
       else
           finished();
       break;
@@ -1351,7 +1351,7 @@ void FileProtocol::special( const TQByteArray &data)
 }
 
 // Connected to KShred
-void FileProtocol::slotProcessedSize( KIO::filesize_t bytes )
+void FileProtocol::slotProcessedSize( TDEIO::filesize_t bytes )
 {
   kdDebug(7101) << "FileProtocol::slotProcessedSize (" << (unsigned int) bytes << ")" << endl;
   processedSize( bytes );
@@ -1382,7 +1382,7 @@ void FileProtocol::mount( bool _ro, const char *_fstype, const TQString& _dev, c
 			kdDebug(7101) << "VOLMGT: no media in "
 					<< devname.data() << endl;
 			err = i18n("No Media inserted or Media not recognized.");
-			error( KIO::ERR_COULD_NOT_MOUNT, err );
+			error( TDEIO::ERR_COULD_NOT_MOUNT, err );
 			return;
 		} else {
 			kdDebug(7101) << "VOLMGT: " << devname.data()
@@ -1393,7 +1393,7 @@ void FileProtocol::mount( bool _ro, const char *_fstype, const TQString& _dev, c
 	} else {
 		err = i18n("\"vold\" is not running.");
 		kdDebug(7101) << "VOLMGT: " << err << endl;
-		error( KIO::ERR_COULD_NOT_MOUNT, err );
+		error( TDEIO::ERR_COULD_NOT_MOUNT, err );
 		return;
 	}
 #else
@@ -1425,7 +1425,7 @@ void FileProtocol::mount( bool _ro, const char *_fstype, const TQString& _dev, c
         path += TQString::fromLatin1(":") + epath;
     TQString mountProg = TDEGlobal::dirs()->findExe("mount", path);
     if (mountProg.isEmpty()){
-      error( KIO::ERR_COULD_NOT_MOUNT, i18n("Could not find program \"mount\""));
+      error( TDEIO::ERR_COULD_NOT_MOUNT, i18n("Could not find program \"mount\""));
       return;
     }
 
@@ -1472,7 +1472,7 @@ void FileProtocol::mount( bool _ro, const char *_fstype, const TQString& _dev, c
         else
         {
             // Didn't work - or maybe we just got a warning
-            TQString mp = KIO::findDeviceMountPoint( _dev );
+            TQString mp = TDEIO::findDeviceMountPoint( _dev );
             // Is the device mounted ?
             if ( !mp.isEmpty() && mount_ret == 0)
             {
@@ -1501,7 +1501,7 @@ void FileProtocol::mount( bool _ro, const char *_fstype, const TQString& _dev, c
                 }
                 else
                 {
-                    error( KIO::ERR_COULD_NOT_MOUNT, err );
+                    error( TDEIO::ERR_COULD_NOT_MOUNT, err );
                     return;
                 }
             }
@@ -1536,7 +1536,7 @@ void FileProtocol::unmount( const TQString& _point )
 		if( (mnttab = KDE_fopen( MNTTAB, "r" )) == NULL ) {
 			err = "couldn't open mnttab";
 			kdDebug(7101) << "VOLMGT: " << err << endl;
-			error( KIO::ERR_COULD_NOT_UNMOUNT, err );
+			error( TDEIO::ERR_COULD_NOT_UNMOUNT, err );
 			return;
 		}
 
@@ -1561,7 +1561,7 @@ void FileProtocol::unmount( const TQString& _point )
 			kdDebug(7101) << "VOLMGT: "
 				<< TQFile::encodeName(_point).data()
 				<< ": " << err << endl;
-			error( KIO::ERR_COULD_NOT_UNMOUNT, err );
+			error( TDEIO::ERR_COULD_NOT_UNMOUNT, err );
 			return;
 		}
 
@@ -1599,7 +1599,7 @@ void FileProtocol::unmount( const TQString& _point )
 		 */
 		err = i18n("\"vold\" is not running.");
 		kdDebug(7101) << "VOLMGT: " << err << endl;
-		error( KIO::ERR_COULD_NOT_UNMOUNT, err );
+		error( TDEIO::ERR_COULD_NOT_UNMOUNT, err );
 		return;
 	}
 #else
@@ -1610,7 +1610,7 @@ void FileProtocol::unmount( const TQString& _point )
     TQString umountProg = TDEGlobal::dirs()->findExe("umount", path);
 
     if (umountProg.isEmpty()) {
-        error( KIO::ERR_COULD_NOT_UNMOUNT, i18n("Could not find program \"umount\""));
+        error( TDEIO::ERR_COULD_NOT_UNMOUNT, i18n("Could not find program \"umount\""));
         return;
     }
     buffer.sprintf( "%s %s 2>%s", umountProg.latin1(), TQFile::encodeName(TDEProcess::quote(_point)).data(), tmp );
@@ -1646,7 +1646,7 @@ void FileProtocol::unmount( const TQString& _point )
     if ( err.isEmpty() )
 	finished();
     else
-        error( KIO::ERR_COULD_NOT_UNMOUNT, err );
+        error( TDEIO::ERR_COULD_NOT_UNMOUNT, err );
 }
 
 /*************************************
@@ -1805,19 +1805,19 @@ static void appendACLAtoms( const TQCString & path, UDSEntry& entry, mode_t type
 
     if ( acl || defaultAcl ) {
       kdDebug(7101) << path.data() << " has extended ACL entries " << endl;
-      atom.m_uds = KIO::UDS_EXTENDED_ACL;
+      atom.m_uds = TDEIO::UDS_EXTENDED_ACL;
       atom.m_long = 1;
       entry.append( atom );
     }
     if ( withACL ) {
         if ( acl ) {
-            atom.m_uds = KIO::UDS_ACL_STRING;
+            atom.m_uds = TDEIO::UDS_ACL_STRING;
             atom.m_str = aclAsString( acl );
             entry.append( atom );
             kdDebug(7101) << path.data() << "ACL: " << atom.m_str << endl;
         }
         if ( defaultAcl ) {
-            atom.m_uds = KIO::UDS_DEFAULT_ACL_STRING;
+            atom.m_uds = TDEIO::UDS_DEFAULT_ACL_STRING;
             atom.m_str = aclAsString( defaultAcl );
             entry.append( atom );
             kdDebug(7101) << path.data() << "DEFAULT ACL: " << atom.m_str << endl;

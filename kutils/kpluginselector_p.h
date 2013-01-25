@@ -24,10 +24,10 @@
 
 #include <tdelibs_export.h>
 
-class KConfigGroup;
+class TDEConfigGroup;
 class TQListViewItem;
 class KPluginInfo;
-class KCModuleInfo;
+class TDECModuleInfo;
 
 /**
  * This is a widget to configure what Plugins should be loaded. This widget is
@@ -53,7 +53,7 @@ class KPluginSelectionWidget : public TQWidget
          * @param parent       The parent widget.
          * @param catname      The translated name of the category.
          * @param category     The unstranslated category key name.
-         * @param config       Set the KConfigGroup object that holds the
+         * @param config       Set the TDEConfigGroup object that holds the
          *                     state of the plugins being enabled or not.
          * @param name         The name of the widget (passed to TQWidget)
          *
@@ -61,7 +61,7 @@ class KPluginSelectionWidget : public TQWidget
          */
         KPluginSelectionWidget( const TQValueList<KPluginInfo*> & plugininfos,
                 KPluginSelector * kps, TQWidget * parent, const TQString & catname,
-                const TQString & category, KConfigGroup * config = 0,
+                const TQString & category, TDEConfigGroup * config = 0,
                 const char * name = 0 );
 
         virtual ~KPluginSelectionWidget();
@@ -162,13 +162,13 @@ class KPluginSelectionWidget : public TQWidget
 
     private:
         /**
-         * Load a KCM from a KCModuleInfo. If successfull connect changed
+         * Load a KCM from a TDECModuleInfo. If successfull connect changed
          * signal and return the module. If not, create a label showing "Error",
          * show the loaderError and return the label.
          *
          * @internal
          */
-        TQWidget * insertKCM( TQWidget * parent, const KCModuleInfo & );
+        TQWidget * insertKCM( TQWidget * parent, const TDECModuleInfo & );
 
         /**
          * Embed the KCMs for the plugin into the widgetstack

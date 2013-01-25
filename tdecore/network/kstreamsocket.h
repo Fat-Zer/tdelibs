@@ -34,7 +34,7 @@ namespace KNetwork {
 
 class KResolverEntry;
 class KResolverResults;
-class KServerSocket;
+class TDEServerSocket;
 class KBufferedSocket;
 
 class KStreamSocketPrivate;
@@ -91,7 +91,7 @@ class KStreamSocketPrivate;
  *  }
  * \endcode
  *
- * @see KNetwork::KBufferedSocket, KNetwork::KServerSocket
+ * @see KNetwork::KBufferedSocket, KNetwork::TDEServerSocket
  * @author Thiago Macieira <thiago@kde.org>
  */
 class TDECORE_EXPORT KStreamSocket: public KClientSocketBase
@@ -241,7 +241,7 @@ private:
 
   KStreamSocketPrivate *d;
 
-  friend class KServerSocket;
+  friend class TDEServerSocket;
   friend class KBufferedSocket;
 };
 

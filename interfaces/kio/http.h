@@ -21,7 +21,7 @@
 #define KIOSLAVE_HTTP_H_
 
 
-namespace KIO {
+namespace TDEIO {
 
   /** HTTP / DAV method **/
   enum HTTP_METHOD {HTTP_GET, HTTP_PUT, HTTP_POST, HTTP_HEAD, HTTP_DELETE,

@@ -208,7 +208,7 @@ public:
 	void save();
 
 private:
-	KConfig *m_cfg;
+	TDEConfig *m_cfg;
 	bool m_bUseSSLv2, m_bUseSSLv3, m_bUseTLSv1;
 	bool m_bWarnOnEnter, m_bWarnOnUnencrypted, m_bWarnOnLeave, m_bWarnOnMixed;
 	bool m_bWarnSelfSigned, m_bWarnRevoked, m_bWarnExpired;

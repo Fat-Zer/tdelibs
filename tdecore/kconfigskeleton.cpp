@@ -32,22 +32,22 @@
 
 #include "kconfigskeleton.h"
 
-void KConfigSkeletonItem::readImmutability( KConfig *config )
+void TDEConfigSkeletonItem::readImmutability( TDEConfig *config )
 {
   mIsImmutable = config->entryIsImmutable( mKey );
 }
 
 
-KConfigSkeleton::ItemString::ItemString( const TQString &group, const TQString &key,
+TDEConfigSkeleton::ItemString::ItemString( const TQString &group, const TQString &key,
                                     TQString &reference,
                                     const TQString &defaultValue,
                                     Type type )
-  : KConfigSkeletonGenericItem<TQString>( group, key, reference, defaultValue ),
+  : TDEConfigSkeletonGenericItem<TQString>( group, key, reference, defaultValue ),
     mType( type )
 {
 }
 
-void KConfigSkeleton::ItemString::writeConfig( KConfig *config )
+void TDEConfigSkeleton::ItemString::writeConfig( TDEConfig *config )
 {
   if ( mReference != mLoadedValue ) // WABA: Is this test needed?
   {
@@ -64,7 +64,7 @@ void KConfigSkeleton::ItemString::writeConfig( KConfig *config )
 }
 
 
-void KConfigSkeleton::ItemString::readConfig( KConfig *config )
+void TDEConfigSkeleton::ItemString::readConfig( TDEConfig *config )
 {
   config->setGroup( mGroup );
 
@@ -88,39 +88,39 @@ void KConfigSkeleton::ItemString::readConfig( KConfig *config )
   readImmutability( config );
 }
 
-void KConfigSkeleton::ItemString::setProperty(const TQVariant & p)
+void TDEConfigSkeleton::ItemString::setProperty(const TQVariant & p)
 {
   mReference = p.toString();
 }
 
-TQVariant KConfigSkeleton::ItemString::property() const
+TQVariant TDEConfigSkeleton::ItemString::property() const
 {
   return TQVariant(mReference);
 }
 
-KConfigSkeleton::ItemPassword::ItemPassword( const TQString &group, const TQString &key,
+TDEConfigSkeleton::ItemPassword::ItemPassword( const TQString &group, const TQString &key,
                                     TQString &reference,
                                     const TQString &defaultValue)
   : ItemString( group, key, reference, defaultValue, Password )
 {
 }
 
-KConfigSkeleton::ItemPath::ItemPath( const TQString &group, const TQString &key,
+TDEConfigSkeleton::ItemPath::ItemPath( const TQString &group, const TQString &key,
                                     TQString &reference,
                                     const TQString &defaultValue)
   : ItemString( group, key, reference, defaultValue, Path )
 {
 }
 
-KConfigSkeleton::ItemProperty::ItemProperty( const TQString &group,
+TDEConfigSkeleton::ItemProperty::ItemProperty( const TQString &group,
                                         const TQString &key,
                                         TQVariant &reference,
                                         TQVariant defaultValue )
-  : KConfigSkeletonGenericItem<TQVariant>( group, key, reference, defaultValue )
+  : TDEConfigSkeletonGenericItem<TQVariant>( group, key, reference, defaultValue )
 {
 }
 
-void KConfigSkeleton::ItemProperty::readConfig( KConfig *config )
+void TDEConfigSkeleton::ItemProperty::readConfig( TDEConfig *config )
 {
   config->setGroup( mGroup );
   mReference = config->readPropertyEntry( mKey, mDefault );
@@ -129,23 +129,23 @@ void KConfigSkeleton::ItemProperty::readConfig( KConfig *config )
   readImmutability( config );
 }
 
-void KConfigSkeleton::ItemProperty::setProperty(const TQVariant & p)
+void TDEConfigSkeleton::ItemProperty::setProperty(const TQVariant & p)
 {
   mReference = p;
 }
 
-TQVariant KConfigSkeleton::ItemProperty::property() const
+TQVariant TDEConfigSkeleton::ItemProperty::property() const
 {
   return mReference;
 }
 
-KConfigSkeleton::ItemBool::ItemBool( const TQString &group, const TQString &key,
+TDEConfigSkeleton::ItemBool::ItemBool( const TQString &group, const TQString &key,
                                 bool &reference, bool defaultValue )
-  : KConfigSkeletonGenericItem<bool>( group, key, reference, defaultValue )
+  : TDEConfigSkeletonGenericItem<bool>( group, key, reference, defaultValue )
 {
 }
 
-void KConfigSkeleton::ItemBool::readConfig( KConfig *config )
+void TDEConfigSkeleton::ItemBool::readConfig( TDEConfig *config )
 {
   config->setGroup( mGroup );
   mReference = config->readBoolEntry( mKey, mDefault );
@@ -154,25 +154,25 @@ void KConfigSkeleton::ItemBool::readConfig( KConfig *config )
   readImmutability( config );
 }
 
-void KConfigSkeleton::ItemBool::setProperty(const TQVariant & p)
+void TDEConfigSkeleton::ItemBool::setProperty(const TQVariant & p)
 {
   mReference = p.toBool();
 }
 
-TQVariant KConfigSkeleton::ItemBool::property() const
+TQVariant TDEConfigSkeleton::ItemBool::property() const
 {
   return TQVariant( mReference, 42 /* dummy */ );
 }
 
 
-KConfigSkeleton::ItemInt::ItemInt( const TQString &group, const TQString &key,
+TDEConfigSkeleton::ItemInt::ItemInt( const TQString &group, const TQString &key,
                               int &reference, int defaultValue )
-  : KConfigSkeletonGenericItem<int>( group, key, reference, defaultValue )
+  : TDEConfigSkeletonGenericItem<int>( group, key, reference, defaultValue )
   ,mHasMin(false), mHasMax(false)
 {
 }
 
-void KConfigSkeleton::ItemInt::readConfig( KConfig *config )
+void TDEConfigSkeleton::ItemInt::readConfig( TDEConfig *config )
 {
   config->setGroup( mGroup );
   mReference = config->readNumEntry( mKey, mDefault );
@@ -185,51 +185,51 @@ void KConfigSkeleton::ItemInt::readConfig( KConfig *config )
   readImmutability( config );
 }
 
-void KConfigSkeleton::ItemInt::setProperty(const TQVariant & p)
+void TDEConfigSkeleton::ItemInt::setProperty(const TQVariant & p)
 {
   mReference = p.toInt();
 }
 
-TQVariant KConfigSkeleton::ItemInt::property() const
+TQVariant TDEConfigSkeleton::ItemInt::property() const
 {
   return TQVariant(mReference);
 }
 
-TQVariant KConfigSkeleton::ItemInt::minValue() const
+TQVariant TDEConfigSkeleton::ItemInt::minValue() const
 {
   if (mHasMin)
     return TQVariant(mMin);
   return TQVariant();
 }
 
-TQVariant KConfigSkeleton::ItemInt::maxValue() const
+TQVariant TDEConfigSkeleton::ItemInt::maxValue() const
 {
   if (mHasMax)
     return TQVariant(mMax);
   return TQVariant();
 }
 
-void KConfigSkeleton::ItemInt::setMinValue(int v)
+void TDEConfigSkeleton::ItemInt::setMinValue(int v)
 {
   mHasMin = true;
   mMin = v;
 }
 
-void KConfigSkeleton::ItemInt::setMaxValue(int v)
+void TDEConfigSkeleton::ItemInt::setMaxValue(int v)
 {
   mHasMax = true;
   mMax = v;
 }
 
 
-KConfigSkeleton::ItemInt64::ItemInt64( const TQString &group, const TQString &key,
+TDEConfigSkeleton::ItemInt64::ItemInt64( const TQString &group, const TQString &key,
                               TQ_INT64 &reference, TQ_INT64 defaultValue )
-  : KConfigSkeletonGenericItem<TQ_INT64>( group, key, reference, defaultValue )
+  : TDEConfigSkeletonGenericItem<TQ_INT64>( group, key, reference, defaultValue )
   ,mHasMin(false), mHasMax(false)
 {
 }
 
-void KConfigSkeleton::ItemInt64::readConfig( KConfig *config )
+void TDEConfigSkeleton::ItemInt64::readConfig( TDEConfig *config )
 {
   config->setGroup( mGroup );
   mReference = config->readNum64Entry( mKey, mDefault );
@@ -242,43 +242,43 @@ void KConfigSkeleton::ItemInt64::readConfig( KConfig *config )
   readImmutability( config );
 }
 
-void KConfigSkeleton::ItemInt64::setProperty(const TQVariant & p)
+void TDEConfigSkeleton::ItemInt64::setProperty(const TQVariant & p)
 {
   mReference = p.toLongLong();
 }
 
-TQVariant KConfigSkeleton::ItemInt64::property() const
+TQVariant TDEConfigSkeleton::ItemInt64::property() const
 {
   return TQVariant(mReference);
 }
 
-TQVariant KConfigSkeleton::ItemInt64::minValue() const
+TQVariant TDEConfigSkeleton::ItemInt64::minValue() const
 {
   if (mHasMin)
     return TQVariant(mMin);
   return TQVariant();
 }
 
-TQVariant KConfigSkeleton::ItemInt64::maxValue() const
+TQVariant TDEConfigSkeleton::ItemInt64::maxValue() const
 {
   if (mHasMax)
     return TQVariant(mMax);
   return TQVariant();
 }
 
-void KConfigSkeleton::ItemInt64::setMinValue(TQ_INT64 v)
+void TDEConfigSkeleton::ItemInt64::setMinValue(TQ_INT64 v)
 {
   mHasMin = true;
   mMin = v;
 }
 
-void KConfigSkeleton::ItemInt64::setMaxValue(TQ_INT64 v)
+void TDEConfigSkeleton::ItemInt64::setMaxValue(TQ_INT64 v)
 {
   mHasMax = true;
   mMax = v;
 }
 
-KConfigSkeleton::ItemEnum::ItemEnum( const TQString &group, const TQString &key,
+TDEConfigSkeleton::ItemEnum::ItemEnum( const TQString &group, const TQString &key,
                                      int &reference,
                                      const TQValueList<Choice> &choices,
                                      int defaultValue )
@@ -286,7 +286,7 @@ KConfigSkeleton::ItemEnum::ItemEnum( const TQString &group, const TQString &key,
 {
 }
 
-void KConfigSkeleton::ItemEnum::readConfig( KConfig *config )
+void TDEConfigSkeleton::ItemEnum::readConfig( TDEConfig *config )
 {
   config->setGroup( mGroup );
   if (!config->hasKey(mKey))
@@ -315,7 +315,7 @@ void KConfigSkeleton::ItemEnum::readConfig( KConfig *config )
   readImmutability( config );
 }
 
-void KConfigSkeleton::ItemEnum::writeConfig( KConfig *config )
+void TDEConfigSkeleton::ItemEnum::writeConfig( TDEConfig *config )
 {
   if ( mReference != mLoadedValue ) // WABA: Is this test needed?
   {
@@ -329,21 +329,21 @@ void KConfigSkeleton::ItemEnum::writeConfig( KConfig *config )
   }
 }
 
-TQValueList<KConfigSkeleton::ItemEnum::Choice> KConfigSkeleton::ItemEnum::choices() const
+TQValueList<TDEConfigSkeleton::ItemEnum::Choice> TDEConfigSkeleton::ItemEnum::choices() const
 {
   return mChoices;
 }
 
 
-KConfigSkeleton::ItemUInt::ItemUInt( const TQString &group, const TQString &key,
+TDEConfigSkeleton::ItemUInt::ItemUInt( const TQString &group, const TQString &key,
                                 unsigned int &reference,
                                 unsigned int defaultValue )
-  : KConfigSkeletonGenericItem<unsigned int>( group, key, reference, defaultValue )
+  : TDEConfigSkeletonGenericItem<unsigned int>( group, key, reference, defaultValue )
   ,mHasMin(false), mHasMax(false)
 {
 }
 
-void KConfigSkeleton::ItemUInt::readConfig( KConfig *config )
+void TDEConfigSkeleton::ItemUInt::readConfig( TDEConfig *config )
 {
   config->setGroup( mGroup );
   mReference = config->readUnsignedNumEntry( mKey, mDefault );
@@ -356,51 +356,51 @@ void KConfigSkeleton::ItemUInt::readConfig( KConfig *config )
   readImmutability( config );
 }
 
-void KConfigSkeleton::ItemUInt::setProperty(const TQVariant & p)
+void TDEConfigSkeleton::ItemUInt::setProperty(const TQVariant & p)
 {
   mReference = p.toUInt();
 }
 
-TQVariant KConfigSkeleton::ItemUInt::property() const
+TQVariant TDEConfigSkeleton::ItemUInt::property() const
 {
   return TQVariant(mReference);
 }
 
-TQVariant KConfigSkeleton::ItemUInt::minValue() const
+TQVariant TDEConfigSkeleton::ItemUInt::minValue() const
 {
   if (mHasMin)
     return TQVariant(mMin);
   return TQVariant();
 }
 
-TQVariant KConfigSkeleton::ItemUInt::maxValue() const
+TQVariant TDEConfigSkeleton::ItemUInt::maxValue() const
 {
   if (mHasMax)
     return TQVariant(mMax);
   return TQVariant();
 }
 
-void KConfigSkeleton::ItemUInt::setMinValue(unsigned int v)
+void TDEConfigSkeleton::ItemUInt::setMinValue(unsigned int v)
 {
   mHasMin = true;
   mMin = v;
 }
 
-void KConfigSkeleton::ItemUInt::setMaxValue(unsigned int v)
+void TDEConfigSkeleton::ItemUInt::setMaxValue(unsigned int v)
 {
   mHasMax = true;
   mMax = v;
 }
 
 
-KConfigSkeleton::ItemUInt64::ItemUInt64( const TQString &group, const TQString &key,
+TDEConfigSkeleton::ItemUInt64::ItemUInt64( const TQString &group, const TQString &key,
                               TQ_UINT64 &reference, TQ_UINT64 defaultValue )
-  : KConfigSkeletonGenericItem<TQ_UINT64>( group, key, reference, defaultValue )
+  : TDEConfigSkeletonGenericItem<TQ_UINT64>( group, key, reference, defaultValue )
   ,mHasMin(false), mHasMax(false)
 {
 }
 
-void KConfigSkeleton::ItemUInt64::readConfig( KConfig *config )
+void TDEConfigSkeleton::ItemUInt64::readConfig( TDEConfig *config )
 {
   config->setGroup( mGroup );
   mReference = config->readUnsignedNum64Entry( mKey, mDefault );
@@ -413,50 +413,50 @@ void KConfigSkeleton::ItemUInt64::readConfig( KConfig *config )
   readImmutability( config );
 }
 
-void KConfigSkeleton::ItemUInt64::setProperty(const TQVariant & p)
+void TDEConfigSkeleton::ItemUInt64::setProperty(const TQVariant & p)
 {
   mReference = p.toULongLong();
 }
 
-TQVariant KConfigSkeleton::ItemUInt64::property() const
+TQVariant TDEConfigSkeleton::ItemUInt64::property() const
 {
   return TQVariant(mReference);
 }
 
-TQVariant KConfigSkeleton::ItemUInt64::minValue() const
+TQVariant TDEConfigSkeleton::ItemUInt64::minValue() const
 {
   if (mHasMin)
     return TQVariant(mMin);
   return TQVariant();
 }
 
-TQVariant KConfigSkeleton::ItemUInt64::maxValue() const
+TQVariant TDEConfigSkeleton::ItemUInt64::maxValue() const
 {
   if (mHasMax)
     return TQVariant(mMax);
   return TQVariant();
 }
 
-void KConfigSkeleton::ItemUInt64::setMinValue(TQ_UINT64 v)
+void TDEConfigSkeleton::ItemUInt64::setMinValue(TQ_UINT64 v)
 {
   mHasMin = true;
   mMin = v;
 }
 
-void KConfigSkeleton::ItemUInt64::setMaxValue(TQ_UINT64 v)
+void TDEConfigSkeleton::ItemUInt64::setMaxValue(TQ_UINT64 v)
 {
   mHasMax = true;
   mMax = v;
 }
 
-KConfigSkeleton::ItemLong::ItemLong( const TQString &group, const TQString &key,
+TDEConfigSkeleton::ItemLong::ItemLong( const TQString &group, const TQString &key,
                                 long &reference, long defaultValue )
-  : KConfigSkeletonGenericItem<long>( group, key, reference, defaultValue )
+  : TDEConfigSkeletonGenericItem<long>( group, key, reference, defaultValue )
   ,mHasMin(false), mHasMax(false)
 {
 }
 
-void KConfigSkeleton::ItemLong::readConfig( KConfig *config )
+void TDEConfigSkeleton::ItemLong::readConfig( TDEConfig *config )
 {
   config->setGroup( mGroup );
   mReference = config->readLongNumEntry( mKey, mDefault );
@@ -469,52 +469,52 @@ void KConfigSkeleton::ItemLong::readConfig( KConfig *config )
   readImmutability( config );
 }
 
-void KConfigSkeleton::ItemLong::setProperty(const TQVariant & p)
+void TDEConfigSkeleton::ItemLong::setProperty(const TQVariant & p)
 {
   mReference = p.toLongLong();
 }
 
-TQVariant KConfigSkeleton::ItemLong::property() const
+TQVariant TDEConfigSkeleton::ItemLong::property() const
 {
   return TQVariant((TQ_LLONG) mReference);
 }
 
-TQVariant KConfigSkeleton::ItemLong::minValue() const
+TQVariant TDEConfigSkeleton::ItemLong::minValue() const
 {
   if (mHasMin)
     return TQVariant((TQ_LLONG) mMin);
   return TQVariant();
 }
 
-TQVariant KConfigSkeleton::ItemLong::maxValue() const
+TQVariant TDEConfigSkeleton::ItemLong::maxValue() const
 {
   if (mHasMax)
     return TQVariant((TQ_LLONG) mMax);
   return TQVariant();
 }
 
-void KConfigSkeleton::ItemLong::setMinValue(long v)
+void TDEConfigSkeleton::ItemLong::setMinValue(long v)
 {
   mHasMin = true;
   mMin = v;
 }
 
-void KConfigSkeleton::ItemLong::setMaxValue(long v)
+void TDEConfigSkeleton::ItemLong::setMaxValue(long v)
 {
   mHasMax = true;
   mMax = v;
 }
 
 
-KConfigSkeleton::ItemULong::ItemULong( const TQString &group, const TQString &key,
+TDEConfigSkeleton::ItemULong::ItemULong( const TQString &group, const TQString &key,
                                   unsigned long &reference,
                                   unsigned long defaultValue )
-  : KConfigSkeletonGenericItem<unsigned long>( group, key, reference, defaultValue )
+  : TDEConfigSkeletonGenericItem<unsigned long>( group, key, reference, defaultValue )
   ,mHasMin(false), mHasMax(false)
 {
 }
 
-void KConfigSkeleton::ItemULong::readConfig( KConfig *config )
+void TDEConfigSkeleton::ItemULong::readConfig( TDEConfig *config )
 {
   config->setGroup( mGroup );
   mReference = config->readUnsignedLongNumEntry( mKey, mDefault );
@@ -527,51 +527,51 @@ void KConfigSkeleton::ItemULong::readConfig( KConfig *config )
   readImmutability( config );
 }
 
-void KConfigSkeleton::ItemULong::setProperty(const TQVariant & p)
+void TDEConfigSkeleton::ItemULong::setProperty(const TQVariant & p)
 {
   mReference = p.toULongLong();
 }
 
-TQVariant KConfigSkeleton::ItemULong::property() const
+TQVariant TDEConfigSkeleton::ItemULong::property() const
 {
   return TQVariant((TQ_ULLONG) mReference);
 }
 
-TQVariant KConfigSkeleton::ItemULong::minValue() const
+TQVariant TDEConfigSkeleton::ItemULong::minValue() const
 {
   if (mHasMin)
     return TQVariant((TQ_ULLONG) mMin);
   return TQVariant();
 }
 
-TQVariant KConfigSkeleton::ItemULong::maxValue() const
+TQVariant TDEConfigSkeleton::ItemULong::maxValue() const
 {
   if (mHasMax)
     return TQVariant((TQ_ULLONG) mMax);
   return TQVariant();
 }
 
-void KConfigSkeleton::ItemULong::setMinValue(unsigned long v)
+void TDEConfigSkeleton::ItemULong::setMinValue(unsigned long v)
 {
   mHasMin = true;
   mMin = v;
 }
 
-void KConfigSkeleton::ItemULong::setMaxValue(unsigned long v)
+void TDEConfigSkeleton::ItemULong::setMaxValue(unsigned long v)
 {
   mHasMax = true;
   mMax = v;
 }
 
 
-KConfigSkeleton::ItemDouble::ItemDouble( const TQString &group, const TQString &key,
+TDEConfigSkeleton::ItemDouble::ItemDouble( const TQString &group, const TQString &key,
                                     double &reference, double defaultValue )
-  : KConfigSkeletonGenericItem<double>( group, key, reference, defaultValue )
+  : TDEConfigSkeletonGenericItem<double>( group, key, reference, defaultValue )
   ,mHasMin(false), mHasMax(false)
 {
 }
 
-void KConfigSkeleton::ItemDouble::readConfig( KConfig *config )
+void TDEConfigSkeleton::ItemDouble::readConfig( TDEConfig *config )
 {
   config->setGroup( mGroup );
   mReference = config->readDoubleNumEntry( mKey, mDefault );
@@ -584,51 +584,51 @@ void KConfigSkeleton::ItemDouble::readConfig( KConfig *config )
   readImmutability( config );
 }
 
-void KConfigSkeleton::ItemDouble::setProperty(const TQVariant & p)
+void TDEConfigSkeleton::ItemDouble::setProperty(const TQVariant & p)
 {
   mReference = p.toDouble();
 }
 
-TQVariant KConfigSkeleton::ItemDouble::property() const
+TQVariant TDEConfigSkeleton::ItemDouble::property() const
 {
   return TQVariant(mReference);
 }
 
-TQVariant KConfigSkeleton::ItemDouble::minValue() const
+TQVariant TDEConfigSkeleton::ItemDouble::minValue() const
 {
   if (mHasMin)
     return TQVariant(mMin);
   return TQVariant();
 }
 
-TQVariant KConfigSkeleton::ItemDouble::maxValue() const
+TQVariant TDEConfigSkeleton::ItemDouble::maxValue() const
 {
   if (mHasMax)
     return TQVariant(mMax);
   return TQVariant();
 }
 
-void KConfigSkeleton::ItemDouble::setMinValue(double v)
+void TDEConfigSkeleton::ItemDouble::setMinValue(double v)
 {
   mHasMin = true;
   mMin = v;
 }
 
-void KConfigSkeleton::ItemDouble::setMaxValue(double v)
+void TDEConfigSkeleton::ItemDouble::setMaxValue(double v)
 {
   mHasMax = true;
   mMax = v;
 }
 
 
-KConfigSkeleton::ItemColor::ItemColor( const TQString &group, const TQString &key,
+TDEConfigSkeleton::ItemColor::ItemColor( const TQString &group, const TQString &key,
                                   TQColor &reference,
                                   const TQColor &defaultValue )
-  : KConfigSkeletonGenericItem<TQColor>( group, key, reference, defaultValue )
+  : TDEConfigSkeletonGenericItem<TQColor>( group, key, reference, defaultValue )
 {
 }
 
-void KConfigSkeleton::ItemColor::readConfig( KConfig *config )
+void TDEConfigSkeleton::ItemColor::readConfig( TDEConfig *config )
 {
   config->setGroup( mGroup );
   mReference = config->readColorEntry( mKey, &mDefault );
@@ -637,25 +637,25 @@ void KConfigSkeleton::ItemColor::readConfig( KConfig *config )
   readImmutability( config );
 }
 
-void KConfigSkeleton::ItemColor::setProperty(const TQVariant & p)
+void TDEConfigSkeleton::ItemColor::setProperty(const TQVariant & p)
 {
   mReference = p.toColor();
 }
 
-TQVariant KConfigSkeleton::ItemColor::property() const
+TQVariant TDEConfigSkeleton::ItemColor::property() const
 {
   return TQVariant(mReference);
 }
 
 
-KConfigSkeleton::ItemFont::ItemFont( const TQString &group, const TQString &key,
+TDEConfigSkeleton::ItemFont::ItemFont( const TQString &group, const TQString &key,
                                 TQFont &reference,
                                 const TQFont &defaultValue )
-  : KConfigSkeletonGenericItem<TQFont>( group, key, reference, defaultValue )
+  : TDEConfigSkeletonGenericItem<TQFont>( group, key, reference, defaultValue )
 {
 }
 
-void KConfigSkeleton::ItemFont::readConfig( KConfig *config )
+void TDEConfigSkeleton::ItemFont::readConfig( TDEConfig *config )
 {
   config->setGroup( mGroup );
   mReference = config->readFontEntry( mKey, &mDefault );
@@ -664,25 +664,25 @@ void KConfigSkeleton::ItemFont::readConfig( KConfig *config )
   readImmutability( config );
 }
 
-void KConfigSkeleton::ItemFont::setProperty(const TQVariant & p)
+void TDEConfigSkeleton::ItemFont::setProperty(const TQVariant & p)
 {
   mReference = p.toFont();
 }
 
-TQVariant KConfigSkeleton::ItemFont::property() const
+TQVariant TDEConfigSkeleton::ItemFont::property() const
 {
   return TQVariant(mReference);
 }
 
 
-KConfigSkeleton::ItemRect::ItemRect( const TQString &group, const TQString &key,
+TDEConfigSkeleton::ItemRect::ItemRect( const TQString &group, const TQString &key,
                                 TQRect &reference,
                                 const TQRect &defaultValue )
-  : KConfigSkeletonGenericItem<TQRect>( group, key, reference, defaultValue )
+  : TDEConfigSkeletonGenericItem<TQRect>( group, key, reference, defaultValue )
 {
 }
 
-void KConfigSkeleton::ItemRect::readConfig( KConfig *config )
+void TDEConfigSkeleton::ItemRect::readConfig( TDEConfig *config )
 {
   config->setGroup( mGroup );
   mReference = config->readRectEntry( mKey, &mDefault );
@@ -691,25 +691,25 @@ void KConfigSkeleton::ItemRect::readConfig( KConfig *config )
   readImmutability( config );
 }
 
-void KConfigSkeleton::ItemRect::setProperty(const TQVariant & p)
+void TDEConfigSkeleton::ItemRect::setProperty(const TQVariant & p)
 {
   mReference = p.toRect();
 }
 
-TQVariant KConfigSkeleton::ItemRect::property() const
+TQVariant TDEConfigSkeleton::ItemRect::property() const
 {
   return TQVariant(mReference);
 }
 
 
-KConfigSkeleton::ItemPoint::ItemPoint( const TQString &group, const TQString &key,
+TDEConfigSkeleton::ItemPoint::ItemPoint( const TQString &group, const TQString &key,
                                   TQPoint &reference,
                                   const TQPoint &defaultValue )
-  : KConfigSkeletonGenericItem<TQPoint>( group, key, reference, defaultValue )
+  : TDEConfigSkeletonGenericItem<TQPoint>( group, key, reference, defaultValue )
 {
 }
 
-void KConfigSkeleton::ItemPoint::readConfig( KConfig *config )
+void TDEConfigSkeleton::ItemPoint::readConfig( TDEConfig *config )
 {
   config->setGroup( mGroup );
   mReference = config->readPointEntry( mKey, &mDefault );
@@ -718,25 +718,25 @@ void KConfigSkeleton::ItemPoint::readConfig( KConfig *config )
   readImmutability( config );
 }
 
-void KConfigSkeleton::ItemPoint::setProperty(const TQVariant & p)
+void TDEConfigSkeleton::ItemPoint::setProperty(const TQVariant & p)
 {
   mReference = p.toPoint();
 }
 
-TQVariant KConfigSkeleton::ItemPoint::property() const
+TQVariant TDEConfigSkeleton::ItemPoint::property() const
 {
   return TQVariant(mReference);
 }
 
 
-KConfigSkeleton::ItemSize::ItemSize( const TQString &group, const TQString &key,
+TDEConfigSkeleton::ItemSize::ItemSize( const TQString &group, const TQString &key,
                                 TQSize &reference,
                                 const TQSize &defaultValue )
-  : KConfigSkeletonGenericItem<TQSize>( group, key, reference, defaultValue )
+  : TDEConfigSkeletonGenericItem<TQSize>( group, key, reference, defaultValue )
 {
 }
 
-void KConfigSkeleton::ItemSize::readConfig( KConfig *config )
+void TDEConfigSkeleton::ItemSize::readConfig( TDEConfig *config )
 {
   config->setGroup( mGroup );
   mReference = config->readSizeEntry( mKey, &mDefault );
@@ -745,25 +745,25 @@ void KConfigSkeleton::ItemSize::readConfig( KConfig *config )
   readImmutability( config );
 }
 
-void KConfigSkeleton::ItemSize::setProperty(const TQVariant & p)
+void TDEConfigSkeleton::ItemSize::setProperty(const TQVariant & p)
 {
   mReference = p.toSize();
 }
 
-TQVariant KConfigSkeleton::ItemSize::property() const
+TQVariant TDEConfigSkeleton::ItemSize::property() const
 {
   return TQVariant(mReference);
 }
 
 
-KConfigSkeleton::ItemDateTime::ItemDateTime( const TQString &group, const TQString &key,
+TDEConfigSkeleton::ItemDateTime::ItemDateTime( const TQString &group, const TQString &key,
                                         TQDateTime &reference,
                                         const TQDateTime &defaultValue )
-  : KConfigSkeletonGenericItem<TQDateTime>( group, key, reference, defaultValue )
+  : TDEConfigSkeletonGenericItem<TQDateTime>( group, key, reference, defaultValue )
 {
 }
 
-void KConfigSkeleton::ItemDateTime::readConfig( KConfig *config )
+void TDEConfigSkeleton::ItemDateTime::readConfig( TDEConfig *config )
 {
   config->setGroup( mGroup );
   mReference = config->readDateTimeEntry( mKey, &mDefault );
@@ -772,25 +772,25 @@ void KConfigSkeleton::ItemDateTime::readConfig( KConfig *config )
   readImmutability( config );
 }
 
-void KConfigSkeleton::ItemDateTime::setProperty(const TQVariant & p)
+void TDEConfigSkeleton::ItemDateTime::setProperty(const TQVariant & p)
 {
   mReference = p.toDateTime();
 }
 
-TQVariant KConfigSkeleton::ItemDateTime::property() const
+TQVariant TDEConfigSkeleton::ItemDateTime::property() const
 {
   return TQVariant(mReference);
 }
 
 
-KConfigSkeleton::ItemStringList::ItemStringList( const TQString &group, const TQString &key,
+TDEConfigSkeleton::ItemStringList::ItemStringList( const TQString &group, const TQString &key,
                                             TQStringList &reference,
                                             const TQStringList &defaultValue )
-  : KConfigSkeletonGenericItem<TQStringList>( group, key, reference, defaultValue )
+  : TDEConfigSkeletonGenericItem<TQStringList>( group, key, reference, defaultValue )
 {
 }
 
-void KConfigSkeleton::ItemStringList::readConfig( KConfig *config )
+void TDEConfigSkeleton::ItemStringList::readConfig( TDEConfig *config )
 {
   config->setGroup( mGroup );
   if ( !config->hasKey( mKey ) )
@@ -802,25 +802,25 @@ void KConfigSkeleton::ItemStringList::readConfig( KConfig *config )
   readImmutability( config );
 }
 
-void KConfigSkeleton::ItemStringList::setProperty(const TQVariant & p)
+void TDEConfigSkeleton::ItemStringList::setProperty(const TQVariant & p)
 {
   mReference = p.toStringList();
 }
 
-TQVariant KConfigSkeleton::ItemStringList::property() const
+TQVariant TDEConfigSkeleton::ItemStringList::property() const
 {
   return TQVariant(mReference);
 }
 
 
-KConfigSkeleton::ItemPathList::ItemPathList( const TQString &group, const TQString &key,
+TDEConfigSkeleton::ItemPathList::ItemPathList( const TQString &group, const TQString &key,
                                             TQStringList &reference,
                                             const TQStringList &defaultValue )
   : ItemStringList( group, key, reference, defaultValue )
 {
 }
 
-void KConfigSkeleton::ItemPathList::readConfig( KConfig *config )
+void TDEConfigSkeleton::ItemPathList::readConfig( TDEConfig *config )
 {
   config->setGroup( mGroup );
   if ( !config->hasKey( mKey ) )
@@ -832,7 +832,7 @@ void KConfigSkeleton::ItemPathList::readConfig( KConfig *config )
   readImmutability( config );
 }
 
-void KConfigSkeleton::ItemPathList::writeConfig( KConfig *config )
+void TDEConfigSkeleton::ItemPathList::writeConfig( TDEConfig *config )
 {
   if ( mReference != mLoadedValue ) // WABA: Is this test needed?
   {
@@ -847,14 +847,14 @@ void KConfigSkeleton::ItemPathList::writeConfig( KConfig *config )
 }
 
 
-KConfigSkeleton::ItemIntList::ItemIntList( const TQString &group, const TQString &key,
+TDEConfigSkeleton::ItemIntList::ItemIntList( const TQString &group, const TQString &key,
                                       TQValueList<int> &reference,
                                       const TQValueList<int> &defaultValue )
-  : KConfigSkeletonGenericItem<TQValueList<int> >( group, key, reference, defaultValue )
+  : TDEConfigSkeletonGenericItem<TQValueList<int> >( group, key, reference, defaultValue )
 {
 }
 
-void KConfigSkeleton::ItemIntList::readConfig( KConfig *config )
+void TDEConfigSkeleton::ItemIntList::readConfig( TDEConfig *config )
 {
   config->setGroup( mGroup );
   if ( !config->hasKey( mKey ) )
@@ -866,22 +866,22 @@ void KConfigSkeleton::ItemIntList::readConfig( KConfig *config )
   readImmutability( config );
 }
 
-void KConfigSkeleton::ItemIntList::setProperty(const TQVariant &)
+void TDEConfigSkeleton::ItemIntList::setProperty(const TQVariant &)
 {
   // TODO: Not yet supported
 }
 
-TQVariant KConfigSkeleton::ItemIntList::property() const
+TQVariant TDEConfigSkeleton::ItemIntList::property() const
 {
   // TODO: Not yet supported
   return TQVariant();  
 }
 
 
-KConfigSkeleton::KConfigSkeleton( const TQString &configname )
+TDEConfigSkeleton::TDEConfigSkeleton( const TQString &configname )
   : mCurrentGroup( "No Group" ), mUseDefaults(false)
 {
-  kdDebug(177) << "Creating KConfigSkeleton (" << (void *)this << ")" << endl;
+  kdDebug(177) << "Creating TDEConfigSkeleton (" << (void *)this << ")" << endl;
 
   if ( !configname.isEmpty() )
   {
@@ -893,40 +893,40 @@ KConfigSkeleton::KConfigSkeleton( const TQString &configname )
   }
 }
 
-KConfigSkeleton::KConfigSkeleton(KSharedConfig::Ptr config)
+TDEConfigSkeleton::TDEConfigSkeleton(KSharedConfig::Ptr config)
   : mCurrentGroup( "No Group" ), mUseDefaults(false)
 {
-  kdDebug(177) << "Creating KConfigSkeleton (" << (void *)this << ")" << endl;
+  kdDebug(177) << "Creating TDEConfigSkeleton (" << (void *)this << ")" << endl;
   mConfig = config;
 }
 
 
-KConfigSkeleton::~KConfigSkeleton()
+TDEConfigSkeleton::~TDEConfigSkeleton()
 {
-  KConfigSkeletonItem::List::ConstIterator it;
+  TDEConfigSkeletonItem::List::ConstIterator it;
   for( it = mItems.begin(); it != mItems.end(); ++it )
   {
     delete *it;
   }
 }
 
-void KConfigSkeleton::setCurrentGroup( const TQString &group )
+void TDEConfigSkeleton::setCurrentGroup( const TQString &group )
 {
   mCurrentGroup = group;
 }
 
-KConfig *KConfigSkeleton::config() const
+TDEConfig *TDEConfigSkeleton::config() const
 {
   return mConfig;
 }
 
-bool KConfigSkeleton::useDefaults(bool b)
+bool TDEConfigSkeleton::useDefaults(bool b)
 {
   if (b == mUseDefaults)
      return mUseDefaults;
 
   mUseDefaults = b;
-  KConfigSkeletonItem::List::ConstIterator it;
+  TDEConfigSkeletonItem::List::ConstIterator it;
   for( it = mItems.begin(); it != mItems.end(); ++it )
   {
     (*it)->swapDefault();
@@ -936,9 +936,9 @@ bool KConfigSkeleton::useDefaults(bool b)
   return !mUseDefaults;
 }
 
-void KConfigSkeleton::setDefaults()
+void TDEConfigSkeleton::setDefaults()
 {
-  KConfigSkeletonItem::List::ConstIterator it;
+  TDEConfigSkeletonItem::List::ConstIterator it;
   for( it = mItems.begin(); it != mItems.end(); ++it ) {
     (*it)->setDefault();
   }
@@ -946,14 +946,14 @@ void KConfigSkeleton::setDefaults()
   usrSetDefaults();
 }
 
-void KConfigSkeleton::readConfig()
+void TDEConfigSkeleton::readConfig()
 {
-  kdDebug(177) << "KConfigSkeleton::readConfig()" << endl;
+  kdDebug(177) << "TDEConfigSkeleton::readConfig()" << endl;
   
   TQString origGroup = mConfig->group();
 
   mConfig->reparseConfiguration();
-  KConfigSkeletonItem::List::ConstIterator it;
+  TDEConfigSkeletonItem::List::ConstIterator it;
   for( it = mItems.begin(); it != mItems.end(); ++it )
   {
     (*it)->readConfig( mConfig );
@@ -964,13 +964,13 @@ void KConfigSkeleton::readConfig()
   mConfig->setGroup(origGroup);
 }
 
-void KConfigSkeleton::writeConfig()
+void TDEConfigSkeleton::writeConfig()
 {
-  kdDebug(177) << "KConfigSkeleton::writeConfig()" << endl;
+  kdDebug(177) << "TDEConfigSkeleton::writeConfig()" << endl;
 
   TQString origGroup = mConfig->group();
 
-  KConfigSkeletonItem::List::ConstIterator it;
+  TDEConfigSkeletonItem::List::ConstIterator it;
   for( it = mItems.begin(); it != mItems.end(); ++it )
   {
     (*it)->writeConfig( mConfig );
@@ -985,7 +985,7 @@ void KConfigSkeleton::writeConfig()
   mConfig->setGroup(origGroup);
 }
 
-void KConfigSkeleton::addItem( KConfigSkeletonItem *item, const TQString &name )
+void TDEConfigSkeleton::addItem( TDEConfigSkeletonItem *item, const TQString &name )
 {
   item->setName( name.isEmpty() ? item->key() : name );
   mItems.append( item );
@@ -994,214 +994,214 @@ void KConfigSkeleton::addItem( KConfigSkeletonItem *item, const TQString &name )
   item->readConfig( mConfig );
 }
 
-KConfigSkeleton::ItemString *KConfigSkeleton::addItemString( const TQString &name, TQString &reference,
+TDEConfigSkeleton::ItemString *TDEConfigSkeleton::addItemString( const TQString &name, TQString &reference,
                                      const TQString &defaultValue, const TQString &key )
 {
-  KConfigSkeleton::ItemString *item;
-  item = new KConfigSkeleton::ItemString( mCurrentGroup, key.isEmpty() ? name : key,
+  TDEConfigSkeleton::ItemString *item;
+  item = new TDEConfigSkeleton::ItemString( mCurrentGroup, key.isEmpty() ? name : key,
                                           reference, defaultValue,
-                                          KConfigSkeleton::ItemString::Normal );
+                                          TDEConfigSkeleton::ItemString::Normal );
   addItem( item, name );
   return item;
 }
 
-KConfigSkeleton::ItemPassword *KConfigSkeleton::addItemPassword( const TQString &name, TQString &reference,
+TDEConfigSkeleton::ItemPassword *TDEConfigSkeleton::addItemPassword( const TQString &name, TQString &reference,
                                        const TQString &defaultValue, const TQString &key )
 {
-  KConfigSkeleton::ItemPassword *item;
-  item = new KConfigSkeleton::ItemPassword( mCurrentGroup, key.isNull() ? name : key,
+  TDEConfigSkeleton::ItemPassword *item;
+  item = new TDEConfigSkeleton::ItemPassword( mCurrentGroup, key.isNull() ? name : key,
                                           reference, defaultValue );
   addItem( item, name );
   return item;
 }
 
-KConfigSkeleton::ItemPath *KConfigSkeleton::addItemPath( const TQString &name, TQString &reference,
+TDEConfigSkeleton::ItemPath *TDEConfigSkeleton::addItemPath( const TQString &name, TQString &reference,
                                    const TQString &defaultValue, const TQString &key )
 {
-  KConfigSkeleton::ItemPath *item;
-  item = new KConfigSkeleton::ItemPath( mCurrentGroup, key.isNull() ? name : key,
+  TDEConfigSkeleton::ItemPath *item;
+  item = new TDEConfigSkeleton::ItemPath( mCurrentGroup, key.isNull() ? name : key,
                                         reference, defaultValue );
   addItem( item, name );
   return item;
 }
 
-KConfigSkeleton::ItemProperty *KConfigSkeleton::addItemProperty( const TQString &name, TQVariant &reference,
+TDEConfigSkeleton::ItemProperty *TDEConfigSkeleton::addItemProperty( const TQString &name, TQVariant &reference,
                                        const TQVariant &defaultValue, const TQString &key )
 {
-  KConfigSkeleton::ItemProperty *item;
-  item = new KConfigSkeleton::ItemProperty( mCurrentGroup, key.isNull() ? name : key,
+  TDEConfigSkeleton::ItemProperty *item;
+  item = new TDEConfigSkeleton::ItemProperty( mCurrentGroup, key.isNull() ? name : key,
                                             reference, defaultValue );
   addItem( item, name );
   return item;
 }
 
-KConfigSkeleton::ItemBool *KConfigSkeleton::addItemBool( const TQString &name, bool &reference,
+TDEConfigSkeleton::ItemBool *TDEConfigSkeleton::addItemBool( const TQString &name, bool &reference,
                                    bool defaultValue, const TQString &key )
 {
-  KConfigSkeleton::ItemBool *item;
-  item = new KConfigSkeleton::ItemBool( mCurrentGroup, key.isNull() ? name : key,
+  TDEConfigSkeleton::ItemBool *item;
+  item = new TDEConfigSkeleton::ItemBool( mCurrentGroup, key.isNull() ? name : key,
                                         reference, defaultValue );
   addItem( item, name );
   return item;
 }
 
-KConfigSkeleton::ItemInt *KConfigSkeleton::addItemInt( const TQString &name, int &reference,
+TDEConfigSkeleton::ItemInt *TDEConfigSkeleton::addItemInt( const TQString &name, int &reference,
                                   int defaultValue, const TQString &key )
 {
-  KConfigSkeleton::ItemInt *item;
-  item = new KConfigSkeleton::ItemInt( mCurrentGroup, key.isNull() ? name : key,
+  TDEConfigSkeleton::ItemInt *item;
+  item = new TDEConfigSkeleton::ItemInt( mCurrentGroup, key.isNull() ? name : key,
                                        reference, defaultValue );
   addItem( item, name );
   return item;
 }
 
-KConfigSkeleton::ItemUInt *KConfigSkeleton::addItemUInt( const TQString &name, unsigned int &reference,
+TDEConfigSkeleton::ItemUInt *TDEConfigSkeleton::addItemUInt( const TQString &name, unsigned int &reference,
                                    unsigned int defaultValue, const TQString &key )
 {
-  KConfigSkeleton::ItemUInt *item;
-  item = new KConfigSkeleton::ItemUInt( mCurrentGroup, key.isNull() ? name : key,
+  TDEConfigSkeleton::ItemUInt *item;
+  item = new TDEConfigSkeleton::ItemUInt( mCurrentGroup, key.isNull() ? name : key,
                                         reference, defaultValue );
   addItem( item, name );
   return item;
 }
 
-KConfigSkeleton::ItemInt64 *KConfigSkeleton::addItemInt64( const TQString &name, TQ_INT64 &reference,
+TDEConfigSkeleton::ItemInt64 *TDEConfigSkeleton::addItemInt64( const TQString &name, TQ_INT64 &reference,
                                     TQ_INT64 defaultValue, const TQString &key )
 {
-  KConfigSkeleton::ItemInt64 *item;
-  item = new KConfigSkeleton::ItemInt64( mCurrentGroup, key.isNull() ? name : key,
+  TDEConfigSkeleton::ItemInt64 *item;
+  item = new TDEConfigSkeleton::ItemInt64( mCurrentGroup, key.isNull() ? name : key,
                                          reference, defaultValue );
   addItem( item, name );
   return item;
 }
 
-KConfigSkeleton::ItemUInt64 *KConfigSkeleton::addItemUInt64( const TQString &name, TQ_UINT64 &reference,
+TDEConfigSkeleton::ItemUInt64 *TDEConfigSkeleton::addItemUInt64( const TQString &name, TQ_UINT64 &reference,
                                      TQ_UINT64 defaultValue, const TQString &key )
 {
-  KConfigSkeleton::ItemUInt64 *item;
-  item = new KConfigSkeleton::ItemUInt64( mCurrentGroup, key.isNull() ? name : key,
+  TDEConfigSkeleton::ItemUInt64 *item;
+  item = new TDEConfigSkeleton::ItemUInt64( mCurrentGroup, key.isNull() ? name : key,
                                           reference, defaultValue );
   addItem( item, name );
   return item;
 }
 
-KConfigSkeleton::ItemLong *KConfigSkeleton::addItemLong( const TQString &name, long &reference,
+TDEConfigSkeleton::ItemLong *TDEConfigSkeleton::addItemLong( const TQString &name, long &reference,
                                    long defaultValue, const TQString &key )
 {
-  KConfigSkeleton::ItemLong *item;
-  item = new KConfigSkeleton::ItemLong( mCurrentGroup, key.isNull() ? name : key,
+  TDEConfigSkeleton::ItemLong *item;
+  item = new TDEConfigSkeleton::ItemLong( mCurrentGroup, key.isNull() ? name : key,
                                         reference, defaultValue );
   addItem( item, name );
   return item;
 }
 
-KConfigSkeleton::ItemULong *KConfigSkeleton::addItemULong( const TQString &name, unsigned long &reference,
+TDEConfigSkeleton::ItemULong *TDEConfigSkeleton::addItemULong( const TQString &name, unsigned long &reference,
                                     unsigned long defaultValue, const TQString &key )
 {
-  KConfigSkeleton::ItemULong *item;
-  item = new KConfigSkeleton::ItemULong( mCurrentGroup, key.isNull() ? name : key,
+  TDEConfigSkeleton::ItemULong *item;
+  item = new TDEConfigSkeleton::ItemULong( mCurrentGroup, key.isNull() ? name : key,
                                          reference, defaultValue );
   addItem( item, name );
   return item;
 }
 
-KConfigSkeleton::ItemDouble *KConfigSkeleton::addItemDouble( const TQString &name, double &reference,
+TDEConfigSkeleton::ItemDouble *TDEConfigSkeleton::addItemDouble( const TQString &name, double &reference,
                                      double defaultValue, const TQString &key )
 {
-  KConfigSkeleton::ItemDouble *item;
-  item = new KConfigSkeleton::ItemDouble( mCurrentGroup, key.isNull() ? name : key,
+  TDEConfigSkeleton::ItemDouble *item;
+  item = new TDEConfigSkeleton::ItemDouble( mCurrentGroup, key.isNull() ? name : key,
                                           reference, defaultValue );
   addItem( item, name );
   return item;
 }
 
-KConfigSkeleton::ItemColor *KConfigSkeleton::addItemColor( const TQString &name, TQColor &reference,
+TDEConfigSkeleton::ItemColor *TDEConfigSkeleton::addItemColor( const TQString &name, TQColor &reference,
                                     const TQColor &defaultValue, const TQString &key )
 {
-  KConfigSkeleton::ItemColor *item;
-  item = new KConfigSkeleton::ItemColor( mCurrentGroup, key.isNull() ? name : key,
+  TDEConfigSkeleton::ItemColor *item;
+  item = new TDEConfigSkeleton::ItemColor( mCurrentGroup, key.isNull() ? name : key,
                                          reference, defaultValue );
   addItem( item, name );
   return item;
 }
 
-KConfigSkeleton::ItemFont *KConfigSkeleton::addItemFont( const TQString &name, TQFont &reference,
+TDEConfigSkeleton::ItemFont *TDEConfigSkeleton::addItemFont( const TQString &name, TQFont &reference,
                                    const TQFont &defaultValue, const TQString &key )
 {
-  KConfigSkeleton::ItemFont *item;
-  item = new KConfigSkeleton::ItemFont( mCurrentGroup, key.isNull() ? name : key,
+  TDEConfigSkeleton::ItemFont *item;
+  item = new TDEConfigSkeleton::ItemFont( mCurrentGroup, key.isNull() ? name : key,
                                         reference, defaultValue );
   addItem( item, name );
   return item;
 }
 
-KConfigSkeleton::ItemRect *KConfigSkeleton::addItemRect( const TQString &name, TQRect &reference,
+TDEConfigSkeleton::ItemRect *TDEConfigSkeleton::addItemRect( const TQString &name, TQRect &reference,
                                    const TQRect &defaultValue, const TQString &key )
 {
-  KConfigSkeleton::ItemRect *item;
-  item = new KConfigSkeleton::ItemRect( mCurrentGroup, key.isNull() ? name : key,
+  TDEConfigSkeleton::ItemRect *item;
+  item = new TDEConfigSkeleton::ItemRect( mCurrentGroup, key.isNull() ? name : key,
                                         reference, defaultValue );
   addItem( item, name );
   return item;
 }
 
-KConfigSkeleton::ItemPoint *KConfigSkeleton::addItemPoint( const TQString &name, TQPoint &reference,
+TDEConfigSkeleton::ItemPoint *TDEConfigSkeleton::addItemPoint( const TQString &name, TQPoint &reference,
                                     const TQPoint &defaultValue, const TQString &key )
 {
-  KConfigSkeleton::ItemPoint *item;
-  item = new KConfigSkeleton::ItemPoint( mCurrentGroup, key.isNull() ? name : key,
+  TDEConfigSkeleton::ItemPoint *item;
+  item = new TDEConfigSkeleton::ItemPoint( mCurrentGroup, key.isNull() ? name : key,
                                          reference, defaultValue );
   addItem( item, name );
   return item;
 }
 
-KConfigSkeleton::ItemSize *KConfigSkeleton::addItemSize( const TQString &name, TQSize &reference,
+TDEConfigSkeleton::ItemSize *TDEConfigSkeleton::addItemSize( const TQString &name, TQSize &reference,
                                    const TQSize &defaultValue, const TQString &key )
 {
-  KConfigSkeleton::ItemSize *item;
-  item = new KConfigSkeleton::ItemSize( mCurrentGroup, key.isNull() ? name : key,
+  TDEConfigSkeleton::ItemSize *item;
+  item = new TDEConfigSkeleton::ItemSize( mCurrentGroup, key.isNull() ? name : key,
                                         reference, defaultValue );
   addItem( item, name );
   return item;
 }
 
-KConfigSkeleton::ItemDateTime *KConfigSkeleton::addItemDateTime( const TQString &name, TQDateTime &reference,
+TDEConfigSkeleton::ItemDateTime *TDEConfigSkeleton::addItemDateTime( const TQString &name, TQDateTime &reference,
                                        const TQDateTime &defaultValue, const TQString &key )
 {
-  KConfigSkeleton::ItemDateTime *item;
-  item = new KConfigSkeleton::ItemDateTime( mCurrentGroup, key.isNull() ? name : key,
+  TDEConfigSkeleton::ItemDateTime *item;
+  item = new TDEConfigSkeleton::ItemDateTime( mCurrentGroup, key.isNull() ? name : key,
                                             reference, defaultValue );
   addItem( item, name );
   return item;
 }
 
-KConfigSkeleton::ItemStringList *KConfigSkeleton::addItemStringList( const TQString &name, TQStringList &reference,
+TDEConfigSkeleton::ItemStringList *TDEConfigSkeleton::addItemStringList( const TQString &name, TQStringList &reference,
                                          const TQStringList &defaultValue, const TQString &key )
 {
-  KConfigSkeleton::ItemStringList *item;
-  item = new KConfigSkeleton::ItemStringList( mCurrentGroup, key.isNull() ? name : key,
+  TDEConfigSkeleton::ItemStringList *item;
+  item = new TDEConfigSkeleton::ItemStringList( mCurrentGroup, key.isNull() ? name : key,
                                               reference, defaultValue );
   addItem( item, name );
   return item;
 }
 
-KConfigSkeleton::ItemIntList *KConfigSkeleton::addItemIntList( const TQString &name, TQValueList<int> &reference,
+TDEConfigSkeleton::ItemIntList *TDEConfigSkeleton::addItemIntList( const TQString &name, TQValueList<int> &reference,
                                       const TQValueList<int> &defaultValue, const TQString &key )
 {
-  KConfigSkeleton::ItemIntList *item;
-  item = new KConfigSkeleton::ItemIntList( mCurrentGroup, key.isNull() ? name : key,
+  TDEConfigSkeleton::ItemIntList *item;
+  item = new TDEConfigSkeleton::ItemIntList( mCurrentGroup, key.isNull() ? name : key,
                                            reference, defaultValue );
   addItem( item, name );
   return item;
 }
 
-bool KConfigSkeleton::isImmutable(const TQString &name)
+bool TDEConfigSkeleton::isImmutable(const TQString &name)
 {
-  KConfigSkeletonItem *item = findItem(name);
+  TDEConfigSkeletonItem *item = findItem(name);
   return !item || item->isImmutable();
 }
 
-KConfigSkeletonItem *KConfigSkeleton::findItem(const TQString &name)
+TDEConfigSkeletonItem *TDEConfigSkeleton::findItem(const TQString &name)
 {
   return mItemDict.find(name);
 }

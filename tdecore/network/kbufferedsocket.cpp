@@ -38,7 +38,7 @@ using namespace KNetwork::Internal;
 class KNetwork::KBufferedSocketPrivate
 {
 public:
-  mutable KSocketBuffer *input, *output;
+  mutable TDESocketBuffer *input, *output;
 
   KBufferedSocketPrivate()
   {
@@ -64,7 +64,7 @@ KBufferedSocket::~KBufferedSocket()
   delete d;
 }
 
-void KBufferedSocket::setSocketDevice(KSocketDevice* device)
+void KBufferedSocket::setSocketDevice(TDESocketDevice* device)
 {
   KStreamSocket::setSocketDevice(device);
   device->setBlocking(false);
@@ -134,7 +134,7 @@ TQT_TQIO_LONG KBufferedSocket::tqreadBlock(char *data, TQT_TQIO_ULONG maxlen)
   return KStreamSocket::tqreadBlock(data, maxlen);
 }
 
-TQT_TQIO_LONG KBufferedSocket::tqreadBlock(char *data, TQT_TQIO_ULONG maxlen, KSocketAddress& from)
+TQT_TQIO_LONG KBufferedSocket::tqreadBlock(char *data, TQT_TQIO_ULONG maxlen, TDESocketAddress& from)
 {
   from = peerAddress();
   return tqreadBlock(data, maxlen);
@@ -156,7 +156,7 @@ TQ_LONG KBufferedSocket::peekBlock(char *data, TQ_ULONG maxlen)
   return KStreamSocket::peekBlock(data, maxlen);
 }
 
-TQ_LONG KBufferedSocket::peekBlock(char *data, TQ_ULONG maxlen, KSocketAddress& from)
+TQ_LONG KBufferedSocket::peekBlock(char *data, TQ_ULONG maxlen, TDESocketAddress& from)
 {
   from = peerAddress();
   return peekBlock(data, maxlen);
@@ -193,7 +193,7 @@ TQT_TQIO_LONG KBufferedSocket::tqwriteBlock(const char *data, TQT_TQIO_ULONG len
 }
 
 TQT_TQIO_LONG KBufferedSocket::tqwriteBlock(const char *data, TQT_TQIO_ULONG maxlen,
-				   const KSocketAddress&)
+				   const TDESocketAddress&)
 {
   // ignore the third parameter
   return tqwriteBlock(data, maxlen);
@@ -256,7 +256,7 @@ void KBufferedSocket::setInputBuffering(bool enable)
     }
   else if (d->input == 0L)
     {
-      d->input = new KSocketBuffer;
+      d->input = new TDESocketBuffer;
     }
 }
 
@@ -275,7 +275,7 @@ void KBufferedSocket::setOutputBuffering(bool enable)
     }
   else if (d->output == 0L)
     {
-      d->output = new KSocketBuffer;
+      d->output = new TDESocketBuffer;
     }
 }
 

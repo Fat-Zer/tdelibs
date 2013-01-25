@@ -43,7 +43,7 @@ class KRESOURCES_EXPORT ResourcePageInfo : public KShared
     ResourcePageInfo();
     ~ResourcePageInfo();
     Manager<Resource> *mManager;
-    KConfig *mConfig;
+    TDEConfig *mConfig;
 };
 
 class Resource;
@@ -89,8 +89,8 @@ class KRESOURCES_EXPORT ConfigPage : public TQWidget, public ManagerObserver<Res
     void saveResourceSettings();
 
     Manager<Resource>* mCurrentManager;
-    KConfig* mCurrentConfig;
-    KConfig* mConfig;
+    TDEConfig* mCurrentConfig;
+    TDEConfig* mConfig;
     TQString mFamily;
     TQStringList mFamilyMap;
     TQValueList<KSharedPtr<ResourcePageInfo> > mInfoMap;

@@ -55,7 +55,7 @@ namespace
   class ReverseThread: public KResolverWorkerBase
   {
   public:
-    ReverseThread(const KSocketAddress& addr, int flags)
+    ReverseThread(const TDESocketAddress& addr, int flags)
       : m_addr(addr), m_flags(flags), m_parent(0L)
     { }
 
@@ -68,7 +68,7 @@ namespace
     virtual bool postprocess();
 
     // input:
-    KSocketAddress m_addr;
+    TDESocketAddress m_addr;
     int m_flags;
     KReverseResolver *m_parent;
 
@@ -99,18 +99,18 @@ class KNetwork::KReverseResolverPrivate
 public:
   TQString node;
   TQString service;
-  KSocketAddress addr;
+  TDESocketAddress addr;
   int flags;
 
   ReverseThread* worker;
   bool success;
 
-  inline KReverseResolverPrivate(const KSocketAddress& _addr)
+  inline KReverseResolverPrivate(const TDESocketAddress& _addr)
     : addr(_addr), worker(0L), success(false)
   { }
 };
 
-KReverseResolver::KReverseResolver(const KSocketAddress& addr, int flags,
+KReverseResolver::KReverseResolver(const TDESocketAddress& addr, int flags,
 				   TQObject *parent, const char* name)
   : TQObject(parent, name), d(new KReverseResolverPrivate(addr))
 {
@@ -148,7 +148,7 @@ TQString KReverseResolver::service() const
   return d->service;
 }
 
-const KSocketAddress& KReverseResolver::address() const
+const TDESocketAddress& KReverseResolver::address() const
 {
   return d->addr;
 }
@@ -190,7 +190,7 @@ bool KReverseResolver::event(TQEvent *e)
   return true;
 }
 
-bool KReverseResolver::resolve(const KSocketAddress& addr, TQString& node,
+bool KReverseResolver::resolve(const TDESocketAddress& addr, TQString& node,
 			       TQString& serv, int flags)
 {
   ReverseThread th(addr, flags);
@@ -206,7 +206,7 @@ bool KReverseResolver::resolve(const KSocketAddress& addr, TQString& node,
 bool KReverseResolver::resolve(const struct sockaddr* sa, TQ_UINT16 salen,
 			       TQString& node, TQString& serv, int flags)
 {
-  return resolve(KSocketAddress(sa, salen), node, serv, flags);
+  return resolve(TDESocketAddress(sa, salen), node, serv, flags);
 }
 
 bool ReverseThread::run()

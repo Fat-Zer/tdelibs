@@ -34,7 +34,7 @@
 
 /**
  * A KFileItem is a generic class to handle a file, local or remote.
- * In particular, it makes it easier to handle the result of KIO::listDir
+ * In particular, it makes it easier to handle the result of TDEIO::listDir
  * (UDSEntry isn't very friendly to use).
  * It includes many file attributes such as mimetype, icon, text, mode, link...
  */
@@ -45,7 +45,7 @@ public:
 
   /**
    * Creates an item representing a file, from a UDSEntry.
-   * This is the preferred constructor when using KIO::listDir().
+   * This is the preferred constructor when using TDEIO::listDir().
    *
    * @param _entry the KIO entry used to get the file, contains info about it
    * @param _url the file url
@@ -54,7 +54,7 @@ public:
    * @param _urlIsDirectory specifies if the url is just the directory of the
    *       fileitem and the filename from the UDSEntry should be used.
    */
-  KFileItem( const KIO::UDSEntry& _entry, const KURL& _url,
+  KFileItem( const TDEIO::UDSEntry& _entry, const KURL& _url,
              bool _determineMimeTypeOnDemand = false,
              bool _urlIsDirectory = false );
 
@@ -239,14 +239,14 @@ public:
    * Returns the size of the file, if known.
    * @return the file size, or 0 if not known
    */
-  KIO::filesize_t size() const;
+  TDEIO::filesize_t size() const;
 
   /**
    * Returns the size of the file, if known, and sets @p hasSize to false if not known
    * @param @hasSize This is set to true if the size is known, and false if not known
    * @return the file size, or 0 if not known
    */ 
-  KIO::filesize_t size(bool &hasSize) const;
+  TDEIO::filesize_t size(bool &hasSize) const;
   
   //FIXME KDE4 deprecate this in favor of time(unsigned int which, bool &hasSize)
   /**
@@ -273,7 +273,7 @@ public:
    * @returns a formatted string of the requested time, TQString::null if time is not known
    * @see time
    */
-  TQString timeString( unsigned int which = KIO::UDS_MODIFICATION_TIME ) const;
+  TQString timeString( unsigned int which = TDEIO::UDS_MODIFICATION_TIME ) const;
 
   /**
    * Returns true if the file is a local file.
@@ -396,7 +396,7 @@ public:
    * by position.
    * @return the UDS entry
    */
-  const KIO::UDSEntry & entry() const { return m_entry; }
+  const TDEIO::UDSEntry & entry() const { return m_entry; }
 
   /**
    * Used when updating a directory. marked == seen when refreshing.
@@ -536,7 +536,7 @@ public:
    *        fileitem and the filename from the UDSEntry should be used.
    * @since 3.4.1
    */
-  void setUDSEntry( const KIO::UDSEntry& entry, const KURL& url,
+  void setUDSEntry( const TDEIO::UDSEntry& entry, const KURL& url,
                     bool determineMimeTypeOnDemand = false,
                     bool urlIsDirectory = false );
 
@@ -576,7 +576,7 @@ private:
   /**
    * We keep a copy of the UDSEntry since we need it for getStatusBarInfo
    */
-  KIO::UDSEntry m_entry;
+  TDEIO::UDSEntry m_entry;
   /**
    * The url of the file
    */
@@ -643,7 +643,7 @@ private:
 
   enum { Modification = 0, Access = 1, Creation = 2, NumFlags = 3 };
   mutable time_t m_time[3];
-  mutable KIO::filesize_t m_size;
+  mutable TDEIO::filesize_t m_size;
 
 protected:
   virtual void virtual_hook( int id, void* data );

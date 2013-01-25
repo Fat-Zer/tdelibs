@@ -143,7 +143,7 @@ void KMCupsConfigWidget::save(bool sync)
 	if (sync) inf->save();
 }
 
-void KMCupsConfigWidget::saveConfig(KConfig *conf)
+void KMCupsConfigWidget::saveConfig(TDEConfig *conf)
 {
 	conf->setGroup("CUPS");
 	conf->writeEntry("Host",m_host->text());

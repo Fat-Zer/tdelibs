@@ -31,30 +31,30 @@
 #include <tqvbox.h>
 #include <tqmap.h>
 
-TQAsciiDict<KConfigDialog> KConfigDialog::openDialogs;
+TQAsciiDict<TDEConfigDialog> TDEConfigDialog::openDialogs;
 
 // This class is here purly so we don't break binary compatibility down the road.
-class KConfigDialog::KConfigDialogPrivate
+class TDEConfigDialog::TDEConfigDialogPrivate
 {
 public:
-  KConfigDialogPrivate(KDialogBase::DialogType t)
+  TDEConfigDialogPrivate(KDialogBase::DialogType t)
   : shown(false), type(t), manager(0) { }
 
   bool shown;
   KDialogBase::DialogType type;
-  KConfigDialogManager *manager;
-  TQMap<TQWidget *, KConfigDialogManager *> managerForPage;
+  TDEConfigDialogManager *manager;
+  TQMap<TQWidget *, TDEConfigDialogManager *> managerForPage;
 };
 
-KConfigDialog::KConfigDialog( TQWidget *parent, const char *name,
-          KConfigSkeleton *config,
+TDEConfigDialog::TDEConfigDialog( TQWidget *parent, const char *name,
+          TDEConfigSkeleton *config,
           DialogType dialogType,
           int dialogButtons,
           ButtonCode defaultButton,
           bool modal ) :
     KDialogBase( dialogType, (WFlags)TQt::WStyle_DialogBorder,
           parent, name, modal, i18n("Configure"), dialogButtons, defaultButton ),
-    d(new KConfigDialogPrivate(dialogType))
+    d(new TDEConfigDialogPrivate(dialogType))
 {
   if ( name ) {
     openDialogs.insert(name, this);
@@ -71,19 +71,19 @@ KConfigDialog::KConfigDialog( TQWidget *parent, const char *name,
   connect(this, TQT_SIGNAL(defaultClicked()), this, TQT_SLOT(updateWidgetsDefault()));
   connect(this, TQT_SIGNAL(defaultClicked()), this, TQT_SLOT(updateButtons()));
 
-  d->manager = new KConfigDialogManager(this, config);
+  d->manager = new TDEConfigDialogManager(this, config);
   setupManagerConnections(d->manager);
 
   enableButton(Apply, false);
 }
 
-KConfigDialog::~KConfigDialog()
+TDEConfigDialog::~TDEConfigDialog()
 {
   openDialogs.remove(name());
   delete d;
 }
 
-void KConfigDialog::addPage(TQWidget *page,
+void TDEConfigDialog::addPage(TQWidget *page,
                                 const TQString &itemName,
                                 const TQString &pixmapName,
                                 const TQString &header,
@@ -94,25 +94,25 @@ void KConfigDialog::addPage(TQWidget *page,
     d->manager->addWidget(page);
 }
 
-void KConfigDialog::addPage(TQWidget *page,
-                                KConfigSkeleton *config,
+void TDEConfigDialog::addPage(TQWidget *page,
+                                TDEConfigSkeleton *config,
                                 const TQString &itemName,
                                 const TQString &pixmapName,
                                 const TQString &header)
 {
   addPageInternal(page, itemName, pixmapName, header);
-  d->managerForPage[page] = new KConfigDialogManager(page, config);
+  d->managerForPage[page] = new TDEConfigDialogManager(page, config);
   setupManagerConnections(d->managerForPage[page]);
 }
 
-void KConfigDialog::addPageInternal(TQWidget *page,
+void TDEConfigDialog::addPageInternal(TQWidget *page,
                                         const TQString &itemName,
                                         const TQString &pixmapName,
                                         const TQString &header)
 {
   if(d->shown)
   {
-    kdDebug(240) << "KConfigDialog::addPage: can not add a page after the dialog has been shown.";
+    kdDebug(240) << "TDEConfigDialog::addPage: can not add a page after the dialog has been shown.";
     return;
   }
   switch(d->type)
@@ -144,11 +144,11 @@ void KConfigDialog::addPageInternal(TQWidget *page,
     break;
 
     default:
-      kdDebug(240) << "KConfigDialog::addpage: unknown type.";
+      kdDebug(240) << "TDEConfigDialog::addpage: unknown type.";
   }
 }
 
-void KConfigDialog::setupManagerConnections(KConfigDialogManager *manager)
+void TDEConfigDialog::setupManagerConnections(TDEConfigDialogManager *manager)
 {
   connect(manager, TQT_SIGNAL(settingsChanged()), this, TQT_SLOT(settingsChangedSlot()));
   connect(manager, TQT_SIGNAL(widgetModified()), this, TQT_SLOT(updateButtons()));
@@ -158,26 +158,26 @@ void KConfigDialog::setupManagerConnections(KConfigDialogManager *manager)
   connect(this, TQT_SIGNAL(defaultClicked()), manager, TQT_SLOT(updateWidgetsDefault()));
 }
 
-KConfigDialog* KConfigDialog::exists(const char* name)
+TDEConfigDialog* TDEConfigDialog::exists(const char* name)
 {
   return openDialogs.find(name);
 }
 
-bool KConfigDialog::showDialog(const char* name)
+bool TDEConfigDialog::showDialog(const char* name)
 {
-  KConfigDialog *dialog = exists(name);
+  TDEConfigDialog *dialog = exists(name);
   if(dialog)
     dialog->show();
   return (dialog != NULL);
 }
 
-void KConfigDialog::updateButtons()
+void TDEConfigDialog::updateButtons()
 {
   static bool only_once = false;
   if (only_once) return;
   only_once = true;
 
-  TQMap<TQWidget *, KConfigDialogManager *>::iterator it;
+  TQMap<TQWidget *, TDEConfigDialogManager *>::iterator it;
 
   bool has_changed = d->manager->hasChanged() || hasChanged();
   for (it = d->managerForPage.begin();
@@ -203,7 +203,7 @@ void KConfigDialog::updateButtons()
   only_once = false;
 }
 
-void KConfigDialog::settingsChangedSlot()
+void TDEConfigDialog::settingsChangedSlot()
 {
   // Update the buttons
   updateButtons();
@@ -211,9 +211,9 @@ void KConfigDialog::settingsChangedSlot()
   emit settingsChanged(name());
 }
 
-void KConfigDialog::show()
+void TDEConfigDialog::show()
 {
-  TQMap<TQWidget *, KConfigDialogManager *>::iterator it;
+  TQMap<TQWidget *, TDEConfigDialogManager *>::iterator it;
 
   updateWidgets();
   d->manager->updateWidgets();
@@ -243,15 +243,15 @@ void KConfigDialog::show()
   KDialogBase::show();
 }
 
-void KConfigDialog::updateSettings()
+void TDEConfigDialog::updateSettings()
 {
 }
 
-void KConfigDialog::updateWidgets()
+void TDEConfigDialog::updateWidgets()
 {
 }
 
-void KConfigDialog::updateWidgetsDefault()
+void TDEConfigDialog::updateWidgetsDefault()
 {
 }
 

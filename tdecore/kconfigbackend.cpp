@@ -231,7 +231,7 @@ static TQCString decodeKey(const char* key)
     return newKey;
 }
 
-class KConfigBackEnd::KConfigBackEndPrivate
+class TDEConfigBackEnd::TDEConfigBackEndPrivate
 {
 public:
    TQDateTime localLastModified;
@@ -240,7 +240,7 @@ public:
    KLockFile::Ptr globalLockFile;
 };
 
-void KConfigBackEnd::changeFileName(const TQString &_fileName,
+void TDEConfigBackEnd::changeFileName(const TQString &_fileName,
                                     const char * _resType,
                                     bool _useKDEGlobals)
 {
@@ -270,7 +270,7 @@ void KConfigBackEnd::changeFileName(const TQString &_fileName,
    d->globalLockFile = 0;
 }
 
-KLockFile::Ptr KConfigBackEnd::lockFile(bool bGlobal)
+KLockFile::Ptr TDEConfigBackEnd::lockFile(bool bGlobal)
 {
    if (bGlobal)
    {
@@ -297,35 +297,35 @@ KLockFile::Ptr KConfigBackEnd::lockFile(bool bGlobal)
    return 0;
 }
 
-KConfigBackEnd::KConfigBackEnd(KConfigBase *_config,
+TDEConfigBackEnd::TDEConfigBackEnd(TDEConfigBase *_config,
 			       const TQString &_fileName,
 			       const char * _resType,
 			       bool _useKDEGlobals)
-  : pConfig(_config), bFileImmutable(false), mConfigState(KConfigBase::NoAccess), mFileMode(-1)
+  : pConfig(_config), bFileImmutable(false), mConfigState(TDEConfigBase::NoAccess), mFileMode(-1)
 {
-   d = new KConfigBackEndPrivate;
+   d = new TDEConfigBackEndPrivate;
    changeFileName(_fileName, _resType, _useKDEGlobals);
 }
 
-KConfigBackEnd::~KConfigBackEnd()
+TDEConfigBackEnd::~TDEConfigBackEnd()
 {
    delete d;
 }
 
-void KConfigBackEnd::setFileWriteMode(int mode)
+void TDEConfigBackEnd::setFileWriteMode(int mode)
 {
   mFileMode = mode;
 }
 
-bool KConfigINIBackEnd::parseConfigFiles()
+bool TDEConfigINIBackEnd::parseConfigFiles()
 {
   // Check if we can write to the local file.
-  mConfigState = KConfigBase::ReadOnly;
+  mConfigState = TDEConfigBase::ReadOnly;
   if (!mLocalFileName.isEmpty() && !pConfig->isReadOnly())
   {
      if (checkAccess(mLocalFileName, W_OK))
      {
-        mConfigState = KConfigBase::ReadWrite;
+        mConfigState = TDEConfigBase::ReadWrite;
      }
      else
      {
@@ -337,7 +337,7 @@ bool KConfigINIBackEnd::parseConfigFiles()
 
         if (checkAccess(mLocalFileName, W_OK))
         {
-           mConfigState = KConfigBase::ReadWrite;
+           mConfigState = TDEConfigBase::ReadWrite;
         }
      }
      TQFileInfo info(mLocalFileName);
@@ -426,7 +426,7 @@ bool KConfigINIBackEnd::parseConfigFiles()
     }
   }
   if (bFileImmutable)
-     mConfigState = KConfigBase::ReadOnly;
+     mConfigState = TDEConfigBase::ReadOnly;
 
   return true;
 }
@@ -447,7 +447,7 @@ extern "C" {
 
 extern bool kde_kiosk_exception;
 
-void KConfigINIBackEnd::parseSingleConfigFile(TQFile &rFile,
+void TDEConfigINIBackEnd::parseSingleConfigFile(TQFile &rFile,
 					      KEntryMap *pWriteBackMap,
 					      bool bGlobal, bool bDefault)
 {
@@ -732,11 +732,11 @@ tqWarning("SIGBUS while reading %s", rFile.name().latin1());
    }
    // Look up translations using KLocale
    // https://launchpad.net/distros/ubuntu/+spec/langpacks-desktopfiles-kde
-   // This calls KLocale up to 10 times for each config file (and each KConfig has up to 4 files)
+   // This calls KLocale up to 10 times for each config file (and each TDEConfig has up to 4 files)
    // so I'll see how much of a performance hit it is
    // it also only acts on the last group in a file
    // Ideas: only translate most important fields, only translate "Desktop Entry" files,
-   //        do translation per KConfig not per single file
+   //        do translation per TDEConfig not per single file
    if (!pWriteBackMap) {
      TQFile file("file.txt");
      if (foundGettextDomain) {
@@ -772,7 +772,7 @@ tqWarning("SIGBUS while reading %s", rFile.name().latin1());
 #endif
 }
 
-void KConfigINIBackEnd::translateKey(KLocale& locale, TQCString currentGroup, TQCString key) {
+void TDEConfigINIBackEnd::translateKey(KLocale& locale, TQCString currentGroup, TQCString key) {
   KEntryKey entryKey = KEntryKey(currentGroup, key);
   KEntry entry = pConfig->lookupData(entryKey);
   if (TQString(entry.mValue) != "") {
@@ -788,7 +788,7 @@ void KConfigINIBackEnd::translateKey(KLocale& locale, TQCString currentGroup, TQ
   }
 }
 
-void KConfigINIBackEnd::sync(bool bMerge)
+void TDEConfigINIBackEnd::sync(bool bMerge)
 {
   // write-sync is only necessary if there are dirty entries
   if (!pConfig->isDirty())
@@ -978,7 +978,7 @@ static void writeEntries(FILE *pStream, const KEntryMap& entryMap, bool defaultG
   } // for loop
 }
 
-bool KConfigINIBackEnd::getEntryMap(KEntryMap &aTempMap, bool bGlobal,
+bool TDEConfigINIBackEnd::getEntryMap(KEntryMap &aTempMap, bool bGlobal,
                                     TQFile *mergeFile)
 {
   bool bEntriesLeft = false;
@@ -1032,7 +1032,7 @@ bool KConfigINIBackEnd::getEntryMap(KEntryMap &aTempMap, bool bGlobal,
 }
 
 /* antlarr: KDE 4.0:  make the first parameter "const TQString &" */
-bool KConfigINIBackEnd::writeConfigFile(TQString filename, bool bGlobal,
+bool TDEConfigINIBackEnd::writeConfigFile(TQString filename, bool bGlobal,
 					bool bMerge)
 {
   // is the config object read-only?
@@ -1135,7 +1135,7 @@ bool KConfigINIBackEnd::writeConfigFile(TQString filename, bool bGlobal,
   return bEntriesLeft;
 }
 
-void KConfigINIBackEnd::writeEntries(FILE *pStream, const KEntryMap &aTempMap)
+void TDEConfigINIBackEnd::writeEntries(FILE *pStream, const KEntryMap &aTempMap)
 {
   bool firstEntry = true;
 
@@ -1146,13 +1146,13 @@ void KConfigINIBackEnd::writeEntries(FILE *pStream, const KEntryMap &aTempMap)
   ::writeEntries(pStream, aTempMap, false, firstEntry, localeString);
 }
 
-void KConfigBackEnd::virtual_hook( int, void* )
+void TDEConfigBackEnd::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
-void KConfigINIBackEnd::virtual_hook( int id, void* data )
-{ KConfigBackEnd::virtual_hook( id, data ); }
+void TDEConfigINIBackEnd::virtual_hook( int id, void* data )
+{ TDEConfigBackEnd::virtual_hook( id, data ); }
 
-bool KConfigBackEnd::checkConfigFilesWritable(bool warnUser)
+bool TDEConfigBackEnd::checkConfigFilesWritable(bool warnUser)
 {
   // WARNING: Do NOT use the event loop as it may not exist at this time.
   bool allWritable = true;

@@ -37,7 +37,7 @@ KImageIOFormat::KImageIOFormat( const TQString &path)
    bLibLoaded = false;
    mReadFunc = 0;
    mWriteFunc = 0;
-   KConfig config(path, true, false);
+   TDEConfig config(path, true, false);
 
    config.setGroup("Image Format");
    mType = config.readEntry("Type");

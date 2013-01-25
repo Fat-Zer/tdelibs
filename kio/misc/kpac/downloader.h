@@ -25,7 +25,7 @@
 
 #include <kurl.h>
 
-namespace KIO { class Job; }
+namespace TDEIO { class Job; }
 
 namespace KPAC
 {
@@ -48,8 +48,8 @@ namespace KPAC
         void setError( const TQString& );
 
     private slots:
-        void data( KIO::Job*, const TQByteArray& );
-        void result( KIO::Job* );
+        void data( TDEIO::Job*, const TQByteArray& );
+        void result( TDEIO::Job* );
 
     private:
         TQByteArray m_data;

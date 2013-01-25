@@ -31,11 +31,11 @@ class KRemoteEncodingPrivate;
  * Certain protocols do not specify an appropriate encoding for decoding
  * their 8-bit data into proper Unicode forms. Therefore, ioslaves should
  * use this class in order to convert those forms into QStrings before
- * creating the respective KIO::UDSEntry. The same is true for decoding
+ * creating the respective TDEIO::UDSEntry. The same is true for decoding
  * URLs to its components.
  *
- * Each KIO::SlaveBase has one object of this kind, even if it is not necessary.
- * It can be accessed through KIO::SlaveBase::remoteEncoding.
+ * Each TDEIO::SlaveBase has one object of this kind, even if it is not necessary.
+ * It can be accessed through TDEIO::SlaveBase::remoteEncoding.
  *
  * @short A class for handling remote filenames
  * @author Thiago Macieira <thiago.macieira@kdemail.net>

@@ -19,7 +19,7 @@
 #include <tqvaluelist.h>
 #include "tdelibs_export.h"
 
-class KConfig;
+class TDEConfig;
 class KIconThemeDir;
 
 class KIconThemePrivate;

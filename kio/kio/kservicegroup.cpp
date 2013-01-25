@@ -128,7 +128,7 @@ int KServiceGroup::childCount()
 {
   if (m_childCount == -1)
   {
-     KConfig global("kdeglobals");
+     TDEConfig global("kdeglobals");
      global.setGroup("KDE");
      bool showUnimportant = global.readBoolEntry("showUnimportant", true);
 

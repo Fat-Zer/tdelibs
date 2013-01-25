@@ -39,7 +39,7 @@ extern "C"
   }
 }
 
-ResourceSql::ResourceSql( AddressBook *ab, const KConfig *config )
+ResourceSql::ResourceSql( AddressBook *ab, const TDEConfig *config )
   : Resource( ab ), mDb( 0 )
 {
   TQString user, password, db, host;

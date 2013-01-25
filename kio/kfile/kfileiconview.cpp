@@ -102,7 +102,7 @@ public:
     KRadioAction *smallColumns, *largeRows;
     KAction *zoomIn, *zoomOut;
     KToggleAction *previews;
-    KIO::PreviewJob *job;
+    TDEIO::PreviewJob *job;
     KFileIconViewItem *dropItem;
     TQTimer previewTimer;
     TQTimer autoOpenTimer;
@@ -187,10 +187,10 @@ KFileIconView::~KFileIconView()
     delete d;
 }
 
-void KFileIconView::readConfig( KConfig *kc, const TQString& group )
+void KFileIconView::readConfig( TDEConfig *kc, const TQString& group )
 {
     TQString gr = group.isEmpty() ? TQString("KFileIconView") : group;
-    KConfigGroupSaver cs( kc, gr );
+    TDEConfigGroupSaver cs( kc, gr );
     TQString small = TQString::fromLatin1("SmallColumns");
     d->previewIconSize = kc->readNumEntry( "Preview Size", DEFAULT_PREVIEW_SIZE );
     d->previews->setChecked( kc->readBoolEntry( "ShowPreviews", DEFAULT_SHOW_PREVIEWS ) );
@@ -208,10 +208,10 @@ void KFileIconView::readConfig( KConfig *kc, const TQString& group )
         showPreviews();
 }
 
-void KFileIconView::writeConfig( KConfig *kc, const TQString& group )
+void KFileIconView::writeConfig( TDEConfig *kc, const TQString& group )
 {
     TQString gr = group.isEmpty() ? TQString("KFileIconView") : group;
-    KConfigGroupSaver cs( kc, gr );
+    TDEConfigGroupSaver cs( kc, gr );
 
     TQString viewMode =  d->smallColumns->isChecked() ?
         TQString::fromLatin1("SmallColumns") :
@@ -578,7 +578,7 @@ void KFileIconView::slotPreviewsToggled( bool on )
 void KFileIconView::showPreviews()
 {
     if ( d->previewMimeTypes.isEmpty() )
-        d->previewMimeTypes = KIO::PreviewJob::supportedMimeTypes();
+        d->previewMimeTypes = TDEIO::PreviewJob::supportedMimeTypes();
 
     stopPreview();
     d->previews->setChecked( true );
@@ -591,18 +591,18 @@ void KFileIconView::showPreviews()
         updateIcons();
     }
 
-    d->job = KIO::filePreview(*items(), d->previewIconSize,d->previewIconSize);
+    d->job = TDEIO::filePreview(*items(), d->previewIconSize,d->previewIconSize);
     d->job->setIgnoreMaximumSize(d->ignoreMaximumSize);
 
-    connect( d->job, TQT_SIGNAL( result( KIO::Job * )),
-             this, TQT_SLOT( slotPreviewResult( KIO::Job * )));
+    connect( d->job, TQT_SIGNAL( result( TDEIO::Job * )),
+             this, TQT_SLOT( slotPreviewResult( TDEIO::Job * )));
     connect( d->job, TQT_SIGNAL( gotPreview( const KFileItem*, const TQPixmap& )),
              TQT_SLOT( gotPreview( const KFileItem*, const TQPixmap& ) ));
 //     connect( d->job, TQT_SIGNAL( failed( const KFileItem* )),
 //              this, TQT_SLOT( slotFailed( const KFileItem* ) ));
 }
 
-void KFileIconView::slotPreviewResult( KIO::Job *job )
+void KFileIconView::slotPreviewResult( TDEIO::Job *job )
 {
     if ( job == d->job )
         d->job = 0L;
@@ -683,7 +683,7 @@ void KFileIconView::setSorting( TQDir::SortSpec spec )
     if ( spec & TQDir::Time ) {
         for ( ; (item = it.current()); ++it )
             // warning, time_t is often signed -> cast it
-            viewItem(item)->setKey( sortingKey( (unsigned long)item->time( KIO::UDS_MODIFICATION_TIME ), item->isDir(), spec ));
+            viewItem(item)->setKey( sortingKey( (unsigned long)item->time( TDEIO::UDS_MODIFICATION_TIME ), item->isDir(), spec ));
     }
 
     else if ( spec & TQDir::Size ) {
@@ -775,7 +775,7 @@ void KFileIconView::initItem( KFileIconViewItem *item, const KFileItem *i,
 
     if ( spec & TQDir::Time )
         // warning, time_t is often signed -> cast it
-        item->setKey( sortingKey( (unsigned long) i->time( KIO::UDS_MODIFICATION_TIME ),
+        item->setKey( sortingKey( (unsigned long) i->time( TDEIO::UDS_MODIFICATION_TIME ),
                                   i->isDir(), spec ));
     else if ( spec & TQDir::Size )
         item->setKey( sortingKey( i->size(), i->isDir(), spec ));

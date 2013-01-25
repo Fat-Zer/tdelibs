@@ -29,12 +29,12 @@
 
 class TQPixmap;
 
-namespace KIO {
+namespace TDEIO {
     /*!
      * This class catches a preview (thumbnail) for files.
      * @short KIO Job to get a thumbnail picture
      */
-    class KIO_EXPORT PreviewJob : public KIO::Job
+    class KIO_EXPORT PreviewJob : public TDEIO::Job
     {
         Q_OBJECT
     public:
@@ -117,11 +117,11 @@ namespace KIO {
         void createThumbnail( TQString );
 
     protected slots:
-        virtual void slotResult( KIO::Job *job );
+        virtual void slotResult( TDEIO::Job *job );
 
     private slots:
         void startPreview();
-        void slotThumbData(KIO::Job *, const TQByteArray &);
+        void slotThumbData(TDEIO::Job *, const TQByteArray &);
 
     private:
         void determineNextFile();

@@ -706,7 +706,7 @@ static TQString itemDeclaration(const CfgEntry *e)
 
   TQString fCap = e->name();
   fCap[0] = fCap[0].upper();
-  return "  KConfigSkeleton::Item"+itemType( e->type() ) +
+  return "  TDEConfigSkeleton::Item"+itemType( e->type() ) +
          "  *item" + fCap +
          ( (!e->param().isEmpty())?(TQString("[%1]").arg(e->paramMax()+1)) : TQString()) +
          ";\n";
@@ -754,7 +754,7 @@ static TQString itemPath(const CfgEntry *e)
 TQString newItem( const TQString &type, const TQString &name, const TQString &key,
                  const TQString &defaultValue, const TQString &param = TQString())
 {
-  TQString t = "new KConfigSkeleton::Item" + itemType( type ) +
+  TQString t = "new TDEConfigSkeleton::Item" + itemType( type ) +
               "( currentGroup(), " + key + ", " + varPath( name ) + param;
   if ( type == "Enum" ) t += ", values" + name;
   if ( !defaultValue.isEmpty() ) {
@@ -953,7 +953,7 @@ TQString indent(TQString text, int spaces)
 int main( int argc, char **argv )
 {
   TDEAboutData aboutData( "kconfig_compiler", I18N_NOOP("TDE .kcfg compiler"), "0.3",
-    I18N_NOOP("KConfig Compiler") , TDEAboutData::License_LGPL );
+    I18N_NOOP("TDEConfig Compiler") , TDEAboutData::License_LGPL );
   aboutData.addAuthor( "Cornelius Schumacher", 0, "schumacher@kde.org" );
   aboutData.addAuthor( "Waldo Bastian", 0, "bastian@kde.org" );
   aboutData.addAuthor( "Zack Rusin", 0, "zack@kde.org" );
@@ -1093,7 +1093,7 @@ int main( int argc, char **argv )
     }
   }
 
-  if ( inherits.isEmpty() ) inherits = "KConfigSkeleton";
+  if ( inherits.isEmpty() ) inherits = "TDEConfigSkeleton";
 
   if ( className.isEmpty() ) {
     kdError() << "Class name missing" << endl;
@@ -1330,7 +1330,7 @@ int main( int argc, char **argv )
     h << "    static" << endl;
     h << "    void writeConfig()" << endl;
     h << "    {" << endl;
-    h << "      static_cast<KConfigSkeleton*>(self())->writeConfig();" << endl;
+    h << "      static_cast<TDEConfigSkeleton*>(self())->writeConfig();" << endl;
     h << "    }" << endl;
   }
 
@@ -1455,7 +1455,7 @@ int main( int argc, char **argv )
     }
     cpp << endl << "    // items" << endl;
     for( e = entries.first(); e; e = entries.next() ) {
-      cpp << "    KConfigSkeleton::Item" << itemType( e->type() ) << " *" << itemVar( e );
+      cpp << "    TDEConfigSkeleton::Item" << itemType( e->type() ) << " *" << itemVar( e );
       if (!e->param().isEmpty() ) cpp << TQString("[%1]").arg( e->paramMax()+1 );
         cpp << ";" << endl;
     }
@@ -1553,13 +1553,13 @@ int main( int argc, char **argv )
       cpp << e->code() << endl;
     }
     if ( e->type() == "Enum" ) {
-      cpp << "  TQValueList<KConfigSkeleton::ItemEnum::Choice> values"
+      cpp << "  TQValueList<TDEConfigSkeleton::ItemEnum::Choice> values"
           << e->name() << ";" << endl;
       TQValueList<CfgEntry::Choice> choices = e->choices();
       TQValueList<CfgEntry::Choice>::ConstIterator it;
       for( it = choices.begin(); it != choices.end(); ++it ) {
         cpp << "  {" << endl;
-        cpp << "    KConfigSkeleton::ItemEnum::Choice choice;" << endl;
+        cpp << "    TDEConfigSkeleton::ItemEnum::Choice choice;" << endl;
         cpp << "    choice.name = TQString::fromLatin1( \"" << (*it).name << "\" );" << endl;
         if ( setUserTexts ) {
           if ( !(*it).label.isEmpty() )
@@ -1670,7 +1670,7 @@ int main( int argc, char **argv )
       if ( itemAccessors )
       {
         cpp << endl;
-        cpp << "KConfigSkeleton::Item" << itemType( e->type() ) << " *"
+        cpp << "TDEConfigSkeleton::Item" << itemType( e->type() ) << " *"
           << getFunction( n, className ) << "Item(";
         if (!e->param().isEmpty()) {
           cpp << " " << cppType(e->paramType()) << " i ";

@@ -527,13 +527,13 @@ const TQString& KAccel::configGroup() const
 void KAccel::setConfigGroup( const TQString& s )
 	{ d->setConfigGroup( s ); }
 
-bool KAccel::readSettings( KConfigBase* pConfig )
+bool KAccel::readSettings( TDEConfigBase* pConfig )
 {
 	d->readSettings( pConfig );
 	return true;
 }
 
-bool KAccel::writeSettings( KConfigBase* pConfig ) const
+bool KAccel::writeSettings( TDEConfigBase* pConfig ) const
 	{ d->writeSettings( pConfig ); return true; }
 
 void KAccel::emitKeycodeChanged()

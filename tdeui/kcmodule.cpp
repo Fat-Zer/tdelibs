@@ -34,10 +34,10 @@
 #include "kcmodule.h"
 #include "kcmodule.moc"
 
-class KCModulePrivate
+class TDECModulePrivate
 {
 public:
-    KCModulePrivate():
+    TDECModulePrivate():
         _about( 0 ),
         _useRootOnlyMsg( false ),
         _hasOwnInstance( true ),
@@ -49,17 +49,17 @@ public:
     TQString _rootOnlyMsg;
     bool _useRootOnlyMsg;
     bool _hasOwnInstance;
-    TQPtrList<KConfigDialogManager> managers;
+    TQPtrList<TDEConfigDialogManager> managers;
     TQString _quickHelp;
 
     // this member is used to record the state on non-automatically
-    // managed widgets, allowing for mixed KConfigXT-drive and manual
+    // managed widgets, allowing for mixed TDEConfigXT-drive and manual
     // widgets to coexist peacefully and do the correct thing with
     // the changed(bool) signal
     bool _unmanagedWidgetChangeState;
 };
 
-KCModule::KCModule(TQWidget *parent, const char *name, const TQStringList &)
+TDECModule::TDECModule(TQWidget *parent, const char *name, const TQStringList &)
     : TQWidget(parent, name)
 {
     init();
@@ -74,7 +74,7 @@ KCModule::KCModule(TQWidget *parent, const char *name, const TQStringList &)
 
 }
 
-KCModule::KCModule(TDEInstance *instance, TQWidget *parent, const TQStringList & )
+TDECModule::TDECModule(TDEInstance *instance, TQWidget *parent, const TQStringList & )
     : TQWidget(parent, instance ? instance->instanceName().data() : 0)
 {
     init();
@@ -89,21 +89,21 @@ KCModule::KCModule(TDEInstance *instance, TQWidget *parent, const TQStringList &
     TDEGlobal::setActiveInstance(this->instance());
 }
 
-void KCModule::init()
+void TDECModule::init()
 {
-    d = new KCModulePrivate;
+    d = new TDECModulePrivate;
    _btn = Help|Default|Apply;
 }
 
-KConfigDialogManager* KCModule::addConfig( KConfigSkeleton *config, TQWidget* widget )
+TDEConfigDialogManager* TDECModule::addConfig( TDEConfigSkeleton *config, TQWidget* widget )
 {
-    KConfigDialogManager* manager = new KConfigDialogManager( widget, config, name() );
+    TDEConfigDialogManager* manager = new TDEConfigDialogManager( widget, config, name() );
     connect( manager, TQT_SIGNAL( widgetModified() ), TQT_SLOT( widgetChanged() ));
     d->managers.append( manager );
     return manager;
 }
 
-KCModule::~KCModule()
+TDECModule::~TDECModule()
 {
     if (d->_hasOwnInstance)
        delete d->_instance;
@@ -111,36 +111,36 @@ KCModule::~KCModule()
     delete d;
 }
 
-void KCModule::load()
+void TDECModule::load()
 {
-    KConfigDialogManager* manager;
+    TDEConfigDialogManager* manager;
     for( manager = d->managers.first(); manager; manager = d->managers.next() )
         manager->updateWidgets();
 }
 
-void KCModule::save()
+void TDECModule::save()
 {
-    KConfigDialogManager* manager;
+    TDEConfigDialogManager* manager;
     for( manager = d->managers.first(); manager; manager = d->managers.next() )
         manager->updateSettings();
     emit( changed( false ));
 }
 
-void KCModule::defaults()
+void TDECModule::defaults()
 {
-    KConfigDialogManager* manager;
+    TDEConfigDialogManager* manager;
     for( manager = d->managers.first(); manager; manager = d->managers.next() )
         manager->updateWidgetsDefault();
 }
 
-void KCModule::widgetChanged()
+void TDECModule::widgetChanged()
 {
     emit changed(d->_unmanagedWidgetChangeState || managedWidgetChangeState());
 }
 
-bool KCModule::managedWidgetChangeState() const
+bool TDECModule::managedWidgetChangeState() const
 {
-    KConfigDialogManager* manager;
+    TDEConfigDialogManager* manager;
     for( manager = d->managers.first(); manager; manager = d->managers.next() )
     {
         if ( manager->hasChanged() )
@@ -150,71 +150,71 @@ bool KCModule::managedWidgetChangeState() const
     return false;
 }
 
-void KCModule::unmanagedWidgetChangeState(bool changed)
+void TDECModule::unmanagedWidgetChangeState(bool changed)
 {
     d->_unmanagedWidgetChangeState = changed;
     widgetChanged();
 }
 
-const TDEAboutData *KCModule::aboutData() const
+const TDEAboutData *TDECModule::aboutData() const
 {
     return d->_about;
 }
 
-void KCModule::setAboutData( TDEAboutData* about )
+void TDECModule::setAboutData( TDEAboutData* about )
 {
     delete d->_about;
     d->_about = about;
 }
 
-void KCModule::setRootOnlyMsg(const TQString& msg)
+void TDECModule::setRootOnlyMsg(const TQString& msg)
 {
     d->_rootOnlyMsg = msg;
 }
 
-TQString KCModule::rootOnlyMsg() const
+TQString TDECModule::rootOnlyMsg() const
 {
     return d->_rootOnlyMsg;
 }
 
-void KCModule::setUseRootOnlyMsg(bool on)
+void TDECModule::setUseRootOnlyMsg(bool on)
 {
     d->_useRootOnlyMsg = on;
 }
 
-bool KCModule::useRootOnlyMsg() const
+bool TDECModule::useRootOnlyMsg() const
 {
     return d->_useRootOnlyMsg;
 }
 
-void KCModule::changed()
+void TDECModule::changed()
 {
     emit changed(true);
 }
 
-TDEInstance *KCModule::instance() const
+TDEInstance *TDECModule::instance() const
 {
     return d->_instance;
 }
 
-void KCModule::setQuickHelp( const TQString& help )
+void TDECModule::setQuickHelp( const TQString& help )
 {
     d->_quickHelp = help;
     emit( quickHelpChanged() );
 }
 
-TQString KCModule::quickHelp() const
+TQString TDECModule::quickHelp() const
 {
     return d->_quickHelp;
 }
 
 
-const TQPtrList<KConfigDialogManager>& KCModule::configs() const
+const TQPtrList<TDEConfigDialogManager>& TDECModule::configs() const
 {
     return d->managers;
 }
 
-void KCModule::virtual_hook( int, void* )
+void TDECModule::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
 // vim: sw=4 et sts=4

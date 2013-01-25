@@ -40,16 +40,16 @@ using namespace KABC;
 class ResourceNet::ResourceNetPrivate
 {
   public:
-    KIO::Job *mLoadJob;
+    TDEIO::Job *mLoadJob;
     bool mIsLoading;
 
-    KIO::Job *mSaveJob;
+    TDEIO::Job *mSaveJob;
     bool mIsSaving;
 
     TQString mLastErrorString;
 };
 
-ResourceNet::ResourceNet( const KConfig *config )
+ResourceNet::ResourceNet( const TDEConfig *config )
   : Resource( config ), mFormat( 0 ),
     mTempFile( 0 ),
     d( new ResourceNetPrivate )
@@ -104,7 +104,7 @@ ResourceNet::~ResourceNet()
   deleteLocalTempFile();
 }
 
-void ResourceNet::writeConfig( KConfig *config )
+void ResourceNet::writeConfig( TDEConfig *config )
 {
   Resource::writeConfig( config );
 
@@ -137,7 +137,7 @@ bool ResourceNet::load()
 {
   TQString tempFile;
 
-  if ( !KIO::NetAccess::download( mUrl, tempFile, 0 ) ) {
+  if ( !TDEIO::NetAccess::download( mUrl, tempFile, 0 ) ) {
     addressBook()->error( i18n( "Unable to download file '%1'." ).arg( mUrl.prettyURL() ) );
     return false;
   }
@@ -145,7 +145,7 @@ bool ResourceNet::load()
   TQFile file( tempFile );
   if ( !file.open( IO_ReadOnly ) ) {
     addressBook()->error( i18n( "Unable to open file '%1'." ).arg( tempFile ) );
-    KIO::NetAccess::removeTempFile( tempFile );
+    TDEIO::NetAccess::removeTempFile( tempFile );
     return false;
   }
 
@@ -153,7 +153,7 @@ bool ResourceNet::load()
   if ( !result )
       addressBook()->error( i18n( "Problems during parsing file '%1'." ).arg( tempFile ) );
 
-  KIO::NetAccess::removeTempFile( tempFile );
+  TDEIO::NetAccess::removeTempFile( tempFile );
 
   return result;
 }
@@ -189,11 +189,11 @@ bool ResourceNet::asyncLoad()
   KURL dest;
   dest.setPath( mTempFile->name() );
 
-  KIO::Scheduler::checkSlaveOnHold( true );
-  d->mLoadJob = KIO::file_copy( mUrl, dest, -1, true, false, false );
+  TDEIO::Scheduler::checkSlaveOnHold( true );
+  d->mLoadJob = TDEIO::file_copy( mUrl, dest, -1, true, false, false );
   d->mIsLoading = true;
-  connect( d->mLoadJob, TQT_SIGNAL( result( KIO::Job* ) ),
-           this, TQT_SLOT( downloadFinished( KIO::Job* ) ) );
+  connect( d->mLoadJob, TQT_SIGNAL( result( TDEIO::Job* ) ),
+           this, TQT_SLOT( downloadFinished( TDEIO::Job* ) ) );
 
   return true;
 }
@@ -247,7 +247,7 @@ bool ResourceNet::save( Ticket* )
     return false;
   }
 
-  ok = KIO::NetAccess::upload( tempFile.name(), mUrl, 0 );
+  ok = TDEIO::NetAccess::upload( tempFile.name(), mUrl, 0 );
   if ( !ok )
     addressBook()->error( i18n( "Unable to upload to '%1'." ).arg( mUrl.prettyURL() ) );
 
@@ -283,11 +283,11 @@ bool ResourceNet::asyncSave( Ticket* )
   KURL src;
   src.setPath( mTempFile->name() );
 
-  KIO::Scheduler::checkSlaveOnHold( true );
+  TDEIO::Scheduler::checkSlaveOnHold( true );
   d->mIsSaving = true;
-  d->mSaveJob = KIO::file_copy( src, mUrl, -1, true, false, false );
-  connect( d->mSaveJob, TQT_SIGNAL( result( KIO::Job* ) ),
-           this, TQT_SLOT( uploadFinished( KIO::Job* ) ) );
+  d->mSaveJob = TDEIO::file_copy( src, mUrl, -1, true, false, false );
+  connect( d->mSaveJob, TQT_SIGNAL( result( TDEIO::Job* ) ),
+           this, TQT_SLOT( uploadFinished( TDEIO::Job* ) ) );
 
   return true;
 }
@@ -344,7 +344,7 @@ TQString ResourceNet::format() const
   return mFormatName;
 }
 
-void ResourceNet::downloadFinished( KIO::Job* )
+void ResourceNet::downloadFinished( TDEIO::Job* )
 {
   kdDebug(5700) << "ResourceNet::downloadFinished()" << endl;
 
@@ -370,7 +370,7 @@ void ResourceNet::downloadFinished( KIO::Job* )
   deleteLocalTempFile();
 }
 
-void ResourceNet::uploadFinished( KIO::Job *job )
+void ResourceNet::uploadFinished( TDEIO::Job *job )
 {
   kdDebug(5700) << "ResourceFile::uploadFinished()" << endl;
 

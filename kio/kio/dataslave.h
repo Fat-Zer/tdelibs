@@ -35,7 +35,7 @@ class TQTimer;
 #define DISPATCH_DECL1(type, paramtype, param) \
 	void dispatch_##type(paramtype param);
 
-namespace KIO {
+namespace TDEIO {
 
     /**
      * This class provides a high performance implementation for the data
@@ -46,7 +46,7 @@ namespace KIO {
      * detail of KIO and subject to change without notice.
      * @author Leo Savernik
      */
-    class DataSlave : public KIO::Slave {
+    class DataSlave : public TDEIO::Slave {
 	Q_OBJECT
     public:
 	DataSlave();
@@ -90,7 +90,7 @@ namespace KIO {
 	struct QueueStruct {
 	  QueueType type;
 	  TQString s;
-	  KIO::filesize_t size;
+	  TDEIO::filesize_t size;
 	  TQByteArray ba;
 
 	  QueueStruct() {}
@@ -100,7 +100,7 @@ namespace KIO {
 	DispatchQueue dispatchQueue;
 
 	DISPATCH_DECL1(mimeType, const TQString &, s)
-	DISPATCH_DECL1(totalSize, KIO::filesize_t, size)
+	DISPATCH_DECL1(totalSize, TDEIO::filesize_t, size)
 	DISPATCH_DECL(sendMetaData)
 	DISPATCH_DECL1(data, const TQByteArray &, ba)
 	DISPATCH_DECL(finished)

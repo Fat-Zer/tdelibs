@@ -25,7 +25,7 @@ class TQComboBox;
 class KLineEdit;
 class TQLabel;
 
-namespace KIO {
+namespace TDEIO {
 
 /**
  * @internal

@@ -62,8 +62,8 @@ protected:
 private slots:
     void reallySendData( const TQByteArray& line );
     //void slotPopupMenu( KXMLGUIClient *cl, const TQPoint &pos, const KURL &u, const TQString &mime, mode_t mode );
-    void slotJobFinished( KIO::Job *job );
-    void slotData( KIO::Job *, const TQByteArray & );
+    void slotJobFinished( TDEIO::Job *job );
+    void slotData( TDEIO::Job *, const TQByteArray & );
     //void updateWindowCaption();
 
     void slotPartCompleted();
@@ -77,7 +77,7 @@ private:
     TQGuardedPtr<KParts::ReadOnlyPart> m_part;
     bool m_isHTMLPart;
     bool m_partIsLoading;
-    KIO::Job* m_job;
+    TDEIO::Job* m_job;
     TQCString m_boundary;
     int m_boundaryLength;
     TQString m_mimeType; // the one handled by m_part - store the kservice instead?

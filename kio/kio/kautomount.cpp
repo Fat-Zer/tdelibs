@@ -38,11 +38,11 @@ KAutoMount::KAutoMount( bool _readonly, const TQString& _format, const TQString&
   //kdDebug(7015) << "KAutoMount device=" << _device << " mountpoint=" << _mountpoint << endl;
   m_bShowFilemanagerWindow = _show_filemanager_window;
 
-  KIO::Job* job = KIO::mount( _readonly, _format.ascii(), _device, _mountpoint );
-  connect( job, TQT_SIGNAL( result( KIO::Job * ) ), this, TQT_SLOT( slotResult( KIO::Job * ) ) );
+  TDEIO::Job* job = TDEIO::mount( _readonly, _format.ascii(), _device, _mountpoint );
+  connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ), this, TQT_SLOT( slotResult( TDEIO::Job * ) ) );
 }
 
-void KAutoMount::slotResult( KIO::Job * job )
+void KAutoMount::slotResult( TDEIO::Job * job )
 {
   if ( job->error() ) {
     emit error();
@@ -51,12 +51,12 @@ void KAutoMount::slotResult( KIO::Job * job )
   else
   {
     KURL mountpoint;
-    mountpoint.setPath( KIO::findDeviceMountPoint( m_strDevice ) );
+    mountpoint.setPath( TDEIO::findDeviceMountPoint( m_strDevice ) );
     //kdDebug(7015) << "KAutoMount: m_strDevice=" << m_strDevice << " -> mountpoint=" << mountpoint << endl;
     Q_ASSERT( mountpoint.isValid() );
 
     if ( mountpoint.path().isEmpty() )
-        kdWarning(7015) << m_strDevice << " was correctly mounted, but KIO::findDeviceMountPoint didn't find it. "
+        kdWarning(7015) << m_strDevice << " was correctly mounted, but TDEIO::findDeviceMountPoint didn't find it. "
                         << "This looks like a bug, please report it on http://bugs.kde.org, together with your /etc/fstab line" << endl;
     else if ( m_bShowFilemanagerWindow )
       KRun::runURL( mountpoint, "inode/directory" );
@@ -80,11 +80,11 @@ void KAutoMount::slotResult( KIO::Job * job )
 KAutoUnmount::KAutoUnmount( const TQString & _mountpoint, const TQString & _desktopFile )
   : m_desktopFile( _desktopFile ), m_mountpoint( _mountpoint )
 {
-  KIO::Job * job = KIO::unmount( m_mountpoint );
-  connect( job, TQT_SIGNAL( result( KIO::Job * ) ), this, TQT_SLOT( slotResult( KIO::Job * ) ) );
+  TDEIO::Job * job = TDEIO::unmount( m_mountpoint );
+  connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ), this, TQT_SLOT( slotResult( TDEIO::Job * ) ) );
 }
 
-void KAutoUnmount::slotResult( KIO::Job * job )
+void KAutoUnmount::slotResult( TDEIO::Job * job )
 {
   if ( job->error() ) {
     emit error();

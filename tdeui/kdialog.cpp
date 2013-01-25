@@ -178,7 +178,7 @@ void KDialog::resizeLayout( TQLayoutItem *lay, int margin, int spacing )
 static TQRect screenRect( TQWidget *w, int screen )
 {
   TQDesktopWidget *desktop = TQApplication::desktop();
-  KConfig gc("kdeglobals", false, false);
+  TDEConfig gc("kdeglobals", false, false);
   gc.setGroup("Windows");
   if (desktop->isVirtualDesktop() &&
       gc.readBoolEntry("XineramaEnabled", true) &&

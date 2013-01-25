@@ -211,8 +211,8 @@ public:
 	/**
 	 * Configuration functions.
 	 */
-	void		load(KConfig& config);
-	void		save(KConfig& config) const;
+	void		load(TDEConfig& config);
+	void		save(TDEConfig& config) const;
 
 private:
 	RandRScreenPrivate*	d;
@@ -271,15 +271,15 @@ public:
 	/**
 	 * Loads saved settings.
 	 *
-	 * @param config the KConfig object to load from
+	 * @param config the TDEConfig object to load from
 	 * @param loadScreens whether to call RandRScreen::load() for each screen
 	 * @retuns true if the settings should be applied on KDE startup.
 	 */
-	bool	loadDisplay(KConfig& config, bool loadScreens = true);
-	void	saveDisplay(KConfig& config, bool applyOnStartup, bool syncTrayApp);
+	bool	loadDisplay(TDEConfig& config, bool loadScreens = true);
+	void	saveDisplay(TDEConfig& config, bool applyOnStartup, bool syncTrayApp);
 
-	static bool		applyOnStartup(KConfig& config);
-	static bool		syncTrayApp(KConfig& config);
+	static bool		applyOnStartup(TDEConfig& config);
+	static bool		syncTrayApp(TDEConfig& config);
 
 	void	applyProposed(bool confirm = true);
 

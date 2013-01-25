@@ -23,7 +23,7 @@ class TQTimer;
 
 class KFileDialog;
 class KFileItem;
-namespace KIO { class Job; class PreviewJob; }
+namespace TDEIO { class Job; class PreviewJob; }
 
 /**
  * Image preview widget for the file dialog.
@@ -51,11 +51,11 @@ class KIO_EXPORT KImageFilePreview : public KPreviewWidgetBase
 
 	protected:
 		virtual void resizeEvent(TQResizeEvent *e);
-		virtual KIO::PreviewJob * createJob( const KURL& url,
+		virtual TDEIO::PreviewJob * createJob( const KURL& url,
                                                      int w, int h );
 
 	private slots:
-		void slotResult( KIO::Job * );
+		void slotResult( TDEIO::Job * );
 		virtual void slotFailed( const KFileItem* );
 
 	private:
@@ -66,7 +66,7 @@ class KIO_EXPORT KImageFilePreview : public KPreviewWidgetBase
 		TQLabel *infoLabel;
 		TQCheckBox *autoPreview;
 		TQPushButton *previewButton;
-		KIO::PreviewJob *m_job;
+		TDEIO::PreviewJob *m_job;
         protected:
                 virtual void virtual_hook( int id, void* data );
         private:

@@ -26,7 +26,7 @@ Group=Graphics (KDE)
 ToolTip=Combo Box (KDE)
 Group=Input (KDE)
 
-[KCModule]
+[TDECModule]
 ToolTip=KControl Center Module (KDE)
 IsContainer=true
 Group=Container (KDE)

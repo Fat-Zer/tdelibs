@@ -40,13 +40,13 @@
 // to the system wide slave pool. (3 minutes)
 #define MAX_SLAVE_IDLE (3*60)
 
-using namespace KIO;
+using namespace TDEIO;
 
-template class TQDict<KIO::Scheduler::ProtocolInfo>;
+template class TQDict<TDEIO::Scheduler::ProtocolInfo>;
 
 Scheduler *Scheduler::instance = 0;
 
-class KIO::SlaveList: public TQPtrList<Slave>
+class TDEIO::SlaveList: public TQPtrList<Slave>
 {
    public:
       SlaveList() { }
@@ -67,7 +67,7 @@ class KIO::SlaveList: public TQPtrList<Slave>
 // We schedule slaves based on (2) but tell the slave about (1) via
 // Slave::setProtocol().
 
-class KIO::Scheduler::JobData
+class TDEIO::Scheduler::JobData
 {
 public:
     JobData() : checkOnHold(false) { }
@@ -78,13 +78,13 @@ public:
     bool checkOnHold;
 };
 
-class KIO::Scheduler::ExtraJobData: public TQPtrDict<KIO::Scheduler::JobData>
+class TDEIO::Scheduler::ExtraJobData: public TQPtrDict<TDEIO::Scheduler::JobData>
 {
 public:
     ExtraJobData() { setAutoDelete(true); }
 };
 
-class KIO::Scheduler::ProtocolInfo
+class TDEIO::Scheduler::ProtocolInfo
 {
 public:
     ProtocolInfo() : maxSlaves(1), skipCount(0)
@@ -99,16 +99,16 @@ public:
     TQString protocol;
 };
 
-class KIO::Scheduler::ProtocolInfoDict : public TQDict<KIO::Scheduler::ProtocolInfo>
+class TDEIO::Scheduler::ProtocolInfoDict : public TQDict<TDEIO::Scheduler::ProtocolInfo>
 {
   public:
     ProtocolInfoDict() { }
 
-    KIO::Scheduler::ProtocolInfo *get( const TQString &protocol);
+    TDEIO::Scheduler::ProtocolInfo *get( const TQString &protocol);
 };
 
-KIO::Scheduler::ProtocolInfo *
-KIO::Scheduler::ProtocolInfoDict::get(const TQString &protocol)
+TDEIO::Scheduler::ProtocolInfo *
+TDEIO::Scheduler::ProtocolInfoDict::get(const TQString &protocol)
 {
     ProtocolInfo *info = find(protocol);
     if (!info)
@@ -124,7 +124,7 @@ KIO::Scheduler::ProtocolInfoDict::get(const TQString &protocol)
 
 
 Scheduler::Scheduler()
-          : DCOPObject( "KIO::Scheduler" ),
+          : DCOPObject( "TDEIO::Scheduler" ),
            TQObject(kapp, "scheduler"),
            slaveTimer(0, "Scheduler::slaveTimer"),
            coSlaveTimer(0, "Scheduler::coSlaveTimer"),
@@ -211,7 +211,7 @@ void Scheduler::_doJob(SimpleJob *job) {
     slaveTimer.start(0, true);
 #ifndef NDEBUG
     if (newJobs.count() > 150)
-	kdDebug() << "WARNING - KIO::Scheduler got more than 150 jobs! This shows a misuse in your app (yes, a job is a TQObject)." << endl;
+	kdDebug() << "WARNING - TDEIO::Scheduler got more than 150 jobs! This shows a misuse in your app (yes, a job is a TQObject)." << endl;
 #endif
 }
 
@@ -272,7 +272,7 @@ void Scheduler::startStep()
     {
        (void) startJobDirect();
     }
-    TQDictIterator<KIO::Scheduler::ProtocolInfo> it(*protInfoDict);
+    TQDictIterator<TDEIO::Scheduler::ProtocolInfo> it(*protInfoDict);
     while(it.current())
     {
        if (startJobScheduled(it.current())) return;
@@ -280,7 +280,7 @@ void Scheduler::startStep()
     }
 }
 
-void Scheduler::setupSlave(KIO::Slave *slave, const KURL &url, const TQString &protocol, const TQString &proxy , bool newSlave, const KIO::MetaData *config)
+void Scheduler::setupSlave(TDEIO::Slave *slave, const KURL &url, const TQString &protocol, const TQString &proxy , bool newSlave, const TDEIO::MetaData *config)
 {
     TQString host = url.host();
     int port = url.port();
@@ -497,13 +497,13 @@ Slave *Scheduler::findIdleSlave(ProtocolInfo *, SimpleJob *job, bool &exact)
     {
        // Make sure that the job wants to do a GET or a POST, and with no offset
        bool bCanReuse = (job->command() == CMD_GET);
-       KIO::TransferJob * tJob = dynamic_cast<KIO::TransferJob *>(job);
+       TDEIO::TransferJob * tJob = dynamic_cast<TDEIO::TransferJob *>(job);
        if ( tJob )
        {
           bCanReuse = (job->command() == CMD_GET || job->command() == CMD_SPECIAL);
           if ( bCanReuse )
           {
-            KIO::MetaData outgoing = tJob->outgoingMetaData();
+            TDEIO::MetaData outgoing = tJob->outgoingMetaData();
             TQString resume = (!outgoing.contains("resume")) ? TQString() : outgoing["resume"];
             kdDebug(7006) << "Resume metadata is '" << resume << "'" << endl;
             bCanReuse = (resume.isEmpty() || resume == "0");
@@ -541,8 +541,8 @@ Slave *Scheduler::createSlave(ProtocolInfo *protInfo, SimpleJob *job, const KURL
    {
       slaveList->append(slave);
       idleSlaves->append(slave);
-      connect(slave, TQT_SIGNAL(slaveDied(KIO::Slave *)),
-                TQT_SLOT(slotSlaveDied(KIO::Slave *)));
+      connect(slave, TQT_SIGNAL(slaveDied(TDEIO::Slave *)),
+                TQT_SLOT(slotSlaveDied(TDEIO::Slave *)));
       connect(slave, TQT_SIGNAL(slaveStatus(pid_t,const TQCString &,const TQString &, bool)),
                 TQT_SLOT(slotSlaveStatus(pid_t,const TQCString &, const TQString &, bool)));
 
@@ -607,7 +607,7 @@ void Scheduler::_jobFinished(SimpleJob *job, Slave *slave)
     }
 }
 
-void Scheduler::slotSlaveDied(KIO::Slave *slave)
+void Scheduler::slotSlaveDied(TDEIO::Slave *slave)
 {
     assert(!slave->isAlive());
     ProtocolInfo *protInfo = protInfoDict->get(slave->slaveProtocol());
@@ -662,7 +662,7 @@ void Scheduler::_scheduleCleanup()
     }
 }
 
-void Scheduler::_putSlaveOnHold(KIO::SimpleJob *job, const KURL &url)
+void Scheduler::_putSlaveOnHold(TDEIO::SimpleJob *job, const KURL &url)
 {
     Slave *slave = job->slave();
     slave->disconnect(job);
@@ -695,7 +695,7 @@ void Scheduler::_removeSlaveOnHold()
 }
 
 Slave *
-Scheduler::_getConnectedSlave(const KURL &url, const KIO::MetaData &config )
+Scheduler::_getConnectedSlave(const KURL &url, const TDEIO::MetaData &config )
 {
     TQString proxy;
     TQString protocol = KProtocolManager::slaveProtocol(url, proxy);
@@ -792,7 +792,7 @@ Scheduler::slotSlaveError(int errorNr, const TQString &errorMsg)
 }
 
 bool
-Scheduler::_assignJobToSlave(KIO::Slave *slave, SimpleJob *job)
+Scheduler::_assignJobToSlave(TDEIO::Slave *slave, SimpleJob *job)
 {
 //    kdDebug(7006) << "_assignJobToSlave( " << job << ", " << slave << ")" << endl;
     TQString dummy;
@@ -822,7 +822,7 @@ Scheduler::_assignJobToSlave(KIO::Slave *slave, SimpleJob *job)
 }
 
 bool
-Scheduler::_disconnectSlave(KIO::Slave *slave)
+Scheduler::_disconnectSlave(TDEIO::Slave *slave)
 {
 //    kdDebug(7006) << "_disconnectSlave( " << slave << ")" << endl;
     JobList *list = coSlaves.take(slave);

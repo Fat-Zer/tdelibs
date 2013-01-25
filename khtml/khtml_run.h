@@ -47,7 +47,7 @@ public:
   //KHTMLPart *htmlPart() const;
 
 protected:
-  virtual void handleError( KIO::Job * job );
+  virtual void handleError( TDEIO::Job * job );
 
   virtual void save( const KURL & url, const TQString & suggestedFilename );
   bool askSave( const KURL & url, KService::Ptr offer, const TQString & mimeType, const TQString & suggestedFilename );

@@ -62,7 +62,7 @@ public:
 
         if ( !initialized )
         {
-            KConfigGroup config( TDEGlobal::config(), "General" );
+            TDEConfigGroup config( TDEGlobal::config(), "General" );
             backspacePerformsCompletion = config.readBoolEntry( "Backspace performs completion", false );
 
             initialized = true;

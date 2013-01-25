@@ -30,8 +30,8 @@
 class KAccelBase;
 
 class TQObject;
-class KConfig;
-class KConfigBase;
+class TDEConfig;
+class TDEConfigBase;
 
 /**
  * @internal
@@ -400,7 +400,7 @@ class TDECORE_EXPORT KAccelActions
 	 * @param sGroup the group in the configuration file
 	 * @return true if successful, false otherwise
 	 */
-	bool init( KConfigBase& config, const TQString& sGroup );
+	bool init( TDEConfigBase& config, const TQString& sGroup );
 
 	/**
 	 * Updates the shortcuts of all actions in this object
@@ -521,7 +521,7 @@ class TDECORE_EXPORT KAccelActions
 	 * @param pConfig the configuration file to load from
 	 * @return true if successful, false otherwise
 	 */
-	bool readActions( const TQString& sConfigGroup = "Shortcuts", KConfigBase* pConfig = 0 );
+	bool readActions( const TQString& sConfigGroup = "Shortcuts", TDEConfigBase* pConfig = 0 );
 
 	/**
 	 * Writes the actions to the given configuration file.
@@ -532,7 +532,7 @@ class TDECORE_EXPORT KAccelActions
 	 * @param bGlobal true to write to the global configuration file
 	 * @return true if successful, false otherwise
 	 */
-	bool writeActions( const TQString& sConfigGroup = "Shortcuts", KConfigBase* pConfig = 0,
+	bool writeActions( const TQString& sConfigGroup = "Shortcuts", TDEConfigBase* pConfig = 0,
 			bool bWriteAll = false, bool bGlobal = false ) const;
 
 	/**

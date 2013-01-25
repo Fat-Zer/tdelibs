@@ -40,12 +40,12 @@ KMConfigCups::KMConfigCups(TQWidget *parent)
 	lay0->addStretch(1);
 }
 
-void KMConfigCups::loadConfig(KConfig *)
+void KMConfigCups::loadConfig(TDEConfig *)
 {
 	m_widget->load();
 }
 
-void KMConfigCups::saveConfig(KConfig *conf)
+void KMConfigCups::saveConfig(TDEConfig *conf)
 {
 	m_widget->saveConfig(conf);
 }

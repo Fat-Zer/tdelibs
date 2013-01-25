@@ -289,8 +289,8 @@ public:
   {
   }
 
-  KIO::FileCopyJob * m_job;
-  KIO::FileCopyJob * m_uploadJob;
+  TDEIO::FileCopyJob * m_job;
+  TDEIO::FileCopyJob * m_uploadJob;
   KURL m_originalURL; // for saveAs
   TQString m_originalFilePath; // for saveAs
   bool m_showProgressInfo : 1;
@@ -364,10 +364,10 @@ bool ReadOnlyPart::openURL( const KURL &url )
 
     KURL destURL;
     destURL.setPath( m_file );
-    d->m_job = KIO::file_copy( m_url, destURL, 0600, true, false, d->m_showProgressInfo );
+    d->m_job = TDEIO::file_copy( m_url, destURL, 0600, true, false, d->m_showProgressInfo );
     d->m_job->setWindow( widget() ? widget()->topLevelWidget() : 0 );
     emit started( d->m_job );
-    connect( d->m_job, TQT_SIGNAL( result( KIO::Job * ) ), this, TQT_SLOT( slotJobFinished ( KIO::Job * ) ) );
+    connect( d->m_job, TQT_SIGNAL( result( TDEIO::Job * ) ), this, TQT_SLOT( slotJobFinished ( TDEIO::Job * ) ) );
     return true;
   }
 }
@@ -397,7 +397,7 @@ bool ReadOnlyPart::closeURL()
   return true;
 }
 
-void ReadOnlyPart::slotJobFinished( KIO::Job * job )
+void ReadOnlyPart::slotJobFinished( TDEIO::Job * job )
 {
   kdDebug(1000) << "ReadOnlyPart::slotJobFinished" << endl;
   assert( job == d->m_job );
@@ -637,14 +637,14 @@ bool ReadWritePart::saveToURL()
        // Uh oh, some error happened.
        return false;
     }
-    d->m_uploadJob = KIO::file_move( uploadUrl, m_url, -1, true /*overwrite*/ );
+    d->m_uploadJob = TDEIO::file_move( uploadUrl, m_url, -1, true /*overwrite*/ );
     d->m_uploadJob->setWindow( widget() ? widget()->topLevelWidget() : 0 );
-    connect( d->m_uploadJob, TQT_SIGNAL( result( KIO::Job * ) ), this, TQT_SLOT( slotUploadFinished (KIO::Job *) ) );
+    connect( d->m_uploadJob, TQT_SIGNAL( result( TDEIO::Job * ) ), this, TQT_SLOT( slotUploadFinished (TDEIO::Job *) ) );
     return true;
   }
 }
 
-void ReadWritePart::slotUploadFinished( KIO::Job * )
+void ReadWritePart::slotUploadFinished( TDEIO::Job * )
 {
   if (d->m_uploadJob->error())
   {

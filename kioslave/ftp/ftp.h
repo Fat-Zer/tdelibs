@@ -43,7 +43,7 @@ struct FtpEntry
   TQString group;
   TQString link;
 
-  KIO::filesize_t size;
+  TDEIO::filesize_t size;
   mode_t type;
   mode_t access;
   time_t date;
@@ -233,7 +233,7 @@ private:
 //===============================================================================
 // Ftp
 //===============================================================================
-class Ftp : public KIO::SlaveBase
+class Ftp : public TDEIO::SlaveBase
 {
   // Ftp()	{}
 
@@ -369,7 +369,7 @@ private:
    * @return true if the command was accepted by the server.
    */
   bool ftpOpenCommand( const char *command, const TQString & path, char mode,
-                       int errorcode, KIO::fileoffset_t offset = 0 );
+                       int errorcode, TDEIO::fileoffset_t offset = 0 );
 
   /**
    * The counterpart to openCommand.
@@ -436,7 +436,7 @@ private:
   /**
     * Helper to fill an UDSEntry
     */
-  void ftpCreateUDSEntry( const TQString & filename, FtpEntry& ftpEnt, KIO::UDSEntry& entry, bool isDir );
+  void ftpCreateUDSEntry( const TQString & filename, FtpEntry& ftpEnt, TDEIO::UDSEntry& entry, bool isDir );
 
   void ftpShortStatAnswer( const TQString& filename, bool isDir );
 
@@ -482,7 +482,7 @@ private:
    * @param hCopyOffset local file only: non-zero for resume
    * @return 0 for success, -1 for server error, -2 for client error
    */
-  StatusCode ftpGet(int& iError, int iCopyFile, const KURL& url, KIO::fileoffset_t hCopyOffset);
+  StatusCode ftpGet(int& iError, int iCopyFile, const KURL& url, TDEIO::fileoffset_t hCopyOffset);
 
   /**
    * This is the internal implementation of put() - see copy().
@@ -575,8 +575,8 @@ private: // data members
   bool m_bPasv;
   bool m_bUseProxy;
 
-  KIO::filesize_t m_size;
-  static KIO::filesize_t UnknownSize;
+  TDEIO::filesize_t m_size;
+  static TDEIO::filesize_t UnknownSize;
 
   enum
   {

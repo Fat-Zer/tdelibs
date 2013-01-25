@@ -3,7 +3,7 @@ ClassName=Test1
 #
 # Singleton=false
 #
-# Inherits=KConfigSkeleton
+# Inherits=TDEConfigSkeleton
 #
 # IncludeFiles=libtdepim/kpimprefs.h
 #

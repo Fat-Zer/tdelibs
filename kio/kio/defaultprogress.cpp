@@ -42,7 +42,7 @@
 #include "jobclasses.h"
 #include "defaultprogress.h"
 
-namespace KIO {
+namespace TDEIO {
 
 class DefaultProgress::DefaultProgressPrivate
 {
@@ -184,7 +184,7 @@ DefaultProgress::~DefaultProgress()
   delete d;
 }
 
-void DefaultProgress::slotTotalSize( KIO::Job*, KIO::filesize_t size )
+void DefaultProgress::slotTotalSize( TDEIO::Job*, TDEIO::filesize_t size )
 {
   // size is measured in bytes
   if ( m_iTotalSize == size )
@@ -195,7 +195,7 @@ void DefaultProgress::slotTotalSize( KIO::Job*, KIO::filesize_t size )
 }
 
 
-void DefaultProgress::slotTotalFiles( KIO::Job*, unsigned long files )
+void DefaultProgress::slotTotalFiles( TDEIO::Job*, unsigned long files )
 {
   if ( m_iTotalFiles == files )
       return;
@@ -204,7 +204,7 @@ void DefaultProgress::slotTotalFiles( KIO::Job*, unsigned long files )
 }
 
 
-void DefaultProgress::slotTotalDirs( KIO::Job*, unsigned long dirs )
+void DefaultProgress::slotTotalDirs( TDEIO::Job*, unsigned long dirs )
 {
   if ( m_iTotalDirs == dirs )
       return;
@@ -232,18 +232,18 @@ void DefaultProgress::showTotals()
 
 //static
 TQString DefaultProgress::makePercentString( unsigned long percent,
-                                            KIO::filesize_t totalSize,
+                                            TDEIO::filesize_t totalSize,
                                             unsigned long totalFiles )
 {
   if ( totalSize )
-      return i18n( "%1 % of %2 " ).arg( TQString::number(percent) , KIO::convertSize( totalSize ) );
+      return i18n( "%1 % of %2 " ).arg( TQString::number(percent) , TDEIO::convertSize( totalSize ) );
   else if ( totalFiles )
       return i18n( "%1 % of 1 file", "%1 % of %n files", totalFiles ).arg( percent );
   else
       return i18n( "%1 %" ).arg( percent );
 }
 
-void DefaultProgress::slotPercent( KIO::Job*, unsigned long percent )
+void DefaultProgress::slotPercent( TDEIO::Job*, unsigned long percent )
 {
   TQString caption = makePercentString( percent, m_iTotalSize, m_iTotalFiles );
   m_pProgressBar->setValue( percent );
@@ -270,26 +270,26 @@ void DefaultProgress::slotPercent( KIO::Job*, unsigned long percent )
 }
 
 
-void DefaultProgress::slotInfoMessage( KIO::Job*, const TQString & msg )
+void DefaultProgress::slotInfoMessage( TDEIO::Job*, const TQString & msg )
 {
   speedLabel->setText( msg );
   speedLabel->setAlignment( speedLabel->alignment() & ~TQt::WordBreak );
 }
 
 
-void DefaultProgress::slotProcessedSize( KIO::Job*, KIO::filesize_t bytes ) {
+void DefaultProgress::slotProcessedSize( TDEIO::Job*, TDEIO::filesize_t bytes ) {
   if ( m_iProcessedSize == bytes )
     return;
   m_iProcessedSize = bytes;
 
   TQString tmp = i18n( "%1 of %2 complete")
-                .arg( KIO::convertSize(bytes) )
-                .arg( KIO::convertSize(m_iTotalSize));
+                .arg( TDEIO::convertSize(bytes) )
+                .arg( TDEIO::convertSize(m_iTotalSize));
   sizeLabel->setText( tmp );
 }
 
 
-void DefaultProgress::slotProcessedDirs( KIO::Job*, unsigned long dirs )
+void DefaultProgress::slotProcessedDirs( TDEIO::Job*, unsigned long dirs )
 {
   if ( m_iProcessedDirs == dirs )
     return;
@@ -303,7 +303,7 @@ void DefaultProgress::slotProcessedDirs( KIO::Job*, unsigned long dirs )
 }
 
 
-void DefaultProgress::slotProcessedFiles( KIO::Job*, unsigned long files )
+void DefaultProgress::slotProcessedFiles( TDEIO::Job*, unsigned long files )
 {
   if ( m_iProcessedFiles == files )
     return;
@@ -319,18 +319,18 @@ void DefaultProgress::slotProcessedFiles( KIO::Job*, unsigned long files )
 }
 
 
-void DefaultProgress::slotSpeed( KIO::Job*, unsigned long speed )
+void DefaultProgress::slotSpeed( TDEIO::Job*, unsigned long speed )
 {
   if ( speed == 0 ) {
     speedLabel->setText( i18n( "Stalled") );
   } else {
-    speedLabel->setText( i18n( "%1/s ( %2 remaining )").arg( KIO::convertSize( speed ))
-        .arg( KIO::convertSeconds( KIO::calculateRemainingSeconds( m_iTotalSize, m_iProcessedSize, speed ))) );
+    speedLabel->setText( i18n( "%1/s ( %2 remaining )").arg( TDEIO::convertSize( speed ))
+        .arg( TDEIO::convertSeconds( TDEIO::calculateRemainingSeconds( m_iTotalSize, m_iProcessedSize, speed ))) );
   }
 }
 
 
-void DefaultProgress::slotCopying( KIO::Job*, const KURL& from, const KURL& to )
+void DefaultProgress::slotCopying( TDEIO::Job*, const KURL& from, const KURL& to )
 {
   if ( d->noCaptionYet ) {
     setCaption(i18n("Copy File(s) Progress"));
@@ -344,7 +344,7 @@ void DefaultProgress::slotCopying( KIO::Job*, const KURL& from, const KURL& to )
 }
 
 
-void DefaultProgress::slotMoving( KIO::Job*, const KURL& from, const KURL& to )
+void DefaultProgress::slotMoving( TDEIO::Job*, const KURL& from, const KURL& to )
 {
   if ( d->noCaptionYet ) {
     setCaption(i18n("Move File(s) Progress"));
@@ -358,7 +358,7 @@ void DefaultProgress::slotMoving( KIO::Job*, const KURL& from, const KURL& to )
 }
 
 
-void DefaultProgress::slotCreatingDir( KIO::Job*, const KURL& dir )
+void DefaultProgress::slotCreatingDir( TDEIO::Job*, const KURL& dir )
 {
   if ( d->noCaptionYet ) {
     setCaption(i18n("Creating Folder"));
@@ -370,7 +370,7 @@ void DefaultProgress::slotCreatingDir( KIO::Job*, const KURL& dir )
 }
 
 
-void DefaultProgress::slotDeleting( KIO::Job*, const KURL& url )
+void DefaultProgress::slotDeleting( TDEIO::Job*, const KURL& url )
 {
   if ( d->noCaptionYet ) {
     setCaption(i18n("Delete File(s) Progress"));
@@ -381,7 +381,7 @@ void DefaultProgress::slotDeleting( KIO::Job*, const KURL& url )
   setDestVisible( false );
 }
 
-void DefaultProgress::slotTransferring( KIO::Job*, const KURL& url )
+void DefaultProgress::slotTransferring( TDEIO::Job*, const KURL& url )
 {
   if ( d->noCaptionYet ) {
     setCaption(i18n("Loading Progress"));
@@ -391,31 +391,31 @@ void DefaultProgress::slotTransferring( KIO::Job*, const KURL& url )
   setDestVisible( false );
 }
 
-void DefaultProgress::slotStating( KIO::Job*, const KURL& url )
+void DefaultProgress::slotStating( TDEIO::Job*, const KURL& url )
 {
   setCaption(i18n("Examining File Progress"));
   sourceEdit->setText(url.prettyURL());
   setDestVisible( false );
 }
 
-void DefaultProgress::slotMounting( KIO::Job*, const TQString & dev, const TQString & point )
+void DefaultProgress::slotMounting( TDEIO::Job*, const TQString & dev, const TQString & point )
 {
   setCaption(i18n("Mounting %1").arg(dev));
   sourceEdit->setText(point);
   setDestVisible( false );
 }
 
-void DefaultProgress::slotUnmounting( KIO::Job*, const TQString & point )
+void DefaultProgress::slotUnmounting( TDEIO::Job*, const TQString & point )
 {
   setCaption(i18n("Unmounting"));
   sourceEdit->setText(point);
   setDestVisible( false );
 }
 
-void DefaultProgress::slotCanResume( KIO::Job*, KIO::filesize_t resume )
+void DefaultProgress::slotCanResume( TDEIO::Job*, TDEIO::filesize_t resume )
 {
   if ( resume ) {
-    resumeLabel->setText( i18n("Resuming from %1").arg(KIO::number(resume)) );
+    resumeLabel->setText( i18n("Resuming from %1").arg(TDEIO::number(resume)) );
   } else {
     resumeLabel->setText( i18n("Not resumable") );
   }
@@ -453,7 +453,7 @@ void DefaultProgress::slotClean() {
       int s = d->startTime.elapsed();
       if (!s)
         s = 1;
-      speedLabel->setText(i18n("%1/s (done)").arg(KIO::convertSize(1000 * m_iTotalSize / s)));
+      speedLabel->setText(i18n("%1/s (done)").arg(TDEIO::convertSize(1000 * m_iTotalSize / s)));
     }
     setOnlyClean(false);
   }

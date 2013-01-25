@@ -162,7 +162,7 @@ struct kDebugPrivate {
 
   TQCString aAreaName;
   unsigned int oldarea;
-  KConfig *config;
+  TDEConfig *config;
 };
 
 static kDebugPrivate *kDebug_data = 0;
@@ -187,7 +187,7 @@ static void kDebugBackend( unsigned short nLevel, unsigned int nArea, const char
 
   if (!kDebug_data->config && TDEGlobal::_instance )
   {
-      kDebug_data->config = new KConfig("kdebugrc", false, false);
+      kDebug_data->config = new TDEConfig("kdebugrc", false, false);
       kDebug_data->config->setGroup("0");
 
       //AB: this is necessary here, otherwise all output with area 0 won't be

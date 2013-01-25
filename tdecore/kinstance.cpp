@@ -195,7 +195,7 @@ void TDEInstance::setConfigReadOnly(bool ro)
     m_configReadOnly = ro;
 }
 
-KConfig	*TDEInstance::config() const
+TDEConfig	*TDEInstance::config() const
 {
     DEBUG_CHECK_ALIVE
     if( _config == 0 ) {

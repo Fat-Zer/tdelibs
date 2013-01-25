@@ -28,7 +28,7 @@
 #include <tqstringlist.h>
 #include <kglobal.h>
 
-class KConfig;
+class TDEConfig;
 class KStandardDirsPrivate;
 
 /**
@@ -427,7 +427,7 @@ public:
 	 * @return true if new config paths have been added
 	 * from @p config.
 	 **/
-	bool addCustomized(KConfig *config);
+	bool addCustomized(TDEConfig *config);
 
 	/**
 	 * This function is used internally by almost all other function as

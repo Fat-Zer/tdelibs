@@ -22,7 +22,7 @@
 #include <tdelibs_export.h>
 
 class TQCString;
-class KConfig;
+class TDEConfig;
 
 namespace KTextEditor
 {
@@ -60,14 +60,14 @@ class KTEXTEDITOR_EXPORT ConfigInterface
       Read/Write the config of the part to a given kconfig object
       to store the settings in a different place than the standard
     */
-    virtual void readConfig (KConfig *) = 0;
-    virtual void writeConfig (KConfig *) = 0;
+    virtual void readConfig (TDEConfig *) = 0;
+    virtual void writeConfig (TDEConfig *) = 0;
     
     /**
       Read/Write session config of only this document/view/plugin 
     */
-    virtual void readSessionConfig (KConfig *) = 0;
-    virtual void writeSessionConfig (KConfig *) = 0;
+    virtual void readSessionConfig (TDEConfig *) = 0;
+    virtual void writeSessionConfig (TDEConfig *) = 0;
     
     /**
       Shows a config dialog for the part, changes will be applied

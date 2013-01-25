@@ -31,7 +31,7 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
 <LI><A HREF="#khtmlw">khtmlw</A></LI>
 <LI><A HREF="#KIntegerLine">KIntegerLine, KIntLineEdit</A></LI>
 <LI><A HREF="#KDNDIcon">KDNDIcon, KDNDDropZone, KDNDWidget, tdecore/drag.h</A></LI>
-<LI><A HREF="#KConfigBase">KConfigBase, KConfig, KSimpleConfig</A></LI>
+<LI><A HREF="#TDEConfigBase">TDEConfigBase, TDEConfig, KSimpleConfig</A></LI>
 <LI><A HREF="#libkfm">libkfm</A></LI>
 <LI><A HREF="#KDialog">KDialog</A></LI>
 <LI><A HREF="#kcharsets">kcharsets</A></LI>
@@ -205,7 +205,7 @@ must have created a TDEApplication object before the methods can be used.<P>
   <TD COLSPAN="2">
     <PRE>
       #include &lt;kglobal.h&gt;
-      #include &lt;kconfig.h&gt;      // Needed to use KConfig
+      #include &lt;kconfig.h&gt;      // Needed to use TDEConfig
       #include &lt;klocale.h&gt;      // Needed to use KLocale
       #include &lt;kiconloader.h&gt;  // Needed to use KIconLoader
     </PRE>
@@ -215,7 +215,7 @@ must have created a TDEApplication object before the methods can be used.<P>
   <TD>
     <PRE>
     ...
-        	KConfig *appcfg = TDEGlobal::config();
+        	TDEConfig *appcfg = TDEGlobal::config();
 	        TQString mystr	 = i18n( "This is a string" );
 
 
@@ -469,17 +469,17 @@ are necessary to convert your old KDND-based stuff to Qt DND.<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
-<H3><A NAME="KConfigBase">KConfigBase, KConfig, KSimpleConfig</A></H3>
+<H3><A NAME="TDEConfigBase">TDEConfigBase, TDEConfig, KSimpleConfig</A></H3>
 
   These classes have been largely re-implemented.  The external API
   remains mostly the same, with the single notable change that
   the groupIterator and entryIterator methods have been removed and
   instead replaced by groupList (which returns a TQStringList of groups)
   and entryMap(const TQString &amp;group) (which returns a TQMap of entries
-  in the specified group).  This is due to internal changes in KConfig
+  in the specified group).  This is due to internal changes in TDEConfig
   which would make providing iterators possibly rather difficult.<P>
 
-  Much more extensive documentation on the KConfig and friends API can
+  Much more extensive documentation on the TDEConfig and friends API can
   be found in the kdoc generated documentation from the header files,
   and in tdecore/KCONFIG_DESIGN.<P>
 
@@ -505,16 +505,16 @@ are necessary to convert your old KDND-based stuff to Qt DND.<P>
  <STRONG> Replacement table :</STRONG><P>
 <TABLE BORDER="1">
 
-<TR><TD>KFM::download         </TD><TD>-&gt; KIO::NetAccess::download (tdelibs/kio/netaccess.h)</TD></TR>
-<TR><TD>KFM::removeTempFile   </TD><TD>-&gt; KIO::NetAccess::removeTempFile</TD></TR>
+<TR><TD>KFM::download         </TD><TD>-&gt; TDEIO::NetAccess::download (tdelibs/kio/netaccess.h)</TD></TR>
+<TR><TD>KFM::removeTempFile   </TD><TD>-&gt; TDEIO::NetAccess::removeTempFile</TD></TR>
 <TR><TD COLSPAN="2" ROWSPAN="0">refreshDesktop, sortDesktop, selectRootIcons : removed; kdesktop handles it</TD></TR>
 <TR><TD>KFM::configure        </TD><TD>-&gt; see konqueror DCOP interface</TD></TR>
 <TR><TD>KFM::openURL          </TD><TD>-&gt; "(void) new KRun (url)" (tdelibs/kio/krun.h)</TD></TR>
 <TR><TD>KFM::refreshDirectory </TD><TD>-&gt; not needed anymore since konqy/kdesktop use KDirWatch</TD></TR>
 <TR><TD>KFM::openProperties   </TD><TD>-&gt; "(void) new KPropertiesDialog (url)" (tdelibs/kfile/kpropsdlg.h)</TD></TR>
 <TR><TD>KFM::exec             </TD><TD>-&gt; "(void) new KRun (url)" (tdelibs/kio/krun.h)</TD></TR>
-<TR><TD>KFM::copy, KFM::move  </TD><TD>-&gt; KIO::Job (async, see kio/job.h)<BR>
-                            or KIO::NetAccess (sync, see kio/netaccess.h)</TD></TR>
+<TR><TD>KFM::copy, KFM::move  </TD><TD>-&gt; TDEIO::Job (async, see kio/job.h)<BR>
+                            or TDEIO::NetAccess (sync, see kio/netaccess.h)</TD></TR>
 <TR><TD>DlgLocation           </TD><TD>-&gt; Use KLineEditDlg (tdeui/klineeditdlg.h) instead</TD></TR>
 </TABLE>
 

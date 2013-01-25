@@ -29,7 +29,7 @@ class TQSignal;
 class TQStrList;
 template<class T> class KStaticDeleter;
 class TDEInstance;
-class KConfig;
+class TDEConfig;
 
 namespace KSettings
 {
@@ -39,7 +39,7 @@ namespace KSettings
  * @short Dispatch change notifications from the KCMs to the program.
  *
  * Since your program does not have direct control over the KCMs that get loaded
- * into the KConfigureDialog you need a way to get notified. This is what you
+ * into the TDEConfigureDialog you need a way to get notified. This is what you
  * do:
  * \code
  * Dispatcher::self()->registerInstance( instance(), this, TQT_SLOT( loadSettings() ) );
@@ -74,9 +74,9 @@ class KUTILS_EXPORT Dispatcher : public TQObject
         void registerInstance( TDEInstance * instance, TQObject * recv, const char * slot );
 
         /**
-         * @return the KConfig object that belongs to the instanceName
+         * @return the TDEConfig object that belongs to the instanceName
          */
-        KConfig * configForInstanceName( const TQCString & instanceName );
+        TDEConfig * configForInstanceName( const TQCString & instanceName );
 
         /**
          * @return a list of all the instance names that are currently
@@ -100,10 +100,10 @@ class KUTILS_EXPORT Dispatcher : public TQObject
         void reparseConfiguration( const TQCString & instanceName );
 
         /**
-         * When this slot is called the KConfig objects of all the registered
-         * instances are sync()ed. This is usefull when some other KConfig
+         * When this slot is called the TDEConfig objects of all the registered
+         * instances are sync()ed. This is usefull when some other TDEConfig
          * objects will read/write from/to the same config file, so that you
-         * can first write out the current state of the KConfig objects.
+         * can first write out the current state of the TDEConfig objects.
          */
         void syncConfiguration();
 

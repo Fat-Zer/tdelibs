@@ -57,7 +57,7 @@
 class TQMovie;
 class KHTMLPart;
 
-namespace KIO {
+namespace TDEIO {
   class Job;
   class TransferJob;
 }
@@ -99,7 +99,7 @@ namespace khtml
 	    Cached        // regular case
 	};
 
-	CachedObject(const DOM::DOMString &url, Type type, KIO::CacheControl _cachePolicy, int size)
+	CachedObject(const DOM::DOMString &url, Type type, TDEIO::CacheControl _cachePolicy, int size)
             : m_url(url), m_type(type), m_cachePolicy(_cachePolicy),
               m_expireDate(0), m_size(size)
 	{
@@ -140,7 +140,7 @@ namespace khtml
 
         bool free() const { return m_free; }
 
-        KIO::CacheControl cachePolicy() const { return m_cachePolicy; }
+        TDEIO::CacheControl cachePolicy() const { return m_cachePolicy; }
 
         void setRequest(Request *_request);
 
@@ -169,7 +169,7 @@ namespace khtml
 	Type m_type;
 	Status m_status;
         int m_accessCount;
-	KIO::CacheControl m_cachePolicy;
+	TDEIO::CacheControl m_cachePolicy;
 	time_t m_expireDate;
 	int m_size;
         bool m_deleted : 1;
@@ -195,7 +195,7 @@ namespace khtml
     class CachedCSSStyleSheet : public CachedObject
     {
     public:
-	CachedCSSStyleSheet(DocLoader* dl, const DOM::DOMString &url, KIO::CacheControl cachePolicy,
+	CachedCSSStyleSheet(DocLoader* dl, const DOM::DOMString &url, TDEIO::CacheControl cachePolicy,
 			    const char *accept);
 	CachedCSSStyleSheet(const DOM::DOMString &url, const TQString &stylesheet_data);
 
@@ -226,7 +226,7 @@ namespace khtml
     class CachedScript : public CachedObject
     {
     public:
-	CachedScript(DocLoader* dl, const DOM::DOMString &url, KIO::CacheControl cachePolicy, const char* accept );
+	CachedScript(DocLoader* dl, const DOM::DOMString &url, TDEIO::CacheControl cachePolicy, const char* accept );
 	CachedScript(const DOM::DOMString &url, const TQString &script_data);
 
 	const DOM::DOMString &script() const { return m_script; }
@@ -257,7 +257,7 @@ namespace khtml
     {
 	Q_OBJECT
     public:
-	CachedImage(DocLoader* dl, const DOM::DOMString &url, KIO::CacheControl cachePolicy, const char* accept);
+	CachedImage(DocLoader* dl, const DOM::DOMString &url, TDEIO::CacheControl cachePolicy, const char* accept);
 	virtual ~CachedImage();
 
 	const TQPixmap &pixmap() const;
@@ -354,7 +354,7 @@ namespace khtml
         CachedScript *requestScript( const DOM::DOMString &url, const TQString& charset);
 
 	bool autoloadImages() const { return m_bautoloadImages; }
-        KIO::CacheControl cachePolicy() const { return m_cachePolicy; }
+        TDEIO::CacheControl cachePolicy() const { return m_cachePolicy; }
         KHTMLSettings::KAnimationAdvice showAnimations() const { return m_showAnimations; }
         time_t expireDate() const { return m_expireDate; }
         KHTMLPart* part() const { return m_part; }
@@ -363,7 +363,7 @@ namespace khtml
         void setCacheCreationDate( time_t );
         void setExpireDate( time_t, bool relative );
         void setAutoloadImages( bool );
-        void setCachePolicy( KIO::CacheControl cachePolicy ) { m_cachePolicy = cachePolicy; }
+        void setCachePolicy( TDEIO::CacheControl cachePolicy ) { m_cachePolicy = cachePolicy; }
         void setShowAnimations( KHTMLSettings::KAnimationAdvice );
         void pauseAnimations();
         void resumeAnimations();
@@ -381,7 +381,7 @@ namespace khtml
         mutable TQPtrDict<CachedObject> m_docObjects;
 	time_t m_expireDate;
 	time_t m_creationDate;
-	KIO::CacheControl m_cachePolicy;
+	TDEIO::CacheControl m_cachePolicy;
         bool m_bautoloadImages : 1;
         KHTMLSettings::KAnimationAdvice m_showAnimations : 2;
         KHTMLPart* m_part;
@@ -418,7 +418,7 @@ namespace khtml
         void cancelRequests( DocLoader* dl );
 
         // may return 0L
-        KIO::Job *jobForRequest( const DOM::DOMString &url ) const;
+        TDEIO::Job *jobForRequest( const DOM::DOMString &url ) const;
 
     signals:
         void requestStarted( khtml::DocLoader* dl, khtml::CachedObject* obj );
@@ -426,8 +426,8 @@ namespace khtml
 	void requestFailed( khtml::DocLoader* dl, khtml::CachedObject *obj );
 
     protected slots:
-	void slotFinished( KIO::Job * );
-	void slotData( KIO::Job *, const TQByteArray & );
+	void slotFinished( TDEIO::Job * );
+	void slotData( TDEIO::Job *, const TQByteArray & );
 	void servePendingRequests();
 
     protected:

@@ -205,14 +205,14 @@ class TDECORE_EXPORT KAccelBase
 	 * The group in which the configuration is stored can be
 	 * set with setConfigGroup().
 	 */
-	void readSettings( KConfigBase* pConfig = 0 );
+	void readSettings( TDEConfigBase* pConfig = 0 );
 
 	/**
 	 * Write the current configurable associations to @p config,
          * or (if @p config is zero) to the application's
 	 * configuration file.
 	 */
-	void writeSettings( KConfigBase* pConfig = 0 ) const;
+	void writeSettings( TDEConfigBase* pConfig = 0 ) const;
 
 	TQPopupMenu* createPopupMenu( TQWidget* pParent, const KKeySequence& );
 

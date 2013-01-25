@@ -22,7 +22,7 @@
 #include <kinstance.h> // KDE4: class TDEInstance is enough here
 
 class KCharsets;
-class KConfig;
+class TDEConfig;
 class KSharedConfig;
 class KIconLoader;
 class TDEHardwareDevices;
@@ -65,7 +65,7 @@ public:
      *  Returns the general config object.
      * @return the global configuration object.
      */
-    static KConfig		*config();
+    static TDEConfig		*config();
 
     /**
      *  Returns the general config object.

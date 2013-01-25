@@ -36,7 +36,7 @@ class KEMailSettingsPrivate {
 public:
     KEMailSettingsPrivate() : m_pConfig( 0 ) {}
     ~KEMailSettingsPrivate() { delete m_pConfig; }
-	KConfig *m_pConfig;
+	TDEConfig *m_pConfig;
 	TQStringList profiles;
 	TQString m_sDefaultProfile, m_sCurrentProfile;
 };
@@ -242,7 +242,7 @@ KEMailSettings::KEMailSettings()
 	p = new KEMailSettingsPrivate();
 	p->m_sCurrentProfile=TQString::null;
 
-	p->m_pConfig = new KConfig("emaildefaults");
+	p->m_pConfig = new TDEConfig("emaildefaults");
 
 	TQStringList groups = p->m_pConfig->groupList();
 	for (TQStringList::Iterator it = groups.begin(); it != groups.end(); ++it) {

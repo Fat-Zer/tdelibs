@@ -1,6 +1,6 @@
 /** @mainpage Some random bits and pieces
 
-Some utility classes for KSettings, KCModule and KPlugin.
+Some utility classes for KSettings, TDECModule and KPlugin.
 
 @authors
 Matthias Kretz \<kretz@kde.org\><br>

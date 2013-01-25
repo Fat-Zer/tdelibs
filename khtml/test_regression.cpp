@@ -521,7 +521,7 @@ int main(int argc, char *argv[])
     a.config()->writeEntry( "kjscupguard_alarmhandler", true );
     a.config()->setGroup("HTML Settings");
     a.config()->writeEntry("ReportJSErrors", false);
-    KConfig cfg( "khtmlrc" );
+    TDEConfig cfg( "khtmlrc" );
     cfg.setGroup("HTML Settings");
     cfg.writeEntry( "StandardFont", HTML_DEFAULT_VIEW_SANSSERIF_FONT );
     cfg.writeEntry( "FixedFont", HTML_DEFAULT_VIEW_FIXED_FONT );

@@ -607,7 +607,7 @@ bool CupsdConf::parseOption(const TQString& line)
 
 bool CupsdConf::loadAvailableResources()
 {
-	KConfig	conf("tdeprintrc");
+	TDEConfig	conf("tdeprintrc");
 	conf.setGroup("CUPS");
 	TQString	host = conf.readEntry("Host",cupsServer());
 	int 	port = conf.readNumEntry("Port",ippPort());

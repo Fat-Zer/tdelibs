@@ -30,32 +30,32 @@
 
 namespace KNetwork {
 
-class KSocketDevice;
-class KSocketDeviceFactoryBase;
+class TDESocketDevice;
+class TDESocketDeviceFactoryBase;
 
-class KSocketDevicePrivate;
-/** @class KSocketDevice tdesocketdevice.h tdesocketdevice.h
+class TDESocketDevicePrivate;
+/** @class TDESocketDevice tdesocketdevice.h tdesocketdevice.h
  *  @brief Low-level socket functionality.
  *
  * This class provides low-level socket functionality. 
  *
  * Most users will prefer "cooked" interfaces like those of @ref KStreamSocket or
- * @ref KServerSocket.
+ * @ref TDEServerSocket.
  *
  * Descended classes from this one provide some other kinds of socket functionality,
  * like proxying or specific socket types.
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class TDECORE_EXPORT KSocketDevice: public KActiveSocketBase, public KPassiveSocketBase
+class TDECORE_EXPORT TDESocketDevice: public KActiveSocketBase, public KPassiveSocketBase
 {
 public:
   /**
    * Capabilities for the socket implementation.
    *
-   * KSocketDevice-derived classes can implement certain capabilities that are not
+   * TDESocketDevice-derived classes can implement certain capabilities that are not
    * available in the default class. These capabilities are described by these flags.
-   * The default KSocketDevice class has none of these capabilities.
+   * The default TDESocketDevice class has none of these capabilities.
    *
    * For the negative capabilities (inabilities, the CanNot* forms), when a capability 
    * is not present, the implementation will default to the original behaviour.
@@ -101,7 +101,7 @@ public:
    * The parameter is used to specify which socket this object is used as
    * a device for.
    */
-  explicit KSocketDevice(const KSocketBase* = 0L);
+  explicit TDESocketDevice(const TDESocketBase* = 0L);
 
   /**
    * Constructs a new object around an already-open socket.
@@ -109,12 +109,12 @@ public:
    * Note: you should write programs that create sockets through
    * the classes whenever possible.
    */
-  explicit KSocketDevice(int fd);
+  explicit TDESocketDevice(int fd);
 
   /**
    * Destructor. This closes the socket if it's open.
    */
-  virtual ~KSocketDevice();
+  virtual ~TDESocketDevice();
 
   /**
    * Returns the file descriptor for this socket.
@@ -186,9 +186,9 @@ public:
 
   /**
    * Accepts a new incoming connection.
-   * Note: this function returns a socket of type KSocketDevice.
+   * Note: this function returns a socket of type TDESocketDevice.
    */
-  virtual KSocketDevice* accept();
+  virtual TDESocketDevice* accept();
 
   /**
    * Disconnects this socket.
@@ -221,7 +221,7 @@ public:
   /**
    * Reads data and the source address from this socket.
    */
-  virtual TQT_TQIO_LONG tqreadBlock(char *data, TQT_TQIO_ULONG maxlen, KSocketAddress& from);
+  virtual TQT_TQIO_LONG tqreadBlock(char *data, TQT_TQIO_ULONG maxlen, TDESocketAddress& from);
 
   /**
    * Peeks data in the socket.
@@ -231,7 +231,7 @@ public:
   /**
    * Peeks the data in the socket and the source address.
    */
-  virtual TQ_LONG peekBlock(char *data, TQ_ULONG maxlen, KSocketAddress& from);
+  virtual TQ_LONG peekBlock(char *data, TQ_ULONG maxlen, TDESocketAddress& from);
 
   /**
    * Writes data to the socket.
@@ -241,18 +241,18 @@ public:
   /**
    * Writes the given data to the given destination address.
    */
-  virtual TQT_TQIO_LONG tqwriteBlock(const char *data, TQT_TQIO_ULONG len, const KSocketAddress& to);
+  virtual TQT_TQIO_LONG tqwriteBlock(const char *data, TQT_TQIO_ULONG len, const TDESocketAddress& to);
 
   /**
    * Returns this socket's local address.
    */
-  virtual KSocketAddress localAddress() const;
+  virtual TDESocketAddress localAddress() const;
 
   /**
    * Returns this socket's peer address. If this implementation does proxying
    * of some sort, this is the real external address, not the proxy's address.
    */
-  virtual KSocketAddress peerAddress() const;
+  virtual TDESocketAddress peerAddress() const;
 
   /**
    * Returns this socket's externally visible local address.
@@ -265,10 +265,10 @@ public:
    * addresses different from the local socket values. The default implementation
    * returns the same value as @ref localAddress.
    *
-   * @note This function may return an empty KSocketAddress. In that case, the
+   * @note This function may return an empty TDESocketAddress. In that case, the
    *       externally visible address could/can not be determined.
    */
-  virtual KSocketAddress externalAddress() const;
+  virtual TDESocketAddress externalAddress() const;
 
   /**
    * Returns a socket notifier for input on this socket.
@@ -337,7 +337,7 @@ protected:
    *
    * @param parent	the parent, if any
    */
-  KSocketDevice(bool, const KSocketBase* parent = 0L);
+  TDESocketDevice(bool, const TDESocketBase* parent = 0L);
 
   /**
    * Creates a socket notifier of the given type.
@@ -358,16 +358,16 @@ protected:
 
 public:
   /**
-   * Creates a new default KSocketDevice object given
+   * Creates a new default TDESocketDevice object given
    * the parent object.
    *
    * The capabilities flag indicates the desired capabilities the object being
    * created should possess. Those capabilities are not guaranteed: if no factory
    * can provide such an object, a default object will be created.
    *
-   * @param parent	the KSocketBase parent
+   * @param parent	the TDESocketBase parent
    */
-  static KSocketDevice* createDefault(KSocketBase* parent);
+  static TDESocketDevice* createDefault(TDESocketBase* parent);
 
   /**
    * @overload
@@ -377,40 +377,40 @@ public:
    * @param parent		the parent
    * @param capabilities	the requested capabilities
    */
-  static KSocketDevice* createDefault(KSocketBase* parent, int capabilities);
+  static TDESocketDevice* createDefault(TDESocketBase* parent, int capabilities);
 
   /**
-   * Sets the default KSocketDevice implementation to use and
+   * Sets the default TDESocketDevice implementation to use and
    * return the old factory.
    *
    * @param factory	the factory object for the implementation
    */
-  static KSocketDeviceFactoryBase* setDefaultImpl(KSocketDeviceFactoryBase* factory);
+  static TDESocketDeviceFactoryBase* setDefaultImpl(TDESocketDeviceFactoryBase* factory);
 
   /**
-   * Adds a factory of KSocketDevice objects to the list, along with its
+   * Adds a factory of TDESocketDevice objects to the list, along with its
    * capabilities flag.
    */
-  static void addNewImpl(KSocketDeviceFactoryBase* factory, int capabilities);
+  static void addNewImpl(TDESocketDeviceFactoryBase* factory, int capabilities);
 
 private:
-  KSocketDevice(const KSocketDevice&);
-  KSocketDevice& operator=(const KSocketDevice&);
+  TDESocketDevice(const TDESocketDevice&);
+  TDESocketDevice& operator=(const TDESocketDevice&);
 
-  KSocketDevicePrivate *d;
+  TDESocketDevicePrivate *d;
 };
 
 /** @internal
  * This class provides functionality for creating and registering
  *  socket implementations.
  */
-class KSocketDeviceFactoryBase
+class TDESocketDeviceFactoryBase
 {
 public:
-  KSocketDeviceFactoryBase() {}
-  virtual ~KSocketDeviceFactoryBase() {}
+  TDESocketDeviceFactoryBase() {}
+  virtual ~TDESocketDeviceFactoryBase() {}
 
-  virtual KSocketDevice* create(KSocketBase*) const = 0;
+  virtual TDESocketDevice* create(TDESocketBase*) const = 0;
 };
 
 /**
@@ -418,13 +418,13 @@ public:
  * socket implementations.
  */
 template<class Impl>
-class KSocketDeviceFactory: public KSocketDeviceFactoryBase
+class TDESocketDeviceFactory: public TDESocketDeviceFactoryBase
 {
 public:
-  KSocketDeviceFactory() {}
-  virtual ~KSocketDeviceFactory() {}
+  TDESocketDeviceFactory() {}
+  virtual ~TDESocketDeviceFactory() {}
 
-  virtual KSocketDevice* create(KSocketBase* parent) const
+  virtual TDESocketDevice* create(TDESocketBase* parent) const
   { return new Impl(parent); }
 };
 

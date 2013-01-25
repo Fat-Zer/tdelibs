@@ -119,7 +119,7 @@ void KCustomMenuEditor::refreshButton()
 }
 
 void
-KCustomMenuEditor::load(KConfigBase *cfg)
+KCustomMenuEditor::load(TDEConfigBase *cfg)
 {
    cfg->setGroup(TQString::null);
    int count = cfg->readNumEntry("NrOfItems");
@@ -147,7 +147,7 @@ KCustomMenuEditor::load(KConfigBase *cfg)
 }
 
 void
-KCustomMenuEditor::save(KConfigBase *cfg)
+KCustomMenuEditor::save(TDEConfigBase *cfg)
 {
    // First clear the whole config file.
    TQStringList groups = cfg->groupList();

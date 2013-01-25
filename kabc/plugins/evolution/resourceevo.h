@@ -7,7 +7,7 @@ namespace Evolution {
 namespace KABC {
     class ResourceEvolution : public Resource {
     public:
-        ResourceEvolution( const KConfig* config );
+        ResourceEvolution( const TDEConfig* config );
         ~ResourceEvolution();
 
         bool doOpen();

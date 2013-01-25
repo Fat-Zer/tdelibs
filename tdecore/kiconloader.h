@@ -33,7 +33,7 @@
 
 struct KIconGroup;
 class KIconThemeNode;
-class KConfig;
+class TDEConfig;
 struct KIconLoaderPrivate;
 class KStandardDirs;
 class KIconEffect;

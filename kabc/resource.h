@@ -118,7 +118,7 @@ class KABC_EXPORT Resource : public KRES::Resource
       @param config The config object where the derived classes can
                     read out their settings.
      */
-    Resource( const KConfig *config );
+    Resource( const TDEConfig *config );
 
     /**
       Destructor.
@@ -157,7 +157,7 @@ class KABC_EXPORT Resource : public KRES::Resource
     /**
       Writes the resource specific config to file.
      */
-    virtual void writeConfig( KConfig *config );
+    virtual void writeConfig( TDEConfig *config );
 
     /**
       Request a ticket, you have to pass through save() to

@@ -624,7 +624,7 @@ void KMdiDockContainer::load( TQDomElement& dockEl )
 		TQTimer::singleShot( 0, this, TQT_SLOT( init() ) );
 }
 
-void KMdiDockContainer::save( KConfig* cfg, const TQString& group_or_prefix )
+void KMdiDockContainer::save( TDEConfig* cfg, const TQString& group_or_prefix )
 {
 	TQString grp = cfg->group();
 	cfg->deleteGroup( group_or_prefix + TQString( "::%1" ).arg( parent() ->name() ) );
@@ -671,7 +671,7 @@ void KMdiDockContainer::save( KConfig* cfg, const TQString& group_or_prefix )
 
 }
 
-void KMdiDockContainer::load( KConfig* cfg, const TQString& group_or_prefix )
+void KMdiDockContainer::load( TDEConfig* cfg, const TQString& group_or_prefix )
 {
 	TQString grp = cfg->group();
 	cfg->setGroup( group_or_prefix + TQString( "::%1" ).arg( parent() ->name() ) );

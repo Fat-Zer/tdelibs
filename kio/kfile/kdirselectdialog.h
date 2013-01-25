@@ -25,7 +25,7 @@
 
 class TQPopupMenu;
 class TQVBoxLayout;
-class KConfig;
+class TDEConfig;
 class KFileTreeBranch;
 class KFileTreeView;
 class KFileTreeViewItem;
@@ -111,8 +111,8 @@ private slots:
     void slotMkdir();
 
 private:
-    void readConfig( KConfig *config, const TQString& group );
-    void saveConfig( KConfig *config, const TQString& group );
+    void readConfig( TDEConfig *config, const TQString& group );
+    void saveConfig( TDEConfig *config, const TQString& group );
     void openNextDir( KFileTreeViewItem *parent );
     KFileTreeBranch * createBranch( const KURL& url );
 

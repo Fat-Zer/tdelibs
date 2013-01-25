@@ -50,7 +50,7 @@ class KBookmarkOwner;
 class KBookmarkMenu;
 class KPopupMenu;
 
-namespace KIO { class Job; }
+namespace TDEIO { class Job; }
 
 /**
  * This class provides a bookmark menu.  It is typically used in

@@ -24,16 +24,16 @@
 
 /**
  * @ingroup kcmodule
- * @brief DCOP Interface for KCModule.
+ * @brief DCOP Interface for TDECModule.
  * 
- * A module (which is loaded via KCModuleProxy) does always have 
+ * A module (which is loaded via TDECModuleProxy) does always have 
  * this DCOP interface, whether it's in root mode or not.
  *
  * @since 3.4
  * @internal
  * @author Frans Englich <frans.englich@telia.com>
  */
-class KCModuleProxyIface : virtual public DCOPObject
+class TDECModuleProxyIface : virtual public DCOPObject
 {
 	K_DCOP
 
@@ -81,7 +81,7 @@ k_dcop_signals:
 	 *
 	 * @param c true if the module is modified, false if its not.
 	 * @param module a string identifying the module which was changed. This 
-	 * is typically "KCModuleProx-X" where X is the module's name.
+	 * is typically "TDECModuleProx-X" where X is the module's name.
 	 */
 	virtual void changed( bool c );
 
@@ -93,25 +93,25 @@ k_dcop_signals:
  * @ingroup kcmodule
  * @brief DCOP interface for communicating with the real module running in root mode.
  * 
- * When a KCModuleProxy tells kcmshell to load "itself" and embed into the 
- * KCModuleProxy, this DCOP interface is used to communicate to the real KCModuleProxy, since 
- * the KCModuleProxy which told kcmshell to load itself, is nothing but a shell.
+ * When a TDECModuleProxy tells kcmshell to load "itself" and embed into the 
+ * TDECModuleProxy, this DCOP interface is used to communicate to the real TDECModuleProxy, since 
+ * the TDECModuleProxy which told kcmshell to load itself, is nothing but a shell.
  *
  * Currently is only the changed signal routed, but it's possible to proxy
- * the rest of the KCModuleProxy API, if it turns out necessary.
+ * the rest of the TDECModuleProxy API, if it turns out necessary.
  *
  * @since 3.4
  * @internal
  * @author Frans Englich <frans.englich@telia.com>
  */
-class KCModuleProxyRootDispatcher : virtual public DCOPObject
+class TDECModuleProxyRootDispatcher : virtual public DCOPObject
 {
 	K_DCOP
 
 k_dcop:
 
 	/**
-	 * KCModuleProxyIface::changed() gets connected to this.
+	 * TDECModuleProxyIface::changed() gets connected to this.
 	 */
 	virtual void changed( bool c ) = 0;
 

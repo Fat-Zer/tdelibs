@@ -32,7 +32,7 @@
 
 class TDEProcess;
 class KService;
-namespace KIO {
+namespace TDEIO {
    class Job;
    class StatJob;
 }
@@ -77,7 +77,7 @@ public:
    *
    * @param showProgressInfo
    *        Whether to show progress information when determining the
-   *        type of the file (i.e. when using KIO::stat and KIO::mimetype)
+   *        type of the file (i.e. when using TDEIO::stat and TDEIO::mimetype)
    *        Before you set this to false to avoid a dialog box, think about
    *        a very slow FTP server...
    *        It is always better to provide progress info in such cases.
@@ -104,7 +104,7 @@ public:
    *
    * @param showProgressInfo
    *        Whether to show progress information when determining the
-   *        type of the file (i.e. when using KIO::stat and KIO::mimetype)
+   *        type of the file (i.e. when using TDEIO::stat and TDEIO::mimetype)
    *        Before you set this to false to avoid a dialog box, think about
    *        a very slow FTP server...
    *        It is always better to provide progress info in such cases.
@@ -401,9 +401,9 @@ signals:
 
 protected slots:
   void slotTimeout();
-  void slotScanFinished( KIO::Job * );
-  void slotScanMimeType( KIO::Job *, const TQString &type );
-  virtual void slotStatResult( KIO::Job * );
+  void slotScanFinished( TDEIO::Job * );
+  void slotScanMimeType( TDEIO::Job *, const TQString &type );
+  virtual void slotStatResult( TDEIO::Job * );
 
 protected:
   virtual void init();
@@ -424,7 +424,7 @@ protected:
   bool m_bAutoDelete;
   bool m_bProgressInfo;
   bool m_bFinished;
-  KIO::Job * m_job;
+  TDEIO::Job * m_job;
   TQTimer m_timer;
 
   /**

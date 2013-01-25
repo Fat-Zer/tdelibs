@@ -3,7 +3,7 @@ that we would like to make for the next binary incompatible release.
 
 - Check for forked classes in kde pim and other modules
 
-- There is no reason why KConfigBase should inherit from QObject, get rid of that.
+- There is no reason why TDEConfigBase should inherit from QObject, get rid of that.
 
 - Change all FooPrivate *d; -> Private * const d; and place initialization
   in the constructor (for classes that would benefit from this).  To help catch silly
@@ -24,7 +24,7 @@ that we would like to make for the next binary incompatible release.
   See: http://groups.google.com/groups?selm=4ognb0%243cd%40linda.teleport.com&oe=UTF-8&output=gplain
   Also free the client from the requirement to inherit from KShared.
 
-- Remove all KSocket, KServerSocket, KSocks and KExtendedSocket references
+- Remove all TDESocket, TDEServerSocket, KSocks and KExtendedSocket references
   throughout KDE in favor of KNetwork's socket implementations.
   Also, revise the namespace usage.
 	thiago.macieira@kdemail.net
@@ -88,7 +88,7 @@ that we would like to make for the next binary incompatible release.
 - Other ideas in this thread: http://lists.kde.org/?l=kde-core-devel&m=107608067302571&w=2
   (Contributors to that thread, please add specific items here.)
 
-- KConfigBase: For all the read*Entry methods that take a QFont *, QPoint *, QSize *, etc.
+- TDEConfigBase: For all the read*Entry methods that take a QFont *, QPoint *, QSize *, etc.
   for the default value, add overloads that use a const reference, so that one can write 
   resize( config->readSizeEntry( "Bleh", size() ); for example. Constructing a null 
   QFont/QPoint/QSize is cheap enough to justify a consistent and usable API (IMHO) .
@@ -110,7 +110,7 @@ that we would like to make for the next binary incompatible release.
   calls (readBoolEntry()).  Although not technicaly a binary incompatiblity... 
   just something to bring up for possible change (for the better)
 
-  Use KConfigXT instead! /FransE
+  Use TDEConfigXT instead! /FransE
 
 - Is it really necessary to bother people using the KCM APIs with withFallback? I have
   never heard of it failing and when would you not like to have that fallback? I think
@@ -118,7 +118,7 @@ that we would like to make for the next binary incompatible release.
 
 - Do we need to have factory arguments in the KCM API? (who would use it anyway?)
 
-- KCModuleInfo should use d-pointer. Perhaps there is more classes.
+- TDECModuleInfo should use d-pointer. Perhaps there is more classes.
 
 - The config options in kdeglobals needs to be cleaned up a little. Perhaps I'm being picky..
 	* They should be named properly, for example "enableIcons" instead of "EnableIcons". Or atleast
@@ -212,7 +212,7 @@ an alternative help->contents action)
 - KListView: merge setDropHighlighter and setDropVisualizer, add a setDnDMode to choose between
   "dnd to move items" (e.g. keditbookmarks) and "dnd onto items" (e.g. kmail). Unless Qt4 does it all :)
 
-- Move KIO::findDeviceMountPoint, findPathMoundPoint, probably_slow_mounted, and testFileSystemFlag to KMountPoint,
+- Move TDEIO::findDeviceMountPoint, findPathMoundPoint, probably_slow_mounted, and testFileSystemFlag to KMountPoint,
   to merge that code.
 
 - Refactor the kio/bookmarks code so we don't need to use the static d-pointer trick anymore.

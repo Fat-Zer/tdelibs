@@ -165,12 +165,12 @@ void KDockMainWindow::readDockConfig(TQDomElement &base)
 }
 
 #ifndef NO_KDE2
-void KDockMainWindow::writeDockConfig( KConfig* c, TQString group )
+void KDockMainWindow::writeDockConfig( TDEConfig* c, TQString group )
 {
   dockManager->writeConfig( c, group );
 }
 
-void KDockMainWindow::readDockConfig( KConfig* c, TQString group )
+void KDockMainWindow::readDockConfig( TDEConfig* c, TQString group )
 {
   dockManager->readConfig( c, group );
 }
@@ -420,12 +420,12 @@ void KDockWidgetHeader::setDragEnabled(bool b)
 }
 
 #ifndef NO_KDE2
-void KDockWidgetHeader::saveConfig( KConfig* c )
+void KDockWidgetHeader::saveConfig( TDEConfig* c )
 {
   c->writeEntry( TQString("%1%2").arg(parent()->name()).arg(":stayButton"), stayButton->isOn() );
 }
 
-void KDockWidgetHeader::loadConfig( KConfig* c )
+void KDockWidgetHeader::loadConfig( TDEConfig* c )
 {
   setDragEnabled( !c->readBoolEntry( TQString("%1%2").arg(parent()->name()).arg(":stayButton"), false ) );
 }
@@ -2528,7 +2528,7 @@ void KDockManager::setReadDockConfigMode(int mode)
 }
 
 #ifndef NO_KDE2
-void KDockManager::writeConfig( KConfig* c, TQString group )
+void KDockManager::writeConfig( TDEConfig* c, TQString group )
 {
   //debug("BEGIN Write Config");
   if ( !c ) c = TDEGlobal::config();
@@ -2670,7 +2670,7 @@ void KDockManager::writeConfig( KConfig* c, TQString group )
   //debug("END Write Config");
 }
 #include <tqmessagebox.h>
-void KDockManager::readConfig( KConfig* c, TQString group )
+void KDockManager::readConfig( TDEConfig* c, TQString group )
 {
   if ( !c ) c = TDEGlobal::config();
   if ( group.isEmpty() ) group = "dock_setting_default";
@@ -3134,12 +3134,12 @@ void KDockArea::resizeEvent(TQResizeEvent *rsize)
 }
 
 #ifndef NO_KDE2
-void KDockArea::writeDockConfig( KConfig* c, TQString group )
+void KDockArea::writeDockConfig( TDEConfig* c, TQString group )
 {
   dockManager->writeConfig( c, group );
 }
 
-void KDockArea::readDockConfig( KConfig* c, TQString group )
+void KDockArea::readDockConfig( TDEConfig* c, TQString group )
 {
   dockManager->readConfig( c, group );
 }
@@ -3261,8 +3261,8 @@ void KDockContainer::removeWidget (KDockWidget *dw){
 void KDockContainer::undockWidget (KDockWidget *){;}
 void KDockContainer::setToolTip(KDockWidget *, TQString &){;}
 void KDockContainer::setPixmap(KDockWidget*,const TQPixmap&){;}
-void KDockContainer::load (KConfig*, const TQString&){;}
-void KDockContainer::save (KConfig*, const TQString&){;}
+void KDockContainer::load (TDEConfig*, const TQString&){;}
+void KDockContainer::save (TDEConfig*, const TQString&){;}
 void KDockContainer::load (TQDomElement&){;}
 void KDockContainer::save (TQDomElement&){;}
 void KDockContainer::prepareSave(TQStringList &names)

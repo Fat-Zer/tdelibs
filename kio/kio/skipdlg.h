@@ -25,7 +25,7 @@
 class TQPushButton;
 class TQWidget;
 
-namespace KIO {
+namespace TDEIO {
 
   enum SkipDlg_Result { S_SKIP = 1, S_AUTO_SKIP = 2, S_CANCEL = 0 };
 

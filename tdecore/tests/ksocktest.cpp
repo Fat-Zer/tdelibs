@@ -100,7 +100,7 @@ main(int argc, char *argv[])
 
    printf("FD %d\n", sock2->fd());
 
-   KSocketAddress* addr = KExtendedSocket::peerAddress( sock2->fd() );
+   TDESocketAddress* addr = KExtendedSocket::peerAddress( sock2->fd() );
    check( "peerAddress:", addr->nodeName().latin1(), "213.203.58.36" );
 
    check( "isEqual:", addr->isEqual(KInetSocketAddress("213.203.58.36", 80)) ? "TRUE" : "FALSE", "TRUE");

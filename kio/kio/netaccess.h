@@ -32,7 +32,7 @@ class TQWidget;
 class KURL;
 template<typename T, typename K> class TQMap;
 
-namespace KIO {
+namespace TDEIO {
 
   class Job;
 
@@ -40,9 +40,9 @@ namespace KIO {
    * Net Transparency.
    *
    * NetAccess allows you to do simple file operation (load, save,
-   * copy, delete...) without working with KIO::Job directly.
-   * Whereas a KIO::Job is asynchronous, meaning that the
-   * developer has to connect slots for it, KIO::NetAccess provides
+   * copy, delete...) without working with TDEIO::Job directly.
+   * Whereas a TDEIO::Job is asynchronous, meaning that the
+   * developer has to connect slots for it, TDEIO::NetAccess provides
    * synchronous downloads and uploads, as well as temporary file
    * creation and removal. The functions appear to be blocking,
    * but the Qt event loop continues running while the operations
@@ -83,12 +83,12 @@ public:
      *
      * \code
      * TQString tmpFile;
-     * if( KIO::NetAccess::download( u, tmpFile, window ) )
+     * if( TDEIO::NetAccess::download( u, tmpFile, window ) )
      * {
      *   loadFile( tmpFile );
-     *   KIO::NetAccess::removeTempFile( tmpFile );
+     *   TDEIO::NetAccess::removeTempFile( tmpFile );
      * } else {
-     *   KMessageBox::error(this, KIO::NetAccess::lastErrorString() );
+     *   KMessageBox::error(this, TDEIO::NetAccess::lastErrorString() );
      * }
      * \endcode
      *
@@ -123,7 +123,7 @@ public:
 
     /**
      * Removes the specified file if and only if it was created
-     * by KIO::NetAccess as a temporary file for a former download.
+     * by TDEIO::NetAccess as a temporary file for a former download.
      *
      * Note: This means that if you created your temporary with KTempFile,
      * use KTempFile::unlink() or KTempFile::setAutoDelete() to have
@@ -165,7 +165,7 @@ public:
      * Overwrite is false, so this will fail if @p target exists.
      *
      * This one takes two URLs and is a direct equivalent
-     * of KIO::file_copy (not KIO::copy!).
+     * of TDEIO::file_copy (not TDEIO::copy!).
      * It will be renamed file_copy in KDE4, so better use file_copy.
      *
      * @param src URL Referencing the file to upload.
@@ -188,13 +188,13 @@ public:
     // KDE4: merge with above
 
     /**
-     * Full-fledged equivalent of KIO::file_copy
+     * Full-fledged equivalent of TDEIO::file_copy
      */
     static bool file_copy( const KURL& src, const KURL& dest, int permissions=-1,
                             bool overwrite=false, bool resume=false, TQWidget* window = 0L );
 
     /**
-     * Full-fledged equivalent of KIO::file_move.
+     * Full-fledged equivalent of TDEIO::file_move.
      * Moves or renames *one file*.
      * @since 3.2
      */
@@ -207,7 +207,7 @@ public:
      * Overwrite is false, so this will fail if @p target exists.
      *
      * This one takes two URLs and is a direct equivalent
-     * of KIO::copy!.
+     * of TDEIO::copy!.
      * This means that it can copy files and directories alike
      * (it should have been named copy()).
      *
@@ -234,14 +234,14 @@ public:
     static bool dircopy( const KURL::List& src, const KURL& target, TQWidget* window = 0L );
 
     /**
-     * Full-fledged equivalent of KIO::move.
+     * Full-fledged equivalent of TDEIO::move.
      * Moves or renames one file or directory.
      * @since 3.2
      */
     static bool move( const KURL& src, const KURL& target, TQWidget* window = 0L );
 
     /**
-     * Full-fledged equivalent of KIO::move.
+     * Full-fledged equivalent of TDEIO::move.
      * Moves or renames a list of files or directories.
      * @since 3.2
      */
@@ -253,7 +253,7 @@ public:
      * @param url the URL we are testing
      * @param source if true, we want to read from that URL.
      *               If false, we want to write to it.
-     * IMPORTANT: see documentation for KIO::stat for more details about this.
+     * IMPORTANT: see documentation for TDEIO::stat for more details about this.
      * @param window main window associated with this job. This is used to
      *               automatically cache and discard authentication information
      *               as needed. If NULL, authentication information will be
@@ -284,7 +284,7 @@ public:
     /**
      * Tests whether a URL exists and return information on it.
      *
-     * This is a convenience function for KIO::stat
+     * This is a convenience function for TDEIO::stat
      * (it saves creating a slot and testing for the job result).
      *
      * @param url The URL we are testing.
@@ -297,17 +297,17 @@ public:
      *               again be prompted for passwords as needed.
      * @return true if successful, false for failure
      */
-    static bool stat(const KURL& url, KIO::UDSEntry & entry, TQWidget* window);
+    static bool stat(const KURL& url, TDEIO::UDSEntry & entry, TQWidget* window);
 
     /**
      * @deprecated. Use the function above instead.
      */
-    static bool stat(const KURL& url, KIO::UDSEntry & entry) KDE_DEPRECATED;
+    static bool stat(const KURL& url, TDEIO::UDSEntry & entry) KDE_DEPRECATED;
 
     /**
      * Tries to map a local URL for the given URL.
      *
-     * This is a convenience function for KIO::stat + parsing the
+     * This is a convenience function for TDEIO::stat + parsing the
      * resulting UDSEntry.
      *
      * @param url The URL we are testing.
@@ -325,7 +325,7 @@ public:
     /**
      * Deletes a file or a directory in a synchronous way.
      *
-     * This is a convenience function for KIO::del
+     * This is a convenience function for TDEIO::del
      * (it saves creating a slot and testing for the job result).
      *
      * @param url The file or directory to delete.
@@ -349,7 +349,7 @@ public:
     /**
      * Creates a directory in a synchronous way.
      *
-     * This is a convenience function for @p KIO::mkdir
+     * This is a convenience function for @p TDEIO::mkdir
      * (it saves creating a slot and testing for the job result).
      *
      * @param url The directory to create.
@@ -397,7 +397,7 @@ public:
      * and after the function returns it will contain all the data fetched by this job.
      *
      * <code>
-     * KIO::Job *job = KIO::get( url, false, false );
+     * TDEIO::Job *job = TDEIO::get( url, false, false );
      * TQMap<TQString, TQString> metaData;
      * metaData.insert( "PropagateHttpHeader", "true" );
      * if ( NetAccess::synchronousRun( job, 0, &data, &url, &metaData ) ) {
@@ -435,7 +435,7 @@ public:
      *
      * Determines the mimetype of a given URL.
      *
-     * This is a convenience function for KIO::mimetype.  You
+     * This is a convenience function for TDEIO::mimetype.  You
      * should call this only when really necessary.
      * KMimeType::findByURL can determine extension a lot faster, but
      * less reliably for remote files. Only when findByURL() returns
@@ -514,10 +514,10 @@ private:
     friend class I_like_this_class;
 
 private slots:
-    void slotResult( KIO::Job * job );
-    void slotMimetype( KIO::Job * job, const TQString & type );
-    void slotData( KIO::Job*, const TQByteArray& );
-    void slotRedirection( KIO::Job*, const KURL& );
+    void slotResult( TDEIO::Job * job );
+    void slotMimetype( TDEIO::Job * job, const TQString & type );
+    void slotData( TDEIO::Job*, const TQByteArray& );
+    void slotRedirection( TDEIO::Job*, const KURL& );
 
 private:
     UDSEntry m_entry;

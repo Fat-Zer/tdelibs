@@ -17,7 +17,7 @@ using namespace KABC;
 class EvolutionFactory : public KRES::PluginFactoryBase
 {
   public:
-    KRES::Resource *resource( const KConfig *config )
+    KRES::Resource *resource( const TDEConfig *config )
     {
       return new ResourceEvolution( config );
     }
@@ -36,7 +36,7 @@ extern "C"
   }
 }
 
-ResourceEvolution::ResourceEvolution( const KConfig* conf )
+ResourceEvolution::ResourceEvolution( const TDEConfig* conf )
     : Resource( conf ), mWrap(0l)
 {
     m_isOpen = false;

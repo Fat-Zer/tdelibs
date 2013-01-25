@@ -43,11 +43,11 @@ class KABC_EXPORT ResourceDir : public Resource
   Q_OBJECT
 
   public:
-    ResourceDir( const KConfig* );
+    ResourceDir( const TDEConfig* );
     ResourceDir( const TQString &path, const TQString &type = "vcard" );
     ~ResourceDir();
 
-    virtual void writeConfig( KConfig* );
+    virtual void writeConfig( TDEConfig* );
 
     virtual bool doOpen();
     virtual void doClose();

@@ -267,20 +267,20 @@ void KDirSelectDialog::slotNextDirToList( KFileTreeViewItem *item )
     }
 }
 
-void KDirSelectDialog::readConfig( KConfig *config, const TQString& group )
+void KDirSelectDialog::readConfig( TDEConfig *config, const TQString& group )
 {
     d->urlCombo->clear();
 
-    KConfigGroup conf( config, group );
+    TDEConfigGroup conf( config, group );
     d->urlCombo->setHistoryItems( conf.readPathListEntry( "History Items" ));
 
     TQSize defaultSize( 400, 450 );
     resize( conf.readSizeEntry( "DirSelectDialog Size", &defaultSize ));
 }
 
-void KDirSelectDialog::saveConfig( KConfig *config, const TQString& group )
+void KDirSelectDialog::saveConfig( TDEConfig *config, const TQString& group )
 {
-    KConfigGroup conf( config, group );
+    TDEConfigGroup conf( config, group );
     conf.writePathEntry( "History Items", d->urlCombo->historyItems(), ',',
                      true, true);
     conf.writeEntry( "DirSelectDialog Size", size(), true, true );
@@ -406,9 +406,9 @@ void KDirSelectDialog::slotMkdir()
     TQString where = url().pathOrURL();
     TQString name = i18n( "New Folder" );
     if ( url().isLocalFile() && TQFileInfo( url().path(+1) + name ).exists() )
-        name = KIO::RenameDlg::suggestName( url(), name );
+        name = TDEIO::RenameDlg::suggestName( url(), name );
 
-    TQString directory = KIO::encodeFileName( KInputDialog::getText( i18n( "New Folder" ),
+    TQString directory = TDEIO::encodeFileName( KInputDialog::getText( i18n( "New Folder" ),
                                          i18n( "Create new folder in:\n%1" ).arg( where ),
                                          name, &ok, this));
     if (!ok)
@@ -425,8 +425,8 @@ void KDirSelectDialog::slotMkdir()
     for ( ; it != dirs.end(); ++it )
     {
         folderurl.addPath( *it );
-        exists = KIO::NetAccess::exists( folderurl, false, 0 );
-        writeOk = !exists && KIO::NetAccess::mkdir( folderurl, topLevelWidget() );
+        exists = TDEIO::NetAccess::exists( folderurl, false, 0 );
+        writeOk = !exists && TDEIO::NetAccess::mkdir( folderurl, topLevelWidget() );
     }
 
     if ( exists ) // url was already existant
@@ -470,7 +470,7 @@ KURL KDirSelectDialog::selectDirectory( const TQString& startDir,
         myDialog.setCaption( caption );
 
     if ( myDialog.exec() == TQDialog::Accepted )
-        return KIO::NetAccess::mostLocalURL(myDialog.url(),parent);
+        return TDEIO::NetAccess::mostLocalURL(myDialog.url(),parent);
     else
         return KURL();
 }

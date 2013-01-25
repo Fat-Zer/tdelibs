@@ -28,10 +28,10 @@ class KDesktopFilePrivate;
  * KDE Desktop File Management.
  *
  * @author Pietro Iglio <iglio@kde.org>
- * @see  KConfigBase  KConfig
+ * @see  TDEConfigBase  TDEConfig
  * @short KDE Desktop File Management class
  */
-class TDECORE_EXPORT KDesktopFile : public KConfig
+class TDECORE_EXPORT KDesktopFile : public TDEConfig
 {
   Q_OBJECT
 

@@ -186,7 +186,7 @@ void KHTMLSettings::splitDomainAdvice(const TQString& configStr, TQString &domai
     }
 }
 
-void KHTMLSettings::readDomainSettings(KConfig *config, bool reset,
+void KHTMLSettings::readDomainSettings(TDEConfig *config, bool reset,
 	bool global, KPerDomainSettings &pd_settings) {
   TQString jsPrefix = global ? TQString::null
   				: TQString::fromLatin1("javascript.");
@@ -289,17 +289,17 @@ bool KHTMLSettings::hoverLink() const
 
 void KHTMLSettings::init()
 {
-  KConfig global( "khtmlrc", true, false );
+  TDEConfig global( "khtmlrc", true, false );
   init( &global, true );
 
-  KConfig *local = TDEGlobal::config();
+  TDEConfig *local = TDEGlobal::config();
   if ( !local )
     return;
 
   init( local, false );
 }
 
-void KHTMLSettings::init( KConfig * config, bool reset )
+void KHTMLSettings::init( TDEConfig * config, bool reset )
 {
   TQString group_save = config->group();
   if (reset || config->hasGroup("MainView Settings"))
@@ -741,7 +741,7 @@ bool KHTMLSettings::isAdFiltered( const TQString &url ) const
 
 void KHTMLSettings::addAdFilter( const TQString &url )
 {
-    KConfig config( "khtmlrc", false, false );
+    TDEConfig config( "khtmlrc", false, false );
     config.setGroup( "Filter Settings" );
 
     TQRegExp rx;
@@ -1027,7 +1027,7 @@ void KHTMLSettings::setJSErrorsEnabled(bool enabled)
 {
   d->m_jsErrorsEnabled = enabled;
   // save it
-  KConfig *config = TDEGlobal::config();
+  TDEConfig *config = TDEGlobal::config();
   config->setGroup("HTML Settings");
   config->writeEntry("ReportJSErrors", enabled);
   config->sync();
@@ -1052,7 +1052,7 @@ void KHTMLSettings::setJSPopupBlockerPassivePopup(bool enabled)
 {
     d->m_jsPopupBlockerPassivePopup = enabled;
     // save it
-    KConfig *config = TDEGlobal::config();
+    TDEConfig *config = TDEGlobal::config();
     config->setGroup("Java/JavaScript Settings");
     config->writeEntry("PopupBlockerPassivePopup", enabled);
     config->sync();

@@ -81,7 +81,7 @@ protected:
 
 private slots:
     void restoreScrollPosition();
-//    void slotImageJobFinished( KIO::Job *job );
+//    void slotImageJobFinished( TDEIO::Job *job );
 
 //    void updateWindowCaption();
 

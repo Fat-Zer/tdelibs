@@ -31,7 +31,7 @@ namespace KSettings
 /**
  * @ingroup settings
  * @ingroup plugin
- * @short Convenience KCModule for creating a plugins config page.
+ * @short Convenience TDECModule for creating a plugins config page.
  *
  * This class makes it very easy to create a plugins configuration page to your
  * program. All you need to do is create a class that is derived from
@@ -55,7 +55,7 @@ namespace KSettings
    Encoding=UTF-8
    Icon=plugin
    Type=Service
-   ServiceTypes=KCModule
+   ServiceTypes=TDECModule
 
    X-TDE-ModuleType=Library
    X-TDE-Library=myapppluginconfig
@@ -70,18 +70,18 @@ namespace KSettings
  * @author Matthias Kretz <kretz@kde.org>
  * @since 3.2
  */
-class KUTILS_EXPORT PluginPage : public KCModule
+class KUTILS_EXPORT PluginPage : public TDECModule
 {
     Q_OBJECT
     public:
         /**
-         * Standart KCModule constructor. Automatically creates the the
+         * Standart TDECModule constructor. Automatically creates the the
          * KPluginSelector widget.
          */
         PluginPage( TQWidget * parent = 0, const char * name = 0, const TQStringList & args = TQStringList() );
 
         /**
-         * Standart KCModule constructor. Automatically creates the the
+         * Standart TDECModule constructor. Automatically creates the the
          * KPluginSelector widget.
          */
         PluginPage( TDEInstance * instance, TQWidget * parent = 0, const TQStringList & args = TQStringList() );
@@ -103,7 +103,7 @@ class KUTILS_EXPORT PluginPage : public KCModule
         virtual void load();
 
         /**
-         * Save the state of the plugins to KConfig objects
+         * Save the state of the plugins to TDEConfig objects
          */
         virtual void save();
         virtual void defaults();

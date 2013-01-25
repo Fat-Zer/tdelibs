@@ -34,7 +34,7 @@
 
 class TQTimer;
 class KDirLister;
-namespace KIO { class Job; class ListJob; }
+namespace TDEIO { class Job; class ListJob; }
 
 
 class KDirLister::KDirListerPrivate
@@ -90,10 +90,10 @@ public:
 
   struct JobData {
     long unsigned int percent, speed;
-    KIO::filesize_t processedSize, totalSize;
+    TDEIO::filesize_t processedSize, totalSize;
   };
 
-  TQMap<KIO::ListJob *, JobData> jobData;
+  TQMap<TDEIO::ListJob *, JobData> jobData;
 
   // file item for the root itself (".")
   KFileItem *rootFileItem;
@@ -195,18 +195,18 @@ private slots:
 
   void slotFileDirtyDelayed();
 
-  void slotEntries( KIO::Job *job, const KIO::UDSEntryList &entries );
-  void slotResult( KIO::Job *j );
-  void slotRedirection( KIO::Job *job, const KURL &url );
+  void slotEntries( TDEIO::Job *job, const TDEIO::UDSEntryList &entries );
+  void slotResult( TDEIO::Job *j );
+  void slotRedirection( TDEIO::Job *job, const KURL &url );
 
-  void slotUpdateEntries( KIO::Job *job, const KIO::UDSEntryList &entries );
-  void slotUpdateResult( KIO::Job *job );
+  void slotUpdateEntries( TDEIO::Job *job, const TDEIO::UDSEntryList &entries );
+  void slotUpdateResult( TDEIO::Job *job );
 
 private:
-  KIO::ListJob *jobForUrl( const TQString& url, KIO::ListJob *not_job = 0 );
-  const KURL& joburl( KIO::ListJob *job );
+  TDEIO::ListJob *jobForUrl( const TQString& url, TDEIO::ListJob *not_job = 0 );
+  const KURL& joburl( TDEIO::ListJob *job );
 
-  void killJob( KIO::ListJob *job );
+  void killJob( TDEIO::ListJob *job );
 
   // check if _url is held by some lister and return true,
   // otherwise schedule a delayed update and return false
@@ -324,7 +324,7 @@ private:
   };
 
   static const unsigned short MAX_JOBS_PER_LISTER;
-  TQMap<KIO::ListJob *, KIO::UDSEntryList> jobs;
+  TQMap<TDEIO::ListJob *, TDEIO::UDSEntryList> jobs;
 
   // an item is a complete directory
   TQDict<DirItem> itemsInUse;

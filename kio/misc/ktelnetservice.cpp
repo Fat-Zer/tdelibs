@@ -49,7 +49,7 @@ int main(int argc, char **argv)
 	if (args->count() != 1)
 		return 1;
 
-	KConfig *config = new KConfig("kdeglobals", true);
+	TDEConfig *config = new TDEConfig("kdeglobals", true);
 	config->setGroup("General");
 	TQString terminal = config->readPathEntry("TerminalApplication", "konsole");
 

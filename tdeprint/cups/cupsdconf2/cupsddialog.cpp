@@ -95,7 +95,7 @@ const char* getPassword(const char*)
 	TQString	user(cupsUser());
 	TQString	pass;
 
-	if (KIO::PasswordDialog::getNameAndPassword(user, pass, NULL) == TQDialog::Accepted)
+	if (TDEIO::PasswordDialog::getNameAndPassword(user, pass, NULL) == TQDialog::Accepted)
 	{
 		cupsSetUser(user.latin1());
 		pass_string = pass;

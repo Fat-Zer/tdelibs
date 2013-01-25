@@ -29,7 +29,7 @@
 
 #include <kurl.h>
 
-namespace KIO { class Job; class ListJob; }
+namespace TDEIO { class Job; class ListJob; }
 
 /**
  * The dir lister deals with the kiojob used to list and update a directory
@@ -520,13 +520,13 @@ signals:
    * Emitted when we know the size of the jobs.
    * @param size the total size in bytes
    */
-  void totalSize( KIO::filesize_t size );
+  void totalSize( TDEIO::filesize_t size );
 
   /**
    * Regularly emitted to show the progress of this KDirLister.
    * @param size the processed size in bytes
    */
-  void processedSize( KIO::filesize_t size );
+  void processedSize( TDEIO::filesize_t size );
 
   /**
    * Emitted to display information about the speed of the jobs.
@@ -598,24 +598,24 @@ protected:
   virtual bool validURL( const KURL& ) const;
 
   /** Reimplement to customize error handling */
-  virtual void handleError( KIO::Job * );
+  virtual void handleError( TDEIO::Job * );
 
 protected:
   virtual void virtual_hook( int id, void *data );
 
 private slots:
-  void slotInfoMessage( KIO::Job *, const TQString& );
-  void slotPercent( KIO::Job *, unsigned long );
-  void slotTotalSize( KIO::Job *, KIO::filesize_t );
-  void slotProcessedSize( KIO::Job *, KIO::filesize_t );
-  void slotSpeed( KIO::Job *, unsigned long );
-  void slotLocalURL( KIO::Job *, const KURL&, bool );
+  void slotInfoMessage( TDEIO::Job *, const TQString& );
+  void slotPercent( TDEIO::Job *, unsigned long );
+  void slotTotalSize( TDEIO::Job *, TDEIO::filesize_t );
+  void slotProcessedSize( TDEIO::Job *, TDEIO::filesize_t );
+  void slotSpeed( TDEIO::Job *, unsigned long );
+  void slotLocalURL( TDEIO::Job *, const KURL&, bool );
   void slotLocalURLKIODestroyed( );
 
 private:
-  void jobStarted( KIO::ListJob * );
-  void connectJob( KIO::ListJob * );
-  void jobDone( KIO::ListJob * );
+  void jobStarted( TDEIO::ListJob * );
+  void connectJob( TDEIO::ListJob * );
+  void jobDone( TDEIO::ListJob * );
 
   uint numJobs();
 

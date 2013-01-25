@@ -3,7 +3,7 @@ ClassName=ExamplePrefsBase
 #
 # Singleton=false
 #
-# Inherits=KConfigSkeleton
+# Inherits=TDEConfigSkeleton
 #
 # IncludeFiles=libtdepim/kpimprefs.h
 #

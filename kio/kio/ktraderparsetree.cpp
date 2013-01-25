@@ -19,7 +19,7 @@
 
 #include "ktraderparsetree.h"
 
-namespace KIO {
+namespace TDEIO {
 
 bool ParseTreeOR::eval( ParseContext *_context ) const
 {

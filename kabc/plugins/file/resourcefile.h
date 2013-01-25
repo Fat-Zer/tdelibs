@@ -47,7 +47,7 @@ class KABC_EXPORT ResourceFile : public Resource
 
       @param cfg The config object where custom resource settings are stored.
      */
-    ResourceFile( const KConfig *cfg );
+    ResourceFile( const TDEConfig *cfg );
 
     /**
       Construct file resource on file @arg fileName using format @arg formatName.
@@ -62,7 +62,7 @@ class KABC_EXPORT ResourceFile : public Resource
     /**
       Writes the config back.
      */
-    virtual void writeConfig( KConfig *cfg );
+    virtual void writeConfig( TDEConfig *cfg );
 
     /**
       Tries to open the file and checks for the proper format.

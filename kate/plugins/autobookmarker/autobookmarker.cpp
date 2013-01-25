@@ -199,7 +199,7 @@ void ABGlobal::readConfig()
     m_ents = new ABEntityList;
   else
     m_ents->clear();
-  KConfig *config = new KConfig("ktexteditor_autobookmarkerrc");
+  TDEConfig *config = new TDEConfig("ktexteditor_autobookmarkerrc");
 
   uint n( 0 );
   while ( config->hasGroup( TQString("autobookmark%1").arg( n ) ) )
@@ -225,7 +225,7 @@ void ABGlobal::readConfig()
 
 void ABGlobal::writeConfig()
 {
-  KConfig *config = new KConfig("ktexteditor_autobookmarkerrc");
+  TDEConfig *config = new TDEConfig("ktexteditor_autobookmarkerrc");
 
   // clean the config object
   TQStringList l = config->groupList();

@@ -29,7 +29,7 @@ class TQPopupMenu; // for obsolete insertItem() methods below
 class TQWidget;
 class KAccelAction;
 class KAccelActions;
-class KConfigBase;
+class TDEConfigBase;
 
 class KAccelPrivate;
 /**
@@ -267,14 +267,14 @@ class TDECORE_EXPORT KAccel : public TQAccel
 	/**
 	 * Returns the configuration group of the settings.
 	 * @return the configuration group
-	 * @see KConfig
+	 * @see TDEConfig
 	 */
 	const TQString& configGroup() const;
 
 	/**
 	 * Returns the configuration group of the settings.
 	 * @param name the new configuration group
-	 * @see KConfig
+	 * @see TDEConfig
 	 */
 	void setConfigGroup( const TQString &name );
 
@@ -289,7 +289,7 @@ class TDECORE_EXPORT KAccel : public TQAccel
 	 *         configuration file
 	 * @return true if successful, false otherwise
 	 */
-	bool readSettings( KConfigBase* pConfig = 0 );
+	bool readSettings( TDEConfigBase* pConfig = 0 );
 	/**
 	 * Write the current shortcuts to @p pConfig,
 	 * or (if @p pConfig is zero) to the application's
@@ -298,7 +298,7 @@ class TDECORE_EXPORT KAccel : public TQAccel
 	 *         configuration file
 	 * @return true if successful, false otherwise
 	 */
-	bool writeSettings( KConfigBase* pConfig = 0 ) const;
+	bool writeSettings( TDEConfigBase* pConfig = 0 ) const;
 
 	/**
 	 * Emits the keycodeChanged() signal.

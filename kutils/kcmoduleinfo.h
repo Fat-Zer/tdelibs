@@ -32,12 +32,12 @@ class TQStringList;
 
 /**
  * @ingroup kcmodule
- * A class that provides information about a KCModule
+ * A class that provides information about a TDECModule
  *
- * KCModuleInfo provides various technical information, such as icon, library
- * etc. about a KCModule.n
+ * TDECModuleInfo provides various technical information, such as icon, library
+ * etc. about a TDECModule.n
  * @note Any values set with the set* functions is not
- * written back with KCModuleInfo it only reads value from the desktop file.
+ * written back with TDECModuleInfo it only reads value from the desktop file.
  *
  * @internal
  * @author Matthias Hoelzer-Kluepfel <mhk@kde.org>
@@ -46,19 +46,19 @@ class TQStringList;
  * @since 3.2
  *
  */
-class KUTILS_EXPORT KCModuleInfo
+class KUTILS_EXPORT TDECModuleInfo
 {
 
 public:
 
   /**
-   * Constructs a KCModuleInfo.
-   * @note a KCModuleInfo object will have to be manually deleted, it is not
+   * Constructs a TDECModuleInfo.
+   * @note a TDECModuleInfo object will have to be manually deleted, it is not
    * done automatically for you.
    * @param desktopFile the desktop file representing the module, or
    * the name of the module.
    */
-  KCModuleInfo(const TQString& desktopFile);
+  TDECModuleInfo(const TQString& desktopFile);
 
   /**
    * Same as above but takes a KService::Ptr as argument.
@@ -67,27 +67,27 @@ public:
    *
    * @param moduleInfo specifies the module
    */
-  KCModuleInfo( KService::Ptr moduleInfo );
+  TDECModuleInfo( KService::Ptr moduleInfo );
 
 
   /**
-   * Same as above but takes a KCModuleInfo as argument.
+   * Same as above but takes a TDECModuleInfo as argument.
    *
    * @param rhs specifies the module
    */
-  KCModuleInfo( const KCModuleInfo &rhs );
+  TDECModuleInfo( const TDECModuleInfo &rhs );
 
   /**
-   * Same as above but creates an empty KCModuleInfo.
+   * Same as above but creates an empty TDECModuleInfo.
    * You should not normally call this.
    * @since 3.4
    */
-  KCModuleInfo();
+  TDECModuleInfo();
 
   /**
    * Assignment operator
    */
-  KCModuleInfo &operator=( const KCModuleInfo &rhs );
+  TDECModuleInfo &operator=( const TDECModuleInfo &rhs );
 
   /**
    * Equal operator
@@ -95,17 +95,17 @@ public:
    * @return true if @p rhs equals itself
    */
 
-  bool operator==( const KCModuleInfo &rhs ) const;
+  bool operator==( const TDECModuleInfo &rhs ) const;
 
   /**
    * @return true if @p rhs is not equal itself
    */
-  bool operator!=( const KCModuleInfo &rhs ) const;
+  bool operator!=( const TDECModuleInfo &rhs ) const;
 
   /**
    * Default destructor.
    */
-  ~KCModuleInfo();
+  ~TDECModuleInfo();
 
   /**
    * @return the filename of the .desktop file that describes the KCM
@@ -262,7 +262,7 @@ protected:
   void setDocPath(const TQString &p) { _doc = p; }
 
   /**
-   * Reads the service entries specific for KCModule from the desktop file.
+   * Reads the service entries specific for TDECModule from the desktop file.
    * The usual desktop entries are read in init.
    */
   void loadAll();
@@ -276,7 +276,7 @@ private:
 
 private:
 
-  // KDE4 These needs to be moved to KCModuleInfoPrivate
+  // KDE4 These needs to be moved to TDECModuleInfoPrivate
   TQStringList _keywords;
   TQString     _name, _icon, _lib, _handle, _fileName, _doc, _comment;
   bool        _needsRootPrivileges : 1;
@@ -286,8 +286,8 @@ private:
 
   KService::Ptr _service;
 
-  class KCModuleInfoPrivate;
-  KCModuleInfoPrivate *d;
+  class TDECModuleInfoPrivate;
+  TDECModuleInfoPrivate *d;
 
 };
 

@@ -144,7 +144,7 @@ void KNewStuffSecure::slotValidated(int result)
      emit installFinished();
   } else
   {
-    KConfig *cfg = TDEGlobal::config();
+    TDEConfig *cfg = TDEGlobal::config();
     cfg->deleteGroup("KNewStuffStatus");
     cfg->setGroup("KNewStuffStatus");
     for (TQMap<TQString, TQString>::ConstIterator it = m_installedResources.constBegin(); it != m_installedResources.constEnd(); ++it)
@@ -159,7 +159,7 @@ void KNewStuffSecure::slotValidated(int result)
 
 void KNewStuffSecure::downloadResource()
 {
-  KConfig *cfg = TDEGlobal::config();
+  TDEConfig *cfg = TDEGlobal::config();
   m_installedResources = cfg->entryMap("KNewStuffStatus");
   engine()->ignoreInstallResult(true);
   KNewStuff::download();
@@ -179,7 +179,7 @@ void KNewStuffSecure::uploadResource(const TQString& fileName)
   m_tempDir->setAutoDelete(true);
   TQFileInfo f(fileName);
   m_signedFileName = m_tempDir->name() + "/" + f.fileName();
-  KIO::NetAccess::file_copy(KURL::fromPathOrURL(fileName), KURL::fromPathOrURL(m_signedFileName), -1, true);
+  TDEIO::NetAccess::file_copy(KURL::fromPathOrURL(fileName), KURL::fromPathOrURL(m_signedFileName), -1, true);
   Security::ref()->signFile(m_signedFileName);
 }
 
@@ -215,7 +215,7 @@ void KNewStuffSecure::slotFileSigned(int result)
       file.close();
     }
     tar.close();
-    KIO::NetAccess::file_move(KURL::fromPathOrURL(m_signedFileName + ".signed"), KURL::fromPathOrURL(m_signedFileName), -1, true);
+    TDEIO::NetAccess::file_move(KURL::fromPathOrURL(m_signedFileName + ".signed"), KURL::fromPathOrURL(m_signedFileName), -1, true);
     KNewStuff::upload(m_signedFileName, TQString::null);
     disconnect(Security::ref(), TQT_SIGNAL(fileSigned(int)), this, TQT_SLOT(slotFileSigned(int)));
   }
@@ -231,7 +231,7 @@ void KNewStuffSecure::removeTempDirectory()
 {
   if (m_tempDir)
   {
-    KIO::NetAccess::del(KURL().fromPathOrURL(m_tempDir->name()), parentWidget());
+    TDEIO::NetAccess::del(KURL().fromPathOrURL(m_tempDir->name()), parentWidget());
     delete m_tempDir;
     m_tempDir = 0L;
   }

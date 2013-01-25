@@ -251,7 +251,7 @@ void KMDIGUIClient::addToolView( KMdiToolViewAccessor* mtva )
 
 	// try to read the action shortcut
 	KShortcut sc;
-	KConfig *cfg = kapp->config();
+	TDEConfig *cfg = kapp->config();
 	TQString _grp = cfg->group();
 	cfg->setGroup( "Shortcuts" );
 	// 	if ( cfg->hasKey( aname ) )

@@ -55,7 +55,7 @@ SuProcess::SuProcess(const TQCString &user, const TQCString &command)
     m_User = user;
     m_Command = command;
 
-    KConfig* config = TDEGlobal::config();
+    TDEConfig* config = TDEGlobal::config();
     config->setGroup("super-user-command");
     superUserCommand = config->readEntry("super-user-command", DEFAULT_SUPER_USER_COMMAND);
     if ( superUserCommand != "sudo" && superUserCommand != "su" ) {

@@ -35,16 +35,16 @@
 #include "kconfigdata.h"
 #include "tdelibs_export.h"
 
-class KConfigBackEnd;
-class KConfigBasePrivate;
-class KConfigGroup;
+class TDEConfigBackEnd;
+class TDEConfigBasePrivate;
+class TDEConfigGroup;
 
 /**
  * @short KDE Configuration Management abstract base class
  *
  * This class forms the base for all %KDE configuration. It is an
  * abstract base class, meaning that you cannot directly instantiate
- * objects of this class. Either use KConfig (for usual %KDE
+ * objects of this class. Either use TDEConfig (for usual %KDE
  * configuration) or KSimpleConfig (for special needs as in ksamba), or
  * even KSharedConfig (stores values in shared memory).
  *
@@ -53,7 +53,7 @@ class KConfigGroup;
  * entries that do not explicitly specify which group they are in are
  * in a special group called the default group.
  *
- * If there is a $ character in an entry, KConfigBase tries to expand
+ * If there is a $ character in an entry, TDEConfigBase tries to expand
  * environment variable and uses its value instead of its name. You
  * can avoid this feature by having two consecutive $ characters in
  * your config file which get expanded to one.
@@ -63,29 +63,29 @@ class KConfigGroup;
  *
  * @author Kalle Dalheimer <kalle@kde.org>, Preston Brown <pbrown@kde.org>
  * @see TDEGlobal#config()
- * @see KConfig
+ * @see TDEConfig
  * @see KSimpleConfig
  * @see KSharedConfig
  */
-class TDECORE_EXPORT KConfigBase : public TQObject
+class TDECORE_EXPORT TDEConfigBase : public TQObject
 {
   Q_OBJECT
   
 
-  friend class KConfigBackEnd;
-  friend class KConfigINIBackEnd;
-  friend class KConfigGroup;
+  friend class TDEConfigBackEnd;
+  friend class TDEConfigINIBackEnd;
+  friend class TDEConfigGroup;
 
 public:
   /**
-   * Construct a KConfigBase object.
+   * Construct a TDEConfigBase object.
    */
-  KConfigBase();
+  TDEConfigBase();
 
   /**
-   * Destructs the KConfigBase object.
+   * Destructs the TDEConfigBase object.
    */
-  virtual ~KConfigBase();
+  virtual ~TDEConfigBase();
 
   /**
    * Specifies the group in which keys will be read and written.
@@ -1670,7 +1670,7 @@ public:
 
 
   /**
-   * Turns on or off "dollar  expansion" (see KConfigBase introduction)
+   * Turns on or off "dollar  expansion" (see TDEConfigBase introduction)
    *  when reading config entries.
    * Dollar sign expansion is initially OFF.
    *
@@ -1688,13 +1688,13 @@ public:
   /**
    * Mark the config object as "clean," i.e. don't write dirty entries
    * at destruction time. If @p bDeep is false, only the global dirty
-   * flag of the KConfig object gets cleared. If you then call
+   * flag of the TDEConfig object gets cleared. If you then call
    * writeEntry() again, the global dirty flag is set again and all
    * dirty entries will be written at a subsequent sync() call.
    *
-   * Classes that derive from KConfigBase should override this
+   * Classes that derive from TDEConfigBase should override this
    * method and implement storage-specific behavior, as well as
-   * calling the KConfigBase::rollback() explicitly in the initializer.
+   * calling the TDEConfigBase::rollback() explicitly in the initializer.
    *
    * @param bDeep If true, the dirty flags of all entries are cleared,
    *        as well as the global dirty flag.
@@ -1901,7 +1901,7 @@ protected:
   /**
    * Parses all configuration files for a configuration object.
    *
-   * The actual parsing is done by the associated KConfigBackEnd.
+   * The actual parsing is done by the associated TDEConfigBackEnd.
    */
   virtual void parseConfigFiles();
 
@@ -1937,7 +1937,7 @@ protected:
 
   /**
    * Inserts a (key/value) pair into the internal storage mechanism of
-   * the configuration object. Classes that derive from KConfigBase
+   * the configuration object. Classes that derive from TDEConfigBase
    * will need to implement this method in a storage-specific manner.
    *
    * Do not use this function, the implementation / return type are
@@ -1954,7 +1954,7 @@ protected:
 
   /**
    * Looks up an entry in the config object's internal structure.
-   * Classes that derive from KConfigBase will need to implement this
+   * Classes that derive from TDEConfigBase will need to implement this
    * method in a storage-specific manner.
    *
    * Do not use this function, the implementation and return type are
@@ -1973,7 +1973,7 @@ protected:
   /**
    * A back end for loading/saving to disk in a particular format.
    */
-  KConfigBackEnd *backEnd;
+  TDEConfigBackEnd *backEnd;
 public:
   /**
    * Overloaded public methods:
@@ -2008,8 +2008,8 @@ protected:
 protected:
   virtual void virtual_hook( int id, void* data );
 private:
-  class KConfigBasePrivate;
-  KConfigBasePrivate *d;
+  class TDEConfigBasePrivate;
+  TDEConfigBasePrivate *d;
 
   void writeEntry( const char *pKey, const TQString &rValue,
     bool bPersistent, bool bGlobal, bool bNLS, bool bExpand );
@@ -2018,14 +2018,14 @@ private:
 
 };
 
-class KConfigGroupSaverPrivate;
+class TDEConfigGroupSaverPrivate;
 
 /**
-  * Helper class to facilitate working with KConfig / KSimpleConfig
+  * Helper class to facilitate working with TDEConfig / KSimpleConfig
   * groups.
   *
   * Careful programmers always set the group of a
-  * KConfig KSimpleConfig object to the group they want to read from
+  * TDEConfig KSimpleConfig object to the group they want to read from
   * and set it back to the old one of afterwards. This is usually
   * written as:
   * \code
@@ -2039,82 +2039,82 @@ class KConfigGroupSaverPrivate;
   * \endcode
   *
   * In order to facilitate this task, you can use
-  * KConfigGroupSaver. Simply construct such an object ON THE STACK
+  * TDEConfigGroupSaver. Simply construct such an object ON THE STACK
   * when you want to switch to a new group. Then, when the object goes
   * out of scope, the group will automatically be restored. If you
   * want to use several different groups within a function or method,
-  * you can still use KConfigGroupSaver: Simply enclose all work with
-  * one group (including the creation of the KConfigGroupSaver object)
+  * you can still use TDEConfigGroupSaver: Simply enclose all work with
+  * one group (including the creation of the TDEConfigGroupSaver object)
   * in one block.
   *
   * @deprecated This class is deprecated and will be removed in KDE 4.
-  * KConfigGroup provides similar functionality in a more object oriented
+  * TDEConfigGroup provides similar functionality in a more object oriented
   * way.
   *
   * @author Matthias Kalle Dalheimer <kalle@kde.org>
-  * @see KConfigBase, KConfig, KSimpleConfig, KConfigGroup
-  * @short Helper class for easier use of KConfig/KSimpleConfig groups
+  * @see TDEConfigBase, TDEConfig, KSimpleConfig, TDEConfigGroup
+  * @short Helper class for easier use of TDEConfig/KSimpleConfig groups
   */
 
-class TDECORE_EXPORT KConfigGroupSaver // KDE4 remove
+class TDECORE_EXPORT TDEConfigGroupSaver // KDE4 remove
 {
 public:
   /**
-   * Constructor. You pass a pointer to the KConfigBase-derived
+   * Constructor. You pass a pointer to the TDEConfigBase-derived
    * object you want to work with and a string indicating the _new_
    * group.
    *
-   * @param config The KConfigBase-derived object this
-   *               KConfigGroupSaver works on.
+   * @param config The TDEConfigBase-derived object this
+   *               TDEConfigGroupSaver works on.
    * @param group  The new group that the config object should switch to.
    */
-  KConfigGroupSaver( KConfigBase* config, TQString group )
+  TDEConfigGroupSaver( TDEConfigBase* config, TQString group )
       /* KDE 4 : make the second parameter const TQString & */
       : _config(config), _oldgroup(config->group())
         { _config->setGroup( group ); }
 
-  KConfigGroupSaver( KConfigBase* config, const char *group )
+  TDEConfigGroupSaver( TDEConfigBase* config, const char *group )
       : _config(config), _oldgroup(config->group())
         { _config->setGroup( group ); }
 
-  KConfigGroupSaver( KConfigBase* config, const TQCString &group )
+  TDEConfigGroupSaver( TDEConfigBase* config, const TQCString &group )
       : _config(config), _oldgroup(config->group())
         { _config->setGroup( group ); }
 
-  ~KConfigGroupSaver() { _config->setGroup( _oldgroup ); }
+  ~TDEConfigGroupSaver() { _config->setGroup( _oldgroup ); }
 
-    KConfigBase* config() { return _config; };
+    TDEConfigBase* config() { return _config; };
 
 private:
-  KConfigBase* _config;
+  TDEConfigBase* _config;
   TQString _oldgroup;
 
-  KConfigGroupSaver(const KConfigGroupSaver&);
-  KConfigGroupSaver& operator=(const KConfigGroupSaver&);
+  TDEConfigGroupSaver(const TDEConfigGroupSaver&);
+  TDEConfigGroupSaver& operator=(const TDEConfigGroupSaver&);
 
-  KConfigGroupSaverPrivate *d;
+  TDEConfigGroupSaverPrivate *d;
 };
 
-class KConfigGroupPrivate;
+class TDEConfigGroupPrivate;
 
 /**
- * A KConfigBase derived class for one specific group in a KConfig object.
+ * A TDEConfigBase derived class for one specific group in a TDEConfig object.
  */
-class TDECORE_EXPORT KConfigGroup: public KConfigBase
+class TDECORE_EXPORT TDEConfigGroup: public TDEConfigBase
 {
 public:
    /**
     * Construct a config group corresponding to @p group in @p master.
     * @p group is the group name encoded in UTF-8.
     */
-   KConfigGroup(KConfigBase *master, const TQCString &group);
+   TDEConfigGroup(TDEConfigBase *master, const TQCString &group);
    /**
     * This is an overloaded constructor provided for convenience.
     * It behaves essentially like the above function.
     *
     * Construct a config group corresponding to @p group in @p master
     */
-   KConfigGroup(KConfigBase *master, const TQString &group);
+   TDEConfigGroup(TDEConfigBase *master, const TQString &group);
    /**
     * This is an overloaded constructor provided for convenience.
     * It behaves essentially like the above function.
@@ -2122,7 +2122,7 @@ public:
     * Construct a config group corresponding to @p group in @p master
     * @p group is the group name encoded in UTF-8.
     */
-   KConfigGroup(KConfigBase *master, const char * group);
+   TDEConfigGroup(TDEConfigBase *master, const char * group);
 
    /**
     * Delete all entries in the entire group
@@ -2170,11 +2170,11 @@ private:
 
    void getConfigState() { }
 
-   KConfigBase *mMaster;
+   TDEConfigBase *mMaster;
 protected:
    virtual void virtual_hook( int id, void* data );
 private:
-   KConfigGroupPrivate* d;
+   TDEConfigGroupPrivate* d;
 };
 
 #endif

@@ -28,7 +28,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tdelibs_export.h>
 
 class TQPopupMenu;
-class KConfig;
+class TDEConfig;
 class KPanelExtensionPrivate;
 
 /**
@@ -139,7 +139,7 @@ public:
     virtual TQSize sizeHint(Position /*p*/, TQSize maxsize) const { return maxsize; }
 
     /**
-     * Always use this KConfig object to save/load your extensions configuration.
+     * Always use this TDEConfig object to save/load your extensions configuration.
      *
      * For unique extensions this config object will write to a config file called
      * \<extensionname\>rc in the users local KDE directory.
@@ -147,7 +147,7 @@ public:
      * For normal extensions this config object will write to a instance specific config file
      * called \<extensionname\>\<instanceid\>rc in the users local KDE directory.
      **/
-    KConfig* config() const { return _config; }
+    TDEConfig* config() const { return _config; }
 
     /**
      * @return Type indicating the extensions type.
@@ -334,7 +334,7 @@ private:
     Type         		_type;
     Position     		_position;
     Alignment    		_alignment;
-    KConfig*     		_config;
+    TDEConfig*     		_config;
     int          		_actions;
 protected:
     virtual void virtual_hook( int id, void* data );

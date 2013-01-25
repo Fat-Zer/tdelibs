@@ -82,10 +82,10 @@ KDirListerTest::KDirListerTest( TQWidget *parent, const char *name )
            debug,  TQT_SLOT( infoMessage( const TQString& ) ) );
   connect( lister, TQT_SIGNAL( percent( int ) ),
            debug,  TQT_SLOT( percent( int ) ) );
-  connect( lister, TQT_SIGNAL( totalSize( KIO::filesize_t ) ),
-           debug,  TQT_SLOT( totalSize( KIO::filesize_t ) ) );
-  connect( lister, TQT_SIGNAL( processedSize( KIO::filesize_t ) ),
-           debug,  TQT_SLOT( processedSize( KIO::filesize_t ) ) );
+  connect( lister, TQT_SIGNAL( totalSize( TDEIO::filesize_t ) ),
+           debug,  TQT_SLOT( totalSize( TDEIO::filesize_t ) ) );
+  connect( lister, TQT_SIGNAL( processedSize( TDEIO::filesize_t ) ),
+           debug,  TQT_SLOT( processedSize( TDEIO::filesize_t ) ) );
   connect( lister, TQT_SIGNAL( speed( int ) ),
            debug,  TQT_SLOT( speed( int ) ) );
 

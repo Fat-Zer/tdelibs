@@ -26,7 +26,7 @@
 #include <kurl.h>
 
 
-namespace KIO {
+namespace TDEIO {
 
 /**
  * This class is intended to make it easier to prompt for, cache

@@ -274,7 +274,7 @@ public:
    * verbose error description a as page, depending on the users configuration.
    * @p job is the job that signaled the error situation
    */
-  virtual void showError( KIO::Job* job );
+  virtual void showError( TDEIO::Job* job );
 
   /**
    * Returns a reference to the DOM HTML document (for non-HTML documents, returns null)
@@ -1118,7 +1118,7 @@ protected:
 
   /**
    * presents a detailed error message to the user.
-   * @p errorCode kio error code, eg KIO::ERR_SERVER_TIMEOUT.
+   * @p errorCode kio error code, eg TDEIO::ERR_SERVER_TIMEOUT.
    * @p text kio additional information text.
    * @p url the url that triggered the error.
    */
@@ -1288,11 +1288,11 @@ private slots:
   /**
    * @internal
    */
-  void slotData( KIO::Job*, const TQByteArray &data );
+  void slotData( TDEIO::Job*, const TQByteArray &data );
   /**
   * @internal
   */
-  void slotInfoMessage( KIO::Job*, const TQString& msg );
+  void slotInfoMessage( TDEIO::Job*, const TQString& msg );
   /**
    * @internal
    */
@@ -1300,7 +1300,7 @@ private slots:
   /**
    * @internal
    */
-  void slotFinished( KIO::Job* );
+  void slotFinished( TDEIO::Job* );
   /**
    * @internal
    */
@@ -1312,7 +1312,7 @@ private slots:
   /**
    * @internal
    */
-  void slotRedirection( KIO::Job*, const KURL& );
+  void slotRedirection( TDEIO::Job*, const KURL& );
   /**
    * @internal
    */
@@ -1405,7 +1405,7 @@ private slots:
   /**
    * @internal
    */
-  void slotChildStarted( KIO::Job *job );
+  void slotChildStarted( TDEIO::Job *job );
   /**
    * @internal
    */
@@ -1451,22 +1451,22 @@ private slots:
   /*
    * @internal
    */
-  void slotJobPercent( KIO::Job*, unsigned long );
+  void slotJobPercent( TDEIO::Job*, unsigned long );
 
   /*
    * @internal
    */
-  void slotJobDone( KIO::Job* );
+  void slotJobDone( TDEIO::Job* );
 
   /*
    * @internal
    */
-  void slotUserSheetStatDone( KIO::Job* );
+  void slotUserSheetStatDone( TDEIO::Job* );
 
   /*
    * @internal
    */
-  void slotJobSpeed( KIO::Job*, unsigned long );
+  void slotJobSpeed( TDEIO::Job*, unsigned long );
 
   /**
    * @internal

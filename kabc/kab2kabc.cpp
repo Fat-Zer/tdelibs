@@ -123,7 +123,7 @@ void importKMailAddressBook( KABC::AddressBook *ab )
   TQString fileName = locateLocal( "data", "kmail/addressbook" );
   TQString kmailConfigName = locate( "config", "kmailrc" );
   if ( !kmailConfigName.isEmpty() ) {
-    KConfig cfg( kmailConfigName );
+    TDEConfig cfg( kmailConfigName );
     cfg.setGroup( "Addressbook" );
     fileName = cfg.readPathEntry( "default", fileName );
   }
@@ -458,7 +458,7 @@ int main( int argc, char **argv )
   if ( args->isSet( "disable-autostart" ) ) {
     kdDebug() << "Disable autostart." << endl;
 
-    KConfig *config = app.config();
+    TDEConfig *config = app.config();
     config->setGroup( "Startup" );
     config->writeEntry( "EnableAutostart", false );
   }

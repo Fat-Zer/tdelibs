@@ -22,7 +22,7 @@
 #include <kdialogbase.h>
 
 class KListView;
-class KConfigBase;
+class TDEConfigBase;
 
  /*
   * Dialog for editing custom menus.
@@ -42,12 +42,12 @@ public:
     /**
      * load the custom menu
      */
-    void load(KConfigBase *);
+    void load(TDEConfigBase *);
 
     /**
      * save the custom menu
      */
-    void save(KConfigBase *);
+    void save(TDEConfigBase *);
 
 public slots:
     void slotNewItem();

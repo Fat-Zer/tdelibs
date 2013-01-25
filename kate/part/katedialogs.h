@@ -46,7 +46,7 @@ struct syntaxContextData;
 class KateDocument;
 class KateView;
 
-namespace KIO
+namespace TDEIO
 {
   class Job;
   class TransferJob;
@@ -350,10 +350,10 @@ class KateHlDownloadDialog: public KDialogBase
   private:
     class TQListView  *list;
     class TQString listData;
-    KIO::TransferJob *transferJob;
+    TDEIO::TransferJob *transferJob;
 
   private slots:
-    void listDataReceived(KIO::Job *, const TQByteArray &data);
+    void listDataReceived(TDEIO::Job *, const TQByteArray &data);
 
   public slots:
     void slotUser1();

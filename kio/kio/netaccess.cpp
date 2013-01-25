@@ -43,7 +43,7 @@
 
 #include "kio/netaccess.h"
 
-using namespace KIO;
+using namespace TDEIO;
 
 TQString * NetAccess::lastErrorMsg;
 int NetAccess::lastErrorCode = 0;
@@ -190,12 +190,12 @@ bool NetAccess::exists( const KURL & url, bool source, TQWidget* window )
   return kioNet.statInternal( url, 0 /*no details*/, source, window );
 }
 
-bool NetAccess::stat( const KURL & url, KIO::UDSEntry & entry )
+bool NetAccess::stat( const KURL & url, TDEIO::UDSEntry & entry )
 {
   return NetAccess::stat( url, entry, 0 );
 }
 
-bool NetAccess::stat( const KURL & url, KIO::UDSEntry & entry, TQWidget* window )
+bool NetAccess::stat( const KURL & url, TDEIO::UDSEntry & entry, TQWidget* window )
 {
   NetAccess kioNet;
   bool ret = kioNet.statInternal( url, 2 /*all details*/, true /*source*/, window );
@@ -211,7 +211,7 @@ KURL NetAccess::mostLocalURL(const KURL & url, TQWidget* window)
     return url;
   }
 
-  KIO::UDSEntry entry;
+  TDEIO::UDSEntry entry;
   if (!stat(url, entry, window))
   {
     return url;
@@ -219,12 +219,12 @@ KURL NetAccess::mostLocalURL(const KURL & url, TQWidget* window)
 
   TQString path;
 
-  // Extract the local path from the KIO::UDSEntry
-  KIO::UDSEntry::ConstIterator it = entry.begin();
-  const KIO::UDSEntry::ConstIterator end = entry.end();
+  // Extract the local path from the TDEIO::UDSEntry
+  TDEIO::UDSEntry::ConstIterator it = entry.begin();
+  const TDEIO::UDSEntry::ConstIterator end = entry.end();
   for ( ; it != end; ++it )
   {
-    if ( (*it).m_uds == KIO::UDS_LOCAL_PATH )
+    if ( (*it).m_uds == TDEIO::UDS_LOCAL_PATH )
     {
       path = (*it).m_str;
       break;
@@ -305,13 +305,13 @@ bool NetAccess::filecopyInternal(const KURL& src, const KURL& target, int permis
 {
   bJobOK = true; // success unless further error occurs
 
-  KIO::Scheduler::checkSlaveOnHold(true);
-  KIO::Job * job = move
-                   ? KIO::file_move( src, target, permissions, overwrite, resume )
-                   : KIO::file_copy( src, target, permissions, overwrite, resume );
+  TDEIO::Scheduler::checkSlaveOnHold(true);
+  TDEIO::Job * job = move
+                   ? TDEIO::file_move( src, target, permissions, overwrite, resume )
+                   : TDEIO::file_copy( src, target, permissions, overwrite, resume );
   job->setWindow (window);
-  connect( job, TQT_SIGNAL( result (KIO::Job *) ),
-           this, TQT_SLOT( slotResult (KIO::Job *) ) );
+  connect( job, TQT_SIGNAL( result (TDEIO::Job *) ),
+           this, TQT_SLOT( slotResult (TDEIO::Job *) ) );
 
   enter_loop();
   return bJobOK;
@@ -322,12 +322,12 @@ bool NetAccess::dircopyInternal(const KURL::List& src, const KURL& target,
 {
   bJobOK = true; // success unless further error occurs
 
-  KIO::Job * job = move
-                   ? KIO::move( src, target )
-                   : KIO::copy( src, target );
+  TDEIO::Job * job = move
+                   ? TDEIO::move( src, target )
+                   : TDEIO::copy( src, target );
   job->setWindow (window);
-  connect( job, TQT_SIGNAL( result (KIO::Job *) ),
-           this, TQT_SLOT( slotResult (KIO::Job *) ) );
+  connect( job, TQT_SIGNAL( result (TDEIO::Job *) ),
+           this, TQT_SLOT( slotResult (TDEIO::Job *) ) );
 
   enter_loop();
   return bJobOK;
@@ -337,12 +337,12 @@ bool NetAccess::statInternal( const KURL & url, int details, bool source,
                               TQWidget* window )
 {
   bJobOK = true; // success unless further error occurs
-  KIO::StatJob * job = KIO::stat( url, !url.isLocalFile() && !url.url().startsWith("beagle:?") );
+  TDEIO::StatJob * job = TDEIO::stat( url, !url.isLocalFile() && !url.url().startsWith("beagle:?") );
   job->setWindow (window);
   job->setDetails( details );
   job->setSide( source );
-  connect( job, TQT_SIGNAL( result (KIO::Job *) ),
-           this, TQT_SLOT( slotResult (KIO::Job *) ) );
+  connect( job, TQT_SIGNAL( result (TDEIO::Job *) ),
+           this, TQT_SLOT( slotResult (TDEIO::Job *) ) );
   enter_loop();
   return bJobOK;
 }
@@ -350,10 +350,10 @@ bool NetAccess::statInternal( const KURL & url, int details, bool source,
 bool NetAccess::delInternal( const KURL & url, TQWidget* window )
 {
   bJobOK = true; // success unless further error occurs
-  KIO::Job * job = KIO::del( url );
+  TDEIO::Job * job = TDEIO::del( url );
   job->setWindow (window);
-  connect( job, TQT_SIGNAL( result (KIO::Job *) ),
-           this, TQT_SLOT( slotResult (KIO::Job *) ) );
+  connect( job, TQT_SIGNAL( result (TDEIO::Job *) ),
+           this, TQT_SLOT( slotResult (TDEIO::Job *) ) );
   enter_loop();
   return bJobOK;
 }
@@ -362,10 +362,10 @@ bool NetAccess::mkdirInternal( const KURL & url, int permissions,
                                TQWidget* window )
 {
   bJobOK = true; // success unless further error occurs
-  KIO::Job * job = KIO::mkdir( url, permissions );
+  TDEIO::Job * job = TDEIO::mkdir( url, permissions );
   job->setWindow (window);
-  connect( job, TQT_SIGNAL( result (KIO::Job *) ),
-           this, TQT_SLOT( slotResult (KIO::Job *) ) );
+  connect( job, TQT_SIGNAL( result (TDEIO::Job *) ),
+           this, TQT_SLOT( slotResult (TDEIO::Job *) ) );
   enter_loop();
   return bJobOK;
 }
@@ -374,17 +374,17 @@ TQString NetAccess::mimetypeInternal( const KURL & url, TQWidget* window )
 {
   bJobOK = true; // success unless further error occurs
   m_mimetype = TQString::fromLatin1("unknown");
-  KIO::Job * job = KIO::mimetype( url );
+  TDEIO::Job * job = TDEIO::mimetype( url );
   job->setWindow (window);
-  connect( job, TQT_SIGNAL( result (KIO::Job *) ),
-           this, TQT_SLOT( slotResult (KIO::Job *) ) );
-  connect( job, TQT_SIGNAL( mimetype (KIO::Job *, const TQString &) ),
-           this, TQT_SLOT( slotMimetype (KIO::Job *, const TQString &) ) );
+  connect( job, TQT_SIGNAL( result (TDEIO::Job *) ),
+           this, TQT_SLOT( slotResult (TDEIO::Job *) ) );
+  connect( job, TQT_SIGNAL( mimetype (TDEIO::Job *, const TQString &) ),
+           this, TQT_SLOT( slotMimetype (TDEIO::Job *, const TQString &) ) );
   enter_loop();
   return m_mimetype;
 }
 
-void NetAccess::slotMimetype( KIO::Job *, const TQString & type  )
+void NetAccess::slotMimetype( TDEIO::Job *, const TQString & type  )
 {
   m_mimetype = type;
 }
@@ -412,13 +412,13 @@ TQString NetAccess::fish_executeInternal(const KURL & url, const TQString comman
 
     stream << int('X') << tempPathUrl << command;
 
-    KIO::Job * job = KIO::special( tempPathUrl, packedArgs, true );
+    TDEIO::Job * job = TDEIO::special( tempPathUrl, packedArgs, true );
     job->setWindow( window );
-    connect( job, TQT_SIGNAL( result (KIO::Job *) ),
-             this, TQT_SLOT( slotResult (KIO::Job *) ) );
+    connect( job, TQT_SIGNAL( result (TDEIO::Job *) ),
+             this, TQT_SLOT( slotResult (TDEIO::Job *) ) );
     enter_loop();
 
-    // since the KIO::special does not provide feedback we need to download the result
+    // since the TDEIO::special does not provide feedback we need to download the result
     if( NetAccess::download( tempPathUrl, target, window ) )
     {
       TQFile resultFile( target );
@@ -459,21 +459,21 @@ bool NetAccess::synchronousRunInternal( Job* job, TQWidget* window, TQByteArray*
       }
   }
 
-  connect( job, TQT_SIGNAL( result (KIO::Job *) ),
-           this, TQT_SLOT( slotResult (KIO::Job *) ) );
+  connect( job, TQT_SIGNAL( result (TDEIO::Job *) ),
+           this, TQT_SLOT( slotResult (TDEIO::Job *) ) );
 
   TQMetaObject *meta = job->metaObject();
 
-  static const char dataSignal[] = "data(KIO::Job*,const " TQBYTEARRAY_OBJECT_NAME_STRING "&)";
+  static const char dataSignal[] = "data(TDEIO::Job*,const " TQBYTEARRAY_OBJECT_NAME_STRING "&)";
   if ( meta->findSignal( dataSignal ) != -1 ) {
-      connect( job, TQT_SIGNAL(data(KIO::Job*,const TQByteArray&)),
-               this, TQT_SLOT(slotData(KIO::Job*,const TQByteArray&)) );
+      connect( job, TQT_SIGNAL(data(TDEIO::Job*,const TQByteArray&)),
+               this, TQT_SLOT(slotData(TDEIO::Job*,const TQByteArray&)) );
   }
 
-  static const char redirSignal[] = "redirection(KIO::Job*,const KURL&)";
+  static const char redirSignal[] = "redirection(TDEIO::Job*,const KURL&)";
   if ( meta->findSignal( redirSignal ) != -1 ) {
-      connect( job, TQT_SIGNAL(redirection(KIO::Job*,const KURL&)),
-               this, TQT_SLOT(slotRedirection(KIO::Job*, const KURL&)) );
+      connect( job, TQT_SIGNAL(redirection(TDEIO::Job*,const KURL&)),
+               this, TQT_SLOT(slotRedirection(TDEIO::Job*, const KURL&)) );
   }
 
   enter_loop();
@@ -499,7 +499,7 @@ void NetAccess::enter_loop()
   tqt_leave_modal(&dummy);
 }
 
-void NetAccess::slotResult( KIO::Job * job )
+void NetAccess::slotResult( TDEIO::Job * job )
 {
   lastErrorCode = job->error();
   bJobOK = !job->error();
@@ -509,8 +509,8 @@ void NetAccess::slotResult( KIO::Job * job )
       lastErrorMsg = new TQString;
     *lastErrorMsg = job->errorString();
   }
-  if ( job->isA("KIO::StatJob") )
-    m_entry = static_cast<KIO::StatJob *>(job)->statResult();
+  if ( job->isA("TDEIO::StatJob") )
+    m_entry = static_cast<TDEIO::StatJob *>(job)->statResult();
 
   if ( m_metaData )
     *m_metaData = job->metaData();
@@ -518,7 +518,7 @@ void NetAccess::slotResult( KIO::Job * job )
   tqApp->exit_loop();
 }
 
-void NetAccess::slotData( KIO::Job*, const TQByteArray& data )
+void NetAccess::slotData( TDEIO::Job*, const TQByteArray& data )
 {
   if ( data.isEmpty() )
     return;
@@ -528,7 +528,7 @@ void NetAccess::slotData( KIO::Job*, const TQByteArray& data )
   std::memcpy( m_data.data() + offset, data.data(), data.size() );
 }
 
-void NetAccess::slotRedirection( KIO::Job*, const KURL& url )
+void NetAccess::slotRedirection( TDEIO::Job*, const KURL& url )
 {
   m_url = url;
 }

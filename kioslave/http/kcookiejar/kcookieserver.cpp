@@ -88,7 +88,7 @@ KCookieServer::KCookieServer(const TQCString &name)
    mAdvicePending = false;
    mTimer = new TQTimer();
    connect( mTimer, TQT_SIGNAL( timeout()), TQT_SLOT( slotSave()));
-   mConfig = new KConfig("kcookiejarrc");
+   mConfig = new TDEConfig("kcookiejarrc");
    mCookieJar->loadConfig( mConfig );
 
    TQString filename = locateLocal("data", "kcookiejar/cookies");

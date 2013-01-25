@@ -55,7 +55,7 @@ KPanelExtension::KPanelExtension(const TQString& configFile, Type type,
 {
     d = new KPanelExtensionPrivate;
     setFrameStyle(NoFrame);
-    _config = new KConfig(configFile);
+    _config = new TDEConfig(configFile);
 }
 
 KPanelExtension::~KPanelExtension()

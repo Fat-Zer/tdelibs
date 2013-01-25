@@ -14,7 +14,7 @@ public:
 
 private slots:
     void slotGenerate();
-    void slotResult(KIO::Job *);
+    void slotResult(TDEIO::Job *);
     void slotPreview( const KFileItem *, const TQPixmap & );
     void slotFailed();
 

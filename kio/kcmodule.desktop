@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=ServiceType
-X-TDE-ServiceType=KCModule
+X-TDE-ServiceType=TDECModule
 Name=TDE Control Module
 Name[af]=TDE Beheer Module
 Name[ar]=وحدة تحكم كيدي

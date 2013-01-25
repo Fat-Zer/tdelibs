@@ -474,7 +474,7 @@ int KService::initialPreferenceForMimeType( const TQString& mimeType ) const
   return 0;
 }
 
-class KServiceReadProperty : public KConfigBase
+class KServiceReadProperty : public TDEConfigBase
 {
 public:
    KServiceReadProperty(const TQString &_key, const TQCString &_value)
@@ -570,7 +570,7 @@ TQVariant KService::property( const TQString& _name, TQVariant::Type t ) const
     }
   }
 
-  // Then we use a homebuild class based on KConfigBase to convert the TQString.
+  // Then we use a homebuild class based on TDEConfigBase to convert the TQString.
   // For some often used property types we do the conversion ourselves.
   TQMap<TQString,TQVariant>::ConstIterator it = m_mapProps.find( _name );
   if ( (it == m_mapProps.end()) || (!it.data().isValid()))

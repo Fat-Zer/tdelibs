@@ -120,12 +120,12 @@ public:
   virtual ~KHTMLPopupGUIClient();
 
   static void saveURL( TQWidget *parent, const TQString &caption, const KURL &url,
-                       const TQMap<TQString, TQString> &metaData = KIO::MetaData(),
+                       const TQMap<TQString, TQString> &metaData = TDEIO::MetaData(),
                        const TQString &filter = TQString::null, long cacheId = 0,
                        const TQString &suggestedFilename = TQString::null );
 
   static void saveURL( const KURL &url, const KURL &destination,
-                       const TQMap<TQString, TQString> &metaData = KIO::MetaData(),
+                       const TQMap<TQString, TQString> &metaData = TDEIO::MetaData(),
                        long cacheId = 0 );
 private slots:
   void slotSaveLinkAs();

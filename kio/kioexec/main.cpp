@@ -61,11 +61,11 @@ static KCmdLineOptions options[] =
 
 int jobCounter = 0;
 
-TQPtrList<KIO::Job>* jobList = 0L;
+TQPtrList<TDEIO::Job>* jobList = 0L;
 
 KIOExec::KIOExec()
 {
-    jobList = new TQPtrList<KIO::Job>;
+    jobList = new TQPtrList<TDEIO::Job>;
     jobList->setAutoDelete( false ); // jobs autodelete themselves
 
     TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
@@ -83,7 +83,7 @@ KIOExec::KIOExec()
     {
         KURL url = args->url(i);
         // we need to map system:/ etc to make sure we get this right
-        url = KIO::NetAccess::mostLocalURL( url, 0 );
+        url = TDEIO::NetAccess::mostLocalURL( url, 0 );
 
         //kdDebug() << "url=" << url.url() << " filename=" << url.fileName() << endl;
         // A local file, not an URL ?
@@ -105,7 +105,7 @@ KIOExec::KIOExec()
             else
             // We must fetch the file
             {
-                TQString fileName = KIO::encodeFileName( url.fileName() );
+                TQString fileName = TDEIO::encodeFileName( url.fileName() );
                 if ( !suggestedFileName.isEmpty() )
                     fileName = suggestedFileName;
                 // Build the destination filename, in ~/.trinity/cache-*/krun/
@@ -122,10 +122,10 @@ KIOExec::KIOExec()
                 KURL dest;
                 dest.setPath( tmp );
                 kdDebug() << "Copying " << url.prettyURL() << " to " << dest << endl;
-                KIO::Job *job = KIO::file_copy( url, dest );
+                TDEIO::Job *job = TDEIO::file_copy( url, dest );
                 jobList->append( job );
 
-                connect( job, TQT_SIGNAL( result( KIO::Job * ) ), TQT_SLOT( slotResult( KIO::Job * ) ) );
+                connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ), TQT_SLOT( slotResult( TDEIO::Job * ) ) );
             }
         }
     }
@@ -143,16 +143,16 @@ KIOExec::KIOExec()
         slotResult( 0L );
 }
 
-void KIOExec::slotResult( KIO::Job * job )
+void KIOExec::slotResult( TDEIO::Job * job )
 {
     if (job && job->error())
     {
         // That error dialog would be queued, i.e. not immediate...
         //job->showErrorDialog();
-        if ( (job->error() != KIO::ERR_USER_CANCELED) )
+        if ( (job->error() != TDEIO::ERR_USER_CANCELED) )
             KMessageBox::error( 0L, job->errorString() );
 
-        TQString path = static_cast<KIO::FileCopyJob*>(job)->destURL().path();
+        TQString path = static_cast<TDEIO::FileCopyJob*>(job)->destURL().path();
 
         TQValueList<fileInfo>::Iterator it = fileList.begin();
         for(;it != fileList.end(); ++it)
@@ -164,7 +164,7 @@ void KIOExec::slotResult( KIO::Job * job )
         if ( it != fileList.end() )
            fileList.remove( it );
         else
-           kdDebug() <<  static_cast<KIO::FileCopyJob*>(job)->destURL().path() << " not found in list" << endl;
+           kdDebug() <<  static_cast<TDEIO::FileCopyJob*>(job)->destURL().path() << " not found in list" << endl;
     }
 
     counter++;
@@ -246,9 +246,9 @@ void KIOExec::slotRunApp()
                 {
                     kdDebug() << TQString(TQString("src='%1'  dest='%2'").arg(src).arg(dest.url())).ascii() << endl;
                     // Do it the synchronous way.
-                    if ( !KIO::NetAccess::upload( src, dest, 0 ) )
+                    if ( !TDEIO::NetAccess::upload( src, dest, 0 ) )
                     {
-                        KMessageBox::error( 0L, KIO::NetAccess::lastErrorString() );
+                        KMessageBox::error( 0L, TDEIO::NetAccess::lastErrorString() );
                         continue; // don't delete the temp file
                     }
                 }

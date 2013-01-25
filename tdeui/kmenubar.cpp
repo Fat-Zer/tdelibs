@@ -235,8 +235,8 @@ void KMenuBar::show()
 
 void KMenuBar::slotReadConfig()
 {
-  KConfig *config = TDEGlobal::config();
-  KConfigGroupSaver saver( config, "KDE" );
+  TDEConfig *config = TDEGlobal::config();
+  TDEConfigGroupSaver saver( config, "KDE" );
   setTopLevelMenuInternal( config->readBoolEntry( "macStyle", false ) );
 }
 
@@ -329,7 +329,7 @@ void KMenuBar::selectionTimeout()
     if ( d->topLevel )
     {
         d->fallback_mode = true; // KMenuBar is handling its position itself
-        KConfigGroup xineramaConfig(TDEGlobal::config(),"Xinerama");
+        TDEConfigGroup xineramaConfig(TDEGlobal::config(),"Xinerama");
         int screen = xineramaConfig.readNumEntry("MenubarScreen",
             TQApplication::desktop()->screenNumber(TQPoint(0,0)) );
         TQRect area;

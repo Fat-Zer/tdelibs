@@ -23,7 +23,7 @@
 #include <kdialogbase.h>
 #include <knewstuff/provider.h>
 
-namespace KIO
+namespace TDEIO
 {
   class Job;
 }
@@ -211,11 +211,11 @@ class KDE_EXPORT DownloadDialog : public KDialogBase
     void slotOk();
 
   private slots:
-    void slotResult(KIO::Job *job);
-    void slotData(KIO::Job *job, const TQByteArray &a);
+    void slotResult(TDEIO::Job *job);
+    void slotData(TDEIO::Job *job, const TQByteArray &a);
     void slotInstall();
     void slotDetails();
-    void slotInstalled(KIO::Job *job);
+    void slotInstalled(TDEIO::Job *job);
     void slotTab();
     void slotSelected();
     void slotPage(TQWidget *w);
@@ -244,8 +244,8 @@ class KDE_EXPORT DownloadDialog : public KDialogBase
     TQMap<TQWidget*, Provider*> m_providers;
     TQMap<TQWidget*, TQTextBrowser*> m_rts;
     TQMap<TQWidget*, TQValueList<TQPushButton*>* > m_buttons;
-    TQMap<KIO::Job*, Provider*> m_jobs;
-    TQMap<KIO::Job*, TQString> m_data;
+    TQMap<TDEIO::Job*, Provider*> m_jobs;
+    TQMap<TDEIO::Job*, TQString> m_data;
     TQString m_filter;
     Engine *m_engine;
     Private *d;

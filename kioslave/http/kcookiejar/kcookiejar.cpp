@@ -257,7 +257,7 @@ KCookieJar::KCookieJar()
     m_configChanged = false;
     m_cookiesChanged = false;
     
-    KConfig cfg("khtml/domain_info", true, false, "data");
+    TDEConfig cfg("khtml/domain_info", true, false, "data");
     TQStringList countries = cfg.readListEntry("twoLevelTLD");
     for(TQStringList::ConstIterator it = countries.begin();
         it != countries.end(); ++it)
@@ -1479,7 +1479,7 @@ bool KCookieJar::loadCookies(const TQString &_filename)
 // Save the cookie configuration
 //
 
-void KCookieJar::saveConfig(KConfig *_config)
+void KCookieJar::saveConfig(TDEConfig *_config)
 {
     if (!m_configChanged)
         return;
@@ -1515,7 +1515,7 @@ void KCookieJar::saveConfig(KConfig *_config)
 // Load the cookie configuration
 //
 
-void KCookieJar::loadConfig(KConfig *_config, bool reparse )
+void KCookieJar::loadConfig(TDEConfig *_config, bool reparse )
 {
     if ( reparse )
         _config->reparseConfiguration();

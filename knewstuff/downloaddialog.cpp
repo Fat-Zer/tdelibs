@@ -52,8 +52,8 @@ struct DownloadDialog::Private
     TQWidget *m_page;
     KListView *m_lvtmp_r, *m_lvtmp_d, *m_lvtmp_l;
     TQPtrList<Entry> m_installlist;
-    TQMap<KIO::Job*, Provider*> m_variantjobs;
-    TQMap<KIO::Job*, TQStringList> m_variants;
+    TQMap<TDEIO::Job*, Provider*> m_variantjobs;
+    TQMap<TDEIO::Job*, TQStringList> m_variants;
     TQMap<Provider*, Provider*> m_newproviders;
 };
 
@@ -237,7 +237,7 @@ void DownloadDialog::addProvider(Provider *p)
   {
     if(!p->icon().protocol().isEmpty())
     {
-      ret = KIO::NetAccess::download(p->icon(), tmp, this);
+      ret = TDEIO::NetAccess::download(p->icon(), tmp, this);
       if(ret) pix = TQPixmap(tmp);
     }
     else
@@ -331,7 +331,7 @@ void DownloadDialog::addProvider(Provider *p)
   TQTimer::singleShot(100, this, TQT_SLOT(slotFinish()));
 }
 
-void DownloadDialog::slotResult(KIO::Job *job)
+void DownloadDialog::slotResult(TDEIO::Job *job)
 {
   TQDomDocument dom;
   TQDomElement knewstuff;
@@ -459,7 +459,7 @@ void DownloadDialog::addEntry(Entry *entry)
   kdDebug() << "added entry " << entry->name() << endl;
 }
 
-void DownloadDialog::slotData(KIO::Job *job, const TQByteArray &a)
+void DownloadDialog::slotData(TDEIO::Job *job, const TQByteArray &a)
 {
   TQCString tmp(a, a.size() + 1);
   m_data[job].append(TQString::fromUtf8(tmp));
@@ -539,8 +539,8 @@ void DownloadDialog::slotInstall()
     KURL source = e->payload();
     KURL dest = KURL(m_s->downloadDestination(e));
 
-    KIO::FileCopyJob *job = KIO::file_copy(source, dest, -1, true);
-    connect(job, TQT_SIGNAL(result(KIO::Job*)), TQT_SLOT(slotInstalled(KIO::Job*)));
+    TDEIO::FileCopyJob *job = TDEIO::file_copy(source, dest, -1, true);
+    connect(job, TQT_SIGNAL(result(TDEIO::Job*)), TQT_SLOT(slotInstalled(TDEIO::Job*)));
   }
 }
 
@@ -580,12 +580,12 @@ void DownloadDialog::install(Entry *e)
   d->m_lvtmp_d->setEnabled( true );
 }
 
-void DownloadDialog::slotInstalled(KIO::Job *job)
+void DownloadDialog::slotInstalled(TDEIO::Job *job)
 {
   bool ret = job && (job->error() == 0);
   if(ret)
   {
-    KIO::FileCopyJob *cjob = ::tqqt_cast<KIO::FileCopyJob*>(job);
+    TDEIO::FileCopyJob *cjob = ::tqqt_cast<TDEIO::FileCopyJob*>(job);
     if(cjob)
     {
       ret = m_s->install(cjob->destURL().path());
@@ -673,7 +673,7 @@ void DownloadDialog::slotSelected()
     }
     else
     {
-      ret = KIO::NetAccess::download(e->preview(lang), tmp, this);
+      ret = TDEIO::NetAccess::download(e->preview(lang), tmp, this);
     }
 
     TQString desc = TQString("<b>%1</b><br>").arg(e->name(lang));
@@ -770,7 +770,7 @@ void DownloadDialog::slotPage(TQWidget *w)
 
 void DownloadDialog::loadProvider(Provider *p)
 {
-  TQMap<KIO::Job*, Provider*>::Iterator it;
+  TQMap<TDEIO::Job*, Provider*>::Iterator it;
 
   for(it = d->m_variantjobs.begin(); it != d->m_variantjobs.end(); it++)
   {
@@ -810,15 +810,15 @@ void DownloadDialog::loadProvider(Provider *p)
     TQString url = it.key();
     TQStringList urlvariants = it.data();
 
-    KIO::TransferJob *variantjob = KIO::get(url);
+    TDEIO::TransferJob *variantjob = TDEIO::get(url);
     d->m_newproviders[p] = p;
     d->m_variantjobs[variantjob] = p;
     d->m_variants[variantjob] = urlvariants;
     m_data[variantjob] = "";
 
-    connect(variantjob, TQT_SIGNAL(result(KIO::Job*)), TQT_SLOT(slotResult(KIO::Job*)));
-    connect(variantjob, TQT_SIGNAL(data(KIO::Job*, const TQByteArray&)),
-      TQT_SLOT(slotData(KIO::Job*, const TQByteArray&)));
+    connect(variantjob, TQT_SIGNAL(result(TDEIO::Job*)), TQT_SLOT(slotResult(TDEIO::Job*)));
+    connect(variantjob, TQT_SIGNAL(data(TDEIO::Job*, const TQByteArray&)),
+      TQT_SLOT(slotData(TDEIO::Job*, const TQByteArray&)));
   }
 
   if(variants.count() == 0) return;
@@ -827,7 +827,7 @@ void DownloadDialog::loadProvider(Provider *p)
 
   kdDebug() << "-- reached old downloadurl section; variants left: " << variants.count() << endl;
 
-  KIO::TransferJob *job = KIO::get(p->downloadUrl());
+  TDEIO::TransferJob *job = TDEIO::get(p->downloadUrl());
 
   d->m_newproviders[p] = p;
   d->m_variantjobs[job] = p;
@@ -835,9 +835,9 @@ void DownloadDialog::loadProvider(Provider *p)
   //m_jobs[job] = p; // not used anymore due to variants
   m_data[job] = "";
 
-  connect(job, TQT_SIGNAL(result(KIO::Job*)), TQT_SLOT(slotResult(KIO::Job*)));
-  connect(job, TQT_SIGNAL(data(KIO::Job*, const TQByteArray&)),
-    TQT_SLOT(slotData(KIO::Job*, const TQByteArray&)));
+  connect(job, TQT_SIGNAL(result(TDEIO::Job*)), TQT_SLOT(slotResult(TDEIO::Job*)));
+  connect(job, TQT_SIGNAL(data(TDEIO::Job*, const TQByteArray&)),
+    TQT_SLOT(slotData(TDEIO::Job*, const TQByteArray&)));
 }
 
 void DownloadDialog::setType(TQString type)

@@ -62,12 +62,12 @@ public:
   TQValueList<KCatalogue> catalogues; // list of all loaded catalogs, contains one instance per catalog name and language
   TQString encoding;
   TQTextCodec * codecForEncoding;
-  KConfig * config;
+  TDEConfig * config;
   bool formatInited;
   int /*TQPrinter::PageSize*/ pageSize;
   KLocale::MeasureSystem measureSystem;
   TQStringList langTwoAlpha;
-  KConfig *languages;
+  TDEConfig *languages;
 
   TQString calendarType;
   KCalendarSystem * calendar;
@@ -81,7 +81,7 @@ public:
 
 static KLocale *this_klocale = 0;
 
-KLocale::KLocale( const TQString & catalog, KConfig * config )
+KLocale::KLocale( const TQString & catalog, TDEConfig * config )
 {
   d = new KLocalePrivate;
   d->config = config;
@@ -92,7 +92,7 @@ KLocale::KLocale( const TQString & catalog, KConfig * config )
   initEncoding(0);
   initFileNameEncoding(0);
 
-  KConfig *cfg = d->config;
+  TDEConfig *cfg = d->config;
   this_klocale = this;
   if (!cfg) cfg = TDEGlobal::instance()->config();
   this_klocale = 0;
@@ -103,12 +103,12 @@ KLocale::KLocale( const TQString & catalog, KConfig * config )
   initMainCatalogues(catalog);
 }
 
-TQString KLocale::_initLanguage(KConfigBase *config)
+TQString KLocale::_initLanguage(TDEConfigBase *config)
 {
   if (this_klocale)
   {
      // ### HPB Why this cast??
-     this_klocale->initLanguageList((KConfig *) config, true);
+     this_klocale->initLanguageList((TDEConfig *) config, true);
      // todo: adapt current catalog list: remove unused languages, insert main catalogs, if not already found
      return this_klocale->language();
   }
@@ -144,9 +144,9 @@ void KLocale::initMainCatalogues(const TQString & catalog)
   }
 }
 
-void KLocale::initLanguageList(KConfig * config, bool useEnv)
+void KLocale::initLanguageList(TDEConfig * config, bool useEnv)
 {
-  KConfigGroupSaver saver(config, "Locale");
+  TDEConfigGroupSaver saver(config, "Locale");
 
   m_country = config->readEntry( "Country" );
   if ( m_country.isEmpty() )
@@ -297,19 +297,19 @@ void KLocale::doFormatInit() const
 
 void KLocale::initFormat()
 {
-  KConfig *config = d->config;
+  TDEConfig *config = d->config;
   if (!config) config = TDEGlobal::instance()->config();
   Q_ASSERT( config );
 
   kdDebug(173) << "KLocale::initFormat" << endl;
 
   // make sure the config files are read using the correct locale
-  // ### Why not add a KConfigBase::setLocale( const KLocale * )?
+  // ### Why not add a TDEConfigBase::setLocale( const KLocale * )?
   // ### Then we could remove this hack
   KLocale *lsave = TDEGlobal::_locale;
   TDEGlobal::_locale = this;
 
-  KConfigGroupSaver saver(config, "Locale");
+  TDEConfigGroupSaver saver(config, "Locale");
 
   KSimpleConfig entry(locate("locale",
                              TQString::fromLatin1("l10n/%1/entry.desktop")
@@ -2054,7 +2054,7 @@ bool KLocale::useDefaultLanguage() const
   return language() == defaultLanguage();
 }
 
-void KLocale::initEncoding(KConfig *)
+void KLocale::initEncoding(TDEConfig *)
 {
   const int mibDefault = 4; // ISO 8859-1
 
@@ -2070,7 +2070,7 @@ void KLocale::initEncoding(KConfig *)
   Q_ASSERT( d->codecForEncoding );
 }
 
-void KLocale::initFileNameEncoding(KConfig *)
+void KLocale::initFileNameEncoding(TDEConfig *)
 {
   // If the following environment variable is set, assume all filenames
   // are in UTF-8 regardless of the current C locale.
@@ -2325,7 +2325,7 @@ TQStringList KLocale::languagesTwoAlpha() const
 
   TQStringList result;
 
-  KConfig config(TQString::fromLatin1("language.codes"), true, false);
+  TDEConfig config(TQString::fromLatin1("language.codes"), true, false);
   config.setGroup("TwoLetterCodes");
 
   for ( TQStringList::ConstIterator it = origList.begin();
@@ -2359,7 +2359,7 @@ TQStringList KLocale::languagesTwoAlpha() const
 TQStringList KLocale::allLanguagesTwoAlpha() const
 {
   if (!d->languages)
-    d->languages = new KConfig("all_languages", true, false, "locale");
+    d->languages = new TDEConfig("all_languages", true, false, "locale");
 
   return d->languages->groupList();
 }
@@ -2367,7 +2367,7 @@ TQStringList KLocale::allLanguagesTwoAlpha() const
 TQString KLocale::twoAlphaToLanguageName(const TQString &code) const
 {
   if (!d->languages)
-    d->languages = new KConfig("all_languages", true, false, "locale");
+    d->languages = new TDEConfig("all_languages", true, false, "locale");
 
   TQString groupName = code;
   const int i = groupName.find('_');
@@ -2393,7 +2393,7 @@ TQStringList KLocale::allCountriesTwoAlpha() const
 
 TQString KLocale::twoAlphaToCountryName(const TQString &code) const
 {
-  KConfig cfg("l10n/"+code.lower()+"/entry.desktop", true, false, "locale");
+  TDEConfig cfg("l10n/"+code.lower()+"/entry.desktop", true, false, "locale");
   cfg.setGroup("KCM Locale");
   return cfg.readEntry("Name");
 }

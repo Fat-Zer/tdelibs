@@ -24,7 +24,7 @@
 #include <tqobject.h>
 #include <kio/global.h>
 
-namespace KIO  {
+namespace TDEIO  {
 
 class SlaveConfig;
 
@@ -40,7 +40,7 @@ public:
     SessionData();
     ~SessionData();
 
-    virtual void configDataFor( KIO::MetaData &configData, const TQString &proto,
+    virtual void configDataFor( TDEIO::MetaData &configData, const TQString &proto,
                                 const TQString &host );
     virtual void reset();
 

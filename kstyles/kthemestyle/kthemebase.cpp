@@ -60,7 +60,7 @@ Bugs:
 Can't delete old slider image when calculating the rotated one for some reason.
 */
 
-//Shamelessly stolen from KConfigBase
+//Shamelessly stolen from TDEConfigBase
 static TQColor readColorEntry( TQSettings* s, const char *pKey,
                               const TQColor* pDefault )
 {

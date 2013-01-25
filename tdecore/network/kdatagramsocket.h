@@ -51,7 +51,7 @@ class KResolverEntry;
 class TDECORE_EXPORT KDatagramPacket
 {
   TQByteArray m_data;
-  KSocketAddress m_address;
+  TDESocketAddress m_address;
 
 public:
   /**
@@ -78,14 +78,14 @@ public:
   /**
    * Constructs the datagram with the specified content and address.
    */
-  KDatagramPacket(const TQByteArray& content, const KSocketAddress& addr)
+  KDatagramPacket(const TQByteArray& content, const TDESocketAddress& addr)
     : m_data(content), m_address(addr)
   { }
 
   /**
    * Constructs the datagram with the specified content and address.
    */
-  KDatagramPacket(const char *content, uint length, const KSocketAddress& addr)
+  KDatagramPacket(const char *content, uint length, const TDESocketAddress& addr)
     : m_address(addr)
   { setData(content, length); }
 
@@ -134,13 +134,13 @@ public:
   /**
    * Returns the socket address
    */
-  const KSocketAddress& address() const
+  const TDESocketAddress& address() const
   { return m_address; }
 
   /**
    * Sets the address stored to the given value.
    */
-  void setAddress(const KSocketAddress& addr)
+  void setAddress(const TDESocketAddress& addr)
   { m_address = addr; }
 
   /**
@@ -241,7 +241,7 @@ public:
   /**
    * Writes data to the socket. Reimplemented from KClientSocketBase.
    */
-  virtual TQ_LONG tqwriteBlock(const char *data, TQ_ULONG len, const KSocketAddress& to);
+  virtual TQ_LONG tqwriteBlock(const char *data, TQ_ULONG len, const TDESocketAddress& to);
 
   /**
    * Receives one datagram from the stream. The reading process is guaranteed

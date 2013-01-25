@@ -30,7 +30,7 @@
 
 class KPopupMenu;
 class KXMLGUIFactory;
-class KConfig;
+class TDEConfig;
 class KHelpMenu;
 class KStatusBar;
 class TQStatusBar;
@@ -489,9 +489,9 @@ public:
      * group name is used.
      * @param force if set, even default settings are re-applied
      */
-    void applyMainWindowSettings(KConfig *config, const TQString &groupName, bool force);
+    void applyMainWindowSettings(TDEConfig *config, const TQString &groupName, bool force);
     // KDE4 merge with force=false
-    void applyMainWindowSettings(KConfig *config, const TQString &groupName = TQString::null);
+    void applyMainWindowSettings(TDEConfig *config, const TQString &groupName = TQString::null);
 
     /**
      * Save settings for statusbar, menubar and toolbar to their respective
@@ -501,7 +501,7 @@ public:
      * @param groupName Group name to use. If not specified, the last used
      * group name is used
      */
-    void saveMainWindowSettings(KConfig *config, const TQString &groupName = TQString::null);
+    void saveMainWindowSettings(TDEConfig *config, const TQString &groupName = TQString::null);
 
     /**
      * Sets whether KMainWindow should provide a menu that allows showing/hiding
@@ -881,12 +881,12 @@ protected:
      * in this function!
      *
      */
-    virtual void saveProperties( KConfig* ) {}
+    virtual void saveProperties( TDEConfig* ) {}
 
    /**
     * Read your instance-specific properties.
     */
-    virtual void readProperties( KConfig* ) {}
+    virtual void readProperties( TDEConfig* ) {}
 
    /**
      * Save your application-wide properties. The function is
@@ -904,16 +904,16 @@ protected:
      *
      * Default implementation does nothing.
      */
-    virtual void saveGlobalProperties( KConfig* sessionConfig );
+    virtual void saveGlobalProperties( TDEConfig* sessionConfig );
 
     /**
      * The counterpart of saveGlobalProperties().
      *
      * Read the application-specific properties in again.
      */
-    virtual void readGlobalProperties( KConfig* sessionConfig );
-    void savePropertiesInternal( KConfig*, int );
-    bool readPropertiesInternal( KConfig*, int );
+    virtual void readGlobalProperties( TDEConfig* sessionConfig );
+    void savePropertiesInternal( TDEConfig*, int );
+    bool readPropertiesInternal( TDEConfig*, int );
 
     /**
      * For inherited classes
@@ -927,13 +927,13 @@ protected:
      * For inherited classes
      * Note that the group must be set before calling
      */
-    void saveWindowSize( KConfig * config ) const;
+    void saveWindowSize( TDEConfig * config ) const;
     /**
      * For inherited classes
      * Note that the group must be set before calling, and that
      * a -geometry on the command line has priority.
      */
-    void restoreWindowSize( KConfig * config );
+    void restoreWindowSize( TDEConfig * config );
 
     /// parse the geometry from the geometry command line argument
     void parseGeometry(bool parsewidth);

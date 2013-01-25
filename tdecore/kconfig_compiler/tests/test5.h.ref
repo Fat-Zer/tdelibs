@@ -6,7 +6,7 @@
 #include <kconfigskeleton.h>
 #include <kdebug.h>
 
-class Test5 : public KConfigSkeleton
+class Test5 : public TDEConfigSkeleton
 {
   public:
     enum { Encrypt, Decrypt, CrashNBurn, PumpNDump };
@@ -107,7 +107,7 @@ class Test5 : public KConfigSkeleton
     static
     void writeConfig()
     {
-      static_cast<KConfigSkeleton*>(self())->writeConfig();
+      static_cast<TDEConfigSkeleton*>(self())->writeConfig();
     }
   protected:
     Test5();

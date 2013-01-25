@@ -43,10 +43,10 @@ namespace KPAC
         m_script = TQString::null;
         m_scriptURL = url;
 
-        KIO::TransferJob* job = KIO::get( url, false, false );
-        connect( job, TQT_SIGNAL( data( KIO::Job*, const TQByteArray& ) ),
-                 TQT_SLOT( data( KIO::Job*, const TQByteArray& ) ) );
-        connect( job, TQT_SIGNAL( result( KIO::Job* ) ), TQT_SLOT( result( KIO::Job* ) ) );
+        TDEIO::TransferJob* job = TDEIO::get( url, false, false );
+        connect( job, TQT_SIGNAL( data( TDEIO::Job*, const TQByteArray& ) ),
+                 TQT_SLOT( data( TDEIO::Job*, const TQByteArray& ) ) );
+        connect( job, TQT_SIGNAL( result( TDEIO::Job* ) ), TQT_SLOT( result( TDEIO::Job* ) ) );
     }
 
     void Downloader::failed()
@@ -59,16 +59,16 @@ namespace KPAC
         m_error = error;
     }
 
-    void Downloader::data( KIO::Job*, const TQByteArray& data )
+    void Downloader::data( TDEIO::Job*, const TQByteArray& data )
     {
         unsigned offset = m_data.size();
         m_data.resize( offset + data.size() );
         std::memcpy( m_data.data() + offset, data.data(), data.size() );
     }
 
-    void Downloader::result( KIO::Job* job )
+    void Downloader::result( TDEIO::Job* job )
     {
-        if ( !job->error() && !static_cast< KIO::TransferJob* >( job )->isErrorPage() )
+        if ( !job->error() && !static_cast< TDEIO::TransferJob* >( job )->isErrorPage() )
         {
             bool dummy;
             m_script = TDEGlobal::charsets()->codecForName(

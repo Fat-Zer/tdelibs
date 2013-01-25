@@ -53,7 +53,7 @@ static const char* const config_stddirs[] = {
 	0
 };
 
-bool KdeprintChecker::check(KConfig *conf, const TQString& group)
+bool KdeprintChecker::check(TDEConfig *conf, const TQString& group)
 {
 	if (!group.isEmpty())
 		conf->setGroup(group);

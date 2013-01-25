@@ -675,12 +675,12 @@ void KKeyChooser::listSync()
 	}*/
 }
 
-void KKeyChooser::syncToConfig( const TQString& sConfigGroup, KConfigBase* pConfig, bool bClearUnset )
+void KKeyChooser::syncToConfig( const TQString& sConfigGroup, TDEConfigBase* pConfig, bool bClearUnset )
 {
 	kdDebug(125) << "KKeyChooser::syncToConfig( \"" << sConfigGroup << "\", " << pConfig << " ) start" << endl;
 	if( !pConfig )
 		pConfig = TDEGlobal::config();
-	KConfigGroupSaver cgs( pConfig, sConfigGroup );
+	TDEConfigGroupSaver cgs( pConfig, sConfigGroup );
 
 	TQListViewItemIterator it( d->pList );
 	for( ; it.current(); ++it ) {
@@ -1094,7 +1094,7 @@ KKeyDialog::KKeyDialog( KKeyChooser::ActionType type, bool bAllowLetterShortcuts
 	setMainWidget( m_pKeyChooser );
 	connect( this, TQT_SIGNAL(defaultClicked()), m_pKeyChooser, TQT_SLOT(allDefault()) );
 
-	KConfigGroup group( TDEGlobal::config(), "KKeyDialog Settings" );
+	TDEConfigGroup group( TDEGlobal::config(), "KKeyDialog Settings" );
 	TQSize sz = size();
 	resize( group.readSizeEntry( "Dialog Size", &sz ) );
 }
@@ -1106,14 +1106,14 @@ KKeyDialog::KKeyDialog( bool bAllowLetterShortcuts, TQWidget *parent, const char
 	setMainWidget( m_pKeyChooser );
 	connect( this, TQT_SIGNAL(defaultClicked()), m_pKeyChooser, TQT_SLOT(allDefault()) );
 
-	KConfigGroup group( TDEGlobal::config(), "KKeyDialog Settings" );
+	TDEConfigGroup group( TDEGlobal::config(), "KKeyDialog Settings" );
 	TQSize sz = size();
 	resize( group.readSizeEntry( "Dialog Size", &sz ) );
 }
 
 KKeyDialog::~KKeyDialog()
 {
-	KConfigGroup group( TDEGlobal::config(), "KKeyDialog Settings" );
+	TDEConfigGroup group( TDEGlobal::config(), "KKeyDialog Settings" );
 	group.writeEntry( "Dialog Size", size(), true, true );
 }
 

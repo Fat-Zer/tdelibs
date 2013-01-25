@@ -915,7 +915,7 @@ void KNotifyWidget::openExecDialog( KURLRequester *requester )
 void KNotifyWidget::playSound()
 {
     TQString soundPath = m_soundPath->url();
-    if (!KIO::NetAccess::exists( m_soundPath->url(), true, 0 )) {        
+    if (!TDEIO::NetAccess::exists( m_soundPath->url(), true, 0 )) {        
         bool foundSound=false;
 
         // find the first "sound"-resource that contains files
@@ -930,7 +930,7 @@ void KNotifyWidget::playSound()
            while ( it != soundDirs.end() ) {
                dir = *it;
                if ( dir.isReadable() && dir.count() > 2 && 
-	            KIO::NetAccess::exists( *it + m_soundPath->url(), true, 0 )) {
+	            TDEIO::NetAccess::exists( *it + m_soundPath->url(), true, 0 )) {
                        foundSound=true;
                        soundPath = *it + m_soundPath->url();
                        break;
@@ -1003,8 +1003,8 @@ Application::Application( const TQString &path )
     TQString config_file = path;
     config_file[config_file.find('/')] = '.';
     m_events = 0L;
-    config = new KConfig(config_file, false, false);
-    kc = new KConfig(path, true, false, "data");
+    config = new TDEConfig(config_file, false, false);
+    kc = new TDEConfig(path, true, false, "data");
     kc->setGroup( TQString::fromLatin1("!Global!") );
     m_icon = kc->readEntry(TQString::fromLatin1("IconName"),
                            TQString::fromLatin1("misc"));

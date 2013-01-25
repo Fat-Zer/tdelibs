@@ -412,8 +412,8 @@ void KOpenWithDlg::init( const TQString& _text, const TQString& _value )
     // init the history combo and insert it into the URL-Requester
     KHistoryCombo *combo = new KHistoryCombo();
     combo->setDuplicatesEnabled( false );
-    KConfig *kc = TDEGlobal::config();
-    KConfigGroupSaver ks( kc, TQString::fromLatin1("Open-with settings") );
+    TDEConfig *kc = TDEGlobal::config();
+    TDEConfigGroupSaver ks( kc, TQString::fromLatin1("Open-with settings") );
     int max = kc->readNumEntry( TQString::fromLatin1("Maximum history"), 15 );
     combo->setMaxCount( max );
     int mode = kc->readNumEntry(TQString::fromLatin1("CompletionMode"),
@@ -483,7 +483,7 @@ void KOpenWithDlg::init( const TQString& _text, const TQString& _value )
 
   // check to see if we use konsole if not disable the nocloseonexit
   // because we don't know how to do this on other terminal applications
-  KConfigGroup confGroup( TDEGlobal::config(), TQString::fromLatin1("General") );
+  TDEConfigGroup confGroup( TDEGlobal::config(), TQString::fromLatin1("General") );
   TQString preferredTerminal = confGroup.readPathEntry("TerminalApplication", TQString::fromLatin1("konsole"));
 
   if (bReadOnly || preferredTerminal != "konsole")
@@ -666,7 +666,7 @@ void KOpenWithDlg::slotOK()
 
   if (terminal->isChecked())
   {
-    KConfigGroup confGroup( TDEGlobal::config(), TQString::fromLatin1("General") );
+    TDEConfigGroup confGroup( TDEGlobal::config(), TQString::fromLatin1("General") );
     preferredTerminal = confGroup.readPathEntry("TerminalApplication", TQString::fromLatin1("konsole"));
     m_command = preferredTerminal;
     // only add --noclose when we are sure it is konsole we're using
@@ -813,8 +813,8 @@ void KOpenWithDlg::accept()
     if ( combo ) {
         combo->addToHistory( edit->url() );
 
-        KConfig *kc = TDEGlobal::config();
-        KConfigGroupSaver ks( kc, TQString::fromLatin1("Open-with settings") );
+        TDEConfig *kc = TDEGlobal::config();
+        TDEConfigGroupSaver ks( kc, TQString::fromLatin1("Open-with settings") );
         kc->writeEntry( TQString::fromLatin1("History"), combo->historyItems() );
 	kc->writeEntry(TQString::fromLatin1("CompletionMode"),
 		       combo->completionMode());

@@ -42,7 +42,7 @@
 #  define DISPATCH(f) f
 #endif
 
-using namespace KIO;
+using namespace TDEIO;
 #ifdef DATAKIOSLAVE
 extern "C" {
 

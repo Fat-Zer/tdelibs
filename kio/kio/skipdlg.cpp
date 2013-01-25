@@ -36,7 +36,7 @@
 #include <twin.h>
 #endif
 
-using namespace KIO;
+using namespace TDEIO;
 
 SkipDlg::SkipDlg(TQWidget *parent, bool _multi, const TQString& _error_text, bool _modal ) :
   KDialog ( parent, "" , _modal )
@@ -132,7 +132,7 @@ void SkipDlg::b2Pressed()
     emit result( this, 2 );
 }
 
-SkipDlg_Result KIO::open_SkipDlg( bool _multi, const TQString& _error_text )
+SkipDlg_Result TDEIO::open_SkipDlg( bool _multi, const TQString& _error_text )
 {
   Q_ASSERT(kapp);
 

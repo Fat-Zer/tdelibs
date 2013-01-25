@@ -324,9 +324,9 @@ void KIso::addBoot(struct el_torito_boot_descriptor* bootdesc) {
 
 void KIso::readParams()
 {
-    KConfig *config;
+    TDEConfig *config;
 
-    config = new KConfig("kio_isorc");
+    config = new TDEConfig("kio_isorc");
     
     showhidden=config->readBoolEntry("showhidden",false);
     showrr=config->readBoolEntry("showrr",true);

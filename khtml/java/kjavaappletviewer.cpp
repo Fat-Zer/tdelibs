@@ -315,12 +315,12 @@ KJavaAppletViewer::KJavaAppletViewer (TQWidget * wparent, const char *,
 
     if (!server->usingKIO ()) {
         /* if this page needs authentication */
-        KIO::AuthInfo info;
+        TDEIO::AuthInfo info;
         TQString errorMsg;
         TQCString replyType;
         TQByteArray params;
         TQByteArray reply;
-        KIO::AuthInfo authResult;
+        TDEIO::AuthInfo authResult;
 
         //(void) dcopClient(); // Make sure to have a dcop client.
         info.url = baseurl;
@@ -329,9 +329,9 @@ KJavaAppletViewer::KJavaAppletViewer (TQWidget * wparent, const char *,
         TQDataStream stream(params, IO_WriteOnly);
         stream << info << m_view->topLevelWidget()->winId();
 
-        if (!kapp->dcopClient ()->call( "kded", "kpasswdserver", "checkAuthInfo(KIO::AuthInfo, long int)", params, replyType, reply ) ) {
+        if (!kapp->dcopClient ()->call( "kded", "kpasswdserver", "checkAuthInfo(TDEIO::AuthInfo, long int)", params, replyType, reply ) ) {
             kdWarning() << "Can't communicate with kded_kpasswdserver!" << endl;
-        } else if ( replyType == "KIO::AuthInfo" ) {
+        } else if ( replyType == "TDEIO::AuthInfo" ) {
             TQDataStream stream2( reply, IO_ReadOnly );
             stream2 >> authResult;
             applet->setUser (authResult.username);

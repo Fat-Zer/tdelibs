@@ -370,8 +370,8 @@ class KateView : public Kate::View,
 
   // config file / session management functions
   public:
-    void readSessionConfig(KConfig *);
-    void writeSessionConfig(KConfig *);
+    void readSessionConfig(TDEConfig *);
+    void writeSessionConfig(TDEConfig *);
 
   public slots:
     int getEol();

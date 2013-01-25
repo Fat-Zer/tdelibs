@@ -59,14 +59,14 @@ KMConfigPreview::KMConfigPreview(TQWidget *parent, const char *name)
 	m_program->setEnabled(false);
 }
 
-void KMConfigPreview::loadConfig(KConfig *conf)
+void KMConfigPreview::loadConfig(TDEConfig *conf)
 {
 	conf->setGroup("General");
 	m_useext->setChecked(conf->readBoolEntry("ExternalPreview", false));
 	m_program->setURL(conf->readPathEntry("PreviewCommand", "gv"));
 }
 
-void KMConfigPreview::saveConfig(KConfig *conf)
+void KMConfigPreview::saveConfig(TDEConfig *conf)
 {
 	conf->setGroup("General");
 	conf->writeEntry("ExternalPreview", m_useext->isChecked());

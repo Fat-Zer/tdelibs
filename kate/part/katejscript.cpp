@@ -642,7 +642,7 @@ void KateJScriptManager::collectScripts (bool force)
     return;
 
   // We'll store the scripts list in this config
-  KConfig config("katepartjscriptrc", false, false);
+  TDEConfig config("katepartjscriptrc", false, false);
 
   // figure out if the kate install is too new
   config.setGroup ("General");
@@ -685,7 +685,7 @@ void KateJScriptManager::collectScripts (bool force)
 
       if (dfi.exists())
       {
-        KConfig df (desktopFile, true, false);
+        TDEConfig df (desktopFile, true, false);
         df.setDesktopGroup ();
 
         // get cmdname, fallback to baseName, if it is empty, therefor not use the kconfig fallback
@@ -778,7 +778,7 @@ bool KateJScriptManager::help( Kate::View *, const TQString &cmd, TQString &msg 
   if (!m_scripts[cmd] || !m_scripts[cmd]->desktopFileExists)
     return false;
 
-  KConfig df (m_scripts[cmd]->desktopFilename(), true, false);
+  TDEConfig df (m_scripts[cmd]->desktopFilename(), true, false);
   df.setDesktopGroup ();
 
   msg = df.readEntry ("X-Kate-Help");
@@ -1016,7 +1016,7 @@ void KateIndentJScriptManager::collectScripts (bool force)
 
 
   // We'll store the scripts list in this config
-  KConfig config("katepartindentjscriptrc", false, false);
+  TDEConfig config("katepartindentjscriptrc", false, false);
 #if 0
   // figure out if the kate install is too new
   config.setGroup ("General");

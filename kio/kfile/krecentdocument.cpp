@@ -86,7 +86,7 @@ void KRecentDocument::add(const KURL& url, const TQString& desktopEntryName)
     openStr.replace( TQRegExp("\\$"), "$$" ); // Desktop files with type "Link" are $-variable expanded
 
     kdDebug(250) << "KRecentDocument::add for " << openStr << endl;
-    KConfig *config = TDEGlobal::config();
+    TDEConfig *config = TDEGlobal::config();
     TQString oldGrp = config->group();
     config->setGroup(TQString::fromLatin1("RecentDocuments"));
     bool useRecent = config->readBoolEntry(TQString::fromLatin1("UseRecent"), true);
@@ -169,8 +169,8 @@ void KRecentDocument::clear()
 
 int KRecentDocument::maximumItems()
 {
-    KConfig *config = TDEGlobal::config();
-    KConfigGroupSaver sa(config, TQString::fromLatin1("RecentDocuments"));
+    TDEConfig *config = TDEGlobal::config();
+    TDEConfigGroupSaver sa(config, TQString::fromLatin1("RecentDocuments"));
     return config->readNumEntry(TQString::fromLatin1("MaxEntries"), 10);
 }
 

@@ -157,8 +157,8 @@ class KABC_EXPORT LdapClient : public TQObject
     void cancelQuery();
 
   protected slots:
-    void slotData( KIO::Job*, const TQByteArray &data );
-    void slotInfoMessage( KIO::Job*, const TQString &info );
+    void slotData( TDEIO::Job*, const TQByteArray &data );
+    void slotInfoMessage( TDEIO::Job*, const TQString &info );
     void slotDone();
 
   protected:
@@ -172,7 +172,7 @@ class KABC_EXPORT LdapClient : public TQObject
     TQString mScope;
     TQStringList mAttrs;
 
-    TQGuardedPtr<KIO::SimpleJob> mJob;
+    TQGuardedPtr<TDEIO::SimpleJob> mJob;
     bool mActive;
 
     LdapObject mCurrentObject;

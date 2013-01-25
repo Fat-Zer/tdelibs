@@ -213,7 +213,7 @@ bool testKernel()
 
   printf("succeeded\n");
 
-  KSocketAddress *ksin = KExtendedSocket::localAddress(sock);
+  TDESocketAddress *ksin = KExtendedSocket::localAddress(sock);
   if (ksin != NULL)
     {
       printf("\tWe got socket %s\n", (const char*)ksin->pretty().latin1());

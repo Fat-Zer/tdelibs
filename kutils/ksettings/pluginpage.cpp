@@ -38,7 +38,7 @@ class PluginPage::PluginPagePrivate
 };
 
     PluginPage::PluginPage( TQWidget * parent, const char * name, const TQStringList & args )
-    : KCModule( parent, name, args )
+    : TDECModule( parent, name, args )
     , d( new PluginPagePrivate )
 {
     ( new TQVBoxLayout( this, 0, KDialog::spacingHint() ) )->setAutoAdd( true );
@@ -47,7 +47,7 @@ class PluginPage::PluginPagePrivate
 }
 
     PluginPage::PluginPage( TDEInstance * instance, TQWidget * parent, const TQStringList & args )
-    : KCModule( instance, parent, args )
+    : TDECModule( instance, parent, args )
     , d( new PluginPagePrivate )
 {
     ( new TQVBoxLayout( this, 0, KDialog::spacingHint() ) )->setAutoAdd( true );

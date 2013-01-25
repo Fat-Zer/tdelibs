@@ -103,7 +103,7 @@ KMConfigFonts::KMConfigFonts(TQWidget *parent, const char *name)
 	m_down->setEnabled(false);
 }
 
-void KMConfigFonts::loadConfig(KConfig *)
+void KMConfigFonts::loadConfig(TDEConfig *)
 {
 	TQSettings	settings;
 	m_embedfonts->setChecked(settings.readBoolEntry("/qt/embedFonts", true));
@@ -113,7 +113,7 @@ void KMConfigFonts::loadConfig(KConfig *)
 		item = new TQListViewItem(m_fontpath, item, *it);
 }
 
-void KMConfigFonts::saveConfig(KConfig *)
+void KMConfigFonts::saveConfig(TDEConfig *)
 {
 	TQSettings	settings;
 	settings.writeEntry("/qt/embedFonts", m_embedfonts->isChecked());

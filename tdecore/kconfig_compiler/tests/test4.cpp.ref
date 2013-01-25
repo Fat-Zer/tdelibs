@@ -21,54 +21,54 @@ Test4 *Test4::self()
 const char* const Test4::EnumButton::enumToString[] = { "right", "mid", "left" };
 
 Test4::Test4(  )
-  : KConfigSkeleton( TQString::fromLatin1( "test4rc" ) )
+  : TDEConfigSkeleton( TQString::fromLatin1( "test4rc" ) )
 {
   mSelf = this;
   setCurrentGroup( TQString::fromLatin1( "Foo" ) );
 
 TQColor defaultColor[4] = { Qt::red, Qt::blue, Qt::green, Qt::black };
-  KConfigSkeleton::ItemColor  *itemColor[4];
-  itemColor[0] = new KConfigSkeleton::ItemColor( currentGroup(), TQString::fromLatin1( "color #0" ), mColor[0], defaultColor[0] );
+  TDEConfigSkeleton::ItemColor  *itemColor[4];
+  itemColor[0] = new TDEConfigSkeleton::ItemColor( currentGroup(), TQString::fromLatin1( "color #0" ), mColor[0], defaultColor[0] );
   addItem( itemColor[0], TQString::fromLatin1( "Color0" ) );
-  itemColor[1] = new KConfigSkeleton::ItemColor( currentGroup(), TQString::fromLatin1( "color #1" ), mColor[1], defaultColor[1] );
+  itemColor[1] = new TDEConfigSkeleton::ItemColor( currentGroup(), TQString::fromLatin1( "color #1" ), mColor[1], defaultColor[1] );
   addItem( itemColor[1], TQString::fromLatin1( "Color1" ) );
-  itemColor[2] = new KConfigSkeleton::ItemColor( currentGroup(), TQString::fromLatin1( "color #2" ), mColor[2], defaultColor[2] );
+  itemColor[2] = new TDEConfigSkeleton::ItemColor( currentGroup(), TQString::fromLatin1( "color #2" ), mColor[2], defaultColor[2] );
   addItem( itemColor[2], TQString::fromLatin1( "Color2" ) );
-  itemColor[3] = new KConfigSkeleton::ItemColor( currentGroup(), TQString::fromLatin1( "color #3" ), mColor[3], defaultColor[3] );
+  itemColor[3] = new TDEConfigSkeleton::ItemColor( currentGroup(), TQString::fromLatin1( "color #3" ), mColor[3], defaultColor[3] );
   addItem( itemColor[3], TQString::fromLatin1( "Color3" ) );
-  TQValueList<KConfigSkeleton::ItemEnum::Choice> valuesMouseAction;
+  TQValueList<TDEConfigSkeleton::ItemEnum::Choice> valuesMouseAction;
   {
-    KConfigSkeleton::ItemEnum::Choice choice;
+    TDEConfigSkeleton::ItemEnum::Choice choice;
     choice.name = TQString::fromLatin1( "Encrypt" );
     valuesMouseAction.append( choice );
   }
   {
-    KConfigSkeleton::ItemEnum::Choice choice;
+    TDEConfigSkeleton::ItemEnum::Choice choice;
     choice.name = TQString::fromLatin1( "Decrypt" );
     valuesMouseAction.append( choice );
   }
   {
-    KConfigSkeleton::ItemEnum::Choice choice;
+    TDEConfigSkeleton::ItemEnum::Choice choice;
     choice.name = TQString::fromLatin1( "CrashNBurn" );
     valuesMouseAction.append( choice );
   }
   {
-    KConfigSkeleton::ItemEnum::Choice choice;
+    TDEConfigSkeleton::ItemEnum::Choice choice;
     choice.name = TQString::fromLatin1( "PumpNDump" );
     valuesMouseAction.append( choice );
   }
-  KConfigSkeleton::ItemEnum  *itemMouseAction[3];
-  itemMouseAction[0] = new KConfigSkeleton::ItemEnum( currentGroup(), TQString::fromLatin1( "right_mouse_action" ), mMouseAction[0], valuesMouseAction, EnumMouseAction::Decrypt );
+  TDEConfigSkeleton::ItemEnum  *itemMouseAction[3];
+  itemMouseAction[0] = new TDEConfigSkeleton::ItemEnum( currentGroup(), TQString::fromLatin1( "right_mouse_action" ), mMouseAction[0], valuesMouseAction, EnumMouseAction::Decrypt );
   addItem( itemMouseAction[0], TQString::fromLatin1( "MouseActionright" ) );
-  itemMouseAction[1] = new KConfigSkeleton::ItemEnum( currentGroup(), TQString::fromLatin1( "mid_mouse_action" ), mMouseAction[1], valuesMouseAction, EnumMouseAction::Encrypt );
+  itemMouseAction[1] = new TDEConfigSkeleton::ItemEnum( currentGroup(), TQString::fromLatin1( "mid_mouse_action" ), mMouseAction[1], valuesMouseAction, EnumMouseAction::Encrypt );
   addItem( itemMouseAction[1], TQString::fromLatin1( "MouseActionmid" ) );
-  itemMouseAction[2] = new KConfigSkeleton::ItemEnum( currentGroup(), TQString::fromLatin1( "left_mouse_action" ), mMouseAction[2], valuesMouseAction, EnumMouseAction::PumpNDump );
+  itemMouseAction[2] = new TDEConfigSkeleton::ItemEnum( currentGroup(), TQString::fromLatin1( "left_mouse_action" ), mMouseAction[2], valuesMouseAction, EnumMouseAction::PumpNDump );
   addItem( itemMouseAction[2], TQString::fromLatin1( "MouseActionleft" ) );
-  KConfigSkeleton::ItemString  *itemFooBar;
-  itemFooBar = new KConfigSkeleton::ItemString( currentGroup(), TQString::fromLatin1( "foo bar" ), mFooBar );
+  TDEConfigSkeleton::ItemString  *itemFooBar;
+  itemFooBar = new TDEConfigSkeleton::ItemString( currentGroup(), TQString::fromLatin1( "foo bar" ), mFooBar );
   addItem( itemFooBar, TQString::fromLatin1( "FooBar" ) );
-  KConfigSkeleton::ItemInt  *itemAge;
-  itemAge = new KConfigSkeleton::ItemInt( currentGroup(), TQString::fromLatin1( "Age" ), mAge, 35 );
+  TDEConfigSkeleton::ItemInt  *itemAge;
+  itemAge = new TDEConfigSkeleton::ItemInt( currentGroup(), TQString::fromLatin1( "Age" ), mAge, 35 );
   itemAge->setMinValue(8);
   itemAge->setMaxValue(88);
   addItem( itemAge, TQString::fromLatin1( "Age" ) );

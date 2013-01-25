@@ -120,7 +120,7 @@ void KHTMLFactory::ref()
         // that the factory gets deleted from within a qPostRoutine, called
         // from the TQApplication destructor. That however is too late, because
         // we want to destruct a TDEInstance object, which involves destructing
-        // a KConfig object, which might call TDEGlobal::dirs() (in sync()) which
+        // a TDEConfig object, which might call TDEGlobal::dirs() (in sync()) which
         // probably is not going to work ;-)
         // well, perhaps I'm wrong here, but as I'm unsure I try to stay on the
         // safe side ;-) -> let's use a simple reference counting scheme

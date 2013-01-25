@@ -191,7 +191,7 @@ void KHTMLPartIface::saveBackground(const TQString &destination)
     if (back.isEmpty())
         return;
 
-    KIO::MetaData metaData;
+    TDEIO::MetaData metaData;
     metaData["referrer"] = part->referrer();
     KHTMLPopupGUIClient::saveURL( back, KURL( destination ), metaData );
 }
@@ -203,7 +203,7 @@ void KHTMLPartIface::saveDocument(const TQString &destination)
     if ( srcURL.fileName(false).isEmpty() )
         srcURL.setFileName( "index.html" );
 
-    KIO::MetaData metaData;
+    TDEIO::MetaData metaData;
     // Referrer unknown?
     KHTMLPopupGUIClient::saveURL( srcURL, KURL( destination ), metaData, part->cacheId() );
 }

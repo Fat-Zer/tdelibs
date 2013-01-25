@@ -1254,7 +1254,7 @@ void KColorDialog::slotDefaultColorClicked()
 void
 KColorDialog::readSettings()
 {
-  KConfigGroup group( TDEGlobal::config(), "Colors" );
+  TDEConfigGroup group( TDEGlobal::config(), "Colors" );
 
   TQString palette = group.readEntry("CurrentPalette");
   d->table->setPalette(palette);
@@ -1263,7 +1263,7 @@ KColorDialog::readSettings()
 void
 KColorDialog::slotWriteSettings()
 {
-  KConfigGroup group( TDEGlobal::config(), "Colors" );
+  TDEConfigGroup group( TDEGlobal::config(), "Colors" );
 
   TQString palette = d->table->palette();
   if (!group.hasDefault("CurrentPalette") &&

@@ -29,7 +29,7 @@
     <xsd:annotation>
         <xsd:documentation>
             
-            A Schema for KDE's KConfigXT XML format. It is similar to the DTD
+            A Schema for KDE's TDEConfigXT XML format. It is similar to the DTD
             found at:
             
             http://www.kde.org/standards/kcfg/1.0/kcfg.dtd    

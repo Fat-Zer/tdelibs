@@ -2076,7 +2076,7 @@ static TQColor colorForCSSValue( int css_value )
 	else if ( css_value == CSS_VAL_INFOTEXT )
 	    return TQToolTip::palette().inactive().foreground();
 	else if ( css_value == CSS_VAL_BACKGROUND ) {
-	    KConfig bckgrConfig("kdesktoprc", true, false); // No multi-screen support
+	    TDEConfig bckgrConfig("kdesktoprc", true, false); // No multi-screen support
 	    bckgrConfig.setGroup("Desktop0");
 	    // Desktop background.
 	    return bckgrConfig.readColorEntry("Color1", &tqApp->palette().disabled().background());
@@ -2089,7 +2089,7 @@ static TQColor colorForCSSValue( int css_value )
     TQColor c = pal.color( uicol->group, uicol->role );
 #ifndef APPLE_CHANGES
     if ( uicol->configEntry ) {
-	KConfig *globalConfig = TDEGlobal::config();
+	TDEConfig *globalConfig = TDEGlobal::config();
 	globalConfig->setGroup( uicol->configGroup );
 	c = globalConfig->readColorEntry( uicol->configEntry, &c );
     }

@@ -7,7 +7,7 @@
 #include <kdebug.h>
 
 #include <tqdir.h>
-class Test9 : public KConfigSkeleton
+class Test9 : public TDEConfigSkeleton
 {
   public:
 

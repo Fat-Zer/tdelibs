@@ -41,7 +41,7 @@ protected:
 
   void closeEvent( TQCloseEvent * );
 
-  void printUDSEntry( const KIO::UDSEntry & entry );
+  void printUDSEntry( const TDEIO::UDSEntry & entry );
 
   // info stuff
   TQLabel *lb_from;
@@ -84,25 +84,25 @@ protected slots:
   void startJob();
   void stopJob();
 
-  void slotResult( KIO::Job * );
-  void slotEntries( KIO::Job *, const KIO::UDSEntryList& );
-  void slotData( KIO::Job *, const TQByteArray &data );
-  void slotDataReq( KIO::Job *, TQByteArray &data );
+  void slotResult( TDEIO::Job * );
+  void slotEntries( TDEIO::Job *, const TDEIO::UDSEntryList& );
+  void slotData( TDEIO::Job *, const TQByteArray &data );
+  void slotDataReq( TDEIO::Job *, TQByteArray &data );
 
   void slotQuit();
   void slotSlaveConnected();
   void slotSlaveError();
 
 private:
-  KIO::Job *job;
+  TDEIO::Job *job;
   TQWidget *main_widget;
 
-  KIO::StatusbarProgress *statusProgress;
+  TDEIO::StatusbarProgress *statusProgress;
 
   int selectedOperation;
   int progressMode;
   int putBuffer;
-  KIO::Slave *slave;
+  TDEIO::Slave *slave;
 };
 
 #endif // _KIOSLAVETEST_H

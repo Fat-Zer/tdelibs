@@ -3,7 +3,7 @@
 #include <kurl.h>
 #include <kdebug.h>
 
-using namespace KIO;
+using namespace TDEIO;
 
 int main(int argc, char **argv)
 {

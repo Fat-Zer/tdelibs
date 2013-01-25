@@ -208,7 +208,7 @@ TQTextCodec* CachedObject::codecForBuffer( const TQString& charset, const TQByte
 
 // -------------------------------------------------------------------------------------------
 
-CachedCSSStyleSheet::CachedCSSStyleSheet(DocLoader* dl, const DOMString &url, KIO::CacheControl _cachePolicy,
+CachedCSSStyleSheet::CachedCSSStyleSheet(DocLoader* dl, const DOMString &url, TDEIO::CacheControl _cachePolicy,
 					 const char *accept)
     : CachedObject(url, CSSStyleSheet, _cachePolicy, 0)
 {
@@ -227,7 +227,7 @@ CachedCSSStyleSheet::CachedCSSStyleSheet(DocLoader* dl, const DOMString &url, KI
 }
 
 CachedCSSStyleSheet::CachedCSSStyleSheet(const DOMString &url, const TQString &stylesheet_data)
-    : CachedObject(url, CSSStyleSheet, KIO::CC_Verify, stylesheet_data.length())
+    : CachedObject(url, CSSStyleSheet, TDEIO::CC_Verify, stylesheet_data.length())
 {
     m_loading = false;
     m_status = Persistent;
@@ -321,7 +321,7 @@ TQString CachedCSSStyleSheet::checkCharset(const TQByteArray& buffer ) const
 
 // -------------------------------------------------------------------------------------------
 
-CachedScript::CachedScript(DocLoader* dl, const DOMString &url, KIO::CacheControl _cachePolicy, const char*)
+CachedScript::CachedScript(DocLoader* dl, const DOMString &url, TDEIO::CacheControl _cachePolicy, const char*)
     : CachedObject(url, Script, _cachePolicy, 0)
 {
     // It's javascript we want.
@@ -334,7 +334,7 @@ CachedScript::CachedScript(DocLoader* dl, const DOMString &url, KIO::CacheContro
 }
 
 CachedScript::CachedScript(const DOMString &url, const TQString &script_data)
-    : CachedObject(url, Script, KIO::CC_Verify, script_data.length())
+    : CachedObject(url, Script, TDEIO::CC_Verify, script_data.length())
 {
     m_loading = false;
     m_status = Persistent;
@@ -466,7 +466,7 @@ static TQString buildAcceptHeader()
 
 // -------------------------------------------------------------------------------------
 
-CachedImage::CachedImage(DocLoader* dl, const DOMString &url, KIO::CacheControl _cachePolicy, const char*)
+CachedImage::CachedImage(DocLoader* dl, const DOMString &url, TDEIO::CacheControl _cachePolicy, const char*)
     : TQObject(), CachedObject(url, Image, _cachePolicy, 0)
 {
     static const TQString &acceptHeader = TDEGlobal::staticQString( buildAcceptHeader() );
@@ -943,7 +943,7 @@ Request::~Request()
 
 DocLoader::DocLoader(KHTMLPart* part, DocumentImpl* doc)
 {
-    m_cachePolicy = KIO::CC_Verify;
+    m_cachePolicy = TDEIO::CC_Verify;
     m_expireDate = 0;
     m_creationDate = time(0);
     m_bautoloadImages = true;
@@ -991,7 +991,7 @@ void DocLoader::insertCachedObject( CachedObject* o ) const
 bool DocLoader::needReload(CachedObject *existing, const TQString& fullURL)
 {
     bool reload = false;
-    if (m_cachePolicy == KIO::CC_Verify)
+    if (m_cachePolicy == TDEIO::CC_Verify)
     {
        if (!m_reloadedURLs.contains(fullURL))
        {
@@ -1003,7 +1003,7 @@ bool DocLoader::needReload(CachedObject *existing, const TQString& fullURL)
           }
        }
     }
-    else if ((m_cachePolicy == KIO::CC_Reload) || (m_cachePolicy == KIO::CC_Refresh))
+    else if ((m_cachePolicy == TDEIO::CC_Reload) || (m_cachePolicy == TDEIO::CC_Refresh))
     {
        if (!m_reloadedURLs.contains(fullURL))
        {
@@ -1153,9 +1153,9 @@ void Loader::servePendingRequests()
 #endif
 
         KURL u(req->object->url().string());
-        KIO::TransferJob* job = KIO::get( u, false, false /*no GUI*/);
+        TDEIO::TransferJob* job = TDEIO::get( u, false, false /*no GUI*/);
 
-        job->addMetaData("cache", KIO::getCacheControlString(req->object->cachePolicy()));
+        job->addMetaData("cache", TDEIO::getCacheControlString(req->object->cachePolicy()));
         if (!req->object->accept().isEmpty())
             job->addMetaData("accept", req->object->accept());
         if ( req->m_docLoader )
@@ -1171,21 +1171,21 @@ void Loader::servePendingRequests()
             }
         }
 
-        connect( job, TQT_SIGNAL( result( KIO::Job * ) ), this, TQT_SLOT( slotFinished( KIO::Job * ) ) );
-        connect( job, TQT_SIGNAL( data( KIO::Job*, const TQByteArray &)),
-                 TQT_SLOT( slotData( KIO::Job*, const TQByteArray &)));
+        connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ), this, TQT_SLOT( slotFinished( TDEIO::Job * ) ) );
+        connect( job, TQT_SIGNAL( data( TDEIO::Job*, const TQByteArray &)),
+                 TQT_SLOT( slotData( TDEIO::Job*, const TQByteArray &)));
 
         if ( req->object->schedule() )
-            KIO::Scheduler::scheduleJob( job );
+            TDEIO::Scheduler::scheduleJob( job );
 
         m_requestsLoading.insert(job, req);
     }
 }
 
-void Loader::slotFinished( KIO::Job* job )
+void Loader::slotFinished( TDEIO::Job* job )
 {
   Request *r = m_requestsLoading.take( job );
-  KIO::TransferJob* j = static_cast<KIO::TransferJob*>(job);
+  TDEIO::TransferJob* j = static_cast<TDEIO::TransferJob*>(job);
 
   if ( !r )
     return;
@@ -1247,7 +1247,7 @@ void Loader::slotFinished( KIO::Job* job )
       m_timer.start(0, true);
 }
 
-void Loader::slotData( KIO::Job*job, const TQByteArray &data )
+void Loader::slotData( TDEIO::Job*job, const TQByteArray &data )
 {
     Request *r = m_requestsLoading[job];
     if(!r) {
@@ -1303,7 +1303,7 @@ void Loader::cancelRequests( DocLoader* dl )
         if ( lIt.current()->m_docLoader == dl )
         {
             //kdDebug( 6060 ) << "canceling loading request for " << lIt.current()->object->url().string() << endl;
-            KIO::Job *job = static_cast<KIO::Job *>( lIt.currentKey() );
+            TDEIO::Job *job = static_cast<TDEIO::Job *>( lIt.currentKey() );
             Cache::removeCacheEntry( lIt.current()->object );
             m_requestsLoading.remove( lIt.currentKey() );
             job->kill();
@@ -1314,7 +1314,7 @@ void Loader::cancelRequests( DocLoader* dl )
     }
 }
 
-KIO::Job *Loader::jobForRequest( const DOM::DOMString &url ) const
+TDEIO::Job *Loader::jobForRequest( const DOM::DOMString &url ) const
 {
     TQPtrDictIterator<Request> it( m_requestsLoading );
 
@@ -1323,7 +1323,7 @@ KIO::Job *Loader::jobForRequest( const DOM::DOMString &url ) const
         CachedObject *obj = it.current()->object;
 
         if ( obj && obj->url() == url )
-            return static_cast<KIO::Job *>( it.currentKey() );
+            return static_cast<TDEIO::Job *>( it.currentKey() );
     }
 
     return 0;
@@ -1424,7 +1424,7 @@ void Cache::clear()
 template<typename CachedObjectType, enum CachedObject::Type CachedType>
 CachedObjectType* Cache::requestObject( DocLoader* dl, const KURL& kurl, const char* accept )
 {
-    KIO::CacheControl cachePolicy = dl ? dl->cachePolicy() : KIO::CC_Verify;
+    TDEIO::CacheControl cachePolicy = dl ? dl->cachePolicy() : TDEIO::CC_Verify;
 
     TQString url = kurl.url();
     CachedObject* o = cache->find(url);

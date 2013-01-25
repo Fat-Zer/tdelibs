@@ -234,7 +234,7 @@ void KMDriverDbWidget::slotOtherClicked()
 		if ( !url.isEmpty() )
 		{
 			TQString filename;
-			if ( KIO::NetAccess::download( url, filename, this ) )
+			if ( TDEIO::NetAccess::download( url, filename, this ) )
 			{
 				DrMain	*driver = KMFactory::self()->manager()->loadFileDriver(filename);
 				if (driver)
@@ -255,7 +255,7 @@ void KMDriverDbWidget::slotOtherClicked()
 				}
 				else
 				{
-					KIO::NetAccess::removeTempFile( filename );
+					TDEIO::NetAccess::removeTempFile( filename );
 					KMessageBox::error(this,"<qt>"+i18n("Wrong driver format.")+"<p>"+KMManager::self()->errorMsg()+"</p></qt>");
 				}
 			}

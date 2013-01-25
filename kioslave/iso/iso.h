@@ -28,7 +28,7 @@
 
 class KIso;
 
-class kio_isoProtocol : public KIO::SlaveBase
+class kio_isoProtocol : public TDEIO::SlaveBase
 {
 public:
     kio_isoProtocol( const TQCString &pool, const TQCString &app );
@@ -40,7 +40,7 @@ public:
 
 protected:
     void getFile( const KIsoFile *isoFileEntry, const TQString &path );
-    void createUDSEntry( const KArchiveEntry * isoEntry, KIO::UDSEntry & entry );
+    void createUDSEntry( const KArchiveEntry * isoEntry, TDEIO::UDSEntry & entry );
     bool checkNewFile( TQString fullPath, TQString & path, int startsec );
 
     KIso * m_isoFile;

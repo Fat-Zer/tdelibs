@@ -29,7 +29,7 @@
 
 template class KStaticDeleter<KTrader>;
 
-using namespace KIO;
+using namespace TDEIO;
 
 class KTraderSorter
 {
@@ -118,10 +118,10 @@ KTrader::OfferList KTrader::query( const TQString& _servicetype, const TQString&
   ParseTreeBase::Ptr prefs;
 
   if ( !_constraint.isEmpty() )
-    constr = KIO::parseConstraints( _constraint );
+    constr = TDEIO::parseConstraints( _constraint );
 
   if ( !_preferences.isEmpty() )
-    prefs = KIO::parsePreferences( _preferences );
+    prefs = TDEIO::parsePreferences( _preferences );
 
   KServiceTypeProfile::OfferList lst;
   KTrader::OfferList ret;

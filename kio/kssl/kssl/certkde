@@ -3,7 +3,7 @@ eval 'exec perl -S $0 ${1+"$@"}'
     if $running_under_some_shell;
 
 ##
-##   Generate the KDE CA list KConfig file
+##   Generate the KDE CA list TDEConfig file
 ##
 
 %CERT = ();

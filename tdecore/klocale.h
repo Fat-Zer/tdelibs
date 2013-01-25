@@ -32,8 +32,8 @@ class TQTime;
 class TQDateTime;
 
 class TDEGlobal;
-class KConfig;
-class KConfigBase;
+class TDEConfig;
+class TDEConfigBase;
 class KLocalePrivate;
 class KCatalogue;
 class KCalendarSystem;
@@ -141,7 +141,7 @@ public:
    * @param catalog The name of the main language file
    * @param config The configuration file to use.
    */
-  KLocale( const TQString& catalog, KConfig *config = 0 );
+  KLocale( const TQString& catalog, TDEConfig *config = 0 );
 
   /**
    * Copy constructor.
@@ -1138,9 +1138,9 @@ public:
 
 
   /**
-   * @internal Called from KConfigBackend to initialize language.
+   * @internal Called from TDEConfigBackend to initialize language.
    */
-  static TQString _initLanguage(KConfigBase *config);
+  static TQString _initLanguage(TDEConfigBase *config);
 
 #ifdef KDE_NO_COMPAT
 private:
@@ -1185,7 +1185,7 @@ private:
    *
    * @param config The configuration object used for init.
    */
-  void initFormat(KConfig *config);
+  void initFormat(TDEConfig *config);
   
   /**
    * @internal Initializes the catalogs appname, tdelibs and kio for all chosen languages.
@@ -1203,20 +1203,20 @@ private:
    * @param config The configuration object used for init
    * @param useEnv True if we should use environment variables
    */
-  void initLanguageList(KConfig * config, bool useEnv);
+  void initLanguageList(TDEConfig * config, bool useEnv);
 
   /**
    * @internal Figures out which encoding the user prefers.
    *
    * @param config The configuration object used for init
    */
-  void initEncoding(KConfig * config);
+  void initEncoding(TDEConfig * config);
 
   /**
    * @internal Figures out which encoding the user prefers for filenames
    * and sets up the appropriate TQFile encoding and decoding functions.
    */
-  void initFileNameEncoding(KConfig *config);
+  void initFileNameEncoding(TDEConfig *config);
 
   /**
    * @internal A TQFile filename encoding function (TQFile::encodeFn).

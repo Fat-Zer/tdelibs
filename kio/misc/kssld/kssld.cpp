@@ -61,7 +61,7 @@ extern "C" {
 }
 
 
-static void updatePoliciesConfig(KConfig *cfg) {
+static void updatePoliciesConfig(TDEConfig *cfg) {
 	TQStringList groups = cfg->groupList();
 
 	for (TQStringList::Iterator i = groups.begin(); i != groups.end(); ++i) {
@@ -641,7 +641,7 @@ TQFile out(path);
 	if (!out.open(IO_WriteOnly))
 		return false;
 
-KConfig cfg("ksslcalist", true, false);
+TDEConfig cfg("ksslcalist", true, false);
 
 TQStringList x = cfg.groupList();
 
@@ -677,7 +677,7 @@ KSSLCertificate *x = KSSLCertificate::fromString(certificate.local8Bit());
 
 	if (!x) return false;
 
-KConfig cfg("ksslcalist", false, false);
+TDEConfig cfg("ksslcalist", false, false);
 
 	cfg.setGroup(x->getSubject());
 	cfg.writeEntry("x509", certificate);
@@ -766,7 +766,7 @@ bool KSSLD::caRemoveFromFile(TQString filename) {
 
 TQStringList KSSLD::caList() {
 TQStringList x;
-KConfig cfg("ksslcalist", true, false);
+TDEConfig cfg("ksslcalist", true, false);
 
 	x = cfg.groupList();
 	x.remove("<default>");
@@ -776,7 +776,7 @@ return x;
 
 
 bool KSSLD::caUseForSSL(TQString subject) {
-KConfig cfg("ksslcalist", true, false);
+TDEConfig cfg("ksslcalist", true, false);
 
 	if (!cfg.hasGroup(subject))
 		return false;
@@ -788,7 +788,7 @@ return cfg.readBoolEntry("site", false);
 
 
 bool KSSLD::caUseForEmail(TQString subject) {
-KConfig cfg("ksslcalist", true, false);
+TDEConfig cfg("ksslcalist", true, false);
 
 	if (!cfg.hasGroup(subject))
 		return false;
@@ -800,7 +800,7 @@ return cfg.readBoolEntry("email", false);
 
 
 bool KSSLD::caUseForCode(TQString subject) {
-KConfig cfg("ksslcalist", true, false);
+TDEConfig cfg("ksslcalist", true, false);
 
 	if (!cfg.hasGroup(subject))
 		return false;
@@ -811,7 +811,7 @@ return cfg.readBoolEntry("code", false);
 
 
 bool KSSLD::caRemove(TQString subject) {
-KConfig cfg("ksslcalist", false, false);
+TDEConfig cfg("ksslcalist", false, false);
 	if (!cfg.hasGroup(subject))
 		return false;
 
@@ -823,7 +823,7 @@ return true;
 
 
 TQString KSSLD::caGetCert(TQString subject) {
-KConfig cfg("ksslcalist", true, false);
+TDEConfig cfg("ksslcalist", true, false);
 	if (!cfg.hasGroup(subject))
 		return TQString::null;
 
@@ -834,7 +834,7 @@ return cfg.readEntry("x509", TQString::null);
 
 
 bool KSSLD::caSetUse(TQString subject, bool ssl, bool email, bool code) {
-KConfig cfg("ksslcalist", false, false);
+TDEConfig cfg("ksslcalist", false, false);
 	if (!cfg.hasGroup(subject))
 		return false;
 

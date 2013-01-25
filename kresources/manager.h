@@ -227,7 +227,7 @@ class Manager : private ManagerNotifier
       Recreate Resource objects from configuration file. If cfg is 0, read
       standard configuration file determined by family name.
     */
-    void readConfig( KConfig *cfg = 0 )
+    void readConfig( TDEConfig *cfg = 0 )
     {
       mImpl->readConfig( cfg );
     }
@@ -236,7 +236,7 @@ class Manager : private ManagerNotifier
       Write configuration of Resource objects to configuration file. If cfg is
       0, write to standard configuration file determined by family name.
     */
-    void writeConfig( KConfig *cfg = 0 )
+    void writeConfig( TDEConfig *cfg = 0 )
     {
       mImpl->writeConfig( cfg );
     }

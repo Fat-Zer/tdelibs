@@ -38,7 +38,7 @@ struct sockaddr_un;
 namespace KNetwork {
 
 class KIpAddress;
-class KSocketAddress;
+class TDESocketAddress;
 class KInetSocketAddress;
 class KUnixSocketAddress;
 
@@ -412,15 +412,15 @@ public:
 };
 
 
-class KSocketAddressData;
-/** @class KSocketAddress tdesocketaddress.h tdesocketaddress.h
+class TDESocketAddressData;
+/** @class TDESocketAddress tdesocketaddress.h tdesocketaddress.h
  *  @brief A generic socket address.
  *
  * This class holds one generic socket address.
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class TDECORE_EXPORT KSocketAddress
+class TDECORE_EXPORT TDESocketAddress
 {
 public:
   /**
@@ -428,7 +428,7 @@ public:
    *
    * Creates an empty object
    */
-  KSocketAddress();
+  TDESocketAddress();
 
   /**
    * Creates this object with the given data.
@@ -437,7 +437,7 @@ public:
    * @param sa		the socket address structure
    * @param len		the socket address length
    */
-  KSocketAddress(const sockaddr* sa, TQ_UINT16 len);
+  TDESocketAddress(const sockaddr* sa, TQ_UINT16 len);
 
   /**
    * Copy constructor. This creates a copy of the other
@@ -447,12 +447,12 @@ public:
    *
    * @param other	the object to copy from
    */
-  KSocketAddress(const KSocketAddress& other);
+  TDESocketAddress(const TDESocketAddress& other);
 
   /**
    * Destructor. Frees any associated resources.
    */
-  virtual ~KSocketAddress();
+  virtual ~TDESocketAddress();
 
   /**
    * Performs a shallow copy of the other object into this one.
@@ -460,7 +460,7 @@ public:
    *
    * @param other	the object to copy from
    */
-  KSocketAddress& operator =(const KSocketAddress& other);
+  TDESocketAddress& operator =(const TDESocketAddress& other);
 
   /**
    * Returns the socket address structure, to be passed down to
@@ -490,7 +490,7 @@ public:
    * @param sa		the socket address structure
    * @param len		the socket address length
    */
-  KSocketAddress& setAddress(const sockaddr *sa, TQ_UINT16 len);
+  TDESocketAddress& setAddress(const sockaddr *sa, TQ_UINT16 len);
 
   /**
    * Returns the socket address structure, to be passed down to
@@ -517,14 +517,14 @@ public:
    * the family:
    *
    * \code
-   *   KSocketAddress qsa;
+   *   TDESocketAddress qsa;
    *   [...]
    *   qsa.setFamily(AF_UNSPEC).setLength(newlen);
    * \endcode
    *
    * @param len		the new length
    */
-  KSocketAddress& setLength(TQ_UINT16 len);
+  TDESocketAddress& setLength(TQ_UINT16 len);
 
   /**
    * Returns the family of this address.
@@ -540,7 +540,7 @@ public:
    *
    * @param family	the new family to set
    */
-  virtual KSocketAddress& setFamily(int family);
+  virtual TDESocketAddress& setFamily(int family);
 
   /**
    * Returns the IANA family number of this address.
@@ -558,7 +558,7 @@ public:
    * @param other	the other socket
    * @return true if both sockets are equal
    */
-  bool operator ==(const KSocketAddress& other) const;
+  bool operator ==(const TDESocketAddress& other) const;
 
   /**
    * Returns the node name of this socket.
@@ -615,11 +615,11 @@ public:
 protected:
   /// @internal
   /// private data
-  KSocketAddressData *d;
+  TDESocketAddressData *d;
 
   /// @internal
   /// extra constructor
-  KSocketAddress(KSocketAddressData* d);
+  TDESocketAddress(TDESocketAddressData* d);
 
 public:				// static
   /**
@@ -648,9 +648,9 @@ public:				// static
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class TDECORE_EXPORT KInetSocketAddress: public KSocketAddress
+class TDECORE_EXPORT KInetSocketAddress: public TDESocketAddress
 {
-  friend class KSocketAddress;
+  friend class TDESocketAddress;
 public:
   /**
    * Public constructor. Creates an empty object.
@@ -693,7 +693,7 @@ public:
    *
    * @param other	the other object
    */
-  KInetSocketAddress(const KSocketAddress& other);
+  KInetSocketAddress(const TDESocketAddress& other);
 
   /**
    * Destroys this object.
@@ -817,7 +817,7 @@ public:
 protected:
   /// @internal
   /// extra constructor
-  KInetSocketAddress(KSocketAddressData* d);
+  KInetSocketAddress(TDESocketAddressData* d);
 
 private:
   void update();
@@ -837,9 +837,9 @@ private:
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class TDECORE_EXPORT KUnixSocketAddress: public KSocketAddress
+class TDECORE_EXPORT KUnixSocketAddress: public TDESocketAddress
 {
-  friend class KSocketAddress;
+  friend class TDESocketAddress;
 public:
   /**
    * Default constructor. Creates an empty object.
@@ -904,7 +904,7 @@ public:
 protected:
   /// @internal
   /// extra constructor
-  KUnixSocketAddress(KSocketAddressData* d);
+  KUnixSocketAddress(TDESocketAddressData* d);
 };
 
 }				// namespace KNetwork

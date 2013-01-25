@@ -104,8 +104,8 @@ public slots:
     void connectTimedOut();
     void interactTimedOut();
 
-    void socketRead(KSocket *);
-    void socketClose(KSocket *);
+    void socketRead(TDESocket *);
+    void socketClose(TDESocket *);
 
 signals:
     void connectionClosed();
@@ -131,7 +131,7 @@ private:
 
     TQString domainName;
 
-    KSocket *sock;
+    TDESocket *sock;
     TQTimer connectTimer;
     TQTimer timeOutTimer;
     TQTimer interactTimer;

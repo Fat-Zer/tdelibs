@@ -24,7 +24,7 @@
 
 class TQGridLayout;
 
-namespace KIO {
+namespace TDEIO {
 
 /**
  * A dialog for requesting a login and a password from the end user.

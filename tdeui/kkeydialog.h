@@ -34,7 +34,7 @@ class TQRadioButton;
 class KAccel;
 class KAccelActions;
 class KActionCollection;
-class KConfigBase;
+class TDEConfigBase;
 class TDEGlobalAccel;
 class KKeySequence;
 class KShortcut;
@@ -98,7 +98,7 @@ class TDEUI_EXPORT KKeyChooser : public TQWidget
 	 */
     bool insert( KActionCollection *, const TQString &title);
 
-	void syncToConfig( const TQString& sConfigGroup, KConfigBase* pConfig, bool bClearUnset );
+	void syncToConfig( const TQString& sConfigGroup, TDEConfigBase* pConfig, bool bClearUnset );
 
 	/**
 	 * This function writes any shortcut changes back to the original
@@ -337,7 +337,7 @@ public:
 	/**
 	 * This is an overloaded member function, provided for convenience.
 	 * It behaves essentially like the above function, except that settings
-	 * are saved to a *.rc file using KConfig.
+	 * are saved to a *.rc file using TDEConfig.
 	 */
 	static int configure( KAccel* keys, TQWidget* parent = 0, bool bSaveSettings = true );
 

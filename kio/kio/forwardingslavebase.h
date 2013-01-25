@@ -25,7 +25,7 @@
 
 #include <tqobject.h>
 
-namespace KIO
+namespace TDEIO
 {
 
 class ForwardingSlaveBasePrivate;
@@ -56,7 +56,7 @@ class ForwardingSlaveBasePrivate;
  *         if ( is_special )
  *         {
  *             // Handle the URL ourselves
- *             KIO::UDSEntry entry;
+ *             TDEIO::UDSEntry entry;
  *             // Fill entry with UDSAtom instances
  *             statEntry(entry);
  *             finished();
@@ -146,7 +146,7 @@ protected:
      * @param listing indicate if this entry it created during a listDir
      *                operation
      */
-    virtual void prepareUDSEntry(KIO::UDSEntry &entry,
+    virtual void prepareUDSEntry(TDEIO::UDSEntry &entry,
                                  bool listing=false) const;
     
     /**
@@ -175,28 +175,28 @@ private:
     void connectLocalURLJob(LocalURLJob *job);
 
 private slots:
-    // KIO::Job
-    void slotResult(KIO::Job *job);
-    void slotWarning(KIO::Job *job, const TQString &msg);
-    void slotInfoMessage(KIO::Job *job, const TQString &msg);
-    void slotTotalSize(KIO::Job *job, KIO::filesize_t size);
-    void slotProcessedSize(KIO::Job *job, KIO::filesize_t size);
-    void slotSpeed(KIO::Job *job, unsigned long bytesPerSecond);
+    // TDEIO::Job
+    void slotResult(TDEIO::Job *job);
+    void slotWarning(TDEIO::Job *job, const TQString &msg);
+    void slotInfoMessage(TDEIO::Job *job, const TQString &msg);
+    void slotTotalSize(TDEIO::Job *job, TDEIO::filesize_t size);
+    void slotProcessedSize(TDEIO::Job *job, TDEIO::filesize_t size);
+    void slotSpeed(TDEIO::Job *job, unsigned long bytesPerSecond);
 
-    // KIO::SimpleJob subclasses
-    void slotRedirection(KIO::Job *job, const KURL &url);
+    // TDEIO::SimpleJob subclasses
+    void slotRedirection(TDEIO::Job *job, const KURL &url);
 
-    // KIO::ListJob
-    void slotEntries(KIO::Job *job, const KIO::UDSEntryList &entries);
+    // TDEIO::ListJob
+    void slotEntries(TDEIO::Job *job, const TDEIO::UDSEntryList &entries);
 
-    // KIO::TransferJob
-    void slotData(KIO::Job *job, const TQByteArray &data);
-    void slotDataReq(KIO::Job *job, TQByteArray &data);
-    void slotMimetype (KIO::Job *job, const TQString &type);
-    void slotCanResume (KIO::Job *job, KIO::filesize_t offset);
+    // TDEIO::TransferJob
+    void slotData(TDEIO::Job *job, const TQByteArray &data);
+    void slotDataReq(TDEIO::Job *job, TQByteArray &data);
+    void slotMimetype (TDEIO::Job *job, const TQString &type);
+    void slotCanResume (TDEIO::Job *job, TDEIO::filesize_t offset);
 
-    // KIO::LocalURLJob
-    void slotLocalURL(KIO::Job *, const KURL&, bool);
+    // TDEIO::LocalURLJob
+    void slotLocalURL(TDEIO::Job *, const KURL&, bool);
 };
 
 }

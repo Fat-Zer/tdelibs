@@ -306,7 +306,7 @@ void KHTMLPart::init( KHTMLView *view, GUIProfile prof )
   d->m_paSetEncoding->insert( d->m_manualDetection );
 
 
-  KConfig *config = TDEGlobal::config();
+  TDEConfig *config = TDEGlobal::config();
   if ( config->hasGroup( "HTML Settings" ) ) {
     config->setGroup( "HTML Settings" );
     khtml::Decoder::AutoDetectLanguage language;
@@ -434,7 +434,7 @@ void KHTMLPart::init( KHTMLView *view, GUIProfile prof )
            this, TQT_SLOT( updateActions() ) );
   connect( this, TQT_SIGNAL( completed( bool ) ),
            this, TQT_SLOT( updateActions() ) );
-  connect( this, TQT_SIGNAL( started( KIO::Job * ) ),
+  connect( this, TQT_SIGNAL( started( TDEIO::Job * ) ),
            this, TQT_SLOT( updateActions() ) );
 
   d->m_popupMenuXML = KXMLGUIFactory::readConfigFile( locate( "data", "khtml/khtml_popupmenu.rc", KHTMLFactory::instance() ) );
@@ -469,7 +469,7 @@ KHTMLPart::~KHTMLPart()
 {
   //kdDebug(6050) << "KHTMLPart::~KHTMLPart " << this << endl;
 
-  KConfig *config = TDEGlobal::config();
+  TDEConfig *config = TDEGlobal::config();
   config->setGroup( "HTML Settings" );
   config->writeEntry( "AutomaticDetectionLanguage", d->m_autoDetectLanguage );
 
@@ -590,7 +590,7 @@ bool KHTMLPart::openURL( const KURL &url )
       KURL mainURL = urls.first();
       int error = mainURL.queryItem( "error" ).toInt();
       // error=0 isn't a valid error code, so 0 means it's missing from the URL
-      if ( error == 0 ) error = KIO::ERR_UNKNOWN;
+      if ( error == 0 ) error = TDEIO::ERR_UNKNOWN;
       TQString errorText = mainURL.queryItem( "errText", HINT_UTF8 );
       urls.pop_front();
       d->m_workingURL = KURL::join( urls );
@@ -698,36 +698,36 @@ bool KHTMLPart::openURL( const KURL &url )
   if (d->m_restored)
   {
      args.metaData().insert("referrer", d->m_pageReferrer);
-     d->m_cachePolicy = KIO::CC_Cache;
+     d->m_cachePolicy = TDEIO::CC_Cache;
   }
   else if (args.reload)
-     d->m_cachePolicy = KIO::CC_Reload;
+     d->m_cachePolicy = TDEIO::CC_Reload;
   else
      d->m_cachePolicy = KProtocolManager::cacheControl();
 
   if ( args.doPost() && (m_url.protocol().startsWith("http")) )
   {
-      d->m_job = KIO::http_post( m_url, args.postData, false );
+      d->m_job = TDEIO::http_post( m_url, args.postData, false );
       d->m_job->addMetaData("content-type", args.contentType() );
   }
   else
   {
-      d->m_job = KIO::get( m_url, false, false );
-      d->m_job->addMetaData("cache", KIO::getCacheControlString(d->m_cachePolicy));
+      d->m_job = TDEIO::get( m_url, false, false );
+      d->m_job->addMetaData("cache", TDEIO::getCacheControlString(d->m_cachePolicy));
   }
 
   if (widget())
      d->m_job->setWindow(widget()->topLevelWidget());
   d->m_job->addMetaData(args.metaData());
 
-  connect( d->m_job, TQT_SIGNAL( result( KIO::Job* ) ),
-           TQT_SLOT( slotFinished( KIO::Job* ) ) );
-  connect( d->m_job, TQT_SIGNAL( data( KIO::Job*, const TQByteArray& ) ),
-           TQT_SLOT( slotData( KIO::Job*, const TQByteArray& ) ) );
-  connect ( d->m_job, TQT_SIGNAL( infoMessage( KIO::Job*, const TQString& ) ),
-           TQT_SLOT( slotInfoMessage(KIO::Job*, const TQString& ) ) );
-  connect( d->m_job, TQT_SIGNAL(redirection(KIO::Job*, const KURL& ) ),
-           TQT_SLOT( slotRedirection(KIO::Job*, const KURL&) ) );
+  connect( d->m_job, TQT_SIGNAL( result( TDEIO::Job* ) ),
+           TQT_SLOT( slotFinished( TDEIO::Job* ) ) );
+  connect( d->m_job, TQT_SIGNAL( data( TDEIO::Job*, const TQByteArray& ) ),
+           TQT_SLOT( slotData( TDEIO::Job*, const TQByteArray& ) ) );
+  connect ( d->m_job, TQT_SIGNAL( infoMessage( TDEIO::Job*, const TQString& ) ),
+           TQT_SLOT( slotInfoMessage(TDEIO::Job*, const TQString& ) ) );
+  connect( d->m_job, TQT_SIGNAL(redirection(TDEIO::Job*, const KURL& ) ),
+           TQT_SLOT( slotRedirection(TDEIO::Job*, const KURL&) ) );
 
   d->m_bComplete = false;
   d->m_bLoadEventEmitted = false;
@@ -743,14 +743,14 @@ bool KHTMLPart::openURL( const KURL &url )
   d->m_bPluginsEnabled = KHTMLFactory::defaultHTMLSettings()->isPluginsEnabled(url.host());
 
 
-  connect( d->m_job, TQT_SIGNAL( speed( KIO::Job*, unsigned long ) ),
-           this, TQT_SLOT( slotJobSpeed( KIO::Job*, unsigned long ) ) );
+  connect( d->m_job, TQT_SIGNAL( speed( TDEIO::Job*, unsigned long ) ),
+           this, TQT_SLOT( slotJobSpeed( TDEIO::Job*, unsigned long ) ) );
 
-  connect( d->m_job, TQT_SIGNAL( percent( KIO::Job*, unsigned long ) ),
-           this, TQT_SLOT( slotJobPercent( KIO::Job*, unsigned long ) ) );
+  connect( d->m_job, TQT_SIGNAL( percent( TDEIO::Job*, unsigned long ) ),
+           this, TQT_SLOT( slotJobPercent( TDEIO::Job*, unsigned long ) ) );
 
-  connect( d->m_job, TQT_SIGNAL( result( KIO::Job* ) ),
-           this, TQT_SLOT( slotJobDone( KIO::Job* ) ) );
+  connect( d->m_job, TQT_SIGNAL( result( TDEIO::Job* ) ),
+           this, TQT_SLOT( slotJobDone( TDEIO::Job* ) ) );
 
   d->m_jobspeed = 0;
 
@@ -758,9 +758,9 @@ bool KHTMLPart::openURL( const KURL &url )
   // do a stat to see whether the stylesheet was changed in the meanwhile.
   if ( args.reload && !settings()->userStyleSheet().isEmpty() ) {
     KURL url( settings()->userStyleSheet() );
-    KIO::StatJob *job = KIO::stat( url, false /* don't show progress */ );
-    connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
-             this, TQT_SLOT( slotUserSheetStatDone( KIO::Job * ) ) );
+    TDEIO::StatJob *job = TDEIO::stat( url, false /* don't show progress */ );
+    connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ),
+             this, TQT_SLOT( slotUserSheetStatDone( TDEIO::Job * ) ) );
   }
   emit started( 0L );
 
@@ -876,7 +876,7 @@ TQString KHTMLPart::documentSource() const
   } else
   {
     TQString tmpFile;
-    if( KIO::NetAccess::download( m_url, tmpFile, NULL ) )
+    if( TDEIO::NetAccess::download( m_url, tmpFile, NULL ) )
     {
       TQFile f( tmpFile );
       if ( f.open( IO_ReadOnly ) )
@@ -886,7 +886,7 @@ TQString KHTMLPart::documentSource() const
 	sourceStr = stream.read();
         f.close();
       }
-      KIO::NetAccess::removeTempFile( tmpFile );
+      TDEIO::NetAccess::removeTempFile( tmpFile );
     }
   }
 
@@ -1511,7 +1511,7 @@ DOM::DocumentImpl *KHTMLPart::xmlDocImpl() const
     return 0;
 }
 
-void KHTMLPart::slotInfoMessage(KIO::Job* kio_job, const TQString& msg)
+void KHTMLPart::slotInfoMessage(TDEIO::Job* kio_job, const TQString& msg)
 {
   assert(d->m_job == kio_job);
 
@@ -1562,7 +1562,7 @@ void KHTMLPart::setPageSecurity( PageSecurity sec )
     d->m_statusBarIconLabel->setPixmap( SmallIcon( iconName, instance() ) );
 }
 
-void KHTMLPart::slotData( KIO::Job* kio_job, const TQByteArray &data )
+void KHTMLPart::slotData( TDEIO::Job* kio_job, const TQByteArray &data )
 {
   assert ( d->m_job == kio_job );
 
@@ -1579,8 +1579,8 @@ void KHTMLPart::slotData( KIO::Job* kio_job, const TQByteArray &data )
     begin( d->m_workingURL, d->m_extension->urlArgs().xOffset, d->m_extension->urlArgs().yOffset );
     d->m_job->resume();
 
-    if (d->m_cachePolicy == KIO::CC_Refresh)
-      d->m_doc->docLoader()->setCachePolicy(KIO::CC_Verify);
+    if (d->m_cachePolicy == TDEIO::CC_Refresh)
+      d->m_doc->docLoader()->setCachePolicy(TDEIO::CC_Verify);
     else
       d->m_doc->docLoader()->setCachePolicy(d->m_cachePolicy);
 
@@ -1696,12 +1696,12 @@ void KHTMLPart::slotRestoreData(const TQByteArray &data )
   }
 }
 
-void KHTMLPart::showError( KIO::Job* job )
+void KHTMLPart::showError( TDEIO::Job* job )
 {
   kdDebug(6050) << "KHTMLPart::showError d->m_bParsing=" << (d->m_doc && d->m_doc->parsing()) << " d->m_bComplete=" << d->m_bComplete
                 << " d->m_bCleared=" << d->m_bCleared << endl;
 
-  if (job->error() == KIO::ERR_NO_CONTENT)
+  if (job->error() == TDEIO::ERR_NO_CONTENT)
 	return;
 
   if ( (d->m_doc && d->m_doc->parsing()) || d->m_workingURL.isEmpty() ) // if we got any data already
@@ -1728,7 +1728,7 @@ void KHTMLPart::htmlError( int errorCode, const TQString& text, const KURL& reqU
   errText += TQString::fromLatin1( "</TITLE></HEAD><BODY><P>" );
   errText += i18n( "An error occurred while loading <B>%1</B>:" ).arg( reqUrl.htmlURL() );
   errText += TQString::fromLatin1( "</P>" );
-  errText += TQStyleSheet::convertFromPlainText( KIO::buildErrorString( errorCode, text ) );
+  errText += TQStyleSheet::convertFromPlainText( TDEIO::buildErrorString( errorCode, text ) );
   errText += TQString::fromLatin1( "</BODY></HTML>" );
   write(errText);
   end();
@@ -1749,7 +1749,7 @@ void KHTMLPart::htmlError( int errorCode, const TQString& text, const KURL& reqU
   TQString errorName, techName, description;
   TQStringList causes, solutions;
 
-  TQByteArray raw = KIO::rawErrorDetail( errorCode, text, &reqUrl );
+  TQByteArray raw = TDEIO::rawErrorDetail( errorCode, text, &reqUrl );
   TQDataStream stream(raw, IO_ReadOnly);
 
   stream >> errorName >> techName >> description >> causes >> solutions;
@@ -1812,7 +1812,7 @@ void KHTMLPart::htmlError( int errorCode, const TQString& text, const KURL& reqU
   end();
 }
 
-void KHTMLPart::slotFinished( KIO::Job * job )
+void KHTMLPart::slotFinished( TDEIO::Job * job )
 {
   d->m_job = 0L;
   d->m_jobspeed = 0L;
@@ -1826,7 +1826,7 @@ void KHTMLPart::slotFinished( KIO::Job * job )
     // KIO cannot change a redirection request from GET to LISTDIR,
     // we have to take care of it here once we know for sure it is
     // a directory...
-    if (job->error() == KIO::ERR_IS_DIRECTORY)
+    if (job->error() == TDEIO::ERR_IS_DIRECTORY)
     {
       KParts::URLArgs args;
       emit d->m_extension->openURLRequest( d->m_workingURL, args );
@@ -1841,7 +1841,7 @@ void KHTMLPart::slotFinished( KIO::Job * job )
 
     return;
   }
-  KIO::TransferJob *tjob = ::tqqt_cast<KIO::TransferJob*>(job);
+  TDEIO::TransferJob *tjob = ::tqqt_cast<TDEIO::TransferJob*>(job);
   if (tjob && tjob->isErrorPage()) {
     khtml::RenderPart *renderPart = d->m_frame ? static_cast<khtml::RenderPart *>(d->m_frame->m_frame) : 0;
     if (renderPart) {
@@ -1861,7 +1861,7 @@ void KHTMLPart::slotFinished( KIO::Job * job )
     d->m_frame->m_jscript->dataReceived();
 
   if ( d->m_doc && d->m_doc->docLoader()->expireDate() && m_url.protocol().lower().startsWith("http"))
-      KIO::http_update_cache(m_url, false, d->m_doc->docLoader()->expireDate());
+      TDEIO::http_update_cache(m_url, false, d->m_doc->docLoader()->expireDate());
 
   d->m_workingURL = KURL();
 
@@ -2140,14 +2140,14 @@ void KHTMLPart::slotProgressUpdate()
   emit d->m_extension->loadingProgress( percent );
 }
 
-void KHTMLPart::slotJobSpeed( KIO::Job* /*job*/, unsigned long speed )
+void KHTMLPart::slotJobSpeed( TDEIO::Job* /*job*/, unsigned long speed )
 {
   d->m_jobspeed = speed;
   if (!parentPart())
     setStatusBarText(jsStatusBarText(), BarOverrideText);
 }
 
-void KHTMLPart::slotJobPercent( KIO::Job* /*job*/, unsigned long percent )
+void KHTMLPart::slotJobPercent( TDEIO::Job* /*job*/, unsigned long percent )
 {
   d->m_jobPercent = percent;
 
@@ -2155,7 +2155,7 @@ void KHTMLPart::slotJobPercent( KIO::Job* /*job*/, unsigned long percent )
     d->m_progressUpdateTimer.start( 0, true );
 }
 
-void KHTMLPart::slotJobDone( KIO::Job* /*job*/ )
+void KHTMLPart::slotJobDone( TDEIO::Job* /*job*/ )
 {
   d->m_jobPercent = 100;
 
@@ -2163,16 +2163,16 @@ void KHTMLPart::slotJobDone( KIO::Job* /*job*/ )
     d->m_progressUpdateTimer.start( 0, true );
 }
 
-void KHTMLPart::slotUserSheetStatDone( KIO::Job *_job )
+void KHTMLPart::slotUserSheetStatDone( TDEIO::Job *_job )
 {
-  using namespace KIO;
+  using namespace TDEIO;
 
   if ( _job->error() ) {
     showError( _job );
     return;
   }
 
-  const UDSEntry entry = dynamic_cast<KIO::StatJob *>( _job )->statResult();
+  const UDSEntry entry = dynamic_cast<TDEIO::StatJob *>( _job )->statResult();
   UDSEntry::ConstIterator it = entry.begin();
   const UDSEntry::ConstIterator end = entry.end();
   for ( ; it != end; ++it ) {
@@ -2453,7 +2453,7 @@ void KHTMLPart::slotRedirect()
     emit completed();
 }
 
-void KHTMLPart::slotRedirection(KIO::Job*, const KURL& url)
+void KHTMLPart::slotRedirection(TDEIO::Job*, const KURL& url)
 {
   // the slave told us that we got redirected
   //kdDebug( 6050 ) << "redirection by KIO to " << url.url() << endl;
@@ -3757,7 +3757,7 @@ void KHTMLPart::overURL( const TQString &url, const TQString &target, bool /*shi
 
   if ( u.isLocalFile() )
   {
-    // TODO : use KIO::stat() and create a KFileItem out of its result,
+    // TODO : use TDEIO::stat() and create a KFileItem out of its result,
     // to use KFileItem::statusBarText()
     TQCString path = TQFile::encodeName( u.path() );
 
@@ -3932,7 +3932,7 @@ bool KHTMLPart::urlSelectedIntern( const TQString &url, int button, int state, c
 
   if ( button == Qt::LeftButton && ( state & ShiftButton ) )
   {
-    KIO::MetaData metaData;
+    TDEIO::MetaData metaData;
     metaData["referrer"] = d->m_referrer;
     KHTMLPopupGUIClient::saveURL( d->m_view, i18n( "Save As" ), cURL, metaData );
     return false;
@@ -4124,7 +4124,7 @@ KURL KHTMLPart::backgroundURL() const
 
 void KHTMLPart::slotSaveBackground()
 {
-  KIO::MetaData metaData;
+  TDEIO::MetaData metaData;
   metaData["referrer"] = d->m_referrer;
   KHTMLPopupGUIClient::saveURL( d->m_view, i18n("Save Background Image As"), backgroundURL(), metaData );
 }
@@ -4136,7 +4136,7 @@ void KHTMLPart::slotSaveDocument()
   if ( srcURL.fileName(false).isEmpty() )
     srcURL.setFileName( "index" + defaultExtension() );
 
-  KIO::MetaData metaData;
+  TDEIO::MetaData metaData;
   // Referre unknown?
   KHTMLPopupGUIClient::saveURL( d->m_view, i18n( "Save As" ), srcURL, metaData, "text/html", d->m_cacheId );
 }
@@ -4211,7 +4211,7 @@ void KHTMLPart::slotSaveFrame()
     if ( srcURL.fileName(false).isEmpty() )
         srcURL.setFileName( "index" + defaultExtension() );
 
-    KIO::MetaData metaData;
+    TDEIO::MetaData metaData;
     // Referrer unknown?
     KHTMLPopupGUIClient::saveURL( d->m_view, i18n( "Save Frame As" ), srcURL, metaData, "text/html" );
 }
@@ -4391,7 +4391,7 @@ bool KHTMLPart::requestObject( khtml::ChildFrame *child, const KURL &url, const 
     args.serviceType = child->m_serviceType;
 
   child->m_args = args;
-  child->m_args.reload = (d->m_cachePolicy == KIO::CC_Reload);
+  child->m_args.reload = (d->m_cachePolicy == TDEIO::CC_Reload);
   child->m_serviceName = TQString();
   if (!d->m_referrer.isEmpty() && !child->m_args.metaData().contains( "referrer" ))
     child->m_args.metaData()["referrer"] = d->m_referrer;
@@ -4518,8 +4518,8 @@ bool KHTMLPart::processObjectRequest( khtml::ChildFrame *child, const KURL &_url
     if (sb)
       sb->setStatusBar( d->m_statusBarExtension->statusBar() );
 
-    connect( part, TQT_SIGNAL( started( KIO::Job *) ),
-             this, TQT_SLOT( slotChildStarted( KIO::Job *) ) );
+    connect( part, TQT_SIGNAL( started( TDEIO::Job *) ),
+             this, TQT_SLOT( slotChildStarted( TDEIO::Job *) ) );
     connect( part, TQT_SIGNAL( completed() ),
              this, TQT_SLOT( slotChildCompleted() ) );
     connect( part, TQT_SIGNAL( completed(bool) ),
@@ -4594,7 +4594,7 @@ bool KHTMLPart::processObjectRequest( khtml::ChildFrame *child, const KURL &_url
     return true;
   }
 
-  child->m_args.reload = (d->m_cachePolicy == KIO::CC_Reload);
+  child->m_args.reload = (d->m_cachePolicy == TDEIO::CC_Reload);
 
   // make sure the part has a way to find out about the mimetype.
   // we actually set it in child->m_args in requestObject already,
@@ -4776,9 +4776,9 @@ void KHTMLPart::submitForm( const char *action, const TQString &url, const TQByt
                                                       KGuiItem(i18n("&Send Unencrypted")),
                                                       "WarnOnUnencryptedForm");
           // Move this setting into KSSL instead
-          KConfig *config = kapp->config();
+          TDEConfig *config = kapp->config();
           TQString grpNotifMsgs = TQString::fromLatin1("Notification Messages");
-          KConfigGroupSaver saver( config, grpNotifMsgs );
+          TDEConfigGroupSaver saver( config, grpNotifMsgs );
 
           if (!config->readBoolEntry("WarnOnUnencryptedForm", true)) {
             config->deleteEntry("WarnOnUnencryptedForm");
@@ -5028,7 +5028,7 @@ void KHTMLPart::slotParentCompleted()
   }
 }
 
-void KHTMLPart::slotChildStarted( KIO::Job *job )
+void KHTMLPart::slotChildStarted( TDEIO::Job *job )
 {
   khtml::ChildFrame *child = frame( TQT_TQOBJECT_CONST(sender()) );
 
@@ -5773,7 +5773,7 @@ void KHTMLPart::setStatusBarText( const TQString& text, StatusBarPriority p)
     if (!tobe.isEmpty() && d->m_jobspeed)
       tobe += " ";
     if (d->m_jobspeed)
-      tobe += i18n( "(%1/s)" ).arg( KIO::convertSize( d->m_jobspeed ) );
+      tobe += i18n( "(%1/s)" ).arg( TDEIO::convertSize( d->m_jobspeed ) );
   }
   tobe = "<qt>"+tobe;
 

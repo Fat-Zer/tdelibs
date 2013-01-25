@@ -52,7 +52,7 @@
 #include <twin.h>
 #endif
 
-using namespace KIO;
+using namespace TDEIO;
 
 class RenameDlg::RenameDlgPrivate
 {
@@ -84,14 +84,14 @@ class RenameDlg::RenameDlgPrivate
 RenameDlg::RenameDlg(TQWidget *parent, const TQString & _caption,
                      const TQString &_src, const TQString &_dest,
                      RenameDlg_Mode _mode,
-                     KIO::filesize_t sizeSrc,
-                     KIO::filesize_t sizeDest,
+                     TDEIO::filesize_t sizeSrc,
+                     TDEIO::filesize_t sizeDest,
                      time_t ctimeSrc,
                      time_t ctimeDest,
                      time_t mtimeSrc,
                      time_t mtimeDest,
                      bool _modal)
-  : TQDialog ( parent, "KIO::RenameDialog" , _modal )
+  : TQDialog ( parent, "TDEIO::RenameDialog" , _modal )
 {
     d = new RenameDlgPrivate( );
     d->modal = _modal;
@@ -243,9 +243,9 @@ RenameDlg::RenameDlg(TQWidget *parent, const TQString & _caption,
             gridLayout->addMultiCellWidget( lb1, 1, 3, 0, 0 ); // takes the first column on rows 1-3
 
             int row = 1;
-            if ( sizeDest != (KIO::filesize_t)-1 )
+            if ( sizeDest != (TDEIO::filesize_t)-1 )
             {
-                TQLabel * lb = new TQLabel( i18n("size %1").arg( KIO::convertSize(sizeDest) ), this );
+                TQLabel * lb = new TQLabel( i18n("size %1").arg( TDEIO::convertSize(sizeDest) ), this );
                 gridLayout->addWidget( lb, row, 1 );
                 row++;
 
@@ -279,9 +279,9 @@ RenameDlg::RenameDlg(TQWidget *parent, const TQString & _caption,
 
                 row = 6;
 
-                if ( sizeSrc != (KIO::filesize_t)-1 )
+                if ( sizeSrc != (TDEIO::filesize_t)-1 )
                 {
-                    TQLabel * lb = new TQLabel( i18n("size %1").arg( KIO::convertSize(sizeSrc) ), this );
+                    TQLabel * lb = new TQLabel( i18n("size %1").arg( TDEIO::convertSize(sizeSrc) ), this );
                     gridLayout->addWidget( lb, row, 1 );
                     row++;
                 }
@@ -323,7 +323,7 @@ RenameDlg::RenameDlg(TQWidget *parent, const TQString & _caption,
     d->m_pLineEdit = new TQLineEdit( this );
     layout2->addWidget( d->m_pLineEdit );
     TQString fileName = d->dest.fileName();
-    d->m_pLineEdit->setText( KIO::decodeFileName( fileName ) );
+    d->m_pLineEdit->setText( TDEIO::decodeFileName( fileName ) );
     if ( d->bRename || d->bOverwrite )
         connect(d->m_pLineEdit, TQT_SIGNAL(textChanged(const TQString &)),
                 TQT_SLOT(enableRenameButton(const TQString &)));
@@ -391,7 +391,7 @@ RenameDlg::~RenameDlg()
 
 void RenameDlg::enableRenameButton(const TQString &newDest)
 {
-  if ( newDest != KIO::decodeFileName( d->dest.fileName() ) && !newDest.isEmpty() )
+  if ( newDest != TDEIO::decodeFileName( d->dest.fileName() ) && !newDest.isEmpty() )
   {
     d->bRename->setEnabled( true );
     d->bRename->setDefault( true );
@@ -410,7 +410,7 @@ KURL RenameDlg::newDestURL()
 {
   KURL newDest( d->dest );
   TQString fileName = d->m_pLineEdit->text();
-  newDest.setFileName( KIO::encodeFileName( fileName ) );
+  newDest.setFileName( TDEIO::encodeFileName( fileName ) );
   return newDest;
 }
 
@@ -523,7 +523,7 @@ static TQString mime( const KURL& src )
 {
   KMimeType::Ptr type = KMimeType::findByURL( src );
   //if( type->name() == KMimeType::defaultMimeType() ){ // ok no mimetype
-    //    TQString ty = KIO::NetAccess::mimetype(d->src );
+    //    TQString ty = TDEIO::NetAccess::mimetype(d->src );
     // return ty;
     return type->name();
 }
@@ -544,12 +544,12 @@ void RenameDlg::pluginHandling()
 }
 
 
-RenameDlg_Result KIO::open_RenameDlg( const TQString & _caption,
+RenameDlg_Result TDEIO::open_RenameDlg( const TQString & _caption,
                                       const TQString & _src, const TQString & _dest,
                                       RenameDlg_Mode _mode,
                                       TQString& _new,
-                                      KIO::filesize_t sizeSrc,
-                                      KIO::filesize_t sizeDest,
+                                      TDEIO::filesize_t sizeSrc,
+                                      TDEIO::filesize_t sizeDest,
                                       time_t ctimeSrc,
                                       time_t ctimeDest,
                                       time_t mtimeSrc,

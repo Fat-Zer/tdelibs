@@ -27,7 +27,7 @@ class TQPopupMenu;
 class TQWidget;
 class KAccelAction;
 class KAccelActions;
-class KConfigBase;
+class TDEConfigBase;
 
 class TDEGlobalAccelPrivate;
 
@@ -157,14 +157,14 @@ class TDECORE_EXPORT TDEGlobalAccel : public TQObject
 	/**
 	 * Returns the configuration group that is used to save the accelerators.
 	 * @return the configuration group
-	 * @see KConfig
+	 * @see TDEConfig
 	 */
 	const TQString& configGroup() const;
 
 	/**
 	 * Sets the configuration group that is used to save the accelerators.
 	 * @param cg the configuration group
-	 * @see KConfig
+	 * @see TDEConfig
 	 */
 	void setConfigGroup( const TQString &cg );
 
@@ -176,7 +176,7 @@ class TDECORE_EXPORT TDEGlobalAccel : public TQObject
 	 *                 configuration file
 	 * @return true if successful, false otherwise
 	 */
-	bool readSettings( KConfigBase* pConfig = 0 );
+	bool readSettings( TDEConfigBase* pConfig = 0 );
 
 	/**
 	 * Write the current shortcuts to @p pConfig,
@@ -187,7 +187,7 @@ class TDECORE_EXPORT TDEGlobalAccel : public TQObject
 	 * @return true if successful, false otherwise
 	 * @since 3.1
 	 */
-	bool writeSettings( KConfigBase* pConfig = 0 ) const;
+	bool writeSettings( TDEConfigBase* pConfig = 0 ) const;
 	// BCI: merge these two writeSettings methods in KDE 4.0
 	/**
 	 * Write the current shortcuts to @p pConfig,
@@ -199,7 +199,7 @@ class TDECORE_EXPORT TDEGlobalAccel : public TQObject
 	 * @param bGlobal if true write the configuration to the kde global settings
 	 * @return true if successful, false otherwise
 	 */
-	bool writeSettings( KConfigBase* pConfig, bool bGlobal ) const;
+	bool writeSettings( TDEConfigBase* pConfig, bool bGlobal ) const;
 
 	/**
 	 * @internal -- this a wrapper function to

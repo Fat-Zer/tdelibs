@@ -214,8 +214,8 @@ void KIconLoader::init( const TQString& _appname, KStandardDirs *_dirs )
 
     // These have to match the order in kicontheme.h
     static const char * const groups[] = { "Desktop", "Toolbar", "MainToolbar", "Small", "Panel", 0L };
-    KConfig *config = TDEGlobal::config();
-    KConfigGroupSaver cs(config, "dummy");
+    TDEConfig *config = TDEGlobal::config();
+    TDEConfigGroupSaver cs(config, "dummy");
 
     // loading config and default sizes
     d->mpGroups = new KIconGroup[(int) KIcon::LastGroup];

@@ -23,7 +23,7 @@
 //
 // configtest.cpp: libKDEcore example
 //
-// demonstrates use of KConfig class
+// demonstrates use of TDEConfig class
 //
 // adapted from Qt widgets demo
 
@@ -56,10 +56,10 @@
 #endif
 
 //
-// Construct the KConfigTestView with buttons
+// Construct the TDEConfigTestView with buttons
 //
 
-KConfigTestView::KConfigTestView( TQWidget *parent, const char *name )
+TDEConfigTestView::TDEConfigTestView( TQWidget *parent, const char *name )
     : TQDialog( parent, name ),
       pConfig( 0L ),
       pFile( 0L ),
@@ -67,7 +67,7 @@ KConfigTestView::KConfigTestView( TQWidget *parent, const char *name )
 {
   // Set the window caption/title
 
-  setCaption( "KConfig test" );
+  setCaption( "TDEConfig test" );
 
   // Label and edit for the app config file
   pAppFileLabel = new TQLabel( this, "appconfiglabel" );
@@ -123,18 +123,18 @@ KConfigTestView::KConfigTestView( TQWidget *parent, const char *name )
   pQuitButton->setGeometry( 340, 60, 60, 60 );
   connect( pQuitButton, TQT_SIGNAL(clicked()), tqApp, TQT_SLOT(quit()) );
 
-  // create a default KConfig object in order to be able to start right away
-  pConfig = new KConfig( TQString::null );
+  // create a default TDEConfig object in order to be able to start right away
+  pConfig = new TDEConfig( TQString::null );
 }
 
-KConfigTestView::~KConfigTestView()
+TDEConfigTestView::~TDEConfigTestView()
 {
     delete pConfig;
     delete pFile;
     delete pStream;
 }
 
-void KConfigTestView::appConfigEditReturnPressed()
+void TDEConfigTestView::appConfigEditReturnPressed()
 {
     // if there already was a config object, delete it and its associated data
     delete pConfig;
@@ -146,12 +146,12 @@ void KConfigTestView::appConfigEditReturnPressed()
 
   // create a new config object
   if( !pAppFileEdit->text().isEmpty() )
-	  pConfig = new KConfig( pAppFileEdit->text() );
+	  pConfig = new TDEConfig( pAppFileEdit->text() );
 
   pInfoLabel2->setText( "New config object created." );
 }
 
-void KConfigTestView::groupEditReturnPressed()
+void TDEConfigTestView::groupEditReturnPressed()
 {
   pConfig->setGroup( pGroupEdit->text() );
   // according to the Qt doc, this is begging for trouble, but for a
@@ -162,7 +162,7 @@ void KConfigTestView::groupEditReturnPressed()
   pInfoLabel2->setText( aText );
 }
 
-void KConfigTestView::keyEditReturnPressed()
+void TDEConfigTestView::keyEditReturnPressed()
 {
   TQString aValue = pConfig->readEntry( pKeyEdit->text() );
   // just checking aValue.isNull() would be easier here, but this is
@@ -181,7 +181,7 @@ void KConfigTestView::keyEditReturnPressed()
     }
 }
 
-void KConfigTestView::writeButtonClicked()
+void TDEConfigTestView::writeButtonClicked()
 {
   pConfig->writeEntry( pKeyEdit->text(), TQString( pValueEdit->text() ) );
   pInfoLabel2->setText( "Entry written" );
@@ -194,7 +194,7 @@ int main( int argc, char **argv )
 {
   TDEApplication a( argc, argv, "bla" );
 
-  KConfigTestView *w = new KConfigTestView();
+  TDEConfigTestView *w = new TDEConfigTestView();
   a.setMainWidget( w );
   return w->exec();
 }

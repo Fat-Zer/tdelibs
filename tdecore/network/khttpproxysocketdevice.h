@@ -35,18 +35,18 @@ class KHttpProxySocketDevicePrivate;
  * @class KHttpProxySocketDevice khttpproxysocketdevice.h khttproxysocketdevice.h
  * @brief The low-level backend for HTTP proxying.
  *
- * This class derives from @ref KSocketDevice and implements the necessary
+ * This class derives from @ref TDESocketDevice and implements the necessary
  * calls to make a connection through an HTTP proxy.
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class TDECORE_EXPORT KHttpProxySocketDevice: public KSocketDevice
+class TDECORE_EXPORT KHttpProxySocketDevice: public TDESocketDevice
 {
 public:
   /**
    * Constructor.
    */
-  KHttpProxySocketDevice(const KSocketBase* = 0L);
+  KHttpProxySocketDevice(const TDESocketBase* = 0L);
 
   /**
    * Constructor with proxy server's address.
@@ -92,13 +92,13 @@ public:
   /**
    * Return the peer address.
    */
-  virtual KSocketAddress peerAddress() const;
+  virtual TDESocketAddress peerAddress() const;
 
   /**
    * Return the externally visible address. We can't tell what that address is,
    * so this function always returns an empty object.
    */
-  virtual KSocketAddress externalAddress() const;
+  virtual TDESocketAddress externalAddress() const;
 
 private:
   /**

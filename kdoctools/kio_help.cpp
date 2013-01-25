@@ -35,7 +35,7 @@
 #include <libxslt/transform.h>
 #include "xslt.h"
 
-using namespace KIO;
+using namespace TDEIO;
 
 TQString HelpProtocol::langLookup(const TQString& fname)
 {
@@ -169,7 +169,7 @@ void HelpProtocol::get( const KURL& url )
 
     if (doc.isEmpty())
     {
-        error( KIO::ERR_DOES_NOT_EXIST, url.url() );
+        error( TDEIO::ERR_DOES_NOT_EXIST, url.url() );
         return;
     }
 
@@ -345,24 +345,24 @@ void HelpProtocol::get_file( const KURL& url )
     struct stat buff;
     if ( ::stat( _path.data(), &buff ) == -1 ) {
         if ( errno == EACCES )
-           error( KIO::ERR_ACCESS_DENIED, url.path() );
+           error( TDEIO::ERR_ACCESS_DENIED, url.path() );
         else
-           error( KIO::ERR_DOES_NOT_EXIST, url.path() );
+           error( TDEIO::ERR_DOES_NOT_EXIST, url.path() );
 	return;
     }
 
     if ( S_ISDIR( buff.st_mode ) ) {
-	error( KIO::ERR_IS_DIRECTORY, url.path() );
+	error( TDEIO::ERR_IS_DIRECTORY, url.path() );
 	return;
     }
     if ( S_ISFIFO( buff.st_mode ) || S_ISSOCK ( buff.st_mode ) ) {
-	error( KIO::ERR_CANNOT_OPEN_FOR_READING, url.path() );
+	error( TDEIO::ERR_CANNOT_OPEN_FOR_READING, url.path() );
 	return;
     }
 
     int fd = open( _path.data(), O_RDONLY);
     if ( fd < 0 ) {
-	error( KIO::ERR_CANNOT_OPEN_FOR_READING, url.path() );
+	error( TDEIO::ERR_CANNOT_OPEN_FOR_READING, url.path() );
 	return;
     }
 
@@ -379,7 +379,7 @@ void HelpProtocol::get_file( const KURL& url )
        {
           if (errno == EINTR)
               continue;
-          error( KIO::ERR_COULD_NOT_READ, url.path());
+          error( TDEIO::ERR_COULD_NOT_READ, url.path());
           close(fd);
           return;
        }

@@ -223,7 +223,7 @@ int KPrinterImpl::dcopPrint(const TQString& cmd, const TQStringList& files, bool
 void KPrinterImpl::statusMessage(const TQString& msg, KPrinter *printer)
 {
 	kdDebug(500) << "tdeprint: status message: " << msg << endl;
-	KConfig	*conf = KMFactory::self()->printConfig();
+	TDEConfig	*conf = KMFactory::self()->printConfig();
 	conf->setGroup("General");
 	if (!conf->readBoolEntry("ShowStatusMsg", true))
 		return;
@@ -583,7 +583,7 @@ void KPrinterImpl::saveOptions(const TQMap<TQString,TQString>& opts)
 
 void KPrinterImpl::loadAppOptions()
 {
-	KConfig	*conf = TDEGlobal::config();
+	TDEConfig	*conf = TDEGlobal::config();
 	conf->setGroup("KPrinter Settings");
 	TQStringList	opts = conf->readListEntry("ApplicationOptions");
 	for (uint i=0; i<opts.count(); i+=2)
@@ -598,7 +598,7 @@ void KPrinterImpl::saveAppOptions()
 		if (it.key().startsWith("app-"))
 			optlist << it.key() << it.data();
 
-	KConfig	*conf = TDEGlobal::config();
+	TDEConfig	*conf = TDEGlobal::config();
 	conf->setGroup("KPrinter Settings");
 	conf->writeEntry("ApplicationOptions", optlist);
 }

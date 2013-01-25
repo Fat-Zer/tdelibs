@@ -31,7 +31,7 @@
 #include <tqptrlist.h>
 #include <time.h>
 
-class KConfig;
+class TDEConfig;
 class KCookieJar;
 class KHttpCookie;
 class KHttpCookieList;
@@ -146,12 +146,12 @@ public:
     /**
      * Save the cookie configuration
      */
-    void saveConfig(KConfig *_config);
+    void saveConfig(TDEConfig *_config);
 
     /**
      * Load the cookie configuration
      */
-    void loadConfig(KConfig *_config, bool reparse = false);
+    void loadConfig(TDEConfig *_config, bool reparse = false);
 
     /**
      * Looks for cookies in the cookie jar which are appropriate for _url.

@@ -26,7 +26,7 @@
 
 class KNotifyPrivate;
 class TDEProcess;
-class KConfig;
+class TDEConfig;
 
 class KNotify : public TQObject, public DCOPObject
 {
@@ -75,7 +75,7 @@ private:
 	bool notifyByLogfile(const TQString &text, const TQString &file);
 	bool notifyByStderr(const TQString &text);
 	bool notifyByPassivePopup(const TQString &text, const TQString &appName,
-                                  KConfig* eventsFile, WId winId );
+                                  TDEConfig* eventsFile, WId winId );
 	bool notifyByExecute(const TQString &command, 
                              const TQString& event, 
                              const TQString& fromApp, 

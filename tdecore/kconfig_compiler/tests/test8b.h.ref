@@ -75,7 +75,7 @@ class Test8b : public Test8a
     static
     void writeConfig()
     {
-      static_cast<KConfigSkeleton*>(self())->writeConfig();
+      static_cast<TDEConfigSkeleton*>(self())->writeConfig();
     }
   protected:
     Test8b();

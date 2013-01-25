@@ -46,8 +46,8 @@ class KToolBar;
 
 class KAccel;
 class KAccelActions;
-class KConfig;
-class KConfigBase;
+class TDEConfig;
+class TDEConfigBase;
 class KURL;
 class TDEInstance;
 class KToolBar;
@@ -191,11 +191,11 @@ public:
   /**
    * Used for reading shortcut configuration from a non-XML rc file.
    */
-  bool readShortcutSettings( const TQString& sConfigGroup = TQString::null, KConfigBase* pConfig = 0 );
+  bool readShortcutSettings( const TQString& sConfigGroup = TQString::null, TDEConfigBase* pConfig = 0 );
   /**
    * Used for writing shortcut configuration to a non-XML rc file.
    */
-  bool writeShortcutSettings( const TQString& sConfigGroup = TQString::null, KConfigBase* pConfig = 0 ) const;
+  bool writeShortcutSettings( const TQString& sConfigGroup = TQString::null, TDEConfigBase* pConfig = 0 ) const;
 
   void setInstance( TDEInstance *instance );
   /** The instance with which this class is associated. */

@@ -31,7 +31,7 @@
  * @short A namespace for KIO globals
  *
  */
-namespace KIO
+namespace TDEIO
 {
   /// 64-bit file offset
   typedef TQ_LLONG fileoffset_t;
@@ -44,7 +44,7 @@ namespace KIO
    * @param  size  size in bytes
    * @return converted size as a string - e.g. 123.4 kB , 12.0 MB
    */
-  KIO_EXPORT TQString convertSize( KIO::filesize_t size );
+  KIO_EXPORT TQString convertSize( TDEIO::filesize_t size );
 
   /**
    * Converts @p size from bytes to a string representation with includes
@@ -53,7 +53,7 @@ namespace KIO
    * @param  size  size in bytes
    * @return converted size as a string - e.g. 1.4 KB (1495 B), 45 B
    */
-  KIO_EXPORT TQString convertSizeWithBytes( KIO::filesize_t size );
+  KIO_EXPORT TQString convertSizeWithBytes( TDEIO::filesize_t size );
   /**
    * Converts a size to a string representation
    * Not unlike TQString::number(...)
@@ -61,7 +61,7 @@ namespace KIO
    * @param size size in bytes
    * @return  converted size as a string - e.g. 123456789
    */
-  KIO_EXPORT TQString number( KIO::filesize_t size );
+  KIO_EXPORT TQString number( TDEIO::filesize_t size );
 
   /**
    * Converts size from kilo-bytes to the string representation.
@@ -69,7 +69,7 @@ namespace KIO
    * @param  kbSize  size in kilo-bytes
    * @return converted size as a string - e.g. 123.4 kB , 12.0 MB
    */
-   KIO_EXPORT TQString convertSizeFromKB( KIO::filesize_t kbSize );
+   KIO_EXPORT TQString convertSizeFromKB( TDEIO::filesize_t kbSize );
 
   /**
    * Calculates remaining time in seconds from total size, processed size and speed.
@@ -81,8 +81,8 @@ namespace KIO
    *
    * @since 3.4
    */
-  KIO_EXPORT unsigned int calculateRemainingSeconds( KIO::filesize_t totalSize,
-                                                     KIO::filesize_t processedSize, KIO::filesize_t speed );
+  KIO_EXPORT unsigned int calculateRemainingSeconds( TDEIO::filesize_t totalSize,
+                                                     TDEIO::filesize_t processedSize, TDEIO::filesize_t speed );
 
   /**
    * Convert @p seconds to a string representing number of days, hours, minutes and seconds
@@ -103,7 +103,7 @@ namespace KIO
    * @param  speed          speed in bytes per second
    * @return calculated remaining time
    */
-  KIO_EXPORT TQTime calculateRemaining( KIO::filesize_t totalSize, KIO::filesize_t processedSize, KIO::filesize_t speed ) KDE_DEPRECATED;
+  KIO_EXPORT TQTime calculateRemaining( TDEIO::filesize_t totalSize, TDEIO::filesize_t processedSize, TDEIO::filesize_t speed ) KDE_DEPRECATED;
 
   /**
    * Helper for showing information about a set of files and directories
@@ -114,12 +114,12 @@ namespace KIO
    * @param showSize whether to show the size in the result
    * @return the summary string
    */
-  KIO_EXPORT TQString itemsSummaryString(uint items, uint files, uint dirs, KIO::filesize_t size, bool showSize);
+  KIO_EXPORT TQString itemsSummaryString(uint items, uint files, uint dirs, TDEIO::filesize_t size, bool showSize);
 
   /**
    * Encodes (from the text displayed to the real filename)
    * This translates % into %% and / into %2f
-   * Used by KIO::link, for instance.
+   * Used by TDEIO::link, for instance.
    * @param str the file name to encode
    * @return the encoded file name
    */
@@ -401,7 +401,7 @@ namespace KIO
    * @return the cache control value
    * @see getCacheControlString()
    */
-  KIO_EXPORT KIO::CacheControl parseCacheControl(const TQString &cacheControl);
+  KIO_EXPORT TDEIO::CacheControl parseCacheControl(const TQString &cacheControl);
 
   /**
    * Returns a string representation of the given cache control method.
@@ -410,7 +410,7 @@ namespace KIO
    * @return the string representation
    * @see parseCacheControl()
    */
-  KIO_EXPORT TQString getCacheControlString(KIO::CacheControl cacheControl);
+  KIO_EXPORT TQString getCacheControlString(TDEIO::CacheControl cacheControl);
 
   /**
    * Returns the mount point where @p device is mounted

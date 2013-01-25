@@ -26,7 +26,7 @@ class TQString;
 class TQImage;
 /**
  * This is the baseclass for "thumbnail-plugins" in KDE. Using the class
- * KIO::PreviewJob allows you to generate small images (thumbnails)
+ * TDEIO::PreviewJob allows you to generate small images (thumbnails)
  * for any kind of file, where a "ThumbCreator" is available. Have a look
  * at tdebase/kioslave/thumbnail/ for existing ThumbCreators.
  *

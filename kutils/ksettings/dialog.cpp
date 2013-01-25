@@ -58,7 +58,7 @@ class PageNode
 		enum Type { KCM, Group, Root };
 		union Value
 		{
-			KCModuleInfo * kcm;
+			TDECModuleInfo * kcm;
 			GroupInfo * group;
 		};
 		Type m_type;
@@ -71,7 +71,7 @@ class PageNode
 		bool m_dirty;
 
 	protected:
-		PageNode( KCModuleInfo * info, PageNode * parent )
+		PageNode( TDECModuleInfo * info, PageNode * parent )
 			: m_type( KCM )
 			, m_parent( parent )
 			, m_visible( true )
@@ -291,7 +291,7 @@ class PageNode
 			return false;
 		}
 
-		bool insert( KCModuleInfo * info, const TQString & parentid )
+		bool insert( TDECModuleInfo * info, const TQString & parentid )
 		{
 			if( parentid.isNull() )
 			{
@@ -467,10 +467,10 @@ TQValueList<KService::Ptr> Dialog::parentComponentsServices(
 	constraint = "('" + constraint + "' in [X-TDE-ParentComponents])";
 
 	kdDebug( 700 ) << "constraint = " << constraint << endl;
-	return KTrader::self()->query( "KCModule", constraint );
+	return KTrader::self()->query( "TDECModule", constraint );
 }
 
-bool Dialog::isPluginForKCMEnabled( KCModuleInfo * moduleinfo ) const
+bool Dialog::isPluginForKCMEnabled( TDECModuleInfo * moduleinfo ) const
 {
 	// if the user of this class requested to hide disabled modules
 	// we check whether it should be enabled or not
@@ -491,9 +491,9 @@ bool Dialog::isPluginForKCMEnabled( KCModuleInfo * moduleinfo ) const
 		// we check if the parent component is a plugin
 		if( ! d->plugininfomap.contains( *pcit ) )
 		{
-			// if not the KCModule must be enabled
+			// if not the TDECModule must be enabled
 			enabled = true;
-			// we're done for this KCModuleInfo
+			// we're done for this TDECModuleInfo
 			break;
 		}
 		// if it is a plugin we check whether the plugin is enabled
@@ -502,7 +502,7 @@ bool Dialog::isPluginForKCMEnabled( KCModuleInfo * moduleinfo ) const
 		enabled = pinfo->isPluginEnabled();
 		kdDebug( 700 ) << "parent " << *pcit << " is "
 			<< ( enabled ? "enabled" : "disabled" ) << endl;
-		// if it is enabled we're done for this KCModuleInfo
+		// if it is enabled we're done for this TDECModuleInfo
 		if( enabled )
 			break;
 	}
@@ -543,12 +543,12 @@ void Dialog::createDialogFromServices()
 				it != setdlgaddon.end(); ++it )
 			parseGroupFile( *it );
 
-	// now we process the KCModule services
+	// now we process the TDECModule services
 	for( TQValueList<KService::Ptr>::ConstIterator it = d->services.begin();
 			it != d->services.end(); ++it )
 	{
-		// we create the KCModuleInfo
-		KCModuleInfo * info = new KCModuleInfo( *it );
+		// we create the TDECModuleInfo
+		TDECModuleInfo * info = new TDECModuleInfo( *it );
 		TQString parentid;
 		TQVariant tmp = info->service()->property( "X-TDE-CfgDlgHierarchy",
 			TQVariant::String );
@@ -577,10 +577,10 @@ void Dialog::createDialogFromServices()
 	// TODO: Don't show the reset button until the issue with the
 	// KPluginSelector::load() method is solved.
 	// Problem:
-	// KCMultiDialog::show() call KCModule::load() to reset all KCMs
+	// KCMultiDialog::show() call TDECModule::load() to reset all KCMs
 	// (KPluginSelector::load() resets all plugin selections and all plugin
 	// KCMs).
-	// The reset button calls KCModule::load(), too but in this case we want the
+	// The reset button calls TDECModule::load(), too but in this case we want the
 	// KPluginSelector to only reset the current visible plugin KCM and not
 	// touch the plugin selections.
 	// I have no idea how to check that in KPluginSelector::load()...

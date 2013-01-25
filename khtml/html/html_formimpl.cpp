@@ -1615,16 +1615,16 @@ bool HTMLInputElementImpl::encoding(const TQTextCodec* codec, khtml::encodingLis
                 fileurl = KURL::fromPathOrURL(val);
             }
 
-            KIO::UDSEntry filestat;
+            TDEIO::UDSEntry filestat;
 
             // can't submit file in www-url-form encoded
             TQWidget* const toplevel = static_cast<RenderSubmitButton*>(m_render)->widget()->topLevelWidget();
             if (multipart) {
                 TQCString filearray( "" );
-                if ( KIO::NetAccess::stat(fileurl, filestat, toplevel)) {
+                if ( TDEIO::NetAccess::stat(fileurl, filestat, toplevel)) {
                     const KFileItem fileitem(filestat, fileurl, true, false);
                     if ( fileitem.isFile() &&
-                         KIO::NetAccess::download(fileurl, local, toplevel) ) {
+                         TDEIO::NetAccess::download(fileurl, local, toplevel) ) {
                         TQFile file(local);
                         filearray.resize(file.size()+1);
                         if ( file.open( IO_ReadOnly ) ) {
@@ -1633,7 +1633,7 @@ bool HTMLInputElementImpl::encoding(const TQTextCodec* codec, khtml::encodingLis
                                 filearray[readbytes] = '\0';
                             file.close();
                         }
-                        KIO::NetAccess::removeTempFile( local );
+                        TDEIO::NetAccess::removeTempFile( local );
                     }
                 }
                 encoding += filearray;

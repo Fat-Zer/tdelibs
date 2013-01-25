@@ -59,7 +59,7 @@ Arts::SoundServerV2 KArtsServer::server(void)
 
 	// aRts seems not to be running, let's try to run it
 	// First, let's read the configuration as in kcmarts
-	KConfig config("kcmartsrc", false /*bReadOnly*/, false /*bUseKDEGlobals*/);
+	TDEConfig config("kcmartsrc", false /*bReadOnly*/, false /*bUseKDEGlobals*/);
 	TDEProcess proc;
 
 	config.setGroup("Arts");

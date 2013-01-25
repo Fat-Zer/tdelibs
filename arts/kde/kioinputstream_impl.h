@@ -62,14 +62,14 @@ signals:
 	void mimeTypeFound(const TQString & mimetype);
 	
 private slots:
-	void slotData(KIO::Job *, const TQByteArray &);
-	void slotResult(KIO::Job *);
-	void slotScanMimeType(KIO::Job *, const TQString &mimetype);
-	void slotTotalSize(KIO::Job *, KIO::filesize_t size);
+	void slotData(TDEIO::Job *, const TQByteArray &);
+	void slotResult(TDEIO::Job *);
+	void slotScanMimeType(TDEIO::Job *, const TQString &mimetype);
+	void slotTotalSize(TDEIO::Job *, TDEIO::filesize_t size);
 
 private:
 	KURL m_url;
-	KIO::TransferJob *m_job;
+	TDEIO::TransferJob *m_job;
 	TQByteArray m_data;
 	bool m_finished;
 	bool m_firstBuffer;
@@ -79,7 +79,7 @@ private:
 
 	unsigned int m_packetBuffer;
 	const unsigned int m_packetSize;
-	KIO::filesize_t m_size;
+	TDEIO::filesize_t m_size;
 	
 	static const unsigned int PACKET_COUNT;
 };

@@ -19,7 +19,7 @@
 #include "jobclasses.h"
 #include "progressbase.h"
 
-namespace KIO {
+namespace TDEIO {
 
 ProgressBase::ProgressBase( TQWidget *parent )
   : TQWidget( parent )
@@ -34,93 +34,93 @@ ProgressBase::ProgressBase( TQWidget *parent )
 }
 
 
-void ProgressBase::setJob( KIO::Job *job )
+void ProgressBase::setJob( TDEIO::Job *job )
 {
   // first connect all slots
-  connect( job, TQT_SIGNAL( percent( KIO::Job*, unsigned long ) ),
-	   TQT_SLOT( slotPercent( KIO::Job*, unsigned long ) ) );
+  connect( job, TQT_SIGNAL( percent( TDEIO::Job*, unsigned long ) ),
+	   TQT_SLOT( slotPercent( TDEIO::Job*, unsigned long ) ) );
 
-  connect( job, TQT_SIGNAL( result( KIO::Job* ) ),
-	   TQT_SLOT( slotFinished( KIO::Job* ) ) );
+  connect( job, TQT_SIGNAL( result( TDEIO::Job* ) ),
+	   TQT_SLOT( slotFinished( TDEIO::Job* ) ) );
 
-  connect( job, TQT_SIGNAL( canceled( KIO::Job* ) ),
-	   TQT_SLOT( slotFinished( KIO::Job* ) ) );
+  connect( job, TQT_SIGNAL( canceled( TDEIO::Job* ) ),
+	   TQT_SLOT( slotFinished( TDEIO::Job* ) ) );
 
   // then assign job
   m_pJob = job;
 }
 
 
-void ProgressBase::setJob( KIO::CopyJob *job )
+void ProgressBase::setJob( TDEIO::CopyJob *job )
 {
   // first connect all slots
-  connect( job, TQT_SIGNAL( totalSize( KIO::Job*, KIO::filesize_t ) ),
-	   TQT_SLOT( slotTotalSize( KIO::Job*, KIO::filesize_t ) ) );
-  connect( job, TQT_SIGNAL( totalFiles( KIO::Job*, unsigned long ) ),
-	   TQT_SLOT( slotTotalFiles( KIO::Job*, unsigned long ) ) );
-  connect( job, TQT_SIGNAL( totalDirs( KIO::Job*, unsigned long ) ),
-	   TQT_SLOT( slotTotalDirs( KIO::Job*, unsigned long ) ) );
+  connect( job, TQT_SIGNAL( totalSize( TDEIO::Job*, TDEIO::filesize_t ) ),
+	   TQT_SLOT( slotTotalSize( TDEIO::Job*, TDEIO::filesize_t ) ) );
+  connect( job, TQT_SIGNAL( totalFiles( TDEIO::Job*, unsigned long ) ),
+	   TQT_SLOT( slotTotalFiles( TDEIO::Job*, unsigned long ) ) );
+  connect( job, TQT_SIGNAL( totalDirs( TDEIO::Job*, unsigned long ) ),
+	   TQT_SLOT( slotTotalDirs( TDEIO::Job*, unsigned long ) ) );
 
-  connect( job, TQT_SIGNAL( processedSize( KIO::Job*, KIO::filesize_t ) ),
-	   TQT_SLOT( slotProcessedSize( KIO::Job*, KIO::filesize_t ) ) );
-  connect( job, TQT_SIGNAL( processedFiles( KIO::Job*, unsigned long ) ),
-	   TQT_SLOT( slotProcessedFiles( KIO::Job*, unsigned long ) ) );
-  connect( job, TQT_SIGNAL( processedDirs( KIO::Job*, unsigned long ) ),
-	   TQT_SLOT( slotProcessedDirs( KIO::Job*, unsigned long ) ) );
+  connect( job, TQT_SIGNAL( processedSize( TDEIO::Job*, TDEIO::filesize_t ) ),
+	   TQT_SLOT( slotProcessedSize( TDEIO::Job*, TDEIO::filesize_t ) ) );
+  connect( job, TQT_SIGNAL( processedFiles( TDEIO::Job*, unsigned long ) ),
+	   TQT_SLOT( slotProcessedFiles( TDEIO::Job*, unsigned long ) ) );
+  connect( job, TQT_SIGNAL( processedDirs( TDEIO::Job*, unsigned long ) ),
+	   TQT_SLOT( slotProcessedDirs( TDEIO::Job*, unsigned long ) ) );
 
-  connect( job, TQT_SIGNAL( speed( KIO::Job*, unsigned long ) ),
-	   TQT_SLOT( slotSpeed( KIO::Job*, unsigned long ) ) );
-  connect( job, TQT_SIGNAL( percent( KIO::Job*, unsigned long ) ),
-	   TQT_SLOT( slotPercent( KIO::Job*, unsigned long ) ) );
+  connect( job, TQT_SIGNAL( speed( TDEIO::Job*, unsigned long ) ),
+	   TQT_SLOT( slotSpeed( TDEIO::Job*, unsigned long ) ) );
+  connect( job, TQT_SIGNAL( percent( TDEIO::Job*, unsigned long ) ),
+	   TQT_SLOT( slotPercent( TDEIO::Job*, unsigned long ) ) );
 
-  connect( job, TQT_SIGNAL( copying( KIO::Job*, const KURL& , const KURL& ) ),
-	   TQT_SLOT( slotCopying( KIO::Job*, const KURL&, const KURL& ) ) );
-  connect( job, TQT_SIGNAL( moving( KIO::Job*, const KURL& , const KURL& ) ),
-	   TQT_SLOT( slotMoving( KIO::Job*, const KURL&, const KURL& ) ) );
-  connect( job, TQT_SIGNAL( creatingDir( KIO::Job*, const KURL& ) ),
- 	   TQT_SLOT( slotCreatingDir( KIO::Job*, const KURL& ) ) );
+  connect( job, TQT_SIGNAL( copying( TDEIO::Job*, const KURL& , const KURL& ) ),
+	   TQT_SLOT( slotCopying( TDEIO::Job*, const KURL&, const KURL& ) ) );
+  connect( job, TQT_SIGNAL( moving( TDEIO::Job*, const KURL& , const KURL& ) ),
+	   TQT_SLOT( slotMoving( TDEIO::Job*, const KURL&, const KURL& ) ) );
+  connect( job, TQT_SIGNAL( creatingDir( TDEIO::Job*, const KURL& ) ),
+ 	   TQT_SLOT( slotCreatingDir( TDEIO::Job*, const KURL& ) ) );
 
-  connect( job, TQT_SIGNAL( result( KIO::Job* ) ),
-	   TQT_SLOT( slotFinished( KIO::Job* ) ) );
+  connect( job, TQT_SIGNAL( result( TDEIO::Job* ) ),
+	   TQT_SLOT( slotFinished( TDEIO::Job* ) ) );
 
-  connect( job, TQT_SIGNAL( canceled( KIO::Job* ) ),
-	   TQT_SLOT( slotFinished( KIO::Job* ) ) );
+  connect( job, TQT_SIGNAL( canceled( TDEIO::Job* ) ),
+	   TQT_SLOT( slotFinished( TDEIO::Job* ) ) );
 
   // then assign job
   m_pJob = job;
 }
 
 
-void ProgressBase::setJob( KIO::DeleteJob *job )
+void ProgressBase::setJob( TDEIO::DeleteJob *job )
 {
   // first connect all slots
-  connect( job, TQT_SIGNAL( totalSize( KIO::Job*, KIO::filesize_t ) ),
-	   TQT_SLOT( slotTotalSize( KIO::Job*, KIO::filesize_t ) ) );
-  connect( job, TQT_SIGNAL( totalFiles( KIO::Job*, unsigned long ) ),
-	   TQT_SLOT( slotTotalFiles( KIO::Job*, unsigned long ) ) );
-  connect( job, TQT_SIGNAL( totalDirs( KIO::Job*, unsigned long ) ),
-	   TQT_SLOT( slotTotalDirs( KIO::Job*, unsigned long ) ) );
+  connect( job, TQT_SIGNAL( totalSize( TDEIO::Job*, TDEIO::filesize_t ) ),
+	   TQT_SLOT( slotTotalSize( TDEIO::Job*, TDEIO::filesize_t ) ) );
+  connect( job, TQT_SIGNAL( totalFiles( TDEIO::Job*, unsigned long ) ),
+	   TQT_SLOT( slotTotalFiles( TDEIO::Job*, unsigned long ) ) );
+  connect( job, TQT_SIGNAL( totalDirs( TDEIO::Job*, unsigned long ) ),
+	   TQT_SLOT( slotTotalDirs( TDEIO::Job*, unsigned long ) ) );
 
-  connect( job, TQT_SIGNAL( processedSize( KIO::Job*, KIO::filesize_t ) ),
-	   TQT_SLOT( slotProcessedSize( KIO::Job*, KIO::filesize_t ) ) );
-  connect( job, TQT_SIGNAL( processedFiles( KIO::Job*, unsigned long ) ),
-	   TQT_SLOT( slotProcessedFiles( KIO::Job*, unsigned long ) ) );
-  connect( job, TQT_SIGNAL( processedDirs( KIO::Job*, unsigned long ) ),
-	   TQT_SLOT( slotProcessedDirs( KIO::Job*, unsigned long ) ) );
+  connect( job, TQT_SIGNAL( processedSize( TDEIO::Job*, TDEIO::filesize_t ) ),
+	   TQT_SLOT( slotProcessedSize( TDEIO::Job*, TDEIO::filesize_t ) ) );
+  connect( job, TQT_SIGNAL( processedFiles( TDEIO::Job*, unsigned long ) ),
+	   TQT_SLOT( slotProcessedFiles( TDEIO::Job*, unsigned long ) ) );
+  connect( job, TQT_SIGNAL( processedDirs( TDEIO::Job*, unsigned long ) ),
+	   TQT_SLOT( slotProcessedDirs( TDEIO::Job*, unsigned long ) ) );
 
-  connect( job, TQT_SIGNAL( speed( KIO::Job*, unsigned long ) ),
-	   TQT_SLOT( slotSpeed( KIO::Job*, unsigned long ) ) );
-  connect( job, TQT_SIGNAL( percent( KIO::Job*, unsigned long ) ),
-	   TQT_SLOT( slotPercent( KIO::Job*, unsigned long ) ) );
+  connect( job, TQT_SIGNAL( speed( TDEIO::Job*, unsigned long ) ),
+	   TQT_SLOT( slotSpeed( TDEIO::Job*, unsigned long ) ) );
+  connect( job, TQT_SIGNAL( percent( TDEIO::Job*, unsigned long ) ),
+	   TQT_SLOT( slotPercent( TDEIO::Job*, unsigned long ) ) );
 
-  connect( job, TQT_SIGNAL( deleting( KIO::Job*, const KURL& ) ),
-	   TQT_SLOT( slotDeleting( KIO::Job*, const KURL& ) ) );
+  connect( job, TQT_SIGNAL( deleting( TDEIO::Job*, const KURL& ) ),
+	   TQT_SLOT( slotDeleting( TDEIO::Job*, const KURL& ) ) );
 
-  connect( job, TQT_SIGNAL( result( KIO::Job* ) ),
-	   TQT_SLOT( slotFinished( KIO::Job* ) ) );
+  connect( job, TQT_SIGNAL( result( TDEIO::Job* ) ),
+	   TQT_SLOT( slotFinished( TDEIO::Job* ) ) );
 
-  connect( job, TQT_SIGNAL( canceled( KIO::Job* ) ),
-	   TQT_SLOT( slotFinished( KIO::Job* ) ) );
+  connect( job, TQT_SIGNAL( canceled( TDEIO::Job* ) ),
+	   TQT_SLOT( slotFinished( TDEIO::Job* ) ) );
 
   // then assign job
   m_pJob = job;
@@ -150,7 +150,7 @@ void ProgressBase::finished() {
   }
 }
 
-void ProgressBase::slotFinished( KIO::Job* ) {
+void ProgressBase::slotFinished( TDEIO::Job* ) {
   finished();
 }
 

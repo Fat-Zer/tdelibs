@@ -38,28 +38,28 @@
 #include "kstandarddirs.h"
 #include "kstringhandler.h"
 
-class KConfigBase::KConfigBasePrivate
+class TDEConfigBase::TDEConfigBasePrivate
 {
 public:
-     KConfigBasePrivate() : readDefaults(false) { };
+     TDEConfigBasePrivate() : readDefaults(false) { };
 
 public:
      bool readDefaults;
 };
 
-KConfigBase::KConfigBase()
+TDEConfigBase::TDEConfigBase()
   : backEnd(0L), bDirty(false), bLocaleInitialized(false),
     bReadOnly(false), bExpand(false), d(0)
 {
     setGroup(TQString::null);
 }
 
-KConfigBase::~KConfigBase()
+TDEConfigBase::~TDEConfigBase()
 {
     delete d;
 }
 
-void KConfigBase::setLocale()
+void TDEConfigBase::setLocale()
 {
   bLocaleInitialized = true;
 
@@ -71,12 +71,12 @@ void KConfigBase::setLocale()
      backEnd->setLocaleString(aLocaleString);
 }
 
-TQString KConfigBase::locale() const
+TQString TDEConfigBase::locale() const
 {
   return TQString::fromUtf8(aLocaleString);
 }
 
-void KConfigBase::setGroup( const TQString& group )
+void TDEConfigBase::setGroup( const TQString& group )
 {
   if ( group.isEmpty() )
     mGroup = "<default>";
@@ -84,12 +84,12 @@ void KConfigBase::setGroup( const TQString& group )
     mGroup = group.utf8();
 }
 
-void KConfigBase::setGroup( const char *pGroup )
+void TDEConfigBase::setGroup( const char *pGroup )
 {
   setGroup(TQCString(pGroup));
 }
 
-void KConfigBase::setGroup( const TQCString &group )
+void TDEConfigBase::setGroup( const TQCString &group )
 {
   if ( group.isEmpty() )
     mGroup = "<default>";
@@ -97,21 +97,21 @@ void KConfigBase::setGroup( const TQCString &group )
     mGroup = group;
 }
 
-TQString KConfigBase::group() const {
+TQString TDEConfigBase::group() const {
   return TQString::fromUtf8(mGroup);
 }
 
-void KConfigBase::setDesktopGroup()
+void TDEConfigBase::setDesktopGroup()
 {
   mGroup = "Desktop Entry";
 }
 
-bool KConfigBase::hasKey(const TQString &key) const
+bool TDEConfigBase::hasKey(const TQString &key) const
 {
    return hasKey(key.utf8().data());
 }
 
-bool KConfigBase::hasKey(const char *pKey) const
+bool TDEConfigBase::hasKey(const char *pKey) const
 {
   KEntryKey aEntryKey(mGroup, 0);
   aEntryKey.c_key = pKey;
@@ -131,7 +131,7 @@ bool KConfigBase::hasKey(const char *pKey) const
   return !entry.mValue.isNull();
 }
 
-bool KConfigBase::hasTranslatedKey(const char* pKey) const
+bool TDEConfigBase::hasTranslatedKey(const char* pKey) const
 {
   KEntryKey aEntryKey(mGroup, 0);
   aEntryKey.c_key = pKey;
@@ -149,27 +149,27 @@ bool KConfigBase::hasTranslatedKey(const char* pKey) const
   return false;
 }
 
-bool KConfigBase::hasGroup(const TQString &group) const
+bool TDEConfigBase::hasGroup(const TQString &group) const
 {
   return internalHasGroup( group.utf8());
 }
 
-bool KConfigBase::hasGroup(const char *_pGroup) const
+bool TDEConfigBase::hasGroup(const char *_pGroup) const
 {
   return internalHasGroup( TQCString(_pGroup));
 }
 
-bool KConfigBase::hasGroup(const TQCString &_pGroup) const
+bool TDEConfigBase::hasGroup(const TQCString &_pGroup) const
 {
   return internalHasGroup( _pGroup);
 }
 
-bool KConfigBase::isImmutable() const
+bool TDEConfigBase::isImmutable() const
 {
   return (getConfigState() != ReadWrite);
 }
 
-bool KConfigBase::groupIsImmutable(const TQString &group) const
+bool TDEConfigBase::groupIsImmutable(const TQString &group) const
 {
   if (getConfigState() != ReadWrite)
      return true;
@@ -179,7 +179,7 @@ bool KConfigBase::groupIsImmutable(const TQString &group) const
   return entry.bImmutable;
 }
 
-bool KConfigBase::entryIsImmutable(const TQString &key) const
+bool TDEConfigBase::entryIsImmutable(const TQString &key) const
 {
   if (getConfigState() != ReadWrite)
      return true;
@@ -201,14 +201,14 @@ bool KConfigBase::entryIsImmutable(const TQString &key) const
 }
 
 
-TQString KConfigBase::readEntryUntranslated( const TQString& pKey,
+TQString TDEConfigBase::readEntryUntranslated( const TQString& pKey,
                                 const TQString& aDefault ) const
 {
-   return KConfigBase::readEntryUntranslated(pKey.utf8().data(), aDefault);
+   return TDEConfigBase::readEntryUntranslated(pKey.utf8().data(), aDefault);
 }
 
 
-TQString KConfigBase::readEntryUntranslated( const char *pKey,
+TQString TDEConfigBase::readEntryUntranslated( const char *pKey,
                                 const TQString& aDefault ) const
 {
    TQCString result = readEntryUtf8(pKey);
@@ -218,22 +218,22 @@ TQString KConfigBase::readEntryUntranslated( const char *pKey,
 }
 
 
-TQString KConfigBase::readEntry( const TQString& pKey,
+TQString TDEConfigBase::readEntry( const TQString& pKey,
                                 const TQString& aDefault ) const
 {
-   return KConfigBase::readEntry(pKey.utf8().data(), aDefault);
+   return TDEConfigBase::readEntry(pKey.utf8().data(), aDefault);
 }
 
-TQString KConfigBase::readEntry( const char *pKey,
+TQString TDEConfigBase::readEntry( const char *pKey,
                                 const TQString& aDefault ) const
 {
   // we need to access _locale instead of the method locale()
   // because calling locale() will create a locale object if it
-  // doesn't exist, which requires KConfig, which will create a infinite
+  // doesn't exist, which requires TDEConfig, which will create a infinite
   // loop, and nobody likes those.
   if (!bLocaleInitialized && TDEGlobal::_locale) {
     // get around const'ness.
-    KConfigBase *that = const_cast<KConfigBase *>(this);
+    TDEConfigBase *that = const_cast<TDEConfigBase *>(this);
     that->setLocale();
   }
 
@@ -335,7 +335,7 @@ TQString KConfigBase::readEntry( const char *pKey,
   return aValue;
 }
 
-TQCString KConfigBase::readEntryUtf8( const char *pKey) const
+TQCString TDEConfigBase::readEntryUtf8( const char *pKey) const
 {
   // We don't try the localized key
   KEntryKey entryKey(mGroup, 0);
@@ -350,13 +350,13 @@ TQCString KConfigBase::readEntryUtf8( const char *pKey) const
   return aEntryData.mValue;
 }
 
-TQVariant KConfigBase::readPropertyEntry( const TQString& pKey,
+TQVariant TDEConfigBase::readPropertyEntry( const TQString& pKey,
                                           TQVariant::Type type ) const
 {
   return readPropertyEntry(pKey.utf8().data(), type);
 }
 
-TQVariant KConfigBase::readPropertyEntry( const char *pKey,
+TQVariant TDEConfigBase::readPropertyEntry( const char *pKey,
                                           TQVariant::Type type ) const
 {
   TQVariant va;
@@ -365,13 +365,13 @@ TQVariant KConfigBase::readPropertyEntry( const char *pKey,
   return readPropertyEntry(pKey, va);
 }
 
-TQVariant KConfigBase::readPropertyEntry( const TQString& pKey,
+TQVariant TDEConfigBase::readPropertyEntry( const TQString& pKey,
                                          const TQVariant &aDefault ) const
 {
   return readPropertyEntry(pKey.utf8().data(), aDefault);
 }
 
-TQVariant KConfigBase::readPropertyEntry( const char *pKey,
+TQVariant TDEConfigBase::readPropertyEntry( const char *pKey,
                                          const TQVariant &aDefault ) const
 {
   if ( !hasKey( pKey ) ) return aDefault;
@@ -474,13 +474,13 @@ TQVariant KConfigBase::readPropertyEntry( const char *pKey,
   return TQVariant();
 }
 
-int KConfigBase::readListEntry( const TQString& pKey,
+int TDEConfigBase::readListEntry( const TQString& pKey,
                                 TQStrList &list, char sep ) const
 {
   return readListEntry(pKey.utf8().data(), list, sep);
 }
 
-int KConfigBase::readListEntry( const char *pKey,
+int TDEConfigBase::readListEntry( const char *pKey,
                                 TQStrList &list, char sep ) const
 {
   if( !hasKey( pKey ) )
@@ -519,12 +519,12 @@ int KConfigBase::readListEntry( const char *pKey,
   return list.count();
 }
 
-TQStringList KConfigBase::readListEntry( const TQString& pKey, char sep ) const
+TQStringList TDEConfigBase::readListEntry( const TQString& pKey, char sep ) const
 {
   return readListEntry(pKey.utf8().data(), sep);
 }
 
-TQStringList KConfigBase::readListEntry( const char *pKey, char sep ) const
+TQStringList TDEConfigBase::readListEntry( const char *pKey, char sep ) const
 {
   static const TQString& emptyString = TDEGlobal::staticQString("");
 
@@ -565,7 +565,7 @@ TQStringList KConfigBase::readListEntry( const char *pKey, char sep ) const
   return list;
 }
 
-TQStringList KConfigBase::readListEntry( const char* pKey, const TQStringList& aDefault,
+TQStringList TDEConfigBase::readListEntry( const char* pKey, const TQStringList& aDefault,
 		char sep ) const
 {
 	if ( !hasKey( pKey ) )
@@ -574,12 +574,12 @@ TQStringList KConfigBase::readListEntry( const char* pKey, const TQStringList& a
 		return readListEntry( pKey, sep );
 }
 
-TQValueList<int> KConfigBase::readIntListEntry( const TQString& pKey ) const
+TQValueList<int> TDEConfigBase::readIntListEntry( const TQString& pKey ) const
 {
   return readIntListEntry(pKey.utf8().data());
 }
 
-TQValueList<int> KConfigBase::readIntListEntry( const char *pKey ) const
+TQValueList<int> TDEConfigBase::readIntListEntry( const char *pKey ) const
 {
   TQStringList strlist = readListEntry(pKey);
   TQValueList<int> list;
@@ -592,12 +592,12 @@ TQValueList<int> KConfigBase::readIntListEntry( const char *pKey ) const
   return list;
 }
 
-TQString KConfigBase::readPathEntry( const TQString& pKey, const TQString& pDefault ) const
+TQString TDEConfigBase::readPathEntry( const TQString& pKey, const TQString& pDefault ) const
 {
   return readPathEntry(pKey.utf8().data(), pDefault);
 }
 
-TQString KConfigBase::readPathEntry( const char *pKey, const TQString& pDefault ) const
+TQString TDEConfigBase::readPathEntry( const char *pKey, const TQString& pDefault ) const
 {
   const bool bExpandSave = bExpand;
   bExpand = true;
@@ -606,12 +606,12 @@ TQString KConfigBase::readPathEntry( const char *pKey, const TQString& pDefault 
   return aValue;
 }
 
-TQStringList KConfigBase::readPathListEntry( const TQString& pKey, char sep ) const
+TQStringList TDEConfigBase::readPathListEntry( const TQString& pKey, char sep ) const
 {
   return readPathListEntry(pKey.utf8().data(), sep);
 }
 
-TQStringList KConfigBase::readPathListEntry( const char *pKey, char sep ) const
+TQStringList TDEConfigBase::readPathListEntry( const char *pKey, char sep ) const
 {
   const bool bExpandSave = bExpand;
   bExpand = true;
@@ -620,12 +620,12 @@ TQStringList KConfigBase::readPathListEntry( const char *pKey, char sep ) const
   return aValue;
 }
 
-int KConfigBase::readNumEntry( const TQString& pKey, int nDefault) const
+int TDEConfigBase::readNumEntry( const TQString& pKey, int nDefault) const
 {
   return readNumEntry(pKey.utf8().data(), nDefault);
 }
 
-int KConfigBase::readNumEntry( const char *pKey, int nDefault) const
+int TDEConfigBase::readNumEntry( const char *pKey, int nDefault) const
 {
   TQCString aValue = readEntryUtf8( pKey );
   if( aValue.isNull() )
@@ -641,12 +641,12 @@ int KConfigBase::readNumEntry( const char *pKey, int nDefault) const
 }
 
 
-unsigned int KConfigBase::readUnsignedNumEntry( const TQString& pKey, unsigned int nDefault) const
+unsigned int TDEConfigBase::readUnsignedNumEntry( const TQString& pKey, unsigned int nDefault) const
 {
   return readUnsignedNumEntry(pKey.utf8().data(), nDefault);
 }
 
-unsigned int KConfigBase::readUnsignedNumEntry( const char *pKey, unsigned int nDefault) const
+unsigned int TDEConfigBase::readUnsignedNumEntry( const char *pKey, unsigned int nDefault) const
 {
   TQCString aValue = readEntryUtf8( pKey );
   if( aValue.isNull() )
@@ -660,12 +660,12 @@ unsigned int KConfigBase::readUnsignedNumEntry( const char *pKey, unsigned int n
 }
 
 
-long KConfigBase::readLongNumEntry( const TQString& pKey, long nDefault) const
+long TDEConfigBase::readLongNumEntry( const TQString& pKey, long nDefault) const
 {
   return readLongNumEntry(pKey.utf8().data(), nDefault);
 }
 
-long KConfigBase::readLongNumEntry( const char *pKey, long nDefault) const
+long TDEConfigBase::readLongNumEntry( const char *pKey, long nDefault) const
 {
   TQCString aValue = readEntryUtf8( pKey );
   if( aValue.isNull() )
@@ -679,12 +679,12 @@ long KConfigBase::readLongNumEntry( const char *pKey, long nDefault) const
 }
 
 
-unsigned long KConfigBase::readUnsignedLongNumEntry( const TQString& pKey, unsigned long nDefault) const
+unsigned long TDEConfigBase::readUnsignedLongNumEntry( const TQString& pKey, unsigned long nDefault) const
 {
   return readUnsignedLongNumEntry(pKey.utf8().data(), nDefault);
 }
 
-unsigned long KConfigBase::readUnsignedLongNumEntry( const char *pKey, unsigned long nDefault) const
+unsigned long TDEConfigBase::readUnsignedLongNumEntry( const char *pKey, unsigned long nDefault) const
 {
   TQCString aValue = readEntryUtf8( pKey );
   if( aValue.isNull() )
@@ -697,12 +697,12 @@ unsigned long KConfigBase::readUnsignedLongNumEntry( const char *pKey, unsigned 
     }
 }
 
-TQ_INT64 KConfigBase::readNum64Entry( const TQString& pKey, TQ_INT64 nDefault) const
+TQ_INT64 TDEConfigBase::readNum64Entry( const TQString& pKey, TQ_INT64 nDefault) const
 {
   return readNum64Entry(pKey.utf8().data(), nDefault);
 }
 
-TQ_INT64 KConfigBase::readNum64Entry( const char *pKey, TQ_INT64 nDefault) const
+TQ_INT64 TDEConfigBase::readNum64Entry( const char *pKey, TQ_INT64 nDefault) const
 {
   // Note that TQCString::toLongLong() is missing, we muse use a TQString instead.
   TQString aValue = readEntry( pKey );
@@ -717,12 +717,12 @@ TQ_INT64 KConfigBase::readNum64Entry( const char *pKey, TQ_INT64 nDefault) const
 }
 
 
-TQ_UINT64 KConfigBase::readUnsignedNum64Entry( const TQString& pKey, TQ_UINT64 nDefault) const
+TQ_UINT64 TDEConfigBase::readUnsignedNum64Entry( const TQString& pKey, TQ_UINT64 nDefault) const
 {
   return readUnsignedNum64Entry(pKey.utf8().data(), nDefault);
 }
 
-TQ_UINT64 KConfigBase::readUnsignedNum64Entry( const char *pKey, TQ_UINT64 nDefault) const
+TQ_UINT64 TDEConfigBase::readUnsignedNum64Entry( const char *pKey, TQ_UINT64 nDefault) const
 {
   // Note that TQCString::toULongLong() is missing, we muse use a TQString instead.
   TQString aValue = readEntry( pKey );
@@ -736,12 +736,12 @@ TQ_UINT64 KConfigBase::readUnsignedNum64Entry( const char *pKey, TQ_UINT64 nDefa
     }
 }
 
-double KConfigBase::readDoubleNumEntry( const TQString& pKey, double nDefault) const
+double TDEConfigBase::readDoubleNumEntry( const TQString& pKey, double nDefault) const
 {
   return readDoubleNumEntry(pKey.utf8().data(), nDefault);
 }
 
-double KConfigBase::readDoubleNumEntry( const char *pKey, double nDefault) const
+double TDEConfigBase::readDoubleNumEntry( const char *pKey, double nDefault) const
 {
   TQCString aValue = readEntryUtf8( pKey );
   if( aValue.isNull() )
@@ -755,12 +755,12 @@ double KConfigBase::readDoubleNumEntry( const char *pKey, double nDefault) const
 }
 
 
-bool KConfigBase::readBoolEntry( const TQString& pKey, bool bDefault ) const
+bool TDEConfigBase::readBoolEntry( const TQString& pKey, bool bDefault ) const
 {
    return readBoolEntry(pKey.utf8().data(), bDefault);
 }
 
-bool KConfigBase::readBoolEntry( const char *pKey, bool bDefault ) const
+bool TDEConfigBase::readBoolEntry( const char *pKey, bool bDefault ) const
 {
   TQCString aValue = readEntryUtf8( pKey );
 
@@ -782,12 +782,12 @@ bool KConfigBase::readBoolEntry( const char *pKey, bool bDefault ) const
     }
 }
 
-TQFont KConfigBase::readFontEntry( const TQString& pKey, const TQFont* pDefault ) const
+TQFont TDEConfigBase::readFontEntry( const TQString& pKey, const TQFont* pDefault ) const
 {
   return readFontEntry(pKey.utf8().data(), pDefault);
 }
 
-TQFont KConfigBase::readFontEntry( const char *pKey, const TQFont* pDefault ) const
+TQFont TDEConfigBase::readFontEntry( const char *pKey, const TQFont* pDefault ) const
 {
   TQFont aRetFont;
 
@@ -879,12 +879,12 @@ TQFont KConfigBase::readFontEntry( const char *pKey, const TQFont* pDefault ) co
 }
 
 
-TQRect KConfigBase::readRectEntry( const TQString& pKey, const TQRect* pDefault ) const
+TQRect TDEConfigBase::readRectEntry( const TQString& pKey, const TQRect* pDefault ) const
 {
   return readRectEntry(pKey.utf8().data(), pDefault);
 }
 
-TQRect KConfigBase::readRectEntry( const char *pKey, const TQRect* pDefault ) const
+TQRect TDEConfigBase::readRectEntry( const char *pKey, const TQRect* pDefault ) const
 {
   TQCString aValue = readEntryUtf8(pKey);
 
@@ -903,13 +903,13 @@ TQRect KConfigBase::readRectEntry( const char *pKey, const TQRect* pDefault ) co
 }
 
 
-TQPoint KConfigBase::readPointEntry( const TQString& pKey,
+TQPoint TDEConfigBase::readPointEntry( const TQString& pKey,
                                     const TQPoint* pDefault ) const
 {
   return readPointEntry(pKey.utf8().data(), pDefault);
 }
 
-TQPoint KConfigBase::readPointEntry( const char *pKey,
+TQPoint TDEConfigBase::readPointEntry( const char *pKey,
                                     const TQPoint* pDefault ) const
 {
   TQCString aValue = readEntryUtf8(pKey);
@@ -928,13 +928,13 @@ TQPoint KConfigBase::readPointEntry( const char *pKey,
   return TQPoint();
 }
 
-TQSize KConfigBase::readSizeEntry( const TQString& pKey,
+TQSize TDEConfigBase::readSizeEntry( const TQString& pKey,
                                   const TQSize* pDefault ) const
 {
   return readSizeEntry(pKey.utf8().data(), pDefault);
 }
 
-TQSize KConfigBase::readSizeEntry( const char *pKey,
+TQSize TDEConfigBase::readSizeEntry( const char *pKey,
                                   const TQSize* pDefault ) const
 {
   TQCString aValue = readEntryUtf8(pKey);
@@ -954,13 +954,13 @@ TQSize KConfigBase::readSizeEntry( const char *pKey,
 }
 
 
-TQColor KConfigBase::readColorEntry( const TQString& pKey,
+TQColor TDEConfigBase::readColorEntry( const TQString& pKey,
                                     const TQColor* pDefault ) const
 {
   return readColorEntry(pKey.utf8().data(), pDefault);
 }
 
-TQColor KConfigBase::readColorEntry( const char *pKey,
+TQColor TDEConfigBase::readColorEntry( const char *pKey,
                                     const TQColor* pDefault ) const
 {
   TQColor aRetColor;
@@ -1019,14 +1019,14 @@ TQColor KConfigBase::readColorEntry( const char *pKey,
 }
 
 
-TQDateTime KConfigBase::readDateTimeEntry( const TQString& pKey,
+TQDateTime TDEConfigBase::readDateTimeEntry( const TQString& pKey,
                                           const TQDateTime* pDefault ) const
 {
   return readDateTimeEntry(pKey.utf8().data(), pDefault);
 }
 
 // ### currentDateTime() as fallback ? (Harri)
-TQDateTime KConfigBase::readDateTimeEntry( const char *pKey,
+TQDateTime TDEConfigBase::readDateTimeEntry( const char *pKey,
                                           const TQDateTime* pDefault ) const
 {
   if( !hasKey( pKey ) )
@@ -1051,7 +1051,7 @@ TQDateTime KConfigBase::readDateTimeEntry( const char *pKey,
   return TQDateTime::currentDateTime();
 }
 
-void KConfigBase::writeEntry( const TQString& pKey, const TQString& value,
+void TDEConfigBase::writeEntry( const TQString& pKey, const TQString& value,
                                  bool bPersistent,
                                  bool bGlobal,
                                  bool bNLS )
@@ -1059,7 +1059,7 @@ void KConfigBase::writeEntry( const TQString& pKey, const TQString& value,
    writeEntry(pKey.utf8().data(), value, bPersistent,  bGlobal, bNLS);
 }
 
-void KConfigBase::writeEntry( const char *pKey, const TQString& value,
+void TDEConfigBase::writeEntry( const char *pKey, const TQString& value,
                                  bool bPersistent,
                                  bool bGlobal,
                                  bool bNLS )
@@ -1067,13 +1067,13 @@ void KConfigBase::writeEntry( const char *pKey, const TQString& value,
    writeEntry(pKey, value, bPersistent,  bGlobal, bNLS, false);
 }
 
-void KConfigBase::writeEntry( const char *pKey, const TQString& value,
+void TDEConfigBase::writeEntry( const char *pKey, const TQString& value,
                                  bool bPersistent,
                                  bool bGlobal,
                                  bool bNLS,
                                  bool bExpand )
 {
-  // the KConfig object is dirty now
+  // the TDEConfig object is dirty now
   // set this before any IO takes place so that if any derivative
   // classes do caching, they won't try and flush the cache out
   // from under us before we read. A race condition is still
@@ -1100,7 +1100,7 @@ void KConfigBase::writeEntry( const char *pKey, const TQString& value,
   putData(entryKey, aEntryData, true);
 }
 
-void KConfigBase::writePathEntry( const TQString& pKey, const TQString & path,
+void TDEConfigBase::writePathEntry( const TQString& pKey, const TQString & path,
                                   bool bPersistent, bool bGlobal,
                                   bool bNLS)
 {
@@ -1171,21 +1171,21 @@ static TQString translatePath( TQString path )
    return path;
 }
 
-void KConfigBase::writePathEntry( const char *pKey, const TQString & path,
+void TDEConfigBase::writePathEntry( const char *pKey, const TQString & path,
                                   bool bPersistent, bool bGlobal,
                                   bool bNLS)
 {
    writeEntry(pKey, translatePath(path), bPersistent, bGlobal, bNLS, true);
 }
 
-void KConfigBase::writePathEntry ( const TQString& pKey, const TQStringList &list,
+void TDEConfigBase::writePathEntry ( const TQString& pKey, const TQStringList &list,
                                char sep , bool bPersistent,
                                bool bGlobal, bool bNLS )
 {
   writePathEntry(pKey.utf8().data(), list, sep, bPersistent, bGlobal, bNLS);
 }
 
-void KConfigBase::writePathEntry ( const char *pKey, const TQStringList &list,
+void TDEConfigBase::writePathEntry ( const char *pKey, const TQStringList &list,
                                char sep , bool bPersistent,
                                bool bGlobal, bool bNLS )
 {
@@ -1204,18 +1204,18 @@ void KConfigBase::writePathEntry ( const char *pKey, const TQStringList &list,
   writeEntry( pKey, new_list, sep, bPersistent, bGlobal, bNLS, true );
 }
 
-void KConfigBase::deleteEntry( const TQString& pKey,
+void TDEConfigBase::deleteEntry( const TQString& pKey,
                                  bool bNLS,
                                  bool bGlobal)
 {
    deleteEntry(pKey.utf8().data(), bNLS, bGlobal);
 }
 
-void KConfigBase::deleteEntry( const char *pKey,
+void TDEConfigBase::deleteEntry( const char *pKey,
                                  bool bNLS,
                                  bool bGlobal)
 {
-  // the KConfig object is dirty now
+  // the TDEConfig object is dirty now
   // set this before any IO takes place so that if any derivative
   // classes do caching, they won't try and flush the cache out
   // from under us before we read. A race condition is still
@@ -1237,7 +1237,7 @@ void KConfigBase::deleteEntry( const char *pKey,
   putData(entryKey, aEntryData, true);
 }
 
-bool KConfigBase::deleteGroup( const TQString& group, bool bDeep, bool bGlobal )
+bool TDEConfigBase::deleteGroup( const TQString& group, bool bDeep, bool bGlobal )
 {
   KEntryMap aEntryMap = internalEntryMap(group);
 
@@ -1268,14 +1268,14 @@ bool KConfigBase::deleteGroup( const TQString& group, bool bDeep, bool bGlobal )
   return true;
 }
 
-void KConfigBase::writeEntry ( const TQString& pKey, const TQVariant &prop,
+void TDEConfigBase::writeEntry ( const TQString& pKey, const TQVariant &prop,
                                bool bPersistent,
                                bool bGlobal, bool bNLS )
 {
   writeEntry(pKey.utf8().data(), prop, bPersistent, bGlobal, bNLS);
 }
 
-void KConfigBase::writeEntry ( const char *pKey, const TQVariant &prop,
+void TDEConfigBase::writeEntry ( const char *pKey, const TQVariant &prop,
                                bool bPersistent,
                                bool bGlobal, bool bNLS )
 {
@@ -1391,14 +1391,14 @@ void KConfigBase::writeEntry ( const char *pKey, const TQVariant &prop,
   Q_ASSERT( 0 );
 }
 
-void KConfigBase::writeEntry ( const TQString& pKey, const TQStrList &list,
+void TDEConfigBase::writeEntry ( const TQString& pKey, const TQStrList &list,
                                char sep , bool bPersistent,
                                bool bGlobal, bool bNLS )
 {
   writeEntry(pKey.utf8().data(), list, sep, bPersistent, bGlobal, bNLS);
 }
 
-void KConfigBase::writeEntry ( const char *pKey, const TQStrList &list,
+void TDEConfigBase::writeEntry ( const char *pKey, const TQStrList &list,
                                char sep , bool bPersistent,
                                bool bGlobal, bool bNLS )
 {
@@ -1431,21 +1431,21 @@ void KConfigBase::writeEntry ( const char *pKey, const TQStrList &list,
   writeEntry( pKey, str_list, bPersistent, bGlobal, bNLS );
 }
 
-void KConfigBase::writeEntry ( const TQString& pKey, const TQStringList &list,
+void TDEConfigBase::writeEntry ( const TQString& pKey, const TQStringList &list,
                                char sep , bool bPersistent,
                                bool bGlobal, bool bNLS )
 {
   writeEntry(pKey.utf8().data(), list, sep, bPersistent, bGlobal, bNLS);
 }
 
-void KConfigBase::writeEntry ( const char *pKey, const TQStringList &list,
+void TDEConfigBase::writeEntry ( const char *pKey, const TQStringList &list,
                                char sep , bool bPersistent,
                                bool bGlobal, bool bNLS )
 {
   writeEntry(pKey, list, sep, bPersistent, bGlobal, bNLS, false);
 }
 
-void KConfigBase::writeEntry ( const char *pKey, const TQStringList &list,
+void TDEConfigBase::writeEntry ( const char *pKey, const TQStringList &list,
                                char sep, bool bPersistent,
                                bool bGlobal, bool bNLS, bool bExpand )
 {
@@ -1475,13 +1475,13 @@ void KConfigBase::writeEntry ( const char *pKey, const TQStringList &list,
   writeEntry( pKey, str_list, bPersistent, bGlobal, bNLS, bExpand );
 }
 
-void KConfigBase::writeEntry ( const TQString& pKey, const TQValueList<int> &list,
+void TDEConfigBase::writeEntry ( const TQString& pKey, const TQValueList<int> &list,
                                bool bPersistent, bool bGlobal, bool bNLS )
 {
   writeEntry(pKey.utf8().data(), list, bPersistent, bGlobal, bNLS);
 }
 
-void KConfigBase::writeEntry ( const char *pKey, const TQValueList<int> &list,
+void TDEConfigBase::writeEntry ( const char *pKey, const TQValueList<int> &list,
                                bool bPersistent, bool bGlobal, bool bNLS )
 {
     TQStringList strlist;
@@ -1491,29 +1491,14 @@ void KConfigBase::writeEntry ( const char *pKey, const TQValueList<int> &list,
     writeEntry(pKey, strlist, ',', bPersistent, bGlobal, bNLS );
 }
 
-void KConfigBase::writeEntry( const TQString& pKey, int nValue,
+void TDEConfigBase::writeEntry( const TQString& pKey, int nValue,
                                  bool bPersistent, bool bGlobal,
                                  bool bNLS )
 {
   writeEntry( pKey, TQString::number(nValue), bPersistent, bGlobal, bNLS );
 }
 
-void KConfigBase::writeEntry( const char *pKey, int nValue,
-                                 bool bPersistent, bool bGlobal,
-                                 bool bNLS )
-{
-  writeEntry( pKey, TQString::number(nValue), bPersistent, bGlobal, bNLS );
-}
-
-
-void KConfigBase::writeEntry( const TQString& pKey, unsigned int nValue,
-                                 bool bPersistent, bool bGlobal,
-                                 bool bNLS )
-{
-  writeEntry( pKey, TQString::number(nValue), bPersistent, bGlobal, bNLS );
-}
-
-void KConfigBase::writeEntry( const char *pKey, unsigned int nValue,
+void TDEConfigBase::writeEntry( const char *pKey, int nValue,
                                  bool bPersistent, bool bGlobal,
                                  bool bNLS )
 {
@@ -1521,43 +1506,14 @@ void KConfigBase::writeEntry( const char *pKey, unsigned int nValue,
 }
 
 
-void KConfigBase::writeEntry( const TQString& pKey, long nValue,
+void TDEConfigBase::writeEntry( const TQString& pKey, unsigned int nValue,
                                  bool bPersistent, bool bGlobal,
                                  bool bNLS )
 {
   writeEntry( pKey, TQString::number(nValue), bPersistent, bGlobal, bNLS );
 }
 
-void KConfigBase::writeEntry( const char *pKey, long nValue,
-                                 bool bPersistent, bool bGlobal,
-                                 bool bNLS )
-{
-  writeEntry( pKey, TQString::number(nValue), bPersistent, bGlobal, bNLS );
-}
-
-
-void KConfigBase::writeEntry( const TQString& pKey, unsigned long nValue,
-                                 bool bPersistent, bool bGlobal,
-                                 bool bNLS )
-{
-  writeEntry( pKey, TQString::number(nValue), bPersistent, bGlobal, bNLS );
-}
-
-void KConfigBase::writeEntry( const char *pKey, unsigned long nValue,
-                                 bool bPersistent, bool bGlobal,
-                                 bool bNLS )
-{
-  writeEntry( pKey, TQString::number(nValue), bPersistent, bGlobal, bNLS );
-}
-
-void KConfigBase::writeEntry( const TQString& pKey, TQ_INT64 nValue,
-                                 bool bPersistent, bool bGlobal,
-                                 bool bNLS )
-{
-  writeEntry( pKey, TQString::number(nValue), bPersistent, bGlobal, bNLS );
-}
-
-void KConfigBase::writeEntry( const char *pKey, TQ_INT64 nValue,
+void TDEConfigBase::writeEntry( const char *pKey, unsigned int nValue,
                                  bool bPersistent, bool bGlobal,
                                  bool bNLS )
 {
@@ -1565,21 +1521,65 @@ void KConfigBase::writeEntry( const char *pKey, TQ_INT64 nValue,
 }
 
 
-void KConfigBase::writeEntry( const TQString& pKey, TQ_UINT64 nValue,
+void TDEConfigBase::writeEntry( const TQString& pKey, long nValue,
                                  bool bPersistent, bool bGlobal,
                                  bool bNLS )
 {
   writeEntry( pKey, TQString::number(nValue), bPersistent, bGlobal, bNLS );
 }
 
-void KConfigBase::writeEntry( const char *pKey, TQ_UINT64 nValue,
+void TDEConfigBase::writeEntry( const char *pKey, long nValue,
                                  bool bPersistent, bool bGlobal,
                                  bool bNLS )
 {
   writeEntry( pKey, TQString::number(nValue), bPersistent, bGlobal, bNLS );
 }
 
-void KConfigBase::writeEntry( const TQString& pKey, double nValue,
+
+void TDEConfigBase::writeEntry( const TQString& pKey, unsigned long nValue,
+                                 bool bPersistent, bool bGlobal,
+                                 bool bNLS )
+{
+  writeEntry( pKey, TQString::number(nValue), bPersistent, bGlobal, bNLS );
+}
+
+void TDEConfigBase::writeEntry( const char *pKey, unsigned long nValue,
+                                 bool bPersistent, bool bGlobal,
+                                 bool bNLS )
+{
+  writeEntry( pKey, TQString::number(nValue), bPersistent, bGlobal, bNLS );
+}
+
+void TDEConfigBase::writeEntry( const TQString& pKey, TQ_INT64 nValue,
+                                 bool bPersistent, bool bGlobal,
+                                 bool bNLS )
+{
+  writeEntry( pKey, TQString::number(nValue), bPersistent, bGlobal, bNLS );
+}
+
+void TDEConfigBase::writeEntry( const char *pKey, TQ_INT64 nValue,
+                                 bool bPersistent, bool bGlobal,
+                                 bool bNLS )
+{
+  writeEntry( pKey, TQString::number(nValue), bPersistent, bGlobal, bNLS );
+}
+
+
+void TDEConfigBase::writeEntry( const TQString& pKey, TQ_UINT64 nValue,
+                                 bool bPersistent, bool bGlobal,
+                                 bool bNLS )
+{
+  writeEntry( pKey, TQString::number(nValue), bPersistent, bGlobal, bNLS );
+}
+
+void TDEConfigBase::writeEntry( const char *pKey, TQ_UINT64 nValue,
+                                 bool bPersistent, bool bGlobal,
+                                 bool bNLS )
+{
+  writeEntry( pKey, TQString::number(nValue), bPersistent, bGlobal, bNLS );
+}
+
+void TDEConfigBase::writeEntry( const TQString& pKey, double nValue,
                                  bool bPersistent, bool bGlobal,
                                  char format, int precision,
                                  bool bNLS )
@@ -1588,7 +1588,7 @@ void KConfigBase::writeEntry( const TQString& pKey, double nValue,
                      bPersistent, bGlobal, bNLS );
 }
 
-void KConfigBase::writeEntry( const char *pKey, double nValue,
+void TDEConfigBase::writeEntry( const char *pKey, double nValue,
                                  bool bPersistent, bool bGlobal,
                                  char format, int precision,
                                  bool bNLS )
@@ -1598,7 +1598,7 @@ void KConfigBase::writeEntry( const char *pKey, double nValue,
 }
 
 
-void KConfigBase::writeEntry( const TQString& pKey, bool bValue,
+void TDEConfigBase::writeEntry( const TQString& pKey, bool bValue,
                                  bool bPersistent,
                                  bool bGlobal,
                                  bool bNLS )
@@ -1606,7 +1606,7 @@ void KConfigBase::writeEntry( const TQString& pKey, bool bValue,
   writeEntry(pKey.utf8().data(), bValue, bPersistent, bGlobal, bNLS);
 }
 
-void KConfigBase::writeEntry( const char *pKey, bool bValue,
+void TDEConfigBase::writeEntry( const char *pKey, bool bValue,
                                  bool bPersistent,
                                  bool bGlobal,
                                  bool bNLS )
@@ -1622,14 +1622,14 @@ void KConfigBase::writeEntry( const char *pKey, bool bValue,
 }
 
 
-void KConfigBase::writeEntry( const TQString& pKey, const TQFont& rFont,
+void TDEConfigBase::writeEntry( const TQString& pKey, const TQFont& rFont,
                                  bool bPersistent, bool bGlobal,
                                  bool bNLS )
 {
   writeEntry(pKey.utf8().data(), rFont, bPersistent, bGlobal, bNLS);
 }
 
-void KConfigBase::writeEntry( const char *pKey, const TQFont& rFont,
+void TDEConfigBase::writeEntry( const char *pKey, const TQFont& rFont,
                                  bool bPersistent, bool bGlobal,
                                  bool bNLS )
 {
@@ -1637,14 +1637,14 @@ void KConfigBase::writeEntry( const char *pKey, const TQFont& rFont,
 }
 
 
-void KConfigBase::writeEntry( const TQString& pKey, const TQRect& rRect,
+void TDEConfigBase::writeEntry( const TQString& pKey, const TQRect& rRect,
                               bool bPersistent, bool bGlobal,
                               bool bNLS )
 {
   writeEntry(pKey.utf8().data(), rRect, bPersistent, bGlobal, bNLS);
 }
 
-void KConfigBase::writeEntry( const char *pKey, const TQRect& rRect,
+void TDEConfigBase::writeEntry( const char *pKey, const TQRect& rRect,
                               bool bPersistent, bool bGlobal,
                               bool bNLS )
 {
@@ -1659,14 +1659,14 @@ void KConfigBase::writeEntry( const char *pKey, const TQRect& rRect,
 }
 
 
-void KConfigBase::writeEntry( const TQString& pKey, const TQPoint& rPoint,
+void TDEConfigBase::writeEntry( const TQString& pKey, const TQPoint& rPoint,
                               bool bPersistent, bool bGlobal,
                               bool bNLS )
 {
   writeEntry(pKey.utf8().data(), rPoint, bPersistent, bGlobal, bNLS);
 }
 
-void KConfigBase::writeEntry( const char *pKey, const TQPoint& rPoint,
+void TDEConfigBase::writeEntry( const char *pKey, const TQPoint& rPoint,
                               bool bPersistent, bool bGlobal,
                               bool bNLS )
 {
@@ -1679,14 +1679,14 @@ void KConfigBase::writeEntry( const char *pKey, const TQPoint& rPoint,
 }
 
 
-void KConfigBase::writeEntry( const TQString& pKey, const TQSize& rSize,
+void TDEConfigBase::writeEntry( const TQString& pKey, const TQSize& rSize,
                               bool bPersistent, bool bGlobal,
                               bool bNLS )
 {
   writeEntry(pKey.utf8().data(), rSize, bPersistent, bGlobal, bNLS);
 }
 
-void KConfigBase::writeEntry( const char *pKey, const TQSize& rSize,
+void TDEConfigBase::writeEntry( const char *pKey, const TQSize& rSize,
                               bool bPersistent, bool bGlobal,
                               bool bNLS )
 {
@@ -1698,7 +1698,7 @@ void KConfigBase::writeEntry( const char *pKey, const TQSize& rSize,
   writeEntry( pKey, list, ',', bPersistent, bGlobal, bNLS );
 }
 
-void KConfigBase::writeEntry( const TQString& pKey, const TQColor& rColor,
+void TDEConfigBase::writeEntry( const TQString& pKey, const TQColor& rColor,
                               bool bPersistent,
                               bool bGlobal,
                               bool bNLS  )
@@ -1706,7 +1706,7 @@ void KConfigBase::writeEntry( const TQString& pKey, const TQColor& rColor,
   writeEntry( pKey.utf8().data(), rColor, bPersistent, bGlobal, bNLS);
 }
 
-void KConfigBase::writeEntry( const char *pKey, const TQColor& rColor,
+void TDEConfigBase::writeEntry( const char *pKey, const TQColor& rColor,
                               bool bPersistent,
                               bool bGlobal,
                               bool bNLS  )
@@ -1720,14 +1720,14 @@ void KConfigBase::writeEntry( const char *pKey, const TQColor& rColor,
   writeEntry( pKey, aValue, bPersistent, bGlobal, bNLS );
 }
 
-void KConfigBase::writeEntry( const TQString& pKey, const TQDateTime& rDateTime,
+void TDEConfigBase::writeEntry( const TQString& pKey, const TQDateTime& rDateTime,
                               bool bPersistent, bool bGlobal,
                               bool bNLS )
 {
   writeEntry(pKey.utf8().data(), rDateTime, bPersistent, bGlobal, bNLS);
 }
 
-void KConfigBase::writeEntry( const char *pKey, const TQDateTime& rDateTime,
+void TDEConfigBase::writeEntry( const char *pKey, const TQDateTime& rDateTime,
                               bool bPersistent, bool bGlobal,
                               bool bNLS )
 {
@@ -1748,7 +1748,7 @@ void KConfigBase::writeEntry( const char *pKey, const TQDateTime& rDateTime,
   writeEntry( pKey, list, ',', bPersistent, bGlobal, bNLS );
 }
 
-void KConfigBase::parseConfigFiles()
+void TDEConfigBase::parseConfigFiles()
 {
   if (!bLocaleInitialized && TDEGlobal::_locale) {
     setLocale();
@@ -1760,7 +1760,7 @@ void KConfigBase::parseConfigFiles()
   }
 }
 
-void KConfigBase::sync()
+void TDEConfigBase::sync()
 {
   if (isReadOnly())
     return;
@@ -1771,35 +1771,35 @@ void KConfigBase::sync()
     rollback();
 }
 
-KConfigBase::ConfigState KConfigBase::getConfigState() const {
+TDEConfigBase::ConfigState TDEConfigBase::getConfigState() const {
     if (backEnd)
        return backEnd->getConfigState();
     return ReadOnly;
 }
 
-void KConfigBase::rollback( bool /*bDeep = true*/ )
+void TDEConfigBase::rollback( bool /*bDeep = true*/ )
 {
   bDirty = false;
 }
 
 
-void KConfigBase::setReadDefaults(bool b)
+void TDEConfigBase::setReadDefaults(bool b)
 {
   if (!d)
   {
      if (!b) return;
-     d = new KConfigBasePrivate();
+     d = new TDEConfigBasePrivate();
   }
 
   d->readDefaults = b;
 }
 
-bool KConfigBase::readDefaults() const
+bool TDEConfigBase::readDefaults() const
 {
   return (d && d->readDefaults);
 }
 
-void KConfigBase::revertToDefault(const TQString &key)
+void TDEConfigBase::revertToDefault(const TQString &key)
 {
   setDirty(true);
 
@@ -1826,7 +1826,7 @@ void KConfigBase::revertToDefault(const TQString &key)
   putData(aEntryKey, entry, true); // Revert
 }
 
-bool KConfigBase::hasDefault(const TQString &key) const
+bool TDEConfigBase::hasDefault(const TQString &key) const
 {
   KEntryKey aEntryKey(mGroup, key.utf8());
   aEntryKey.bDefault = true;
@@ -1851,7 +1851,7 @@ bool KConfigBase::hasDefault(const TQString &key) const
 
 
 
-KConfigGroup::KConfigGroup(KConfigBase *master, const TQString &group)
+TDEConfigGroup::TDEConfigGroup(TDEConfigBase *master, const TQString &group)
 {
   mMaster = master;
   backEnd = mMaster->backEnd; // Needed for getConfigState()
@@ -1864,7 +1864,7 @@ KConfigGroup::KConfigGroup(KConfigBase *master, const TQString &group)
   setReadDefaults(mMaster->readDefaults());
 }
 
-KConfigGroup::KConfigGroup(KConfigBase *master, const TQCString &group)
+TDEConfigGroup::TDEConfigGroup(TDEConfigBase *master, const TQCString &group)
 {
   mMaster = master;
   backEnd = mMaster->backEnd; // Needed for getConfigState()
@@ -1877,7 +1877,7 @@ KConfigGroup::KConfigGroup(KConfigBase *master, const TQCString &group)
   setReadDefaults(mMaster->readDefaults());
 }
 
-KConfigGroup::KConfigGroup(KConfigBase *master, const char * group)
+TDEConfigGroup::TDEConfigGroup(TDEConfigBase *master, const char * group)
 {
   mMaster = master;
   backEnd = mMaster->backEnd; // Needed for getConfigState()
@@ -1890,43 +1890,43 @@ KConfigGroup::KConfigGroup(KConfigBase *master, const char * group)
   setReadDefaults(mMaster->readDefaults());
 }
 
-void KConfigGroup::deleteGroup(bool bGlobal)
+void TDEConfigGroup::deleteGroup(bool bGlobal)
 {
-  mMaster->deleteGroup(KConfigBase::group(), true, bGlobal);
+  mMaster->deleteGroup(TDEConfigBase::group(), true, bGlobal);
 }
 
-bool KConfigGroup::groupIsImmutable() const
+bool TDEConfigGroup::groupIsImmutable() const
 {
-    return mMaster->groupIsImmutable(KConfigBase::group());
+    return mMaster->groupIsImmutable(TDEConfigBase::group());
 }
 
-void KConfigGroup::setDirty(bool _bDirty)
+void TDEConfigGroup::setDirty(bool _bDirty)
 {
   mMaster->setDirty(_bDirty);
 }
 
-void KConfigGroup::putData(const KEntryKey &_key, const KEntry &_data, bool _checkGroup)
+void TDEConfigGroup::putData(const KEntryKey &_key, const KEntry &_data, bool _checkGroup)
 {
   mMaster->putData(_key, _data, _checkGroup);
 }
 
-KEntry KConfigGroup::lookupData(const KEntryKey &_key) const
+KEntry TDEConfigGroup::lookupData(const KEntryKey &_key) const
 {
   return mMaster->lookupData(_key);
 }
 
-void KConfigGroup::sync()
+void TDEConfigGroup::sync()
 {
   mMaster->sync();
 }
 
-void KConfigBase::virtual_hook( int, void* )
+void TDEConfigBase::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
-void KConfigGroup::virtual_hook( int id, void* data )
-{ KConfigBase::virtual_hook( id, data ); }
+void TDEConfigGroup::virtual_hook( int id, void* data )
+{ TDEConfigBase::virtual_hook( id, data ); }
 
-bool KConfigBase::checkConfigFilesWritable(bool warnUser)
+bool TDEConfigBase::checkConfigFilesWritable(bool warnUser)
 {
   if (backEnd)
     return backEnd->checkConfigFilesWritable(warnUser);

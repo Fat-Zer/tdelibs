@@ -39,7 +39,7 @@
 
 #define NETRC_READ_BUF_SIZE 4096
 
-using namespace KIO;
+using namespace TDEIO;
 
 AuthInfo::AuthInfo()
 {
@@ -72,7 +72,7 @@ AuthInfo& AuthInfo::operator= ( const AuthInfo& info )
     return *this;
 }
 
-TQDataStream& KIO::operator<< (TQDataStream& s, const AuthInfo& a)
+TQDataStream& TDEIO::operator<< (TQDataStream& s, const AuthInfo& a)
 {
     s << a.url << a.username << a.password << a.prompt << a.caption
       << a.comment << a.commentLabel << a.realmValue << a.digestInfo
@@ -81,7 +81,7 @@ TQDataStream& KIO::operator<< (TQDataStream& s, const AuthInfo& a)
     return s;
 }
 
-TQDataStream& KIO::operator>> (TQDataStream& s, AuthInfo& a)
+TQDataStream& TDEIO::operator>> (TQDataStream& s, AuthInfo& a)
 {
     TQ_UINT8 verify = 0;
     TQ_UINT8 ro = 0;

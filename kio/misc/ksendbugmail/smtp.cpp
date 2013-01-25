@@ -158,7 +158,7 @@ void SMTP::connectTimerTick(void)
     }
 
     kdDebug() << "connecting to " << serverHost << ":" << hostPort << " ..... " << endl;
-    sock = new KSocket(serverHost.ascii(), hostPort);
+    sock = new TDESocket(serverHost.ascii(), hostPort);
 
     if(sock == 0L || sock->socket() < 0) {
         timeOutTimer.stop();
@@ -173,8 +173,8 @@ void SMTP::connectTimerTick(void)
     state = INIT;
     serverState = NONE;
 
-    connect(sock, TQT_SIGNAL(readEvent(KSocket *)), this, TQT_SLOT(socketRead(KSocket *)));
-    connect(sock, TQT_SIGNAL(closeEvent(KSocket *)), this, TQT_SLOT(socketClose(KSocket *)));
+    connect(sock, TQT_SIGNAL(readEvent(TDESocket *)), this, TQT_SLOT(socketRead(TDESocket *)));
+    connect(sock, TQT_SIGNAL(closeEvent(TDESocket *)), this, TQT_SLOT(socketClose(TDESocket *)));
     //    sock->enableRead(true);
     timeOutTimer.stop();
     kdDebug() << "connected" << endl;
@@ -202,7 +202,7 @@ void SMTP::interactTimedOut(void)
     emit error(INTERACTTIMEOUT);
 }
 
-void SMTP::socketRead(KSocket *socket)
+void SMTP::socketRead(TDESocket *socket)
 {
     int n, nl;
 
@@ -228,11 +228,11 @@ void SMTP::socketRead(KSocket *socket)
         interactTimer.start(timeOut, true);
 }
 
-void SMTP::socketClose(KSocket *socket)
+void SMTP::socketClose(TDESocket *socket)
 {
     timeOutTimer.stop();
-    disconnect(sock, TQT_SIGNAL(readEvent(KSocket *)), this, TQT_SLOT(socketRead(KSocket *)));
-    disconnect(sock, TQT_SIGNAL(closeEvent(KSocket *)), this, TQT_SLOT(socketClose(KSocket *)));
+    disconnect(sock, TQT_SIGNAL(readEvent(TDESocket *)), this, TQT_SLOT(socketRead(TDESocket *)));
+    disconnect(sock, TQT_SIGNAL(closeEvent(TDESocket *)), this, TQT_SLOT(socketClose(TDESocket *)));
     socket->enableRead(false);
     kdDebug() << "connection terminated" << endl;
     connected = false;

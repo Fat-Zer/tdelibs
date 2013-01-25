@@ -10,59 +10,59 @@ Test2::Test2(  )
 {
   setCurrentGroup( TQString::fromLatin1( "General" ) );
 
-  mAutoSaveItem = new KConfigSkeleton::ItemBool( currentGroup(), TQString::fromLatin1( "Auto Save" ), mAutoSave, false );
+  mAutoSaveItem = new TDEConfigSkeleton::ItemBool( currentGroup(), TQString::fromLatin1( "Auto Save" ), mAutoSave, false );
   mAutoSaveItem->setLabel( i18n("Enable automatic saving of calendar") );
   mAutoSaveItem->setWhatsThis( i18n("WhatsThis text for AutoSave option") );
   addItem( mAutoSaveItem, TQString::fromLatin1( "AutoSave" ) );
-  mAutoSaveIntervalItem = new KConfigSkeleton::ItemInt( currentGroup(), TQString::fromLatin1( "Auto Save Interval" ), mAutoSaveInterval, 10 );
+  mAutoSaveIntervalItem = new TDEConfigSkeleton::ItemInt( currentGroup(), TQString::fromLatin1( "Auto Save Interval" ), mAutoSaveInterval, 10 );
   mAutoSaveIntervalItem->setLabel( i18n("Auto Save Interval") );
   addItem( mAutoSaveIntervalItem, TQString::fromLatin1( "AutoSaveInterval" ) );
-  mConfirmItem = new KConfigSkeleton::ItemBool( currentGroup(), TQString::fromLatin1( "Confirm Deletes" ), mConfirm, true );
+  mConfirmItem = new TDEConfigSkeleton::ItemBool( currentGroup(), TQString::fromLatin1( "Confirm Deletes" ), mConfirm, true );
   mConfirmItem->setLabel( i18n("Confirm deletes") );
   addItem( mConfirmItem, TQString::fromLatin1( "Confirm" ) );
-  mArchiveFileItem = new KConfigSkeleton::ItemString( currentGroup(), TQString::fromLatin1( "Archive File" ), mArchiveFile );
+  mArchiveFileItem = new TDEConfigSkeleton::ItemString( currentGroup(), TQString::fromLatin1( "Archive File" ), mArchiveFile );
   mArchiveFileItem->setLabel( i18n("Archive File") );
   addItem( mArchiveFileItem, TQString::fromLatin1( "ArchiveFile" ) );
-  TQValueList<KConfigSkeleton::ItemEnum::Choice> valuesDestination;
+  TQValueList<TDEConfigSkeleton::ItemEnum::Choice> valuesDestination;
   {
-    KConfigSkeleton::ItemEnum::Choice choice;
+    TDEConfigSkeleton::ItemEnum::Choice choice;
     choice.name = TQString::fromLatin1( "standardDestination" );
     valuesDestination.append( choice );
   }
   {
-    KConfigSkeleton::ItemEnum::Choice choice;
+    TDEConfigSkeleton::ItemEnum::Choice choice;
     choice.name = TQString::fromLatin1( "askDestination" );
     valuesDestination.append( choice );
   }
   {
-    KConfigSkeleton::ItemEnum::Choice choice;
+    TDEConfigSkeleton::ItemEnum::Choice choice;
     choice.name = TQString::fromLatin1( "argl1" );
     choice.label = i18n("Argl1 Label");
     valuesDestination.append( choice );
   }
   {
-    KConfigSkeleton::ItemEnum::Choice choice;
+    TDEConfigSkeleton::ItemEnum::Choice choice;
     choice.name = TQString::fromLatin1( "argl2" );
     choice.whatsThis = i18n("Argl2 Whatsthis");
     valuesDestination.append( choice );
   }
   {
-    KConfigSkeleton::ItemEnum::Choice choice;
+    TDEConfigSkeleton::ItemEnum::Choice choice;
     choice.name = TQString::fromLatin1( "argl3" );
     choice.label = i18n("Argl3 Label");
     choice.whatsThis = i18n("Argl3 Whatsthis");
     valuesDestination.append( choice );
   }
-  mDestinationItem = new KConfigSkeleton::ItemEnum( currentGroup(), TQString::fromLatin1( "Destination" ), mDestination, valuesDestination, standardDestination );
+  mDestinationItem = new TDEConfigSkeleton::ItemEnum( currentGroup(), TQString::fromLatin1( "Destination" ), mDestination, valuesDestination, standardDestination );
   mDestinationItem->setLabel( i18n("New Events/Todos Should") );
   addItem( mDestinationItem, TQString::fromLatin1( "Destination" ) );
 
   setCurrentGroup( TQString::fromLatin1( "Views" ) );
 
-  mHourSizeItem = new KConfigSkeleton::ItemInt( currentGroup(), TQString::fromLatin1( "Hour Size" ), mHourSize, 10 );
+  mHourSizeItem = new TDEConfigSkeleton::ItemInt( currentGroup(), TQString::fromLatin1( "Hour Size" ), mHourSize, 10 );
   mHourSizeItem->setLabel( i18n("Hour Size") );
   addItem( mHourSizeItem, TQString::fromLatin1( "HourSize" ) );
-  mSelectionStartsEditorItem = new KConfigSkeleton::ItemBool( currentGroup(), TQString::fromLatin1( "SelectionStartsEditor" ), mSelectionStartsEditor, false );
+  mSelectionStartsEditorItem = new TDEConfigSkeleton::ItemBool( currentGroup(), TQString::fromLatin1( "SelectionStartsEditor" ), mSelectionStartsEditor, false );
   mSelectionStartsEditorItem->setLabel( i18n("Time range selection in agenda view starts event editor") );
   addItem( mSelectionStartsEditorItem, TQString::fromLatin1( "SelectionStartsEditor" ) );
 
@@ -72,22 +72,22 @@ Test2::Test2(  )
   defaultSelectedPlugins.append( TQString::fromUtf8( "holidays" ) );
   defaultSelectedPlugins.append( TQString::fromUtf8( "webexport" ) );
 
-  mSelectedPluginsItem = new KConfigSkeleton::ItemStringList( currentGroup(), TQString::fromLatin1( "SelectedPlugins" ), mSelectedPlugins, defaultSelectedPlugins );
+  mSelectedPluginsItem = new TDEConfigSkeleton::ItemStringList( currentGroup(), TQString::fromLatin1( "SelectedPlugins" ), mSelectedPlugins, defaultSelectedPlugins );
   mSelectedPluginsItem->setLabel( i18n("SelectedPlugins") );
   addItem( mSelectedPluginsItem, TQString::fromLatin1( "SelectedPlugins" ) );
 
   setCurrentGroup( TQString::fromLatin1( "Colors" ) );
 
-  mHighlightColorItem = new KConfigSkeleton::ItemColor( currentGroup(), TQString::fromLatin1( "Highlight Color" ), mHighlightColor, TQColor( 100, 100, 255 ) );
+  mHighlightColorItem = new TDEConfigSkeleton::ItemColor( currentGroup(), TQString::fromLatin1( "Highlight Color" ), mHighlightColor, TQColor( 100, 100, 255 ) );
   mHighlightColorItem->setLabel( i18n("Highlight color") );
   addItem( mHighlightColorItem, TQString::fromLatin1( "HighlightColor" ) );
-  mAgendaBgColorItem = new KConfigSkeleton::ItemColor( currentGroup(), TQString::fromLatin1( "Agenda Background Color" ), mAgendaBgColor, TQColor( 255, 255, 255 ) );
+  mAgendaBgColorItem = new TDEConfigSkeleton::ItemColor( currentGroup(), TQString::fromLatin1( "Agenda Background Color" ), mAgendaBgColor, TQColor( 255, 255, 255 ) );
   mAgendaBgColorItem->setLabel( i18n("Agenda view background color") );
   addItem( mAgendaBgColorItem, TQString::fromLatin1( "AgendaBgColor" ) );
 
   setCurrentGroup( TQString::fromLatin1( "Fonts" ) );
 
-  mTimeBarFontItem = new KConfigSkeleton::ItemFont( currentGroup(), TQString::fromLatin1( "TimeBar Font" ), mTimeBarFont );
+  mTimeBarFontItem = new TDEConfigSkeleton::ItemFont( currentGroup(), TQString::fromLatin1( "TimeBar Font" ), mTimeBarFont );
   mTimeBarFontItem->setLabel( i18n("Time bar") );
   addItem( mTimeBarFontItem, TQString::fromLatin1( "TimeBarFont" ) );
 }

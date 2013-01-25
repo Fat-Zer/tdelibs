@@ -27,7 +27,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqframe.h>
 #include <kconfig.h>
 
-class KConfig;
+class TDEConfig;
 class TQPopupMenu;
 
 /**
@@ -176,7 +176,7 @@ public:
     virtual int heightForWidth(int width) const { return width; }
 
     /**
-     * Always use this KConfig object to save/load your applet's configuration.
+     * Always use this TDEConfig object to save/load your applet's configuration.
      *
      * For unique applets this config object will write to a config file called
      * \<appletname\>rc in the user's local %KDE directory.
@@ -184,7 +184,7 @@ public:
      * For normal applets this config object will write to a instance specific config file
      * called \<appletname\>\<instanceid\>rc in the user's local %KDE directory.
      **/
-    KConfig* config() const { return _config; }
+    TDEConfig* config() const { return _config; }
     KSharedConfig::Ptr sharedConfig() const;
 
     /**
@@ -384,7 +384,7 @@ private:
     Type         _type;
     Position     _position;
     Alignment    _alignment;
-    KConfig*     _config;
+    TDEConfig*     _config;
     int          _actions;
 protected:
     virtual void virtual_hook( int id, void* data );

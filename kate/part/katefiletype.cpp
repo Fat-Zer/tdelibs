@@ -72,7 +72,7 @@ KateFileTypeManager::~KateFileTypeManager ()
 //
 void KateFileTypeManager::update ()
 {
-  KConfig config ("katefiletyperc", false, false);
+  TDEConfig config ("katefiletyperc", false, false);
 
   TQStringList g (config.groupList());
   g.sort ();
@@ -101,7 +101,7 @@ void KateFileTypeManager::update ()
 //
 void KateFileTypeManager::save (TQPtrList<KateFileType> *v)
 {
-  KConfig config ("katefiletyperc", false, false);
+  TDEConfig config ("katefiletyperc", false, false);
 
   TQStringList newg;
   for (uint z=0; z < v->count(); z++)

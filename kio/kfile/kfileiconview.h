@@ -68,7 +68,7 @@ private:
 
 };
 
-namespace KIO {
+namespace TDEIO {
     class Job;
 }
 
@@ -141,8 +141,8 @@ public:
 
     virtual void setSorting(TQDir::SortSpec sort);
 
-    virtual void readConfig( KConfig *, const TQString& group = TQString::null );
-    virtual void writeConfig( KConfig *, const TQString& group = TQString::null);
+    virtual void readConfig( TDEConfig *, const TQString& group = TQString::null );
+    virtual void writeConfig( TDEConfig *, const TQString& group = TQString::null);
 
     // for KMimeTypeResolver
     void mimeTypeDeterminationFinished();
@@ -212,7 +212,7 @@ private slots:
     void slotLargeRows();
     void slotPreviewsToggled( bool );
 
-    void slotPreviewResult( KIO::Job * );
+    void slotPreviewResult( TDEIO::Job * );
     void gotPreview( const KFileItem *item, const TQPixmap& pix );
     void slotAutoOpen();
 

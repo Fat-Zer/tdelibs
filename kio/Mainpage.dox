@@ -6,8 +6,8 @@
  * this to provide its network-enabled file management.
  *
  * The easiest way to use this library from a %Trinity application is via the
- * KIO::NetAccess class (for easy synchronous access) or via the
- * KIO::Job class (for more complex asynchronous jobs).
+ * TDEIO::NetAccess class (for easy synchronous access) or via the
+ * TDEIO::Job class (for more complex asynchronous jobs).
  *
  * This library also implements the System Configuration Cache (KSycoca).
  *
@@ -44,7 +44,7 @@
  * view based on KIconView. Additionally, there are some compound views,
  * like a view using the icon-view for files on the right side and another
  * view for directories on the left. A view, that shows a preview for the
- * currently selected file (using KIO::PreviewJob to generate previews)
+ * currently selected file (using TDEIO::PreviewJob to generate previews)
  * and any other view to show the files is also available.
  *
  * All those views share a common baseclass, named KFileView, which

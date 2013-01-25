@@ -81,8 +81,8 @@ void KBookmarkImporter::scanIntern( TQDomElement & parentElem, const TQString & 
                 parentElem.appendChild( groupElem );
                 TQDomElement textElem = m_pDoc->createElement( "title" );
                 groupElem.appendChild( textElem );
-                textElem.appendChild( m_pDoc->createTextNode( KIO::decodeFileName( ep->d_name ) ) );
-                if ( KIO::decodeFileName( ep->d_name ) == "Toolbar" )
+                textElem.appendChild( m_pDoc->createTextNode( TDEIO::decodeFileName( ep->d_name ) ) );
+                if ( TDEIO::decodeFileName( ep->d_name ) == "Toolbar" )
                     groupElem.setAttribute("toolbar","yes");
                 scanIntern( groupElem, file.path() );
             }
@@ -136,7 +136,7 @@ void KBookmarkImporter::parseBookmark( TQDomElement & parentElem, TQCString _tex
     if (icon.right( 4 ) == ".xpm" ) // prevent warnings
         icon.truncate( icon.length() - 4 );
 
-    TQString text = KIO::decodeFileName( TQString::fromLocal8Bit(_text) );
+    TQString text = TDEIO::decodeFileName( TQString::fromLocal8Bit(_text) );
     if ( text.length() > 8 && text.right( 8 ) == ".desktop" )
         text.truncate( text.length() - 8 );
     if ( text.length() > 7 && text.right( 7 ) == ".kdelnk" )

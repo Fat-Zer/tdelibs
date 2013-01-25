@@ -135,9 +135,9 @@ void JobTest::runAll()
 
 void JobTest::cleanup()
 {
-    KIO::NetAccess::del( homeTmpDir(), 0 );
-    KIO::NetAccess::del( otherTmpDir(), 0 );
-    KIO::NetAccess::del( systemTmpDir(), 0 );
+    TDEIO::NetAccess::del( homeTmpDir(), 0 );
+    TDEIO::NetAccess::del( otherTmpDir(), 0 );
+    TDEIO::NetAccess::del( systemTmpDir(), 0 );
 }
 
 static void setTimeStamp( const TQString& path )
@@ -194,19 +194,19 @@ void JobTest::get()
     createTestFile( filePath );
     KURL u; u.setPath( filePath );
     m_result = -1;
-    KIO::StoredTransferJob* job = KIO::storedGet( u );
-    connect( job, TQT_SIGNAL( result( KIO::Job* ) ),
-            this, TQT_SLOT( slotGetResult( KIO::Job* ) ) );
+    TDEIO::StoredTransferJob* job = TDEIO::storedGet( u );
+    connect( job, TQT_SIGNAL( result( TDEIO::Job* ) ),
+            this, TQT_SLOT( slotGetResult( TDEIO::Job* ) ) );
     kapp->eventLoop()->enterLoop();
     assert( m_result == 0 ); // no error
     assert( m_data.size() == 11 );
     assert( TQCString( m_data ) == "Hello world" );
 }
 
-void JobTest::slotGetResult( KIO::Job* job )
+void JobTest::slotGetResult( TDEIO::Job* job )
 {
     m_result = job->error();
-    m_data = static_cast<KIO::StoredTransferJob *>(job)->data();
+    m_data = static_cast<TDEIO::StoredTransferJob *>(job)->data();
     kapp->eventLoop()->exitLoop();
 }
 
@@ -220,7 +220,7 @@ void JobTest::copyLocalFile( const TQString& src, const TQString& dest )
     d.setPath( dest );
 
     // copy the file with file_copy
-    bool ok = KIO::NetAccess::file_copy( u, d );
+    bool ok = TDEIO::NetAccess::file_copy( u, d );
     assert( ok );
     assert( TQFile::exists( dest ) );
     assert( TQFile::exists( src ) ); // still there
@@ -234,9 +234,9 @@ void JobTest::copyLocalFile( const TQString& src, const TQString& dest )
         assert( srcInfo.lastModified() == destInfo.lastModified() );
     }
 
-    // cleanup and retry with KIO::copy()
+    // cleanup and retry with TDEIO::copy()
     TQFile::remove( dest );
-    ok = KIO::NetAccess::dircopy( u, d, 0 );
+    ok = TDEIO::NetAccess::dircopy( u, d, 0 );
     assert( ok );
     assert( TQFile::exists( dest ) );
     assert( TQFile::exists( src ) ); // still there
@@ -262,7 +262,7 @@ void JobTest::copyLocalDirectory( const TQString& src, const TQString& _dest, in
     else
         assert( !TQFile::exists( dest ) );
 
-    bool ok = KIO::NetAccess::dircopy( u, d, 0 );
+    bool ok = TDEIO::NetAccess::dircopy( u, d, 0 );
     assert( ok );
 
     if ( flags & AlreadyExists ) {
@@ -341,13 +341,13 @@ void JobTest::moveLocalFile( const TQString& src, const TQString& dest )
     d.setPath( dest );
 
     // move the file with file_move
-    bool ok = KIO::NetAccess::file_move( u, d );
+    bool ok = TDEIO::NetAccess::file_move( u, d );
     assert( ok );
     assert( TQFile::exists( dest ) );
     assert( !TQFile::exists( src ) ); // not there anymore
 
-    // move it back with KIO::move()
-    ok = KIO::NetAccess::move( d, u, 0 );
+    // move it back with TDEIO::move()
+    ok = TDEIO::NetAccess::move( d, u, 0 );
     assert( ok );
     assert( !TQFile::exists( dest ) );
     assert( TQFile::exists( src ) ); // it's back
@@ -363,15 +363,15 @@ static void moveLocalSymlink( const TQString& src, const TQString& dest )
     d.setPath( dest );
 
     // move the symlink with move, NOT with file_move
-    bool ok = KIO::NetAccess::move( u, d );
+    bool ok = TDEIO::NetAccess::move( u, d );
     if ( !ok )
-        kdWarning() << KIO::NetAccess::lastError() << endl;
+        kdWarning() << TDEIO::NetAccess::lastError() << endl;
     assert( ok );
     assert ( KDE_lstat( TQFile::encodeName( dest ), &buf ) == 0 );
     assert( !TQFile::exists( src ) ); // not there anymore
 
-    // move it back with KIO::move()
-    ok = KIO::NetAccess::move( d, u, 0 );
+    // move it back with TDEIO::move()
+    ok = TDEIO::NetAccess::move( d, u, 0 );
     assert( ok );
     assert ( KDE_lstat( TQFile::encodeName( dest ), &buf ) != 0 ); // doesn't exist anymore
     assert ( KDE_lstat( TQFile::encodeName( src ), &buf ) == 0 ); // it's back
@@ -388,7 +388,7 @@ void JobTest::moveLocalDirectory( const TQString& src, const TQString& dest )
     KURL d;
     d.setPath( dest );
 
-    bool ok = KIO::NetAccess::move( u, d, 0 );
+    bool ok = TDEIO::NetAccess::move( u, d, 0 );
     assert( ok );
     assert( TQFile::exists( dest ) );
     assert( TQFileInfo( dest ).isDir() );
@@ -455,12 +455,12 @@ void JobTest::moveFileNoPermissions()
     KURL d;
     d.setPath( dest );
 
-    KIO::CopyJob* job = KIO::move( u, d, 0 );
+    TDEIO::CopyJob* job = TDEIO::move( u, d, 0 );
     job->setInteractive( false ); // no skip dialog, thanks
     TQMap<TQString, TQString> metaData;
-    bool ok = KIO::NetAccess::synchronousRun( job, 0, 0, 0, &metaData );
+    bool ok = TDEIO::NetAccess::synchronousRun( job, 0, 0, 0, &metaData );
     assert( !ok );
-    assert( KIO::NetAccess::lastError() == KIO::ERR_ACCESS_DENIED );
+    assert( TDEIO::NetAccess::lastError() == TDEIO::ERR_ACCESS_DENIED );
     // OK this is fishy. Just like mv(1), KIO's behavior depends on whether
     // a direct rename(2) was used, or a full copy+del. In the first case
     // there is no destination file created, but in the second case the
@@ -482,12 +482,12 @@ void JobTest::moveDirectoryNoPermissions()
     KURL d;
     d.setPath( dest );
 
-    KIO::CopyJob* job = KIO::move( u, d, 0 );
+    TDEIO::CopyJob* job = TDEIO::move( u, d, 0 );
     job->setInteractive( false ); // no skip dialog, thanks
     TQMap<TQString, TQString> metaData;
-    bool ok = KIO::NetAccess::synchronousRun( job, 0, 0, 0, &metaData );
+    bool ok = TDEIO::NetAccess::synchronousRun( job, 0, 0, 0, &metaData );
     assert( !ok );
-    assert( KIO::NetAccess::lastError() == KIO::ERR_ACCESS_DENIED );
+    assert( TDEIO::NetAccess::lastError() == TDEIO::ERR_ACCESS_DENIED );
     assert( TQFile::exists( dest ) ); // see moveFileNoPermissions
     assert( TQFile::exists( src ) );
 }
@@ -497,10 +497,10 @@ void JobTest::listRecursive()
     const TQString src = homeTmpDir();
     KURL u;
     u.setPath( src );
-    KIO::ListJob* job = KIO::listRecursive( u );
-    connect( job, TQT_SIGNAL( entries( KIO::Job*, const KIO::UDSEntryList& ) ),
-             TQT_SLOT( slotEntries( KIO::Job*, const KIO::UDSEntryList& ) ) );
-    bool ok = KIO::NetAccess::synchronousRun( job, 0 );
+    TDEIO::ListJob* job = TDEIO::listRecursive( u );
+    connect( job, TQT_SIGNAL( entries( TDEIO::Job*, const TDEIO::UDSEntryList& ) ),
+             TQT_SLOT( slotEntries( TDEIO::Job*, const TDEIO::UDSEntryList& ) ) );
+    bool ok = TDEIO::NetAccess::synchronousRun( job, 0 );
     assert( ok );
     m_names.sort();
     check( "listRecursive", m_names.join( "," ), ".,..,"
@@ -510,18 +510,18 @@ void JobTest::listRecursive()
             "fileFromHome,fileFromHome_copied" );
 }
 
-void JobTest::slotEntries( KIO::Job*, const KIO::UDSEntryList& lst )
+void JobTest::slotEntries( TDEIO::Job*, const TDEIO::UDSEntryList& lst )
 {
-    for( KIO::UDSEntryList::ConstIterator it = lst.begin(); it != lst.end(); ++it ) {
-        KIO::UDSEntry::ConstIterator it2 = (*it).begin();
+    for( TDEIO::UDSEntryList::ConstIterator it = lst.begin(); it != lst.end(); ++it ) {
+        TDEIO::UDSEntry::ConstIterator it2 = (*it).begin();
         TQString displayName;
         KURL url;
         for( ; it2 != (*it).end(); it2++ ) {
             switch ((*it2).m_uds) {
-            case KIO::UDS_NAME:
+            case TDEIO::UDS_NAME:
                 displayName = (*it2).m_str;
                 break;
-            case KIO::UDS_URL:
+            case TDEIO::UDS_URL:
                 url = (*it2).m_str;
                 break;
             }
@@ -564,10 +564,10 @@ void JobTest::copyFileToSystem( bool resolve_local_urls )
     kdDebug() << "copying " << u << " to " << d << endl;
 
     // copy the file with file_copy
-    KIO::FileCopyJob* job = KIO::file_copy( u, d );
-    connect( job, TQT_SIGNAL(mimetype(KIO::Job*,const TQString&)),
-             this, TQT_SLOT(slotMimetype(KIO::Job*,const TQString&)) );
-    bool ok = KIO::NetAccess::synchronousRun( job, 0 );
+    TDEIO::FileCopyJob* job = TDEIO::file_copy( u, d );
+    connect( job, TQT_SIGNAL(mimetype(TDEIO::Job*,const TQString&)),
+             this, TQT_SLOT(slotMimetype(TDEIO::Job*,const TQString&)) );
+    bool ok = TDEIO::NetAccess::synchronousRun( job, 0 );
     assert( ok );
 
     TQString dest = realSystemPath() + "fileFromHome_copied";
@@ -587,9 +587,9 @@ void JobTest::copyFileToSystem( bool resolve_local_urls )
     assert( m_mimetype == "application/octet-stream" );
     //assert( m_mimetype == "text/plain" );
 
-    // cleanup and retry with KIO::copy()
+    // cleanup and retry with TDEIO::copy()
     TQFile::remove( dest );
-    ok = KIO::NetAccess::dircopy( u, d, 0 );
+    ok = TDEIO::NetAccess::dircopy( u, d, 0 );
     assert( ok );
     assert( TQFile::exists( dest ) );
     assert( TQFile::exists( src ) ); // still there
@@ -604,7 +604,7 @@ void JobTest::copyFileToSystem( bool resolve_local_urls )
     kio_resolve_local_urls = true;
 }
 
-void JobTest::slotMimetype(KIO::Job* job, const TQString& type)
+void JobTest::slotMimetype(TDEIO::Job* job, const TQString& type)
 {
     assert( job );
     m_mimetype = type;

@@ -356,7 +356,7 @@ TDEInstance* KUniqueApplication::initHack( bool configUnique )
   TDEInstance* inst = new TDEInstance( TDECmdLineArgs::about );
   if (configUnique)
   {
-    KConfigGroupSaver saver( inst->config(), "KDE" );
+    TDEConfigGroupSaver saver( inst->config(), "KDE" );
     s_multipleInstances = inst->config()->readBoolEntry("MultipleInstances", false);
   }
   if( !start())

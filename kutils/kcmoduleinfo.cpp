@@ -31,13 +31,13 @@
 
 #include "kcmoduleinfo.h"
 
-class KCModuleInfo::KCModuleInfoPrivate
+class TDECModuleInfo::TDECModuleInfoPrivate
 {
   public:
-    KCModuleInfoPrivate() :
+    TDECModuleInfoPrivate() :
       testModule( false )
     {}
-    ~KCModuleInfoPrivate()
+    ~TDECModuleInfoPrivate()
     { }
 
     TQString factoryName;
@@ -45,34 +45,34 @@ class KCModuleInfo::KCModuleInfoPrivate
 
 };
 
-KCModuleInfo::KCModuleInfo()
+TDECModuleInfo::TDECModuleInfo()
 {
   _allLoaded = false;
-  d = new KCModuleInfoPrivate;
+  d = new TDECModuleInfoPrivate;
 }
 
-KCModuleInfo::KCModuleInfo(const TQString& desktopFile)
+TDECModuleInfo::TDECModuleInfo(const TQString& desktopFile)
 {
   KService::Ptr service = KService::serviceByStorageId(desktopFile);
   if(!service) setName(desktopFile);
   init(service);
 }
 
-KCModuleInfo::KCModuleInfo( KService::Ptr moduleInfo )
+TDECModuleInfo::TDECModuleInfo( KService::Ptr moduleInfo )
 {
   init(moduleInfo);
 }
 
-KCModuleInfo::KCModuleInfo( const KCModuleInfo &rhs )
+TDECModuleInfo::TDECModuleInfo( const TDECModuleInfo &rhs )
 {
-    d = new KCModuleInfoPrivate;
+    d = new TDECModuleInfoPrivate;
     ( *this ) = rhs;
 }
 
 // this re-implementation exists to ensure that other code always calls
 // our re-implementation, so in case we add data to the d pointer in the future 
 // we can be sure that we get called when we are copied.
-KCModuleInfo &KCModuleInfo::operator=( const KCModuleInfo &rhs )
+TDECModuleInfo &TDECModuleInfo::operator=( const TDECModuleInfo &rhs )
 {
     _keywords = rhs._keywords;
     _name = rhs._name;
@@ -92,7 +92,7 @@ KCModuleInfo &KCModuleInfo::operator=( const KCModuleInfo &rhs )
     return *this;
 }
 
-TQString KCModuleInfo::factoryName() const
+TQString TDECModuleInfo::factoryName() const
 {
   if( d->factoryName.isEmpty() )
   {
@@ -104,25 +104,25 @@ TQString KCModuleInfo::factoryName() const
   return d->factoryName;
 }
 
-bool KCModuleInfo::operator==( const KCModuleInfo & rhs ) const
+bool TDECModuleInfo::operator==( const TDECModuleInfo & rhs ) const
 {
   return ( ( _name == rhs._name ) && ( _lib == rhs._lib ) && ( _fileName == rhs._fileName ) );
 }
 
-bool KCModuleInfo::operator!=( const KCModuleInfo & rhs ) const
+bool TDECModuleInfo::operator!=( const TDECModuleInfo & rhs ) const
 {
   return ! operator==( rhs );
 }
 
-KCModuleInfo::~KCModuleInfo()
+TDECModuleInfo::~TDECModuleInfo()
 { 
   delete d;
 }
 
-void KCModuleInfo::init(KService::Ptr s)
+void TDECModuleInfo::init(KService::Ptr s)
 {
   _allLoaded = false;
-  d = new KCModuleInfoPrivate;
+  d = new TDECModuleInfoPrivate;
 
   if ( s )
     _service = s;
@@ -147,7 +147,7 @@ void KCModuleInfo::init(KService::Ptr s)
 }
 
 void
-KCModuleInfo::loadAll() 
+TDECModuleInfo::loadAll() 
 {
   if( !_service ) /* We have a bogus service. All get functions will return empty/zero values */
     return;
@@ -180,19 +180,19 @@ KCModuleInfo::loadAll()
 }
 
 TQString
-KCModuleInfo::docPath() const
+TDECModuleInfo::docPath() const
 {
   if (!_allLoaded) 
-    const_cast<KCModuleInfo*>(this)->loadAll();
+    const_cast<TDECModuleInfo*>(this)->loadAll();
 
   return _doc;
 }
 
 TQString
-KCModuleInfo::handle() const
+TDECModuleInfo::handle() const
 {
   if (!_allLoaded) 
-    const_cast<KCModuleInfo*>(this)->loadAll();
+    const_cast<TDECModuleInfo*>(this)->loadAll();
 
   if (_handle.isEmpty())
      return _lib;
@@ -201,38 +201,38 @@ KCModuleInfo::handle() const
 }
 
 int
-KCModuleInfo::weight() const
+TDECModuleInfo::weight() const
 {
   if (!_allLoaded) 
-    const_cast<KCModuleInfo*>(this)->loadAll();
+    const_cast<TDECModuleInfo*>(this)->loadAll();
 
   return _weight;
 }
 
 bool
-KCModuleInfo::needsRootPrivileges() const
+TDECModuleInfo::needsRootPrivileges() const
 {
   if (!_allLoaded) 
-    const_cast<KCModuleInfo*>(this)->loadAll();
+    const_cast<TDECModuleInfo*>(this)->loadAll();
 
   return _needsRootPrivileges;
 }
 
 bool
-KCModuleInfo::isHiddenByDefault() const
+TDECModuleInfo::isHiddenByDefault() const
 {
   if (!_allLoaded)
-    const_cast<KCModuleInfo*>(this)->loadAll();
+    const_cast<TDECModuleInfo*>(this)->loadAll();
 
   return _isHiddenByDefault;
 }
 
-bool KCModuleInfo::needsTest() const 
+bool TDECModuleInfo::needsTest() const 
 {
   return d->testModule;
 }
 
-void KCModuleInfo::setNeedsTest( bool val )
+void TDECModuleInfo::setNeedsTest( bool val )
 {
   d->testModule = val;
 }

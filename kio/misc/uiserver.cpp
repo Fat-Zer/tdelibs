@@ -192,7 +192,7 @@ ProgressItem::ProgressItem( ListProgress* view, TQListViewItem *after, TQCString
   m_defaultProgressVisible = showDefault;
 
   // create dialog, but don't show it
-  defaultProgress = new KIO::DefaultProgress( false );
+  defaultProgress = new TDEIO::DefaultProgress( false );
   defaultProgress->setOnlyClean( true );
   connect ( defaultProgress, TQT_SIGNAL( stopped() ), this, TQT_SLOT( slotCanceled() ) );
   connect ( &m_showTimer, TQT_SIGNAL( timeout() ), this, TQT_SLOT(slotShowDefaultProgress()) );
@@ -217,11 +217,11 @@ ProgressItem::~ProgressItem() {
 }
 
 
-void ProgressItem::setTotalSize( KIO::filesize_t size ) {
+void ProgressItem::setTotalSize( TDEIO::filesize_t size ) {
   m_iTotalSize = size;
 
   // It's already in the % column...
-  //setText( listProgress->lv_total, KIO::convertSize( m_iTotalSize ) );
+  //setText( listProgress->lv_total, TDEIO::convertSize( m_iTotalSize ) );
 
   defaultProgress->slotTotalSize( 0, m_iTotalSize );
 }
@@ -239,10 +239,10 @@ void ProgressItem::setTotalDirs( unsigned long dirs ) {
 }
 
 
-void ProgressItem::setProcessedSize( KIO::filesize_t size ) {
+void ProgressItem::setProcessedSize( TDEIO::filesize_t size ) {
   m_iProcessedSize = size;
 
-  setText( ListProgress::TB_TOTAL, KIO::convertSize( size ) );
+  setText( ListProgress::TB_TOTAL, TDEIO::convertSize( size ) );
 
   defaultProgress->slotProcessedSize( 0, size );
 }
@@ -264,7 +264,7 @@ void ProgressItem::setProcessedDirs( unsigned long dirs ) {
 
 
 void ProgressItem::setPercent( unsigned long percent ) {
-  const TQString tmps = KIO::DefaultProgress::makePercentString( percent, m_iTotalSize, m_iTotalFiles );
+  const TQString tmps = TDEIO::DefaultProgress::makePercentString( percent, m_iTotalSize, m_iTotalFiles );
   setText( ListProgress::TB_PROGRESS, tmps );
 
   defaultProgress->slotPercent( 0, percent );
@@ -281,15 +281,15 @@ void ProgressItem::setInfoMessage( const TQString & msg ) {
 
 void ProgressItem::setSpeed( unsigned long bytes_per_second ) {
   m_iSpeed = bytes_per_second;
-  m_remainingSeconds = KIO::calculateRemainingSeconds( m_iTotalSize, m_iProcessedSize, m_iSpeed );
+  m_remainingSeconds = TDEIO::calculateRemainingSeconds( m_iTotalSize, m_iProcessedSize, m_iSpeed );
 
   TQString tmps, tmps2;
   if ( m_iSpeed == 0 ) {
     tmps = i18n( "Stalled");
     tmps2 = tmps;
   } else {
-    tmps = i18n( "%1/s").arg( KIO::convertSize( m_iSpeed ));
-    tmps2 = KIO::convertSeconds( m_remainingSeconds );
+    tmps = i18n( "%1/s").arg( TDEIO::convertSize( m_iSpeed ));
+    tmps2 = TDEIO::convertSeconds( m_remainingSeconds );
   }
   setText( ListProgress::TB_SPEED, tmps );
   setText( ListProgress::TB_REMAINING_TIME, tmps2 );
@@ -382,7 +382,7 @@ void ProgressItem::setUnmounting( const TQString & point ) {
   defaultProgress->slotUnmounting( 0, point );
 }
 
-void ProgressItem::setCanResume( KIO::filesize_t offset ) {
+void ProgressItem::setCanResume( TDEIO::filesize_t offset ) {
   /*
   TQString tmps;
   // set canResume
@@ -527,7 +527,7 @@ void ListProgress::applySettings()
 }
 
 void ListProgress::readSettings() {
-  KConfig config("uiserverrc");
+  TDEConfig config("uiserverrc");
 
   // read listview geometry properties
   config.setGroup( "ProgressList" );
@@ -560,7 +560,7 @@ void ListProgress::columnWidthChanged(int column)
 }
 
 void ListProgress::writeSettings() {
-   KConfig config("uiserverrc");
+   TDEConfig config("uiserverrc");
 
    // write listview geometry properties
    config.setGroup( "ProgressList" );
@@ -830,9 +830,9 @@ void UIServer::jobFinished( int id )
 void UIServer::totalSize( int id, unsigned long size )
 { totalSize64(id, size); }
 
-void UIServer::totalSize64( int id, KIO::filesize_t size )
+void UIServer::totalSize64( int id, TDEIO::filesize_t size )
 {
-//  kdDebug(7024) << "UIServer::totalSize " << id << " " << KIO::number(size) << endl;
+//  kdDebug(7024) << "UIServer::totalSize " << id << " " << TDEIO::number(size) << endl;
 
   ProgressItem *item = findItem( id );
   if ( item ) {
@@ -863,9 +863,9 @@ void UIServer::totalDirs( int id, unsigned long dirs )
 void UIServer::processedSize( int id, unsigned long size )
 { processedSize64(id, size); }
 
-void UIServer::processedSize64( int id, KIO::filesize_t size )
+void UIServer::processedSize64( int id, TDEIO::filesize_t size )
 {
-  //kdDebug(7024) << "UIServer::processedSize " << id << " " << KIO::number(size) << endl;
+  //kdDebug(7024) << "UIServer::processedSize " << id << " " << TDEIO::number(size) << endl;
 
   ProgressItem *item = findItem( id );
   if ( item ) {
@@ -926,7 +926,7 @@ void UIServer::infoMessage( int id, const TQString & msg )
 void UIServer::canResume( int id, unsigned long offset )
 { canResume64(id, offset); }
 
-void UIServer::canResume64( int id, KIO::filesize_t offset )
+void UIServer::canResume64( int id, TDEIO::filesize_t offset )
 {
   //kdDebug(7024) << "UIServer::canResume " << id << " " << offset << endl;
 
@@ -1018,8 +1018,8 @@ void UIServer::unmounting( int id, TQString point )
 
 void UIServer::killJob( TQCString observerAppId, int progressId )
 {
-    // Contact the object "KIO::Observer" in the application <appId>
-    Observer_stub observer( observerAppId, "KIO::Observer" );
+    // Contact the object "TDEIO::Observer" in the application <appId>
+    Observer_stub observer( observerAppId, "TDEIO::Observer" );
     // Tell it to kill the job
     observer.killJob( progressId );
 }
@@ -1029,7 +1029,7 @@ void UIServer::slotJobCanceled( ProgressItem *item ) {
   // kill the corresponding job
   killJob( item->appId(), item->jobId() );
 
-  // KIO::Job, when killed, should call back jobFinished(), but we can't
+  // TDEIO::Job, when killed, should call back jobFinished(), but we can't
   // really rely on that - the app may have crashed
   delete item;
 }
@@ -1071,7 +1071,7 @@ void UIServer::slotUpdate() {
   }
 
   int iTotalFiles = 0;
-  KIO::filesize_t iTotalSize = 0;
+  TDEIO::filesize_t iTotalSize = 0;
   int iTotalSpeed = 0;
   unsigned int totalRemTime = 0; // in seconds
 
@@ -1095,11 +1095,11 @@ void UIServer::slotUpdate() {
 
   // update statusbar
   statusBar()->changeItem( i18n( " Files: %1 ").arg( iTotalFiles ), ID_TOTAL_FILES);
-  statusBar()->changeItem( i18n( "Remaining Size", " Rem. Size: %1 ").arg( KIO::convertSize( iTotalSize ) ),
+  statusBar()->changeItem( i18n( "Remaining Size", " Rem. Size: %1 ").arg( TDEIO::convertSize( iTotalSize ) ),
                            ID_TOTAL_SIZE);
-  statusBar()->changeItem( i18n( "Remaining Time", " Rem. Time: %1 ").arg( KIO::convertSeconds( totalRemTime ) ),
+  statusBar()->changeItem( i18n( "Remaining Time", " Rem. Time: %1 ").arg( TDEIO::convertSeconds( totalRemTime ) ),
                            ID_TOTAL_TIME);
-  statusBar()->changeItem( i18n( " %1/s ").arg( KIO::convertSize( iTotalSpeed ) ),
+  statusBar()->changeItem( i18n( " %1/s ").arg( TDEIO::convertSize( iTotalSpeed ) ),
                            ID_TOTAL_SPEED);
 
 }
@@ -1145,12 +1145,12 @@ void UIServer::slotSelection() {
 
 // This code is deprecated, slaves go to Observer::openPassDlg now,
 // but this is kept for compat (DCOP calls to kio_uiserver).
-TQByteArray UIServer::openPassDlg( const KIO::AuthInfo &info )
+TQByteArray UIServer::openPassDlg( const TDEIO::AuthInfo &info )
 {
     kdDebug(7024) << "UIServer::openPassDlg: User= " << info.username
                   << ", Msg= " << info.prompt << endl;
-    KIO::AuthInfo inf(info);
-    int result = KIO::PasswordDialog::getNameAndPassword( inf.username, inf.password,
+    TDEIO::AuthInfo inf(info);
+    int result = TDEIO::PasswordDialog::getNameAndPassword( inf.username, inf.password,
                                                           &inf.keepPassword, inf.prompt,
                                                           inf.readOnly, inf.caption,
                                                           inf.comment, inf.commentLabel );
@@ -1169,12 +1169,12 @@ int UIServer::messageBox( int progressId, int type, const TQString &text, const 
     return Observer::messageBox( progressId, type, text, caption, buttonYes, buttonNo );
 }
 
-void UIServer::showSSLInfoDialog(const TQString &url, const KIO::MetaData &meta)
+void UIServer::showSSLInfoDialog(const TQString &url, const TDEIO::MetaData &meta)
 {
     return showSSLInfoDialog(url,meta,0);
 }
 
-void UIServer::showSSLInfoDialog(const TQString &url, const KIO::MetaData &meta, int mainwindow)
+void UIServer::showSSLInfoDialog(const TQString &url, const TDEIO::MetaData &meta, int mainwindow)
 {
    KSSLInfoDlg *kid = new KSSLInfoDlg(meta["ssl_in_use"].upper()=="TRUE", 0L /*parent?*/, 0L, true);
    KSSLCertificate *x = KSSLCertificate::fromString(meta["ssl_peer_certificate"].local8Bit());
@@ -1269,8 +1269,8 @@ TQByteArray UIServer::open_RenameDlg64( int id,
                                      const TQString & caption,
                                      const TQString& src, const TQString & dest,
                                      int mode,
-                                     KIO::filesize_t sizeSrc,
-                                     KIO::filesize_t sizeDest,
+                                     TDEIO::filesize_t sizeSrc,
+                                     TDEIO::filesize_t sizeDest,
                                      unsigned long ctimeSrc,
                                      unsigned long ctimeDest,
                                      unsigned long mtimeSrc,
@@ -1282,17 +1282,17 @@ TQByteArray UIServer::open_RenameDlg64( int id,
   if ( item )
     setItemVisible( item, false );
   TQString newDest;
-  kdDebug(7024) << "Calling KIO::open_RenameDlg" << endl;
-  KIO::RenameDlg_Result result = KIO::open_RenameDlg( caption, src, dest,
-                                                      (KIO::RenameDlg_Mode) mode, newDest,
+  kdDebug(7024) << "Calling TDEIO::open_RenameDlg" << endl;
+  TDEIO::RenameDlg_Result result = TDEIO::open_RenameDlg( caption, src, dest,
+                                                      (TDEIO::RenameDlg_Mode) mode, newDest,
                                                       sizeSrc, sizeDest,
                                                       (time_t)ctimeSrc, (time_t)ctimeDest,
                                                       (time_t)mtimeSrc, (time_t)mtimeDest );
-  kdDebug(7024) << "KIO::open_RenameDlg done" << endl;
+  kdDebug(7024) << "TDEIO::open_RenameDlg done" << endl;
   TQByteArray data;
   TQDataStream stream( data, IO_WriteOnly );
   stream << TQ_UINT8(result) << newDest;
-  if ( item && result != KIO::R_CANCEL )
+  if ( item && result != TDEIO::R_CANCEL )
     setItemVisible( item, true );
   return data;
 }
@@ -1305,16 +1305,16 @@ int UIServer::open_SkipDlg( int id,
   ProgressItem *item = findItem( id );
   if ( item )
     setItemVisible( item, false );
-  kdDebug(7024) << "Calling KIO::open_SkipDlg" << endl;
-  KIO::SkipDlg_Result result = KIO::open_SkipDlg( (bool)multi, error_text );
-  if ( item && result != KIO::S_CANCEL )
+  kdDebug(7024) << "Calling TDEIO::open_SkipDlg" << endl;
+  TDEIO::SkipDlg_Result result = TDEIO::open_SkipDlg( (bool)multi, error_text );
+  if ( item && result != TDEIO::S_CANCEL )
     setItemVisible( item, true );
-  return (KIO::SkipDlg_Result) result;
+  return (TDEIO::SkipDlg_Result) result;
 }
 
 
 void UIServer::readSettings() {
-  KConfig config("uiserverrc");
+  TDEConfig config("uiserverrc");
   config.setGroup( "UIServer" );
   m_showStatusBar=config.readBoolEntry("ShowStatusBar",false);
   m_showToolBar=config.readBoolEntry("ShowToolBar",true);
@@ -1326,7 +1326,7 @@ void UIServer::readSettings() {
 }
 
 void UIServer::writeSettings() {
-  KConfig config("uiserverrc");
+  TDEConfig config("uiserverrc");
   config.setGroup( "UIServer" );
   config.writeEntry("InitialWidth",width());
   config.writeEntry("InitialHeight",height());

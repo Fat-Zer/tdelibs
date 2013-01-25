@@ -80,7 +80,7 @@ KCheckAccelerators::KCheckAccelerators( TQObject* parent )
     : TQObject( parent, "kapp_accel_filter" ), key(0), block( false ), drklash(0)
 {
     parent->installEventFilter( this );
-    KConfigGroupSaver saver( TDEGlobal::config(), "Development" );
+    TDEConfigGroupSaver saver( TDEGlobal::config(), "Development" );
     TQString sKey = TDEGlobal::config()->readEntry( "CheckAccelerators" ).stripWhiteSpace();
     if( !sKey.isEmpty() ) {
       KShortcut cuts( sKey );

@@ -44,7 +44,7 @@ namespace KABC {
     @short LDAP Configuration widget
  
     This class can be used to query the user for LDAP connection parameters. 
-    It's KConfigXT compatible, using widget names starting with kcfg_
+    It's TDEConfigXT compatible, using widget names starting with kcfg_
   */
 
   class KABC_EXPORT LdapConfigWidget : public TQWidget
@@ -223,23 +223,23 @@ namespace KABC {
 
       /**
        * Sets the size limit.
-       * KConfig widget name: kcfg_ldapsizelimit
+       * TDEConfig widget name: kcfg_ldapsizelimit
        */
       void setSizeLimit( int sizelimit );
       /**
        * Returns the size limit.
-       * KConfig widget name: kcfg_ldapsizelimit
+       * TDEConfig widget name: kcfg_ldapsizelimit
        */
       int sizeLimit() const;
 
       /**
        * Sets the time limit.
-       * KConfig widget name: kcfg_ldaptimelimit
+       * TDEConfig widget name: kcfg_ldaptimelimit
        */
       void setTimeLimit( int timelimit );
       /**
        * Returns the time limit.
-       * KConfig widget name: kcfg_ldaptimelimit
+       * TDEConfig widget name: kcfg_ldaptimelimit
        */
       int timeLimit() const;
 
@@ -262,8 +262,8 @@ namespace KABC {
       void setSASL( int state );
       void mQueryDNClicked();
       void mQueryMechClicked();
-      void loadData( KIO::Job*, const TQByteArray& );
-      void loadResult( KIO::Job* );  
+      void loadData( TDEIO::Job*, const TQByteArray& );
+      void loadResult( TDEIO::Job* );  
     private:
 
       int mFlags;

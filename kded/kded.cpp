@@ -155,7 +155,7 @@ bool Kded::process(const TQCString &obj, const TQCString &fun,
 void Kded::initModules()
 {
      m_dontLoad.clear();
-     KConfig *config = kapp->config();
+     TDEConfig *config = kapp->config();
      bool kde_running = !( getenv( "TDE_FULL_SESSION" ) == NULL || getenv( "TDE_FULL_SESSION" )[ 0 ] == '\0' );
     // not the same user like the one running the session (most likely we're run via sudo or something)
     if( getenv( "TDE_SESSION_UID" ) != NULL && uid_t( atoi( getenv( "TDE_SESSION_UID" ))) != getuid())
@@ -225,7 +225,7 @@ void Kded::initModules()
 void Kded::loadSecondPhase()
 {
      kdDebug(7020) << "Loading second phase autoload" << endl;
-     KConfig *config = kapp->config();
+     TDEConfig *config = kapp->config();
      KService::List kdedModules = KServiceType::offers("KDEDModule");
      for(KService::List::ConstIterator it = kdedModules.begin(); it != kdedModules.end(); ++it)
      {
@@ -905,7 +905,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
      }
 
      TDEInstance *instance = new TDEInstance(&aboutData);
-     KConfig *config = instance->config(); // Enable translations.
+     TDEConfig *config = instance->config(); // Enable translations.
 
      if (args->isSet("check"))
      {

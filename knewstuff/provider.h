@@ -28,7 +28,7 @@
 
 #include <kurl.h>
 
-namespace KIO { class Job; }
+namespace TDEIO { class Job; }
 
 namespace KNS {
 
@@ -198,8 +198,8 @@ class KDE_EXPORT ProviderLoader : public TQObject
     void providersLoaded( Provider::List * );
 
   protected slots:
-    void slotJobData( KIO::Job *, const TQByteArray & );
-    void slotJobResult( KIO::Job * );
+    void slotJobData( TDEIO::Job *, const TQByteArray & );
+    void slotJobResult( TDEIO::Job * );
 
   private:
     TQWidget *mParentWidget;

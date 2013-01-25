@@ -1626,12 +1626,12 @@ TQString KFileMimeTypeInfo::ItemInfo::string(const TQVariant& value, bool mangle
             else if (unit() == KFileMimeTypeInfo::Bytes)
             {
                 // convertSize already adds the correct suffix
-                return KIO::convertSize(value.toInt());
+                return TDEIO::convertSize(value.toInt());
             }
             else if (unit() == KFileMimeTypeInfo::KiloBytes)
             {
                 // convertSizeFromKB already adds the correct suffix
-                return KIO::convertSizeFromKB(value.toInt());
+                return TDEIO::convertSizeFromKB(value.toInt());
             }
             else
                 s = TDEGlobal::locale()->formatNumber( value.toInt() , 0);
@@ -1643,9 +1643,9 @@ TQString KFileMimeTypeInfo::ItemInfo::string(const TQVariant& value, bool mangle
 
 	case TQVariant::ULongLong :
             if ( unit() == KFileMimeTypeInfo::Bytes )
-                return KIO::convertSize( value.toULongLong() );
+                return TDEIO::convertSize( value.toULongLong() );
             else if ( unit() == KFileMimeTypeInfo::KiloBytes )
-                return KIO::convertSizeFromKB( value.toULongLong() );
+                return TDEIO::convertSizeFromKB( value.toULongLong() );
             else
                 s = TDEGlobal::locale()->formatNumber( value.toULongLong(), 0 );
             break;

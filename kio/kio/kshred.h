@@ -112,7 +112,7 @@ class KIO_EXPORT_DEPRECATED KShred : public TQObject { // KDE4: remove
          * Shows progress of the shredding.
 	 * @param bytes the number of bytes written to the file
          */
-        void processedSize(KIO::filesize_t bytes);
+        void processedSize(TDEIO::filesize_t bytes);
 
         /**
          * Shows a message in the progress dialog
@@ -139,7 +139,7 @@ class KIO_EXPORT_DEPRECATED KShred : public TQObject { // KDE4: remove
 	/**
 	 * @internal for the size of the file
 	 */
-        KIO::filesize_t fileSize;
+        TDEIO::filesize_t fileSize;
 
 	/**
 	 * @internal for keeping track of progress

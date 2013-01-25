@@ -1164,7 +1164,7 @@ void KRecentFilesAction::clearURLList()
     d->m_urls.clear();
 }
 
-void KRecentFilesAction::loadEntries( KConfig* config, TQString groupname)
+void KRecentFilesAction::loadEntries( TDEConfig* config, TQString groupname)
 {
     TQString     key;
     TQString     value;
@@ -1209,7 +1209,7 @@ void KRecentFilesAction::loadEntries( KConfig* config, TQString groupname)
     config->setGroup( oldGroup );
 }
 
-void KRecentFilesAction::saveEntries( KConfig* config, TQString groupname )
+void KRecentFilesAction::saveEntries( TDEConfig* config, TQString groupname )
 {
     TQString     key;
     TQString     value;

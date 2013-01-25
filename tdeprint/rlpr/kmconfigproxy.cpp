@@ -36,12 +36,12 @@ KMConfigProxy::KMConfigProxy(TQWidget *parent)
 	lay0->addStretch(1);
 }
 
-void KMConfigProxy::loadConfig(KConfig *conf)
+void KMConfigProxy::loadConfig(TDEConfig *conf)
 {
 	m_widget->loadConfig(conf);
 }
 
-void KMConfigProxy::saveConfig(KConfig *conf)
+void KMConfigProxy::saveConfig(TDEConfig *conf)
 {
 	m_widget->saveConfig(conf);
 }

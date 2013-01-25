@@ -203,7 +203,7 @@ bool KAccelAction::useFourModifierKeys()
 {
 	if( KAccelAction::g_bUseFourModifierKeys == -1 ) {
 		// Read in whether to use 4 modifier keys
-		KConfigGroupSaver cgs( TDEGlobal::config(), "Keyboard" );
+		TDEConfigGroupSaver cgs( TDEGlobal::config(), "Keyboard" );
 		bool b = TDEGlobal::config()->readBoolEntry( "Use Four Modifier Keys",  false );
 		KAccelAction::g_bUseFourModifierKeys = b && KKeyNative::keyboardHasWinKey();
 	}
@@ -219,7 +219,7 @@ void KAccelAction::useFourModifierKeys( bool b )
 		if( b && !KKeyNative::keyboardHasWinKey() )
 			kdDebug(125) << "Tried to use four modifier keys on a keyboard layout without a Meta key.\n";
 	}
-	KConfigGroupSaver cgs( TDEGlobal::config(), "Keyboard" );
+	TDEConfigGroupSaver cgs( TDEGlobal::config(), "Keyboard" );
 	TDEGlobal::config()->writeEntry( "Use Four Modifier Keys", KAccelAction::g_bUseFourModifierKeys, true, true);
 
 	kdDebug(125) << "bUseFourModifierKeys = " << KAccelAction::g_bUseFourModifierKeys << endl;
@@ -294,7 +294,7 @@ bool KAccelActions::init( const KAccelActions& actions )
 	return true;
 }
 
-bool KAccelActions::init( KConfigBase& config, const TQString& sGroup )
+bool KAccelActions::init( TDEConfigBase& config, const TQString& sGroup )
 {
 	kdDebug(125) << "KAccelActions::init( " << sGroup << " )" << endl;
 	TQMap<TQString, TQString> mapEntry = config.entryMap( sGroup );
@@ -483,7 +483,7 @@ bool KAccelActions::remove( const TQString& sAction )
 	return true;
 }
 
-bool KAccelActions::readActions( const TQString& sConfigGroup, KConfigBase* pConfig )
+bool KAccelActions::readActions( const TQString& sConfigGroup, TDEConfigBase* pConfig )
 {
 	KAccelShortcutList accelList(*this, false);
 	return accelList.readSettings( sConfigGroup, pConfig );
@@ -502,13 +502,13 @@ bool KAccelActions::readActions( const TQString& sConfigGroup, KConfigBase* pCon
 				1) KKeySequence = Alt+F2
 	-> "Something=Meta+X,Asterisk;Alt+F2"
 */
-bool KAccelActions::writeActions( const TQString &sGroup, KConfigBase* pConfig,
+bool KAccelActions::writeActions( const TQString &sGroup, TDEConfigBase* pConfig,
 			bool bWriteAll, bool bGlobal ) const
 {
 	kdDebug(125) << "KAccelActions::writeActions( " << sGroup << ", " << pConfig << ", " << bWriteAll << ", " << bGlobal << " )" << endl;
 	if( !pConfig )
 		pConfig = TDEGlobal::config();
-	KConfigGroupSaver cs( pConfig, sGroup );
+	TDEConfigGroupSaver cs( pConfig, sGroup );
 
 	for( uint i = 0; i < m_nSize; i++ ) {
 		if( m_prgActions[i] == 0 ) {

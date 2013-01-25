@@ -25,28 +25,28 @@
 #include <tqptrlist.h>
 #include "tdelibs_export.h"
 
-class KConfigSkeleton;
-class KConfigSkeletonItem;
+class TDEConfigSkeleton;
+class TDEConfigSkeletonItem;
 class TQWidget;
 class TQSqlPropertyMap;
 
 /**
  * @short Provides a means of automatically retrieving,
- * saving and resetting KConfigSkeleton based settings in a dialog.
+ * saving and resetting TDEConfigSkeleton based settings in a dialog.
  *
- * The KConfigDialogManager class provides a means of automatically
+ * The TDEConfigDialogManager class provides a means of automatically
  * retrieving, saving and resetting basic settings.
  * It also can emit signals when settings have been changed
  * (settings were saved) or modified (the user changes a checkbox
  * from on to off).
  *
  * The names of the widgets to be managed have to correspond to the names of the
- * configuration entries in the KConfigSkeleton object plus an additional
+ * configuration entries in the TDEConfigSkeleton object plus an additional
  * "kcfg_" prefix. For example a widget named "kcfg_MyOption" would be
  * associated to the configuration entry "MyOption".
  *
- * KConfigDialogManager uses the TQSqlPropertyMap class to determine if it can do
- * anything to a widget.  Note that KConfigDialogManager doesn't  require a
+ * TDEConfigDialogManager uses the TQSqlPropertyMap class to determine if it can do
+ * anything to a widget.  Note that TDEConfigDialogManager doesn't  require a
  * database, it simply uses the functionality that is built into the
  * TQSqlPropertyMap class.  New widgets can be added to the map using
  * TQSqlPropertyMap::installDefaultMap().  Note that you can't just add any
@@ -75,7 +75,7 @@ class TQSqlPropertyMap;
  * @author Benjamin C Meyer <ben+tdelibs at meyerhome dot net>
  * @author Waldo Bastian <bastian@kde.org>
  */
-class TDECORE_EXPORT KConfigDialogManager : public TQObject {
+class TDECORE_EXPORT TDEConfigDialogManager : public TQObject {
 
 Q_OBJECT
 
@@ -114,12 +114,12 @@ public:
    * @param conf Object that contains settings
    * @param name - Object name.
    */
-   KConfigDialogManager(TQWidget *parent, KConfigSkeleton *conf, const char *name=0);
+   TDEConfigDialogManager(TQWidget *parent, TDEConfigSkeleton *conf, const char *name=0);
 
   /**
    * Destructor.
    */
-  ~KConfigDialogManager();
+  ~TDEConfigDialogManager();
 
   /**
    * Add additional widgets to manage
@@ -200,13 +200,13 @@ protected:
   /**
    * Setup secondary widget properties
    */
-  void setupWidget(TQWidget *widget, KConfigSkeletonItem *item);
+  void setupWidget(TQWidget *widget, TDEConfigSkeletonItem *item);
 
 protected:
   /**
-   * KConfigSkeleton object used to store settings
+   * TDEConfigSkeleton object used to store settings
    */
-  KConfigSkeleton *m_conf;
+  TDEConfigSkeleton *m_conf;
 
   /**
    * Dialog being managed
@@ -226,7 +226,7 @@ protected:
 private:
   class Private;
   /**
-   * KConfigDialogManager Private class.
+   * TDEConfigDialogManager Private class.
    */
   Private *d;
 

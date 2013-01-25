@@ -27,7 +27,7 @@ class TQPushButton;
 class TQLabel;
 class KProgress;
 
-namespace KIO {
+namespace TDEIO {
 
 class Job;
 
@@ -49,7 +49,7 @@ class Job;
 * statusBar()->insertWidget( statusProgress, statusProgress->width() , 0 );
 * ...
 * // create job and connect it to the progress
-* CopyJob* job = KIO::copy(...);
+* CopyJob* job = TDEIO::copy(...);
 * statusProgress->setJob( job );
 * ...
 * \endcode
@@ -76,20 +76,20 @@ public:
    * Sets the job to monitor.
    * @param job the job to monitor
    */
-  void setJob( KIO::Job *job );
+  void setJob( TDEIO::Job *job );
 
 public slots:
   virtual void slotClean();
-  virtual void slotTotalSize( KIO::Job* job, KIO::filesize_t size );
-  virtual void slotPercent( KIO::Job* job, unsigned long percent );
-  virtual void slotSpeed( KIO::Job* job, unsigned long speed );
+  virtual void slotTotalSize( TDEIO::Job* job, TDEIO::filesize_t size );
+  virtual void slotPercent( TDEIO::Job* job, unsigned long percent );
+  virtual void slotSpeed( TDEIO::Job* job, unsigned long speed );
 
 protected:
   KProgress* m_pProgressBar;
   TQLabel* m_pLabel;
   TQPushButton* m_pButton;
 
-  KIO::filesize_t m_iTotalSize;
+  TDEIO::filesize_t m_iTotalSize;
 
   enum Mode { None, Label, Progress };
 

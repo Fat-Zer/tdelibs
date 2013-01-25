@@ -650,7 +650,7 @@ int main(int argc, char *argv[])
 
 RegressionTest *RegressionTest::curr = 0;
 
-RegressionTest::RegressionTest(KateDocument *part, KConfig *baseConfig,
+RegressionTest::RegressionTest(KateDocument *part, TDEConfig *baseConfig,
                                const TQString &baseDir,
                                const TQString &outputDir, bool _genOutput)
   : TQObject(part)
@@ -723,14 +723,14 @@ RegressionTest::~RegressionTest()
     delete m_failureSave;
 }
 
-void RegressionTest::setFailureSnapshotConfig(KConfig *cfg, const TQString &sname)
+void RegressionTest::setFailureSnapshotConfig(TDEConfig *cfg, const TQString &sname)
 {
     Q_ASSERT(cfg);
     m_failureComp = cfg;
     m_failureComp->setGroup(sname);
 }
 
-void RegressionTest::setFailureSnapshotSaver(KConfig *cfg, const TQString &sname)
+void RegressionTest::setFailureSnapshotSaver(TDEConfig *cfg, const TQString &sname)
 {
     Q_ASSERT(cfg);
     m_failureSave = cfg;

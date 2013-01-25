@@ -56,7 +56,7 @@ extern "C"
 }
 
 
-ResourceDir::ResourceDir( const KConfig *config )
+ResourceDir::ResourceDir( const TDEConfig *config )
   : Resource( config ), mAsynchronous( false )
 {
   if ( config ) {
@@ -100,7 +100,7 @@ ResourceDir::~ResourceDir()
   mFormat = 0;
 }
 
-void ResourceDir::writeConfig( KConfig *config )
+void ResourceDir::writeConfig( TDEConfig *config )
 {
   Resource::writeConfig( config );
 

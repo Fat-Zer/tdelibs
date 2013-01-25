@@ -163,7 +163,7 @@ void KDiskFreeSp::dfDone()
 KDiskFreeSp * KDiskFreeSp::findUsageInfo( const TQString & path )
 {
     KDiskFreeSp * job = new KDiskFreeSp;
-    TQString mountPoint = KIO::findPathMountPoint( path );
+    TQString mountPoint = TDEIO::findPathMountPoint( path );
     job->readDF( mountPoint );
     return job;
 }

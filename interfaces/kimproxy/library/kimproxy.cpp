@@ -643,7 +643,7 @@ KIMIface_stub * KIMProxy::stubForProtocol( const TQString &protocol)
 
 TQString KIMProxy::preferredApp()
 {
-	KConfig *store = new KSimpleConfig( IM_CLIENT_PREFERENCES_FILE );
+	TDEConfig *store = new KSimpleConfig( IM_CLIENT_PREFERENCES_FILE );
 	store->setGroup( IM_CLIENT_PREFERENCES_SECTION );
 	TQString preferredApp = store->readEntry( IM_CLIENT_PREFERENCES_ENTRY );
 	//kdDebug( 790 ) << k_funcinfo << "found preferred app: " << preferredApp << endl;

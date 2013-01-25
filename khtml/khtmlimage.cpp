@@ -158,7 +158,7 @@ bool KHTMLImage::openURL( const KURL &url )
     DOM::DocumentImpl *impl = dynamic_cast<DOM::DocumentImpl *>( m_khtml->document().handle() ); // ### hack ;-)
     if (!impl) return false;
     if ( m_ext->urlArgs().reload )
-        impl->docLoader()->setCachePolicy( KIO::CC_Reload );
+        impl->docLoader()->setCachePolicy( TDEIO::CC_Reload );
 
     khtml::DocLoader *dl = impl->docLoader();
     m_image = dl->requestImage( m_url.url() );
@@ -232,7 +232,7 @@ void KHTMLImage::guiActivateEvent( KParts::GUIActivateEvent *e )
 }
 
 /*
-void KHTMLImage::slotImageJobFinished( KIO::Job *job )
+void KHTMLImage::slotImageJobFinished( TDEIO::Job *job )
 {
     if ( job->error() )
     {

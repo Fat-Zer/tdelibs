@@ -21,35 +21,35 @@
 #ifndef KCONFIGDIALOG_H
 #define KCONFIGDIALOG_H
 
-class KConfig;
-class KConfigSkeleton;
-class KConfigDialogManager;
+class TDEConfig;
+class TDEConfigSkeleton;
+class TDEConfigDialogManager;
 #include <kdialogbase.h>
 #include <tqasciidict.h>
 
 /**
  * \short Standard %KDE configuration dialog class
  *
- * The KConfigDialog class provides an easy and uniform means of displaying
- * a settings dialog using KDialogBase, KConfigDialogManager and a
- * KConfigSkeleton derived settings class.
+ * The TDEConfigDialog class provides an easy and uniform means of displaying
+ * a settings dialog using KDialogBase, TDEConfigDialogManager and a
+ * TDEConfigSkeleton derived settings class.
  *
- * KConfigDialog handles the enabling and disabling of buttons, creation
+ * TDEConfigDialog handles the enabling and disabling of buttons, creation
  * of the dialog, and deletion of the widgets.  Because of
- * KConfigDialogManager, this class also manages: restoring
+ * TDEConfigDialogManager, this class also manages: restoring
  * the settings, reseting them to the default values, and saving them. This
  * requires that the names of the widgets corresponding to configuration entries
  * have to have the same name plus an additional "kcfg_" prefix. For example the
  * widget named "kcfg_MyOption" would be associated with the configuration entry
  * "MyOption".
  *
- * Here is an example usage of KConfigDialog:
+ * Here is an example usage of TDEConfigDialog:
  *
  * \code
  * void KCoolApp::showSettings(){
- *   if(KConfigDialog::showDialog("settings"))
+ *   if(TDEConfigDialog::showDialog("settings"))
  *     return;
- *   KConfigDialog *dialog = new KConfigDialog(this, "settings", MySettings::self(), KDialogBase::IconList);
+ *   TDEConfigDialog *dialog = new TDEConfigDialog(this, "settings", MySettings::self(), KDialogBase::IconList);
  *   dialog->addPage(new General(0, "General"), i18n("General") );
  *   dialog->addPage(new Appearance(0, "Style"), i18n("Appearance") );
  *   connect(dialog, TQT_SIGNAL(settingsChanged()), mainWidget, TQT_SLOT(loadSettings()));
@@ -65,11 +65,11 @@ class KConfigDialogManager;
  * Please note that using the setMainWidget method inherited from KDialogBase
  * currently yields broken behaviour at runtime; use @ref addPage() instead.
  *
- * @see KConfigSkeleton
+ * @see TDEConfigSkeleton
  * @author Waldo Bastian <bastian@kde.org>
  * @since 3.2
  */
-class TDEUI_EXPORT KConfigDialog : public KDialogBase {
+class TDEUI_EXPORT TDEConfigDialog : public KDialogBase {
 Q_OBJECT
 
 signals:
@@ -87,7 +87,7 @@ signals:
   /**
    * One or more of the settings have been permanently changed such as if
    * the user clicked on the Apply or Ok button.
-   * This signal is useful when using KConfigDialog to configure
+   * This signal is useful when using TDEConfigDialog to configure
    * items in a list.  When emitted the main class would then know what
    * item in the list was actually changed.
    * @param dialogName the name of the dialog.
@@ -116,12 +116,12 @@ public:
    * @param modal - Whether the dialog should be modal. To prevent more than one
    * non-modal settings dialog from showing the static function showDialog() can be
    * used in determining if the settings dialog already exists before creating
-   * a new KConfigDialog object.
+   * a new TDEConfigDialog object.
    */
   // KDE4: Add the "separator" parameter as in KDialogBase
   //       Make "dialogType" an int
-  KConfigDialog( TQWidget *parent, const char *name,
-                 KConfigSkeleton *config,
+  TDEConfigDialog( TQWidget *parent, const char *name,
+                 TDEConfigSkeleton *config,
                  DialogType dialogType = IconList,
                  int dialogButtons = Default|Ok|Apply|Cancel|Help,
                  ButtonCode defaultButton = Ok,
@@ -132,10 +132,10 @@ public:
    * Deletes private class.
    * @see exists()
    */
-  ~KConfigDialog();
+  ~TDEConfigDialog();
 
   /**
-   * Adds page to the dialog and to KConfigDialogManager.  When an
+   * Adds page to the dialog and to TDEConfigDialogManager.  When an
    * application is done adding pages show() should be called to
    * display the dialog.
    * Note that after you call show() you can not add any more pages
@@ -146,7 +146,7 @@ public:
    * @param pixmapName - Name of the pixmap that should be used if needed.
    * @param header - Header text use in the list modes. Ignored in Tabbed
    *        mode. If empty, the itemName text is used when needed.
-   * @param manage - Whether KConfigDialogManager should manage the page or not.
+   * @param manage - Whether TDEConfigDialogManager should manage the page or not.
    */
   // KDE4: Add a default value for itemName & pixmapName
   void addPage( TQWidget *page, const TQString &itemName,
@@ -155,9 +155,9 @@ public:
                 bool manage=true );
 
   /**
-   * Adds page to the dialog that is managed by a custom KConfigDialogManager.
+   * Adds page to the dialog that is managed by a custom TDEConfigDialogManager.
    * This is useful for dialogs that contain settings spread over more than
-   * one configuration file and thus have/need more than one KConfigSkeleton.
+   * one configuration file and thus have/need more than one TDEConfigSkeleton.
    * When an application is done adding pages show() should be called to
    * display the dialog.
    * Note that after you call show() you can not add any more pages
@@ -171,7 +171,7 @@ public:
    *        mode. If empty, the itemName text is used when needed.
    */
   // KDE4: Add a default value for itemName & pixmapName
-  void addPage( TQWidget *page, KConfigSkeleton *config,
+  void addPage( TQWidget *page, TDEConfigSkeleton *config,
                 const TQString &itemName,
                 const TQString &pixmapName,
                 const TQString &header=TQString::null );
@@ -182,7 +182,7 @@ public:
    * @param name - Dialog name to look for.
    * @return Pointer to widget or NULL if it does not exist.
    */
-  static KConfigDialog* exists( const char* name );
+  static TDEConfigDialog* exists( const char* name );
 
   /**
    * Attempts to show the dialog with the name 'name'.
@@ -260,19 +260,19 @@ private:
    * Sets the connections from a manager to the dialog (and the other
    * way round) up.
    */
-  void setupManagerConnections(KConfigDialogManager *manager);
+  void setupManagerConnections(TDEConfigDialogManager *manager);
 
 private:
   /**
    * The list of existing dialogs.
    */
-  static TQAsciiDict<KConfigDialog> openDialogs;
+  static TQAsciiDict<TDEConfigDialog> openDialogs;
 
-  class KConfigDialogPrivate;
+  class TDEConfigDialogPrivate;
   /**
    * Private class.
    */
-  KConfigDialogPrivate *d;
+  TDEConfigDialogPrivate *d;
 };
 
 #endif //KCONFIGDIALOG_H

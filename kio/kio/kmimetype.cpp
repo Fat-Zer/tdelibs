@@ -533,8 +533,8 @@ TQString KMimeType::favIconForURL( const KURL& url )
     static bool check = true;
     if ( check ) {
         check = false;
-        KConfig *config = TDEGlobal::config();
-        KConfigGroupSaver cs( config, "HTML Settings" );
+        TDEConfig *config = TDEGlobal::config();
+        TDEConfigGroupSaver cs( config, "HTML Settings" );
         useFavIcons = config->readBoolEntry( "EnableFavicon", true );
     }
 
@@ -717,7 +717,7 @@ TQString KDEDesktopMimeType::icon( const KURL& _url, bool _is_local ) const
     TQString dev = cfg.readEntry( "Dev" );
     if ( !icon.isEmpty() && !unmount_icon.isEmpty() && !dev.isEmpty() )
     {
-      TQString mp = KIO::findDeviceMountPoint( dev );
+      TQString mp = TDEIO::findDeviceMountPoint( dev );
       // Is the device not mounted ?
       if ( mp.isNull() )
         return unmount_icon;
@@ -831,7 +831,7 @@ pid_t KDEDesktopMimeType::runFSDevice( const KURL& _url, const KSimpleConfig &cf
     return retval;
   }
 
-  TQString mp = KIO::findDeviceMountPoint( dev );
+  TQString mp = TDEIO::findDeviceMountPoint( dev );
   // Is the device already mounted ?
   if ( !mp.isNull() )
   {
@@ -933,7 +933,7 @@ TQValueList<KDEDesktopMimeType::Service> KDEDesktopMimeType::builtinServices( co
     }
     else
     {
-      TQString mp = KIO::findDeviceMountPoint( dev );
+      TQString mp = TDEIO::findDeviceMountPoint( dev );
       // not mounted ?
       if ( mp.isEmpty() )
       {
@@ -968,12 +968,12 @@ TQValueList<KDEDesktopMimeType::Service> KDEDesktopMimeType::userDefinedServices
   return userDefinedServices( path, cfg, bLocalFiles );
 }
 
-TQValueList<KDEDesktopMimeType::Service> KDEDesktopMimeType::userDefinedServices( const TQString& path, KConfig& cfg, bool bLocalFiles )
+TQValueList<KDEDesktopMimeType::Service> KDEDesktopMimeType::userDefinedServices( const TQString& path, TDEConfig& cfg, bool bLocalFiles )
 {
  return userDefinedServices( path, cfg, bLocalFiles, KURL::List() );
 }
 
-TQValueList<KDEDesktopMimeType::Service> KDEDesktopMimeType::userDefinedServices( const TQString& path, KConfig& cfg, bool bLocalFiles, const KURL::List & file_list )
+TQValueList<KDEDesktopMimeType::Service> KDEDesktopMimeType::userDefinedServices( const TQString& path, TDEConfig& cfg, bool bLocalFiles, const KURL::List & file_list )
 {
   TQValueList<Service> result;
 
@@ -1114,7 +1114,7 @@ void KDEDesktopMimeType::executeService( const KURL::List& urls, KDEDesktopMimeT
       KMessageBoxWrapper::error( 0, tmp );
       return;
     }
-    TQString mp = KIO::findDeviceMountPoint( dev );
+    TQString mp = TDEIO::findDeviceMountPoint( dev );
 
     if ( _service.m_type == ST_MOUNT )
     {

@@ -54,9 +54,9 @@ public:
     void copyFileToSystem();
 
 private slots:
-    void slotEntries( KIO::Job*, const KIO::UDSEntryList& lst );
-    void slotGetResult( KIO::Job* );
-    void slotMimetype(KIO::Job*,const TQString&);
+    void slotEntries( TDEIO::Job*, const TDEIO::UDSEntryList& lst );
+    void slotGetResult( TDEIO::Job* );
+    void slotMimetype(TDEIO::Job*,const TQString&);
 
 private:
     TQString homeTmpDir() const;

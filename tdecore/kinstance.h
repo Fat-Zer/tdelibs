@@ -20,7 +20,7 @@
 
 class KStandardDirs;
 class TDEAboutData;
-class KConfig;
+class TDEConfig;
 class KIconLoader;
 class KCharsets;
 class TQFont;
@@ -86,13 +86,13 @@ class TDECORE_EXPORT TDEInstance
 
     /**
      * Returns the general config object ("appnamerc").
-     * @return the KConfig object for the instance.
+     * @return the TDEConfig object for the instance.
      */
-    KConfig            *config() const;
+    TDEConfig            *config() const;
 
     /**
      * Returns the general config object ("appnamerc").
-     * @return the KConfig object for the instance.
+     * @return the TDEConfig object for the instance.
      */
     KSharedConfig      *sharedConfig() const;
 
@@ -165,7 +165,7 @@ protected:
 private:
     mutable KStandardDirs       *_dirs;
 
-    mutable KConfig             *_config;
+    mutable TDEConfig             *_config;
     mutable KIconLoader         *_iconLoader;
 
     mutable TDEHardwareDevices  *_hardwaredevices;

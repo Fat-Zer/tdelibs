@@ -29,7 +29,7 @@ class TQTimer;
 #include "kconfigbase.h"
 #include "klockfile.h"
 
-class KConfigPrivate;
+class TDEConfigPrivate;
 
 /**
 * Access KDE Configuration entries.
@@ -37,17 +37,17 @@ class KConfigPrivate;
 * This class implements KDE's default configuration system.
 *
 * @author Kalle Dalheimer <kalle@kde.org>, Preston Brown <pbrown@kde.org>
-* @see TDEGlobal::config(), KConfigBase, KSimpleConfig
+* @see TDEGlobal::config(), TDEConfigBase, KSimpleConfig
 * @short KDE Configuration Management class
 */
-class TDECORE_EXPORT KConfig : public KConfigBase
+class TDECORE_EXPORT TDEConfig : public TDEConfigBase
 {
   Q_OBJECT
 
 public:
 
   /**
-   * Constructs a KConfig object.
+   * Constructs a TDEConfig object.
    *
    * @param fileName A file to parse in addition to the
    *        system-wide file(s).  If it is not provided, only global
@@ -59,18 +59,18 @@ public:
    * @param bUseKDEGlobals Toggle reading the global KDE configuration file.
    * @param resType the place to look in (config, data, etc) See KStandardDirs.
    */
-  KConfig( const TQString& fileName = TQString::null,
+  TDEConfig( const TQString& fileName = TQString::null,
           bool bReadOnly = false, bool bUseKDEGlobals = true, const char *resType="config");
 
-  KConfig(KConfigBackEnd *backEnd, bool bReadOnly = false);
+  TDEConfig(TDEConfigBackEnd *backEnd, bool bReadOnly = false);
 
   /**
-   * Destructs the KConfig object.
+   * Destructs the TDEConfig object.
    *
    * Writes back any dirty configuration entries, and destroys
    * dynamically created objects.
    */
-  virtual ~KConfig();
+  virtual ~TDEConfig();
 
   /**
    * Clears all entries out of the @p dirtyEntryMap, so the
@@ -82,7 +82,7 @@ public:
    *        false, but the dirty entries remain in the dirty entry
    *        map.
    *
-   * @see KConfigBase::rollback
+   * @see TDEConfigBase::rollback
    */
   virtual void rollback(bool bDeep = true);
 
@@ -162,15 +162,15 @@ public:
    * @param config optional config object to reuse
    * @since 3.2
    */
-  KConfig* copyTo(const TQString &file, KConfig *config=0) const;
+  TDEConfig* copyTo(const TQString &file, TDEConfig *config=0) const;
 
   /**
    * Returns a lock file object for the configuration file or 0 if
    * the backend does not support locking.
    * @param bGlobal if true, return the lock file for the global config file
    *
-   * NOTE: KConfig::sync() requires a lock on both the normal and global
-   * config file. When calling KConfig::sync() while having a lock on the
+   * NOTE: TDEConfig::sync() requires a lock on both the normal and global
+   * config file. When calling TDEConfig::sync() while having a lock on the
    * global config file, the normal config file MUST be locked AS WELL and the 
    * normal config file MUST be locked BEFORE the global config file!
    * Otherwise there is a risk of deadlock.
@@ -247,12 +247,12 @@ private:
    * @internal
    * copy-construction and assignment are not allowed
    */
-  KConfig( const KConfig& );
+  TDEConfig( const TDEConfig& );
   /**
    * @internal
    * copy-construction and assignment are not allowed
    */
-  KConfig& operator= ( const KConfig& rConfig );
+  TDEConfig& operator= ( const TDEConfig& rConfig );
 
 private:
   bool bGroupImmutable : 1; // Current group is immutable.
@@ -261,16 +261,16 @@ private:
 protected:
   virtual void virtual_hook( int id, void* data );
 private:
-  KConfigPrivate *d;
+  TDEConfigPrivate *d;
 };
 
 /**
- * KConfig variant using shared memory
+ * TDEConfig variant using shared memory
  *
  * KSharedConfig provides a reference counted, shared memory variant
- * of KConfig.
+ * of TDEConfig.
  */
-class TDECORE_EXPORT KSharedConfig : public KConfig, public KShared
+class TDECORE_EXPORT KSharedConfig : public TDEConfig, public KShared
 {
   friend class TQValueList<KSharedConfig*>;
 public:

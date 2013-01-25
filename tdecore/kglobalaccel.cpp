@@ -119,11 +119,11 @@ const TQString& TDEGlobalAccel::configGroup() const
 void TDEGlobalAccel::setConfigGroup( const TQString& s )
 	{ d->setConfigGroup( s ); }
 
-bool TDEGlobalAccel::readSettings( KConfigBase* pConfig )
+bool TDEGlobalAccel::readSettings( TDEConfigBase* pConfig )
 	{ d->readSettings( pConfig ); return true; }
-bool TDEGlobalAccel::writeSettings( KConfigBase* pConfig ) const
+bool TDEGlobalAccel::writeSettings( TDEConfigBase* pConfig ) const
 	{ d->writeSettings( pConfig ); return true; }
-bool TDEGlobalAccel::writeSettings( KConfigBase* pConfig, bool bGlobal ) const
+bool TDEGlobalAccel::writeSettings( TDEConfigBase* pConfig, bool bGlobal ) const
 {
 	d->setConfigGlobal( bGlobal );
 	d->writeSettings( pConfig );

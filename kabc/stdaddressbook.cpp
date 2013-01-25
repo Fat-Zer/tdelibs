@@ -188,7 +188,7 @@ bool StdAddressBook::automaticSave()
 // should get const for 4.X
 Addressee StdAddressBook::whoAmI()
 {
-  KConfig config( "kabcrc" );
+  TDEConfig config( "kabcrc" );
   config.setGroup( "General" );
 
   return findByUid( config.readEntry( "WhoAmI" ) );
@@ -196,7 +196,7 @@ Addressee StdAddressBook::whoAmI()
 
 void StdAddressBook::setWhoAmI( const Addressee &addr )
 {
-  KConfig config( "kabcrc" );
+  TDEConfig config( "kabcrc" );
   config.setGroup( "General" );
 
   config.writeEntry( "WhoAmI", addr.uid() );

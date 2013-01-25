@@ -47,7 +47,7 @@ using namespace KABC;
 void tqt_enter_modal( TQWidget *widget );
 void tqt_leave_modal( TQWidget *widget );
 
-class ResourceLDAPKIO::ResourceLDAPKIOPrivate 
+class ResourceLDAPTDEIO::ResourceLDAPKIOPrivate 
 {
   public:
     LDIF mLdif;
@@ -69,7 +69,7 @@ class ResourceLDAPKIO::ResourceLDAPKIOPrivate
     KTempFile *mTmp;
 };
 
-ResourceLDAPKIO::ResourceLDAPKIO( const KConfig *config )
+ResourceLDAPTDEIO::ResourceLDAPKIO( const TDEConfig *config )
   : Resource( config )
 {
   d = new ResourceLDAPKIOPrivate;
@@ -115,12 +115,12 @@ ResourceLDAPKIO::ResourceLDAPKIO( const KConfig *config )
   init(); 
 }
 
-ResourceLDAPKIO::~ResourceLDAPKIO() 
+ResourceLDAPTDEIO::~ResourceLDAPKIO() 
 {
   delete d;
 }
 
-void ResourceLDAPKIO::enter_loop()
+void ResourceLDAPTDEIO::enter_loop()
 {
   TQWidget dummy(0,0,(WFlags)(WType_Dialog | WShowModal));
   dummy.setFocusPolicy( TQ_NoFocus );
@@ -129,14 +129,14 @@ void ResourceLDAPKIO::enter_loop()
   tqt_leave_modal(&dummy);
 }
 
-void ResourceLDAPKIO::entries( KIO::Job*, const KIO::UDSEntryList & list )
+void ResourceLDAPTDEIO::entries( TDEIO::Job*, const TDEIO::UDSEntryList & list )
 {
-  KIO::UDSEntryListConstIterator it = list.begin();
-  KIO::UDSEntryListConstIterator end = list.end();
+  TDEIO::UDSEntryListConstIterator it = list.begin();
+  TDEIO::UDSEntryListConstIterator end = list.end();
   for (; it != end; ++it) {
-    KIO::UDSEntry::ConstIterator it2 = (*it).begin();
+    TDEIO::UDSEntry::ConstIterator it2 = (*it).begin();
     for( ; it2 != (*it).end(); it2++ ) {
-      if ( (*it2).m_uds == KIO::UDS_URL ) {
+      if ( (*it2).m_uds == TDEIO::UDS_URL ) {
         KURL tmpurl( (*it2).m_str );
         d->mResultDn = tmpurl.path();
         kdDebug(7125) << "findUid(): " << d->mResultDn << endl;
@@ -147,20 +147,20 @@ void ResourceLDAPKIO::entries( KIO::Job*, const KIO::UDSEntryList & list )
   }
 }
 
-void ResourceLDAPKIO::listResult( KIO::Job *job)
+void ResourceLDAPTDEIO::listResult( TDEIO::Job *job)
 {
   d->mError = job->error();  
-  if ( d->mError && d->mError != KIO::ERR_USER_CANCELED )
+  if ( d->mError && d->mError != TDEIO::ERR_USER_CANCELED )
     mErrorMsg = job->errorString();
   else 
     mErrorMsg = "";
   tqApp->exit_loop();
 }
 
-TQString ResourceLDAPKIO::findUid( const TQString &uid ) 
+TQString ResourceLDAPTDEIO::findUid( const TQString &uid ) 
 {
   LDAPUrl url( d->mLDAPUrl );
-  KIO::UDSEntry entry;
+  TDEIO::UDSEntry entry;
   
   mErrorMsg = d->mResultDn = "";
 
@@ -168,21 +168,21 @@ TQString ResourceLDAPKIO::findUid( const TQString &uid )
   url.setFilter( "(" + mAttributes[ "uid" ] + "=" + uid + ")" + mFilter );
   url.setExtension( "x-dir", "one" );
 
-  kdDebug(7125) << "ResourceLDAPKIO::findUid() uid: " << uid << " url " << 
+  kdDebug(7125) << "ResourceLDAPTDEIO::findUid() uid: " << uid << " url " << 
     url.prettyURL() << endl;
   
-  KIO::ListJob * listJob = KIO::listDir( url, false /* no GUI */ );
+  TDEIO::ListJob * listJob = TDEIO::listDir( url, false /* no GUI */ );
   connect( listJob, 
-    TQT_SIGNAL( entries( KIO::Job *, const KIO::UDSEntryList& ) ),
-    TQT_SLOT( entries( KIO::Job*, const KIO::UDSEntryList& ) ) );
-  connect( listJob, TQT_SIGNAL( result( KIO::Job* ) ), 
-    this, TQT_SLOT( listResult( KIO::Job* ) ) );
+    TQT_SIGNAL( entries( TDEIO::Job *, const TDEIO::UDSEntryList& ) ),
+    TQT_SLOT( entries( TDEIO::Job*, const TDEIO::UDSEntryList& ) ) );
+  connect( listJob, TQT_SIGNAL( result( TDEIO::Job* ) ), 
+    this, TQT_SLOT( listResult( TDEIO::Job* ) ) );
 
   enter_loop();
   return d->mResultDn;
 }
 
-TQCString ResourceLDAPKIO::addEntry( const TQString &attr, const TQString &value, bool mod )
+TQCString ResourceLDAPTDEIO::addEntry( const TQString &attr, const TQString &value, bool mod )
 {
   TQCString tmp;
   if ( !attr.isEmpty() ) {
@@ -193,7 +193,7 @@ TQCString ResourceLDAPKIO::addEntry( const TQString &attr, const TQString &value
   return ( tmp );
 }
 
-bool ResourceLDAPKIO::AddresseeToLDIF( TQByteArray &ldif, const Addressee &addr, 
+bool ResourceLDAPTDEIO::AddresseeToLDIF( TQByteArray &ldif, const Addressee &addr, 
   const TQString &olddn )
 {
   TQCString tmp;
@@ -313,14 +313,14 @@ bool ResourceLDAPKIO::AddresseeToLDIF( TQByteArray &ldif, const Addressee &addr,
   return true;
 }
 
-void ResourceLDAPKIO::setReadOnly( bool value )
+void ResourceLDAPTDEIO::setReadOnly( bool value )
 {
   //save the original readonly flag, because offline using disables writing
   d->mReadOnly = true;
   Resource::setReadOnly( value );
 }
 
-void ResourceLDAPKIO::init()
+void ResourceLDAPTDEIO::init()
 {
   if ( mPort == 0 ) mPort = 389;
 
@@ -417,7 +417,7 @@ void ResourceLDAPKIO::init()
   kdDebug(7125) << "resource_ldapkio url: " << d->mLDAPUrl.prettyURL() << endl;
 }
 
-void ResourceLDAPKIO::writeConfig( KConfig *config )
+void ResourceLDAPTDEIO::writeConfig( TDEConfig *config )
 {
   Resource::writeConfig( config );
 
@@ -450,7 +450,7 @@ void ResourceLDAPKIO::writeConfig( KConfig *config )
   config->writeEntry( "LdapAttributes", attributes );
 }
 
-Ticket *ResourceLDAPKIO::requestSaveTicket()
+Ticket *ResourceLDAPTDEIO::requestSaveTicket()
 {
   if ( !addressBook() ) {
     kdDebug(7125) << "no addressbook" << endl;
@@ -460,21 +460,21 @@ Ticket *ResourceLDAPKIO::requestSaveTicket()
   return createTicket( this );
 }
 
-void ResourceLDAPKIO::releaseSaveTicket( Ticket *ticket )
+void ResourceLDAPTDEIO::releaseSaveTicket( Ticket *ticket )
 {
   delete ticket;
 }
 
-bool ResourceLDAPKIO::doOpen()
+bool ResourceLDAPTDEIO::doOpen()
 {
   return true;
 }
 
-void ResourceLDAPKIO::doClose()
+void ResourceLDAPTDEIO::doClose()
 {
 }
 
-void ResourceLDAPKIO::createCache()
+void ResourceLDAPTDEIO::createCache()
 {
   d->mTmp = NULL;
   if ( d->mCachePolicy == Cache_NoConnection && d->mAutoCache ) {
@@ -483,7 +483,7 @@ void ResourceLDAPKIO::createCache()
   }
 }
 
-void ResourceLDAPKIO::activateCache()
+void ResourceLDAPTDEIO::activateCache()
 {
   if ( d->mTmp && d->mError == 0 ) {
     d->mTmp->close();
@@ -495,12 +495,12 @@ void ResourceLDAPKIO::activateCache()
   }
 }
 
-KIO::Job *ResourceLDAPKIO::loadFromCache()
+TDEIO::Job *ResourceLDAPTDEIO::loadFromCache()
 {
-  KIO::Job *job = NULL;
+  TDEIO::Job *job = NULL;
   if ( d->mCachePolicy == Cache_Always || 
      ( d->mCachePolicy == Cache_NoConnection && 
-      d->mError == KIO::ERR_COULD_NOT_CONNECT ) ) {
+      d->mError == TDEIO::ERR_COULD_NOT_CONNECT ) ) {
 
     d->mAddr = Addressee();
     d->mAd = Address( Address::Home );
@@ -510,17 +510,17 @@ KIO::Job *ResourceLDAPKIO::loadFromCache()
     Resource::setReadOnly( true );
   
     KURL url( d->mCacheDst );
-    job = KIO::get( url, true, false );
-    connect( job, TQT_SIGNAL( data( KIO::Job*, const TQByteArray& ) ),
-      this, TQT_SLOT( data( KIO::Job*, const TQByteArray& ) ) );
+    job = TDEIO::get( url, true, false );
+    connect( job, TQT_SIGNAL( data( TDEIO::Job*, const TQByteArray& ) ),
+      this, TQT_SLOT( data( TDEIO::Job*, const TQByteArray& ) ) );
   }
   return job;
 }
 
-bool ResourceLDAPKIO::load()
+bool ResourceLDAPTDEIO::load()
 {
-  kdDebug(7125) << "ResourceLDAPKIO::load()" << endl;
-  KIO::Job *job;
+  kdDebug(7125) << "ResourceLDAPTDEIO::load()" << endl;
+  TDEIO::Job *job;
 
   clear();
   //clear the addressee
@@ -534,18 +534,18 @@ bool ResourceLDAPKIO::load()
 
   createCache();
   if ( d->mCachePolicy != Cache_Always ) {
-    job = KIO::get( d->mLDAPUrl, true, false );
-    connect( job, TQT_SIGNAL( data( KIO::Job*, const TQByteArray& ) ),
-      this, TQT_SLOT( data( KIO::Job*, const TQByteArray& ) ) );
-    connect( job, TQT_SIGNAL( result( KIO::Job* ) ),
-      this, TQT_SLOT( syncLoadSaveResult( KIO::Job* ) ) );
+    job = TDEIO::get( d->mLDAPUrl, true, false );
+    connect( job, TQT_SIGNAL( data( TDEIO::Job*, const TQByteArray& ) ),
+      this, TQT_SLOT( data( TDEIO::Job*, const TQByteArray& ) ) );
+    connect( job, TQT_SIGNAL( result( TDEIO::Job* ) ),
+      this, TQT_SLOT( syncLoadSaveResult( TDEIO::Job* ) ) );
     enter_loop();
   }
 
   job = loadFromCache();    
   if ( job ) {
-    connect( job, TQT_SIGNAL( result( KIO::Job* ) ),
-      this, TQT_SLOT( syncLoadSaveResult( KIO::Job* ) ) );
+    connect( job, TQT_SIGNAL( result( TDEIO::Job* ) ),
+      this, TQT_SLOT( syncLoadSaveResult( TDEIO::Job* ) ) );
     enter_loop();
   }
   if ( mErrorMsg.isEmpty() ) {
@@ -558,7 +558,7 @@ bool ResourceLDAPKIO::load()
   }
 }
 
-bool ResourceLDAPKIO::asyncLoad()
+bool ResourceLDAPTDEIO::asyncLoad()
 {
   clear();
   //clear the addressee
@@ -571,18 +571,18 @@ bool ResourceLDAPKIO::asyncLoad()
 
   createCache();
   if ( d->mCachePolicy != Cache_Always ) {
-    KIO::Job *job = KIO::get( d->mLDAPUrl, true, false );
-    connect( job, TQT_SIGNAL( data( KIO::Job*, const TQByteArray& ) ),
-      this, TQT_SLOT( data( KIO::Job*, const TQByteArray& ) ) );
-    connect( job, TQT_SIGNAL( result( KIO::Job* ) ),
-      this, TQT_SLOT( result( KIO::Job* ) ) );
+    TDEIO::Job *job = TDEIO::get( d->mLDAPUrl, true, false );
+    connect( job, TQT_SIGNAL( data( TDEIO::Job*, const TQByteArray& ) ),
+      this, TQT_SLOT( data( TDEIO::Job*, const TQByteArray& ) ) );
+    connect( job, TQT_SIGNAL( result( TDEIO::Job* ) ),
+      this, TQT_SLOT( result( TDEIO::Job* ) ) );
   } else {
     result( NULL );
   }
   return true;
 }
 
-void ResourceLDAPKIO::data( KIO::Job *, const TQByteArray &data )
+void ResourceLDAPTDEIO::data( TDEIO::Job *, const TQByteArray &data )
 {
   if ( data.size() ) {
     d->mLdif.setLDIF( data );
@@ -685,11 +685,11 @@ void ResourceLDAPKIO::data( KIO::Job *, const TQByteArray &data )
   } while ( ret != LDIF::MoreData );
 }
 
-void ResourceLDAPKIO::loadCacheResult( KIO::Job *job )
+void ResourceLDAPTDEIO::loadCacheResult( TDEIO::Job *job )
 {
   mErrorMsg = "";
   d->mError = job->error();
-  if ( d->mError && d->mError != KIO::ERR_USER_CANCELED ) {
+  if ( d->mError && d->mError != TDEIO::ERR_USER_CANCELED ) {
     mErrorMsg = job->errorString();
   }
   if ( !mErrorMsg.isEmpty() )
@@ -698,12 +698,12 @@ void ResourceLDAPKIO::loadCacheResult( KIO::Job *job )
     emit loadingFinished( this );
 }
 
-void ResourceLDAPKIO::result( KIO::Job *job )
+void ResourceLDAPTDEIO::result( TDEIO::Job *job )
 {
   mErrorMsg = "";
   if ( job ) {
     d->mError = job->error();
-    if ( d->mError && d->mError != KIO::ERR_USER_CANCELED ) {
+    if ( d->mError && d->mError != TDEIO::ERR_USER_CANCELED ) {
       mErrorMsg = job->errorString();
     }
   } else {
@@ -711,11 +711,11 @@ void ResourceLDAPKIO::result( KIO::Job *job )
   }
   activateCache();
 
-  KIO::Job *cjob;
+  TDEIO::Job *cjob;
   cjob = loadFromCache();
   if ( cjob ) {
-    connect( cjob, TQT_SIGNAL( result( KIO::Job* ) ),
-      this, TQT_SLOT( loadCacheResult( KIO::Job* ) ) );
+    connect( cjob, TQT_SIGNAL( result( TDEIO::Job* ) ),
+      this, TQT_SLOT( loadCacheResult( TDEIO::Job* ) ) );
   } else {
     if ( !mErrorMsg.isEmpty() )
       emit loadingError( this, mErrorMsg );
@@ -724,16 +724,16 @@ void ResourceLDAPKIO::result( KIO::Job *job )
   }
 }
 
-bool ResourceLDAPKIO::save( Ticket* )
+bool ResourceLDAPTDEIO::save( Ticket* )
 {
   kdDebug(7125) << "ResourceLDAPKIO save" << endl;
   
   d->mSaveIt = begin();
-  KIO::Job *job = KIO::put( d->mLDAPUrl, -1, true, false, false );
-  connect( job, TQT_SIGNAL( dataReq( KIO::Job*, TQByteArray& ) ),
-    this, TQT_SLOT( saveData( KIO::Job*, TQByteArray& ) ) );
-  connect( job, TQT_SIGNAL( result( KIO::Job* ) ),
-    this, TQT_SLOT( syncLoadSaveResult( KIO::Job* ) ) );
+  TDEIO::Job *job = TDEIO::put( d->mLDAPUrl, -1, true, false, false );
+  connect( job, TQT_SIGNAL( dataReq( TDEIO::Job*, TQByteArray& ) ),
+    this, TQT_SLOT( saveData( TDEIO::Job*, TQByteArray& ) ) );
+  connect( job, TQT_SIGNAL( result( TDEIO::Job* ) ),
+    this, TQT_SLOT( syncLoadSaveResult( TDEIO::Job* ) ) );
   enter_loop();
   if ( mErrorMsg.isEmpty() ) {
     kdDebug(7125) << "ResourceLDAPKIO save ok!" << endl; 
@@ -745,22 +745,22 @@ bool ResourceLDAPKIO::save( Ticket* )
   }
 }
 
-bool ResourceLDAPKIO::asyncSave( Ticket* )
+bool ResourceLDAPTDEIO::asyncSave( Ticket* )
 {
   kdDebug(7125) << "ResourceLDAPKIO asyncSave" << endl;
   d->mSaveIt = begin();
-  KIO::Job *job = KIO::put( d->mLDAPUrl, -1, true, false, false );
-  connect( job, TQT_SIGNAL( dataReq( KIO::Job*, TQByteArray& ) ),
-    this, TQT_SLOT( saveData( KIO::Job*, TQByteArray& ) ) );
-  connect( job, TQT_SIGNAL( result( KIO::Job* ) ),
-    this, TQT_SLOT( saveResult( KIO::Job* ) ) );
+  TDEIO::Job *job = TDEIO::put( d->mLDAPUrl, -1, true, false, false );
+  connect( job, TQT_SIGNAL( dataReq( TDEIO::Job*, TQByteArray& ) ),
+    this, TQT_SLOT( saveData( TDEIO::Job*, TQByteArray& ) ) );
+  connect( job, TQT_SIGNAL( result( TDEIO::Job* ) ),
+    this, TQT_SLOT( saveResult( TDEIO::Job* ) ) );
   return true;
 }
 
-void ResourceLDAPKIO::syncLoadSaveResult( KIO::Job *job )
+void ResourceLDAPTDEIO::syncLoadSaveResult( TDEIO::Job *job )
 {
   d->mError = job->error();
-  if ( d->mError && d->mError != KIO::ERR_USER_CANCELED )
+  if ( d->mError && d->mError != TDEIO::ERR_USER_CANCELED )
     mErrorMsg = job->errorString();
   else
     mErrorMsg = "";
@@ -769,16 +769,16 @@ void ResourceLDAPKIO::syncLoadSaveResult( KIO::Job *job )
   tqApp->exit_loop();
 }
 
-void ResourceLDAPKIO::saveResult( KIO::Job *job )
+void ResourceLDAPTDEIO::saveResult( TDEIO::Job *job )
 {
   d->mError = job->error();
-  if ( d->mError && d->mError != KIO::ERR_USER_CANCELED )
+  if ( d->mError && d->mError != TDEIO::ERR_USER_CANCELED )
     emit savingError( this, job->errorString() );
   else
     emit savingFinished( this );
 }
 
-void ResourceLDAPKIO::saveData( KIO::Job*, TQByteArray& data )
+void ResourceLDAPTDEIO::saveData( TDEIO::Job*, TQByteArray& data )
 {
   while ( d->mSaveIt != end() &&
        !(*d->mSaveIt).changed() ) d->mSaveIt++;
@@ -799,7 +799,7 @@ void ResourceLDAPKIO::saveData( KIO::Job*, TQByteArray& data )
   d->mSaveIt++;  
 }
 
-void ResourceLDAPKIO::removeAddressee( const Addressee& addr )
+void ResourceLDAPTDEIO::removeAddressee( const Addressee& addr )
 {
   TQString dn = findUid( addr.uid() );
   
@@ -815,7 +815,7 @@ void ResourceLDAPKIO::removeAddressee( const Addressee& addr )
     url.setPath( "/" + dn );
     url.setExtension( "x-dir", "base" );
     url.setScope( LDAPUrl::Base );
-    if ( KIO::NetAccess::del( url, NULL ) ) mAddrMap.erase( addr.uid() );
+    if ( TDEIO::NetAccess::del( url, NULL ) ) mAddrMap.erase( addr.uid() );
   } else {
     //maybe it's not saved yet
     mAddrMap.erase( addr.uid() );
@@ -823,216 +823,216 @@ void ResourceLDAPKIO::removeAddressee( const Addressee& addr )
 }
 
 
-void ResourceLDAPKIO::setUser( const TQString &user )
+void ResourceLDAPTDEIO::setUser( const TQString &user )
 {
   mUser = user;
 }
 
-TQString ResourceLDAPKIO::user() const
+TQString ResourceLDAPTDEIO::user() const
 {
   return mUser;
 }
 
-void ResourceLDAPKIO::setPassword( const TQString &password )
+void ResourceLDAPTDEIO::setPassword( const TQString &password )
 {
   mPassword = password;
 }
 
-TQString ResourceLDAPKIO::password() const
+TQString ResourceLDAPTDEIO::password() const
 {
   return mPassword;
 }
 
-void ResourceLDAPKIO::setDn( const TQString &dn )
+void ResourceLDAPTDEIO::setDn( const TQString &dn )
 {
   mDn = dn;
 }
 
-TQString ResourceLDAPKIO::dn() const
+TQString ResourceLDAPTDEIO::dn() const
 {
   return mDn;
 }
 
-void ResourceLDAPKIO::setHost( const TQString &host )
+void ResourceLDAPTDEIO::setHost( const TQString &host )
 {
   mHost = host;
 }
 
-TQString ResourceLDAPKIO::host() const
+TQString ResourceLDAPTDEIO::host() const
 {
   return mHost;
 }
 
-void ResourceLDAPKIO::setPort( int port )
+void ResourceLDAPTDEIO::setPort( int port )
 {
   mPort = port;
 }
 
-int ResourceLDAPKIO::port() const
+int ResourceLDAPTDEIO::port() const
 {
   return mPort;
 }
 
-void ResourceLDAPKIO::setVer( int ver )
+void ResourceLDAPTDEIO::setVer( int ver )
 {
   d->mVer = ver;
 }
 
-int ResourceLDAPKIO::ver() const
+int ResourceLDAPTDEIO::ver() const
 {
   return d->mVer;
 }
     
-void ResourceLDAPKIO::setSizeLimit( int sizelimit )
+void ResourceLDAPTDEIO::setSizeLimit( int sizelimit )
 {
   d->mSizeLimit = sizelimit;
 }
 
-int ResourceLDAPKIO::sizeLimit()
+int ResourceLDAPTDEIO::sizeLimit()
 {
   return d->mSizeLimit;
 }
     
-void ResourceLDAPKIO::setTimeLimit( int timelimit )
+void ResourceLDAPTDEIO::setTimeLimit( int timelimit )
 {
   d->mTimeLimit = timelimit;
 }
 
-int ResourceLDAPKIO::timeLimit()
+int ResourceLDAPTDEIO::timeLimit()
 {
   return d->mTimeLimit;
 }
 
-void ResourceLDAPKIO::setFilter( const TQString &filter )
+void ResourceLDAPTDEIO::setFilter( const TQString &filter )
 {
   mFilter = filter;
 }
 
-TQString ResourceLDAPKIO::filter() const
+TQString ResourceLDAPTDEIO::filter() const
 {
   return mFilter;
 }
 
-void ResourceLDAPKIO::setIsAnonymous( bool value )
+void ResourceLDAPTDEIO::setIsAnonymous( bool value )
 {
   mAnonymous = value;
 }
 
-bool ResourceLDAPKIO::isAnonymous() const
+bool ResourceLDAPTDEIO::isAnonymous() const
 {
   return mAnonymous;
 }
 
-void ResourceLDAPKIO::setIsTLS( bool value )
+void ResourceLDAPTDEIO::setIsTLS( bool value )
 {
   d->mTLS = value;
 }
 
-bool ResourceLDAPKIO::isTLS() const
+bool ResourceLDAPTDEIO::isTLS() const
 {
   return d->mTLS;
 }
-void ResourceLDAPKIO::setIsSSL( bool value )
+void ResourceLDAPTDEIO::setIsSSL( bool value )
 {
   d->mSSL = value;
 }
 
-bool ResourceLDAPKIO::isSSL() const
+bool ResourceLDAPTDEIO::isSSL() const
 {
   return d->mSSL;
 }
 
-void ResourceLDAPKIO::setIsSubTree( bool value )
+void ResourceLDAPTDEIO::setIsSubTree( bool value )
 {
   d->mSubTree = value;
 }
 
-bool ResourceLDAPKIO::isSubTree() const
+bool ResourceLDAPTDEIO::isSubTree() const
 {
   return d->mSubTree;
 }
 
-void ResourceLDAPKIO::setAttributes( const TQMap<TQString, TQString> &attributes )
+void ResourceLDAPTDEIO::setAttributes( const TQMap<TQString, TQString> &attributes )
 {
   mAttributes = attributes;
 }
 
-TQMap<TQString, TQString> ResourceLDAPKIO::attributes() const
+TQMap<TQString, TQString> ResourceLDAPTDEIO::attributes() const
 {
   return mAttributes;
 }
 
-void ResourceLDAPKIO::setRDNPrefix( int value )
+void ResourceLDAPTDEIO::setRDNPrefix( int value )
 {
   d->mRDNPrefix = value;
 }
 
-int ResourceLDAPKIO::RDNPrefix() const
+int ResourceLDAPTDEIO::RDNPrefix() const
 {
   return d->mRDNPrefix;
 }
 
-void ResourceLDAPKIO::setIsSASL( bool value )
+void ResourceLDAPTDEIO::setIsSASL( bool value )
 {
   d->mSASL = value;
 }
 
-bool ResourceLDAPKIO::isSASL() const
+bool ResourceLDAPTDEIO::isSASL() const
 {
   return d->mSASL;
 }
 
-void ResourceLDAPKIO::setMech( const TQString &mech )
+void ResourceLDAPTDEIO::setMech( const TQString &mech )
 {
   d->mMech = mech;
 }
 
-TQString ResourceLDAPKIO::mech() const
+TQString ResourceLDAPTDEIO::mech() const
 {
   return d->mMech;
 }
 
-void ResourceLDAPKIO::setRealm( const TQString &realm )
+void ResourceLDAPTDEIO::setRealm( const TQString &realm )
 {
   d->mRealm = realm;
 }
 
-TQString ResourceLDAPKIO::realm() const
+TQString ResourceLDAPTDEIO::realm() const
 {
   return d->mRealm;
 }
     
-void ResourceLDAPKIO::setBindDN( const TQString &binddn )
+void ResourceLDAPTDEIO::setBindDN( const TQString &binddn )
 {
   d->mBindDN = binddn;
 }
 
-TQString ResourceLDAPKIO::bindDN() const
+TQString ResourceLDAPTDEIO::bindDN() const
 {
   return d->mBindDN;
 }
 
-void ResourceLDAPKIO::setCachePolicy( int pol )
+void ResourceLDAPTDEIO::setCachePolicy( int pol )
 {
   d->mCachePolicy = pol;
 }
 
-int ResourceLDAPKIO::cachePolicy() const
+int ResourceLDAPTDEIO::cachePolicy() const
 {
   return d->mCachePolicy;
 }
 
-void ResourceLDAPKIO::setAutoCache( bool value )
+void ResourceLDAPTDEIO::setAutoCache( bool value )
 {
   d->mAutoCache = value;
 }
 
-bool ResourceLDAPKIO::autoCache()
+bool ResourceLDAPTDEIO::autoCache()
 {
   return d->mAutoCache;
 }
 
-TQString ResourceLDAPKIO::cacheDst() const
+TQString ResourceLDAPTDEIO::cacheDst() const
 {
   return d->mCacheDst;
 }    

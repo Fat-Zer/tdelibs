@@ -244,7 +244,7 @@ bool KPrintPreview::preview(const TQString& file, bool previewOnly, WId parentId
 	if ( !isPS )
 		kdDebug( 500 ) << "Previewing a non PostScript file, built-in preview disabled" << endl;
 
-	KConfig	*conf = KMFactory::self()->printConfig();
+	TDEConfig	*conf = KMFactory::self()->printConfig();
 	conf->setGroup("General");
 	KLibFactory	*factory(0);
 	bool	externalPreview = conf->readBoolEntry("ExternalPreview", false);

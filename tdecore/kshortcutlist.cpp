@@ -68,7 +68,7 @@ bool KShortcutList::setOther( Other, uint, TQVariant )
 	return false;
 }
 
-bool KShortcutList::readSettings( const TQString& sConfigGroup, KConfigBase* pConfig )
+bool KShortcutList::readSettings( const TQString& sConfigGroup, TDEConfigBase* pConfig )
 {
 	kdDebug(125) << "KShortcutList::readSettings( \"" << sConfigGroup << "\", " << pConfig << " ) start" << endl;
 	if( !pConfig )
@@ -84,7 +84,7 @@ bool KShortcutList::readSettings( const TQString& sConfigGroup, KConfigBase* pCo
 	kdDebug(125) << "\treadSettings( \"" << sGroup << "\", " << pConfig << " )" << endl;
 	if( !pConfig->hasGroup( sGroup ) )
 		return true;
-	KConfigGroupSaver cgs( pConfig, sGroup );
+	TDEConfigGroupSaver cgs( pConfig, sGroup );
 
 	uint nSize = count();
 	for( uint i = 0; i < nSize; i++ ) {
@@ -106,7 +106,7 @@ bool KShortcutList::readSettings( const TQString& sConfigGroup, KConfigBase* pCo
 	return true;
 }
 
-bool KShortcutList::writeSettings( const TQString &sConfigGroup, KConfigBase* pConfig, bool bWriteAll, bool bGlobal ) const
+bool KShortcutList::writeSettings( const TQString &sConfigGroup, TDEConfigBase* pConfig, bool bWriteAll, bool bGlobal ) const
 {
 	kdDebug(125) << "KShortcutList::writeSettings( " << sConfigGroup << ", " << pConfig << ", " << bWriteAll << ", " << bGlobal << " )" << endl;
 	if( !pConfig )
@@ -118,7 +118,7 @@ bool KShortcutList::writeSettings( const TQString &sConfigGroup, KConfigBase* pC
 	if( pConfig->hasGroup( "Keys" ) )
 		pConfig->deleteGroup( "Keys", true );
 
-	KConfigGroupSaver cs( pConfig, sGroup );
+	TDEConfigGroupSaver cs( pConfig, sGroup );
 
 	uint nSize = count();
 	for( uint i = 0; i < nSize; i++ ) {

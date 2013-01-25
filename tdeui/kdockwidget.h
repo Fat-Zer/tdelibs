@@ -81,7 +81,7 @@ class TQPixmap;
 
 #ifndef NO_KDE2
 class KToolBar;
-class KConfig;
+class TDEConfig;
 #else
 class TQToolBar;
 #endif
@@ -128,12 +128,12 @@ public:
   /**
    * Provides saving the current configuration. Must be overridden by an inheriting class.
    */
-  virtual void saveConfig( KConfig* ){}
+  virtual void saveConfig( TDEConfig* ){}
 
   /**
    * Provides loading the current configuration.  Must be overridden by an inheriting class
    */
-  virtual void loadConfig( KConfig* ){}
+  virtual void loadConfig( TDEConfig* ){}
 #endif
 
 protected:
@@ -291,14 +291,14 @@ public:
    *
    * @param c the configuration safe
    */
-  virtual void saveConfig( KConfig* c);
+  virtual void saveConfig( TDEConfig* c);
 
   /**
    * Loads the current button state from a KDE config container object.
    *
    * @param c the configuration safe
    */
-  virtual void loadConfig( KConfig* c);
+  virtual void loadConfig( TDEConfig* c);
 #endif
 
    /*@since 3.2
@@ -906,7 +906,7 @@ private:
  * that can be called within a KDockMainWindow or a KDockWidget .
  *
  * An important feature is the ability to read or save the current state of all things concerning to
- * dockwidgets to KConfig .
+ * dockwidgets to TDEConfig .
  *
  * The dockmanager is also often used when a certain dockwidget or a child of such dockwidget must be found.
  *
@@ -954,9 +954,9 @@ public:
    * last but not least some necessary things for recovering the dockmainwindow state.
    *
    * @param c the KDE configuration saver
-   * @param group the name of the section in KConfig
+   * @param group the name of the section in TDEConfig
    */
-  void writeConfig( KConfig* c = 0L, TQString group = TQString::null );
+  void writeConfig( TDEConfig* c = 0L, TQString group = TQString::null );
 
   /**
    * Like writeConfig but reads the whole stuff in.
@@ -972,9 +972,9 @@ public:
    * to work, each widget must have a unique name.
    *
    * @param c the KDE configuration saver
-   * @param group the name of the section in KConfig
+   * @param group the name of the section in TDEConfig
    */
-  void readConfig ( KConfig* c = 0L, TQString group = TQString::null );
+  void readConfig ( TDEConfig* c = 0L, TQString group = TQString::null );
 #endif
 
   /// @since 3.1
@@ -1390,20 +1390,20 @@ public:
 
 #ifndef NO_KDE2
   /**
-   * It writes the current dock state in the given section of KConfig.
+   * It writes the current dock state in the given section of TDEConfig.
    *
    * @param c     KDE class for saving configurations
    * @param group name of section to write to
    */
-  void writeDockConfig( KConfig* c = 0L, TQString group = TQString::null );
+  void writeDockConfig( TDEConfig* c = 0L, TQString group = TQString::null );
 
   /**
-   * It reads the current dock state from the given section of KConfig.
+   * It reads the current dock state from the given section of TDEConfig.
    *
    * @param c     KDE class for saving configurations
    * @param group name of section to read from
    */
-  void readDockConfig ( KConfig* c = 0L, TQString group = TQString::null );
+  void readDockConfig ( TDEConfig* c = 0L, TQString group = TQString::null );
 #endif
 
   /**
@@ -1509,8 +1509,8 @@ public:
   void readDockConfig(TQDomElement &base);
 
 #ifndef NO_KDE2
-  void writeDockConfig( KConfig* c = 0L, TQString group = TQString::null );
-  void readDockConfig ( KConfig* c = 0L, TQString group = TQString::null );
+  void writeDockConfig( TDEConfig* c = 0L, TQString group = TQString::null );
+  void readDockConfig ( TDEConfig* c = 0L, TQString group = TQString::null );
 #endif
 
 

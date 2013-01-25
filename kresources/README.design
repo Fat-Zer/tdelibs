@@ -41,7 +41,7 @@ Both Exchange-based calendar resources are objects of the same
 type, but with different settings. These resources are persistent,
 and they are managed by the ResourceManager for the calendar
 resource family. The list of resources, and the settings for
-each resource, are stored by the resource manager using KConfig,
+each resource, are stored by the resource manager using TDEConfig,
 in $HOME/.trinity/share/config/<family>.
 
 The resource manager is a singleton object for every resource family. 

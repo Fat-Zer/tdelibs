@@ -24,7 +24,7 @@
 
 #include <kio/jobclasses.h>
 
-namespace KIO {
+namespace TDEIO {
 
 
     /**
@@ -80,7 +80,7 @@ namespace KIO {
      * Create or move a symlink.
      * This is the lowlevel operation, similar to file_copy and file_move.
      * It doesn't do any check (other than those the slave does)
-     * and it doesn't show rename and skip dialogs - use KIO::link for that.
+     * and it doesn't show rename and skip dialogs - use TDEIO::link for that.
      * @param target The string that will become the "target" of the link (can be relative)
      * @param dest The symlink to create.
      * @param overwrite whether to automatically overwrite if the dest exists
@@ -215,7 +215,7 @@ namespace KIO {
      *
      * Example:
      * \code
-     *    job = KIO::http_post( url, postData, false );
+     *    job = TDEIO::http_post( url, postData, false );
      *    job->addMetaData("content-type", contentType );
      *    job->addMetaData("referrer", referrerURL);
      * \endcode

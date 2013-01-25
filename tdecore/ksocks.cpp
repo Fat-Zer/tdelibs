@@ -213,7 +213,7 @@ KSocks *KSocks::self() {
   // Note that we don't use a static deleter here. It makes no sense and tends to cause crashes.
   if (!_me) {
      if (kapp) {
-        KConfigGroup cfg(kapp->config(), "Socks");
+        TDEConfigGroup cfg(kapp->config(), "Socks");
         _me = new KSocks(&cfg);
      } else {
         _disabled = true;
@@ -223,7 +223,7 @@ KSocks *KSocks::self() {
   return _me;
 }
 
-void KSocks::setConfig(KConfigBase *config)
+void KSocks::setConfig(TDEConfigBase *config)
 {
   // We can change the config from disabled to enabled
   // but not the other way around.
@@ -239,7 +239,7 @@ void KSocks::setConfig(KConfigBase *config)
 bool KSocks::activated() { return (_me != 0L); }
 
 
-KSocks::KSocks(KConfigBase *config) : _socksLib(0L), _st(0L) {
+KSocks::KSocks(TDEConfigBase *config) : _socksLib(0L), _st(0L) {
    _hasSocks = false;
    _useSocks = false;
 

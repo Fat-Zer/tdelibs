@@ -371,7 +371,7 @@ void KateLUAIndentScriptManager::collectScripts (bool force)
       <<"================================================="<<endl;
 
   // We'll store the scripts list in this config
-  KConfig config("katepartluaindentscriptrc", false, false);
+  TDEConfig config("katepartluaindentscriptrc", false, false);
 #if 0
   // figure out if the kate install is too new
   config.setGroup ("General");

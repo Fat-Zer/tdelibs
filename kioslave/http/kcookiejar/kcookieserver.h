@@ -34,7 +34,7 @@ class KHttpCookie;
 class TQTimer;
 class RequestList;
 class DCOPClient;
-class KConfig;
+class TDEConfig;
 
 class KCookieServer : public KDEDModule
 {
@@ -86,7 +86,7 @@ protected:
   TQTimer *mTimer;
   bool mAdvicePending;
   DCOPClient *mOldCookieServer;
-  KConfig *mConfig;
+  TDEConfig *mConfig;
 
 private:
   virtual int newInstance(TQValueList<TQCString>) { return 0; }

@@ -63,7 +63,7 @@ KIconEffect::~KIconEffect()
 
 void KIconEffect::init()
 {
-    KConfig *config = TDEGlobal::config();
+    TDEConfig *config = TDEGlobal::config();
 
     int i, j, effect=-1;
     TQStringList groups;
@@ -86,7 +86,7 @@ void KIconEffect::init()
     TQString _none("none");
     TQString _tomonochrome("tomonochrome");
 
-    KConfigGroupSaver cs(config, "default");
+    TDEConfigGroupSaver cs(config, "default");
 
     for (it=groups.begin(), i=0; it!=groups.end(); it++, i++)
     {

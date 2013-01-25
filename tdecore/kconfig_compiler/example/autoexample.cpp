@@ -48,7 +48,7 @@ int main( int argc, char **argv )
   ExamplePrefsBase configSkeleton( "dummy1", "dummy2" );
   configSkeleton.readConfig();
 
-  KConfigDialog *dialog = new KConfigDialog( 0, "settings", &configSkeleton );
+  TDEConfigDialog *dialog = new TDEConfigDialog( 0, "settings", &configSkeleton );
   
   GeneralBase *general = new GeneralBase( 0 );
   dialog->addPage( general, i18n("General"), "General", "" );

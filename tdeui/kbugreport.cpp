@@ -338,7 +338,7 @@ void KBugReport::slotSetFrom()
   m_configureEmail->setEnabled(true);
 
   // ### KDE4: why oh why is KEmailSettings in kio?
-  KConfig emailConf( TQString::fromLatin1("emaildefaults") );
+  TDEConfig emailConf( TQString::fromLatin1("emaildefaults") );
 
   // find out the default profile
   emailConf.setGroup( TQString::fromLatin1("Defaults") );

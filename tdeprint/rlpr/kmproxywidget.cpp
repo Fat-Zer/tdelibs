@@ -55,7 +55,7 @@ KMProxyWidget::KMProxyWidget(TQWidget *parent, const char *name)
 	lay0->addWidget(m_proxyport,2,1);
 }
 
-void KMProxyWidget::loadConfig(KConfig *conf)
+void KMProxyWidget::loadConfig(TDEConfig *conf)
 {
 	conf->setGroup("RLPR");
 	m_proxyhost->setText(conf->readEntry("ProxyHost",TQString::null));
@@ -63,7 +63,7 @@ void KMProxyWidget::loadConfig(KConfig *conf)
 	m_useproxy->setChecked(!m_proxyhost->text().isEmpty());
 }
 
-void KMProxyWidget::saveConfig(KConfig *conf)
+void KMProxyWidget::saveConfig(TDEConfig *conf)
 {
 	conf->setGroup("RLPR");
 	conf->writeEntry("ProxyHost",(m_useproxy->isChecked() ? m_proxyhost->text() : TQString::null));

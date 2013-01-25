@@ -53,7 +53,7 @@ LprSettings* LprSettings::self()
 void LprSettings::init()
 {
 	// LPR/LPRng mode
-	KConfig	*conf = KMFactory::self()->printConfig();
+	TDEConfig	*conf = KMFactory::self()->printConfig();
 	conf->setGroup("LPR");
 	TQString	modestr = conf->readEntry("Mode");
 	if (modestr == "LPRng")

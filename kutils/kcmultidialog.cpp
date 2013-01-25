@@ -51,7 +51,7 @@ class KCMultiDialog::KCMultiDialogPrivate
         {}
 
         bool hasRootKCM;
-        KCModuleProxy* currentModule;
+        TDECModuleProxy* currentModule;
 };
 
  
@@ -141,7 +141,7 @@ void KCMultiDialog::apply()
     ModuleList::Iterator end = m_modules.end();
     for( ModuleList::Iterator it = m_modules.begin(); it != end; ++it )
     {
-        KCModuleProxy * m = ( *it ).kcm;
+        TDECModuleProxy * m = ( *it ).kcm;
         if( m->changed() )
         {
             m->save();
@@ -228,10 +228,10 @@ void KCMultiDialog::addModule(const TQString& path, bool withfallback, TQStringL
 
     KService::Ptr service = KService::serviceByStorageId( complete );
 
-    addModule( KCModuleInfo( service ), TQStringList(), withfallback, args );
+    addModule( TDECModuleInfo( service ), TQStringList(), withfallback, args );
 }
 
-void KCMultiDialog::addModule(const KCModuleInfo& moduleinfo,
+void KCMultiDialog::addModule(const TDECModuleInfo& moduleinfo,
         TQStringList parentmodulenames, bool withfallback, TQStringList args)
 {
     kdDebug(710) << "KCMultiDialog::addModule " 
@@ -243,7 +243,7 @@ void KCMultiDialog::addModule(const KCModuleInfo& moduleinfo,
     if ( !kapp->authorizeControlModule( moduleinfo.service()->menuId() ))
             return;
 
-    if( !KCModuleLoader::testModule( moduleinfo ))
+    if( !TDECModuleLoader::testModule( moduleinfo ))
             return;
 
     TQFrame* page = 0;
@@ -271,17 +271,17 @@ void KCMultiDialog::addModule(const KCModuleInfo& moduleinfo,
                 break;
         }
     if(!page) {
-        KCModuleLoader::unloadModule(moduleinfo);
+        TDECModuleLoader::unloadModule(moduleinfo);
         return;
     }
-    KCModuleProxy * module;
+    TDECModuleProxy * module;
     if( m_orphanModules.contains( moduleinfo.service() ) )
     {
-        // the KCModule already exists - it was removed from the dialog in
+        // the TDECModule already exists - it was removed from the dialog in
         // removeAllModules
         module = m_orphanModules[ moduleinfo.service() ];
         m_orphanModules.remove( moduleinfo.service() );
-        kdDebug( 710 ) << "Use KCModule from the list of orphans for " <<
+        kdDebug( 710 ) << "Use TDECModule from the list of orphans for " <<
             moduleinfo.moduleName() << ": " << module << endl;
 
         module->reparent( page, 0, TQPoint( 0, 0 ), true );
@@ -294,7 +294,7 @@ void KCMultiDialog::addModule(const KCModuleInfo& moduleinfo,
     }
     else
     {
-        module = new KCModuleProxy( moduleinfo, withfallback, page, 0, args );
+        module = new TDECModuleProxy( moduleinfo, withfallback, page, 0, args );
         TQStringList parentComponents = moduleinfo.service()->property(
                 "X-TDE-ParentComponents" ).toStringList();
         moduleParentComponents.insert( module,
@@ -327,7 +327,7 @@ void KCMultiDialog::removeAllModules()
     for( ModuleList::Iterator it = m_modules.begin(); it != end; ++it )
     {
         kdDebug( 710 ) << "remove 2" << endl;
-        KCModuleProxy * kcm = ( *it ).kcm;
+        TDECModuleProxy * kcm = ( *it ).kcm;
         TQObject * page = TQT_TQOBJECT(kcm->parent());
         kcm->hide();
         if( page )
@@ -337,7 +337,7 @@ void KCMultiDialog::removeAllModules()
             delete page;
         }
         m_orphanModules[ ( *it ).service ] = kcm;
-        kdDebug( 710 ) << "added KCModule to the list of orphans: " <<
+        kdDebug( 710 ) << "added TDECModule to the list of orphans: " <<
             kcm << endl;
     }
     m_modules.clear();
@@ -354,19 +354,19 @@ void KCMultiDialog::slotAboutToShow(TQWidget *page)
 {
     kdDebug(710) << k_funcinfo << endl;
 
-    TQObject * obj = page->child( 0, "KCModuleProxy" );
+    TQObject * obj = page->child( 0, "TDECModuleProxy" );
     if( ! obj )
         return;
 
-    KCModuleProxy * module = ::tqqt_cast<KCModuleProxy*>(obj);
+    TDECModuleProxy * module = ::tqqt_cast<TDECModuleProxy*>(obj);
     if( ! module )
         return;
     d->currentModule = module;
 
     enableButton( KDialogBase::Help,
-            d->currentModule->buttons() & KCModule::Help );
+            d->currentModule->buttons() & TDECModule::Help );
     enableButton( KDialogBase::Default,
-            d->currentModule->buttons() & KCModule::Default );
+            d->currentModule->buttons() & TDECModule::Default );
 
     disconnect( this, TQT_SIGNAL(user2Clicked()), 0, 0 );
 

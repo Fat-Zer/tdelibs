@@ -24,7 +24,7 @@
 
 #include <kcmodule.h>
 
-class KRESOURCES_EXPORT KCMKResources : public KCModule
+class KRESOURCES_EXPORT KCMKResources : public TDECModule
 {
   Q_OBJECT
 

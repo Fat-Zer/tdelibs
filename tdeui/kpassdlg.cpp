@@ -110,8 +110,8 @@ KPasswordEdit::KPasswordEdit(TQWidget *parent, const char *name)
 {
     init();
 
-    KConfig* const cfg = TDEGlobal::config();
-    KConfigGroupSaver saver(cfg, "Passwords");
+    TDEConfig* const cfg = TDEGlobal::config();
+    TDEConfigGroupSaver saver(cfg, "Passwords");
 
     const TQString val = cfg->readEntry("EchoMode", "OneStar");
     if (val == "ThreeStars")
@@ -338,8 +338,8 @@ void KPasswordDialog::init()
 {
     m_Row = 0;
 
-    KConfig* const cfg = TDEGlobal::config();
-    const KConfigGroupSaver saver(cfg, "Passwords");
+    TDEConfig* const cfg = TDEGlobal::config();
+    const TDEConfigGroupSaver saver(cfg, "Passwords");
     bool def = ( qstrcmp( tqAppName(), "tdesu" ) == 0 ? defKeep : false );
     if (m_Keep && cfg->readBoolEntry("Keep", def))
 	++m_Keep;

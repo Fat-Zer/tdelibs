@@ -77,10 +77,10 @@
 
 
 /**
- * Class KSocketAddress
+ * Class TDESocketAddress
  */
 
-KSocketAddress::KSocketAddress(const sockaddr* sa, ksocklen_t size)
+TDESocketAddress::TDESocketAddress(const sockaddr* sa, ksocklen_t size)
 {
     if ( !sa )
         init();
@@ -94,44 +94,44 @@ KSocketAddress::KSocketAddress(const sockaddr* sa, ksocklen_t size)
     }
 }
 
-void KSocketAddress::init()
+void TDESocketAddress::init()
 {
   data = NULL;
   datasize = 0;
   owndata = false;
 }
 
-KSocketAddress::~KSocketAddress()
+TDESocketAddress::~TDESocketAddress()
 {
   if (owndata && data != NULL)
     free(data);
 }
 
-TQString KSocketAddress::pretty() const
+TQString TDESocketAddress::pretty() const
 {
   return i18n("<unknown socket>");
 }
 
-int KSocketAddress::family() const
+int TDESocketAddress::family() const
 {
   if (data != NULL)
     return data->sa_family;
   return AF_UNSPEC;
 }
 
-// This creates a new KSocketAddress with given sockaddr
-KSocketAddress* KSocketAddress::newAddress(const struct sockaddr* sa, ksocklen_t size)
+// This creates a new TDESocketAddress with given sockaddr
+TDESocketAddress* TDESocketAddress::newAddress(const struct sockaddr* sa, ksocklen_t size)
 {
   if (size == 0)
     {
-      kdWarning() << "KSocketAddress::newAddress called with size = 0!\n";
+      kdWarning() << "TDESocketAddress::newAddress called with size = 0!\n";
       return NULL;
     }
 
   // make sure we have the right stuff
   if (size < MIN_SOCKADDR_LEN)
     {
-      kdWarning() << "KSocketAddress::newAddress called with invalid size\n";
+      kdWarning() << "TDESocketAddress::newAddress called with invalid size\n";
       return NULL;
     }
 
@@ -153,10 +153,10 @@ KSocketAddress* KSocketAddress::newAddress(const struct sockaddr* sa, ksocklen_t
       return new KUnixSocketAddress((const sockaddr_un*)sa, size);
     }
 
-  return new KSocketAddress(sa, size);
+  return new TDESocketAddress(sa, size);
 }
 
-bool KSocketAddress::isEqual(const KSocketAddress& other) const
+bool TDESocketAddress::isEqual(const TDESocketAddress& other) const
 {
   switch(family())
   {
@@ -176,7 +176,7 @@ bool KSocketAddress::isEqual(const KSocketAddress& other) const
   return memcmp(data, other.data, datasize) == 0;
 }
 
-bool KSocketAddress::isCoreEqual(const KSocketAddress& other) const
+bool TDESocketAddress::isCoreEqual(const TDESocketAddress& other) const
 {
   switch(family())
   {
@@ -193,17 +193,17 @@ bool KSocketAddress::isCoreEqual(const KSocketAddress& other) const
   return false;
 }
 
-TQString KSocketAddress::nodeName() const
+TQString TDESocketAddress::nodeName() const
 {
   return TQString::null;
 }
 
-TQString KSocketAddress::serviceName() const
+TQString TDESocketAddress::serviceName() const
 {
   return TQString::null;
 }
 
-int KSocketAddress::ianaFamily(int af)
+int TDESocketAddress::ianaFamily(int af)
 {
   switch (af)
     {
@@ -218,7 +218,7 @@ int KSocketAddress::ianaFamily(int af)
     }
 }
 
-int KSocketAddress::fromIanaFamily(int iana)
+int TDESocketAddress::fromIanaFamily(int iana)
 {
   switch (iana)
     {
@@ -274,7 +274,7 @@ KInetSocketAddress::KInetSocketAddress() :
 }
 
 KInetSocketAddress::KInetSocketAddress(const KInetSocketAddress &other) :
-  KSocketAddress(), d(new KInetSocketAddressPrivate)
+  TDESocketAddress(), d(new KInetSocketAddressPrivate)
 {
   setAddress(other);
 }
@@ -313,7 +313,7 @@ KInetSocketAddress::~KInetSocketAddress()
 {
   delete d;
 
-  //  KSocketAddress::~KSocketAddress();
+  //  TDESocketAddress::~TDESocketAddress();
 }
 
 bool KInetSocketAddress::setAddress(const KInetSocketAddress &other)
@@ -626,7 +626,7 @@ ksocklen_t KInetSocketAddress::size() const
     return 0;
 }
 
-bool KInetSocketAddress::areEqualInet(const KSocketAddress &s1, const KSocketAddress &s2, bool coreOnly)
+bool KInetSocketAddress::areEqualInet(const TDESocketAddress &s1, const TDESocketAddress &s2, bool coreOnly)
 {
    if (s1.family() != s2.family())
       return false;
@@ -643,7 +643,7 @@ bool KInetSocketAddress::areEqualInet(const KSocketAddress &s1, const KSocketAdd
              (memcmp(&sin1->sin_addr, &sin2->sin_addr, sizeof(struct in_addr))  == 0);
 }
 
-bool KInetSocketAddress::areEqualInet6(const KSocketAddress &s1, const KSocketAddress &s2, bool coreOnly)
+bool KInetSocketAddress::areEqualInet6(const TDESocketAddress &s1, const TDESocketAddress &s2, bool coreOnly)
 {
 #ifdef AF_INET6
    if (s1.family() != s2.family())
@@ -688,7 +688,7 @@ void KInetSocketAddress::fromV4()
 # endif
 #endif
 
-  // data == KSocketAddress::data
+  // data == TDESocketAddress::data
   data = (sockaddr*)&d->sin;
   datasize = sizeof( sockaddr_in );	
 }
@@ -864,7 +864,7 @@ const sockaddr_un* KUnixSocketAddress::address() const
   return d->m_sun;
 }
 
-bool KUnixSocketAddress::areEqualUnix(const KSocketAddress &s1, const KSocketAddress &s2, bool /* coreOnly */)
+bool KUnixSocketAddress::areEqualUnix(const TDESocketAddress &s1, const TDESocketAddress &s2, bool /* coreOnly */)
 {
    if (s1.family() != s2.family())
       return false;   
@@ -881,14 +881,14 @@ bool KUnixSocketAddress::areEqualUnix(const KSocketAddress &s1, const KSocketAdd
    return (strcmp(sun1->sun_path, sun2->sun_path) == 0);
 }
 
-void KSocketAddress::virtual_hook( int, void* )
+void TDESocketAddress::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
 void KInetSocketAddress::virtual_hook( int id, void* data )
-{ KSocketAddress::virtual_hook( id, data ); }
+{ TDESocketAddress::virtual_hook( id, data ); }
 
 void KUnixSocketAddress::virtual_hook( int id, void* data )
-{ KSocketAddress::virtual_hook( id, data ); }
+{ TDESocketAddress::virtual_hook( id, data ); }
 
 
 #include "ksockaddr.moc"

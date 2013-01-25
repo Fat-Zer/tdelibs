@@ -61,13 +61,13 @@ TQTimer* AddressLineEdit::s_LDAPTimer = 0L;
 LdapSearch* AddressLineEdit::s_LDAPSearch = 0L;
 TQString* AddressLineEdit::s_LDAPText = 0L;
 AddressLineEdit* AddressLineEdit::s_LDAPLineEdit = 0L;
-KConfig *AddressLineEdit::s_config = 0L;
+TDEConfig *AddressLineEdit::s_config = 0L;
 
 static KStaticDeleter<KCompletion> completionDeleter;
 static KStaticDeleter<TQTimer> ldapTimerDeleter;
 static KStaticDeleter<LdapSearch> ldapSearchDeleter;
 static KStaticDeleter<TQString> ldapTextDeleter;
-static KStaticDeleter<KConfig> configDeleter;
+static KStaticDeleter<TDEConfig> configDeleter;
 
 AddressLineEdit::AddressLineEdit(TQWidget* parent,
 		bool useCompletion,
@@ -136,10 +136,10 @@ AddressLineEdit::~AddressLineEdit()
 
 //-----------------------------------------------------------------------------
 
-KConfig* AddressLineEdit::config()
+TDEConfig* AddressLineEdit::config()
 {
   if ( !s_config )
-    configDeleter.setObject( s_config, new KConfig( "kabldaprc", false, false ) ); // Open read-write, no kdeglobals
+    configDeleter.setObject( s_config, new TDEConfig( "kabldaprc", false, false ) ); // Open read-write, no kdeglobals
 
   return s_config;
 }

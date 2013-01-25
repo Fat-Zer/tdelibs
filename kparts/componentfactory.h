@@ -307,7 +307,7 @@ namespace KParts
          * \endcode
          *
          * @param serviceType the type of service for which to find a plugin
-         * @param constraint an optional constraint to pass to the trader (see KIO::KTrader)
+         * @param constraint an optional constraint to pass to the trader (see TDEIO::KTrader)
          * @param parent the parent object for the part itself
          * @param name the name that will be given to the part
          * @param args A list of string arguments, passed to the factory and possibly

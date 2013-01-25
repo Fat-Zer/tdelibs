@@ -91,8 +91,8 @@ class DockContainer: public TQWidget, public KDockContainer
 
     void hideIfNeeded();
 
-    virtual void save(KConfig *,const TQString& group_or_prefix);
-    virtual void load(KConfig *,const TQString& group_or_prefix);
+    virtual void save(TDEConfig *,const TQString& group_or_prefix);
+    virtual void load(TDEConfig *,const TQString& group_or_prefix);
 
     void setStyle(int);
   protected:

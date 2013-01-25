@@ -103,17 +103,17 @@ public:
   int addLocalFolderByName(TQString folderurl, TQString remoteurl, TQString syncmethod, TQString excludelist, TQString sync_on_login, TQString sync_on_logout, TQString sync_timed_interval);
   TQString findSyncMethodByName(TQString folderurl);
   /** manages initial communication setup including password queries */
-  int establishConnectionRsync(char *buffer, KIO::fileoffset_t len);
+  int establishConnectionRsync(char *buffer, TDEIO::fileoffset_t len);
   /** manages initial communication setup including password queries */
-  int establishConnectionUnison(char *buffer, KIO::fileoffset_t len, TQString localfolder, TQString remotepath);
+  int establishConnectionUnison(char *buffer, TDEIO::fileoffset_t len, TQString localfolder, TQString remotepath);
   /** creates the unidirectional sync subprocess */
   bool syncUnidirectional(TQString synccommand, TQString syncflags, int parameter_order, TQString localfolder, TQString remotepath);
   /** creates the bidirectional sync subprocess */
   bool syncBidirectional(TQString synccommand, TQString syncflags, int parameter_order, TQString localfolder, TQString remotepath);
   /** writes one chunk of data to stdin of child process */
-  void writeChild(const char *buf, KIO::fileoffset_t len);
+  void writeChild(const char *buf, TDEIO::fileoffset_t len);
   /** AuthInfo object used for logging in */
-  KIO::AuthInfo connectionAuth;
+  TDEIO::AuthInfo connectionAuth;
   /**
    Clean up connection
   */
@@ -158,9 +158,9 @@ private:
   /** buffer for data to be written */
   const char *outBuf;
   /** current write position in buffer */
-  KIO::fileoffset_t outBufPos;
+  TDEIO::fileoffset_t outBufPos;
   /** length of buffer */
-  KIO::fileoffset_t outBufLen;
+  TDEIO::fileoffset_t outBufLen;
   /** use su if true else use ssh */
   //bool local;
   /**  // FIXME: just a workaround for konq deficiencies */

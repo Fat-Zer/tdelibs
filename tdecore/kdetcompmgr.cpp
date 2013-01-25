@@ -51,7 +51,7 @@ int main(int argc, char **argv)
 
     TDEApplication app;
 
-    KConfig config("twinrc", true);
+    TDEConfig config("twinrc", true);
     config.setGroup( "Notification Messages" );
     if (!config.readBoolEntry("UseTranslucency",false)) {
         // Attempt to load the kompmgr pid file
@@ -97,7 +97,7 @@ int main(int argc, char **argv)
     }
 
      if (app.detectCompositionManagerAvailable(false, false)) {		// Perform a shallow check for the composite extension (a deep check would cause noticeable flicker)
-	KConfig config2("twinrc", true);
+	TDEConfig config2("twinrc", true);
 	config2.setGroup( "Notification Messages" );
 	if (config2.readBoolEntry("UseTranslucency",false)) {
 		app.detectCompositionManagerAvailable(true, true);

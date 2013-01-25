@@ -8,8 +8,8 @@
 void output( const KURL& u )
 {
     kdDebug() << "Looking up auto login for: " << u.url() << endl;
-    KIO::NetRC::AutoLogin l;
-    bool result = KIO::NetRC::self()->lookup( u, l, true );
+    TDEIO::NetRC::AutoLogin l;
+    bool result = TDEIO::NetRC::self()->lookup( u, l, true );
     if ( !result )
     {
        kdDebug() << "Either no .netrc and/or .kionetrc file was "

@@ -53,16 +53,16 @@
 
 #include "previewjob.moc"
 
-namespace KIO { struct PreviewItem; }
-using namespace KIO;
+namespace TDEIO { struct PreviewItem; }
+using namespace TDEIO;
 
-struct KIO::PreviewItem
+struct TDEIO::PreviewItem
 {
     KFileItem *item;
     KService::Ptr plugin;
 };
 
-struct KIO::PreviewJobPrivate
+struct TDEIO::PreviewJobPrivate
 {
     enum { STATE_STATORIG, // if the thumbnail exists
            STATE_GETORIG, // if we create it
@@ -118,7 +118,7 @@ struct KIO::PreviewJobPrivate
 PreviewJob::PreviewJob( const KFileItemList &items, int width, int height,
     int iconSize, int iconAlpha, bool scale, bool save,
     const TQStringList *enabledPlugins, bool deleteItems )
-    : KIO::Job( false /* no GUI */ )
+    : TDEIO::Job( false /* no GUI */ )
 {
     d = new PreviewJobPrivate;
     d->tOrig = 0;
@@ -244,8 +244,8 @@ void PreviewJob::startPreview()
     }
 
   // Read configuration value for the maximum allowed size
-    KConfig * config = TDEGlobal::config();
-    KConfigGroupSaver cgs( config, "PreviewSettings" );
+    TDEConfig * config = TDEGlobal::config();
+    TDEConfigGroupSaver cgs( config, "PreviewSettings" );
     d->maximumSize = config->readNumEntry( "MaximumSize", 1024*1024 /* 1MB */ );
 
     if (bNeedCache)
@@ -306,13 +306,13 @@ void PreviewJob::determineNextFile()
         d->currentItem = d->items.first();
         d->succeeded = false;
         d->items.remove(d->items.begin());
-        KIO::Job *job = KIO::stat( d->currentItem.item->url(), false );
+        TDEIO::Job *job = TDEIO::stat( d->currentItem.item->url(), false );
         job->addMetaData( "no-auth-prompt", "true" );
         addSubjob(job);
     }
 }
 
-void PreviewJob::slotResult( KIO::Job *job )
+void PreviewJob::slotResult( TDEIO::Job *job )
 {
     subjobs.remove( job );
     Q_ASSERT ( subjobs.isEmpty() ); // We should have only one job at a time ...
@@ -326,18 +326,18 @@ void PreviewJob::slotResult( KIO::Job *job )
                 determineNextFile();
                 return;
             }
-            KIO::UDSEntry entry = ((KIO::StatJob*)job)->statResult();
-            KIO::UDSEntry::ConstIterator it = entry.begin();
+            TDEIO::UDSEntry entry = ((TDEIO::StatJob*)job)->statResult();
+            TDEIO::UDSEntry::ConstIterator it = entry.begin();
             d->tOrig = 0;
             int found = 0;
             for( ; it != entry.end() && found < 2; it++ )
             {
-                if ( (*it).m_uds == KIO::UDS_MODIFICATION_TIME )
+                if ( (*it).m_uds == TDEIO::UDS_MODIFICATION_TIME )
                 {
                     d->tOrig = (time_t)((*it).m_long);
                     found++;
                 }
-                else if ( (*it).m_uds == KIO::UDS_SIZE )
+                else if ( (*it).m_uds == TDEIO::UDS_SIZE )
                     {
                     if ( filesize_t((*it).m_long) > d->maximumSize &&
                          !d->ignoreMaximumSize &&
@@ -372,7 +372,7 @@ void PreviewJob::slotResult( KIO::Job *job )
                 return;
             }
 
-            createThumbnail( static_cast<KIO::FileCopyJob*>(job)->destURL().path() );
+            createThumbnail( static_cast<TDEIO::FileCopyJob*>(job)->destURL().path() );
             return;
         }
         case PreviewJobPrivate::STATE_CREATETHUMB:
@@ -436,7 +436,7 @@ void PreviewJob::getOrCreateThumbnail()
         KURL localURL;
         localURL.setPath( d->tempName = localFile.name() );
         const KURL currentURL = item->url();
-        KIO::Job * job = KIO::file_copy( currentURL, localURL, -1, true,
+        TDEIO::Job * job = TDEIO::file_copy( currentURL, localURL, -1, true,
                                          false, false /* No GUI */ );
         job->addMetaData("thumbnail","1");
         addSubjob(job);
@@ -450,9 +450,9 @@ void PreviewJob::createThumbnail( TQString pixPath )
     KURL thumbURL;
     thumbURL.setProtocol("thumbnail");
     thumbURL.setPath(pixPath);
-    KIO::TransferJob *job = KIO::get(thumbURL, false, false);
+    TDEIO::TransferJob *job = TDEIO::get(thumbURL, false, false);
     addSubjob(job);
-    connect(job, TQT_SIGNAL(data(KIO::Job *, const TQByteArray &)), TQT_SLOT(slotThumbData(KIO::Job *, const TQByteArray &)));
+    connect(job, TQT_SIGNAL(data(TDEIO::Job *, const TQByteArray &)), TQT_SLOT(slotThumbData(TDEIO::Job *, const TQByteArray &)));
     bool save = d->bSave && d->currentItem.plugin->property("CacheThumbnail").toBool();
     job->addMetaData("mimeType", d->currentItem.item->mimetype());
     job->addMetaData("width", TQString().setNum(save ? d->cacheWidth : d->width));
@@ -486,7 +486,7 @@ void PreviewJob::createThumbnail( TQString pixPath )
 #endif
 }
 
-void PreviewJob::slotThumbData(KIO::Job *, const TQByteArray &data)
+void PreviewJob::slotThumbData(TDEIO::Job *, const TQByteArray &data)
 {
     bool save = d->bSave &&
                 d->currentItem.plugin->property("CacheThumbnail").toBool() &&
@@ -573,7 +573,7 @@ void PreviewJob::kill( bool quietly )
     Job::kill( quietly );
 }
 
-PreviewJob *KIO::filePreview( const KFileItemList &items, int width, int height,
+PreviewJob *TDEIO::filePreview( const KFileItemList &items, int width, int height,
     int iconSize, int iconAlpha, bool scale, bool save,
     const TQStringList *enabledPlugins )
 {
@@ -581,7 +581,7 @@ PreviewJob *KIO::filePreview( const KFileItemList &items, int width, int height,
                           scale, save, enabledPlugins);
 }
 
-PreviewJob *KIO::filePreview( const KURL::List &items, int width, int height,
+PreviewJob *TDEIO::filePreview( const KURL::List &items, int width, int height,
     int iconSize, int iconAlpha, bool scale, bool save,
     const TQStringList *enabledPlugins )
 {
@@ -593,5 +593,5 @@ PreviewJob *KIO::filePreview( const KURL::List &items, int width, int height,
 }
 
 void PreviewJob::virtual_hook( int id, void* data )
-{ KIO::Job::virtual_hook( id, data ); }
+{ TDEIO::Job::virtual_hook( id, data ); }
 

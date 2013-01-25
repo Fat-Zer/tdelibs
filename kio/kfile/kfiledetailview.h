@@ -149,8 +149,8 @@ public:
     void determineIcon( KFileListViewItem *item );
     TQScrollView *scrollWidget() const { return (TQScrollView*) this; }
 
-    virtual void readConfig( KConfig *, const TQString& group = TQString::null );
-    virtual void writeConfig( KConfig *, const TQString& group = TQString::null);
+    virtual void readConfig( TDEConfig *, const TQString& group = TQString::null );
+    virtual void writeConfig( TDEConfig *, const TQString& group = TQString::null);
 
 signals:
     /**

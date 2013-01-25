@@ -740,7 +740,7 @@ void KCertPart::slotImport() {
 		if (!_silentImport)
 			KMessageBox::information(_frame, i18n("Certificate has been successfully imported into TDE.\nYou can manage your certificate settings from the TDE Control Center."), i18n("Certificate Import"));
 	} else if (_ca) {
-		KConfig cfg("ksslcalist", true, false);
+		TDEConfig cfg("ksslcalist", true, false);
 		if (cfg.hasGroup(_ca->getSubject())) {
 			TQString msg = _curName + "\n" + i18n("A certificate with that name already exists. Are you sure that you wish to replace it?");
 			int rc= KMessageBox::warningContinueCancel(_frame, msg, i18n("Certificate Import"),i18n("Replace"));

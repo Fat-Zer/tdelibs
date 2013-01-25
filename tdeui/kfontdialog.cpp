@@ -330,8 +330,8 @@ KFontChooser::KFontChooser(TQWidget *parent, const char *name,
   if( sizeIsRelativeState && sizeIsRelativeCheckBox )
     setSizeIsRelative( *sizeIsRelativeState );
 
-  KConfig *config = TDEGlobal::config();
-  KConfigGroupSaver saver(config, TQString::fromLatin1("General"));
+  TDEConfig *config = TDEGlobal::config();
+  TDEConfigGroupSaver saver(config, TQString::fromLatin1("General"));
   showXLFDArea(config->readBoolEntry(TQString::fromLatin1("fontSelectorShowXLFD"), false));
 }
 

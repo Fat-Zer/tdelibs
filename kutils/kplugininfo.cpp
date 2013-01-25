@@ -60,7 +60,7 @@ class KPluginInfo::KPluginInfoPrivate
         bool enabledbydefault;
         bool pluginenabled;
 
-        KConfig * config;
+        TDEConfig * config;
         TQString configgroup;
         KService::Ptr service;
         TQValueList<KService::Ptr> kcmservices;
@@ -151,7 +151,7 @@ KPluginInfo::~KPluginInfo()
     delete d;
 }
 
-TQValueList<KPluginInfo*> KPluginInfo::fromServices( const KService::List & services, KConfig * config, const TQString & group )
+TQValueList<KPluginInfo*> KPluginInfo::fromServices( const KService::List & services, TDEConfig * config, const TQString & group )
 {
     TQValueList<KPluginInfo*> infolist;
     KPluginInfo * info;
@@ -165,7 +165,7 @@ TQValueList<KPluginInfo*> KPluginInfo::fromServices( const KService::List & serv
     return infolist;
 }
 
-TQValueList<KPluginInfo*> KPluginInfo::fromFiles( const TQStringList & files, KConfig * config, const TQString & group )
+TQValueList<KPluginInfo*> KPluginInfo::fromFiles( const TQStringList & files, TDEConfig * config, const TQString & group )
 {
     TQValueList<KPluginInfo*> infolist;
     for( TQStringList::ConstIterator it = files.begin(); it != files.end(); ++it )
@@ -177,7 +177,7 @@ TQValueList<KPluginInfo*> KPluginInfo::fromFiles( const TQStringList & files, KC
     return infolist;
 }
 
-TQValueList<KPluginInfo*> KPluginInfo::fromKPartsInstanceName( const TQString & name, KConfig * config, const TQString & group )
+TQValueList<KPluginInfo*> KPluginInfo::fromKPartsInstanceName( const TQString & name, TDEConfig * config, const TQString & group )
 {
     TQStringList files = TDEGlobal::dirs()->findAllResources( "data", name +
             "/kpartplugins/*.desktop", true, false );
@@ -276,7 +276,7 @@ const TQValueList<KService::Ptr> & KPluginInfo::kcmServices() const
 {
     if ( !d->kcmservicesCached )
     {
-        d->kcmservices = KTrader::self()->query( "KCModule", "'" + d->pluginName +
+        d->kcmservices = KTrader::self()->query( "TDECModule", "'" + d->pluginName +
             "' in [X-TDE-ParentComponents]" );
         kdDebug( 703 ) << "found " << d->kcmservices.count() << " offers for " <<
             d->pluginName << endl;
@@ -287,13 +287,13 @@ const TQValueList<KService::Ptr> & KPluginInfo::kcmServices() const
     return d->kcmservices;
 }
 
-void KPluginInfo::setConfig( KConfig * config, const TQString & group )
+void KPluginInfo::setConfig( TDEConfig * config, const TQString & group )
 {
     d->config = config;
     d->configgroup = group;
 }
 
-KConfig * KPluginInfo::config() const
+TDEConfig * KPluginInfo::config() const
 {
     return d->config;
 }
@@ -316,14 +316,14 @@ TQVariant KPluginInfo::operator[]( const TQString & key ) const
     return property( key );
 }
 
-void KPluginInfo::save( KConfigGroup * config )
+void KPluginInfo::save( TDEConfigGroup * config )
 {
     kdDebug( 703 ) << k_funcinfo << endl;
     if( 0 == config )
     {
         if( 0 == d->config )
         {
-            kdWarning( 703 ) << "no KConfigGroup, cannot save" << endl;
+            kdWarning( 703 ) << "no TDEConfigGroup, cannot save" << endl;
             return;
         }
         d->config->setGroup( d->configgroup );
@@ -333,14 +333,14 @@ void KPluginInfo::save( KConfigGroup * config )
         config->writeEntry( d->pluginName + "Enabled", isPluginEnabled() );
 }
 
-void KPluginInfo::load( KConfigGroup * config )
+void KPluginInfo::load( TDEConfigGroup * config )
 {
     kdDebug( 703 ) << k_funcinfo << endl;
     if( 0 == config )
     {
         if( 0 == d->config )
         {
-            kdWarning( 703 ) << "no KConfigGroup, cannot load" << endl;
+            kdWarning( 703 ) << "no TDEConfigGroup, cannot load" << endl;
             return;
         }
         d->config->setGroup( d->configgroup );

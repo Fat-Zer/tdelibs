@@ -27,7 +27,7 @@
  * Computes a directory size (similar to "du", but doesn't give the same results
  * since we simply sum up the dir and file sizes, whereas du speaks disk blocks)
  */
-class KIO_EXPORT KDirSize : public KIO::Job
+class KIO_EXPORT KDirSize : public TDEIO::Job
 {
   Q_OBJECT
 protected:
@@ -39,14 +39,14 @@ public:
   /**
    * @return the size we found
    */
-  KIO::filesize_t totalSize() const { return m_totalSize; }
+  TDEIO::filesize_t totalSize() const { return m_totalSize; }
 
   /**
    * @return the total number of files (counting symlinks to files, sockets
    * and character devices as files) in this directory and all sub-directories
    * @since 3.3
    */
-  KIO::filesize_t totalFiles() const { return m_totalFiles; }
+  TDEIO::filesize_t totalFiles() const { return m_totalFiles; }
 
   /**
    * @return the total number of sub-directories found (not including the
@@ -54,7 +54,7 @@ public:
    * as directories)
    * @since 3.3
    */
-  KIO::filesize_t totalSubdirs() const { return m_totalSubdirs; }
+  TDEIO::filesize_t totalSubdirs() const { return m_totalSubdirs; }
 
   /**
    * Asynchronous method. Connect to the result signal.
@@ -75,7 +75,7 @@ public:
    * Synchronous method - you get the result as soon as
    * the call returns.
    */
-  static KIO::filesize_t dirSize( const KURL & directory );
+  static TDEIO::filesize_t dirSize( const KURL & directory );
 
 protected:
   /**
@@ -87,15 +87,15 @@ protected:
 
 protected slots:
 
-  virtual void slotResult( KIO::Job *job );
-  void slotEntries( KIO::Job * , const KIO::UDSEntryList &);
+  virtual void slotResult( TDEIO::Job *job );
+  void slotEntries( TDEIO::Job * , const TDEIO::UDSEntryList &);
   void processList();
 
 private:
   bool m_bAsync;
-  KIO::filesize_t m_totalSize;
-  KIO::filesize_t m_totalFiles;
-  KIO::filesize_t m_totalSubdirs;
+  TDEIO::filesize_t m_totalSize;
+  TDEIO::filesize_t m_totalFiles;
+  TDEIO::filesize_t m_totalSubdirs;
   KFileItemList m_lstItems;
 protected:
   virtual void virtual_hook( int id, void* data );

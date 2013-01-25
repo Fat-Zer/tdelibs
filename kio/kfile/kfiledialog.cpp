@@ -97,7 +97,7 @@
 enum Buttons { HOTLIST_BUTTON,
                PATH_COMBO, CONFIGURE_BUTTON };
 
-template class TQPtrList<KIO::StatJob>;
+template class TQPtrList<TDEIO::StatJob>;
 
 namespace {
     static void silenceQToolBar(TQtMsgType, const char *)
@@ -136,7 +136,7 @@ struct KFileDialogPrivate
     bool autoSelectExtChecked; // whether or not the _user_ has checked the above box
     TQString extension; // current extension for this filter
 
-    TQPtrList<KIO::StatJob> statJobs;
+    TQPtrList<TDEIO::StatJob> statJobs;
 
     KURL::List urlList; //the list of selected urls
 
@@ -185,7 +185,7 @@ KFileDialog::~KFileDialog()
 {
     hide();
 
-    KConfig *config = TDEGlobal::config();
+    TDEConfig *config = TDEGlobal::config();
 
     if (d->urlBar)
         d->urlBar->save( config );
@@ -402,7 +402,7 @@ void KFileDialog::slotOk()
             }
         }
 
-        KURL url = KIO::NetAccess::mostLocalURL(d->url,topLevelWidget());
+        KURL url = TDEIO::NetAccess::mostLocalURL(d->url,topLevelWidget());
         if ( (mode() & KFile::LocalOnly) == KFile::LocalOnly &&
              !url.isLocalFile() ) {
 // ### after message freeze, add message for directories!
@@ -446,7 +446,7 @@ void KFileDialog::slotOk()
        return;
     }
 
-    KURL url = KIO::NetAccess::mostLocalURL(selectedURL,topLevelWidget());
+    KURL url = TDEIO::NetAccess::mostLocalURL(selectedURL,topLevelWidget());
     if ( (mode() & KFile::LocalOnly) == KFile::LocalOnly &&
          !url.isLocalFile() ) {
         KMessageBox::sorry( d->mainWidget,
@@ -528,12 +528,12 @@ void KFileDialog::slotOk()
 
     if (!kapp->authorizeURLAction("open", KURL(), d->url))
     {
-        TQString msg = KIO::buildErrorString(KIO::ERR_ACCESS_DENIED, d->url.prettyURL());
+        TQString msg = TDEIO::buildErrorString(TDEIO::ERR_ACCESS_DENIED, d->url.prettyURL());
         KMessageBox::error( d->mainWidget, msg);
         return;
     }
 
-    KIO::StatJob *job = 0L;
+    TDEIO::StatJob *job = 0L;
     d->statJobs.clear();
     d->filenames = KShell::tildeExpand(locationEdit->currentText());
 
@@ -546,7 +546,7 @@ void KFileDialog::slotOk()
         {
             if (!kapp->authorizeURLAction("open", KURL(), *it))
             {
-                TQString msg = KIO::buildErrorString(KIO::ERR_ACCESS_DENIED, (*it).prettyURL());
+                TQString msg = TDEIO::buildErrorString(TDEIO::ERR_ACCESS_DENIED, (*it).prettyURL());
                 KMessageBox::error( d->mainWidget, msg);
                 return;
             }
@@ -554,32 +554,32 @@ void KFileDialog::slotOk()
         for ( KURL::List::ConstIterator it = list.begin();
               it != list.end(); ++it )
         {
-            job = KIO::stat( *it, !(*it).isLocalFile() );
+            job = TDEIO::stat( *it, !(*it).isLocalFile() );
             job->setWindow (topLevelWidget());
-            KIO::Scheduler::scheduleJob( job );
+            TDEIO::Scheduler::scheduleJob( job );
             d->statJobs.append( job );
-            connect( job, TQT_SIGNAL( result(KIO::Job *) ),
-                     TQT_SLOT( slotStatResult( KIO::Job *) ));
+            connect( job, TQT_SIGNAL( result(TDEIO::Job *) ),
+                     TQT_SLOT( slotStatResult( TDEIO::Job *) ));
         }
         return;
     }
 
-    job = KIO::stat(d->url,!d->url.isLocalFile());
+    job = TDEIO::stat(d->url,!d->url.isLocalFile());
     job->setWindow (topLevelWidget());
     d->statJobs.append( job );
-    connect(job, TQT_SIGNAL(result(KIO::Job*)), TQT_SLOT(slotStatResult(KIO::Job*)));
+    connect(job, TQT_SIGNAL(result(TDEIO::Job*)), TQT_SLOT(slotStatResult(TDEIO::Job*)));
 }
 
 
-static bool isDirectory (const KIO::UDSEntry &t)
+static bool isDirectory (const TDEIO::UDSEntry &t)
 {
     bool isDir = false;
 
-    for (KIO::UDSEntry::ConstIterator it = t.begin();
+    for (TDEIO::UDSEntry::ConstIterator it = t.begin();
          it != t.end();
          it++)
     {
-        if ((*it).m_uds == KIO::UDS_FILE_TYPE)
+        if ((*it).m_uds == TDEIO::UDS_FILE_TYPE)
         {
             isDir = S_ISDIR ((mode_t) ((*it).m_long));
             break;
@@ -592,10 +592,10 @@ static bool isDirectory (const KIO::UDSEntry &t)
 // FIXME : count all errors and show messagebox when d->statJobs.count() == 0
 // in case of an error, we cancel the whole operation (clear d->statJobs and
 // don't call accept)
-void KFileDialog::slotStatResult(KIO::Job* job)
+void KFileDialog::slotStatResult(TDEIO::Job* job)
 {
     kdDebug(kfile_area) << "slotStatResult" << endl;
-    KIO::StatJob *sJob = static_cast<KIO::StatJob *>( job );
+    TDEIO::StatJob *sJob = static_cast<TDEIO::StatJob *>( job );
 
     if ( !d->statJobs.removeRef( sJob ) ) {
         return;
@@ -611,7 +611,7 @@ void KFileDialog::slotStatResult(KIO::Job* job)
         return;
     }
 
-    KIO::UDSEntry t = sJob->statResult();
+    TDEIO::UDSEntry t = sJob->statResult();
     if (isDirectory (t))
     {
         if ( ops->dirOnlyMode() )
@@ -672,7 +672,7 @@ void KFileDialog::accept()
         locationEdit->insertItem( file, 1 );
     }
 
-    KConfig *config = TDEGlobal::config();
+    TDEConfig *config = TDEGlobal::config();
     config->setForceGlobal( true );
     writeConfig( config, ConfigGroup );
     config->setForceGlobal( false );
@@ -1038,7 +1038,7 @@ void KFileDialog::init(const TQString& startDir, const TQString& filter, TQWidge
 
     initGUI(); // activate GM
 
-    KConfig* config = TDEGlobal::config();
+    TDEConfig* config = TDEGlobal::config();
     readRecentFiles( config );
 
     adjustSize();
@@ -1550,7 +1550,7 @@ TQString KFileDialog::selectedFile() const
 {
     if ( result() == TQDialog::Accepted )
     {
-      KURL url = KIO::NetAccess::mostLocalURL(d->url,topLevelWidget());
+      KURL url = TDEIO::NetAccess::mostLocalURL(d->url,topLevelWidget());
        if (url.isLocalFile())
            return url.path();
        else {
@@ -1572,7 +1572,7 @@ TQStringList KFileDialog::selectedFiles() const
             KURL::List urls = parseSelectedURLs();
             TQValueListConstIterator<KURL> it = urls.begin();
             while ( it != urls.end() ) {
-              url = KIO::NetAccess::mostLocalURL(*it,topLevelWidget());
+              url = TDEIO::NetAccess::mostLocalURL(*it,topLevelWidget());
                 if ( url.isLocalFile() )
                     list.append( url.path() );
                 ++it;
@@ -1698,7 +1698,7 @@ KFile::Mode KFileDialog::mode() const
 }
 
 
-void KFileDialog::readConfig( KConfig *kc, const TQString& group )
+void KFileDialog::readConfig( TDEConfig *kc, const TQString& group )
 {
     if ( !kc )
         return;
@@ -1749,7 +1749,7 @@ void KFileDialog::readConfig( KConfig *kc, const TQString& group )
     kc->setGroup( oldGroup );
 }
 
-void KFileDialog::writeConfig( KConfig *kc, const TQString& group )
+void KFileDialog::writeConfig( TDEConfig *kc, const TQString& group )
 {
     if ( !kc )
         return;
@@ -1771,7 +1771,7 @@ void KFileDialog::writeConfig( KConfig *kc, const TQString& group )
 }
 
 
-void KFileDialog::readRecentFiles( KConfig *kc )
+void KFileDialog::readRecentFiles( TDEConfig *kc )
 {
     TQString oldGroup = kc->group();
     kc->setGroup( ConfigGroup );
@@ -1786,7 +1786,7 @@ void KFileDialog::readRecentFiles( KConfig *kc )
     kc->setGroup( oldGroup );
 }
 
-void KFileDialog::saveRecentFiles( KConfig *kc )
+void KFileDialog::saveRecentFiles( TDEConfig *kc )
 {
     TQString oldGroup = kc->group();
     kc->setGroup( ConfigGroup );
@@ -1816,7 +1816,7 @@ void KFileDialog::slotCancel()
     ops->close();
     KDialogBase::slotCancel();
 
-    KConfig *config = TDEGlobal::config();
+    TDEConfig *config = TDEGlobal::config();
     config->setForceGlobal( true );
     writeConfig( config, ConfigGroup );
     config->setForceGlobal( false );
@@ -2069,8 +2069,8 @@ void KFileDialog::updateLocationEditExtension (const TQString &lastExtension)
     )
     {
         // exists?
-        KIO::UDSEntry t;
-        if (KIO::NetAccess::stat (url, t, topLevelWidget()))
+        TDEIO::UDSEntry t;
+        if (TDEIO::NetAccess::stat (url, t, topLevelWidget()))
         {
             kdDebug (kfile_area) << "\tfile exists" << endl;
 
@@ -2142,13 +2142,13 @@ void KFileDialog::appendExtension (KURL &url)
     const bool suppressExtension = (dot == len - 1);
     const bool unspecifiedExtension = (dot <= 0);
 
-    // don't KIO::NetAccess::Stat if unnecessary
+    // don't TDEIO::NetAccess::Stat if unnecessary
     if (!(suppressExtension || unspecifiedExtension))
         return;
 
     // exists?
-    KIO::UDSEntry t;
-    if (KIO::NetAccess::stat (url, t, topLevelWidget()))
+    TDEIO::UDSEntry t;
+    if (TDEIO::NetAccess::stat (url, t, topLevelWidget()))
     {
         kdDebug (kfile_area) << "\tfile exists - won't append extension" << endl;
         return;

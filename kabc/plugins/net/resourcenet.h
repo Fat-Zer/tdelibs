@@ -31,7 +31,7 @@ class TQFile;
 class TQTimer;
 class KTempFile;
 
-namespace KIO {
+namespace TDEIO {
 class Job;
 }
 
@@ -47,11 +47,11 @@ class KABC_EXPORT ResourceNet : public Resource
   Q_OBJECT
 
   public:
-    ResourceNet( const KConfig* );
+    ResourceNet( const TDEConfig* );
     ResourceNet( const KURL &url, const TQString &format );
     ~ResourceNet();
 
-    virtual void writeConfig( KConfig* );
+    virtual void writeConfig( TDEConfig* );
 
     virtual bool doOpen();
     virtual void doClose();
@@ -88,8 +88,8 @@ class KABC_EXPORT ResourceNet : public Resource
     void init( const KURL &url, const TQString &format );
 
   private slots:
-    void downloadFinished( KIO::Job* );
-    void uploadFinished( KIO::Job* );
+    void downloadFinished( TDEIO::Job* );
+    void uploadFinished( TDEIO::Job* );
     void signalError();
 
   private:

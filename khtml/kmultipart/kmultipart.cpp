@@ -163,14 +163,14 @@ bool KMultiPart::openURL( const KURL &url )
     // Hmm, args.reload is set to true when reloading, but this doesn't seem to be enough...
     // I get "HOLD: Reusing held slave for <url>", and the old data
 
-    m_job = KIO::get( url, args.reload, false );
+    m_job = TDEIO::get( url, args.reload, false );
 
     emit started( 0 /*m_job*/ ); // don't pass the job, it would interfer with our own infoMessage
 
-    connect( m_job, TQT_SIGNAL( result( KIO::Job * ) ),
-             this, TQT_SLOT( slotJobFinished( KIO::Job * ) ) );
-    connect( m_job, TQT_SIGNAL( data( KIO::Job *, const TQByteArray & ) ),
-             this, TQT_SLOT( slotData( KIO::Job *, const TQByteArray & ) ) );
+    connect( m_job, TQT_SIGNAL( result( TDEIO::Job * ) ),
+             this, TQT_SLOT( slotJobFinished( TDEIO::Job * ) ) );
+    connect( m_job, TQT_SIGNAL( data( TDEIO::Job *, const TQByteArray & ) ),
+             this, TQT_SLOT( slotData( TDEIO::Job *, const TQByteArray & ) ) );
 
     m_numberOfFrames = 0;
     m_numberOfFramesSkipped = 0;
@@ -184,7 +184,7 @@ bool KMultiPart::openURL( const KURL &url )
 // Yes, libtdenetwork's has such a parser already (MultiPart),
 // but it works on the complete string, expecting the whole data to be available....
 // The version here is asynchronous.
-void KMultiPart::slotData( KIO::Job *job, const TQByteArray &data )
+void KMultiPart::slotData( TDEIO::Job *job, const TQByteArray &data )
 {
     if (m_boundary.isNull())
     {
@@ -533,7 +533,7 @@ void KMultiPart::guiActivateEvent( KParts::GUIActivateEvent * )
     //    m_part->guiActivateEvent( e );
 }
 
-void KMultiPart::slotJobFinished( KIO::Job *job )
+void KMultiPart::slotJobFinished( TDEIO::Job *job )
 {
     if ( job->error() )
     {

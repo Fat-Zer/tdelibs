@@ -72,8 +72,8 @@ public:
   KResolver resLocal;		// binding resolution
   unsigned current;		// used by the asynchronous connection
 
-  ::KSocketAddress *local;	// local socket address
-  ::KSocketAddress *peer;	// peer socket address
+  ::TDESocketAddress *local;	// local socket address
+  ::TDESocketAddress *peer;	// peer socket address
 
   TQSocketNotifier *qsnIn, *qsnOut;
   int inMaxSize, outMaxSize;
@@ -718,7 +718,7 @@ bool KExtendedSocket::setBufferSize(int rsize, int wsize)
  * if we have done this already, we return it. Otherwise, we'll have
  * to find the socket name
  */
-const ::KSocketAddress *KExtendedSocket::localAddress()
+const ::TDESocketAddress *KExtendedSocket::localAddress()
 {
   if (d->local != NULL)
     return d->local;
@@ -733,7 +733,7 @@ const ::KSocketAddress *KExtendedSocket::localAddress()
  * passiveSocket and that we require to be connected already. Also note that
  * the behavior on connectionless sockets is not defined here.
  */
-const ::KSocketAddress* KExtendedSocket::peerAddress()
+const ::TDESocketAddress* KExtendedSocket::peerAddress()
 {
   if (d->peer != NULL)
     return d->peer;
@@ -2002,7 +2002,7 @@ int KExtendedSocket::resolve(sockaddr *sock, ksocklen_t len, TQString &host,
   return err;
 }
 
-int KExtendedSocket::resolve(::KSocketAddress *sock, TQString &host, TQString &port,
+int KExtendedSocket::resolve(::TDESocketAddress *sock, TQString &host, TQString &port,
 			     int flags)
 {
   return resolve(sock->data, sock->datasize, host, port, flags);
@@ -2058,7 +2058,7 @@ TQPtrList<KAddressInfo> KExtendedSocket::lookup(const TQString& host, const TQSt
 	  ai->ai->ai_addr = 0;
 	}
 
-      ai->addr = ::KSocketAddress::newAddress(ai->ai->ai_addr, ai->ai->ai_addrlen);
+      ai->addr = ::TDESocketAddress::newAddress(ai->ai->ai_addr, ai->ai->ai_addrlen);
 
       l.append(ai);
     }
@@ -2069,9 +2069,9 @@ TQPtrList<KAddressInfo> KExtendedSocket::lookup(const TQString& host, const TQSt
   return l;
 }
 
-::KSocketAddress *KExtendedSocket::localAddress(int fd)
+::TDESocketAddress *KExtendedSocket::localAddress(int fd)
 {
-  ::KSocketAddress *local;
+  ::TDESocketAddress *local;
   struct sockaddr static_sa, *sa = &static_sa;
   ksocklen_t len = sizeof(static_sa);
 
@@ -2106,20 +2106,20 @@ TQPtrList<KAddressInfo> KExtendedSocket::lookup(const TQString& host, const TQSt
 	  return NULL;
 	}
 
-      local = ::KSocketAddress::newAddress(sa, len);
+      local = ::TDESocketAddress::newAddress(sa, len);
       free(sa);
     }
   else
-    local = ::KSocketAddress::newAddress(sa, len);
+    local = ::TDESocketAddress::newAddress(sa, len);
 
   return local;
 }
 
 /* This is exactly the same code as localAddress, except
  * we call getpeername here */
-::KSocketAddress *KExtendedSocket::peerAddress(int fd)
+::TDESocketAddress *KExtendedSocket::peerAddress(int fd)
 {
-  ::KSocketAddress *peer;
+  ::TDESocketAddress *peer;
   struct sockaddr static_sa, *sa = &static_sa;
   ksocklen_t len = sizeof(static_sa);
 
@@ -2154,11 +2154,11 @@ TQPtrList<KAddressInfo> KExtendedSocket::lookup(const TQString& host, const TQSt
 	  return NULL;
 	}
 
-      peer = ::KSocketAddress::newAddress(sa, len);
+      peer = ::TDESocketAddress::newAddress(sa, len);
       free(sa);
     }
   else
-    peer = ::KSocketAddress::newAddress(sa, len);
+    peer = ::TDESocketAddress::newAddress(sa, len);
 
   return peer;
 }
@@ -2204,7 +2204,7 @@ KAddressInfo::KAddressInfo(addrinfo *p)
       ai->ai_addrlen = 0;
    }
 
-   addr = ::KSocketAddress::newAddress(ai->ai_addr, ai->ai_addrlen);
+   addr = ::TDESocketAddress::newAddress(ai->ai_addr, ai->ai_addrlen);
 }
 #endif
 KAddressInfo::~KAddressInfo()

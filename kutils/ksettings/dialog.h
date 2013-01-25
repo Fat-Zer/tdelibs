@@ -26,7 +26,7 @@
 template<class T> class TQValueList;
 class KPluginInfo;
 class KCMultiDialog;
-class KCModuleInfo;
+class TDECModuleInfo;
 
 namespace KSettings
 {
@@ -188,7 +188,7 @@ class KUTILS_EXPORT Dialog : public TQObject
          * @internal
          * Check whether the plugin associated with this KCM is enabled.
          */
-        bool isPluginForKCMEnabled( KCModuleInfo * ) const;
+        bool isPluginForKCMEnabled( TDECModuleInfo * ) const;
 
         TQValueList<KService::Ptr> instanceServices() const;
         TQValueList<KService::Ptr> parentComponentsServices(
@@ -204,7 +204,7 @@ class KUTILS_EXPORT Dialog : public TQObject
          * If this module is put into a TreeList hierarchy this will return a
          * list of the names of the parent modules.
          */
-        TQStringList parentModuleNames( KCModuleInfo * );
+        TQStringList parentModuleNames( TDECModuleInfo * );
 
         /**
          * @internal

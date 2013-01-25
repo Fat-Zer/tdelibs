@@ -75,7 +75,7 @@ void BrowserRun::init()
     // is either malformed, or points to a non-existing local file...
     // So we need to reimplement some of the checks, to handle m_bHideErrorDialog
     if ( !m_strURL.isValid() ) {
-        redirectToError( KIO::ERR_MALFORMED_URL, m_strURL.url() );
+        redirectToError( TDEIO::ERR_MALFORMED_URL, m_strURL.url() );
         return;
     }
     if ( !m_bIsLocalFile && !m_bFault && m_strURL.isLocalFile() )
@@ -86,7 +86,7 @@ void BrowserRun::init()
       if ( stat( TQFile::encodeName(m_strURL.path()), &buff ) == -1 )
       {
         kdDebug(1000) << "BrowserRun::init : " << m_strURL.prettyURL() << " doesn't exist." << endl;
-        redirectToError( KIO::ERR_DOES_NOT_EXIST, m_strURL.path() );
+        redirectToError( TDEIO::ERR_DOES_NOT_EXIST, m_strURL.path() );
         return;
       }
       m_mode = buff.st_mode; // while we're at it, save it for KRun::init() to use it
@@ -132,38 +132,38 @@ void BrowserRun::scanFile()
           m_args.metaData().insert("PropagateHttpHeader", "TRUE");
   }
 
-  KIO::TransferJob *job;
+  TDEIO::TransferJob *job;
   if ( m_args.doPost() && m_strURL.protocol().startsWith("http"))
   {
-      job = KIO::http_post( m_strURL, m_args.postData, false );
+      job = TDEIO::http_post( m_strURL, m_args.postData, false );
       job->addMetaData( "content-type", m_args.contentType() );
   }
   else
-      job = KIO::get(m_strURL, m_args.reload, false);
+      job = TDEIO::get(m_strURL, m_args.reload, false);
 
   if ( m_bRemoveReferrer )
      m_args.metaData().remove("referrer");
 
   job->addMetaData( m_args.metaData() );
   job->setWindow( m_window );
-  connect( job, TQT_SIGNAL( result( KIO::Job *)),
-           this, TQT_SLOT( slotBrowserScanFinished(KIO::Job *)));
-  connect( job, TQT_SIGNAL( mimetype( KIO::Job *, const TQString &)),
-           this, TQT_SLOT( slotBrowserMimetype(KIO::Job *, const TQString &)));
+  connect( job, TQT_SIGNAL( result( TDEIO::Job *)),
+           this, TQT_SLOT( slotBrowserScanFinished(TDEIO::Job *)));
+  connect( job, TQT_SIGNAL( mimetype( TDEIO::Job *, const TQString &)),
+           this, TQT_SLOT( slotBrowserMimetype(TDEIO::Job *, const TQString &)));
   m_job = job;
 }
 
-void BrowserRun::slotBrowserScanFinished(KIO::Job *job)
+void BrowserRun::slotBrowserScanFinished(TDEIO::Job *job)
 {
   kdDebug(1000) << "BrowserRun::slotBrowserScanFinished" << endl;
-  if ( job->error() == KIO::ERR_IS_DIRECTORY )
+  if ( job->error() == TDEIO::ERR_IS_DIRECTORY )
   {
       // It is in fact a directory. This happens when HTTP redirects to FTP.
       // Due to the "protocol doesn't support listing" code in BrowserRun, we
       // assumed it was a file.
       kdDebug(1000) << "It is in fact a directory!" << endl;
       // Update our URL in case of a redirection
-      m_strURL = static_cast<KIO::TransferJob *>(job)->url();
+      m_strURL = static_cast<TDEIO::TransferJob *>(job)->url();
       m_job = 0;
       foundMimeType( "inode/directory" );
   }
@@ -176,10 +176,10 @@ void BrowserRun::slotBrowserScanFinished(KIO::Job *job)
   }
 }
 
-void BrowserRun::slotBrowserMimetype( KIO::Job *_job, const TQString &type )
+void BrowserRun::slotBrowserMimetype( TDEIO::Job *_job, const TQString &type )
 {
   Q_ASSERT( _job == m_job );
-  KIO::TransferJob *job = static_cast<KIO::TransferJob *>(m_job);
+  TDEIO::TransferJob *job = static_cast<TDEIO::TransferJob *>(m_job);
   // Update our URL in case of a redirection
   //kdDebug(1000) << "old URL=" << m_strURL.url() << endl;
   //kdDebug(1000) << "new URL=" << job->url().url() << endl;
@@ -242,10 +242,10 @@ BrowserRun::NonEmbeddableResult BrowserRun::handleNonEmbeddable( const TQString&
                 KTempFile tempFile( TQString::null, extension );
                 KURL destURL;
                 destURL.setPath( tempFile.name() );
-                KIO::Job *job = KIO::file_copy( m_strURL, destURL, 0600, true /*overwrite*/, false /*no resume*/, true /*progress info*/ );
+                TDEIO::Job *job = TDEIO::file_copy( m_strURL, destURL, 0600, true /*overwrite*/, false /*no resume*/, true /*progress info*/ );
                 job->setWindow (m_window);
-                connect( job, TQT_SIGNAL( result( KIO::Job *)),
-                         this, TQT_SLOT( slotCopyToTempFileResult(KIO::Job *)) );
+                connect( job, TQT_SIGNAL( result( TDEIO::Job *)),
+                         this, TQT_SLOT( slotCopyToTempFileResult(TDEIO::Job *)) );
                 return Delayed; // We'll continue after the job has finished
             }
         }
@@ -259,7 +259,7 @@ BrowserRun::NonEmbeddableResult BrowserRun::handleNonEmbeddable( const TQString&
         return Handled;
     }
 
-    KIO::SimpleJob::removeOnHold(); // Kill any slave that was put on hold.
+    TDEIO::SimpleJob::removeOnHold(); // Kill any slave that was put on hold.
     return NotHandled;
 }
 
@@ -377,7 +377,7 @@ void BrowserRun::simpleSave( const KURL & url, const TQString & suggestedFilenam
     // only use the downloadmanager for non-local urls
     if ( !url.isLocalFile() )
     {
-        KConfig cfg("konquerorrc", false, false);
+        TDEConfig cfg("konquerorrc", false, false);
         cfg.setGroup("HTML Settings");
         TQString downloadManger = cfg.readPathEntry("DownloadManager");
         if (!downloadManger.isEmpty())
@@ -405,7 +405,7 @@ void BrowserRun::simpleSave( const KURL & url, const TQString & suggestedFilenam
 
                 kdDebug(1000) << "Calling command  " << cmd << endl;
                 // slave is already on hold (slotBrowserMimetype())
-                KIO::Scheduler::publishSlaveOnHold();
+                TDEIO::Scheduler::publishSlaveOnHold();
                 KRun::runCommand(cmd);
                 return;
             }
@@ -424,7 +424,7 @@ void BrowserRun::simpleSave( const KURL & url, const TQString & suggestedFilenam
         KURL destURL( dlg->selectedURL() );
         if ( destURL.isValid() )
         {
-            KIO::Job *job = KIO::copy( url, destURL );
+            TDEIO::Job *job = TDEIO::copy( url, destURL );
             job->setWindow (window);
             job->setAutoErrorHandlingEnabled( true );
         }
@@ -432,7 +432,7 @@ void BrowserRun::simpleSave( const KURL & url, const TQString & suggestedFilenam
     delete dlg;
 }
 
-void BrowserRun::slotStatResult( KIO::Job *job )
+void BrowserRun::slotStatResult( TDEIO::Job *job )
 {
     if ( job->error() ) {
         kdDebug(1000) << "BrowserRun::slotStatResult : " << job->errorString() << endl;
@@ -441,14 +441,14 @@ void BrowserRun::slotStatResult( KIO::Job *job )
         KRun::slotStatResult( job );
 }
 
-void BrowserRun::handleError( KIO::Job * job )
+void BrowserRun::handleError( TDEIO::Job * job )
 {
     if ( !job ) { // Shouldn't happen, see docu.
         kdWarning(1000) << "BrowserRun::handleError called with job=0! hideErrorDialog=" << d->m_bHideErrorDialog << endl;
         return;
     }
 
-    if (d->m_bHideErrorDialog && job->error() != KIO::ERR_NO_CONTENT)
+    if (d->m_bHideErrorDialog && job->error() != TDEIO::ERR_NO_CONTENT)
     {
         redirectToError( job->error(), job->errorText() );
         return;
@@ -483,13 +483,13 @@ void BrowserRun::redirectToError( int error, const TQString& errorText )
     foundMimeType( "text/html" );
 }
 
-void BrowserRun::slotCopyToTempFileResult(KIO::Job *job)
+void BrowserRun::slotCopyToTempFileResult(TDEIO::Job *job)
 {
     if ( job->error() ) {
         job->showErrorDialog( m_window );
     } else {
         // Same as KRun::foundMimeType but with a different URL
-        (void) (KRun::runURL( static_cast<KIO::FileCopyJob *>(job)->destURL(), m_sMimeType ));
+        (void) (KRun::runURL( static_cast<TDEIO::FileCopyJob *>(job)->destURL(), m_sMimeType ));
     }
     m_bFault = true; // see above
     m_bFinished = true;

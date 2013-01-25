@@ -37,14 +37,14 @@ class KURL;
 #  include "kio/dataslave.h"
 #endif
 
-namespace KIO {
+namespace TDEIO {
 
 /** This kioslave provides support of data urls as specified by rfc 2397
  * @see http://www.ietf.org/rfc/rfc2397.txt
  * @author Leo Savernik
  */
 #if defined(DATAKIOSLAVE)
-class DataProtocol : public KIO::SlaveBase {
+class DataProtocol : public TDEIO::SlaveBase {
 #elif defined(TESTKIO)
 class DataProtocol : public TestSlave {
 #else

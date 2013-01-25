@@ -28,7 +28,7 @@
 #include <klistbox.h>
 #include <kurl.h>
 
-class KConfig;
+class TDEConfig;
 class KURLBar;
 
 /**
@@ -215,7 +215,7 @@ class KURLBarListBox;
  * read and write the configuration of all the entries. It can differentiate
  * between global and local entries -- global entries will be saved in the
  * global configuration (kdeglobals), while local entries will be saved in
- * your application's KConfig object.
+ * your application's TDEConfig object.
  *
  * Due to the configurability, you usually only insert some default entries
  * once and then solely use the read and writeConfig methods to preserve the
@@ -331,27 +331,27 @@ public:
      * inside the group @p itemGroup. All items in there will be restored.
      * The reading of every item is delegated to the readItem() method.
      */
-    virtual void readConfig(  KConfig *config, const TQString& itemGroup );
+    virtual void readConfig(  TDEConfig *config, const TQString& itemGroup );
     /**
      * Call this method to save the current configuration into @p config,
      * inside the group @p iconGroup. The writeItem() method is used
      * to save each item.
      */
-    virtual void writeConfig( KConfig *config, const TQString& itemGroup );
+    virtual void writeConfig( TDEConfig *config, const TQString& itemGroup );
 
     /**
      * Called from readConfig() to read the i'th from @p config.
      * After reading a KURLBarItem is created and initialized with the read
      * values (as well as the given @p applicationLocal).
      */
-    virtual void readItem( int i, KConfig *config, bool applicationLocal );
+    virtual void readItem( int i, TDEConfig *config, bool applicationLocal );
     /**
      * Called from writeConfig() to save the KURLBarItem @p item as the
      * i'th entry in the config-object.
      * @p global tell whether it should be saved in the global configuration
-     * or not (using KConfig::writeEntry( key, value, true, global ) ).
+     * or not (using TDEConfig::writeEntry( key, value, true, global ) ).
      */
-    virtual void writeItem( KURLBarItem *item, int i, KConfig *, bool global );
+    virtual void writeItem( KURLBarItem *item, int i, TDEConfig *, bool global );
 
     /**
      * @returns the current KURLBarItem, or 0L if none.

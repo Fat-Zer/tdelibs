@@ -275,7 +275,7 @@ HTTPFilterGZip::slotInput(const TQByteArray &d)
         }
      }
      if (!bHasFinished)
-        emit error( KIO::ERR_SLAVE_DEFINED, i18n("Unexpected end of data, some information may be lost."));
+        emit error( TDEIO::ERR_SLAVE_DEFINED, i18n("Unexpected end of data, some information may be lost."));
      return;
   }
   if (bHasFinished)
@@ -332,7 +332,7 @@ HTTPFilterGZip::slotInput(const TQByteArray &d)
      int result = inflate( &zstr, Z_NO_FLUSH );
      if ((result != Z_OK) && (result != Z_STREAM_END))
      {
-        emit error( KIO::ERR_SLAVE_DEFINED, i18n("Receiving corrupt data."));
+        emit error( TDEIO::ERR_SLAVE_DEFINED, i18n("Receiving corrupt data."));
         break;
      }
      int bytesOut = 8192 - zstr.avail_out;

@@ -42,7 +42,7 @@
 #include <volmgt.h>
 #endif
 
-KIO_EXPORT TQString KIO::convertSizeWithBytes( KIO::filesize_t size )
+KIO_EXPORT TQString TDEIO::convertSizeWithBytes( TDEIO::filesize_t size )
 {
     if ( size >= 1024 )
         return convertSize( size ) + " (" + i18n( "%1 B" ).arg( TDEGlobal::locale()->formatNumber(size, 0) ) + ")";
@@ -50,7 +50,7 @@ KIO_EXPORT TQString KIO::convertSizeWithBytes( KIO::filesize_t size )
 	return convertSize( size );
 }
 
-KIO_EXPORT TQString KIO::convertSize( KIO::filesize_t size )
+KIO_EXPORT TQString TDEIO::convertSize( TDEIO::filesize_t size )
 {
     double fsize = size;
     TQString s;
@@ -88,20 +88,20 @@ KIO_EXPORT TQString KIO::convertSize( KIO::filesize_t size )
     return s;
 }
 
-KIO_EXPORT TQString KIO::convertSizeFromKB( KIO::filesize_t kbSize )
+KIO_EXPORT TQString TDEIO::convertSizeFromKB( TDEIO::filesize_t kbSize )
 {
     return convertSize(kbSize * 1024);
 }
 
-KIO_EXPORT TQString KIO::number( KIO::filesize_t size )
+KIO_EXPORT TQString TDEIO::number( TDEIO::filesize_t size )
 {
     char charbuf[256];
     sprintf(charbuf, "%lld", size);
     return TQString::fromLatin1(charbuf);
 }
 
-KIO_EXPORT unsigned int KIO::calculateRemainingSeconds( KIO::filesize_t totalSize,
-                                                        KIO::filesize_t processedSize, KIO::filesize_t speed )
+KIO_EXPORT unsigned int TDEIO::calculateRemainingSeconds( TDEIO::filesize_t totalSize,
+                                                        TDEIO::filesize_t processedSize, TDEIO::filesize_t speed )
 {
   if ( (speed != 0) && (totalSize != 0) )
     return ( totalSize - processedSize ) / speed;
@@ -109,7 +109,7 @@ KIO_EXPORT unsigned int KIO::calculateRemainingSeconds( KIO::filesize_t totalSiz
     return 0;
 }
 
-KIO_EXPORT TQString KIO::convertSeconds( unsigned int seconds )
+KIO_EXPORT TQString TDEIO::convertSeconds( unsigned int seconds )
 {
   unsigned int days  = seconds / 86400;
   unsigned int hours = (seconds - (days * 86400)) / 3600;
@@ -124,12 +124,12 @@ KIO_EXPORT TQString KIO::convertSeconds( unsigned int seconds )
     return timeStr;
 }
 
-KIO_EXPORT TQTime KIO::calculateRemaining( KIO::filesize_t totalSize, KIO::filesize_t processedSize, KIO::filesize_t speed )
+KIO_EXPORT TQTime TDEIO::calculateRemaining( TDEIO::filesize_t totalSize, TDEIO::filesize_t processedSize, TDEIO::filesize_t speed )
 {
   TQTime remainingTime;
 
   if ( speed != 0 ) {
-    KIO::filesize_t secs;
+    TDEIO::filesize_t secs;
     if ( totalSize == 0 ) {
       secs = 0;
     } else {
@@ -147,7 +147,7 @@ KIO_EXPORT TQTime KIO::calculateRemaining( KIO::filesize_t totalSize, KIO::files
   return remainingTime;
 }
 
-KIO_EXPORT TQString KIO::itemsSummaryString(uint items, uint files, uint dirs, KIO::filesize_t size, bool showSize)
+KIO_EXPORT TQString TDEIO::itemsSummaryString(uint items, uint files, uint dirs, TDEIO::filesize_t size, bool showSize)
 {
     TQString text = items == 0 ? i18n( "No Items" ) : i18n( "One Item", "%n Items", items );
     text += " - ";
@@ -155,14 +155,14 @@ KIO_EXPORT TQString KIO::itemsSummaryString(uint items, uint files, uint dirs, K
     if ( showSize && files > 0 )
     {
         text += " ";
-        text += i18n("(%1 Total)").arg(KIO::convertSize( size ) );
+        text += i18n("(%1 Total)").arg(TDEIO::convertSize( size ) );
     }
     text += " - ";
     text += dirs == 0 ? i18n( "No Folders" ) : i18n("One Folder", "%n Folders", dirs);
     return text;
 }
 
-KIO_EXPORT TQString KIO::encodeFileName( const TQString & _str )
+KIO_EXPORT TQString TDEIO::encodeFileName( const TQString & _str )
 {
   TQString str( _str );
 
@@ -177,7 +177,7 @@ KIO_EXPORT TQString KIO::encodeFileName( const TQString & _str )
   return str;
 }
 
-KIO_EXPORT TQString KIO::decodeFileName( const TQString & _str )
+KIO_EXPORT TQString TDEIO::decodeFileName( const TQString & _str )
 {
   TQString str;
 
@@ -205,210 +205,210 @@ KIO_EXPORT TQString KIO::decodeFileName( const TQString & _str )
   return str;
 }
 
-KIO_EXPORT TQString KIO::Job::errorString() const
+KIO_EXPORT TQString TDEIO::Job::errorString() const
 {
-  return KIO::buildErrorString(m_error, m_errorText);
+  return TDEIO::buildErrorString(m_error, m_errorText);
 }
 
-KIO_EXPORT TQString KIO::buildErrorString(int errorCode, const TQString &errorText)
+KIO_EXPORT TQString TDEIO::buildErrorString(int errorCode, const TQString &errorText)
 {
   TQString result;
 
   switch( errorCode )
     {
-    case  KIO::ERR_CANNOT_OPEN_FOR_READING:
+    case  TDEIO::ERR_CANNOT_OPEN_FOR_READING:
       result = i18n( "Could not read %1." ).arg( errorText );
       break;
-    case  KIO::ERR_CANNOT_OPEN_FOR_WRITING:
+    case  TDEIO::ERR_CANNOT_OPEN_FOR_WRITING:
       result = i18n( "Could not write to %1." ).arg( errorText );
       break;
-    case  KIO::ERR_CANNOT_LAUNCH_PROCESS:
+    case  TDEIO::ERR_CANNOT_LAUNCH_PROCESS:
       result = i18n( "Could not start process %1." ).arg( errorText );
       break;
-    case  KIO::ERR_INTERNAL:
+    case  TDEIO::ERR_INTERNAL:
       result = i18n( "Internal Error\nPlease send a full bug report at http://bugs.kde.org\n%1" ).arg( errorText );
       break;
-    case  KIO::ERR_MALFORMED_URL:
+    case  TDEIO::ERR_MALFORMED_URL:
       result = i18n( "Malformed URL %1." ).arg( errorText );
       break;
-    case  KIO::ERR_UNSUPPORTED_PROTOCOL:
+    case  TDEIO::ERR_UNSUPPORTED_PROTOCOL:
       result = i18n( "The protocol %1 is not supported." ).arg( errorText );
       break;
-    case  KIO::ERR_NO_SOURCE_PROTOCOL:
+    case  TDEIO::ERR_NO_SOURCE_PROTOCOL:
       result = i18n( "The protocol %1 is only a filter protocol.").arg( errorText );
       break;
-    case  KIO::ERR_UNSUPPORTED_ACTION:
+    case  TDEIO::ERR_UNSUPPORTED_ACTION:
       result = errorText;
 //       result = i18n( "Unsupported action %1" ).arg( errorText );
       break;
-    case  KIO::ERR_IS_DIRECTORY:
+    case  TDEIO::ERR_IS_DIRECTORY:
       result = i18n( "%1 is a folder, but a file was expected." ).arg( errorText );
       break;
-    case  KIO::ERR_IS_FILE:
+    case  TDEIO::ERR_IS_FILE:
       result = i18n( "%1 is a file, but a folder was expected." ).arg( errorText );
       break;
-    case  KIO::ERR_DOES_NOT_EXIST:
+    case  TDEIO::ERR_DOES_NOT_EXIST:
       result = i18n( "The file or folder %1 does not exist." ).arg( errorText );
       break;
-    case  KIO::ERR_FILE_ALREADY_EXIST:
+    case  TDEIO::ERR_FILE_ALREADY_EXIST:
       result = i18n( "A file named %1 already exists." ).arg( errorText );
       break;
-    case  KIO::ERR_DIR_ALREADY_EXIST:
+    case  TDEIO::ERR_DIR_ALREADY_EXIST:
       result = i18n( "A folder named %1 already exists." ).arg( errorText );
       break;
-    case  KIO::ERR_UNKNOWN_HOST:
+    case  TDEIO::ERR_UNKNOWN_HOST:
       result = errorText.isEmpty() ? i18n( "No hostname specified." ) : i18n( "Unknown host %1" ).arg( errorText );
       break;
-    case  KIO::ERR_ACCESS_DENIED:
+    case  TDEIO::ERR_ACCESS_DENIED:
       result = i18n( "Access denied to %1." ).arg( errorText );
       break;
-    case  KIO::ERR_WRITE_ACCESS_DENIED:
+    case  TDEIO::ERR_WRITE_ACCESS_DENIED:
       result = i18n( "Access denied.\nCould not write to %1." ).arg( errorText );
       break;
-    case  KIO::ERR_CANNOT_ENTER_DIRECTORY:
+    case  TDEIO::ERR_CANNOT_ENTER_DIRECTORY:
       result = i18n( "Could not enter folder %1." ).arg( errorText );
       break;
-    case  KIO::ERR_PROTOCOL_IS_NOT_A_FILESYSTEM:
+    case  TDEIO::ERR_PROTOCOL_IS_NOT_A_FILESYSTEM:
       result = i18n( "The protocol %1 does not implement a folder service." ).arg( errorText );
       break;
-    case  KIO::ERR_CYCLIC_LINK:
+    case  TDEIO::ERR_CYCLIC_LINK:
       result = i18n( "Found a cyclic link in %1." ).arg( errorText );
       break;
-    case  KIO::ERR_USER_CANCELED:
+    case  TDEIO::ERR_USER_CANCELED:
       // Do nothing in this case. The user doesn't need to be told what he just did.
       break;
-    case  KIO::ERR_CYCLIC_COPY:
+    case  TDEIO::ERR_CYCLIC_COPY:
       result = i18n( "Found a cyclic link while copying %1." ).arg( errorText );
       break;
-    case  KIO::ERR_COULD_NOT_CREATE_SOCKET:
+    case  TDEIO::ERR_COULD_NOT_CREATE_SOCKET:
       result = i18n( "Could not create socket for accessing %1." ).arg( errorText );
       break;
-    case  KIO::ERR_COULD_NOT_CONNECT:
+    case  TDEIO::ERR_COULD_NOT_CONNECT:
       result = i18n( "Could not connect to host %1." ).arg( errorText.isEmpty() ? TQString::fromLatin1("localhost") : errorText );
       break;
-    case  KIO::ERR_CONNECTION_BROKEN:
+    case  TDEIO::ERR_CONNECTION_BROKEN:
       result = i18n( "Connection to host %1 is broken." ).arg( errorText );
       break;
-    case  KIO::ERR_NOT_FILTER_PROTOCOL:
+    case  TDEIO::ERR_NOT_FILTER_PROTOCOL:
       result = i18n( "The protocol %1 is not a filter protocol." ).arg( errorText );
       break;
-    case  KIO::ERR_COULD_NOT_MOUNT:
+    case  TDEIO::ERR_COULD_NOT_MOUNT:
       result = i18n( "Could not mount device.\nThe reported error was:\n%1" ).arg( errorText );
       break;
-    case  KIO::ERR_COULD_NOT_UNMOUNT:
+    case  TDEIO::ERR_COULD_NOT_UNMOUNT:
       result = i18n( "Could not unmount device.\nThe reported error was:\n%1" ).arg( errorText );
       break;
-    case  KIO::ERR_COULD_NOT_READ:
+    case  TDEIO::ERR_COULD_NOT_READ:
       result = i18n( "Could not read file %1." ).arg( errorText );
       break;
-    case  KIO::ERR_COULD_NOT_WRITE:
+    case  TDEIO::ERR_COULD_NOT_WRITE:
       result = i18n( "Could not write to file %1." ).arg( errorText );
       break;
-    case  KIO::ERR_COULD_NOT_BIND:
+    case  TDEIO::ERR_COULD_NOT_BIND:
       result = i18n( "Could not bind %1." ).arg( errorText );
       break;
-    case  KIO::ERR_COULD_NOT_LISTEN:
+    case  TDEIO::ERR_COULD_NOT_LISTEN:
       result = i18n( "Could not listen %1." ).arg( errorText );
       break;
-    case  KIO::ERR_COULD_NOT_ACCEPT:
+    case  TDEIO::ERR_COULD_NOT_ACCEPT:
       result = i18n( "Could not accept %1." ).arg( errorText );
       break;
-    case  KIO::ERR_COULD_NOT_LOGIN:
+    case  TDEIO::ERR_COULD_NOT_LOGIN:
       result = errorText;
       break;
-    case  KIO::ERR_COULD_NOT_STAT:
+    case  TDEIO::ERR_COULD_NOT_STAT:
       result = i18n( "Could not access %1." ).arg( errorText );
       break;
-    case  KIO::ERR_COULD_NOT_CLOSEDIR:
+    case  TDEIO::ERR_COULD_NOT_CLOSEDIR:
       result = i18n( "Could not terminate listing %1." ).arg( errorText );
       break;
-    case  KIO::ERR_COULD_NOT_MKDIR:
+    case  TDEIO::ERR_COULD_NOT_MKDIR:
       result = i18n( "Could not make folder %1." ).arg( errorText );
       break;
-    case  KIO::ERR_COULD_NOT_RMDIR:
+    case  TDEIO::ERR_COULD_NOT_RMDIR:
       result = i18n( "Could not remove folder %1." ).arg( errorText );
       break;
-    case  KIO::ERR_CANNOT_RESUME:
+    case  TDEIO::ERR_CANNOT_RESUME:
       result = i18n( "Could not resume file %1." ).arg( errorText );
       break;
-    case  KIO::ERR_CANNOT_RENAME:
+    case  TDEIO::ERR_CANNOT_RENAME:
       result = i18n( "Could not rename file %1." ).arg( errorText );
       break;
-    case  KIO::ERR_CANNOT_CHMOD:
+    case  TDEIO::ERR_CANNOT_CHMOD:
       result = i18n( "Could not change permissions for %1." ).arg( errorText );
       break;
-    case  KIO::ERR_CANNOT_DELETE:
+    case  TDEIO::ERR_CANNOT_DELETE:
       result = i18n( "Could not delete file %1." ).arg( errorText );
       break;
-    case  KIO::ERR_SLAVE_DIED:
+    case  TDEIO::ERR_SLAVE_DIED:
       result = i18n( "The process for the %1 protocol died unexpectedly." ).arg( errorText );
       break;
-    case  KIO::ERR_OUT_OF_MEMORY:
+    case  TDEIO::ERR_OUT_OF_MEMORY:
       result = i18n( "Error. Out of memory.\n%1" ).arg( errorText );
       break;
-    case  KIO::ERR_UNKNOWN_PROXY_HOST:
+    case  TDEIO::ERR_UNKNOWN_PROXY_HOST:
       result = i18n( "Unknown proxy host\n%1" ).arg( errorText );
       break;
-    case  KIO::ERR_COULD_NOT_AUTHENTICATE:
+    case  TDEIO::ERR_COULD_NOT_AUTHENTICATE:
       result = i18n( "Authorization failed, %1 authentication not supported" ).arg( errorText );
       break;
-    case  KIO::ERR_ABORTED:
+    case  TDEIO::ERR_ABORTED:
       result = i18n( "User canceled action\n%1" ).arg( errorText );
       break;
-    case  KIO::ERR_INTERNAL_SERVER:
+    case  TDEIO::ERR_INTERNAL_SERVER:
       result = i18n( "Internal error in server\n%1" ).arg( errorText );
       break;
-    case  KIO::ERR_SERVER_TIMEOUT:
+    case  TDEIO::ERR_SERVER_TIMEOUT:
       result = i18n( "Timeout on server\n%1" ).arg( errorText );
       break;
-    case  KIO::ERR_UNKNOWN:
+    case  TDEIO::ERR_UNKNOWN:
       result = i18n( "Unknown error\n%1" ).arg( errorText );
       break;
-    case  KIO::ERR_UNKNOWN_INTERRUPT:
+    case  TDEIO::ERR_UNKNOWN_INTERRUPT:
       result = i18n( "Unknown interrupt\n%1" ).arg( errorText );
       break;
 /*
-    case  KIO::ERR_CHECKSUM_MISMATCH:
+    case  TDEIO::ERR_CHECKSUM_MISMATCH:
       if (errorText)
         result = i18n( "Warning: MD5 Checksum for %1 does not match checksum returned from server" ).arg(errorText);
       else
         result = i18n( "Warning: MD5 Checksum for %1 does not match checksum returned from server" ).arg("document");
       break;
 */
-    case KIO::ERR_CANNOT_DELETE_ORIGINAL:
+    case TDEIO::ERR_CANNOT_DELETE_ORIGINAL:
       result = i18n( "Could not delete original file %1.\nPlease check permissions." ).arg( errorText );
       break;
-    case KIO::ERR_CANNOT_DELETE_PARTIAL:
+    case TDEIO::ERR_CANNOT_DELETE_PARTIAL:
       result = i18n( "Could not delete partial file %1.\nPlease check permissions." ).arg( errorText );
       break;
-    case KIO::ERR_CANNOT_RENAME_ORIGINAL:
+    case TDEIO::ERR_CANNOT_RENAME_ORIGINAL:
       result = i18n( "Could not rename original file %1.\nPlease check permissions." ).arg( errorText );
       break;
-    case KIO::ERR_CANNOT_RENAME_PARTIAL:
+    case TDEIO::ERR_CANNOT_RENAME_PARTIAL:
       result = i18n( "Could not rename partial file %1.\nPlease check permissions." ).arg( errorText );
       break;
-    case KIO::ERR_CANNOT_SYMLINK:
+    case TDEIO::ERR_CANNOT_SYMLINK:
       result = i18n( "Could not create symlink %1.\nPlease check permissions." ).arg( errorText );
       break;
-    case KIO::ERR_NO_CONTENT:
+    case TDEIO::ERR_NO_CONTENT:
       result = errorText;
       break;
-    case KIO::ERR_DISK_FULL:
+    case TDEIO::ERR_DISK_FULL:
       result = i18n( "Could not write file %1.\nDisk full." ).arg( errorText );
       break;
-    case KIO::ERR_IDENTICAL_FILES:
+    case TDEIO::ERR_IDENTICAL_FILES:
       result = i18n( "The source and destination are the same file.\n%1" ).arg( errorText );
       break;
-    case KIO::ERR_SLAVE_DEFINED:
+    case TDEIO::ERR_SLAVE_DEFINED:
       result = errorText;
       break;
-    case KIO::ERR_UPGRADE_REQUIRED:
+    case TDEIO::ERR_UPGRADE_REQUIRED:
       result = i18n( "%1 is required by the server, but is not available." ).arg(errorText);
       break;
-    case KIO::ERR_POST_DENIED:
+    case TDEIO::ERR_POST_DENIED:
       result = i18n( "Access to restricted port in POST denied.");
       break;
-    case KIO::ERR_OFFLINE_MODE:
+    case TDEIO::ERR_OFFLINE_MODE:
       result = i18n( "Could not access %1.\nOffline mode active.").arg( errorText ); 
       break;
     default:
@@ -419,7 +419,7 @@ KIO_EXPORT TQString KIO::buildErrorString(int errorCode, const TQString &errorTe
   return result;
 }
 
-KIO_EXPORT TQString KIO::unsupportedActionErrorString(const TQString &protocol, int cmd) {
+KIO_EXPORT TQString TDEIO::unsupportedActionErrorString(const TQString &protocol, int cmd) {
   switch (cmd) {
     case CMD_CONNECT:
       return i18n("Opening connections is not supported with the protocol %1." ).arg(protocol);
@@ -458,7 +458,7 @@ KIO_EXPORT TQString KIO::unsupportedActionErrorString(const TQString &protocol, 
   }/*end switch*/
 }
 
-KIO_EXPORT TQStringList KIO::Job::detailedErrorStrings( const KURL *reqUrl /*= 0L*/,
+KIO_EXPORT TQStringList TDEIO::Job::detailedErrorStrings( const KURL *reqUrl /*= 0L*/,
                                             int method /*= -1*/ ) const
 {
   TQString errorName, techName, description, ret2;
@@ -508,7 +508,7 @@ KIO_EXPORT TQStringList KIO::Job::detailedErrorStrings( const KURL *reqUrl /*= 0
   return ret;
 }
 
-KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorText,
+KIO_EXPORT TQByteArray TDEIO::rawErrorDetail(int errorCode, const TQString &errorText,
                                const KURL *reqUrl /*= 0L*/, int /*method = -1*/ )
 {
   TQString url, host, protocol, datetime, domain, path, dir, filename;
@@ -612,7 +612,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
   TQString sNetwork = i18n( "Check your network connection status." );
 
   switch( errorCode ) {
-    case  KIO::ERR_CANNOT_OPEN_FOR_READING:
+    case  TDEIO::ERR_CANNOT_OPEN_FOR_READING:
       errorName = i18n( "Cannot Open Resource For Reading" );
       description = i18n( "This means that the contents of the requested file "
         "or folder <strong>%1</strong> could not be retrieved, as read "
@@ -622,7 +622,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sAccess << sQuerylock << sSysadmin;
       break;
 
-    case  KIO::ERR_CANNOT_OPEN_FOR_WRITING:
+    case  TDEIO::ERR_CANNOT_OPEN_FOR_WRITING:
       errorName = i18n( "Cannot Open Resource For Writing" );
       description = i18n( "This means that the file, <strong>%1</strong>, could "
         "not be written to as requested, because access with permission to "
@@ -631,7 +631,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sAccess << sQuerylock << sSysadmin;
       break;
 
-    case  KIO::ERR_CANNOT_LAUNCH_PROCESS:
+    case  TDEIO::ERR_CANNOT_LAUNCH_PROCESS:
       errorName = i18n( "Cannot Initiate the %1 Protocol" ).arg( protocol );
       techName = i18n( "Unable to Launch Process" );
       description = i18n( "The program on your computer which provides access "
@@ -644,7 +644,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sUpdate << sSysadmin;
       break;
 
-    case  KIO::ERR_INTERNAL:
+    case  TDEIO::ERR_INTERNAL:
       errorName = i18n( "Internal Error" );
       description = i18n( "The program on your computer which provides access "
         "to the <strong>%1</strong> protocol has reported an internal error." )
@@ -653,7 +653,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sUpdate << sBugreport;
       break;
 
-    case  KIO::ERR_MALFORMED_URL:
+    case  TDEIO::ERR_MALFORMED_URL:
       errorName = i18n( "Improperly Formatted URL" );
       description = i18n( "The <strong>U</strong>niform <strong>R</strong>esource "
         "<strong>L</strong>ocator (URL) that you entered was not properly "
@@ -663,7 +663,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sTypo;
       break;
 
-    case  KIO::ERR_UNSUPPORTED_PROTOCOL:
+    case  TDEIO::ERR_UNSUPPORTED_PROTOCOL:
       errorName = i18n( "Unsupported Protocol %1" ).arg( protocol );
       description = i18n( "The protocol <strong>%1</strong> is not supported "
         "by the TDE programs currently installed on this computer." )
@@ -679,7 +679,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
         << sUpdate << sSysadmin;
       break;
 
-    case  KIO::ERR_NO_SOURCE_PROTOCOL:
+    case  TDEIO::ERR_NO_SOURCE_PROTOCOL:
       errorName = i18n( "URL Does Not Refer to a Resource." );
       techName = i18n( "Protocol is a Filter Protocol" );
       description = i18n( "The <strong>U</strong>niform <strong>R</strong>esource "
@@ -692,7 +692,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sTypo;
       break;
 
-    case  KIO::ERR_UNSUPPORTED_ACTION:
+    case  TDEIO::ERR_UNSUPPORTED_ACTION:
       errorName = i18n( "Unsupported Action: %1" ).arg( errorText );
       description = i18n( "The requested action is not supported by the TDE "
         "program which is implementing the <strong>%1</strong> protocol." )
@@ -704,7 +704,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
         "outcome." );
       break;
 
-    case  KIO::ERR_IS_DIRECTORY:
+    case  TDEIO::ERR_IS_DIRECTORY:
       errorName = i18n( "File Expected" );
       description = i18n( "The request expected a file, however the "
         "folder <strong>%1</strong> was found instead." ).arg( dir );
@@ -712,7 +712,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sUpdate << sSysadmin;
       break;
 
-    case  KIO::ERR_IS_FILE:
+    case  TDEIO::ERR_IS_FILE:
       errorName = i18n( "Folder Expected" );
       description = i18n( "The request expected a folder, however "
         "the file <strong>%1</strong> was found instead." ).arg( filename );
@@ -720,7 +720,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sUpdate << sSysadmin;
       break;
 
-    case  KIO::ERR_DOES_NOT_EXIST:
+    case  TDEIO::ERR_DOES_NOT_EXIST:
       errorName = i18n( "File or Folder Does Not Exist" );
       description = i18n( "The specified file or folder <strong>%1</strong> "
         "does not exist." ).arg( dir );
@@ -728,7 +728,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sUpdate << sSysadmin;
       break;
 
-    case  KIO::ERR_FILE_ALREADY_EXIST:
+    case  TDEIO::ERR_FILE_ALREADY_EXIST:
       errorName = i18n( "File Already Exists" );
       description = i18n( "The requested file could not be created because a "
         "file with the same name already exists." );
@@ -738,7 +738,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
         << i18n( "Choose an alternate filename for the new file." );
       break;
 
-    case  KIO::ERR_DIR_ALREADY_EXIST:
+    case  TDEIO::ERR_DIR_ALREADY_EXIST:
       errorName = i18n( "Folder Already Exists" );
       description = i18n( "The requested folder could not be created because "
         "a folder with the same name already exists." );
@@ -748,7 +748,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
         << i18n( "Choose an alternate name for the new folder." );
       break;
 
-    case  KIO::ERR_UNKNOWN_HOST:
+    case  TDEIO::ERR_UNKNOWN_HOST:
       errorName = i18n( "Unknown Host" );
       description = i18n( "An unknown host error indicates that the server with "
         "the requested name, <strong>%1</strong>, could not be "
@@ -759,7 +759,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sNetwork << sSysadmin;
       break;
 
-    case  KIO::ERR_ACCESS_DENIED:
+    case  TDEIO::ERR_ACCESS_DENIED:
       errorName = i18n( "Access Denied" );
       description = i18n( "Access was denied to the specified resource, "
         "<strong>%1</strong>." ).arg( url );
@@ -772,7 +772,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       if ( !isSlaveNetwork ) solutions << sServeradmin;
       break;
 
-    case  KIO::ERR_WRITE_ACCESS_DENIED:
+    case  TDEIO::ERR_WRITE_ACCESS_DENIED:
       errorName = i18n( "Write Access Denied" );
       description = i18n( "This means that an attempt to write to the file "
         "<strong>%1</strong> was rejected." ).arg( filename );
@@ -780,7 +780,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sAccess << sQuerylock << sSysadmin;
       break;
 
-    case  KIO::ERR_CANNOT_ENTER_DIRECTORY:
+    case  TDEIO::ERR_CANNOT_ENTER_DIRECTORY:
       errorName = i18n( "Unable to Enter Folder" );
       description = i18n( "This means that an attempt to enter (in other words, "
         "to open) the requested folder <strong>%1</strong> was rejected." )
@@ -789,7 +789,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sAccess << sQuerylock << sSysadmin;
       break;
 
-    case  KIO::ERR_PROTOCOL_IS_NOT_A_FILESYSTEM:
+    case  TDEIO::ERR_PROTOCOL_IS_NOT_A_FILESYSTEM:
       errorName = i18n( "Folder Listing Unavailable" );
       techName = i18n( "Protocol %1 is not a Filesystem" ).arg( protocol );
       description = i18n( "This means that a request was made which requires "
@@ -799,7 +799,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sUpdate << sBugreport;
       break;
 
-    case  KIO::ERR_CYCLIC_LINK:
+    case  TDEIO::ERR_CYCLIC_LINK:
       errorName = i18n( "Cyclic Link Detected" );
       description = i18n( "UNIX environments are commonly able to link a file or "
         "folder to a separate name and/or location. TDE detected a link or "
@@ -809,7 +809,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
         "cause an infinite loop, and try again." ) << sSysadmin;
       break;
 
-    case  KIO::ERR_USER_CANCELED:
+    case  TDEIO::ERR_USER_CANCELED:
       // Do nothing in this case. The user doesn't need to be told what he just did.
       // rodda: However, if we have been called, an application is about to display
       // this information anyway. If we don't return sensible information, the
@@ -820,7 +820,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << i18n( "Retry the request." );
       break;
 
-    case  KIO::ERR_CYCLIC_COPY:
+    case  TDEIO::ERR_CYCLIC_COPY:
       errorName = i18n( "Cyclic Link Detected During Copy" );
       description = i18n( "UNIX environments are commonly able to link a file or "
         "folder to a separate name and/or location. During the requested copy "
@@ -831,7 +831,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
         "cause an infinite loop, and try again." ) << sSysadmin;
       break;
 
-    case  KIO::ERR_COULD_NOT_CREATE_SOCKET:
+    case  TDEIO::ERR_COULD_NOT_CREATE_SOCKET:
       errorName = i18n( "Could Not Create Network Connection" );
       techName = i18n( "Could Not Create Socket" );
       description = i18n( "This is a fairly technical error in which a required "
@@ -841,7 +841,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sNetwork << sSysadmin;
       break;
 
-    case  KIO::ERR_COULD_NOT_CONNECT:
+    case  TDEIO::ERR_COULD_NOT_CONNECT:
       errorName = i18n( "Connection to Server Refused" );
       description = i18n( "The server <strong>%1</strong> refused to allow this "
         "computer to make a connection." ).arg( host );
@@ -855,7 +855,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sTryagain << sServeradmin << sSysadmin;
       break;
 
-    case  KIO::ERR_CONNECTION_BROKEN:
+    case  TDEIO::ERR_CONNECTION_BROKEN:
       errorName = i18n( "Connection to Server Closed Unexpectedly" );
       description = i18n( "Although a connection was established to "
         "<strong>%1</strong>, the connection was closed at an unexpected point "
@@ -865,7 +865,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sTryagain << sServeradmin << sSysadmin;
       break;
 
-    case  KIO::ERR_NOT_FILTER_PROTOCOL:
+    case  TDEIO::ERR_NOT_FILTER_PROTOCOL:
       errorName = i18n( "URL Resource Invalid" );
       techName = i18n( "Protocol %1 is not a Filter Protocol" ).arg( protocol );
       description = i18n( "The <strong>U</strong>niform <strong>R</strong>esource "
@@ -880,7 +880,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sTypo << sSysadmin;
       break;
 
-    case  KIO::ERR_COULD_NOT_MOUNT:
+    case  TDEIO::ERR_COULD_NOT_MOUNT:
       errorName = i18n( "Unable to Initialize Input/Output Device" );
       techName = i18n( "Could Not Mount Device" );
       description = i18n( "The requested device could not be initialized "
@@ -899,7 +899,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
         "on.; and try again." ) << sAccess << sSysadmin;
       break;
 
-    case  KIO::ERR_COULD_NOT_UNMOUNT:
+    case  TDEIO::ERR_COULD_NOT_UNMOUNT:
       errorName = i18n( "Unable to Uninitialize Input/Output Device" );
       techName = i18n( "Could Not Unmount Device" );
       description = i18n( "The requested device could not be uninitialized "
@@ -917,7 +917,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
         "and try again." ) << sAccess << sSysadmin;
       break;
 
-    case  KIO::ERR_COULD_NOT_READ:
+    case  TDEIO::ERR_COULD_NOT_READ:
       errorName = i18n( "Cannot Read From Resource" );
       description = i18n( "This means that although the resource, "
         "<strong>%1</strong>, was able to be opened, an error occurred while "
@@ -930,7 +930,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sSysadmin;
       break;
 
-    case  KIO::ERR_COULD_NOT_WRITE:
+    case  TDEIO::ERR_COULD_NOT_WRITE:
       errorName = i18n( "Cannot Write to Resource" );
       description = i18n( "This means that although the resource, <strong>%1</strong>"
         ", was able to be opened, an error occurred while writing to the resource." )
@@ -943,7 +943,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sSysadmin;
       break;
 
-    case  KIO::ERR_COULD_NOT_BIND:
+    case  TDEIO::ERR_COULD_NOT_BIND:
       errorName = i18n( "Could Not Listen for Network Connections" );
       techName = i18n( "Could Not Bind" );
       description = i18n( "This is a fairly technical error in which a required "
@@ -954,7 +954,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sNetwork << sSysadmin;
       break;
 
-    case  KIO::ERR_COULD_NOT_LISTEN:
+    case  TDEIO::ERR_COULD_NOT_LISTEN:
       errorName = i18n( "Could Not Listen for Network Connections" );
       techName = i18n( "Could Not Listen" );
       description = i18n( "This is a fairly technical error in which a required "
@@ -965,7 +965,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sNetwork << sSysadmin;
       break;
 
-    case  KIO::ERR_COULD_NOT_ACCEPT:
+    case  TDEIO::ERR_COULD_NOT_ACCEPT:
       errorName = i18n( "Could Not Accept Network Connection" );
       description = i18n( "This is a fairly technical error in which an error "
         "occurred while attempting to accept an incoming network connection." );
@@ -975,7 +975,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sNetwork << sSysadmin;
       break;
 
-    case  KIO::ERR_COULD_NOT_LOGIN:
+    case  TDEIO::ERR_COULD_NOT_LOGIN:
       errorName = i18n( "Could Not Login: %1" ).arg( errorText );
       description = i18n( "An attempt to login to perform the requested "
         "operation was unsuccessful." );
@@ -987,7 +987,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
         "are entered correctly." ) << sServeradmin << sSysadmin;
       break;
 
-    case  KIO::ERR_COULD_NOT_STAT:
+    case  TDEIO::ERR_COULD_NOT_STAT:
       errorName = i18n( "Could Not Determine Resource Status" );
       techName = i18n( "Could Not Stat Resource" );
       description = i18n( "An attempt to determine information about the status "
@@ -999,13 +999,13 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
         "are entered correctly." ) << sSysadmin;
       break;
 
-    case  KIO::ERR_COULD_NOT_CLOSEDIR:
+    case  TDEIO::ERR_COULD_NOT_CLOSEDIR:
       //result = i18n( "Could not terminate listing %1" ).arg( errorText );
       errorName = i18n( "Could Not Cancel Listing" );
       techName = i18n( "FIXME: Document this" );
       break;
 
-    case  KIO::ERR_COULD_NOT_MKDIR:
+    case  TDEIO::ERR_COULD_NOT_MKDIR:
       errorName = i18n( "Could Not Create Folder" );
       description = i18n( "An attempt to create the requested folder failed." );
       causes << cAccess << i18n( "The location where the folder was to be created "
@@ -1014,7 +1014,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << i18n( "Retry the request." ) << sAccess;
       break;
 
-    case  KIO::ERR_COULD_NOT_RMDIR:
+    case  TDEIO::ERR_COULD_NOT_RMDIR:
       errorName = i18n( "Could Not Remove Folder" );
       description = i18n( "An attempt to remove the specified folder, "
         "<strong>%1</strong>, failed." ).arg( dir );
@@ -1026,7 +1026,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
         "again." ) << sAccess;
       break;
 
-    case  KIO::ERR_CANNOT_RESUME:
+    case  TDEIO::ERR_CANNOT_RESUME:
       errorName = i18n( "Could Not Resume File Transfer" );
       description = i18n( "The specified request asked that the transfer of "
         "file <strong>%1</strong> be resumed at a certain point of the "
@@ -1037,7 +1037,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
         "transfer." );
       break;
 
-    case  KIO::ERR_CANNOT_RENAME:
+    case  TDEIO::ERR_CANNOT_RENAME:
       errorName = i18n( "Could Not Rename Resource" );
       description = i18n( "An attempt to rename the specified resource "
         "<strong>%1</strong> failed." ).arg( url );
@@ -1046,7 +1046,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sAccess << sExists;
       break;
 
-    case  KIO::ERR_CANNOT_CHMOD:
+    case  TDEIO::ERR_CANNOT_CHMOD:
       errorName = i18n( "Could Not Alter Permissions of Resource" );
       description = i18n( "An attempt to alter the permissions on the specified "
         "resource <strong>%1</strong> failed." ).arg( url );
@@ -1054,7 +1054,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sAccess << sExists;
       break;
 
-    case  KIO::ERR_CANNOT_DELETE:
+    case  TDEIO::ERR_CANNOT_DELETE:
       errorName = i18n( "Could Not Delete Resource" );
       description = i18n( "An attempt to delete the specified resource "
         "<strong>%1</strong> failed." ).arg( url );
@@ -1062,7 +1062,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sAccess << sExists;
       break;
 
-    case  KIO::ERR_SLAVE_DIED:
+    case  TDEIO::ERR_SLAVE_DIED:
       errorName = i18n( "Unexpected Program Termination" );
       description = i18n( "The program on your computer which provides access "
         "to the <strong>%1</strong> protocol has unexpectedly terminated." )
@@ -1071,7 +1071,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sUpdate << sBugreport;
       break;
 
-    case  KIO::ERR_OUT_OF_MEMORY:
+    case  TDEIO::ERR_OUT_OF_MEMORY:
       errorName = i18n( "Out of Memory" );
       description = i18n( "The program on your computer which provides access "
         "to the <strong>%1</strong> protocol could not obtain the memory "
@@ -1080,7 +1080,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sUpdate << sBugreport;
       break;
 
-    case  KIO::ERR_UNKNOWN_PROXY_HOST:
+    case  TDEIO::ERR_UNKNOWN_PROXY_HOST:
       errorName = i18n( "Unknown Proxy Host" );
       description = i18n( "While retrieving information about the specified "
         "proxy host, <strong>%1</strong>, an Unknown Host error was encountered. "
@@ -1094,7 +1094,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
         << sSysadmin;
       break;
 
-    case  KIO::ERR_COULD_NOT_AUTHENTICATE:
+    case  TDEIO::ERR_COULD_NOT_AUTHENTICATE:
       errorName = i18n( "Authentication Failed: Method %1 Not Supported" )
          .arg( errorText );
       description = i18n( "Although you may have supplied the correct "
@@ -1106,14 +1106,14 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
         "authentication method." ) << sSysadmin;
       break;
 
-    case  KIO::ERR_ABORTED:
+    case  TDEIO::ERR_ABORTED:
       errorName = i18n( "Request Aborted" );
       description = i18n( "The request was not completed because it was "
         "aborted." );
       solutions << i18n( "Retry the request." );
       break;
 
-    case  KIO::ERR_INTERNAL_SERVER:
+    case  TDEIO::ERR_INTERNAL_SERVER:
       errorName = i18n( "Internal Error in Server" );
       description = i18n( "The program on the server which provides access "
         "to the <strong>%1</strong> protocol has reported an internal error: "
@@ -1127,7 +1127,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
         "submit the bug report directly to them." );
       break;
 
-    case  KIO::ERR_SERVER_TIMEOUT:
+    case  TDEIO::ERR_SERVER_TIMEOUT:
       errorName = i18n( "Timeout Error" );
       description = i18n( "Although contact was made with the server, a "
         "response was not received within the amount of time allocated for "
@@ -1145,7 +1145,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sTryagain << sServeradmin;
       break;
 
-    case  KIO::ERR_UNKNOWN:
+    case  TDEIO::ERR_UNKNOWN:
       errorName = i18n( "Unknown Error" );
       description = i18n( "The program on your computer which provides access "
         "to the <strong>%1</strong> protocol has reported an unknown error: "
@@ -1154,7 +1154,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sUpdate << sBugreport;
       break;
 
-    case  KIO::ERR_UNKNOWN_INTERRUPT:
+    case  TDEIO::ERR_UNKNOWN_INTERRUPT:
       errorName = i18n( "Unknown Interruption" );
       description = i18n( "The program on your computer which provides access "
         "to the <strong>%1</strong> protocol has reported an interruption of "
@@ -1163,7 +1163,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sUpdate << sBugreport;
       break;
 
-    case KIO::ERR_CANNOT_DELETE_ORIGINAL:
+    case TDEIO::ERR_CANNOT_DELETE_ORIGINAL:
       errorName = i18n( "Could Not Delete Original File" );
       description = i18n( "The requested operation required the deleting of "
         "the original file, most likely at the end of a file move operation. "
@@ -1173,7 +1173,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sAccess;
       break;
 
-    case KIO::ERR_CANNOT_DELETE_PARTIAL:
+    case TDEIO::ERR_CANNOT_DELETE_PARTIAL:
       errorName = i18n( "Could Not Delete Temporary File" );
       description = i18n( "The requested operation required the creation of "
         "a temporary file in which to save the new file while being "
@@ -1183,7 +1183,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sAccess;
       break;
 
-    case KIO::ERR_CANNOT_RENAME_ORIGINAL:
+    case TDEIO::ERR_CANNOT_RENAME_ORIGINAL:
       errorName = i18n( "Could Not Rename Original File" );
       description = i18n( "The requested operation required the renaming of "
         "the original file <strong>%1</strong>, however it could not be "
@@ -1192,7 +1192,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sAccess;
       break;
 
-    case KIO::ERR_CANNOT_RENAME_PARTIAL:
+    case TDEIO::ERR_CANNOT_RENAME_PARTIAL:
       errorName = i18n( "Could Not Rename Temporary File" );
       description = i18n( "The requested operation required the creation of "
         "a temporary file <strong>%1</strong>, however it could not be "
@@ -1201,7 +1201,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sAccess;
       break;
 
-    case KIO::ERR_CANNOT_SYMLINK:
+    case TDEIO::ERR_CANNOT_SYMLINK:
       errorName = i18n( "Could Not Create Link" );
       techName = i18n( "Could Not Create Symbolic Link" );
       description = i18n( "The requested symbolic link %1 could not be created." )
@@ -1210,12 +1210,12 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       solutions << sAccess;
       break;
 
-    case KIO::ERR_NO_CONTENT:
+    case TDEIO::ERR_NO_CONTENT:
       errorName = i18n( "No Content" );
       description = errorText;
       break;
 
-    case KIO::ERR_DISK_FULL:
+    case TDEIO::ERR_DISK_FULL:
       errorName = i18n( "Disk Full" );
       description = i18n( "The requested file <strong>%1</strong> could not be "
         "written to as there is inadequate disk space." ).arg( errorText );
@@ -1225,7 +1225,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
         << sSysadmin;
       break;
 
-    case KIO::ERR_IDENTICAL_FILES:
+    case TDEIO::ERR_IDENTICAL_FILES:
       errorName = i18n( "Source and Destination Files Identical" );
       description = i18n( "The operation could not be completed because the "
         "source and destination files are the same file." );
@@ -1233,7 +1233,7 @@ KIO_EXPORT TQByteArray KIO::rawErrorDetail(int errorCode, const TQString &errorT
       break;
 
     // We assume that the slave has all the details
-    case KIO::ERR_SLAVE_DEFINED:
+    case TDEIO::ERR_SLAVE_DEFINED:
       errorName = TQString::null;
       description = errorText;
       break;
@@ -1368,7 +1368,7 @@ extern "C" void endvfsent( );
 
 #endif /* HAVE_GETMNTINFO */
 
-TQString KIO::findDeviceMountPoint( const TQString& filename )
+TQString TDEIO::findDeviceMountPoint( const TQString& filename )
 {
     TQString result;
 
@@ -1909,13 +1909,13 @@ static TQString get_mount_info(const TQString& filename,
 
 #else //!Q_OS_UNIX
 //dummy
-TQString KIO::findDeviceMountPoint( const TQString& filename )
+TQString TDEIO::findDeviceMountPoint( const TQString& filename )
 {
 	return TQString::null;
 }
 #endif
 
-TQString KIO::findPathMountPoint(const TQString& filename)
+TQString TDEIO::findPathMountPoint(const TQString& filename)
 {
 #ifdef Q_OS_UNIX
   MountState isautofs = Unseen, isslow = Unseen, ismanual = Wrong;
@@ -1926,7 +1926,7 @@ TQString KIO::findPathMountPoint(const TQString& filename)
 #endif 
 }
 
-bool KIO::manually_mounted(const TQString& filename)
+bool TDEIO::manually_mounted(const TQString& filename)
 {
 #ifdef Q_OS_UNIX
   MountState isautofs = Unseen, isslow = Unseen, ismanual = Unseen;
@@ -1938,7 +1938,7 @@ bool KIO::manually_mounted(const TQString& filename)
 #endif 
 }
 
-bool KIO::probably_slow_mounted(const TQString& filename)
+bool TDEIO::probably_slow_mounted(const TQString& filename)
 {
 #ifdef Q_OS_UNIX
   MountState isautofs = Unseen, isslow = Unseen, ismanual = Wrong;
@@ -1950,7 +1950,7 @@ bool KIO::probably_slow_mounted(const TQString& filename)
 #endif 
 }
 
-bool KIO::testFileSystemFlag(const TQString& filename, FileSystemFlag flag)
+bool TDEIO::testFileSystemFlag(const TQString& filename, FileSystemFlag flag)
 {
 #ifdef Q_OS_UNIX
   MountState isautofs = Unseen, isslow = Unseen, ismanual = Wrong;
@@ -1973,36 +1973,36 @@ bool KIO::testFileSystemFlag(const TQString& filename, FileSystemFlag flag)
   return false;
 }
 
-KIO::CacheControl KIO::parseCacheControl(const TQString &cacheControl)
+TDEIO::CacheControl TDEIO::parseCacheControl(const TQString &cacheControl)
 {
   TQString tmp = cacheControl.lower();
 
   if (tmp == "cacheonly")
-     return KIO::CC_CacheOnly;
+     return TDEIO::CC_CacheOnly;
   if (tmp == "cache")
-     return KIO::CC_Cache;
+     return TDEIO::CC_Cache;
   if (tmp == "verify")
-     return KIO::CC_Verify;
+     return TDEIO::CC_Verify;
   if (tmp == "refresh")
-     return KIO::CC_Refresh;
+     return TDEIO::CC_Refresh;
   if (tmp == "reload")
-     return KIO::CC_Reload;
+     return TDEIO::CC_Reload;
 
   kdDebug() << "unrecognized Cache control option:"<<cacheControl<<endl;
-  return KIO::CC_Verify;
+  return TDEIO::CC_Verify;
 }
 
-TQString KIO::getCacheControlString(KIO::CacheControl cacheControl)
+TQString TDEIO::getCacheControlString(TDEIO::CacheControl cacheControl)
 {
-    if (cacheControl == KIO::CC_CacheOnly)
+    if (cacheControl == TDEIO::CC_CacheOnly)
 	return "CacheOnly";
-    if (cacheControl == KIO::CC_Cache)
+    if (cacheControl == TDEIO::CC_Cache)
 	return "Cache";
-    if (cacheControl == KIO::CC_Verify)
+    if (cacheControl == TDEIO::CC_Verify)
 	return "Verify";
-    if (cacheControl == KIO::CC_Refresh)
+    if (cacheControl == TDEIO::CC_Refresh)
 	return "Refresh";
-    if (cacheControl == KIO::CC_Reload)
+    if (cacheControl == TDEIO::CC_Reload)
 	return "Reload";
     kdDebug() << "unrecognized Cache control enum value:"<<cacheControl<<endl;
     return TQString::null;

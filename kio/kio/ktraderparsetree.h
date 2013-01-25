@@ -31,7 +31,7 @@
 
 #include "ktrader.h"
 
-namespace KIO {
+namespace TDEIO {
 
 class ParseTreeBase;
 

@@ -2015,9 +2015,9 @@ bool KListView::shadeSortColumn() const
   return d->shadeSortColumn;
 }
 
-void KListView::saveLayout(KConfig *config, const TQString &group) const
+void KListView::saveLayout(TDEConfig *config, const TQString &group) const
 {
-  KConfigGroupSaver saver(config, group);
+  TDEConfigGroupSaver saver(config, group);
   TQStringList widths, order;
 
   const int colCount = columns();
@@ -2033,9 +2033,9 @@ void KListView::saveLayout(KConfig *config, const TQString &group) const
   config->writeEntry("SortAscending", d->sortAscending);
 }
 
-void KListView::restoreLayout(KConfig *config, const TQString &group)
+void KListView::restoreLayout(TDEConfig *config, const TQString &group)
 {
-  KConfigGroupSaver saver(config, group);
+  TDEConfigGroupSaver saver(config, group);
   TQStringList cols = config->readListEntry("ColumnWidths");
   int i = 0;
   { // scope the iterators

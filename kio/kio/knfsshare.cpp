@@ -52,7 +52,7 @@ KNFSSharePrivate::KNFSSharePrivate()
  * @return wether an 'exports' file was found.
  **/
 bool KNFSSharePrivate::findExportsFile() {
-  KConfig config("knfsshare");
+  TDEConfig config("knfsshare");
   config.setGroup("General");
   exportsFile = config.readPathEntry("exportsFile");
 

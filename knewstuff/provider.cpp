@@ -219,7 +219,7 @@ void ProviderLoader::load( const TQString &type, const TQString &providersList )
   mProviders.clear();
   mJobData = "";
 
-  KConfig *cfg = TDEGlobal::config();
+  TDEConfig *cfg = TDEGlobal::config();
   cfg->setGroup("KNewStuff");
 
   TQString providersUrl = providersList;
@@ -236,16 +236,16 @@ void ProviderLoader::load( const TQString &type, const TQString &providersList )
 
   kdDebug() << "ProviderLoader::load(): providersUrl: " << providersUrl << endl;
   
-  KIO::TransferJob *job = KIO::get( KURL( providersUrl ), false, false );
-  connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
-           TQT_SLOT( slotJobResult( KIO::Job * ) ) );
-  connect( job, TQT_SIGNAL( data( KIO::Job *, const TQByteArray & ) ),
-           TQT_SLOT( slotJobData( KIO::Job *, const TQByteArray & ) ) );
+  TDEIO::TransferJob *job = TDEIO::get( KURL( providersUrl ), false, false );
+  connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ),
+           TQT_SLOT( slotJobResult( TDEIO::Job * ) ) );
+  connect( job, TQT_SIGNAL( data( TDEIO::Job *, const TQByteArray & ) ),
+           TQT_SLOT( slotJobData( TDEIO::Job *, const TQByteArray & ) ) );
 
 //  job->dumpObjectInfo();
 }
 
-void ProviderLoader::slotJobData( KIO::Job *, const TQByteArray &data )
+void ProviderLoader::slotJobData( TDEIO::Job *, const TQByteArray &data )
 {
   kdDebug() << "ProviderLoader::slotJobData()" << endl;
 
@@ -256,7 +256,7 @@ void ProviderLoader::slotJobData( KIO::Job *, const TQByteArray &data )
   mJobData.append( TQString::fromUtf8( str ) );
 }
 
-void ProviderLoader::slotJobResult( KIO::Job *job )
+void ProviderLoader::slotJobResult( TDEIO::Job *job )
 {
   if ( job->error() ) {
     job->showErrorDialog( TQT_TQWIDGET(parent()) );

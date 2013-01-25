@@ -28,7 +28,7 @@
 /** @deprecated Use KProtocolManager::defaultUserAgent() instead. */
 #define DEFAULT_USERAGENT_STRING ""
 
-class KConfig;
+class TDEConfig;
 
 /**
  * Provides information about I/O (Internet, etc.) settings chosen/set
@@ -311,7 +311,7 @@ public:
    * Returns the Cache control directive to be used.
    * @return the cache control value
    */
-  static KIO::CacheControl cacheControl();
+  static TDEIO::CacheControl cacheControl();
 
 
 /*============================ DOWNLOAD CONFIG ==============================*/
@@ -382,8 +382,8 @@ public:
    * @internal
    * (Shared with SlaveConfig)
    */
-  static KConfig *config();
+  static TDEConfig *config();
 private:
-  static KConfig *http_config();
+  static TDEConfig *http_config();
 };
 #endif

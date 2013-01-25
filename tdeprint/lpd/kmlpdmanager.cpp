@@ -273,7 +273,7 @@ void KMLpdManager::listPrinters()
 
 TQString KMLpdManager::programName(int f)
 {
-	KConfig	*conf = KMFactory::self()->printConfig();
+	TDEConfig	*conf = KMFactory::self()->printConfig();
 	conf->setGroup("LPD");
 	switch (f)
 	{

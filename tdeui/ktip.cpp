@@ -301,7 +301,7 @@ KTipDialog::KTipDialog(KTipDatabase *db, TQWidget *parent, const char *name)
     ok->setDefault(true);
     hbox2->addWidget(ok);
 
-    KConfigGroup config(kapp->config(), "TipOfDay");
+    TDEConfigGroup config(kapp->config(), "TipOfDay");
     mTipOnStart->setChecked(config.readBoolEntry("RunOnStart", true));
 
     connect(next, TQT_SIGNAL(clicked()), this, TQT_SLOT(nextTip()));
@@ -332,7 +332,7 @@ void KTipDialog::showTip(TQWidget *parent, const TQString &tipFile, bool force)
 
 void KTipDialog::showMultiTip(TQWidget *parent, const TQStringList &tipFiles, bool force)
 {
-    KConfigGroup configGroup(kapp->config(), "TipOfDay");
+    TDEConfigGroup configGroup(kapp->config(), "TipOfDay");
 
     const bool runOnStart = configGroup.readBoolEntry("RunOnStart", true);
 
@@ -418,7 +418,7 @@ static TQString fixTip(TQString tip)
 
   void KTipDialog::setShowOnStart(bool on)
   {
-      KConfigGroup config(kapp->config(), "TipOfDay");
+      TDEConfigGroup config(kapp->config(), "TipOfDay");
       config.writeEntry("RunOnStart", on);
       config.sync();
   }

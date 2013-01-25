@@ -25,21 +25,21 @@
 #include <tqdir.h>
 #include <kio/global.h>
 
-using namespace KIO;
+using namespace TDEIO;
 
 SpeedTest::SpeedTest( const KURL & url )
     : TQObject(0, "speed")
 {
     Job *job = listRecursive( url );
     //Job *job = del( KURL("file:" + TQDir::currentDirPath()) ); DANGEROUS !
-    connect(job, TQT_SIGNAL( result( KIO::Job*)),
-	    TQT_SLOT( finished( KIO::Job* ) ));
-    /*connect(job, TQT_SIGNAL( entries( KIO::Job*, const KIO::UDSEntryList&)),
-	    TQT_SLOT( entries( KIO::Job*, const KIO::UDSEntryList&)));
+    connect(job, TQT_SIGNAL( result( TDEIO::Job*)),
+	    TQT_SLOT( finished( TDEIO::Job* ) ));
+    /*connect(job, TQT_SIGNAL( entries( TDEIO::Job*, const TDEIO::UDSEntryList&)),
+	    TQT_SLOT( entries( TDEIO::Job*, const TDEIO::UDSEntryList&)));
     */
 }
 
-void SpeedTest::entries(KIO::Job*, const UDSEntryList& list) {
+void SpeedTest::entries(TDEIO::Job*, const UDSEntryList& list) {
 
     UDSEntryListConstIterator it=list.begin();
     for (; it != list.end(); ++it) {
@@ -65,7 +65,7 @@ static KCmdLineOptions options[] =
 
 int main(int argc, char **argv) {
 
-    TDECmdLineArgs::init( argc, argv, "speedapp", "A KIO::listRecursive testing tool", "0.0" );
+    TDECmdLineArgs::init( argc, argv, "speedapp", "A TDEIO::listRecursive testing tool", "0.0" );
 
     TDECmdLineArgs::addCmdLineOptions( options );
 
@@ -79,15 +79,15 @@ int main(int argc, char **argv) {
     else
       url = "file:" + TQDir::currentDirPath();
 
-    kdDebug() << url.url() << " is probably " << (KIO::probably_slow_mounted(url.path()) ? "slow" : "normal") << " mounted\n";
-    kdDebug() << url.url() << " is " << (KIO::manually_mounted(url.path()) ? "manually" : "system") << " mounted\n";
-    TQString mp = KIO::findDeviceMountPoint(url.path());
+    kdDebug() << url.url() << " is probably " << (TDEIO::probably_slow_mounted(url.path()) ? "slow" : "normal") << " mounted\n";
+    kdDebug() << url.url() << " is " << (TDEIO::manually_mounted(url.path()) ? "manually" : "system") << " mounted\n";
+    TQString mp = TDEIO::findDeviceMountPoint(url.path());
     if (mp.isEmpty()) {
         kdDebug() << "no mount point for device " << url.url() << " found\n";
     } else
         kdDebug() << mp << " is the mount point for device " << url.url() << endl;
 
-    mp = KIO::findPathMountPoint(url.path());
+    mp = TDEIO::findPathMountPoint(url.path());
     if (mp.isEmpty()) {
         kdDebug() << "no mount point for path " << url.url() << " found\n";
     } else
@@ -95,7 +95,7 @@ int main(int argc, char **argv) {
     // SpeedTest test( url );
     // app.exec();
 
-    mp = KIO::findPathMountPoint(url.path());
+    mp = TDEIO::findPathMountPoint(url.path());
     if (mp.isEmpty()) {
         kdDebug() << "no mount point for path " << url.url() << " found\n";
     } else
@@ -105,7 +105,7 @@ int main(int argc, char **argv) {
 
     url.setPath(TQDir::homeDirPath());
 
-    mp = KIO::findPathMountPoint(url.path());
+    mp = TDEIO::findPathMountPoint(url.path());
     if (mp.isEmpty()) {
         kdDebug() << "no mount point for path " << url.url() << " found\n";
     } else
@@ -113,7 +113,7 @@ int main(int argc, char **argv) {
     // SpeedTest test( url );
     // app.exec();
 
-    mp = KIO::findPathMountPoint(url.path());
+    mp = TDEIO::findPathMountPoint(url.path());
     if (mp.isEmpty()) {
         kdDebug() << "no mount point for path " << url.url() << " found\n";
     } else
@@ -126,7 +126,7 @@ int main(int argc, char **argv) {
     else
       url = "file:" + TQDir::currentDirPath();
 
-    mp = KIO::findPathMountPoint(url.path());
+    mp = TDEIO::findPathMountPoint(url.path());
     if (mp.isEmpty()) {
         kdDebug() << "no mount point for path " << url.url() << " found\n";
     } else

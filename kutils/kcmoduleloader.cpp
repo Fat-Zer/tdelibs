@@ -39,11 +39,11 @@
  * When something goes wrong in loading the module, this one
  * jumps in as a "dummy" module.
  */
-class KCMError : public KCModule
+class KCMError : public TDECModule
 {
 	public:
 		KCMError( const TQString& msg, const TQString& details, TQWidget* parent )
-			: KCModule( parent, "KCMError" )
+			: TDECModule( parent, "KCMError" )
 		{
 			TQVBoxLayout* topLayout = new TQVBoxLayout( this );
 			topLayout->addWidget( new TQLabel( msg, this ) );
@@ -55,7 +55,7 @@ class KCMError : public KCModule
 
 
 
-KCModule* KCModuleLoader::load(const KCModuleInfo &mod, const TQString &libname,
+TDECModule* TDECModuleLoader::load(const TDECModuleInfo &mod, const TQString &libname,
     KLibLoader *loader, ErrorReporting report, TQWidget * parent,
     const char * name, const TQStringList & args )
 {
@@ -72,7 +72,7 @@ KCModule* KCModuleLoader::load(const KCModuleInfo &mod, const TQString &libname,
       KLibFactory *factory = lib->factory();
       if ( factory )
       {
-        KCModule *module = KParts::ComponentFactory::createInstanceFromFactory<KCModule>( factory, TQT_TQOBJECT(parent), name ? name : mod.handle().latin1(), args );
+        TDECModule *module = KParts::ComponentFactory::createInstanceFromFactory<TDECModule>( factory, TQT_TQOBJECT(parent), name ? name : mod.handle().latin1(), args );
         if (module)
           return module;
       }
@@ -87,8 +87,8 @@ KCModule* KCModuleLoader::load(const KCModuleInfo &mod, const TQString &libname,
     if (create)
     {
       // create the module
-      KCModule* (*func)(TQWidget *, const char *);
-      func = (KCModule* (*)(TQWidget *, const char *)) create;
+      TDECModule* (*func)(TQWidget *, const char *);
+      func = (TDECModule* (*)(TQWidget *, const char *)) create;
       return  func( parent, name ? name : mod.handle().latin1() );
     }
     else
@@ -113,12 +113,12 @@ KCModule* KCModuleLoader::load(const KCModuleInfo &mod, const TQString &libname,
   return 0;
 }
 
-KCModule* KCModuleLoader::loadModule(const KCModuleInfo &mod, bool withfallback, TQWidget * parent, const char * name, const TQStringList & args )
+TDECModule* TDECModuleLoader::loadModule(const TDECModuleInfo &mod, bool withfallback, TQWidget * parent, const char * name, const TQStringList & args )
 {
   return loadModule( mod, None, withfallback, parent, name, args );
 }
 
-KCModule* KCModuleLoader::loadModule(const KCModuleInfo &mod, ErrorReporting report, bool withfallback, TQWidget * parent, const char * name, const TQStringList & args )
+TDECModule* TDECModuleLoader::loadModule(const TDECModuleInfo &mod, ErrorReporting report, bool withfallback, TQWidget * parent, const char * name, const TQStringList & args )
 {
   /*
    * Simple libraries as modules are the easiest case:
@@ -153,7 +153,7 @@ KCModule* KCModuleLoader::loadModule(const KCModuleInfo &mod, ErrorReporting rep
 
     KLibLoader *loader = KLibLoader::self();
 
-    KCModule *module = load(mod, "kcm_%1", loader, report, parent, name, args );
+    TDECModule *module = load(mod, "kcm_%1", loader, report, parent, name, args );
     /*
      * Only try to load libkcm_* if it exists, otherwise KLibLoader::lastErrorMessage would say
      * "libkcm_foo not found" instead of the real problem with loading kcm_foo.
@@ -189,19 +189,19 @@ KCModule* KCModuleLoader::loadModule(const KCModuleInfo &mod, ErrorReporting rep
   return 0;
 }
 
-KCModule* KCModuleLoader::loadModule(const TQString &module, TQWidget *parent,
+TDECModule* TDECModuleLoader::loadModule(const TQString &module, TQWidget *parent,
       const char *name, const TQStringList & args)
 {
-  return loadModule(KCModuleInfo(module), None, false, parent, name, args);
+  return loadModule(TDECModuleInfo(module), None, false, parent, name, args);
 }
 
-KCModule* KCModuleLoader::loadModule(const TQString &module, ErrorReporting
+TDECModule* TDECModuleLoader::loadModule(const TQString &module, ErrorReporting
     report, TQWidget *parent, const char *name, const TQStringList & args)
 {
-  return loadModule(KCModuleInfo(module), report, false, parent, name, args);
+  return loadModule(TDECModuleInfo(module), report, false, parent, name, args);
 }
 
-void KCModuleLoader::unloadModule(const KCModuleInfo &mod)
+void TDECModuleLoader::unloadModule(const TDECModuleInfo &mod)
 {
   // get the library loader instance
   KLibLoader *loader = KLibLoader::self();
@@ -214,7 +214,7 @@ void KCModuleLoader::unloadModule(const KCModuleInfo &mod)
   loader->unloadLibrary(TQFile::encodeName(libname.arg(mod.library())));
 }
 
-void KCModuleLoader::showLastLoaderError(TQWidget *parent)
+void TDECModuleLoader::showLastLoaderError(TQWidget *parent)
 {
   KMessageBox::detailedError(parent,
       i18n("There was an error loading the module."),i18n("<qt><p>The diagnostics is:<br>%1"
@@ -227,12 +227,12 @@ void KCModuleLoader::showLastLoaderError(TQWidget *parent)
 
 }
 
-bool KCModuleLoader::testModule( const TQString& module )
+bool TDECModuleLoader::testModule( const TQString& module )
 {
-  return testModule( KCModuleInfo( module ) );
+  return testModule( TDECModuleInfo( module ) );
 }
 
-bool KCModuleLoader::testModule( const KCModuleInfo& module )
+bool TDECModuleLoader::testModule( const TDECModuleInfo& module )
 {
   if (!module.service())
   {
@@ -250,7 +250,7 @@ bool KCModuleLoader::testModule( const KCModuleInfo& module )
     /**
      * If something fails we return true - we can't risk functionality becoming
      * unavailable because of a buggy test. Furthermore, the error needs to
-     * show so it is discovered. KCModuleProxy will detect the error and load
+     * show so it is discovered. TDECModuleProxy will detect the error and load
      * a corresponding KCMError.
      * */
     KLibLoader* loader = KLibLoader::self();
@@ -281,7 +281,7 @@ bool KCModuleLoader::testModule( const KCModuleInfo& module )
   }
 }
 
-KCModule* KCModuleLoader::reportError( ErrorReporting report, const TQString & text,
+TDECModule* TDECModuleLoader::reportError( ErrorReporting report, const TQString & text,
         TQString details, TQWidget * parent )
 {
   if( details.isNull() )

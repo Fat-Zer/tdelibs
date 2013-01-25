@@ -28,8 +28,8 @@
 class TDEInstance;
 class KPluginInfo;
 class TQWidgetStack;
-class KConfig;
-class KConfigGroup;
+class TDEConfig;
+class TDEConfigGroup;
 
 /**
  * @ingroup main
@@ -89,10 +89,10 @@ class KUTILS_EXPORT KPluginSelector : public TQWidget
          *                     with the Category key == @p category. If @p
          *                     category is not set the Category key is ignored
          *                     and all plugins are shown.
-         * @param config       The KConfig object that holds the state of the
+         * @param config       The TDEConfig object that holds the state of the
          *                     plugins being enabled or not. By default it should
          *                     be instance->config(). It is recommended to
-         *                     always pass a KConfig object if you use
+         *                     always pass a TDEConfig object if you use
          *                     KSettings::PluginPage since you never know from where the
          *                     page will be called (think global config app).
          *                     For example KViewCanvas passes KSimpleConfig(
@@ -101,7 +101,7 @@ class KUTILS_EXPORT KPluginSelector : public TQWidget
         void addPlugins( const TQString & instanceName,
                 const TQString & catname = TQString::null,
                 const TQString & category = TQString::null,
-                KConfig * config = 0 );
+                TDEConfig * config = 0 );
 
         /**
          * Add a list of KParts plugins. Convenience method for the one above.
@@ -110,7 +110,7 @@ class KUTILS_EXPORT KPluginSelector : public TQWidget
         void addPlugins( const TDEInstance * instance,
                 const TQString & catname = TQString::null,
                 const TQString & category = TQString::null,
-                KConfig * config = 0 );
+                TDEConfig * config = 0 );
 
         /**
          * Add a list of non-KParts plugins
@@ -128,10 +128,10 @@ class KUTILS_EXPORT KPluginSelector : public TQWidget
          *                     with the Category key == @p category. If @p
          *                     category is not set the Category key is ignored
          *                     and all plugins are shown.
-         * @param config       The KConfig object that holds the state of the
+         * @param config       The TDEConfig object that holds the state of the
          *                     plugins being enabled or not. By default it will
          *                     use TDEGlobal::config(). It is recommended to
-         *                     always pass a KConfig object if you use
+         *                     always pass a TDEConfig object if you use
          *                     KSettings::PluginPage since you never know from where the
          *                     page will be called (think global config app).
          *                     For example KViewCanvas passes KSimpleConfig(
@@ -140,7 +140,7 @@ class KUTILS_EXPORT KPluginSelector : public TQWidget
         void addPlugins( const TQValueList<KPluginInfo*> & plugininfos,
                 const TQString & catname = TQString::null,
                 const TQString & category = TQString::null,
-                KConfig * config = 0 );
+                TDEConfig * config = 0 );
 
         /**
          * Set whether the area for showing the KCMs of the plugins should be
@@ -208,7 +208,7 @@ class KUTILS_EXPORT KPluginSelector : public TQWidget
          */
 	void addPluginsInternal( const TQValueList<KPluginInfo*> plugininfos,
                                  const TQString & catname, const TQString & category,
-                                 KConfigGroup* cfgGroup );
+                                 TDEConfigGroup* cfgGroup );
 
 	class KPluginSelectorPrivate;
         KPluginSelectorPrivate * d;

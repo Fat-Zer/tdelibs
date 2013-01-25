@@ -27,13 +27,13 @@
 /**
  * @short A class for handling downloads from KIO
  *
- * This class handles a KIO::get job and passes the data
+ * This class handles a TDEIO::get job and passes the data
  * back to the AppletServer.
  *
  * @author Wynn Wilkes, wynnw@calderasystems.com
  */
 
-namespace KIO {
+namespace TDEIO {
     class Job;
 }
 
@@ -59,10 +59,10 @@ public:
 
     virtual void jobCommand( int cmd );
 protected slots:
-    void slotData( KIO::Job*, const TQByteArray& );
-    void slotConnected( KIO::Job* );
-    void slotMimetype( KIO::Job*, const TQString& );
-    void slotResult( KIO::Job* );
+    void slotData( TDEIO::Job*, const TQByteArray& );
+    void slotConnected( TDEIO::Job* );
+    void slotMimetype( TDEIO::Job*, const TQString& );
+    void slotResult( TDEIO::Job* );
 
 private:
     KJavaDownloaderPrivate* d;
@@ -81,8 +81,8 @@ public:
     virtual void data( const TQByteArray& qb );
     void start();
 protected slots:
-    void slotDataRequest( KIO::Job*, TQByteArray& );
-    void slotResult( KIO::Job* );
+    void slotDataRequest( TDEIO::Job*, TQByteArray& );
+    void slotResult( TDEIO::Job* );
 private:
     KJavaUploaderPrivate* d;
 

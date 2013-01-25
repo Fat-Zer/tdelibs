@@ -46,7 +46,7 @@
 
 using namespace KABC;
 
-ResourceFile::ResourceFile( const KConfig *config )
+ResourceFile::ResourceFile( const TDEConfig *config )
   : Resource( config ), mFormat( 0 ),
     mAsynchronous( false )
 {
@@ -98,7 +98,7 @@ ResourceFile::~ResourceFile()
   mFormat = 0;
 }
 
-void ResourceFile::writeConfig( KConfig *config )
+void ResourceFile::writeConfig( TDEConfig *config )
 {
   Resource::writeConfig( config );
 

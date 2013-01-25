@@ -36,8 +36,8 @@ public:
   ResourceSqlConfig( TQWidget* parent = 0, const char* name = 0 );
 
 public slots:
-  void loadSettings( KConfig *config );
-  void saveSettings( KConfig *config );
+  void loadSettings( TDEConfig *config );
+  void saveSettings( TDEConfig *config );
 
 private:
   KLineEdit* mUser;

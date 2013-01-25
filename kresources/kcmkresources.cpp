@@ -33,7 +33,7 @@ typedef KGenericFactory<KCMKResources, TQWidget> ResourcesFactory;
 K_EXPORT_COMPONENT_FACTORY( kcm_kresources, ResourcesFactory( "kcmkresources" ) )
 
 KCMKResources::KCMKResources( TQWidget *parent, const char *name, const TQStringList& )
-  : KCModule( ResourcesFactory::instance(), parent, name )
+  : TDECModule( ResourcesFactory::instance(), parent, name )
 {
   TQVBoxLayout *layout = new TQVBoxLayout( this );
   mConfigPage = new KRES::ConfigPage( this );

@@ -60,7 +60,7 @@
 
 #include "kio/tcpslavebase.h"
 
-using namespace KIO;
+using namespace TDEIO;
 
 class TCPSlaveBase::TcpSlaveBasePrivate
 {
@@ -327,7 +327,7 @@ bool TCPSlaveBase::connectToHost( const TQString &host,
                                    "WarnOnLeaveSSLMode" );
 
            // Move this setting into KSSL instead
-          KConfig *config = new KConfig("kioslaverc");
+          TDEConfig *config = new TDEConfig("kioslaverc");
           config->setGroup("Notification Messages");
 
           if (!config->readBoolEntry("WarnOnLeaveSSLMode", true)) {
@@ -369,7 +369,7 @@ bool TCPSlaveBase::connectToHost( const TQString &host,
     m_iSock = ks.fd();
 
     // store the IP for later
-    const KSocketAddress *sa = ks.peerAddress();
+    const TDESocketAddress *sa = ks.peerAddress();
     if (sa)
       d->ip = sa->nodeName();
     else
@@ -671,7 +671,7 @@ KSSLCertificateHome::KSSLAuthAction aa;
   // We're almost committed.  If we can read the cert, we'll send it now.
   KSSLPKCS12 *pkcs = KSSLCertificateHome::getCertificateByName(certname);
   if (!pkcs && KSSLCertificateHome::hasCertificateByName(certname)) {           // We need the password
-     KIO::AuthInfo ai;
+     TDEIO::AuthInfo ai;
      bool first = true;
      do {
         ai.prompt = i18n("Enter the certificate password:");
@@ -906,7 +906,7 @@ int TCPSlaveBase::verifyCertificate()
                    arg << theurl << mOutgoingMetaData;
                    arg << metaData("window-id").toInt();
                         d->dcc->call("kio_uiserver", "UIServer",
-                                "showSSLInfoDialog(TQString,KIO::MetaData,int)",
+                                "showSSLInfoDialog(TQString,TDEIO::MetaData,int)",
                                 data, ignoretype, ignore);
                 }
              } while (result == KMessageBox::Yes);
@@ -1033,7 +1033,7 @@ int TCPSlaveBase::verifyCertificate()
                    arg << theurl << mOutgoingMetaData;
                    arg << metaData("window-id").toInt();
                         d->dcc->call("kio_uiserver", "UIServer",
-                                "showSSLInfoDialog(TQString,KIO::MetaData,int)",
+                                "showSSLInfoDialog(TQString,TDEIO::MetaData,int)",
                                 data, ignoretype, ignore);
                 }
           } while (result == KMessageBox::Yes);
@@ -1090,7 +1090,7 @@ int TCPSlaveBase::verifyCertificate()
                                                    i18n("C&onnect"),
                                                    "WarnOnEnterSSLMode" );
       // Move this setting into KSSL instead
-      KConfig *config = new KConfig("kioslaverc");
+      TDEConfig *config = new TDEConfig("kioslaverc");
       config->setGroup("Notification Messages");
 
       if (!config->readBoolEntry("WarnOnEnterSSLMode", true)) {
@@ -1117,7 +1117,7 @@ int TCPSlaveBase::verifyCertificate()
           arg << theurl << mOutgoingMetaData;
           arg << metaData("window-id").toInt();
           d->dcc->call("kio_uiserver", "UIServer",
-                       "showSSLInfoDialog(TQString,KIO::MetaData,int)",
+                       "showSSLInfoDialog(TQString,TDEIO::MetaData,int)",
                        data, ignoretype, ignore);
       }
       } while (result != KMessageBox::No);

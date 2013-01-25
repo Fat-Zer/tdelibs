@@ -83,7 +83,7 @@ void Dispatcher::registerInstance( TDEInstance * instance, TQObject * recv, cons
     connect( recv, TQT_SIGNAL( destroyed( TQObject * ) ), this, TQT_SLOT( unregisterInstance( TQObject * ) ) );
 }
 
-KConfig * Dispatcher::configForInstanceName( const TQCString & instanceName )
+TDEConfig * Dispatcher::configForInstanceName( const TQCString & instanceName )
 {
     kdDebug( 701 ) << k_funcinfo << endl;
     if( m_instanceInfo.contains( instanceName ) )
@@ -113,7 +113,7 @@ void Dispatcher::reparseConfiguration( const TQCString & instanceName )
     // check if the instanceName is valid:
     if( ! m_instanceInfo.contains( instanceName ) )
         return;
-    // first we reparse the config of the instance so that the KConfig object
+    // first we reparse the config of the instance so that the TDEConfig object
     // will be up to date
     m_instanceInfo[ instanceName ].instance->config()->reparseConfiguration();
     TQSignal * sig = m_instanceInfo[ instanceName ].signal;

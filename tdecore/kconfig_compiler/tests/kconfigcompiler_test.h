@@ -1,5 +1,5 @@
 /*
-    Tests for KConfig Compiler
+    Tests for TDEConfig Compiler
 
     Copyright (c) 2005      by Duncan Mac-Vicar       <duncan@kde.org>
 
@@ -21,7 +21,7 @@
 class TQString;
 
 // change to SlotTester when it works
-class KConfigCompiler_Test : public KUnitTest::Tester
+class TDEConfigCompiler_Test : public KUnitTest::Tester
 {
 public:
 	void allTests();

@@ -26,7 +26,7 @@
 
 #include "addressee.h"
 
-class KConfig;
+class TDEConfig;
 
 namespace KABC {
 
@@ -134,7 +134,7 @@ public:
    * @param identifier The unique identifier
    * @param fields     The list of the fields
    */
-  static void saveFields( KConfig *cfg, const TQString &identifier,
+  static void saveFields( TDEConfig *cfg, const TQString &identifier,
                           const Field::List &fields );
   /**
    * This is the same as above, with the difference, that
@@ -149,7 +149,7 @@ public:
    * @param cfg        The config file object
    * @param identifier The unique identifier
    */
-  static Field::List restoreFields( KConfig *cfg, const TQString &identifier );
+  static Field::List restoreFields( TDEConfig *cfg, const TQString &identifier );
 
   /**
    * This is the same as above, with the difference, that

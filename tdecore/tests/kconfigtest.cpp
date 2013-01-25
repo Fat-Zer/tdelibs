@@ -22,7 +22,7 @@
 
 #include <kconfig.h>
 
-class KConfigTest : public KUnitTest::Tester
+class TDEConfigTest : public KUnitTest::Tester
 {
 public:
     void allTests();
@@ -31,8 +31,8 @@ private:
     void revertEntries();
 };
 
-KUNITTEST_MODULE( kunittest_kconfig, "KConfigTest" )
-KUNITTEST_MODULE_REGISTER_TESTER( KConfigTest )
+KUNITTEST_MODULE( kunittest_kconfig, "TDEConfigTest" )
+KUNITTEST_MODULE_REGISTER_TESTER( TDEConfigTest )
 
 // test data
 #define BOOLENTRY1 true
@@ -50,9 +50,9 @@ KUNITTEST_MODULE_REGISTER_TESTER( KConfigTest )
 #define DATETIMEENTRY TQDateTime( TQDate( 2002, 06, 23 ), TQTime( 12, 55, 40 ) )
 #define STRINGLISTENTRY TQStringList( "Hello," )
 
-void KConfigTest::writeConfigFile()
+void TDEConfigTest::writeConfigFile()
 {
-  KConfig sc( "kconfigtest" );
+  TDEConfig sc( "kconfigtest" );
 
   sc.setGroup("AAA");
   sc.writeEntry("stringEntry1", STRINGENTRY1, true, true);
@@ -86,10 +86,10 @@ void KConfigTest::writeConfigFile()
 }
 
 // ### TODO: call this, and test the state of things afterwards
-void KConfigTest::revertEntries()
+void TDEConfigTest::revertEntries()
 {
   tqWarning("Reverting entries");
-  KConfig sc( "kconfigtest" );
+  TDEConfig sc( "kconfigtest" );
 
   sc.setGroup("Hello");
   sc.revertToDefault( "boolEntry1");
@@ -105,13 +105,13 @@ void KConfigTest::revertEntries()
   sc.sync();
 }
 
-void KConfigTest::allTests()
+void TDEConfigTest::allTests()
 {
   writeConfigFile();
 
-  KConfig sc2( "kconfigtest" );
+  TDEConfig sc2( "kconfigtest" );
 
-  KConfigGroup sc3( &sc2, "AAA");
+  TDEConfigGroup sc3( &sc2, "AAA");
   bool bImmutable = sc3.entryIsImmutable("stringEntry1");
 
   CHECK( bImmutable, false );

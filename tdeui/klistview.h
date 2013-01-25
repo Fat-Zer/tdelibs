@@ -26,7 +26,7 @@
 #include <tdelibs_export.h>
 
 class TQDragObject;
-class KConfig;
+class TDEConfig;
 class KLineEdit;
 /**
  * This Widget extends the functionality of TQListView to honor the system
@@ -350,20 +350,20 @@ public:
 
   /**
    * Saves the list view's layout (column widtsh, column order, sort column)
-   * to a KConfig group
+   * to a TDEConfig group
    *
-   * @param config the KConfig object to write to
+   * @param config the TDEConfig object to write to
    * @param group the config group to use
    */
-  void saveLayout(KConfig *config, const TQString &group) const;
+  void saveLayout(TDEConfig *config, const TQString &group) const;
   /**
-   * Reads the list view's layout from a KConfig group as stored with
+   * Reads the list view's layout from a TDEConfig group as stored with
    * saveLayout
    *
-   * @param config the KConfig object to read from
+   * @param config the TDEConfig object to read from
    * @param group the config group to use
    */
-  void restoreLayout(KConfig *config, const TQString &group);
+  void restoreLayout(TDEConfig *config, const TQString &group);
   /**
    * Reimplemented to remember the current sort column and order.
    * @param column is the column to be sorted, or -1 to sort in order of

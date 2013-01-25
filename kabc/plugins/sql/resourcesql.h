@@ -35,7 +35,7 @@ class ResourceSql : public Resource
 public:
   ResourceSql( AddressBook *ab, const TQString &user, const TQString &password,
     const TQString &db, const TQString &host );
-  ResourceSql( AddressBook *ab, const KConfig * );
+  ResourceSql( AddressBook *ab, const TDEConfig * );
   
   bool open();
   void close();

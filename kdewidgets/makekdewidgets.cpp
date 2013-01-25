@@ -117,11 +117,11 @@ static KCmdLineOptions options[] =
         KCmdLineLastOption
     };
 
-static TQString buildWidgetDef( const TQString &name, KConfig &input, const TQString &group );
-static TQString buildWidgetCreate( const TQString &name, KConfig &input );
-static TQString buildWidgetInclude( const TQString &name, KConfig &input );
+static TQString buildWidgetDef( const TQString &name, TDEConfig &input, const TQString &group );
+static TQString buildWidgetCreate( const TQString &name, TDEConfig &input );
+static TQString buildWidgetInclude( const TQString &name, TDEConfig &input );
 static void buildFile( TQTextStream &stream, const TQString& group, const TQString& fileName, const TQString& pluginName, const TQString& iconPath );
-static TQString buildPixmap( const TQString &name, KConfig &input, const TQString &iconPath );
+static TQString buildPixmap( const TQString &name, TDEConfig &input, const TQString &iconPath );
 
 int main( int argc, char **argv ) {
     new TDEInstance( "makekdewidgets" );
@@ -160,7 +160,7 @@ int main( int argc, char **argv ) {
 }
 
 void buildFile( TQTextStream &ts, const TQString& group, const TQString& fileName, const TQString& pluginName, const TQString& iconPath ) {
-    KConfig input( fileName, true, false );
+    TDEConfig input( fileName, true, false );
     input.setGroup( "Global" );
     TQMap<TQString, TQString> MainMap;
     MainMap.insert( "PluginName", input.readEntry( "PluginName", pluginName ) );
@@ -195,7 +195,7 @@ void buildFile( TQTextStream &ts, const TQString& group, const TQString& fileNam
 
 }
 
-TQString buildWidgetDef( const TQString &name, KConfig &input, const TQString &group ) {
+TQString buildWidgetDef( const TQString &name, TDEConfig &input, const TQString &group ) {
     input.setGroup( name );
     TQMap<TQString, TQString> defMap;
     defMap.insert( "Group", input.readEntry( "Group", group ).replace( "\"", "\\\"" ) );
@@ -209,7 +209,7 @@ TQString buildWidgetDef( const TQString &name, KConfig &input, const TQString &g
     return KMacroExpander::expandMacros( widgetDef, defMap );
 }
 
-TQString buildWidgetCreate( const TQString &name, KConfig &input ) {
+TQString buildWidgetCreate( const TQString &name, TDEConfig &input ) {
     input.setGroup( name );
     TQMap<TQString, TQString> createMap;
     createMap.insert( "ImplClass", input.readEntry( "ImplClass", name ) );
@@ -218,12 +218,12 @@ TQString buildWidgetCreate( const TQString &name, KConfig &input ) {
     return KMacroExpander::expandMacros( widgetCreate, createMap );
 }
 
-TQString buildWidgetInclude( const TQString &name, KConfig &input ) {
+TQString buildWidgetInclude( const TQString &name, TDEConfig &input ) {
     input.setGroup( name );
     return "#include <" + input.readEntry( "IncludeFile", name.lower() + ".h" ) + ">";
 }
 
-TQString buildPixmap( const TQString &name, KConfig &input, const TQString &iconPath ) {
+TQString buildPixmap( const TQString &name, TDEConfig &input, const TQString &iconPath ) {
     input.setGroup( name );
     TQString cleanName = name.lower().replace( ":", "_" );
     TQString iconName = input.readEntry( "IconSet", cleanName + ".png" );

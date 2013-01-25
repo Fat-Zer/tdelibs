@@ -145,7 +145,7 @@ ConfigPage::ConfigPage( TQWidget *parent, const char *name )
 
   mLastItem = 0;
 
-  mConfig = new KConfig( "kcmkresourcesrc" );
+  mConfig = new TDEConfig( "kcmkresourcesrc" );
   mConfig->setGroup( "General" );
 
   load();
@@ -223,7 +223,7 @@ void ConfigPage::loadManager( const TQString& family )
 
       ResourcePageInfo *info = new ResourcePageInfo;
       info->mManager = mCurrentManager;
-      info->mConfig = new KConfig( KRES::ManagerImpl::defaultConfigFile( family ) );
+      info->mConfig = new TDEConfig( KRES::ManagerImpl::defaultConfigFile( family ) );
       info->mManager->readConfig( info->mConfig );
 
       mInfoMap.append( KSharedPtr<ResourcePageInfo>(info) );

@@ -30,10 +30,10 @@
 #include <tqptrlist.h>
 #include <tqobject.h>
 
-class KSocket;
+class TDESocket;
 class TQSocketNotifier;
 
-namespace KIO {
+namespace TDEIO {
 
     struct KIO_EXPORT Task {
 	int cmd;
@@ -62,7 +62,7 @@ namespace KIO {
 	 * @param sock the socket to use
 	 * @see inited()
 	 */
-	void init(KSocket *sock);
+	void init(TDESocket *sock);
         /**
 	 * Initialize the connection to use the given file
 	 * descriptors.
@@ -143,7 +143,7 @@ namespace KIO {
     private:
 	int fd_in;
 	FILE *f_out;
-	KSocket *socket;
+	TDESocket *socket;
 	TQSocketNotifier *notifier;
 	TQObject *receiver;
 	const char *member;

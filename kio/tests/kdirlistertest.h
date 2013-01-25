@@ -88,10 +88,10 @@ public slots:
    void percent( int percent )
    { cout << "*** percent: " << percent << endl; }
 
-   void totalSize( KIO::filesize_t size )
+   void totalSize( TDEIO::filesize_t size )
    { cout << "*** totalSize: " << (long)size << endl; }
 
-   void processedSize( KIO::filesize_t size )
+   void processedSize( TDEIO::filesize_t size )
    { cout << "*** processedSize: " << (long)size << endl; }
 
    void speed( int bytes_per_second )

@@ -30,7 +30,7 @@
 
 #include <dcopobject.h>
 
-namespace KIO {
+namespace TDEIO {
 
     class Slave;
     class SlaveList;
@@ -38,7 +38,7 @@ namespace KIO {
     class SessionData;
 
     /**
-     * The KIO::Scheduler manages io-slaves for the application.
+     * The TDEIO::Scheduler manages io-slaves for the application.
      * It also queues jobs and assigns the job to a slave when one
      * becomes available.
      *
@@ -46,12 +46,12 @@ namespace KIO {
      *
      * <h3>1. Direct</h3>
      * This is the default. When you create a job the
-     * KIO::Scheduler will be notified and will find either an existing
+     * TDEIO::Scheduler will be notified and will find either an existing
      * slave that is idle or it will create a new slave for the job.
      *
      * Example:
      * \code
-     *    TransferJob *job = KIO::get(KURL("http://www.kde.org"));
+     *    TransferJob *job = TDEIO::get(KURL("http://www.kde.org"));
      * \endcode
      *
      *
@@ -64,8 +64,8 @@ namespace KIO {
      *
      * Example:
      * \code
-     *    TransferJob *job = KIO::get(KURL("http://www.kde.org"));
-     *    KIO::Scheduler::scheduleJob(job);
+     *    TransferJob *job = TDEIO::get(KURL("http://www.kde.org"));
+     *    TDEIO::Scheduler::scheduleJob(job);
      * \endcode
      *
      * <h3>3. Connection Oriented</h3>
@@ -80,32 +80,32 @@ namespace KIO {
      *
      * Example:
      * \code
-     *    Slave *slave = KIO::Scheduler::getConnectedSlave(
+     *    Slave *slave = TDEIO::Scheduler::getConnectedSlave(
      *            KURL("pop3://bastian:password@mail.kde.org"));
-     *    TransferJob *job1 = KIO::get(
+     *    TransferJob *job1 = TDEIO::get(
      *            KURL("pop3://bastian:password@mail.kde.org/msg1"));
-     *    KIO::Scheduler::assignJobToSlave(slave, job1);
-     *    TransferJob *job2 = KIO::get(
+     *    TDEIO::Scheduler::assignJobToSlave(slave, job1);
+     *    TransferJob *job2 = TDEIO::get(
      *            KURL("pop3://bastian:password@mail.kde.org/msg2"));
-     *    KIO::Scheduler::assignJobToSlave(slave, job2);
-     *    TransferJob *job3 = KIO::get(
+     *    TDEIO::Scheduler::assignJobToSlave(slave, job2);
+     *    TransferJob *job3 = TDEIO::get(
      *            KURL("pop3://bastian:password@mail.kde.org/msg3"));
-     *    KIO::Scheduler::assignJobToSlave(slave, job3);
+     *    TDEIO::Scheduler::assignJobToSlave(slave, job3);
      *
      *    // ... Wait for jobs to finish...
      *
-     *    KIO::Scheduler::disconnectSlave(slave);
+     *    TDEIO::Scheduler::disconnectSlave(slave);
      * \endcode
      *
      * Note that you need to explicitly disconnect the slave when the 
      * connection goes down, so your error handler should contain:
      * \code
-     *    if (error == KIO::ERR_CONNECTION_BROKEN)
-     *        KIO::Scheduler::disconnectSlave(slave);
+     *    if (error == TDEIO::ERR_CONNECTION_BROKEN)
+     *        TDEIO::Scheduler::disconnectSlave(slave);
      * \endcode
      *
-     * @see KIO::Slave
-     * @see KIO::Job
+     * @see TDEIO::Slave
+     * @see TDEIO::Job
      **/
 
     class KIO_EXPORT Scheduler : public TQObject, virtual public DCOPObject {
@@ -150,7 +150,7 @@ namespace KIO {
 	 * @param job the finished job
 	 * @param slave the slave that executed the @p job
          */
-        static void jobFinished(KIO::SimpleJob *job, KIO::Slave *slave)
+        static void jobFinished(TDEIO::SimpleJob *job, TDEIO::Slave *slave)
         { self()->_jobFinished(job, slave); }
 
         /**
@@ -164,7 +164,7 @@ namespace KIO {
 	 * @param job the job that should be stopped
 	 * @param url the URL that is handled by the @p url
          */
-        static void putSlaveOnHold(KIO::SimpleJob *job, const KURL &url)
+        static void putSlaveOnHold(TDEIO::SimpleJob *job, const KURL &url)
         { self()->_putSlaveOnHold(job, url); }
 
         /**
@@ -193,7 +193,7 @@ namespace KIO {
          * @see assignJobToSlave()
          * @see disconnectSlave()
          */
-        static KIO::Slave *getConnectedSlave(const KURL &url, const KIO::MetaData &config = MetaData() )
+        static TDEIO::Slave *getConnectedSlave(const KURL &url, const TDEIO::MetaData &config = MetaData() )
         { return self()->_getConnectedSlave(url, config); }
 
         /*
@@ -212,7 +212,7 @@ namespace KIO {
          * @see slaveConnected()
          * @see slaveError()
          */
-        static bool assignJobToSlave(KIO::Slave *slave, KIO::SimpleJob *job)
+        static bool assignJobToSlave(TDEIO::Slave *slave, TDEIO::SimpleJob *job)
         { return self()->_assignJobToSlave(slave, job); }
 
         /*
@@ -227,7 +227,7 @@ namespace KIO {
          * @see getConnectedSlave
          * @see assignJobToSlave
          */
-        static bool disconnectSlave(KIO::Slave *slave)
+        static bool disconnectSlave(TDEIO::Slave *slave)
         { return self()->_disconnectSlave(slave); }
 
         /**
@@ -236,7 +236,7 @@ namespace KIO {
          * the that was started.
          * Register the mainwindow @p wid with the KIO subsystem
          * Do not call this, it is called automatically from
-         * void KIO::Job::setWindow(TQWidget*).
+         * void TDEIO::Job::setWindow(TQWidget*).
 	 * @param wid the window to register
 	 * @since 3.1
          */
@@ -287,15 +287,15 @@ namespace KIO {
         virtual QCStringList functions();
 
     public slots:
-        void slotSlaveDied(KIO::Slave *slave);
+        void slotSlaveDied(TDEIO::Slave *slave);
         void slotSlaveStatus(pid_t pid, const TQCString &protocol,
                              const TQString &host, bool connected);
     signals:
-        void slaveConnected(KIO::Slave *slave);
-        void slaveError(KIO::Slave *slave, int error, const TQString &errorMsg);
+        void slaveConnected(TDEIO::Slave *slave);
+        void slaveError(TDEIO::Slave *slave, int error, const TQString &errorMsg);
 
     protected:
-        void setupSlave(KIO::Slave *slave, const KURL &url, const TQString &protocol, const TQString &proxy , bool newSlave, const KIO::MetaData *config=0);
+        void setupSlave(TDEIO::Slave *slave, const KURL &url, const TQString &protocol, const TQString &proxy , bool newSlave, const TDEIO::MetaData *config=0);
         bool startJobScheduled(ProtocolInfo *protInfo);
         bool startJobDirect();
         Scheduler();
@@ -319,13 +319,13 @@ namespace KIO {
         void _doJob(SimpleJob *job);
         void _scheduleJob(SimpleJob *job);
         void _cancelJob(SimpleJob *job);
-        void _jobFinished(KIO::SimpleJob *job, KIO::Slave *slave);
+        void _jobFinished(TDEIO::SimpleJob *job, TDEIO::Slave *slave);
         void _scheduleCleanup();
-        void _putSlaveOnHold(KIO::SimpleJob *job, const KURL &url);
+        void _putSlaveOnHold(TDEIO::SimpleJob *job, const KURL &url);
         void _removeSlaveOnHold();
-        Slave *_getConnectedSlave(const KURL &url, const KIO::MetaData &metaData );
-        bool _assignJobToSlave(KIO::Slave *slave, KIO::SimpleJob *job);
-        bool _disconnectSlave(KIO::Slave *slave);
+        Slave *_getConnectedSlave(const KURL &url, const TDEIO::MetaData &metaData );
+        bool _assignJobToSlave(TDEIO::Slave *slave, TDEIO::SimpleJob *job);
+        bool _disconnectSlave(TDEIO::Slave *slave);
         void _checkSlaveOnHold(bool b);
         void _publishSlaveOnHold();
         void _registerWindow(TQWidget *wid);

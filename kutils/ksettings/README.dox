@@ -45,7 +45,7 @@ mechanisms.
 Every page is a KCM. This is what you need for creating a page:
 
 \code
-class MyAppConfig : public KCModule
+class MyAppConfig : public TDECModule
 {
   Q_OBJECT
 public:
@@ -67,7 +67,7 @@ K_EXPORT_COMPONENT_FACTORY( kcm_myappconfig, MyAppConfigFactory(
     "kcm_myappconfig" ) );
 
 MyAppConfig::MyAppConfig( QWidget *parent, const char *, const QStringList &args )
-  : KCModule( MyAppConfigFactory::instance(), parent, args )
+  : TDECModule( MyAppConfigFactory::instance(), parent, args )
 {
   // create the pages GUI
   load();
@@ -76,9 +76,9 @@ MyAppConfig::MyAppConfig( QWidget *parent, const char *, const QStringList &args
 // implementations for the other methods
 \endcode
 
-For the KConfig object you can either use
+For the TDEConfig object you can either use
 TDEGlobal::config() (I don't recommend it) or KSimpleConfig( "myapprc" ).
-I added a method to KSettings::Dispatcher that gives you the KConfig
+I added a method to KSettings::Dispatcher that gives you the TDEConfig
 object for every registered instance name: \ref KSettings::Dispatcher::configForInstanceName
 
 
@@ -94,7 +94,7 @@ An example file:
 Encoding=UTF-8
 Icon=myapp
 Type=Service
-ServiceTypes=KCModule
+ServiceTypes=TDECModule
 
 X-TDE-ModuleType=Library
 X-TDE-Library=myappconfig
@@ -115,10 +115,10 @@ Some explanation for those keys:
 - Icon is the icon that will be used in the listview/iconview for your page.
 - X-TDE-Library is the name of the library where the page is in. The library
   always needs to be prefixed with kcm_ but you don't write the prefix in the
-  desktop file. For more docu on this look for the KCModule docu.
+  desktop file. For more docu on this look for the TDECModule docu.
 - X-TDE-FactoryName is either the name of the Factory you used in the
   KGenericFactory call or the suffix of the create_ function that you created.
-  Again for more info look for the KCModule docu.
+  Again for more info look for the TDECModule docu.
 - X-TDE-ParentApp is the name of the application this config page belongs to. It
   is used by the first two \ref KSettings::Dialog constructors. The Dialog will
   use all modules that set X-TDE-ParentApp to

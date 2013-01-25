@@ -31,7 +31,7 @@
 #include <kio/slavebase.h>
 
 
-namespace KIO {
+namespace TDEIO {
 
 /**
  * There are two classes that specifies the protocol between application (job)

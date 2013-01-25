@@ -145,7 +145,7 @@ void KMMainView::loadParameters()
 
 void KMMainView::restoreSettings()
 {
-	KConfig	*conf = KMFactory::self()->printConfig();
+	TDEConfig	*conf = KMFactory::self()->printConfig();
 	conf->setGroup("General");
 	setViewType((KMPrinterView::ViewType)conf->readNumEntry("ViewType",KMPrinterView::Icons));
 	setOrientation(conf->readNumEntry("Orientation", Qt::Vertical));
@@ -162,7 +162,7 @@ void KMMainView::restoreSettings()
 
 void KMMainView::saveSettings()
 {
-	KConfig	*conf = KMFactory::self()->printConfig();
+	TDEConfig	*conf = KMFactory::self()->printConfig();
 	conf->setGroup("General");
 	conf->writeEntry("ViewType",(int)m_printerview->viewType());
 	conf->writeEntry("Orientation",(int)orientation());

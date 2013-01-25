@@ -83,7 +83,7 @@
 
 // JPF: somebody should find a better solution for this or move this to KIO
 // JPF: anyhow, in KDE 3.2.0 I found diffent MAX_IPC_SIZE definitions!
-namespace KIO {
+namespace TDEIO {
     enum buffersizes
     {  /**
         * largest buffer size that should be used to transfer data between
@@ -131,9 +131,9 @@ namespace KIO {
    }
 }
 
-KIO::filesize_t Ftp::UnknownSize = (KIO::filesize_t)-1;
+TDEIO::filesize_t Ftp::UnknownSize = (TDEIO::filesize_t)-1;
 
-using namespace KIO;
+using namespace TDEIO;
 
 extern "C" { KDE_EXPORT int kdemain(int argc, char **argv); }
 
@@ -849,7 +849,7 @@ int Ftp::ftpOpenPASVDataConnection()
   assert(m_data == NULL);       // ... but no data connection
 
   // Check that we can do PASV
-  const KSocketAddress *sa = m_control->peerAddress();
+  const TDESocketAddress *sa = m_control->peerAddress();
   if (sa != NULL && sa->family() != PF_INET)
     return ERR_INTERNAL;       // no PASV for non-PF_INET connections
 
@@ -910,7 +910,7 @@ int Ftp::ftpOpenEPSVDataConnection()
   assert(m_control != NULL);    // must have control connection socket
   assert(m_data == NULL);       // ... but no data connection
 
-  const KSocketAddress *sa = m_control->peerAddress();
+  const TDESocketAddress *sa = m_control->peerAddress();
   int portnum;
   // we are sure sa is a KInetSocketAddress, because we asked for KExtendedSocket::inetSocket
   // when we connected
@@ -1127,7 +1127,7 @@ int Ftp::ftpAcceptConnect()
 }
 
 bool Ftp::ftpOpenCommand( const char *_command, const TQString & _path, char _mode,
-                          int errorcode, KIO::fileoffset_t _offset )
+                          int errorcode, TDEIO::fileoffset_t _offset )
 {
   int errCode = 0;
   if( !ftpDataMode(_mode) )
@@ -1428,15 +1428,15 @@ void Ftp::ftpShortStatAnswer( const TQString& filename, bool isDir )
     UDSEntry entry;
     UDSAtom atom;
 
-    atom.m_uds = KIO::UDS_NAME;
+    atom.m_uds = TDEIO::UDS_NAME;
     atom.m_str = filename;
     entry.append( atom );
 
-    atom.m_uds = KIO::UDS_FILE_TYPE;
+    atom.m_uds = TDEIO::UDS_FILE_TYPE;
     atom.m_long = isDir ? S_IFDIR : S_IFREG;
     entry.append( atom );
 
-    atom.m_uds = KIO::UDS_ACCESS;
+    atom.m_uds = TDEIO::UDS_ACCESS;
     atom.m_long = S_IRUSR | S_IXUSR | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH;
     entry.append( atom );
 
@@ -1484,22 +1484,22 @@ void Ftp::stat( const KURL &url)
     UDSEntry entry;
     UDSAtom atom;
 
-    atom.m_uds = KIO::UDS_NAME;
+    atom.m_uds = TDEIO::UDS_NAME;
     atom.m_str = TQString::null;
     entry.append( atom );
 
-    atom.m_uds = KIO::UDS_FILE_TYPE;
+    atom.m_uds = TDEIO::UDS_FILE_TYPE;
     atom.m_long = S_IFDIR;
     entry.append( atom );
 
-    atom.m_uds = KIO::UDS_ACCESS;
+    atom.m_uds = TDEIO::UDS_ACCESS;
     atom.m_long = S_IRUSR | S_IXUSR | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH;
     entry.append( atom );
 
-    atom.m_uds = KIO::UDS_USER;
+    atom.m_uds = TDEIO::UDS_USER;
     atom.m_str = "root";
     entry.append( atom );
-    atom.m_uds = KIO::UDS_GROUP;
+    atom.m_uds = TDEIO::UDS_GROUP;
     entry.append( atom );
 
     // no size
@@ -1551,15 +1551,15 @@ void Ftp::stat( const KURL &url)
     UDSEntry entry;
     UDSAtom atom;
 
-    atom.m_uds = KIO::UDS_NAME;
+    atom.m_uds = TDEIO::UDS_NAME;
     atom.m_str = filename;
     entry.append( atom );
 
-    atom.m_uds = KIO::UDS_FILE_TYPE;
+    atom.m_uds = TDEIO::UDS_FILE_TYPE;
     atom.m_long = S_IFDIR;
     entry.append( atom );
 
-    atom.m_uds = KIO::UDS_ACCESS;
+    atom.m_uds = TDEIO::UDS_ACCESS;
     atom.m_long = S_IRUSR | S_IXUSR | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH;
     entry.append( atom );
 
@@ -1987,7 +1987,7 @@ void Ftp::get( const KURL & url )
   ftpCloseCommand();                        // must close command!
 }
 
-Ftp::StatusCode Ftp::ftpGet(int& iError, int iCopyFile, const KURL& url, KIO::fileoffset_t llOffset)
+Ftp::StatusCode Ftp::ftpGet(int& iError, int iCopyFile, const KURL& url, TDEIO::fileoffset_t llOffset)
 {
   // Calls error() by itself!
   if( !ftpOpenConnection(loginImplicit) )
@@ -2028,12 +2028,12 @@ Ftp::StatusCode Ftp::ftpGet(int& iError, int iCopyFile, const KURL& url, KIO::fi
     if (!m_size) m_size = UnknownSize;
   }
 
-  KIO::filesize_t bytesLeft = 0;
+  TDEIO::filesize_t bytesLeft = 0;
   if ( m_size != UnknownSize )
     bytesLeft = m_size - llOffset;
 
   kdDebug(7102) << "ftpGet: starting with offset=" << llOffset << endl;
-  KIO::fileoffset_t processed_size = llOffset;
+  TDEIO::fileoffset_t processed_size = llOffset;
 
   TQByteArray array;
   bool mimetypeEmitted = false;
@@ -2137,7 +2137,7 @@ void Ftp::mimetype( const KURL& url )
   }
   char buffer[ 2048 ];
   TQByteArray array;
-  // Get one chunk of data only and send it, KIO::Job will determine the
+  // Get one chunk of data only and send it, TDEIO::Job will determine the
   // mimetype from it using KMimeMagic
   int n = m_data->read( buffer, 2048 );
   array.setRawData(buffer, n);
@@ -2284,7 +2284,7 @@ Ftp::StatusCode Ftp::ftpPut(int& iError, int iCopyFile, const KURL& dest_url,
   } else
     dest = dest_orig;
 
-  KIO::fileoffset_t offset = 0;
+  TDEIO::fileoffset_t offset = 0;
 
   // set the mode according to offset
   if( resume && m_size > 0 )
@@ -2304,7 +2304,7 @@ Ftp::StatusCode Ftp::ftpPut(int& iError, int iCopyFile, const KURL& dest_url,
      return statusServerError;
 
   kdDebug(7102) << "ftpPut: starting with offset=" << offset << endl;
-  KIO::fileoffset_t processed_size = offset;
+  TDEIO::fileoffset_t processed_size = offset;
 
   TQByteArray buffer;
   int result;
@@ -2621,7 +2621,7 @@ Ftp::StatusCode Ftp::ftpCopyGet(int& iError, int& iCopyFile, const TQString sCop
     initialMode = 0666;
 
   // open the output file ...
-  KIO::fileoffset_t hCopyOffset = 0;
+  TDEIO::fileoffset_t hCopyOffset = 0;
   if(bResume)
   {
     iCopyFile = KDE_open( sPart.data(), O_RDWR );  // append if resuming

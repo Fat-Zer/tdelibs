@@ -60,7 +60,7 @@ KStandardDirs *TDEGlobal::dirs()
     return _instance->dirs();
 }
 
-KConfig	*TDEGlobal::config()
+TDEConfig	*TDEGlobal::config()
 {
     MYASSERT(_instance);
 

@@ -1217,7 +1217,7 @@ bool TDERootSystemDevice::canPowerOff() {
 	// Can we power down this system?
 	// This should probably be checked via DCOP and therefore interface with KDM
 
-	KConfig *config = TDEGlobal::config();
+	TDEConfig *config = TDEGlobal::config();
 	config->reparseConfiguration(); // config may have changed in the KControl module
 	
 	config->setGroup("General" );
@@ -2766,7 +2766,7 @@ TDEDiskDeviceType::TDEDiskDeviceType classifyDiskType(udev_device* dev, const TQ
 
 	// KStandardDirs::kde_default
 
-typedef TQMap<TQString, TQString> KConfigMap;
+typedef TQMap<TQString, TQString> TDEConfigMap;
 
 TQString readUdevAttribute(udev_device* dev, TQString attr) {
 	return TQString(udev_device_get_property_value(dev, attr.ascii()));
@@ -3070,7 +3070,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDeviceByExternalRules(udev_
 		TQString hardware_info_directory;
 	
 		// Scan the hardware_info_directory for configuration files
-		// For each one, open it with KConfig() and apply its rules to classify the device
+		// For each one, open it with TDEConfig() and apply its rules to classify the device
 		// FIXME
 		// Should this also scan up to <n> subdirectories for the files?  That feature might end up being too expensive...
 
@@ -3092,10 +3092,10 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDeviceByExternalRules(udev_
 						bool match = true;
 		
 						// Open the rules file
-						KConfig rulesFile(fi->absFilePath(), true, false);
+						TDEConfig rulesFile(fi->absFilePath(), true, false);
 						rulesFile.setGroup("Conditions");
-						KConfigMap conditionmap = rulesFile.entryMap("Conditions");
-						KConfigMap::Iterator cndit;
+						TDEConfigMap conditionmap = rulesFile.entryMap("Conditions");
+						TDEConfigMap::Iterator cndit;
 						for (cndit = conditionmap.begin(); cndit != conditionmap.end(); ++cndit) {
 							TQStringList conditionList = TQStringList::split(',', cndit.data(), false);
 							bool atleastonematch = false;

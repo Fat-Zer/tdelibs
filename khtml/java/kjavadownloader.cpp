@@ -58,13 +58,13 @@ public:
     ~KJavaDownloaderPrivate()
     {
         delete url;
-        if (job) job->kill(); // KIO::Job::kill deletes itself
+        if (job) job->kill(); // TDEIO::Job::kill deletes itself
     }
 private:
     int               loaderID;
     KURL*             url;
     TQByteArray        file;
-    KIO::TransferJob* job;
+    TDEIO::TransferJob* job;
     int               responseCode;
     bool              isfirstdata;
 };
@@ -79,16 +79,16 @@ KJavaDownloader::KJavaDownloader( int ID, const TQString& url )
     d->loaderID = ID;
     d->url = new KURL( url );
 
-    d->job = KIO::get( *d->url, false, false );
+    d->job = TDEIO::get( *d->url, false, false );
     d->job->addMetaData("PropagateHttpHeader", "true");
-    connect( d->job,  TQT_SIGNAL(data( KIO::Job*, const TQByteArray& )),
-             this,    TQT_SLOT(slotData( KIO::Job*, const TQByteArray& )) );
-    connect( d->job, TQT_SIGNAL(connected(KIO::Job*)),
-             this, TQT_SLOT(slotConnected(KIO::Job*)));
-    connect( d->job, TQT_SIGNAL(mimetype(KIO::Job*, const TQString&)),
-             this, TQT_SLOT(slotMimetype(KIO::Job*, const TQString&)));
-    connect( d->job, TQT_SIGNAL(result(KIO::Job*)),
-             this,   TQT_SLOT(slotResult(KIO::Job*)) );
+    connect( d->job,  TQT_SIGNAL(data( TDEIO::Job*, const TQByteArray& )),
+             this,    TQT_SLOT(slotData( TDEIO::Job*, const TQByteArray& )) );
+    connect( d->job, TQT_SIGNAL(connected(TDEIO::Job*)),
+             this, TQT_SLOT(slotConnected(TDEIO::Job*)));
+    connect( d->job, TQT_SIGNAL(mimetype(TDEIO::Job*, const TQString&)),
+             this, TQT_SLOT(slotMimetype(TDEIO::Job*, const TQString&)));
+    connect( d->job, TQT_SIGNAL(result(TDEIO::Job*)),
+             this,   TQT_SLOT(slotResult(TDEIO::Job*)) );
 }
 
 KJavaDownloader::~KJavaDownloader()
@@ -96,7 +96,7 @@ KJavaDownloader::~KJavaDownloader()
     delete d;
 }
 
-void KJavaDownloader::slotData( KIO::Job*, const TQByteArray& qb )
+void KJavaDownloader::slotData( TDEIO::Job*, const TQByteArray& qb )
 {
     //kdDebug(6100) << "slotData(" << d->loaderID << ")" << endl;
 
@@ -116,17 +116,17 @@ void KJavaDownloader::slotData( KIO::Job*, const TQByteArray& qb )
     KJavaAppletServer::freeJavaServer();
 }
 
-void KJavaDownloader::slotConnected(KIO::Job*)
+void KJavaDownloader::slotConnected(TDEIO::Job*)
 {
     kdDebug(6100) << "slave connected" << endl;
     d->responseCode = d->job->error();
 }
 
-void KJavaDownloader::slotMimetype(KIO::Job*, const TQString & type) {
+void KJavaDownloader::slotMimetype(TDEIO::Job*, const TQString & type) {
     kdDebug(6100) << "slave mimetype " << type << endl;
 }
 
-void KJavaDownloader::slotResult( KIO::Job* )
+void KJavaDownloader::slotResult( TDEIO::Job* )
 {
     kdDebug(6100) << "slotResult(" << d->loaderID << ")" << endl;
 
@@ -149,7 +149,7 @@ void KJavaDownloader::slotResult( KIO::Job* )
     {
         server->sendURLData( d->loaderID, FINISHED, d->file );
     }
-    d->job = 0L; // signal KIO::Job::result deletes itself
+    d->job = 0L; // signal TDEIO::Job::result deletes itself
     server->removeDataJob( d->loaderID ); // will delete this
     KJavaAppletServer::freeJavaServer();
 }
@@ -161,7 +161,7 @@ void KJavaDownloader::jobCommand( int cmd )
         case KJAS_STOP: {
             kdDebug(6100) << "jobCommand(" << d->loaderID << ") stop" << endl;
             d->job->kill();
-            d->job = 0L; // KIO::Job::kill deletes itself
+            d->job = 0L; // TDEIO::Job::kill deletes itself
             KJavaAppletServer* server = KJavaAppletServer::allocateJavaServer();
             server->removeDataJob( d->loaderID ); // will delete this
             KJavaAppletServer::freeJavaServer();
@@ -187,12 +187,12 @@ public:
     ~KJavaUploaderPrivate()
     {
         delete url;
-        if (job) job->kill(); // KIO::Job::kill deletes itself
+        if (job) job->kill(); // TDEIO::Job::kill deletes itself
     }
     int               loaderID;
     KURL*             url;
     TQByteArray        file;
-    KIO::TransferJob* job;
+    TDEIO::TransferJob* job;
     bool              finished;
 };
 
@@ -213,12 +213,12 @@ void KJavaUploader::start()
     kdDebug(6100) << "KJavaUploader::start(" << d->loaderID << ")" << endl;
     KJavaAppletServer* server = KJavaAppletServer::allocateJavaServer();
     // create a suspended job
-    d->job = KIO::put( *d->url, -1, false, false, false );
+    d->job = TDEIO::put( *d->url, -1, false, false, false );
     d->job->suspend();
-    connect( d->job, TQT_SIGNAL(dataReq( KIO::Job*, TQByteArray& )),
-            this,   TQT_SLOT(slotDataRequest( KIO::Job*, TQByteArray& )) );
-    connect( d->job, TQT_SIGNAL(result(KIO::Job*)),
-            this,   TQT_SLOT(slotResult(KIO::Job*)) );
+    connect( d->job, TQT_SIGNAL(dataReq( TDEIO::Job*, TQByteArray& )),
+            this,   TQT_SLOT(slotDataRequest( TDEIO::Job*, TQByteArray& )) );
+    connect( d->job, TQT_SIGNAL(result(TDEIO::Job*)),
+            this,   TQT_SLOT(slotResult(TDEIO::Job*)) );
     server->sendURLData( d->loaderID, CONNECTED, d->file );
     KJavaAppletServer::freeJavaServer();
 }
@@ -228,7 +228,7 @@ KJavaUploader::~KJavaUploader()
     delete d;
 }
 
-void KJavaUploader::slotDataRequest( KIO::Job*, TQByteArray& qb )
+void KJavaUploader::slotDataRequest( TDEIO::Job*, TQByteArray& qb )
 {
     // send our data and suspend
     kdDebug(6100) << "slotDataRequest(" << d->loaderID << ") finished:" << d->finished << endl;
@@ -256,7 +256,7 @@ void KJavaUploader::data( const TQByteArray& qb )
     d->job->resume();
 }
 
-void KJavaUploader::slotResult( KIO::Job* )
+void KJavaUploader::slotResult( TDEIO::Job* )
 {
     kdDebug(6100) << "slotResult(" << d->loaderID << ") job:" << d->job << endl;
 
@@ -276,7 +276,7 @@ void KJavaUploader::slotResult( KIO::Job* )
     }
     else // shouldn't come here
         kdError(6100) << "slotResult(" << d->loaderID << ") job:" << d->job << endl;
-    d->job = 0L; // signal KIO::Job::result deletes itself
+    d->job = 0L; // signal TDEIO::Job::result deletes itself
     server->removeDataJob( d->loaderID ); // will delete this
     KJavaAppletServer::freeJavaServer();
 }

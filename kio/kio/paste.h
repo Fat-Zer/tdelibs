@@ -27,7 +27,7 @@ class TQMimeSource;
 
 // KDE4 TODO pass a parent widget to all methods that will display a message box
 
-namespace KIO {
+namespace TDEIO {
   class Job;
   class CopyJob;
 

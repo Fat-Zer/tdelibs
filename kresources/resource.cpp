@@ -44,7 +44,7 @@ class Resource::ResourcePrivate
     bool mIsOpen;
 };
 
-Resource::Resource( const KConfig* config )
+Resource::Resource( const TDEConfig* config )
   : TQObject( 0, "" ), d( new ResourcePrivate )
 {
   d->mOpenCount = 0;
@@ -71,7 +71,7 @@ Resource::~Resource()
   d = 0;
 }
 
-void Resource::writeConfig( KConfig* config )
+void Resource::writeConfig( TDEConfig* config )
 {
   kdDebug(5650) << "Resource::writeConfig()" << endl;
 

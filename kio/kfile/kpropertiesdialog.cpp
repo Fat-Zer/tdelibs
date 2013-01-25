@@ -146,7 +146,7 @@ static TQString nameFromFileName(TQString nameStr)
    if ( nameStr.endsWith(".kdelnk") )
       nameStr.truncate( nameStr.length() - 7 );
    // Make it human-readable (%2F => '/', ...)
-   nameStr = KIO::decodeFileName( nameStr );
+   nameStr = TDEIO::decodeFileName( nameStr );
    return nameStr;
 }
 
@@ -174,7 +174,7 @@ public:
 KPropertiesDialog::KPropertiesDialog (KFileItem* item,
                                       TQWidget* parent, const char* name,
                                       bool modal, bool autoShow)
-  : KDialogBase (KDialogBase::Tabbed, i18n( "Properties for %1" ).arg(KIO::decodeFileName(item->url().fileName())),
+  : KDialogBase (KDialogBase::Tabbed, i18n( "Properties for %1" ).arg(TDEIO::decodeFileName(item->url().fileName())),
                  KDialogBase::Ok | KDialogBase::Cancel, KDialogBase::Ok,
                  parent, name, modal)
 {
@@ -206,7 +206,7 @@ KPropertiesDialog::KPropertiesDialog (KFileItemList _items,
                  // TODO: replace <never used> with "Properties for 1 item". It's very confusing how it has to be translated otherwise
                  // (empty translation before the "\n" is not allowed by msgfmt...)
 		 _items.count()>1 ? i18n( "<never used>","Properties for %n Selected Items",_items.count()) :
-		 i18n( "Properties for %1" ).arg(KIO::decodeFileName(_items.first()->url().fileName())),
+		 i18n( "Properties for %1" ).arg(TDEIO::decodeFileName(_items.first()->url().fileName())),
                  KDialogBase::Ok | KDialogBase::Cancel, KDialogBase::Ok,
                  parent, name, modal)
 {
@@ -229,16 +229,16 @@ KPropertiesDialog::KPropertiesDialog (const KURL& _url, mode_t /* _mode is now u
                                       TQWidget* parent, const char* name,
                                       bool modal, bool autoShow)
   : KDialogBase (KDialogBase::Tabbed,
-		 i18n( "Properties for %1" ).arg(KIO::decodeFileName(_url.fileName())),
+		 i18n( "Properties for %1" ).arg(TDEIO::decodeFileName(_url.fileName())),
                  KDialogBase::Ok | KDialogBase::Cancel, KDialogBase::Ok,
                  parent, name, modal),
   m_singleUrl( _url )
 {
   d = new KPropertiesDialogPrivate;
 
-  KIO::UDSEntry entry;
+  TDEIO::UDSEntry entry;
 
-  KIO::NetAccess::stat(_url, entry, parent);
+  TDEIO::NetAccess::stat(_url, entry, parent);
 
   m_items.append( new KFileItem( entry, _url ) );
   init (modal, autoShow);
@@ -249,16 +249,16 @@ KPropertiesDialog::KPropertiesDialog (const KURL& _url,
                                       TQWidget* parent, const char* name,
                                       bool modal, bool autoShow)
   : KDialogBase (KDialogBase::Tabbed,
-		 i18n( "Properties for %1" ).arg(KIO::decodeFileName(_url.fileName())),
+		 i18n( "Properties for %1" ).arg(TDEIO::decodeFileName(_url.fileName())),
                  KDialogBase::Ok | KDialogBase::Cancel, KDialogBase::Ok,
                  parent, name, modal),
   m_singleUrl( _url )
 {
   d = new KPropertiesDialogPrivate;
 
-  KIO::UDSEntry entry;
+  TDEIO::UDSEntry entry;
 
-  KIO::NetAccess::stat(_url, entry, parent);
+  TDEIO::NetAccess::stat(_url, entry, parent);
 
   m_items.append( new KFileItem( entry, _url ) );
   init (modal, autoShow);
@@ -269,7 +269,7 @@ KPropertiesDialog::KPropertiesDialog (const KURL& _tempUrl, const KURL& _current
                                       TQWidget* parent, const char* name,
                                       bool modal, bool autoShow)
   : KDialogBase (KDialogBase::Tabbed,
-		 i18n( "Properties for %1" ).arg(KIO::decodeFileName(_tempUrl.fileName())),
+		 i18n( "Properties for %1" ).arg(TDEIO::decodeFileName(_tempUrl.fileName())),
                  KDialogBase::Ok | KDialogBase::Cancel, KDialogBase::Ok,
                  parent, name, modal),
 
@@ -360,7 +360,7 @@ void KPropertiesDialog::setFileNameReadOnly( bool ro )
     }
 }
 
-void KPropertiesDialog::slotStatResult( KIO::Job * )
+void KPropertiesDialog::slotStatResult( TDEIO::Job * )
 {
 }
 
@@ -725,7 +725,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
   TQString mimeComment = item->mimeComment();
   d->mimeType = item->mimetype();
   bool hasTotalSize;
-  KIO::filesize_t totalSize = item->size(hasTotalSize);
+  TDEIO::filesize_t totalSize = item->size(hasTotalSize);
   TQString magicMimeComment;
   if ( isLocal ) {
       KMimeType::Ptr magicMimeType = KMimeType::findByFileContent( url.path() );
@@ -894,7 +894,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
   {
     TQLabel *lab = new TQLabel(d->m_frame );
     if ( d->bMultiple )
-      lab->setText( KIO::itemsSummaryString( iFileCount + iDirCount, iFileCount, iDirCount, 0, false ) );
+      lab->setText( TDEIO::itemsSummaryString( iFileCount + iDirCount, iFileCount, iDirCount, 0, false ) );
     else
       lab->setText( filename );
     nameArea = lab;
@@ -992,7 +992,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
   if ( !hasDirs ) // Only files [and symlinks]
   {
     if(hasTotalSize) {
-      m_sizeLabel->setText(KIO::convertSizeWithBytes(totalSize));
+      m_sizeLabel->setText(TDEIO::convertSizeWithBytes(totalSize));
     }
 
     m_sizeDetermineButton = 0L;
@@ -1034,7 +1034,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
   {
     TQDateTime dt;
     bool hasTime;
-    time_t tim = item->time(KIO::UDS_CREATION_TIME, hasTime);
+    time_t tim = item->time(TDEIO::UDS_CREATION_TIME, hasTime);
     if ( hasTime )
     {
       l = new TQLabel(i18n("Created:"), d->m_frame );
@@ -1045,7 +1045,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
       grid->addWidget(l, curRow++, 2);
     }
 
-    tim = item->time(KIO::UDS_MODIFICATION_TIME, hasTime);
+    tim = item->time(TDEIO::UDS_MODIFICATION_TIME, hasTime);
     if ( hasTime )
     {
       l = new TQLabel(i18n("Modified:"), d->m_frame );
@@ -1056,7 +1056,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
       grid->addWidget(l, curRow++, 2);
     }
 
-    tim = item->time(KIO::UDS_ACCESS_TIME, hasTime);
+    tim = item->time(TDEIO::UDS_ACCESS_TIME, hasTime);
     if ( hasTime )
     {
       l = new TQLabel(i18n("Accessed:"), d->m_frame );
@@ -1074,7 +1074,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
     grid->addMultiCellWidget(sep, curRow, curRow, 0, 2);
     ++curRow;
 
-    TQString mountPoint = KIO::findPathMountPoint( url.path() );
+    TQString mountPoint = TDEIO::findPathMountPoint( url.path() );
 
     if (mountPoint != "/")
     {
@@ -1193,8 +1193,8 @@ void KFilePropsPlugin::slotFoundMountPoint( const TQString&,
     d->m_freeSpaceLabel->setText(
 	// xgettext:no-c-format  --  Don't warn about translating the %1 out of %2 part.
 	i18n("Available space out of total partition size (percent used)", "%1 out of %2 (%3% used)")
-	.arg(KIO::convertSizeFromKB(kBAvail))
-	.arg(KIO::convertSizeFromKB(kBSize))
+	.arg(TDEIO::convertSizeFromKB(kBAvail))
+	.arg(TDEIO::convertSizeFromKB(kBSize))
 	.arg( 100 - (int)(100.0 * kBAvail / kBSize) ));
 }
 
@@ -1208,34 +1208,34 @@ void KFilePropsPlugin::slotFoundMountPoint( const unsigned long& kBSize,
     d->m_freeSpaceLabel->setText(
 	// xgettext:no-c-format  --  Don't warn about translating the %1 out of %2 part.
 	i18n("Available space out of total partition size (percent used)", "%1 out of %2 (%3% used)")
-	.arg(KIO::convertSizeFromKB(kBAvail))
-	.arg(KIO::convertSizeFromKB(kBSize))
+	.arg(TDEIO::convertSizeFromKB(kBAvail))
+	.arg(TDEIO::convertSizeFromKB(kBSize))
 	.arg( 100 - (int)(100.0 * kBAvail / kBSize) ));
 }
 
 void KFilePropsPlugin::slotDirSizeUpdate()
 {
-    KIO::filesize_t totalSize = d->dirSizeJob->totalSize();
-    KIO::filesize_t totalFiles = d->dirSizeJob->totalFiles();
-         KIO::filesize_t totalSubdirs = d->dirSizeJob->totalSubdirs();
+    TDEIO::filesize_t totalSize = d->dirSizeJob->totalSize();
+    TDEIO::filesize_t totalFiles = d->dirSizeJob->totalFiles();
+         TDEIO::filesize_t totalSubdirs = d->dirSizeJob->totalSubdirs();
     m_sizeLabel->setText( i18n("Calculating... %1 (%2)\n%3, %4")
-			  .arg(KIO::convertSize(totalSize))
+			  .arg(TDEIO::convertSize(totalSize))
                          .arg(TDEGlobal::locale()->formatNumber(totalSize, 0))
         .arg(i18n("1 file","%n files",totalFiles))
         .arg(i18n("1 sub-folder","%n sub-folders",totalSubdirs)));
 }
 
-void KFilePropsPlugin::slotDirSizeFinished( KIO::Job * job )
+void KFilePropsPlugin::slotDirSizeFinished( TDEIO::Job * job )
 {
   if (job->error())
     m_sizeLabel->setText( job->errorString() );
   else
   {
-    KIO::filesize_t totalSize = static_cast<KDirSize*>(job)->totalSize();
-	KIO::filesize_t totalFiles = static_cast<KDirSize*>(job)->totalFiles();
-	KIO::filesize_t totalSubdirs = static_cast<KDirSize*>(job)->totalSubdirs();
+    TDEIO::filesize_t totalSize = static_cast<KDirSize*>(job)->totalSize();
+	TDEIO::filesize_t totalFiles = static_cast<KDirSize*>(job)->totalFiles();
+	TDEIO::filesize_t totalSubdirs = static_cast<KDirSize*>(job)->totalSubdirs();
     m_sizeLabel->setText( TQString::fromLatin1("%1 (%2)\n%3, %4")
-			  .arg(KIO::convertSize(totalSize))
+			  .arg(TDEIO::convertSize(totalSize))
 			  .arg(TDEGlobal::locale()->formatNumber(totalSize, 0))
         .arg(i18n("1 file","%n files",totalFiles))
         .arg(i18n("1 sub-folder","%n sub-folders",totalSubdirs)));
@@ -1259,8 +1259,8 @@ void KFilePropsPlugin::slotSizeDetermine()
   connect( d->dirSizeUpdateTimer, TQT_SIGNAL( timeout() ),
            TQT_SLOT( slotDirSizeUpdate() ) );
   d->dirSizeUpdateTimer->start(500);
-  connect( d->dirSizeJob, TQT_SIGNAL( result( KIO::Job * ) ),
-           TQT_SLOT( slotDirSizeFinished( KIO::Job * ) ) );
+  connect( d->dirSizeJob, TQT_SIGNAL( result( TDEIO::Job * ) ),
+           TQT_SLOT( slotDirSizeFinished( TDEIO::Job * ) ) );
   m_sizeStopButton->setEnabled(true);
   m_sizeDetermineButton->setEnabled(false);
 
@@ -1270,7 +1270,7 @@ void KFilePropsPlugin::slotSizeDetermine()
     bool isLocal;
     KFileItem * item = properties->item();
     KURL url = item->mostLocalURL( isLocal );
-    TQString mountPoint = KIO::findPathMountPoint( url.path() );
+    TQString mountPoint = TDEIO::findPathMountPoint( url.path() );
 
     KDiskFreeSp * job = new KDiskFreeSp;
     connect( job, TQT_SIGNAL( foundMountPoint( const unsigned long&, const unsigned long&,
@@ -1334,10 +1334,10 @@ void KFilePropsPlugin::applyChanges()
     kdDebug(250) << "oldname = " << oldName << endl;
     kdDebug(250) << "newname = " << n << endl;
     if ( oldName != n || m_bFromTemplate ) { // true for any from-template file
-      KIO::Job * job = 0L;
+      TDEIO::Job * job = 0L;
       KURL oldurl = properties->kurl();
 
-      TQString newFileName = KIO::encodeFileName(n);
+      TQString newFileName = TDEIO::encodeFileName(n);
       if (d->bDesktopFile && !newFileName.endsWith(".desktop") && !newFileName.endsWith(".kdelnk"))
          newFileName += ".desktop";
 
@@ -1353,14 +1353,14 @@ void KFilePropsPlugin::applyChanges()
 
       // Don't remove the template !!
       if ( !m_bFromTemplate ) // (normal renaming)
-        job = KIO::move( oldurl, properties->kurl() );
+        job = TDEIO::move( oldurl, properties->kurl() );
       else // Copying a template
-        job = KIO::copy( oldurl, properties->kurl() );
+        job = TDEIO::copy( oldurl, properties->kurl() );
 
-      connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
-               TQT_SLOT( slotCopyFinished( KIO::Job * ) ) );
-      connect( job, TQT_SIGNAL( renamed( KIO::Job *, const KURL &, const KURL & ) ),
-               TQT_SLOT( slotFileRenamed( KIO::Job *, const KURL &, const KURL & ) ) );
+      connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ),
+               TQT_SLOT( slotCopyFinished( TDEIO::Job * ) ) );
+      connect( job, TQT_SIGNAL( renamed( TDEIO::Job *, const KURL &, const KURL & ) ),
+               TQT_SLOT( slotFileRenamed( TDEIO::Job *, const KURL &, const KURL & ) ) );
       // wait for job
       TQWidget dummy(0,0,(WFlags)(WType_Dialog|WShowModal));
       tqt_enter_modal(&dummy);
@@ -1378,7 +1378,7 @@ void KFilePropsPlugin::applyChanges()
   slotCopyFinished( 0L );
 }
 
-void KFilePropsPlugin::slotCopyFinished( KIO::Job * job )
+void KFilePropsPlugin::slotCopyFinished( TDEIO::Job * job )
 {
   kdDebug(250) << "KFilePropsPlugin::slotCopyFinished" << endl;
   if (job)
@@ -1389,7 +1389,7 @@ void KFilePropsPlugin::slotCopyFinished( KIO::Job * job )
     {
         job->showErrorDialog( d->m_frame );
         // Didn't work. Revert the URL to the old one
-        properties->updateUrl( static_cast<KIO::CopyJob*>(job)->srcURLs().first() );
+        properties->updateUrl( static_cast<TDEIO::CopyJob*>(job)->srcURLs().first() );
         properties->abortApplying(); // Don't apply the changes to the wrong file !
         return;
     }
@@ -1431,9 +1431,9 @@ void KFilePropsPlugin::applyIconChanges()
   if ( !iconButton || !d->bIconChanged )
     return;
   // handle icon changes - only local files (or pseudo-local) for now
-  // TODO: Use KTempFile and KIO::file_copy with overwrite = true
+  // TODO: Use KTempFile and TDEIO::file_copy with overwrite = true
   KURL url = properties->kurl();
-  url = KIO::NetAccess::mostLocalURL( url, properties );
+  url = TDEIO::NetAccess::mostLocalURL( url, properties );
   if (url.isLocalFile()) {
     TQString path;
 
@@ -1478,7 +1478,7 @@ void KFilePropsPlugin::applyIconChanges()
   }
 }
 
-void KFilePropsPlugin::slotFileRenamed( KIO::Job *, const KURL &, const KURL & newUrl )
+void KFilePropsPlugin::slotFileRenamed( TDEIO::Job *, const KURL &, const KURL & newUrl )
 {
   // This is called in case of an existing local file during the copy/move operation,
   // if the user chooses Rename.
@@ -1633,7 +1633,7 @@ KFilePermissionsPropsPlugin::KFilePermissionsPropsPlugin( KPropertiesDialog *_pr
   } else {
     //We don't know, for remote files, if they are ours or not.
     //So we let the user change permissions, and
-    //KIO::chmod will tell, if he had no right to do it.
+    //TDEIO::chmod will tell, if he had no right to do it.
     isMyFile = true;
   }
 
@@ -2506,17 +2506,17 @@ void KFilePermissionsPropsPlugin::applyChanges()
       && !permissionChange && !ACLChange && !defaultACLChange )
     return;
 
-  KIO::Job * job;
+  TDEIO::Job * job;
   if (files.count() > 0) {
-    job = KIO::chmod( files, orFilePermissions, ~andFilePermissions,
+    job = TDEIO::chmod( files, orFilePermissions, ~andFilePermissions,
         owner, group, false );
     if ( ACLChange && d->fileSystemSupportsACLs )
       job->addMetaData( "ACL_STRING", d->extendedACL.isValid()?d->extendedACL.asString():"ACL_DELETE" );
     if ( defaultACLChange && d->fileSystemSupportsACLs )
       job->addMetaData( "DEFAULT_ACL_STRING", d->defaultACL.isValid()?d->defaultACL.asString():"ACL_DELETE" );
 
-    connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
-        TQT_SLOT( slotChmodResult( KIO::Job * ) ) );
+    connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ),
+        TQT_SLOT( slotChmodResult( TDEIO::Job * ) ) );
     // Wait for job
     TQWidget dummy(0,0,(WFlags)(WType_Dialog|WShowModal));
     tqt_enter_modal(&dummy);
@@ -2524,15 +2524,15 @@ void KFilePermissionsPropsPlugin::applyChanges()
     tqt_leave_modal(&dummy);
   }
   if (dirs.count() > 0) {
-    job = KIO::chmod( dirs, orDirPermissions, ~andDirPermissions,
+    job = TDEIO::chmod( dirs, orDirPermissions, ~andDirPermissions,
         owner, group, recursive );
     if ( ACLChange && d->fileSystemSupportsACLs )
       job->addMetaData( "ACL_STRING", d->extendedACL.isValid()?d->extendedACL.asString():"ACL_DELETE" );
     if ( defaultACLChange && d->fileSystemSupportsACLs )
       job->addMetaData( "DEFAULT_ACL_STRING", d->defaultACL.isValid()?d->defaultACL.asString():"ACL_DELETE" );
 
-    connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
-        TQT_SLOT( slotChmodResult( KIO::Job * ) ) );
+    connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ),
+        TQT_SLOT( slotChmodResult( TDEIO::Job * ) ) );
     // Wait for job
     TQWidget dummy(0,0,(WFlags)(WType_Dialog|WShowModal));
     tqt_enter_modal(&dummy);
@@ -2541,7 +2541,7 @@ void KFilePermissionsPropsPlugin::applyChanges()
   }
 }
 
-void KFilePermissionsPropsPlugin::slotChmodResult( KIO::Job * job )
+void KFilePermissionsPropsPlugin::slotChmodResult( TDEIO::Job * job )
 {
   kdDebug(250) << "KFilePermissionsPropsPlugin::slotChmodResult" << endl;
   if (job->error())
@@ -3042,8 +3042,8 @@ void KDevicePropsPlugin::slotFoundMountPoint( const unsigned long& kBSize,
   d->m_freeSpaceLabel->setText(
       // xgettext:no-c-format  --  Don't warn about translating the %1 out of %2 part.
       i18n("Available space out of total partition size (percent used)", "%1 out of %2 (%3% used)")
-      .arg(KIO::convertSizeFromKB(kBAvail))
-      .arg(KIO::convertSizeFromKB(kBSize))
+      .arg(TDEIO::convertSizeFromKB(kBAvail))
+      .arg(TDEIO::convertSizeFromKB(kBSize))
       .arg( 100 - (int)(100.0 * kBAvail / kBSize) ));
 
   d->m_freeSpaceBar->setProgress(percUsed, 100);
@@ -3446,7 +3446,7 @@ void KDesktopPropsPlugin::slotAdvanced()
 
   // check to see if we use konsole if not do not add the nocloseonexit
   // because we don't know how to do this on other terminal applications
-  KConfigGroup confGroup( TDEGlobal::config(), TQString::fromLatin1("General") );
+  TDEConfigGroup confGroup( TDEGlobal::config(), TQString::fromLatin1("General") );
   TQString preferredTerminal = confGroup.readPathEntry("TerminalApplication",
 						  TQString::fromLatin1("konsole"));
 
@@ -3672,7 +3672,7 @@ KExecPropsPlugin::KExecPropsPlugin( KPropertiesDialog *_props )
 
   // check to see if we use konsole if not do not add the nocloseonexit
   // because we don't know how to do this on other terminal applications
-  KConfigGroup confGroup( TDEGlobal::config(), TQString::fromLatin1("General") );
+  TDEConfigGroup confGroup( TDEGlobal::config(), TQString::fromLatin1("General") );
   TQString preferredTerminal = confGroup.readPathEntry("TerminalApplication",
 						  TQString::fromLatin1("konsole"));
 

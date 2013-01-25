@@ -54,7 +54,7 @@ static const unsigned char zisofs_magic[8] = {
     0x37, 0xE4, 0x53, 0x96, 0xC9, 0xDB, 0xD6, 0x07
 };
 
-using namespace KIO;
+using namespace TDEIO;
 
 extern "C" { KDE_EXPORT int kdemain(int argc, char **argv); }
 
@@ -241,7 +241,7 @@ void kio_isoProtocol::listDir( const KURL & url )
         kdDebug()  << "Checking (stat) on " << _path << endl;
         struct stat buff;
         if ( ::stat( _path.data(), &buff ) == -1 || !S_ISDIR( buff.st_mode ) ) {
-            error( KIO::ERR_DOES_NOT_EXIST, url.path() );
+            error( TDEIO::ERR_DOES_NOT_EXIST, url.path() );
             return;
         }
         // It's a real dir -> redirect
@@ -278,12 +278,12 @@ void kio_isoProtocol::listDir( const KURL & url )
         const KArchiveEntry* e = root->entry( path );
         if ( !e )
         {
-            error( KIO::ERR_DOES_NOT_EXIST, path );
+            error( TDEIO::ERR_DOES_NOT_EXIST, path );
             return;
         }
         if ( ! e->isDirectory() )
         {
-            error( KIO::ERR_IS_FILE, path );
+            error( TDEIO::ERR_IS_FILE, path );
             return;
         }
         dir = (KArchiveDirectory*)e;
@@ -328,17 +328,17 @@ void kio_isoProtocol::stat( const KURL & url )
         struct stat buff;
         if ( ::stat( _path.data(), &buff ) == -1 || !S_ISDIR( buff.st_mode ) ) {
             kdDebug() << "isdir=" << S_ISDIR( buff.st_mode ) << "  errno=" << strerror(errno) << endl;
-            error( KIO::ERR_DOES_NOT_EXIST, url.path() );
+            error( TDEIO::ERR_DOES_NOT_EXIST, url.path() );
             return;
         }
         // Real directory. Return just enough information for KRun to work
         UDSAtom atom;
-        atom.m_uds = KIO::UDS_NAME;
+        atom.m_uds = TDEIO::UDS_NAME;
         atom.m_str = url.fileName();
         entry.append( atom );
         kdDebug()  << "kio_isoProtocol::stat returning name=" << url.fileName() << endl;
 
-        atom.m_uds = KIO::UDS_FILE_TYPE;
+        atom.m_uds = TDEIO::UDS_FILE_TYPE;
         atom.m_long = buff.st_mode & S_IFMT;
         entry.append( atom );
 
@@ -363,7 +363,7 @@ void kio_isoProtocol::stat( const KURL & url )
     }
     if ( !isoEntry )
     {
-        error( KIO::ERR_DOES_NOT_EXIST, path );
+        error( TDEIO::ERR_DOES_NOT_EXIST, path );
         return;
     }
     createUDSEntry( isoEntry, entry );
@@ -412,7 +412,7 @@ void kio_isoProtocol::getFile( const KIsoFile *isoFileEntry, const TQString &pat
                     
                 pptr = pointer_block.data();
             } else {
-                error(KIO::ERR_COULD_NOT_READ, path);
+                error(TDEIO::ERR_COULD_NOT_READ, path);
                 return;
             }
         } else {
@@ -474,7 +474,7 @@ void kio_isoProtocol::getFile( const KIsoFile *isoFileEntry, const TQString &pat
     }
 
     if (pos!=size) {
-        error(KIO::ERR_COULD_NOT_READ, path);
+        error(TDEIO::ERR_COULD_NOT_READ, path);
         return;
     }
 
@@ -492,7 +492,7 @@ void kio_isoProtocol::get( const KURL & url )
     TQString path;
     if ( !checkNewFile( url.path(), path, url.hasRef() ? url.htmlRef().toInt() : -1 ) )
     {
-        error( KIO::ERR_DOES_NOT_EXIST, url.path() );
+        error( TDEIO::ERR_DOES_NOT_EXIST, url.path() );
         return;
     }
 
@@ -501,12 +501,12 @@ void kio_isoProtocol::get( const KURL & url )
 
     if ( !isoEntry )
     {
-        error( KIO::ERR_DOES_NOT_EXIST, path );
+        error( TDEIO::ERR_DOES_NOT_EXIST, path );
         return;
     }
     if ( isoEntry->isDirectory() )
     {
-        error( KIO::ERR_IS_DIRECTORY, path );
+        error( TDEIO::ERR_IS_DIRECTORY, path );
         return;
     }
 

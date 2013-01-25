@@ -224,11 +224,11 @@ void KMFactory::loadFactory(const TQString& syst)
 	}
 }
 
-KConfig* KMFactory::printConfig(const TQString& group)
+TDEConfig* KMFactory::printConfig(const TQString& group)
 {
 	if (!m_printconfig)
 	{
-		m_printconfig = new KConfig("tdeprintrc");
+		m_printconfig = new TDEConfig("tdeprintrc");
 		TQ_CHECK_PTR(m_printconfig);
 	}
 	if (!group.isEmpty())
@@ -238,7 +238,7 @@ KConfig* KMFactory::printConfig(const TQString& group)
 
 TQString KMFactory::printSystem()
 {
-	KConfig	*conf = printConfig();
+	TDEConfig	*conf = printConfig();
 	conf->setGroup("General");
 	TQString	sys = conf->readEntry("PrintSystem");
 	if (sys.isEmpty())
@@ -276,7 +276,7 @@ void KMFactory::reload(const TQString& syst, bool saveSyst)
 	unload();
 	if (saveSyst)
 	{
-		KConfig	*conf = printConfig();
+		TDEConfig	*conf = printConfig();
 		conf->setGroup("General");
 		conf->writeEntry("PrintSystem", syst);
 		conf->sync();
@@ -403,7 +403,7 @@ void KMFactory::slot_configChanged()
 
 void KMFactory::saveConfig()
 {
-	KConfig	*conf = printConfig();
+	TDEConfig	*conf = printConfig();
 	conf->sync();
 	kdDebug(500) << "KMFactory (" << getpid() << ") emitting DCOP signal configChanged()" << endl;
 	emit configChanged();

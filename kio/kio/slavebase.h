@@ -28,7 +28,7 @@
 class DCOPClient;
 class KRemoteEncoding;
 
-namespace KIO {
+namespace TDEIO {
 
 class Connection;
 class SlaveBasePrivate;
@@ -93,7 +93,7 @@ public:
      * Call to signal an error.
      * This also finishes the job, no need to call finished.
      *
-     * If the Error code is KIO::ERR_SLAVE_DEFINED then the
+     * If the Error code is TDEIO::ERR_SLAVE_DEFINED then the
      * _text should contain the complete translated text of
      * of the error message.  This message will be displayed
      * in an KTextBrowser which allows rich text complete
@@ -101,9 +101,9 @@ public:
      * mailer, "exec:/command arg1 arg2" will be forked and
      * all other links will call the default browser.
      *
-     * @see KIO::Error
+     * @see TDEIO::Error
      * @see KTextBrowser
-     * @param _errid the error code from KIO::Error
+     * @param _errid the error code from TDEIO::Error
      * @param _text the rich text error message
      */
     void error( int _errid, const TQString &_text );
@@ -154,7 +154,7 @@ public:
      * In this case, the boolean returns whether we can indeed resume or not
      * (we can't if the protocol doing the get() doesn't support setting an offset)
      */
-    bool canResume( KIO::filesize_t offset );
+    bool canResume( TDEIO::filesize_t offset );
 
     /*
      * Call this at the beginning of get(), if the "resume" metadata was set
@@ -171,13 +171,13 @@ public:
      * of the file
      * Call in listDir too, when you know the total number of items.
      */
-    void totalSize( KIO::filesize_t _bytes );
+    void totalSize( TDEIO::filesize_t _bytes );
     /**
      * Call this during get and copy, once in a while,
      * to give some info about the current state.
      * Don't emit it in listDir, listEntries speaks for itself.
      */
-    void processedSize( KIO::filesize_t _bytes );
+    void processedSize( TDEIO::filesize_t _bytes );
 
     /**
      * Only use this if you can't know in advance the size of the
@@ -317,7 +317,7 @@ public:
      * The application provides the slave with all configuration information
      * relevant for the current protocol and host.
      */
-    KConfigBase* config();
+    TDEConfigBase* config();
 
     /**
      * Returns an object that can translate remote filenames into proper
@@ -621,7 +621,7 @@ public:
      * simple example:
      *
      * \code
-     * KIO::AuthInfo authInfo;
+     * TDEIO::AuthInfo authInfo;
      * if ( openPassDlg( authInfo ) )
      * {
      *    kdDebug() << TQString::fromLatin1("User: ")
@@ -635,7 +635,7 @@ public:
      * comment as follows:
      *
      * \code
-     * KIO::AuthInfo authInfo;
+     * TDEIO::AuthInfo authInfo;
      * authInfo.caption= "Acme Password Dialog";
      * authInfo.username= "Wile E. Coyote";
      * TQString errorMsg = "You entered an incorrect password.";
@@ -661,13 +661,13 @@ public:
      * @return      @p true if user clicks on "OK", @p false otherwsie.
      * @since 3.1
      */
-    bool openPassDlg( KIO::AuthInfo& info, const TQString &errorMsg );
+    bool openPassDlg( TDEIO::AuthInfo& info, const TQString &errorMsg );
 
     /**
      * Same as above function except it does not need error message.
      * BIC: Combine this function with the above for KDE4.
      */
-    bool openPassDlg( KIO::AuthInfo& info );
+    bool openPassDlg( TDEIO::AuthInfo& info );
 
     /**
      * Checks for cached authentication based on parameters

@@ -460,7 +460,7 @@ void DockContainer::setPixmap(KDockWidget* widget ,const TQPixmap& pixmap)
   tab->setIcon(pixmap.isNull()?SmallIcon("misc"):pixmap);
 }
 
-void DockContainer::save(KConfig* cfg,const TQString& group_or_prefix)
+void DockContainer::save(TDEConfig* cfg,const TQString& group_or_prefix)
 {
   // group name
   TQString grp=cfg->group();
@@ -504,7 +504,7 @@ void DockContainer::save(KConfig* cfg,const TQString& group_or_prefix)
   cfg->setGroup(grp);
 }
 
-void DockContainer::load(KConfig* cfg,const TQString& group_or_prefix)
+void DockContainer::load(TDEConfig* cfg,const TQString& group_or_prefix)
 {
   TQString grp=cfg->group();
   cfg->setGroup(group_or_prefix+TQString("::%1").arg(parent()->name()));

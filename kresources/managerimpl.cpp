@@ -88,13 +88,13 @@ void ManagerImpl::createStandardConfig()
 {
   if ( !mStdConfig ) {
     TQString file = defaultConfigFile( mFamily );
-    mStdConfig = new KConfig( file );
+    mStdConfig = new TDEConfig( file );
   }
   
   mConfig = mStdConfig;
 }
 
-void ManagerImpl::readConfig( KConfig *cfg )
+void ManagerImpl::readConfig( TDEConfig *cfg )
 {
   kdDebug(5650) << "ManagerImpl::readConfig()" << endl;
 
@@ -123,7 +123,7 @@ void ManagerImpl::readConfig( KConfig *cfg )
   mConfigRead = true;
 }
 
-void ManagerImpl::writeConfig( KConfig *cfg )
+void ManagerImpl::writeConfig( TDEConfig *cfg )
 {
   kdDebug(5650) << "ManagerImpl::writeConfig()" << endl;
 

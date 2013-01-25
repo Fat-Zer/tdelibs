@@ -207,12 +207,12 @@ void KSwitchLanguageDialog::slotOk()
         first = false;
     }
     
-    KConfig *config = TDEGlobal::config();
+    TDEConfig *config = TDEGlobal::config();
     
     if (d->applicationLanguageList().join(":") != languageString)
     {
         //list is different from defaults or saved languages list
-        KConfigGroup group(config, "Locale");
+        TDEConfigGroup group(config, "Locale");
     
         group.writeEntry("Language", languageString);
         config->sync();
@@ -258,12 +258,12 @@ void KSwitchLanguageDialogPrivate::fillApplicationLanguages(KLanguageButton *but
 
 TQStringList KSwitchLanguageDialogPrivate::applicationLanguageList()
 {
-    KConfig *config = TDEGlobal::config();
+    TDEConfig *config = TDEGlobal::config();
     TQStringList languagesList;
     
     if (config->hasGroup("Locale"))
     {
-        KConfigGroupSaver saver(config, "Locale");
+        TDEConfigGroupSaver saver(config, "Locale");
         
         if (config->hasKey("Language"))
         {

@@ -572,7 +572,7 @@ TQTextCodec *KCharsets::codecForName(const TQString &n, bool &ok) const
 
     TQString dir;
     {
-    KConfigGroupSaver cfgsav( TDEGlobal::config(), "i18n" );
+    TDEConfigGroupSaver cfgsav( TDEGlobal::config(), "i18n" );
     dir = TDEGlobal::config()->readPathEntry("i18ndir", TQString::fromLatin1("/usr/share/i18n/charmaps"));
     }
 

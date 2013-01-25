@@ -391,7 +391,7 @@ TQString&) is not a slot anymore.
 <li>setMaxCacheAge( int )
 <li>setUseCache( bool )
 <li>setMaxCacheSize( int )
-<li>setCacheControl( KIO::CacheControl )
+<li>setCacheControl( TDEIO::CacheControl )
 <li>setUseProxy( bool )
 <li>setUseReverseProxy( bool )
 <li>setProxyType( ProxyType )
@@ -406,7 +406,7 @@ TQString&) is not a slot anymore.
   <li>In order to support files &gt; 4Gb, the file size / file-offset argument
       in the signals totalSize, processedSize and canResume, which are used 
       by the io-slaves and passed along to jobs, has been changed from
-      <b>unsigned long</b> to <b>KIO::filesize_t</b>.
+      <b>unsigned long</b> to <b>TDEIO::filesize_t</b>.
       Make sure to check if you use these signals since your compiler
       will typically not generate a compile-time error for these changes,
       instead you might get a run-time error when you try to connect to
@@ -568,7 +568,7 @@ sorting is utilized by letting its view-items provide a TQString key() method. T
 KFileView offers the two methods
 <ul>
 <li>TQString sortingKey( const TQString&amp; value, bool isDir, int sortSpec )</li>
-<li>TQString sortingKey( KIO::filesize_t value, bool isDir, int sortSpec )</li>
+<li>TQString sortingKey( TDEIO::filesize_t value, bool isDir, int sortSpec )</li>
 </ul>
 which the view-classes can use to generate the string for the key() method. The KFile::SortMode
 enum has been removed, as TQDir::SortSpec is used entirely.
@@ -577,8 +577,8 @@ enum has been removed, as TQDir::SortSpec is used entirely.
 Further changes:
 <table>
 <tr><th>Old:</th><th>New:</th></tr>
-<tr><td>not existant</td><td>virtual void readConfig( KConfig *, const TQString&amp; group = TQString::null )</td></tr>
-<tr><td>not existant</td><td>void writeConfig( KConfig *, const TQString&amp; group = TQString::null)</td></tr>
+<tr><td>not existant</td><td>virtual void readConfig( TDEConfig *, const TQString&amp; group = TQString::null )</td></tr>
+<tr><td>not existant</td><td>void writeConfig( TDEConfig *, const TQString&amp; group = TQString::null)</td></tr>
 <tr><td>virtual void setCurrentItem( const TQString&amp; filename, KFileViewItem * )</td><td>Replaced with the two methods below.</td></tr>
 <tr><td>&nbsp;</td><td>void setCurrentItem( const TQString&amp; filename );</td></tr>
 <tr><td>&nbsp;</td><td>virtual void setCurrentItem( const KFileViewItem * ) = 0;</td></tr>

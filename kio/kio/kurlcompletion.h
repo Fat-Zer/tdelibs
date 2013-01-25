@@ -176,8 +176,8 @@ protected:
 	virtual void customEvent( TQCustomEvent *e );
 
 protected slots:
-	void slotEntries( KIO::Job *, const KIO::UDSEntryList& );
-	void slotIOFinished( KIO::Job * );
+	void slotEntries( TDEIO::Job *, const TDEIO::UDSEntryList& );
+	void slotIOFinished( TDEIO::Job * );
 
 private:
 

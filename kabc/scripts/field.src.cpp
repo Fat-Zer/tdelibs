@@ -428,13 +428,13 @@ void Field::deleteFields()
 void Field::saveFields( const TQString &identifier,
                         const Field::List &fields )
 {
-  KConfig *cfg = TDEGlobal::config();
-  KConfigGroupSaver( cfg, "KABCFields" );
+  TDEConfig *cfg = TDEGlobal::config();
+  TDEConfigGroupSaver( cfg, "KABCFields" );
 
   saveFields( cfg, identifier, fields );
 }
 
-void Field::saveFields( KConfig *cfg, const TQString &identifier,
+void Field::saveFields( TDEConfig *cfg, const TQString &identifier,
                         const Field::List &fields )
 {
   TQValueList<int> fieldIds;
@@ -458,13 +458,13 @@ void Field::saveFields( KConfig *cfg, const TQString &identifier,
 
 Field::List Field::restoreFields( const TQString &identifier )
 {
-  KConfig *cfg = TDEGlobal::config();
-  KConfigGroupSaver( cfg, "KABCFields" );
+  TDEConfig *cfg = TDEGlobal::config();
+  TDEConfigGroupSaver( cfg, "KABCFields" );
  
   return restoreFields( cfg, identifier );
 }
 
-Field::List Field::restoreFields( KConfig *cfg, const TQString &identifier )
+Field::List Field::restoreFields( TDEConfig *cfg, const TQString &identifier )
 {
   const TQValueList<int> fieldIds = cfg->readIntListEntry( identifier );
 

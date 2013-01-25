@@ -30,7 +30,7 @@
 #include <kio/authinfo.h>
 #include <kdatastream.h>
 
-namespace KIO {
+namespace TDEIO {
 
 class Connection;
 // better there is one ...
@@ -85,7 +85,7 @@ class SlaveInterfacePrivate;
 
 /**
  * There are two classes that specifies the protocol between application
- * (KIO::Job) and kioslave. SlaveInterface is the class to use on the application
+ * (TDEIO::Job) and kioslave. SlaveInterface is the class to use on the application
  * end, SlaveBase is the one to use on the slave end.
  *
  * A call to foo() results in a call to slotFoo() on the other end.
@@ -109,8 +109,8 @@ public:
      */
     void sendResumeAnswer( bool resume );
 
-    void setOffset( KIO::filesize_t offset );
-    KIO::filesize_t offset() const;
+    void setOffset( TDEIO::filesize_t offset );
+    TDEIO::filesize_t offset() const;
 
 signals:
     ///////////
@@ -123,19 +123,19 @@ signals:
     void connected();
     void finished();
     void slaveStatus(pid_t, const TQCString &, const TQString &, bool);
-    void listEntries( const KIO::UDSEntryList& );
-    void statEntry( const KIO::UDSEntry& );
+    void listEntries( const TDEIO::UDSEntryList& );
+    void statEntry( const TDEIO::UDSEntry& );
     void needSubURLData();
     void needProgressId();
 
-    void canResume( KIO::filesize_t ) ;
+    void canResume( TDEIO::filesize_t ) ;
 
     ///////////
     // Info sent by the slave
     //////////
-    void metaData( const KIO::MetaData & );
-    void totalSize( KIO::filesize_t ) ;
-    void processedSize( KIO::filesize_t ) ;
+    void metaData( const TDEIO::MetaData & );
+    void totalSize( TDEIO::filesize_t ) ;
+    void processedSize( TDEIO::filesize_t ) ;
     void redirection( const KURL& ) ;
     void localURL( const KURL&, bool ) ;
 
@@ -172,7 +172,7 @@ protected:
     * using default values:
     *
     * \code
-    * KIO::AuthInfo authInfo;
+    * TDEIO::AuthInfo authInfo;
     * bool result = openPassDlg( authInfo );
     * if ( result )
     * {
@@ -203,7 +203,7 @@ protected:
      * @param       info See AuthInfo.
      * @return      true if user clicks on "OK", false otherwsie.
      */
-    void openPassDlg( KIO::AuthInfo& info );
+    void openPassDlg( TDEIO::AuthInfo& info );
 
    /**
     * @deprecated. Use openPassDlg( AuthInfo& ) instead.
@@ -252,16 +252,16 @@ private:
 
 }
 
-inline TQDataStream &operator >>(TQDataStream &s, KIO::UDSAtom &a )
+inline TQDataStream &operator >>(TQDataStream &s, TDEIO::UDSAtom &a )
 {
     TQ_INT32 l;
     s >> a.m_uds;
 
-    if ( a.m_uds & KIO::UDS_LONG ) {
+    if ( a.m_uds & TDEIO::UDS_LONG ) {
         s >> l;
         a.m_long = l;
         a.m_str = TQString::null;
-    } else if ( a.m_uds & KIO::UDS_STRING ) {
+    } else if ( a.m_uds & TDEIO::UDS_STRING ) {
         s >> a.m_str;
         a.m_long = 0;
     } else {} // DIE!
@@ -270,13 +270,13 @@ inline TQDataStream &operator >>(TQDataStream &s, KIO::UDSAtom &a )
     return s;
 }
 
-inline TQDataStream &operator <<(TQDataStream &s, const KIO::UDSAtom &a )
+inline TQDataStream &operator <<(TQDataStream &s, const TDEIO::UDSAtom &a )
 {
     s << a.m_uds;
 
-    if ( a.m_uds & KIO::UDS_LONG )
+    if ( a.m_uds & TDEIO::UDS_LONG )
         s << (TQ_INT32) a.m_long;
-    else if ( a.m_uds & KIO::UDS_STRING )
+    else if ( a.m_uds & TDEIO::UDS_STRING )
         s << a.m_str;
     else {} // DIE!
     //    assert( 0 );
@@ -284,7 +284,7 @@ inline TQDataStream &operator <<(TQDataStream &s, const KIO::UDSAtom &a )
     return s;
 }
 
-KIO_EXPORT TQDataStream &operator <<(TQDataStream &s, const KIO::UDSEntry &e );
-KIO_EXPORT TQDataStream &operator >>(TQDataStream &s, KIO::UDSEntry &e );
+KIO_EXPORT TQDataStream &operator <<(TQDataStream &s, const TDEIO::UDSEntry &e );
+KIO_EXPORT TQDataStream &operator >>(TQDataStream &s, TDEIO::UDSEntry &e );
 
 #endif

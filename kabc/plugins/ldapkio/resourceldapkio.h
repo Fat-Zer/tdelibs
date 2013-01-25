@@ -26,7 +26,7 @@
 #include <kabc/ldif.h>
 #include <kio/job.h>
 
-class KConfig;
+class TDEConfig;
 
 namespace KABC {
 
@@ -37,14 +37,14 @@ class KABC_EXPORT ResourceLDAPKIO : public Resource
   public:
     enum CachePolicy{ Cache_No, Cache_NoConnection, Cache_Always };
 
-    ResourceLDAPKIO( const KConfig* );
+    ResourceLDAPKIO( const TDEConfig* );
     virtual ~ResourceLDAPKIO();
     /**
      *  Call this after you used one of the set... methods 
      */
     virtual void init();
     
-    virtual void writeConfig( KConfig* );
+    virtual void writeConfig( TDEConfig* );
 
     virtual bool doOpen();
     virtual void doClose();
@@ -128,14 +128,14 @@ class KABC_EXPORT ResourceLDAPKIO : public Resource
     TQString cacheDst() const;
     
 protected slots:
-    void entries( KIO::Job*, const KIO::UDSEntryList& );
-    void data( KIO::Job*, const TQByteArray& );
-    void result( KIO::Job* );
-    void listResult( KIO::Job* );
-    void syncLoadSaveResult( KIO::Job* );
-    void saveResult( KIO::Job* );
-    void saveData( KIO::Job*, TQByteArray& );
-    void loadCacheResult( KIO::Job* );
+    void entries( TDEIO::Job*, const TDEIO::UDSEntryList& );
+    void data( TDEIO::Job*, const TQByteArray& );
+    void result( TDEIO::Job* );
+    void listResult( TDEIO::Job* );
+    void syncLoadSaveResult( TDEIO::Job* );
+    void saveResult( TDEIO::Job* );
+    void saveData( TDEIO::Job*, TQByteArray& );
+    void loadCacheResult( TDEIO::Job* );
   
   private:
     TQString mUser;
@@ -151,9 +151,9 @@ protected slots:
     int mGetCounter; //KDE 4: remove
     bool mErrorOccured; //KDE 4: remove
     TQString mErrorMsg;
-    TQMap<KIO::Job*, TQByteArray> mJobMap; //KDE 4: remove
+    TQMap<TDEIO::Job*, TQByteArray> mJobMap; //KDE 4: remove
 
-    KIO::Job *loadFromCache();
+    TDEIO::Job *loadFromCache();
     void createCache();
     void activateCache();
     void enter_loop();

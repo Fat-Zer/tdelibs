@@ -405,12 +405,12 @@ KAction* KActionCollection::action( int index ) const
 //  return d->m_actions.at( index );
 }
 
-bool KActionCollection::readShortcutSettings( const TQString& sConfigGroup, KConfigBase* pConfig )
+bool KActionCollection::readShortcutSettings( const TQString& sConfigGroup, TDEConfigBase* pConfig )
 {
   return KActionShortcutList(this).readSettings( sConfigGroup, pConfig );
 }
 
-bool KActionCollection::writeShortcutSettings( const TQString& sConfigGroup, KConfigBase* pConfig ) const
+bool KActionCollection::writeShortcutSettings( const TQString& sConfigGroup, TDEConfigBase* pConfig ) const
 {
   return KActionShortcutList((KActionCollection*)this).writeSettings( sConfigGroup, pConfig );
 }

@@ -28,19 +28,19 @@
 #include <kio/job.h>
 #include <kfileitem.h>
 
-namespace KIO {
+namespace TDEIO {
 
     /**
      * This job changes permissions on a list of files or directories,
      * optionally in a recursive manner.
-     * @see KIO::chmod()
+     * @see TDEIO::chmod()
      */
-    class KIO_EXPORT ChmodJob : public KIO::Job
+    class KIO_EXPORT ChmodJob : public TDEIO::Job
     {
         Q_OBJECT
     public:
 	/**
-	 * Create new ChmodJobs using the KIO::chmod() function.
+	 * Create new ChmodJobs using the TDEIO::chmod() function.
 	 */
         ChmodJob( const KFileItemList & lstItems,  int permissions, int mask,
                   int newOwner, int newGroup,
@@ -51,8 +51,8 @@ namespace KIO {
 
     protected slots:
 
-        virtual void slotResult( KIO::Job *job );
-        void slotEntries( KIO::Job * , const KIO::UDSEntryList & );
+        virtual void slotResult( TDEIO::Job *job );
+        void slotEntries( TDEIO::Job * , const TDEIO::UDSEntryList & );
         void processList();
 
     private:

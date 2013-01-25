@@ -241,9 +241,9 @@ void NetworkScanner::slotConnectionSuccess()
 {
 	kdDebug() << "Success" << endl;
 #ifdef USE_QSOCKET
-	KSocketAddress *addr = KExtendedSocket::peerAddress( d->socket->socket() );
+	TDESocketAddress *addr = KExtendedSocket::peerAddress( d->socket->socket() );
 #else
-	KSocketAddress *addr = const_cast<KSocketAddress*>( d->socket->peerAddress() );
+	TDESocketAddress *addr = const_cast<TDESocketAddress*>( d->socket->peerAddress() );
 #endif
 	kdDebug() << "Connection success: " << ( addr ? addr->pretty() : TQString( "ERROR" ) ) << endl;
 	kdDebug() << "Socket: " << d->socket->socket() << endl;

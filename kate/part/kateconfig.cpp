@@ -114,7 +114,7 @@ KateDocumentConfig::KateDocumentConfig ()
   m_pluginsSet.fill (true);
 
   // init with defaults from config or really hardcoded ones
-  KConfig *config = kapp->config();
+  TDEConfig *config = kapp->config();
   config->setGroup("Kate Document Defaults");
   readConfig (config);
 }
@@ -149,7 +149,7 @@ KateDocumentConfig::~KateDocumentConfig ()
 {
 }
 
-void KateDocumentConfig::readConfig (KConfig *config)
+void KateDocumentConfig::readConfig (TDEConfig *config)
 {
   configStart ();
 
@@ -191,7 +191,7 @@ void KateDocumentConfig::readConfig (KConfig *config)
   configEnd ();
 }
 
-void KateDocumentConfig::writeConfig (KConfig *config)
+void KateDocumentConfig::writeConfig (TDEConfig *config)
 {
   config->writeEntry("Tab Width", tabWidth());
 
@@ -631,7 +631,7 @@ KateViewConfig::KateViewConfig ()
   s_global = this;
 
   // init with defaults from config or really hardcoded ones
-  KConfig *config = kapp->config();
+  TDEConfig *config = kapp->config();
   config->setGroup("Kate View Defaults");
   readConfig (config);
 }
@@ -660,7 +660,7 @@ KateViewConfig::~KateViewConfig ()
 {
 }
 
-void KateViewConfig::readConfig (KConfig *config)
+void KateViewConfig::readConfig (TDEConfig *config)
 {
   configStart ();
 
@@ -693,7 +693,7 @@ void KateViewConfig::readConfig (KConfig *config)
   configEnd ();
 }
 
-void KateViewConfig::writeConfig (KConfig *config)
+void KateViewConfig::writeConfig (TDEConfig *config)
 {
   config->writeEntry( "Dynamic Word Wrap", dynWordWrap() );
   config->writeEntry( "Dynamic Word Wrap Indicators", dynWordWrapIndicators() );
@@ -1022,7 +1022,7 @@ KateRendererConfig::KateRendererConfig ()
   s_global = this;
 
   // init with defaults from config or really hardcoded ones
-  KConfig *config = kapp->config();
+  TDEConfig *config = kapp->config();
   config->setGroup("Kate Renderer Defaults");
   readConfig (config);
 }
@@ -1054,7 +1054,7 @@ KateRendererConfig::~KateRendererConfig ()
   delete m_font;
 }
 
-void KateRendererConfig::readConfig (KConfig *config)
+void KateRendererConfig::readConfig (TDEConfig *config)
 {
   configStart ();
 
@@ -1067,7 +1067,7 @@ void KateRendererConfig::readConfig (KConfig *config)
   configEnd ();
 }
 
-void KateRendererConfig::writeConfig (KConfig *config)
+void KateRendererConfig::writeConfig (TDEConfig *config)
 {
   config->writeEntry ("Schema", KateFactory::self()->schemaManager()->name(schema()));
 
@@ -1125,7 +1125,7 @@ void KateRendererConfig::setSchemaInternal( int schema )
   m_schemaSet = true;
   m_schema = schema;
 
-  KConfig *config (KateFactory::self()->schemaManager()->schema(schema));
+  TDEConfig *config (KateFactory::self()->schemaManager()->schema(schema));
 
   TQColor tmp0 (TDEGlobalSettings::baseColor());
   TQColor tmp1 (TDEGlobalSettings::highlightColor());

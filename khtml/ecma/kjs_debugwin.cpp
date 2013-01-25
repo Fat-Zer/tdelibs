@@ -860,8 +860,8 @@ bool KJSDebugWin::exception(ExecState *exec, const Value &value, bool inTryCatch
   }
 
   if (dontShowAgain) {
-    KConfig *config = kapp->config();
-    KConfigGroupSaver saver(config,TQString::fromLatin1("Java/JavaScript Settings"));
+    TDEConfig *config = kapp->config();
+    TDEConfigGroupSaver saver(config,TQString::fromLatin1("Java/JavaScript Settings"));
     config->writeEntry("ReportJavaScriptErrors",TQVariant(false,0));
     config->sync();
     TQByteArray data;

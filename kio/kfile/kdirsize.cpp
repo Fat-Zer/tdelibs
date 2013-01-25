@@ -24,16 +24,16 @@
 #include <tqtimer.h>
 #include <config-kfile.h>
 
-using namespace KIO;
+using namespace TDEIO;
 
 KDirSize::KDirSize( const KURL & directory )
-    : KIO::Job(false /*No GUI*/), m_bAsync(true), m_totalSize(0L), m_totalFiles(0L), m_totalSubdirs(0L)
+    : TDEIO::Job(false /*No GUI*/), m_bAsync(true), m_totalSize(0L), m_totalFiles(0L), m_totalSubdirs(0L)
 {
     startNextJob( directory );
 }
 
 KDirSize::KDirSize( const KFileItemList & lstItems )
-    : KIO::Job(false /*No GUI*/), m_bAsync(true), m_totalSize(0L), m_totalFiles(0L), m_totalSubdirs(0L), m_lstItems(lstItems)
+    : TDEIO::Job(false /*No GUI*/), m_bAsync(true), m_totalSize(0L), m_totalFiles(0L), m_totalSubdirs(0L), m_lstItems(lstItems)
 {
     TQTimer::singleShot( 0, this, TQT_SLOT(processList()) );
 }
@@ -69,38 +69,38 @@ void KDirSize::processList()
 
 void KDirSize::startNextJob( const KURL & url )
 {
-    KIO::ListJob * listJob = KIO::listRecursive( url, false /* no GUI */ );
-    connect( listJob, TQT_SIGNAL(entries( KIO::Job *,
-                                      const KIO::UDSEntryList& )),
-             TQT_SLOT( slotEntries( KIO::Job*,
-                                const KIO::UDSEntryList& )));
+    TDEIO::ListJob * listJob = TDEIO::listRecursive( url, false /* no GUI */ );
+    connect( listJob, TQT_SIGNAL(entries( TDEIO::Job *,
+                                      const TDEIO::UDSEntryList& )),
+             TQT_SLOT( slotEntries( TDEIO::Job*,
+                                const TDEIO::UDSEntryList& )));
     addSubjob( listJob );
 }
 
-void KDirSize::slotEntries( KIO::Job*, const KIO::UDSEntryList & list )
+void KDirSize::slotEntries( TDEIO::Job*, const TDEIO::UDSEntryList & list )
 {
     static const TQString& dot = TDEGlobal::staticQString( "." );
     static const TQString& dotdot = TDEGlobal::staticQString( ".." );
-    KIO::UDSEntryListConstIterator it = list.begin();
-    KIO::UDSEntryListConstIterator end = list.end();
+    TDEIO::UDSEntryListConstIterator it = list.begin();
+    TDEIO::UDSEntryListConstIterator end = list.end();
     for (; it != end; ++it) {
-        KIO::UDSEntry::ConstIterator it2 = (*it).begin();
-        KIO::filesize_t size = 0;
+        TDEIO::UDSEntry::ConstIterator it2 = (*it).begin();
+        TDEIO::filesize_t size = 0;
         bool isLink = false;
         bool isDir = false;
         TQString name;
         for( ; it2 != (*it).end(); it2++ ) {
           switch( (*it2).m_uds ) {
-            case KIO::UDS_NAME:
+            case TDEIO::UDS_NAME:
               name = (*it2).m_str;
               break;
-            case KIO::UDS_LINK_DEST:
+            case TDEIO::UDS_LINK_DEST:
               isLink = !(*it2).m_str.isEmpty();
               break;
-            case KIO::UDS_SIZE:
+            case TDEIO::UDS_SIZE:
               size = ((*it2).m_long);
               break;
-            case KIO::UDS_FILE_TYPE:
+            case TDEIO::UDS_FILE_TYPE:
               isDir = S_ISDIR((*it2).m_long);
               break;
             default:
@@ -135,7 +135,7 @@ KDirSize * KDirSize::dirSizeJob( const KFileItemList & lstItems )
 }
 
 //static
-KIO::filesize_t KDirSize::dirSize( const KURL & directory )
+TDEIO::filesize_t KDirSize::dirSize( const KURL & directory )
 {
     KDirSize * dirSize = dirSizeJob( directory );
     dirSize->setSync();
@@ -144,9 +144,9 @@ KIO::filesize_t KDirSize::dirSize( const KURL & directory )
 }
 
 
-void KDirSize::slotResult( KIO::Job * job )
+void KDirSize::slotResult( TDEIO::Job * job )
 {
-    kdDebug(kfile_area) << " KDirSize::slotResult( KIO::Job * job ) m_lstItems:" << m_lstItems.count() << endl;
+    kdDebug(kfile_area) << " KDirSize::slotResult( TDEIO::Job * job ) m_lstItems:" << m_lstItems.count() << endl;
     if ( !m_lstItems.isEmpty() )
     {
         subjobs.remove(job); // Remove job, but don't kill this job.
@@ -156,11 +156,11 @@ void KDirSize::slotResult( KIO::Job * job )
     {
         if ( !m_bAsync )
             tqApp->exit_loop();
-        KIO::Job::slotResult( job );
+        TDEIO::Job::slotResult( job );
     }
 }
 
 void KDirSize::virtual_hook( int id, void* data )
-{ KIO::Job::virtual_hook( id, data ); }
+{ TDEIO::Job::virtual_hook( id, data ); }
 
 #include "kdirsize.moc"

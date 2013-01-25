@@ -40,7 +40,7 @@
 
 #define KIO_ARGS TQByteArray packedArgs; TQDataStream stream( packedArgs, IO_WriteOnly ); stream
 
-using namespace KIO;
+using namespace TDEIO;
 
 class DavJob::DavJobPrivate
 {
@@ -50,7 +50,7 @@ public:
 };
 
 DavJob::DavJob( const KURL& url, int method, const TQString& request, bool showProgressInfo )
-  : TransferJob( url, KIO::CMD_SPECIAL, TQByteArray(), TQByteArray(), showProgressInfo )
+  : TransferJob( url, TDEIO::CMD_SPECIAL, TQByteArray(), TQByteArray(), showProgressInfo )
 {
   d = new DavJobPrivate;
   // We couldn't set the args when calling the parent constructor,
@@ -86,10 +86,10 @@ void DavJob::slotFinished()
 		istream >> s_url;
 		istream >> s_method;
 		// PROPFIND
-		if ( (s_cmd == 7) && (s_method == (int)KIO::DAV_PROPFIND) ) {
+		if ( (s_cmd == 7) && (s_method == (int)TDEIO::DAV_PROPFIND) ) {
 			m_packedArgs.truncate(0);
 			TQDataStream stream( m_packedArgs, IO_WriteOnly );
-			stream << (int)7 << m_redirectionURL << (int)KIO::DAV_PROPFIND;
+			stream << (int)7 << m_redirectionURL << (int)TDEIO::DAV_PROPFIND;
 		}
   } else if ( ! m_response.setContent( d->str_response, true ) ) {
 		// An error occurred parsing the XML response
@@ -114,20 +114,20 @@ void DavJob::slotFinished()
 /* Convenience methods */
 
 // KDE 4: Make it const TQString &
-DavJob* KIO::davPropFind( const KURL& url, const TQDomDocument& properties, TQString depth, bool showProgressInfo )
+DavJob* TDEIO::davPropFind( const KURL& url, const TQDomDocument& properties, TQString depth, bool showProgressInfo )
 {
-  DavJob *job = new DavJob( url, (int) KIO::DAV_PROPFIND, properties.toString(), showProgressInfo );
+  DavJob *job = new DavJob( url, (int) TDEIO::DAV_PROPFIND, properties.toString(), showProgressInfo );
   job->addMetaData( "davDepth", depth );
   return job;
 }
 
 
-DavJob* KIO::davPropPatch( const KURL& url, const TQDomDocument& properties, bool showProgressInfo )
+DavJob* TDEIO::davPropPatch( const KURL& url, const TQDomDocument& properties, bool showProgressInfo )
 {
-  return new DavJob( url, (int) KIO::DAV_PROPPATCH, properties.toString(), showProgressInfo );
+  return new DavJob( url, (int) TDEIO::DAV_PROPPATCH, properties.toString(), showProgressInfo );
 }
 
-DavJob* KIO::davSearch( const KURL& url, const TQString& nsURI, const TQString& qName, const TQString& query, bool showProgressInfo )
+DavJob* TDEIO::davSearch( const KURL& url, const TQString& nsURI, const TQString& qName, const TQString& query, bool showProgressInfo )
 {
   TQDomDocument doc;
   TQDomElement searchrequest = doc.createElementNS( "DAV:", "searchrequest" );
@@ -136,7 +136,7 @@ DavJob* KIO::davSearch( const KURL& url, const TQString& nsURI, const TQString& 
   searchelement.appendChild( text );
   searchrequest.appendChild( searchelement );
   doc.appendChild( searchrequest );
-  return new DavJob( url, KIO::DAV_SEARCH, doc.toString(), showProgressInfo );
+  return new DavJob( url, TDEIO::DAV_SEARCH, doc.toString(), showProgressInfo );
 }
 
 #include "davjob.moc"

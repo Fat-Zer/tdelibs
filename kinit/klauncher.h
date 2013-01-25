@@ -43,7 +43,7 @@ class IdleSlave : public TQObject
 {
    Q_OBJECT
 public:
-   IdleSlave(KSocket *socket);
+   IdleSlave(TDESocket *socket);
    bool match( const TQString &protocol, const TQString &host, bool connected);
    void connect( const TQString &app_socket);
    pid_t pid() const { return mPid;}
@@ -59,7 +59,7 @@ protected slots:
    void gotInput();
 
 protected:
-   KIO::Connection mConn;
+   TDEIO::Connection mConn;
    TQString mProtocol;
    TQString mHost;
    bool mConnected;
@@ -169,7 +169,7 @@ public slots:
    void slotKDEInitData(int);
    void slotAppRegistered(const TQCString &appId);
    void slotSlaveStatus(IdleSlave *);
-   void acceptSlave( KSocket *);
+   void acceptSlave( TDESocket *);
    void slotSlaveGone();
    void idleTimeout();
 
@@ -182,7 +182,7 @@ protected:
    KLaunchRequest *lastRequest;
    TQPtrList<SlaveWaitRequest> mSlaveWaitRequest;
    TQString mPoolSocketName;
-   KServerSocket *mPoolSocket;
+   TDEServerSocket *mPoolSocket;
    TQPtrList<IdleSlave> mSlaveList;
    TQTimer mTimer;
    TQTimer mAutoTimer;

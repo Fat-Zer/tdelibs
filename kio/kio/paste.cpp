@@ -54,10 +54,10 @@ static KURL getNewFileName( const KURL &u, const TQString& text )
   KURL myurl(u);
   myurl.addPath( file );
 
-  if (KIO::NetAccess::exists(myurl, false, 0))
+  if (TDEIO::NetAccess::exists(myurl, false, 0))
   {
       kdDebug(7007) << "Paste will overwrite file.  Prompting..." << endl;
-      KIO::RenameDlg_Result res = KIO::R_OVERWRITE;
+      TDEIO::RenameDlg_Result res = TDEIO::R_OVERWRITE;
 
       TQString newPath;
       // Ask confirmation about resuming previous transfer
@@ -65,13 +65,13 @@ static KURL getNewFileName( const KURL &u, const TQString& text )
                           0L, i18n("File Already Exists"),
                           u.pathOrURL(),
                           myurl.pathOrURL(),
-                          (KIO::RenameDlg_Mode) (KIO::M_OVERWRITE | KIO::M_SINGLE), newPath);
+                          (TDEIO::RenameDlg_Mode) (TDEIO::M_OVERWRITE | TDEIO::M_SINGLE), newPath);
 
-      if ( res == KIO::R_RENAME )
+      if ( res == TDEIO::R_RENAME )
       {
           myurl = newPath;
       }
-      else if ( res == KIO::R_CANCEL )
+      else if ( res == TDEIO::R_CANCEL )
       {
           return KURL();
       }
@@ -81,7 +81,7 @@ static KURL getNewFileName( const KURL &u, const TQString& text )
 }
 
 // The finaly step: write _data to tempfile and move it to neW_url
-static KIO::CopyJob* pasteDataAsyncTo( const KURL& new_url, const TQByteArray& _data )
+static TDEIO::CopyJob* pasteDataAsyncTo( const KURL& new_url, const TQByteArray& _data )
 {
      KTempFile tempFile;
      tempFile.dataStream()->writeRawBytes( _data.data(), _data.size() );
@@ -90,11 +90,11 @@ static KIO::CopyJob* pasteDataAsyncTo( const KURL& new_url, const TQByteArray& _
      KURL orig_url;
      orig_url.setPath(tempFile.name());
 
-     return KIO::move( orig_url, new_url );
+     return TDEIO::move( orig_url, new_url );
 }
 
 #ifndef QT_NO_MIMECLIPBOARD
-static KIO::CopyJob* chooseAndPaste( const KURL& u, TQMimeSource* data,
+static TDEIO::CopyJob* chooseAndPaste( const KURL& u, TQMimeSource* data,
                                      const TQValueVector<TQCString>& formats,
                                      const TQString& text,
                                      TQWidget* widget,
@@ -113,7 +113,7 @@ static KIO::CopyJob* chooseAndPaste( const KURL& u, TQMimeSource* data,
     TQString dialogText( text );
     if ( dialogText.isEmpty() )
         dialogText = i18n( "Filename for clipboard content:" );
-    KIO::PasteDialog dlg( TQString::null, dialogText, TQString::null, formatLabels, widget, clipboard );
+    TDEIO::PasteDialog dlg( TQString::null, dialogText, TQString::null, formatLabels, widget, clipboard );
 
     if ( dlg.exec() != KDialogBase::Accepted )
         return 0;
@@ -143,7 +143,7 @@ static KIO::CopyJob* chooseAndPaste( const KURL& u, TQMimeSource* data,
 #endif
 
 // KDE4: remove
-KIO_EXPORT bool KIO::isClipboardEmpty()
+KIO_EXPORT bool TDEIO::isClipboardEmpty()
 {
 #ifndef QT_NO_MIMECLIPBOARD
   TQMimeSource *data = TQApplication::clipboard()->data();
@@ -161,7 +161,7 @@ KIO_EXPORT bool KIO::isClipboardEmpty()
 
 #ifndef QT_NO_MIMECLIPBOARD
 // The main method for dropping
-KIO::CopyJob* KIO::pasteMimeSource( TQMimeSource* data, const KURL& dest_url,
+TDEIO::CopyJob* TDEIO::pasteMimeSource( TQMimeSource* data, const KURL& dest_url,
                                     const TQString& dialogText, TQWidget* widget, bool clipboard )
 {
   TQByteArray ba;
@@ -207,7 +207,7 @@ KIO::CopyJob* KIO::pasteMimeSource( TQMimeSource* data, const KURL& dest_url,
 #endif
 
 // The main method for pasting
-KIO_EXPORT KIO::Job *KIO::pasteClipboard( const KURL& dest_url, bool move )
+KIO_EXPORT TDEIO::Job *TDEIO::pasteClipboard( const KURL& dest_url, bool move )
 {
   if ( !dest_url.isValid() ) {
     KMessageBox::error( 0L, i18n( "Malformed URL\n%1" ).arg( dest_url.url() ) );
@@ -225,11 +225,11 @@ KIO_EXPORT KIO::Job *KIO::pasteClipboard( const KURL& dest_url, bool move )
       return 0;
     }
 
-    KIO::Job *res = 0;
+    TDEIO::Job *res = 0;
     if ( move )
-      res = KIO::move( urls, dest_url );
+      res = TDEIO::move( urls, dest_url );
     else
-      res = KIO::copy( urls, dest_url );
+      res = TDEIO::copy( urls, dest_url );
 
     // If moving, erase the clipboard contents, the original files don't exist anymore
     if ( move )
@@ -256,10 +256,10 @@ KIO_EXPORT KIO::Job *KIO::pasteClipboard( const KURL& dest_url, bool move )
 }
 
 
-KIO_EXPORT void KIO::pasteData( const KURL& u, const TQByteArray& _data )
+KIO_EXPORT void TDEIO::pasteData( const KURL& u, const TQByteArray& _data )
 {
     KURL new_url = getNewFileName( u, TQString::null );
-    // We could use KIO::put here, but that would require a class
+    // We could use TDEIO::put here, but that would require a class
     // for the slotData call. With NetAccess, we can do a synchronous call.
 
     if (new_url.isEmpty())
@@ -270,15 +270,15 @@ KIO_EXPORT void KIO::pasteData( const KURL& u, const TQByteArray& _data )
     tempFile.dataStream()->writeRawBytes( _data.data(), _data.size() );
     tempFile.close();
 
-    (void) KIO::NetAccess::upload( tempFile.name(), new_url, 0 );
+    (void) TDEIO::NetAccess::upload( tempFile.name(), new_url, 0 );
 }
 
-KIO_EXPORT KIO::CopyJob* KIO::pasteDataAsync( const KURL& u, const TQByteArray& _data )
+KIO_EXPORT TDEIO::CopyJob* TDEIO::pasteDataAsync( const KURL& u, const TQByteArray& _data )
 {
     return pasteDataAsync( u, _data, TQString::null );
 }
 
-KIO_EXPORT KIO::CopyJob* KIO::pasteDataAsync( const KURL& u, const TQByteArray& _data, const TQString& text )
+KIO_EXPORT TDEIO::CopyJob* TDEIO::pasteDataAsync( const KURL& u, const TQByteArray& _data, const TQString& text )
 {
     KURL new_url = getNewFileName( u, text );
 
@@ -288,7 +288,7 @@ KIO_EXPORT KIO::CopyJob* KIO::pasteDataAsync( const KURL& u, const TQByteArray& 
     return pasteDataAsyncTo( new_url, _data );
 }
 
-KIO_EXPORT TQString KIO::pasteActionText()
+KIO_EXPORT TQString TDEIO::pasteActionText()
 {
     TQMimeSource *data = TQApplication::clipboard()->data();
     KURL::List urls;

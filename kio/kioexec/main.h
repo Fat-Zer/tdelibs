@@ -6,7 +6,7 @@
 #include <tqstrlist.h>
 #include <tqtimer.h>
 
-namespace KIO { class Job; }
+namespace TDEIO { class Job; }
 
 class KIOExec : public TQObject
 {
@@ -15,7 +15,7 @@ public:
     KIOExec();
 
 public slots:
-    void slotResult( KIO::Job * );
+    void slotResult( TDEIO::Job * );
     void slotRunApp();
 
 protected:

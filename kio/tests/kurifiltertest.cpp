@@ -354,7 +354,7 @@ int main(int argc, char **argv)
     filter( "config", tdehome+"/share/config", KURIFilterData::LOCAL_DIR, "kshorturifilter", tdehome+"/share" );
 
     // Clean up
-    KIO::NetAccess::del( tdehome, 0 );
+    TDEIO::NetAccess::del( tdehome, 0 );
 
     kdDebug() << "All tests done. Go home..." << endl;
     return 0;

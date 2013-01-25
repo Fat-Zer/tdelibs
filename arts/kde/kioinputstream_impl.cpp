@@ -75,19 +75,19 @@ void KIOInputStream_impl::streamStart()
 
 	if(m_job != 0)
 		m_job->kill();
-	m_job = KIO::get(m_url, false, false);
+	m_job = TDEIO::get(m_url, false, false);
 
 	m_job->addMetaData("accept", "audio/x-mp3, video/mpeg, application/ogg");
 	m_job->addMetaData("UserAgent", TQString::fromLatin1("aRts/") + TQString::fromLatin1(ARTS_VERSION));
 
-	TQObject::connect(m_job, TQT_SIGNAL(data(KIO::Job *, const TQByteArray &)),
-			 this, TQT_SLOT(slotData(KIO::Job *, const TQByteArray &)));		     
-	TQObject::connect(m_job, TQT_SIGNAL(result(KIO::Job *)),
-			 this, TQT_SLOT(slotResult(KIO::Job *)));		     
-	TQObject::connect(m_job, TQT_SIGNAL(mimetype(KIO::Job *, const TQString &)),
-			 this, TQT_SLOT(slotScanMimeType(KIO::Job *, const TQString &)));
-	TQObject::connect(m_job, TQT_SIGNAL(totalSize( KIO::Job *, KIO::filesize_t)),
-			 this, TQT_SLOT(slotTotalSize(KIO::Job *, KIO::filesize_t)));
+	TQObject::connect(m_job, TQT_SIGNAL(data(TDEIO::Job *, const TQByteArray &)),
+			 this, TQT_SLOT(slotData(TDEIO::Job *, const TQByteArray &)));		     
+	TQObject::connect(m_job, TQT_SIGNAL(result(TDEIO::Job *)),
+			 this, TQT_SLOT(slotResult(TDEIO::Job *)));		     
+	TQObject::connect(m_job, TQT_SIGNAL(mimetype(TDEIO::Job *, const TQString &)),
+			 this, TQT_SLOT(slotScanMimeType(TDEIO::Job *, const TQString &)));
+	TQObject::connect(m_job, TQT_SIGNAL(totalSize( TDEIO::Job *, TDEIO::filesize_t)),
+			 this, TQT_SLOT(slotTotalSize(TDEIO::Job *, TDEIO::filesize_t)));
 
 	m_streamStarted = true;
 }
@@ -98,14 +98,14 @@ void KIOInputStream_impl::streamEnd()
 
 	if(m_job != 0)
 	{
-		TQObject::disconnect(m_job, TQT_SIGNAL(data(KIO::Job *, const TQByteArray &)),
-	    				this, TQT_SLOT(slotData(KIO::Job *, const TQByteArray &)));
-		TQObject::disconnect(m_job, TQT_SIGNAL(result(KIO::Job *)),
-						this, TQT_SLOT(slotResult(KIO::Job *)));		     
-		TQObject::disconnect(m_job, TQT_SIGNAL(mimetype(KIO::Job *, const TQString &)),
-				 this, TQT_SLOT(slotScanMimeType(KIO::Job *, const TQString &)));
-		TQObject::disconnect(m_job, TQT_SIGNAL(totalSize( KIO::Job *, KIO::filesize_t)),
-				 this, TQT_SLOT(slotTotalSize(KIO::Job *, KIO::filesize_t)));
+		TQObject::disconnect(m_job, TQT_SIGNAL(data(TDEIO::Job *, const TQByteArray &)),
+	    				this, TQT_SLOT(slotData(TDEIO::Job *, const TQByteArray &)));
+		TQObject::disconnect(m_job, TQT_SIGNAL(result(TDEIO::Job *)),
+						this, TQT_SLOT(slotResult(TDEIO::Job *)));		     
+		TQObject::disconnect(m_job, TQT_SIGNAL(mimetype(TDEIO::Job *, const TQString &)),
+				 this, TQT_SLOT(slotScanMimeType(TDEIO::Job *, const TQString &)));
+		TQObject::disconnect(m_job, TQT_SIGNAL(totalSize( TDEIO::Job *, TDEIO::filesize_t)),
+				 this, TQT_SLOT(slotTotalSize(TDEIO::Job *, TDEIO::filesize_t)));
 
 		if ( m_streamPulled )
 			outdata.endPull();
@@ -124,7 +124,7 @@ bool KIOInputStream_impl::openURL(const std::string& url)
 	return true;
 }
 
-void KIOInputStream_impl::slotData(KIO::Job *, const TQByteArray &data)
+void KIOInputStream_impl::slotData(TDEIO::Job *, const TQByteArray &data)
 {
 	if(m_finished)
 	    m_finished = false;
@@ -136,7 +136,7 @@ void KIOInputStream_impl::slotData(KIO::Job *, const TQByteArray &data)
 	processQueue();
 }
 
-void KIOInputStream_impl::slotResult(KIO::Job *job)
+void KIOInputStream_impl::slotResult(TDEIO::Job *job)
 {
 	// jobs delete themselves after emitting their result
 	m_finished = true;
@@ -151,13 +151,13 @@ void KIOInputStream_impl::slotResult(KIO::Job *job)
 	}
 }
 
-void KIOInputStream_impl::slotScanMimeType(KIO::Job *, const TQString &mimetype)
+void KIOInputStream_impl::slotScanMimeType(TDEIO::Job *, const TQString &mimetype)
 {
 	kdDebug( 400 ) << "got mimetype: " << mimetype << endl;
 	emit mimeTypeFound(mimetype);
 }
 
-void KIOInputStream_impl::slotTotalSize(KIO::Job *, KIO::filesize_t size)
+void KIOInputStream_impl::slotTotalSize(TDEIO::Job *, TDEIO::filesize_t size)
 {
 	m_size = size;
 }

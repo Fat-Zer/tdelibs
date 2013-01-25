@@ -102,7 +102,7 @@ bool KNSPluginInstallEngine::isActive()
 {
     // check if we have a configuration key in the kde registry
     TQString pluginsListFile;
-    KConfig cfg("kcmnspluginrc", true);
+    TDEConfig cfg("kcmnspluginrc", true);
     cfg.setGroup("Misc");
     pluginsListFile = cfg.readPathEntry("PluginsListFile");
     return !pluginsListFile.isEmpty();
@@ -117,7 +117,7 @@ const TQValueList<KNSPluginInfo>& KNSPluginInstallEngine::pluginList() const
 bool KNSPluginInstallEngine::loadConfig()
 {
     TQString pluginsListFile;
-    KConfig cfg("kcmnspluginrc", true);
+    TDEConfig cfg("kcmnspluginrc", true);
     cfg.setGroup("Misc");
     pluginsListFile = cfg.readPathEntry("PluginsListFile");
     if(!pluginsListFile.isEmpty())
@@ -136,7 +136,7 @@ bool KNSPluginInstallEngine::loadXmlConfig()
     if(m_pluginsXmlConfig.isEmpty())
     {
         TQString tmpFile;
-        if(KIO::NetAccess::download(m_pluginsListFileURL, tmpFile, NULL)) {
+        if(TDEIO::NetAccess::download(m_pluginsListFileURL, tmpFile, NULL)) {
             TQFile f(tmpFile);
             if(!f.open(IO_ReadOnly))
                 return false;
@@ -144,7 +144,7 @@ bool KNSPluginInstallEngine::loadXmlConfig()
             stream.setEncoding(TQTextStream::UnicodeUTF8);
             m_pluginsXmlConfig = stream.read();
             f.close();
-            KIO::NetAccess::removeTempFile(tmpFile);
+            TDEIO::NetAccess::removeTempFile(tmpFile);
         } else
             return false;
     }
@@ -232,20 +232,20 @@ void KNSPluginInstallEngine::startInstall(KNSPluginInfo info)
     tempFile.unlink();
     tempFile.close();
     // start the download job
-    m_downloadJob  = KIO::copy(info.pluginURL(), "file://"+m_tmpPluginFileName, false );
+    m_downloadJob  = TDEIO::copy(info.pluginURL(), "file://"+m_tmpPluginFileName, false );
     // connect signals 
-    connect(m_downloadJob, TQT_SIGNAL(percent (KIO::Job *, unsigned long)), this , TQT_SLOT(slotDownLoadProgress(KIO::Job *, unsigned long)));
-    connect(m_downloadJob, TQT_SIGNAL(result(KIO::Job *)), this, TQT_SLOT(slotDownloadResult(KIO::Job *)) );
+    connect(m_downloadJob, TQT_SIGNAL(percent (TDEIO::Job *, unsigned long)), this , TQT_SLOT(slotDownLoadProgress(TDEIO::Job *, unsigned long)));
+    connect(m_downloadJob, TQT_SIGNAL(result(TDEIO::Job *)), this, TQT_SLOT(slotDownloadResult(TDEIO::Job *)) );
     kdDebug(DEBUG_NUMBER) << "download plugin " << m_tmpPluginFileName << endl;
 } 
 
-void KNSPluginInstallEngine::slotDownLoadProgress(KIO::Job *, unsigned long percent)
+void KNSPluginInstallEngine::slotDownLoadProgress(TDEIO::Job *, unsigned long percent)
 { 
     // propagate the download progression
     emit installProgress( ((int)percent)/3 );
 }
 
-void KNSPluginInstallEngine::slotDownloadResult(KIO::Job *job)
+void KNSPluginInstallEngine::slotDownloadResult(TDEIO::Job *job)
 { 
     // test if the download job suceed
     if(job->error()) {
@@ -279,9 +279,9 @@ void KNSPluginInstallEngine::slotDownloadResult(KIO::Job *job)
        for( it = pluginFileList.begin(); it != pluginFileList.end(); ++it ) {
            urlList.append( KURL("tar://"+m_tmpPluginFileName+"/"+(*it)) );
         }
-       m_installFileJob  = KIO::copy(urlList , destURL, false );
-       connect(m_installFileJob, TQT_SIGNAL(percent (KIO::Job *, unsigned long)), this , TQT_SLOT(slotCopyProgress(KIO::Job *, unsigned long)));
-       connect(m_installFileJob, TQT_SIGNAL(result(KIO::Job *)), this, TQT_SLOT(slotCopyResult(KIO::Job *)) );
+       m_installFileJob  = TDEIO::copy(urlList , destURL, false );
+       connect(m_installFileJob, TQT_SIGNAL(percent (TDEIO::Job *, unsigned long)), this , TQT_SLOT(slotCopyProgress(TDEIO::Job *, unsigned long)));
+       connect(m_installFileJob, TQT_SIGNAL(result(TDEIO::Job *)), this, TQT_SLOT(slotCopyResult(TDEIO::Job *)) );
     }
     kdDebug(DEBUG_NUMBER) << "COPY FILE " << m_tmpPluginFileName << endl;
 
@@ -289,13 +289,13 @@ void KNSPluginInstallEngine::slotDownloadResult(KIO::Job *job)
     m_downloadJob = NULL;
 }
 
-void KNSPluginInstallEngine::slotCopyProgress(KIO::Job *, unsigned long percent)
+void KNSPluginInstallEngine::slotCopyProgress(TDEIO::Job *, unsigned long percent)
 {
     // propagate the download progression
     emit installProgress( ((int)percent)/3 + 33 );
 } 
  
-void KNSPluginInstallEngine::slotCopyResult(KIO::Job *job)
+void KNSPluginInstallEngine::slotCopyResult(TDEIO::Job *job)
 {
     // test if the download job suceed
     if(job->error()) {
@@ -501,14 +501,14 @@ void KNSPluginWizard::showPage(TQWidget *page)
         TQString tmpFile;
         if(info.licenceURL().isValid()) 
             // retrieve the licence if we have an url
-            if(KIO::NetAccess::download(info.licenceURL(), tmpFile, NULL)) {
+            if(TDEIO::NetAccess::download(info.licenceURL(), tmpFile, NULL)) {
                     TQFile f(tmpFile);
                     if(f.open(IO_ReadOnly)) {
                         TQTextStream stream(&f);
                         stream.setEncoding(TQTextStream::UnicodeUTF8);
                         licence  = stream.read();
                         f.close();
-                        KIO::NetAccess::removeTempFile(tmpFile);
+                        TDEIO::NetAccess::removeTempFile(tmpFile);
                     }
              } 
         // else display the licence found in the xml config

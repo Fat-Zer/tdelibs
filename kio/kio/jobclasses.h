@@ -39,7 +39,7 @@ class TQTimer;
 
 #define KIO_COPYJOB_HAS_SETINTERACTIVE // new in 3.4. Used by kio_trash.
 
-namespace KIO {
+namespace TDEIO {
 
     class Slave;
     class SlaveInterface;
@@ -50,9 +50,9 @@ namespace KIO {
      * For all jobs created in an application, the code looks like
      *
      * \code
-     *   KIO::Job * job = KIO::someoperation( some parameters );
-     *   connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
-     *            this, TQT_SLOT( slotResult( KIO::Job * ) ) );
+     *   TDEIO::Job * job = TDEIO::someoperation( some parameters );
+     *   connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ),
+     *            this, TQT_SLOT( slotResult( TDEIO::Job * ) ) );
      * \endcode
      *   (other connects, specific to the job)
      *
@@ -62,8 +62,8 @@ namespace KIO {
      *  if ( job->error() )
      *      job->showErrorDialog( this or 0L  );
      * \endcode
-     * @see KIO::Scheduler
-     * @see KIO::Slave
+     * @see TDEIO::Scheduler
+     * @see TDEIO::Slave
      */
     class KIO_EXPORT Job : public TQObject {
         Q_OBJECT
@@ -90,7 +90,7 @@ namespace KIO {
 	 * Returns the error code, if there has been an error.
          * Only call this method from the slot connected to result().
          * @return the error code for this job, 0 if no error.
-         * Error codes are defined in KIO::Error.
+         * Error codes are defined in TDEIO::Error.
          */
         int error() const { return m_error; }
 
@@ -262,7 +262,7 @@ namespace KIO {
 	 * @see addMetaData()
 	 * @see mergeMetaData()
          */
-        void setMetaData( const KIO::MetaData &metaData);
+        void setMetaData( const TDEIO::MetaData &metaData);
 
         /**
          * Add key/value pair to the meta data that is sent to the slave.
@@ -317,7 +317,7 @@ namespace KIO {
          * @see processedSize
          * @since 3.2
          */
-        KIO::filesize_t getProcessedSize();
+        TDEIO::filesize_t getProcessedSize();
 
     signals:
         /**
@@ -325,7 +325,7 @@ namespace KIO {
          * failed...). Use error to know the result.
 	 * @param job the job that emitted this signal
          */
-        void result( KIO::Job *job );
+        void result( TDEIO::Job *job );
 
         /**
          * @deprecated. Don't use !
@@ -334,7 +334,7 @@ namespace KIO {
          * in this case, ERR_USER_CANCELED.
 	 * @param job the job that emitted this signal
          */
-        void canceled( KIO::Job *job );
+        void canceled( TDEIO::Job *job );
 
         /**
          * Emitted to display information about this job, as sent by the slave.
@@ -342,7 +342,7 @@ namespace KIO {
 	 * @param job the job that emitted this signal
 	 * @param msg the info message
          */
-        void infoMessage( KIO::Job *job, const TQString & msg );
+        void infoMessage( TDEIO::Job *job, const TQString & msg );
         // KDE4: Separate rich-text string from plain-text string, for different widgets.
 
         /**
@@ -351,7 +351,7 @@ namespace KIO {
          * @param msg the info message
          * @since 3.5
          */
-        void warning( KIO::Job *job, const TQString & msg );
+        void warning( TDEIO::Job *job, const TQString & msg );
         // KDE4: Separate rich-text string from plain-text string, for different widgets.
 
         /**
@@ -360,7 +360,7 @@ namespace KIO {
          * currently unused (in the applications).
 	 * @param job the job that emitted this signal
          */
-        void connected( KIO::Job *job );
+        void connected( TDEIO::Job *job );
 
         /**
          * Progress signal showing the overall progress of the job
@@ -370,7 +370,7 @@ namespace KIO {
 	 * @param job the job that emitted this signal
 	 * @param percent the percentage
          */
-        void percent( KIO::Job *job, unsigned long percent );
+        void percent( TDEIO::Job *job, unsigned long percent );
 
         /**
          * Emitted when we know the size of this job (data size for transfers,
@@ -378,7 +378,7 @@ namespace KIO {
 	 * @param job the job that emitted this signal
 	 * @param size the total size in bytes
          */
-        void totalSize( KIO::Job *job, KIO::filesize_t size );
+        void totalSize( TDEIO::Job *job, TDEIO::filesize_t size );
 
         /**
          * Regularly emitted to show the progress of this job
@@ -386,14 +386,14 @@ namespace KIO {
 	 * @param job the job that emitted this signal
 	 * @param size the processed size in bytes
          */
-        void processedSize( KIO::Job *job, KIO::filesize_t size );
+        void processedSize( TDEIO::Job *job, TDEIO::filesize_t size );
 
         /**
          * Emitted to display information about the speed of this job.
 	 * @param job the job that emitted this signal
 	 * @param speed the speed in bytes/s
          */
-        void speed( KIO::Job *job, unsigned long speed );
+        void speed( TDEIO::Job *job, unsigned long speed );
 
     protected slots:
         /**
@@ -404,7 +404,7 @@ namespace KIO {
 	 * @param job the subjob
 	 * @see result()
          */
-        virtual void slotResult( KIO::Job *job );
+        virtual void slotResult( TDEIO::Job *job );
 
         /**
          * Forward signal from subjob.
@@ -412,14 +412,14 @@ namespace KIO {
 	 * @param speed the speed in bytes/s
 	 * @see speed()
          */
-        void slotSpeed( KIO::Job *job, unsigned long speed );
+        void slotSpeed( TDEIO::Job *job, unsigned long speed );
         /**
          * Forward signal from subjob.
 	 * @param job the subjob
 	 * @param msg the info message
 	 * @see infoMessage()
          */
-        void slotInfoMessage( KIO::Job *job, const TQString &msg );
+        void slotInfoMessage( TDEIO::Job *job, const TQString &msg );
 
         /**
          * Remove speed information.
@@ -465,7 +465,7 @@ namespace KIO {
 	 * @param processedSize the processed size in bytes
 	 * @param totalSize the total size in bytes
          */
-        void emitPercent( KIO::filesize_t processedSize, KIO::filesize_t totalSize );
+        void emitPercent( TDEIO::filesize_t processedSize, TDEIO::filesize_t totalSize );
 
         /**
          * Utility function for inherited jobs.
@@ -485,7 +485,7 @@ namespace KIO {
          * Set the processed size, does not emit processedSize
          * @since 3.2
          */
-        void setProcessedSize(KIO::filesize_t size);
+        void setProcessedSize(TDEIO::filesize_t size);
 
         /**
          * @internal
@@ -525,7 +525,7 @@ namespace KIO {
      * Other jobs are high-level jobs (CopyJob, DeleteJob, FileCopyJob...)
      * that manage subjobs but aren't scheduled directly.
      */
-    class KIO_EXPORT SimpleJob : public KIO::Job {
+    class KIO_EXPORT SimpleJob : public TDEIO::Job {
     Q_OBJECT
 
     public:
@@ -598,7 +598,7 @@ namespace KIO {
          * Can also be called by the parent job, when it knows the size.
 	 * @param data_size the total size
          */
-        void slotTotalSize( KIO::filesize_t data_size );
+        void slotTotalSize( TDEIO::filesize_t data_size );
 
     protected slots:
         /**
@@ -631,7 +631,7 @@ namespace KIO {
 	 * @param data_size the processed size in bytes
 	 * @see processedSize()
          */
-        void slotProcessedSize( KIO::filesize_t data_size );
+        void slotProcessedSize( TDEIO::filesize_t data_size );
         /**
          * Forward signal from the slave.
 	 * @param speed the speed in bytes/s
@@ -644,7 +644,7 @@ namespace KIO {
 	 * @param _metaData the meta data
 	 * @see metaData()
          */
-        virtual void slotMetaData( const KIO::MetaData &_metaData);
+        virtual void slotMetaData( const TDEIO::MetaData &_metaData);
 
     public slots:
         /**
@@ -666,7 +666,7 @@ namespace KIO {
         KURL m_url;
         KURL m_subUrl;
         int m_command;
-        KIO::filesize_t m_totalSize;
+        TDEIO::filesize_t m_totalSize;
     protected:
 	virtual void virtual_hook( int id, void* data );
 	/*
@@ -683,7 +683,7 @@ namespace KIO {
 
     /**
      * A KIO job that retrieves information about a file or directory.
-     * @see KIO::stat()
+     * @see TDEIO::stat()
      */
     class KIO_EXPORT StatJob : public SimpleJob {
 
@@ -691,7 +691,7 @@ namespace KIO {
 
     public:
         /**
-	 * Do not use this constructor to create a StatJob, use KIO::stat() instead.
+	 * Do not use this constructor to create a StatJob, use TDEIO::stat() instead.
 	 * @param url the url of the file or directory to check
 	 * @param command the command to issue
 	 * @param packedArgs the arguments
@@ -742,7 +742,7 @@ namespace KIO {
 	 * @param job the job that is redirected
 	 * @param url the new url
          */
-        void redirection( KIO::Job *job, const KURL &url );
+        void redirection( TDEIO::Job *job, const KURL &url );
 
         /**
          * Signals a permanent redirection.
@@ -752,13 +752,13 @@ namespace KIO {
 	 * @param toUrl the new URL
 	 * @since 3.1
          */
-        void permanentRedirection( KIO::Job *job, const KURL &fromUrl, const KURL &toUrl );
+        void permanentRedirection( TDEIO::Job *job, const KURL &fromUrl, const KURL &toUrl );
 
     protected slots:
-        void slotStatEntry( const KIO::UDSEntry & entry );
+        void slotStatEntry( const TDEIO::UDSEntry & entry );
         void slotRedirection( const KURL &url);
         virtual void slotFinished();
-        virtual void slotMetaData( const KIO::MetaData &_metaData);
+        virtual void slotMetaData( const TDEIO::MetaData &_metaData);
 
     protected:
         UDSEntry m_statResult;
@@ -774,7 +774,7 @@ namespace KIO {
 
     /**
      * A KIO job that creates a directory
-     * @see KIO::mkdir()
+     * @see TDEIO::mkdir()
      * @since 3.3
      */
     class KIO_EXPORT MkdirJob : public SimpleJob {
@@ -783,7 +783,7 @@ namespace KIO {
 
     public:
         /**
-	 * Do not use this constructor to create a MkdirJob, use KIO::mkdir() instead.
+	 * Do not use this constructor to create a MkdirJob, use TDEIO::mkdir() instead.
 	 * @param url the url of the file or directory to check
 	 * @param command the command to issue
 	 * @param packedArgs the arguments
@@ -807,7 +807,7 @@ namespace KIO {
 	 * @param job the job that is redirected
 	 * @param url the new url
          */
-        void redirection( KIO::Job *job, const KURL &url );
+        void redirection( TDEIO::Job *job, const KURL &url );
 
         /**
          * Signals a permanent redirection.
@@ -816,7 +816,7 @@ namespace KIO {
 	 * @param fromUrl the original URL
 	 * @param toUrl the new URL
          */
-        void permanentRedirection( KIO::Job *job, const KURL &fromUrl, const KURL &toUrl );
+        void permanentRedirection( TDEIO::Job *job, const KURL &fromUrl, const KURL &toUrl );
 
     protected slots:
         void slotRedirection( const KURL &url);
@@ -841,7 +841,7 @@ namespace KIO {
 
     public:
         /**
-         * Do not create a DirectCopyJob. Use KIO::copy() or KIO::file_copy() instead.
+         * Do not create a DirectCopyJob. Use TDEIO::copy() or TDEIO::file_copy() instead.
          */
         DirectCopyJob(const KURL& url, int command, const TQByteArray &packedArgs,
                       bool showProgressInfo);
@@ -859,10 +859,10 @@ namespace KIO {
          * Emitted if the job found an existing partial file
          * and supports resuming. Used by FileCopyJob.
          */
-        void canResume( KIO::Job *job, KIO::filesize_t offset );
+        void canResume( TDEIO::Job *job, TDEIO::filesize_t offset );
 
     private slots:
-        void slotCanResume( KIO::filesize_t offset );
+        void slotCanResume( TDEIO::filesize_t offset );
     };
 
 
@@ -877,7 +877,7 @@ namespace KIO {
 
     public:
        /**
-	* Do not create a TransferJob. Use KIO::get() or KIO::put()
+	* Do not create a TransferJob. Use TDEIO::get() or TDEIO::put()
 	* instead.
 	* @param url the url to get or put
 	* @param command the command to issue
@@ -902,7 +902,7 @@ namespace KIO {
          * Called when m_subJob finishes.
 	 * @param job the job that finished
          */
-        virtual void slotResult( KIO::Job *job );
+        virtual void slotResult( TDEIO::Job *job );
 
         /**
          * Flow control. Suspend data processing from the slave.
@@ -974,7 +974,7 @@ namespace KIO {
          * should not be certain of data.size() == 0 ever happening (e.g. in case
          * of an error), so you should rely on result() instead.
          */
-        void data( KIO::Job *job, const TQByteArray &data );
+        void data( TDEIO::Job *job, const TQByteArray &data );
 
         /**
          * Request for data.
@@ -987,7 +987,7 @@ namespace KIO {
          * @param data buffer to fill with data to send to the
          * slave. An empty buffer indicates end of data. (EOD)
          */
-        void dataReq( KIO::Job *job, TQByteArray &data );
+        void dataReq( TDEIO::Job *job, TQByteArray &data );
 
         /**
          * Signals a redirection.
@@ -996,7 +996,7 @@ namespace KIO {
 	 * @param job the job that emitted this signal
 	 * @param url the new URL
          */
-        void redirection( KIO::Job *job, const KURL &url );
+        void redirection( TDEIO::Job *job, const KURL &url );
 
         /**
          * Signals a permanent redirection.
@@ -1006,14 +1006,14 @@ namespace KIO {
 	 * @param toUrl the new URL
 	 * @since 3.1
          */
-        void permanentRedirection( KIO::Job *job, const KURL &fromUrl, const KURL &toUrl );
+        void permanentRedirection( TDEIO::Job *job, const KURL &fromUrl, const KURL &toUrl );
 
         /**
          * Mimetype determined.
 	 * @param job the job that emitted this signal
 	 * @param type the mime type
          */
-        void mimetype( KIO::Job *job, const TQString &type );
+        void mimetype( TDEIO::Job *job, const TQString &type );
 
         /**
          * @internal
@@ -1022,7 +1022,7 @@ namespace KIO {
          * and emitted by the "get" job if it supports resuming to
          * the given offset - in this case @p offset is unused)
          */
-        void canResume( KIO::Job *job, KIO::filesize_t offset );
+        void canResume( TDEIO::Job *job, TDEIO::filesize_t offset );
 
 
     protected slots:
@@ -1032,10 +1032,10 @@ namespace KIO {
         virtual void slotDataReq();
         virtual void slotMimetype( const TQString &mimetype );
         virtual void slotNeedSubURLData();
-        virtual void slotSubURLData(KIO::Job*, const TQByteArray &);
-        virtual void slotMetaData( const KIO::MetaData &_metaData);
+        virtual void slotSubURLData(TDEIO::Job*, const TQByteArray &);
+        virtual void slotMetaData( const TDEIO::MetaData &_metaData);
         void slotErrorPage();
-        void slotCanResume( KIO::filesize_t offset );
+        void slotCanResume( TDEIO::filesize_t offset );
         void slotPostRedirection();
 
     protected:
@@ -1057,14 +1057,14 @@ namespace KIO {
      * also stores a TQByteArray with the data, making it simpler to use than the
      * standard TransferJob.
      *
-     * For KIO::storedGet it puts the data into the member TQByteArray, so the user
+     * For TDEIO::storedGet it puts the data into the member TQByteArray, so the user
      * of this class can get hold of the whole data at once by calling data()
      * when the result signal is emitted.
      * You should only use StoredTransferJob to download data if you cannot
      * process the data by chunks while it's being downloaded, since storing
      * everything in a TQByteArray can potentially require a lot of memory.
      *
-     * For KIO::storedPut the user of this class simply provides the bytearray from
+     * For TDEIO::storedPut the user of this class simply provides the bytearray from
      * the start, and the job takes care of uploading it.
      * You should only use StoredTransferJob to upload data if you cannot
      * provide the in chunks while it's being uploaded, since storing
@@ -1072,7 +1072,7 @@ namespace KIO {
      *
      * @since 3.3
      */
-    class KIO_EXPORT StoredTransferJob : public KIO::TransferJob {
+    class KIO_EXPORT StoredTransferJob : public TDEIO::TransferJob {
         Q_OBJECT
 
     public:
@@ -1092,7 +1092,7 @@ namespace KIO {
 
         /**
          * Set data to be uploaded. This is for put jobs.
-         * Automatically called by KIO::storedPut(const TQByteArray &, ...),
+         * Automatically called by TDEIO::storedPut(const TQByteArray &, ...),
          * do not call this yourself.
          */
         void setData( const TQByteArray& arr );
@@ -1104,8 +1104,8 @@ namespace KIO {
         TQByteArray data() const { return m_data; }
 
     private slots:
-        void slotStoredData( KIO::Job *job, const TQByteArray &data );
-        void slotStoredDataReq( KIO::Job *job, TQByteArray &data );
+        void slotStoredData( TDEIO::Job *job, const TQByteArray &data );
+        void slotStoredDataReq( TDEIO::Job *job, TQByteArray &data );
     private:
         TQByteArray m_data;
         int m_uploadOffset;
@@ -1114,15 +1114,15 @@ namespace KIO {
     /**
      * The MultiGetJob is a TransferJob that allows you to get
      * several files from a single server. Don't create directly,
-     * but use KIO::multi_get() instead.
-     * @see KIO::multi_get()
+     * but use TDEIO::multi_get() instead.
+     * @see TDEIO::multi_get()
      */
     class KIO_EXPORT MultiGetJob : public TransferJob {
     Q_OBJECT
 
     public:
         /**
-	 * Do not create a MultiGetJob directly, use KIO::multi_get()
+	 * Do not create a MultiGetJob directly, use TDEIO::multi_get()
 	 * instead.
 	 *
 	 * @param url the first url to get
@@ -1166,7 +1166,7 @@ namespace KIO {
         /**
          * File transfer completed.
          *
-         * When all files have been processed, result(KIO::Job *) gets
+         * When all files have been processed, result(TDEIO::Job *) gets
          * emitted.
 	 * @param id the id of the request
          */
@@ -1202,15 +1202,15 @@ namespace KIO {
     /**
      * A MimetypeJob is a TransferJob that  allows you to get
      * the mime type of an URL. Don't create directly,
-     * but use KIO::mimetype() instead.
-     * @see KIO::mimetype()
+     * but use TDEIO::mimetype() instead.
+     * @see TDEIO::mimetype()
      */
     class KIO_EXPORT MimetypeJob : public TransferJob {
     Q_OBJECT
 
     public:
        /**
-	* Do not create a MimetypeJob directly. Use KIO::mimetype()
+	* Do not create a MimetypeJob directly. Use TDEIO::mimetype()
 	* instead.
 	* @param url the url to get
 	* @param command the command to issue
@@ -1244,16 +1244,16 @@ namespace KIO {
 
     /**
      * The FileCopyJob copies data from one place to another.
-     * @see KIO::file_copy()
-     * @see KIO::file_move()
+     * @see TDEIO::file_copy()
+     * @see TDEIO::file_move()
      */
     class KIO_EXPORT FileCopyJob : public Job {
     Q_OBJECT
 
     public:
 	/**
-	* Do not create a FileCopyJob directly. Use KIO::file_move()
-	* or KIO::file_copy() instead.
+	* Do not create a FileCopyJob directly. Use TDEIO::file_move()
+	* or TDEIO::file_copy() instead.
 	* @param src the source URL
 	* @param dest the destination URL
 	* @param permissions the permissions of the resulting resource
@@ -1272,7 +1272,7 @@ namespace KIO {
 	 * @param size the size of the source file
 	 * @since 3.2
          */
-        void setSourceSize64(KIO::filesize_t size);
+        void setSourceSize64(TDEIO::filesize_t size);
 
         /**
          * Sets the modification time of the file
@@ -1310,45 +1310,45 @@ namespace KIO {
          *
          * @since 3.5.7
          */
-        void mimetype( KIO::Job *job, const TQString &type );
+        void mimetype( TDEIO::Job *job, const TQString &type );
 
     public slots:
         void slotStart();
-        void slotData( KIO::Job *, const TQByteArray &data);
-        void slotDataReq( KIO::Job *, TQByteArray &data);
-        void slotMimetype( KIO::Job *, const TQString& type );
+        void slotData( TDEIO::Job *, const TQByteArray &data);
+        void slotDataReq( TDEIO::Job *, TQByteArray &data);
+        void slotMimetype( TDEIO::Job *, const TQString& type );
 
     protected slots:
         /**
          * Called whenever a subjob finishes.
 	 * @param job the job that emitted this signal
          */
-        virtual void slotResult( KIO::Job *job );
+        virtual void slotResult( TDEIO::Job *job );
 
         /**
          * Forward signal from subjob
 	 * @param job the job that emitted this signal
 	 * @param size the processed size in bytes
          */
-        void slotProcessedSize( KIO::Job *job, KIO::filesize_t size );
+        void slotProcessedSize( TDEIO::Job *job, TDEIO::filesize_t size );
         /**
          * Forward signal from subjob
 	 * @param job the job that emitted this signal
 	 * @param size the total size
          */
-        void slotTotalSize( KIO::Job *job, KIO::filesize_t size );
+        void slotTotalSize( TDEIO::Job *job, TDEIO::filesize_t size );
         /**
          * Forward signal from subjob
 	 * @param job the job that emitted this signal
 	 * @param pct the percentage
          */
-        void slotPercent( KIO::Job *job, unsigned long pct );
+        void slotPercent( TDEIO::Job *job, unsigned long pct );
         /**
          * Forward signal from subjob
 	 * @param job the job that emitted this signal
 	 * @param offset the offset to resume from
          */
-        void slotCanResume( KIO::Job *job, KIO::filesize_t offset );
+        void slotCanResume( TDEIO::Job *job, TDEIO::filesize_t offset );
 
     protected:
         void startCopyJob();
@@ -1374,7 +1374,7 @@ namespace KIO {
         SimpleJob *m_copyJob;
         TransferJob *m_getJob;
         TransferJob *m_putJob;
-        KIO::filesize_t m_totalSize;
+        TDEIO::filesize_t m_totalSize;
     protected:
 	virtual void virtual_hook( int id, void* data );
     private:
@@ -1384,18 +1384,18 @@ namespace KIO {
 
     /**
      * A ListJob is allows you to get the get the content of a directory.
-     * Don't create the job directly, but use KIO::listRecursive() or
-     * KIO::listDir() instead.
-     * @see KIO::listRecursive()
-     * @see KIO::listDir()
+     * Don't create the job directly, but use TDEIO::listRecursive() or
+     * TDEIO::listDir() instead.
+     * @see TDEIO::listRecursive()
+     * @see TDEIO::listDir()
      */
     class KIO_EXPORT ListJob : public SimpleJob {
     Q_OBJECT
 
     public:
        /**
-	* Do not create a ListJob directly. Use KIO::listDir() or
-	* KIO::listRecursive() instead.
+	* Do not create a ListJob directly. Use TDEIO::listDir() or
+	* TDEIO::listRecursive() instead.
 	* @param url the url of the directory
 	* @param showProgressInfo true to show progress information to the user
 	* @param recursive true to get the data recursively from child directories,
@@ -1439,7 +1439,7 @@ namespace KIO {
 	 * @param job the job that emitted this signal
 	 * @param list the list of UDSEntries
          */
-        void entries( KIO::Job *job, const KIO::UDSEntryList& list);
+        void entries( TDEIO::Job *job, const TDEIO::UDSEntryList& list);
 
         /**
          * Signals a redirection.
@@ -1448,7 +1448,7 @@ namespace KIO {
 	 * @param job the job that is redirected
 	 * @param url the new url
          */
-        void redirection( KIO::Job *job, const KURL &url );
+        void redirection( TDEIO::Job *job, const KURL &url );
 
         /**
          * Signals a permanent redirection.
@@ -1458,15 +1458,15 @@ namespace KIO {
 	 * @param toUrl the new URL
 	 * @since 3.1
          */
-        void permanentRedirection( KIO::Job *job, const KURL &fromUrl, const KURL &toUrl );
+        void permanentRedirection( TDEIO::Job *job, const KURL &fromUrl, const KURL &toUrl );
 
     protected slots:
         virtual void slotFinished( );
-        virtual void slotMetaData( const KIO::MetaData &_metaData);
-        virtual void slotResult( KIO::Job *job );
-        void slotListEntries( const KIO::UDSEntryList& list );
+        virtual void slotMetaData( const TDEIO::MetaData &_metaData);
+        virtual void slotResult( TDEIO::Job *job );
+        void slotListEntries( const TDEIO::UDSEntryList& list );
         void slotRedirection( const KURL &url );
-        void gotEntries( KIO::Job * subjob, const KIO::UDSEntryList& list );
+        void gotEntries( TDEIO::Job * subjob, const TDEIO::UDSEntryList& list );
 
     private:
         bool recursive;
@@ -1490,20 +1490,20 @@ namespace KIO {
         //mode_t type;
         time_t ctime;
         time_t mtime;
-        KIO::filesize_t size; // 0 for dirs
+        TDEIO::filesize_t size; // 0 for dirs
     };
 
     /**
      * CopyJob is used to move, copy or symlink files and directories.
-     * Don't create the job directly, but use KIO::copy(),
-     * KIO::move(), KIO::link() and friends.
+     * Don't create the job directly, but use TDEIO::copy(),
+     * TDEIO::move(), TDEIO::link() and friends.
      *
-     * @see KIO::copy()
-     * @see KIO::copyAs()
-     * @see KIO::move()
-     * @see KIO::moveAs()
-     * @see KIO::link()
-     * @see KIO::linkAs()
+     * @see TDEIO::copy()
+     * @see TDEIO::copyAs()
+     * @see TDEIO::move()
+     * @see TDEIO::moveAs()
+     * @see TDEIO::link()
+     * @see TDEIO::linkAs()
      */
     class KIO_EXPORT CopyJob : public Job {
     Q_OBJECT
@@ -1515,21 +1515,21 @@ namespace KIO {
         enum CopyMode{ Copy, Move, Link };
 
 	/**
-	 * Do not create a CopyJob directly. Use KIO::copy(),
-	 * KIO::move(), KIO::link() and friends instead.
+	 * Do not create a CopyJob directly. Use TDEIO::copy(),
+	 * TDEIO::move(), TDEIO::link() and friends instead.
 	 *
 	 * @param src the list of source URLs
 	 * @param dest the destination URL
 	 * @param mode specifies whether the job should copy, move or link
-	 * @param asMethod if true, behaves like KIO::copyAs(),
-	 * KIO::moveAs() or KIO::linkAs()
+	 * @param asMethod if true, behaves like TDEIO::copyAs(),
+	 * TDEIO::moveAs() or TDEIO::linkAs()
 	 * @param showProgressInfo true to show progress information to the user
-	 * @see KIO::copy()
-	 * @see KIO::copyAs()
-	 * @see KIO::move()
-	 * @see KIO::moveAs()
-	 * @see KIO::link()
-	 * @see KIO::linkAs()
+	 * @see TDEIO::copy()
+	 * @see TDEIO::copyAs()
+	 * @see TDEIO::move()
+	 * @see TDEIO::moveAs()
+	 * @see TDEIO::link()
+	 * @see TDEIO::linkAs()
 	 */
         CopyJob( const KURL::List& src, const KURL& dest, CopyMode mode, bool asMethod, bool showProgressInfo );
 
@@ -1579,13 +1579,13 @@ namespace KIO {
 	 * @param job the job that emitted this signal
 	 * @param files the total number of files
 	 */
-        void totalFiles( KIO::Job *job, unsigned long files );
+        void totalFiles( TDEIO::Job *job, unsigned long files );
         /**
 	 * Emitted when the toal number of direcotries is known.
 	 * @param job the job that emitted this signal
 	 * @param dirs the total number of directories
 	 */
-        void totalDirs( KIO::Job *job, unsigned long dirs );
+        void totalDirs( TDEIO::Job *job, unsigned long dirs );
 
         /**
 	 * Emitted when it is known which files / directories are going
@@ -1594,20 +1594,20 @@ namespace KIO {
 	 * @param job the job that emitted this signal
 	 * @param files a list of items that are about to be created.
 	 */
-        void aboutToCreate( KIO::Job *job, const TQValueList<KIO::CopyInfo> &files);
+        void aboutToCreate( TDEIO::Job *job, const TQValueList<TDEIO::CopyInfo> &files);
 
         /**
 	 * Sends the number of processed files.
 	 * @param job the job that emitted this signal
 	 * @param files the number of processed files
 	 */
-        void processedFiles( KIO::Job *job, unsigned long files );
+        void processedFiles( TDEIO::Job *job, unsigned long files );
         /**
 	 * Sends the number of processed directories.
 	 * @param job the job that emitted this signal
 	 * @param dirs the number of processed dirs
 	 */
-        void processedDirs( KIO::Job *job, unsigned long dirs );
+        void processedDirs( TDEIO::Job *job, unsigned long dirs );
 
         /**
          * The job is copying a file or directory.
@@ -1616,7 +1616,7 @@ namespace KIO {
 	 *             being copied
 	 * @param to the destination of the current operation
          */
-        void copying( KIO::Job *job, const KURL& from, const KURL& to );
+        void copying( TDEIO::Job *job, const KURL& from, const KURL& to );
         /**
          * The job is creating a symbolic link.
 	 * @param job the job that emitted this signal
@@ -1624,7 +1624,7 @@ namespace KIO {
 	 *             being linked
 	 * @param to the destination of the current operation
          */
-        void linking( KIO::Job *job, const TQString& target, const KURL& to );
+        void linking( TDEIO::Job *job, const TQString& target, const KURL& to );
         /**
          * The job is moving a file or directory.
 	 * @param job the job that emitted this signal
@@ -1632,20 +1632,20 @@ namespace KIO {
 	 *             being moved
 	 * @param to the destination of the current operation
          */
-        void moving( KIO::Job *job, const KURL& from, const KURL& to );
+        void moving( TDEIO::Job *job, const KURL& from, const KURL& to );
         /**
          * The job is creating the directory @p dir.
 	 * @param job the job that emitted this signal
 	 * @param dir the directory that is currently being created
          */
-        void creatingDir( KIO::Job *job, const KURL& dir );
+        void creatingDir( TDEIO::Job *job, const KURL& dir );
         /**
          * The user chose to rename @p from to @p to.
 	 * @param job the job that emitted this signal
 	 * @param from the original name
 	 * @param to the new name
          */
-        void renamed( KIO::Job *job, const KURL& from, const KURL& to );
+        void renamed( TDEIO::Job *job, const KURL& from, const KURL& to );
 
         /**
          * The job emits this signal when copying or moving a file or directory successfully finished.
@@ -1659,7 +1659,7 @@ namespace KIO {
          * @param renamed indicates that the destination URL was created using a
          * rename operation (i.e. fast directory moving). true if is has been renamed
          */
-        void copyingDone( KIO::Job *job, const KURL &from, const KURL &to, bool directory, bool renamed );
+        void copyingDone( TDEIO::Job *job, const KURL &from, const KURL &to, bool directory, bool renamed );
         /**
          * The job is copying or moving a symbolic link, that points to target.
          * The new link is created in @p to. The existing one is/was in @p from.
@@ -1669,26 +1669,26 @@ namespace KIO {
 	 * @param target the target
          * @param to the destination URL
          */
-        void copyingLinkDone( KIO::Job *job, const KURL &from, const TQString& target, const KURL& to );
+        void copyingLinkDone( TDEIO::Job *job, const KURL &from, const TQString& target, const KURL& to );
 
     protected:
         void statCurrentSrc();
         void statNextSrc();
 
         // Those aren't slots but submethods for slotResult.
-        void slotResultStating( KIO::Job * job );
+        void slotResultStating( TDEIO::Job * job );
         void startListing( const KURL & src );
-        void slotResultCreatingDirs( KIO::Job * job );
-        void slotResultConflictCreatingDirs( KIO::Job * job );
+        void slotResultCreatingDirs( TDEIO::Job * job );
+        void slotResultConflictCreatingDirs( TDEIO::Job * job );
         void createNextDir();
-        void slotResultCopyingFiles( KIO::Job * job );
-        void slotResultConflictCopyingFiles( KIO::Job * job );
+        void slotResultCopyingFiles( TDEIO::Job * job );
+        void slotResultConflictCopyingFiles( TDEIO::Job * job );
         void copyNextFile();
-        void slotResultDeletingDirs( KIO::Job * job );
+        void slotResultDeletingDirs( TDEIO::Job * job );
         void deleteNextDir();
         void skip( const KURL & sourceURL );
-        void slotResultRenaming( KIO::Job * job );
-        //void slotResultSettingDirAttributes( KIO::Job * job );
+        void slotResultRenaming( TDEIO::Job * job );
+        //void slotResultSettingDirAttributes( TDEIO::Job * job );
         void setNextDirAttribute();
     private:
         void startRenameJob(const KURL &slave_url);
@@ -1698,17 +1698,17 @@ namespace KIO {
 
     protected slots:
         void slotStart();
-        void slotEntries( KIO::Job*, const KIO::UDSEntryList& list );
-        virtual void slotResult( KIO::Job *job );
+        void slotEntries( TDEIO::Job*, const TDEIO::UDSEntryList& list );
+        virtual void slotResult( TDEIO::Job *job );
         /**
          * Forward signal from subjob
          */
-        void slotProcessedSize( KIO::Job*, KIO::filesize_t data_size );
+        void slotProcessedSize( TDEIO::Job*, TDEIO::filesize_t data_size );
         /**
          * Forward signal from subjob
 	 * @param size the total size
          */
-        void slotTotalSize( KIO::Job*, KIO::filesize_t size );
+        void slotTotalSize( TDEIO::Job*, TDEIO::filesize_t size );
 
         void slotReport();
     private:
@@ -1719,9 +1719,9 @@ namespace KIO {
         enum { STATE_STATING, STATE_RENAMING, STATE_LISTING, STATE_CREATING_DIRS,
                STATE_CONFLICT_CREATING_DIRS, STATE_COPYING_FILES, STATE_CONFLICT_COPYING_FILES,
                STATE_DELETING_DIRS, STATE_SETTING_DIR_ATTRIBUTES } state;
-        KIO::filesize_t m_totalSize;
-        KIO::filesize_t m_processedSize;
-        KIO::filesize_t m_fileProcessedSize;
+        TDEIO::filesize_t m_totalSize;
+        TDEIO::filesize_t m_processedSize;
+        TDEIO::filesize_t m_fileProcessedSize;
         int m_processedFiles;
         int m_processedDirs;
         TQValueList<CopyInfo> files;
@@ -1756,22 +1756,22 @@ namespace KIO {
 
     /**
      * A more complex Job to delete files and directories.
-     * Don't create the job directly, but use KIO::del() instead.
+     * Don't create the job directly, but use TDEIO::del() instead.
      *
-     * @see KIO::del()
+     * @see TDEIO::del()
      */
     class KIO_EXPORT DeleteJob : public Job {
     Q_OBJECT
 
     public:
 	/**
-	 * Do not create a DeleteJob directly. Use KIO::del()
+	 * Do not create a DeleteJob directly. Use TDEIO::del()
 	 * instead.
 	 *
 	 * @param src the list of URLs to delete
 	 * @param shred true to shred (make sure that data is not recoverable)a
 	 * @param showProgressInfo true to show progress information to the user
-	 * @see KIO::del()
+	 * @see TDEIO::del()
 	 */
         DeleteJob( const KURL::List& src, bool shred, bool showProgressInfo );
 
@@ -1788,26 +1788,26 @@ namespace KIO {
 	 * @param job the job that emitted this signal
 	 * @param files the total number of files
 	 */
-        void totalFiles( KIO::Job *job, unsigned long files );
+        void totalFiles( TDEIO::Job *job, unsigned long files );
         /**
 	 * Emitted when the toal number of direcotries is known.
 	 * @param job the job that emitted this signal
 	 * @param dirs the total number of directories
 	 */
-        void totalDirs( KIO::Job *job, unsigned long dirs );
+        void totalDirs( TDEIO::Job *job, unsigned long dirs );
 
         /**
 	 * Sends the number of processed files.
 	 * @param job the job that emitted this signal
 	 * @param files the number of processed files
 	 */
-        void processedFiles( KIO::Job *job, unsigned long files );
+        void processedFiles( TDEIO::Job *job, unsigned long files );
         /**
 	 * Sends the number of processed directories.
 	 * @param job the job that emitted this signal
 	 * @param dirs the number of processed dirs
 	 */
-        void processedDirs( KIO::Job *job, unsigned long dirs );
+        void processedDirs( TDEIO::Job *job, unsigned long dirs );
 
         /**
 	 * Sends the URL of the file that is currently being deleted.
@@ -1815,17 +1815,17 @@ namespace KIO {
 	 * @param file the URL of the file or directory that is being
 	 *        deleted
 	 */
-        void deleting( KIO::Job *job, const KURL& file );
+        void deleting( TDEIO::Job *job, const KURL& file );
 
     protected slots:
         void slotStart();
-        void slotEntries( KIO::Job*, const KIO::UDSEntryList& list );
-        virtual void slotResult( KIO::Job *job );
+        void slotEntries( TDEIO::Job*, const TDEIO::UDSEntryList& list );
+        virtual void slotResult( TDEIO::Job *job );
 
         /**
          * Forward signal from subjob
          */
-        void slotProcessedSize( KIO::Job*, KIO::filesize_t data_size );
+        void slotProcessedSize( TDEIO::Job*, TDEIO::filesize_t data_size );
         void slotReport();
 
     private:
@@ -1836,9 +1836,9 @@ namespace KIO {
     private:
         enum { STATE_STATING, STATE_LISTING,
                STATE_DELETING_FILES, STATE_DELETING_DIRS } state;
-        KIO::filesize_t m_totalSize;
-        KIO::filesize_t m_processedSize;
-        KIO::filesize_t m_fileProcessedSize;
+        TDEIO::filesize_t m_totalSize;
+        TDEIO::filesize_t m_processedSize;
+        TDEIO::filesize_t m_fileProcessedSize;
         int m_processedFiles;
         int m_processedDirs;
         int m_totalFilesDirs;
@@ -1860,7 +1860,7 @@ namespace KIO {
 
     /**
      * A KIO job that finds a local URL
-     * @see KIO::localURL()
+     * @see TDEIO::localURL()
      * @since R14.0.0
      */
     class KIO_EXPORT LocalURLJob : public SimpleJob {
@@ -1869,7 +1869,7 @@ namespace KIO {
 
     public:
         /**
-	 * Do not use this constructor to create a LocalURLJob, use KIO::localURL() instead.
+	 * Do not use this constructor to create a LocalURLJob, use TDEIO::localURL() instead.
 	 * @param url the url of the file or directory to check
 	 * @param command the command to issue
 	 * @param packedArgs the arguments
@@ -1891,7 +1891,7 @@ namespace KIO {
 	 * @param url the local url
 	 * @param isLocal true if the returned URL is local, false if not
          */
-        void localURL( KIO::Job *job, const KURL &url, bool isLocal );
+        void localURL( TDEIO::Job *job, const KURL &url, bool isLocal );
 
     protected slots:
         void slotLocalURL( const KURL &url, bool isLocal );

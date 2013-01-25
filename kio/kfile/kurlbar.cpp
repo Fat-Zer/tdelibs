@@ -577,16 +577,16 @@ KURL KURLBar::currentURL() const
     return item ? item->url() : KURL();
 }
 
-void KURLBar::readConfig( KConfig *appConfig, const TQString& itemGroup )
+void KURLBar::readConfig( TDEConfig *appConfig, const TQString& itemGroup )
 {
     m_isImmutable = appConfig->groupIsImmutable( itemGroup );
-    KConfigGroupSaver cs( appConfig, itemGroup );
+    TDEConfigGroupSaver cs( appConfig, itemGroup );
     d->defaultIconSize = m_iconSize;
     m_iconSize = appConfig->readNumEntry( "Speedbar IconSize", m_iconSize );
 
     if ( m_useGlobal ) { // read global items
-        KConfig *globalConfig = TDEGlobal::config();
-        KConfigGroupSaver cs( globalConfig, (TQString)(itemGroup +" (Global)"));
+        TDEConfig *globalConfig = TDEGlobal::config();
+        TDEConfigGroupSaver cs( globalConfig, (TQString)(itemGroup +" (Global)"));
         int num = globalConfig->readNumEntry( "Number of Entries" );
         for ( int i = 0; i < num; i++ ) {
             readItem( i, globalConfig, false );
@@ -600,7 +600,7 @@ void KURLBar::readConfig( KConfig *appConfig, const TQString& itemGroup )
     }
 }
 
-void KURLBar::readItem( int i, KConfig *config, bool applicationLocal )
+void KURLBar::readItem( int i, TDEConfig *config, bool applicationLocal )
 {
     TQString number = TQString::number( i );
     KURL url = KURL::fromPathOrURL( config->readPathEntry( TQString("URL_") + number ));
@@ -610,9 +610,9 @@ void KURLBar::readItem( int i, KConfig *config, bool applicationLocal )
     TQString description = config->readEntry( TQString("Description_") + number ); 
 
     if (description.isEmpty() && url.protocol()=="beagle") {
-        KIO::UDSEntry uds;
+        TDEIO::UDSEntry uds;
         const KURL kurl("beagle:?beagled-status");
-        if (!KIO::NetAccess::stat(kurl, uds))
+        if (!TDEIO::NetAccess::stat(kurl, uds))
             return;
 
         description = i18n("Desktop Search");
@@ -626,9 +626,9 @@ void KURLBar::readItem( int i, KConfig *config, bool applicationLocal )
                     config->readNumEntry( TQString("IconGroup_") + number )) );
 }
 
-void KURLBar::writeConfig( KConfig *config, const TQString& itemGroup )
+void KURLBar::writeConfig( TDEConfig *config, const TQString& itemGroup )
 {
-    KConfigGroupSaver cs1( config, itemGroup );
+    TDEConfigGroupSaver cs1( config, itemGroup );
     if(!config->hasDefault("Speedbar IconSize") && m_iconSize == d->defaultIconSize )
         config->revertToDefault("Speedbar IconSize");
     else
@@ -685,7 +685,7 @@ void KURLBar::writeConfig( KConfig *config, const TQString& itemGroup )
     m_isModified = false;
 }
 
-void KURLBar::writeItem( KURLBarItem *item, int i, KConfig *config,
+void KURLBar::writeItem( KURLBarItem *item, int i, TDEConfig *config,
                          bool global )
 {
     if ( !item->isPersistent() )

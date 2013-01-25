@@ -37,7 +37,7 @@
 #include "sessiondata.h"
 #include "sessiondata.moc"
 
-namespace KIO {
+namespace TDEIO {
 
 /***************************** SessionData::AuthData ************************/
 struct SessionData::AuthData
@@ -264,7 +264,7 @@ void SessionData::reset()
 {
     d->initDone = true;
     // Get Cookie settings...
-    KConfig* cfg = new KConfig("kcookiejarrc", true, false);
+    TDEConfig* cfg = new TDEConfig("kcookiejarrc", true, false);
     cfg->setGroup( "Cookie Policy" );
     d->useCookie = cfg->readBoolEntry( "Cookies", true );
     delete cfg;

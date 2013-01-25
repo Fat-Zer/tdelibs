@@ -136,7 +136,7 @@ void UploadDialog::slotOk()
   entry->setSummary( mSummaryEdit->text(), mLanguageCombo->currentText() );
 
   if ( mPayloadUrl.isValid() ) {
-    KConfig *conf = kapp->config();
+    TDEConfig *conf = kapp->config();
     conf->setGroup( TQString("KNewStuffUpload:%1").arg(mPayloadUrl.fileName()) );
     conf->writeEntry("name", mNameEdit->text());
     conf->writeEntry("author", mAuthorEdit->text());
@@ -164,7 +164,7 @@ void UploadDialog::setPayloadFile( const TQString &payloadFile )
 {
   mPayloadUrl = payloadFile;
 
-  KConfig *conf = kapp->config();
+  TDEConfig *conf = kapp->config();
   conf->setGroup( TQString("KNewStuffUpload:%1").arg(mPayloadUrl.fileName()) );
   TQString name = conf->readEntry("name");
   TQString author = conf->readEntry("author");

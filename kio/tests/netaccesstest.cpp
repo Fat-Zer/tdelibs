@@ -31,8 +31,8 @@ int main(int argc, char **argv)
 
   for ( uint i = 0; i < 4 ; ++i ) {
     kdDebug() << "file_copy" << endl;
-    if ( !KIO::NetAccess::file_copy(srcURL, tmpURL, -1, true, false, 0) )
-      kdError() << "file_copy failed: " << KIO::NetAccess::lastErrorString() << endl;
+    if ( !TDEIO::NetAccess::file_copy(srcURL, tmpURL, -1, true, false, 0) )
+      kdError() << "file_copy failed: " << TDEIO::NetAccess::lastErrorString() << endl;
     else {
       TQFile f( tmpURL.path() );
       if (!f.open(IO_ReadOnly))

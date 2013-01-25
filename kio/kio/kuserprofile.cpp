@@ -53,7 +53,7 @@ void KServiceTypeProfile::initStatic()
   profileDeleter.setObject(s_lstProfiles, new KServiceTypeProfileList);
   s_lstProfiles->setAutoDelete( true );
 
-  KConfig config( "profilerc", true, false);
+  TDEConfig config( "profilerc", true, false);
 
   static const TQString & defaultGroup = TDEGlobal::staticQString("<default>");
 

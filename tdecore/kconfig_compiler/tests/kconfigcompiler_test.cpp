@@ -1,5 +1,5 @@
 /*
-    Tests for KConfig Compiler
+    Tests for TDEConfig Compiler
 
     Copyright (c) 2005      by Duncan Mac-Vicar       <duncan@kde.org>
 
@@ -21,8 +21,8 @@
 
 using namespace KUnitTest;
 
-KUNITTEST_MODULE( kunittest_kconfigcompiler_test, "KConfigXT")
-KUNITTEST_MODULE_REGISTER_TESTER( KConfigCompiler_Test )
+KUNITTEST_MODULE( kunittest_kconfigcompiler_test, "TDEConfigXT")
+KUNITTEST_MODULE_REGISTER_TESTER( TDEConfigCompiler_Test )
 
 typedef const char * CompilerTestSet[];
 
@@ -50,12 +50,12 @@ static CompilerTestSet willFailCases =
 };
 
 
-void KConfigCompiler_Test::allTests()
+void TDEConfigCompiler_Test::allTests()
 {
 	testExpectedOutput();
 }
 
-void KConfigCompiler_Test::testExpectedOutput()
+void TDEConfigCompiler_Test::testExpectedOutput()
 {
 	uint i = 0;
 	// Known to pass test cases
@@ -74,7 +74,7 @@ void KConfigCompiler_Test::testExpectedOutput()
 	}
 }
 
-void KConfigCompiler_Test::performCompare(const TQString &fileName, bool fail)
+void TDEConfigCompiler_Test::performCompare(const TQString &fileName, bool fail)
 {
 	TQFile file(fileName);
 	TQFile fileRef(TQString::fromLatin1(SRCDIR) + TQString::fromLatin1("/") + fileName + TQString::fromLatin1(".ref"));

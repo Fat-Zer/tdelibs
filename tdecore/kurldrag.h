@@ -95,7 +95,7 @@ public:
    * This is an alternative way of setting the metadata:
    * either use the constructor to pass it all at once, or use
    * drag->metaData()["key"] = data;
-   * @see KIO::TransferJob
+   * @see TDEIO::TransferJob
    */
   TQMap<TQString, TQString> &metaData() { return m_metaData; }
 

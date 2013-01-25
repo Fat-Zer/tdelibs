@@ -261,7 +261,7 @@ KMimeTypeChooserDialog::KMimeTypeChooserDialog(
                                   this, "chooser" );
   setMainWidget(m_chooser);
 
-  KConfigGroup group( TDEGlobal::config(), "KMimeTypeChooserDialog");
+  TDEConfigGroup group( TDEGlobal::config(), "KMimeTypeChooserDialog");
   TQSize defaultSize( 400, 300 );
   resize( group.readSizeEntry("size", &defaultSize) );
 }
@@ -280,7 +280,7 @@ KMimeTypeChooserDialog::KMimeTypeChooserDialog(
                                   this, "chooser" );
   setMainWidget(m_chooser);
 
-  KConfigGroup group( TDEGlobal::config(), "KMimeTypeChooserDialog");
+  TDEConfigGroup group( TDEGlobal::config(), "KMimeTypeChooserDialog");
   TQSize defaultSize( 400, 300 );
   resize( group.readSizeEntry("size", &defaultSize) );
 }
@@ -288,7 +288,7 @@ KMimeTypeChooserDialog::KMimeTypeChooserDialog(
 
 KMimeTypeChooserDialog::~KMimeTypeChooserDialog()
 {
-  KConfigGroup group( TDEGlobal::config(), "KMimeTypeChooserDialog");
+  TDEConfigGroup group( TDEGlobal::config(), "KMimeTypeChooserDialog");
   group.writeEntry("size", size());
 }
 

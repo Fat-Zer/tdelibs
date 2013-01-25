@@ -29,8 +29,8 @@
 #include <klocale.h>
 #include <kservice.h>
 
-class KCModuleProxy;
-class KCModuleInfo;
+class TDECModuleProxy;
+class TDECModuleInfo;
 
 /**
  * @ingroup kcmodule
@@ -126,7 +126,7 @@ public:
     /**
      * Add a module.
      *
-     * @param moduleinfo Pass a KCModuleInfo object which will be
+     * @param moduleinfo Pass a TDECModuleInfo object which will be
      *                   used for creating the module. It will be added
      *                   to the list of modules the dialog will show.
      *
@@ -140,7 +140,7 @@ public:
      *
      * @param args   List of arguments to pass to the module.
      **/
-    void addModule(const KCModuleInfo& moduleinfo, TQStringList
+    void addModule(const TDECModuleInfo& moduleinfo, TQStringList
             parentmodulenames = TQStringList(), bool withfallback=false, TQStringList args = TQStringList());
 
     /**
@@ -156,7 +156,7 @@ public:
 
 signals:
     /**
-     * Emitted after all KCModules have been told to save their configuration.
+     * Emitted after all TDECModules have been told to save their configuration.
      *
      * The applyClicked and okClicked signals are emitted before the
      * configuration is saved.
@@ -164,7 +164,7 @@ signals:
     void configCommitted();
 
     /**
-     * Emitted after the KCModules have been told to save their configuration.
+     * Emitted after the TDECModules have been told to save their configuration.
      * It is emitted once for every instance the KCMs that were changed belong
      * to.
      *
@@ -265,14 +265,14 @@ private:
 
     struct CreatedModule
     {
-        KCModuleProxy * kcm;
+        TDECModuleProxy * kcm;
         KService::Ptr service;
         /* KDE 4 Move to Private class */
     };
     typedef TQValueList<CreatedModule> ModuleList;
     ModuleList m_modules;
 
-    typedef TQMap<KService::Ptr, KCModuleProxy*> OrphanMap;
+    typedef TQMap<KService::Ptr, TDECModuleProxy*> OrphanMap;
     OrphanMap m_orphanModules;
 
     TQPtrDict<TQStringList> moduleParentComponents;

@@ -6,7 +6,7 @@
 
 #include <tqwidget.h>
 
-class KConfig;
+class TDEConfig;
 class TQString;
 
 namespace KTextEditor
@@ -45,8 +45,8 @@ public:
 	virtual const TQStringList &choices();
 	virtual void saveSettings();
 
-	void readAppSetting(KConfig *cfg,const TQString& postfix);
-	void writeAppSetting(KConfig *cfg,const TQString& postfix);
+	void readAppSetting(TDEConfig *cfg,const TQString& postfix);
+	void writeAppSetting(TDEConfig *cfg,const TQString& postfix);
 
 public slots:
 	virtual void madeChoice(int pos,const TQString &choice);

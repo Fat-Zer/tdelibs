@@ -243,7 +243,7 @@ void LdapConfigWidget::initWidget()
 
 }
 
-void LdapConfigWidget::loadData( KIO::Job*, const TQByteArray& d )
+void LdapConfigWidget::loadData( TDEIO::Job*, const TQByteArray& d )
 {
   LDIF::ParseVal ret;
 
@@ -261,10 +261,10 @@ void LdapConfigWidget::loadData( KIO::Job*, const TQByteArray& d )
   } while ( ret != LDIF::MoreData );
 }
 
-void LdapConfigWidget::loadResult( KIO::Job* job)
+void LdapConfigWidget::loadResult( TDEIO::Job* job)
 {
   int error = job->error();
-  if ( error && error != KIO::ERR_USER_CANCELED )
+  if ( error && error != TDEIO::ERR_USER_CANCELED )
     mErrorMsg = job->errorString();
   else
     mErrorMsg = "";
@@ -291,12 +291,12 @@ void LdapConfigWidget::sendQuery()
 
   kdDebug(5700) << "sendQuery url: " << _url.prettyURL() << endl;
   mLdif.startParsing();
-  KIO::Job *job = KIO::get( _url, true, false );
+  TDEIO::Job *job = TDEIO::get( _url, true, false );
   job->addMetaData("no-auth-prompt","true");
-  connect( job, TQT_SIGNAL( data( KIO::Job*, const TQByteArray& ) ),
-    this, TQT_SLOT( loadData( KIO::Job*, const TQByteArray& ) ) );
-  connect( job, TQT_SIGNAL( result( KIO::Job* ) ),
-    this, TQT_SLOT( loadResult( KIO::Job* ) ) );
+  connect( job, TQT_SIGNAL( data( TDEIO::Job*, const TQByteArray& ) ),
+    this, TQT_SLOT( loadData( TDEIO::Job*, const TQByteArray& ) ) );
+  connect( job, TQT_SIGNAL( result( TDEIO::Job* ) ),
+    this, TQT_SLOT( loadResult( TDEIO::Job* ) ) );
 
   if ( mProg == NULL )
     mProg = new KProgressDialog( this, 0, i18n("LDAP Query"), _url.prettyURL(), true );

@@ -27,7 +27,7 @@
 
 #include "forwardingslavebase.h"
 
-namespace KIO
+namespace TDEIO
 {
 
 class ForwardingSlaveBasePrivate
@@ -63,7 +63,7 @@ bool ForwardingSlaveBase::internalRewriteURL(const KURL &url, KURL &newURL)
     return result;
 }
 
-void ForwardingSlaveBase::prepareUDSEntry(KIO::UDSEntry &entry,
+void ForwardingSlaveBase::prepareUDSEntry(TDEIO::UDSEntry &entry,
                                           bool listing) const
 {
     kdDebug() << "ForwardingSlaveBase::prepareUDSEntry: listing=="
@@ -73,8 +73,8 @@ void ForwardingSlaveBase::prepareUDSEntry(KIO::UDSEntry &entry,
     TQString name;
     KURL url;
 
-    KIO::UDSEntry::iterator it = entry.begin();
-    KIO::UDSEntry::iterator end = entry.end();
+    TDEIO::UDSEntry::iterator it = entry.begin();
+    TDEIO::UDSEntry::iterator end = entry.end();
 
     for(; it!=end; ++it)
     {
@@ -82,11 +82,11 @@ void ForwardingSlaveBase::prepareUDSEntry(KIO::UDSEntry &entry,
 
         switch( (*it).m_uds )
         {
-        case KIO::UDS_NAME:
+        case TDEIO::UDS_NAME:
             name = (*it).m_str;
             kdDebug() << "Name = " << name << endl;
 	    break;
-        case KIO::UDS_URL:
+        case TDEIO::UDS_URL:
             url_found = true;
             url = (*it).m_str;
 	    if (listing)
@@ -108,8 +108,8 @@ void ForwardingSlaveBase::prepareUDSEntry(KIO::UDSEntry &entry,
             new_url.addPath( name );
         }
 
-        KIO::UDSAtom atom;
-        atom.m_uds = KIO::UDS_LOCAL_PATH;
+        TDEIO::UDSAtom atom;
+        atom.m_uds = TDEIO::UDS_LOCAL_PATH;
         atom.m_long = 0;
         atom.m_str = new_url.path();
         entry.append(atom);
@@ -123,7 +123,7 @@ void ForwardingSlaveBase::get(const KURL &url)
     KURL new_url;
     if ( internalRewriteURL(url, new_url) )
     {
-        KIO::TransferJob *job = KIO::get(new_url, false, false);
+        TDEIO::TransferJob *job = TDEIO::get(new_url, false, false);
         connectTransferJob(job);
 
         tqApp->eventLoop()->enterLoop();
@@ -138,7 +138,7 @@ void ForwardingSlaveBase::put(const KURL &url, int permissions,
     KURL new_url;
     if ( internalRewriteURL(url, new_url) )
     {
-        KIO::TransferJob *job = KIO::put(new_url, permissions, overwrite,
+        TDEIO::TransferJob *job = TDEIO::put(new_url, permissions, overwrite,
                                          resume, false);
         connectTransferJob(job);
 
@@ -153,7 +153,7 @@ void ForwardingSlaveBase::stat(const KURL &url)
     KURL new_url;
     if ( internalRewriteURL(url, new_url) )
     {
-        KIO::SimpleJob *job = KIO::stat(new_url, false);
+        TDEIO::SimpleJob *job = TDEIO::stat(new_url, false);
         connectSimpleJob(job);
 
         tqApp->eventLoop()->enterLoop();
@@ -167,7 +167,7 @@ void ForwardingSlaveBase::mimetype(const KURL &url)
     KURL new_url;
     if ( internalRewriteURL(url, new_url) )
     {
-        KIO::TransferJob *job = KIO::mimetype(new_url, false);
+        TDEIO::TransferJob *job = TDEIO::mimetype(new_url, false);
         connectTransferJob(job);
 
         tqApp->eventLoop()->enterLoop();
@@ -181,7 +181,7 @@ void ForwardingSlaveBase::listDir(const KURL &url)
     KURL new_url;
     if ( internalRewriteURL(url, new_url) )
     {
-        KIO::ListJob *job = KIO::listDir(new_url, false);
+        TDEIO::ListJob *job = TDEIO::listDir(new_url, false);
         connectListJob(job);
 
         tqApp->eventLoop()->enterLoop();
@@ -195,7 +195,7 @@ void ForwardingSlaveBase::mkdir(const KURL &url, int permissions)
     KURL new_url;
     if ( internalRewriteURL(url, new_url) )
     {
-        KIO::SimpleJob *job = KIO::mkdir(new_url, permissions);
+        TDEIO::SimpleJob *job = TDEIO::mkdir(new_url, permissions);
         connectSimpleJob(job);
 
         tqApp->eventLoop()->enterLoop();
@@ -210,7 +210,7 @@ void ForwardingSlaveBase::rename(const KURL &src, const KURL &dest,
     KURL new_src, new_dest;
     if ( internalRewriteURL(src, new_src) && internalRewriteURL(dest, new_dest) )
     {
-        KIO::Job *job = KIO::rename(new_src, new_dest, overwrite);
+        TDEIO::Job *job = TDEIO::rename(new_src, new_dest, overwrite);
         connectJob(job);
 
         tqApp->eventLoop()->enterLoop();
@@ -225,7 +225,7 @@ void ForwardingSlaveBase::symlink(const TQString &target, const KURL &dest,
     KURL new_dest;
     if ( internalRewriteURL(dest, new_dest) )
     {
-        KIO::SimpleJob *job = KIO::symlink(target, new_dest, overwrite, false);
+        TDEIO::SimpleJob *job = TDEIO::symlink(target, new_dest, overwrite, false);
         connectSimpleJob(job);
 
         tqApp->eventLoop()->enterLoop();
@@ -239,7 +239,7 @@ void ForwardingSlaveBase::chmod(const KURL &url, int permissions)
     KURL new_url;
     if ( internalRewriteURL(url, new_url) )
     {
-        KIO::SimpleJob *job = KIO::chmod(new_url, permissions);
+        TDEIO::SimpleJob *job = TDEIO::chmod(new_url, permissions);
         connectSimpleJob(job);
 
         tqApp->eventLoop()->enterLoop();
@@ -254,7 +254,7 @@ void ForwardingSlaveBase::copy(const KURL &src, const KURL &dest,
     KURL new_src, new_dest;
     if ( internalRewriteURL(src, new_src) && internalRewriteURL(dest, new_dest) )
     {
-        KIO::Job *job = KIO::file_copy(new_src, new_dest, permissions,
+        TDEIO::Job *job = TDEIO::file_copy(new_src, new_dest, permissions,
                                        overwrite, false);
         connectJob(job);
 
@@ -271,12 +271,12 @@ void ForwardingSlaveBase::del(const KURL &url, bool isfile)
     {
         if (isfile)
         {
-            KIO::DeleteJob *job = KIO::del(new_url, false, false);
+            TDEIO::DeleteJob *job = TDEIO::del(new_url, false, false);
             connectJob(job);
         }
         else
         {
-            KIO::SimpleJob *job = KIO::rmdir(new_url);
+            TDEIO::SimpleJob *job = TDEIO::rmdir(new_url);
             connectSimpleJob(job);
         }
 
@@ -291,7 +291,7 @@ void ForwardingSlaveBase::localURL(const KURL& remoteURL)
     KURL new_url;
     if ( internalRewriteURL(remoteURL, new_url) )
     {
-        KIO::LocalURLJob *job = KIO::localURL(new_url);
+        TDEIO::LocalURLJob *job = TDEIO::localURL(new_url);
         connectLocalURLJob(job);
 
         tqApp->eventLoop()->enterLoop();
@@ -305,7 +305,7 @@ void ForwardingSlaveBase::localURL(const KURL& remoteURL)
 
 //////////////////////////////////////////////////////////////////////////////
 
-void ForwardingSlaveBase::connectJob(KIO::Job *job)
+void ForwardingSlaveBase::connectJob(TDEIO::Job *job)
 {
     // We will forward the warning message, no need to let the job
     // display it itself
@@ -320,57 +320,57 @@ void ForwardingSlaveBase::connectJob(KIO::Job *job)
         kdDebug() << it.key() << " = " << it.data() << endl;
 #endif
 
-    connect( job, TQT_SIGNAL( result(KIO::Job *) ),
-             this, TQT_SLOT( slotResult(KIO::Job *) ) );
-    connect( job, TQT_SIGNAL( warning(KIO::Job *, const TQString &) ),
-             this, TQT_SLOT( slotWarning(KIO::Job *, const TQString &) ) );
-    connect( job, TQT_SIGNAL( infoMessage(KIO::Job *, const TQString &) ),
-             this, TQT_SLOT( slotInfoMessage(KIO::Job *, const TQString &) ) );
-    connect( job, TQT_SIGNAL( totalSize(KIO::Job *, KIO::filesize_t) ),
-             this, TQT_SLOT( slotTotalSize(KIO::Job *, KIO::filesize_t) ) );
-    connect( job, TQT_SIGNAL( processedSize(KIO::Job *, KIO::filesize_t) ),
-             this, TQT_SLOT( slotProcessedSize(KIO::Job *, KIO::filesize_t) ) );
-    connect( job, TQT_SIGNAL( speed(KIO::Job *, unsigned long) ),
-             this, TQT_SLOT( slotSpeed(KIO::Job *, unsigned long) ) );
+    connect( job, TQT_SIGNAL( result(TDEIO::Job *) ),
+             this, TQT_SLOT( slotResult(TDEIO::Job *) ) );
+    connect( job, TQT_SIGNAL( warning(TDEIO::Job *, const TQString &) ),
+             this, TQT_SLOT( slotWarning(TDEIO::Job *, const TQString &) ) );
+    connect( job, TQT_SIGNAL( infoMessage(TDEIO::Job *, const TQString &) ),
+             this, TQT_SLOT( slotInfoMessage(TDEIO::Job *, const TQString &) ) );
+    connect( job, TQT_SIGNAL( totalSize(TDEIO::Job *, TDEIO::filesize_t) ),
+             this, TQT_SLOT( slotTotalSize(TDEIO::Job *, TDEIO::filesize_t) ) );
+    connect( job, TQT_SIGNAL( processedSize(TDEIO::Job *, TDEIO::filesize_t) ),
+             this, TQT_SLOT( slotProcessedSize(TDEIO::Job *, TDEIO::filesize_t) ) );
+    connect( job, TQT_SIGNAL( speed(TDEIO::Job *, unsigned long) ),
+             this, TQT_SLOT( slotSpeed(TDEIO::Job *, unsigned long) ) );
 }
 
-void ForwardingSlaveBase::connectSimpleJob(KIO::SimpleJob *job)
+void ForwardingSlaveBase::connectSimpleJob(TDEIO::SimpleJob *job)
 {
     connectJob(job);
-    connect( job, TQT_SIGNAL( redirection(KIO::Job *, const KURL &) ),
-             this, TQT_SLOT( slotRedirection(KIO::Job *, const KURL &) ) );
+    connect( job, TQT_SIGNAL( redirection(TDEIO::Job *, const KURL &) ),
+             this, TQT_SLOT( slotRedirection(TDEIO::Job *, const KURL &) ) );
 }
 
-void ForwardingSlaveBase::connectListJob(KIO::ListJob *job)
+void ForwardingSlaveBase::connectListJob(TDEIO::ListJob *job)
 {
     connectSimpleJob(job);
-    connect( job, TQT_SIGNAL( entries(KIO::Job *, const KIO::UDSEntryList &) ),
-             this, TQT_SLOT( slotEntries(KIO::Job *, const KIO::UDSEntryList &) ) );
+    connect( job, TQT_SIGNAL( entries(TDEIO::Job *, const TDEIO::UDSEntryList &) ),
+             this, TQT_SLOT( slotEntries(TDEIO::Job *, const TDEIO::UDSEntryList &) ) );
 }
 
-void ForwardingSlaveBase::connectTransferJob(KIO::TransferJob *job)
+void ForwardingSlaveBase::connectTransferJob(TDEIO::TransferJob *job)
 {
     connectSimpleJob(job);
-    connect( job, TQT_SIGNAL( data(KIO::Job *, const TQByteArray &) ),
-             this, TQT_SLOT( slotData(KIO::Job *, const TQByteArray &) ) );
-    connect( job, TQT_SIGNAL( dataReq(KIO::Job *, TQByteArray &) ),
-             this, TQT_SLOT( slotDataReq(KIO::Job *, TQByteArray &) ) );
-    connect( job, TQT_SIGNAL( mimetype(KIO::Job *, const TQString &) ),
-             this, TQT_SLOT( slotMimetype(KIO::Job *, const TQString &) ) );
-    connect( job, TQT_SIGNAL( canResume(KIO::Job *, KIO::filesize_t) ),
-             this, TQT_SLOT( slotCanResume(KIO::Job *, KIO::filesize_t) ) );
+    connect( job, TQT_SIGNAL( data(TDEIO::Job *, const TQByteArray &) ),
+             this, TQT_SLOT( slotData(TDEIO::Job *, const TQByteArray &) ) );
+    connect( job, TQT_SIGNAL( dataReq(TDEIO::Job *, TQByteArray &) ),
+             this, TQT_SLOT( slotDataReq(TDEIO::Job *, TQByteArray &) ) );
+    connect( job, TQT_SIGNAL( mimetype(TDEIO::Job *, const TQString &) ),
+             this, TQT_SLOT( slotMimetype(TDEIO::Job *, const TQString &) ) );
+    connect( job, TQT_SIGNAL( canResume(TDEIO::Job *, TDEIO::filesize_t) ),
+             this, TQT_SLOT( slotCanResume(TDEIO::Job *, TDEIO::filesize_t) ) );
 }
 
-void ForwardingSlaveBase::connectLocalURLJob(KIO::LocalURLJob *job)
+void ForwardingSlaveBase::connectLocalURLJob(TDEIO::LocalURLJob *job)
 {
     connectJob(job);
-    connect( job, TQT_SIGNAL( localURL(KIO::Job *, const KURL&, bool) ),
-             this, TQT_SLOT( slotLocalURL(KIO::Job *, const KURL&, bool) ) );
+    connect( job, TQT_SIGNAL( localURL(TDEIO::Job *, const KURL&, bool) ),
+             this, TQT_SLOT( slotLocalURL(TDEIO::Job *, const KURL&, bool) ) );
 }
 
 //////////////////////////////////////////////////////////////////////////////
 
-void ForwardingSlaveBase::slotResult(KIO::Job *job)
+void ForwardingSlaveBase::slotResult(TDEIO::Job *job)
 {
     if ( job->error() != 0)
     {
@@ -378,10 +378,10 @@ void ForwardingSlaveBase::slotResult(KIO::Job *job)
     }
     else
     {
-        KIO::StatJob *stat_job = dynamic_cast<KIO::StatJob *>(job);
+        TDEIO::StatJob *stat_job = dynamic_cast<TDEIO::StatJob *>(job);
         if ( stat_job!=0L )
         {
-            KIO::UDSEntry entry = stat_job->statResult();
+            TDEIO::UDSEntry entry = stat_job->statResult();
 	    prepareUDSEntry(entry);
             statEntry( entry );
         }
@@ -391,32 +391,32 @@ void ForwardingSlaveBase::slotResult(KIO::Job *job)
     tqApp->eventLoop()->exitLoop();
 }
 
-void ForwardingSlaveBase::slotWarning(KIO::Job* /*job*/, const TQString &msg)
+void ForwardingSlaveBase::slotWarning(TDEIO::Job* /*job*/, const TQString &msg)
 {
     warning(msg);
 }
 
-void ForwardingSlaveBase::slotInfoMessage(KIO::Job* /*job*/, const TQString &msg)
+void ForwardingSlaveBase::slotInfoMessage(TDEIO::Job* /*job*/, const TQString &msg)
 {
     infoMessage(msg);
 }
 
-void ForwardingSlaveBase::slotTotalSize(KIO::Job* /*job*/, KIO::filesize_t size)
+void ForwardingSlaveBase::slotTotalSize(TDEIO::Job* /*job*/, TDEIO::filesize_t size)
 {
     totalSize(size);
 }
 
-void ForwardingSlaveBase::slotProcessedSize(KIO::Job* /*job*/, KIO::filesize_t size)
+void ForwardingSlaveBase::slotProcessedSize(TDEIO::Job* /*job*/, TDEIO::filesize_t size)
 {
     processedSize(size);
 }
 
-void ForwardingSlaveBase::slotSpeed(KIO::Job* /*job*/, unsigned long bytesPerSecond)
+void ForwardingSlaveBase::slotSpeed(TDEIO::Job* /*job*/, unsigned long bytesPerSecond)
 {
     speed(bytesPerSecond);
 }
 
-void ForwardingSlaveBase::slotRedirection(KIO::Job *job, const KURL &url)
+void ForwardingSlaveBase::slotRedirection(TDEIO::Job *job, const KURL &url)
 {
     redirection(url);
 
@@ -427,13 +427,13 @@ void ForwardingSlaveBase::slotRedirection(KIO::Job *job, const KURL &url)
     tqApp->eventLoop()->exitLoop();
 }
 
-void ForwardingSlaveBase::slotEntries(KIO::Job* /*job*/,
-                                      const KIO::UDSEntryList &entries)
+void ForwardingSlaveBase::slotEntries(TDEIO::Job* /*job*/,
+                                      const TDEIO::UDSEntryList &entries)
 {
-    KIO::UDSEntryList final_entries = entries;
+    TDEIO::UDSEntryList final_entries = entries;
 
-    KIO::UDSEntryList::iterator it = final_entries.begin();
-    KIO::UDSEntryList::iterator end = final_entries.end();
+    TDEIO::UDSEntryList::iterator it = final_entries.begin();
+    TDEIO::UDSEntryList::iterator end = final_entries.end();
 
     for(; it!=end; ++it)
     {
@@ -443,28 +443,28 @@ void ForwardingSlaveBase::slotEntries(KIO::Job* /*job*/,
     listEntries( final_entries );
 }
 
-void ForwardingSlaveBase::slotData(KIO::Job* /*job*/, const TQByteArray &d)
+void ForwardingSlaveBase::slotData(TDEIO::Job* /*job*/, const TQByteArray &d)
 {
     data(d);
 }
 
-void ForwardingSlaveBase::slotDataReq(KIO::Job* /*job*/, TQByteArray &data)
+void ForwardingSlaveBase::slotDataReq(TDEIO::Job* /*job*/, TQByteArray &data)
 {
     dataReq();
     readData(data);
 }
 
-void ForwardingSlaveBase::slotMimetype (KIO::Job* /*job*/, const TQString &type)
+void ForwardingSlaveBase::slotMimetype (TDEIO::Job* /*job*/, const TQString &type)
 {
     mimeType(type);
 }
 
-void ForwardingSlaveBase::slotCanResume (KIO::Job* /*job*/, KIO::filesize_t offset)
+void ForwardingSlaveBase::slotCanResume (TDEIO::Job* /*job*/, TDEIO::filesize_t offset)
 {
     canResume(offset);
 }
 
-void ForwardingSlaveBase::slotLocalURL(KIO::Job *, const KURL& url, bool)
+void ForwardingSlaveBase::slotLocalURL(TDEIO::Job *, const KURL& url, bool)
 {
     SlaveBase::localURL(url);
 }

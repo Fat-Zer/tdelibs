@@ -29,7 +29,7 @@
 
 #include <kio/global.h>
 
-namespace KIO {
+namespace TDEIO {
 
 // KDE4: get rid of M_OVERWRITE_ITSELF, trigger it internally if src==dest
 enum RenameDlg_Mode { M_OVERWRITE = 1, M_OVERWRITE_ITSELF = 2, M_SKIP = 4, M_SINGLE = 8, M_MULTI = 16, M_RESUME = 32, M_NORENAME = 64 };
@@ -69,8 +69,8 @@ public:
              // KDE4: make those KURLs, and use pathOrURL() internally.
              const TQString & src, const TQString & dest,
              RenameDlg_Mode mode,
-             KIO::filesize_t sizeSrc = (KIO::filesize_t) -1,
-             KIO::filesize_t sizeDest = (KIO::filesize_t) -1,
+             TDEIO::filesize_t sizeSrc = (TDEIO::filesize_t) -1,
+             TDEIO::filesize_t sizeDest = (TDEIO::filesize_t) -1,
              time_t ctimeSrc = (time_t) -1,
              time_t ctimeDest = (time_t) -1,
              time_t mtimeSrc = (time_t) -1,
@@ -116,7 +116,7 @@ private:
   /**
    * \addtogroup renamedlg "RenameDlg related Functions"
    *  @{
-   * \relates KIO::RenameDlg
+   * \relates TDEIO::RenameDlg
    * Construct a modal, parent-less "rename" dialog, and return
    * a result code, as well as the new dest. Much easier to use than the
    * class RenameDlg directly.
@@ -139,8 +139,8 @@ KIO_EXPORT RenameDlg_Result open_RenameDlg( const TQString & caption,
                                  // KDE4: make those KURLs
                                  const TQString& src, const TQString & dest,
                                  RenameDlg_Mode mode, TQString& newDestPath,
-                                 KIO::filesize_t sizeSrc = (KIO::filesize_t) -1,
-                                 KIO::filesize_t sizeDest = (KIO::filesize_t) -1,
+                                 TDEIO::filesize_t sizeSrc = (TDEIO::filesize_t) -1,
+                                 TDEIO::filesize_t sizeDest = (TDEIO::filesize_t) -1,
                                  time_t ctimeSrc = (time_t) -1,
                                  time_t ctimeDest = (time_t) -1,
                                  time_t mtimeSrc = (time_t) -1,

@@ -90,7 +90,7 @@
 
 #include <misc/kntlm/kntlm.h>
 
-using namespace KIO;
+using namespace TDEIO;
 
 extern "C" {
   KDE_EXPORT int kdemain(int argc, char **argv);
@@ -185,7 +185,7 @@ static TQString sanitizeCustomHTTPHeader(const TQString& _header)
 }
 
 
-#define NO_SIZE		((KIO::filesize_t) -1)
+#define NO_SIZE		((TDEIO::filesize_t) -1)
 
 #ifdef HAVE_STRTOLL
 #define STRTOLL	strtoll
@@ -465,7 +465,7 @@ bool HTTPProtocol::checkRequestURL( const KURL& u )
 
   if (m_request.hostname.isEmpty())
   {
-     error( KIO::ERR_UNKNOWN_HOST, i18n("No host specified."));
+     error( TDEIO::ERR_UNKNOWN_HOST, i18n("No host specified."));
      return false;
   }
 
@@ -619,15 +619,15 @@ void HTTPProtocol::stat(const KURL& url)
     // When downloading we assume it exists
     UDSEntry entry;
     UDSAtom atom;
-    atom.m_uds = KIO::UDS_NAME;
+    atom.m_uds = TDEIO::UDS_NAME;
     atom.m_str = url.fileName();
     entry.append( atom );
 
-    atom.m_uds = KIO::UDS_FILE_TYPE;
+    atom.m_uds = TDEIO::UDS_FILE_TYPE;
     atom.m_long = S_IFREG; // a file
     entry.append( atom );
 
-    atom.m_uds = KIO::UDS_ACCESS;
+    atom.m_uds = TDEIO::UDS_ACCESS;
     atom.m_long = S_IRUSR | S_IRGRP | S_IROTH; // readable by everybody
     entry.append( atom );
 
@@ -762,7 +762,7 @@ void HTTPProtocol::davStatList( const KURL& url, bool stat )
 
       KURL thisURL ( urlStr, encoding );
 
-      atom.m_uds = KIO::UDS_NAME;
+      atom.m_uds = TDEIO::UDS_NAME;
 
       if ( thisURL.isValid() ) {
         // don't list the base dir of a listDir()
@@ -811,7 +811,7 @@ void HTTPProtocol::davStatList( const KURL& url, bool stat )
   }
 }
 
-void HTTPProtocol::davGeneric( const KURL& url, KIO::HTTP_METHOD method )
+void HTTPProtocol::davGeneric( const KURL& url, TDEIO::HTTP_METHOD method )
 {
   kdDebug(7113) << "(" << m_pid << ") HTTPProtocol::davGeneric " << url.url()
                 << endl;
@@ -877,7 +877,7 @@ void HTTPProtocol::davParsePropstats( const TQDomNodeList& propstats, UDSEntry& 
 
     if ( hasMetaData( "davRequestResponse" ) )
     {
-      atom.m_uds = KIO::UDS_XML_PROPERTIES;
+      atom.m_uds = TDEIO::UDS_XML_PROPERTIES;
       TQDomDocument doc;
       doc.appendChild(prop);
       atom.m_str = doc.toString();
@@ -899,14 +899,14 @@ void HTTPProtocol::davParsePropstats( const TQDomNodeList& propstats, UDSEntry& 
       if ( property.tagName() == "creationdate" )
       {
         // Resource creation date. Should be is ISO 8601 format.
-        atom.m_uds = KIO::UDS_CREATION_TIME;
+        atom.m_uds = TDEIO::UDS_CREATION_TIME;
         atom.m_long = parseDateTime( property.text(), property.attribute("dt") );
         entry.append( atom );
       }
       else if ( property.tagName() == "getcontentlength" )
       {
         // Content length (file size)
-        atom.m_uds = KIO::UDS_SIZE;
+        atom.m_uds = TDEIO::UDS_SIZE;
         atom.m_long = property.text().toULong();
         entry.append( atom );
       }
@@ -952,7 +952,7 @@ void HTTPProtocol::davParsePropstats( const TQDomNodeList& propstats, UDSEntry& 
       else if ( property.tagName() == "getlastmodified" )
       {
         // Last modification date
-        atom.m_uds = KIO::UDS_MODIFICATION_TIME;
+        atom.m_uds = TDEIO::UDS_MODIFICATION_TIME;
         atom.m_long = parseDateTime( property.text(), property.attribute("dt") );
         entry.append( atom );
 
@@ -1009,27 +1009,27 @@ void HTTPProtocol::davParsePropstats( const TQDomNodeList& propstats, UDSEntry& 
   setMetaData( "davLockCount", TQString("%1").arg(lockCount) );
   setMetaData( "davSupportedLockCount", TQString("%1").arg(supportedLockCount) );
 
-  atom.m_uds = KIO::UDS_FILE_TYPE;
+  atom.m_uds = TDEIO::UDS_FILE_TYPE;
   atom.m_long = isDirectory ? S_IFDIR : S_IFREG;
   entry.append( atom );
 
   if ( foundExecutable || isDirectory )
   {
     // File was executable, or is a directory.
-    atom.m_uds = KIO::UDS_ACCESS;
+    atom.m_uds = TDEIO::UDS_ACCESS;
     atom.m_long = 0700;
     entry.append(atom);
   }
   else
   {
-    atom.m_uds = KIO::UDS_ACCESS;
+    atom.m_uds = TDEIO::UDS_ACCESS;
     atom.m_long = 0600;
     entry.append(atom);
   }
 
   if ( !isDirectory && !mimeType.isEmpty() )
   {
-    atom.m_uds = KIO::UDS_MIME_TYPE;
+    atom.m_uds = TDEIO::UDS_MIME_TYPE;
     atom.m_str = mimeType;
     entry.append( atom );
   }
@@ -1553,7 +1553,7 @@ TQString HTTPProtocol::davError( int code /* = -1 */, TQString url )
     url = m_request.url.url();
 
   TQString action, errorString;
-  KIO::Error kError;
+  TDEIO::Error kError;
 
   // for 412 Precondition Failed
   TQString ow = i18n( "Otherwise, the request would have succeeded." );
@@ -1742,7 +1742,7 @@ TQString HTTPProtocol::davError( int code /* = -1 */, TQString url )
 void HTTPProtocol::httpError()
 {
   TQString action, errorString;
-  KIO::Error kError;
+  TDEIO::Error kError;
 
   switch ( m_request.method ) {
     case HTTP_PUT:
@@ -2187,10 +2187,10 @@ bool HTTPProtocol::httpOpen()
   {
      m_request.fcache = checkCacheEntry( );
 
-     bool bCacheOnly = (m_request.cache == KIO::CC_CacheOnly);
+     bool bCacheOnly = (m_request.cache == TDEIO::CC_CacheOnly);
      bool bOffline = isOffline(m_request.doProxy ? m_proxyURL : m_request.url);
-     if (bOffline && (m_request.cache != KIO::CC_Reload))
-        m_request.cache = KIO::CC_CacheOnly;
+     if (bOffline && (m_request.cache != TDEIO::CC_Reload))
+        m_request.cache = TDEIO::CC_CacheOnly;
 
      if (m_request.cache == CC_Reload && m_request.fcache)
      {
@@ -2198,7 +2198,7 @@ bool HTTPProtocol::httpOpen()
           fclose(m_request.fcache);
         m_request.fcache = 0;
      }
-     if ((m_request.cache == KIO::CC_CacheOnly) || (m_request.cache == KIO::CC_Cache))
+     if ((m_request.cache == TDEIO::CC_CacheOnly) || (m_request.cache == TDEIO::CC_Cache))
         m_request.bMustRevalidate = false;
 
      m_request.bCachedWrite = true;
@@ -2429,8 +2429,8 @@ bool HTTPProtocol::httpOpen()
 
     if ( m_request.offset > 0 )
     {
-      header += TQString("Range: bytes=%1-\r\n").arg(KIO::number(m_request.offset));
-      kdDebug(7103) << "kio_http : Range = " << KIO::number(m_request.offset) << endl;
+      header += TQString("Range: bytes=%1-\r\n").arg(TDEIO::number(m_request.offset));
+      kdDebug(7103) << "kio_http : Range = " << TDEIO::number(m_request.offset) << endl;
     }
 
     if ( m_request.cache == CC_Reload )
@@ -4092,7 +4092,7 @@ void HTTPProtocol::special( const TQByteArray &data )
       KURL url;
       int method;
       stream >> url >> method;
-      davGeneric( url, (KIO::HTTP_METHOD) method );
+      davGeneric( url, (TDEIO::HTTP_METHOD) method );
       break;
     }
     case 99: // Close Connection
@@ -4343,7 +4343,7 @@ bool HTTPProtocol::readBody( bool dataInternal /* = false */ )
   bool useMD5 = !m_sContentMD5.isEmpty();
 
   // Deal with the size of the file.
-  KIO::filesize_t sz = m_request.offset;
+  TDEIO::filesize_t sz = m_request.offset;
   if ( sz )
     m_iSize += sz;
 
@@ -4354,7 +4354,7 @@ bool HTTPProtocol::readBody( bool dataInternal /* = false */ )
   if ( !dataInternal ) {
     if ( (m_iSize > 0) && (m_iSize != NO_SIZE)) {
        totalSize(m_iSize);
-       infoMessage( i18n( "Retrieving %1 from %2...").arg(KIO::convertSize(m_iSize))
+       infoMessage( i18n( "Retrieving %1 from %2...").arg(TDEIO::convertSize(m_iSize))
          .arg( m_request.hostname ) );
     }
     else
@@ -4411,7 +4411,7 @@ bool HTTPProtocol::readBody( bool dataInternal /* = false */ )
     m_iBytesLeft = NO_SIZE;
 
   kdDebug(7113) << "(" << m_pid << ") HTTPProtocol::readBody: retrieve data. "
-                << KIO::number(m_iBytesLeft) << " left." << endl;
+                << TDEIO::number(m_iBytesLeft) << " left." << endl;
 
   // Main incoming loop...  Gather everything while we can...
   m_cpMimeBuffer = false;
@@ -4527,7 +4527,7 @@ bool HTTPProtocol::readBody( bool dataInternal /* = false */ )
 
     if (m_iBytesLeft == 0)
     {
-      kdDebug(7113) << "("<<m_pid<<") EOD received! Left = "<< KIO::number(m_iBytesLeft) << endl;
+      kdDebug(7113) << "("<<m_pid<<") EOD received! Left = "<< TDEIO::number(m_iBytesLeft) << endl;
       break;
     }
   }
@@ -4554,13 +4554,13 @@ bool HTTPProtocol::readBody( bool dataInternal /* = false */ )
   }
   else
   {
-    kdDebug(7113) << "(" << m_pid << ") still "<< KIO::number(m_iBytesLeft)
+    kdDebug(7113) << "(" << m_pid << ") still "<< TDEIO::number(m_iBytesLeft)
                   << " bytes left! can't close cache entry!\n";
   }
 
   if (sz <= 1)
   {
-    /* kdDebug(7113) << "(" << m_pid << ") readBody: sz = " << KIO::number(sz)
+    /* kdDebug(7113) << "(" << m_pid << ") readBody: sz = " << TDEIO::number(sz)
                      << ", responseCode =" << m_responseCode << endl; */
     if (m_responseCode >= 500 && m_responseCode <= 599)
       error(ERR_INTERNAL_SERVER, m_state.hostname);

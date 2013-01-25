@@ -27,7 +27,7 @@
 #include "entry.h"
 #include "provider.h"
 
-namespace KIO { class Job; }
+namespace TDEIO { class Job; }
 
 class KNewStuff;
 
@@ -143,14 +143,14 @@ class KDE_EXPORT Engine : public TQObject
     void getMetaInformation( Provider::List *providers );
     void selectUploadProvider( Provider::List *providers );
 
-    void slotNewStuffJobData( KIO::Job *job, const TQByteArray &data );
-    void slotNewStuffJobResult( KIO::Job *job );
+    void slotNewStuffJobData( TDEIO::Job *job, const TQByteArray &data );
+    void slotNewStuffJobResult( TDEIO::Job *job );
 
-    void slotDownloadJobResult( KIO::Job *job );
+    void slotDownloadJobResult( TDEIO::Job *job );
 
-    void slotUploadPayloadJobResult( KIO::Job *job );
-    void slotUploadPreviewJobResult (KIO::Job *job );
-    void slotUploadMetaJobResult( KIO::Job *job );
+    void slotUploadPayloadJobResult( TDEIO::Job *job );
+    void slotUploadPreviewJobResult (TDEIO::Job *job );
+    void slotUploadMetaJobResult( TDEIO::Job *job );
 
   protected:
     bool createMetaFile( Entry * );
@@ -160,8 +160,8 @@ class KDE_EXPORT Engine : public TQObject
 
     ProviderLoader *mProviderLoader;
 
-    TQMap<KIO::Job *,TQString> mNewStuffJobData;
-    TQMap<KIO::Job *,Provider *> mProviderJobs;
+    TQMap<TDEIO::Job *,TQString> mNewStuffJobData;
+    TQMap<TDEIO::Job *,Provider *> mProviderJobs;
 
     TQPtrList<Entry> mNewStuffList;
 

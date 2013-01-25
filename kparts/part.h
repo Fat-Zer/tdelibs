@@ -34,7 +34,7 @@ class KActionCollection;
 class TQEvent;
 struct QUnknownInterface;
 
-namespace KIO {
+namespace TDEIO {
   class Job;
 }
 
@@ -96,7 +96,7 @@ protected:
 
   /**
    * We have three different policies, whether to load new plugins or not. The
-   * value in the KConfig object of the TDEInstance object always overrides
+   * value in the TDEConfig object of the TDEInstance object always overrides
    * LoadPlugins and LoadPluginsIfEnabled.
    */
   enum PluginLoadingMode {
@@ -452,10 +452,10 @@ private: // Makes no sense for inherited classes to call those. But make it prot
 signals:
   /**
    * The part emits this when starting data.
-   * If using a KIO::Job, it sets the job in the signal, so that
+   * If using a TDEIO::Job, it sets the job in the signal, so that
    * progress information can be shown. Otherwise, job is 0.
    **/
-  void started( KIO::Job * );
+  void started( TDEIO::Job * );
 
   /**
    * Emit this when you have completed loading data.
@@ -482,7 +482,7 @@ signals:
   void canceled( const TQString &errMsg );
 
 protected slots:
-  void slotJobFinished( KIO::Job * job );
+  void slotJobFinished( TDEIO::Job * job );
 
 protected:
   /**
@@ -667,7 +667,7 @@ protected:
    * @return true on success, false on failure.
    * On failure the function should inform the user about the
    * problem with an appropriate message box. Standard error
-   * messages can be constructed using KIO::buildErrorString()
+   * messages can be constructed using TDEIO::buildErrorString()
    * in combination with the error codes defined in kio/global.h
    */
   virtual bool saveFile() = 0;
@@ -686,7 +686,7 @@ protected slots:
   /**
    * @internal
    */
-  void slotUploadFinished( KIO::Job * job );
+  void slotUploadFinished( TDEIO::Job * job );
 
 private:
   void prepareSaving();

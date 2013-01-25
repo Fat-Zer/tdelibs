@@ -95,7 +95,7 @@ int main()
             return 6;
         if( group.left( 1 ) == "[" && group.right( 1 ) == "]" )
             { // whole config group
-            KConfig cfg( file );
+            TDEConfig cfg( file );
             group = group.mid( 1, group.length() - 2 );
             TQMap< TQString, TQString > entries = cfg.entryMap( group );
             startupconfig << "# " << line << "\n";
@@ -115,7 +115,7 @@ int main()
             { // a single key
             if( key.isEmpty())
                 return 7;
-            KConfig cfg( file );
+            TDEConfig cfg( file );
             cfg.setGroup( group );
             TQString value = cfg.readEntry( key, def );
             startupconfig << "# " << line << "\n";

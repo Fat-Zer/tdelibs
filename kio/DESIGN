@@ -190,7 +190,7 @@ B. customized progress dialogs
  This will be similar to what we had before.
 
  - ProgressBase class that all other dialogs will inherit.
-    will contain an initialization method setJob( KIO::Job*) for apps of the
+    will contain an initialization method setJob( TDEIO::Job*) for apps of the
     second class (see A.2 above), that will connect job's signals to dialog's
     slots
 

@@ -74,7 +74,7 @@ ResourceSqlConfig::ResourceSqlConfig( TQWidget* parent,  const char* name )
   mainLayout->addWidget( mDbName, 4, 1 );
 }
 
-void ResourceSqlConfig::loadSettings( KConfig *config )
+void ResourceSqlConfig::loadSettings( TDEConfig *config )
 {
   mUser->setText( config->readEntry( "SqlUser" ) );
   mPassword->setText( KABC::Resource::cryptStr( config->readEntry( "SqlPassword" ) ) );
@@ -83,7 +83,7 @@ void ResourceSqlConfig::loadSettings( KConfig *config )
   mPort->setValue( config->readNumEntry( "SqlPort" ) );
 }
 
-void ResourceSqlConfig::saveSettings( KConfig *config )
+void ResourceSqlConfig::saveSettings( TDEConfig *config )
 {
   config->writeEntry( "SqlUser", mUser->text() );
   config->writeEntry( "SqlPassword", KABC::Resource::cryptStr( mPassword->text() ) );

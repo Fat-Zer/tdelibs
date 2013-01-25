@@ -31,23 +31,23 @@ class KLibLoader;
  * @ingroup kcmodule
  * @brief Loads a KControl Module.
  *
- * KCModuleLoader tries in several ways 
- * to locate and load a KCModule. If loading fails a 
+ * TDECModuleLoader tries in several ways 
+ * to locate and load a TDECModule. If loading fails a 
  * zero pointer is returned. \n
- * It is very unlikely KCModuleLoader is what you want 
- * and @ref KCModuleProxy suits your needs.
+ * It is very unlikely TDECModuleLoader is what you want 
+ * and @ref TDECModuleProxy suits your needs.
  * 
  * @author Matthias Hoelzer-Kluepfel <mhk@kde.org>
  * @author Frans Englich <frans.englich@telia.com>
  * @since 3.2
  * @internal
 **/
-class KUTILS_EXPORT KCModuleLoader
+class KUTILS_EXPORT TDECModuleLoader
 {
   public:
 
     /**
-     * Loads a @ref KCModule. If loading fails a zero pointer is returned.
+     * Loads a @ref TDECModule. If loading fails a zero pointer is returned.
      * @param module what module to load
      * @param withFallback if true and loading failed a separate window
      * with the module may appear and a zero pointer is a returned
@@ -55,17 +55,17 @@ class KUTILS_EXPORT KCModuleLoader
      * @param name The widget's name
      * @param args A list of arguments for the module to load
      *
-     * @return a pointer to the loaded @ref KCModule
+     * @return a pointer to the loaded @ref TDECModule
      *
      * @deprecated use the function which explicitly states the error reporting
      * method
      */
-    static KCModule *loadModule(const KCModuleInfo &module, bool withFallback=true, 
+    static TDECModule *loadModule(const TDECModuleInfo &module, bool withFallback=true, 
         TQWidget * parent = 0, const char * name = 0,
         const TQStringList & args = TQStringList() ) KDE_DEPRECATED;
 
     /**
-     * Loads a @ref KCModule. If loading fails a zero pointer is returned.
+     * Loads a @ref TDECModule. If loading fails a zero pointer is returned.
      * @param module what module to load
      * with the module may appear and a zero pointer is a returned
      * @param parent The parent widget
@@ -75,7 +75,7 @@ class KUTILS_EXPORT KCModuleLoader
      * @deprecated use the function which explicitly states the error reporting
      * method
      */
-    static KCModule *loadModule(const TQString &module, TQWidget *parent = 0,
+    static TDECModule *loadModule(const TQString &module, TQWidget *parent = 0,
         const char *name = 0, const TQStringList & args = TQStringList()) KDE_DEPRECATED;
 
     /**
@@ -88,7 +88,7 @@ class KUTILS_EXPORT KCModuleLoader
       None = 0,
       /**
        * the error report is shown instead of the 
-       * KCModule that should have * been loaded 
+       * TDECModule that should have * been loaded 
        */
       Inline = 1,
       /** 
@@ -102,7 +102,7 @@ class KUTILS_EXPORT KCModuleLoader
     };
 
     /**
-     * Loads a @ref KCModule. If loading fails a zero pointer is returned.
+     * Loads a @ref TDECModule. If loading fails a zero pointer is returned.
      * @param module what module to load
      * @param report see ErrorReporting
      * @param withFallback if true and loading failed a separate window
@@ -111,15 +111,15 @@ class KUTILS_EXPORT KCModuleLoader
      * @param name The widget's name
      * @param args A list of arguments for the module to load
      *
-     * @return a pointer to the loaded @ref KCModule
+     * @return a pointer to the loaded @ref TDECModule
      * @since 3.4
      */
-    static KCModule *loadModule(const KCModuleInfo &module, ErrorReporting
+    static TDECModule *loadModule(const TDECModuleInfo &module, ErrorReporting
         report, bool withFallback=true, TQWidget * parent = 0,
         const char * name = 0, const TQStringList & args = TQStringList() );
 
     /**
-     * Loads a @ref KCModule. If loading fails a zero pointer is returned.
+     * Loads a @ref TDECModule. If loading fails a zero pointer is returned.
      * @param module what module to load
      * @param report see ErrorReporting
      * with the module may appear and a zero pointer is a returned
@@ -127,10 +127,10 @@ class KUTILS_EXPORT KCModuleLoader
      * @param name The widget's name
      * @param args A list of arguments for the module to load
      *
-     * @return a pointer to the loaded @ref KCModule
+     * @return a pointer to the loaded @ref TDECModule
      * @since 3.4
      */
-    static KCModule *loadModule(const TQString &module, ErrorReporting
+    static TDECModule *loadModule(const TQString &module, ErrorReporting
         report, TQWidget *parent = 0, const char *name = 0,
         const TQStringList & args = TQStringList());
 
@@ -138,7 +138,7 @@ class KUTILS_EXPORT KCModuleLoader
      * Unloads the module's library
      * @param mod What module to unload for
      */
-    static void unloadModule(const KCModuleInfo &mod);
+    static void unloadModule(const TDECModuleInfo &mod);
 
     /**
      * Display a message box explaining an error occured and possible
@@ -151,7 +151,7 @@ class KUTILS_EXPORT KCModuleLoader
 
 
     /**
-     * Checks whether an KCModule should be shown by running its 
+     * Checks whether an TDECModule should be shown by running its 
      * test function. If it is unsure whether a module should be shown, it should 
      * be made available, leaving the decision to the user.
      * If false is returned, the module should not be loaded in any interface.
@@ -187,10 +187,10 @@ class KUTILS_EXPORT KCModuleLoader
      * @returns true if the module should be loaded
      * @since 3.4
      */
-    static bool testModule( const KCModuleInfo& module );
+    static bool testModule( const TDECModuleInfo& module );
 
     /**
-     * Returns a KCModule containing the messages @p report and @p text.
+     * Returns a TDECModule containing the messages @p report and @p text.
      *
      * @param report the type of error reporting, see ErrorReporting
      * @param text the main message
@@ -200,7 +200,7 @@ class KUTILS_EXPORT KCModuleLoader
      * @since 3.4
      * @internal
      */
-    static KCModule* reportError( ErrorReporting report, const TQString & text,
+    static TDECModule* reportError( ErrorReporting report, const TQString & text,
         TQString details, TQWidget * parent );
 
   private:
@@ -209,7 +209,7 @@ class KUTILS_EXPORT KCModuleLoader
      * Internal loader called by the public loaders.
      * @internal
      */
-    static KCModule* load(const KCModuleInfo &mod, const TQString &libname, 
+    static TDECModule* load(const TDECModuleInfo &mod, const TQString &libname, 
         KLibLoader *loader, ErrorReporting report, TQWidget * parent = 0,
         const char * name = 0, const TQStringList & args = TQStringList() );
 

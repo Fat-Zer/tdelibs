@@ -39,7 +39,7 @@ public:
     testStrings("MIME Type: ",mime_type_expected,type);
   }
 
-  void totalSize(KIO::filesize_t bytes) {
+  void totalSize(TDEIO::filesize_t bytes) {
 //    cout << "content size: " << bytes << " bytes" << endl;
   }
 
@@ -47,7 +47,7 @@ public:
 //    meta_data[key] = value;
 //    cout << "§ " << key << " = " << value << endl;
     TQString prefix = "Metadata[\""+key+"\"]: ";
-    KIO::MetaData::Iterator it = attributes_expected.find(key);
+    TDEIO::MetaData::Iterator it = attributes_expected.find(key);
     if (it != attributes_expected.end()) {
       testStrings(prefix,it.data(),value);
       // remove key from map
@@ -60,8 +60,8 @@ public:
 
   void sendMetaData() {
     // check here if attributes_expected contains any excess keys
-    KIO::MetaData::ConstIterator it = attributes_expected.begin();
-    KIO::MetaData::ConstIterator end = attributes_expected.end();
+    TDEIO::MetaData::ConstIterator it = attributes_expected.begin();
+    TDEIO::MetaData::ConstIterator end = attributes_expected.end();
     for (; it != end; ++it) {
       cout << endl << "Metadata[\"" << it.key()
       		<< "\"] was expected but not defined";
@@ -93,7 +93,7 @@ private:
   // -- testcase related members
   TQString mime_type_expected;	// expected mime type
   /** contains all attributes and values the testcase has to set */
-  KIO::MetaData attributes_expected;
+  TDEIO::MetaData attributes_expected;
   /** contains the content as it is expected to be returned */
   TQByteArray content_expected;
   int passed;		// # of passed tests
@@ -150,7 +150,7 @@ public:
   /**
    * sets all attribute-value pairs the testcase must deliver.
    */
-  void setExpectedAttributes(const KIO::MetaData &attres) {
+  void setExpectedAttributes(const TDEIO::MetaData &attres) {
     attributes_expected = attres;
   }
 

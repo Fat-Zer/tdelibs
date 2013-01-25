@@ -61,12 +61,12 @@
 // Dispose slaves after being idle for SLAVE_MAX_IDLE seconds
 #define SLAVE_MAX_IDLE	30
 
-using namespace KIO;
+using namespace TDEIO;
 
 template class TQPtrList<KLaunchRequest>;
 template class TQPtrList<IdleSlave>;
 
-IdleSlave::IdleSlave(KSocket *socket)
+IdleSlave::IdleSlave(TDESocket *socket)
 {
    mConn.init(socket);
    mConn.connect(this, TQT_SLOT(gotInput()));
@@ -194,9 +194,9 @@ KLauncher::KLauncher(int _tdeinitSocket, bool new_startup)
    domainname.close();
    domainname.unlink();
 #endif
-   mPoolSocket = new KServerSocket(static_cast<const char*>(TQFile::encodeName(mPoolSocketName)));
-   connect(mPoolSocket, TQT_SIGNAL(accepted( KSocket *)),
-           TQT_SLOT(acceptSlave(KSocket *)));
+   mPoolSocket = new TDEServerSocket(static_cast<const char*>(TQFile::encodeName(mPoolSocketName)));
+   connect(mPoolSocket, TQT_SIGNAL(accepted( TDESocket *)),
+           TQT_SLOT(acceptSlave(TDESocket *)));
 
    connect(&mTimer, TQT_SIGNAL(timeout()), TQT_SLOT(idleTimeout()));
 
@@ -1353,7 +1353,7 @@ KLauncher::waitForSlave(pid_t pid)
 }
 
 void
-KLauncher::acceptSlave(KSocket *slaveSocket)
+KLauncher::acceptSlave(TDESocket *slaveSocket)
 {
     IdleSlave *slave = new IdleSlave(slaveSocket);
     // Send it a SLAVE_STATUS command.

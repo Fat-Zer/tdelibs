@@ -905,20 +905,20 @@ public:
   /**
    * Save the toolbar settings to group @p configGroup in @p config.
    */
-    void saveSettings(KConfig *config, const TQString &configGroup);
+    void saveSettings(TDEConfig *config, const TQString &configGroup);
 
   /**
    * Read the toolbar settings from group @p configGroup in @p config
    * and apply them. Even default settings are re-applied if @p force is set.
    */
-    void applySettings(KConfig *config, const TQString &configGroup,bool force);
+    void applySettings(TDEConfig *config, const TQString &configGroup,bool force);
     // KDE4 merge with force=false
-    void applySettings(KConfig *config, const TQString &configGroup);
+    void applySettings(TDEConfig *config, const TQString &configGroup);
 
   /*
    * Tell the toolbar what XML-GUI resource file it should use to save
    * it's state.  The state of the toolbar (position, size, etc) is
-   * saved in KConfig files if the application does not use XML-GUI
+   * saved in TDEConfig files if the application does not use XML-GUI
    * but if the app does, then it's saved the XML file.  This function
    * allows this to happen.
    *
@@ -1090,7 +1090,7 @@ protected:
     void showEvent( TQShowEvent *e );
     void resizeEvent( TQResizeEvent *e );
     bool event( TQEvent *e );
-    void applyAppearanceSettings(KConfig *config, const TQString &_configGroup, bool forceGlobal = false);
+    void applyAppearanceSettings(TDEConfig *config, const TQString &_configGroup, bool forceGlobal = false);
     TQString settingsGroup() const;
 
 private slots:

@@ -264,12 +264,12 @@ KActionCollection * KFilePreview::actionCollection() const
     }
 }
 
-void KFilePreview::readConfig( KConfig *config, const TQString& group )
+void KFilePreview::readConfig( TDEConfig *config, const TQString& group )
 {
     left->readConfig( config, group );
 }
 
-void KFilePreview::writeConfig( KConfig *config, const TQString& group )
+void KFilePreview::writeConfig( TDEConfig *config, const TQString& group )
 {
     left->writeConfig( config, group );
 }

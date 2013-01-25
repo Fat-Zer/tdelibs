@@ -43,7 +43,7 @@
 #include <kdebug.h>
 #include <tqsocketnotifier.h>
 
-using namespace KIO;
+using namespace TDEIO;
 
 Connection::Connection()
 {
@@ -83,7 +83,7 @@ void Connection::close()
     delete socket;
     socket = 0;
 
-    // KSocket has already closed the file descriptor, but we need to
+    // TDESocket has already closed the file descriptor, but we need to
     // close the file-stream as well otherwise we leak memory. 
     // As a result we close the file descriptor twice, but that should
     // be harmless
@@ -121,7 +121,7 @@ void Connection::dequeue()
     }
 }
 
-void Connection::init(KSocket *sock)
+void Connection::init(TDESocket *sock)
 {
     delete notifier;
     notifier = 0;

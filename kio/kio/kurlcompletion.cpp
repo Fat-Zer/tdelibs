@@ -459,7 +459,7 @@ public:
 	bool replace_home;
 	bool complete_url; // if true completing a URL (i.e. 'prepend' is a URL), otherwise a path
 
-	KIO::ListJob *list_job; // kio job to list directories
+	TDEIO::ListJob *list_job; // kio job to list directories
 
 	TQString prepend; // text to prepend to listed items
 	TQString compl_text; // text to pass on to KCompletion
@@ -519,8 +519,8 @@ void KURLCompletion::init()
 	d->mode = KURLCompletion::FileCompletion;
 
 	// Read settings
-	KConfig *c = TDEGlobal::config();
-	KConfigGroupSaver cgs( c, "URLCompletion" );
+	TDEConfig *c = TDEGlobal::config();
+	TDEConfigGroupSaver cgs( c, "URLCompletion" );
 
 	d->url_auto_completion = c->readBoolEntry("alwaysAutoComplete", true);
 	d->popup_append_slash = c->readBoolEntry("popupAppendSlash", true);
@@ -1226,12 +1226,12 @@ void KURLCompletion::listURLs(
  *
  * Receive files listed by KIO and call addMatches()
  */
-void KURLCompletion::slotEntries(KIO::Job*, const KIO::UDSEntryList& entries)
+void KURLCompletion::slotEntries(TDEIO::Job*, const TDEIO::UDSEntryList& entries)
 {
 	TQStringList matches;
 
-	KIO::UDSEntryListConstIterator it = entries.begin();
-	KIO::UDSEntryListConstIterator end = entries.end();
+	TDEIO::UDSEntryListConstIterator it = entries.begin();
+	TDEIO::UDSEntryListConstIterator end = entries.end();
 
 	TQString filter = d->list_urls_filter;
 
@@ -1245,21 +1245,21 @@ void KURLCompletion::slotEntries(KIO::Job*, const KIO::UDSEntryList& entries)
 		bool is_exe = false;
 		bool is_dir = false;
 
-		KIO::UDSEntry e = *it;
-		KIO::UDSEntry::ConstIterator it_2 = e.begin();
+		TDEIO::UDSEntry e = *it;
+		TDEIO::UDSEntry::ConstIterator it_2 = e.begin();
 
 		for( ; it_2 != e.end(); it_2++ ) {
 			switch ( (*it_2).m_uds ) {
-				case KIO::UDS_NAME:
+				case TDEIO::UDS_NAME:
 					name = (*it_2).m_str;
 					break;
-				case KIO::UDS_ACCESS:
+				case TDEIO::UDS_ACCESS:
 					is_exe = ((*it_2).m_long & MODE_EXE) != 0;
 					break;
-				case KIO::UDS_FILE_TYPE:
+				case TDEIO::UDS_FILE_TYPE:
 					is_dir = ((*it_2).m_long & S_IFDIR) != 0;
 					break;
-				case KIO::UDS_URL:
+				case TDEIO::UDS_URL:
 					url = (*it_2).m_str;
 					break;
 			}
@@ -1301,7 +1301,7 @@ void KURLCompletion::slotEntries(KIO::Job*, const KIO::UDSEntryList& entries)
  * Start a new list job if there are still urls in
  * d->list_urls, otherwise call finished()
  */
-void KURLCompletion::slotIOFinished( KIO::Job * job )
+void KURLCompletion::slotIOFinished( TDEIO::Job * job )
 {
 //	kdDebug() << "slotIOFinished() " << endl;
 
@@ -1322,18 +1322,18 @@ void KURLCompletion::slotIOFinished( KIO::Job * job )
 
 //		kdDebug() << "Start KIO: " << kurl->prettyURL() << endl;
 
-		d->list_job = KIO::listDir( *kurl, false );
+		d->list_job = TDEIO::listDir( *kurl, false );
 		d->list_job->addMetaData("no-auth-prompt", "true");
 
 		assert( d->list_job );
 
 		connect( d->list_job,
-				TQT_SIGNAL(result(KIO::Job*)),
-				TQT_SLOT(slotIOFinished(KIO::Job*)) );
+				TQT_SIGNAL(result(TDEIO::Job*)),
+				TQT_SLOT(slotIOFinished(TDEIO::Job*)) );
 
 		connect( d->list_job,
-				TQT_SIGNAL( entries( KIO::Job*, const KIO::UDSEntryList&)),
-				TQT_SLOT( slotEntries( KIO::Job*, const KIO::UDSEntryList&)) );
+				TQT_SIGNAL( entries( TDEIO::Job*, const TDEIO::UDSEntryList&)),
+				TQT_SLOT( slotEntries( TDEIO::Job*, const TDEIO::UDSEntryList&)) );
 
 		delete kurl;
 	}

@@ -238,7 +238,7 @@ struct our_sockaddr_in6
 #define MIN_SOCKADDR_UN_LEN	(sizeof(TQ_UINT16) + sizeof(char))
 
 
-class KNetwork::KSocketAddressData
+class KNetwork::TDESocketAddressData
 {
 public:
   /*
@@ -249,7 +249,7 @@ public:
   class QMixSocketAddressRef : public KInetSocketAddress, public KUnixSocketAddress
   {
   public:
-    QMixSocketAddressRef(KSocketAddressData* d)
+    QMixSocketAddressRef(TDESocketAddressData* d)
       : KInetSocketAddress(d), KUnixSocketAddress(d)
     {
     }
@@ -265,7 +265,7 @@ public:
   } addr;
   TQ_UINT16 curlen, reallen;
 
-  KSocketAddressData()
+  TDESocketAddressData()
     : ref(this)
   {
     addr.generic = 0L;
@@ -273,7 +273,7 @@ public:
     invalidate();
   }
 
-  ~KSocketAddressData()
+  ~TDESocketAddressData()
   {
     if (addr.generic != 0L)
       free(addr.generic);
@@ -343,7 +343,7 @@ public:
 };
 
 // create duplicates of
-void KSocketAddressData::dup(const sockaddr* sa, TQ_UINT16 len, bool clear)
+void TDESocketAddressData::dup(const sockaddr* sa, TQ_UINT16 len, bool clear)
 {
   if (len < MIN_SOCKADDR_LEN)
     {
@@ -405,30 +405,30 @@ void KSocketAddressData::dup(const sockaddr* sa, TQ_UINT16 len, bool clear)
 }
 
 // default constructor
-KSocketAddress::KSocketAddress()
-  : d(new KSocketAddressData)
+TDESocketAddress::TDESocketAddress()
+  : d(new TDESocketAddressData)
 {
 }
 
 // constructor from binary data
-KSocketAddress::KSocketAddress(const sockaddr *sa, TQ_UINT16 len)
-  : d(new KSocketAddressData)
+TDESocketAddress::TDESocketAddress(const sockaddr *sa, TQ_UINT16 len)
+  : d(new TDESocketAddressData)
 {
   setAddress(sa, len);
 }
 
-KSocketAddress::KSocketAddress(const KSocketAddress& other)
-  : d(new(KSocketAddressData))
+TDESocketAddress::TDESocketAddress(const TDESocketAddress& other)
+  : d(new(TDESocketAddressData))
 {
   *this = other;
 }
 
-KSocketAddress::KSocketAddress(KSocketAddressData *d2)
+TDESocketAddress::TDESocketAddress(TDESocketAddressData *d2)
   : d(d2)
 {
 }
 
-KSocketAddress::~KSocketAddress()
+TDESocketAddress::~TDESocketAddress()
 {
   // prevent double-deletion, since we're already being deleted
   if (d)
@@ -439,7 +439,7 @@ KSocketAddress::~KSocketAddress()
     }
 }
 
-KSocketAddress& KSocketAddress::operator =(const KSocketAddress& other)
+TDESocketAddress& TDESocketAddress::operator =(const TDESocketAddress& other)
 {
   if (other.d && !other.d->invalid())
     d->dup(other.d->addr.generic, other.d->reallen);
@@ -448,21 +448,21 @@ KSocketAddress& KSocketAddress::operator =(const KSocketAddress& other)
   return *this;
 }
 
-const sockaddr* KSocketAddress::address() const
+const sockaddr* TDESocketAddress::address() const
 {
   if (d->invalid())
     return 0L;
   return d->addr.generic;
 }
 
-sockaddr* KSocketAddress::address()
+sockaddr* TDESocketAddress::address()
 {
   if (d->invalid())
     return 0L;
   return d->addr.generic;
 }
 
-KSocketAddress& KSocketAddress::setAddress(const sockaddr* sa, TQ_UINT16 len)
+TDESocketAddress& TDESocketAddress::setAddress(const sockaddr* sa, TQ_UINT16 len)
 {
   if (sa != 0L && len >= MIN_SOCKADDR_LEN)
     d->dup(sa, len);
@@ -472,28 +472,28 @@ KSocketAddress& KSocketAddress::setAddress(const sockaddr* sa, TQ_UINT16 len)
   return *this;
 }
 
-TQ_UINT16 KSocketAddress::length() const
+TQ_UINT16 TDESocketAddress::length() const
 {
   if (d->invalid())
     return 0;
   return d->reallen;
 }
 
-KSocketAddress& KSocketAddress::setLength(TQ_UINT16 len)
+TDESocketAddress& TDESocketAddress::setLength(TQ_UINT16 len)
 {
   d->dup((sockaddr*)0L, len, false);
 
   return *this;
 }
 
-int KSocketAddress::family() const
+int TDESocketAddress::family() const
 {
   if (d->invalid())
     return AF_UNSPEC;
   return d->addr.generic->sa_family;
 }
 
-KSocketAddress& KSocketAddress::setFamily(int family)
+TDESocketAddress& TDESocketAddress::setFamily(int family)
 {
   if (d->invalid())
     d->dup((sockaddr*)0L, MIN_SOCKADDR_LEN);
@@ -502,7 +502,7 @@ KSocketAddress& KSocketAddress::setFamily(int family)
   return *this;
 }
 
-bool KSocketAddress::operator ==(const KSocketAddress& other) const
+bool TDESocketAddress::operator ==(const TDESocketAddress& other) const
 {
   // if this is invalid, it's only equal if the other one is invalid as well
   if (d->invalid())
@@ -559,7 +559,7 @@ bool KSocketAddress::operator ==(const KSocketAddress& other) const
   return false;		// not equal in any other case
 }
 
-TQString KSocketAddress::nodeName() const
+TQString TDESocketAddress::nodeName() const
 {
   if (d->invalid())
     return TQString::null;
@@ -585,7 +585,7 @@ TQString KSocketAddress::nodeName() const
   return TQString::null;
 }
 
-TQString KSocketAddress::serviceName() const
+TQString TDESocketAddress::serviceName() const
 {
   if (d->invalid())
     return TQString::null;
@@ -605,7 +605,7 @@ TQString KSocketAddress::serviceName() const
   return TQString::null;
 }
 
-TQString KSocketAddress::toString() const
+TQString TDESocketAddress::toString() const
 {
   if (d->invalid())
     return TQString::null;
@@ -627,27 +627,27 @@ TQString KSocketAddress::toString() const
   return fmt.arg(nodeName()).arg(serviceName());
 }
 
-KInetSocketAddress& KSocketAddress::asInet()
+KInetSocketAddress& TDESocketAddress::asInet()
 {
   return d->ref;
 }
 
-KInetSocketAddress KSocketAddress::asInet() const
+KInetSocketAddress TDESocketAddress::asInet() const
 {
   return d->ref;
 }
 
-KUnixSocketAddress& KSocketAddress::asUnix()
+KUnixSocketAddress& TDESocketAddress::asUnix()
 {
   return d->ref;
 }
 
-KUnixSocketAddress KSocketAddress::asUnix() const
+KUnixSocketAddress TDESocketAddress::asUnix() const
 {
   return d->ref;
 }
 
-int KSocketAddress::ianaFamily(int af)
+int TDESocketAddress::ianaFamily(int af)
 {
   switch (af)
     {
@@ -664,7 +664,7 @@ int KSocketAddress::ianaFamily(int af)
     }
 }
 
-int KSocketAddress::fromIanaFamily(int iana)
+int TDESocketAddress::fromIanaFamily(int iana)
 {
   switch (iana)
     {
@@ -688,7 +688,7 @@ KInetSocketAddress::KInetSocketAddress()
 
 // binary data constructor
 KInetSocketAddress::KInetSocketAddress(const sockaddr* sa, TQ_UINT16 len)
-  : KSocketAddress(sa, len)
+  : TDESocketAddress(sa, len)
 {
   if (!d->invalid())
     update();
@@ -703,21 +703,21 @@ KInetSocketAddress::KInetSocketAddress(const KIpAddress& host, TQ_UINT16 port)
 
 // copy constructor
 KInetSocketAddress::KInetSocketAddress(const KInetSocketAddress& other)
-  : KSocketAddress(other)
+  : TDESocketAddress(other)
 {
 }
 
 // special copy constructor
-KInetSocketAddress::KInetSocketAddress(const KSocketAddress& other)
-  : KSocketAddress(other)
+KInetSocketAddress::KInetSocketAddress(const TDESocketAddress& other)
+  : TDESocketAddress(other)
 {
   if (!d->invalid())
     update();
 }
 
 // special constructor
-KInetSocketAddress::KInetSocketAddress(KSocketAddressData *d)
-  : KSocketAddress(d)
+KInetSocketAddress::KInetSocketAddress(TDESocketAddressData *d)
+  : TDESocketAddress(d)
 {
 }
 
@@ -730,7 +730,7 @@ KInetSocketAddress::~KInetSocketAddress()
 // copy operator
 KInetSocketAddress& KInetSocketAddress::operator =(const KInetSocketAddress& other)
 {
-  KSocketAddress::operator =(other);
+  TDESocketAddress::operator =(other);
   return *this;
 }
 
@@ -905,14 +905,14 @@ KUnixSocketAddress::KUnixSocketAddress()
 }
 
 KUnixSocketAddress::KUnixSocketAddress(const sockaddr* sa, TQ_UINT16 len)
-  : KSocketAddress(sa, len)
+  : TDESocketAddress(sa, len)
 {
   if (!d->invalid() && d->addr.un->sun_family != AF_UNIX)
     d->invalidate();
 }
 
 KUnixSocketAddress::KUnixSocketAddress(const KUnixSocketAddress& other)
-  : KSocketAddress(other)
+  : TDESocketAddress(other)
 {
 }
 
@@ -921,8 +921,8 @@ KUnixSocketAddress::KUnixSocketAddress(const TQString& pathname)
   setPathname(pathname);
 }
 
-KUnixSocketAddress::KUnixSocketAddress(KSocketAddressData* d)
-  : KSocketAddress(d)
+KUnixSocketAddress::KUnixSocketAddress(TDESocketAddressData* d)
+  : TDESocketAddress(d)
 {
 }
 
@@ -932,7 +932,7 @@ KUnixSocketAddress::~KUnixSocketAddress()
 
 KUnixSocketAddress& KUnixSocketAddress::operator =(const KUnixSocketAddress& other)
 {
-  KSocketAddress::operator =(other);
+  TDESocketAddress::operator =(other);
   return *this;
 }
 

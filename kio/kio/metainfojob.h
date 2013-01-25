@@ -25,14 +25,14 @@
 #include <kio/job.h>
 #include <kfileitem.h>
 
-namespace KIO {
+namespace TDEIO {
     /**
      * MetaInfoJob is a KIO Job to retrieve meta information from files.
      * 
      * @short KIO Job to retrieve meta information from files.
      * @since 3.1
      */
-    class KIO_EXPORT MetaInfoJob : public KIO::Job
+    class KIO_EXPORT MetaInfoJob : public TDEIO::Job
     {
         Q_OBJECT
     public:
@@ -85,11 +85,11 @@ namespace KIO {
         void getMetaInfo();
 
     protected slots:
-        virtual void slotResult( KIO::Job *job );
+        virtual void slotResult( TDEIO::Job *job );
 
     private slots:
         void start();
-        void slotMetaInfo(KIO::Job *, const TQByteArray &);
+        void slotMetaInfo(TDEIO::Job *, const TQByteArray &);
 
     private:
         void determineNextFile();

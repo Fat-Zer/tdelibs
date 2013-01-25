@@ -7,7 +7,7 @@
 #include <kconfigskeleton.h>
 #include <kdebug.h>
 
-class Test8a : public KConfigSkeleton
+class Test8a : public TDEConfigSkeleton
 {
   public:
 

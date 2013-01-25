@@ -99,7 +99,7 @@ KMJobViewer::KMJobViewer(TQWidget *parent, const char *name)
 	if (m_standalone)
 	{
 		setCaption(i18n("No Printer"));
-		KConfig *conf = KMFactory::self()->printConfig();
+		TDEConfig *conf = KMFactory::self()->printConfig();
 		TQSize defSize( 550, 250 );
 		conf->setGroup( "Jobs" );
 		resize( conf->readSizeEntry( "Size", &defSize ) );
@@ -111,7 +111,7 @@ KMJobViewer::~KMJobViewer()
 	if (m_standalone)
 	{
 		kdDebug( 500 ) << "Destroying stand-alone job viewer window" << endl;
-		KConfig *conf = KMFactory::self()->printConfig();
+		TDEConfig *conf = KMFactory::self()->printConfig();
 		conf->setGroup( "Jobs" );
 		conf->writeEntry( "Size", size() );
 		emit viewerDestroyed(this);
@@ -700,7 +700,7 @@ void KMJobViewer::slotConfigure()
 	KMConfigJobs	*w = new KMConfigJobs(&dlg);
 	dlg.setMainWidget(w);
 	dlg.resize(300, 10);
-	KConfig	*conf = KMFactory::self()->printConfig();
+	TDEConfig	*conf = KMFactory::self()->printConfig();
 	w->loadConfig(conf);
 	if (dlg.exec())
 	{
@@ -727,7 +727,7 @@ void KMJobViewer::slotDropped( TQDropEvent *e, TQListViewItem* )
 	for ( KURL::List::ConstIterator it = uris.begin();
 	      it != uris.end(); ++it)
 	{
-		if ( KIO::NetAccess::download( *it, target, 0 ) )
+		if ( TDEIO::NetAccess::download( *it, target, 0 ) )
 			files << target;
 	}
 

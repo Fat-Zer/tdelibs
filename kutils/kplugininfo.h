@@ -26,7 +26,7 @@
 #include <tqvaluelist.h>
 #include <kservice.h>
 
-class KConfigGroup;
+class TDEConfigGroup;
 
 /**
  * @ingroup main
@@ -120,7 +120,7 @@ class KUTILS_EXPORT KPluginInfo
          * KService objects. If you get a trader offer of the plugins you want
          * to use you can just pass them to this function.
          */
-        static KPluginInfo::List fromServices( const KService::List & services, KConfig * config = 0, const TQString & group = TQString::null );
+        static KPluginInfo::List fromServices( const KService::List & services, TDEConfig * config = 0, const TQString & group = TQString::null );
 
         /**
          * @return A list of KPluginInfo objects constructed from a list of
@@ -128,14 +128,14 @@ class KUTILS_EXPORT KPluginInfo
          * KStandardDirs::findAllResources() you pass the list of files to this
          * function.
          */
-        static KPluginInfo::List fromFiles( const TQStringList & files, KConfig * config = 0, const TQString & group = TQString::null );
+        static KPluginInfo::List fromFiles( const TQStringList & files, TDEConfig * config = 0, const TQString & group = TQString::null );
 
         /**
          * @return A list of KPluginInfo objects for the KParts plugins of an
          * instance. You only need the name of the instance not a pointer to the
          * TDEInstance object.
          */
-        static KPluginInfo::List fromKPartsInstanceName( const TQString &, KConfig * config = 0, const TQString & group = TQString::null );
+        static KPluginInfo::List fromKPartsInstanceName( const TQString &, TDEConfig * config = 0, const TQString & group = TQString::null );
 
         /**
          * @return Whether the plugin should be hidden.
@@ -263,25 +263,25 @@ class KUTILS_EXPORT KPluginInfo
 
         /**
          * @return A list of Service pointers if the plugin installs one or more
-         *         KCModule
+         *         TDECModule
          */
         const TQValueList<KService::Ptr> & kcmServices() const;
 
         /**
-         * Set the KConfigGroup to use for load()ing and save()ing the
-         * configuration. This will be overridden by the KConfigGroup passed to
+         * Set the TDEConfigGroup to use for load()ing and save()ing the
+         * configuration. This will be overridden by the TDEConfigGroup passed to
          * save() or load() (if one is passed).
          */
-        void setConfig( KConfig * config, const TQString & group );
+        void setConfig( TDEConfig * config, const TQString & group );
 
         /**
-         * @return If the KPluginInfo object has a KConfig object set return
+         * @return If the KPluginInfo object has a TDEConfig object set return
          * it, else return 0.
          */
-        KConfig * config() const;
+        TDEConfig * config() const;
 
         /**
-         * @return The groupname used in the KConfig object for load()ing and
+         * @return The groupname used in the TDEConfig object for load()ing and
          * save()ing whether the plugin is enabled.
          */
         const TQString & configgroup() const;
@@ -289,18 +289,18 @@ class KUTILS_EXPORT KPluginInfo
         /**
          * Save state of the plugin - enabled or not. This function is provided
          * for reimplementation if you need to save somewhere else.
-         * @param config    The KConfigGroup holding the information whether
+         * @param config    The TDEConfigGroup holding the information whether
          *                  plugin is enabled.
          */
-        virtual void save( KConfigGroup * config = 0 );
+        virtual void save( TDEConfigGroup * config = 0 );
 
         /**
          * Load the state of the plugin - enabled or not. This function is provided
          * for reimplementation if you need to save somewhere else.
-         * @param config    The KConfigGroup holding the information whether
+         * @param config    The TDEConfigGroup holding the information whether
          *                  plugin is enabled.
          */
-        virtual void load( KConfigGroup * config = 0 );
+        virtual void load( TDEConfigGroup * config = 0 );
 
         /**
          * Restore defaults (enabled or not).

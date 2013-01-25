@@ -994,8 +994,8 @@ void KHTMLView::viewportMousePressEvent( TQMouseEvent *_mouse )
         bool hasHorBar = visibleWidth() < contentsWidth();
         bool hasVerBar = visibleHeight() < contentsHeight();
 
-        KConfig *config = TDEGlobal::config();
-        KConfigGroupSaver saver( config, "HTML Settings" );
+        TDEConfig *config = TDEGlobal::config();
+        TDEConfigGroupSaver saver( config, "HTML Settings" );
         if ( config->readBoolEntry( "ShowMouseScrollIndicator", true ) ) {
             d->m_mouseScrollIndicator->show();
             d->m_mouseScrollIndicator->unsetCursor();
@@ -4517,7 +4517,7 @@ static const int SCROLL_TICK = 20;
 
 void KHTMLView::scrollBy(int dx, int dy)
 {
-    KConfigGroup cfg( TDEGlobal::config(), "KDE" );
+    TDEConfigGroup cfg( TDEGlobal::config(), "KDE" );
     if( !cfg.readBoolEntry( "SmoothScrolling", false )) {
         TQScrollView::scrollBy( dx, dy );
         return;

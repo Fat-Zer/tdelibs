@@ -1099,7 +1099,7 @@ void KBookmarkMenuNSImporter::endFolder()
 
 KBookmarkMenu::DynMenuInfo KBookmarkMenu::showDynamicBookmarks( const TQString &id )
 {
-  KConfig config("kbookmarkrc", false, false);
+  TDEConfig config("kbookmarkrc", false, false);
   config.setGroup("Bookmarks");
 
   DynMenuInfo info;
@@ -1131,7 +1131,7 @@ KBookmarkMenu::DynMenuInfo KBookmarkMenu::showDynamicBookmarks( const TQString &
 
 TQStringList KBookmarkMenu::dynamicBookmarksList()
 {
-  KConfig config("kbookmarkrc", false, false);
+  TDEConfig config("kbookmarkrc", false, false);
   config.setGroup("Bookmarks");
 
   TQStringList mlist;
@@ -1145,7 +1145,7 @@ TQStringList KBookmarkMenu::dynamicBookmarksList()
 
 void KBookmarkMenu::setDynamicBookmarks(const TQString &id, const DynMenuInfo &newMenu)
 {
-  KConfig config("kbookmarkrc", false, false);
+  TDEConfig config("kbookmarkrc", false, false);
 
   // add group unconditionally
   config.setGroup("DynamicMenu-" + id);

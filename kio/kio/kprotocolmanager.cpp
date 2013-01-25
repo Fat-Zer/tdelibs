@@ -44,8 +44,8 @@ public:
 
    ~KProtocolManagerPrivate();
 
-   KConfig *config;
-   KConfig *http_config;
+   TDEConfig *config;
+   TDEConfig *http_config;
    bool init_busy;
    KURL url;
    TQString protocol;
@@ -80,29 +80,29 @@ void KProtocolManager::reparseConfiguration()
   kpmpksd.destructObject();
 
   // Force the slave config to re-read its config...
-  KIO::SlaveConfig::self()->reset ();
+  TDEIO::SlaveConfig::self()->reset ();
 }
 
-KConfig *KProtocolManager::config()
+TDEConfig *KProtocolManager::config()
 {
   if (!d)
      d = new KProtocolManagerPrivate;
 
   if (!d->config)
   {
-     d->config = new KConfig("kioslaverc", true, false);
+     d->config = new TDEConfig("kioslaverc", true, false);
   }
   return d->config;
 }
 
-KConfig *KProtocolManager::http_config()
+TDEConfig *KProtocolManager::http_config()
 {
   if (!d)
      d = new KProtocolManagerPrivate;
 
   if (!d->http_config)
   {
-     d->http_config = new KConfig("kio_httprc", false, false);
+     d->http_config = new TDEConfig("kio_httprc", false, false);
   }
   return d->http_config;
 }
@@ -111,7 +111,7 @@ KConfig *KProtocolManager::http_config()
 
 int KProtocolManager::readTimeout()
 {
-  KConfig *cfg = config();
+  TDEConfig *cfg = config();
   cfg->setGroup( TQString::null );
   int val = cfg->readNumEntry( "ReadTimeout", DEFAULT_READ_TIMEOUT );
   return QMAX(MIN_TIMEOUT_VALUE, val);
@@ -119,7 +119,7 @@ int KProtocolManager::readTimeout()
 
 int KProtocolManager::connectTimeout()
 {
-  KConfig *cfg = config();
+  TDEConfig *cfg = config();
   cfg->setGroup( TQString::null );
   int val = cfg->readNumEntry( "ConnectTimeout", DEFAULT_CONNECT_TIMEOUT );
   return QMAX(MIN_TIMEOUT_VALUE, val);
@@ -127,7 +127,7 @@ int KProtocolManager::connectTimeout()
 
 int KProtocolManager::proxyConnectTimeout()
 {
-  KConfig *cfg = config();
+  TDEConfig *cfg = config();
   cfg->setGroup( TQString::null );
   int val = cfg->readNumEntry( "ProxyConnectTimeout", DEFAULT_PROXY_CONNECT_TIMEOUT );
   return QMAX(MIN_TIMEOUT_VALUE, val);
@@ -135,7 +135,7 @@ int KProtocolManager::proxyConnectTimeout()
 
 int KProtocolManager::responseTimeout()
 {
-  KConfig *cfg = config();
+  TDEConfig *cfg = config();
   cfg->setGroup( TQString::null );
   int val = cfg->readNumEntry( "ResponseTimeout", DEFAULT_RESPONSE_TIMEOUT );
   return QMAX(MIN_TIMEOUT_VALUE, val);
@@ -150,21 +150,21 @@ bool KProtocolManager::useProxy()
 
 bool KProtocolManager::useReverseProxy()
 {
-  KConfig *cfg = config();
+  TDEConfig *cfg = config();
   cfg->setGroup( "Proxy Settings" );
   return cfg->readBoolEntry("ReversedException", false);
 }
 
 KProtocolManager::ProxyType KProtocolManager::proxyType()
 {
-  KConfig *cfg = config();
+  TDEConfig *cfg = config();
   cfg->setGroup( "Proxy Settings" );
   return static_cast<ProxyType>(cfg->readNumEntry( "ProxyType" ));
 }
 
 KProtocolManager::ProxyAuthMode KProtocolManager::proxyAuthMode()
 {
-  KConfig *cfg = config();
+  TDEConfig *cfg = config();
   cfg->setGroup( "Proxy Settings" );
   return static_cast<ProxyAuthMode>(cfg->readNumEntry( "AuthMode" ));
 }
@@ -173,40 +173,40 @@ KProtocolManager::ProxyAuthMode KProtocolManager::proxyAuthMode()
 
 bool KProtocolManager::useCache()
 {
-  KConfig *cfg = http_config();
+  TDEConfig *cfg = http_config();
   return cfg->readBoolEntry( "UseCache", true );
 }
 
-KIO::CacheControl KProtocolManager::cacheControl()
+TDEIO::CacheControl KProtocolManager::cacheControl()
 {
-  KConfig *cfg = http_config();
+  TDEConfig *cfg = http_config();
   TQString tmp = cfg->readEntry("cache");
   if (tmp.isEmpty())
     return DEFAULT_CACHE_CONTROL;
-  return KIO::parseCacheControl(tmp);
+  return TDEIO::parseCacheControl(tmp);
 }
 
 TQString KProtocolManager::cacheDir()
 {
-  KConfig *cfg = http_config();
+  TDEConfig *cfg = http_config();
   return cfg->readPathEntry("CacheDir", TDEGlobal::dirs()->saveLocation("cache","http"));
 }
 
 int KProtocolManager::maxCacheAge()
 {
-  KConfig *cfg = http_config();
+  TDEConfig *cfg = http_config();
   return cfg->readNumEntry( "MaxCacheAge", DEFAULT_MAX_CACHE_AGE ); // 14 days
 }
 
 int KProtocolManager::maxCacheSize()
 {
-  KConfig *cfg = http_config();
+  TDEConfig *cfg = http_config();
   return cfg->readNumEntry( "MaxCacheSize", DEFAULT_MAX_CACHE_SIZE ); // 5 MB
 }
 
 TQString KProtocolManager::noProxyForRaw()
 {
-  KConfig *cfg = config();
+  TDEConfig *cfg = config();
   cfg->setGroup( "Proxy Settings" );
 
   return cfg->readEntry( "NoProxyFor" );
@@ -230,7 +230,7 @@ TQString KProtocolManager::proxyFor( const TQString& protocol )
   else if (scheme == "webdavs")
     scheme = "https";
 
-  KConfig *cfg = config();
+  TDEConfig *cfg = config();
   cfg->setGroup( "Proxy Settings" );
   return cfg->readEntry( scheme + "Proxy" );
 }
@@ -417,11 +417,11 @@ TQString KProtocolManager::slaveProtocol(const KURL &url, TQString &proxy)
 
 TQString KProtocolManager::userAgentForHost( const TQString& hostname )
 {
-  TQString sendUserAgent = KIO::SlaveConfig::self()->configData("http", hostname.lower(), "SendUserAgent").lower();
+  TQString sendUserAgent = TDEIO::SlaveConfig::self()->configData("http", hostname.lower(), "SendUserAgent").lower();
   if (sendUserAgent == "false")
      return TQString::null;
 
-  TQString useragent = KIO::SlaveConfig::self()->configData("http", hostname.lower(), "UserAgent");
+  TQString useragent = TDEIO::SlaveConfig::self()->configData("http", hostname.lower(), "UserAgent");
 
   // Return the default user-agent if none is specified
   // for the requested host.
@@ -433,7 +433,7 @@ TQString KProtocolManager::userAgentForHost( const TQString& hostname )
 
 TQString KProtocolManager::defaultUserAgent( )
 {
-  TQString modifiers = KIO::SlaveConfig::self()->configData("http", TQString::null, "UserAgentKeys");
+  TQString modifiers = TDEIO::SlaveConfig::self()->configData("http", TQString::null, "UserAgentKeys");
   return defaultUserAgent(modifiers);
 }
 
@@ -492,14 +492,14 @@ TQString KProtocolManager::defaultUserAgent( const TQString &_modifiers )
 
 bool KProtocolManager::markPartial()
 {
-  KConfig *cfg = config();
+  TDEConfig *cfg = config();
   cfg->setGroup( TQString::null );
   return cfg->readBoolEntry( "MarkPartial", true );
 }
 
 int KProtocolManager::minimumKeepSize()
 {
-  KConfig *cfg = config();
+  TDEConfig *cfg = config();
   cfg->setGroup( TQString::null );
   return cfg->readNumEntry( "MinimumKeepSize",
                             DEFAULT_MINIMUM_KEEP_SIZE ); // 5000 byte
@@ -507,28 +507,28 @@ int KProtocolManager::minimumKeepSize()
 
 bool KProtocolManager::autoResume()
 {
-  KConfig *cfg = config();
+  TDEConfig *cfg = config();
   cfg->setGroup( TQString::null );
   return cfg->readBoolEntry( "AutoResume", false );
 }
 
 bool KProtocolManager::persistentConnections()
 {
-  KConfig *cfg = config();
+  TDEConfig *cfg = config();
   cfg->setGroup( TQString::null );
   return cfg->readBoolEntry( "PersistentConnections", true );
 }
 
 bool KProtocolManager::persistentProxyConnection()
 {
-  KConfig *cfg = config();
+  TDEConfig *cfg = config();
   cfg->setGroup( TQString::null );
   return cfg->readBoolEntry( "PersistentProxyConnection", false );
 }
 
 TQString KProtocolManager::proxyConfigScript()
 {
-  KConfig *cfg = config();
+  TDEConfig *cfg = config();
   cfg->setGroup( "Proxy Settings" );
   return cfg->readEntry( "Proxy Config Script" );
 }

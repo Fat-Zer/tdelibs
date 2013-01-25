@@ -88,7 +88,7 @@ public:
    * @param addr	the address to resolve
    * @param flags	the flags to use, see @ref Flags
    */
-  KReverseResolver(const KSocketAddress& addr, int flags = 0,
+  KReverseResolver(const TDESocketAddress& addr, int flags = 0,
 		   TQObject * = 0L, const char * = 0L);
 
   /**
@@ -128,7 +128,7 @@ public:
   /**
    * Returns the socket address which was subject to resolution.
    */
-  const KSocketAddress& address() const;
+  const TDESocketAddress& address() const;
 
   /**
    * Starts the resolution. This function returns 'true'
@@ -165,7 +165,7 @@ public:
    * @return true if the resolution succeeded, false if not
    * @see ReverseFlags for the possible values for @p flags
    */
-  static bool resolve(const KSocketAddress& addr, TQString& node, 
+  static bool resolve(const TDESocketAddress& addr, TQString& node, 
 		      TQString& serv, int flags = 0);
 
   /**

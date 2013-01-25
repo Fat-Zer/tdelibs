@@ -54,7 +54,7 @@ KScrollView::~KScrollView()
 
 void KScrollView::scrollBy(int dx, int dy)
 {
-    KConfigGroup cfg( TDEGlobal::config(), "KDE" );
+    TDEConfigGroup cfg( TDEGlobal::config(), "KDE" );
     if( !cfg.readBoolEntry( "SmoothScrolling", true )) {
         TQScrollView::scrollBy( dx, dy );
         return;

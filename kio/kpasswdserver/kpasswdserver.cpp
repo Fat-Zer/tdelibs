@@ -100,7 +100,7 @@ static TQString makeMapKey( const char* key, int entryNumber )
     return str;
 }
 
-static bool storeInWallet( KWallet::Wallet* wallet, const TQString& key, const KIO::AuthInfo &info )
+static bool storeInWallet( KWallet::Wallet* wallet, const TQString& key, const TDEIO::AuthInfo &info )
 {
     if ( !wallet->hasFolder( KWallet::Wallet::PasswordFolder() ) )
         if ( !wallet->createFolder( KWallet::Wallet::PasswordFolder() ) )
@@ -175,14 +175,14 @@ static bool readFromWallet( KWallet::Wallet* wallet, const TQString& key, const 
     return false;
 }
 
-KIO::AuthInfo
-KPasswdServer::checkAuthInfo(KIO::AuthInfo info, long windowId)
+TDEIO::AuthInfo
+KPasswdServer::checkAuthInfo(TDEIO::AuthInfo info, long windowId)
 {
     return checkAuthInfo(info, windowId, 0);
 }
 
-KIO::AuthInfo
-KPasswdServer::checkAuthInfo(KIO::AuthInfo info, long windowId, unsigned long usertime)
+TDEIO::AuthInfo
+KPasswdServer::checkAuthInfo(TDEIO::AuthInfo info, long windowId, unsigned long usertime)
 {
     kdDebug(130) << "KPasswdServer::checkAuthInfo: User= " << info.username
               << ", WindowId = " << windowId << endl;
@@ -242,14 +242,14 @@ KPasswdServer::checkAuthInfo(KIO::AuthInfo info, long windowId, unsigned long us
     return copyAuthInfo(result);
 }
 
-KIO::AuthInfo
-KPasswdServer::queryAuthInfo(KIO::AuthInfo info, TQString errorMsg, long windowId, long seqNr)
+TDEIO::AuthInfo
+KPasswdServer::queryAuthInfo(TDEIO::AuthInfo info, TQString errorMsg, long windowId, long seqNr)
 {
     return queryAuthInfo(info, errorMsg, windowId, seqNr, 0 );
 }
 
-KIO::AuthInfo
-KPasswdServer::queryAuthInfo(KIO::AuthInfo info, TQString errorMsg, long windowId, long seqNr, unsigned long usertime)
+TDEIO::AuthInfo
+KPasswdServer::queryAuthInfo(TDEIO::AuthInfo info, TQString errorMsg, long windowId, long seqNr, unsigned long usertime)
 {
     kdDebug(130) << "KPasswdServer::queryAuthInfo: User= " << info.username
               << ", Message= " << info.prompt << ", WindowId = " << windowId << endl;
@@ -285,7 +285,7 @@ KPasswdServer::queryAuthInfo(KIO::AuthInfo info, TQString errorMsg, long windowI
 }
 
 void
-KPasswdServer::addAuthInfo(KIO::AuthInfo info, long windowId)
+KPasswdServer::addAuthInfo(TDEIO::AuthInfo info, long windowId)
 {
     kdDebug(130) << "KPasswdServer::addAuthInfo: User= " << info.username
               << ", RealmValue= " << info.realmValue << ", WindowId = " << windowId << endl;
@@ -316,7 +316,7 @@ KPasswdServer::processRequest()
     if (!request)
        return;
 
-    KIO::AuthInfo &info = request->info;
+    TDEIO::AuthInfo &info = request->info;
 
     kdDebug(130) << "KPasswdServer::processRequest: User= " << info.username
               << ", Message= " << info.prompt << endl;
@@ -366,7 +366,7 @@ KPasswdServer::processRequest()
                     hasWalletData = readFromWallet( m_wallet, request->key, info.realmValue, username, password, info.readOnly, knownLogins );
             }
 
-            KIO::PasswordDialog dlg( info.prompt, username, info.keepPassword );
+            TDEIO::PasswordDialog dlg( info.prompt, username, info.keepPassword );
             if (info.caption.isEmpty())
                dlg.setPlainCaption( i18n("Authorization Dialog") );
             else
@@ -428,7 +428,7 @@ KPasswdServer::processRequest()
 
     TQDataStream stream2(replyData, IO_WriteOnly);
     stream2 << info << m_seqNr;
-    replyType = "KIO::AuthInfo";
+    replyType = "TDEIO::AuthInfo";
     request->client->endTransaction( request->transaction,
                                      replyType, replyData);
 
@@ -479,11 +479,11 @@ KPasswdServer::processRequest()
            else
            {
                updateAuthExpire(waitRequest->key, result, waitRequest->windowId, false);
-               KIO::AuthInfo info = copyAuthInfo(result);
+               TDEIO::AuthInfo info = copyAuthInfo(result);
                stream2 << info;
            }
 
-           replyType = "KIO::AuthInfo";
+           replyType = "TDEIO::AuthInfo";
            waitRequest->client->endTransaction( waitRequest->transaction,
                                                 replyType, replyData);
 
@@ -497,7 +497,7 @@ KPasswdServer::processRequest()
 
 }
 
-TQString KPasswdServer::createCacheKey( const KIO::AuthInfo &info )
+TQString KPasswdServer::createCacheKey( const TDEIO::AuthInfo &info )
 {
     if( !info.url.isValid() ) {
         // Note that a null key will break findAuthInfoItem later on...
@@ -524,10 +524,10 @@ TQString KPasswdServer::createCacheKey( const KIO::AuthInfo &info )
     return key;
 }
 
-KIO::AuthInfo
+TDEIO::AuthInfo
 KPasswdServer::copyAuthInfo(const AuthInfo *i)
 {
-    KIO::AuthInfo result;
+    TDEIO::AuthInfo result;
     result.url = i->url;
     result.username = i->username;
     result.password = i->password;
@@ -539,7 +539,7 @@ KPasswdServer::copyAuthInfo(const AuthInfo *i)
 }
 
 const KPasswdServer::AuthInfo *
-KPasswdServer::findAuthInfoItem(const TQString &key, const KIO::AuthInfo &info)
+KPasswdServer::findAuthInfoItem(const TQString &key, const TDEIO::AuthInfo &info)
 {
    AuthInfoList *authList = m_authDict.find(key);
    if (!authList)
@@ -577,7 +577,7 @@ KPasswdServer::findAuthInfoItem(const TQString &key, const KIO::AuthInfo &info)
 }
 
 void
-KPasswdServer::removeAuthInfoItem(const TQString &key, const KIO::AuthInfo &info)
+KPasswdServer::removeAuthInfoItem(const TQString &key, const TDEIO::AuthInfo &info)
 {
    AuthInfoList *authList = m_authDict.find(key);
    if (!authList)
@@ -604,7 +604,7 @@ KPasswdServer::removeAuthInfoItem(const TQString &key, const KIO::AuthInfo &info
 
 
 void
-KPasswdServer::addAuthInfoItem(const TQString &key, const KIO::AuthInfo &info, long windowId, long seqNr, bool canceled)
+KPasswdServer::addAuthInfoItem(const TQString &key, const TDEIO::AuthInfo &info, long windowId, long seqNr, bool canceled)
 {
    AuthInfoList *authList = m_authDict.find(key);
    if (!authList)

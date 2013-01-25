@@ -599,7 +599,7 @@ public:
      * You won't have the benefit of weighted completion though, so normally
      * you should do something like
      * \code
-     * KConfig *config = kapp->config();
+     * TDEConfig *config = kapp->config();
      * TQStringList list;
      *
      * // load the history and completion list after creating the history combo
@@ -618,7 +618,7 @@ public:
      * config->writeEntry( "History list", list );
      * \endcode
      *
-     * Be sure to use different names for saving with KConfig if you have more
+     * Be sure to use different names for saving with TDEConfig if you have more
      * than one KHistoryCombo.
      *
      * Note: When @p setCompletionList is true, the items are inserted into the

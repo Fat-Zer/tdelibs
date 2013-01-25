@@ -6,20 +6,20 @@
 using namespace TestNameSpace;
 
 Test3::Test3(  )
-  : KConfigSkeleton( TQString::fromLatin1( "test3rc" ) )
+  : TDEConfigSkeleton( TQString::fromLatin1( "test3rc" ) )
 {
   setCurrentGroup( TQString::fromLatin1( "General" ) );
 
-  mAutoSaveItem = new KConfigSkeleton::ItemBool( currentGroup(), TQString::fromLatin1( "Auto Save" ), mAutoSave, false );
+  mAutoSaveItem = new TDEConfigSkeleton::ItemBool( currentGroup(), TQString::fromLatin1( "Auto Save" ), mAutoSave, false );
   addItem( mAutoSaveItem, TQString::fromLatin1( "AutoSave" ) );
 
   setCurrentGroup( TQString::fromLatin1( "Blah" ) );
 
-  mBlubbItem = new KConfigSkeleton::ItemInt( currentGroup(), TQString::fromLatin1( "Blubb" ), mBlubb, 10 );
+  mBlubbItem = new TDEConfigSkeleton::ItemInt( currentGroup(), TQString::fromLatin1( "Blubb" ), mBlubb, 10 );
   addItem( mBlubbItem, TQString::fromLatin1( "Blubb" ) );
-  mBlahBlahItem = new KConfigSkeleton::ItemString( currentGroup(), TQString::fromLatin1( "BlahBlah" ), mBlahBlah, TQString::fromLatin1( "a string" ) );
+  mBlahBlahItem = new TDEConfigSkeleton::ItemString( currentGroup(), TQString::fromLatin1( "BlahBlah" ), mBlahBlah, TQString::fromLatin1( "a string" ) );
   addItem( mBlahBlahItem, TQString::fromLatin1( "BlahBlah" ) );
-  mMyPasswordItem = new KConfigSkeleton::ItemPassword( currentGroup(), TQString::fromLatin1( "MyPassword" ), mMyPassword );
+  mMyPasswordItem = new TDEConfigSkeleton::ItemPassword( currentGroup(), TQString::fromLatin1( "MyPassword" ), mMyPassword );
   addItem( mMyPasswordItem, TQString::fromLatin1( "MyPassword" ) );
 }
 

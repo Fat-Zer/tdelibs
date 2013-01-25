@@ -476,7 +476,7 @@ TQStringList KRun::processDesktopExec(const KService &_service, const KURL::List
 */
 
   if (_service.terminal()) {
-    KConfigGroupSaver gs(TDEGlobal::config(), "General");
+    TDEConfigGroupSaver gs(TDEGlobal::config(), "General");
     TQString terminal = TDEGlobal::config()->readPathEntry("TerminalApplication", "konsole");
     if (terminal == "konsole")
       terminal += " -caption=%c %i %m";
@@ -727,7 +727,7 @@ static KURL::List resolveURLs( const KURL::List& _urls, const KService& _service
       if ( !supported && KProtocolInfo::protocolClass(url.protocol()) == ":local" )
       {
         // Maybe we can resolve to a local URL?
-        KURL localURL = KIO::NetAccess::mostLocalURL( url, 0 );
+        KURL localURL = TDEIO::NetAccess::mostLocalURL( url, 0 );
         if ( localURL != url ) {
           *it = localURL;
           kdDebug(7010) << "Changed to " << localURL << endl;
@@ -1003,7 +1003,7 @@ void KRun::init()
   }
   if ( !kapp->authorizeURLAction( "open", KURL(), m_strURL))
   {
-    TQString msg = KIO::buildErrorString(KIO::ERR_ACCESS_DENIED, m_strURL.prettyURL());
+    TQString msg = TDEIO::buildErrorString(TDEIO::ERR_ACCESS_DENIED, m_strURL.prettyURL());
     d->m_showingError = true;
     KMessageBoxWrapper::error( d->m_window, msg );
     d->m_showingError = false;
@@ -1119,10 +1119,10 @@ void KRun::init()
   kdDebug(7010) << "Testing directory (stating)" << endl;
 
   // It may be a directory or a file, let's stat
-  KIO::StatJob *job = KIO::stat( m_strURL, true, 0 /* no details */, m_bProgressInfo );
+  TDEIO::StatJob *job = TDEIO::stat( m_strURL, true, 0 /* no details */, m_bProgressInfo );
   job->setWindow (d->m_window);
-  connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
-           this, TQT_SLOT( slotStatResult( KIO::Job * ) ) );
+  connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ),
+           this, TQT_SLOT( slotStatResult( TDEIO::Job * ) ) );
   m_job = job;
   kdDebug(7010) << " Job " << job << " is about stating " << m_strURL.url() << endl;
 }
@@ -1168,12 +1168,12 @@ void KRun::scanFile()
   }
   kdDebug(7010) << this << " Scanning file " << m_strURL.url() << endl;
 
-  KIO::TransferJob *job = KIO::get( m_strURL, false /*reload*/, m_bProgressInfo );
+  TDEIO::TransferJob *job = TDEIO::get( m_strURL, false /*reload*/, m_bProgressInfo );
   job->setWindow (d->m_window);
-  connect(job, TQT_SIGNAL( result(KIO::Job *)),
-          this, TQT_SLOT( slotScanFinished(KIO::Job *)));
-  connect(job, TQT_SIGNAL( mimetype(KIO::Job *, const TQString &)),
-          this, TQT_SLOT( slotScanMimeType(KIO::Job *, const TQString &)));
+  connect(job, TQT_SIGNAL( result(TDEIO::Job *)),
+          this, TQT_SLOT( slotScanFinished(TDEIO::Job *)));
+  connect(job, TQT_SIGNAL( mimetype(TDEIO::Job *, const TQString &)),
+          this, TQT_SLOT( slotScanMimeType(TDEIO::Job *, const TQString &)));
   m_job = job;
   kdDebug(7010) << " Job " << job << " is about getting from " << m_strURL.url() << endl;
 }
@@ -1217,7 +1217,7 @@ void KRun::slotTimeout()
   }
 }
 
-void KRun::slotStatResult( KIO::Job * job )
+void KRun::slotStatResult( TDEIO::Job * job )
 {
   m_job = 0L;
   if (job->error())
@@ -1237,24 +1237,24 @@ void KRun::slotStatResult( KIO::Job * job )
   } else {
 
     kdDebug(7010) << "Finished" << endl;
-    if(!dynamic_cast<KIO::StatJob*>(job))
+    if(!dynamic_cast<TDEIO::StatJob*>(job))
         kdFatal() << "job is a " << typeid(*job).name() << " should be a StatJob" << endl;
 
     TQString knownMimeType;
-    KIO::UDSEntry entry = ((KIO::StatJob*)job)->statResult();
-    KIO::UDSEntry::ConstIterator it = entry.begin();
+    TDEIO::UDSEntry entry = ((TDEIO::StatJob*)job)->statResult();
+    TDEIO::UDSEntry::ConstIterator it = entry.begin();
     for( ; it != entry.end(); it++ ) {
         switch( (*it).m_uds ) {
-        case KIO::UDS_FILE_TYPE:
+        case TDEIO::UDS_FILE_TYPE:
             if ( S_ISDIR( (mode_t)((*it).m_long) ) )
                 m_bIsDirectory = true; // it's a dir
             else
                 m_bScanFile = true; // it's a file
             break;
-        case KIO::UDS_MIME_TYPE: // mimetype already known? (e.g. print:/manager)
+        case TDEIO::UDS_MIME_TYPE: // mimetype already known? (e.g. print:/manager)
             knownMimeType = (*it).m_str;
             break;
-        case KIO::UDS_LOCAL_PATH:
+        case TDEIO::UDS_LOCAL_PATH:
             d->m_localPath = (*it).m_str;
             break;
         default:
@@ -1277,7 +1277,7 @@ void KRun::slotStatResult( KIO::Job * job )
   }
 }
 
-void KRun::slotScanMimeType( KIO::Job *, const TQString &mimetype )
+void KRun::slotScanMimeType( TDEIO::Job *, const TQString &mimetype )
 {
   if ( mimetype.isEmpty() )
     kdWarning(7010) << "KRun::slotScanFinished : MimetypeJob didn't find a mimetype! Probably a kioslave bug." << endl;
@@ -1285,7 +1285,7 @@ void KRun::slotScanMimeType( KIO::Job *, const TQString &mimetype )
   m_job = 0;
 }
 
-void KRun::slotScanFinished( KIO::Job *job )
+void KRun::slotScanFinished( TDEIO::Job *job )
 {
   m_job = 0;
   if (job->error())
@@ -1352,19 +1352,19 @@ void KRun::foundMimeType( const TQString& type )
     // We don't know if this is a file or a directory. Let's test this first.
     // (For instance a tar.gz is a directory contained inside a file)
     // It may be a directory or a file, let's stat
-    KIO::StatJob *job = KIO::stat( m_strURL, m_bProgressInfo );
-    connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
-             this, TQT_SLOT( slotStatResult( KIO::Job * ) ) );
+    TDEIO::StatJob *job = TDEIO::stat( m_strURL, m_bProgressInfo );
+    connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ),
+             this, TQT_SLOT( slotStatResult( TDEIO::Job * ) ) );
     m_job = job;
 
     return;
   }
 */
-  KIO::TransferJob *job = ::tqqt_cast<KIO::TransferJob *>( m_job );
+  TDEIO::TransferJob *job = ::tqqt_cast<TDEIO::TransferJob *>( m_job );
   if ( job )
   {
      job->putOnHold();
-     KIO::Scheduler::publishSlaveOnHold();
+     TDEIO::Scheduler::publishSlaveOnHold();
      m_job = 0;
   }
 
@@ -1440,7 +1440,7 @@ void KRun::abort()
 void KRun::setEnableExternalBrowser(bool b)
 {
    if (b)
-      d->m_externalBrowser = KConfigGroup(TDEGlobal::config(), "General").readEntry("BrowserApplication");
+      d->m_externalBrowser = TDEConfigGroup(TDEGlobal::config(), "General").readEntry("BrowserApplication");
    else
       d->m_externalBrowser = TQString::null;
 }

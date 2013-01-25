@@ -24,7 +24,7 @@
 
 #include <tdelibs_export.h>
 
-class KConfig;
+class TDEConfig;
 
 class TDEPRINT_EXPORT KMConfigPage : public TQWidget
 {
@@ -32,8 +32,8 @@ class TDEPRINT_EXPORT KMConfigPage : public TQWidget
 public:
 	KMConfigPage(TQWidget *parent = 0, const char *name = 0);
 
-	virtual void loadConfig(KConfig*);
-	virtual void saveConfig(KConfig*);
+	virtual void loadConfig(TDEConfig*);
+	virtual void saveConfig(TDEConfig*);
 
 	TQString pageName() const 	{ return m_name; }
 	TQString pageHeader() const 	{ return m_header; }

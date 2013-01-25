@@ -171,7 +171,7 @@ int tdeinit_x_errhandler( Display *, XErrorEvent *err );
 extern "C" KParts::Plugin* _kinit_init_kparts() { return new KParts::Plugin(); }
 /* These are to link libkio even if 'smart' linker is used */
 #include <kio/authinfo.h>
-extern "C" KIO::AuthInfo* _kioslave_init_kio() { return new KIO::AuthInfo(); }
+extern "C" TDEIO::AuthInfo* _kioslave_init_kio() { return new TDEIO::AuthInfo(); }
 
 /*
  * Close fd's which are only useful for the parent process.
@@ -1758,7 +1758,7 @@ int main(int argc, char **argv, char **envp)
    tdeinit_initsetproctitle(argc, argv, envp);
    tdeinit_library_path();
    // Don't make our instance the global instance
-   // (do it only after tdeinit_library_path, that one indirectly uses KConfig,
+   // (do it only after tdeinit_library_path, that one indirectly uses TDEConfig,
    // which seems to be buggy and always use TDEGlobal instead of the maching TDEInstance)
    TDEGlobal::_instance = 0L;
    // don't change envvars before tdeinit_initsetproctitle()

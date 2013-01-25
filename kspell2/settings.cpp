@@ -180,7 +180,7 @@ bool Settings::ignore( const TQString& word )
 
 void Settings::readIgnoreList()
 {
-    KConfigGroup conf( d->config, "Spelling" );
+    TDEConfigGroup conf( d->config, "Spelling" );
     TQString ignoreEntry = TQString( "ignore_%1" ).arg( d->defaultLanguage );
     TQStringList ignores = conf.readListEntry( ignoreEntry );
     setQuietIgnoreList( ignores );
@@ -189,7 +189,7 @@ void Settings::readIgnoreList()
 void Settings::save()
 {
     if ( d->modified ) {
-        KConfigGroup conf( d->config, "Spelling" );
+        TDEConfigGroup conf( d->config, "Spelling" );
         conf.writeEntry( "defaultClient", d->defaultClient );
         conf.writeEntry( "defaultLanguage", d->defaultLanguage );
         conf.writeEntry( "checkUppercase", d->checkUppercase );
@@ -203,7 +203,7 @@ void Settings::save()
 
 void Settings::loadConfig()
 {
-    KConfigGroup conf( d->config, "Spelling" );
+    TDEConfigGroup conf( d->config, "Spelling" );
     d->defaultClient = conf.readEntry( "defaultClient",
                                         TQString::null );
     d->defaultLanguage = conf.readEntry(

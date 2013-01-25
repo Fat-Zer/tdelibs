@@ -561,11 +561,11 @@ public:
   static TQValueList<Service> userDefinedServices( const TQString& path, bool bLocalFiles );
 
   /**
-   * Overload of userDefinedServices for speed purposes: it takes a KConfig* so that
+   * Overload of userDefinedServices for speed purposes: it takes a TDEConfig* so that
    * the caller can check things in the file without having it parsed twice.
    * @since 3.4
    */
-  static TQValueList<Service> userDefinedServices( const TQString& path, KConfig& config, bool bLocalFiles );
+  static TQValueList<Service> userDefinedServices( const TQString& path, TDEConfig& config, bool bLocalFiles );
 
   /**
    * Overload of userDefinedServices but also allows you to pass a list of urls for this file.
@@ -573,7 +573,7 @@ public:
    * the X-TDE-GetActionMenu extension.
    * @since 3.5
    */
-  static TQValueList<Service> userDefinedServices( const TQString& path, KConfig& config, bool bLocalFiles,  const KURL::List & file_list);
+  static TQValueList<Service> userDefinedServices( const TQString& path, TDEConfig& config, bool bLocalFiles,  const KURL::List & file_list);
 
   /**
    * @param path is the path of the desktop entry.

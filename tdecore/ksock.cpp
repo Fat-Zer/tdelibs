@@ -89,21 +89,21 @@ extern "C" {
 #include "tqwindowdefs.h"
 #endif 
 
-class KSocketPrivate
+class TDESocketPrivate
 {
 public:
   TQSocketNotifier *readNotifier;
   TQSocketNotifier *writeNotifier;
 
-  KSocketPrivate() :
+  TDESocketPrivate() :
     readNotifier(0), writeNotifier(0)
   { }
 };
 
 // I moved this into here so we could accurately detect the domain, for
 // posterity.  Really.
-KSocket::KSocket( int _sock)
-  : sock(_sock), d(new KSocketPrivate)
+TDESocket::TDESocket( int _sock)
+  : sock(_sock), d(new TDESocketPrivate)
 {
   struct sockaddr_in sin;
   ksocklen_t len = sizeof(sin);
@@ -116,19 +116,19 @@ KSocket::KSocket( int _sock)
   KSocks::self()->getsockname(_sock, (struct sockaddr *)&sin, &len);
 }
 
-KSocket::KSocket( const char *_host, unsigned short int _port, int _timeout ) :
-  sock( -1 ), d(new KSocketPrivate)
+TDESocket::TDESocket( const char *_host, unsigned short int _port, int _timeout ) :
+  sock( -1 ), d(new TDESocketPrivate)
 {
     connect( _host, _port, _timeout );
 }
 
-KSocket::KSocket( const char *_path ) :
-  sock( -1 ), d(new KSocketPrivate)
+TDESocket::TDESocket( const char *_path ) :
+  sock( -1 ), d(new TDESocketPrivate)
 {
   connect( _path );
 }
 
-void KSocket::enableRead( bool _state )
+void TDESocket::enableRead( bool _state )
 {
   if ( _state )
     {
@@ -144,7 +144,7 @@ void KSocket::enableRead( bool _state )
 	d->readNotifier->setEnabled( false );
 }
 
-void KSocket::enableWrite( bool _state )
+void TDESocket::enableWrite( bool _state )
 {
   if ( _state )
     {
@@ -161,7 +161,7 @@ void KSocket::enableWrite( bool _state )
 	d->writeNotifier->setEnabled( false );
 }
 
-void KSocket::slotRead( int )
+void TDESocket::slotRead( int )
 {
   char buffer[2];
 
@@ -172,7 +172,7 @@ void KSocket::slotRead( int )
 	emit readEvent( this );
 }
 
-void KSocket::slotWrite( int )
+void TDESocket::slotWrite( int )
 {
   emit writeEvent( this );
 }
@@ -180,7 +180,7 @@ void KSocket::slotWrite( int )
 /*
  * Connects the PF_UNIX domain socket to _path.
  */
-bool KSocket::connect( const char *_path )
+bool TDESocket::connect( const char *_path )
 {
   KExtendedSocket ks(TQString::null, _path, KExtendedSocket::unixSocket);
 
@@ -194,7 +194,7 @@ bool KSocket::connect( const char *_path )
 /*
  * Connects the socket to _host, _port.
  */
-bool KSocket::connect( const TQString& _host, unsigned short int _port, int _timeout )
+bool TDESocket::connect( const TQString& _host, unsigned short int _port, int _timeout )
 {
   KExtendedSocket ks(_host, _port, KExtendedSocket::inetSocket);
   ks.setTimeout(_timeout, 0);
@@ -208,10 +208,10 @@ bool KSocket::connect( const TQString& _host, unsigned short int _port, int _tim
 
 // only for doxygen - the define is always true as defined above
 #ifdef KSOCK_NO_BROKEN
-unsigned long KSocket::ipv4_addr()
+unsigned long TDESocket::ipv4_addr()
 {
   unsigned long retval = 0;
-  KSocketAddress *sa = KExtendedSocket::peerAddress(sock);
+  TDESocketAddress *sa = KExtendedSocket::peerAddress(sock);
   if (sa == NULL)
     return 0;
 
@@ -230,12 +230,12 @@ unsigned long KSocket::ipv4_addr()
   return retval;
 }
 
-bool KSocket::initSockaddr (ksockaddr_in *server_name, const char *hostname, unsigned short int port, int domain)
+bool TDESocket::initSockaddr (ksockaddr_in *server_name, const char *hostname, unsigned short int port, int domain)
 {
   // This function is now IPv4 only
   // if you want something better, you should use KExtendedSocket::lookup yourself
 
-  kdWarning(170) << "deprecated KSocket::initSockaddr called" << endl;
+  kdWarning(170) << "deprecated TDESocket::initSockaddr called" << endl;
 
   if (domain != PF_INET)
     return false;
@@ -255,13 +255,13 @@ bool KSocket::initSockaddr (ksockaddr_in *server_name, const char *hostname, uns
     return false;
 
   memcpy(server_name, sin->addressV4(), sizeof(*server_name));
-  kdDebug(170) << "KSocket::initSockaddr: returning " << sin->pretty() << endl;
+  kdDebug(170) << "TDESocket::initSockaddr: returning " << sin->pretty() << endl;
   return true;
 }
 
 #endif
 
-KSocket::~KSocket()
+TDESocket::~TDESocket()
 {
   // Coolo says delete 0 is ok :) -thiago
   delete d->readNotifier;
@@ -274,7 +274,7 @@ KSocket::~KSocket()
   }
 }
 
-class KServerSocketPrivate
+class TDEServerSocketPrivate
 {
 public:
    bool bind;
@@ -284,25 +284,25 @@ public:
 };
 
 
-KServerSocket::KServerSocket( const char *_path, bool _bind ) :
+TDEServerSocket::TDEServerSocket( const char *_path, bool _bind ) :
   sock( -1 )
 {
-  d = new KServerSocketPrivate();
+  d = new TDEServerSocketPrivate();
   d->bind = _bind;
 
   init ( _path );
 }
 
-KServerSocket::KServerSocket( unsigned short int _port, bool _bind ) :
+TDEServerSocket::TDEServerSocket( unsigned short int _port, bool _bind ) :
   sock( -1 )
 {
-  d = new KServerSocketPrivate();
+  d = new TDEServerSocketPrivate();
   d->bind = _bind;
 
   init ( _port );
 }
 
-bool KServerSocket::init( const char *_path )
+bool TDEServerSocket::init( const char *_path )
 {
   unlink(_path );
   d->path = _path;
@@ -317,7 +317,7 @@ bool KServerSocket::init( const char *_path )
 }
 
 
-bool KServerSocket::init( unsigned short int _port )
+bool TDEServerSocket::init( unsigned short int _port )
 {
   d->port = _port;
   KExtendedSocket *ks;
@@ -330,7 +330,7 @@ bool KServerSocket::init( unsigned short int _port )
   return true;
 }
 
-bool KServerSocket::bindAndListen()
+bool TDEServerSocket::bindAndListen()
 {
   if (d == NULL || d->ks == NULL)
     return false;
@@ -354,11 +354,11 @@ bool KServerSocket::bindAndListen()
 }
 
 
-unsigned short int KServerSocket::port()
+unsigned short int TDEServerSocket::port()
 {
   if (d == NULL || d->ks == NULL || sock == -1)
     return 0;
-  const KSocketAddress *sa = d->ks->localAddress();
+  const TDESocketAddress *sa = d->ks->localAddress();
   if (sa == NULL)
     return 0;
 
@@ -378,11 +378,11 @@ unsigned short int KServerSocket::port()
   return 0;			// not a port we know
 }
 
-unsigned long KServerSocket::ipv4_addr()
+unsigned long TDEServerSocket::ipv4_addr()
 {
   if (d == NULL || d->ks == NULL || sock == -1)
     return 0;
-  const KSocketAddress *sa = d->ks->localAddress();
+  const TDESocketAddress *sa = d->ks->localAddress();
 
   const sockaddr_in *sin = (sockaddr_in*)sa->address();
 
@@ -401,7 +401,7 @@ unsigned long KServerSocket::ipv4_addr()
   return 0;			// this is dumb, isn't it?
 }
 
-void KServerSocket::slotAccept( int )
+void TDEServerSocket::slotAccept( int )
 {
   if (d == NULL || d->ks == NULL || sock == -1)
     return;			// nothing!
@@ -417,10 +417,10 @@ void KServerSocket::slotAccept( int )
   s->release();			// we're getting rid of the KExtendedSocket
   delete s;
 
-  emit accepted( new KSocket( new_sock ) );
+  emit accepted( new TDESocket( new_sock ) );
 }
 
-KServerSocket::~KServerSocket()
+TDEServerSocket::~TDEServerSocket()
 {
   if (d != NULL)
     {

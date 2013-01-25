@@ -73,11 +73,11 @@ public:
    void gotScriptArguments(const TQString &_arguments);
    void resetOptions();
 
-   void copyGroup(KConfigBase *cfg1, const TQString &grp1, 
-                  KConfigBase *cfg2, const TQString &grp2);
+   void copyGroup(TDEConfigBase *cfg1, const TQString &grp1, 
+                  TDEConfigBase *cfg2, const TQString &grp2);
 
 protected:
-   KConfig *config;
+   TDEConfig *config;
    TQString currentFilename;
    bool skip;
    bool debug;
@@ -86,9 +86,9 @@ protected:
    TQString oldFile;
    TQString newFile;
    TQString newFileName;
-   KConfig *oldConfig1; // Config to read keys from.
-   KConfig *oldConfig2; // Config to delete keys from.
-   KConfig *newConfig;
+   TDEConfig *oldConfig1; // Config to read keys from.
+   TDEConfig *oldConfig2; // Config to delete keys from.
+   TDEConfig *newConfig;
 
    TQString oldGroup;
    TQString newGroup;
@@ -113,7 +113,7 @@ KonfUpdate::KonfUpdate()
    oldConfig2 = 0;
    newConfig = 0;
 
-   config = new KConfig("kconf_updaterc");
+   config = new TDEConfig("kconf_updaterc");
 
    TQStringList updateFiles;
    TDECmdLineArgs *args=TDECmdLineArgs::parsedArgs();
@@ -501,7 +501,7 @@ void KonfUpdate::gotFile(const TQString &_file)
    
    if (!oldFile.isEmpty())
    {
-      oldConfig2 = new KConfig(oldFile, false, false);
+      oldConfig2 = new TDEConfig(oldFile, false, false);
       TQString cfg_id = currentFilename + ":" + id;
       oldConfig2->setGroup("$Version");
       TQStringList ids = oldConfig2->readListEntry("update_info");
@@ -514,7 +514,7 @@ void KonfUpdate::gotFile(const TQString &_file)
 
       if (!newFile.isEmpty())
       {
-         newConfig = new KConfig(newFile, false, false);
+         newConfig = new TDEConfig(newFile, false, false);
          newConfig->setGroup("$Version");
          ids = newConfig->readListEntry("update_info");
          if (ids.contains(cfg_id))
@@ -528,7 +528,7 @@ void KonfUpdate::gotFile(const TQString &_file)
          newConfig = oldConfig2;
       }
 
-      oldConfig1 = new KConfig(oldFile, true, false);
+      oldConfig1 = new TDEConfig(oldFile, true, false);
    }
    else
    {
@@ -703,8 +703,8 @@ void KonfUpdate::gotOptions(const TQString &_options)
    }
 }
 
-void KonfUpdate::copyGroup(KConfigBase *cfg1, const TQString &grp1, 
-                           KConfigBase *cfg2, const TQString &grp2)
+void KonfUpdate::copyGroup(TDEConfigBase *cfg1, const TQString &grp1, 
+                           TDEConfigBase *cfg2, const TQString &grp2)
 {
    cfg1->setGroup(grp1);
    cfg2->setGroup(grp2);
@@ -905,10 +905,10 @@ void KonfUpdate::gotScript(const TQString &_script)
    // Merging in new entries.
    m_bCopy = true;
    {
-     KConfig *saveOldConfig1 = oldConfig1;
+     TDEConfig *saveOldConfig1 = oldConfig1;
      TQString saveOldGroup = oldGroup;
      TQString saveNewGroup = newGroup;
-     oldConfig1 = new KConfig(tmp2.name(), true, false);
+     oldConfig1 = new TDEConfig(tmp2.name(), true, false);
 
      // For all groups...
      TQStringList grpList = oldConfig1->groupList();

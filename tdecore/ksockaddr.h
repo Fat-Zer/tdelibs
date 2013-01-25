@@ -34,7 +34,7 @@ struct sockaddr;
 
 class KExtendedSocket;		// No need to define it fully
 
-class KSocketAddressPrivate;
+class TDESocketAddressPrivate;
 /**
  * A socket address.
  *
@@ -43,27 +43,27 @@ class KSocketAddressPrivate;
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  * @short a socket address.
  */
-class TDECORE_EXPORT KSocketAddress: public TQObject
+class TDECORE_EXPORT TDESocketAddress: public TQObject
 {
   Q_OBJECT
 protected:
   /**
    * Creates an empty class
    */
-  KSocketAddress() { init(); }
+  TDESocketAddress() { init(); }
 
   /**
    * Creates with given data
    * @param sa a sockaddr structure
    * @param size the size of @p sa
    */
-  KSocketAddress(const sockaddr* sa, ksocklen_t size);
+  TDESocketAddress(const sockaddr* sa, ksocklen_t size);
 
 public:
   /**
    * Destructor.
    */
-  virtual ~KSocketAddress();
+  virtual ~TDESocketAddress();
 
   /**
    * Returns a string representation of this socket.
@@ -112,15 +112,15 @@ public:
    * @param other	the other socket
    * @return true if both sockets are equal
    */
-  virtual bool isEqual(const KSocketAddress& other) const;
-  bool isEqual(const KSocketAddress* other) const
+  virtual bool isEqual(const TDESocketAddress& other) const;
+  bool isEqual(const TDESocketAddress* other) const
   { return isEqual(*other); }
 
   /**
    * Overloaded == operator.
    * @see isEqual()
    */
-  bool operator==(const KSocketAddress& other) const
+  bool operator==(const TDESocketAddress& other) const
   { return isEqual(other); }
 
   /**
@@ -133,7 +133,7 @@ public:
    * @param other	the other socket
    * @return true if the code part is equal
    */
-  bool isCoreEqual(const KSocketAddress& other) const;
+  bool isCoreEqual(const TDESocketAddress& other) const;
 
   /**
    * Some sockets may differ in such things as services or port numbers,
@@ -145,7 +145,7 @@ public:
    * @param other	the other socket
    * @return true if the code part is equal
    */
-  bool isCoreEqual(const KSocketAddress* other) const
+  bool isCoreEqual(const TDESocketAddress* other) const
   { return isCoreEqual(*other); }
 
   /**
@@ -174,18 +174,18 @@ protected:
 private:
   void init();
   /* No copy constructor */
-  KSocketAddress(KSocketAddress&);
-  KSocketAddress& operator=(KSocketAddress&);
+  TDESocketAddress(TDESocketAddress&);
+  TDESocketAddress& operator=(TDESocketAddress&);
 
 public:
   /**
-   * Creates a new KSocketAddress or descendant class from given
+   * Creates a new TDESocketAddress or descendant class from given
    * raw socket address.
    * @param sa		new socket address
    * @param size	new socket address's length
-   * @return the new KSocketAddress, or 0 if the function failed
+   * @return the new TDESocketAddress, or 0 if the function failed
    */
-  static KSocketAddress* newAddress(const struct sockaddr *sa, ksocklen_t size);
+  static TDESocketAddress* newAddress(const struct sockaddr *sa, ksocklen_t size);
 
   /**
    * Returns the IANA family number of the given address family.
@@ -206,7 +206,7 @@ public:
 protected:
   virtual void virtual_hook( int id, void* data );
 private:
-  KSocketAddressPrivate* d;
+  TDESocketAddressPrivate* d;
 };
 
 /*
@@ -224,13 +224,13 @@ class KInetSocketAddressPrivate;
  *
  * This is an IPv4 or IPv6 address of the Internet
  *
- * This class inherits most of the functionality from KSocketAddress, but
+ * This class inherits most of the functionality from TDESocketAddress, but
  * is targeted specifically to Internet addresses
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  * @short an Internet socket address
  */
-class TDECORE_EXPORT KInetSocketAddress: public ::KSocketAddress
+class TDECORE_EXPORT KInetSocketAddress: public ::TDESocketAddress
 {
   Q_OBJECT
 public:
@@ -485,10 +485,10 @@ public:
    *                 the address)
    * @return true if the given addresses are equal.
    * @see areEqualInet6()
-   * @see KSocketAddress::isEqual()
-   * @see KSocketAddress::isCoreEqual()
+   * @see TDESocketAddress::isEqual()
+   * @see TDESocketAddress::isCoreEqual()
    */
-  static bool areEqualInet(const KSocketAddress &s1, const KSocketAddress &s2, bool coreOnly);
+  static bool areEqualInet(const TDESocketAddress &s1, const TDESocketAddress &s2, bool coreOnly);
 
   /**
    * Compares two IPv6 addresses.
@@ -498,10 +498,10 @@ public:
    *                 the address)
    * @return true if the given addresses are equal.
    * @see areEqualInet()
-   * @see KSocketAddress::isEqual()
-   * @see KSocketAddress::isCoreEqual()
+   * @see TDESocketAddress::isEqual()
+   * @see TDESocketAddress::isCoreEqual()
    */
-  static bool areEqualInet6(const KSocketAddress &s1, const KSocketAddress &s2, bool coreOnly);
+  static bool areEqualInet6(const TDESocketAddress &s1, const TDESocketAddress &s2, bool coreOnly);
 
   /* operators */
 
@@ -581,7 +581,7 @@ class KUnixSocketAddressPrivate;
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  * @short a Unix socket address
  */
-class TDECORE_EXPORT KUnixSocketAddress: public ::KSocketAddress
+class TDECORE_EXPORT KUnixSocketAddress: public ::TDESocketAddress
 {
   Q_OBJECT
 public:
@@ -665,10 +665,10 @@ public:
    * @param coreOnly true if only core parts should be compared (currently
    *                 unused)
    * @return true if the given addresses are equal.
-   * @see KSocketAddress::isEqual()
-   * @see KSocketAddress::isCoreEqual()
+   * @see TDESocketAddress::isEqual()
+   * @see TDESocketAddress::isCoreEqual()
    */
-  static bool areEqualUnix(const KSocketAddress &s1, const KSocketAddress &s2, bool coreOnly);
+  static bool areEqualUnix(const TDESocketAddress &s1, const TDESocketAddress &s2, bool coreOnly);
 
 private:
   void init();

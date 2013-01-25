@@ -31,9 +31,9 @@
 
 #include "metainfojob.moc"
 
-using namespace KIO;
+using namespace TDEIO;
 
-struct KIO::MetaInfoJobPrivate
+struct TDEIO::MetaInfoJobPrivate
 {
     KFileItemList          items;       // all the items we got
     KFileItemListIterator* currentItem; // argh! No default constructor
@@ -42,7 +42,7 @@ struct KIO::MetaInfoJobPrivate
 };
 
 MetaInfoJob::MetaInfoJob(const KFileItemList &items, bool deleteItems)
-    : KIO::Job(false /* no GUI */)
+    : TDEIO::Job(false /* no GUI */)
 {
     d               = new MetaInfoJobPrivate;
     d->deleteItems  = deleteItems;
@@ -113,7 +113,7 @@ void MetaInfoJob::determineNextFile()
     getMetaInfo();
 }
 
-void MetaInfoJob::slotResult( KIO::Job *job )
+void MetaInfoJob::slotResult( TDEIO::Job *job )
 {
     subjobs.remove(job);
     Q_ASSERT(subjobs.isEmpty()); // We should have only one job at a time ...
@@ -129,17 +129,17 @@ void MetaInfoJob::getMetaInfo()
     URL.setProtocol("metainfo");
     URL.setPath(d->currentItem->current()->url().path());
 
-    KIO::TransferJob* job = KIO::get(URL, false, false);
+    TDEIO::TransferJob* job = TDEIO::get(URL, false, false);
     addSubjob(job);
 
-    connect(job,  TQT_SIGNAL(data(KIO::Job *, const TQByteArray &)),
-            this, TQT_SLOT(slotMetaInfo(KIO::Job *, const TQByteArray &)));
+    connect(job,  TQT_SIGNAL(data(TDEIO::Job *, const TQByteArray &)),
+            this, TQT_SLOT(slotMetaInfo(TDEIO::Job *, const TQByteArray &)));
 
     job->addMetaData("mimeType", d->currentItem->current()->mimetype());
 }
 
 
-void MetaInfoJob::slotMetaInfo(KIO::Job*, const TQByteArray &data)
+void MetaInfoJob::slotMetaInfo(TDEIO::Job*, const TQByteArray &data)
 {
     KFileMetaInfo info;
     TQDataStream s(data, IO_ReadOnly);
@@ -169,12 +169,12 @@ TQStringList MetaInfoJob::supportedMimeTypes()
     return result;
 }
 
-KIO_EXPORT MetaInfoJob *KIO::fileMetaInfo( const KFileItemList &items)
+KIO_EXPORT MetaInfoJob *TDEIO::fileMetaInfo( const KFileItemList &items)
 {
     return new MetaInfoJob(items, false);
 }
 
-KIO_EXPORT MetaInfoJob *KIO::fileMetaInfo( const KURL::List &items)
+KIO_EXPORT MetaInfoJob *TDEIO::fileMetaInfo( const KURL::List &items)
 {
     KFileItemList fileItems;
     for (KURL::List::ConstIterator it = items.begin(); it != items.end(); ++it)

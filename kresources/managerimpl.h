@@ -30,7 +30,7 @@
 #include "manageriface.h"
 #include <kresources/resource.h>
 
-class KConfig;
+class TDEConfig;
 
 namespace KRES {
 
@@ -49,8 +49,8 @@ class KRESOURCES_EXPORT ManagerImpl : virtual public ManagerIface
     ManagerImpl( ManagerNotifier *, const TQString &family );
     ~ManagerImpl();
 
-    void readConfig( KConfig * );
-    void writeConfig( KConfig * );
+    void readConfig( TDEConfig * );
+    void writeConfig( TDEConfig * );
 
     void add( Resource *resource );
     void remove( Resource *resource );
@@ -90,8 +90,8 @@ class KRESOURCES_EXPORT ManagerImpl : virtual public ManagerIface
 
     ManagerNotifier *mNotifier;
     TQString mFamily;
-    KConfig *mConfig;
-    KConfig *mStdConfig;
+    TDEConfig *mConfig;
+    TDEConfig *mStdConfig;
     Resource *mStandard;
     Factory *mFactory;
     Resource::List mResources;

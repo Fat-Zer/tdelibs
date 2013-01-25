@@ -33,7 +33,7 @@
 #include <klocale.h>
 #include <kstandarddirs.h>
 
-using namespace KIO;
+using namespace TDEIO;
 
 struct PasswordDialog::PasswordDialogPrivate
 {
@@ -74,8 +74,8 @@ void PasswordDialog::init( const TQString& prompt, const TQString& user,
     d->nRow = 0;
     d->keepCheckBox = 0;
 
-    KConfig* cfg = TDEGlobal::config();
-    KConfigGroupSaver saver( cfg, "Passwords" );
+    TDEConfig* cfg = TDEGlobal::config();
+    TDEConfigGroupSaver saver( cfg, "Passwords" );
 
     d->layout = new TQGridLayout( main, 9, 3, spacingHint(), marginHint());
     d->layout->addColSpacing(1, 5);

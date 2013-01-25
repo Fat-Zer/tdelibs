@@ -32,16 +32,16 @@
 #include "kio/slaveinterface.h"
 #include "kio/connection.h"
 
-class KServerSocket;
-class KSocket;
+class TDEServerSocket;
+class TDESocket;
 
-namespace KIO {
+namespace TDEIO {
 
-    /** Attention developers: If you change the implementation of KIO::Slave,
-    * do *not* use connection() or slaveconn but the respective KIO::Slave
+    /** Attention developers: If you change the implementation of TDEIO::Slave,
+    * do *not* use connection() or slaveconn but the respective TDEIO::Slave
     * accessor methods. Otherwise classes derived from Slave might break. (LS)
     */
-    class KIO_EXPORT Slave : public KIO::SlaveInterface
+    class KIO_EXPORT Slave : public TDEIO::SlaveInterface
     {
 	Q_OBJECT
 	
@@ -53,11 +53,11 @@ namespace KIO {
 	 * @internal
 	 * @since 3.2
 	 */
-	Slave(bool derived, KServerSocket *unixdomain, const TQString &protocol,
+	Slave(bool derived, TDEServerSocket *unixdomain, const TQString &protocol,
 		const TQString &socketname);	// TODO(BIC): Remove in KDE 4
 
     public:
-	Slave(KServerSocket *unixdomain,
+	Slave(TDEServerSocket *unixdomain,
 	      const TQString &protocol, const TQString &socketname);
 
         virtual ~Slave();
@@ -202,7 +202,7 @@ namespace KIO {
         void setConnected(bool c) { contacted = c; }
 
 	/** @deprecated This method is obsolete, use the accessor methods
-	  * within KIO::Slave instead. Old code directly accessing connection()
+	  * within TDEIO::Slave instead. Old code directly accessing connection()
 	  * will not be able to access special protocols.
 	  */
         KDE_DEPRECATED Connection *connection() { return &slaveconn; }	// TODO(BIC): remove before KDE 4
@@ -211,11 +211,11 @@ namespace KIO {
         void deref() { m_refCount--; if (!m_refCount) delete this; }
 
     public slots:
-        void accept(KSocket *socket);
+        void accept(TDESocket *socket);
 	void gotInput();
 	void timeout();
     signals:
-        void slaveDied(KIO::Slave *slave);
+        void slaveDied(TDEIO::Slave *slave);
 
     protected:
         void unlinkSocket();
@@ -227,14 +227,14 @@ namespace KIO {
         int m_port;
         TQString m_user;
         TQString m_passwd;
-	KServerSocket *serv;
+	TDEServerSocket *serv;
 	TQString m_socket;
 	pid_t m_pid;
 	bool contacted;
 	bool dead;
 	time_t contact_started;
 	time_t idle_since;
-	KIO::Connection slaveconn;
+	TDEIO::Connection slaveconn;
 	int m_refCount;
     protected:
 	virtual void virtual_hook( int id, void* data );

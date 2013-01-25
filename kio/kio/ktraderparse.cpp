@@ -30,12 +30,12 @@ extern "C"
 #include "ktraderparsetree.h"
 #include <kdebug.h>
 
-using namespace KIO;
+using namespace TDEIO;
 
 static ParseTreeBase::Ptr *pTree = 0;
 static const char* sCode = 0;
 
-ParseTreeBase::Ptr KIO::parseConstraints( const TQString& _constr )
+ParseTreeBase::Ptr TDEIO::parseConstraints( const TQString& _constr )
 {
   TQCString str = _constr.utf8();
   sCode = str.data();
@@ -45,7 +45,7 @@ ParseTreeBase::Ptr KIO::parseConstraints( const TQString& _constr )
   return *pTree;
 }
 
-ParseTreeBase::Ptr KIO::parsePreferences( const TQString& _prefs )
+ParseTreeBase::Ptr TDEIO::parsePreferences( const TQString& _prefs )
 {
   TQCString str = _prefs.utf8();
   sCode = str.data();

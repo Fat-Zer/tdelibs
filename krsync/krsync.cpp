@@ -428,7 +428,7 @@ KDE_EXPORT bool KRsync::syncBidirectional(TQString synccommand, TQString syncfla
 /**
 writes one chunk of data to stdin of child process
 */
-KDE_EXPORT void KRsync::writeChild(const char *buf, KIO::fileoffset_t len) {
+KDE_EXPORT void KRsync::writeChild(const char *buf, TDEIO::fileoffset_t len) {
     if (outBufPos >= 0 && outBuf) {
 #if 0
         TQString debug;
@@ -445,7 +445,7 @@ KDE_EXPORT void KRsync::writeChild(const char *buf, KIO::fileoffset_t len) {
 /**
 manages initial communication setup including password queries
 */
-KDE_EXPORT int KRsync::establishConnectionRsync(char *buffer, KIO::fileoffset_t len) {
+KDE_EXPORT int KRsync::establishConnectionRsync(char *buffer, TDEIO::fileoffset_t len) {
     TQString buf;
     buf.setLatin1(buffer,len);
     int pos;
@@ -560,7 +560,7 @@ KDE_EXPORT int KRsync::establishConnectionRsync(char *buffer, KIO::fileoffset_t 
 /**
 manages initial communication setup including password queries
 */
-KDE_EXPORT int KRsync::establishConnectionUnison(char *buffer, KIO::fileoffset_t len, TQString localfolder, TQString remotepath) {
+KDE_EXPORT int KRsync::establishConnectionUnison(char *buffer, TDEIO::fileoffset_t len, TQString localfolder, TQString remotepath) {
     TQString buf;
     buf.setLatin1(buffer,len);
     int pos;
@@ -775,7 +775,7 @@ KDE_EXPORT void KRsync::shutdownConnection(bool forced, bool wait){
 
 KDE_EXPORT void KRsync::saveSettings()
 {
-  KConfig cfg ("rsyncrc", false, false);
+  TDEConfig cfg ("rsyncrc", false, false);
   cfg.setGroup ("General");
   cfg.writeEntry("LocalFolders", cfgfolderlist, CONFIGURATION_FILE_SEPARATOR);
   cfg.writeEntry("AutoSyncOnLogout", cfgautosync_onlogout_list, CONFIGURATION_FILE_SEPARATOR);
@@ -787,7 +787,7 @@ KDE_EXPORT void KRsync::loadSettings()
   if (m_bSettingsLoaded)
     return;
 
-  KConfig cfg ("rsyncrc", false, false);
+  TDEConfig cfg ("rsyncrc", false, false);
   cfg.setGroup ("General");
 
   cfgfolderlist = cfg.readListEntry("LocalFolders", CONFIGURATION_FILE_SEPARATOR);

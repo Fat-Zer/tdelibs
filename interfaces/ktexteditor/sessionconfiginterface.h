@@ -22,7 +22,7 @@
 #include <tdelibs_export.h>
 
 class TQCString;
-class KConfig;
+class TDEConfig;
 
 namespace KTextEditor
 {
@@ -53,8 +53,8 @@ class KTEXTEDITOR_EXPORT SessionConfigInterface
      * In case of the document, that means for example it should reload the file,
      * restore all marks, ...
     */
-    virtual void readSessionConfig (KConfig *) = 0;
-    virtual void writeSessionConfig (KConfig *) = 0;
+    virtual void readSessionConfig (TDEConfig *) = 0;
+    virtual void writeSessionConfig (TDEConfig *) = 0;
 
   private:
     class PrivateSessionConfigInterface *d;

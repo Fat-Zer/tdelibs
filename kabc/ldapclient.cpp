@@ -137,12 +137,12 @@ void LdapClient::startQuery( const TQString& filter )
 
   startParseLDIF();
   mActive = true;
-  mJob = KIO::get( url, false, false );
-  connect( mJob, TQT_SIGNAL( data( KIO::Job*, const TQByteArray& ) ),
-           this, TQT_SLOT( slotData( KIO::Job*, const TQByteArray& ) ) );
-  connect( mJob, TQT_SIGNAL( infoMessage( KIO::Job*, const TQString& ) ),
-           this, TQT_SLOT( slotInfoMessage( KIO::Job*, const TQString& ) ) );
-  connect( mJob, TQT_SIGNAL( result( KIO::Job* ) ),
+  mJob = TDEIO::get( url, false, false );
+  connect( mJob, TQT_SIGNAL( data( TDEIO::Job*, const TQByteArray& ) ),
+           this, TQT_SLOT( slotData( TDEIO::Job*, const TQByteArray& ) ) );
+  connect( mJob, TQT_SIGNAL( infoMessage( TDEIO::Job*, const TQString& ) ),
+           this, TQT_SLOT( slotInfoMessage( TDEIO::Job*, const TQString& ) ) );
+  connect( mJob, TQT_SIGNAL( result( TDEIO::Job* ) ),
            this, TQT_SLOT( slotDone() ) );
 }
 
@@ -156,7 +156,7 @@ void LdapClient::cancelQuery()
   mActive = false;
 }
 
-void LdapClient::slotData( KIO::Job*, const TQByteArray& data )
+void LdapClient::slotData( TDEIO::Job*, const TQByteArray& data )
 {
 #ifndef NDEBUG // don't create the QString
 //  TQString str( data );
@@ -165,7 +165,7 @@ void LdapClient::slotData( KIO::Job*, const TQByteArray& data )
   parseLDIF( data );
 }
 
-void LdapClient::slotInfoMessage( KIO::Job*, const TQString & )
+void LdapClient::slotInfoMessage( TDEIO::Job*, const TQString & )
 {
   //tqDebug("Job said \"%s\"", info.latin1());
 }
@@ -180,8 +180,8 @@ void LdapClient::slotDone()
   }
 #endif
   int err = mJob->error();
-  if ( err && err != KIO::ERR_USER_CANCELED ) {
-    emit error( KIO::buildErrorString( err, TQString("%1:%2").arg( mHost ).arg( mPort ) ) );
+  if ( err && err != TDEIO::ERR_USER_CANCELED ) {
+    emit error( TDEIO::buildErrorString( err, TQString("%1:%2").arg( mHost ).arg( mPort ) ) );
   }
   emit done();
 }
@@ -251,7 +251,7 @@ LdapSearch::LdapSearch()
   }
 
   // stolen from KAddressBook
-  KConfig config( "kabldaprc", true );
+  TDEConfig config( "kabldaprc", true );
   config.setGroup( "LDAP" );
   int numHosts = config.readUnsignedNumEntry( "NumSelectedHosts");
   if ( !numHosts ) {

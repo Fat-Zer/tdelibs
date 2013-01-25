@@ -39,7 +39,7 @@
 class KURIFilterPrivate;
 class KURIFilterDataPrivate;
 
-class KCModule;
+class TDECModule;
 
 /**
 * A basic message object used for exchanging filtering
@@ -410,7 +410,7 @@ public:
      *
      * @return A configuration module, 0 if the filter isn't configurable.
      */
-    virtual KCModule *configModule( TQWidget*, const char* ) const { return 0; }
+    virtual TDECModule *configModule( TQWidget*, const char* ) const { return 0; }
 
     /**
      * Returns the name of the configuration module for the filter.

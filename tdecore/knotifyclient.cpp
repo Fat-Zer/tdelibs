@@ -51,12 +51,12 @@ static bool canAvoidStartupEvent( const TQString& event, const TQString& appname
         return false;
     }
     // starttde event is in global events file
-    static KConfig* configfile = appname != "ksmserver"
-        ? new KConfig( appname + ".eventsrc", true, false )
-        : new KConfig( "knotify.eventsrc", true, false );
-    static KConfig* eventsfile = appname != "ksmserver"
-        ? new KConfig( appname + "/eventsrc", true, false, "data" )
-        : new KConfig( "knotify/eventsrc", true, false, "data" );
+    static TDEConfig* configfile = appname != "ksmserver"
+        ? new TDEConfig( appname + ".eventsrc", true, false )
+        : new TDEConfig( "knotify.eventsrc", true, false );
+    static TDEConfig* eventsfile = appname != "ksmserver"
+        ? new TDEConfig( appname + "/eventsrc", true, false, "data" )
+        : new TDEConfig( "knotify/eventsrc", true, false, "data" );
     configfile->setGroup( event );
     eventsfile->setGroup( event );
     int ev1 = configfile->readNumEntry( "presentation", -2 );
@@ -178,7 +178,7 @@ int KNotifyClient::getPresentation(const TQString &eventname)
 	int present;
 	if (eventname.isEmpty()) return Default;
 
-	KConfig eventsfile( KNotifyClient::instance()->instanceName()+".eventsrc", true, false);
+	TDEConfig eventsfile( KNotifyClient::instance()->instanceName()+".eventsrc", true, false);
 	eventsfile.setGroup(eventname);
 
 	present=eventsfile.readNumEntry("presentation", -1);
@@ -190,7 +190,7 @@ TQString KNotifyClient::getFile(const TQString &eventname, int present)
 {
 	if (eventname.isEmpty()) return TQString::null;
 
-	KConfig eventsfile( KNotifyClient::instance()->instanceName()+".eventsrc", true, false);
+	TDEConfig eventsfile( KNotifyClient::instance()->instanceName()+".eventsrc", true, false);
 	eventsfile.setGroup(eventname);
 
 	switch (present)
@@ -209,7 +209,7 @@ int KNotifyClient::getDefaultPresentation(const TQString &eventname)
 	int present;
 	if (eventname.isEmpty()) return Default;
 
-	KConfig eventsfile( KNotifyClient::instance()->instanceName()+"/eventsrc", true, false, "data");
+	TDEConfig eventsfile( KNotifyClient::instance()->instanceName()+"/eventsrc", true, false, "data");
 	eventsfile.setGroup(eventname);
 
 	present=eventsfile.readNumEntry("default_presentation", -1);
@@ -221,7 +221,7 @@ TQString KNotifyClient::getDefaultFile(const TQString &eventname, int present)
 {
 	if (eventname.isEmpty()) return TQString::null;
 
-	KConfig eventsfile( KNotifyClient::instance()->instanceName()+"/eventsrc", true, false, "data");
+	TDEConfig eventsfile( KNotifyClient::instance()->instanceName()+"/eventsrc", true, false, "data");
 	eventsfile.setGroup(eventname);
 
 	switch (present)
@@ -332,8 +332,8 @@ KNotifyClient::Instance::Instance(TDEInstance *instance)
     d->instance = instance;
     instances()->push(this);
 
-    KConfig *config = instance->config();
-    KConfigGroupSaver cs( config, "General" );
+    TDEConfig *config = instance->config();
+    TDEConfigGroupSaver cs( config, "General" );
     d->useSystemBell = config->readBoolEntry( "UseSystemBell", false );
 }
 

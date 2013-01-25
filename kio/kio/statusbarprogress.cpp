@@ -30,7 +30,7 @@
 #include "jobclasses.h"
 #include "statusbarprogress.h"
 
-namespace KIO {
+namespace TDEIO {
 
 StatusbarProgress::StatusbarProgress( TQWidget* parent, bool button )
   : ProgressBase( parent ) {
@@ -71,7 +71,7 @@ StatusbarProgress::StatusbarProgress( TQWidget* parent, bool button )
 }
 
 
-void StatusbarProgress::setJob( KIO::Job *job )
+void StatusbarProgress::setJob( TDEIO::Job *job )
 {
   ProgressBase::setJob( job );
 
@@ -118,20 +118,20 @@ void StatusbarProgress::slotClean() {
 }
 
 
-void StatusbarProgress::slotTotalSize( KIO::Job*, KIO::filesize_t size ) {
+void StatusbarProgress::slotTotalSize( TDEIO::Job*, TDEIO::filesize_t size ) {
   m_iTotalSize = size;  // size is measured in bytes
 }
 
-void StatusbarProgress::slotPercent( KIO::Job*, unsigned long percent ) {
+void StatusbarProgress::slotPercent( TDEIO::Job*, unsigned long percent ) {
   m_pProgressBar->setValue( percent );
 }
 
 
-void StatusbarProgress::slotSpeed( KIO::Job*, unsigned long speed ) {
+void StatusbarProgress::slotSpeed( TDEIO::Job*, unsigned long speed ) {
   if ( speed == 0 ) { // spped is measured in bytes-per-second
     m_pLabel->setText( i18n( " Stalled ") );
   } else {
-    m_pLabel->setText( i18n( " %1/s ").arg( KIO::convertSize( speed )) );
+    m_pLabel->setText( i18n( " %1/s ").arg( TDEIO::convertSize( speed )) );
   }
 }
 

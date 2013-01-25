@@ -55,7 +55,7 @@ class KateSchemaManager
     /**
      * return kconfig with right group set or set to Normal if not there
      */
-    KConfig *schema (uint number);
+    TDEConfig *schema (uint number);
 
     void addSchema (const TQString &t);
 
@@ -85,7 +85,7 @@ class KateSchemaManager
     static TQString printingSchema ();
 
   private:
-    KConfig m_config;
+    TDEConfig m_config;
     TQStringList m_schemas;
 };
 
@@ -216,7 +216,7 @@ class KateSchemaConfigFontTab : public TQWidget
     ~KateSchemaConfigFontTab();
 
   public:
-    void readConfig (KConfig *config);
+    void readConfig (TDEConfig *config);
 
   public slots:
     void apply();

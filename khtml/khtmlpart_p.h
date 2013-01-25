@@ -60,7 +60,7 @@ class KURLLabel;
 class KJavaAppletContext;
 class KJSErrorDlg;
 
-namespace KIO
+namespace TDEIO
 {
   class Job;
   class TransferJob;
@@ -198,7 +198,7 @@ public:
     m_job = 0L;
     m_bComplete = true;
     m_bLoadEventEmitted = true;
-    m_cachePolicy = KIO::CC_Verify;
+    m_cachePolicy = TDEIO::CC_Verify;
     m_manager = 0L;
     m_settings = new KHTMLSettings(*KHTMLFactory::defaultHTMLSettings());
     m_bClearing = false;
@@ -356,7 +356,7 @@ public:
 
   KHTMLSettings *m_settings;
 
-  KIO::TransferJob * m_job;
+  TDEIO::TransferJob * m_job;
 
   TQString m_statusBarText[3];
   unsigned long m_jobspeed;
@@ -387,7 +387,7 @@ public:
 
   KURL m_workingURL;
 
-  KIO::CacheControl m_cachePolicy;
+  TDEIO::CacheControl m_cachePolicy;
   TQTimer m_redirectionTimer;
   TQTime m_parsetime;
   int m_delayRedirect;

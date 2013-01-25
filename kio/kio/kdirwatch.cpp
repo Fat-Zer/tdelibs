@@ -109,7 +109,7 @@
 
 #include "kdirwatch.h"
 #include "kdirwatch_p.h"
-#include "global.h" //  KIO::probably_slow_mounted
+#include "global.h" //  TDEIO::probably_slow_mounted
 
 #define NO_NOTIFY (time_t) 0
 
@@ -226,7 +226,7 @@ KDirWatchPrivate::KDirWatchPrivate()
   delayRemove = false;
   m_ref = 0;
 
-  KConfigGroup config(TDEGlobal::config(), TQCString("DirWatch"));
+  TDEConfigGroup config(TDEGlobal::config(), TQCString("DirWatch"));
   m_nfsPollInterval = config.readNumEntry("NFSPollInterval", 5000);
   m_PollInterval = config.readNumEntry("PollInterval", 500);
 
@@ -744,7 +744,7 @@ bool KDirWatchPrivate::useINotify( Entry* e )
 bool KDirWatchPrivate::useStat(Entry* e)
 {
   if ( e->path.startsWith("/media/") || (e->path == "/media")
-       || (KIO::probably_slow_mounted(e->path)) )
+       || (TDEIO::probably_slow_mounted(e->path)) )
     useFreq(e, m_nfsPollInterval);
   else
     useFreq(e, m_PollInterval);

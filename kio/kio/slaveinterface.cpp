@@ -32,10 +32,10 @@
 #include <time.h>
 #include <tqtimer.h>
 
-using namespace KIO;
+using namespace TDEIO;
 
 
-TQDataStream &operator <<(TQDataStream &s, const KIO::UDSEntry &e )
+TQDataStream &operator <<(TQDataStream &s, const TDEIO::UDSEntry &e )
 {
     // On 32-bit platforms we send UDS_SIZE with UDS_SIZE_LARGE in front
     // of it to carry the 32 msb. We can't send a 64 bit UDS_SIZE because
@@ -44,21 +44,21 @@ TQDataStream &operator <<(TQDataStream &s, const KIO::UDSEntry &e )
     // environment.
 
     TQ_UINT32 size = 0;
-    KIO::UDSEntry::ConstIterator it = e.begin();
+    TDEIO::UDSEntry::ConstIterator it = e.begin();
     for( ; it != e.end(); ++it )
     {
        size++;
-       if ((*it).m_uds == KIO::UDS_SIZE)
+       if ((*it).m_uds == TDEIO::UDS_SIZE)
           size++;
     }
     s << size;
     it = e.begin();
     for( ; it != e.end(); ++it )
     {
-       if ((*it).m_uds == KIO::UDS_SIZE)
+       if ((*it).m_uds == TDEIO::UDS_SIZE)
        {
-          KIO::UDSAtom a;
-          a.m_uds = KIO::UDS_SIZE_LARGE;
+          TDEIO::UDSAtom a;
+          a.m_uds = TDEIO::UDS_SIZE_LARGE;
           a.m_long = (*it).m_long >> 32;
           s << a;
        }
@@ -67,7 +67,7 @@ TQDataStream &operator <<(TQDataStream &s, const KIO::UDSEntry &e )
     return s;
 }
 
-TQDataStream &operator >>(TQDataStream &s, KIO::UDSEntry &e )
+TQDataStream &operator >>(TQDataStream &s, TDEIO::UDSEntry &e )
 {
     e.clear();
     TQ_UINT32 size;
@@ -81,15 +81,15 @@ TQDataStream &operator >>(TQDataStream &s, KIO::UDSEntry &e )
     TQ_LLONG msb = 0;
     for(TQ_UINT32 i = 0; i < size; i++)
     {
-       KIO::UDSAtom a;
+       TDEIO::UDSAtom a;
        s >> a;
-       if (a.m_uds == KIO::UDS_SIZE_LARGE)
+       if (a.m_uds == TDEIO::UDS_SIZE_LARGE)
        {
           msb = a.m_long;
        }
        else
        {
-          if (a.m_uds == KIO::UDS_SIZE)
+          if (a.m_uds == TDEIO::UDS_SIZE)
           {
              if (a.m_long < 0)
                 a.m_long += (TQ_LLONG) 1 << 32;
@@ -104,7 +104,7 @@ TQDataStream &operator >>(TQDataStream &s, KIO::UDSEntry &e )
 
 static const unsigned int max_nums = 8;
 
-class KIO::SlaveInterfacePrivate
+class TDEIO::SlaveInterfacePrivate
 {
 public:
   SlaveInterfacePrivate() {
@@ -120,9 +120,9 @@ public:
   struct timeval start_time;
   uint nums;
   long times[max_nums];
-  KIO::filesize_t sizes[max_nums];
+  TDEIO::filesize_t sizes[max_nums];
   size_t last_time;
-  KIO::filesize_t filesize, offset;
+  TDEIO::filesize_t filesize, offset;
 
   TQTimer speed_timer;
 };
@@ -146,16 +146,16 @@ SlaveInterface::~SlaveInterface()
     delete d;
 }
 
-static KIO::filesize_t readFilesize_t(TQDataStream &stream)
+static TDEIO::filesize_t readFilesize_t(TQDataStream &stream)
 {
-   KIO::filesize_t result;
+   TDEIO::filesize_t result;
    unsigned long ul;
    stream >> ul;
    result = ul;
    if (stream.atEnd())
       return result;
    stream >> ul;
-   result += ((KIO::filesize_t)ul) << 32;
+   result += ((TDEIO::filesize_t)ul) << 32;
    return result;
 }
 
@@ -199,7 +199,7 @@ void SlaveInterface::calcSpeed()
     d->times[d->nums] = diff;
     d->sizes[d->nums++] = d->filesize - d->offset;
 
-    KIO::filesize_t lspeed = 1000 * (d->sizes[d->nums-1] - d->sizes[0]) / (d->times[d->nums-1] - d->times[0]);
+    TDEIO::filesize_t lspeed = 1000 * (d->sizes[d->nums-1] - d->sizes[0]) / (d->times[d->nums-1] - d->times[0]);
 
 //     kdDebug() << "proceeed " << (long)d->filesize << " " << diff << " " 
 // 	      << long(d->sizes[d->nums-1] - d->sizes[0]) << " " 
@@ -293,7 +293,7 @@ bool SlaveInterface::dispatch( int _cmd, const TQByteArray &rawdata )
 
     case INF_TOTAL_SIZE:
 	{
-	    KIO::filesize_t size = readFilesize_t(stream);
+	    TDEIO::filesize_t size = readFilesize_t(stream);
 	    gettimeofday(&d->start_time, 0);
 	    d->last_time = 0;
 	    d->filesize = d->offset;
@@ -307,7 +307,7 @@ bool SlaveInterface::dispatch( int _cmd, const TQByteArray &rawdata )
 	break;
     case INF_PROCESSED_SIZE:
 	{
-	    KIO::filesize_t size = readFilesize_t(stream);
+	    TDEIO::filesize_t size = readFilesize_t(stream);
 	    emit processedSize( size );
 	    d->filesize = size;
 	}
@@ -423,12 +423,12 @@ bool SlaveInterface::dispatch( int _cmd, const TQByteArray &rawdata )
     return true;
 }
 
-void SlaveInterface::setOffset( KIO::filesize_t o)
+void SlaveInterface::setOffset( TDEIO::filesize_t o)
 {
     d->offset = o;
 }
 
-KIO::filesize_t SlaveInterface::offset() const { return d->offset; }
+TDEIO::filesize_t SlaveInterface::offset() const { return d->offset; }
 
 void SlaveInterface::requestNetwork(const TQString &host, const TQString &slaveid)
 {
@@ -510,7 +510,7 @@ void SlaveInterface::messageBox( int type, const TQString &text, const TQString 
     TQDataStream stream( packedArgs, IO_WriteOnly );
 
     TQString caption( _caption );
-    if ( type == KIO::SlaveBase::SSLMessageBox )
+    if ( type == TDEIO::SlaveBase::SSLMessageBox )
         caption = TQString::fromUtf8(kapp->dcopClient()->appId()); // hack, see observer.cpp
 
     emit needProgressId();

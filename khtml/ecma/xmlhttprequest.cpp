@@ -42,7 +42,7 @@
 #include "KWQLoader.h"
 #else
 #include <kio/netaccess.h>
-using KIO::NetAccess;
+using TDEIO::NetAccess;
 #endif
 
 #define BANNED_HTTP_HEADERS "authorization,proxy-authorization,"\
@@ -81,23 +81,23 @@ XMLHttpRequestQObject::XMLHttpRequestQObject(XMLHttpRequest *_jsObject)
 }
 
 #ifdef APPLE_CHANGES
-void XMLHttpRequestQObject::slotData( KIO::Job* job, const char *data, int size )
+void XMLHttpRequestQObject::slotData( TDEIO::Job* job, const char *data, int size )
 {
   jsObject->slotData(job, data, size);
 }
 #else
-void XMLHttpRequestQObject::slotData( KIO::Job* job, const TQByteArray &data )
+void XMLHttpRequestQObject::slotData( TDEIO::Job* job, const TQByteArray &data )
 {
   jsObject->slotData(job, data);
 }
 #endif
 
-void XMLHttpRequestQObject::slotFinished( KIO::Job* job )
+void XMLHttpRequestQObject::slotFinished( TDEIO::Job* job )
 {
   jsObject->slotFinished(job);
 }
 
-void XMLHttpRequestQObject::slotRedirection( KIO::Job* job, const KURL& url)
+void XMLHttpRequestQObject::slotRedirection( TDEIO::Job* job, const KURL& url)
 {
   jsObject->slotRedirection( job, url );
 }
@@ -344,7 +344,7 @@ void XMLHttpRequest::send(const TQString& _body)
 
   const TQString protocol = url.protocol().lower();
   // Abandon the request when the protocol is other than "http",
-  // instead of blindly doing a KIO::get on other protocols like file:/.
+  // instead of blindly doing a TDEIO::get on other protocols like file:/.
   if (!protocol.startsWith("http") && !protocol.startsWith("webdav"))
   {
     abort();
@@ -359,14 +359,14 @@ void XMLHttpRequest::send(const TQString& _body)
     TQCString str = _body.utf8();
     buf.duplicate(str.data(), str.size() - 1);
 
-    job = KIO::http_post( url, buf, false );
+    job = TDEIO::http_post( url, buf, false );
     if(contentType.isNull())
       job->addMetaData( "content-type", "Content-type: text/plain" );
     else
       job->addMetaData( "content-type", contentType );
   }
   else {
-    job = KIO::get( url, false, false );
+    job = TDEIO::get( url, false, false );
   }
 
   if (!requestHeaders.isEmpty()) {
@@ -421,22 +421,22 @@ void XMLHttpRequest::send(const TQString& _body)
     return;
   }
 
-  qObject->connect( job, TQT_SIGNAL( result( KIO::Job* ) ),
-		    TQT_SLOT( slotFinished( KIO::Job* ) ) );
+  qObject->connect( job, TQT_SIGNAL( result( TDEIO::Job* ) ),
+		    TQT_SLOT( slotFinished( TDEIO::Job* ) ) );
 #ifdef APPLE_CHANGES
-  qObject->connect( job, TQT_SIGNAL( data( KIO::Job*, const char*, int ) ),
-		    TQT_SLOT( slotData( KIO::Job*, const char*, int ) ) );
+  qObject->connect( job, TQT_SIGNAL( data( TDEIO::Job*, const char*, int ) ),
+		    TQT_SLOT( slotData( TDEIO::Job*, const char*, int ) ) );
 #else
-  qObject->connect( job, TQT_SIGNAL( data( KIO::Job*, const TQByteArray& ) ),
-		    TQT_SLOT( slotData( KIO::Job*, const TQByteArray& ) ) );
+  qObject->connect( job, TQT_SIGNAL( data( TDEIO::Job*, const TQByteArray& ) ),
+		    TQT_SLOT( slotData( TDEIO::Job*, const TQByteArray& ) ) );
 #endif
-  qObject->connect( job, TQT_SIGNAL(redirection(KIO::Job*, const KURL& ) ),
-		    TQT_SLOT( slotRedirection(KIO::Job*, const KURL&) ) );
+  qObject->connect( job, TQT_SIGNAL(redirection(TDEIO::Job*, const KURL& ) ),
+		    TQT_SLOT( slotRedirection(TDEIO::Job*, const KURL&) ) );
 
 #ifdef APPLE_CHANGES
   KWQServeRequest(khtml::Cache::loader(), doc->docLoader(), job);
 #else
-  KIO::Scheduler::scheduleJob( job );
+  TDEIO::Scheduler::scheduleJob( job );
 #endif
 }
 
@@ -610,7 +610,7 @@ void XMLHttpRequest::processSyncLoadResults(const TQByteArray &data, const KURL 
   slotFinished(0);
 }
 
-void XMLHttpRequest::slotFinished(KIO::Job *)
+void XMLHttpRequest::slotFinished(TDEIO::Job *)
 {
   if (decoder) {
     response += decoder->flush();
@@ -625,7 +625,7 @@ void XMLHttpRequest::slotFinished(KIO::Job *)
   decoder = 0;
 }
 
-void XMLHttpRequest::slotRedirection(KIO::Job*, const KURL& url)
+void XMLHttpRequest::slotRedirection(TDEIO::Job*, const KURL& url)
 {
   if (!urlMatchesDocumentDomain(url)) {
     abort();
@@ -633,9 +633,9 @@ void XMLHttpRequest::slotRedirection(KIO::Job*, const KURL& url)
 }
 
 #ifdef APPLE_CHANGES
-void XMLHttpRequest::slotData( KIO::Job*, const char *data, int len )
+void XMLHttpRequest::slotData( TDEIO::Job*, const char *data, int len )
 #else
-void XMLHttpRequest::slotData(KIO::Job*, const TQByteArray &_data)
+void XMLHttpRequest::slotData(TDEIO::Job*, const TQByteArray &_data)
 #endif
 {
   if (state < Loaded ) {

@@ -8,7 +8,7 @@
 
 namespace TestNameSpace {
 
-class Test3 : public KConfigSkeleton
+class Test3 : public TDEConfigSkeleton
 {
   public:
 

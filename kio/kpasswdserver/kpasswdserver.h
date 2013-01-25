@@ -46,11 +46,11 @@ public:
 
 k_dcop:
   // KDE4 merge
-  KIO::AuthInfo checkAuthInfo(KIO::AuthInfo, long, unsigned long);
-  KIO::AuthInfo checkAuthInfo(KIO::AuthInfo, long);
-  KIO::AuthInfo queryAuthInfo(KIO::AuthInfo, TQString, long, long, unsigned long);
-  KIO::AuthInfo queryAuthInfo(KIO::AuthInfo, TQString, long, long);
-  void addAuthInfo(KIO::AuthInfo, long);
+  TDEIO::AuthInfo checkAuthInfo(TDEIO::AuthInfo, long, unsigned long);
+  TDEIO::AuthInfo checkAuthInfo(TDEIO::AuthInfo, long);
+  TDEIO::AuthInfo queryAuthInfo(TDEIO::AuthInfo, TQString, long, long, unsigned long);
+  TDEIO::AuthInfo queryAuthInfo(TDEIO::AuthInfo, TQString, long, long);
+  void addAuthInfo(TDEIO::AuthInfo, long);
 
 public slots:
   void processRequest();
@@ -60,11 +60,11 @@ public slots:
 protected:
   struct AuthInfo;
 
-  TQString createCacheKey( const KIO::AuthInfo &info );
-  const AuthInfo *findAuthInfoItem(const TQString &key, const KIO::AuthInfo &info);
-  void removeAuthInfoItem(const TQString &key, const KIO::AuthInfo &info);
-  void addAuthInfoItem(const TQString &key, const KIO::AuthInfo &info, long windowId, long seqNr, bool canceled);
-  KIO::AuthInfo copyAuthInfo(const AuthInfo *);
+  TQString createCacheKey( const TDEIO::AuthInfo &info );
+  const AuthInfo *findAuthInfoItem(const TQString &key, const TDEIO::AuthInfo &info);
+  void removeAuthInfoItem(const TQString &key, const TDEIO::AuthInfo &info);
+  void addAuthInfoItem(const TQString &key, const TDEIO::AuthInfo &info, long windowId, long seqNr, bool canceled);
+  TDEIO::AuthInfo copyAuthInfo(const AuthInfo *);
   void updateAuthExpire(const TQString &key, const AuthInfo *, long windowId, bool keep);
   int findWalletEntry( const TQMap<TQString,TQString>& map, const TQString& username );
   bool openWallet( WId windowId );
@@ -100,7 +100,7 @@ protected:
      DCOPClient *client;
      DCOPClientTransaction *transaction;
      TQString key;
-     KIO::AuthInfo info;
+     TDEIO::AuthInfo info;
      TQString errorMsg;
      long windowId;
      long seqNr;

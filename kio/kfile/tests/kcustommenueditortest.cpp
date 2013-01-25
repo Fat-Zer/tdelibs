@@ -8,7 +8,7 @@ int main(int argc, char** argv)
   KLocale::setMainCatalogue("tdelibs");
   TDEApplication app(argc, argv, "KCustomMenuEditorTest");
   KCustomMenuEditor editor(0);
-  KConfig *cfg = new KConfig("kdesktop_custom_menu2");
+  TDEConfig *cfg = new TDEConfig("kdesktop_custom_menu2");
   editor.load(cfg);
   if (editor.exec())
   {

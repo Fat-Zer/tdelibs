@@ -32,7 +32,7 @@ class KateRenderer;
 class KateFontStruct;
 class KateFontMetrics;
 
-class KConfig;
+class TDEConfig;
 
 class TQFont;
 class TQTextCodec;
@@ -115,12 +115,12 @@ class KateDocumentConfig : public KateConfig
     /**
      * Read config from object
      */
-    void readConfig (KConfig *config);
+    void readConfig (TDEConfig *config);
 
     /**
      * Write config to object
      */
-    void writeConfig (KConfig *config);
+    void writeConfig (TDEConfig *config);
 
   protected:
     void updateConfig ();
@@ -304,12 +304,12 @@ class KateViewConfig : public KateConfig
     /**
      * Read config from object
      */
-    void readConfig (KConfig *config);
+    void readConfig (TDEConfig *config);
 
     /**
      * Write config to object
      */
-    void writeConfig (KConfig *config);
+    void writeConfig (TDEConfig *config);
 
   protected:
     void updateConfig ();
@@ -432,12 +432,12 @@ class KateRendererConfig : public KateConfig
     /**
      * Read config from object
      */
-    void readConfig (KConfig *config);
+    void readConfig (TDEConfig *config);
 
     /**
      * Write config to object
      */
-    void writeConfig (KConfig *config);
+    void writeConfig (TDEConfig *config);
 
   protected:
     void updateConfig ();

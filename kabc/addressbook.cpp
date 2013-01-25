@@ -41,7 +41,7 @@ struct AddressBook::AddressBookData
 {
   Field::List mAllFields;
   ErrorHandler *mErrorHandler;
-  KConfig *mConfig;
+  TDEConfig *mConfig;
   KRES::Manager<Resource> *mManager;
   TQPtrList<Resource> mPendingLoadResources;
   TQPtrList<Resource> mPendingSaveResources;
@@ -318,7 +318,7 @@ AddressBook::AddressBook( const TQString &config )
   if ( config.isEmpty() )
     d->mConfig = 0;
   else
-    d->mConfig = new KConfig( config );
+    d->mConfig = new TDEConfig( config );
   d->mManager = new KRES::Manager<Resource>( "contact" );
   d->mManager->readConfig( d->mConfig );
   d->end.d->mResources = TQValueList<Resource*>();

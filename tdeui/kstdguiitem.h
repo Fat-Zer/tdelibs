@@ -86,7 +86,7 @@ public:
     static KGuiItem overwrite();
     /**
      * Returns a KGuiItem suiting for cases where code or functionality
-     * runs under root privileges. Used in conjunction with KConfig Modules.
+     * runs under root privileges. Used in conjunction with TDEConfig Modules.
      */
     static KGuiItem adminMode();
 

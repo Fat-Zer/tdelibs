@@ -33,8 +33,8 @@ class KMConfigFonts : public KMConfigPage
 public:
 	KMConfigFonts(TQWidget *parent = 0, const char *name = 0);
 
-	void loadConfig(KConfig*);
-	void saveConfig(KConfig*);
+	void loadConfig(TDEConfig*);
+	void saveConfig(TDEConfig*);
 
 protected slots:
 	void slotUp();

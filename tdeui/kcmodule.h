@@ -30,9 +30,9 @@
 class TQStringList;
 
 class TDEAboutData;
-class KConfigDialogManager;
-class KConfigSkeleton;
-class KCModulePrivate;
+class TDEConfigDialogManager;
+class TDEConfigSkeleton;
+class TDECModulePrivate;
 class TDEInstance;
 
 /**
@@ -54,8 +54,8 @@ class TDEInstance;
  * \code
  * #include <kgenericfactory.h>
  *
- * typedef KGenericFactory<YourKCModule, TQWidget> YourKCModuleFactory;
- * K_EXPORT_COMPONENT_FACTORY( yourLibName, YourKCModuleFactory("name_of_the_po_file") );
+ * typedef KGenericFactory<YourTDECModule, TQWidget> YourTDECModuleFactory;
+ * K_EXPORT_COMPONENT_FACTORY( yourLibName, YourTDECModuleFactory("name_of_the_po_file") );
  * \endcode
  *
  * The parameter "name_of_the_po_file" has to correspond with the messages target
@@ -66,7 +66,7 @@ class TDEInstance;
  *
  * @author Matthias Hoelzer-Kluepfel <hoelzer@kde.org>
  */
-class TDEUI_EXPORT KCModule : public TQWidget
+class TDEUI_EXPORT TDECModule : public TQWidget
 {
   Q_OBJECT
 
@@ -76,7 +76,7 @@ public:
    * An enumeration type for the buttons used by this module.
    * You should only use Help, Default and Apply. The rest is obsolete.
    *
-   * @see KCModule::buttons @see KCModule::setButtons
+   * @see TDECModule::buttons @see TDECModule::setButtons
    */
   enum Button {Help=1, Default=2, Apply=16,
                Reset=4, /* obsolete, do not use! */
@@ -89,14 +89,14 @@ public:
    * Make sure you have a TQStringList argument in your
    * implementation.
    */
-  KCModule(TQWidget *parent=0, const char *name=0, const TQStringList &args=TQStringList() );
+  TDECModule(TQWidget *parent=0, const char *name=0, const TQStringList &args=TQStringList() );
 
-  KCModule(TDEInstance *instance, TQWidget *parent=0, const TQStringList &args=TQStringList() );
+  TDECModule(TDEInstance *instance, TQWidget *parent=0, const TQStringList &args=TQStringList() );
 
   /*
    * Destroys the module.
    */
-  ~KCModule();
+  ~TDECModule();
 
   /**
    * Load the configuration data into the module.
@@ -111,9 +111,9 @@ public:
    * center, to undo all of his changes and restore the currently valid
    * settings. 
    *
-   * If you use KConfigXT, loading is taken care of automatically and 
+   * If you use TDEConfigXT, loading is taken care of automatically and 
    * you do not need to do it manually. However, if you for some reason reimplement it and
-   * also are using KConfigXT, you must call this function otherwise the loading of KConfigXT 
+   * also are using TDEConfigXT, you must call this function otherwise the loading of TDEConfigXT 
    * options will not work.
    *
    */
@@ -134,9 +134,9 @@ public:
    *
    * save is called when the user clicks "Apply" or "Ok".
    *
-   * If you use KConfigXT, saving is taken care off automatically and 
+   * If you use TDEConfigXT, saving is taken care off automatically and 
    * you do not need to load manually. However, if you for some reason reimplement it and
-   * also are using KConfigXT, you must call this function, otherwise the saving of KConfigXT 
+   * also are using TDEConfigXT, you must call this function, otherwise the saving of TDEConfigXT 
    * options will not work. Call it at the very end of your reimplementation, to avoid
    * changed() signals getting emitted when you modify widgets.
    */
@@ -148,9 +148,9 @@ public:
    * This method is called when the user clicks the "Default"
    * button. It should set the display to useful values.
    *
-   * If you use KConfigXT, you do not have to reimplement this function since
+   * If you use TDEConfigXT, you do not have to reimplement this function since
    * the fetching and settings of default values is done automatically. However, if you 
-   * reimplement and also are using KConfigXT, remember to call the base function at the 
+   * reimplement and also are using TDEConfigXT, remember to call the base function at the 
    * very end of your reimplementation.
    */
   virtual void defaults();
@@ -198,7 +198,7 @@ public:
    * The return value is a value or'ed together from
    * the Button enumeration type.
    *
-   * @see KCModule::setButtons
+   * @see TDECModule::setButtons
    */
   int buttons() const { return _btn; }
 
@@ -212,7 +212,7 @@ public:
    * customized message. If none has been set, a default message
    * will be used.
    *
-   * @see KCModule::setRootOnlyMsg
+   * @see TDECModule::setRootOnlyMsg
    */
   TQString rootOnlyMsg() const;
 
@@ -224,30 +224,30 @@ public:
    * appear (for example if it has already one). This function
    * tells KControl if a RootOnly message should be shown
    *
-   * @see KCModule::setUseRootOnlyMsg
+   * @see TDECModule::setUseRootOnlyMsg
    */
   bool useRootOnlyMsg() const;
 
   TDEInstance *instance() const;
 
   /**
-   * @return a list of @ref KConfigDialogManager's in use, if any.
+   * @return a list of @ref TDEConfigDialogManager's in use, if any.
    * @since 3.4
    */
-  const TQPtrList<KConfigDialogManager>& configs() const;
+  const TQPtrList<TDEConfigDialogManager>& configs() const;
 
 protected:
   /**
-   * Adds a KConfigskeleton @p config to watch the widget @p widget
+   * Adds a TDEConfigskeleton @p config to watch the widget @p widget
    *
    * This function is useful if you need to handle multiple configuration files.
    *
    * @since 3.3
-   * @return a pointer to the KConfigDialogManager in use
-   * @param config the KConfigSkeleton to use
+   * @return a pointer to the TDEConfigDialogManager in use
+   * @param config the TDEConfigSkeleton to use
    * @param widget the widget to watch
    */
-  KConfigDialogManager* addConfig( KConfigSkeleton *config, TQWidget* widget );
+  TDEConfigDialogManager* addConfig( TDEConfigSkeleton *config, TQWidget* widget );
 
   /**
    * Sets the quick help.
@@ -304,7 +304,7 @@ protected:
    *
    * If Apply is not specified, kcmshell will show a "Close" button.
    *
-   * @see KCModule::buttons
+   * @see TDECModule::buttons
    */
   void setButtons(int btn) { _btn = btn; }
 
@@ -315,7 +315,7 @@ protected:
    * corresponding desktop file contains the line X-TDE-RootOnly=true.
    * If no message is set, a default one will be used.
    *
-   * @see KCModule::rootOnlyMsg
+   * @see TDECModule::rootOnlyMsg
    */
   void setRootOnlyMsg(const TQString& msg);
 
@@ -325,7 +325,7 @@ protected:
    * Following the value of @p on, the RootOnly message will be
    * shown or not.
    *
-   * @see KCModule::useRootOnlyMsg
+   * @see TDECModule::useRootOnlyMsg
    */
   void setUseRootOnlyMsg(bool on);
 
@@ -348,7 +348,7 @@ private:
 protected:
   virtual void virtual_hook( int id, void* data );
 private:
-  KCModulePrivate *d;
+  TDECModulePrivate *d;
 
   /**
    * Internal function for initialization of the class.

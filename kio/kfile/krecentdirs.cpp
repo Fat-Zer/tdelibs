@@ -32,7 +32,7 @@
 
 #define MAX_DIR_HISTORY 3
 
-static void recentdirs_done(KConfig *config)
+static void recentdirs_done(TDEConfig *config)
 {
    if (config == TDEGlobal::config())
    {
@@ -44,9 +44,9 @@ static void recentdirs_done(KConfig *config)
    }
 }
 
-static KConfig *recentdirs_readList(TQString &key, TQStringList &result, bool readOnly)
+static TDEConfig *recentdirs_readList(TQString &key, TQStringList &result, bool readOnly)
 {
-   KConfig *config;
+   TDEConfig *config;
    if ((key.length() < 2) || (key[0] != ':'))
      key = ":default";
    if (key[1] == ':') 
@@ -87,7 +87,7 @@ void KRecentDirs::add(const TQString &fileClass, const TQString &directory)
 {
    TQString key = fileClass;
    TQStringList result;
-   KConfig *config = recentdirs_readList(key, result, false);
+   TDEConfig *config = recentdirs_readList(key, result, false);
    // make sure the dir is first in history
    result.remove(directory);
    result.prepend(directory);

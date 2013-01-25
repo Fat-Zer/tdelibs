@@ -8,7 +8,7 @@
 
 class TestDPointerPrivate;
 
-class TestDPointer : public KConfigSkeleton
+class TestDPointer : public TDEConfigSkeleton
 {
   public:
     class EnumDestination
@@ -210,7 +210,7 @@ class TestDPointer : public KConfigSkeleton
     static
     void writeConfig()
     {
-      static_cast<KConfigSkeleton*>(self())->writeConfig();
+      static_cast<TDEConfigSkeleton*>(self())->writeConfig();
     }
   protected:
     TestDPointer();

@@ -139,7 +139,7 @@ void GUIClient::addToolView(KMDI::ToolViewAccessor* mtva)
 
   // try to read the action shortcut
   KShortcut sc;
-  KConfig *cfg = kapp->config();
+  TDEConfig *cfg = kapp->config();
   TQString _grp = cfg->group();
   cfg->setGroup("Shortcuts");
   sc = KShortcut( cfg->readEntry( aname, "" ) );

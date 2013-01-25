@@ -92,7 +92,7 @@ public:
     }
     bool saveState( TQSessionManager& )
     {
-        KConfig* config = TDEApplication::kApplication()->sessionConfig();
+        TDEConfig* config = TDEApplication::kApplication()->sessionConfig();
         if ( KMainWindow::memberList->first() ){
             // According to Jochen Wilhelmy <digisnap@cs.tu-berlin.de>, this
             // hook is useful for better document orientation
@@ -353,7 +353,7 @@ bool KMainWindow::canBeRestored( int number )
 {
     if ( !kapp->isRestored() )
         return false;
-    KConfig *config = kapp->sessionConfig();
+    TDEConfig *config = kapp->sessionConfig();
     if ( !config )
         return false;
     config->setGroup( TQString::fromLatin1("Number") );
@@ -365,7 +365,7 @@ const TQString KMainWindow::classNameOfToplevel( int number )
 {
     if ( !kapp->isRestored() )
         return TQString::null;
-    KConfig *config = kapp->sessionConfig();
+    TDEConfig *config = kapp->sessionConfig();
     if ( !config )
         return TQString::null;
     TQString s;
@@ -412,7 +412,7 @@ bool KMainWindow::restore( int number, bool show )
 {
     if ( !canBeRestored( number ) )
         return false;
-    KConfig *config = kapp->sessionConfig();
+    TDEConfig *config = kapp->sessionConfig();
     if ( readPropertiesInternal( config, number ) ){
         if ( show )
             KMainWindow::show();
@@ -671,11 +671,11 @@ bool KMainWindow::queryClose()
     return true;
 }
 
-void KMainWindow::saveGlobalProperties( KConfig*  )
+void KMainWindow::saveGlobalProperties( TDEConfig*  )
 {
 }
 
-void KMainWindow::readGlobalProperties( KConfig*  )
+void KMainWindow::readGlobalProperties( TDEConfig*  )
 {
 }
 
@@ -689,7 +689,7 @@ void KMainWindow::showAboutApplication()
 {
 }
 
-void KMainWindow::savePropertiesInternal( KConfig *config, int number )
+void KMainWindow::savePropertiesInternal( TDEConfig *config, int number )
 {
     bool oldASWS = d->autoSaveWindowSize;
     d->autoSaveWindowSize = true; // make saveMainWindowSettings save the window size
@@ -713,7 +713,7 @@ void KMainWindow::savePropertiesInternal( KConfig *config, int number )
     d->autoSaveWindowSize = oldASWS;
 }
 
-void KMainWindow::saveMainWindowSettings(KConfig *config, const TQString &configGroup)
+void KMainWindow::saveMainWindowSettings(TDEConfig *config, const TQString &configGroup)
 {
     kdDebug(200) << "KMainWindow::saveMainWindowSettings " << configGroup << endl;
     TQString oldGroup;
@@ -802,7 +802,7 @@ void KMainWindow::createStandardStatusBarAction(){
   }
 }
 
-bool KMainWindow::readPropertiesInternal( KConfig *config, int number )
+bool KMainWindow::readPropertiesInternal( TDEConfig *config, int number )
 {
     if ( number == 1 )
         readGlobalProperties( config );
@@ -826,16 +826,16 @@ bool KMainWindow::readPropertiesInternal( KConfig *config, int number )
     return true;
 }
 
-void KMainWindow::applyMainWindowSettings(KConfig *config, const TQString &configGroup)
+void KMainWindow::applyMainWindowSettings(TDEConfig *config, const TQString &configGroup)
 {
     return applyMainWindowSettings(config,configGroup,false);
 }
 
-void KMainWindow::applyMainWindowSettings(KConfig *config, const TQString &configGroup,bool force)
+void KMainWindow::applyMainWindowSettings(TDEConfig *config, const TQString &configGroup,bool force)
 {
     kdDebug(200) << "KMainWindow::applyMainWindowSettings" << endl;
 
-    KConfigGroupSaver saver( config, configGroup.isEmpty() ? config->group() : configGroup );
+    TDEConfigGroupSaver saver( config, configGroup.isEmpty() ? config->group() : configGroup );
 
     restoreWindowSize(config);
 
@@ -899,7 +899,7 @@ void KMainWindow::finalizeGUI( bool force )
     d->settingsDirty = false;
 }
 
-void KMainWindow::saveWindowSize( KConfig * config ) const
+void KMainWindow::saveWindowSize( TDEConfig * config ) const
 {
   int scnum = TQApplication::desktop()->screenNumber(parentWidget());
   TQRect desk = TQApplication::desktop()->screenGeometry(scnum);
@@ -931,7 +931,7 @@ void KMainWindow::saveWindowSize( KConfig * config ) const
      config->writeEntry(heightString, h );
 }
 
-void KMainWindow::restoreWindowSize( KConfig * config )
+void KMainWindow::restoreWindowSize( TDEConfig * config )
 {
     if (d->care_about_geometry) {
         parseGeometry(true);

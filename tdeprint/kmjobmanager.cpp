@@ -242,14 +242,14 @@ bool KMJobManager::doPluginAction(int, const TQPtrList<KMJob>&)
 
 void KMJobManager::setLimit(int val)
 {
-	KConfig *conf = KMFactory::self()->printConfig();
+	TDEConfig *conf = KMFactory::self()->printConfig();
 	conf->setGroup("Jobs");
 	conf->writeEntry("Limit", val);
 }
 
 int KMJobManager::limit()
 {
-	KConfig	*conf = KMFactory::self()->printConfig();
+	TDEConfig	*conf = KMFactory::self()->printConfig();
 	conf->setGroup("Jobs");
 	return conf->readNumEntry("Limit", 0);
 }

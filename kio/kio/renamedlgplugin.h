@@ -43,11 +43,11 @@ public:
    * This function will be called by RenameDlg. The params are infos about the files.
    * @return If the plugin want's to display it return true, if not return false
    */
-  virtual bool initialize(KIO::RenameDlg_Mode /*mod*/ ,  const TQString &/*_src*/, const TQString &/*_dest*/,
+  virtual bool initialize(TDEIO::RenameDlg_Mode /*mod*/ ,  const TQString &/*_src*/, const TQString &/*_dest*/,
 		  const TQString &/*mimeSrc*/,
 		  const TQString &/*mimeDest*/,
-		  KIO::filesize_t /*sizeSrc*/,
-		  KIO::filesize_t /*sizeDest*/,
+		  TDEIO::filesize_t /*sizeSrc*/,
+		  TDEIO::filesize_t /*sizeDest*/,
 		  time_t /*ctimeSrc*/,
 		  time_t /*ctimeDest*/,
 		  time_t /*mtimeSrc*/,

@@ -110,7 +110,7 @@ DeviceManager::DeviceManager(int def)
   {
     TDEInstance *tmp_instance=0L;
     if (!TDEGlobal::_instance) tmp_instance=new TDEInstance("nonKDEapp");
-    KConfig *config = new KConfig("kcmmidirc", true);
+    TDEConfig *config = new TDEConfig("kcmmidirc", true);
 
     config->setGroup("Configuration");
     default_dev=config->readNumEntry("midiDevice",0);

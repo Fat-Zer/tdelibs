@@ -27,7 +27,7 @@
 
 class TQWidget;
 class TQStringList;
-class KConfig;
+class TDEConfig;
 class KDialogBase;
 
  /**
@@ -1097,7 +1097,7 @@ public:
      * If @p cfg is 0 (default) TDEGlobal::config() will be used.
      * @since 3.2
      */    
-    static void setDontShowAskAgainConfig(KConfig* cfg);
+    static void setDontShowAskAgainConfig(TDEConfig* cfg);
 
     /**
      * Create content and layout of a standard dialog
@@ -1160,7 +1160,7 @@ public:
                              TQMessageBox::Icon notifyType=TQMessageBox::Information);
 
 private:
-    static KConfig* againConfig;
+    static TDEConfig* againConfig;
 };
 
 #endif

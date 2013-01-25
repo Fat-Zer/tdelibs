@@ -34,7 +34,7 @@ using namespace KWallet;
 
 
 const TQString Wallet::LocalWallet() {
-	KConfig cfg("kwalletrc", true);
+	TDEConfig cfg("kwalletrc", true);
 	cfg.setGroup("Wallet");
 	if (!cfg.readBoolEntry("Use One Wallet", true)) {
 		TQString tmp = cfg.readEntry("Local Wallet", "localwallet");
@@ -52,7 +52,7 @@ const TQString Wallet::LocalWallet() {
 }
 
 const TQString Wallet::NetworkWallet() {
-	KConfig cfg("kwalletrc", true);
+	TDEConfig cfg("kwalletrc", true);
 	cfg.setGroup("Wallet");
 
 	TQString tmp = cfg.readEntry("Default Wallet", "kdewallet");

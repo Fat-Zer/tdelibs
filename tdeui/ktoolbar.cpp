@@ -1020,7 +1020,7 @@ void KToolBar::saveState()
     }
 
     // if that didn't work, we save to the config file
-    KConfig *config = TDEGlobal::config();
+    TDEConfig *config = TDEGlobal::config();
     saveSettings(config, TQString::null);
     config->sync();
 }
@@ -1040,7 +1040,7 @@ TQString KToolBar::settingsGroup() const
     return configGroup;
 }
 
-void KToolBar::saveSettings(KConfig *config, const TQString &_configGroup)
+void KToolBar::saveSettings(TDEConfig *config, const TQString &_configGroup)
 {
     TQString configGroup = _configGroup;
     if (configGroup.isEmpty())
@@ -1053,7 +1053,7 @@ void KToolBar::saveSettings(KConfig *config, const TQString &_configGroup)
 
     //kdDebug(220) << name() << "                position=" << position << " index=" << index << " offset=" << offset() << " newLine=" << newLine() << endl;
 
-    KConfigGroupSaver saver(config, configGroup);
+    TDEConfigGroupSaver saver(config, configGroup);
 
     if(!config->hasDefault("Position") && position == d->PositionDefault )
       config->revertToDefault("Position");
@@ -1487,7 +1487,7 @@ void KToolBar::slotAppearanceChanged()
 bool KToolBar::highlightSetting()
 {
     TQString grpToolbar(TQString::fromLatin1("Toolbar style"));
-    KConfigGroupSaver saver(TDEGlobal::config(), grpToolbar);
+    TDEConfigGroupSaver saver(TDEGlobal::config(), grpToolbar);
     return TDEGlobal::config()->readBoolEntry(TQString::fromLatin1("Highlighting"),true);
 }
 
@@ -1495,7 +1495,7 @@ bool KToolBar::highlightSetting()
 bool KToolBar::transparentSetting()
 {
     TQString grpToolbar(TQString::fromLatin1("Toolbar style"));
-    KConfigGroupSaver saver(TDEGlobal::config(), grpToolbar);
+    TDEConfigGroupSaver saver(TDEGlobal::config(), grpToolbar);
     return TDEGlobal::config()->readBoolEntry(TQString::fromLatin1("TransparentMoving"),true);
 }
 
@@ -1503,7 +1503,7 @@ bool KToolBar::transparentSetting()
 KToolBar::IconText KToolBar::iconTextSetting()
 {
     TQString grpToolbar(TQString::fromLatin1("Toolbar style"));
-    KConfigGroupSaver saver(TDEGlobal::config(), grpToolbar);
+    TDEConfigGroupSaver saver(TDEGlobal::config(), grpToolbar);
     TQString icontext = TDEGlobal::config()->readEntry(TQString::fromLatin1("IconText"),TQString::fromLatin1("IconOnly"));
     if ( icontext == "IconTextRight" )
         return IconTextRight;
@@ -1515,7 +1515,7 @@ KToolBar::IconText KToolBar::iconTextSetting()
         return IconOnly;
 }
 
-void KToolBar::applyAppearanceSettings(KConfig *config, const TQString &_configGroup, bool forceGlobal)
+void KToolBar::applyAppearanceSettings(TDEConfig *config, const TQString &_configGroup, bool forceGlobal)
 {
     TQString configGroup = _configGroup.isEmpty() ? settingsGroup() : _configGroup;
     //kdDebug(220) << name() << " applyAppearanceSettings: configGroup=" << configGroup << " forceGlobal=" << forceGlobal << endl;
@@ -1527,7 +1527,7 @@ void KToolBar::applyAppearanceSettings(KConfig *config, const TQString &_configG
     // This is the reason for the xmlgui tests below.
     bool xmlgui = d->m_xmlguiClient && !d->m_xmlguiClient->xmlFile().isEmpty();
 
-    KConfig *gconfig = TDEGlobal::config();
+    TDEConfig *gconfig = TDEGlobal::config();
 
     static const TQString &attrIconText  = TDEGlobal::staticQString("IconText");
     static const TQString &attrHighlight = TDEGlobal::staticQString("Highlighting");
@@ -1547,8 +1547,8 @@ void KToolBar::applyAppearanceSettings(KConfig *config, const TQString &_configG
 
     // this is the first iteration
     TQString grpToolbar(TQString::fromLatin1("Toolbar style"));
-    { // start block for KConfigGroupSaver
-        KConfigGroupSaver saver(gconfig, grpToolbar);
+    { // start block for TDEConfigGroupSaver
+        TDEConfigGroupSaver saver(gconfig, grpToolbar);
 
         // first, get the generic settings
         highlight   = gconfig->readBoolEntry(attrHighlight, true);
@@ -1590,7 +1590,7 @@ void KToolBar::applyAppearanceSettings(KConfig *config, const TQString &_configG
         }
 
         // revert back to the old group
-    } // end block for KConfigGroupSaver
+    } // end block for TDEConfigGroupSaver
 
     bool doUpdate = false;
 
@@ -1637,12 +1637,12 @@ void KToolBar::applyAppearanceSettings(KConfig *config, const TQString &_configG
         updateGeometry();
 }
 
-void KToolBar::applySettings(KConfig *config, const TQString &_configGroup)
+void KToolBar::applySettings(TDEConfig *config, const TQString &_configGroup)
 {
     return applySettings(config,_configGroup,false);
 }
 
-void KToolBar::applySettings(KConfig *config, const TQString &_configGroup, bool force)
+void KToolBar::applySettings(TDEConfig *config, const TQString &_configGroup, bool force)
 {
     //kdDebug(220) << name() << " applySettings group=" << _configGroup << endl;
 
@@ -1654,7 +1654,7 @@ void KToolBar::applySettings(KConfig *config, const TQString &_configGroup, bool
        Global config / <appnamerc> user settings                        if no XMLGUI is used
        Global config / App-XML attributes / <appnamerc> user settings   if XMLGUI is used
 
-      So in the first case, we simply read everything from KConfig as below,
+      So in the first case, we simply read everything from TDEConfig as below,
       but in the second case we don't do anything here if there is no app-specific config,
       and the XMLGUI-related code (loadState()) uses the static methods of this class
       to get the global defaults.
@@ -1668,7 +1668,7 @@ void KToolBar::applySettings(KConfig *config, const TQString &_configGroup, bool
     // ...and now the position stuff
     if ( config->hasGroup(configGroup) || force )
     {
-        KConfigGroupSaver cgs(config, configGroup);
+        TDEConfigGroupSaver cgs(config, configGroup);
 
         static const TQString &attrPosition  = TDEGlobal::staticQString("Position");
         static const TQString &attrIndex  = TDEGlobal::staticQString("Index");
@@ -1801,9 +1801,9 @@ void KToolBar::loadState( const TQDomElement &element )
       This method is called in order to load toolbar settings from XML.
       However this can be used in two rather different cases:
       - for the initial loading of the app's XML. In that case the settings
-        are only the defaults, the user's KConfig settings will override them
+        are only the defaults, the user's TDEConfig settings will override them
         (KDE4 TODO: how about saving those user settings into the local XML file instead?
-        Then this whole thing would be simpler, no KConfig settings to apply afterwards.
+        Then this whole thing would be simpler, no TDEConfig settings to apply afterwards.
         OTOH we'd have to migrate those settings when the .rc version increases,
         like we do for shortcuts)
 

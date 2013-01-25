@@ -59,7 +59,7 @@
 #define _PATH_TMP "/tmp"
 #endif
 
-using namespace KIO;
+using namespace TDEIO;
 
 #define SLAVE_CONNECTION_TIMEOUT_MIN	   2
 
@@ -73,7 +73,7 @@ using namespace KIO;
 #define SLAVE_CONNECTION_TIMEOUT_MAX    3600
 #endif
 
-namespace KIO {
+namespace TDEIO {
 
   /**
    * @internal
@@ -87,7 +87,7 @@ namespace KIO {
   };
 }
 
-void Slave::accept(KSocket *socket)
+void Slave::accept(TDESocket *socket)
 {
 #ifndef Q_WS_WIN
     slaveconn.init(socket);
@@ -138,7 +138,7 @@ void Slave::timeout()
    deref();
 }
 
-Slave::Slave(KServerSocket *socket, const TQString &protocol, const TQString &socketname)
+Slave::Slave(TDEServerSocket *socket, const TQString &protocol, const TQString &socketname)
   : SlaveInterface(&slaveconn), serv(socket), contacted(false),
   	d(new SlavePrivate(false))
 {
@@ -152,12 +152,12 @@ Slave::Slave(KServerSocket *socket, const TQString &protocol, const TQString &so
     m_pid = 0;
     m_port = 0;
 #ifndef Q_WS_WIN
-    connect(serv, TQT_SIGNAL(accepted( KSocket* )),
-	    TQT_SLOT(accept(KSocket*) ) );
+    connect(serv, TQT_SIGNAL(accepted( TDESocket* )),
+	    TQT_SLOT(accept(TDESocket*) ) );
 #endif
 }
 
-Slave::Slave(bool /*derived*/, KServerSocket *socket, const TQString &protocol,
+Slave::Slave(bool /*derived*/, TDEServerSocket *socket, const TQString &protocol,
 	const TQString &socketname)
   : SlaveInterface(&slaveconn), serv(socket), contacted(false),
   	d(new SlavePrivate(true))
@@ -174,8 +174,8 @@ Slave::Slave(bool /*derived*/, KServerSocket *socket, const TQString &protocol,
     m_port = 0;
     if (serv != 0) {
 #ifndef Q_WS_WIN
-      connect(serv, TQT_SIGNAL(accepted( KSocket* )),
-        TQT_SLOT(accept(KSocket*) ) );
+      connect(serv, TQT_SIGNAL(accepted( TDESocket* )),
+        TQT_SLOT(accept(TDESocket*) ) );
 #endif
     }
 }
@@ -368,7 +368,7 @@ Slave* Slave::createSlave( const TQString &protocol, const KURL& url, int& error
     if ( socketfile.status() != 0 )
     {
 	error_text = i18n("Unable to create io-slave: %1").arg(strerror(errno));
-	error = KIO::ERR_CANNOT_LAUNCH_PROCESS;
+	error = TDEIO::ERR_CANNOT_LAUNCH_PROCESS;
 	return 0;
     }
 
@@ -377,7 +377,7 @@ Slave* Slave::createSlave( const TQString &protocol, const KURL& url, int& error
 #endif
     
 #ifndef Q_WS_WIN
-    KServerSocket *kss = new KServerSocket(TQFile::encodeName(socketfile.name()).data());
+    TDEServerSocket *kss = new TDEServerSocket(TQFile::encodeName(socketfile.name()).data());
 
     Slave *slave = new Slave(kss, protocol, socketfile.name());
 #else
@@ -399,7 +399,7 @@ Slave* Slave::createSlave( const TQString &protocol, const KURL& url, int& error
        if (_name.isEmpty())
        {
           error_text = i18n("Unknown protocol '%1'.").arg(protocol);
-          error = KIO::ERR_CANNOT_LAUNCH_PROCESS;
+          error = TDEIO::ERR_CANNOT_LAUNCH_PROCESS;
           delete slave;
           return 0;
        }
@@ -407,7 +407,7 @@ Slave* Slave::createSlave( const TQString &protocol, const KURL& url, int& error
        if (lib_path.isEmpty())
        {
           error_text = i18n("Can not find io-slave for protocol '%1'.").arg(protocol);
-          error = KIO::ERR_CANNOT_LAUNCH_PROCESS;
+          error = TDEIO::ERR_CANNOT_LAUNCH_PROCESS;
           return 0;
        }
 
@@ -435,7 +435,7 @@ Slave* Slave::createSlave( const TQString &protocol, const KURL& url, int& error
     if (!client->call(launcher, launcher, "requestSlave(TQString,TQString,TQString)",
 	    params, replyType, reply)) {
 	error_text = i18n("Cannot talk to klauncher");
-	error = KIO::ERR_SLAVE_DEFINED;
+	error = TDEIO::ERR_SLAVE_DEFINED;
         delete slave;
         return 0;
     }
@@ -446,7 +446,7 @@ Slave* Slave::createSlave( const TQString &protocol, const KURL& url, int& error
     if (!pid)
     {
         error_text = i18n("Unable to create io-slave:\nklauncher said: %1").arg(errorStr);
-        error = KIO::ERR_CANNOT_LAUNCH_PROCESS;
+        error = TDEIO::ERR_CANNOT_LAUNCH_PROCESS;
         delete slave;
         return 0;
     }
@@ -479,7 +479,7 @@ Slave* Slave::holdSlave( const TQString &protocol, const KURL& url )
 #endif
 
 #ifndef Q_WS_WIN
-    KServerSocket *kss = new KServerSocket(TQFile::encodeName(socketfile.name()).data());
+    TDEServerSocket *kss = new TDEServerSocket(TQFile::encodeName(socketfile.name()).data());
 
     Slave *slave = new Slave(kss, protocol, socketfile.name());
 #else
@@ -513,7 +513,7 @@ Slave* Slave::holdSlave( const TQString &protocol, const KURL& url )
 }
 
 void Slave::virtual_hook( int id, void* data ) {
-  KIO::SlaveInterface::virtual_hook( id, data );
+  TDEIO::SlaveInterface::virtual_hook( id, data );
 }
 
 #include "slave.moc"

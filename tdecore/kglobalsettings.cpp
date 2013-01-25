@@ -108,19 +108,19 @@ void readXdgUserDirs(TQString *desktop, TQString *documents)
 
 int TDEGlobalSettings::dndEventDelay()
 {
-    KConfigGroup g( TDEGlobal::config(), "General" );
+    TDEConfigGroup g( TDEGlobal::config(), "General" );
     return g.readNumEntry("StartDragDist", TQApplication::startDragDistance());
 }
 
 bool TDEGlobalSettings::singleClick()
 {
-    KConfigGroup g( TDEGlobal::config(), "KDE" );
+    TDEConfigGroup g( TDEGlobal::config(), "KDE" );
     return g.readBoolEntry("SingleClick", KDE_DEFAULT_SINGLECLICK);
 }
 
 bool TDEGlobalSettings::iconUseRoundedRect()
 {
-    KConfigGroup g( TDEGlobal::config(), "KDE" );
+    TDEConfigGroup g( TDEGlobal::config(), "KDE" );
     return g.readBoolEntry("IconUseRoundedRect", KDE_DEFAULT_ICONTEXTROUNDED);
 }
 
@@ -128,7 +128,7 @@ TDEGlobalSettings::TearOffHandle TDEGlobalSettings::insertTearOffHandle()
 {
     int tearoff;
     bool effectsenabled;
-    KConfigGroup g( TDEGlobal::config(), "KDE" );
+    TDEConfigGroup g( TDEGlobal::config(), "KDE" );
     effectsenabled = g.readBoolEntry( "EffectsEnabled", false);
     tearoff = g.readNumEntry("InsertTearOffHandle", KDE_DEFAULT_INSERTTEAROFFHANDLES);
     return effectsenabled ? (TearOffHandle) tearoff : Disable;
@@ -136,19 +136,19 @@ TDEGlobalSettings::TearOffHandle TDEGlobalSettings::insertTearOffHandle()
 
 bool TDEGlobalSettings::changeCursorOverIcon()
 {
-    KConfigGroup g( TDEGlobal::config(), "KDE" );
+    TDEConfigGroup g( TDEGlobal::config(), "KDE" );
     return g.readBoolEntry("ChangeCursor", KDE_DEFAULT_CHANGECURSOR);
 }
 
 bool TDEGlobalSettings::visualActivate()
 {
-    KConfigGroup g( TDEGlobal::config(), "KDE" );
+    TDEConfigGroup g( TDEGlobal::config(), "KDE" );
     return g.readBoolEntry("VisualActivate", KDE_DEFAULT_VISUAL_ACTIVATE);
 }
 
 unsigned int TDEGlobalSettings::visualActivateSpeed()
 {
-    KConfigGroup g( TDEGlobal::config(), "KDE" );
+    TDEConfigGroup g( TDEGlobal::config(), "KDE" );
     return
         g.readNumEntry(
             "VisualActivateSpeed",
@@ -160,14 +160,14 @@ unsigned int TDEGlobalSettings::visualActivateSpeed()
 
 int TDEGlobalSettings::autoSelectDelay()
 {
-    KConfigGroup g( TDEGlobal::config(), "KDE" );
+    TDEConfigGroup g( TDEGlobal::config(), "KDE" );
     return g.readNumEntry("AutoSelectDelay", KDE_DEFAULT_AUTOSELECTDELAY);
 }
 
 TDEGlobalSettings::Completion TDEGlobalSettings::completionMode()
 {
     int completion;
-    KConfigGroup g( TDEGlobal::config(), "General" );
+    TDEConfigGroup g( TDEGlobal::config(), "General" );
     completion = g.readNumEntry("completionMode", -1);
     if ((completion < (int) CompletionNone) ||
         (completion > (int) CompletionPopupAuto))
@@ -179,13 +179,13 @@ TDEGlobalSettings::Completion TDEGlobalSettings::completionMode()
 
 bool TDEGlobalSettings::showContextMenusOnPress ()
 {
-    KConfigGroup g(TDEGlobal::config(), "ContextMenus");
+    TDEConfigGroup g(TDEGlobal::config(), "ContextMenus");
     return g.readBoolEntry("ShowOnPress", true);
 }
 
 int TDEGlobalSettings::contextMenuKey ()
 {
-    KConfigGroup g(TDEGlobal::config(), "Shortcuts");
+    TDEConfigGroup g(TDEGlobal::config(), "Shortcuts");
     KShortcut cut (g.readEntry ("PopupMenuContext", "Menu"));
     return cut.keyCodeQt();
 }
@@ -193,7 +193,7 @@ int TDEGlobalSettings::contextMenuKey ()
 TQColor TDEGlobalSettings::toolBarHighlightColor()
 {
     initColors();
-    KConfigGroup g( TDEGlobal::config(), "Toolbar style" );
+    TDEConfigGroup g( TDEGlobal::config(), "Toolbar style" );
     return g.readColorEntry("HighlightColor", _trinity4Blue);
 }
 
@@ -204,7 +204,7 @@ TQColor TDEGlobalSettings::inactiveTitleColor()
 #else
     if (!_inactiveBackground)
         _inactiveBackground = new TQColor(157, 170, 186);
-    KConfigGroup g( TDEGlobal::config(), "WM" );
+    TDEConfigGroup g( TDEGlobal::config(), "WM" );
     return g.readColorEntry( "inactiveBackground", _inactiveBackground );
 #endif
 }
@@ -216,7 +216,7 @@ TQColor TDEGlobalSettings::inactiveTextColor()
 #else
     if (!_inactiveForeground)
        _inactiveForeground = new TQColor(221,221,221);
-    KConfigGroup g( TDEGlobal::config(), "WM" );
+    TDEConfigGroup g( TDEGlobal::config(), "WM" );
     return g.readColorEntry( "inactiveForeground", _inactiveForeground );
 #endif
 }
@@ -229,7 +229,7 @@ TQColor TDEGlobalSettings::activeTitleColor()
     initColors();
     if (!_activeBackground)
       _activeBackground = new TQColor(65,142,220);
-    KConfigGroup g( TDEGlobal::config(), "WM" );
+    TDEConfigGroup g( TDEGlobal::config(), "WM" );
     return g.readColorEntry( "activeBackground", _activeBackground);
 #endif
 }
@@ -239,14 +239,14 @@ TQColor TDEGlobalSettings::activeTextColor()
 #ifdef Q_WS_WIN
     return qt_colorref2qrgb(GetSysColor(COLOR_CAPTIONTEXT));
 #else
-    KConfigGroup g( TDEGlobal::config(), "WM" );
+    TDEConfigGroup g( TDEGlobal::config(), "WM" );
     return g.readColorEntry( "activeForeground", tqwhiteptr );
 #endif
 }
 
 int TDEGlobalSettings::contrast()
 {
-    KConfigGroup g( TDEGlobal::config(), "KDE" );
+    TDEConfigGroup g( TDEGlobal::config(), "KDE" );
     return g.readNumEntry( "contrast", 7 );
 }
 
@@ -254,13 +254,13 @@ TQColor TDEGlobalSettings::buttonBackground()
 {
     if (!_buttonBackground)
       _buttonBackground = new TQColor(221,223,228);
-    KConfigGroup g( TDEGlobal::config(), "General" );
+    TDEConfigGroup g( TDEGlobal::config(), "General" );
     return g.readColorEntry( "buttonBackground", _buttonBackground );
 }
 
 TQColor TDEGlobalSettings::buttonTextColor()
 {
-    KConfigGroup g( TDEGlobal::config(), "General" );
+    TDEConfigGroup g( TDEGlobal::config(), "General" );
     return g.readColorEntry( "buttonForeground", tqblackptr );
 }
 
@@ -269,7 +269,7 @@ TQColor TDEGlobalSettings::buttonTextColor()
 //   TDEApplication::kdisplaySetPalette()
 TQColor TDEGlobalSettings::baseColor()
 {
-    KConfigGroup g( TDEGlobal::config(), "General" );
+    TDEConfigGroup g( TDEGlobal::config(), "General" );
     return g.readColorEntry( "windowBackground", tqwhiteptr );
 }
 
@@ -278,7 +278,7 @@ TQColor TDEGlobalSettings::baseColor()
 //   TDEApplication::kdisplaySetPalette()
 TQColor TDEGlobalSettings::textColor()
 {
-    KConfigGroup g( TDEGlobal::config(), "General" );
+    TDEConfigGroup g( TDEGlobal::config(), "General" );
     return g.readColorEntry( "windowForeground", tqblackptr );
 }
 
@@ -287,7 +287,7 @@ TQColor TDEGlobalSettings::textColor()
 //   TDEApplication::kdisplaySetPalette()
 TQColor TDEGlobalSettings::highlightedTextColor()
 {
-    KConfigGroup g( TDEGlobal::config(), "General" );
+    TDEConfigGroup g( TDEGlobal::config(), "General" );
     return g.readColorEntry( "selectForeground", tqwhiteptr );
 }
 
@@ -299,14 +299,14 @@ TQColor TDEGlobalSettings::highlightColor()
     initColors();
     if (!_selectBackground)
         _selectBackground = new TQColor(103,141,178);
-    KConfigGroup g( TDEGlobal::config(), "General" );
+    TDEConfigGroup g( TDEGlobal::config(), "General" );
     return g.readColorEntry( "selectBackground", _selectBackground );
 }
 
 TQColor TDEGlobalSettings::alternateBackgroundColor()
 {
     initColors();
-    KConfigGroup g( TDEGlobal::config(), "General" );
+    TDEConfigGroup g( TDEGlobal::config(), "General" );
     *alternateColor = calculateAlternateBackgroundColor( baseColor() );
     return g.readColorEntry( "alternateBackground", alternateColor );
 }
@@ -330,7 +330,7 @@ TQColor TDEGlobalSettings::calculateAlternateBackgroundColor(const TQColor& base
 
 bool TDEGlobalSettings::shadeSortColumn()
 {
-    KConfigGroup g( TDEGlobal::config(), "General" );
+    TDEConfigGroup g( TDEGlobal::config(), "General" );
     return g.readBoolEntry( "shadeSortColumn", KDE_DEFAULT_SHADE_SORT_COLUMN );
 }
 
@@ -339,7 +339,7 @@ TQColor TDEGlobalSettings::linkColor()
     initColors();
     if (!_linkColor)
         _linkColor = new TQColor(0,0,238);
-    KConfigGroup g( TDEGlobal::config(), "General" );
+    TDEConfigGroup g( TDEGlobal::config(), "General" );
     return g.readColorEntry( "linkColor", _linkColor );
 }
 
@@ -347,7 +347,7 @@ TQColor TDEGlobalSettings::visitedLinkColor()
 {
     if (!_visitedLinkColor)
         _visitedLinkColor = new TQColor(82,24,139);
-    KConfigGroup g( TDEGlobal::config(), "General" );
+    TDEConfigGroup g( TDEGlobal::config(), "General" );
     return g.readColorEntry( "visitedLinkColor", _visitedLinkColor );
 }
 
@@ -361,7 +361,7 @@ TQFont TDEGlobalSettings::generalFont()
     _generalFont->setPointSize(10);
     _generalFont->setStyleHint(TQFont::SansSerif);
 
-    KConfigGroup g( TDEGlobal::config(), "General" );
+    TDEConfigGroup g( TDEGlobal::config(), "General" );
     *_generalFont = g.readFontEntry("font", _generalFont);
 
     return *_generalFont;
@@ -377,7 +377,7 @@ TQFont TDEGlobalSettings::fixedFont()
     _fixedFont->setPointSize(10);
     _fixedFont->setStyleHint(TQFont::TypeWriter);
 
-    KConfigGroup g( TDEGlobal::config(), "General" );
+    TDEConfigGroup g( TDEGlobal::config(), "General" );
     *_fixedFont = g.readFontEntry("fixed", _fixedFont);
 
     return *_fixedFont;
@@ -393,7 +393,7 @@ TQFont TDEGlobalSettings::toolBarFont()
     _toolBarFont->setPointSize(10);
     _toolBarFont->setStyleHint(TQFont::SansSerif);
 
-    KConfigGroup g( TDEGlobal::config(), "General" );
+    TDEConfigGroup g( TDEGlobal::config(), "General" );
     *_toolBarFont = g.readFontEntry("toolBarFont", _toolBarFont);
 
     return *_toolBarFont;
@@ -409,7 +409,7 @@ TQFont TDEGlobalSettings::menuFont()
     _menuFont->setPointSize(10);
     _menuFont->setStyleHint(TQFont::SansSerif);
 
-    KConfigGroup g( TDEGlobal::config(), "General" );
+    TDEConfigGroup g( TDEGlobal::config(), "General" );
     *_menuFont = g.readFontEntry("menuFont", _menuFont);
 
     return *_menuFont;
@@ -425,7 +425,7 @@ TQFont TDEGlobalSettings::windowTitleFont()
     _windowTitleFont->setPointSize(10);
     _windowTitleFont->setStyleHint(TQFont::SansSerif);
 
-    KConfigGroup g( TDEGlobal::config(), "WM" );
+    TDEConfigGroup g( TDEGlobal::config(), "WM" );
     *_windowTitleFont = g.readFontEntry("activeFont", _windowTitleFont); // inconsistency
 
     return *_windowTitleFont;
@@ -441,7 +441,7 @@ TQFont TDEGlobalSettings::taskbarFont()
     _taskbarFont->setPointSize(10);
     _taskbarFont->setStyleHint(TQFont::SansSerif);
 
-    KConfigGroup g( TDEGlobal::config(), "General" );
+    TDEConfigGroup g( TDEGlobal::config(), "General" );
     *_taskbarFont = g.readFontEntry("taskbarFont", _taskbarFont);
 
     return *_taskbarFont;
@@ -516,7 +516,7 @@ void TDEGlobalSettings::initStatic() // should be called initPaths(). Don't put 
     s_trashPath = new TQString();
     s_documentPath = new TQString();
 
-    KConfigGroup g( TDEGlobal::config(), "Paths" );
+    TDEConfigGroup g( TDEGlobal::config(), "Paths" );
 
 	// Read desktop and documents path using XDG_USER_DIRS
 	readXdgUserDirs(s_desktopPath, s_documentPath);
@@ -613,7 +613,7 @@ TDEGlobalSettings::KMouseSettings & TDEGlobalSettings::mouseSettings()
         KMouseSettings & s = *s_mouseSettings; // for convenience
 
 #ifndef Q_WS_WIN
-        KConfigGroup g( TDEGlobal::config(), "Mouse" );
+        TDEConfigGroup g( TDEGlobal::config(), "Mouse" );
         TQString setting = g.readEntry("MouseButtonMapping");
         if (setting == "RightHanded")
             s.handed = KMouseSettings::RightHanded;
@@ -678,7 +678,7 @@ bool TDEGlobalSettings::isMultiHead()
 
 bool TDEGlobalSettings::wheelMouseZooms()
 {
-    KConfigGroup g( TDEGlobal::config(), "KDE" );
+    TDEConfigGroup g( TDEGlobal::config(), "KDE" );
     return g.readBoolEntry( "WheelMouseZooms", KDE_DEFAULT_WHEEL_ZOOM );
 }
 
@@ -687,7 +687,7 @@ TQRect TDEGlobalSettings::splashScreenDesktopGeometry()
     TQDesktopWidget *dw = TQApplication::desktop();
 
     if (dw->isVirtualDesktop()) {
-        KConfigGroup group(TDEGlobal::config(), "Windows");
+        TDEConfigGroup group(TDEGlobal::config(), "Windows");
         int scr = group.readNumEntry("Unmanaged", -3);
         if (group.readBoolEntry("XineramaEnabled", true) && scr != -2) {
             if (scr == -3)
@@ -706,7 +706,7 @@ TQRect TDEGlobalSettings::desktopGeometry(const TQPoint& point)
     TQDesktopWidget *dw = TQApplication::desktop();
 
     if (dw->isVirtualDesktop()) {
-        KConfigGroup group(TDEGlobal::config(), "Windows");
+        TDEConfigGroup group(TDEGlobal::config(), "Windows");
         if (group.readBoolEntry("XineramaEnabled", true) &&
             group.readBoolEntry("XineramaPlacementEnabled", true)) {
             return dw->screenGeometry(dw->screenNumber(point));
@@ -723,7 +723,7 @@ TQRect TDEGlobalSettings::desktopGeometry(TQWidget* w)
     TQDesktopWidget *dw = TQApplication::desktop();
 
     if (dw->isVirtualDesktop()) {
-        KConfigGroup group(TDEGlobal::config(), "Windows");
+        TDEConfigGroup group(TDEGlobal::config(), "Windows");
         if (group.readBoolEntry("XineramaEnabled", true) &&
             group.readBoolEntry("XineramaPlacementEnabled", true)) {
             if (w)
@@ -739,14 +739,14 @@ TQRect TDEGlobalSettings::desktopGeometry(TQWidget* w)
 
 bool TDEGlobalSettings::showIconsOnPushButtons()
 {
-    KConfigGroup g( TDEGlobal::config(), "KDE" );
+    TDEConfigGroup g( TDEGlobal::config(), "KDE" );
     return g.readBoolEntry("ShowIconsOnPushButtons",
         KDE_DEFAULT_ICON_ON_PUSHBUTTON);
 }
 
 bool TDEGlobalSettings::showFilePreview(const KURL &url)
 {
-    KConfigGroup g(TDEGlobal::config(), "PreviewSettings");
+    TDEConfigGroup g(TDEGlobal::config(), "PreviewSettings");
     TQString protocol = url.protocol();
     bool defaultSetting = KProtocolInfo::showFilePreview( protocol );
     return g.readBoolEntry(protocol, defaultSetting );
@@ -754,21 +754,21 @@ bool TDEGlobalSettings::showFilePreview(const KURL &url)
 
 bool TDEGlobalSettings::showKonqIconActivationEffect()
 {
-    KConfigGroup g( TDEGlobal::config(), "KDE" );
+    TDEConfigGroup g( TDEGlobal::config(), "KDE" );
     return g.readBoolEntry("ShowKonqIconActivationEffect",
         KDE_DEFAULT_KONQ_ACTIVATION_EFFECT);
 }
 
 bool TDEGlobalSettings::opaqueResize()
 {
-    KConfigGroup g( TDEGlobal::config(), "KDE" );
+    TDEConfigGroup g( TDEGlobal::config(), "KDE" );
     return g.readBoolEntry("OpaqueResize",
         KDE_DEFAULT_OPAQUE_RESIZE);
 }
 
 int TDEGlobalSettings::buttonLayout()
 {
-    KConfigGroup g( TDEGlobal::config(), "KDE" );
+    TDEConfigGroup g( TDEGlobal::config(), "KDE" );
     return g.readNumEntry("ButtonLayout",
         KDE_DEFAULT_BUTTON_LAYOUT);
 }

@@ -18,7 +18,7 @@
 #include <kio/global.h>
 #include <kio/slavebase.h>
 
-class HelpProtocol : public KIO::SlaveBase
+class HelpProtocol : public TDEIO::SlaveBase
 {
 public:
 

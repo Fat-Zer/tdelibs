@@ -87,7 +87,7 @@ KPixmapIO::KPixmapIO()
 
 #ifdef HAVE_MITSHM
     setShmPolicy(ShmDontKeep);
-    KConfig *config = TDEGlobal::config();
+    TDEConfig *config = TDEGlobal::config();
     if (!config->readBoolEntry("UseMitShm", true))
 	return;
 

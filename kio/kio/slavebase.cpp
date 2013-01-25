@@ -66,7 +66,7 @@
 #endif
 #endif
 
-using namespace KIO;
+using namespace TDEIO;
 
 template class TQPtrList<TQValueList<UDSAtom> >;
 typedef TQValueList<TQCString> AuthKeysList;
@@ -74,9 +74,9 @@ typedef TQMap<TQString,TQCString> AuthKeysMap;
 #define KIO_DATA TQByteArray data; TQDataStream stream( data, IO_WriteOnly ); stream
 #define KIO_FILESIZE_T(x) (unsigned long)(x & 0xffffffff) << (unsigned long)(x >> 32)
 
-namespace KIO {
+namespace TDEIO {
 
-class SlaveBaseConfig : public KConfigBase
+class SlaveBaseConfig : public TDEConfigBase
 {
 public:
    SlaveBaseConfig(SlaveBase *_slave)
@@ -124,8 +124,8 @@ public:
     KURL onHoldUrl;
 
     struct timeval last_tv;
-    KIO::filesize_t totalSize;
-    KIO::filesize_t sentListEntries;
+    TDEIO::filesize_t totalSize;
+    TDEIO::filesize_t sentListEntries;
     DCOPClient *dcopClient;
     KRemoteEncoding *remotefile;
     time_t timeout;
@@ -341,8 +341,8 @@ void SlaveBase::dispatchLoop()
 
 void SlaveBase::connectSlave(const TQString& path)
 {
-#ifdef Q_OS_UNIX //TODO: KSocket not yet available on WIN32
-    appconn->init(new KSocket(TQFile::encodeName(path).data()));
+#ifdef Q_OS_UNIX //TODO: TDESocket not yet available on WIN32
+    appconn->init(new TDESocket(TQFile::encodeName(path).data()));
     if (!appconn->inited())
     {
         kdDebug(7019) << "SlaveBase: failed to connect to " << path << endl;
@@ -389,7 +389,7 @@ bool SlaveBase::hasMetaData(const TQString &key) {
    return const_cast<const SlaveBase*>(this)->hasMetaData( key );
 }
 
-KConfigBase *SlaveBase::config()
+TDEConfigBase *SlaveBase::config()
 {
    return d->config;
 }
@@ -485,7 +485,7 @@ void SlaveBase::canResume()
     m_pConnection->send( MSG_CANRESUME );
 }
 
-void SlaveBase::totalSize( KIO::filesize_t _bytes )
+void SlaveBase::totalSize( TDEIO::filesize_t _bytes )
 {
     KIO_DATA << KIO_FILESIZE_T(_bytes);
     slaveWriteError = false;
@@ -501,7 +501,7 @@ void SlaveBase::totalSize( KIO::filesize_t _bytes )
     d->sentListEntries=0;
 }
 
-void SlaveBase::processedSize( KIO::filesize_t _bytes )
+void SlaveBase::processedSize( TDEIO::filesize_t _bytes )
 {
     bool           emitSignal=false;
     struct timeval tv;
@@ -872,7 +872,7 @@ bool SlaveBase::openPassDlg( AuthInfo& info, const TQString &errorMsg )
     else
        stream << info << errorMsg << windowId << s_seqNr << userTimestamp;
 
-    bool callOK = d->dcopClient->call( "kded", "kpasswdserver", "queryAuthInfo(KIO::AuthInfo, TQString, long int, long int, unsigned long int)",
+    bool callOK = d->dcopClient->call( "kded", "kpasswdserver", "queryAuthInfo(TDEIO::AuthInfo, TQString, long int, long int, unsigned long int)",
                                         params, replyType, reply );
 
     if (progressId)
@@ -884,7 +884,7 @@ bool SlaveBase::openPassDlg( AuthInfo& info, const TQString &errorMsg )
        return false;
     }
 
-    if ( replyType == "KIO::AuthInfo" )
+    if ( replyType == "TDEIO::AuthInfo" )
     {
        TQDataStream stream2( reply, IO_ReadOnly );
        stream2 >> authResult >> s_seqNr;
@@ -892,7 +892,7 @@ bool SlaveBase::openPassDlg( AuthInfo& info, const TQString &errorMsg )
     else
     {
        kdError(7019) << "DCOP function queryAuthInfo(...) returns "
-                     << replyType << ", expected KIO::AuthInfo" << endl;
+                     << replyType << ", expected TDEIO::AuthInfo" << endl;
        return false;
     }
 
@@ -930,9 +930,9 @@ int SlaveBase::messageBox( const TQString &text, MessageBoxType type, const TQSt
         return 0; // communication failure
 }
 
-bool SlaveBase::canResume( KIO::filesize_t offset )
+bool SlaveBase::canResume( TDEIO::filesize_t offset )
 {
-    kdDebug(7019) << "SlaveBase::canResume offset=" << KIO::number(offset) << endl;
+    kdDebug(7019) << "SlaveBase::canResume offset=" << TDEIO::number(offset) << endl;
     d->needSendCanResume = false;
     KIO_DATA << KIO_FILESIZE_T(offset);
     m_pConnection->send( MSG_RESUME, data );
@@ -1216,14 +1216,14 @@ bool SlaveBase::checkCachedAuthentication( AuthInfo& info )
     TQDataStream stream(params, IO_WriteOnly);
     stream << info << windowId << userTimestamp;
 
-    if ( !d->dcopClient->call( "kded", "kpasswdserver", "checkAuthInfo(KIO::AuthInfo, long int, unsigned long int)",
+    if ( !d->dcopClient->call( "kded", "kpasswdserver", "checkAuthInfo(TDEIO::AuthInfo, long int, unsigned long int)",
                                params, replyType, reply ) )
     {
        kdWarning(7019) << "Can't communicate with kded_kpasswdserver!" << endl;
        return false;
     }
 
-    if ( replyType == "KIO::AuthInfo" )
+    if ( replyType == "TDEIO::AuthInfo" )
     {
        TQDataStream stream2( reply, IO_ReadOnly );
        stream2 >> authResult;
@@ -1231,7 +1231,7 @@ bool SlaveBase::checkCachedAuthentication( AuthInfo& info )
     else
     {
        kdError(7019) << "DCOP function checkAuthInfo(...) returns "
-                     << replyType << ", expected KIO::AuthInfo" << endl;
+                     << replyType << ", expected TDEIO::AuthInfo" << endl;
        return false;
     }
     if (!authResult.isModified())
@@ -1253,7 +1253,7 @@ bool SlaveBase::cacheAuthentication( const AuthInfo& info )
     TQDataStream stream(params, IO_WriteOnly);
     stream << info << windowId;
 
-    d->dcopClient->send( "kded", "kpasswdserver", "addAuthInfo(KIO::AuthInfo, long int)", params );
+    d->dcopClient->send( "kded", "kpasswdserver", "addAuthInfo(TDEIO::AuthInfo, long int)", params );
 
     return true;
 }

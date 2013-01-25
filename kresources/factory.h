@@ -49,7 +49,7 @@ namespace KRES {
  *
  * // to allow a transparent configuration of resources, we have
  * // to use a kconfig object.
- * KConfig config( "tst" );
+ * TDEConfig config( "tst" );
  * config.writePathEntry( "FileName", "/home/foobar/test.vcf" );// resource dependend
  * config.writeEntry( "FileFormat", "vcard" );                  // resource dependend
  *
@@ -87,7 +87,7 @@ class KRESOURCES_EXPORT Factory
      * @param config The config object where the resource get it settings from,
      *               or 0 if a resource with default values should be created.
      */
-    Resource *resource( const TQString& type, const KConfig *config );
+    Resource *resource( const TQString& type, const TDEConfig *config );
 
     /**
      * Returns a list of all available resource types.

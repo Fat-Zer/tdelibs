@@ -28,7 +28,7 @@
 
 #include <klibloader.h>
 
-class KConfig;
+class TDEConfig;
 
 namespace KRES {
 
@@ -72,9 +72,9 @@ class ConfigWidget;
 class ResourceExample : public KRES::Resource
 {
   public:
-    ResourceExample( const KConfig * );
+    ResourceExample( const TDEConfig * );
     ~ResourceExample();
-    void writeConfig( KConfig *config );
+    void writeConfig( TDEConfig *config );
 
   private:
     TQString mLocation;
@@ -88,7 +88,7 @@ class ResourceExample : public KRES::Resource
 
 #include "resourceexample.h"
 
-ResourceExample::ResourceExample( const KConfig *config )
+ResourceExample::ResourceExample( const TDEConfig *config )
     : Resource( config )
 {
   if ( config ) {
@@ -100,7 +100,7 @@ ResourceExample::ResourceExample( const KConfig *config )
   }
 }
 
-void ResourceExample::writeConfig( KConfig *config )
+void ResourceExample::writeConfig( TDEConfig *config )
 {
   KRES::Resource::writeConfig( config );
   config->writePathEntry( "Location", mLocation );
@@ -113,7 +113,7 @@ extern "C"
     return new ResourceExampleConfig( parent, "Configure Example Resource" );
   }
 
-  KRES::Resource *resource( const KConfig *config ) {
+  KRES::Resource *resource( const TDEConfig *config ) {
     return new ResourceExample( config );
   }
 }
@@ -266,7 +266,7 @@ class KRESOURCES_EXPORT Resource : public TQObject
      * @param config Configuration to read persistence information from.
      *               If config is 0, create object using default settings.
      */
-    Resource( const KConfig *config );
+    Resource( const TDEConfig *config );
 
     /**
      * Destructor.
@@ -279,7 +279,7 @@ class KRESOURCES_EXPORT Resource : public TQObject
      * or Terrible Things(TM) will happen.
      * @param config Configuration to write persistence information to.
      */
-    virtual void writeConfig( KConfig *config );
+    virtual void writeConfig( TDEConfig *config );
 
     /**
      * Open this resource, if it not already open. Increase the open
@@ -384,7 +384,7 @@ class KRESOURCES_EXPORT Resource : public TQObject
 class KRESOURCES_EXPORT PluginFactoryBase : public KLibFactory
 {
   public:
-    virtual Resource *resource( const KConfig *config ) = 0;
+    virtual Resource *resource( const TDEConfig *config ) = 0;
 
     virtual ConfigWidget *configWidget( TQWidget *parent ) = 0;
 
@@ -404,7 +404,7 @@ template<class TR,class TC>
 class PluginFactory : public PluginFactoryBase
 {
   public:
-    Resource *resource( const KConfig *config )
+    Resource *resource( const TDEConfig *config )
     {
       return new TR( config );
     }

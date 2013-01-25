@@ -40,10 +40,10 @@ namespace KABC {
  *      KAudioPlayer::play( tmp.name() );
  *    } else if(!sound.url().isEmpty()) {
  *      TQString tmpFile;
- *      if(!KIO::NetAccess::download(KURL(themeURL.url()), tmpFile, NULL))
+ *      if(!TDEIO::NetAccess::download(KURL(themeURL.url()), tmpFile, NULL))
  *      {
  *        KMessageBox::error(0L,
- *                           KIO::NetAccess::lastErrorString(),
+ *                           TDEIO::NetAccess::lastErrorString(),
  *                           i18n("Failed to download sound file"),
  *                           KMessageBox::Notify
  *                          );

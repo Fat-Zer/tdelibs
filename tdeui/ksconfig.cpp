@@ -181,7 +181,7 @@ KSpellConfig::dictFromList() const
 bool
 KSpellConfig::readGlobalSettings()
 {
-  KConfigGroupSaver cs( kc,"KSpell" );
+  TDEConfigGroupSaver cs( kc,"KSpell" );
 
   setNoRootAffix   ( kc->readNumEntry("KSpell_NoRootAffix", 0) );
   setRunTogether   ( kc->readNumEntry("KSpell_RunTogether", 0) );
@@ -196,7 +196,7 @@ KSpellConfig::readGlobalSettings()
 bool
 KSpellConfig::writeGlobalSettings ()
 {
-  KConfigGroupSaver cs( kc,"KSpell" );
+  TDEConfigGroupSaver cs( kc,"KSpell" );
 
   kc->writeEntry ("KSpell_NoRootAffix",(int) noRootAffix(), true, true);
   kc->writeEntry ("KSpell_RunTogether", (int) runTogether(), true, true);

@@ -30,8 +30,8 @@ class KMConfigCupsDir : public KMConfigPage
 public:
 	KMConfigCupsDir(TQWidget *parent = 0);
 
-	void loadConfig(KConfig*);
-	void saveConfig(KConfig*);
+	void loadConfig(TDEConfig*);
+	void saveConfig(TDEConfig*);
 
 private:
 	KURLRequester		*m_installdir;

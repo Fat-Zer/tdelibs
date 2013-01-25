@@ -125,7 +125,7 @@ TQString Factory::typeDescription( const TQString &type ) const
   return ptr->comment();
 }
 
-Resource *Factory::resource( const TQString& type, const KConfig *config )
+Resource *Factory::resource( const TQString& type, const TDEConfig *config )
 {
   kdDebug(5650) << "Factory::resource( " << type << ", config )" << endl;
 

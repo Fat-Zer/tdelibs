@@ -26,7 +26,7 @@
 
 #include "kioslavetest.h"
 
-using namespace KIO;
+using namespace TDEIO;
 
 KioslaveTest::KioslaveTest( TQString src, TQString dest, uint op, uint pr )
   : KMainWindow(0, "")
@@ -165,10 +165,10 @@ KioslaveTest::KioslaveTest( TQString src, TQString dest, uint op, uint pr )
   setCentralWidget( main_widget );
 
   slave = 0;
-//  slave = KIO::Scheduler::getConnectedSlave(KURL("ftp://ftp.kde.org"));
-  KIO::Scheduler::connect(TQT_SIGNAL(slaveConnected(KIO::Slave*)),
+//  slave = TDEIO::Scheduler::getConnectedSlave(KURL("ftp://ftp.kde.org"));
+  TDEIO::Scheduler::connect(TQT_SIGNAL(slaveConnected(TDEIO::Slave*)),
 	this, TQT_SLOT(slotSlaveConnected()));
-  KIO::Scheduler::connect(TQT_SIGNAL(slaveError(KIO::Slave*,int,const TQString&)),
+  TDEIO::Scheduler::connect(TQT_SIGNAL(slaveError(TDEIO::Slave*,int,const TQString&)),
 	this, TQT_SLOT(slotSlaveError()));
 }
 
@@ -183,7 +183,7 @@ void KioslaveTest::slotQuit(){
     job->kill( true );  // kill the job quietly
   }
   if (slave)
-    KIO::Scheduler::disconnectSlave(slave);
+    TDEIO::Scheduler::disconnectSlave(slave);
   kapp->quit();
 }
 
@@ -241,70 +241,70 @@ void KioslaveTest::startJob() {
 
   switch ( selectedOperation ) {
   case List:
-    myJob = KIO::listDir( src );
-    connect(myJob, TQT_SIGNAL( entries( KIO::Job*, const KIO::UDSEntryList&)),
-            TQT_SLOT( slotEntries( KIO::Job*, const KIO::UDSEntryList&)));
+    myJob = TDEIO::listDir( src );
+    connect(myJob, TQT_SIGNAL( entries( TDEIO::Job*, const TDEIO::UDSEntryList&)),
+            TQT_SLOT( slotEntries( TDEIO::Job*, const TDEIO::UDSEntryList&)));
     break;
 
   case ListRecursive:
-    myJob = KIO::listRecursive( src );
-    connect(myJob, TQT_SIGNAL( entries( KIO::Job*, const KIO::UDSEntryList&)),
-            TQT_SLOT( slotEntries( KIO::Job*, const KIO::UDSEntryList&)));
+    myJob = TDEIO::listRecursive( src );
+    connect(myJob, TQT_SIGNAL( entries( TDEIO::Job*, const TDEIO::UDSEntryList&)),
+            TQT_SLOT( slotEntries( TDEIO::Job*, const TDEIO::UDSEntryList&)));
     break;
 
   case Stat:
-    myJob = KIO::stat( src, false, 2 );
+    myJob = TDEIO::stat( src, false, 2 );
     break;
 
   case Get:
-    myJob = KIO::get( src, true );
-    connect(myJob, TQT_SIGNAL( data( KIO::Job*, const TQByteArray &)),
-            TQT_SLOT( slotData( KIO::Job*, const TQByteArray &)));
+    myJob = TDEIO::get( src, true );
+    connect(myJob, TQT_SIGNAL( data( TDEIO::Job*, const TQByteArray &)),
+            TQT_SLOT( slotData( TDEIO::Job*, const TQByteArray &)));
     break;
 
   case Put:
     putBuffer = 0;
-    myJob = KIO::put( src, -1, true, false);
-    connect(myJob, TQT_SIGNAL( dataReq( KIO::Job*, TQByteArray &)),
-            TQT_SLOT( slotDataReq( KIO::Job*, TQByteArray &)));
+    myJob = TDEIO::put( src, -1, true, false);
+    connect(myJob, TQT_SIGNAL( dataReq( TDEIO::Job*, TQByteArray &)),
+            TQT_SLOT( slotDataReq( TDEIO::Job*, TQByteArray &)));
     break;
 
   case Copy:
-    job = KIO::copy( src, dest, observe );
+    job = TDEIO::copy( src, dest, observe );
     break;
 
   case Move:
-    job = KIO::move( src, dest, observe );
+    job = TDEIO::move( src, dest, observe );
     break;
 
   case Delete:
-    job = KIO::del( src, false, observe );
+    job = TDEIO::del( src, false, observe );
     break;
 
   case Shred:
-    job = KIO::del(src, true, observe);
+    job = TDEIO::del(src, true, observe);
     break;
 
   case Mkdir:
-    myJob = KIO::mkdir( src );
+    myJob = TDEIO::mkdir( src );
     break;
 
   case Mimetype:
-    myJob = KIO::mimetype( src );
+    myJob = TDEIO::mimetype( src );
     break;
   }
   if (myJob)
   {
     if (slave)
-      KIO::Scheduler::assignJobToSlave(slave, myJob);
+      TDEIO::Scheduler::assignJobToSlave(slave, myJob);
     job = myJob;
   }
 
-  connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
-           TQT_SLOT( slotResult( KIO::Job * ) ) );
+  connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ),
+           TQT_SLOT( slotResult( TDEIO::Job * ) ) );
 
-  connect( job, TQT_SIGNAL( canceled( KIO::Job * ) ),
-           TQT_SLOT( slotResult( KIO::Job * ) ) );
+  connect( job, TQT_SIGNAL( canceled( TDEIO::Job * ) ),
+           TQT_SLOT( slotResult( TDEIO::Job * ) ) );
 
   if (progressMode == ProgressStatus) {
     statusProgress->setJob( job );
@@ -314,7 +314,7 @@ void KioslaveTest::startJob() {
 }
 
 
-void KioslaveTest::slotResult( KIO::Job * _job )
+void KioslaveTest::slotResult( TDEIO::Job * _job )
 {
   if ( _job->error() )
   {
@@ -322,12 +322,12 @@ void KioslaveTest::slotResult( KIO::Job * _job )
   }
   else if ( selectedOperation == Stat )
   {
-      UDSEntry entry = ((KIO::StatJob*)_job)->statResult();
+      UDSEntry entry = ((TDEIO::StatJob*)_job)->statResult();
       printUDSEntry( entry );
   }
   else if ( selectedOperation == Mimetype )
   {
-      kdDebug() << "mimetype is " << ((KIO::MimetypeJob*)_job)->mimetype() << endl;
+      kdDebug() << "mimetype is " << ((TDEIO::MimetypeJob*)_job)->mimetype() << endl;
   }
 
   if (job == _job)
@@ -357,62 +357,62 @@ static void printACL( const TQString& acl )
 }
 
 
-void KioslaveTest::printUDSEntry( const KIO::UDSEntry & entry )
+void KioslaveTest::printUDSEntry( const TDEIO::UDSEntry & entry )
 {
-    KIO::UDSEntry::ConstIterator it = entry.begin();
+    TDEIO::UDSEntry::ConstIterator it = entry.begin();
     for( ; it != entry.end(); it++ ) {
         switch ((*it).m_uds) {
-            case KIO::UDS_FILE_TYPE:
+            case TDEIO::UDS_FILE_TYPE:
                 kdDebug() << "File Type : " << (mode_t)((*it).m_long) << endl;
                 if ( S_ISDIR( (mode_t)((*it).m_long) ) )
                 {
                     kdDebug() << "is a dir" << endl;
                 }
                 break;
-            case KIO::UDS_ACCESS:
+            case TDEIO::UDS_ACCESS:
                 kdDebug() << "Access permissions : " << (*it).m_long << endl;
                 break;
-            case KIO::UDS_EXTENDED_ACL:
+            case TDEIO::UDS_EXTENDED_ACL:
                 if( (*it).m_long == 1 )
                   kdDebug() << "Has extended ACL information." << endl;
                 break;
-            case KIO::UDS_ACL_STRING:
+            case TDEIO::UDS_ACL_STRING:
                 kdDebug() << "ACL: " << ( (*it).m_str.ascii() ) << endl;
                 printACL( (*it).m_str );
                 break;
-            case KIO::UDS_DEFAULT_ACL_STRING:
+            case TDEIO::UDS_DEFAULT_ACL_STRING:
                 kdDebug() << "Default ACL: " << ( (*it).m_str.ascii() ) << endl;
                 printACL( (*it).m_str );
                 break;
-            case KIO::UDS_USER:
+            case TDEIO::UDS_USER:
                 kdDebug() << "User : " << ((*it).m_str.ascii() ) << endl;
                 break;
-            case KIO::UDS_GROUP:
+            case TDEIO::UDS_GROUP:
                 kdDebug() << "Group : " << ((*it).m_str.ascii() ) << endl;
                 break;
-            case KIO::UDS_NAME:
+            case TDEIO::UDS_NAME:
                 kdDebug() << "Name : " << ((*it).m_str.ascii() ) << endl;
                 //m_strText = decodeFileName( (*it).m_str );
                 break;
-            case KIO::UDS_URL:
+            case TDEIO::UDS_URL:
                 kdDebug() << "URL : " << ((*it).m_str.ascii() ) << endl;
                 break;
-            case KIO::UDS_MIME_TYPE:
+            case TDEIO::UDS_MIME_TYPE:
                 kdDebug() << "MimeType : " << ((*it).m_str.ascii() ) << endl;
                 break;
-            case KIO::UDS_LINK_DEST:
+            case TDEIO::UDS_LINK_DEST:
                 kdDebug() << "LinkDest : " << ((*it).m_str.ascii() ) << endl;
                 break;
-            case KIO::UDS_SIZE:
-                kdDebug() << "Size: " << KIO::convertSize((*it).m_long) << endl;
+            case TDEIO::UDS_SIZE:
+                kdDebug() << "Size: " << TDEIO::convertSize((*it).m_long) << endl;
                 break;
         }
     }
 }
 
-void KioslaveTest::slotEntries(KIO::Job* job, const KIO::UDSEntryList& list) {
+void KioslaveTest::slotEntries(TDEIO::Job* job, const TDEIO::UDSEntryList& list) {
 
-    KURL url = static_cast<KIO::ListJob*>( job )->url();
+    KURL url = static_cast<TDEIO::ListJob*>( job )->url();
     KProtocolInfo::ExtraFieldList extraFields = KProtocolInfo::extraFields(url);
     UDSEntryListConstIterator it=list.begin();
     for (; it != list.end(); ++it) {
@@ -433,7 +433,7 @@ void KioslaveTest::slotEntries(KIO::Job* job, const KIO::UDSEntryList& list) {
     }
 }
 
-void KioslaveTest::slotData(KIO::Job*, const TQByteArray &data)
+void KioslaveTest::slotData(TDEIO::Job*, const TQByteArray &data)
 {
     if (data.size() == 0)
     {
@@ -445,7 +445,7 @@ void KioslaveTest::slotData(KIO::Job*, const TQByteArray &data)
     }
 }
 
-void KioslaveTest::slotDataReq(KIO::Job*, TQByteArray &data)
+void KioslaveTest::slotDataReq(TDEIO::Job*, TQByteArray &data)
 {
     const char *fileDataArray[] =
        {

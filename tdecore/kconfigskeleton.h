@@ -39,20 +39,20 @@
   /**
    * @short Class for storing a preferences setting
    * @author Cornelius Schumacher
-   * @see KConfigSkeleton
+   * @see TDEConfigSkeleton
    * 
-   * This class represents one preferences setting as used by @ref KConfigSkeleton.
-   * Subclasses of KConfigSkeletonItem implement storage functions for a certain type of
+   * This class represents one preferences setting as used by @ref TDEConfigSkeleton.
+   * Subclasses of TDEConfigSkeletonItem implement storage functions for a certain type of
    * setting. Normally you don't have to use this class directly. Use the special
-   * addItem() functions of KConfigSkeleton instead. If you subclass this class you will
-   * have to register instances with the function KConfigSkeleton::addItem().
+   * addItem() functions of TDEConfigSkeleton instead. If you subclass this class you will
+   * have to register instances with the function TDEConfigSkeleton::addItem().
    */
-  class TDECORE_EXPORT KConfigSkeletonItem
+  class TDECORE_EXPORT TDEConfigSkeletonItem
   {
   public:
-    typedef TQValueList < KConfigSkeletonItem * >List;
-    typedef TQDict < KConfigSkeletonItem > Dict;
-    typedef TQDictIterator < KConfigSkeletonItem > DictIterator;
+    typedef TQValueList < TDEConfigSkeletonItem * >List;
+    typedef TQDict < TDEConfigSkeletonItem > Dict;
+    typedef TQDictIterator < TDEConfigSkeletonItem > DictIterator;
 
     /**
      * Constructor.
@@ -60,7 +60,7 @@
      * @param group Config file group.
      * @param key Config file key.
      */
-    KConfigSkeletonItem(const TQString & group, const TQString & key)
+    TDEConfigSkeletonItem(const TQString & group, const TQString & key)
       :mGroup(group),mKey(key), mIsImmutable(true)
     {
     }
@@ -68,7 +68,7 @@
     /**
      * Destructor.
      */
-    virtual ~KConfigSkeletonItem()
+    virtual ~TDEConfigSkeletonItem()
     {
     }
 
@@ -153,22 +153,22 @@
     }
 
     /**
-     * This function is called by @ref KConfigSkeleton to read the value for this setting
+     * This function is called by @ref TDEConfigSkeleton to read the value for this setting
      * from a config file.
      * value.
      */
-    virtual void readConfig(KConfig *) = 0;
+    virtual void readConfig(TDEConfig *) = 0;
 
     /**
-     * This function is called by @ref KConfigSkeleton to write the value of this setting
+     * This function is called by @ref TDEConfigSkeleton to write the value of this setting
      * to a config file.
      */
-    virtual void writeConfig(KConfig *) = 0;
+    virtual void writeConfig(TDEConfig *) = 0;
 
     /**
      * Read global default value.
      */
-    virtual void readDefault(KConfig *) = 0;
+    virtual void readDefault(TDEConfig *) = 0;
 
     /**
      * Set item to @p p
@@ -197,7 +197,7 @@
 
     /**
      * Exchanges the current value with the default value
-     * Used by KConfigSkeleton::useDefaults(bool);
+     * Used by TDEConfigSkeleton::useDefaults(bool);
      */
     virtual void swapDefault() = 0;
 
@@ -212,9 +212,9 @@
   protected:
     /**
      * sets mIsImmutable to true if mKey in config is immutable
-     * @param config KConfig to check if mKey is immutable in
+     * @param config TDEConfig to check if mKey is immutable in
      */
-    void readImmutability(KConfig *config);
+    void readImmutability(TDEConfig *config);
 
     TQString mGroup;
     TQString mKey;
@@ -228,18 +228,18 @@
   };
 
 
-template < typename T > class KConfigSkeletonGenericItem:public KConfigSkeletonItem
+template < typename T > class TDEConfigSkeletonGenericItem:public TDEConfigSkeletonItem
   {
   public:
-    KConfigSkeletonGenericItem(const TQString & group, const TQString & key, T & reference,
+    TDEConfigSkeletonGenericItem(const TQString & group, const TQString & key, T & reference,
                 T defaultValue)
-      : KConfigSkeletonItem(group, key), mReference(reference),
+      : TDEConfigSkeletonItem(group, key), mReference(reference),
         mDefault(defaultValue), mLoadedValue(defaultValue)
     {
     }
 
     /**
-     * Set value of this KConfigSkeletonItem.
+     * Set value of this TDEConfigSkeletonItem.
      */
     void setValue(const T & v)
     {
@@ -247,7 +247,7 @@ template < typename T > class KConfigSkeletonGenericItem:public KConfigSkeletonI
     }
 
     /**
-     * Return value of this KConfigSkeletonItem.
+     * Return value of this TDEConfigSkeletonItem.
      */
     T & value()
     {
@@ -255,7 +255,7 @@ template < typename T > class KConfigSkeletonGenericItem:public KConfigSkeletonI
     }
 
     /**
-     * Return const value of this KConfigSkeletonItem.
+     * Return const value of this TDEConfigSkeletonItem.
      */
     const T & value() const
     {
@@ -275,7 +275,7 @@ template < typename T > class KConfigSkeletonGenericItem:public KConfigSkeletonI
       mReference = mDefault;
     }
 
-    virtual void writeConfig(KConfig * config)
+    virtual void writeConfig(TDEConfig * config)
     {
       if ( mReference != mLoadedValue ) // Is this needed?
       {
@@ -287,7 +287,7 @@ template < typename T > class KConfigSkeletonGenericItem:public KConfigSkeletonI
       }
     }
 
-    void readDefault(KConfig * config)
+    void readDefault(TDEConfig * config)
     {
       config->setReadDefaults(true);
       readConfig(config);
@@ -311,19 +311,19 @@ template < typename T > class KConfigSkeletonGenericItem:public KConfigSkeletonI
   /**
    * @short Class for handling preferences settings for an application.
    * @author Cornelius Schumacher
-   * @see KConfigSkeletonItem
+   * @see TDEConfigSkeletonItem
    * 
    * This class provides an interface to preferences settings. Preferences items
    * can be registered by the addItem() function corresponding to the data type of
-   * the seetting. KConfigSkeleton then handles reading and writing of config files and
+   * the seetting. TDEConfigSkeleton then handles reading and writing of config files and
    * setting of default values.
    * 
-   * Normally you will subclass KConfigSkeleton, add data members for the preferences
+   * Normally you will subclass TDEConfigSkeleton, add data members for the preferences
    * settings and register the members in the constructor of the subclass.
    * 
    * Example:
    * \code
-   * class MyPrefs : public KConfigSkeleton
+   * class MyPrefs : public TDEConfigSkeleton
    * {
    *   public:
    *     MyPrefs()
@@ -342,9 +342,9 @@ template < typename T > class KConfigSkeletonGenericItem:public KConfigSkeletonI
    * }
    * \endcode
    * 
-   * It might be convenient in many cases to make this subclass of KConfigSkeleton a
+   * It might be convenient in many cases to make this subclass of TDEConfigSkeleton a
    * singleton for global access from all over the application without passing
-   * references to the KConfigSkeleton object around.
+   * references to the TDEConfigSkeleton object around.
    * 
    * You can write the data to the configuration file by calling @ref writeConfig()
    * and read the data from the configuration file by calling @ref readConfig().
@@ -355,21 +355,21 @@ template < typename T > class KConfigSkeletonGenericItem:public KConfigSkeletonI
    * @ref usrWriteConfig().
    * 
    * Internally preferences settings are stored in instances of subclasses of
-   * @ref KConfigSkeletonItem. You can also add KConfigSkeletonItem subclasses 
+   * @ref TDEConfigSkeletonItem. You can also add TDEConfigSkeletonItem subclasses 
    * for your own types and call the generic @ref addItem() to register them.
    *
-   * In many cases you don't have to write the specific KConfigSkeleton
+   * In many cases you don't have to write the specific TDEConfigSkeleton
    * subclasses yourself, but you can use \ref kconfig_compiler to automatically
    * generate the C++ code from an XML description of the configuration options.
    */
-class TDECORE_EXPORT KConfigSkeleton
+class TDECORE_EXPORT TDEConfigSkeleton
 {
 public:
 
   /**
    * Class for handling a string preferences item.
    */
-  class TDECORE_EXPORT ItemString:public KConfigSkeletonGenericItem < TQString >
+  class TDECORE_EXPORT ItemString:public TDEConfigSkeletonGenericItem < TQString >
   {
   public:
     enum Type { Normal, Password, Path };
@@ -379,8 +379,8 @@ public:
                const TQString & defaultValue = TQString::fromLatin1(""), // NOT TQString::null !!
                Type type = Normal);
 
-    void writeConfig(KConfig * config);
-    void readConfig(KConfig * config);
+    void writeConfig(TDEConfig * config);
+    void readConfig(TDEConfig * config);
     void setProperty(const TQVariant & p);
     TQVariant property() const;
 
@@ -414,13 +414,13 @@ public:
   /**
    * Class for handling a TQVariant preferences item.
    */
-  class TDECORE_EXPORT ItemProperty:public KConfigSkeletonGenericItem < TQVariant >
+  class TDECORE_EXPORT ItemProperty:public TDEConfigSkeletonGenericItem < TQVariant >
   {
   public:
     ItemProperty(const TQString & group, const TQString & key,
                  TQVariant & reference, TQVariant defaultValue = 0);
 
-    void readConfig(KConfig * config);
+    void readConfig(TDEConfig * config);
     void setProperty(const TQVariant & p);
     TQVariant property() const;
   };
@@ -429,13 +429,13 @@ public:
   /**
    * Class for handling a bool preferences item.
    */
-  class TDECORE_EXPORT ItemBool:public KConfigSkeletonGenericItem < bool >
+  class TDECORE_EXPORT ItemBool:public TDEConfigSkeletonGenericItem < bool >
   {
   public:
     ItemBool(const TQString & group, const TQString & key, bool & reference,
              bool defaultValue = true);
 
-    void readConfig(KConfig * config);
+    void readConfig(TDEConfig * config);
     void setProperty(const TQVariant & p);
     TQVariant property() const;
   };
@@ -444,13 +444,13 @@ public:
   /**
    * Class for handling an integer preferences item.
    */
-  class TDECORE_EXPORT ItemInt:public KConfigSkeletonGenericItem < int >
+  class TDECORE_EXPORT ItemInt:public TDEConfigSkeletonGenericItem < int >
   {
   public:
     ItemInt(const TQString & group, const TQString & key, int &reference,
             int defaultValue = 0);
 
-    void readConfig(KConfig * config);
+    void readConfig(TDEConfig * config);
     void setProperty(const TQVariant & p);
     TQVariant property() const;
     TQVariant minValue() const;
@@ -469,13 +469,13 @@ public:
   /**
    * Class for handling an 64-bit integer preferences item.
    */
-  class TDECORE_EXPORT ItemInt64:public KConfigSkeletonGenericItem < TQ_INT64 >
+  class TDECORE_EXPORT ItemInt64:public TDEConfigSkeletonGenericItem < TQ_INT64 >
   {
   public:
     ItemInt64(const TQString & group, const TQString & key, TQ_INT64 &reference,
             TQ_INT64 defaultValue = 0);
 
-    void readConfig(KConfig * config);
+    void readConfig(TDEConfig * config);
     void setProperty(const TQVariant & p);
     TQVariant property() const;
 
@@ -510,8 +510,8 @@ public:
 
     TQValueList<Choice> choices() const;
 
-    void readConfig(KConfig * config);
-    void writeConfig(KConfig * config);
+    void readConfig(TDEConfig * config);
+    void writeConfig(TDEConfig * config);
 
   private:
       TQValueList<Choice> mChoices;
@@ -521,13 +521,13 @@ public:
   /**
    * Class for handling an unsingend integer preferences item.
    */
-  class TDECORE_EXPORT ItemUInt:public KConfigSkeletonGenericItem < unsigned int >
+  class TDECORE_EXPORT ItemUInt:public TDEConfigSkeletonGenericItem < unsigned int >
   {
   public:
     ItemUInt(const TQString & group, const TQString & key,
              unsigned int &reference, unsigned int defaultValue = 0);
 
-    void readConfig(KConfig * config);
+    void readConfig(TDEConfig * config);
     void setProperty(const TQVariant & p);
     TQVariant property() const;
     TQVariant minValue() const;
@@ -547,13 +547,13 @@ public:
   /**
    * Class for hanlding a long integer preferences item.
    */
-  class TDECORE_EXPORT ItemLong:public KConfigSkeletonGenericItem < long >
+  class TDECORE_EXPORT ItemLong:public TDEConfigSkeletonGenericItem < long >
   {
   public:
     ItemLong(const TQString & group, const TQString & key, long &reference,
              long defaultValue = 0);
 
-    void readConfig(KConfig * config);
+    void readConfig(TDEConfig * config);
     void setProperty(const TQVariant & p);
     TQVariant property() const;
     TQVariant minValue() const;
@@ -573,13 +573,13 @@ public:
   /**
    * Class for handling an unsigned long integer preferences item.
    */
-  class TDECORE_EXPORT ItemULong:public KConfigSkeletonGenericItem < unsigned long >
+  class TDECORE_EXPORT ItemULong:public TDEConfigSkeletonGenericItem < unsigned long >
   {
   public:
     ItemULong(const TQString & group, const TQString & key,
               unsigned long &reference, unsigned long defaultValue = 0);
 
-    void readConfig(KConfig * config);
+    void readConfig(TDEConfig * config);
     void setProperty(const TQVariant & p);
     TQVariant property() const;
     TQVariant minValue() const;
@@ -598,13 +598,13 @@ public:
   /**
    * Class for handling unsigned 64-bit integer preferences item.
    */
-  class TDECORE_EXPORT ItemUInt64:public KConfigSkeletonGenericItem < TQ_UINT64 >
+  class TDECORE_EXPORT ItemUInt64:public TDEConfigSkeletonGenericItem < TQ_UINT64 >
   {
   public:
     ItemUInt64(const TQString & group, const TQString & key, TQ_UINT64 &reference,
             TQ_UINT64 defaultValue = 0);
 
-    void readConfig(KConfig * config);
+    void readConfig(TDEConfig * config);
     void setProperty(const TQVariant & p);
     TQVariant property() const;
 
@@ -624,13 +624,13 @@ public:
   /**
    * Class for handling a floating point preference item.
    */
-  class TDECORE_EXPORT ItemDouble:public KConfigSkeletonGenericItem < double >
+  class TDECORE_EXPORT ItemDouble:public TDEConfigSkeletonGenericItem < double >
   {
   public:
     ItemDouble(const TQString & group, const TQString & key,
                double &reference, double defaultValue = 0);
 
-    void readConfig(KConfig * config);
+    void readConfig(TDEConfig * config);
     void setProperty(const TQVariant & p);
     TQVariant property() const;
     TQVariant minValue() const;
@@ -650,14 +650,14 @@ public:
   /**
    * Class for handling a color preferences item.
    */
-  class TDECORE_EXPORT ItemColor:public KConfigSkeletonGenericItem < TQColor >
+  class TDECORE_EXPORT ItemColor:public TDEConfigSkeletonGenericItem < TQColor >
   {
   public:
     ItemColor(const TQString & group, const TQString & key,
               TQColor & reference,
               const TQColor & defaultValue = TQColor(128, 128, 128));
 
-    void readConfig(KConfig * config);
+    void readConfig(TDEConfig * config);
     void setProperty(const TQVariant & p);
     TQVariant property() const;
   };
@@ -666,13 +666,13 @@ public:
   /**
    * Class for handling a font preferences item.
    */
-  class TDECORE_EXPORT ItemFont:public KConfigSkeletonGenericItem < TQFont >
+  class TDECORE_EXPORT ItemFont:public TDEConfigSkeletonGenericItem < TQFont >
   {
   public:
     ItemFont(const TQString & group, const TQString & key, TQFont & reference,
              const TQFont & defaultValue = TDEGlobalSettings::generalFont());
 
-    void readConfig(KConfig * config);
+    void readConfig(TDEConfig * config);
     void setProperty(const TQVariant & p);
     TQVariant property() const;
   };
@@ -681,13 +681,13 @@ public:
   /**
    * Class for handling a TQRect preferences item.
    */
-  class TDECORE_EXPORT ItemRect:public KConfigSkeletonGenericItem < TQRect >
+  class TDECORE_EXPORT ItemRect:public TDEConfigSkeletonGenericItem < TQRect >
   {
   public:
     ItemRect(const TQString & group, const TQString & key, TQRect & reference,
              const TQRect & defaultValue = TQRect());
 
-    void readConfig(KConfig * config);
+    void readConfig(TDEConfig * config);
     void setProperty(const TQVariant & p);
     TQVariant property() const;
   };
@@ -696,13 +696,13 @@ public:
   /**
    * Class for handling a TQPoint preferences item.
    */
-  class TDECORE_EXPORT ItemPoint:public KConfigSkeletonGenericItem < TQPoint >
+  class TDECORE_EXPORT ItemPoint:public TDEConfigSkeletonGenericItem < TQPoint >
   {
   public:
     ItemPoint(const TQString & group, const TQString & key, TQPoint & reference,
               const TQPoint & defaultValue = TQPoint());
 
-    void readConfig(KConfig * config);
+    void readConfig(TDEConfig * config);
     void setProperty(const TQVariant & p);
     TQVariant property() const;
   };
@@ -711,13 +711,13 @@ public:
   /**
    * Class for handling a TQSize preferences item.
    */
-  class TDECORE_EXPORT ItemSize:public KConfigSkeletonGenericItem < TQSize >
+  class TDECORE_EXPORT ItemSize:public TDEConfigSkeletonGenericItem < TQSize >
   {
   public:
     ItemSize(const TQString & group, const TQString & key, TQSize & reference,
              const TQSize & defaultValue = TQSize());
 
-    void readConfig(KConfig * config);
+    void readConfig(TDEConfig * config);
     void setProperty(const TQVariant & p);
     TQVariant property() const;
   };
@@ -726,14 +726,14 @@ public:
   /**
    * Class for handling a TQDateTime preferences item.
    */
-  class TDECORE_EXPORT ItemDateTime:public KConfigSkeletonGenericItem < TQDateTime >
+  class TDECORE_EXPORT ItemDateTime:public TDEConfigSkeletonGenericItem < TQDateTime >
   {
   public:
     ItemDateTime(const TQString & group, const TQString & key,
                  TQDateTime & reference,
                  const TQDateTime & defaultValue = TQDateTime());
 
-    void readConfig(KConfig * config);
+    void readConfig(TDEConfig * config);
     void setProperty(const TQVariant & p);
     TQVariant property() const;
   };
@@ -742,14 +742,14 @@ public:
   /**
    * Class for handling a string list preferences item.
    */
-  class TDECORE_EXPORT ItemStringList:public KConfigSkeletonGenericItem < TQStringList >
+  class TDECORE_EXPORT ItemStringList:public TDEConfigSkeletonGenericItem < TQStringList >
   {
   public:
     ItemStringList(const TQString & group, const TQString & key,
                    TQStringList & reference,
                    const TQStringList & defaultValue = TQStringList());
 
-    void readConfig(KConfig * config);
+    void readConfig(TDEConfig * config);
     void setProperty(const TQVariant & p);
     TQVariant property() const;
   };
@@ -765,22 +765,22 @@ public:
                    TQStringList & reference,
                    const TQStringList & defaultValue = TQStringList());
 
-    void readConfig(KConfig * config);
-    void writeConfig(KConfig * config);
+    void readConfig(TDEConfig * config);
+    void writeConfig(TDEConfig * config);
   };
 
 
   /**
    * Class for handling an integer list preferences item.
    */
-  class TDECORE_EXPORT ItemIntList:public KConfigSkeletonGenericItem < TQValueList < int > >
+  class TDECORE_EXPORT ItemIntList:public TDEConfigSkeletonGenericItem < TQValueList < int > >
   {
   public:
     ItemIntList(const TQString & group, const TQString & key,
                 TQValueList < int >&reference,
                 const TQValueList < int >&defaultValue = TQValueList < int >());
 
-    void readConfig(KConfig * config);
+    void readConfig(TDEConfig * config);
     void setProperty(const TQVariant & p);
     TQVariant property() const;
   };
@@ -793,19 +793,19 @@ public:
    * @param configname name of config file. If no name is given, the default
    * config file as returned by kapp()->config() is used.
    */
-  KConfigSkeleton(const TQString & configname = TQString::null);
+  TDEConfigSkeleton(const TQString & configname = TQString::null);
 
   /**
    * Constructor.
    * 
    * @param config configuration object to use.
    */
-  KConfigSkeleton(KSharedConfig::Ptr config);
+  TDEConfigSkeleton(KSharedConfig::Ptr config);
 
   /**
    * Destructor
    */
-    virtual ~ KConfigSkeleton();
+    virtual ~ TDEConfigSkeleton();
 
   /**
     Set all registered items to their default values.
@@ -840,12 +840,12 @@ public:
   }
 
   /**
-   * Register a custom @ref KConfigSkeletonItem with a given name. If the name
-   * parameter is null, take the name from KConfigSkeletonItem::key().
+   * Register a custom @ref TDEConfigSkeletonItem with a given name. If the name
+   * parameter is null, take the name from TDEConfigSkeletonItem::key().
    * Note that all names must be unique but that multiple entries can have
    * the same key if they reside in different groups. 
    */
-  void addItem(KConfigSkeletonItem *, const TQString & name = TQString::null );
+  void addItem(TDEConfigSkeletonItem *, const TQString & name = TQString::null );
 
   /**
    * Register an item of type TQString.
@@ -1154,14 +1154,14 @@ public:
                               const TQString & key = TQString::null);
 
   /**
-   * Return the @ref KConfig object used for reading and writing the settings.
+   * Return the @ref TDEConfig object used for reading and writing the settings.
    */
-  KConfig *config() const;
+  TDEConfig *config() const;
 
   /**
-   * Return list of items managed by this KConfigSkeleton object.
+   * Return list of items managed by this TDEConfigSkeleton object.
    */
-  KConfigSkeletonItem::List items() const
+  TDEConfigSkeletonItem::List items() const
   {
     return mItems;
   }
@@ -1174,7 +1174,7 @@ public:
   /**
    * Lookup item by name
    */
-  KConfigSkeletonItem * findItem(const TQString & name);
+  TDEConfigSkeletonItem * findItem(const TQString & name);
 
   /**
    * Indicate whether this object should reflect the actual
@@ -1215,10 +1215,10 @@ protected:
 private:
   TQString mCurrentGroup;
 
-  KSharedConfig::Ptr mConfig; // pointer to KConfig object
+  KSharedConfig::Ptr mConfig; // pointer to TDEConfig object
 
-  KConfigSkeletonItem::List mItems;
-  KConfigSkeletonItem::Dict mItemDict;
+  TDEConfigSkeletonItem::List mItems;
+  TDEConfigSkeletonItem::Dict mItemDict;
   
   bool mUseDefaults;
 

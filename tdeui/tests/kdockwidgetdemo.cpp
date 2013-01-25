@@ -81,7 +81,7 @@ static const char *preview_xpm[] = {
 SFileDialog::SFileDialog( TQString initially, const TQStringList& filter, const char* name )
 :TQDialog(0L,name,true)
 {
-  KConfig* config = kapp->config();
+  TDEConfig* config = kapp->config();
   config->setGroup( TQString::fromLatin1("SFileDialogData:") + name );
   if ( initially.isNull() ){
     initially = config->readPathEntry( "InitiallyDir", TQDir::currentDirPath() );
@@ -166,7 +166,7 @@ void SFileDialog::dockChange()
 
 SFileDialog::~SFileDialog()
 {
-  KConfig* config = kapp->config();
+  TDEConfig* config = kapp->config();
   config->setGroup( TQString("SFileDialogData:") + name() );
   config->writeEntry( "Bookmarks", fd->getBookmark() );
 
@@ -188,7 +188,7 @@ void SFileDialog::setDockDefaultPos( KDockWidget* d )
 void SFileDialog::changeDir( const TQString& f )
 {
   if ( !f.isEmpty() ){
-    KConfig* config = kapp->config();
+    TDEConfig* config = kapp->config();
     config->setGroup( TQString("SFileDialogData:") + name() );
     config->writePathEntry( "InitiallyDir", f );
   }

@@ -103,12 +103,12 @@ void InsertFilePluginView::slotInsertFile()
 
     KURL destURL;
     destURL.setPath( _tmpfile );
-    _job = KIO::file_copy( _file, destURL, 0600, true, false, true );
-    connect( _job, TQT_SIGNAL( result( KIO::Job * ) ), this, TQT_SLOT( slotFinished ( KIO::Job * ) ) );
+    _job = TDEIO::file_copy( _file, destURL, 0600, true, false, true );
+    connect( _job, TQT_SIGNAL( result( TDEIO::Job * ) ), this, TQT_SLOT( slotFinished ( TDEIO::Job * ) ) );
   }
 }
 
-void InsertFilePluginView::slotFinished( KIO::Job *job )
+void InsertFilePluginView::slotFinished( TDEIO::Job *job )
 {
   assert( job == _job );
   _job = 0;

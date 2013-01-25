@@ -28,7 +28,7 @@
 #include <tqapplication.h>
 #include <tqclipboard.h>
 
-KIO::PasteDialog::PasteDialog( const TQString &caption, const TQString &label,
+TDEIO::PasteDialog::PasteDialog( const TQString &caption, const TQString &label,
                                const TQString &value, const TQStringList& items,
                                TQWidget *parent,
                                bool clipboard )
@@ -66,17 +66,17 @@ KIO::PasteDialog::PasteDialog( const TQString &caption, const TQString &label,
                  this, TQT_SLOT( slotClipboardDataChanged() ) );
 }
 
-void KIO::PasteDialog::slotClipboardDataChanged()
+void TDEIO::PasteDialog::slotClipboardDataChanged()
 {
     m_clipboardChanged = true;
 }
 
-TQString KIO::PasteDialog::lineEditText() const
+TQString TDEIO::PasteDialog::lineEditText() const
 {
     return m_lineEdit->text();
 }
 
-int KIO::PasteDialog::comboItem() const
+int TDEIO::PasteDialog::comboItem() const
 {
     return m_comboBox->currentItem();
 }

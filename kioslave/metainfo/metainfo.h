@@ -23,7 +23,7 @@
 
 #include <kio/slavebase.h>
 
-class MetaInfoProtocol : public KIO::SlaveBase
+class MetaInfoProtocol : public TDEIO::SlaveBase
 {
 public:
     MetaInfoProtocol(const TQCString &pool, const TQCString &app);

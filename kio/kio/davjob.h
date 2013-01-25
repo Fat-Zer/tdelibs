@@ -39,7 +39,7 @@
 class Observer;
 class TQTimer;
 
-namespace KIO {
+namespace TDEIO {
 
     class Slave;
     class SlaveInterface;
@@ -49,9 +49,9 @@ namespace KIO {
      * Data is sent to the slave on request of the slave ( dataReq).
      * If data coming from the slave can not be handled, the
      * reading of data from the slave should be suspended.
-     * @see KIO::davPropFind()
-     * @see KIO::davPropPatch()
-     * @see KIO::davSearch()
+     * @see TDEIO::davPropFind()
+     * @see TDEIO::davPropPatch()
+     * @see TDEIO::davSearch()
      * @since 3.1
      */
     class KIO_EXPORT DavJob : public TransferJob {
@@ -59,8 +59,8 @@ namespace KIO {
 
     public:
         /**
-	 * Use KIO::davPropFind(), KIO::davPropPatch() and
-	 * KIO::davSearch() to create a new DavJob.
+	 * Use TDEIO::davPropFind(), TDEIO::davPropPatch() and
+	 * TDEIO::davSearch() to create a new DavJob.
 	 */
         DavJob(const KURL& url, int method,
                     const TQString& request, bool showProgressInfo);

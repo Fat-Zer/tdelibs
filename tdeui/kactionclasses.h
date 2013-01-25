@@ -48,8 +48,8 @@ class KToolBar;
 
 class KAccel;
 class KAccelActions;
-class KConfig;
-class KConfigBase;
+class TDEConfig;
+class TDEConfigBase;
 class KURL;
 class TDEInstance;
 class KToolBar;
@@ -834,22 +834,22 @@ public slots:
   void setMaxItems( uint maxItems );
 
   /**
-   *  Loads the recent files entries from a given KConfig object.
+   *  Loads the recent files entries from a given TDEConfig object.
    *  You can provide the name of the group used to load the entries.
    *  If the groupname is empty, entries are load from a group called 'RecentFiles'
    *
-   *  This method does not effect the active group of KConfig.
+   *  This method does not effect the active group of TDEConfig.
    */
-  void loadEntries( KConfig* config, TQString groupname=TQString::null );
+  void loadEntries( TDEConfig* config, TQString groupname=TQString::null );
 
   /**
-   *  Saves the current recent files entries to a given KConfig object.
+   *  Saves the current recent files entries to a given TDEConfig object.
    *  You can provide the name of the group used to load the entries.
    *  If the groupname is empty, entries are saved to a group called 'RecentFiles'
    *
-   *  This method does not effect the active group of KConfig.
+   *  This method does not effect the active group of TDEConfig.
    */
-  void saveEntries( KConfig* config, TQString groupname=TQString::null );
+  void saveEntries( TDEConfig* config, TQString groupname=TQString::null );
 
   /**
    *  Add URL to recent files list.

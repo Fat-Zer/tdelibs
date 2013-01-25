@@ -273,12 +273,12 @@ KOpenSSLProxy::KOpenSSLProxy() {
 KLibLoader *ll = KLibLoader::self();
 _ok = false;
 TQStringList libpaths, libnamesc, libnamess;
-KConfig *cfg;
+TDEConfig *cfg;
 
    _cryptoLib = 0L;
    _sslLib = 0L;
 
-   cfg = new KConfig("cryptodefaults", false, false);
+   cfg = new TDEConfig("cryptodefaults", false, false);
    cfg->setGroup("OpenSSL");
    TQString upath = cfg->readPathEntry("Path");
    if (!upath.isEmpty())

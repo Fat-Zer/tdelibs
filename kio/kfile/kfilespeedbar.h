@@ -21,7 +21,7 @@
 
 #include <kurlbar.h>
 
-class KConfig;
+class TDEConfig;
 
 class KIO_EXPORT KFileSpeedBar : public KURLBar
 {
@@ -30,7 +30,7 @@ public:
     KFileSpeedBar( TQWidget *parent = 0, const char *name = 0 );
     ~KFileSpeedBar();
 
-    virtual void save( KConfig *config );
+    virtual void save( TDEConfig *config );
     virtual TQSize sizeHint() const;
 
 private:

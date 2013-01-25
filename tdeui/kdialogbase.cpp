@@ -1744,7 +1744,7 @@ TQSize KDialogBase::configDialogSize( const TQString& groupName ) const
 }
 
 
-TQSize KDialogBase::configDialogSize( KConfig& config,
+TQSize KDialogBase::configDialogSize( TDEConfig& config,
 				      const TQString& groupName ) const
 {
    int w, h;
@@ -1754,7 +1754,7 @@ TQSize KDialogBase::configDialogSize( KConfig& config,
    w = sizeHint().width();
    h = sizeHint().height();
 
-   KConfigGroupSaver cs(&config, groupName);
+   TDEConfigGroupSaver cs(&config, groupName);
    w = config.readNumEntry( TQString::fromLatin1("Width %1").arg( desk.width()), w );
    h = config.readNumEntry( TQString::fromLatin1("Height %1").arg( desk.height()), h );
 
@@ -1768,13 +1768,13 @@ void KDialogBase::saveDialogSize( const TQString& groupName, bool global )
 }
 
 
-void KDialogBase::saveDialogSize( KConfig& config, const TQString& groupName,
+void KDialogBase::saveDialogSize( TDEConfig& config, const TQString& groupName,
 				      bool global ) const
 {
    int scnum = TQApplication::desktop()->screenNumber(parentWidget());
    TQRect desk = TQApplication::desktop()->screenGeometry(scnum);
 
-   KConfigGroupSaver cs(&config, groupName);
+   TDEConfigGroupSaver cs(&config, groupName);
    TQSize sizeToSave = size();
 
    config.writeEntry( TQString::fromLatin1("Width %1").arg( desk.width()),

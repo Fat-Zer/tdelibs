@@ -55,10 +55,10 @@
 #include "kcmoduleproxyIfaceImpl.h"
 
 /***************************************************************/
-class KCModuleProxy::KCModuleProxyPrivate
+class TDECModuleProxy::TDECModuleProxyPrivate
 {
 	public:
-		KCModuleProxyPrivate( const KCModuleInfo & info )
+		TDECModuleProxyPrivate( const TDECModuleInfo & info )
 			: args( 0 )
 			, kcm( 0 )
 			//, view( 0 )
@@ -78,7 +78,7 @@ class KCModuleProxy::KCModuleProxyPrivate
 			, isInitialized( false )
 		{}
 
-		~KCModuleProxyPrivate()
+		~TDECModuleProxyPrivate()
 		{
 			delete rootInfo; // Delete before embedWidget!
 			delete embedWidget; // Delete before embedFrame!
@@ -91,17 +91,17 @@ class KCModuleProxy::KCModuleProxyPrivate
 		}
 
 		TQStringList							args;
-		KCModule							*kcm;
+		TDECModule							*kcm;
 		QXEmbed								*embedWidget;
 		TDEProcess							*rootProcess;
 		TQVBox								*embedFrame;
-		KCModuleProxyIfaceImpl  					*dcopObject;
+		TDECModuleProxyIfaceImpl  					*dcopObject;
 		DCOPClient							*dcopClient;
 		TQVBoxLayout							*topLayout; /* Contains TQScrollView view, and root stuff */
-		KCModuleProxyRootCommunicatorImpl				*rootCommunicator;
+		TDECModuleProxyRootCommunicatorImpl				*rootCommunicator;
 		TQLabel								*rootInfo;
 		TQCString							dcopName;
-		KCModuleInfo 							modInfo;
+		TDECModuleInfo 							modInfo;
 		bool 								withFallback;
 		bool 								changed;
 		bool 								rootMode;
@@ -115,7 +115,7 @@ class KCModuleProxy::KCModuleProxyPrivate
 /*
  TODO:
 
- - How KCModuleProxy behaves wrt memory leaks and behavior, when exiting
+ - How TDECModuleProxy behaves wrt memory leaks and behavior, when exiting
  	from root mode is not tested, because no code make use of it. It needs 
 	work, if it should be used.
 
@@ -137,7 +137,7 @@ class KCModuleProxy::KCModuleProxyPrivate
 
  */
 /***************************************************************/
-KCModule * KCModuleProxy::realModule() const
+TDECModule * TDECModuleProxy::realModule() const
 {
 
 	/*
@@ -157,11 +157,11 @@ KCModule * KCModuleProxy::realModule() const
 
 	TQApplication::setOverrideCursor( Qt::WaitCursor );
 	
-	KCModuleProxy * that = const_cast<KCModuleProxy*>( this );
+	TDECModuleProxy * that = const_cast<TDECModuleProxy*>( this );
 
 	if( !d->isInitialized )
 	{
-  		d->dcopName = TQString(moduleInfo().handle().prepend("KCModuleProxy-")).utf8();
+  		d->dcopName = TQString(moduleInfo().handle().prepend("TDECModuleProxy-")).utf8();
 		d->topLayout = new TQVBoxLayout( that, 0, 0, "topLayout" );
 
 		d->isInitialized = true;
@@ -180,9 +180,9 @@ KCModule * KCModuleProxy::realModule() const
 	   * or, it was an random application which had picked that name */
 		kdDebug(711) << "Module not already loaded, loading module" << endl;
 
-		d->dcopObject = new KCModuleProxyIfaceImpl( d->dcopName, that );
+		d->dcopObject = new TDECModuleProxyIfaceImpl( d->dcopName, that );
 
-		d->kcm = KCModuleLoader::loadModule( moduleInfo(), KCModuleLoader::Inline, d->withFallback,
+		d->kcm = TDECModuleLoader::loadModule( moduleInfo(), TDECModuleLoader::Inline, d->withFallback,
 			that, name(), d->args );
 
 		connect( d->kcm, TQT_SIGNAL( changed( bool ) ),
@@ -248,7 +248,7 @@ KCModule * KCModuleProxy::realModule() const
 		{
 			stream >> result;
 
-			d->kcm = KCModuleLoader::reportError( KCModuleLoader::Inline, 
+			d->kcm = TDECModuleLoader::reportError( TDECModuleLoader::Inline, 
 					i18n( "Argument is application name", "This configuration section is "
 						"already opened in %1" ).arg( result ), " ", that );
 
@@ -256,7 +256,7 @@ KCModule * KCModuleProxy::realModule() const
 		}
 		else
 		{
-			kdDebug(711) << "Calling KCModuleProxy's DCOP interface for fetching the name failed." << endl;
+			kdDebug(711) << "Calling TDECModuleProxy's DCOP interface for fetching the name failed." << endl;
 			d->bogusOccupier = true;
 			TQApplication::restoreOverrideCursor();
 			return realModule();
@@ -268,7 +268,7 @@ KCModule * KCModuleProxy::realModule() const
 	return d->kcm;
 }
 
-void KCModuleProxy::applicationRemoved( const TQCString& app )
+void TDECModuleProxy::applicationRemoved( const TQCString& app )
 {
 	if( app == d->dcopName )
 	{
@@ -282,7 +282,7 @@ void KCModuleProxy::applicationRemoved( const TQCString& app )
 	}
 }
 
-void KCModuleProxy::showEvent( TQShowEvent * ev )
+void TDECModuleProxy::showEvent( TQShowEvent * ev )
 {
 
 	kdDebug(711) << k_funcinfo << endl;
@@ -296,7 +296,7 @@ void KCModuleProxy::showEvent( TQShowEvent * ev )
 
 }
 
-void KCModuleProxy::runAsRoot()
+void TDECModuleProxy::runAsRoot()
 {
 	if ( !moduleInfo().needsRootPrivileges() )
 		return;
@@ -378,7 +378,7 @@ void KCModuleProxy::runAsRoot()
 		{
 			d->rootMode = true;
 			kapp->dcopClient();
-			d->rootCommunicator = new KCModuleProxyRootCommunicatorImpl( d->dcopName + "-RootCommunicator", this );
+			d->rootCommunicator = new TDECModuleProxyRootCommunicatorImpl( d->dcopName + "-RootCommunicator", this );
 		}
 
 		delete lblBusy;
@@ -395,7 +395,7 @@ void KCModuleProxy::runAsRoot()
 	TQApplication::restoreOverrideCursor();
 }
 
-void KCModuleProxy::rootExited()
+void TDECModuleProxy::rootExited()
 {
 	kdDebug(711) << k_funcinfo << endl;
 
@@ -426,15 +426,15 @@ void KCModuleProxy::rootExited()
 	emit childClosed();
 }
 
-KCModuleProxy::~KCModuleProxy()
+TDECModuleProxy::~TDECModuleProxy()
 {
 	deleteClient();
-	KCModuleLoader::unloadModule(moduleInfo());
+	TDECModuleLoader::unloadModule(moduleInfo());
 
 	delete d;
 }
 
-void KCModuleProxy::deleteClient()
+void TDECModuleProxy::deleteClient()
 {
 	if( d->embedWidget )
 		XKillClient(tqt_xdisplay(), d->embedWidget->embeddedWinId());
@@ -456,7 +456,7 @@ void KCModuleProxy::deleteClient()
 
 }
 
-void KCModuleProxy::moduleChanged( bool c )
+void TDECModuleProxy::moduleChanged( bool c )
 {
 	if(  d->changed == c )
 		return;
@@ -466,21 +466,21 @@ void KCModuleProxy::moduleChanged( bool c )
 	emit changed( this );
 }
 
-void KCModuleProxy::moduleDestroyed()
+void TDECModuleProxy::moduleDestroyed()
 {
 	d->kcm = 0;
 }
 
-KCModuleProxy::KCModuleProxy( const KService::Ptr & service, bool withFallback, 
+TDECModuleProxy::TDECModuleProxy( const KService::Ptr & service, bool withFallback, 
 		TQWidget  * parent, const char * name, const TQStringList & args)
 	: TQWidget( parent, name )
 {
-	init( KCModuleInfo( service ));
+	init( TDECModuleInfo( service ));
 	d->args = args;
 	d->withFallback = withFallback;
 }
 
-KCModuleProxy::KCModuleProxy( const KCModuleInfo & info, bool withFallback,
+TDECModuleProxy::TDECModuleProxy( const TDECModuleInfo & info, bool withFallback,
 		TQWidget * parent, const char * name, const TQStringList & args )
 	: TQWidget( parent, name )
 {
@@ -489,21 +489,21 @@ KCModuleProxy::KCModuleProxy( const KCModuleInfo & info, bool withFallback,
 	d->withFallback = withFallback;
 }
 
-KCModuleProxy::KCModuleProxy( const TQString& serviceName, bool withFallback, 
+TDECModuleProxy::TDECModuleProxy( const TQString& serviceName, bool withFallback, 
 		TQWidget * parent, const char * name, 
 		const TQStringList & args)
 	: TQWidget( parent, name )
 {
-	init( KCModuleInfo( serviceName ));
+	init( TDECModuleInfo( serviceName ));
 	d->args = args;
 	d->withFallback = withFallback;
 }
 
-void KCModuleProxy::init( const KCModuleInfo& info )
+void TDECModuleProxy::init( const TDECModuleInfo& info )
 { 
 	kdDebug(711) << k_funcinfo << endl;
 
-	d = new KCModuleProxyPrivate( info );
+	d = new TDECModuleProxyPrivate( info );
 
 	/* This is all we do for now; all the heavy work is 
 	 * done in realModule(). It's called when the module
@@ -513,7 +513,7 @@ void KCModuleProxy::init( const KCModuleInfo& info )
 
 }
 
-void KCModuleProxy::load()
+void TDECModuleProxy::load()
 {
 
 	if( d->rootMode )
@@ -525,7 +525,7 @@ void KCModuleProxy::load()
 	}
 }
 
-void KCModuleProxy::save()
+void TDECModuleProxy::save()
 {
 	if( d->rootMode )
 		callRootModule( "save()" );
@@ -536,7 +536,7 @@ void KCModuleProxy::save()
 	}
 }
 
-void KCModuleProxy::callRootModule( const TQCString& function )
+void TDECModuleProxy::callRootModule( const TQCString& function )
 {
 	TQByteArray sendData, replyData;
 	TQCString replyType;
@@ -549,7 +549,7 @@ void KCModuleProxy::callRootModule( const TQCString& function )
 
 }
 
-void KCModuleProxy::defaults()
+void TDECModuleProxy::defaults()
 {
 	if( d->rootMode )
 		callRootModule( "defaults()" );
@@ -557,7 +557,7 @@ void KCModuleProxy::defaults()
 		d->kcm->defaults();
 }
 
-TQString KCModuleProxy::quickHelp() const
+TQString TDECModuleProxy::quickHelp() const
 {
 
 	if( !d->rootMode )
@@ -586,7 +586,7 @@ TQString KCModuleProxy::quickHelp() const
 	}
 }
 
-const TDEAboutData * KCModuleProxy::aboutData() const
+const TDEAboutData * TDECModuleProxy::aboutData() const
 {
 	if( !d->rootMode )
 		return realModule() ? realModule()->aboutData() : 0;
@@ -598,48 +598,48 @@ const TDEAboutData * KCModuleProxy::aboutData() const
 
 }
 
-int KCModuleProxy::buttons() const
+int TDECModuleProxy::buttons() const
 {
 	return realModule() ? realModule()->buttons() :
-		KCModule::Help | KCModule::Default | KCModule::Apply ;
+		TDECModule::Help | TDECModule::Default | TDECModule::Apply ;
 }
 
-TQString KCModuleProxy::rootOnlyMsg() const
+TQString TDECModuleProxy::rootOnlyMsg() const
 {
 	return realModule() ? realModule()->rootOnlyMsg() : TQString::null;
 }
 
-bool KCModuleProxy::useRootOnlyMsg() const
+bool TDECModuleProxy::useRootOnlyMsg() const
 {
 	return realModule() ? realModule()->useRootOnlyMsg() : true;
 }
 
-TDEInstance * KCModuleProxy::instance() const
+TDEInstance * TDECModuleProxy::instance() const
 {
 	return realModule() ? realModule()->instance() : 0;
 }
 
-bool KCModuleProxy::changed() const
+bool TDECModuleProxy::changed() const
 {
 	return d->changed;
 }
 
-const KCModuleInfo& KCModuleProxy::moduleInfo() const
+const TDECModuleInfo& TDECModuleProxy::moduleInfo() const
 {
 	return d->modInfo;
 }
 
-bool KCModuleProxy::rootMode() const
+bool TDECModuleProxy::rootMode() const
 {
 	return d->rootMode;
 }
 
-TQCString KCModuleProxy::dcopName() const
+TQCString TDECModuleProxy::dcopName() const
 {
 	return d->dcopName;
 }
 
-void KCModuleProxy::emitQuickHelpChanged()
+void TDECModuleProxy::emitQuickHelpChanged()
 {
 	emit quickHelpChanged();
 }

@@ -47,7 +47,7 @@ namespace KParts {
          * @param url the URL we're probing
          * @param args URL args - includes data for a HTTP POST, etc.
          * @param part the part going to open this URL - can be 0L if not created yet
-         * @param window the mainwindow - passed to KIO::Job::setWindow()
+         * @param window the mainwindow - passed to TDEIO::Job::setWindow()
          * @param removeReferrer if true, the "referrer" metadata from @p args isn't passed on
          * @param trustedSource if false, a warning will be shown before launching an executable
          * Always pass false for @p trustedSource, except for local directory views.
@@ -61,7 +61,7 @@ namespace KParts {
          * @param url the URL we're probing
          * @param args URL args - includes data for a HTTP POST, etc.
          * @param part the part going to open this URL - can be 0L if not created yet
-         * @param window the mainwindow - passed to KIO::Job::setWindow()
+         * @param window the mainwindow - passed to TDEIO::Job::setWindow()
          * @param removeReferrer if true, the "referrer" metadata from @p args isn't passed on
          * @param trustedSource if false, a warning will be shown before launching an executable.
          * Always pass false for @p  trustedSource, except for local directory views.
@@ -155,7 +155,7 @@ namespace KParts {
          * It is strongly recommended to reimplement this method if
          * you passed hideErrorDialog=true.
          */
-        virtual void handleError( KIO::Job * job );
+        virtual void handleError( TDEIO::Job * job );
 
         /**
          * NotHandled means that foundMimeType should call KRun::foundMimeType,
@@ -169,10 +169,10 @@ namespace KParts {
         NonEmbeddableResult handleNonEmbeddable( const TQString& mimeType );
 
     protected slots:
-        void slotBrowserScanFinished(KIO::Job *job);
-        void slotBrowserMimetype(KIO::Job *job, const TQString &type);
-        void slotCopyToTempFileResult(KIO::Job *job);
-        virtual void slotStatResult( KIO::Job *job );
+        void slotBrowserScanFinished(TDEIO::Job *job);
+        void slotBrowserMimetype(TDEIO::Job *job, const TQString &type);
+        void slotCopyToTempFileResult(TDEIO::Job *job);
+        virtual void slotStatResult( TDEIO::Job *job );
 
     protected:
         KParts::URLArgs m_args;

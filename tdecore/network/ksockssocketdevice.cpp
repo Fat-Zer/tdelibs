@@ -43,15 +43,15 @@ using namespace KNetwork;
 
 // constructor
 // nothing to do
-KSocksSocketDevice::KSocksSocketDevice(const KSocketBase* obj)
-  : KSocketDevice(obj)
+KSocksSocketDevice::KSocksSocketDevice(const TDESocketBase* obj)
+  : TDESocketDevice(obj)
 {
 }
 
 // constructor with argument
 // nothing to do
 KSocksSocketDevice::KSocksSocketDevice(int fd)
-  : KSocketDevice(fd)
+  : TDESocketDevice(fd)
 {
 }
 
@@ -67,7 +67,7 @@ int KSocksSocketDevice::capabilities() const
   return 0;			// can do everything!
 }
 
-// From here on, the code is almost exactly a copy of KSocketDevice
+// From here on, the code is almost exactly a copy of TDESocketDevice
 // the differences are the use of KSocks where appropriate
 
 bool KSocksSocketDevice::bind(const KResolverEntry& address)
@@ -190,7 +190,7 @@ KSocksSocketDevice* KSocksSocketDevice::accept()
   return new KSocksSocketDevice(newfd);
 }
 
-static int socks_read_common(int sockfd, char *data, TQ_ULONG maxlen, KSocketAddress* from, ssize_t &retval, bool peek = false)
+static int socks_read_common(int sockfd, char *data, TQ_ULONG maxlen, TDESocketAddress* from, ssize_t &retval, bool peek = false)
 {
   kde_socklen_t len;
   if (from)
@@ -204,9 +204,9 @@ static int socks_read_common(int sockfd, char *data, TQ_ULONG maxlen, KSocketAdd
   if (retval == -1)
     {
       if (errno == EAGAIN || errno == EWOULDBLOCK)
-	return KSocketDevice::WouldBlock;
+	return TDESocketDevice::WouldBlock;
       else
-	return KSocketDevice::UnknownError;
+	return TDESocketDevice::UnknownError;
     }
 
   if (from)
@@ -235,7 +235,7 @@ TQ_LONG KSocksSocketDevice::tqreadBlock(char *data, TQ_ULONG maxlen)
   return retval;
 }
 
-TQ_LONG KSocksSocketDevice::tqreadBlock(char *data, TQ_ULONG maxlen, KSocketAddress &from)
+TQ_LONG KSocksSocketDevice::tqreadBlock(char *data, TQ_ULONG maxlen, TDESocketAddress &from)
 {
   resetError();
   if (m_sockfd == -1)
@@ -277,7 +277,7 @@ TQ_LONG KSocksSocketDevice::peekBlock(char *data, TQ_ULONG maxlen)
   return retval;
 }
 
-TQ_LONG KSocksSocketDevice::peekBlock(char *data, TQ_ULONG maxlen, KSocketAddress& from)
+TQ_LONG KSocksSocketDevice::peekBlock(char *data, TQ_ULONG maxlen, TDESocketAddress& from)
 {
   resetError();
   if (m_sockfd == -1)
@@ -300,10 +300,10 @@ TQ_LONG KSocksSocketDevice::peekBlock(char *data, TQ_ULONG maxlen, KSocketAddres
 
 TQ_LONG KSocksSocketDevice::tqwriteBlock(const char *data, TQ_ULONG len)
 {
-  return tqwriteBlock(data, len, KSocketAddress());
+  return tqwriteBlock(data, len, TDESocketAddress());
 }
 
-TQ_LONG KSocksSocketDevice::tqwriteBlock(const char *data, TQ_ULONG len, const KSocketAddress& to)
+TQ_LONG KSocksSocketDevice::tqwriteBlock(const char *data, TQ_ULONG len, const TDESocketAddress& to)
 {
   resetError();
   if (m_sockfd == -1)
@@ -325,17 +325,17 @@ TQ_LONG KSocksSocketDevice::tqwriteBlock(const char *data, TQ_ULONG len, const K
   return retval;
 }
 
-KSocketAddress KSocksSocketDevice::localAddress() const
+TDESocketAddress KSocksSocketDevice::localAddress() const
 {
   if (m_sockfd == -1)
-    return KSocketAddress();	// not open, empty value
+    return TDESocketAddress();	// not open, empty value
 
   kde_socklen_t len;
-  KSocketAddress localAddress;
+  TDESocketAddress localAddress;
   localAddress.setLength(len = 32);	// arbitrary value
   if (KSocks::self()->getsockname(m_sockfd, localAddress.address(), &len) == -1)
     // error!
-    return KSocketAddress();
+    return TDESocketAddress();
 
   if (len <= localAddress.length())
     {
@@ -349,22 +349,22 @@ KSocketAddress KSocksSocketDevice::localAddress() const
   localAddress.setLength(len);
   if (KSocks::self()->getsockname(m_sockfd, localAddress.address(), &len) == -1)
     // error!
-    return KSocketAddress();
+    return TDESocketAddress();
 
   return localAddress;
 }
 
-KSocketAddress KSocksSocketDevice::peerAddress() const
+TDESocketAddress KSocksSocketDevice::peerAddress() const
 {
   if (m_sockfd == -1)
-    return KSocketAddress();	// not open, empty value
+    return TDESocketAddress();	// not open, empty value
 
   kde_socklen_t len;
-  KSocketAddress peerAddress;
+  TDESocketAddress peerAddress;
   peerAddress.setLength(len = 32);	// arbitrary value
   if (KSocks::self()->getpeername(m_sockfd, peerAddress.address(), &len) == -1)
     // error!
-    return KSocketAddress();
+    return TDESocketAddress();
 
   if (len <= peerAddress.length())
     {
@@ -378,15 +378,15 @@ KSocketAddress KSocksSocketDevice::peerAddress() const
   peerAddress.setLength(len);
   if (KSocks::self()->getpeername(m_sockfd, peerAddress.address(), &len) == -1)
     // error!
-    return KSocketAddress();
+    return TDESocketAddress();
 
   return peerAddress;
 }
 
-KSocketAddress KSocksSocketDevice::externalAddress() const
+TDESocketAddress KSocksSocketDevice::externalAddress() const
 {
   // return empty, indicating unknown external address
-  return KSocketAddress();
+  return TDESocketAddress();
 }
 
 bool KSocksSocketDevice::poll(bool *input, bool *output, bool *exception,
@@ -474,13 +474,13 @@ void KSocksSocketDevice::initSocks()
   init = true;
 
   if (KSocks::self()->hasSocks())
-    delete KSocketDevice::setDefaultImpl(new KSocketDeviceFactory<KSocksSocketDevice>);
+    delete TDESocketDevice::setDefaultImpl(new TDESocketDeviceFactory<KSocksSocketDevice>);
 }
 
 #if 0
 static bool register()
 {
-  KSocketDevice::addNewImpl(new KSocketDeviceFactory<KSocksSocketDevice>, 0);
+  TDESocketDevice::addNewImpl(new TDESocketDeviceFactory<KSocksSocketDevice>, 0);
 }
 
 static bool register = registered();

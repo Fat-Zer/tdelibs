@@ -31,60 +31,60 @@ class TQTabWidget;
 class TQWidget;
 class TQVBoxLayout;
 
-class KCModuleProxy;
+class TDECModuleProxy;
 
 /**
  * @ingroup kcmodule
- * @brief KCModuleContainer is a convenience class encapsulating several KCModules.
+ * @brief TDECModuleContainer is a convenience class encapsulating several TDECModules.
  *
- * The KCModuleContainer class is a convenience class for organizing a multiple set
- * of KCModule. KCModuleContainer is a sub class of KCModule and builds an interface mainly
+ * The TDECModuleContainer class is a convenience class for organizing a multiple set
+ * of TDECModule. TDECModuleContainer is a sub class of TDECModule and builds an interface mainly
  * consisting of a tab widget where each tab contains one of the modules specified via one of the
- * constructors. KCModuleContainer can handle modules which requires root permissions. What you
+ * constructors. TDECModuleContainer can handle modules which requires root permissions. What you
  * most likely want is the KCMODULECONTAINER macro. \n
  * Sometimes it is of interest to detect in runtime whether a module should be loaded or not. This
- * can be achieved by sub classing KCModuleContainer, doing the probing/testing checks and then manually
+ * can be achieved by sub classing TDECModuleContainer, doing the probing/testing checks and then manually
  * call addModule for each module which should be displayed. When all calls to addModule is done, call
  * finalize() which performs some necessary final steps.
  *
  * @author Frans Englich <frans.englich@telia.com>
  * @since 3.4
  */
-class KUTILS_EXPORT KCModuleContainer : public KCModule
+class KUTILS_EXPORT TDECModuleContainer : public TDECModule
 {
 	Q_OBJECT
 	public:
 		/**
-		 * Creates a KCModuleContainer with tabs, each one containing one of the
+		 * Creates a TDECModuleContainer with tabs, each one containing one of the
 		 * specified modules in @p mods.
 		 *
                  * @param parent the parent TQWidget.
                  * @param name the module's name.
-		 * @param mods The list of KCModules to be loaded. The name of each
-		 * KCModule is its service name, that is the name of the desktop file without
+		 * @param mods The list of TDECModules to be loaded. The name of each
+		 * TDECModule is its service name, that is the name of the desktop file without
 		 * the ".desktop" part
 		 *
 		 */
-		KCModuleContainer( TQWidget* parent, const char* name, const TQStringList& mods );
+		TDECModuleContainer( TQWidget* parent, const char* name, const TQStringList& mods );
 
 		/**
 		 * This is a convenience function, instead of building a TQStringList you
 		 * can specify the modules in a comma separated TQString. For example;
 		 * \code
-		 * KCModuleContainer* cont = KCModuleContainer( this, "kcm_misc", TQString("kcm_energy, kcm_keyboard ,kcm_useraccount, kcm_mouse") );
+		 * TDECModuleContainer* cont = TDECModuleContainer( this, "kcm_misc", TQString("kcm_energy, kcm_keyboard ,kcm_useraccount, kcm_mouse") );
 		 * \endcode
 		 * The other constructor takes its modules in a QStringlist which also can be constructed from a
 		 * string and thus you will have to be explicit on the data type.
 		 *
-		 * What you probably want is the KCMODULECONTAINER macro which builds an KCModule
+		 * What you probably want is the KCMODULECONTAINER macro which builds an TDECModule
 		 * for you, taking the modules you want as argument.
 		 *
 		 * @param parent The parent widget
 		 * @param name The service name
 		 * @param mods The modules to load
-		 * @return The KCModule containing the requested modules.
+		 * @return The TDECModule containing the requested modules.
 		 */
-		KCModuleContainer( TQWidget *parent, const char* name, const TQString& mods = TQString() );
+		TDECModuleContainer( TQWidget *parent, const char* name, const TQString& mods = TQString() );
 
 		/**
 		 * Adds the specified module to the tab widget. Setting the tab icon, text,
@@ -98,7 +98,7 @@ class KUTILS_EXPORT KCModuleContainer : public KCModule
 		/**
 		 * Default destructor.
 		 */
-		virtual ~KCModuleContainer();
+		virtual ~TDECModuleContainer();
 
 		/**
 		 * Reimplemented for internal purposes.
@@ -122,16 +122,16 @@ class KUTILS_EXPORT KCModuleContainer : public KCModule
 
 		/**
 		 * Sets this KCM's buttons and adds a AdminMode button
-		 * if necessary. If KCModuleContainer is subclassed finalize()
+		 * if necessary. If TDECModuleContainer is subclassed finalize()
 		 * should be called in the constructor after all calls to addModule
 		 * have been done. Call it once.
 		 */
 		void finalize();
 
-		typedef TQValueList<KCModuleProxy*> ModuleList;
+		typedef TQValueList<TDECModuleProxy*> ModuleList;
 
 		/**
-		 * A list containing KCModuleProxy objects which
+		 * A list containing TDECModuleProxy objects which
 		 * have changed and must be saved.
 		 */
 		ModuleList changedModules;
@@ -148,7 +148,7 @@ class KUTILS_EXPORT KCModuleContainer : public KCModule
 		 */
 		void tabSwitched( TQWidget * module );
 
-		void moduleChanged(KCModuleProxy *proxy);
+		void moduleChanged(TDECModuleProxy *proxy);
 
 		/**
 		 * Called when the user clicks our custom root button.
@@ -164,19 +164,19 @@ class KUTILS_EXPORT KCModuleContainer : public KCModule
 
 		void init();
 
-		class KCModuleContainerPrivate;
-		KCModuleContainerPrivate *d;
+		class TDECModuleContainerPrivate;
+		TDECModuleContainerPrivate *d;
 
 };
 
 /**
  * @ingroup kcmodule
- * This macro creates an factory declaration which when run creates an KCModule with specified
+ * This macro creates an factory declaration which when run creates an TDECModule with specified
  * modules. For example:
  * \code
  * KCMODULECONTAINER( "kcm_fonts, kcm_keyboard,kcm_fonts", misc_modules)
  * \endcode
- * would create a KCModule with three tabs, each containing one of the specified KCMs. Each
+ * would create a TDECModule with three tabs, each containing one of the specified KCMs. Each
  * use of the macro must be accompanied by a desktop file where the factory name equals
  * the second argument in the macro(in this example, misc_modules). \n
  * The module container takes care of testing the contained modules when being shown, as well
@@ -188,16 +188,16 @@ class KUTILS_EXPORT KCModuleContainer : public KCModule
 #define KCMODULECONTAINER( modules, factoryName ) \
 extern "C" \
 { \
-	KCModule *create_## factoryName(TQWidget *parent, const char *name) \
+	TDECModule *create_## factoryName(TQWidget *parent, const char *name) \
 	{ \
-		return new KCModuleContainer( parent, name, TQString( modules ) ); \
+		return new TDECModuleContainer( parent, name, TQString( modules ) ); \
 	} \
 	\
 	bool test_## factoryName() \
 	{ \
 		TQStringList modList = TQStringList::split( ",", TQString(modules).remove( " " )); \
 		for ( TQStringList::Iterator it = modList.begin(); it != modList.end(); ++it ) \
-			if ( KCModuleLoader::testModule( *it ) ) \
+			if ( TDECModuleLoader::testModule( *it ) ) \
 				return true; \
 		return false; \
 	} \

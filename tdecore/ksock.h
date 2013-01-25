@@ -65,8 +65,8 @@ typedef sockaddr_in ksockaddr_in;
 
 #define KSOCK_DEFAULT_DOMAIN PF_INET
 
-class KSocketPrivate;
-class KServerSocketPrivate;
+class TDESocketPrivate;
+class TDEServerSocketPrivate;
 
 /** @deprecated
  * You can connect this socket to any Internet address.
@@ -79,7 +79,7 @@ class KServerSocketPrivate;
  * Using socket() you get a file descriptor
  * which you can use with the usual UNIX function like write() or
  * read().
- * If you have already such a socket identifier you can construct a KSocket
+ * If you have already such a socket identifier you can construct a TDESocket
  * on this identifier.
  *
  * If socket() delivers a value of -1 or less, the connection
@@ -88,33 +88,33 @@ class KServerSocketPrivate;
  * @author Torben Weis <weis@uni-frankfurt.de>
  * @short A TCP/IP client socket.
  */
-class TDECORE_EXPORT KSocket : public TQObject
+class TDECORE_EXPORT TDESocket : public TQObject
 {
     Q_OBJECT
 public:
     /**
-     * Constructs a KSocket with the provided file descriptor.
+     * Constructs a TDESocket with the provided file descriptor.
      * @param _sock	The file descriptor to use.
      */
-    KSocket( int _sock ) KDE_DEPRECATED;
+    TDESocket( int _sock ) KDE_DEPRECATED;
     /**
      * Creates a socket and connects to a host.
      * @param _host	The remote host to which to connect.
      * @param _port	The port on the remote host.
      * @param timeOut	The number of seconds waiting for connect (default 30).
      */
-    KSocket( const char *_host, unsigned short int _port, int timeOut = 30) KDE_DEPRECATED;
+    TDESocket( const char *_host, unsigned short int _port, int timeOut = 30) KDE_DEPRECATED;
 
     /**
      * Connects to a UNIX domain socket.
      * @param _path    The filename of the socket.
      */
-    KSocket( const char * _path ) KDE_DEPRECATED;
+    TDESocket( const char * _path ) KDE_DEPRECATED;
 
     /**
      * Destructor. Closes the socket if it is still open.
      */
-    virtual ~KSocket();
+    virtual ~TDESocket();
 
     /**
      * Returns a file descriptor for this socket.
@@ -171,9 +171,9 @@ signals:
      *
      * This signal will only be raised if enableRead( @p true ) was called
      * first.
-     * @param s the KSocket that triggered the event
+     * @param s the TDESocket that triggered the event
      */
-    void readEvent( KSocket *s );
+    void readEvent( TDESocket *s );
 
     /**
      * Socket is ready for writing.
@@ -184,15 +184,15 @@ signals:
      * Warning: If you forget to call enableWrite(false) when you are
      * not ready to send data, you will get lots of writeEvent() signals,
      * in the order of thousands a second !
-     * @param s the KSocket that triggered the event
+     * @param s the TDESocket that triggered the event
      */
-    void writeEvent( KSocket *s );
+    void writeEvent( TDESocket *s );
 
     /**
      * Raised when the connection is broken.
-     * @param s the KSocket that triggered the event
+     * @param s the TDESocket that triggered the event
      */
-    void closeEvent( KSocket *s );
+    void closeEvent( TDESocket *s );
 
 public slots:
     /**
@@ -224,10 +224,10 @@ protected:
     int sock;
 
 private:
-    KSocket(const KSocket&);
-    KSocket& operator=(const KSocket&);
+    TDESocket(const TDESocket&);
+    TDESocket& operator=(const TDESocket&);
 
-    KSocketPrivate *d;
+    TDESocketPrivate *d;
 
 };
 
@@ -239,19 +239,19 @@ private:
  * This class is deprecated and will be removed in the future.
  * Please use the classes in KNetwork for new programs. 
  * In special, this class is replaced by KNetwork::KStreamSocket
- * and KNetwork::KServerSocket. 
+ * and KNetwork::TDEServerSocket. 
  *
- * You can use a KServerSocket to listen on a port for incoming
- * connections. When a connection arrived in the port, a KSocket
+ * You can use a TDEServerSocket to listen on a port for incoming
+ * connections. When a connection arrived in the port, a TDESocket
  * is created and the signal accepted is raised. Make sure you
  * always connect to this signal. If you don't the ServerSocket will
- * create new KSocket's and no one will delete them!
+ * create new TDESocket's and no one will delete them!
  *
  * If socket() is -1 or less the socket was not created properly.
  *
  * @author Torben Weis <weis@stud.uni-frankfurt.de>
 */
-class TDECORE_EXPORT KServerSocket : public TQObject
+class TDECORE_EXPORT TDEServerSocket : public TQObject
 {
     Q_OBJECT
 public:
@@ -262,7 +262,7 @@ public:
      *                  This gives you the opportunity to set options on the
      *                  socket.
      */
-    KServerSocket( unsigned short int _port, bool _bind = true );
+    TDEServerSocket( unsigned short int _port, bool _bind = true );
 
     /**
      * Creates a UNIX domain server socket.
@@ -271,12 +271,12 @@ public:
      *                  This gives you the opportunity to set options on the
      *                  socket.
      */
-    KServerSocket( const char *_path, bool _bind = true);
+    TDEServerSocket( const char *_path, bool _bind = true);
 
     /**
      * Destructor. Closes the socket if it was not already closed.
      */
-    virtual ~KServerSocket();
+    virtual ~TDEServerSocket();
 
     /**
      * Binds the socket and start listening. This should only be called
@@ -319,14 +319,14 @@ public slots:
 signals:
     /**
      * A connection has been accepted.
-     * It is your task to delete the KSocket if it is no longer needed.
+     * It is your task to delete the TDESocket if it is no longer needed.
      *
      * WARNING: this signal is always emitted, even if you don't connect
-     * anything to it. That would mean memory loss, because the KSockets
+     * anything to it. That would mean memory loss, because the TDESockets
      * created go to oblivion.
      * @param s the socket that accepted
      */
-    void accepted( KSocket*s );
+    void accepted( TDESocket*s );
 
 protected:
     bool init( unsigned short int );
@@ -339,10 +339,10 @@ protected:
     int sock;
 
 private:
-    KServerSocket(const KServerSocket&);
-    KServerSocket& operator=(const KServerSocket&);
+    TDEServerSocket(const TDEServerSocket&);
+    TDEServerSocket& operator=(const TDEServerSocket&);
 
-    KServerSocketPrivate *d;
+    TDEServerSocketPrivate *d;
 };
 
 #endif //Q_OS_UNIX

@@ -42,13 +42,13 @@ class KMulticastSocketImplPrivate;
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class KMulticastSocketImpl: public KSocketDevice
+class KMulticastSocketImpl: public TDESocketDevice
 {
 public:
   /**
    * Constructor.
    */
-  KMulticastSocketImpl(const KSocketBase* = 0L);
+  KMulticastSocketImpl(const TDESocketBase* = 0L);
 
   /**
    * Destructor
@@ -117,14 +117,14 @@ public:
    * @param group	the multicast group to join
    * @returns true on success
    */
-  virtual bool joinGroup(const KSocketAddress& group);
+  virtual bool joinGroup(const TDESocketAddress& group);
 
   /**
    * @overload
    * Joins a multicast group. This function also specifies the network interface
    * to be used.
    */
-  virtual bool joinGroup(const KSocketAddress& group, 
+  virtual bool joinGroup(const TDESocketAddress& group, 
 			 const KNetworkInterface& iface);
 
   /**
@@ -134,13 +134,13 @@ public:
    * @param group	the group to leave
    * @returns true on successful leaving the group
    */
-  virtual bool leaveGroup(const KSocketAddress& group);
+  virtual bool leaveGroup(const TDESocketAddress& group);
 
   /**
    * @overload
    * Leaves a multicast group.
    */
-  virtual bool leaveGroup(const KSocketAddress& group,
+  virtual bool leaveGroup(const TDESocketAddress& group,
 			  const KNetworkInterface& iface);
 private:
   KMulticastSocketImplPrivate *d;

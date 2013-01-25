@@ -58,13 +58,13 @@ class InsertFilePluginView : public TQObject, public KXMLGUIClient
     /* display a file dialog, and insert the chosen file */
     void slotInsertFile();
   private slots:
-    void slotFinished( KIO::Job *job );
-    //slotAborted( KIO::Job *job );
+    void slotFinished( TDEIO::Job *job );
+    //slotAborted( TDEIO::Job *job );
   private:
     void insertFile();
     KURL _file;
     TQString _tmpfile;
-    KIO::FileCopyJob *_job;
+    TDEIO::FileCopyJob *_job;
 };
 
 #endif // _INSERT_FILE_PLUGIN_H_

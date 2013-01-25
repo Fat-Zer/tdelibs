@@ -1,7 +1,7 @@
 #include <kconfigskeleton.h>
 
-class MyPrefs : public KConfigSkeleton
+class MyPrefs : public TDEConfigSkeleton
 {
   public:
-    MyPrefs( const TQString &a ) : KConfigSkeleton( a ) {}
+    MyPrefs( const TQString &a ) : TDEConfigSkeleton( a ) {}
 };

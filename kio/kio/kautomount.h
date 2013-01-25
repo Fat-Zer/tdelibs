@@ -30,14 +30,14 @@
 
 #ifdef Q_OS_UNIX
 
-namespace KIO {
+namespace TDEIO {
 class Job;
 }
 
 /**
  * This class implements synchronous mounting of devices,
  * as well as showing a file-manager window after mounting a device, optionally.
- * It is a wrapper around the asychronous KIO::special() call for mount,
+ * It is a wrapper around the asychronous TDEIO::special() call for mount,
  * used by KMimeType.
  *
  * @short This class implements synchronous mounting of devices.
@@ -68,7 +68,7 @@ signals:
   void error();
 
 protected slots:
-  void slotResult( KIO::Job * );
+  void slotResult( TDEIO::Job * );
 
 protected:
   TQString m_strDevice;
@@ -82,7 +82,7 @@ private:
 
 /**
  * This class implements synchronous unmounting of devices,
- * It is a wrapper around the asychronous KIO::special() call for unmount,
+ * It is a wrapper around the asychronous TDEIO::special() call for unmount,
  * used by KMimeType.
  *
  * @short This class implements synchronous unmounting of devices,
@@ -107,7 +107,7 @@ signals:
   void error();
 
 protected slots:
-  void slotResult( KIO::Job * );
+  void slotResult( TDEIO::Job * );
 private:
   TQString m_desktopFile;
   TQString m_mountpoint;

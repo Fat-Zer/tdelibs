@@ -41,9 +41,9 @@
 #include "kstaticdeleter.h"
 #include <tqtimer.h>
 
-KConfig::KConfig( const TQString& fileName,
+TDEConfig::TDEConfig( const TQString& fileName,
                  bool bReadOnly, bool bUseKderc, const char *resType )
-  : KConfigBase(), bGroupImmutable(false), bFileImmutable(false),
+  : TDEConfigBase(), bGroupImmutable(false), bFileImmutable(false),
     bForceGlobal(false)
 {
   // set the object's read-only status.
@@ -52,7 +52,7 @@ KConfig::KConfig( const TQString& fileName,
   // for right now we will hardcode that we are using the INI
   // back end driver.  In the future this should be converted over to
   // a object factory of some sorts.
-  KConfigINIBackEnd *aBackEnd = new KConfigINIBackEnd(this,
+  TDEConfigINIBackEnd *aBackEnd = new TDEConfigINIBackEnd(this,
 						      fileName,
                                                       resType,
 						      bUseKderc);
@@ -75,7 +75,7 @@ KConfig::KConfig( const TQString& fileName,
       reparseConfiguration();
 }
 
-KConfig::KConfig(KConfigBackEnd *aBackEnd, bool bReadOnly)
+TDEConfig::TDEConfig(TDEConfigBackEnd *aBackEnd, bool bReadOnly)
     : bGroupImmutable(false), bFileImmutable(false),
     bForceGlobal(false)
 {
@@ -84,19 +84,19 @@ KConfig::KConfig(KConfigBackEnd *aBackEnd, bool bReadOnly)
   reparseConfiguration();
 }
 
-KConfig::~KConfig()
+TDEConfig::~TDEConfig()
 {
   sync();
 
   delete backEnd;
 }
 
-void KConfig::rollback(bool bDeep)
+void TDEConfig::rollback(bool bDeep)
 {
-  KConfigBase::rollback(bDeep);
+  TDEConfigBase::rollback(bDeep);
 
   if (!bDeep)
-    return; // object's bDeep flag is set in KConfigBase method
+    return; // object's bDeep flag is set in TDEConfigBase method
 
   // clear any dirty flags that entries might have set
   for (KEntryMapIterator aIt = aEntryMap.begin();
@@ -104,7 +104,7 @@ void KConfig::rollback(bool bDeep)
     (*aIt).bDirty = false;
 }
 
-TQStringList KConfig::groupList() const
+TQStringList TDEConfig::groupList() const
 {
   TQStringList retList;
 
@@ -138,7 +138,7 @@ TQStringList KConfig::groupList() const
   return retList;
 }
 
-TQMap<TQString, TQString> KConfig::entryMap(const TQString &pGroup) const
+TQMap<TQString, TQString> TDEConfig::entryMap(const TQString &pGroup) const
 {
   TQCString pGroup_utf = pGroup.utf8();
   KEntryKey groupKey( pGroup_utf, 0 );
@@ -158,7 +158,7 @@ TQMap<TQString, TQString> KConfig::entryMap(const TQString &pGroup) const
   return tmpMap;
 }
 
-void KConfig::reparseConfiguration()
+void TDEConfig::reparseConfiguration()
 {
   // Don't lose pending changes
   if (!isReadOnly() && backEnd && bDirty)
@@ -175,7 +175,7 @@ void KConfig::reparseConfiguration()
   bFileImmutable = bReadOnly;
 }
 
-KEntryMap KConfig::internalEntryMap(const TQString &pGroup) const
+KEntryMap TDEConfig::internalEntryMap(const TQString &pGroup) const
 {
   TQCString pGroup_utf = pGroup.utf8();
   KEntry aEntry;
@@ -199,7 +199,7 @@ KEntryMap KConfig::internalEntryMap(const TQString &pGroup) const
   return tmpEntryMap;
 }
 
-void KConfig::putData(const KEntryKey &_key, const KEntry &_data, bool _checkGroup)
+void TDEConfig::putData(const KEntryKey &_key, const KEntry &_data, bool _checkGroup)
 {
   if (bFileImmutable && !_key.bDefault)
     return;
@@ -235,7 +235,7 @@ void KConfig::putData(const KEntryKey &_key, const KEntry &_data, bool _checkGro
   }
 }
 
-KEntry KConfig::lookupData(const KEntryKey &_key) const
+KEntry TDEConfig::lookupData(const KEntryKey &_key) const
 {
   KEntryMapConstIterator aIt = aEntryMap.find(_key);
   if (aIt != aEntryMap.end())
@@ -251,7 +251,7 @@ KEntry KConfig::lookupData(const KEntryKey &_key) const
   }
 }
 
-bool KConfig::internalHasGroup(const TQCString &group) const
+bool TDEConfig::internalHasGroup(const TQCString &group) const
 {
   KEntryKey groupKey( group, 0);
 
@@ -272,19 +272,19 @@ bool KConfig::internalHasGroup(const TQCString &group) const
   return false;
 }
 
-void KConfig::setFileWriteMode(int mode)
+void TDEConfig::setFileWriteMode(int mode)
 {
   backEnd->setFileWriteMode(mode);
 }
 
-KLockFile::Ptr KConfig::lockFile(bool bGlobal)
+KLockFile::Ptr TDEConfig::lockFile(bool bGlobal)
 {
-  KConfigINIBackEnd *aBackEnd = dynamic_cast<KConfigINIBackEnd*>(backEnd);
+  TDEConfigINIBackEnd *aBackEnd = dynamic_cast<TDEConfigINIBackEnd*>(backEnd);
   if (!aBackEnd) return 0;
   return aBackEnd->lockFile(bGlobal);
 }
 
-void KConfig::checkUpdate(const TQString &id, const TQString &updateFile)
+void TDEConfig::checkUpdate(const TQString &id, const TQString &updateFile)
 {
   TQString oldGroup = group();
   setGroup("$Version");
@@ -300,10 +300,10 @@ void KConfig::checkUpdate(const TQString &id, const TQString &updateFile)
   setGroup(oldGroup);
 }
 
-KConfig* KConfig::copyTo(const TQString &file, KConfig *config) const
+TDEConfig* TDEConfig::copyTo(const TQString &file, TDEConfig *config) const
 {
   if (!config)
-     config = new KConfig(TQString::null, false, false);
+     config = new TDEConfig(TQString::null, false, false);
   config->backEnd->changeFileName(file, "config", false);
   config->setReadOnly(false);
   config->bFileImmutable = false;
@@ -325,8 +325,8 @@ KConfig* KConfig::copyTo(const TQString &file, KConfig *config) const
   return config;
 }
 
-void KConfig::virtual_hook( int id, void* data )
-{ KConfigBase::virtual_hook( id, data ); }
+void TDEConfig::virtual_hook( int id, void* data )
+{ TDEConfigBase::virtual_hook( id, data ); }
 
 static KStaticDeleter< TQValueList<KSharedConfig*> > sd;
 TQValueList<KSharedConfig*> *KSharedConfig::s_list = 0;
@@ -348,7 +348,7 @@ KSharedConfig::Ptr KSharedConfig::openConfig(const TQString& fileName, bool read
 }
 
 KSharedConfig::KSharedConfig( const TQString& fileName, bool readonly, bool usekdeglobals)
- : KConfig(fileName, readonly, usekdeglobals)
+ : TDEConfig(fileName, readonly, usekdeglobals)
 {
   if (!s_list)
   {

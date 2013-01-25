@@ -24,7 +24,7 @@
 #include <tqobject.h>
 #include <kio/global.h>
 
-namespace KIO {
+namespace TDEIO {
 
     class SlaveConfigPrivate;
     /**

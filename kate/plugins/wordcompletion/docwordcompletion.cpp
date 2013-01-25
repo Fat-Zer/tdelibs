@@ -68,7 +68,7 @@ DocWordCompletionPlugin::DocWordCompletionPlugin( TQObject *parent,
 
 void DocWordCompletionPlugin::readConfig()
 {
-  KConfig *config = kapp->config();
+  TDEConfig *config = kapp->config();
   config->setGroup( "DocWordCompletion Plugin" );
   m_treshold = config->readNumEntry( "treshold", 3 );
   m_autopopup = config->readBoolEntry( "autopopup", true );
@@ -76,7 +76,7 @@ void DocWordCompletionPlugin::readConfig()
 
 void DocWordCompletionPlugin::writeConfig()
 {
-  KConfig *config = kapp->config();
+  TDEConfig *config = kapp->config();
   config->setGroup("DocWordCompletion Plugin");
   config->writeEntry("autopopup", m_autopopup );
   config->writeEntry("treshold", m_treshold );

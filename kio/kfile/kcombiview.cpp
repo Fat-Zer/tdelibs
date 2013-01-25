@@ -305,14 +305,14 @@ KFileView *KCombiView::focusView( KFileView *preferred ) const
     return (preferred && w == preferred->widget()) ? preferred : other;
 }
 
-void KCombiView::readConfig( KConfig *config, const TQString& group )
+void KCombiView::readConfig( TDEConfig *config, const TQString& group )
 {
     left->readConfig( config, group );
     if ( right )
         right->readConfig( config, group );
 }
 
-void KCombiView::writeConfig( KConfig *config, const TQString& group )
+void KCombiView::writeConfig( TDEConfig *config, const TQString& group )
 {
     left->writeConfig( config, group );
     if ( right )

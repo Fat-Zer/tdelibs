@@ -162,7 +162,7 @@ void KDEPrintd::slotPrintError( KPrintProcess *proc, const TQString& msg )
 TQString KDEPrintd::openPassDlg(const TQString& user)
 {
 	TQString	user_(user), pass_, result;
-	if (KIO::PasswordDialog::getNameAndPassword(user_, pass_, NULL) == KDialog::Accepted)
+	if (TDEIO::PasswordDialog::getNameAndPassword(user_, pass_, NULL) == KDialog::Accepted)
 		result.append(user_).append(":").append(pass_);
 	return result;
 }
@@ -252,7 +252,7 @@ void KDEPrintd::processRequest()
 		return;
 
 	Request *req = m_requestsPending.first();
-	KIO::AuthInfo info;
+	TDEIO::AuthInfo info;
 	TQByteArray params, reply;
 	TQCString replyType;
 	TQString authString( "::" );
@@ -264,13 +264,13 @@ void KDEPrintd::processRequest()
 
 	TQDataStream input( params, IO_WriteOnly );
 	input << info << TQString(i18n( "Authentication failed (user name=%1)" ).arg( info.username )) << 0L << (long int) req->seqNbr;
-	if ( callingDcopClient()->call( "kded", "kpasswdserver", "queryAuthInfo(KIO::AuthInfo,TQString,long int,long int)",
+	if ( callingDcopClient()->call( "kded", "kpasswdserver", "queryAuthInfo(TDEIO::AuthInfo,TQString,long int,long int)",
 				params, replyType, reply ) )
 	{
-		if ( replyType == "KIO::AuthInfo" )
+		if ( replyType == "TDEIO::AuthInfo" )
 		{
 			TQDataStream output( reply, IO_ReadOnly );
-			KIO::AuthInfo result;
+			TDEIO::AuthInfo result;
 			int seqNbr;
 			output >> result >> seqNbr;
 
@@ -278,7 +278,7 @@ void KDEPrintd::processRequest()
 				authString = result.username + ":" + result.password + ":" + TQString::number( seqNbr );
 		}
 		else
-			kdWarning( 500 ) << "DCOP returned type error, expected KIO::AuthInfo, received " << replyType << endl;
+			kdWarning( 500 ) << "DCOP returned type error, expected TDEIO::AuthInfo, received " << replyType << endl;
 	}
 	else
 		kdWarning( 500 ) << "Cannot communicate with kded_kpasswdserver" << endl;
@@ -298,7 +298,7 @@ void KDEPrintd::initPassword( const TQString& user, const TQString& passwd, cons
 {
 	TQByteArray params, reply;
 	TQCString replyType;
-	KIO::AuthInfo info;
+	TDEIO::AuthInfo info;
 
 	info.username = user;
 	info.password = passwd;
@@ -307,7 +307,7 @@ void KDEPrintd::initPassword( const TQString& user, const TQString& passwd, cons
 	TQDataStream input( params, IO_WriteOnly );
 	input << info << ( long int )0;
 
-	if ( !callingDcopClient()->call( "kded", "kpasswdserver", "addAuthInfo(KIO::AuthInfo,long int)",
+	if ( !callingDcopClient()->call( "kded", "kpasswdserver", "addAuthInfo(TDEIO::AuthInfo,long int)",
 			params, replyType, reply ) )
 		kdWarning( 500 ) << "Unable to initialize password, cannot communicate with kded_kpasswdserver" << endl;
 }

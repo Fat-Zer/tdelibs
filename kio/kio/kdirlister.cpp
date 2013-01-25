@@ -224,8 +224,8 @@ bool KDirListerCache::listDir( KDirLister *lister, const KURL& _u,
       if ( lister->d->url == _url )
         lister->d->rootFileItem = 0;
 
-      KIO::ListJob* job = KIO::listDir( _url, false /* no default GUI */ );
-      jobs.insert( job, TQValueList<KIO::UDSEntry>() );
+      TDEIO::ListJob* job = TDEIO::listDir( _url, false /* no default GUI */ );
+      jobs.insert( job, TQValueList<TDEIO::UDSEntry>() );
 
       lister->jobStarted( job );
       lister->connectJob( job );
@@ -233,12 +233,12 @@ bool KDirListerCache::listDir( KDirLister *lister, const KURL& _u,
       if ( lister->d->window )
         job->setWindow( lister->d->window );
 
-      connect( job, TQT_SIGNAL( entries( KIO::Job *, const KIO::UDSEntryList & ) ),
-               this, TQT_SLOT( slotEntries( KIO::Job *, const KIO::UDSEntryList & ) ) );
-      connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
-               this, TQT_SLOT( slotResult( KIO::Job * ) ) );
-      connect( job, TQT_SIGNAL( redirection( KIO::Job *, const KURL & ) ),
-               this, TQT_SLOT( slotRedirection( KIO::Job *, const KURL & ) ) );
+      connect( job, TQT_SIGNAL( entries( TDEIO::Job *, const TDEIO::UDSEntryList & ) ),
+               this, TQT_SLOT( slotEntries( TDEIO::Job *, const TDEIO::UDSEntryList & ) ) );
+      connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ),
+               this, TQT_SLOT( slotResult( TDEIO::Job * ) ) );
+      connect( job, TQT_SIGNAL( redirection( TDEIO::Job *, const KURL & ) ),
+               this, TQT_SLOT( slotRedirection( TDEIO::Job *, const KURL & ) ) );
 
       emit lister->started( _url );
 
@@ -253,7 +253,7 @@ bool KDirListerCache::listDir( KDirLister *lister, const KURL& _u,
 
     urlsCurrentlyListed[urlStr]->append( lister );
 
-    KIO::ListJob *job = jobForUrl( urlStr );
+    TDEIO::ListJob *job = jobForUrl( urlStr );
     Q_ASSERT( job );
 
     lister->jobStarted( job );
@@ -322,7 +322,7 @@ void KDirListerCache::stop( KDirLister *lister )
       bool ret = listers->removeRef( lister );
       Q_ASSERT( ret );
       
-      KIO::ListJob *job = jobForUrl( url );
+      TDEIO::ListJob *job = jobForUrl( url );
       if ( job )
         lister->jobDone( job );
 
@@ -388,7 +388,7 @@ void KDirListerCache::stop( KDirLister *lister, const KURL& _u )
   holders->append( lister );
 
 
-  KIO::ListJob *job = jobForUrl( urlStr );
+  TDEIO::ListJob *job = jobForUrl( urlStr );
   if ( job )
     lister->jobDone( job );
 
@@ -472,7 +472,7 @@ void KDirListerCache::forgetDirs( KDirLister *lister, const KURL& _url, bool not
       itemsInUse.remove( urlStr );
 
       // this job is a running update
-      KIO::ListJob *job = jobForUrl( urlStr );
+      TDEIO::ListJob *job = jobForUrl( urlStr );
       if ( job )
       {
         lister->jobDone( job );
@@ -499,7 +499,7 @@ void KDirListerCache::forgetDirs( KDirLister *lister, const KURL& _url, bool not
         // Generally keep a watch, except when it would prevent
         // unmounting a removable device (#37780)
         const bool isLocal = item->url.isLocalFile();
-        const bool isManuallyMounted = isLocal && KIO::manually_mounted( item->url.path() );
+        const bool isManuallyMounted = isLocal && TDEIO::manually_mounted( item->url.path() );
         bool containsManuallyMounted = false;
         if ( !isManuallyMounted && item->lstItems && isLocal ) 
         {
@@ -509,7 +509,7 @@ void KDirListerCache::forgetDirs( KDirLister *lister, const KURL& _url, bool not
           // of the time this is just a stat per subdir)
           KFileItemListIterator kit( *item->lstItems );
           for ( ; kit.current() && !containsManuallyMounted; ++kit )
-            if ( (*kit)->isDir() && KIO::manually_mounted( (*kit)->url().path() ) )
+            if ( (*kit)->isDir() && TDEIO::manually_mounted( (*kit)->url().path() ) )
               containsManuallyMounted = true;
         }
 
@@ -554,7 +554,7 @@ void KDirListerCache::updateDirectory( const KURL& _dir )
   // restart the job for _dir if it is running already
   bool killed = false;
   TQWidget *window = 0;
-  KIO::ListJob *job = jobForUrl( urlStr );
+  TDEIO::ListJob *job = jobForUrl( urlStr );
   if ( job )
   {
      window = job->window();
@@ -577,13 +577,13 @@ void KDirListerCache::updateDirectory( const KURL& _dir )
 
   Q_ASSERT( !listers || (listers && killed) );
 
-  job = KIO::listDir( _dir, false /* no default GUI */ );
-  jobs.insert( job, TQValueList<KIO::UDSEntry>() );
+  job = TDEIO::listDir( _dir, false /* no default GUI */ );
+  jobs.insert( job, TQValueList<TDEIO::UDSEntry>() );
 
-  connect( job, TQT_SIGNAL(entries( KIO::Job *, const KIO::UDSEntryList & )),
-           this, TQT_SLOT(slotUpdateEntries( KIO::Job *, const KIO::UDSEntryList & )) );
-  connect( job, TQT_SIGNAL(result( KIO::Job * )),
-           this, TQT_SLOT(slotUpdateResult( KIO::Job * )) );
+  connect( job, TQT_SIGNAL(entries( TDEIO::Job *, const TDEIO::UDSEntryList & )),
+           this, TQT_SLOT(slotUpdateEntries( TDEIO::Job *, const TDEIO::UDSEntryList & )) );
+  connect( job, TQT_SIGNAL(result( TDEIO::Job * )),
+           this, TQT_SLOT(slotUpdateResult( TDEIO::Job * )) );
 
   kdDebug(7004) << k_funcinfo << "update started in " << _dir << endl;
 
@@ -930,9 +930,9 @@ void KDirListerCache::slotFileDeleted( const TQString& _file )
   FilesRemoved( u );
 }
 
-void KDirListerCache::slotEntries( KIO::Job *job, const KIO::UDSEntryList &entries )
+void KDirListerCache::slotEntries( TDEIO::Job *job, const TDEIO::UDSEntryList &entries )
 {
-  KURL url = joburl( static_cast<KIO::ListJob *>(job) );
+  KURL url = joburl( static_cast<TDEIO::ListJob *>(job) );
   url.adjustPath(-1);
   TQString urlStr = url.url();
 
@@ -954,17 +954,17 @@ void KDirListerCache::slotEntries( KIO::Job *job, const KIO::UDSEntryList &entri
   static const TQString& dot = TDEGlobal::staticQString(".");
   static const TQString& dotdot = TDEGlobal::staticQString("..");
 
-  KIO::UDSEntryListConstIterator it = entries.begin();
-  KIO::UDSEntryListConstIterator end = entries.end();
+  TDEIO::UDSEntryListConstIterator it = entries.begin();
+  TDEIO::UDSEntryListConstIterator end = entries.end();
 
   for ( ; it != end; ++it )
   {
     TQString name;
 
     // find out about the name
-    KIO::UDSEntry::ConstIterator entit = (*it).begin();
+    TDEIO::UDSEntry::ConstIterator entit = (*it).begin();
     for( ; entit != (*it).end(); ++entit )
-      if ( (*entit).m_uds == KIO::UDS_NAME )
+      if ( (*entit).m_uds == TDEIO::UDS_NAME )
       {
         name = (*entit).m_str;
         break;
@@ -1000,10 +1000,10 @@ void KDirListerCache::slotEntries( KIO::Job *job, const KIO::UDSEntryList &entri
     kdl->emitItems();
 }
 
-void KDirListerCache::slotResult( KIO::Job *j )
+void KDirListerCache::slotResult( TDEIO::Job *j )
 {
   Q_ASSERT( j );
-  KIO::ListJob *job = static_cast<KIO::ListJob *>( j );
+  TDEIO::ListJob *job = static_cast<TDEIO::ListJob *>( j );
   jobs.remove( job );
 
   KURL jobUrl = joburl( job );
@@ -1067,10 +1067,10 @@ void KDirListerCache::slotResult( KIO::Job *j )
 #endif
 }
 
-void KDirListerCache::slotRedirection( KIO::Job *j, const KURL& url )
+void KDirListerCache::slotRedirection( TDEIO::Job *j, const KURL& url )
 {
   Q_ASSERT( j );
-  KIO::ListJob *job = static_cast<KIO::ListJob *>( j );
+  TDEIO::ListJob *job = static_cast<TDEIO::ListJob *>( j );
 
   KURL oldUrl = job->url();  // here we really need the old url!
   KURL newUrl = url;
@@ -1175,7 +1175,7 @@ void KDirListerCache::slotRedirection( KIO::Job *j, const KURL& url )
 
     // get the job if one's running for newUrl already (can be a list-job or an update-job), but
     // do not return this 'job', which would happen because of the use of redirectionURL()
-    KIO::ListJob *oldJob = jobForUrl( newUrl.url(), job );
+    TDEIO::ListJob *oldJob = jobForUrl( newUrl.url(), job );
 
     // listers of newUrl with oldJob: forget about the oldJob and use the already running one
     // which will be converted to an updateJob
@@ -1305,10 +1305,10 @@ void KDirListerCache::slotRedirection( KIO::Job *j, const KURL& url )
   // make the job an update job
   job->disconnect( this );
     
-  connect( job, TQT_SIGNAL(entries( KIO::Job *, const KIO::UDSEntryList & )),
-           this, TQT_SLOT(slotUpdateEntries( KIO::Job *, const KIO::UDSEntryList & )) );
-  connect( job, TQT_SIGNAL(result( KIO::Job * )),
-           this, TQT_SLOT(slotUpdateResult( KIO::Job * )) );
+  connect( job, TQT_SIGNAL(entries( TDEIO::Job *, const TDEIO::UDSEntryList & )),
+           this, TQT_SLOT(slotUpdateEntries( TDEIO::Job *, const TDEIO::UDSEntryList & )) );
+  connect( job, TQT_SIGNAL(result( TDEIO::Job * )),
+           this, TQT_SLOT(slotUpdateResult( TDEIO::Job * )) );
 
   // FIXME: autoUpdate-Counts!!
 
@@ -1385,7 +1385,7 @@ void KDirListerCache::emitRedirections( const KURL &oldUrl, const KURL &url )
   TQString oldUrlStr = oldUrl.url(-1);
   TQString urlStr = url.url(-1);
 
-  KIO::ListJob *job = jobForUrl( oldUrlStr );
+  TDEIO::ListJob *job = jobForUrl( oldUrlStr );
   if ( job )
     killJob( job );
 
@@ -1454,15 +1454,15 @@ void KDirListerCache::removeDirFromCache( const KURL& dir )
   }
 }
 
-void KDirListerCache::slotUpdateEntries( KIO::Job* job, const KIO::UDSEntryList& list )
+void KDirListerCache::slotUpdateEntries( TDEIO::Job* job, const TDEIO::UDSEntryList& list )
 {
-  jobs[static_cast<KIO::ListJob*>(job)] += list;
+  jobs[static_cast<TDEIO::ListJob*>(job)] += list;
 }
 
-void KDirListerCache::slotUpdateResult( KIO::Job * j )
+void KDirListerCache::slotUpdateResult( TDEIO::Job * j )
 {
   Q_ASSERT( j );
-  KIO::ListJob *job = static_cast<KIO::ListJob *>( j );
+  TDEIO::ListJob *job = static_cast<TDEIO::ListJob *>( j );
 
   KURL jobUrl = joburl( job );
   jobUrl.adjustPath(-1);  // need remove trailing slashes again, in case of redirections
@@ -1544,8 +1544,8 @@ void KDirListerCache::slotUpdateResult( KIO::Job * j )
 
   KFileItem *item = 0, *tmp;
 
-  TQValueList<KIO::UDSEntry> buf = jobs[job];
-  TQValueListIterator<KIO::UDSEntry> it = buf.begin();
+  TQValueList<TDEIO::UDSEntry> buf = jobs[job];
+  TQValueListIterator<TDEIO::UDSEntry> it = buf.begin();
   for ( ; it != buf.end(); ++it )
   {
     // Form the complete url
@@ -1641,10 +1641,10 @@ void KDirListerCache::slotUpdateResult( KIO::Job * j )
 
 // private
 
-KIO::ListJob *KDirListerCache::jobForUrl( const TQString& url, KIO::ListJob *not_job )
+TDEIO::ListJob *KDirListerCache::jobForUrl( const TQString& url, TDEIO::ListJob *not_job )
 {
-  KIO::ListJob *job;
-  TQMap< KIO::ListJob *, TQValueList<KIO::UDSEntry> >::Iterator it = jobs.begin();
+  TDEIO::ListJob *job;
+  TQMap< TDEIO::ListJob *, TQValueList<TDEIO::UDSEntry> >::Iterator it = jobs.begin();
   while ( it != jobs.end() )
   {
     job = it.key();
@@ -1655,7 +1655,7 @@ KIO::ListJob *KDirListerCache::jobForUrl( const TQString& url, KIO::ListJob *not
   return 0;
 }
 
-const KURL& KDirListerCache::joburl( KIO::ListJob *job )
+const KURL& KDirListerCache::joburl( TDEIO::ListJob *job )
 {
   if ( job->redirectionURL().isValid() )
      return job->redirectionURL();
@@ -1663,7 +1663,7 @@ const KURL& KDirListerCache::joburl( KIO::ListJob *job )
      return job->url();
 }
 
-void KDirListerCache::killJob( KIO::ListJob *job )
+void KDirListerCache::killJob( TDEIO::ListJob *job )
 {
   jobs.remove( job );
   job->disconnect( this );
@@ -1806,7 +1806,7 @@ void KDirListerCache::printDebug()
     kdDebug(7004) << "   " << it2.currentKey() << "  " << it2.current()->count() << " listers: " << list << endl;
   }
 
-  TQMap< KIO::ListJob *, TQValueList<KIO::UDSEntry> >::Iterator jit = jobs.begin();
+  TQMap< TDEIO::ListJob *, TQValueList<TDEIO::UDSEntry> >::Iterator jit = jobs.begin();
   kdDebug(7004) << "Jobs: " << endl;
   for ( ; jit != jobs.end() ; ++jit )
     kdDebug(7004) << "   " << jit.key() << " listing " << joburl( jit.key() ).prettyURL() << ": " << (*jit).count() << " entries." << endl;
@@ -1867,9 +1867,9 @@ bool KDirLister::openURL( const KURL& _url, bool _keep, bool _reload )
   // If a local path is available, monitor that instead of the given remote URL...
   KURL realURL = _url;
   if (!realURL.isLocalFile()) {
-      KIO::LocalURLJob* localURLJob = KIO::localURL(_url);
+      TDEIO::LocalURLJob* localURLJob = TDEIO::localURL(_url);
       if (localURLJob) {
-          connect(localURLJob, TQT_SIGNAL(localURL(KIO::Job*, const KURL&, bool)), this, TQT_SLOT(slotLocalURL(KIO::Job*, const KURL&, bool)));
+          connect(localURLJob, TQT_SIGNAL(localURL(TDEIO::Job*, const KURL&, bool)), this, TQT_SLOT(slotLocalURL(TDEIO::Job*, const KURL&, bool)));
           connect(localURLJob, TQT_SIGNAL(destroyed()), this, TQT_SLOT(slotLocalURLKIODestroyed()));
           d->localURLSlotFired = false;
           while (!d->localURLSlotFired) {
@@ -1885,7 +1885,7 @@ bool KDirLister::openURL( const KURL& _url, bool _keep, bool _reload )
   return s_pCache->listDir( this, realURL, _keep, _reload );
 }
 
-void KDirLister::slotLocalURL(KIO::Job *job, const KURL& url, bool isLocal) {
+void KDirLister::slotLocalURL(TDEIO::Job *job, const KURL& url, bool isLocal) {
   d->localURLSlotFired = true;
   d->localURLResultURL = url;
   d->localURLResultIsLocal = isLocal;
@@ -2248,7 +2248,7 @@ bool KDirLister::validURL( const KURL& _url ) const
   return s_pCache->validURL( this, _url );
 }
 
-void KDirLister::handleError( KIO::Job *job )
+void KDirLister::handleError( TDEIO::Job *job )
 {
   if ( d->autoErrorHandling )
     job->showErrorDialog( d->errorParent );
@@ -2382,20 +2382,20 @@ void KDirLister::emitDeleteItem( KFileItem *item )
 
 // ================ private slots ================ //
 
-void KDirLister::slotInfoMessage( KIO::Job *, const TQString& message )
+void KDirLister::slotInfoMessage( TDEIO::Job *, const TQString& message )
 {
   emit infoMessage( message );
 }
 
-void KDirLister::slotPercent( KIO::Job *job, unsigned long pcnt )
+void KDirLister::slotPercent( TDEIO::Job *job, unsigned long pcnt )
 {
-  d->jobData[static_cast<KIO::ListJob *>(job)].percent = pcnt;
+  d->jobData[static_cast<TDEIO::ListJob *>(job)].percent = pcnt;
 
   int result = 0;
 
-  KIO::filesize_t size = 0;
+  TDEIO::filesize_t size = 0;
 
-  TQMap< KIO::ListJob *, KDirListerPrivate::JobData >::Iterator dataIt = d->jobData.begin();
+  TQMap< TDEIO::ListJob *, KDirListerPrivate::JobData >::Iterator dataIt = d->jobData.begin();
   while ( dataIt != d->jobData.end() )
   {
     result += (*dataIt).percent * (*dataIt).totalSize;
@@ -2410,12 +2410,12 @@ void KDirLister::slotPercent( KIO::Job *job, unsigned long pcnt )
   emit percent( result );
 }
 
-void KDirLister::slotTotalSize( KIO::Job *job, KIO::filesize_t size )
+void KDirLister::slotTotalSize( TDEIO::Job *job, TDEIO::filesize_t size )
 {
-  d->jobData[static_cast<KIO::ListJob *>(job)].totalSize = size;
+  d->jobData[static_cast<TDEIO::ListJob *>(job)].totalSize = size;
 
-  KIO::filesize_t result = 0;
-  TQMap< KIO::ListJob *, KDirListerPrivate::JobData >::Iterator dataIt = d->jobData.begin();
+  TDEIO::filesize_t result = 0;
+  TQMap< TDEIO::ListJob *, KDirListerPrivate::JobData >::Iterator dataIt = d->jobData.begin();
   while ( dataIt != d->jobData.end() )
   {
     result += (*dataIt).totalSize;
@@ -2425,12 +2425,12 @@ void KDirLister::slotTotalSize( KIO::Job *job, KIO::filesize_t size )
   emit totalSize( result );
 }
 
-void KDirLister::slotProcessedSize( KIO::Job *job, KIO::filesize_t size )
+void KDirLister::slotProcessedSize( TDEIO::Job *job, TDEIO::filesize_t size )
 {
-  d->jobData[static_cast<KIO::ListJob *>(job)].processedSize = size;
+  d->jobData[static_cast<TDEIO::ListJob *>(job)].processedSize = size;
 
-  KIO::filesize_t result = 0;
-  TQMap< KIO::ListJob *, KDirListerPrivate::JobData >::Iterator dataIt = d->jobData.begin();
+  TDEIO::filesize_t result = 0;
+  TQMap< TDEIO::ListJob *, KDirListerPrivate::JobData >::Iterator dataIt = d->jobData.begin();
   while ( dataIt != d->jobData.end() )
   {
     result += (*dataIt).processedSize;
@@ -2440,12 +2440,12 @@ void KDirLister::slotProcessedSize( KIO::Job *job, KIO::filesize_t size )
   emit processedSize( result );
 }
 
-void KDirLister::slotSpeed( KIO::Job *job, unsigned long spd )
+void KDirLister::slotSpeed( TDEIO::Job *job, unsigned long spd )
 {
-  d->jobData[static_cast<KIO::ListJob *>(job)].speed = spd;
+  d->jobData[static_cast<TDEIO::ListJob *>(job)].speed = spd;
 
   int result = 0;
-  TQMap< KIO::ListJob *, KDirListerPrivate::JobData >::Iterator dataIt = d->jobData.begin();
+  TQMap< TDEIO::ListJob *, KDirListerPrivate::JobData >::Iterator dataIt = d->jobData.begin();
   while ( dataIt != d->jobData.end() )
   {
     result += (*dataIt).speed;
@@ -2460,12 +2460,12 @@ uint KDirLister::numJobs()
   return d->jobData.count();
 }
 
-void KDirLister::jobDone( KIO::ListJob *job )
+void KDirLister::jobDone( TDEIO::ListJob *job )
 {
   d->jobData.remove( job );
 }
 
-void KDirLister::jobStarted( KIO::ListJob *job )
+void KDirLister::jobStarted( TDEIO::ListJob *job )
 {
   KDirListerPrivate::JobData jobData;
   jobData.speed = 0;
@@ -2477,18 +2477,18 @@ void KDirLister::jobStarted( KIO::ListJob *job )
   d->complete = false;
 }
 
-void KDirLister::connectJob( KIO::ListJob *job )
+void KDirLister::connectJob( TDEIO::ListJob *job )
 {
-  connect( job, TQT_SIGNAL(infoMessage( KIO::Job *, const TQString& )),
-           this, TQT_SLOT(slotInfoMessage( KIO::Job *, const TQString& )) );
-  connect( job, TQT_SIGNAL(percent( KIO::Job *, unsigned long )),
-           this, TQT_SLOT(slotPercent( KIO::Job *, unsigned long )) );
-  connect( job, TQT_SIGNAL(totalSize( KIO::Job *, KIO::filesize_t )),
-           this, TQT_SLOT(slotTotalSize( KIO::Job *, KIO::filesize_t )) );
-  connect( job, TQT_SIGNAL(processedSize( KIO::Job *, KIO::filesize_t )),
-           this, TQT_SLOT(slotProcessedSize( KIO::Job *, KIO::filesize_t )) );
-  connect( job, TQT_SIGNAL(speed( KIO::Job *, unsigned long )),
-           this, TQT_SLOT(slotSpeed( KIO::Job *, unsigned long )) );
+  connect( job, TQT_SIGNAL(infoMessage( TDEIO::Job *, const TQString& )),
+           this, TQT_SLOT(slotInfoMessage( TDEIO::Job *, const TQString& )) );
+  connect( job, TQT_SIGNAL(percent( TDEIO::Job *, unsigned long )),
+           this, TQT_SLOT(slotPercent( TDEIO::Job *, unsigned long )) );
+  connect( job, TQT_SIGNAL(totalSize( TDEIO::Job *, TDEIO::filesize_t )),
+           this, TQT_SLOT(slotTotalSize( TDEIO::Job *, TDEIO::filesize_t )) );
+  connect( job, TQT_SIGNAL(processedSize( TDEIO::Job *, TDEIO::filesize_t )),
+           this, TQT_SLOT(slotProcessedSize( TDEIO::Job *, TDEIO::filesize_t )) );
+  connect( job, TQT_SIGNAL(speed( TDEIO::Job *, unsigned long )),
+           this, TQT_SLOT(slotSpeed( TDEIO::Job *, unsigned long )) );
 }
 
 void KDirLister::setMainWindow( TQWidget *window )

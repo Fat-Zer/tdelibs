@@ -378,7 +378,7 @@ int OfflineDialog::cachePolicy() const
 
 void OfflineDialog::loadCache() 
 {
-  if ( KIO::NetAccess::download( mSrc, mDst, this ) ) {
+  if ( TDEIO::NetAccess::download( mSrc, mDst, this ) ) {
     KMessageBox::information( this, 
       i18n("Successfully downloaded directory server contents!") );
   } else {

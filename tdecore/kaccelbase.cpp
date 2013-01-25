@@ -564,14 +564,14 @@ bool KAccelBase::setShortcut( const TQString& sAction, const KShortcut& cut )
 		return false;
 }
 
-void KAccelBase::readSettings( KConfigBase* pConfig )
+void KAccelBase::readSettings( TDEConfigBase* pConfig )
 {
 	m_rgActions.readActions( m_sConfigGroup, pConfig );
 	if( m_bAutoUpdate )
 		updateConnections();
 }
 
-void KAccelBase::writeSettings( KConfigBase* pConfig ) const
+void KAccelBase::writeSettings( TDEConfigBase* pConfig ) const
 {
 	m_rgActions.writeActions( m_sConfigGroup, pConfig, m_bConfigIsGlobal, m_bConfigIsGlobal );
 }

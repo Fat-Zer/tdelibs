@@ -29,7 +29,7 @@
 #include "tdelibs_export.h"
 
 class TQFile;
-class KConfigBackEndPrivate;
+class TDEConfigBackEndPrivate;
 
 /**
  * Abstract base class for KDE configuration file loading/saving.
@@ -45,9 +45,9 @@ class KConfigBackEndPrivate;
  *         Matthias Kalle Dalheimer <kalle@kde.org>
  * @short KDE Configuration file loading/saving abstract base class
  */
-class TDECORE_EXPORT KConfigBackEnd
+class TDECORE_EXPORT TDEConfigBackEnd
 {
-  friend class KConfig;
+  friend class TDEConfig;
   friend class KSharedConfig;
 public:
   /**
@@ -65,13 +65,13 @@ public:
    *        will be imported into the config object.  If false, only
    *        the filename specified will be dealt with.
    */
-  KConfigBackEnd(KConfigBase *_config, const TQString &_fileName,
+  TDEConfigBackEnd(TDEConfigBase *_config, const TQString &_fileName,
 		 const char * _resType, bool _useKDEGlobals);
 
   /**
    * Destructs the configuration backend.
    */
-  virtual ~KConfigBackEnd();
+  virtual ~TDEConfigBackEnd();
 
   /**
    * Parses all configuration files for a configuration object.  This
@@ -108,9 +108,9 @@ public:
   /**
    * Returns the state of the app-config object.
    *
-   * @see KConfig::getConfigState
+   * @see TDEConfig::getConfigState
    */
-  virtual KConfigBase::ConfigState getConfigState() const
+  virtual TDEConfigBase::ConfigState getConfigState() const
     { return mConfigState; }
 
   /**
@@ -162,7 +162,7 @@ private:
   KDE_DEPRECATED TQString filename() const { return mfileName; }
 
 protected:
-  KConfigBase *pConfig;
+  TDEConfigBase *pConfig;
 
   TQString mfileName;
   TQCString resType;
@@ -171,14 +171,14 @@ protected:
   TQCString localeString;
   TQString mLocalFileName;
   TQString mGlobalFileName;
-  KConfigBase::ConfigState mConfigState;
+  TDEConfigBase::ConfigState mConfigState;
   int mFileMode;
 
 protected:
   virtual void virtual_hook( int id, void* data );
 protected:
-  class KConfigBackEndPrivate;
-  KConfigBackEndPrivate *d;
+  class TDEConfigBackEndPrivate;
+  TDEConfigBackEndPrivate *d;
 };
 
 
@@ -188,7 +188,7 @@ protected:
  * @author Preston Brown <pbrown@kde.org>,
  *         Matthias Kalle Dalheimer <kalle@kde.org>
  */
-class TDECORE_EXPORT KConfigINIBackEnd : public KConfigBackEnd
+class TDECORE_EXPORT TDEConfigINIBackEnd : public TDEConfigBackEnd
 {
 
 public:
@@ -207,14 +207,14 @@ public:
    *        will be imported into the config object.  If false, only
    *        the filename specified will be dealt with.
    */
-  KConfigINIBackEnd(KConfigBase *_config, const TQString &_fileName,
+  TDEConfigINIBackEnd(TDEConfigBase *_config, const TQString &_fileName,
 		    const char * _resType, bool _useKDEGlobals = true)
-    : KConfigBackEnd(_config, _fileName, _resType, _useKDEGlobals) {}
+    : TDEConfigBackEnd(_config, _fileName, _resType, _useKDEGlobals) {}
 
   /**
    * Destructs the configuration backend.
    */
-  virtual ~KConfigINIBackEnd() {}
+  virtual ~TDEConfigINIBackEnd() {}
 
   /**
    * Parses all INI-style configuration files for a config object.
@@ -292,8 +292,8 @@ protected:
 protected:
   virtual void virtual_hook( int id, void* data );
 private:
-  class KConfigINIBackEndPrivate;
-  KConfigINIBackEndPrivate *not_d;
+  class TDEConfigINIBackEndPrivate;
+  TDEConfigINIBackEndPrivate *not_d;
 };
 
 #endif
