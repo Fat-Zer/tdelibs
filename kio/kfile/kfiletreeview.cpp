@@ -262,7 +262,7 @@ TQDragObject * KFileTreeView::dragObject()
    TQPoint hotspot;
    TQPixmap pixmap;
    if( urls.count() > 1 ){
-      pixmap = DesktopIcon( "kmultiple", 16 );
+      pixmap = DesktopIcon( "tdemultiple", 16 );
    }
    if( pixmap.isNull() )
       pixmap = currentKFileTreeViewItem()->fileItem()->pixmap( 16 );

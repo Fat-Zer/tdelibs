@@ -29,7 +29,7 @@
 #include "kservicegroupfactory.h"
 #include "kservicegroup.h"
 #include "kservice.h"
-#include "ksycoca.h"
+#include "tdesycoca.h"
 
 class KServiceGroup::Private
 {

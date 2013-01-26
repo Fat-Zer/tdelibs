@@ -34,7 +34,7 @@
 #include <kmessagebox.h>
 #include <kdebug.h>
 #include <kio/passdlg.h>
-#include <kwallet.h>
+#include <tdewallet.h>
 
 #include "config.h"
 #ifdef Q_WS_X11
@@ -361,7 +361,7 @@ KPasswdServer::processRequest()
             if ( ( username.isEmpty() || password.isEmpty() )
                 && !KWallet::Wallet::keyDoesNotExist(KWallet::Wallet::NetworkWallet(), KWallet::Wallet::PasswordFolder(), makeWalletKey( request->key, info.realmValue )) )
             {
-                // no login+pass provided, check if kwallet has one
+                // no login+pass provided, check if tdewallet has one
                 if ( openWallet( request->windowId ) )
                     hasWalletData = readFromWallet( m_wallet, request->key, info.realmValue, username, password, info.readOnly, knownLogins );
             }

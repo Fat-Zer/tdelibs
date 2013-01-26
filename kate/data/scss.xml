@@ -189,7 +189,7 @@
             <item> -o-text-overflow </item>
 
             <!-- konq specific -->
-            <item> -khtml-background-size </item>
+            <item> -tdehtml-background-size </item>
             <item> konq_bgpos_x </item>
             <item> konq_bgpos_y </item>
 

@@ -25,9 +25,9 @@
 #include <tqdict.h>
 
 #include <kservice.h>
-#include <ksycoca.h>
-#include <ksycocatype.h>
-#include <ksycocaentry.h>
+#include <tdesycoca.h>
+#include <tdesycocatype.h>
+#include <tdesycocaentry.h>
 #include <kservicegroup.h>
 
 #include "vfolder_menu.h"
@@ -80,7 +80,7 @@ protected:
    bool build();
    
    /**
-    * Save the ksycoca file
+    * Save the tdesycoca file
     */
    void save();
 

@@ -88,7 +88,7 @@
 
 #endif /* HAVE_LIBGSSAPI */
 
-#include <misc/kntlm/kntlm.h>
+#include <misc/tdentlm/tdentlm.h>
 
 using namespace TDEIO;
 
@@ -3982,7 +3982,7 @@ void HTTPProtocol::httpClose( bool keepAlive )
   // Only allow persistent connections for GET requests.
   // NOTE: we might even want to narrow this down to non-form
   // based submit requests which will require a meta-data from
-  // khtml.
+  // tdehtml.
   if (keepAlive && (!m_bUseProxy ||
       m_bPersistentProxyConnection || m_bIsTunneled))
   {

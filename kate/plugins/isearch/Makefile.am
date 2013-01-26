@@ -2,17 +2,17 @@ INCLUDES    = -I$(top_srcdir)/interfaces $(all_includes)
 METASOURCES = AUTO
 
 # Install this plugin in the KDE modules directory
-kde_module_LTLIBRARIES = ktexteditor_isearch.la
+kde_module_LTLIBRARIES = tdetexteditor_isearch.la
 
-ktexteditor_isearch_la_SOURCES = ISearchPlugin.cpp
-ktexteditor_isearch_la_LIBADD = $(top_builddir)/interfaces/ktexteditor/libktexteditor.la $(LIB_QT) $(LIB_TDECORE) $(LIB_TDEUI)
-ktexteditor_isearch_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
+tdetexteditor_isearch_la_SOURCES = ISearchPlugin.cpp
+tdetexteditor_isearch_la_LIBADD = $(top_builddir)/interfaces/tdetexteditor/libtdetexteditor.la $(LIB_QT) $(LIB_TDECORE) $(LIB_TDEUI)
+tdetexteditor_isearch_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
           
-isearchdatadir = $(kde_datadir)/ktexteditor_isearch
-isearchdata_DATA = ktexteditor_isearchui.rc
+isearchdatadir = $(kde_datadir)/tdetexteditor_isearch
+isearchdata_DATA = tdetexteditor_isearchui.rc
 
-kde_services_DATA = ktexteditor_isearch.desktop
+kde_services_DATA = tdetexteditor_isearch.desktop
 
 messages: rc.cpp
-	$(XGETTEXT) *.cpp *.h -o $(podir)/ktexteditor_isearch.pot
+	$(XGETTEXT) *.cpp *.h -o $(podir)/tdetexteditor_isearch.pot
 

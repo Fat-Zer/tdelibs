@@ -257,7 +257,7 @@ KCookieJar::KCookieJar()
     m_configChanged = false;
     m_cookiesChanged = false;
     
-    TDEConfig cfg("khtml/domain_info", true, false, "data");
+    TDEConfig cfg("tdehtml/domain_info", true, false, "data");
     TQStringList countries = cfg.readListEntry("twoLevelTLD");
     for(TQStringList::ConstIterator it = countries.begin();
         it != countries.end(); ++it)

@@ -42,6 +42,6 @@ set( ${target}_SRCS
 tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 0.0.0
-  LINK ktexteditor-shared
+  LINK tdetexteditor-shared
   DESTINATION ${LIB_INSTALL_DIR}
 )

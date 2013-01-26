@@ -21,19 +21,19 @@
 #include "kate_kdatatool.moc"
 #include <kgenericfactory.h>
 #include <kaction.h>
-#include <ktexteditor/view.h>
+#include <tdetexteditor/view.h>
 #include <kdebug.h>
 #include <kdatatool.h>
-#include <ktexteditor/document.h>
-#include <ktexteditor/selectioninterface.h>
+#include <tdetexteditor/document.h>
+#include <tdetexteditor/selectioninterface.h>
 #include <kpopupmenu.h>
-#include <ktexteditor/viewcursorinterface.h>
-#include <ktexteditor/editinterface.h>
+#include <tdetexteditor/viewcursorinterface.h>
+#include <tdetexteditor/editinterface.h>
 #include <kmessagebox.h>
 //END includes
 
 
-K_EXPORT_COMPONENT_FACTORY( ktexteditor_kdatatool, KGenericFactory<KTextEditor::KDataToolPlugin>( "ktexteditor_kdatatool" ) )
+K_EXPORT_COMPONENT_FACTORY( tdetexteditor_kdatatool, KGenericFactory<KTextEditor::KDataToolPlugin>( "tdetexteditor_kdatatool" ) )
 
 namespace KTextEditor {
 
@@ -77,7 +77,7 @@ KDataToolPluginView::KDataToolPluginView( KTextEditor::View *view )
 
 	m_menu = new KActionMenu(i18n("Data Tools"), actionCollection(), "popup_dataTool");
 	connect(m_menu->popupMenu(), TQT_SIGNAL(aboutToShow()), this, TQT_SLOT(aboutToShow()));
-	setXMLFile("ktexteditor_kdatatoolui.rc");
+	setXMLFile("tdetexteditor_kdatatoolui.rc");
 
 	m_view = view;
 }

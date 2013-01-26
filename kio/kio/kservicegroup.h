@@ -28,8 +28,8 @@
 #include <kdesktopfile.h>
 #include <ksortablevaluelist.h>
 
-#include "ksycocaentry.h"
-#include "ksycocatype.h"
+#include "tdesycocaentry.h"
+#include "tdesycocatype.h"
 #include "kservice.h"
 
 class KBuildServiceGroupFactory;
@@ -144,7 +144,7 @@ public:
 
   /**
    * Returns true if the NoDisplay flag was set, i.e. if this
-   * group should be hidden from menus, while still being in ksycoca.
+   * group should be hidden from menus, while still being in tdesycoca.
    * @return true to hide this service group, false to display it
    * @since 3.1
    */

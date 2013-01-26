@@ -77,7 +77,7 @@
   </Menu>
 </MenuBar>
 
-<Menu name="ktexteditor_popup" noMerge="1">
+<Menu name="tdetexteditor_popup" noMerge="1">
   <Action name="edit_undo" group="popup_operations" />
   <Action name="edit_redo" group="popup_operations" />
   <Separator group="popup_operations" />

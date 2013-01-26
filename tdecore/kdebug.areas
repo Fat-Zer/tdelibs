@@ -47,27 +47,27 @@
 399        kimgio
 400        artskde
 500        tdeprint
-700        kutils (KSettings::Dialog)
-701        kutils (KSettings::Dispatcher)
-702        kutils (KPluginSelector)
-703        kutils (KPluginInfo)
-704        kutils (KSettings::ComponentsDialog)
-710        kutils (KCMultiDialog)
-711        kutils (TDECModuleProxy)
-712        kutils (TDECModuleInfo)
-713        kutils (TDECModuleContainer)
-750        kspell (tdelibs)
-760        kmdi
+700        tdeutils (KSettings::Dialog)
+701        tdeutils (KSettings::Dispatcher)
+702        tdeutils (KPluginSelector)
+703        tdeutils (KPluginInfo)
+704        tdeutils (KSettings::ComponentsDialog)
+710        tdeutils (KCMultiDialog)
+711        tdeutils (TDECModuleProxy)
+712        tdeutils (TDECModuleInfo)
+713        tdeutils (TDECModuleContainer)
+750        tdespell (tdelibs)
+760        tdemdi
 780        kcmshell (tdelibs)
-790        kimproxy (tdelibs)
+790        tdeimproxy (tdelibs)
 800        kabapi (tdelibs)
 900        tdesu (tdelibs)
 912        ksmartcard (tdelibs)
 
 
-1000        kparts
-1001        kparts (mainwindow)
-1002        kparts (factory)
+1000        tdeparts
+1001        tdeparts (mainwindow)
+1002        tdeparts (factory)
 
 # tdebase
 1201        konqtree
@@ -116,7 +116,7 @@
 2003        ksim
 2100	    kgpg
 2200	    kdf
-2300        kwallet
+2300        tdewallet
 
 # 2500-2999 Reserved for private use
 
@@ -182,7 +182,7 @@
 5600        kontact (core)
 5601        kontact (interfaces)
 5602        kontact (plugins)
-5650        kresources
+5650        tderesources
 5700        kabc
 5710        kabc/vcard
 5720        kaddressbook
@@ -197,28 +197,28 @@
 5960        kandy
 5970        karm
 
-# libkhtml
-6000        khtml
-6005        khtml (encoding)
-6010        khtml (dom)
-6020        khtml (xml)
-6030        khtml (html)
-6031        khtml (frames & objects)
-6035        khtml (parser)
-6036        khtml (tokenizer)
-6040        khtml (render)
-6041        khtml (bidi)
-6045        khtml (rendering tree)
-6050        khtml (part)
-6060        khtml (cache)
-6061        khtml (cache-expiredates)
-6070        khtml (jscript)
-6080        khtml (css)
-6090        khtml (memory)
+# libtdehtml
+6000        tdehtml
+6005        tdehtml (encoding)
+6010        tdehtml (dom)
+6020        tdehtml (xml)
+6030        tdehtml (html)
+6031        tdehtml (frames & objects)
+6035        tdehtml (parser)
+6036        tdehtml (tokenizer)
+6040        tdehtml (render)
+6041        tdehtml (bidi)
+6045        tdehtml (rendering tree)
+6050        tdehtml (part)
+6060        tdehtml (cache)
+6061        tdehtml (cache-expiredates)
+6070        tdehtml (jscript)
+6080        tdehtml (css)
+6090        tdehtml (memory)
 6100        kjas
-6200        khtml (caret)
-6201        khtml (caret table)
-6210        khtml (editor)
+6200        tdehtml (caret)
+6201        tdehtml (caret table)
+6210        tdehtml (editor)
 
 # libkio
 7000        kio
@@ -556,7 +556,7 @@
 66666	noatun
 67000	kscd
 67100	kmix
-67200	kmid
+67200	tdemid
 
 # tdebindings
 70001	dcoppython

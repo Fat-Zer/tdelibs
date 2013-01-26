@@ -24,7 +24,7 @@
 #include <tqobject.h>
 #include <tqptrlist.h>
 
-#include <kresources/manager.h>
+#include <tderesources/manager.h>
 
 #include "addressee.h"
 #include "field.h"

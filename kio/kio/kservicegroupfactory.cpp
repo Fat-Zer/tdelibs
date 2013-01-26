@@ -17,9 +17,9 @@
  **/
 
 #include "kservicegroupfactory.h"
-#include "ksycoca.h"
-#include "ksycocatype.h"
-#include "ksycocadict.h"
+#include "tdesycoca.h"
+#include "tdesycocatype.h"
+#include "tdesycocadict.h"
 #include "kservice.h"
 
 #include <tqstring.h>

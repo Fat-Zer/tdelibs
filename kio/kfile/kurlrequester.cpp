@@ -389,7 +389,7 @@ bool KURLRequester::eventFilter( TQObject *obj, TQEvent *ev )
     if ( ( TQT_BASE_OBJECT(d->edit) == TQT_BASE_OBJECT(obj) ) || ( TQT_BASE_OBJECT(d->combo) == TQT_BASE_OBJECT(obj) ) )
     {
         if (( ev->type() == TQEvent::FocusIn ) || ( ev->type() == TQEvent::FocusOut ))
-            // Forward focusin/focusout events to the urlrequester; needed by file form element in khtml
+            // Forward focusin/focusout events to the urlrequester; needed by file form element in tdehtml
             TQApplication::sendEvent( this, ev );
     }
     return TQWidget::eventFilter( obj, ev );

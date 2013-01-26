@@ -1023,9 +1023,9 @@ void KEdit::misspelling (const TQString &word, const TQStringList &, unsigned in
 
   /*
   if (cursorPoint().y()>height()/2)
-    kspell->moveDlg (10, height()/2-kspell->heightDlg()-15);
+    tdespell->moveDlg (10, height()/2-tdespell->heightDlg()-15);
   else
-    kspell->moveDlg (10, height()/2 + 15);
+    tdespell->moveDlg (10, height()/2 + 15);
   */
 
 }

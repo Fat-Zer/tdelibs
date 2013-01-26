@@ -1,5 +1,5 @@
 #include <kde_terminal_interface.h>
-#include <kparts/part.h>
+#include <tdeparts/part.h>
 #include <ktrader.h>
 #include <klibloader.h>
 #include <kmainwindow.h>

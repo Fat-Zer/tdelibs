@@ -4458,7 +4458,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		}
 
 		// FIXME
-		// Much of the code in libkrandr should be integrated into/interfaced with this library
+		// Much of the code in libtderandr should be integrated into/interfaced with this library
 	}
 
 	if (device->type() == TDEGenericDeviceType::RootSystem) {
@@ -5587,7 +5587,7 @@ TQPixmap TDEHardwareDevices::getDeviceTypeIconFromType(TDEGenericDeviceType::TDE
 		ret = DesktopIcon("kcmpci", size);
 	}
 	else if (query == TDEGenericDeviceType::Backlight) {
-		ret = DesktopIcon("kscreensaver", size);	// FIXME
+		ret = DesktopIcon("tdescreensaver", size);	// FIXME
 	}
 	else if (query == TDEGenericDeviceType::Battery) {
 		ret = DesktopIcon("energy", size);

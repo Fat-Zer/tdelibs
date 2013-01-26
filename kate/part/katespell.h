@@ -71,7 +71,7 @@ class KateSpell : public TQObject
     KateView *m_view;
     KAction *m_spellcheckSelection;
 
-    KSpell *m_kspell;
+    KSpell *m_tdespell;
 
     // define the part of the text to check
     KateTextCursor m_spellStart, m_spellEnd;

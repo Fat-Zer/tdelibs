@@ -18,7 +18,7 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/dcop
   ${CMAKE_SOURCE_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/tdeui
-  ${CMAKE_SOURCE_DIR}/kwallet/client
+  ${CMAKE_SOURCE_DIR}/tdewallet/client
   ${CMAKE_SOURCE_DIR}/kio
 )
 

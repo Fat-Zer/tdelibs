@@ -16,11 +16,11 @@ libkate_la_SOURCES = katesearch.cpp katebuffer.cpp katecmds.cpp \
 
 libkatepart_la_SOURCES = dummy.cpp
 
-libkatepart_la_LIBADD = libkate.la ../interfaces/libkatepartinterfaces.la $(LIB_TDEPRINT) $(top_builddir)/kutils/libkutils.la $(top_builddir)/kjs/libkjs.la $(LUA_LIBS) $(LIB_QT) $(LIB_TDEUI) $(LIB_TDECORE) $(LIB_KPARTS) $(top_builddir)/interfaces/ktexteditor/libktexteditor.la $(LIB_KFILE) $(top_builddir)/dcop/libDCOP.la
+libkatepart_la_LIBADD = libkate.la ../interfaces/libkatepartinterfaces.la $(LIB_TDEPRINT) $(top_builddir)/tdeutils/libtdeutils.la $(top_builddir)/kjs/libkjs.la $(LUA_LIBS) $(LIB_QT) $(LIB_TDEUI) $(LIB_TDECORE) $(LIB_KPARTS) $(top_builddir)/interfaces/tdetexteditor/libtdetexteditor.la $(LIB_KFILE) $(top_builddir)/dcop/libDCOP.la
 
 libkatepart_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN)
 
-INCLUDES= -I../interfaces -I$(top_srcdir) -I$(top_srcdir)/tdeprint -I$(top_srcdir)/interfaces  -I$(top_srcdir)/interfaces/kregexpeditor -I$(top_srcdir)/tdefx -I$(top_srcdir)/kutils -I$(top_builddir)/kjs $(LUA_INCLUDES) $(all_includes)
+INCLUDES= -I../interfaces -I$(top_srcdir) -I$(top_srcdir)/tdeprint -I$(top_srcdir)/interfaces  -I$(top_srcdir)/interfaces/kregexpeditor -I$(top_srcdir)/tdefx -I$(top_srcdir)/tdeutils -I$(top_builddir)/kjs $(LUA_INCLUDES) $(all_includes)
 
 METASOURCES = AUTO
 

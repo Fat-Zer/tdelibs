@@ -1,5 +1,5 @@
 
-INCLUDES= -I$(top_srcdir)/kparts $(all_includes)
+INCLUDES= -I$(top_srcdir)/tdeparts $(all_includes)
 
 # the service type
 servicetypedir = $(kde_servicetypesdir)

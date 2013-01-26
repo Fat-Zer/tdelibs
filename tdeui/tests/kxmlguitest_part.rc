@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui SYSTEM "kpartgui.dtd">
-<kpartgui name="khtmlpart" version="7">
+<kpartgui name="tdehtmlpart" version="7">
 <ToolBar name="mainToolBar"><text>Main Toolbar</text>
  <Action name="decFontSizes" />
  <Separator />

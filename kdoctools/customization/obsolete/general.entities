@@ -233,8 +233,8 @@
 <!ENTITY kmathtool "<application>KMathTool</application>">
 <!ENTITY kmenuedit	"<application>kmenuedit</application>">
 <!ENTITY kmessedwords	"<application>KMessedWords</application>">
-<!ENTITY kmid	"<application>KMid</application>">
-<!ENTITY kmidi	"<application>KMidi</application>">
+<!ENTITY tdemid	"<application>KMid</application>">
+<!ENTITY tdemidi	"<application>KMidi</application>">
 <!ENTITY kmines	"<application>KMines</application>">
 <!ENTITY kmix	"<application>KMix</application>">
 <!ENTITY kmplot	"<application>KmPlot</application>">
@@ -279,7 +279,7 @@
 <!ENTITY ksame	"<application>KSame</application>">
 <!ENTITY kscd	"<application>KsCD</application>">
 <!ENTITY kscore	"<application>KScore</application>">
-<!ENTITY kscreensaver	"<application>KScreensaver</application>">
+<!ENTITY tdescreensaver	"<application>KScreensaver</application>">
 <!ENTITY ksgmltools	"<application>ksgmltools</application>">
 <!ENTITY kshisen	"<application>KShisen</application>">
 <!ENTITY ksim	"<application>KSim</application>">
@@ -290,7 +290,7 @@
 <!ENTITY ksnapshot	"<application>KSnapshot</application>">
 <!ENTITY ksokoban	"<application>KSokoban</application>">
 <!ENTITY kspaceduel	"<application>KSpaceDuel</application>">
-<!ENTITY kspell	"<application>KSpell</application>">
+<!ENTITY tdespell	"<application>KSpell</application>">
 <!ENTITY kspread	"<application>KSpread</application>">
 <!ENTITY kstars	"<application>KStars</application>">
 <!ENTITY kstart	"<application>kstart</application>">
@@ -357,7 +357,7 @@
 <!ENTITY Solaris	"<trademark>Solaris</trademark>">
 <!ENTITY SuSE	'<acronym><trademark class="registered">SuSE</trademark></acronym>'>
 <!ENTITY ThreeCom	'<trademark class="registered">3Com</trademark>'>
-<!ENTITY tkmidi	"<application>tkmidi</application>">
+<!ENTITY ttdemidi	"<application>ttdemidi</application>">
 <!ENTITY TrueType	'<trademark class="registered">TrueType</trademark>'>
 <!ENTITY UNIX	'<trademark class="registered">UNIX</trademark>'>
 <!ENTITY URL	"<acronym>URL</acronym>">

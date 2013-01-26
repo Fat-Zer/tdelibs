@@ -17,9 +17,9 @@
  **/
 
 #include "kservicetypefactory.h"
-#include "ksycoca.h"
-#include "ksycocatype.h"
-#include "ksycocadict.h"
+#include "tdesycoca.h"
+#include "tdesycocatype.h"
+#include "tdesycocadict.h"
 #include "kservicetype.h"
 #include "kmimetype.h"
 #include "kuserprofile.h"

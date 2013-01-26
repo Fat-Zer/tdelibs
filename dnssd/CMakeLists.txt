@@ -31,9 +31,9 @@ install( FILES
   DESTINATION ${INCLUDE_INSTALL_DIR}/dnssd )
 
 
-##### kdnssd ####################################
+##### tdednssd ####################################
 
-set( target kdnssd )
+set( target tdednssd )
 
 set( ${target}_SRCS
   remoteservice.cpp responder.cpp servicebase.cpp

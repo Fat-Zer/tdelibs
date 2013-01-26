@@ -166,9 +166,9 @@ int tdeinit_x_errhandler( Display *, XErrorEvent *err );
 }
 #endif
 
-/* These are to link libkparts even if 'smart' linker is used */
-#include <kparts/plugin.h>
-extern "C" KParts::Plugin* _kinit_init_kparts() { return new KParts::Plugin(); }
+/* These are to link libtdeparts even if 'smart' linker is used */
+#include <tdeparts/plugin.h>
+extern "C" KParts::Plugin* _kinit_init_tdeparts() { return new KParts::Plugin(); }
 /* These are to link libkio even if 'smart' linker is used */
 #include <kio/authinfo.h>
 extern "C" TDEIO::AuthInfo* _kioslave_init_kio() { return new TDEIO::AuthInfo(); }

@@ -98,7 +98,7 @@ void KServiceTypeProfile::initStatic()
 //static
 void KServiceTypeProfile::clear()
 {
-    // HACK ksycoca may open the dummy db, in such case the first call to ksycoca
+    // HACK tdesycoca may open the dummy db, in such case the first call to tdesycoca
     // in initStatic() leads to closing the dummy db and clear() being called
     // in the middle of it, making s_lstProfiles be NULL
     if( s_lstProfiles == NULL || s_lstProfiles->count() == 0 )

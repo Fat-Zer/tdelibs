@@ -6,7 +6,7 @@ noinst_HEADERS = resourcedirconfig.h
 lib_LTLIBRARIES = libkabc_dir.la
 libkabc_dir_la_SOURCES = resourcedir.cpp resourcedirconfig.cpp
 libkabc_dir_la_LDFLAGS = $(KDE_RPATH) $(all_libraries) -version-info 1:0:0 -no-undefined 
-libkabc_dir_la_LIBADD = $(LIB_KABC) $(LIB_QT) $(top_builddir)/kresources/libkresources.la $(LIB_TDECORE) $(LIB_KFILE) $(LIB_TDEUI)
+libkabc_dir_la_LIBADD = $(LIB_KABC) $(LIB_QT) $(top_builddir)/tderesources/libtderesources.la $(LIB_TDECORE) $(LIB_KFILE) $(LIB_TDEUI)
 libkabc_dir_la_COMPILE_FIRST = $(top_builddir)/kabc/addressee.h
 
 kde_module_LTLIBRARIES = kabc_dir.la
@@ -22,7 +22,7 @@ messages: rc.cpp
 kabcincludedir = $(includedir)/kabc
 kabcinclude_HEADERS = resourcedir.h
 
-servicedir = $(kde_servicesdir)/kresources/kabc
+servicedir = $(kde_servicesdir)/tderesources/kabc
 service_DATA = dir.desktop
 
 resourcedirplugin.lo: ../../addressee.h

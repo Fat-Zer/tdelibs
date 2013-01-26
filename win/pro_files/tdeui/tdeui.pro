@@ -93,8 +93,8 @@ ksconfig.cpp \
 kselect.cpp \
 kseparator.cpp \
 kshortcutdialog.cpp \
-kspell.cpp \
-kspelldlg.cpp \
+tdespell.cpp \
+tdespelldlg.cpp \
 ksplashscreen.cpp \
 ksqueezedtextlabel.cpp \
 kstatusbar.cpp \
@@ -143,6 +143,6 @@ kmainwindowiface_skel.cpp
 FORMS = \
 kshortcutdialog_advanced.ui \
 kshortcutdialog_simple.ui \
-kspellui.ui
+tdespellui.ui
 
 HEADERS =

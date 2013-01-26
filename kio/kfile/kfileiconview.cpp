@@ -817,7 +817,7 @@ TQDragObject *KFileIconView::dragObject()
     }
     TQPixmap pixmap;
     if( urls.count() > 1 )
-        pixmap = DesktopIcon( "kmultiple", iconSize() );
+        pixmap = DesktopIcon( "tdemultiple", iconSize() );
     if( pixmap.isNull() )
         pixmap = currentFileItem()->pixmap( iconSize() );
 

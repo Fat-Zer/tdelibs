@@ -19,9 +19,9 @@
 #include "insertfileplugin.h"
 #include "insertfileplugin.moc"
 
-#include <ktexteditor/document.h>
-#include <ktexteditor/viewcursorinterface.h>
-#include <ktexteditor/editinterface.h>
+#include <tdetexteditor/document.h>
+#include <tdetexteditor/viewcursorinterface.h>
+#include <tdetexteditor/editinterface.h>
 
 #include <assert.h>
 #include <kio/job.h>
@@ -37,7 +37,7 @@
 #include <tqfile.h>
 #include <tqtextstream.h>
 
-K_EXPORT_COMPONENT_FACTORY( ktexteditor_insertfile, KGenericFactory<InsertFilePlugin>( "ktexteditor_insertfile" ) )
+K_EXPORT_COMPONENT_FACTORY( tdetexteditor_insertfile, KGenericFactory<InsertFilePlugin>( "tdetexteditor_insertfile" ) )
 
 
 //BEGIN InsertFilePlugin
@@ -77,7 +77,7 @@ InsertFilePluginView::InsertFilePluginView( KTextEditor::View *view, const char 
   setInstance( KGenericFactory<InsertFilePlugin>::instance() );
   _job = 0;
   (void) new KAction( i18n("Insert File..."), 0, this, TQT_SLOT(slotInsertFile()), actionCollection(), "tools_insert_file" );
-  setXMLFile( "ktexteditor_insertfileui.rc" );
+  setXMLFile( "tdetexteditor_insertfileui.rc" );
 }
 
 void InsertFilePluginView::slotInsertFile()

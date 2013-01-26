@@ -24,8 +24,8 @@
 #include <klibloader.h>
 #include <kglobal.h>
 #include <kmimetype.h>
-#include <ksycocaentry.h>
-#include <ksycoca.h>
+#include <tdesycocaentry.h>
+#include <tdesycoca.h>
 #include <kdebug.h>
 #include <kstaticdeleter.h>
 

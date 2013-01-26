@@ -20,9 +20,9 @@ or <a href="http://doc.trolltech.com/3.0/porting.html">this page online</a>.<P>
 <LI><A HREF="#tdecore">Changes in tdecore</A></LI>
 <LI><A HREF="#tdeui">Changes in tdeui</A></LI>
 <LI><A HREF="#kio">Changes in kio</A></LI>
-<LI><A HREF="#kparts">Changes in kparts</A></LI>
-<LI><A HREF="#kspell">Changes in kspell</A></LI>
-<LI><A HREF="#khtmlpart">API-cleanup in KHTML</A></LI>
+<LI><A HREF="#tdeparts">Changes in tdeparts</A></LI>
+<LI><A HREF="#tdespell">Changes in tdespell</A></LI>
+<LI><A HREF="#tdehtmlpart">API-cleanup in KHTML</A></LI>
 <LI><A HREF="#kfile">Changes in kfile</A></LI>
 <LI><A HREF="#kcontrol">TDE Control Center</A></LI>
 <LI><A HREF="#kicker">Panel Applets and Extensions</A></LI>
@@ -416,7 +416,7 @@ TQString&) is not a slot anymore.
 
 <H4>KOpenWithHandler / KFileOpenWithHandler</H4>
 Those two classes are deprecated, no need to create a KFileOpenWithHandler anymore.
-The merging of libkio, libksycoca, libkfile and libkssl into a single libkio has
+The merging of libkio, libtdesycoca, libkfile and libkssl into a single libkio has
 allowed to fix this dependency problem: KRun can now use the OpenWith dialog directly.
 
 <H4>KMimeType, KService</H4>
@@ -440,7 +440,7 @@ The createFilterDevice method is deprecated. Use deviceForFile instead.
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
-<H3><A NAME="kparts">Changes in kparts</A></H3>
+<H3><A NAME="tdeparts">Changes in tdeparts</A></H3>
 
 <H4>KParts::Factory</H4>
 The createPart method is no more virtual and the createPartObject method
@@ -468,7 +468,7 @@ setURLArgs does the job.
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
-<H3><A NAME="kspell">Changes in kspell</A></H3>
+<H3><A NAME="tdespell">Changes in tdespell</A></H3>
 
 <H4>KSpell</H4>
 The API has been cleaned up to be in line with the rest of tdelibs, in particular:
@@ -495,7 +495,7 @@ The API has been cleaned up to be in line with the rest of tdelibs, in particula
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
-<H3><A NAME="khtmlpart">API-cleanups in KHTML</A></H3>
+<H3><A NAME="tdehtmlpart">API-cleanups in KHTML</A></H3>
 
 There were a few relatively minor API-adjustements in KHTMLPart. In particular:
 <ul><li>enableJScript(bool) has been replaced by setJScriptEnabled(bool)

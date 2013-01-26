@@ -154,7 +154,7 @@ static const KCmdLineOptions options[] =
 int main(int argc, char **argv)
 {
     // Ensure that user configuration doesn't change the results of those tests
-    // TDEHOME needs to be writable though, for a ksycoca database
+    // TDEHOME needs to be writable though, for a tdesycoca database
     setenv( "TDEHOME", TQFile::encodeName( TQDir::homeDirPath() + "/.tde-kurifiltertest" ), true );
     setenv( "TDE_FORK_SLAVES", "yes", true ); // simpler, for the final cleanup
 

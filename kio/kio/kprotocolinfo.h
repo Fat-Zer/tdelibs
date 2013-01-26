@@ -24,8 +24,8 @@
 #include <tqdatastream.h>
 
 #include <kurl.h>
-#include <ksycocaentry.h>
-#include <ksycocatype.h>
+#include <tdesycocaentry.h>
+#include <tdesycocatype.h>
 
 /**
  * Information about I/O (Internet, etc.) protocols supported by KDE.

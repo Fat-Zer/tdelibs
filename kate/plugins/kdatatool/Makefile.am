@@ -2,18 +2,18 @@ INCLUDES    = -I$(top_srcdir)/interfaces -I$(top_srcdir)/tdefx $(all_includes)
 METASOURCES = AUTO
 
 # Install this plugin in the KDE modules directory
-kde_module_LTLIBRARIES = ktexteditor_kdatatool.la
+kde_module_LTLIBRARIES = tdetexteditor_kdatatool.la
 
-ktexteditor_kdatatool_la_SOURCES = kate_kdatatool.cpp
-ktexteditor_kdatatool_la_LIBADD = $(top_builddir)/interfaces/ktexteditor/libktexteditor.la $(LIB_QT) $(LIB_TDECORE) $(LIB_KFILE) $(LIB_TDEUI)
-ktexteditor_kdatatool_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
+tdetexteditor_kdatatool_la_SOURCES = kate_kdatatool.cpp
+tdetexteditor_kdatatool_la_LIBADD = $(top_builddir)/interfaces/tdetexteditor/libtdetexteditor.la $(LIB_QT) $(LIB_TDECORE) $(LIB_KFILE) $(LIB_TDEUI)
+tdetexteditor_kdatatool_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
 
-kdatatooldatadir = $(kde_datadir)/ktexteditor_kdatatool
-kdatatooldata_DATA = ktexteditor_kdatatoolui.rc
+kdatatooldatadir = $(kde_datadir)/tdetexteditor_kdatatool
+kdatatooldata_DATA = tdetexteditor_kdatatoolui.rc
 
-kde_services_DATA = ktexteditor_kdatatool.desktop
+kde_services_DATA = tdetexteditor_kdatatool.desktop
 
 messages: rc.cpp
-	$(XGETTEXT) *.cpp *.h -o $(podir)/ktexteditor_kdatatool.pot
+	$(XGETTEXT) *.cpp *.h -o $(podir)/tdetexteditor_kdatatool.pot
 
 

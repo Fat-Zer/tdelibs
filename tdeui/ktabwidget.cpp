@@ -414,7 +414,7 @@ void KTabWidget::moveTab( int from, int to )
     blockSignals(true);
     removePage( w );
 
-    // Work-around kmdi brain damage which calls showPage() in insertTab()
+    // Work-around tdemdi brain damage which calls showPage() in insertTab()
     TQTab * t = new TQTab();
     t->setText(tablabel);
     TQTabWidget::insertTab( w, t, to );

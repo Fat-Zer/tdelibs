@@ -72,7 +72,7 @@ install( FILES
     kstringvalidator.h twindowinfo.h
     ktextedit.h kpassivepopup.h
     kdatetimewidget.h ktimewidget.h ktimezonewidget.h kscrollview.h
-    kspell.h ksconfig.h kspelldlg.h ksyntaxhighlighter.h
+    tdespell.h ksconfig.h tdespelldlg.h ksyntaxhighlighter.h
     ktabbar.h ktabwidget.h ksplashscreen.h kconfigdialog.h
     kactionselector.h klanguagebutton.h klistviewsearchline.h
     kpixmapregionselectorwidget.h kpixmapregionselectordialog.h
@@ -136,9 +136,9 @@ set( ${target}_SRCS
   kstringvalidator.cpp kactivelabel.cpp
   twindowinfo.cpp ktextedit.cpp kwizard.cpp kpassivepopup.cpp
   ktoolbarhandler.cpp kdatetimewidget.cpp ktimewidget.cpp ktimezonewidget.cpp
-  ksconfig.cpp kspelldlg.cpp
-  kspell.cpp ksyntaxhighlighter.cpp ktabbar.cpp ktabwidget.cpp
-  ksplashscreen.cpp kspellui.ui kconfigdialog.cpp
+  ksconfig.cpp tdespelldlg.cpp
+  tdespell.cpp ksyntaxhighlighter.cpp ktabbar.cpp ktabwidget.cpp
+  ksplashscreen.cpp tdespellui.ui kconfigdialog.cpp
   kactionselector.cpp klanguagebutton.cpp klistviewsearchline.cpp
   kpixmapregionselectorwidget.cpp kpixmapregionselectordialog.cpp
   kwhatsthismanager.cpp kiconviewsearchline.cpp
@@ -154,9 +154,9 @@ tde_add_library( ${target} SHARED AUTOMOC
 )
 
 
-##### libkspell #################################
+##### libtdespell #################################
 
-set( target kspell )
+set( target tdespell )
 
 configure_file( ${CMAKE_SOURCE_DIR}/cmake/modules/template_dummy_cpp.cmake dummy.cpp COPYONLY )
 

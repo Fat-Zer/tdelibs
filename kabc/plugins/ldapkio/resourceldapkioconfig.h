@@ -27,7 +27,7 @@
 #include <tqdict.h>
 
 #include <kdialogbase.h>
-#include <kresources/configwidget.h>
+#include <tderesources/configwidget.h>
 #include <kabc/ldif.h>
 #include <kabc/ldapconfigwidget.h>
 

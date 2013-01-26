@@ -39,7 +39,7 @@ set( test_PROGS
   kxmlguitest kaccelgentest ksystemtraytest klistviewtest
   ktextedittest kmainwindowtest kmainwindowrestoretest
   kactiontest kdatetimewidgettest ktimewidgettest
-  kspelltest kinputdialogtest ktabwidgettest kwordwraptest
+  tdespelltest kinputdialogtest ktabwidgettest kwordwraptest
   kdocktest qxembedtest ksqueezedtextlabeltest
   kpixmapregionselectordialogtest kjanuswidgettest ktoolbarlabelactiontest
 )

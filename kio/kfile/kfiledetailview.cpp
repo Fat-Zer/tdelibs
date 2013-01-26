@@ -543,7 +543,7 @@ TQDragObject *KFileDetailView::dragObject()
     }
     TQPixmap pixmap;
     if( urls.count() > 1 )
-        pixmap = DesktopIcon( "kmultiple", KIcon::SizeSmall );
+        pixmap = DesktopIcon( "tdemultiple", KIcon::SizeSmall );
     if( pixmap.isNull() )
         pixmap = currentFileItem()->pixmap( KIcon::SizeSmall );
 

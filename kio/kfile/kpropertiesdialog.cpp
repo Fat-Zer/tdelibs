@@ -117,7 +117,7 @@ extern "C" {
 #include <ksqueezedtextlabel.h>
 #include <klibloader.h>
 #include <ktrader.h>
-#include <kparts/componentfactory.h>
+#include <tdeparts/componentfactory.h>
 #include <kmetaprops.h>
 #include <kpreviewprops.h>
 #include <kprocess.h>
@@ -818,7 +818,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
       if ( (*it)->mode() != mode )
         mode = (mode_t)0;
       if ( KMimeType::iconForURL(url, mode) != iconStr )
-        iconStr = "kmultiple";
+        iconStr = "tdemultiple";
       if ( url.directory() != directory )
         directory = TQString::null;
       if ( url.protocol() != protocol )

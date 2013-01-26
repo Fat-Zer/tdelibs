@@ -17,8 +17,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <kunittest/tester.h>
-#include <kunittest/module.h>
+#include <tdeunittest/tester.h>
+#include <tdeunittest/module.h>
 
 #include <kconfig.h>
 
@@ -31,7 +31,7 @@ private:
     void revertEntries();
 };
 
-KUNITTEST_MODULE( kunittest_kconfig, "TDEConfigTest" )
+KUNITTEST_MODULE( tdeunittest_kconfig, "TDEConfigTest" )
 KUNITTEST_MODULE_REGISTER_TESTER( TDEConfigTest )
 
 // test data

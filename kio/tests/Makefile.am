@@ -18,15 +18,15 @@
 
 INCLUDES= -I$(top_srcdir) -I$(top_srcdir)/kio $(all_includes)
 LDADD = $(LIB_KIO)
-AM_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+AM_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
 
-check_PROGRAMS = ksycocatest getalltest kruntest ktartest kziptest\
+check_PROGRAMS = tdesycocatest getalltest kruntest ktartest kziptest\
                  kioslavetest kdirwatchtest kshredtest speed kurifiltertest \
                  kdefaultprogresstest kmimemagictest \
                  kfiltertest kiopassdlgtest kscantest kdirlistertest \
                  previewtest kionetrctest kdcopcheck metatest \
 		 kmimefromext kpropsdlgtest kmfitest dataprotocoltest \
-		 kprotocolinfotest ksycocaupdatetest netaccesstest jobtest \
+		 kprotocolinfotest tdesycocaupdatetest netaccesstest jobtest \
 		 kurlcompletiontest kmimetypetest kacltest
 
 # Unfortunately some tests depend on the network settings, it seems
@@ -48,7 +48,7 @@ kdefaultprogresstest_SOURCES = kdefaultprogresstest.cpp
 kionetrctest_SOURCES = kionetrctest.cpp
 kiopassdlgtest_SOURCES = kiopassdlgtest.cpp
 kurifiltertest_SOURCES = kurifiltertest.cpp
-ksycocatest_SOURCES = ksycocatest.cpp
+tdesycocatest_SOURCES = tdesycocatest.cpp
 kdcopcheck_SOURCES = kdcopcheck.cpp
 getalltest_SOURCES = getalltest.cpp
 kruntest_SOURCES = kruntest.cpp
@@ -67,7 +67,7 @@ kpropsdlgtest_SOURCES = kpropsdlgtest.cpp
 kmfitest_SOURCES = kmfitest.cpp
 dataprotocoltest_SOURCES = dataprotocoltest.cpp
 kprotocolinfotest_SOURCES = kprotocolinfotest.cpp
-ksycocaupdatetest_SOURCES = ksycocaupdatetest.cpp
+tdesycocaupdatetest_SOURCES = tdesycocaupdatetest.cpp
 netaccesstest_SOURCES = netaccesstest.cpp
 jobtest_SOURCES = jobtest.cpp
 kurlcompletiontest_SOURCES = kurlcompletiontest.cpp
@@ -75,10 +75,10 @@ kmimetypetest_SOURCES = kmimetypetest.cpp
 kacltest_SOURCES = kacltest.cpp
 
 
-check_LTLIBRARIES = kunittest_kdirwatch.la
-kunittest_kdirwatch_la_SOURCES = kdirwatchunittest.cpp
-kunittest_kdirwatch_la_LIBADD = $(LIB_KUNITTEST) $(LIB_KIO)
-kunittest_kdirwatch_la_LDFLAGS = -module $(KDE_CHECK_PLUGIN)
+check_LTLIBRARIES = tdeunittest_kdirwatch.la
+tdeunittest_kdirwatch_la_SOURCES = kdirwatchunittest.cpp
+tdeunittest_kdirwatch_la_LIBADD = $(LIB_KUNITTEST) $(LIB_KIO)
+tdeunittest_kdirwatch_la_LDFLAGS = -module $(KDE_CHECK_PLUGIN)
 
 # kfile meta stuff. Comment this in, if you want a small
 # metadata plugin test and "make install".

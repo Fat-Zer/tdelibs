@@ -19,8 +19,8 @@
 #include "kdirwatch.h"
 #include "kapplication.h"
 
-#include <kunittest/tester.h>
-#include <kunittest/module.h>
+#include <tdeunittest/tester.h>
+#include <tdeunittest/module.h>
 
 class KDirWatchTest : public KUnitTest::Tester
 {

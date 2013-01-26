@@ -22,7 +22,7 @@ messages: rc.cpp
 kabcincludedir = $(includedir)/kabc
 kabcinclude_HEADERS = resourcenet.h
 
-servicedir = $(kde_servicesdir)/kresources/kabc
+servicedir = $(kde_servicesdir)/tderesources/kabc
 service_DATA = net.desktop
 
 resourcenetplugin.lo: ../../addressee.h

@@ -65,7 +65,7 @@ configure_file( ${CMAKE_SOURCE_DIR}/cmake/modules/template_dummy_cpp.cmake dummy
 tde_add_library( ${target} SHARED
   SOURCES ${CMAKE_CURRENT_BINARY_DIR}/dummy.cpp
   VERSION 4.2.0
-  EMBED kssl-static kiocore-static ksycoca-static kbookmarks-static kfile-static ${ELFICON_STATIC_LIB}
-  LINK ltdlc-static tdeui-shared tdesu-shared kwalletclient-shared ${LIBR_LIBRARIES}
+  EMBED kssl-static kiocore-static tdesycoca-static kbookmarks-static kfile-static ${ELFICON_STATIC_LIB}
+  LINK ltdlc-static tdeui-shared tdesu-shared tdewalletclient-shared ${LIBR_LIBRARIES}
   DESTINATION ${LIB_INSTALL_DIR}
 )

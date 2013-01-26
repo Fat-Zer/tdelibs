@@ -19,14 +19,14 @@
 #ifndef _KATE_VIEW_INCLUDE_
 #define _KATE_VIEW_INCLUDE_
 
-#include <ktexteditor/document.h>
-#include <ktexteditor/view.h>
-#include <ktexteditor/clipboardinterface.h>
-#include <ktexteditor/popupmenuinterface.h>
-#include <ktexteditor/markinterface.h>
-#include <ktexteditor/viewcursorinterface.h>
-#include <ktexteditor/codecompletioninterface.h>
-#include <ktexteditor/dynwordwrapinterface.h>
+#include <tdetexteditor/document.h>
+#include <tdetexteditor/view.h>
+#include <tdetexteditor/clipboardinterface.h>
+#include <tdetexteditor/popupmenuinterface.h>
+#include <tdetexteditor/markinterface.h>
+#include <tdetexteditor/viewcursorinterface.h>
+#include <tdetexteditor/codecompletioninterface.h>
+#include <tdetexteditor/dynwordwrapinterface.h>
 
 class TDEConfig;
 

@@ -40,14 +40,14 @@
 #include "katefiletype.h"
 #include "kateschema.h"
 #include "katetemplatehandler.h"
-#include <ktexteditor/plugin.h>
+#include <tdetexteditor/plugin.h>
 
 #include <kio/job.h>
 #include <kio/netaccess.h>
 #include <kio/kfileitem.h>
 
 
-#include <kparts/event.h>
+#include <tdeparts/event.h>
 
 #include <klocale.h>
 #include <kglobal.h>
@@ -112,7 +112,7 @@ KateDocument::KateDocument ( bool bSingleViewMode, bool bBrowserView,
   // my dcop object
   setObjId ("KateDocument#"+documentDCOPSuffix());
 
-  // ktexteditor interfaces
+  // tdetexteditor interfaces
   setBlockSelectionInterfaceDCOPSuffix (documentDCOPSuffix());
   setConfigInterfaceDCOPSuffix (documentDCOPSuffix());
   setConfigInterfaceExtensionDCOPSuffix (documentDCOPSuffix());
@@ -2761,7 +2761,7 @@ bool KateDocument::closeURL()
   }
 
   //
-  // first call the normal kparts implementation
+  // first call the normal tdeparts implementation
   //
   if (!KParts::ReadWritePart::closeURL ())
     return false;

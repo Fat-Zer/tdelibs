@@ -350,8 +350,8 @@ public:
      *
      * Example:
      * \code
-     * perlSplit(' ', "kparts reaches the parts other parts can't", 3)
-     * TQStringList contains: "kparts", "reaches", "the parts other parts can't"
+     * perlSplit(' ', "tdeparts reaches the parts other parts can't", 3)
+     * TQStringList contains: "tdeparts", "reaches", "the parts other parts can't"
      * \endcode
      *
      * @param sep is the character to use to delimit s.

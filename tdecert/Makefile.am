@@ -1,0 +1,18 @@
+INCLUDES= -I$(top_srcdir)/kio/kssl -I$(top_builddir)/kio/kssl -I$(top_srcdir) $(SSL_INCLUDES) $(all_includes)
+
+kde_module_LTLIBRARIES = libtdecertpart.la
+
+libtdecertpart_la_SOURCES	= tdecertpart.cc
+
+libtdecertpart_la_LDFLAGS = $(KDE_PLUGIN) $(all_libraries)
+libtdecertpart_la_LIBADD = $(LIB_KPARTS) $(LIB_QT) $(LIB_TDEUI) $(LIB_KFILE) $(LIB_TDECORE)
+libtdecertpart_la_DEPENDENCIES = $(LIB_KPARTS)
+
+libtdecertpart_la_METASOURCES = AUTO
+
+servicedir = $(kde_servicesdir)
+service_DATA = tdecertpart.desktop
+
+rcdir = $(kde_datadir)/tdecertpart
+rc_DATA = tdecertpart.rc
+

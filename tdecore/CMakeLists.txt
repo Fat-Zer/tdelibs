@@ -85,9 +85,9 @@ install( FILES
     kdcoppropertyproxy.h netwm.h kaccelmanager.h netwm_def.h
     kpixmapprovider.h kunload.h kstaticdeleter.h kextsock.h
     kextendedsocket.h ksockaddr.h kprocio.h kasyncio.h kbufferedio.h
-    kurldrag.h kmimesourcefactory.h kmdcodec.h ksocks.h ksycoca.h
-    ksycocaentry.h ksycocatype.h kxmessages.h kstartupinfo.h
-    klargefile.h kmultipledrag.h kgenericfactory.h kgenericfactory.tcc
+    kurldrag.h kmimesourcefactory.h kmdcodec.h ksocks.h tdesycoca.h
+    tdesycocaentry.h tdesycocatype.h kxmessages.h kstartupinfo.h
+    klargefile.h tdemultipledrag.h kgenericfactory.h kgenericfactory.tcc
     ktypelist.h ksortablevaluelist.h kdebugclasses.h kclipboard.h
     kcalendarsystem.h kcalendarsystemfactory.h kmacroexpander.h
     kmanagerselection.h kmountpoint.h kuser.h klockfile.h
@@ -138,9 +138,9 @@ set( ${target}_SRCS
   kaudioplayer.cpp kdcoppropertyproxy.cpp ksockaddr.cpp
   kextsock.cpp netsupp.cpp kprocio.cpp kbufferedio.cpp
   kpixmapprovider.cpp kurldrag.cpp kmdcodec.cpp ksocks.cpp
-  fakes.c vsnprintf.c ksycoca.cpp ksycocadict.cpp ksycoca.skel
-  ksycocafactory.cpp kxmessages.cpp kstartupinfo.cpp
-  kcatalogue.cpp kasyncio.cpp kmultipledrag.cpp kstaticdeleter.cpp
+  fakes.c vsnprintf.c tdesycoca.cpp tdesycocadict.cpp tdesycoca.skel
+  tdesycocafactory.cpp kxmessages.cpp kstartupinfo.cpp
+  kcatalogue.cpp kasyncio.cpp tdemultipledrag.cpp kstaticdeleter.cpp
   kappdcopiface.cpp kappdcopiface.skel kclipboard.cpp
   kcheckaccelerators.cpp tdeversion.cpp kdebugdcopiface.cpp
   kdebugdcopiface.skel kcalendarsystem.cpp kcalendarsystemgregorian.cpp

@@ -59,7 +59,7 @@ install( FILES
 ##### other data ################################
 
 install( FILES kab2kabc.desktop DESTINATION ${AUTOSTART_INSTALL_DIR} )
-install( FILES kabc_manager.desktop DESTINATION ${SERVICES_INSTALL_DIR}/kresources )
+install( FILES kabc_manager.desktop DESTINATION ${SERVICES_INSTALL_DIR}/tderesources )
 install( FILES countrytransl.map DESTINATION ${DATA_INSTALL_DIR}/kabc )
 
 
@@ -102,7 +102,7 @@ set( ${target}_SRCS
 tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 1.2.0
-  LINK vcards-static vcard-shared kio-shared kresources-shared
+  LINK vcards-static vcard-shared kio-shared tderesources-shared
   DEPENDENCIES addressee.h dcopidl
   DESTINATION ${LIB_INSTALL_DIR}
 )

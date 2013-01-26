@@ -56,7 +56,7 @@
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
 #include <kurl.h>
-#include <ksycoca.h>
+#include <tdesycoca.h>
 #include <kde_file.h>
 
 template class KSharedPtr<KMimeType>;
@@ -144,7 +144,7 @@ KMimeType::Ptr KMimeType::mimeType( const TQString& _name )
 
   if ( !mime || !mime->isType( KST_KMimeType ) )
   {
-    // When building ksycoca, findServiceTypeByName doesn't create an object
+    // When building tdesycoca, findServiceTypeByName doesn't create an object
     // but returns one from a dict.
     if ( !KSycoca::self()->isBuilding() )
         delete mime;
@@ -426,7 +426,7 @@ void KMimeType::save( TQDataStream& _str )
 {
   KServiceType::save( _str );
   // Warning adding/removing fields here involves a binary incompatible change - update version
-  // number in ksycoca.h
+  // number in tdesycoca.h
   _str << m_lstPatterns;
 }
 

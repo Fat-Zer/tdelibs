@@ -16,8 +16,8 @@
  *  Boston, MA 02110-1301, USA.
  **/
 
-#include "ksycoca.h"
-#include "ksycocadict.h"
+#include "tdesycoca.h"
+#include "tdesycocadict.h"
 #include "kresourcelist.h"
 
 #include <kglobal.h>

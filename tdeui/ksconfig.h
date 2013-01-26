@@ -238,7 +238,7 @@ class TDEUI_EXPORT KSpellConfig : public TQWidget
 
   protected slots:
     /**
-     * Invokes the help documentation for kspell
+     * Invokes the help documentation for tdespell
      */ 
     void sHelp();
     //void sBrowseDict();

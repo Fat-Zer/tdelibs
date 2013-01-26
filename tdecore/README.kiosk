@@ -492,11 +492,11 @@ of these actions then the application will not appear in the TDE menu and will n
 be used by KDE for opening files.
 
 IMPORTANT NOTE:
-Changing restrictions may influence the data that is cached in the ksycoca
+Changing restrictions may influence the data that is cached in the tdesycoca
 database. Since changes to .../share/config/kdeglobals do not trigger an
-automatic ksycoca update you need to force an update manually.
-To force an update of the ksycoca database touch the file 
-.../share/services/update_ksycoca. This will force a user's sycoca database
+automatic tdesycoca update you need to force an update manually.
+To force an update of the tdesycoca database touch the file 
+.../share/services/update_tdesycoca. This will force a user's sycoca database
 to be rebuild the next time the user logs in.
 
 KDE3 URL Restrictions

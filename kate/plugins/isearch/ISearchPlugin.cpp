@@ -30,7 +30,7 @@
 #include "ISearchPlugin.h"
 #include "ISearchPlugin.moc"
 
-K_EXPORT_COMPONENT_FACTORY( ktexteditor_isearch, KGenericFactory<ISearchPlugin>( "ktexteditor_isearch" ) )
+K_EXPORT_COMPONENT_FACTORY( tdetexteditor_isearch, KGenericFactory<ISearchPlugin>( "tdetexteditor_isearch" ) )
 
 ISearchPluginView::ISearchPluginView( KTextEditor::View *view )
 	: TQObject ( view ), KXMLGUIClient (view)
@@ -139,7 +139,7 @@ ISearchPluginView::ISearchPluginView( KTextEditor::View *view )
 // 	action->setChecked( m_autoWrap );
 // 	optionMenu->insert( action );
 
-	setXMLFile( "ktexteditor_isearchui.rc" );
+	setXMLFile( "tdetexteditor_isearchui.rc" );
 }
 
 ISearchPluginView::~ISearchPluginView()

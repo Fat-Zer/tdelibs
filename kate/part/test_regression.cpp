@@ -66,7 +66,7 @@
 
 #include "katedocument.h"
 #include "kateview.h"
-#include <kparts/browserextension.h>
+#include <tdeparts/browserextension.h>
 #include "katejscript.h"
 #include "katedocumenthelpers.h"
 #include "kateconfig.h"

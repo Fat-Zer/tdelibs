@@ -30,7 +30,7 @@
 #include <kconfig.h>
 #include <kdebug.h>
 #include <kglobal.h>
-#include <kspell.h>
+#include <tdespell.h>
 #include <kapplication.h>
 
 #include "ksyntaxhighlighter.h"
@@ -371,7 +371,7 @@ bool KDictSpellingHighlighter::isMisspelled( const TQString &word )
     // This debug is expensive, only enable it locally
     //kdDebug(0) << "KDictSpellingHighlighter::isMisspelled( \"" << word << "\" )" << endl;
     // Normally isMisspelled would look up a dictionary and return
-    // true or false, but kspell is asynchronous and slow so things
+    // true or false, but tdespell is asynchronous and slow so things
     // get tricky...
     // For auto detection ignore signature and reply prefix
     if ( !d->autoReady )

@@ -23,7 +23,7 @@
 #include <kcmdlineargs.h>
 #include <kaboutdata.h>
 #include <kglobalsettings.h>
-#include <ksycoca.h>
+#include <tdesycoca.h>
 
 int
 main(int argc, char *argv[])

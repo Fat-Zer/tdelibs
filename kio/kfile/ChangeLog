@@ -622,7 +622,7 @@ Mon Mar 16 11:36:07 1998 Daniel Grana <grana@ie.iwi.unibe.ch>
         a mkdir method to kdir in near future
 
 Mon Mar 16 20:04:00 1998  Martin Jones <mjones@kde.org>
-	* Added booktoken.* to remove dependancy on khtmlw and jscript
+	* Added booktoken.* to remove dependancy on tdehtmlw and jscript
 
 Thu Mar 12 09:32:06 1998  Daniel Grana <grana@ie.iwi.unibe.ch>
 	* worked on the dir and file completion, should do both now,

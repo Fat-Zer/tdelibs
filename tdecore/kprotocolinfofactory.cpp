@@ -21,8 +21,8 @@
 #include <kglobal.h>
 #include <kapplication.h>
 #include <kdebug.h>
-#include <ksycoca.h>
-#include <ksycocadict.h>
+#include <tdesycoca.h>
+#include <tdesycocadict.h>
 
 #include "kprotocolinfofactory.h"
 

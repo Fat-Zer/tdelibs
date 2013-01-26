@@ -29,8 +29,8 @@
 #include <dcopclient.h>
 #include <dcopobject.h>
 
-#include <ksycoca.h>
-#include <ksycocatype.h>
+#include <tdesycoca.h>
+#include <tdesycocatype.h>
 #include <kdedmodule.h>
 #include <klibloader.h>
 

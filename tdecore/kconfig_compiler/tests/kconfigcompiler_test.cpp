@@ -16,12 +16,12 @@
 #include <tqfile.h>
 #include <tqstring.h>
 #include <kdebug.h>
-#include <kunittest/module.h>
+#include <tdeunittest/module.h>
 #include "kconfigcompiler_test.h"
 
 using namespace KUnitTest;
 
-KUNITTEST_MODULE( kunittest_kconfigcompiler_test, "TDEConfigXT")
+KUNITTEST_MODULE( tdeunittest_kconfigcompiler_test, "TDEConfigXT")
 KUNITTEST_MODULE_REGISTER_TESTER( TDEConfigCompiler_Test )
 
 typedef const char * CompilerTestSet[];

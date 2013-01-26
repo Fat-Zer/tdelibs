@@ -19,7 +19,7 @@
 #ifndef __KATE_CONFIG_H__
 #define __KATE_CONFIG_H__
 
-#include <ktexteditor/markinterface.h>
+#include <tdetexteditor/markinterface.h>
 
 #include <tqbitarray.h>
 #include <tqcolor.h>

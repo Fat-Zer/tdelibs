@@ -1,5 +1,5 @@
 ClassName=Configuration
-File=kcm_kdnssd.kcfg
+File=kcm_tdednssd.kcfg
 GlobalEnums=false
 Inherits=TDEConfigSkeleton
 ItemAccessors=false

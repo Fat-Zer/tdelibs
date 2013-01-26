@@ -29,9 +29,9 @@ libkio_la_SOURCES = dummy.cpp
 libkio_la_LDFLAGS = -version-info 6:0:2 -no-undefined $(all_libraries) \
 	$(KDE_MT_LDFLAGS)
 libkio_la_LIBADD = kssl/libkssl.la kio/libkiocore.la \
-	kio/libksycoca.la bookmarks/libkbookmarks.la kfile/libkfile.la \
+	kio/libtdesycoca.la bookmarks/libkbookmarks.la kfile/libkfile.la \
 	../tdeui/libtdeui.la ../tdesu/libtdesu.la \
-	../kwallet/client/libkwalletclient.la \
+	../tdewallet/client/libtdewalletclient.la \
 	$(LIBZ) $(LIBFAM) $(LIBVOLMGT) $(ACL_LIBS) $(LIB_QT) $(LIB_TDECORE) $(top_builddir)/dcop/libDCOP.la $(LIB_X11)
 
 kde_mime_DATA = magic

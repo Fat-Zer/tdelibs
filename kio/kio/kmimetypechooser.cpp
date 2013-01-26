@@ -25,7 +25,7 @@
 #include <kmimetype.h>
 #include <kprocess.h>
 #include <krun.h>
-#include <ksycoca.h>
+#include <tdesycoca.h>
 
 #include <tqlabel.h>
 #include <tqlayout.h>

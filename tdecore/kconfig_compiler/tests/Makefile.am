@@ -1,4 +1,4 @@
-AM_CPPFLAGS = -I$(top_srcdir)/tdecore -I$(top_srcdir)/kunittest $(all_includes) -DQT_NO_CAST_ASCII -DSRCDIR=\"$(srcdir)\"
+AM_CPPFLAGS = -I$(top_srcdir)/tdecore -I$(top_srcdir)/tdeunittest $(all_includes) -DQT_NO_CAST_ASCII -DSRCDIR=\"$(srcdir)\"
 
 check_PROGRAMS = test1 test2 test3 test4 test5 test6 test7 test8 test9 test_dpointer
 
@@ -14,52 +14,52 @@ CLEANFILES = test1.cpp test1.h \
 						 test_dpointer.cpp test_dpointer.h \
              md5sums
 
-test1_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+test1_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
 test1_LDADD = $(LIB_TDECORE)
 test1_SOURCES = test1main.cpp test1.cpp
 
-test2_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+test2_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
 test2_LDADD = $(LIB_TDECORE)
 test2_SOURCES = test2main.cpp test2.cpp
 
-test3_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+test3_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
 test3_LDADD = $(LIB_TDECORE)
 test3_SOURCES = test3main.cpp test3.cpp
 
-test4_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+test4_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
 test4_LDADD = $(LIB_TDECORE)
 test4_SOURCES = test4main.cpp test4.cpp
 
-test5_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+test5_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
 test5_LDADD = $(LIB_TDECORE)
 test5_SOURCES = test5main.cpp test5.cpp
 
-test6_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+test6_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
 test6_LDADD = $(LIB_TDECORE)
 test6_SOURCES = test6main.cpp test6.cpp
 
-test7_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+test7_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
 test7_LDADD = $(LIB_TDECORE)
 test7_SOURCES = test7main.cpp test7.cpp
 
-test8_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+test8_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
 test8_LDADD = $(LIB_TDECORE)
 test8_SOURCES = test8main.cpp test8a.cpp test8b.cpp
 
-test9_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+test9_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
 test9_LDADD = $(LIB_TDECORE)
 test9_SOURCES = test9main.cpp test9.cpp
 
-test_dpointer_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+test_dpointer_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
 test_dpointer_LDADD = $(LIB_TDECORE)
 test_dpointer_SOURCES = test_dpointer_main.cpp test_dpointer.cpp
 
-check_LTLIBRARIES = kunittest_kconfigcompiler_test.la
+check_LTLIBRARIES = tdeunittest_kconfigcompiler_test.la
 
-kunittest_kconfigcompiler_test_la_SOURCES = kconfigcompiler_test.cpp
-kunittest_kconfigcompiler_test_la_LIBADD = \
-	$(top_builddir)/kunittest/libkunittest.la
-kunittest_kconfigcompiler_test_la_LDFLAGS = -module $(KDE_CHECK_PLUGIN) \
+tdeunittest_kconfigcompiler_test_la_SOURCES = kconfigcompiler_test.cpp
+tdeunittest_kconfigcompiler_test_la_LIBADD = \
+	$(top_builddir)/tdeunittest/libtdeunittest.la
+tdeunittest_kconfigcompiler_test_la_LDFLAGS = -module $(KDE_CHECK_PLUGIN) \
 	$(all_libraries)
 
 

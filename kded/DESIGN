@@ -12,9 +12,9 @@ kbuildsycoca recreates the sycoca file by:
 * parsing all .desktop files, replacing global ones by local ones (at any
   level of the hierarchy)
 * creating all objects in memory
-* saving everything in the sycoca file (see below for ksycoca internals)
+* saving everything in the sycoca file (see below for tdesycoca internals)
 * clearing all memory
-* notifying the applications that use ksycoca by a DCOP call to the ksycoca
+* notifying the applications that use tdesycoca by a DCOP call to the tdesycoca
 object (KSycoca::notifyDatabaseChanged()).
 
 Format of the sycoca database file

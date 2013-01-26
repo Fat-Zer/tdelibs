@@ -18,7 +18,7 @@
  **/
 
 #include "kservice.h"
-#include "ksycoca.h"
+#include "tdesycoca.h"
 #include "kservicetype.h"
 #include "kservicetypefactory.h"
 #include "kservicefactory.h"
@@ -138,7 +138,7 @@ KServiceType::save( TQDataStream& _str )
   KSycocaEntry::save( _str );
   // !! This data structure should remain binary compatible at all times !!
   // You may add new fields at the end. Make sure to update the version
-  // number in ksycoca.h
+  // number in tdesycoca.h
   _str << m_strName << m_strIcon << m_strComment << m_mapProps << m_mapPropDefs
        << (TQ_INT8)m_bValid;
 }

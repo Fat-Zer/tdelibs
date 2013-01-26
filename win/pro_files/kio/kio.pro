@@ -19,7 +19,7 @@ INCLUDEPATH += $(KDELIBS)/tdecore/network $(KDELIBS)/kio/kio $(KDELIBS)/kio/misc
   $(KDELIBS)/kio/kio/moc $(KDELIBS)/kio/misc/moc $(KDELIBS)/kio/kfile/moc \
   $(KDELIBS)/kio/misc/moc \
   $(KDELIBS)/kio/bookmarks/moc \
-  $(KDELIBS)/kio/kssl/moc $(KDELIBS)/kwallet/client 
+  $(KDELIBS)/kio/kssl/moc $(KDELIBS)/tdewallet/client 
 
 system( cd kio && dcopidl kdirnotify.h > kdirnotify.kidl && dcopidl2cpp --no-stub kdirnotify.kidl )
 system( cd kio && dcopidl observer.h > observer.kidl && dcopidl2cpp observer.kidl )

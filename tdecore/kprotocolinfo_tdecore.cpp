@@ -150,7 +150,7 @@ void
 KProtocolInfo::load( TQDataStream& _str)
 {
    // You may add new fields at the end. Make sure to update the version
-   // number in ksycoca.h
+   // number in tdesycoca.h
    TQ_INT32 i_inputType, i_outputType;
    TQ_INT8 i_isSourceProtocol, i_isHelperProtocol,
           i_supportsListing, i_supportsReading,
@@ -205,7 +205,7 @@ KProtocolInfo::save( TQDataStream& _str)
    KSycocaEntry::save( _str );
 
    // You may add new fields at the end. Make sure to update the version
-   // number in ksycoca.h
+   // number in tdesycoca.h
    TQ_INT32 i_inputType, i_outputType;
    TQ_INT8 i_isSourceProtocol, i_isHelperProtocol,
           i_supportsListing, i_supportsReading,

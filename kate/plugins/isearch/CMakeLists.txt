@@ -27,13 +27,13 @@ link_directories(
 
 ##### other data ################################
 
-install( FILES ktexteditor_isearch.desktop DESTINATION ${SERVICES_INSTALL_DIR} )
-install( FILES ktexteditor_isearchui.rc DESTINATION ${DATA_INSTALL_DIR}/ktexteditor_isearch )
+install( FILES tdetexteditor_isearch.desktop DESTINATION ${SERVICES_INSTALL_DIR} )
+install( FILES tdetexteditor_isearchui.rc DESTINATION ${DATA_INSTALL_DIR}/tdetexteditor_isearch )
 
 
-##### ktexteditor_isearch #######################
+##### tdetexteditor_isearch #######################
 
-set( target ktexteditor_isearch )
+set( target tdetexteditor_isearch )
 
 set( ${target}_SRCS
   ISearchPlugin.cpp
@@ -41,6 +41,6 @@ set( ${target}_SRCS
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK ktexteditor-shared
+  LINK tdetexteditor-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

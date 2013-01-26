@@ -23,7 +23,7 @@
 #include <tqstringlist.h>
 
 #include "kservice.h"
-#include "ksycocafactory.h"
+#include "tdesycocafactory.h"
 #include <assert.h>
 
 class KSycoca;

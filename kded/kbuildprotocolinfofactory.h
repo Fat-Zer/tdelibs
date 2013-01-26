@@ -24,7 +24,7 @@
 #include <tqstringlist.h>
 
 /**
- * Protocol Info factory for building ksycoca
+ * Protocol Info factory for building tdesycoca
  * @internal
  */
 class KBuildProtocolInfoFactory : public KProtocolInfoFactory

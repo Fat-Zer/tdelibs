@@ -47,7 +47,7 @@
 
 #include "kaccelmanager_private.h"
 #include "../tdeui/kstdaction_p.h"
-#include "../kutils/kmultitabbar.h"
+#include "../tdeutils/tdemultitabbar.h"
 
 
 /*********************************************************************

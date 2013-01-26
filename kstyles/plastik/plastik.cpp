@@ -240,9 +240,9 @@ void PlastikStyle::polish(const TQStyleControlElementData &ceData, ControlElemen
     if (ceData.widgetObjectTypes.contains(TQWIDGET_OBJECT_NAME_STRING)) {
 	TQWidget *widget = reinterpret_cast<TQWidget*>(ptr);
 
-	if( !strcmp(widget->name(), "__khtml") ) { // is it a khtml widget...?
-		khtmlWidgets[widget] = true;
-		connect(widget, TQT_SIGNAL(destroyed(TQObject*)), this, TQT_SLOT(khtmlWidgetDestroyed(TQObject*)));
+	if( !strcmp(widget->name(), "__tdehtml") ) { // is it a tdehtml widget...?
+		tdehtmlWidgets[widget] = true;
+		connect(widget, TQT_SIGNAL(destroyed(TQObject*)), this, TQT_SLOT(tdehtmlWidgetDestroyed(TQObject*)));
 	}
 	
 	// use tqqt_cast where possible to check if the widget inheits one of the classes. might improve
@@ -283,8 +283,8 @@ void PlastikStyle::unPolish(const TQStyleControlElementData &ceData, ControlElem
     if (ceData.widgetObjectTypes.contains(TQWIDGET_OBJECT_NAME_STRING)) {
 	TQWidget *widget = reinterpret_cast<TQWidget*>(ptr);
 
-	if( !strcmp(widget->name(), "__khtml") ) { // is it a khtml widget...?
-		khtmlWidgets.remove(widget);
+	if( !strcmp(widget->name(), "__tdehtml") ) { // is it a tdehtml widget...?
+		tdehtmlWidgets.remove(widget);
 	}
 	
 	// use tqqt_cast to check if the widget inheits one of the classes.
@@ -314,9 +314,9 @@ void PlastikStyle::unPolish(const TQStyleControlElementData &ceData, ControlElem
     KStyle::unPolish(ceData, elementFlags, ptr);
 }
 
-void PlastikStyle::khtmlWidgetDestroyed(TQObject* obj)
+void PlastikStyle::tdehtmlWidgetDestroyed(TQObject* obj)
 {
-    khtmlWidgets.remove(TQT_TQWIDGET(obj));
+    tdehtmlWidgets.remove(TQT_TQWIDGET(obj));
 }
 
 void PlastikStyle::progressBarDestroyed(TQObject* obj)
@@ -719,7 +719,7 @@ void PlastikStyle::renderButton(TQPainter *p,
                                bool mouseOver,
                                bool horizontal,
                                bool enabled,
-                               bool khtmlMode) const
+                               bool tdehtmlMode) const
 {
     // small fix for the kicker buttons...
     if(kickerMode) enabled = true;
@@ -728,7 +728,7 @@ void PlastikStyle::renderButton(TQPainter *p,
 
     uint contourFlags = Draw_Left|Draw_Right|Draw_Top|Draw_Bottom;
     if(!enabled) contourFlags|=Is_Disabled;
-    if(khtmlMode) contourFlags|=Draw_AlphaBlend;
+    if(tdehtmlMode) contourFlags|=Draw_AlphaBlend;
 
     uint surfaceFlags = Draw_Left|Draw_Right|Draw_Top|Draw_Bottom;
     if(horizontal) surfaceFlags|=Is_Horizontal;
@@ -1526,8 +1526,8 @@ void PlastikStyle::drawPrimitive(TQ_PrimitiveElement pe,
         case PE_ButtonTool:
         case PE_ButtonDropDown:
         case PE_ButtonCommand: {
-            bool khtmlMode = opt.isDefault() ? false : khtmlWidgets.contains(opt.widget());
-            renderButton(p, r, cg, (on||down), mouseOver, true, enabled, khtmlMode );
+            bool tdehtmlMode = opt.isDefault() ? false : tdehtmlWidgets.contains(opt.widget());
+            renderButton(p, r, cg, (on||down), mouseOver, true, enabled, tdehtmlMode );
             break;
         }
 
@@ -1884,12 +1884,12 @@ void PlastikStyle::drawPrimitive(TQ_PrimitiveElement pe,
 
             // HACK!!
             //
-            // In order to draw nice edges in khtml, we need to paint alpha-blended.
+            // In order to draw nice edges in tdehtml, we need to paint alpha-blended.
             // On the other hand, we can't paint alpha-blended in normal widgets.
             //
-            // In this place there is no reliable way to detect if we are in khtml; the
-            // only thing we know is that khtml buffers its widgets into a pixmap. So
-            // when the paint device is a TQPixmap, chances are high that we are in khtml.
+            // In this place there is no reliable way to detect if we are in tdehtml; the
+            // only thing we know is that tdehtml buffers its widgets into a pixmap. So
+            // when the paint device is a TQPixmap, chances are high that we are in tdehtml.
             // It's possible that this breaks other things, so let's see how it works...
             if (p->device() && dynamic_cast<TQPixmap*>(p->device() ) ) {
                 contourFlags += Draw_AlphaBlend;
@@ -2816,7 +2816,7 @@ void PlastikStyle::drawComplexControl(TQ_ComplexControl control,
                                               :cg.background();
 
             uint contourFlags = 0;
-            if( khtmlWidgets.contains(cb) )
+            if( tdehtmlWidgets.contains(cb) )
                 contourFlags |= Draw_AlphaBlend;
             
             if (_inputFocusHighlight && hasFocus && editable && enabled)

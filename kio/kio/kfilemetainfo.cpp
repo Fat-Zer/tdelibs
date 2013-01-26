@@ -27,7 +27,7 @@
 
 #include <ktrader.h>
 #include <kstaticdeleter.h>
-#include <kparts/componentfactory.h>
+#include <tdeparts/componentfactory.h>
 #include <kuserprofile.h>
 #include <kdebug.h>
 #include <kmimetype.h>

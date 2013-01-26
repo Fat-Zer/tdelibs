@@ -24,7 +24,7 @@
 #include <tqpopupmenu.h>
 
 #include <ksyntaxhighlighter.h>
-#include <kspell.h>
+#include <tdespell.h>
 #include <kcursor.h>
 #include <kglobalsettings.h>
 #include <kstdaccel.h>

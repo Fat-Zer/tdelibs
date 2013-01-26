@@ -19,7 +19,7 @@
 #define BYTESEDITINTERFACE_H
 
 // kde specific
-#include <kparts/componentfactory.h>
+#include <tdeparts/componentfactory.h>
 
 #include <tqwidget.h>
 

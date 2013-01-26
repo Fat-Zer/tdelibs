@@ -26,12 +26,12 @@ INCLUDES= -I/usr/include/freetype2/ -I$(top_srcdir)/tdefx -I$(top_srcdir)/interf
 # into $(all_libraries) isn't better
 AM_LDFLAGS = $(LDFLAGS_AS_NEEDED) $(LDFLAGS_NEW_DTAGS)
 
-lib_LTLIBRARIES = libtdeui.la libkspell.la
+lib_LTLIBRARIES = libtdeui.la libtdespell.la
 libtdeui_la_LDFLAGS = $(KDE_MT_LDFLAGS) -no-undefined -version-info 6:0:2
 libtdeui_la_LIBADD = ../tdecore/libtdecore.la $(LIB_QT) $(top_builddir)/dcop/libDCOP.la $(LIB_X11) $(top_builddir)/tdefx/libtdefx.la $(LIB_XEXT)
 
-libkspell_la_LDFLAGS = $(KDE_MT_LDFLAGS) -version-info 6:0:2 -no-undefined
-libkspell_la_SOURCES = dummy.cpp
+libtdespell_la_LDFLAGS = $(KDE_MT_LDFLAGS) -version-info 6:0:2 -no-undefined
+libtdespell_la_SOURCES = dummy.cpp
 
 picsdir = $(kde_datadir)/tdeui/pics
 pics_DATA = aboutkde.png ktip-bulb.png ktip-background.png
@@ -69,7 +69,7 @@ include_HEADERS = kprogressbox.h kprogress.h kcolordlg.h \
 		kstringvalidator.h twindowinfo.h \
 		ktextedit.h kpassivepopup.h \
 		kdatetimewidget.h ktimewidget.h ktimezonewidget.h kscrollview.h \
-		kspell.h ksconfig.h kspelldlg.h ksyntaxhighlighter.h \
+		tdespell.h ksconfig.h tdespelldlg.h ksyntaxhighlighter.h \
 		ktabbar.h ktabwidget.h ksplashscreen.h kconfigdialog.h \
 		kactionselector.h klanguagebutton.h klistviewsearchline.h \
 		kpixmapregionselectorwidget.h kpixmapregionselectordialog.h \
@@ -117,9 +117,9 @@ libtdeui_la_SOURCES = \
 		kstringvalidator.cpp kactivelabel.cpp \
 		twindowinfo.cpp ktextedit.cpp kwizard.cpp kpassivepopup.cpp \
 		ktoolbarhandler.cpp kdatetimewidget.cpp ktimewidget.cpp ktimezonewidget.cpp \
-		ksconfig.cpp kspelldlg.cpp \
-		kspell.cpp ksyntaxhighlighter.cpp ktabbar.cpp ktabwidget.cpp \
-		ksplashscreen.cpp kspellui.ui kconfigdialog.cpp \
+		ksconfig.cpp tdespelldlg.cpp \
+		tdespell.cpp ksyntaxhighlighter.cpp ktabbar.cpp ktabwidget.cpp \
+		ksplashscreen.cpp tdespellui.ui kconfigdialog.cpp \
 		kactionselector.cpp klanguagebutton.cpp klistviewsearchline.cpp \
 		kpixmapregionselectorwidget.cpp kpixmapregionselectordialog.cpp \
 		kwhatsthismanager.cpp kiconviewsearchline.cpp \
@@ -166,6 +166,6 @@ dummy.cpp:
 	echo "}" >> dummy.cpp
 	echo "#endif" >> dummy.cpp
 
-DOXYGEN_REFERENCES = tdecore tdefx dcop kio kutils
+DOXYGEN_REFERENCES = tdecore tdefx dcop kio tdeutils
 DOXYGEN_SET_INTERNAL_DOCS = YES
 include ../admin/Doxyfile.am

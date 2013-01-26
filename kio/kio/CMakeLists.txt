@@ -90,9 +90,9 @@ tde_add_library( ${target} STATIC_PIC AUTOMOC
 )
 
 
-##### ksycoca ###################################
+##### tdesycoca ###################################
 
-set( target ksycoca )
+set( target tdesycoca )
 
 set( ${target}_SRCS
   kdirwatch.cpp kfileshare.cpp ksambashare.cpp

@@ -29,11 +29,11 @@
 
 #include "../interfaces/document.h"
 
-#include <ktexteditor/configinterfaceextension.h>
-#include <ktexteditor/encodinginterface.h>
-#include <ktexteditor/sessionconfiginterface.h>
-#include <ktexteditor/editinterfaceext.h>
-#include <ktexteditor/templateinterface.h>
+#include <tdetexteditor/configinterfaceextension.h>
+#include <tdetexteditor/encodinginterface.h>
+#include <tdetexteditor/sessionconfiginterface.h>
+#include <tdetexteditor/editinterfaceext.h>
+#include <tdetexteditor/templateinterface.h>
 
 #include <dcopobject.h>
 
@@ -955,7 +955,7 @@ class KateDocument : public Kate::Document,
 
   /**
    * Variable Reader
-   * TODO add register functionality/ktexteditor interface
+   * TODO add register functionality/tdetexteditor interface
    */
   private:
     /**

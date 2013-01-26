@@ -104,11 +104,11 @@ Kded::Kded(bool checkUpdates, bool new_startup)
 {
   _self = this;
   TQCString cPath;
-  TQCString ksycoca_env = getenv("TDESYCOCA");
-  if (ksycoca_env.isEmpty())
-     cPath = TQFile::encodeName(TDEGlobal::dirs()->saveLocation("tmp")+"ksycoca");
+  TQCString tdesycoca_env = getenv("TDESYCOCA");
+  if (tdesycoca_env.isEmpty())
+     cPath = TQFile::encodeName(TDEGlobal::dirs()->saveLocation("tmp")+"tdesycoca");
   else
-     cPath = ksycoca_env;
+     cPath = tdesycoca_env;
   m_pTimer = new TQTimer(this);
   connect(m_pTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(recreate()));
 
@@ -139,7 +139,7 @@ bool Kded::process(const TQCString &obj, const TQCString &fun,
                    const TQByteArray &data,
                    TQCString &replyType, TQByteArray &replyData)
 {
-  if (obj == "ksycoca") return false; // Ignore this one.
+  if (obj == "tdesycoca") return false; // Ignore this one.
 
   if (m_dontLoad[obj])
      return false;
@@ -484,7 +484,7 @@ void Kded::recreate(bool initial)
       recreateDone();
       if(delayedCheck)
       {
-         // do a proper ksycoca check after a delay
+         // do a proper tdesycoca check after a delay
          TQTimer::singleShot( 60000, this, TQT_SLOT( runDelayedCheck()));
          m_needDelayedCheck = true;
          delayedCheck = false;
@@ -961,7 +961,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
      // anyway, because it was too early, so let's send this signal
      // unconditionnally (David)
      TQByteArray data;
-     client->send( "*", "ksycoca", "notifyDatabaseChanged()", data );
+     client->send( "*", "tdesycoca", "notifyDatabaseChanged()", data );
      client->send( "ksplash", "", "upAndRunning(TQString)",  TQString("kded"));
 #ifdef Q_WS_X11
      XEvent e;

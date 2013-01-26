@@ -25,7 +25,7 @@
 #include <tqvariant.h>
 #include <kicontheme.h>
 
-#include "ksycocaentry.h"
+#include "tdesycocaentry.h"
 
 class TQDataStream;
 class KDesktopFile;

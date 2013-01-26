@@ -106,7 +106,7 @@ void KDirWatchTest::rename_file(const TQString& from, const TQString& to)
   ::rename(TQFile::encodeName(from), TQFile::encodeName(to));
 }
 
-KUNITTEST_MODULE ( kunittest_kdirwatch, "KDirWatchTest" )
+KUNITTEST_MODULE ( tdeunittest_kdirwatch, "KDirWatchTest" )
 KUNITTEST_MODULE_REGISTER_TESTER (KDirWatchTest)
 
 #define SLEEP() TQApplication::processEvents();

@@ -31,7 +31,7 @@
 #include <kprogress.h>
 #include <kstandarddirs.h>
 #include <ktempfile.h>
-#include <kwallet.h>
+#include <tdewallet.h>
 
 #include <tqlineedit.h>
 #include <tqpushbutton.h>

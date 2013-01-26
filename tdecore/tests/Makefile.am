@@ -79,8 +79,8 @@ kstdacceltest_SOURCES = kstdacceltest.cpp
 kglobaltest_SOURCES = kglobaltest.cpp
 ktimezonestest_SOURCES = ktimezonestest.cpp
 
-check_LTLIBRARIES = kunittest_kconfig.la
+check_LTLIBRARIES = tdeunittest_kconfig.la
 
-kunittest_kconfig_la_SOURCES = kconfigtest.cpp
-kunittest_kconfig_la_LIBADD = $(LIB_KUNITTEST)
-kunittest_kconfig_la_LDFLAGS = -module $(KDE_CHECK_PLUGIN)
+tdeunittest_kconfig_la_SOURCES = kconfigtest.cpp
+tdeunittest_kconfig_la_LIBADD = $(LIB_KUNITTEST)
+tdeunittest_kconfig_la_LDFLAGS = -module $(KDE_CHECK_PLUGIN)

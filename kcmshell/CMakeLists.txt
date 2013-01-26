@@ -18,7 +18,7 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/tdeui
   ${CMAKE_SOURCE_DIR}/kio
   ${CMAKE_SOURCE_DIR}/kio/kio
-  ${CMAKE_SOURCE_DIR}/kutils
+  ${CMAKE_SOURCE_DIR}/tdeutils
 )
 
 link_directories(
@@ -36,6 +36,6 @@ set( ${target}_SRCS
 
 tde_add_tdeinit_executable( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK kutils-shared
+  LINK tdeutils-shared
   DEPENDENCIES dcopidl
 )

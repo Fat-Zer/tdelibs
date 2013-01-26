@@ -27,7 +27,7 @@ Here is an alphabetical list:
     communicate with KDE applications. It's also the base for KParts.
 
 * interfaces
-    kparts interface for text editors, mediaplayer and scripting.
+    tdeparts interface for text editors, mediaplayer and scripting.
 
 * kab
     OBSOLETE, see kabc: Used to be the address book library, but now only
@@ -39,7 +39,7 @@ Here is an alphabetical list:
 * kate
     KPart for 'kate', the KDE advanced text editor.
 
-* kcert
+* tdecert
     Personal certification manager.
 
 * kconf_update
@@ -73,7 +73,7 @@ Here is an alphabetical list:
     Contains mostly stuff convert XML docbook files via XSLT into
     human readable stuff.
 
-* khtml
+* tdehtml
     The next generation HTML rendering widget designed for Konqueror.  This
     supports HTML 4, CSS, and a variety of other web related standards.
 
@@ -86,7 +86,7 @@ Here is an alphabetical list:
 
 * kio
     Classes that fetch and decode URLs are contained here. This library also
-    contains "ksycoca", the system configure cache containing services,
+    contains "tdesycoca", the system configure cache containing services,
     applications, servicetypes and mimetypes.
 
 * kioslave
@@ -95,21 +95,21 @@ Here is an alphabetical list:
 * kjs
     Implementation of ECMAScript (aka JavaScript).
 
-* kparts
+* tdeparts
     KDE component model.
 
 * kstyles
     The theme engine lies within. It handles nearly anything relating to
     customizing the appearance of widgets.
 
-* kwallet
+* tdewallet
     Client and backend to store values in encrypted files.
 
-* libkmid
+* libtdemid
     MIDI file handling and midi mapper (manages output of midi files to
     various devices).
 
-* libkscreensaver
+* libtdescreensaver
     Library for making KDE screensavers.
 
 * libltdl

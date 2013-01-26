@@ -28,7 +28,7 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
 <LI><A HREF="#KHelpMenu">KHelpMenu</A></LI>
 <LI><A HREF="#KToolBar">KToolBar</A></LI>
 <LI><A HREF="#launching">Starting other programs</A></LI>
-<LI><A HREF="#khtmlw">khtmlw</A></LI>
+<LI><A HREF="#tdehtmlw">tdehtmlw</A></LI>
 <LI><A HREF="#KIntegerLine">KIntegerLine, KIntLineEdit</A></LI>
 <LI><A HREF="#KDNDIcon">KDNDIcon, KDNDDropZone, KDNDWidget, tdecore/drag.h</A></LI>
 <LI><A HREF="#TDEConfigBase">TDEConfigBase, TDEConfig, KSimpleConfig</A></LI>
@@ -347,9 +347,9 @@ This makes KRun the recommended way to run another program in KDE 2.
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
-<H3><A NAME="khtmlw">khtmlw</A></H3>
+<H3><A NAME="tdehtmlw">tdehtmlw</A></H3>
 
-khtmlw has been replaced with khtml.<BR>
+tdehtmlw has been replaced with tdehtml.<BR>
 <UL>
 	<LI>KHTMLView has vanished. Just use KHTMLWidget, which does scrollbar
   managing for free.
@@ -361,7 +361,7 @@ khtmlw has been replaced with khtml.<BR>
 	w-&gt;openURL(myURL);
   </PRE>
 
-	<LI>khtml uses QString's instead of char *'s now. This means, that most
+	<LI>tdehtml uses QString's instead of char *'s now. This means, that most
   of the api has changed. In all functions:<P>
   <PRE>
      const char * -&gt; QString
@@ -406,7 +406,7 @@ khtmlw has been replaced with khtml.<BR>
 </TR>
 </TABLE><P>
 
-<LI>Don't forget to change the link-flags! (-lkhtml -lkjava instead of -lkhtmlw)
+<LI>Don't forget to change the link-flags! (-ltdehtml -lkjava instead of -ltdehtmlw)
 </UL>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>

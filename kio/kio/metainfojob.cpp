@@ -25,7 +25,7 @@
 #include <kdebug.h>
 #include <kfilemetainfo.h>
 #include <kio/kservice.h>
-#include <kparts/componentfactory.h>
+#include <tdeparts/componentfactory.h>
 
 #include <tqtimer.h>
 

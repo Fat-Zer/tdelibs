@@ -28,9 +28,9 @@
 
 #include "../interfaces/view.h"
 
-#include <ktexteditor/sessionconfiginterface.h>
-#include <ktexteditor/viewstatusmsginterface.h>
-#include <ktexteditor/texthintinterface.h>
+#include <tdetexteditor/sessionconfiginterface.h>
+#include <tdetexteditor/viewstatusmsginterface.h>
+#include <tdetexteditor/texthintinterface.h>
 
 #include <tqguardedptr.h>
 

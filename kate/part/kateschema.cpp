@@ -40,7 +40,7 @@
 #include <kcolordialog.h>
 #include <kapplication.h>
 #include <kaboutdata.h>
-#include <ktexteditor/markinterface.h>
+#include <tdetexteditor/markinterface.h>
 
 #include <tqbuttongroup.h>
 #include <tqcheckbox.h>

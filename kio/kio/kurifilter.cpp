@@ -26,7 +26,7 @@
 #include <kmimetype.h>
 #include <klibloader.h>
 #include <kstaticdeleter.h>
-#include <kparts/componentfactory.h>
+#include <tdeparts/componentfactory.h>
 
 #ifdef HAVE_ELFICON
 #include <tqimage.h>

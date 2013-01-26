@@ -8,7 +8,7 @@
 #ifndef SSK_KIMGIOFACTORY_H
 #define SSK_KIMGIOFACTORY_H
 
-#include "ksycocafactory.h"
+#include "tdesycocafactory.h"
 #include "kimageio.h"
 
 class KImageIOFormat;

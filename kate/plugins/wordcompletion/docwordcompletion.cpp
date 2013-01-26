@@ -28,10 +28,10 @@
 //BEGIN includes
 #include "docwordcompletion.h"
 
-#include <ktexteditor/document.h>
-#include <ktexteditor/viewcursorinterface.h>
-#include <ktexteditor/editinterface.h>
-#include <ktexteditor/variableinterface.h>
+#include <tdetexteditor/document.h>
+#include <tdetexteditor/viewcursorinterface.h>
+#include <tdetexteditor/editinterface.h>
+#include <tdetexteditor/variableinterface.h>
 
 #include <kapplication.h>
 #include <kconfig.h>
@@ -40,7 +40,7 @@
 #include <klocale.h>
 #include <kaction.h>
 #include <knotifyclient.h>
-#include <kparts/part.h>
+#include <tdeparts/part.h>
 #include <kiconloader.h>
 
 #include <tqregexp.h>
@@ -57,7 +57,7 @@
 //END
 
 //BEGIN DocWordCompletionPlugin
-K_EXPORT_COMPONENT_FACTORY( ktexteditor_docwordcompletion, KGenericFactory<DocWordCompletionPlugin>( "ktexteditor_docwordcompletion" ) )
+K_EXPORT_COMPONENT_FACTORY( tdetexteditor_docwordcompletion, KGenericFactory<DocWordCompletionPlugin>( "tdetexteditor_docwordcompletion" ) )
 DocWordCompletionPlugin::DocWordCompletionPlugin( TQObject *parent,
                             const char* name,
                             const TQStringList& /*args*/ )

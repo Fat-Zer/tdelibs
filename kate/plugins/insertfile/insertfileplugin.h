@@ -22,8 +22,8 @@
 #ifndef _INSERT_FILE_PLUGIN_H_
 #define _INSERT_FILE_PLUGIN_H_
 
-#include <ktexteditor/plugin.h>
-#include <ktexteditor/view.h>
+#include <tdetexteditor/plugin.h>
+#include <tdetexteditor/view.h>
 
 #include <kxmlguiclient.h>
 #include <tqobject.h>

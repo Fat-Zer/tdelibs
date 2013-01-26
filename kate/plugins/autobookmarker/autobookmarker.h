@@ -23,8 +23,8 @@
 #ifndef _AUTOBOOKMARKER_H_
 #define _AUTOBOOKMARKER_H_
 
-#include <ktexteditor/plugin.h>
-#include <ktexteditor/configinterfaceextension.h>
+#include <tdetexteditor/plugin.h>
+#include <tdetexteditor/configinterfaceextension.h>
 
 #include <kdialogbase.h>
 

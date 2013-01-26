@@ -19,24 +19,24 @@
 #ifndef _KATE_DOCUMENT_INCLUDE_
 #define _KATE_DOCUMENT_INCLUDE_
 
-#include <ktexteditor/document.h>
-#include <ktexteditor/view.h>
-#include <ktexteditor/editinterface.h>
-#include <ktexteditor/undointerface.h>
-#include <ktexteditor/cursorinterface.h>
-#include <ktexteditor/documentinfo.h>
-#include <ktexteditor/selectioninterface.h>
-#include <ktexteditor/selectioninterfaceext.h>
-#include <ktexteditor/blockselectioninterface.h>
-#include <ktexteditor/searchinterface.h>
-#include <ktexteditor/highlightinginterface.h>
-#include <ktexteditor/configinterface.h>
-#include <ktexteditor/configinterfaceextension.h>
-#include <ktexteditor/markinterface.h>
-#include <ktexteditor/markinterfaceextension.h>
-#include <ktexteditor/wordwrapinterface.h>
-#include <ktexteditor/printinterface.h>
-#include <ktexteditor/variableinterface.h>
+#include <tdetexteditor/document.h>
+#include <tdetexteditor/view.h>
+#include <tdetexteditor/editinterface.h>
+#include <tdetexteditor/undointerface.h>
+#include <tdetexteditor/cursorinterface.h>
+#include <tdetexteditor/documentinfo.h>
+#include <tdetexteditor/selectioninterface.h>
+#include <tdetexteditor/selectioninterfaceext.h>
+#include <tdetexteditor/blockselectioninterface.h>
+#include <tdetexteditor/searchinterface.h>
+#include <tdetexteditor/highlightinginterface.h>
+#include <tdetexteditor/configinterface.h>
+#include <tdetexteditor/configinterfaceextension.h>
+#include <tdetexteditor/markinterface.h>
+#include <tdetexteditor/markinterfaceextension.h>
+#include <tdetexteditor/wordwrapinterface.h>
+#include <tdetexteditor/printinterface.h>
+#include <tdetexteditor/variableinterface.h>
 
 #include <kaction.h>
 

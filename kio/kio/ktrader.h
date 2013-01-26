@@ -36,7 +36,7 @@
  * A few examples will make this a lot more clear.
  *
  * Say you have an application that will display HTML.  In this
- * example, you don't want to link to khtml... and furthermore, you
+ * example, you don't want to link to tdehtml... and furthermore, you
  * really don't care if the HTML browser is ours or not, as long as
  * it works.  The way that you formulate your query as well as the way
  * that you execute the browser depends on whether or not you want the

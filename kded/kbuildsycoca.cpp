@@ -104,15 +104,15 @@ static TQString sycocaPath()
 
   if (bGlobalDatabase)
   {
-     path = TDEGlobal::dirs()->saveLocation("services")+"ksycoca";
+     path = TDEGlobal::dirs()->saveLocation("services")+"tdesycoca";
   }
   else
   {
-     TQCString ksycoca_env = getenv("TDESYCOCA");
-     if (ksycoca_env.isEmpty())
-        path = TDEGlobal::dirs()->saveLocation("cache")+"ksycoca";
+     TQCString tdesycoca_env = getenv("TDESYCOCA");
+     if (tdesycoca_env.isEmpty())
+        path = TDEGlobal::dirs()->saveLocation("cache")+"tdesycoca";
      else
-        path = TQFile::decodeName(ksycoca_env);
+        path = TQFile::decodeName(tdesycoca_env);
   }
 
   return path;
@@ -120,9 +120,9 @@ static TQString sycocaPath()
 
 static TQString oldSycocaPath()
 {
-  TQCString ksycoca_env = getenv("TDESYCOCA");
-  if (ksycoca_env.isEmpty())
-     return TDEGlobal::dirs()->saveLocation("tmp")+"ksycoca";
+  TQCString tdesycoca_env = getenv("TDESYCOCA");
+  if (tdesycoca_env.isEmpty())
+     return TDEGlobal::dirs()->saveLocation("tmp")+"tdesycoca";
 
   return TQString::null;
 }
@@ -487,7 +487,7 @@ bool KBuildSycoca::recreate()
 
   m_str = database->dataStream();
 
-  kdDebug(7021) << "Recreating ksycoca file (" << path << ", version " << KSycoca::version() << ")" << endl;
+  kdDebug(7021) << "Recreating tdesycoca file (" << path << ", version " << KSycoca::version() << ")" << endl;
 
   // It is very important to build the servicetype one first
   // Both are registered in KSycoca, no need to keep the pointers
@@ -527,9 +527,9 @@ bool KBuildSycoca::recreate()
   {
     // update the timestamp file
     TQString stamppath = path + "stamp";
-    TQFile ksycocastamp(stamppath);
-    ksycocastamp.open( IO_WriteOnly );
-    TQDataStream str( &ksycocastamp );
+    TQFile tdesycocastamp(stamppath);
+    tdesycocastamp.open( IO_WriteOnly );
+    TQDataStream str( &tdesycocastamp );
     str << newTimestamp;
     str << existingResourceDirs();
     if (g_vfolder)
@@ -566,7 +566,7 @@ void KBuildSycoca::save()
    (*m_str) << TDEGlobal::dirs()->kfsstnd_prefixes();
    (*m_str) << newTimestamp;
    (*m_str) << TDEGlobal::locale()->language();
-   (*m_str) << TDEGlobal::dirs()->calcResourceHash("services", "update_ksycoca", true);
+   (*m_str) << TDEGlobal::dirs()->calcResourceHash("services", "update_tdesycoca", true);
    (*m_str) << (*g_allResourceDirs);
 
    // Write factory data....
@@ -636,10 +636,10 @@ bool KBuildSycoca::checkDirTimestamps( const TQString& dirname, const TQDateTime
    return true;
 }
 
-// check times of last modification of all files on which ksycoca depens,
+// check times of last modification of all files on which tdesycoca depens,
 // and also their directories
-// if all of them all older than the timestamp in file ksycocastamp, this
-// means that there's no need to rebuild ksycoca
+// if all of them all older than the timestamp in file tdesycocastamp, this
+// means that there's no need to rebuild tdesycoca
 bool KBuildSycoca::checkTimestamps( TQ_UINT32 timestamp, const TQStringList &dirs )
 {
    kdDebug( 7021 ) << "checking file timestamps" << endl;
@@ -663,7 +663,7 @@ TQStringList KBuildSycoca::existingResourceDirs()
        return *dirs;
    dirs = new TQStringList;
    g_allResourceDirs = new TQStringList;
-   // these are all resources cached by ksycoca
+   // these are all resources cached by tdesycoca
    TQStringList resources;
    resources += KBuildServiceTypeFactory::resourceTypes();
    resources += KBuildServiceGroupFactory::resourceTypes();
@@ -805,12 +805,12 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
    {
      KSycoca::self()->disableAutoRebuild(); // Prevent deadlock
      TQString current_language = TDEGlobal::locale()->language();
-     TQString ksycoca_language = KSycoca::self()->language();
-     TQ_UINT32 current_update_sig = TDEGlobal::dirs()->calcResourceHash("services", "update_ksycoca", true);
-     TQ_UINT32 ksycoca_update_sig = KSycoca::self()->updateSignature();
+     TQString tdesycoca_language = KSycoca::self()->language();
+     TQ_UINT32 current_update_sig = TDEGlobal::dirs()->calcResourceHash("services", "update_tdesycoca", true);
+     TQ_UINT32 tdesycoca_update_sig = KSycoca::self()->updateSignature();
 
-     if ((current_update_sig != ksycoca_update_sig) ||
-         (current_language != ksycoca_language) ||
+     if ((current_update_sig != tdesycoca_update_sig) ||
+         (current_language != tdesycoca_language) ||
          (KSycoca::self()->timeStamp() == 0))
      {
         incremental = false;
@@ -829,10 +829,10 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
        TQString path = sycocaPath()+"stamp";
        TQCString qPath = TQFile::encodeName(path);
        cSycocaPath = qPath.data(); // Delete timestamps on crash
-       TQFile ksycocastamp(path);
-       if( ksycocastamp.open( IO_ReadOnly ))
+       TQFile tdesycocastamp(path);
+       if( tdesycocastamp.open( IO_ReadOnly ))
        {
-           TQDataStream str( &ksycocastamp );
+           TQDataStream str( &tdesycocastamp );
            if (!str.atEnd())
                str >> filestamp;
            if (!str.atEnd())
@@ -870,7 +870,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
       g_ctimeDict = 0;
       if (incremental)
       {
-         tqWarning("[kbuildsycoca] Reusing existing ksycoca.");
+         tqWarning("[kbuildsycoca] Reusing existing tdesycoca.");
          KSycoca *oldSycoca = KSycoca::self();
          KSycocaFactoryList *factories = new KSycocaFactoryList;
          g_allEntries = new KSycocaEntryListList;
@@ -940,11 +940,11 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
 
    if (args->isSet("signal"))
    {
-     // Notify ALL applications that have a ksycoca object, using a broadcast
+     // Notify ALL applications that have a tdesycoca object, using a broadcast
      TQByteArray data;
      TQDataStream stream(data, IO_WriteOnly);
      stream << *g_changeList;
-     dcopClient->send( "*", "ksycoca", "notifyDatabaseChanged(TQStringList)", data );
+     dcopClient->send( "*", "tdesycoca", "notifyDatabaseChanged(TQStringList)", data );
    }
 
 #ifdef KBUILDSYCOCA_GUI

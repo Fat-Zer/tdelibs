@@ -54,7 +54,7 @@
 #include <kmimetype.h>
 #include <kservicegroup.h>
 #include <klistview.h>
-#include <ksycoca.h>
+#include <tdesycoca.h>
 #include <kstdguiitem.h>
 
 #include "kopenwith.h"

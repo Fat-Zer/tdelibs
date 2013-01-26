@@ -965,7 +965,7 @@ void KSpellConfig::activateHelp( void )
 
 void KSpellConfig::sHelp( void )
 {
-  kapp->invokeHelp("configuration", "kspell");
+  kapp->invokeHelp("configuration", "tdespell");
 }
 
 /*

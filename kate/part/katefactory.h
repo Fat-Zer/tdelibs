@@ -20,7 +20,7 @@
 #define __KATE_FACTORY_H__
 
 #include "katejscript.h"
-#include <kparts/factory.h>
+#include <tdeparts/factory.h>
 
 #include <ktrader.h>
 #include <kinstance.h>
@@ -148,7 +148,7 @@ class KateFactory
 
     /**
      * on start detected plugins
-     * @return list of all at launch detected ktexteditor::plugins
+     * @return list of all at launch detected tdetexteditor::plugins
      */
     inline const KTrader::OfferList &plugins () { return m_plugins; };
 

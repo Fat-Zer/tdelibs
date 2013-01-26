@@ -52,7 +52,7 @@
 
 namespace KJS {
 
-// taken from khtml
+// taken from tdehtml
 // therefor thx to:
 // Copyright (C) 1999-2003 Harri Porten (porten@kde.org)
 // Copyright (C) 2001-2003 David Faure (faure@kde.org)

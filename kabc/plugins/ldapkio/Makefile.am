@@ -6,7 +6,7 @@ noinst_HEADERS = resourceldapkioconfig.h
 lib_LTLIBRARIES = libkabc_ldapkio.la
 libkabc_ldapkio_la_SOURCES = resourceldapkio.cpp resourceldapkioconfig.cpp
 libkabc_ldapkio_la_LDFLAGS = $(KDE_RPATH) $(all_libraries) -version-info 1:0:0 -no-undefined
-libkabc_ldapkio_la_LIBADD	= $(LIB_KABC) $(LIB_KIO) $(LIB_QT) $(top_builddir)/kresources/libkresources.la $(LIB_TDEUI) $(LIB_TDECORE)
+libkabc_ldapkio_la_LIBADD	= $(LIB_KABC) $(LIB_KIO) $(LIB_QT) $(top_builddir)/tderesources/libtderesources.la $(LIB_TDEUI) $(LIB_TDECORE)
 libkabc_ldapkio_la_COMPILE_FIRST = $(top_builddir)/kabc/addressee.h
 
 kde_module_LTLIBRARIES = kabc_ldapkio.la
@@ -22,7 +22,7 @@ messages: rc.cpp
 kabcincludedir = $(includedir)/kabc
 kabcinclude_HEADERS = resourceldapkio.h
 
-servicedir = $(kde_servicesdir)/kresources/kabc
+servicedir = $(kde_servicesdir)/tderesources/kabc
 service_DATA = ldapkio.desktop
 
 resourceldapkioplugin.lo: ../../addressee.h

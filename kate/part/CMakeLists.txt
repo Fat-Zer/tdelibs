@@ -25,7 +25,7 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/kio/kio
   ${CMAKE_SOURCE_DIR}/kio/kfile
   ${CMAKE_SOURCE_DIR}/kjs
-  ${CMAKE_SOURCE_DIR}/kutils
+  ${CMAKE_SOURCE_DIR}/tdeutils
   ${CMAKE_SOURCE_DIR}/tdeprint
   ${CMAKE_SOURCE_DIR}/interfaces
   ${CMAKE_SOURCE_DIR}/interfaces/kregexpeditor
@@ -72,6 +72,6 @@ configure_file( ${CMAKE_SOURCE_DIR}/cmake/modules/template_dummy_cpp.cmake dummy
 tde_add_kpart( ${target}
   SOURCES dummy.cpp
   EMBED kate-static
-  LINK kjs-shared tdeprint-shared katepartinterfaces-shared kutils-shared
+  LINK kjs-shared tdeprint-shared katepartinterfaces-shared tdeutils-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

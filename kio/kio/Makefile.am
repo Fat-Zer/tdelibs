@@ -20,11 +20,11 @@ AM_CPPFLAGS = -D_LARGEFILE64_SOURCE
 
 INCLUDES=  -I$(top_srcdir) -I$(srcdir)/.. -I$(top_srcdir)/tdecore/network -I$(srcdir)/../kssl -I../kssl -I$(srcdir)/../../interfaces  $(all_includes) $(SSL_INCLUDES)
 
-noinst_LTLIBRARIES = libkiocore.la libksycoca.la
+noinst_LTLIBRARIES = libkiocore.la libtdesycoca.la
 
 # convenience lib - no LDFLAGS or LIBADD !
 
-libksycoca_la_SOURCES = \
+libtdesycoca_la_SOURCES = \
 	kdirwatch.cpp \
 	kfileshare.cpp ksambashare.cpp knfsshare.cpp \
 	ktrader.cpp ktraderparse.cpp ktraderparsetree.cpp \
@@ -43,7 +43,7 @@ libksycoca_la_SOURCES = \
 	kfilemetainfo.cpp kdcopservicestarter.cpp \
 	dataslave.cpp dataprotocol.cpp 
 #if USE_POSIX_ACL
-  libksycoca_la_SOURCES += kacl.cpp posixacladdons.cpp
+  libtdesycoca_la_SOURCES += kacl.cpp posixacladdons.cpp
 #endif
 
 include_HEADERS = \

@@ -39,7 +39,7 @@ install( FILES
 
 ##### other data ################################
 
-install( FILES dir.desktop DESTINATION ${SERVICES_INSTALL_DIR}/kresources/kabc )
+install( FILES dir.desktop DESTINATION ${SERVICES_INSTALL_DIR}/tderesources/kabc )
 
 
 ##### kabc_dir (library) ########################

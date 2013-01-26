@@ -21,7 +21,7 @@
 #ifndef __kservicetype_h__
 #define __kservicetype_h__
 
-#include "ksycocaentry.h"
+#include "tdesycocaentry.h"
 #include "kservice.h"
 
 #include <tqstring.h>

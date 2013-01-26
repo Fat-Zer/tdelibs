@@ -7,16 +7,16 @@ noinst_HEADERS = sdevent.h
 # let automoc handle all of the meta source files (moc)
 METASOURCES = AUTO
 
-lib_LTLIBRARIES =  libkdnssd.la
+lib_LTLIBRARIES =  libtdednssd.la
 
-libkdnssd_la_SOURCES = remoteservice.cpp responder.cpp servicebase.cpp \
+libtdednssd_la_SOURCES = remoteservice.cpp responder.cpp servicebase.cpp \
 				settings.kcfgc publicservice.cpp query.cpp domainbrowser.cpp servicebrowser.cpp
 dnssdincludedir = $(includedir)/dnssd
 dnssdinclude_HEADERS = domainbrowser.h query.h remoteservice.h \
 	publicservice.h servicebase.h servicebrowser.h settings.h
-libkdnssd_la_LIBADD = ../tdecore/libtdecore.la $(AVAHI_LIBS) $(LIB_QT)
-libkdnssd_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) -version-info 1:0
+libtdednssd_la_LIBADD = ../tdecore/libtdecore.la $(AVAHI_LIBS) $(LIB_QT)
+libtdednssd_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) -version-info 1:0
 
-#kde_kcfg_DATA = kcm_kdnssd.kcfg
+#kde_kcfg_DATA = kcm_tdednssd.kcfg
 
 include ../admin/Doxyfile.am

@@ -51,7 +51,7 @@
 #include "kservicetypefactory.h"
 #include "kservicetype.h"
 #include "kuserprofile.h"
-#include "ksycoca.h"
+#include "tdesycoca.h"
 
 class KService::KServicePrivate
 {
@@ -336,7 +336,7 @@ void KService::load( TQDataStream& s )
   // WARNING: IN KDE 3.x THIS NEEDS TO REMAIN COMPATIBLE WITH KDE 2.x!
   // !! This data structure should remain binary compatible at all times !!
   // You may add new fields at the end. Make sure to update the version
-  // number in ksycoca.h
+  // number in tdesycoca.h
   s >> m_strType >> m_strName >> m_strExec >> m_strIcon
     >> term >> m_strTerminalOptions
     >> m_strPath >> m_strComment >> m_lstServiceTypes >> def >> m_mapProps
@@ -369,7 +369,7 @@ void KService::save( TQDataStream& s )
   // WARNING: IN KDE 3.x THIS NEEDS TO REMAIN COMPATIBLE WITH KDE 2.x!
   // !! This data structure should remain binary compatible at all times !!
   // You may add new fields at the end. Make sure to update the version
-  // number in ksycoca.h
+  // number in tdesycoca.h
   s << m_strType << m_strName << m_strExec << m_strIcon
     << term << m_strTerminalOptions
     << m_strPath << m_strComment << m_lstServiceTypes << def << m_mapProps
@@ -879,7 +879,7 @@ void KService::virtual_hook( int id, void* data )
 
 void KService::rebuildKSycoca(TQWidget *parent)
 {
-  KServiceProgressDialog dlg(parent, "ksycoca_progress",
+  KServiceProgressDialog dlg(parent, "tdesycoca_progress",
                       i18n("Updating System Configuration"),
                       i18n("Updating system configuration."));
 

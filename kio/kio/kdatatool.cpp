@@ -26,7 +26,7 @@
 #include <kinstance.h>
 
 #include <ktrader.h>
-#include <kparts/componentfactory.h>
+#include <tdeparts/componentfactory.h>
 
 #include <tqpixmap.h>
 #include <tqfile.h>

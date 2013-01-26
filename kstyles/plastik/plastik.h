@@ -233,7 +233,7 @@ protected:
                       bool mouseOver = false,
                       bool horizontal = true,
                       bool enabled = true,
-                      bool khtmlMode = false) const;
+                      bool tdehtmlMode = false) const;
 
     void renderPanel(TQPainter *p,
                      const TQRect &r,
@@ -269,7 +269,7 @@ protected:
     virtual bool objectEventHandler( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void* source, TQEvent *e );
 
 protected slots:
-    void khtmlWidgetDestroyed(TQObject* w);
+    void tdehtmlWidgetDestroyed(TQObject* w);
 
     //Animation slots.
     void updateProgressPos();
@@ -300,8 +300,8 @@ private:
     TQColor _focusHighlightColor;
     TQColor _checkMarkColor;
 
-    // track khtml widgets.
-    TQMap<const TQWidget*,bool> khtmlWidgets;
+    // track tdehtml widgets.
+    TQMap<const TQWidget*,bool> tdehtmlWidgets;
 
     //Animation support.
     TQMap<TQWidget*, int> progAnimWidgets;

@@ -25,7 +25,7 @@
 #include <tqlayout.h>
 #include <tqvbox.h>
 
-#include <kparts/part.h>
+#include <tdeparts/part.h>
 #include <kaccel.h>
 #include <kaction.h>
 #include <klibloader.h>

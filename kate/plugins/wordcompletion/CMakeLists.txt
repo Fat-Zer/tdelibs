@@ -25,13 +25,13 @@ link_directories(
 
 ##### other data ################################
 
-install( FILES ktexteditor_docwordcompletion.desktop DESTINATION ${SERVICES_INSTALL_DIR} )
-install( FILES docwordcompletionui.rc DESTINATION ${DATA_INSTALL_DIR}/ktexteditor_docwordcompletion )
+install( FILES tdetexteditor_docwordcompletion.desktop DESTINATION ${SERVICES_INSTALL_DIR} )
+install( FILES docwordcompletionui.rc DESTINATION ${DATA_INSTALL_DIR}/tdetexteditor_docwordcompletion )
 
 
-##### ktexteditor_docwordcompletion #############
+##### tdetexteditor_docwordcompletion #############
 
-set( target ktexteditor_docwordcompletion )
+set( target tdetexteditor_docwordcompletion )
 
 set( ${target}_SRCS
   docwordcompletion.cpp
@@ -39,6 +39,6 @@ set( ${target}_SRCS
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK ktexteditor-shared
+  LINK tdetexteditor-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

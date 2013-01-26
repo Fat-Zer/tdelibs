@@ -29,7 +29,7 @@
 
 #include <kicontheme.h>
 #include <kurl.h>
-#include <ksycocatype.h>
+#include <tdesycocatype.h>
 #include <kservicetype.h>
 
 class KSimpleConfig;

@@ -24,7 +24,7 @@ install( FILES
     kresolver.h kreverseresolver.h tdesocketaddress.h
     tdesocketbase.h tdesocketdevice.h kclientsocketbase.h
     kstreamsocket.h kserversocket.h kdatagramsocket.h
-    kmulticastsocketdevice.h kmulticastsocket.h
+    tdemulticastsocketdevice.h tdemulticastsocket.h
     knetworkinterface.h khttpproxysocketdevice.h
     ksockssocketdevice.h kbufferedsocket.h kiobuffer.h
   DESTINATION ${INCLUDE_INSTALL_DIR} )

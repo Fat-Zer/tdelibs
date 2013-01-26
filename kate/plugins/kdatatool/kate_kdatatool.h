@@ -21,7 +21,7 @@
 #ifndef _KATE_KDATATOOL_
 #define _KATE_KDATATOOL_
 
-#include <ktexteditor/plugin.h>
+#include <tdetexteditor/plugin.h>
 #include <tqstringlist.h>
 #include <kxmlguiclient.h>
 #include <tqguardedptr.h>

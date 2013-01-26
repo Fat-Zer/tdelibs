@@ -46,9 +46,9 @@
 #include "kateautoindent.h"
 #include "katespell.h"
 
-#include <ktexteditor/plugin.h>
+#include <tdetexteditor/plugin.h>
 
-#include <kparts/event.h>
+#include <tdeparts/event.h>
 
 #include <kio/netaccess.h>
 
@@ -67,7 +67,7 @@
 #include <kaccel.h>
 #include <klibloader.h>
 #include <kencodingfiledialog.h>
-#include <kmultipledrag.h>
+#include <tdemultipledrag.h>
 #include <ktempfile.h>
 #include <ksavefile.h>
 

@@ -80,9 +80,9 @@ kglobalaccel.cpp \
 kglobalaccel_win.cpp \
 kaccelaction.cpp \
 kuniqueapplication.cpp \
-ksycoca.cpp \
-ksycocadict.cpp \
-ksycocafactory.cpp \
+tdesycoca.cpp \
+tdesycocadict.cpp \
+tdesycocafactory.cpp \
 kapplication.cpp \
 kapplication_win.cpp \
 kappdcopiface.cpp \
@@ -105,7 +105,7 @@ kclipboard.cpp \
 kdebugdcopiface.cpp \
 krandomsequence.cpp \
 krfcdate.cpp \
-kmultipledrag.cpp \
+tdemultipledrag.cpp \
 kipc.cpp \
 kuser.cpp \
 kaudioplayer.cpp \
@@ -130,8 +130,8 @@ kqiodevicegzip_p.cpp
 SOURCES += \
 kappdcopiface_stub.cpp \
 kappdcopiface_skel.cpp \
-ksycoca_stub.cpp \
-ksycoca_skel.cpp \
+tdesycoca_stub.cpp \
+tdesycoca_skel.cpp \
 kdebugdcopiface_stub.cpp \
 kdebugdcopiface_skel.cpp
 

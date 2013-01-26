@@ -15,6 +15,6 @@ METASOURCES = AUTO
 messages: rc.cpp
 	$(XGETTEXT) *.cpp -o $(podir)/kabc_sql.pot
 
-linkdir		= $(kde_datadir)/kresources/contact
+linkdir		= $(kde_datadir)/tderesources/contact
 link_DATA	= sql.desktop
 EXTRA_DIST	= $(link_DATA)

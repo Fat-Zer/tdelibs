@@ -23,7 +23,7 @@
 
 #include "../interfaces/document.h"
 
-#include <kparts/browserextension.h>
+#include <tdeparts/browserextension.h>
 
 #include <tqstringlist.h>
 #include <tqguardedptr.h>

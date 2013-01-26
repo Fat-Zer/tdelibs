@@ -44,7 +44,7 @@ klibloader.cpp
 klocale.cpp		Hans Petter Bieker <bieker@kde.org>
 kmdcodec.cpp
 kmimesourcefactory.cpp
-kmultipledrag.cpp	David Faure <faure@kde.org>
+tdemultipledrag.cpp	David Faure <faure@kde.org>
 knotifyclient.cpp
 kpalette.cpp		Waldo Bastian <bastian@kde.org>
 kpixmapprovider.cpp	Carsten Pfeiffer <pfeiffer@kde.org>
@@ -64,9 +64,9 @@ kstartupinfo.cpp	Lubos Lunak <l.lunak@kde.org>
 kstaticdeleter.cpp	Stephan Kulow <coolo@kde.org>
 kstdaccel.cpp		Ellis Whitehead <ellis@kde.org>
 kstringhandler.cpp
-ksycoca.cpp		Waldo Bastian <bastian@kde.org>
-ksycocadict.cpp		Waldo Bastian <bastian@kde.org>
-ksycocafactory.cpp	Waldo Bastian <bastian@kde.org>
+tdesycoca.cpp		Waldo Bastian <bastian@kde.org>
+tdesycocadict.cpp		Waldo Bastian <bastian@kde.org>
+tdesycocafactory.cpp	Waldo Bastian <bastian@kde.org>
 ktempfile.cpp		Waldo Bastian <bastian@kde.org>
 kuniqueapplication.cpp	Waldo Bastian <bastian@kde.org>
 kurl.cpp		Waldo Bastian <bastian@kde.org>

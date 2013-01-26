@@ -53,8 +53,8 @@ include_HEADERS = kconfig.h kconfigskeleton.h \
 	netwm_def.h kpixmapprovider.h kunload.h kstaticdeleter.h \
 	kextsock.h kextendedsocket.h ksockaddr.h kprocio.h kasyncio.h \
 	kbufferedio.h kurldrag.h kmimesourcefactory.h kmdcodec.h ksocks.h \
-	ksycoca.h ksycocaentry.h ksycocatype.h kxmessages.h kstartupinfo.h \
-	klargefile.h kmultipledrag.h kgenericfactory.h kgenericfactory.tcc \
+	tdesycoca.h tdesycocaentry.h tdesycocatype.h kxmessages.h kstartupinfo.h \
+	klargefile.h tdemultipledrag.h kgenericfactory.h kgenericfactory.tcc \
 	ktypelist.h ksortablevaluelist.h kdebugclasses.h kclipboard.h \
 	kcalendarsystem.h kcalendarsystemfactory.h kmacroexpander.h \
 	kmanagerselection.h kmountpoint.h kuser.h klockfile.h \
@@ -84,7 +84,7 @@ libtdefakes_pic.a: libtdefakes.la
 noinst_HEADERS = kaccelaction.h kaccelbase.h kaccelprivate.h kckey.h \
 	kcompletion_private.h netwm_p.h \
 	kglobalaccel_x11.h kglobalaccel_win.h kkeyserver_x11.h kkeyserver.h \
-	kregpriv.h kshortcutmenu.h ksycocadict.h ksycocafactory.h netsupp.h \
+	kregpriv.h kshortcutmenu.h tdesycocadict.h tdesycocafactory.h netsupp.h \
 	kcheckaccelerators.h kcalendarsystemgregorian.h \
 	kcalendarsystemhijri.h kcalendarsystemhebrew.h kcalendarsystemjalali.h \
 	kprotocolinfofactory.h kqiodevicegzip_p.h kiconloader_p.h
@@ -108,9 +108,9 @@ libtdecore_la_SOURCES = libintl.cpp kapplication.cpp \
 	ksockaddr.cpp kextsock.cpp netsupp.cpp kprocio.cpp kbufferedio.cpp \
 	kpixmapprovider.cpp kurldrag.cpp \
 	kmdcodec.cpp ksocks.cpp fakes.c vsnprintf.c \
-	ksycoca.cpp ksycocadict.cpp ksycocafactory.cpp ksycoca.skel \
+	tdesycoca.cpp tdesycocadict.cpp tdesycocafactory.cpp tdesycoca.skel \
 	kxmessages.cpp kstartupinfo.cpp kcatalogue.cpp kasyncio.cpp \
-	kmultipledrag.cpp kstaticdeleter.cpp kappdcopiface.cpp \
+	tdemultipledrag.cpp kstaticdeleter.cpp kappdcopiface.cpp \
 	kappdcopiface.skel kclipboard.cpp kcheckaccelerators.cpp \
 	tdeversion.cpp kdebugdcopiface.cpp kdebugdcopiface.skel \
 	kcalendarsystem.cpp kcalendarsystemgregorian.cpp \
@@ -188,7 +188,7 @@ install-exec-hook:
 
 DISTCLEANFILES = tde-config.cpp
 
-DOXYGEN_REFERENCES = dcop tdeui kparts kio
+DOXYGEN_REFERENCES = dcop tdeui tdeparts kio
 DOXYGEN_EXCLUDE = malloc kde_file.h
 DOXYGEN_SET_WARN_IF_UNDOCUMENTED = YES
 

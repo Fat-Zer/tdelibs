@@ -6,10 +6,10 @@ Some of these tasks are built in, others are started on demand.
 
 Built in tasks
 ==============
-*) Checking for newly installed software and updating ksycoca when new
-software is detected. Updating of ksycoca is done by the program kbuildsycoca
+*) Checking for newly installed software and updating tdesycoca when new
+software is detected. Updating of tdesycoca is done by the program kbuildsycoca
 which gets started by kded. When kded is first started it always runs
-kbuildsycoca to ensure that ksycoca is up to date.
+kbuildsycoca to ensure that tdesycoca is up to date.
 
 *) Checking for newly installed update files. Applications can install
 *.upd update files. These *.upd files are used to update configuration files 
@@ -40,9 +40,9 @@ the hostname is checked for changes. The time is specified in milliseconds
 and has a default of 5000 (5 seconds).
 
 CheckSycoca: This option can be used to disable checking for new software.
-ksycoca will still be built when kded starts up and when applications
-explicitly request a rebuild of the ksycoca database. The user can 
-also manually rebuild ksycoca by running the kbuildsycoca program.
+tdesycoca will still be built when kded starts up and when applications
+explicitly request a rebuild of the tdesycoca database. The user can 
+also manually rebuild tdesycoca by running the kbuildsycoca program.
 The default value of this option is "true". Checking can be disabled by 
 setting this option to "false".
 

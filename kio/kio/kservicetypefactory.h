@@ -25,7 +25,7 @@
 #include <tqstringlist.h>
 #include <tqvaluevector.h>
 
-#include "ksycocafactory.h"
+#include "tdesycocafactory.h"
 #include "kmimetype.h"
 
 class KSycoca;

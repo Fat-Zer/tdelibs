@@ -38,8 +38,8 @@ include_HEADERS = kresolver.h \
 	kstreamsocket.h \
 	kserversocket.h \
 	kdatagramsocket.h \
-	kmulticastsocketdevice.h \
-	kmulticastsocket.h \
+	tdemulticastsocketdevice.h \
+	tdemulticastsocket.h \
 	knetworkinterface.h \
 	khttpproxysocketdevice.h \
 	ksockssocketdevice.h \

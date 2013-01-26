@@ -9,7 +9,7 @@ check_PROGRAMS = kcookiejartest
 
 kcookiejartest_SOURCES = kcookiejartest.cpp 
 kcookiejartest_LDADD   = $(LIB_KIO)
-kcookiejartest_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+kcookiejartest_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
 
 check-local: kcookiejartest
 	./kcookiejartest $(srcdir)/cookie.test

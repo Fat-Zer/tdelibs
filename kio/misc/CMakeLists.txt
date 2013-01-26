@@ -14,8 +14,8 @@ add_subdirectory( kpac )
 add_subdirectory( tdesasl )
 add_subdirectory( kssld )
 add_subdirectory( kfile )
-add_subdirectory( kwalletd )
-add_subdirectory( kntlm )
+add_subdirectory( tdewalletd )
+add_subdirectory( tdentlm )
 
 add_definitions(
   -D_LARGEFILE64_SOURCE

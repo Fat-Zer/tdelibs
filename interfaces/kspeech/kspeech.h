@@ -186,7 +186,7 @@
  *
  * There are two methods of making DCOP calls from your application to %KTTSD.
  *
- *   - Manually code them using dcopClient object.  See tdebase/konqueror/kttsplugin/khtmlkttsd.cpp
+ *   - Manually code them using dcopClient object.  See tdebase/konqueror/kttsplugin/tdehtmlkttsd.cpp
  *     for an example.  This method is recommended if you want to make a few simple calls to KTTSD.
  *   - Use kspeech_stub as described below.  This method generates the marshalling code for you
  *     and is recommended for a more complex speech-enabled applications.  kcmkttsmgr in the

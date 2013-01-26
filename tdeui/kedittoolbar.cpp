@@ -292,7 +292,7 @@ public:
           name = i18n( txt );
 
       // the name of the toolbar might depend on whether or not
-      // it is in kparts
+      // it is in tdeparts
       if ( ( xmlData.m_type == XmlData::Shell ) ||
            ( xmlData.m_type == XmlData::Part ) )
       {

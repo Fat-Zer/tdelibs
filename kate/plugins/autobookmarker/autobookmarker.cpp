@@ -23,10 +23,10 @@
 //BEGIN includes
 #include "autobookmarker.h"
 
-#include <ktexteditor/markinterfaceextension.h>
-#include <ktexteditor/editinterface.h>
-#include <ktexteditor/documentinfo.h>
-#include <ktexteditor/document.h>
+#include <tdetexteditor/markinterfaceextension.h>
+#include <tdetexteditor/editinterface.h>
+#include <tdetexteditor/documentinfo.h>
+#include <tdetexteditor/document.h>
 
 #include <kaction.h>
 #include <kapplication.h>
@@ -57,7 +57,7 @@
 //END includes
 
 //BEGIN AutoBookmarker
-K_EXPORT_COMPONENT_FACTORY( ktexteditor_autobookmarker, KGenericFactory<AutoBookmarker>( "ktexteditor_autobookmarker" ) )
+K_EXPORT_COMPONENT_FACTORY( tdetexteditor_autobookmarker, KGenericFactory<AutoBookmarker>( "tdetexteditor_autobookmarker" ) )
 
 AutoBookmarker::AutoBookmarker( TQObject *parent,
                             const char* name,
@@ -199,7 +199,7 @@ void ABGlobal::readConfig()
     m_ents = new ABEntityList;
   else
     m_ents->clear();
-  TDEConfig *config = new TDEConfig("ktexteditor_autobookmarkerrc");
+  TDEConfig *config = new TDEConfig("tdetexteditor_autobookmarkerrc");
 
   uint n( 0 );
   while ( config->hasGroup( TQString("autobookmark%1").arg( n ) ) )
@@ -225,7 +225,7 @@ void ABGlobal::readConfig()
 
 void ABGlobal::writeConfig()
 {
-  TDEConfig *config = new TDEConfig("ktexteditor_autobookmarkerrc");
+  TDEConfig *config = new TDEConfig("tdetexteditor_autobookmarkerrc");
 
   // clean the config object
   TQStringList l = config->groupList();

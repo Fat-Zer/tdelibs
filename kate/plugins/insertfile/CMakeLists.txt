@@ -29,13 +29,13 @@ link_directories(
 
 ##### other data ################################
 
-install( FILES ktexteditor_insertfile.desktop DESTINATION ${SERVICES_INSTALL_DIR} )
-install( FILES ktexteditor_insertfileui.rc DESTINATION ${DATA_INSTALL_DIR}/ktexteditor_insertfile )
+install( FILES tdetexteditor_insertfile.desktop DESTINATION ${SERVICES_INSTALL_DIR} )
+install( FILES tdetexteditor_insertfileui.rc DESTINATION ${DATA_INSTALL_DIR}/tdetexteditor_insertfile )
 
 
-##### ktexteditor_insertfile ####################
+##### tdetexteditor_insertfile ####################
 
-set( target ktexteditor_insertfile )
+set( target tdetexteditor_insertfile )
 
 set( ${target}_SRCS
   insertfileplugin.cpp
@@ -43,6 +43,6 @@ set( ${target}_SRCS
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK ktexteditor-shared
+  LINK tdetexteditor-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

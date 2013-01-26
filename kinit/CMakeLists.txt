@@ -39,7 +39,7 @@ set( ${target}_SRCS
 
 tde_add_executable( ${target}
   SOURCES ${${target}_SRCS}
-  LINK ltdlc-static kparts-shared
+  LINK ltdlc-static tdeparts-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )
 

@@ -26,7 +26,7 @@
 #include <tqstring.h>
 #include <tqstringlist.h>
 #include <kurl.h>
-#include <ksycocafactory.h>
+#include <tdesycocafactory.h>
 
 class KProtocolInfoPrivate;
 

@@ -118,7 +118,7 @@ class KateFileLoader
 
         if (c > 0)
         {
-          // fix utf16 LE, stolen from khtml ;)
+          // fix utf16 LE, stolen from tdehtml ;)
           if ((c >= 2) && (m_codec->mibEnum() == 1000) && (m_buffer[1] == 0x00))
           {
             // utf16LE, we need to put the decoder in LE mode

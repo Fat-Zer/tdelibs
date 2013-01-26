@@ -1,3 +1,3 @@
 
-SUBDIRS = common kspell tdelibs
+SUBDIRS = common tdespell tdelibs
 

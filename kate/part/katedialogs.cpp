@@ -35,8 +35,8 @@
 #include "kateview.h"
 
 
-#include <ktexteditor/configinterfaceextension.h>
-#include <ktexteditor/plugin.h>
+#include <tdetexteditor/configinterfaceextension.h>
+#include <tdetexteditor/plugin.h>
 
 #include <kio/job.h>
 #include <kio/jobclasses.h>
@@ -64,7 +64,7 @@
 #include <kmessagebox.h>
 #include <kmimetypechooser.h>
 #include <knuminput.h>
-#include <kparts/componentfactory.h>
+#include <tdeparts/componentfactory.h>
 #include <kpopupmenu.h>
 #include <kprocess.h>
 #include <kprocio.h>
