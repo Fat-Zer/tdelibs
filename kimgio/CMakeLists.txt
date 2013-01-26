@@ -142,7 +142,8 @@ if( OPENEXR_FOUND )
     DESTINATION ${PLUGIN_INSTALL_DIR}
   )
   # FIXME COMPILE_FLAGS must be written a little better
-  set_target_properties( ${target}-module PROPERTIES COMPILE_FLAGS -I${OPENEXR_INCLUDE_DIRS} )
+  STRING(REGEX REPLACE ";" " -I" OPENEXR_INCLUDE_FLAGS "-I${OPENEXR_INCLUDE_DIRS}")
+  set_target_properties( ${target}-module PROPERTIES COMPILE_FLAGS "${OPENEXR_INCLUDE_FLAGS}" )
   install( FILES exr.kimgio DESTINATION ${SERVICES_INSTALL_DIR} )
 endif( OPENEXR_FOUND )
 
