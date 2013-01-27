@@ -28,7 +28,7 @@
 #include <tqmutex.h>
 #include <tqcstring.h>
 #include <tqvaluelist.h>
-#include "kiobuffer.h"
+#include "tdeiobuffer.h"
 
 namespace KNetwork {
 

@@ -26,7 +26,7 @@ install( FILES
     kstreamsocket.h kserversocket.h kdatagramsocket.h
     tdemulticastsocketdevice.h tdemulticastsocket.h
     knetworkinterface.h khttpproxysocketdevice.h
-    ksockssocketdevice.h kbufferedsocket.h kiobuffer.h
+    ksockssocketdevice.h kbufferedsocket.h tdeiobuffer.h
   DESTINATION ${INCLUDE_INSTALL_DIR} )
 
 

@@ -32,7 +32,7 @@
 class TQIODevice;
 
 /**
- * @class TDEIOBufferBase kiobuffer.h kiobuffer.h
+ * @class TDEIOBufferBase tdeiobuffer.h tdeiobuffer.h
  * @brief base for I/O buffer implementation
  *
  * This class declares the base methods to interface with an I/O buffer.
