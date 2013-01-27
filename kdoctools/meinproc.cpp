@@ -98,7 +98,7 @@ int main(int argc, char **argv) {
     TDECmdLineArgs::init(argc, argv, &aboutData);
     TDECmdLineArgs::addCmdLineOptions( options );
 
-    KLocale::setMainCatalogue("kio_help");
+    KLocale::setMainCatalogue("tdeio_help");
     TDEInstance ins("meinproc");
     TDEGlobal::locale();
 

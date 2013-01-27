@@ -28,11 +28,11 @@
 
 class KIso;
 
-class kio_isoProtocol : public TDEIO::SlaveBase
+class tdeio_isoProtocol : public TDEIO::SlaveBase
 {
 public:
-    kio_isoProtocol( const TQCString &pool, const TQCString &app );
-    virtual ~kio_isoProtocol();
+    tdeio_isoProtocol( const TQCString &pool, const TQCString &app );
+    virtual ~tdeio_isoProtocol();
 
     virtual void listDir( const KURL & url );
     virtual void stat( const KURL & url );

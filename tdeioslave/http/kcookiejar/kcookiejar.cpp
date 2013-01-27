@@ -85,7 +85,7 @@
 #define IP_ADDRESS_EXPRESSION "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)"
 
 // Note with respect to TQString::fromLatin1( )
-// Cookies are stored as 8 bit data and passed to kio_http as
+// Cookies are stored as 8 bit data and passed to tdeio_http as
 // latin1 regardless of their actual encoding.
 
 // L1 is used to indicate latin1 constants

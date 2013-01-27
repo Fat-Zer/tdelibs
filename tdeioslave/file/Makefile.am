@@ -6,11 +6,11 @@ INCLUDES = $(all_includes)
 
 ####### Files
 
-kde_module_LTLIBRARIES = kio_file.la
+kde_module_LTLIBRARIES = tdeio_file.la
 
-kio_file_la_SOURCES = file.cc
-kio_file_la_LIBADD = $(LIB_KIO) $(LIB_QT) $(LIB_TDECORE) $(ACL_LIBS)
-kio_file_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN) $(top_builddir)/dcop/libDCOP.la
+tdeio_file_la_SOURCES = file.cc
+tdeio_file_la_LIBADD = $(LIB_KIO) $(LIB_QT) $(LIB_TDECORE) $(ACL_LIBS)
+tdeio_file_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN) $(top_builddir)/dcop/libDCOP.la
 noinst_HEADERS = file.h
 
 fileinclude_HEADERS = file.h

@@ -22,7 +22,7 @@
 */
 
 
-#define  KIO_FTP_PRIVATE_INCLUDE
+#define  TDEIO_FTP_PRIVATE_INCLUDE
 #include "ftp.h"
 
 #include <sys/stat.h>
@@ -81,17 +81,17 @@
 //#undef  kdDebug
 #define ENABLE_CAN_RESUME
 
-// JPF: somebody should find a better solution for this or move this to KIO
+// JPF: somebody should find a better solution for this or move this to TDEIO
 // JPF: anyhow, in KDE 3.2.0 I found diffent MAX_IPC_SIZE definitions!
 namespace TDEIO {
     enum buffersizes
     {  /**
         * largest buffer size that should be used to transfer data between
-        * KIO slaves using the data() function
+        * TDEIO slaves using the data() function
         */
         maximumIpcSize = 32 * 1024,
         /**
-         * this is a reasonable value for an initial read() that a KIO slave
+         * this is a reasonable value for an initial read() that a TDEIO slave
          * can do to obtain data via a slow network connection.
          */
         initialIpcSize =  2 * 1024,
@@ -140,14 +140,14 @@ extern "C" { KDE_EXPORT int kdemain(int argc, char **argv); }
 int kdemain( int argc, char **argv )
 {
   KLocale::setMainCatalogue("tdelibs");
-  TDEInstance instance( "kio_ftp" );
+  TDEInstance instance( "tdeio_ftp" );
   ( void ) TDEGlobal::locale();
 
   kdDebug(7102) << "Starting " << getpid() << endl;
 
   if (argc != 4)
   {
-     fprintf(stderr, "Usage: kio_ftp protocol domain-socket1 domain-socket2\n");
+     fprintf(stderr, "Usage: tdeio_ftp protocol domain-socket1 domain-socket2\n");
      exit(-1);
   }
 
@@ -2481,7 +2481,7 @@ bool Ftp::ftpFolder(const TQString& path, bool bReportError)
 
 
 //===============================================================================
-// public: copy          don't use kio data pump if one side is a local file
+// public: copy          don't use tdeio data pump if one side is a local file
 // helper: ftpCopyPut    called from copy() on upload
 // helper: ftpCopyGet    called from copy() on download
 //===============================================================================
@@ -2590,7 +2590,7 @@ Ftp::StatusCode Ftp::ftpCopyGet(int& iError, int& iCopyFile, const TQString sCop
     sPart = TQFile::encodeName(sCopyFile);
   }
   else if(bPartExists && buff.st_size > 0)
-  { // must not be a folder! please fix a similar bug in kio_file!!
+  { // must not be a folder! please fix a similar bug in tdeio_file!!
     if(S_ISDIR(buff.st_mode))
     {
       iError = ERR_DIR_ALREADY_EXIST;
@@ -2607,7 +2607,7 @@ Ftp::StatusCode Ftp::ftpCopyGet(int& iError, int& iCopyFile, const TQString sCop
   if(bPartExists && !bResume)                  // get rid of an unwanted ".part" file
     remove(sPart.data());
 
-  // JPF: in kio_file overwrite disables ".part" operations. I do not believe
+  // JPF: in tdeio_file overwrite disables ".part" operations. I do not believe
   // JPF: that this is a good behaviour!
   if(bDestExists)                             // must delete for overwrite
     remove(sDest.data());

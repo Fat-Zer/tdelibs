@@ -15,7 +15,7 @@ Applications supporting extended webdav features
 Much of the info here is elaborated by rfc #2518; the rest can be understood by reading
 davPropStat() in http.cc, specifically the setMetaData() calls.
 
-Extended information is transferred via kio's metadata system...
+Extended information is transferred via tdeio's metadata system...
 
 === MISCELLANEOUS ===
 Display Names (names suitable for presentation to the user) are passed as the metadata

@@ -1,4 +1,4 @@
-kde_module_LTLIBRARIES = kio_iso.la
+kde_module_LTLIBRARIES = tdeio_iso.la
 
 
 INCLUDES = $(all_includes)
@@ -6,18 +6,18 @@ INCLUDES = $(all_includes)
 
 #LDFLAGS =      
 
-kio_iso_la_METASOURCES=AUTO
+tdeio_iso_la_METASOURCES=AUTO
 
-kio_iso_la_SOURCES = kisodirectory.cpp kisofile.cpp qfilehack.cpp kiso.cpp iso.cpp
-kio_iso_la_LIBADD = libisofs/libisofs.la $(LIB_QT) $(LIB_TDECORE) $(LIB_KIO)
+tdeio_iso_la_SOURCES = kisodirectory.cpp kisofile.cpp qfilehack.cpp kiso.cpp iso.cpp
+tdeio_iso_la_LIBADD = libisofs/libisofs.la $(LIB_QT) $(LIB_TDECORE) $(LIB_KIO)
 
-kio_iso_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
+tdeio_iso_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
 
 
 SUBDIRS = libisofs
 
 noinst_HEADERS = iso.h kiso.h qfilehack.h kisofile.h kisodirectory.h
-EXTRA_DIST = iso.protocol isoservice.desktop kio_iso.desktop
+EXTRA_DIST = iso.protocol isoservice.desktop tdeio_iso.desktop
 
 install-data-local:
 	$(mkinstalldirs)  $(DESTDIR)$(kde_servicesdir)/

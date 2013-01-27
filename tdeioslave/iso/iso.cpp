@@ -60,17 +60,17 @@ extern "C" { KDE_EXPORT int kdemain(int argc, char **argv); }
 
 int kdemain( int argc, char **argv )
 {
-  TDEInstance instance( "kio_iso" );
+  TDEInstance instance( "tdeio_iso" );
 
   kdDebug()   << "Starting " << getpid() << endl;
 
   if (argc != 4)
   {
-     fprintf(stderr, "Usage: kio_iso protocol domain-socket1 domain-socket2\n");
+     fprintf(stderr, "Usage: tdeio_iso protocol domain-socket1 domain-socket2\n");
      exit(-1);
   }
 
-  kio_isoProtocol slave(argv[2], argv[3]);
+  tdeio_isoProtocol slave(argv[2], argv[3]);
   slave.dispatchLoop();
 
   kdDebug()   << "Done" << endl;
@@ -78,20 +78,20 @@ int kdemain( int argc, char **argv )
 }
 
 
-kio_isoProtocol::kio_isoProtocol( const TQCString &pool, const TQCString &app ) : SlaveBase( "iso", pool, app )
+tdeio_isoProtocol::tdeio_isoProtocol( const TQCString &pool, const TQCString &app ) : SlaveBase( "iso", pool, app )
 {
-  kdDebug() << "kio_isoProtocol::kio_isoProtocol" << endl;
+  kdDebug() << "tdeio_isoProtocol::tdeio_isoProtocol" << endl;
   m_isoFile = 0L;
 }
 
-kio_isoProtocol::~kio_isoProtocol()
+tdeio_isoProtocol::~tdeio_isoProtocol()
 {
     delete m_isoFile;
 }
 
-bool kio_isoProtocol::checkNewFile( TQString fullPath, TQString & path, int startsec )
+bool tdeio_isoProtocol::checkNewFile( TQString fullPath, TQString & path, int startsec )
 {
-    kdDebug()   << "kio_isoProtocol::checkNewFile " << fullPath << " startsec: " <<
+    kdDebug()   << "tdeio_isoProtocol::checkNewFile " << fullPath << " startsec: " <<
         startsec << endl;
 
     // Are we already looking at that file ?
@@ -105,7 +105,7 @@ bool kio_isoProtocol::checkNewFile( TQString fullPath, TQString & path, int star
             if ( m_mtime == statbuf.st_mtime )
             {
                 path = fullPath.mid( m_isoFile->fileName().length() );
-                kdDebug()   << "kio_isoProtocol::checkNewFile returning " << path << endl;
+                kdDebug()   << "tdeio_isoProtocol::checkNewFile returning " << path << endl;
                 return true;
             }
         }
@@ -157,7 +157,7 @@ bool kio_isoProtocol::checkNewFile( TQString fullPath, TQString & path, int star
     }
     if ( isoFile.isEmpty() )
     {
-        kdDebug()   << "kio_isoProtocol::checkNewFile: not found" << endl;
+        kdDebug()   << "tdeio_isoProtocol::checkNewFile: not found" << endl;
         return false;
     }
 
@@ -177,7 +177,7 @@ bool kio_isoProtocol::checkNewFile( TQString fullPath, TQString & path, int star
 }
 
 
-void kio_isoProtocol::createUDSEntry( const KArchiveEntry * isoEntry, UDSEntry & entry )
+void tdeio_isoProtocol::createUDSEntry( const KArchiveEntry * isoEntry, UDSEntry & entry )
 {
     UDSAtom atom;
 
@@ -230,9 +230,9 @@ void kio_isoProtocol::createUDSEntry( const KArchiveEntry * isoEntry, UDSEntry &
     entry.append( atom );
 }
 
-void kio_isoProtocol::listDir( const KURL & url )
+void tdeio_isoProtocol::listDir( const KURL & url )
 {
-    kdDebug() << "kio_isoProtocol::listDir " << url.url() << endl;
+    kdDebug() << "tdeio_isoProtocol::listDir " << url.url() << endl;
 
     TQString path;
     if ( !checkNewFile( url.path(), path, url.hasRef() ? url.htmlRef().toInt() : -1 ) )
@@ -263,7 +263,7 @@ void kio_isoProtocol::listDir( const KURL & url )
         kdDebug() << "url.path()==" << url.path() << endl;
         if (url.hasRef()) redir.setRef(url.htmlRef());
         redir.setPath( url.path() + TQString::fromLatin1("/") );
-        kdDebug() << "kio_isoProtocol::listDir: redirection " << redir.url() << endl;
+        kdDebug() << "tdeio_isoProtocol::listDir: redirection " << redir.url() << endl;
         redirection( redir );
         finished();
         return;
@@ -310,21 +310,21 @@ void kio_isoProtocol::listDir( const KURL & url )
 
     finished();
 
-    kdDebug()  << "kio_isoProtocol::listDir done" << endl;
+    kdDebug()  << "tdeio_isoProtocol::listDir done" << endl;
 }
 
-void kio_isoProtocol::stat( const KURL & url )
+void tdeio_isoProtocol::stat( const KURL & url )
 {
     TQString path;
     UDSEntry entry;
 
-    kdDebug() << "kio_isoProtocol::stat " << url.url() << endl;
+    kdDebug() << "tdeio_isoProtocol::stat " << url.url() << endl;
     if ( !checkNewFile( url.path(), path, url.hasRef() ? url.htmlRef().toInt() : -1 ) )
     {
         // We may be looking at a real directory - this happens
         // when pressing up after being in the root of an archive
         TQCString _path( TQFile::encodeName(url.path()));
-        kdDebug()  << "kio_isoProtocol::stat (stat) on " << _path << endl;
+        kdDebug()  << "tdeio_isoProtocol::stat (stat) on " << _path << endl;
         struct stat buff;
         if ( ::stat( _path.data(), &buff ) == -1 || !S_ISDIR( buff.st_mode ) ) {
             kdDebug() << "isdir=" << S_ISDIR( buff.st_mode ) << "  errno=" << strerror(errno) << endl;
@@ -336,7 +336,7 @@ void kio_isoProtocol::stat( const KURL & url )
         atom.m_uds = TDEIO::UDS_NAME;
         atom.m_str = url.fileName();
         entry.append( atom );
-        kdDebug()  << "kio_isoProtocol::stat returning name=" << url.fileName() << endl;
+        kdDebug()  << "tdeio_isoProtocol::stat returning name=" << url.fileName() << endl;
 
         atom.m_uds = TDEIO::UDS_FILE_TYPE;
         atom.m_long = buff.st_mode & S_IFMT;
@@ -371,7 +371,7 @@ void kio_isoProtocol::stat( const KURL & url )
     finished();
 }
 
-void kio_isoProtocol::getFile( const KIsoFile *isoFileEntry, const TQString &path )
+void tdeio_isoProtocol::getFile( const KIsoFile *isoFileEntry, const TQString &path )
 {
     unsigned long long size, pos = 0;
     bool mime=false,zlib=false;
@@ -485,9 +485,9 @@ void kio_isoProtocol::getFile( const KIsoFile *isoFileEntry, const TQString &pat
 
 }
 
-void kio_isoProtocol::get( const KURL & url )
+void tdeio_isoProtocol::get( const KURL & url )
 {
-    kdDebug()  << "kio_isoProtocol::get" << url.url() << endl;
+    kdDebug()  << "tdeio_isoProtocol::get" << url.url() << endl;
 
     TQString path;
     if ( !checkNewFile( url.path(), path, url.hasRef() ? url.htmlRef().toInt() : -1 ) )

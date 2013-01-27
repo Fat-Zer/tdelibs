@@ -11,7 +11,7 @@
 #include <tqregexp.h>
 #include <xslt.h>
 #include <kinstance.h>
-#include "kio_help.h"
+#include "tdeio_help.h"
 #include <klocale.h>
 #include <assert.h>
 #include <kfilterbase.h>
@@ -287,7 +287,7 @@ TQString lookForCache( const TQString &filename )
         return output;
     if ( readCache( filename,
                     locateLocal( "cache",
-                                 "kio_help" + cache +
+                                 "tdeio_help" + cache +
                                  "cache.bz2" ), output ) )
         return output;
 

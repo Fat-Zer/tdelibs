@@ -326,7 +326,7 @@ void KIso::readParams()
 {
     TDEConfig *config;
 
-    config = new TDEConfig("kio_isorc");
+    config = new TDEConfig("tdeio_isorc");
     
     showhidden=config->readBoolEntry("showhidden",false);
     showrr=config->readBoolEntry("showrr",true);

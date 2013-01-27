@@ -42,11 +42,11 @@ extern "C"
 
 int kdemain(int argc, char **argv)
 {
-    TDEApplication app(argc, argv, "kio_metainfo", false, true);
+    TDEApplication app(argc, argv, "tdeio_metainfo", false, true);
 
     if (argc != 4)
     {
-        kdError() << "Usage: kio_metainfo protocol domain-socket1 domain-socket2" << endl;
+        kdError() << "Usage: tdeio_metainfo protocol domain-socket1 domain-socket2" << endl;
         exit(-1);
     }
 

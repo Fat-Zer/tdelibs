@@ -28,9 +28,9 @@ link_directories(
 install( FILES metainfo.protocol DESTINATION ${SERVICES_INSTALL_DIR} )
 
 
-##### kio_metainfo ##############################
+##### tdeio_metainfo ##############################
 
-set( target kio_metainfo )
+set( target tdeio_metainfo )
 
 set( ${target}_SRCS
   metainfo.cpp

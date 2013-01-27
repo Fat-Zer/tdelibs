@@ -99,12 +99,12 @@ extern "C" {
 int kdemain( int argc, char **argv )
 {
   KLocale::setMainCatalogue("tdelibs");
-  TDEInstance instance( "kio_http" );
+  TDEInstance instance( "tdeio_http" );
   ( void ) TDEGlobal::locale();
 
   if (argc != 4)
   {
-     fprintf(stderr, "Usage: kio_http protocol domain-socket1 domain-socket2\n");
+     fprintf(stderr, "Usage: tdeio_http protocol domain-socket1 domain-socket2\n");
      exit(-1);
   }
 
@@ -2056,7 +2056,7 @@ bool HTTPProtocol::httpOpenConnection()
   kdDebug(7113) << "(" << m_pid << ") HTTPProtocol::httpOpenConnection" << endl;
 
   setBlockConnection( true );
-  // kio_http uses its own proxying:
+  // tdeio_http uses its own proxying:
   KSocks::self()->disableSocks();
 
   if ( m_state.doProxy )
@@ -2430,7 +2430,7 @@ bool HTTPProtocol::httpOpen()
     if ( m_request.offset > 0 )
     {
       header += TQString("Range: bytes=%1-\r\n").arg(TDEIO::number(m_request.offset));
-      kdDebug(7103) << "kio_http : Range = " << TDEIO::number(m_request.offset) << endl;
+      kdDebug(7103) << "tdeio_http : Range = " << TDEIO::number(m_request.offset) << endl;
     }
 
     if ( m_request.cache == CC_Reload )
@@ -2842,7 +2842,7 @@ try_again:
     {
       // We get XML / HTTP without a proper header
       // put string back
-      kdDebug(7103) << "kio_http: No valid HTTP header found! Document starts with XML/HTML tag" << endl;
+      kdDebug(7103) << "tdeio_http: No valid HTTP header found! Document starts with XML/HTML tag" << endl;
 
       // Document starts with a tag, assume html instead of text/plain
       m_strMimeType = "text/html";
@@ -3217,7 +3217,7 @@ try_again:
 
     // content?
     else if (strncasecmp(buf, "Content-Encoding:", 17) == 0) {
-      // This is so wrong !!  No wonder kio_http is stripping the
+      // This is so wrong !!  No wonder tdeio_http is stripping the
       // gzip encoding from downloaded files.  This solves multiple
       // bug reports and caitoo's problem with downloads when such a
       // header is encountered...

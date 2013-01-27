@@ -1,5 +1,5 @@
 The following is a list of items that are currently missing or partially implemented
-in kio_http:
+in tdeio_http:
 
 - HTTP/1.1 Persistant Connections:
 The header often specifies the timeout value used for connections.
@@ -19,7 +19,7 @@ features such as locking.
 - Rating(s) support.  http://www.w3.org/PICS:
 This might involve an external program to parse the labels, and something to
 configure access accordingly.  There is only some basic things that need to be
-added to kio_http to support this.  The majority of the work has to be done at the
+added to tdeio_http to support this.  The majority of the work has to be done at the
 application level.  A tdehtml plugin in tdeaddons to do this might be a nice idea.
 
 - P3P support:

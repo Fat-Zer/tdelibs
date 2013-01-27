@@ -30,7 +30,7 @@
 #include <kstandarddirs.h>
 #include <kinstance.h>
 
-#include "kio_help.h"
+#include "tdeio_help.h"
 #include <libxslt/xsltutils.h>
 #include <libxslt/transform.h>
 #include "xslt.h"
@@ -240,7 +240,7 @@ void HelpProtocol::get( const KURL& url )
                 infoMessage( i18n( "Saving to cache" ) );
                 TQString cache = file.left( file.length() - 7 );
                 saveToCache( mParsed, locateLocal( "cache",
-                                                        "kio_help" + cache +
+                                                        "tdeio_help" + cache +
                                                         "cache.bz2" ) );
             }
         } else infoMessage( i18n( "Using cached version" ) );
@@ -333,7 +333,7 @@ void HelpProtocol::mimetype( const KURL &)
     finished();
 }
 
-// Copied from kio_file to avoid redirects
+// Copied from tdeio_file to avoid redirects
 
 #define MAX_IPC_SIZE (1024*32)
 

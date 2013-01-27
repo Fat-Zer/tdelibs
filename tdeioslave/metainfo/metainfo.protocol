@@ -1,5 +1,5 @@
 [Protocol]
-exec=kio_metainfo
+exec=tdeio_metainfo
 protocol=metainfo
 input=stream
 output=stream

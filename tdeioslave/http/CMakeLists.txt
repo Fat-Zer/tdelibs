@@ -38,9 +38,9 @@ install( FILES
   DESTINATION ${SERVICES_INSTALL_DIR} )
 
 
-##### kio_http_cache_cleaner ####################
+##### tdeio_http_cache_cleaner ####################
 
-set( target kio_http_cache_cleaner )
+set( target tdeio_http_cache_cleaner )
 
 set( ${target}_SRCS
   http_cache_cleaner.cpp
@@ -52,11 +52,11 @@ tde_add_tdeinit_executable( ${target} AUTOMOC
 )
 
 
-##### kio_http ##################################
+##### tdeio_http ##################################
 
 # FIXME GSSAPI support is not handled yet
 
-set( target kio_http )
+set( target tdeio_http )
 
 set( ${target}_SRCS
   http.cc

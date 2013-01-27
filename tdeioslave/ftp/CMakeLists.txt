@@ -29,9 +29,9 @@ link_directories(
 install( FILES ftp.protocol DESTINATION ${SERVICES_INSTALL_DIR} )
 
 
-##### kio_ftp ###################################
+##### tdeio_ftp ###################################
 
-set( target kio_ftp )
+set( target tdeio_ftp )
 
 set( ${target}_SRCS
   ftp.cc

@@ -113,14 +113,14 @@ extern "C" { KDE_EXPORT int kdemain(int argc, char **argv); }
 int kdemain( int argc, char **argv )
 {
   KLocale::setMainCatalogue("tdelibs");
-  TDEInstance instance( "kio_file" );
+  TDEInstance instance( "tdeio_file" );
   ( void ) TDEGlobal::locale();
 
   kdDebug(7101) << "Starting " << getpid() << endl;
 
   if (argc != 4)
   {
-     fprintf(stderr, "Usage: kio_file protocol domain-socket1 domain-socket2\n");
+     fprintf(stderr, "Usage: tdeio_file protocol domain-socket1 domain-socket2\n");
      exit(-1);
   }
 
@@ -998,7 +998,7 @@ bool FileProtocol::createUDSEntry( const TQString & filename, const TQCString & 
 {
     assert(entry.count() == 0); // by contract :-)
     // Note: details = 0 (only "file or directory or symlink or doesn't exist") isn't implemented
-    // because there's no real performance penalty in kio_file for returning the complete
+    // because there's no real performance penalty in tdeio_file for returning the complete
     // details. Please consider doing it in your tdeioslave if you're using this one as a model :)
     UDSAtom atom;
     atom.m_uds = TDEIO::UDS_NAME;

@@ -39,9 +39,9 @@ install( FILES file.h DESTINATION ${INCLUDE_INSTALL_DIR}/tdeio )
 install( FILES file.protocol DESTINATION ${SERVICES_INSTALL_DIR} )
 
 
-##### kio_file ##################################
+##### tdeio_file ##################################
 
-set( target kio_file )
+set( target tdeio_file )
 
 set( ${target}_SRCS
   file.cc

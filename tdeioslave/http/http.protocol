@@ -1,5 +1,5 @@
 [Protocol]
-exec=kio_http
+exec=tdeio_http
 protocol=http
 input=none
 output=filesystem

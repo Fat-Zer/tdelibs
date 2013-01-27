@@ -31,13 +31,13 @@ link_directories(
 
 install( FILES iso.protocol DESTINATION ${SERVICES_INSTALL_DIR} )
 install( FILES isoservice.desktop DESTINATION ${DATA_INSTALL_DIR}/konqueror/servicemenus )
-install( FILES kio_isorc DESTINATION ${CONFIG_INSTALL_DIR} )
-install( FILES kio_iso.desktop DESTINATION ${APPS_INSTALL_DIR} )
+install( FILES tdeio_isorc DESTINATION ${CONFIG_INSTALL_DIR} )
+install( FILES tdeio_iso.desktop DESTINATION ${APPS_INSTALL_DIR} )
 
 
-##### kio_iso ###################################
+##### tdeio_iso ###################################
 
-set( target kio_iso )
+set( target tdeio_iso )
 
 set( ${target}_SRCS
   kisodirectory.cpp kisofile.cpp qfilehack.cpp

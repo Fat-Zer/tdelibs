@@ -1,5 +1,5 @@
 [Protocol]
-exec=kio_ftp
+exec=tdeio_ftp
 protocol=ftp
 input=none
 output=filesystem

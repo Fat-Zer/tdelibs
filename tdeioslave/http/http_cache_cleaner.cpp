@@ -48,7 +48,7 @@ time_t currentDate;
 int m_maxCacheAge;
 int m_maxCacheSize;
 
-static const char appName[] = "kio_http_cache_cleaner";
+static const char appName[] = "tdeio_http_cache_cleaner";
 
 static const char description[] = I18N_NOOP("TDE HTTP cache maintenance tool");
 

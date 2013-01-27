@@ -53,7 +53,7 @@ struct FtpEntry
 // FtpTextReader  A helper class to read text lines from a socket
 //===============================================================================
 
-#ifdef  KIO_FTP_PRIVATE_INCLUDE
+#ifdef  TDEIO_FTP_PRIVATE_INCLUDE
 class FtpSocket;
 
 class FtpTextReader
@@ -131,12 +131,12 @@ private:
    */
   int m_iTextBuff;
 };
-#endif // KIO_FTP_PRIVATE_INCLUDE
+#endif // TDEIO_FTP_PRIVATE_INCLUDE
 
 //===============================================================================
 // FtpSocket  Helper Class for Data or Control Connections
 //===============================================================================
-#ifdef  KIO_FTP_PRIVATE_INCLUDE
+#ifdef  TDEIO_FTP_PRIVATE_INCLUDE
 class FtpSocket : public FtpTextReader, public KExtendedSocket
 {
 private:
@@ -228,7 +228,7 @@ private:
 };
 #else
    class FtpSocket;
-#endif // KIO_FTP_PRIVATE_INCLUDE
+#endif // TDEIO_FTP_PRIVATE_INCLUDE
 
 //===============================================================================
 // Ftp

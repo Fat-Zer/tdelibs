@@ -1,5 +1,5 @@
 [Protocol]
-exec=kio_iso
+exec=tdeio_iso
 protocol=iso
 listing=Name,Type,Size,Date,AccessDate,CreationDate,Access,Owner,Group,Link
 input=filesystem
