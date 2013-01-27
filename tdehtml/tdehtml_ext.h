@@ -35,16 +35,16 @@
 #include <tdeio/global.h>
 
 /**
- * This is the BrowserExtension for a KHTMLPart document. Please see the KParts documentation for
+ * This is the BrowserExtension for a TDEHTMLPart document. Please see the KParts documentation for
  * more information about the BrowserExtension.
  */
-class KHTMLPartBrowserExtension : public KParts::BrowserExtension
+class TDEHTMLPartBrowserExtension : public KParts::BrowserExtension
 {
   Q_OBJECT
-  friend class KHTMLPart;
-  friend class KHTMLView;
+  friend class TDEHTMLPart;
+  friend class TDEHTMLView;
 public:
-  KHTMLPartBrowserExtension( KHTMLPart *parent, const char *name = 0L );
+  TDEHTMLPartBrowserExtension( TDEHTMLPart *parent, const char *name = 0L );
 
   virtual int xOffset();
   virtual int yOffset();
@@ -84,17 +84,17 @@ signals:
 private:
     void callExtensionProxyMethod( const char *method );
 
-    KHTMLPart *m_part;
+    TDEHTMLPart *m_part;
     TQGuardedPtr<TQWidget> m_editableFormWidget;
     TQGuardedPtr<KParts::BrowserExtension> m_extensionProxy;
     bool m_connectedToClipboard;
 };
 
-class KHTMLPartBrowserHostExtension : public KParts::BrowserHostExtension
+class TDEHTMLPartBrowserHostExtension : public KParts::BrowserHostExtension
 {
 public:
-  KHTMLPartBrowserHostExtension( KHTMLPart *part );
-  virtual ~KHTMLPartBrowserHostExtension();
+  TDEHTMLPartBrowserHostExtension( TDEHTMLPart *part );
+  virtual ~TDEHTMLPartBrowserHostExtension();
 
   virtual TQStringList frameNames() const;
 
@@ -105,19 +105,19 @@ public:
 protected:
   virtual void virtual_hook( int id, void* data );
 private:
-  KHTMLPart *m_part;
+  TDEHTMLPart *m_part;
 };
 
 /**
  * @internal
  * INTERNAL class. *NOT* part of the public API.
  */
-class KHTMLPopupGUIClient : public TQObject, public KXMLGUIClient
+class TDEHTMLPopupGUIClient : public TQObject, public KXMLGUIClient
 {
   Q_OBJECT
 public:
-  KHTMLPopupGUIClient( KHTMLPart *tdehtml, const TQString &doc, const KURL &url );
-  virtual ~KHTMLPopupGUIClient();
+  TDEHTMLPopupGUIClient( TDEHTMLPart *tdehtml, const TQString &doc, const KURL &url );
+  virtual ~TDEHTMLPopupGUIClient();
 
   static void saveURL( TQWidget *parent, const TQString &caption, const KURL &url,
                        const TQMap<TQString, TQString> &metaData = TDEIO::MetaData(),
@@ -145,20 +145,20 @@ private slots:
   void slotBlockIFrame();
 
 private:
-  class KHTMLPopupGUIClientPrivate;
-  KHTMLPopupGUIClientPrivate *d;
+  class TDEHTMLPopupGUIClientPrivate;
+  TDEHTMLPopupGUIClientPrivate *d;
 };
 
-class KHTMLZoomFactorAction : public KAction
+class TDEHTMLZoomFactorAction : public KAction
 {
     Q_OBJECT
 public:
     //BCI: remove in KDE 4
-    KHTMLZoomFactorAction( KHTMLPart *part, bool direction, const TQString &text, const TQString &icon, const TQObject *receiver, const char *slot, TQObject *parent, const char *name );
-    KHTMLZoomFactorAction( KHTMLPart *part, bool direction, const TQString &text,
+    TDEHTMLZoomFactorAction( TDEHTMLPart *part, bool direction, const TQString &text, const TQString &icon, const TQObject *receiver, const char *slot, TQObject *parent, const char *name );
+    TDEHTMLZoomFactorAction( TDEHTMLPart *part, bool direction, const TQString &text,
             const TQString &icon, const KShortcut& cut, const TQObject *receiver,
             const char *slot, TQObject *parent, const char *name );
-    virtual ~KHTMLZoomFactorAction();
+    virtual ~TDEHTMLZoomFactorAction();
 
     virtual int plug( TQWidget *widget, int index );
 
@@ -167,11 +167,11 @@ private slots:
 protected slots:
     void slotActivated() { KAction::slotActivated(); }
 private:
-    void init(KHTMLPart *part, bool direction);
+    void init(TDEHTMLPart *part, bool direction);
 private:
     TQPopupMenu *m_popup;
     bool m_direction;
-    KHTMLPart *m_part;
+    TDEHTMLPart *m_part;
 };
 
 #endif

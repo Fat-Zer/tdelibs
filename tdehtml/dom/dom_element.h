@@ -86,7 +86,7 @@ class DocumentImpl;
  * unknown, there are no tokenized attribute values.
  *
  */
-class KHTML_EXPORT Attr : public Node
+class TDEHTML_EXPORT Attr : public Node
 {
     friend class Element;
     friend class Document;
@@ -207,7 +207,7 @@ class DOMString;
  * access an attribute value can safely be used as a convenience.
  *
  */
-class KHTML_EXPORT Element : public Node
+class TDEHTML_EXPORT Element : public Node
 {
     friend class Document;
     friend class HTMLDocument;
@@ -579,7 +579,7 @@ public:
     bool isHTMLElement() const;
 
     /**
-     * KHTML extension to DOM
+     * TDEHTML extension to DOM
      * This method returns the associated form element.
      * returns null if this element is not a form-like element
      * or if this elment is not in the scope of a form element.

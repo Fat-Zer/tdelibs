@@ -43,7 +43,7 @@ You can add the widget to your program by doing something like:
    .
    .
 
-    KHTMLWidget *view = new KHTMLWidget( parent, "Name" );
+    TDEHTMLWidget *view = new TDEHTMLWidget( parent, "Name" );
 	view->show();
 
 	view->begin( "file:/tmp/test.html" );

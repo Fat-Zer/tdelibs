@@ -43,7 +43,7 @@ class DOMString;
  * BASE element definition </a> in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLBaseElement : public HTMLElement
+class TDEHTML_EXPORT HTMLBaseElement : public HTMLElement
 {
 public:
     HTMLBaseElement();
@@ -98,7 +98,7 @@ class HTMLLinkElementImpl;
  * LINK element definition </a> in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLLinkElement : public HTMLElement
+class TDEHTML_EXPORT HTMLLinkElement : public HTMLElement
 {
 public:
     HTMLLinkElement();
@@ -253,7 +253,7 @@ class HTMLMetaElementImpl;
  * META element definition </a> in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLMetaElement : public HTMLElement
+class TDEHTML_EXPORT HTMLMetaElement : public HTMLElement
 {
 public:
     HTMLMetaElement();
@@ -332,7 +332,7 @@ class HTMLScriptElementImpl;
  * SCRIPT element definition </a> in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLScriptElement : public HTMLElement
+class TDEHTML_EXPORT HTMLScriptElement : public HTMLElement
 {
 public:
     HTMLScriptElement();
@@ -446,7 +446,7 @@ class HTMLStyleElementImpl;
  * STYLE element definition </a> in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLStyleElement : public HTMLElement
+class TDEHTML_EXPORT HTMLStyleElement : public HTMLElement
 {
 public:
     HTMLStyleElement();
@@ -519,7 +519,7 @@ class HTMLTitleElementImpl;
  * TITLE element definition </a> in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLTitleElement : public HTMLElement
+class TDEHTML_EXPORT HTMLTitleElement : public HTMLElement
 {
 public:
     HTMLTitleElement();

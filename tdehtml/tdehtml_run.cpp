@@ -28,7 +28,7 @@
 #include "tdehtml_ext.h"
 #include <tqwidget.h>
 
-KHTMLRun::KHTMLRun( KHTMLPart *part, tdehtml::ChildFrame *child, const KURL &url,
+TDEHTMLRun::TDEHTMLRun( TDEHTMLPart *part, tdehtml::ChildFrame *child, const KURL &url,
                     const KParts::URLArgs &args, bool hideErrorDialog )
     : KParts::BrowserRun( url, args, part, part->widget() ? part->widget()->topLevelWidget() : 0,
                           false, false, hideErrorDialog ),
@@ -41,14 +41,14 @@ KHTMLRun::KHTMLRun( KHTMLPart *part, tdehtml::ChildFrame *child, const KURL &url
     part->started(0L);
 }
 
-//KHTMLPart *KHTMLRun::htmlPart() const
-//{ return static_cast<KHTMLPart *>(m_part); }
+//TDEHTMLPart *TDEHTMLRun::htmlPart() const
+//{ return static_cast<TDEHTMLPart *>(m_part); }
 
-void KHTMLRun::foundMimeType( const TQString &_type )
+void TDEHTMLRun::foundMimeType( const TQString &_type )
 {
     Q_ASSERT(!m_bFinished);
     TQString mimeType = _type; // this ref comes from the job, we lose it when using KIO again
-    if ( static_cast<KHTMLPart *>(m_part)->processObjectRequest( m_child, m_strURL, mimeType ) )
+    if ( static_cast<TDEHTMLPart *>(m_part)->processObjectRequest( m_child, m_strURL, mimeType ) )
         m_bFinished = true;
     else {
         if ( m_bFinished ) // abort was called (this happens with the activex fallback for instance)
@@ -60,7 +60,7 @@ void KHTMLRun::foundMimeType( const TQString &_type )
         m_bFinished = ( res == KParts::BrowserRun::Handled );
         if ( m_bFinished ) { // saved or canceled -> flag completed
             m_child->m_bCompleted = true;
-            static_cast<KHTMLPart *>(m_part)->checkCompleted();
+            static_cast<TDEHTMLPart *>(m_part)->checkCompleted();
         }
     }
 
@@ -70,21 +70,21 @@ void KHTMLRun::foundMimeType( const TQString &_type )
         return;
     }
 
-    //kdDebug(6050) << "KHTMLRun::foundMimeType " << _type << " couldn't open" << endl;
+    //kdDebug(6050) << "TDEHTMLRun::foundMimeType " << _type << " couldn't open" << endl;
     KRun::foundMimeType( mimeType );
 
     // "open" is finished -> flag completed
     m_child->m_bCompleted = true;
-    static_cast<KHTMLPart *>(m_part)->checkCompleted();
+    static_cast<TDEHTMLPart *>(m_part)->checkCompleted();
 }
 
-void KHTMLRun::save( const KURL & url, const TQString & suggestedFilename )
+void TDEHTMLRun::save( const KURL & url, const TQString & suggestedFilename )
 {
-    KHTMLPopupGUIClient::saveURL( m_part->widget(), i18n( "Save As" ), url, m_args.metaData(), TQString::null, 0, suggestedFilename );
+    TDEHTMLPopupGUIClient::saveURL( m_part->widget(), i18n( "Save As" ), url, m_args.metaData(), TQString::null, 0, suggestedFilename );
 }
 
 // KDE4: remove
-void KHTMLRun::handleError( TDEIO::Job *job )
+void TDEHTMLRun::handleError( TDEIO::Job *job )
 {
     KParts::BrowserRun::handleError( job );
 }

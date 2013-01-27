@@ -31,7 +31,7 @@
 #include "misc/loader_client.h"
 #include "misc/stringit.h"
 
-class KHTMLView;
+class TDEHTMLView;
 
 namespace tdehtml {
     class CachedObject;
@@ -51,7 +51,7 @@ namespace tdehtml {
 class XMLHandler : public TQXmlDefaultHandler
 {
 public:
-    XMLHandler(DOM::DocumentImpl *_doc, KHTMLView *_view);
+    XMLHandler(DOM::DocumentImpl *_doc, TDEHTMLView *_view);
     virtual ~XMLHandler();
 
     // return the error protocol if parsing failed
@@ -101,7 +101,7 @@ private:
 private:
     TQString errorProt;
     DOM::DocumentImpl *m_doc;
-    KHTMLView *m_view;
+    TDEHTMLView *m_view;
     TQPtrStack<DOM::NodeImpl> m_nodes;
     DOM::NodeImpl *m_rootNode;
 
@@ -162,7 +162,7 @@ private:
 class XMLTokenizer : public Tokenizer, public tdehtml::CachedObjectClient
 {
 public:
-    XMLTokenizer(DOM::DocumentImpl *, KHTMLView * = 0);
+    XMLTokenizer(DOM::DocumentImpl *, TDEHTMLView * = 0);
     virtual ~XMLTokenizer();
     virtual void begin();
     virtual void write( const TokenizerString &str, bool );
@@ -178,7 +178,7 @@ public:
 
 protected:
     DOM::DocumentImpl *m_doc;
-    KHTMLView *m_view;
+    TDEHTMLView *m_view;
 
     void executeScripts();
     void addScripts(DOM::NodeImpl *n);

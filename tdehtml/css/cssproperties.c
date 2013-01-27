@@ -295,7 +295,7 @@ findProp (register const char *str, register unsigned int len)
 #line 104 "cssproperties.gperf"
       {"text-indent", CSS_PROP_TEXT_INDENT},
 #line 69 "cssproperties.gperf"
-      {"-tdehtml-margin-start", CSS_PROP__KHTML_MARGIN_START},
+      {"-tdehtml-margin-start", CSS_PROP__TDEHTML_MARGIN_START},
 #line 14 "cssproperties.gperf"
       {"background-color", CSS_PROP_BACKGROUND_COLOR},
 #line 100 "cssproperties.gperf"
@@ -305,7 +305,7 @@ findProp (register const char *str, register unsigned int len)
 #line 47 "cssproperties.gperf"
       {"counter-reset", CSS_PROP_COUNTER_RESET},
 #line 93 "cssproperties.gperf"
-      {"-tdehtml-padding-start", CSS_PROP__KHTML_PADDING_START},
+      {"-tdehtml-padding-start", CSS_PROP__TDEHTML_PADDING_START},
 #line 15 "cssproperties.gperf"
       {"background-image", CSS_PROP_BACKGROUND_IMAGE},
 #line 96 "cssproperties.gperf"
@@ -319,11 +319,11 @@ findProp (register const char *str, register unsigned int len)
 #line 52 "cssproperties.gperf"
       {"float", CSS_PROP_FLOAT},
 #line 21 "cssproperties.gperf"
-      {"-tdehtml-background-clip", CSS_PROP__KHTML_BACKGROUND_CLIP},
+      {"-tdehtml-background-clip", CSS_PROP__TDEHTML_BACKGROUND_CLIP},
 #line 70 "cssproperties.gperf"
-      {"-tdehtml-marquee", CSS_PROP__KHTML_MARQUEE},
+      {"-tdehtml-marquee", CSS_PROP__TDEHTML_MARQUEE},
 #line 27 "cssproperties.gperf"
-      {"-tdehtml-border-vertical-spacing", CSS_PROP__KHTML_BORDER_VERTICAL_SPACING},
+      {"-tdehtml-border-vertical-spacing", CSS_PROP__TDEHTML_BORDER_VERTICAL_SPACING},
 #line 46 "cssproperties.gperf"
       {"counter-increment", CSS_PROP_COUNTER_INCREMENT},
 #line 128 "cssproperties.gperf"
@@ -337,7 +337,7 @@ findProp (register const char *str, register unsigned int len)
 #line 31 "cssproperties.gperf"
       {"border-left-color", CSS_PROP_BORDER_LEFT_COLOR},
 #line 22 "cssproperties.gperf"
-      {"-tdehtml-background-origin", CSS_PROP__KHTML_BACKGROUND_ORIGIN},
+      {"-tdehtml-background-origin", CSS_PROP__TDEHTML_BACKGROUND_ORIGIN},
 #line 17 "cssproperties.gperf"
       {"background-attachment", CSS_PROP_BACKGROUND_ATTACHMENT},
 #line 126 "cssproperties.gperf"
@@ -353,7 +353,7 @@ findProp (register const char *str, register unsigned int len)
 #line 68 "cssproperties.gperf"
       {"margin-left", CSS_PROP_MARGIN_LEFT},
 #line 142 "cssproperties.gperf"
-      {"-tdehtml-user-input", CSS_PROP__KHTML_USER_INPUT},
+      {"-tdehtml-user-input", CSS_PROP__TDEHTML_USER_INPUT},
 #line 79 "cssproperties.gperf"
       {"min-width", CSS_PROP_MIN_WIDTH},
 #line 127 "cssproperties.gperf"
@@ -361,13 +361,13 @@ findProp (register const char *str, register unsigned int len)
 #line 92 "cssproperties.gperf"
       {"padding-left", CSS_PROP_PADDING_LEFT},
 #line 71 "cssproperties.gperf"
-      {"-tdehtml-marquee-direction", CSS_PROP__KHTML_MARQUEE_DIRECTION},
+      {"-tdehtml-marquee-direction", CSS_PROP__TDEHTML_MARQUEE_DIRECTION},
 #line 73 "cssproperties.gperf"
-      {"-tdehtml-marquee-repetition", CSS_PROP__KHTML_MARQUEE_REPETITION},
+      {"-tdehtml-marquee-repetition", CSS_PROP__TDEHTML_MARQUEE_REPETITION},
 #line 95 "cssproperties.gperf"
       {"page-break-before", CSS_PROP_PAGE_BREAK_BEFORE},
 #line 74 "cssproperties.gperf"
-      {"-tdehtml-marquee-speed", CSS_PROP__KHTML_MARQUEE_SPEED},
+      {"-tdehtml-marquee-speed", CSS_PROP__TDEHTML_MARQUEE_SPEED},
 #line 94 "cssproperties.gperf"
       {"page-break-after", CSS_PROP_PAGE_BREAK_AFTER},
 #line 81 "cssproperties.gperf"
@@ -383,7 +383,7 @@ findProp (register const char *str, register unsigned int len)
 #line 134 "cssproperties.gperf"
       {"scrollbar-face-color", CSS_PROP_SCROLLBAR_FACE_COLOR},
 #line 72 "cssproperties.gperf"
-      {"-tdehtml-marquee-increment", CSS_PROP__KHTML_MARQUEE_INCREMENT},
+      {"-tdehtml-marquee-increment", CSS_PROP__TDEHTML_MARQUEE_INCREMENT},
 #line 116 "cssproperties.gperf"
       {"word-spacing", CSS_PROP_WORD_SPACING},
 #line 111 "cssproperties.gperf"
@@ -405,13 +405,13 @@ findProp (register const char *str, register unsigned int len)
 #line 32 "cssproperties.gperf"
       {"border-top-style", CSS_PROP_BORDER_TOP_STYLE},
 #line 26 "cssproperties.gperf"
-      {"-tdehtml-border-horizontal-spacing", CSS_PROP__KHTML_BORDER_HORIZONTAL_SPACING},
+      {"-tdehtml-border-horizontal-spacing", CSS_PROP__TDEHTML_BORDER_HORIZONTAL_SPACING},
 #line 33 "cssproperties.gperf"
       {"border-right-style", CSS_PROP_BORDER_RIGHT_STYLE},
 #line 34 "cssproperties.gperf"
       {"border-bottom-style", CSS_PROP_BORDER_BOTTOM_STYLE},
 #line 23 "cssproperties.gperf"
-      {"-tdehtml-background-size", CSS_PROP__KHTML_BACKGROUND_SIZE},
+      {"-tdehtml-background-size", CSS_PROP__TDEHTML_BACKGROUND_SIZE},
 #line 135 "cssproperties.gperf"
       {"scrollbar-shadow-color", CSS_PROP_SCROLLBAR_SHADOW_COLOR},
 #line 129 "cssproperties.gperf"
@@ -435,7 +435,7 @@ findProp (register const char *str, register unsigned int len)
 #line 84 "cssproperties.gperf"
       {"outline-style", CSS_PROP_OUTLINE_STYLE},
 #line 141 "cssproperties.gperf"
-      {"-tdehtml-flow-mode", CSS_PROP__KHTML_FLOW_MODE},
+      {"-tdehtml-flow-mode", CSS_PROP__TDEHTML_FLOW_MODE},
 #line 87 "cssproperties.gperf"
       {"overflow-x", CSS_PROP_OVERFLOW_X},
 #line 113 "cssproperties.gperf"
@@ -449,7 +449,7 @@ findProp (register const char *str, register unsigned int len)
 #line 83 "cssproperties.gperf"
       {"outline-offset", CSS_PROP_OUTLINE_OFFSET},
 #line 75 "cssproperties.gperf"
-      {"-tdehtml-marquee-style", CSS_PROP__KHTML_MARQUEE_STYLE},
+      {"-tdehtml-marquee-style", CSS_PROP__TDEHTML_MARQUEE_STYLE},
 #line 55 "cssproperties.gperf"
       {"font-style", CSS_PROP_FONT_STYLE},
 #line 35 "cssproperties.gperf"

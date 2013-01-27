@@ -44,7 +44,7 @@ class RangeImpl;
 class DOMException;
 
 // Introduced in DOM Level 2:
-class KHTML_EXPORT RangeException {
+class TDEHTML_EXPORT RangeException {
 public:
     RangeException(unsigned short _code) { code = _code; }
     RangeException(const RangeException &other) { code = other.code; }
@@ -67,7 +67,7 @@ public:
 };
 
 
-class KHTML_EXPORT Range
+class TDEHTML_EXPORT Range
 {
     friend class DocumentImpl;
     friend class Document;

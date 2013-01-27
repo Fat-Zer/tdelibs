@@ -23,8 +23,8 @@
 //
 // KDE HTML Widget -- String class
 
-#ifndef KHTMLSTRING_H
-#define KHTMLSTRING_H
+#ifndef TDEHTMLSTRING_H
+#define TDEHTMLSTRING_H
 
 #include "dom/dom_string.h"
 

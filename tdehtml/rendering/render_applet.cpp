@@ -48,9 +48,9 @@ RenderApplet::RenderApplet(HTMLElementImpl *applet, const TQMap<TQString, TQStri
     setInline(true);
 
     KJavaAppletContext *context = 0;
-    KHTMLView *_view = applet->getDocument()->view();
+    TDEHTMLView *_view = applet->getDocument()->view();
     if ( _view ) {
-        KHTMLPart *part = _view->part();
+        TDEHTMLPart *part = _view->part();
         context = part->createJavaContext();
     }
 
@@ -89,8 +89,8 @@ void RenderApplet::layout()
 {
     //kdDebug(6100) << "RenderApplet::layout" << endl;
 
-    KHTMLAssert( needsLayout() );
-    KHTMLAssert( minMaxKnown() );
+    TDEHTMLAssert( needsLayout() );
+    TDEHTMLAssert( minMaxKnown() );
 
     calcWidth();
     calcHeight();

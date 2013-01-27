@@ -55,7 +55,7 @@
 #include <dom/dom_string.h>
 
 class TQMovie;
-class KHTMLPart;
+class TDEHTMLPart;
 
 namespace TDEIO {
   class Job;
@@ -183,7 +183,7 @@ namespace tdehtml
         CachedObject* m_next;
         CachedObject* m_prev;
         friend class Cache;
-        friend class ::KHTMLPart;
+        friend class ::TDEHTMLPart;
     };
 
 
@@ -286,7 +286,7 @@ namespace tdehtml
         const TQString& suggestedTitle() const { return m_suggestedFilename; }
 #endif
 
-        void setShowAnimations( KHTMLSettings::KAnimationAdvice );
+        void setShowAnimations( TDEHTMLSettings::KAnimationAdvice );
         void pauseAnimations();
         void resumeAnimations();
 
@@ -331,10 +331,10 @@ namespace tdehtml
 	bool typeChecked : 1;
         bool isFullyTransparent : 1;
         bool monochrome : 1;
-        KHTMLSettings::KAnimationAdvice m_showAnimations : 2;
+        TDEHTMLSettings::KAnimationAdvice m_showAnimations : 2;
 
         friend class Cache;
-        friend class ::KHTMLPart;
+        friend class ::TDEHTMLPart;
     };
 
     /**
@@ -345,7 +345,7 @@ namespace tdehtml
     class DocLoader
     {
     public:
- 	DocLoader(KHTMLPart*, DOM::DocumentImpl*);
+ 	DocLoader(TDEHTMLPart*, DOM::DocumentImpl*);
  	~DocLoader();
 
 	CachedImage *requestImage( const DOM::DOMString &url);
@@ -355,16 +355,16 @@ namespace tdehtml
 
 	bool autoloadImages() const { return m_bautoloadImages; }
         TDEIO::CacheControl cachePolicy() const { return m_cachePolicy; }
-        KHTMLSettings::KAnimationAdvice showAnimations() const { return m_showAnimations; }
+        TDEHTMLSettings::KAnimationAdvice showAnimations() const { return m_showAnimations; }
         time_t expireDate() const { return m_expireDate; }
-        KHTMLPart* part() const { return m_part; }
+        TDEHTMLPart* part() const { return m_part; }
         DOM::DocumentImpl* doc() const { return m_doc; }
 
         void setCacheCreationDate( time_t );
         void setExpireDate( time_t, bool relative );
         void setAutoloadImages( bool );
         void setCachePolicy( TDEIO::CacheControl cachePolicy ) { m_cachePolicy = cachePolicy; }
-        void setShowAnimations( KHTMLSettings::KAnimationAdvice );
+        void setShowAnimations( TDEHTMLSettings::KAnimationAdvice );
         void pauseAnimations();
         void resumeAnimations();
         void insertCachedObject( CachedObject* o ) const;
@@ -375,7 +375,7 @@ namespace tdehtml
 
         friend class Cache;
         friend class DOM::DocumentImpl;
-        friend class ::KHTMLPart;
+        friend class ::TDEHTMLPart;
 
         TQStringList m_reloadedURLs;
         mutable TQPtrDict<CachedObject> m_docObjects;
@@ -383,8 +383,8 @@ namespace tdehtml
 	time_t m_creationDate;
 	TDEIO::CacheControl m_cachePolicy;
         bool m_bautoloadImages : 1;
-        KHTMLSettings::KAnimationAdvice m_showAnimations : 2;
-        KHTMLPart* m_part;
+        TDEHTMLSettings::KAnimationAdvice m_showAnimations : 2;
+        TDEHTMLPart* m_part;
         DOM::DocumentImpl* m_doc;
     };
 

@@ -69,9 +69,9 @@ static const char styleEnd [] =  "</style";
 static const char textareaEnd [] = "</textarea";
 static const char titleEnd [] = "</title";
 
-#define KHTML_ALLOC_QCHAR_VEC( N ) (TQChar*) malloc( sizeof(TQChar)*( N ) )
-#define KHTML_REALLOC_QCHAR_VEC(P, N ) (TQChar*) realloc(P, sizeof(TQChar)*( N ))
-#define KHTML_DELETE_QCHAR_VEC( P ) free((char*)( P ))
+#define TDEHTML_ALLOC_QCHAR_VEC( N ) (TQChar*) malloc( sizeof(TQChar)*( N ) )
+#define TDEHTML_REALLOC_QCHAR_VEC(P, N ) (TQChar*) realloc(P, sizeof(TQChar)*( N ))
+#define TDEHTML_DELETE_QCHAR_VEC( P ) free((char*)( P ))
 
 // Full support for MS Windows extensions to Latin-1.
 // Technically these extensions should only be activated for pages
@@ -123,14 +123,14 @@ static const char titleEnd [] = "</title";
 #endif
 // ----------------------------------------------------------------------------
 
-HTMLTokenizer::HTMLTokenizer(DOM::DocumentImpl *_doc, KHTMLView *_view)
+HTMLTokenizer::HTMLTokenizer(DOM::DocumentImpl *_doc, TDEHTMLView *_view)
 {
     view = _view;
     buffer = 0;
     scriptCode = 0;
     scriptCodeSize = scriptCodeMaxSize = scriptCodeResync = 0;
     charsets = TDEGlobal::charsets();
-    parser = new KHTMLParser(_view, _doc);
+    parser = new TDEHTMLParser(_view, _doc);
     m_executingScript = 0;
     m_autoCloseTimer = 0;
     onHold = false;
@@ -145,7 +145,7 @@ HTMLTokenizer::HTMLTokenizer(DOM::DocumentImpl *_doc, DOM::DocumentFragmentImpl 
     scriptCode = 0;
     scriptCodeSize = scriptCodeMaxSize = scriptCodeResync = 0;
     charsets = TDEGlobal::charsets();
-    parser = new KHTMLParser( i, _doc );
+    parser = new TDEHTMLParser( i, _doc );
     m_executingScript = 0;
     m_autoCloseTimer = 0;
     onHold = false;
@@ -163,12 +163,12 @@ void HTMLTokenizer::reset()
         cachedScript.dequeue()->deref(this);
 
     if ( buffer )
-        KHTML_DELETE_QCHAR_VEC(buffer);
+        TDEHTML_DELETE_QCHAR_VEC(buffer);
     buffer = dest = 0;
     size = 0;
 
     if ( scriptCode )
-        KHTML_DELETE_QCHAR_VEC(scriptCode);
+        TDEHTML_DELETE_QCHAR_VEC(scriptCode);
     scriptCode = 0;
     scriptCodeSize = scriptCodeMaxSize = scriptCodeResync = 0;
 
@@ -186,7 +186,7 @@ void HTMLTokenizer::begin()
     onHold = false;
     reset();
     size = 254;
-    buffer = KHTML_ALLOC_QCHAR_VEC( 255 );
+    buffer = TDEHTML_ALLOC_QCHAR_VEC( 255 );
     dest = buffer;
     tag = NoTag;
     pending = NonePending;
@@ -1578,10 +1578,10 @@ void HTMLTokenizer::end()
         processToken();
 
     if(buffer)
-        KHTML_DELETE_QCHAR_VEC(buffer);
+        TDEHTML_DELETE_QCHAR_VEC(buffer);
 
     if(scriptCode)
-        KHTML_DELETE_QCHAR_VEC(scriptCode);
+        TDEHTML_DELETE_QCHAR_VEC(scriptCode);
 
     scriptCode = 0;
     scriptCodeSize = scriptCodeMaxSize = scriptCodeResync = 0;
@@ -1621,7 +1621,7 @@ void HTMLTokenizer::finish()
             pos = TQConstString(scriptCode, scriptCodeSize).string().find('>');
             food.setUnicode(scriptCode+pos+1, scriptCodeSize-pos-1); // deep copy
         }
-        KHTML_DELETE_QCHAR_VEC(scriptCode);
+        TDEHTML_DELETE_QCHAR_VEC(scriptCode);
         scriptCode = 0;
         scriptCodeSize = scriptCodeMaxSize = scriptCodeResync = 0;
         if (script)
@@ -1720,7 +1720,7 @@ void HTMLTokenizer::enlargeBuffer(int len)
     int newsize = kMax(size*2, size+len);
     int oldoffs = (dest - buffer);
 
-    buffer = KHTML_REALLOC_QCHAR_VEC(buffer, newsize);
+    buffer = TDEHTML_REALLOC_QCHAR_VEC(buffer, newsize);
     dest = buffer + oldoffs;
     size = newsize;
 }
@@ -1728,7 +1728,7 @@ void HTMLTokenizer::enlargeBuffer(int len)
 void HTMLTokenizer::enlargeScriptBuffer(int len)
 {
     int newsize = kMax(scriptCodeMaxSize*2, scriptCodeMaxSize+len);
-    scriptCode = KHTML_REALLOC_QCHAR_VEC(scriptCode, newsize);
+    scriptCode = TDEHTML_REALLOC_QCHAR_VEC(scriptCode, newsize);
     scriptCodeMaxSize = newsize;
 }
 

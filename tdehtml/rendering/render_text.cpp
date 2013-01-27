@@ -691,7 +691,7 @@ RenderText::RenderText(DOM::NodeImpl* node, DOMStringImpl *_str)
     m_maxWidth = -1;
     str = _str;
     if(str) str->ref();
-    KHTMLAssert(!str || !str->l || str->s);
+    TDEHTMLAssert(!str || !str->l || str->s);
 
     m_selectionState = SelectionNone;
     m_hasReturn = true;
@@ -723,7 +723,7 @@ void RenderText::setStyle(RenderStyle *_style)
 
 RenderText::~RenderText()
 {
-    KHTMLAssert(m_lines.count() == 0);
+    TDEHTMLAssert(m_lines.count() == 0);
     if(str) str->deref();
 }
 
@@ -745,7 +745,7 @@ void RenderText::deleteInlineBoxes(RenderArena* arena)
         }
     }
 
-    KHTMLAssert(m_lines.count() == 0);
+    TDEHTMLAssert(m_lines.count() == 0);
 }
 
 bool RenderText::isTextFragment() const
@@ -1009,12 +1009,12 @@ bool RenderText::posOfChar(int chr, int &x, int &y)
 
 void RenderText::paint( PaintInfo& /*pI*/, int /*tx*/, int /*ty*/)
 {
-    KHTMLAssert( false );
+    TDEHTMLAssert( false );
 }
 
 void RenderText::calcMinMaxWidth()
 {
-    KHTMLAssert( !minMaxKnown() );
+    TDEHTMLAssert( !minMaxKnown() );
 
     // ### calc Min and Max width...
     m_minWidth = m_beginMinWidth = m_endMinWidth = 0;
@@ -1213,8 +1213,8 @@ void RenderText::setText(DOMStringImpl *text, bool force)
 
     // ### what should happen if we change the text of a
     // RenderBR object ?
-    KHTMLAssert(!isBR() || (str->l == 1 && (*str->s) == '\n'));
-    KHTMLAssert(!str->l || str->s);
+    TDEHTMLAssert(!isBR() || (str->l == 1 && (*str->s) == '\n'));
+    TDEHTMLAssert(!str->l || str->s);
 
     setNeedsLayoutAndMinMaxRecalc();
 #ifdef BIDI_DEBUG
@@ -1251,7 +1251,7 @@ short RenderText::baselinePosition( bool firstLine ) const
 
 InlineBox* RenderText::createInlineBox(bool, bool isRootLineBox)
 {
-    KHTMLAssert( !isRootLineBox );
+    TDEHTMLAssert( !isRootLineBox );
     return new (renderArena()) InlineTextBox(this);
 }
 
@@ -1260,7 +1260,7 @@ void RenderText::position(InlineBox* box, int from, int len, bool reverse)
 //kdDebug(6040) << "position: from="<<from<<" len="<<len<<endl;
     // ### should not be needed!!!
     // asserts sometimes with pre (that unibw-hamburg testcase). ### find out why
-    //KHTMLAssert(!(len == 0 || (str->l && len == 1 && *(str->s+from) == '\n') ));
+    //TDEHTMLAssert(!(len == 0 || (str->l && len == 1 && *(str->s+from) == '\n') ));
     // It is now needed. BRs need text boxes too otherwise caret navigation
     // gets stuck (LS)
     // if (len == 0 || (str->l && len == 1 && *(str->s+from) == '\n') ) return;
@@ -1272,7 +1272,7 @@ void RenderText::position(InlineBox* box, int from, int len, bool reverse)
     TQConstString cstr(ch, len);
 #endif
 
-    KHTMLAssert(box->isInlineTextBox());
+    TDEHTMLAssert(box->isInlineTextBox());
     InlineTextBox *s = static_cast<InlineTextBox *>(box);
     s->m_start = from;
     s->m_len = len;

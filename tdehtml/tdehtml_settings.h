@@ -30,12 +30,12 @@ class TDEConfig;
 #include <tdelibs_export.h>
 
 struct KPerDomainSettings;
-class KHTMLSettingsPrivate;
+class TDEHTMLSettingsPrivate;
 
 /**
  * Settings for the HTML view.
  */
-class KHTML_EXPORT KHTMLSettings
+class TDEHTML_EXPORT TDEHTMLSettings
 {
 public:
 
@@ -99,8 +99,8 @@ public:
     /**
      * @internal Constructor
      */
-    KHTMLSettings();
-    KHTMLSettings(const KHTMLSettings &other);
+    TDEHTMLSettings();
+    TDEHTMLSettings(const TDEHTMLSettings &other);
 
     /**
      * Called by constructor and reparseConfiguration
@@ -117,7 +117,7 @@ public:
     /**
      * Destructor. Don't delete any instance by yourself.
      */
-    virtual ~KHTMLSettings();
+    virtual ~TDEHTMLSettings();
 
     // Behavior settings
     bool changeCursor() const;
@@ -135,7 +135,7 @@ public:
     TQString cursiveFontName() const;
     TQString fantasyFontName() const;
 
-    // these two can be set. Mainly for historical reasons (the method in KHTMLPart exists...)
+    // these two can be set. Mainly for historical reasons (the method in TDEHTMLPart exists...)
     void setStdFontName(const TQString &n);
     void setFixedFontName(const TQString &n);
 
@@ -222,10 +222,10 @@ public:
     bool jsPopupBlockerPassivePopup() const;
 
 private:
-    friend class KHTMLFactory;
+    friend class TDEHTMLFactory;
     TQString lookupFont(int i) const;
 
-    KHTMLSettingsPrivate *d;
+    TDEHTMLSettingsPrivate *d;
     static TQString *avFamilies;
 };
 

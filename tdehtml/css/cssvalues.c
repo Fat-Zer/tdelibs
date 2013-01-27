@@ -597,9 +597,9 @@ findValue (register const char *str, register unsigned int len)
 #line 35 "cssvalues.gperf"
       {"small-caps", CSS_VAL_SMALL_CAPS},
 #line 122 "cssvalues.gperf"
-      {"-tdehtml-text", CSS_VAL__KHTML_TEXT},
+      {"-tdehtml-text", CSS_VAL__TDEHTML_TEXT},
 #line 141 "cssvalues.gperf"
-      {"-tdehtml-left", CSS_VAL__KHTML_LEFT},
+      {"-tdehtml-left", CSS_VAL__TDEHTML_LEFT},
 #line 97 "cssvalues.gperf"
       {"background", CSS_VAL_BACKGROUND},
 #line 178 "cssvalues.gperf"
@@ -615,9 +615,9 @@ findValue (register const char *str, register unsigned int len)
 #line 198 "cssvalues.gperf"
       {"table-caption", CSS_VAL_TABLE_CAPTION},
 #line 154 "cssvalues.gperf"
-      {"-tdehtml-lao", CSS_VAL__KHTML_LAO},
+      {"-tdehtml-lao", CSS_VAL__TDEHTML_LAO},
 #line 143 "cssvalues.gperf"
-      {"-tdehtml-center", CSS_VAL__KHTML_CENTER},
+      {"-tdehtml-center", CSS_VAL__TDEHTML_CENTER},
 #line 54 "cssvalues.gperf"
       {"x-large", CSS_VAL_X_LARGE},
 #line 30 "cssvalues.gperf"
@@ -625,29 +625,29 @@ findValue (register const char *str, register unsigned int len)
 #line 203 "cssvalues.gperf"
       {"progress", CSS_VAL_PROGRESS},
 #line 16 "cssvalues.gperf"
-      {"-tdehtml-native", CSS_VAL__KHTML_NATIVE},
+      {"-tdehtml-native", CSS_VAL__TDEHTML_NATIVE},
 #line 177 "cssvalues.gperf"
       {"hiragana", CSS_VAL_HIRAGANA},
 #line 171 "cssvalues.gperf"
       {"lower-greek", CSS_VAL_LOWER_GREEK},
 #line 150 "cssvalues.gperf"
-      {"-tdehtml-diamond", CSS_VAL__KHTML_DIAMOND},
+      {"-tdehtml-diamond", CSS_VAL__TDEHTML_DIAMOND},
 #line 224 "cssvalues.gperf"
       {"no-close-quote", CSS_VAL_NO_CLOSE_QUOTE},
 #line 61 "cssvalues.gperf"
       {"ultra-condensed", CSS_VAL_ULTRA_CONDENSED},
 #line 158 "cssvalues.gperf"
-      {"-tdehtml-tibetan", CSS_VAL__KHTML_TIBETAN},
+      {"-tdehtml-tibetan", CSS_VAL__TDEHTML_TIBETAN},
 #line 124 "cssvalues.gperf"
       {"repeat-x", CSS_VAL_REPEAT_X},
 #line 266 "cssvalues.gperf"
-      {"-tdehtml-normal", CSS_VAL__KHTML_NORMAL},
+      {"-tdehtml-normal", CSS_VAL__TDEHTML_NORMAL},
 #line 113 "cssvalues.gperf"
       {"threeddarkshadow", CSS_VAL_THREEDDARKSHADOW},
 #line 219 "cssvalues.gperf"
       {"uppercase", CSS_VAL_UPPERCASE},
 #line 136 "cssvalues.gperf"
-      {"-tdehtml-auto", CSS_VAL__KHTML_AUTO},
+      {"-tdehtml-auto", CSS_VAL__TDEHTML_AUTO},
 #line 163 "cssvalues.gperf"
       {"georgian", CSS_VAL_GEORGIAN},
 #line 229 "cssvalues.gperf"
@@ -657,13 +657,13 @@ findValue (register const char *str, register unsigned int len)
 #line 109 "cssvalues.gperf"
       {"infobackground", CSS_VAL_INFOBACKGROUND},
 #line 157 "cssvalues.gperf"
-      {"-tdehtml-thai", CSS_VAL__KHTML_THAI},
+      {"-tdehtml-thai", CSS_VAL__TDEHTML_THAI},
 #line 226 "cssvalues.gperf"
       {"open-quote", CSS_VAL_OPEN_QUOTE},
 #line 173 "cssvalues.gperf"
       {"lower-alpha", CSS_VAL_LOWER_ALPHA},
 #line 156 "cssvalues.gperf"
-      {"-tdehtml-urdu", CSS_VAL__KHTML_URDU},
+      {"-tdehtml-urdu", CSS_VAL__TDEHTML_URDU},
 #line 223 "cssvalues.gperf"
       {"close-quote", CSS_VAL_CLOSE_QUOTE},
 #line 104 "cssvalues.gperf"
@@ -671,13 +671,13 @@ findValue (register const char *str, register unsigned int len)
 #line 225 "cssvalues.gperf"
       {"no-open-quote", CSS_VAL_NO_OPEN_QUOTE},
 #line 231 "cssvalues.gperf"
-      {"-tdehtml-nowrap", CSS_VAL__KHTML_NOWRAP},
+      {"-tdehtml-nowrap", CSS_VAL__TDEHTML_NOWRAP},
 #line 67 "cssvalues.gperf"
       {"extra-expanded", CSS_VAL_EXTRA_EXPANDED},
 #line 105 "cssvalues.gperf"
       {"highlighttext", CSS_VAL_HIGHLIGHTTEXT},
 #line 155 "cssvalues.gperf"
-      {"-tdehtml-persian", CSS_VAL__KHTML_PERSIAN},
+      {"-tdehtml-persian", CSS_VAL__TDEHTML_PERSIAN},
 #line 116 "cssvalues.gperf"
       {"threedlightshadow", CSS_VAL_THREEDLIGHTSHADOW},
 #line 96 "cssvalues.gperf"
@@ -691,13 +691,13 @@ findValue (register const char *str, register unsigned int len)
 #line 251 "cssvalues.gperf"
       {"line-through", CSS_VAL_LINE_THROUGH},
 #line 142 "cssvalues.gperf"
-      {"-tdehtml-right", CSS_VAL__KHTML_RIGHT},
+      {"-tdehtml-right", CSS_VAL__TDEHTML_RIGHT},
 #line 160 "cssvalues.gperf"
       {"upper-roman", CSS_VAL_UPPER_ROMAN},
 #line 135 "cssvalues.gperf"
-      {"-tdehtml-baseline-middle", CSS_VAL__KHTML_BASELINE_MIDDLE},
+      {"-tdehtml-baseline-middle", CSS_VAL__TDEHTML_BASELINE_MIDDLE},
 #line 153 "cssvalues.gperf"
-      {"-tdehtml-arabic-indic", CSS_VAL__KHTML_ARABIC_INDIC},
+      {"-tdehtml-arabic-indic", CSS_VAL__TDEHTML_ARABIC_INDIC},
 #line 152 "cssvalues.gperf"
       {"decimal-leading-zero", CSS_VAL_DECIMAL_LEADING_ZERO},
 #line 115 "cssvalues.gperf"
@@ -707,13 +707,13 @@ findValue (register const char *str, register unsigned int len)
 #line 99 "cssvalues.gperf"
       {"buttonhighlight", CSS_VAL_BUTTONHIGHLIGHT},
 #line 56 "cssvalues.gperf"
-      {"-tdehtml-xxx-large", CSS_VAL__KHTML_XXX_LARGE},
+      {"-tdehtml-xxx-large", CSS_VAL__TDEHTML_XXX_LARGE},
 #line 267 "cssvalues.gperf"
-      {"-tdehtml-around-floats", CSS_VAL__KHTML_AROUND_FLOATS},
+      {"-tdehtml-around-floats", CSS_VAL__TDEHTML_AROUND_FLOATS},
 #line 191 "cssvalues.gperf"
       {"table-row-group", CSS_VAL_TABLE_ROW_GROUP},
 #line 182 "cssvalues.gperf"
-      {"-tdehtml-close-quote", CSS_VAL__KHTML_CLOSE_QUOTE},
+      {"-tdehtml-close-quote", CSS_VAL__TDEHTML_CLOSE_QUOTE},
 #line 179 "cssvalues.gperf"
       {"hiragana-iroha", CSS_VAL_HIRAGANA_IROHA},
 #line 193 "cssvalues.gperf"
@@ -723,23 +723,23 @@ findValue (register const char *str, register unsigned int len)
 #line 175 "cssvalues.gperf"
       {"upper-alpha", CSS_VAL_UPPER_ALPHA},
 #line 181 "cssvalues.gperf"
-      {"-tdehtml-open-quote", CSS_VAL__KHTML_OPEN_QUOTE},
+      {"-tdehtml-open-quote", CSS_VAL__TDEHTML_OPEN_QUOTE},
 #line 165 "cssvalues.gperf"
-      {"-tdehtml-japanese-formal", CSS_VAL__KHTML_JAPANESE_FORMAL},
+      {"-tdehtml-japanese-formal", CSS_VAL__TDEHTML_JAPANESE_FORMAL},
 #line 166 "cssvalues.gperf"
-      {"-tdehtml-japanese-informal", CSS_VAL__KHTML_JAPANESE_INFORMAL},
+      {"-tdehtml-japanese-informal", CSS_VAL__TDEHTML_JAPANESE_INFORMAL},
 #line 192 "cssvalues.gperf"
       {"table-header-group", CSS_VAL_TABLE_HEADER_GROUP},
 #line 169 "cssvalues.gperf"
-      {"-tdehtml-trad-chinese-formal", CSS_VAL__KHTML_TRAD_CHINESE_FORMAL},
+      {"-tdehtml-trad-chinese-formal", CSS_VAL__TDEHTML_TRAD_CHINESE_FORMAL},
 #line 170 "cssvalues.gperf"
-      {"-tdehtml-trad-chinese-informal", CSS_VAL__KHTML_TRAD_CHINESE_INFORMAL},
+      {"-tdehtml-trad-chinese-informal", CSS_VAL__TDEHTML_TRAD_CHINESE_INFORMAL},
 #line 167 "cssvalues.gperf"
-      {"-tdehtml-simp-chinese-formal", CSS_VAL__KHTML_SIMP_CHINESE_FORMAL},
+      {"-tdehtml-simp-chinese-formal", CSS_VAL__TDEHTML_SIMP_CHINESE_FORMAL},
 #line 168 "cssvalues.gperf"
-      {"-tdehtml-simp-chinese-informal", CSS_VAL__KHTML_SIMP_CHINESE_INFORMAL},
+      {"-tdehtml-simp-chinese-informal", CSS_VAL__TDEHTML_SIMP_CHINESE_INFORMAL},
 #line 172 "cssvalues.gperf"
-      {"-tdehtml-upper-greek", CSS_VAL__KHTML_UPPER_GREEK}
+      {"-tdehtml-upper-greek", CSS_VAL__TDEHTML_UPPER_GREEK}
     };
 
   static const short lookup[] =

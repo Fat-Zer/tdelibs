@@ -36,7 +36,7 @@ using namespace tdehtml;
 //#define BOX_DEBUG
 //#define SPEED_DEBUG
 
-RenderCanvas::RenderCanvas(DOM::NodeImpl* node, KHTMLView *view)
+RenderCanvas::RenderCanvas(DOM::NodeImpl* node, TDEHTMLView *view)
     : RenderBlock(node)
 {
     // init RenderObject attributes
@@ -103,7 +103,7 @@ void RenderCanvas::calcHeight()
 
 void RenderCanvas::calcWidth()
 {
-    // the width gets set by KHTMLView::print when printing to a printer.
+    // the width gets set by TDEHTMLView::print when printing to a printer.
     if(m_pagedMode || !m_view)
     {
         m_width = m_rootWidth;
@@ -125,7 +125,7 @@ void RenderCanvas::calcWidth()
 
 void RenderCanvas::calcMinMaxWidth()
 {
-    KHTMLAssert( !minMaxKnown() );
+    TDEHTMLAssert( !minMaxKnown() );
 
     RenderBlock::calcMinMaxWidth();
 
@@ -271,7 +271,7 @@ bool RenderCanvas::needsFullRepaint() const
 
 void RenderCanvas::repaintViewRectangle(int x, int y, int w, int h, bool asap)
 {
-  KHTMLAssert( view() );
+  TDEHTMLAssert( view() );
   view()->scheduleRepaint( x, y, w, h, asap );
 }
 

@@ -17,19 +17,19 @@
  *  Boston, MA 02110-1301, USA.
  **/
 
-#ifndef KHTML_PRINTSETTINGS_H
-#define KHTML_PRINTSETTINGS_H
+#ifndef TDEHTML_PRINTSETTINGS_H
+#define TDEHTML_PRINTSETTINGS_H
 
 #include <tdeprint/kprintdialogpage.h>
 
 class TQCheckBox;
 
-class KHTMLPrintSettings : public KPrintDialogPage
+class TDEHTMLPrintSettings : public KPrintDialogPage
 {
 	Q_OBJECT
 public:
-	KHTMLPrintSettings(TQWidget *parent = 0, const char *name = 0);
-	~KHTMLPrintSettings();
+	TDEHTMLPrintSettings(TQWidget *parent = 0, const char *name = 0);
+	~TDEHTMLPrintSettings();
 
 	void getOptions(TQMap<TQString,TQString>& opts, bool incldef = false);
 	void setOptions(const TQMap<TQString,TQString>& opts);

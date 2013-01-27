@@ -19,7 +19,7 @@
 
 /**
  * An interactive interpreter to test the ECMA Script language bindings
- * for the DOM of KHTML.
+ * for the DOM of TDEHTML.
  * The 'document' property is preset to an instance of Document and serves
  * as an entrypoint.
  *

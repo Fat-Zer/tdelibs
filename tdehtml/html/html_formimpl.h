@@ -34,7 +34,7 @@
 #include <tqcstring.h>
 #include <tqmemarray.h>
 
-class KHTMLView;
+class TDEHTMLView;
 class TQTextCodec;
 
 namespace tdehtml

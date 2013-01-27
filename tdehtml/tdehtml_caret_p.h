@@ -18,8 +18,8 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef KHTML_CARET_P_H
-#define KHTML_CARET_P_H
+#ifndef TDEHTML_CARET_P_H
+#define TDEHTML_CARET_P_H
 
 #include "rendering/render_table.h"
 
@@ -68,7 +68,7 @@ struct CaretViewContext {
     bool displayed;		// true if caret is to be displayed at all.
     bool caretMoved;		// set to true once caret has been moved in page
     				// how to display the caret when view is not focused
-    KHTMLPart::CaretDisplayPolicy displayNonFocused;
+    TDEHTMLPart::CaretDisplayPolicy displayNonFocused;
 
     /** For natural traversal of lines, the original x position is saved, and
      * the actual x is set to the first character whose x position is
@@ -83,7 +83,7 @@ struct CaretViewContext {
     				// corresponding release event
     CaretViewContext() : freqTimerId(-1), x(0), y(0), width(1), height(16),
     	visible(true), displayed(false), caretMoved(false),
-	displayNonFocused(KHTMLPart::CaretInvisible), origX(0),
+	displayNonFocused(TDEHTMLPart::CaretInvisible), origX(0),
 	keyReleasePending(false)
     {}
 };
@@ -650,7 +650,7 @@ public:
    *	cannot serve as a base (to see if this is the case, check whether
    *	LinearDocument::baseFlow()->element() != base)
    */
-  LinearDocument(KHTMLPart *part, DOM::NodeImpl *node, long offset,
+  LinearDocument(TDEHTMLPart *part, DOM::NodeImpl *node, long offset,
   		CaretAdvancePolicy advancePolicy, DOM::ElementImpl *baseElem);
 
   virtual ~LinearDocument();
@@ -730,7 +730,7 @@ protected:
   Iterator _preBegin;
   Iterator _end;
 
-  KHTMLPart *m_part;
+  TDEHTMLPart *m_part;
   CaretAdvancePolicy advPol;
   RenderObject *base;
 
@@ -754,7 +754,7 @@ protected:
  * @since 3.3
  */
 class EditableCaretBoxIterator : public CaretBoxIterator {
-  KHTMLPart *m_part;
+  TDEHTMLPart *m_part;
   bool adjacent;
   CaretAdvancePolicy advpol;	// caret advance policy
 

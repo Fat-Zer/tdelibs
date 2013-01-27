@@ -40,10 +40,10 @@ class DOMStringImpl;
  * that modifications to one instance will also modify all others. If you
  * wish to get a DOMString that is independent, use copy().
  */
-class KHTML_EXPORT DOMString
+class TDEHTML_EXPORT DOMString
 {
     friend class CharacterDataImpl;
-    friend KHTML_EXPORT bool operator==( const DOMString &a, const char *b );
+    friend TDEHTML_EXPORT bool operator==( const DOMString &a, const char *b );
 public:
     /**
      * default constructor. Gives an empty DOMString
@@ -128,17 +128,17 @@ inline kndbgstream &operator<<(kndbgstream &stream, const DOMString &) {
 }
 #endif
 
-KHTML_EXPORT bool operator==( const DOMString &a, const DOMString &b );
-KHTML_EXPORT bool operator==( const DOMString &a, const TQString &b );
-KHTML_EXPORT bool operator==( const DOMString &a, const char *b );
+TDEHTML_EXPORT bool operator==( const DOMString &a, const DOMString &b );
+TDEHTML_EXPORT bool operator==( const DOMString &a, const TQString &b );
+TDEHTML_EXPORT bool operator==( const DOMString &a, const char *b );
 inline bool operator!=( const DOMString &a, const DOMString &b ) { return !(a==b); }
 inline bool operator!=( const DOMString &a, const TQString &b ) { return !(a==b); }
 inline bool operator!=( const DOMString &a, const char *b )  { return !(a==b); }
 inline bool strcmp( const DOMString &a, const DOMString &b ) { return a != b; }
 
 // returns false when equal, true otherwise (ignoring case)
-KHTML_EXPORT bool strcasecmp( const DOMString &a, const DOMString &b );
-KHTML_EXPORT bool strcasecmp( const DOMString& a, const char* b );
+TDEHTML_EXPORT bool strcasecmp( const DOMString &a, const DOMString &b );
+TDEHTML_EXPORT bool strcasecmp( const DOMString& a, const char* b );
 
 }
 #endif

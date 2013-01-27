@@ -57,7 +57,7 @@ class CustomNodeFilterImpl;
  * interface.
  *
  */
-class KHTML_EXPORT NodeIterator
+class TDEHTML_EXPORT NodeIterator
 {
     friend class NodeIteratorImpl;
     friend class Document;
@@ -181,7 +181,7 @@ protected:
  * an instance of it to the NodeFilter. For more details see the
  * CustomNodeFilter class
  */
-class KHTML_EXPORT NodeFilter
+class TDEHTML_EXPORT NodeFilter
 {
     friend class NodeIterator;
     friend class NodeIteratorImpl;
@@ -292,7 +292,7 @@ protected:
  *
  */
 
-class KHTML_EXPORT CustomNodeFilter : public DomShared {
+class TDEHTML_EXPORT CustomNodeFilter : public DomShared {
 public:
     CustomNodeFilter();
     virtual ~CustomNodeFilter();
@@ -336,7 +336,7 @@ protected:
  * how deeply nested the structure of the original document.
  *
  */
-class KHTML_EXPORT TreeWalker
+class TDEHTML_EXPORT TreeWalker
 {
     friend class Document;
     friend class TreeWalkerImpl;

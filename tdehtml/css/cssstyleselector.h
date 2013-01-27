@@ -30,10 +30,10 @@
 #include "dom/dom_string.h"
 #include "xml/dom_restyler.h"
 
-class KHTMLSettings;
-class KHTMLView;
-class KHTMLPart;
-class KHTMLFactory;
+class TDEHTMLSettings;
+class TDEHTMLView;
+class TDEHTMLPart;
+class TDEHTMLFactory;
 class KURL;
 
 namespace DOM {
@@ -127,7 +127,7 @@ namespace tdehtml
         KDE_EXPORT static void clear();
         static void reparseConfiguration();
 
-	static void loadDefaultStyle(const KHTMLSettings *s, DOM::DocumentImpl *doc);
+	static void loadDefaultStyle(const TDEHTMLSettings *s, DOM::DocumentImpl *doc);
 
 	RenderStyle *styleForElement(DOM::ElementImpl *e);
 
@@ -189,7 +189,7 @@ namespace tdehtml
 public:
 
     private:
-        void init(const KHTMLSettings* settings, DOM::DocumentImpl* doc);
+        void init(const TDEHTMLSettings* settings, DOM::DocumentImpl* doc);
 
         void mapBackgroundAttachment(BackgroundLayer* layer, DOM::CSSValueImpl* value);
         void mapBackgroundClip(BackgroundLayer* layer, DOM::CSSValueImpl* value);
@@ -246,9 +246,9 @@ public:
 	RenderStyle *parentStyle;
 	DOM::ElementImpl *element;
 	DOM::NodeImpl *parentNode;
-	KHTMLView *view;
-	KHTMLPart *part;
-	const KHTMLSettings *settings;
+	TDEHTMLView *view;
+	TDEHTMLPart *part;
+	const TDEHTMLSettings *settings;
 	TQPaintDeviceMetrics *paintDeviceMetrics;
         TQValueVector<int>     m_fontSizes;
 	TQValueVector<int>     m_fixedFontSizes;

@@ -63,7 +63,7 @@ class Event;
  * imply that the DOM specifies an order to these Nodes.
  *
  */
-class KHTML_EXPORT NamedNodeMap
+class TDEHTML_EXPORT NamedNodeMap
 {
 public:
     NamedNodeMap();
@@ -271,7 +271,7 @@ class NodeImpl;
  * mechanisms to get and set the relevant information.
  *
  */
-class KHTML_EXPORT Node
+class TDEHTML_EXPORT Node
 {
     friend class NamedNodeMap;
     friend class NodeList;
@@ -775,7 +775,7 @@ public:
      *
      * @exception DOMException
      * NO_MODIFICATION_ALLOWED_ERR: Raised if this node is readonly.
-     * Note: KHTML will also raise this if setContent is called on things
+     * Note: TDEHTML will also raise this if setContent is called on things
      * that do not have child nodes.
      *
      * @since 3.5.7
@@ -928,7 +928,7 @@ class NodeListImpl;
  * integral index, starting from 0.
  *
  */
-class KHTML_EXPORT NodeList
+class TDEHTML_EXPORT NodeList
 {
     friend class Element;
     friend class Node;

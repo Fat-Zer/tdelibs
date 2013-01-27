@@ -55,7 +55,7 @@ class DocumentImpl;
  * instruction </a> .
  *
  */
-class KHTML_EXPORT StyleSheet
+class TDEHTML_EXPORT StyleSheet
 {
 public:
     StyleSheet();
@@ -170,7 +170,7 @@ protected:
  * This exception is raised when a specific CSS operation is impossible
  * to perform.
  */
-class KHTML_EXPORT CSSException
+class TDEHTML_EXPORT CSSException
 {
 public:
     CSSException(unsigned short _code) { code = _code; }
@@ -204,7 +204,7 @@ class CSSRuleList;
  * content type is "text/css".
  *
  */
-class KHTML_EXPORT CSSStyleSheet : public StyleSheet
+class TDEHTML_EXPORT CSSStyleSheet : public StyleSheet
 {
 public:
     CSSStyleSheet();
@@ -306,7 +306,7 @@ class StyleSheet;
  * abstraction of an ordered collection of style sheets.
  *
  */
-class KHTML_EXPORT StyleSheetList
+class TDEHTML_EXPORT StyleSheetList
 {
 public:
     StyleSheetList();
@@ -360,7 +360,7 @@ class CSSStyleSheet;
  * strings.
  *
  */
-class KHTML_EXPORT MediaList
+class TDEHTML_EXPORT MediaList
 {
 public:
     MediaList();
@@ -444,7 +444,7 @@ protected:
 
 class LinkStyleImpl;
 
-class KHTML_EXPORT LinkStyle
+class TDEHTML_EXPORT LinkStyle
 {
 public:
     LinkStyle();
@@ -466,7 +466,7 @@ protected:
 
 class DocumentStyleImpl;
 
-class KHTML_EXPORT DocumentStyle
+class TDEHTML_EXPORT DocumentStyle
 {
 public:
     DocumentStyle();

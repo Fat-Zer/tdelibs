@@ -19,7 +19,7 @@
 #include "domtreeview.moc"
 #include "xml/dom_nodeimpl.h"
 
-DOMTreeView::DOMTreeView(TQWidget *parent, KHTMLPart *currentpart, const char * name) : KListView(parent, name)
+DOMTreeView::DOMTreeView(TQWidget *parent, TDEHTMLPart *currentpart, const char * name) : KListView(parent, name)
 {
     setCaption(name);
     setRootIsDecorated(true);

@@ -725,7 +725,7 @@ Value XMLHttpRequestProtoFunc::tryCall(ExecState *exec, Object &thisObj, const L
       }
 
       TQString method = args[0].toString(exec).qstring();
-      KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(Window::retrieveActive(exec)->part());
+      TDEHTMLPart *part = ::tqqt_cast<TDEHTMLPart *>(Window::retrieveActive(exec)->part());
       if (!part)
         return Undefined();
       KURL url = KURL(part->document().completeURL(args[1].toString(exec).qstring()).string());

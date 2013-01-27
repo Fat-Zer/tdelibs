@@ -36,7 +36,7 @@
  * If you want to add to your application a widget that only needs simple text
  * browsing, you can also use the KTextBrowser widget in tdeui.
  *
- * KHTMLPart :
+ * TDEHTMLPart :
  *   The main part/widget for using tdehtml.
  *
  * DOM :

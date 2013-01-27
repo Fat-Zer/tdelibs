@@ -127,7 +127,7 @@ void RenderContainer::addChild(RenderObject *newChild, RenderObject *beforeChild
             break;
         case NONE:
             // RenderHtml and some others can have display:none
-            // KHTMLAssert(false);
+            // TDEHTMLAssert(false);
             break;
         }
     }
@@ -167,7 +167,7 @@ void RenderContainer::addChild(RenderObject *newChild, RenderObject *beforeChild
 
 RenderObject* RenderContainer::removeChildNode(RenderObject* oldChild)
 {
-    KHTMLAssert(oldChild->parent() == this);
+    TDEHTMLAssert(oldChild->parent() == this);
 
     // So that we'll get the appropriate dirty bit set (either that a normal flow child got yanked or
     // that a positioned child got yanked).  We also repaint, so that the area exposed when the child
@@ -465,7 +465,7 @@ void RenderContainer::updateReplacedContent()
 
 void RenderContainer::appendChildNode(RenderObject* newChild)
 {
-    KHTMLAssert(newChild->parent() == 0);
+    TDEHTMLAssert(newChild->parent() == 0);
 
     newChild->setParent(this);
     RenderObject* lChild = lastChild();
@@ -499,10 +499,10 @@ void RenderContainer::insertChildNode(RenderObject* child, RenderObject* beforeC
         return;
     }
 
-    KHTMLAssert(!child->parent());
+    TDEHTMLAssert(!child->parent());
     while ( beforeChild->parent() != this && beforeChild->parent()->isAnonymousBlock() )
 	beforeChild = beforeChild->parent();
-    KHTMLAssert(beforeChild->parent() == this);
+    TDEHTMLAssert(beforeChild->parent() == this);
 
     if(beforeChild == firstChild())
         setFirstChild(child);
@@ -526,8 +526,8 @@ void RenderContainer::insertChildNode(RenderObject* child, RenderObject* beforeC
 
 void RenderContainer::layout()
 {
-    KHTMLAssert( needsLayout() );
-    KHTMLAssert( minMaxKnown() );
+    TDEHTMLAssert( needsLayout() );
+    TDEHTMLAssert( minMaxKnown() );
     const bool pagedMode = canvas()->pagedMode();
     RenderObject *child = firstChild();
     while( child ) {

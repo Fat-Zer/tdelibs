@@ -164,9 +164,9 @@ static int cssyylex( YYSTYPE *yylval ) {
 %token FONT_FACE_SYM
 %token CHARSET_SYM
 %token NAMESPACE_SYM
-%token KHTML_RULE_SYM
-%token KHTML_DECLS_SYM
-%token KHTML_VALUE_SYM
+%token TDEHTML_RULE_SYM
+%token TDEHTML_DECLS_SYM
+%token TDEHTML_VALUE_SYM
 
 %token IMPORTANT_SYM
 
@@ -261,20 +261,20 @@ stylesheet:
   ;
 
 tdehtml_rule:
-    KHTML_RULE_SYM '{' maybe_space ruleset maybe_space '}' {
+    TDEHTML_RULE_SYM '{' maybe_space ruleset maybe_space '}' {
         CSSParser *p = static_cast<CSSParser *>(parser);
 	p->rule = $4;
     }
 ;
 
 tdehtml_decls:
-    KHTML_DECLS_SYM declaration_block {
+    TDEHTML_DECLS_SYM declaration_block {
 	/* can be empty */
     }
 ;
 
 tdehtml_value:
-    KHTML_VALUE_SYM '{' maybe_space expr '}' {
+    TDEHTML_VALUE_SYM '{' maybe_space expr '}' {
 	CSSParser *p = static_cast<CSSParser *>(parser);
 	if ( $4 ) {
 	    p->valueList = $4;

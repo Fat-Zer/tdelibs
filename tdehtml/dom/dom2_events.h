@@ -61,7 +61,7 @@ class MutationEventImpl;
  * add them manually.
  *
  */
-class KHTML_EXPORT EventListener : public DomShared {
+class TDEHTML_EXPORT EventListener : public DomShared {
 public:
     EventListener();
     virtual ~EventListener();
@@ -108,7 +108,7 @@ protected:
  * implemented by the object passed to the event listener.
  *
  */
-class KHTML_EXPORT Event {
+class TDEHTML_EXPORT Event {
     friend class Document;
     friend class NodeImpl;
     friend class DocumentImpl;
@@ -259,7 +259,7 @@ protected:
  * descriptions.
  *
  */
-class KHTML_EXPORT EventException
+class TDEHTML_EXPORT EventException
 {
 public:
     EventException(unsigned short _code);
@@ -291,7 +291,7 @@ public:
  * with User Interface events.
  *
  */
-class KHTML_EXPORT UIEvent : public Event {
+class TDEHTML_EXPORT UIEvent : public Event {
 public:
     UIEvent();
     UIEvent(const UIEvent &other);
@@ -396,7 +396,7 @@ protected:
  * obtain notification of mouse events which occur within its descendent elements.
  *
  */
-class KHTML_EXPORT MouseEvent : public UIEvent {
+class TDEHTML_EXPORT MouseEvent : public UIEvent {
 public:
     MouseEvent();
     MouseEvent(const MouseEvent &other);
@@ -552,7 +552,7 @@ protected:
  * as specified in current DOM3 Events revision. This is doing heavy emulation
  * at the moment
  */
-class KHTML_EXPORT TextEvent : public UIEvent {
+class TDEHTML_EXPORT TextEvent : public UIEvent {
 public:
     TextEvent();
     TextEvent(const TextEvent &other);
@@ -735,7 +735,7 @@ protected:
  * associated with Mutation events.
  *
  */
-class KHTML_EXPORT MutationEvent : public Event {
+class TDEHTML_EXPORT MutationEvent : public Event {
 public:
     MutationEvent();
     MutationEvent(const MutationEvent &other);

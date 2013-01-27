@@ -50,9 +50,9 @@ nth             (-?[0-9]*n[\+-][0-9]+)|(-?[0-9]*n)
 "@font-face"            {yyTok = FONT_FACE_SYM; return yyTok;}
 "@charset"              {yyTok = CHARSET_SYM; return yyTok;}
 "@namespace"		{yyTok = NAMESPACE_SYM; return yyTok; }
-"@-tdehtml-rule"    {yyTok = KHTML_RULE_SYM; return yyTok; }
-"@-tdehtml-decls"   {yyTok = KHTML_DECLS_SYM; return yyTok; }
-"@-tdehtml-value"   {yyTok = KHTML_VALUE_SYM; return yyTok; }
+"@-tdehtml-rule"    {yyTok = TDEHTML_RULE_SYM; return yyTok; }
+"@-tdehtml-decls"   {yyTok = TDEHTML_DECLS_SYM; return yyTok; }
+"@-tdehtml-value"   {yyTok = TDEHTML_VALUE_SYM; return yyTok; }
 
 "!"{w}"important"         {yyTok = IMPORTANT_SYM; return yyTok;}
 

@@ -149,7 +149,7 @@ Type=bool
 [PropertyDef::X-TDE-BrowserView-Built-Into]
 Type=TQString
 
-# If the part has a plugin for KHTML Javascript's window.navigator.plugins
+# If the part has a plugin for TDEHTML Javascript's window.navigator.plugins
 # array, it should create a plugin info file and set this property to the
 # file path here. The path should be relative to TDE's data dir
 # ($TDEDIR/share/apps)

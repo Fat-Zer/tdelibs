@@ -180,8 +180,8 @@ short RenderListItem::marginRight() const
 
 void RenderListItem::layout( )
 {
-    KHTMLAssert( needsLayout() );
-    KHTMLAssert( minMaxKnown() );
+    TDEHTMLAssert( needsLayout() );
+    TDEHTMLAssert( minMaxKnown() );
 
     updateMarkerLocation();
     RenderBlock::layout();
@@ -369,7 +369,7 @@ void RenderListMarker::paint(PaintInfo& paintInfo, int _tx, int _ty)
 
 void RenderListMarker::layout()
 {
-    KHTMLAssert( needsLayout() );
+    TDEHTMLAssert( needsLayout() );
 
     if ( !minMaxKnown() )
         calcMinMaxWidth();
@@ -392,7 +392,7 @@ void RenderListMarker::setPixmap( const TQPixmap &p, const TQRect& r, CachedImag
 
 void RenderListMarker::calcMinMaxWidth()
 {
-    KHTMLAssert( !minMaxKnown() );
+    TDEHTMLAssert( !minMaxKnown() );
 
     m_markerWidth = m_width = 0;
 
@@ -541,7 +541,7 @@ void RenderListMarker::calcMinMaxWidth()
     case LNONE:
         break;
     default:
-        KHTMLAssert(false);
+        TDEHTMLAssert(false);
     }
     m_markerWidth = fm.width(m_item) + fm.width(TQString::fromLatin1(". "));
     }

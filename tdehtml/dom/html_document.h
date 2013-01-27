@@ -35,8 +35,8 @@
 
 #include <tdelibs_export.h>
 
-class KHTMLView;
-class KHTMLPart;
+class TDEHTMLView;
+class TDEHTMLPart;
 
 namespace DOM {
 
@@ -70,10 +70,10 @@ class HTMLElement;
  *
  *
  */
-class KHTML_EXPORT HTMLDocument : public Document
+class TDEHTML_EXPORT HTMLDocument : public Document
 {
-    friend class ::KHTMLView;
-    friend class ::KHTMLPart;
+    friend class ::TDEHTMLView;
+    friend class ::TDEHTMLPart;
     friend class DOMImplementation;
 public:
     HTMLDocument();
@@ -82,7 +82,7 @@ public:
      * Rendering information (like sizes, etc...) is only created if
      * parent != 0
      */
-    HTMLDocument(KHTMLView *parent);
+    HTMLDocument(TDEHTMLView *parent);
     HTMLDocument(const HTMLDocument &other);
     HTMLDocument(const Node &other) : Document(false)
          {(*this)=other;}

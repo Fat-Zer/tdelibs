@@ -417,7 +417,7 @@ bool Font::isFontScalable(TQFontDatabase& db, const TQFont& font)
 
 void Font::update( TQPaintDeviceMetrics* devMetrics ) const
 {
-    f.setFamily( fontDef.family.isEmpty() ? KHTMLFactory::defaultHTMLSettings()->stdFontName() : fontDef.family );
+    f.setFamily( fontDef.family.isEmpty() ? TDEHTMLFactory::defaultHTMLSettings()->stdFontName() : fontDef.family );
     f.setItalic( fontDef.italic );
     f.setWeight( fontDef.weight );
 

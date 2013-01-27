@@ -28,7 +28,7 @@
 #include <tqobject.h>
 #include <tqstringlist.h>
 
-class KHTMLView;
+class TDEHTMLView;
 
 // -------------------------------------------------------------------------
 namespace DOM {

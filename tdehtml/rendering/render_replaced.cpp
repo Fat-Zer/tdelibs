@@ -64,7 +64,7 @@ RenderReplaced::RenderReplaced(DOM::NodeImpl* node)
 
 void RenderReplaced::calcMinMaxWidth()
 {
-    KHTMLAssert( !minMaxKnown());
+    TDEHTMLAssert( !minMaxKnown());
 
 #ifdef DEBUG_LAYOUT
     kdDebug( 6040 ) << "RenderReplaced::calcMinMaxWidth() known=" << minMaxKnown() << endl;
@@ -102,7 +102,7 @@ RenderWidget::RenderWidget(DOM::NodeImpl* node)
     m_arena.reset(renderArena());
     m_resizePending = false;
     m_discardResizes = false;
-    m_isKHTMLWidget = false;
+    m_isTDEHTMLWidget = false;
     m_needsMask = false;
 
     // this is no real reference counting, its just there
@@ -131,7 +131,7 @@ void RenderWidget::detach()
 
 RenderWidget::~RenderWidget()
 {
-    KHTMLAssert( refCount() <= 0 );
+    TDEHTMLAssert( refCount() <= 0 );
 
     if(m_widget) {
         m_widget->hide();
@@ -157,7 +157,7 @@ void  RenderWidget::resizeWidget( int w, int h )
     w = kMin( w, 2000 );
 
     if (m_widget->width() != w || m_widget->height() != h) {
-        m_resizePending = isKHTMLWidget();
+        m_resizePending = isTDEHTMLWidget();
         ref();
         element()->ref();
         TQApplication::postEvent( this, new TQWidgetResizeEvent( w, h ) );
@@ -185,8 +185,8 @@ bool RenderWidget::event( TQEvent *e )
         m_widget->resize( re->w,  re->h );
         repaint();
     }
-    // eat all events - except if this is a frame (in which case KHTMLView handles it all)
-    if ( ::tqqt_cast<KHTMLView *>( m_widget ) )
+    // eat all events - except if this is a frame (in which case TDEHTMLView handles it all)
+    if ( ::tqqt_cast<TDEHTMLView *>( m_widget ) )
         return TQObject::event( e );
     return true;
 }
@@ -212,7 +212,7 @@ void RenderWidget::setQWidget(TQWidget *widget)
             connect( m_widget, TQT_SIGNAL( destroyed()), this, TQT_SLOT( slotWidgetDestructed()));
             m_widget->installEventFilter(this);
 
-            if ( (m_isKHTMLWidget = !strcmp(m_widget->name(), "__tdehtml")) && !::tqqt_cast<TQFrame*>(m_widget))
+            if ( (m_isTDEHTMLWidget = !strcmp(m_widget->name(), "__tdehtml")) && !::tqqt_cast<TQFrame*>(m_widget))
                 m_widget->setBackgroundMode( TQWidget::NoBackground );
 
             if (m_widget->focusPolicy() > TQ_StrongFocus)
@@ -236,12 +236,12 @@ void RenderWidget::setQWidget(TQWidget *widget)
 
 void RenderWidget::layout( )
 {
-    KHTMLAssert( needsLayout() );
-    KHTMLAssert( minMaxKnown() );
+    TDEHTMLAssert( needsLayout() );
+    TDEHTMLAssert( minMaxKnown() );
     if ( m_widget ) {
         resizeWidget( m_width-borderLeft()-borderRight()-paddingLeft()-paddingRight(),
                       m_height-borderTop()-borderBottom()-paddingTop()-paddingBottom() );
-        if (!isKHTMLWidget() && !isFrame() && !m_needsMask) {
+        if (!isTDEHTMLWidget() && !isFrame() && !m_needsMask) {
             m_needsMask = true;
             RenderLayer* rl = enclosingStackingContext();
             RenderLayer* el = enclosingLayer();
@@ -277,7 +277,7 @@ void RenderWidget::updateFromElement()
             int lowlightVal = 100 + (2*contrast_+4)*10;
 
             if (backgroundColor.isValid()) {
-                if (!isKHTMLWidget())
+                if (!isTDEHTMLWidget())
                     widget()->setEraseColor(backgroundColor );
                 for ( int i = 0; i < TQPalette::NColorGroups; ++i ) {
                     pal.setColor( (TQPalette::ColorGroup)i, TQColorGroup::Background, backgroundColor );
@@ -398,11 +398,11 @@ void RenderWidget::paint(PaintInfo& paintInfo, int _tx, int _ty)
     int xPos = _tx+borderLeft()+paddingLeft();
     int yPos = _ty+borderTop()+paddingTop();
 
-    bool tdehtmlw = isKHTMLWidget();
+    bool tdehtmlw = isTDEHTMLWidget();
     int childw = m_widget->width();
     int childh = m_widget->height();
-    if ( (childw == 2000 || childh == 3072) && m_widget->inherits( "KHTMLView" ) ) {
-        KHTMLView *vw = static_cast<KHTMLView *>(m_widget);
+    if ( (childw == 2000 || childh == 3072) && m_widget->inherits( "TDEHTMLView" ) ) {
+        TDEHTMLView *vw = static_cast<TDEHTMLView *>(m_widget);
         int cy = m_view->contentsY();
         int ch = m_view->visibleHeight();
 
@@ -612,8 +612,8 @@ void RenderWidget::paintWidget(PaintInfo& pI, TQWidget *widget, int tx, int ty)
 
 bool RenderWidget::eventFilter(TQObject* /*o*/, TQEvent* e)
 {
-    // no special event processing if this is a frame (in which case KHTMLView handles it all)
-    if ( ::tqqt_cast<KHTMLView *>( m_widget ) )
+    // no special event processing if this is a frame (in which case TDEHTMLView handles it all)
+    if ( ::tqqt_cast<TDEHTMLView *>( m_widget ) )
         return false;
     if ( !element() ) return true;
 
@@ -655,14 +655,14 @@ bool RenderWidget::eventFilter(TQObject* /*o*/, TQEvent* e)
         //kdDebug(6000) << "RenderWidget::eventFilter captures FocusIn" << endl;
         element()->getDocument()->setFocusNode(element());
 //         if ( isEditable() ) {
-//             KHTMLPartBrowserExtension *ext = static_cast<KHTMLPartBrowserExtension *>( element()->view->part()->browserExtension() );
+//             TDEHTMLPartBrowserExtension *ext = static_cast<TDEHTMLPartBrowserExtension *>( element()->view->part()->browserExtension() );
 //             if ( ext )  ext->editableWidgetFocused( m_widget );
 //         }
         break;
     case TQEvent::KeyPress:
     case TQEvent::KeyRelease:
     // TODO this seems wrong - Qt events are not correctly translated to DOM ones,
-    // like in KHTMLView::dispatchKeyEvent()
+    // like in TDEHTMLView::dispatchKeyEvent()
         if (element()->dispatchKeyEvent(TQT_TQKEYEVENT(e),false))
             filtered = true;
         break;
@@ -837,13 +837,13 @@ bool RenderWidget::handleEvent(const DOM::EventImpl& ev)
         const KeyEventBaseImpl& domKeyEv = static_cast<const KeyEventBaseImpl &>(ev);
         if (domKeyEv.isSynthetic() && !acceptsSyntheticEvents()) break;
 
-        // See KHTMLView::dispatchKeyEvent: autorepeat is just keypress in the DOM
+        // See TDEHTMLView::dispatchKeyEvent: autorepeat is just keypress in the DOM
         // but it's keyrelease+keypress in Qt. So here we do the inverse mapping as
-        // the one done in KHTMLView: generate two events for one DOM auto-repeat keypress.
+        // the one done in TDEHTMLView: generate two events for one DOM auto-repeat keypress.
         // Similarly, DOM keypress events with non-autorepeat Qt event do nothing here,
         // because the matching Qt keypress event was already sent from DOM keydown event.
 
-        // Reverse drawing as the one in KHTMLView:
+        // Reverse drawing as the one in TDEHTMLView:
         //  DOM:   Down      Press   |       Press                             |     Up
         //  Qt:    (nothing) Press   | Release(autorepeat) + Press(autorepeat) |   Release
         //

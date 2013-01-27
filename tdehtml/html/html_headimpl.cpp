@@ -175,7 +175,7 @@ void HTMLLinkElementImpl::process()
     TQString type = getAttribute(ATTR_TYPE).string().lower();
     TQString rel = getAttribute(ATTR_REL).string().lower();
 
-    KHTMLPart* part = getDocument()->view() ? getDocument()->view()->part() : 0;
+    TDEHTMLPart* part = getDocument()->view() ? getDocument()->view()->part() : 0;
 
     // IE extension: location of small icon for locationbar / bookmarks
     // Uses both "shortcut icon" and "icon"
@@ -408,7 +408,7 @@ void HTMLScriptElementImpl::evaluateScript(const TQString &URL, const DOMString 
     if (m_evaluated)
         return;
 
-    KHTMLPart *part = getDocument()->part();
+    TDEHTMLPart *part = getDocument()->part();
     if (part) {
         KJSProxy *proxy = KJSProxy::proxy(part);
         if (proxy) {

@@ -83,8 +83,8 @@ void RenderFormElement::updateFromElement()
 
 void RenderFormElement::layout()
 {
-    KHTMLAssert( needsLayout() );
-    KHTMLAssert( minMaxKnown() );
+    TDEHTMLAssert( needsLayout() );
+    TDEHTMLAssert( minMaxKnown() );
 
     // minimum height
     m_height = 0;
@@ -103,13 +103,13 @@ TQ_Alignment RenderFormElement::textAlignment() const
 {
     switch (style()->textAlign()) {
         case LEFT:
-        case KHTML_LEFT:
+        case TDEHTML_LEFT:
             return Qt::AlignLeft;
         case RIGHT:
-        case KHTML_RIGHT:
+        case TDEHTML_RIGHT:
             return Qt::AlignRight;
         case CENTER:
-        case KHTML_CENTER:
+        case TDEHTML_CENTER:
             return Qt::AlignHCenter;
         case JUSTIFY:
             // Just fall into the auto code for justify.
@@ -152,7 +152,7 @@ RenderCheckBox::RenderCheckBox(HTMLInputElementImpl *element)
 
 void RenderCheckBox::calcMinMaxWidth()
 {
-    KHTMLAssert( !minMaxKnown() );
+    TDEHTMLAssert( !minMaxKnown() );
 
     TQCheckBox *cb = static_cast<TQCheckBox *>( m_widget );
     TQSize s( cb->style().pixelMetric( TQStyle::PM_IndicatorWidth ),
@@ -204,7 +204,7 @@ void RenderRadioButton::updateFromElement()
 
 void RenderRadioButton::calcMinMaxWidth()
 {
-    KHTMLAssert( !minMaxKnown() );
+    TDEHTMLAssert( !minMaxKnown() );
 
     TQRadioButton *rb = static_cast<TQRadioButton *>( m_widget );
     TQSize s( rb->style().pixelMetric( TQStyle::PM_ExclusiveIndicatorWidth ),
@@ -251,7 +251,7 @@ TQString RenderSubmitButton::rawText()
 
 void RenderSubmitButton::calcMinMaxWidth()
 {
-    KHTMLAssert( !minMaxKnown() );
+    TDEHTMLAssert( !minMaxKnown() );
 
     TQString raw = rawText();
     TQPushButton* pb = static_cast<TQPushButton*>(m_widget);
@@ -307,7 +307,7 @@ RenderResetButton::RenderResetButton(HTMLInputElementImpl *element)
 
 // -------------------------------------------------------------------------------
 
-LineEditWidget::LineEditWidget(DOM::HTMLInputElementImpl* input, KHTMLView* view, TQWidget* parent)
+LineEditWidget::LineEditWidget(DOM::HTMLInputElementImpl* input, TDEHTMLView* view, TQWidget* parent)
     : KLineEdit(parent, "__tdehtml"), m_input(input), m_view(view), m_spell(0)
 {
     setMouseTracking(true);
@@ -532,7 +532,7 @@ void RenderLineEdit::handleFocusOut()
 
 void RenderLineEdit::calcMinMaxWidth()
 {
-    KHTMLAssert( !minMaxKnown() );
+    TDEHTMLAssert( !minMaxKnown() );
 
     const TQFontMetrics &fm = style()->fontMetrics();
     TQSize s;
@@ -797,7 +797,7 @@ RenderFileButton::RenderFileButton(HTMLInputElementImpl *element)
 
 void RenderFileButton::calcMinMaxWidth()
 {
-    KHTMLAssert( !minMaxKnown() );
+    TDEHTMLAssert( !minMaxKnown() );
 
     const TQFontMetrics &fm = style()->fontMetrics();
     int size = element()->size();
@@ -1032,7 +1032,7 @@ void RenderSelect::updateFromElement()
                     static_cast<KComboBox*>(m_widget)->insertItem(text, listIndex);
             }
             else
-                KHTMLAssert(false);
+                TDEHTMLAssert(false);
             m_selectionChanged = true;
         }
 
@@ -1058,7 +1058,7 @@ void RenderSelect::updateFromElement()
 
 void RenderSelect::calcMinMaxWidth()
 {
-    KHTMLAssert( !minMaxKnown() );
+    TDEHTMLAssert( !minMaxKnown() );
 
     if (m_optionsChanged)
         updateFromElement();
@@ -1074,8 +1074,8 @@ void RenderSelect::calcMinMaxWidth()
 
 void RenderSelect::layout( )
 {
-    KHTMLAssert(needsLayout());
-    KHTMLAssert(minMaxKnown());
+    TDEHTMLAssert(needsLayout());
+    TDEHTMLAssert(minMaxKnown());
 
     // ### maintain selection properly between type/size changes, and work
     // out how to handle multiselect->singleselect (probably just select
@@ -1137,7 +1137,7 @@ void RenderSelect::slotSelected(int index) // emitted by the combobox only
 {
     if ( m_ignoreSelectEvents ) return;
 
-    KHTMLAssert( !m_useListBox );
+    TDEHTMLAssert( !m_useListBox );
 
     TQMemArray<HTMLGenericFormElementImpl*> listItems = element()->listItems();
     if(index >= 0 && index < int(listItems.size()))
@@ -1561,7 +1561,7 @@ void TextAreaWidget::slotFind()
     if ( m_findDlg ) {
       KWin::activateWindow( m_findDlg->winId() );
     } else {
-      m_findDlg = new KFindDialog(false, this, "KHTML Text Area Find Dialog");
+      m_findDlg = new KFindDialog(false, this, "TDEHTML Text Area Find Dialog");
       connect( m_findDlg, TQT_SIGNAL(okClicked()), this, TQT_SLOT(slotDoFind()) );
     }
     m_findDlg->show();
@@ -1576,7 +1576,7 @@ void TextAreaWidget::slotReplace()
     if ( m_repDlg ) {
       KWin::activateWindow( m_repDlg->winId() );
     } else {
-      m_repDlg = new KReplaceDialog(this, "KHTMLText Area Replace Dialog", 0,
+      m_repDlg = new KReplaceDialog(this, "TDEHTMLText Area Replace Dialog", 0,
                                     TQStringList(), TQStringList(), false);
       connect( m_repDlg, TQT_SIGNAL(okClicked()), this, TQT_SLOT(slotDoReplace()) );
     }
@@ -1614,7 +1614,7 @@ RenderTextArea::RenderTextArea(HTMLTextAreaElementImpl *element)
 
     TextAreaWidget *edit = new TextAreaWidget(element->wrap(), view());
     setQWidget(edit);
-    const KHTMLSettings *settings = view()->part()->settings();
+    const TDEHTMLSettings *settings = view()->part()->settings();
     edit->setCheckSpellingEnabled( settings->autoSpellCheck() );
     edit->setTabChangesFocus( ! settings->allowTabulation() );
 
@@ -1645,7 +1645,7 @@ void RenderTextArea::handleFocusOut()
 
 void RenderTextArea::calcMinMaxWidth()
 {
-    KHTMLAssert( !minMaxKnown() );
+    TDEHTMLAssert( !minMaxKnown() );
 
     TextAreaWidget* w = static_cast<TextAreaWidget*>(m_widget);
     const TQFontMetrics &m = style()->fontMetrics();
@@ -1680,7 +1680,7 @@ void RenderTextArea::setStyle(RenderStyle* _style)
 
 void RenderTextArea::layout()
 {
-    KHTMLAssert( needsLayout() );
+    TDEHTMLAssert( needsLayout() );
 
     RenderFormElement::layout();
 

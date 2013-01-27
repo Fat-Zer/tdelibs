@@ -34,40 +34,40 @@
 #include <kmimetype.h>
 #include <klocale.h>
 
-K_EXPORT_COMPONENT_FACTORY( tdehtmlimagefactory /*NOT the part name, see Makefile.am*/, KHTMLImageFactory )
+K_EXPORT_COMPONENT_FACTORY( tdehtmlimagefactory /*NOT the part name, see Makefile.am*/, TDEHTMLImageFactory )
 
-TDEInstance *KHTMLImageFactory::s_instance = 0;
+TDEInstance *TDEHTMLImageFactory::s_instance = 0;
 
-KHTMLImageFactory::KHTMLImageFactory()
+TDEHTMLImageFactory::TDEHTMLImageFactory()
 {
     s_instance = new TDEInstance( "tdehtmlimage" );
 }
 
-KHTMLImageFactory::~KHTMLImageFactory()
+TDEHTMLImageFactory::~TDEHTMLImageFactory()
 {
     delete s_instance;
 }
 
-KParts::Part *KHTMLImageFactory::createPartObject( TQWidget *parentWidget, const char *widgetName,
+KParts::Part *TDEHTMLImageFactory::createPartObject( TQWidget *parentWidget, const char *widgetName,
                                                    TQObject *parent, const char *name,
                                                    const char *className, const TQStringList & )
 {
-  KHTMLPart::GUIProfile prof = KHTMLPart::DefaultGUI;
+  TDEHTMLPart::GUIProfile prof = TDEHTMLPart::DefaultGUI;
   if ( strcmp( className, "Browser/View" ) == 0 )
-    prof = KHTMLPart::BrowserViewGUI;
-  return new KHTMLImage( parentWidget, widgetName, parent, name, prof );
+    prof = TDEHTMLPart::BrowserViewGUI;
+  return new TDEHTMLImage( parentWidget, widgetName, parent, name, prof );
 }
 
-KHTMLImage::KHTMLImage( TQWidget *parentWidget, const char *widgetName,
-                        TQObject *parent, const char *name, KHTMLPart::GUIProfile prof )
+TDEHTMLImage::TDEHTMLImage( TQWidget *parentWidget, const char *widgetName,
+                        TQObject *parent, const char *name, TDEHTMLPart::GUIProfile prof )
     : KParts::ReadOnlyPart( parent, name ), m_image( 0 )
 {
-    KHTMLPart* parentPart = ::tqqt_cast<KHTMLPart *>( parent );
-    setInstance( KHTMLImageFactory::instance(), prof == KHTMLPart::BrowserViewGUI && !parentPart );
+    TDEHTMLPart* parentPart = ::tqqt_cast<TDEHTMLPart *>( parent );
+    setInstance( TDEHTMLImageFactory::instance(), prof == TDEHTMLPart::BrowserViewGUI && !parentPart );
 
     TQVBox *box = new TQVBox( parentWidget, widgetName );
 
-    m_tdehtml = new KHTMLPart( box, widgetName, this, "htmlimagepart", prof );
+    m_tdehtml = new TDEHTMLPart( box, widgetName, this, "htmlimagepart", prof );
     m_tdehtml->setAutoloadImages( true );
     m_tdehtml->widget()->installEventFilter(this);
     connect( m_tdehtml->view(), TQT_SIGNAL( finishedLayout() ), this, TQT_SLOT( restoreScrollPosition() ) );
@@ -77,7 +77,7 @@ KHTMLImage::KHTMLImage( TQWidget *parentWidget, const char *widgetName,
     // VBox can't take focus, so pass it on to sub-widget
     box->setFocusProxy( m_tdehtml->widget() );
 
-    m_ext = new KHTMLImageBrowserExtension( this, "be" );
+    m_ext = new TDEHTMLImageBrowserExtension( this, "be" );
 
     // Remove unnecessary actions.
     KAction *encodingAction = actionCollection()->action( "setEncoding" );
@@ -103,7 +103,7 @@ KHTMLImage::KHTMLImage( TQWidget *parentWidget, const char *widgetName,
     // forward important signals from the tdehtml part
 
     // forward opening requests to parent frame (if existing)
-    KHTMLPart *p = ::tqqt_cast<KHTMLPart *>(parent);
+    TDEHTMLPart *p = ::tqqt_cast<TDEHTMLPart *>(parent);
     KParts::BrowserExtension *be = p ? p->browserExtension() : m_ext;
     connect(m_tdehtml->browserExtension(), TQT_SIGNAL(openURLRequestDelayed(const KURL &, const KParts::URLArgs &)),
     		be, TQT_SIGNAL(openURLRequestDelayed(const KURL &, const KParts::URLArgs &)));
@@ -118,7 +118,7 @@ KHTMLImage::KHTMLImage( TQWidget *parentWidget, const char *widgetName,
     m_ext->setURLDropHandlingEnabled( true );
 }
 
-KHTMLImage::~KHTMLImage()
+TDEHTMLImage::~TDEHTMLImage()
 {
     disposeImage();
 
@@ -130,10 +130,10 @@ KHTMLImage::~KHTMLImage()
     // when we're in a html frameset and the view dies first, then it will also
     // kill the htmlpart
     if ( m_tdehtml )
-        delete static_cast<KHTMLPart *>( m_tdehtml );
+        delete static_cast<TDEHTMLPart *>( m_tdehtml );
 }
 
-bool KHTMLImage::openURL( const KURL &url )
+bool TDEHTMLImage::openURL( const KURL &url )
 {
     static const TQString &html = TDEGlobal::staticQString( "<html><body><img src=\"%1\"></body></html>" );
 
@@ -175,14 +175,14 @@ bool KHTMLImage::openURL( const KURL &url )
     return true;
 }
 
-bool KHTMLImage::closeURL()
+bool TDEHTMLImage::closeURL()
 {
     disposeImage();
     return m_tdehtml->closeURL();
 }
 
 // This can happen after openURL returns, or directly from m_image->ref()
-void KHTMLImage::notifyFinished( tdehtml::CachedObject *o )
+void TDEHTMLImage::notifyFinished( tdehtml::CachedObject *o )
 {
     if ( !m_image || o != m_image )
         return;
@@ -214,14 +214,14 @@ void KHTMLImage::notifyFinished( tdehtml::CachedObject *o )
     emit setStatusBarText(i18n("Done."));
 }
 
-void KHTMLImage::restoreScrollPosition()
+void TDEHTMLImage::restoreScrollPosition()
 {
     if ( m_tdehtml->view()->contentsY() == 0 ) {
         m_tdehtml->view()->setContentsPos( m_xOffset, m_yOffset );
     }
 }
 
-void KHTMLImage::guiActivateEvent( KParts::GUIActivateEvent *e )
+void TDEHTMLImage::guiActivateEvent( KParts::GUIActivateEvent *e )
 {
     // prevent the base implementation from emitting setWindowCaption with
     // our url. It destroys our pretty, previously caption. Konq saves/restores
@@ -232,7 +232,7 @@ void KHTMLImage::guiActivateEvent( KParts::GUIActivateEvent *e )
 }
 
 /*
-void KHTMLImage::slotImageJobFinished( TDEIO::Job *job )
+void TDEHTMLImage::slotImageJobFinished( TDEIO::Job *job )
 {
     if ( job->error() )
     {
@@ -246,7 +246,7 @@ void KHTMLImage::slotImageJobFinished( TDEIO::Job *job )
     }
 }
 
-void KHTMLImage::updateWindowCaption()
+void TDEHTMLImage::updateWindowCaption()
 {
     if ( !m_tdehtml )
         return;
@@ -287,7 +287,7 @@ void KHTMLImage::updateWindowCaption()
 }
 */
 
-void KHTMLImage::disposeImage()
+void TDEHTMLImage::disposeImage()
 {
     if ( !m_image )
         return;
@@ -296,7 +296,7 @@ void KHTMLImage::disposeImage()
     m_image = 0;
 }
 
-bool KHTMLImage::eventFilter(TQObject *, TQEvent *e) {
+bool TDEHTMLImage::eventFilter(TQObject *, TQEvent *e) {
     switch (e->type()) {
       case TQEvent::DragEnter:
       case TQEvent::DragMove:
@@ -304,7 +304,7 @@ bool KHTMLImage::eventFilter(TQObject *, TQEvent *e) {
       case TQEvent::Drop: {
         // find out if this part is embedded in a frame, and send the
 	// event to its outside widget
-	KHTMLPart *p = ::tqqt_cast<KHTMLPart *>(parent());
+	TDEHTMLPart *p = ::tqqt_cast<TDEHTMLPart *>(parent());
 	if (p)
 	    return TQApplication::sendEvent(p->widget(), e);
         // otherwise simply forward all dnd events to the part widget,
@@ -316,37 +316,37 @@ bool KHTMLImage::eventFilter(TQObject *, TQEvent *e) {
     return false;
 }
 
-KHTMLImageBrowserExtension::KHTMLImageBrowserExtension( KHTMLImage *parent, const char *name )
+TDEHTMLImageBrowserExtension::TDEHTMLImageBrowserExtension( TDEHTMLImage *parent, const char *name )
     : KParts::BrowserExtension( parent, name )
 {
     m_imgPart = parent;
 }
 
-int KHTMLImageBrowserExtension::xOffset()
+int TDEHTMLImageBrowserExtension::xOffset()
 {
     return m_imgPart->doc()->view()->contentsX();
 }
 
-int KHTMLImageBrowserExtension::yOffset()
+int TDEHTMLImageBrowserExtension::yOffset()
 {
     return m_imgPart->doc()->view()->contentsY();
 }
 
-void KHTMLImageBrowserExtension::print()
+void TDEHTMLImageBrowserExtension::print()
 {
-    static_cast<KHTMLPartBrowserExtension *>( m_imgPart->doc()->browserExtension() )->print();
+    static_cast<TDEHTMLPartBrowserExtension *>( m_imgPart->doc()->browserExtension() )->print();
 }
 
-void KHTMLImageBrowserExtension::reparseConfiguration()
+void TDEHTMLImageBrowserExtension::reparseConfiguration()
 {
-    static_cast<KHTMLPartBrowserExtension *>( m_imgPart->doc()->browserExtension() )->reparseConfiguration();
+    static_cast<TDEHTMLPartBrowserExtension *>( m_imgPart->doc()->browserExtension() )->reparseConfiguration();
     m_imgPart->doc()->setAutoloadImages( true );
 }
 
 
-void KHTMLImageBrowserExtension::disableScrolling()
+void TDEHTMLImageBrowserExtension::disableScrolling()
 {
-    static_cast<KHTMLPartBrowserExtension *>( m_imgPart->doc()->browserExtension() )->disableScrolling();
+    static_cast<TDEHTMLPartBrowserExtension *>( m_imgPart->doc()->browserExtension() )->disableScrolling();
 }
 
 using namespace KParts;

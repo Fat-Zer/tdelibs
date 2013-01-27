@@ -26,7 +26,7 @@
 
 #include "misc/loader_client.h"
 
-class KHTMLPart;
+class TDEHTMLPart;
 class TDEInstance;
 
 namespace tdehtml
@@ -37,12 +37,12 @@ namespace tdehtml
 /**
  * @internal
  */
-class KHTMLImageFactory : public KParts::Factory
+class TDEHTMLImageFactory : public KParts::Factory
 {
     Q_OBJECT
 public:
-    KHTMLImageFactory();
-    virtual ~KHTMLImageFactory();
+    TDEHTMLImageFactory();
+    virtual ~TDEHTMLImageFactory();
 
     virtual KParts::Part *createPartObject( TQWidget *parentWidget, const char *widgetName,
                                             TQObject *parent, const char *name,
@@ -57,13 +57,13 @@ private:
 /**
  * @internal
  */
-class KHTMLImage : public KParts::ReadOnlyPart, public tdehtml::CachedObjectClient
+class TDEHTMLImage : public KParts::ReadOnlyPart, public tdehtml::CachedObjectClient
 {
     Q_OBJECT
 public:
-    KHTMLImage( TQWidget *parentWidget, const char *widgetName,
-                TQObject *parent, const char *name, KHTMLPart::GUIProfile prof );
-    virtual ~KHTMLImage();
+    TDEHTMLImage( TQWidget *parentWidget, const char *widgetName,
+                TQObject *parent, const char *name, TDEHTMLPart::GUIProfile prof );
+    virtual ~TDEHTMLImage();
 
     virtual bool openFile() { return true; } // grmbl, should be non-pure in part.h, IMHO
 
@@ -71,7 +71,7 @@ public:
 
     virtual bool closeURL();
 
-    KHTMLPart *doc() const { return m_tdehtml; }
+    TDEHTMLPart *doc() const { return m_tdehtml; }
 
     virtual void notifyFinished( tdehtml::CachedObject *o );
 
@@ -88,7 +88,7 @@ private slots:
 private:
     void disposeImage();
 
-    TQGuardedPtr<KHTMLPart> m_tdehtml;
+    TQGuardedPtr<TDEHTMLPart> m_tdehtml;
     KParts::BrowserExtension *m_ext;
     TQString m_mimeType;
     tdehtml::CachedImage *m_image;
@@ -98,11 +98,11 @@ private:
 /**
  * @internal
  */
-class KHTMLImageBrowserExtension : public KParts::BrowserExtension
+class TDEHTMLImageBrowserExtension : public KParts::BrowserExtension
 {
     Q_OBJECT
 public:
-    KHTMLImageBrowserExtension( KHTMLImage *parent, const char *name = 0 );
+    TDEHTMLImageBrowserExtension( TDEHTMLImage *parent, const char *name = 0 );
 
     virtual int xOffset();
     virtual int yOffset();
@@ -113,7 +113,7 @@ protected slots:
     void disableScrolling();
 
 private:
-    KHTMLImage *m_imgPart;
+    TDEHTMLImage *m_imgPart;
 };
 
 #endif

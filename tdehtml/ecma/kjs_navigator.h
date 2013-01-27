@@ -23,13 +23,13 @@
 
 #include <kjs/object.h>
 
-class KHTMLPart;
+class TDEHTMLPart;
 
 namespace KJS {
 
   class Navigator : public ObjectImp {
   public:
-    Navigator(ExecState *exec, KHTMLPart *p);
+    Navigator(ExecState *exec, TDEHTMLPart *p);
     virtual Value get(ExecState *exec, const Identifier &propertyName) const;
     Value getValueProperty(ExecState *exec, int token) const;
     virtual const ClassInfo* classInfo() const { return &info; }
@@ -37,9 +37,9 @@ namespace KJS {
     enum { AppCodeName, AppName, AppVersion, Language, UserAgent, UserLanguage, Platform,
            _Plugins, _MimeTypes, Product,  ProductSub, Vendor, CookieEnabled, JavaEnabled, 
            BrowserLanguage, CpuClass };
-    KHTMLPart *part() const { return m_part; }
+    TDEHTMLPart *part() const { return m_part; }
   private:
-    KHTMLPart *m_part;
+    TDEHTMLPart *m_part;
   };
 
   // Hashtable enums

@@ -26,7 +26,7 @@
 #include <tqstring.h>
 #include <sys/time.h>
 
-class KHTMLPart;
+class TDEHTMLPart;
 
 namespace DOM {
   class Node;
@@ -72,8 +72,8 @@ public:
   tdehtml::ChildFrame *m_frame;
   int m_handlerLineno;
 
-  // Helper method, to access the private KHTMLPart::jScript()
-  static KJSProxy *proxy( KHTMLPart *part );
+  // Helper method, to access the private TDEHTMLPart::jScript()
+  static KJSProxy *proxy( TDEHTMLPart *part );
 };
 
 class KJSCPUGuard {

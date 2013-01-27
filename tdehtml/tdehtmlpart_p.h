@@ -33,7 +33,7 @@
 #include <tdeparts/partmanager.h>
 #include <tdeparts/statusbarextension.h>
 #include <tdeparts/browserextension.h>
-#ifndef KHTML_NO_WALLET
+#ifndef TDEHTML_NO_WALLET
 #include <tdewallet.h>
 #endif
 
@@ -103,7 +103,7 @@ namespace tdehtml
     bool m_bCompleted;
     TQString m_name;
     KParts::URLArgs m_args;
-    TQGuardedPtr<KHTMLRun> m_run;
+    TQGuardedPtr<TDEHTMLRun> m_run;
     bool m_bPreloaded;
     KURL m_workingURL;
     Type m_type;
@@ -116,36 +116,36 @@ namespace tdehtml
 
 }
 
-struct KHTMLFrameList : public TQValueList<tdehtml::ChildFrame*>
+struct TDEHTMLFrameList : public TQValueList<tdehtml::ChildFrame*>
 {
     Iterator find( const TQString &name ) KDE_NO_EXPORT;
 };
 
-typedef KHTMLFrameList::ConstIterator ConstFrameIt;
-typedef KHTMLFrameList::Iterator FrameIt;
+typedef TDEHTMLFrameList::ConstIterator ConstFrameIt;
+typedef TDEHTMLFrameList::Iterator FrameIt;
 
 static int tdehtml_part_dcop_counter = 0;
 
 
-class KHTMLWalletQueue : public TQObject
+class TDEHTMLWalletQueue : public TQObject
 {
   Q_OBJECT
   public:
-    KHTMLWalletQueue(TQObject *parent) : TQObject(parent) {
-#ifndef KHTML_NO_WALLET
+    TDEHTMLWalletQueue(TQObject *parent) : TQObject(parent) {
+#ifndef TDEHTML_NO_WALLET
       wallet = 0L;
-#endif // KHTML_NO_WALLET
+#endif // TDEHTML_NO_WALLET
     }
 
-    virtual ~KHTMLWalletQueue() {
-#ifndef KHTML_NO_WALLET
+    virtual ~TDEHTMLWalletQueue() {
+#ifndef TDEHTML_NO_WALLET
       delete wallet;
       wallet = 0L;
-#endif // KHTML_NO_WALLET
+#endif // TDEHTML_NO_WALLET
     }
-#ifndef KHTML_NO_WALLET
+#ifndef TDEHTML_NO_WALLET
     KWallet::Wallet *wallet;
-#endif // KHTML_NO_WALLET
+#endif // TDEHTML_NO_WALLET
     typedef QPair<DOM::HTMLFormElementImpl*, TQGuardedPtr<DOM::DocumentImpl> > Caller;
     typedef TQValueList<Caller> CallerList;
     CallerList callers;
@@ -156,7 +156,7 @@ class KHTMLWalletQueue : public TQObject
 
   public slots:
     void walletOpened(bool success) {
-#ifndef KHTML_NO_WALLET
+#ifndef TDEHTML_NO_WALLET
       if (!success) {
         delete wallet;
         wallet = 0L;
@@ -179,16 +179,16 @@ class KHTMLWalletQueue : public TQObject
       callers.clear();
       savers.clear();
       wallet = 0L; // gave it away
-#endif // KHTML_NO_WALLET
+#endif // TDEHTML_NO_WALLET
     }
 };
 
-class KHTMLPartPrivate
+class TDEHTMLPartPrivate
 {
-  KHTMLPartPrivate(const KHTMLPartPrivate & other);
-  KHTMLPartPrivate& operator=(const KHTMLPartPrivate&);
+  TDEHTMLPartPrivate(const TDEHTMLPartPrivate & other);
+  TDEHTMLPartPrivate& operator=(const TDEHTMLPartPrivate&);
 public:
-  KHTMLPartPrivate(TQObject* parent)
+  TDEHTMLPartPrivate(TQObject* parent)
   {
     m_doc = 0L;
     m_decoder = 0L;
@@ -200,7 +200,7 @@ public:
     m_bLoadEventEmitted = true;
     m_cachePolicy = TDEIO::CC_Verify;
     m_manager = 0L;
-    m_settings = new KHTMLSettings(*KHTMLFactory::defaultHTMLSettings());
+    m_settings = new TDEHTMLSettings(*TDEHTMLFactory::defaultHTMLSettings());
     m_bClearing = false;
     m_bCleared = false;
     m_zoomFactor = 100;
@@ -218,7 +218,7 @@ public:
     m_findDialog = 0;
     m_ssl_in_use = false;
     m_jsedlg = 0;
-    m_formNotification = KHTMLPart::NoNotification;
+    m_formNotification = TDEHTMLPart::NoNotification;
 
 #ifndef Q_WS_QWS
     m_javaContext = 0;
@@ -252,9 +252,9 @@ public:
     m_autoDetectLanguage = tdehtml::Decoder::SemiautomaticDetection;
 
     // inherit settings from parent
-    if(parent && parent->inherits("KHTMLPart"))
+    if(parent && parent->inherits("TDEHTMLPart"))
     {
-        KHTMLPart* part = static_cast<KHTMLPart*>(parent);
+        TDEHTMLPart* part = static_cast<TDEHTMLPart*>(parent);
         if(part->d)
         {
             m_bJScriptForce = part->d->m_bJScriptForce;
@@ -289,13 +289,13 @@ public:
     m_userStyleSheetLastModified = 0;
     m_wq = 0;
   }
-  ~KHTMLPartPrivate()
+  ~TDEHTMLPartPrivate()
   {
     delete m_dcopobject;
     delete m_statusBarExtension;
     delete m_extension;
     delete m_settings;
-#ifndef KHTML_NO_WALLET
+#ifndef TDEHTML_NO_WALLET
     delete m_wallet;
 #endif
 #ifndef Q_WS_QWS
@@ -304,19 +304,19 @@ public:
   }
 
   TQGuardedPtr<tdehtml::ChildFrame> m_frame;
-  KHTMLFrameList m_frames;
-  KHTMLFrameList m_objects;
+  TDEHTMLFrameList m_frames;
+  TDEHTMLFrameList m_objects;
 
-  TQGuardedPtr<KHTMLView> m_view;
-  KHTMLPartBrowserExtension *m_extension;
+  TQGuardedPtr<TDEHTMLView> m_view;
+  TDEHTMLPartBrowserExtension *m_extension;
   KParts::StatusBarExtension *m_statusBarExtension;
-  KHTMLPartBrowserHostExtension *m_hostExtension;
+  TDEHTMLPartBrowserHostExtension *m_hostExtension;
   KURLLabel* m_statusBarIconLabel;
   KURLLabel* m_statusBarWalletLabel;
   KURLLabel* m_statusBarUALabel;
   KURLLabel* m_statusBarJSErrorLabel;
   KURLLabel* m_statusBarPopupLabel;
-  TQValueList<TQGuardedPtr<KHTMLPart> > m_suppressedPopupOriginParts;
+  TQValueList<TQGuardedPtr<TDEHTMLPart> > m_suppressedPopupOriginParts;
   int m_openableSuppressedPopups;
   DOM::DocumentImpl *m_doc;
   tdehtml::Decoder *m_decoder;
@@ -354,7 +354,7 @@ public:
   KJavaAppletContext *m_javaContext;
 #endif
 
-  KHTMLSettings *m_settings;
+  TDEHTMLSettings *m_settings;
 
   TDEIO::TransferJob * m_job;
 
@@ -402,8 +402,8 @@ public:
   KAction *m_paSecurity;
   KActionMenu *m_paSetEncoding;
   KSelectAction *m_paUseStylesheet;
-  KHTMLZoomFactorAction *m_paIncZoomFactor;
-  KHTMLZoomFactorAction *m_paDecZoomFactor;
+  TDEHTMLZoomFactorAction *m_paIncZoomFactor;
+  TDEHTMLZoomFactorAction *m_paDecZoomFactor;
   KAction *m_paLoadImages;
   KAction *m_paFind;
   KAction *m_paFindNext;
@@ -421,7 +421,7 @@ public:
   KParts::PartManager *m_manager;
 
   TQString m_popupMenuXML;
-  KHTMLPart::GUIProfile m_guiProfile;
+  TDEHTMLPart::GUIProfile m_guiProfile;
 
   int m_zoomFactor;
 
@@ -476,7 +476,7 @@ public:
   int m_focusNodeNumber;
 
   TQPoint m_dragStartPos;
-#ifdef KHTML_NO_SELECTION
+#ifdef TDEHTML_NO_SELECTION
   TQPoint m_dragLastPos;
 #endif
 
@@ -490,7 +490,7 @@ public:
   unsigned long m_totalObjectCount;
   unsigned int m_jobPercent;
 
-  KHTMLPart::FormNotification m_formNotification;
+  TDEHTMLPart::FormNotification m_formNotification;
   TQTimer m_progressUpdateTimer;
 
   TQStringList m_pluginPageQuestionAsked;
@@ -543,7 +543,7 @@ public:
 
   //TQGuardedPtr<KParts::Part> m_activeFrame;
   KParts::Part * m_activeFrame;
-  TQGuardedPtr<KHTMLPart> m_opener;
+  TQGuardedPtr<TDEHTMLPart> m_opener;
   bool m_openedByJS;
   bool m_newJSInterpreterExists; // set to 1 by setOpenedByJS, for window.open
 
@@ -551,7 +551,7 @@ public:
   KPopupMenu *m_automaticDetection;
   KSelectAction *m_manualDetection;
 
-  void setFlagRecursively(bool KHTMLPartPrivate::*flag, bool value);
+  void setFlagRecursively(bool TDEHTMLPartPrivate::*flag, bool value);
   /** returns the caret node */
   DOM::Node &caretNode() {
     return m_extendAtEnd ? m_selectionEnd : m_selectionStart;
@@ -563,7 +563,7 @@ public:
 
   time_t m_userStyleSheetLastModified;
 
-  KHTMLWalletQueue *m_wq;
+  TDEHTMLWalletQueue *m_wq;
 };
 
 #endif

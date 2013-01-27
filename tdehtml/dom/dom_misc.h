@@ -33,7 +33,7 @@ namespace DOM {
  * Other objects should overload deleteMe() to fit their needs. The default
  * implementation deletes the object if the ref count drops to 0.
  */
-class KHTML_EXPORT DomShared
+class TDEHTML_EXPORT DomShared
 {
 public:
   DomShared() : _ref( 0 ) {}

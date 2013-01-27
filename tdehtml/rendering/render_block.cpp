@@ -1,5 +1,5 @@
 /*
- * This file is part of the render object implementation for KHTML.
+ * This file is part of the render object implementation for TDEHTML.
  *
  * Copyright (C) 1999-2003 Lars Knoll (knoll@kde.org)
  *           (C) 1999-2003 Antti Koivisto (koivisto@kde.org)
@@ -279,7 +279,7 @@ void RenderBlock::addChildToFlow(RenderObject* newChild, RenderObject* beforeChi
     // needed in cases of things like anonymous tables.
     if (beforeChild && beforeChild->parent() != this) {
 
-        KHTMLAssert(beforeChild->parent());
+        TDEHTMLAssert(beforeChild->parent());
 
         // In the special case where we are prepending a block-level element before
         // something contained inside an anonymous block, we can just prepend it before
@@ -317,8 +317,8 @@ void RenderBlock::addChildToFlow(RenderObject* newChild, RenderObject* beforeChi
 
         if (beforeChild && beforeChild->parent() != this) {
             beforeChild = beforeChild->parent();
-            KHTMLAssert(beforeChild->isAnonymousBlock());
-            KHTMLAssert(beforeChild->parent() == this);
+            TDEHTMLAssert(beforeChild->isAnonymousBlock());
+            TDEHTMLAssert(beforeChild->parent() == this);
         }
     }
     else if (!m_childrenInline && !newChild->isFloatingOrPositioned())
@@ -421,8 +421,8 @@ void RenderBlock::makeChildrenNonInline(RenderObject *insertionPoint)
     // means that we cannot coalesce inlines before |insertionPoint| with inlines following
     // |insertionPoint|, because the new child is going to be inserted in between the inlines,
     // splitting them.
-    KHTMLAssert(isReplacedBlock() || !isInline());
-    KHTMLAssert(!insertionPoint || insertionPoint->parent() == this);
+    TDEHTMLAssert(isReplacedBlock() || !isInline());
+    TDEHTMLAssert(!insertionPoint || insertionPoint->parent() == this);
 
     m_childrenInline = false;
 
@@ -454,8 +454,8 @@ void RenderBlock::makeChildrenNonInline(RenderObject *insertionPoint)
 
 void RenderBlock::makePageBreakAvoidBlocks()
 {
-    KHTMLAssert(!childrenInline());
-    KHTMLAssert(canvas()->pagedMode());
+    TDEHTMLAssert(!childrenInline());
+    TDEHTMLAssert(canvas()->pagedMode());
 
     RenderObject *breakAfter = firstChild();
     RenderObject *breakBefore = breakAfter ? breakAfter->nextSibling() : 0;
@@ -620,8 +620,8 @@ void RenderBlock::layoutBlock(bool relayoutChildren)
     //    kdDebug( 6040 ) << renderName() << " " << this << "::layoutBlock() start" << endl;
     //     TQTime t;
     //     t.start();
-    KHTMLAssert( needsLayout() );
-    KHTMLAssert( minMaxKnown() );
+    TDEHTMLAssert( needsLayout() );
+    TDEHTMLAssert( minMaxKnown() );
 
     if (canvas()->pagedMode()) relayoutChildren = true;
 
@@ -737,7 +737,7 @@ void RenderBlock::layoutBlock(bool relayoutChildren)
         // Check for an overhanging float first.
         // FIXME: This needs to look at the last flow, not the last child.
         if (lastChild() && lastChild()->hasOverhangingFloats() && !lastChild()->hasOverflowClip()) {
-            KHTMLAssert(lastChild()->isRenderBlock());
+            TDEHTMLAssert(lastChild()->isRenderBlock());
             m_height = lastChild()->yPos() + static_cast<RenderBlock*>(lastChild())->floatBottom();
             m_height += borderBottom() + paddingBottom();
         }
@@ -950,7 +950,7 @@ void RenderBlock::insertCompactIfNeeded(RenderObject* child, CompactInfo& compac
         int compactYPos = child->yPos() + child->borderTop() + child->paddingTop()
                             - compactChild->paddingTop() - compactChild->borderTop();
         int adj = 0;
-        KHTMLAssert(child->isRenderBlock());
+        TDEHTMLAssert(child->isRenderBlock());
         InlineRunBox *b = static_cast<RenderBlock*>(child)->firstLineBox();
         InlineRunBox *c = static_cast<RenderBlock*>(compactChild)->firstLineBox();
         if (b && c) {
@@ -1162,8 +1162,8 @@ void RenderBlock::clearFloatsIfNeeded(RenderObject* child, MarginInfo& marginInf
 
 bool RenderBlock::canClear(RenderObject *child, PageBreakLevel level)
 {
-    KHTMLAssert(child->parent() && child->parent() == this);
-    KHTMLAssert(canvas()->pagedMode());
+    TDEHTMLAssert(child->parent() && child->parent() == this);
+    TDEHTMLAssert(canvas()->pagedMode());
 
     // Positioned elements cannot be moved. Only normal flow and floating.
     if (child->isPositioned() || child->isRelPositioned()) return false;
@@ -1190,8 +1190,8 @@ bool RenderBlock::canClear(RenderObject *child, PageBreakLevel level)
 
 void RenderBlock::clearPageBreak(RenderObject* child, int pageBottom)
 {
-    KHTMLAssert(child->parent() && child->parent() == this);
-    KHTMLAssert(canvas()->pagedMode());
+    TDEHTMLAssert(child->parent() && child->parent() == this);
+    TDEHTMLAssert(canvas()->pagedMode());
 
     if (child->yPos() >= pageBottom) return;
 
@@ -1257,7 +1257,7 @@ void RenderBlock::determineHorizontalPosition(RenderObject* child)
         // to shift over as necessary to dodge any floats that might get in the way.
         if (child->flowAroundFloats()) {
             int leftOff = leftOffset(m_height);
-            if (style()->textAlign() != KHTML_CENTER && !child->style()->marginLeft().isVariable()) {
+            if (style()->textAlign() != TDEHTML_CENTER && !child->style()->marginLeft().isVariable()) {
                 if (child->marginLeft() < 0)
                     leftOff += child->marginLeft();
                 chPos = kMax(chPos, leftOff); // Let the float sit in the child's margin if it can fit.
@@ -1281,7 +1281,7 @@ void RenderBlock::determineHorizontalPosition(RenderObject* child)
         int chPos = xPos - (child->width() + child->marginRight());
         if (child->flowAroundFloats()) {
             int rightOff = rightOffset(m_height);
-            if (style()->textAlign() != KHTML_CENTER && !child->style()->marginRight().isVariable()) {
+            if (style()->textAlign() != TDEHTML_CENTER && !child->style()->marginRight().isVariable()) {
                 if (child->marginRight() < 0)
                     rightOff -= child->marginRight();
                 chPos = kMin(chPos, rightOff - child->width()); // Let the float sit in the child's margin if it can fit.
@@ -1789,7 +1789,7 @@ void RenderBlock::insertFloatingObject(RenderObject *o)
     else {
         // We should never get here, as insertFloatingObject() should only ever be called with floating
         // objects.
-        KHTMLAssert(false);
+        TDEHTMLAssert(false);
         newObj = 0; // keep gcc's uninitialized variable warnings happy
     }
 
@@ -2568,7 +2568,7 @@ bool RenderBlock::nodeAtPoint(NodeInfo& info, int _x, int _y, int _tx, int _ty, 
 
 void RenderBlock::calcMinMaxWidth()
 {
-    KHTMLAssert( !minMaxKnown() );
+    TDEHTMLAssert( !minMaxKnown() );
 
 #ifdef DEBUG_LAYOUT
     kdDebug( 6040 ) << renderName() << "(RenderBlock)::calcMinMaxWidth() this=" << this << endl;

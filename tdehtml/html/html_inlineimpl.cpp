@@ -98,7 +98,7 @@ void HTMLAnchorElementImpl::defaultEventHandler(EventImpl *evt)
                 tdehtml::RenderImage *r = static_cast<tdehtml::RenderImage *>(img->renderer());
                 if(r && e)
                 {
-                    KHTMLView* v = getDocument()->view();
+                    TDEHTMLView* v = getDocument()->view();
                     int x = e->clientX();
                     int y = e->clientY();
                     int absx = 0;
@@ -276,7 +276,7 @@ void HTMLFontElementImpl::parseAttribute(AttributeImpl *attr)
             case  6: size = CSS_VAL_XX_LARGE; break;
             default:
                 if (num > 6)
-                    size = CSS_VAL__KHTML_XXX_LARGE;
+                    size = CSS_VAL__TDEHTML_XXX_LARGE;
                 else
                     size = CSS_VAL_XX_SMALL;
             }

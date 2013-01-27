@@ -47,7 +47,7 @@
 class TQPaintDevice;
 class TQTextCodec;
 class TQPaintDeviceMetrics;
-class KHTMLView;
+class TDEHTMLView;
 
 namespace tdehtml {
     class Tokenizer;
@@ -115,8 +115,8 @@ public:
     HTMLDocumentImpl* createHTMLDocument( const DOMString& title);
 
     // Other methods (not part of DOM)
-    DocumentImpl *createDocument( KHTMLView *v = 0 );
-    HTMLDocumentImpl *createHTMLDocument( KHTMLView *v = 0 );
+    DocumentImpl *createDocument( TDEHTMLView *v = 0 );
+    HTMLDocumentImpl *createHTMLDocument( TDEHTMLView *v = 0 );
 
     // Returns the static instance of this class - only one instance of this class should
     // ever be present, and is used as a factory method for creating DocumentImpl objects
@@ -184,7 +184,7 @@ class DocumentImpl : public TQObject, private tdehtml::CachedObjectClient, publi
 {
     Q_OBJECT
 public:
-    DocumentImpl(DOMImplementationImpl *_implementation, KHTMLView *v);
+    DocumentImpl(DOMImplementationImpl *_implementation, TDEHTMLView *v);
     ~DocumentImpl();
 
     // DOM methods & attributes for Document
@@ -281,8 +281,8 @@ public:
     // Set the state the document should restore to
     void setRestoreState( const TQStringList &s) { m_state = s; }
 
-    KHTMLView *view() const { return m_view; }
-    KHTMLPart* part() const;
+    TDEHTMLView *view() const { return m_view; }
+    TDEHTMLPart* part() const;
 
     RangeImpl *createRange();
 
@@ -550,7 +550,7 @@ signals:
 
 protected:
     tdehtml::CSSStyleSelector *m_styleSelector;
-    KHTMLView *m_view;
+    TDEHTMLView *m_view;
     TQStringList m_state;
 
     tdehtml::DocLoader *m_docLoader;

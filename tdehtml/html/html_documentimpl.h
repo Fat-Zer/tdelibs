@@ -29,7 +29,7 @@
 
 #include <tqmap.h>
 
-class KHTMLView;
+class TDEHTMLView;
 class TQString;
 
 namespace DOM {
@@ -45,7 +45,7 @@ class HTMLDocumentImpl : public DOM::DocumentImpl
 {
     Q_OBJECT
 public:
-    HTMLDocumentImpl(DOMImplementationImpl *_implementation, KHTMLView *v = 0);
+    HTMLDocumentImpl(DOMImplementationImpl *_implementation, TDEHTMLView *v = 0);
     ~HTMLDocumentImpl();
 
     virtual bool isHTMLDocument() const { return true; }

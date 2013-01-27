@@ -46,7 +46,7 @@ class CharacterDataImpl;
  * <code>offset</code>s in this interface start from 0.
  *
  */
-class KHTML_EXPORT CharacterData : public Node
+class TDEHTML_EXPORT CharacterData : public Node
 {
     friend class CharacterDataImpl;
 
@@ -220,7 +220,7 @@ class CommentImpl;
  * the full SGML comment structure.
  *
  */
-class KHTML_EXPORT Comment : public CharacterData
+class TDEHTML_EXPORT Comment : public CharacterData
 {
     friend class Document;
     friend class TextImpl;
@@ -266,7 +266,7 @@ class TextImpl;
  * \c XPointers.
  *
  */
-class KHTML_EXPORT Text : public CharacterData
+class TDEHTML_EXPORT Text : public CharacterData
 {
     friend class Document;
     friend class TextImpl;

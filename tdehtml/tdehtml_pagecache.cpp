@@ -32,18 +32,18 @@
 #include <assert.h>
 
 // We keep 12 pages in memory.
-#ifndef KHTML_PAGE_CACHE_SIZE
-#define KHTML_PAGE_CACHE_SIZE 12
+#ifndef TDEHTML_PAGE_CACHE_SIZE
+#define TDEHTML_PAGE_CACHE_SIZE 12
 #endif
 
-template class TQPtrList<KHTMLPageCacheDelivery>;
-class KHTMLPageCacheEntry
+template class TQPtrList<TDEHTMLPageCacheDelivery>;
+class TDEHTMLPageCacheEntry
 {
-  friend class KHTMLPageCache;
+  friend class TDEHTMLPageCache;
 public:
-  KHTMLPageCacheEntry(long id);
+  TDEHTMLPageCacheEntry(long id);
 
-  ~KHTMLPageCacheEntry();
+  ~TDEHTMLPageCacheEntry();
 
   void addData(const TQByteArray &data);
 
@@ -52,7 +52,7 @@ public:
   bool isComplete()
    { return m_complete; }
 
-  KHTMLPageCacheDelivery *fetchData(TQObject *recvObj, const char *recvSlot);
+  TDEHTMLPageCacheDelivery *fetchData(TQObject *recvObj, const char *recvSlot);
 private:
   long m_id;
   bool m_complete;
@@ -60,38 +60,38 @@ private:
   KTempFile *m_file;
 };
 
-class KHTMLPageCachePrivate
+class TDEHTMLPageCachePrivate
 {
 public:
   long newId;
-  TQIntDict<KHTMLPageCacheEntry> dict;
-  TQPtrList<KHTMLPageCacheDelivery> delivery;
-  TQPtrList<KHTMLPageCacheEntry> expireQueue;
+  TQIntDict<TDEHTMLPageCacheEntry> dict;
+  TQPtrList<TDEHTMLPageCacheDelivery> delivery;
+  TQPtrList<TDEHTMLPageCacheEntry> expireQueue;
   bool deliveryActive;
 };
 
-KHTMLPageCacheEntry::KHTMLPageCacheEntry(long id) : m_id(id), m_complete(false)
+TDEHTMLPageCacheEntry::TDEHTMLPageCacheEntry(long id) : m_id(id), m_complete(false)
 {
   TQString path = locateLocal("tmp", "tdehtmlcache");
   m_file = new KTempFile(path);
   m_file->unlink();
 }
 
-KHTMLPageCacheEntry::~KHTMLPageCacheEntry()
+TDEHTMLPageCacheEntry::~TDEHTMLPageCacheEntry()
 {
   delete m_file;
 }
 
 
 void
-KHTMLPageCacheEntry::addData(const TQByteArray &data)
+TDEHTMLPageCacheEntry::addData(const TQByteArray &data)
 {
   if (m_file->status() == 0)
      m_file->dataStream()->writeRawBytes(data.data(), data.size());
 }
 
 void
-KHTMLPageCacheEntry::endData()
+TDEHTMLPageCacheEntry::endData()
 {
   m_complete = true;
   if ( m_file->status() == 0) {
@@ -101,38 +101,38 @@ KHTMLPageCacheEntry::endData()
 }
 
 
-KHTMLPageCacheDelivery *
-KHTMLPageCacheEntry::fetchData(TQObject *recvObj, const char *recvSlot)
+TDEHTMLPageCacheDelivery *
+TDEHTMLPageCacheEntry::fetchData(TQObject *recvObj, const char *recvSlot)
 {
   // Duplicate fd so that entry can be safely deleted while delivering the data.
   int fd = dup(m_file->handle());
   lseek(fd, 0, SEEK_SET);
-  KHTMLPageCacheDelivery *delivery = new KHTMLPageCacheDelivery(fd);
+  TDEHTMLPageCacheDelivery *delivery = new TDEHTMLPageCacheDelivery(fd);
   recvObj->connect(delivery, TQT_SIGNAL(emitData(const TQByteArray&)), recvSlot);
   delivery->recvObj = recvObj;
   return delivery;
 }
 
-static KStaticDeleter<KHTMLPageCache> pageCacheDeleter;
+static KStaticDeleter<TDEHTMLPageCache> pageCacheDeleter;
 
-KHTMLPageCache *KHTMLPageCache::_self = 0;
+TDEHTMLPageCache *TDEHTMLPageCache::_self = 0;
 
-KHTMLPageCache *
-KHTMLPageCache::self()
+TDEHTMLPageCache *
+TDEHTMLPageCache::self()
 {
   if (!_self)
-     _self = pageCacheDeleter.setObject(_self, new KHTMLPageCache);
+     _self = pageCacheDeleter.setObject(_self, new TDEHTMLPageCache);
   return _self;
 }
 
-KHTMLPageCache::KHTMLPageCache()
+TDEHTMLPageCache::TDEHTMLPageCache()
 {
-  d = new KHTMLPageCachePrivate;
+  d = new TDEHTMLPageCachePrivate;
   d->newId = 1;
   d->deliveryActive = false;
 }
 
-KHTMLPageCache::~KHTMLPageCache()
+TDEHTMLPageCache::~TDEHTMLPageCache()
 {
   d->delivery.setAutoDelete(true);
   d->dict.setAutoDelete(true);
@@ -140,14 +140,14 @@ KHTMLPageCache::~KHTMLPageCache()
 }
 
 long
-KHTMLPageCache::createCacheEntry()
+TDEHTMLPageCache::createCacheEntry()
 {
-  KHTMLPageCacheEntry *entry = new KHTMLPageCacheEntry(d->newId);
+  TDEHTMLPageCacheEntry *entry = new TDEHTMLPageCacheEntry(d->newId);
   d->dict.insert(d->newId, entry);
   d->expireQueue.append(entry);
-  if (d->expireQueue.count() > KHTML_PAGE_CACHE_SIZE)
+  if (d->expireQueue.count() > TDEHTML_PAGE_CACHE_SIZE)
   {
-     KHTMLPageCacheEntry *entry = d->expireQueue.take(0);
+     TDEHTMLPageCacheEntry *entry = d->expireQueue.take(0);
      d->dict.remove(entry->m_id);
      delete entry;
   }
@@ -155,25 +155,25 @@ KHTMLPageCache::createCacheEntry()
 }
 
 void
-KHTMLPageCache::addData(long id, const TQByteArray &data)
+TDEHTMLPageCache::addData(long id, const TQByteArray &data)
 {
-  KHTMLPageCacheEntry *entry = d->dict.find(id);
+  TDEHTMLPageCacheEntry *entry = d->dict.find(id);
   if (entry)
      entry->addData(data);
 }
 
 void
-KHTMLPageCache::endData(long id)
+TDEHTMLPageCache::endData(long id)
 {
-  KHTMLPageCacheEntry *entry = d->dict.find(id);
+  TDEHTMLPageCacheEntry *entry = d->dict.find(id);
   if (entry)
      entry->endData();
 }
 
 void
-KHTMLPageCache::cancelEntry(long id)
+TDEHTMLPageCache::cancelEntry(long id)
 {
-  KHTMLPageCacheEntry *entry = d->dict.take(id);
+  TDEHTMLPageCacheEntry *entry = d->dict.take(id);
   if (entry)
   {
      d->expireQueue.removeRef(entry);
@@ -182,24 +182,24 @@ KHTMLPageCache::cancelEntry(long id)
 }
 
 bool
-KHTMLPageCache::isValid(long id)
+TDEHTMLPageCache::isValid(long id)
 {
   return (d->dict.find(id) != 0);
 }
 
 bool
-KHTMLPageCache::isComplete(long id)
+TDEHTMLPageCache::isComplete(long id)
 {
-  KHTMLPageCacheEntry *entry = d->dict.find(id);
+  TDEHTMLPageCacheEntry *entry = d->dict.find(id);
   if (entry)
      return entry->isComplete();
   return false;
 }
 
 void
-KHTMLPageCache::fetchData(long id, TQObject *recvObj, const char *recvSlot)
+TDEHTMLPageCache::fetchData(long id, TQObject *recvObj, const char *recvSlot)
 {
-  KHTMLPageCacheEntry *entry = d->dict.find(id);
+  TDEHTMLPageCacheEntry *entry = d->dict.find(id);
   if (!entry || !entry->isComplete()) return;
 
   // Make this entry the most recent entry.
@@ -215,10 +215,10 @@ KHTMLPageCache::fetchData(long id, TQObject *recvObj, const char *recvSlot)
 }
 
 void
-KHTMLPageCache::cancelFetch(TQObject *recvObj)
+TDEHTMLPageCache::cancelFetch(TQObject *recvObj)
 {
-  KHTMLPageCacheDelivery *next;
-  for(KHTMLPageCacheDelivery* delivery = d->delivery.first();
+  TDEHTMLPageCacheDelivery *next;
+  for(TDEHTMLPageCacheDelivery* delivery = d->delivery.first();
       delivery;
       delivery = next)
   {
@@ -232,14 +232,14 @@ KHTMLPageCache::cancelFetch(TQObject *recvObj)
 }
 
 void
-KHTMLPageCache::sendData()
+TDEHTMLPageCache::sendData()
 {
   if (d->delivery.isEmpty())
   {
      d->deliveryActive = false;
      return;
   }
-  KHTMLPageCacheDelivery *delivery = d->delivery.take(0);
+  TDEHTMLPageCacheDelivery *delivery = d->delivery.take(0);
   assert(delivery);
 
   char buf[8192];
@@ -269,9 +269,9 @@ KHTMLPageCache::sendData()
 }
 
 void
-KHTMLPageCache::saveData(long id, TQDataStream *str)
+TDEHTMLPageCache::saveData(long id, TQDataStream *str)
 {
-  KHTMLPageCacheEntry *entry = d->dict.find(id);
+  TDEHTMLPageCacheEntry *entry = d->dict.find(id);
   assert(entry);
 
   int fd = entry->m_file->handle();
@@ -305,7 +305,7 @@ KHTMLPageCache::saveData(long id, TQDataStream *str)
     lseek(fd, pos, SEEK_SET);
 }
 
-KHTMLPageCacheDelivery::~KHTMLPageCacheDelivery()
+TDEHTMLPageCacheDelivery::~TDEHTMLPageCacheDelivery()
 {
   close(fd);
 }

@@ -31,7 +31,7 @@ const char *text = "Rationale \
 ========= \
  \
 This code is intended to provide an implementation of the W3C's XPath \
-specification for KHTML. XPath isn't particularly useful on its own, however\
+specification for TDEHTML. XPath isn't particularly useful on its own, however\
 it is an essential building block for the implementation of other standards \
 like XSLT and XQuery. XPath is supported to a greater or lesser extent by both\
 IE and Mozilla so it is likely to become increasingly important over the next\
@@ -45,7 +45,7 @@ licenses including Mozilla's, libxml2, Xerces and probably others, so it is \
 reasonable to ask why there should be another one. \
  \
 It would certainly be possible to integrate one of these implementations into\
-KHTML, but it would actually be quite a lot of work. I looked at all of the\
+TDEHTML, but it would actually be quite a lot of work. I looked at all of the\
 implementations mentioned with a view to using this approach before I decided\
 to start from scratch.\
  \
@@ -62,7 +62,7 @@ Xerces XPath (C++ version)\
  \
 The Xerces code seemed pretty clean and was reasonably understandable, however\
 it doesn't seem to be used very much which greatly reduces the utility. As\
-with the mozilla code, porting it to use KHTML's DOM would take a fair bit of \
+with the mozilla code, porting it to use TDEHTML's DOM would take a fair bit of \
 work. The main issue here being that Xerces is based around pointers to Nodes\
 rather than implicitly shared Node objects.\
  \
@@ -72,7 +72,7 @@ libxml2 \
 This is the most obvious library to reuse as it is currently used to generate\
 the KDE documentation, and is also a very complete and fast\
 implementation. The down side of using this code is that it would either need\
-a new DOM implementation in KHTML (which used the libxml2 structures), a \
+a new DOM implementation in TDEHTML (which used the libxml2 structures), a \
 wrapper library that made on of the DOM trees support the API of the other, or\
 binding layer that parsed the XML twice and somehow maintained a mapping\
 between the two DOM trees. Unfortunately the documentation of this library is\
@@ -83,7 +83,7 @@ for. They are well documented and have a well structured API. Unfortunately\
 using this library still requires some mechanism to integrate the two\
 underlying DOM implementations.\
  \
-KHTML XPath\
+TDEHTML XPath\
 ----------- \
  \
 There are some advantages to the XPath implementation Zack and I are working\
@@ -95,7 +95,7 @@ on, namely: \
 - The code is clean and uses familiar types and idioms. \
  \
 We intend the code to be build on top of the DOM api rather than tying it\
-directly to the Qt or KHTML XML implementations. This will allow us to take\
+directly to the Qt or TDEHTML XML implementations. This will allow us to take\
 advantage of any improvements that might be made to the underlying parser\
 etc. The DOM2 traversal APIs provide a set of classes that map almost directly \
 to the XPath location steps, since we need to implement these facilities\

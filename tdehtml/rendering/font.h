@@ -22,8 +22,8 @@
  *
  */
 
-#ifndef KHTMLFONT_H
-#define KHTMLFONT_H
+#ifndef TDEHTMLFONT_H
+#define TDEHTMLFONT_H
 
 #include <tqfont.h>
 #include <tqfontmetrics.h>

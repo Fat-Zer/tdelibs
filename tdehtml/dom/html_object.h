@@ -47,7 +47,7 @@ class HTMLAppletElementImpl;
  * deprecated in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLAppletElement : public HTMLElement
+class TDEHTML_EXPORT HTMLAppletElement : public HTMLElement
 {
 public:
     HTMLAppletElement();
@@ -255,7 +255,7 @@ class HTMLObjectElementImpl;
  * OBJECT element definition </a> in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLObjectElement : public HTMLElement
+class TDEHTML_EXPORT HTMLObjectElement : public HTMLElement
 {
 public:
     HTMLObjectElement();
@@ -554,7 +554,7 @@ class HTMLParamElementImpl;
  * PARAM element definition </a> in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLParamElement : public HTMLElement
+class TDEHTML_EXPORT HTMLParamElement : public HTMLElement
 {
 public:
     HTMLParamElement();

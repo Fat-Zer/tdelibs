@@ -289,7 +289,7 @@ void RenderFlow::repaint(Priority prior)
         for (RenderObject* inlineFlow = this; inlineFlow && inlineFlow->isInlineFlow() && inlineFlow != cb;
              inlineFlow = inlineFlow->parent()) {
              if (inlineFlow->style() && inlineFlow->style()->position() == RELATIVE && inlineFlow->layer()) {
-                KHTMLAssert(inlineFlow->isBox());
+                TDEHTMLAssert(inlineFlow->isBox());
                 static_cast<RenderBox*>(inlineFlow)->relativePositionOffset(left, top);
              }
         }

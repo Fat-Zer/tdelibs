@@ -23,21 +23,21 @@
 
 #include <kjs/object.h>
 
-class KHTMLPart;
+class TDEHTMLPart;
 
 namespace KJS {
 
   class MozillaSidebarExtension : public ObjectImp {
   public:
-    MozillaSidebarExtension(ExecState *exec, KHTMLPart *p);
+    MozillaSidebarExtension(ExecState *exec, TDEHTMLPart *p);
     virtual Value get(ExecState *exec, const Identifier &propertyName) const;
     Value getValueProperty(ExecState *exec, int token) const;
     virtual const ClassInfo* classInfo() const { return &info; }
     static const ClassInfo info;
     enum { addPanel };
-    KHTMLPart *part() const { return m_part; }
+    TDEHTMLPart *part() const { return m_part; }
   private:
-    KHTMLPart *m_part;
+    TDEHTMLPart *m_part;
   };
 } // namespace
 

@@ -533,7 +533,7 @@ bool CSSParser::parseValue( int propId, bool important )
      * correctly and allows optimization in tdehtml::applyRule(..)
      */
     case CSS_PROP_CAPTION_SIDE:         // top | bottom | left | right | inherit
-        // Left and right were deprecated in CSS 2.1 and never supported by KHTML
+        // Left and right were deprecated in CSS 2.1 and never supported by TDEHTML
         if ( /* id == CSS_VAL_LEFT || id == CSS_VAL_RIGHT || */
             id == CSS_VAL_TOP || id == CSS_VAL_BOTTOM)
             valid_primitive = true;
@@ -567,7 +567,7 @@ bool CSSParser::parseValue( int propId, bool important )
         // upper-roman | lower-greek | lower-alpha | lower-latin | upper-alpha |
         // upper-latin | hebrew | armenian | georgian | cjk-ideographic | hiragana |
         // katakana | hiragana-iroha | katakana-iroha | none | inherit
-        if ((id >= CSS_VAL_DISC && id <= CSS_VAL__KHTML_CLOSE_QUOTE) || id == CSS_VAL_NONE)
+        if ((id >= CSS_VAL_DISC && id <= CSS_VAL__TDEHTML_CLOSE_QUOTE) || id == CSS_VAL_NONE)
             valid_primitive = true;
         break;
 
@@ -590,8 +590,8 @@ bool CSSParser::parseValue( int propId, bool important )
         break;
 
     case CSS_PROP_FLOAT:                // left | right | none | tdehtml_left | tdehtml_right | inherit + center for buggy CSS
-        if ( id == CSS_VAL_LEFT || id == CSS_VAL_RIGHT || id == CSS_VAL__KHTML_LEFT ||
-             id == CSS_VAL__KHTML_RIGHT ||id == CSS_VAL_NONE || id == CSS_VAL_CENTER)
+        if ( id == CSS_VAL_LEFT || id == CSS_VAL_RIGHT || id == CSS_VAL__TDEHTML_LEFT ||
+             id == CSS_VAL__TDEHTML_RIGHT ||id == CSS_VAL_NONE || id == CSS_VAL_CENTER)
             valid_primitive = true;
         break;
 
@@ -603,7 +603,7 @@ bool CSSParser::parseValue( int propId, bool important )
 
     case CSS_PROP_TEXT_ALIGN:
         // left | right | center | justify | tdehtml_left | tdehtml_right | tdehtml_center | <string> | inherit
-        if ( ( id >= CSS_VAL__KHTML_AUTO && id <= CSS_VAL__KHTML_CENTER ) ||
+        if ( ( id >= CSS_VAL__TDEHTML_AUTO && id <= CSS_VAL__TDEHTML_CENTER ) ||
              value->unit == CSSPrimitiveValue::CSS_STRING )
             valid_primitive = true;
         break;
@@ -613,7 +613,7 @@ bool CSSParser::parseValue( int propId, bool important )
     case CSS_PROP_BORDER_RIGHT_STYLE:   //   Defined as:    none | hidden | dotted | dashed |
     case CSS_PROP_BORDER_BOTTOM_STYLE:  //   solid | double | groove | ridge | inset | outset | -tdehtml-native
     case CSS_PROP_BORDER_LEFT_STYLE:    ////
-        if (id >= CSS_VAL__KHTML_NATIVE && id <= CSS_VAL_DOUBLE)
+        if (id >= CSS_VAL__TDEHTML_NATIVE && id <= CSS_VAL_DOUBLE)
             valid_primitive = true;
         break;
 
@@ -636,8 +636,8 @@ bool CSSParser::parseValue( int propId, bool important )
 
     case CSS_PROP_BORDER_SPACING:
     {
-        const int properties[2] = { CSS_PROP__KHTML_BORDER_HORIZONTAL_SPACING,
-                                    CSS_PROP__KHTML_BORDER_VERTICAL_SPACING };
+        const int properties[2] = { CSS_PROP__TDEHTML_BORDER_HORIZONTAL_SPACING,
+                                    CSS_PROP__TDEHTML_BORDER_VERTICAL_SPACING };
         if (num == 1) {
             ShorthandScope scope(this, CSS_PROP_BORDER_SPACING);
             if (!parseValue(properties[0], important)) return false;
@@ -653,8 +653,8 @@ bool CSSParser::parseValue( int propId, bool important )
         }
         return false;
     }
-    case CSS_PROP__KHTML_BORDER_HORIZONTAL_SPACING:
-    case CSS_PROP__KHTML_BORDER_VERTICAL_SPACING:
+    case CSS_PROP__TDEHTML_BORDER_HORIZONTAL_SPACING:
+    case CSS_PROP__TDEHTML_BORDER_VERTICAL_SPACING:
         valid_primitive = validUnit(value, FLength|FNonNeg, strict&(!nonCSSHint));
         break;
 
@@ -682,10 +682,10 @@ bool CSSParser::parseValue( int propId, bool important )
     case CSS_PROP_BORDER_BOTTOM_COLOR:  // <color> | inherit
     case CSS_PROP_BORDER_LEFT_COLOR:    // <color> | inherit
     case CSS_PROP_COLOR:                // <color> | inherit
-        if ( id == CSS_VAL__KHTML_TEXT || id == CSS_VAL_MENU ||
+        if ( id == CSS_VAL__TDEHTML_TEXT || id == CSS_VAL_MENU ||
              (id >= CSS_VAL_AQUA && id <= CSS_VAL_WINDOWTEXT ) ||
              id == CSS_VAL_TRANSPARENT ||
-             (id >= CSS_VAL_GREY && id < CSS_VAL__KHTML_TEXT && (nonCSSHint|!strict) ) ) {
+             (id >= CSS_VAL_GREY && id < CSS_VAL__TDEHTML_TEXT && (nonCSSHint|!strict) ) ) {
             valid_primitive = true;
         } else {
             parsedValue = parseColor();
@@ -707,13 +707,13 @@ bool CSSParser::parseValue( int propId, bool important )
         break;
 
     case CSS_PROP_BACKGROUND_ATTACHMENT:
-    case CSS_PROP__KHTML_BACKGROUND_CLIP:
+    case CSS_PROP__TDEHTML_BACKGROUND_CLIP:
     case CSS_PROP_BACKGROUND_IMAGE:
-    case CSS_PROP__KHTML_BACKGROUND_ORIGIN:
+    case CSS_PROP__TDEHTML_BACKGROUND_ORIGIN:
     case CSS_PROP_BACKGROUND_POSITION:
     case CSS_PROP_BACKGROUND_POSITION_X:
     case CSS_PROP_BACKGROUND_POSITION_Y:
-    case CSS_PROP__KHTML_BACKGROUND_SIZE:
+    case CSS_PROP__TDEHTML_BACKGROUND_SIZE:
     case CSS_PROP_BACKGROUND_REPEAT: {
         CSSValueImpl *val1 = 0, *val2 = 0;
         int propId1, propId2;
@@ -769,7 +769,7 @@ bool CSSParser::parseValue( int propId, bool important )
     case CSS_PROP_PADDING_RIGHT:        //  <padding-width> | inherit
     case CSS_PROP_PADDING_BOTTOM:       //   Which is defined as
     case CSS_PROP_PADDING_LEFT:         //   <length> | <percentage>
-    case CSS_PROP__KHTML_PADDING_START:
+    case CSS_PROP__TDEHTML_PADDING_START:
         valid_primitive = ( !id && validUnit( value, FLength|FPercent|FNonNeg, strict&(!nonCSSHint) ) );
         break;
 
@@ -807,7 +807,7 @@ bool CSSParser::parseValue( int propId, bool important )
             // baseline | sub | super | top | text-top | middle | bottom | text-bottom |
         // <percentage> | <length> | inherit
 
-        if ( id >= CSS_VAL_BASELINE && id <= CSS_VAL__KHTML_BASELINE_MIDDLE )
+        if ( id >= CSS_VAL_BASELINE && id <= CSS_VAL__TDEHTML_BASELINE_MIDDLE )
             valid_primitive = true;
         else
             valid_primitive = ( !id && validUnit( value, FLength|FPercent, strict&(!nonCSSHint) ) );
@@ -830,7 +830,7 @@ bool CSSParser::parseValue( int propId, bool important )
     case CSS_PROP_MARGIN_RIGHT:         //   Which is defined as
     case CSS_PROP_MARGIN_BOTTOM:        //   <length> | <percentage> | auto | inherit
     case CSS_PROP_MARGIN_LEFT:          ////
-    case CSS_PROP__KHTML_MARGIN_START:
+    case CSS_PROP__TDEHTML_MARGIN_START:
         if ( id == CSS_VAL_AUTO )
             valid_primitive = true;
         else
@@ -912,8 +912,8 @@ bool CSSParser::parseValue( int propId, bool important )
             valid_primitive = true;
         break;
 
-    case CSS_PROP__KHTML_FLOW_MODE:
-        if ( id == CSS_VAL__KHTML_NORMAL || id == CSS_VAL__KHTML_AROUND_FLOATS )
+    case CSS_PROP__TDEHTML_FLOW_MODE:
+        if ( id == CSS_VAL__TDEHTML_NORMAL || id == CSS_VAL__TDEHTML_AROUND_FLOATS )
             valid_primitive = true;
         break;
 
@@ -934,41 +934,41 @@ bool CSSParser::parseValue( int propId, bool important )
     case CSS_PROP_OPACITY:
         valid_primitive = validUnit(value, FNumber, strict);
         break;
-    case CSS_PROP__KHTML_USER_INPUT:        // none | enabled | disabled | inherit
+    case CSS_PROP__TDEHTML_USER_INPUT:        // none | enabled | disabled | inherit
         if ( id == CSS_VAL_NONE || id == CSS_VAL_ENABLED || id == CSS_VAL_DISABLED )
             valid_primitive = true;
-//        kdDebug(6080) << "CSS_PROP__KHTML_USER_INPUT: " << valid_primitive << endl;
+//        kdDebug(6080) << "CSS_PROP__TDEHTML_USER_INPUT: " << valid_primitive << endl;
         break;
-    case CSS_PROP__KHTML_MARQUEE: {
-        const int properties[5] = { CSS_PROP__KHTML_MARQUEE_DIRECTION, CSS_PROP__KHTML_MARQUEE_INCREMENT,
-                                    CSS_PROP__KHTML_MARQUEE_REPETITION,
-                                    CSS_PROP__KHTML_MARQUEE_STYLE, CSS_PROP__KHTML_MARQUEE_SPEED };
+    case CSS_PROP__TDEHTML_MARQUEE: {
+        const int properties[5] = { CSS_PROP__TDEHTML_MARQUEE_DIRECTION, CSS_PROP__TDEHTML_MARQUEE_INCREMENT,
+                                    CSS_PROP__TDEHTML_MARQUEE_REPETITION,
+                                    CSS_PROP__TDEHTML_MARQUEE_STYLE, CSS_PROP__TDEHTML_MARQUEE_SPEED };
         return parseShortHand(propId, properties, 5, important);
     }
-    case CSS_PROP__KHTML_MARQUEE_DIRECTION:
+    case CSS_PROP__TDEHTML_MARQUEE_DIRECTION:
         if (id == CSS_VAL_FORWARDS || id == CSS_VAL_BACKWARDS || id == CSS_VAL_AHEAD ||
             id == CSS_VAL_REVERSE || id == CSS_VAL_LEFT || id == CSS_VAL_RIGHT || id == CSS_VAL_DOWN ||
             id == CSS_VAL_UP || id == CSS_VAL_AUTO)
             valid_primitive = true;
         break;
-    case CSS_PROP__KHTML_MARQUEE_INCREMENT:
+    case CSS_PROP__TDEHTML_MARQUEE_INCREMENT:
         if (id == CSS_VAL_SMALL || id == CSS_VAL_LARGE || id == CSS_VAL_MEDIUM)
             valid_primitive = true;
         else
             valid_primitive = validUnit(value, FLength|FPercent, strict&(!nonCSSHint));
         break;
-    case CSS_PROP__KHTML_MARQUEE_STYLE:
+    case CSS_PROP__TDEHTML_MARQUEE_STYLE:
         if (id == CSS_VAL_NONE || id == CSS_VAL_SLIDE || id == CSS_VAL_SCROLL || id == CSS_VAL_ALTERNATE ||
             id == CSS_VAL_UNFURL)
             valid_primitive = true;
         break;
-    case CSS_PROP__KHTML_MARQUEE_REPETITION:
+    case CSS_PROP__TDEHTML_MARQUEE_REPETITION:
         if (id == CSS_VAL_INFINITE)
             valid_primitive = true;
         else
             valid_primitive = validUnit(value, FInteger|FNonNeg, strict&(!nonCSSHint));
         break;
-    case CSS_PROP__KHTML_MARQUEE_SPEED:
+    case CSS_PROP__TDEHTML_MARQUEE_SPEED:
         if (id == CSS_VAL_NORMAL || id == CSS_VAL_SLOW || id == CSS_VAL_FAST)
             valid_primitive = true;
         else
@@ -1137,11 +1137,11 @@ bool CSSParser::parseBackgroundShorthand(bool important)
 {
     // Position must come before color in this array because a plain old "0" is a legal color
     // in quirks mode but it's usually the X coordinate of a position.
-    // FIXME: Add CSS_PROP__KHTML_BACKGROUND_SIZE to the shorthand.
+    // FIXME: Add CSS_PROP__TDEHTML_BACKGROUND_SIZE to the shorthand.
     const int numProperties = 7;
     const int properties[numProperties] = { CSS_PROP_BACKGROUND_IMAGE, CSS_PROP_BACKGROUND_REPEAT,
-        CSS_PROP_BACKGROUND_ATTACHMENT, CSS_PROP_BACKGROUND_POSITION,  CSS_PROP__KHTML_BACKGROUND_CLIP,
-        CSS_PROP__KHTML_BACKGROUND_ORIGIN, CSS_PROP_BACKGROUND_COLOR };
+        CSS_PROP_BACKGROUND_ATTACHMENT, CSS_PROP_BACKGROUND_POSITION,  CSS_PROP__TDEHTML_BACKGROUND_CLIP,
+        CSS_PROP__TDEHTML_BACKGROUND_ORIGIN, CSS_PROP_BACKGROUND_COLOR };
 
     ShorthandScope scope(this, CSS_PROP_BACKGROUND);
 
@@ -1427,7 +1427,7 @@ CSSValueImpl* CSSParser::parseCounterContent(ValueList *args, bool counters)
         if (i->unit != Value::Operator || i->iValue != ',') goto invalid;
         i = args->next();
         if (i->unit != CSSPrimitiveValue::CSS_IDENT) goto invalid;
-        if (i->id < CSS_VAL_DISC || i->id > CSS_VAL__KHTML_CLOSE_QUOTE) goto invalid;
+        if (i->id < CSS_VAL_DISC || i->id > CSS_VAL__TDEHTML_CLOSE_QUOTE) goto invalid;
         counter->m_listStyle = i->id - CSS_VAL_DISC;
     }
     return new CSSPrimitiveValueImpl(counter);
@@ -1439,9 +1439,9 @@ invalid:
 CSSValueImpl* CSSParser::parseBackgroundColor()
 {
     int id = valueList->current()->id;
-    if (id == CSS_VAL__KHTML_TEXT || id == CSS_VAL_TRANSPARENT ||
+    if (id == CSS_VAL__TDEHTML_TEXT || id == CSS_VAL_TRANSPARENT ||
         (id >= CSS_VAL_AQUA && id <= CSS_VAL_WINDOWTEXT) || id == CSS_VAL_MENU ||
-        (id >= CSS_VAL_GREY && id < CSS_VAL__KHTML_TEXT && !strict))
+        (id >= CSS_VAL_GREY && id < CSS_VAL__TDEHTML_TEXT && !strict))
        return new CSSPrimitiveValueImpl(id);
     return parseColor();
 }
@@ -1615,8 +1615,8 @@ bool CSSParser::parseBackgroundProperty(int propId, int& propId1, int& propId2,
                     if (currValue)
                         valueList->next();
                     break;
-                case CSS_PROP__KHTML_BACKGROUND_CLIP:
-                case CSS_PROP__KHTML_BACKGROUND_ORIGIN:
+                case CSS_PROP__TDEHTML_BACKGROUND_CLIP:
+                case CSS_PROP__TDEHTML_BACKGROUND_ORIGIN:
                     if (val->id == CSS_VAL_BORDER || val->id == CSS_VAL_PADDING || val->id == CSS_VAL_CONTENT) {
                         currValue = new CSSPrimitiveValueImpl(val->id);
                         valueList->next();
@@ -1646,7 +1646,7 @@ bool CSSParser::parseBackgroundProperty(int propId, int& propId1, int& propId2,
                         valueList->next();
                     }
                     break;
-                case CSS_PROP__KHTML_BACKGROUND_SIZE:
+                case CSS_PROP__TDEHTML_BACKGROUND_SIZE:
                     currValue = parseBackgroundSize();
                     if (currValue)
                         valueList->next();
@@ -2268,7 +2268,7 @@ bool CSSParser::parseShadow(int propId, bool important)
             // The only other type of value that's ok is a color value.
             CSSPrimitiveValueImpl* parsedColor = 0;
             bool isColor = (val->id >= CSS_VAL_AQUA && val->id <= CSS_VAL_WINDOWTEXT || val->id == CSS_VAL_MENU ||
-                           (val->id >= CSS_VAL_GREY && val->id <= CSS_VAL__KHTML_TEXT && !strict));
+                           (val->id >= CSS_VAL_GREY && val->id <= CSS_VAL__TDEHTML_TEXT && !strict));
 	    if (!context.allowColor)
                 return context.failed();
 

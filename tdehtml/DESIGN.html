@@ -15,7 +15,7 @@ document, but it'll hopefully make it easier for you to read the source code.
 </p>
 <p>
 The library is build up out of several different parts. Basically, when you use the lib, you
-create an instance of a KHTMLPart, and feed data to it. That's more or less all you need to 
+create an instance of a TDEHTMLPart, and feed data to it. That's more or less all you need to 
 know if you want to use tdehtml for another application. If you want to start hacking tdehtml,
 here's a sketch of the objects that will get constructed, when eg. running testtdehtml with
 a url argument.
@@ -52,8 +52,8 @@ compatible to IE.
 </blockquote>
 
 <p>
-<a href="tdehtml_part.h">KHTMLPart</a> creates one instance of a
-<a href="tdehtmlview.h">KHTMLView</a> (derived from TQScrollView),
+<a href="tdehtml_part.h">TDEHTMLPart</a> creates one instance of a
+<a href="tdehtmlview.h">TDEHTMLView</a> (derived from TQScrollView),
 the widget showing the whole thing.  At the same time a DOM tree
 is built up from the HTML or XML found in the specified file.
 <p>
@@ -173,7 +173,7 @@ classes. In the implementation classes we have added a few more intermediate cla
 not be seen from the outside for various reasons (make implementation of shared features easier
 or to reduce memory consumption).
 <p>
-In C++, you can access the whole DOM tree from outside KHTML by using the interface classes. 
+In C++, you can access the whole DOM tree from outside TDEHTML by using the interface classes. 
 For a description see the <a href="http://developer.kde.org/documentation/library/kdeqt/trinityarch/tdehtml/index.html">introduction to tdehtml</a> on <a href="http://developer.kde.org/">developer.kde.org</a>.
 
 One thing that has been omitted in the discussion above is the style sheet defined inside the 
@@ -261,8 +261,8 @@ RenderRoot*
 A call to of <a href="rendering/render_root.cpp">layout()</a> on the
 <a href="rendering/render_root.h">RenderRoot </a> (the root of the rendering tree)
 object causes the rendering tree to layout itself into the available space
-(width) given by the the KHTMLView. After that, the drawContents() method of
-KHTMLView can call RenderRoot->print() with appropriate parameters to actually
+(width) given by the the TDEHTMLView. After that, the drawContents() method of
+TDEHTMLView can call RenderRoot->print() with appropriate parameters to actually
 paint the document. This is not 100% correct, when parsing incrementally, but
 is exactly what happens when you resize the document.
 
@@ -301,7 +301,7 @@ the definition of the objects used in the rendering tree, the layouting code, an
 
 <h2>Exception handling</h2>
 To save on library size, C++-exceptions are only enabled in the dom/ subdirectory,
-since exceptions are mandated by the DOM API. In the rest of KHTML's code,
+since exceptions are mandated by the DOM API. In the rest of TDEHTML's code,
 we pass an error flag (usually called "exceptionCode"), and the class that
 is part of dom/* checks for this flag and throws the exception.
   

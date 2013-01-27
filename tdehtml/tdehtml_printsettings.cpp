@@ -24,7 +24,7 @@
 #include <tqlayout.h>
 #include <tqwhatsthis.h>
 
-KHTMLPrintSettings::KHTMLPrintSettings(TQWidget *parent, const char *name)
+TDEHTMLPrintSettings::TDEHTMLPrintSettings(TQWidget *parent, const char *name)
 : KPrintDialogPage(parent, name)
 {
 	//WhatsThis strings.... (added by pfeifle@kde.org)
@@ -87,18 +87,18 @@ KHTMLPrintSettings::KHTMLPrintSettings(TQWidget *parent, const char *name)
 	l0->addStretch(1);
 }
 
-KHTMLPrintSettings::~KHTMLPrintSettings()
+TDEHTMLPrintSettings::~TDEHTMLPrintSettings()
 {
 }
 
-void KHTMLPrintSettings::getOptions(TQMap<TQString,TQString>& opts, bool /*incldef*/)
+void TDEHTMLPrintSettings::getOptions(TQMap<TQString,TQString>& opts, bool /*incldef*/)
 {
 	opts["app-tdehtml-printfriendly"] = (m_printfriendly->isChecked() ? "true" : "false");
 	opts["app-tdehtml-printimages"] = (m_printimages->isChecked() ? "true" : "false");
 	opts["app-tdehtml-printheader"] = (m_printheader->isChecked() ? "true" : "false");
 }
 
-void KHTMLPrintSettings::setOptions(const TQMap<TQString,TQString>& opts)
+void TDEHTMLPrintSettings::setOptions(const TQMap<TQString,TQString>& opts)
 {
 	m_printfriendly->setChecked(opts["app-tdehtml-printfriendly"] != "false");
 	m_printimages->setChecked(opts["app-tdehtml-printimages"] != "false");

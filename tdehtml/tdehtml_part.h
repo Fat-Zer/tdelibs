@@ -36,11 +36,11 @@
 
 #include <tqregexp.h>
 
-class KHTMLPartPrivate;
-class KHTMLPartBrowserExtension;
+class TDEHTMLPartPrivate;
+class TDEHTMLPartBrowserExtension;
 class KJSProxy;
-class KHTMLView;
-class KHTMLSettings;
+class TDEHTMLView;
+class TDEHTMLSettings;
 class KJavaAppletContext;
 class KJSErrorDlg;
 
@@ -120,7 +120,7 @@ namespace KWallet
  *
  * \code
  * KURL url = "http://www.kde.org";
- * KHTMLPart *w = new KHTMLPart();
+ * TDEHTMLPart *w = new TDEHTMLPart();
  * w->openURL(url);
  * w->view()->resize(500, 400);
  * w->show();
@@ -139,7 +139,7 @@ namespace KWallet
  * w->setPluginsEnabled(false);
  * \endcode
  *
- * You may also wish to disable external references.  This will prevent KHTML
+ * You may also wish to disable external references.  This will prevent TDEHTML
  * from loading images, frames, etc,  or redirecting to external sites.
  *
  * \code
@@ -151,7 +151,7 @@ namespace KWallet
  *
  * \code
  * TQString myHTMLCode = ...;
- * KHTMLPart *w = new KHTMLPart();
+ * TDEHTMLPart *w = new TDEHTMLPart();
  * w->begin();
  * w->write(myHTMLCode);
  * ...
@@ -171,9 +171,9 @@ namespace KWallet
  * described above as the following example shows:
  *
  * \code
- * KHTMLPart *doc = new KHTMLPart();
+ * TDEHTMLPart *doc = new TDEHTMLPart();
  * doc->openStream( "text/html", KURL() );
- * doc->writeStream( TQCString( "<html><body><p>KHTML Rocks!</p></body></html>" ) );
+ * doc->writeStream( TQCString( "<html><body><p>TDEHTML Rocks!</p></body></html>" ) );
  * doc->closeStream();
  * \endcode
  *
@@ -181,10 +181,10 @@ namespace KWallet
  * @author Lars Knoll (knoll@kde.org)
  *
  */
-class KHTML_EXPORT KHTMLPart : public KParts::ReadOnlyPart
+class TDEHTML_EXPORT TDEHTMLPart : public KParts::ReadOnlyPart
 {
   Q_OBJECT
-  friend class KHTMLView;
+  friend class TDEHTMLView;
   friend class DOM::HTMLTitleElementImpl;
   friend class DOM::HTMLFrameElementImpl;
   friend class DOM::HTMLIFrameElementImpl;
@@ -192,7 +192,7 @@ class KHTML_EXPORT KHTMLPart : public KParts::ReadOnlyPart
   friend class DOM::HTMLAnchorElementImpl;
   friend class DOM::HTMLMetaElementImpl;
   friend class DOM::NodeImpl;
-  friend class KHTMLRun;
+  friend class TDEHTMLRun;
   friend class DOM::HTMLFormElementImpl;
   friend class tdehtml::RenderPartObject;
   friend class KJS::Window;
@@ -205,17 +205,17 @@ class KHTML_EXPORT KHTMLPart : public KParts::ReadOnlyPart
   friend class KJS::DOMDocument;
   friend class KJS::SourceFile;
   friend class KJSProxy;
-  friend class KHTMLPartBrowserExtension;
+  friend class TDEHTMLPartBrowserExtension;
   friend class DOM::DocumentImpl;
   friend class DOM::HTMLDocumentImpl;
-  friend class KHTMLPartBrowserHostExtension;
+  friend class TDEHTMLPartBrowserHostExtension;
   friend class tdehtml::HTMLTokenizer;
   friend class tdehtml::XMLTokenizer;
   friend class tdehtml::RenderWidget;
   friend class tdehtml::CSSStyleSelector;
-  friend class KHTMLPartIface;
-  friend class KHTMLPartFunction;
-  friend class KHTMLPopupGUIClient;
+  friend class TDEHTMLPartIface;
+  friend class TDEHTMLPartFunction;
+  friend class TDEHTMLPopupGUIClient;
 
   TQ_PROPERTY( bool javaScriptEnabled READ jScriptEnabled WRITE setJScriptEnabled )
   TQ_PROPERTY( bool javaEnabled READ javaEnabled WRITE setJavaEnabled )
@@ -235,26 +235,26 @@ public:
   enum GUIProfile { DefaultGUI, BrowserViewGUI /* ... */ };
 
   /**
-   * Constructs a new KHTMLPart.
+   * Constructs a new TDEHTMLPart.
    *
-   * KHTML basically consists of two objects: The KHTMLPart itself,
-   * holding the document data (DOM document), and the KHTMLView,
+   * TDEHTML basically consists of two objects: The TDEHTMLPart itself,
+   * holding the document data (DOM document), and the TDEHTMLView,
    * derived from TQScrollView, in which the document content is
    * rendered in. You can specify two different parent objects for a
-   * KHTMLPart, one parent for the KHTMLPart document and on parent
-   * for the KHTMLView. If the second @p parent argument is 0L, then
+   * TDEHTMLPart, one parent for the TDEHTMLPart document and on parent
+   * for the TDEHTMLView. If the second @p parent argument is 0L, then
    * @p parentWidget is used as parent for both objects, the part and
    * the view.
    */
-  KHTMLPart( TQWidget *parentWidget = 0, const char *widgetname = 0,
+  TDEHTMLPart( TQWidget *parentWidget = 0, const char *widgetname = 0,
              TQObject *parent = 0, const char *name = 0, GUIProfile prof = DefaultGUI );
 
-  KHTMLPart( KHTMLView *view, TQObject *parent = 0, const char *name = 0, GUIProfile prof = DefaultGUI );
+  TDEHTMLPart( TDEHTMLView *view, TQObject *parent = 0, const char *name = 0, GUIProfile prof = DefaultGUI );
 
   /**
    * Destructor.
    */
-  virtual ~KHTMLPart();
+  virtual ~TDEHTMLPart();
 
   /**
    * Opens the specified URL @p url.
@@ -307,7 +307,7 @@ public:
   /**
    * Returns a pointer to the HTML document's view.
    */
-  KHTMLView *view() const;
+  TDEHTMLView *view() const;
 
   /**
    * Enable/disable Javascript support. Note that this will
@@ -440,7 +440,7 @@ public:
    * Security option.
    *
    * Specify whether only file:/ or data:/ urls are allowed to be loaded without
-   * user confirmation by KHTML.
+   * user confirmation by TDEHTML.
    * ( for example referenced by stylesheets, images, scripts, subdocuments, embedded elements ).
    *
    * This option is mainly intended for enabling the "mail reader mode", where you load untrusted
@@ -605,7 +605,7 @@ public:
   //    void print(TQPainter *, int pageHeight, int pageWidth);
 
   /**
-   * Paints the HTML page to a TQPainter. See KHTMLView::paint for details
+   * Paints the HTML page to a TQPainter. See TDEHTMLView::paint for details
    */
   void paint( TQPainter *, const TQRect &, int = 0, bool * = 0 );
 
@@ -845,7 +845,7 @@ public:
   KParts::PartManager *partManager();
 
   /**
-   * Saves the KHTMLPart's complete state (including child frame
+   * Saves the TDEHTMLPart's complete state (including child frame
    * objects) to the provided TQDataStream.
    *
    * This is called from the saveState() method of the
@@ -853,7 +853,7 @@ public:
    */
   virtual void saveState( TQDataStream &stream );
   /**
-   * Restores the KHTMLPart's previously saved state (including
+   * Restores the TDEHTMLPart's previously saved state (including
    * child frame objects) from the provided TQDataStream.
    *
    * @see saveState()
@@ -884,15 +884,15 @@ public:
   /**
    * @internal
    */
-  const KHTMLSettings *settings() const;
+  const TDEHTMLSettings *settings() const;
 
   /**
-   * Returns a pointer to the parent KHTMLPart if the part is a frame
+   * Returns a pointer to the parent TDEHTMLPart if the part is a frame
    * in an HTML frameset.
    *
    *  Returns 0L otherwise.
    */
-  KHTMLPart *parentPart();
+  TDEHTMLPart *parentPart();
 
   /**
    * Returns a list of names of all frame (including iframe) objects of
@@ -906,7 +906,7 @@ public:
   /**
    * Finds a frame by name. Returns 0L if frame can't be found.
    */
-  KHTMLPart *findFrame( const TQString &f );
+  TDEHTMLPart *findFrame( const TQString &f );
 
   /**
    * Recursively finds the part containing the frame with name @p f
@@ -916,7 +916,7 @@ public:
    * frame info in @p *childFrame
    * @since 3.3
    */
-  KHTMLPart *findFrameParent( KParts::ReadOnlyPart *callingPart, const TQString &f, tdehtml::ChildFrame **childFrame=0 );
+  TDEHTMLPart *findFrameParent( KParts::ReadOnlyPart *callingPart, const TQString &f, tdehtml::ChildFrame **childFrame=0 );
 
   /**
    * Return the current frame (the one that has focus)
@@ -1046,7 +1046,7 @@ public:
    * Shows or hides the suppressed popup indicator
    * @since 3.5
    */
-  void setSuppressedPopupIndicator( bool enable, KHTMLPart *originPart );
+  void setSuppressedPopupIndicator( bool enable, TDEHTMLPart *originPart );
 
   /**
    * @internal
@@ -1553,7 +1553,7 @@ private:
   void resetFromScript();
   void emitSelectionChanged();
   // Returns whether callingHtmlPart may access this part
-  bool checkFrameAccess(KHTMLPart *callingHtmlPart);
+  bool checkFrameAccess(TDEHTMLPart *callingHtmlPart);
   bool openURLInFrame( const KURL &url, const KParts::URLArgs &urlArgs );
   bool urlSelectedIntern( const TQString &url, int button, int state,
                           const TQString &_target, KParts::URLArgs args = KParts::URLArgs());
@@ -1588,7 +1588,7 @@ private:
 
   void popupMenu( const TQString &url );
 
-  void init( KHTMLView *view, GUIProfile prof );
+  void init( TDEHTMLView *view, GUIProfile prof );
 
 
   void clear();
@@ -1621,16 +1621,16 @@ private:
   DOM::DocumentImpl *xmlDocImpl() const;
   tdehtml::ChildFrame *frame( const TQObject *obj );
 
-  tdehtml::ChildFrame *recursiveFrameRequest( KHTMLPart *callingHtmlPart, const KURL &url, const KParts::URLArgs &args, bool callParent = true );
+  tdehtml::ChildFrame *recursiveFrameRequest( TDEHTMLPart *callingHtmlPart, const KURL &url, const KParts::URLArgs &args, bool callParent = true );
 
   bool checkLinkSecurity( const KURL &linkURL,const TQString &message = TQString::null, const TQString &button = TQString::null );
   TQVariant executeScript( const TQString& filename, int baseLine, const DOM::Node &n, const TQString& script );
 
   KJSProxy *jScript();
 
-  KHTMLPart *opener();
+  TDEHTMLPart *opener();
   long cacheId() const;
-  void setOpener( KHTMLPart *_opener );
+  void setOpener( TDEHTMLPart *_opener );
   bool openedByJS();
   void setOpenedByJS( bool _openedByJS );
 
@@ -1675,8 +1675,8 @@ private:
 
   void runAdFilter();
 
-  KHTMLPartPrivate *d;
-  friend class KHTMLPartPrivate;
+  TDEHTMLPartPrivate *d;
+  friend class TDEHTMLPartPrivate;
 };
 
 

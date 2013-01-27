@@ -211,7 +211,7 @@ static PseudoState pseudoState;
 CSSStyleSelector::CSSStyleSelector( DocumentImpl* doc, TQString userStyleSheet, StyleSheetListImpl *styleSheets,
                                     const KURL &url, bool _strictParsing )
 {
-    KHTMLView* view = doc->view();
+    TDEHTMLView* view = doc->view();
 
     init(view ? view->part()->settings() : 0, doc);
 
@@ -273,14 +273,14 @@ CSSStyleSelector::CSSStyleSelector( CSSStyleSheetImpl *sheet )
 {
     init(0L, 0L);
 
-    KHTMLView *view = sheet->doc()->view();
+    TDEHTMLView *view = sheet->doc()->view();
     m_medium = view ? view->mediaType() : "screen";
 
     authorStyle = new CSSStyleSelectorList();
     authorStyle->append( sheet, m_medium );
 }
 
-void CSSStyleSelector::init(const KHTMLSettings* _settings, DocumentImpl* doc)
+void CSSStyleSelector::init(const TDEHTMLSettings* _settings, DocumentImpl* doc)
 {
     element = 0;
     settings = _settings;
@@ -308,12 +308,12 @@ CSSStyleSelector::~CSSStyleSelector()
 
 void CSSStyleSelector::addSheet( CSSStyleSheetImpl *sheet )
 {
-    KHTMLView *view = sheet->doc()->view();
+    TDEHTMLView *view = sheet->doc()->view();
     m_medium = view ? view->mediaType() : "screen";
     authorStyle->append( sheet, m_medium );
 }
 
-void CSSStyleSelector::loadDefaultStyle(const KHTMLSettings *s, DocumentImpl *doc)
+void CSSStyleSelector::loadDefaultStyle(const TDEHTMLSettings *s, DocumentImpl *doc)
 {
     if(s_defaultStyle) return;
 
@@ -883,9 +883,9 @@ static PseudoState checkPseudoState( const CSSStyleSelector::Encodedurl& encoded
         cleanpath( u );
     }
     //completeURL( attr.string() );
-    bool contains = KHTMLFactory::vLinks()->contains( u );
+    bool contains = TDEHTMLFactory::vLinks()->contains( u );
     if ( !contains && u.contains('/')==2 )
-      contains = KHTMLFactory::vLinks()->contains( u+'/' );
+      contains = TDEHTMLFactory::vLinks()->contains( u+'/' );
     return contains ? PseudoVisited : PseudoLink;
 }
 
@@ -2136,9 +2136,9 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
                      (!parentNode && value->cssValueType() == CSSValue::CSS_INHERIT);
 
     // These properties are used to set the correct margins/padding on RTL lists.
-    if (id == CSS_PROP__KHTML_MARGIN_START)
+    if (id == CSS_PROP__TDEHTML_MARGIN_START)
         id = style->direction() == LTR ? CSS_PROP_MARGIN_LEFT : CSS_PROP_MARGIN_RIGHT;
-    else if (id == CSS_PROP__KHTML_PADDING_START)
+    else if (id == CSS_PROP__TDEHTML_PADDING_START)
         id = style->direction() == LTR ? CSS_PROP_PADDING_LEFT : CSS_PROP_PADDING_RIGHT;
 
     // What follows is a list that maps the CSS properties into their corresponding front-end
@@ -2150,16 +2150,16 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
     case CSS_PROP_BACKGROUND_ATTACHMENT:
         HANDLE_BACKGROUND_VALUE(backgroundAttachment, BackgroundAttachment, value)
         break;
-    case CSS_PROP__KHTML_BACKGROUND_CLIP:
+    case CSS_PROP__TDEHTML_BACKGROUND_CLIP:
         HANDLE_BACKGROUND_VALUE(backgroundClip, BackgroundClip, value)
         break;
-    case CSS_PROP__KHTML_BACKGROUND_ORIGIN:
+    case CSS_PROP__TDEHTML_BACKGROUND_ORIGIN:
         HANDLE_BACKGROUND_VALUE(backgroundOrigin, BackgroundOrigin, value)
         break;
     case CSS_PROP_BACKGROUND_REPEAT:
         HANDLE_BACKGROUND_VALUE(backgroundRepeat, BackgroundRepeat, value)
         break;
-    case CSS_PROP__KHTML_BACKGROUND_SIZE:
+    case CSS_PROP__TDEHTML_BACKGROUND_SIZE:
         HANDLE_BACKGROUND_VALUE(backgroundSize, BackgroundSize, value)
         break;
     case CSS_PROP_BORDER_COLLAPSE:
@@ -2181,27 +2181,27 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
     case CSS_PROP_BORDER_TOP_STYLE:
         HANDLE_INHERIT_AND_INITIAL_WITH_VALUE(borderTopStyle, BorderTopStyle, BorderStyle)
         if (!primitiveValue) return;
-        style->setBorderTopStyle((EBorderStyle)(primitiveValue->getIdent() - CSS_VAL__KHTML_NATIVE));
+        style->setBorderTopStyle((EBorderStyle)(primitiveValue->getIdent() - CSS_VAL__TDEHTML_NATIVE));
         break;
     case CSS_PROP_BORDER_RIGHT_STYLE:
         HANDLE_INHERIT_AND_INITIAL_WITH_VALUE(borderRightStyle, BorderRightStyle, BorderStyle)
         if (!primitiveValue) return;
-        style->setBorderRightStyle((EBorderStyle)(primitiveValue->getIdent() - CSS_VAL__KHTML_NATIVE));
+        style->setBorderRightStyle((EBorderStyle)(primitiveValue->getIdent() - CSS_VAL__TDEHTML_NATIVE));
         break;
     case CSS_PROP_BORDER_BOTTOM_STYLE:
         HANDLE_INHERIT_AND_INITIAL_WITH_VALUE(borderBottomStyle, BorderBottomStyle, BorderStyle)
         if (!primitiveValue) return;
-        style->setBorderBottomStyle((EBorderStyle)(primitiveValue->getIdent() - CSS_VAL__KHTML_NATIVE));
+        style->setBorderBottomStyle((EBorderStyle)(primitiveValue->getIdent() - CSS_VAL__TDEHTML_NATIVE));
         break;
     case CSS_PROP_BORDER_LEFT_STYLE:
         HANDLE_INHERIT_AND_INITIAL_WITH_VALUE(borderLeftStyle, BorderLeftStyle, BorderStyle)
         if (!primitiveValue) return;
-        style->setBorderLeftStyle((EBorderStyle)(primitiveValue->getIdent() - CSS_VAL__KHTML_NATIVE));
+        style->setBorderLeftStyle((EBorderStyle)(primitiveValue->getIdent() - CSS_VAL__TDEHTML_NATIVE));
         break;
     case CSS_PROP_OUTLINE_STYLE:
         HANDLE_INHERIT_AND_INITIAL_WITH_VALUE(outlineStyle, OutlineStyle, BorderStyle)
         if (!primitiveValue) return;
-        style->setOutlineStyle((EBorderStyle)(primitiveValue->getIdent() - CSS_VAL__KHTML_NATIVE));
+        style->setOutlineStyle((EBorderStyle)(primitiveValue->getIdent() - CSS_VAL__TDEHTML_NATIVE));
         break;
     case CSS_PROP_CAPTION_SIDE:
     {
@@ -2279,11 +2279,11 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
         EFloat f;
         switch(primitiveValue->getIdent())
         {
-        case CSS_VAL__KHTML_LEFT:
+        case CSS_VAL__TDEHTML_LEFT:
             f = FLEFT_ALIGN; break;
         case CSS_VAL_LEFT:
             f = FLEFT; break;
-        case CSS_VAL__KHTML_RIGHT:
+        case CSS_VAL__TDEHTML_RIGHT:
             f = FRIGHT_ALIGN; break;
         case CSS_VAL_RIGHT:
             f = FRIGHT; break;
@@ -2659,8 +2659,8 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
 
         EWhiteSpace s;
         switch(primitiveValue->getIdent()) {
-        case CSS_VAL__KHTML_NOWRAP:
-            s = KHTML_NOWRAP;
+        case CSS_VAL__TDEHTML_NOWRAP:
+            s = TDEHTML_NOWRAP;
             break;
         case CSS_VAL_NOWRAP:
             s = NOWRAP;
@@ -2700,14 +2700,14 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
         style->setBorderVerticalSpacing(parentStyle->borderVerticalSpacing());
         break;
     }
-    case CSS_PROP__KHTML_BORDER_HORIZONTAL_SPACING: {
+    case CSS_PROP__TDEHTML_BORDER_HORIZONTAL_SPACING: {
         HANDLE_INHERIT_AND_INITIAL(borderHorizontalSpacing, BorderHorizontalSpacing)
         if (!primitiveValue) break;
         short spacing =  primitiveValue->computeLength(style, paintDeviceMetrics);
         style->setBorderHorizontalSpacing(spacing);
         break;
     }
-    case CSS_PROP__KHTML_BORDER_VERTICAL_SPACING: {
+    case CSS_PROP__TDEHTML_BORDER_VERTICAL_SPACING: {
         HANDLE_INHERIT_AND_INITIAL(borderVerticalSpacing, BorderVerticalSpacing)
         if (!primitiveValue) break;
         short spacing =  primitiveValue->computeLength(style, paintDeviceMetrics);
@@ -2759,7 +2759,7 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
 		return;
 	    int ident = primitiveValue->getIdent();
 	    if ( ident ) {
-		if ( ident == CSS_VAL__KHTML_TEXT )
+		if ( ident == CSS_VAL__TDEHTML_TEXT )
 		    col = element->getDocument()->textColor();
   		// ### should be eliminated
 		else if ( ident == CSS_VAL_TRANSPARENT
@@ -3152,7 +3152,7 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
 		    align = SUB; break;
 		case CSS_VAL_SUPER:
 		    align = SUPER; break;
-		case CSS_VAL__KHTML_BASELINE_MIDDLE:
+		case CSS_VAL__TDEHTML_BASELINE_MIDDLE:
 		    align = BASELINE_MIDDLE; break;
 		default:
 		    return;
@@ -3210,7 +3210,7 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
             case CSS_VAL_LARGE:    size = int( fontSizes[4] ); break;
             case CSS_VAL_X_LARGE:  size = int( fontSizes[5] ); break;
             case CSS_VAL_XX_LARGE: size = int( fontSizes[6] ); break;
-            case CSS_VAL__KHTML_XXX_LARGE: size = int( fontSizes[7] ); break;
+            case CSS_VAL__TDEHTML_XXX_LARGE: size = int( fontSizes[7] ); break;
             case CSS_VAL_LARGER:
                 size = nextFontSize(fontSizes, oldSize, false);
                 break;
@@ -3326,7 +3326,7 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
         HANDLE_INHERIT_AND_INITIAL(textAlign, TextAlign)
         if (!primitiveValue) return;
         if (primitiveValue->getIdent())
-            style->setTextAlign( (ETextAlign) (primitiveValue->getIdent() - CSS_VAL__KHTML_AUTO) );
+            style->setTextAlign( (ETextAlign) (primitiveValue->getIdent() - CSS_VAL__TDEHTML_AUTO) );
 	return;
     }
 
@@ -3581,15 +3581,15 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
 	style->setTextDecoration(t);
         break;
     }
-    case CSS_PROP__KHTML_FLOW_MODE:
+    case CSS_PROP__TDEHTML_FLOW_MODE:
         HANDLE_INHERIT_AND_INITIAL(flowAroundFloats, FlowAroundFloats)
         if (!primitiveValue) return;
         if (primitiveValue->getIdent()) {
-            style->setFlowAroundFloats( primitiveValue->getIdent() == CSS_VAL__KHTML_AROUND_FLOATS );
+            style->setFlowAroundFloats( primitiveValue->getIdent() == CSS_VAL__TDEHTML_AROUND_FLOATS );
             return;
         }
         break;
-    case CSS_PROP__KHTML_USER_INPUT: {
+    case CSS_PROP__TDEHTML_USER_INPUT: {
         if(value->cssValueType() == CSSValue::CSS_INHERIT)
         {
             if(!parentNode) return;
@@ -3843,7 +3843,7 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
         // Clamp opacity to the range 0-1
         style->setOpacity(kMin(1.0f, kMax(0.0f, (float)primitiveValue->floatValue(CSSPrimitiveValue::CSS_NUMBER))));
         break;
-    case CSS_PROP__KHTML_MARQUEE:
+    case CSS_PROP__TDEHTML_MARQUEE:
         if (value->cssValueType() != CSSValue::CSS_INHERIT || !parentNode) return;
         style->setMarqueeDirection(parentStyle->marqueeDirection());
         style->setMarqueeIncrement(parentStyle->marqueeIncrement());
@@ -3851,7 +3851,7 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
         style->setMarqueeLoopCount(parentStyle->marqueeLoopCount());
         style->setMarqueeBehavior(parentStyle->marqueeBehavior());
         break;
-    case CSS_PROP__KHTML_MARQUEE_REPETITION: {
+    case CSS_PROP__TDEHTML_MARQUEE_REPETITION: {
         HANDLE_INHERIT_AND_INITIAL(marqueeLoopCount, MarqueeLoopCount)
         if (!primitiveValue) return;
         if (primitiveValue->getIdent() == CSS_VAL_INFINITE)
@@ -3860,7 +3860,7 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
             style->setMarqueeLoopCount((int)(primitiveValue->floatValue(CSSPrimitiveValue::CSS_NUMBER)));
         break;
     }
-    case CSS_PROP__KHTML_MARQUEE_SPEED: {
+    case CSS_PROP__TDEHTML_MARQUEE_SPEED: {
         HANDLE_INHERIT_AND_INITIAL(marqueeSpeed, MarqueeSpeed)
         if (!primitiveValue) return;
         if (primitiveValue->getIdent()) {
@@ -3885,7 +3885,7 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
             style->setMarqueeSpeed(int(primitiveValue->floatValue(CSSPrimitiveValue::CSS_NUMBER)));
         break;
     }
-    case CSS_PROP__KHTML_MARQUEE_INCREMENT: {
+    case CSS_PROP__TDEHTML_MARQUEE_INCREMENT: {
         HANDLE_INHERIT_AND_INITIAL(marqueeIncrement, MarqueeIncrement)
         if (!primitiveValue) return;
         if (primitiveValue->getIdent()) {
@@ -3910,7 +3910,7 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
         }
         break;
     }
-    case CSS_PROP__KHTML_MARQUEE_STYLE: {
+    case CSS_PROP__TDEHTML_MARQUEE_STYLE: {
         HANDLE_INHERIT_AND_INITIAL(marqueeBehavior, MarqueeBehavior)
         if (!primitiveValue || !primitiveValue->getIdent()) return;
         switch (primitiveValue->getIdent())
@@ -3933,7 +3933,7 @@ void CSSStyleSelector::applyRule( int id, DOM::CSSValueImpl *value )
         }
         break;
     }
-    case CSS_PROP__KHTML_MARQUEE_DIRECTION: {
+    case CSS_PROP__TDEHTML_MARQUEE_DIRECTION: {
         HANDLE_INHERIT_AND_INITIAL(marqueeDirection, MarqueeDirection)
         if (!primitiveValue || !primitiveValue->getIdent()) return;
         switch (primitiveValue->getIdent())

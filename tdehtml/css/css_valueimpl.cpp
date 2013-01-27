@@ -891,7 +891,7 @@ FontFamilyValueImpl::FontFamilyValueImpl( const TQString &string)
     parsedFontName.replace(braceReg, TQString());
 
 #ifndef APPLE_CHANGES
-    const TQString &available = KHTMLSettings::availableFamilies();
+    const TQString &available = TDEHTMLSettings::availableFamilies();
 
     parsedFontName = parsedFontName.lower();
     // kdDebug(0) << "searching for face '" << parsedFontName << "'" << endl;

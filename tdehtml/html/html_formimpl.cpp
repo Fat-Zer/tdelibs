@@ -53,7 +53,7 @@
 #include <kmessagebox.h>
 #include <kapplication.h>
 #include <klocale.h>
-#ifndef KHTML_NO_WALLET
+#ifndef TDEHTML_NO_WALLET
 #include <tdewallet.h>
 #endif
 #include <netaccess.h>
@@ -223,7 +223,7 @@ TQByteArray HTMLFormElementImpl::formData(bool& ok)
     for(unsigned int i=0; i < strLength; ++i) if(str[i].latin1() == ',') str[i] = space;
     const TQStringList charsets = TQStringList::split(' ', str);
     TQTextCodec* codec = 0;
-    KHTMLView *view = getDocument()->view();
+    TDEHTMLView *view = getDocument()->view();
     {
         TQStringList::ConstIterator it = charsets.begin();
         const TQStringList::ConstIterator itEnd = charsets.end();
@@ -425,7 +425,7 @@ static TQString calculateAutoFillKey(const HTMLFormElementImpl& e)
 
 void HTMLFormElementImpl::doAutoFill()
 {
-#ifndef KHTML_NO_WALLET
+#ifndef TDEHTML_NO_WALLET
     const TQString key = calculateAutoFillKey(*this);
 
     if (KWallet::Wallet::keyDoesNotExist(KWallet::Wallet::NetworkWallet(),
@@ -435,12 +435,12 @@ void HTMLFormElementImpl::doAutoFill()
 
     // assert(view())
     getDocument()->view()->part()->openWallet(this);
-#endif // KHTML_NO_WALLET
+#endif // TDEHTML_NO_WALLET
 }
 
 
 void HTMLFormElementImpl::walletOpened(KWallet::Wallet *w) {
-#ifndef KHTML_NO_WALLET
+#ifndef TDEHTML_NO_WALLET
     assert(w);
     const TQString key = calculateAutoFillKey(*this);
     if (!w->hasFolder(KWallet::Wallet::FormDataFolder())) {
@@ -463,7 +463,7 @@ void HTMLFormElementImpl::walletOpened(KWallet::Wallet *w) {
             }
         }
     }
-#endif // KHTML_NO_WALLET
+#endif // TDEHTML_NO_WALLET
 }
 
 void HTMLFormElementImpl::submitFromKeyboard()
@@ -505,8 +505,8 @@ void HTMLFormElementImpl::submitFromKeyboard()
 
 void HTMLFormElementImpl::gatherWalletData()
 {
-#ifndef KHTML_NO_WALLET
-    KHTMLView* const view = getDocument()->view();
+#ifndef TDEHTML_NO_WALLET
+    TDEHTMLView* const view = getDocument()->view();
     // check if we have any password input's
     m_walletMap.clear();
     m_havePassword = false;
@@ -529,13 +529,13 @@ void HTMLFormElementImpl::gatherWalletData()
                 m_haveTextarea = true;
         }
     }
-#endif // KHTML_NO_WALLET
+#endif // TDEHTML_NO_WALLET
 }
 
 
 bool HTMLFormElementImpl::prepareSubmit()
 {
-    KHTMLView* const view = getDocument()->view();
+    TDEHTMLView* const view = getDocument()->view();
     if(m_insubmit || !view || !view->part() || view->part()->onlyLocalReferences())
         return m_insubmit;
 
@@ -569,7 +569,7 @@ void HTMLFormElementImpl::submit(  )
 #endif
 
     bool ok;
-    KHTMLView* const view = getDocument()->view();
+    TDEHTMLView* const view = getDocument()->view();
     const TQByteArray form_data = formData(ok);
     const KURL formUrl(getDocument()->URL());
 
@@ -577,7 +577,7 @@ void HTMLFormElementImpl::submit(  )
         if (m_walletMap.isEmpty()) {
             gatherWalletData();
         }
-#ifndef KHTML_NO_WALLET
+#ifndef TDEHTML_NO_WALLET
         if (m_havePassword && !m_haveTextarea && KWallet::Wallet::isEnabled()) {
             const TQString key = calculateAutoFillKey(*this);
             const bool doesnotexist = KWallet::Wallet::keyDoesNotExist(KWallet::Wallet::NetworkWallet(), KWallet::Wallet::FormDataFolder(), key);
@@ -630,7 +630,7 @@ void HTMLFormElementImpl::submit(  )
                 }
             }
         }
-#endif // KHTML_NO_WALLET
+#endif // TDEHTML_NO_WALLET
 
         const DOMString url(tdehtml::parseURL(getAttribute(ATTR_ACTION)));
         if(m_post) {
@@ -652,7 +652,7 @@ void HTMLFormElementImpl::submit(  )
 
 void HTMLFormElementImpl::reset(  )
 {
-    KHTMLView* const view = getDocument()->view();
+    TDEHTMLView* const view = getDocument()->view();
     if(m_inreset || !view || !view->part()) return;
 
     m_inreset = true;
@@ -991,9 +991,9 @@ void HTMLGenericFormElementImpl::defaultEventHandler(EventImpl *evt)
     if (evt->target()==this && !m_disabled)
     {
         // Report focus in/out changes to the browser extension (editable widgets only)
-        KHTMLView* const view = getDocument()->view();
+        TDEHTMLView* const view = getDocument()->view();
         if (view && evt->id() == EventImpl::DOMFOCUSIN_EVENT && isEditable() && m_render && m_render->isWidget()) {
-            KHTMLPartBrowserExtension *ext = static_cast<KHTMLPartBrowserExtension *>(view->part()->browserExtension());
+            TDEHTMLPartBrowserExtension *ext = static_cast<TDEHTMLPartBrowserExtension *>(view->part()->browserExtension());
             TQWidget* const widget = static_cast<RenderWidget*>(m_render)->widget();
             if (ext)
                 ext->editableWidgetFocused(widget);
@@ -1038,7 +1038,7 @@ void HTMLGenericFormElementImpl::defaultEventHandler(EventImpl *evt)
 
 
 	if (view && evt->id() == EventImpl::DOMFOCUSOUT_EVENT && isEditable() && m_render && m_render->isWidget()) {
-	    KHTMLPartBrowserExtension* const ext = static_cast<KHTMLPartBrowserExtension *>(view->part()->browserExtension());
+	    TDEHTMLPartBrowserExtension* const ext = static_cast<TDEHTMLPartBrowserExtension *>(view->part()->browserExtension());
 	    TQWidget* const widget = static_cast<RenderWidget*>(m_render)->widget();
 	    if (ext)
 		ext->editableWidgetBlurred(widget);
@@ -1772,7 +1772,7 @@ void HTMLInputElementImpl::defaultEventHandler(EventImpl *evt)
 		m_render->absolutePosition(offsetX,offsetY);
 		xPos = me->clientX()-offsetX;
 		yPos = me->clientY()-offsetY;
-                KHTMLView* v = getDocument()->view();
+                TDEHTMLView* v = getDocument()->view();
                 if ( v ) {
                     xPos += v->contentsX();
                     yPos += v->contentsY();

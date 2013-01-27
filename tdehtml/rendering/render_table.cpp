@@ -265,9 +265,9 @@ void RenderTable::calcWidth()
 
 void RenderTable::layout()
 {
-    KHTMLAssert( needsLayout() );
-    KHTMLAssert( minMaxKnown() );
-    KHTMLAssert( !needSectionRecalc );
+    TDEHTMLAssert( needsLayout() );
+    TDEHTMLAssert( minMaxKnown() );
+    TDEHTMLAssert( !needSectionRecalc );
 
     if (posChildNeedsLayout() && !normalChildNeedsLayout() && !selfNeedsLayout()) {
         // All we have to is lay out our positioned objects.
@@ -531,7 +531,7 @@ void RenderTable::paintBoxDecorations(PaintInfo &pI, int _tx, int _ty)
 
 void RenderTable::calcMinMaxWidth()
 {
-    KHTMLAssert( !minMaxKnown() );
+    TDEHTMLAssert( !minMaxKnown() );
 
     if ( needSectionRecalc )
 	recalcSections();
@@ -567,7 +567,7 @@ void RenderTable::splitColumn( int pos, int firstSpan )
     columns.resize( oldSize + 1 );
     int oldSpan = columns[pos].span;
 //     tqDebug("splitColumn( %d,%d ), oldSize=%d, oldSpan=%d", pos, firstSpan, oldSize, oldSpan );
-    KHTMLAssert( oldSpan > firstSpan );
+    TDEHTMLAssert( oldSpan > firstSpan );
     columns[pos].span = firstSpan;
     memmove( columns.data()+pos+1, columns.data()+pos, (oldSize-pos)*sizeof(ColumnStruct) );
     columns[pos+1].span = oldSpan - firstSpan;
@@ -1040,7 +1040,7 @@ void RenderTableSection::addChild(RenderObject *child, RenderObject *beforeChild
     cCol = 0;
 
     ensureRows( cRow+1 );
-    KHTMLAssert( child->isTableRow() );
+    TDEHTMLAssert( child->isTableRow() );
     grid[cRow].rowRenderer = static_cast<RenderTableRow*>(child);
 
     if (!beforeChild) {
@@ -2084,8 +2084,8 @@ void RenderTableRow::addChild(RenderObject *child, RenderObject *beforeChild)
 
 void RenderTableRow::layout()
 {
-    KHTMLAssert( needsLayout() );
-    KHTMLAssert( minMaxKnown() );
+    TDEHTMLAssert( needsLayout() );
+    TDEHTMLAssert( minMaxKnown() );
 
     RenderObject *child = firstChild();
     const bool pagedMode = canvas()->pagedMode();
@@ -2176,7 +2176,7 @@ void RenderTableRow::paintRow( PaintInfo& pI, int tx, int ty, int w, int h )
 
 void RenderTableRow::paint(PaintInfo& i, int tx, int ty)
 {
-    KHTMLAssert(layer());
+    TDEHTMLAssert(layer());
     if (!layer())
         return;
 
@@ -2260,7 +2260,7 @@ Length RenderTableCell::styleOrColWidth()
 
 void RenderTableCell::calcMinMaxWidth()
 {
-    KHTMLAssert( !minMaxKnown() );
+    TDEHTMLAssert( !minMaxKnown() );
 #ifdef DEBUG_LAYOUT
     kdDebug( 6040 ) << renderName() << "(TableCell)::calcMinMaxWidth() known=" << minMaxKnown() << endl;
 #endif
@@ -2365,7 +2365,7 @@ void RenderTableCell::setStyle( RenderStyle *newStyle )
     RenderBlock::setStyle( newStyle );
     setShouldPaintBackgroundOrBorder(true);
 
-    if (newStyle->whiteSpace() == KHTML_NOWRAP) {
+    if (newStyle->whiteSpace() == TDEHTML_NOWRAP) {
       // Figure out if we are really nowrapping or if we should just
       // use normal instead.  If the width of the cell is fixed, then
       // we don't actually use NOWRAP.

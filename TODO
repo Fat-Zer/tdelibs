@@ -223,7 +223,7 @@ an alternative help->contents action)
 
 - Move KRichTextLabel into tdeui if still required with Qt 4.
 
-- Add the concept of a session to KIO, in particular for KHTML so that it can
+- Add the concept of a session to KIO, in particular for TDEHTML so that it can
   have all of its jobs associated in some way (a unique key of sorts).  Will
   make SSL much easier to implement and allow removal of many hacks, mostly
   involving metadata.

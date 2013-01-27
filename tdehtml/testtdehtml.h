@@ -1,5 +1,5 @@
-#ifndef TESTKHTML_H
-#define TESTKHTML_H
+#ifndef TESTTDEHTML_H
+#define TESTTDEHTML_H
 
 #include <kdebug.h>
 #include <tqvaluelist.h>
@@ -12,7 +12,7 @@ class Dummy : public TQObject
 {
   Q_OBJECT
 public:
-  Dummy( KHTMLPart *part ) : TQObject( part ) { m_part = part; };
+  Dummy( TDEHTMLPart *part ) : TQObject( part ) { m_part = part; };
 
 private slots:
   void slotOpenURL( const KURL &url, const KParts::URLArgs &args )
@@ -43,7 +43,7 @@ private slots:
   void handleDone();
 
 private:
-  KHTMLPart *m_part;
+  TDEHTMLPart *m_part;
   TQValueList<TQString> filesToBenchmark;
   TQMap<TQString, TQValueList<int> > results;
   int                 benchmarkRun;

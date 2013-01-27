@@ -179,11 +179,11 @@ EventImpl::EventId EventImpl::typeToId(DOMString type)
     else if ( type == "keypress" )
         return KEYPRESS_EVENT;
     else if ( type == "readystatechange" )
-        return KHTML_READYSTATECHANGE_EVENT;
+        return TDEHTML_READYSTATECHANGE_EVENT;
     else if ( type == "dblclick" )
-        return KHTML_ECMA_DBLCLICK_EVENT;
+        return TDEHTML_ECMA_DBLCLICK_EVENT;
 
-    // ignore: KHTML_CLICK_EVENT
+    // ignore: TDEHTML_CLICK_EVENT
     return UNKNOWN_EVENT;
 }
 
@@ -254,15 +254,15 @@ DOMString EventImpl::idToType(EventImpl::EventId id)
         return "keypress"; //DOM3 ev. suggests textInput, but it's better for compat this way
 
     //tdehtml extensions
-    case KHTML_ECMA_DBLCLICK_EVENT:
+    case TDEHTML_ECMA_DBLCLICK_EVENT:
         return "dblclick";
-    case KHTML_ECMA_CLICK_EVENT:
+    case TDEHTML_ECMA_CLICK_EVENT:
         return "click";
-    case KHTML_DRAGDROP_EVENT:
+    case TDEHTML_DRAGDROP_EVENT:
         return "tdehtml_dragdrop";
-    case KHTML_MOVE_EVENT:
+    case TDEHTML_MOVE_EVENT:
         return "tdehtml_move";
-    case KHTML_READYSTATECHANGE_EVENT:
+    case TDEHTML_READYSTATECHANGE_EVENT:
         return "readystatechange";
 
     default:
@@ -454,7 +454,7 @@ void MouseEventImpl::initMouseEvent(const DOMString &typeArg,
     m_clientY = clientYArg;
     m_pageX   = clientXArg;
     m_pageY   = clientYArg;
-    KHTMLView* v;
+    TDEHTMLView* v;
     if ( view() && view()->document() && ( v = view()->document()->view() ) ) {
         m_pageX += v->contentsX();
         m_pageY += v->contentsY();

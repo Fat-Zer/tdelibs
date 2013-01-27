@@ -1,19 +1,19 @@
 /** @mainpage Trinity HTML Parser and Widget
 
 If you want a fully-fledged HTML browser widget in your application,
-you can use KHTMLPart to do so.
+you can use TDEHTMLPart to do so.
 
 @code
 KUrl url = "http://www.trinitydesktop.org";
-KHTMLPart *w = new KHTMLPart();
+TDEHTMLPart *w = new TDEHTMLPart();
 w->openUrl(url);
 w->view()->resize(500, 400);
 w->show();
 @endcode
 
-For more information, see the documentation for KHTMLPart.
+For more information, see the documentation for TDEHTMLPart.
 
-Note that using KHTMLPart may introduce security vulnerabilities
+Note that using TDEHTMLPart may introduce security vulnerabilities
 and unnecessary bloat to your application.  Qt's text widgets are
 rich-text capable, and will interpret a limited subset of HTML.
 
@@ -30,7 +30,7 @@ George Staikos \<staikos@kde.org\><br>
 Allan Sandfeld Jensen \<kde@carewolf.com\><br>
 Germain Garand \<germain@ebooksfrance.org\><br>
 Maksim Orlovich \<maksim@kde.org\><br>
-KHTML has also heavily benefited from the work of Apple Computer, Inc.
+TDEHTML has also heavily benefited from the work of Apple Computer, Inc.
 @maintainers
 Allan Sandfeld Jensen <br>
 Germain Garand<br>
@@ -42,5 +42,5 @@ Maksim Orlovich
 */
 // DOXYGEN_REFERENCES = tdecore tdeui kio tdeparts kjs
 // DOXYGEN_EXCLUDE =  test*.* html rendering xml misc ecma css imload pics test 
-// DOXYGEN_SET_PROJECT_NAME = KHTML
+// DOXYGEN_SET_PROJECT_NAME = TDEHTML
 // vim:ts=4:sw=4:expandtab:filetype=doxygen

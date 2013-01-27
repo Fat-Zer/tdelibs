@@ -28,7 +28,7 @@
 #include "misc/loader_client.h"
 #include "css/css_stylesheetimpl.h"
 
-class KHTMLView;
+class TDEHTMLView;
 
 namespace tdehtml {
     class CachedCSSStyleSheet;

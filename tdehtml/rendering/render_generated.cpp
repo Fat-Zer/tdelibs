@@ -38,7 +38,7 @@ RenderCounterBase::RenderCounterBase(DOM::NodeImpl* node)
 
 void RenderCounterBase::layout()
 {
-    KHTMLAssert( needsLayout() );
+    TDEHTMLAssert( needsLayout() );
 
     if ( !minMaxKnown() )
         calcMinMaxWidth();
@@ -48,7 +48,7 @@ void RenderCounterBase::layout()
 
 void RenderCounterBase::calcMinMaxWidth()
 {
-    KHTMLAssert( !minMaxKnown() );
+    TDEHTMLAssert( !minMaxKnown() );
 
     generateContent();
 

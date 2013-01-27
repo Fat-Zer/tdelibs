@@ -37,7 +37,7 @@
 class TQPainter;
 template <class type> class TQPtrList;
 template <class type> class TQValueList;
-class KHTMLView;
+class TDEHTMLView;
 class TQRect;
 class TQMouseEvent;
 class TQKeyEvent;
@@ -283,7 +283,7 @@ public:
     void dispatchUIEvent(int _id, int detail = 0);
     void dispatchSubtreeModifiedEvent();
     // return true if defaultPrevented (i.e. event should be swallowed)
-    // this matches the logic in KHTMLView.
+    // this matches the logic in TDEHTMLView.
     bool dispatchKeyEvent(TQKeyEvent *key, bool keypress);
 
     void handleLocalEvents(EventImpl *evt, bool useCapture);
@@ -351,7 +351,7 @@ public:
     /**
      * Attaches this node to the rendering tree. This calculates the style to be applied to the node and creates an
      * appropriate RenderObject which will be inserted into the tree (except when the style has display: none). This
-     * makes the node visible in the KHTMLView.
+     * makes the node visible in the TDEHTMLView.
      */
     virtual void attach();
 

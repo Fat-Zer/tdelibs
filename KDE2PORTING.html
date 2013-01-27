@@ -351,13 +351,13 @@ This makes KRun the recommended way to run another program in KDE 2.
 
 tdehtmlw has been replaced with tdehtml.<BR>
 <UL>
-	<LI>KHTMLView has vanished. Just use KHTMLWidget, which does scrollbar
+	<LI>TDEHTMLView has vanished. Just use TDEHTMLWidget, which does scrollbar
   managing for free.
 
 	<LI>A lot of the API has changed. If you just want to open a file/URL,
   you just need to do:<P>
   <PRE>
-	KHTMLWidget *w = new KHTMLWidget();
+	TDEHTMLWidget *w = new TDEHTMLWidget();
 	w-&gt;openURL(myURL);
   </PRE>
 
@@ -367,18 +367,18 @@ tdehtmlw has been replaced with tdehtml.<BR>
      const char * -&gt; QString
      TQStrList -&gt; QStringList
   </PRE>
-  The only exception for the moment is KHTMLWidget::write(), which does
+  The only exception for the moment is TDEHTMLWidget::write(), which does
   also exist in a const char * version.<P>
 
 
-<LI>you won't need the getKHTMLWiget function anymore. Just replace
-	getKHTMLWidget-&gt;xxx() with xxx()<P>
+<LI>you won't need the getTDEHTMLWiget function anymore. Just replace
+	getTDEHTMLWidget-&gt;xxx() with xxx()<P>
 <LI>xxx(TQString) -&gt; xxx(const TQString &amp;)<P>
 <LI>consistent naming. All getXyz() functions are renamed to xyz()<P>
 <LI>replaced/changed functions:<P>
 <TABLE BORDER="1">
 <TR>
-<TD>KHTMLWidget::setDefaultFontBase()</TD>
+<TD>TDEHTMLWidget::setDefaultFontBase()</TD>
 <TD>-&gt; setFontSizes()</TD>
 </TR>
 <TR>

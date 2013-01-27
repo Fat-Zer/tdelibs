@@ -30,7 +30,7 @@
  * @short Provides a context for KJavaAppletWidgets
  *
  * Applets run in a context- (see the Java documentation for more information
- * on contexts).  Currently, each document in KHTML creates one context, in
+ * on contexts).  Currently, each document in TDEHTML creates one context, in
  * which multiple applets can run.
  *
  * @author Richard J. Moore, rich@kde.org
@@ -112,12 +112,12 @@ signals:
     void showStatus  ( const TQString& txt );
 
     /**
-     * Signals the KHTML Part to show a url in a given target
+     * Signals the TDEHTML Part to show a url in a given target
      */
     void showDocument( const TQString& url, const TQString& target );
 
     /**
-     * Signals the KHTML Part an applet is loaded
+     * Signals the TDEHTML Part an applet is loaded
      **/
     void appletLoaded();
 

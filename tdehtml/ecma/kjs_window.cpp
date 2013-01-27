@@ -77,7 +77,7 @@ namespace KJS {
   class History : public ObjectImp {
     friend class HistoryFunc;
   public:
-    History(ExecState *exec, KHTMLPart *p)
+    History(ExecState *exec, TDEHTMLPart *p)
       : ObjectImp(exec->interpreter()->builtinObjectPrototype()), part(p) { }
     virtual Value get(ExecState *exec, const Identifier &propertyName) const;
     Value getValueProperty(ExecState *exec, int token) const;
@@ -85,31 +85,31 @@ namespace KJS {
     static const ClassInfo info;
     enum { Back, Forward, Go, Length };
   private:
-    TQGuardedPtr<KHTMLPart> part;
+    TQGuardedPtr<TDEHTMLPart> part;
   };
 
   class External : public ObjectImp {
     friend class ExternalFunc;
   public:
-    External(ExecState *exec, KHTMLPart *p)
+    External(ExecState *exec, TDEHTMLPart *p)
       : ObjectImp(exec->interpreter()->builtinObjectPrototype()), part(p) { }
     virtual Value get(ExecState *exec, const Identifier &propertyName) const;
     virtual const ClassInfo* classInfo() const { return &info; }
     static const ClassInfo info;
     enum { AddFavorite };
   private:
-    TQGuardedPtr<KHTMLPart> part;
+    TQGuardedPtr<TDEHTMLPart> part;
   };
 
   class FrameArray : public ObjectImp {
   public:
-    FrameArray(ExecState *exec, KHTMLPart *p)
+    FrameArray(ExecState *exec, TDEHTMLPart *p)
       : ObjectImp(exec->interpreter()->builtinObjectPrototype()), part(p) { }
     virtual Value get(ExecState *exec, const Identifier &propertyName) const;
     virtual Value call(ExecState *exec, Object &thisObj, const List &args);
     virtual bool implementsCall() const { return true; }
   private:
-    TQGuardedPtr<KHTMLPart> part;
+    TQGuardedPtr<TDEHTMLPart> part;
   };
 
 #ifdef Q_WS_QWS
@@ -421,7 +421,7 @@ Window *Window::retrieveWindow(KParts::ReadOnlyPart *p)
   Object obj = Object::dynamicCast( retrieve( p ) );
 #ifndef NDEBUG
   // obj should never be null, except when javascript has been disabled in that part.
-  KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(p);
+  TDEHTMLPart *part = ::tqqt_cast<TDEHTMLPart *>(p);
   if ( part && part->jScriptEnabled() )
   {
     assert( obj.isValid() );
@@ -448,10 +448,10 @@ Window *Window::retrieveActive(ExecState *exec)
 Value Window::retrieve(KParts::ReadOnlyPart *p)
 {
   assert(p);
-  KHTMLPart * part = ::tqqt_cast<KHTMLPart *>(p);
+  TDEHTMLPart * part = ::tqqt_cast<TDEHTMLPart *>(p);
   KJSProxy *proxy = 0L;
   if (!part) {
-    part = ::tqqt_cast<KHTMLPart *>(p->parent());
+    part = ::tqqt_cast<TDEHTMLPart *>(p->parent());
     if (part)
       proxy = part->framejScript(p);
   } else
@@ -478,7 +478,7 @@ Location *Window::location() const
 
 ObjectImp* Window::frames( ExecState* exec ) const
 {
-  KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(m_frame->m_part);
+  TDEHTMLPart *part = ::tqqt_cast<TDEHTMLPart *>(m_frame->m_part);
   if (part)
     return m_frames ? m_frames :
       (const_cast<Window*>(this)->m_frames = new FrameArray(exec, part));
@@ -516,7 +516,7 @@ bool Window::hasProperty(ExecState *exec, const Identifier &p) const
   if (Lookup::findEntry(&WindowTable, p))
     return true;
 
-  KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(m_frame->m_part);
+  TDEHTMLPart *part = ::tqqt_cast<TDEHTMLPart *>(m_frame->m_part);
   if (!part)
       return false;
 
@@ -585,7 +585,7 @@ Value Window::get(ExecState *exec, const Identifier &p) const
   }
 
   const HashEntry* entry = Lookup::findEntry(&WindowTable, p);
-  KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(m_frame->m_part);
+  TDEHTMLPart *part = ::tqqt_cast<TDEHTMLPart *>(m_frame->m_part);
 
   // properties that work on all windows
   if (entry) {
@@ -604,7 +604,7 @@ Value Window::get(ExecState *exec, const Identifier &p) const
     }
     if (!part)
         return Undefined();
-    // KHTMLPart next
+    // TDEHTMLPart next
     switch(entry->value) {
     case Frames:
       return Value(frames(exec));
@@ -614,9 +614,9 @@ Value Window::get(ExecState *exec, const Identifier &p) const
       else                // doesn't work yet
         return retrieve(part->opener());
     case Parent:
-      return retrieve(part->parentPart() ? part->parentPart() : (KHTMLPart*)part);
+      return retrieve(part->parentPart() ? part->parentPart() : (TDEHTMLPart*)part);
     case Top: {
-      KHTMLPart *p = part;
+      TDEHTMLPart *p = part;
       while (p->parentPart())
         p = p->parentPart();
       return retrieve(p);
@@ -638,7 +638,7 @@ Value Window::get(ExecState *exec, const Identifier &p) const
       break;
     }
   } else if (!part) {
-    // not a  KHTMLPart
+    // not a  TDEHTMLPart
     TQString rvalue;
     KParts::LiveConnectExtension::Type rtype;
     unsigned long robjid;
@@ -948,11 +948,11 @@ Value Window::get(ExecState *exec, const Identifier &p) const
     case Onchange:
       return getListener(exec,DOM::EventImpl::CHANGE_EVENT);
     case Onclick:
-      return getListener(exec,DOM::EventImpl::KHTML_ECMA_CLICK_EVENT);
+      return getListener(exec,DOM::EventImpl::TDEHTML_ECMA_CLICK_EVENT);
     case Ondblclick:
-      return getListener(exec,DOM::EventImpl::KHTML_ECMA_DBLCLICK_EVENT);
+      return getListener(exec,DOM::EventImpl::TDEHTML_ECMA_DBLCLICK_EVENT);
     case Ondragdrop:
-      return getListener(exec,DOM::EventImpl::KHTML_DRAGDROP_EVENT);
+      return getListener(exec,DOM::EventImpl::TDEHTML_DRAGDROP_EVENT);
     case Onerror:
       return getListener(exec,DOM::EventImpl::ERROR_EVENT);
     case Onfocus:
@@ -976,7 +976,7 @@ Value Window::get(ExecState *exec, const Identifier &p) const
     case Onmouseup:
       return getListener(exec,DOM::EventImpl::MOUSEUP_EVENT);
     case Onmove:
-      return getListener(exec,DOM::EventImpl::KHTML_MOVE_EVENT);
+      return getListener(exec,DOM::EventImpl::TDEHTML_MOVE_EVENT);
     case Onreset:
       return getListener(exec,DOM::EventImpl::RESET_EVENT);
     case Onresize:
@@ -1085,12 +1085,12 @@ void Window::put(ExecState* exec, const Identifier &propertyName, const Value &v
     default:
       break;
     }
-    KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(m_frame->m_part);
+    TDEHTMLPart *part = ::tqqt_cast<TDEHTMLPart *>(m_frame->m_part);
     if (part) {
     switch( entry->value ) {
     case Status: {
       if  (isSafeScript(exec) && part->settings()->windowStatusPolicy(part->url().host())
-		== KHTMLSettings::KJSWindowStatusAllow) {
+		== TDEHTMLSettings::KJSWindowStatusAllow) {
       String s = value.toString(exec);
       part->setJSStatusBarText(s.value().qstring());
       }
@@ -1098,7 +1098,7 @@ void Window::put(ExecState* exec, const Identifier &propertyName, const Value &v
     }
     case DefaultStatus: {
       if (isSafeScript(exec) && part->settings()->windowStatusPolicy(part->url().host())
-		== KHTMLSettings::KJSWindowStatusAllow) {
+		== TDEHTMLSettings::KJSWindowStatusAllow) {
       String s = value.toString(exec);
       part->setJSDefaultStatusBarText(s.value().qstring());
       }
@@ -1118,15 +1118,15 @@ void Window::put(ExecState* exec, const Identifier &propertyName, const Value &v
       return;
     case Onclick:
       if (isSafeScript(exec))
-        setListener(exec,DOM::EventImpl::KHTML_ECMA_CLICK_EVENT,value);
+        setListener(exec,DOM::EventImpl::TDEHTML_ECMA_CLICK_EVENT,value);
       return;
     case Ondblclick:
       if (isSafeScript(exec))
-        setListener(exec,DOM::EventImpl::KHTML_ECMA_DBLCLICK_EVENT,value);
+        setListener(exec,DOM::EventImpl::TDEHTML_ECMA_DBLCLICK_EVENT,value);
       return;
     case Ondragdrop:
       if (isSafeScript(exec))
-        setListener(exec,DOM::EventImpl::KHTML_DRAGDROP_EVENT,value);
+        setListener(exec,DOM::EventImpl::TDEHTML_DRAGDROP_EVENT,value);
       return;
     case Onerror:
       if (isSafeScript(exec))
@@ -1174,7 +1174,7 @@ void Window::put(ExecState* exec, const Identifier &propertyName, const Value &v
       return;
     case Onmove:
       if (isSafeScript(exec))
-        setListener(exec,DOM::EventImpl::KHTML_MOVE_EVENT,value);
+        setListener(exec,DOM::EventImpl::TDEHTML_MOVE_EVENT,value);
       return;
     case Onreset:
       if (isSafeScript(exec))
@@ -1222,7 +1222,7 @@ bool Window::toBoolean(ExecState *) const
 
 DOM::AbstractView Window::toAbstractView() const
 {
-  KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(m_frame->m_part);
+  TDEHTMLPart *part = ::tqqt_cast<TDEHTMLPart *>(m_frame->m_part);
   if (!part)
     return DOM::AbstractView();
   return part->document().defaultView();
@@ -1240,9 +1240,9 @@ void Window::closeNow()
   if (m_frame.isNull() || m_frame->m_part.isNull()) {
     kdDebug(6070) << k_funcinfo << "part is deleted already" << endl;
   } else {
-    KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(m_frame->m_part);
+    TDEHTMLPart *part = ::tqqt_cast<TDEHTMLPart *>(m_frame->m_part);
     if (!part) {
-      kdDebug(6070) << "closeNow on non KHTML part" << endl;
+      kdDebug(6070) << "closeNow on non TDEHTML part" << endl;
     } else {
       //kdDebug(6070) << k_funcinfo << " -> closing window" << endl;
       // We want to make sure that window.open won't find this part by name.
@@ -1288,9 +1288,9 @@ bool Window::checkIsSafeScript(KParts::ReadOnlyPart *activePart) const
    if ( activePart == m_frame->m_part ) // Not calling from another frame, no problem.
      return true;
 
-  KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(m_frame->m_part);
+  TDEHTMLPart *part = ::tqqt_cast<TDEHTMLPart *>(m_frame->m_part);
   if (!part)
-    return true; // not a KHTMLPart
+    return true; // not a TDEHTMLPart
 
   if ( part->document().isNull() )
     return true; // allow to access a window that was just created (e.g. with window.open("about:blank"))
@@ -1301,11 +1301,11 @@ bool Window::checkIsSafeScript(KParts::ReadOnlyPart *activePart) const
     return false;
   }
 
-  KHTMLPart *activeKHTMLPart = ::tqqt_cast<KHTMLPart *>(activePart);
-  if (!activeKHTMLPart)
-    return true; // not a KHTMLPart
+  TDEHTMLPart *activeTDEHTMLPart = ::tqqt_cast<TDEHTMLPart *>(activePart);
+  if (!activeTDEHTMLPart)
+    return true; // not a TDEHTMLPart
 
-  DOM::HTMLDocument actDocument = activeKHTMLPart->htmlDocument();
+  DOM::HTMLDocument actDocument = activeTDEHTMLPart->htmlDocument();
   if ( actDocument.isNull() ) {
     kdDebug(6070) << "Window::isSafeScript: active part has no document!" << endl;
     return false;
@@ -1327,7 +1327,7 @@ bool Window::checkIsSafeScript(KParts::ReadOnlyPart *activePart) const
 
 void Window::setListener(ExecState *exec, int eventId, Value func)
 {
-  KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(m_frame->m_part);
+  TDEHTMLPart *part = ::tqqt_cast<TDEHTMLPart *>(m_frame->m_part);
   if (!part || !isSafeScript(exec))
     return;
   DOM::DocumentImpl *doc = static_cast<DOM::DocumentImpl*>(part->htmlDocument().handle());
@@ -1339,7 +1339,7 @@ void Window::setListener(ExecState *exec, int eventId, Value func)
 
 Value Window::getListener(ExecState *exec, int eventId) const
 {
-  KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(m_frame->m_part);
+  TDEHTMLPart *part = ::tqqt_cast<TDEHTMLPart *>(m_frame->m_part);
   if (!part || !isSafeScript(exec))
     return Undefined();
   DOM::DocumentImpl *doc = static_cast<DOM::DocumentImpl*>(part->htmlDocument().handle());
@@ -1357,7 +1357,7 @@ Value Window::getListener(ExecState *exec, int eventId) const
 JSEventListener *Window::getJSEventListener(const Value& val, bool html)
 {
   // This function is so hot that it's worth coding it directly with imps.
-  KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(m_frame->m_part);
+  TDEHTMLPart *part = ::tqqt_cast<TDEHTMLPart *>(m_frame->m_part);
   if (!part || val.type() != ObjectType)
     return 0;
 
@@ -1433,8 +1433,8 @@ void Window::setCurrentEvent( DOM::Event *evt )
 void Window::goURL(ExecState* exec, const TQString& url, bool lockHistory)
 {
   Window* active = Window::retrieveActive(exec);
-  KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(m_frame->m_part);
-  KHTMLPart *active_part = ::tqqt_cast<KHTMLPart *>(active->part());
+  TDEHTMLPart *part = ::tqqt_cast<TDEHTMLPart *>(m_frame->m_part);
+  TDEHTMLPart *active_part = ::tqqt_cast<TDEHTMLPart *>(active->part());
   // Complete the URL using the "active part" (running interpreter)
   if (active_part && part) {
     if (url[0] == TQChar('#')) {
@@ -1470,7 +1470,7 @@ void Window::delayedGoHistory( int steps )
 
 void Window::goHistory( int steps )
 {
-  KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(m_frame->m_part);
+  TDEHTMLPart *part = ::tqqt_cast<TDEHTMLPart *>(m_frame->m_part);
   if(!part)
       // TODO history readonlypart
     return;
@@ -1488,7 +1488,7 @@ void Window::goHistory( int steps )
 
 void KJS::Window::resizeTo(TQWidget* tl, int width, int height)
 {
-  KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(m_frame->m_part);
+  TDEHTMLPart *part = ::tqqt_cast<TDEHTMLPart *>(m_frame->m_part);
   if(!part)
       // TODO resizeTo readonlypart
     return;
@@ -1531,10 +1531,10 @@ void KJS::Window::resizeTo(TQWidget* tl, int width, int height)
 
 Value Window::openWindow(ExecState *exec, const List& args)
 {
-  KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(m_frame->m_part);
+  TDEHTMLPart *part = ::tqqt_cast<TDEHTMLPart *>(m_frame->m_part);
   if (!part)
     return Undefined();
-  KHTMLView *widget = part->view();
+  TDEHTMLView *widget = part->view();
   Value v = args[0];
   TQString str;
   if (v.isValid() && !v.isA(UndefinedType))
@@ -1544,7 +1544,7 @@ Value Window::openWindow(ExecState *exec, const List& args)
   KURL url;
   if (!str.isEmpty())
   {
-    KHTMLPart* p = ::tqqt_cast<KHTMLPart *>(Window::retrieveActive(exec)->m_frame->m_part);
+    TDEHTMLPart* p = ::tqqt_cast<TDEHTMLPart *>(Window::retrieveActive(exec)->m_frame->m_part);
     if ( p )
       url = p->htmlDocument().completeURL(str).string();
     if ( !p ||
@@ -1552,9 +1552,9 @@ Value Window::openWindow(ExecState *exec, const List& args)
       return Undefined();
   }
 
-  KHTMLSettings::KJSWindowOpenPolicy policy =
+  TDEHTMLSettings::KJSWindowOpenPolicy policy =
 		part->settings()->windowOpenPolicy(part->url().host());
-  if ( policy == KHTMLSettings::KJSWindowOpenAsk ) {
+  if ( policy == TDEHTMLSettings::KJSWindowOpenAsk ) {
     emit part->browserExtension()->requestFocus(part);
     TQString caption;
     if (!part->url().host().isEmpty())
@@ -1568,12 +1568,12 @@ Value Window::openWindow(ExecState *exec, const List& args)
                                     i18n( "<qt>This site is requesting to open<p>%1</p>in a new browser window via JavaScript.<br />"
                                           "Do you want to allow this?</qt>").arg(KStringHandler::csqueeze(url.htmlURL(),  100)),
                                     caption, i18n("Allow"), i18n("Do Not Allow") ) == KMessageBox::Yes )
-      policy = KHTMLSettings::KJSWindowOpenAllow;
-  } else if ( policy == KHTMLSettings::KJSWindowOpenSmart )
+      policy = TDEHTMLSettings::KJSWindowOpenAllow;
+  } else if ( policy == TDEHTMLSettings::KJSWindowOpenSmart )
   {
     // window.open disabled unless from a key/mouse event
     if (static_cast<ScriptInterpreter *>(exec->interpreter())->isWindowOpenAllowed())
-      policy = KHTMLSettings::KJSWindowOpenAllow;
+      policy = TDEHTMLSettings::KJSWindowOpenAllow;
   }
 
   TQString frameName = args.size() > 1 ? args[1].toString(exec).qstring() : TQString("_blank");
@@ -1587,7 +1587,7 @@ Value Window::openWindow(ExecState *exec, const List& args)
       features = features.mid(1, features.length()-2);
   }
 
-  if ( policy != KHTMLSettings::KJSWindowOpenAllow ) {
+  if ( policy != TDEHTMLSettings::KJSWindowOpenAllow ) {
     if ( url.isEmpty() )
       part->setSuppressedPopupIndicator(true, 0);
     else {
@@ -1602,8 +1602,8 @@ Value Window::openWindow(ExecState *exec, const List& args)
 
 Value Window::executeOpenWindow(ExecState *exec, const KURL& url, const TQString& frameName, const TQString& features)
 {
-    KHTMLPart *p = ::tqqt_cast<KHTMLPart *>(m_frame->m_part);
-    KHTMLView *widget = p->view();
+    TDEHTMLPart *p = ::tqqt_cast<TDEHTMLPart *>(m_frame->m_part);
+    TDEHTMLView *widget = p->view();
     KParts::WindowArgs winargs;
 
     // scan feature argument
@@ -1703,8 +1703,8 @@ Value Window::executeOpenWindow(ExecState *exec, const KURL& url, const TQString
     // request window (new or existing if framename is set)
     KParts::ReadOnlyPart *newPart = 0L;
     emit p->browserExtension()->createNewWindow(KURL(), uargs,winargs,newPart);
-    if (newPart && ::tqqt_cast<KHTMLPart*>(newPart)) {
-      KHTMLPart *tdehtmlpart = static_cast<KHTMLPart*>(newPart);
+    if (newPart && ::tqqt_cast<TDEHTMLPart*>(newPart)) {
+      TDEHTMLPart *tdehtmlpart = static_cast<TDEHTMLPart*>(newPart);
       //tqDebug("opener set to %p (this Window's part) in new Window %p  (this Window=%p)",part,win,window);
       tdehtmlpart->setOpener(p);
       tdehtmlpart->setOpenedByJS(true);
@@ -1735,7 +1735,7 @@ void Window::forgetSuppressedWindows()
 
 void Window::showSuppressedWindows()
 {
-  KHTMLPart *part = ::tqqt_cast<KHTMLPart *>( m_frame->m_part );
+  TDEHTMLPart *part = ::tqqt_cast<TDEHTMLPart *>( m_frame->m_part );
   KJS::Interpreter *interpreter = part->jScript()->interpreter();
   ExecState *exec = interpreter->globalExec();
 
@@ -1760,11 +1760,11 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
   Window *window = static_cast<Window *>(thisObj.imp());
   TQString str, str2;
 
-  KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(window->m_frame->m_part);
+  TDEHTMLPart *part = ::tqqt_cast<TDEHTMLPart *>(window->m_frame->m_part);
   if (!part)
     return Undefined();
 
-  KHTMLView *widget = part->view();
+  TDEHTMLView *widget = part->view();
   Value v = args[0];
   UString s;
   if (v.isValid() && !v.isA(UndefinedType)) {
@@ -1894,9 +1894,9 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
     window->goURL(exec, args[0].toString(exec).qstring(), false /*don't lock history*/);
     return Undefined();
   case Window::Focus: {
-    KHTMLSettings::KJSWindowFocusPolicy policy =
+    TDEHTMLSettings::KJSWindowFocusPolicy policy =
 		part->settings()->windowFocusPolicy(part->url().host());
-    if(policy == KHTMLSettings::KJSWindowFocusAllow && widget) {
+    if(policy == TDEHTMLSettings::KJSWindowFocusAllow && widget) {
       widget->topLevelWidget()->raise();
       KWin::deIconifyWindow( widget->topLevelWidget()->winId() );
       widget->setActiveWindow();
@@ -1944,9 +1944,9 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
       widget->setContentsPos(args[0].toInt32(exec), args[1].toInt32(exec));
     return Undefined();
   case Window::MoveBy: {
-    KHTMLSettings::KJSWindowMovePolicy policy =
+    TDEHTMLSettings::KJSWindowMovePolicy policy =
 		part->settings()->windowMovePolicy(part->url().host());
-    if(policy == KHTMLSettings::KJSWindowMoveAllow && args.size() == 2 && widget)
+    if(policy == TDEHTMLSettings::KJSWindowMoveAllow && args.size() == 2 && widget)
     {
       KParts::BrowserExtension *ext = part->browserExtension();
       if (ext) {
@@ -1964,9 +1964,9 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
     return Undefined();
   }
   case Window::MoveTo: {
-    KHTMLSettings::KJSWindowMovePolicy policy =
+    TDEHTMLSettings::KJSWindowMovePolicy policy =
 		part->settings()->windowMovePolicy(part->url().host());
-    if(policy == KHTMLSettings::KJSWindowMoveAllow && args.size() == 2 && widget)
+    if(policy == TDEHTMLSettings::KJSWindowMoveAllow && args.size() == 2 && widget)
     {
       KParts::BrowserExtension *ext = part->browserExtension();
       if (ext) {
@@ -1984,9 +1984,9 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
     return Undefined();
   }
   case Window::ResizeBy: {
-    KHTMLSettings::KJSWindowResizePolicy policy =
+    TDEHTMLSettings::KJSWindowResizePolicy policy =
 		part->settings()->windowResizePolicy(part->url().host());
-    if(policy == KHTMLSettings::KJSWindowResizeAllow
+    if(policy == TDEHTMLSettings::KJSWindowResizeAllow
     		&& args.size() == 2 && widget)
     {
       TQWidget * tl = widget->topLevelWidget();
@@ -1998,9 +1998,9 @@ Value WindowFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
     return Undefined();
   }
   case Window::ResizeTo: {
-    KHTMLSettings::KJSWindowResizePolicy policy =
+    TDEHTMLSettings::KJSWindowResizePolicy policy =
                part->settings()->windowResizePolicy(part->url().host());
-    if(policy == KHTMLSettings::KJSWindowResizeAllow
+    if(policy == TDEHTMLSettings::KJSWindowResizeAllow
                && args.size() == 2 && widget)
     {
       TQWidget * tl = widget->topLevelWidget();
@@ -2114,7 +2114,7 @@ ScheduledAction::ScheduledAction(TQString _code, DateTimeMS _nextTime, int _inte
 
 bool ScheduledAction::execute(Window *window)
 {
-  KHTMLPart *part = ::tqqt_cast<KHTMLPart *>(window->m_frame->m_part);
+  TDEHTMLPart *part = ::tqqt_cast<TDEHTMLPart *>(window->m_frame->m_part);
   if (!part || !part->jScriptEnabled())
     return false;
   ScriptInterpreter *interpreter = static_cast<ScriptInterpreter *>(part->jScript()->interpreter());
@@ -2432,7 +2432,7 @@ Value FrameArray::get(ExecState *exec, const Identifier &p) const
     if (node) {
       if (node->id() == ID_FRAME || node->id() == ID_IFRAME) {
         //Return the Window object.
-        KHTMLPart* part = static_cast<DOM::HTMLFrameElementImpl*>(node)->contentPart();
+        TDEHTMLPart* part = static_cast<DOM::HTMLFrameElementImpl*>(node)->contentPart();
         if (part)
           return Value(Window::retrieveWindow(part));
         else
@@ -2590,7 +2590,7 @@ void Location::put(ExecState *exec, const Identifier &p, const Value &v, int att
     TQString str = v.toString(exec).qstring();
     switch (entry->value) {
     case Href: {
-      KHTMLPart* p =::tqqt_cast<KHTMLPart*>(Window::retrieveActive(exec)->part());
+      TDEHTMLPart* p =::tqqt_cast<TDEHTMLPart*>(Window::retrieveActive(exec)->part());
       if ( p )
         url = p->htmlDocument().completeURL( str ).string();
       else
@@ -2681,7 +2681,7 @@ Value LocationFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
             id == Location::Replace);
     break;
   case Location::Reload: {
-    KHTMLPart *tdehtmlpart = ::tqqt_cast<KHTMLPart *>(part);
+    TDEHTMLPart *tdehtmlpart = ::tqqt_cast<TDEHTMLPart *>(part);
     if (tdehtmlpart)
       tdehtmlpart->scheduleRedirection(-1, part->url().url(), true/*lock history*/);
     else
@@ -2714,11 +2714,11 @@ Value ExternalFunc::tryCall(ExecState *exec, Object &thisObj, const List &args)
   KJS_CHECK_THIS( External, thisObj );
   External *external = static_cast<External *>(thisObj.imp());
 
-  KHTMLPart *part = external->part;
+  TDEHTMLPart *part = external->part;
   if (!part)
     return Undefined();
 
-  KHTMLView *widget = part->view();
+  TDEHTMLView *widget = part->view();
 
   switch (id) {
   case External::AddFavorite:

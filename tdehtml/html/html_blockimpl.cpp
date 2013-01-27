@@ -45,11 +45,11 @@ void HTMLDivElementImpl::parseAttribute(AttributeImpl *attr)
     {
         DOMString v = attr->value().lower();
         if ( strcmp( v, "middle" ) == 0 || strcmp( v, "center" ) == 0 )
-            addCSSProperty(CSS_PROP_TEXT_ALIGN, CSS_VAL__KHTML_CENTER);
+            addCSSProperty(CSS_PROP_TEXT_ALIGN, CSS_VAL__TDEHTML_CENTER);
         else if (strcmp(v, "left") == 0)
-            addCSSProperty(CSS_PROP_TEXT_ALIGN, CSS_VAL__KHTML_LEFT);
+            addCSSProperty(CSS_PROP_TEXT_ALIGN, CSS_VAL__TDEHTML_LEFT);
         else if (strcmp(v, "right") == 0)
-            addCSSProperty(CSS_PROP_TEXT_ALIGN, CSS_VAL__KHTML_RIGHT);
+            addCSSProperty(CSS_PROP_TEXT_ALIGN, CSS_VAL__TDEHTML_RIGHT);
         else
             addCSSProperty(CSS_PROP_TEXT_ALIGN, v);
         break;
@@ -214,37 +214,37 @@ void HTMLMarqueeElementImpl::parseAttribute(AttributeImpl *attr)
             break;
         case ATTR_SCROLLAMOUNT:
             if (!attr->value().isEmpty())
-                addCSSLength(CSS_PROP__KHTML_MARQUEE_INCREMENT, attr->value());
+                addCSSLength(CSS_PROP__TDEHTML_MARQUEE_INCREMENT, attr->value());
             else
-                removeCSSProperty(CSS_PROP__KHTML_MARQUEE_INCREMENT);
+                removeCSSProperty(CSS_PROP__TDEHTML_MARQUEE_INCREMENT);
             break;
         case ATTR_SCROLLDELAY:
             if (!attr->value().isEmpty())
-                addCSSLength(CSS_PROP__KHTML_MARQUEE_SPEED, attr->value(), true);
+                addCSSLength(CSS_PROP__TDEHTML_MARQUEE_SPEED, attr->value(), true);
             else
-                removeCSSProperty(CSS_PROP__KHTML_MARQUEE_SPEED);
+                removeCSSProperty(CSS_PROP__TDEHTML_MARQUEE_SPEED);
             break;
         case ATTR_LOOP:
             if (!attr->value().isEmpty()) {
                 if (attr->value() == "-1" || strcasecmp(attr->value(), "infinite") == 0)
-                    addCSSProperty(CSS_PROP__KHTML_MARQUEE_REPETITION, CSS_VAL_INFINITE);
+                    addCSSProperty(CSS_PROP__TDEHTML_MARQUEE_REPETITION, CSS_VAL_INFINITE);
                 else
-                    addCSSLength(CSS_PROP__KHTML_MARQUEE_REPETITION, attr->value().lower(), true);
+                    addCSSLength(CSS_PROP__TDEHTML_MARQUEE_REPETITION, attr->value().lower(), true);
             }
             else
-                removeCSSProperty(CSS_PROP__KHTML_MARQUEE_REPETITION);
+                removeCSSProperty(CSS_PROP__TDEHTML_MARQUEE_REPETITION);
             break;
         case ATTR_BEHAVIOR:
             if (!attr->value().isEmpty())
-                addCSSProperty(CSS_PROP__KHTML_MARQUEE_STYLE, attr->value().lower());
+                addCSSProperty(CSS_PROP__TDEHTML_MARQUEE_STYLE, attr->value().lower());
             else
-                removeCSSProperty(CSS_PROP__KHTML_MARQUEE_STYLE);
+                removeCSSProperty(CSS_PROP__TDEHTML_MARQUEE_STYLE);
             break;
         case ATTR_DIRECTION:
             if (!attr->value().isEmpty())
-                addCSSProperty(CSS_PROP__KHTML_MARQUEE_DIRECTION, attr->value().lower());
+                addCSSProperty(CSS_PROP__TDEHTML_MARQUEE_DIRECTION, attr->value().lower());
             else
-                removeCSSProperty(CSS_PROP__KHTML_MARQUEE_DIRECTION);
+                removeCSSProperty(CSS_PROP__TDEHTML_MARQUEE_DIRECTION);
             break;
         case ATTR_TRUESPEED:
             m_minimumDelay = attr->val() ? 0 : defaultMinimumDelay;

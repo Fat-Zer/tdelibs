@@ -32,8 +32,8 @@
 #include <dom/dom_node.h>
 #include <dom/css_stylesheet.h>
 
-class KHTMLView;
-class KHTMLPart;
+class TDEHTMLView;
+class TDEHTMLPart;
 
 namespace DOM {
 
@@ -74,7 +74,7 @@ class HTMLDocument;
  * DOM Level 2 and newer provide means for creating documents directly,
  * which was not possible with DOM Level 1.
  */
-class KHTML_EXPORT DOMImplementation
+class TDEHTML_EXPORT DOMImplementation
 {
    friend class Document;
 public:
@@ -242,10 +242,10 @@ protected:
  * context they were created.
  *
  */
-class KHTML_EXPORT Document : public Node
+class TDEHTML_EXPORT Document : public Node
 {
-    friend class ::KHTMLView;
-    friend class ::KHTMLPart;
+    friend class ::TDEHTMLView;
+    friend class ::TDEHTMLPart;
     friend class AbstractView;
     friend class DOMImplementation;
     friend class HTMLFrameElement;
@@ -786,9 +786,9 @@ public:
     void removeStyleSheet(const StyleSheet &sheet);
     
     /**
-     * @return The KHTML view widget of this document.
+     * @return The TDEHTML view widget of this document.
      */
-    KHTMLView *view() const;
+    TDEHTMLView *view() const;
 
     /**
      * Introduced in DOM Level 2
@@ -988,7 +988,7 @@ class DocumentFragmentImpl;
  * \c insertBefore() and \c appendChild() .
  *
  */
-class KHTML_EXPORT DocumentFragment : public Node
+class TDEHTML_EXPORT DocumentFragment : public Node
 {
     friend class Document;
     friend class HTMLElementImpl;
@@ -1025,7 +1025,7 @@ class DOMString;
  * nodes.
  *
  */
-class KHTML_EXPORT DocumentType : public Node
+class TDEHTML_EXPORT DocumentType : public Node
 {
     friend class Document;
     friend class DOMImplementation;

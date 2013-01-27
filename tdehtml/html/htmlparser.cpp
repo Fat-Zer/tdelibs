@@ -125,7 +125,7 @@ public:
  *
  */
 
-KHTMLParser::KHTMLParser( KHTMLView *_parent, DocumentImpl *doc)
+TDEHTMLParser::TDEHTMLParser( TDEHTMLView *_parent, DocumentImpl *doc)
 {
     //kdDebug( 6035 ) << "parser constructor" << endl;
 #if SPEED_DEBUG > 0
@@ -144,7 +144,7 @@ KHTMLParser::KHTMLParser( KHTMLView *_parent, DocumentImpl *doc)
     reset();
 }
 
-KHTMLParser::KHTMLParser( DOM::DocumentFragmentImpl *i, DocumentImpl *doc )
+TDEHTMLParser::TDEHTMLParser( DOM::DocumentFragmentImpl *i, DocumentImpl *doc )
 {
     HTMLWidget = 0;
     document = doc;
@@ -161,7 +161,7 @@ KHTMLParser::KHTMLParser( DOM::DocumentFragmentImpl *i, DocumentImpl *doc )
     inBody = true;
 }
 
-KHTMLParser::~KHTMLParser()
+TDEHTMLParser::~TDEHTMLParser()
 {
 #if SPEED_DEBUG > 0
     kdDebug( ) << "TIME: parsing time was = " << qt.elapsed() << endl;
@@ -175,7 +175,7 @@ KHTMLParser::~KHTMLParser()
     delete isindex;
 }
 
-void KHTMLParser::reset()
+void TDEHTMLParser::reset()
 {
     setCurrent ( document );
 
@@ -201,7 +201,7 @@ void KHTMLParser::reset()
     discard_until = 0;
 }
 
-void KHTMLParser::parseToken(Token *t)
+void TDEHTMLParser::parseToken(Token *t)
 {
     if (t->tid > 2*ID_CLOSE_TAG)
     {
@@ -310,7 +310,7 @@ static bool isTableRelatedTag(int id)
             id == ID_TH);
 }
 
-bool KHTMLParser::insertNode(NodeImpl *n, bool flat)
+bool TDEHTMLParser::insertNode(NodeImpl *n, bool flat)
 {
     int id = n->id();
 
@@ -821,7 +821,7 @@ bool KHTMLParser::insertNode(NodeImpl *n, bool flat)
 }
 
 
-NodeImpl *KHTMLParser::getElement(Token* t)
+NodeImpl *TDEHTMLParser::getElement(Token* t)
 {
     NodeImpl *n = 0;
 
@@ -911,11 +911,11 @@ NodeImpl *KHTMLParser::getElement(Token* t)
         break;
     case ID_INPUT:
         if ( t->attrs &&
-             KHTMLFactory::defaultHTMLSettings()->isAdFilterEnabled() &&
-             KHTMLFactory::defaultHTMLSettings()->isHideAdsEnabled() &&
+             TDEHTMLFactory::defaultHTMLSettings()->isAdFilterEnabled() &&
+             TDEHTMLFactory::defaultHTMLSettings()->isHideAdsEnabled() &&
              !strcasecmp( t->attrs->getValue( ATTR_TYPE ), "image" ) )
         {
-            if (KHTMLFactory::defaultHTMLSettings()->isAdFiltered( doc()->completeURL( tdehtml::parseURL(t->attrs->getValue(ATTR_SRC)).string() ) ))
+            if (TDEHTMLFactory::defaultHTMLSettings()->isAdFiltered( doc()->completeURL( tdehtml::parseURL(t->attrs->getValue(ATTR_SRC)).string() ) ))
                 return 0;
         }
         n = new HTMLInputElementImpl(document, form);
@@ -1038,11 +1038,11 @@ NodeImpl *KHTMLParser::getElement(Token* t)
 // images
     case ID_IMG:
         if (t->attrs&&
-            KHTMLFactory::defaultHTMLSettings()->isAdFilterEnabled()&&
-            KHTMLFactory::defaultHTMLSettings()->isHideAdsEnabled())
+            TDEHTMLFactory::defaultHTMLSettings()->isAdFilterEnabled()&&
+            TDEHTMLFactory::defaultHTMLSettings()->isHideAdsEnabled())
         {
             TQString url = doc()->completeURL( tdehtml::parseURL(t->attrs->getValue(ATTR_SRC)).string() );
-            if (KHTMLFactory::defaultHTMLSettings()->isAdFiltered(url))
+            if (TDEHTMLFactory::defaultHTMLSettings()->isAdFiltered(url))
                 return 0;
         }
         n = new HTMLImageElementImpl(document, form);
@@ -1200,7 +1200,7 @@ NodeImpl *KHTMLParser::getElement(Token* t)
     return n;
 }
 
-void KHTMLParser::processCloseTag(Token *t)
+void TDEHTMLParser::processCloseTag(Token *t)
 {
     // support for really broken html. Can't believe I'm supporting such crap (lars)
     switch(t->tid)
@@ -1244,7 +1244,7 @@ void KHTMLParser::processCloseTag(Token *t)
 #endif
 }
 
-bool KHTMLParser::isResidualStyleTag(int _id)
+bool TDEHTMLParser::isResidualStyleTag(int _id)
 {
     switch (_id) {
         case ID_A:
@@ -1274,7 +1274,7 @@ bool KHTMLParser::isResidualStyleTag(int _id)
     }
 }
 
-bool KHTMLParser::isAffectedByResidualStyle(int _id)
+bool TDEHTMLParser::isAffectedByResidualStyle(int _id)
 {
     if (isResidualStyleTag(_id))
         return true;
@@ -1304,7 +1304,7 @@ bool KHTMLParser::isAffectedByResidualStyle(int _id)
     }
 }
 
-void KHTMLParser::handleResidualStyleCloseTagAcrossBlocks(HTMLStackElem* elem)
+void TDEHTMLParser::handleResidualStyleCloseTagAcrossBlocks(HTMLStackElem* elem)
 {
     // Find the element that crosses over to a higher level.
     // ### For now, if there is more than one, we will only make sure we close the residual style.
@@ -1487,7 +1487,7 @@ void KHTMLParser::handleResidualStyleCloseTagAcrossBlocks(HTMLStackElem* elem)
                                                     // if it becomes necessary to do so.
 }
 
-void KHTMLParser::reopenResidualStyleTags(HTMLStackElem* elem, DOM::NodeImpl* malformedTableParent)
+void TDEHTMLParser::reopenResidualStyleTags(HTMLStackElem* elem, DOM::NodeImpl* malformedTableParent)
 {
     // Loop for each tag that needs to be reopened.
     while (elem) {
@@ -1525,7 +1525,7 @@ void KHTMLParser::reopenResidualStyleTags(HTMLStackElem* elem, DOM::NodeImpl* ma
     }
 }
 
-void KHTMLParser::pushBlock(int _id, int _level)
+void TDEHTMLParser::pushBlock(int _id, int _level)
 {
     HTMLStackElem *Elem = new HTMLStackElem(_id, _level, current, m_inline, blockStack);
 
@@ -1533,7 +1533,7 @@ void KHTMLParser::pushBlock(int _id, int _level)
     addForbidden(_id, forbiddenTag);
 }
 
-void KHTMLParser::popBlock( int _id )
+void TDEHTMLParser::popBlock( int _id )
 {
     HTMLStackElem *Elem = blockStack;
     int maxLevel = 0;
@@ -1619,7 +1619,7 @@ void KHTMLParser::popBlock( int _id )
     reopenResidualStyleTags(residualStyleStack, malformedTableParent);
 }
 
-void KHTMLParser::popOneBlock(bool delBlock)
+void TDEHTMLParser::popOneBlock(bool delBlock)
 {
     HTMLStackElem *Elem = blockStack;
 
@@ -1661,20 +1661,20 @@ void KHTMLParser::popOneBlock(bool delBlock)
         delete Elem;
 }
 
-void KHTMLParser::popInlineBlocks()
+void TDEHTMLParser::popInlineBlocks()
 {
     while(blockStack && current->isInline() && current->id() != ID_FONT)
         popOneBlock();
 }
 
-void KHTMLParser::freeBlock()
+void TDEHTMLParser::freeBlock()
 {
     while (blockStack)
         popOneBlock();
     blockStack = 0;
 }
 
-void KHTMLParser::createHead()
+void TDEHTMLParser::createHead()
 {
     if(head || !doc()->firstChild())
         return;
@@ -1692,7 +1692,7 @@ void KHTMLParser::createHead()
     }
 }
 
-NodeImpl *KHTMLParser::handleIsindex( Token *t )
+NodeImpl *TDEHTMLParser::handleIsindex( Token *t )
 {
     NodeImpl *n;
     HTMLFormElementImpl *myform = form;
@@ -1718,7 +1718,7 @@ NodeImpl *KHTMLParser::handleIsindex( Token *t )
     return n;
 }
 
-void KHTMLParser::startBody()
+void TDEHTMLParser::startBody()
 {
     if(inBody) return;
 

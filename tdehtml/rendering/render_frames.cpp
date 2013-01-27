@@ -101,11 +101,11 @@ bool RenderFrameSet::nodeAtPoint(NodeInfo& info, int _x, int _y, int _tx, int _t
 
 void RenderFrameSet::layout( )
 {
-    KHTMLAssert( needsLayout() );
-    KHTMLAssert( minMaxKnown() );
+    TDEHTMLAssert( needsLayout() );
+    TDEHTMLAssert( minMaxKnown() );
 
     if ( !parent()->isFrameSet() ) {
-        KHTMLView* view = canvas()->view();
+        TDEHTMLView* view = canvas()->view();
         m_width = view ? view->visibleWidth() : 0;
         m_height = view ? view->visibleHeight() : 0;
     }
@@ -545,7 +545,7 @@ bool RenderFrameSet::userResize( MouseEventImpl *evt )
     setNeedsLayout(true);
   }
 
-  KHTMLView *view = canvas()->view();
+  TDEHTMLView *view = canvas()->view();
   if ((m_resizing || evt->id() == EventImpl::MOUSEUP_EVENT) && view) {
       TQPainter paint( view );
       paint.setPen( Qt::gray );
@@ -635,7 +635,7 @@ void RenderPart::setWidget( TQWidget *widget )
 
     setQWidget( widget );
     widget->setFocusPolicy(TQ_WheelFocus);
-    if(widget->inherits("KHTMLView"))
+    if(widget->inherits("TDEHTMLView"))
         connect( widget, TQT_SIGNAL( cleared() ), this, TQT_SLOT( slotViewCleared() ) );
 
     setNeedsLayoutAndMinMaxRecalc();
@@ -683,11 +683,11 @@ void RenderFrame::slotViewCleared()
             view->setFrameStyle(TQFrame::NoFrame);
 	    view->setVScrollBarMode(element()->scrolling );
 	    view->setHScrollBarMode(element()->scrolling );
-        if(view->inherits("KHTMLView")) {
+        if(view->inherits("TDEHTMLView")) {
 #ifdef DEBUG_LAYOUT
-            kdDebug(6031) << "frame is a KHTMLview!" << endl;
+            kdDebug(6031) << "frame is a TDEHTMLview!" << endl;
 #endif
-            KHTMLView *htmlView = static_cast<KHTMLView *>(view);
+            TDEHTMLView *htmlView = static_cast<TDEHTMLView *>(view);
             if(element()->marginWidth != -1) htmlView->setMarginWidth(element()->marginWidth);
             if(element()->marginHeight != -1) htmlView->setMarginHeight(element()->marginHeight);
         }
@@ -706,7 +706,7 @@ RenderPartObject::RenderPartObject( DOM::HTMLElementImpl* element )
 void RenderPartObject::updateWidget()
 {
   TQString url;
-  KHTMLPart *part = m_view->part();
+  TDEHTMLPart *part = m_view->part();
 
   setNeedsLayoutAndMinMaxRecalc();
 
@@ -754,8 +754,8 @@ void RenderPartObject::updateWidget()
               }
           }
       }
-      params.append( TQString::fromLatin1("__KHTML__PLUGINEMBED=\"YES\"") );
-      params.append( TQString::fromLatin1("__KHTML__PLUGINBASEURL=\"%1\"").arg(element()->getDocument()->baseURL().url()));
+      params.append( TQString::fromLatin1("__TDEHTML__PLUGINEMBED=\"YES\"") );
+      params.append( TQString::fromLatin1("__TDEHTML__PLUGINBASEURL=\"%1\"").arg(element()->getDocument()->baseURL().url()));
 
       HTMLEmbedElementImpl *embed = 0;
       TQString classId;
@@ -775,8 +775,8 @@ void RenderPartObject::updateWidget()
               }
           classId = objbase->classId;
 
-          params.append( TQString::fromLatin1("__KHTML__CLASSID=\"%1\"").arg( classId ) );
-          params.append( TQString::fromLatin1("__KHTML__CODEBASE=\"%1\"").arg( objbase->getAttribute(ATTR_CODEBASE).string() ) );
+          params.append( TQString::fromLatin1("__TDEHTML__CLASSID=\"%1\"").arg( classId ) );
+          params.append( TQString::fromLatin1("__TDEHTML__CODEBASE=\"%1\"").arg( objbase->getAttribute(ATTR_CODEBASE).string() ) );
           if (!objbase->getAttribute(ATTR_WIDTH).isEmpty())
               params.append( TQString::fromLatin1("WIDTH=\"%1\"").arg( objbase->getAttribute(ATTR_WIDTH).string() ) );
           else if (embed && !embed->getAttribute(ATTR_WIDTH).isEmpty()) {
@@ -857,7 +857,7 @@ void RenderPartObject::close()
 
 bool RenderPartObject::partLoadingErrorNotify( tdehtml::ChildFrame *childFrame, const KURL& url, const TQString& serviceType )
 {
-    KHTMLPart *part = static_cast<KHTMLView *>(m_view)->part();
+    TDEHTMLPart *part = static_cast<TDEHTMLView *>(m_view)->part();
     kdDebug(6031) << "RenderPartObject::partLoadingErrorNotify serviceType=" << serviceType << endl;
     // Check if we just tried with e.g. nsplugin
     // and fallback to the activexhandler if there is a classid
@@ -925,7 +925,7 @@ void RenderPartObject::slotPartLoadingErrorNotify()
     // prepare for the local eventloop in KMessageBox
     ref();
 
-    KHTMLPart *part = static_cast<KHTMLView *>(m_view)->part();
+    TDEHTMLPart *part = static_cast<TDEHTMLView *>(m_view)->part();
     KParts::BrowserExtension *ext = part->browserExtension();
     if( embed && !embed->pluginPage.isEmpty() && ext ) {
         // Prepare the mimetype to show in the question (comment if available, name as fallback)
@@ -976,8 +976,8 @@ void RenderPartObject::slotPartLoadingErrorNotify()
 
 void RenderPartObject::layout( )
 {
-    KHTMLAssert( needsLayout() );
-    KHTMLAssert( minMaxKnown() );
+    TDEHTMLAssert( needsLayout() );
+    TDEHTMLAssert( minMaxKnown() );
 
     calcWidth();
     calcHeight();
@@ -1009,11 +1009,11 @@ void RenderPartObject::slotViewCleared()
       view->setFrameStyle(frameStyle);
       view->setVScrollBarMode(scroll );
       view->setHScrollBarMode(scroll );
-      if(view->inherits("KHTMLView")) {
+      if(view->inherits("TDEHTMLView")) {
 #ifdef DEBUG_LAYOUT
-          kdDebug(6031) << "frame is a KHTMLview!" << endl;
+          kdDebug(6031) << "frame is a TDEHTMLview!" << endl;
 #endif
-          KHTMLView *htmlView = static_cast<KHTMLView *>(view);
+          TDEHTMLView *htmlView = static_cast<TDEHTMLView *>(view);
           htmlView->setIgnoreWheelEvents( element()->id() == ID_IFRAME );
           if(marginw != -1) htmlView->setMarginWidth(marginw);
           if(marginh != -1) htmlView->setMarginHeight(marginh);

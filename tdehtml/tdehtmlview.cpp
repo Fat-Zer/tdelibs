@@ -56,7 +56,7 @@
 
 #include "tdehtmlpart_p.h"
 
-#ifndef KHTML_NO_CARET
+#ifndef TDEHTML_NO_CARET
 #include "tdehtml_caret_p.h"
 #include "xml/dom2_rangeimpl.h"
 #endif
@@ -109,15 +109,15 @@ namespace tdehtml {
 
 using namespace DOM;
 using namespace tdehtml;
-class KHTMLToolTip;
+class TDEHTMLToolTip;
 
 
 #ifndef QT_NO_TOOLTIP
 
-class KHTMLToolTip : public TQToolTip
+class TDEHTMLToolTip : public TQToolTip
 {
 public:
-    KHTMLToolTip(KHTMLView *view,  KHTMLViewPrivate* vp) : TQToolTip(view->viewport())
+    TDEHTMLToolTip(TDEHTMLView *view,  TDEHTMLViewPrivate* vp) : TQToolTip(view->viewport())
     {
         m_view = view;
         m_viewprivate = vp;
@@ -127,14 +127,14 @@ protected:
     virtual void maybeTip(const TQPoint &);
 
 private:
-    KHTMLView *m_view;
-    KHTMLViewPrivate* m_viewprivate;
+    TDEHTMLView *m_view;
+    TDEHTMLViewPrivate* m_viewprivate;
 };
 
 #endif
 
-class KHTMLViewPrivate {
-    friend class KHTMLToolTip;
+class TDEHTMLViewPrivate {
+    friend class TDEHTMLToolTip;
 public:
 
     enum PseudoFocusNodes {
@@ -149,16 +149,16 @@ public:
         CSActionPending
     };
 
-    KHTMLViewPrivate()
+    TDEHTMLViewPrivate()
         : underMouse( 0 ), underMouseNonShared( 0 ), visibleWidgets( 107 )
 #ifndef NO_SMOOTH_SCROLL_HACK
           , dx(0), dy(0), ddx(0), ddy(0), rdx(0), rdy(0), scrolling(false)
 #endif
     {
-#ifndef KHTML_NO_CARET
+#ifndef TDEHTML_NO_CARET
 	m_caretViewContext = 0;
 	m_editorContext = 0;
-#endif // KHTML_NO_CARET
+#endif // TDEHTML_NO_CARET
         postponed_autorepeat = NULL;
         reset();
         vmode = TQScrollView::Auto;
@@ -175,7 +175,7 @@ public:
         m_mouseScrollTimer = 0;
         m_mouseScrollIndicator = 0;
     }
-    ~KHTMLViewPrivate()
+    ~TDEHTMLViewPrivate()
     {
         delete formCompletions;
         delete tp; tp = 0;
@@ -187,10 +187,10 @@ public:
         if (underMouseNonShared)
 	    underMouseNonShared->deref();
 	delete tooltip;
-#ifndef KHTML_NO_CARET
+#ifndef TDEHTML_NO_CARET
 	delete m_caretViewContext;
 	delete m_editorContext;
-#endif // KHTML_NO_CARET
+#endif // TDEHTML_NO_CARET
         delete cursor_icon_widget;
         delete m_mouseScrollTimer;
         delete m_mouseScrollIndicator;
@@ -208,7 +208,7 @@ public:
 	tabMovePending = false;
 	lastTabbingDirection = true;
 	pseudoFocusNode = PFNone;
-#ifndef KHTML_NO_SCROLLBARS
+#ifndef TDEHTML_NO_SCROLLBARS
         //We don't turn off the toolbars here
 	//since if the user turns them
 	//off, then chances are they want them turned
@@ -250,22 +250,22 @@ public:
         painting = false;
         updateRegion = TQRegion();
         m_dialogsAllowed = true;
-#ifndef KHTML_NO_CARET
+#ifndef TDEHTML_NO_CARET
         if (m_caretViewContext) {
           m_caretViewContext->caretMoved = false;
 	  m_caretViewContext->keyReleasePending = false;
         }/*end if*/
-#endif // KHTML_NO_CARET
-#ifndef KHTML_NO_TYPE_AHEAD_FIND
+#endif // TDEHTML_NO_CARET
+#ifndef TDEHTML_NO_TYPE_AHEAD_FIND
         typeAheadActivated = false;
-#endif // KHTML_NO_TYPE_AHEAD_FIND
+#endif // TDEHTML_NO_TYPE_AHEAD_FIND
 	accessKeysActivated = false;
 	accessKeysPreActivate = false;
 
         // We ref/deref to ensure defaultHTMLSettings is available
-        KHTMLFactory::ref();
-        accessKeysEnabled = KHTMLFactory::defaultHTMLSettings()->accessKeysEnabled();
-        KHTMLFactory::deref();
+        TDEHTMLFactory::ref();
+        accessKeysEnabled = TDEHTMLFactory::defaultHTMLSettings()->accessKeysEnabled();
+        TDEHTMLFactory::deref();
 
         emitCompletedAfterRepaint = CSNone;
     }
@@ -304,7 +304,7 @@ public:
         scrollSuspended = false;
     }
 
-#ifndef KHTML_NO_CARET
+#ifndef TDEHTML_NO_CARET
     /** this function returns an instance of the caret view context. If none
      * exists, it will be instantiated.
      */
@@ -319,7 +319,7 @@ public:
       if (!m_editorContext) m_editorContext = new EditorContext();
       return m_editorContext;
     }
-#endif // KHTML_NO_CARET
+#endif // TDEHTML_NO_CARET
 
 #ifdef DEBUG_PIXEL
     TQTime timer;
@@ -375,18 +375,18 @@ public:
     bool dirtyLayout                           :1;
     bool m_dialogsAllowed			:1;
     TQRegion updateRegion;
-    KHTMLToolTip *tooltip;
+    TDEHTMLToolTip *tooltip;
     TQPtrDict<TQWidget> visibleWidgets;
-#ifndef KHTML_NO_CARET
+#ifndef TDEHTML_NO_CARET
     CaretViewContext *m_caretViewContext;
     EditorContext *m_editorContext;
-#endif // KHTML_NO_CARET
-#ifndef KHTML_NO_TYPE_AHEAD_FIND
+#endif // TDEHTML_NO_CARET
+#ifndef TDEHTML_NO_TYPE_AHEAD_FIND
     TQString findString;
     TQTimer timer;
     bool findLinksOnly;
     bool typeAheadActivated;
-#endif // KHTML_NO_TYPE_AHEAD_FIND
+#endif // TDEHTML_NO_TYPE_AHEAD_FIND
     bool accessKeysEnabled;
     bool accessKeysActivated;
     bool accessKeysPreActivate;
@@ -453,7 +453,7 @@ static bool findImageMapRect(HTMLImageElementImpl *img, const TQPoint &scrollOfs
     return false;
 }
 
-void KHTMLToolTip::maybeTip(const TQPoint& p)
+void TDEHTMLToolTip::maybeTip(const TQPoint& p)
 {
     DOM::NodeImpl *node = m_viewprivate->underMouseNonShared;
     TQRect region;
@@ -484,13 +484,13 @@ void KHTMLToolTip::maybeTip(const TQPoint& p)
 }
 #endif
 
-KHTMLView::KHTMLView( KHTMLPart *part, TQWidget *parent, const char *name)
+TDEHTMLView::TDEHTMLView( TDEHTMLPart *part, TQWidget *parent, const char *name)
     : TQScrollView( parent, name, (WFlags)(WResizeNoErase | WRepaintNoErase) )
 {
     m_medium = "screen";
 
     m_part = part;
-    d = new KHTMLViewPrivate;
+    d = new TDEHTMLViewPrivate;
     TQScrollView::setVScrollBarMode(d->vmode);
     TQScrollView::setHScrollBarMode(d->hmode);
     connect(kapp, TQT_SIGNAL(kdisplayPaletteChanged()), this, TQT_SLOT(slotPaletteChanged()));
@@ -499,7 +499,7 @@ KHTMLView::KHTMLView( KHTMLPart *part, TQWidget *parent, const char *name)
     // initialize QScrollView
     enableClipper(true);
     // hack to get unclipped painting on the viewport.
-    static_cast<KHTMLView *>(TQT_TQWIDGET(viewport()))->setWFlags(WPaintUnclipped);
+    static_cast<TDEHTMLView *>(TQT_TQWIDGET(viewport()))->setWFlags(WPaintUnclipped);
 
     setResizePolicy(Manual);
     viewport()->setMouseTracking(true);
@@ -508,12 +508,12 @@ KHTMLView::KHTMLView( KHTMLPart *part, TQWidget *parent, const char *name)
     KImageIO::registerFormats();
 
 #ifndef QT_NO_TOOLTIP
-    d->tooltip = new KHTMLToolTip( this, d );
+    d->tooltip = new TDEHTMLToolTip( this, d );
 #endif
 
-#ifndef KHTML_NO_TYPE_AHEAD_FIND
+#ifndef TDEHTML_NO_TYPE_AHEAD_FIND
     connect(&d->timer, TQT_SIGNAL(timeout()), this, TQT_SLOT(findTimeout()));
-#endif // KHTML_NO_TYPE_AHEAD_FIND
+#endif // TDEHTML_NO_TYPE_AHEAD_FIND
 
     init();
 
@@ -525,7 +525,7 @@ KHTMLView::KHTMLView( KHTMLPart *part, TQWidget *parent, const char *name)
 #endif
 }
 
-KHTMLView::~KHTMLView()
+TDEHTMLView::~TDEHTMLView()
 {
     closeChildDialogs();
     if (m_part)
@@ -539,7 +539,7 @@ KHTMLView::~KHTMLView()
     delete d; d = 0;
 }
 
-void KHTMLView::init()
+void TDEHTMLView::init()
 {
     if(!d->paintBuffer) d->paintBuffer = new TQPixmap(PAINT_BUFFER_HEIGHT, PAINT_BUFFER_HEIGHT);
     if(!d->vertPaintBuffer)
@@ -561,15 +561,15 @@ void KHTMLView::init()
     resizeContents(s.width(), s.height());
 }
 
-void KHTMLView::clear()
+void TDEHTMLView::clear()
 {
     // work around QScrollview's unbelievable bugginess
     setStaticBackground(true);
-#ifndef KHTML_NO_CARET
+#ifndef TDEHTML_NO_CARET
     if (!m_part->isCaretMode() && !m_part->isEditable()) caretOff();
 #endif
 
-#ifndef KHTML_NO_TYPE_AHEAD_FIND
+#ifndef TDEHTML_NO_TYPE_AHEAD_FIND
     if( d->typeAheadActivated )
         findTimeout();
 #endif
@@ -588,21 +588,21 @@ void KHTMLView::clear()
     horizontalScrollBar()->setEnabled( false );
 }
 
-void KHTMLView::hideEvent(TQHideEvent* e)
+void TDEHTMLView::hideEvent(TQHideEvent* e)
 {
     TQScrollView::hideEvent(e);
     if ( m_part && m_part->xmlDocImpl() )
         m_part->xmlDocImpl()->docLoader()->pauseAnimations();
 }
 
-void KHTMLView::showEvent(TQShowEvent* e)
+void TDEHTMLView::showEvent(TQShowEvent* e)
 {
     TQScrollView::showEvent(e);
     if ( m_part && m_part->xmlDocImpl() )
         m_part->xmlDocImpl()->docLoader()->resumeAnimations();
 }
 
-void KHTMLView::resizeEvent (TQResizeEvent* e)
+void TDEHTMLView::resizeEvent (TQResizeEvent* e)
 {
     int dw = e->oldSize().width() - e->size().width();
     int dh = e->oldSize().height() - e->size().height();
@@ -620,7 +620,7 @@ void KHTMLView::resizeEvent (TQResizeEvent* e)
         m_part->xmlDocImpl()->dispatchWindowEvent( EventImpl::RESIZE_EVENT, false, false );
 }
 
-void KHTMLView::viewportResizeEvent (TQResizeEvent* e)
+void TDEHTMLView::viewportResizeEvent (TQResizeEvent* e)
 {
     TQScrollView::viewportResizeEvent(e);
 
@@ -629,7 +629,7 @@ void KHTMLView::viewportResizeEvent (TQResizeEvent* e)
 
     if (d->layoutSchedulingEnabled)
         layout();
-#ifndef KHTML_NO_CARET
+#ifndef TDEHTML_NO_CARET
     else {
         hideCaret();
         recalcAndStoreCaretPos();
@@ -641,11 +641,11 @@ void KHTMLView::viewportResizeEvent (TQResizeEvent* e)
 }
 
 // this is to get rid of a compiler virtual overload mismatch warning. do not remove
-void KHTMLView::drawContents( TQPainter*)
+void TDEHTMLView::drawContents( TQPainter*)
 {
 }
 
-void KHTMLView::drawContents( TQPainter *p, int ex, int ey, int ew, int eh )
+void TDEHTMLView::drawContents( TQPainter *p, int ex, int ey, int ew, int eh )
 {
 #ifdef DEBUG_PIXEL
 
@@ -683,7 +683,7 @@ void KHTMLView::drawContents( TQPainter *p, int ex, int ey, int ew, int eh )
     for (TQPtrDictIterator<TQWidget> it(d->visibleWidgets); it.current(); ++it) {
 	TQWidget *w = it.current();
 	RenderWidget* rw = static_cast<RenderWidget*>( it.currentKey() );
-	if (w && rw && !rw->isKHTMLWidget()) {
+	if (w && rw && !rw->isTDEHTMLWidget()) {
             int x, y;
             rw->absolutePosition(x, y);
             contentsToViewport(x, y, x, y);
@@ -760,7 +760,7 @@ static int cnt=0;
         m_part->xmlDocImpl()->renderer()->layer()->paint(p, pr);
 #endif // DEBUG_NO_PAINT_BUFFER
 
-#ifndef KHTML_NO_CARET
+#ifndef TDEHTML_NO_CARET
     if (d->m_caretViewContext && d->m_caretViewContext->visible) {
         TQRect pos(d->m_caretViewContext->x, d->m_caretViewContext->y,
 		d->m_caretViewContext->width, d->m_caretViewContext->height);
@@ -774,7 +774,7 @@ static int cnt=0;
 	    }/*end if*/
 	}/*end if*/
     }/*end if*/
-#endif // KHTML_NO_CARET
+#endif // TDEHTML_NO_CARET
 
 //    p->setPen(TQPen(magenta,0,DashDotDotLine));
 //    p->drawRect(dbg_paint_rect);
@@ -785,19 +785,19 @@ static int cnt=0;
     d->painting = false;
 }
 
-void KHTMLView::setMarginWidth(int w)
+void TDEHTMLView::setMarginWidth(int w)
 {
     // make it update the rendering area when set
     _marginWidth = w;
 }
 
-void KHTMLView::setMarginHeight(int h)
+void TDEHTMLView::setMarginHeight(int h)
 {
     // make it update the rendering area when set
     _marginHeight = h;
 }
 
-void KHTMLView::layout()
+void TDEHTMLView::layout()
 {
     if( m_part && m_part->xmlDocImpl() ) {
         DOM::DocumentImpl *document = m_part->xmlDocImpl();
@@ -824,7 +824,7 @@ void KHTMLView::layout()
              }
              else {
                  if (!d->tooltip)
-                     d->tooltip = new KHTMLToolTip( this, d );
+                     d->tooltip = new TDEHTMLToolTip( this, d );
                  // only apply body's overflow to canvas if root as a visible overflow
                  if (root)
                      ref = (!body || root->style()->hidesOverflow()) ? root : body->renderer();
@@ -870,7 +870,7 @@ void KHTMLView::layout()
     if (listitem) kdDebug(6000) << "after layout, before repaint" << endl;
     if (listitem) dumpLineBoxes(static_cast<RenderFlow *>(listitem->renderer()));
 #endif
-#ifndef KHTML_NO_CARET
+#ifndef TDEHTML_NO_CARET
         hideCaret();
         if ((m_part->isCaretMode() || m_part->isEditable())
         	&& !d->complete && d->m_caretViewContext
@@ -895,7 +895,7 @@ void KHTMLView::layout()
     d->layoutSchedulingEnabled=true;
 }
 
-void KHTMLView::closeChildDialogs()
+void TDEHTMLView::closeChildDialogs()
 {
     TQObjectList *dlgs = queryList(TQDIALOG_OBJECT_NAME_STRING);
     for (TQObject *dlg = dlgs->first(); dlg; dlg = dlgs->next())
@@ -919,15 +919,15 @@ void KHTMLView::closeChildDialogs()
     d->m_dialogsAllowed = false;
 }
 
-bool KHTMLView::dialogsAllowed() {
+bool TDEHTMLView::dialogsAllowed() {
     bool allowed = d->m_dialogsAllowed;
-    KHTMLPart* p = m_part->parentPart();
+    TDEHTMLPart* p = m_part->parentPart();
     if (p && p->view())
         allowed &= p->view()->dialogsAllowed();
     return allowed;
 }
 
-void KHTMLView::closeEvent( TQCloseEvent* ev )
+void TDEHTMLView::closeEvent( TQCloseEvent* ev )
 {
     closeChildDialogs();
     TQScrollView::closeEvent( ev );
@@ -938,7 +938,7 @@ void KHTMLView::closeEvent( TQCloseEvent* ev )
 //
 /////////////////
 
-void KHTMLView::viewportMousePressEvent( TQMouseEvent *_mouse )
+void TDEHTMLView::viewportMousePressEvent( TQMouseEvent *_mouse )
 {
     if (!m_part->xmlDocImpl()) return;
     if (d->possibleTripleClick && ( _mouse->button() & Qt::MouseButtonMask ) == Qt::LeftButton)
@@ -1058,7 +1058,7 @@ void KHTMLView::viewportMousePressEvent( TQMouseEvent *_mouse )
     }
 }
 
-void KHTMLView::viewportMouseDoubleClickEvent( TQMouseEvent *_mouse )
+void TDEHTMLView::viewportMouseDoubleClickEvent( TQMouseEvent *_mouse )
 {
     if(!m_part->xmlDocImpl()) return;
 
@@ -1098,7 +1098,7 @@ void KHTMLView::viewportMouseDoubleClickEvent( TQMouseEvent *_mouse )
     TQTimer::singleShot(TQApplication::doubleClickInterval(),this,TQT_SLOT(tripleClickTimeout()));
 }
 
-void KHTMLView::tripleClickTimeout()
+void TDEHTMLView::tripleClickTimeout()
 {
     d->possibleTripleClick = false;
     d->clickCount = 0;
@@ -1120,7 +1120,7 @@ static inline void forwardPeripheralEvent(tdehtml::RenderWidget* r, TQMouseEvent
 }
 
 
-static bool targetOpensNewWindow(KHTMLPart *part, TQString target)
+static bool targetOpensNewWindow(TDEHTMLPart *part, TQString target)
 {
     if (!target.isEmpty() && (target.lower() != "_top") &&
        (target.lower() != "_self") && (target.lower() != "_parent")) {
@@ -1136,7 +1136,7 @@ static bool targetOpensNewWindow(KHTMLPart *part, TQString target)
     return false;
 }
 
-void KHTMLView::viewportMouseMoveEvent( TQMouseEvent * _mouse )
+void TDEHTMLView::viewportMouseMoveEvent( TQMouseEvent * _mouse )
 {
     if ( d->m_mouseScrollTimer ) {
         TQPoint point = mapFromGlobal( _mouse->globalPos() );
@@ -1259,7 +1259,7 @@ void KHTMLView::viewportMouseMoveEvent( TQMouseEvent * _mouse )
 
     if ( viewport()->cursor().handle() != c.handle() ) {
         if( c.handle() == KCursor::arrowCursor().handle()) {
-            for (KHTMLPart* p = m_part; p; p = p->parentPart())
+            for (TDEHTMLPart* p = m_part; p; p = p->parentPart())
                 p->view()->viewport()->unsetCursor();
         }
         else {
@@ -1316,7 +1316,7 @@ void KHTMLView::viewportMouseMoveEvent( TQMouseEvent * _mouse )
     }
 }
 
-void KHTMLView::viewportMouseReleaseEvent( TQMouseEvent * _mouse )
+void TDEHTMLView::viewportMouseReleaseEvent( TQMouseEvent * _mouse )
 {
     bool swallowEvent = false;
     int xm, ym;
@@ -1357,7 +1357,7 @@ void KHTMLView::viewportMouseReleaseEvent( TQMouseEvent * _mouse )
 }
 
 // returns true if event should be swallowed
-bool KHTMLView::dispatchKeyEvent( TQKeyEvent *_ke )
+bool TDEHTMLView::dispatchKeyEvent( TQKeyEvent *_ke )
 {
     if (!m_part->xmlDocImpl())
         return false;
@@ -1432,7 +1432,7 @@ bool KHTMLView::dispatchKeyEvent( TQKeyEvent *_ke )
 }
 
 // returns true if event should be swallowed
-bool KHTMLView::dispatchKeyEventHelper( TQKeyEvent *_ke, bool keypress )
+bool TDEHTMLView::dispatchKeyEventHelper( TQKeyEvent *_ke, bool keypress )
 {
     DOM::NodeImpl* keyNode = m_part->xmlDocImpl()->focusNode();
     if (keyNode) {
@@ -1442,9 +1442,9 @@ bool KHTMLView::dispatchKeyEventHelper( TQKeyEvent *_ke, bool keypress )
     }
 }
 
-void KHTMLView::keyPressEvent( TQKeyEvent *_ke )
+void TDEHTMLView::keyPressEvent( TQKeyEvent *_ke )
 {
-#ifndef KHTML_NO_TYPE_AHEAD_FIND
+#ifndef TDEHTML_NO_TYPE_AHEAD_FIND
 	if(d->typeAheadActivated)
 	{
 		// type-ahead find aka find-as-you-type
@@ -1483,9 +1483,9 @@ void KHTMLView::keyPressEvent( TQKeyEvent *_ke )
 			return;
 		}
 	}
-#endif // KHTML_NO_TYPE_AHEAD_FIND
+#endif // TDEHTML_NO_TYPE_AHEAD_FIND
 
-#ifndef KHTML_NO_CARET
+#ifndef TDEHTML_NO_CARET
     if (m_part->isEditable() || m_part->isCaretMode()
         || (m_part->xmlDocImpl() && m_part->xmlDocImpl()->focusNode()
 	    && m_part->xmlDocImpl()->focusNode()->contentEditable())) {
@@ -1493,7 +1493,7 @@ void KHTMLView::keyPressEvent( TQKeyEvent *_ke )
       caretKeyPressEvent(_ke);
       return;
     }
-#endif // KHTML_NO_CARET
+#endif // TDEHTML_NO_CARET
 
     // If CTRL was hit, be prepared for access keys
     if (d->accessKeysEnabled && _ke->key() == Key_Control && _ke->state()==0 && !d->accessKeysActivated)
@@ -1539,22 +1539,22 @@ void KHTMLView::keyPressEvent( TQKeyEvent *_ke )
 
         case Key_Down:
         case Key_J:
-            d->adjustScroller(this, KHTMLViewPrivate::ScrollDown, KHTMLViewPrivate::ScrollUp);
+            d->adjustScroller(this, TDEHTMLViewPrivate::ScrollDown, TDEHTMLViewPrivate::ScrollUp);
             break;
 
         case Key_Up:
         case Key_K:
-            d->adjustScroller(this, KHTMLViewPrivate::ScrollUp, KHTMLViewPrivate::ScrollDown);
+            d->adjustScroller(this, TDEHTMLViewPrivate::ScrollUp, TDEHTMLViewPrivate::ScrollDown);
             break;
 
         case Key_Left:
         case Key_H:
-            d->adjustScroller(this, KHTMLViewPrivate::ScrollLeft, KHTMLViewPrivate::ScrollRight);
+            d->adjustScroller(this, TDEHTMLViewPrivate::ScrollLeft, TDEHTMLViewPrivate::ScrollRight);
             break;
 
         case Key_Right:
         case Key_L:
-            d->adjustScroller(this, KHTMLViewPrivate::ScrollRight, KHTMLViewPrivate::ScrollLeft);
+            d->adjustScroller(this, TDEHTMLViewPrivate::ScrollRight, TDEHTMLViewPrivate::ScrollLeft);
             break;
         }
     else
@@ -1636,30 +1636,30 @@ void KHTMLView::keyPressEvent( TQKeyEvent *_ke )
     _ke->accept();
 }
 
-void KHTMLView::findTimeout()
+void TDEHTMLView::findTimeout()
 {
-#ifndef KHTML_NO_TYPE_AHEAD_FIND
+#ifndef TDEHTML_NO_TYPE_AHEAD_FIND
 	d->typeAheadActivated = false;
 	d->findString = "";
-	m_part->setStatusBarText(i18n("Find stopped."), KHTMLPart::BarDefaultText);
+	m_part->setStatusBarText(i18n("Find stopped."), TDEHTMLPart::BarDefaultText);
 	m_part->enableFindAheadActions( true );
-#endif // KHTML_NO_TYPE_AHEAD_FIND
+#endif // TDEHTML_NO_TYPE_AHEAD_FIND
 }
 
-#ifndef KHTML_NO_TYPE_AHEAD_FIND
-void KHTMLView::startFindAhead( bool linksOnly )
+#ifndef TDEHTML_NO_TYPE_AHEAD_FIND
+void TDEHTMLView::startFindAhead( bool linksOnly )
 {
 	if( linksOnly )
 	{
 		d->findLinksOnly = true;
 		m_part->setStatusBarText(i18n("Starting -- find links as you type"),
-		                         KHTMLPart::BarDefaultText);
+		                         TDEHTMLPart::BarDefaultText);
 	}
 	else
 	{
 		d->findLinksOnly = false;
 		m_part->setStatusBarText(i18n("Starting -- find text as you type"),
-		                         KHTMLPart::BarDefaultText);
+		                         TDEHTMLPart::BarDefaultText);
 	}
 
 	m_part->findTextBegin();
@@ -1669,14 +1669,14 @@ void KHTMLView::startFindAhead( bool linksOnly )
 	d->timer.start(3000, true);
 }
 
-void KHTMLView::findAhead(bool increase)
+void TDEHTMLView::findAhead(bool increase)
 {
 	TQString status;
 
 	if(d->findLinksOnly)
 	{
-		m_part->findText(d->findString, KHTMLPart::FindNoPopups |
-		                 KHTMLPart::FindLinksOnly, this);
+		m_part->findText(d->findString, TDEHTMLPart::FindNoPopups |
+		                 TDEHTMLPart::FindLinksOnly, this);
 		if(m_part->findTextNext())
 		{
 			status = i18n("Link found: \"%1\".");
@@ -1689,7 +1689,7 @@ void KHTMLView::findAhead(bool increase)
 	}
 	else
 	{
-		m_part->findText(d->findString, KHTMLPart::FindNoPopups, this);
+		m_part->findText(d->findString, TDEHTMLPart::FindNoPopups, this);
 		if(m_part->findTextNext())
 		{
 			status = i18n("Text found: \"%1\".");
@@ -1702,20 +1702,20 @@ void KHTMLView::findAhead(bool increase)
 	}
 
 	m_part->setStatusBarText(status.arg(d->findString.lower()),
-	                         KHTMLPart::BarDefaultText);
+	                         TDEHTMLPart::BarDefaultText);
 }
 
-void KHTMLView::updateFindAheadTimeout()
+void TDEHTMLView::updateFindAheadTimeout()
 {
     if( d->typeAheadActivated )
         d->timer.start( 3000, true );
 }
 
-#endif // KHTML_NO_TYPE_AHEAD_FIND
+#endif // TDEHTML_NO_TYPE_AHEAD_FIND
 
-void KHTMLView::keyReleaseEvent(TQKeyEvent *_ke)
+void TDEHTMLView::keyReleaseEvent(TQKeyEvent *_ke)
 {
-#ifndef KHTML_NO_TYPE_AHEAD_FIND
+#ifndef TDEHTML_NO_TYPE_AHEAD_FIND
     if(d->typeAheadActivated) {
         _ke->accept();
         return;
@@ -1749,7 +1749,7 @@ void KHTMLView::keyReleaseEvent(TQKeyEvent *_ke)
         if (d->accessKeysPreActivate && _ke->state() == TQt::ControlButton && !(TDEApplication::keyboardMouseState() & TQt::ControlButton))
         {
 	    displayAccessKeys();
-	    m_part->setStatusBarText(i18n("Access Keys activated"),KHTMLPart::BarOverrideText);
+	    m_part->setStatusBarText(i18n("Access Keys activated"),TDEHTMLPart::BarOverrideText);
 	    d->accessKeysActivated = true;
 	    d->accessKeysPreActivate = false;
             _ke->accept();
@@ -1773,7 +1773,7 @@ void KHTMLView::keyReleaseEvent(TQKeyEvent *_ke)
     TQScrollView::keyReleaseEvent(_ke);
 }
 
-void KHTMLView::contentsContextMenuEvent ( TQContextMenuEvent * /*ce*/ )
+void TDEHTMLView::contentsContextMenuEvent ( TQContextMenuEvent * /*ce*/ )
 {
 // ### what kind of c*** is that ?
 #if 0
@@ -1800,7 +1800,7 @@ void KHTMLView::contentsContextMenuEvent ( TQContextMenuEvent * /*ce*/ )
 #endif
 }
 
-bool KHTMLView::focusNextPrevChild( bool next )
+bool TDEHTMLView::focusNextPrevChild( bool next )
 {
     // Now try to find the next child
     if (m_part->xmlDocImpl() && focusNextPrevNode(next))
@@ -1812,14 +1812,14 @@ bool KHTMLView::focusNextPrevChild( bool next )
     }
 
     // If we get here, pass tabbing control up to the next/previous child in our parent
-    d->pseudoFocusNode = KHTMLViewPrivate::PFNone;
+    d->pseudoFocusNode = TDEHTMLViewPrivate::PFNone;
     if (m_part->parentPart() && m_part->parentPart()->view())
         return m_part->parentPart()->view()->focusNextPrevChild(next);
 
     return TQWidget::focusNextPrevChild(next);
 }
 
-void KHTMLView::doAutoScroll()
+void TDEHTMLView::doAutoScroll()
 {
     TQPoint pos = TQCursor::pos();
     pos = viewport()->mapFromGlobal( pos );
@@ -1833,7 +1833,7 @@ void KHTMLView::doAutoScroll()
     {
         ensureVisible( xm, ym, 0, 5 );
 
-#ifndef KHTML_NO_SELECTION
+#ifndef TDEHTML_NO_SELECTION
         // extend the selection while scrolling
 	DOM::Node innerNode;
 	if (m_part->isExtendingSelection()) {
@@ -1849,7 +1849,7 @@ void KHTMLView::doAutoScroll()
 
             m_part->extendSelectionTo(xm, ym, absX, absY, innerNode);
         }/*end if*/
-#endif // KHTML_NO_SELECTION
+#endif // TDEHTML_NO_SELECTION
     }
 }
 
@@ -1860,7 +1860,7 @@ class HackWidget : public TQWidget
     inline void setNoErase() { setWFlags(getWFlags()|WRepaintNoErase); }
 };
 
-bool KHTMLView::eventFilter(TQObject *o, TQEvent *e)
+bool TDEHTMLView::eventFilter(TQObject *o, TQEvent *e)
 {
     if ( e->type() == TQEvent::AccelOverride ) {
 	TQKeyEvent* ke = (TQKeyEvent*) e;
@@ -2011,17 +2011,17 @@ bool KHTMLView::eventFilter(TQObject *o, TQEvent *e)
 }
 
 
-DOM::NodeImpl *KHTMLView::nodeUnderMouse() const
+DOM::NodeImpl *TDEHTMLView::nodeUnderMouse() const
 {
     return d->underMouse;
 }
 
-DOM::NodeImpl *KHTMLView::nonSharedNodeUnderMouse() const
+DOM::NodeImpl *TDEHTMLView::nonSharedNodeUnderMouse() const
 {
     return d->underMouseNonShared;
 }
 
-bool KHTMLView::scrollTo(const TQRect &bounds)
+bool TDEHTMLView::scrollTo(const TQRect &bounds)
 {
     d->scrollingSelf = true; // so scroll events get ignored
 
@@ -2091,7 +2091,7 @@ bool KHTMLView::scrollTo(const TQRect &bounds)
 
 }
 
-bool KHTMLView::focusNextPrevNode(bool next)
+bool TDEHTMLView::focusNextPrevNode(bool next)
 {
     // Sets the focus node of the document to be the node after (or if
     // next is false, before) the current focus node.  Only nodes that
@@ -2143,7 +2143,7 @@ bool KHTMLView::focusNextPrevNode(bool next)
 		    d->scrollBarMoved = false;
 		    d->tabMovePending = false;
 		    d->lastTabbingDirection = next;
-		    d->pseudoFocusNode = KHTMLViewPrivate::PFNone;
+		    d->pseudoFocusNode = TDEHTMLViewPrivate::PFNone;
 		    m_part->xmlDocImpl()->setFocusNode(toFocus);
 		    Node guard(toFocus);
 		    if (!toFocus->hasOneRef() )
@@ -2169,11 +2169,11 @@ bool KHTMLView::focusNextPrevNode(bool next)
     }
 #endif
 
-    if (!oldFocusNode && d->pseudoFocusNode == KHTMLViewPrivate::PFNone)
+    if (!oldFocusNode && d->pseudoFocusNode == TDEHTMLViewPrivate::PFNone)
     {
 	ensureVisible(contentsX(), next?0:contentsHeight());
 	d->scrollBarMoved = false;
-	d->pseudoFocusNode = next?KHTMLViewPrivate::PFTop:KHTMLViewPrivate::PFBottom;
+	d->pseudoFocusNode = next?TDEHTMLViewPrivate::PFTop:TDEHTMLViewPrivate::PFBottom;
 	return true;
     }
 
@@ -2186,12 +2186,12 @@ bool KHTMLView::focusNextPrevNode(bool next)
     }
     else if (next)
     {
-	if (oldFocusNode || d->pseudoFocusNode == KHTMLViewPrivate::PFTop )
+	if (oldFocusNode || d->pseudoFocusNode == TDEHTMLViewPrivate::PFTop )
 	    newFocusNode = doc->nextFocusNode(oldFocusNode);
     }
     else
     {
-	if (oldFocusNode || d->pseudoFocusNode == KHTMLViewPrivate::PFBottom )
+	if (oldFocusNode || d->pseudoFocusNode == TDEHTMLViewPrivate::PFBottom )
 	    newFocusNode = doc->previousFocusNode(oldFocusNode);
     }
 
@@ -2209,7 +2209,7 @@ bool KHTMLView::focusNextPrevNode(bool next)
     }
     else
     {
-#ifndef KHTML_NO_CARET
+#ifndef TDEHTML_NO_CARET
         // if it's an editable element, activate the caret
         if (!m_part->isCaretMode() && !m_part->isEditable()
 		&& newFocusNode->contentEditable()) {
@@ -2218,7 +2218,7 @@ bool KHTMLView::focusNextPrevNode(bool next)
         } else {
 	    caretOff();
 	}
-#endif // KHTML_NO_CARET
+#endif // TDEHTML_NO_CARET
 
 	targetVisible = scrollTo(newFocusNode->getRect());
     }
@@ -2240,7 +2240,7 @@ bool KHTMLView::focusNextPrevNode(bool next)
 	}
 	else
 	{
-	    d->pseudoFocusNode = next?KHTMLViewPrivate::PFBottom:KHTMLViewPrivate::PFTop;
+	    d->pseudoFocusNode = next?TDEHTMLViewPrivate::PFBottom:TDEHTMLViewPrivate::PFTop;
 	    return false;
 	}
     }
@@ -2253,14 +2253,14 @@ bool KHTMLView::focusNextPrevNode(bool next)
     }
 }
 
-void KHTMLView::displayAccessKeys()
+void TDEHTMLView::displayAccessKeys()
 {
     TQValueVector< TQChar > taken;
     displayAccessKeys( NULL, this, taken, false );
     displayAccessKeys( NULL, this, taken, true );
 }
 
-void KHTMLView::displayAccessKeys( KHTMLView* caller, KHTMLView* origview, TQValueVector< TQChar >& taken, bool use_fallbacks )
+void TDEHTMLView::displayAccessKeys( TDEHTMLView* caller, TDEHTMLView* origview, TQValueVector< TQChar >& taken, bool use_fallbacks )
 {
     TQMap< ElementImpl*, TQChar > fallbacks;
     if( use_fallbacks )
@@ -2304,9 +2304,9 @@ void KHTMLView::displayAccessKeys( KHTMLView* caller, KHTMLView* origview, TQVal
     for( TQPtrListIterator<KParts::ReadOnlyPart> it( frames );
          it != NULL;
          ++it ) {
-        if( !(*it)->inherits( "KHTMLPart" ))
+        if( !(*it)->inherits( "TDEHTMLPart" ))
             continue;
-        KHTMLPart* part = static_cast< KHTMLPart* >( *it );
+        TDEHTMLPart* part = static_cast< TDEHTMLPart* >( *it );
         if( part->view() && part->view() != caller )
             part->view()->displayAccessKeys( this, origview, taken, use_fallbacks );
     }
@@ -2318,16 +2318,16 @@ void KHTMLView::displayAccessKeys( KHTMLView* caller, KHTMLView* origview, TQVal
 
 
 
-void KHTMLView::accessKeysTimeout()
+void TDEHTMLView::accessKeysTimeout()
 {
 d->accessKeysActivated=false;
 d->accessKeysPreActivate = false;
-m_part->setStatusBarText(TQString::null, KHTMLPart::BarOverrideText);
+m_part->setStatusBarText(TQString::null, TDEHTMLPart::BarOverrideText);
 emit hideAccessKeys();
 }
 
 // Handling of the HTML accesskey attribute.
-bool KHTMLView::handleAccessKey( const TQKeyEvent* ev )
+bool TDEHTMLView::handleAccessKey( const TQKeyEvent* ev )
 {
 // Qt interprets the keyevent also with the modifiers, and ev->text() matches that,
 // but this code must act as if the modifiers weren't pressed
@@ -2347,7 +2347,7 @@ bool KHTMLView::handleAccessKey( const TQKeyEvent* ev )
     return focusNodeWithAccessKey( c );
 }
 
-bool KHTMLView::focusNodeWithAccessKey( TQChar c, KHTMLView* caller )
+bool TDEHTMLView::focusNodeWithAccessKey( TQChar c, TDEHTMLView* caller )
 {
     DocumentImpl *doc = m_part->xmlDocImpl();
     if( !doc )
@@ -2358,9 +2358,9 @@ bool KHTMLView::focusNodeWithAccessKey( TQChar c, KHTMLView* caller )
         for( TQPtrListIterator<KParts::ReadOnlyPart> it( frames );
              it != NULL;
              ++it ) {
-            if( !(*it)->inherits( "KHTMLPart" ))
+            if( !(*it)->inherits( "TDEHTMLPart" ))
                 continue;
-            KHTMLPart* part = static_cast< KHTMLPart* >( *it );
+            TDEHTMLPart* part = static_cast< TDEHTMLPart* >( *it );
             if( part->view() && part->view() != caller
                 && part->view()->focusNodeWithAccessKey( c, this ))
                 return true;
@@ -2385,7 +2385,7 @@ bool KHTMLView::focusNodeWithAccessKey( TQChar c, KHTMLView* caller )
     }
 
     // Scroll the view as necessary to ensure that the new focus node is visible
-#ifndef KHTML_NO_CARET
+#ifndef TDEHTML_NO_CARET
     // if it's an editable element, activate the caret
     if (!m_part->isCaretMode() && !m_part->isEditable()
 	&& node->contentEditable()) {
@@ -2394,7 +2394,7 @@ bool KHTMLView::focusNodeWithAccessKey( TQChar c, KHTMLView* caller )
     } else {
         caretOff();
     }
-#endif // KHTML_NO_CARET
+#endif // TDEHTML_NO_CARET
 
     TQRect r = node->getRect();
     ensureVisible( r.right(), r.bottom());
@@ -2521,7 +2521,7 @@ struct AccessKeyData {
 };
 }
 
-TQMap< ElementImpl*, TQChar > KHTMLView::buildFallbackAccessKeys() const
+TQMap< ElementImpl*, TQChar > TDEHTMLView::buildFallbackAccessKeys() const
 {
     // build a list of all possible candidate elements that could use an accesskey
     TQValueList< AccessKeyData > data;
@@ -2739,22 +2739,22 @@ TQMap< ElementImpl*, TQChar > KHTMLView::buildFallbackAccessKeys() const
     return ret;
 }
 
-void KHTMLView::setMediaType( const TQString &medium )
+void TDEHTMLView::setMediaType( const TQString &medium )
 {
     m_medium = medium;
 }
 
-TQString KHTMLView::mediaType() const
+TQString TDEHTMLView::mediaType() const
 {
     return m_medium;
 }
 
-bool KHTMLView::pagedMode() const
+bool TDEHTMLView::pagedMode() const
 {
     return d->paged;
 }
 
-void KHTMLView::setWidgetVisible(RenderWidget* w, bool vis)
+void TDEHTMLView::setWidgetVisible(RenderWidget* w, bool vis)
 {
     if (vis) {
         d->visibleWidgets.replace(w, w->widget());
@@ -2763,24 +2763,24 @@ void KHTMLView::setWidgetVisible(RenderWidget* w, bool vis)
         d->visibleWidgets.remove(w);
 }
 
-bool KHTMLView::needsFullRepaint() const
+bool TDEHTMLView::needsFullRepaint() const
 {
     return d->needsFullRepaint;
 }
 
-void KHTMLView::print()
+void TDEHTMLView::print()
 {
     print( false );
 }
 
-void KHTMLView::print(bool quick)
+void TDEHTMLView::print(bool quick)
 {
     if(!m_part->xmlDocImpl()) return;
     tdehtml::RenderCanvas *root = static_cast<tdehtml::RenderCanvas *>(m_part->xmlDocImpl()->renderer());
     if(!root) return;
 
     KPrinter *printer = new KPrinter(true, TQPrinter::ScreenResolution);
-    printer->addDialogPage(new KHTMLPrintSettings());
+    printer->addDialogPage(new TDEHTMLPrintSettings());
     TQString docname = m_part->xmlDocImpl()->URL().prettyURL();
     if ( !docname.isEmpty() )
         docname = KStringHandler::csqueeze(docname, 80);
@@ -2963,7 +2963,7 @@ void KHTMLView::print(bool quick)
     delete printer;
 }
 
-void KHTMLView::slotPaletteChanged()
+void TDEHTMLView::slotPaletteChanged()
 {
     if(!m_part->xmlDocImpl()) return;
     DOM::DocumentImpl *document = m_part->xmlDocImpl();
@@ -2977,7 +2977,7 @@ void KHTMLView::slotPaletteChanged()
     body->recalcStyle( NodeImpl::Force );
 }
 
-void KHTMLView::paint(TQPainter *p, const TQRect &rc, int yOff, bool *more)
+void TDEHTMLView::paint(TQPainter *p, const TQRect &rc, int yOff, bool *more)
 {
     if(!m_part->xmlDocImpl()) return;
     tdehtml::RenderCanvas *root = static_cast<tdehtml::RenderCanvas *>(m_part->xmlDocImpl()->renderer());
@@ -3010,16 +3010,16 @@ void KHTMLView::paint(TQPainter *p, const TQRect &rc, int yOff, bool *more)
 }
 
 
-void KHTMLView::useSlowRepaints()
+void TDEHTMLView::useSlowRepaints()
 {
     d->useSlowRepaints = true;
     setStaticBackground(true);
 }
 
 
-void KHTMLView::setVScrollBarMode ( ScrollBarMode mode )
+void TDEHTMLView::setVScrollBarMode ( ScrollBarMode mode )
 {
-#ifndef KHTML_NO_SCROLLBARS
+#ifndef TDEHTML_NO_SCROLLBARS
     d->vmode = mode;
     TQScrollView::setVScrollBarMode(mode);
 #else
@@ -3027,9 +3027,9 @@ void KHTMLView::setVScrollBarMode ( ScrollBarMode mode )
 #endif
 }
 
-void KHTMLView::setHScrollBarMode ( ScrollBarMode mode )
+void TDEHTMLView::setHScrollBarMode ( ScrollBarMode mode )
 {
-#ifndef KHTML_NO_SCROLLBARS
+#ifndef TDEHTML_NO_SCROLLBARS
     d->hmode = mode;
     TQScrollView::setHScrollBarMode(mode);
 #else
@@ -3037,7 +3037,7 @@ void KHTMLView::setHScrollBarMode ( ScrollBarMode mode )
 #endif
 }
 
-void KHTMLView::restoreScrollBar()
+void TDEHTMLView::restoreScrollBar()
 {
     int ow = visibleWidth();
     TQScrollView::setVScrollBarMode(d->vmode);
@@ -3046,7 +3046,7 @@ void KHTMLView::restoreScrollBar()
     d->prevScrollbarVisible = verticalScrollBar()->isVisible();
 }
 
-TQStringList KHTMLView::formCompletionItems(const TQString &name) const
+TQStringList TDEHTMLView::formCompletionItems(const TQString &name) const
 {
     if (!m_part->settings()->isFormCompletionEnabled())
         return TQStringList();
@@ -3055,7 +3055,7 @@ TQStringList KHTMLView::formCompletionItems(const TQString &name) const
     return d->formCompletions->readListEntry(name);
 }
 
-void KHTMLView::clearCompletionHistory(const TQString& name)
+void TDEHTMLView::clearCompletionHistory(const TQString& name)
 {
     if (!d->formCompletions)
     {
@@ -3065,7 +3065,7 @@ void KHTMLView::clearCompletionHistory(const TQString& name)
     d->formCompletions->sync();
 }
 
-void KHTMLView::addFormCompletionItem(const TQString &name, const TQString &value)
+void TDEHTMLView::addFormCompletionItem(const TQString &name, const TQString &value)
 {
     if (!m_part->settings()->isFormCompletionEnabled())
         return;
@@ -3092,7 +3092,7 @@ void KHTMLView::addFormCompletionItem(const TQString &name, const TQString &valu
     d->formCompletions->writeEntry(name, items);
 }
 
-void KHTMLView::removeFormCompletionItem(const TQString &name, const TQString &value)
+void TDEHTMLView::removeFormCompletionItem(const TQString &name, const TQString &value)
 {
     if (!m_part->settings()->isFormCompletionEnabled())
         return;
@@ -3102,7 +3102,7 @@ void KHTMLView::removeFormCompletionItem(const TQString &name, const TQString &v
         d->formCompletions->writeEntry(name, items);
 }
 
-void KHTMLView::addNonPasswordStorableSite(const TQString& host)
+void TDEHTMLView::addNonPasswordStorableSite(const TQString& host)
 {
     if (!d->formCompletions) {
         d->formCompletions = new KSimpleConfig(locateLocal("data", "tdehtml/formcompletions"));
@@ -3116,7 +3116,7 @@ void KHTMLView::addNonPasswordStorableSite(const TQString& host)
     d->formCompletions->setGroup(TQString::null);//reset
 }
 
-bool KHTMLView::nonPasswordStorableSite(const TQString& host) const
+bool TDEHTMLView::nonPasswordStorableSite(const TQString& host) const
 {
     if (!d->formCompletions) {
         d->formCompletions = new KSimpleConfig(locateLocal("data", "tdehtml/formcompletions"));
@@ -3129,7 +3129,7 @@ bool KHTMLView::nonPasswordStorableSite(const TQString& host) const
 }
 
 // returns true if event should be swallowed
-bool KHTMLView::dispatchMouseEvent(int eventId, DOM::NodeImpl *targetNode,
+bool TDEHTMLView::dispatchMouseEvent(int eventId, DOM::NodeImpl *targetNode,
 				   DOM::NodeImpl *targetNodeNonShared, bool cancelable,
 				   int detail,TQMouseEvent *_mouse, bool setUnder,
 				   int mouseEventType)
@@ -3262,14 +3262,14 @@ bool KHTMLView::dispatchMouseEvent(int eventId, DOM::NodeImpl *targetNode,
     return swallowEvent;
 }
 
-void KHTMLView::setIgnoreWheelEvents( bool e )
+void TDEHTMLView::setIgnoreWheelEvents( bool e )
 {
     d->ignoreWheelEvents = e;
 }
 
 #ifndef QT_NO_WHEELEVENT
 
-void KHTMLView::viewportWheelEvent(TQWheelEvent* e)
+void TDEHTMLView::viewportWheelEvent(TQWheelEvent* e)
 {
     if (d->accessKeysEnabled && d->accessKeysPreActivate) d->accessKeysPreActivate=false;
 
@@ -3314,7 +3314,7 @@ void KHTMLView::viewportWheelEvent(TQWheelEvent* e)
 }
 #endif
 
-void KHTMLView::dragEnterEvent( TQDragEnterEvent* ev )
+void TDEHTMLView::dragEnterEvent( TQDragEnterEvent* ev )
 {
     // Handle drops onto frames (#16820)
     // Drops on the main html part is handled by Konqueror (and shouldn't do anything
@@ -3327,7 +3327,7 @@ void KHTMLView::dragEnterEvent( TQDragEnterEvent* ev )
     TQScrollView::dragEnterEvent( ev );
 }
 
-void KHTMLView::dropEvent( TQDropEvent *ev )
+void TDEHTMLView::dropEvent( TQDropEvent *ev )
 {
     // Handle drops onto frames (#16820)
     // Drops on the main html part is handled by Konqueror (and shouldn't do anything
@@ -3340,9 +3340,9 @@ void KHTMLView::dropEvent( TQDropEvent *ev )
     TQScrollView::dropEvent( ev );
 }
 
-void KHTMLView::focusInEvent( TQFocusEvent *e )
+void TDEHTMLView::focusInEvent( TQFocusEvent *e )
 {
-#ifndef KHTML_NO_TYPE_AHEAD_FIND
+#ifndef TDEHTML_NO_TYPE_AHEAD_FIND
     m_part->enableFindAheadActions( true );
 #endif
     DOM::NodeImpl* fn = m_part->xmlDocImpl() ? m_part->xmlDocImpl()->focusNode() : 0;
@@ -3350,7 +3350,7 @@ void KHTMLView::focusInEvent( TQFocusEvent *e )
         (e->reason() != TQFocusEvent::Mouse) &&
         static_cast<tdehtml::RenderWidget*>(fn->renderer())->widget())
         static_cast<tdehtml::RenderWidget*>(fn->renderer())->widget()->setFocus();
-#ifndef KHTML_NO_CARET
+#ifndef TDEHTML_NO_CARET
     // Restart blink frequency timer if it has been killed, but only on
     // editable nodes
     if (d->m_caretViewContext &&
@@ -3366,29 +3366,29 @@ void KHTMLView::focusInEvent( TQFocusEvent *e )
         }/*end if*/
     }/*end if*/
     showCaret();
-#endif // KHTML_NO_CARET
+#endif // TDEHTML_NO_CARET
     TQScrollView::focusInEvent( e );
 }
 
-void KHTMLView::focusOutEvent( TQFocusEvent *e )
+void TDEHTMLView::focusOutEvent( TQFocusEvent *e )
 {
     if(m_part) m_part->stopAutoScroll();
 
-#ifndef KHTML_NO_TYPE_AHEAD_FIND
+#ifndef TDEHTML_NO_TYPE_AHEAD_FIND
     if(d->typeAheadActivated)
     {
         findTimeout();
     }
     m_part->enableFindAheadActions( false );
-#endif // KHTML_NO_TYPE_AHEAD_FIND
+#endif // TDEHTML_NO_TYPE_AHEAD_FIND
 
-#ifndef KHTML_NO_CARET
+#ifndef TDEHTML_NO_CARET
     if (d->m_caretViewContext) {
         switch (d->m_caretViewContext->displayNonFocused) {
-	case KHTMLPart::CaretInvisible:
+	case TDEHTMLPart::CaretInvisible:
             hideCaret();
 	    break;
-	case KHTMLPart::CaretVisible: {
+	case TDEHTMLPart::CaretVisible: {
 	    killTimer(d->m_caretViewContext->freqTimerId);
 	    d->m_caretViewContext->freqTimerId = -1;
             NodeImpl *caretNode = m_part->xmlDocImpl()->focusNode();
@@ -3402,12 +3402,12 @@ void KHTMLView::focusOutEvent( TQFocusEvent *e )
 	    }/*end if*/
 	    break;
 	}
-	case KHTMLPart::CaretBlink:
+	case TDEHTMLPart::CaretBlink:
 	    // simply leave as is
 	    break;
 	}/*end switch*/
     }/*end if*/
-#endif // KHTML_NO_CARET
+#endif // TDEHTML_NO_CARET
 
     if ( d->cursor_icon_widget )
         d->cursor_icon_widget->hide();
@@ -3415,7 +3415,7 @@ void KHTMLView::focusOutEvent( TQFocusEvent *e )
     TQScrollView::focusOutEvent( e );
 }
 
-void KHTMLView::slotScrollBarMoved()
+void TDEHTMLView::slotScrollBarMoved()
 {
     if ( !d->firstRelayout && !d->complete && m_part->xmlDocImpl() &&
           d->layoutSchedulingEnabled) {
@@ -3437,32 +3437,32 @@ void KHTMLView::slotScrollBarMoved()
         m_part->xmlDocImpl()->documentElement()->dispatchHTMLEvent(EventImpl::SCROLL_EVENT, true, false);
 }
 
-void KHTMLView::timerEvent ( TQTimerEvent *e )
+void TDEHTMLView::timerEvent ( TQTimerEvent *e )
 {
 //    kdDebug() << "timer event " << e->timerId() << endl;
     if ( e->timerId() == d->scrollTimerId ) {
         if( d->scrollSuspended )
             return;
         switch (d->scrollDirection) {
-            case KHTMLViewPrivate::ScrollDown:
+            case TDEHTMLViewPrivate::ScrollDown:
                 if (contentsY() + visibleHeight () >= contentsHeight())
                     d->newScrollTimer(this, 0);
                 else
                     scrollBy( 0, d->scrollBy );
                 break;
-            case KHTMLViewPrivate::ScrollUp:
+            case TDEHTMLViewPrivate::ScrollUp:
                 if (contentsY() <= 0)
                     d->newScrollTimer(this, 0);
                 else
                     scrollBy( 0, -d->scrollBy );
                 break;
-            case KHTMLViewPrivate::ScrollRight:
+            case TDEHTMLViewPrivate::ScrollRight:
                 if (contentsX() + visibleWidth () >= contentsWidth())
                     d->newScrollTimer(this, 0);
                 else
                     scrollBy( d->scrollBy, 0 );
                 break;
-            case KHTMLViewPrivate::ScrollLeft:
+            case TDEHTMLViewPrivate::ScrollLeft:
                 if (contentsX() <= 0)
                     d->newScrollTimer(this, 0);
                 else
@@ -3480,7 +3480,7 @@ void KHTMLView::timerEvent ( TQTimerEvent *e )
             horizontalScrollBar()->setEnabled( true );
         }
     }
-#ifndef KHTML_NO_CARET
+#ifndef TDEHTML_NO_CARET
     else if (d->m_caretViewContext
     	     && e->timerId() == d->m_caretViewContext->freqTimerId) {
         d->m_caretViewContext->visible = !d->m_caretViewContext->visible;
@@ -3562,8 +3562,8 @@ void KHTMLView::timerEvent ( TQTimerEvent *e )
 
     emit repaintAccessKeys();
     if (d->emitCompletedAfterRepaint) {
-        bool full = d->emitCompletedAfterRepaint == KHTMLViewPrivate::CSFull;
-        d->emitCompletedAfterRepaint = KHTMLViewPrivate::CSNone;
+        bool full = d->emitCompletedAfterRepaint == TDEHTMLViewPrivate::CSFull;
+        d->emitCompletedAfterRepaint = TDEHTMLViewPrivate::CSNone;
         if ( full )
             emit m_part->completed();
         else
@@ -3571,7 +3571,7 @@ void KHTMLView::timerEvent ( TQTimerEvent *e )
     }
 }
 
-void KHTMLView::scheduleRelayout(tdehtml::RenderObject * /*clippedObj*/)
+void TDEHTMLView::scheduleRelayout(tdehtml::RenderObject * /*clippedObj*/)
 {
     if (!d->layoutSchedulingEnabled || d->layoutTimerId)
         return;
@@ -3580,7 +3580,7 @@ void KHTMLView::scheduleRelayout(tdehtml::RenderObject * /*clippedObj*/)
                              ? 1000 : 0 );
 }
 
-void KHTMLView::unscheduleRelayout()
+void TDEHTMLView::unscheduleRelayout()
 {
     if (!d->layoutTimerId)
         return;
@@ -3589,7 +3589,7 @@ void KHTMLView::unscheduleRelayout()
     d->layoutTimerId = 0;
 }
 
-void KHTMLView::unscheduleRepaint()
+void TDEHTMLView::unscheduleRepaint()
 {
     if (!d->repaintTimerId)
         return;
@@ -3598,7 +3598,7 @@ void KHTMLView::unscheduleRepaint()
     d->repaintTimerId = 0;
 }
 
-void KHTMLView::scheduleRepaint(int x, int y, int w, int h, bool asap)
+void TDEHTMLView::scheduleRepaint(int x, int y, int w, int h, bool asap)
 {
     bool parsing = !m_part->xmlDocImpl() || m_part->xmlDocImpl()->parsing();
 
@@ -3628,9 +3628,9 @@ void KHTMLView::scheduleRepaint(int x, int y, int w, int h, bool asap)
 //     kdDebug() << "starting timer " << time << endl;
 }
 
-void KHTMLView::complete( bool pendingAction )
+void TDEHTMLView::complete( bool pendingAction )
 {
-//     kdDebug() << "KHTMLView::complete()" << endl;
+//     kdDebug() << "TDEHTMLView::complete()" << endl;
 
     d->complete = true;
 
@@ -3642,7 +3642,7 @@ void KHTMLView::complete( bool pendingAction )
         killTimer(d->layoutTimerId);
         d->layoutTimerId = startTimer( 0 );
         d->emitCompletedAfterRepaint = pendingAction ?
-            KHTMLViewPrivate::CSActionPending : KHTMLViewPrivate::CSFull;
+            TDEHTMLViewPrivate::CSActionPending : TDEHTMLViewPrivate::CSFull;
     }
 
     // is there a repaint pending?
@@ -3653,7 +3653,7 @@ void KHTMLView::complete( bool pendingAction )
         killTimer(d->repaintTimerId);
         d->repaintTimerId = startTimer( 20 );
         d->emitCompletedAfterRepaint = pendingAction ?
-            KHTMLViewPrivate::CSActionPending : KHTMLViewPrivate::CSFull;
+            TDEHTMLViewPrivate::CSActionPending : TDEHTMLViewPrivate::CSFull;
     }
 
     if (!d->emitCompletedAfterRepaint)
@@ -3666,19 +3666,19 @@ void KHTMLView::complete( bool pendingAction )
 
 }
 
-void KHTMLView::slotMouseScrollTimer()
+void TDEHTMLView::slotMouseScrollTimer()
 {
     scrollBy( d->m_mouseScroll_byX, d->m_mouseScroll_byY );
 }
 
-#ifndef KHTML_NO_CARET
+#ifndef TDEHTML_NO_CARET
 
 // ### the dependencies on static functions are a nightmare. just be
 // hacky and include the implementation here. Clean me up, please.
 
 #include "tdehtml_caret.cpp"
 
-void KHTMLView::initCaret(bool keepSelection)
+void TDEHTMLView::initCaret(bool keepSelection)
 {
 #if DEBUG_CARETMODE > 0
   kdDebug(6200) << "begin initCaret" << endl;
@@ -3713,7 +3713,7 @@ void KHTMLView::initCaret(bool keepSelection)
 #endif
 }
 
-bool KHTMLView::caretOverrides() const
+bool TDEHTMLView::caretOverrides() const
 {
     bool cm = m_part->isCaretMode();
     bool dm = m_part->isEditable();
@@ -3722,7 +3722,7 @@ bool KHTMLView::caretOverrides() const
 	  && d->editorContext()->override;
 }
 
-void KHTMLView::ensureNodeHasFocus(NodeImpl *node)
+void TDEHTMLView::ensureNodeHasFocus(NodeImpl *node)
 {
   if (m_part->isCaretMode() || m_part->isEditable()) return;
   if (node->focused()) return;
@@ -3754,7 +3754,7 @@ void KHTMLView::ensureNodeHasFocus(NodeImpl *node)
   emit m_part->nodeActivated(Node(firstAncestor));
 }
 
-void KHTMLView::recalcAndStoreCaretPos(CaretBox *hintBox)
+void TDEHTMLView::recalcAndStoreCaretPos(CaretBox *hintBox)
 {
     if (!m_part || m_part->d->caretNode().isNull()) return;
     d->caretViewContext();
@@ -3795,13 +3795,13 @@ void KHTMLView::recalcAndStoreCaretPos(CaretBox *hintBox)
 #endif
 }
 
-void KHTMLView::caretOn()
+void TDEHTMLView::caretOn()
 {
     if (d->m_caretViewContext) {
         killTimer(d->m_caretViewContext->freqTimerId);
 
 	if (hasFocus() || d->m_caretViewContext->displayNonFocused
-			== KHTMLPart::CaretBlink) {
+			== TDEHTMLPart::CaretBlink) {
             d->m_caretViewContext->freqTimerId = startTimer(500);
 	} else {
 	    d->m_caretViewContext->freqTimerId = -1;
@@ -3810,7 +3810,7 @@ void KHTMLView::caretOn()
         d->m_caretViewContext->visible = true;
         if ((d->m_caretViewContext->displayed = (hasFocus()
 		|| d->m_caretViewContext->displayNonFocused
-			!= KHTMLPart::CaretInvisible))) {
+			!= TDEHTMLPart::CaretInvisible))) {
 	    updateContents(d->m_caretViewContext->x, d->m_caretViewContext->y,
 	    		d->m_caretViewContext->width,
 			d->m_caretViewContext->height);
@@ -3819,7 +3819,7 @@ void KHTMLView::caretOn()
     }/*end if*/
 }
 
-void KHTMLView::caretOff()
+void TDEHTMLView::caretOff()
 {
     if (d->m_caretViewContext) {
         killTimer(d->m_caretViewContext->freqTimerId);
@@ -3835,7 +3835,7 @@ void KHTMLView::caretOff()
     }/*end if*/
 }
 
-void KHTMLView::showCaret(bool forceRepaint)
+void TDEHTMLView::showCaret(bool forceRepaint)
 {
     if (d->m_caretViewContext) {
         d->m_caretViewContext->displayed = true;
@@ -3854,7 +3854,7 @@ void KHTMLView::showCaret(bool forceRepaint)
     }/*end if*/
 }
 
-bool KHTMLView::foldSelectionToCaret(NodeImpl *startNode, long startOffset,
+bool TDEHTMLView::foldSelectionToCaret(NodeImpl *startNode, long startOffset,
     				NodeImpl *endNode, long endOffset)
 {
   m_part->d->m_selectionStart = m_part->d->m_selectionEnd = m_part->d->caretNode();
@@ -3871,7 +3871,7 @@ bool KHTMLView::foldSelectionToCaret(NodeImpl *startNode, long startOffset,
   return folded;
 }
 
-void KHTMLView::hideCaret()
+void TDEHTMLView::hideCaret()
 {
     if (d->m_caretViewContext) {
         if (d->m_caretViewContext->visible) {
@@ -3889,31 +3889,31 @@ void KHTMLView::hideCaret()
     }/*end if*/
 }
 
-int KHTMLView::caretDisplayPolicyNonFocused() const
+int TDEHTMLView::caretDisplayPolicyNonFocused() const
 {
   if (d->m_caretViewContext)
     return d->m_caretViewContext->displayNonFocused;
   else
-    return KHTMLPart::CaretInvisible;
+    return TDEHTMLPart::CaretInvisible;
 }
 
-void KHTMLView::setCaretDisplayPolicyNonFocused(int policy)
+void TDEHTMLView::setCaretDisplayPolicyNonFocused(int policy)
 {
   d->caretViewContext();
 //  int old = d->m_caretViewContext->displayNonFocused;
-  d->m_caretViewContext->displayNonFocused = (KHTMLPart::CaretDisplayPolicy)policy;
+  d->m_caretViewContext->displayNonFocused = (TDEHTMLPart::CaretDisplayPolicy)policy;
 
   // make change immediately take effect if not focused
   if (!hasFocus()) {
     switch (d->m_caretViewContext->displayNonFocused) {
-      case KHTMLPart::CaretInvisible:
+      case TDEHTMLPart::CaretInvisible:
         hideCaret();
 	break;
-      case KHTMLPart::CaretBlink:
+      case TDEHTMLPart::CaretBlink:
 	if (d->m_caretViewContext->freqTimerId != -1) break;
 	d->m_caretViewContext->freqTimerId = startTimer(500);
 	// fall through
-      case KHTMLPart::CaretVisible:
+      case TDEHTMLPart::CaretVisible:
         d->m_caretViewContext->displayed = true;
         showCaret();
 	break;
@@ -3921,7 +3921,7 @@ void KHTMLView::setCaretDisplayPolicyNonFocused(int policy)
   }/*end if*/
 }
 
-bool KHTMLView::placeCaret(CaretBox *hintBox)
+bool TDEHTMLView::placeCaret(CaretBox *hintBox)
 {
   CaretViewContext *cv = d->caretViewContext();
   caretOff();
@@ -3941,7 +3941,7 @@ bool KHTMLView::placeCaret(CaretBox *hintBox)
   return false;
 }
 
-void KHTMLView::ensureCaretVisible()
+void TDEHTMLView::ensureCaretVisible()
 {
   CaretViewContext *cv = d->m_caretViewContext;
   if (!cv) return;
@@ -3949,7 +3949,7 @@ void KHTMLView::ensureCaretVisible()
   d->scrollBarMoved = false;
 }
 
-bool KHTMLView::extendSelection(NodeImpl *oldStartSel, long oldStartOfs,
+bool TDEHTMLView::extendSelection(NodeImpl *oldStartSel, long oldStartOfs,
 				NodeImpl *oldEndSel, long oldEndOfs)
 {
   bool changed = false;
@@ -4001,7 +4001,7 @@ bool KHTMLView::extendSelection(NodeImpl *oldStartSel, long oldStartOfs,
   return changed;
 }
 
-void KHTMLView::updateSelection(NodeImpl *oldStartSel, long oldStartOfs,
+void TDEHTMLView::updateSelection(NodeImpl *oldStartSel, long oldStartOfs,
 				NodeImpl *oldEndSel, long oldEndOfs)
 {
   if (m_part->d->m_selectionStart == m_part->d->m_selectionEnd
@@ -4035,7 +4035,7 @@ void KHTMLView::updateSelection(NodeImpl *oldStartSel, long oldStartOfs,
   }/*end if*/
 }
 
-void KHTMLView::caretKeyPressEvent(TQKeyEvent *_ke)
+void TDEHTMLView::caretKeyPressEvent(TQKeyEvent *_ke)
 {
   NodeImpl *oldStartSel = m_part->d->m_selectionStart.handle();
   long oldStartOfs = m_part->d->m_startOffset;
@@ -4112,7 +4112,7 @@ void KHTMLView::caretKeyPressEvent(TQKeyEvent *_ke)
   _ke->accept();
 }
 
-bool KHTMLView::moveCaretTo(NodeImpl *node, long offset, bool clearSel)
+bool TDEHTMLView::moveCaretTo(NodeImpl *node, long offset, bool clearSel)
 {
   if (!node) return false;
   ElementImpl *baseElem = determineBaseElement(node);
@@ -4128,7 +4128,7 @@ bool KHTMLView::moveCaretTo(NodeImpl *node, long offset, bool clearSel)
   CaretBoxIterator cbit;
   CaretBoxLine *cbl = findCaretBoxLine(node, offset, &cblDeleter, base, r_ofs, cbit);
   if(!cbl) {
-      kdWarning() << "KHTMLView::moveCaretTo - findCaretBoxLine() returns NULL" << endl;
+      kdWarning() << "TDEHTMLView::moveCaretTo - findCaretBoxLine() returns NULL" << endl;
       return false;
   }
 
@@ -4187,7 +4187,7 @@ bool KHTMLView::moveCaretTo(NodeImpl *node, long offset, bool clearSel)
   return selChanged;
 }
 
-void KHTMLView::moveCaretByLine(bool next, int count)
+void TDEHTMLView::moveCaretByLine(bool next, int count)
 {
   Node &caretNodeRef = m_part->d->caretNode();
   if (caretNodeRef.isNull()) return;
@@ -4218,7 +4218,7 @@ void KHTMLView::moveCaretByLine(bool next, int count)
   placeCaretOnLine(caretBox, x, absx, absy);
 }
 
-void KHTMLView::placeCaretOnLine(CaretBox *caretBox, int x, int absx, int absy)
+void TDEHTMLView::placeCaretOnLine(CaretBox *caretBox, int x, int absx, int absy)
 {
   // paranoia sanity check
   if (!caretBox) return;
@@ -4313,7 +4313,7 @@ void KHTMLView::placeCaretOnLine(CaretBox *caretBox, int x, int absx, int absy)
   caretOn();
 }
 
-void KHTMLView::moveCaretToLineBoundary(bool end)
+void TDEHTMLView::moveCaretToLineBoundary(bool end)
 {
   Node &caretNodeRef = m_part->d->caretNode();
   if (caretNodeRef.isNull()) return;
@@ -4343,7 +4343,7 @@ void KHTMLView::moveCaretToLineBoundary(bool end)
   placeCaretOnLine(b, x, absx, absy);
 }
 
-void KHTMLView::moveCaretToDocumentBoundary(bool end)
+void TDEHTMLView::moveCaretToDocumentBoundary(bool end)
 {
   Node &caretNodeRef = m_part->d->caretNode();
   if (caretNodeRef.isNull()) return;
@@ -4373,7 +4373,7 @@ void KHTMLView::moveCaretToDocumentBoundary(bool end)
   placeCaretOnLine(b, x, absx, absy);
 }
 
-void KHTMLView::moveCaretBy(bool next, CaretMovement cmv, int count)
+void TDEHTMLView::moveCaretBy(bool next, CaretMovement cmv, int count)
 {
   if (!m_part) return;
   Node &caretNodeRef = m_part->d->caretNode();
@@ -4421,7 +4421,7 @@ void KHTMLView::moveCaretBy(bool next, CaretMovement cmv, int count)
   placeCaretOnChar(hintBox);
 }
 
-void KHTMLView::placeCaretOnChar(CaretBox *hintBox)
+void TDEHTMLView::placeCaretOnChar(CaretBox *hintBox)
 {
   caretOff();
   recalcAndStoreCaretPos(hintBox);
@@ -4436,7 +4436,7 @@ void KHTMLView::placeCaretOnChar(CaretBox *hintBox)
   caretOn();
 }
 
-void KHTMLView::moveCaretByPage(bool next)
+void TDEHTMLView::moveCaretByPage(bool next)
 {
   Node &caretNodeRef = m_part->d->caretNode();
   if (caretNodeRef.isNull()) return;
@@ -4465,47 +4465,47 @@ void KHTMLView::moveCaretByPage(bool next)
   placeCaretOnLine(caretBox, x, absx, absy);
 }
 
-void KHTMLView::moveCaretPrevWord()
+void TDEHTMLView::moveCaretPrevWord()
 {
   moveCaretBy(false, CaretByWord, 1);
 }
 
-void KHTMLView::moveCaretNextWord()
+void TDEHTMLView::moveCaretNextWord()
 {
   moveCaretBy(true, CaretByWord, 1);
 }
 
-void KHTMLView::moveCaretPrevLine(int n)
+void TDEHTMLView::moveCaretPrevLine(int n)
 {
   moveCaretByLine(false, n);
 }
 
-void KHTMLView::moveCaretNextLine(int n)
+void TDEHTMLView::moveCaretNextLine(int n)
 {
   moveCaretByLine(true, n);
 }
 
-void KHTMLView::moveCaretPrevPage()
+void TDEHTMLView::moveCaretPrevPage()
 {
   moveCaretByPage(false);
 }
 
-void KHTMLView::moveCaretNextPage()
+void TDEHTMLView::moveCaretNextPage()
 {
   moveCaretByPage(true);
 }
 
-void KHTMLView::moveCaretToLineBegin()
+void TDEHTMLView::moveCaretToLineBegin()
 {
   moveCaretToLineBoundary(false);
 }
 
-void KHTMLView::moveCaretToLineEnd()
+void TDEHTMLView::moveCaretToLineEnd()
 {
   moveCaretToLineBoundary(true);
 }
 
-#endif // KHTML_NO_CARET
+#endif // TDEHTML_NO_CARET
 
 #ifndef NO_SMOOTH_SCROLL_HACK
 #define timer timer2
@@ -4515,7 +4515,7 @@ static const int SCROLL_TIME = 240;
 // Each step is 20 ms == 50 frames/second
 static const int SCROLL_TICK = 20;
 
-void KHTMLView::scrollBy(int dx, int dy)
+void TDEHTMLView::scrollBy(int dx, int dy)
 {
     TDEConfigGroup cfg( TDEGlobal::config(), "KDE" );
     if( !cfg.readBoolEntry( "SmoothScrolling", false )) {
@@ -4552,7 +4552,7 @@ void KHTMLView::scrollBy(int dx, int dy)
     }
 }
 
-void KHTMLView::scrollTick() {
+void TDEHTMLView::scrollTick() {
     if (d->dx == 0 && d->dy == 0) {
         stopScrolling();
         return;
@@ -4586,13 +4586,13 @@ void KHTMLView::scrollTick() {
     kapp->syncX();
 }
 
-void KHTMLView::startScrolling()
+void TDEHTMLView::startScrolling()
 {
     d->scrolling = true;
     d->timer.start(SCROLL_TICK, false);
 }
 
-void KHTMLView::stopScrolling()
+void TDEHTMLView::stopScrolling()
 {
     d->timer.stop();
     d->dx = d->dy = 0;
@@ -4600,7 +4600,7 @@ void KHTMLView::stopScrolling()
 }
 
 // Overloaded from TQScrollView and TQScrollBar
-void KHTMLView::scrollViewWheelEvent( TQWheelEvent *e )
+void TDEHTMLView::scrollViewWheelEvent( TQWheelEvent *e )
 {
     int pageStep = verticalScrollBar()->pageStep();
     int lineStep = verticalScrollBar()->lineStep();

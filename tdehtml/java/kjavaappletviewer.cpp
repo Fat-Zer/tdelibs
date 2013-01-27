@@ -241,15 +241,15 @@ KJavaAppletViewer::KJavaAppletViewer (TQWidget * wparent, const char *,
             kdDebug(6100) << "name=" << name << " value=" << value << endl;
             if (!name.isEmpty()) {
                 const TQString name_lower = name.lower ();
-                if (name == "__KHTML__PLUGINBASEURL") {
+                if (name == "__TDEHTML__PLUGINBASEURL") {
                     baseurl = KURL (KURL (value), TQString (".")).url ();
-                } else if (name == "__KHTML__CODEBASE")
+                } else if (name == "__TDEHTML__CODEBASE")
                     tdehtml_codebase = value;
                 else if (name_lower == TQString::fromLatin1("codebase") ||
                          name_lower == TQString::fromLatin1("java_codebase")) {
                     if (!value.isEmpty ())
                         codebase = value;
-                } else if (name == "__KHTML__CLASSID")
+                } else if (name == "__TDEHTML__CLASSID")
                 //else if (name.lower()==TQString::fromLatin1("classid"))
                     classid = value;
                 else if (name_lower == TQString::fromLatin1("code") ||
@@ -267,7 +267,7 @@ KJavaAppletViewer::KJavaAppletViewer (TQWidget * wparent, const char *,
                     width = value.toInt();
                 else if (name_lower == TQString::fromLatin1("height"))
                     height = value.toInt();
-                if (!name.startsWith ("__KHTML__")) {
+                if (!name.startsWith ("__TDEHTML__")) {
                     applet->setParameter (name, value);
                 }
             }

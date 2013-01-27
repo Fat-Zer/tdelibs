@@ -44,7 +44,7 @@
 #include "html/html_documentimpl.h"
 #include "html/RefPtr.h"
 
-class KHTMLView;
+class TDEHTMLView;
 class HTMLStackElem;
 
 namespace DOM {
@@ -66,12 +66,12 @@ class Token;
  * The parser for html. It receives a stream of tokens from the HTMLTokenizer, and
  * builds up the Document structure form it.
  */
-class KHTMLParser
+class TDEHTMLParser
 {
 public:
-    KHTMLParser( KHTMLView *w, DOM::DocumentImpl *i );
-    KHTMLParser( DOM::DocumentFragmentImpl *frag, DOM::DocumentImpl *doc );
-    virtual ~KHTMLParser();
+    TDEHTMLParser( TDEHTMLView *w, DOM::DocumentImpl *i );
+    TDEHTMLParser( DOM::DocumentFragmentImpl *frag, DOM::DocumentImpl *doc );
+    virtual ~TDEHTMLParser();
 
     /**
      * parses one token delivered by the tokenizer
@@ -92,7 +92,7 @@ public:
 
 protected:
 
-    KHTMLView *HTMLWidget;
+    TDEHTMLView *HTMLWidget;
     DOM::DocumentImpl *document;
 
     /*

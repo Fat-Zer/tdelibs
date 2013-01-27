@@ -25,7 +25,7 @@
 #include <tqvaluelist.h>
 #include <tqptrlist.h>
 
-class KHTMLPageCachePrivate;
+class TDEHTMLPageCachePrivate;
 
 /**
  * Singleton Object that handles a binary cache on top of
@@ -38,7 +38,7 @@ class KHTMLPageCachePrivate;
  *
  * It operates completely independent from the kio_http cache.
  */
-class KHTMLPageCache : public TQObject
+class TDEHTMLPageCache : public TQObject
 {
   Q_OBJECT
 public:
@@ -47,8 +47,8 @@ public:
    * @return returns a pointer to the cache, if it exists.
    * creates a new cache otherwise.
    */
-  static KHTMLPageCache *self();
-  ~KHTMLPageCache();
+  static TDEHTMLPageCache *self();
+  ~TDEHTMLPageCache();
   
   /**
    * Create a new cache entry. 
@@ -106,21 +106,21 @@ private slots:
   void sendData();
 
 private:  
-  KHTMLPageCache();
+  TDEHTMLPageCache();
 
-  static KHTMLPageCache *_self;
+  static TDEHTMLPageCache *_self;
 
-  KHTMLPageCachePrivate *d;  
+  TDEHTMLPageCachePrivate *d;  
 };
 
-class KHTMLPageCacheDelivery : public TQObject
+class TDEHTMLPageCacheDelivery : public TQObject
 {
-   friend class KHTMLPageCache;
+   friend class TDEHTMLPageCache;
 Q_OBJECT
 public:
-   KHTMLPageCacheDelivery(int _fd)
+   TDEHTMLPageCacheDelivery(int _fd)
     : fd(_fd) { }
-   ~KHTMLPageCacheDelivery();
+   ~TDEHTMLPageCacheDelivery();
 
 signals:
    void emitData(const TQByteArray &data);

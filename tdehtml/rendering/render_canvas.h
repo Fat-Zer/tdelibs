@@ -25,7 +25,7 @@
 
 #include "render_block.h"
 
-class KHTMLView;
+class TDEHTMLView;
 class TQScrollView;
 
 namespace tdehtml {
@@ -42,7 +42,7 @@ enum CanvasMode {
 class RenderCanvas : public RenderBlock
 {
 public:
-    RenderCanvas(DOM::NodeImpl* node, KHTMLView *view);
+    RenderCanvas(DOM::NodeImpl* node, TDEHTMLView *view);
     ~RenderCanvas();
 
     virtual const char *renderName() const { return "RenderCanvas"; }
@@ -59,7 +59,7 @@ public:
     int docHeight() const;
     int docWidth() const;
 
-    KHTMLView *view() const { return m_view; }
+    TDEHTMLView *view() const { return m_view; }
 
     virtual void repaint(Priority p=NormalPriority);
     virtual void repaintRectangle(int x, int y, int w, int h, Priority p=NormalPriority, bool f=false);
@@ -145,7 +145,7 @@ protected:
 
     virtual TQRect viewRect() const;
 
-    KHTMLView *m_view;
+    TDEHTMLView *m_view;
 
     RenderObject* m_selectionStart;
     RenderObject* m_selectionEnd;

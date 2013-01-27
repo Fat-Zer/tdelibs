@@ -37,40 +37,40 @@
 
 #include <kdebug.h>
 
-template class TQPtrList<KHTMLPart>;
+template class TQPtrList<TDEHTMLPart>;
 
 extern "C" KDE_EXPORT void *init_libtdehtml()
 {
     // We can't use a plain self() here, because that would
     // return the global factory, which might already exist
     // at the time init_libtdehtml is called! As soon as someone
-    // does new KHTMLPart() in his application and loads up
+    // does new TDEHTMLPart() in his application and loads up
     // an html document into that part which either embeds
-    // embeds another KHTMLPart instance via <object> or
+    // embeds another TDEHTMLPart instance via <object> or
     // as html frame, then we cannot return self(), as
     // what we return here is what the KLibLoader deletes
     // in the end, and we don't want the libloader to
     // delete our global instance. Anyway, the new
-    // KHTMLFactory we create here is very cheap :)
+    // TDEHTMLFactory we create here is very cheap :)
     // (Simon)
-    return new KHTMLFactory( true );
+    return new TDEHTMLFactory( true );
 }
 
-KHTMLFactory *KHTMLFactory::s_self = 0;
-unsigned long int KHTMLFactory::s_refcnt = 0;
-TDEInstance *KHTMLFactory::s_instance = 0;
-TDEAboutData *KHTMLFactory::s_about = 0;
-KHTMLSettings *KHTMLFactory::s_settings = 0;
-TQPtrList<KHTMLPart> *KHTMLFactory::s_parts = 0;
-TQString *KHTMLSettings::avFamilies = 0;
+TDEHTMLFactory *TDEHTMLFactory::s_self = 0;
+unsigned long int TDEHTMLFactory::s_refcnt = 0;
+TDEInstance *TDEHTMLFactory::s_instance = 0;
+TDEAboutData *TDEHTMLFactory::s_about = 0;
+TDEHTMLSettings *TDEHTMLFactory::s_settings = 0;
+TQPtrList<TDEHTMLPart> *TDEHTMLFactory::s_parts = 0;
+TQString *TDEHTMLSettings::avFamilies = 0;
 
-KHTMLFactory::KHTMLFactory( bool clone )
+TDEHTMLFactory::TDEHTMLFactory( bool clone )
 {
     if ( clone )
         ref();
 }
 
-KHTMLFactory::~KHTMLFactory()
+TDEHTMLFactory::~TDEHTMLFactory()
 {
     if ( s_self == this )
     {
@@ -79,7 +79,7 @@ KHTMLFactory::~KHTMLFactory()
         delete s_instance;
         delete s_about;
         delete s_settings;
-	delete KHTMLSettings::avFamilies;
+	delete TDEHTMLSettings::avFamilies;
         if ( s_parts )
         {
             assert( s_parts->isEmpty() );
@@ -90,7 +90,7 @@ KHTMLFactory::~KHTMLFactory()
         s_about = 0;
         s_settings = 0;
         s_parts = 0;
-	KHTMLSettings::avFamilies = 0;
+	TDEHTMLSettings::avFamilies = 0;
 
         // clean up static data
         tdehtml::CSSStyleSelector::clear();
@@ -103,16 +103,16 @@ KHTMLFactory::~KHTMLFactory()
         deref();
 }
 
-KParts::Part *KHTMLFactory::createPartObject( TQWidget *parentWidget, const char *widgetName, TQObject *parent, const char *name, const char *className, const TQStringList & )
+KParts::Part *TDEHTMLFactory::createPartObject( TQWidget *parentWidget, const char *widgetName, TQObject *parent, const char *name, const char *className, const TQStringList & )
 {
-  KHTMLPart::GUIProfile prof = KHTMLPart::DefaultGUI;
+  TDEHTMLPart::GUIProfile prof = TDEHTMLPart::DefaultGUI;
   if ( strcmp( className, "Browser/View" ) == 0 )
-    prof = KHTMLPart::BrowserViewGUI;
+    prof = TDEHTMLPart::BrowserViewGUI;
 
-  return new KHTMLPart( parentWidget, widgetName, parent, name, prof );
+  return new TDEHTMLPart( parentWidget, widgetName, parent, name, prof );
 }
 
-void KHTMLFactory::ref()
+void TDEHTMLFactory::ref()
 {
     if ( !s_refcnt && !s_self )
     {
@@ -125,14 +125,14 @@ void KHTMLFactory::ref()
         // well, perhaps I'm wrong here, but as I'm unsure I try to stay on the
         // safe side ;-) -> let's use a simple reference counting scheme
         // (Simon)
-        s_self = new KHTMLFactory;
+        s_self = new TDEHTMLFactory;
         tdehtml::Cache::init();
     }
 
     s_refcnt++;
 }
 
-void KHTMLFactory::deref()
+void TDEHTMLFactory::deref()
 {
     if ( !--s_refcnt && s_self )
     {
@@ -141,10 +141,10 @@ void KHTMLFactory::deref()
     }
 }
 
-void KHTMLFactory::registerPart( KHTMLPart *part )
+void TDEHTMLFactory::registerPart( TDEHTMLPart *part )
 {
     if ( !s_parts )
-        s_parts = new TQPtrList<KHTMLPart>;
+        s_parts = new TQPtrList<TDEHTMLPart>;
 
     if ( !s_parts->containsRef( part ) )
     {
@@ -153,7 +153,7 @@ void KHTMLFactory::registerPart( KHTMLPart *part )
     }
 }
 
-void KHTMLFactory::deregisterPart( KHTMLPart *part )
+void TDEHTMLFactory::deregisterPart( TDEHTMLPart *part )
 {
     assert( s_parts );
 
@@ -168,13 +168,13 @@ void KHTMLFactory::deregisterPart( KHTMLPart *part )
     }
 }
 
-TDEInstance *KHTMLFactory::instance()
+TDEInstance *TDEHTMLFactory::instance()
 {
   assert( s_self );
 
   if ( !s_instance )
   {
-    s_about = new TDEAboutData( "tdehtml", I18N_NOOP( "KHTML" ), "4.0",
+    s_about = new TDEAboutData( "tdehtml", I18N_NOOP( "TDEHTML" ), "4.0",
                               I18N_NOOP( "Embeddable HTML component" ),
                               TDEAboutData::License_LGPL );
     s_about->addAuthor( "Lars Knoll", 0, "knoll@kde.org" );
@@ -193,11 +193,11 @@ TDEInstance *KHTMLFactory::instance()
   return s_instance;
 }
 
-KHTMLSettings *KHTMLFactory::defaultHTMLSettings()
+TDEHTMLSettings *TDEHTMLFactory::defaultHTMLSettings()
 {
   assert( s_self );
   if ( !s_settings )
-    s_settings = new KHTMLSettings();
+    s_settings = new TDEHTMLSettings();
 
   return s_settings;
 }

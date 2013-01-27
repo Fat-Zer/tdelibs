@@ -70,7 +70,7 @@
 
 #include "tdehtmlpart_p.h"
 
-KHTMLPartBrowserExtension::KHTMLPartBrowserExtension( KHTMLPart *parent, const char *name )
+TDEHTMLPartBrowserExtension::TDEHTMLPartBrowserExtension( TDEHTMLPart *parent, const char *name )
 : KParts::BrowserExtension( parent, name )
 {
     m_part = parent;
@@ -83,29 +83,29 @@ KHTMLPartBrowserExtension::KHTMLPartBrowserExtension( KHTMLPart *parent, const c
     m_connectedToClipboard = false;
 }
 
-int KHTMLPartBrowserExtension::xOffset()
+int TDEHTMLPartBrowserExtension::xOffset()
 {
     return m_part->view()->contentsX();
 }
 
-int KHTMLPartBrowserExtension::yOffset()
+int TDEHTMLPartBrowserExtension::yOffset()
 {
   return m_part->view()->contentsY();
 }
 
-void KHTMLPartBrowserExtension::saveState( TQDataStream &stream )
+void TDEHTMLPartBrowserExtension::saveState( TQDataStream &stream )
 {
   //kdDebug( 6050 ) << "saveState!" << endl;
   m_part->saveState( stream );
 }
 
-void KHTMLPartBrowserExtension::restoreState( TQDataStream &stream )
+void TDEHTMLPartBrowserExtension::restoreState( TQDataStream &stream )
 {
   //kdDebug( 6050 ) << "restoreState!" << endl;
   m_part->restoreState( stream );
 }
 
-void KHTMLPartBrowserExtension::editableWidgetFocused( TQWidget *widget )
+void TDEHTMLPartBrowserExtension::editableWidgetFocused( TQWidget *widget )
 {
     m_editableFormWidget = widget;
     updateEditActions();
@@ -124,7 +124,7 @@ void KHTMLPartBrowserExtension::editableWidgetFocused( TQWidget *widget )
     editableWidgetFocused();
 }
 
-void KHTMLPartBrowserExtension::editableWidgetBlurred( TQWidget * /*widget*/ )
+void TDEHTMLPartBrowserExtension::editableWidgetBlurred( TQWidget * /*widget*/ )
 {
     TQWidget *oldWidget = m_editableFormWidget;
 
@@ -150,13 +150,13 @@ void KHTMLPartBrowserExtension::editableWidgetBlurred( TQWidget * /*widget*/ )
     editableWidgetBlurred();
 }
 
-void KHTMLPartBrowserExtension::setExtensionProxy( KParts::BrowserExtension *proxy )
+void TDEHTMLPartBrowserExtension::setExtensionProxy( KParts::BrowserExtension *proxy )
 {
     if ( m_extensionProxy )
     {
         disconnect( m_extensionProxy, TQT_SIGNAL( enableAction( const char *, bool ) ),
                     this, TQT_SLOT( extensionProxyActionEnabled( const char *, bool ) ) );
-        if ( m_extensionProxy->inherits( "KHTMLPartBrowserExtension" ) )
+        if ( m_extensionProxy->inherits( "TDEHTMLPartBrowserExtension" ) )
         {
             disconnect( m_extensionProxy, TQT_SIGNAL( editableWidgetFocused() ),
                         this, TQT_SLOT( extensionProxyEditableWidgetFocused() ) );
@@ -171,7 +171,7 @@ void KHTMLPartBrowserExtension::setExtensionProxy( KParts::BrowserExtension *pro
     {
         connect( m_extensionProxy, TQT_SIGNAL( enableAction( const char *, bool ) ),
                  this, TQT_SLOT( extensionProxyActionEnabled( const char *, bool ) ) );
-        if ( m_extensionProxy->inherits( "KHTMLPartBrowserExtension" ) )
+        if ( m_extensionProxy->inherits( "TDEHTMLPartBrowserExtension" ) )
         {
             connect( m_extensionProxy, TQT_SIGNAL( editableWidgetFocused() ),
                      this, TQT_SLOT( extensionProxyEditableWidgetFocused() ) );
@@ -190,7 +190,7 @@ void KHTMLPartBrowserExtension::setExtensionProxy( KParts::BrowserExtension *pro
     }
 }
 
-void KHTMLPartBrowserExtension::cut()
+void TDEHTMLPartBrowserExtension::cut()
 {
     if ( m_extensionProxy )
     {
@@ -207,7 +207,7 @@ void KHTMLPartBrowserExtension::cut()
         static_cast<TQTextEdit *>( &(*m_editableFormWidget) )->cut();
 }
 
-void KHTMLPartBrowserExtension::copy()
+void TDEHTMLPartBrowserExtension::copy()
 {
     if ( m_extensionProxy )
     {
@@ -215,7 +215,7 @@ void KHTMLPartBrowserExtension::copy()
         return;
     }
 
-    kdDebug( 6050 ) << "************! KHTMLPartBrowserExtension::copy()" << endl;
+    kdDebug( 6050 ) << "************! TDEHTMLPartBrowserExtension::copy()" << endl;
     if ( !m_editableFormWidget )
     {
         // get selected text and paste to the clipboard
@@ -261,7 +261,7 @@ void KHTMLPartBrowserExtension::copy()
     }
 }
 
-void KHTMLPartBrowserExtension::searchProvider()
+void TDEHTMLPartBrowserExtension::searchProvider()
 {
     // action name is of form "previewProvider[<searchproviderprefix>:]"
     const TQString searchProviderPrefix = TQString( TQT_TQOBJECT_CONST(sender())->name() ).mid( 14 );
@@ -285,7 +285,7 @@ void KHTMLPartBrowserExtension::searchProvider()
     emit m_part->browserExtension()->openURLRequest( data.uri(), args );
 }
 
-void KHTMLPartBrowserExtension::openSelection()
+void TDEHTMLPartBrowserExtension::openSelection()
 {
     KParts::URLArgs args;
     args.frameName = "_blank";
@@ -293,7 +293,7 @@ void KHTMLPartBrowserExtension::openSelection()
     emit m_part->browserExtension()->openURLRequest( m_part->selectedText(), args );
 }
 
-void KHTMLPartBrowserExtension::paste()
+void TDEHTMLPartBrowserExtension::paste()
 {
     if ( m_extensionProxy )
     {
@@ -310,7 +310,7 @@ void KHTMLPartBrowserExtension::paste()
         static_cast<TQTextEdit *>( &(*m_editableFormWidget) )->paste();
 }
 
-void KHTMLPartBrowserExtension::callExtensionProxyMethod( const char *method )
+void TDEHTMLPartBrowserExtension::callExtensionProxyMethod( const char *method )
 {
     if ( !m_extensionProxy )
         return;
@@ -323,7 +323,7 @@ void KHTMLPartBrowserExtension::callExtensionProxyMethod( const char *method )
     m_extensionProxy->tqt_invoke( slot, o );
 }
 
-void KHTMLPartBrowserExtension::updateEditActions()
+void TDEHTMLPartBrowserExtension::updateEditActions()
 {
     if ( !m_editableFormWidget )
     {
@@ -354,15 +354,15 @@ void KHTMLPartBrowserExtension::updateEditActions()
     enableAction( "cut", hasSelection );
 }
 
-void KHTMLPartBrowserExtension::extensionProxyEditableWidgetFocused() {
+void TDEHTMLPartBrowserExtension::extensionProxyEditableWidgetFocused() {
 	editableWidgetFocused();
 }
 
-void KHTMLPartBrowserExtension::extensionProxyEditableWidgetBlurred() {
+void TDEHTMLPartBrowserExtension::extensionProxyEditableWidgetBlurred() {
 	editableWidgetBlurred();
 }
 
-void KHTMLPartBrowserExtension::extensionProxyActionEnabled( const char *action, bool enable )
+void TDEHTMLPartBrowserExtension::extensionProxyActionEnabled( const char *action, bool enable )
 {
     // only forward enableAction calls for actions we actually do forward
     if ( strcmp( action, "cut" ) == 0 ||
@@ -372,17 +372,17 @@ void KHTMLPartBrowserExtension::extensionProxyActionEnabled( const char *action,
     }
 }
 
-void KHTMLPartBrowserExtension::reparseConfiguration()
+void TDEHTMLPartBrowserExtension::reparseConfiguration()
 {
   m_part->reparseConfiguration();
 }
 
-void KHTMLPartBrowserExtension::print()
+void TDEHTMLPartBrowserExtension::print()
 {
   m_part->view()->print();
 }
 
-void KHTMLPartBrowserExtension::disableScrolling()
+void TDEHTMLPartBrowserExtension::disableScrolling()
 {
   TQScrollView *scrollView = m_part->view();
   if (scrollView) {
@@ -391,10 +391,10 @@ void KHTMLPartBrowserExtension::disableScrolling()
   }
 }
 
-class KHTMLPopupGUIClient::KHTMLPopupGUIClientPrivate
+class TDEHTMLPopupGUIClient::TDEHTMLPopupGUIClientPrivate
 {
 public:
-  KHTMLPart *m_tdehtml;
+  TDEHTMLPart *m_tdehtml;
   KURL m_url;
   KURL m_imageURL;
   TQPixmap m_pixmap;
@@ -402,10 +402,10 @@ public:
 };
 
 
-KHTMLPopupGUIClient::KHTMLPopupGUIClient( KHTMLPart *tdehtml, const TQString &doc, const KURL &url )
+TDEHTMLPopupGUIClient::TDEHTMLPopupGUIClient( TDEHTMLPart *tdehtml, const TQString &doc, const KURL &url )
   : TQObject( tdehtml )
 {
-  d = new KHTMLPopupGUIClientPrivate;
+  d = new TDEHTMLPopupGUIClientPrivate;
   d->m_tdehtml = tdehtml;
   d->m_url = url;
   bool isImage = false;
@@ -556,7 +556,7 @@ KHTMLPopupGUIClient::KHTMLPopupGUIClient( KHTMLPart *tdehtml, const TQString &do
       new KAction( i18n( "Reload Frame" ), 0, this, TQT_SLOT( slotReloadFrame() ),
                                         actionCollection(), "reloadframe" );
 
-      if ( KHTMLFactory::defaultHTMLSettings()->isAdFilterEnabled() ) {
+      if ( TDEHTMLFactory::defaultHTMLSettings()->isAdFilterEnabled() ) {
           if ( tdehtml->d->m_frame->m_type == tdehtml::ChildFrame::IFrame )
               new KAction( i18n( "Block IFrame..." ), 0, this, TQT_SLOT( slotBlockIFrame() ), actionCollection(), "blockiframe" );
       }
@@ -618,7 +618,7 @@ KHTMLPopupGUIClient::KHTMLPopupGUIClient( KHTMLPart *tdehtml, const TQString &do
     new KAction( i18n( "View Image (%1)" ).arg(d->m_suggestedFilename.isEmpty() ? name.replace("&", "&&") : d->m_suggestedFilename.replace("&", "&&")), 0, this, TQT_SLOT( slotViewImage() ),
                  actionCollection(), "viewimage" );
 
-    if (KHTMLFactory::defaultHTMLSettings()->isAdFilterEnabled())
+    if (TDEHTMLFactory::defaultHTMLSettings()->isAdFilterEnabled())
     {
       new KAction( i18n( "Block Image..." ), 0, this, TQT_SLOT( slotBlockImage() ),
                    actionCollection(), "blockimage" );
@@ -641,19 +641,19 @@ KHTMLPopupGUIClient::KHTMLPopupGUIClient( KHTMLPart *tdehtml, const TQString &do
     menu.insertBefore( domDocument().createElement( "separator" ), menu.firstChild() );
 }
 
-KHTMLPopupGUIClient::~KHTMLPopupGUIClient()
+TDEHTMLPopupGUIClient::~TDEHTMLPopupGUIClient()
 {
   delete d;
 }
 
-void KHTMLPopupGUIClient::slotSaveLinkAs()
+void TDEHTMLPopupGUIClient::slotSaveLinkAs()
 {
   TDEIO::MetaData metaData;
   metaData["referrer"] = d->m_tdehtml->referrer();
   saveURL( d->m_tdehtml->widget(), i18n( "Save Link As" ), d->m_url, metaData );
 }
 
-void KHTMLPopupGUIClient::slotSendImage()
+void TDEHTMLPopupGUIClient::slotSendImage()
 {
     TQStringList urls;
     urls.append( d->m_imageURL.url());
@@ -666,21 +666,21 @@ void KHTMLPopupGUIClient::slotSendImage()
 
 }
 
-void KHTMLPopupGUIClient::slotSaveImageAs()
+void TDEHTMLPopupGUIClient::slotSaveImageAs()
 {
   TDEIO::MetaData metaData;
   metaData["referrer"] = d->m_tdehtml->referrer();
   saveURL( d->m_tdehtml->widget(), i18n( "Save Image As" ), d->m_imageURL, metaData, TQString::null, 0, d->m_suggestedFilename );
 }
 
-void KHTMLPopupGUIClient::slotBlockHost()
+void TDEHTMLPopupGUIClient::slotBlockHost()
 {
     TQString name=d->m_imageURL.protocol()+"://"+d->m_imageURL.host()+"/*";
-    KHTMLFactory::defaultHTMLSettings()->addAdFilter( name );
+    TDEHTMLFactory::defaultHTMLSettings()->addAdFilter( name );
     d->m_tdehtml->reparseConfiguration();
 }
 
-void KHTMLPopupGUIClient::slotBlockImage()
+void TDEHTMLPopupGUIClient::slotBlockImage()
 {
     bool ok = false;
 
@@ -689,12 +689,12 @@ void KHTMLPopupGUIClient::slotBlockImage()
                                          d->m_imageURL.url(),
                                          &ok);
     if ( ok ) {
-        KHTMLFactory::defaultHTMLSettings()->addAdFilter( url );
+        TDEHTMLFactory::defaultHTMLSettings()->addAdFilter( url );
         d->m_tdehtml->reparseConfiguration();
     }
 }
 
-void KHTMLPopupGUIClient::slotBlockIFrame()
+void TDEHTMLPopupGUIClient::slotBlockIFrame()
 {
     bool ok = false;
     TQString url = KInputDialog::getText( i18n( "Add URL to Filter"),
@@ -702,12 +702,12 @@ void KHTMLPopupGUIClient::slotBlockIFrame()
                                                d->m_tdehtml->url().url(),
                                                &ok );
     if ( ok ) {
-        KHTMLFactory::defaultHTMLSettings()->addAdFilter( url );
+        TDEHTMLFactory::defaultHTMLSettings()->addAdFilter( url );
         d->m_tdehtml->reparseConfiguration();
     }
 }
 
-void KHTMLPopupGUIClient::slotCopyLinkLocation()
+void TDEHTMLPopupGUIClient::slotCopyLinkLocation()
 {
   KURL safeURL(d->m_url);
   safeURL.setPass(TQString::null);
@@ -722,12 +722,12 @@ void KHTMLPopupGUIClient::slotCopyLinkLocation()
 #endif
 }
 
-void KHTMLPopupGUIClient::slotStopAnimations()
+void TDEHTMLPopupGUIClient::slotStopAnimations()
 {
   d->m_tdehtml->stopAnimations();
 }
 
-void KHTMLPopupGUIClient::slotCopyImage()
+void TDEHTMLPopupGUIClient::slotCopyImage()
 {
 #ifndef QT_NO_MIMECLIPBOARD
   KURL safeURL(d->m_imageURL);
@@ -748,7 +748,7 @@ void KHTMLPopupGUIClient::slotCopyImage()
 #endif
 }
 
-void KHTMLPopupGUIClient::slotCopyImageLocation()
+void TDEHTMLPopupGUIClient::slotCopyImageLocation()
 {
   KURL safeURL(d->m_imageURL);
   safeURL.setPass(TQString::null);
@@ -763,12 +763,12 @@ void KHTMLPopupGUIClient::slotCopyImageLocation()
 #endif
 }
 
-void KHTMLPopupGUIClient::slotViewImage()
+void TDEHTMLPopupGUIClient::slotViewImage()
 {
   d->m_tdehtml->browserExtension()->createNewWindow(d->m_imageURL);
 }
 
-void KHTMLPopupGUIClient::slotReloadFrame()
+void TDEHTMLPopupGUIClient::slotReloadFrame()
 {
   KParts::URLArgs args( d->m_tdehtml->browserExtension()->urlArgs() );
   args.reload = true;
@@ -779,7 +779,7 @@ void KHTMLPopupGUIClient::slotReloadFrame()
   d->m_tdehtml->openURL( d->m_tdehtml->url() );
 }
 
-void KHTMLPopupGUIClient::slotFrameInWindow()
+void TDEHTMLPopupGUIClient::slotFrameInWindow()
 {
   KParts::URLArgs args( d->m_tdehtml->browserExtension()->urlArgs() );
   args.metaData()["referrer"] = d->m_tdehtml->pageReferrer();
@@ -787,7 +787,7 @@ void KHTMLPopupGUIClient::slotFrameInWindow()
   emit d->m_tdehtml->browserExtension()->createNewWindow( d->m_tdehtml->url(), args );
 }
 
-void KHTMLPopupGUIClient::slotFrameInTop()
+void TDEHTMLPopupGUIClient::slotFrameInTop()
 {
   KParts::URLArgs args( d->m_tdehtml->browserExtension()->urlArgs() );
   args.metaData()["referrer"] = d->m_tdehtml->pageReferrer();
@@ -795,7 +795,7 @@ void KHTMLPopupGUIClient::slotFrameInTop()
   emit d->m_tdehtml->browserExtension()->openURLRequest( d->m_tdehtml->url(), args );
 }
 
-void KHTMLPopupGUIClient::slotFrameInTab()
+void TDEHTMLPopupGUIClient::slotFrameInTab()
 {
   KParts::URLArgs args( d->m_tdehtml->browserExtension()->urlArgs() );
   args.metaData()["referrer"] = d->m_tdehtml->pageReferrer();
@@ -803,7 +803,7 @@ void KHTMLPopupGUIClient::slotFrameInTab()
   emit d->m_tdehtml->browserExtension()->createNewWindow( d->m_tdehtml->url(), args );
 }
 
-void KHTMLPopupGUIClient::saveURL( TQWidget *parent, const TQString &caption,
+void TDEHTMLPopupGUIClient::saveURL( TQWidget *parent, const TQString &caption,
                                    const KURL &url,
                                    const TQMap<TQString, TQString> &metadata,
                                    const TQString &filter, long cacheId,
@@ -834,21 +834,21 @@ void KHTMLPopupGUIClient::saveURL( TQWidget *parent, const TQString &caption,
     saveURL(url, destURL, metadata, cacheId);
 }
 
-void KHTMLPopupGUIClient::saveURL( const KURL &url, const KURL &destURL,
+void TDEHTMLPopupGUIClient::saveURL( const KURL &url, const KURL &destURL,
                                    const TQMap<TQString, TQString> &metadata,
                                    long cacheId )
 {
     if ( destURL.isValid() )
     {
         bool saved = false;
-        if (KHTMLPageCache::self()->isComplete(cacheId))
+        if (TDEHTMLPageCache::self()->isComplete(cacheId))
         {
             if (destURL.isLocalFile())
             {
                 KSaveFile destFile(destURL.path());
                 if (destFile.status() == 0)
                 {
-                    KHTMLPageCache::self()->saveData(cacheId, destFile.dataStream());
+                    TDEHTMLPageCache::self()->saveData(cacheId, destFile.dataStream());
                     saved = true;
                 }
             }
@@ -858,7 +858,7 @@ void KHTMLPopupGUIClient::saveURL( const KURL &url, const KURL &destURL,
                 KTempFile destFile;
                 if (destFile.status() == 0)
                 {
-                    KHTMLPageCache::self()->saveData(cacheId, destFile.dataStream());
+                    TDEHTMLPageCache::self()->saveData(cacheId, destFile.dataStream());
                     destFile.close();
                     KURL url2 = KURL();
                     url2.setPath(destFile.name());
@@ -917,37 +917,37 @@ void KHTMLPopupGUIClient::saveURL( const KURL &url, const KURL &destURL,
     }
 }
 
-KHTMLPartBrowserHostExtension::KHTMLPartBrowserHostExtension( KHTMLPart *part )
+TDEHTMLPartBrowserHostExtension::TDEHTMLPartBrowserHostExtension( TDEHTMLPart *part )
 : KParts::BrowserHostExtension( part )
 {
   m_part = part;
 }
 
-KHTMLPartBrowserHostExtension::~KHTMLPartBrowserHostExtension()
+TDEHTMLPartBrowserHostExtension::~TDEHTMLPartBrowserHostExtension()
 {
 }
 
-TQStringList KHTMLPartBrowserHostExtension::frameNames() const
+TQStringList TDEHTMLPartBrowserHostExtension::frameNames() const
 {
   return m_part->frameNames();
 }
 
-const TQPtrList<KParts::ReadOnlyPart> KHTMLPartBrowserHostExtension::frames() const
+const TQPtrList<KParts::ReadOnlyPart> TDEHTMLPartBrowserHostExtension::frames() const
 {
   return m_part->frames();
 }
 
-bool KHTMLPartBrowserHostExtension::openURLInFrame( const KURL &url, const KParts::URLArgs &urlArgs )
+bool TDEHTMLPartBrowserHostExtension::openURLInFrame( const KURL &url, const KParts::URLArgs &urlArgs )
 {
   return m_part->openURLInFrame( url, urlArgs );
 }
 
-void KHTMLPartBrowserHostExtension::virtual_hook( int id, void *data )
+void TDEHTMLPartBrowserHostExtension::virtual_hook( int id, void *data )
 {
   if (id == VIRTUAL_FIND_FRAME_PARENT)
   {
     FindFrameParentParams *param = static_cast<FindFrameParentParams*>(data);
-    KHTMLPart *parentPart = m_part->findFrameParent(param->callingPart, param->frame);
+    TDEHTMLPart *parentPart = m_part->findFrameParent(param->callingPart, param->frame);
     if (parentPart)
        param->parent = parentPart->browserHostExtension();
     return;
@@ -961,19 +961,19 @@ extern const int KDE_NO_EXPORT fastZoomSizes[];
 extern const int KDE_NO_EXPORT fastZoomSizeCount;
 
 // BCI: remove in KDE 4
-KHTMLZoomFactorAction::KHTMLZoomFactorAction( KHTMLPart *part, bool direction, const TQString &text, const TQString &icon, const TQObject *receiver, const char *slot, TQObject *parent, const char *name )
+TDEHTMLZoomFactorAction::TDEHTMLZoomFactorAction( TDEHTMLPart *part, bool direction, const TQString &text, const TQString &icon, const TQObject *receiver, const char *slot, TQObject *parent, const char *name )
     : KAction( text, icon, 0, receiver, slot, parent, name )
 {
     init(part, direction);
 }
 
-KHTMLZoomFactorAction::KHTMLZoomFactorAction( KHTMLPart *part, bool direction, const TQString &text, const TQString &icon, const KShortcut &cut, const TQObject *receiver, const char *slot, TQObject *parent, const char *name )
+TDEHTMLZoomFactorAction::TDEHTMLZoomFactorAction( TDEHTMLPart *part, bool direction, const TQString &text, const TQString &icon, const KShortcut &cut, const TQObject *receiver, const char *slot, TQObject *parent, const char *name )
     : KAction( text, icon, cut, receiver, slot, parent, name )
 {
     init(part, direction);
 }
 
-void KHTMLZoomFactorAction::init(KHTMLPart *part, bool direction)
+void TDEHTMLZoomFactorAction::init(TDEHTMLPart *part, bool direction)
 {
     m_direction = direction;
     m_part = part;
@@ -999,12 +999,12 @@ void KHTMLZoomFactorAction::init(KHTMLPart *part, bool direction)
     connect( m_popup, TQT_SIGNAL( activated( int ) ), this, TQT_SLOT( slotActivated( int ) ) );
 }
 
-KHTMLZoomFactorAction::~KHTMLZoomFactorAction()
+TDEHTMLZoomFactorAction::~TDEHTMLZoomFactorAction()
 {
     delete m_popup;
 }
 
-int KHTMLZoomFactorAction::plug( TQWidget *w, int index )
+int TDEHTMLZoomFactorAction::plug( TQWidget *w, int index )
 {
     int containerId = KAction::plug( w, index );
     if ( containerId == -1 || !w->inherits( "KToolBar" ) )
@@ -1018,7 +1018,7 @@ int KHTMLZoomFactorAction::plug( TQWidget *w, int index )
     return containerId;
 }
 
-void KHTMLZoomFactorAction::slotActivated( int id )
+void TDEHTMLZoomFactorAction::slotActivated( int id )
 {
     int idx = m_popup->indexOf( id );
 

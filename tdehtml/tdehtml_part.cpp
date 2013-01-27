@@ -125,7 +125,7 @@ namespace tdehtml {
     class PartStyleSheetLoader : public CachedObjectClient
     {
     public:
-        PartStyleSheetLoader(KHTMLPart *part, DOM::DOMString url, DocLoader* dl)
+        PartStyleSheetLoader(TDEHTMLPart *part, DOM::DOMString url, DocLoader* dl)
         {
             m_part = part;
             m_cachedSheet = dl->requestStyleSheet(url, TQString(), "text/css",
@@ -147,7 +147,7 @@ namespace tdehtml {
         virtual void error( int, const TQString& ) {
           delete this;
         }
-        TQGuardedPtr<KHTMLPart> m_part;
+        TQGuardedPtr<TDEHTMLPart> m_part;
         tdehtml::CachedCSSStyleSheet *m_cachedSheet;
     };
 }
@@ -178,7 +178,7 @@ void tdehtml::ChildFrame::liveConnectEvent(const unsigned long, const TQString &
     script += ")";
     kdDebug(6050) << "tdehtml::ChildFrame::liveConnectEvent " << script << endl;
 
-    KHTMLPart * part = ::tqqt_cast<KHTMLPart *>(m_part->parent());
+    TDEHTMLPart * part = ::tqqt_cast<TDEHTMLPart *>(m_part->parent());
     if (!part)
         return;
     if (!m_jscript)
@@ -191,7 +191,7 @@ void tdehtml::ChildFrame::liveConnectEvent(const unsigned long, const TQString &
         part->executeScript(m_frame->element(), script);
 }
 
-KHTMLFrameList::Iterator KHTMLFrameList::find( const TQString &name )
+TDEHTMLFrameList::Iterator TDEHTMLFrameList::find( const TQString &name )
 {
     Iterator it = begin();
     const Iterator e = end();
@@ -203,44 +203,44 @@ KHTMLFrameList::Iterator KHTMLFrameList::find( const TQString &name )
     return it;
 }
 
-KHTMLPart::KHTMLPart( TQWidget *parentWidget, const char *widgetname, TQObject *parent, const char *name, GUIProfile prof )
+TDEHTMLPart::TDEHTMLPart( TQWidget *parentWidget, const char *widgetname, TQObject *parent, const char *name, GUIProfile prof )
 : KParts::ReadOnlyPart( parent, name )
 {
     d = 0;
-    KHTMLFactory::registerPart( this );
-    setInstance(  KHTMLFactory::instance(), prof == BrowserViewGUI && !parentPart() );
+    TDEHTMLFactory::registerPart( this );
+    setInstance(  TDEHTMLFactory::instance(), prof == BrowserViewGUI && !parentPart() );
     // TODO KDE4 - don't load plugins yet
-    //setInstance( KHTMLFactory::instance(), false );
-    init( new KHTMLView( this, parentWidget, widgetname ), prof );
+    //setInstance( TDEHTMLFactory::instance(), false );
+    init( new TDEHTMLView( this, parentWidget, widgetname ), prof );
 }
 
-KHTMLPart::KHTMLPart( KHTMLView *view, TQObject *parent, const char *name, GUIProfile prof )
+TDEHTMLPart::TDEHTMLPart( TDEHTMLView *view, TQObject *parent, const char *name, GUIProfile prof )
 : KParts::ReadOnlyPart( parent, name )
 {
     d = 0;
-    KHTMLFactory::registerPart( this );
-    setInstance(  KHTMLFactory::instance(), prof == BrowserViewGUI && !parentPart() );
+    TDEHTMLFactory::registerPart( this );
+    setInstance(  TDEHTMLFactory::instance(), prof == BrowserViewGUI && !parentPart() );
     // TODO KDE4 - don't load plugins yet
-    //setInstance( KHTMLFactory::instance(), false );
+    //setInstance( TDEHTMLFactory::instance(), false );
     assert( view );
     init( view, prof );
 }
 
-void KHTMLPart::init( KHTMLView *view, GUIProfile prof )
+void TDEHTMLPart::init( TDEHTMLView *view, GUIProfile prof )
 {
   if ( prof == DefaultGUI )
     setXMLFile( "tdehtml.rc" );
   else if ( prof == BrowserViewGUI )
     setXMLFile( "tdehtml_browser.rc" );
 
-  d = new KHTMLPartPrivate(parent());
+  d = new TDEHTMLPartPrivate(parent());
 
   d->m_view = view;
   setWidget( d->m_view );
 
   d->m_guiProfile = prof;
-  d->m_extension = new KHTMLPartBrowserExtension( this, "KHTMLBrowserExtension" );
-  d->m_hostExtension = new KHTMLPartBrowserHostExtension( this );
+  d->m_extension = new TDEHTMLPartBrowserExtension( this, "TDEHTMLBrowserExtension" );
+  d->m_hostExtension = new TDEHTMLPartBrowserHostExtension( this );
   d->m_statusBarExtension = new KParts::StatusBarExtension( this );
   d->m_statusBarIconLabel = 0L;
   d->m_statusBarPopupLabel = 0L;
@@ -357,13 +357,13 @@ void KHTMLPart::init( KHTMLView *view, GUIProfile prof )
   d->m_paUseStylesheet = new KSelectAction( i18n( "Use S&tylesheet"), 0, this, TQT_SLOT( slotUseStylesheet() ), actionCollection(), "useStylesheet" );
 
   if ( prof == BrowserViewGUI ) {
-      d->m_paIncZoomFactor = new KHTMLZoomFactorAction( this, true, i18n(
+      d->m_paIncZoomFactor = new TDEHTMLZoomFactorAction( this, true, i18n(
                   "Enlarge Font" ), "viewmag+", "CTRL++;CTRL+=", this,
               TQT_SLOT( slotIncZoomFast() ), actionCollection(), "incFontSizes" );
       d->m_paIncZoomFactor->setWhatsThis( i18n( "Enlarge Font<p>"
                                                 "Make the font in this window bigger. "
                             "Click and hold down the mouse button for a menu with all available font sizes." ) );
-      d->m_paDecZoomFactor = new KHTMLZoomFactorAction( this, false, i18n(
+      d->m_paDecZoomFactor = new TDEHTMLZoomFactorAction( this, false, i18n(
                   "Shrink Font" ), "viewmag-", CTRL + Key_Minus, this,
               TQT_SLOT( slotDecZoomFast() ), actionCollection(), "decFontSizes" );
       d->m_paDecZoomFactor->setWhatsThis( i18n( "Shrink Font<p>"
@@ -437,7 +437,7 @@ void KHTMLPart::init( KHTMLView *view, GUIProfile prof )
   connect( this, TQT_SIGNAL( started( TDEIO::Job * ) ),
            this, TQT_SLOT( updateActions() ) );
 
-  d->m_popupMenuXML = KXMLGUIFactory::readConfigFile( locate( "data", "tdehtml/tdehtml_popupmenu.rc", KHTMLFactory::instance() ) );
+  d->m_popupMenuXML = KXMLGUIFactory::readConfigFile( locate( "data", "tdehtml/tdehtml_popupmenu.rc", TDEHTMLFactory::instance() ) );
 
   connect( tdehtml::Cache::loader(), TQT_SIGNAL( requestStarted( tdehtml::DocLoader*, tdehtml::CachedObject* ) ),
            this, TQT_SLOT( slotLoaderRequestStarted( tdehtml::DocLoader*, tdehtml::CachedObject* ) ) );
@@ -453,7 +453,7 @@ void KHTMLPart::init( KHTMLView *view, GUIProfile prof )
   connect( &d->m_redirectionTimer, TQT_SIGNAL( timeout() ),
            this, TQT_SLOT( slotRedirect() ) );
 
-  d->m_dcopobject = new KHTMLPartIface(this);
+  d->m_dcopobject = new TDEHTMLPartIface(this);
 
   // TODO KDE4 - load plugins now (see also the constructors)
   //if ( prof == BrowserViewGUI && !parentPart() )
@@ -465,9 +465,9 @@ void KHTMLPart::init( KHTMLView *view, GUIProfile prof )
   TDEGlobal::locale()->removeCatalogue("tdehtml");
 }
 
-KHTMLPart::~KHTMLPart()
+TDEHTMLPart::~TDEHTMLPart()
 {
-  //kdDebug(6050) << "KHTMLPart::~KHTMLPart " << this << endl;
+  //kdDebug(6050) << "TDEHTMLPart::~TDEHTMLPart " << this << endl;
 
   TDEConfig *config = TDEGlobal::config();
   config->setGroup( "HTML Settings" );
@@ -520,12 +520,12 @@ KHTMLPart::~KHTMLPart()
   if (!parentPart()) // only delete d->m_frame if the top tdehtml_part closes
       delete d->m_frame;
   delete d; d = 0;
-  KHTMLFactory::deregisterPart( this );
+  TDEHTMLFactory::deregisterPart( this );
 }
 
-bool KHTMLPart::restoreURL( const KURL &url )
+bool TDEHTMLPart::restoreURL( const KURL &url )
 {
-  kdDebug( 6050 ) << "KHTMLPart::restoreURL " << url.url() << endl;
+  kdDebug( 6050 ) << "TDEHTMLPart::restoreURL " << url.url() << endl;
 
   d->m_redirectionTimer.stop();
 
@@ -544,10 +544,10 @@ bool KHTMLPart::restoreURL( const KURL &url )
   d->m_workingURL = url;
 
   // set the java(script) flags according to the current host.
-  d->m_bJScriptEnabled = KHTMLFactory::defaultHTMLSettings()->isJavaScriptEnabled(url.host());
-  setDebugScript( KHTMLFactory::defaultHTMLSettings()->isJavaScriptDebugEnabled() );
-  d->m_bJavaEnabled = KHTMLFactory::defaultHTMLSettings()->isJavaEnabled(url.host());
-  d->m_bPluginsEnabled = KHTMLFactory::defaultHTMLSettings()->isPluginsEnabled(url.host());
+  d->m_bJScriptEnabled = TDEHTMLFactory::defaultHTMLSettings()->isJavaScriptEnabled(url.host());
+  setDebugScript( TDEHTMLFactory::defaultHTMLSettings()->isJavaScriptDebugEnabled() );
+  d->m_bJavaEnabled = TDEHTMLFactory::defaultHTMLSettings()->isJavaEnabled(url.host());
+  d->m_bPluginsEnabled = TDEHTMLFactory::defaultHTMLSettings()->isPluginsEnabled(url.host());
 
   m_url = url;
 
@@ -555,7 +555,7 @@ bool KHTMLPart::restoreURL( const KURL &url )
   disconnect(d->m_view, TQT_SIGNAL(finishedLayout()), this, TQT_SLOT(restoreScrollPosition()));
   connect(d->m_view, TQT_SIGNAL(finishedLayout()), this, TQT_SLOT(restoreScrollPosition()));
 
-  KHTMLPageCache::self()->fetchData( d->m_cacheId, this, TQT_SLOT(slotRestoreData(const TQByteArray &)));
+  TDEHTMLPageCache::self()->fetchData( d->m_cacheId, this, TQT_SLOT(slotRestoreData(const TQByteArray &)));
 
   emit started( 0L );
 
@@ -563,9 +563,9 @@ bool KHTMLPart::restoreURL( const KURL &url )
 }
 
 
-bool KHTMLPart::openURL( const KURL &url )
+bool TDEHTMLPart::openURL( const KURL &url )
 {
-  kdDebug( 6050 ) << "KHTMLPart(" << this << ")::openURL " << url.url() << endl;
+  kdDebug( 6050 ) << "TDEHTMLPart(" << this << ")::openURL " << url.url() << endl;
 
   d->m_redirectionTimer.stop();
 
@@ -644,7 +644,7 @@ bool KHTMLPart::openURL( const KURL &url )
     bool noReloadForced = !args.reload && !args.redirectedRequest() && !args.doPost();
     if (noReloadForced && urlcmp( url.url(), m_url.url(), true, true ))
     {
-        kdDebug( 6050 ) << "KHTMLPart::openURL, jumping to anchor. m_url = " << url.url() << endl;
+        kdDebug( 6050 ) << "TDEHTMLPart::openURL, jumping to anchor. m_url = " << url.url() << endl;
         m_url = url;
         emit started( 0L );
 
@@ -737,10 +737,10 @@ bool KHTMLPart::openURL( const KURL &url )
     d->m_statusBarText[BarOverrideText] = d->m_statusBarText[BarDefaultText] = TQString();
 
   // set the javascript flags according to the current url
-  d->m_bJScriptEnabled = KHTMLFactory::defaultHTMLSettings()->isJavaScriptEnabled(url.host());
-  setDebugScript( KHTMLFactory::defaultHTMLSettings()->isJavaScriptDebugEnabled() );
-  d->m_bJavaEnabled = KHTMLFactory::defaultHTMLSettings()->isJavaEnabled(url.host());
-  d->m_bPluginsEnabled = KHTMLFactory::defaultHTMLSettings()->isPluginsEnabled(url.host());
+  d->m_bJScriptEnabled = TDEHTMLFactory::defaultHTMLSettings()->isJavaScriptEnabled(url.host());
+  setDebugScript( TDEHTMLFactory::defaultHTMLSettings()->isJavaScriptDebugEnabled() );
+  d->m_bJavaEnabled = TDEHTMLFactory::defaultHTMLSettings()->isJavaEnabled(url.host());
+  d->m_bPluginsEnabled = TDEHTMLFactory::defaultHTMLSettings()->isPluginsEnabled(url.host());
 
 
   connect( d->m_job, TQT_SIGNAL( speed( TDEIO::Job*, unsigned long ) ),
@@ -767,11 +767,11 @@ bool KHTMLPart::openURL( const KURL &url )
   return true;
 }
 
-bool KHTMLPart::closeURL()
+bool TDEHTMLPart::closeURL()
 {
   if ( d->m_job )
   {
-    KHTMLPageCache::self()->cancelEntry(d->m_cacheId);
+    TDEHTMLPageCache::self()->cancelEntry(d->m_cacheId);
     d->m_job->kill();
     d->m_job = 0;
   }
@@ -793,7 +793,7 @@ bool KHTMLPart::closeURL()
 
   disconnect(d->m_view, TQT_SIGNAL(finishedLayout()), this, TQT_SLOT(restoreScrollPosition()));
 
-  KHTMLPageCache::self()->cancelFetch(this);
+  TDEHTMLPageCache::self()->cancelFetch(this);
   if ( d->m_doc && d->m_doc->parsing() )
   {
     kdDebug( 6050 ) << " was still parsing... calling end " << endl;
@@ -849,7 +849,7 @@ bool KHTMLPart::closeURL()
   return true;
 }
 
-DOM::HTMLDocument KHTMLPart::htmlDocument() const
+DOM::HTMLDocument TDEHTMLPart::htmlDocument() const
 {
   if (d->m_doc && d->m_doc->isHTMLDocument())
     return static_cast<HTMLDocumentImpl*>(d->m_doc);
@@ -857,19 +857,19 @@ DOM::HTMLDocument KHTMLPart::htmlDocument() const
     return static_cast<HTMLDocumentImpl*>(0);
 }
 
-DOM::Document KHTMLPart::document() const
+DOM::Document TDEHTMLPart::document() const
 {
     return d->m_doc;
 }
 
-TQString KHTMLPart::documentSource() const
+TQString TDEHTMLPart::documentSource() const
 {
   TQString sourceStr;
-  if ( !( m_url.isLocalFile() ) && KHTMLPageCache::self()->isComplete( d->m_cacheId ) )
+  if ( !( m_url.isLocalFile() ) && TDEHTMLPageCache::self()->isComplete( d->m_cacheId ) )
   {
      TQByteArray sourceArray;
      TQDataStream dataStream( sourceArray, IO_WriteOnly );
-     KHTMLPageCache::self()->saveData( d->m_cacheId, &dataStream );
+     TDEHTMLPageCache::self()->saveData( d->m_cacheId, &dataStream );
      TQTextStream stream( sourceArray, IO_ReadOnly );
      stream.setCodec( TQTextCodec::codecForName( encoding().latin1() ) );
      sourceStr = stream.read();
@@ -894,27 +894,27 @@ TQString KHTMLPart::documentSource() const
 }
 
 
-KParts::BrowserExtension *KHTMLPart::browserExtension() const
+KParts::BrowserExtension *TDEHTMLPart::browserExtension() const
 {
   return d->m_extension;
 }
 
-KParts::BrowserHostExtension *KHTMLPart::browserHostExtension() const
+KParts::BrowserHostExtension *TDEHTMLPart::browserHostExtension() const
 {
   return d->m_hostExtension;
 }
 
-KHTMLView *KHTMLPart::view() const
+TDEHTMLView *TDEHTMLPart::view() const
 {
   return d->m_view;
 }
 
-void KHTMLPart::setStatusMessagesEnabled( bool enable )
+void TDEHTMLPart::setStatusMessagesEnabled( bool enable )
 {
   d->m_statusMessagesEnabled = enable;
 }
 
-KJS::Interpreter *KHTMLPart::jScriptInterpreter()
+KJS::Interpreter *TDEHTMLPart::jScriptInterpreter()
 {
   KJSProxy *proxy = jScript();
   if (!proxy || proxy->paused())
@@ -923,12 +923,12 @@ KJS::Interpreter *KHTMLPart::jScriptInterpreter()
   return proxy->interpreter();
 }
 
-bool KHTMLPart::statusMessagesEnabled() const
+bool TDEHTMLPart::statusMessagesEnabled() const
 {
   return d->m_statusMessagesEnabled;
 }
 
-void KHTMLPart::setJScriptEnabled( bool enable )
+void TDEHTMLPart::setJScriptEnabled( bool enable )
 {
   if ( !enable && jScriptEnabled() && d->m_frame && d->m_frame->m_jscript ) {
     d->m_frame->m_jscript->clear();
@@ -937,7 +937,7 @@ void KHTMLPart::setJScriptEnabled( bool enable )
   d->m_bJScriptOverride = true;
 }
 
-bool KHTMLPart::jScriptEnabled() const
+bool TDEHTMLPart::jScriptEnabled() const
 {
   if(onlyLocalReferences()) return false;
 
@@ -946,12 +946,12 @@ bool KHTMLPart::jScriptEnabled() const
   return d->m_bJScriptEnabled;
 }
 
-void KHTMLPart::setMetaRefreshEnabled( bool enable )
+void TDEHTMLPart::setMetaRefreshEnabled( bool enable )
 {
   d->m_metaRefreshEnabled = enable;
 }
 
-bool KHTMLPart::metaRefreshEnabled() const
+bool TDEHTMLPart::metaRefreshEnabled() const
 {
   return d->m_metaRefreshEnabled;
 }
@@ -995,12 +995,12 @@ static bool createJScript(tdehtml::ChildFrame *frame)
   return true;
 }
 
-KJSProxy *KHTMLPart::jScript()
+KJSProxy *TDEHTMLPart::jScript()
 {
   if (!jScriptEnabled()) return 0;
 
   if ( !d->m_frame ) {
-      KHTMLPart * p = parentPart();
+      TDEHTMLPart * p = parentPart();
       if (!p) {
           d->m_frame = new tdehtml::ChildFrame;
           d->m_frame->m_part = this;
@@ -1025,9 +1025,9 @@ KJSProxy *KHTMLPart::jScript()
   return d->m_frame->m_jscript;
 }
 
-TQVariant KHTMLPart::crossFrameExecuteScript(const TQString& target,  const TQString& script)
+TQVariant TDEHTMLPart::crossFrameExecuteScript(const TQString& target,  const TQString& script)
 {
-  KHTMLPart* destpart = this;
+  TDEHTMLPart* destpart = this;
 
   TQString trg = target.lower();
 
@@ -1063,7 +1063,7 @@ TQVariant KHTMLPart::crossFrameExecuteScript(const TQString& target,  const TQSt
 //Enable this to see all JS scripts being executed
 //#define KJS_VERBOSE
 
-KJSErrorDlg *KHTMLPart::jsErrorExtension() {
+KJSErrorDlg *TDEHTMLPart::jsErrorExtension() {
   if (!d->m_settings->jsErrorsEnabled()) {
     return 0L;
   }
@@ -1094,7 +1094,7 @@ KJSErrorDlg *KHTMLPart::jsErrorExtension() {
   return d->m_jsedlg;
 }
 
-void KHTMLPart::removeJSErrorExtension() {
+void TDEHTMLPart::removeJSErrorExtension() {
   if (parentPart()) {
     parentPart()->removeJSErrorExtension();
     return;
@@ -1108,24 +1108,24 @@ void KHTMLPart::removeJSErrorExtension() {
   d->m_jsedlg = 0;
 }
 
-void KHTMLPart::disableJSErrorExtension() {
+void TDEHTMLPart::disableJSErrorExtension() {
   removeJSErrorExtension();
   // These two lines are really kind of hacky, and it sucks to do this inside
-  // KHTML but I don't know of anything that's reasonably easy as an alternative
+  // TDEHTML but I don't know of anything that's reasonably easy as an alternative
   // right now.  It makes me wonder if there should be a more clean way to
-  // contact all running "KHTML" instance as opposed to Konqueror instances too.
+  // contact all running "TDEHTML" instance as opposed to Konqueror instances too.
   d->m_settings->setJSErrorsEnabled(false);
   DCOPClient::mainClient()->send("konqueror*", "KonquerorIface", "reparseConfiguration()", TQByteArray());
 }
 
-void KHTMLPart::jsErrorDialogContextMenu() {
+void TDEHTMLPart::jsErrorDialogContextMenu() {
   KPopupMenu *m = new KPopupMenu(0L);
   m->insertItem(i18n("&Hide Errors"), this, TQT_SLOT(removeJSErrorExtension()));
   m->insertItem(i18n("&Disable Error Reporting"), this, TQT_SLOT(disableJSErrorExtension()));
   m->popup(TQCursor::pos());
 }
 
-void KHTMLPart::launchJSErrorDialog() {
+void TDEHTMLPart::launchJSErrorDialog() {
   KJSErrorDlg *dlg = jsErrorExtension();
   if (dlg) {
     dlg->show();
@@ -1133,13 +1133,13 @@ void KHTMLPart::launchJSErrorDialog() {
   }
 }
 
-void KHTMLPart::launchJSConfigDialog() {
+void TDEHTMLPart::launchJSConfigDialog() {
   TQStringList args;
   args << "tdehtml_java_js";
   TDEApplication::tdeinitExec( "tdecmshell", args );
 }
 
-TQVariant KHTMLPart::executeScript(const TQString& filename, int baseLine, const DOM::Node& n, const TQString& script)
+TQVariant TDEHTMLPart::executeScript(const TQString& filename, int baseLine, const DOM::Node& n, const TQString& script)
 {
 #ifdef KJS_VERBOSE
   // The script is now printed by KJS's Parser::parse
@@ -1179,15 +1179,15 @@ TQVariant KHTMLPart::executeScript(const TQString& filename, int baseLine, const
   return ret;
 }
 
-TQVariant KHTMLPart::executeScript( const TQString &script )
+TQVariant TDEHTMLPart::executeScript( const TQString &script )
 {
     return executeScript( DOM::Node(), script );
 }
 
-TQVariant KHTMLPart::executeScript( const DOM::Node &n, const TQString &script )
+TQVariant TDEHTMLPart::executeScript( const DOM::Node &n, const TQString &script )
 {
 #ifdef KJS_VERBOSE
-  kdDebug(6070) << "KHTMLPart::executeScript caller='" << name() << "' node=" << n.nodeName().string().latin1() << "(" << (n.isNull() ? 0 : n.nodeType()) << ") " /* << script */ << endl;
+  kdDebug(6070) << "TDEHTMLPart::executeScript caller='" << name() << "' node=" << n.nodeName().string().latin1() << "(" << (n.isNull() ? 0 : n.nodeType()) << ") " /* << script */ << endl;
 #endif
   KJSProxy *proxy = jScript();
 
@@ -1213,14 +1213,14 @@ TQVariant KHTMLPart::executeScript( const DOM::Node &n, const TQString &script )
       submitFormAgain();
 
 #ifdef KJS_VERBOSE
-  kdDebug(6070) << "KHTMLPart::executeScript - done" << endl;
+  kdDebug(6070) << "TDEHTMLPart::executeScript - done" << endl;
 #endif
   return ret;
 }
 
-bool KHTMLPart::scheduleScript(const DOM::Node &n, const TQString& script)
+bool TDEHTMLPart::scheduleScript(const DOM::Node &n, const TQString& script)
 {
-    //kdDebug(6050) << "KHTMLPart::scheduleScript "<< script << endl;
+    //kdDebug(6050) << "TDEHTMLPart::scheduleScript "<< script << endl;
 
     d->scheduledScript = script;
     d->scheduledScriptNode = n;
@@ -1228,7 +1228,7 @@ bool KHTMLPart::scheduleScript(const DOM::Node &n, const TQString& script)
     return true;
 }
 
-TQVariant KHTMLPart::executeScheduledScript()
+TQVariant TDEHTMLPart::executeScheduledScript()
 {
   if( d->scheduledScript.isEmpty() )
     return TQVariant();
@@ -1242,13 +1242,13 @@ TQVariant KHTMLPart::executeScheduledScript()
   return ret;
 }
 
-void KHTMLPart::setJavaEnabled( bool enable )
+void TDEHTMLPart::setJavaEnabled( bool enable )
 {
   d->m_bJavaForce = enable;
   d->m_bJavaOverride = true;
 }
 
-bool KHTMLPart::javaEnabled() const
+bool TDEHTMLPart::javaEnabled() const
 {
   if (onlyLocalReferences()) return false;
 
@@ -1261,23 +1261,23 @@ bool KHTMLPart::javaEnabled() const
 #endif
 }
 
-KJavaAppletContext *KHTMLPart::javaContext()
+KJavaAppletContext *TDEHTMLPart::javaContext()
 {
   return 0;
 }
 
-KJavaAppletContext *KHTMLPart::createJavaContext()
+KJavaAppletContext *TDEHTMLPart::createJavaContext()
 {
   return 0;
 }
 
-void KHTMLPart::setPluginsEnabled( bool enable )
+void TDEHTMLPart::setPluginsEnabled( bool enable )
 {
   d->m_bPluginsForce = enable;
   d->m_bPluginsOverride = true;
 }
 
-bool KHTMLPart::pluginsEnabled() const
+bool TDEHTMLPart::pluginsEnabled() const
 {
   if (onlyLocalReferences()) return false;
 
@@ -1288,7 +1288,7 @@ bool KHTMLPart::pluginsEnabled() const
 
 static int s_DOMTreeIndentLevel = 0;
 
-void KHTMLPart::slotDebugDOMTree()
+void TDEHTMLPart::slotDebugDOMTree()
 {
   if ( d->m_doc && d->m_doc->firstChild() )
     tqDebug("%s", d->m_doc->firstChild()->toString().string().latin1());
@@ -1300,21 +1300,21 @@ void KHTMLPart::slotDebugDOMTree()
   ConstFrameIt it = d->m_frames.begin();
   const ConstFrameIt end = d->m_frames.end();
   for (; it != end; ++it )
-    if ( !( *it )->m_part.isNull() && (*it)->m_part->inherits( "KHTMLPart" ) ) {
+    if ( !( *it )->m_part.isNull() && (*it)->m_part->inherits( "TDEHTMLPart" ) ) {
       KParts::ReadOnlyPart* const p = ( *it )->m_part;
       kdDebug(6050) << TQString().leftJustify(s_DOMTreeIndentLevel*4,' ') << "FRAME " << p->name() << " " << endl;
-      static_cast<KHTMLPart*>( p )->slotDebugDOMTree();
+      static_cast<TDEHTMLPart*>( p )->slotDebugDOMTree();
     }
   s_DOMTreeIndentLevel = indentLevel;
 }
 
-void KHTMLPart::slotDebugScript()
+void TDEHTMLPart::slotDebugScript()
 {
   if (jScript())
     jScript()->showDebugWindow();
 }
 
-void KHTMLPart::slotDebugRenderTree()
+void TDEHTMLPart::slotDebugRenderTree()
 {
 #ifndef NDEBUG
   if ( d->m_doc ) {
@@ -1328,12 +1328,12 @@ void KHTMLPart::slotDebugRenderTree()
 #endif
 }
 
-void KHTMLPart::slotStopAnimations()
+void TDEHTMLPart::slotStopAnimations()
 {
   stopAnimations();
 }
 
-void KHTMLPart::setAutoloadImages( bool enable )
+void TDEHTMLPart::setAutoloadImages( bool enable )
 {
   if ( d->m_doc && d->m_doc->docLoader()->autoloadImages() == enable )
     return;
@@ -1357,7 +1357,7 @@ void KHTMLPart::setAutoloadImages( bool enable )
   }
 }
 
-bool KHTMLPart::autoloadImages() const
+bool TDEHTMLPart::autoloadImages() const
 {
   if ( d->m_doc )
     return d->m_doc->docLoader()->autoloadImages();
@@ -1365,7 +1365,7 @@ bool KHTMLPart::autoloadImages() const
   return true;
 }
 
-void KHTMLPart::clear()
+void TDEHTMLPart::clear()
 {
   if ( d->m_bCleared )
     return;
@@ -1434,7 +1434,7 @@ void KHTMLPart::clear()
 
   if (d->m_frames.count())
   {
-    KHTMLFrameList frames = d->m_frames;
+    TDEHTMLFrameList frames = d->m_frames;
     d->m_frames.clear();
     ConstFrameIt it = frames.begin();
     const ConstFrameIt end = frames.end();
@@ -1452,7 +1452,7 @@ void KHTMLPart::clear()
 
   if (d->m_objects.count())
   {
-    KHTMLFrameList objects = d->m_objects;
+    TDEHTMLFrameList objects = d->m_objects;
     d->m_objects.clear();
     ConstFrameIt oi = objects.begin();
     const ConstFrameIt oiEnd = objects.end();
@@ -1492,26 +1492,26 @@ void KHTMLPart::clear()
 #endif
 }
 
-bool KHTMLPart::openFile()
+bool TDEHTMLPart::openFile()
 {
   return true;
 }
 
-DOM::HTMLDocumentImpl *KHTMLPart::docImpl() const
+DOM::HTMLDocumentImpl *TDEHTMLPart::docImpl() const
 {
     if ( d && d->m_doc && d->m_doc->isHTMLDocument() )
         return static_cast<HTMLDocumentImpl*>(d->m_doc);
     return 0;
 }
 
-DOM::DocumentImpl *KHTMLPart::xmlDocImpl() const
+DOM::DocumentImpl *TDEHTMLPart::xmlDocImpl() const
 {
     if ( d )
         return d->m_doc;
     return 0;
 }
 
-void KHTMLPart::slotInfoMessage(TDEIO::Job* kio_job, const TQString& msg)
+void TDEHTMLPart::slotInfoMessage(TDEIO::Job* kio_job, const TQString& msg)
 {
   assert(d->m_job == kio_job);
 
@@ -1519,7 +1519,7 @@ void KHTMLPart::slotInfoMessage(TDEIO::Job* kio_job, const TQString& msg)
     setStatusBarText(msg, BarDefaultText);
 }
 
-void KHTMLPart::setPageSecurity( PageSecurity sec )
+void TDEHTMLPart::setPageSecurity( PageSecurity sec )
 {
   emit d->m_extension->setPageSecurity( sec );
   if ( sec != NotCrypted && !d->m_statusBarIconLabel && !parentPart() ) {
@@ -1562,7 +1562,7 @@ void KHTMLPart::setPageSecurity( PageSecurity sec )
     d->m_statusBarIconLabel->setPixmap( SmallIcon( iconName, instance() ) );
 }
 
-void KHTMLPart::slotData( TDEIO::Job* kio_job, const TQByteArray &data )
+void TDEHTMLPart::slotData( TDEIO::Job* kio_job, const TQByteArray &data )
 {
   assert ( d->m_job == kio_job );
 
@@ -1586,7 +1586,7 @@ void KHTMLPart::slotData( TDEIO::Job* kio_job, const TQByteArray &data )
 
     d->m_workingURL = KURL();
 
-    d->m_cacheId = KHTMLPageCache::self()->createCacheEntry();
+    d->m_cacheId = TDEHTMLPageCache::self()->createCacheEntry();
 
     // When the first data arrives, the metadata has just been made available
     d->m_httpHeaders = d->m_job->queryMetaData("HTTP-Headers");
@@ -1599,7 +1599,7 @@ void KHTMLPart::slotData( TDEIO::Job* kio_job, const TQByteArray &data )
     d->m_ssl_in_use = (d->m_job->queryMetaData("ssl_in_use") == "TRUE");
 
     {
-    KHTMLPart *p = parentPart();
+    TDEHTMLPart *p = parentPart();
     if (p && p->d->m_ssl_in_use != d->m_ssl_in_use) {
 	while (p->parentPart()) p = p->parentPart();
 
@@ -1663,13 +1663,13 @@ void KHTMLPart::slotData( TDEIO::Job* kio_job, const TQByteArray &data )
         d->m_lastModified = TQString(); // done on-demand by lastModified()
   }
 
-  KHTMLPageCache::self()->addData(d->m_cacheId, data);
+  TDEHTMLPageCache::self()->addData(d->m_cacheId, data);
   write( data.data(), data.size() );
   if (d->m_frame && d->m_frame->m_jscript)
     d->m_frame->m_jscript->dataReceived();
 }
 
-void KHTMLPart::slotRestoreData(const TQByteArray &data )
+void TDEHTMLPart::slotRestoreData(const TQByteArray &data )
 {
   // The first data ?
   if ( !d->m_workingURL.isEmpty() )
@@ -1696,9 +1696,9 @@ void KHTMLPart::slotRestoreData(const TQByteArray &data )
   }
 }
 
-void KHTMLPart::showError( TDEIO::Job* job )
+void TDEHTMLPart::showError( TDEIO::Job* job )
 {
-  kdDebug(6050) << "KHTMLPart::showError d->m_bParsing=" << (d->m_doc && d->m_doc->parsing()) << " d->m_bComplete=" << d->m_bComplete
+  kdDebug(6050) << "TDEHTMLPart::showError d->m_bParsing=" << (d->m_doc && d->m_doc->parsing()) << " d->m_bComplete=" << d->m_bComplete
                 << " d->m_bCleared=" << d->m_bCleared << endl;
 
   if (job->error() == TDEIO::ERR_NO_CONTENT)
@@ -1713,9 +1713,9 @@ void KHTMLPart::showError( TDEIO::Job* job )
 }
 
 // This is a protected method, placed here because of it's relevance to showError
-void KHTMLPart::htmlError( int errorCode, const TQString& text, const KURL& reqUrl )
+void TDEHTMLPart::htmlError( int errorCode, const TQString& text, const KURL& reqUrl )
 {
-  kdDebug(6050) << "KHTMLPart::htmlError errorCode=" << errorCode << " text=" << text << endl;
+  kdDebug(6050) << "TDEHTMLPart::htmlError errorCode=" << errorCode << " text=" << text << endl;
   // make sure we're not executing any embedded JS
   bool bJSFO = d->m_bJScriptForce;
   bool bJSOO = d->m_bJScriptOverride;
@@ -1812,14 +1812,14 @@ void KHTMLPart::htmlError( int errorCode, const TQString& text, const KURL& reqU
   end();
 }
 
-void KHTMLPart::slotFinished( TDEIO::Job * job )
+void TDEHTMLPart::slotFinished( TDEIO::Job * job )
 {
   d->m_job = 0L;
   d->m_jobspeed = 0L;
 
   if (job->error())
   {
-    KHTMLPageCache::self()->cancelEntry(d->m_cacheId);
+    TDEHTMLPageCache::self()->cancelEntry(d->m_cacheId);
 
     // The following catches errors that occur as a result of HTTP
     // to FTP redirections where the FTP URL is a directory. Since
@@ -1856,7 +1856,7 @@ void KHTMLPart::slotFinished( TDEIO::Job * job )
 
   //kdDebug( 6050 ) << "slotFinished" << endl;
 
-  KHTMLPageCache::self()->endData(d->m_cacheId);
+  TDEHTMLPageCache::self()->endData(d->m_cacheId);
   if (d->m_frame && d->m_frame->m_jscript)
     d->m_frame->m_jscript->dataReceived();
 
@@ -1869,17 +1869,17 @@ void KHTMLPart::slotFinished( TDEIO::Job * job )
     end(); //will emit completed()
 }
 
-void KHTMLPart::begin( const KURL &url, int xOffset, int yOffset )
+void TDEHTMLPart::begin( const KURL &url, int xOffset, int yOffset )
 {
   // No need to show this for a new page until an error is triggered
   if (!parentPart()) {
     removeJSErrorExtension();
     setSuppressedPopupIndicator( false );
     d->m_openableSuppressedPopups = 0;
-    for ( TQValueListIterator<TQGuardedPtr<KHTMLPart> > i = d->m_suppressedPopupOriginParts.begin();
+    for ( TQValueListIterator<TQGuardedPtr<TDEHTMLPart> > i = d->m_suppressedPopupOriginParts.begin();
           i != d->m_suppressedPopupOriginParts.end(); ++i ) {
 
-      if (KHTMLPart* part = *i) {
+      if (TDEHTMLPart* part = *i) {
         KJS::Window *w = KJS::Window::retrieveWindow( part );
         if (w)
           w->forgetSuppressedWindows();
@@ -1895,10 +1895,10 @@ void KHTMLPart::begin( const KURL &url, int xOffset, int yOffset )
 
   if(url.isValid()) {
       TQString urlString = url.url();
-      KHTMLFactory::vLinks()->insert( urlString );
+      TDEHTMLFactory::vLinks()->insert( urlString );
       TQString urlString2 = url.prettyURL();
       if ( urlString != urlString2 ) {
-          KHTMLFactory::vLinks()->insert( urlString2 );
+          TDEHTMLFactory::vLinks()->insert( urlString2 );
       }
   }
 
@@ -1928,7 +1928,7 @@ void KHTMLPart::begin( const KURL &url, int xOffset, int yOffset )
     // HTML or XHTML? (#86446)
     static_cast<HTMLDocumentImpl *>(d->m_doc)->setHTMLRequested( !servedAsXHTML );
   }
-#ifndef KHTML_NO_CARET
+#ifndef TDEHTML_NO_CARET
 //  d->m_view->initCaret();
 #endif
 
@@ -1937,14 +1937,14 @@ void KHTMLPart::begin( const KURL &url, int xOffset, int yOffset )
   if (!d->m_doc->attached())
     d->m_doc->attach( );
   d->m_doc->setBaseURL( KURL() );
-  d->m_doc->docLoader()->setShowAnimations( KHTMLFactory::defaultHTMLSettings()->showAnimations() );
+  d->m_doc->docLoader()->setShowAnimations( TDEHTMLFactory::defaultHTMLSettings()->showAnimations() );
   emit docCreated();
 
   d->m_paUseStylesheet->setItems(TQStringList());
   d->m_paUseStylesheet->setEnabled( false );
 
-  setAutoloadImages( KHTMLFactory::defaultHTMLSettings()->autoLoadImages() );
-  TQString userStyleSheet = KHTMLFactory::defaultHTMLSettings()->userStyleSheet();
+  setAutoloadImages( TDEHTMLFactory::defaultHTMLSettings()->autoLoadImages() );
+  TQString userStyleSheet = TDEHTMLFactory::defaultHTMLSettings()->userStyleSheet();
   if ( !userStyleSheet.isEmpty() )
     setUserStyleSheet( KURL( userStyleSheet ) );
 
@@ -1957,7 +1957,7 @@ void KHTMLPart::begin( const KURL &url, int xOffset, int yOffset )
   d->m_doc->setParsing(true);
 }
 
-void KHTMLPart::write( const char *str, int len )
+void TDEHTMLPart::write( const char *str, int len )
 {
   if ( !d->m_decoder )
     d->m_decoder = createDecoder();
@@ -1977,7 +1977,7 @@ void KHTMLPart::write( const char *str, int len )
       d->m_doc->determineParseMode( decoded );
       d->m_bFirstData = false;
 
-  //kdDebug(6050) << "KHTMLPart::write haveEnc = " << d->m_haveEncoding << endl;
+  //kdDebug(6050) << "TDEHTMLPart::write haveEnc = " << d->m_haveEncoding << endl;
       // ### this is still quite hacky, but should work a lot better than the old solution
       if(d->m_decoder->visuallyOrdered()) d->m_doc->setVisuallyOrdered();
       d->m_doc->setDecoderCodec(d->m_decoder->codec());
@@ -1989,7 +1989,7 @@ void KHTMLPart::write( const char *str, int len )
     t->write( decoded, true );
 }
 
-void KHTMLPart::write( const TQString &str )
+void TDEHTMLPart::write( const TQString &str )
 {
     if ( str.isNull() )
         return;
@@ -2004,7 +2004,7 @@ void KHTMLPart::write( const TQString &str )
         t->write( str, true );
 }
 
-void KHTMLPart::end()
+void TDEHTMLPart::end()
 {
     if (d->m_doc) {
         if (d->m_decoder) {
@@ -2019,7 +2019,7 @@ void KHTMLPart::end()
     }
 }
 
-bool KHTMLPart::doOpenStream( const TQString& mimeType )
+bool TDEHTMLPart::doOpenStream( const TQString& mimeType )
 {
     KMimeType::Ptr mime = KMimeType::mimeType(mimeType);
     if ( mime->is( "text/html" ) || mime->is( "text/xml" ) )
@@ -2030,40 +2030,40 @@ bool KHTMLPart::doOpenStream( const TQString& mimeType )
     return false;
 }
 
-bool KHTMLPart::doWriteStream( const TQByteArray& data )
+bool TDEHTMLPart::doWriteStream( const TQByteArray& data )
 {
     write( data.data(), data.size() );
     return true;
 }
 
-bool KHTMLPart::doCloseStream()
+bool TDEHTMLPart::doCloseStream()
 {
     end();
     return true;
 }
 
 
-void KHTMLPart::paint(TQPainter *p, const TQRect &rc, int yOff, bool *more)
+void TDEHTMLPart::paint(TQPainter *p, const TQRect &rc, int yOff, bool *more)
 {
     if (!d->m_view) return;
     d->m_view->paint(p, rc, yOff, more);
 }
 
-void KHTMLPart::stopAnimations()
+void TDEHTMLPart::stopAnimations()
 {
   if ( d->m_doc )
-    d->m_doc->docLoader()->setShowAnimations( KHTMLSettings::KAnimationDisabled );
+    d->m_doc->docLoader()->setShowAnimations( TDEHTMLSettings::KAnimationDisabled );
 
   ConstFrameIt it = d->m_frames.begin();
   const ConstFrameIt end = d->m_frames.end();
   for (; it != end; ++it )
-    if ( !(*it)->m_part.isNull() && (*it)->m_part->inherits( "KHTMLPart" ) ) {
+    if ( !(*it)->m_part.isNull() && (*it)->m_part->inherits( "TDEHTMLPart" ) ) {
       KParts::ReadOnlyPart* const p = ( *it )->m_part;
-      static_cast<KHTMLPart*>( p )->stopAnimations();
+      static_cast<TDEHTMLPart*>( p )->stopAnimations();
     }
 }
 
-void KHTMLPart::resetFromScript()
+void TDEHTMLPart::resetFromScript()
 {
     closeURL();
     d->m_bComplete = false;
@@ -2075,7 +2075,7 @@ void KHTMLPart::resetFromScript()
     emit started( 0L );
 }
 
-void KHTMLPart::slotFinishedParsing()
+void TDEHTMLPart::slotFinishedParsing()
 {
   d->m_doc->setParsing(false);
   checkEmitLoadEvent();
@@ -2087,12 +2087,12 @@ void KHTMLPart::slotFinishedParsing()
   checkCompleted();
 }
 
-void KHTMLPart::slotLoaderRequestStarted( tdehtml::DocLoader* dl, tdehtml::CachedObject *obj )
+void TDEHTMLPart::slotLoaderRequestStarted( tdehtml::DocLoader* dl, tdehtml::CachedObject *obj )
 {
   if ( obj && obj->type() == tdehtml::CachedObject::Image && d->m_doc && d->m_doc->docLoader() == dl ) {
-    KHTMLPart* p = this;
+    TDEHTMLPart* p = this;
     while ( p ) {
-      KHTMLPart* const op = p;
+      TDEHTMLPart* const op = p;
       ++(p->d->m_totalObjectCount);
       p = p->parentPart();
       if ( !p && op->d->m_loadedObjects <= op->d->m_totalObjectCount
@@ -2102,12 +2102,12 @@ void KHTMLPart::slotLoaderRequestStarted( tdehtml::DocLoader* dl, tdehtml::Cache
   }
 }
 
-void KHTMLPart::slotLoaderRequestDone( tdehtml::DocLoader* dl, tdehtml::CachedObject *obj )
+void TDEHTMLPart::slotLoaderRequestDone( tdehtml::DocLoader* dl, tdehtml::CachedObject *obj )
 {
   if ( obj && obj->type() == tdehtml::CachedObject::Image && d->m_doc && d->m_doc->docLoader() == dl ) {
-    KHTMLPart* p = this;
+    TDEHTMLPart* p = this;
     while ( p ) {
-      KHTMLPart* const op = p;
+      TDEHTMLPart* const op = p;
       ++(p->d->m_loadedObjects);
       p = p->parentPart();
       if ( !p && op->d->m_loadedObjects <= op->d->m_totalObjectCount && op->d->m_jobPercent <= 100
@@ -2119,7 +2119,7 @@ void KHTMLPart::slotLoaderRequestDone( tdehtml::DocLoader* dl, tdehtml::CachedOb
   checkCompleted();
 }
 
-void KHTMLPart::slotProgressUpdate()
+void TDEHTMLPart::slotProgressUpdate()
 {
   int percent;
   if ( d->m_loadedObjects < d->m_totalObjectCount )
@@ -2140,14 +2140,14 @@ void KHTMLPart::slotProgressUpdate()
   emit d->m_extension->loadingProgress( percent );
 }
 
-void KHTMLPart::slotJobSpeed( TDEIO::Job* /*job*/, unsigned long speed )
+void TDEHTMLPart::slotJobSpeed( TDEIO::Job* /*job*/, unsigned long speed )
 {
   d->m_jobspeed = speed;
   if (!parentPart())
     setStatusBarText(jsStatusBarText(), BarOverrideText);
 }
 
-void KHTMLPart::slotJobPercent( TDEIO::Job* /*job*/, unsigned long percent )
+void TDEHTMLPart::slotJobPercent( TDEIO::Job* /*job*/, unsigned long percent )
 {
   d->m_jobPercent = percent;
 
@@ -2155,7 +2155,7 @@ void KHTMLPart::slotJobPercent( TDEIO::Job* /*job*/, unsigned long percent )
     d->m_progressUpdateTimer.start( 0, true );
 }
 
-void KHTMLPart::slotJobDone( TDEIO::Job* /*job*/ )
+void TDEHTMLPart::slotJobDone( TDEIO::Job* /*job*/ )
 {
   d->m_jobPercent = 100;
 
@@ -2163,7 +2163,7 @@ void KHTMLPart::slotJobDone( TDEIO::Job* /*job*/ )
     d->m_progressUpdateTimer.start( 0, true );
 }
 
-void KHTMLPart::slotUserSheetStatDone( TDEIO::Job *_job )
+void TDEHTMLPart::slotUserSheetStatDone( TDEIO::Job *_job )
 {
   using namespace TDEIO;
 
@@ -2194,9 +2194,9 @@ void KHTMLPart::slotUserSheetStatDone( TDEIO::Job *_job )
   setUserStyleSheet( KURL( settings()->userStyleSheet() ) );
 }
 
-void KHTMLPart::checkCompleted()
+void TDEHTMLPart::checkCompleted()
 {
-//   kdDebug( 6050 ) << "KHTMLPart::checkCompleted() " << this << " " << name() << endl;
+//   kdDebug( 6050 ) << "TDEHTMLPart::checkCompleted() " << this << " " << name() << endl;
 //   kdDebug( 6050 ) << "                           parsing: " << (d->m_doc && d->m_doc->parsing()) << endl;
 //   kdDebug( 6050 ) << "                           complete: " << d->m_bComplete << endl;
 
@@ -2255,9 +2255,9 @@ void KHTMLPart::checkCompleted()
   d->m_totalObjectCount = 0;
   d->m_loadedObjects = 0;
 
-  KHTMLPart* p = this;
+  TDEHTMLPart* p = this;
   while ( p ) {
-    KHTMLPart* op = p;
+    TDEHTMLPart* op = p;
     p = p->parentPart();
     if ( !p && !op->d->m_progressUpdateTimer.isActive())
       op->d->m_progressUpdateTimer.start( 0, true );
@@ -2312,7 +2312,7 @@ void KHTMLPart::checkCompleted()
 #endif
 }
 
-void KHTMLPart::checkEmitLoadEvent()
+void TDEHTMLPart::checkEmitLoadEvent()
 {
   if ( d->m_bLoadEventEmitted || !d->m_doc || d->m_doc->parsing() ) return;
 
@@ -2344,20 +2344,20 @@ void KHTMLPart::checkEmitLoadEvent()
     d->m_doc->close();
 }
 
-const KHTMLSettings *KHTMLPart::settings() const
+const TDEHTMLSettings *TDEHTMLPart::settings() const
 {
   return d->m_settings;
 }
 
 #ifndef KDE_NO_COMPAT
-KURL KHTMLPart::baseURL() const
+KURL TDEHTMLPart::baseURL() const
 {
   if ( !d->m_doc ) return KURL();
 
   return d->m_doc->baseURL();
 }
 
-TQString KHTMLPart::baseTarget() const
+TQString TDEHTMLPart::baseTarget() const
 {
   if ( !d->m_doc ) return TQString();
 
@@ -2365,7 +2365,7 @@ TQString KHTMLPart::baseTarget() const
 }
 #endif
 
-KURL KHTMLPart::completeURL( const TQString &url )
+KURL TDEHTMLPart::completeURL( const TQString &url )
 {
   if ( !d->m_doc ) return KURL( url );
 
@@ -2377,9 +2377,9 @@ KURL KHTMLPart::completeURL( const TQString &url )
 
 // Called by ecma/kjs_window in case of redirections from Javascript,
 // and by xml/dom_docimpl.cpp in case of http-equiv meta refresh.
-void KHTMLPart::scheduleRedirection( int delay, const TQString &url, bool doLockHistory )
+void TDEHTMLPart::scheduleRedirection( int delay, const TQString &url, bool doLockHistory )
 {
-  kdDebug(6050) << "KHTMLPart::scheduleRedirection delay=" << delay << " url=" << url << endl;
+  kdDebug(6050) << "TDEHTMLPart::scheduleRedirection delay=" << delay << " url=" << url << endl;
   kdDebug(6050) << "current redirectURL=" << d->m_redirectURL << " with delay " << d->m_delayRedirect <<  endl;
   if( delay < 24*60*60 &&
       ( d->m_redirectURL.isEmpty() || delay <= d->m_delayRedirect) ) {
@@ -2394,7 +2394,7 @@ void KHTMLPart::scheduleRedirection( int delay, const TQString &url, bool doLock
   }
 }
 
-void KHTMLPart::slotRedirect()
+void TDEHTMLPart::slotRedirect()
 {
   kdDebug(6050) << this << " slotRedirect()" << endl;
   TQString u = d->m_redirectURL;
@@ -2405,7 +2405,7 @@ void KHTMLPart::slotRedirect()
   if ( u.find( TQString::fromLatin1( "javascript:" ), 0, false ) == 0 )
   {
     TQString script = KURL::decode_string( u.right( u.length() - 11 ) );
-    kdDebug( 6050 ) << "KHTMLPart::slotRedirect script=" << script << endl;
+    kdDebug( 6050 ) << "TDEHTMLPart::slotRedirect script=" << script << endl;
     TQVariant res = executeScript( DOM::Node(), script );
     if ( res.type() == TQVariant::String ) {
       begin( url() );
@@ -2425,7 +2425,7 @@ void KHTMLPart::slotRedirect()
 
   if (!kapp || !kapp->authorizeURLAction("redirect", cUrl, url))
   {
-    kdWarning(6050) << "KHTMLPart::scheduleRedirection: Redirection from " << cUrl << " to " << url << " REJECTED!" << endl;
+    kdWarning(6050) << "TDEHTMLPart::scheduleRedirection: Redirection from " << cUrl << " to " << url << " REJECTED!" << endl;
     emit completed();
     return;
   }
@@ -2453,7 +2453,7 @@ void KHTMLPart::slotRedirect()
     emit completed();
 }
 
-void KHTMLPart::slotRedirection(TDEIO::Job*, const KURL& url)
+void TDEHTMLPart::slotRedirection(TDEIO::Job*, const KURL& url)
 {
   // the slave told us that we got redirected
   //kdDebug( 6050 ) << "redirection by KIO to " << url.url() << endl;
@@ -2461,7 +2461,7 @@ void KHTMLPart::slotRedirection(TDEIO::Job*, const KURL& url)
   d->m_workingURL = url;
 }
 
-bool KHTMLPart::setEncoding( const TQString &name, bool override )
+bool TDEHTMLPart::setEncoding( const TQString &name, bool override )
 {
     d->m_encoding = name;
     d->m_haveEncoding = override;
@@ -2479,7 +2479,7 @@ bool KHTMLPart::setEncoding( const TQString &name, bool override )
     return true;
 }
 
-TQString KHTMLPart::encoding() const
+TQString TDEHTMLPart::encoding() const
 {
     if(d->m_haveEncoding && !d->m_encoding.isEmpty())
         return d->m_encoding;
@@ -2490,7 +2490,7 @@ TQString KHTMLPart::encoding() const
     return defaultEncoding();
 }
 
-TQString KHTMLPart::defaultEncoding() const
+TQString TDEHTMLPart::defaultEncoding() const
 {
   TQString encoding = settings()->encoding();
   if ( !encoding.isEmpty() )
@@ -2503,19 +2503,19 @@ TQString KHTMLPart::defaultEncoding() const
     return TDEGlobal::locale()->encoding();
 }
 
-void KHTMLPart::setUserStyleSheet(const KURL &url)
+void TDEHTMLPart::setUserStyleSheet(const KURL &url)
 {
   if ( d->m_doc && d->m_doc->docLoader() )
     (void) new tdehtml::PartStyleSheetLoader(this, url.url(), d->m_doc->docLoader());
 }
 
-void KHTMLPart::setUserStyleSheet(const TQString &styleSheet)
+void TDEHTMLPart::setUserStyleSheet(const TQString &styleSheet)
 {
   if ( d->m_doc )
     d->m_doc->setUserStyleSheet( styleSheet );
 }
 
-bool KHTMLPart::gotoAnchor( const TQString &name )
+bool TDEHTMLPart::gotoAnchor( const TQString &name )
 {
   if (!d->m_doc)
     return false;
@@ -2539,7 +2539,7 @@ bool KHTMLPart::gotoAnchor( const TQString &name )
       d->m_view->setContentsPos(0, 0);
       return true;
   } else if (!n) {
-      kdDebug(6050) << "KHTMLPart::gotoAnchor node '" << name << "' not found" << endl;
+      kdDebug(6050) << "TDEHTMLPart::gotoAnchor node '" << name << "' not found" << endl;
       return false;
   }
 
@@ -2563,7 +2563,7 @@ bool KHTMLPart::gotoAnchor( const TQString &name )
   return true;
 }
 
-bool KHTMLPart::nextAnchor()
+bool TDEHTMLPart::nextAnchor()
 {
   if (!d->m_doc)
     return false;
@@ -2572,7 +2572,7 @@ bool KHTMLPart::nextAnchor()
   return true;
 }
 
-bool KHTMLPart::prevAnchor()
+bool TDEHTMLPart::prevAnchor()
 {
   if (!d->m_doc)
     return false;
@@ -2581,38 +2581,38 @@ bool KHTMLPart::prevAnchor()
   return true;
 }
 
-void KHTMLPart::setStandardFont( const TQString &name )
+void TDEHTMLPart::setStandardFont( const TQString &name )
 {
     d->m_settings->setStdFontName(name);
 }
 
-void KHTMLPart::setFixedFont( const TQString &name )
+void TDEHTMLPart::setFixedFont( const TQString &name )
 {
     d->m_settings->setFixedFontName(name);
 }
 
-void KHTMLPart::setURLCursor( const TQCursor &c )
+void TDEHTMLPart::setURLCursor( const TQCursor &c )
 {
   d->m_linkCursor = c;
 }
 
-TQCursor KHTMLPart::urlCursor() const
+TQCursor TDEHTMLPart::urlCursor() const
 {
   return d->m_linkCursor;
 }
 
-bool KHTMLPart::onlyLocalReferences() const
+bool TDEHTMLPart::onlyLocalReferences() const
 {
   return d->m_onlyLocalReferences;
 }
 
-void KHTMLPart::setOnlyLocalReferences(bool enable)
+void TDEHTMLPart::setOnlyLocalReferences(bool enable)
 {
   d->m_onlyLocalReferences = enable;
 }
 
-void KHTMLPartPrivate::setFlagRecursively(
-	bool KHTMLPartPrivate::*flag, bool value)
+void TDEHTMLPartPrivate::setFlagRecursively(
+	bool TDEHTMLPartPrivate::*flag, bool value)
 {
   // first set it on the current one
   this->*flag = value;
@@ -2622,8 +2622,8 @@ void KHTMLPartPrivate::setFlagRecursively(
     TQValueList<tdehtml::ChildFrame*>::Iterator it = m_frames.begin();
     const TQValueList<tdehtml::ChildFrame*>::Iterator itEnd = m_frames.end();
     for (; it != itEnd; ++it) {
-      KHTMLPart* const part = static_cast<KHTMLPart *>((KParts::ReadOnlyPart *)(*it)->m_part);
-      if (part->inherits("KHTMLPart"))
+      TDEHTMLPart* const part = static_cast<TDEHTMLPart *>((KParts::ReadOnlyPart *)(*it)->m_part);
+      if (part->inherits("TDEHTMLPart"))
         part->d->setFlagRecursively(flag, value);
     }/*next it*/
   }
@@ -2632,19 +2632,19 @@ void KHTMLPartPrivate::setFlagRecursively(
     TQValueList<tdehtml::ChildFrame*>::Iterator it = m_objects.begin();
     const TQValueList<tdehtml::ChildFrame*>::Iterator itEnd = m_objects.end();
     for (; it != itEnd; ++it) {
-      KHTMLPart* const part = static_cast<KHTMLPart *>((KParts::ReadOnlyPart *)(*it)->m_part);
-      if (part->inherits("KHTMLPart"))
+      TDEHTMLPart* const part = static_cast<TDEHTMLPart *>((KParts::ReadOnlyPart *)(*it)->m_part);
+      if (part->inherits("TDEHTMLPart"))
         part->d->setFlagRecursively(flag, value);
     }/*next it*/
   }
 }
 
-void KHTMLPart::setCaretMode(bool enable)
+void TDEHTMLPart::setCaretMode(bool enable)
 {
-#ifndef KHTML_NO_CARET
+#ifndef TDEHTML_NO_CARET
   kdDebug(6200) << "setCaretMode(" << enable << ")" << endl;
   if (isCaretMode() == enable) return;
-  d->setFlagRecursively(&KHTMLPartPrivate::m_caretMode, enable);
+  d->setFlagRecursively(&TDEHTMLPartPrivate::m_caretMode, enable);
   // FIXME: this won't work on frames as expected
   if (!isEditable()) {
     if (enable) {
@@ -2653,19 +2653,19 @@ void KHTMLPart::setCaretMode(bool enable)
     } else
       view()->caretOff();
   }/*end if*/
-#endif // KHTML_NO_CARET
+#endif // TDEHTML_NO_CARET
 }
 
-bool KHTMLPart::isCaretMode() const
+bool TDEHTMLPart::isCaretMode() const
 {
   return d->m_caretMode;
 }
 
-void KHTMLPart::setEditable(bool enable)
+void TDEHTMLPart::setEditable(bool enable)
 {
-#ifndef KHTML_NO_CARET
+#ifndef TDEHTML_NO_CARET
   if (isEditable() == enable) return;
-  d->setFlagRecursively(&KHTMLPartPrivate::m_designMode, enable);
+  d->setFlagRecursively(&TDEHTMLPartPrivate::m_designMode, enable);
   // FIXME: this won't work on frames as expected
   if (!isCaretMode()) {
     if (enable) {
@@ -2674,17 +2674,17 @@ void KHTMLPart::setEditable(bool enable)
     } else
       view()->caretOff();
   }/*end if*/
-#endif // KHTML_NO_CARET
+#endif // TDEHTML_NO_CARET
 }
 
-bool KHTMLPart::isEditable() const
+bool TDEHTMLPart::isEditable() const
 {
   return d->m_designMode;
 }
 
-void KHTMLPart::setCaretPosition(DOM::Node node, long offset, bool extendSelection)
+void TDEHTMLPart::setCaretPosition(DOM::Node node, long offset, bool extendSelection)
 {
-#ifndef KHTML_NO_CARET
+#ifndef TDEHTML_NO_CARET
 #if 0
   kdDebug(6200) << k_funcinfo << "node: " << node.handle() << " nodeName: "
   	<< node.nodeName().string() << " offset: " << offset
@@ -2693,28 +2693,28 @@ void KHTMLPart::setCaretPosition(DOM::Node node, long offset, bool extendSelecti
   if (view()->moveCaretTo(node.handle(), offset, !extendSelection))
     emitSelectionChanged();
   view()->ensureCaretVisible();
-#endif // KHTML_NO_CARET
+#endif // TDEHTML_NO_CARET
 }
 
-KHTMLPart::CaretDisplayPolicy KHTMLPart::caretDisplayPolicyNonFocused() const
+TDEHTMLPart::CaretDisplayPolicy TDEHTMLPart::caretDisplayPolicyNonFocused() const
 {
-#ifndef KHTML_NO_CARET
+#ifndef TDEHTML_NO_CARET
   return (CaretDisplayPolicy)view()->caretDisplayPolicyNonFocused();
-#else // KHTML_NO_CARET
+#else // TDEHTML_NO_CARET
   return CaretInvisible;
-#endif // KHTML_NO_CARET
+#endif // TDEHTML_NO_CARET
 }
 
-void KHTMLPart::setCaretDisplayPolicyNonFocused(CaretDisplayPolicy policy)
+void TDEHTMLPart::setCaretDisplayPolicyNonFocused(CaretDisplayPolicy policy)
 {
-#ifndef KHTML_NO_CARET
+#ifndef TDEHTML_NO_CARET
   view()->setCaretDisplayPolicyNonFocused(policy);
-#endif // KHTML_NO_CARET
+#endif // TDEHTML_NO_CARET
 }
 
-void KHTMLPart::setCaretVisible(bool show)
+void TDEHTMLPart::setCaretVisible(bool show)
 {
-#ifndef KHTML_NO_CARET
+#ifndef TDEHTML_NO_CARET
   if (show) {
 
     NodeImpl *caretNode = xmlDocImpl()->focusNode();
@@ -2728,10 +2728,10 @@ void KHTMLPart::setCaretVisible(bool show)
     view()->caretOff();
 
   }/*end if*/
-#endif // KHTML_NO_CARET
+#endif // TDEHTML_NO_CARET
 }
 
-void KHTMLPart::findTextBegin()
+void TDEHTMLPart::findTextBegin()
 {
   d->m_findPos = -1;
   d->m_findNode = 0;
@@ -2744,7 +2744,7 @@ void KHTMLPart::findTextBegin()
   d->m_find = 0L;
 }
 
-bool KHTMLPart::initFindNode( bool selection, bool reverse, bool fromCursor )
+bool TDEHTMLPart::initFindNode( bool selection, bool reverse, bool fromCursor )
 {
     if ( !d->m_doc )
         return false;
@@ -2817,7 +2817,7 @@ bool KHTMLPart::initFindNode( bool selection, bool reverse, bool fromCursor )
 }
 
 // Old method (its API limits the available features - remove in KDE-4)
-bool KHTMLPart::findTextNext( const TQString &str, bool forward, bool caseSensitive, bool isRegExp )
+bool TDEHTMLPart::findTextNext( const TQString &str, bool forward, bool caseSensitive, bool isRegExp )
 {
     if ( !initFindNode( false, !forward, d->m_findNode ) )
       return false;
@@ -2898,91 +2898,91 @@ bool KHTMLPart::findTextNext( const TQString &str, bool forward, bool caseSensit
 }
 
 
-void KHTMLPart::slotFind()
+void TDEHTMLPart::slotFind()
 {
   KParts::ReadOnlyPart *part = currentFrame();
   if (!part)
     return;
-  if (!part->inherits("KHTMLPart") )
+  if (!part->inherits("TDEHTMLPart") )
   {
       kdError(6000) << "slotFind: part is a " << part->className() << ", can't do a search into it" << endl;
       return;
   }
-  static_cast<KHTMLPart *>( part )->findText();
+  static_cast<TDEHTMLPart *>( part )->findText();
 }
 
-void KHTMLPart::slotFindNext()
+void TDEHTMLPart::slotFindNext()
 {
   KParts::ReadOnlyPart *part = currentFrame();
   if (!part)
     return;
-  if (!part->inherits("KHTMLPart") )
+  if (!part->inherits("TDEHTMLPart") )
   {
       kdError(6000) << "slotFindNext: part is a " << part->className() << ", can't do a search into it" << endl;
       return;
   }
-  static_cast<KHTMLPart *>( part )->findTextNext();
+  static_cast<TDEHTMLPart *>( part )->findTextNext();
 }
 
-void KHTMLPart::slotFindPrev()
+void TDEHTMLPart::slotFindPrev()
 {
   KParts::ReadOnlyPart *part = currentFrame();
   if (!part)
     return;
-  if (!part->inherits("KHTMLPart") )
+  if (!part->inherits("TDEHTMLPart") )
   {
       kdError(6000) << "slotFindNext: part is a " << part->className() << ", can't do a search into it" << endl;
       return;
   }
-  static_cast<KHTMLPart *>( part )->findTextNext( true ); // reverse
+  static_cast<TDEHTMLPart *>( part )->findTextNext( true ); // reverse
 }
 
-void KHTMLPart::slotFindDone()
+void TDEHTMLPart::slotFindDone()
 {
   // ### remove me
 }
 
-void KHTMLPart::slotFindAheadText()
+void TDEHTMLPart::slotFindAheadText()
 {
-#ifndef KHTML_NO_TYPE_AHEAD_FIND
+#ifndef TDEHTML_NO_TYPE_AHEAD_FIND
   KParts::ReadOnlyPart *part = currentFrame();
   if (!part)
     return;
-  if (!part->inherits("KHTMLPart") )
+  if (!part->inherits("TDEHTMLPart") )
   {
       kdError(6000) << "slotFindNext: part is a " << part->className() << ", can't do a search into it" << endl;
       return;
   }
-  static_cast<KHTMLPart *>( part )->view()->startFindAhead( false );
-#endif // KHTML_NO_TYPE_AHEAD_FIND
+  static_cast<TDEHTMLPart *>( part )->view()->startFindAhead( false );
+#endif // TDEHTML_NO_TYPE_AHEAD_FIND
 }
 
-void KHTMLPart::slotFindAheadLink()
+void TDEHTMLPart::slotFindAheadLink()
 {
-#ifndef KHTML_NO_TYPE_AHEAD_FIND
+#ifndef TDEHTML_NO_TYPE_AHEAD_FIND
   KParts::ReadOnlyPart *part = currentFrame();
   if (!part)
     return;
-  if (!part->inherits("KHTMLPart") )
+  if (!part->inherits("TDEHTMLPart") )
   {
       kdError(6000) << "slotFindNext: part is a " << part->className() << ", can't do a search into it" << endl;
       return;
   }
-  static_cast<KHTMLPart *>( part )->view()->startFindAhead( true );
-#endif // KHTML_NO_TYPE_AHEAD_FIND
+  static_cast<TDEHTMLPart *>( part )->view()->startFindAhead( true );
+#endif // TDEHTML_NO_TYPE_AHEAD_FIND
 }
 
-void KHTMLPart::enableFindAheadActions( bool enable )
+void TDEHTMLPart::enableFindAheadActions( bool enable )
 {
   // only the topmost one has shortcuts
-  KHTMLPart* p = this;
+  TDEHTMLPart* p = this;
   while( p->parentPart())
     p = p->parentPart();
   p->d->m_paFindAheadText->setEnabled( enable );
   p->d->m_paFindAheadLinks->setEnabled( enable );
 }
 
-void KHTMLPart::slotFindDialogDestroyed()
+void TDEHTMLPart::slotFindDialogDestroyed()
 {
   d->m_lastFindState.options = d->m_findDialog->options();
   d->m_lastFindState.history = d->m_findDialog->findHistory();
@@ -2990,7 +2990,7 @@ void KHTMLPart::slotFindDialogDestroyed()
   d->m_findDialog = 0L;
 }
 
-void KHTMLPart::findText()
+void TDEHTMLPart::findText()
 {
   // First do some init to make sure we can search in this frame
   if ( !d->m_doc )
@@ -3029,7 +3029,7 @@ void KHTMLPart::findText()
   findText( d->m_findDialog->pattern(), 0 /*options*/, widget(), d->m_findDialog );
 }
 
-void KHTMLPart::findText( const TQString &str, long options, TQWidget *parent, KFindDialog *findDialog )
+void TDEHTMLPart::findText( const TQString &str, long options, TQWidget *parent, KFindDialog *findDialog )
 {
   // First do some init to make sure we can search in this frame
   if ( !d->m_doc )
@@ -3057,13 +3057,13 @@ void KHTMLPart::findText( const TQString &str, long options, TQWidget *parent, K
   }
 }
 
-bool KHTMLPart::findTextNext()
+bool TDEHTMLPart::findTextNext()
 {
   return findTextNext( false );
 }
 
 // New method
-bool KHTMLPart::findTextNext( bool reverse )
+bool TDEHTMLPart::findTextNext( bool reverse )
 {
   if (!d->m_find)
   {
@@ -3216,16 +3216,16 @@ bool KHTMLPart::findTextNext( bool reverse )
           if( !( options & KFindDialog::FindBackwards ))
           {
             //kdDebug(6050) << "StringPortion: " << index << "-" << index+s.length()-1 << " -> " << lastNode << endl;
-            d->m_stringPortions.append( KHTMLPartPrivate::StringPortion( str.length(), lastNode ) );
+            d->m_stringPortions.append( TDEHTMLPartPrivate::StringPortion( str.length(), lastNode ) );
             str += s;
           }
           else // KFind itself can search backwards, so str must not be built backwards
           {
-            for( TQValueList<KHTMLPartPrivate::StringPortion>::Iterator it = d->m_stringPortions.begin();
+            for( TQValueList<TDEHTMLPartPrivate::StringPortion>::Iterator it = d->m_stringPortions.begin();
                  it != d->m_stringPortions.end();
                  ++it )
                 (*it).index += s.length();
-            d->m_stringPortions.prepend( KHTMLPartPrivate::StringPortion( 0, lastNode ) );
+            d->m_stringPortions.prepend( TDEHTMLPartPrivate::StringPortion( 0, lastNode ) );
             str.prepend( s );
           }
         }
@@ -3290,12 +3290,12 @@ bool KHTMLPart::findTextNext( bool reverse )
   return res == KFind::Match;
 }
 
-void KHTMLPart::slotHighlight( const TQString& /*text*/, int index, int length )
+void TDEHTMLPart::slotHighlight( const TQString& /*text*/, int index, int length )
 {
   //kdDebug(6050) << "slotHighlight index=" << index << " length=" << length << endl;
-  TQValueList<KHTMLPartPrivate::StringPortion>::Iterator it = d->m_stringPortions.begin();
-  const TQValueList<KHTMLPartPrivate::StringPortion>::Iterator itEnd = d->m_stringPortions.end();
-  TQValueList<KHTMLPartPrivate::StringPortion>::Iterator prev = it;
+  TQValueList<TDEHTMLPartPrivate::StringPortion>::Iterator it = d->m_stringPortions.begin();
+  const TQValueList<TDEHTMLPartPrivate::StringPortion>::Iterator itEnd = d->m_stringPortions.end();
+  TQValueList<TDEHTMLPartPrivate::StringPortion>::Iterator prev = it;
   // We stop at the first portion whose index is 'greater than', and then use the previous one
   while ( it != itEnd && (*it).index <= index )
   {
@@ -3431,7 +3431,7 @@ void KHTMLPart::slotHighlight( const TQString& /*text*/, int index, int length )
   }
 }
 
-TQString KHTMLPart::selectedTextAsHTML() const
+TQString TDEHTMLPart::selectedTextAsHTML() const
 {
   if(!hasSelection()) {
     kdDebug() << "selectedTextAsHTML(): selection is not valid.  Returning empty selection" << endl;
@@ -3448,7 +3448,7 @@ TQString KHTMLPart::selectedTextAsHTML() const
   return r.handle()->toHTML(exceptioncode).string();
 }
 
-TQString KHTMLPart::selectedText() const
+TQString TDEHTMLPart::selectedText() const
 {
   bool hasNewLine = true;
   bool seenTDTag = false;
@@ -3590,7 +3590,7 @@ TQString KHTMLPart::selectedText() const
     return text.mid(start, end-start);
 }
 
-bool KHTMLPart::hasSelection() const
+bool TDEHTMLPart::hasSelection() const
 {
   if ( d->m_selectionStart.isNull() || d->m_selectionEnd.isNull() )
       return false;
@@ -3600,7 +3600,7 @@ bool KHTMLPart::hasSelection() const
   return true;
 }
 
-DOM::Range KHTMLPart::selection() const
+DOM::Range TDEHTMLPart::selection() const
 {
     if( d->m_selectionStart.isNull() || d->m_selectionEnd.isNull() )
         return DOM::Range();
@@ -3654,7 +3654,7 @@ DOM::Range KHTMLPart::selection() const
     return r;
 }
 
-void KHTMLPart::selection(DOM::Node &s, long &so, DOM::Node &e, long &eo) const
+void TDEHTMLPart::selection(DOM::Node &s, long &so, DOM::Node &e, long &eo) const
 {
     s = d->m_selectionStart;
     so = d->m_startOffset;
@@ -3662,7 +3662,7 @@ void KHTMLPart::selection(DOM::Node &s, long &so, DOM::Node &e, long &eo) const
     eo = d->m_endOffset;
 }
 
-void KHTMLPart::setSelection( const DOM::Range &r )
+void TDEHTMLPart::setSelection( const DOM::Range &r )
 {
     // Quick-fix: a collapsed range shouldn't select the whole node.
     // The real problem is in RenderCanvas::setSelection though (when index==0 the whole node is selected).
@@ -3675,17 +3675,17 @@ void KHTMLPart::setSelection( const DOM::Range &r )
         d->m_endOffset = r.endOffset();
         d->m_doc->setSelection(d->m_selectionStart.handle(),d->m_startOffset,
                                d->m_selectionEnd.handle(),d->m_endOffset);
-#ifndef KHTML_NO_CARET
+#ifndef TDEHTML_NO_CARET
         bool v = d->m_view->placeCaret();
         emitCaretPositionChanged(v ? d->caretNode() : 0, d->caretOffset());
 #endif
     }
 }
 
-void KHTMLPart::slotClearSelection()
+void TDEHTMLPart::slotClearSelection()
 {
     bool hadSelection = hasSelection();
-#ifndef KHTML_NO_CARET
+#ifndef TDEHTML_NO_CARET
     //kdDebug(6000) << "d->m_selectionStart " << d->m_selectionStart.handle()
     //		<< " d->m_selectionEnd " << d->m_selectionEnd.handle() << endl;
     // nothing, leave selection parameters as is
@@ -3698,13 +3698,13 @@ void KHTMLPart::slotClearSelection()
     if ( d->m_doc ) d->m_doc->clearSelection();
     if ( hadSelection )
       emitSelectionChanged();
-#ifndef KHTML_NO_CARET
+#ifndef TDEHTML_NO_CARET
     bool v = d->m_view->placeCaret();
     emitCaretPositionChanged(v ? d->caretNode() : 0, d->caretOffset());
 #endif
 }
 
-void KHTMLPart::resetHoverText()
+void TDEHTMLPart::resetHoverText()
 {
    if( !d->m_overURL.isEmpty() ) // Only if we were showing a link
    {
@@ -3716,7 +3716,7 @@ void KHTMLPart::resetHoverText()
   }
 }
 
-void KHTMLPart::overURL( const TQString &url, const TQString &target, bool /*shiftPressed*/ )
+void TDEHTMLPart::overURL( const TQString &url, const TQString &target, bool /*shiftPressed*/ )
 {
   KURL u = completeURL(url);
 
@@ -3829,7 +3829,7 @@ void KHTMLPart::overURL( const TQString &url, const TQString &target, bool /*shi
              (target.lower() != "_self") &&
              (target.lower() != "_parent"))
     {
-      KHTMLPart *p = this;
+      TDEHTMLPart *p = this;
       while (p->parentPart())
           p = p->parentPart();
       if (!p->frameExists(target))
@@ -3887,7 +3887,7 @@ void KHTMLPart::overURL( const TQString &url, const TQString &target, bool /*shi
 // This executes in the active part on a click or other url selection action in
 // that active part.
 //
-void KHTMLPart::urlSelected( const TQString &url, int button, int state, const TQString &_target, KParts::URLArgs args )
+void TDEHTMLPart::urlSelected( const TQString &url, int button, int state, const TQString &_target, KParts::URLArgs args )
 {
   // The member var is so that slotRedirection still calls the virtual urlSelected
   // but is able to know if is opened a url. KDE4: just make urlSelected return a bool
@@ -3896,7 +3896,7 @@ void KHTMLPart::urlSelected( const TQString &url, int button, int state, const T
 }
 
 // Return value: true if an url was opened, false if not (e.g. error, or jumping to anchor)
-bool KHTMLPart::urlSelectedIntern( const TQString &url, int button, int state, const TQString &_target, KParts::URLArgs args )
+bool TDEHTMLPart::urlSelectedIntern( const TQString &url, int button, int state, const TQString &_target, KParts::URLArgs args )
 {
   bool hasTarget = false;
 
@@ -3934,7 +3934,7 @@ bool KHTMLPart::urlSelectedIntern( const TQString &url, int button, int state, c
   {
     TDEIO::MetaData metaData;
     metaData["referrer"] = d->m_referrer;
-    KHTMLPopupGUIClient::saveURL( d->m_view, i18n( "Save As" ), cURL, metaData );
+    TDEHTMLPopupGUIClient::saveURL( d->m_view, i18n( "Save As" ), cURL, metaData );
     return false;
   }
 
@@ -4011,16 +4011,16 @@ bool KHTMLPart::urlSelectedIntern( const TQString &url, int button, int state, c
   return true;
 }
 
-void KHTMLPart::slotViewDocumentSource()
+void TDEHTMLPart::slotViewDocumentSource()
 {
   KURL url(m_url);
   bool isTempFile = false;
-  if (!(url.isLocalFile()) && KHTMLPageCache::self()->isComplete(d->m_cacheId))
+  if (!(url.isLocalFile()) && TDEHTMLPageCache::self()->isComplete(d->m_cacheId))
   {
      KTempFile sourceFile(TQString(), defaultExtension());
      if (sourceFile.status() == 0)
      {
-        KHTMLPageCache::self()->saveData(d->m_cacheId, sourceFile.dataStream());
+        TDEHTMLPageCache::self()->saveData(d->m_cacheId, sourceFile.dataStream());
         url = KURL();
         url.setPath(sourceFile.name());
         isTempFile = true;
@@ -4030,9 +4030,9 @@ void KHTMLPart::slotViewDocumentSource()
   (void) KRun::runURL( url, TQString::fromLatin1("text/plain"), isTempFile );
 }
 
-void KHTMLPart::slotViewPageInfo()
+void TDEHTMLPart::slotViewPageInfo()
 {
-  KHTMLInfoDlg *dlg = new KHTMLInfoDlg(NULL, "KHTML Page Info Dialog", false, (WFlags)WDestructiveClose);
+  TDEHTMLInfoDlg *dlg = new TDEHTMLInfoDlg(NULL, "TDEHTML Page Info Dialog", false, (WFlags)WDestructiveClose);
   dlg->_close->setGuiItem(KStdGuiItem::close());
 
   if (d->m_doc)
@@ -4083,7 +4083,7 @@ void KHTMLPart::slotViewPageInfo()
 }
 
 
-void KHTMLPart::slotViewFrameSource()
+void TDEHTMLPart::slotViewFrameSource()
 {
   KParts::ReadOnlyPart *frame = currentFrame();
   if ( !frame )
@@ -4091,16 +4091,16 @@ void KHTMLPart::slotViewFrameSource()
 
   KURL url = frame->url();
   bool isTempFile = false;
-  if (!(url.isLocalFile()) && frame->inherits("KHTMLPart"))
+  if (!(url.isLocalFile()) && frame->inherits("TDEHTMLPart"))
   {
-       long cacheId = static_cast<KHTMLPart *>(frame)->d->m_cacheId;
+       long cacheId = static_cast<TDEHTMLPart *>(frame)->d->m_cacheId;
 
-       if (KHTMLPageCache::self()->isComplete(cacheId))
+       if (TDEHTMLPageCache::self()->isComplete(cacheId))
        {
            KTempFile sourceFile(TQString(), defaultExtension());
            if (sourceFile.status() == 0)
            {
-               KHTMLPageCache::self()->saveData(cacheId, sourceFile.dataStream());
+               TDEHTMLPageCache::self()->saveData(cacheId, sourceFile.dataStream());
                url = KURL();
                url.setPath(sourceFile.name());
                isTempFile = true;
@@ -4111,7 +4111,7 @@ void KHTMLPart::slotViewFrameSource()
   (void) KRun::runURL( url, TQString::fromLatin1("text/plain"), isTempFile );
 }
 
-KURL KHTMLPart::backgroundURL() const
+KURL TDEHTMLPart::backgroundURL() const
 {
   // ### what about XML documents? get from CSS?
   if (!d->m_doc || !d->m_doc->isHTMLDocument())
@@ -4122,14 +4122,14 @@ KURL KHTMLPart::backgroundURL() const
   return KURL( m_url, relURL );
 }
 
-void KHTMLPart::slotSaveBackground()
+void TDEHTMLPart::slotSaveBackground()
 {
   TDEIO::MetaData metaData;
   metaData["referrer"] = d->m_referrer;
-  KHTMLPopupGUIClient::saveURL( d->m_view, i18n("Save Background Image As"), backgroundURL(), metaData );
+  TDEHTMLPopupGUIClient::saveURL( d->m_view, i18n("Save Background Image As"), backgroundURL(), metaData );
 }
 
-void KHTMLPart::slotSaveDocument()
+void TDEHTMLPart::slotSaveDocument()
 {
   KURL srcURL( m_url );
 
@@ -4138,10 +4138,10 @@ void KHTMLPart::slotSaveDocument()
 
   TDEIO::MetaData metaData;
   // Referre unknown?
-  KHTMLPopupGUIClient::saveURL( d->m_view, i18n( "Save As" ), srcURL, metaData, "text/html", d->m_cacheId );
+  TDEHTMLPopupGUIClient::saveURL( d->m_view, i18n( "Save As" ), srcURL, metaData, "text/html", d->m_cacheId );
 }
 
-void KHTMLPart::slotSecurity()
+void TDEHTMLPart::slotSecurity()
 {
 //   kdDebug( 6050 ) << "Meta Data:" << endl
 //                   << d->m_ssl_peer_cert_subject
@@ -4200,7 +4200,7 @@ void KHTMLPart::slotSecurity()
   } else kid->exec();
 }
 
-void KHTMLPart::slotSaveFrame()
+void TDEHTMLPart::slotSaveFrame()
 {
     KParts::ReadOnlyPart *frame = currentFrame();
     if ( !frame )
@@ -4213,10 +4213,10 @@ void KHTMLPart::slotSaveFrame()
 
     TDEIO::MetaData metaData;
     // Referrer unknown?
-    KHTMLPopupGUIClient::saveURL( d->m_view, i18n( "Save Frame As" ), srcURL, metaData, "text/html" );
+    TDEHTMLPopupGUIClient::saveURL( d->m_view, i18n( "Save Frame As" ), srcURL, metaData, "text/html" );
 }
 
-void KHTMLPart::slotSetEncoding()
+void TDEHTMLPart::slotSetEncoding()
 {
   d->m_automaticDetection->setItemChecked( int( d->m_autoDetectLanguage ), false );
   d->m_paSetEncoding->popupMenu()->setItemChecked( 0, false );
@@ -4226,7 +4226,7 @@ void KHTMLPart::slotSetEncoding()
   setEncoding( enc, true );
 }
 
-void KHTMLPart::slotUseStylesheet()
+void TDEHTMLPart::slotUseStylesheet()
 {
   if (d->m_doc)
   {
@@ -4236,7 +4236,7 @@ void KHTMLPart::slotUseStylesheet()
   }
 }
 
-void KHTMLPart::updateActions()
+void TDEHTMLPart::updateActions()
 {
   bool frames = false;
 
@@ -4265,7 +4265,7 @@ void KHTMLPart::updateActions()
   bool enableFindAndSelectAll = true;
 
   if ( frame )
-    enableFindAndSelectAll = frame->inherits( "KHTMLPart" );
+    enableFindAndSelectAll = frame->inherits( "TDEHTMLPart" );
 
   d->m_paFind->setEnabled( enableFindAndSelectAll );
   d->m_paSelectAll->setEnabled( enableFindAndSelectAll );
@@ -4293,7 +4293,7 @@ void KHTMLPart::updateActions()
     d->m_paDebugScript->setEnabled( d->m_frame ? d->m_frame->m_jscript : 0L );
 }
 
-KParts::LiveConnectExtension *KHTMLPart::liveConnectExtension( const tdehtml::RenderPart *frame) const {
+KParts::LiveConnectExtension *TDEHTMLPart::liveConnectExtension( const tdehtml::RenderPart *frame) const {
     const ConstFrameIt end = d->m_objects.end();
     for(ConstFrameIt it = d->m_objects.begin(); it != end; ++it )
         if ((*it)->m_frame == frame)
@@ -4301,7 +4301,7 @@ KParts::LiveConnectExtension *KHTMLPart::liveConnectExtension( const tdehtml::Re
     return 0L;
 }
 
-bool KHTMLPart::requestFrame( tdehtml::RenderPart *frame, const TQString &url, const TQString &frameName,
+bool TDEHTMLPart::requestFrame( tdehtml::RenderPart *frame, const TQString &url, const TQString &frameName,
                               const TQStringList &params, bool isIFrame )
 {
   //kdDebug( 6050 ) << this << " requestFrame( ..., " << url << ", " << frameName << " )" << endl;
@@ -4322,7 +4322,7 @@ bool KHTMLPart::requestFrame( tdehtml::RenderPart *frame, const TQString &url, c
   if ( url.find( TQString::fromLatin1( "javascript:" ), 0, false ) == 0 )
   {
     if ( processObjectRequest(*it, KURL("about:blank"), TQString("text/html") ) ) {
-      KHTMLPart* p = static_cast<KHTMLPart*>(static_cast<KParts::ReadOnlyPart *>((*it)->m_part));
+      TDEHTMLPart* p = static_cast<TDEHTMLPart*>(static_cast<KParts::ReadOnlyPart *>((*it)->m_part));
 
       // See if we want to replace content with javascript: output..
       TQVariant res = p->executeScript( DOM::Node(), KURL::decode_string( url.right( url.length() - 11) ) );
@@ -4339,15 +4339,15 @@ bool KHTMLPart::requestFrame( tdehtml::RenderPart *frame, const TQString &url, c
   return requestObject( *it, u );
 }
 
-TQString KHTMLPart::requestFrameName()
+TQString TDEHTMLPart::requestFrameName()
 {
    return TQString::fromLatin1("<!--frame %1-->").arg(d->m_frameNameId++);
 }
 
-bool KHTMLPart::requestObject( tdehtml::RenderPart *frame, const TQString &url, const TQString &serviceType,
+bool TDEHTMLPart::requestObject( tdehtml::RenderPart *frame, const TQString &url, const TQString &serviceType,
                                const TQStringList &params )
 {
-  //kdDebug( 6005 ) << "KHTMLPart::requestObject " << this << " frame=" << frame << endl;
+  //kdDebug( 6005 ) << "TDEHTMLPart::requestObject " << this << " frame=" << frame << endl;
   tdehtml::ChildFrame *child = new tdehtml::ChildFrame;
   FrameIt it = d->m_objects.append( child );
   (*it)->m_frame = frame;
@@ -4363,16 +4363,16 @@ bool KHTMLPart::requestObject( tdehtml::RenderPart *frame, const TQString &url, 
   return true;
 }
 
-bool KHTMLPart::requestObject( tdehtml::ChildFrame *child, const KURL &url, const KParts::URLArgs &_args )
+bool TDEHTMLPart::requestObject( tdehtml::ChildFrame *child, const KURL &url, const KParts::URLArgs &_args )
 {
   if (!checkLinkSecurity(url))
   {
-    kdDebug(6005) << this << " KHTMLPart::requestObject checkLinkSecurity refused" << endl;
+    kdDebug(6005) << this << " TDEHTMLPart::requestObject checkLinkSecurity refused" << endl;
     return false;
   }
   if ( child->m_bPreloaded )
   {
-    kdDebug(6005) << "KHTMLPart::requestObject preload" << endl;
+    kdDebug(6005) << "TDEHTMLPart::requestObject preload" << endl;
     if ( child->m_frame && child->m_part )
       child->m_frame->setWidget( child->m_part->widget() );
 
@@ -4380,7 +4380,7 @@ bool KHTMLPart::requestObject( tdehtml::ChildFrame *child, const KURL &url, cons
     return true;
   }
 
-  //kdDebug(6005) << "KHTMLPart::requestObject child=" << child << " child->m_part=" << child->m_part << endl;
+  //kdDebug(6005) << "TDEHTMLPart::requestObject child=" << child << " child->m_part=" << child->m_part << endl;
 
   KParts::URLArgs args( _args );
 
@@ -4406,13 +4406,13 @@ bool KHTMLPart::requestObject( tdehtml::ChildFrame *child, const KURL &url, cons
   child->m_args.metaData().insert("ssl_activate_warnings", "TRUE");
   child->m_args.metaData().insert("cross-domain", toplevelURL().url());
 
-  // We want a KHTMLPart if the HTML says <frame src=""> or <frame src="about:blank">
+  // We want a TDEHTMLPart if the HTML says <frame src=""> or <frame src="about:blank">
   if ((url.isEmpty() || url.url() == "about:blank") && args.serviceType.isEmpty())
     args.serviceType = TQString::fromLatin1( "text/html" );
 
   if ( args.serviceType.isEmpty() ) {
-    kdDebug(6050) << "Running new KHTMLRun for " << this << " and child=" << child << endl;
-    child->m_run = new KHTMLRun( this, child, url, child->m_args, true );
+    kdDebug(6050) << "Running new TDEHTMLRun for " << this << " and child=" << child << endl;
+    child->m_run = new TDEHTMLRun( this, child, url, child->m_args, true );
     d->m_bComplete = false; // ensures we stop it in checkCompleted...
     return false;
   } else {
@@ -4420,9 +4420,9 @@ bool KHTMLPart::requestObject( tdehtml::ChildFrame *child, const KURL &url, cons
   }
 }
 
-bool KHTMLPart::processObjectRequest( tdehtml::ChildFrame *child, const KURL &_url, const TQString &mimetype )
+bool TDEHTMLPart::processObjectRequest( tdehtml::ChildFrame *child, const KURL &_url, const TQString &mimetype )
 {
-  //kdDebug( 6050 ) << "KHTMLPart::processObjectRequest trying to create part for " << mimetype << endl;
+  //kdDebug( 6050 ) << "TDEHTMLPart::processObjectRequest trying to create part for " << mimetype << endl;
 
   // IMPORTANT: create a copy of the url here, because it is just a reference, which was likely to be given
   // by an emitting frame part (emit openURLRequest( blahurl, ... ) . A few lines below we delete the part
@@ -4459,7 +4459,7 @@ bool KHTMLPart::processObjectRequest( tdehtml::ChildFrame *child, const KURL &_u
         url, mimetype, suggestedFilename  );
       switch( res ) {
       case KParts::BrowserRun::Save:
-        KHTMLPopupGUIClient::saveURL( widget(), i18n( "Save As" ), url, child->m_args.metaData(), TQString(), 0, suggestedFilename);
+        TDEHTMLPopupGUIClient::saveURL( widget(), i18n( "Save As" ), url, child->m_args.metaData(), TQString(), 0, suggestedFilename);
         // fall-through
       case KParts::BrowserRun::Cancel:
         child->m_bCompleted = true;
@@ -4486,7 +4486,7 @@ bool KHTMLPart::processObjectRequest( tdehtml::ChildFrame *child, const KURL &_u
     //CRITICAL STUFF
     if ( child->m_part )
     {
-      if (!::tqqt_cast<KHTMLPart*>(child->m_part) && child->m_jscript)
+      if (!::tqqt_cast<TDEHTMLPart*>(child->m_part) && child->m_jscript)
           child->m_jscript->clear();
       partManager()->removePart( (KParts::ReadOnlyPart *)child->m_part );
       delete (KParts::ReadOnlyPart *)child->m_part;
@@ -4507,8 +4507,8 @@ bool KHTMLPart::processObjectRequest( tdehtml::ChildFrame *child, const KURL &_u
 
     child->m_part = part;
 
-    if (::tqqt_cast<KHTMLPart*>(part)) {
-      static_cast<KHTMLPart*>(part)->d->m_frame = child;
+    if (::tqqt_cast<TDEHTMLPart*>(part)) {
+      static_cast<TDEHTMLPart*>(part)->d->m_frame = child;
     } else if (child->m_frame) {
       child->m_liveconnect = KParts::LiveConnectExtension::childObject(part);
       if (child->m_liveconnect)
@@ -4526,7 +4526,7 @@ bool KHTMLPart::processObjectRequest( tdehtml::ChildFrame *child, const KURL &_u
              this, TQT_SLOT( slotChildCompleted(bool) ) );
     connect( part, TQT_SIGNAL( setStatusBarText( const TQString & ) ),
                 this, TQT_SIGNAL( setStatusBarText( const TQString & ) ) );
-    if ( part->inherits( "KHTMLPart" ) )
+    if ( part->inherits( "TDEHTMLPart" ) )
     {
       connect( this, TQT_SIGNAL( completed() ),
                part, TQT_SLOT( slotParentCompleted() ) );
@@ -4598,7 +4598,7 @@ bool KHTMLPart::processObjectRequest( tdehtml::ChildFrame *child, const KURL &_u
 
   // make sure the part has a way to find out about the mimetype.
   // we actually set it in child->m_args in requestObject already,
-  // but it's useless if we had to use a KHTMLRun instance, as the
+  // but it's useless if we had to use a TDEHTMLRun instance, as the
   // point the run object is to find out exactly the mimetype.
   child->m_args.serviceType = mimetype;
 
@@ -4609,10 +4609,10 @@ bool KHTMLPart::processObjectRequest( tdehtml::ChildFrame *child, const KURL &_u
     child->m_extension->setURLArgs( child->m_args );
 
   if(url.protocol() == "javascript" || url.url() == "about:blank") {
-      if (!child->m_part->inherits("KHTMLPart"))
+      if (!child->m_part->inherits("TDEHTMLPart"))
           return false;
 
-      KHTMLPart* p = static_cast<KHTMLPart*>(static_cast<KParts::ReadOnlyPart *>(child->m_part));
+      TDEHTMLPart* p = static_cast<TDEHTMLPart*>(static_cast<KParts::ReadOnlyPart *>(child->m_part));
 
       p->begin();
       if (d->m_doc && p->d->m_doc)
@@ -4643,7 +4643,7 @@ bool KHTMLPart::processObjectRequest( tdehtml::ChildFrame *child, const KURL &_u
   }
 }
 
-KParts::ReadOnlyPart *KHTMLPart::createPart( TQWidget *parentWidget, const char *widgetName,
+KParts::ReadOnlyPart *TDEHTMLPart::createPart( TQWidget *parentWidget, const char *widgetName,
                                              TQObject *parent, const char *name, const TQString &mimetype,
                                              TQString &serviceName, TQStringList &serviceTypes,
                                              const TQStringList &params )
@@ -4697,7 +4697,7 @@ KParts::ReadOnlyPart *KHTMLPart::createPart( TQWidget *parentWidget, const char 
   return 0;
 }
 
-KParts::PartManager *KHTMLPart::partManager()
+KParts::PartManager *TDEHTMLPart::partManager()
 {
   if ( !d->m_manager && d->m_view )
   {
@@ -4712,28 +4712,28 @@ KParts::PartManager *KHTMLPart::partManager()
   return d->m_manager;
 }
 
-void KHTMLPart::submitFormAgain()
+void TDEHTMLPart::submitFormAgain()
 {
   disconnect(this, TQT_SIGNAL(completed()), this, TQT_SLOT(submitFormAgain()));
   if( d->m_doc && !d->m_doc->parsing() && d->m_submitForm)
-    KHTMLPart::submitForm( d->m_submitForm->submitAction, d->m_submitForm->submitUrl, d->m_submitForm->submitFormData, d->m_submitForm->target, d->m_submitForm->submitContentType, d->m_submitForm->submitBoundary );
+    TDEHTMLPart::submitForm( d->m_submitForm->submitAction, d->m_submitForm->submitUrl, d->m_submitForm->submitFormData, d->m_submitForm->target, d->m_submitForm->submitContentType, d->m_submitForm->submitBoundary );
 
   delete d->m_submitForm;
   d->m_submitForm = 0;
 }
 
-void KHTMLPart::submitFormProxy( const char *action, const TQString &url, const TQByteArray &formData, const TQString &_target, const TQString& contentType, const TQString& boundary )
+void TDEHTMLPart::submitFormProxy( const char *action, const TQString &url, const TQByteArray &formData, const TQString &_target, const TQString& contentType, const TQString& boundary )
 {
   submitForm(action, url, formData, _target, contentType, boundary);
 }
 
-void KHTMLPart::submitForm( const char *action, const TQString &url, const TQByteArray &formData, const TQString &_target, const TQString& contentType, const TQString& boundary )
+void TDEHTMLPart::submitForm( const char *action, const TQString &url, const TQByteArray &formData, const TQString &_target, const TQString& contentType, const TQString& boundary )
 {
-  kdDebug(6000) << this << ": KHTMLPart::submitForm target=" << _target << " url=" << url << endl;
-  if (d->m_formNotification == KHTMLPart::Only) {
+  kdDebug(6000) << this << ": TDEHTMLPart::submitForm target=" << _target << " url=" << url << endl;
+  if (d->m_formNotification == TDEHTMLPart::Only) {
     emit formSubmitNotification(action, url, formData, _target, contentType, boundary);
     return;
-  } else if (d->m_formNotification == KHTMLPart::Before) {
+  } else if (d->m_formNotification == TDEHTMLPart::Before) {
     emit formSubmitNotification(action, url, formData, _target, contentType, boundary);
   }
 
@@ -4911,10 +4911,10 @@ void KHTMLPart::submitForm( const char *action, const TQString &url, const TQByt
 
   if ( d->m_doc->parsing() || d->m_runningScripts > 0 ) {
     if( d->m_submitForm ) {
-      kdDebug(6000) << "KHTMLPart::submitForm ABORTING!" << endl;
+      kdDebug(6000) << "TDEHTMLPart::submitForm ABORTING!" << endl;
       return;
     }
-    d->m_submitForm = new KHTMLPartPrivate::SubmitForm;
+    d->m_submitForm = new TDEHTMLPartPrivate::SubmitForm;
     d->m_submitForm->submitAction = action;
     d->m_submitForm->submitUrl = url;
     d->m_submitForm->submitFormData = formData;
@@ -4929,7 +4929,7 @@ void KHTMLPart::submitForm( const char *action, const TQString &url, const TQByt
   }
 }
 
-void KHTMLPart::popupMenu( const TQString &linkUrl )
+void TDEHTMLPart::popupMenu( const TQString &linkUrl )
 {
   KURL popupURL;
   KURL linkKURL;
@@ -4938,7 +4938,7 @@ void KHTMLPart::popupMenu( const TQString &linkUrl )
   KParts::BrowserExtension::PopupFlags itemflags=KParts::BrowserExtension::ShowBookmark | KParts::BrowserExtension::ShowReload;
 
   if ( linkUrl.isEmpty() ) { // click on background
-    KHTMLPart* tdehtmlPart = this;
+    TDEHTMLPart* tdehtmlPart = this;
     while ( tdehtmlPart->parentPart() )
     {
       tdehtmlPart=tdehtmlPart->parentPart();
@@ -4961,7 +4961,7 @@ void KHTMLPart::popupMenu( const TQString &linkUrl )
       if (d->m_strSelectedURLTarget.lower() == "_blank")
         args.setForcesNewWindow(true);
       else {
-	KHTMLPart *p = this;
+	TDEHTMLPart *p = this;
 	while (p->parentPart())
 	  p = p->parentPart();
 	if (!p->frameExists(d->m_strSelectedURLTarget))
@@ -4971,8 +4971,8 @@ void KHTMLPart::popupMenu( const TQString &linkUrl )
   }
 
   // Danger, Will Robinson. The Popup might stay around for a much
-  // longer time than KHTMLPart. Deal with it.
-  KHTMLPopupGUIClient* client = new KHTMLPopupGUIClient( this, d->m_popupMenuXML, linkKURL );
+  // longer time than TDEHTMLPart. Deal with it.
+  TDEHTMLPopupGUIClient* client = new TDEHTMLPopupGUIClient( this, d->m_popupMenuXML, linkKURL );
   TQGuardedPtr<TQObject> guard( client );
 
   TQString mimetype = TQString::fromLatin1( "text/html" );
@@ -5018,7 +5018,7 @@ void KHTMLPart::popupMenu( const TQString &linkUrl )
   }
 }
 
-void KHTMLPart::slotParentCompleted()
+void TDEHTMLPart::slotParentCompleted()
 {
   //kdDebug(6050) << this << " slotParentCompleted()" << endl;
   if ( !d->m_redirectURL.isEmpty() && !d->m_redirectionTimer.isActive() )
@@ -5028,7 +5028,7 @@ void KHTMLPart::slotParentCompleted()
   }
 }
 
-void KHTMLPart::slotChildStarted( TDEIO::Job *job )
+void TDEHTMLPart::slotChildStarted( TDEIO::Job *job )
 {
   tdehtml::ChildFrame *child = frame( TQT_TQOBJECT_CONST(sender()) );
 
@@ -5050,12 +5050,12 @@ void KHTMLPart::slotChildStarted( TDEIO::Job *job )
   }
 }
 
-void KHTMLPart::slotChildCompleted()
+void TDEHTMLPart::slotChildCompleted()
 {
   slotChildCompleted( false );
 }
 
-void KHTMLPart::slotChildCompleted( bool pendingAction )
+void TDEHTMLPart::slotChildCompleted( bool pendingAction )
 {
   tdehtml::ChildFrame *child = frame( TQT_TQOBJECT_CONST(sender()) );
 
@@ -5068,19 +5068,19 @@ void KHTMLPart::slotChildCompleted( bool pendingAction )
   checkCompleted();
 }
 
-void KHTMLPart::slotChildDocCreated()
+void TDEHTMLPart::slotChildDocCreated()
 {
-  const KHTMLPart* htmlFrame = static_cast<const KHTMLPart *>(sender());
+  const TDEHTMLPart* htmlFrame = static_cast<const TDEHTMLPart *>(sender());
   // Set domain to the frameset's domain
   // This must only be done when loading the frameset initially (#22039),
   // not when following a link in a frame (#44162).
   if ( d->m_doc && d->m_doc->isHTMLDocument() )
   {
-    if ( sender()->inherits("KHTMLPart") )
+    if ( sender()->inherits("TDEHTMLPart") )
     {
       DOMString domain = static_cast<HTMLDocumentImpl*>(d->m_doc)->domain();
       if (htmlFrame->d->m_doc && htmlFrame->d->m_doc->isHTMLDocument() )
-        //kdDebug(6050) << "KHTMLPart::slotChildDocCreated: url: " << htmlFrame->m_url.url() << endl;
+        //kdDebug(6050) << "TDEHTMLPart::slotChildDocCreated: url: " << htmlFrame->m_url.url() << endl;
         static_cast<HTMLDocumentImpl*>(htmlFrame->d->m_doc)->setDomain( domain );
     }
   }
@@ -5088,10 +5088,10 @@ void KHTMLPart::slotChildDocCreated()
   disconnect( htmlFrame, TQT_SIGNAL( docCreated() ), this, TQT_SLOT( slotChildDocCreated() ) );
 }
 
-void KHTMLPart::slotChildURLRequest( const KURL &url, const KParts::URLArgs &args )
+void TDEHTMLPart::slotChildURLRequest( const KURL &url, const KParts::URLArgs &args )
 {
   tdehtml::ChildFrame *child = frame( TQT_TQOBJECT_CONST(sender())->parent() );
-  KHTMLPart *callingHtmlPart = const_cast<KHTMLPart *>(dynamic_cast<const KHTMLPart *>(sender()->parent()));
+  TDEHTMLPart *callingHtmlPart = const_cast<TDEHTMLPart *>(dynamic_cast<const TDEHTMLPart *>(sender()->parent()));
 
   // TODO: handle child target correctly! currently the script are always executed fur the parent
   TQString urlStr = url.url();
@@ -5147,12 +5147,12 @@ void KHTMLPart::slotChildURLRequest( const KURL &url, const KParts::URLArgs &arg
   }
 }
 
-void KHTMLPart::slotRequestFocus( KParts::ReadOnlyPart * )
+void TDEHTMLPart::slotRequestFocus( KParts::ReadOnlyPart * )
 {
   emit d->m_extension->requestFocus(this);
 }
 
-tdehtml::ChildFrame *KHTMLPart::frame( const TQObject *obj )
+tdehtml::ChildFrame *TDEHTMLPart::frame( const TQObject *obj )
 {
     assert( obj->inherits( "KParts::ReadOnlyPart" ) );
     const KParts::ReadOnlyPart* const part = static_cast<const KParts::ReadOnlyPart *>( obj );
@@ -5174,14 +5174,14 @@ tdehtml::ChildFrame *KHTMLPart::frame( const TQObject *obj )
 
 //#define DEBUG_FINDFRAME
 
-bool KHTMLPart::checkFrameAccess(KHTMLPart *callingHtmlPart)
+bool TDEHTMLPart::checkFrameAccess(TDEHTMLPart *callingHtmlPart)
 {
   if (callingHtmlPart == this)
     return true; // trivial
 
   if (htmlDocument().isNull()) {
 #ifdef DEBUG_FINDFRAME
-    kdDebug(6050) << "KHTMLPart::checkFrameAccess: Empty part " << this << " URL = " << m_url << endl;
+    kdDebug(6050) << "TDEHTMLPart::checkFrameAccess: Empty part " << this << " URL = " << m_url << endl;
 #endif
     return false; // we are empty?
   }
@@ -5193,7 +5193,7 @@ bool KHTMLPart::checkFrameAccess(KHTMLPart *callingHtmlPart)
     DOM::DOMString destDomain = htmlDocument().domain();
 
 #ifdef DEBUG_FINDFRAME
-    kdDebug(6050) << "KHTMLPart::checkFrameAccess: actDomain = '" << actDomain.string() << "' destDomain = '" << destDomain.string() << "'" << endl;
+    kdDebug(6050) << "TDEHTMLPart::checkFrameAccess: actDomain = '" << actDomain.string() << "' destDomain = '" << destDomain.string() << "'" << endl;
 #endif
 
     if (actDomain == destDomain)
@@ -5202,20 +5202,20 @@ bool KHTMLPart::checkFrameAccess(KHTMLPart *callingHtmlPart)
 #ifdef DEBUG_FINDFRAME
   else
   {
-    kdDebug(6050) << "KHTMLPart::checkFrameAccess: Unknown part/domain " << callingHtmlPart << " tries to access part " << this << endl;
+    kdDebug(6050) << "TDEHTMLPart::checkFrameAccess: Unknown part/domain " << callingHtmlPart << " tries to access part " << this << endl;
   }
 #endif
   return false;
 }
 
-KHTMLPart *
-KHTMLPart::findFrameParent( KParts::ReadOnlyPart *callingPart, const TQString &f, tdehtml::ChildFrame **childFrame )
+TDEHTMLPart *
+TDEHTMLPart::findFrameParent( KParts::ReadOnlyPart *callingPart, const TQString &f, tdehtml::ChildFrame **childFrame )
 {
 #ifdef DEBUG_FINDFRAME
-  kdDebug(6050) << "KHTMLPart::findFrameParent: this = " << this << " URL = " << m_url << " name = " << name() << " findFrameParent( " << f << " )" << endl;
+  kdDebug(6050) << "TDEHTMLPart::findFrameParent: this = " << this << " URL = " << m_url << " name = " << name() << " findFrameParent( " << f << " )" << endl;
 #endif
   // Check access
-  KHTMLPart* const callingHtmlPart = dynamic_cast<KHTMLPart *>(callingPart);
+  TDEHTMLPart* const callingHtmlPart = dynamic_cast<TDEHTMLPart *>(callingPart);
 
   if (!checkFrameAccess(callingHtmlPart))
      return 0;
@@ -5229,7 +5229,7 @@ KHTMLPart::findFrameParent( KParts::ReadOnlyPart *callingPart, const TQString &f
   if ( it != end )
   {
 #ifdef DEBUG_FINDFRAME
-     kdDebug(6050) << "KHTMLPart::findFrameParent: FOUND!" << endl;
+     kdDebug(6050) << "TDEHTMLPart::findFrameParent: FOUND!" << endl;
 #endif
      if (childFrame)
         *childFrame = *it;
@@ -5240,9 +5240,9 @@ KHTMLPart::findFrameParent( KParts::ReadOnlyPart *callingPart, const TQString &f
   for (; it != end; ++it )
   {
     KParts::ReadOnlyPart* const p = (*it)->m_part;
-    if ( p && p->inherits( "KHTMLPart" ))
+    if ( p && p->inherits( "TDEHTMLPart" ))
     {
-      KHTMLPart* const frameParent = static_cast<KHTMLPart*>(p)->findFrameParent(callingPart, f, childFrame);
+      TDEHTMLPart* const frameParent = static_cast<TDEHTMLPart*>(p)->findFrameParent(callingPart, f, childFrame);
       if (frameParent)
          return frameParent;
     }
@@ -5251,41 +5251,41 @@ KHTMLPart::findFrameParent( KParts::ReadOnlyPart *callingPart, const TQString &f
 }
 
 
-KHTMLPart *KHTMLPart::findFrame( const TQString &f )
+TDEHTMLPart *TDEHTMLPart::findFrame( const TQString &f )
 {
   tdehtml::ChildFrame *childFrame;
-  KHTMLPart *parentFrame = findFrameParent(this, f, &childFrame);
+  TDEHTMLPart *parentFrame = findFrameParent(this, f, &childFrame);
   if (parentFrame)
   {
      KParts::ReadOnlyPart *p = childFrame->m_part;
-     if ( p && p->inherits( "KHTMLPart" ))
-        return static_cast<KHTMLPart *>(p);
+     if ( p && p->inherits( "TDEHTMLPart" ))
+        return static_cast<TDEHTMLPart *>(p);
   }
   return 0;
 }
 
-KParts::ReadOnlyPart *KHTMLPart::findFramePart(const TQString &f)
+KParts::ReadOnlyPart *TDEHTMLPart::findFramePart(const TQString &f)
 {
   tdehtml::ChildFrame *childFrame;
   return findFrameParent(this, f, &childFrame) ? static_cast<KParts::ReadOnlyPart *>(childFrame->m_part) : 0L;
 }
 
-KParts::ReadOnlyPart *KHTMLPart::currentFrame() const
+KParts::ReadOnlyPart *TDEHTMLPart::currentFrame() const
 {
   KParts::ReadOnlyPart* part = (KParts::ReadOnlyPart*)(this);
   // Find active part in our frame manager, in case we are a frameset
   // and keep doing that (in case of nested framesets).
   // Just realized we could also do this recursively, calling part->currentFrame()...
-  while ( part && part->inherits("KHTMLPart") &&
-          static_cast<KHTMLPart *>(part)->d->m_frames.count() > 0 ) {
-    KHTMLPart* frameset = static_cast<KHTMLPart *>(part);
+  while ( part && part->inherits("TDEHTMLPart") &&
+          static_cast<TDEHTMLPart *>(part)->d->m_frames.count() > 0 ) {
+    TDEHTMLPart* frameset = static_cast<TDEHTMLPart *>(part);
     part = static_cast<KParts::ReadOnlyPart *>(frameset->partManager()->activePart());
     if ( !part ) return frameset;
   }
   return part;
 }
 
-bool KHTMLPart::frameExists( const TQString &frameName )
+bool TDEHTMLPart::frameExists( const TQString &frameName )
 {
   ConstFrameIt it = d->m_frames.find( frameName );
   if ( it == d->m_frames.end() )
@@ -5297,9 +5297,9 @@ bool KHTMLPart::frameExists( const TQString &frameName )
   return (!(*it)->m_frame.isNull());
 }
 
-KJSProxy *KHTMLPart::framejScript(KParts::ReadOnlyPart *framePart)
+KJSProxy *TDEHTMLPart::framejScript(KParts::ReadOnlyPart *framePart)
 {
-  KHTMLPart* const kp = ::tqqt_cast<KHTMLPart*>(framePart);
+  TDEHTMLPart* const kp = ::tqqt_cast<TDEHTMLPart*>(framePart);
   if (kp)
     return kp->jScript();
 
@@ -5315,19 +5315,19 @@ KJSProxy *KHTMLPart::framejScript(KParts::ReadOnlyPart *framePart)
   return 0L;
 }
 
-KHTMLPart *KHTMLPart::parentPart()
+TDEHTMLPart *TDEHTMLPart::parentPart()
 {
-  return ::tqqt_cast<KHTMLPart *>( parent() );
+  return ::tqqt_cast<TDEHTMLPart *>( parent() );
 }
 
-tdehtml::ChildFrame *KHTMLPart::recursiveFrameRequest( KHTMLPart *callingHtmlPart, const KURL &url,
+tdehtml::ChildFrame *TDEHTMLPart::recursiveFrameRequest( TDEHTMLPart *callingHtmlPart, const KURL &url,
                                                      const KParts::URLArgs &args, bool callParent )
 {
 #ifdef DEBUG_FINDFRAME
-  kdDebug( 6050 ) << "KHTMLPart::recursiveFrameRequest this = " << this << ", frame = " << args.frameName << ", url = " << url << endl;
+  kdDebug( 6050 ) << "TDEHTMLPart::recursiveFrameRequest this = " << this << ", frame = " << args.frameName << ", url = " << url << endl;
 #endif
   tdehtml::ChildFrame *childFrame;
-  KHTMLPart *childPart = findFrameParent(callingHtmlPart, args.frameName, &childFrame);
+  TDEHTMLPart *childPart = findFrameParent(callingHtmlPart, args.frameName, &childFrame);
   if (childPart)
   {
      if (childPart == this)
@@ -5352,7 +5352,7 @@ tdehtml::ChildFrame *KHTMLPart::recursiveFrameRequest( KHTMLPart *callingHtmlPar
 static int s_saveStateIndentLevel = 0;
 #endif
 
-void KHTMLPart::saveState( TQDataStream &stream )
+void TDEHTMLPart::saveState( TQDataStream &stream )
 {
 #ifndef NDEBUG
   TQString indent = TQString().leftJustify( s_saveStateIndentLevel * 4, ' ' );
@@ -5438,7 +5438,7 @@ void KHTMLPart::saveState( TQDataStream &stream )
 #endif
 }
 
-void KHTMLPart::restoreState( TQDataStream &stream )
+void TDEHTMLPart::restoreState( TQDataStream &stream )
 {
   KURL u;
   TQ_INT32 xOffset, yOffset, wContents, hContents, mWidth, mHeight;
@@ -5610,7 +5610,7 @@ void KHTMLPart::restoreState( TQDataStream &stream )
     args.docState = docState;
 
     d->m_extension->setURLArgs( args );
-    if (!KHTMLPageCache::self()->isComplete(d->m_cacheId))
+    if (!TDEHTMLPageCache::self()->isComplete(d->m_cacheId))
     {
        d->m_restored = true;
        openURL( u );
@@ -5624,29 +5624,29 @@ void KHTMLPart::restoreState( TQDataStream &stream )
 
 }
 
-void KHTMLPart::show()
+void TDEHTMLPart::show()
 {
   if ( d->m_view )
     d->m_view->show();
 }
 
-void KHTMLPart::hide()
+void TDEHTMLPart::hide()
 {
   if ( d->m_view )
     d->m_view->hide();
 }
 
-DOM::Node KHTMLPart::nodeUnderMouse() const
+DOM::Node TDEHTMLPart::nodeUnderMouse() const
 {
     return d->m_view->nodeUnderMouse();
 }
 
-DOM::Node KHTMLPart::nonSharedNodeUnderMouse() const
+DOM::Node TDEHTMLPart::nonSharedNodeUnderMouse() const
 {
     return d->m_view->nonSharedNodeUnderMouse();
 }
 
-void KHTMLPart::emitSelectionChanged()
+void TDEHTMLPart::emitSelectionChanged()
 {
   emit d->m_extension->enableAction( "copy", hasSelection() );
   if ( d->m_findDialog )
@@ -5656,7 +5656,7 @@ void KHTMLPart::emitSelectionChanged()
   emit selectionChanged();
 }
 
-int KHTMLPart::zoomFactor() const
+int TDEHTMLPart::zoomFactor() const
 {
   return d->m_zoomFactor;
 }
@@ -5671,27 +5671,27 @@ static const int maxZoom = 300;
 extern const int KDE_NO_EXPORT fastZoomSizes[] = { 20, 50, 75, 90, 100, 120, 150, 200, 300 };
 extern const int KDE_NO_EXPORT fastZoomSizeCount = sizeof fastZoomSizes / sizeof fastZoomSizes[0];
 
-void KHTMLPart::slotIncZoom()
+void TDEHTMLPart::slotIncZoom()
 {
   zoomIn(zoomSizes, zoomSizeCount);
 }
 
-void KHTMLPart::slotDecZoom()
+void TDEHTMLPart::slotDecZoom()
 {
   zoomOut(zoomSizes, zoomSizeCount);
 }
 
-void KHTMLPart::slotIncZoomFast()
+void TDEHTMLPart::slotIncZoomFast()
 {
   zoomIn(fastZoomSizes, fastZoomSizeCount);
 }
 
-void KHTMLPart::slotDecZoomFast()
+void TDEHTMLPart::slotDecZoomFast()
 {
   zoomOut(fastZoomSizes, fastZoomSizeCount);
 }
 
-void KHTMLPart::zoomIn(const int stepping[], int count)
+void TDEHTMLPart::zoomIn(const int stepping[], int count)
 {
   int zoomFactor = d->m_zoomFactor;
 
@@ -5706,7 +5706,7 @@ void KHTMLPart::zoomIn(const int stepping[], int count)
   }
 }
 
-void KHTMLPart::zoomOut(const int stepping[], int count)
+void TDEHTMLPart::zoomOut(const int stepping[], int count)
 {
     int zoomFactor = d->m_zoomFactor;
     if (zoomFactor > minZoom) {
@@ -5720,7 +5720,7 @@ void KHTMLPart::zoomOut(const int stepping[], int count)
     }
 }
 
-void KHTMLPart::setZoomFactor (int percent)
+void TDEHTMLPart::setZoomFactor (int percent)
 {
   if (percent < minZoom) percent = minZoom;
   if (percent > maxZoom) percent = maxZoom;
@@ -5738,9 +5738,9 @@ void KHTMLPart::setZoomFactor (int percent)
   ConstFrameIt it = d->m_frames.begin();
   const ConstFrameIt end = d->m_frames.end();
   for (; it != end; ++it )
-    if ( !( *it )->m_part.isNull() && (*it)->m_part->inherits( "KHTMLPart" ) ) {
+    if ( !( *it )->m_part.isNull() && (*it)->m_part->inherits( "TDEHTMLPart" ) ) {
       KParts::ReadOnlyPart* const p = ( *it )->m_part;
-      static_cast<KHTMLPart*>( p )->setZoomFactor(d->m_zoomFactor);
+      static_cast<TDEHTMLPart*>( p )->setZoomFactor(d->m_zoomFactor);
     }
 
   if ( d->m_guiProfile == BrowserViewGUI ) {
@@ -5749,7 +5749,7 @@ void KHTMLPart::setZoomFactor (int percent)
   }
 }
 
-void KHTMLPart::slotZoomView( int delta )
+void TDEHTMLPart::slotZoomView( int delta )
 {
   if ( delta < 0 )
     slotIncZoom();
@@ -5757,7 +5757,7 @@ void KHTMLPart::slotZoomView( int delta )
     slotDecZoom();
 }
 
-void KHTMLPart::setStatusBarText( const TQString& text, StatusBarPriority p)
+void TDEHTMLPart::setStatusBarText( const TQString& text, StatusBarPriority p)
 {
   if (!d->m_statusMessagesEnabled)
     return;
@@ -5781,32 +5781,32 @@ void KHTMLPart::setStatusBarText( const TQString& text, StatusBarPriority p)
 }
 
 
-void KHTMLPart::setJSStatusBarText( const TQString &text )
+void TDEHTMLPart::setJSStatusBarText( const TQString &text )
 {
   setStatusBarText(text, BarOverrideText);
 }
 
-void KHTMLPart::setJSDefaultStatusBarText( const TQString &text )
+void TDEHTMLPart::setJSDefaultStatusBarText( const TQString &text )
 {
   setStatusBarText(text, BarDefaultText);
 }
 
-TQString KHTMLPart::jsStatusBarText() const
+TQString TDEHTMLPart::jsStatusBarText() const
 {
     return d->m_statusBarText[BarOverrideText];
 }
 
-TQString KHTMLPart::jsDefaultStatusBarText() const
+TQString TDEHTMLPart::jsDefaultStatusBarText() const
 {
    return d->m_statusBarText[BarDefaultText];
 }
 
-TQString KHTMLPart::referrer() const
+TQString TDEHTMLPart::referrer() const
 {
    return d->m_referrer;
 }
 
-TQString KHTMLPart::pageReferrer() const
+TQString TDEHTMLPart::pageReferrer() const
 {
    KURL referrerURL = KURL( d->m_pageReferrer );
    if (referrerURL.isValid())
@@ -5827,7 +5827,7 @@ TQString KHTMLPart::pageReferrer() const
 }
 
 
-TQString KHTMLPart::lastModified() const
+TQString TDEHTMLPart::lastModified() const
 {
   if ( d->m_lastModified.isEmpty() && m_url.isLocalFile() ) {
     // Local file: set last-modified from the file's mtime.
@@ -5836,11 +5836,11 @@ TQString KHTMLPart::lastModified() const
     TQDateTime lastModif = TQFileInfo( m_url.path() ).lastModified();
     d->m_lastModified = lastModif.toString( Qt::LocalDate );
   }
-  //kdDebug(6050) << "KHTMLPart::lastModified: " << d->m_lastModified << endl;
+  //kdDebug(6050) << "TDEHTMLPart::lastModified: " << d->m_lastModified << endl;
   return d->m_lastModified;
 }
 
-void KHTMLPart::slotLoadImages()
+void TDEHTMLPart::slotLoadImages()
 {
   if (d->m_doc )
     d->m_doc->docLoader()->setAutoloadImages( !d->m_doc->docLoader()->autoloadImages() );
@@ -5848,15 +5848,15 @@ void KHTMLPart::slotLoadImages()
   ConstFrameIt it = d->m_frames.begin();
   const ConstFrameIt end = d->m_frames.end();
   for (; it != end; ++it )
-    if ( !( *it )->m_part.isNull() && (*it)->m_part->inherits( "KHTMLPart" ) ) {
+    if ( !( *it )->m_part.isNull() && (*it)->m_part->inherits( "TDEHTMLPart" ) ) {
       KParts::ReadOnlyPart* const p = ( *it )->m_part;
-      static_cast<KHTMLPart*>( p )->slotLoadImages();
+      static_cast<TDEHTMLPart*>( p )->slotLoadImages();
     }
 }
 
-void KHTMLPart::reparseConfiguration()
+void TDEHTMLPart::reparseConfiguration()
 {
-  KHTMLSettings *settings = KHTMLFactory::defaultHTMLSettings();
+  TDEHTMLSettings *settings = TDEHTMLFactory::defaultHTMLSettings();
   settings->init();
 
   setAutoloadImages( settings->autoLoadImages() );
@@ -5872,18 +5872,18 @@ void KHTMLPart::reparseConfiguration()
   d->m_metaRefreshEnabled = settings->isAutoDelayedActionsEnabled ();
 
   delete d->m_settings;
-  d->m_settings = new KHTMLSettings(*KHTMLFactory::defaultHTMLSettings());
+  d->m_settings = new TDEHTMLSettings(*TDEHTMLFactory::defaultHTMLSettings());
 
   TQApplication::setOverrideCursor( tqwaitCursor );
   tdehtml::CSSStyleSelector::reparseConfiguration();
   if(d->m_doc) d->m_doc->updateStyleSelector();
   TQApplication::restoreOverrideCursor();
 
-  if (KHTMLFactory::defaultHTMLSettings()->isAdFilterEnabled())
+  if (TDEHTMLFactory::defaultHTMLSettings()->isAdFilterEnabled())
      runAdFilter();
 }
 
-TQStringList KHTMLPart::frameNames() const
+TQStringList TDEHTMLPart::frameNames() const
 {
   TQStringList res;
 
@@ -5896,7 +5896,7 @@ TQStringList KHTMLPart::frameNames() const
   return res;
 }
 
-TQPtrList<KParts::ReadOnlyPart> KHTMLPart::frames() const
+TQPtrList<KParts::ReadOnlyPart> TDEHTMLPart::frames() const
 {
   TQPtrList<KParts::ReadOnlyPart> res;
 
@@ -5909,9 +5909,9 @@ TQPtrList<KParts::ReadOnlyPart> KHTMLPart::frames() const
   return res;
 }
 
-bool KHTMLPart::openURLInFrame( const KURL &url, const KParts::URLArgs &urlArgs )
+bool TDEHTMLPart::openURLInFrame( const KURL &url, const KParts::URLArgs &urlArgs )
 {
-    kdDebug( 6050 ) << this << "KHTMLPart::openURLInFrame " << url << endl;
+    kdDebug( 6050 ) << this << "TDEHTMLPart::openURLInFrame " << url << endl;
   FrameIt it = d->m_frames.find( urlArgs.frameName );
 
   if ( it == d->m_frames.end() )
@@ -5926,17 +5926,17 @@ bool KHTMLPart::openURLInFrame( const KURL &url, const KParts::URLArgs &urlArgs 
   return true;
 }
 
-void KHTMLPart::setDNDEnabled( bool b )
+void TDEHTMLPart::setDNDEnabled( bool b )
 {
   d->m_bDnd = b;
 }
 
-bool KHTMLPart::dndEnabled() const
+bool TDEHTMLPart::dndEnabled() const
 {
   return d->m_bDnd;
 }
 
-void KHTMLPart::customEvent( TQCustomEvent *event )
+void TDEHTMLPart::customEvent( TQCustomEvent *event )
 {
   if ( tdehtml::MousePressEvent::test( event ) )
   {
@@ -6041,7 +6041,7 @@ static bool lastRunAt(tdehtml::RenderObject *renderNode, int y, NodeImpl *&endNo
     }
 }
 
-void KHTMLPart::tdehtmlMousePressEvent( tdehtml::MousePressEvent *event )
+void TDEHTMLPart::tdehtmlMousePressEvent( tdehtml::MousePressEvent *event )
 {
   DOM::DOMString url = event->url();
   TQMouseEvent *_mouse = event->qmouseEvent();
@@ -6062,7 +6062,7 @@ void KHTMLPart::tdehtmlMousePressEvent( tdehtml::MousePressEvent *event )
   {
     d->m_bMousePressed = true;
 
-#ifndef KHTML_NO_SELECTION
+#ifndef TDEHTML_NO_SELECTION
     if ( _mouse->button() == Qt::LeftButton )
     {
       if ( (!d->m_strSelectedURL.isNull() && !isEditable())
@@ -6076,27 +6076,27 @@ void KHTMLPart::tdehtmlMousePressEvent( tdehtml::MousePressEvent *event )
                                                                event->absX()-innerNode.handle()->renderer()->xPos(),
                                                                event->absY()-innerNode.handle()->renderer()->yPos(), node, offset, state );
           d->m_extendMode = d->ExtendByChar;
-#ifdef KHTML_NO_CARET
+#ifdef TDEHTML_NO_CARET
           d->m_selectionStart = node;
           d->m_startOffset = offset;
           //if ( node )
-          //  kdDebug(6005) << "KHTMLPart::tdehtmlMousePressEvent selectionStart=" << d->m_selectionStart.handle()->renderer()
+          //  kdDebug(6005) << "TDEHTMLPart::tdehtmlMousePressEvent selectionStart=" << d->m_selectionStart.handle()->renderer()
           //                << " offset=" << d->m_startOffset << endl;
           //else
-          //  kdDebug(6005) << "KHTML::tdehtmlMousePressEvent selectionStart=(nil)" << endl;
+          //  kdDebug(6005) << "TDEHTML::tdehtmlMousePressEvent selectionStart=(nil)" << endl;
           d->m_selectionEnd = d->m_selectionStart;
           d->m_endOffset = d->m_startOffset;
           d->m_doc->clearSelection();
-#else // KHTML_NO_CARET
+#else // TDEHTML_NO_CARET
 	  d->m_view->moveCaretTo(node, offset, (_mouse->state() & ShiftButton) == 0);
-#endif // KHTML_NO_CARET
+#endif // TDEHTML_NO_CARET
 	  d->m_initialNode = d->m_selectionStart;
 	  d->m_initialOffset = d->m_startOffset;
 //           kdDebug(6000) << "press: initOfs " << d->m_initialOffset << endl;
       }
       else
       {
-#ifndef KHTML_NO_CARET
+#ifndef TDEHTML_NO_CARET
         // simply leave it. Is this a good idea?
 #else
         d->m_selectionStart = DOM::Node();
@@ -6121,7 +6121,7 @@ void KHTMLPart::tdehtmlMousePressEvent( tdehtml::MousePressEvent *event )
   }
 }
 
-void KHTMLPart::tdehtmlMouseDoubleClickEvent( tdehtml::MouseDoubleClickEvent *event )
+void TDEHTMLPart::tdehtmlMouseDoubleClickEvent( tdehtml::MouseDoubleClickEvent *event )
 {
   TQMouseEvent *_mouse = event->qmouseEvent();
   if ( _mouse->button() == Qt::LeftButton )
@@ -6175,7 +6175,7 @@ void KHTMLPart::tdehtmlMouseDoubleClickEvent( tdehtml::MouseDoubleClickEvent *ev
         d->m_doc
           ->setSelection(d->m_selectionStart.handle(),d->m_startOffset,
                          d->m_selectionEnd.handle(),d->m_endOffset);
-#ifndef KHTML_NO_CARET
+#ifndef TDEHTML_NO_CARET
         bool v = d->m_view->placeCaret();
         emitCaretPositionChanged(v ? d->caretNode() : 0, d->caretOffset());
 #endif
@@ -6185,7 +6185,7 @@ void KHTMLPart::tdehtmlMouseDoubleClickEvent( tdehtml::MouseDoubleClickEvent *ev
   }
 }
 
-void KHTMLPart::extendSelection( DOM::NodeImpl* node, long offset, DOM::Node& selectionNode, long& selectionOffset, bool right, bool selectLines )
+void TDEHTMLPart::extendSelection( DOM::NodeImpl* node, long offset, DOM::Node& selectionNode, long& selectionOffset, bool right, bool selectLines )
 {
   tdehtml::RenderObject* obj = node->renderer();
 
@@ -6289,11 +6289,11 @@ void KHTMLPart::extendSelection( DOM::NodeImpl* node, long offset, DOM::Node& se
   if (right) ++selectionOffset;
 }
 
-#ifndef KHTML_NO_SELECTION
-void KHTMLPart::extendSelectionTo(int x, int y, int absX, int absY, const DOM::Node &innerNode)
+#ifndef TDEHTML_NO_SELECTION
+void TDEHTMLPart::extendSelectionTo(int x, int y, int absX, int absY, const DOM::Node &innerNode)
 {
       int offset;
-      //kdDebug(6000) << "KHTMLPart::tdehtmlMouseMoveEvent x=" << event->x() << " y=" << event->y() << endl;
+      //kdDebug(6000) << "TDEHTMLPart::tdehtmlMouseMoveEvent x=" << event->x() << " y=" << event->y() << endl;
       DOM::NodeImpl* node=0;
       tdehtml::RenderObject::SelPointState state;
       innerNode.handle()->renderer()->checkSelectionPoint( x, y,
@@ -6357,21 +6357,21 @@ void KHTMLPart::extendSelectionTo(int x, int y, int absX, int absY, const DOM::N
             ->setSelection(d->m_selectionEnd.handle(),d->m_endOffset,
                            d->m_selectionStart.handle(),d->m_startOffset);
       }
-#ifndef KHTML_NO_CARET
+#ifndef TDEHTML_NO_CARET
       d->m_view->placeCaret();
 #endif
 }
 
-bool KHTMLPart::isExtendingSelection() const
+bool TDEHTMLPart::isExtendingSelection() const
 {
   // This is it, the whole detection. tdehtmlMousePressEvent only sets this
   // on LMB or MMB, but never on RMB. As text selection doesn't work for MMB,
   // it's sufficient to only rely on this flag to detect selection extension.
   return d->m_bMousePressed;
 }
-#endif // KHTML_NO_SELECTION
+#endif // TDEHTML_NO_SELECTION
 
-void KHTMLPart::tdehtmlMouseMoveEvent( tdehtml::MouseMoveEvent *event )
+void TDEHTMLPart::tdehtmlMouseMoveEvent( tdehtml::MouseMoveEvent *event )
 {
   TQMouseEvent *_mouse = event->qmouseEvent();
 
@@ -6490,7 +6490,7 @@ void KHTMLPart::tdehtmlMouseMoveEvent( tdehtml::MouseMoveEvent *event )
     }
   }
   else {
-#ifndef KHTML_NO_SELECTION
+#ifndef TDEHTML_NO_SELECTION
     // selection stuff
     if( d->m_bMousePressed && innerNode.handle() && innerNode.handle()->renderer() &&
         ( (_mouse->state() & Qt::LeftButton) != 0 )) {
@@ -6510,7 +6510,7 @@ void KHTMLPart::tdehtmlMouseMoveEvent( tdehtml::MouseMoveEvent *event )
 
 }
 
-void KHTMLPart::tdehtmlMouseReleaseEvent( tdehtml::MouseReleaseEvent *event )
+void TDEHTMLPart::tdehtmlMouseReleaseEvent( tdehtml::MouseReleaseEvent *event )
 {
   DOM::Node innerNode = event->innerNode();
   d->m_mousePressNode = DOM::Node();
@@ -6535,21 +6535,21 @@ void KHTMLPart::tdehtmlMouseReleaseEvent( tdehtml::MouseReleaseEvent *event )
   }
 #ifndef QT_NO_CLIPBOARD
   if ((d->m_guiProfile == BrowserViewGUI) && (_mouse->button() == Qt::MidButton) && (event->url().isNull())) {
-    kdDebug( 6050 ) << "KHTMLPart::tdehtmlMouseReleaseEvent() MMB shouldOpen="
+    kdDebug( 6050 ) << "TDEHTMLPart::tdehtmlMouseReleaseEvent() MMB shouldOpen="
                     << d->m_bOpenMiddleClick << endl;
 
     if (d->m_bOpenMiddleClick) {
-    KHTMLPart *p = this;
+    TDEHTMLPart *p = this;
     while (p->parentPart()) p = p->parentPart();
     p->d->m_extension->pasteRequest();
   }
   }
 #endif
 
-#ifndef KHTML_NO_SELECTION
+#ifndef TDEHTML_NO_SELECTION
   // delete selection in case start and end position are at the same point
   if(d->m_selectionStart == d->m_selectionEnd && d->m_startOffset == d->m_endOffset) {
-#ifndef KHTML_NO_CARET
+#ifndef TDEHTML_NO_CARET
     d->m_extendAtEnd = true;
 #else
     d->m_selectionStart = 0;
@@ -6602,7 +6602,7 @@ void KHTMLPart::tdehtmlMouseReleaseEvent( tdehtml::MouseReleaseEvent *event )
       d->m_startBeforeEnd = true;
       d->m_extendAtEnd = !d->m_extendAtEnd;
     }
-#ifndef KHTML_NO_CARET
+#ifndef TDEHTML_NO_CARET
     bool v = d->m_view->placeCaret();
     emitCaretPositionChanged(v ? d->caretNode() : 0, d->caretOffset());
 #endif
@@ -6624,11 +6624,11 @@ void KHTMLPart::tdehtmlMouseReleaseEvent( tdehtml::MouseReleaseEvent *event )
 
 }
 
-void KHTMLPart::tdehtmlDrawContentsEvent( tdehtml::DrawContentsEvent * )
+void TDEHTMLPart::tdehtmlDrawContentsEvent( tdehtml::DrawContentsEvent * )
 {
 }
 
-void KHTMLPart::guiActivateEvent( KParts::GUIActivateEvent *event )
+void TDEHTMLPart::guiActivateEvent( KParts::GUIActivateEvent *event )
 {
   if ( event->activated() )
   {
@@ -6644,7 +6644,7 @@ void KHTMLPart::guiActivateEvent( KParts::GUIActivateEvent *event )
   }
 }
 
-void KHTMLPart::slotPrintFrame()
+void TDEHTMLPart::slotPrintFrame()
 {
   if ( d->m_frames.count() == 0 )
     return;
@@ -6667,20 +6667,20 @@ void KHTMLPart::slotPrintFrame()
   }
 }
 
-void KHTMLPart::slotSelectAll()
+void TDEHTMLPart::slotSelectAll()
 {
   KParts::ReadOnlyPart *part = currentFrame();
-  if (part && part->inherits("KHTMLPart"))
-    static_cast<KHTMLPart *>(part)->selectAll();
+  if (part && part->inherits("TDEHTMLPart"))
+    static_cast<TDEHTMLPart *>(part)->selectAll();
 }
 
-void KHTMLPart::startAutoScroll()
+void TDEHTMLPart::startAutoScroll()
 {
    connect(&d->m_scrollTimer, TQT_SIGNAL( timeout() ), this, TQT_SLOT( slotAutoScroll() ));
    d->m_scrollTimer.start(100, false);
 }
 
-void KHTMLPart::stopAutoScroll()
+void TDEHTMLPart::stopAutoScroll()
 {
    disconnect(&d->m_scrollTimer, TQT_SIGNAL( timeout() ), this, TQT_SLOT( slotAutoScroll() ));
    if (d->m_scrollTimer.isActive())
@@ -6688,7 +6688,7 @@ void KHTMLPart::stopAutoScroll()
 }
 
 
-void KHTMLPart::slotAutoScroll()
+void TDEHTMLPart::slotAutoScroll()
 {
     if (d->m_view)
       d->m_view->doAutoScroll();
@@ -6696,7 +6696,7 @@ void KHTMLPart::slotAutoScroll()
       stopAutoScroll(); // Safety
 }
 
-void KHTMLPart::runAdFilter()
+void TDEHTMLPart::runAdFilter()
 {
     if ( parentPart() )
         parentPart()->runAdFilter();
@@ -6709,12 +6709,12 @@ void KHTMLPart::runAdFilter()
         if ( it.current()->type() == tdehtml::CachedObject::Image ) {
             tdehtml::CachedImage *image = static_cast<tdehtml::CachedImage *>(it.current());
             bool wasBlocked = image->m_wasBlocked;
-            image->m_wasBlocked = KHTMLFactory::defaultHTMLSettings()->isAdFiltered( d->m_doc->completeURL( (*it).url().string() ) );
+            image->m_wasBlocked = TDEHTMLFactory::defaultHTMLSettings()->isAdFiltered( d->m_doc->completeURL( (*it).url().string() ) );
             if ( image->m_wasBlocked != wasBlocked )
                 image->do_notify(image->pixmap(), image->valid_rect());
         }
 
-    if ( KHTMLFactory::defaultHTMLSettings()->isHideAdsEnabled() ) {
+    if ( TDEHTMLFactory::defaultHTMLSettings()->isHideAdsEnabled() ) {
         for ( NodeImpl *nextNode, *node = d->m_doc; node; node = nextNode ) {
 
             // We might be deleting 'node' shortly.
@@ -6724,7 +6724,7 @@ void KHTMLPart::runAdFilter()
                  node->id() == ID_IFRAME ||
                  (node->id() == ID_INPUT && static_cast<HTMLInputElementImpl *>(node)->inputType() == HTMLInputElementImpl::IMAGE ))
             {
-                if ( KHTMLFactory::defaultHTMLSettings()->isAdFiltered( d->m_doc->completeURL( static_cast<ElementImpl *>(node)->getAttribute(ATTR_SRC).string() ) ) )
+                if ( TDEHTMLFactory::defaultHTMLSettings()->isAdFiltered( d->m_doc->completeURL( static_cast<ElementImpl *>(node)->getAttribute(ATTR_SRC).string() ) ) )
                 {
                     // We found an IMG, IFRAME or INPUT (of type IMAGE) matching a filter.
                     node->ref();
@@ -6741,7 +6741,7 @@ void KHTMLPart::runAdFilter()
     }
 }
 
-void KHTMLPart::selectAll()
+void TDEHTMLPart::selectAll()
 {
   if (!d->m_doc) return;
 
@@ -6809,7 +6809,7 @@ void KHTMLPart::selectAll()
   emitSelectionChanged();
 }
 
-bool KHTMLPart::checkLinkSecurity(const KURL &linkURL,const TQString &message, const TQString &button)
+bool TDEHTMLPart::checkLinkSecurity(const KURL &linkURL,const TQString &message, const TQString &button)
 {
   bool linkAllowed = true;
 
@@ -6843,13 +6843,13 @@ bool KHTMLPart::checkLinkSecurity(const KURL &linkURL,const TQString &message, c
   return true;
 }
 
-void KHTMLPart::slotPartRemoved( KParts::Part *part )
+void TDEHTMLPart::slotPartRemoved( KParts::Part *part )
 {
-//    kdDebug(6050) << "KHTMLPart::slotPartRemoved " << part << endl;
+//    kdDebug(6050) << "TDEHTMLPart::slotPartRemoved " << part << endl;
     if ( part == d->m_activeFrame )
     {
         d->m_activeFrame = 0L;
-        if ( !part->inherits( "KHTMLPart" ) )
+        if ( !part->inherits( "TDEHTMLPart" ) )
         {
             if (factory()) {
                 factory()->removeClient( part );
@@ -6861,16 +6861,16 @@ void KHTMLPart::slotPartRemoved( KParts::Part *part )
     }
 }
 
-void KHTMLPart::slotActiveFrameChanged( KParts::Part *part )
+void TDEHTMLPart::slotActiveFrameChanged( KParts::Part *part )
 {
-//    kdDebug(6050) << "KHTMLPart::slotActiveFrameChanged this=" << this << "part=" << part << endl;
+//    kdDebug(6050) << "TDEHTMLPart::slotActiveFrameChanged this=" << this << "part=" << part << endl;
     if ( part == this )
     {
         kdError(6050) << "strange error! we activated ourselves" << endl;
         assert( false );
         return;
     }
-//    kdDebug(6050) << "KHTMLPart::slotActiveFrameChanged d->m_activeFrame=" << d->m_activeFrame << endl;
+//    kdDebug(6050) << "TDEHTMLPart::slotActiveFrameChanged d->m_activeFrame=" << d->m_activeFrame << endl;
     if ( d->m_activeFrame && d->m_activeFrame->widget() && d->m_activeFrame->widget()->inherits( TQFRAME_OBJECT_NAME_STRING ) )
     {
         TQFrame *frame = static_cast<TQFrame *>( d->m_activeFrame->widget() );
@@ -6881,14 +6881,14 @@ void KHTMLPart::slotActiveFrameChanged( KParts::Part *part )
         }
     }
 
-    if( d->m_activeFrame && !d->m_activeFrame->inherits( "KHTMLPart" ) )
+    if( d->m_activeFrame && !d->m_activeFrame->inherits( "TDEHTMLPart" ) )
     {
         if (factory()) {
             factory()->removeClient( d->m_activeFrame );
         }
         removeChildClient( d->m_activeFrame );
     }
-    if( part && !part->inherits( "KHTMLPart" ) )
+    if( part && !part->inherits( "TDEHTMLPart" ) )
     {
         if (factory()) {
             factory()->addClient( part );
@@ -6916,7 +6916,7 @@ void KHTMLPart::slotActiveFrameChanged( KParts::Part *part )
     d->m_extension->setExtensionProxy( KParts::BrowserExtension::childObject( d->m_activeFrame ) );
 }
 
-void KHTMLPart::setActiveNode(const DOM::Node &node)
+void TDEHTMLPart::setActiveNode(const DOM::Node &node)
 {
     if (!d->m_doc || !d->m_view)
         return;
@@ -6930,12 +6930,12 @@ void KHTMLPart::setActiveNode(const DOM::Node &node)
     d->m_view->ensureVisible(rect.left(), rect.top());
 }
 
-DOM::Node KHTMLPart::activeNode() const
+DOM::Node TDEHTMLPart::activeNode() const
 {
     return DOM::Node(d->m_doc?d->m_doc->focusNode():0);
 }
 
-DOM::EventListener *KHTMLPart::createHTMLEventListener( TQString code, TQString name, NodeImpl* node )
+DOM::EventListener *TDEHTMLPart::createHTMLEventListener( TQString code, TQString name, NodeImpl* node )
 {
   KJSProxy *proxy = jScript();
 
@@ -6945,64 +6945,64 @@ DOM::EventListener *KHTMLPart::createHTMLEventListener( TQString code, TQString 
   return proxy->createHTMLEventHandler( m_url.url(), name, code, node );
 }
 
-KHTMLPart *KHTMLPart::opener()
+TDEHTMLPart *TDEHTMLPart::opener()
 {
     return d->m_opener;
 }
 
-void KHTMLPart::setOpener(KHTMLPart *_opener)
+void TDEHTMLPart::setOpener(TDEHTMLPart *_opener)
 {
     d->m_opener = _opener;
 }
 
-bool KHTMLPart::openedByJS()
+bool TDEHTMLPart::openedByJS()
 {
     return d->m_openedByJS;
 }
 
-void KHTMLPart::setOpenedByJS(bool _openedByJS)
+void TDEHTMLPart::setOpenedByJS(bool _openedByJS)
 {
     d->m_openedByJS = _openedByJS;
 }
 
-void KHTMLPart::preloadStyleSheet(const TQString &url, const TQString &stylesheet)
+void TDEHTMLPart::preloadStyleSheet(const TQString &url, const TQString &stylesheet)
 {
     tdehtml::Cache::preloadStyleSheet(url, stylesheet);
 }
 
-void KHTMLPart::preloadScript(const TQString &url, const TQString &script)
+void TDEHTMLPart::preloadScript(const TQString &url, const TQString &script)
 {
     tdehtml::Cache::preloadScript(url, script);
 }
 
-TQCString KHTMLPart::dcopObjectId() const
+TQCString TDEHTMLPart::dcopObjectId() const
 {
   TQCString id;
   id.sprintf("html-widget%d", d->m_dcop_counter);
   return id;
 }
 
-long KHTMLPart::cacheId() const
+long TDEHTMLPart::cacheId() const
 {
   return d->m_cacheId;
 }
 
-bool KHTMLPart::restored() const
+bool TDEHTMLPart::restored() const
 {
   return d->m_restored;
 }
 
-bool KHTMLPart::pluginPageQuestionAsked(const TQString& mimetype) const
+bool TDEHTMLPart::pluginPageQuestionAsked(const TQString& mimetype) const
 {
   // parentPart() should be const!
-  KHTMLPart* parent = const_cast<KHTMLPart *>(this)->parentPart();
+  TDEHTMLPart* parent = const_cast<TDEHTMLPart *>(this)->parentPart();
   if ( parent )
     return parent->pluginPageQuestionAsked(mimetype);
 
   return d->m_pluginPageQuestionAsked.contains(mimetype);
 }
 
-void KHTMLPart::setPluginPageQuestionAsked(const TQString& mimetype)
+void TDEHTMLPart::setPluginPageQuestionAsked(const TQString& mimetype)
 {
   if ( parentPart() )
     parentPart()->setPluginPageQuestionAsked(mimetype);
@@ -7010,7 +7010,7 @@ void KHTMLPart::setPluginPageQuestionAsked(const TQString& mimetype)
   d->m_pluginPageQuestionAsked.append(mimetype);
 }
 
-void KHTMLPart::slotAutomaticDetectionLanguage( int _id )
+void TDEHTMLPart::slotAutomaticDetectionLanguage( int _id )
 {
   d->m_automaticDetection->setItemChecked( _id, true );
 
@@ -7079,7 +7079,7 @@ void KHTMLPart::slotAutomaticDetectionLanguage( int _id )
   d->m_paSetEncoding->popupMenu()->setItemChecked( d->m_paSetEncoding->popupMenu()->idAt( 2 ), false );
 }
 
-tdehtml::Decoder *KHTMLPart::createDecoder()
+tdehtml::Decoder *TDEHTMLPart::createDecoder()
 {
     tdehtml::Decoder *dec = new tdehtml::Decoder();
     if( !d->m_encoding.isNull() )
@@ -7099,11 +7099,11 @@ tdehtml::Decoder *KHTMLPart::createDecoder()
     return dec;
 }
 
-void KHTMLPart::emitCaretPositionChanged(const DOM::Node &node, long offset) {
+void TDEHTMLPart::emitCaretPositionChanged(const DOM::Node &node, long offset) {
   emit caretPositionChanged(node, offset);
 }
 
-void KHTMLPart::restoreScrollPosition()
+void TDEHTMLPart::restoreScrollPosition()
 {
   KParts::URLArgs args = d->m_extension->urlArgs();
 
@@ -7127,10 +7127,10 @@ void KHTMLPart::restoreScrollPosition()
 }
 
 
-void KHTMLPart::openWallet(DOM::HTMLFormElementImpl *form)
+void TDEHTMLPart::openWallet(DOM::HTMLFormElementImpl *form)
 {
-#ifndef KHTML_NO_WALLET
-  KHTMLPart *p;
+#ifndef TDEHTML_NO_WALLET
+  TDEHTMLPart *p;
 
   for (p = parentPart(); p && p->parentPart(); p = p->parentPart()) {
   }
@@ -7158,21 +7158,21 @@ void KHTMLPart::openWallet(DOM::HTMLFormElementImpl *form)
 
   if (!d->m_wq) {
     KWallet::Wallet *wallet = KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(), widget() ? widget()->topLevelWidget()->winId() : 0, KWallet::Wallet::Asynchronous);
-    d->m_wq = new KHTMLWalletQueue(this);
+    d->m_wq = new TDEHTMLWalletQueue(this);
     d->m_wq->wallet = wallet;
     connect(wallet, TQT_SIGNAL(walletOpened(bool)), d->m_wq, TQT_SLOT(walletOpened(bool)));
     connect(d->m_wq, TQT_SIGNAL(walletOpened(KWallet::Wallet*)), this, TQT_SLOT(walletOpened(KWallet::Wallet*)));
   }
   assert(form);
-  d->m_wq->callers.append(KHTMLWalletQueue::Caller(form, form->getDocument()));
-#endif // KHTML_NO_WALLET
+  d->m_wq->callers.append(TDEHTMLWalletQueue::Caller(form, form->getDocument()));
+#endif // TDEHTML_NO_WALLET
 }
 
 
-void KHTMLPart::saveToWallet(const TQString& key, const TQMap<TQString,TQString>& data)
+void TDEHTMLPart::saveToWallet(const TQString& key, const TQMap<TQString,TQString>& data)
 {
-#ifndef KHTML_NO_WALLET
-  KHTMLPart *p;
+#ifndef TDEHTML_NO_WALLET
+  TDEHTMLPart *p;
 
   for (p = parentPart(); p && p->parentPart(); p = p->parentPart()) {
   }
@@ -7200,19 +7200,19 @@ void KHTMLPart::saveToWallet(const TQString& key, const TQMap<TQString,TQString>
 
   if (!d->m_wq) {
     KWallet::Wallet *wallet = KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(), widget() ? widget()->topLevelWidget()->winId() : 0, KWallet::Wallet::Asynchronous);
-    d->m_wq = new KHTMLWalletQueue(this);
+    d->m_wq = new TDEHTMLWalletQueue(this);
     d->m_wq->wallet = wallet;
     connect(wallet, TQT_SIGNAL(walletOpened(bool)), d->m_wq, TQT_SLOT(walletOpened(bool)));
     connect(d->m_wq, TQT_SIGNAL(walletOpened(KWallet::Wallet*)), this, TQT_SLOT(walletOpened(KWallet::Wallet*)));
   }
   d->m_wq->savers.append(qMakePair(key, data));
-#endif // KHTML_NO_WALLET
+#endif // TDEHTML_NO_WALLET
 }
 
 
-void KHTMLPart::dequeueWallet(DOM::HTMLFormElementImpl *form) {
-#ifndef KHTML_NO_WALLET
-  KHTMLPart *p;
+void TDEHTMLPart::dequeueWallet(DOM::HTMLFormElementImpl *form) {
+#ifndef TDEHTML_NO_WALLET
+  TDEHTMLPart *p;
 
   for (p = parentPart(); p && p->parentPart(); p = p->parentPart()) {
   }
@@ -7223,14 +7223,14 @@ void KHTMLPart::dequeueWallet(DOM::HTMLFormElementImpl *form) {
   }
 
   if (d->m_wq) {
-    d->m_wq->callers.remove(KHTMLWalletQueue::Caller(form, form->getDocument()));
+    d->m_wq->callers.remove(TDEHTMLWalletQueue::Caller(form, form->getDocument()));
   }
-#endif // KHTML_NO_WALLET
+#endif // TDEHTML_NO_WALLET
 }
 
 
-void KHTMLPart::walletOpened(KWallet::Wallet *wallet) {
-#ifndef KHTML_NO_WALLET
+void TDEHTMLPart::walletOpened(KWallet::Wallet *wallet) {
+#ifndef TDEHTML_NO_WALLET
   assert(!d->m_wallet);
   assert(d->m_wq);
 
@@ -7259,14 +7259,14 @@ void KHTMLPart::walletOpened(KWallet::Wallet *wallet) {
     TQToolTip::remove(d->m_statusBarWalletLabel);
   }
   TQToolTip::add(d->m_statusBarWalletLabel, i18n("The wallet '%1' is open and being used for form data and passwords.").arg(KWallet::Wallet::NetworkWallet()));
-#endif // KHTML_NO_WALLET
+#endif // TDEHTML_NO_WALLET
 }
 
 
-KWallet::Wallet *KHTMLPart::wallet()
+KWallet::Wallet *TDEHTMLPart::wallet()
 {
-#ifndef KHTML_NO_WALLET
-  KHTMLPart *p;
+#ifndef TDEHTML_NO_WALLET
+  TDEHTMLPart *p;
 
   for (p = parentPart(); p && p->parentPart(); p = p->parentPart())
     ;
@@ -7274,14 +7274,14 @@ KWallet::Wallet *KHTMLPart::wallet()
   if (p)
     return p->wallet();
 
-#endif // KHTML_NO_WALLET
+#endif // TDEHTML_NO_WALLET
   return d->m_wallet;
 }
 
 
-void KHTMLPart::slotWalletClosed()
+void TDEHTMLPart::slotWalletClosed()
 {
-#ifndef KHTML_NO_WALLET
+#ifndef TDEHTML_NO_WALLET
   if (d->m_wallet) {
     d->m_wallet->deleteLater();
     d->m_wallet = 0L;
@@ -7292,12 +7292,12 @@ void KHTMLPart::slotWalletClosed()
     delete d->m_statusBarWalletLabel;
     d->m_statusBarWalletLabel = 0L;
   }
-#endif // KHTML_NO_WALLET
+#endif // TDEHTML_NO_WALLET
 }
 
-void KHTMLPart::launchWalletManager()
+void TDEHTMLPart::launchWalletManager()
 {
-#ifndef KHTML_NO_WALLET
+#ifndef TDEHTML_NO_WALLET
   if (!DCOPClient::mainClient()->isApplicationRegistered("tdewalletmanager")) {
     TDEApplication::startServiceByDesktopName("tdewalletmanager_show");
   } else {
@@ -7305,34 +7305,34 @@ void KHTMLPart::launchWalletManager()
     r.send("show");
     r.send("raise");
   }
-#endif // KHTML_NO_WALLET
+#endif // TDEHTML_NO_WALLET
 }
 
-void KHTMLPart::walletMenu()
+void TDEHTMLPart::walletMenu()
 {
-#ifndef KHTML_NO_WALLET
+#ifndef TDEHTML_NO_WALLET
   KPopupMenu *m = new KPopupMenu(0L);
   m->insertItem(i18n("&Close Wallet"), this, TQT_SLOT(slotWalletClosed()));
   m->popup(TQCursor::pos());
-#endif // KHTML_NO_WALLET
+#endif // TDEHTML_NO_WALLET
 }
 
-void KHTMLPart::slotToggleCaretMode()
+void TDEHTMLPart::slotToggleCaretMode()
 {
   setCaretMode(d->m_paToggleCaretMode->isChecked());
 }
 
-void KHTMLPart::setFormNotification(KHTMLPart::FormNotification fn) {
+void TDEHTMLPart::setFormNotification(TDEHTMLPart::FormNotification fn) {
   d->m_formNotification = fn;
 }
 
-KHTMLPart::FormNotification KHTMLPart::formNotification() const {
+TDEHTMLPart::FormNotification TDEHTMLPart::formNotification() const {
   return d->m_formNotification;
 }
 
-KURL KHTMLPart::toplevelURL()
+KURL TDEHTMLPart::toplevelURL()
 {
-  KHTMLPart* part = this;
+  TDEHTMLPart* part = this;
   while (part->parentPart())
     part = part->parentPart();
 
@@ -7342,7 +7342,7 @@ KURL KHTMLPart::toplevelURL()
   return part->url();
 }
 
-bool KHTMLPart::isModified() const
+bool TDEHTMLPart::isModified() const
 {
   if ( !d->m_doc )
     return false;
@@ -7350,7 +7350,7 @@ bool KHTMLPart::isModified() const
   return d->m_doc->unsubmittedFormChanges();
 }
 
-void KHTMLPart::setDebugScript( bool enable )
+void TDEHTMLPart::setDebugScript( bool enable )
 {
   unplugActionList( "debugScriptList" );
   if ( enable ) {
@@ -7365,12 +7365,12 @@ void KHTMLPart::setDebugScript( bool enable )
   d->m_bJScriptDebugEnabled = enable;
 }
 
-void KHTMLPart::setSuppressedPopupIndicator( bool enable )
+void TDEHTMLPart::setSuppressedPopupIndicator( bool enable )
 {
     setSuppressedPopupIndicator( enable, 0 );
 }
 
-void KHTMLPart::setSuppressedPopupIndicator( bool enable, KHTMLPart *originPart )
+void TDEHTMLPart::setSuppressedPopupIndicator( bool enable, TDEHTMLPart *originPart )
 {
     if ( parentPart() ) {
         parentPart()->setSuppressedPopupIndicator( enable, originPart );
@@ -7406,7 +7406,7 @@ void KHTMLPart::setSuppressedPopupIndicator( bool enable, KHTMLPart *originPart 
     }
 }
 
-void KHTMLPart::suppressedPopupMenu() {
+void TDEHTMLPart::suppressedPopupMenu() {
   KPopupMenu *m = new KPopupMenu(0L);
   m->setCheckable(true);
   if ( d->m_openableSuppressedPopups )
@@ -7417,16 +7417,16 @@ void KHTMLPart::suppressedPopupMenu() {
   m->popup(TQCursor::pos());
 }
 
-void KHTMLPart::togglePopupPassivePopup() {
+void TDEHTMLPart::togglePopupPassivePopup() {
   // Same hack as in disableJSErrorExtension()
   d->m_settings->setJSPopupBlockerPassivePopup( !d->m_settings->jsPopupBlockerPassivePopup() );
   DCOPClient::mainClient()->send("konqueror*", "KonquerorIface", "reparseConfiguration()", TQByteArray());
 }
 
-void KHTMLPart::showSuppressedPopups() {
-    for ( TQValueListIterator<TQGuardedPtr<KHTMLPart> > i = d->m_suppressedPopupOriginParts.begin();
+void TDEHTMLPart::showSuppressedPopups() {
+    for ( TQValueListIterator<TQGuardedPtr<TDEHTMLPart> > i = d->m_suppressedPopupOriginParts.begin();
           i != d->m_suppressedPopupOriginParts.end(); ++i ) {
-      if (KHTMLPart* part = *i) {
+      if (TDEHTMLPart* part = *i) {
         KJS::Window *w = KJS::Window::retrieveWindow( part );
         if (w) {
             w->showSuppressedWindows();
@@ -7441,7 +7441,7 @@ void KHTMLPart::showSuppressedPopups() {
 
 // Extension to use for "view document source", "save as" etc.
 // Using the right extension can help the viewer get into the right mode (#40496)
-TQString KHTMLPart::defaultExtension() const
+TQString TDEHTMLPart::defaultExtension() const
 {
     if ( !d->m_doc )
         return ".html";
@@ -7450,7 +7450,7 @@ TQString KHTMLPart::defaultExtension() const
     return d->m_doc->htmlMode() == DOM::DocumentImpl::XHtml ? ".xhtml" : ".html";
 }
 
-bool KHTMLPart::inProgress() const
+bool TDEHTMLPart::inProgress() const
 {
     if (d->m_runningScripts || (d->m_doc && d->m_doc->parsing()))
         return true;

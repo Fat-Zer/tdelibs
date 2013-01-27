@@ -19,8 +19,8 @@
     Boston, MA 02110-1301, USA.
 
 */
-#ifndef KHTMLDECODER_H
-#define KHTMLDECODER_H
+#ifndef TDEHTMLDECODER_H
+#define TDEHTMLDECODER_H
 
 #include <tqstring.h>
 class TQTextCodec;

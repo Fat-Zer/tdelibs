@@ -1,7 +1,7 @@
 This module contains the ECMAScript a.k.a. JavaScript language bindings for
-the KHTML Part.
+the TDEHTML Part.
 
-The module is loaded into KHTML's address space on demand.
+The module is loaded into TDEHTML's address space on demand.
 
 To test the non-HTML DOM functions you may compile a little interactive
 interpreter called 'testecma' with 'make check' (see testecma.cpp for

@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 {
 
     TDECmdLineArgs::init(argc, argv, "testtdehtml", "Testtdehtml",
-            "a basic web browser using the KHTML library", "1.0");
+            "a basic web browser using the TDEHTML library", "1.0");
     TDECmdLineArgs::addCmdLineOptions(options);
 
     TDEApplication a;
@@ -49,11 +49,11 @@ int main(int argc, char *argv[])
     }
 
 #ifndef __KDE_HAVE_GCC_VISIBILITY
-    KHTMLFactory *fac = new KHTMLFactory(true);
+    TDEHTMLFactory *fac = new TDEHTMLFactory(true);
 #endif
 
     KMainWindow *toplevel = new KMainWindow();
-    KHTMLPart *doc = new KHTMLPart( toplevel, 0, toplevel, 0, KHTMLPart::BrowserViewGUI );
+    TDEHTMLPart *doc = new TDEHTMLPart( toplevel, 0, toplevel, 0, TDEHTMLPart::BrowserViewGUI );
 
     Dummy *dummy = new Dummy( doc );
     TQObject::connect( doc->browserExtension(), TQT_SIGNAL( openURLRequest( const KURL &, const KParts::URLArgs & ) ),

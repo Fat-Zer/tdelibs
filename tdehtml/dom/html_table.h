@@ -44,7 +44,7 @@ class DOMString;
  * CAPTION element definition </a> in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLTableCaptionElement : public HTMLElement
+class TDEHTML_EXPORT HTMLTableCaptionElement : public HTMLElement
 {
     friend class HTMLTableElement;
 
@@ -88,7 +88,7 @@ class HTMLTableCellElementImpl;
  * TD element definition </a> in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLTableCellElement : public HTMLElement
+class TDEHTML_EXPORT HTMLTableCellElement : public HTMLElement
 {
     friend class HTMLTableElement;
 
@@ -319,7 +319,7 @@ class HTMLTableColElementImpl;
  * COL element definition </a> in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLTableColElement : public HTMLElement
+class TDEHTML_EXPORT HTMLTableColElement : public HTMLElement
 {
     friend class HTMLTableElement;
 
@@ -438,7 +438,7 @@ class DOMString;
  * TABLE element definition </a> in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLTableElement : public HTMLElement
+class TDEHTML_EXPORT HTMLTableElement : public HTMLElement
 {
 public:
     HTMLTableElement();
@@ -722,7 +722,7 @@ class DOMString;
  * TR element definition </a> in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLTableRowElement : public HTMLElement
+class TDEHTML_EXPORT HTMLTableRowElement : public HTMLElement
 {
     friend class HTMLTableElement;
 
@@ -892,7 +892,7 @@ class DOMString;
  * elements.
  *
  */
-class KHTML_EXPORT HTMLTableSectionElement : public HTMLElement
+class TDEHTML_EXPORT HTMLTableSectionElement : public HTMLElement
 {
     friend class HTMLTableElement;
 

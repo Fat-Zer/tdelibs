@@ -45,7 +45,7 @@ class HTMLCollectionImpl;
  * deprecated in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLBaseFontElement : public HTMLElement
+class TDEHTML_EXPORT HTMLBaseFontElement : public HTMLElement
 {
 public:
     HTMLBaseFontElement();
@@ -123,7 +123,7 @@ public:
  * automatically updated when the underlying document is changed.
  *
  */
-class KHTML_EXPORT HTMLCollection
+class TDEHTML_EXPORT HTMLCollection
 {
     friend class HTMLDocument;
     friend class HTMLSelectElement;
@@ -201,7 +201,7 @@ protected:
     HTMLCollectionImpl *impl;
 };
 
-class KHTML_EXPORT HTMLFormCollection : public HTMLCollection
+class TDEHTML_EXPORT HTMLFormCollection : public HTMLCollection
 {
     friend class HTMLFormElement;
 protected:
@@ -211,7 +211,7 @@ protected:
 /**
   @internal. Not part of the public API
 */
-class KHTML_EXPORT HTMLMappedNameCollection : public HTMLCollection
+class TDEHTML_EXPORT HTMLMappedNameCollection : public HTMLCollection
 {
 public:
     HTMLMappedNameCollection(NodeImpl *base, int type, const DOMString &name );

@@ -91,7 +91,7 @@ void XMLIncrementalSource::setFinished( bool finished )
     m_finished = finished;
 }
 
-XMLHandler::XMLHandler(DocumentImpl *_doc, KHTMLView *_view)
+XMLHandler::XMLHandler(DocumentImpl *_doc, TDEHTMLView *_view)
     : errorLine(0)
 {
     m_doc = _doc;
@@ -390,7 +390,7 @@ bool XMLHandler::unparsedEntityDecl(const TQString &/*name*/, const TQString &/*
 
 //------------------------------------------------------------------------------
 
-XMLTokenizer::XMLTokenizer(DOM::DocumentImpl *_doc, KHTMLView *_view)
+XMLTokenizer::XMLTokenizer(DOM::DocumentImpl *_doc, TDEHTMLView *_view)
     : m_handler(_doc,_view)
 {
     m_doc = _doc;

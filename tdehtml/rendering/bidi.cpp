@@ -618,7 +618,7 @@ InlineFlowBox* RenderBlock::createLineBoxes(RenderObject* obj)
 {
     // See if we have an unconstructed line box for this object that is also
     // the last item on the line.
-    KHTMLAssert(obj->isInlineFlow() || obj == this);
+    TDEHTMLAssert(obj->isInlineFlow() || obj == this);
     RenderFlow* flow = static_cast<RenderFlow*>(obj);
 
     // Get the last box we made for this render object.
@@ -633,7 +633,7 @@ InlineFlowBox* RenderBlock::createLineBoxes(RenderObject* obj)
         // We need to make a new box for this render object.  Once
         // made, we need to place it at the end of the current line.
         InlineBox* newBox = obj->createInlineBox(false, obj == this);
-        KHTMLAssert(newBox->isInlineFlowBox());
+        TDEHTMLAssert(newBox->isInlineFlowBox());
         box = static_cast<InlineFlowBox*>(newBox);
         box->setFirstLineStyleBit(m_firstLine);
 
@@ -673,7 +673,7 @@ InlineFlowBox* RenderBlock::constructLine(const BidiIterator &/*start*/, const B
 
     // We should have a root inline box.  It should be unconstructed and
     // be the last continuation of our line list.
-    KHTMLAssert(lastLineBox() && !lastLineBox()->isConstructed());
+    TDEHTMLAssert(lastLineBox() && !lastLineBox()->isConstructed());
 
     // Set bits on our inline flow boxes that indicate which sides should
     // paint borders/margins/padding.  This knowledge will ultimately be used when
@@ -719,7 +719,7 @@ void RenderBlock::computeHorizontalPositionsForLine(InlineFlowBox* lineBox, Bidi
     int availableWidth = lineWidth(m_height);
     switch(style()->textAlign()) {
         case LEFT:
-        case KHTML_LEFT:
+        case TDEHTML_LEFT:
             numSpaces = 0;
             break;
         case JUSTIFY:
@@ -732,12 +732,12 @@ void RenderBlock::computeHorizontalPositionsForLine(InlineFlowBox* lineBox, Bidi
             if (bidi.context->basicDir == TQChar::DirL)
                 break;
         case RIGHT:
-        case KHTML_RIGHT:
+        case TDEHTML_RIGHT:
             x += availableWidth - totWidth;
             numSpaces = 0;
             break;
         case CENTER:
-        case KHTML_CENTER:
+        case TDEHTML_CENTER:
             int xd = (availableWidth - totWidth)/2;
             x += xd >0 ? xd : 0;
             numSpaces = 0;
@@ -756,7 +756,7 @@ void RenderBlock::computeHorizontalPositionsForLine(InlineFlowBox* lineBox, Bidi
                         spaces++;
                 }
 
-                KHTMLAssert(spaces <= numSpaces);
+                TDEHTMLAssert(spaces <= numSpaces);
 
                 // Only justify text with white-space: normal.
                 if (r->obj->style()->whiteSpace() == NORMAL) {
@@ -1986,7 +1986,7 @@ BidiIterator RenderBlock::findNextLineBreak(BidiIterator &start, BidiState &bidi
                 }
             }
         } else
-            KHTMLAssert( false );
+            TDEHTMLAssert( false );
 
         InlineMinMaxIterator savedIt = lastIt;
         lastIt = it;

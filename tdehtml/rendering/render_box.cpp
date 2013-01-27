@@ -119,7 +119,7 @@ static inline bool overflowAppliesTo(RenderObject* o)
      // css 2.1-11.1.1
      // 1) overflow only applies to non-replaced block-level elements, table cells, and inline-block elements
      if (o->isRenderBlock() || o->isTableRow() || o->isTableSection())
-         // 2) overflow on root applies to the viewport (cf. KHTMLView::layout)
+         // 2) overflow on root applies to the viewport (cf. TDEHTMLView::layout)
          if (!o->isRoot())
              // 3) overflow on body may apply to the viewport...
              if (!o->isBody()
@@ -995,7 +995,7 @@ void RenderBox::calcHorizontalMargins(const Length& ml, const Length& mr, int cw
     {
         if ( (ml.isVariable() && mr.isVariable() && m_width<cw) ||
              (!ml.isVariable() && !mr.isVariable() &&
-                containingBlock()->style()->textAlign() == KHTML_CENTER) )
+                containingBlock()->style()->textAlign() == TDEHTML_CENTER) )
         {
             m_marginLeft = (cw - m_width)/2;
             if (m_marginLeft<0) m_marginLeft=0;
@@ -1003,14 +1003,14 @@ void RenderBox::calcHorizontalMargins(const Length& ml, const Length& mr, int cw
         }
         else if ( (mr.isVariable() && m_width<cw) ||
                  (!ml.isVariable() && containingBlock()->style()->direction() == RTL &&
-                  containingBlock()->style()->textAlign() == KHTML_LEFT))
+                  containingBlock()->style()->textAlign() == TDEHTML_LEFT))
         {
             m_marginLeft = ml.width(cw);
             m_marginRight = cw - m_width - m_marginLeft;
         }
         else if ( (ml.isVariable() && m_width<cw) ||
                  (!mr.isVariable() && containingBlock()->style()->direction() == LTR &&
-                  containingBlock()->style()->textAlign() == KHTML_RIGHT))
+                  containingBlock()->style()->textAlign() == TDEHTML_RIGHT))
         {
             m_marginRight = mr.width(cw);
             m_marginLeft = cw - m_width - m_marginRight;
@@ -2295,15 +2295,15 @@ void RenderBox::caretPos(int /*offset*/, int flags, int &_x, int &_y, int &width
         // ### regard direction
 	switch (s->textAlign()) {
 	case LEFT:
-	case KHTML_LEFT:
+	case TDEHTML_LEFT:
 	case TAAUTO:	// ### find out what this does
 	case JUSTIFY:
 	    break;
 	case CENTER:
-	case KHTML_CENTER:
+	case TDEHTML_CENTER:
 	    _x += contentWidth() / 2;
 	    break;
-	case KHTML_RIGHT:
+	case TDEHTML_RIGHT:
 	case RIGHT:
 	    _x += contentWidth();
 	    break;

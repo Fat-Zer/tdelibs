@@ -1357,7 +1357,7 @@ void KeramikStyle::drawKStylePrimitive( KStylePrimitive kpe,
 bool KeramikStyle::isFormWidget(const TQStyleControlElementData &ceData, const ControlElementFlags elementFlags, const TQWidget* widget) const
 {
 	if (widget) {
-		//Form widgets are in the KHTMLView, but that has 2 further inner levels
+		//Form widgets are in the TDEHTMLView, but that has 2 further inner levels
 		//of widgets - QClipperWidget, and outside of that, QViewportWidget
 		TQWidget* potentialClipPort = widget->parentWidget();
 		if ((ceData.parentWidgetData.widgetObjectTypes.isEmpty()) && (ceData.parentWidgetFlags & CEF_IsTopLevel)) {
@@ -1369,9 +1369,9 @@ bool KeramikStyle::isFormWidget(const TQStyleControlElementData &ceData, const C
 				qstrcmp(potentialViewPort->name(), "qt_viewport") )
 			return false;
 	
-		TQWidget* potentialKHTML  = potentialViewPort->parentWidget();
-		if (!potentialKHTML || potentialKHTML->isTopLevel() ||
-				qstrcmp(potentialKHTML->className(), "KHTMLView") )
+		TQWidget* potentialTDEHTML  = potentialViewPort->parentWidget();
+		if (!potentialTDEHTML || potentialTDEHTML->isTopLevel() ||
+				qstrcmp(potentialTDEHTML->className(), "TDEHTMLView") )
 			return false;
 	
 	

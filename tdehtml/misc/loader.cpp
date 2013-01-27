@@ -486,7 +486,7 @@ CachedImage::CachedImage(DocLoader* dl, const DOMString &url, TDEIO::CacheContro
     setAccept( acceptHeader );
     m_showAnimations = dl->showAnimations();
 
-    if ( KHTMLFactory::defaultHTMLSettings()->isAdFiltered( url.string() ) ) {
+    if ( TDEHTMLFactory::defaultHTMLSettings()->isAdFiltered( url.string() ) ) {
         m_wasBlocked = true;
         CachedObject::finish();
     }
@@ -735,13 +735,13 @@ void CachedImage::movieStatus(int status)
     }
 
     if((status == TQMovie::EndOfMovie && (!m || m->frameNumber() <= 1)) ||
-       ((status == TQMovie::EndOfLoop) && (m_showAnimations == KHTMLSettings::KAnimationLoopOnce)) ||
-       ((status == TQMovie::EndOfFrame) && (m_showAnimations == KHTMLSettings::KAnimationDisabled))
+       ((status == TQMovie::EndOfLoop) && (m_showAnimations == TDEHTMLSettings::KAnimationLoopOnce)) ||
+       ((status == TQMovie::EndOfFrame) && (m_showAnimations == TDEHTMLSettings::KAnimationDisabled))
       )
     {
         if(imgSource)
         {
-            setShowAnimations( KHTMLSettings::KAnimationDisabled );
+            setShowAnimations( TDEHTMLSettings::KAnimationDisabled );
 
             // monochrome alphamasked images are usually about 10000 times
             // faster to draw, so this is worth the hack
@@ -779,10 +779,10 @@ void CachedImage::movieResize(const TQSize& /*s*/)
     do_notify(m->framePixmap(), TQRect());
 }
 
-void CachedImage::setShowAnimations( KHTMLSettings::KAnimationAdvice showAnimations )
+void CachedImage::setShowAnimations( TDEHTMLSettings::KAnimationAdvice showAnimations )
 {
     m_showAnimations = showAnimations;
-    if ( (m_showAnimations == KHTMLSettings::KAnimationDisabled) && imgSource ) {
+    if ( (m_showAnimations == TDEHTMLSettings::KAnimationDisabled) && imgSource ) {
         imgSource->cleanBuffer();
         delete p;
         p = new TQPixmap(m->framePixmap());
@@ -941,13 +941,13 @@ Request::~Request()
 
 // ------------------------------------------------------------------------------------------
 
-DocLoader::DocLoader(KHTMLPart* part, DocumentImpl* doc)
+DocLoader::DocLoader(TDEHTMLPart* part, DocumentImpl* doc)
 {
     m_cachePolicy = TDEIO::CC_Verify;
     m_expireDate = 0;
     m_creationDate = time(0);
     m_bautoloadImages = true;
-    m_showAnimations = KHTMLSettings::KAnimationEnabled;
+    m_showAnimations = TDEHTMLSettings::KAnimationEnabled;
     m_part = part;
     m_doc = doc;
 
@@ -1052,8 +1052,8 @@ CachedCSSStyleSheet *DocLoader::requestStyleSheet( const DOM::DOMString &url, co
 CachedScript *DocLoader::requestScript( const DOM::DOMString &url, const TQString& charset)
 {
     DOCLOADER_SECCHECK(true);
-    if ( ! KHTMLFactory::defaultHTMLSettings()->isJavaScriptEnabled(fullURL.host()) ||
-           KHTMLFactory::defaultHTMLSettings()->isAdFiltered(fullURL.url()))
+    if ( ! TDEHTMLFactory::defaultHTMLSettings()->isJavaScriptEnabled(fullURL.host()) ||
+           TDEHTMLFactory::defaultHTMLSettings()->isAdFiltered(fullURL.url()))
 	return 0L;
 
     CachedScript* s = Cache::requestObject<CachedScript, CachedObject::Script>( this, fullURL, 0 );
@@ -1086,7 +1086,7 @@ void DocLoader::setAutoloadImages( bool enable )
         }
 }
 
-void DocLoader::setShowAnimations( KHTMLSettings::KAnimationAdvice showAnimations )
+void DocLoader::setShowAnimations( TDEHTMLSettings::KAnimationAdvice showAnimations )
 {
     if ( showAnimations == m_showAnimations ) return;
     m_showAnimations = showAnimations;
@@ -1162,7 +1162,7 @@ void Loader::servePendingRequests()
         {
             job->addMetaData( "referrer",  req->m_docLoader->doc()->URL().url() );
 
-            KHTMLPart *part = req->m_docLoader->part();
+            TDEHTMLPart *part = req->m_docLoader->part();
             if (part )
             {
                 job->addMetaData( "cross-domain", part->toplevelURL().url() );
@@ -1356,7 +1356,7 @@ void Cache::init()
         nullPixmap = new TQPixmap;
 
     if ( !brokenPixmap )
-        brokenPixmap = new TQPixmap(KHTMLFactory::instance()->iconLoader()->loadIcon("file_broken", KIcon::Desktop, 16, KIcon::DisabledState));
+        brokenPixmap = new TQPixmap(TDEHTMLFactory::instance()->iconLoader()->loadIcon("file_broken", KIcon::Desktop, 16, KIcon::DisabledState));
 
     if ( !blockedPixmap ) {
         blockedPixmap = new TQPixmap();

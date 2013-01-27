@@ -39,11 +39,11 @@ struct KPerDomainSettings {
     bool m_bEnableJavaScript : 1;
     bool m_bEnablePlugins : 1;
     // don't forget to maintain the bitfields as the enums grow
-    KHTMLSettings::KJSWindowOpenPolicy m_windowOpenPolicy : 2;
-    KHTMLSettings::KJSWindowStatusPolicy m_windowStatusPolicy : 1;
-    KHTMLSettings::KJSWindowFocusPolicy m_windowFocusPolicy : 1;
-    KHTMLSettings::KJSWindowMovePolicy m_windowMovePolicy : 1;
-    KHTMLSettings::KJSWindowResizePolicy m_windowResizePolicy : 1;
+    TDEHTMLSettings::KJSWindowOpenPolicy m_windowOpenPolicy : 2;
+    TDEHTMLSettings::KJSWindowStatusPolicy m_windowStatusPolicy : 1;
+    TDEHTMLSettings::KJSWindowFocusPolicy m_windowFocusPolicy : 1;
+    TDEHTMLSettings::KJSWindowMovePolicy m_windowMovePolicy : 1;
+    TDEHTMLSettings::KJSWindowResizePolicy m_windowResizePolicy : 1;
 
 #ifdef DEBUG_SETTINGS
     void dump(const TQString &infix = TQString::null) const {
@@ -62,7 +62,7 @@ struct KPerDomainSettings {
 
 typedef TQMap<TQString,KPerDomainSettings> PolicyMap;
 
-class KHTMLSettingsPrivate
+class TDEHTMLSettingsPrivate
 {
 public:
     bool m_bChangeCursor : 1;
@@ -92,7 +92,7 @@ public:
     int m_fontSize;
     int m_minFontSize;
     int m_maxFormCompletionItems;
-    KHTMLSettings::KAnimationAdvice m_showAnimations;
+    TDEHTMLSettings::KAnimationAdvice m_showAnimations;
 
     TQString m_encoding;
     TQString m_userSheet;
@@ -115,7 +115,7 @@ public:
   * or a deep copy of the global settings if not existent.
   */
 static KPerDomainSettings &setup_per_domain_policy(
-				KHTMLSettingsPrivate *d,
+				TDEHTMLSettingsPrivate *d,
 				const TQString &domain) {
   if (domain.isEmpty()) {
     kdWarning() << "setup_per_domain_policy: domain is empty" << endl;
@@ -131,7 +131,7 @@ static KPerDomainSettings &setup_per_domain_policy(
 }
 
 
-KHTMLSettings::KJavaScriptAdvice KHTMLSettings::strToAdvice(const TQString& _str)
+TDEHTMLSettings::KJavaScriptAdvice TDEHTMLSettings::strToAdvice(const TQString& _str)
 {
   KJavaScriptAdvice ret = KJavaScriptDunno;
 
@@ -146,7 +146,7 @@ KHTMLSettings::KJavaScriptAdvice KHTMLSettings::strToAdvice(const TQString& _str
   return ret;
 }
 
-const char* KHTMLSettings::adviceToStr(KJavaScriptAdvice _advice)
+const char* TDEHTMLSettings::adviceToStr(KJavaScriptAdvice _advice)
 {
     switch( _advice ) {
     case KJavaScriptAccept: return I18N_NOOP("Accept");
@@ -157,7 +157,7 @@ const char* KHTMLSettings::adviceToStr(KJavaScriptAdvice _advice)
 }
 
 
-void KHTMLSettings::splitDomainAdvice(const TQString& configStr, TQString &domain,
+void TDEHTMLSettings::splitDomainAdvice(const TQString& configStr, TQString &domain,
                                       KJavaScriptAdvice &javaAdvice, KJavaScriptAdvice& javaScriptAdvice)
 {
     TQString tmp(configStr);
@@ -186,7 +186,7 @@ void KHTMLSettings::splitDomainAdvice(const TQString& configStr, TQString &domai
     }
 }
 
-void KHTMLSettings::readDomainSettings(TDEConfig *config, bool reset,
+void TDEHTMLSettings::readDomainSettings(TDEConfig *config, bool reset,
 	bool global, KPerDomainSettings &pd_settings) {
   TQString jsPrefix = global ? TQString::null
   				: TQString::fromLatin1("javascript.");
@@ -255,39 +255,39 @@ void KHTMLSettings::readDomainSettings(TDEConfig *config, bool reset,
 }
 
 
-KHTMLSettings::KHTMLSettings()
+TDEHTMLSettings::TDEHTMLSettings()
 {
-  d = new KHTMLSettingsPrivate();
+  d = new TDEHTMLSettingsPrivate();
   init();
 }
 
-KHTMLSettings::KHTMLSettings(const KHTMLSettings &other)
+TDEHTMLSettings::TDEHTMLSettings(const TDEHTMLSettings &other)
 {
-  d = new KHTMLSettingsPrivate();
+  d = new TDEHTMLSettingsPrivate();
   *d = *other.d;
 }
 
-KHTMLSettings::~KHTMLSettings()
+TDEHTMLSettings::~TDEHTMLSettings()
 {
   delete d;
 }
 
-bool KHTMLSettings::changeCursor() const
+bool TDEHTMLSettings::changeCursor() const
 {
   return d->m_bChangeCursor;
 }
 
-bool KHTMLSettings::underlineLink() const
+bool TDEHTMLSettings::underlineLink() const
 {
   return d->m_underlineLink;
 }
 
-bool KHTMLSettings::hoverLink() const
+bool TDEHTMLSettings::hoverLink() const
 {
   return d->m_hoverLink;
 }
 
-void KHTMLSettings::init()
+void TDEHTMLSettings::init()
 {
   TDEConfig global( "tdehtmlrc", true, false );
   init( &global, true );
@@ -299,7 +299,7 @@ void KHTMLSettings::init()
   init( local, false );
 }
 
-void KHTMLSettings::init( TDEConfig * config, bool reset )
+void TDEHTMLSettings::init( TDEConfig * config, bool reset )
 {
   TQString group_save = config->group();
   if (reset || config->hasGroup("MainView Settings"))
@@ -640,7 +640,7 @@ void KHTMLSettings::init( TDEConfig * config, bool reset )
   * In case of doubt, the global domain is returned.
   */
 static const KPerDomainSettings &lookup_hostname_policy(
-			const KHTMLSettingsPrivate *d,
+			const TDEHTMLSettingsPrivate *d,
 			const TQString& hostname)
 {
 #ifdef DEBUG_SETTINGS
@@ -693,32 +693,32 @@ static const KPerDomainSettings &lookup_hostname_policy(
   return d->global;
 }
 
-bool KHTMLSettings::isOpenMiddleClickEnabled()
+bool TDEHTMLSettings::isOpenMiddleClickEnabled()
 {
   return d->m_bOpenMiddleClick;
 }
 
-bool KHTMLSettings::isBackRightClickEnabled()
+bool TDEHTMLSettings::isBackRightClickEnabled()
 {
   return d->m_bBackRightClick;
 }
 
-bool KHTMLSettings::accessKeysEnabled() const
+bool TDEHTMLSettings::accessKeysEnabled() const
 {
     return d->m_accessKeysEnabled;
 }
 
-bool KHTMLSettings::isAdFilterEnabled() const
+bool TDEHTMLSettings::isAdFilterEnabled() const
 {
     return d->m_adFilterEnabled;
 }
 
-bool KHTMLSettings::isHideAdsEnabled() const
+bool TDEHTMLSettings::isHideAdsEnabled() const
 {
     return d->m_hideAdsEnabled;
 }
 
-bool KHTMLSettings::isAdFiltered( const TQString &url ) const
+bool TDEHTMLSettings::isAdFiltered( const TQString &url ) const
 {
     if (d->m_adFilterEnabled)
     {
@@ -739,7 +739,7 @@ bool KHTMLSettings::isAdFiltered( const TQString &url ) const
     return false;
 }
 
-void KHTMLSettings::addAdFilter( const TQString &url )
+void TDEHTMLSettings::addAdFilter( const TQString &url )
 {
     TDEConfig config( "tdehtmlrc", false, false );
     config.setGroup( "Filter Settings" );
@@ -780,69 +780,69 @@ void KHTMLSettings::addAdFilter( const TQString &url )
     }
 }
 
-bool KHTMLSettings::isJavaEnabled( const TQString& hostname )
+bool TDEHTMLSettings::isJavaEnabled( const TQString& hostname )
 {
   return lookup_hostname_policy(d,hostname.lower()).m_bEnableJava;
 }
 
-bool KHTMLSettings::isJavaScriptEnabled( const TQString& hostname )
+bool TDEHTMLSettings::isJavaScriptEnabled( const TQString& hostname )
 {
   return lookup_hostname_policy(d,hostname.lower()).m_bEnableJavaScript;
 }
 
-bool KHTMLSettings::isJavaScriptDebugEnabled( const TQString& /*hostname*/ )
+bool TDEHTMLSettings::isJavaScriptDebugEnabled( const TQString& /*hostname*/ )
 {
   // debug setting is global for now, but could change in the future
   return d->m_bEnableJavaScriptDebug;
 }
 
-bool KHTMLSettings::isJavaScriptErrorReportingEnabled( const TQString& /*hostname*/ ) const
+bool TDEHTMLSettings::isJavaScriptErrorReportingEnabled( const TQString& /*hostname*/ ) const
 {
   // error reporting setting is global for now, but could change in the future
   return d->m_bEnableJavaScriptErrorReporting;
 }
 
-bool KHTMLSettings::isPluginsEnabled( const TQString& hostname )
+bool TDEHTMLSettings::isPluginsEnabled( const TQString& hostname )
 {
   return lookup_hostname_policy(d,hostname.lower()).m_bEnablePlugins;
 }
 
-KHTMLSettings::KJSWindowOpenPolicy KHTMLSettings::windowOpenPolicy(
+TDEHTMLSettings::KJSWindowOpenPolicy TDEHTMLSettings::windowOpenPolicy(
 				const TQString& hostname) const {
   return lookup_hostname_policy(d,hostname.lower()).m_windowOpenPolicy;
 }
 
-KHTMLSettings::KJSWindowMovePolicy KHTMLSettings::windowMovePolicy(
+TDEHTMLSettings::KJSWindowMovePolicy TDEHTMLSettings::windowMovePolicy(
 				const TQString& hostname) const {
   return lookup_hostname_policy(d,hostname.lower()).m_windowMovePolicy;
 }
 
-KHTMLSettings::KJSWindowResizePolicy KHTMLSettings::windowResizePolicy(
+TDEHTMLSettings::KJSWindowResizePolicy TDEHTMLSettings::windowResizePolicy(
 				const TQString& hostname) const {
   return lookup_hostname_policy(d,hostname.lower()).m_windowResizePolicy;
 }
 
-KHTMLSettings::KJSWindowStatusPolicy KHTMLSettings::windowStatusPolicy(
+TDEHTMLSettings::KJSWindowStatusPolicy TDEHTMLSettings::windowStatusPolicy(
 				const TQString& hostname) const {
   return lookup_hostname_policy(d,hostname.lower()).m_windowStatusPolicy;
 }
 
-KHTMLSettings::KJSWindowFocusPolicy KHTMLSettings::windowFocusPolicy(
+TDEHTMLSettings::KJSWindowFocusPolicy TDEHTMLSettings::windowFocusPolicy(
 				const TQString& hostname) const {
   return lookup_hostname_policy(d,hostname.lower()).m_windowFocusPolicy;
 }
 
-int KHTMLSettings::mediumFontSize() const
+int TDEHTMLSettings::mediumFontSize() const
 {
     return d->m_fontSize;
 }
 
-int KHTMLSettings::minFontSize() const
+int TDEHTMLSettings::minFontSize() const
 {
   return d->m_minFontSize;
 }
 
-TQString KHTMLSettings::settingsToCSS() const
+TQString TDEHTMLSettings::settingsToCSS() const
 {
     // lets start with the link properties
     TQString str = "a:link {\ncolor: ";
@@ -873,7 +873,7 @@ TQString KHTMLSettings::settingsToCSS() const
     return str;
 }
 
-const TQString &KHTMLSettings::availableFamilies()
+const TQString &TDEHTMLSettings::availableFamilies()
 {
     if ( !avFamilies ) {
         avFamilies = new TQString;
@@ -899,7 +899,7 @@ const TQString &KHTMLSettings::availableFamilies()
   return *avFamilies;
 }
 
-TQString KHTMLSettings::lookupFont(int i) const
+TQString TDEHTMLSettings::lookupFont(int i) const
 {
     TQString font;
     if (d->fonts.count() > (uint) i)
@@ -909,121 +909,121 @@ TQString KHTMLSettings::lookupFont(int i) const
     return font;
 }
 
-TQString KHTMLSettings::stdFontName() const
+TQString TDEHTMLSettings::stdFontName() const
 {
     return lookupFont(0);
 }
 
-TQString KHTMLSettings::fixedFontName() const
+TQString TDEHTMLSettings::fixedFontName() const
 {
     return lookupFont(1);
 }
 
-TQString KHTMLSettings::serifFontName() const
+TQString TDEHTMLSettings::serifFontName() const
 {
     return lookupFont(2);
 }
 
-TQString KHTMLSettings::sansSerifFontName() const
+TQString TDEHTMLSettings::sansSerifFontName() const
 {
     return lookupFont(3);
 }
 
-TQString KHTMLSettings::cursiveFontName() const
+TQString TDEHTMLSettings::cursiveFontName() const
 {
     return lookupFont(4);
 }
 
-TQString KHTMLSettings::fantasyFontName() const
+TQString TDEHTMLSettings::fantasyFontName() const
 {
     return lookupFont(5);
 }
 
-void KHTMLSettings::setStdFontName(const TQString &n)
+void TDEHTMLSettings::setStdFontName(const TQString &n)
 {
     while(d->fonts.count() <= 0)
         d->fonts.append(TQString::null);
     d->fonts[0] = n;
 }
 
-void KHTMLSettings::setFixedFontName(const TQString &n)
+void TDEHTMLSettings::setFixedFontName(const TQString &n)
 {
     while(d->fonts.count() <= 1)
         d->fonts.append(TQString::null);
     d->fonts[1] = n;
 }
 
-TQString KHTMLSettings::userStyleSheet() const
+TQString TDEHTMLSettings::userStyleSheet() const
 {
     return d->m_userSheet;
 }
 
-bool KHTMLSettings::isFormCompletionEnabled() const
+bool TDEHTMLSettings::isFormCompletionEnabled() const
 {
   return d->m_formCompletionEnabled;
 }
 
-int KHTMLSettings::maxFormCompletionItems() const
+int TDEHTMLSettings::maxFormCompletionItems() const
 {
   return d->m_maxFormCompletionItems;
 }
 
-const TQString &KHTMLSettings::encoding() const
+const TQString &TDEHTMLSettings::encoding() const
 {
   return d->m_encoding;
 }
 
-bool KHTMLSettings::followSystemColors() const
+bool TDEHTMLSettings::followSystemColors() const
 {
     return d->m_follow_system_colors;
 }
 
-const TQColor& KHTMLSettings::textColor() const
+const TQColor& TDEHTMLSettings::textColor() const
 {
   return d->m_textColor;
 }
 
-const TQColor& KHTMLSettings::baseColor() const
+const TQColor& TDEHTMLSettings::baseColor() const
 {
   return d->m_baseColor;
 }
 
-const TQColor& KHTMLSettings::linkColor() const
+const TQColor& TDEHTMLSettings::linkColor() const
 {
   return d->m_linkColor;
 }
 
-const TQColor& KHTMLSettings::vLinkColor() const
+const TQColor& TDEHTMLSettings::vLinkColor() const
 {
   return d->m_vLinkColor;
 }
 
-bool KHTMLSettings::autoLoadImages() const
+bool TDEHTMLSettings::autoLoadImages() const
 {
   return d->m_bAutoLoadImages;
 }
 
-bool KHTMLSettings::unfinishedImageFrame() const
+bool TDEHTMLSettings::unfinishedImageFrame() const
 {
   return d->m_bUnfinishedImageFrame;
 }
 
-KHTMLSettings::KAnimationAdvice KHTMLSettings::showAnimations() const
+TDEHTMLSettings::KAnimationAdvice TDEHTMLSettings::showAnimations() const
 {
   return d->m_showAnimations;
 }
 
-bool KHTMLSettings::isAutoDelayedActionsEnabled() const
+bool TDEHTMLSettings::isAutoDelayedActionsEnabled() const
 {
   return d->m_autoDelayedActionsEnabled;
 }
 
-bool KHTMLSettings::jsErrorsEnabled() const
+bool TDEHTMLSettings::jsErrorsEnabled() const
 {
   return d->m_jsErrorsEnabled;
 }
 
-void KHTMLSettings::setJSErrorsEnabled(bool enabled)
+void TDEHTMLSettings::setJSErrorsEnabled(bool enabled)
 {
   d->m_jsErrorsEnabled = enabled;
   // save it
@@ -1033,22 +1033,22 @@ void KHTMLSettings::setJSErrorsEnabled(bool enabled)
   config->sync();
 }
 
-bool KHTMLSettings::allowTabulation() const
+bool TDEHTMLSettings::allowTabulation() const
 {
     return d->m_allowTabulation;
 }
 
-bool KHTMLSettings::autoSpellCheck() const
+bool TDEHTMLSettings::autoSpellCheck() const
 {
     return d->m_autoSpellCheck;
 }
 
-TQValueList< TQPair< TQString, TQChar > > KHTMLSettings::fallbackAccessKeysAssignments() const
+TQValueList< TQPair< TQString, TQChar > > TDEHTMLSettings::fallbackAccessKeysAssignments() const
 {
     return d->m_fallbackAccessKeysAssignments;
 }
 
-void KHTMLSettings::setJSPopupBlockerPassivePopup(bool enabled)
+void TDEHTMLSettings::setJSPopupBlockerPassivePopup(bool enabled)
 {
     d->m_jsPopupBlockerPassivePopup = enabled;
     // save it
@@ -1058,7 +1058,7 @@ void KHTMLSettings::setJSPopupBlockerPassivePopup(bool enabled)
     config->sync();
 }
 
-bool KHTMLSettings::jsPopupBlockerPassivePopup() const
+bool TDEHTMLSettings::jsPopupBlockerPassivePopup() const
 {
     return d->m_jsPopupBlockerPassivePopup;
 }

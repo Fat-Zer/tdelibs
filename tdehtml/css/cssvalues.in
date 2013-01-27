@@ -350,16 +350,16 @@ thick
 thin
 underline
 #
-# CSS_PROP__KHTML_FLOW_MODE
+# CSS_PROP__TDEHTML_FLOW_MODE
 -tdehtml-normal
 -tdehtml-around-floats
 
 # CSS3 Values
-# CSS_PROP__KHTML_BOX_SIZING
+# CSS_PROP__TDEHTML_BOX_SIZING
 border-box
 content-box
 
-# CSS_PROP__KHTML_USER_INPUT
+# CSS_PROP__TDEHTML_USER_INPUT
 enabled
 disabled
 #none

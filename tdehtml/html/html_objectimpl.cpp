@@ -265,7 +265,7 @@ void HTMLAppletElementImpl::parseAttribute(AttributeImpl *attr)
 
 void HTMLAppletElementImpl::attach()
 {
-    KHTMLView* w = getDocument()->view();
+    TDEHTMLView* w = getDocument()->view();
 
 #ifndef Q_WS_QWS // FIXME?
     DOMString codeBase = getAttribute( ATTR_CODEBASE );
@@ -346,7 +346,7 @@ void HTMLEmbedElementImpl::parseAttribute(AttributeImpl *attr)
 
 void HTMLEmbedElementImpl::attach()
 {
-    KHTMLView* w = getDocument()->view();
+    TDEHTMLView* w = getDocument()->view();
 
     if (!w || !w->part()->pluginsEnabled())
         m_renderAlternative = true;
@@ -422,14 +422,14 @@ DocumentImpl* HTMLObjectElementImpl::contentDocument() const
     if ( !m_render ) return 0;
     if ( !m_render->isWidget() ) return 0;
     TQWidget* widget = static_cast<RenderWidget*>( m_render )->widget();
-    if( widget && ::tqqt_cast<KHTMLView*>( widget ) )
-        return static_cast<KHTMLView*>( widget )->part()->xmlDocImpl();
+    if( widget && ::tqqt_cast<TDEHTMLView*>( widget ) )
+        return static_cast<TDEHTMLView*>( widget )->part()->xmlDocImpl();
     return 0;
 }
 
 void HTMLObjectElementImpl::attach()
 {
-    KHTMLView* w = getDocument()->view();
+    TDEHTMLView* w = getDocument()->view();
 
     if (!w || !w->part()->pluginsEnabled())
         m_renderAlternative = true;

@@ -22,8 +22,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef KHTMLVIEW_H
-#define KHTMLVIEW_H
+#ifndef TDEHTMLVIEW_H
+#define TDEHTMLVIEW_H
 
 // qt includes and classes
 #include <tqscrollview.h>
@@ -67,15 +67,15 @@ namespace tdehtml {
     void applyRule(DOM::CSSProperty *prop);
 }
 
-class KHTMLPart;
-class KHTMLViewPrivate;
+class TDEHTMLPart;
+class TDEHTMLViewPrivate;
 
 /**
  * Renders and displays HTML in a TQScrollView.
  *
  * Suitable for use as an application's main view.
  **/
-class KHTML_EXPORT KHTMLView : public TQScrollView
+class TDEHTML_EXPORT TDEHTMLView : public TQScrollView
 {
     Q_OBJECT
 
@@ -86,7 +86,7 @@ class KHTML_EXPORT KHTMLView : public TQScrollView
     friend class DOM::HTMLAnchorElementImpl;
     friend class DOM::HTMLInputElementImpl;
     friend class DOM::DocumentImpl;
-    friend class KHTMLPart;
+    friend class TDEHTMLPart;
     friend class tdehtml::RenderCanvas;
     friend class tdehtml::RenderObject;
     friend class tdehtml::RenderLineEdit;
@@ -101,16 +101,16 @@ class KHTML_EXPORT KHTMLView : public TQScrollView
 
 public:
     /**
-     * Constructs a KHTMLView.
+     * Constructs a TDEHTMLView.
      */
-    KHTMLView( KHTMLPart *part, TQWidget *parent, const char *name=0 );
-    virtual ~KHTMLView();
+    TDEHTMLView( TDEHTMLPart *part, TQWidget *parent, const char *name=0 );
+    virtual ~TDEHTMLView();
 
     /**
-     * Returns a pointer to the KHTMLPart that is
+     * Returns a pointer to the TDEHTMLPart that is
      * rendering the page.
      **/
-    KHTMLPart *part() const { return m_part; }
+    TDEHTMLPart *part() const { return m_part; }
 
     int frameWidth() const { return _width; }
 
@@ -173,7 +173,7 @@ public:
 signals:
     /**
      * This signal is used for internal layouting. Don't use it to check if rendering finished.
-     * Use @ref KHTMLPart completed() signal instead.
+     * Use @ref TDEHTMLPart completed() signal instead.
      */
     void finishedLayout();
     void cleared();
@@ -296,9 +296,9 @@ private:
 
     bool focusNextPrevNode(bool next);
     bool handleAccessKey(const TQKeyEvent* ev);
-    bool focusNodeWithAccessKey(TQChar c, KHTMLView* caller = NULL);
+    bool focusNodeWithAccessKey(TQChar c, TDEHTMLView* caller = NULL);
     TQMap< DOM::ElementImpl*, TQChar > buildFallbackAccessKeys() const;
-    void displayAccessKeys( KHTMLView* caller, KHTMLView* origview, TQValueVector< TQChar >& taken, bool use_fallbacks );
+    void displayAccessKeys( TDEHTMLView* caller, TDEHTMLView* origview, TQValueVector< TQChar >& taken, bool use_fallbacks );
 
     void useSlowRepaints();
 
@@ -328,13 +328,13 @@ private:
 
     void complete( bool pendingAction );
 
-#ifndef KHTML_NO_TYPE_AHEAD_FIND
+#ifndef TDEHTML_NO_TYPE_AHEAD_FIND
     void findAhead(bool increase);
     void updateFindAheadTimeout();
     void startFindAhead( bool linksOnly );
-#endif // KHTML_NO_TYPE_AHEAD_FIND
+#endif // TDEHTML_NO_TYPE_AHEAD_FIND
 
-#ifndef KHTML_NO_CARET
+#ifndef TDEHTML_NO_CARET
     // -- caret-related member functions (for caretMode as well as designMode)
 
     /** initializes the caret if it hasn't been initialized yet.
@@ -463,14 +463,14 @@ private:
 
     /**
      * Returns the current caret policy when the view is not focused.
-     * @return a KHTMLPart::CaretDisplay value
+     * @return a TDEHTMLPart::CaretDisplay value
      */
     int caretDisplayPolicyNonFocused() const;
 
     /**
      * Sets the caret display policy when the view is not focused.
      * @param policy new display policy as
-     *		defined by KHTMLPart::CaretDisplayPolicy
+     *		defined by TDEHTMLPart::CaretDisplayPolicy
      * @since 3.2
      */
     void setCaretDisplayPolicyNonFocused(int policy);
@@ -601,7 +601,7 @@ private:
      */
     void moveCaretToLineEnd();
 
-#endif // KHTML_NO_CARET
+#endif // TDEHTML_NO_CARET
 
     // ------------------------------------- member variables ------------------------------------
  private:
@@ -614,8 +614,8 @@ private:
     int _marginWidth;
     int _marginHeight;
 
-    KHTMLPart *m_part;
-    KHTMLViewPrivate *d;
+    TDEHTMLPart *m_part;
+    TDEHTMLViewPrivate *d;
 
     TQString m_medium;   // media type
 };

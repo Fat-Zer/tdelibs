@@ -232,7 +232,7 @@ bool ScriptInterpreter::isWindowOpenAllowed() const
     bool eventOk = ( // mouse events
       id == DOM::EventImpl::CLICK_EVENT ||
       id == DOM::EventImpl::MOUSEUP_EVENT || id == DOM::EventImpl::MOUSEDOWN_EVENT ||
-      id == DOM::EventImpl::KHTML_ECMA_CLICK_EVENT || id == DOM::EventImpl::KHTML_ECMA_DBLCLICK_EVENT ||
+      id == DOM::EventImpl::TDEHTML_ECMA_CLICK_EVENT || id == DOM::EventImpl::TDEHTML_ECMA_DBLCLICK_EVENT ||
       // keyboard events
       id == DOM::EventImpl::KEYDOWN_EVENT || id == DOM::EventImpl::KEYPRESS_EVENT ||
       id == DOM::EventImpl::KEYUP_EVENT ||

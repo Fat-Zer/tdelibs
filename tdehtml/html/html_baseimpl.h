@@ -33,8 +33,8 @@
 
 #include <tqscrollview.h>
 
-class KHTMLView;
-class KHTMLPart;
+class TDEHTMLView;
+class TDEHTMLPart;
 
 namespace tdehtml {
     class RenderFrameSet;
@@ -96,7 +96,7 @@ public:
     virtual void setFocus(bool);
 
     DocumentImpl* contentDocument() const;
-    KHTMLPart*    contentPart() const;
+    TDEHTMLPart*    contentPart() const;
 
     DOMString url;
     DOMString name;

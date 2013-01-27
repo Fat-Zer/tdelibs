@@ -334,7 +334,7 @@ void KMultiPart::setPart( const TQString& mimeType )
     {
 
         // Forward signals from the part's browser extension
-        // this is very related (but not exactly like) KHTMLPart::processObjectRequest
+        // this is very related (but not exactly like) TDEHTMLPart::processObjectRequest
 
         connect( childExtension, TQT_SIGNAL( openURLNotify() ),
                  m_extension, TQT_SIGNAL( openURLNotify() ) );
@@ -396,7 +396,7 @@ void KMultiPart::setPart( const TQString& mimeType )
 
     m_partIsLoading = false;
     // Load the part's plugins too.
-    // ###### This is a hack. The bug is that KHTMLPart doesn't load its plugins
+    // ###### This is a hack. The bug is that TDEHTMLPart doesn't load its plugins
     // if className != "Browser/View".
     loadPlugins( this, m_part, m_part->instance() );
     // Get the part's GUI to appear
@@ -437,7 +437,7 @@ void KMultiPart::startOfData()
     }
     if ( m_isHTMLPart )
     {
-        KHTMLPart* htmlPart = static_cast<KHTMLPart *>( static_cast<KParts::ReadOnlyPart *>( m_part ) );
+        TDEHTMLPart* htmlPart = static_cast<TDEHTMLPart *>( static_cast<KParts::ReadOnlyPart *>( m_part ) );
         htmlPart->begin( url() );
     }
     else
@@ -463,7 +463,7 @@ void KMultiPart::reallySendData( const TQByteArray& line )
 {
     if ( m_isHTMLPart )
     {
-        KHTMLPart* htmlPart = static_cast<KHTMLPart *>( static_cast<KParts::ReadOnlyPart *>( m_part ) );
+        TDEHTMLPart* htmlPart = static_cast<TDEHTMLPart *>( static_cast<KParts::ReadOnlyPart *>( m_part ) );
         htmlPart->write( line.data(), line.size() );
     }
     else if ( m_tempFile )
@@ -477,7 +477,7 @@ void KMultiPart::endOfData()
     Q_ASSERT( m_part );
     if ( m_isHTMLPart )
     {
-        KHTMLPart* htmlPart = static_cast<KHTMLPart *>( static_cast<KParts::ReadOnlyPart *>( m_part ) );
+        TDEHTMLPart* htmlPart = static_cast<TDEHTMLPart *>( static_cast<KParts::ReadOnlyPart *>( m_part ) );
         htmlPart->end();
     } else if ( m_tempFile )
     {
@@ -600,12 +600,12 @@ int KMultiPartBrowserExtension::yOffset()
 
 void KMultiPartBrowserExtension::print()
 {
-    static_cast<KHTMLPartBrowserExtension *>( m_imgPart->doc()->browserExtension() )->print();
+    static_cast<TDEHTMLPartBrowserExtension *>( m_imgPart->doc()->browserExtension() )->print();
 }
 
 void KMultiPartBrowserExtension::reparseConfiguration()
 {
-    static_cast<KHTMLPartBrowserExtension *>( m_imgPart->doc()->browserExtension() )->reparseConfiguration();
+    static_cast<TDEHTMLPartBrowserExtension *>( m_imgPart->doc()->browserExtension() )->reparseConfiguration();
     m_imgPart->doc()->setAutoloadImages( true );
 }
 #endif

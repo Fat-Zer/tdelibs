@@ -65,7 +65,7 @@ struct KPARTS_EXPORT URLArgs
 
   /**
    * This buffer can be used by the part to save and restore its contents.
-   * See KHTMLPart for instance.
+   * See TDEHTMLPart for instance.
    */
   TQStringList docState;
 
@@ -89,26 +89,26 @@ struct KPARTS_EXPORT URLArgs
   TQString serviceType;
 
   /**
-   * KHTML-specific field, contents of the HTTP POST data.
+   * TDEHTML-specific field, contents of the HTTP POST data.
    */
   TQByteArray postData;
 
   /**
-   * KHTML-specific field, header defining the type of the POST data.
+   * TDEHTML-specific field, header defining the type of the POST data.
    */
   void setContentType( const TQString & contentType );
   /**
-   * KHTML-specific field, header defining the type of the POST data.
+   * TDEHTML-specific field, header defining the type of the POST data.
    */
   TQString contentType() const;
   /**
-   * KHTML-specific field, whether to do a POST instead of a GET,
+   * TDEHTML-specific field, whether to do a POST instead of a GET,
    * for the next openURL.
    */
   void setDoPost( bool enable );
 
   /**
-   * KHTML-specific field, whether to do a POST instead of a GET,
+   * TDEHTML-specific field, whether to do a POST instead of a GET,
    * for the next openURL.
    */
   bool doPost() const;
@@ -134,7 +134,7 @@ struct KPARTS_EXPORT URLArgs
   TQMap<TQString, TQString> &metaData();
 
   /**
-   * The frame in which to open the URL. KHTML/Konqueror-specific.
+   * The frame in which to open the URL. TDEHTML/Konqueror-specific.
    */
   TQString frameName;
 
@@ -719,7 +719,7 @@ private:
 /**
  * An extension class for container parts, i.e. parts that contain
  * other parts.
- * For instance a KHTMLPart hosts one part per frame.
+ * For instance a TDEHTMLPart hosts one part per frame.
  */
 class KPARTS_EXPORT BrowserHostExtension : public TQObject
 {

@@ -165,7 +165,7 @@ const ClassInfo Navigator::info = { "Navigator", 0, &NavigatorTable, 0 };
 */
 IMPLEMENT_PROTOFUNC_DOM(NavigatorFunc)
 
-Navigator::Navigator(ExecState *exec, KHTMLPart *p)
+Navigator::Navigator(ExecState *exec, TDEHTMLPart *p)
   : ObjectImp(exec->interpreter()->builtinObjectPrototype()), m_part(p) { }
 
 Value Navigator::get(ExecState *exec, const Identifier &propertyName) const

@@ -38,7 +38,7 @@ class DOMString;
  * A base interface that all views shall derive from.
  *
  */
-class KHTML_EXPORT AbstractView {
+class TDEHTML_EXPORT AbstractView {
     friend class Event;
     friend class UIEvent;
     friend class MouseEvent;

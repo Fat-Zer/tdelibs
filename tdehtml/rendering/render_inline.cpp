@@ -1,5 +1,5 @@
 /*
- * This file is part of the render object implementation for KHTML.
+ * This file is part of the render object implementation for TDEHTML.
  *
  * Copyright (C) 1999-2003 Lars Knoll (knoll@kde.org)
  *           (C) 1999-2003 Antti Koivisto (koivisto@kde.org)
@@ -760,7 +760,7 @@ void RenderInline::paintOutlinePath(TQPainter *p, int tx, int ty, const TQPoint 
 
 void RenderInline::calcMinMaxWidth()
 {
-    KHTMLAssert( !minMaxKnown() );
+    TDEHTMLAssert( !minMaxKnown() );
 
 #ifdef DEBUG_LAYOUT
     kdDebug( 6040 ) << renderName() << "(RenderInline)::calcMinMaxWidth() this=" << this << endl;

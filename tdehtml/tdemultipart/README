@@ -1,4 +1,4 @@
-KMultiPart implements "server push" for KHTML/Konqueror:
+KMultiPart implements "server push" for TDEHTML/Konqueror:
 it handles the multipart/mixed and multipart/x-mixed-replace
 mimetype, embedding the appropriate component (part).
 
@@ -11,6 +11,6 @@ Testcases:
 
 TODO:
 * Use the new streaming API of KParts to pipe data into the part,
-the current code does that for KHTML only.
-* Change KHTML so that it embeds KMultiPart for images which send multipart/x-mixed-replace
+the current code does that for TDEHTML only.
+* Change TDEHTML so that it embeds KMultiPart for images which send multipart/x-mixed-replace
 data.

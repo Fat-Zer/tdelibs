@@ -41,8 +41,8 @@ static const int computedProperties[] = {
     CSS_PROP_BACKGROUND_POSITION_Y,
     CSS_PROP_BORDER_COLLAPSE,
     CSS_PROP_BORDER_SPACING,
-    CSS_PROP__KHTML_BORDER_HORIZONTAL_SPACING,
-    CSS_PROP__KHTML_BORDER_VERTICAL_SPACING,
+    CSS_PROP__TDEHTML_BORDER_HORIZONTAL_SPACING,
+    CSS_PROP__TDEHTML_BORDER_VERTICAL_SPACING,
     CSS_PROP_BORDER_TOP_COLOR,
     CSS_PROP_BORDER_RIGHT_COLOR,
     CSS_PROP_BORDER_BOTTOM_COLOR,
@@ -80,10 +80,10 @@ static const int computedProperties[] = {
     CSS_PROP_MARGIN_RIGHT,
     CSS_PROP_MARGIN_BOTTOM,
     CSS_PROP_MARGIN_LEFT,
-    CSS_PROP__KHTML_MARQUEE_DIRECTION,
-    CSS_PROP__KHTML_MARQUEE_INCREMENT,
-    CSS_PROP__KHTML_MARQUEE_REPETITION,
-    CSS_PROP__KHTML_MARQUEE_STYLE,
+    CSS_PROP__TDEHTML_MARQUEE_DIRECTION,
+    CSS_PROP__TDEHTML_MARQUEE_INCREMENT,
+    CSS_PROP__TDEHTML_MARQUEE_REPETITION,
+    CSS_PROP__TDEHTML_MARQUEE_STYLE,
     CSS_PROP_MAX_HEIGHT,
     CSS_PROP_MAX_WIDTH,
     CSS_PROP_MIN_HEIGHT,
@@ -137,7 +137,7 @@ static CSSValueImpl *valueForBorderStyle(EBorderStyle style)
 {
     switch (style) {
     case tdehtml::BNATIVE:
-        return new CSSPrimitiveValueImpl(CSS_VAL__KHTML_NATIVE);
+        return new CSSPrimitiveValueImpl(CSS_VAL__TDEHTML_NATIVE);
     case tdehtml::BNONE:
         return new CSSPrimitiveValueImpl(CSS_VAL_NONE);
     case tdehtml::BHIDDEN:
@@ -176,12 +176,12 @@ static CSSValueImpl *valueForTextAlign(ETextAlign align)
         return new CSSPrimitiveValueImpl(CSS_VAL_CENTER);
     case tdehtml::JUSTIFY:
         return new CSSPrimitiveValueImpl(CSS_VAL_JUSTIFY);
-    case tdehtml::KHTML_LEFT:
-        return new CSSPrimitiveValueImpl(CSS_VAL__KHTML_LEFT);
-    case tdehtml::KHTML_RIGHT:
-        return new CSSPrimitiveValueImpl(CSS_VAL__KHTML_RIGHT);
-    case tdehtml::KHTML_CENTER:
-        return new CSSPrimitiveValueImpl(CSS_VAL__KHTML_CENTER);
+    case tdehtml::TDEHTML_LEFT:
+        return new CSSPrimitiveValueImpl(CSS_VAL__TDEHTML_LEFT);
+    case tdehtml::TDEHTML_RIGHT:
+        return new CSSPrimitiveValueImpl(CSS_VAL__TDEHTML_RIGHT);
+    case tdehtml::TDEHTML_CENTER:
+        return new CSSPrimitiveValueImpl(CSS_VAL__TDEHTML_CENTER);
     }
     Q_ASSERT( 0 );
     return 0;
@@ -440,10 +440,10 @@ CSSValueImpl *RenderStyleDeclarationImpl::getPropertyCSSValue( int propertyID ) 
                        "px");
         return new CSSPrimitiveValueImpl(string, CSSPrimitiveValue::CSS_STRING);
     }
-    case CSS_PROP__KHTML_BORDER_HORIZONTAL_SPACING:
+    case CSS_PROP__TDEHTML_BORDER_HORIZONTAL_SPACING:
         return new CSSPrimitiveValueImpl(style->borderHorizontalSpacing(),
                                          CSSPrimitiveValue::CSS_PX);
-    case CSS_PROP__KHTML_BORDER_VERTICAL_SPACING:
+    case CSS_PROP__TDEHTML_BORDER_VERTICAL_SPACING:
         return new CSSPrimitiveValueImpl(style->borderVerticalSpacing(),
                                          CSSPrimitiveValue::CSS_PX);
     case CSS_PROP_BORDER_TOP_COLOR:
@@ -614,9 +614,9 @@ CSSValueImpl *RenderStyleDeclarationImpl::getPropertyCSSValue( int propertyID ) 
         case FRIGHT:
             return new CSSPrimitiveValueImpl(CSS_VAL_RIGHT);
         case FLEFT_ALIGN:
-            return new CSSPrimitiveValueImpl(CSS_VAL__KHTML_LEFT);
+            return new CSSPrimitiveValueImpl(CSS_VAL__TDEHTML_LEFT);
         case FRIGHT_ALIGN:
-            return new CSSPrimitiveValueImpl(CSS_VAL__KHTML_RIGHT);
+            return new CSSPrimitiveValueImpl(CSS_VAL__TDEHTML_RIGHT);
         }
     }
     case CSS_PROP_FONT_FAMILY:
@@ -706,10 +706,10 @@ CSSValueImpl *RenderStyleDeclarationImpl::getPropertyCSSValue( int propertyID ) 
         return valueForLength(style->marginBottom(), renderer->contentHeight());
     case CSS_PROP_MARGIN_LEFT:
         return valueForLength(style->marginLeft(), renderer->contentWidth());
-    case CSS_PROP__KHTML_MARQUEE:
+    case CSS_PROP__TDEHTML_MARQUEE:
         // FIXME: unimplemented
         break;
-    case CSS_PROP__KHTML_MARQUEE_DIRECTION:
+    case CSS_PROP__TDEHTML_MARQUEE_DIRECTION:
         switch (style->marqueeDirection()) {
         case MFORWARD:
             return new CSSPrimitiveValueImpl(CSS_VAL_FORWARDS);
@@ -728,16 +728,16 @@ CSSValueImpl *RenderStyleDeclarationImpl::getPropertyCSSValue( int propertyID ) 
         }
         Q_ASSERT(0);
         return 0;
-    case CSS_PROP__KHTML_MARQUEE_INCREMENT:
+    case CSS_PROP__TDEHTML_MARQUEE_INCREMENT:
         return valueForLength(style->marqueeIncrement(), renderer->contentWidth());
-    case CSS_PROP__KHTML_MARQUEE_REPETITION:
+    case CSS_PROP__TDEHTML_MARQUEE_REPETITION:
         if (style->marqueeLoopCount() < 0)
             return new CSSPrimitiveValueImpl(CSS_VAL_INFINITE);
         return new CSSPrimitiveValueImpl(style->marqueeLoopCount(), CSSPrimitiveValue::CSS_NUMBER);
-    case CSS_PROP__KHTML_MARQUEE_SPEED:
+    case CSS_PROP__TDEHTML_MARQUEE_SPEED:
         // FIXME: unimplemented
         break;
-    case CSS_PROP__KHTML_MARQUEE_STYLE:
+    case CSS_PROP__TDEHTML_MARQUEE_STYLE:
         switch (style->marqueeBehavior()) {
         case MNONE:
             return new CSSPrimitiveValueImpl(CSS_VAL_NONE);
@@ -960,7 +960,7 @@ CSSValueImpl *RenderStyleDeclarationImpl::getPropertyCSSValue( int propertyID ) 
         case BOTTOM:
             return new CSSPrimitiveValueImpl(CSS_VAL_BOTTOM);
         case BASELINE_MIDDLE:
-            return new CSSPrimitiveValueImpl(CSS_VAL__KHTML_BASELINE_MIDDLE);
+            return new CSSPrimitiveValueImpl(CSS_VAL__TDEHTML_BASELINE_MIDDLE);
         case LENGTH:
             return valueForLength(style->verticalAlignLength(), renderer->contentWidth());
         }
@@ -991,8 +991,8 @@ CSSValueImpl *RenderStyleDeclarationImpl::getPropertyCSSValue( int propertyID ) 
             return new CSSPrimitiveValueImpl(CSS_VAL_PRE_LINE);
         case NOWRAP:
             return new CSSPrimitiveValueImpl(CSS_VAL_NOWRAP);
-        case KHTML_NOWRAP:
-            return new CSSPrimitiveValueImpl(CSS_VAL__KHTML_NOWRAP);
+        case TDEHTML_NOWRAP:
+            return new CSSPrimitiveValueImpl(CSS_VAL__TDEHTML_NOWRAP);
         }
         Q_ASSERT(0);
         break;
@@ -1060,9 +1060,9 @@ CSSValueImpl *RenderStyleDeclarationImpl::getPropertyCSSValue( int propertyID ) 
         break;
     case CSS_PROP_SCROLLBAR_ARROW_COLOR:
         break;
-    case CSS_PROP__KHTML_FLOW_MODE:
+    case CSS_PROP__TDEHTML_FLOW_MODE:
         break;
-    case CSS_PROP__KHTML_USER_INPUT:
+    case CSS_PROP__TDEHTML_USER_INPUT:
         break;
     default:
         Q_ASSERT( 0 );

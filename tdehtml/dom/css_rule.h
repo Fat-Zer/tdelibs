@@ -49,7 +49,7 @@ class CSSRuleImpl;
  * interface.
  *
  */
-class KHTML_EXPORT CSSRule
+class TDEHTML_EXPORT CSSRule
 {
 public:
     CSSRule();
@@ -72,7 +72,7 @@ public:
         MEDIA_RULE = 4,
         FONT_FACE_RULE = 5,
         PAGE_RULE = 6,
-	QUIRKS_RULE = 100 // KHTML CSS Extension
+	QUIRKS_RULE = 100 // TDEHTML CSS Extension
     };
 
     /**
@@ -146,7 +146,7 @@ class CSSCharsetRuleImpl;
  * be used to define the encoding of the style sheet.
  *
  */
-class KHTML_EXPORT CSSCharsetRule : public CSSRule
+class TDEHTML_EXPORT CSSCharsetRule : public CSSRule
 {
 public:
     CSSCharsetRule();
@@ -190,7 +190,7 @@ class CSSFontFaceRuleImpl;
  * rule is used to hold a set of font descriptions.
  *
  */
-class KHTML_EXPORT CSSFontFaceRule : public CSSRule
+class TDEHTML_EXPORT CSSFontFaceRule : public CSSRule
 {
 public:
     CSSFontFaceRule();
@@ -220,7 +220,7 @@ class CSSImportRuleImpl;
  * rule is used to import style rules from other style sheets.
  *
  */
-class KHTML_EXPORT CSSImportRule : public CSSRule
+class TDEHTML_EXPORT CSSImportRule : public CSSRule
 {
 public:
     CSSImportRule();
@@ -267,7 +267,7 @@ class CSSMediaRuleImpl;
  * can be used to delimit style rules for specific media types.
  *
  */
-class KHTML_EXPORT CSSMediaRule : public CSSRule
+class TDEHTML_EXPORT CSSMediaRule : public CSSRule
 {
 public:
     CSSMediaRule();
@@ -359,7 +359,7 @@ class CSSPageRuleImpl;
  * page box for paged media.
  *
  */
-class KHTML_EXPORT CSSPageRule : public CSSRule
+class TDEHTML_EXPORT CSSPageRule : public CSSRule
 {
 public:
     CSSPageRule();
@@ -408,7 +408,7 @@ class CSSStyleRuleImpl;
  * in a CSS style sheet.
  *
  */
-class KHTML_EXPORT CSSStyleRule : public CSSRule
+class TDEHTML_EXPORT CSSStyleRule : public CSSRule
 {
 public:
     CSSStyleRule();
@@ -458,7 +458,7 @@ class CSSUnknownRuleImpl;
  * not supported by this user agent.
  *
  */
-class KHTML_EXPORT CSSUnknownRule : public CSSRule
+class TDEHTML_EXPORT CSSUnknownRule : public CSSRule
 {
 public:
     CSSUnknownRule();
@@ -481,7 +481,7 @@ class StyleListImpl;
  * of an ordered collection of CSS rules.
  *
  */
-class KHTML_EXPORT CSSRuleList
+class TDEHTML_EXPORT CSSRuleList
 {
 public:
     CSSRuleList();

@@ -114,7 +114,7 @@ static pid_t xvfb;
 
 PartMonitor *PartMonitor::sm_highestMonitor = NULL;
 
-PartMonitor::PartMonitor(KHTMLPart *_part)
+PartMonitor::PartMonitor(TDEHTMLPart *_part)
 {
     m_part = _part;
     m_completed = false;
@@ -271,19 +271,19 @@ Value RegTestFunction::call(ExecState *exec, Object &/*thisObj*/, const List &ar
 
 // -------------------------------------------------------------------------
 
-KHTMLPartObject::KHTMLPartObject(ExecState *exec, KHTMLPart *_part)
+TDEHTMLPartObject::TDEHTMLPartObject(ExecState *exec, TDEHTMLPart *_part)
 {
     m_part = _part;
-    putDirect("openPage", new KHTMLPartFunction(exec,m_part,KHTMLPartFunction::OpenPage,1), DontEnum);
-    putDirect("openPageAsUrl", new KHTMLPartFunction(exec,m_part,KHTMLPartFunction::OpenPageAsUrl,1), DontEnum);
-    putDirect("begin",     new KHTMLPartFunction(exec,m_part,KHTMLPartFunction::Begin,1), DontEnum);
-    putDirect("write",    new KHTMLPartFunction(exec,m_part,KHTMLPartFunction::Write,1), DontEnum);
-    putDirect("end",    new KHTMLPartFunction(exec,m_part,KHTMLPartFunction::End,0), DontEnum);
-    putDirect("executeScript", new KHTMLPartFunction(exec,m_part,KHTMLPartFunction::ExecuteScript,0), DontEnum);
-    putDirect("processEvents", new KHTMLPartFunction(exec,m_part,KHTMLPartFunction::ProcessEvents,0), DontEnum);
+    putDirect("openPage", new TDEHTMLPartFunction(exec,m_part,TDEHTMLPartFunction::OpenPage,1), DontEnum);
+    putDirect("openPageAsUrl", new TDEHTMLPartFunction(exec,m_part,TDEHTMLPartFunction::OpenPageAsUrl,1), DontEnum);
+    putDirect("begin",     new TDEHTMLPartFunction(exec,m_part,TDEHTMLPartFunction::Begin,1), DontEnum);
+    putDirect("write",    new TDEHTMLPartFunction(exec,m_part,TDEHTMLPartFunction::Write,1), DontEnum);
+    putDirect("end",    new TDEHTMLPartFunction(exec,m_part,TDEHTMLPartFunction::End,0), DontEnum);
+    putDirect("executeScript", new TDEHTMLPartFunction(exec,m_part,TDEHTMLPartFunction::ExecuteScript,0), DontEnum);
+    putDirect("processEvents", new TDEHTMLPartFunction(exec,m_part,TDEHTMLPartFunction::ProcessEvents,0), DontEnum);
 }
 
-Value KHTMLPartObject::get(ExecState *exec, const Identifier &propertyName) const
+Value TDEHTMLPartObject::get(ExecState *exec, const Identifier &propertyName) const
 {
     if (propertyName == "document")
         return getDOMNode(exec,m_part->document());
@@ -293,19 +293,19 @@ Value KHTMLPartObject::get(ExecState *exec, const Identifier &propertyName) cons
         return ObjectImp::get(exec,propertyName);
 }
 
-KHTMLPartFunction::KHTMLPartFunction(ExecState */*exec*/, KHTMLPart *_part, int _id, int length)
+TDEHTMLPartFunction::TDEHTMLPartFunction(ExecState */*exec*/, TDEHTMLPart *_part, int _id, int length)
 {
     m_part = _part;
     id = _id;
     putDirect("length",length);
 }
 
-bool KHTMLPartFunction::implementsCall() const
+bool TDEHTMLPartFunction::implementsCall() const
 {
     return true;
 }
 
-Value KHTMLPartFunction::call(ExecState *exec, Object &/*thisObj*/, const List &args)
+Value TDEHTMLPartFunction::call(ExecState *exec, Object &/*thisObj*/, const List &args)
 {
     Value result = Undefined();
 
@@ -534,7 +534,7 @@ int main(int argc, char *argv[])
     cfg.writeEntry( "Fonts", TQStringList() );
     cfg.writeEntry( "DefaultEncoding", "" );
     cfg.setGroup("Java/JavaScript Settings");
-    cfg.writeEntry( "WindowOpenPolicy", KHTMLSettings::KJSWindowOpenAllow);
+    cfg.writeEntry( "WindowOpenPolicy", TDEHTMLSettings::KJSWindowOpenAllow);
 
     cfg.sync();
 
@@ -557,9 +557,9 @@ int main(int argc, char *argv[])
     }
 
     // create widgets
-    KHTMLFactory *fac = new KHTMLFactory();
+    TDEHTMLFactory *fac = new TDEHTMLFactory();
     KMainWindow *toplevel = new KMainWindow();
-    KHTMLPart *part = new KHTMLPart( toplevel, 0, toplevel, 0, KHTMLPart::BrowserViewGUI );
+    TDEHTMLPart *part = new TDEHTMLPart( toplevel, 0, toplevel, 0, TDEHTMLPart::BrowserViewGUI );
 
     toplevel->setCentralWidget( part->widget() );
     part->setJScriptEnabled(true);
@@ -670,7 +670,7 @@ int main(int argc, char *argv[])
 
 RegressionTest *RegressionTest::curr = 0;
 
-RegressionTest::RegressionTest(KHTMLPart *part, const TQString &baseDir, const TQString &outputDir,
+RegressionTest::RegressionTest(TDEHTMLPart *part, const TQString &baseDir, const TQString &outputDir,
 			       bool _genOutput, bool runJS, bool runHTML)
   : TQObject(part)
 {
@@ -820,7 +820,7 @@ bool RegressionTest::runTests(TQString relPath, bool mustExist, int known_failur
     return true;
 }
 
-void RegressionTest::getPartDOMOutput( TQTextStream &outputStream, KHTMLPart* part, uint indent )
+void RegressionTest::getPartDOMOutput( TQTextStream &outputStream, TDEHTMLPart* part, uint indent )
 {
     Node node = part->document();
     while (!node.isNull()) {
@@ -849,7 +849,7 @@ void RegressionTest::getPartDOMOutput( TQTextStream &outputStream, KHTMLPart* pa
 		if ( node.handle()->id() == ID_FRAME ) {
 			outputStream << endl;
 			TQString frameName = static_cast<DOM::HTMLFrameElementImpl *>( node.handle() )->name.string();
-			KHTMLPart* frame = part->findFrame( frameName );
+			TDEHTMLPart* frame = part->findFrame( frameName );
 			Q_ASSERT( frame );
 			if ( frame )
 			    getPartDOMOutput( outputStream, frame, indent );
@@ -910,7 +910,7 @@ void RegressionTest::getPartDOMOutput( TQTextStream &outputStream, KHTMLPart* pa
     }
 }
 
-void RegressionTest::dumpRenderTree( TQTextStream &outputStream, KHTMLPart* part )
+void RegressionTest::dumpRenderTree( TQTextStream &outputStream, TDEHTMLPart* part )
 {
     DOM::DocumentImpl* doc = static_cast<DocumentImpl*>( part->document().handle() );
     if ( !doc || !doc->renderer() )
@@ -923,7 +923,7 @@ void RegressionTest::dumpRenderTree( TQTextStream &outputStream, KHTMLPart* part
     names.sort();
     for ( TQStringList::iterator it = names.begin(); it != names.end(); ++it ) {
         outputStream << "FRAME: " << (*it) << "\n";
-	KHTMLPart* frame = part->findFrame( (*it) );
+	TDEHTMLPart* frame = part->findFrame( (*it) );
 	Q_ASSERT( frame );
 	if ( frame )
             dumpRenderTree( outputStream, frame );
@@ -1411,7 +1411,7 @@ void RegressionTest::testJSFile(const TQString & filename )
     ScriptInterpreter interp(global,&frame);
     ExecState *exec = interp.globalExec();
 
-    global.put(exec, "part", Object(new KHTMLPartObject(exec,m_part)));
+    global.put(exec, "part", Object(new TDEHTMLPartObject(exec,m_part)));
     global.put(exec, "regtest", Object(new RegTestObject(exec,this)));
     global.put(exec, "debug", Object(new RegTestFunction(exec,this,RegTestFunction::Print,1) ) );
     global.put(exec, "print", Object(new RegTestFunction(exec,this,RegTestFunction::Print,1) ) );

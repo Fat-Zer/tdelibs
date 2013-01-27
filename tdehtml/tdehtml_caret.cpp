@@ -884,15 +884,15 @@ CaretBoxLine *CaretBoxLine::constructCaretBoxLine(CaretBoxLineDeleter *deleter,
     // ### regard direction
     switch (s->textAlign()) {
       case LEFT:
-      case KHTML_LEFT:
+      case TDEHTML_LEFT:
       case TAAUTO:	// ### find out what this does
       case JUSTIFY:
         break;
       case CENTER:
-      case KHTML_CENTER:
+      case TDEHTML_CENTER:
         _x += cb->contentWidth() / 2;
         break;
-      case KHTML_RIGHT:
+      case TDEHTML_RIGHT:
       case RIGHT:
         _x += cb->contentWidth();
         break;
@@ -1128,7 +1128,7 @@ static inline bool isDescendant(RenderObject *r, RenderObject *cb)
  *	or at the end.
  * @param fromEnd begin search from end (default: begin from beginning)
  */
-static bool containsEditableElement(KHTMLPart *part, RenderBlock *cb,
+static bool containsEditableElement(TDEHTMLPart *part, RenderBlock *cb,
 	RenderTable *&table, bool fromEnd = false)
 {
   RenderObject *r = cb;
@@ -1185,7 +1185,7 @@ static bool containsEditableElement(KHTMLPart *part, RenderBlock *cb,
  * @param fromEnd begin search from end (default: begin from beginning)
  * @param start object after which to begin search.
  */
-static bool containsEditableChildElement(KHTMLPart *part, RenderBlock *cb,
+static bool containsEditableChildElement(TDEHTMLPart *part, RenderBlock *cb,
 	RenderTable *&table, bool fromEnd, RenderObject *start)
 {
   int state = 0;
@@ -1242,7 +1242,7 @@ static bool containsEditableChildElement(KHTMLPart *part, RenderBlock *cb,
 
 // == class LinearDocument implementation
 
-LinearDocument::LinearDocument(KHTMLPart *part, NodeImpl *node, long offset,
+LinearDocument::LinearDocument(TDEHTMLPart *part, NodeImpl *node, long offset,
   		CaretAdvancePolicy advancePolicy, ElementImpl *baseElem)
 	: node(node), offset(offset), m_part(part),
 	advPol(advancePolicy), base(0)
@@ -2052,7 +2052,7 @@ TableRowIterator &TableRowIterator::operator --()
 // == class ErgonomicEditableLineIterator implementation
 
 // some decls
-static RenderTableCell *findNearestTableCellInRow(KHTMLPart *part, int x,
+static RenderTableCell *findNearestTableCellInRow(TDEHTMLPart *part, int x,
 		RenderTableSection::RowStruct *row, bool fromEnd);
 
 /** finds the cell corresponding to absolute x-coordinate @p x in the given
@@ -2068,7 +2068,7 @@ static RenderTableCell *findNearestTableCellInRow(KHTMLPart *part, int x,
  *	beginning
  * @return the cell, or 0 if no editable cell was found.
  */
-static inline RenderTableCell *findNearestTableCell(KHTMLPart *part, int x,
+static inline RenderTableCell *findNearestTableCell(TDEHTMLPart *part, int x,
 		TableRowIterator &it, bool fromEnd)
 {
   RenderTableCell *result = 0;
@@ -2096,7 +2096,7 @@ static inline RenderTableCell *findNearestTableCell(KHTMLPart *part, int x,
  * @param fromEnd @p true, begin from end (applies only to nested tables)
  * @return the found cell or 0 if no editable cell was found
  */
-static RenderTableCell *findNearestTableCellInRow(KHTMLPart *part, int x,
+static RenderTableCell *findNearestTableCellInRow(TDEHTMLPart *part, int x,
 		RenderTableSection::RowStruct *row, bool fromEnd)
 {
   // First pass. Find spatially nearest cell.

@@ -256,12 +256,12 @@ bool RenderObject::isHTMLMarquee() const
 
 void RenderObject::addChild(RenderObject* , RenderObject *)
 {
-    KHTMLAssert(0);
+    TDEHTMLAssert(0);
 }
 
 RenderObject* RenderObject::removeChildNode(RenderObject* )
 {
-    KHTMLAssert(0);
+    TDEHTMLAssert(0);
     return 0;
 }
 
@@ -273,12 +273,12 @@ void RenderObject::removeChild(RenderObject *o )
 
 void RenderObject::appendChildNode(RenderObject*)
 {
-    KHTMLAssert(0);
+    TDEHTMLAssert(0);
 }
 
 void RenderObject::insertChildNode(RenderObject*, RenderObject*)
 {
-    KHTMLAssert(0);
+    TDEHTMLAssert(0);
 }
 
 RenderObject *RenderObject::nextRenderer() const
@@ -1369,7 +1369,7 @@ bool RenderObject::attemptDirectLayerTranslation()
     // When the difference between two successive styles is only 'Position'
     // we may attempt to save a layout by directly updating the object position.
 
-    KHTMLAssert( m_style->position() != STATIC );
+    TDEHTMLAssert( m_style->position() != STATIC );
     if (!layer())
         return false;
     setInline(m_style->isDisplayInlineType());
@@ -1444,7 +1444,7 @@ void RenderObject::setOverhangingContents(bool p)
     if (p)
     {
         m_overhangingContents = true;
-        KHTMLAssert( cb != this || isCanvas());
+        TDEHTMLAssert( cb != this || isCanvas());
         if (cb && cb != this)
             cb->setOverhangingContents();
     }
@@ -1464,7 +1464,7 @@ void RenderObject::setOverhangingContents(bool p)
         else
         {
             m_overhangingContents = false;
-            KHTMLAssert( cb != this );
+            TDEHTMLAssert( cb != this );
             if (cb && cb != this)
                 cb->setOverhangingContents(false);
         }
@@ -1935,7 +1935,7 @@ void RenderObject::invalidateVerticalPositions()
 
 void RenderObject::recalcMinMaxWidths()
 {
-    KHTMLAssert( m_recalcMinMax );
+    TDEHTMLAssert( m_recalcMinMax );
 
 #ifdef DEBUG_LAYOUT
     kdDebug( 6040 ) << renderName() << " recalcMinMaxWidths() this=" << this <<endl;
@@ -1974,7 +1974,7 @@ void RenderObject::recalcMinMaxWidths()
 void RenderObject::scheduleRelayout(RenderObject *clippedObj)
 {
     if (!isCanvas()) return;
-    KHTMLView *view = static_cast<RenderCanvas *>(this)->view();
+    TDEHTMLView *view = static_cast<RenderCanvas *>(this)->view();
     if ( view )
         view->scheduleRelayout(clippedObj);
 }
@@ -1986,7 +1986,7 @@ void RenderObject::removeLeftoverAnonymousBoxes()
 
 InlineBox* RenderObject::createInlineBox(bool /*makePlaceHolderBox*/, bool /*isRootLineBox*/)
 {
-    KHTMLAssert(false);
+    TDEHTMLAssert(false);
     return 0;
 }
 

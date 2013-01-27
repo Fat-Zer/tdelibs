@@ -32,8 +32,8 @@
 #include "kjs_views.h"
 
 class TQTimer;
-class KHTMLView;
-class KHTMLPart;
+class TDEHTMLView;
+class TDEHTMLPart;
 
 namespace KParts {
   class ReadOnlyPart;
@@ -64,13 +64,13 @@ namespace KJS {
     virtual Value get(ExecState *exec, const Identifier &propertyName) const;
     Value getValueProperty(ExecState *exec, int token) const;
   private:
-    KHTMLView *view;
+    TDEHTMLView *view;
     virtual const ClassInfo* classInfo() const { return &info; }
     static const ClassInfo info;
   };
 
   class KDE_EXPORT Window : public ObjectImp {
-    friend TQGuardedPtr<KHTMLPart> getInstance();
+    friend TQGuardedPtr<TDEHTMLPart> getInstance();
     friend class Location;
     friend class WindowFunc;
     friend class WindowQObject;
@@ -293,14 +293,14 @@ namespace KJS {
   class Konqueror : public ObjectImp {
     friend class KonquerorFunc;
   public:
-    Konqueror(KHTMLPart *p) : part(p) { }
+    Konqueror(TDEHTMLPart *p) : part(p) { }
     virtual Value get(ExecState *exec, const Identifier &propertyName) const;
     virtual bool hasProperty(ExecState *exec, const Identifier &p) const;
     virtual UString toString(ExecState *exec) const;
     virtual const ClassInfo* classInfo() const { return &info; }
     static const ClassInfo info;
   private:
-    KHTMLPart *part;
+    TDEHTMLPart *part;
   };
 #endif
 

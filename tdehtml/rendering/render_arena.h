@@ -43,8 +43,8 @@
 
 namespace tdehtml {
 
-#define KHTML_MAX_RECYCLED_SIZE 400
-#define KHTML_ROUNDUP(x,y) ((((x)+((y)-1))/(y))*(y))
+#define TDEHTML_MAX_RECYCLED_SIZE 400
+#define TDEHTML_ROUNDUP(x,y) ((((x)+((y)-1))/(y))*(y))
 
 class RenderArena: public Shared<RenderArena> {
 public:
@@ -61,7 +61,7 @@ private:
 
   // The recycler array is sparse with the indices being multiples of 4,
   // i.e., 0, 4, 8, 12, 16, 20, ...
-  void* m_recyclers[KHTML_MAX_RECYCLED_SIZE >> 2];
+  void* m_recyclers[TDEHTML_MAX_RECYCLED_SIZE >> 2];
 };
 
 

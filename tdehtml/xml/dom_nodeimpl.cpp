@@ -337,7 +337,7 @@ void NodeImpl::dispatchEvent(EventImpl *evt, int &exceptioncode, bool tempEvent)
     evt->setTarget(this);
 
     // Since event handling code could cause this object to be deleted, grab a reference to the view now
-    KHTMLView *view = getDocument()->view();
+    TDEHTMLView *view = getDocument()->view();
 
     dispatchGenericEvent( evt, exceptioncode );
 
@@ -610,8 +610,8 @@ void NodeImpl::handleLocalEvents(EventImpl *evt, bool useCapture)
                 // * use me->qEvent(), it's not available when using initMouseEvent/dispatchEvent
                 // So we currently store a bool in MouseEventImpl. If anyone needs to trigger
                 // dblclicks from the DOM API, we'll need a timer here (well in the doc).
-                if ( ( !me->isDoubleClick() && current.id == EventImpl::KHTML_ECMA_CLICK_EVENT) ||
-                  ( me->isDoubleClick() && current.id == EventImpl::KHTML_ECMA_DBLCLICK_EVENT) )
+                if ( ( !me->isDoubleClick() && current.id == EventImpl::TDEHTML_ECMA_CLICK_EVENT) ||
+                  ( me->isDoubleClick() && current.id == EventImpl::TDEHTML_ECMA_DBLCLICK_EVENT) )
                     current.listener->handleEvent(ev);
             }
         }

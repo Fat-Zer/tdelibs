@@ -243,7 +243,7 @@
         stalled layout flags problems - #121653). (updateWidgetMasks): mask the content box, not the border box.
         (enclosingStackingContext) new. Returns the layer defining current stacking context.
 
-        * rendering/render_replaced.{h,cpp} (isKHTMLWidget): new flag for KHTML-proxied widgets.
+        * rendering/render_replaced.{h,cpp} (isTDEHTMLWidget): new flag for TDEHTML-proxied widgets.
         (detach/resizeWidget/setQWidget/layout/updateFromElement/slotWidgetDestructed/setStyle/paint): use the flag insead of strcmp's
         Only allow !tdehtml widgets to register in the view (only those need masking).
 
@@ -473,7 +473,7 @@
 
 2005-08-10  Dawit Alemayehu <adawit@kde.org>
         * ecma/xmlhttprequest.cpp: Convert a 304 (Not Modified) HTTP response in
-          XMLHttpRequest to a 200 (OK) response to make KHTML conform to IE's and
+          XMLHttpRequest to a 200 (OK) response to make TDEHTML conform to IE's and
           Mozilla's behavior. BUG: 110272
 
         * ecma/xmlhttprequest.cpp: Factored out the HTTP status line parsing code
@@ -510,7 +510,7 @@
         replace them with the "blocked" pixmap.)
 
         * tdehtml_part.{cpp,h}: Added runAdFilters() function which is called from reparseConfiguration()
-        * tdehtml_ext.cpp: Call KHTMLPart::reparseConfiguration() after adding new filters.
+        * tdehtml_ext.cpp: Call TDEHTMLPart::reparseConfiguration() after adding new filters.
         * misc/loader.cpp: Create blockedPixmap in Cache::init() instead of the CachedImage constructor.
 
 2005-07-19  Allan Sandfeld Jensen <kde@carewolf.com>
@@ -528,7 +528,7 @@
 
         * tdehtml_ext.{cpp,h}: Added "blockiframe" to context popup menu
         * tdehtml_popupmenu.rc: Same
-        * tdehtml_part.h: added KHTMLPopupGUIClient to friend classes
+        * tdehtml_part.h: added TDEHTMLPopupGUIClient to friend classes
 
 2005-07-08  Germain Garand  <germain@ebooksfrance.org>
 
@@ -544,11 +544,11 @@
 
 2005-07-07  Allan Sandfeld Jensen <kde@carewolf.com>
 
-        There is nothing KHTML specific about keypress events. They might not be DOM2 or 3,
+        There is nothing TDEHTML specific about keypress events. They might not be DOM2 or 3,
         but MSIE, Mozilla and Safari all handles them as a valid event class.
 
         * xml/dom2_eventsimpl.{h,cpp}: Allow KEYPRESS as a valid event type
-        * ./.: Rename KHTML_KEYPRESS_EVENT to KEYPRESS_EVENT
+        * ./.: Rename TDEHTML_KEYPRESS_EVENT to KEYPRESS_EVENT
 
 2005-07-05  Allan Sandfeld Jensen <kde@carewolf.com>
 
@@ -1969,7 +1969,7 @@
 
 2004-07-28  Leo Savernik  <l.savernik@aon.at>
 
-	* tdehtmlview.{cpp,h} (KHTMLToolTip::maybeTip): Query <area> elements
+	* tdehtmlview.{cpp,h} (TDEHTMLToolTip::maybeTip): Query <area> elements
 	of image maps.
 	(dispatchMouseEvent): Added parameter innerNonSharedNode.
 	* tdehtml_part.{cpp,h}: Added method nonSharedNodeUnderMouse.
@@ -1978,7 +1978,7 @@
 	* xml/dom_nodeimpl.h: Added innerNonSharedNode to
 	NodeImpl::MouseEvent.
 	* html/html_imageimpl.h: Added cachedRegion() for being able to
-	retrieve the region in KHTMLToolTip.
+	retrieve the region in TDEHTMLToolTip.
 
 2004-07-20  Stephan Kulow  <coolo@kde.org>
 
@@ -2297,7 +2297,7 @@
 
 2004-05-06  Tobias Anton  <anton@stud.fbi.fh-darmstadt.de>
 
-	* html/htmlparser.cpp (class KHTMLParser): use setCurrent() after reset()
+	* html/htmlparser.cpp (class TDEHTMLParser): use setCurrent() after reset()
 	to avoid a memleak whenever the parser is used on a DocumentFragment.
 
 2004-05-04  Leo Savernik  <l.savernik@aon.at>
@@ -2370,8 +2370,8 @@
 	Added classes CaretBox, CaretBoxLine, CaretBoxIterator,
 	EditableCaretBoxIterator. Changed every other class.
 
-	* tdehtmlview.[cpp,h}: (class KHTMLView) Adapt to tdehtml_caret* changes.
-	(KHTMLToolTip::maybeTip) Save tooltip position instead of recalculating it.
+	* tdehtmlview.[cpp,h}: (class TDEHTMLView) Adapt to tdehtml_caret* changes.
+	(TDEHTMLToolTip::maybeTip) Save tooltip position instead of recalculating it.
 
 	* rendering/render_{inline,box}.{cpp,h}: (Render{Box,Inline}::caretPos)
 	Handle outside caret positions.
@@ -2508,7 +2508,7 @@
 	* ecma/xmlhttprequest.h/cpp: Implement asynchronous interface
 	enough to pass the tests on http://www.mozilla.org/xmlextras/tests.html
 
-	* xml/dom2_eventsimpl.h (EventImpl): rename KHTML_KEYUP/DOWN_EVENT
+	* xml/dom2_eventsimpl.h (EventImpl): rename TDEHTML_KEYUP/DOWN_EVENT
 	to KEYUP/DOWN_EVENT. Add events needed for XMLHttpRequest.
 
 	* rendering/render_object.h (class RenderObject): introduce a PaintInfo
@@ -2526,7 +2526,7 @@
 	* tdehtml_part.cpp/.h (openURL): In case the call is a reload, do a stat
 	on the user-defined stylesheet and reload it in case it changed in
 	the meanwhile (#39962).
-	* tdehtmlpart_p.h (class KHTMLPartPrivate): Added
+	* tdehtmlpart_p.h (class TDEHTMLPartPrivate): Added
 	m_userStyleSheetLastModified variable which keeps track of the
 	mtime of the user-defined sheet.
 
@@ -2825,7 +2825,7 @@
 
 2004-01-18  Dirk Mueller  <mueller@kde.org>
 
-	* tdehtmlpart_p.h (class KHTMLPartPrivate): experimental:
+	* tdehtmlpart_p.h (class TDEHTMLPartPrivate): experimental:
 	copy encoding information from parent frame. helps on
 	http://www.pfl.ru/ when manually setting the correct encoding.
 
@@ -3835,7 +3835,7 @@
 	to make the one call entering a local event loop the last, so that we can
 	cleanly exit when it the view is already deleted.
 
-	* tdehtml_ext.cpp (KHTMLPopupGUIClient): pass QObject parent
+	* tdehtml_ext.cpp (TDEHTMLPopupGUIClient): pass QObject parent
 
 2003-10-05  Dirk Mueller  <mueller@kde.org>
 
@@ -3852,7 +3852,7 @@
 
 2003-10-04  Dirk Mueller  <mueller@kde.org>
 
-	* html/htmlparser.h (class KHTMLParser): keep "current" NodeImpl referenced
+	* html/htmlparser.h (class TDEHTMLParser): keep "current" NodeImpl referenced
 	to avoid ugly crashes when DHTML deletes the node while we're still parsing.
 	#57020, testcase alja.html
 

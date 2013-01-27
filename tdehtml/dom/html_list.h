@@ -49,7 +49,7 @@ class DOMString;
  * DL element definition </a> in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLDListElement : public HTMLElement
+class TDEHTML_EXPORT HTMLDListElement : public HTMLElement
 {
 public:
     HTMLDListElement();
@@ -89,7 +89,7 @@ public:
  * in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLDirectoryElement : public HTMLElement
+class TDEHTML_EXPORT HTMLDirectoryElement : public HTMLElement
 {
 public:
     HTMLDirectoryElement();
@@ -128,7 +128,7 @@ public:
  * LI element definition </a> in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLLIElement : public HTMLElement
+class TDEHTML_EXPORT HTMLLIElement : public HTMLElement
 {
 public:
     HTMLLIElement();
@@ -183,7 +183,7 @@ public:
  * deprecated in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLMenuElement : public HTMLElement
+class TDEHTML_EXPORT HTMLMenuElement : public HTMLElement
 {
 public:
     HTMLMenuElement();
@@ -223,7 +223,7 @@ public:
  * OL element definition </a> in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLOListElement : public HTMLElement
+class TDEHTML_EXPORT HTMLOListElement : public HTMLElement
 {
 public:
     HTMLOListElement();
@@ -291,7 +291,7 @@ public:
  * UL element definition </a> in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLUListElement : public HTMLElement
+class TDEHTML_EXPORT HTMLUListElement : public HTMLElement
 {
 public:
     HTMLUListElement();

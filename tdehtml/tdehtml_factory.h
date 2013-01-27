@@ -28,33 +28,33 @@
 class TDEInstance;
 class TDEAboutData;
 class HistoryProvider;
-class KHTMLSettings;
-class KHTMLPart;
+class TDEHTMLSettings;
+class TDEHTMLPart;
 
 namespace DOM
 {
   class DocumentImpl;
 }
 
-class KDE_EXPORT KHTMLFactory : public KParts::Factory
+class KDE_EXPORT TDEHTMLFactory : public KParts::Factory
 {
   Q_OBJECT
   friend class DOM::DocumentImpl;
-  friend class KHTMLViewPrivate;
+  friend class TDEHTMLViewPrivate;
 public:
-  KHTMLFactory( bool clone = false );
-  virtual ~KHTMLFactory();
+  TDEHTMLFactory( bool clone = false );
+  virtual ~TDEHTMLFactory();
 
   virtual KParts::Part *createPartObject( TQWidget *parentWidget, const char *widgetName, TQObject *parent, const char *name, const char *className, const TQStringList &args );
 
-  static void registerPart( KHTMLPart *part );
-  static void deregisterPart( KHTMLPart *part );
+  static void registerPart( TDEHTMLPart *part );
+  static void deregisterPart( TDEHTMLPart *part );
 
-  static TQPtrList<KHTMLPart> *partList() { return s_parts; }
+  static TQPtrList<TDEHTMLPart> *partList() { return s_parts; }
 
   static TDEInstance *instance();
 
-  static KHTMLSettings *defaultHTMLSettings();
+  static TDEHTMLSettings *defaultHTMLSettings();
 
   // list of visited URLs
   static KParts::HistoryProvider *vLinks() {
@@ -66,11 +66,11 @@ protected:
   static void deref();
 private:
   static unsigned long s_refcnt;
-  static KHTMLFactory *s_self;
+  static TDEHTMLFactory *s_self;
   static TDEInstance *s_instance;
   static TDEAboutData *s_about;
-  static KHTMLSettings *s_settings;
-  static TQPtrList<KHTMLPart> *s_parts;
+  static TDEHTMLSettings *s_settings;
+  static TQPtrList<TDEHTMLPart> *s_parts;
 };
 
 #endif

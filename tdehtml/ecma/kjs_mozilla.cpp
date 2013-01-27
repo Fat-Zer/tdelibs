@@ -40,7 +40,7 @@ const ClassInfo MozillaSidebarExtension::info = { "sidebar", 0, &MozillaSidebarE
 }
 IMPLEMENT_PROTOFUNC_DOM(MozillaSidebarExtensionFunc)
 
-MozillaSidebarExtension::MozillaSidebarExtension(ExecState *exec, KHTMLPart *p)
+MozillaSidebarExtension::MozillaSidebarExtension(ExecState *exec, TDEHTMLPart *p)
   : ObjectImp(exec->interpreter()->builtinObjectPrototype()), m_part(p) { }
 
 Value MozillaSidebarExtension::get(ExecState *exec, const Identifier &propertyName) const
@@ -66,7 +66,7 @@ Value MozillaSidebarExtensionFunc::tryCall(ExecState *exec, Object &thisObj, con
   KJS_CHECK_THIS( KJS::MozillaSidebarExtension, thisObj );
   MozillaSidebarExtension *mse = static_cast<MozillaSidebarExtension*>(thisObj.imp());
 
-  KHTMLPart *part = mse->part();
+  TDEHTMLPart *part = mse->part();
   if (!part)
     return Undefined();
 

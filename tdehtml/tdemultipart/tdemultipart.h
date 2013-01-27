@@ -28,7 +28,7 @@
 #include <kaboutdata.h>
 #include <tqdatetime.h>
 
-class KHTMLPart;
+class TDEHTMLPart;
 class TDEInstance;
 class KTempFile;
 class KLineParser;

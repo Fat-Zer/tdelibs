@@ -438,7 +438,7 @@ void Document::setSelectedStylesheetSet(const DOMString& s)
 }
 
 
-KHTMLView *Document::view() const
+TDEHTMLView *Document::view() const
 {
     if (!impl) return 0;
 

@@ -200,12 +200,12 @@ CSSStyleSheetImpl *DOMImplementationImpl::createCSSStyleSheet(DOMStringImpl* /*t
 	return sheet;
 }
 
-DocumentImpl *DOMImplementationImpl::createDocument( KHTMLView *v )
+DocumentImpl *DOMImplementationImpl::createDocument( TDEHTMLView *v )
 {
     return new DocumentImpl(this, v);
 }
 
-HTMLDocumentImpl *DOMImplementationImpl::createHTMLDocument( KHTMLView *v )
+HTMLDocumentImpl *DOMImplementationImpl::createHTMLDocument( TDEHTMLView *v )
 {
     return new HTMLDocumentImpl(this, v);
 }
@@ -288,8 +288,8 @@ ElementMappingCache::ItemInfo* ElementMappingCache::get(const TQString& id)
 static KStaticDeleter< TQPtrList<DocumentImpl> > s_changedDocumentsDeleter;
 TQPtrList<DocumentImpl> * DocumentImpl::changedDocuments;
 
-// KHTMLView might be 0
-DocumentImpl::DocumentImpl(DOMImplementationImpl *_implementation, KHTMLView *v)
+// TDEHTMLView might be 0
+DocumentImpl::DocumentImpl(DOMImplementationImpl *_implementation, TDEHTMLView *v)
     : NodeBaseImpl( 0 ), m_domtree_version(0), m_counterDict(257),
       m_imageLoadEventTimer(0)
 {
@@ -304,7 +304,7 @@ DocumentImpl::DocumentImpl(DOMImplementationImpl *_implementation, KHTMLView *v)
     m_view = v;
     m_renderArena.reset();
 
-    KHTMLFactory::ref();
+    TDEHTMLFactory::ref();
 
     if ( v ) {
         m_docLoader = new DocLoader(v->part(), this );
@@ -459,7 +459,7 @@ DocumentImpl::~DocumentImpl()
 
     m_renderArena.reset();
 
-    KHTMLFactory::deref();
+    TDEHTMLFactory::deref();
 }
 
 
@@ -1132,7 +1132,7 @@ void DocumentImpl::recalcStyle( StyleChange change )
 	fontDef.italic = f.italic();
 	fontDef.weight = f.weight();
         if (m_view) {
-            const KHTMLSettings *settings = m_view->part()->settings();
+            const TDEHTMLSettings *settings = m_view->part()->settings();
 	    TQString stdfont = settings->stdFontName();
 	    if ( !stdfont.isEmpty() )
 		fontDef.family = stdfont;
@@ -1317,7 +1317,7 @@ void DocumentImpl::open( bool clearEventListeners )
     delete m_tokenizer;
     m_tokenizer = 0;
 
-    KHTMLView* view = m_view;
+    TDEHTMLView* view = m_view;
     bool was_attached = attached();
     if ( was_attached )
         detach();
@@ -1662,7 +1662,7 @@ void DocumentImpl::processHttpEquiv(const DOMString &equiv, const DOMString &con
 {
     assert(!equiv.isNull() && !content.isNull());
 
-    KHTMLView *v = getDocument()->view();
+    TDEHTMLView *v = getDocument()->view();
 
     if(strcasecmp(equiv, "refresh") == 0 && v && v->part()->metaRefreshEnabled())
     {
@@ -2336,12 +2336,12 @@ void DocumentImpl::notifyBeforeNodeRemoval(NodeImpl *n)
 
 bool DocumentImpl::isURLAllowed(const TQString& url) const
 {
-    KHTMLPart *thisPart = part();
+    TDEHTMLPart *thisPart = part();
 
     KURL newURL(completeURL(url));
     newURL.setRef(TQString::null);
 
-    if (KHTMLFactory::defaultHTMLSettings()->isAdFiltered( newURL.url() ))
+    if (TDEHTMLFactory::defaultHTMLSettings()->isAdFiltered( newURL.url() ))
         return false;
 
     // Prohibit non-file URLs if we are asked to.
@@ -2355,7 +2355,7 @@ bool DocumentImpl::isURLAllowed(const TQString& url) const
     // We allow one level of self-reference because some sites depend on that.
     // But we don't allow more than one.
     bool foundSelfReference = false;
-    for (KHTMLPart *part = thisPart; part; part = part->parentPart()) {
+    for (TDEHTMLPart *part = thisPart; part; part = part->parentPart()) {
         KURL partURL = part->url();
         partURL.setRef(TQString::null);
         if (partURL == newURL) {
@@ -2619,7 +2619,7 @@ void DocumentImpl::setDecoderCodec(const TQTextCodec *codec)
 
 ElementImpl *DocumentImpl::ownerElement() const
 {
-    KHTMLPart *childPart = part();
+    TDEHTMLPart *childPart = part();
     if (!childPart)
         return 0;
     ChildFrame *childFrame = childPart->d->m_frame;
@@ -2675,9 +2675,9 @@ DOMString DocumentImpl::toString() const
 }
 
 
-KHTMLPart* DOM::DocumentImpl::part() const
+TDEHTMLPart* DOM::DocumentImpl::part() const
 {
-    // ### TODO: make this independent from a KHTMLView one day.
+    // ### TODO: make this independent from a TDEHTMLView one day.
     return view() ? view()->part() : 0;
 }
 

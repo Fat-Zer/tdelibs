@@ -45,7 +45,7 @@ class QListboxItem;
 #include <kcombobox.h>
 #include "dom/dom_misc.h"
 
-class KHTMLPartBrowserExtension;
+class TDEHTMLPartBrowserExtension;
 class KSpell;
 class KFindDialog;
 class KReplaceDialog;
@@ -256,7 +256,7 @@ class LineEditWidget : public KLineEdit
     Q_OBJECT
 public:
     LineEditWidget(DOM::HTMLInputElementImpl* input,
-                   KHTMLView* view, TQWidget* parent);
+                   TDEHTMLView* view, TQWidget* parent);
     ~LineEditWidget();
     void highLightWord( unsigned int length, unsigned int pos );
 
@@ -280,7 +280,7 @@ private:
         EditHistory
     };
     DOM::HTMLInputElementImpl* m_input;
-    KHTMLView* m_view;
+    TDEHTMLView* m_view;
     KSpell *m_spell;
     KAction *m_spellAction;
 };

@@ -1,4 +1,4 @@
-# This file defines handy gdb macros for KHTML
+# This file defines handy gdb macros for TDEHTML
 # To use it, add this line to your ~/.gdbinit :
 # source /path/to/kde/sources/tdelibs/tdehtml/tdehtml-devel-gdb
 
@@ -6,7 +6,7 @@ define printdomstring
     printdomstringimpl $arg0.impl
 end
 document printdomstring
-  Prints the contents of a KHTML DOMString.
+  Prints the contents of a TDEHTML DOMString.
 end
 define printdomstringimpl
     set $i=0
@@ -17,6 +17,6 @@ define printdomstringimpl
     printf "\n"
 end
 document printdomstringimpl
-  Prints the contents of a KHTML DOMStringImpl.
+  Prints the contents of a TDEHTML DOMStringImpl.
 end
 

@@ -1,5 +1,5 @@
 /*
- * This file is part of the render object implementation for KHTML.
+ * This file is part of the render object implementation for TDEHTML.
  *
  * Copyright (C) 1999-2003 Lars Knoll (knoll@kde.org)
  *           (C) 1999-2003 Antti Koivisto (koivisto@kde.org)

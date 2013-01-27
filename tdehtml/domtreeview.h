@@ -28,7 +28,7 @@ class DOMTreeView : public KListView
 {
     Q_OBJECT
     public: 
-	DOMTreeView(TQWidget *parent, KHTMLPart *part, const char * name = 0);
+	DOMTreeView(TQWidget *parent, TDEHTMLPart *part, const char * name = 0);
 	~DOMTreeView();
 
 	void recursive(const DOM::Node &pNode, const DOM::Node &node);
@@ -47,7 +47,7 @@ class DOMTreeView : public KListView
 	TQPtrDict<DOM::Node> m_nodedict;
 	DOM::Node document;
 
-	KHTMLPart *part;
+	TDEHTMLPart *part;
 
 };
 

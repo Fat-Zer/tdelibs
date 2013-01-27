@@ -28,23 +28,23 @@
 #include <kservice.h>
 #include <tdeparts/browserextension.h>
 
-class KHTMLPart;
+class TDEHTMLPart;
 
 namespace tdehtml
 {
   class ChildFrame;
 }
 
-class KHTMLRun : public KParts::BrowserRun
+class TDEHTMLRun : public KParts::BrowserRun
 {
   Q_OBJECT
 public:
-  KHTMLRun( KHTMLPart *part, tdehtml::ChildFrame *child, const KURL &url,
+  TDEHTMLRun( TDEHTMLPart *part, tdehtml::ChildFrame *child, const KURL &url,
             const KParts::URLArgs &args, bool hideErrorDialog );
 
   virtual void foundMimeType( const TQString &mimetype );
 
-  //KHTMLPart *htmlPart() const;
+  //TDEHTMLPart *htmlPart() const;
 
 protected:
   virtual void handleError( TDEIO::Job * job );

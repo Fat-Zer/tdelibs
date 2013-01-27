@@ -249,12 +249,12 @@ KJSDebugWin * KJSDebugWin::kjs_html_debugger = 0;
 TQString SourceFile::getCode()
 {
   if (interpreter) {
-    KHTMLPart *part = ::tqqt_cast<KHTMLPart*>(static_cast<ScriptInterpreter*>(interpreter)->part());
-    if (part && url == part->url().url() && KHTMLPageCache::self()->isValid(part->cacheId())) {
+    TDEHTMLPart *part = ::tqqt_cast<TDEHTMLPart*>(static_cast<ScriptInterpreter*>(interpreter)->part());
+    if (part && url == part->url().url() && TDEHTMLPageCache::self()->isValid(part->cacheId())) {
       Decoder *decoder = part->createDecoder();
       TQByteArray data;
       TQDataStream stream(data,IO_WriteOnly);
-      KHTMLPageCache::self()->saveData(part->cacheId(),&stream);
+      TDEHTMLPageCache::self()->saveData(part->cacheId(),&stream);
       TQString str;
       if (data.size() == 0)
 	str = "";
@@ -721,7 +721,7 @@ bool KJSDebugWin::sourceParsed(KJS::ExecState *exec, int sourceId,
       KParts::ReadOnlyPart *part = static_cast<ScriptInterpreter*>(exec->interpreter())->part();
       if (m_nextSourceUrl == part->url().url()) {
 	// Only store the code here if it's not from the part's html page... in that
-	// case we can get it from KHTMLPageCache
+	// case we can get it from TDEHTMLPageCache
 	code = TQString::null;
       }
 
@@ -805,7 +805,7 @@ bool KJSDebugWin::exception(ExecState *exec, const Value &value, bool inTryCatch
     return true;
 
   KParts::ReadOnlyPart *part = static_cast<ScriptInterpreter*>(exec->interpreter())->part();
-  KHTMLPart *tdehtmlpart = ::tqqt_cast<KHTMLPart*>(part);
+  TDEHTMLPart *tdehtmlpart = ::tqqt_cast<TDEHTMLPart*>(part);
   if (tdehtmlpart && !tdehtmlpart->settings()->isJavaScriptErrorReportingEnabled())
     return true;
 

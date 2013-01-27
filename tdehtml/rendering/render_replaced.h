@@ -26,7 +26,7 @@
 #include <tqobject.h>
 #include <tqscrollview.h>
 
-class KHTMLView;
+class TDEHTMLView;
 class TQWidget;
 
 namespace DOM
@@ -100,7 +100,7 @@ public:
     virtual void updateFromElement();
 
     TQWidget *widget() const { return m_widget; }
-    KHTMLView* view() const { return m_view; }
+    TDEHTMLView* view() const { return m_view; }
 
     void deref();
 
@@ -119,7 +119,7 @@ public:
 
 public slots:
     void slotWidgetDestructed();
-    bool isKHTMLWidget() const { return m_isKHTMLWidget; }
+    bool isTDEHTMLWidget() const { return m_isTDEHTMLWidget; }
 
 protected:
     virtual bool canHaveBorder() const { return false; }
@@ -134,7 +134,7 @@ protected:
     void resizeWidget( int w, int h );
 
     TQWidget *m_widget;
-    KHTMLView* m_view;
+    TDEHTMLView* m_view;
 
     //Because we mess with normal detach due to ref/deref,
     //we need to keep track of the arena ourselves
@@ -143,7 +143,7 @@ protected:
 
     bool m_resizePending;
     bool m_discardResizes;
-    bool m_isKHTMLWidget;
+    bool m_isTDEHTMLWidget;
     bool m_needsMask;
 
 public:

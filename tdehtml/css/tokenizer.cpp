@@ -756,17 +756,17 @@ YY_RULE_SETUP
 case 20:
 YY_RULE_SETUP
 #line 53 "tokenizer.flex"
-{yyTok = KHTML_RULE_SYM; return yyTok; }
+{yyTok = TDEHTML_RULE_SYM; return yyTok; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
 #line 54 "tokenizer.flex"
-{yyTok = KHTML_DECLS_SYM; return yyTok; }
+{yyTok = TDEHTML_DECLS_SYM; return yyTok; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
 #line 55 "tokenizer.flex"
-{yyTok = KHTML_VALUE_SYM; return yyTok; }
+{yyTok = TDEHTML_VALUE_SYM; return yyTok; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP

@@ -40,12 +40,12 @@ class PartMonitor : public TQObject
 {
   Q_OBJECT
 public:
-    PartMonitor(KHTMLPart *_part);
+    PartMonitor(TDEHTMLPart *_part);
     ~PartMonitor();
     void waitForCompletion();
     static PartMonitor* sm_highestMonitor;
     bool m_completed;
-    KHTMLPart *m_part;
+    TDEHTMLPart *m_part;
     int m_timer_waits;
     TQTimer *m_timeout_timer;
 public slots:
@@ -87,31 +87,31 @@ private:
 /**
  * @internal
  */
-class KHTMLPartObject : public KJS::ObjectImp
+class TDEHTMLPartObject : public KJS::ObjectImp
 {
 public:
-    KHTMLPartObject(KJS::ExecState *exec, KHTMLPart *_part);
+    TDEHTMLPartObject(KJS::ExecState *exec, TDEHTMLPart *_part);
 
     virtual KJS::Value get(KJS::ExecState *exec, const KJS::Identifier &propertyName) const;
 
 private:
-    KHTMLPart *m_part;
+    TDEHTMLPart *m_part;
 };
 
 /**
  * @internal
  */
-class KHTMLPartFunction : public KJS::ObjectImp
+class TDEHTMLPartFunction : public KJS::ObjectImp
 {
 public:
-    KHTMLPartFunction(KJS::ExecState *exec, KHTMLPart *_part, int _id, int length);
+    TDEHTMLPartFunction(KJS::ExecState *exec, TDEHTMLPart *_part, int _id, int length);
 
     bool implementsCall() const;
     KJS::Value call(KJS::ExecState *exec, KJS::Object &thisObj, const KJS::List &args);
 
     enum { OpenPage, OpenPageAsUrl, Begin, Write, End, ExecuteScript, ProcessEvents };
 private:
-    KHTMLPart *m_part;
+    TDEHTMLPart *m_part;
     int id;
 };
 
@@ -127,14 +127,14 @@ class RegressionTest : public TQObject
   Q_OBJECT
 public:
 
-    RegressionTest(KHTMLPart *part, const TQString &baseDir, const TQString &outputDir,
+    RegressionTest(TDEHTMLPart *part, const TQString &baseDir, const TQString &outputDir,
 		   bool _genOutput, bool runJS, bool runHTML);
     ~RegressionTest();
 
     enum OutputType { DOMTree, RenderTree };
     TQString getPartOutput( OutputType type );
-    void getPartDOMOutput( TQTextStream &outputStream, KHTMLPart* part, uint indent );
-    void dumpRenderTree( TQTextStream &outputStream, KHTMLPart* part );
+    void getPartDOMOutput( TQTextStream &outputStream, TDEHTMLPart* part, uint indent );
+    void dumpRenderTree( TQTextStream &outputStream, TDEHTMLPart* part );
     void testStaticFile(const TQString& filename);
     void testJSFile(const TQString& filename);
     enum CheckResult { Failure = 0, Success = 1, Ignored = 2 };
@@ -152,7 +152,7 @@ public:
     void doJavascriptReport( const TQString &test );
     void doFailureReport( const TQString& test, int failures );
 
-    KHTMLPart *m_part;
+    TDEHTMLPart *m_part;
     TQString m_baseDir;
     TQString m_outputDir;
     bool m_genOutput;

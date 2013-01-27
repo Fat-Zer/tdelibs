@@ -1,5 +1,5 @@
 <!DOCTYPE UI><UI version="3.1" stdsetdef="1">
-<class>KHTMLInfoDlg</class>
+<class>TDEHTMLInfoDlg</class>
 <comment>A dialog to display the HTTP headers for a given page.</comment>
 <author>George Staikos &lt;staikos@kde.org&gt;</author>
 <widget class="TQDialog">

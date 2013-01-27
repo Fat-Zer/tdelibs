@@ -39,7 +39,7 @@ HTMLDocument::HTMLDocument() : Document(false) // create the impl here
 
 }
 
-HTMLDocument::HTMLDocument(KHTMLView *parent)
+HTMLDocument::HTMLDocument(TDEHTMLView *parent)
     : Document(false) // create the impl here
 {
     impl = DOMImplementationImpl::instance()->createHTMLDocument(parent);

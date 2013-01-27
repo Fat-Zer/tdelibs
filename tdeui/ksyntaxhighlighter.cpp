@@ -234,7 +234,7 @@ TQStringList KSpellingHighlighter::personalWords()
     l.append( "KMail" );
     l.append( "KOrganizer" );
     l.append( "KAddressBook" );
-    l.append( "KHTML" );
+    l.append( "TDEHTML" );
     l.append( "KIO" );
     l.append( "KJS" );
     l.append( "Konqueror" );

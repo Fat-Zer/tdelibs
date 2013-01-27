@@ -43,17 +43,17 @@
 class TQPainter;
 class TQTextStream;
 class CSSStyle;
-class KHTMLView;
+class TDEHTMLView;
 
 #ifndef NDEBUG
-#define KHTMLAssert( x ) if( !(x) ) { \
+#define TDEHTMLAssert( x ) if( !(x) ) { \
     const RenderObject *o = this; while( o->parent() ) o = o->parent(); \
     o->printTree(); \
     tqDebug(" this object = %p, %s", (void*) this, kdBacktrace().latin1() ); \
     assert( x ); \
 }
 #else
-#define KHTMLAssert( x )
+#define TDEHTMLAssert( x )
 #endif
 
 /*

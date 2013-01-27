@@ -28,7 +28,7 @@
 #include "dom/dom2_events.h"
 #include "xml/dom2_viewsimpl.h"
 
-class KHTMLPart;
+class TDEHTMLPart;
 class TQMouseEvent;
 
 namespace DOM {
@@ -81,12 +81,12 @@ public:
 	KEYUP_EVENT,
 	KEYPRESS_EVENT, //Mostly corresponds to DOM3 textInput event.
 	// tdehtml events (not part of DOM)
-	KHTML_ECMA_DBLCLICK_EVENT, // for html ondblclick
-	KHTML_ECMA_CLICK_EVENT, // for html onclick
-	KHTML_DRAGDROP_EVENT,
-	KHTML_MOVE_EVENT,
+	TDEHTML_ECMA_DBLCLICK_EVENT, // for html ondblclick
+	TDEHTML_ECMA_CLICK_EVENT, // for html onclick
+	TDEHTML_DRAGDROP_EVENT,
+	TDEHTML_MOVE_EVENT,
         // XMLHttpRequest events
-        KHTML_READYSTATECHANGE_EVENT
+        TDEHTML_READYSTATECHANGE_EVENT
     };
 
     EventImpl();

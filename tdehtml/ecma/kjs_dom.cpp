@@ -265,11 +265,11 @@ Value DOMNode::getValueProperty(ExecState *exec, int token) const
   case OnChange:
     return getListener(DOM::EventImpl::CHANGE_EVENT);
   case OnClick:
-    return getListener(DOM::EventImpl::KHTML_ECMA_CLICK_EVENT);
+    return getListener(DOM::EventImpl::TDEHTML_ECMA_CLICK_EVENT);
   case OnDblClick:
-    return getListener(DOM::EventImpl::KHTML_ECMA_DBLCLICK_EVENT);
+    return getListener(DOM::EventImpl::TDEHTML_ECMA_DBLCLICK_EVENT);
   case OnDragDrop:
-    return getListener(DOM::EventImpl::KHTML_DRAGDROP_EVENT);
+    return getListener(DOM::EventImpl::TDEHTML_DRAGDROP_EVENT);
   case OnError:
     return getListener(DOM::EventImpl::ERROR_EVENT);
   case OnFocus:
@@ -293,7 +293,7 @@ Value DOMNode::getValueProperty(ExecState *exec, int token) const
   case OnMouseUp:
     return getListener(DOM::EventImpl::MOUSEUP_EVENT);
   case OnMove:
-    return getListener(DOM::EventImpl::KHTML_MOVE_EVENT);
+    return getListener(DOM::EventImpl::TDEHTML_MOVE_EVENT);
   case OnReset:
     return getListener(DOM::EventImpl::RESET_EVENT);
   case OnResize:
@@ -409,13 +409,13 @@ void DOMNode::putValueProperty(ExecState *exec, int token, const Value& value, i
     setListener(exec,DOM::EventImpl::CHANGE_EVENT,value);
     break;
   case OnClick:
-    setListener(exec,DOM::EventImpl::KHTML_ECMA_CLICK_EVENT,value);
+    setListener(exec,DOM::EventImpl::TDEHTML_ECMA_CLICK_EVENT,value);
     break;
   case OnDblClick:
-    setListener(exec,DOM::EventImpl::KHTML_ECMA_DBLCLICK_EVENT,value);
+    setListener(exec,DOM::EventImpl::TDEHTML_ECMA_DBLCLICK_EVENT,value);
     break;
   case OnDragDrop:
-    setListener(exec,DOM::EventImpl::KHTML_DRAGDROP_EVENT,value);
+    setListener(exec,DOM::EventImpl::TDEHTML_DRAGDROP_EVENT,value);
     break;
   case OnError:
     setListener(exec,DOM::EventImpl::ERROR_EVENT,value);
@@ -451,7 +451,7 @@ void DOMNode::putValueProperty(ExecState *exec, int token, const Value& value, i
     setListener(exec,DOM::EventImpl::MOUSEUP_EVENT,value);
     break;
   case OnMove:
-    setListener(exec,DOM::EventImpl::KHTML_MOVE_EVENT,value);
+    setListener(exec,DOM::EventImpl::TDEHTML_MOVE_EVENT,value);
     break;
   case OnReset:
     setListener(exec,DOM::EventImpl::RESET_EVENT,value);
@@ -949,7 +949,7 @@ Value DOMDocument::getValueProperty(ExecState *exec, int token) const
     return getDOMStyleSheetList(exec, doc.styleSheets(), doc);
   case DOMDocument::DefaultView: // DOM2
     {
-    KHTMLView *view = node.handle()->getDocument()->view();
+    TDEHTMLView *view = node.handle()->getDocument()->view();
     if (view)
         return Window::retrieve(view->part());
     return getDOMAbstractView(exec, doc.defaultView());
@@ -963,7 +963,7 @@ Value DOMDocument::getValueProperty(ExecState *exec, int token) const
     DOM::DocumentImpl* docimpl = node.handle()->getDocument();
     if ( docimpl && docimpl->view() )
     {
-      KHTMLPart* part = docimpl->view()->part();
+      TDEHTMLPart* part = docimpl->view()->part();
       if ( part ) {
         if (part->d->m_bComplete) return String("complete");
         if (docimpl->parsing()) return String("loading");
@@ -1088,7 +1088,7 @@ Value DOMDocumentProtoFunc::tryCall(ExecState *exec, Object &thisObj, const List
     Window* active = Window::retrieveActive(exec);
     // Complete the URL using the "active part" (running interpreter). We do this for the security
     // check and to make sure we load exactly the same url as we have verified to be safe
-    KHTMLPart *tdehtmlpart = ::tqqt_cast<KHTMLPart *>(active->part());
+    TDEHTMLPart *tdehtmlpart = ::tqqt_cast<TDEHTMLPart *>(active->part());
     if (tdehtmlpart) {
       // Security: only allow documents to be loaded from the same host
       TQString dstUrl = tdehtmlpart->htmlDocument().completeURL(s).string();
@@ -1274,7 +1274,7 @@ Value DOMDOMImplementationProtoFunc::tryCall(ExecState *exec, Object &thisObj, c
   case DOMDOMImplementation::CreateDocument: { // DOM2
     // Initially set the URL to document of the creator... this is so that it resides in the same
     // host/domain for security checks. The URL will be updated if Document.load() is called.
-    KHTMLPart *part = ::tqqt_cast<KHTMLPart*>(static_cast<KJS::ScriptInterpreter*>(exec->interpreter())->part());
+    TDEHTMLPart *part = ::tqqt_cast<TDEHTMLPart*>(static_cast<KJS::ScriptInterpreter*>(exec->interpreter())->part());
     if (part) {
       Document doc = implementation.createDocument(args[0].toString(exec).string(),args[1].toString(exec).string(),toNode(args[2]));
       KURL url = static_cast<DocumentImpl*>(part->document().handle())->URL();
@@ -1526,7 +1526,7 @@ bool checkNodeSecurity(ExecState *exec, const DOM::Node& n)
   // Check to see if the currently executing interpreter is allowed to access the specified node
   if (n.isNull())
     return true;
-  KHTMLView *view = n.handle()->getDocument()->view();
+  TDEHTMLView *view = n.handle()->getDocument()->view();
   Window* win = view && view->part() ? Window::retrieveWindow(view->part()) : 0L;
   if ( !win || !win->isSafeScript(exec) )
     return false;

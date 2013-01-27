@@ -26,127 +26,127 @@
 #include <tqapplication.h>
 #include <tqvariant.h>
 
-KHTMLPartIface::KHTMLPartIface( KHTMLPart *_part )
+TDEHTMLPartIface::TDEHTMLPartIface( TDEHTMLPart *_part )
     : DCOPObject( _part->dcopObjectId() ), part(_part)
 {
 }
 
-KHTMLPartIface::~KHTMLPartIface()
+TDEHTMLPartIface::~TDEHTMLPartIface()
 {
 }
 
-KURL KHTMLPartIface::url() const
+KURL TDEHTMLPartIface::url() const
 {
     return part->url();
 }
 
-void KHTMLPartIface::setJScriptEnabled( bool enable )
+void TDEHTMLPartIface::setJScriptEnabled( bool enable )
 {
     part->setJScriptEnabled(enable);
 }
 
-bool KHTMLPartIface::jScriptEnabled() const
+bool TDEHTMLPartIface::jScriptEnabled() const
 {
     return part->jScriptEnabled();
 }
 
-bool KHTMLPartIface::closeURL()
+bool TDEHTMLPartIface::closeURL()
 {
     return part->closeURL();
 }
 
-bool KHTMLPartIface::metaRefreshEnabled() const
+bool TDEHTMLPartIface::metaRefreshEnabled() const
 {
     return part->metaRefreshEnabled();
 }
 
-void KHTMLPartIface::setDNDEnabled( bool b )
+void TDEHTMLPartIface::setDNDEnabled( bool b )
 {
     part->setDNDEnabled(b);
 }
 
-bool KHTMLPartIface::dndEnabled() const
+bool TDEHTMLPartIface::dndEnabled() const
 {
     return part->dndEnabled();
 }
 
-void KHTMLPartIface::setJavaEnabled( bool enable )
+void TDEHTMLPartIface::setJavaEnabled( bool enable )
 {
     part->setJavaEnabled( enable );
 }
 
-bool KHTMLPartIface::javaEnabled() const
+bool TDEHTMLPartIface::javaEnabled() const
 {
     return part->javaEnabled();
 }
 
-void KHTMLPartIface::setPluginsEnabled( bool enable )
+void TDEHTMLPartIface::setPluginsEnabled( bool enable )
 {
     part->setPluginsEnabled( enable );
 }
 
-bool KHTMLPartIface::pluginsEnabled() const
+bool TDEHTMLPartIface::pluginsEnabled() const
 {
     return part->pluginsEnabled();
 }
 
-void KHTMLPartIface::setAutoloadImages( bool enable )
+void TDEHTMLPartIface::setAutoloadImages( bool enable )
 {
     part->setAutoloadImages( enable );
 }
 
-bool KHTMLPartIface::autoloadImages() const
+bool TDEHTMLPartIface::autoloadImages() const
 {
     return part->autoloadImages();
 }
 
-void KHTMLPartIface::setOnlyLocalReferences(bool enable)
+void TDEHTMLPartIface::setOnlyLocalReferences(bool enable)
 {
     part->setOnlyLocalReferences(enable);
 }
 
-void KHTMLPartIface::setMetaRefreshEnabled( bool enable )
+void TDEHTMLPartIface::setMetaRefreshEnabled( bool enable )
 {
     part->setMetaRefreshEnabled(enable);
 }
 
-bool KHTMLPartIface::onlyLocalReferences() const
+bool TDEHTMLPartIface::onlyLocalReferences() const
 {
     return part->onlyLocalReferences();
 }
 
-bool KHTMLPartIface::setEncoding( const TQString &name )
+bool TDEHTMLPartIface::setEncoding( const TQString &name )
 {
     return part->setEncoding(name);
 }
 
-TQString KHTMLPartIface::encoding() const
+TQString TDEHTMLPartIface::encoding() const
 {
     return part->encoding();
 }
 
-void KHTMLPartIface::setFixedFont( const TQString &name )
+void TDEHTMLPartIface::setFixedFont( const TQString &name )
 {
     part->setFixedFont(name);
 
 }
 
-bool KHTMLPartIface::gotoAnchor( const TQString &name )
+bool TDEHTMLPartIface::gotoAnchor( const TQString &name )
 {
     return part->gotoAnchor(name);
 }
 
-bool KHTMLPartIface::nextAnchor()
+bool TDEHTMLPartIface::nextAnchor()
 {
     return part->nextAnchor();
 }
 
-bool KHTMLPartIface::prevAnchor()
+bool TDEHTMLPartIface::prevAnchor()
 {
     return part->prevAnchor();
 }
 
-void KHTMLPartIface::activateNode()
+void TDEHTMLPartIface::activateNode()
 {
     KParts::ReadOnlyPart* p = part->currentFrame();
     if ( p && p->widget() ) {
@@ -155,37 +155,37 @@ void KHTMLPartIface::activateNode()
     }
 }
 
-void KHTMLPartIface::selectAll()
+void TDEHTMLPartIface::selectAll()
 {
     part->selectAll();
 }
 
-TQString KHTMLPartIface::lastModified() const
+TQString TDEHTMLPartIface::lastModified() const
 {
     return part->lastModified();
 }
 
-void KHTMLPartIface::debugRenderTree()
+void TDEHTMLPartIface::debugRenderTree()
 {
     part->slotDebugRenderTree();
 }
 
-void KHTMLPartIface::debugDOMTree()
+void TDEHTMLPartIface::debugDOMTree()
 {
     part->slotDebugDOMTree();
 }
 
-void KHTMLPartIface::stopAnimations()
+void TDEHTMLPartIface::stopAnimations()
 {
     part->slotStopAnimations();
 }
 
-void KHTMLPartIface::viewDocumentSource()
+void TDEHTMLPartIface::viewDocumentSource()
 {
     part->slotViewDocumentSource();
 }
 
-void KHTMLPartIface::saveBackground(const TQString &destination)
+void TDEHTMLPartIface::saveBackground(const TQString &destination)
 {
     KURL back = part->backgroundURL();
     if (back.isEmpty())
@@ -193,10 +193,10 @@ void KHTMLPartIface::saveBackground(const TQString &destination)
 
     TDEIO::MetaData metaData;
     metaData["referrer"] = part->referrer();
-    KHTMLPopupGUIClient::saveURL( back, KURL( destination ), metaData );
+    TDEHTMLPopupGUIClient::saveURL( back, KURL( destination ), metaData );
 }
 
-void KHTMLPartIface::saveDocument(const TQString &destination)
+void TDEHTMLPartIface::saveDocument(const TQString &destination)
 {
     KURL srcURL( part->url() );
 
@@ -205,29 +205,29 @@ void KHTMLPartIface::saveDocument(const TQString &destination)
 
     TDEIO::MetaData metaData;
     // Referrer unknown?
-    KHTMLPopupGUIClient::saveURL( srcURL, KURL( destination ), metaData, part->cacheId() );
+    TDEHTMLPopupGUIClient::saveURL( srcURL, KURL( destination ), metaData, part->cacheId() );
 }
 
-void KHTMLPartIface::setUserStyleSheet(const TQString &styleSheet)
+void TDEHTMLPartIface::setUserStyleSheet(const TQString &styleSheet)
 {
     part->setUserStyleSheet(styleSheet);
 }
 
-TQString KHTMLPartIface::selectedText() const
+TQString TDEHTMLPartIface::selectedText() const
 {
     return part->selectedText();
 }
 
-void KHTMLPartIface::viewFrameSource()
+void TDEHTMLPartIface::viewFrameSource()
 {
     part->slotViewFrameSource();
 }
 
-TQString KHTMLPartIface::evalJS(const TQString &script)
+TQString TDEHTMLPartIface::evalJS(const TQString &script)
 {
     return part->executeScript(DOM::Node(), script).toString();
 }
 
-void KHTMLPartIface::print( bool quick ) {
+void TDEHTMLPartIface::print( bool quick ) {
     part->view()->print( quick );
 }

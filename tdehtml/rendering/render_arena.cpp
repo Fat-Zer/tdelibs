@@ -43,7 +43,7 @@ using namespace tdehtml;
 namespace tdehtml {
 
 //#ifdef NDEBUG
-#define KHTML_USE_ARENA_ALLOCATOR
+#define TDEHTML_USE_ARENA_ALLOCATOR
 //#endif
 
 typedef struct {
@@ -78,7 +78,7 @@ RenderArena::~RenderArena()
 
 void* RenderArena::allocate(size_t size)
 {
-#ifndef KHTML_USE_ARENA_ALLOCATOR
+#ifndef TDEHTML_USE_ARENA_ALLOCATOR
     // Use standard malloc so that memory debugging tools work.
     void *block = ::malloc(sizeof(RenderArenaDebugHeader) + size);
     RenderArenaDebugHeader *header = (RenderArenaDebugHeader *)block;
@@ -89,10 +89,10 @@ void* RenderArena::allocate(size_t size)
     void* result = 0;
 
     // Ensure we have correct alignment for pointers.  Important for Tru64
-    size = KHTML_ROUNDUP(size, sizeof(void*));
+    size = TDEHTML_ROUNDUP(size, sizeof(void*));
 
     // Check recyclers first
-    if (size < KHTML_MAX_RECYCLED_SIZE) {
+    if (size < TDEHTML_MAX_RECYCLED_SIZE) {
         const int   index = size >> 2;
 
         result = m_recyclers[index];
@@ -117,7 +117,7 @@ void* RenderArena::allocate(size_t size)
 
 void RenderArena::free(size_t size, void* ptr)
 {
-#ifndef KHTML_USE_ARENA_ALLOCATOR
+#ifndef TDEHTML_USE_ARENA_ALLOCATOR
     // Use standard free so that memory debugging tools work.
     assert(this);
     RenderArenaDebugHeader *header = (RenderArenaDebugHeader *)ptr - 1;
@@ -131,10 +131,10 @@ void RenderArena::free(size_t size, void* ptr)
 #endif
 
     // Ensure we have correct alignment for pointers.  Important for Tru64
-    size = KHTML_ROUNDUP(size, sizeof(void*));
+    size = TDEHTML_ROUNDUP(size, sizeof(void*));
 
     // See if it's a size that we recycle
-    if (size < KHTML_MAX_RECYCLED_SIZE) {
+    if (size < TDEHTML_MAX_RECYCLED_SIZE) {
         const int   index = size >> 2;
         void*       currentTop = m_recyclers[index];
         m_recyclers[index] = ptr;

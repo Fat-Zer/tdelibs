@@ -64,7 +64,7 @@ RenderImage::RenderImage(NodeImpl *_element)
     m_selectionState = SelectionNone;
     berrorPic = false;
 
-    const KHTMLSettings *settings = _element->getDocument()->view()->part()->settings();
+    const TDEHTMLSettings *settings = _element->getDocument()->view()->part()->settings();
     bUnfinishedImageFrame = settings->unfinishedImageFrame();
 
     setIntrinsicWidth( 0 );
@@ -378,8 +378,8 @@ void RenderImage::paint(PaintInfo& paintInfo, int _tx, int _ty)
 
 void RenderImage::layout()
 {
-    KHTMLAssert( needsLayout());
-    KHTMLAssert( minMaxKnown() );
+    TDEHTMLAssert( needsLayout());
+    TDEHTMLAssert( minMaxKnown() );
 
     short oldwidth = m_width;
     int oldheight = m_height;

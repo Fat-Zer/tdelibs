@@ -47,7 +47,7 @@ class DOMString;
  * BLOCKQUOTE element definition </a> in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLBlockquoteElement : public HTMLElement
+class TDEHTML_EXPORT HTMLBlockquoteElement : public HTMLElement
 {
 public:
     HTMLBlockquoteElement();
@@ -88,7 +88,7 @@ class DOMString;
  * DIV element definition </a> in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLDivElement : public HTMLElement
+class TDEHTML_EXPORT HTMLDivElement : public HTMLElement
 {
 public:
     HTMLDivElement();
@@ -130,7 +130,7 @@ class DOMString;
  * HR element definition </a> in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLHRElement : public HTMLElement
+class TDEHTML_EXPORT HTMLHRElement : public HTMLElement
 {
 public:
     HTMLHRElement();
@@ -214,7 +214,7 @@ class DOMString;
  * H1 element definition </a> in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLHeadingElement : public HTMLElement
+class TDEHTML_EXPORT HTMLHeadingElement : public HTMLElement
 {
 public:
     HTMLHeadingElement();
@@ -255,7 +255,7 @@ class DOMString;
  * element definition </a> in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLParagraphElement : public HTMLElement
+class TDEHTML_EXPORT HTMLParagraphElement : public HTMLElement
 {
 public:
     HTMLParagraphElement();
@@ -296,7 +296,7 @@ class HTMLPreElementImpl;
  * PRE element definition </a> in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLPreElement : public HTMLElement
+class TDEHTML_EXPORT HTMLPreElement : public HTMLElement
 {
 public:
     HTMLPreElement();
@@ -334,7 +334,7 @@ class HTMLLayerElementImpl;
  * Behaves mostly like absolute positioned DIV-blocks.
  *
  */
-class KHTML_EXPORT HTMLLayerElement : public HTMLElement
+class TDEHTML_EXPORT HTMLLayerElement : public HTMLElement
 {
 public:
     HTMLLayerElement();

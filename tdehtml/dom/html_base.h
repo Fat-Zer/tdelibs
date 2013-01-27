@@ -47,7 +47,7 @@ class DOMString;
  * BODY element definition </a> in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLBodyElement : public HTMLElement
+class TDEHTML_EXPORT HTMLBodyElement : public HTMLElement
 {
 public:
     HTMLBodyElement();
@@ -160,7 +160,7 @@ class DOMString;
  * FRAME element definition </a> in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLFrameElement : public HTMLElement
+class TDEHTML_EXPORT HTMLFrameElement : public HTMLElement
 {
 public:
     HTMLFrameElement();
@@ -306,7 +306,7 @@ class DOMString;
  * FRAMESET element definition </a> in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLFrameSetElement : public HTMLElement
+class TDEHTML_EXPORT HTMLFrameSetElement : public HTMLElement
 {
 public:
     HTMLFrameSetElement();
@@ -359,7 +359,7 @@ class HTMLIFrameElementImpl;
  * IFRAME element definition </a> in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLIFrameElement : public HTMLElement
+class TDEHTML_EXPORT HTMLIFrameElement : public HTMLElement
 {
 public:
     HTMLIFrameElement();
@@ -533,7 +533,7 @@ class DOMString;
  * HEAD element definition </a> in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLHeadElement : public HTMLElement
+class TDEHTML_EXPORT HTMLHeadElement : public HTMLElement
 {
 public:
     HTMLHeadElement();
@@ -574,7 +574,7 @@ class DOMString;
  * HTML element definition </a> in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLHtmlElement : public HTMLElement
+class TDEHTML_EXPORT HTMLHtmlElement : public HTMLElement
 {
 public:
     HTMLHtmlElement();

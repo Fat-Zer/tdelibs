@@ -98,7 +98,7 @@ Value KJS::HTMLDocFunction::tryCall(ExecState *exec, Object &thisObj, const List
   case HTMLDocument::Open:
     if (args.size() >= 3) // IE extension for document.open: it means window.open if it has 3 args or more
     {
-      KHTMLView *view = static_cast<DOM::DocumentImpl*>(doc.handle())->view();
+      TDEHTMLView *view = static_cast<DOM::DocumentImpl*>(doc.handle())->view();
       if ( view && view->part() ) {
         Window* win = Window::retrieveWindow(view->part());
         if( win ) {
@@ -133,7 +133,7 @@ Value KJS::HTMLDocFunction::tryCall(ExecState *exec, Object &thisObj, const List
   case HTMLDocument::GetSelection: {
     // NS4 and Mozilla specific. IE uses document.selection.createRange()
     // http://docs.sun.com/source/816-6408-10/document.htm#1195981
-    KHTMLView *view = static_cast<DOM::DocumentImpl*>(doc.handle())->view();
+    TDEHTMLView *view = static_cast<DOM::DocumentImpl*>(doc.handle())->view();
     if ( view && view->part() )
        return String(view->part()->selectedText());
     else
@@ -199,7 +199,7 @@ bool KJS::HTMLDocument::hasProperty(ExecState *exec, const Identifier &p) const
 #endif
   DOM::HTMLDocument doc = static_cast<DOM::HTMLDocument>(node);
   DOM::DocumentImpl* docImpl = static_cast<DOM::DocumentImpl*>(doc.handle());
-  KHTMLView *view = docImpl->view();
+  TDEHTMLView *view = docImpl->view();
   Window* win = view && view->part() ? Window::retrieveWindow(view->part()) : 0L;
   if ( !win || !win->isSafeScript(exec) )
     return false;
@@ -210,7 +210,7 @@ bool KJS::HTMLDocument::hasProperty(ExecState *exec, const Identifier &p) const
 
   if ( view && view->part() )
   {
-    KHTMLPart *kp = view->part()->findFrame( p.qstring() );
+    TDEHTMLPart *kp = view->part()->findFrame( p.qstring() );
     if (kp)
       return true;
   }
@@ -226,7 +226,7 @@ Value KJS::HTMLDocument::tryGet(ExecState *exec, const Identifier &propertyName)
 
   DOM::HTMLDocument doc = static_cast<DOM::HTMLDocument>(node);
   DOM::DocumentImpl* docImpl = static_cast<DOM::DocumentImpl*>(doc.handle());
-  KHTMLView *view = docImpl->view();
+  TDEHTMLView *view = docImpl->view();
 
   Window* win = view && view->part() ? Window::retrieveWindow(view->part()) : 0L;
   if ( !win || !win->isSafeScript(exec) )
@@ -261,7 +261,7 @@ Value KJS::HTMLDocument::tryGet(ExecState *exec, const Identifier &propertyName)
   {
     // ###### TODO return a collection in case several frames have the same name
     // (IE does that). Hard to do with findFrame :}
-    KHTMLPart *kp = view->part()->findFrame( propertyName.qstring() );
+    TDEHTMLPart *kp = view->part()->findFrame( propertyName.qstring() );
     if (kp)
       return Window::retrieve(kp);
   }
@@ -356,7 +356,7 @@ void KJS::HTMLDocument::tryPut(ExecState *exec, const Identifier &propertyName, 
 #ifdef KJS_VERBOSE
   kdDebug(6070) << "KJS::HTMLDocument::tryPut " << propertyName.qstring() << endl;
 #endif
-  KHTMLView *view = static_cast<DOM::DocumentImpl*>(node.handle())->view();
+  TDEHTMLView *view = static_cast<DOM::DocumentImpl*>(node.handle())->view();
 
   Window* win = view && view->part() ? Window::retrieveWindow(view->part()) : 0L;
   if ( !win || !win->isSafeScript(exec) )
@@ -394,7 +394,7 @@ void KJS::HTMLDocument::putValueProperty(ExecState *exec, int token, const Value
     break;
   case Location:
   {
-    KHTMLView *view = static_cast<DOM::DocumentImpl*>(doc.handle())->view();
+    TDEHTMLView *view = static_cast<DOM::DocumentImpl*>(doc.handle())->view();
     if ( view )
       Window::retrieveWindow(view->part())->goURL(exec, value.toString(exec).qstring(), false /*don't lock history*/);
     break;
@@ -1127,7 +1127,7 @@ const ClassInfo* KJS::HTMLElement::classInfo() const
 static KParts::LiveConnectExtension *getLiveConnectExtension(const DOM::HTMLElement & element)
 {
   DOM::HTMLDocument doc = element.ownerDocument();
-  KHTMLView *view = static_cast<DOM::DocumentImpl*>(doc.handle())->view();
+  TDEHTMLView *view = static_cast<DOM::DocumentImpl*>(doc.handle())->view();
   if (view && element.handle())
     return view->part()->liveConnectExtension(static_cast<tdehtml::RenderPart*>(element.handle()->renderer()));
   return 0L;
@@ -1870,7 +1870,7 @@ Value KJS::HTMLElement::getValueProperty(ExecState *exec, int token) const
     case FrameContentDocument: return checkNodeSecurity(exec,frameElement.contentDocument()) ?
 				      getDOMNode(exec, frameElement.contentDocument()) : Undefined();
     case FrameContentWindow:   {
-        KHTMLPart* part = static_cast<DOM::HTMLFrameElementImpl*>(frameElement.handle())->contentPart();
+        TDEHTMLPart* part = static_cast<DOM::HTMLFrameElementImpl*>(frameElement.handle())->contentPart();
         if (part) {
           Window *w = Window::retrieveWindow(part);
           if (w)
@@ -1905,7 +1905,7 @@ Value KJS::HTMLElement::getValueProperty(ExecState *exec, int token) const
     case IFrameContentDocument: return checkNodeSecurity(exec,iFrame.contentDocument()) ?
 				       getDOMNode(exec, iFrame.contentDocument()) : Undefined();
     case IFrameContentWindow:       {
-        KHTMLPart* part = static_cast<DOM::HTMLIFrameElementImpl*>(iFrame.handle())->contentPart();
+        TDEHTMLPart* part = static_cast<DOM::HTMLIFrameElementImpl*>(iFrame.handle())->contentPart();
         if (part) {
           Window *w = Window::retrieveWindow(part);
           if (w)
@@ -2123,14 +2123,14 @@ Value KJS::HTMLElementFunction::tryCall(ExecState *exec, Object &thisObj, const 
 
 
         DOM::HTMLDocument doc = element.ownerDocument();
-        KHTMLView *view = static_cast<DOM::DocumentImpl*>(doc.handle())->view();
-        KHTMLSettings::KJSWindowOpenPolicy policy = KHTMLSettings::KJSWindowOpenAllow;
+        TDEHTMLView *view = static_cast<DOM::DocumentImpl*>(doc.handle())->view();
+        TDEHTMLSettings::KJSWindowOpenPolicy policy = TDEHTMLSettings::KJSWindowOpenAllow;
 	if (view)
 	    policy = view->part()->settings()->windowOpenPolicy(view->part()->url().host());
 
         bool block = false;
 
-        if ( policy != KHTMLSettings::KJSWindowOpenAllow ) {
+        if ( policy != TDEHTMLSettings::KJSWindowOpenAllow ) {
           block = true;
 
          // if this is a form without a target, or a special target, don't block
@@ -2146,7 +2146,7 @@ Value KJS::HTMLElementFunction::tryCall(ExecState *exec, Object &thisObj, const 
             if (!view->part()->url().host().isEmpty())
               caption = view->part()->url().host() + " - ";
             // search all (possibly nested) framesets
-            KHTMLPart *currentPart = view->part()->parentPart();
+            TDEHTMLPart *currentPart = view->part()->parentPart();
             while( currentPart != 0L ) {
               if( currentPart->frameExists( form.target().string() ) )
                 block = false;
@@ -2154,7 +2154,7 @@ Value KJS::HTMLElementFunction::tryCall(ExecState *exec, Object &thisObj, const 
             }
           }
 
-          if ( block && policy == KHTMLSettings::KJSWindowOpenAsk && view ) {
+          if ( block && policy == TDEHTMLSettings::KJSWindowOpenAsk && view ) {
             if (view && view->part())
             emit view->part()->browserExtension()->requestFocus(view->part());
             caption += i18n( "Confirmation: JavaScript Popup" );
@@ -2167,7 +2167,7 @@ Value KJS::HTMLElementFunction::tryCall(ExecState *exec, Object &thisObj, const 
                    caption, i18n("Allow"), i18n("Do Not Allow") ) == KMessageBox::Yes )
               block = false;
 
-          } else if ( block && policy == KHTMLSettings::KJSWindowOpenSmart ) {
+          } else if ( block && policy == TDEHTMLSettings::KJSWindowOpenSmart ) {
             if( static_cast<KJS::ScriptInterpreter *>(exec->interpreter())->isWindowOpenAllowed() ) {
               // This submission has been triggered by the user
               block = false;

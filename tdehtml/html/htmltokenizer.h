@@ -41,7 +41,7 @@
 #include "xml/dom_docimpl.h"
 
 class KCharsets;
-class KHTMLView;
+class TDEHTMLView;
 
 namespace DOM {
     class DocumentImpl;
@@ -50,7 +50,7 @@ namespace DOM {
 
 namespace tdehtml {
     class CachedScript;
-    class KHTMLParser;
+    class TDEHTMLParser;
 
     /**
      * @internal
@@ -120,9 +120,9 @@ namespace tdehtml {
 
 class HTMLTokenizer : public Tokenizer, public CachedObjectClient
 {
-    friend class KHTMLParser;
+    friend class TDEHTMLParser;
 public:
-    HTMLTokenizer(DOM::DocumentImpl *, KHTMLView * = 0);
+    HTMLTokenizer(DOM::DocumentImpl *, TDEHTMLView * = 0);
     HTMLTokenizer(DOM::DocumentImpl *, DOM::DocumentFragmentImpl *frag);
     virtual ~HTMLTokenizer();
 
@@ -347,9 +347,9 @@ protected:
     tdehtml::TokenizerString src;
 
     KCharsets *charsets;
-    KHTMLParser *parser;
+    TDEHTMLParser *parser;
 
-    KHTMLView *view;
+    TDEHTMLView *view;
 };
 
 } // namespace

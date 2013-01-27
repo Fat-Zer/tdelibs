@@ -44,7 +44,7 @@ class DOMString;
  * element definition </a> in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLAnchorElement : public HTMLElement
+class TDEHTML_EXPORT HTMLAnchorElement : public HTMLElement
 {
 public:
     HTMLAnchorElement();
@@ -256,7 +256,7 @@ class HTMLBRElementImpl;
  * element definition </a> in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLBRElement : public HTMLElement
+class TDEHTML_EXPORT HTMLBRElement : public HTMLElement
 {
 public:
     HTMLBRElement();
@@ -299,7 +299,7 @@ class DOMString;
  * deprecated in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLFontElement : public HTMLElement
+class TDEHTML_EXPORT HTMLFontElement : public HTMLElement
 {
 public:
     HTMLFontElement();
@@ -369,7 +369,7 @@ class DOMString;
  * DEL </a> element definitions in HTML 4.0.
  *
  */
-class KHTML_EXPORT HTMLModElement : public HTMLElement
+class TDEHTML_EXPORT HTMLModElement : public HTMLElement
 {
 public:
     HTMLModElement();
@@ -427,7 +427,7 @@ class HTMLQuoteElementImpl;
  * element. To resolve ambiquities, we use this one for the \c Q
  * element only.
  */
-class KHTML_EXPORT HTMLQuoteElement : public HTMLElement
+class TDEHTML_EXPORT HTMLQuoteElement : public HTMLElement
 {
 public:
     HTMLQuoteElement();

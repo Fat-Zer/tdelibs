@@ -69,7 +69,7 @@ using namespace DOM;
 using namespace tdehtml;
 
 
-HTMLDocumentImpl::HTMLDocumentImpl(DOMImplementationImpl *_implementation, KHTMLView *v)
+HTMLDocumentImpl::HTMLDocumentImpl(DOMImplementationImpl *_implementation, TDEHTMLView *v)
   : DocumentImpl(_implementation, v)
 {
 //    kdDebug( 6090 ) << "HTMLDocumentImpl constructor this = " << this << endl;
@@ -78,12 +78,12 @@ HTMLDocumentImpl::HTMLDocumentImpl(DOMImplementationImpl *_implementation, KHTML
     m_doAutoFill = false;
 
 /* dynamic history stuff to be fixed later (pfeiffer)
-    connect( KHTMLFactory::vLinks(), TQT_SIGNAL( removed( const TQString& )),
+    connect( TDEHTMLFactory::vLinks(), TQT_SIGNAL( removed( const TQString& )),
              TQT_SLOT( slotHistoryChanged() ));
 */
-    connect( KHTMLFactory::vLinks(), TQT_SIGNAL( inserted( const TQString& ) ),
+    connect( TDEHTMLFactory::vLinks(), TQT_SIGNAL( inserted( const TQString& ) ),
              TQT_SLOT( slotHistoryChanged() ));
-    connect( KHTMLFactory::vLinks(), TQT_SIGNAL( cleared()),
+    connect( TDEHTMLFactory::vLinks(), TQT_SIGNAL( cleared()),
              TQT_SLOT( slotHistoryChanged() ));
 }
 
@@ -108,7 +108,7 @@ DOMString HTMLDocumentImpl::lastModified() const
 DOMString HTMLDocumentImpl::cookie() const
 {
     long windowId = 0;
-    KHTMLView *v = view ();
+    TDEHTMLView *v = view ();
 
     if ( v && v->topLevelWidget() )
       windowId = v->topLevelWidget()->winId();
@@ -140,7 +140,7 @@ DOMString HTMLDocumentImpl::cookie() const
 void HTMLDocumentImpl::setCookie( const DOMString & value )
 {
     long windowId = 0;
-    KHTMLView *v = view ();
+    TDEHTMLView *v = view ();
 
     if ( v && v->topLevelWidget() )
       windowId = v->topLevelWidget()->winId();

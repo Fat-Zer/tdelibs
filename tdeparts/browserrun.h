@@ -123,7 +123,7 @@ namespace KParts {
          */
         static AskSaveResult askEmbedOrSave( const KURL & url, const TQString& mimeType, const TQString & suggestedFilename = TQString::null, int flags = 0 );
 
-        // virtual so that KHTML can implement differently (HTML cache)
+        // virtual so that TDEHTML can implement differently (HTML cache)
         virtual void save( const KURL & url, const TQString & suggestedFilename );
 
         // static so that it can be called from other classes

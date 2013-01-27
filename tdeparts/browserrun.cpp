@@ -356,7 +356,7 @@ BrowserRun::AskSaveResult BrowserRun::askEmbedOrSave( const KURL & url, const TQ
     // SYNC SYNC SYNC SYNC SYNC SYNC SYNC SYNC SYNC SYNC SYNC SYNC SYNC SYNC
 }
 
-// Default implementation, overridden in KHTMLRun
+// Default implementation, overridden in TDEHTMLRun
 void BrowserRun::save( const KURL & url, const TQString & suggestedFilename )
 {
     simpleSave( url, suggestedFilename, m_window );
@@ -461,7 +461,7 @@ void BrowserRun::handleError( TDEIO::Job * job )
 void BrowserRun::redirectToError( int error, const TQString& errorText )
 {
     /**
-     * To display this error in KHTMLPart instead of inside a dialog box,
+     * To display this error in TDEHTMLPart instead of inside a dialog box,
      * we tell konq that the mimetype is text/html, and we redirect to
      * an error:/ URL that sends the info to tdehtml.
      *

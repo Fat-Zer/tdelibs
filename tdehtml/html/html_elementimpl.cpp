@@ -212,11 +212,11 @@ void HTMLElementImpl::parseAttribute(AttributeImpl *attr)
         break;
 // standard events
     case ATTR_ONCLICK:
-	setHTMLEventListener(EventImpl::KHTML_ECMA_CLICK_EVENT,
+	setHTMLEventListener(EventImpl::TDEHTML_ECMA_CLICK_EVENT,
 	    getDocument()->createHTMLEventListener(attr->value().string(), "onclick", this));
         break;
     case ATTR_ONDBLCLICK:
-	setHTMLEventListener(EventImpl::KHTML_ECMA_DBLCLICK_EVENT,
+	setHTMLEventListener(EventImpl::TDEHTML_ECMA_DBLCLICK_EVENT,
 	    getDocument()->createHTMLEventListener(attr->value().string(), "ondblclick", this));
         break;
     case ATTR_ONMOUSEDOWN:
@@ -640,7 +640,7 @@ void HTMLElementImpl::addHTMLAlignment( DOMString alignment )
     } else if ( strcasecmp( alignment, "top" ) == 0 ) {
 	propvalign = CSS_VAL_TOP;
     } else if ( strcasecmp( alignment, "middle" ) == 0 ) {
-	propvalign = CSS_VAL__KHTML_BASELINE_MIDDLE;
+	propvalign = CSS_VAL__TDEHTML_BASELINE_MIDDLE;
     } else if ( strcasecmp( alignment, "center" ) == 0 ) {
 	propvalign = CSS_VAL_MIDDLE;
     } else if ( strcasecmp( alignment, "bottom" ) == 0 ) {

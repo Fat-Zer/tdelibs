@@ -24,19 +24,19 @@
 #include <dcopref.h>
 #include <kurl.h>
 
-class KHTMLPart;
+class TDEHTMLPart;
 
 /**
- * DCOP interface for KHTML
+ * DCOP interface for TDEHTML
  */
-class KHTMLPartIface : public DCOPObject
+class TDEHTMLPartIface : public DCOPObject
 {
     K_DCOP
 
 public:
 
-    KHTMLPartIface( KHTMLPart * );
-    virtual ~KHTMLPartIface();
+    TDEHTMLPartIface( TDEHTMLPart * );
+    virtual ~TDEHTMLPartIface();
 
 k_dcop:
     /**
@@ -235,7 +235,7 @@ k_dcop:
     void stopAnimations();
 
 private:
-    KHTMLPart *part;
+    TDEHTMLPart *part;
 };
 
 #endif

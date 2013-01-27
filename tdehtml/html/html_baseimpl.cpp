@@ -85,7 +85,7 @@ void HTMLBodyElementImpl::parseAttribute(AttributeImpl *attr)
         break;
     }
     case ATTR_MARGINWIDTH: {
-	KHTMLView* w = getDocument()->view();
+	TDEHTMLView* w = getDocument()->view();
 	if (w)
 	    w->setMarginWidth( -1 ); // unset this, so it doesn't override the setting here
         addCSSLength(CSS_PROP_MARGIN_RIGHT, attr->value() );
@@ -95,7 +95,7 @@ void HTMLBodyElementImpl::parseAttribute(AttributeImpl *attr)
         addCSSLength(CSS_PROP_MARGIN_LEFT, attr->value() );
         break;
     case ATTR_MARGINHEIGHT: {
-	KHTMLView* w = getDocument()->view();
+	TDEHTMLView* w = getDocument()->view();
 	if (w)
 	    w->setMarginHeight( -1 ); // unset this, so it doesn't override the setting here
         addCSSLength(CSS_PROP_MARGIN_BOTTOM, attr->value());
@@ -185,7 +185,7 @@ void HTMLBodyElementImpl::insertedIntoDocument()
 {
     HTMLElementImpl::insertedIntoDocument();
 
-    KHTMLView* w = getDocument()->view();
+    TDEHTMLView* w = getDocument()->view();
     if(w && w->marginWidth() != -1) {
         TQString s;
         s.sprintf( "%d", w->marginWidth() );
@@ -351,7 +351,7 @@ void HTMLFrameElementImpl::attach()
     if (!m_render)
         return;
 
-    KHTMLView* w = getDocument()->view();
+    TDEHTMLView* w = getDocument()->view();
     if (w) {
 	// we need a unique name for every frame in the frameset. Hope that's unique enough.
 	if(name.isEmpty() || w->part()->frameExists( name.string() ) )
@@ -380,9 +380,9 @@ void HTMLFrameElementImpl::setLocation( const DOMString& str )
         return;
 
     // load the frame contents
-    KHTMLView *w = getDocument()->view();
+    TDEHTMLView *w = getDocument()->view();
     if (w) {
-	KHTMLPart *part = w->part()->findFrame(  name.string() );
+	TDEHTMLPart *part = w->part()->findFrame(  name.string() );
 	if ( part ) {
 	    part->openURL( KURL( getDocument()->completeURL( url.string() ) ) );
 	} else {
@@ -414,20 +414,20 @@ DocumentImpl* HTMLFrameElementImpl::contentDocument() const
 
     RenderPart* render = static_cast<RenderPart*>( m_render );
 
-    if(render->widget() && ::tqqt_cast<KHTMLView*>( render->widget()) )
-        return static_cast<KHTMLView*>( render->widget() )->part()->xmlDocImpl();
+    if(render->widget() && ::tqqt_cast<TDEHTMLView*>( render->widget()) )
+        return static_cast<TDEHTMLView*>( render->widget() )->part()->xmlDocImpl();
 
     return 0;
 }
 
-KHTMLPart*   HTMLFrameElementImpl::contentPart() const
+TDEHTMLPart*   HTMLFrameElementImpl::contentPart() const
 {
     if ( !m_render ) return 0;
 
     RenderPart* render = static_cast<RenderPart*>( m_render );
 
-    if(render->widget() && ::tqqt_cast<KHTMLView*>( render->widget()) )
-        return static_cast<KHTMLView*>( render->widget() )->part();
+    if(render->widget() && ::tqqt_cast<TDEHTMLView*>( render->widget()) )
+        return static_cast<TDEHTMLView*>( render->widget() )->part();
 
     return 0;
 }
@@ -688,7 +688,7 @@ void HTMLIFrameElementImpl::attach()
 
     if (m_render) {
         // we need a unique name for every frame in the frameset. Hope that's unique enough.
-        KHTMLView* w = getDocument()->view();
+        TDEHTMLView* w = getDocument()->view();
         if(w && (name.isEmpty() || w->part()->frameExists( name.string() )))
             name = DOMString(w->part()->requestFrameName());
 

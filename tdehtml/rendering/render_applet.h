@@ -28,7 +28,7 @@
 #include <tqwidget.h>
 #include <tqmap.h>
 
-class KHTMLView;
+class TDEHTMLView;
 
 namespace DOM {
     class HTMLElementImpl;

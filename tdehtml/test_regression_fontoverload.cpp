@@ -265,7 +265,7 @@ KDE_EXPORT bool  TQFontDatabase::isSmoothlyScalable( const TQString &,
     return true;
 }
 
-const TQString &KHTMLSettings::availableFamilies()
+const TQString &TDEHTMLSettings::availableFamilies()
 {
     if ( !avFamilies ) {
         avFamilies = new TQString;
@@ -275,7 +275,7 @@ const TQString &KHTMLSettings::availableFamilies()
   return *avFamilies;
 }
 
-bool KHTMLSettings::unfinishedImageFrame() const
+bool TDEHTMLSettings::unfinishedImageFrame() const
 {
   return false;
 }

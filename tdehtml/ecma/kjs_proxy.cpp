@@ -355,7 +355,7 @@ void KJSProxyImpl::applyUserAgent()
     // If we find "Mozilla" but not "(compatible, ...)" we are a real Netscape
     if (userAgent.find(TQString::fromLatin1("Mozilla")) >= 0 &&
         userAgent.find(TQString::fromLatin1("compatible")) == -1 &&
-        userAgent.find(TQString::fromLatin1("KHTML")) == -1)
+        userAgent.find(TQString::fromLatin1("TDEHTML")) == -1)
     {
       m_script->setCompatMode(Interpreter::NetscapeCompat);
 #ifdef KJS_VERBOSE
@@ -365,8 +365,8 @@ void KJSProxyImpl::applyUserAgent()
 }
 
 // Helper method, so that all classes which need jScript() don't need to be added
-// as friend to KHTMLPart
-KJSProxy * KJSProxy::proxy( KHTMLPart *part )
+// as friend to TDEHTMLPart
+KJSProxy * KJSProxy::proxy( TDEHTMLPart *part )
 {
     return part->jScript();
 }
@@ -402,7 +402,7 @@ void KJSCPUGuard::stop()
 
 bool KJSCPUGuard::confirmTerminate() {
   kdDebug(6070) << "alarmhandler" << endl;
-  return KMessageBox::warningYesNo(0L, i18n("A script on this page is causing KHTML to freeze. If it continues to run, other applications may become less responsive.\nDo you want to abort the script?"), i18n("JavaScript"), i18n("&Abort"), KStdGuiItem::cont(), "kjscupguard_alarmhandler") == KMessageBox::Yes;
+  return KMessageBox::warningYesNo(0L, i18n("A script on this page is causing TDEHTML to freeze. If it continues to run, other applications may become less responsive.\nDo you want to abort the script?"), i18n("JavaScript"), i18n("&Abort"), KStdGuiItem::cont(), "kjscupguard_alarmhandler") == KMessageBox::Yes;
 }
 
 void KJSCPUGuard::alarmHandler(int) {

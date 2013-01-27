@@ -26,7 +26,7 @@
 #include "rendering/render_replaced.h"
 #include "xml/dom_nodeimpl.h"
 #include "html/html_baseimpl.h"
-class KHTMLView;
+class TDEHTMLView;
 
 namespace DOM
 {
@@ -102,7 +102,7 @@ public:
     virtual void setWidget( TQWidget *widget );
 
     /**
-     * Called by KHTMLPart to notify the frame object that loading the
+     * Called by TDEHTMLPart to notify the frame object that loading the
      * part was not successfuly. (called either asyncroniously after a
      * after the servicetype of the given url (the one passed with requestObject)
      * has been determined or syncroniously from within requestObject)
