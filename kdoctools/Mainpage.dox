@@ -1,6 +1,6 @@
 /** @mainpage Trinity Documentation Tools
 
-Provides a KIO slave for accessing application documentation for
+Provides a TDEIO slave for accessing application documentation for
 Trinity and GNOME applications.
 
 @authors
@@ -21,6 +21,6 @@ holders.
 
 */
 
-// DOXYGEN_REFERENCES = tdecore tdeui kio
+// DOXYGEN_REFERENCES = tdecore tdeui tdeio
 // DOXYGEN_SET_PROJECT_NAME = KDocTools
 // vim:ts=4:sw=4:expandtab:filetype=doxygen
