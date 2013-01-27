@@ -21,7 +21,7 @@
 #include <ksimpleconfig.h>
 #include <ktrader.h>
 #include <kdebug.h>
-#include <kconfigbase.h>
+#include <tdeconfigbase.h>
 #include <kglobal.h>
 #include <kstandarddirs.h>
 #include <kdesktopfile.h>

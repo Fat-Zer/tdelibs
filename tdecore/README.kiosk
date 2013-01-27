@@ -616,7 +616,7 @@ tde-display.desktop
 tde-proxy.desktop
 tde-screensaver.desktop
 
-See also kcmshell --list for a list of all the base names.
+See also tdecmshell --list for a list of all the base names.
 
 Expansion of environment variables in KDE config files.
 =======================================================

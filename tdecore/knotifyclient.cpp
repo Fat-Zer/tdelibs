@@ -26,7 +26,7 @@
 #include <kapplication.h>
 #include <kstandarddirs.h>
 #include <kapplication.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <dcopclient.h>
 #include <kdebug.h>
 #include <kstaticdeleter.h>

@@ -39,7 +39,7 @@
 #include <tqmetaobject.h>
 #include <tqcheckbox.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <kglobal.h>
 #include <kshortcut.h>

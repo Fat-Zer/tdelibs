@@ -33,7 +33,7 @@
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kmessagebox.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kseparator.h>
 #include <kguiitem.h>
 #include <kactivelabel.h>

@@ -23,7 +23,7 @@ or <a href="http://doc.trolltech.com/3.0/porting.html">this page online</a>.<P>
 <LI><A HREF="#tdeparts">Changes in tdeparts</A></LI>
 <LI><A HREF="#tdespell">Changes in tdespell</A></LI>
 <LI><A HREF="#tdehtmlpart">API-cleanup in KHTML</A></LI>
-<LI><A HREF="#kfile">Changes in kfile</A></LI>
+<LI><A HREF="#tdefile">Changes in tdefile</A></LI>
 <LI><A HREF="#kcontrol">TDE Control Center</A></LI>
 <LI><A HREF="#kicker">Panel Applets and Extensions</A></LI>
 </UL>
@@ -214,7 +214,7 @@ The preferred means of defining a shortcut, however, is to use <b>KAction</b>.
 <H4>KIconLoader, KIconTheme</H4>
 Methods now use KIcon::Group and KIcon::Context instead of int as types for group and context arguments.
 The change should affect only code using hardcoded numeric values instead of using the proper enum constants.
-This applies to classes KIconLoader, KIconTheme and (in kio and kfile) KMimeType, KService, KIconDialog, KIconButton,
+This applies to classes KIconLoader, KIconTheme and (in kio and tdefile) KMimeType, KService, KIconDialog, KIconButton,
 KURLBar and KURLBarItem.
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
@@ -416,7 +416,7 @@ TQString&) is not a slot anymore.
 
 <H4>KOpenWithHandler / KFileOpenWithHandler</H4>
 Those two classes are deprecated, no need to create a KFileOpenWithHandler anymore.
-The merging of libkio, libtdesycoca, libkfile and libkssl into a single libkio has
+The merging of libtdeio, libtdesycoca, libtdefile and libkssl into a single libtdeio has
 allowed to fix this dependency problem: KRun can now use the OpenWith dialog directly.
 
 <H4>KMimeType, KService</H4>
@@ -520,14 +520,14 @@ disable this use a #define KDE_NO_COMPAT.
 </ul>
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
-<H3><A NAME="kfile">Changes in kfile</A></H3>
-The kfile-library, as used by the KFileDialog provides classes for directory browsing widgets.
+<H3><A NAME="tdefile">Changes in tdefile</A></H3>
+The tdefile-library, as used by the KFileDialog provides classes for directory browsing widgets.
 Those classes gained some new features, some parts were merged with other existing classes
-and in some cases the API was cleaned up/fixed. The library is now built as part of libkio
-library (there's no need to modify Makefiles which use $LIB_KFILE instead of hardcoding -lkfile).
+and in some cases the API was cleaned up/fixed. The library is now built as part of libtdeio
+library (there's no need to modify Makefiles which use $LIB_KFILE instead of hardcoding -ltdefile).
 <p>
 Even if the list of changes is long, the affected code base should be relatively small, as most
-parts are rarely used outside of kfile.
+parts are rarely used outside of tdefile.
 <p>
 The changes are:
 <H4>KFileItem</H4>

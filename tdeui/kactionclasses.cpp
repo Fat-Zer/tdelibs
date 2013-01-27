@@ -43,7 +43,7 @@
 #include <dcopref.h>
 #include <kaccel.h>
 #include <kapplication.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <kfontcombo.h>
 #include <kfontdialog.h>

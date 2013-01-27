@@ -30,7 +30,7 @@
 
 #include <kdebug.h>
 #include "kurl.h"
-#include "kconfigbackend.h"
+#include "tdeconfigbackend.h"
 #include "kapplication.h"
 #include "kstandarddirs.h"
 #include "kmountpoint.h"

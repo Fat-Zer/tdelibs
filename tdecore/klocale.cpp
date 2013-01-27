@@ -37,7 +37,7 @@
 #include "kstandarddirs.h"
 #include "ksimpleconfig.h"
 #include "kinstance.h"
-#include "kconfig.h"
+#include "tdeconfig.h"
 #include "kdebug.h"
 #include "kcalendarsystem.h"
 #include "kcalendarsystemfactory.h"
@@ -672,7 +672,7 @@ void KLocale::updateCatalogues( )
   }
 
   // now iterate over all languages and all wanted catalog names and append or create them in the right order
-  // the sequence must be e.g. nds/appname nds/tdelibs nds/kio de/appname de/tdelibs de/kio etc.
+  // the sequence must be e.g. nds/appname nds/tdelibs nds/tdeio de/appname de/tdelibs de/tdeio etc.
   // and not nds/appname de/appname nds/tdelibs de/tdelibs etc. Otherwise we would be in trouble with a language
   // sequende nds,en_US, de. In this case en_US must hide everything below in the language list.
   for ( TQStringList::ConstIterator itLangs =  d->languageList.begin();

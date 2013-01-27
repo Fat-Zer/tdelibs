@@ -27,7 +27,7 @@
 
 #include <kabc/ldapurl.h>
 #include <kabc/ldif.h>
-#include <kio/job.h>
+#include <tdeio/job.h>
 
 class TQGridLayout;
 class TQSpinBox;

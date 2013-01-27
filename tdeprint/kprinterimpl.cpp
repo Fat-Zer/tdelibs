@@ -41,7 +41,7 @@
 #include <kmimemagic.h>
 #include <kmessagebox.h>
 #include <kprocess.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include <stdlib.h>
 

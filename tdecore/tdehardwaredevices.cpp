@@ -25,7 +25,7 @@
 
 #include <kglobal.h>
 #include <klocale.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <ktempfile.h>
 #include <ksimpledirwatch.h>
 #include <kstandarddirs.h>

@@ -21,7 +21,7 @@
 SUBDIRS=. pics tests
 AM_CXXFLAGS = -DQT_PLUGIN
 
-INCLUDES = -I$(top_srcdir)/kfile $(all_includes)
+INCLUDES = -I$(top_srcdir)/tdefile $(all_includes)
 
 bin_PROGRAMS = makekdewidgets
 makekdewidgets_SOURCES = makekdewidgets.cpp

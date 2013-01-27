@@ -20,7 +20,7 @@
 #include "kmtimer.h"
 #include "kmfactory.h"
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 KMTimer* KMTimer::m_self = 0;
 

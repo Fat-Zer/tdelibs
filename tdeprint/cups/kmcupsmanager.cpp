@@ -43,7 +43,7 @@
 #include <kdebug.h>
 #include <kapplication.h>
 #include <klocale.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kstandarddirs.h>
 #include <tdesocketbase.h>
 #include <klibloader.h>

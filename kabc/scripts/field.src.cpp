@@ -19,7 +19,7 @@
 */
 
 #include <klocale.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kglobal.h>
 
 #include "field.h"

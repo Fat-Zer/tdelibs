@@ -27,7 +27,7 @@
 
 #include <kurl.h>
 #include <kprocess.h>
-#include <kfileitem.h>
+#include <tdefileitem.h>
 #include <klibloader.h>
 #include <kdialogbase.h>
 

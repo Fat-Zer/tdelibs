@@ -24,7 +24,7 @@
 
 #include <kapplication.h>
 #include <kdebug.h>
-#include <kio/job.h>
+#include <tdeio/job.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kstandarddirs.h>

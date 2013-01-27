@@ -27,7 +27,7 @@ include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}
   ${CMAKE_BINARY_DIR}/kjs
-  ${CMAKE_BINARY_DIR}/kio/kssl
+  ${CMAKE_BINARY_DIR}/tdeio/kssl
   ${CMAKE_BINARY_DIR}/tdecore
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_SOURCE_DIR}
@@ -35,10 +35,10 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/tdefx
   ${CMAKE_SOURCE_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/tdeui
-  ${CMAKE_SOURCE_DIR}/kio
-  ${CMAKE_SOURCE_DIR}/kio/kio
-  ${CMAKE_SOURCE_DIR}/kio/kfile
-  ${CMAKE_SOURCE_DIR}/kio/kssl
+  ${CMAKE_SOURCE_DIR}/tdeio
+  ${CMAKE_SOURCE_DIR}/tdeio/tdeio
+  ${CMAKE_SOURCE_DIR}/tdeio/tdefile
+  ${CMAKE_SOURCE_DIR}/tdeio/kssl
   ${CMAKE_SOURCE_DIR}/tdeutils
   ${CMAKE_SOURCE_DIR}/tdewallet/client
   ${CMAKE_SOURCE_DIR}/tdeprint

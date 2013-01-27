@@ -17,7 +17,7 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kglobal.h>
 #include <kglobalsettings.h>
 

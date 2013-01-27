@@ -24,9 +24,9 @@
 #include <tdetexteditor/editinterface.h>
 
 #include <assert.h>
-#include <kio/job.h>
+#include <tdeio/job.h>
 #include <kaction.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kgenericfactory.h>
 #include <klocale.h>
 #include <kmessagebox.h>

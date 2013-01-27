@@ -37,7 +37,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <ktoolbar.h>
 #include <kmimetype.h>
 

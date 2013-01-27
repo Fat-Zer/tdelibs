@@ -22,7 +22,7 @@
 #include <tqstyle.h>
 #include <tqstylesheet.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kiconloader.h>
 #include <kstringhandler.h>
 

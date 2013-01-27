@@ -18,7 +18,7 @@
 
 #include <kapplication.h>
 #include <kglobal.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kiconview.h>
 #include <klistview.h>
 #include <klistbox.h>

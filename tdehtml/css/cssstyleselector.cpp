@@ -58,7 +58,7 @@ using namespace DOM;
 #include <kstandarddirs.h>
 #include <kcharsets.h>
 #include <kglobal.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <tqfile.h>
 #include <tqvaluelist.h>
 #include <tqstring.h>

@@ -45,7 +45,7 @@
 #include <kmessagebox.h>
 #include <kaction.h>
 #include <klocale.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <ktoolbar.h>
 #include <ktoolbarbutton.h>
 #include <kdebug.h>

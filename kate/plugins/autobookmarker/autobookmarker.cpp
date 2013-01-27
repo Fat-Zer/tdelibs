@@ -30,7 +30,7 @@
 
 #include <kaction.h>
 #include <kapplication.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kgenericfactory.h>
 #include <kiconloader.h>
 #include <klistview.h>

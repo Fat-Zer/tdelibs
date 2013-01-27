@@ -166,16 +166,16 @@ bool launchApp(TQString app)
     TQDataStream arg(data, IO_WriteOnly);
     arg << app << URLs;
 
-    if ( !dcop->call( "klauncher", "klauncher", "start_service_by_desktop_name(TQString,TQStringList)",
+    if ( !dcop->call( "tdelauncher", "tdelauncher", "start_service_by_desktop_name(TQString,TQStringList)",
                       data, replyType, replyData) ) {
-	tqWarning( "call to klauncher failed.");
+	tqWarning( "call to tdelauncher failed.");
         return false;
     }
     TQDataStream reply(replyData, IO_ReadOnly);
 
     if ( replyType != "serviceResult" )
     {
-        tqWarning( "unexpected result '%s' from klauncher.", replyType.data());
+        tqWarning( "unexpected result '%s' from tdelauncher.", replyType.data());
         return false;
     }
     int result;

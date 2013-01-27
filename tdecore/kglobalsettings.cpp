@@ -23,7 +23,7 @@
 #include <tqfontdatabase.h>
 #include <tqcursor.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <ksimpleconfig.h>
 #include <kapplication.h>
 

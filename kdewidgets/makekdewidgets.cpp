@@ -2,7 +2,7 @@
 #include <kaboutdata.h>
 #include <kinstance.h>
 #include <kcmdlineargs.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kmacroexpander.h>
 #include <kdebug.h>
 

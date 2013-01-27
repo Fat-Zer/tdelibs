@@ -24,7 +24,7 @@
 
 #include <kaction.h>
 #include <kdebug.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 KMJobManager::KMJobManager(TQObject *parent, const char *name)
 : TQObject(parent,name)

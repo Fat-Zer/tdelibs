@@ -41,7 +41,7 @@
 #include <kiconloader.h>
 #include <tqstringlist.h>
 #include <tqwhatsthis.h>
-#include <kio/passdlg.h>
+#include <tdeio/passdlg.h>
 #include <kguiitem.h>
 #include <kprocess.h>
 

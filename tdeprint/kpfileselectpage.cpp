@@ -18,7 +18,7 @@
  **/
 
 #include "kpfileselectpage.h"
-#include "kfilelist.h"
+#include "tdefilelist.h"
 
 #include <tqlayout.h>
 #include <tqstringlist.h>

@@ -26,7 +26,7 @@
 #include <kcmdlineargs.h>
 #include <klocale.h>
 #include <kdebug.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include <pwd.h>
 #include <signal.h>

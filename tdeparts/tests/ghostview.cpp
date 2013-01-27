@@ -3,7 +3,7 @@
 #include <kapplication.h>
 #include <kaction.h>
 #include <klocale.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kmessagebox.h>
 #include <kcmdlineargs.h>
 #include <klibloader.h>

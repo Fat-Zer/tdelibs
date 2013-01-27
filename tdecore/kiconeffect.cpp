@@ -30,7 +30,7 @@
 
 #include <kdebug.h>
 #include <kglobal.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kglobalsettings.h>
 #include <kicontheme.h>
 #include "kiconeffect.h"

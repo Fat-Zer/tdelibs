@@ -68,7 +68,7 @@
 #if 1
 #include <kinstance.h>
 #include <kglobal.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #endif
 
 //#define DEVICEMANDEBUG

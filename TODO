@@ -180,9 +180,9 @@ that we would like to make for the next binary incompatible release.
 
 - KWallet::Wallet::* functions - remove the default = 0 argument for mainwindow for the dialog
 
-- Make libtdewalletclient part of libkio and get rid of libtdewalletclient.
+- Make libtdewalletclient part of libtdeio and get rid of libtdewalletclient.
 
-- Get rid of libtdesu dependency in libkio, get rid of SessionData::AuthData*,
+- Get rid of libtdesu dependency in libtdeio, get rid of SessionData::AuthData*,
   get rid of SlaveInterface::authorizationKey and SlaveInterface::delAuthorization
 
 - Make functions in KHelpMenu virtual so they can be overridden (ex: to provide
@@ -215,7 +215,7 @@ an alternative help->contents action)
 - Move TDEIO::findDeviceMountPoint, findPathMoundPoint, probably_slow_mounted, and testFileSystemFlag to KMountPoint,
   to merge that code.
 
-- Refactor the kio/bookmarks code so we don't need to use the static d-pointer trick anymore.
+- Refactor the tdeio/bookmarks code so we don't need to use the static d-pointer trick anymore.
 
 - Rename the parameters to KDEDesktopMimeType::pixmap so that they use meaningful names rather than
   just a, b, c, and d. Probably not something that has to wait for KDE 4, but seems like a good idea

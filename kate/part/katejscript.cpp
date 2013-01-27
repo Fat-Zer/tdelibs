@@ -37,7 +37,7 @@
 #include <kstandarddirs.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include <kjs/function_object.h>
 #include <kjs/interpreter.h>
@@ -688,7 +688,7 @@ void KateJScriptManager::collectScripts (bool force)
         TDEConfig df (desktopFile, true, false);
         df.setDesktopGroup ();
 
-        // get cmdname, fallback to baseName, if it is empty, therefor not use the kconfig fallback
+        // get cmdname, fallback to baseName, if it is empty, therefor not use the tdeconfig fallback
         TQString cmdname = df.readEntry ("X-Kate-Command");
         if (cmdname.isEmpty())
         {

@@ -26,8 +26,8 @@
 #include <kmessagebox.h>
 #include <kdebug.h>
 #include <dcopclient.h>
-#include <kio/passdlg.h>
-#include <kio/authinfo.h>
+#include <tdeio/passdlg.h>
+#include <tdeio/authinfo.h>
 #include <tqlabel.h>
 #include <kpushbutton.h>
 #include <kiconloader.h>

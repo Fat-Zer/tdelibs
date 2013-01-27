@@ -25,9 +25,9 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/dcop
   ${CMAKE_SOURCE_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/tdefx
-  ${CMAKE_SOURCE_DIR}/kio
-  ${CMAKE_SOURCE_DIR}/kio/kio
-  ${CMAKE_SOURCE_DIR}/kio/kfile
+  ${CMAKE_SOURCE_DIR}/tdeio
+  ${CMAKE_SOURCE_DIR}/tdeio/tdeio
+  ${CMAKE_SOURCE_DIR}/tdeio/tdefile
   ${FREETYPE_INCLUDE_DIRS}
 )
 
@@ -73,7 +73,7 @@ install( FILES
     ktextedit.h kpassivepopup.h
     kdatetimewidget.h ktimewidget.h ktimezonewidget.h kscrollview.h
     tdespell.h ksconfig.h tdespelldlg.h ksyntaxhighlighter.h
-    ktabbar.h ktabwidget.h ksplashscreen.h kconfigdialog.h
+    ktabbar.h ktabwidget.h ksplashscreen.h tdeconfigdialog.h
     kactionselector.h klanguagebutton.h klistviewsearchline.h
     kpixmapregionselectorwidget.h kpixmapregionselectordialog.h
     kiconviewsearchline.h ktoolbarlabelaction.h kshortcutdialog.h
@@ -138,7 +138,7 @@ set( ${target}_SRCS
   ktoolbarhandler.cpp kdatetimewidget.cpp ktimewidget.cpp ktimezonewidget.cpp
   ksconfig.cpp tdespelldlg.cpp
   tdespell.cpp ksyntaxhighlighter.cpp ktabbar.cpp ktabwidget.cpp
-  ksplashscreen.cpp tdespellui.ui kconfigdialog.cpp
+  ksplashscreen.cpp tdespellui.ui tdeconfigdialog.cpp
   kactionselector.cpp klanguagebutton.cpp klistviewsearchline.cpp
   kpixmapregionselectorwidget.cpp kpixmapregionselectordialog.cpp
   kwhatsthismanager.cpp kiconviewsearchline.cpp

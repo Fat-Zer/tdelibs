@@ -32,7 +32,7 @@
 #include "kateschema.h"
 #include "kateconfig.h"
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kglobal.h>
 #include <kinstance.h>
 #include <kmimetype.h>

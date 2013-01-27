@@ -49,7 +49,7 @@
 #include <tqtimer.h>
 
 #include <kurl.h>
-#include <kio/global.h>
+#include <tdeio/global.h>
 
 #include <tdehtml_settings.h>
 #include <dom/dom_string.h>

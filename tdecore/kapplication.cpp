@@ -68,7 +68,7 @@
 #include <kstyle.h>
 #include <kiconloader.h>
 #include <kclipboard.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <ksimpleconfig.h>
 #include <kcmdlineargs.h>
 #include <kaboutdata.h>
@@ -2970,7 +2970,7 @@ void TDEApplication::broadcastKeyCode(unsigned int keyCode)
 TQCString
 TDEApplication::launcher()
 {
-   return "klauncher";
+   return "tdelauncher";
 }
 
 static int

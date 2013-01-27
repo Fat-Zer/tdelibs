@@ -78,7 +78,7 @@
 #include "html/html_objectimpl.h"
 
 #include <kapplication.h>
-#include <kio/job.h>
+#include <tdeio/job.h>
 
 #include <stdlib.h>
 #include "dom_docimpl.h"

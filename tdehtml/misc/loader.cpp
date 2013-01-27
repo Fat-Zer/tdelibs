@@ -57,8 +57,8 @@
 #include <tqwidget.h>
 
 #include <kapplication.h>
-#include <kio/job.h>
-#include <kio/jobclasses.h>
+#include <tdeio/job.h>
+#include <tdeio/jobclasses.h>
 #include <kglobal.h>
 #include <kimageio.h>
 #include <kcharsets.h>
@@ -70,7 +70,7 @@
 
 #ifdef IMAGE_TITLES
 #include <tqfile.h>
-#include <kfilemetainfo.h>
+#include <tdefilemetainfo.h>
 #include <ktempfile.h>
 #endif
 

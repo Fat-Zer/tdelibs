@@ -6,7 +6,7 @@
  *   email                : sascha.cunz@tiscali.de
  */
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include <tqapplication.h>
 #include <tqlabel.h>

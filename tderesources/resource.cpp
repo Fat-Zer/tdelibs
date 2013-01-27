@@ -23,7 +23,7 @@
 
 #include <kdebug.h>
 #include <kapplication.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <klocale.h>
 #include "resource.h"
 

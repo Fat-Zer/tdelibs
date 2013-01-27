@@ -18,7 +18,7 @@ include_directories(
   ${CMAKE_BINARY_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/tdehtml
   ${CMAKE_SOURCE_DIR}/tdecore
-  ${CMAKE_SOURCE_DIR}/kio
+  ${CMAKE_SOURCE_DIR}/tdeio
 )
 
 

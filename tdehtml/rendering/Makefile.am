@@ -41,8 +41,8 @@ noinst_HEADERS = \
 	render_br.h render_applet.h font.h table_layout.h render_line.h \
 	render_generated.h enumerate.h
 
-INCLUDES = -I$(top_srcdir)/kimgio -I$(top_srcdir)/kio -I$(top_srcdir)/dcop \
- -I$(top_srcdir)/kfile -I$(top_srcdir)/tdehtml -I$(top_srcdir)/tdeutils -I$(top_srcdir) $(all_includes)
+INCLUDES = -I$(top_srcdir)/kimgio -I$(top_srcdir)/tdeio -I$(top_srcdir)/dcop \
+ -I$(top_srcdir)/tdefile -I$(top_srcdir)/tdehtml -I$(top_srcdir)/tdeutils -I$(top_srcdir) $(all_includes)
 
 SRCDOC_DEST=$(kde_htmldir)/en/tdelibs/tdehtml
 

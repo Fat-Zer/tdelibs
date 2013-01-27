@@ -21,7 +21,7 @@
 #include <kapplication.h>
 #include <dcopclient.h>
 #include <kglobal.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 
 KAppDCOPInterface::KAppDCOPInterface(TDEApplication * theKApp)

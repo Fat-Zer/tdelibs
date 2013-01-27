@@ -22,10 +22,10 @@
 #include "kmtimer.h"
 #include "messagewindow.h"
 
-#include <kio/passdlg.h>
-#include <kio/authinfo.h>
+#include <tdeio/passdlg.h>
+#include <tdeio/authinfo.h>
 #include <klocale.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kapplication.h>
 #include <dcopclient.h>
 #include <kdebug.h>

@@ -41,7 +41,7 @@
 #include <kiconloader.h>
 #include <kmessagebox.h>
 #include <kaboutdialog.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kstandarddirs.h>
 #include <kprogress.h>
 

@@ -26,7 +26,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "kpanelapplet.h"
 #include "kpanelapplet.moc"
 #include <kapplication.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 class KPanelApplet::KPanelAppletPrivate
 {

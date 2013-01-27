@@ -29,7 +29,7 @@
 220        tdeui (KToolBar)
 230        tdeui (KCommand)
 240        tdeui (tdelibs)
-250        kfile (tdelibs)
+250        tdefile (tdelibs)
 264        tdecore (KIconLoader)
 265        tdecore (KIconEffect)
 270        tdeui (KRootPixmap)
@@ -58,7 +58,7 @@
 713        tdeutils (TDECModuleContainer)
 750        tdespell (tdelibs)
 760        tdemdi
-780        kcmshell (tdelibs)
+780        tdecmshell (tdelibs)
 790        tdeimproxy (tdelibs)
 800        kabapi (tdelibs)
 900        tdesu (tdelibs)
@@ -87,8 +87,8 @@
 1216        twin (client errors)
 1217        khotkeys
 1218        ksmserver
-1219        media kioslave
-1220        remote kioslave
+1219        media tdeioslave
+1220        remote tdeioslave
 
 1400        khelpcenter (tdebase)
 1401        kcmhelpcenter
@@ -220,7 +220,7 @@
 6201        tdehtml (caret table)
 6210        tdehtml (editor)
 
-# libkio
+# libtdeio
 7000        kio
 7001        kio (KDirWatch)
 7002        kio (Slave)
@@ -239,9 +239,9 @@
 7016        kio (KLauncher)
 7017        kio (KIOConnection)
 7018        kio (KMimeMagic)
-7019        kio (kioslave)
+7019        kio (tdeioslave)
 7020        kded
-7021        kbuildsycoca
+7021        tdebuildsycoca
 7022        kurifilter
 7023        kurifilter (plugins)
 7024        kio (UIServer)
@@ -260,7 +260,7 @@
 7042        KAr
 7043        kio (bookmarks)
 
-# 71xx      are for kioslaves
+# 71xx      are for tdeioslaves
 7101        kio_file
 7102        kio_ftp
 7103        kio_http
@@ -427,8 +427,8 @@
 20011        KDB (Connection)
 20012        KDB (plugin)
 
-#kfilereplace
-23000 	     KFileReplace (kfilereplacepart)
+#tdefilereplace
+23000 	     KFileReplace (tdefilereplacepart)
 
 #klinkstatus
 23100        KLinkStatus

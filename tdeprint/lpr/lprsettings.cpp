@@ -21,7 +21,7 @@
 #include "kmmanager.h"
 #include "kmfactory.h"
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <tqfile.h>
 #include <tqtextstream.h>
 

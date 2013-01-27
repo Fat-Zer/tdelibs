@@ -22,7 +22,7 @@
 #include <tqpopupmenu.h>
 #include "kcmenumngr.h"
 #include "kglobal.h"
-#include "kconfig.h"
+#include "tdeconfig.h"
 #include "kshortcut.h"
 
 #undef KeyPress

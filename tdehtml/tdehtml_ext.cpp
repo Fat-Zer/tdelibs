@@ -45,8 +45,8 @@
 
 #include <kdebug.h>
 #include <klocale.h>
-#include <kfiledialog.h>
-#include <kio/job.h>
+#include <tdefiledialog.h>
+#include <tdeio/job.h>
 #include <kprocess.h>
 #include <ktoolbarbutton.h>
 #include <ktoolbar.h>

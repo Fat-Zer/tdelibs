@@ -36,9 +36,9 @@
 #include <klocale.h>
 #include <ktempfile.h>
 #include <kmessagebox.h>
-#include <kio/job.h>
+#include <tdeio/job.h>
 #include <kstandarddirs.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kdirnotify_stub.h>
 
 #include <stdio.h>

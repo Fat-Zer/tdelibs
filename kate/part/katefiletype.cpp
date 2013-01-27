@@ -25,7 +25,7 @@
 #include "kateview.h"
 #include "katefactory.h"
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kmimemagic.h>
 #include <kmimetype.h>
 #include <kmimetypechooser.h>

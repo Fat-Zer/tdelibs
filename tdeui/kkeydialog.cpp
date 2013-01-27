@@ -40,7 +40,7 @@
 #include <kaccelaction.h>
 #include <kactionshortcutlist.h>
 #include <kapplication.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <kglobal.h>
 #include <kglobalaccel.h>

@@ -51,7 +51,7 @@
 #include <kapplication.h>
 #include <dcopclient.h>
 
-#include <../kinit/klauncher_cmds.h>
+#include <../kinit/tdelauncher_cmds.h>
 
 #if defined Q_WS_X11
 #include <X11/Xlib.h>
@@ -262,7 +262,7 @@ void KCrash::startDrKonqi( const char* argv[], int argc )
     startDirectly( argv, argc );
     return;
   }
-  klauncher_header header;
+  tdelauncher_header header;
   header.cmd = LAUNCHER_EXEC_NEW;
   const int BUFSIZE = 8192; // make sure this is big enough
   char buffer[ BUFSIZE + 10 ];

@@ -173,7 +173,7 @@ matter ).
  The ASN identification string must be a unique string for every ASN.
 In KStartupInfo class, it's created as 'hostname;tm.sec;tm.usec;pid',
 tm being the current time. If the identification string is set to "0",
-it means no ASN should be done ( e.g. for things like kio_uiserver,
+it means no ASN should be done ( e.g. for things like tdeio_uiserver,
 which shouldn't get ASN ). Empty identification string means the same
 like "0", except for the call to KStartupInfoId::initId(), where it means
 to create a new one.

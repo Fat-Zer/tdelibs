@@ -24,7 +24,7 @@
 #include "dictionary.h"
 #include "settings.h"
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 
 #include <tqtextedit.h>

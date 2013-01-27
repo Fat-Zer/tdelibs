@@ -300,9 +300,9 @@ protected:
    * Help: shows a "Help" button.
    * Default: shows a "Use Defaults" button
    * Apply: in kcontrol this will show an "Apply" and "Reset" button
-   *        in kcmshell this will show an "Ok", "Apply" and "Cancel" button
+   *        in tdecmshell this will show an "Ok", "Apply" and "Cancel" button
    *
-   * If Apply is not specified, kcmshell will show a "Close" button.
+   * If Apply is not specified, tdecmshell will show a "Close" button.
    *
    * @see TDECModule::buttons
    */

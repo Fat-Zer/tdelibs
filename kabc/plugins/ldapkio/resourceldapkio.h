@@ -24,7 +24,7 @@
 
 #include <kabc/resource.h>
 #include <kabc/ldif.h>
-#include <kio/job.h>
+#include <tdeio/job.h>
 
 class TDEConfig;
 

@@ -19,7 +19,7 @@
 
 	*/
 
-#include <kio/kmimetype.h>
+#include <tdeio/kmimetype.h>
 #include "artskde.h"
 #include "kplayobjectcreator.h"
 #include "kplayobjectcreator.moc"

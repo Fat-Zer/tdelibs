@@ -3,7 +3,7 @@
 
 #include <tqcombobox.h>
 #include <ktrader.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <tqstringlist.h>
 #include <kservice.h>
 #include <klocale.h>

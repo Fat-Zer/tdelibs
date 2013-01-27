@@ -23,7 +23,7 @@
 
 #include <tqpopupmenu.h>
 #include <kapplication.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <ktoolbar.h>
 #include <klocale.h>
 #include <kaction.h>

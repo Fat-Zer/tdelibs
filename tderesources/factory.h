@@ -27,7 +27,7 @@
 #include <tqdict.h>
 #include <tqstring.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <klibloader.h>
 #include <ktrader.h>
 
@@ -48,7 +48,7 @@ namespace KRES {
  * KABC::Factory *factory = KABC::Factory::self( "contact" );
  *
  * // to allow a transparent configuration of resources, we have
- * // to use a kconfig object.
+ * // to use a tdeconfig object.
  * TDEConfig config( "tst" );
  * config.writePathEntry( "FileName", "/home/foobar/test.vcf" );// resource dependend
  * config.writeEntry( "FileFormat", "vcard" );                  // resource dependend

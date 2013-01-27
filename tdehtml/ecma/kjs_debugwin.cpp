@@ -53,8 +53,8 @@
 #include <kactioncollection.h>
 #include <kglobalsettings.h>
 #include <kshortcut.h>
-#include <kconfig.h>
-#include <kconfigbase.h>
+#include <tdeconfig.h>
+#include <tdeconfigbase.h>
 #include <kapplication.h>
 #include <dcop/dcopclient.h>
 #include <kstringhandler.h> 

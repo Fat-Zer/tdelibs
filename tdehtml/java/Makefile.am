@@ -15,7 +15,7 @@ libkjava_la_LDFLAGS = $(KDE_MT_LDFLAGS) -no-undefined
 libkjava_la_LIBADD = $(LIB_KPARTS)
 
 INCLUDES = -I$(top_srcdir) -I$(top_srcdir)/tdehtml \
-	-I$(top_srcdir)/kio/kssl -I$(top_builddir)/kio/kssl \
+	-I$(top_srcdir)/tdeio/kssl -I$(top_builddir)/tdeio/kssl \
 	$(all_includes) 
 
 kjavadata_DATA = kjava.jar kjava.policy pluginsinfo

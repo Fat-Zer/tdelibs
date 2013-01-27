@@ -1,4 +1,4 @@
-INCLUDES = -I$(top_srcdir)/kio -I$(top_srcdir)/interfaces -I$(srcdir) -I$(top_srcdir) -I$(top_srcdir)/interfaces/tdescript $(all_includes)
+INCLUDES = -I$(top_srcdir)/tdeio -I$(top_srcdir)/interfaces -I$(srcdir) -I$(top_srcdir) -I$(top_srcdir)/interfaces/tdescript $(all_includes)
 
 kde_module_LTLIBRARIES = libshellscript.la
 

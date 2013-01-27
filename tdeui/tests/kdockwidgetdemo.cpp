@@ -19,7 +19,7 @@
 #include <tqstrlist.h>
 #include <tqpainter.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kapplication.h>
 //#include <kimgio.h>
 #include <stdlib.h>

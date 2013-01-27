@@ -32,9 +32,9 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/tdefx
   ${CMAKE_SOURCE_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/tdeui
-  ${CMAKE_SOURCE_DIR}/kio
-  ${CMAKE_SOURCE_DIR}/kio/kio
-  ${CMAKE_SOURCE_DIR}/kio/kfile
+  ${CMAKE_SOURCE_DIR}/tdeio
+  ${CMAKE_SOURCE_DIR}/tdeio/tdeio
+  ${CMAKE_SOURCE_DIR}/tdeio/tdefile
   ${CMAKE_SOURCE_DIR}/kded
 )
 
@@ -84,7 +84,7 @@ set( ${target}_SRCS
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK kio-shared tdeinit_kded-shared
+  LINK tdeio-shared tdeinit_kded-shared
   DEPENDENCIES dcopidl dcopidl2cpp
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
@@ -104,7 +104,7 @@ set( ${target}_SRCS
   kpgeneralpage.cpp kpqtpage.cpp kmthreadjob.cpp
   kpipeprocess.cpp kpfilterpage.cpp kmspecialmanager.cpp
   tdeprintcheck.cpp plugincombobox.cpp kpreloadobject.cpp
-  kfilelist.cpp kprintaction.cpp kpfileselectpage.cpp
+  tdefilelist.cpp kprintaction.cpp kpfileselectpage.cpp
   treecombobox.cpp kxmlcommand.cpp util.cpp printerfilter.cpp
   marginpreview.cpp marginvaluewidget.cpp marginwidget.cpp
   kpmarginpage.cpp messagewindow.cpp posterpreview.cpp
@@ -116,7 +116,7 @@ set( ${target}_SRCS
 tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 4.2.0
-  LINK kio-shared
+  LINK tdeio-shared
   DEPENDENCIES dcopidl dcopidl2cpp
   DESTINATION ${LIB_INSTALL_DIR}
 )

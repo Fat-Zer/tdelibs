@@ -873,7 +873,7 @@ protected:
      * invoked when the session manager requests your application
      * to save its state.
      *
-     * You @em must @em not change the group of the @p kconfig object, since
+     * You @em must @em not change the group of the @p tdeconfig object, since
      * KMainWindow uses one group for each window.  Please
      * reimplement these function in childclasses.
      *

@@ -30,7 +30,7 @@
 
 #include <kplugininfo.h>
 #include <ktrader.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include <kdebug.h>
 

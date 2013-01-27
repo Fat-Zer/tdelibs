@@ -45,7 +45,7 @@
 #include <kdirwatch.h>
 #include <kstandarddirs.h>
 #include <kdatastream.h>
-#include <kio/global.h>
+#include <tdeio/global.h>
 #include <kservicetype.h>
 
 #ifdef Q_WS_X11
@@ -65,27 +65,27 @@ static void runBuildSycoca(TQObject *callBackObj=0, const char *callBackSlot=0)
    if(checkStamps)
       args.append("--checkstamps");
    if(delayedCheck)
-      args.append("--nocheckfiles");
+      args.append("--nochectdefiles");
    else
       checkStamps = false; // useful only during kded startup
    if (callBackObj)
    {
       TQByteArray data;
       TQDataStream dataStream( data, IO_WriteOnly );
-      dataStream << TQString("kbuildsycoca") << args;
+      dataStream << TQString("tdebuildsycoca") << args;
       TQCString _launcher = TDEApplication::launcher();
 
       kapp->dcopClient()->callAsync(_launcher, _launcher, "tdeinit_exec_wait(TQString,TQStringList)", data, callBackObj, callBackSlot);
    }
    else
    {
-      TDEApplication::tdeinitExecWait( "kbuildsycoca", args );
+      TDEApplication::tdeinitExecWait( "tdebuildsycoca", args );
    }
 }
 
 static void runKonfUpdate()
 {
-   TDEApplication::tdeinitExecWait( "kconf_update", TQStringList(), 0, 0, "0" /*no startup notification*/ );
+   TDEApplication::tdeinitExecWait( "tdeconf_update", TQStringList(), 0, 0, "0" /*no startup notification*/ );
 }
 
 static void runDontChangeHostname(const TQCString &oldName, const TQCString &newName)
@@ -97,7 +97,7 @@ static void runDontChangeHostname(const TQCString &oldName, const TQCString &new
 }
 
 Kded::Kded(bool checkUpdates, bool new_startup)
-  : DCOPObject("kbuildsycoca"), DCOPObjectProxy(),
+  : DCOPObject("tdebuildsycoca"), DCOPObjectProxy(),
     b_checkUpdates(checkUpdates),
     m_needDelayedCheck(false),
     m_newStartup( new_startup )
@@ -665,7 +665,7 @@ KUpdateD::KUpdateD()
     TQObject::connect( m_pDirWatch, TQT_SIGNAL(dirty(const TQString&)),
            this, TQT_SLOT(slotNewUpdateFile()));
 
-    TQStringList dirs = TDEGlobal::dirs()->findDirs("data", "kconf_update");
+    TQStringList dirs = TDEGlobal::dirs()->findDirs("data", "tdeconf_update");
     for( TQStringList::ConstIterator it = dirs.begin();
          it != dirs.end();
          ++it )
@@ -957,7 +957,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
      // During startup kdesktop waits for KDED to finish.
      // Send a notifyDatabaseChanged signal even if the database hasn't
      // changed.
-     // If the database changed, kbuildsycoca's signal didn't go anywhere
+     // If the database changed, tdebuildsycoca's signal didn't go anywhere
      // anyway, because it was too early, so let's send this signal
      // unconditionnally (David)
      TQByteArray data;

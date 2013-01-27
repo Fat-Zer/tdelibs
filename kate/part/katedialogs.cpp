@@ -38,9 +38,9 @@
 #include <tdetexteditor/configinterfaceextension.h>
 #include <tdetexteditor/plugin.h>
 
-#include <kio/job.h>
-#include <kio/jobclasses.h>
-#include <kio/netaccess.h>
+#include <tdeio/job.h>
+#include <tdeio/jobclasses.h>
+#include <tdeio/netaccess.h>
 
 #include <kaccel.h>
 #include <kapplication.h>
@@ -50,7 +50,7 @@
 #include <kcolorcombo.h>
 #include <kcolordialog.h>
 #include <kcombobox.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <kfontdialog.h>
 #include <kglobal.h>

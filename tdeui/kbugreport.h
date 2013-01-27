@@ -57,7 +57,7 @@ public:
 
 protected slots:
   /**
-   * "Configure email" has been clicked - this calls kcmshell System/email
+   * "Configure email" has been clicked - this calls tdecmshell System/email
    */
   virtual void slotConfigureEmail();
   /**

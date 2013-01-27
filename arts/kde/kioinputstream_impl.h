@@ -24,7 +24,7 @@
 
 #include <tqobject.h>
 #include <tqcstring.h>
-#include <kio/jobclasses.h>
+#include <tdeio/jobclasses.h>
 #include <kurl.h>
 #include "artskde.h"
 #include "stdsynthmodule.h" 

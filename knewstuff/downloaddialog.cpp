@@ -24,11 +24,11 @@
 #include <klocale.h>
 #include <klistview.h>
 #include <kdebug.h>
-#include <kio/job.h>
-#include <kio/netaccess.h>
+#include <tdeio/job.h>
+#include <tdeio/netaccess.h>
 #include <kmessagebox.h>
 #include <kurl.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kapplication.h>
 #include <kiconloader.h>
 

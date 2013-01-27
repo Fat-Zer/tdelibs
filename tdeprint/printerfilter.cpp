@@ -21,7 +21,7 @@
 #include "kmprinter.h"
 #include "kmfactory.h"
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kglobal.h>
 #include <kdebug.h>
 

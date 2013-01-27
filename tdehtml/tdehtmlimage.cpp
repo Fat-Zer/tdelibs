@@ -29,7 +29,7 @@
 #include <tqvbox.h>
 #include <tqtimer.h>
 
-#include <kio/job.h>
+#include <tdeio/job.h>
 #include <kinstance.h>
 #include <kmimetype.h>
 #include <klocale.h>

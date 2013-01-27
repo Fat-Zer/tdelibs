@@ -24,13 +24,13 @@
 #include <klocale.h>
 
 #include <kstandarddirs.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 
-#include <kio/kprotocolmanager.h>
-#include <kio/kmimetype.h>
-#include <kio/kservice.h>
-#include <kio/ktrader.h>
+#include <tdeio/kprotocolmanager.h>
+#include <tdeio/kmimetype.h>
+#include <tdeio/kservice.h>
+#include <tdeio/ktrader.h>
 #include "kjs_navigator.h"
 #include "kjs/lookup.h"
 #include "kjs_binding.h"

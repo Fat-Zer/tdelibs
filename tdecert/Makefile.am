@@ -1,4 +1,4 @@
-INCLUDES= -I$(top_srcdir)/kio/kssl -I$(top_builddir)/kio/kssl -I$(top_srcdir) $(SSL_INCLUDES) $(all_includes)
+INCLUDES= -I$(top_srcdir)/tdeio/kssl -I$(top_builddir)/tdeio/kssl -I$(top_srcdir) $(SSL_INCLUDES) $(all_includes)
 
 kde_module_LTLIBRARIES = libtdecertpart.la
 

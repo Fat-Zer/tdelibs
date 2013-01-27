@@ -10,11 +10,11 @@ libknewstuff_la_SOURCES = engine.cpp entry.cpp downloaddialog.cpp \
   uploaddialog.cpp providerdialog.cpp provider.cpp knewstuff.cpp \
   knewstuffgeneric.cpp knewstuffbutton.cpp knewstuffsecure.cpp security.cpp
 
-bin_PROGRAMS = khotnewstuff
+bin_PROGRAMS = tdehotnewstuff
 
-khotnewstuff_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
-khotnewstuff_LDADD = libknewstuff.la
-khotnewstuff_SOURCES = khotnewstuff.cpp
+tdehotnewstuff_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
+tdehotnewstuff_LDADD = libknewstuff.la
+tdehotnewstuff_SOURCES = tdehotnewstuff.cpp
 
 EXTRA_PROGRAMS = testnewstuff ghns
 
@@ -29,7 +29,7 @@ ghns_SOURCES = ghns.cpp
 knewstuffdir = $(kde_datadir)/knewstuff
 knewstuff_DATA = types
 
-kde_conf_DATA = khotnewstuffrc
+kde_conf_DATA = tdehotnewstuffrc
 
 knsdir = $(includedir)/knewstuff
 kns_HEADERS = downloaddialog.h engine.h entry.h knewstuffgeneric.h knewstuff.h providerdialog.h provider.h uploaddialog.h knewstuffbutton.h knewstuffsecure.h

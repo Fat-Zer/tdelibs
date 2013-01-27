@@ -11,7 +11,7 @@
 
 add_subdirectory( malloc )
 add_subdirectory( network )
-add_subdirectory( kconfig_compiler )
+add_subdirectory( tdeconfig_compiler )
 add_subdirectory( hwlibdata )
 add_subdirectory( hwlibdaemons )
 
@@ -53,7 +53,7 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/libltdl
   ${CMAKE_SOURCE_DIR}/tdefx
   ${CMAKE_SOURCE_DIR}/tdeui
-  ${CMAKE_SOURCE_DIR}/kio/kio
+  ${CMAKE_SOURCE_DIR}/tdeio/tdeio
   ${LIBART_INCLUDE_DIRS}
   ${LIBIDN_INCLUDE_DIRS}
   ${GAMIN_INCLUDEDIR}
@@ -69,9 +69,9 @@ link_directories(
 ##### headers ###################################
 
 install( FILES
-    kconfig.h kconfigskeleton.h kconfigdata.h ksimpleconfig.h
-    kconfigdialogmanager.h kconfigbase.h kdesktopfile.h
-    kurl.h ksock.h kaboutdata.h kcmdlineargs.h kconfigbackend.h
+    tdeconfig.h tdeconfigskeleton.h tdeconfigdata.h ksimpleconfig.h
+    tdeconfigdialogmanager.h tdeconfigbase.h kdesktopfile.h
+    kurl.h ksock.h kaboutdata.h kcmdlineargs.h tdeconfigbackend.h
     kapp.h kapplication.h kuniqueapp.h kuniqueapplication.h
     kcharsets.h tdeversion.h kpty.h kprocess.h kprocctrl.h
     klocale.h kicontheme.h kiconloader.h kdebug.h twinmodule.h
@@ -110,7 +110,7 @@ install( FILES kdebug.areas kdebugrc language.codes
   DESTINATION ${CONFIG_INSTALL_DIR} )
 
 install( FILES kmdcodec_compat.h
-  DESTINATION ${INCLUDE_INSTALL_DIR}/kio RENAME kmdcodec.h )
+  DESTINATION ${INCLUDE_INSTALL_DIR}/tdeio RENAME kmdcodec.h )
 
 install( FILES eventsrc
   DESTINATION ${DATA_INSTALL_DIR}/knotify )
@@ -121,7 +121,7 @@ set( target tdecore )
 
 set( ${target}_SRCS
   libintl.cpp kapplication.cpp kdebug.cpp netwm.cpp
-  kconfigbase.cpp kconfig.cpp ksimpleconfig.cpp kconfigbackend.cpp
+  tdeconfigbase.cpp tdeconfig.cpp ksimpleconfig.cpp tdeconfigbackend.cpp
   kmanagerselection.cpp kdesktopfile.cpp kstandarddirs.cpp
   ksock.cpp kpty.cpp kprocess.cpp kprocctrl.cpp klocale.cpp
   krfcdate.cpp kiconeffect.cpp kicontheme.cpp kiconloader.cpp
@@ -148,7 +148,7 @@ set( ${target}_SRCS
   kcalendarsystemfactory.cpp kmacroexpander.cpp kidna.cpp
   ktempdir.cpp kshell.cpp kmountpoint.cpp kcalendarsystemjalali.cpp
   kprotocolinfo_tdecore.cpp kprotocolinfofactory.cpp kxerrorhandler.cpp
-  kuser.cpp kconfigskeleton.cpp kconfigdialogmanager.cpp klockfile.cpp
+  kuser.cpp tdeconfigskeleton.cpp tdeconfigdialogmanager.cpp klockfile.cpp
   kqiodevicegzip_p.cpp ktimezones.cpp tdehardwaredevices.cpp tdenetworkconnections.cpp
   ksimpledirwatch.cpp
   ${TDENM_BACKEND_SOURCES}

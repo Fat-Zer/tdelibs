@@ -22,7 +22,7 @@
 #include "driver.h"
 
 #include <klocale.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 
 KMPrinter::KMPrinter()
 : KMObject()

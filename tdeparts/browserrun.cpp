@@ -18,9 +18,9 @@
 
 #include "browserrun.h"
 #include <kmessagebox.h>
-#include <kfiledialog.h>
-#include <kio/job.h>
-#include <kio/scheduler.h>
+#include <tdefiledialog.h>
+#include <tdeio/job.h>
+#include <tdeio/scheduler.h>
 #include <klocale.h>
 #include <kprocess.h>
 #include <kstringhandler.h>

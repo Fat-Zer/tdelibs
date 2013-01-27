@@ -33,15 +33,15 @@
 #include "tdehtml_part.h"
 #include "tdehtmlview.h"
 
-#include <kio/scheduler.h>
-#include <kio/job.h>
+#include <tdeio/scheduler.h>
+#include <tdeio/job.h>
 #include <tqobject.h>
 #include <kdebug.h>
 
 #ifdef APPLE_CHANGES
 #include "KWQLoader.h"
 #else
-#include <kio/netaccess.h>
+#include <tdeio/netaccess.h>
 using TDEIO::NetAccess;
 #endif
 

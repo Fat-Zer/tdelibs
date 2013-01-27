@@ -27,7 +27,7 @@
 #include "dictionary.h"
 #include "settings.h"
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <klocale.h>
 #include <kdebug.h>
 

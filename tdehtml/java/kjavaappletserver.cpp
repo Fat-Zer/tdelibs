@@ -26,14 +26,14 @@
 #include "kjavadownloader.h"
 
 #include <kdebug.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <klocale.h>
 #include <tdeparts/browserextension.h>
 #include <kapplication.h>
 #include <kstandarddirs.h>
 
-#include <kio/job.h>
-#include <kio/kprotocolmanager.h>
+#include <tdeio/job.h>
+#include <tdeio/kprotocolmanager.h>
 #include <ksslcertificate.h>
 #include <ksslcertchain.h>
 #include <kssl.h>

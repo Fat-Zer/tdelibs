@@ -32,7 +32,7 @@
 #include <tqguardedptr.h>
 
 #include <kaction.h>
-#include <kio/global.h>
+#include <tdeio/global.h>
 
 /**
  * This is the BrowserExtension for a KHTMLPart document. Please see the KParts documentation for

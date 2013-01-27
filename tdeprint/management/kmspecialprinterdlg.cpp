@@ -37,7 +37,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kicondialog.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kseparator.h>
 
 KMSpecialPrinterDlg::KMSpecialPrinterDlg(TQWidget *parent, const char *name)

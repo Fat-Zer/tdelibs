@@ -26,7 +26,7 @@
 #include <kaboutdata.h>
 #include <kapplication.h>
 #include <kdebug.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kstandarddirs.h>
 
 #include "resource.h"

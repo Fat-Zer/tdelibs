@@ -23,7 +23,7 @@
 #include <kurlrequester.h>
 #include <klocale.h>
 #include <kdialog.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <tqgroupbox.h>
 #include <tqlayout.h>
 #include <kcursor.h>

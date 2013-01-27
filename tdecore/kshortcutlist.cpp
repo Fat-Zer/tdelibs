@@ -3,7 +3,7 @@
 
 #include <kaccel.h>
 #include "kaccelaction.h"
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <kglobal.h>
 #include <kglobalaccel.h>

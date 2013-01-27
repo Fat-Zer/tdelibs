@@ -45,7 +45,7 @@
 
 #include <kapplication.h>
 #include <kdebug.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kglobal.h>
 #include <kstaticdeleter.h>
 #include <kde_file.h>
@@ -184,7 +184,7 @@ void KSimpleDirWatchPrivate::dnotify_sigio_handler(int sig, siginfo_t *si, void 
  * are supported:
  * - Polling: All files to be watched are polled regularly
  *   using stat (more precise: TQFileInfo.lastModified()).
- *   The polling frequency is determined from global kconfig
+ *   The polling frequency is determined from global tdeconfig
  *   settings, defaulting to 500 ms for local directories
  *   and 5000 ms for remote mounts
  * - FAM (File Alternation Monitor): first used on IRIX, SGI

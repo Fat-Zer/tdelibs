@@ -28,7 +28,7 @@
 #include <tqpainter.h>
 
 #include <kglobalsettings.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kcursor.h>
 #include <kapplication.h>
 #include <kipc.h>

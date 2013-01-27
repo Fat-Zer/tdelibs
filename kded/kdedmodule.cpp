@@ -24,7 +24,7 @@
 
 #include "kded.h"
 #include "kdedmodule.h"
-#include "kconfigdata.h"
+#include "tdeconfigdata.h"
 
 typedef TQMap<KEntryKey, KSharedPtr<KShared> > KDEDObjectMap;
 

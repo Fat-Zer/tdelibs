@@ -19,7 +19,7 @@
 
 	*/
 
-#include <kio/kmimetype.h>
+#include <tdeio/kmimetype.h>
 #include "kplayobject.h"
 #include "artskde.h"
 #include "kplayobjectfactory.h"
@@ -33,7 +33,7 @@
 #include <kdebug.h>
 #include "kaudiomanagerplay.h"
 #include <flowsystem.h>
-#include <kio/netaccess.h>
+#include <tdeio/netaccess.h>
 
 using namespace std;
 

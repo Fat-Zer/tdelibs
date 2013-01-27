@@ -40,7 +40,7 @@ noinst_HEADERS = \
 	html_formimpl.h      html_objectimpl.h
 
 INCLUDES = -I$(top_srcdir)/kimgio -I$(top_srcdir)/dcop \
- -I$(top_srcdir)/kio/kssl \
+ -I$(top_srcdir)/tdeio/kssl \
  -I$(top_srcdir)/kjs -I$(top_srcdir)/tdehtml -I$(top_srcdir) \
  -I$(top_srcdir)/tdewallet/client -I$(top_srcdir)/tdeutils \
  $(all_includes)

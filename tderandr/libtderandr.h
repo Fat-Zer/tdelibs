@@ -31,7 +31,7 @@
 
 #include <tqfile.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <ksimpleconfig.h>
 #include <tdelibs_export.h>
 

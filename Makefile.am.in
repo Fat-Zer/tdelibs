@@ -27,7 +27,7 @@ COMPILE_BEFORE_kabc = kab tderesources
 COMPILE_BEFORE_kate = interfaces tdeutils
 COMPILE_BEFORE_tdemdi = tdeutils
 COMPILE_BEFORE_tdespell2 = tdeutils
-COMPILE_BEFORE_kcmshell = tdeutils
+COMPILE_BEFORE_tdecmshell = tdeutils
 COMPILE_BEFORE_kdewidgets = kabc tdehtml
 COMPILE_BEFORE_interfaces = arts kabc
 

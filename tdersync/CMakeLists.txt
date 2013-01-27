@@ -18,8 +18,8 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/tdeui
   ${CMAKE_SOURCE_DIR}/tdefx
-  ${CMAKE_SOURCE_DIR}/kio
-  ${CMAKE_SOURCE_DIR}/kio/kio
+  ${CMAKE_SOURCE_DIR}/tdeio
+  ${CMAKE_SOURCE_DIR}/tdeio/tdeio
 )
 
 link_directories(
@@ -45,6 +45,6 @@ set( ${target}_SRCS
 tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 0.0.1
-  LINK tdeui-shared kio-shared
+  LINK tdeui-shared tdeio-shared
   DESTINATION ${LIB_INSTALL_DIR}
 )

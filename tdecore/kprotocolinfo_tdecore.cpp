@@ -30,7 +30,7 @@
 #include <kapplication.h>
 #include <kdebug.h>
 #include <ksimpleconfig.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kstringhandler.h>
 
 class KProtocolInfo::KProtocolInfoPrivate
@@ -555,7 +555,7 @@ TQDataStream& operator<<( TQDataStream& s, const KProtocolInfo::ExtraField& fiel
   return s;
 }
 
-// KURL based static functions are implemented in ../kio/kio/kprotocolinfo.cpp
+// KURL based static functions are implemented in ../tdeio/tdeio/kprotocolinfo.cpp
 
 void KProtocolInfo::virtual_hook( int id, void* data )
 { KSycocaEntry::virtual_hook( id, data ); }

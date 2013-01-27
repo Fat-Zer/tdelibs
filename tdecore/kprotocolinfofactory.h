@@ -20,7 +20,7 @@
 #ifndef __kprotocolinfofactory_h__
 #define __kprotocolinfofactory_h__
 
-#include "../kio/kio/kprotocolinfo.h"
+#include "../tdeio/tdeio/kprotocolinfo.h"
 
 #include <tqmap.h>
 #include <tqstring.h>

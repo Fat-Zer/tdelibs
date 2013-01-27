@@ -10,7 +10,7 @@
 #################################################
 
 if( ARTS_FOUND )
-  add_subdirectory( kfileaudiopreview )
+  add_subdirectory( tdefileaudiopreview )
 endif( ARTS_FOUND )
 
 include_directories(

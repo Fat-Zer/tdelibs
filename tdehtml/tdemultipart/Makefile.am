@@ -1,11 +1,11 @@
-INCLUDES = -I$(top_srcdir)/tdehtml -I$(top_srcdir)/kio/httpfilter -I$(top_srcdir)/tdeutils $(all_includes)
+INCLUDES = -I$(top_srcdir)/tdehtml -I$(top_srcdir)/tdeio/httpfilter -I$(top_srcdir)/tdeutils $(all_includes)
 
 # These are not really libraries, but modules dynamically opened.
 # So they should be installed in kde_module_dir, which is usually $kde_prefix/lib/trinity
 kde_module_LTLIBRARIES = libtdemultipart.la
 
 libtdemultipart_la_SOURCES = tdemultipart.cpp
-libtdemultipart_la_LIBADD = $(LIB_KPARTS) $(top_builddir)/kio/httpfilter/libhttpfilter.la $(LIB_QT) $(LIB_TDECORE) $(LIB_TDEUI) $(LIB_KFILE) $(LIBZ)
+libtdemultipart_la_LIBADD = $(LIB_KPARTS) $(top_builddir)/tdeio/httpfilter/libhttpfilter.la $(LIB_QT) $(LIB_TDECORE) $(LIB_TDEUI) $(LIB_KFILE) $(LIBZ)
 libtdemultipart_la_DEPENDENCIES = $(LIB_KPARTS)
 libtdemultipart_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN)
 

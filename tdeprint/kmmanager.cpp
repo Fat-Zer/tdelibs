@@ -29,7 +29,7 @@
 #include <zlib.h>
 #include <tqfile.h>
 #include <kstandarddirs.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kapplication.h>

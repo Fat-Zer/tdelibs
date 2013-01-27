@@ -1,6 +1,6 @@
 SUBDIRS = . sample
 
-INCLUDES = -I$(top_srcdir)/kio -I$(top_srcdir) -I$(srcdir) -I$(srcdir)/.. $(all_includes)
+INCLUDES = -I$(top_srcdir)/tdeio -I$(top_srcdir) -I$(srcdir) -I$(srcdir)/.. $(all_includes)
 
 #lib_LTLIBRARIES = libtdescriptloader.la libtdescript.la
 lib_LTLIBRARIES = libtdescript.la

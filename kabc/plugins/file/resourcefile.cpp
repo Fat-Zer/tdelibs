@@ -30,9 +30,9 @@
 #include <tqtimer.h>
 
 #include <kapplication.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
-#include <kio/scheduler.h>
+#include <tdeio/scheduler.h>
 #include <klocale.h>
 #include <ksavefile.h>
 #include <kstandarddirs.h>

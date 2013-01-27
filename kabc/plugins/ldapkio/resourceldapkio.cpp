@@ -29,12 +29,12 @@
 #include <kstandarddirs.h>
 #include <klineedit.h>
 #include <klocale.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kstringhandler.h>
 #include <ktempfile.h>
 
 #include <stdlib.h>
-#include <kio/netaccess.h>
+#include <tdeio/netaccess.h>
 #include <kabc/ldif.h>
 #include <kabc/ldapurl.h>
 

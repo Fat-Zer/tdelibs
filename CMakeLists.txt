@@ -81,7 +81,7 @@ OPTION( WITH_AVAHI "Enable AVAHI support" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_ELFICON "Enable ELF embedded icon support" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_PCRE "Enable pcre regex support for kjs" ON )
 OPTION( WITH_GCC_VISIBILITY "Enable fvisibility and fvisibility-inlines-hidden" ${WITH_ALL_OPTIONS} )
-OPTION( WITH_INOTIFY "Enable inotify support for kio" ON )
+OPTION( WITH_INOTIFY "Enable inotify support for tdeio" ON )
 OPTION( WITH_GAMIN "Enable FAM/GAMIN support" ${WITH_ALL_OPTIONS} )
 option( WITH_UPOWER "Enable UPOWER support" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_NETWORK_MANAGER_BACKEND "Enable network-manager support" OFF )
@@ -745,7 +745,7 @@ endif( )
 # before altering the LIBR_VERSION check,
 # please ensure that nothing changed in the
 # duplicated data definitions present in
-# kio/kio/kfileitem.cpp
+# tdeio/tdeio/tdefileitem.cpp
 
 if( WITH_ELFICON )
   pkg_search_module( LIBR libr )
@@ -886,7 +886,7 @@ configure_file( config.h.cmake config.h )
 configure_file( dcop/dcop-path.h.cmake dcop/dcop-path.h )
 configure_file( tdecore/kdemacros.h.cmake tdecore/kdemacros.h )
 configure_file( kjs/global.h.in kjs/global.h )
-configure_file( kio/kssl/ksslconfig.h.cmake kio/kssl/ksslconfig.h )
+configure_file( tdeio/kssl/ksslconfig.h.cmake tdeio/kssl/ksslconfig.h )
 configure_file( kdoctools/checkXML.cmake kdoctools/checkXML )
 
 
@@ -895,7 +895,7 @@ configure_file( kdoctools/checkXML.cmake kdoctools/checkXML )
 set( KDE3_DCOPIDL_EXECUTABLE ${CMAKE_BINARY_DIR}/dcop/dcopidl/dcopidl )
 set( KDE3_DCOPIDL2CPP_EXECUTABLE ${CMAKE_BINARY_DIR}/dcop/dcopidl2cpp/dcopidl2cpp )
 set( KDE3_MEINPROC_EXECUTABLE ${CMAKE_BINARY_DIR}/kdoctools/meinproc )
-set( KDE3_KCFGC_EXECUTABLE ${CMAKE_BINARY_DIR}/tdecore/kconfig_compiler/kconfig_compiler )
+set( KDE3_KCFGC_EXECUTABLE ${CMAKE_BINARY_DIR}/tdecore/tdeconfig_compiler/tdeconfig_compiler )
 
 
 ##### global compiler settings ##################
@@ -937,7 +937,7 @@ add_subdirectory( tdeui )
 add_subdirectory( tdesu )
 add_subdirectory( kjs )
 add_subdirectory( tdewallet )
-add_subdirectory( kio )
+add_subdirectory( tdeio )
 add_subdirectory( kded )
 
 # FIXME this directory/target doesn't exists
@@ -962,11 +962,11 @@ if( XRANDR_FOUND )
   add_subdirectory( tderandr )
 endif( XRANDR_FOUND )
 add_subdirectory( tdehtml )
-add_subdirectory( kcmshell )
-add_subdirectory( kconf_update )
+add_subdirectory( tdecmshell )
+add_subdirectory( tdeconf_update )
 add_subdirectory( kdewidgets )
 add_subdirectory( kimgio )
-add_subdirectory( kioslave )
+add_subdirectory( tdeioslave )
 add_subdirectory( kstyles )
 add_subdirectory( libtdemid )
 add_subdirectory( libtdescreensaver )
@@ -977,7 +977,7 @@ add_subdirectory( licenses )
 add_subdirectory( dnssd )
 add_subdirectory( pics )
 add_subdirectory( mimetypes )
-add_subdirectory( kfile-plugins )
+add_subdirectory( tdefile-plugins )
 
 
 ##### install import cmake modules ###############

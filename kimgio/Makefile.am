@@ -81,7 +81,7 @@ kimg_hdr_la_LIBADD = $(LIB_QT)
 
 noinst_HEADERS= xview.h eps.h tiffr.h g3r.h ico.h jp2.h pcx.h tga.h rgb.h xcf.h gimp.h exr.h dds.h psd.h hdr.h
 
-INCLUDES = -I$(top_srcdir)/kio -I$(top_srcdir)/dcop -I$(top_srcdir)/libltdl $(all_includes) -Drestrict= $(EXR_FLAGS)
+INCLUDES = -I$(top_srcdir)/tdeio -I$(top_srcdir)/dcop -I$(top_srcdir)/libltdl $(all_includes) -Drestrict= $(EXR_FLAGS)
 
 servicedir = $(kde_servicesdir)
 service_DATA = png.kimgio xpm.kimgio bmp.kimgio pbm.kimgio pgm.kimgio \

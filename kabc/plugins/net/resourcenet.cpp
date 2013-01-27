@@ -21,8 +21,8 @@
 #include <tqfile.h>
 
 #include <kdebug.h>
-#include <kio/netaccess.h>
-#include <kio/scheduler.h>
+#include <tdeio/netaccess.h>
+#include <tdeio/scheduler.h>
 #include <klocale.h>
 #include <ksavefile.h>
 #include <ktempfile.h>

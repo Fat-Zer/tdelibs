@@ -24,7 +24,7 @@
 #include <tqdict.h>
 #include <tqstring.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <klibloader.h>
 
 #include "formatplugin.h"

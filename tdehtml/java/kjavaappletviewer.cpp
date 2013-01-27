@@ -37,8 +37,8 @@
 #include <kiconloader.h>
 #include <kapplication.h>
 #include <kdebug.h>
-#include <kconfig.h>
-#include <kio/authinfo.h>
+#include <tdeconfig.h>
+#include <tdeio/authinfo.h>
 #include <dcopclient.h>
 
 #include "kjavaappletwidget.h"

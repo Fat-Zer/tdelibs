@@ -30,7 +30,7 @@
 #include <kurlrequester.h>
 #include <krun.h>
 #include <kmimemagic.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <knuminput.h>
 #include <kmessagebox.h>
 #include <kcursor.h>

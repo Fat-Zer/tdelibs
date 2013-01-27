@@ -21,7 +21,7 @@
 #ifndef KABC_RESOURCESQL_H
 #define KABC_RESOURCESQL_H
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include "addressbook.h"
 #include "resource.h"

@@ -31,7 +31,7 @@
 #include <tqguardedptr.h>
 #include <tqtimer.h>
 
-#include <kio/job.h>
+#include <tdeio/job.h>
 
 namespace KABC {
 

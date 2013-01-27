@@ -16,7 +16,7 @@
 #    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 #    Boston, MA 02110-1301, USA.
 
-INCLUDES = -I$(top_srcdir) -I$(top_srcdir)/kio -I$(top_srcdir)/kio/bookmarks -I$(top_srcdir)/tdehtml -I$(top_srcdir)/tdehtml/java -I$(top_srcdir)/tdewallet/client -I$(top_srcdir)/tdeutils -I$(top_builddir)/kjs $(all_includes)
+INCLUDES = -I$(top_srcdir) -I$(top_srcdir)/tdeio -I$(top_srcdir)/tdeio/bookmarks -I$(top_srcdir)/tdehtml -I$(top_srcdir)/tdehtml/java -I$(top_srcdir)/tdewallet/client -I$(top_srcdir)/tdeutils -I$(top_builddir)/kjs $(all_includes)
 
 KDE_CXXFLAGS = $(USE_EXCEPTIONS)
 

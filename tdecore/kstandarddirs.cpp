@@ -47,7 +47,7 @@
 #include <tqstringlist.h>
 
 #include "kstandarddirs.h"
-#include "kconfig.h"
+#include "tdeconfig.h"
 #include "kinstance.h"
 #include "kshell.h"
 #include "ksimpleconfig.h"

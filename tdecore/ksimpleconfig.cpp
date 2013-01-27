@@ -33,7 +33,7 @@
 
 #include "kglobal.h"
 #include "kstandarddirs.h"
-#include "kconfigbackend.h"
+#include "tdeconfigbackend.h"
 
 #include "ksimpleconfig.h"
 

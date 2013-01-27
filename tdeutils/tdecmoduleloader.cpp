@@ -170,9 +170,9 @@ TDECModule* TDECModuleLoader::loadModule(const TDECModuleInfo &mod, ErrorReporti
   /*
    * Ok, we could not load the library.
    * Try to run it as an executable.
-   * This must not be done when calling from kcmshell, or you'll
+   * This must not be done when calling from tdecmshell, or you'll
    * have infinite recursion
-   * (startService calls kcmshell which calls modloader which calls startService...)
+   * (startService calls tdecmshell which calls modloader which calls startService...)
    *
    */
   if(withfallback)

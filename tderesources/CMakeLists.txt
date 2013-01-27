@@ -17,9 +17,9 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/dcop
   ${CMAKE_SOURCE_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/tdeui
-  ${CMAKE_SOURCE_DIR}/kio
-  ${CMAKE_SOURCE_DIR}/kio/kio
-  ${CMAKE_SOURCE_DIR}/kio/kfile
+  ${CMAKE_SOURCE_DIR}/tdeio
+  ${CMAKE_SOURCE_DIR}/tdeio/tdeio
+  ${CMAKE_SOURCE_DIR}/tdeio/tdefile
 )
 
 link_directories(
@@ -57,7 +57,7 @@ set( ${target}_SRCS
 tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 1.2.0
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${LIB_INSTALL_DIR}
   DEPENDENCIES dcopidl
 )

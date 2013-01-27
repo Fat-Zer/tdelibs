@@ -255,7 +255,7 @@ changes.
 <dfaure> ok :-)
 <weis> dfaure: Can you have a look at tdeparts/COMMENTS ?
 --
-<dfaure> weis: you should have come before. coolo is talking about re-writing libkio.
+<dfaure> weis: you should have come before. coolo is talking about re-writing libtdeio.
 <dfaure> well in fact he started the rewrite
  dfaure having a look
 <weis> dfaure: Unfortunately I am not paid for KDE but for Qt hacking :-( So I fear I have no time for kio anyway.

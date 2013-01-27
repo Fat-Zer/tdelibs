@@ -31,9 +31,9 @@
 
 #include <kapplication.h>
 #include <kdebug.h>
-#include <kio/job.h>
-#include <kio/kmimetype.h>
-#include <kio/jobclasses.h>
+#include <tdeio/job.h>
+#include <tdeio/kmimetype.h>
+#include <tdeio/jobclasses.h>
 #include <tqtimer.h>
 #include <tqdatastream.h>
 #include "artsversion.h"

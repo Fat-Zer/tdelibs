@@ -2,7 +2,7 @@
 #include <kdebug.h>
 #include <kinstance.h>
 #include <kstandarddirs.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 int main(int argc, char **argv)
 {

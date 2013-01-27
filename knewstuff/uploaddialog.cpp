@@ -31,7 +31,7 @@
 #include <kdebug.h>
 #include <kurlrequester.h>
 #include <kmessagebox.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kapplication.h>
 #include <kuser.h>
 

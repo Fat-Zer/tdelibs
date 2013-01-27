@@ -18,8 +18,8 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/dcop
   ${CMAKE_SOURCE_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/tdeui
-  ${CMAKE_SOURCE_DIR}/kio
-  ${CMAKE_SOURCE_DIR}/kio/kio
+  ${CMAKE_SOURCE_DIR}/tdeio
+  ${CMAKE_SOURCE_DIR}/tdeio/tdeio
 )
 
 link_directories(
@@ -51,16 +51,16 @@ set( ${target}_SRCS
 # modules need this library
 tde_add_tdeinit_executable( ${target} AUTOMOC EXPORT
   SOURCES ${${target}_SRCS}
-  LINK kio-shared
+  LINK tdeio-shared
 )
 
 
-#### kbuildsycoca ###############################
+#### tdebuildsycoca ###############################
 
-set( target kbuildsycoca )
+set( target tdebuildsycoca )
 
 set( ${target}_SRCS
-  kbuildsycoca.cpp kbuildservicetypefactory.cpp
+  tdebuildsycoca.cpp kbuildservicetypefactory.cpp
   kbuildservicefactory.cpp kbuildservicegroupfactory.cpp
   kbuildimageiofactory.cpp kbuildprotocolinfofactory.cpp
   kctimefactory.cpp vfolder_menu.cpp
@@ -68,7 +68,7 @@ set( ${target}_SRCS
 
 tde_add_tdeinit_executable( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK kio-shared
+  LINK tdeio-shared
 )
 
 
@@ -87,31 +87,31 @@ tde_add_executable( ${target}
 )
 
 
-#### kde-menu ###################################
+#### tde-menu ###################################
 
-set( target kde-menu )
+set( target tde-menu )
 
 set( ${target}_SRCS
-  kde-menu.cpp
+  tde-menu.cpp
 )
 
 tde_add_executable( ${target}
   SOURCES ${${target}_SRCS}
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )
 
 
-#### kmimelist ##################################
+#### tdemimelist ##################################
 
-set( target kmimelist )
+set( target tdemimelist )
 
 set( ${target}_SRCS
-  kmimelist.cpp
+  tdemimelist.cpp
 )
 
 tde_add_executable( ${target}
   SOURCES ${${target}_SRCS}
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )

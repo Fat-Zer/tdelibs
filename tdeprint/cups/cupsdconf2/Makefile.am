@@ -1,6 +1,6 @@
 #$Id$
 
-INCLUDES= -I$(top_srcdir) -I$(top_srcdir)/kio -I$(top_srcdir)/kfile $(all_includes)
+INCLUDES= -I$(top_srcdir) -I$(top_srcdir)/tdeio -I$(top_srcdir)/tdefile $(all_includes)
 
 bin_PROGRAMS =
 lib_LTLIBRARIES =

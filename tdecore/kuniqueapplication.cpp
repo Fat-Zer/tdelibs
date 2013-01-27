@@ -43,7 +43,7 @@
 #include <kstartupinfo.h> 
 #endif
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include "kdebug.h"
 #include "kuniqueapplication.h"
 

@@ -23,7 +23,7 @@
 #include <kinstance.h>
 #include <kmimetype.h>
 #include <klocale.h>
-#include <kio/job.h>
+#include <tdeio/job.h>
 #include <tqfile.h>
 #include <ktempfile.h>
 #include <kmessagebox.h>

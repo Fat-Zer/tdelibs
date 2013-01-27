@@ -42,7 +42,7 @@
 #include <kaction.h>
 #include <kcmdlineargs.h>
 #include "katefactory.h"
-#include <kio/job.h>
+#include <tdeio/job.h>
 #include <kmainwindow.h>
 #include <ksimpleconfig.h>
 #include <kglobalsettings.h>

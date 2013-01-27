@@ -151,7 +151,7 @@ TDECModule * TDECModuleProxy::realModule() const
 	if( d->kcm )
 		return d->kcm;
 
-	/* /We/ have no kcm, but kcmshell running with root prevs does.. */
+	/* /We/ have no kcm, but tdecmshell running with root prevs does.. */
 	if( d->rootMode )
 		return 0;
 
@@ -329,7 +329,7 @@ void TDECModuleProxy::runAsRoot()
 	lblBusy->show();
 
 	deleteClient();
-	/* The DCOP registration is now gone, and it will occur again when kcmshell soon 
+	/* The DCOP registration is now gone, and it will occur again when tdecmshell soon 
 	 * registers. Here's a race condition in other words, but how likely is that?
 	 *
 	 * - It's a user initiated action, which means the user have to do weird stuff, very
@@ -340,7 +340,7 @@ void TDECModuleProxy::runAsRoot()
 	 * the DCOP object is established.
 	 */
 
-	/* Prepare the process to run the kcmshell */
+	/* Prepare the process to run the tdecmshell */
 	TQString cmd = moduleInfo().service()->exec().stripWhiteSpace();
 	if (cmd.left(5) == "tdesu")
 	{
@@ -351,7 +351,7 @@ void TDECModuleProxy::runAsRoot()
 			cmd = TQString(cmd.remove( 0, cmd.find( ' ' ) )).stripWhiteSpace();
 	}
 
-	if (cmd.left(8) == "kcmshell")
+	if (cmd.left(8) == "tdecmshell")
 		cmd = TQString(cmd.remove(0,8)).stripWhiteSpace();
 
 	/* Run the process */
@@ -364,7 +364,7 @@ void TDECModuleProxy::runAsRoot()
 		*d->rootProcess << tdesu;
 		*d->rootProcess << "--nonewdcop" << "-n" << "-d" << TQString( "-i%1" ).arg(moduleInfo().icon());
 
-		*d->rootProcess << TQString("%1 %2 --embed-proxy %3 --lang %4").arg(locate("exe", "kcmshell"))
+		*d->rootProcess << TQString("%1 %2 --embed-proxy %3 --lang %4").arg(locate("exe", "tdecmshell"))
 			.arg(cmd).arg(d->embedWidget->winId()).arg(TDEGlobal::locale()->language());
 
 		connect(d->rootProcess, TQT_SIGNAL(processExited(TDEProcess*)), TQT_SLOT(rootExited()));

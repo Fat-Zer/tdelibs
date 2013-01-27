@@ -20,7 +20,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "kconfig.h"
+#include "tdeconfig.h"
 #include "klocale.h"
 #include "kcharsets.h"
 #include "kiconloader.h"

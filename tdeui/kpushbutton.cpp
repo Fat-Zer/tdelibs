@@ -26,7 +26,7 @@
 #include "config.h"
 
 #include <kglobalsettings.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kglobal.h>
 #include <kipc.h> 
 #include <kapplication.h>

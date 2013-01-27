@@ -36,7 +36,7 @@
 #include <kapplication.h>
 #include <kstandarddirs.h>
 #include <kglobal.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <krun.h>
 #include <knotifyclient.h>
 #include <kdebug.h>

@@ -42,7 +42,7 @@ Here is an alphabetical list:
 * tdecert
     Personal certification manager.
 
-* kconf_update
+* tdeconf_update
     Auto-Updater for config files.
 
 * tdecore
@@ -89,7 +89,7 @@ Here is an alphabetical list:
     contains "tdesycoca", the system configure cache containing services,
     applications, servicetypes and mimetypes.
 
-* kioslave
+* tdeioslave
     I/O subprocesses to handle files, ftp, http, gzip and bzip2 streams.
 
 * kjs

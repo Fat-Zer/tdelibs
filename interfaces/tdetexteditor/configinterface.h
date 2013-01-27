@@ -57,7 +57,7 @@ class KTEXTEDITOR_EXPORT ConfigInterface
     virtual void writeConfig () = 0;           
                                                                          
     /**
-      Read/Write the config of the part to a given kconfig object
+      Read/Write the config of the part to a given tdeconfig object
       to store the settings in a different place than the standard
     */
     virtual void readConfig (TDEConfig *) = 0;

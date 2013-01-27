@@ -53,7 +53,7 @@
 #include <tqvbox.h>
 
 #include <kapplication.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <kglobal.h>
 #include <kiconloader.h>

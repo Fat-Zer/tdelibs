@@ -13,5 +13,5 @@
 
 install( FILES
     http.h
-  DESTINATION ${INCLUDE_INSTALL_DIR}/kio )
+  DESTINATION ${INCLUDE_INSTALL_DIR}/tdeio )
 

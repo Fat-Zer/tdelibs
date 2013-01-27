@@ -31,7 +31,7 @@
 #include <tqwidget.h>
 
 #include <kglobal.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <tqscrollview.h>
 
 #include "kcursor_private.h"

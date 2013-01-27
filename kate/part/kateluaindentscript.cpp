@@ -31,7 +31,7 @@
 #include <tqfileinfo.h>
 #include <kstandarddirs.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kglobal.h>
 #include <klocale.h>
 

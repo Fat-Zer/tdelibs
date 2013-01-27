@@ -24,11 +24,11 @@
 
 #include <kurl.h>
 #include <kprocess.h>
-#include <kfileitem.h>
+#include <tdefileitem.h>
 #include <klibloader.h>
 #include <tdeparts/plugin.h>
-#include <kio/global.h>
-#include <kio/slavebase.h>
+#include <tdeio/global.h>
+#include <tdeio/slavebase.h>
 
 #include <tqfile.h>
 #include <tqtimer.h>
@@ -62,7 +62,7 @@
 #include <kpassdlg.h>
 #include <klistview.h>
 #include <kapplication.h>
-#include <kconfigdialog.h>
+#include <tdeconfigdialog.h>
 
 #include <kdirlister.h>
 #include <kstandarddirs.h>

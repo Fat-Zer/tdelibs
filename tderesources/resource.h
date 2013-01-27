@@ -66,7 +66,7 @@ class ConfigWidget;
  
   <B>resourceexample.h</B>:
 \code
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <tderesources/resource.h>
 
 class ResourceExample : public KRES::Resource
@@ -84,7 +84,7 @@ class ResourceExample : public KRES::Resource
 
   <B>resourceexample.cpp</B>:
 \code
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include "resourceexample.h"
 

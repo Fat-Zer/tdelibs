@@ -32,7 +32,7 @@
 #include <kapplication.h>
 #include <kmessagebox.h>
 #include <kguiitem.h>
-#include <kio/netaccess.h>
+#include <tdeio/netaccess.h>
 
 KMWDriverTest::KMWDriverTest(TQWidget *parent, const char *name)
 : KMWizardPage(parent,name)

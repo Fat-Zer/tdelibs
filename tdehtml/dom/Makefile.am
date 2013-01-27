@@ -46,7 +46,7 @@ myinclude_HEADERS = \
 	dom2_views.h
 #	css_extensions.h
 
-INCLUDES = -I$(top_srcdir)/kimgio -I$(top_srcdir)/kio -I$(top_srcdir)/dcop \
+INCLUDES = -I$(top_srcdir)/kimgio -I$(top_srcdir)/tdeio -I$(top_srcdir)/dcop \
  -I$(top_srcdir)/tdehtml -I$(top_srcdir) $(all_includes)
 
 SRCDOC_DEST=$(kde_htmldir)/en/tdelibs/tdehtml

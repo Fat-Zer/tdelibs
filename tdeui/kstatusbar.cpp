@@ -20,7 +20,7 @@
 
 #include <kdebug.h>
 #include <kstatusbar.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kglobal.h>
 
 

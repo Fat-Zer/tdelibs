@@ -35,9 +35,9 @@
 
 #include <klocale.h>
 #include <kcursor.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kguiitem.h>
-#include <kio/netaccess.h>
+#include <tdeio/netaccess.h>
 
 KMDriverDbWidget::KMDriverDbWidget(TQWidget *parent, const char *name)
 : TQWidget(parent,name)

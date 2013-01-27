@@ -26,7 +26,7 @@
 #include <kplugininfo.h>
 #include <kiconloader.h>
 #include <kdebug.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kseparator.h>
 
 namespace KSettings

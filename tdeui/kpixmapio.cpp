@@ -19,7 +19,7 @@
 #include <tqglobal.h>
 
 #include <kglobal.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 
 #include <sys/types.h>

@@ -33,7 +33,7 @@
 #include <tqstyle.h>
 
 #ifndef NO_KDE2
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <ktoolbar.h>

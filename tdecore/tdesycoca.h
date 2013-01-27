@@ -124,7 +124,7 @@ public:
    virtual bool isBuilding() { return false; }
 
    /**
-    * @internal - disables launching of kbuildsycoca
+    * @internal - disables launching of tdebuildsycoca
     */
    void disableAutoRebuild();
 
@@ -152,7 +152,7 @@ public:
 
 k_dcop:
    /**
-    * internal function for receiving kded/kbuildsycoca's signal, when the sycoca file changes
+    * internal function for receiving kded/tdebuildsycoca's signal, when the sycoca file changes
     */
    void notifyDatabaseChanged(const TQStringList &);
 

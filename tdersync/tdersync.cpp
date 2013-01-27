@@ -50,8 +50,8 @@
 #include <util.h>
 #endif
 
-#include <kio/global.h>
-#include <kio/slavebase.h>
+#include <tdeio/global.h>
+#include <tdeio/slavebase.h>
 
 #include "tdersync.h"
 #include "rsyncconfigdialog.h"

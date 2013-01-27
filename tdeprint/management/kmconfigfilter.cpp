@@ -29,7 +29,7 @@
 #include <tqapplication.h>
 
 #include <klocale.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kiconloader.h>
 #include <klistbox.h>
 #include <kdialog.h>

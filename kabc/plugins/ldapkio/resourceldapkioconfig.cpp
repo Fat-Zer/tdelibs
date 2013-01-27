@@ -36,7 +36,7 @@
 #include <klocale.h>
 #include <klineedit.h>
 #include <kmessagebox.h>
-#include <kio/netaccess.h>
+#include <tdeio/netaccess.h>
 
 #include "resourceldapkio.h"
 

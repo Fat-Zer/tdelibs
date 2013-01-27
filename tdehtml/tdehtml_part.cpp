@@ -75,9 +75,9 @@ using namespace DOM;
 #include <dcopref.h>
 #include <kstandarddirs.h>
 #include <kstringhandler.h>
-#include <kio/job.h>
-#include <kio/global.h>
-#include <kio/netaccess.h>
+#include <tdeio/job.h>
+#include <tdeio/global.h>
+#include <tdeio/netaccess.h>
 #include <kprotocolmanager.h>
 #include <kdebug.h>
 #include <kiconloader.h>
@@ -85,7 +85,7 @@ using namespace DOM;
 #include <kcharsets.h>
 #include <kmessagebox.h>
 #include <kstdaction.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <ktrader.h>
 #include <kdatastream.h>
 #include <ktempfile.h>
@@ -102,7 +102,7 @@ using namespace DOM;
 #include <ksslcertchain.h>
 #include <ksslinfodlg.h>
 
-#include <kfileitem.h>
+#include <tdefileitem.h>
 #include <kurifilter.h>
 #include <kstatusbar.h>
 #include <kurllabel.h>
@@ -1136,7 +1136,7 @@ void KHTMLPart::launchJSErrorDialog() {
 void KHTMLPart::launchJSConfigDialog() {
   TQStringList args;
   args << "tdehtml_java_js";
-  TDEApplication::tdeinitExec( "kcmshell", args );
+  TDEApplication::tdeinitExec( "tdecmshell", args );
 }
 
 TQVariant KHTMLPart::executeScript(const TQString& filename, int baseLine, const DOM::Node& n, const TQString& script)

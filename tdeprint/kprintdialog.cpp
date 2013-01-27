@@ -53,16 +53,16 @@
 
 #include <klocale.h>
 #include <kiconloader.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kurlrequester.h>
 #include <klineedit.h>
 #include <kdebug.h>
 #include <kglobal.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kguiitem.h>
 #include <kstdguiitem.h>
 #include <kapplication.h>
-#include <kio/renamedlg.h>
+#include <tdeio/renamedlg.h>
 
 #include <time.h>
 

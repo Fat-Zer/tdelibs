@@ -24,7 +24,7 @@
 
 #include "resource.h"
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include <tqwidget.h>
 

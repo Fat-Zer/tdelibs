@@ -22,7 +22,7 @@
  */
 #include "tdehtmlpart_p.h"
 #include "tdehtml_run.h"
-#include <kio/job.h>
+#include <tdeio/job.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include "tdehtml_ext.h"

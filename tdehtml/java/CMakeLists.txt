@@ -16,14 +16,14 @@ include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}
   ${CMAKE_BINARY_DIR}/tdecore
-  ${CMAKE_BINARY_DIR}/kio/kssl
+  ${CMAKE_BINARY_DIR}/tdeio/kssl
   ${CMAKE_SOURCE_DIR}
   ${CMAKE_SOURCE_DIR}/tdehtml
   ${CMAKE_SOURCE_DIR}/dcop
   ${CMAKE_SOURCE_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/tdeui
-  ${CMAKE_SOURCE_DIR}/kio
-  ${CMAKE_SOURCE_DIR}/kio/kssl
+  ${CMAKE_SOURCE_DIR}/tdeio
+  ${CMAKE_SOURCE_DIR}/tdeio/kssl
 )
 
 link_directories(

@@ -30,7 +30,7 @@
 #include <tqptrlist.h>
 #include <kstaticdeleter.h>
 #include <kapplication.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <tqtooltip.h>
 
 using namespace DOM;

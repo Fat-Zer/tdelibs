@@ -23,8 +23,8 @@
 #include "kjavaappletserver.h"
 
 #include <kurl.h>
-#include <kio/job.h>
-#include <kio/jobclasses.h>
+#include <tdeio/job.h>
+#include <tdeio/jobclasses.h>
 #include <kdebug.h>
 #include <tqfile.h>
 

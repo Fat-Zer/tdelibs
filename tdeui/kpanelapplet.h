@@ -25,7 +25,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define __kpanelapplet_h__
 
 #include <tqframe.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 class TDEConfig;
 class TQPopupMenu;

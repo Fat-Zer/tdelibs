@@ -100,7 +100,7 @@ TDECModuleProxyRootCommunicatorImpl::TDECModuleProxyRootCommunicatorImpl
 		p( const_cast<TDECModuleProxy *>( client ))
 { 
 	/*
-	 * Connect kcmshell's TDECModuleProxy's change signal 
+	 * Connect tdecmshell's TDECModuleProxy's change signal 
 	 * to us, such that we act as a proxy for 
 	 * TDECModuleProxy's API.
 	 */

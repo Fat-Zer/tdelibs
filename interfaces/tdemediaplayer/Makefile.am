@@ -1,8 +1,8 @@
 if include_ARTS
-kfileaudiopreview_subdir = kfileaudiopreview
+tdefileaudiopreview_subdir = tdefileaudiopreview
 endif
 
-SUBDIRS = . $(kfileaudiopreview_subdir)
+SUBDIRS = . $(tdefileaudiopreview_subdir)
 INCLUDES = -I$(srcdir)/.. $(all_includes)
 
 lib_LTLIBRARIES = libtdemediaplayer.la

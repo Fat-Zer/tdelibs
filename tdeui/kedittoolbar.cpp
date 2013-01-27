@@ -40,7 +40,7 @@
 #include <kmessagebox.h>
 #include <kxmlguifactory.h>
 #include <kseparator.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <klistview.h>
 #include <kdebug.h>
 #include <kpushbutton.h>
@@ -1373,8 +1373,8 @@ void KEditToolbarWidget::updateLocal(TQDomElement& elem)
 
 void KEditToolbarWidget::slotChangeIcon()
 {
-  // We can't use KIconChooser here, since it's in libkio
-  // ##### KDE4: reconsider this, e.g. move KEditToolbar to libkio
+  // We can't use KIconChooser here, since it's in libtdeio
+  // ##### KDE4: reconsider this, e.g. move KEditToolbar to libtdeio
   
   //if the process is already running (e.g. when somebody clicked the change button twice (see #127149)) - do nothing... 
   //otherwise m_kdialogProcess will be overwritten and set to zero in slotProcessExited()...crash!

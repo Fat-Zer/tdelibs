@@ -24,7 +24,7 @@
 #include <tqptrlist.h>
 
 #include <tdecmodule.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 class KTimerDialog;
 class RandRScreenPrivate;

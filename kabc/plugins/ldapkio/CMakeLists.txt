@@ -20,9 +20,9 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/dcop
   ${CMAKE_SOURCE_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/tdeui
-  ${CMAKE_SOURCE_DIR}/kio
-  ${CMAKE_SOURCE_DIR}/kio/kio
-  ${CMAKE_SOURCE_DIR}/kio/kfiles
+  ${CMAKE_SOURCE_DIR}/tdeio
+  ${CMAKE_SOURCE_DIR}/tdeio/tdeio
+  ${CMAKE_SOURCE_DIR}/tdeio/tdefiles
 )
 
 link_directories(
@@ -68,6 +68,6 @@ set( ${target}_SRCS
 
 tde_add_kpart( ${target}
   SOURCES ${${target}_SRCS}
-  LINK kabc_ldapkio-shared
+  LINK kabc_ldaptdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

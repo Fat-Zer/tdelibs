@@ -205,7 +205,7 @@ must have created a TDEApplication object before the methods can be used.<P>
   <TD COLSPAN="2">
     <PRE>
       #include &lt;kglobal.h&gt;
-      #include &lt;kconfig.h&gt;      // Needed to use TDEConfig
+      #include &lt;tdeconfig.h&gt;      // Needed to use TDEConfig
       #include &lt;klocale.h&gt;      // Needed to use KLocale
       #include &lt;kiconloader.h&gt;  // Needed to use KIconLoader
     </PRE>
@@ -501,20 +501,20 @@ are necessary to convert your old KDND-based stuff to Qt DND.<P>
 <H3><A NAME="libkfm">libkfm has disappeared</A></H3>
 
   Lots of other functionalities have been taken out of kfm, some being
-  now in libkio, some in libkonq.<P>
+  now in libtdeio, some in libkonq.<P>
  <STRONG> Replacement table :</STRONG><P>
 <TABLE BORDER="1">
 
-<TR><TD>KFM::download         </TD><TD>-&gt; TDEIO::NetAccess::download (tdelibs/kio/netaccess.h)</TD></TR>
+<TR><TD>KFM::download         </TD><TD>-&gt; TDEIO::NetAccess::download (tdelibs/tdeio/netaccess.h)</TD></TR>
 <TR><TD>KFM::removeTempFile   </TD><TD>-&gt; TDEIO::NetAccess::removeTempFile</TD></TR>
 <TR><TD COLSPAN="2" ROWSPAN="0">refreshDesktop, sortDesktop, selectRootIcons : removed; kdesktop handles it</TD></TR>
 <TR><TD>KFM::configure        </TD><TD>-&gt; see konqueror DCOP interface</TD></TR>
-<TR><TD>KFM::openURL          </TD><TD>-&gt; "(void) new KRun (url)" (tdelibs/kio/krun.h)</TD></TR>
+<TR><TD>KFM::openURL          </TD><TD>-&gt; "(void) new KRun (url)" (tdelibs/tdeio/krun.h)</TD></TR>
 <TR><TD>KFM::refreshDirectory </TD><TD>-&gt; not needed anymore since konqy/kdesktop use KDirWatch</TD></TR>
-<TR><TD>KFM::openProperties   </TD><TD>-&gt; "(void) new KPropertiesDialog (url)" (tdelibs/kfile/kpropsdlg.h)</TD></TR>
-<TR><TD>KFM::exec             </TD><TD>-&gt; "(void) new KRun (url)" (tdelibs/kio/krun.h)</TD></TR>
-<TR><TD>KFM::copy, KFM::move  </TD><TD>-&gt; TDEIO::Job (async, see kio/job.h)<BR>
-                            or TDEIO::NetAccess (sync, see kio/netaccess.h)</TD></TR>
+<TR><TD>KFM::openProperties   </TD><TD>-&gt; "(void) new KPropertiesDialog (url)" (tdelibs/tdefile/kpropsdlg.h)</TD></TR>
+<TR><TD>KFM::exec             </TD><TD>-&gt; "(void) new KRun (url)" (tdelibs/tdeio/krun.h)</TD></TR>
+<TR><TD>KFM::copy, KFM::move  </TD><TD>-&gt; TDEIO::Job (async, see tdeio/job.h)<BR>
+                            or TDEIO::NetAccess (sync, see tdeio/netaccess.h)</TD></TR>
 <TR><TD>DlgLocation           </TD><TD>-&gt; Use KLineEditDlg (tdeui/klineeditdlg.h) instead</TD></TR>
 </TABLE>
 

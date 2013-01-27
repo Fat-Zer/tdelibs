@@ -24,7 +24,7 @@
 #include <tqpushbutton.h>
 #include <klistview.h>
 #include <klocale.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kiconloader.h>
 
 QDirMultiLineEdit::QDirMultiLineEdit(TQWidget *parent, const char *name)

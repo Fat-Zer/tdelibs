@@ -30,7 +30,7 @@
 #include <kcmdlineargs.h>
 #include <kaction.h>
 #include "domtreeview.h"
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 
 static KCmdLineOptions options[] = { { "+file", "url to open", 0 } , KCmdLineLastOption };
 

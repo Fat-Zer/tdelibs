@@ -35,7 +35,7 @@
 
 #include <kapplication.h>
 #include <klocale.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kiconloader.h>
 #include <kglobal.h>
 #include <kglobalsettings.h>

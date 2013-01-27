@@ -439,7 +439,7 @@
       <!-- others -->
       <item> dcop </item>
       <item> kdialog </item>
-      <item> kfile </item>
+      <item> tdefile </item>
       <item> xhost </item>
       <item> xmodmap </item>
       <item> xset </item>

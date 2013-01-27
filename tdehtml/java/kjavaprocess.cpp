@@ -22,7 +22,7 @@
 #include "kjavaprocess.h"
 
 #include <kdebug.h>
-#include <kio/kprotocolmanager.h>
+#include <tdeio/kprotocolmanager.h>
 
 #include <tqtextstream.h>
 #include <tqmap.h>

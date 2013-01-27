@@ -18,8 +18,8 @@ include_directories(
   ${CMAKE_BINARY_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/tdeui
-  ${CMAKE_SOURCE_DIR}/kio
-  ${CMAKE_SOURCE_DIR}/kio/kio
+  ${CMAKE_SOURCE_DIR}/tdeio
+  ${CMAKE_SOURCE_DIR}/tdeio/tdeio
 )
 
 link_directories(
@@ -65,6 +65,6 @@ add_custom_command(
 tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 1.2.0
-  LINK kio-shared mcop artsflow_idl kmedia2_idl soundserver_idl artsflow qtmcop
+  LINK tdeio-shared mcop artsflow_idl kmedia2_idl soundserver_idl artsflow qtmcop
   DESTINATION ${LIB_INSTALL_DIR}
 )

@@ -450,7 +450,7 @@ void KSycoca::flagError()
          return;
       _self->d->readError = true;
       if (_self->d->autoRebuild)
-         if(system("kbuildsycoca") < 0) // Rebuild the damned thing.
+         if(system("tdebuildsycoca") < 0) // Rebuild the damned thing.
 	   tqWarning("ERROR: Running KSycoca failed.");
    }
 }

@@ -48,7 +48,7 @@
 #include <tqcstring.h>
 #include <tqfile.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <kstandarddirs.h>
 

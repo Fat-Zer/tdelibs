@@ -21,7 +21,7 @@
 #ifndef KABC_RESOURCEFILE_H
 #define KABC_RESOURCEFILE_H
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdirwatch.h>
 
 #include <sys/types.h>

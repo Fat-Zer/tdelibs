@@ -93,9 +93,9 @@ k_dcop_signals:
  * @ingroup tdecmodule
  * @brief DCOP interface for communicating with the real module running in root mode.
  * 
- * When a TDECModuleProxy tells kcmshell to load "itself" and embed into the 
+ * When a TDECModuleProxy tells tdecmshell to load "itself" and embed into the 
  * TDECModuleProxy, this DCOP interface is used to communicate to the real TDECModuleProxy, since 
- * the TDECModuleProxy which told kcmshell to load itself, is nothing but a shell.
+ * the TDECModuleProxy which told tdecmshell to load itself, is nothing but a shell.
  *
  * Currently is only the changed signal routed, but it's possible to proxy
  * the rest of the TDECModuleProxy API, if it turns out necessary.

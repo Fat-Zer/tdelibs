@@ -36,18 +36,18 @@
 #include <ksslall.h>
 #include <kopenssl.h>
 #include <ksslpemcallback.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kprocess.h>
 #include <tqtabwidget.h>
 #include <kseparator.h>
 #include <klistview.h>
-#include <kio/kmimemagic.h>
+#include <tdeio/kmimemagic.h>
 #include <tqmultilineedit.h>
 #include <tqregexp.h>
 #include <kcombobox.h>
 #include <tdeparts/browserextension.h>
 #include <tdeparts/browserinterface.h>
-#include <kio/kservicetypefactory.h>
+#include <tdeio/kservicetypefactory.h>
 
 K_EXPORT_COMPONENT_FACTORY( libtdecertpart, KParts::GenericFactory<KCertPart> )
 
@@ -774,7 +774,7 @@ void KCertPart::slotDone() {
 
 void KCertPart::slotLaunch() {
 KShellProcess p;
-p << "kcmshell" << "crypto";
+p << "tdecmshell" << "crypto";
 p.start(TDEProcess::DontCare);
 }
 

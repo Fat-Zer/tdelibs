@@ -25,7 +25,7 @@
 #include <tqlayout.h>
 #include <tqgroupbox.h>
 #include <klocale.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 KMConfigLpr::KMConfigLpr(TQWidget *parent, const char *name)
 : KMConfigPage(parent, name)

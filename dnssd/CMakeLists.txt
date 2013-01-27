@@ -45,6 +45,6 @@ tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 1.0.0
   LINK tdecore-shared
-  DEPENDENCIES kconfig_compiler
+  DEPENDENCIES tdeconfig_compiler
   DESTINATION ${LIB_INSTALL_DIR}
 )

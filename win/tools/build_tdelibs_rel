@@ -53,8 +53,8 @@ kabc \
 tdeutils \
 tdeparts \
 tdemdi \
-kioslave/gzip \
-kioslave/bzip2 \
+tdeioslave/gzip \
+tdeioslave/bzip2 \
 interfaces/tdetexteditor \
 kate/interfaces \
 kate/part \

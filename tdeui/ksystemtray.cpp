@@ -36,7 +36,7 @@
 
 #include <kimageeffect.h>
 #include <kiconloader.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include <tqapplication.h>
 #include <tqbitmap.h>

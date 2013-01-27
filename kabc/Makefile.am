@@ -50,13 +50,13 @@ kabcinclude_HEADERS = address.h addressbook.h addressee.h addresseedialog.h \
 
 METASOURCES = AUTO
 
-bin_PROGRAMS = kab2kabc
+bin_PROGRAMS = tdeab2tdeabc
 
-kab2kabc_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
-kab2kabc_LDADD = libkabc.la ../kab/libkab.la
-kab2kabc_SOURCES = kab2kabc.cpp
+tdeab2tdeabc_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
+tdeab2tdeabc_LDADD = libkabc.la ../kab/libkab.la
+tdeab2tdeabc_SOURCES = tdeab2tdeabc.cpp
 
-autostart_DATA = kab2kabc.desktop
+autostart_DATA = tdeab2tdeabc.desktop
 autostartdir = $(datadir)/autostart
 
 manager_DATA = kabc_manager.desktop

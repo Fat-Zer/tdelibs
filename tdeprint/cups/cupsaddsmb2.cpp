@@ -30,7 +30,7 @@
 #include <kmessagebox.h>
 #include <tqmessagebox.h>
 #include <tqfile.h>
-#include <kio/passdlg.h>
+#include <tdeio/passdlg.h>
 #include <kdebug.h>
 #include <kseparator.h>
 #include <kactivelabel.h>

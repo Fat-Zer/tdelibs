@@ -35,7 +35,7 @@ noinst_HEADERS = \
 	dom2_traversalimpl.h xml_tokenizer.h  dom_xmlimpl.h \
 	dom2_eventsimpl.h  dom2_viewsimpl.h dom_restyler.h
 
-INCLUDES = -I$(top_srcdir)/kimgio -I$(top_srcdir)/kio -I$(top_srcdir)/dcop \
+INCLUDES = -I$(top_srcdir)/kimgio -I$(top_srcdir)/tdeio -I$(top_srcdir)/dcop \
  -I$(top_srcdir)/tdehtml -I$(top_srcdir) -I$(top_srcdir)/tdewallet/client \
  -I$(top_srcdir)/tdeutils -I$(top_builddir)/kjs $(all_includes)
 

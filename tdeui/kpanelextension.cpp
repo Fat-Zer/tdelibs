@@ -23,7 +23,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include <tqpopupmenu.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include "kpanelextension.h"
 #include "kpanelextension.moc"

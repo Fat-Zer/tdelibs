@@ -32,7 +32,7 @@
 // When a date is selected by the user, it emits a signal:
 //      dateSelected(TQDate)
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kglobal.h>
 #include <kglobalsettings.h>
 #include <kapplication.h>

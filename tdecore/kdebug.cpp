@@ -55,7 +55,7 @@
 #include <syslog.h>
 #include <errno.h>
 #include <string.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include "kstaticdeleter.h"
 #include <config.h>
 

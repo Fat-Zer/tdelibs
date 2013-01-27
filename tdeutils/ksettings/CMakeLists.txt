@@ -16,7 +16,7 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/tdeutils
   ${CMAKE_SOURCE_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/tdeui
-  ${CMAKE_SOURCE_DIR}/kio/kio
+  ${CMAKE_SOURCE_DIR}/tdeio/tdeio
 )
 
 ##### headers ###################################

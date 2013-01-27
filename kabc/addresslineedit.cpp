@@ -33,7 +33,7 @@
 #include <tqdragobject.h>
 
 #include <kcompletionbox.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kcursor.h>
 #include <kstandarddirs.h>
 #include <kstaticdeleter.h>

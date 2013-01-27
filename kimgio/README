@@ -22,7 +22,7 @@ XCF	<read>
 
 To use these formats, you only need to:
 
-1. link the application with the libkio library
+1. link the application with the libtdeio library
 2. Include the <kimageio.h> header
 3. call KImageIO::registerFormats() once, somewhere in your code
    before you load an image.

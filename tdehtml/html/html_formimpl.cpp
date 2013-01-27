@@ -57,7 +57,7 @@
 #include <tdewallet.h>
 #endif
 #include <netaccess.h>
-#include <kfileitem.h>
+#include <tdefileitem.h>
 #include <tqfile.h>
 #include <tqdir.h>
 #include <tqtextcodec.h>

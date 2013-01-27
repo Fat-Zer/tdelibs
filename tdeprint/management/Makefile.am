@@ -1,6 +1,6 @@
 AM_CPPFLAGS = -D_TDEPRINT_COMPILE
 
-INCLUDES= -I$(top_srcdir)/tdefx -I$(top_srcdir)/tdeprint -I$(top_builddir)/tdeprint -I$(top_srcdir)/kio -I$(top_srcdir)/kfile -I$(top_srcdir) $(all_includes)
+INCLUDES= -I$(top_srcdir)/tdefx -I$(top_srcdir)/tdeprint -I$(top_builddir)/tdeprint -I$(top_srcdir)/tdeio -I$(top_srcdir)/tdefile -I$(top_srcdir) $(all_includes)
 
 lib_LTLIBRARIES = libtdeprint_management.la
 kde_module_LTLIBRARIES = libtdeprint_management_module.la

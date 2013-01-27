@@ -23,7 +23,7 @@ libtdeprint_la_SOURCES = kmfactory.cpp kmjob.cpp kmjobmanager.cpp kmmanager.cpp 
 		         kprintpreview.cpp kprintdialog.cpp kprinter.cpp kprinterimpl.cpp kprintdialogpage.cpp \
 			 kpcopiespage.cpp kpdriverpage.cpp kprinterpropertydialog.cpp kpgeneralpage.cpp kpqtpage.cpp \
 			 kmthreadjob.cpp kpipeprocess.cpp kpfilterpage.cpp \
-			 kmspecialmanager.cpp tdeprintcheck.cpp plugincombobox.cpp kpreloadobject.cpp kfilelist.cpp \
+			 kmspecialmanager.cpp tdeprintcheck.cpp plugincombobox.cpp kpreloadobject.cpp tdefilelist.cpp \
 			 kprintaction.cpp kpfileselectpage.cpp treecombobox.cpp kmfactory.skel kxmlcommand.cpp \
 			 util.cpp printerfilter.cpp marginpreview.cpp marginvaluewidget.cpp marginwidget.cpp \
 			 kpmarginpage.cpp messagewindow.cpp posterpreview.cpp kpposterpage.cpp foomatic2loader.cpp \
@@ -40,7 +40,7 @@ noinst_HEADERS = kmdbentry.h kmfactory.h \
 		 kpcopiespage.h kpdriverpage.h kprinterpropertydialog.h kpgeneralpage.h \
 		 kpqtpage.h kprintprocess.h kmthreadjob.h kpipeprocess.h tdeprintd.h \
 		 kpfilterpage.h kmspecialmanager.h tdeprintcheck.h plugincombobox.h \
-		 kfilelist.h kpfileselectpage.h treecombobox.h kxmlcommand.h \
+		 tdefilelist.h kpfileselectpage.h treecombobox.h kxmlcommand.h \
 		 util.h driverparse.h printerfilter.h marginpreview.h marginwidget.h \
 		 marginvaluewidget.h kpmarginpage.h messagewindow.h \
 		 posterpreview.h kpposterpage.h foomatic2loader.h ppdloader.h
@@ -104,7 +104,7 @@ noinst_LIBRARIES = libdriverparse.a
 libdriverparse_a_SOURCES = driverparse.c
 
 update_DATA = tdeprintrc.upd
-updatedir = $(kde_datadir)/kconf_update
+updatedir = $(kde_datadir)/tdeconf_update
 
 messages: rc.cpp
 	$(EXTRACTRC) `find . -name "*.rc" -o -name "*.ui" | grep -v /cupsdconf` >> rc.cpp

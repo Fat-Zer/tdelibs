@@ -26,7 +26,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <kprocess.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kstandarddirs.h>
 #include <kmessagebox.h>
 #include <ktar.h>

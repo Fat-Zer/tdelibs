@@ -21,7 +21,7 @@
 #ifndef _KSIMPLECONFIG_H
 #define _KSIMPLECONFIG_H
 
-#include "kconfig.h"
+#include "tdeconfig.h"
 
 class KSimpleConfigPrivate;
 

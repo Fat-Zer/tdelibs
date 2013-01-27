@@ -44,7 +44,7 @@
 #include <kmenubar.h>
 #include <kdebug.h>
 #include <twin.h>
-#include <kio/netaccess.h>
+#include <tdeio/netaccess.h>
 #include <tqtimer.h>
 #include <tqlayout.h>
 #include <stdlib.h>
@@ -52,7 +52,7 @@
 #include <kdialogbase.h>
 #include <tqcheckbox.h>
 #include <kurldrag.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #undef m_manager
 #define	m_manager	KMFactory::self()->jobManager()

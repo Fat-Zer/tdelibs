@@ -50,7 +50,7 @@
 #include <kartsserver.h>
 #endif
 #include <kcmdlineargs.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <kglobal.h>
 #include <klocale.h>

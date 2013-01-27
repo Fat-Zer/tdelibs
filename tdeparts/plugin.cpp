@@ -35,7 +35,7 @@
 #include <kdebug.h>
 #include <kxmlguifactory.h>
 #include <klocale.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <ksimpleconfig.h>
 
 using namespace KParts;

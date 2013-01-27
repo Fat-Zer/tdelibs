@@ -20,7 +20,7 @@
 
 #include <tqdbusmessage.h>
 
-#include "kconfig.h"
+#include "tdeconfig.h"
 #include "tdehardwaredevices.h"
 
 #include "network-manager.h"
@@ -4828,10 +4828,10 @@ TDENetworkVPNTypeList TDENetworkConnectionManager_BackendNM::availableVPNTypes()
 		// read in all available Services
 		for (TQStringList::Iterator i = services.begin (); i != services.end (); ++i) {
 			TQString service = NM_PLUGIN_SERVICE_DIR + TQString ("/") + *i;
-			TDEConfig* kconfig = new TDEConfig (service, true, true, "config");
-			kconfig->setGroup ("VPN Connection");
+			TDEConfig* tdeconfig = new TDEConfig (service, true, true, "config");
+			tdeconfig->setGroup ("VPN Connection");
 
-			TQString serviceName = kconfig->readEntry("name", TQString());
+			TQString serviceName = tdeconfig->readEntry("name", TQString());
 			serviceName = serviceName.lower();
 
 			if (serviceName == "openvpn") {
@@ -4847,7 +4847,7 @@ TDENetworkVPNTypeList TDENetworkConnectionManager_BackendNM::availableVPNTypes()
 				ret.append(TDENetworkVPNType::VPNC);
 			}
 
-			delete kconfig;
+			delete tdeconfig;
 		}
 	}
 

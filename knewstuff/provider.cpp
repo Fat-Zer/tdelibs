@@ -18,9 +18,9 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
-#include <kio/job.h>
+#include <tdeio/job.h>
 #include <kglobal.h>
 #include <kmessagebox.h>
 #include <klocale.h>

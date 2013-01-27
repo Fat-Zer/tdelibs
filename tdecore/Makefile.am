@@ -27,7 +27,7 @@ SVGICONS=svgicons
 SVGICON_LIB=svgicons/libkdesvgicons.la
 endif
 
-SUBDIRS = malloc network $(SVGICONS) . kconfig_compiler tests
+SUBDIRS = malloc network $(SVGICONS) . tdeconfig_compiler tests
 
 # For the future: examine if condensing the tons of *_LDFLAGS variables
 # into $(all_libraries) isn't better
@@ -36,10 +36,10 @@ AM_LDFLAGS = $(LDFLAGS_AS_NEEDED) $(LDFLAGS_NEW_DTAGS)
 lib_LTLIBRARIES = libtdefakes.la libtdecore.la
 lib_LIBRARIES = libtdefakes_nonpic.a libtdefakes_pic.a
 
-include_HEADERS = kconfig.h kconfigskeleton.h \
-	kconfigdata.h ksimpleconfig.h kconfigdialogmanager.h \
-	kconfigbase.h kdesktopfile.h kurl.h ksock.h kaboutdata.h \
-	kcmdlineargs.h kconfigbackend.h kapp.h kapplication.h kuniqueapp.h \
+include_HEADERS = tdeconfig.h tdeconfigskeleton.h \
+	tdeconfigdata.h ksimpleconfig.h tdeconfigdialogmanager.h \
+	tdeconfigbase.h kdesktopfile.h kurl.h ksock.h kaboutdata.h \
+	kcmdlineargs.h tdeconfigbackend.h kapp.h kapplication.h kuniqueapp.h \
 	kuniqueapplication.h kcharsets.h tdeversion.h kpty.h kprocess.h \
 	kprocctrl.h klocale.h kicontheme.h kiconloader.h kdebug.h \
 	twinmodule.h twin.h krootprop.h kshortcut.h kkeynative.h kaccel.h \
@@ -90,8 +90,8 @@ noinst_HEADERS = kaccelaction.h kaccelbase.h kaccelprivate.h kckey.h \
 	kprotocolinfofactory.h kqiodevicegzip_p.h kiconloader_p.h
 
 libtdecore_la_SOURCES = libintl.cpp kapplication.cpp \
-	kdebug.cpp netwm.cpp kconfigbase.cpp kconfig.cpp  ksimpleconfig.cpp \
-	kconfigbackend.cpp kmanagerselection.cpp kdesktopfile.cpp \
+	kdebug.cpp netwm.cpp tdeconfigbase.cpp tdeconfig.cpp  ksimpleconfig.cpp \
+	tdeconfigbackend.cpp kmanagerselection.cpp kdesktopfile.cpp \
 	kstandarddirs.cpp ksock.cpp kpty.cpp kprocess.cpp kprocctrl.cpp \
 	klocale.cpp krfcdate.cpp kiconeffect.cpp kicontheme.cpp \
 	kiconloader.cpp twin.cpp twinmodule.cpp krootprop.cpp kcharsets.cpp \
@@ -118,7 +118,7 @@ libtdecore_la_SOURCES = libintl.cpp kapplication.cpp \
 	kcalendarsystemfactory.cpp kmacroexpander.cpp kidna.cpp \
 	ktempdir.cpp kshell.cpp kmountpoint.cpp kcalendarsystemjalali.cpp \
 	kprotocolinfo_tdecore.cpp kprotocolinfofactory.cpp kxerrorhandler.cpp \
-	kuser.cpp kconfigskeleton.cpp kconfigdialogmanager.cpp klockfile.cpp \
+	kuser.cpp tdeconfigskeleton.cpp tdeconfigdialogmanager.cpp klockfile.cpp \
 	kqiodevicegzip_p.cpp ktimezones.cpp
 
 libtdecore_la_LDFLAGS = $(QT_LDFLAGS) $(KDE_RPATH) $(KDE_MT_LDFLAGS) $(X_LDFLAGS) $(USER_LDFLAGS) -version-info 6:0:2 -no-undefined
@@ -143,16 +143,16 @@ kckey_h : $(srcdir)/generate_keys.sh $(QNAMESPACE_H)
 install-data-local:
 	$(mkinstalldirs) $(DESTDIR)$(kde_locale)
 	$(INSTALL_DATA) $(srcdir)/all_languages.desktop $(DESTDIR)$(kde_locale)/all_languages
-	$(mkinstalldirs) $(DESTDIR)$(includedir)/kio
+	$(mkinstalldirs) $(DESTDIR)$(includedir)/tdeio
 	$(mkinstalldirs) $(DESTDIR)$(kde_datadir)/knotify
 	$(INSTALL_DATA) $(srcdir)/eventsrc $(DESTDIR)$(kde_datadir)/knotify/eventsrc
-	$(INSTALL_DATA) $(srcdir)/kmdcodec_compat.h $(DESTDIR)$(includedir)/kio/kmdcodec.h
+	$(INSTALL_DATA) $(srcdir)/kmdcodec_compat.h $(DESTDIR)$(includedir)/tdeio/kmdcodec.h
 	rm -f "$(DESTDIR)$(kde_confdir)/colors/40 Colors"
 	rm -f $(DESTDIR)$(kde_confdir)/colors/Web
 	rm -f $(DESTDIR)$(kde_confdir)/colors/Royal
 
 uninstall-local:
-	-rm -f $(DESTDIR)$(includedir)/kio/kmdcodec.h
+	-rm -f $(DESTDIR)$(includedir)/tdeio/kmdcodec.h
 
 # If you add a color palette file here, please change tdelibs/tdeui/kcolordialog.cpp too to allow to translate the name
 colors_DATA = 40.colors Web.colors Royal.colors Rainbow.colors

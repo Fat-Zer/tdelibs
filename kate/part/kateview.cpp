@@ -50,9 +50,9 @@
 
 #include <tdeparts/event.h>
 
-#include <kio/netaccess.h>
+#include <tdeio/netaccess.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kurldrag.h>
 #include <kdebug.h>
 #include <kapplication.h>

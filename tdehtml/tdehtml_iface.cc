@@ -22,7 +22,7 @@
 #include "tdehtml_part.h"
 #include "tdehtmlview.h"
 #include "tdehtml_ext.h"
-#include <kio/global.h>
+#include <tdeio/global.h>
 #include <tqapplication.h>
 #include <tqvariant.h>
 

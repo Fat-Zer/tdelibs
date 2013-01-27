@@ -29,7 +29,7 @@
 #include <klocale.h>
 #include <kdebug.h>
 #include "klibloader.h"
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kapplication.h>
 
 #include <sys/types.h>

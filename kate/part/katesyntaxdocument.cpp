@@ -27,7 +27,7 @@
 #include <kstandarddirs.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include <tqfile.h>
 

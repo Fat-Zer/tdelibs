@@ -32,7 +32,7 @@
 #include <tqstyle.h>
 #include <tqtimer.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kglobalsettings.h>
 #include <kmenubar.h>
 #include <kapplication.h>

@@ -118,7 +118,7 @@ const TQString KateCmd::fromHistory( uint index ) const
 //BEGIN KateCmdShellCompletion
 /*
    A lot of the code in the below class is copied from
-   tdelibs/kio/kio/kshellcompletion.cpp
+   tdelibs/tdeio/tdeio/kshellcompletion.cpp
    Copyright (C) 2000 David Smith <dsmith@algonet.se>
    Copyright (C) 2004 Anders Lund <anders@alweb.dk>
 */

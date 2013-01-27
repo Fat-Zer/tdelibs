@@ -22,7 +22,7 @@
 
 #include <tqfile.h>
 #include <kstandarddirs.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <klocale.h>
 
 KExtPrinterImpl::KExtPrinterImpl(TQObject *parent, const char *name, const TQStringList & /*args*/)

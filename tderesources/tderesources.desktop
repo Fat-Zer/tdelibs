@@ -1,5 +1,5 @@
 [Desktop Entry]
-Exec=kcmshell tderesources
+Exec=tdecmshell tderesources
 Icon=about_kde
 Type=Application
 Terminal=false

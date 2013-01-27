@@ -31,7 +31,7 @@ noinst_HEADERS = \
 	decoder.h tdehtmllayout.h loader_jpeg.h loader.h guess_ja.h\
 	stringit.h htmlhashes.h helper.h shared.h arena.h knsplugininstaller.h
 
-INCLUDES = -I$(top_srcdir) -I$(top_srcdir)/dcop -I$(top_srcdir)/kio -I$(top_srcdir)/libltdl \
+INCLUDES = -I$(top_srcdir) -I$(top_srcdir)/dcop -I$(top_srcdir)/tdeio -I$(top_srcdir)/libltdl \
            -I$(top_srcdir)/tdehtml -I$(top_srcdir)/tdeutils $(all_includes)
 
 SRCDOC_DEST=$(kde_htmldir)/en/tdelibs/tdehtml

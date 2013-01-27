@@ -27,7 +27,7 @@ link_directories(
 set( target kstyle_plastik_config )
 
 set( ${target}_SRCS
-  plastikconf.cpp
+  plastitdeconf.cpp
 )
 
 tde_add_kpart( ${target} AUTOMOC

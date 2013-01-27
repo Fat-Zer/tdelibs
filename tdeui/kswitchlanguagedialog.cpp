@@ -27,7 +27,7 @@
 #include <tqmap.h>
 
 #include <klanguagebutton.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdebug.h>

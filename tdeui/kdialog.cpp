@@ -18,7 +18,7 @@
  *  Boston, MA 02110-1301, USA.
  */
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kapplication.h>
 #include <kdialog.h>
 #include <kwhatsthismanager_p.h>

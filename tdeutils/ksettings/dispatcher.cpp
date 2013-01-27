@@ -23,7 +23,7 @@
 
 #include <kstaticdeleter.h>
 #include <kdebug.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <assert.h>
 
 namespace KSettings

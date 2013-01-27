@@ -37,7 +37,7 @@
 class KDirWatch;
 class KService;
 
-// No need for this in libkio - apps only get readonly access
+// No need for this in libtdeio - apps only get readonly access
 class Kded : public TQObject, public DCOPObject, public DCOPObjectProxy
 {
   Q_OBJECT

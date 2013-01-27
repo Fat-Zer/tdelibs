@@ -51,7 +51,7 @@
 #include <kaction.h>
 #include <kstdaction.h>
 #include <kglobal.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kiconloader.h>
 #include <kcombobox.h>
 #include <kpopupmenu.h>

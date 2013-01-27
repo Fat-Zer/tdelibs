@@ -19,11 +19,11 @@ INCLUDES = -I$(srcdir)/../libltdl/ $(all_includes) $(TDEINIT_XFT_INCLUDES)
 
 SUBDIRS = . tests
 
-bin_PROGRAMS = tdeinit tdeinit_wrapper kshell tdeinit_shutdown lnusertemp kwrapper kioslave \
-               kstartupconfig kdostartupconfig start_tdeinit start_tdeinit_wrapper
+bin_PROGRAMS = tdeinit tdeinit_wrapper kshell tdeinit_shutdown lnusertemp kwrapper tdeioslave \
+               tdestartupconfig tdedostartupconfig start_tdeinit start_tdeinit_wrapper
 
 lib_LTLIBRARIES = 
-tdeinit_LTLIBRARIES = klauncher.la
+tdeinit_LTLIBRARIES = tdelauncher.la
 tdeinit_SOURCES = kinit.cpp setproctitle.cpp
 
 # NOTE: We link against all common libraries even if we don't need them ourselves.
@@ -35,10 +35,10 @@ tdeinit_LDFLAGS = $(KDE_MT_LDFLAGS) $(QT_LDFLAGS) $(X_LDFLAGS) $(USER_LDFLAGS) \
                   $(KDE_RPATH)
 tdeinit_LDADD = $(LIB_KPARTS) -lXft $(LIB_QT)
 
-kioslave_SOURCES = kioslave.cpp
-kioslave_LDFLAGS = $(KDE_MT_LDFLAGS) $(QT_LDFLAGS) $(X_LDFLAGS) $(USER_LDFLAGS) \
+tdeioslave_SOURCES = tdeioslave.cpp
+tdeioslave_LDFLAGS = $(KDE_MT_LDFLAGS) $(QT_LDFLAGS) $(X_LDFLAGS) $(USER_LDFLAGS) \
                   $(KDE_RPATH)
-kioslave_LDADD = $(LIB_KIO) 
+tdeioslave_LDADD = $(LIB_KIO) 
 
 tdeinit_wrapper_SOURCES = wrapper.c
 tdeinit_wrapper_LDADD = $(LIBSOCKET)
@@ -55,16 +55,16 @@ lnusertemp_LDFLAGS = $(KDE_RPATH)
 kwrapper_SOURCES = kwrapper.c
 kwrapper_LDADD = $(LIBSOCKET)
 
-klauncher_la_LDFLAGS = $(all_libraries) -module -avoid-version
-klauncher_la_LIBADD = $(LIB_KIO) $(LIB_QT) $(LIB_TDECORE) $(top_builddir)/dcop/libDCOP.la $(LIB_X11)
-klauncher_la_SOURCES = klauncher.cpp klauncher_main.cpp autostart.cpp
+tdelauncher_la_LDFLAGS = $(all_libraries) -module -avoid-version
+tdelauncher_la_LIBADD = $(LIB_KIO) $(LIB_QT) $(LIB_TDECORE) $(top_builddir)/dcop/libDCOP.la $(LIB_X11)
+tdelauncher_la_SOURCES = tdelauncher.cpp tdelauncher_main.cpp autostart.cpp
 
-kstartupconfig_SOURCES  = kstartupconfig.cpp
-kstartupconfig_LDADD  = $(top_builddir)/tdecore/libtdefakes.la $(LIB_QT)
-kdostartupconfig_SOURCES = kdostartupconfig.cpp
-kdostartupconfig_LDFLAGS = $(KDE_MT_LDFLAGS) $(QT_LDFLAGS) $(X_LDFLAGS) $(USER_LDFLAGS) \
+tdestartupconfig_SOURCES  = tdestartupconfig.cpp
+tdestartupconfig_LDADD  = $(top_builddir)/tdecore/libtdefakes.la $(LIB_QT)
+tdedostartupconfig_SOURCES = tdedostartupconfig.cpp
+tdedostartupconfig_LDFLAGS = $(KDE_MT_LDFLAGS) $(QT_LDFLAGS) $(X_LDFLAGS) $(USER_LDFLAGS) \
                            $(KDE_RPATH)
-kdostartupconfig_LDADD  = $(LIB_TDECORE)
+tdedostartupconfig_LDADD  = $(LIB_TDECORE)
 
 start_tdeinit_SOURCES = start_tdeinit.c
 tdeinitpath = $(bindir)/tdeinit
@@ -75,7 +75,7 @@ start_tdeinit_wrapper_SOURCES = start_tdeinit_wrapper.c
 
 METASOURCES = AUTO
 
-noinst_HEADERS = klauncher.h autostart.h klauncher_cmds.h setproctitle.h
+noinst_HEADERS = tdelauncher.h autostart.h tdelauncher_cmds.h setproctitle.h
 
 kwrapper.o: wrapper.c
 

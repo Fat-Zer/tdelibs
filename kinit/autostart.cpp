@@ -22,7 +22,7 @@
 
 #include "autostart.h"
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdesktopfile.h>
 #include <kglobal.h>
 #include <kstandarddirs.h>

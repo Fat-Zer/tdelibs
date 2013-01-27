@@ -20,7 +20,7 @@
 
 #include "tdewallettypes.h"
 #include "tdewallet.h"
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <tdeversion.h>
 #include <dcopclient.h>

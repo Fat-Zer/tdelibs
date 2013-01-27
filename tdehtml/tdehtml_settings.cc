@@ -22,7 +22,7 @@
 #include "tdehtml_settings.h"
 #include "tdehtmldefaults.h"
 #include <kglobalsettings.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <kdebug.h>

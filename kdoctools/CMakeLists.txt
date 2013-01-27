@@ -18,9 +18,9 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_BINARY_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/tdecore
-  ${CMAKE_SOURCE_DIR}/kio
-  ${CMAKE_SOURCE_DIR}/kio/kio
-  ${CMAKE_SOURCE_DIR}/kioslave
+  ${CMAKE_SOURCE_DIR}/tdeio
+  ${CMAKE_SOURCE_DIR}/tdeio/tdeio
+  ${CMAKE_SOURCE_DIR}/tdeioslave
   ${LIBXML2_INCLUDE_DIRS}
   ${LIBXSLT_INCLUDE_DIRS}
 )
@@ -54,7 +54,7 @@ install( FILES man-template.docbook template.docbook DESTINATION ${DATA_INSTALL_
 ##### kbzipfilter_dummy ##############################
 
 tde_add_library( kbzipfilter_dummy STATIC_PIC
-  SOURCES ${CMAKE_SOURCE_DIR}/kioslave/bzip2/kbzip2filter.cpp
+  SOURCES ${CMAKE_SOURCE_DIR}/tdeioslave/bzip2/kbzip2filter.cpp
 )
 
 
@@ -68,7 +68,7 @@ set( ${target}_SRCS
 
 tde_add_kpart( ${target} SHARED
   SOURCES ${${target}_SRCS}
-  LINK kbzipfilter_dummy-static kio-shared ${BZIP2_LIBRARIES} ${LIBXML2_LIBRARIES} ${LIBXSLT_LIBRARIES}
+  LINK kbzipfilter_dummy-static tdeio-shared ${BZIP2_LIBRARIES} ${LIBXML2_LIBRARIES} ${LIBXSLT_LIBRARIES}
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 
@@ -83,7 +83,7 @@ set( ${target}_SRCS
 
 tde_add_kpart( ${target} SHARED
   SOURCES ${${target}_SRCS}
-  LINK kbzipfilter_dummy-static kio-shared ${BZIP2_LIBRARIES} ${LIBXML2_LIBRARIES} ${LIBXSLT_LIBRARIES}
+  LINK kbzipfilter_dummy-static tdeio-shared ${BZIP2_LIBRARIES} ${LIBXML2_LIBRARIES} ${LIBXSLT_LIBRARIES}
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 
@@ -102,6 +102,6 @@ set_source_files_properties( xslt_pure.cpp PROPERTIES COMPILE_FLAGS -DSIMPLE_XSL
 
 tde_add_executable( ${target}
   SOURCES ${${target}_SRCS}
-  LINK kbzipfilter_dummy-static kio-shared ${BZIP2_LIBRARIES} ${LIBXML2_LIBRARIES} ${LIBXSLT_LIBRARIES}
+  LINK kbzipfilter_dummy-static tdeio-shared ${BZIP2_LIBRARIES} ${LIBXML2_LIBRARIES} ${LIBXSLT_LIBRARIES}
   DESTINATION ${BIN_INSTALL_DIR}
 )

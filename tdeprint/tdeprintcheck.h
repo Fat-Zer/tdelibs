@@ -22,7 +22,7 @@
 
 #include <tqstring.h>
 #include <tqstringlist.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kurl.h>
 
 class TDEPRINT_EXPORT KdeprintChecker

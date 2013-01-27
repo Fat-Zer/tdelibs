@@ -668,7 +668,7 @@ protected:
    * On failure the function should inform the user about the
    * problem with an appropriate message box. Standard error
    * messages can be constructed using TDEIO::buildErrorString()
-   * in combination with the error codes defined in kio/global.h
+   * in combination with the error codes defined in tdeio/global.h
    */
   virtual bool saveFile() = 0;
 

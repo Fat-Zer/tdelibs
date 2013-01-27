@@ -55,7 +55,7 @@
 #include <kinstance.h>
 #include <kstandarddirs.h>
 #include <kglobal.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <klibloader.h>
 #include <kapplication.h>
 #include <klocale.h>
@@ -74,7 +74,7 @@
 #include <tdeversion.h>
 
 #include "ltdl.h"
-#include "klauncher_cmds.h"
+#include "tdelauncher_cmds.h"
 
 //#if defined Q_WS_X11 && ! defined K_WS_QTONLY
 #ifdef Q_WS_X11
@@ -169,9 +169,9 @@ int tdeinit_x_errhandler( Display *, XErrorEvent *err );
 /* These are to link libtdeparts even if 'smart' linker is used */
 #include <tdeparts/plugin.h>
 extern "C" KParts::Plugin* _kinit_init_tdeparts() { return new KParts::Plugin(); }
-/* These are to link libkio even if 'smart' linker is used */
-#include <kio/authinfo.h>
-extern "C" TDEIO::AuthInfo* _kioslave_init_kio() { return new TDEIO::AuthInfo(); }
+/* These are to link libtdeio even if 'smart' linker is used */
+#include <tdeio/authinfo.h>
+extern "C" TDEIO::AuthInfo* _tdeioslave_init_kio() { return new TDEIO::AuthInfo(); }
 
 /*
  * Close fd's which are only useful for the parent process.
@@ -429,8 +429,8 @@ static pid_t launch(int argc, const char *_name, const char *args,
   TQCString name;
   TQCString exec;
 
-  if (strcmp(_name, "klauncher") == 0) {
-     /* klauncher is launched in a special way:
+  if (strcmp(_name, "tdelauncher") == 0) {
+     /* tdelauncher is launched in a special way:
       * It has a communication socket on LAUNCHER_FD
       */
      if (0 > socketpair(AF_UNIX, SOCK_STREAM, 0, d.launcher))
@@ -891,7 +891,7 @@ static void init_tdeinit_socket()
      if(connect(s, (struct sockaddr *)&server, socklen) == 0)
      {
         fprintf(stderr, "[tdeinit] Shutting down running client.\n");
-        klauncher_header request_header;
+        tdelauncher_header request_header;
         request_header.cmd = LAUNCHER_TERMINATE_TDEINIT;
         request_header.arg_length = 0;
         write(s, &request_header, sizeof(request_header));
@@ -1090,7 +1090,7 @@ static void launcher_died()
    close(d.launcher[0]);
    d.launcher[0] = -1;
 
-   pid_t pid = launch( 1, "klauncher", 0 );
+   pid_t pid = launch( 1, "tdelauncher", 0 );
 #ifndef NDEBUG
    fprintf(stderr, "[tdeinit] Relaunching KLauncher, pid = %ld result = %d\n", (long) pid, d.result);
 #endif
@@ -1105,7 +1105,7 @@ static void handle_launcher_request(int sock = -1)
        launcher = true;
    }
 
-   klauncher_header request_header;
+   tdelauncher_header request_header;
    char *request_data = 0L;
    int result = read_socket(sock, (char *) &request_header, sizeof(request_header));
    if (result != 0)
@@ -1141,7 +1141,7 @@ static void handle_launcher_request(int sock = -1)
        (request_header.cmd == LAUNCHER_EXEC_NEW)))
    {
       pid_t pid;
-      klauncher_header response_header;
+      tdelauncher_header response_header;
       long response_data;
       long l;
       memcpy( &l, request_data, sizeof( long ));
@@ -1273,7 +1273,7 @@ static void handle_launcher_request(int sock = -1)
 
 #ifndef NDEBUG
       if (launcher)
-         fprintf(stderr, "[tdeinit] Got SETENV '%s=%s' from klauncher.\n", env_name, env_value);
+         fprintf(stderr, "[tdeinit] Got SETENV '%s=%s' from tdelauncher.\n", env_name, env_value);
       else
          fprintf(stderr, "[tdeinit] Got SETENV '%s=%s' from socket.\n", env_name, env_value);
 #endif
@@ -1301,7 +1301,7 @@ static void handle_launcher_request(int sock = -1)
    else if (request_header.cmd == LAUNCHER_TERMINATE_TDEINIT)
    {
 #ifndef NDEBUG
-       fprintf(stderr,"[tdeinit] Killing tdeinit/klauncher.\n");
+       fprintf(stderr,"[tdeinit] Killing tdeinit/tdelauncher.\n");
 #endif
        if (d.launcher_pid)
           kill(d.launcher_pid, SIGTERM);
@@ -1359,7 +1359,7 @@ static void handle_requests(pid_t waitForPid)
            if (d.launcher_pid)
            {
            // TODO send process died message
-              klauncher_header request_header;
+              tdelauncher_header request_header;
               long request_data[2];
               request_header.cmd = LAUNCHER_DIED;
               request_header.arg_length = sizeof(long) * 2;
@@ -1686,7 +1686,7 @@ int main(int argc, char **argv, char **envp)
    int i;
    pid_t pid;
    int launch_dcop = 1;
-   int launch_klauncher = 1;
+   int launch_tdelauncher = 1;
    int launch_kded = 1;
    int keep_running = 1;
    int new_startup = 0;
@@ -1699,8 +1699,8 @@ int main(int argc, char **argv, char **envp)
       safe_argv[i] = strcpy((char*)malloc(strlen(argv[i])+1), argv[i]);
       if (strcmp(safe_argv[i], "--no-dcop") == 0)
          launch_dcop = 0;
-      if (strcmp(safe_argv[i], "--no-klauncher") == 0)
-         launch_klauncher = 0;
+      if (strcmp(safe_argv[i], "--no-tdelauncher") == 0)
+         launch_tdelauncher = 0;
       if (strcmp(safe_argv[i], "--no-kded") == 0)
          launch_kded = 0;
       if (strcmp(safe_argv[i], "--suicide") == 0)
@@ -1717,7 +1717,7 @@ int main(int argc, char **argv, char **envp)
       {
         printf("Usage: tdeinit [options]\n");
      // printf("    --no-dcop         Do not start dcopserver\n");
-     // printf("    --no-klauncher    Do not start klauncher\n");
+     // printf("    --no-tdelauncher    Do not start tdelauncher\n");
         printf("    --no-kded         Do not start kded\n");
         printf("    --suicide         Terminate when no TDE applications are left running\n");
      // printf("    --exit            Terminate when kded has run\n");
@@ -1729,7 +1729,7 @@ int main(int argc, char **argv, char **envp)
 
    // Fork here and let parent process exit.
    // Parent process may only exit after all required services have been
-   // launched. (dcopserver/klauncher and services which start with '+')
+   // launched. (dcopserver/tdelauncher and services which start with '+')
    signal( SIGCHLD, secondary_child_handler);
    if (fork() > 0) // Go into background
    {
@@ -1812,16 +1812,16 @@ int main(int argc, char **argv, char **envp)
 	  (void) lt_dlopen(TQFile::encodeName(konq).data());
    }
 #endif 
-   if (launch_klauncher)
+   if (launch_tdelauncher)
    {
       if( new_startup )
-         pid = launch( 2, "klauncher", "--new-startup" );
+         pid = launch( 2, "tdelauncher", "--new-startup" );
       else
-         pid = launch( 1, "klauncher", 0 );
+         pid = launch( 1, "tdelauncher", 0 );
 #ifndef NDEBUG
       fprintf(stderr, "[tdeinit] Launched KLauncher, pid = %ld result = %d\n", (long) pid, d.result);
 #endif
-      handle_requests(pid); // Wait for klauncher to be ready
+      handle_requests(pid); // Wait for tdelauncher to be ready
    }
    
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY

@@ -28,7 +28,7 @@
 
 #include <kaboutdata.h>
 #include <kapplication.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <klineedit.h>
 #include <klocale.h>
@@ -319,11 +319,11 @@ void KBugReport::slotConfigureEmail()
 {
   if (m_process) return;
   m_process = new TDEProcess;
-  *m_process << TQString::fromLatin1("kcmshell") << TQString::fromLatin1("kcm_useraccount");
+  *m_process << TQString::fromLatin1("tdecmshell") << TQString::fromLatin1("kcm_useraccount");
   connect(m_process, TQT_SIGNAL(processExited(TDEProcess *)), TQT_SLOT(slotSetFrom()));
   if (!m_process->start())
   {
-    kdDebug() << "Couldn't start kcmshell.." << endl;
+    kdDebug() << "Couldn't start tdecmshell.." << endl;
     delete m_process;
     m_process = 0;
     return;
@@ -489,9 +489,9 @@ bool KBugReport::sendBugReport()
     TQString::fromLatin1("submit@bugs.pearsoncomputing.net") );
 
   TQString command;
-  command = locate("exe", "ksendbugmail");
+  command = locate("exe", "tdesendbugmail");
   if (command.isEmpty())
-      command = KStandardDirs::findExe( TQString::fromLatin1("ksendbugmail") );
+      command = KStandardDirs::findExe( TQString::fromLatin1("tdesendbugmail") );
 
   KTempFile outputfile;
   outputfile.close();

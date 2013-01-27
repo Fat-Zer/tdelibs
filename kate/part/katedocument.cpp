@@ -42,9 +42,9 @@
 #include "katetemplatehandler.h"
 #include <tdetexteditor/plugin.h>
 
-#include <kio/job.h>
-#include <kio/netaccess.h>
-#include <kio/kfileitem.h>
+#include <tdeio/job.h>
+#include <tdeio/netaccess.h>
+#include <tdeio/tdefileitem.h>
 
 
 #include <tdeparts/event.h>
@@ -53,8 +53,8 @@
 #include <kglobal.h>
 #include <kapplication.h>
 #include <kpopupmenu.h>
-#include <kconfig.h>
-#include <kfiledialog.h>
+#include <tdeconfig.h>
+#include <tdefiledialog.h>
 #include <kmessagebox.h>
 #include <kstdaction.h>
 #include <kiconloader.h>
@@ -1924,13 +1924,13 @@ void KateDocument::writeConfig()
   config->sync();
 }
 
-void KateDocument::readSessionConfig(TDEConfig *kconfig)
+void KateDocument::readSessionConfig(TDEConfig *tdeconfig)
 {
   // restore the url
-  KURL url (kconfig->readEntry("URL"));
+  KURL url (tdeconfig->readEntry("URL"));
 
   // get the encoding
-  TQString tmpenc=kconfig->readEntry("Encoding");
+  TQString tmpenc=tdeconfig->readEntry("Encoding");
   if (!tmpenc.isEmpty() && (tmpenc != encoding()))
     setEncoding(tmpenc);
 
@@ -1939,34 +1939,34 @@ void KateDocument::readSessionConfig(TDEConfig *kconfig)
     openURL (url);
 
   // restore the hl stuff
-  m_buffer->setHighlight(KateHlManager::self()->nameFind(kconfig->readEntry("Highlighting")));
+  m_buffer->setHighlight(KateHlManager::self()->nameFind(tdeconfig->readEntry("Highlighting")));
 
   if (hlMode() > 0)
     hlSetByUser = true;
 
   // indent mode
-  config()->setIndentationMode( (uint)kconfig->readNumEntry("Indentation Mode", config()->indentationMode() ) );
+  config()->setIndentationMode( (uint)tdeconfig->readNumEntry("Indentation Mode", config()->indentationMode() ) );
 
   // Restore Bookmarks
-  TQValueList<int> marks = kconfig->readIntListEntry("Bookmarks");
+  TQValueList<int> marks = tdeconfig->readIntListEntry("Bookmarks");
   for( uint i = 0; i < marks.count(); i++ )
     addMark( marks[i], KateDocument::markType01 );
 }
 
-void KateDocument::writeSessionConfig(TDEConfig *kconfig)
+void KateDocument::writeSessionConfig(TDEConfig *tdeconfig)
 {
   if ( m_url.isLocalFile() && !TDEGlobal::dirs()->relativeLocation("tmp", m_url.path()).startsWith("/"))
        return;
   // save url
-  kconfig->writeEntry("URL", m_url.prettyURL() );
+  tdeconfig->writeEntry("URL", m_url.prettyURL() );
 
   // save encoding
-  kconfig->writeEntry("Encoding",encoding());
+  tdeconfig->writeEntry("Encoding",encoding());
 
   // save hl
-  kconfig->writeEntry("Highlighting", highlight()->name());
+  tdeconfig->writeEntry("Highlighting", highlight()->name());
 
-  kconfig->writeEntry("Indentation Mode", config()->indentationMode() );
+  tdeconfig->writeEntry("Indentation Mode", config()->indentationMode() );
 
   // Save Bookmarks
   TQValueList<int> marks;
@@ -1975,7 +1975,7 @@ void KateDocument::writeSessionConfig(TDEConfig *kconfig)
        ++it )
      marks << it.current()->line;
 
-  kconfig->writeEntry( "Bookmarks", marks );
+  tdeconfig->writeEntry( "Bookmarks", marks );
 }
 
 void KateDocument::configDialog()

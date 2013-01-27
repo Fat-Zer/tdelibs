@@ -29,7 +29,7 @@
 #include <tqlistview.h>
 #include <tqfont.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kaction.h>
 
 class KateView;
@@ -53,7 +53,7 @@ class KateSchemaManager
     void update (bool readfromfile = true);
 
     /**
-     * return kconfig with right group set or set to Normal if not there
+     * return tdeconfig with right group set or set to Normal if not there
      */
     TDEConfig *schema (uint number);
 

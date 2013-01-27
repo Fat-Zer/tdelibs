@@ -26,7 +26,7 @@
 
 #include "../interfaces/document.h"
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include <tqptrlist.h>
 #include <tqvaluelist.h>

@@ -34,7 +34,7 @@
 
 #include <klocale.h>
 #include <kstandarddirs.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kprocess.h>
 
 #include <pwd.h>

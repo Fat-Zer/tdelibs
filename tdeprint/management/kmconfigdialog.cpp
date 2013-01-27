@@ -32,7 +32,7 @@
 #include <tqlayout.h>
 #include <klocale.h>
 #include <kiconloader.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 KMConfigDialog::KMConfigDialog(TQWidget *parent, const char *name)
 : KDialogBase(IconList,i18n("TDE Print Configuration"),Ok|Cancel,Ok,parent,name,true,true)

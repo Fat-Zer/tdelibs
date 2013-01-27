@@ -14,14 +14,14 @@ include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_BINARY_DIR}
   ${CMAKE_BINARY_DIR}/tdecore
-  ${CMAKE_BINARY_DIR}/kio/kssl
+  ${CMAKE_BINARY_DIR}/tdeio/kssl
   ${CMAKE_SOURCE_DIR}
   ${CMAKE_SOURCE_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/tdeui
-  ${CMAKE_SOURCE_DIR}/kio
-  ${CMAKE_SOURCE_DIR}/kio/kio
-  ${CMAKE_SOURCE_DIR}/kio/kfile
-  ${CMAKE_SOURCE_DIR}/kio/kssl
+  ${CMAKE_SOURCE_DIR}/tdeio
+  ${CMAKE_SOURCE_DIR}/tdeio/tdeio
+  ${CMAKE_SOURCE_DIR}/tdeio/tdefile
+  ${CMAKE_SOURCE_DIR}/tdeio/kssl
 )
 
 link_directories(
@@ -45,6 +45,6 @@ set( ${target}_SRCS
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK kio-shared tdeparts-shared
+  LINK tdeio-shared tdeparts-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

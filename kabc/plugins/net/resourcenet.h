@@ -21,7 +21,7 @@
 #ifndef KABC_RESOURCENET_H
 #define KABC_RESOURCENET_H
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include <sys/types.h>
 

@@ -29,10 +29,10 @@
 #include <tqwhatsthis.h>
 
 #include <klocale.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kiconloader.h>
 #include <kurlrequester.h>
-#include <kfile.h>
+#include <tdefile.h>
 #include <klistview.h>
 #include <kdialog.h>
 

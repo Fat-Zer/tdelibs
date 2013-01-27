@@ -24,8 +24,8 @@
 #include <tqlayout.h>
 
 #include <kaboutdata.h>
-#include <kconfigskeleton.h>
-#include <kconfigdialogmanager.h>
+#include <tdeconfigskeleton.h>
+#include <tdeconfigdialogmanager.h>
 #include <kdebug.h>
 #include <kglobal.h>
 #include <kinstance.h>

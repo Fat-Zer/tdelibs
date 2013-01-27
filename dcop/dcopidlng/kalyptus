@@ -1514,7 +1514,7 @@ sub makeParamList($$$)
 		}
 
 		if (defined $defaultparam && $isEnum) {
-			# Remove any casts in enum values, for example this in kfileitem.h:
+			# Remove any casts in enum values, for example this in tdefileitem.h:
 			#  'enum { Unknown = (mode_t) - 1 };'
 			$defaultparam =~ s/\([^\)]+\)(.*[0-9].*)/$1/;
 		}

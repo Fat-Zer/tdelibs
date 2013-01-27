@@ -29,7 +29,7 @@
 #include <tqwidget.h>
 
 #include <kapplication.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <kgenericfactory.h>
 #include <kglobal.h>

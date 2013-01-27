@@ -30,7 +30,7 @@
 
 #include <klocale.h>
 #include <kcursor.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kstringhandler.h>
 
 class PortValidator : public TQIntValidator

@@ -26,7 +26,7 @@
 
 #include <klocale.h>
 #include <kurlrequester.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdialog.h>
 
 KMConfigPreview::KMConfigPreview(TQWidget *parent, const char *name)

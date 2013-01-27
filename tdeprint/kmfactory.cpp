@@ -32,7 +32,7 @@
 #include <tqsettings.h>
 
 #include <klibloader.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kstandarddirs.h>
 #include <kiconloader.h>
 #include <kdebug.h>
@@ -43,7 +43,7 @@
 #include <kapplication.h>
 #include <dcopclient.h>
 #include <dcopref.h>
-#include <kio/authinfo.h>
+#include <tdeio/authinfo.h>
 
 #include <unistd.h>
 

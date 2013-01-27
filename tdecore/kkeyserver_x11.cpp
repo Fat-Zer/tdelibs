@@ -31,7 +31,7 @@
 #include "kkeynative.h"
 #include "kshortcut.h"
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <kglobal.h>
 #include <klocale.h>

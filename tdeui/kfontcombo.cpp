@@ -23,7 +23,7 @@
 #include <tqregexp.h>
 
 #include <kcharsets.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kglobal.h>
 #include <kfontdialog.h>
 

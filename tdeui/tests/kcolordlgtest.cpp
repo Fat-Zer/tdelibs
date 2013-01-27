@@ -19,7 +19,7 @@
 
 #include <kapplication.h>
 #include "kcolordialog.h"
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <klocale.h>
 
 int main( int argc, char *argv[] )

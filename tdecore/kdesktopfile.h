@@ -19,7 +19,7 @@
 #ifndef _KDESKTOPFILE_H
 #define _KDESKTOPFILE_H
 
-#include "kconfig.h"
+#include "tdeconfig.h"
 #include "tdelibs_export.h"
 
 class KDesktopFilePrivate;

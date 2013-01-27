@@ -2,8 +2,8 @@
 
 AM_LDFLAGS = $(LDFLAGS_AS_NEEDED)
 
-INCLUDES= -I$(srcdir)/../ -I$(top_srcdir)/kio/ -I$(top_srcdir)/libltdl \
-	-I$(top_srcdir)/kfile $(all_includes)
+INCLUDES= -I$(srcdir)/../ -I$(top_srcdir)/tdeio/ -I$(top_srcdir)/libltdl \
+	-I$(top_srcdir)/tdefile $(all_includes)
 libtdeparts_la_LDFLAGS = $(KDE_MT_LDFLAGS) -version-info 3:0:1 -no-undefined
 libtdeparts_la_LIBADD  = $(LIB_KIO) $(LIB_QT) $(LIB_TDEUI) $(LIB_TDECORE) $(top_builddir)/dcop/libDCOP.la
 

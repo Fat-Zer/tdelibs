@@ -24,7 +24,7 @@
 
 #include "kscrollview.h"
 #include <kdebug.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kglobal.h>
 
 struct KScrollView::KScrollViewPrivate {

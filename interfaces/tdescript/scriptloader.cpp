@@ -23,7 +23,7 @@
 #include <tdeparts/componentfactory.h>
 #include <kglobal.h>
 #include <klocale.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdesktopfile.h>
 #include <kstandarsdirs.h>
 #include <kstdaccel.h>

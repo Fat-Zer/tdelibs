@@ -83,7 +83,7 @@
 #include <kpassdlg.h>
 #include <klistview.h>
 #include <kapplication.h>
-#include <kconfigdialog.h>
+#include <tdeconfigdialog.h>
 
 #include <kdirlister.h>
 #include <kstandarddirs.h>

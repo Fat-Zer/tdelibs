@@ -15,8 +15,8 @@
 #include <tqvaluelist.h>
 
 
-#include <kio/global.h>
-#include <kio/slavebase.h>
+#include <tdeio/global.h>
+#include <tdeio/slavebase.h>
 
 class HelpProtocol : public TDEIO::SlaveBase
 {

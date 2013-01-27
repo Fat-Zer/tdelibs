@@ -20,8 +20,8 @@
 	* - <a target="_top" href="kjs/html/index.html"><b>kjs</b></a>
         *   (<a target="_top" href="kjs/html/classes.html">classes</a>)\n
 	*   <i>Javascript (aka. ECMAScript and JScript) support.</i>
-	* - <a target="_top" href="kio/html/index.html"><b>kio</b></a>
-        *   (<a target="_top" href="kio/kio/html/classes.html">classes</a>)\n
+	* - <a target="_top" href="tdeio/html/index.html"><b>kio</b></a>
+        *   (<a target="_top" href="tdeio/tdeio/html/classes.html">classes</a>)\n
 	*   <i>Low level access to network files. Also provides access to facilities
 	*   such as KDirWatcher which monitors directories for changes.</i>
 	* - <a target="_top" href="tdeparts/html/index.html"><b>tdeparts</b></a>

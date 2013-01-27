@@ -34,7 +34,7 @@
 #include <kdebug.h>
 #include <kiconloader.h>
 #include <kapplication.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <klocale.h>
 
 //TODO: Well, this is already defined in tdeui/kdockwidget.cpp

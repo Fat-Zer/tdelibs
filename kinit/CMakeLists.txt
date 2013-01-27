@@ -19,8 +19,8 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/dcop
   ${CMAKE_SOURCE_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/tdeui
-  ${CMAKE_SOURCE_DIR}/kio
-  ${CMAKE_SOURCE_DIR}/kio/kio
+  ${CMAKE_SOURCE_DIR}/tdeio
+  ${CMAKE_SOURCE_DIR}/tdeio/tdeio
   ${FREETYPE_INCLUDE_DIRS}
 )
 
@@ -94,34 +94,34 @@ tde_add_executable( ${target}
 )
 
 
-#### kioslave ###################################
+#### tdeioslave ###################################
 
-set( target kioslave )
+set( target tdeioslave )
 
 tde_add_executable( ${target} AUTOMOC
-  SOURCES kioslave.cpp
-  LINK ltdlc-static kio-shared
+  SOURCES tdeioslave.cpp
+  LINK ltdlc-static tdeio-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )
 
 
-#### kstartupconfig #############################
+#### tdestartupconfig #############################
 
-set( target kstartupconfig )
+set( target tdestartupconfig )
 
 tde_add_executable( ${target} AUTOMOC
-  SOURCES kstartupconfig.cpp
+  SOURCES tdestartupconfig.cpp
   LINK tdefakes-shared ${TQT_LIBRARIES}
   DESTINATION ${BIN_INSTALL_DIR}
 )
 
 
-#### kdostartupconfig ###########################
+#### tdedostartupconfig ###########################
 
-set( target kdostartupconfig )
+set( target tdedostartupconfig )
 
 tde_add_executable( ${target} AUTOMOC
-  SOURCES kdostartupconfig.cpp
+  SOURCES tdedostartupconfig.cpp
   LINK tdecore-shared
   DESTINATION ${BIN_INSTALL_DIR}
 )
@@ -153,15 +153,15 @@ tde_add_executable( ${target}
 )
 
 
-#### klauncher ##################################
+#### tdelauncher ##################################
 
-set( target klauncher )
+set( target tdelauncher )
 
 set( ${target}_SRCS
-  klauncher.cpp klauncher_main.cpp autostart.cpp
+  tdelauncher.cpp tdelauncher_main.cpp autostart.cpp
 )
 
 tde_add_tdeinit_executable( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK kio-shared
+  LINK tdeio-shared
 )

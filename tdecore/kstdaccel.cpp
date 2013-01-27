@@ -23,7 +23,7 @@
 
 #include "kaccelaction.h"
 #include "kaccelbase.h"
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <kglobal.h>
 #include <klocale.h>
