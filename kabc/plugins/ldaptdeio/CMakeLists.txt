@@ -33,21 +33,21 @@ link_directories(
 ##### headers ###################################
 
 install( FILES
-    resourceldapkio.h
+    resourceldaptdeio.h
   DESTINATION ${INCLUDE_INSTALL_DIR}/kabc )
 
 
 ##### other data ################################
 
-install( FILES ldapkio.desktop DESTINATION ${SERVICES_INSTALL_DIR}/tderesources/kabc )
+install( FILES ldaptdeio.desktop DESTINATION ${SERVICES_INSTALL_DIR}/tderesources/kabc )
 
 
-##### kabc_ldapkio ##############################
+##### kabc_ldaptdeio ##############################
 
-set( target kabc_ldapkio )
+set( target kabc_ldaptdeio )
 
 set( ${target}_SRCS
-  resourceldapkio.cpp resourceldapkioconfig.cpp
+  resourceldaptdeio.cpp resourceldaptdeioconfig.cpp
 )
 
 tde_add_library( ${target} SHARED AUTOMOC
@@ -58,12 +58,12 @@ tde_add_library( ${target} SHARED AUTOMOC
 )
 
 
-##### kabc_ldapkio ##############################
+##### kabc_ldaptdeio ##############################
 
-set( target kabc_ldapkio )
+set( target kabc_ldaptdeio )
 
 set( ${target}_SRCS
-  resourceldapkioplugin.cpp
+  resourceldaptdeioplugin.cpp
 )
 
 tde_add_kpart( ${target}

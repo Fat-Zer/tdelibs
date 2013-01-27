@@ -18,8 +18,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include "resourceldapkio.h"
-#include "resourceldapkioconfig.h"
+#include "resourceldaptdeio.h"
+#include "resourceldaptdeioconfig.h"
 
 #include <kglobal.h>
 #include <klocale.h>
@@ -28,9 +28,9 @@ using namespace KABC;
 
 extern "C"
 {
-  KDE_EXPORT void *init_kabc_ldapkio()
+  KDE_EXPORT void *init_kabc_ldaptdeio()
   {
-    TDEGlobal::locale()->insertCatalogue("kabc_ldapkio");
+    TDEGlobal::locale()->insertCatalogue("kabc_ldaptdeio");
     return new KRES::PluginFactory<ResourceLDAPTDEIO, ResourceLDAPTDEIOConfig>();
   }
 }

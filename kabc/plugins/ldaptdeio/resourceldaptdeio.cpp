@@ -38,8 +38,8 @@
 #include <kabc/ldif.h>
 #include <kabc/ldapurl.h>
 
-#include "resourceldapkio.h"
-#include "resourceldapkioconfig.h"
+#include "resourceldaptdeio.h"
+#include "resourceldaptdeioconfig.h"
 
 using namespace KABC;
 
@@ -110,7 +110,7 @@ ResourceLDAPTDEIO::ResourceLDAPTDEIO( const TDEConfig *config )
     d->mCachePolicy = Cache_No;
     d->mAutoCache = true;
   }
-  d->mCacheDst = TDEGlobal::dirs()->saveLocation("cache", "ldapkio") + "/" +
+  d->mCacheDst = TDEGlobal::dirs()->saveLocation("cache", "ldaptdeio") + "/" +
     type() + "_" + identifier();
   init(); 
 }
@@ -414,7 +414,7 @@ void ResourceLDAPTDEIO::init()
 
   d->mReadOnly = readOnly();
 
-  kdDebug(7125) << "resource_ldapkio url: " << d->mLDAPUrl.prettyURL() << endl;
+  kdDebug(7125) << "resource_ldaptdeio url: " << d->mLDAPUrl.prettyURL() << endl;
 }
 
 void ResourceLDAPTDEIO::writeConfig( TDEConfig *config )
@@ -1038,4 +1038,4 @@ TQString ResourceLDAPTDEIO::cacheDst() const
 }    
 
 
-#include "resourceldapkio.moc"
+#include "resourceldaptdeio.moc"

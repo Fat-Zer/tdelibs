@@ -38,10 +38,10 @@
 #include <kmessagebox.h>
 #include <tdeio/netaccess.h>
 
-#include "resourceldapkio.h"
+#include "resourceldaptdeio.h"
 
-#include "resourceldapkioconfig.h"
-#include "resourceldapkioconfig.moc"
+#include "resourceldaptdeioconfig.h"
+#include "resourceldaptdeioconfig.moc"
 
 using namespace KABC;
 
