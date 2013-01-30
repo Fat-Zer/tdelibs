@@ -19,8 +19,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef KRESOURCES_CONFIGDIALOG_H
-#define KRESOURCES_CONFIGDIALOG_H
+#ifndef TDERESOURCES_CONFIGDIALOG_H
+#define TDERESOURCES_CONFIGDIALOG_H
 
 #include <kdialogbase.h>
 
@@ -32,7 +32,7 @@ namespace KRES {
   class Resource;
   class ConfigWidget;
 
-class KRESOURCES_EXPORT ConfigDialog : public KDialogBase
+class TDERESOURCES_EXPORT ConfigDialog : public KDialogBase
 {
     Q_OBJECT
   public:

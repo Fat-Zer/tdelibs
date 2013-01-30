@@ -30,7 +30,7 @@
 
 #include "fileprops.h"
 
-#define KFILEVERSION "0.2"
+#define TDEFILEVERSION "0.2"
 #define INDENT "\t"
 
 using namespace std;
@@ -407,7 +407,7 @@ static void processMetaDataOptions( const TQPtrList<FileProps> propList,
 int main( int argc, char **argv )
 {
     TDEAboutData about(
-	  "tdefile", I18N_NOOP( "tdefile" ), KFILEVERSION,
+	  "tdefile", I18N_NOOP( "tdefile" ), TDEFILEVERSION,
 	  I18N_NOOP("A commandline tool to read and modify metadata of files." ),
 	  TDEAboutData::License_LGPL, "(c) 2002, Carsten Pfeiffer",
 	  0 /*text*/, "http://devel-home.kde.org/~pfeiffer/",

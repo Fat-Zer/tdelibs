@@ -21,8 +21,8 @@
     Send comments and bug fixes to Timothy Pearson <kb9vqf@pearsoncomputing.net>
 
 ***************************************************************************/
-#ifndef _LIBKRANDR_H
-#define _LIBKRANDR_H
+#ifndef _LIBTDERANDR_H
+#define _LIBTDERANDR_H
 
 #include "randr.h"
 #include "lowlevel_randr.h"
@@ -50,7 +50,7 @@
  * @version 0.9.5 27/04/2010
  * @author Timothy Pearson <kb9vqf@pearsoncomputing.net>
  */
-class KRANDR_EXPORT KRandrSimpleAPI : public RandRDisplay
+class TDERANDR_EXPORT KRandrSimpleAPI : public RandRDisplay
 {
   private:
 
@@ -326,27 +326,27 @@ class KRANDR_EXPORT KRandrSimpleAPI : public RandRDisplay
 extern "C" {
 
 #else
-#define KRANDR_EXPORT
+#define TDERANDR_EXPORT
 #endif
 
-// KRANDR_EXPORT ScreenInfo* read_screen_info(Display *);
-// KRANDR_EXPORT int         set_screen_size (ScreenInfo *screen_info);
-// KRANDR_EXPORT void        output_auto (ScreenInfo *screen_info, OutputInfo *output_info);
-// KRANDR_EXPORT void        output_off(ScreenInfo *screen_info, OutputInfo *output);
-// KRANDR_EXPORT CrtcInfo*   auto_find_crtc (ScreenInfo *screen_info, OutputInfo *output_info);
-// KRANDR_EXPORT XRRModeInfo *find_mode_by_xid (ScreenInfo *screen_info, RRMode mode_id);
-// KRANDR_EXPORT int         mode_height (XRRModeInfo *mode_info, Rotation rotation);
-// KRANDR_EXPORT int         mode_width (XRRModeInfo *mode_info, Rotation rotation);
-// KRANDR_EXPORT int         get_width_by_output_id (ScreenInfo *screen_info, RROutput output_id);
-// KRANDR_EXPORT int         get_height_by_output_id (ScreenInfo *screen_info, RROutput output_id);
-// KRANDR_EXPORT char        *get_output_name (ScreenInfo *screen_info, RROutput id);
-// KRANDR_EXPORT Status      crtc_apply (CrtcInfo *crtc_info);
-// KRANDR_EXPORT Status      crtc_disable (CrtcInfo *crtc);
-// KRANDR_EXPORT int         main_low_apply (ScreenInfo *screen_info);
-// KRANDR_EXPORT bool        kRandrHasRandr();
+// TDERANDR_EXPORT ScreenInfo* read_screen_info(Display *);
+// TDERANDR_EXPORT int         set_screen_size (ScreenInfo *screen_info);
+// TDERANDR_EXPORT void        output_auto (ScreenInfo *screen_info, OutputInfo *output_info);
+// TDERANDR_EXPORT void        output_off(ScreenInfo *screen_info, OutputInfo *output);
+// TDERANDR_EXPORT CrtcInfo*   auto_find_crtc (ScreenInfo *screen_info, OutputInfo *output_info);
+// TDERANDR_EXPORT XRRModeInfo *find_mode_by_xid (ScreenInfo *screen_info, RRMode mode_id);
+// TDERANDR_EXPORT int         mode_height (XRRModeInfo *mode_info, Rotation rotation);
+// TDERANDR_EXPORT int         mode_width (XRRModeInfo *mode_info, Rotation rotation);
+// TDERANDR_EXPORT int         get_width_by_output_id (ScreenInfo *screen_info, RROutput output_id);
+// TDERANDR_EXPORT int         get_height_by_output_id (ScreenInfo *screen_info, RROutput output_id);
+// TDERANDR_EXPORT char        *get_output_name (ScreenInfo *screen_info, RROutput id);
+// TDERANDR_EXPORT Status      crtc_apply (CrtcInfo *crtc_info);
+// TDERANDR_EXPORT Status      crtc_disable (CrtcInfo *crtc);
+// TDERANDR_EXPORT int         main_low_apply (ScreenInfo *screen_info);
+// TDERANDR_EXPORT bool        kRandrHasRandr();
 
-KRANDR_EXPORT const char  *kRandrVersion(void);
-KRANDR_EXPORT const char  *kRandrCopyright(void);
+TDERANDR_EXPORT const char  *kRandrVersion(void);
+TDERANDR_EXPORT const char  *kRandrCopyright(void);
 
 #ifdef __cplusplus
 

@@ -1,5 +1,5 @@
-#ifndef CONFIG_KFILE_H
-#define CONFIG_KFILE_H
+#ifndef CONFIG_TDEFILE_H
+#define CONFIG_TDEFILE_H
 
 const int tdefile_area = 250;
 

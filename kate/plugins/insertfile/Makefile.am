@@ -5,7 +5,7 @@ METASOURCES = AUTO
 kde_module_LTLIBRARIES = tdetexteditor_insertfile.la
 
 tdetexteditor_insertfile_la_SOURCES = insertfileplugin.cpp
-tdetexteditor_insertfile_la_LIBADD = $(top_builddir)/interfaces/tdetexteditor/libtdetexteditor.la $(LIB_QT) $(LIB_TDECORE) $(LIB_KFILE) $(LIB_TDEUI)
+tdetexteditor_insertfile_la_LIBADD = $(top_builddir)/interfaces/tdetexteditor/libtdetexteditor.la $(LIB_QT) $(LIB_TDECORE) $(LIB_TDEFILE) $(LIB_TDEUI)
 tdetexteditor_insertfile_la_LDFLAGS = -module $(KDE_PLUGIN) $(all_libraries)
           
 insertfiledatadir = $(kde_datadir)/tdetexteditor_insertfile

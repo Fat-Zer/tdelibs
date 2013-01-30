@@ -30,7 +30,7 @@
 #include <kmimetype.h>
 #include <tdefilemetainfo.h>
 
-#define KFILEITEM_HAS_ISWRITABLE // only used in libkonq/konq_iconviewwidget.cc, will be removed for 3.4
+#define TDEFILEITEM_HAS_ISWRITABLE // only used in libkonq/konq_iconviewwidget.cc, will be removed for 3.4
 
 /**
  * A KFileItem is a generic class to handle a file, local or remote.

@@ -18,8 +18,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef KFILEFILTER_H
-#define KFILEFILTER_H
+#ifndef TDEFILEFILTER_H
+#define TDEFILEFILTER_H
 
 #include <tqptrlist.h>
 #include <tqstringlist.h>
@@ -167,4 +167,4 @@ private:
     class KSimpleFileFilterPrivate* d;
 };
 
-#endif // KFILEFILTER_H
+#endif // TDEFILEFILTER_H

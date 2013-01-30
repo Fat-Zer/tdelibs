@@ -15,8 +15,8 @@
     the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
     Boston, MA 02110-1301, USA.
 */
-#ifndef KFILE_H
-#define KFILE_H
+#ifndef TDEFILE_H
+#define TDEFILE_H
 
 #include <tqdir.h>
 
@@ -126,4 +126,4 @@ public:
 
 };
 
-#endif // KFILE_H
+#endif // TDEFILE_H

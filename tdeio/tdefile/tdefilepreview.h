@@ -20,8 +20,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef _KFILEPREVIEW_H
-#define _KFILEPREVIEW_H
+#ifndef _TDEFILEPREVIEW_H
+#define _TDEFILEPREVIEW_H
 
 #include <tqsplitter.h>
 #include <tqwidget.h>

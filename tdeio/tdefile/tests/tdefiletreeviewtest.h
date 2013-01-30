@@ -17,8 +17,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef KFILETREEVIEWTEST
-#define KFILETREEVIEWTEST
+#ifndef TDEFILETREEVIEWTEST
+#define TDEFILETREEVIEWTEST
 
 class testFrame: public KMainWindow
 {

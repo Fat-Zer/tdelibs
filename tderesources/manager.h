@@ -21,8 +21,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef KRESOURCES_MANAGER_H
-#define KRESOURCES_MANAGER_H
+#ifndef TDERESOURCES_MANAGER_H
+#define TDERESOURCES_MANAGER_H
 
 #include <tqdict.h>
 #include <tqstringlist.h>

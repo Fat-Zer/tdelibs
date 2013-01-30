@@ -17,8 +17,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef KFILEFILTERCOMBO_H
-#define KFILEFILTERCOMBO_H
+#ifndef TDEFILEFILTERCOMBO_H
+#define TDEFILEFILTERCOMBO_H
 
 #include <tqstringlist.h>
 #include <tqptrdict.h>

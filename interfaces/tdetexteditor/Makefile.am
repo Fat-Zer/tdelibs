@@ -23,7 +23,7 @@ libtdetexteditor_la_SOURCES = tdetexteditor.cpp \
 
 
 libtdetexteditor_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
-libtdetexteditor_la_LIBADD = $(LIB_KPARTS) $(top_builddir)/dcop/libDCOP.la $(LIB_KABC) $(LIB_TDECORE) $(LIB_QT) $(LIB_KFILE) $(LIB_TDEUI)
+libtdetexteditor_la_LIBADD = $(LIB_KPARTS) $(top_builddir)/dcop/libDCOP.la $(LIB_KABC) $(LIB_TDECORE) $(LIB_QT) $(LIB_TDEFILE) $(LIB_TDEUI)
 
 tdetexteditorinclude_HEADERS = document.h view.h editor.h plugin.h editinterface.h undointerface.h \
                              selectioninterface.h cursorinterface.h \

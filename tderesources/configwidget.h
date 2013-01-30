@@ -19,8 +19,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef KRESOURCES_CONFIGWIDGET_H
-#define KRESOURCES_CONFIGWIDGET_H
+#ifndef TDERESOURCES_CONFIGWIDGET_H
+#define TDERESOURCES_CONFIGWIDGET_H
 
 #include "resource.h"
 
@@ -30,7 +30,7 @@
 
 namespace KRES {
 
-class KRESOURCES_EXPORT ConfigWidget : public TQWidget
+class TDERESOURCES_EXPORT ConfigWidget : public TQWidget
 {
     Q_OBJECT
   public:

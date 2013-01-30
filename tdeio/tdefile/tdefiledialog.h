@@ -22,8 +22,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef __KFILEDIALOG_H__
-#define __KFILEDIALOG_H__
+#ifndef __TDEFILEDIALOG_H__
+#define __TDEFILEDIALOG_H__
 
 #include <tqstring.h>
 

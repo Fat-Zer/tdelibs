@@ -18,8 +18,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef KFILEICONVIEW_H
-#define KFILEICONVIEW_H
+#ifndef TDEFILEICONVIEW_H
+#define TDEFILEICONVIEW_H
 
 #include <tqt.h>
 
@@ -264,4 +264,4 @@ private:
     KFileIconViewPrivate *d;
 };
 
-#endif // KFILESIMPLEVIEW_H
+#endif // TDEFILESIMPLEVIEW_H

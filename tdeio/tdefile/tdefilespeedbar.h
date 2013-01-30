@@ -16,8 +16,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef KFILESPEEDBAR_H
-#define KFILESPEEDBAR_H
+#ifndef TDEFILESPEEDBAR_H
+#define TDEFILESPEEDBAR_H
 
 #include <kurlbar.h>
 
@@ -38,4 +38,4 @@ private:
 
 };
 
-#endif // KFILESPEEDBAR_H
+#endif // TDEFILESPEEDBAR_H

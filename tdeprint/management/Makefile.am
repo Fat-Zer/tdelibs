@@ -26,7 +26,7 @@ libtdeprint_management_la_SOURCES = \
 	pluginaction.cpp kxmlcommanddlg.cpp kxmlcommandselector.cpp kmconfigcommand.cpp \
 	kmconfigfilter.cpp kmconfigfonts.cpp kmconfigjobs.cpp networkscanner.cpp
 libtdeprint_management_la_LDFLAGS = $(all_libraries) -version-info 6:0:2 -no-undefined
-libtdeprint_management_la_LIBADD = ../libtdeprint.la $(LIB_QT) $(LIB_TDECORE) $(LIB_TDEUI) $(LIB_KFILE)
+libtdeprint_management_la_LIBADD = ../libtdeprint.la $(LIB_QT) $(LIB_TDECORE) $(LIB_TDEUI) $(LIB_TDEFILE)
 libtdeprint_management_la_METASOURCES = AUTO
 
 libtdeprint_management_module_la_SOURCES = tdeprint_management_module.cpp

@@ -429,7 +429,7 @@
   <item> TEMP-TABLE </item>
   <item> VARIABLE </item>
   <item> WORK-TABLE </item>
-  <item> WORKFILE </item>
+  <item> WORTDEFILE </item>
   <item> DELETE </item>
   <item> ALIAS </item>
   <item> OBJECT </item>

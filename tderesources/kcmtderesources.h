@@ -19,12 +19,12 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef KRESOURCES_KCMKRESOURCES_H
-#define KRESOURCES_KCMKRESOURCES_H
+#ifndef TDERESOURCES_KCMTDERESOURCES_H
+#define TDERESOURCES_KCMTDERESOURCES_H
 
 #include <tdecmodule.h>
 
-class KRESOURCES_EXPORT KCMKResources : public TDECModule
+class TDERESOURCES_EXPORT KCMKResources : public TDECModule
 {
   Q_OBJECT
 

@@ -16,8 +16,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef KFILEAUDIOPREVIEW_H
-#define KFILEAUDIOPREVIEW_H
+#ifndef TDEFILEAUDIOPREVIEW_H
+#define TDEFILEAUDIOPREVIEW_H
 
 #include <tqdict.h>
 
@@ -61,4 +61,4 @@ private:
     KFileAudioPreviewPrivate *d;
 };
 
-#endif // KFILEAUDIOPREVIEW_H
+#endif // TDEFILEAUDIOPREVIEW_H

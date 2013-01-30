@@ -16,8 +16,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef KFILEPROPS_H
-#define KFILEPROPS_H
+#ifndef TDEFILEPROPS_H
+#define TDEFILEPROPS_H
 
 #include <tqstring.h>
 
@@ -71,4 +71,4 @@ private:
 
 };
 
-#endif // KFILEPROPS_H
+#endif // TDEFILEPROPS_H

@@ -17,8 +17,8 @@
  *
  */
 
-#ifndef __KFILE_BMP_H__
-#define __KFILE_BMP_H__
+#ifndef __TDEFILE_BMP_H__
+#define __TDEFILE_BMP_H__
 
 #include <tdefilemetainfo.h>
 

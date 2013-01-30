@@ -20,8 +20,8 @@
     the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
     Boston, MA 02110-1301, USA.
 */
-#ifndef KRESOURCES_MANAGERIMPL_H
-#define KRESOURCES_MANAGERIMPL_H
+#ifndef TDERESOURCES_MANAGERIMPL_H
+#define TDERESOURCES_MANAGERIMPL_H
 
 #include <tqstring.h>
 #include <tqptrlist.h>
@@ -43,7 +43,7 @@ class ManagerNotifier;
 
   Do not use this class directly. Use ResourceManager instead
 */
-class KRESOURCES_EXPORT ManagerImpl : virtual public ManagerIface
+class TDERESOURCES_EXPORT ManagerImpl : virtual public ManagerIface
 {
   public:
     ManagerImpl( ManagerNotifier *, const TQString &family );

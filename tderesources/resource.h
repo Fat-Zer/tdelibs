@@ -19,8 +19,8 @@
     the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
     Boston, MA 02110-1301, USA.
 */
-#ifndef KRESOURCES_RESOURCE_H
-#define KRESOURCES_RESOURCE_H
+#ifndef TDERESOURCES_RESOURCE_H
+#define TDERESOURCES_RESOURCE_H
 
 #include <tqmutex.h>
 #include <tqvaluelist.h>
@@ -252,7 +252,7 @@ service_DATA = resourceexample.desktop
   data. Subclasses of ResourceCalendar would implement this API for local files,
   remote files, specific calendar servers etc.
 */
-class KRESOURCES_EXPORT Resource : public TQObject
+class TDERESOURCES_EXPORT Resource : public TQObject
 {
     friend class Factory;
     friend class ManagerImpl;
@@ -381,7 +381,7 @@ class KRESOURCES_EXPORT Resource : public TQObject
     ResourcePrivate *d;
 };
 
-class KRESOURCES_EXPORT PluginFactoryBase : public KLibFactory
+class TDERESOURCES_EXPORT PluginFactoryBase : public KLibFactory
 {
   public:
     virtual Resource *resource( const TDEConfig *config ) = 0;

@@ -16,8 +16,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef KFILEBOOKMARKHANDLER_H
-#define KFILEBOOKMARKHANDLER_H
+#ifndef TDEFILEBOOKMARKHANDLER_H
+#define TDEFILEBOOKMARKHANDLER_H
 
 #include <kbookmarkmanager.h>
 #include <kbookmarkmenu.h>
@@ -60,4 +60,4 @@ private:
 };
 
 
-#endif // KFILEBOOKMARKHANDLER_H
+#endif // TDEFILEBOOKMARKHANDLER_H

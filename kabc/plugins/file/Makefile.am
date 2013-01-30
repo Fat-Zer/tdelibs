@@ -6,7 +6,7 @@ noinst_HEADERS   = resourcefileconfig.h
 lib_LTLIBRARIES = libkabc_file.la
 libkabc_file_la_SOURCES = resourcefile.cpp resourcefileconfig.cpp
 libkabc_file_la_LDFLAGS = $(KDE_RPATH) $(all_libraries) -version-info 1:0:0 -no-undefined
-libkabc_file_la_LIBADD = $(LIB_KABC) $(LIB_QT) $(top_builddir)/tderesources/libtderesources.la $(LIB_KFILE) $(LIB_TDECORE) $(LIB_TDEUI)
+libkabc_file_la_LIBADD = $(LIB_KABC) $(LIB_QT) $(top_builddir)/tderesources/libtderesources.la $(LIB_TDEFILE) $(LIB_TDECORE) $(LIB_TDEUI)
 libkabc_file_la_COMPILE_FIRST = $(top_builddir)/kabc/addressee.h
 
 

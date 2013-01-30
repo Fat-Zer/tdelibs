@@ -26,7 +26,7 @@
 
 namespace KRES {
 
-class KRESOURCES_EXPORT ManagerIface : virtual public DCOPObject
+class TDERESOURCES_EXPORT ManagerIface : virtual public DCOPObject
 {
   K_DCOP
 

@@ -17,8 +17,8 @@
 
  */
 
-#ifndef __KFILEMETAINFOWIDGET_H__
-#define __KFILEMETAINFOWIDGET_H__
+#ifndef __TDEFILEMETAINFOWIDGET_H__
+#define __TDEFILEMETAINFOWIDGET_H__
 
 #include <tqwidget.h>
 #include <tqvariant.h>

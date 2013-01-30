@@ -26,7 +26,7 @@ bin_PROGRAMS =
 tdeinit_LTLIBRARIES = tdecmshell.la
 
 tdecmshell_la_SOURCES = main.cpp main.skel
-tdecmshell_la_LIBADD = ../tdeutils/libtdeutils.la $(LIB_QT) $(LIB_TDEUI) $(top_builddir)/dcop/libDCOP.la $(LIB_TDECORE) $(LIB_KFILE)
+tdecmshell_la_LIBADD = ../tdeutils/libtdeutils.la $(LIB_QT) $(LIB_TDEUI) $(top_builddir)/dcop/libDCOP.la $(LIB_TDECORE) $(LIB_TDEFILE)
 tdecmshell_la_LDFLAGS = $(all_libraries) -module -avoid-version
 
 noinst_HEADERS = main.h

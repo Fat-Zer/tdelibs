@@ -4,7 +4,7 @@ include( $(KDELIBS)/win/common.pro )
 
 
 # needed to export library classes:
-DEFINES += MAKE_KRESOURCES_LIB
+DEFINES += MAKE_TDERESOURCES_LIB
 
 INCLUDEPATH	+= $(KDELIBS)/ab
 

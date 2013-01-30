@@ -20,8 +20,8 @@
     the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
     Boston, MA 02110-1301, USA.
 */
-#ifndef KRESOURCES_CONFIGPAGE_H
-#define KRESOURCES_CONFIGPAGE_H
+#ifndef TDERESOURCES_CONFIGPAGE_H
+#define TDERESOURCES_CONFIGPAGE_H
 
 #include <ksharedptr.h>
 #include <tqstringlist.h>
@@ -37,7 +37,7 @@ class TQPushButton;
 
 namespace KRES {
 
-class KRESOURCES_EXPORT ResourcePageInfo : public KShared
+class TDERESOURCES_EXPORT ResourcePageInfo : public KShared
 {
   public:
     ResourcePageInfo();
@@ -49,7 +49,7 @@ class KRESOURCES_EXPORT ResourcePageInfo : public KShared
 class Resource;
 class ConfigViewItem;
 
-class KRESOURCES_EXPORT ConfigPage : public TQWidget, public ManagerObserver<Resource>
+class TDERESOURCES_EXPORT ConfigPage : public TQWidget, public ManagerObserver<Resource>
 {
   Q_OBJECT
 

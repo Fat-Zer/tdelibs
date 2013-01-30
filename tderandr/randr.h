@@ -29,7 +29,7 @@
 class KTimerDialog;
 class RandRScreenPrivate;
 
-class KRANDR_EXPORT HotPlugRule {
+class TDERANDR_EXPORT HotPlugRule {
 	public:
 		enum states {
 			AnyState		= 0,
@@ -49,7 +49,7 @@ class KRANDR_EXPORT HotPlugRule {
 
 typedef TQValueList< HotPlugRule > HotPlugRulesList;
 
-class KRANDR_EXPORT SingleScreenData {
+class TDERANDR_EXPORT SingleScreenData {
 	public:
 		SingleScreenData();
 		virtual ~SingleScreenData();

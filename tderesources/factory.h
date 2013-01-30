@@ -21,8 +21,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef KRESOURCES_FACTORY_H
-#define KRESOURCES_FACTORY_H
+#ifndef TDERESOURCES_FACTORY_H
+#define TDERESOURCES_FACTORY_H
 
 #include <tqdict.h>
 #include <tqstring.h>
@@ -59,7 +59,7 @@ namespace KRES {
  *
  * \endcode
  */
-class KRESOURCES_EXPORT Factory
+class TDERESOURCES_EXPORT Factory
 {
   public:
 

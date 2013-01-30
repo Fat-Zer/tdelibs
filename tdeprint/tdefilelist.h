@@ -17,8 +17,8 @@
  *  Boston, MA 02110-1301, USA.
  **/
 
-#ifndef KFILELIST_H
-#define KFILELIST_H
+#ifndef TDEFILELIST_H
+#define TDEFILELIST_H
 
 #include <tqwidget.h>
 #include <tqptrlist.h>

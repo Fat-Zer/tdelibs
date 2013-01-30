@@ -21,8 +21,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef KRESOURCES_SELECTDIALOG_H
-#define KRESOURCES_SELECTDIALOG_H
+#ifndef TDERESOURCES_SELECTDIALOG_H
+#define TDERESOURCES_SELECTDIALOG_H
 
 #include <tqobject.h>
 #include <tqptrlist.h>
@@ -53,7 +53,7 @@ class Resource;
  * }
  * \endcode
  */
-class KRESOURCES_EXPORT SelectDialog : KDialog
+class TDERESOURCES_EXPORT SelectDialog : KDialog
 {
   public:
     /**

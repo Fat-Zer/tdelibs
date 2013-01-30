@@ -6,8 +6,8 @@
  * License. See the file "COPYING" for the exact licensing terms.
  */
 
-#ifndef KFILEMETAPREVIEW_H
-#define KFILEMETAPREVIEW_H
+#ifndef TDEFILEMETAPREVIEW_H
+#define TDEFILEMETAPREVIEW_H
 
 #include <tqdict.h>
 #include <tqwidgetstack.h>
@@ -53,4 +53,4 @@ private:
     KFileMetaPreviewPrivate *d;
 };
 
-#endif // KFILEMETAPREVIEW_H
+#endif // TDEFILEMETAPREVIEW_H

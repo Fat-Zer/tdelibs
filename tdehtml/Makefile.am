@@ -57,7 +57,7 @@ libtdehtml_la_LIBADD = ./xml/libtdehtmlxml.la ./html/libtdehtmlhtml.la \
 	$(LIBTHAI) \
 	$(top_builddir)/tdeprint/libtdeprint.la  \
 	$(top_builddir)/tdeutils/libtdeutils.la \
-	$(top_builddir)/tdewallet/client/libtdewalletclient.la $(top_builddir)/kjs/libkjs.la $(LIB_TDEUI) $(LIB_QT) $(LIB_TDECORE) $(LIB_KFILE) $(top_builddir)/dcop/libDCOP.la $(LIBJPEG) $(LIB_X11)
+	$(top_builddir)/tdewallet/client/libtdewalletclient.la $(top_builddir)/kjs/libkjs.la $(LIB_TDEUI) $(LIB_QT) $(LIB_TDECORE) $(LIB_TDEFILE) $(top_builddir)/dcop/libDCOP.la $(LIBJPEG) $(LIB_X11)
 
 # init_libtdehtml is in libtdehtml.so; init_libtdehtmlpart needs to be in the part
 dummy.cpp: $(srcdir)/Makefile.am

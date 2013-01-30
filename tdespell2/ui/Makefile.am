@@ -18,4 +18,4 @@ dialog.lo: tdespell2ui.h
 
 libtdespell2_la_SOURCES = dialog.cpp
 libtdespell2_la_LDFLAGS = -no-undefined -version-info 1:0:0 $(all_libraries)
-libtdespell2_la_LIBADD = libtdespell2_noinst.la ../libtdespell2base.la ../../tdeutils/libtdeutils.la  $(LIB_QT) $(LIB_TDEUI) $(LIB_TDECORE) $(LIB_KFILE)
+libtdespell2_la_LIBADD = libtdespell2_noinst.la ../libtdespell2base.la ../../tdeutils/libtdeutils.la  $(LIB_QT) $(LIB_TDEUI) $(LIB_TDECORE) $(LIB_TDEFILE)

@@ -19,8 +19,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef KFILEVIEW_H
-#define KFILEVIEW_H
+#ifndef TDEFILEVIEW_H
+#define TDEFILEVIEW_H
 
 class TQPoint;
 class KActionCollection;
@@ -441,4 +441,4 @@ private:
     KFileViewPrivate *d;
 };
 
-#endif // KFILEINFOLISTWIDGET_H
+#endif // TDEFILEINFOLISTWIDGET_H

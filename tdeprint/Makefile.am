@@ -30,7 +30,7 @@ libtdeprint_la_SOURCES = kmfactory.cpp kmjob.cpp kmjobmanager.cpp kmmanager.cpp 
 			 fooparser.cpp fooscanner.cpp ppdparser.cpp ppdscanner.cpp ppdloader.cpp
 
 libtdeprint_la_LDFLAGS = $(all_libraries) -version-info 6:0:2 -no-undefined
-libtdeprint_la_LIBADD = $(LIBZ) $(LIB_QT) $(LIB_TDEUI) $(top_builddir)/dcop/libDCOP.la $(LIB_TDECORE) $(LIB_KFILE)
+libtdeprint_la_LIBADD = $(LIBZ) $(LIB_QT) $(LIB_TDEUI) $(top_builddir)/dcop/libDCOP.la $(LIB_TDECORE) $(LIB_TDEFILE)
 libtdeprint_la_DEPENDENCIES =  $(LIB_KPARTS) 
 libtdeprint_la_METASOURCES = AUTO
 
