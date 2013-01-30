@@ -254,7 +254,7 @@ LDIF::ParseVal LDIF::processLine()
       break;
     case Entry_Mod:
       if ( mModType == Mod_None ) {
-        kdDebug(5700) << "kio_ldap: new modtype " << mAttr << endl;
+        kdDebug(5700) << "tdeio_ldap: new modtype " << mAttr << endl;
         if ( mAttr.isEmpty() && mVal.size() == 0 ) {
           retval = EndEntry;
         } else if ( attrLower == "add" ) {

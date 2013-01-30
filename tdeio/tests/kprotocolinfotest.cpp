@@ -52,7 +52,7 @@ int main(int argc, char **argv) {
     assert( protocol == "http" );
 
     TQStringList capabilities = KProtocolInfo::capabilities( "imap" );
-    kdDebug() << "kio_imap capabilities: " << capabilities << endl;
+    kdDebug() << "tdeio_imap capabilities: " << capabilities << endl;
     //assert(capabilities.contains("ACL"));
 
     return 0;

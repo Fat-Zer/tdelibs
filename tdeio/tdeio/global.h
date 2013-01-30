@@ -15,8 +15,8 @@
    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA 02110-1301, USA.
 */
-#ifndef __kio_global_h__
-#define __kio_global_h__
+#ifndef __tdeio_global_h__
+#define __tdeio_global_h__
 
 #include <tqstring.h>
 #include <tqvaluelist.h>

@@ -482,11 +482,11 @@ public:
     virtual void del( const KURL &url, bool isfile);
 
     // TODO KDE4: add setLinkDest() or something, to modify symlink targets.
-    // Will be used for kio_file but also kio_remote (#97129)
+    // Will be used for tdeio_file but also tdeio_remote (#97129)
 
     /**
      * Used for any command that is specific to this slave (protocol)
-     * Examples are : HTTP POST, mount and unmount (kio_file)
+     * Examples are : HTTP POST, mount and unmount (tdeio_file)
      *
      * @param data packed data; the meaning is completely dependent on the
      *        slave, but usually starts with an int for the command number.

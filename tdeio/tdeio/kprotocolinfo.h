@@ -104,8 +104,8 @@ public:
 
   /**
    * Returns the library / executable to open for the protocol @p protocol
-   * Example : "kio_ftp", meaning either the executable "kio_ftp" or
-   * the library "kio_ftp.la" (recommended), whichever is available.
+   * Example : "tdeio_ftp", meaning either the executable "tdeio_ftp" or
+   * the library "tdeio_ftp.la" (recommended), whichever is available.
    *
    * This corresponds to the "exec=" field in the protocol description file.
    * @param protocol the protocol to check
@@ -422,7 +422,7 @@ public:
    * copying a file or directory to another directory. By default the destination
    * filename is made out of the filename in the source URL. However if the
    * ioslave displays names that are different from the filename of the URL
-   * (e.g. kio_fonts shows Arial for arial.ttf, or kio_trash shows foo.txt and
+   * (e.g. tdeio_fonts shows Arial for arial.ttf, or tdeio_trash shows foo.txt and
    * uses some internal URL), using Name means that the display name (UDS_NAME)
    * will be used to as the filename in the destination directory.
    *

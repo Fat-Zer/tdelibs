@@ -393,7 +393,7 @@ void XMLHttpRequest::send(const TQString& _body)
 
   // Set the default referrer if one is not already supplied
   // through setRequestHeader. NOTE: the user can still disable
-  // this feature at the protocol level (kio_http).
+  // this feature at the protocol level (tdeio_http).
   // ### does find() ever succeed? the headers are stored in lower case!
   if (requestHeaders.find("Referer") == requestHeaders.end()) {
     KURL documentURL(doc->URL());
@@ -476,7 +476,7 @@ void XMLHttpRequest::setRequestHeader(const TQString& _name, const TQString &val
 
   // Sanitize the request headers below and handle them as if they are
   // calls to open. Otherwise, we will end up ignoring them all together!
-  // TODO: Do something about "put" which kio_http sort of supports and
+  // TODO: Do something about "put" which tdeio_http sort of supports and
   // the webDAV headers such as PROPFIND etc...
   if (name == "get"  || name == "post") {
     KURL reqURL (doc->URL(), value.stripWhiteSpace());

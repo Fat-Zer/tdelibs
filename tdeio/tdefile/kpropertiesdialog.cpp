@@ -781,7 +781,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
     // Extract the file name only
     filename = properties->defaultName();
     if ( filename.isEmpty() ) { // no template
-      filename = item->name(); // this gives support for UDS_NAME, e.g. for kio_trash or kio_system
+      filename = item->name(); // this gives support for UDS_NAME, e.g. for tdeio_trash or tdeio_system
     } else {
       m_bFromTemplate = true;
       setDirty(); // to enforce that the copy happens

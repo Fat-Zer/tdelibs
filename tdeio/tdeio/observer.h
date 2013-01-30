@@ -16,8 +16,8 @@
    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA 02110-1301, USA.
 */
-#ifndef __kio_observer_h__
-#define __kio_observer_h__
+#ifndef __tdeio_observer_h__
+#define __tdeio_observer_h__
 
 #include <tqobject.h>
 #include <dcopobject.h>

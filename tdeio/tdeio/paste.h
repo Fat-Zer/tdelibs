@@ -16,8 +16,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef __kio_paste_h__
-#define __kio_paste_h__
+#ifndef __tdeio_paste_h__
+#define __tdeio_paste_h__
 
 #include <tqstring.h>
 #include <tqmemarray.h>

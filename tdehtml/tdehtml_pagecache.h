@@ -36,7 +36,7 @@ class TDEHTMLPageCachePrivate;
  * These operations always want to use the original document and 
  * don't want to fetch the data from the network again.
  *
- * It operates completely independent from the kio_http cache.
+ * It operates completely independent from the tdeio_http cache.
  */
 class TDEHTMLPageCache : public TQObject
 {

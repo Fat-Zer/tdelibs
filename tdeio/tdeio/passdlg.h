@@ -17,8 +17,8 @@
    Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef __kio_pass_dlg_h__
-#define __kio_pass_dlg_h__
+#ifndef __tdeio_pass_dlg_h__
+#define __tdeio_pass_dlg_h__
 
 #include <kdialogbase.h>
 

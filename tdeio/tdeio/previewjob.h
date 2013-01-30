@@ -21,8 +21,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef __kio_previewjob_h__
-#define __kio_previewjob_h__
+#ifndef __tdeio_previewjob_h__
+#define __tdeio_previewjob_h__
 
 #include <tdefileitem.h>
 #include <tdeio/job.h>

@@ -403,7 +403,7 @@ TQString KProtocolInfo::config( const TQString& _protocol )
   if ( !prot )
     return TQString::null;
 
-  return TQString("kio_%1rc").arg(prot->m_config);
+  return TQString("tdeio_%1rc").arg(prot->m_config);
 }
 
 int KProtocolInfo::maxSlaves( const TQString& _protocol )

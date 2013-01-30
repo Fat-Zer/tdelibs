@@ -1283,7 +1283,7 @@ KLauncher::requestSlave(const TQString &protocol,
         return 0;
     }
 
-    TQCString name = _name.latin1(); // ex: "kio_ftp"
+    TQCString name = _name.latin1(); // ex: "tdeio_ftp"
     TQCString arg1 = protocol.latin1();
     TQCString arg2 = TQFile::encodeName(mPoolSocketName);
     TQCString arg3 = TQFile::encodeName(app_socket);

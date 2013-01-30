@@ -20,8 +20,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef __kio_netaccess_h
-#define __kio_netaccess_h
+#ifndef __tdeio_netaccess_h
+#define __tdeio_netaccess_h
 
 #include <tqobject.h>
 #include <tqstring.h>

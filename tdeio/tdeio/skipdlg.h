@@ -16,8 +16,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef __kio_skip_dlg__
-#define __kio_skip_dlg__
+#ifndef __tdeio_skip_dlg__
+#define __tdeio_skip_dlg__
 
 #include <tdelibs_export.h>
 #include <kdialog.h>

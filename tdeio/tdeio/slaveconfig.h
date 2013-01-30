@@ -38,7 +38,7 @@ namespace TDEIO {
      * configuration items of an io-slave when the io-slave is used by
      * your application. 
      *
-     * Normally io-slaves are being configured by "kio_<protocol>rc" 
+     * Normally io-slaves are being configured by "tdeio_<protocol>rc" 
      * configuration files. Groups defined in such files are treated as host 
      * or domain specification. Configuration items defined in a group are 
      * only applied when the slave is connecting with a host that matches with 

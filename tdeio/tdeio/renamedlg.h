@@ -19,8 +19,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef __kio_rename_dlg__
-#define __kio_rename_dlg__
+#ifndef __tdeio_rename_dlg__
+#define __tdeio_rename_dlg__
 
 #include <kurl.h>
 #include <tqdialog.h>

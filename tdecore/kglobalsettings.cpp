@@ -539,7 +539,7 @@ void TDEGlobalSettings::initStatic() // should be called initPaths(). Don't put 
     if ( !s_documentPath->endsWith("/"))
       s_documentPath->append('/');
 
-    // Trash Path - TODO remove in KDE4 (kio_trash can't use it for interoperability reasons)
+    // Trash Path - TODO remove in KDE4 (tdeio_trash can't use it for interoperability reasons)
     *s_trashPath = *s_desktopPath + i18n("Trash") + "/";
     *s_trashPath = g.readPathEntry( "Trash" , *s_trashPath);
     *s_trashPath = TQDir::cleanDirPath( *s_trashPath );

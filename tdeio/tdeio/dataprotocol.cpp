@@ -47,19 +47,19 @@ using namespace TDEIO;
 extern "C" {
 
   int kdemain( int argc, char **argv ) {
-    TDEInstance instance( "kio_data" );
+    TDEInstance instance( "tdeio_data" );
 
-    kdDebug(7101) << "*** Starting kio_data " << endl;
+    kdDebug(7101) << "*** Starting tdeio_data " << endl;
 
     if (argc != 4) {
-      kdDebug(7101) << "Usage: kio_data  protocol domain-socket1 domain-socket2" << endl;
+      kdDebug(7101) << "Usage: tdeio_data  protocol domain-socket1 domain-socket2" << endl;
       exit(-1);
     }
 
     DataProtocol slave(argv[2], argv[3]);
     slave.dispatchLoop();
 
-    kdDebug(7101) << "*** kio_data Done" << endl;
+    kdDebug(7101) << "*** tdeio_data Done" << endl;
     return 0;
   }
 }
@@ -242,7 +242,7 @@ static void parseDataHeader(const KURL &url, DataHeader &header_info) {
 
 #ifdef DATAKIOSLAVE
 DataProtocol::DataProtocol(const TQCString &pool_socket, const TQCString &app_socket)
-	: SlaveBase("kio_data", pool_socket, app_socket) {
+	: SlaveBase("tdeio_data", pool_socket, app_socket) {
 #else
 DataProtocol::DataProtocol() {
 #endif
@@ -260,7 +260,7 @@ DataProtocol::~DataProtocol() {
 void DataProtocol::get(const KURL& url) {
   ref();
   //kdDebug() << "===============================================================================================================================================================================" << endl;
-  kdDebug() << "kio_data@"<<this<<"::get(const KURL& url)" << endl ;
+  kdDebug() << "tdeio_data@"<<this<<"::get(const KURL& url)" << endl ;
 
   DataHeader hdr;
   parseDataHeader(url,hdr);

@@ -34,7 +34,7 @@ public:
     void runAll();
     void cleanup();
 
-    // Local tests (kio_file only)
+    // Local tests (tdeio_file only)
     void get();
     void copyFileToSamePartition();
     void copyDirectoryToSamePartition();

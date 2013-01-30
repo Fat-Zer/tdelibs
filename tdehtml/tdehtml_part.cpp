@@ -1511,9 +1511,9 @@ DOM::DocumentImpl *TDEHTMLPart::xmlDocImpl() const
     return 0;
 }
 
-void TDEHTMLPart::slotInfoMessage(TDEIO::Job* kio_job, const TQString& msg)
+void TDEHTMLPart::slotInfoMessage(TDEIO::Job* tdeio_job, const TQString& msg)
 {
-  assert(d->m_job == kio_job);
+  assert(d->m_job == tdeio_job);
 
   if (!parentPart())
     setStatusBarText(msg, BarDefaultText);
@@ -1562,9 +1562,9 @@ void TDEHTMLPart::setPageSecurity( PageSecurity sec )
     d->m_statusBarIconLabel->setPixmap( SmallIcon( iconName, instance() ) );
 }
 
-void TDEHTMLPart::slotData( TDEIO::Job* kio_job, const TQByteArray &data )
+void TDEHTMLPart::slotData( TDEIO::Job* tdeio_job, const TQByteArray &data )
 {
-  assert ( d->m_job == kio_job );
+  assert ( d->m_job == tdeio_job );
 
   //kdDebug( 6050 ) << "slotData: " << data.size() << endl;
   // The first data ?

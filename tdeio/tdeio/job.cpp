@@ -1354,7 +1354,7 @@ TransferJob *TDEIO::http_post( const KURL& url, const TQByteArray &postData, boo
 	static TQValueList< int >* overriden_ports = NULL;
 	if( !override_loaded )
 	{
-	    TDEConfig cfg( "kio_httprc", true );
+	    TDEConfig cfg( "tdeio_httprc", true );
 	    overriden_ports = new TQValueList< int >;
 	    *overriden_ports = cfg.readIntListEntry( "OverriddenPorts" );
 	    override_loaded = true;
@@ -2307,7 +2307,7 @@ void CopyJob::slotStart()
 }
 
 // For unit test purposes
-TDEIO_EXPORT bool kio_resolve_local_urls = true;
+TDEIO_EXPORT bool tdeio_resolve_local_urls = true;
 
 void CopyJob::slotResultStating( Job *job )
 {
@@ -2376,7 +2376,7 @@ void CopyJob::slotResultStating( Job *job )
         if ( isGlobalDest )
             d->m_globalDestinationState = destinationState;
 
-        if ( !sLocalPath.isEmpty() && kio_resolve_local_urls ) {
+        if ( !sLocalPath.isEmpty() && tdeio_resolve_local_urls ) {
             m_dest = KURL();
             m_dest.setPath(sLocalPath);
             if ( isGlobalDest )
@@ -2586,7 +2586,7 @@ void CopyJob::slotEntries(TDEIO::Job* job, const UDSEntryList& list)
                 }
             }
             //kdDebug(7007) << "displayName=" << displayName << " url=" << url << endl;
-            if (!localPath.isEmpty() && kio_resolve_local_urls) {
+            if (!localPath.isEmpty() && tdeio_resolve_local_urls) {
                 url = KURL();
                 url.setPath(localPath);
             }

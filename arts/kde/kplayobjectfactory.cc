@@ -68,7 +68,7 @@ KPlayObject *KPlayObjectFactory::createPlayObject(const KURL& _url, const TQStri
 	// I hate it
 	// I hate it
 	// It sucks
-	// kio_media please die
+	// tdeio_media please die
 	KURL url = TDEIO::NetAccess::mostLocalURL(_url, 0);
 
 	if(!m_server.isNull())
@@ -139,7 +139,7 @@ KDE::PlayObject *KDE::PlayObjectFactory::createPlayObject(const KURL& _url, cons
 	// I hate it
 	// I hate it
 	// It sucks
-	// kio_media please die
+	// tdeio_media please die
 	KURL url = TDEIO::NetAccess::mostLocalURL(_url, 0);
 	
 	// return a NULL playobject if the server is NULL
@@ -154,7 +154,7 @@ KDE::PlayObject *KDE::PlayObjectFactory::createPlayObject(const KURL& _url, cons
 		createBUS = false;
 	}
 
-	// decide if it's a local file. mpeglib provides cdda reading and decoding, so we prefer that over kio_audiocd
+	// decide if it's a local file. mpeglib provides cdda reading and decoding, so we prefer that over tdeio_audiocd
 	if ( url.isLocalFile() || !d->allowStreaming || (url.protocol() == "audiocd" && mimetype == "application/x-cda" && mimeTypes().contains( "application/x-cda" ) ) )
 	{
 		// we rely on the delivered mimetype if it's a local file

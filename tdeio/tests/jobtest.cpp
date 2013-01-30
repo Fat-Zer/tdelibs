@@ -227,7 +227,7 @@ void JobTest::copyLocalFile( const TQString& src, const TQString& dest )
 
     {
         // check that the timestamp is the same (#24443)
-        // Note: this only works because of copy() in kio_file.
+        // Note: this only works because of copy() in tdeio_file.
         // The datapump solution ignores mtime, the app has to call FileCopyJob::setModificationTime()
         TQFileInfo srcInfo( src );
         TQFileInfo destInfo( dest );
@@ -533,7 +533,7 @@ void JobTest::slotEntries( TDEIO::Job*, const TDEIO::UDSEntryList& lst )
 void JobTest::copyFileToSystem()
 {
     if ( !KProtocolInfo::isKnownProtocol( TQString::fromLatin1( "system" ) ) ) {
-        kdDebug() << k_funcinfo << "no kio_system, skipping test" << endl;
+        kdDebug() << k_funcinfo << "no tdeio_system, skipping test" << endl;
         return;
     }
 
@@ -551,8 +551,8 @@ void JobTest::copyFileToSystem()
 void JobTest::copyFileToSystem( bool resolve_local_urls )
 {
     kdDebug() << k_funcinfo << resolve_local_urls << endl;
-    extern TDEIO_EXPORT bool kio_resolve_local_urls;
-    kio_resolve_local_urls = resolve_local_urls;
+    extern TDEIO_EXPORT bool tdeio_resolve_local_urls;
+    tdeio_resolve_local_urls = resolve_local_urls;
 
     const TQString src = homeTmpDir() + "fileFromHome";
     createTestFile( src );
@@ -583,7 +583,7 @@ void JobTest::copyFileToSystem( bool resolve_local_urls )
 
     // Check mimetype
     kdDebug() << m_mimetype << endl;
-    // There's no mimemagic determination in kio_file in trinity. Fixing this for kde4...
+    // There's no mimemagic determination in tdeio_file in trinity. Fixing this for kde4...
     assert( m_mimetype == "application/octet-stream" );
     //assert( m_mimetype == "text/plain" );
 
@@ -601,7 +601,7 @@ void JobTest::copyFileToSystem( bool resolve_local_urls )
     }
 
     // restore normal behavior
-    kio_resolve_local_urls = true;
+    tdeio_resolve_local_urls = true;
 }
 
 void JobTest::slotMimetype(TDEIO::Job* job, const TQString& type)

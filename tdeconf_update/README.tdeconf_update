@@ -167,7 +167,7 @@ Example update file
 
 # This is comment
 Id=kde2.2
-File=tdeioslaverc,kio_httprc
+File=tdeioslaverc,tdeio_httprc
 Group=Proxy Settings
 Key=NoProxyFor
 Key=UseProxy
@@ -182,20 +182,20 @@ RemoveGroup=KDE
 
 
 The above update file extracts config information from the file "tdeioslaverc" 
-and stores it into the file "kio_httprc". 
+and stores it into the file "tdeio_httprc". 
 
 It reads the keys "NoProxyFor", "UseProxy" and "httpProxy" from the group 
 "Proxy Settings" in the "tdeioslaverc" file. If any of these options are present
 they are written to the keys "NoProxyFor", "UseProxy" and "Proxy" (!) in
-the group "Proxy Settings" in the "kio_httprc" file.
+the group "Proxy Settings" in the "tdeio_httprc" file.
 
 It also reads the keys "MaxCacheSize" and "UseCache" from the group 
 "Cache Settings" in the "tdeioslaverc" file and writes this information to the
 keys "MaxCacheSize" and "UseCache" in the group "Cache" (!) in the 
-"kio_httprc" file.
+"tdeio_httprc" file.
 
 Then it takes all keys in the "UserAgent" group of the file "tdeioslaverc" 
-and moves then to the "UserAgent" group in the "kio_httprc" file.
+and moves then to the "UserAgent" group in the "tdeio_httprc" file.
 
 Finally it removes the entire "KDE" group in the tdeioslaverc file.
 

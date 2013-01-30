@@ -250,12 +250,12 @@ const TQChar * const charset_urls[] = {
 #endif
 
 int main(int /*argc*/,char* /*argv*/[]) {
-  DataProtocol kio_data;
+  DataProtocol tdeio_data;
 
-  kio_data.initTestrun();
+  tdeio_data.initTestrun();
   for (uint i = 0; i < sizeof testcases/sizeof testcases[0]; i++) {
-    kio_data.beginTestcase(testcases[i].name);
-    kio_data.setExpectedMimeType(testcases[i].exp_mime_type != 0
+    tdeio_data.beginTestcase(testcases[i].name);
+    tdeio_data.setExpectedMimeType(testcases[i].exp_mime_type != 0
     		? testcases[i].exp_mime_type : "text/plain");
 
     bool has_charset = false;
@@ -268,20 +268,20 @@ int main(int /*argc*/,char* /*argv*/[]) {
       }/*next j*/
     }
     if (!has_charset) exp_attrs["charset"] = "us-ascii";
-    kio_data.setExpectedAttributes(exp_attrs);
+    tdeio_data.setExpectedAttributes(exp_attrs);
 
     TQByteArray exp_content;
     uint exp_content_len = strlen(testcases[i].exp_content);
     exp_content.setRawData(testcases[i].exp_content,exp_content_len);
-    kio_data.setExpectedContent(exp_content);
+    tdeio_data.setExpectedContent(exp_content);
 
-    kio_data.get(testcases[i].url);
+    tdeio_data.get(testcases[i].url);
 
-    kio_data.endTestcase();
+    tdeio_data.endTestcase();
     exp_content.resetRawData(testcases[i].exp_content,exp_content_len);
   }/*next i*/
-  kio_data.endTestrun();
+  tdeio_data.endTestrun();
 
-  return kio_data.hasFailedTestcases() ? 1 : 0;
+  return tdeio_data.hasFailedTestcases() ? 1 : 0;
 }
 

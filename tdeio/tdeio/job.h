@@ -19,8 +19,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef __kio_job_h__
-#define __kio_job_h__
+#ifndef __tdeio_job_h__
+#define __tdeio_job_h__
 
 #include <tdeio/jobclasses.h>
 
@@ -92,7 +92,7 @@ namespace TDEIO {
     /**
      * Execute any command that is specific to one slave (protocol).
      *
-     * Examples are : HTTP POST, mount and unmount (kio_file)
+     * Examples are : HTTP POST, mount and unmount (tdeio_file)
      *
      * @param url The URL isn't passed to the slave, but is used to know
      *        which slave to send it to :-)
@@ -106,7 +106,7 @@ namespace TDEIO {
     /**
      * Mount filesystem.
      *
-     * Special job for @p kio_file.
+     * Special job for @p tdeio_file.
      *
      * @param ro Mount read-only if @p true.
      * @param fstype File system type (e.g. "ext2", can be 0L).
@@ -120,7 +120,7 @@ namespace TDEIO {
     /**
      * Unmount filesystem.
      *
-     * Special job for @p kio_file.
+     * Special job for @p tdeio_file.
      *
      * @param point Point to unmount.
      * @param showProgressInfo true to show progress information

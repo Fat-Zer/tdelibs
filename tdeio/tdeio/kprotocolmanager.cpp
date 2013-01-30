@@ -102,7 +102,7 @@ TDEConfig *KProtocolManager::http_config()
 
   if (!d->http_config)
   {
-     d->http_config = new TDEConfig("kio_httprc", false, false);
+     d->http_config = new TDEConfig("tdeio_httprc", false, false);
   }
   return d->http_config;
 }

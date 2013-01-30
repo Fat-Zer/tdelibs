@@ -109,7 +109,7 @@ ssl_proxied	bool		Presently exists only if true.  Set in TCPSlaveBase to indicat
 
 main_frame_request	bool	Actually for SSL, this is set in the caller to tell TCPSlaveBase if this is the request for the main frame of an html page. (dfault: true)
 
-HTTP-Version		string	The HTTP version in use for kio_http (set by http)
+HTTP-Version		string	The HTTP version in use for tdeio_http (set by http)
 
 PropagateHttpHeader	bool	Whether HTTP headers should be send back (read by http)
 

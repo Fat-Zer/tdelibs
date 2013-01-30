@@ -19,8 +19,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef __kio_jobclasses_h__
-#define __kio_jobclasses_h__
+#ifndef __tdeio_jobclasses_h__
+#define __tdeio_jobclasses_h__
 
 #include <tqobject.h>
 #include <tqptrlist.h>
@@ -37,7 +37,7 @@
 class Observer;
 class TQTimer;
 
-#define KIO_COPYJOB_HAS_SETINTERACTIVE // new in 3.4. Used by kio_trash.
+#define KIO_COPYJOB_HAS_SETINTERACTIVE // new in 3.4. Used by tdeio_trash.
 
 namespace TDEIO {
 

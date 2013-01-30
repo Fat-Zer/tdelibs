@@ -43,8 +43,8 @@ LDFLAGS: -module $(KDE_PLUGIN)
 
 KIOSlave
 ========
-Name: kio_<protocol>.la
-Definition: kde_module_LTLIBRARIES = kio_<protocol>.la
+Name: tdeio_<protocol>.la
+Definition: kde_module_LTLIBRARIES = tdeio_<protocol>.la
 LDFLAGS: -module $(KDE_PLUGIN)
 
 

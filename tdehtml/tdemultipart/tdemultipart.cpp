@@ -260,7 +260,7 @@ void KMultiPart::slotData( TDEIO::Job *job, const TQByteArray &data )
 #endif
                     startOfData();
                 }
-                // First header (when we know it from kio_http)
+                // First header (when we know it from tdeio_http)
                 else if ( line == m_boundary )
                     ; // nothing to do
                 else if ( !line.isEmpty() ) // this happens with e.g. Set-Cookie:

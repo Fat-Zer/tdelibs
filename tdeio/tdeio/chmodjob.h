@@ -18,8 +18,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef __kio_chmodjob_h__
-#define __kio_chmodjob_h__
+#ifndef __tdeio_chmodjob_h__
+#define __tdeio_chmodjob_h__
 
 #include <kurl.h>
 #include <tqstring.h>

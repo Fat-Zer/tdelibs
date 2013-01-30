@@ -112,7 +112,7 @@ InfoOutput=4
 [5901]
 InfoOutput=4
 
-# kio_http_debug debug info off
+# tdeio_http_debug debug info off
 [7113]
 InfoOutput=4
 
@@ -120,7 +120,7 @@ InfoOutput=4
 [7118]
 InfoOutput=4
 
-# kio_nntp debug info off
+# tdeio_nntp debug info off
 [7114]
 InfoOutput=4
 

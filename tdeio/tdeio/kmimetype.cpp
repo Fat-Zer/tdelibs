@@ -729,7 +729,7 @@ TQString KDEDesktopMimeType::icon( const KURL& _url, bool _is_local ) const
           const KURL url( u );
           if ( url.protocol() == "trash" ) {
               // We need to find if the trash is empty, preferrably without using a KIO job.
-              // So instead kio_trash leaves an entry in its config file for us.
+              // So instead tdeio_trash leaves an entry in its config file for us.
               KSimpleConfig trashConfig( "trashrc", true );
               trashConfig.setGroup( "Status" );
               if ( trashConfig.readBoolEntry( "Empty", true ) ) {

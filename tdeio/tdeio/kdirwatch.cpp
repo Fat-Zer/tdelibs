@@ -1396,7 +1396,7 @@ bool KDirWatchPrivate::isNoisyFile( const char * filename )
     if (strncmp(filename, ".X.err", 6) == 0) return true;
     if (strncmp(filename, ".xsession-errors", 16) == 0) return true;
     // fontconfig updates the cache on every KDE app start
-    // (inclusive kio_thumbnail slaves)
+    // (inclusive tdeio_thumbnail slaves)
     if (strncmp(filename, ".fonts.cache", 12) == 0) return true;
   }
 

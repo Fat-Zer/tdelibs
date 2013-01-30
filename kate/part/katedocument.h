@@ -565,7 +565,7 @@ class KateDocument : public Kate::Document,
     void setModified( bool m );
 
   private slots:
-    void slotDataKate ( TDEIO::Job* kio_job, const TQByteArray &data );
+    void slotDataKate ( TDEIO::Job* tdeio_job, const TQByteArray &data );
     void slotFinishedKate ( TDEIO::Job * job );
 
   private:
