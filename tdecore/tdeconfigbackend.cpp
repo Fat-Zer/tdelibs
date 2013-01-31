@@ -333,7 +333,7 @@ bool TDEConfigINIBackEnd::parseConfigFiles()
         KURL path;
         path.setPath(mLocalFileName);
         TQString dir=path.directory();
-        KStandardDirs::makeDir(dir);
+        TDEStandardDirs::makeDir(dir);
 
         if (checkAccess(mLocalFileName, W_OK))
         {
@@ -806,7 +806,7 @@ void TDEConfigINIBackEnd::sync(bool bMerge)
        KURL path;
        path.setPath(mLocalFileName);
        TQString dir=path.directory();
-       KStandardDirs::makeDir(dir);
+       TDEStandardDirs::makeDir(dir);
     }
 
     // Can we allow the write? We can, if the program
@@ -1177,7 +1177,7 @@ bool TDEConfigBackEnd::checkConfigFilesWritable(bool warnUser)
   {
     // Note: We don't ask the user if we should not ask this question again because we can't save the answer.
     errorMsg += i18n("Please contact your system administrator.");
-    TQString cmdToExec = KStandardDirs::findExe(TQString("kdialog"));
+    TQString cmdToExec = TDEStandardDirs::findExe(TQString("kdialog"));
     TDEApplication *app = kapp;
     if (!cmdToExec.isEmpty() && app)
     {

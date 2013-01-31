@@ -30,16 +30,16 @@
 /**
 * @short Access to the standard KDE directories for the pixmap style
 * @author Maksim Orlovich<mo002j@mail.rochester.edu> is responsible for this file,
-    but all the interesting work is done by KStandardDirs
+    but all the interesting work is done by TDEStandardDirs
 * @version $Id$
 *
-* This class provides a this wrapper for styles around KStandardDirs,
+* This class provides a this wrapper for styles around TDEStandardDirs,
 * permitting integration with TQSettings and easy loading of pixmaps
 *
 * It add share/apps/kstyle/themes as "themerc",
 *    share/apps/kstyle/pixmaps "themepixmap"
 */
-class KStyleDirs: public KStandardDirs
+class KStyleDirs: public TDEStandardDirs
 {
 public:
     static KStyleDirs* dirs()

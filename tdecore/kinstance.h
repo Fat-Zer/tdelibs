@@ -18,7 +18,7 @@
 #ifndef _KINSTANCE_H
 #define _KINSTANCE_H
 
-class KStandardDirs;
+class TDEStandardDirs;
 class TDEAboutData;
 class TDEConfig;
 class KIconLoader;
@@ -44,7 +44,7 @@ class TDEGlobalNetworkManager;
  */
 class TDECORE_EXPORT TDEInstance
 {
-    friend class KStandardDirs;
+    friend class TDEStandardDirs;
 
  public:
     /**
@@ -80,9 +80,9 @@ class TDECORE_EXPORT TDEInstance
 
     /**
      * Returns the application standard dirs object.
-     * @return The KStandardDirs of the application.
+     * @return The TDEStandardDirs of the application.
      */
-    KStandardDirs	*dirs() const;
+    TDEStandardDirs	*dirs() const;
 
     /**
      * Returns the general config object ("appnamerc").
@@ -163,7 +163,7 @@ protected:
     void setConfigName(const TQString &name);
 
 private:
-    mutable KStandardDirs       *_dirs;
+    mutable TDEStandardDirs       *_dirs;
 
     mutable TDEConfig             *_config;
     mutable KIconLoader         *_iconLoader;

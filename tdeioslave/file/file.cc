@@ -1677,7 +1677,7 @@ bool FileProtocol::pmount(const TQString &dev)
 
 bool FileProtocol::pumount(const TQString &point)
 {
-    TQString real_point = KStandardDirs::realPath(point);
+    TQString real_point = TDEStandardDirs::realPath(point);
 
     KMountPoint::List mtab = KMountPoint::currentMountPoints();
 
@@ -1690,10 +1690,10 @@ bool FileProtocol::pumount(const TQString &point)
     {
         TQString tmp = (*it)->mountedFrom();
         TQString mp = (*it)->mountPoint();
-        mp = KStandardDirs::realPath(mp);
+        mp = TDEStandardDirs::realPath(mp);
 
         if (mp==real_point)
-            dev = KStandardDirs::realPath(tmp);
+            dev = TDEStandardDirs::realPath(tmp);
     }
 
     if (dev.isEmpty()) return false;

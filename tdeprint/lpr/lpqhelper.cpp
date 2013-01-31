@@ -29,7 +29,7 @@
 LpqHelper::LpqHelper(TQObject *parent, const char *name)
 : TQObject(parent, name)
 {
-	m_exepath = KStandardDirs::findExe("lpq");
+	m_exepath = TDEStandardDirs::findExe("lpq");
 }
 
 LpqHelper::~LpqHelper()

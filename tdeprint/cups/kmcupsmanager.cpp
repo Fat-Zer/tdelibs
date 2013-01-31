@@ -628,7 +628,7 @@ DrMain* KMCupsManager::loadMaticDriver(const TQString& drname)
 	TQStringList	comps = TQStringList::split('/', drname, false);
 	TQString	tmpFile = locateLocal("tmp", "foomatic_" + kapp->randomString(8));
 	TQString	PATH = getenv("PATH") + TQString::fromLatin1(":/usr/sbin:/usr/local/sbin:/opt/sbin:/opt/local/sbin");
-	TQString	exe = KStandardDirs::findExe("foomatic-datafile", PATH);
+	TQString	exe = TDEStandardDirs::findExe("foomatic-datafile", PATH);
 	if (exe.isEmpty())
 	{
 		setErrorMsg(i18n("Unable to find the executable foomatic-datafile "

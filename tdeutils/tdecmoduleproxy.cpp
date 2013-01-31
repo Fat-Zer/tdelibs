@@ -355,7 +355,7 @@ void TDECModuleProxy::runAsRoot()
 		cmd = TQString(cmd.remove(0,8)).stripWhiteSpace();
 
 	/* Run the process */
-	TQString tdesu = KStandardDirs::findExe("tdesu");
+	TQString tdesu = TDEStandardDirs::findExe("tdesu");
 	if (!tdesu.isEmpty())
 	{
 

@@ -29,7 +29,7 @@
 #include <kglobal.h>
 
 class TDEConfig;
-class KStandardDirsPrivate;
+class TDEStandardDirsPrivate;
 
 /**
  * @short Site-independent access to standard KDE directories.
@@ -45,12 +45,12 @@ class KStandardDirsPrivate;
  * and applications always refer to a file with a resource type
  * (e.g. icon) and a filename (e.g. khexdit.xpm). In an ideal world
  * the application would make no assumption where this file is and
- * leave it up to KStandardDirs::findResource("apps", "Home.desktop")
+ * leave it up to TDEStandardDirs::findResource("apps", "Home.desktop")
  * to apply this knowledge to return /opt/kde/share/applnk/Home.desktop
  * or ::locate("data", "kgame/background.jpg") to return
  * /opt/kde/share/apps/kgame/background.jpg
  *
- * The main idea behind KStandardDirs is that there are several
+ * The main idea behind TDEStandardDirs is that there are several
  * toplevel prefixes below which the files lie. One of these prefixes is
  * the one where the user installed tdelibs, one is where the
  * application was installed, and one is $HOME/.trinity, but there
@@ -61,7 +61,7 @@ class KStandardDirsPrivate;
  * So the search algorithm basically appends to each prefix each registered
  * suffix and tries to locate the file there.
  * To make the thing even more complex, it's also possible to register
- * absolute paths that KStandardDirs looks up after not finding anything
+ * absolute paths that TDEStandardDirs looks up after not finding anything
  * in the former steps. They can be useful if the user wants to provide
  * specific directories that aren't in his $HOME/.trinity directory for,
  * for example, icons.
@@ -97,13 +97,13 @@ class KStandardDirsPrivate;
  * So while you had to ::locate("data", "appname/filename") so you can
  * also write ::locate("appdata", "filename") if your TDEApplication instance
  * is called "appname" (as set via TDEApplication's constructor or TDEAboutData, if
- * you use the global KStandardDirs object TDEGlobal::dirs()).
+ * you use the global TDEStandardDirs object TDEGlobal::dirs()).
  * Please note though that you cannot use the "appdata"
  * type if you intend to use it in an applet for Kicker because 'appname' would
  * be "Kicker" instead of the applet's name. Therefore, for applets, you've got
  * to work around this by using ::locate("data", "appletname/filename").
  *
- * <b>KStandardDirs supports the following environment variables:</b>
+ * <b>TDEStandardDirs supports the following environment variables:</b>
  *
  * @li TDEDIRS: This may set an additional number of directory prefixes to
  *          search for resources. The directories should be separated
@@ -122,18 +122,18 @@ class KStandardDirsPrivate;
  *
  * @see TDEGlobalSettings
  */
-class TDECORE_EXPORT KStandardDirs
+class TDECORE_EXPORT TDEStandardDirs
 {
 public:
         /**
-	 * KStandardDirs' constructor. It just initializes the caches.
+	 * TDEStandardDirs' constructor. It just initializes the caches.
 	 **/
-	KStandardDirs( );
+	TDEStandardDirs( );
 
 	/**
-	 * KStandardDirs' destructor.
+	 * TDEStandardDirs' destructor.
 	 */
-	virtual ~KStandardDirs();
+	virtual ~TDEStandardDirs();
 
 	/**
 	 * Adds another search dir to front of the @p fsstnd list.
@@ -211,7 +211,7 @@ public:
 	 *
 	 * The filename should be a filename relative to the base dir
 	 * for resources. So is a way to get the path to libtdecore.la
-	 * to findResource("lib", "libtdecore.la"). KStandardDirs will
+	 * to findResource("lib", "libtdecore.la"). TDEStandardDirs will
 	 * then look into the subdir lib of all elements of all prefixes
 	 * ($TDEDIRS) for a file libtdecore.la and return the path to
 	 * the first one it finds (e.g. /opt/kde/lib/libtdecore.la)
@@ -443,7 +443,7 @@ public:
 	TQStringList resourceDirs(const char *type) const;
 
 	/**
-	 * This function will return a list of all the types that KStandardDirs
+	 * This function will return a list of all the types that TDEStandardDirs
 	 * supports.
 	 *
 	 * @return All types that KDE supports
@@ -545,7 +545,7 @@ public:
 	TQString kfsstnd_xdg_data_prefixes();
 
 	/**
-	 * Returns the toplevel directory in which KStandardDirs
+	 * Returns the toplevel directory in which TDEStandardDirs
 	 * will store things. Most likely $HOME/.trinity
 	 * Don't use this function if you can use locateLocal
 	 * @return the toplevel directory
@@ -617,13 +617,13 @@ public:
 	mutable TQDict<TQString> savelocations;
 
 	// Disallow assignment and copy-construction
-	KStandardDirs( const KStandardDirs& );
-	KStandardDirs& operator= ( const KStandardDirs& );
+	TDEStandardDirs( const TDEStandardDirs& );
+	TDEStandardDirs& operator= ( const TDEStandardDirs& );
 
 	bool addedCustoms;
 
-	class KStandardDirsPrivate;
-	KStandardDirsPrivate *d;
+	class TDEStandardDirsPrivate;
+	TDEStandardDirsPrivate *d;
 
 	void checkConfig() const;
 	void applyDataRestrictions(const TQString &) const;
@@ -696,14 +696,14 @@ public:
  **/
 
 /*!
- * \relates KStandardDirs
+ * \relates TDEStandardDirs
  * This function is just for convenience. It simply calls
- *instance->dirs()->\link KStandardDirs::findResource() findResource\endlink(type, filename).
+ *instance->dirs()->\link TDEStandardDirs::findResource() findResource\endlink(type, filename).
  **/
 TDECORE_EXPORT TQString locate( const char *type, const TQString& filename, const TDEInstance* instance = TDEGlobal::instance() );
 
 /*!
- * \relates KStandardDirs
+ * \relates TDEStandardDirs
  * This function is much like locate. However it returns a
  * filename suitable for writing to. No check is made if the
  * specified filename actually exists. Missing directories
@@ -714,7 +714,7 @@ TDECORE_EXPORT TQString locate( const char *type, const TQString& filename, cons
 TDECORE_EXPORT TQString locateLocal( const char *type, const TQString& filename, const TDEInstance* instance = TDEGlobal::instance() );
 
 /*!
- * \relates KStandardDirs
+ * \relates TDEStandardDirs
  * This function is much like locate. No check is made if the
  * specified filename actually exists. Missing directories
  * are created if @p createDir is true. If filename is only

@@ -98,7 +98,7 @@ KSSLSettings::KSSLSettings(bool readConfig) {
   d = new KSSLSettingsPrivate;
   m_cfg = new TDEConfig("cryptodefaults", false, false);
 
-  if (!TDEGlobal::dirs()->addResourceType("kssl", KStandardDirs::kde_default("data") + "kssl")) {
+  if (!TDEGlobal::dirs()->addResourceType("kssl", TDEStandardDirs::kde_default("data") + "kssl")) {
     //kdDebug(7029) << "Error adding (kssl, share/apps/kssl)" << endl;
   }
 

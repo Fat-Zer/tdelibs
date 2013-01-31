@@ -53,7 +53,7 @@
 
 static void kglobal_init();
 
-KStandardDirs *TDEGlobal::dirs()
+TDEStandardDirs *TDEGlobal::dirs()
 {
     MYASSERT(_instance);
 

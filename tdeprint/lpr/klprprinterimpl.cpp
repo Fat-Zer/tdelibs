@@ -28,7 +28,7 @@
 KLprPrinterImpl::KLprPrinterImpl(TQObject *parent, const char *name, const TQStringList & /*args*/)
 : KPrinterImpl(parent,name)
 {
-	m_exepath = KStandardDirs::findExe("lpr");
+	m_exepath = TDEStandardDirs::findExe("lpr");
 }
 
 KLprPrinterImpl::~KLprPrinterImpl()

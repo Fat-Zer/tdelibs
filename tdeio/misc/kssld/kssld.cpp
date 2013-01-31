@@ -117,7 +117,7 @@ KSSLD::KSSLD(const TQCString &name) : KDEDModule(name)
 	if (2 != cfg->readNumEntry("policies version", 0)) {
 		::updatePoliciesConfig(cfg);
 	}
-	TDEGlobal::dirs()->addResourceType("kssl", KStandardDirs::kde_default("data") + "kssl");
+	TDEGlobal::dirs()->addResourceType("kssl", TDEStandardDirs::kde_default("data") + "kssl");
 	caVerifyUpdate();
 	cacheLoadDefaultPolicies();
 	certList.setAutoDelete(false);

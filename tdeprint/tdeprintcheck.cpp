@@ -80,7 +80,7 @@ bool KdeprintChecker::checkURL(const KURL& url)
 	else if (prot == "exec")
 		return checkExec(url);
 	else if (prot == "file" || prot == "dir")
-		return KStandardDirs::exists(url.url());
+		return TDEStandardDirs::exists(url.url());
 	else if (prot == "service")
 		return checkService(url);
 	return false;
@@ -117,7 +117,7 @@ bool KdeprintChecker::checkConfig(const KURL& url)
 bool KdeprintChecker::checkExec(const KURL& url)
 {
 	QString	execname(url.path().mid(1));
-	return !(KStandardDirs::findExe(execname).isEmpty());
+	return !(TDEStandardDirs::findExe(execname).isEmpty());
 }
 
 bool KdeprintChecker::checkService(const KURL& url)

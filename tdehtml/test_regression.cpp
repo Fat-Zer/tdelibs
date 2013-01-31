@@ -479,7 +479,7 @@ int main(int argc, char *argv[])
 
     if (args->isSet("xvfb"))
     {
-        TQString xvfbPath = KStandardDirs::findExe("Xvfb");
+        TQString xvfbPath = TDEStandardDirs::findExe("Xvfb");
         if ( xvfbPath.isEmpty() ) {
             fprintf( stderr, "[test_regression] ERROR: We need Xvfb to be installed for reliable results\n" );
             exit( 1 );

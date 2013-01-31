@@ -214,7 +214,7 @@ int PTY::grantpt()
 	return 0;
 
     // Use konsole_grantpty:
-    if (KStandardDirs::findExe("konsole_grantpty").isEmpty())
+    if (TDEStandardDirs::findExe("konsole_grantpty").isEmpty())
     {
 	kdError(900) << k_lineinfo << "konsole_grantpty not found.\n";
 	return -1;

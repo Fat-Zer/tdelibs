@@ -44,7 +44,7 @@ KSaveFile::KSaveFile(const TQString &filename, int mode)
  : mTempFile(true)
 {
    // follow symbolic link, if any
-   TQString real_filename = KStandardDirs::realFilePath(filename);
+   TQString real_filename = TDEStandardDirs::realFilePath(filename);
 
    // we only check here if the directory can be written to
    // the actual filename isn't written to, but replaced later

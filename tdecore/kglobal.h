@@ -28,7 +28,7 @@ class KIconLoader;
 class TDEHardwareDevices;
 class TDEGlobalNetworkManager;
 class KLocale;
-class KStandardDirs;
+class TDEStandardDirs;
 class KStaticDeleterBase;
 class KStaticDeleterList;
 class KStringDict;
@@ -59,7 +59,7 @@ public:
      *  Returns the application standard dirs object.
      * @return the global standard dir object
      */
-    static KStandardDirs	*dirs();
+    static TDEStandardDirs	*dirs();
 
     /**
      *  Returns the general config object.

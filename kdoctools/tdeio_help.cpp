@@ -190,7 +190,7 @@ void HelpProtocol::get( const KURL& url )
       }
     } else {
         TQString docbook_file = file.left(file.findRev('/')) + "/index.docbook";
-        if (!KStandardDirs::exists(file)) {
+        if (!TDEStandardDirs::exists(file)) {
             file = docbook_file;
         } else {
             TQFileInfo fi(file);

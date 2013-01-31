@@ -35,7 +35,7 @@ KLpdPrinterImpl::~KLpdPrinterImpl()
 
 TQString KLpdPrinterImpl::executable()
 {
-	return KStandardDirs::findExe("lpr");
+	return TDEStandardDirs::findExe("lpr");
 }
 
 bool KLpdPrinterImpl::setupCommand(TQString& cmd, KPrinter *printer)

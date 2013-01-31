@@ -41,7 +41,7 @@ KFileBookmarkHandler::KFileBookmarkHandler( KFileDialog *dialog )
     KBookmarkManager *manager = KBookmarkManager::managerForFile( file, false);
 
     // import old bookmarks
-    if ( !KStandardDirs::exists( file ) ) {
+    if ( !TDEStandardDirs::exists( file ) ) {
         TQString oldFile = locate( "data", "tdefile/bookmarks.html" );
         if ( !oldFile.isEmpty() )
             importOldBookmarks( oldFile, manager );

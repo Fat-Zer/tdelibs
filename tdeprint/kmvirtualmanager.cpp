@@ -297,7 +297,7 @@ void KMVirtualManager::triggerSave()
 	QString	filename;
 	if (getuid() == 0)
 	{
-		if (KStandardDirs::makeDir(TQFile::decodeName("/etc/cups")))
+		if (TDEStandardDirs::makeDir(TQFile::decodeName("/etc/cups")))
 			filename = TQFile::decodeName("/etc/cups/lpoptions");
 	}
 	else

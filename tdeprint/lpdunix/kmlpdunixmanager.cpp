@@ -230,7 +230,7 @@ void KMLpdUnixManager::parseEtcPrintcap()
 TQString getEtcPrintersConfName()
 {
 	TQString	printersconf("/etc/printers.conf");
-	if (!TQFile::exists(printersconf) && !KStandardDirs::findExe( "ypcat" ).isEmpty())
+	if (!TQFile::exists(printersconf) && !TDEStandardDirs::findExe( "ypcat" ).isEmpty())
 	{
 		// standard file not found, try NIS
 		printersconf = locateLocal("tmp","printers.conf");

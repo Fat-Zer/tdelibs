@@ -173,7 +173,7 @@ void EscpWidget::startCommand(const TQString& arg)
 		return;
 	}
 
-	TQString	exestr = KStandardDirs::findExe("escputil");
+	TQString	exestr = TDEStandardDirs::findExe("escputil");
 	if (exestr.isEmpty())
 	{
 		KMessageBox::error(this, i18n("The executable escputil cannot be found in your "

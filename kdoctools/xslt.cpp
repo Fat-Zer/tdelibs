@@ -114,7 +114,7 @@ xmlParserInputPtr meinExternalEntityLoader(const char *URL, const char *ID,
 	URL = "docbook/xml-dtd-4.1.2/docbookx.dtd";
 
     TQString file;
-    if (KStandardDirs::exists( TQDir::currentDirPath() + "/" + URL ) )
+    if (TDEStandardDirs::exists( TQDir::currentDirPath() + "/" + URL ) )
         file = TQDir::currentDirPath() + "/" + URL;
     else
         file = locate("dtd", URL);
@@ -186,7 +186,7 @@ void fillInstance(TDEInstance &ins, const TQString &srcdir) {
         catalogs += ins.dirs()->findResource("data", "ksgmltools2/customization/catalog");
         catalogs += ':';
         catalogs += ins.dirs()->findResource("data", "ksgmltools2/docbook/xml-dtd-4.2/docbook.cat");
-        ins.dirs()->addResourceType("dtd", KStandardDirs::kde_default("data") + "ksgmltools2");
+        ins.dirs()->addResourceType("dtd", TDEStandardDirs::kde_default("data") + "ksgmltools2");
     } else {
         catalogs += srcdir +"/customization/catalog:" + srcdir + "/docbook/xml-dtd-4.2/docbook.cat";
         ins.dirs()->addResourceDir("dtd", srcdir);

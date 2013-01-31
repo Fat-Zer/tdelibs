@@ -46,10 +46,10 @@ MaticHandler::MaticHandler(KMManager *mgr)
 {
 	TQString	PATH = getenv("PATH");
 	PATH.append(":/usr/sbin:/usr/local/sbin:/opt/sbin:/opt/local/sbin");
-	m_exematicpath = KStandardDirs::findExe("lpdomatic", PATH);
-	m_ncpath = KStandardDirs::findExe("nc");
-	m_smbpath = KStandardDirs::findExe("smbclient");
-	m_rlprpath = KStandardDirs::findExe("rlpr");
+	m_exematicpath = TDEStandardDirs::findExe("lpdomatic", PATH);
+	m_ncpath = TDEStandardDirs::findExe("nc");
+	m_smbpath = TDEStandardDirs::findExe("smbclient");
+	m_rlprpath = TDEStandardDirs::findExe("rlpr");
 }
 
 bool MaticHandler::validate(PrintcapEntry *entry)
@@ -248,7 +248,7 @@ DrMain* MaticHandler::loadDbDriver(const TQString& path)
 
 	TQString	tmpFile = locateLocal("tmp", "foomatic_" + kapp->randomString(8));
 	TQString	PATH = getenv("PATH") + TQString::fromLatin1(":/usr/sbin:/usr/local/sbin:/opt/sbin:/opt/local/sbin");
-	TQString	exe = KStandardDirs::findExe("foomatic-datafile", PATH);
+	TQString	exe = TDEStandardDirs::findExe("foomatic-datafile", PATH);
 	if (exe.isEmpty())
 	{
 		manager()->setErrorMsg(i18n("Unable to find the executable foomatic-datafile "
@@ -352,7 +352,7 @@ bool MaticHandler::savePpdFile(DrMain *driver, const TQString& filename)
 		return true;
 
 	TQString	PATH = getenv("PATH") + TQString::fromLatin1(":/usr/sbin:/usr/local/sbin:/opt/sbin:/opt/local/sbin");
-	TQString	exe = KStandardDirs::findExe("foomatic-datafile", PATH);
+	TQString	exe = TDEStandardDirs::findExe("foomatic-datafile", PATH);
 	if (exe.isEmpty())
 	{
 		manager()->setErrorMsg(i18n("Unable to find the executable foomatic-datafile "

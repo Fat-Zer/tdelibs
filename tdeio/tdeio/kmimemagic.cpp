@@ -528,7 +528,7 @@ public:
         tmpDirs << TQString::fromLatin1("/tmp"); // default value
 
         // The trick is that we also don't want the user to override globally set
-        // directories. So we have to misuse KStandardDirs :}
+        // directories. So we have to misuse TDEStandardDirs :}
         TQStringList confDirs = TDEGlobal::dirs()->resourceDirs( "config" );
         if ( !confDirs.isEmpty() )
         {

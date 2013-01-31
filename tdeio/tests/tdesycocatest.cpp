@@ -194,7 +194,7 @@ int main(int argc, char *argv[])
 
    //
    debug("\nTrying findByURL for $TDEDIR/bin/kdesktop");
-   KMimeType::Ptr mf  = KMimeType::findByURL( KStandardDirs::findExe( "kdesktop" ), 0,
+   KMimeType::Ptr mf  = KMimeType::findByURL( TDEStandardDirs::findExe( "kdesktop" ), 0,
 				 true, false );
    assert( mf );
    check( "A binary's mimetype", mf->name(), "application/x-executable" );

@@ -216,7 +216,7 @@ PrintcapEntry* ApsHandler::createEntry(KMPrinter *prt)
 		return NULL;
 	}
 	TQString	path = sysconfDir() + "/" + prt->printerName();
-	if (!KStandardDirs::makeDir(path, 0755))
+	if (!TDEStandardDirs::makeDir(path, 0755))
 	{
 		manager()->setErrorMsg(i18n("Unable to create directory %1.").arg(path));
 		return NULL;

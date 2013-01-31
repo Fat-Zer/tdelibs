@@ -45,7 +45,7 @@ class KTempDirPrivate;
  *
  * KTempFile does not create any missing directories, but locateLocal() does.
  *
- * See also KStandardDirs
+ * See also TDEStandardDirs
  *
  * @since 3.2
  * @author Joseph Wenninger <jowenn@kde.org>

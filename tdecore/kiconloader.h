@@ -35,7 +35,7 @@ struct KIconGroup;
 class KIconThemeNode;
 class TDEConfig;
 struct KIconLoaderPrivate;
-class KStandardDirs;
+class TDEStandardDirs;
 class KIconEffect;
 
 
@@ -83,7 +83,7 @@ public:
      * @param appname Add the data directories of this application to the
      * icon search path for the "User" group. The default argument adds the
      * directories of the current application.
-     * @param dirs the KStandardDirs object to use. If null the global one is used
+     * @param dirs the TDEStandardDirs object to use. If null the global one is used
      *
      * Usually, you use the default iconloader, which can be accessed via
      * TDEGlobal::iconLoader(), so you hardly ever have to create an
@@ -92,7 +92,7 @@ public:
      * @see TDEGlobal::iconLoader()
      * @see TDEInstance::iconLoader()
      */
-    KIconLoader(const TQString& appname=TQString::null, KStandardDirs *dirs = 0);
+    KIconLoader(const TQString& appname=TQString::null, TDEStandardDirs *dirs = 0);
 
     /**
      * Cleanup
@@ -301,7 +301,7 @@ public:
      * @param _dirs the new standard directories. If 0, the directories
      *              from TDEGlobal will be taken.
      */
-    void reconfigure( const TQString& _appname, KStandardDirs *_dirs );
+    void reconfigure( const TQString& _appname, TDEStandardDirs *_dirs );
 
     /**
      * Returns the unknown icon. An icon that is used when no other icon
@@ -368,7 +368,7 @@ public:
     /**
      * @internal
      */
-    void init( const TQString& _appname, KStandardDirs *_dirs );
+    void init( const TQString& _appname, TDEStandardDirs *_dirs );
 
     /**
      * @internal

@@ -51,9 +51,9 @@ LpcHelper::LpcHelper(TQObject *parent, const char *name)
 	// add some specific dirs.
 	TQString	PATH = getenv("PATH");
 	PATH.append(":/usr/sbin:/usr/local/sbin:/sbin:/opt/sbin:/opt/local/sbin");
-	m_exepath = KStandardDirs::findExe("lpc", PATH);
-	m_checkpcpath = KStandardDirs::findExe("checkpc", PATH);
-	m_lprmpath = KStandardDirs::findExe("lprm");
+	m_exepath = TDEStandardDirs::findExe("lpc", PATH);
+	m_checkpcpath = TDEStandardDirs::findExe("checkpc", PATH);
+	m_lprmpath = TDEStandardDirs::findExe("lprm");
 }
 
 LpcHelper::~LpcHelper()

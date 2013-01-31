@@ -158,7 +158,7 @@ KMountPoint::List KMountPoint::possibleMountPoints(int infoNeeded)
       if (infoNeeded & NeedRealDeviceName)
       {
          if (mp->m_mountedFrom.startsWith("/"))
-            mp->m_device = KStandardDirs::realPath(mp->m_mountedFrom);
+            mp->m_device = TDEStandardDirs::realPath(mp->m_mountedFrom);
       }
       // TODO: Strip trailing '/' ?
       result.append(mp);
@@ -209,7 +209,7 @@ KMountPoint::List KMountPoint::possibleMountPoints(int infoNeeded)
       if (infoNeeded & NeedRealDeviceName)
       {
          if (mp->m_mountedFrom.startsWith("/"))
-            mp->m_device = KStandardDirs::realPath(mp->m_mountedFrom);
+            mp->m_device = TDEStandardDirs::realPath(mp->m_mountedFrom);
       }
       // TODO: Strip trailing '/' ?
       result.append(mp);
@@ -256,7 +256,7 @@ KMountPoint::List KMountPoint::currentMountPoints(int infoNeeded)
       if (infoNeeded & NeedRealDeviceName)
       {
          if (mp->m_mountedFrom.startsWith("/"))
-            mp->m_device = KStandardDirs::realPath(mp->m_mountedFrom);
+            mp->m_device = TDEStandardDirs::realPath(mp->m_mountedFrom);
       }
       // TODO: Strip trailing '/' ?
       result.append(mp);
@@ -320,7 +320,7 @@ KMountPoint::List KMountPoint::currentMountPoints(int infoNeeded)
             if (infoNeeded & NeedRealDeviceName)
             {
                if (mp->m_mountedFrom.startsWith("/"))
-                  mp->m_device = KStandardDirs::realPath(mp->m_mountedFrom);
+                  mp->m_device = TDEStandardDirs::realPath(mp->m_mountedFrom);
             }
             
             result.append(mp);
@@ -363,7 +363,7 @@ KMountPoint::List KMountPoint::currentMountPoints(int infoNeeded)
       if (infoNeeded & NeedRealDeviceName)
       {
          if (mp->m_mountedFrom.startsWith("/"))
-            mp->m_device = KStandardDirs::realPath(mp->m_mountedFrom);
+            mp->m_device = TDEStandardDirs::realPath(mp->m_mountedFrom);
       }
       // TODO: Strip trailing '/' ?
       result.append(mp);

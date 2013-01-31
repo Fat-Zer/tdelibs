@@ -74,7 +74,7 @@ class KUTILS_EXPORT KPluginInfo
          *
          * @param filename  The filename of the .desktop file.
          * @param resource  If filename is relative, you need to specify a resource type
-         * (e.g. "service", "apps"... KStandardDirs). Otherwise,
+         * (e.g. "service", "apps"... TDEStandardDirs). Otherwise,
          * resource isn't used.
          */
         KPluginInfo( const TQString & filename, const char* resource = 0 );
@@ -125,7 +125,7 @@ class KUTILS_EXPORT KPluginInfo
         /**
          * @return A list of KPluginInfo objects constructed from a list of
          * filenames. If you make a lookup using, for example,
-         * KStandardDirs::findAllResources() you pass the list of files to this
+         * TDEStandardDirs::findAllResources() you pass the list of files to this
          * function.
          */
         static KPluginInfo::List fromFiles( const TQStringList & files, TDEConfig * config = 0, const TQString & group = TQString::null );

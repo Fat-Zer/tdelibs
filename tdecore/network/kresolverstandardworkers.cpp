@@ -317,7 +317,7 @@ namespace
   {
     if (herrno)
       {
-	tqDebug("KStandardWorker::processResults: got error %d", herrno);
+	tqDebug("TDEStandardWorker::processResults: got error %d", herrno);
 	switch (herrno)
 	  {
 	  case HOST_NOT_FOUND:
@@ -368,9 +368,9 @@ namespace
       {
 	sa.setHost(KIpAddress(he->h_addr_list[i], he->h_addrtype == AF_INET ? 4 : 6));
 	results.prepend(KResolverEntry(sa, socktype, proto, canon, m_hostname));
-	// tqDebug("KStandardWorker::processResults: adding %s", sa.toString().latin1());
+	// tqDebug("TDEStandardWorker::processResults: adding %s", sa.toString().latin1());
       }
-    //  tqDebug("KStandardWorker::processResults: added %d entries", i);
+    //  tqDebug("TDEStandardWorker::processResults: added %d entries", i);
   }
 
 #else  // HAVE_GETADDRINFO
@@ -540,7 +540,7 @@ namespace
 #endif // HAVE_GETADDRINFO
 } // namespace
 
-bool KStandardWorker::sanityCheck()
+bool TDEStandardWorker::sanityCheck()
 {
   // check that the requested values are sensible
 
@@ -580,7 +580,7 @@ bool KStandardWorker::sanityCheck()
   return true;			// it's sane
 }
 
-bool KStandardWorker::resolveScopeId()
+bool TDEStandardWorker::resolveScopeId()
 {
   // we must test the original name, not the encoded one
   scopeid = 0;
@@ -606,7 +606,7 @@ bool KStandardWorker::resolveScopeId()
   return true;
 }
 
-bool KStandardWorker::resolveService()
+bool TDEStandardWorker::resolveService()
 {
   // find the service first
   bool ok;
@@ -656,7 +656,7 @@ bool KStandardWorker::resolveService()
   return true;
 }
 
-KResolver::ErrorCodes KStandardWorker::addUnix()
+KResolver::ErrorCodes TDEStandardWorker::addUnix()
 {
   // before trying to add, see if the user wants Unix sockets
   if ((familyMask() & KResolver::UnixFamily) == 0)
@@ -691,7 +691,7 @@ KResolver::ErrorCodes KStandardWorker::addUnix()
   return KResolver::NoError;
 }
 
-bool KStandardWorker::resolveNumerically()
+bool TDEStandardWorker::resolveNumerically()
 {
   // if the NoResolve flag is active, our result from this point forward
   // will always be true, even if the resolution failed.
@@ -793,7 +793,7 @@ bool KStandardWorker::resolveNumerically()
   return ok || (flags() & KResolver::NoResolve);
 }
 
-bool KStandardWorker::preprocess()
+bool TDEStandardWorker::preprocess()
 {
   // check sanity
   if (!sanityCheck())
@@ -841,7 +841,7 @@ bool KStandardWorker::preprocess()
   return true;			// it's ok
 }
 
-bool KStandardWorker::run()
+bool TDEStandardWorker::run()
 {
 #ifndef HAVE_GETADDRINFO
   // check the scope id first
@@ -900,7 +900,7 @@ bool KStandardWorker::run()
   return true;
 }
 
-bool KStandardWorker::postprocess()
+bool TDEStandardWorker::postprocess()
 {
   if (results.count())
     return true;		// no need
@@ -1020,7 +1020,7 @@ bool KGetAddrinfoWorker::wantThis(int family)
 void KNetwork::Internal::initStandardWorkers()
 {
   //KResolverWorkerFactoryBase::registerNewWorker(new KResolverWorkerFactory<KBlacklistWorker>);
-  KResolverWorkerFactoryBase::registerNewWorker(new KResolverWorkerFactory<KStandardWorker>);
+  KResolverWorkerFactoryBase::registerNewWorker(new KResolverWorkerFactory<TDEStandardWorker>);
 
 #ifdef HAVE_GETADDRINFO
   KResolverWorkerFactoryBase::registerNewWorker(new KResolverWorkerFactory<KGetAddrinfoWorker>);

@@ -79,7 +79,7 @@ void KMimeType::buildDefaultType()
   else
   {
      errorMissingMimeType( defaultMimeType() );
-     KStandardDirs stdDirs;
+     TDEStandardDirs stdDirs;
      TQString sDefaultMimeType = stdDirs.resourceDirs("mime").first()+defaultMimeType()+".desktop";
      s_pDefaultType = new KMimeType( sDefaultMimeType, defaultMimeType(),
                                      "unknown", "mime", TQStringList() );
@@ -605,9 +605,9 @@ TQString KFolderType::icon( const KURL& _url, bool _is_local ) const
   u.addPath( ".directory" );
 
   TQString icon;
-  // using KStandardDirs as this one checks for path being
+  // using TDEStandardDirs as this one checks for path being
   // a file instead of a directory
-  if ( KStandardDirs::exists( u.path() ) )
+  if ( TDEStandardDirs::exists( u.path() ) )
   {
     KSimpleConfig cfg( u.path(), true );
     cfg.setDesktopGroup();
@@ -985,7 +985,7 @@ TQValueList<KDEDesktopMimeType::Service> KDEDesktopMimeType::userDefinedServices
   if ( cfg.hasKey( "TryExec" ) )
   {
       TQString tryexec = cfg.readPathEntry( "TryExec" );
-      TQString exe =  KStandardDirs::findExe( tryexec );
+      TQString exe =  TDEStandardDirs::findExe( tryexec );
       if (exe.isEmpty()) {
           return result;
       }

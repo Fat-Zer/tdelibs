@@ -7,7 +7,7 @@
 int main(int argc, char **argv)
 {
   TDEApplication a(argc, argv, "whatever", false);
-  KStandardDirs t;
+  TDEStandardDirs t;
   TDEConfig config; // to add custom entries - a bit tricky :/
 
   TQStringList list;

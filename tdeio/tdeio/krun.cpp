@@ -1549,7 +1549,7 @@ TDEProcessRunner::slotProcessExited(TDEProcess * p)
     // We can't just rely on that, but it's a good hint.
     // Before assuming its really so, we'll try to find the binName
     // relatively to current directory,  and then in the PATH.
-    if ( !TQFile( binName ).exists() && KStandardDirs::findExe( binName ).isEmpty() )
+    if ( !TQFile( binName ).exists() && TDEStandardDirs::findExe( binName ).isEmpty() )
     {
       kapp->ref();
       KMessageBox::sorry( 0L, i18n("Could not find the program '%1'").arg( binName ) );

@@ -1013,7 +1013,7 @@ void TDEApplication::init(bool GUIenabled)
 	setReverseLayout( !rtl );
 
   // install appdata resource type
-  TDEGlobal::dirs()->addResourceType("appdata", KStandardDirs::kde_default("data")
+  TDEGlobal::dirs()->addResourceType("appdata", TDEStandardDirs::kde_default("data")
                                    + TQString::fromLatin1(name()) + '/');
   pSessionConfig = 0L;
   bSessionManagement = true;
@@ -1346,7 +1346,7 @@ static void checkRestartVersion( TQSessionManager& sm )
             }
         }
     }
-    TQString wrapper = KStandardDirs::findExe( "trinity" );
+    TQString wrapper = TDEStandardDirs::findExe( "trinity" );
     TQStringList restartCommand = sm.restartCommand();
     restartCommand.prepend( wrapper );
     sm.setRestartCommand( restartCommand );
@@ -1451,9 +1451,9 @@ void TDEApplication::startKdeinit()
          return; // whoever held the lock has already started dcopserver
   }
   // Try to launch tdeinit.
-  TQString srv = KStandardDirs::findExe(TQString::fromLatin1("tdeinit"));
+  TQString srv = TDEStandardDirs::findExe(TQString::fromLatin1("tdeinit"));
   if (srv.isEmpty())
-     srv = KStandardDirs::findExe(TQString::fromLatin1("tdeinit"), TDEGlobal::dirs()->kfsstnd_defaultbindir());
+     srv = TDEStandardDirs::findExe(TQString::fromLatin1("tdeinit"), TDEGlobal::dirs()->kfsstnd_defaultbindir());
   if (srv.isEmpty())
      return;
   if (kapp && (Tty != kapp->type()))

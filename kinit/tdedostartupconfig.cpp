@@ -132,7 +132,7 @@ int main()
              ++it )
             {
             TQString cfg = *it + "share/config/" + file;
-            if( KStandardDirs::exists( cfg ))
+            if( TDEStandardDirs::exists( cfg ))
                 startupconfigfiles << cfg << "\n";
             else
                 startupconfigfiles << "!" << cfg << "\n";

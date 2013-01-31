@@ -253,7 +253,7 @@ void PreviewJob::startPreview()
         if (d->width <= 128 && d->height <= 128) d->cacheWidth = d->cacheHeight = 128;
         else d->cacheWidth = d->cacheHeight = 256;
         d->thumbPath = d->thumbRoot + (d->cacheWidth == 128 ? "normal/" : "large/");
-        KStandardDirs::makeDir(d->thumbPath, 0700);
+        TDEStandardDirs::makeDir(d->thumbPath, 0700);
     }
     else
         d->bSave = false;

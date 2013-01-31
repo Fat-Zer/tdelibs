@@ -242,7 +242,7 @@ TQString KFileShare::findExe( const char* exeName )
 {
    // /usr/sbin on Mandrake, $PATH allows flexibility for other distributions
    TQString path = TQString::fromLocal8Bit(getenv("PATH")) + TQString::fromLatin1(":/usr/sbin");
-   TQString exe = KStandardDirs::findExe( exeName, path );
+   TQString exe = TDEStandardDirs::findExe( exeName, path );
    if (exe.isEmpty())
        kdError() << exeName << " not found in " << path << endl;
    return exe;

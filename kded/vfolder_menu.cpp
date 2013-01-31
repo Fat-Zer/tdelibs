@@ -767,7 +767,7 @@ VFolderMenu::locateMenuFile(const TQString &fileName)
 {
    if (!TQDir::isRelativePath(fileName))
    {
-      if (KStandardDirs::exists(fileName))
+      if (TDEStandardDirs::exists(fileName))
          return fileName;
       return TQString::null;
    }
@@ -808,7 +808,7 @@ VFolderMenu::locateDirectoryFile(const TQString &fileName)
 
    if (!TQDir::isRelativePath(fileName))
    {
-      if (KStandardDirs::exists(fileName))
+      if (TDEStandardDirs::exists(fileName))
          return fileName;
       return TQString::null;
    }
@@ -820,7 +820,7 @@ VFolderMenu::locateDirectoryFile(const TQString &fileName)
        ++it)
    {
       tmp = (*it)+fileName;
-      if (KStandardDirs::exists(tmp))
+      if (TDEStandardDirs::exists(tmp))
          return tmp;
    }
 

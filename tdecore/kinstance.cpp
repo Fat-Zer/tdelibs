@@ -172,11 +172,11 @@ TDEInstance::~TDEInstance()
 }
 
 
-KStandardDirs *TDEInstance::dirs() const
+TDEStandardDirs *TDEInstance::dirs() const
 {
     DEBUG_CHECK_ALIVE
     if( _dirs == 0 ) {
-	_dirs = new KStandardDirs( );
+	_dirs = new TDEStandardDirs( );
         if (_config) {
             if (_dirs->addCustomized(_config))
                 _config->reparseConfiguration();

@@ -63,7 +63,7 @@ TDEConfig::TDEConfig( const TQString& fileName,
   // read initial information off disk
   reparseConfiguration();
 
-  // we let KStandardDirs add custom user config files. It will do
+  // we let TDEStandardDirs add custom user config files. It will do
   // this only once. So only the first call ever to this constructor
   // will anything else than return here We have to reparse here as
   // configuration files may appear after customized directories have

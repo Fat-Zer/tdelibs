@@ -127,7 +127,7 @@ static TQValueList< KIconLoaderDebug > *kiconloaders;
 
 /*** KIconLoader: the icon loader ***/
 
-KIconLoader::KIconLoader(const TQString& _appname, KStandardDirs *_dirs)
+KIconLoader::KIconLoader(const TQString& _appname, TDEStandardDirs *_dirs)
 {
 #ifdef KICONLOADER_CHECKS
     if( kiconloaders == NULL )
@@ -159,7 +159,7 @@ KIconLoader::KIconLoader(const TQString& _appname, KStandardDirs *_dirs)
     init( _appname, _dirs );
 }
 
-void KIconLoader::reconfigure( const TQString& _appname, KStandardDirs *_dirs )
+void KIconLoader::reconfigure( const TQString& _appname, TDEStandardDirs *_dirs )
 {
     d->links.clear();
     d->imgDict.clear();
@@ -171,7 +171,7 @@ void KIconLoader::reconfigure( const TQString& _appname, KStandardDirs *_dirs )
     init( _appname, _dirs );
 }
 
-void KIconLoader::init( const TQString& _appname, KStandardDirs *_dirs )
+void KIconLoader::init( const TQString& _appname, TDEStandardDirs *_dirs )
 {
     // If this is unequal to 0, the iconloader is initialized
     // successfully.
@@ -236,10 +236,10 @@ void KIconLoader::init( const TQString& _appname, KStandardDirs *_dirs )
     }
 
     // Insert application specific themes at the top.
-    d->mpDirs->addResourceType("appicon", KStandardDirs::kde_default("data") +
+    d->mpDirs->addResourceType("appicon", TDEStandardDirs::kde_default("data") +
 		appname + "/pics/");
     // ################## KDE4: consider removing the toolbar directory
-    d->mpDirs->addResourceType("appicon", KStandardDirs::kde_default("data") +
+    d->mpDirs->addResourceType("appicon", TDEStandardDirs::kde_default("data") +
 		appname + "/toolbar/");
 
     // Add legacy icon dirs.
@@ -294,10 +294,10 @@ bool KIconLoader::isDelayedIconSetLoadingEnabled() const
 
 void KIconLoader::addAppDir(const TQString& appname)
 {
-    d->mpDirs->addResourceType("appicon", KStandardDirs::kde_default("data") +
+    d->mpDirs->addResourceType("appicon", TDEStandardDirs::kde_default("data") +
 		appname + "/pics/");
     // ################## KDE4: consider removing the toolbar directory
-    d->mpDirs->addResourceType("appicon", KStandardDirs::kde_default("data") +
+    d->mpDirs->addResourceType("appicon", TDEStandardDirs::kde_default("data") +
 		appname + "/toolbar/");
     addAppThemes(appname);
 }
@@ -362,8 +362,8 @@ void KIconLoader::addExtraDesktopThemes()
 	TQStringList::ConstIterator it2;
 	for (it2=lst.begin(); it2!=lst.end(); ++it2)
 	{
-	    if (!KStandardDirs::exists(*it + *it2 + "/index.desktop")
-		&& !KStandardDirs::exists(*it + *it2 + "/index.theme"))
+	    if (!TDEStandardDirs::exists(*it + *it2 + "/index.desktop")
+		&& !TDEStandardDirs::exists(*it + *it2 + "/index.theme"))
 		continue;
 	    r=readlink( TQFile::encodeName(*it + *it2) , buf, sizeof(buf)-1);
 	    if ( r>0 )

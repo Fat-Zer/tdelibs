@@ -40,7 +40,7 @@ public:
     TQStringList mThemesInTree;
     KIconGroup *mpGroups;
     KIconThemeNode *mpThemeRoot;
-    KStandardDirs *mpDirs;
+    TDEStandardDirs *mpDirs;
     KIconLoader *q;
     KIconEffect mpEffect;
     TQDict<TQImage> imgDict;

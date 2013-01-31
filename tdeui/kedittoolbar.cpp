@@ -816,7 +816,7 @@ void KEditToolbarWidget::setupLayout()
 
   // "change icon" button
   d->m_changeIcon = new KPushButton( i18n( "Change &Icon..." ), this );
-  TQString kdialogExe = KStandardDirs::findExe(TQString::fromLatin1("kdialog"));
+  TQString kdialogExe = TDEStandardDirs::findExe(TQString::fromLatin1("kdialog"));
   d->m_hasKDialog = !kdialogExe.isEmpty();
   d->m_changeIcon->setEnabled( d->m_hasKDialog );
 
@@ -1382,7 +1382,7 @@ void KEditToolbarWidget::slotChangeIcon()
         return;
   
   d->m_kdialogProcess = new KProcIO;
-  TQString kdialogExe = KStandardDirs::findExe(TQString::fromLatin1("kdialog"));
+  TQString kdialogExe = TDEStandardDirs::findExe(TQString::fromLatin1("kdialog"));
   (*d->m_kdialogProcess) << kdialogExe;
   (*d->m_kdialogProcess) << "--embed";
   (*d->m_kdialogProcess) << TQString::number( (ulong)topLevelWidget()->winId() );

@@ -113,11 +113,11 @@ KIconTheme::KIconTheme(const TQString& name, const TQString& appName)
     for (it=icnlibs.begin(); it!=icnlibs.end(); ++it)
     {
         cDir = *it + name + "/";
-        if (KStandardDirs::exists(cDir))
+        if (TDEStandardDirs::exists(cDir))
         {
             themeDirs += cDir;
 	    if (mDir.isEmpty()
-		    && (KStandardDirs::exists( cDir + "index.desktop") || KStandardDirs::exists( cDir + "index.theme")))
+		    && (TDEStandardDirs::exists( cDir + "index.desktop") || TDEStandardDirs::exists( cDir + "index.theme")))
 		mDir = cDir;
         }
     }
@@ -166,7 +166,7 @@ KIconTheme::KIconTheme(const TQString& name, const TQString& appName)
 	cfg.setGroup(*it);
 	for (itDir=themeDirs.begin(); itDir!=themeDirs.end(); ++itDir)
 	{
-	    if (KStandardDirs::exists(*itDir + *it + "/"))
+	    if (TDEStandardDirs::exists(*itDir + *it + "/"))
 	    {
 	        KIconThemeDir *dir = new KIconThemeDir(*itDir + *it, &cfg);
 	        if (!dir->isValid())
@@ -487,7 +487,7 @@ TQStringList KIconTheme::list()
         {
             if ((*it2 == ".") || (*it2 == "..") || (*it2).startsWith("default.") )
                 continue;
-            if (!KStandardDirs::exists(*it + *it2 + "/index.desktop") && !KStandardDirs::exists(*it + *it2 + "/index.theme"))
+            if (!TDEStandardDirs::exists(*it + *it2 + "/index.desktop") && !TDEStandardDirs::exists(*it + *it2 + "/index.theme"))
                 continue;
 		KIconTheme oink(*it2);
 	    if (!oink.isValid()) continue;

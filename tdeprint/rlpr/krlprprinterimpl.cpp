@@ -47,7 +47,7 @@ bool KRlprPrinterImpl::setupCommand(TQString& cmd, KPrinter *printer)
 	QString	host(rpr->option("host")), queue(rpr->option("queue"));
 	if (!host.isEmpty() && !queue.isEmpty())
 	{
-		QString		exestr = KStandardDirs::findExe("rlpr");
+		QString		exestr = TDEStandardDirs::findExe("rlpr");
 		if (exestr.isEmpty())
 		{
 			printer->setErrorMessage(i18n("The <b>%1</b> executable could not be found in your path. Check your installation.").arg("rlpr"));

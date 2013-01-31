@@ -91,7 +91,7 @@ bool KMDBCreator::createDriverDB(const TQString& dirname, const TQString& filena
 	if (exestr.isEmpty())
 		msg = i18n("No executable defined for the creation of the "
 		           "driver database. This operation is not implemented.");
-	else if (KStandardDirs::findExe(exestr).isEmpty())
+	else if (TDEStandardDirs::findExe(exestr).isEmpty())
 		msg = i18n("The executable %1 could not be found in your "
 		           "PATH. Check that this program exists and is "
 			   "accessible in your PATH variable.").arg(exestr);

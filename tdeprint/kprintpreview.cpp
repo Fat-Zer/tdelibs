@@ -273,7 +273,7 @@ bool KPrintPreview::preview(const TQString& file, bool previewOnly, WId parentId
 	if (externalPreview && isPS )
 	{
 		exe = conf->readPathEntry("PreviewCommand", "gv");
-		if (KStandardDirs::findExe(exe).isEmpty())
+		if (TDEStandardDirs::findExe(exe).isEmpty())
 		{
 			QString	msg = i18n("The preview program %1 cannot be found. "
 						       "Check that the program is correctly installed and "

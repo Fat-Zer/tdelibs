@@ -345,7 +345,7 @@ bool KMLprManager::createPrinter(KMPrinter *prt)
 		return false;
 	}
 	sd.append("/").append(prt->printerName());
-	if (!KStandardDirs::makeDir(sd, 0755))
+	if (!TDEStandardDirs::makeDir(sd, 0755))
 	{
 		setErrorMsg(i18n("Unable to create the spool directory %1. Check that you "
 		                 "have the required permissions for that operation.").arg(sd));

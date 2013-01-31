@@ -57,10 +57,10 @@
 
 template class TQDict<TQStringList>;
 
-class KStandardDirs::KStandardDirsPrivate
+class TDEStandardDirs::TDEStandardDirsPrivate
 {
 public:
-   KStandardDirsPrivate()
+   TDEStandardDirsPrivate()
     : restrictionsActive(false),
       dataRestrictionActive(false),
       checkRestrictions(true)
@@ -76,20 +76,20 @@ public:
 
 // Singleton, with data shared by all kstandarddirs instances.
 // Used in static methods like findExe()
-class KStandardDirsSingleton
+class TDEStandardDirsSingleton
 {
 public:
    TQString defaultprefix;
    TQString defaultbindir;
-   static KStandardDirsSingleton* self();
+   static TDEStandardDirsSingleton* self();
 private:
-   static KStandardDirsSingleton* s_self;
+   static TDEStandardDirsSingleton* s_self;
 };
-static KStaticDeleter<KStandardDirsSingleton> kstds_sd;
-KStandardDirsSingleton* KStandardDirsSingleton::s_self = 0;
-KStandardDirsSingleton* KStandardDirsSingleton::self() {
+static KStaticDeleter<TDEStandardDirsSingleton> kstds_sd;
+TDEStandardDirsSingleton* TDEStandardDirsSingleton::s_self = 0;
+TDEStandardDirsSingleton* TDEStandardDirsSingleton::self() {
     if ( !s_self )
-        kstds_sd.setObject( s_self, new KStandardDirsSingleton );
+        kstds_sd.setObject( s_self, new TDEStandardDirsSingleton );
     return s_self;
 }
 
@@ -105,9 +105,9 @@ static const char* const types[] = {"html", "html-bundle", "icon", "apps", "soun
 static int tokenize( TQStringList& token, const TQString& str,
 		const TQString& delim );
 
-KStandardDirs::KStandardDirs( ) : addedCustoms(false)
+TDEStandardDirs::TDEStandardDirs( ) : addedCustoms(false)
 {
-    d = new KStandardDirsPrivate;
+    d = new TDEStandardDirsPrivate;
     dircache.setAutoDelete(true);
     relatives.setAutoDelete(true);
     absolutes.setAutoDelete(true);
@@ -115,12 +115,12 @@ KStandardDirs::KStandardDirs( ) : addedCustoms(false)
     addKDEDefaults();
 }
 
-KStandardDirs::~KStandardDirs()
+TDEStandardDirs::~TDEStandardDirs()
 {
     delete d;
 }
 
-bool KStandardDirs::isRestrictedResource(const char *type, const TQString& relPath) const
+bool TDEStandardDirs::isRestrictedResource(const char *type, const TQString& relPath) const
 {
    if (!d || !d->restrictionsActive)
       return false;
@@ -140,7 +140,7 @@ bool KStandardDirs::isRestrictedResource(const char *type, const TQString& relPa
    return false;
 }
 
-void KStandardDirs::applyDataRestrictions(const TQString &relPath) const
+void TDEStandardDirs::applyDataRestrictions(const TQString &relPath) const
 {
    TQString key;
    int i = relPath.find(QChar('/'));
@@ -154,7 +154,7 @@ void KStandardDirs::applyDataRestrictions(const TQString &relPath) const
 }
 
 
-TQStringList KStandardDirs::allTypes() const
+TQStringList TDEStandardDirs::allTypes() const
 {
     TQStringList list;
     for (int i = 0; types[i] != 0; ++i)
@@ -177,12 +177,12 @@ static void priorityAdd(TQStringList &prefixes, const TQString& dir, bool priori
     }
 }
 
-void KStandardDirs::addPrefix( const TQString& _dir )
+void TDEStandardDirs::addPrefix( const TQString& _dir )
 {
     addPrefix(_dir, false);
 }
 
-void KStandardDirs::addPrefix( const TQString& _dir, bool priority )
+void TDEStandardDirs::addPrefix( const TQString& _dir, bool priority )
 {
     if (_dir.isEmpty())
 	return;
@@ -197,12 +197,12 @@ void KStandardDirs::addPrefix( const TQString& _dir, bool priority )
     }
 }
 
-void KStandardDirs::addXdgConfigPrefix( const TQString& _dir )
+void TDEStandardDirs::addXdgConfigPrefix( const TQString& _dir )
 {
     addXdgConfigPrefix(_dir, false);
 }
 
-void KStandardDirs::addXdgConfigPrefix( const TQString& _dir, bool priority )
+void TDEStandardDirs::addXdgConfigPrefix( const TQString& _dir, bool priority )
 {
     if (_dir.isEmpty())
 	return;
@@ -217,12 +217,12 @@ void KStandardDirs::addXdgConfigPrefix( const TQString& _dir, bool priority )
     }
 }
 
-void KStandardDirs::addXdgDataPrefix( const TQString& _dir )
+void TDEStandardDirs::addXdgDataPrefix( const TQString& _dir )
 {
     addXdgDataPrefix(_dir, false);
 }
 
-void KStandardDirs::addXdgDataPrefix( const TQString& _dir, bool priority )
+void TDEStandardDirs::addXdgDataPrefix( const TQString& _dir, bool priority )
 {
     if (_dir.isEmpty())
 	return;
@@ -237,27 +237,27 @@ void KStandardDirs::addXdgDataPrefix( const TQString& _dir, bool priority )
     }
 }
 
-TQString KStandardDirs::kfsstnd_prefixes()
+TQString TDEStandardDirs::kfsstnd_prefixes()
 {
    return prefixes.join(TQChar(KPATH_SEPARATOR));
 }
 
-TQString KStandardDirs::kfsstnd_xdg_conf_prefixes()
+TQString TDEStandardDirs::kfsstnd_xdg_conf_prefixes()
 {
    return d->xdgconf_prefixes.join(TQChar(KPATH_SEPARATOR));
 }
 
-TQString KStandardDirs::kfsstnd_xdg_data_prefixes()
+TQString TDEStandardDirs::kfsstnd_xdg_data_prefixes()
 {
    return d->xdgdata_prefixes.join(TQChar(KPATH_SEPARATOR));
 }
 
-bool KStandardDirs::addResourceType( const char *type,
+bool TDEStandardDirs::addResourceType( const char *type,
 				     const TQString& relativename )
 {
     return addResourceType(type, relativename, true);
 }
-bool KStandardDirs::addResourceType( const char *type,
+bool TDEStandardDirs::addResourceType( const char *type,
 				     const TQString& relativename,
 				     bool priority )
 {
@@ -283,14 +283,14 @@ bool KStandardDirs::addResourceType( const char *type,
     return false;
 }
 
-bool KStandardDirs::addResourceDir( const char *type,
+bool TDEStandardDirs::addResourceDir( const char *type,
 				    const TQString& absdir)
 {
     // KDE4: change priority to bring in line with addResourceType
     return addResourceDir(type, absdir, false);
 }
 
-bool KStandardDirs::addResourceDir( const char *type,
+bool TDEStandardDirs::addResourceDir( const char *type,
 				    const TQString& absdir,
 				    bool priority)
 {
@@ -314,7 +314,7 @@ bool KStandardDirs::addResourceDir( const char *type,
     return false;
 }
 
-TQString KStandardDirs::findResource( const char *type,
+TQString TDEStandardDirs::findResource( const char *type,
 				     const TQString& filename ) const
 {
 	if (!TQDir::isRelativePath(filename))
@@ -349,7 +349,7 @@ static TQ_UINT32 updateHash(const TQString &file, TQ_UINT32 hash)
     return hash;
 }
 
-TQ_UINT32 KStandardDirs::calcResourceHash( const char *type,
+TQ_UINT32 TDEStandardDirs::calcResourceHash( const char *type,
 			      const TQString& filename, bool deep) const
 {
     TQ_UINT32 hash = 0;
@@ -375,7 +375,7 @@ TQ_UINT32 KStandardDirs::calcResourceHash( const char *type,
 }
 
 
-TQStringList KStandardDirs::findDirs( const char *type,
+TQStringList TDEStandardDirs::findDirs( const char *type,
                                      const TQString& reldir ) const
 {
     TQDir testdir;
@@ -409,12 +409,12 @@ TQStringList KStandardDirs::findDirs( const char *type,
     return list;
 }
 
-TQString KStandardDirs::findResourceDir( const char *type,
+TQString TDEStandardDirs::findResourceDir( const char *type,
 					const TQString& filename) const
 {
 #ifndef NDEBUG
     if (filename.isEmpty()) {
-      fprintf(stderr, "filename for type %s in KStandardDirs::findResourceDir is not supposed to be empty!!", type);
+      fprintf(stderr, "filename for type %s in TDEStandardDirs::findResourceDir is not supposed to be empty!!", type);
       return TQString::null;
     }
 #endif
@@ -430,7 +430,7 @@ TQString KStandardDirs::findResourceDir( const char *type,
 #ifdef Q_WS_WIN //this ensures we're using installed .la files
           if ((*it).isEmpty() && filename.right(3)==".la") {
 #ifndef NDEBUG
-              fprintf(stderr, "KStandardDirs::findResourceDir() found .la in cwd: skipping. (fname=%s)\n", filename.ascii());
+              fprintf(stderr, "TDEStandardDirs::findResourceDir() found .la in cwd: skipping. (fname=%s)\n", filename.ascii());
 #endif
               continue;
           }
@@ -447,7 +447,7 @@ TQString KStandardDirs::findResourceDir( const char *type,
     return TQString::null;
 }
 
-bool KStandardDirs::exists(const TQString &fullPath)
+bool TDEStandardDirs::exists(const TQString &fullPath)
 {
     KDE_struct_stat buff;
     if ((access(TQFile::encodeName(fullPath), R_OK) == 0) && (KDE_stat( TQFile::encodeName(fullPath), &buff ) == 0)) {
@@ -620,7 +620,7 @@ static void lookupPrefix(const TQString& prefix, const TQString& relpath,
 }
 
 TQStringList
-KStandardDirs::findAllResources( const char *type,
+TDEStandardDirs::findAllResources( const char *type,
 			         const TQString& filter,
 				 bool recursive,
 			         bool unique,
@@ -676,7 +676,7 @@ KStandardDirs::findAllResources( const char *type,
 }
 
 TQStringList
-KStandardDirs::findAllResources( const char *type,
+TDEStandardDirs::findAllResources( const char *type,
 			         const TQString& filter,
 				 bool recursive,
 			         bool unique) const
@@ -686,7 +686,7 @@ KStandardDirs::findAllResources( const char *type,
 }
 
 TQString
-KStandardDirs::realPath(const TQString &dirname)
+TDEStandardDirs::realPath(const TQString &dirname)
 {
     char realpath_buffer[MAXPATHLEN + 1];
     memset(realpath_buffer, 0, MAXPATHLEN + 1);
@@ -704,7 +704,7 @@ KStandardDirs::realPath(const TQString &dirname)
 }
 
 TQString
-KStandardDirs::realFilePath(const TQString &filename)
+TDEStandardDirs::realFilePath(const TQString &filename)
 {
     char realpath_buffer[MAXPATHLEN + 1];
     memset(realpath_buffer, 0, MAXPATHLEN + 1);
@@ -718,7 +718,7 @@ KStandardDirs::realFilePath(const TQString &filename)
     return filename;
 }
 
-void KStandardDirs::createSpecialResource(const char *type)
+void TDEStandardDirs::createSpecialResource(const char *type)
 {
    char hostname[256];
    hostname[0] = 0;
@@ -792,17 +792,17 @@ void KStandardDirs::createSpecialResource(const char *type)
    addResourceDir(type, dir+QChar('/'));
 }
 
-TQStringList KStandardDirs::resourceDirs(const char *type) const
+TQStringList TDEStandardDirs::resourceDirs(const char *type) const
 {
     TQStringList *candidates = dircache.find(type);
 
     if (!candidates) { // filling cache
         if (strcmp(type, "socket") == 0)
-           const_cast<KStandardDirs *>(this)->createSpecialResource(type);
+           const_cast<TDEStandardDirs *>(this)->createSpecialResource(type);
         else if (strcmp(type, "tmp") == 0)
-           const_cast<KStandardDirs *>(this)->createSpecialResource(type);
+           const_cast<TDEStandardDirs *>(this)->createSpecialResource(type);
         else if (strcmp(type, "cache") == 0)
-           const_cast<KStandardDirs *>(this)->createSpecialResource(type);
+           const_cast<TDEStandardDirs *>(this)->createSpecialResource(type);
 
         TQDir testdir;
 
@@ -883,7 +883,7 @@ TQStringList KStandardDirs::resourceDirs(const char *type) const
   return *candidates;
 }
 
-TQStringList KStandardDirs::systemPaths( const TQString& pstr )
+TQStringList TDEStandardDirs::systemPaths( const TQString& pstr )
 {
     TQStringList tokens;
     TQString p = pstr;
@@ -929,7 +929,7 @@ TQStringList KStandardDirs::systemPaths( const TQString& pstr )
 }
 
 
-TQString KStandardDirs::findExe( const TQString& appname,
+TQString TDEStandardDirs::findExe( const TQString& appname,
 				const TQString& pstr, bool ignore)
 {
 #ifdef Q_WS_WIN
@@ -978,7 +978,7 @@ TQString KStandardDirs::findExe( const TQString& appname,
     return TQString::null;
 }
 
-int KStandardDirs::findAllExe( TQStringList& list, const TQString& appname,
+int TDEStandardDirs::findAllExe( TQStringList& list, const TQString& appname,
 			const TQString& pstr, bool ignore )
 {
 #ifdef Q_WS_WIN
@@ -1033,7 +1033,7 @@ static int tokenize( TQStringList& tokens, const TQString& str,
     return tokens.count();
 }
 
-TQString KStandardDirs::kde_default(const char *type) {
+TQString TDEStandardDirs::kde_default(const char *type) {
     if (!strcmp(type, "data"))
 	return "share/apps/";
     if (!strcmp(type, "html-bundle"))
@@ -1096,7 +1096,7 @@ TQString KStandardDirs::kde_default(const char *type) {
     return TQString::null;
 }
 
-TQString KStandardDirs::saveLocation(const char *type,
+TQString TDEStandardDirs::saveLocation(const char *type,
 				    const TQString& suffix,
 				    bool create) const
 {
@@ -1127,7 +1127,7 @@ TQString KStandardDirs::saveLocation(const char *type,
        else {
           dirs = absolutes.find(type);
           if (!dirs)
-             tqFatal("KStandardDirs: The resource type %s is not registered", type);
+             tqFatal("TDEStandardDirs: The resource type %s is not registered", type);
           pPath = new TQString(realPath(dirs->last()));
        }
 
@@ -1151,7 +1151,7 @@ TQString KStandardDirs::saveLocation(const char *type,
     return fullPath;
 }
 
-TQString KStandardDirs::relativeLocation(const char *type, const TQString &absPath)
+TQString TDEStandardDirs::relativeLocation(const char *type, const TQString &absPath)
 {
     TQString fullPath = absPath;
     int i = absPath.findRev('/');
@@ -1173,7 +1173,7 @@ TQString KStandardDirs::relativeLocation(const char *type, const TQString &absPa
 }
 
 
-bool KStandardDirs::makeDir(const TQString& dir, int mode)
+bool TDEStandardDirs::makeDir(const TQString& dir, int mode)
 {
     // we want an absolute path
     if (TQDir::isRelativePath(dir))
@@ -1254,9 +1254,9 @@ static TQString executablePrefix()
 }
 #endif
 
-TQString KStandardDirs::kfsstnd_defaultprefix()
+TQString TDEStandardDirs::kfsstnd_defaultprefix()
 {
-   KStandardDirsSingleton* s = KStandardDirsSingleton::self();
+   TDEStandardDirsSingleton* s = TDEStandardDirsSingleton::self();
    if (!s->defaultprefix.isEmpty())
       return s->defaultprefix;
 #ifdef Q_WS_WIN
@@ -1269,14 +1269,14 @@ TQString KStandardDirs::kfsstnd_defaultprefix()
    s->defaultprefix = TDEDIR;
 #endif
    if (s->defaultprefix.isEmpty()) {
-      fprintf(stderr, "KStandardDirs::kfsstnd_defaultprefix(): default TDE prefix not found!\n");
+      fprintf(stderr, "TDEStandardDirs::kfsstnd_defaultprefix(): default TDE prefix not found!\n");
    }
    return s->defaultprefix;
 }
 
-TQString KStandardDirs::kfsstnd_defaultbindir()
+TQString TDEStandardDirs::kfsstnd_defaultbindir()
 {
-   KStandardDirsSingleton* s = KStandardDirsSingleton::self();
+   TDEStandardDirsSingleton* s = TDEStandardDirsSingleton::self();
    if (!s->defaultbindir.isEmpty())
       return s->defaultbindir;
 #ifdef Q_WS_WIN
@@ -1287,12 +1287,12 @@ TQString KStandardDirs::kfsstnd_defaultbindir()
       s->defaultbindir = kfsstnd_defaultprefix() + TQString::fromLatin1("/bin");
 #endif
    if (s->defaultbindir.isEmpty()) {
-      fprintf(stderr, "KStandardDirs::kfsstnd_defaultbindir(): default binary TDE dir not found!\n");
+      fprintf(stderr, "TDEStandardDirs::kfsstnd_defaultbindir(): default binary TDE dir not found!\n");
    }
   return s->defaultbindir;
 }
 
-void KStandardDirs::addKDEDefaults()
+void TDEStandardDirs::addKDEDefaults()
 {
     TQStringList tdedirList;
 
@@ -1459,10 +1459,10 @@ void KStandardDirs::addKDEDefaults()
     addResourceDir("locale", "/usr/share/locale-langpack/", true);
 }
 
-void KStandardDirs::checkConfig() const
+void TDEStandardDirs::checkConfig() const
 {
     if (!addedCustoms && TDEGlobal::_instance && TDEGlobal::_instance->_config)
-        const_cast<KStandardDirs*>(this)->addCustomized(TDEGlobal::_instance->_config);
+        const_cast<TDEStandardDirs*>(this)->addCustomized(TDEGlobal::_instance->_config);
 }
 
 static TQStringList lookupProfiles(const TQString &mapFile)
@@ -1534,7 +1534,7 @@ static TQStringList lookupProfiles(const TQString &mapFile)
 
 extern bool kde_kiosk_admin;
 
-bool KStandardDirs::addCustomized(TDEConfig *config)
+bool TDEStandardDirs::addCustomized(TDEConfig *config)
 {
     if (addedCustoms && !d->checkRestrictions) // there are already customized entries
         return false; // we just quit and hope they are the right ones
@@ -1666,19 +1666,19 @@ bool KStandardDirs::addCustomized(TDEConfig *config)
     return configDirsChanged;
 }
 
-TQString KStandardDirs::localtdedir() const
+TQString TDEStandardDirs::localtdedir() const
 {
     // Return the prefix to use for saving
     return prefixes.first();
 }
 
-TQString KStandardDirs::localxdgdatadir() const
+TQString TDEStandardDirs::localxdgdatadir() const
 {
     // Return the prefix to use for saving
     return d->xdgdata_prefixes.first();
 }
 
-TQString KStandardDirs::localxdgconfdir() const
+TQString TDEStandardDirs::localxdgconfdir() const
 {
     // Return the prefix to use for saving
     return d->xdgconf_prefixes.first();

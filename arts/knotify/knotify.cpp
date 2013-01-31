@@ -296,7 +296,7 @@ void KNotify::loadConfig() {
         players << "wavplay" << "aplay" << "auplay";
         TQStringList::Iterator it = players.begin();
         while ( d->externalPlayer.isEmpty() && it != players.end() ) {
-            d->externalPlayer = KStandardDirs::findExe( *it );
+            d->externalPlayer = TDEStandardDirs::findExe( *it );
             ++it;
         }
     }

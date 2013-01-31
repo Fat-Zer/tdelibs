@@ -78,7 +78,7 @@ namespace KParts
      *
      * For advanced use you can also inherit from the template and re-implement additionally the
      * virtual TDEInstance *createInstance() method, for example in case you want to extend the
-     * paths of your instance's KStandardDirs object.
+     * paths of your instance's TDEStandardDirs object.
      *
      * If a KParts::ReadOnlyPart is requested through this factory and the template argument
      * implements a KParts::ReadWritePart then setReadWrite( false ) will automatically be

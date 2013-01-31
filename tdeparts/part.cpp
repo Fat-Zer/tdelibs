@@ -113,7 +113,7 @@ void PartBase::setInstance( TDEInstance *inst, bool bLoadPlugins )
   TDEGlobal::locale()->insertCatalogue( inst->instanceName() );
   // install 'instancename'data resource type
   TDEGlobal::dirs()->addResourceType( inst->instanceName() + "data",
-                                    KStandardDirs::kde_default( "data" )
+                                    TDEStandardDirs::kde_default( "data" )
                                     + TQString::fromLatin1( inst->instanceName() ) + '/' );
   if ( bLoadPlugins )
     loadPlugins( m_obj, this, instance() );

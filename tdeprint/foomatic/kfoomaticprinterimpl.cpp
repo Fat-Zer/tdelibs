@@ -35,7 +35,7 @@ KFoomaticPrinterImpl::~KFoomaticPrinterImpl()
 // look for executable
 TQString KFoomaticPrinterImpl::executable()
 {
-	QString	exe = KStandardDirs::findExe("foomatic-printjob");
+	QString	exe = TDEStandardDirs::findExe("foomatic-printjob");
 	return exe;
 }
 

@@ -133,7 +133,7 @@ bool KDesktopFile::isAuthorizedDesktopFile(const TQString& path)
   if (TQDir::isRelativePath(path))
      return true; // Relative paths are ok.
      
-  KStandardDirs *dirs = TDEGlobal::dirs();
+  TDEStandardDirs *dirs = TDEGlobal::dirs();
   if (TQDir::isRelativePath( dirs->relativeLocation("apps", path) ))
      return true;
   if (TQDir::isRelativePath( dirs->relativeLocation("xdgdata-apps", path) ))

@@ -237,7 +237,7 @@ void KFileSharePropsPlugin::slotConfigureFileSharing()
     if (d->m_configProc) return;
 
     d->m_configProc = new TDEProcess(this);
-    (*d->m_configProc) << KStandardDirs::findExe("tdesu") << locate("exe", "tdecmshell") << "fileshare";
+    (*d->m_configProc) << TDEStandardDirs::findExe("tdesu") << locate("exe", "tdecmshell") << "fileshare";
     if (!d->m_configProc->start( TDEProcess::NotifyOnExit ))
     {
        delete d->m_configProc;

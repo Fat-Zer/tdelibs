@@ -620,9 +620,9 @@ bool KMLpdManager::createSpooldir(PrintcapEntry *entry)
 	if (entry->arg("sd").isEmpty())
 		entry->m_args["sd"] = TQString::fromLatin1("/var/spool/lpd/")+entry->m_name;
 	QString	sd = entry->arg("sd");
-	if (!KStandardDirs::exists(sd))
+	if (!TDEStandardDirs::exists(sd))
 	{
-		if (!KStandardDirs::makeDir(sd,0750))
+		if (!TDEStandardDirs::makeDir(sd,0750))
 			return false;
 		struct passwd	*lp_pw = getpwnam("lp");
 		if (lp_pw && chown(TQFile::encodeName(sd),lp_pw->pw_uid,lp_pw->pw_gid) != 0)

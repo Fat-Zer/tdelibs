@@ -1,7 +1,7 @@
 /*
  $Id$
 
- Simple helper routines for style's use of KStandardDirs with TQSettings, etc.
+ Simple helper routines for style's use of TDEStandardDirs with TQSettings, etc.
 
  This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public
@@ -29,8 +29,8 @@ KStyleDirs* KStyleDirs::instance = 0;
 
 KStyleDirs::KStyleDirs()
 {
-    addResourceType( "themepixmap", KStandardDirs::kde_default( "data" ) + "kstyle/pixmaps/" );
-    addResourceType( "themerc", KStandardDirs::kde_default( "data" ) + "kstyle/themes/" );
+    addResourceType( "themepixmap", TDEStandardDirs::kde_default( "data" ) + "kstyle/pixmaps/" );
+    addResourceType( "themerc", TDEStandardDirs::kde_default( "data" ) + "kstyle/themes/" );
 }
 
 KStyleDirs::~KStyleDirs()

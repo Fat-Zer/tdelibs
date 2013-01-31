@@ -62,7 +62,7 @@ namespace KNetwork { namespace Internal
   /** @internal
    * Standard worker.
    */
-  class KStandardWorker: public KNetwork::KResolverWorkerBase
+  class TDEStandardWorker: public KNetwork::KResolverWorkerBase
   {
   protected:
     mutable TQCString m_encodedName;
@@ -90,7 +90,7 @@ namespace KNetwork { namespace Internal
    *
    * This class does not do post-processing.
    */
-  class KGetAddrinfoWorker: public KStandardWorker
+  class KGetAddrinfoWorker: public TDEStandardWorker
   {
   public:
     KGetAddrinfoWorker()

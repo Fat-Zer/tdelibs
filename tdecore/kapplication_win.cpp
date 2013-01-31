@@ -79,7 +79,7 @@ void TDEApplication::invokeHelp( const TQString& anchor,
 {
 	if (!d->qassistantclient) {
 		d->qassistantclient = new QAssistantClient(
-			KStandardDirs::findExe( "assistant" ), 0);
+			TDEStandardDirs::findExe( "assistant" ), 0);
 		TQStringList args;
 		args << "-profile";
 		args << TQDir::convertSeparators( locate("html", TQString(name())+"/"+TQString(name())+".adp") );

@@ -2764,7 +2764,7 @@ TDEDiskDeviceType::TDEDiskDeviceType classifyDiskType(udev_device* dev, const TQ
 	return disktype;
 }
 
-	// KStandardDirs::kde_default
+	// TDEStandardDirs::kde_default
 
 typedef TQMap<TQString, TQString> TDEConfigMap;
 

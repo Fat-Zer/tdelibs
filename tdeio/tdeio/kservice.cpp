@@ -202,10 +202,10 @@ KService::init( KDesktopFile *config )
   } else if (config->readBoolEntry("X-TDE-SubstituteUID")) {
     int space = m_strExec.find(" ");
     if (space==-1)
-      m_strExec = KStandardDirs::findExe(m_strExec);
+      m_strExec = TDEStandardDirs::findExe(m_strExec);
     else {
       const TQString command = m_strExec.left(space);
-      m_strExec.replace(command,KStandardDirs::findExe(command));
+      m_strExec.replace(command,TDEStandardDirs::findExe(command));
     }
   }
 

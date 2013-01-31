@@ -77,12 +77,12 @@ Arts::SoundServerV2 KArtsServer::server(void)
 
 	X11CommConfig.sync();
 	
-	proc << TQFile::encodeName(KStandardDirs::findExe(TQString::fromLatin1("tdeinit_wrapper"))).data();
+	proc << TQFile::encodeName(TDEStandardDirs::findExe(TQString::fromLatin1("tdeinit_wrapper"))).data();
 
 	if(rt)
-		proc << TQFile::encodeName(KStandardDirs::findExe(TQString::fromLatin1("artswrapper"))).data();
+		proc << TQFile::encodeName(TDEStandardDirs::findExe(TQString::fromLatin1("artswrapper"))).data();
 	else
-		proc << TQFile::encodeName(KStandardDirs::findExe(TQString::fromLatin1("artsd"))).data();
+		proc << TQFile::encodeName(TDEStandardDirs::findExe(TQString::fromLatin1("artsd"))).data();
 
 	proc << TQStringList::split( " ", config.readEntry( "Arguments", "-F 10 -S 4096 -s 60 -m artsmessage -l 3 -f" ) );
 

@@ -491,7 +491,7 @@ bool KBugReport::sendBugReport()
   TQString command;
   command = locate("exe", "tdesendbugmail");
   if (command.isEmpty())
-      command = KStandardDirs::findExe( TQString::fromLatin1("tdesendbugmail") );
+      command = TDEStandardDirs::findExe( TQString::fromLatin1("tdesendbugmail") );
 
   KTempFile outputfile;
   outputfile.close();

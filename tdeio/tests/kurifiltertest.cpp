@@ -305,11 +305,11 @@ int main(int argc, char **argv)
     }
 
     filter( "$TDEHOME/share", tdehome+"/share", KURIFilterData::LOCAL_DIR );
-    KStandardDirs::makeDir( tdehome+"/a+plus" );
+    TDEStandardDirs::makeDir( tdehome+"/a+plus" );
     filter( "$TDEHOME/a+plus", tdehome+"/a+plus", KURIFilterData::LOCAL_DIR );
 
     // BR 27788
-    KStandardDirs::makeDir( tdehome+"/share/Dir With Space" );
+    TDEStandardDirs::makeDir( tdehome+"/share/Dir With Space" );
     filter( "$TDEHOME/share/Dir With Space", tdehome+"/share/Dir With Space", KURIFilterData::LOCAL_DIR );
 
     // support for name filters (BR 93825)
@@ -318,11 +318,11 @@ int main(int argc, char **argv)
     filter( "$TDEHOME/a?c.txt", tdehome+"/a?c.txt", KURIFilterData::LOCAL_DIR );
     filter( "$TDEHOME/?c.txt", tdehome+"/?c.txt", KURIFilterData::LOCAL_DIR );
     // but let's check that a directory with * in the name still works
-    KStandardDirs::makeDir( tdehome+"/share/Dir*With*Stars" );
+    TDEStandardDirs::makeDir( tdehome+"/share/Dir*With*Stars" );
     filter( "$TDEHOME/share/Dir*With*Stars", tdehome+"/share/Dir*With*Stars", KURIFilterData::LOCAL_DIR );
-    KStandardDirs::makeDir( tdehome+"/share/Dir?QuestionMark" );
+    TDEStandardDirs::makeDir( tdehome+"/share/Dir?QuestionMark" );
     filter( "$TDEHOME/share/Dir?QuestionMark", tdehome+"/share/Dir?QuestionMark", KURIFilterData::LOCAL_DIR );
-    KStandardDirs::makeDir( tdehome+"/share/Dir[Bracket" );
+    TDEStandardDirs::makeDir( tdehome+"/share/Dir[Bracket" );
     filter( "$TDEHOME/share/Dir[Bracket", tdehome+"/share/Dir[Bracket", KURIFilterData::LOCAL_DIR );
 
     filter( "$HOME/$TDEDIR/tdebase/kcontrol/ebrowsing", 0, KURIFilterData::ERROR );

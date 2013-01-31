@@ -163,7 +163,7 @@ int main(int argc, char **argv) {
         exe = XMLLINT;
 #endif
         if ( (::access( TQFile::encodeName( exe ), X_OK )!=0) ) {
-            exe = KStandardDirs::findExe( "xmllint" );
+            exe = TDEStandardDirs::findExe( "xmllint" );
             if (exe.isEmpty())
                 exe = locate( "exe", "xmllint" );
         }

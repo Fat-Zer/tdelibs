@@ -384,7 +384,7 @@ void BrowserRun::simpleSave( const KURL & url, const TQString & suggestedFilenam
         {
             // then find the download manager location
             kdDebug(1000) << "Using: "<<downloadManger <<" as Download Manager" <<endl;
-            TQString cmd=KStandardDirs::findExe(downloadManger);
+            TQString cmd=TDEStandardDirs::findExe(downloadManger);
             if (cmd.isEmpty())
             {
                 TQString errMsg=i18n("The Download Manager (%1) could not be found in your $PATH ").arg(downloadManger);

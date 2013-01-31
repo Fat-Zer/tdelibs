@@ -57,7 +57,7 @@ public:
    *        object will automatically become read-only if either the user does not have
    *        write permission to @p fileName or if no file was specified.
    * @param bUseKDEGlobals Toggle reading the global KDE configuration file.
-   * @param resType the place to look in (config, data, etc) See KStandardDirs.
+   * @param resType the place to look in (config, data, etc) See TDEStandardDirs.
    */
   TDEConfig( const TQString& fileName = TQString::null,
           bool bReadOnly = false, bool bUseKDEGlobals = true, const char *resType="config");
