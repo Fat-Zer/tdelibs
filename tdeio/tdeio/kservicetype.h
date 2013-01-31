@@ -47,7 +47,7 @@ class TDEIO_EXPORT KServiceType : public KSycocaEntry
   K_SYCOCATYPE( KST_KServiceType, KSycocaEntry )
 
 public:
-  typedef KSharedPtr<KServiceType> Ptr;
+  typedef TDESharedPtr<KServiceType> Ptr;
   typedef TQValueList<Ptr> List;
 public:
 

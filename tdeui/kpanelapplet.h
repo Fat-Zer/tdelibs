@@ -185,7 +185,7 @@ public:
      * called \<appletname\>\<instanceid\>rc in the user's local %KDE directory.
      **/
     TDEConfig* config() const { return _config; }
-    KSharedConfig::Ptr sharedConfig() const;
+    TDESharedConfig::Ptr sharedConfig() const;
 
     /**
      * @return Type indicating the applet's type.

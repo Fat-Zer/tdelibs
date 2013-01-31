@@ -26,7 +26,7 @@
 #include <tqstring.h>
 #include <tdelibs_export.h>
 
-class KSharedConfig;
+class TDESharedConfig;
 
 namespace KSpell2
 {
@@ -59,7 +59,7 @@ namespace KSpell2
 
         void save();
 
-        KSharedConfig *sharedConfig() const;
+        TDESharedConfig *sharedConfig() const;
 
     private:
         void loadConfig();
@@ -68,7 +68,7 @@ namespace KSpell2
 
     private:
         friend class Broker;
-        Settings( Broker *broker, KSharedConfig *config );
+        Settings( Broker *broker, TDESharedConfig *config );
     private:
         class Private;
         Private *d;

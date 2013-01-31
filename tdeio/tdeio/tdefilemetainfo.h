@@ -1698,7 +1698,7 @@ private:
         KFilePlugin* plugin;
         KFileMimeTypeInfo* mimeTypeInfo;
         // The problem here is that plugin can be shared in multiple instances,
-        // so the memory management isn't easy. KDE4 solution: use KSharedPtr?
+        // so the memory management isn't easy. KDE4 solution: use TDESharedPtr?
         // For now we flag one copy of the KFilePlugin pointer as being "owned".
         bool ownsPlugin;
     };

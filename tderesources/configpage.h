@@ -37,7 +37,7 @@ class TQPushButton;
 
 namespace KRES {
 
-class TDERESOURCES_EXPORT ResourcePageInfo : public KShared
+class TDERESOURCES_EXPORT ResourcePageInfo : public TDEShared
 {
   public:
     ResourcePageInfo();
@@ -93,7 +93,7 @@ class TDERESOURCES_EXPORT ConfigPage : public TQWidget, public ManagerObserver<R
     TDEConfig* mConfig;
     TQString mFamily;
     TQStringList mFamilyMap;
-    TQValueList<KSharedPtr<ResourcePageInfo> > mInfoMap;
+    TQValueList<TDESharedPtr<ResourcePageInfo> > mInfoMap;
 
     KComboBox* mFamilyCombo;
     KListView* mListView;

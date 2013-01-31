@@ -67,7 +67,7 @@ TDEConfig	*TDEGlobal::config()
     return _instance->config();
 }
 
-KSharedConfig *TDEGlobal::sharedConfig()
+TDESharedConfig *TDEGlobal::sharedConfig()
 {
     MYASSERT(_instance);
 

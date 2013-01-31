@@ -203,7 +203,7 @@ bool KTimezone::isValidLongitude(float longitude)
 }
 
 KTimezone::KTimezone(
-    KSharedPtr<KTimezoneSource> db, const TQString& name,
+    TDESharedPtr<KTimezoneSource> db, const TQString& name,
     const TQString &countryCode, float latitude, float longitude,
     const TQString &comment) :
     m_db(db),
@@ -415,7 +415,7 @@ const KTimezones::ZoneMap KTimezones::allZones()
     TQTextStream str(&f);
     TQRegExp lineSeparator("[ \t]");
     TQRegExp ordinateSeparator("[+-]");
-    KSharedPtr<KTimezoneSource> db(new KTimezoneSource(m_zoneinfoDir));
+    TDESharedPtr<KTimezoneSource> db(new KTimezoneSource(m_zoneinfoDir));
     while (!str.atEnd())
     {
         TQString line = str.readLine();

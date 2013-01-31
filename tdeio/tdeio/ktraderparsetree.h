@@ -120,10 +120,10 @@ public:
 /**
  * @internal
  */
-class TDEIO_EXPORT ParseTreeBase : public KShared
+class TDEIO_EXPORT ParseTreeBase : public TDEShared
 {
 public:
-  typedef KSharedPtr<ParseTreeBase> Ptr;
+  typedef TDESharedPtr<ParseTreeBase> Ptr;
   ParseTreeBase() { }
 
   virtual bool eval( ParseContext *_context ) const = 0;

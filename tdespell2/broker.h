@@ -28,7 +28,7 @@
 #include <tqstringlist.h>
 #include <tqstring.h>
 
-class KSharedConfig;
+class TDESharedConfig;
 template <typename T>
 class TQPtrDict;
 
@@ -46,11 +46,11 @@ namespace KSpell2
      * of the KSpell2 architecture.
      */
     class KDE_EXPORT Broker : public TQObject,
-                   public KShared
+                   public TDEShared
     {
         Q_OBJECT
     public:
-        typedef KSharedPtr<Broker> Ptr;
+        typedef TDESharedPtr<Broker> Ptr;
         /**
          * Constructs the broker.
          *
@@ -65,7 +65,7 @@ namespace KSpell2
          *        and default client values. If no value will
          *        be passed Broker will use global tdespellrc file.
          */
-        static Broker *openBroker( KSharedConfig *config = 0 );
+        static Broker *openBroker( TDESharedConfig *config = 0 );
 
     public:
         ~Broker();
@@ -122,7 +122,7 @@ namespace KSpell2
         friend class Settings;
         void changed();
     private:
-        Broker( KSharedConfig *config );
+        Broker( TDESharedConfig *config );
         void loadPlugins();
         void loadPlugin( const TQString& );
     private:

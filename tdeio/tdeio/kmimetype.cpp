@@ -59,7 +59,7 @@
 #include <tdesycoca.h>
 #include <kde_file.h>
 
-template class KSharedPtr<KMimeType>;
+template class TDESharedPtr<KMimeType>;
 template class TQValueList<KMimeType::Ptr>;
 
 KMimeType::Ptr KMimeType::s_pDefaultType = 0L;

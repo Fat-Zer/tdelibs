@@ -51,7 +51,7 @@ Highlighter::Highlighter( TQTextEdit *textEdit,
     d = new Private;
     d->filter = filter;
     if ( !configFile.isEmpty() )
-        d->broker = Broker::openBroker( KSharedConfig::openConfig( configFile ) );
+        d->broker = Broker::openBroker( TDESharedConfig::openConfig( configFile ) );
     else
         d->broker = Broker::openBroker();
 

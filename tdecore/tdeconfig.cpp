@@ -328,14 +328,14 @@ TDEConfig* TDEConfig::copyTo(const TQString &file, TDEConfig *config) const
 void TDEConfig::virtual_hook( int id, void* data )
 { TDEConfigBase::virtual_hook( id, data ); }
 
-static KStaticDeleter< TQValueList<KSharedConfig*> > sd;
-TQValueList<KSharedConfig*> *KSharedConfig::s_list = 0;
+static KStaticDeleter< TQValueList<TDESharedConfig*> > sd;
+TQValueList<TDESharedConfig*> *TDESharedConfig::s_list = 0;
 
-KSharedConfig::Ptr KSharedConfig::openConfig(const TQString& fileName, bool readOnly, bool useKDEGlobals )
+TDESharedConfig::Ptr TDESharedConfig::openConfig(const TQString& fileName, bool readOnly, bool useKDEGlobals )
 {
   if (s_list)
   {
-     for(TQValueList<KSharedConfig*>::ConstIterator it = s_list->begin();
+     for(TQValueList<TDESharedConfig*>::ConstIterator it = s_list->begin();
          it != s_list->end(); ++it)
      {
         if ((*it)->backEnd->fileName() == fileName &&
@@ -344,21 +344,21 @@ KSharedConfig::Ptr KSharedConfig::openConfig(const TQString& fileName, bool read
            return (*it);
      }
   }
-  return new KSharedConfig(fileName, readOnly, useKDEGlobals);
+  return new TDESharedConfig(fileName, readOnly, useKDEGlobals);
 }
 
-KSharedConfig::KSharedConfig( const TQString& fileName, bool readonly, bool usekdeglobals)
+TDESharedConfig::TDESharedConfig( const TQString& fileName, bool readonly, bool usekdeglobals)
  : TDEConfig(fileName, readonly, usekdeglobals)
 {
   if (!s_list)
   {
-    sd.setObject(s_list, new TQValueList<KSharedConfig*>);
+    sd.setObject(s_list, new TQValueList<TDESharedConfig*>);
   }
 
   s_list->append(this);
 }
 
-KSharedConfig::~KSharedConfig()
+TDESharedConfig::~TDESharedConfig()
 {
   if ( s_list )
     s_list->remove(this);

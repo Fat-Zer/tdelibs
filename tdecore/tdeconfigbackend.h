@@ -48,7 +48,7 @@ class TDEConfigBackEndPrivate;
 class TDECORE_EXPORT TDEConfigBackEnd
 {
   friend class TDEConfig;
-  friend class KSharedConfig;
+  friend class TDESharedConfig;
 public:
   /**
    * Constructs a configuration back end.

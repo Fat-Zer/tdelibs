@@ -30,10 +30,10 @@
  * @author Waldo Bastian <bastian@kde.org>
  * @since 3.3
  */
-class TDECORE_EXPORT KLockFile : public KShared
+class TDECORE_EXPORT KLockFile : public TDEShared
 {
 public:
-   typedef KSharedPtr<KLockFile> Ptr;
+   typedef TDESharedPtr<KLockFile> Ptr;
 
    KLockFile(const TQString &file);
 

@@ -32,11 +32,11 @@
  * @author Waldo Bastian <bastian@kde.org>
  * @since 3.2
  */
-class TDECORE_EXPORT KMountPoint : public KShared
+class TDECORE_EXPORT KMountPoint : public TDEShared
 {
    typedef signed long long int filesize_t;
 public:
-  typedef KSharedPtr<KMountPoint> Ptr;
+  typedef TDESharedPtr<KMountPoint> Ptr;
   typedef TQValueList<Ptr> List;
 public:
    enum { NeedMountOptions = 1, NeedRealDeviceName = 2 };

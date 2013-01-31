@@ -49,7 +49,7 @@ class TDEIO_EXPORT KMimeType : public KServiceType
   K_SYCOCATYPE( KST_KMimeType, KServiceType )
 
 public:
-  typedef KSharedPtr<KMimeType> Ptr;
+  typedef TDESharedPtr<KMimeType> Ptr;
   typedef TQValueList<Ptr> List;
 public:
   /**

@@ -9,7 +9,7 @@ Dictionaries are abstracted in the KSpell::Dictionary object which
 encapsulates all spell-checking functionality.
 
 You'll notice that the Broker is being created via the 
-Broker::Ptr Broker::openBroker( KSharedConfig *config =0 );
+Broker::Ptr Broker::openBroker( TDESharedConfig *config =0 );
 call. The Broker is a shared object and the reason for this construct
 is very simple:
 - most application would need to have a few Broker objects (one for

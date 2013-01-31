@@ -52,7 +52,7 @@ class TDEIO_EXPORT KService : public KSycocaEntry
   friend class KBuildSycoca;
 
 public:
-  typedef KSharedPtr<KService> Ptr;
+  typedef TDESharedPtr<KService> Ptr;
   typedef TQValueList<Ptr> List;
 public:
   /**

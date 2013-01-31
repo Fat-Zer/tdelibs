@@ -267,14 +267,14 @@ private:
 /**
  * TDEConfig variant using shared memory
  *
- * KSharedConfig provides a reference counted, shared memory variant
+ * TDESharedConfig provides a reference counted, shared memory variant
  * of TDEConfig.
  */
-class TDECORE_EXPORT KSharedConfig : public TDEConfig, public KShared
+class TDECORE_EXPORT TDESharedConfig : public TDEConfig, public TDEShared
 {
-  friend class TQValueList<KSharedConfig*>;
+  friend class TQValueList<TDESharedConfig*>;
 public:
-  typedef KSharedPtr<KSharedConfig> Ptr;
+  typedef TDESharedPtr<TDESharedConfig> Ptr;
 
 public:  
   /**
@@ -283,14 +283,14 @@ public:
    * @param readOnly set the config object's read-only status
    * @param bUseKDEGlobals Toggle reading the global KDE configuration file.
    */
-  static KSharedConfig::Ptr openConfig(const TQString& fileName, bool readOnly = false,
+  static TDESharedConfig::Ptr openConfig(const TQString& fileName, bool readOnly = false,
     bool bUseKDEGlobals = true);
 
 private:
-  KSharedConfig( const TQString& fileName, bool readOnly, bool useKDEGlobals );
-  ~KSharedConfig();
+  TDESharedConfig( const TQString& fileName, bool readOnly, bool useKDEGlobals );
+  ~TDESharedConfig();
 
-  static TQValueList<KSharedConfig*> *s_list;
+  static TQValueList<TDESharedConfig*> *s_list;
 };
 
 #endif

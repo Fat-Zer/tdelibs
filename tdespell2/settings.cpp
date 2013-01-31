@@ -37,7 +37,7 @@ class Settings::Private
 {
 public:
     Broker*  broker; //can't be a Ptr since we don't want to hold a ref on it
-    KSharedConfig::Ptr config;
+    TDESharedConfig::Ptr config;
     bool     modified;
 
     TQString defaultLanguage;
@@ -50,7 +50,7 @@ public:
     TQMap<TQString, bool> ignore;
 };
 
-Settings::Settings( Broker *broker, KSharedConfig *config )
+Settings::Settings( Broker *broker, TDESharedConfig *config )
 {
     d = new Private;
     d->broker = broker;
@@ -67,7 +67,7 @@ Settings::~Settings()
     delete d; d = 0;
 }
 
-KSharedConfig *Settings::sharedConfig() const
+TDESharedConfig *Settings::sharedConfig() const
 {
     return d->config;
 }

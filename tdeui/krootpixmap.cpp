@@ -61,7 +61,7 @@ void KRootPixmap::init()
     m_Fade = 0;
     m_BlurRadius = 0;
     m_BlurSigma = 0;
-    m_pPixmap = new KSharedPixmap; //ordinary KPixmap on win32
+    m_pPixmap = new TDESharedPixmap; //ordinary KPixmap on win32
     m_pTimer = new TQTimer( this );
     m_bInit = false;
     m_bActive = false;
@@ -238,7 +238,7 @@ void KRootPixmap::repaint(bool force)
 	m_Desk = currentDesktop();
     }
 
-    // KSharedPixmap will correctly generate a tile for us.
+    // TDESharedPixmap will correctly generate a tile for us.
     m_pPixmap->loadFromShared(pixmapName(m_Desk), m_Rect);
 #else
 	m_Desk = currentDesktop();
@@ -308,7 +308,7 @@ void KRootPixmap::slotDone(bool success)
 	updateBackground( m_pPixmap );
 }
 
-void KRootPixmap::updateBackground( KSharedPixmap *spm )
+void KRootPixmap::updateBackground( TDESharedPixmap *spm )
 {
     TQPixmap pm = *spm;
 

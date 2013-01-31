@@ -26,7 +26,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 int main( int, char*[] )
 {
   TDEInstance i("test");
-  Test8a *config1 = new Test8a( KSharedConfig::openConfig( TQString::null ) );
+  Test8a *config1 = new Test8a( TDESharedConfig::openConfig( TQString::null ) );
   Test8a *config2 = new Test8a();
   Test8b::self();
   delete config1;

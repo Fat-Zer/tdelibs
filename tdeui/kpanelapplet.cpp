@@ -37,7 +37,7 @@ public:
       {}
 
   const TQPopupMenu* customMenu;
-  KSharedConfig::Ptr sharedConfig;
+  TDESharedConfig::Ptr sharedConfig;
   TQPtrList<TQObject> watchedForFocus;
   bool hasFocus;
 };
@@ -60,7 +60,7 @@ KPanelApplet::KPanelApplet(const TQString& configFile, Type type,
   }
   setBackgroundOrigin( AncestorOrigin );
 
-  d->sharedConfig = KSharedConfig::openConfig(configFile, kapp && kapp->config()->isImmutable());
+  d->sharedConfig = TDESharedConfig::openConfig(configFile, kapp && kapp->config()->isImmutable());
   _config = d->sharedConfig;
 }
 
@@ -188,7 +188,7 @@ bool KPanelApplet::eventFilter(TQObject *o, TQEvent * e)
     return TQFrame::eventFilter(o, e);
 }
 
-KSharedConfig::Ptr KPanelApplet::sharedConfig() const
+TDESharedConfig::Ptr KPanelApplet::sharedConfig() const
 {
     return d->sharedConfig;
 }

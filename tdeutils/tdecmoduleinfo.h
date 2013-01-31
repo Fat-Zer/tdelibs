@@ -132,7 +132,7 @@ public:
   // changed from name() to avoid ambiguity with TQObject::name() on multiple inheritance
 
   /**
-   * @return a KSharedPtr to KService created from the modules .desktop file
+   * @return a TDESharedPtr to KService created from the modules .desktop file
    */
   KService::Ptr service() const { return _service; }
 

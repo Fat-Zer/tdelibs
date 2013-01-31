@@ -45,7 +45,7 @@
 
 namespace KRES {
 
-ResourcePageInfo::ResourcePageInfo() : KShared() {
+ResourcePageInfo::ResourcePageInfo() : TDEShared() {
   mManager = 0L;
   mConfig = 0L;
 }
@@ -153,7 +153,7 @@ ConfigPage::ConfigPage( TQWidget *parent, const char *name )
 
 ConfigPage::~ConfigPage()
 {
-  TQValueList<KSharedPtr<ResourcePageInfo> >::Iterator it;
+  TQValueList<TDESharedPtr<ResourcePageInfo> >::Iterator it;
   for ( it = mInfoMap.begin(); it != mInfoMap.end(); ++it ) {
     (*it)->mManager->removeObserver( this );
   }
@@ -226,7 +226,7 @@ void ConfigPage::loadManager( const TQString& family )
       info->mConfig = new TDEConfig( KRES::ManagerImpl::defaultConfigFile( family ) );
       info->mManager->readConfig( info->mConfig );
 
-      mInfoMap.append( KSharedPtr<ResourcePageInfo>(info) );
+      mInfoMap.append( TDESharedPtr<ResourcePageInfo>(info) );
   }
 }
 
@@ -234,7 +234,7 @@ void ConfigPage::save()
 {
   saveResourceSettings();
 
-  TQValueList<KSharedPtr<ResourcePageInfo> >::Iterator it;
+  TQValueList<TDESharedPtr<ResourcePageInfo> >::Iterator it;
   for ( it = mInfoMap.begin(); it != mInfoMap.end(); ++it )
     (*it)->mManager->writeConfig( (*it)->mConfig );
 

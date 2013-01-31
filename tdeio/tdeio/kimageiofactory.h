@@ -20,7 +20,7 @@ class TDEIO_EXPORT KImageIOFormat : public KSycocaEntry
   K_SYCOCATYPE( KST_KImageIOFormat, KSycocaEntry )
 
 public:
-  typedef KSharedPtr<KImageIOFormat> Ptr;
+  typedef TDESharedPtr<KImageIOFormat> Ptr;
   typedef TQValueList<Ptr> List;
 public: // KDoc seems to barf on those typedefs and generates no docs after them
   /**

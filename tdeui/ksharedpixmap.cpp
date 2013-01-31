@@ -49,10 +49,10 @@
 #undef FocusOut
 
 /**
- * KSharedPixmap
+ * TDESharedPixmap
  */
 
-class KSharedPixmapPrivate
+class TDESharedPixmapPrivate
 {
 public:
   Atom pixmap;
@@ -61,21 +61,21 @@ public:
   TQRect rect;
 };
 
-KSharedPixmap::KSharedPixmap()
+TDESharedPixmap::TDESharedPixmap()
     : TQWidget(0L, "shpixmap comm window")
 {
-    d = new KSharedPixmapPrivate;
+    d = new TDESharedPixmapPrivate;
     init();
 }
 
 
-KSharedPixmap::~KSharedPixmap()
+TDESharedPixmap::~TDESharedPixmap()
 {
     delete d;
 }
 
 
-void KSharedPixmap::init()
+void TDESharedPixmap::init()
 {
     d->pixmap = XInternAtom(tqt_xdisplay(), "PIXMAP", false);
     TQCString atom;
@@ -85,7 +85,7 @@ void KSharedPixmap::init()
 }
 
 
-bool KSharedPixmap::isAvailable(const TQString & name) const
+bool TDESharedPixmap::isAvailable(const TQString & name) const
 {
     TQString str = TQString("KDESHPIXMAP:%1").arg(name);
     Atom sel = XInternAtom(tqt_xdisplay(), str.latin1(), true);
@@ -95,7 +95,7 @@ bool KSharedPixmap::isAvailable(const TQString & name) const
 }
 
 
-bool KSharedPixmap::loadFromShared(const TQString & name, const TQRect & rect)
+bool TDESharedPixmap::loadFromShared(const TQString & name, const TQRect & rect)
 {
     d->rect = rect;
     if (d->selection != None)
@@ -120,7 +120,7 @@ bool KSharedPixmap::loadFromShared(const TQString & name, const TQRect & rect)
 }
 
 
-bool KSharedPixmap::x11Event(XEvent *event)
+bool TDESharedPixmap::x11Event(XEvent *event)
 {
     if (event->type != SelectionNotify)
 	return false;

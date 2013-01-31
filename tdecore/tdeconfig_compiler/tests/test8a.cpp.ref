@@ -3,7 +3,7 @@
 
 #include "test8a.h"
 
-Test8a::Test8a(  KSharedConfig::Ptr config  )
+Test8a::Test8a(  TDESharedConfig::Ptr config  )
   : TDEConfigSkeleton( config )
 {
   setCurrentGroup( TQString::fromLatin1( "Group" ) );

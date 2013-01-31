@@ -26,7 +26,7 @@ class KCharsets;
 class TQFont;
 class TDEInstancePrivate;
 class KMimeSourceFactory;
-class KSharedConfig;
+class TDESharedConfig;
 class TDEHardwareDevices;
 class TDEGlobalNetworkManager;
 
@@ -94,7 +94,7 @@ class TDECORE_EXPORT TDEInstance
      * Returns the general config object ("appnamerc").
      * @return the TDEConfig object for the instance.
      */
-    KSharedConfig      *sharedConfig() const;
+    TDESharedConfig      *sharedConfig() const;
 
     /**
      * Set a read-only flag on the configuration files

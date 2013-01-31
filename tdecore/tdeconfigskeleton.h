@@ -800,7 +800,7 @@ public:
    * 
    * @param config configuration object to use.
    */
-  TDEConfigSkeleton(KSharedConfig::Ptr config);
+  TDEConfigSkeleton(TDESharedConfig::Ptr config);
 
   /**
    * Destructor
@@ -1215,7 +1215,7 @@ protected:
 private:
   TQString mCurrentGroup;
 
-  KSharedConfig::Ptr mConfig; // pointer to TDEConfig object
+  TDESharedConfig::Ptr mConfig; // pointer to TDEConfig object
 
   TDEConfigSkeletonItem::List mItems;
   TDEConfigSkeletonItem::Dict mItemDict;

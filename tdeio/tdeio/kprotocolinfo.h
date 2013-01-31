@@ -47,7 +47,7 @@ class TDEIO_EXPORT KProtocolInfo : public KSycocaEntry
   K_SYCOCATYPE( KST_KProtocolInfo, KSycocaEntry )
 
 public:
-  typedef KSharedPtr<KProtocolInfo> Ptr;
+  typedef TDESharedPtr<KProtocolInfo> Ptr;
 
 public:
   /**

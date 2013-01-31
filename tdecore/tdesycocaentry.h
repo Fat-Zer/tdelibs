@@ -34,7 +34,7 @@ class TQDataStream;
  * @internal
  * @see http://developer.kde.org/documentation/library/kdeqt/trinityarch/tdesycoca.html 
  */
-class TDECORE_EXPORT KSycocaEntry : public KShared
+class TDECORE_EXPORT KSycocaEntry : public TDEShared
 {
  
 public:
@@ -42,7 +42,7 @@ public:
    virtual KSycocaType sycocaType() const { return KST_KSycocaEntry; }
 
 public:
-  typedef KSharedPtr<KSycocaEntry> Ptr;
+  typedef TDESharedPtr<KSycocaEntry> Ptr;
   typedef TQValueList<Ptr> List;
 public: // KDoc seems to barf on those typedefs and generates no docs after them
    /**

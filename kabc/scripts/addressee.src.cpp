@@ -44,7 +44,7 @@ static bool emailsEquals( const TQStringList&, const TQStringList& );
 
 KABC::SortMode *Addressee::mSortMode = 0;
 
-struct Addressee::AddresseeData : public KShared
+struct Addressee::AddresseeData : public TDEShared
 {
   TQString uid;
   TQString uri;
@@ -68,7 +68,7 @@ Addressee::AddresseeData* Addressee::shared_null = 0;
 Addressee::AddresseeData* Addressee::makeSharedNull()
 {
   Addressee::shared_null = new AddresseeData;
-  shared_null->_KShared_ref(); //just in case (we should add KSD)
+  shared_null->_TDEShared_ref(); //just in case (we should add KSD)
   shared_null->empty = true;
   shared_null->changed = false;
   shared_null->resource = 0;

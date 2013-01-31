@@ -23,7 +23,7 @@
 
 class KCharsets;
 class TDEConfig;
-class KSharedConfig;
+class TDESharedConfig;
 class KIconLoader;
 class TDEHardwareDevices;
 class TDEGlobalNetworkManager;
@@ -71,7 +71,7 @@ public:
      *  Returns the general config object.
      * @return the global configuration object.
      */
-    static KSharedConfig        *sharedConfig();
+    static TDESharedConfig        *sharedConfig();
 
     /**
      *  Returns an iconloader object.

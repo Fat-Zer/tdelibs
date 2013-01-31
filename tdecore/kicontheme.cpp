@@ -43,7 +43,7 @@ public:
     TQString example, screenshot;
     TQString linkOverlay, lockOverlay, zipOverlay, shareOverlay;
     bool hidden;
-    KSharedConfig::Ptr sharedConfig;
+    TDESharedConfig::Ptr sharedConfig;
 };
 
 /**
@@ -136,9 +136,9 @@ KIconTheme::KIconTheme(const TQString& name, const TQString& appName)
 	fileName = mDir + "index.theme";
 	mainSection="Icon Theme";
     }
-    // Use KSharedConfig to avoid parsing the file many times, from each kinstance.
+    // Use TDESharedConfig to avoid parsing the file many times, from each kinstance.
     // Need to keep a ref to it to make this useful
-    d->sharedConfig = KSharedConfig::openConfig( fileName, true /*readonly*/, false /*useKDEGlobals*/ );
+    d->sharedConfig = TDESharedConfig::openConfig( fileName, true /*readonly*/, false /*useKDEGlobals*/ );
     TDEConfig& cfg = *d->sharedConfig;
     //was: KSimpleConfig cfg(fileName);
 

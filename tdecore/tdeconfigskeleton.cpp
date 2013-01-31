@@ -885,7 +885,7 @@ TDEConfigSkeleton::TDEConfigSkeleton( const TQString &configname )
 
   if ( !configname.isEmpty() )
   {
-    mConfig = KSharedConfig::openConfig( configname );
+    mConfig = TDESharedConfig::openConfig( configname );
   }
   else
   {
@@ -893,7 +893,7 @@ TDEConfigSkeleton::TDEConfigSkeleton( const TQString &configname )
   }
 }
 
-TDEConfigSkeleton::TDEConfigSkeleton(KSharedConfig::Ptr config)
+TDEConfigSkeleton::TDEConfigSkeleton(TDESharedConfig::Ptr config)
   : mCurrentGroup( "No Group" ), mUseDefaults(false)
 {
   kdDebug(177) << "Creating TDEConfigSkeleton (" << (void *)this << ")" << endl;

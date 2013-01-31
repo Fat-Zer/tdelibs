@@ -391,7 +391,7 @@ class KABC_EXPORT Addressee
     void detach();
 
     struct AddresseeData;
-    mutable KSharedPtr<AddresseeData> mData;
+    mutable TDESharedPtr<AddresseeData> mData;
 
   private:
     static AddresseeData* shared_null;

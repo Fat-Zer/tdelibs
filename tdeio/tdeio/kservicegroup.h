@@ -71,8 +71,8 @@ class TDEIO_EXPORT KServiceGroup : public KSycocaEntry
   K_SYCOCATYPE( KST_KServiceGroup, KSycocaEntry )
 
 public:
-  typedef KSharedPtr<KServiceGroup> Ptr;
-  typedef KSharedPtr<KSycocaEntry> SPtr;
+  typedef TDESharedPtr<KServiceGroup> Ptr;
+  typedef TDESharedPtr<KSycocaEntry> SPtr;
   typedef TQValueList<SPtr> List;
 public:
   /**
@@ -332,7 +332,7 @@ class TDEIO_EXPORT KServiceSeparator : public KSycocaEntry
   K_SYCOCATYPE( KST_KServiceSeparator, KSycocaEntry )
 
 public:
-  typedef KSharedPtr<KServiceSeparator> Ptr;
+  typedef TDESharedPtr<KServiceSeparator> Ptr;
 public:
   /**
    * Construct a service separator

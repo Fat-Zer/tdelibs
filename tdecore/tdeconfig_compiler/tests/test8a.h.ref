@@ -11,7 +11,7 @@ class Test8a : public TDEConfigSkeleton
 {
   public:
 
-    Test8a( KSharedConfig::Ptr config = TDEGlobal::sharedConfig() );
+    Test8a( TDESharedConfig::Ptr config = TDEGlobal::sharedConfig() );
     ~Test8a();
 
     /**

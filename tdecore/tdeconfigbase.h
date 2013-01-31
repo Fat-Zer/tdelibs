@@ -46,7 +46,7 @@ class TDEConfigGroup;
  * abstract base class, meaning that you cannot directly instantiate
  * objects of this class. Either use TDEConfig (for usual %KDE
  * configuration) or KSimpleConfig (for special needs as in ksamba), or
- * even KSharedConfig (stores values in shared memory).
+ * even TDESharedConfig (stores values in shared memory).
  *
  * All configuration entries are key, value pairs.  Each entry also
  * belongs to a specific group of related entries.  All configuration
@@ -65,7 +65,7 @@ class TDEConfigGroup;
  * @see TDEGlobal#config()
  * @see TDEConfig
  * @see KSimpleConfig
- * @see KSharedConfig
+ * @see TDESharedConfig
  */
 class TDECORE_EXPORT TDEConfigBase : public TQObject
 {

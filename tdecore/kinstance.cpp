@@ -65,7 +65,7 @@ public:
     KMimeSourceFactory* mimeSourceFactory;
     TQString configName;
     bool ownAboutdata;
-    KSharedConfig::Ptr sharedConfig;
+    TDESharedConfig::Ptr sharedConfig;
 };
 
 TDEInstance::TDEInstance( const TQCString& name)
@@ -201,7 +201,7 @@ TDEConfig	*TDEInstance::config() const
     if( _config == 0 ) {
         if ( !d->configName.isEmpty() )
         {
-            d->sharedConfig = KSharedConfig::openConfig( d->configName );
+            d->sharedConfig = TDESharedConfig::openConfig( d->configName );
 
             // Check whether custom config files are allowed.
             d->sharedConfig->setGroup( "KDE Action Restrictions" );
@@ -220,10 +220,10 @@ TDEConfig	*TDEInstance::config() const
         if ( d->sharedConfig == 0 )
         {
 	    if ( !_name.isEmpty() ) {
-	        d->sharedConfig = KSharedConfig::openConfig( _name + "rc", m_configReadOnly );
+	        d->sharedConfig = TDESharedConfig::openConfig( _name + "rc", m_configReadOnly );
 	    }
 	    else {
-	        d->sharedConfig = KSharedConfig::openConfig( TQString::null );
+	        d->sharedConfig = TDESharedConfig::openConfig( TQString::null );
 	    }
 	}
 
@@ -244,7 +244,7 @@ TDEConfig	*TDEInstance::config() const
     return _config;
 }
 
-KSharedConfig *TDEInstance::sharedConfig() const
+TDESharedConfig *TDEInstance::sharedConfig() const
 {
     DEBUG_CHECK_ALIVE
     if (_config == 0)

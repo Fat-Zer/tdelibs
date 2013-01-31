@@ -1220,7 +1220,7 @@ int main( int argc, char **argv )
   if ( !singleton ) {
     h << "    " << className << "(";
     if (cfgFileNameArg)
-       h << " KSharedConfig::Ptr config" << (parameters.isEmpty() ? " = TDEGlobal::sharedConfig()" : ", ");
+       h << " TDESharedConfig::Ptr config" << (parameters.isEmpty() ? " = TDEGlobal::sharedConfig()" : ", ");
     for (TQValueList<Param>::ConstIterator it = parameters.begin();
          it != parameters.end(); ++it)
     {
@@ -1502,7 +1502,7 @@ int main( int argc, char **argv )
   cpp << className << "::" << className << "( ";
   if ( cfgFileNameArg ) {
     if ( !singleton )
-      cpp << " KSharedConfig::Ptr config";
+      cpp << " TDESharedConfig::Ptr config";
     else
       cpp << " const char *config";
     cpp << (parameters.isEmpty() ? " " : ", ");

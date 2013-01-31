@@ -56,11 +56,11 @@ public:
 
 TQPtrDict<Broker> *Broker::s_brokers = 0;
 
-Broker *Broker::openBroker( KSharedConfig *config )
+Broker *Broker::openBroker( TDESharedConfig *config )
 {
-    KSharedConfig::Ptr preventDeletion;
+    TDESharedConfig::Ptr preventDeletion;
     if ( !config ) {
-        preventDeletion = KSharedConfig::openConfig( DEFAULT_CONFIG_FILE );
+        preventDeletion = TDESharedConfig::openConfig( DEFAULT_CONFIG_FILE );
     } else
         preventDeletion = config;
 
@@ -74,9 +74,9 @@ Broker *Broker::openBroker( KSharedConfig *config )
     return broker;
 }
 
-Broker::Broker( KSharedConfig *config )
+Broker::Broker( TDESharedConfig *config )
 {
-    KSharedConfig::Ptr preventDeletion( config );
+    TDESharedConfig::Ptr preventDeletion( config );
     Q_UNUSED( preventDeletion );
 
     if ( !s_brokers )

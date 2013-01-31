@@ -1,6 +1,6 @@
 #include "test.h"
 
-class TestObject : public KShared
+class TestObject : public TDEShared
 {
 public:
    TestObject(const TQCString &_app) : app(_app)

@@ -33,7 +33,7 @@
 264        tdecore (KIconLoader)
 265        tdecore (KIconEffect)
 270        tdeui (KRootPixmap)
-280        tdeui (KSharedPixmap)
+280        tdeui (TDESharedPixmap)
 281        tdeui (TDECModule)
 282        tdeui (KDockWidget)
 290        tdeui (KPixmapIO)

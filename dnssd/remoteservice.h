@@ -43,7 +43,7 @@ class KDNSSD_EXPORT RemoteService : public TQObject, public ServiceBase
 {
 	Q_OBJECT
 public:
-	typedef KSharedPtr<RemoteService> Ptr;
+	typedef TDESharedPtr<RemoteService> Ptr;
 	
 	/**
 	Creates unresolved service from given DNS label
