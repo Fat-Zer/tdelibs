@@ -40,7 +40,7 @@ class TQEvent;
  *
  * @author Carsten Pfeiffer <pfeiffer@kde.org>
  */
-class TDEUI_EXPORT KCompletionBox : public KListBox
+class TDEUI_EXPORT KCompletionBox : public TDEListBox
 {
     Q_OBJECT
     TQ_PROPERTY( bool isTabHandling READ isTabHandling WRITE setTabHandling )
@@ -216,7 +216,7 @@ protected:
     void sizeAndPosition();
 
     /**
-     * Reimplemented from KListBox to get events from the viewport (to hide
+     * Reimplemented from TDEListBox to get events from the viewport (to hide
      * this widget on mouse-click, Escape-presses, etc.
      */
     virtual bool eventFilter( TQObject *, TQEvent * );

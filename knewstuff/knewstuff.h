@@ -26,17 +26,17 @@
 
 class TQObject;
 class TQWidget;
-class KAction;
-class KActionCollection;
+class TDEAction;
+class TDEActionCollection;
 
 namespace KNS {
 class Engine;
 class Entry;
 
-KDE_EXPORT KAction* standardAction(const TQString& what,
+KDE_EXPORT TDEAction* standardAction(const TQString& what,
                         const TQObject *recvr,
                         const char *slot,
-                        KActionCollection* parent,
+                        TDEActionCollection* parent,
                         const char *name = 0);
 }
 

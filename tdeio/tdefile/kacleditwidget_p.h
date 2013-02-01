@@ -47,7 +47,7 @@ class TQCheckBox;
 /**
 @author Sean Harmer
 */
-class KACLListView : public KListView
+class KACLListView : public TDEListView
 {
     Q_OBJECT
     
@@ -168,7 +168,7 @@ private:
 };
 
 
-class KACLListViewItem : public KListViewItem
+class KACLListViewItem : public TDEListViewItem
 {
 public:
     KACLListViewItem( TQListView* parent, KACLListView::EntryType type,

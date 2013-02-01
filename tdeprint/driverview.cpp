@@ -30,7 +30,7 @@
 #include <klocale.h>
 
 DrListView::DrListView(TQWidget *parent, const char *name)
-: KListView(parent,name)
+: TDEListView(parent,name)
 {
 	addColumn("");
 	header()->hide();

@@ -182,7 +182,7 @@ class KateIconBorder : public TQWidget
     mutable TQColor m_oldBackgroundColor;
 };
 
-class KateViewEncodingAction : public KActionMenu
+class KateViewEncodingAction : public TDEActionMenu
 {
   Q_OBJECT
 

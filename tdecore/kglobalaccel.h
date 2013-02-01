@@ -25,19 +25,19 @@
 
 class TQPopupMenu;
 class TQWidget;
-class KAccelAction;
-class KAccelActions;
+class TDEAccelAction;
+class TDEAccelActions;
 class TDEConfigBase;
 
 class TDEGlobalAccelPrivate;
 
 /**
 * TDEGlobalAccel allows you to have global accelerators that are independent of
-* the focused window. Unlike KAccel it does not matter which window is 
+* the focused window. Unlike TDEAccel it does not matter which window is 
 * currently active.
 *
-* @see KAccel
-* @see KAccelShortcutList
+* @see TDEAccel
+* @see TDEAccelShortcutList
 * @see KKeyChooser
 * @see KKeyDialog
 * @short Configurable global shortcut support
@@ -90,8 +90,8 @@ class TDECORE_EXPORT TDEGlobalAccel : public TQObject
 	 * @param bConfigurable Allow the user to change this shortcut if set to 'true'.
 	 * @param bEnabled The action will be activated by the shortcut if set to 'true'.
 	 */
-	KAccelAction* insert( const TQString& sAction, const TQString& sLabel, const TQString& sWhatsThis,
-	                 const KShortcut& cutDef3, const KShortcut& cutDef4,
+	TDEAccelAction* insert( const TQString& sAction, const TQString& sLabel, const TQString& sWhatsThis,
+	                 const TDEShortcut& cutDef3, const TDEShortcut& cutDef4,
 	                 const TQObject* pObjSlot, const char* psMethodSlot,
 	                 bool bConfigurable = true, bool bEnabled = true );
 
@@ -108,9 +108,9 @@ class TDECORE_EXPORT TDEGlobalAccel : public TQObject
 	 * displayed when the user configures shortcuts.
 	 * @param sName of the of the action to insert
 	 * @param sLabel a user-readable (i18n!) name for the action
-	 * @return the KAccelAction of the action
+	 * @return the TDEAccelAction of the action
 	 */
-	KAccelAction* insert( const TQString& sName, const TQString& sLabel );
+	TDEAccelAction* insert( const TQString& sName, const TQString& sLabel );
 
 	/**
 	 * Updates the connections of the accelerations after changing them. 
@@ -123,14 +123,14 @@ class TDECORE_EXPORT TDEGlobalAccel : public TQObject
 	 * @param sAction the name of the action
 	 * @return the shortcut. If the action does not exist a null shortcut will be returned.
 	 */
-	const KShortcut& shortcut( const TQString& sAction ) const;
+	const TDEShortcut& shortcut( const TQString& sAction ) const;
 	/**
 	 * Set the shortcut to be associated with the action named by @p sAction.
 	 * @param sAction the name of the action
 	 * @param shortcut the shortcut for the action
 	 * @return true if successful, false otherwise
 	 */
-	bool setShortcut( const TQString& sAction, const KShortcut &shortcut );
+	bool setShortcut( const TQString& sAction, const TDEShortcut &shortcut );
 	/**
 	 * Set the slot to be called when the shortcut of the action named
 	 * by @p sAction is pressed.
@@ -203,7 +203,7 @@ class TDECORE_EXPORT TDEGlobalAccel : public TQObject
 
 	/**
 	 * @internal -- this a wrapper function to
-	 * KAccelActions::useFourModifierKeys().
+	 * TDEAccelActions::useFourModifierKeys().
 	 */
 	static bool useFourModifierKeys();
         
@@ -224,11 +224,11 @@ class TDECORE_EXPORT TDEGlobalAccel : public TQObject
 
 private:
 
-	KAccelActions& actions();
-	const KAccelActions& actions() const;
+	TDEAccelActions& actions();
+	const TDEAccelActions& actions() const;
 
 	friend class TDEGlobalAccelPrivate;
-	friend class KAccelShortcutList;
+	friend class TDEAccelShortcutList;
 protected:
 	/** \internal */
 	virtual void virtual_hook( int id, void* data );

@@ -33,7 +33,7 @@
 
 #include "tdefiletreeviewtest.moc"
 
-testFrame::testFrame():KMainWindow(0,"Test FileTreeView"),
+testFrame::testFrame():TDEMainWindow(0,"Test FileTreeView"),
 		       dirOnlyMode(false)
 
 {

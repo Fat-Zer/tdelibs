@@ -57,10 +57,10 @@
 #include <kstandarddirs.h>
 #include <kstringhandler.h>
 
-class KToggleAction::KToggleActionPrivate
+class TDEToggleAction::TDEToggleActionPrivate
 {
 public:
-  KToggleActionPrivate()
+  TDEToggleActionPrivate()
   {
     m_checked = false;
     m_checkedGuiItem = 0;
@@ -71,86 +71,86 @@ public:
   KGuiItem* m_checkedGuiItem;
 };
 
-KToggleAction::KToggleAction( const TQString& text, const KShortcut& cut,
+TDEToggleAction::TDEToggleAction( const TQString& text, const TDEShortcut& cut,
                               TQObject* parent,
                               const char* name )
-    : KAction( text, cut, parent, name )
+    : TDEAction( text, cut, parent, name )
 {
-  d = new KToggleActionPrivate;
+  d = new TDEToggleActionPrivate;
 }
 
-KToggleAction::KToggleAction( const TQString& text, const KShortcut& cut,
+TDEToggleAction::TDEToggleAction( const TQString& text, const TDEShortcut& cut,
                               const TQObject* receiver, const char* slot,
                               TQObject* parent, const char* name )
-  : KAction( text, cut, receiver, slot, parent, name )
+  : TDEAction( text, cut, receiver, slot, parent, name )
 {
-  d = new KToggleActionPrivate;
+  d = new TDEToggleActionPrivate;
 }
 
-KToggleAction::KToggleAction( const TQString& text, const TQIconSet& pix,
-                              const KShortcut& cut,
+TDEToggleAction::TDEToggleAction( const TQString& text, const TQIconSet& pix,
+                              const TDEShortcut& cut,
                               TQObject* parent, const char* name )
-  : KAction( text, pix, cut, parent, name )
+  : TDEAction( text, pix, cut, parent, name )
 {
-  d = new KToggleActionPrivate;
+  d = new TDEToggleActionPrivate;
 }
 
-KToggleAction::KToggleAction( const TQString& text, const TQString& pix,
-                              const KShortcut& cut,
+TDEToggleAction::TDEToggleAction( const TQString& text, const TQString& pix,
+                              const TDEShortcut& cut,
                               TQObject* parent, const char* name )
- : KAction( text, pix, cut, parent, name )
+ : TDEAction( text, pix, cut, parent, name )
 {
-  d = new KToggleActionPrivate;
+  d = new TDEToggleActionPrivate;
 }
 
-KToggleAction::KToggleAction( const TQString& text, const TQIconSet& pix,
-                              const KShortcut& cut,
+TDEToggleAction::TDEToggleAction( const TQString& text, const TQIconSet& pix,
+                              const TDEShortcut& cut,
                               const TQObject* receiver,
                               const char* slot, TQObject* parent,
                               const char* name )
-  : KAction( text, pix, cut, receiver, slot, parent, name )
+  : TDEAction( text, pix, cut, receiver, slot, parent, name )
 {
-  d = new KToggleActionPrivate;
+  d = new TDEToggleActionPrivate;
 }
 
-KToggleAction::KToggleAction( const TQString& text, const TQString& pix,
-                              const KShortcut& cut,
+TDEToggleAction::TDEToggleAction( const TQString& text, const TQString& pix,
+                              const TDEShortcut& cut,
                               const TQObject* receiver,
                               const char* slot, TQObject* parent,
                               const char* name )
-  : KAction( text, pix, cut, receiver, slot, parent, name )
+  : TDEAction( text, pix, cut, receiver, slot, parent, name )
 {
-  d = new KToggleActionPrivate;
+  d = new TDEToggleActionPrivate;
 }
 
-KToggleAction::KToggleAction( TQObject* parent, const char* name )
-    : KAction( parent, name )
+TDEToggleAction::TDEToggleAction( TQObject* parent, const char* name )
+    : TDEAction( parent, name )
 {
-  d = new KToggleActionPrivate;
+  d = new TDEToggleActionPrivate;
 }
 
-KToggleAction::~KToggleAction()
+TDEToggleAction::~TDEToggleAction()
 {
   delete d->m_checkedGuiItem;
   delete d;
 }
 
-int KToggleAction::plug( TQWidget* widget, int index )
+int TDEToggleAction::plug( TQWidget* widget, int index )
 {
-  if ( !::tqqt_cast<TQPopupMenu *>( widget ) && !::tqqt_cast<KToolBar *>( widget ) )
+  if ( !::tqqt_cast<TQPopupMenu *>( widget ) && !::tqqt_cast<TDEToolBar *>( widget ) )
   {
-    kdWarning() << "Can not plug KToggleAction in " << widget->className() << endl;
+    kdWarning() << "Can not plug TDEToggleAction in " << widget->className() << endl;
     return -1;
   }
-  if (kapp && !kapp->authorizeKAction(name()))
+  if (kapp && !kapp->authorizeTDEAction(name()))
     return -1;
 
-  int _index = KAction::plug( widget, index );
+  int _index = TDEAction::plug( widget, index );
   if ( _index == -1 )
     return _index;
 
-  if ( ::tqqt_cast<KToolBar *>( widget ) ) {
-    KToolBar *bar = static_cast<KToolBar *>( widget );
+  if ( ::tqqt_cast<TDEToolBar *>( widget ) ) {
+    TDEToolBar *bar = static_cast<TDEToolBar *>( widget );
 
     bar->setToggle( itemId( _index ), true );
     bar->setButton( itemId( _index ), isChecked() );
@@ -162,11 +162,11 @@ int KToggleAction::plug( TQWidget* widget, int index )
   return _index;
 }
 
-void KToggleAction::setChecked( bool c )
+void TDEToggleAction::setChecked( bool c )
 {
   if ( c == d->m_checked )
     return;
-  //kdDebug(129) << "KToggleAction::setChecked(" << c << ") " << this << " " << name() << endl;
+  //kdDebug(129) << "TDEToggleAction::setChecked(" << c << ") " << this << " " << name() << endl;
 
   d->m_checked = c;
 
@@ -180,9 +180,9 @@ void KToggleAction::setChecked( bool c )
     if ( !list.isEmpty() ) {
       TQObjectListIt it( list );
       for( ; it.current(); ++it ) {
-          if ( ::tqqt_cast<KToggleAction *>( it.current() ) && it.current() != this &&
-            static_cast<KToggleAction*>(it.current())->exclusiveGroup() == exclusiveGroup() ) {
-	  KToggleAction *a = static_cast<KToggleAction*>(it.current());
+          if ( ::tqqt_cast<TDEToggleAction *>( it.current() ) && it.current() != this &&
+            static_cast<TDEToggleAction*>(it.current())->exclusiveGroup() == exclusiveGroup() ) {
+	  TDEToggleAction *a = static_cast<TDEToggleAction*>(it.current());
 	  if( a->isChecked() ) {
 	    a->setChecked( false );
 	    emit a->toggled( false );
@@ -193,7 +193,7 @@ void KToggleAction::setChecked( bool c )
   }
 }
 
-void KToggleAction::updateChecked( int id )
+void TDEToggleAction::updateChecked( int id )
 {
   TQWidget *w = container( id );
 
@@ -221,124 +221,124 @@ void KToggleAction::updateChecked( int id )
   }
   else if ( ::tqqt_cast<TQMenuBar *>( w ) ) // not handled in plug...
     static_cast<TQMenuBar*>(w)->setItemChecked( itemId( id ), d->m_checked );
-  else if ( ::tqqt_cast<KToolBar *>( w ) )
+  else if ( ::tqqt_cast<TDEToolBar *>( w ) )
   {
-    TQWidget* r = static_cast<KToolBar*>( w )->getButton( itemId( id ) );
-    if ( r && ::tqqt_cast<KToolBarButton *>( r ) ) {
-      static_cast<KToolBar*>( w )->setButton( itemId( id ), d->m_checked );
+    TQWidget* r = static_cast<TDEToolBar*>( w )->getButton( itemId( id ) );
+    if ( r && ::tqqt_cast<TDEToolBarButton *>( r ) ) {
+      static_cast<TDEToolBar*>( w )->setButton( itemId( id ), d->m_checked );
       if ( d->m_checkedGuiItem && d->m_checkedGuiItem->hasIcon() ) {
         const KGuiItem* gui = d->m_checked ? d->m_checkedGuiItem : &guiItem();
-        static_cast<KToolBar*>( w )->setButtonIconSet( itemId( id ), gui->iconSet( KIcon::Toolbar ) );
+        static_cast<TDEToolBar*>( w )->setButtonIconSet( itemId( id ), gui->iconSet( KIcon::Toolbar ) );
       }
     }
   }
 }
 
-void KToggleAction::slotActivated()
+void TDEToggleAction::slotActivated()
 {
   setChecked( !isChecked() );
-  KAction::slotActivated();
+  TDEAction::slotActivated();
   emit toggled( isChecked() );
 }
 
-bool KToggleAction::isChecked() const
+bool TDEToggleAction::isChecked() const
 {
   return d->m_checked;
 }
 
-void KToggleAction::setExclusiveGroup( const TQString& name )
+void TDEToggleAction::setExclusiveGroup( const TQString& name )
 {
   d->m_exclusiveGroup = name;
 }
 
-TQString KToggleAction::exclusiveGroup() const
+TQString TDEToggleAction::exclusiveGroup() const
 {
   return d->m_exclusiveGroup;
 }
 
-void KToggleAction::setCheckedState( const KGuiItem& checkedItem )
+void TDEToggleAction::setCheckedState( const KGuiItem& checkedItem )
 {
   delete d->m_checkedGuiItem;
   d->m_checkedGuiItem = new KGuiItem( checkedItem );
 }
 
-TQString KToggleAction::toolTip() const
+TQString TDEToggleAction::toolTip() const
 {
   if ( d->m_checkedGuiItem && d->m_checked )
       return d->m_checkedGuiItem->toolTip();
   else
-      return KAction::toolTip();
+      return TDEAction::toolTip();
 }
 
-KRadioAction::KRadioAction( const TQString& text, const KShortcut& cut,
+TDERadioAction::TDERadioAction( const TQString& text, const TDEShortcut& cut,
                             TQObject* parent, const char* name )
-: KToggleAction( text, cut, parent, name )
+: TDEToggleAction( text, cut, parent, name )
 {
 }
 
-KRadioAction::KRadioAction( const TQString& text, const KShortcut& cut,
+TDERadioAction::TDERadioAction( const TQString& text, const TDEShortcut& cut,
                             const TQObject* receiver, const char* slot,
                             TQObject* parent, const char* name )
-: KToggleAction( text, cut, receiver, slot, parent, name )
+: TDEToggleAction( text, cut, receiver, slot, parent, name )
 {
 }
 
-KRadioAction::KRadioAction( const TQString& text, const TQIconSet& pix,
-                            const KShortcut& cut,
+TDERadioAction::TDERadioAction( const TQString& text, const TQIconSet& pix,
+                            const TDEShortcut& cut,
                             TQObject* parent, const char* name )
-: KToggleAction( text, pix, cut, parent, name )
+: TDEToggleAction( text, pix, cut, parent, name )
 {
 }
 
-KRadioAction::KRadioAction( const TQString& text, const TQString& pix,
-                            const KShortcut& cut,
+TDERadioAction::TDERadioAction( const TQString& text, const TQString& pix,
+                            const TDEShortcut& cut,
                             TQObject* parent, const char* name )
-: KToggleAction( text, pix, cut, parent, name )
+: TDEToggleAction( text, pix, cut, parent, name )
 {
 }
 
-KRadioAction::KRadioAction( const TQString& text, const TQIconSet& pix,
-                            const KShortcut& cut,
+TDERadioAction::TDERadioAction( const TQString& text, const TQIconSet& pix,
+                            const TDEShortcut& cut,
                             const TQObject* receiver, const char* slot,
                             TQObject* parent, const char* name )
-: KToggleAction( text, pix, cut, receiver, slot, parent, name )
+: TDEToggleAction( text, pix, cut, receiver, slot, parent, name )
 {
 }
 
-KRadioAction::KRadioAction( const TQString& text, const TQString& pix,
-                            const KShortcut& cut,
+TDERadioAction::TDERadioAction( const TQString& text, const TQString& pix,
+                            const TDEShortcut& cut,
                             const TQObject* receiver, const char* slot,
                             TQObject* parent, const char* name )
-: KToggleAction( text, pix, cut, receiver, slot, parent, name )
+: TDEToggleAction( text, pix, cut, receiver, slot, parent, name )
 {
 }
 
-KRadioAction::KRadioAction( TQObject* parent, const char* name )
-: KToggleAction( parent, name )
+TDERadioAction::TDERadioAction( TQObject* parent, const char* name )
+: TDEToggleAction( parent, name )
 {
 }
 
-void KRadioAction::slotActivated()
+void TDERadioAction::slotActivated()
 {
   if ( isChecked() )
   {
     const TQObject *senderObj = TQT_TQOBJECT_CONST(sender());
 
-    if ( !senderObj || !::tqqt_cast<const KToolBarButton *>( senderObj ) )
+    if ( !senderObj || !::tqqt_cast<const TDEToolBarButton *>( senderObj ) )
       return;
 
-    const_cast<KToolBarButton *>( static_cast<const KToolBarButton *>( TQT_TQWIDGET_CONST(senderObj) ) )->on( true );
+    const_cast<TDEToolBarButton *>( static_cast<const TDEToolBarButton *>( TQT_TQWIDGET_CONST(senderObj) ) )->on( true );
 
     return;
   }
 
-  KToggleAction::slotActivated();
+  TDEToggleAction::slotActivated();
 }
 
-class KSelectAction::KSelectActionPrivate
+class TDESelectAction::TDESelectActionPrivate
 {
 public:
-  KSelectActionPrivate()
+  TDESelectActionPrivate()
   {
     m_edit = false;
     m_menuAccelsEnabled = true;
@@ -373,71 +373,71 @@ public:
   }
 };
 
-KSelectAction::KSelectAction( const TQString& text, const KShortcut& cut,
+TDESelectAction::TDESelectAction( const TQString& text, const TDEShortcut& cut,
                               TQObject* parent, const char* name )
-  : KAction( text, cut, parent, name )
+  : TDEAction( text, cut, parent, name )
 {
-  d = new KSelectActionPrivate;
+  d = new TDESelectActionPrivate;
 }
 
-KSelectAction::KSelectAction( const TQString& text, const KShortcut& cut,
+TDESelectAction::TDESelectAction( const TQString& text, const TDEShortcut& cut,
                               const TQObject* receiver, const char* slot,
                               TQObject* parent, const char* name )
-  : KAction( text, cut, receiver, slot, parent, name )
+  : TDEAction( text, cut, receiver, slot, parent, name )
 {
-  d = new KSelectActionPrivate;
+  d = new TDESelectActionPrivate;
 }
 
-KSelectAction::KSelectAction( const TQString& text, const TQIconSet& pix,
-                              const KShortcut& cut,
+TDESelectAction::TDESelectAction( const TQString& text, const TQIconSet& pix,
+                              const TDEShortcut& cut,
                               TQObject* parent, const char* name )
-  : KAction( text, pix, cut, parent, name )
+  : TDEAction( text, pix, cut, parent, name )
 {
-  d = new KSelectActionPrivate;
+  d = new TDESelectActionPrivate;
 }
 
-KSelectAction::KSelectAction( const TQString& text, const TQString& pix,
-                              const KShortcut& cut,
+TDESelectAction::TDESelectAction( const TQString& text, const TQString& pix,
+                              const TDEShortcut& cut,
                               TQObject* parent, const char* name )
-  : KAction( text, pix, cut, parent, name )
+  : TDEAction( text, pix, cut, parent, name )
 {
-  d = new KSelectActionPrivate;
+  d = new TDESelectActionPrivate;
 }
 
-KSelectAction::KSelectAction( const TQString& text, const TQIconSet& pix,
-                              const KShortcut& cut,
+TDESelectAction::TDESelectAction( const TQString& text, const TQIconSet& pix,
+                              const TDEShortcut& cut,
                               const TQObject* receiver,
                               const char* slot, TQObject* parent,
                               const char* name )
-  : KAction( text, pix, cut, receiver, slot, parent, name )
+  : TDEAction( text, pix, cut, receiver, slot, parent, name )
 {
-  d = new KSelectActionPrivate;
+  d = new TDESelectActionPrivate;
 }
 
-KSelectAction::KSelectAction( const TQString& text, const TQString& pix,
-                              const KShortcut& cut,
+TDESelectAction::TDESelectAction( const TQString& text, const TQString& pix,
+                              const TDEShortcut& cut,
                               const TQObject* receiver,
                               const char* slot, TQObject* parent,
                               const char* name )
-  : KAction( text, pix, cut, receiver, slot, parent, name )
+  : TDEAction( text, pix, cut, receiver, slot, parent, name )
 {
-  d = new KSelectActionPrivate;
+  d = new TDESelectActionPrivate;
 }
 
-KSelectAction::KSelectAction( TQObject* parent, const char* name )
-  : KAction( parent, name )
+TDESelectAction::TDESelectAction( TQObject* parent, const char* name )
+  : TDEAction( parent, name )
 {
-  d = new KSelectActionPrivate;
+  d = new TDESelectActionPrivate;
 }
 
-KSelectAction::~KSelectAction()
+TDESelectAction::~TDESelectAction()
 {
   assert(d);
   delete d->m_menu;
   delete d; d = 0;
 }
 
-void KSelectAction::setCurrentItem( int id )
+void TDESelectAction::setCurrentItem( int id )
 {
     if ( id >= (int)d->m_list.count() ) {
         Q_ASSERT(id < (int)d->m_list.count());
@@ -459,12 +459,12 @@ void KSelectAction::setCurrentItem( int id )
     for( int i = 0; i < len; ++i )
         updateCurrentItem( i );
 
-    //    emit KAction::activated();
+    //    emit TDEAction::activated();
     //    emit activated( currentItem() );
     //    emit activated( currentText() );
 }
 
-void KSelectAction::setComboWidth( int width )
+void TDESelectAction::setComboWidth( int width )
 {
   if ( width < 0 )
     return;
@@ -478,17 +478,17 @@ void KSelectAction::setComboWidth( int width )
 
 }
 
-void KSelectAction::setMaxComboViewCount( int n )
+void TDESelectAction::setMaxComboViewCount( int n )
 {
   d->m_maxComboViewCount = n;
 }
 
-TQPopupMenu* KSelectAction::popupMenu() const
+TQPopupMenu* TDESelectAction::popupMenu() const
 {
-	kdDebug(129) << "KAction::popupMenu()" << endl; // remove -- ellis
+	kdDebug(129) << "TDEAction::popupMenu()" << endl; // remove -- ellis
   if ( !d->m_menu )
   {
-    d->m_menu = new KPopupMenu(0L, "KSelectAction::popupMenu()");
+    d->m_menu = new TDEPopupMenu(0L, "TDESelectAction::popupMenu()");
     setupMenu();
     if ( d->m_current >= 0 )
       d->m_menu->setItemChecked( d->m_current, true );
@@ -497,7 +497,7 @@ TQPopupMenu* KSelectAction::popupMenu() const
   return d->m_menu;
 }
 
-void KSelectAction::setupMenu() const
+void TDESelectAction::setupMenu() const
 {
     if ( !d->m_menu )
         return;
@@ -513,11 +513,11 @@ void KSelectAction::setupMenu() const
     }
 }
 
-void KSelectAction::changeItem( int index, const TQString& text )
+void TDESelectAction::changeItem( int index, const TQString& text )
 {
   if ( index < 0 || index >= (int)d->m_list.count() )
   {
-    kdWarning() << "KSelectAction::changeItem Index out of scope" << endl;
+    kdWarning() << "TDESelectAction::changeItem Index out of scope" << endl;
     return;
   }
 
@@ -531,15 +531,15 @@ void KSelectAction::changeItem( int index, const TQString& text )
     changeItem( i, index, text );
 }
 
-void KSelectAction::changeItem( int id, int index, const TQString& text)
+void TDESelectAction::changeItem( int id, int index, const TQString& text)
 {
   if ( index < 0 )
         return;
 
   TQWidget* w = container( id );
-  if ( ::tqqt_cast<KToolBar *>( w ) )
+  if ( ::tqqt_cast<TDEToolBar *>( w ) )
   {
-     TQWidget* r = (static_cast<KToolBar*>( w ))->getWidget( itemId( id ) );
+     TQWidget* r = (static_cast<TDEToolBar*>( w ))->getWidget( itemId( id ) );
      if ( ::tqqt_cast<TQComboBox *>( r ) )
      {
         TQComboBox *b = static_cast<TQComboBox*>( r );
@@ -548,7 +548,7 @@ void KSelectAction::changeItem( int id, int index, const TQString& text)
   }
 }
 
-void KSelectAction::setItems( const TQStringList &lst )
+void TDESelectAction::setItems( const TQStringList &lst )
 {
   d->m_list = lst;
   d->m_current = -1;
@@ -563,12 +563,12 @@ void KSelectAction::setItems( const TQStringList &lst )
   setEnabled ( lst.count() > 0 || d->m_edit );
 }
 
-TQStringList KSelectAction::items() const
+TQStringList TDESelectAction::items() const
 {
   return d->m_list;
 }
 
-TQString KSelectAction::currentText() const
+TQString TDESelectAction::currentText() const
 {
   if ( currentItem() < 0 )
     return TQString::null;
@@ -576,19 +576,19 @@ TQString KSelectAction::currentText() const
   return d->m_list[ currentItem() ];
 }
 
-int KSelectAction::currentItem() const
+int TDESelectAction::currentItem() const
 {
   return d->m_current;
 }
 
-void KSelectAction::updateCurrentItem( int id )
+void TDESelectAction::updateCurrentItem( int id )
 {
   if ( d->m_current < 0 )
         return;
 
   TQWidget* w = container( id );
-  if ( ::tqqt_cast<KToolBar *>( w ) ) {
-    TQWidget* r = static_cast<KToolBar*>( w )->getWidget( itemId( id ) );
+  if ( ::tqqt_cast<TDEToolBar *>( w ) ) {
+    TQWidget* r = static_cast<TDEToolBar*>( w )->getWidget( itemId( id ) );
     if ( ::tqqt_cast<TQComboBox *>( r ) ) {
       TQComboBox *b = static_cast<TQComboBox*>( r );
       b->setCurrentItem( d->m_current );
@@ -596,16 +596,16 @@ void KSelectAction::updateCurrentItem( int id )
   }
 }
 
-int KSelectAction::comboWidth() const
+int TDESelectAction::comboWidth() const
 {
   return d->m_comboWidth;
 }
 
-void KSelectAction::updateComboWidth( int id )
+void TDESelectAction::updateComboWidth( int id )
 {
   TQWidget* w = container( id );
-  if ( ::tqqt_cast<KToolBar *>( w ) ) {
-    TQWidget* r = static_cast<KToolBar*>( w )->getWidget( itemId( id ) );
+  if ( ::tqqt_cast<TDEToolBar *>( w ) ) {
+    TQWidget* r = static_cast<TDEToolBar*>( w )->getWidget( itemId( id ) );
     if ( ::tqqt_cast<TQComboBox *>( r ) ) {
       TQComboBox *cb = static_cast<TQComboBox*>( r );
       cb->setMinimumWidth( d->m_comboWidth );
@@ -614,12 +614,12 @@ void KSelectAction::updateComboWidth( int id )
   }
 }
 
-void KSelectAction::updateItems( int id )
+void TDESelectAction::updateItems( int id )
 {
-  kdDebug(129) << "KAction::updateItems( " << id << ", lst )" << endl; // remove -- ellis
+  kdDebug(129) << "TDEAction::updateItems( " << id << ", lst )" << endl; // remove -- ellis
   TQWidget* w = container( id );
-  if ( ::tqqt_cast<KToolBar *>( w ) ) {
-    TQWidget* r = static_cast<KToolBar*>( w )->getWidget( itemId( id ) );
+  if ( ::tqqt_cast<TDEToolBar *>( w ) ) {
+    TQWidget* r = static_cast<TDEToolBar*>( w )->getWidget( itemId( id ) );
     if ( ::tqqt_cast<TQComboBox *>( r ) ) {
       TQComboBox *cb = static_cast<TQComboBox*>( r );
       cb->clear();
@@ -636,11 +636,11 @@ void KSelectAction::updateItems( int id )
    }
 }
 
-int KSelectAction::plug( TQWidget *widget, int index )
+int TDESelectAction::plug( TQWidget *widget, int index )
 {
-  if (kapp && !kapp->authorizeKAction(name()))
+  if (kapp && !kapp->authorizeTDEAction(name()))
     return -1;
-  kdDebug(129) << "KSelectAction::plug( " << widget << ", " << index << " )" << endl; // remove -- ellis
+  kdDebug(129) << "TDESelectAction::plug( " << widget << ", " << index << " )" << endl; // remove -- ellis
   if ( ::tqqt_cast<TQPopupMenu *>( widget) )
   {
     // Create the PopupMenu and store it in m_menu
@@ -665,10 +665,10 @@ int KSelectAction::plug( TQWidget *widget, int index )
 
     return containerCount() - 1;
   }
-  else if ( ::tqqt_cast<KToolBar *>( widget ) )
+  else if ( ::tqqt_cast<TDEToolBar *>( widget ) )
   {
-    KToolBar* bar = static_cast<KToolBar*>( widget );
-    int id_ = KAction::getToolButtonID();
+    TDEToolBar* bar = static_cast<TDEToolBar*>( widget );
+    int id_ = TDEAction::getToolButtonID();
     bar->insertCombo( comboItems(), id_, isEditable(),
                       TQT_SIGNAL( activated( const TQString & ) ), this,
                       TQT_SLOT( slotActivated( const TQString & ) ), isEnabled(),
@@ -718,11 +718,11 @@ int KSelectAction::plug( TQWidget *widget, int index )
     return containerCount() - 1;
   }
 
-  kdWarning() << "Can not plug KAction in " << widget->className() << endl;
+  kdWarning() << "Can not plug TDEAction in " << widget->className() << endl;
   return -1;
 }
 
-TQStringList KSelectAction::comboItems() const
+TQStringList TDESelectAction::comboItems() const
 {
   if( d->m_menuAccelsEnabled ) {
     TQStringList lst;
@@ -741,7 +741,7 @@ TQStringList KSelectAction::comboItems() const
     return d->m_list;
 }
 
-void KSelectAction::clear()
+void TDESelectAction::clear()
 {
   if ( d->m_menu )
     d->m_menu->clear();
@@ -751,11 +751,11 @@ void KSelectAction::clear()
     updateClear( i );
 }
 
-void KSelectAction::updateClear( int id )
+void TDESelectAction::updateClear( int id )
 {
   TQWidget* w = container( id );
-  if ( ::tqqt_cast<KToolBar *>( w ) ) {
-    TQWidget* r = static_cast<KToolBar*>( w )->getWidget( itemId( id ) );
+  if ( ::tqqt_cast<TDEToolBar *>( w ) ) {
+    TQWidget* r = static_cast<TDEToolBar*>( w )->getWidget( itemId( id ) );
     if ( ::tqqt_cast<TQComboBox *>( r ) ) {
       TQComboBox *b = static_cast<TQComboBox*>( r );
       b->clear();
@@ -763,7 +763,7 @@ void KSelectAction::updateClear( int id )
   }
 }
 
-void KSelectAction::slotActivated( int id )
+void TDESelectAction::slotActivated( int id )
 {
   if ( d->m_current == id )
     return;
@@ -774,7 +774,7 @@ void KSelectAction::slotActivated( int id )
   TQTimer::singleShot( 0, this, TQT_SLOT( slotActivated() ) );
 }
 
-void KSelectAction::slotActivated( const TQString &text )
+void TDESelectAction::slotActivated( const TQString &text )
 {
   if ( isEditable() )
   {
@@ -796,175 +796,175 @@ void KSelectAction::slotActivated( const TQString &text )
   TQTimer::singleShot( 0, this, TQT_SLOT( slotActivated() ) );
 }
 
-void KSelectAction::slotActivated()
+void TDESelectAction::slotActivated()
 {
-  KAction::slotActivated();
-  kdDebug(129) << "KSelectAction::slotActivated currentItem=" << currentItem() << " currentText=" << currentText() << endl;
+  TDEAction::slotActivated();
+  kdDebug(129) << "TDESelectAction::slotActivated currentItem=" << currentItem() << " currentText=" << currentText() << endl;
   emit activated( currentItem() );
   emit activated( currentText() );
 }
 
-void KSelectAction::setEditable( bool edit )
+void TDESelectAction::setEditable( bool edit )
 {
   d->m_edit = edit;
 }
 
-bool KSelectAction::isEditable() const
+bool TDESelectAction::isEditable() const
 {
   return d->m_edit;
 }
 
-void KSelectAction::setRemoveAmpersandsInCombo( bool b )
+void TDESelectAction::setRemoveAmpersandsInCombo( bool b )
 {
   setMenuAccelsEnabled( b );
 }
 
-bool KSelectAction::removeAmpersandsInCombo() const
+bool TDESelectAction::removeAmpersandsInCombo() const
 {
   return menuAccelsEnabled( );
 }
 
-void KSelectAction::setMenuAccelsEnabled( bool b )
+void TDESelectAction::setMenuAccelsEnabled( bool b )
 {
   d->m_menuAccelsEnabled = b;
 }
 
-bool KSelectAction::menuAccelsEnabled() const
+bool TDESelectAction::menuAccelsEnabled() const
 {
   return d->m_menuAccelsEnabled;
 }
 
-class KListAction::KListActionPrivate
+class TDEListAction::TDEListActionPrivate
 {
 public:
-  KListActionPrivate()
+  TDEListActionPrivate()
   {
     m_current = 0;
   }
   int m_current;
 };
 
-KListAction::KListAction( const TQString& text, const KShortcut& cut,
+TDEListAction::TDEListAction( const TQString& text, const TDEShortcut& cut,
                           TQObject* parent, const char* name )
-  : KSelectAction( text, cut, parent, name )
+  : TDESelectAction( text, cut, parent, name )
 {
-  d = new KListActionPrivate;
+  d = new TDEListActionPrivate;
 }
 
-KListAction::KListAction( const TQString& text, const KShortcut& cut,
+TDEListAction::TDEListAction( const TQString& text, const TDEShortcut& cut,
                           const TQObject* receiver, const char* slot,
                           TQObject* parent, const char* name )
-  : KSelectAction( text, cut, parent, name )
+  : TDESelectAction( text, cut, parent, name )
 {
-  d = new KListActionPrivate;
+  d = new TDEListActionPrivate;
   if ( receiver )
     connect( this, TQT_SIGNAL( activated( int ) ), receiver, slot );
 }
 
-KListAction::KListAction( const TQString& text, const TQIconSet& pix,
-                          const KShortcut& cut,
+TDEListAction::TDEListAction( const TQString& text, const TQIconSet& pix,
+                          const TDEShortcut& cut,
                           TQObject* parent, const char* name )
-  : KSelectAction( text, pix, cut, parent, name )
+  : TDESelectAction( text, pix, cut, parent, name )
 {
-  d = new KListActionPrivate;
+  d = new TDEListActionPrivate;
 }
 
-KListAction::KListAction( const TQString& text, const TQString& pix,
-                          const KShortcut& cut,
+TDEListAction::TDEListAction( const TQString& text, const TQString& pix,
+                          const TDEShortcut& cut,
                           TQObject* parent, const char* name )
-  : KSelectAction( text, pix, cut, parent, name )
+  : TDESelectAction( text, pix, cut, parent, name )
 {
-  d = new KListActionPrivate;
+  d = new TDEListActionPrivate;
 }
 
-KListAction::KListAction( const TQString& text, const TQIconSet& pix,
-                          const KShortcut& cut, const TQObject* receiver,
+TDEListAction::TDEListAction( const TQString& text, const TQIconSet& pix,
+                          const TDEShortcut& cut, const TQObject* receiver,
                           const char* slot, TQObject* parent,
                           const char* name )
-  : KSelectAction( text, pix, cut, parent, name )
+  : TDESelectAction( text, pix, cut, parent, name )
 {
-  d = new KListActionPrivate;
+  d = new TDEListActionPrivate;
   if ( receiver )
     connect( this, TQT_SIGNAL( activated( int ) ), receiver, slot );
 }
 
-KListAction::KListAction( const TQString& text, const TQString& pix,
-                          const KShortcut& cut, const TQObject* receiver,
+TDEListAction::TDEListAction( const TQString& text, const TQString& pix,
+                          const TDEShortcut& cut, const TQObject* receiver,
                           const char* slot, TQObject* parent,
                           const char* name )
-  : KSelectAction( text, pix, cut, parent, name )
+  : TDESelectAction( text, pix, cut, parent, name )
 {
-  d = new KListActionPrivate;
+  d = new TDEListActionPrivate;
   if ( receiver )
     connect( this, TQT_SIGNAL( activated( int ) ), receiver, slot );
 }
 
-KListAction::KListAction( TQObject* parent, const char* name )
-  : KSelectAction( parent, name )
+TDEListAction::TDEListAction( TQObject* parent, const char* name )
+  : TDESelectAction( parent, name )
 {
-  d = new KListActionPrivate;
+  d = new TDEListActionPrivate;
 }
 
-KListAction::~KListAction()
+TDEListAction::~TDEListAction()
 {
   delete d; d = 0;
 }
 
-void KListAction::setCurrentItem( int index )
+void TDEListAction::setCurrentItem( int index )
 {
-  KSelectAction::setCurrentItem( index );
+  TDESelectAction::setCurrentItem( index );
   d->m_current = index;
 
-  //  emit KAction::activated();
+  //  emit TDEAction::activated();
   //  emit activated( currentItem() );
   // emit activated( currentText() );
 }
 
-TQString KListAction::currentText() const
+TQString TDEListAction::currentText() const
 {
-  return KSelectAction::currentText();
+  return TDESelectAction::currentText();
 }
 
-int KListAction::currentItem() const
+int TDEListAction::currentItem() const
 {
   return d->m_current;
 }
 
-class KRecentFilesAction::KRecentFilesActionPrivate
+class TDERecentFilesAction::TDERecentFilesActionPrivate
 {
 public:
-  KRecentFilesActionPrivate()
+  TDERecentFilesActionPrivate()
   {
     m_maxItems = 0;
     m_popup = 0;
   }
   uint m_maxItems;
-  KPopupMenu *m_popup;
+  TDEPopupMenu *m_popup;
   TQMap<TQString, TQString> m_shortNames;
   TQMap<TQString, KURL> m_urls;
 };
 
-KRecentFilesAction::KRecentFilesAction( const TQString& text,
-                                        const KShortcut& cut,
+TDERecentFilesAction::TDERecentFilesAction( const TQString& text,
+                                        const TDEShortcut& cut,
                                         TQObject* parent, const char* name,
                                         uint maxItems )
-  : KListAction( text, cut, parent, name)
+  : TDEListAction( text, cut, parent, name)
 {
-  d = new KRecentFilesActionPrivate;
+  d = new TDERecentFilesActionPrivate;
   d->m_maxItems = maxItems;
 
   init();
 }
 
-KRecentFilesAction::KRecentFilesAction( const TQString& text,
-                                        const KShortcut& cut,
+TDERecentFilesAction::TDERecentFilesAction( const TQString& text,
+                                        const TDEShortcut& cut,
                                         const TQObject* receiver,
                                         const char* slot,
                                         TQObject* parent, const char* name,
                                         uint maxItems )
-  : KListAction( text, cut, parent, name)
+  : TDEListAction( text, cut, parent, name)
 {
-  d = new KRecentFilesActionPrivate;
+  d = new TDERecentFilesActionPrivate;
   d->m_maxItems = maxItems;
 
   init();
@@ -974,42 +974,42 @@ KRecentFilesAction::KRecentFilesAction( const TQString& text,
              receiver, slot );
 }
 
-KRecentFilesAction::KRecentFilesAction( const TQString& text,
+TDERecentFilesAction::TDERecentFilesAction( const TQString& text,
                                         const TQIconSet& pix,
-                                        const KShortcut& cut,
+                                        const TDEShortcut& cut,
                                         TQObject* parent, const char* name,
                                         uint maxItems )
-  : KListAction( text, pix, cut, parent, name)
+  : TDEListAction( text, pix, cut, parent, name)
 {
-  d = new KRecentFilesActionPrivate;
+  d = new TDERecentFilesActionPrivate;
   d->m_maxItems = maxItems;
 
   init();
 }
 
-KRecentFilesAction::KRecentFilesAction( const TQString& text,
+TDERecentFilesAction::TDERecentFilesAction( const TQString& text,
                                         const TQString& pix,
-                                        const KShortcut& cut,
+                                        const TDEShortcut& cut,
                                         TQObject* parent, const char* name,
                                         uint maxItems )
-  : KListAction( text, pix, cut, parent, name)
+  : TDEListAction( text, pix, cut, parent, name)
 {
-  d = new KRecentFilesActionPrivate;
+  d = new TDERecentFilesActionPrivate;
   d->m_maxItems = maxItems;
 
   init();
 }
 
-KRecentFilesAction::KRecentFilesAction( const TQString& text,
+TDERecentFilesAction::TDERecentFilesAction( const TQString& text,
                                         const TQIconSet& pix,
-                                        const KShortcut& cut,
+                                        const TDEShortcut& cut,
                                         const TQObject* receiver,
                                         const char* slot,
                                         TQObject* parent, const char* name,
                                         uint maxItems )
-  : KListAction( text, pix, cut, parent, name)
+  : TDEListAction( text, pix, cut, parent, name)
 {
-  d = new KRecentFilesActionPrivate;
+  d = new TDERecentFilesActionPrivate;
   d->m_maxItems = maxItems;
 
   init();
@@ -1019,16 +1019,16 @@ KRecentFilesAction::KRecentFilesAction( const TQString& text,
              receiver, slot );
 }
 
-KRecentFilesAction::KRecentFilesAction( const TQString& text,
+TDERecentFilesAction::TDERecentFilesAction( const TQString& text,
                                         const TQString& pix,
-                                        const KShortcut& cut,
+                                        const TDEShortcut& cut,
                                         const TQObject* receiver,
                                         const char* slot,
                                         TQObject* parent, const char* name,
                                         uint maxItems )
-  : KListAction( text, pix, cut, parent, name)
+  : TDEListAction( text, pix, cut, parent, name)
 {
-  d = new KRecentFilesActionPrivate;
+  d = new TDERecentFilesActionPrivate;
   d->m_maxItems = maxItems;
 
   init();
@@ -1038,20 +1038,20 @@ KRecentFilesAction::KRecentFilesAction( const TQString& text,
              receiver, slot );
 }
 
-KRecentFilesAction::KRecentFilesAction( TQObject* parent, const char* name,
+TDERecentFilesAction::TDERecentFilesAction( TQObject* parent, const char* name,
                                         uint maxItems )
-  : KListAction( parent, name )
+  : TDEListAction( parent, name )
 {
-  d = new KRecentFilesActionPrivate;
+  d = new TDERecentFilesActionPrivate;
   d->m_maxItems = maxItems;
 
   init();
 }
 
-void KRecentFilesAction::init()
+void TDERecentFilesAction::init()
 {
-  KRecentFilesAction *that = const_cast<KRecentFilesAction*>(this);
-  that->d->m_popup = new KPopupMenu;
+  TDERecentFilesAction *that = const_cast<TDERecentFilesAction*>(this);
+  that->d->m_popup = new TDEPopupMenu;
   connect(d->m_popup, TQT_SIGNAL(aboutToShow()), this, TQT_SLOT(menuAboutToShow()));
   connect(d->m_popup, TQT_SIGNAL(activated(int)), this, TQT_SLOT(menuItemActivated(int)));
   connect( this, TQT_SIGNAL( activated( const TQString& ) ),
@@ -1060,20 +1060,20 @@ void KRecentFilesAction::init()
   setMenuAccelsEnabled( false );
 }
 
-KRecentFilesAction::~KRecentFilesAction()
+TDERecentFilesAction::~TDERecentFilesAction()
 {
   delete d->m_popup;
   delete d; d = 0;
 }
 
-uint KRecentFilesAction::maxItems() const
+uint TDERecentFilesAction::maxItems() const
 {
     return d->m_maxItems;
 }
 
-void KRecentFilesAction::setMaxItems( uint maxItems )
+void TDERecentFilesAction::setMaxItems( uint maxItems )
 {
-    TQStringList lst = KSelectAction::items();
+    TQStringList lst = TDESelectAction::items();
     uint oldCount   = lst.count();
 
     // set new maxItems
@@ -1094,17 +1094,17 @@ void KRecentFilesAction::setMaxItems( uint maxItems )
         setItems( lst );
 }
 
-void KRecentFilesAction::addURL( const KURL& url )
+void TDERecentFilesAction::addURL( const KURL& url )
 {
     addURL( url, url.fileName() );
 }
 
-void KRecentFilesAction::addURL( const KURL& url, const TQString& name )
+void TDERecentFilesAction::addURL( const KURL& url, const TQString& name )
 {
     if ( url.isLocalFile() && !TDEGlobal::dirs()->relativeLocation("tmp", url.path()).startsWith("/"))
        return;
     const TQString file = url.pathOrURL();
-    TQStringList lst = KSelectAction::items();
+    TQStringList lst = TDESelectAction::items();
 
     // remove file if already in list
     const TQStringList::Iterator end = lst.end();
@@ -1137,9 +1137,9 @@ void KRecentFilesAction::addURL( const KURL& url, const TQString& name )
     setItems( lst );
 }
 
-void KRecentFilesAction::removeURL( const KURL& url )
+void TDERecentFilesAction::removeURL( const KURL& url )
 {
-    TQStringList lst = KSelectAction::items();
+    TQStringList lst = TDESelectAction::items();
     TQString     file = url.pathOrURL();
 
     // remove url
@@ -1157,14 +1157,14 @@ void KRecentFilesAction::removeURL( const KURL& url )
     }
 }
 
-void KRecentFilesAction::clearURLList()
+void TDERecentFilesAction::clearURLList()
 {
     clear();
     d->m_shortNames.clear();
     d->m_urls.clear();
 }
 
-void KRecentFilesAction::loadEntries( TDEConfig* config, TQString groupname)
+void TDERecentFilesAction::loadEntries( TDEConfig* config, TQString groupname)
 {
     TQString     key;
     TQString     value;
@@ -1209,12 +1209,12 @@ void KRecentFilesAction::loadEntries( TDEConfig* config, TQString groupname)
     config->setGroup( oldGroup );
 }
 
-void KRecentFilesAction::saveEntries( TDEConfig* config, TQString groupname )
+void TDERecentFilesAction::saveEntries( TDEConfig* config, TQString groupname )
 {
     TQString     key;
     TQString     value;
     TQString     oldGroup;
-    TQStringList lst = KSelectAction::items();
+    TQStringList lst = TDESelectAction::items();
 
     oldGroup = config->group();
 
@@ -1238,7 +1238,7 @@ void KRecentFilesAction::saveEntries( TDEConfig* config, TQString groupname )
     config->setGroup( oldGroup );
 }
 
-void KRecentFilesAction::itemSelected( const TQString& text )
+void TDERecentFilesAction::itemSelected( const TQString& text )
 {
     //return a copy of the URL since the slot where it is connected might call
     //addURL or removeURL where the d->m_urls.erase( title ) could destroy the
@@ -1246,7 +1246,7 @@ void KRecentFilesAction::itemSelected( const TQString& text )
     emit urlSelected( KURL(d->m_urls[ text ]) );
 }
 
-void KRecentFilesAction::menuItemActivated( int id )
+void TDERecentFilesAction::menuItemActivated( int id )
 {
     TQString text = d->m_popup->text(id);
     //return a copy of the URL since the slot where it is connected might call
@@ -1255,28 +1255,28 @@ void KRecentFilesAction::menuItemActivated( int id )
     emit urlSelected( KURL(d->m_urls[ text ]) );
 }
 
-void KRecentFilesAction::menuAboutToShow()
+void TDERecentFilesAction::menuAboutToShow()
 {
-    KPopupMenu *menu = d->m_popup;
+    TDEPopupMenu *menu = d->m_popup;
     menu->clear();
-    TQStringList list = KSelectAction::items();
+    TQStringList list = TDESelectAction::items();
     for ( TQStringList::Iterator it = list.begin(); it != list.end(); ++it )
     {
        menu->insertItem(*it);
     }
 }
 
-int KRecentFilesAction::plug( TQWidget *widget, int index )
+int TDERecentFilesAction::plug( TQWidget *widget, int index )
 {
-  if (kapp && !kapp->authorizeKAction(name()))
+  if (kapp && !kapp->authorizeTDEAction(name()))
     return -1;
-  // This is very related to KActionMenu::plug.
-  // In fact this class could be an interesting base class for KActionMenu
-  if ( ::tqqt_cast<KToolBar *>( widget ) )
+  // This is very related to TDEActionMenu::plug.
+  // In fact this class could be an interesting base class for TDEActionMenu
+  if ( ::tqqt_cast<TDEToolBar *>( widget ) )
   {
-    KToolBar *bar = (KToolBar *)widget;
+    TDEToolBar *bar = (TDEToolBar *)widget;
 
-    int id_ = KAction::getToolButtonID();
+    int id_ = TDEAction::getToolButtonID();
 
     TDEInstance * instance;
     if ( m_parentCollection )
@@ -1300,36 +1300,36 @@ int KRecentFilesAction::plug( TQWidget *widget, int index )
     return containerCount() - 1;
   }
 
-  return KListAction::plug( widget, index );
+  return TDEListAction::plug( widget, index );
 }
 
-void KRecentFilesAction::slotClicked()
+void TDERecentFilesAction::slotClicked()
 {
-  KAction::slotActivated();
+  TDEAction::slotActivated();
 }
 
-void KRecentFilesAction::slotActivated(const TQString& text)
+void TDERecentFilesAction::slotActivated(const TQString& text)
 {
-  KListAction::slotActivated(text);
+  TDEListAction::slotActivated(text);
 }
 
 
-void KRecentFilesAction::slotActivated(int id)
+void TDERecentFilesAction::slotActivated(int id)
 {
-  KListAction::slotActivated(id);
+  TDEListAction::slotActivated(id);
 }
 
 
-void KRecentFilesAction::slotActivated()
+void TDERecentFilesAction::slotActivated()
 {
   emit activated( currentItem() );
   emit activated( currentText() );
 }
 
 //KDE4: rename to urls() and return a KURL::List
-TQStringList KRecentFilesAction::items() const
+TQStringList TDERecentFilesAction::items() const
 {
-    TQStringList lst = KSelectAction::items();
+    TQStringList lst = TDESelectAction::items();
     TQStringList result;
 
     for( unsigned int i = 1 ; i <= lst.count() ; i++ )
@@ -1341,130 +1341,130 @@ TQStringList KRecentFilesAction::items() const
 }
 
 //KDE4: remove
-TQStringList KRecentFilesAction::completeItems() const
+TQStringList TDERecentFilesAction::completeItems() const
 {
-    return KSelectAction::items();
+    return TDESelectAction::items();
 }
 
 
-class KFontAction::KFontActionPrivate
+class TDEFontAction::TDEFontActionPrivate
 {
 public:
-  KFontActionPrivate()
+  TDEFontActionPrivate()
   {
   }
   TQStringList m_fonts;
 };
 
-KFontAction::KFontAction( const TQString& text,
-                          const KShortcut& cut, TQObject* parent,
+TDEFontAction::TDEFontAction( const TQString& text,
+                          const TDEShortcut& cut, TQObject* parent,
                           const char* name )
-  : KSelectAction( text, cut, parent, name )
+  : TDESelectAction( text, cut, parent, name )
 {
-    d = new KFontActionPrivate;
-    KFontChooser::getFontList( d->m_fonts, 0 );
-    KSelectAction::setItems( d->m_fonts );
+    d = new TDEFontActionPrivate;
+    TDEFontChooser::getFontList( d->m_fonts, 0 );
+    TDESelectAction::setItems( d->m_fonts );
     setEditable( true );
 }
 
-KFontAction::KFontAction( const TQString& text, const KShortcut& cut,
+TDEFontAction::TDEFontAction( const TQString& text, const TDEShortcut& cut,
                           const TQObject* receiver, const char* slot,
                           TQObject* parent, const char* name )
-    : KSelectAction( text, cut, receiver, slot, parent, name )
+    : TDESelectAction( text, cut, receiver, slot, parent, name )
 {
-    d = new KFontActionPrivate;
-    KFontChooser::getFontList( d->m_fonts, 0 );
-    KSelectAction::setItems( d->m_fonts );
+    d = new TDEFontActionPrivate;
+    TDEFontChooser::getFontList( d->m_fonts, 0 );
+    TDESelectAction::setItems( d->m_fonts );
     setEditable( true );
 }
 
-KFontAction::KFontAction( const TQString& text, const TQIconSet& pix,
-                          const KShortcut& cut,
+TDEFontAction::TDEFontAction( const TQString& text, const TQIconSet& pix,
+                          const TDEShortcut& cut,
                           TQObject* parent, const char* name )
-    : KSelectAction( text, pix, cut, parent, name )
+    : TDESelectAction( text, pix, cut, parent, name )
 {
-    d = new KFontActionPrivate;
-    KFontChooser::getFontList( d->m_fonts, 0 );
-    KSelectAction::setItems( d->m_fonts );
+    d = new TDEFontActionPrivate;
+    TDEFontChooser::getFontList( d->m_fonts, 0 );
+    TDESelectAction::setItems( d->m_fonts );
     setEditable( true );
 }
 
-KFontAction::KFontAction( const TQString& text, const TQString& pix,
-                          const KShortcut& cut,
+TDEFontAction::TDEFontAction( const TQString& text, const TQString& pix,
+                          const TDEShortcut& cut,
                           TQObject* parent, const char* name )
-    : KSelectAction( text, pix, cut, parent, name )
+    : TDESelectAction( text, pix, cut, parent, name )
 {
-    d = new KFontActionPrivate;
-    KFontChooser::getFontList( d->m_fonts, 0 );
-    KSelectAction::setItems( d->m_fonts );
+    d = new TDEFontActionPrivate;
+    TDEFontChooser::getFontList( d->m_fonts, 0 );
+    TDESelectAction::setItems( d->m_fonts );
     setEditable( true );
 }
 
-KFontAction::KFontAction( const TQString& text, const TQIconSet& pix,
-                          const KShortcut& cut,
+TDEFontAction::TDEFontAction( const TQString& text, const TQIconSet& pix,
+                          const TDEShortcut& cut,
                           const TQObject* receiver, const char* slot,
                           TQObject* parent, const char* name )
-    : KSelectAction( text, pix, cut, receiver, slot, parent, name )
+    : TDESelectAction( text, pix, cut, receiver, slot, parent, name )
 {
-    d = new KFontActionPrivate;
-    KFontChooser::getFontList( d->m_fonts, 0 );
-    KSelectAction::setItems( d->m_fonts );
+    d = new TDEFontActionPrivate;
+    TDEFontChooser::getFontList( d->m_fonts, 0 );
+    TDESelectAction::setItems( d->m_fonts );
     setEditable( true );
 }
 
-KFontAction::KFontAction( const TQString& text, const TQString& pix,
-                          const KShortcut& cut,
+TDEFontAction::TDEFontAction( const TQString& text, const TQString& pix,
+                          const TDEShortcut& cut,
                           const TQObject* receiver, const char* slot,
                           TQObject* parent, const char* name )
-    : KSelectAction( text, pix, cut, receiver, slot, parent, name )
+    : TDESelectAction( text, pix, cut, receiver, slot, parent, name )
 {
-    d = new KFontActionPrivate;
-    KFontChooser::getFontList( d->m_fonts, 0 );
-    KSelectAction::setItems( d->m_fonts );
+    d = new TDEFontActionPrivate;
+    TDEFontChooser::getFontList( d->m_fonts, 0 );
+    TDESelectAction::setItems( d->m_fonts );
     setEditable( true );
 }
 
-KFontAction::KFontAction( uint fontListCriteria, const TQString& text,
-                          const KShortcut& cut, TQObject* parent,
+TDEFontAction::TDEFontAction( uint fontListCriteria, const TQString& text,
+                          const TDEShortcut& cut, TQObject* parent,
                           const char* name )
-    : KSelectAction( text, cut, parent, name )
+    : TDESelectAction( text, cut, parent, name )
 {
-    d = new KFontActionPrivate;
-    KFontChooser::getFontList( d->m_fonts, fontListCriteria );
-    KSelectAction::setItems( d->m_fonts );
+    d = new TDEFontActionPrivate;
+    TDEFontChooser::getFontList( d->m_fonts, fontListCriteria );
+    TDESelectAction::setItems( d->m_fonts );
     setEditable( true );
 }
 
-KFontAction::KFontAction( uint fontListCriteria, const TQString& text, const TQString& pix,
-                          const KShortcut& cut,
+TDEFontAction::TDEFontAction( uint fontListCriteria, const TQString& text, const TQString& pix,
+                          const TDEShortcut& cut,
                           TQObject* parent, const char* name )
-    : KSelectAction( text, pix, cut, parent, name )
+    : TDESelectAction( text, pix, cut, parent, name )
 {
-    d = new KFontActionPrivate;
-    KFontChooser::getFontList( d->m_fonts, fontListCriteria );
-    KSelectAction::setItems( d->m_fonts );
+    d = new TDEFontActionPrivate;
+    TDEFontChooser::getFontList( d->m_fonts, fontListCriteria );
+    TDESelectAction::setItems( d->m_fonts );
     setEditable( true );
 }
 
-KFontAction::KFontAction( TQObject* parent, const char* name )
-  : KSelectAction( parent, name )
+TDEFontAction::TDEFontAction( TQObject* parent, const char* name )
+  : TDESelectAction( parent, name )
 {
-    d = new KFontActionPrivate;
-    KFontChooser::getFontList( d->m_fonts, 0 );
-    KSelectAction::setItems( d->m_fonts );
+    d = new TDEFontActionPrivate;
+    TDEFontChooser::getFontList( d->m_fonts, 0 );
+    TDESelectAction::setItems( d->m_fonts );
     setEditable( true );
 }
 
-KFontAction::~KFontAction()
+TDEFontAction::~TDEFontAction()
 {
     delete d;
     d = 0;
 }
 
 /*
- * Maintenance note: Keep in sync with KFontCombo::setCurrentFont()
+ * Maintenance note: Keep in sync with TDEFontCombo::setCurrentFont()
  */
-void KFontAction::setFont( const TQString &family )
+void TDEFontAction::setFont( const TQString &family )
 {
     TQString lowerName = family.lower();
     int i = 0;
@@ -1521,15 +1521,15 @@ void KFontAction::setFont( const TQString &family )
        kdDebug(129) << "Font not found " << family.lower() << endl;
 }
 
-int KFontAction::plug( TQWidget *w, int index )
+int TDEFontAction::plug( TQWidget *w, int index )
 {
-  if (kapp && !kapp->authorizeKAction(name()))
+  if (kapp && !kapp->authorizeTDEAction(name()))
     return -1;
-  if ( ::tqqt_cast<KToolBar *>( w ) )
+  if ( ::tqqt_cast<TDEToolBar *>( w ) )
   {
-    KToolBar* bar = static_cast<KToolBar*>( w );
-    int id_ = KAction::getToolButtonID();
-    KFontCombo *cb = new KFontCombo( items(), bar );
+    TDEToolBar* bar = static_cast<TDEToolBar*>( w );
+    int id_ = TDEAction::getToolButtonID();
+    TDEFontCombo *cb = new TDEFontCombo( items(), bar );
     connect( cb, TQT_SIGNAL( activated( const TQString & ) ),
              TQT_SLOT( slotActivated( const TQString & ) ) );
     cb->setEnabled( isEnabled() );
@@ -1544,85 +1544,85 @@ int KFontAction::plug( TQWidget *w, int index )
 
     return containerCount() - 1;
   }
-  else return KSelectAction::plug( w, index );
+  else return TDESelectAction::plug( w, index );
 }
 
-class KFontSizeAction::KFontSizeActionPrivate
+class TDEFontSizeAction::TDEFontSizeActionPrivate
 {
 public:
-  KFontSizeActionPrivate()
+  TDEFontSizeActionPrivate()
   {
   }
 };
 
-KFontSizeAction::KFontSizeAction( const TQString& text,
-                                  const KShortcut& cut,
+TDEFontSizeAction::TDEFontSizeAction( const TQString& text,
+                                  const TDEShortcut& cut,
                                   TQObject* parent, const char* name )
-  : KSelectAction( text, cut, parent, name )
+  : TDESelectAction( text, cut, parent, name )
 {
   init();
 }
 
-KFontSizeAction::KFontSizeAction( const TQString& text,
-                                  const KShortcut& cut,
+TDEFontSizeAction::TDEFontSizeAction( const TQString& text,
+                                  const TDEShortcut& cut,
                                   const TQObject* receiver, const char* slot,
                                   TQObject* parent, const char* name )
-  : KSelectAction( text, cut, receiver, slot, parent, name )
+  : TDESelectAction( text, cut, receiver, slot, parent, name )
 {
   init();
 }
 
-KFontSizeAction::KFontSizeAction( const TQString& text, const TQIconSet& pix,
-                                  const KShortcut& cut,
+TDEFontSizeAction::TDEFontSizeAction( const TQString& text, const TQIconSet& pix,
+                                  const TDEShortcut& cut,
                                   TQObject* parent, const char* name )
-  : KSelectAction( text, pix, cut, parent, name )
+  : TDESelectAction( text, pix, cut, parent, name )
 {
   init();
 }
 
-KFontSizeAction::KFontSizeAction( const TQString& text, const TQString& pix,
-                                  const KShortcut& cut,
+TDEFontSizeAction::TDEFontSizeAction( const TQString& text, const TQString& pix,
+                                  const TDEShortcut& cut,
                                   TQObject* parent, const char* name )
-  : KSelectAction( text, pix, cut, parent, name )
+  : TDESelectAction( text, pix, cut, parent, name )
 {
   init();
 }
 
-KFontSizeAction::KFontSizeAction( const TQString& text, const TQIconSet& pix,
-                                  const KShortcut& cut,
+TDEFontSizeAction::TDEFontSizeAction( const TQString& text, const TQIconSet& pix,
+                                  const TDEShortcut& cut,
                                   const TQObject* receiver,
                                   const char* slot, TQObject* parent,
                                   const char* name )
-    : KSelectAction( text, pix, cut, receiver, slot, parent, name )
+    : TDESelectAction( text, pix, cut, receiver, slot, parent, name )
 {
   init();
 }
 
-KFontSizeAction::KFontSizeAction( const TQString& text, const TQString& pix,
-                                  const KShortcut& cut,
+TDEFontSizeAction::TDEFontSizeAction( const TQString& text, const TQString& pix,
+                                  const TDEShortcut& cut,
                                   const TQObject* receiver,
                                   const char* slot, TQObject* parent,
                                   const char* name )
-  : KSelectAction( text, pix, cut, receiver, slot, parent, name )
+  : TDESelectAction( text, pix, cut, receiver, slot, parent, name )
 {
   init();
 }
 
-KFontSizeAction::KFontSizeAction( TQObject* parent, const char* name )
-  : KSelectAction( parent, name )
+TDEFontSizeAction::TDEFontSizeAction( TQObject* parent, const char* name )
+  : TDESelectAction( parent, name )
 {
   init();
 }
 
-KFontSizeAction::~KFontSizeAction()
+TDEFontSizeAction::~TDEFontSizeAction()
 {
     delete d;
     d = 0;
 }
 
-void KFontSizeAction::init()
+void TDEFontSizeAction::init()
 {
-    d = new KFontSizeActionPrivate;
+    d = new TDEFontSizeActionPrivate;
 
     setEditable( true );
     TQFontDatabase fontDB;
@@ -1634,7 +1634,7 @@ void KFontSizeAction::init()
     setItems( lst );
 }
 
-void KFontSizeAction::setFontSize( int size )
+void TDEFontSizeAction::setFontSize( int size )
 {
     if ( size == fontSize() ) {
         setCurrentItem( items().findIndex( TQString::number( size ) ) );
@@ -1642,7 +1642,7 @@ void KFontSizeAction::setFontSize( int size )
     }
 
     if ( size < 1 ) {
-        kdWarning() << "KFontSizeAction: Size " << size << " is out of range" << endl;
+        kdWarning() << "TDEFontSizeAction: Size " << size << " is out of range" << endl;
         return;
     }
 
@@ -1662,7 +1662,7 @@ void KFontSizeAction::setFontSize( int size )
         TQStringList strLst;
         for (TQValueList<int>::Iterator it = lst.begin() ; it != lst.end() ; ++it)
             strLst.append( TQString::number(*it) );
-        KSelectAction::setItems( strLst );
+        TDESelectAction::setItems( strLst );
         // Find new current item
         index = lst.findIndex( size );
         setCurrentItem( index );
@@ -1671,130 +1671,130 @@ void KFontSizeAction::setFontSize( int size )
         setCurrentItem( index );
 
 
-    //emit KAction::activated();
+    //emit TDEAction::activated();
     //emit activated( index );
     //emit activated( TQString::number( size ) );
     //emit fontSizeChanged( size );
 }
 
-int KFontSizeAction::fontSize() const
+int TDEFontSizeAction::fontSize() const
 {
   return currentText().toInt();
 }
 
-void KFontSizeAction::slotActivated( int index )
+void TDEFontSizeAction::slotActivated( int index )
 {
-  KSelectAction::slotActivated( index );
+  TDESelectAction::slotActivated( index );
 
   emit fontSizeChanged( items()[ index ].toInt() );
 }
 
-void KFontSizeAction::slotActivated( const TQString& size )
+void TDEFontSizeAction::slotActivated( const TQString& size )
 {
   setFontSize( size.toInt() ); // insert sorted first
-  KSelectAction::slotActivated( size );
+  TDESelectAction::slotActivated( size );
   emit fontSizeChanged( size.toInt() );
 }
 
-class KActionMenu::KActionMenuPrivate
+class TDEActionMenu::TDEActionMenuPrivate
 {
 public:
-  KActionMenuPrivate()
+  TDEActionMenuPrivate()
   {
-    m_popup = new KPopupMenu(0L,"KActionMenu::KActionMenuPrivate");
+    m_popup = new TDEPopupMenu(0L,"TDEActionMenu::TDEActionMenuPrivate");
     m_delayed = true;
     m_stickyMenu = true;
   }
-  ~KActionMenuPrivate()
+  ~TDEActionMenuPrivate()
   {
     delete m_popup; m_popup = 0;
   }
-  KPopupMenu *m_popup;
+  TDEPopupMenu *m_popup;
   bool m_delayed;
   bool m_stickyMenu;
 };
 
-KActionMenu::KActionMenu( TQObject* parent, const char* name )
-  : KAction( parent, name )
+TDEActionMenu::TDEActionMenu( TQObject* parent, const char* name )
+  : TDEAction( parent, name )
 {
-  d = new KActionMenuPrivate;
+  d = new TDEActionMenuPrivate;
   setShortcutConfigurable( false );
 }
 
-KActionMenu::KActionMenu( const TQString& text, TQObject* parent,
+TDEActionMenu::TDEActionMenu( const TQString& text, TQObject* parent,
                           const char* name )
-  : KAction( text, 0, parent, name )
+  : TDEAction( text, 0, parent, name )
 {
-  d = new KActionMenuPrivate;
+  d = new TDEActionMenuPrivate;
   setShortcutConfigurable( false );
 }
 
-KActionMenu::KActionMenu( const TQString& text, const TQIconSet& icon,
+TDEActionMenu::TDEActionMenu( const TQString& text, const TQIconSet& icon,
                           TQObject* parent, const char* name )
-  : KAction( text, icon, 0, parent, name )
+  : TDEAction( text, icon, 0, parent, name )
 {
-  d = new KActionMenuPrivate;
+  d = new TDEActionMenuPrivate;
   setShortcutConfigurable( false );
 }
 
-KActionMenu::KActionMenu( const TQString& text, const TQString& icon,
+TDEActionMenu::TDEActionMenu( const TQString& text, const TQString& icon,
                           TQObject* parent, const char* name )
-  : KAction( text, icon, 0, parent, name )
+  : TDEAction( text, icon, 0, parent, name )
 {
-  d = new KActionMenuPrivate;
+  d = new TDEActionMenuPrivate;
   setShortcutConfigurable( false );
 }
 
-KActionMenu::~KActionMenu()
+TDEActionMenu::~TDEActionMenu()
 {
     unplugAll();
-    kdDebug(129) << "KActionMenu::~KActionMenu()" << endl; // ellis
+    kdDebug(129) << "TDEActionMenu::~TDEActionMenu()" << endl; // ellis
     delete d; d = 0;
 }
 
-void KActionMenu::popup( const TQPoint& global )
+void TDEActionMenu::popup( const TQPoint& global )
 {
   popupMenu()->popup( global );
 }
 
-KPopupMenu* KActionMenu::popupMenu() const
+TDEPopupMenu* TDEActionMenu::popupMenu() const
 {
   return d->m_popup;
 }
 
-void KActionMenu::insert( KAction* cmd, int index )
+void TDEActionMenu::insert( TDEAction* cmd, int index )
 {
   if ( cmd )
     cmd->plug( d->m_popup, index );
 }
 
-void KActionMenu::remove( KAction* cmd )
+void TDEActionMenu::remove( TDEAction* cmd )
 {
   if ( cmd )
     cmd->unplug( d->m_popup );
 }
 
-bool KActionMenu::delayed() const {
+bool TDEActionMenu::delayed() const {
     return d->m_delayed;
 }
 
-void KActionMenu::setDelayed(bool _delayed) {
+void TDEActionMenu::setDelayed(bool _delayed) {
     d->m_delayed = _delayed;
 }
 
-bool KActionMenu::stickyMenu() const {
+bool TDEActionMenu::stickyMenu() const {
     return d->m_stickyMenu;
 }
 
-void KActionMenu::setStickyMenu(bool sticky) {
+void TDEActionMenu::setStickyMenu(bool sticky) {
     d->m_stickyMenu = sticky;
 }
 
-int KActionMenu::plug( TQWidget* widget, int index )
+int TDEActionMenu::plug( TQWidget* widget, int index )
 {
-  if (kapp && !kapp->authorizeKAction(name()))
+  if (kapp && !kapp->authorizeTDEAction(name()))
     return -1;
-  kdDebug(129) << "KActionMenu::plug( " << widget << ", " << index << " )" << endl; // remove -- ellis
+  kdDebug(129) << "TDEActionMenu::plug( " << widget << ", " << index << " )" << endl; // remove -- ellis
   if ( ::tqqt_cast<TQPopupMenu *>( widget ) )
   {
     TQPopupMenu* menu = static_cast<TQPopupMenu*>( widget );
@@ -1815,11 +1815,11 @@ int KActionMenu::plug( TQWidget* widget, int index )
 
     return containerCount() - 1;
   }
-  else if ( ::tqqt_cast<KToolBar *>( widget ) )
+  else if ( ::tqqt_cast<TDEToolBar *>( widget ) )
   {
-    KToolBar *bar = static_cast<KToolBar *>( widget );
+    TDEToolBar *bar = static_cast<TDEToolBar *>( widget );
 
-    int id_ = KAction::getToolButtonID();
+    int id_ = TDEAction::getToolButtonID();
 
     if ( icon().isEmpty() && !iconSet().isNull() )
       bar->insertButton( iconSet().pixmap(), id_, TQT_SIGNAL( clicked() ), this,
@@ -1879,74 +1879,74 @@ int KActionMenu::plug( TQWidget* widget, int index )
 
 ////////
 
-KToolBarPopupAction::KToolBarPopupAction( const TQString& text,
+TDEToolBarPopupAction::TDEToolBarPopupAction( const TQString& text,
                                           const TQString& icon,
-                                          const KShortcut& cut,
+                                          const TDEShortcut& cut,
                                           TQObject* parent, const char* name )
-  : KAction( text, icon, cut, parent, name )
+  : TDEAction( text, icon, cut, parent, name )
 {
   m_popup = 0;
   m_delayed = true;
   m_stickyMenu = true;
 }
 
-KToolBarPopupAction::KToolBarPopupAction( const TQString& text,
+TDEToolBarPopupAction::TDEToolBarPopupAction( const TQString& text,
                                           const TQString& icon,
-                                          const KShortcut& cut,
+                                          const TDEShortcut& cut,
                                           const TQObject* receiver,
                                           const char* slot, TQObject* parent,
                                           const char* name )
-  : KAction( text, icon, cut, receiver, slot, parent, name )
+  : TDEAction( text, icon, cut, receiver, slot, parent, name )
 {
   m_popup = 0;
   m_delayed = true;
   m_stickyMenu = true;
 }
 
-KToolBarPopupAction::KToolBarPopupAction( const KGuiItem& item,
-                                          const KShortcut& cut,
+TDEToolBarPopupAction::TDEToolBarPopupAction( const KGuiItem& item,
+                                          const TDEShortcut& cut,
                                           const TQObject* receiver,
-                                          const char* slot, KActionCollection* parent,
+                                          const char* slot, TDEActionCollection* parent,
                                           const char* name )
-  : KAction( item, cut, receiver, slot, parent, name )
+  : TDEAction( item, cut, receiver, slot, parent, name )
 {
   m_popup = 0;
   m_delayed = true;
   m_stickyMenu = true;
 }
 
-KToolBarPopupAction::~KToolBarPopupAction()
+TDEToolBarPopupAction::~TDEToolBarPopupAction()
 {
     delete m_popup;
 }
 
-bool KToolBarPopupAction::delayed() const {
+bool TDEToolBarPopupAction::delayed() const {
     return m_delayed;
 }
 
-void KToolBarPopupAction::setDelayed(bool delayed) {
+void TDEToolBarPopupAction::setDelayed(bool delayed) {
     m_delayed = delayed;
 }
 
-bool KToolBarPopupAction::stickyMenu() const {
+bool TDEToolBarPopupAction::stickyMenu() const {
     return m_stickyMenu;
 }
 
-void KToolBarPopupAction::setStickyMenu(bool sticky) {
+void TDEToolBarPopupAction::setStickyMenu(bool sticky) {
     m_stickyMenu = sticky;
 }
 
-int KToolBarPopupAction::plug( TQWidget *widget, int index )
+int TDEToolBarPopupAction::plug( TQWidget *widget, int index )
 {
-  if (kapp && !kapp->authorizeKAction(name()))
+  if (kapp && !kapp->authorizeTDEAction(name()))
     return -1;
-  // This is very related to KActionMenu::plug.
-  // In fact this class could be an interesting base class for KActionMenu
-  if ( ::tqqt_cast<KToolBar *>( widget ) )
+  // This is very related to TDEActionMenu::plug.
+  // In fact this class could be an interesting base class for TDEActionMenu
+  if ( ::tqqt_cast<TDEToolBar *>( widget ) )
   {
-    KToolBar *bar = (KToolBar *)widget;
+    TDEToolBar *bar = (TDEToolBar *)widget;
 
-    int id_ = KAction::getToolButtonID();
+    int id_ = TDEAction::getToolButtonID();
 
     if ( icon().isEmpty() && !iconSet().isNull() ) {
         bar->insertButton( iconSet().pixmap(), id_, TQT_SIGNAL( buttonClicked(int, TQt::ButtonState) ), this,
@@ -1982,42 +1982,42 @@ int KToolBarPopupAction::plug( TQWidget *widget, int index )
     return containerCount() - 1;
   }
 
-  return KAction::plug( widget, index );
+  return TDEAction::plug( widget, index );
 }
 
-KPopupMenu *KToolBarPopupAction::popupMenu() const
+TDEPopupMenu *TDEToolBarPopupAction::popupMenu() const
 {
     if ( !m_popup ) {
-        KToolBarPopupAction *that = const_cast<KToolBarPopupAction*>(this);
-        that->m_popup = new KPopupMenu;
+        TDEToolBarPopupAction *that = const_cast<TDEToolBarPopupAction*>(this);
+        that->m_popup = new TDEPopupMenu;
     }
     return m_popup;
 }
 
 ////////
 
-KToggleToolBarAction::KToggleToolBarAction( const char* toolBarName,
-         const TQString& text, KActionCollection* parent, const char* name )
-  : KToggleAction( text, KShortcut(), parent, name )
+TDEToggleToolBarAction::TDEToggleToolBarAction( const char* toolBarName,
+         const TQString& text, TDEActionCollection* parent, const char* name )
+  : TDEToggleAction( text, TDEShortcut(), parent, name )
   , m_toolBarName( toolBarName )
   , m_toolBar( 0L )
 {
 }
 
-KToggleToolBarAction::KToggleToolBarAction( KToolBar *toolBar, const TQString &text,
-                                            KActionCollection *parent, const char *name )
-  : KToggleAction( text, KShortcut(), parent, name )
+TDEToggleToolBarAction::TDEToggleToolBarAction( TDEToolBar *toolBar, const TQString &text,
+                                            TDEActionCollection *parent, const char *name )
+  : TDEToggleAction( text, TDEShortcut(), parent, name )
   , m_toolBarName( 0 ), m_toolBar( toolBar )
 {
 }
 
-KToggleToolBarAction::~KToggleToolBarAction()
+TDEToggleToolBarAction::~TDEToggleToolBarAction()
 {
 }
 
-int KToggleToolBarAction::plug( TQWidget* w, int index )
+int TDEToggleToolBarAction::plug( TQWidget* w, int index )
 {
-  if (kapp && !kapp->authorizeKAction(name()))
+  if (kapp && !kapp->authorizeTDEAction(name()))
       return -1;
 
   if ( !m_toolBar ) {
@@ -2027,7 +2027,7 @@ int KToggleToolBarAction::plug( TQWidget* w, int index )
     while ( !tl->isDialog() && ( n = tl->parentWidget() ) ) // lookup parent and store
       tl = n;
 
-    KMainWindow * mw = tqt_dynamic_cast<KMainWindow *>(tl); // try to see if it's a kmainwindow
+    TDEMainWindow * mw = tqt_dynamic_cast<TDEMainWindow *>(tl); // try to see if it's a kmainwindow
 
     if ( mw )
         m_toolBar = mw->toolBar( m_toolBarName );
@@ -2042,10 +2042,10 @@ int KToggleToolBarAction::plug( TQWidget* w, int index )
     setEnabled( false );
   }
 
-  return KToggleAction::plug( w, index );
+  return TDEToggleAction::plug( w, index );
 }
 
-void KToggleToolBarAction::setChecked( bool c )
+void TDEToggleToolBarAction::setChecked( bool c )
 {
   if( m_toolBar && c != m_toolBar->isVisible() ) {
     if( c ) {
@@ -2054,29 +2054,29 @@ void KToggleToolBarAction::setChecked( bool c )
       m_toolBar->hide();
     }
     TQMainWindow* mw = m_toolBar->mainWindow();
-    if ( mw && ::tqqt_cast<KMainWindow *>( mw ) )
-      static_cast<KMainWindow *>( mw )->setSettingsDirty();
+    if ( mw && ::tqqt_cast<TDEMainWindow *>( mw ) )
+      static_cast<TDEMainWindow *>( mw )->setSettingsDirty();
   }
-  KToggleAction::setChecked( c );
+  TDEToggleAction::setChecked( c );
 }
 
 ////////
 
-KToggleFullScreenAction::KToggleFullScreenAction( const KShortcut &cut,
+TDEToggleFullScreenAction::TDEToggleFullScreenAction( const TDEShortcut &cut,
                              const TQObject* receiver, const char* slot,
                              TQObject* parent, TQWidget* window,
                              const char* name )
-  : KToggleAction( TQString::null, cut, receiver, slot, parent, name ),
+  : TDEToggleAction( TQString::null, cut, receiver, slot, parent, name ),
     window( NULL )
 {
   setWindow( window );
 }
 
-KToggleFullScreenAction::~KToggleFullScreenAction()
+TDEToggleFullScreenAction::~TDEToggleFullScreenAction()
 {
 }
 
-void KToggleFullScreenAction::setWindow( TQWidget* w )
+void TDEToggleFullScreenAction::setWindow( TQWidget* w )
 {
   if( window )
     window->removeEventFilter( this );
@@ -2085,7 +2085,7 @@ void KToggleFullScreenAction::setWindow( TQWidget* w )
     window->installEventFilter( this );
 }
 
-void KToggleFullScreenAction::setChecked( bool c )
+void TDEToggleFullScreenAction::setChecked( bool c )
 {
   if (c)
   {
@@ -2097,10 +2097,10 @@ void KToggleFullScreenAction::setChecked( bool c )
      setText(i18n("F&ull Screen Mode"));
      setIcon("window_fullscreen");
   }
-  KToggleAction::setChecked( c );
+  TDEToggleAction::setChecked( c );
 }
 
-bool KToggleFullScreenAction::eventFilter( TQObject* o, TQEvent* e )
+bool TDEToggleFullScreenAction::eventFilter( TQObject* o, TQEvent* e )
 {
     if( TQT_BASE_OBJECT(o) == TQT_BASE_OBJECT(window) )
         if( e->type() == TQEvent::WindowStateChange )
@@ -2114,10 +2114,10 @@ bool KToggleFullScreenAction::eventFilter( TQObject* o, TQEvent* e )
 ////////
 
 KWidgetAction::KWidgetAction( TQWidget* widget,
-    const TQString& text, const KShortcut& cut,
+    const TQString& text, const TDEShortcut& cut,
     const TQObject* receiver, const char* slot,
-    KActionCollection* parent, const char* name )
-  : KAction( text, cut, receiver, slot, parent, name )
+    TDEActionCollection* parent, const char* name )
+  : TDEAction( text, cut, receiver, slot, parent, name )
   , m_widget( widget )
   , m_autoSized( false )
 {
@@ -2138,7 +2138,7 @@ void KWidgetAction::setAutoSized( bool autoSized )
   if( !m_widget || !isPlugged() )
     return;
 
-  KToolBar* toolBar = (KToolBar*)m_widget->parent();
+  TDEToolBar* toolBar = (TDEToolBar*)m_widget->parent();
   int i = findContainer( toolBar );
   if ( i == -1 )
     return;
@@ -2149,11 +2149,11 @@ void KWidgetAction::setAutoSized( bool autoSized )
 
 int KWidgetAction::plug( TQWidget* w, int index )
 {
-  if (kapp && !kapp->authorizeKAction(name()))
+  if (kapp && !kapp->authorizeTDEAction(name()))
       return -1;
 
-  if ( !::tqqt_cast<KToolBar *>( w ) ) {
-    kdError() << "KWidgetAction::plug: KWidgetAction must be plugged into KToolBar." << endl;
+  if ( !::tqqt_cast<TDEToolBar *>( w ) ) {
+    kdError() << "KWidgetAction::plug: KWidgetAction must be plugged into TDEToolBar." << endl;
     return -1;
   }
   if ( !m_widget ) {
@@ -2161,9 +2161,9 @@ int KWidgetAction::plug( TQWidget* w, int index )
     return -1;
   }
 
-  KToolBar* toolBar = static_cast<KToolBar*>( w );
+  TDEToolBar* toolBar = static_cast<TDEToolBar*>( w );
 
-  int id = KAction::getToolButtonID();
+  int id = TDEAction::getToolButtonID();
 
   m_widget->reparent( toolBar, TQPoint() );
   toolBar->insertWidget( id, 0, m_widget, index );
@@ -2183,13 +2183,13 @@ void KWidgetAction::unplug( TQWidget *w )
   if( !m_widget || !isPlugged() )
     return;
 
-  KToolBar* toolBar = (KToolBar*)m_widget->parent();
+  TDEToolBar* toolBar = (TDEToolBar*)m_widget->parent();
   if ( toolBar == w )
   {
       disconnect( toolBar, TQT_SIGNAL( toolbarDestroyed() ), this, TQT_SLOT( slotToolbarDestroyed() ) );
       m_widget->reparent( 0L, TQPoint(), false /*showIt*/ );
   }
-  KAction::unplug( w );
+  TDEAction::unplug( w );
 }
 
 void KWidgetAction::slotToolbarDestroyed()
@@ -2205,16 +2205,16 @@ void KWidgetAction::slotToolbarDestroyed()
 
 ////////
 
-KActionSeparator::KActionSeparator( TQObject *parent, const char *name )
-  : KAction( parent, name )
+TDEActionSeparator::TDEActionSeparator( TQObject *parent, const char *name )
+  : TDEAction( parent, name )
 {
 }
 
-KActionSeparator::~KActionSeparator()
+TDEActionSeparator::~TDEActionSeparator()
 {
 }
 
-int KActionSeparator::plug( TQWidget *widget, int index )
+int TDEActionSeparator::plug( TQWidget *widget, int index )
 {
   if ( ::tqqt_cast<TQPopupMenu *>( widget) )
   {
@@ -2239,9 +2239,9 @@ int KActionSeparator::plug( TQWidget *widget, int index )
 
     return containerCount() - 1;
   }
-  else if ( ::tqqt_cast<KToolBar *>( widget ) )
+  else if ( ::tqqt_cast<TDEToolBar *>( widget ) )
   {
-    KToolBar *toolBar = static_cast<KToolBar *>( widget );
+    TDEToolBar *toolBar = static_cast<TDEToolBar *>( widget );
 
     int id = toolBar->insertSeparator( index );
 
@@ -2255,40 +2255,40 @@ int KActionSeparator::plug( TQWidget *widget, int index )
   return -1;
 }
 
-KPasteTextAction::KPasteTextAction( const TQString& text,
+TDEPasteTextAction::TDEPasteTextAction( const TQString& text,
                             const TQString& icon,
-                            const KShortcut& cut,
+                            const TDEShortcut& cut,
                             const TQObject* receiver,
                             const char* slot, TQObject* parent,
                             const char* name)
-  : KAction( text, icon, cut, receiver, slot, parent, name )
+  : TDEAction( text, icon, cut, receiver, slot, parent, name )
 {
-  m_popup = new KPopupMenu;
+  m_popup = new TDEPopupMenu;
   connect(m_popup, TQT_SIGNAL(aboutToShow()), this, TQT_SLOT(menuAboutToShow()));
   connect(m_popup, TQT_SIGNAL(activated(int)), this, TQT_SLOT(menuItemActivated(int)));
   m_popup->setCheckable(true);
   m_mixedMode = true;
 }
 
-KPasteTextAction::~KPasteTextAction()
+TDEPasteTextAction::~TDEPasteTextAction()
 {
   delete m_popup;
 }
 
-void KPasteTextAction::setMixedMode(bool mode)
+void TDEPasteTextAction::setMixedMode(bool mode)
 {
   m_mixedMode = mode;
 }
 
-int KPasteTextAction::plug( TQWidget *widget, int index )
+int TDEPasteTextAction::plug( TQWidget *widget, int index )
 {
-  if (kapp && !kapp->authorizeKAction(name()))
+  if (kapp && !kapp->authorizeTDEAction(name()))
     return -1;
-  if ( ::tqqt_cast<KToolBar *>( widget ) )
+  if ( ::tqqt_cast<TDEToolBar *>( widget ) )
   {
-    KToolBar *bar = (KToolBar *)widget;
+    TDEToolBar *bar = (TDEToolBar *)widget;
 
-    int id_ = KAction::getToolButtonID();
+    int id_ = TDEAction::getToolButtonID();
 
     TDEInstance * instance;
     if ( m_parentCollection )
@@ -2312,10 +2312,10 @@ int KPasteTextAction::plug( TQWidget *widget, int index )
     return containerCount() - 1;
   }
 
-  return KAction::plug( widget, index );
+  return TDEAction::plug( widget, index );
 }
 
-void KPasteTextAction::menuAboutToShow()
+void TDEPasteTextAction::menuAboutToShow()
 {
     m_popup->clear();
     TQStringList list;
@@ -2343,7 +2343,7 @@ void KPasteTextAction::menuAboutToShow()
     }
 }
 
-void KPasteTextAction::menuItemActivated( int id)
+void TDEPasteTextAction::menuItemActivated( int id)
 {
     DCOPClient *client = kapp->dcopClient();
     if (client->isAttached() && client->isApplicationRegistered("klipper")) {
@@ -2359,7 +2359,7 @@ void KPasteTextAction::menuItemActivated( int id)
     TQTimer::singleShot(20, this, TQT_SLOT(slotActivated()));
 }
 
-void KPasteTextAction::slotActivated()
+void TDEPasteTextAction::slotActivated()
 {
   if (!m_mixedMode) {
     TQWidget *w = tqApp->widgetAt(TQCursor::pos(), true);
@@ -2367,53 +2367,53 @@ void KPasteTextAction::slotActivated()
     if (!data->provides("text/plain") && w) {
       m_popup->popup(w->mapToGlobal(TQPoint(0, w->height())));
     } else
-      KAction::slotActivated();
+      TDEAction::slotActivated();
   } else
-    KAction::slotActivated();
+    TDEAction::slotActivated();
 }
 
 
-void KToggleAction::virtual_hook( int id, void* data )
-{ KAction::virtual_hook( id, data ); }
+void TDEToggleAction::virtual_hook( int id, void* data )
+{ TDEAction::virtual_hook( id, data ); }
 
-void KRadioAction::virtual_hook( int id, void* data )
-{ KToggleAction::virtual_hook( id, data ); }
+void TDERadioAction::virtual_hook( int id, void* data )
+{ TDEToggleAction::virtual_hook( id, data ); }
 
-void KSelectAction::virtual_hook( int id, void* data )
-{ KAction::virtual_hook( id, data ); }
+void TDESelectAction::virtual_hook( int id, void* data )
+{ TDEAction::virtual_hook( id, data ); }
 
-void KListAction::virtual_hook( int id, void* data )
-{ KSelectAction::virtual_hook( id, data ); }
+void TDEListAction::virtual_hook( int id, void* data )
+{ TDESelectAction::virtual_hook( id, data ); }
 
-void KRecentFilesAction::virtual_hook( int id, void* data )
-{ KListAction::virtual_hook( id, data ); }
+void TDERecentFilesAction::virtual_hook( int id, void* data )
+{ TDEListAction::virtual_hook( id, data ); }
 
-void KFontAction::virtual_hook( int id, void* data )
-{ KSelectAction::virtual_hook( id, data ); }
+void TDEFontAction::virtual_hook( int id, void* data )
+{ TDESelectAction::virtual_hook( id, data ); }
 
-void KFontSizeAction::virtual_hook( int id, void* data )
-{ KSelectAction::virtual_hook( id, data ); }
+void TDEFontSizeAction::virtual_hook( int id, void* data )
+{ TDESelectAction::virtual_hook( id, data ); }
 
-void KActionMenu::virtual_hook( int id, void* data )
-{ KAction::virtual_hook( id, data ); }
+void TDEActionMenu::virtual_hook( int id, void* data )
+{ TDEAction::virtual_hook( id, data ); }
 
-void KToolBarPopupAction::virtual_hook( int id, void* data )
-{ KAction::virtual_hook( id, data ); }
+void TDEToolBarPopupAction::virtual_hook( int id, void* data )
+{ TDEAction::virtual_hook( id, data ); }
 
-void KToggleToolBarAction::virtual_hook( int id, void* data )
-{ KToggleAction::virtual_hook( id, data ); }
+void TDEToggleToolBarAction::virtual_hook( int id, void* data )
+{ TDEToggleAction::virtual_hook( id, data ); }
 
-void KToggleFullScreenAction::virtual_hook( int id, void* data )
-{ KToggleAction::virtual_hook( id, data ); }
+void TDEToggleFullScreenAction::virtual_hook( int id, void* data )
+{ TDEToggleAction::virtual_hook( id, data ); }
 
 void KWidgetAction::virtual_hook( int id, void* data )
-{ KAction::virtual_hook( id, data ); }
+{ TDEAction::virtual_hook( id, data ); }
 
-void KActionSeparator::virtual_hook( int id, void* data )
-{ KAction::virtual_hook( id, data ); }
+void TDEActionSeparator::virtual_hook( int id, void* data )
+{ TDEAction::virtual_hook( id, data ); }
 
-void KPasteTextAction::virtual_hook( int id, void* data )
-{ KAction::virtual_hook( id, data ); }
+void TDEPasteTextAction::virtual_hook( int id, void* data )
+{ TDEAction::virtual_hook( id, data ); }
 
 /* vim: et sw=2 ts=2
  */

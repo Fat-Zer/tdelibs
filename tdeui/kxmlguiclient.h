@@ -27,8 +27,8 @@
 #include <tdelibs_export.h>
 
 class TQWidget;
-class KAction;
-class KActionCollection;
+class TDEAction;
+class TDEActionCollection;
 class TDEInstance;
 class KXMLGUIClientPrivate;
 class KXMLGUIFactory;
@@ -74,25 +74,25 @@ public:
    * This method is provided for convenience, as it uses actionCollection()
    * to get the action object.
    */
-  KAction* action( const char* name ) const;
+  TDEAction* action( const char* name ) const;
 
   /**
    * Retrieves an action for a given TQDomElement. The default
    * implementation uses the "name" attribute to query the action
    * object via the other action() method.
    */
-  virtual KAction *action( const TQDomElement &element ) const;
+  virtual TDEAction *action( const TQDomElement &element ) const;
 
   /**
    * Retrieves the entire action collection for the GUI client. If
    * you subclass KXMLGUIClient you should call
-   * KActionCollection::setWidget( TQWidget* ) with this object, or
-   * you will encounter subtle bugs with KAction keyboard shortcuts.
-   * This is not necessary if your KXMLGUIClient is a KMainWindow.
+   * TDEActionCollection::setWidget( TQWidget* ) with this object, or
+   * you will encounter subtle bugs with TDEAction keyboard shortcuts.
+   * This is not necessary if your KXMLGUIClient is a TDEMainWindow.
    *
-   * @see KActionCollection::setWidget( TQWidget* )
+   * @see TDEActionCollection::setWidget( TQWidget* )
    */
-  virtual KActionCollection* actionCollection() const;
+  virtual TDEActionCollection* actionCollection() const;
 
   /**
    * @return The instance ( TDEInstance ) for this GUI client.
@@ -218,7 +218,7 @@ public:
    * This tag will get expanded to a list of actions.  In the example
    * above ( a file manager with a dynamic file menu ), you would call
    * \code
-   * TQPtrList<KAction> file_actions;
+   * TQPtrList<TDEAction> file_actions;
    * for( ... )
    *   if( ... )
    *     file_actions.append( cool_action );
@@ -234,7 +234,7 @@ public:
    *       plugActionList() would leave the previous actions in the
    *       menu too..
    */
-  void plugActionList( const TQString &name, const TQPtrList<KAction> &actionList );
+  void plugActionList( const TQString &name, const TQPtrList<TDEAction> &actionList );
 
   /**
    * The complement of plugActionList() ...
@@ -342,7 +342,7 @@ private:
   };
 
   bool mergeXML( TQDomElement &base, const TQDomElement &additive,
-                 KActionCollection *actionCollection );
+                 TDEActionCollection *actionCollection );
 
   TQDomElement findMatchingElement( const TQDomElement &base,
                                    const TQDomElement &additive );

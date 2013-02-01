@@ -33,17 +33,17 @@
 
 #define KLISTVIEWSEARCHLINE_ALLVISIBLECOLUMNS_ID 2004
 
-class KListViewSearchLine::KListViewSearchLinePrivate
+class TDEListViewSearchLine::TDEListViewSearchLinePrivate
 {
 public:
-    KListViewSearchLinePrivate() :
+    TDEListViewSearchLinePrivate() :
         listView(0),
         caseSensitive(false),
         activeSearch(false),
         keepParentsVisible(true),
         queuedSearches(0) {}
 
-    KListView *listView;
+    TDEListView *listView;
     bool caseSensitive;
     bool activeSearch;
     bool keepParentsVisible;
@@ -56,10 +56,10 @@ public:
 // public methods
 ////////////////////////////////////////////////////////////////////////////////
 
-KListViewSearchLine::KListViewSearchLine(TQWidget *parent, KListView *listView, const char *name) :
+TDEListViewSearchLine::TDEListViewSearchLine(TQWidget *parent, TDEListView *listView, const char *name) :
     KLineEdit(parent, name)
 {
-    d = new KListViewSearchLinePrivate;
+    d = new TDEListViewSearchLinePrivate;
 
     d->listView = listView;
 
@@ -77,10 +77,10 @@ KListViewSearchLine::KListViewSearchLine(TQWidget *parent, KListView *listView, 
         setEnabled(false);
 }
 
-KListViewSearchLine::KListViewSearchLine(TQWidget *parent, const char *name) :
+TDEListViewSearchLine::TDEListViewSearchLine(TQWidget *parent, const char *name) :
     KLineEdit(parent, name)
 {
-    d = new KListViewSearchLinePrivate;
+    d = new TDEListViewSearchLinePrivate;
 
     d->listView = 0;
 
@@ -90,27 +90,27 @@ KListViewSearchLine::KListViewSearchLine(TQWidget *parent, const char *name) :
     setEnabled(false);
 }
 
-KListViewSearchLine::~KListViewSearchLine()
+TDEListViewSearchLine::~TDEListViewSearchLine()
 {
     delete d;
 }
 
-bool KListViewSearchLine::caseSensitive() const
+bool TDEListViewSearchLine::caseSensitive() const
 {
     return d->caseSensitive;
 }
 
-TQValueList<int> KListViewSearchLine::searchColumns() const
+TQValueList<int> TDEListViewSearchLine::searchColumns() const
 {
     return d->searchColumns;
 }
 
-bool KListViewSearchLine::keepParentsVisible() const
+bool TDEListViewSearchLine::keepParentsVisible() const
 {
     return d->keepParentsVisible;
 }
 
-KListView *KListViewSearchLine::listView() const
+TDEListView *TDEListViewSearchLine::listView() const
 {
     return d->listView;
 }
@@ -119,7 +119,7 @@ KListView *KListViewSearchLine::listView() const
 // public slots
 ////////////////////////////////////////////////////////////////////////////////
 
-void KListViewSearchLine::updateSearch(const TQString &s)
+void TDEListViewSearchLine::updateSearch(const TQString &s)
 {
     if(!d->listView)
         return;
@@ -133,9 +133,9 @@ void KListViewSearchLine::updateSearch(const TQString &s)
 
     switch(d->listView->selectionMode())
     {
-    case KListView::NoSelection:
+    case TDEListView::NoSelection:
         break;
-    case KListView::Single:
+    case TDEListView::Single:
         currentItem = d->listView->selectedItem();
         break;
     default:
@@ -160,22 +160,22 @@ void KListViewSearchLine::updateSearch(const TQString &s)
         d->listView->ensureItemVisible(currentItem);
 }
 
-void KListViewSearchLine::setCaseSensitive(bool cs)
+void TDEListViewSearchLine::setCaseSensitive(bool cs)
 {
     d->caseSensitive = cs;
 }
 
-void KListViewSearchLine::setKeepParentsVisible(bool v)
+void TDEListViewSearchLine::setKeepParentsVisible(bool v)
 {
     d->keepParentsVisible = v;
 }
 
-void KListViewSearchLine::setSearchColumns(const TQValueList<int> &columns)
+void TDEListViewSearchLine::setSearchColumns(const TQValueList<int> &columns)
 {
     d->searchColumns = columns;
 }
 
-void KListViewSearchLine::setListView(KListView *lv)
+void TDEListViewSearchLine::setListView(TDEListView *lv)
 {
     if(d->listView) {
         disconnect(d->listView, TQT_SIGNAL(destroyed()),
@@ -202,7 +202,7 @@ void KListViewSearchLine::setListView(KListView *lv)
 // protected members
 ////////////////////////////////////////////////////////////////////////////////
 
-bool KListViewSearchLine::itemMatches(const TQListViewItem *item, const TQString &s) const
+bool TDEListViewSearchLine::itemMatches(const TQListViewItem *item, const TQString &s) const
 {
     if(s.isEmpty())
         return true;
@@ -231,7 +231,7 @@ bool KListViewSearchLine::itemMatches(const TQListViewItem *item, const TQString
     return false;
 }
 
-TQPopupMenu *KListViewSearchLine::createPopupMenu()
+TQPopupMenu *TDEListViewSearchLine::createPopupMenu()
 {
     TQPopupMenu *popup = KLineEdit::createPopupMenu();
 
@@ -281,14 +281,14 @@ TQPopupMenu *KListViewSearchLine::createPopupMenu()
 // protected slots
 ////////////////////////////////////////////////////////////////////////////////
 
-void KListViewSearchLine::queueSearch(const TQString &search)
+void TDEListViewSearchLine::queueSearch(const TQString &search)
 {
     d->queuedSearches++;
     d->search = search;
     TQTimer::singleShot(200, this, TQT_SLOT(activateSearch()));
 }
 
-void KListViewSearchLine::activateSearch()
+void TDEListViewSearchLine::activateSearch()
 {
     --(d->queuedSearches);
 
@@ -300,18 +300,18 @@ void KListViewSearchLine::activateSearch()
 // private slots
 ////////////////////////////////////////////////////////////////////////////////
 
-void KListViewSearchLine::itemAdded(TQListViewItem *item) const
+void TDEListViewSearchLine::itemAdded(TQListViewItem *item) const
 {
     item->setVisible(itemMatches(item, text()));
 }
 
-void KListViewSearchLine::listViewDeleted()
+void TDEListViewSearchLine::listViewDeleted()
 {
     d->listView = 0;
     setEnabled(false);
 }
 
-void KListViewSearchLine::searchColumnsMenuActivated(int id)
+void TDEListViewSearchLine::searchColumnsMenuActivated(int id)
 {
     if(id == KLISTVIEWSEARCHLINE_ALLVISIBLECOLUMNS_ID) {
         if(d->searchColumns.isEmpty())
@@ -340,7 +340,7 @@ void KListViewSearchLine::searchColumnsMenuActivated(int id)
 // private methods
 ////////////////////////////////////////////////////////////////////////////////
 
-void KListViewSearchLine::checkItemParentsNotVisible()
+void TDEListViewSearchLine::checkItemParentsNotVisible()
 {
     TQListViewItemIterator it(d->listView);
     for(; it.current(); ++it)
@@ -364,7 +364,7 @@ void KListViewSearchLine::checkItemParentsNotVisible()
  *  \return \c true if an item which should be visible is found, \c false if all items found should be hidden. If this function
  *             returns true and \p highestHiddenParent was not 0, highestHiddenParent will have been shown.
  */
-bool KListViewSearchLine::checkItemParentsVisible(TQListViewItem *item, TQListViewItem *highestHiddenParent)
+bool TDEListViewSearchLine::checkItemParentsVisible(TQListViewItem *item, TQListViewItem *highestHiddenParent)
 {
     bool visible = false;
     TQListViewItem * first = item;
@@ -403,24 +403,24 @@ bool KListViewSearchLine::checkItemParentsVisible(TQListViewItem *item, TQListVi
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// KListViewSearchLineWidget
+// TDEListViewSearchLineWidget
 ////////////////////////////////////////////////////////////////////////////////
 
-class KListViewSearchLineWidget::KListViewSearchLineWidgetPrivate
+class TDEListViewSearchLineWidget::TDEListViewSearchLineWidgetPrivate
 {
 public:
-    KListViewSearchLineWidgetPrivate() : listView(0), searchLine(0), clearButton(0) {}
-    KListView *listView;
-    KListViewSearchLine *searchLine;
+    TDEListViewSearchLineWidgetPrivate() : listView(0), searchLine(0), clearButton(0) {}
+    TDEListView *listView;
+    TDEListViewSearchLine *searchLine;
     TQToolButton *clearButton;
 };
 
-KListViewSearchLineWidget::KListViewSearchLineWidget(KListView *listView,
+TDEListViewSearchLineWidget::TDEListViewSearchLineWidget(TDEListView *listView,
                                                      TQWidget *parent,
                                                      const char *name) :
     TQHBox(parent, name)
 {
-    d = new KListViewSearchLineWidgetPrivate;
+    d = new TDEListViewSearchLineWidgetPrivate;
     d->listView = listView;
 
     setSpacing(5);
@@ -428,19 +428,19 @@ KListViewSearchLineWidget::KListViewSearchLineWidget(KListView *listView,
     TQTimer::singleShot(0, this, TQT_SLOT(createWidgets()));
 }
 
-KListViewSearchLineWidget::~KListViewSearchLineWidget()
+TDEListViewSearchLineWidget::~TDEListViewSearchLineWidget()
 {
     delete d;
 }
 
-KListViewSearchLine *KListViewSearchLineWidget::createSearchLine(KListView *listView)
+TDEListViewSearchLine *TDEListViewSearchLineWidget::createSearchLine(TDEListView *listView)
 {
     if(!d->searchLine)
-        d->searchLine = new KListViewSearchLine(this, listView);
+        d->searchLine = new TDEListViewSearchLine(this, listView);
     return d->searchLine;
 }
 
-void KListViewSearchLineWidget::createWidgets()
+void TDEListViewSearchLineWidget::createWidgets()
 {
     positionInToolBar();
 
@@ -463,14 +463,14 @@ void KListViewSearchLineWidget::createWidgets()
     connect(d->clearButton, TQT_SIGNAL(clicked()), d->searchLine, TQT_SLOT(clear()));
 }
 
-KListViewSearchLine *KListViewSearchLineWidget::searchLine() const
+TDEListViewSearchLine *TDEListViewSearchLineWidget::searchLine() const
 {
     return d->searchLine;
 }
 
-void KListViewSearchLineWidget::positionInToolBar()
+void TDEListViewSearchLineWidget::positionInToolBar()
 {
-    KToolBar *toolBar = tqt_dynamic_cast<KToolBar *>(parent());
+    TDEToolBar *toolBar = tqt_dynamic_cast<TDEToolBar *>(parent());
 
     if(toolBar) {
 
@@ -486,7 +486,7 @@ void KListViewSearchLineWidget::positionInToolBar()
                 toolBar->setItemAutoSized(id);
                 if(!d->clearButton) {
                     TQString icon = TQApplication::reverseLayout() ? "clear_left" : "locationbar_erase";
-                    d->clearButton = new KToolBarButton(icon, 2005, toolBar);
+                    d->clearButton = new TDEToolBarButton(icon, 2005, toolBar);
                 }
                 toolBar->insertWidget(2005, d->clearButton->width(), d->clearButton, index);
                 break;

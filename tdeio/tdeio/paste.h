@@ -114,7 +114,7 @@ namespace TDEIO {
   /**
    * Returns the text to use for the Paste action, when the application supports
    * pasting files, urls, and clipboard data, using pasteClipboard().
-   * @return a string suitable for KAction::setText, or an empty string if pasting
+   * @return a string suitable for TDEAction::setText, or an empty string if pasting
    * isn't possible right now.
    *
    * @since 3.5

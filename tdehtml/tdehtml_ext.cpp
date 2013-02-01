@@ -430,7 +430,7 @@ TDEHTMLPopupGUIClient::TDEHTMLPopupGUIClient( TDEHTMLPart *tdehtml, const TQStri
 
   if (hasSelection)
   {
-      KAction* copyAction = KStdAction::copy( d->m_tdehtml->browserExtension(), TQT_SLOT( copy() ), actionCollection(), "copy" );
+      TDEAction* copyAction = KStdAction::copy( d->m_tdehtml->browserExtension(), TQT_SLOT( copy() ), actionCollection(), "copy" );
       copyAction->setText(i18n("&Copy Text"));
       copyAction->setEnabled(d->m_tdehtml->browserExtension()->isActionEnabled( "copy" ));
       actionCollection()->insert( tdehtml->actionCollection()->action( "selectAll" ) );
@@ -477,7 +477,7 @@ TDEHTMLPopupGUIClient::TDEHTMLPopupGUIClient( TDEHTMLPart *tdehtml, const TQStri
       }
 
       // using .arg(foo, bar) instead of .arg(foo).arg(bar), as foo can contain %x
-      new KAction( i18n( "Search for '%1' with %2" ).arg( selectedText, name ), icon, 0, d->m_tdehtml->browserExtension(),
+      new TDEAction( i18n( "Search for '%1' with %2" ).arg( selectedText, name ), icon, 0, d->m_tdehtml->browserExtension(),
                      TQT_SLOT( searchProvider() ), actionCollection(), "searchProvider" );
 
       // favorite search providers
@@ -486,7 +486,7 @@ TDEHTMLPopupGUIClient::TDEHTMLPopupGUIClient( TDEHTMLPart *tdehtml, const TQStri
       favoriteEngines = config.readListEntry("FavoriteSearchEngines", favoriteEngines);
 
       if ( !favoriteEngines.isEmpty()) {
-        KActionMenu* providerList = new KActionMenu( i18n( "Search for '%1' with" ).arg( selectedText ), actionCollection(), "searchProviderList" );
+        TDEActionMenu* providerList = new TDEActionMenu( i18n( "Search for '%1' with" ).arg( selectedText ), actionCollection(), "searchProviderList" );
 
         TQStringList::ConstIterator it = favoriteEngines.begin();
         for ( ; it != favoriteEngines.end(); ++it ) {
@@ -507,7 +507,7 @@ TDEHTMLPopupGUIClient::TDEHTMLPopupGUIClient( TDEHTMLPart *tdehtml, const TQStri
               icon = TQPixmap( iconPath );
             name = service->name();
 
-            providerList->insert( new KAction( name, icon, 0, d->m_tdehtml->browserExtension(),
+            providerList->insert( new TDEAction( name, icon, 0, d->m_tdehtml->browserExtension(),
               TQT_SLOT( searchProvider() ), actionCollection(), TQString( "searchProvider" + searchProviderPrefix ).latin1() ) );
           }
         }
@@ -515,14 +515,14 @@ TDEHTMLPopupGUIClient::TDEHTMLPopupGUIClient( TDEHTMLPart *tdehtml, const TQStri
 
 
       if ( selectedText.contains("://") && KURL(selectedText).isValid() )
-         new KAction( i18n( "Open '%1'" ).arg( selectedText ), "window_new", 0,
+         new TDEAction( i18n( "Open '%1'" ).arg( selectedText ), "window_new", 0,
          d->m_tdehtml->browserExtension(), TQT_SLOT( openSelection() ), actionCollection(), "openSelection" );
   }
   else if ( url.isEmpty() && !isImage )
   {
       actionCollection()->insert( tdehtml->actionCollection()->action( "security" ) );
       actionCollection()->insert( tdehtml->actionCollection()->action( "setEncoding" ) );
-      new KAction( i18n( "Stop Animations" ), 0, this, TQT_SLOT( slotStopAnimations() ),
+      new TDEAction( i18n( "Stop Animations" ), 0, this, TQT_SLOT( slotStopAnimations() ),
                    actionCollection(), "stopanimations" );
   }
 
@@ -530,14 +530,14 @@ TDEHTMLPopupGUIClient::TDEHTMLPopupGUIClient( TDEHTMLPart *tdehtml, const TQStri
   {
     if (url.protocol() == "mailto")
     {
-      new KAction( i18n( "Copy Email Address" ), 0, this, TQT_SLOT( slotCopyLinkLocation() ),
+      new TDEAction( i18n( "Copy Email Address" ), 0, this, TQT_SLOT( slotCopyLinkLocation() ),
                  actionCollection(), "copylinklocation" );
     }
     else
     {
-      new KAction( i18n( "&Save Link As..." ), 0, this, TQT_SLOT( slotSaveLinkAs() ),
+      new TDEAction( i18n( "&Save Link As..." ), 0, this, TQT_SLOT( slotSaveLinkAs() ),
                  actionCollection(), "savelinkas" );
-      new KAction( i18n( "Copy &Link Address" ), 0, this, TQT_SLOT( slotCopyLinkLocation() ),
+      new TDEAction( i18n( "Copy &Link Address" ), 0, this, TQT_SLOT( slotCopyLinkLocation() ),
                  actionCollection(), "copylinklocation" );
     }
   }
@@ -547,28 +547,28 @@ TDEHTMLPopupGUIClient::TDEHTMLPopupGUIClient( TDEHTMLPart *tdehtml, const TQStri
   {
     if ( tdehtml->parentPart() )
     {
-      new KAction( i18n( "Open in New &Window" ), "window_new", 0, this, TQT_SLOT( slotFrameInWindow() ),
+      new TDEAction( i18n( "Open in New &Window" ), "window_new", 0, this, TQT_SLOT( slotFrameInWindow() ),
                                           actionCollection(), "frameinwindow" );
-      new KAction( i18n( "Open in &This Window" ), 0, this, TQT_SLOT( slotFrameInTop() ),
+      new TDEAction( i18n( "Open in &This Window" ), 0, this, TQT_SLOT( slotFrameInTop() ),
                                           actionCollection(), "frameintop" );
-      new KAction( i18n( "Open in &New Tab" ), "tab_new", 0, this, TQT_SLOT( slotFrameInTab() ),
+      new TDEAction( i18n( "Open in &New Tab" ), "tab_new", 0, this, TQT_SLOT( slotFrameInTab() ),
                                        actionCollection(), "frameintab" );
-      new KAction( i18n( "Reload Frame" ), 0, this, TQT_SLOT( slotReloadFrame() ),
+      new TDEAction( i18n( "Reload Frame" ), 0, this, TQT_SLOT( slotReloadFrame() ),
                                         actionCollection(), "reloadframe" );
 
       if ( TDEHTMLFactory::defaultHTMLSettings()->isAdFilterEnabled() ) {
           if ( tdehtml->d->m_frame->m_type == tdehtml::ChildFrame::IFrame )
-              new KAction( i18n( "Block IFrame..." ), 0, this, TQT_SLOT( slotBlockIFrame() ), actionCollection(), "blockiframe" );
+              new TDEAction( i18n( "Block IFrame..." ), 0, this, TQT_SLOT( slotBlockIFrame() ), actionCollection(), "blockiframe" );
       }
 
-      new KAction( i18n( "View Frame Source" ), 0, d->m_tdehtml, TQT_SLOT( slotViewDocumentSource() ),
+      new TDEAction( i18n( "View Frame Source" ), 0, d->m_tdehtml, TQT_SLOT( slotViewDocumentSource() ),
                                           actionCollection(), "viewFrameSource" );
-      new KAction( i18n( "View Frame Information" ), 0, d->m_tdehtml, TQT_SLOT( slotViewPageInfo() ), actionCollection(), "viewFrameInfo" );
+      new TDEAction( i18n( "View Frame Information" ), 0, d->m_tdehtml, TQT_SLOT( slotViewPageInfo() ), actionCollection(), "viewFrameInfo" );
       // This one isn't in tdehtml_popupmenu.rc anymore, because Print isn't either,
       // and because print frame is already in the toolbar and the menu.
       // But leave this here, so that it's easy to read it.
-      new KAction( i18n( "Print Frame..." ), "frameprint", 0, d->m_tdehtml->browserExtension(), TQT_SLOT( print() ), actionCollection(), "printFrame" );
-      new KAction( i18n( "Save &Frame As..." ), 0, d->m_tdehtml, TQT_SLOT( slotSaveFrame() ), actionCollection(), "saveFrame" );
+      new TDEAction( i18n( "Print Frame..." ), "frameprint", 0, d->m_tdehtml->browserExtension(), TQT_SLOT( print() ), actionCollection(), "printFrame" );
+      new TDEAction( i18n( "Save &Frame As..." ), 0, d->m_tdehtml, TQT_SLOT( slotSaveFrame() ), actionCollection(), "saveFrame" );
 
       actionCollection()->insert( tdehtml->parentPart()->actionCollection()->action( "viewDocumentSource" ) );
       actionCollection()->insert( tdehtml->parentPart()->actionCollection()->action( "viewPageInfo" ) );
@@ -579,7 +579,7 @@ TDEHTMLPopupGUIClient::TDEHTMLPopupGUIClient( TDEHTMLPart *tdehtml, const TQStri
   } else if (isImage || !url.isEmpty()) {
     actionCollection()->insert( tdehtml->actionCollection()->action( "viewDocumentSource" ) );
     actionCollection()->insert( tdehtml->actionCollection()->action( "viewPageInfo" ) );
-    new KAction( i18n( "Stop Animations" ), 0, this, TQT_SLOT( slotStopAnimations() ),
+    new TDEAction( i18n( "Stop Animations" ), 0, this, TQT_SLOT( slotStopAnimations() ),
                  actionCollection(), "stopanimations" );
   }
 
@@ -598,35 +598,35 @@ TDEHTMLPopupGUIClient::TDEHTMLPopupGUIClient( TDEHTMLPart *tdehtml, const TQStri
     }
     else
       d->m_imageURL = KURL( static_cast<DOM::HTMLInputElement>( e ).src().string() );
-    new KAction( i18n( "Save Image As..." ), 0, this, TQT_SLOT( slotSaveImageAs() ),
+    new TDEAction( i18n( "Save Image As..." ), 0, this, TQT_SLOT( slotSaveImageAs() ),
                  actionCollection(), "saveimageas" );
-    new KAction( i18n( "Send Image..." ), 0, this, TQT_SLOT( slotSendImage() ),
+    new TDEAction( i18n( "Send Image..." ), 0, this, TQT_SLOT( slotSendImage() ),
                  actionCollection(), "sendimage" );
 
 
 #ifndef QT_NO_MIMECLIPBOARD
-    (new KAction( i18n( "Copy Image" ), 0, this, TQT_SLOT( slotCopyImage() ),
+    (new TDEAction( i18n( "Copy Image" ), 0, this, TQT_SLOT( slotCopyImage() ),
                  actionCollection(), "copyimage" ))->setEnabled(!d->m_pixmap.isNull());
 #endif
 
     if(d->m_pixmap.isNull()) {    //fallback to image location if still loading the image.  this will always be true if ifdef QT_NO_MIMECLIPBOARD
-      new KAction( i18n( "Copy Image Location" ), 0, this, TQT_SLOT( slotCopyImageLocation() ),
+      new TDEAction( i18n( "Copy Image Location" ), 0, this, TQT_SLOT( slotCopyImageLocation() ),
                    actionCollection(), "copyimagelocation" );
     }
 
     TQString name = KStringHandler::csqueeze(d->m_imageURL.fileName()+d->m_imageURL.query(), 25);
-    new KAction( i18n( "View Image (%1)" ).arg(d->m_suggestedFilename.isEmpty() ? name.replace("&", "&&") : d->m_suggestedFilename.replace("&", "&&")), 0, this, TQT_SLOT( slotViewImage() ),
+    new TDEAction( i18n( "View Image (%1)" ).arg(d->m_suggestedFilename.isEmpty() ? name.replace("&", "&&") : d->m_suggestedFilename.replace("&", "&&")), 0, this, TQT_SLOT( slotViewImage() ),
                  actionCollection(), "viewimage" );
 
     if (TDEHTMLFactory::defaultHTMLSettings()->isAdFilterEnabled())
     {
-      new KAction( i18n( "Block Image..." ), 0, this, TQT_SLOT( slotBlockImage() ),
+      new TDEAction( i18n( "Block Image..." ), 0, this, TQT_SLOT( slotBlockImage() ),
                    actionCollection(), "blockimage" );
 
       if (!d->m_imageURL.host().isEmpty() &&
           !d->m_imageURL.protocol().isEmpty())
       {
-        new KAction( i18n( "Block Images From %1" ).arg(d->m_imageURL.host()), 0, this, TQT_SLOT( slotBlockHost() ),
+        new TDEAction( i18n( "Block Images From %1" ).arg(d->m_imageURL.host()), 0, this, TQT_SLOT( slotBlockHost() ),
                      actionCollection(), "blockhost" );
       }
     }
@@ -962,13 +962,13 @@ extern const int KDE_NO_EXPORT fastZoomSizeCount;
 
 // BCI: remove in KDE 4
 TDEHTMLZoomFactorAction::TDEHTMLZoomFactorAction( TDEHTMLPart *part, bool direction, const TQString &text, const TQString &icon, const TQObject *receiver, const char *slot, TQObject *parent, const char *name )
-    : KAction( text, icon, 0, receiver, slot, parent, name )
+    : TDEAction( text, icon, 0, receiver, slot, parent, name )
 {
     init(part, direction);
 }
 
-TDEHTMLZoomFactorAction::TDEHTMLZoomFactorAction( TDEHTMLPart *part, bool direction, const TQString &text, const TQString &icon, const KShortcut &cut, const TQObject *receiver, const char *slot, TQObject *parent, const char *name )
-    : KAction( text, icon, cut, receiver, slot, parent, name )
+TDEHTMLZoomFactorAction::TDEHTMLZoomFactorAction( TDEHTMLPart *part, bool direction, const TQString &text, const TQString &icon, const TDEShortcut &cut, const TQObject *receiver, const char *slot, TQObject *parent, const char *name )
+    : TDEAction( text, icon, cut, receiver, slot, parent, name )
 {
     init(part, direction);
 }
@@ -1006,11 +1006,11 @@ TDEHTMLZoomFactorAction::~TDEHTMLZoomFactorAction()
 
 int TDEHTMLZoomFactorAction::plug( TQWidget *w, int index )
 {
-    int containerId = KAction::plug( w, index );
-    if ( containerId == -1 || !w->inherits( "KToolBar" ) )
+    int containerId = TDEAction::plug( w, index );
+    if ( containerId == -1 || !w->inherits( "TDEToolBar" ) )
         return containerId;
 
-    KToolBarButton *button = static_cast<KToolBar *>( w )->getButton( itemId( containerId ) );
+    TDEToolBarButton *button = static_cast<TDEToolBar *>( w )->getButton( itemId( containerId ) );
     if ( !button )
         return containerId;
 

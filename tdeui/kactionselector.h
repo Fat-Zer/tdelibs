@@ -29,7 +29,7 @@ class TQKeyEvent;
 class TQEvent;
 class TQIconSet;
 
-class KActionSelectorPrivate;
+class TDEActionSelectorPrivate;
 
 /**
     @short A widget for selecting and arranging actions/objects
@@ -76,7 +76,7 @@ class KActionSelectorPrivate;
     @author Anders Lund <anders@alweb.dk>
 */
 
-class TDEUI_EXPORT KActionSelector : public TQWidget {
+class TDEUI_EXPORT TDEActionSelector : public TQWidget {
   Q_OBJECT
   TQ_ENUMS( ButtonIconSize InsertionPolicy )
   TQ_PROPERTY( bool moveOnDoubleClick READ moveOnDoubleClick WRITE setMoveOnDoubleClick )
@@ -89,8 +89,8 @@ class TDEUI_EXPORT KActionSelector : public TQWidget {
   TQ_PROPERTY( bool showUpDownButtons READ showUpDownButtons WRITE setShowUpDownButtons )
 
 public:
-  KActionSelector( TQWidget *parent=0, const char *name=0 );
-  ~KActionSelector();
+  TDEActionSelector( TQWidget *parent=0, const char *name=0 );
+  ~TDEActionSelector();
 
   /**
      @return The TQListBox holding the available actions
@@ -396,7 +396,7 @@ private:
   /** @private
     Private data storage
   */
-  KActionSelectorPrivate *d;
+  TDEActionSelectorPrivate *d;
 };
 
 #endif // _KACTION_SELECTOR_H_

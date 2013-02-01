@@ -37,12 +37,12 @@
  * settings.  If you want to get informed when the user selects
  * something connect to the TQListBox::selectionChanged() signal.
  **/
-class TDEUI_EXPORT KListBox : public TQListBox
+class TDEUI_EXPORT TDEListBox : public TQListBox
 {
     Q_OBJECT
 
 public:
-  KListBox( TQWidget *parent = 0, const char *name = 0, WFlags f = 0 );
+  TDEListBox( TQWidget *parent = 0, const char *name = 0, WFlags f = 0 );
 
 signals:
 
@@ -121,8 +121,8 @@ private slots:
 protected:
   virtual void virtual_hook( int id, void* data );
 private:
-  class KListBoxPrivate;
-  KListBoxPrivate* const d;
+  class TDEListBoxPrivate;
+  TDEListBoxPrivate* const d;
 };
 
 #endif

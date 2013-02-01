@@ -75,7 +75,7 @@ KHelpMenu::KHelpMenu( TQWidget *parent, const TQString &aboutAppText,
 }
 
 KHelpMenu::KHelpMenu( TQWidget *parent, const TDEAboutData *aboutData,
-		      bool showWhatsThis, KActionCollection *actions )
+		      bool showWhatsThis, TDEActionCollection *actions )
   : TQObject(parent), mMenu(0), mAboutApp(0), mAboutKDE(0), mBugReport(0),
     d(new KHelpMenuPrivate)
 {
@@ -109,7 +109,7 @@ KHelpMenu::~KHelpMenu()
 }
 
 
-KPopupMenu* KHelpMenu::menu()
+TDEPopupMenu* KHelpMenu::menu()
 {
   if( !mMenu )
   {
@@ -121,20 +121,20 @@ KPopupMenu* KHelpMenu::menu()
     const TDEAboutData *aboutData = d->mAboutData ? d->mAboutData : TDEGlobal::instance()->aboutData();
     TQString appName = (aboutData)? aboutData->programName() : TQString::fromLatin1(tqApp->name());
 
-    mMenu = new KPopupMenu();
+    mMenu = new TDEPopupMenu();
     connect( mMenu, TQT_SIGNAL(destroyed()), this, TQT_SLOT(menuDestroyed()));
 
     bool need_separator = false;
-    if (kapp->authorizeKAction("help_contents"))
+    if (kapp->authorizeTDEAction("help_contents"))
     {
       mMenu->insertItem( BarIcon( "contents", KIcon::SizeSmall),
                      TQString(i18n( "%1 &Handbook" ).arg( appName)) ,menuHelpContents );
       mMenu->connectItem( menuHelpContents, this, TQT_SLOT(appHelpActivated()) );
-      mMenu->setAccel( KStdAccel::shortcut(KStdAccel::Help), menuHelpContents );
+      mMenu->setAccel( TDEStdAccel::shortcut(TDEStdAccel::Help), menuHelpContents );
       need_separator = true;
     }
 
-    if( mShowWhatsThis && kapp->authorizeKAction("help_whats_this") )
+    if( mShowWhatsThis && kapp->authorizeTDEAction("help_whats_this") )
     {
       TQToolButton* wtb = TQWhatsThis::whatsThisButton(0);
       mMenu->insertItem( wtb->iconSet(),i18n( "What's &This" ), menuWhatsThis);
@@ -144,7 +144,7 @@ KPopupMenu* KHelpMenu::menu()
       need_separator = true;
     }
 
-    if (kapp->authorizeKAction("help_report_bug") && aboutData && !aboutData->bugAddress().isEmpty() )
+    if (kapp->authorizeTDEAction("help_report_bug") && aboutData && !aboutData->bugAddress().isEmpty() )
     {
       if (need_separator)
         mMenu->insertSeparator();
@@ -153,7 +153,7 @@ KPopupMenu* KHelpMenu::menu()
       need_separator = true;
     }
 
-    if (kapp->authorizeKAction("switch_application_language"))
+    if (kapp->authorizeTDEAction("switch_application_language"))
     {
       if (need_separator)
         mMenu->insertSeparator();
@@ -165,14 +165,14 @@ KPopupMenu* KHelpMenu::menu()
     if (need_separator)
       mMenu->insertSeparator();
 
-    if (kapp->authorizeKAction("help_about_app"))
+    if (kapp->authorizeTDEAction("help_about_app"))
     {
       mMenu->insertItem( kapp->miniIcon(),
         TQString(i18n( "&About %1" ).arg(appName)), menuAboutApp );
       mMenu->connectItem( menuAboutApp, this, TQT_SLOT( aboutApplication() ) );
     }
     
-    if (kapp->authorizeKAction("help_about_kde"))
+    if (kapp->authorizeTDEAction("help_about_kde"))
     {
       mMenu->insertItem( SmallIcon("about_kde"), i18n( "About &Trinity" ), menuAboutKDE );
       mMenu->connectItem( menuAboutKDE, this, TQT_SLOT( aboutKDE() ) );

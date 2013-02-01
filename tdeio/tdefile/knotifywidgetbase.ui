@@ -19,7 +19,7 @@
         <property name="margin">
             <number>0</number>
         </property>
-        <widget class="KListView">
+        <widget class="TDEListView">
             <column>
                 <property name="text">
                     <string></string>

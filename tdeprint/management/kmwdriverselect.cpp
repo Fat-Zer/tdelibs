@@ -38,7 +38,7 @@ KMWDriverSelect::KMWDriverSelect(TQWidget *parent, const char *name)
 	m_nextpage = KMWizard::DriverTest;
 	m_entries = NULL;
 
-	m_list = new KListBox(this);
+	m_list = new TDEListBox(this);
 	TQLabel	*l1 = new TQLabel(this);
 	l1->setText(i18n("<p>Several drivers have been detected for this model. Select the driver "
 			 "you want to use. You will have the opportunity to test it as well as to "

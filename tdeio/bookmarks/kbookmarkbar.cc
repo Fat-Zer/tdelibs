@@ -45,10 +45,10 @@
 class KBookmarkBarPrivate : public dPtrTemplate<KBookmarkBar, KBookmarkBarPrivate>
 {
 public:
-    TQPtrList<KAction> m_actions;
+    TQPtrList<TDEAction> m_actions;
     bool m_readOnly;
     KBookmarkManager* m_filteredMgr;
-    KToolBar* m_sepToolBar;
+    TDEToolBar* m_sepToolBar;
     int m_sepIndex;
     bool m_atFirst;
     TQString m_dropAddress;
@@ -85,8 +85,8 @@ private:
 };
 
 KBookmarkBar::KBookmarkBar( KBookmarkManager* mgr,
-                            KBookmarkOwner *_owner, KToolBar *_toolBar,
-                            KActionCollection *coll,
+                            KBookmarkOwner *_owner, TDEToolBar *_toolBar,
+                            TDEActionCollection *coll,
                             TQObject *parent, const char *name )
     : TQObject( parent, name ), m_pOwner(_owner), m_toolBar(_toolBar),
       m_actionCollection( coll ), m_pManager(mgr)
@@ -150,7 +150,7 @@ KBookmarkBar::~KBookmarkBar()
 
 void KBookmarkBar::clear()
 {
-    TQPtrListIterator<KAction> it( dptr()->m_actions );
+    TQPtrListIterator<TDEAction> it( dptr()->m_actions );
     m_toolBar->clear();
     for (; it.current(); ++it ) {
         (*it)->unplugAll();
@@ -199,9 +199,9 @@ void KBookmarkBar::fillBookmarkBar(KBookmarkGroup & parent)
                 m_toolBar->insertLineSeparator();
             else
             {
-                KAction *action = new KBookmarkAction( text, bm.icon(), 0, m_actionCollection, 0 );
-                connect(action, TQT_SIGNAL( activated ( KAction::ActivationReason, TQt::ButtonState )),
-                        this, TQT_SLOT( slotBookmarkSelected( KAction::ActivationReason, TQt::ButtonState ) ));
+                TDEAction *action = new KBookmarkAction( text, bm.icon(), 0, m_actionCollection, 0 );
+                connect(action, TQT_SIGNAL( activated ( TDEAction::ActivationReason, TQt::ButtonState )),
+                        this, TQT_SLOT( slotBookmarkSelected( TDEAction::ActivationReason, TQt::ButtonState ) ));
 
                 action->setProperty( "url", bm.url().url() );
                 action->setProperty( "address", bm.address() );
@@ -215,7 +215,7 @@ void KBookmarkBar::fillBookmarkBar(KBookmarkGroup & parent)
         }
         else
         {
-            KActionMenu *action = new KBookmarkActionMenu( text, bm.icon(),
+            TDEActionMenu *action = new KBookmarkActionMenu( text, bm.icon(),
                                                            m_actionCollection,
                                                            "bookmarkbar-actionmenu");
             action->setProperty( "address", bm.address() );
@@ -252,11 +252,11 @@ bool KBookmarkBar::isReadOnly() const
     return dptr()->m_readOnly;
 }
 
-void KBookmarkBar::slotBookmarkSelected( KAction::ActivationReason /*reason*/, TQt::ButtonState state )
+void KBookmarkBar::slotBookmarkSelected( TDEAction::ActivationReason /*reason*/, TQt::ButtonState state )
 {
     if (!m_pOwner) return; // this view doesn't handle bookmarks...
 
-    const KAction* action = dynamic_cast<const KAction *>(sender());
+    const TDEAction* action = dynamic_cast<const TDEAction *>(sender());
     if(action)
     {
         const TQString & url = sender()->property("url").toString();
@@ -267,7 +267,7 @@ void KBookmarkBar::slotBookmarkSelected( KAction::ActivationReason /*reason*/, T
 
 void KBookmarkBar::slotBookmarkSelected()
 {
-    slotBookmarkSelected(KAction::ToolBarActivation, Qt::NoButton);
+    slotBookmarkSelected(TDEAction::ToolBarActivation, Qt::NoButton);
 }
 
 static const int const_sepId = -9999; // FIXME this is ugly,
@@ -282,9 +282,9 @@ static void removeTempSep(KBookmarkBarPrivate* p)
     }
 }
 
-static KAction* findPluggedAction(TQPtrList<KAction> actions, KToolBar *tb, int id)
+static TDEAction* findPluggedAction(TQPtrList<TDEAction> actions, TDEToolBar *tb, int id)
 {
-    TQPtrListIterator<KAction> it( actions );
+    TQPtrListIterator<TDEAction> it( actions );
     for (; (*it); ++it )
         if ((*it)->isPlugged(tb, id))
             return (*it);
@@ -302,19 +302,19 @@ static KAction* findPluggedAction(TQPtrList<KAction> actions, KToolBar *tb, int 
  *        returned action was dropped on
  */
 static TQString handleToolbarDragMoveEvent(
-    KBookmarkBarPrivate *p, KToolBar *tb, TQPoint pos, TQPtrList<KAction> actions,
+    KBookmarkBarPrivate *p, TDEToolBar *tb, TQPoint pos, TQPtrList<TDEAction> actions,
     bool &atFirst, KBookmarkManager *mgr
 ) {
     Q_UNUSED( mgr );
-    Q_ASSERT( actions.isEmpty() || (tb == dynamic_cast<KToolBar*>(actions.first()->container(0))) );
+    Q_ASSERT( actions.isEmpty() || (tb == dynamic_cast<TDEToolBar*>(actions.first()->container(0))) );
     p->m_sepToolBar = tb;
     p->m_sepToolBar->removeItemDelayed(const_sepId);
 
     int index = 0;
-    KToolBarButton* b;
+    TDEToolBarButton* b;
 
-    b = dynamic_cast<KToolBarButton*>(tb->childAt(pos));
-    KAction *a = 0;
+    b = dynamic_cast<TDEToolBarButton*>(tb->childAt(pos));
+    TDEAction *a = 0;
     TQString address;
     atFirst = false;
 
@@ -382,23 +382,23 @@ skipact:
 }
 
 // TODO - document!!!!
-static KAction* handleToolbarMouseButton(TQPoint pos, TQPtrList<KAction> actions,
+static TDEAction* handleToolbarMouseButton(TQPoint pos, TQPtrList<TDEAction> actions,
 	                                     KBookmarkManager * /*mgr*/, TQPoint & pt)
 {
-    KAction *act = actions.first();
+    TDEAction *act = actions.first();
     if (!act) {
         return 0;
     }
 
-    KToolBar *tb = dynamic_cast<KToolBar*>(act->container(0));
+    TDEToolBar *tb = dynamic_cast<TDEToolBar*>(act->container(0));
     Q_ASSERT(tb);
 
-    KToolBarButton *b;
-    b = dynamic_cast<KToolBarButton*>(tb->childAt(pos));
+    TDEToolBarButton *b;
+    b = dynamic_cast<TDEToolBarButton*>(tb->childAt(pos));
     if (!b)
         return 0;
 
-    KAction *a = 0;
+    TDEAction *a = 0;
     a = findPluggedAction(actions, tb, b->id());
     Q_ASSERT(a);
     pt = tb->mapToGlobal(pos);
@@ -454,7 +454,7 @@ bool KBookmarkBar::eventFilter( TQObject *o, TQEvent *e )
         TQMouseEvent *mev = (TQMouseEvent*)e;
 
         TQPoint pt;
-        KAction *_a;
+        TDEAction *_a;
 
         // FIXME, see how this holds up on an empty toolbar
         _a = handleToolbarMouseButton( mev->pos(), dptr()->m_actions, m_pManager, pt );
@@ -463,7 +463,7 @@ bool KBookmarkBar::eventFilter( TQObject *o, TQEvent *e )
             dptr()->m_highlightedAddress = _a->property("address").toString();
             KBookmark bookmark = m_pManager->findByAddress( dptr()->m_highlightedAddress );
             RMB::begin_rmb_action(this);
-            KPopupMenu *pm = new KPopupMenu;
+            TDEPopupMenu *pm = new TDEPopupMenu;
             rmbSelf(this)->fillContextMenu( pm, dptr()->m_highlightedAddress, 0 );
             emit aboutToShowContextMenu( rmbSelf(this)->atAddress( dptr()->m_highlightedAddress ), pm );
             rmbSelf(this)->fillContextMenu2( pm, dptr()->m_highlightedAddress, 0 );
@@ -510,7 +510,7 @@ bool KBookmarkBar::eventFilter( TQObject *o, TQEvent *e )
             return false;
         bool _atFirst;
         TQString dropAddress;
-        KToolBar *tb = (KToolBar*)o;
+        TDEToolBar *tb = (TDEToolBar*)o;
         dropAddress = handleToolbarDragMoveEvent(dptr(), tb, dme->pos(), dptr()->m_actions, _atFirst, m_pManager);
         if (!dropAddress.isNull())
         {

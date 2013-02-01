@@ -32,7 +32,7 @@
 # AbortFatal=1
 #
 
-# KAccel debug info off
+# TDEAccel debug info off
 [125]
 InfoOutput=4
 
@@ -40,7 +40,7 @@ InfoOutput=4
 [131]
 InfoOutput=4
 
-# KAction debug info off
+# TDEAction debug info off
 [129]
 InfoOutput=4
 
@@ -52,7 +52,7 @@ InfoOutput=4
 [173]
 InfoOutput=4
 
-# KMainWindow debug info off
+# TDEMainWindow debug info off
 [200]
 InfoOutput=4
 

@@ -69,7 +69,7 @@ static TDEConfig *recentdirs_readList(TQString &key, TQStringList &result, bool 
    return config;
 }
 
-TQStringList KRecentDirs::list(const TQString &fileClass)
+TQStringList TDERecentDirs::list(const TQString &fileClass)
 {
    TQString key = fileClass;
    TQStringList result;
@@ -77,13 +77,13 @@ TQStringList KRecentDirs::list(const TQString &fileClass)
    return result;
 }
     
-TQString KRecentDirs::dir(const TQString &fileClass)
+TQString TDERecentDirs::dir(const TQString &fileClass)
 {
    TQStringList result = list(fileClass);
    return result[0];
 }
 
-void KRecentDirs::add(const TQString &fileClass, const TQString &directory)
+void TDERecentDirs::add(const TQString &fileClass, const TQString &directory)
 {
    TQString key = fileClass;
    TQStringList result;

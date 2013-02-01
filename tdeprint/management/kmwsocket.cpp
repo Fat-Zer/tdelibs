@@ -39,7 +39,7 @@ KMWSocket::KMWSocket(TQWidget *parent, const char *name)
 	m_ID = KMWizard::TCP;
 	m_nextpage = KMWizard::Driver;
 
-	m_list = new KListView(this);
+	m_list = new TDEListView(this);
 	m_list->addColumn("");
 	m_list->header()->hide();
 	m_list->setFrameStyle(TQFrame::WinPanel|TQFrame::Sunken);

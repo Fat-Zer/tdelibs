@@ -27,7 +27,7 @@
 #include "kshortcutmenu.h"
 //#include <kkeynative.h>
 
-KShortcutMenu::KShortcutMenu( TQWidget* pParent, KAccelActions* pActions, KKeySequence seq )
+TDEShortcutMenu::TDEShortcutMenu( TQWidget* pParent, TDEAccelActions* pActions, KKeySequence seq )
 :	TQPopupMenu( pParent ),
 	m_pActions( pActions ),
 	m_seq( seq )
@@ -44,9 +44,9 @@ KShortcutMenu::KShortcutMenu( TQWidget* pParent, KAccelActions* pActions, KKeySe
 	insertItem( pTitle );
 }
 
-bool KShortcutMenu::insertAction( uint iAction, KKeySequence seq )
+bool TDEShortcutMenu::insertAction( uint iAction, KKeySequence seq )
 {
-	KAccelAction* pAction = m_pActions->actionPtr( iAction );
+	TDEAccelAction* pAction = m_pActions->actionPtr( iAction );
 	
 	if( pAction ) {
 		insertItem( "", iAction );
@@ -57,14 +57,14 @@ bool KShortcutMenu::insertAction( uint iAction, KKeySequence seq )
 }
 
 
-void KShortcutMenu::updateShortcuts()
+void TDEShortcutMenu::updateShortcuts()
 {
 	pTitle->setText( m_seq.toString() + ",..." );
 	
 	for( uint iItem = 1; iItem < count(); iItem++ ) {
 		int iAction = idAt( iItem );
 		if( iAction >= 0 ) {
-			KAccelAction* pAction = m_pActions->actionPtr( iAction );
+			TDEAccelAction* pAction = m_pActions->actionPtr( iAction );
 			if( pAction ) {
 				KKeySequence seq = m_seqs[iItem];
 				TQString sSeq = seq.key(m_seq.count()).toString();
@@ -78,7 +78,7 @@ void KShortcutMenu::updateShortcuts()
 	}
 }
 
-void KShortcutMenu::keyPressEvent( TQKeyEvent* pEvent )
+void TDEShortcutMenu::keyPressEvent( TQKeyEvent* pEvent )
 {
 	kdDebug() << "keypress; " << pEvent->key() << endl;
 	KKey key( pEvent );
@@ -117,7 +117,7 @@ void KShortcutMenu::keyPressEvent( TQKeyEvent* pEvent )
 	}
 }
 
-int KShortcutMenu::searchForKey( KKey key )
+int TDEShortcutMenu::searchForKey( KKey key )
 {
 	int iItemFound = -1; // -1 indicates no match
 	uint iKey = m_seq.count();
@@ -138,7 +138,7 @@ int KShortcutMenu::searchForKey( KKey key )
 	return iItemFound;
 }
 
-void KShortcutMenu::keepItemsMatching( KKey key )
+void TDEShortcutMenu::keepItemsMatching( KKey key )
 {
 	kdDebug(125) << "MyAccel::keepItemsMatching( " << key.toStringInternal() << " )" << endl;
 	

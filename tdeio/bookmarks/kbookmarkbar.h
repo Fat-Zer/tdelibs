@@ -27,11 +27,11 @@
 #include <kbookmark.h>
 #include <kaction.h>
 
-class KToolBar;
+class TDEToolBar;
 class KBookmarkMenu;
 class KBookmarkOwner;
-class KActionCollection;
-class KAction;
+class TDEActionCollection;
+class TDEAction;
 class TQPopupMenu;
 
 /**
@@ -52,14 +52,14 @@ public:
      * @param owner implementation of the KBookmarkOwner interface (callbacks)
      * @param toolBar toolbar to fill
      * 
-     * The KActionCollection pointer argument is now obsolete.
+     * The TDEActionCollection pointer argument is now obsolete.
      *
      * @param parent the parent widget for the bookmark toolbar
      * @param name the internal name for the bookmark toolbar
      */
     KBookmarkBar( KBookmarkManager* manager,
-                  KBookmarkOwner *owner, KToolBar *toolBar,
-                  KActionCollection *,
+                  KBookmarkOwner *owner, TDEToolBar *toolBar,
+                  TDEActionCollection *,
                   TQObject *parent = 0L, const char *name = 0L);
 
     virtual ~KBookmarkBar();
@@ -98,7 +98,7 @@ public slots:
     /**
      * @since 3.4
      */
-    void slotBookmarkSelected( KAction::ActivationReason reason, TQt::ButtonState state );
+    void slotBookmarkSelected( TDEAction::ActivationReason reason, TQt::ButtonState state );
     
     /// @since 3.2
     void slotRMBActionRemove( int );
@@ -119,8 +119,8 @@ private:
     KBookmarkGroup getToolbar();
 
     KBookmarkOwner *m_pOwner;
-    TQGuardedPtr<KToolBar> m_toolBar;
-    KActionCollection *m_actionCollection;
+    TQGuardedPtr<TDEToolBar> m_toolBar;
+    TDEActionCollection *m_actionCollection;
     KBookmarkManager *m_pManager;
     TQPtrList<KBookmarkMenu> m_lstSubMenus;
 

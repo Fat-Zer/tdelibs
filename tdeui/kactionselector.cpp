@@ -31,24 +31,24 @@
 #include <tqevent.h>
 #include <tqwhatsthis.h>
 
-class KActionSelectorPrivate {
+class TDEActionSelectorPrivate {
   public:
   TQListBox *availableListBox, *selectedListBox;
   TQToolButton *btnAdd, *btnRemove, *btnUp, *btnDown;
   TQLabel *lAvailable, *lSelected;
   bool moveOnDoubleClick, keyboardEnabled;
-  KActionSelector::ButtonIconSize iconSize;
+  TDEActionSelector::ButtonIconSize iconSize;
   TQString addIcon, removeIcon, upIcon, downIcon;
-  KActionSelector::InsertionPolicy availableInsertionPolicy, selectedInsertionPolicy;
+  TDEActionSelector::InsertionPolicy availableInsertionPolicy, selectedInsertionPolicy;
   bool showUpDownButtons;
 };
 
 //BEGIN Constructor/destructor
 
-KActionSelector::KActionSelector( TQWidget *parent, const char *name )
+TDEActionSelector::TDEActionSelector( TQWidget *parent, const char *name )
   : TQWidget( parent, name )
 {
-  d = new KActionSelectorPrivate();
+  d = new TDEActionSelectorPrivate();
   d->moveOnDoubleClick = true;
   d->keyboardEnabled = true;
   d->iconSize = SmallIcon;
@@ -116,7 +116,7 @@ KActionSelector::KActionSelector( TQWidget *parent, const char *name )
   d->selectedListBox->installEventFilter( this );
 }
 
-KActionSelector::~KActionSelector()
+TDEActionSelector::~TDEActionSelector()
 {
   delete d;
 }
@@ -125,17 +125,17 @@ KActionSelector::~KActionSelector()
 
 //BEGIN Public Methods
 
-TQListBox *KActionSelector::availableListBox() const
+TQListBox *TDEActionSelector::availableListBox() const
 {
   return d->availableListBox;
 }
 
-TQListBox *KActionSelector::selectedListBox() const
+TQListBox *TDEActionSelector::selectedListBox() const
 {
   return d->selectedListBox;
 }
 
-void KActionSelector::setButtonIcon( const TQString &icon, MoveButton button )
+void TDEActionSelector::setButtonIcon( const TQString &icon, MoveButton button )
 {
   switch ( button )
   {
@@ -156,11 +156,11 @@ void KActionSelector::setButtonIcon( const TQString &icon, MoveButton button )
     d->btnDown->setIconSet( SmallIconSet( icon, d->iconSize ) );
     break;
     default:
-    kdDebug(13001)<<"KActionSelector::setButtonIcon: DAINBREAD!"<<endl;
+    kdDebug(13001)<<"TDEActionSelector::setButtonIcon: DAINBREAD!"<<endl;
   }
 }
 
-void KActionSelector::setButtonIconSet( const TQIconSet &iconset, MoveButton button )
+void TDEActionSelector::setButtonIconSet( const TQIconSet &iconset, MoveButton button )
 {
   switch ( button )
   {
@@ -177,11 +177,11 @@ void KActionSelector::setButtonIconSet( const TQIconSet &iconset, MoveButton but
     d->btnDown->setIconSet( iconset );
     break;
     default:
-    kdDebug(13001)<<"KActionSelector::setButtonIconSet: DAINBREAD!"<<endl;
+    kdDebug(13001)<<"TDEActionSelector::setButtonIconSet: DAINBREAD!"<<endl;
   }
 }
 
-void KActionSelector::setButtonTooltip( const TQString &tip, MoveButton button )
+void TDEActionSelector::setButtonTooltip( const TQString &tip, MoveButton button )
 {
   switch ( button )
   {
@@ -198,11 +198,11 @@ void KActionSelector::setButtonTooltip( const TQString &tip, MoveButton button )
     d->btnDown->setTextLabel( tip );
     break;
     default:
-    kdDebug(13001)<<"KActionSelector::setButtonToolTip: DAINBREAD!"<<endl;
+    kdDebug(13001)<<"TDEActionSelector::setButtonToolTip: DAINBREAD!"<<endl;
   }
 }
 
-void KActionSelector::setButtonWhatsThis( const TQString &text, MoveButton button )
+void TDEActionSelector::setButtonWhatsThis( const TQString &text, MoveButton button )
 {
   switch ( button )
   {
@@ -219,11 +219,11 @@ void KActionSelector::setButtonWhatsThis( const TQString &text, MoveButton butto
     TQWhatsThis::add( d->btnDown, text );
     break;
     default:
-    kdDebug(13001)<<"KActionSelector::setButtonWhatsThis: DAINBREAD!"<<endl;
+    kdDebug(13001)<<"TDEActionSelector::setButtonWhatsThis: DAINBREAD!"<<endl;
   }
 }
 
-void KActionSelector::setButtonsEnabled()
+void TDEActionSelector::setButtonsEnabled()
 {
   d->btnAdd->setEnabled( d->availableListBox->currentItem() > -1 );
   d->btnRemove->setEnabled( d->selectedListBox->currentItem() > -1 );
@@ -236,84 +236,84 @@ void KActionSelector::setButtonsEnabled()
 
 //BEGIN Properties
 
-bool KActionSelector::moveOnDoubleClick() const
+bool TDEActionSelector::moveOnDoubleClick() const
 {
   return d->moveOnDoubleClick;
 }
 
-void KActionSelector::setMoveOnDoubleClick( bool b )
+void TDEActionSelector::setMoveOnDoubleClick( bool b )
 {
   d->moveOnDoubleClick = b;
 }
 
-bool KActionSelector::keyboardEnabled() const
+bool TDEActionSelector::keyboardEnabled() const
 {
   return d->keyboardEnabled;
 }
 
-void KActionSelector::setKeyboardEnabled( bool b )
+void TDEActionSelector::setKeyboardEnabled( bool b )
 {
   d->keyboardEnabled = b;
 }
 
-TQString KActionSelector::availableLabel() const
+TQString TDEActionSelector::availableLabel() const
 {
   return d->lAvailable->text();
 }
 
-void KActionSelector::setAvailableLabel( const TQString &text )
+void TDEActionSelector::setAvailableLabel( const TQString &text )
 {
   d->lAvailable->setText( text );
 }
 
-TQString KActionSelector::selectedLabel() const
+TQString TDEActionSelector::selectedLabel() const
 {
   return d->lSelected->text();
 }
 
-void KActionSelector::setSelectedLabel( const TQString &text )
+void TDEActionSelector::setSelectedLabel( const TQString &text )
 {
   d->lSelected->setText( text );
 }
 
-KActionSelector::ButtonIconSize KActionSelector::buttonIconSize() const
+TDEActionSelector::ButtonIconSize TDEActionSelector::buttonIconSize() const
 {
   return d->iconSize;
 }
 
-void KActionSelector::setButtonIconSize( ButtonIconSize size )
+void TDEActionSelector::setButtonIconSize( ButtonIconSize size )
 {
   d->iconSize = size;
   // reload icons
   loadIcons();
 }
 
-KActionSelector::InsertionPolicy KActionSelector::availableInsertionPolicy() const
+TDEActionSelector::InsertionPolicy TDEActionSelector::availableInsertionPolicy() const
 {
   return d->availableInsertionPolicy;
 }
 
-void KActionSelector::setAvailableInsertionPolicy( InsertionPolicy p )
+void TDEActionSelector::setAvailableInsertionPolicy( InsertionPolicy p )
 {
   d->availableInsertionPolicy = p;
 }
 
-KActionSelector::InsertionPolicy KActionSelector::selectedInsertionPolicy() const
+TDEActionSelector::InsertionPolicy TDEActionSelector::selectedInsertionPolicy() const
 {
   return d->selectedInsertionPolicy;
 }
 
-void KActionSelector::setSelectedInsertionPolicy( InsertionPolicy p )
+void TDEActionSelector::setSelectedInsertionPolicy( InsertionPolicy p )
 {
   d->selectedInsertionPolicy = p;
 }
 
-bool KActionSelector::showUpDownButtons() const
+bool TDEActionSelector::showUpDownButtons() const
 {
   return d->showUpDownButtons;
 }
 
-void KActionSelector::setShowUpDownButtons( bool show )
+void TDEActionSelector::setShowUpDownButtons( bool show )
 {
   d->showUpDownButtons = show;
   if ( show )
@@ -332,7 +332,7 @@ void KActionSelector::setShowUpDownButtons( bool show )
 
 //BEGIN Public Slots
 
-void KActionSelector::polish()
+void TDEActionSelector::polish()
 {
   setButtonsEnabled();
 }
@@ -340,7 +340,7 @@ void KActionSelector::polish()
 //END Public Slots
 
 //BEGIN Protected
-void KActionSelector::keyPressEvent( TQKeyEvent *e )
+void TDEActionSelector::keyPressEvent( TQKeyEvent *e )
 {
   if ( ! d->keyboardEnabled ) return;
   if ( (e->state() & TQt::ControlButton) )
@@ -366,7 +366,7 @@ void KActionSelector::keyPressEvent( TQKeyEvent *e )
   }
 }
 
-bool KActionSelector::eventFilter( TQObject *o, TQEvent *e )
+bool TDEActionSelector::eventFilter( TQObject *o, TQEvent *e )
 {
   if ( d->keyboardEnabled && e->type() == TQEvent::KeyPress )
   {
@@ -413,7 +413,7 @@ bool KActionSelector::eventFilter( TQObject *o, TQEvent *e )
 
 //BEGIN Private Slots
 
-void KActionSelector::buttonAddClicked()
+void TDEActionSelector::buttonAddClicked()
 {
   // move all selected items from available to selected listbox
   TQListBoxItem *item = d->availableListBox->firstItem();
@@ -432,7 +432,7 @@ void KActionSelector::buttonAddClicked()
   d->selectedListBox->setFocus();
 }
 
-void KActionSelector::buttonRemoveClicked()
+void TDEActionSelector::buttonRemoveClicked()
 {
   // move all selected items from selected to available listbox
   TQListBoxItem *item = d->selectedListBox->firstItem();
@@ -451,7 +451,7 @@ void KActionSelector::buttonRemoveClicked()
   d->availableListBox->setFocus();
 }
 
-void KActionSelector::buttonUpClicked()
+void TDEActionSelector::buttonUpClicked()
 {
   int c = d->selectedListBox->currentItem();
   if ( c < 1 ) return;
@@ -462,7 +462,7 @@ void KActionSelector::buttonUpClicked()
   emit movedUp( item );
 }
 
-void KActionSelector::buttonDownClicked()
+void TDEActionSelector::buttonDownClicked()
 {
   int c = d->selectedListBox->currentItem();
   if ( c < 0 || c == int( d->selectedListBox->count() ) - 1 ) return;
@@ -473,7 +473,7 @@ void KActionSelector::buttonDownClicked()
   emit movedDown( item );
 }
 
-void KActionSelector::itemDoubleClicked( TQListBoxItem *item )
+void TDEActionSelector::itemDoubleClicked( TQListBoxItem *item )
 {
   if ( d->moveOnDoubleClick )
     moveItem( item );
@@ -483,7 +483,7 @@ void KActionSelector::itemDoubleClicked( TQListBoxItem *item )
 
 //BEGIN Private Methods
 
-void KActionSelector::loadIcons()
+void TDEActionSelector::loadIcons()
 {
   d->btnAdd->setIconSet( SmallIconSet( d->addIcon, d->iconSize ) );
   d->btnRemove->setIconSet( SmallIconSet( d->removeIcon, d->iconSize ) );
@@ -491,7 +491,7 @@ void KActionSelector::loadIcons()
   d->btnDown->setIconSet( SmallIconSet( d->downIcon, d->iconSize ) );
 }
 
-void KActionSelector::moveItem( TQListBoxItem *item )
+void TDEActionSelector::moveItem( TQListBoxItem *item )
 {
   TQListBox *lbFrom = item->listBox();
   TQListBox *lbTo;
@@ -518,7 +518,7 @@ void KActionSelector::moveItem( TQListBoxItem *item )
     emit removed( item );
 }
 
-int KActionSelector::insertionIndex( TQListBox *lb, InsertionPolicy policy )
+int TDEActionSelector::insertionIndex( TQListBox *lb, InsertionPolicy policy )
 {
   int index;
   switch ( policy )

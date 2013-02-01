@@ -95,9 +95,9 @@ void TDEConfigDialogManager::init(bool trackChanges)
 
     // KDE
     changedMap.insert( "KComboBox", TQT_SIGNAL(activated (int)));
-    changedMap.insert( "KFontCombo", TQT_SIGNAL(activated (int)));
-    changedMap.insert( "KFontRequester", TQT_SIGNAL(fontSelected(const TQFont &)));
-    changedMap.insert( "KFontChooser",  TQT_SIGNAL(fontSelected(const TQFont &)));
+    changedMap.insert( "TDEFontCombo", TQT_SIGNAL(activated (int)));
+    changedMap.insert( "TDEFontRequester", TQT_SIGNAL(fontSelected(const TQFont &)));
+    changedMap.insert( "TDEFontChooser",  TQT_SIGNAL(fontSelected(const TQFont &)));
     changedMap.insert( "KHistoryCombo", TQT_SIGNAL(activated (int)));
 
     changedMap.insert( "KColorButton", TQT_SIGNAL(changed(const TQColor &)));
@@ -105,7 +105,7 @@ void TDEConfigDialogManager::init(bool trackChanges)
     changedMap.insert( "KDateWidget", TQT_SIGNAL(changed (TQDate)));
     changedMap.insert( "KDateTimeWidget", TQT_SIGNAL(valueChanged (const TQDateTime &)));
     changedMap.insert( "KEditListBox", TQT_SIGNAL(changed()));
-    changedMap.insert( "KListBox", TQT_SIGNAL(selectionChanged()));
+    changedMap.insert( "TDEListBox", TQT_SIGNAL(selectionChanged()));
     changedMap.insert( "KLineEdit", TQT_SIGNAL(textChanged(const TQString &)));
     changedMap.insert( "KPasswordEdit", TQT_SIGNAL(textChanged(const TQString &)));
     changedMap.insert( "KRestrictedLine", TQT_SIGNAL(textChanged(const TQString &)));

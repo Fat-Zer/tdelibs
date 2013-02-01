@@ -75,7 +75,7 @@ KDataToolPluginView::KDataToolPluginView( KTextEditor::View *view )
 	view->insertChildClient (this);
 	setInstance( KGenericFactory<KDataToolPlugin>::instance() );
 
-	m_menu = new KActionMenu(i18n("Data Tools"), actionCollection(), "popup_dataTool");
+	m_menu = new TDEActionMenu(i18n("Data Tools"), actionCollection(), "popup_dataTool");
 	connect(m_menu->popupMenu(), TQT_SIGNAL(aboutToShow()), this, TQT_SLOT(aboutToShow()));
 	setXMLFile("tdetexteditor_kdatatoolui.rc");
 
@@ -96,7 +96,7 @@ void KDataToolPluginView::aboutToShow()
 	m_wordUnderCursor = TQString::null;
 
 	// unplug old actions, if any:
-	KAction *ac;
+	TDEAction *ac;
 	for ( ac = m_actionList.first(); ac; ac = m_actionList.next() ) {
 		m_menu->remove(ac);
 	}
@@ -150,7 +150,7 @@ void KDataToolPluginView::aboutToShow()
 			m_singleWord = true;
 			m_singleWord_line = line;
 		} else {
-			m_notAvailable = new KAction(i18n("(not available)"), TQString::null, 0, this, 
+			m_notAvailable = new TDEAction(i18n("(not available)"), TQString::null, 0, this, 
 					TQT_SLOT(slotNotAvailable()), actionCollection(),"dt_n_av");
 			m_menu->insert(m_notAvailable);
 			return;
@@ -172,7 +172,7 @@ void KDataToolPluginView::aboutToShow()
 	}
 
 	if( m_actionList.isEmpty() ) {
-		m_notAvailable = new KAction(i18n("(not available)"), TQString::null, 0, this,
+		m_notAvailable = new TDEAction(i18n("(not available)"), TQString::null, 0, this,
 			TQT_SLOT(slotNotAvailable()), actionCollection(),"dt_n_av");
 		m_menu->insert(m_notAvailable);
 	}

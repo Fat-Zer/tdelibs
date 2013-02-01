@@ -32,19 +32,19 @@ Shell::Shell()
   m_part1 = new Part1(this, m_splitter);
   m_part2 = new Part2(this, m_splitter);
 
-  KActionCollection *coll = actionCollection();
+  TDEActionCollection *coll = actionCollection();
 
-  (void)new KAction( "&View local file", 0, this, TQT_SLOT( slotFileOpen() ), coll, "open_local_file" );
-  (void)new KAction( "&View remote file", 0, this, TQT_SLOT( slotFileOpenRemote() ), coll, "open_remote_file" );
+  (void)new TDEAction( "&View local file", 0, this, TQT_SLOT( slotFileOpen() ), coll, "open_local_file" );
+  (void)new TDEAction( "&View remote file", 0, this, TQT_SLOT( slotFileOpenRemote() ), coll, "open_remote_file" );
 
-  m_paEditFile = new KAction( "&Edit file", 0, this, TQT_SLOT( slotFileEdit() ), coll, "edit_file" );
-  m_paCloseEditor = new KAction( "&Close file editor", 0, this, TQT_SLOT( slotFileCloseEditor() ), coll, "close_editor" );
+  m_paEditFile = new TDEAction( "&Edit file", 0, this, TQT_SLOT( slotFileEdit() ), coll, "edit_file" );
+  m_paCloseEditor = new TDEAction( "&Close file editor", 0, this, TQT_SLOT( slotFileCloseEditor() ), coll, "close_editor" );
   m_paCloseEditor->setEnabled(false);
-  KAction * paQuit = new KAction( "&Quit", 0, this, TQT_SLOT( close() ), coll, "shell_quit" );
+  TDEAction * paQuit = new TDEAction( "&Quit", 0, this, TQT_SLOT( close() ), coll, "shell_quit" );
   paQuit->setIconSet(TQIconSet(BarIcon("exit")));
 
-  (void)new KAction( "Yet another menu item", 0, coll, "shell_yami" );
-  (void)new KAction( "Yet another submenu item", 0, coll, "shell_yasmi" );
+  (void)new TDEAction( "Yet another menu item", 0, coll, "shell_yami" );
+  (void)new TDEAction( "Yet another submenu item", 0, coll, "shell_yasmi" );
 
   setCentralWidget( m_splitter );
   m_splitter->setMinimumSize( 400, 300 );

@@ -72,7 +72,7 @@ class KURL;
  * the above functions to false.
  *
  * The default key-bindings for completion and rotation is determined
- * from the global settings in KStdAccel. These values, however, can
+ * from the global settings in TDEStdAccel. These values, however, can
  * be overridden locally by invoking @p setKeyBinding(). You can easily
  * revert these settings back to the default by simply calling
  * @p useGlobalSettings(). An alternate method would be to default

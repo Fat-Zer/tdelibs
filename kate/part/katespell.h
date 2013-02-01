@@ -27,7 +27,7 @@
 
 class KateView;
 
-class KAction;
+class TDEAction;
 class KSpell;
 
 class KateSpell : public TQObject
@@ -38,7 +38,7 @@ class KateSpell : public TQObject
     KateSpell( KateView* );
     ~KateSpell();
 
-    void createActions( KActionCollection* );
+    void createActions( TDEActionCollection* );
 
     void updateActions ();
 
@@ -69,7 +69,7 @@ class KateSpell : public TQObject
 
   private:
     KateView *m_view;
-    KAction *m_spellcheckSelection;
+    TDEAction *m_spellcheckSelection;
 
     KSpell *m_tdespell;
 

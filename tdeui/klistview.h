@@ -46,13 +46,13 @@ class KLineEdit;
  * To see where you are dropping, setDropVisualizer(true).
  * And also you'll need acceptDrag(TQDropEvent*)
  *
- * KListView is drag-enabled, too: to benefit from that you have to derive from it.
+ * TDEListView is drag-enabled, too: to benefit from that you have to derive from it.
  * Reimplement dragObject() and (possibly) startDrag(),
  * and setDragEnabled(true).
  */
-class TDEUI_EXPORT KListView : public TQListView
+class TDEUI_EXPORT TDEListView : public TQListView
 {
-  friend class KListViewItem;
+  friend class TDEListViewItem;
 
   Q_OBJECT
   
@@ -116,12 +116,12 @@ public:
    * The parameters @p parent and @p name are handled by
    * TQListView, as usual.
    */
-  KListView (TQWidget *parent = 0, const char *name = 0);
+  TDEListView (TQWidget *parent = 0, const char *name = 0);
 
   /**
    * Destructor.
    */
-  virtual ~KListView();
+  virtual ~TDEListView();
 
  /**
    * Reimplemented for internal reasons.
@@ -333,7 +333,7 @@ public:
 
   /**
    * sets the alternate background background color.
-   * This only has an effect if the items are KListViewItems
+   * This only has an effect if the items are TDEListViewItems
    *
    * @param c the color to use for every other item. Set to an invalid
    *        color to disable alternate colors.
@@ -452,7 +452,7 @@ signals:
    * @param after is the item after which the drop occurred (or 0L, if
    * the drop was above all items
    */
-  void dropped (KListView* list, TQDropEvent* e, TQListViewItem* after);
+  void dropped (TDEListView* list, TQDropEvent* e, TQListViewItem* after);
 
   /**
    * This signal gets emitted whenever something acceptable is
@@ -466,7 +466,7 @@ signals:
    * @param after is the item after which the drop occurred (or 0L, if
    * the drop was above all items
    */
-  void dropped (KListView* list, TQDropEvent* e, TQListViewItem* parent, TQListViewItem* after);
+  void dropped (TDEListView* list, TQDropEvent* e, TQListViewItem* parent, TQListViewItem* after);
 
   /**
    * This signal gets emitted whenever something acceptable is
@@ -494,7 +494,7 @@ signals:
    * a move is made, for example, to disable sorting
    *
    * This is sent only once per each groups of moves.  That is, for each
-   * drop that is a move this will be emitted once, before KListView calls
+   * drop that is a move this will be emitted once, before TDEListView calls
    * @see moveItem()
    */
   void aboutToMove();
@@ -538,13 +538,13 @@ signals:
    * This signal is emitted when the shortcut key for popup-menus is pressed.
    *
    * Normally you should not use this, just connect a slot to signal
-   * contextMenu (KListView*, TQListViewItem*, const TQPoint&) to correctly
+   * contextMenu (TDEListView*, TQListViewItem*, const TQPoint&) to correctly
    * handle showing context menus regardless of settings.
    *
    * @param list is this listview.
    * @param item is the currentItem() at the time the key was pressed. May be 0L.
    */
-  void menuShortCutPressed (KListView* list, TQListViewItem* item);
+  void menuShortCutPressed (TDEListView* list, TQListViewItem* item);
 
   /**
    * This signal is emitted whenever a context-menu should be shown for item @p i.
@@ -554,7 +554,7 @@ signals:
    * @param i is the item for which the menu should be shown. May be 0L.
    * @param p is the point at which the menu should be shown.
    */
-  void contextMenu (KListView* l, TQListViewItem* i, const TQPoint& p);
+  void contextMenu (TDEListView* l, TQListViewItem* i, const TQPoint& p);
 
   void itemAdded(TQListViewItem *item);
   void itemRemoved(TQListViewItem *item);
@@ -571,7 +571,7 @@ public slots:
    * Use this function to enable the feature on other columns.
    *
    * If you want more intelligent (dynamic) selection,
-   * you'll have to derive from KListView,
+   * you'll have to derive from TDEListView,
    * and override rename() and call only call it
    * if you want the item to be renamed.
    */
@@ -947,7 +947,7 @@ protected slots:
   /**
    * Emit the contextMenu signal. This slot is for key presses.
    */
-  void emitContextMenu (KListView*, TQListViewItem*);
+  void emitContextMenu (TDEListView*, TQListViewItem*);
 
   /**
    * Accessory slot for AutoSelect
@@ -1004,8 +1004,8 @@ private:
 protected:
   virtual void virtual_hook( int id, void* data );
 private:
-  class KListViewPrivate;
-  KListViewPrivate* const d;
+  class TDEListViewPrivate;
+  TDEListViewPrivate* const d;
   bool isExecuteArea( int x, TQListViewItem* item );
 };
 
@@ -1015,46 +1015,46 @@ private:
  *
  * @short listview item with alternate background color support
  */
-class TDEUI_EXPORT KListViewItem : public TQListViewItem
+class TDEUI_EXPORT TDEListViewItem : public TQListViewItem
 {
-  friend class KListView;
+  friend class TDEListView;
 public:
   /**
    * constructors. The semantics remain as in TQListViewItem.
    * Although they accept a TQListViewItem as parent, please
-   * don't mix KListViewItem (or subclasses) with QListViewItem
+   * don't mix TDEListViewItem (or subclasses) with QListViewItem
    * (or subclasses).
    */
-  KListViewItem(TQListView *parent);
-  KListViewItem(TQListViewItem *parent);
-  KListViewItem(TQListView *parent, TQListViewItem *after);
-  KListViewItem(TQListViewItem *parent, TQListViewItem *after);
+  TDEListViewItem(TQListView *parent);
+  TDEListViewItem(TQListViewItem *parent);
+  TDEListViewItem(TQListView *parent, TQListViewItem *after);
+  TDEListViewItem(TQListViewItem *parent, TQListViewItem *after);
 
-  KListViewItem(TQListView *parent,
+  TDEListViewItem(TQListView *parent,
     TQString, TQString = TQString::null,
     TQString = TQString::null, TQString = TQString::null,
     TQString = TQString::null, TQString = TQString::null,
     TQString = TQString::null, TQString = TQString::null);
 
-  KListViewItem(TQListViewItem *parent,
+  TDEListViewItem(TQListViewItem *parent,
     TQString, TQString = TQString::null,
     TQString = TQString::null, TQString = TQString::null,
     TQString = TQString::null, TQString = TQString::null,
     TQString = TQString::null, TQString = TQString::null);
 
-  KListViewItem(TQListView *parent, TQListViewItem *after,
+  TDEListViewItem(TQListView *parent, TQListViewItem *after,
     TQString, TQString = TQString::null,
     TQString = TQString::null, TQString = TQString::null,
     TQString = TQString::null, TQString = TQString::null,
     TQString = TQString::null, TQString = TQString::null);
 
-  KListViewItem(TQListViewItem *parent, TQListViewItem *after,
+  TDEListViewItem(TQListViewItem *parent, TQListViewItem *after,
     TQString, TQString = TQString::null,
     TQString = TQString::null, TQString = TQString::null,
     TQString = TQString::null, TQString = TQString::null,
     TQString = TQString::null, TQString = TQString::null);
 
-  virtual ~KListViewItem();
+  virtual ~TDEListViewItem();
 
   virtual void insertItem(TQListViewItem *item);
   virtual void takeItem(TQListViewItem *item);

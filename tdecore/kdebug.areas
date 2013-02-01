@@ -5,13 +5,13 @@
 #
 #Format : number<tab>description
 
-125        tdecore (KAccel)
+125        tdecore (TDEAccel)
 126        tdecore (KURL)
 127        kio (KProtocolInfo)
 128        tdecore (KRegExp)
-129        tdecore (KAction)
+129        tdecore (TDEAction)
 130        kio (KPasswdServer)
-131        tdecore (KAcceleratorManager)
+131        tdecore (TDEAcceleratorManager)
 150        tdecore (KLibLoader)
 160        tdecore (KNotifyClient)
 170        tdecore (KNetwork socket)
@@ -25,8 +25,8 @@
 178        tdecore (TDEConfigDialogManager)
 179        tdecore (KNetwork resolver)
 180        tdecore (tdelibs)
-200        tdeui (KMainWindow)
-220        tdeui (KToolBar)
+200        tdeui (TDEMainWindow)
+220        tdeui (TDEToolBar)
 230        tdeui (KCommand)
 240        tdeui (tdelibs)
 250        tdefile (tdelibs)
@@ -42,7 +42,7 @@
 293        tdeui (KLineEdit)
 294        tdeui (KEdit)
 295        tdeui (KMenuBar)
-296        tdeui (KPopupMenu)
+296        tdeui (TDEPopupMenu)
 298        tdeui (KDatePicker)
 399        kimgio
 400        artskde
@@ -236,7 +236,7 @@
 7013        kio (KPing)
 7014        kio (TDETrader)
 7015        kio (KAutoMount)
-7016        kio (KLauncher)
+7016        kio (TDELauncher)
 7017        kio (KIOConnection)
 7018        kio (KMimeMagic)
 7019        kio (tdeioslave)

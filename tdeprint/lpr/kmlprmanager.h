@@ -54,8 +54,8 @@ public:
 	LpcHelper* lpcHelper()	{ return m_lpchelper; }
 	TQString printOptions(KPrinter*);
 
-	void createPluginActions(KActionCollection*);
-	void validatePluginActions(KActionCollection*, KMPrinter*);
+	void createPluginActions(TDEActionCollection*);
+	void validatePluginActions(TDEActionCollection*, KMPrinter*);
 	TQString stateInformation();
 
 protected slots:

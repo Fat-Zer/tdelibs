@@ -13,7 +13,7 @@
 #include <ktabwidget.h>
 #include <tdemdidefines.h>
 
-class KPopupMenu;
+class TDEPopupMenu;
 
 //KDE4: Add a d pointer
 /**

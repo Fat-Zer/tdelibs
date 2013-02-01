@@ -75,44 +75,44 @@ void KTextEdit::keyPressEvent( TQKeyEvent *e )
 {
     KKey key( e );
 
-    if ( KStdAccel::copy().contains( key ) ) {
+    if ( TDEStdAccel::copy().contains( key ) ) {
         copy();
         e->accept();
         return;
     }
-    else if ( KStdAccel::paste().contains( key ) ) {
+    else if ( TDEStdAccel::paste().contains( key ) ) {
         paste();
         e->accept();
         return;
     }
-    else if ( KStdAccel::cut().contains( key ) ) {
+    else if ( TDEStdAccel::cut().contains( key ) ) {
         cut();
         e->accept();
         return;
     }
-    else if ( KStdAccel::undo().contains( key ) ) {
+    else if ( TDEStdAccel::undo().contains( key ) ) {
         undo();
         e->accept();
         return;
     }
-    else if ( KStdAccel::redo().contains( key ) ) {
+    else if ( TDEStdAccel::redo().contains( key ) ) {
         redo();
         e->accept();
         return;
     }
-    else if ( KStdAccel::deleteWordBack().contains( key ) )
+    else if ( TDEStdAccel::deleteWordBack().contains( key ) )
     {
         deleteWordBack();
         e->accept();
         return;
     }
-    else if ( KStdAccel::deleteWordForward().contains( key ) )
+    else if ( TDEStdAccel::deleteWordForward().contains( key ) )
     {
         deleteWordForward();
         e->accept();
         return;
     }
-    else if ( KStdAccel::backwardWord().contains( key ) )
+    else if ( TDEStdAccel::backwardWord().contains( key ) )
     {
       CursorAction action = MoveWordBackward;
       int para, index;
@@ -123,7 +123,7 @@ void KTextEdit::keyPressEvent( TQKeyEvent *e )
       e->accept();
       return;
     }
-    else if ( KStdAccel::forwardWord().contains( key ) )
+    else if ( TDEStdAccel::forwardWord().contains( key ) )
     {
       CursorAction action = MoveWordForward;
       int para, index;
@@ -134,43 +134,43 @@ void KTextEdit::keyPressEvent( TQKeyEvent *e )
       e->accept();
       return;
     }
-    else if ( KStdAccel::next().contains( key ) )
+    else if ( TDEStdAccel::next().contains( key ) )
     {
       moveCursor( MovePgDown, false );
       e->accept();
       return;
     }
-    else if ( KStdAccel::prior().contains( key ) )
+    else if ( TDEStdAccel::prior().contains( key ) )
     {
       moveCursor( MovePgUp, false );
       e->accept();
       return;
     }
-    else if ( KStdAccel::home().contains( key ) )
+    else if ( TDEStdAccel::home().contains( key ) )
     {
       moveCursor( MoveHome, false );
       e->accept();
       return;
     }
-    else if ( KStdAccel::end().contains( key ) )
+    else if ( TDEStdAccel::end().contains( key ) )
     {
       moveCursor( MoveEnd, false );
       e->accept();
       return;
     }
-    else if ( KStdAccel::beginningOfLine().contains( key ) )
+    else if ( TDEStdAccel::beginningOfLine().contains( key ) )
     {
       moveCursor( MoveLineStart, false );
       e->accept();
       return;
     }
-    else if ( KStdAccel::endOfLine().contains( key ) )
+    else if ( TDEStdAccel::endOfLine().contains( key ) )
     {
       moveCursor(MoveLineEnd, false);
       e->accept();
       return;
     }
-    else if ( KStdAccel::pasteSelection().contains( key ) )
+    else if ( TDEStdAccel::pasteSelection().contains( key ) )
     {
         TQString text = TQApplication::clipboard()->text( TQClipboard::Selection);
         if ( !text.isEmpty() )

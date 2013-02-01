@@ -16,16 +16,16 @@ DnD stuff, TDESocket and TDEServerSocket classes, KPixmap
 
 Alexander Sanda <alex@darkstar.ping.at>
 Read and write numerical config entries, KPanner, KTabControl,
-KPopupMenu, KMessageBox, KEdit widgets. 
+TDEPopupMenu, KMessageBox, KEdit widgets. 
 
 Martin Jones <mjones@powerup.com.au>
-Bugfixes in KPixmap and KURL, KColorDialog, KSelector
+Bugfixes in KPixmap and KURL, KColorDialog, TDESelector
 
 Keith Brown <kbrown@pdq.net>
 KTreeList class
 
 Bernd Johannes Wuebben <wuebben@math.cornell.edu>
-KFontDialog classes
+TDEFontDialog classes
 
 Tim D. Gilman <tdgilman@best.com>
 KDatePicker, KDateTable class

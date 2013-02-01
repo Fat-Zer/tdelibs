@@ -8,7 +8,7 @@
 
 class TQMultiLineEdit;
 
-class testWindow  : public KMainWindow
+class testWindow  : public TDEMainWindow
 {
     Q_OBJECT
 

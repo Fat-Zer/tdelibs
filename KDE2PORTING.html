@@ -26,7 +26,7 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
 <LI><A HREF="#KIconLoader">KIconLoader</A></LI>
 <LI><A HREF="#KTMainWindow">KTMainWindow</A></LI>
 <LI><A HREF="#KHelpMenu">KHelpMenu</A></LI>
-<LI><A HREF="#KToolBar">KToolBar</A></LI>
+<LI><A HREF="#TDEToolBar">TDEToolBar</A></LI>
 <LI><A HREF="#launching">Starting other programs</A></LI>
 <LI><A HREF="#tdehtmlw">tdehtmlw</A></LI>
 <LI><A HREF="#KIntegerLine">KIntegerLine, KIntLineEdit</A></LI>
@@ -45,8 +45,8 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
 <LI><A HREF="#KQuickHelp">KQuickHelp</A></LI>
 <LI><A HREF="#KPixmapgradientFill">KPixmap::gradientFill</A></LI>
 <LI><A HREF="#KTabListBox">KTabListBox</A></LI>
-<LI><A HREF="#KToolBarButton">KToolBarButton &amp; KRadioGroup</A></LI>
-<LI><A HREF="#KAccel">KAccel</A></LI>
+<LI><A HREF="#TDEToolBarButton">TDEToolBarButton &amp; TDERadioGroup</A></LI>
+<LI><A HREF="#TDEAccel">TDEAccel</A></LI>
 <LI><A HREF="#kstring">kstring.h / KString</A></LI>
 <LI><A HREF="#ktopwidget">ktopwidget.h / KTopWidget</A></LI>
 <LI><A HREF="#kbutton">kbutton.h / KButton</A></LI>
@@ -142,8 +142,8 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
   The methods tempSaveName() and checkRecoverFile() return QString
   now. The returned values must _not_ be free()d.<P>
 
-  helpMenu() has been moved to KMainWindow. aboutKDE(), aboutApp() and
-  appHelpActivated() have all been removed See section for KMainWindow
+  helpMenu() has been moved to TDEMainWindow. aboutKDE(), aboutApp() and
+  appHelpActivated() have all been removed See section for TDEMainWindow
   for more info.<P>
 
   The TDEApplication constructor has changed. Command line arguments and
@@ -248,9 +248,9 @@ in stripping off the .xpm part<P>
 
 <H3><A NAME="KTMainWindow">KTMainWindow</A></H3>
 
-KTMainWindow has been replaced with KMainWindow.<p>
+KTMainWindow has been replaced with TDEMainWindow.<p>
 
-The KMainWindow constructor needs a parent widget as first argument. 
+The TDEMainWindow constructor needs a parent widget as first argument. 
 You can use 0 for this.<p>
 setView() has been replaced with setCentralWidget().<p>
 view() has been replaced with centralWidget().<p>
@@ -271,12 +271,12 @@ mainViewGeometry() instead.<P>
 
 <H3><A NAME="KHelpMenu">KHelpMenu</A></H3>
 
-helpMenu() has been moved to KMainWindow from TDEApplication (kapp).<P>
+helpMenu() has been moved to TDEMainWindow from TDEApplication (kapp).<P>
 
 Both the "About KDE" and the "About &lt;Application&gt;" dialog boxes
 are now modeless. "About KDE" is a completely new widget.<P>
 
-If you used in the toplevel window (that is derived from KMainWindow)
+If you used in the toplevel window (that is derived from TDEMainWindow)
 "kapp-&gt;helpMenu( bool, TQString )" to get the help menu
 you must now change this to "helpMenu( TQString )". The TQString defaults
 to TQString::null so it is sufficient to write helpMenu().<P>
@@ -284,13 +284,13 @@ to TQString::null so it is sufficient to write helpMenu().<P>
 The old aboutKDE(), aboutApp() and appHelpActivated() of TDEApplication
 have all been removed. If you need direct access to these or need
 access to a help menu in a class that is not derived from
-KMainWindow then allocate an instance of the new class KHelpMenu.
+TDEMainWindow then allocate an instance of the new class KHelpMenu.
 See KDE 2.0 API reference or khelpmenu.h (tdeui) for additional info.<P>
 Espen Sand &lt;<A HREF="mailto:espen@kde.org">espen@kde.org</A>&gt;<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
-<H3><A NAME="KToolBar">KToolBar</A></H3>
+<H3><A NAME="TDEToolBar">TDEToolBar</A></H3>
 
 enable(...) is depreciated, use show()/hide() instead.<p>
 enableFloating(...) has been removed, use enableMoving() instead.<p>
@@ -588,7 +588,7 @@ this:<P>
 <TABLE><TR><TD>
     TQSplitter *split = new TQSplitter( parent );<BR>
     TQListBox *lb = new TQListBox( split );<BR>
-    KListView *lv = new KListView( split );<BR>
+    TDEListView *lv = new TDEListView( split );<BR>
     TQMultiLineEdit *ed = new TQMultiLineEdit( split );
 </TD></TR></TABLE>
 
@@ -600,17 +600,17 @@ possible if you call setOpaqueResize(true).<P>
 
 <H3><A NAME="KTreeList">KTreeList, KTreeListItem</A></H3>
 
-Use KListView, TQListViewItem instead. API is almost the same, you only
-need to add a Column (KListView::addColum) before KListView is useable.<P>
+Use TDEListView, TQListViewItem instead. API is almost the same, you only
+need to add a Column (TDEListView::addColum) before TDEListView is useable.<P>
 
-KListView has no addChild(), insertItem() and removeItem() calls. Inserting
-a root item is done by constructing a TQListViewItem with the KListView
+TDEListView has no addChild(), insertItem() and removeItem() calls. Inserting
+a root item is done by constructing a TQListViewItem with the TDEListView
 passed as the parent widget. adding a child item is done by constructing
 a TQListViewItem with the parent item as parameter. removeItem() should
 be replaced by delete &lt;pointer to item&gt;.<P>
 
 The root items are not shown in a tree fashion by default. to get this,
-use KListView::setDecorativeRoot(true).<P>
+use TDEListView::setDecorativeRoot(true).<P>
 
 Expanding and collapsing can by done by using TQListViewItem::setOpen(bool).<P>
 
@@ -685,24 +685,24 @@ unbalancedGradient(), hash(), desaturate(), pattern(), fade(), blend() etc.<P>
 
 <H3><A NAME="KTabListBox">KTabListBox</A></H3>
 
-This widget has been replaced by the almighty KListView. Everything said
+This widget has been replaced by the almighty TDEListView. Everything said
 about KTreeList could be repeated here. The good thing is, that you now
 can combine TreeView's and normal Tablists without problems.<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
-<H3><A NAME="KToolBarButton">KToolBarButton &amp; KRadioGroup</A></H3>
+<H3><A NAME="TDEToolBarButton">TDEToolBarButton &amp; TDERadioGroup</A></H3>
 
-If you need to do anything with KToolBarButton you now need to include 
-&lt;ktoolbarbutton.h&gt; KRadioGroup has been renamed to KToolBarRadioGroup and
+If you need to do anything with TDEToolBarButton you now need to include 
+&lt;ktoolbarbutton.h&gt; TDERadioGroup has been renamed to TDEToolBarRadioGroup and
 requires you to include &lt;ktoolbarradiogroup.h&gt;<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
-<H3><A NAME="KAccel">KAccel</A></H3>
+<H3><A NAME="TDEAccel">TDEAccel</A></H3>
 
 The functions keyToString() and stringToKey() which were previously
-declared globally in kaccel.h are now static methods in KAccel.<P>
+declared globally in kaccel.h are now static methods in TDEAccel.<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
@@ -716,7 +716,7 @@ The file has been removed completely, use TQString instead. (<A HREF="mailto:mir
 
 <H3><A NAME="ktopwidget">ktopwidget.h / KTopWidget</A></H3>
 
-KMainWindow replaces this class completely. ktopwidget.h does not
+TDEMainWindow replaces this class completely. ktopwidget.h does not
 exist in KDE 2. (<A HREF="mailto:mirko@kde.org">mirko@kde.org</A>)<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
@@ -754,7 +754,7 @@ Please adjust your code accordingly.<P>
 
 <H3><A NAME="KDockWidget">KDockWidget</A></H3>
 
-KDockWidget inherits form KMainWindow instead of KTMainWindow now.
+KDockWidget inherits form TDEMainWindow instead of KTMainWindow now.
 See <A HREF="KTMainWindow">KTMainWindow</A> for more details.
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>

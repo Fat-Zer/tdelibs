@@ -51,7 +51,7 @@ protected:
     void init(const TQPixmap& pixmap, bool parse, bool dir, const TQString &_path, const TQString &exec);
 
 public:
-    KAppTreeListItem( KListView* parent, const TQString & name, const TQPixmap& pixmap,
+    KAppTreeListItem( TDEListView* parent, const TQString & name, const TQPixmap& pixmap,
                       bool parse, bool dir, const TQString &p, const TQString &c );
     KAppTreeListItem( TQListViewItem* parent, const TQString & name, const TQPixmap& pixmap,
                       bool parse, bool dir, const TQString &p, const TQString &c );
@@ -69,7 +69,7 @@ protected:
 /**
  * @internal
  */
-class TDEApplicationTree : public KListView
+class TDEApplicationTree : public TDEListView
 {
     Q_OBJECT
 public:

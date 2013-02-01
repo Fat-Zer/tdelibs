@@ -27,7 +27,7 @@
 #include <tdelibs_export.h>
 
 class KStatusBar;
-class KMainWindow;
+class TDEMainWindow;
 class TQEvent;
 
 namespace KParts
@@ -87,7 +87,7 @@ namespace KParts
       void removeStatusBarItem( TQWidget * widget );
 
       /**
-       * @return the statusbar of the KMainWindow in which this part is currently embedded.
+       * @return the statusbar of the TDEMainWindow in which this part is currently embedded.
        * WARNING: this could return 0L
        */
       KStatusBar* statusBar() const;
@@ -95,7 +95,7 @@ namespace KParts
       /**
        * This allows the hosting application to set a particular KStatusBar
        * for this part. If it doesn't do this, the statusbar used will be
-       * the one of the KMainWindow in which the part is embedded.
+       * the one of the TDEMainWindow in which the part is embedded.
        * Konqueror uses this to assign a view-statusbar to the part.
        * The part should never call this method!
        */

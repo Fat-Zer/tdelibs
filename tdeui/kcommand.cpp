@@ -77,22 +77,22 @@ KCommandHistory::KCommandHistory() :
     clear();
 }
 
-KCommandHistory::KCommandHistory(KActionCollection * actionCollection, bool withMenus) :
+KCommandHistory::KCommandHistory(TDEActionCollection * actionCollection, bool withMenus) :
     m_undoLimit(50), m_redoLimit(30), m_first(false)
 {
     d=new KCommandHistoryPrivate();
     if (withMenus)
     {
-        KToolBarPopupAction * undo = new KToolBarPopupAction( i18n("&Undo"), "undo",
-                                          KStdAccel::shortcut(KStdAccel::Undo), this, TQT_SLOT( undo() ),
+        TDEToolBarPopupAction * undo = new TDEToolBarPopupAction( i18n("&Undo"), "undo",
+                                          TDEStdAccel::shortcut(TDEStdAccel::Undo), this, TQT_SLOT( undo() ),
                                           actionCollection, KStdAction::stdName( KStdAction::Undo ) );
         connect( undo->popupMenu(), TQT_SIGNAL( aboutToShow() ), this, TQT_SLOT( slotUndoAboutToShow() ) );
         connect( undo->popupMenu(), TQT_SIGNAL( activated( int ) ), this, TQT_SLOT( slotUndoActivated( int ) ) );
         m_undo = undo;
         m_undoPopup = undo->popupMenu();
 
-        KToolBarPopupAction * redo = new KToolBarPopupAction( i18n("&Redo"), "redo",
-                                          KStdAccel::shortcut(KStdAccel::Redo), this, TQT_SLOT( redo() ),
+        TDEToolBarPopupAction * redo = new TDEToolBarPopupAction( i18n("&Redo"), "redo",
+                                          TDEStdAccel::shortcut(TDEStdAccel::Redo), this, TQT_SLOT( redo() ),
                                           actionCollection, KStdAction::stdName( KStdAction::Redo ) );
         connect( redo->popupMenu(), TQT_SIGNAL( aboutToShow() ), this, TQT_SLOT( slotRedoAboutToShow() ) );
         connect( redo->popupMenu(), TQT_SIGNAL( activated( int ) ), this, TQT_SLOT( slotRedoActivated( int ) ) );

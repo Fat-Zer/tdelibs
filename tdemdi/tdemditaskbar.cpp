@@ -145,7 +145,7 @@ TQString KMdiTaskBarButton::actualText() const
 //####################################################################
 
 KMdiTaskBar::KMdiTaskBar( KMdiMainFrm *parent, TQMainWindow::ToolBarDock dock )
-		: KToolBar( parent, "KMdiTaskBar",  /*honor_style*/ false,  /*readConfig*/ true )
+		: TDEToolBar( parent, "KMdiTaskBar",  /*honor_style*/ false,  /*readConfig*/ true )
 		, m_pCurrentFocusedWindow( 0 )
 		, m_pStretchSpace( 0 )
 		, m_layoutIsPending( false )
@@ -388,7 +388,7 @@ void KMdiTaskBar::resizeEvent( TQResizeEvent* rse )
 			layoutTaskBar( rse->size().width() );
 		}
 	}
-	KToolBar::resizeEvent( rse );
+	TDEToolBar::resizeEvent( rse );
 }
 
 // kate: space-indent off; tab-width 4; replace-tabs off; indent-mode csands;

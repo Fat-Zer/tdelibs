@@ -57,7 +57,7 @@
 #undef m_manager
 #define	m_manager	KMFactory::self()->jobManager()
 
-class KJobListView : public KListView
+class KJobListView : public TDEListView
 {
 public:
 	KJobListView( TQWidget *parent = 0, const char *name = 0 );
@@ -67,7 +67,7 @@ protected:
 };
 
 KJobListView::KJobListView( TQWidget *parent, const char *name )
-	: KListView( parent, name )
+	: TDEListView( parent, name )
 {
 	setAcceptDrops( true );
 	setDropVisualizer( false );
@@ -78,11 +78,11 @@ bool KJobListView::acceptDrag( TQDropEvent *e ) const
 	if ( KURLDrag::canDecode( e ) )
 		return true;
 	else
-		return KListView::acceptDrag( e );
+		return TDEListView::acceptDrag( e );
 }
 
 KMJobViewer::KMJobViewer(TQWidget *parent, const char *name)
-: KMainWindow(parent,name)
+: TDEMainWindow(parent,name)
 {
 	m_view = 0;
 	m_pop = 0;
@@ -259,20 +259,20 @@ void KMJobViewer::init()
 void KMJobViewer::initActions()
 {
 	// job actions
-	KAction	*hact = new KAction(i18n("&Hold"),"stop",0,TQT_TQOBJECT(this),TQT_SLOT(slotHold()),actionCollection(),"job_hold");
-	KAction	*ract = new KAction(i18n("&Resume"),"run",0,TQT_TQOBJECT(this),TQT_SLOT(slotResume()),actionCollection(),"job_resume");
-	KAction	*dact = new KAction(i18n("Remo&ve"),"edittrash",Qt::Key_Delete,TQT_TQOBJECT(this),TQT_SLOT(slotRemove()),actionCollection(),"job_remove");
-	KAction *sact = new KAction(i18n("Res&tart"),"redo",0,TQT_TQOBJECT(this),TQT_SLOT(slotRestart()),actionCollection(),"job_restart");
-	KActionMenu *mact = new KActionMenu(i18n("&Move to Printer"),"fileprint",actionCollection(),"job_move");
+	TDEAction	*hact = new TDEAction(i18n("&Hold"),"stop",0,TQT_TQOBJECT(this),TQT_SLOT(slotHold()),actionCollection(),"job_hold");
+	TDEAction	*ract = new TDEAction(i18n("&Resume"),"run",0,TQT_TQOBJECT(this),TQT_SLOT(slotResume()),actionCollection(),"job_resume");
+	TDEAction	*dact = new TDEAction(i18n("Remo&ve"),"edittrash",Qt::Key_Delete,TQT_TQOBJECT(this),TQT_SLOT(slotRemove()),actionCollection(),"job_remove");
+	TDEAction *sact = new TDEAction(i18n("Res&tart"),"redo",0,TQT_TQOBJECT(this),TQT_SLOT(slotRestart()),actionCollection(),"job_restart");
+	TDEActionMenu *mact = new TDEActionMenu(i18n("&Move to Printer"),"fileprint",actionCollection(),"job_move");
 	mact->setDelayed(false);
 	connect(mact->popupMenu(),TQT_SIGNAL(activated(int)),TQT_SLOT(slotMove(int)));
 	connect(mact->popupMenu(),TQT_SIGNAL(aboutToShow()),KMTimer::self(),TQT_SLOT(hold()));
 	connect(mact->popupMenu(),TQT_SIGNAL(aboutToHide()),KMTimer::self(),TQT_SLOT(release()));
 	connect(mact->popupMenu(),TQT_SIGNAL(aboutToShow()),TQT_SLOT(slotShowMoveMenu()));
-	KToggleAction	*tact = new KToggleAction(i18n("&Toggle Completed Jobs"),"history",0,actionCollection(),"view_completed");
+	TDEToggleAction	*tact = new TDEToggleAction(i18n("&Toggle Completed Jobs"),"history",0,actionCollection(),"view_completed");
 	tact->setEnabled(m_manager->actions() & KMJob::ShowCompleted);
 	connect(tact,TQT_SIGNAL(toggled(bool)),TQT_SLOT(slotShowCompleted(bool)));
-	KToggleAction	*uact = new KToggleAction(i18n("Show Only User Jobs"), "personal", 0, actionCollection(), "view_user_jobs");
+	TDEToggleAction	*uact = new TDEToggleAction(i18n("Show Only User Jobs"), "personal", 0, actionCollection(), "view_user_jobs");
 	uact->setCheckedState(KGuiItem(i18n("Hide Only User Jobs"),"personal"));
 	connect(uact, TQT_SIGNAL(toggled(bool)), TQT_SLOT(slotUserOnly(bool)));
 	m_userfield = new TQLineEdit(0);
@@ -298,7 +298,7 @@ void KMJobViewer::initActions()
 	}
 
 	// Filter actions
-	KActionMenu	*fact = new KActionMenu(i18n("&Select Printer"), "tdeprint_printer", actionCollection(), "filter_modify");
+	TDEActionMenu	*fact = new TDEActionMenu(i18n("&Select Printer"), "tdeprint_printer", actionCollection(), "filter_modify");
 	fact->setDelayed(false);
 	connect(fact->popupMenu(),TQT_SIGNAL(activated(int)),TQT_SLOT(slotPrinterSelected(int)));
 	connect(fact->popupMenu(),TQT_SIGNAL(aboutToShow()),KMTimer::self(),TQT_SLOT(hold()));
@@ -307,7 +307,7 @@ void KMJobViewer::initActions()
 
 	if (!m_standalone)
 	{
-		KToolBar	*toolbar = toolBar();
+		TDEToolBar	*toolbar = toolBar();
 		hact->plug(toolbar);
 		ract->plug(toolbar);
 		toolbar->insertSeparator();
@@ -327,7 +327,7 @@ void KMJobViewer::initActions()
 		KStdAction::preferences(TQT_TQOBJECT(this), TQT_SLOT(slotConfigure()), actionCollection());
 
 		// refresh action
-		new KAction(i18n("Refresh"),"reload",0,TQT_TQOBJECT(this),TQT_SLOT(slotRefresh()),actionCollection(),"refresh");
+		new TDEAction(i18n("Refresh"),"reload",0,TQT_TQOBJECT(this),TQT_SLOT(slotRefresh()),actionCollection(),"refresh");
 
 		// create status bar
 		KStatusBar	*statusbar = statusBar();
@@ -367,13 +367,13 @@ void KMJobViewer::buildPrinterMenu(TQPopupMenu *menu, bool use_all, bool use_spe
 
 void KMJobViewer::slotShowMoveMenu()
 {
-	TQPopupMenu	*menu = static_cast<KActionMenu*>(actionCollection()->action("job_move"))->popupMenu();
+	TQPopupMenu	*menu = static_cast<TDEActionMenu*>(actionCollection()->action("job_move"))->popupMenu();
 	buildPrinterMenu(menu, false, false);
 }
 
 void KMJobViewer::slotShowPrinterMenu()
 {
-	TQPopupMenu	*menu = static_cast<KActionMenu*>(actionCollection()->action("filter_modify"))->popupMenu();
+	TQPopupMenu	*menu = static_cast<TDEActionMenu*>(actionCollection()->action("filter_modify"))->popupMenu();
 	buildPrinterMenu(menu, true, true);
 }
 
@@ -583,7 +583,7 @@ void KMJobViewer::loadPluginActions()
 	if (m_standalone)
 	{
 		// standalone window, insert actions into main menubar
-		KAction	*act = actionCollection()->action("job_restart");
+		TDEAction	*act = actionCollection()->action("job_restart");
 		for (int i=0;i<act->containerCount();i++)
 		{
 			if (menuBar()->findItem(act->itemId(i), &menu))
@@ -594,8 +594,8 @@ void KMJobViewer::loadPluginActions()
 		}
 	}
 
-	TQValueList<KAction*>	acts = m_manager->createPluginActions(actionCollection());
-	for (TQValueListIterator<KAction*> it=acts.begin(); it!=acts.end(); ++it)
+	TQValueList<TDEAction*>	acts = m_manager->createPluginActions(actionCollection());
+	for (TQValueListIterator<TDEAction*> it=acts.begin(); it!=acts.end(); ++it)
 	{
 		// connect the action to this
 		connect((*it), TQT_SIGNAL(activated(int)), TQT_SLOT(pluginActionActivated(int)));
@@ -611,8 +611,8 @@ void KMJobViewer::loadPluginActions()
 
 void KMJobViewer::removePluginActions()
 {
-	TQValueList<KAction*>	acts = actionCollection()->actions("plugin");
-	for (TQValueListIterator<KAction*> it=acts.begin(); it!=acts.end(); ++it)
+	TQValueList<TDEAction*>	acts = actionCollection()->actions("plugin");
+	for (TQValueListIterator<TDEAction*> it=acts.begin(); it!=acts.end(); ++it)
 	{
 		(*it)->unplugAll();
 		delete (*it);
@@ -650,7 +650,7 @@ void KMJobViewer::reload()
 
 	// update the "History" action state
 	actionCollection()->action("view_completed")->setEnabled(m_manager->actions() & KMJob::ShowCompleted);
-	static_cast<KToggleAction*>(actionCollection()->action("view_completed"))->setChecked(false);
+	static_cast<TDEToggleAction*>(actionCollection()->action("view_completed"))->setChecked(false);
 }
 
 void KMJobViewer::closeEvent(TQCloseEvent *e)

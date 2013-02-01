@@ -39,7 +39,7 @@
 
 class TQComboBox;
 class TQLineEdit;
-class KListBox;
+class TDEListBox;
 class KPalette;
 class KColorCells;
 
@@ -99,7 +99,7 @@ class KValueSelectorPrivate;
  * @see KHSSelector, KColorDialog
  * @author Martin Jones (mjones@kde.org)
  */
-class TDEUI_EXPORT KValueSelector : public KSelector
+class TDEUI_EXPORT KValueSelector : public TDESelector
 {
   Q_OBJECT
 
@@ -132,7 +132,7 @@ protected:
   virtual void resizeEvent( TQResizeEvent * );
 
   /**
-   * Reimplemented from KSelector. The drawing is
+   * Reimplemented from TDESelector. The drawing is
    * buffered in a pixmap here. As real drawing
    * routine, drawPalette() is used.
    */
@@ -229,7 +229,7 @@ protected:
   TQComboBox *combo;
   KColorCells *cells;
   TQScrollView *sv;
-  KListBox *mNamedColorList;
+  TDEListBox *mNamedColorList;
   KPalette *mPalette;
   int mMinWidth;
   int mCols;

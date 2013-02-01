@@ -29,19 +29,19 @@
 #include <tqstring.h>
 #include <kglobal.h>
 
-class KToolBar;
-class KToolBarButtonPrivate;
+class TDEToolBar;
+class TDEToolBarButtonPrivate;
 class TDEInstance;
 class TQEvent;
 class TQPopupMenu;
 class TQPainter;
 
 /**
- * A toolbar button. This is used internally by KToolBar, use the
- * KToolBar methods instead.
+ * A toolbar button. This is used internally by TDEToolBar, use the
+ * TDEToolBar methods instead.
  * @internal
  */
-class TDEUI_EXPORT KToolBarButton : public TQToolButton
+class TDEUI_EXPORT TDEToolBarButton : public TQToolButton
 {
   Q_OBJECT
   
@@ -59,7 +59,7 @@ public:
    * @param txt    This button's text (in a tooltip or otherwise)
    * @param _instance the instance to use for this button
    */
-  KToolBarButton(const TQString& icon, int id, TQWidget *parent,
+  TDEToolBarButton(const TQString& icon, int id, TQWidget *parent,
                  const char *name=0L, const TQString &txt=TQString::null,
                  TDEInstance *_instance = TDEGlobal::instance());
 
@@ -74,7 +74,7 @@ public:
    * @param name   This button's internal name
    * @param txt    This button's text (in a tooltip or otherwise)
    */
-  KToolBarButton(const TQPixmap& pixmap, int id, TQWidget *parent,
+  TDEToolBarButton(const TQPixmap& pixmap, int id, TQWidget *parent,
                  const char *name=0L, const TQString &txt=TQString::null);
 
   /**
@@ -83,12 +83,12 @@ public:
    * @param parent This button's parent
    * @param name   This button's internal name
    */
-  KToolBarButton(TQWidget *parent=0L, const char *name=0L);
+  TDEToolBarButton(TQWidget *parent=0L, const char *name=0L);
 
   /**
    * Standard destructor
    */
-  ~KToolBarButton();
+  ~TDEToolBarButton();
 
 #ifndef KDE_NO_COMPAT
   /**
@@ -313,19 +313,19 @@ protected slots:
 protected:
   virtual void virtual_hook( int id, void* data );
 private:
-  KToolBarButtonPrivate *d;
+  TDEToolBarButtonPrivate *d;
 };
 
 /**
-* List of KToolBarButton objects.
+* List of TDEToolBarButton objects.
 * @internal
 * @version $Id$
 */
-class TDEUI_EXPORT KToolBarButtonList : public TQIntDict<KToolBarButton>
+class TDEUI_EXPORT TDEToolBarButtonList : public TQIntDict<TDEToolBarButton>
 {
 public:
-   KToolBarButtonList();
-   ~KToolBarButtonList() {}
+   TDEToolBarButtonList();
+   ~TDEToolBarButtonList() {}
 };
 
 #endif

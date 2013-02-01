@@ -35,7 +35,7 @@ class KMDBEntry;
 class KMVirtualManager;
 class KMSpecialManager;
 class TQWidget;
-class KActionCollection;
+class TDEActionCollection;
 class PrinterFilter;
 
 /**
@@ -135,8 +135,8 @@ public:
 	virtual TQStringList detectLocalPrinters();
 
 	// additional actions (for print manager)
-	virtual void createPluginActions(KActionCollection*);
-	virtual void validatePluginActions(KActionCollection*, KMPrinter*);
+	virtual void createPluginActions(TDEActionCollection*);
+	virtual void validatePluginActions(TDEActionCollection*, KMPrinter*);
 
 	// utility function
 	void checkUpdatePossible();

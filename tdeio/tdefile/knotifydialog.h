@@ -195,7 +195,7 @@ namespace KNotify
                        bool handleAllApps = false );
         ~KNotifyWidget();
 
-        KListView * eventsView() {
+        TDEListView * eventsView() {
             return m_listview;
         }
 

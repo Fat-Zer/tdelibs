@@ -30,9 +30,9 @@
  * This class provides the standard "About KDE" dialog box that is used
  * KHelpMenu Normally you should not use this class directly but
  * rather the KHelpMenu class or even better just subclass your
- * toplevel window from KMainWindow. If you do the latter, the help
+ * toplevel window from TDEMainWindow. If you do the latter, the help
  * menu and thereby this dialog box is available through the
- * KMainWindow::helpMenu() function.
+ * TDEMainWindow::helpMenu() function.
  *
  * @author Espen Sand (espen@kde.org)
  */

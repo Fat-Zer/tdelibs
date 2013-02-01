@@ -76,7 +76,7 @@ public:
    DCOPClientTransaction *transaction;
 };
 
-class KLaunchRequest
+class TDELaunchRequest
 {
 public:
    TQCString name;
@@ -105,14 +105,14 @@ struct serviceResult
   pid_t pid;
 };
 
-class KLauncher : public TDEApplication, public DCOPObject
+class TDELauncher : public TDEApplication, public DCOPObject
 {
    Q_OBJECT
 
 public:
-   KLauncher(int _tdeinitSocket, bool new_startup);
+   TDELauncher(int _tdeinitSocket, bool new_startup);
 
-   ~KLauncher();
+   ~TDELauncher();
 
    void close();
    static void destruct(int exit_code); // exit!
@@ -126,8 +126,8 @@ public:
 protected:
    void processDied(pid_t pid, long exitStatus);
 
-   void requestStart(KLaunchRequest *request);
-   void requestDone(KLaunchRequest *request);
+   void requestStart(TDELaunchRequest *request);
+   void requestDone(TDELaunchRequest *request);
 
    void setLaunchEnv(const TQCString &name, const TQCString &value);
    void exec_blind(const TQCString &name, const TQValueList<TQCString> &arg_list,
@@ -148,7 +148,7 @@ protected:
 
    void autoStart(int phase);
 
-   void createArgs( KLaunchRequest *request, const KService::Ptr service,
+   void createArgs( TDELaunchRequest *request, const KService::Ptr service,
                     const TQStringList &url);
 
    pid_t requestHoldSlave(const KURL &url, const TQString &app_socket);
@@ -156,11 +156,11 @@ protected:
                       const TQString &app_socket, TQString &error);
 
 
-   void queueRequest(KLaunchRequest *);
+   void queueRequest(TDELaunchRequest *);
 
-   void send_service_startup_info( KLaunchRequest *request, KService::Ptr service, const TQCString& startup_id,
+   void send_service_startup_info( TDELaunchRequest *request, KService::Ptr service, const TQCString& startup_id,
        const TQValueList<TQCString> &envs );
-   void cancel_service_startup_info( KLaunchRequest *request, const TQCString& startup_id,
+   void cancel_service_startup_info( TDELaunchRequest *request, const TQCString& startup_id,
        const TQValueList<TQCString> &envs );
 
 public slots:
@@ -174,12 +174,12 @@ public slots:
    void idleTimeout();
 
 protected:
-   TQPtrList<KLaunchRequest> requestList; // Requests being handled
-   TQPtrList<KLaunchRequest> requestQueue; // Requests waiting to being handled
+   TQPtrList<TDELaunchRequest> requestList; // Requests being handled
+   TQPtrList<TDELaunchRequest> requestQueue; // Requests waiting to being handled
    int tdeinitSocket;
    TQSocketNotifier *tdeinitNotifier;
    serviceResult DCOPresult;
-   KLaunchRequest *lastRequest;
+   TDELaunchRequest *lastRequest;
    TQPtrList<SlaveWaitRequest> mSlaveWaitRequest;
    TQString mPoolSocketName;
    TDEServerSocket *mPoolSocket;

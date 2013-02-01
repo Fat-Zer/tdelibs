@@ -44,10 +44,10 @@ class TDEAboutData;
 class TQGridLayout;
 
 
-class KX509Item : public KListViewItem {
+class KX509Item : public TDEListViewItem {
 	public:
-		KX509Item(KListViewItem *parent, KSSLCertificate *x);
-		KX509Item(KListView *parent, KSSLCertificate *x);
+		KX509Item(TDEListViewItem *parent, KSSLCertificate *x);
+		KX509Item(TDEListView *parent, KSSLCertificate *x);
 		void setup(KSSLCertificate *x);
 		~KX509Item();
 		virtual int rtti() const { return 1; }
@@ -56,9 +56,9 @@ class KX509Item : public KListViewItem {
 };
 
 
-class KPKCS12Item : public KListViewItem {
+class KPKCS12Item : public TDEListViewItem {
 	public:
-		KPKCS12Item(KListViewItem *parent, KSSLPKCS12 *x);
+		KPKCS12Item(TDEListViewItem *parent, KSSLPKCS12 *x);
 		~KPKCS12Item();
 	KSSLPKCS12 *cert;
 	TQString _prettyName;
@@ -94,8 +94,8 @@ protected:
   void displayPKCS12Cert(KSSLCertificate *c);
   void displayCACert(KSSLCertificate *c);
 
-  KListView *_sideList;
-  KListViewItem *_parentCA, *_parentP12;
+  TDEListView *_sideList;
+  TDEListViewItem *_parentCA, *_parentP12;
   TQFrame *_pkcsFrame, *_blankFrame, *_x509Frame, *_frame;
 
   // for the PKCS12 widget

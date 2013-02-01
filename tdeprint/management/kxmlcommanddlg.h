@@ -25,13 +25,13 @@
 #include <tqstringlist.h>
 #include <kdialogbase.h>
 
-class KListView;
+class TDEListView;
 class TQListViewItem;
 class TQLineEdit;
 class TQComboBox;
 class TQWidgetStack;
 class TQToolButton;
-class KListBox;
+class TDEListBox;
 class TQListBoxItem;
 class TQTextEdit;
 class TQCheckBox;
@@ -74,11 +74,11 @@ protected slots:
 	void slotChanged();
 
 private:
-	KListView	*m_view;
+	TDEListView	*m_view;
 	TQLineEdit	*m_name, *m_desc, *m_format, *m_default, *m_command;
 	TQComboBox	*m_type;
 	TQWidget		*m_dummy;
-	KListView	*m_values;
+	TDEListView	*m_values;
 	TQLineEdit	*m_edit1, *m_edit2;
 	TQWidgetStack	*m_stack;
 	TQToolButton	*m_apply, *m_addgrp, *m_addopt, *m_delopt, *m_up, *m_down;
@@ -115,9 +115,9 @@ private:
 	TQLineEdit	*m_description;
 	TQLabel		*m_idname;
 	TQComboBox	*m_mimetype;
-	KListBox	*m_availablemime, *m_selectedmime;
+	TDEListBox	*m_availablemime, *m_selectedmime;
 	TQToolButton	*m_addmime, *m_removemime;
-	KListView	*m_requirements;
+	TDEListView	*m_requirements;
 	TQToolButton	*m_removereq, *m_addreq;
 
 	TQStringList	m_mimelist;

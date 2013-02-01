@@ -48,12 +48,12 @@
 // needed to get our instance
 #include <kmainwindow.h>
 
-template class TQIntDict<KToolBarButton>;
+template class TQIntDict<TDEToolBarButton>;
 
-class KToolBarButtonPrivate
+class TDEToolBarButtonPrivate
 {
 public:
-  KToolBarButtonPrivate()
+  TDEToolBarButtonPrivate()
   {
     m_buttonDown  = false;
 
@@ -65,13 +65,13 @@ public:
     m_isActive    = false;
 
     m_iconName    = TQString::null;
-    m_iconText    = KToolBar::IconOnly;
+    m_iconText    = TDEToolBar::IconOnly;
     m_iconSize    = 0;
 
     m_parent   = 0;
     m_instance = TDEGlobal::instance();
   }
-  ~KToolBarButtonPrivate()
+  ~TDEToolBarButtonPrivate()
   {
   }
 
@@ -86,8 +86,8 @@ public:
 
   TQString m_iconName;
 
-  KToolBar *m_parent;
-  KToolBar::IconText m_iconText;
+  TDEToolBar *m_parent;
+  TDEToolBar::IconText m_iconText;
   int m_iconSize;
   TQSize size;
 
@@ -97,28 +97,28 @@ public:
 };
 
 // This will construct a separator
-KToolBarButton::KToolBarButton( TQWidget *_parent, const char *_name )
+TDEToolBarButton::TDEToolBarButton( TQWidget *_parent, const char *_name )
   : TQToolButton( _parent , _name)
 {
-  d = new KToolBarButtonPrivate;
+  d = new TDEToolBarButtonPrivate;
 
   resize(6,6);
   hide();
   d->m_isSeparator = true;
 }
 
-KToolBarButton::KToolBarButton( const TQString& _icon, int _id,
+TDEToolBarButton::TDEToolBarButton( const TQString& _icon, int _id,
                                 TQWidget *_parent, const char *_name,
                                 const TQString &_txt, TDEInstance *_instance )
     : TQToolButton( _parent, _name ), d( 0 )
 {
-  d = new KToolBarButtonPrivate;
+  d = new TDEToolBarButtonPrivate;
 
   d->m_id     = _id;
   TQToolButton::setTextLabel(_txt);
   d->m_instance = _instance;
 
-  d->m_parent = tqt_dynamic_cast<KToolBar*>(_parent);
+  d->m_parent = tqt_dynamic_cast<TDEToolBar*>(_parent);
   if (d->m_parent) {
     connect(d->m_parent, TQT_SIGNAL( modechange() ),
             this,         TQT_SLOT( modeChange() ));
@@ -141,17 +141,17 @@ KToolBarButton::KToolBarButton( const TQString& _icon, int _id,
   modeChange();
 }
 
-KToolBarButton::KToolBarButton( const TQPixmap& pixmap, int _id,
+TDEToolBarButton::TDEToolBarButton( const TQPixmap& pixmap, int _id,
                                 TQWidget *_parent, const char *name,
                                 const TQString& txt)
     : TQToolButton( _parent, name ), d( 0 )
 {
-  d = new KToolBarButtonPrivate;
+  d = new TDEToolBarButtonPrivate;
 
   d->m_id       = _id;
   TQToolButton::setTextLabel(txt);
 
-  d->m_parent = tqt_dynamic_cast<KToolBar*>(_parent);
+  d->m_parent = tqt_dynamic_cast<TDEToolBar*>(_parent);
   if (d->m_parent) {
     connect(d->m_parent, TQT_SIGNAL( modechange() ),
             this,         TQT_SLOT( modeChange() ));
@@ -173,12 +173,12 @@ KToolBarButton::KToolBarButton( const TQPixmap& pixmap, int _id,
   modeChange();
 }
 
-KToolBarButton::~KToolBarButton()
+TDEToolBarButton::~TDEToolBarButton()
 {
   delete d; d = 0;
 }
 
-void KToolBarButton::modeChange()
+void TDEToolBarButton::modeChange()
 {
   TQSize mysize;
 
@@ -206,7 +206,7 @@ void KToolBarButton::modeChange()
   int text_width = 0;
 
   TQToolTip::remove(this);
-  if (d->m_iconText != KToolBar::IconOnly)
+  if (d->m_iconText != TDEToolBar::IconOnly)
   {
     // okay, we have to deal with fonts.  let's get our information now
     TQFont tmp_font = TDEGlobalSettings::toolBarFont();
@@ -226,19 +226,19 @@ void KToolBarButton::modeChange()
 
   switch (d->m_iconText)
   {
-  case KToolBar::IconOnly:
+  case TDEToolBar::IconOnly:
     mysize = TQSize(pix_width, pix_height);
     break;
 
-  case KToolBar::IconTextRight:
+  case TDEToolBar::IconTextRight:
     mysize = TQSize(pix_width + text_width + 4, pix_height);
     break;
 
-  case KToolBar::TextOnly:
+  case TDEToolBar::TextOnly:
     mysize = TQSize(text_width + 4, text_height);
     break;
 
-  case KToolBar::IconTextBottom:
+  case TDEToolBar::IconTextBottom:
     mysize = TQSize((text_width + 4 > pix_width) ? text_width + 4 : pix_width, pix_height + text_height);
     break;
 
@@ -257,7 +257,7 @@ void KToolBarButton::modeChange()
   updateGeometry();
 }
 
-void KToolBarButton::setTextLabel( const TQString& text, bool tipToo)
+void TDEToolBarButton::setTextLabel( const TQString& text, bool tipToo)
 {
   if (text.isNull())
     return;
@@ -270,13 +270,13 @@ void KToolBarButton::setTextLabel( const TQString& text, bool tipToo)
   update();
 }
 
-void KToolBarButton::setText( const TQString& text)
+void TDEToolBarButton::setText( const TQString& text)
 {
   setTextLabel(text, true);
   modeChange();
 }
 
-void KToolBarButton::setIcon( const TQString &icon )
+void TDEToolBarButton::setIcon( const TQString &icon )
 {
   d->m_iconName = icon;
   if (d->m_parent)
@@ -290,13 +290,13 @@ void KToolBarButton::setIcon( const TQString &icon )
         d->m_iconName, KIcon::Toolbar, d->m_iconSize ));
 }
 
-void KToolBarButton::setIconSet( const TQIconSet &iconset )
+void TDEToolBarButton::setIconSet( const TQIconSet &iconset )
 {
   TQToolButton::setIconSet( iconset );
 }
 
 // remove?
-void KToolBarButton::setPixmap( const TQPixmap &pixmap )
+void TDEToolBarButton::setPixmap( const TQPixmap &pixmap )
 {
   if( pixmap.isNull()) // called by TQToolButton
   {
@@ -308,21 +308,21 @@ void KToolBarButton::setPixmap( const TQPixmap &pixmap )
   TQToolButton::setIconSet( set );
 }
 
-void KToolBarButton::setDefaultPixmap( const TQPixmap &pixmap )
+void TDEToolBarButton::setDefaultPixmap( const TQPixmap &pixmap )
 {
   TQIconSet set = iconSet();
   set.setPixmap( pixmap, TQIconSet::Automatic, TQIconSet::Normal );
   TQToolButton::setIconSet( set );
 }
 
-void KToolBarButton::setDisabledPixmap( const TQPixmap &pixmap )
+void TDEToolBarButton::setDisabledPixmap( const TQPixmap &pixmap )
 {
   TQIconSet set = iconSet();
   set.setPixmap( pixmap, TQIconSet::Automatic, TQIconSet::Disabled );
   TQToolButton::setIconSet( set );
 }
 
-void KToolBarButton::setDefaultIcon( const TQString& icon )
+void TDEToolBarButton::setDefaultIcon( const TQString& icon )
 {
   TQIconSet set = iconSet();
   TQPixmap pm;
@@ -336,7 +336,7 @@ void KToolBarButton::setDefaultIcon( const TQString& icon )
   TQToolButton::setIconSet( set );
 }
 
-void KToolBarButton::setDisabledIcon( const TQString& icon )
+void TDEToolBarButton::setDisabledIcon( const TQString& icon )
 {
   TQIconSet set = iconSet();
   TQPixmap pm;
@@ -350,27 +350,27 @@ void KToolBarButton::setDisabledIcon( const TQString& icon )
   TQToolButton::setIconSet( set );
 }
 
-TQPopupMenu *KToolBarButton::popup()
+TQPopupMenu *TDEToolBarButton::popup()
 {
   // obsolete
   // KDE4: remove me
   return TQToolButton::popup();
 }
 
-void KToolBarButton::setPopup(TQPopupMenu *p, bool)
+void TDEToolBarButton::setPopup(TQPopupMenu *p, bool)
 {
   TQToolButton::setPopup(p);
   TQToolButton::setPopupDelay(-1);
 }
 
 
-void KToolBarButton::setDelayedPopup (TQPopupMenu *p, bool)
+void TDEToolBarButton::setDelayedPopup (TQPopupMenu *p, bool)
 {
   TQToolButton::setPopup(p);
   TQToolButton::setPopupDelay(TQApplication::startDragTime());
 }
 
-void KToolBarButton::leaveEvent(TQEvent *)
+void TDEToolBarButton::leaveEvent(TQEvent *)
 {
   if( d->m_isRaised || d->m_isActive )
   {
@@ -382,7 +382,7 @@ void KToolBarButton::leaveEvent(TQEvent *)
   emit highlighted(d->m_id, false);
 }
 
-void KToolBarButton::enterEvent(TQEvent *)
+void TDEToolBarButton::enterEvent(TQEvent *)
 {
   if (d->m_highlight)
   {
@@ -403,7 +403,7 @@ void KToolBarButton::enterEvent(TQEvent *)
   emit highlighted(d->m_id, true);
 }
 
-bool KToolBarButton::eventFilter(TQObject *o, TQEvent *ev)
+bool TDEToolBarButton::eventFilter(TQObject *o, TQEvent *ev)
 {
   if (TQT_BASE_OBJECT(o) == TQT_BASE_OBJECT(this))
   {
@@ -446,7 +446,7 @@ bool KToolBarButton::eventFilter(TQObject *o, TQEvent *ev)
   return TQToolButton::eventFilter(o, ev);
 }
 
-void KToolBarButton::mousePressEvent( TQMouseEvent * e )
+void TDEToolBarButton::mousePressEvent( TQMouseEvent * e )
 {
   d->m_buttonDown = true;
 
@@ -460,7 +460,7 @@ void KToolBarButton::mousePressEvent( TQMouseEvent * e )
   TQToolButton::mousePressEvent(e);
 }
 
-void KToolBarButton::mouseReleaseEvent( TQMouseEvent * e )
+void TDEToolBarButton::mouseReleaseEvent( TQMouseEvent * e )
 {
   TQt::ButtonState state = TQt::ButtonState(e->button() | (e->state() & KeyButtonMask));
   if ( e->button() == Qt::MidButton )
@@ -479,7 +479,7 @@ void KToolBarButton::mouseReleaseEvent( TQMouseEvent * e )
     emit buttonClicked( d->m_id, state );
 }
 
-void KToolBarButton::drawButton( TQPainter *_painter )
+void TDEToolBarButton::drawButton( TQPainter *_painter )
 {
   TQStyle::SFlags flags   = TQStyle::Style_Default;
   TQStyle::SCFlags active = TQStyle::SC_None;
@@ -503,7 +503,7 @@ void KToolBarButton::drawButton( TQPainter *_painter )
   TQRect textRect;
   int textFlags = 0;
 
-  if (d->m_iconText == KToolBar::IconOnly) // icon only
+  if (d->m_iconText == TDEToolBar::IconOnly) // icon only
   {
     TQPixmap pixmap = iconSet().pixmap( TQIconSet::Automatic,
         isEnabled() ? (d->m_isActive ? TQIconSet::Active : TQIconSet::Normal) :
@@ -521,7 +521,7 @@ void KToolBarButton::drawButton( TQPainter *_painter )
       _painter->drawPixmap( dx, dy, pixmap );
     }
   }
-  else if (d->m_iconText == KToolBar::IconTextRight) // icon and text (if any)
+  else if (d->m_iconText == TDEToolBar::IconTextRight) // icon and text (if any)
   {
     TQPixmap pixmap = iconSet().pixmap( TQIconSet::Automatic,
         isEnabled() ? (d->m_isActive ? TQIconSet::Active : TQIconSet::Normal) :
@@ -555,7 +555,7 @@ void KToolBarButton::drawButton( TQPainter *_painter )
       textRect = TQRect(dx, dy, width()-dx, height());
     }
   }
-  else if (d->m_iconText == KToolBar::TextOnly)
+  else if (d->m_iconText == TDEToolBar::TextOnly)
   {
     if (!textLabel().isNull())
     {
@@ -570,7 +570,7 @@ void KToolBarButton::drawButton( TQPainter *_painter )
       textRect = TQRect( dx, dy, fm.width(textLabel()), fm.lineSpacing() );
     }
   }
-  else if (d->m_iconText == KToolBar::IconTextBottom)
+  else if (d->m_iconText == TDEToolBar::IconTextBottom)
   {
     TQPixmap pixmap = iconSet().pixmap( TQIconSet::Automatic,
         isEnabled() ? (d->m_isActive ? TQIconSet::Active : TQIconSet::Normal) :
@@ -629,7 +629,7 @@ void KToolBarButton::drawButton( TQPainter *_painter )
   }
 }
 
-void KToolBarButton::paletteChange(const TQPalette &)
+void TDEToolBarButton::paletteChange(const TQPalette &)
 {
   if(!d->m_isSeparator)
   {
@@ -638,12 +638,12 @@ void KToolBarButton::paletteChange(const TQPalette &)
   }
 }
 
-bool KToolBarButton::event(TQEvent *e)
+bool TDEToolBarButton::event(TQEvent *e)
 {
   if (e->type() == TQEvent::ParentFontChange || e->type() == TQEvent::ApplicationFontChange)
   {
      //If we use toolbar text, apply the settings again, to relayout...
-     if (d->m_iconText != KToolBar::IconOnly)
+     if (d->m_iconText != TDEToolBar::IconOnly)
        modeChange();
      return true;
   }
@@ -652,19 +652,19 @@ bool KToolBarButton::event(TQEvent *e)
 }
 
 
-void KToolBarButton::showMenu()
+void TDEToolBarButton::showMenu()
 {
   // obsolete
   // KDE4: remove me
 }
 
-void KToolBarButton::slotDelayTimeout()
+void TDEToolBarButton::slotDelayTimeout()
 {
   // obsolete
   // KDE4: remove me
 }
 
-void KToolBarButton::slotClicked()
+void TDEToolBarButton::slotClicked()
 {
   emit clicked( d->m_id );
 
@@ -677,37 +677,37 @@ void KToolBarButton::slotClicked()
   }
 }
 
-void KToolBarButton::slotPressed()
+void TDEToolBarButton::slotPressed()
 {
   emit pressed( d->m_id );
 }
 
-void KToolBarButton::slotReleased()
+void TDEToolBarButton::slotReleased()
 {
   emit released( d->m_id );
 }
 
-void KToolBarButton::slotToggled()
+void TDEToolBarButton::slotToggled()
 {
   emit toggled( d->m_id );
 }
 
-void KToolBarButton::setNoStyle(bool no_style)
+void TDEToolBarButton::setNoStyle(bool no_style)
 {
     d->m_noStyle = no_style;
 
     modeChange();
-    d->m_iconText = KToolBar::IconTextRight;
+    d->m_iconText = TDEToolBar::IconTextRight;
     repaint(false);
 }
 
-void KToolBarButton::setRadio (bool f)
+void TDEToolBarButton::setRadio (bool f)
 {
     if ( d )
 	d->m_isRadio = f;
 }
 
-void KToolBarButton::on(bool flag)
+void TDEToolBarButton::on(bool flag)
 {
   if(isToggleButton())
     setOn(flag);
@@ -719,13 +719,13 @@ void KToolBarButton::on(bool flag)
   repaint();
 }
 
-void KToolBarButton::toggle()
+void TDEToolBarButton::toggle()
 {
   setOn(!isOn());
   repaint();
 }
 
-void KToolBarButton::setToggle(bool flag)
+void TDEToolBarButton::setToggle(bool flag)
 {
   setToggleButton(flag);
   if (flag)
@@ -734,48 +734,48 @@ void KToolBarButton::setToggle(bool flag)
     disconnect(this, TQT_SIGNAL(toggled(bool)), this, TQT_SLOT(slotToggled()));
 }
 
-TQSize KToolBarButton::sizeHint() const
+TQSize TDEToolBarButton::sizeHint() const
 {
    return d->size;
 }
 
-TQSize KToolBarButton::minimumSizeHint() const
+TQSize TDEToolBarButton::minimumSizeHint() const
 {
    return d->size;
 }
 
-TQSize KToolBarButton::minimumSize() const
+TQSize TDEToolBarButton::minimumSize() const
 {
    return d->size;
 }
 
-bool KToolBarButton::isRaised() const
+bool TDEToolBarButton::isRaised() const
 {
     return d->m_isRaised;
 }
 
-bool KToolBarButton::isActive() const
+bool TDEToolBarButton::isActive() const
 {
     return d->m_isActive;
 }
 
-int KToolBarButton::iconTextMode() const
+int TDEToolBarButton::iconTextMode() const
 {
     return static_cast<int>( d->m_iconText );
 }
 
-int KToolBarButton::id() const
+int TDEToolBarButton::id() const
 {
     return d->m_id;
 }
 
-// KToolBarButtonList
-KToolBarButtonList::KToolBarButtonList()
+// TDEToolBarButtonList
+TDEToolBarButtonList::TDEToolBarButtonList()
 {
    setAutoDelete(false);
 }
 
-void KToolBarButton::virtual_hook( int, void* )
+void TDEToolBarButton::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
 #include "ktoolbarbutton.moc"

@@ -498,7 +498,7 @@ void KPropertiesDialog::insertPages()
     insertPlugin (p);
   }
 
-  if ( kapp->authorizeKAction("sharefile") &&
+  if ( kapp->authorizeTDEAction("sharefile") &&
        KFileSharePropsPlugin::supports( m_items ) )
   {
     KPropsDlgPlugin *p = new KFileSharePropsPlugin( this );
@@ -953,7 +953,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
 
     connect( button, TQT_SIGNAL( clicked() ), TQT_SLOT( slotEditFileType() ));
 
-    if (!kapp->authorizeKAction("editfiletype"))
+    if (!kapp->authorizeTDEAction("editfiletype"))
        button->hide();
 #endif
 

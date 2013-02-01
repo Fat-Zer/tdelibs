@@ -3,45 +3,45 @@
 
 #include <kmainwindow.h>
 
-class MainWin1 : public KMainWindow {
+class MainWin1 : public TDEMainWindow {
   Q_OBJECT
 public:
-  MainWin1() : KMainWindow() {}
+  MainWin1() : TDEMainWindow() {}
   virtual ~MainWin1() {}
 };
 
-class MainWin2 : public KMainWindow {
+class MainWin2 : public TDEMainWindow {
   Q_OBJECT
 public:
-  MainWin2() : KMainWindow() {}
+  MainWin2() : TDEMainWindow() {}
   virtual ~MainWin2() {}
 };
 
-class MainWin3 : public KMainWindow {
+class MainWin3 : public TDEMainWindow {
   Q_OBJECT
 public:
-  MainWin3() : KMainWindow() {}
+  MainWin3() : TDEMainWindow() {}
   virtual ~MainWin3() {}
 };
 
-class MainWin4 : public KMainWindow {
+class MainWin4 : public TDEMainWindow {
   Q_OBJECT
 public:
-  MainWin4() : KMainWindow() {}
+  MainWin4() : TDEMainWindow() {}
   virtual ~MainWin4() {}
 };
 
-class MainWin5 : public KMainWindow {
+class MainWin5 : public TDEMainWindow {
   Q_OBJECT
 public:
-  MainWin5() : KMainWindow() {}
+  MainWin5() : TDEMainWindow() {}
   virtual ~MainWin5() {}
 };
 
-class MainWin6 : public KMainWindow {
+class MainWin6 : public TDEMainWindow {
   Q_OBJECT
 public:
-  MainWin6() : KMainWindow() {}
+  MainWin6() : TDEMainWindow() {}
   virtual ~MainWin6() {}
 };
 

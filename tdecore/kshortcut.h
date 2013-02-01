@@ -34,7 +34,7 @@ class KKeyNative;
 * by the underlying system (e.g. X11).
 * @see KKeyNative
 * @see KKeySequence
-* @see KShortcut
+* @see TDEShortcut
 */
 
 class TDECORE_EXPORT KKey
@@ -282,7 +282,7 @@ class TDECORE_EXPORT KKey
 * A KKeySequence object holds a sequence of up to 4 keys.
 * Ex: Ctrl+X,I
 * @see KKey
-* @see KShortcut
+* @see TDEShortcut
 */
 
 class TDECORE_EXPORT KKeySequence
@@ -518,18 +518,18 @@ class TDECORE_EXPORT KKeySequence
 };
 
 /**
-* The KShortcut class is used to represent a keyboard shortcut to an action.
+* The TDEShortcut class is used to represent a keyboard shortcut to an action.
 * A shortcut is normally a single key with modifiers, such as Ctrl+V.
-* A KShortcut object may also contain an alternate key which will also
+* A TDEShortcut object may also contain an alternate key which will also
 * activate the action it's associated to, as long as no other actions have
 * defined that key as their primary key.  Ex: Ctrl+V;Shift+Insert.
 *
-* This can be used to add additional accelerators to a KAction.  For example,
+* This can be used to add additional accelerators to a TDEAction.  For example,
 * the below code binds the escape key to the close action.
 *
 * \code
-*  KAction *closeAction = KStdAction::close( this, TQT_SLOT( close() ), actionCollection() );
-*  KShortcut closeShortcut = closeAction->shortcut();
+*  TDEAction *closeAction = KStdAction::close( this, TQT_SLOT( close() ), actionCollection() );
+*  TDEShortcut closeShortcut = closeAction->shortcut();
 *  closeShortcut.append( KKey(Key_Escape));
 *  closeAction->setShortcut(closeShortcut);
 * \endcode
@@ -540,12 +540,12 @@ class TDECORE_EXPORT KKeySequence
 * 
 */
 
-class TDECORE_EXPORT KShortcut
+class TDECORE_EXPORT TDEShortcut
 {
  public:
         /**
 	 * The maximum number of key sequences that can be contained in
-	 * a KShortcut.
+	 * a TDEShortcut.
          */
 	enum { MAX_SEQUENCES = 2 };
 
@@ -555,7 +555,7 @@ class TDECORE_EXPORT KShortcut
 	 * @see isNull()
 	 * @see clear()
 	 */
-	KShortcut();
+	TDEShortcut();
 
 	/**
 	 * Creates a new shortcut with the given Qt key code
@@ -563,34 +563,34 @@ class TDECORE_EXPORT KShortcut
 	 * @param keyQt the qt keycode
 	 * @see Qt::Key
 	 */
-	KShortcut( int keyQt );
+	TDEShortcut( int keyQt );
 
 	/**
 	 * Creates a new shortcut that contains only the given qt key
 	 * sequence.
 	 * @param keySeq the qt key sequence to add
 	 */
-	KShortcut( const TQKeySequence& keySeq );
+	TDEShortcut( const TQKeySequence& keySeq );
 
 	/**
 	 * Creates a new shortcut that contains only the given key
 	 * in its only sequence.
 	 * @param key the key to add
 	 */
-	KShortcut( const KKey& key );
+	TDEShortcut( const KKey& key );
 
 	/**
 	 * Creates a new shortcut that contains only the given key
 	 * sequence.
 	 * @param keySeq the key sequence to add
 	 */
-	KShortcut( const KKeySequence& keySeq );
+	TDEShortcut( const KKeySequence& keySeq );
 
 	/**
 	 * Copies the given shortcut.
 	 * @param shortcut the shortcut to add
 	 */
-	KShortcut( const KShortcut& shortcut );
+	TDEShortcut( const TDEShortcut& shortcut );
 
 	/**
 	 * Creates a new key sequence that contains the given key sequence.
@@ -599,7 +599,7 @@ class TDECORE_EXPORT KShortcut
 	 * @param shortcut the description of the key
 	 * @see KKeySequence::KKeySequence(const TQString&)
 	 */
-	KShortcut( const char* shortcut );
+	TDEShortcut( const char* shortcut );
 
 	/**
 	 * Creates a new key sequence that contains the given key sequence.
@@ -608,8 +608,8 @@ class TDECORE_EXPORT KShortcut
 	 * @param shortcut the description of the key
 	 * @see KKeySequence::KKeySequence(const TQString&)
 	 */
-	KShortcut( const TQString& shortcut );
-	~KShortcut();
+	TDEShortcut( const TQString& shortcut );
+	~TDEShortcut();
 
 	/**
 	 * Clears the shortcut. The shortcut is null after calling this
@@ -648,7 +648,7 @@ class TDECORE_EXPORT KShortcut
 	 * Copies the given shortcut.
 	 * @param shortcut the shortcut to add
 	 */
-	bool init( const KShortcut& shortcut );
+	bool init( const TDEShortcut& shortcut );
 
 	/**
 	 * Initializes the key sequence with the given key sequence.
@@ -662,7 +662,7 @@ class TDECORE_EXPORT KShortcut
 	/**
 	 * Copies the given shortcut over this shortcut.
 	 */
-	KShortcut& operator =( const KShortcut& cut )
+	TDEShortcut& operator =( const TDEShortcut& cut )
 		{ init( cut ); return *this; }
 
 	/**
@@ -708,32 +708,32 @@ class TDECORE_EXPORT KShortcut
 	 * beginning until an unequal key sequences has been found. If a shortcut
 	 * contains more key sequences, it is considered larger.
 	 * @param shortcut the shortcut to compare to
-	 * @return a negative number if the given KShortcut is larger, 0 if
-	 * they are equal and a positive number this KShortcut is larger
+	 * @return a negative number if the given TDEShortcut is larger, 0 if
+	 * they are equal and a positive number this TDEShortcut is larger
 	 * @see KKey::compare()
 	 * @see KKeyShortcut::compare()
 	 */
-	int compare( const KShortcut& shortcut ) const;
+	int compare( const TDEShortcut& shortcut ) const;
 
 	/**
 	 * Compares the sequences of both shortcuts.
 	 * @see compare()
 	 */
-	bool operator == ( const KShortcut& cut ) const
+	bool operator == ( const TDEShortcut& cut ) const
 		{ return compare( cut ) == 0; }
 
 	/**
 	 * Compares the sequences of both shortcuts.
 	 * @see compare()
 	 */
-	bool operator != ( const KShortcut& cut ) const
+	bool operator != ( const TDEShortcut& cut ) const
 		{ return compare( cut ) != 0; }
 
 	/**
 	 * Compares the sequences of both shortcuts.
 	 * @see compare()
 	 */
-	bool operator < ( const KShortcut& cut ) const
+	bool operator < ( const TDEShortcut& cut ) const
 		{ return compare( cut ) < 0; }
 
 	/**
@@ -804,7 +804,7 @@ class TDECORE_EXPORT KShortcut
 	 * @see MAX_SEQUENCES
 	 * @since 3.2
 	*/
-	bool append( const KShortcut& cut );
+	bool append( const TDEShortcut& cut );
 
 	/**
 	 * Converts this shortcut to a key sequence. The first key sequence
@@ -824,7 +824,7 @@ class TDECORE_EXPORT KShortcut
 	/**
 	 * @internal
 	 */
-	TQString toStringInternal( const KShortcut* pcutDefault = 0 ) const;
+	TQString toStringInternal( const TDEShortcut* pcutDefault = 0 ) const;
 
 	/**
 	 * Returns a null shortcut.
@@ -832,14 +832,14 @@ class TDECORE_EXPORT KShortcut
 	 * @see isNull()
 	 * @see clear()
 	 */
-	static KShortcut& null();
+	static TDEShortcut& null();
 
  protected:
 	uint m_nSeqs;
 	KKeySequence m_rgseq[MAX_SEQUENCES];
 
  private:
-	class KShortcutPrivate* d;
+	class TDEShortcutPrivate* d;
 	friend class KKeyNative;
 
 #ifndef KDE_NO_COMPAT

@@ -39,7 +39,7 @@ EditEntryDialog::EditEntryDialog(PrintcapEntry *entry, TQWidget *parent, const c
 
 	TQLabel	*lab0 = new TQLabel(i18n("Aliases:"), w);
 	m_aliases = new TQLineEdit(w);
-	m_view = new KListView(w);
+	m_view = new TDEListView(w);
 	m_view->addColumn("");
 	m_view->header()->hide();
 	m_type = new TQComboBox(w);

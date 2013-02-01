@@ -29,9 +29,9 @@ namespace KTextEditor { class Mark; }
 
 namespace Kate { class View; }
 
-class KAction;
-class KToggleAction;
-class KActionCollection;
+class TDEAction;
+class TDEToggleAction;
+class TDEActionCollection;
 class TQPopupMenu;
 class TQMenuData;
 
@@ -44,7 +44,7 @@ class KateBookmarks : public TQObject
     KateBookmarks( KateView* parent, Sorting sort=Position );
     virtual ~KateBookmarks();
 
-    void createActions( KActionCollection* );
+    void createActions( TDEActionCollection* );
 
     KateBookmarks::Sorting sorting() { return m_sorting; };
     void setSorting( Sorting s ) { m_sorting = s; };
@@ -69,10 +69,10 @@ class KateBookmarks : public TQObject
 
   private:
     KateView*                    m_view;
-    KToggleAction*               m_bookmarkToggle;
-    KAction*                     m_bookmarkClear;
-    KAction*                     m_goNext;
-    KAction*                     m_goPrevious;
+    TDEToggleAction*               m_bookmarkToggle;
+    TDEAction*                     m_bookmarkClear;
+    TDEAction*                     m_goNext;
+    TDEAction*                     m_goPrevious;
 
     Sorting                      m_sorting;
     TQPopupMenu*          m_bookmarksMenu;

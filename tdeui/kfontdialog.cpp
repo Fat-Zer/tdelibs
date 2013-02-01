@@ -80,16 +80,16 @@ static int minimumListHeight( const TQListBox *list, int numVisibleEntry )
   return ( w * numVisibleEntry + 2 * list->frameWidth() );
 }
 
-class KFontChooser::KFontChooserPrivate
+class TDEFontChooser::TDEFontChooserPrivate
 {
 public:
-    KFontChooserPrivate()
+    TDEFontChooserPrivate()
         { m_palette.setColor(TQPalette::Active, TQColorGroup::Text, Qt::black);
           m_palette.setColor(TQPalette::Active, TQColorGroup::Base, Qt::white); }
     TQPalette m_palette;
 };
 
-KFontChooser::KFontChooser(TQWidget *parent, const char *name,
+TDEFontChooser::TDEFontChooser(TQWidget *parent, const char *name,
 			   bool onlyFixed, const TQStringList &fontList,
 			   bool makeFrame, int visibleListSize, bool diff,
                            TQButton::ToggleState *sizeIsRelativeState )
@@ -101,7 +101,7 @@ KFontChooser::KFontChooser(TQWidget *parent, const char *name,
     i18n( "Here you can choose the font to be used." );
   TQWhatsThis::add( this, mainWhatsThisText );
 
-  d = new KFontChooserPrivate;
+  d = new TDEFontChooserPrivate;
   TQVBoxLayout *topLayout = new TQVBoxLayout( this, 0, KDialog::spacingHint() );
   int checkBoxGap = KDialog::spacingHint() / 2;
 
@@ -192,7 +192,7 @@ KFontChooser::KFontChooser(TQWidget *parent, const char *name,
   //
   // now create the actual boxes that hold the info
   //
-  familyListBox = new KListBox( page, "familyListBox");
+  familyListBox = new TDEListBox( page, "familyListBox");
   familyListBox->setEnabled( !diff );
   gridLayout->addWidget( familyListBox, row, 0 );
   TQString fontFamilyWhatsThisText =
@@ -214,7 +214,7 @@ KFontChooser::KFontChooser(TQWidget *parent, const char *name,
   familyListBox->setMinimumHeight(
     minimumListHeight( familyListBox, visibleListSize  ) );
 
-  styleListBox = new KListBox( page, "styleListBox");
+  styleListBox = new TDEListBox( page, "styleListBox");
   styleListBox->setEnabled( !diff );
   gridLayout->addWidget(styleListBox, row, 1);
   TQString fontStyleWhatsThisText =
@@ -233,7 +233,7 @@ KFontChooser::KFontChooser(TQWidget *parent, const char *name,
 	  TQT_SLOT(style_chosen_slot(const TQString &)));
 
 
-  sizeListBox = new KListBox( page, "sizeListBox");
+  sizeListBox = new TDEListBox( page, "sizeListBox");
   sizeOfFont = new KIntNumInput( page, "sizeOfFont");
   sizeOfFont->setMinValue(4);
 
@@ -335,12 +335,12 @@ KFontChooser::KFontChooser(TQWidget *parent, const char *name,
   showXLFDArea(config->readBoolEntry(TQString::fromLatin1("fontSelectorShowXLFD"), false));
 }
 
-KFontChooser::~KFontChooser()
+TDEFontChooser::~TDEFontChooser()
 {
   delete d;
 }
 
-void KFontChooser::fillSizeList() {
+void TDEFontChooser::fillSizeList() {
   if(! sizeListBox) return; //assertion.
 
   static const int c[] =
@@ -359,7 +359,7 @@ void KFontChooser::fillSizeList() {
   }
 }
 
-void KFontChooser::setColor( const TQColor & col )
+void TDEFontChooser::setColor( const TQColor & col )
 {
   d->m_palette.setColor( TQPalette::Active, TQColorGroup::Text, col );
   TQPalette pal = sampleEdit->palette();
@@ -367,12 +367,12 @@ void KFontChooser::setColor( const TQColor & col )
   sampleEdit->setPalette( pal );
 }
 
-TQColor KFontChooser::color() const
+TQColor TDEFontChooser::color() const
 {
   return d->m_palette.color( TQPalette::Active, TQColorGroup::Text );
 }
 
-void KFontChooser::setBackgroundColor( const TQColor & col )
+void TDEFontChooser::setBackgroundColor( const TQColor & col )
 {
   d->m_palette.setColor( TQPalette::Active, TQColorGroup::Base, col );
   TQPalette pal = sampleEdit->palette();
@@ -380,12 +380,12 @@ void KFontChooser::setBackgroundColor( const TQColor & col )
   sampleEdit->setPalette( pal );
 }
 
-TQColor KFontChooser::backgroundColor() const
+TQColor TDEFontChooser::backgroundColor() const
 {
   return d->m_palette.color( TQPalette::Active, TQColorGroup::Base );
 }
 
-void KFontChooser::setSizeIsRelative( TQButton::ToggleState relative )
+void TDEFontChooser::setSizeIsRelative( TQButton::ToggleState relative )
 {
   // check or uncheck or gray out the "relative" checkbox
   if( sizeIsRelativeCheckBox ) {
@@ -396,20 +396,20 @@ void KFontChooser::setSizeIsRelative( TQButton::ToggleState relative )
   }
 }
 
-TQButton::ToggleState KFontChooser::sizeIsRelative() const
+TQButton::ToggleState TDEFontChooser::sizeIsRelative() const
 {
   return sizeIsRelativeCheckBox
        ? sizeIsRelativeCheckBox->state()
        : TQButton::NoChange;
 }
 
-TQSize KFontChooser::sizeHint( void ) const
+TQSize TDEFontChooser::sizeHint( void ) const
 {
   return minimumSizeHint();
 }
 
 
-void KFontChooser::enableColumn( int column, bool state )
+void TDEFontChooser::enableColumn( int column, bool state )
 {
   if( column & FamilyList )
   {
@@ -426,7 +426,7 @@ void KFontChooser::enableColumn( int column, bool state )
 }
 
 
-void KFontChooser::setFont( const TQFont& aFont, bool onlyFixed )
+void TDEFontChooser::setFont( const TQFont& aFont, bool onlyFixed )
 {
   selFont = aFont;
   selectedSize=aFont.pointSize();
@@ -443,7 +443,7 @@ void KFontChooser::setFont( const TQFont& aFont, bool onlyFixed )
 }
 
 
-int KFontChooser::fontDiffFlags() {
+int TDEFontChooser::fontDiffFlags() {
    int diffFlags = 0;
    if (familyCheckbox && styleCheckbox && sizeCheckbox) {
       diffFlags = (int)(familyCheckbox->isChecked() ? FontDiffFamily : 0)
@@ -453,7 +453,7 @@ int KFontChooser::fontDiffFlags() {
    return diffFlags;
 }
 
-void KFontChooser::toggled_checkbox()
+void TDEFontChooser::toggled_checkbox()
 {
   familyListBox->setEnabled( familyCheckbox->isChecked() );
   styleListBox->setEnabled( styleCheckbox->isChecked() );
@@ -461,7 +461,7 @@ void KFontChooser::toggled_checkbox()
   sizeOfFont->setEnabled( sizeCheckbox->isChecked() );
 }
 
-void KFontChooser::family_chosen_slot(const TQString& family)
+void TDEFontChooser::family_chosen_slot(const TQString& family)
 {
     TQFontDatabase dbase;
     TQStringList styles = TQStringList(dbase.styles(family));
@@ -496,7 +496,7 @@ void KFontChooser::family_chosen_slot(const TQString& family)
     style_chosen_slot(TQString::null);
 }
 
-void KFontChooser::size_chosen_slot(const TQString& size){
+void TDEFontChooser::size_chosen_slot(const TQString& size){
 
   selectedSize=size.toInt();
   sizeOfFont->setValue(selectedSize);
@@ -504,12 +504,12 @@ void KFontChooser::size_chosen_slot(const TQString& size){
   emit fontSelected(selFont);
 }
 
-void KFontChooser::size_value_slot(int val) {
+void TDEFontChooser::size_value_slot(int val) {
   selFont.setPointSize(val);
   emit fontSelected(selFont);
 }
 
-void KFontChooser::style_chosen_slot(const TQString& style)
+void TDEFontChooser::style_chosen_slot(const TQString& style)
 {
     TQString currentStyle;
     if (style.isEmpty())
@@ -549,7 +549,7 @@ void KFontChooser::style_chosen_slot(const TQString& style)
         selectedStyle = style;
 }
 
-void KFontChooser::displaySample(const TQFont& font)
+void TDEFontChooser::displaySample(const TQFont& font)
 {
   sampleEdit->setFont(font);
   sampleEdit->setCursorPosition(0);
@@ -561,7 +561,7 @@ void KFontChooser::displaySample(const TQFont& font)
   //kdDebug() << "      (" << font.toString() << ")\n";
 }
 
-void KFontChooser::setupDisplay()
+void TDEFontChooser::setupDisplay()
 {
   // Calling familyListBox->setCurrentItem() causes the value of selFont
   // to change, so we save the family, style and size beforehand.
@@ -638,7 +638,7 @@ void KFontChooser::setupDisplay()
 }
 
 
-void KFontChooser::getFontList( TQStringList &list, uint fontListCriteria)
+void TDEFontChooser::getFontList( TQStringList &list, uint fontListCriteria)
 {
   TQFontDatabase dbase;
   TQStringList lstSys(dbase.families());
@@ -671,7 +671,7 @@ void KFontChooser::getFontList( TQStringList &list, uint fontListCriteria)
   list = lstSys;
 }
 
-void KFontChooser::addFont( TQStringList &list, const char *xfont )
+void TDEFontChooser::addFont( TQStringList &list, const char *xfont )
 {
   const char *ptr = strchr( xfont, '-' );
   if ( !ptr )
@@ -699,7 +699,7 @@ void KFontChooser::addFont( TQStringList &list, const char *xfont )
   }
 }
 
-void KFontChooser::fillFamilyListBox(bool onlyFixedFonts)
+void TDEFontChooser::fillFamilyListBox(bool onlyFixedFonts)
 {
   TQStringList fontList;
   getFontList(fontList, onlyFixedFonts?FixedWidthFonts:0);
@@ -707,7 +707,7 @@ void KFontChooser::fillFamilyListBox(bool onlyFixedFonts)
   familyListBox->insertStringList(fontList);
 }
 
-void KFontChooser::showXLFDArea(bool show)
+void TDEFontChooser::showXLFDArea(bool show)
 {
   if( show )
   {
@@ -721,24 +721,24 @@ void KFontChooser::showXLFDArea(bool show)
 
 ///////////////////////////////////////////////////////////////////////////////
 
-KFontDialog::KFontDialog( TQWidget *parent, const char* name,
+TDEFontDialog::TDEFontDialog( TQWidget *parent, const char* name,
 			  bool onlyFixed, bool modal,
 			  const TQStringList &fontList, bool makeFrame, bool diff,
                           TQButton::ToggleState *sizeIsRelativeState )
   : KDialogBase( parent, name, modal, i18n("Select Font"), Ok|Cancel, Ok )
 {
-  chooser = new KFontChooser( this, "fontChooser",
+  chooser = new TDEFontChooser( this, "fontChooser",
                               onlyFixed, fontList, makeFrame, 8,
                               diff, sizeIsRelativeState );
   setMainWidget(chooser);
 }
 
 
-int KFontDialog::getFontDiff( TQFont &theFont, int &diffFlags, bool onlyFixed,
+int TDEFontDialog::getFontDiff( TQFont &theFont, int &diffFlags, bool onlyFixed,
                              TQWidget *parent, bool makeFrame,
                              TQButton::ToggleState *sizeIsRelativeState )
 {
-  KFontDialog dlg( parent, "Font Selector", onlyFixed, true, TQStringList(),
+  TDEFontDialog dlg( parent, "Font Selector", onlyFixed, true, TQStringList(),
 		   makeFrame, true, sizeIsRelativeState );
   dlg.setFont( theFont, onlyFixed );
 
@@ -753,11 +753,11 @@ int KFontDialog::getFontDiff( TQFont &theFont, int &diffFlags, bool onlyFixed,
   return result;
 }
 
-int KFontDialog::getFont( TQFont &theFont, bool onlyFixed,
+int TDEFontDialog::getFont( TQFont &theFont, bool onlyFixed,
                           TQWidget *parent, bool makeFrame,
                           TQButton::ToggleState *sizeIsRelativeState )
 {
-  KFontDialog dlg( parent, "Font Selector", onlyFixed, true, TQStringList(),
+  TDEFontDialog dlg( parent, "Font Selector", onlyFixed, true, TQStringList(),
 		   makeFrame, false, sizeIsRelativeState );
   dlg.setFont( theFont, onlyFixed );
 
@@ -772,12 +772,12 @@ int KFontDialog::getFont( TQFont &theFont, bool onlyFixed,
 }
 
 
-int KFontDialog::getFontAndText( TQFont &theFont, TQString &theString,
+int TDEFontDialog::getFontAndText( TQFont &theFont, TQString &theString,
 				 bool onlyFixed, TQWidget *parent,
 				 bool makeFrame,
                                  TQButton::ToggleState *sizeIsRelativeState )
 {
-  KFontDialog dlg( parent, "Font and Text Selector", onlyFixed, true,
+  TDEFontDialog dlg( parent, "Font and Text Selector", onlyFixed, true,
 		   TQStringList(), makeFrame, false, sizeIsRelativeState );
   dlg.setFont( theFont, onlyFixed );
 
@@ -792,8 +792,8 @@ int KFontDialog::getFontAndText( TQFont &theFont, TQString &theString,
   return result;
 }
 
-void KFontChooser::virtual_hook( int, void* )
+void TDEFontChooser::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
-void KFontDialog::virtual_hook( int id, void* data )
+void TDEFontDialog::virtual_hook( int id, void* data )
 { KDialogBase::virtual_hook( id, data ); }

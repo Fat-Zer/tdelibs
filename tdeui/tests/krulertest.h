@@ -42,7 +42,7 @@ private:
 };
 
 
-class KRulerTest : public KMainWindow
+class KRulerTest : public TDEMainWindow
 {
 Q_OBJECT
 public:

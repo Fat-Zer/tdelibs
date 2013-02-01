@@ -69,7 +69,7 @@
 
 // ----------------------------------------------------------------------
 
-KAppTreeListItem::KAppTreeListItem( KListView* parent, const TQString & name,
+KAppTreeListItem::KAppTreeListItem( TDEListView* parent, const TQString & name,
                                     const TQPixmap& pixmap, bool parse, bool dir, const TQString &p, const TQString &c )
     : TQListViewItem( parent, name )
 {
@@ -145,7 +145,7 @@ bool KAppTreeListItem::isDirectory()
 // ----------------------------------------------------------------------
 
 TDEApplicationTree::TDEApplicationTree( TQWidget *parent )
-    : KListView( parent ), currentitem(0)
+    : TDEListView( parent ), currentitem(0)
 {
     addColumn( i18n("Known Applications") );
     setRootIsDecorated( true );
@@ -281,7 +281,7 @@ void TDEApplicationTree::resizeEvent( TQResizeEvent * e)
 {
     setColumnWidth(0, width()-TQApplication::style().pixelMetric(TQStyle::PM_ScrollBarExtent)
                          -2*TQApplication::style().pixelMetric(TQStyle::PM_DefaultFrameWidth));
-    KListView::resizeEvent(e);
+    TDEListView::resizeEvent(e);
 }
 
 // Prune empty directories from the tree

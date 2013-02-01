@@ -27,7 +27,7 @@
 
 #include "klistbox.h"
 
-KListBox::KListBox( TQWidget *parent, const char *name, WFlags f )
+TDEListBox::TDEListBox( TQWidget *parent, const char *name, WFlags f )
     : TQListBox( parent, name, f ), d(0)
 {
     connect( this, TQT_SIGNAL( onViewport() ),
@@ -48,7 +48,7 @@ KListBox::KListBox( TQWidget *parent, const char *name, WFlags f )
     	     this, TQT_SLOT( slotAutoSelect() ) );
 }
 
-void KListBox::slotOnItem( TQListBoxItem *item )
+void TDEListBox::slotOnItem( TQListBoxItem *item )
 {
     if ( item && m_bChangeCursorOverItem && m_bUseSingle )
         viewport()->setCursor( KCursor().handCursor() );
@@ -59,7 +59,7 @@ void KListBox::slotOnItem( TQListBoxItem *item )
     }
 }
 
-void KListBox::slotOnViewport()
+void TDEListBox::slotOnViewport()
 {
     if ( m_bChangeCursorOverItem )
         viewport()->unsetCursor();
@@ -69,7 +69,7 @@ void KListBox::slotOnViewport()
 }
 
 
-void KListBox::slotSettingsChanged(int category)
+void TDEListBox::slotSettingsChanged(int category)
 {
     if (category != TDEApplication::SETTINGS_MOUSE)
         return;
@@ -106,7 +106,7 @@ void KListBox::slotSettingsChanged(int category)
         viewport()->unsetCursor();
 }
 
-void KListBox::slotAutoSelect()
+void TDEListBox::slotAutoSelect()
 {
   // check that the item still exists
   if( index( m_pCurrentItem ) == -1 )
@@ -176,7 +176,7 @@ void KListBox::slotAutoSelect()
     kdDebug() << "That´s not supposed to happen!!!!" << endl;
 }
 
-void KListBox::emitExecute( TQListBoxItem *item, const TQPoint &pos )
+void TDEListBox::emitExecute( TQListBoxItem *item, const TQPoint &pos )
 {
   ButtonState keybstate = TDEApplication::keyboardMouseState();
     
@@ -196,7 +196,7 @@ void KListBox::emitExecute( TQListBoxItem *item, const TQPoint &pos )
 // to start help or close the dialog. This functionality
 // should be done in TQListView but it is not (at least now)
 //
-void KListBox::keyPressEvent(TQKeyEvent *e)
+void TDEListBox::keyPressEvent(TQKeyEvent *e)
 {
   if( e->key() == Key_Escape )
   {
@@ -212,21 +212,21 @@ void KListBox::keyPressEvent(TQKeyEvent *e)
   }
 }
 
-void KListBox::focusOutEvent( TQFocusEvent *fe )
+void TDEListBox::focusOutEvent( TQFocusEvent *fe )
 {
   m_pAutoSelect->stop();
 
   TQListBox::focusOutEvent( fe );
 }
 
-void KListBox::leaveEvent( TQEvent *e ) 
+void TDEListBox::leaveEvent( TQEvent *e ) 
 {
   m_pAutoSelect->stop();
 
   TQListBox::leaveEvent( e );
 }
 
-void KListBox::contentsMousePressEvent( TQMouseEvent *e )
+void TDEListBox::contentsMousePressEvent( TQMouseEvent *e )
 {
   if( (selectionMode() == Extended) && (e->state() & ShiftButton) && !(e->state() & ControlButton) ) {
     bool block = signalsBlocked();
@@ -240,7 +240,7 @@ void KListBox::contentsMousePressEvent( TQMouseEvent *e )
   TQListBox::contentsMousePressEvent( e );
 }
 
-void KListBox::contentsMouseDoubleClickEvent ( TQMouseEvent * e )
+void TDEListBox::contentsMouseDoubleClickEvent ( TQMouseEvent * e )
 {
   TQListBox::contentsMouseDoubleClickEvent( e );
 
@@ -254,13 +254,13 @@ void KListBox::contentsMouseDoubleClickEvent ( TQMouseEvent * e )
   }
 }
 
-void KListBox::slotMouseButtonClicked( int btn, TQListBoxItem *item, const TQPoint &pos )
+void TDEListBox::slotMouseButtonClicked( int btn, TQListBoxItem *item, const TQPoint &pos )
 {
   if( (btn == Qt::LeftButton) && item )
     emitExecute( item, pos );
 }
 
-void KListBox::virtual_hook( int, void* )
+void TDEListBox::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
 #include "klistbox.moc"

@@ -29,7 +29,7 @@
 EditList::EditList(TQWidget *parent, const char *name)
 	: TQWidget(parent, name)
 {
-	list_ = new KListBox(this);
+	list_ = new TDEListBox(this);
 	addbtn_ = new KPushButton(KGuiItem(i18n("Add..."), "filenew"), this);
 	editbtn_ = new KPushButton(KGuiItem(i18n("Edit..."), "edit"), this);
 	delbtn_ = new KPushButton(KGuiItem(i18n("Delete"), "editdelete"), this);

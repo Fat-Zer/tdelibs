@@ -191,7 +191,7 @@ private:
  * The slot defined for step 2 is called when the action is activated, and
  * that's where the tool should be created and run.
  */
-class TDEIO_EXPORT KDataToolAction : public KAction
+class TDEIO_EXPORT KDataToolAction : public TDEAction
 {
     Q_OBJECT
     
@@ -215,9 +215,9 @@ public:
      * @param tools the list of data tool descriptions
      * @param receiver the receiver for toolActivated() signals
      * @param slot the slot that will receive the toolActivated() signals
-     * @return the KActions
+     * @return the TDEActions
      */
-    static TQPtrList<KAction> dataToolActionList( const TQValueList<KDataToolInfo> & tools, const TQObject *receiver, const char* slot );
+    static TQPtrList<TDEAction> dataToolActionList( const TQValueList<KDataToolInfo> & tools, const TQObject *receiver, const char* slot );
 
 signals:
     /**

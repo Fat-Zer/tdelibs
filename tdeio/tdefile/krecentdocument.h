@@ -47,7 +47,7 @@
  *
  * @author Daniel M. Duley <mosfet@kde.org>
  */
-class TDEIO_EXPORT KRecentDocument
+class TDEIO_EXPORT TDERecentDocument
 {
 public:
 

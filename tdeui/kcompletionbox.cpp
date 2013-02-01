@@ -45,7 +45,7 @@ public:
 };
 
 KCompletionBox::KCompletionBox( TQWidget *parent, const char *name )
- :KListBox( parent, name, (WFlags)WType_Popup ), d(new KCompletionBoxPrivate)
+ :TDEListBox( parent, name, (WFlags)WType_Popup ), d(new KCompletionBoxPrivate)
 {
 
     d->m_parent        = parent;
@@ -243,7 +243,7 @@ bool KCompletionBox::eventFilter( TQObject *o, TQEvent *e )
         }
     }
 
-    return KListBox::eventFilter( o, e );
+    return TDEListBox::eventFilter( o, e );
 }
 
 
@@ -318,7 +318,7 @@ void KCompletionBox::show()
     // of the parent, and calls hide() - and this hide() happen in the middle
     // of show(), causing inconsistent state. I'll try to submit a Qt patch too.
     tqApp->sendPostedEvents();
-    KListBox::show();
+    TDEListBox::show();
 }
 
 void KCompletionBox::hide()
@@ -326,7 +326,7 @@ void KCompletionBox::hide()
     if ( d->m_parent )
         tqApp->removeEventFilter( this );
     d->cancelText = TQString::null;
-    KListBox::hide();
+    TDEListBox::hide();
 }
 
 TQRect KCompletionBox::calculateGeometry() const
@@ -335,8 +335,8 @@ TQRect KCompletionBox::calculateGeometry() const
     int ih = itemHeight();
     int h = QMIN( 15 * ih, (int) count() * ih ) + 2*frameWidth();
 
-    int w = (d->m_parent) ? d->m_parent->width() : KListBox::minimumSizeHint().width();
-    w = QMAX( KListBox::minimumSizeHint().width(), w );
+    int w = (d->m_parent) ? d->m_parent->width() : TDEListBox::minimumSizeHint().width();
+    w = QMAX( TDEListBox::minimumSizeHint().width(), w );
 
     //If we're inside a combox, Qt by default makes the dropdown
     // as wide as the combo, and gives the style a chance
@@ -557,6 +557,6 @@ bool KCompletionBox::activateOnSelect() const
 }
 
 void KCompletionBox::virtual_hook( int id, void* data )
-{ KListBox::virtual_hook( id, data ); }
+{ TDEListBox::virtual_hook( id, data ); }
 
 #include "kcompletionbox.moc"

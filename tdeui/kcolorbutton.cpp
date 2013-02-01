@@ -153,11 +153,11 @@ void KColorButton::keyPressEvent( TQKeyEvent *e )
 {
   KKey key( e );
 
-  if ( KStdAccel::copy().contains( key ) ) {
+  if ( TDEStdAccel::copy().contains( key ) ) {
     TQMimeSource* mime = new KColorDrag( color() );
     TQApplication::clipboard()->setData( mime, TQClipboard::Clipboard );
   }
-  else if ( KStdAccel::paste().contains( key ) ) {
+  else if ( TDEStdAccel::paste().contains( key ) ) {
     TQColor color;
     KColorDrag::decode( TQApplication::clipboard()->data( TQClipboard::Clipboard ), color );
     setColor( color );

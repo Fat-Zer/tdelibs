@@ -36,7 +36,7 @@ KContextMenuManager::KContextMenuManager( TQObject* parent, const char* name )
     : TQObject( parent, name)
 {
     TDEConfigGroupSaver saver ( TDEGlobal::config(), TQString::fromLatin1("Shortcuts") ) ;
-    menuKey = KShortcut( saver.config()->readEntry(TQString::fromLatin1("PopupContextMenu"), TQString::fromLatin1("Menu") ) ).keyCodeQt();
+    menuKey = TDEShortcut( saver.config()->readEntry(TQString::fromLatin1("PopupContextMenu"), TQString::fromLatin1("Menu") ) ).keyCodeQt();
     saver.config()->setGroup( TQString::fromLatin1("ContextMenus") ) ;
     showOnPress = saver.config()->readBoolEntry(TQString::fromLatin1("ShowOnPress"), true );
 }

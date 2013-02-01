@@ -60,12 +60,12 @@ public:
 
         noArrangement = false;
 	ignoreMaximumSize = false;
-	smallColumns = new KRadioAction( i18n("Small Icons"), 0, TQT_TQOBJECT(parent),
+	smallColumns = new TDERadioAction( i18n("Small Icons"), 0, TQT_TQOBJECT(parent),
 					 TQT_SLOT( slotSmallColumns() ),
 					 parent->actionCollection(),
 					 "small columns" );
 
-	largeRows = new KRadioAction( i18n("Large Icons"), 0, TQT_TQOBJECT(parent),
+	largeRows = new TDERadioAction( i18n("Large Icons"), 0, TQT_TQOBJECT(parent),
 				      TQT_SLOT( slotLargeRows() ),
 				      parent->actionCollection(),
 				      "large rows" );
@@ -73,7 +73,7 @@ public:
 	smallColumns->setExclusiveGroup(TQString::fromLatin1("IconView mode"));
 	largeRows->setExclusiveGroup(TQString::fromLatin1("IconView mode"));
 
-        previews = new KToggleAction( i18n("Thumbnail Previews"), 0,
+        previews = new TDEToggleAction( i18n("Thumbnail Previews"), 0,
                                       parent->actionCollection(),
                                       "show previews" );
         zoomIn = KStdAction::zoomIn( TQT_TQOBJECT(parent), TQT_SLOT( zoomIn() ),
@@ -99,9 +99,9 @@ public:
             job->kill();
     }
 
-    KRadioAction *smallColumns, *largeRows;
-    KAction *zoomIn, *zoomOut;
-    KToggleAction *previews;
+    TDERadioAction *smallColumns, *largeRows;
+    TDEAction *zoomIn, *zoomOut;
+    TDEToggleAction *previews;
     TDEIO::PreviewJob *job;
     KFileIconViewItem *dropItem;
     TQTimer previewTimer;

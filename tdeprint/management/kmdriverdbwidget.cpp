@@ -46,8 +46,8 @@ KMDriverDbWidget::KMDriverDbWidget(TQWidget *parent, const char *name)
 	m_valid = false;
 
 	// build widget
-	m_manu = new KListBox(this);
-	m_model = new KListBox(this);
+	m_manu = new TDEListBox(this);
+	m_model = new TDEListBox(this);
 	m_postscript = new TQCheckBox(i18n("&PostScript printer"),this);
 	m_raw = new TQCheckBox(i18n("&Raw printer (no driver needed)"),this);
 	m_postscript->setCursor(KCursor::handCursor());

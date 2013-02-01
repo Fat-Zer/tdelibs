@@ -64,14 +64,14 @@ signals:
  *
  *  You can insert text labels or custom widgets. Their geometry is managed
  *  internally. KStatusBar resizes itself, but positioning is left to
- *  KMainWindow (or to you, if you don't use KMainWindow ).
+ *  TDEMainWindow (or to you, if you don't use TDEMainWindow ).
  *
  *  A special type of item is a message which is a temporary text-message
  *  displayed on top of other items in full-width. Messages are visible for
  *  specified time, or until you call the slot TQStatusBar::clear(). See
  *  TQStatusBar::message for details.
  *
- *  It is useful to connect the KActionCollection signals to the
+ *  It is useful to connect the TDEActionCollection signals to the
  *  TQStatusBar::message slots.
  *
  *  KStatusBar inherits TQStatusBar, you can freely use all QStatusBar
@@ -82,7 +82,7 @@ signals:
  *
  *  @author Mark Donohoe (donohoe@kde.org) Maintained by Sven Radej <radej@kde.org>
 
- *  @see KActionCollection
+ *  @see TDEActionCollection
  */
 class TDEUI_EXPORT KStatusBar : public TQStatusBar
 {
@@ -97,7 +97,7 @@ public:
   enum BarStatus{ Toggle, Show, Hide };
 
   /**
-   *  Constructs a status bar. @p parent is usually KMainWindow.
+   *  Constructs a status bar. @p parent is usually TDEMainWindow.
    */
   KStatusBar( TQWidget* parent = 0L, const char* name = 0L );
 

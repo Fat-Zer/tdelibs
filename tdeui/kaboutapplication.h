@@ -34,9 +34,9 @@
  * TDEAboutData that is specified at the start of your program in
  * main(). Normally you should not use this class directly but rather
  * the KHelpMenu class or even better just subclass your toplevel
- * window from KMainWindow. If you do the latter, the help menu and
+ * window from TDEMainWindow. If you do the latter, the help menu and
  * thereby this dialog box is available through the
- * KMainWindow::helpMenu() function.
+ * TDEMainWindow::helpMenu() function.
  *
  * @author Waldo Bastian (bastian@kde.org) and Espen Sand (espen@kde.org)
  */

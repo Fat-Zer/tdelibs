@@ -77,13 +77,13 @@ class KATEPARTINTERFACES_EXPORT ConfigPage : public KTextEditor::ConfigPage
     void slotChanged();
 };
 
-class KATEPARTINTERFACES_EXPORT ActionMenu : public KActionMenu
+class KATEPARTINTERFACES_EXPORT ActionMenu : public TDEActionMenu
 {
   Q_OBJECT
 
   public:
     ActionMenu ( const TQString& text, TQObject* parent = 0, const char* name = 0 )
-      : KActionMenu(text, parent, name) { ; };
+      : TDEActionMenu(text, parent, name) { ; };
     virtual ~ActionMenu () { ; };
 
   public:

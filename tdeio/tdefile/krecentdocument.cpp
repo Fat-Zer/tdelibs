@@ -42,13 +42,13 @@
 #include <sys/types.h>
 #include <utime.h>
 
-TQString KRecentDocument::recentDocumentDirectory()
+TQString TDERecentDocument::recentDocumentDirectory()
 {
     // need to change this path, not sure where
     return locateLocal("data", TQString::fromLatin1("RecentDocuments/"));
 }
 
-TQStringList KRecentDocument::recentDocuments()
+TQStringList TDERecentDocument::recentDocuments()
 {
     TQDir d(recentDocumentDirectory(), "*.desktop", TQDir::Time,
            TQDir::Files | TQDir::Readable | TQDir::Hidden);
@@ -72,12 +72,12 @@ TQStringList KRecentDocument::recentDocuments()
     return fullList;
 }
 
-void KRecentDocument::add(const KURL& url)
+void TDERecentDocument::add(const KURL& url)
 {
-    KRecentDocument::add(url, tqApp->argv()[0]); // ### argv[0] might not match the service filename!
+    TDERecentDocument::add(url, tqApp->argv()[0]); // ### argv[0] might not match the service filename!
 }
 
-void KRecentDocument::add(const KURL& url, const TQString& desktopEntryName)
+void TDERecentDocument::add(const KURL& url, const TQString& desktopEntryName)
 {
 	if ( url.isLocalFile() && !TDEGlobal::dirs()->relativeLocation("tmp", url.path()).startsWith("/"))
 		return;
@@ -85,7 +85,7 @@ void KRecentDocument::add(const KURL& url, const TQString& desktopEntryName)
     TQString openStr = url.url();
     openStr.replace( TQRegExp("\\$"), "$$" ); // Desktop files with type "Link" are $-variable expanded
 
-    kdDebug(250) << "KRecentDocument::add for " << openStr << endl;
+    kdDebug(250) << "TDERecentDocument::add for " << openStr << endl;
     TDEConfig *config = TDEGlobal::config();
     TQString oldGrp = config->group();
     config->setGroup(TQString::fromLatin1("RecentDocuments"));
@@ -148,7 +148,7 @@ void KRecentDocument::add(const KURL& url, const TQString& desktopEntryName)
     conf.writeEntry( TQString::fromLatin1("Icon"), KMimeType::iconForURL( url ) );
 }
 
-void KRecentDocument::add(const TQString &openStr, bool isUrl)
+void TDERecentDocument::add(const TQString &openStr, bool isUrl)
 {
     if( isUrl ) {
         add( KURL( openStr ) );
@@ -159,7 +159,7 @@ void KRecentDocument::add(const TQString &openStr, bool isUrl)
     }
 }
 
-void KRecentDocument::clear()
+void TDERecentDocument::clear()
 {
   TQStringList list = recentDocuments();
   TQDir dir;
@@ -167,7 +167,7 @@ void KRecentDocument::clear()
     dir.remove(*it);
 }
 
-int KRecentDocument::maximumItems()
+int TDERecentDocument::maximumItems()
 {
     TDEConfig *config = TDEGlobal::config();
     TDEConfigGroupSaver sa(config, TQString::fromLatin1("RecentDocuments"));

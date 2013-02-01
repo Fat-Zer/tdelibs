@@ -159,7 +159,7 @@ KateAutoIndent::~KateAutoIndent ()
 
 //BEGIN KateViewIndentAction
 KateViewIndentationAction::KateViewIndentationAction(KateDocument *_doc, const TQString& text, TQObject* parent, const char* name)
-       : KActionMenu (text, parent, name), doc(_doc)
+       : TDEActionMenu (text, parent, name), doc(_doc)
 {
   connect(popupMenu(),TQT_SIGNAL(aboutToShow()),this,TQT_SLOT(slotAboutToShow()));
 }

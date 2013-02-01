@@ -30,7 +30,7 @@ int main()
 	         << "&yoyo && dyne";
 
     TQStringList output;
-    KAccelGen::generate( input, output );
+    TDEAccelGen::generate( input, output );
     check( "TQStringList value generation", expected, output );
 
     TQMap<TQString,TQString> map;
@@ -39,13 +39,13 @@ int main()
     }
     input.sort();
     expected.clear();
-    KAccelGen::generate( input, expected );
+    TDEAccelGen::generate( input, expected );
 
     output.clear();
-    KAccelGen::generateFromValues( map, output );
+    TDEAccelGen::generateFromValues( map, output );
     check( "map value generation", expected, output );
 
     output.clear();
-    KAccelGen::generateFromKeys( map, output );
+    TDEAccelGen::generateFromKeys( map, output );
     check( "map key generation", expected, output );
 }

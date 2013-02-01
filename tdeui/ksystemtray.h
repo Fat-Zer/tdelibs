@@ -21,8 +21,8 @@
 #include <kglobal.h>
 #include <tqlabel.h>
 
-class KActionCollection;
-class KPopupMenu;
+class TDEActionCollection;
+class TDEPopupMenu;
 class KSystemTrayPrivate;
 
 /**
@@ -89,14 +89,14 @@ public:
        Access to the context menu. This makes it easy to add new items
        to it.
      */
-    KPopupMenu* contextMenu() const;
+    TDEPopupMenu* contextMenu() const;
 
     /**
        Easy access to the actions in the context menu
        Currently includes KStdAction::Quit and minimizeRestore
        @since 3.1
     */
-    KActionCollection* actionCollection();
+    TDEActionCollection* actionCollection();
 
     /**
      * Changes the tray's icon.
@@ -183,7 +183,7 @@ protected:
        Makes it easy to adjust some menu items right before the
        context menu becomes visible.
      */
-    virtual void contextMenuAboutToShow( KPopupMenu* menu );
+    virtual void contextMenuAboutToShow( TDEPopupMenu* menu );
 
     /**
        Reimplemented for internal reasons.
@@ -202,7 +202,7 @@ private slots:
 private:
     void activateOrHide();
     void minimizeRestore( bool restore );
-    KPopupMenu* menu;
+    TDEPopupMenu* menu;
     // minimizeRestoreId is no longer needed. remove in KDE 4.0
     int minimizeRestoreId;
     uint hasQuit :1;

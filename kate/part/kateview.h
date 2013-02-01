@@ -44,10 +44,10 @@ class KateViewSchemaAction;
 class KateRenderer;
 class KateSpell;
 
-class KToggleAction;
-class KAction;
-class KRecentFilesAction;
-class KSelectAction;
+class TDEToggleAction;
+class TDEAction;
+class TDERecentFilesAction;
+class TDESelectAction;
 
 class TQGridLayout;
 
@@ -429,7 +429,7 @@ class KateView : public Kate::View,
     // Is it really necessary to have 3 methods for this?! :)
     KateDocument*  doc() const       { return m_doc; }
 
-    KActionCollection* editActionCollection() const { return m_editActions; }
+    TDEActionCollection* editActionCollection() const { return m_editActions; }
 
   public slots:
     void slotNewUndo();
@@ -472,31 +472,31 @@ class KateView : public Kate::View,
     void setupCodeFolding();
     void setupCodeCompletion();
 
-    KActionCollection*     m_editActions;
-    KAction*               m_editUndo;
-    KAction*               m_editRedo;
-    KRecentFilesAction*    m_fileRecent;
-    KToggleAction*         m_toggleFoldingMarkers;
-    KToggleAction*         m_toggleIconBar;
-    KToggleAction*         m_toggleLineNumbers;
-    KToggleAction*         m_toggleScrollBarMarks;
-    KToggleAction*         m_toggleDynWrap;
-    KSelectAction*         m_setDynWrapIndicators;
-    KToggleAction*         m_toggleWWMarker;
-    KAction*               m_switchCmdLine;
+    TDEActionCollection*     m_editActions;
+    TDEAction*               m_editUndo;
+    TDEAction*               m_editRedo;
+    TDERecentFilesAction*    m_fileRecent;
+    TDEToggleAction*         m_toggleFoldingMarkers;
+    TDEToggleAction*         m_toggleIconBar;
+    TDEToggleAction*         m_toggleLineNumbers;
+    TDEToggleAction*         m_toggleScrollBarMarks;
+    TDEToggleAction*         m_toggleDynWrap;
+    TDESelectAction*         m_setDynWrapIndicators;
+    TDEToggleAction*         m_toggleWWMarker;
+    TDEAction*               m_switchCmdLine;
 
-    KSelectAction*         m_setEndOfLine;
+    TDESelectAction*         m_setEndOfLine;
 
-    KAction *m_cut;
-    KAction *m_copy;
-    KAction *m_copyHTML;
-    KAction *m_paste;
-    KAction *m_selectAll;
-    KAction *m_deSelect;
+    TDEAction *m_cut;
+    TDEAction *m_copy;
+    TDEAction *m_copyHTML;
+    TDEAction *m_paste;
+    TDEAction *m_selectAll;
+    TDEAction *m_deSelect;
 
-    KToggleAction *m_toggleBlockSelection;
-    KToggleAction *m_toggleInsert;
-    KToggleAction *m_toggleWriteLock;
+    TDEToggleAction *m_toggleBlockSelection;
+    TDEToggleAction *m_toggleInsert;
+    TDEToggleAction *m_toggleWriteLock;
 
     KateDocument*          m_doc;
     KateViewInternal*      m_viewInternal;

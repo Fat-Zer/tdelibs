@@ -28,7 +28,7 @@ namespace TDEIO
   class Job;
 }
 
-class KListView;
+class TDEListView;
 class TQTextBrowser;
 class TQFrame;
 class KNewStuffGeneric;
@@ -232,7 +232,7 @@ class KDE_EXPORT DownloadDialog : public KDialogBase
 
     ProviderLoader *m_loader;
     TQString m_entryname;
-    KListView *lv_r, *lv_d, *lv_l;
+    TDEListView *lv_r, *lv_d, *lv_l;
     TQTextBrowser *m_rt;
     TQFrame *m_frame;
     TQListViewItem *m_entryitem;
@@ -240,7 +240,7 @@ class KDE_EXPORT DownloadDialog : public KDialogBase
     Entry *m_entry;
     KNewStuffGeneric *m_s;
     int m_curtab;
-    TQMap<TQWidget*, TQValueList<KListView*>* > m_map;
+    TQMap<TQWidget*, TQValueList<TDEListView*>* > m_map;
     TQMap<TQWidget*, Provider*> m_providers;
     TQMap<TQWidget*, TQTextBrowser*> m_rts;
     TQMap<TQWidget*, TQValueList<TQPushButton*>* > m_buttons;

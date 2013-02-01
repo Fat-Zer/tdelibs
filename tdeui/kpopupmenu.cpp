@@ -32,13 +32,13 @@
 #include <kdebug.h>
 #include <kapplication.h>
 
-KPopupTitle::KPopupTitle(TQWidget *parent, const char *name)
+TDEPopupTitle::TDEPopupTitle(TQWidget *parent, const char *name)
     : TQWidget(parent, name)
 {
     setMinimumSize(16, fontMetrics().height()+8);
 }
 
-KPopupTitle::KPopupTitle(KPixmapEffect::GradientType /* gradient */,
+TDEPopupTitle::TDEPopupTitle(KPixmapEffect::GradientType /* gradient */,
                          const TQColor &/* color */, const TQColor &/* textColor */,
                          TQWidget *parent, const char *name)
    : TQWidget(parent, name)
@@ -46,7 +46,7 @@ KPopupTitle::KPopupTitle(KPixmapEffect::GradientType /* gradient */,
     calcSize();
 }
 
-KPopupTitle::KPopupTitle(const KPixmap & /* background */, const TQColor &/* color */,
+TDEPopupTitle::TDEPopupTitle(const KPixmap & /* background */, const TQColor &/* color */,
                          const TQColor &/* textColor */, TQWidget *parent,
                          const char *name)
     : TQWidget(parent, name)
@@ -54,7 +54,7 @@ KPopupTitle::KPopupTitle(const KPixmap & /* background */, const TQColor &/* col
     calcSize();
 }
 
-void KPopupTitle::setTitle(const TQString &text, const TQPixmap *icon)
+void TDEPopupTitle::setTitle(const TQString &text, const TQPixmap *icon)
 {
     titleStr = text;
     if (icon)
@@ -65,19 +65,19 @@ void KPopupTitle::setTitle(const TQString &text, const TQPixmap *icon)
     calcSize();
 }
 
-void KPopupTitle::setText( const TQString &text )
+void TDEPopupTitle::setText( const TQString &text )
 {
     titleStr = text;
     calcSize();
 }
 
-void KPopupTitle::setIcon( const TQPixmap &pix )
+void TDEPopupTitle::setIcon( const TQPixmap &pix )
 {
     miniicon = pix;
     calcSize();
 }
 
-void KPopupTitle::calcSize()
+void TDEPopupTitle::calcSize()
 {
     TQFont f = font();
     f.setBold(true);
@@ -86,7 +86,7 @@ void KPopupTitle::calcSize()
     setMinimumSize( w+16, h+8 );
 }
 
-void KPopupTitle::paintEvent(TQPaintEvent *)
+void TDEPopupTitle::paintEvent(TQPaintEvent *)
 {
     TQRect r(rect());
     TQPainter p(this);
@@ -115,15 +115,15 @@ void KPopupTitle::paintEvent(TQPaintEvent *)
     }
 }
 
-TQSize KPopupTitle::sizeHint() const
+TQSize TDEPopupTitle::sizeHint() const
 {
     return minimumSize();
 }
 
-class KPopupMenu::KPopupMenuPrivate
+class TDEPopupMenu::TDEPopupMenuPrivate
 {
 public:
-    KPopupMenuPrivate ()
+    TDEPopupMenuPrivate ()
         : noMatches(false)
         , shortcuts(false)
         , autoExec(false)
@@ -132,7 +132,7 @@ public:
         , m_ctxMenu(0)
     {}
 
-    ~KPopupMenuPrivate ()
+    ~TDEPopupMenuPrivate ()
     {
         delete m_ctxMenu;
     }
@@ -156,112 +156,112 @@ public:
     TQPopupMenu* m_ctxMenu;
     static bool s_continueCtxMenuShow;
     static int s_highlightedItem;
-    static KPopupMenu* s_contextedMenu;
+    static TDEPopupMenu* s_contextedMenu;
 };
 
-int KPopupMenu::KPopupMenuPrivate::s_highlightedItem(-1);
-KPopupMenu* KPopupMenu::KPopupMenuPrivate::s_contextedMenu(0);
-bool KPopupMenu::KPopupMenuPrivate::s_continueCtxMenuShow(true);
+int TDEPopupMenu::TDEPopupMenuPrivate::s_highlightedItem(-1);
+TDEPopupMenu* TDEPopupMenu::TDEPopupMenuPrivate::s_contextedMenu(0);
+bool TDEPopupMenu::TDEPopupMenuPrivate::s_continueCtxMenuShow(true);
 
-KPopupMenu::KPopupMenu(TQWidget *parent, const char *name)
+TDEPopupMenu::TDEPopupMenu(TQWidget *parent, const char *name)
     : TQPopupMenu(parent, name)
 {
-    d = new KPopupMenuPrivate;
+    d = new TDEPopupMenuPrivate;
     resetKeyboardVars();
     connect(&(d->clearTimer), TQT_SIGNAL(timeout()), TQT_SLOT(resetKeyboardVars()));
 }
 
-KPopupMenu::~KPopupMenu()
+TDEPopupMenu::~TDEPopupMenu()
 {
-    if (KPopupMenuPrivate::s_contextedMenu == this)
+    if (TDEPopupMenuPrivate::s_contextedMenu == this)
     {
-        KPopupMenuPrivate::s_contextedMenu = 0;
-        KPopupMenuPrivate::s_highlightedItem = -1;
+        TDEPopupMenuPrivate::s_contextedMenu = 0;
+        TDEPopupMenuPrivate::s_highlightedItem = -1;
     }
 
     delete d;
 }
 
-int KPopupMenu::insertTitle(const TQString &text, int id, int index)
+int TDEPopupMenu::insertTitle(const TQString &text, int id, int index)
 {
-    KPopupTitle *titleItem = new KPopupTitle();
+    TDEPopupTitle *titleItem = new TDEPopupTitle();
     titleItem->setTitle(text);
     int ret = insertItem(titleItem, id, index);
     setItemEnabled(ret, false);
     return ret;
 }
 
-int KPopupMenu::insertTitle(const TQPixmap &icon, const TQString &text, int id,
+int TDEPopupMenu::insertTitle(const TQPixmap &icon, const TQString &text, int id,
                             int index)
 {
-    KPopupTitle *titleItem = new KPopupTitle();
+    TDEPopupTitle *titleItem = new TDEPopupTitle();
     titleItem->setTitle(text, &icon);
     int ret = insertItem(titleItem, id, index);
     setItemEnabled(ret, false);
     return ret;
 }
 
-void KPopupMenu::changeTitle(int id, const TQString &text)
+void TDEPopupMenu::changeTitle(int id, const TQString &text)
 {
     TQMenuItem *item = findItem(id);
     if(item){
         if(item->widget())
-            ((KPopupTitle *)item->widget())->setTitle(text);
+            ((TDEPopupTitle *)item->widget())->setTitle(text);
 #ifndef NDEBUG
         else
-            kdWarning() << "KPopupMenu: changeTitle() called with non-title id "<< id << endl;
+            kdWarning() << "TDEPopupMenu: changeTitle() called with non-title id "<< id << endl;
 #endif
     }
 #ifndef NDEBUG
     else
-        kdWarning() << "KPopupMenu: changeTitle() called with invalid id " << id << endl;
+        kdWarning() << "TDEPopupMenu: changeTitle() called with invalid id " << id << endl;
 #endif
 }
 
-void KPopupMenu::changeTitle(int id, const TQPixmap &icon, const TQString &text)
+void TDEPopupMenu::changeTitle(int id, const TQPixmap &icon, const TQString &text)
 {
     TQMenuItem *item = findItem(id);
     if(item){
         if(item->widget())
-            ((KPopupTitle *)item->widget())->setTitle(text, &icon);
+            ((TDEPopupTitle *)item->widget())->setTitle(text, &icon);
 #ifndef NDEBUG
         else
-            kdWarning() << "KPopupMenu: changeTitle() called with non-title id "<< id << endl;
+            kdWarning() << "TDEPopupMenu: changeTitle() called with non-title id "<< id << endl;
 #endif
     }
 #ifndef NDEBUG
     else
-        kdWarning() << "KPopupMenu: changeTitle() called with invalid id " << id << endl;
+        kdWarning() << "TDEPopupMenu: changeTitle() called with invalid id " << id << endl;
 #endif
 }
 
-TQString KPopupMenu::title(int id) const
+TQString TDEPopupMenu::title(int id) const
 {
     if(id == -1) // obsolete
         return d->m_lastTitle;
     TQMenuItem *item = findItem(id);
     if(item){
         if(item->widget())
-            return ((KPopupTitle *)item->widget())->title();
+            return ((TDEPopupTitle *)item->widget())->title();
         else
-            tqWarning("KPopupMenu: title() called with non-title id %d.", id);
+            tqWarning("TDEPopupMenu: title() called with non-title id %d.", id);
     }
     else
-        tqWarning("KPopupMenu: title() called with invalid id %d.", id);
+        tqWarning("TDEPopupMenu: title() called with invalid id %d.", id);
     return TQString::null;
 }
 
-TQPixmap KPopupMenu::titlePixmap(int id) const
+TQPixmap TDEPopupMenu::titlePixmap(int id) const
 {
     TQMenuItem *item = findItem(id);
     if(item){
         if(item->widget())
-            return ((KPopupTitle *)item->widget())->icon();
+            return ((TDEPopupTitle *)item->widget())->icon();
         else
-            tqWarning("KPopupMenu: titlePixmap() called with non-title id %d.", id);
+            tqWarning("TDEPopupMenu: titlePixmap() called with non-title id %d.", id);
     }
     else
-        tqWarning("KPopupMenu: titlePixmap() called with invalid id %d.", id);
+        tqWarning("TDEPopupMenu: titlePixmap() called with invalid id %d.", id);
     TQPixmap tmp;
     return tmp;
 }
@@ -269,25 +269,25 @@ TQPixmap KPopupMenu::titlePixmap(int id) const
 /**
  * This is re-implemented for keyboard navigation.
  */
-void KPopupMenu::closeEvent(TQCloseEvent*e)
+void TDEPopupMenu::closeEvent(TQCloseEvent*e)
 {
     if (d->shortcuts)
         resetKeyboardVars();
     TQPopupMenu::closeEvent(e);
 }
 
-void KPopupMenu::activateItemAt(int index)
+void TDEPopupMenu::activateItemAt(int index)
 {
     d->state = Qt::NoButton;
     TQPopupMenu::activateItemAt(index);
 }
 
-TQt::ButtonState KPopupMenu::state() const
+TQt::ButtonState TDEPopupMenu::state() const
 {
     return d->state;
 }
 
-void KPopupMenu::keyPressEvent(TQKeyEvent* e)
+void TDEPopupMenu::keyPressEvent(TQKeyEvent* e)
 {
     d->state = Qt::NoButton;
     if (!d->shortcuts) {
@@ -445,13 +445,13 @@ void KPopupMenu::keyPressEvent(TQKeyEvent* e)
     TQPopupMenu::keyPressEvent(e);
 }
 
-bool KPopupMenu::focusNextPrevChild( bool next )
+bool TDEPopupMenu::focusNextPrevChild( bool next )
 {
     resetKeyboardVars();
     return TQPopupMenu::focusNextPrevChild( next );
 }
 
-TQString KPopupMenu::underlineText(const TQString& text, uint length)
+TQString TDEPopupMenu::underlineText(const TQString& text, uint length)
 {
     TQString ret = text;
     for (uint i = 0; i < length; i++) {
@@ -461,7 +461,7 @@ TQString KPopupMenu::underlineText(const TQString& text, uint length)
     return ret;
 }
 
-void KPopupMenu::resetKeyboardVars(bool noMatches /* = false */)
+void TDEPopupMenu::resetKeyboardVars(bool noMatches /* = false */)
 {
     // Clean up keyboard variables
     if (d->lastHitIndex != -1) {
@@ -476,12 +476,12 @@ void KPopupMenu::resetKeyboardVars(bool noMatches /* = false */)
     d->noMatches = noMatches;
 }
 
-void KPopupMenu::setKeyboardShortcutsEnabled(bool enable)
+void TDEPopupMenu::setKeyboardShortcutsEnabled(bool enable)
 {
     d->shortcuts = enable;
 }
 
-void KPopupMenu::setKeyboardShortcutsExecute(bool enable)
+void TDEPopupMenu::setKeyboardShortcutsExecute(bool enable)
 {
     d->autoExec = enable;
 }
@@ -493,7 +493,7 @@ void KPopupMenu::setKeyboardShortcutsExecute(bool enable)
  * RMB menus on menus
  */
 
-void KPopupMenu::mousePressEvent(TQMouseEvent* e)
+void TDEPopupMenu::mousePressEvent(TQMouseEvent* e)
 {
     if (d->m_ctxMenu && d->m_ctxMenu->isVisible())
     {
@@ -504,7 +504,7 @@ void KPopupMenu::mousePressEvent(TQMouseEvent* e)
     TQPopupMenu::mousePressEvent(e);
 }
 
-void KPopupMenu::mouseReleaseEvent(TQMouseEvent* e)
+void TDEPopupMenu::mouseReleaseEvent(TQMouseEvent* e)
 {
     // Save the button, and the modifiers from state()
     d->state = TQt::ButtonState(e->button() | (e->state() & KeyButtonMask));
@@ -513,7 +513,7 @@ void KPopupMenu::mouseReleaseEvent(TQMouseEvent* e)
 	TQPopupMenu::mouseReleaseEvent(e);
 }
 
-TQPopupMenu* KPopupMenu::contextMenu()
+TQPopupMenu* TDEPopupMenu::contextMenu()
 {
     if (!d->m_ctxMenu)
     {
@@ -524,27 +524,27 @@ TQPopupMenu* KPopupMenu::contextMenu()
     return d->m_ctxMenu;
 }
 
-const TQPopupMenu* KPopupMenu::contextMenu() const
+const TQPopupMenu* TDEPopupMenu::contextMenu() const
 {
-    return const_cast< KPopupMenu* >( this )->contextMenu();
+    return const_cast< TDEPopupMenu* >( this )->contextMenu();
 }
 
-void KPopupMenu::hideContextMenu()
+void TDEPopupMenu::hideContextMenu()
 {
-    KPopupMenuPrivate::s_continueCtxMenuShow = false;
+    TDEPopupMenuPrivate::s_continueCtxMenuShow = false;
 }
 
-int KPopupMenu::contextMenuFocusItem()
+int TDEPopupMenu::contextMenuFocusItem()
 {
-    return KPopupMenuPrivate::s_highlightedItem;
+    return TDEPopupMenuPrivate::s_highlightedItem;
 }
 
-KPopupMenu* KPopupMenu::contextMenuFocus()
+TDEPopupMenu* TDEPopupMenu::contextMenuFocus()
 {
-    return KPopupMenuPrivate::s_contextedMenu;
+    return TDEPopupMenuPrivate::s_contextedMenu;
 }
 
-void KPopupMenu::itemHighlighted(int /* whichItem */)
+void TDEPopupMenu::itemHighlighted(int /* whichItem */)
 {
     if (!d->m_ctxMenu || !d->m_ctxMenu->isVisible())
     {
@@ -555,9 +555,9 @@ void KPopupMenu::itemHighlighted(int /* whichItem */)
     showCtxMenu(mapFromGlobal(TQCursor::pos()));
 }
 
-void KPopupMenu::showCtxMenu(TQPoint pos)
+void TDEPopupMenu::showCtxMenu(TQPoint pos)
 {
-    TQMenuItem* item = findItem(KPopupMenuPrivate::s_highlightedItem);
+    TQMenuItem* item = findItem(TDEPopupMenuPrivate::s_highlightedItem);
     if (item)
     {
         TQPopupMenu* subMenu = item->popup();
@@ -567,30 +567,30 @@ void KPopupMenu::showCtxMenu(TQPoint pos)
         }
     }
 
-    KPopupMenuPrivate::s_highlightedItem = idAt(pos);
+    TDEPopupMenuPrivate::s_highlightedItem = idAt(pos);
 
-    if (KPopupMenuPrivate::s_highlightedItem == -1)
+    if (TDEPopupMenuPrivate::s_highlightedItem == -1)
     {
-        KPopupMenuPrivate::s_contextedMenu = 0;
+        TDEPopupMenuPrivate::s_contextedMenu = 0;
         return;
     }
 
-    emit aboutToShowContextMenu(this, KPopupMenuPrivate::s_highlightedItem, d->m_ctxMenu);
+    emit aboutToShowContextMenu(this, TDEPopupMenuPrivate::s_highlightedItem, d->m_ctxMenu);
 
-    TQPopupMenu* subMenu = findItem(KPopupMenuPrivate::s_highlightedItem)->popup();
+    TQPopupMenu* subMenu = findItem(TDEPopupMenuPrivate::s_highlightedItem)->popup();
     if (subMenu)
     {
         connect(subMenu, TQT_SIGNAL(aboutToShow()), TQT_SLOT(ctxMenuHideShowingMenu()));
         TQTimer::singleShot(100, subMenu, TQT_SLOT(hide()));
     }
 
-    if (!KPopupMenuPrivate::s_continueCtxMenuShow)
+    if (!TDEPopupMenuPrivate::s_continueCtxMenuShow)
     {
-        KPopupMenuPrivate::s_continueCtxMenuShow = true;
+        TDEPopupMenuPrivate::s_continueCtxMenuShow = true;
         return;
     }
 
-    KPopupMenuPrivate::s_contextedMenu = this;
+    TDEPopupMenuPrivate::s_contextedMenu = this;
     d->m_ctxMenu->popup(this->mapToGlobal(pos));
     connect(this, TQT_SIGNAL(highlighted(int)), this, TQT_SLOT(itemHighlighted(int)));
 }
@@ -599,9 +599,9 @@ void KPopupMenu::showCtxMenu(TQPoint pos)
  * this method helps prevent submenus popping up while we have a context menu
  * showing
  */
-void KPopupMenu::ctxMenuHideShowingMenu()
+void TDEPopupMenu::ctxMenuHideShowingMenu()
 {
-    TQMenuItem* item = findItem(KPopupMenuPrivate::s_highlightedItem);
+    TQMenuItem* item = findItem(TDEPopupMenuPrivate::s_highlightedItem);
     if (item)
     {
         TQPopupMenu* subMenu = item->popup();
@@ -612,11 +612,11 @@ void KPopupMenu::ctxMenuHideShowingMenu()
     }
 }
 
-void KPopupMenu::ctxMenuHiding()
+void TDEPopupMenu::ctxMenuHiding()
 {
-    if (KPopupMenuPrivate::s_highlightedItem)
+    if (TDEPopupMenuPrivate::s_highlightedItem)
     {
-        TQPopupMenu* subMenu = findItem(KPopupMenuPrivate::s_highlightedItem)->popup();
+        TQPopupMenu* subMenu = findItem(TDEPopupMenuPrivate::s_highlightedItem)->popup();
         if (subMenu)
         {
             disconnect(subMenu, TQT_SIGNAL(aboutToShow()), this, TQT_SLOT(ctxMenuHideShowingMenu()));
@@ -624,10 +624,10 @@ void KPopupMenu::ctxMenuHiding()
     }
 
     disconnect(this, TQT_SIGNAL(highlighted(int)), this, TQT_SLOT(itemHighlighted(int)));
-    KPopupMenuPrivate::s_continueCtxMenuShow = true;
+    TDEPopupMenuPrivate::s_continueCtxMenuShow = true;
 }
 
-void KPopupMenu::contextMenuEvent(TQContextMenuEvent* e)
+void TDEPopupMenu::contextMenuEvent(TQContextMenuEvent* e)
 {
     if (d->m_ctxMenu)
     {
@@ -647,7 +647,7 @@ void KPopupMenu::contextMenuEvent(TQContextMenuEvent* e)
     TQPopupMenu::contextMenuEvent(e);
 }
 
-void KPopupMenu::hideEvent(TQHideEvent*)
+void TDEPopupMenu::hideEvent(TQHideEvent*)
 {
     if (d->m_ctxMenu && d->m_ctxMenu->isVisible())
     {
@@ -669,26 +669,26 @@ void KPopupMenu::hideEvent(TQHideEvent*)
  */
 
 // Obsolete
-KPopupMenu::KPopupMenu(const TQString& title, TQWidget *parent, const char *name)
+TDEPopupMenu::TDEPopupMenu(const TQString& title, TQWidget *parent, const char *name)
     : TQPopupMenu(parent, name)
 {
-    d = new KPopupMenuPrivate;
+    d = new TDEPopupMenuPrivate;
     insertTitle(title);
 }
 
 // Obsolete
-void KPopupMenu::setTitle(const TQString &title)
+void TDEPopupMenu::setTitle(const TQString &title)
 {
-    KPopupTitle *titleItem = new KPopupTitle();
+    TDEPopupTitle *titleItem = new TDEPopupTitle();
     titleItem->setTitle(title);
     insertItem(titleItem);
     d->m_lastTitle = title;
 }
 
-void KPopupTitle::virtual_hook( int, void* )
+void TDEPopupTitle::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
-void KPopupMenu::virtual_hook( int, void* )
+void TDEPopupMenu::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
 #include "kpopupmenu.moc"

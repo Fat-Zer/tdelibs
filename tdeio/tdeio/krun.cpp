@@ -211,7 +211,7 @@ bool KRun::displayOpenWithDialog( const KURL::List& lst, bool tempFiles )
 
 bool KRun::displayOpenWithDialog( const KURL::List& lst, bool tempFiles, const TQString& suggestedFileName )
 {
-    if (kapp && !kapp->authorizeKAction("openwith"))
+    if (kapp && !kapp->authorizeTDEAction("openwith"))
     {
        // TODO: Better message, i18n freeze :-(
        KMessageBox::sorry(0L, i18n("You are not authorized to open this file."));
@@ -780,8 +780,8 @@ pid_t KRun::run( const KService& _service, const KURL::List& _urls, TQWidget* wi
       // Remember we opened those urls, for the "recent documents" menu in kicker
       KURL::List::ConstIterator it = _urls.begin();
       for(; it != _urls.end(); ++it) {
-          //kdDebug(7010) << "KRecentDocument::adding " << (*it).url() << endl;
-          KRecentDocument::add( *it, _service.desktopEntryName() );
+          //kdDebug(7010) << "TDERecentDocument::adding " << (*it).url() << endl;
+          TDERecentDocument::add( *it, _service.desktopEntryName() );
       }
   }
 

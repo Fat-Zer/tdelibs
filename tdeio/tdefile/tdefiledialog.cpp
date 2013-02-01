@@ -153,7 +153,7 @@ struct KFileDialogPrivate
     bool hasDefaultFilter :1; // necessary for the operationMode
     KFileDialog::OperationMode operationMode;
 
-    // The file class used for KRecentDirs
+    // The file class used for TDERecentDirs
     TQString fileClass;
 
     KFileBookmarkHandler *bookmarkHandler;
@@ -648,7 +648,7 @@ void KFileDialog::accept()
 
     *lastDirectory = ops->url();
     if (!d->fileClass.isEmpty())
-       KRecentDirs::add(d->fileClass, ops->url().url());
+       TDERecentDirs::add(d->fileClass, ops->url().url());
 
     // clear the topmost item, we insert it as full path later on as item 1
     locationEdit->changeItem( TQString::null, 0 );
@@ -832,7 +832,7 @@ void KFileDialog::init(const TQString& startDir, const TQString& filter, TQWidge
     d->urlBar = 0; // delayed loading
 
     TQtMsgHandler oldHandler = tqInstallMsgHandler( silenceQToolBar );
-    toolbar = new KToolBar( d->mainWidget, "KFileDialog::toolbar", true);
+    toolbar = new TDEToolBar( d->mainWidget, "KFileDialog::toolbar", true);
     toolbar->setFlat(true);
     tqInstallMsgHandler( oldHandler );
 
@@ -905,7 +905,7 @@ void KFileDialog::init(const TQString& startDir, const TQString& filter, TQWidge
     ops->setupMenu(KDirOperator::SortActions |
                    KDirOperator::FileActions |
                    KDirOperator::ViewActions);
-    KActionCollection *coll = ops->actionCollection();
+    TDEActionCollection *coll = ops->actionCollection();
 
     // plug nav items into the toolbar
     coll->action( "up" )->plug( toolbar );
@@ -922,19 +922,19 @@ void KFileDialog::init(const TQString& startDir, const TQString& filter, TQWidge
     coll->action( "mkdir" )->plug( toolbar );
     coll->action( "mkdir" )->setWhatsThis(i18n("Click this button to create a new folder."));
 
-    KToggleAction *showSidebarAction =
-        new KToggleAction(i18n("Show Quick Access Navigation Panel"), Key_F9, coll,"toggleSpeedbar");
+    TDEToggleAction *showSidebarAction =
+        new TDEToggleAction(i18n("Show Quick Access Navigation Panel"), Key_F9, coll,"toggleSpeedbar");
     showSidebarAction->setCheckedState(i18n("Hide Quick Access Navigation Panel"));
     connect( showSidebarAction, TQT_SIGNAL( toggled( bool ) ),
              TQT_SLOT( toggleSpeedbar( bool )) );
 
-    KToggleAction *showBookmarksAction =
-            new KToggleAction(i18n("Show Bookmarks"), 0, coll, "toggleBookmarks");
+    TDEToggleAction *showBookmarksAction =
+            new TDEToggleAction(i18n("Show Bookmarks"), 0, coll, "toggleBookmarks");
     showBookmarksAction->setCheckedState(i18n("Hide Bookmarks"));
     connect( showBookmarksAction, TQT_SIGNAL( toggled( bool ) ),
              TQT_SLOT( toggleBookmarks( bool )) );
 
-    KActionMenu *menu = new KActionMenu( i18n("Configure"), "configure", TQT_TQOBJECT(this), "extra menu" );
+    TDEActionMenu *menu = new TDEActionMenu( i18n("Configure"), "configure", TQT_TQOBJECT(this), "extra menu" );
     menu->setWhatsThis(i18n("<qt>This is the configuration menu for the file dialog. "
                             "Various options can be accessed from this menu including: <ul>"
                             "<li>how files are sorted in the list</li>"
@@ -965,15 +965,15 @@ void KFileDialog::init(const TQString& startDir, const TQString& filter, TQWidge
     menu->plug( toolbar );
 
     //Insert a separator.
-    KToolBarSeparator* spacerWidget = new KToolBarSeparator(Qt::Horizontal, false /*no line*/,
+    TDEToolBarSeparator* spacerWidget = new TDEToolBarSeparator(Qt::Horizontal, false /*no line*/,
                                                             toolbar);
     d->m_pathComboIndex = toolbar->insertWidget(-1, -1, spacerWidget);
     toolbar->insertWidget(PATH_COMBO, 0, d->pathCombo);
 
 
     toolbar->setItemAutoSized (PATH_COMBO);
-    toolbar->setIconText(KToolBar::IconOnly);
-    toolbar->setBarPos(KToolBar::Top);
+    toolbar->setIconText(TDEToolBar::IconOnly);
+    toolbar->setBarPos(TDEToolBar::Top);
     toolbar->setMovingEnabled(false);
     toolbar->adjustSize();
 
@@ -1609,7 +1609,7 @@ TQString KFileDialog::getSaveFileName(const TQString& dir, const TQString& filte
 
     TQString filename = dlg.selectedFile();
     if (!filename.isEmpty())
-        KRecentDocument::add(filename);
+        TDERecentDocument::add(filename);
 
     return filename;
 }
@@ -1638,7 +1638,7 @@ TQString KFileDialog::getSaveFileNameWId(const TQString& dir, const TQString& fi
 
     TQString filename = dlg.selectedFile();
     if (!filename.isEmpty())
-        KRecentDocument::add(filename);
+        TDERecentDocument::add(filename);
 
     return filename;
 }
@@ -1658,7 +1658,7 @@ KURL KFileDialog::getSaveURL(const TQString& dir, const TQString& filter,
 
     KURL url = dlg.selectedURL();
     if (url.isValid())
-        KRecentDocument::add( url );
+        TDERecentDocument::add( url );
 
     return url;
 }
@@ -2189,7 +2189,7 @@ void KFileDialog::addToRecentDocuments()
         TQStringList files = selectedFiles();
         TQStringList::ConstIterator it = files.begin();
         for ( ; it != files.end(); ++it )
-            KRecentDocument::add( *it );
+            TDERecentDocument::add( *it );
     }
 
     else { // urls
@@ -2197,12 +2197,12 @@ void KFileDialog::addToRecentDocuments()
         KURL::List::ConstIterator it = urls.begin();
         for ( ; it != urls.end(); ++it ) {
             if ( (*it).isValid() )
-                KRecentDocument::add( *it );
+                TDERecentDocument::add( *it );
         }
     }
 }
 
-KActionCollection * KFileDialog::actionCollection() const
+TDEActionCollection * KFileDialog::actionCollection() const
 {
     return ops->actionCollection();
 }
@@ -2251,7 +2251,7 @@ void KFileDialog::toggleSpeedbar( bool show )
             ops->actionCollection()->action( "home" )->plug( toolbar, 3 );
     }
 
-    static_cast<KToggleAction *>(actionCollection()->action("toggleSpeedbar"))->setChecked( show );
+    static_cast<TDEToggleAction *>(actionCollection()->action("toggleSpeedbar"))->setChecked( show );
 }
 
 void KFileDialog::toggleBookmarks(bool show)
@@ -2286,7 +2286,7 @@ void KFileDialog::toggleBookmarks(bool show)
         toolbar->removeItem(HOTLIST_BUTTON);
     }
 
-    static_cast<KToggleAction *>(actionCollection()->action("toggleBookmarks"))->setChecked( show );
+    static_cast<TDEToggleAction *>(actionCollection()->action("toggleBookmarks"))->setChecked( show );
 }
 
 int KFileDialog::pathComboIndex()
@@ -2318,7 +2318,7 @@ KURL KFileDialog::getStartURL( const TQString& startDir,
         if (startDir[0] == ':')
         {
             recentDirClass = startDir;
-            ret = KURL::fromPathOrURL( KRecentDirs::dir(recentDirClass) );
+            ret = KURL::fromPathOrURL( TDERecentDirs::dir(recentDirClass) );
         }
         else
         {

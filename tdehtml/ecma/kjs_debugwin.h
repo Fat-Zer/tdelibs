@@ -43,8 +43,8 @@
 
 class TQListBox;
 class TQComboBox;
-class KActionCollection;
-class KAction;
+class TDEActionCollection;
+class TDEAction;
 
 namespace KJS {
   class FunctionImp;
@@ -157,7 +157,7 @@ namespace KJS {
    *
    * There is only one debug window per program. This can be obtained by calling #instance
    */
-  class KJSDebugWin : public KMainWindow, public Debugger, public TDEInstance
+  class KJSDebugWin : public TDEMainWindow, public Debugger, public TDEInstance
   {
     Q_OBJECT
     friend class SourceDisplay;
@@ -259,17 +259,17 @@ namespace KJS {
     TQMap<int,SourceFragment*> m_sourceFragments; /* maps SourceId->SourceFragment */
     TQPtrList<SourceFile> m_sourceSelFiles; /* maps combobox index->SourceFile */
 
-    KActionCollection *m_actionCollection;
+    TDEActionCollection *m_actionCollection;
     TQPixmap m_stopIcon;
     TQPixmap m_emptyIcon;
     SourceDisplay *m_sourceDisplay;
     TQListBox *m_contextList;
 
-    KAction *m_stepAction;
-    KAction *m_nextAction;
-    KAction *m_continueAction;
-    KAction *m_stopAction;
-    KAction *m_breakAction;
+    TDEAction *m_stepAction;
+    TDEAction *m_nextAction;
+    TDEAction *m_continueAction;
+    TDEAction *m_stopAction;
+    TDEAction *m_breakAction;
 
     TQComboBox *m_sourceSel;
     EvalMultiLineEdit *m_evalEdit;

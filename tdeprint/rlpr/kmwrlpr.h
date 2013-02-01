@@ -22,7 +22,7 @@
 
 #include "kmwizardpage.h"
 
-class KListView;
+class TDEListView;
 class TQLineEdit;
 class TQListViewItem;
 
@@ -43,7 +43,7 @@ protected:
 	void initialize();
 
 private:
-	KListView	*m_view;
+	TDEListView	*m_view;
 	TQLineEdit	*m_host, *m_queue;
 };
 

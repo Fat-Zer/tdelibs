@@ -915,15 +915,15 @@ TQStringList KMCupsManager::detectLocalPrinters()
 	return list;
 }
 
-void KMCupsManager::createPluginActions(KActionCollection *coll)
+void KMCupsManager::createPluginActions(TDEActionCollection *coll)
 {
-	KAction	*act = new KAction(i18n("&Export Driver..."), "tdeprint_uploadsmb", 0, this, TQT_SLOT(exportDriver()), coll, "plugin_export_driver");
+	TDEAction	*act = new TDEAction(i18n("&Export Driver..."), "tdeprint_uploadsmb", 0, this, TQT_SLOT(exportDriver()), coll, "plugin_export_driver");
 	act->setGroup("plugin");
-	act = new KAction(i18n("&Printer IPP Report"), "tdeprint_report", 0, this, TQT_SLOT(printerIppReport()), coll, "plugin_printer_ipp_report");
+	act = new TDEAction(i18n("&Printer IPP Report"), "tdeprint_report", 0, this, TQT_SLOT(printerIppReport()), coll, "plugin_printer_ipp_report");
 	act->setGroup("plugin");
 }
 
-void KMCupsManager::validatePluginActions(KActionCollection *coll, KMPrinter *pr)
+void KMCupsManager::validatePluginActions(TDEActionCollection *coll, KMPrinter *pr)
 {
 	// save selected printer for future use in slots
 	m_currentprinter = pr;

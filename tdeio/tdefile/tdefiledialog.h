@@ -40,7 +40,7 @@ class TQLabel;
 class TQPopupMenu;
 class TQVBoxLayout;
 
-class KActionCollection;
+class TDEActionCollection;
 class KDirOperator;
 class KURLBar;
 class KURLComboBox;
@@ -48,7 +48,7 @@ class KFileFilterCombo;
 class KFileView;
 class KFileItem;
 class KPushButton;
-class KToolBar;
+class TDEToolBar;
 class KPreviewWidgetBase;
 
 struct KFileDialogPrivate;
@@ -713,13 +713,13 @@ public:
      * You can use this to insert custom
      * items into it, e.g.:
      * \code
-     *      yourAction = new KAction( i18n("Your Action"), 0,
+     *      yourAction = new TDEAction( i18n("Your Action"), 0,
      *                                this, TQT_SLOT( yourSlot() ),
      *                                this, "action name" );
      *      yourAction->plug( tdefileDialog->toolBar() );
      * \endcode
      */
-    KToolBar *toolBar() const { return toolbar; }
+    TDEToolBar *toolBar() const { return toolbar; }
 
     /**
      * @returns a pointer to the OK-Button in the filedialog. You may use it
@@ -752,9 +752,9 @@ public:
 
     /**
      * @returns a pointer to the action collection, holding all the used
-     * KActions.
+     * TDEActions.
      */
-    KActionCollection *actionCollection() const;
+    TDEActionCollection *actionCollection() const;
 
     /**
      * @returns the index of the path combobox so when inserting widgets into
@@ -769,7 +769,7 @@ public:
      * @param startDir A url/directory, to be used. May use the ':' and '::' syntax
      *        as documented in the KFileDialog() constructor.
      * @param recentDirClass If the ':' or '::' syntax is used, recentDirClass
-     *        will contain the string to be used later for KRecentDir::dir()
+     *        will contain the string to be used later for TDERecentDir::dir()
      * @return The URL that should be listed by default (e.g. by KFileDialog or
      *         KDirSelectDialog).
      * @since 3.1
@@ -820,7 +820,7 @@ signals:
     void filterChanged( const TQString& filter );
 
 protected:
-    KToolBar *toolbar;
+    TDEToolBar *toolbar;
 
     static KURL *lastDirectory;
 

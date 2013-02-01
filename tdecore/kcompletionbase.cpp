@@ -112,7 +112,7 @@ void KCompletionBase::setCompletionMode( TDEGlobalSettings::Completion mode )
         m_pCompObj->setCompletionMode( m_iCompletionMode );
 }
 
-bool KCompletionBase::setKeyBinding( KeyBindingType item, const KShortcut& cut )
+bool KCompletionBase::setKeyBinding( KeyBindingType item, const TDEShortcut& cut )
 {
     if ( m_delegate )
         return m_delegate->setKeyBinding( item, cut );

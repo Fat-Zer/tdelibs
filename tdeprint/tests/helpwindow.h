@@ -20,7 +20,7 @@
 class TQComboBox;
 class TQPopupMenu;
 
-class HelpWindow : public KMainWindow
+class HelpWindow : public TDEMainWindow
 {
     Q_OBJECT
 public:

@@ -319,7 +319,7 @@ void KCombiView::writeConfig( TDEConfig *config, const TQString& group )
         right->writeConfig( config, group );
 }
 
-KActionCollection * KCombiView::actionCollection() const
+TDEActionCollection * KCombiView::actionCollection() const
 {
     return focusView( right )->actionCollection();
 }

@@ -27,7 +27,7 @@
 
 #include <kshortcut.h>
 
-class KAccelBase;
+class TDEAccelBase;
 
 class TQObject;
 class TDEConfig;
@@ -35,27 +35,27 @@ class TDEConfigBase;
 
 /**
  * @internal
- * A KAccelAction prepresents an action that can be executed using 
- * an accelerator key. Each KAccelAction has a name, a label, a 
- * "What's this" string and a KShortcut. The user can configure and 
+ * A TDEAccelAction prepresents an action that can be executed using 
+ * an accelerator key. Each TDEAccelAction has a name, a label, a 
+ * "What's this" string and a TDEShortcut. The user can configure and 
  * enable/disable them using KKeyDialog. 
  *
  * \code
- *	1) KAccelAction = "Run Command"
+ *	1) TDEAccelAction = "Run Command"
  *		Default3 = "Alt+F2"
  *		Default4 = "Meta+Enter;Alt+F2"
- *		1) KShortcut = "Meta+Enter"
+ *		1) TDEShortcut = "Meta+Enter"
  *			1) KKeySequence = "Meta+Enter"
  *				1) KKey = "Meta+Enter"
  *					1) Meta+Enter
  *					2) Meta+Keypad_Enter
- *		2) KShortcut = "Alt+F2"
+ *		2) TDEShortcut = "Alt+F2"
  *			1) KKeySequence = "Alt+F2"
  *				1) Alt+F2
- *	2) KAccelAction = "Something"
+ *	2) TDEAccelAction = "Something"
  *		Default3 = ""
  *		Default4 = ""
- *		1) KShortcut = "Meta+X,Asterisk"
+ *		1) TDEShortcut = "Meta+X,Asterisk"
  *			1) KKeySequence = "Meta+X,Asterisk"
  *				1) KKey = "Meta+X"
  *					1) Meta+X
@@ -64,27 +64,27 @@ class TDEConfigBase;
  *					2) Keypad_Asterisk
  * \endcode
  * @short An accelerator action
- * @see KAccel
+ * @see TDEAccel
  * @see TDEGlobalAccel
  * @see KKeyChooser
  * @see KKeyDialog
  */
-class TDECORE_EXPORT KAccelAction
+class TDECORE_EXPORT TDEAccelAction
 {
  public:
         /**
-	 * Creates an empty KAccelAction.
+	 * Creates an empty TDEAccelAction.
 	 * @see clear()
 	 */
-	KAccelAction();
+	TDEAccelAction();
 
 	/**
 	 * Copy constructor.
 	 */
-	KAccelAction( const KAccelAction& );
+	TDEAccelAction( const TDEAccelAction& );
 
 	/**
-	 * Creates a new KAccelAction.
+	 * Creates a new TDEAccelAction.
 	 * @param sName the name of the accelerator
 	 * @param sLabel the label of the accelerator (i18n!)
 	 * @param sWhatsThis the What's This text (18n!)
@@ -97,11 +97,11 @@ class TDECORE_EXPORT KAccelAction
 	 * @param bConfigurable if true the user can configure the shortcut
 	 * @param bEnabled true if the accelerator should be enabled
 	 */
-	KAccelAction( const TQString& sName, const TQString& sLabel, const TQString& sWhatsThis,
-			const KShortcut& cutDef3, const KShortcut& cutDef4,
+	TDEAccelAction( const TQString& sName, const TQString& sLabel, const TQString& sWhatsThis,
+			const TDEShortcut& cutDef3, const TDEShortcut& cutDef4,
 			const TQObject* pObjSlot, const char* psMethodSlot,
 			bool bConfigurable, bool bEnabled );
-	~KAccelAction();
+	~TDEAccelAction();
 
 	/**
 	 * Clears the accelerator.
@@ -109,7 +109,7 @@ class TDECORE_EXPORT KAccelAction
 	void clear();
 
 	/**
-	 * Re-initialized the KAccelAction.
+	 * Re-initialized the TDEAccelAction.
 	 * @param sName the name of the accelerator
 	 * @param sLabel the label of the accelerator (i18n!)
 	 * @param sWhatsThis the What's This text (18n!)
@@ -124,14 +124,14 @@ class TDECORE_EXPORT KAccelAction
 	 * @return true if successful, false otherwise
 	 */
 	bool init( const TQString& sName, const TQString& sLabel, const TQString& sWhatsThis,
-			const KShortcut& cutDef3, const KShortcut& cutDef4,
+			const TDEShortcut& cutDef3, const TDEShortcut& cutDef4,
 			const TQObject* pObjSlot, const char* psMethodSlot,
 			bool bConfigurable, bool bEnabled );
 
 	/**
-	 * Copies this KAccelAction.
+	 * Copies this TDEAccelAction.
 	 */
-	KAccelAction& operator=( const KAccelAction& );
+	TDEAccelAction& operator=( const TDEAccelAction& );
 
 	/**
 	 * Returns the name of the accelerator action.
@@ -156,10 +156,10 @@ class TDECORE_EXPORT KAccelAction
 	
 	/**
 	 * The shortcut that is actually used (may be used configured).
-	 * @return the shortcut of the KAccelAction, can be null if not set
+	 * @return the shortcut of the TDEAccelAction, can be null if not set
 	 * @see shortcutDefault()
 	 */
-	const KShortcut& shortcut() const          { return m_cut; }
+	const TDEShortcut& shortcut() const          { return m_cut; }
 
 	/**
 	 * The default shortcut for this system.
@@ -168,7 +168,7 @@ class TDECORE_EXPORT KAccelAction
 	 * @see shortcutDefault3()
 	 * @see shortcutDefault4()
 	 */
-	const KShortcut& shortcutDefault() const;
+	const TDEShortcut& shortcutDefault() const;
 
 	/**
 	 * The default shortcut for 3 modifier systems.
@@ -178,7 +178,7 @@ class TDECORE_EXPORT KAccelAction
 	 * @see shortcutDefault4()
 	 * @see useFourModifierKeys()
 	 */
-	const KShortcut& shortcutDefault3() const  { return m_cutDefault3; }
+	const TDEShortcut& shortcutDefault3() const  { return m_cutDefault3; }
 
 	/**
 	 * The default shortcut for 4 modifier systems.
@@ -188,7 +188,7 @@ class TDECORE_EXPORT KAccelAction
 	 * @see shortcutDefault3()
 	 * @see useFourModifierKeys()
 	 */
-	const KShortcut& shortcutDefault4() const  { return m_cutDefault4; }
+	const TDEShortcut& shortcutDefault4() const  { return m_cutDefault4; }
 
 	/**
 	 * Returns the receiver of signals.
@@ -237,7 +237,7 @@ class TDECORE_EXPORT KAccelAction
 	 * @param rgCuts the shortcut to set
 	 * @return true if successful, false otherwise
 	 */
-	bool setShortcut( const KShortcut& rgCuts );
+	bool setShortcut( const TDEShortcut& rgCuts );
 
 	/**
 	 * Sets the slot of the accelerator action.
@@ -284,14 +284,14 @@ class TDECORE_EXPORT KAccelAction
 	 * @param i the position of the sequence
 	 * @param keySeq the new new sequence
 	 * @return true if successful, false otherwise
-	 * @see KShortcut::setSeq()
+	 * @see TDEShortcut::setSeq()
 	 */
 	bool setKeySequence( uint i, const KKeySequence &keySeq );
 	
 	/**
 	 * Clears the action's shortcut. It will not contain any sequences after
 	 * calling this method.
-	 * @see KShortcut::clear()
+	 * @see TDEShortcut::clear()
 	 */
 	void clearShortcut();
 	
@@ -299,14 +299,14 @@ class TDECORE_EXPORT KAccelAction
 	 * Checks whether the action's shortcut contains the given key sequence.
 	 * @param keySeq the key sequence to check
 	 * @return true if the shortcut contains the given sequence
-	 * @see KShortcut::contains()
+	 * @see TDEShortcut::contains()
 	 */
 	bool contains( const KKeySequence &keySeq );
 
 	/**
 	 * Returns the string representation of the action's shortcut.
 	 * @return the string representation of the action's shortcut.
-	 * @see KShortcut::toString()
+	 * @see TDEShortcut::toString()
 	 */
 	TQString toString() const;
 
@@ -332,8 +332,8 @@ class TDECORE_EXPORT KAccelAction
 	TQString m_sName /**< Name of accel. @sa setName() */,
 	        m_sLabel /**< Label of accel. User-visible. */,
 	        m_sWhatsThis /**< WhatsThis help for accel. User-visible. */;
-	KShortcut m_cut /**< Shortcut actually assigned. */;
-	KShortcut m_cutDefault3 /**< Default shortcut in 3-modifier layout */, 
+	TDEShortcut m_cut /**< Shortcut actually assigned. */;
+	TDEShortcut m_cutDefault3 /**< Default shortcut in 3-modifier layout */, 
 		  m_cutDefault4 /**< Default shortcur in 4-modifier layout */;
 	const TQObject* m_pObjSlot /**< Object we will send signals to. */;
 	const char* m_psMethodSlot /**< Slot we send signals to, in m_pObjSlot */;
@@ -349,36 +349,36 @@ class TDECORE_EXPORT KAccelAction
 
  private:
 	static int g_bUseFourModifierKeys;
-	class KAccelActionPrivate* d;
+	class TDEAccelActionPrivate* d;
 
-	friend class KAccelActions;
-	friend class KAccelBase;
+	friend class TDEAccelActions;
+	friend class TDEAccelBase;
 };
 
 //---------------------------------------------------------------------
-// KAccelActions
+// TDEAccelActions
 //---------------------------------------------------------------------
 
 /**
  * @internal
- * This class represents a collection of KAccelAction objects.
+ * This class represents a collection of TDEAccelAction objects.
  *
  * @short A collection of accelerator actions
- * @see KAccelAction
+ * @see TDEAccelAction
  */
-class TDECORE_EXPORT KAccelActions
+class TDECORE_EXPORT TDEAccelActions
 {
  public:
        /**
-	* Creates a new, empty KAccelActions object.
+	* Creates a new, empty TDEAccelActions object.
 	*/
-	KAccelActions();
+	TDEAccelActions();
 
 	/**
 	 * Copy constructor (deep copy).
 	 */
-	KAccelActions( const KAccelActions& );
-	virtual ~KAccelActions();
+	TDEAccelActions( const TDEAccelActions& );
+	virtual ~TDEAccelActions();
 
 	/**
 	 * Removes all items from this collection.
@@ -391,7 +391,7 @@ class TDECORE_EXPORT KAccelActions
 	 * @param actions the actions to copy
 	 * @return true if successful, false otherwise
 	 */
-	bool init( const KAccelActions &actions );
+	bool init( const TDEAccelActions &actions );
 
 	/**
 	 * Loads the actions from the given configuration file.
@@ -408,7 +408,7 @@ class TDECORE_EXPORT KAccelActions
 	 * @param shortcuts the collection that contains the new
 	 *        shortcuts
 	 */
-	void updateShortcuts( KAccelActions &shortcuts );
+	void updateShortcuts( TDEAccelActions &shortcuts );
 
 	/**
 	 * Retrieves the index of the action with the given name.
@@ -421,63 +421,63 @@ class TDECORE_EXPORT KAccelActions
 	 * Returns the action with the given @p index.
 	 * @param index the index of an action. You must not
 	 *         use an index that is too high.
-	 * @return the KAccelAction with the given index
+	 * @return the TDEAccelAction with the given index
 	 * @see count()
 	 */
-	KAccelAction* actionPtr( uint index );
+	TDEAccelAction* actionPtr( uint index );
 
 	/**
 	 * Returns the action with the given @p index.
 	 * @param index the index of an action. You must not
 	 *         use an index that is too high.
-	 * @return the KAccelAction with the given index
+	 * @return the TDEAccelAction with the given index
 	 * @see count()
 	 */
-	const KAccelAction* actionPtr( uint index ) const;
+	const TDEAccelAction* actionPtr( uint index ) const;
 
 	/**
 	 * Returns the action with the given name.
 	 * @param sAction the name of the action to search
-	 * @return the KAccelAction with the given name, or 0
+	 * @return the TDEAccelAction with the given name, or 0
 	 *          if not found
 	 */
-	KAccelAction* actionPtr( const TQString& sAction );
+	TDEAccelAction* actionPtr( const TQString& sAction );
 
 	/**
 	 * Returns the action with the given name.
 	 * @param sAction the name of the action to search
-	 * @return the KAccelAction with the given name, or 0
+	 * @return the TDEAccelAction with the given name, or 0
 	 *          if not found
 	 */
-	const KAccelAction* actionPtr( const TQString& sAction ) const;
+	const TDEAccelAction* actionPtr( const TQString& sAction ) const;
 
 	/**
 	 * Returns the action with the given key sequence.
 	 * @param cut the sequence to search for
-	 * @return the KAccelAction with the given sequence, or 0
+	 * @return the TDEAccelAction with the given sequence, or 0
 	 *          if not found
 	 */
-	KAccelAction* actionPtr( KKeySequence cut );
+	TDEAccelAction* actionPtr( KKeySequence cut );
 
 	/**
 	 * Returns the action with the given @p index.
 	 * @param index the index of an action. You must not
 	 *         use an index that is too high.
-	 * @return the KAccelAction with the given index
+	 * @return the TDEAccelAction with the given index
 	 * @see actionPtr()
 	 * @see count()
 	 */
-	KAccelAction& operator []( uint index );
+	TDEAccelAction& operator []( uint index );
 
 	/**
 	 * Returns the action with the given @p index.
 	 * @param index the index of an action. You must not
 	 *         use an index that is too high.
-	 * @return the KAccelAction with the given index
+	 * @return the TDEAccelAction with the given index
 	 * @see actionPtr()
 	 * @see count()
 	 */
-	const KAccelAction& operator []( uint index ) const;
+	const TDEAccelAction& operator []( uint index ) const;
 
 	/**
 	 * Inserts an action into the collection.
@@ -494,8 +494,8 @@ class TDECORE_EXPORT KAccelActions
 	 * @param bEnabled       if true the accelerator should be enabled
 	 * @return the new action
 	 */
-	KAccelAction* insert( const TQString& sAction, const TQString& sLabel, const TQString& sWhatsThis,
-			const KShortcut& rgCutDefaults3, const KShortcut& rgCutDefaults4,
+	TDEAccelAction* insert( const TQString& sAction, const TQString& sLabel, const TQString& sWhatsThis,
+			const TDEShortcut& rgCutDefaults3, const TDEShortcut& rgCutDefaults4,
 			const TQObject* pObjSlot = 0, const char* psMethodSlot = 0,
 			bool bConfigurable = true, bool bEnabled = true );
 
@@ -505,7 +505,7 @@ class TDECORE_EXPORT KAccelActions
 	 * @param sLabel the label of the accelerator (i18n!)
 	 * @return the new action
 	 */
-	KAccelAction* insert( const TQString& sName, const TQString& sLabel );
+	TDEAccelAction* insert( const TQString& sName, const TQString& sLabel );
 
 	/**
 	 * Removes the given action.
@@ -548,9 +548,9 @@ class TDECORE_EXPORT KAccelActions
 
  protected:
 	/** Base object that proxies signals from us. */
-	KAccelBase* m_pKAccelBase;
+	TDEAccelBase* m_pTDEAccelBase;
 	/** Array of actions we're hanging on to. */
-	KAccelAction** m_prgActions;
+	TDEAccelAction** m_prgActions;
 	uint m_nSizeAllocated /**< Allocated size of the array. */, 
 	     m_nSize /**< Amount in use. */ ;
 
@@ -561,16 +561,16 @@ class TDECORE_EXPORT KAccelActions
 	 */
 	void resize( uint new_size );
 	/** Add a action to this collection. @todo Document ownership. */
-	void insertPtr( KAccelAction* );
+	void insertPtr( TDEAccelAction* );
 
  private:
-	class KAccelActionsPrivate* d;
+	class TDEAccelActionsPrivate* d;
 
-	KAccelActions( KAccelBase* );
-	void initPrivate( KAccelBase* );
-	KAccelActions& operator =( KAccelActions& );
+	TDEAccelActions( TDEAccelBase* );
+	void initPrivate( TDEAccelBase* );
+	TDEAccelActions& operator =( TDEAccelActions& );
 
-	friend class KAccelBase;
+	friend class TDEAccelBase;
 };
 
 #endif // _KACCELACTION_H

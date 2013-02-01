@@ -34,11 +34,11 @@
 class TQPopupMenu;
 class TQTimer;
 
-class KAction;
+class TDEAction;
 class KDirLister;
-class KToggleAction;
-class KActionSeparator;
-class KActionMenu;
+class TDEToggleAction;
+class TDEActionSeparator;
+class TDEActionMenu;
 class TQWidgetStack;
 class KProgress;
 namespace TDEIO {
@@ -345,7 +345,7 @@ class TDEIO_EXPORT KDirOperator : public TQWidget
     /**
      * an accessor to a collection of all available Actions. The actions
      * are static, they will be there all the time (no need to connect to
-     * the signals KActionCollection::inserted() or removed().
+     * the signals TDEActionCollection::inserted() or removed().
      *
      * There are the following actions:
      *
@@ -387,7 +387,7 @@ class TDEIO_EXPORT KDirOperator : public TQWidget
      *
      * @returns all available Actions
      */
-    KActionCollection * actionCollection() const { return myActionCollection; }
+    TDEActionCollection * actionCollection() const { return myActionCollection; }
 
     /**
      * Sets the config object and the to be used group in KDirOperator. This
@@ -710,7 +710,7 @@ public slots:
      * @since 3.4
      */
 	// ### KDE4: make virtual
-    void trashSelected(KAction::ActivationReason, TQt::ButtonState);
+    void trashSelected(TDEAction::ActivationReason, TQt::ButtonState);
 
 protected slots:
     /**
@@ -873,32 +873,32 @@ private:
 
     // actions for the popupmenus
     // ### clean up all those -- we have them all in the actionMenu!
-    KActionMenu *actionMenu;
+    TDEActionMenu *actionMenu;
 
-    KAction 	*backAction;
-    KAction 	*forwardAction;
-    KAction 	*homeAction;
-    KAction 	*upAction;
-    KAction 	*reloadAction;
-    KActionSeparator *actionSeparator;
-    KAction 	*mkdirAction;
+    TDEAction 	*backAction;
+    TDEAction 	*forwardAction;
+    TDEAction 	*homeAction;
+    TDEAction 	*upAction;
+    TDEAction 	*reloadAction;
+    TDEActionSeparator *actionSeparator;
+    TDEAction 	*mkdirAction;
 
-    KActionMenu *sortActionMenu;
-    KRadioAction *byNameAction;
-    KRadioAction *byDateAction;
-    KRadioAction *bySizeAction;
-    KToggleAction *reverseAction;
-    KToggleAction *dirsFirstAction;
-    KToggleAction *caseInsensitiveAction;
+    TDEActionMenu *sortActionMenu;
+    TDERadioAction *byNameAction;
+    TDERadioAction *byDateAction;
+    TDERadioAction *bySizeAction;
+    TDEToggleAction *reverseAction;
+    TDEToggleAction *dirsFirstAction;
+    TDEToggleAction *caseInsensitiveAction;
 
-    KActionMenu *viewActionMenu;
-    KRadioAction *shortAction;
-    KRadioAction *detailedAction;
-    KToggleAction *showHiddenAction;
-    KToggleAction *separateDirsAction;
+    TDEActionMenu *viewActionMenu;
+    TDERadioAction *shortAction;
+    TDERadioAction *detailedAction;
+    TDEToggleAction *showHiddenAction;
+    TDEToggleAction *separateDirsAction;
 
-    KActionCollection *myActionCollection;
-    KActionCollection *viewActionCollection;
+    TDEActionCollection *myActionCollection;
+    TDEActionCollection *viewActionCollection;
 
 private slots:
     /**
@@ -926,8 +926,8 @@ private slots:
     void slotCanceled();
     void slotRedirected( const KURL& );
 
-    void slotViewActionAdded( KAction * );
-    void slotViewActionRemoved( KAction * );
+    void slotViewActionAdded( TDEAction * );
+    void slotViewActionRemoved( TDEAction * );
     void slotViewSortingChanged( TQDir::SortSpec );
 
     void slotClearView();

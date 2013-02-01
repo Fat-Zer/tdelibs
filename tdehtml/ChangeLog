@@ -810,7 +810,7 @@
 
 2005-04-06  Lubos Lunak <l.lunak@kde.org>
 
-        * tdehtmlview.{h,cpp}: Use KActions for type ahead find.
+        * tdehtmlview.{h,cpp}: Use TDEActions for type ahead find.
         * tdehtml_part.{h,cpp}: ditto.
         * tdehtml_part.{h,cpp}: Add Find Previous action.
         * tdehtml_part.cpp (findTextNext): Fix changing direction while searching text.

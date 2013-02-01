@@ -23,7 +23,7 @@
 #define TDEFILEVIEW_H
 
 class TQPoint;
-class KActionCollection;
+class TDEActionCollection;
 
 #include <tqwidget.h>
 
@@ -342,7 +342,7 @@ public:
      * add its actions here (if it has any) to make them available to
      * e.g. the KDirOperator's popup-menu.
      */
-    virtual KActionCollection * actionCollection() const;
+    virtual TDEActionCollection * actionCollection() const;
 
     KFileViewSignaler * signaler() const { return sig; }
 

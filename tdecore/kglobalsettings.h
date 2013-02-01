@@ -111,7 +111,7 @@ class TDECORE_EXPORT TDEGlobalSettings
     /**
      * This enum describes the return type for insertTearOffHandle() whether to insert
      * a handle or not. Applications who independently want to use handles in their popup menus
-     * should test for Application level before calling the appropriate function in KPopupMenu.
+     * should test for Application level before calling the appropriate function in TDEPopupMenu.
      * @since 3.1
      **/
     enum TearOffHandle {
@@ -121,8 +121,8 @@ class TDECORE_EXPORT TDEGlobalSettings
     };
 
     /**
-     * Returns whether tear-off handles are inserted in KPopupMenus.
-     * @return whether tear-off handles are inserted in KPopupMenus.
+     * Returns whether tear-off handles are inserted in TDEPopupMenus.
+     * @return whether tear-off handles are inserted in TDEPopupMenus.
      * @since 3.1
      **/
     static TearOffHandle insertTearOffHandle();
@@ -346,8 +346,8 @@ class TDECORE_EXPORT TDEGlobalSettings
     static TQColor highlightColor();
 
     /**
-     * Returns the alternate background color used by KListView with
-     * KListViewItem. Any other list that uses alternating background
+     * Returns the alternate background color used by TDEListView with
+     * TDEListViewItem. Any other list that uses alternating background
      * colors should use this too, to obey to the user's preferences. Returns
      * an invalid color if the user doesn't want alternating backgrounds.
      * @return the alternate background color
@@ -365,7 +365,7 @@ class TDECORE_EXPORT TDEGlobalSettings
     static TQColor calculateAlternateBackgroundColor(const TQColor& base);
 
     /**
-      * Returns if the sorted column in a KListView shall be drawn with a
+      * Returns if the sorted column in a TDEListView shall be drawn with a
       * shaded background color.
       * @return true if the sorted column shall be shaded
       * @since 3.4

@@ -51,7 +51,7 @@ class KFindDialog;
 class KReplaceDialog;
 class KFind;
 class KReplace;
-class KAction;
+class TDEAction;
 class KURLRequester;
 
 namespace DOM {
@@ -282,7 +282,7 @@ private:
     DOM::HTMLInputElementImpl* m_input;
     TDEHTMLView* m_view;
     KSpell *m_spell;
-    KAction *m_spellAction;
+    TDEAction *m_spellAction;
 };
 
 // -------------------------------------------------------------------------
@@ -399,7 +399,7 @@ public:
     { return static_cast<DOM::HTMLSelectElementImpl*>(RenderObject::element()); }
 
 protected:
-    KListBox *createListBox();
+    TDEListBox *createListBox();
     ComboBoxWidget *createComboBox();
 
     unsigned  m_size;
@@ -440,9 +440,9 @@ private:
     KFind *m_find;
     KReplaceDialog *m_repDlg;
     KReplace *m_replace;
-    KAction *m_findAction;
-    KAction *m_findNextAction;
-    KAction *m_replaceAction;
+    TDEAction *m_findAction;
+    TDEAction *m_findNextAction;
+    TDEAction *m_replaceAction;
     int m_findIndex, m_findPara;
     int m_repIndex, m_repPara;
 };

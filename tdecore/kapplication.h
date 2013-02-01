@@ -432,10 +432,10 @@ public:
   /**
    * Returns true if the application is currently saving its session
    * data (most probably before KDE logout). This is intended for use
-   * mainly in KMainWindow::queryClose() and KMainWindow::queryExit().
+   * mainly in TDEMainWindow::queryClose() and TDEMainWindow::queryExit().
    *
-   * @see KMainWindow::queryClose
-   * @see KMainWindow::queryExit
+   * @see TDEMainWindow::queryClose
+   * @see TDEMainWindow::queryExit
    * @since 3.1.1
    */
   bool sessionSaving() const;
@@ -482,7 +482,7 @@ public:
    *  Sets the top widget of the application.
    *  This means basically applying the right window caption and
    *  icon. An application may have several top widgets. You don't
-   *  need to call this function manually when using KMainWindow.
+   *  need to call this function manually when using TDEMainWindow.
    *
    *  @param topWidget A top widget of the application.
    *
@@ -627,21 +627,21 @@ public slots:
    * If the widget with focus provides a clear() slot, call that slot.  Thus for a
    * simple application clear() can be implemented as:
    * \code
-   * new KAction( i18n( "Clear" ), "editclear", 0, kapp, TQT_SLOT( clear() ), actionCollection(), "clear" );
+   * new TDEAction( i18n( "Clear" ), "editclear", 0, kapp, TQT_SLOT( clear() ), actionCollection(), "clear" );
    * \endcode
    *
    * Note that for some widgets, this may not provide the intended bahavior.  For
-   * example if you make use of the code above and a KListView has the focus, clear()
+   * example if you make use of the code above and a TDEListView has the focus, clear()
    * will clear all of the items in the list.  If this is not the intened behavior
-   * and you want to make use of this slot, you can subclass KListView and reimplement
-   * this slot.  For example the following code would implement a KListView without this
+   * and you want to make use of this slot, you can subclass TDEListView and reimplement
+   * this slot.  For example the following code would implement a TDEListView without this
    * behavior:
    *
    * \code
-   * class MyListView : public KListView {
+   * class MyListView : public TDEListView {
    *   Q_OBJECT
    * public:
-   *   MyListView( TQWidget * parent = 0, const char * name = 0, WFlags f = 0 ) : KListView( parent, name, f ) {}
+   *   MyListView( TQWidget * parent = 0, const char * name = 0, WFlags f = 0 ) : TDEListView( parent, name, f ) {}
    *   virtual ~MyListView() {}
    * public slots:
    *   virtual void clear() {}
@@ -1121,13 +1121,13 @@ public:
   bool authorize(const TQString &genericAction);
 
   /**
-   * Returns whether a certain KAction is authorized.
+   * Returns whether a certain TDEAction is authorized.
    *
-   * @param action The name of a KAction action. The name is prepended
+   * @param action The name of a TDEAction action. The name is prepended
    * with "action/" before being passed to authorize()
-   * @return true if the KAction is authorized
+   * @return true if the TDEAction is authorized
    */
-  bool authorizeKAction(const char *action);
+  bool authorizeTDEAction(const char *action);
 
   /**
    * Returns whether a certain URL related action is authorized.
@@ -1272,7 +1272,7 @@ protected:
    * \endcode
    *
    * Now in your application calls to MyApplication::deselect() will call this slot on the
-   * focused widget if it provides this slot.  You can combine this with KAction with:
+   * focused widget if it provides this slot.  You can combine this with TDEAction with:
    *
    * \code
    * KStdAction::deselect( static_cast<MyApplication *>( kapp ), TQT_SLOT( cut() ), actionCollection() );
@@ -1438,7 +1438,7 @@ signals:
   void appearanceChanged();
 
   /**
-   * Emitted when the settings for toolbars have been changed. KToolBar will know what to do.
+   * Emitted when the settings for toolbars have been changed. TDEToolBar will know what to do.
    */
   void toolbarAppearanceChanged(int);
 
@@ -1478,12 +1478,12 @@ signals:
       Session management asks you to save the state of your application.
 
      This signal is provided for compatibility only. For new
-     applications, simply use KMainWindow. By reimplementing 
-     KMainWindow::queryClose(), KMainWindow::saveProperties() and
- KMainWindow::readProperties() you can simply handle session
+     applications, simply use TDEMainWindow. By reimplementing 
+     TDEMainWindow::queryClose(), TDEMainWindow::saveProperties() and
+ TDEMainWindow::readProperties() you can simply handle session
      management for applications with multiple toplevel windows.
 
-     For purposes without KMainWindow, create an instance of
+     For purposes without TDEMainWindow, create an instance of
      KSessionManaged and reimplement the functions 
      KSessionManaged::commitData() and/or 
      KSessionManaged::saveState()
@@ -1572,12 +1572,12 @@ class KSessionManagedPrivate;
 
    KSessionManaged makes it possible to provide implementations for
  TQApplication::commitData() and TQApplication::saveState(), without
-   subclassing TDEApplication. KMainWindow internally makes use of this.
+   subclassing TDEApplication. TDEMainWindow internally makes use of this.
 
    You don't need to do anything with this class when using
-   KMainWindow. Instead, use KMainWindow::saveProperties(),
- KMainWindow::readProperties(), KMainWindow::queryClose(),
- KMainWindow::queryExit() and friends.
+   TDEMainWindow. Instead, use TDEMainWindow::saveProperties(),
+ TDEMainWindow::readProperties(), TDEMainWindow::queryClose(),
+ TDEMainWindow::queryExit() and friends.
 
   @short Highlevel access to session management.
   @author Matthias Ettrich <ettrich@kde.org>

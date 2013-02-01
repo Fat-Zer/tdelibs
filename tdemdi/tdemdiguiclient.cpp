@@ -57,9 +57,9 @@ using namespace KMDIPrivate;
 
 
 
-ToggleToolViewAction::ToggleToolViewAction( const TQString& text, const KShortcut& cut, KDockWidget *dw, KMdiMainFrm *mdiMainFrm,
+ToggleToolViewAction::ToggleToolViewAction( const TQString& text, const TDEShortcut& cut, KDockWidget *dw, KMdiMainFrm *mdiMainFrm,
         TQObject* parent, const char* name )
-		: KToggleAction( text, cut, parent, name ), m_dw( dw ), m_mdiMainFrm( mdiMainFrm )
+		: TDEToggleAction( text, cut, parent, name ), m_dw( dw ), m_mdiMainFrm( mdiMainFrm )
 {
 	if ( m_dw )
 	{
@@ -136,10 +136,10 @@ KMDIGUIClient::KMDIGUIClient( KMdiMainFrm* mdiMainFrm, bool showMDIModeAction, c
 
 	if ( actionCollection() ->kaccel() == 0 )
 		actionCollection() ->setWidget( mdiMainFrm );
-	m_toolMenu = new KActionMenu( i18n( "Tool &Views" ), actionCollection(), "tdemdi_toolview_menu" );
+	m_toolMenu = new TDEActionMenu( i18n( "Tool &Views" ), actionCollection(), "tdemdi_toolview_menu" );
 	if ( showMDIModeAction )
 	{
-		m_mdiModeAction = new KSelectAction( i18n( "MDI Mode" ), 0, actionCollection() );
+		m_mdiModeAction = new TDESelectAction( i18n( "MDI Mode" ), 0, actionCollection() );
 		TQStringList modes;
 		modes << i18n( "&Toplevel Mode" ) << i18n( "C&hildframe Mode" ) << i18n( "Ta&b Page Mode" ) << i18n( "I&DEAl Mode" );
 		m_mdiModeAction->setItems( modes );
@@ -151,19 +151,19 @@ KMDIGUIClient::KMDIGUIClient( KMdiMainFrm* mdiMainFrm, bool showMDIModeAction, c
 	connect( m_mdiMainFrm, TQT_SIGNAL( mdiModeHasBeenChangedTo( KMdi::MdiMode ) ),
 	         this, TQT_SLOT( mdiModeHasBeenChangedTo( KMdi::MdiMode ) ) );
 
-	m_gotoToolDockMenu = new KActionMenu( i18n( "Tool &Docks" ), actionCollection(), "tdemdi_tooldock_menu" );
-	m_gotoToolDockMenu->insert( new KAction( i18n( "Switch Top Dock" ), ALT + CTRL + SHIFT + Key_T, this, TQT_SIGNAL( toggleTop() ),
+	m_gotoToolDockMenu = new TDEActionMenu( i18n( "Tool &Docks" ), actionCollection(), "tdemdi_tooldock_menu" );
+	m_gotoToolDockMenu->insert( new TDEAction( i18n( "Switch Top Dock" ), ALT + CTRL + SHIFT + Key_T, this, TQT_SIGNAL( toggleTop() ),
 	                            actionCollection(), "tdemdi_activate_top" ) );
-	m_gotoToolDockMenu->insert( new KAction( i18n( "Switch Left Dock" ), ALT + CTRL + SHIFT + Key_L, this, TQT_SIGNAL( toggleLeft() ),
+	m_gotoToolDockMenu->insert( new TDEAction( i18n( "Switch Left Dock" ), ALT + CTRL + SHIFT + Key_L, this, TQT_SIGNAL( toggleLeft() ),
 	                            actionCollection(), "tdemdi_activate_left" ) );
-	m_gotoToolDockMenu->insert( new KAction( i18n( "Switch Right Dock" ), ALT + CTRL + SHIFT + Key_R, this, TQT_SIGNAL( toggleRight() ),
+	m_gotoToolDockMenu->insert( new TDEAction( i18n( "Switch Right Dock" ), ALT + CTRL + SHIFT + Key_R, this, TQT_SIGNAL( toggleRight() ),
 	                            actionCollection(), "tdemdi_activate_right" ) );
-	m_gotoToolDockMenu->insert( new KAction( i18n( "Switch Bottom Dock" ), ALT + CTRL + SHIFT + Key_B, this, TQT_SIGNAL( toggleBottom() ),
+	m_gotoToolDockMenu->insert( new TDEAction( i18n( "Switch Bottom Dock" ), ALT + CTRL + SHIFT + Key_B, this, TQT_SIGNAL( toggleBottom() ),
 	                            actionCollection(), "tdemdi_activate_bottom" ) );
-	m_gotoToolDockMenu->insert( new KActionSeparator( actionCollection(), "tdemdi_goto_menu_separator" ) );
-	m_gotoToolDockMenu->insert( new KAction( i18n( "Previous Tool View" ), ALT + CTRL + Key_Left, TQT_TQOBJECT(m_mdiMainFrm), TQT_SLOT( prevToolViewInDock() ),
+	m_gotoToolDockMenu->insert( new TDEActionSeparator( actionCollection(), "tdemdi_goto_menu_separator" ) );
+	m_gotoToolDockMenu->insert( new TDEAction( i18n( "Previous Tool View" ), ALT + CTRL + Key_Left, TQT_TQOBJECT(m_mdiMainFrm), TQT_SLOT( prevToolViewInDock() ),
 	                            actionCollection(), "tdemdi_prev_toolview" ) );
-	m_gotoToolDockMenu->insert( new KAction( i18n( "Next Tool View" ), ALT + CTRL + Key_Right, TQT_TQOBJECT(m_mdiMainFrm), TQT_SLOT( nextToolViewInDock() ),
+	m_gotoToolDockMenu->insert( new TDEAction( i18n( "Next Tool View" ), ALT + CTRL + Key_Right, TQT_TQOBJECT(m_mdiMainFrm), TQT_SLOT( nextToolViewInDock() ),
 	                            actionCollection(), "tdemdi_next_toolview" ) );
 
 	actionCollection() ->readShortcutSettings( "Shortcuts", kapp->config() );
@@ -224,10 +224,10 @@ void KMDIGUIClient::setupActions()
 
 	//    m_toolBars = builder.toolBars();
 
-	//    m_toolViewActions.append(new KAction( "TESTKMDIGUICLIENT", TQString::null, 0,
+	//    m_toolViewActions.append(new TDEAction( "TESTKMDIGUICLIENT", TQString::null, 0,
 	//             this, TQT_SLOT(blah()),actionCollection(),"nothing"));
 
-	TQPtrList<KAction> addList;
+	TQPtrList<TDEAction> addList;
 	if ( m_toolViewActions.count() < 3 )
 		for ( uint i = 0;i < m_toolViewActions.count();i++ )
 			addList.append( m_toolViewActions.at( i ) );
@@ -250,14 +250,14 @@ void KMDIGUIClient::addToolView( KMdiToolViewAccessor* mtva )
 	TQString aname = TQString( "tdemdi_toolview_" ) + mtva->wrappedWidget() ->name();
 
 	// try to read the action shortcut
-	KShortcut sc;
+	TDEShortcut sc;
 	TDEConfig *cfg = kapp->config();
 	TQString _grp = cfg->group();
 	cfg->setGroup( "Shortcuts" );
 	// 	if ( cfg->hasKey( aname ) )
-	sc = KShortcut( cfg->readEntry( aname, "" ) );
+	sc = TDEShortcut( cfg->readEntry( aname, "" ) );
 	cfg->setGroup( _grp );
-	KAction *a = new ToggleToolViewAction( i18n( "Show %1" ).arg( mtva->wrappedWidget() ->caption() ),
+	TDEAction *a = new ToggleToolViewAction( i18n( "Show %1" ).arg( mtva->wrappedWidget() ->caption() ),
 	                                       /*TQString::null*/sc, tqt_dynamic_cast<KDockWidget*>( mtva->wrapperWidget() ),
 	                                       m_mdiMainFrm, actionCollection(), aname.latin1() );
 #if KDE_IS_VERSION(3,2,90)
@@ -275,8 +275,8 @@ void KMDIGUIClient::addToolView( KMdiToolViewAccessor* mtva )
 
 void KMDIGUIClient::actionDeleted( TQObject* a )
 {
-	m_toolViewActions.remove( static_cast<KAction*>( a ) );
-	/*	if (!m_toolMenu.isNull()) m_toolMenu->remove(static_cast<KAction*>(a));*/
+	m_toolViewActions.remove( static_cast<TDEAction*>( a ) );
+	/*	if (!m_toolMenu.isNull()) m_toolMenu->remove(static_cast<TDEAction*>(a));*/
 	setupActions();
 }
 

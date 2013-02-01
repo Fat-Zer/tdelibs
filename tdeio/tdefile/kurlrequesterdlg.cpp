@@ -115,7 +115,7 @@ KURL KURLRequesterDlg::getURL(const TQString& dir, TQWidget *parent,
 
     const KURL& url = dlg.selectedURL();
     if (url.isValid())
-        KRecentDocument::add(url);
+        TDERecentDocument::add(url);
 
     return url;
 }

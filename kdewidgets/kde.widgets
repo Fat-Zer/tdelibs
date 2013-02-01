@@ -55,19 +55,19 @@ Group=Graphics (KDE)
 ToolTip=Fullfeatured edit box with buttons (KDE)
 Group=Views (KDE)
 
-[KFontCombo]
+[TDEFontCombo]
 ToolTip=Font Combo Box (KDE)
 WhatsThis=A TQCombo Box showing the installed system fonts (with preview)
 Group=Input (KDE)
 
-[KFontChooser]
+[TDEFontChooser]
 IncludeFile=kfontdialog.h
 IconSet=kfontcombo.png
 ToolTip=Font Chooser (KDE)
 WhatsThis=A font type, size and style selection widget complete with preview
 Group=Input (KDE)
 
-[KFontRequester]
+[TDEFontRequester]
 IncludeFile=kfontrequester.h
 ToolTip=Font Requester (KDE)
 WhatsThis=A compact font selection and preview widget
@@ -94,12 +94,12 @@ ToolTip=LED Widget (KDE)
 WhatsThis=A widget showing a light emitter diode
 Group=Display (KDE)
 
-[KListBox]
+[TDEListBox]
 ToolTip=Extended List Box (KDE)
 WhatsThis=An improved version of the TQListBox that follows KDE settings
 Group=Views (KDE)
 
-[KListView]
+[TDEListView]
 ToolTip=Extended List View (KDE)
 WhatsThis=An improved version of the TQListView that allows certain KDE extensions
 Group=Views (KDE)
@@ -108,12 +108,12 @@ Group=Views (KDE)
 ToolTip=Line Edit (KDE)
 Group=Input (KDE)
 
-[KListViewSearchLine]
+[TDEListViewSearchLine]
 ToolTip=ListView Search Line (KDE)
 Group=Input (KDE)
 ConstructorArgs=(parent, 0, name)
 
-[KListViewSearchLineWidget]
+[TDEListViewSearchLineWidget]
 ToolTip=ListView Search Line Widget (KDE)
 IncludeFile=klistviewsearchline.h
 Group=Input (KDE)
@@ -243,7 +243,7 @@ ToolTip=A widget that provides a image preview of a URL
 Group=Display (KDE)
 ConstructorArgs=(parent)
 
-[KActionSelector]
+[TDEActionSelector]
 IncludeFile=kactionselector.h
 ToolTip=A widget for selecting and arranging actions/objects
 Group=Views (KDE)

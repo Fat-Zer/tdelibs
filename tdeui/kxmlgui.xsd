@@ -148,7 +148,7 @@
                     Defines both Standard and app-specific actions. An action can appear
                     in a menu, a toolbar or in a menubar.  
                     Attributes: 
-                    - name of the action: this is matched with the KAction name.
+                    - name of the action: this is matched with the TDEAction name.
                     - group: this is used to control the placement of the action when
                     merging e.g. a part, it matches the name of a DefineGroup in the
                     mainwindow's rc file.
@@ -157,7 +157,7 @@
                     there.  Note that this feature is currently only available for the
                     mainwindow, not for parts/plugins.  
                     - text, whatsThis, toolTip, shortText, shortcut, icon: all those are
-                    mapped to KAction properties.
+                    mapped to TDEAction properties.
                     
                     
                 </xsd:documentation>

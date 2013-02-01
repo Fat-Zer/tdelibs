@@ -51,13 +51,13 @@ KateSpell::~KateSpell()
   }
 }
 
-void KateSpell::createActions( KActionCollection* ac )
+void KateSpell::createActions( TDEActionCollection* ac )
 {
    KStdAction::spelling( this, TQT_SLOT(spellcheck()), ac );
-   KAction *a = new KAction( i18n("Spelling (from cursor)..."), "spellcheck", 0, this, TQT_SLOT(spellcheckFromCursor()), ac, "tools_spelling_from_cursor" );
+   TDEAction *a = new TDEAction( i18n("Spelling (from cursor)..."), "spellcheck", 0, this, TQT_SLOT(spellcheckFromCursor()), ac, "tools_spelling_from_cursor" );
    a->setWhatsThis(i18n("Check the document's spelling from the cursor and forward"));
 
-   m_spellcheckSelection = new KAction( i18n("Spellcheck Selection..."), "spellcheck", 0, this, TQT_SLOT(spellcheckSelection()), ac, "tools_spelling_selection" );
+   m_spellcheckSelection = new TDEAction( i18n("Spellcheck Selection..."), "spellcheck", 0, this, TQT_SLOT(spellcheckSelection()), ac, "tools_spelling_selection" );
    m_spellcheckSelection->setWhatsThis(i18n("Check spelling of the selected text"));
 }
 

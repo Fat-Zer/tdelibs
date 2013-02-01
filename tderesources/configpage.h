@@ -30,7 +30,7 @@
 #include "manager.h"
 
 class KComboBox;
-class KListView;
+class TDEListView;
 
 class TQListViewItem;
 class TQPushButton;
@@ -96,7 +96,7 @@ class TDERESOURCES_EXPORT ConfigPage : public TQWidget, public ManagerObserver<R
     TQValueList<TDESharedPtr<ResourcePageInfo> > mInfoMap;
 
     KComboBox* mFamilyCombo;
-    KListView* mListView;
+    TDEListView* mListView;
     TQPushButton* mAddButton;
     TQPushButton* mRemoveButton;
     TQPushButton* mEditButton;

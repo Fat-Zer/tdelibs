@@ -110,7 +110,7 @@ KJanusWidget::KJanusWidget( TQWidget *parent, const char *name, int face )
       d->mListFrame = new TQWidget( d->mSplitter );
       TQVBoxLayout *dummy = new TQVBoxLayout( d->mListFrame, 0, KDialog::spacingHint() );
       dummy->setAutoAdd( true );
-      mTreeList = new KListView( d->mListFrame );
+      mTreeList = new TDEListView( d->mListFrame );
       mTreeList->addColumn( TQString::null );
       mTreeList->header()->hide();
       mTreeList->setRootIsDecorated(true);
@@ -939,7 +939,7 @@ bool KJanusWidget::eventFilter( TQObject *o, TQEvent *e )
 
 KJanusWidget::IconListBox::IconListBox( TQWidget *parent, const char *name,
 					WFlags f )
-  :KListBox( parent, name, f ), mShowAll(false), mHeightValid(false),
+  :TDEListBox( parent, name, f ), mShowAll(false), mHeightValid(false),
    mWidthValid(false),
    mOldItem(0) 
 {
@@ -1008,7 +1008,7 @@ void KJanusWidget::IconListBox::setShowAll( bool showAll )
 
 void KJanusWidget::IconListBox::leaveEvent( TQEvent *ev )
 {
-  KListBox::leaveEvent( ev ); 
+  TDEListBox::leaveEvent( ev ); 
 
   if ( mOldItem && !mOldItem->isSelected() )
   {
@@ -1020,7 +1020,7 @@ void KJanusWidget::IconListBox::leaveEvent( TQEvent *ev )
 // hack because qt does not support Q_OBJECT in nested classes
 void KJanusWidget::IconListBox::slotOnItem(TQListBoxItem *qitem)
 {
-  KListBox::slotOnItem( qitem );
+  TDEListBox::slotOnItem( qitem );
 
   if ( qitem == mOldItem )
   {

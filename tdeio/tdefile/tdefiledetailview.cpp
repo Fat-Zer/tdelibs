@@ -56,7 +56,7 @@ public:
 };
 
 KFileDetailView::KFileDetailView(TQWidget *parent, const char *name)
-    : KListView(parent, name), KFileView(), d(new KFileDetailViewPrivate())
+    : TDEListView(parent, name), KFileView(), d(new KFileDetailViewPrivate())
 {
     // this is always the static section, not the index depending on column order
     m_sortingCol = COL_NAME; 
@@ -149,7 +149,7 @@ void KFileDetailView::setSelected( const KFileItem *info, bool enable )
     KFileListViewItem *item = (KFileListViewItem*)info->extraData( this );
 
     if ( item )
-	KListView::setSelected( item, enable );
+	TDEListView::setSelected( item, enable );
 }
 
 void KFileDetailView::setCurrentItem( const KFileItem *item )
@@ -158,7 +158,7 @@ void KFileDetailView::setCurrentItem( const KFileItem *item )
         return;
     KFileListViewItem *it = (KFileListViewItem*) item->extraData( this );
     if ( it )
-        KListView::setCurrentItem( it );
+        TDEListView::setCurrentItem( it );
 }
 
 KFileItem * KFileDetailView::currentFileItem() const
@@ -172,7 +172,7 @@ KFileItem * KFileDetailView::currentFileItem() const
 
 void KFileDetailView::clearSelection()
 {
-    KListView::clearSelection();
+    TDEListView::clearSelection();
 }
 
 void KFileDetailView::selectAll()
@@ -181,12 +181,12 @@ void KFileDetailView::selectAll()
         KFileView::selectionMode() == KFile::Single)
 	return;
 
-    KListView::selectAll( true );
+    TDEListView::selectAll( true );
 }
 
 void KFileDetailView::invertSelection()
 {
-    KListView::invertSelection();
+    TDEListView::invertSelection();
 }
 
 void KFileDetailView::slotActivateMenu (TQListViewItem *item,const TQPoint& pos )
@@ -202,7 +202,7 @@ void KFileDetailView::slotActivateMenu (TQListViewItem *item,const TQPoint& pos 
 void KFileDetailView::clearView()
 {
     m_resolver->m_lstPendingMimeIconItems.clear();
-    KListView::clear();
+    TDEListView::clear();
 }
 
 void KFileDetailView::insertItem( KFileItem *i )
@@ -415,8 +415,8 @@ void KFileDetailView::slotSortingChanged( int col )
         }
     }
 
-    KListView::setSorting( m_sortingCol, !reversed );
-    KListView::sort();
+    TDEListView::setSorting( m_sortingCol, !reversed );
+    TDEListView::sort();
 
     if ( !m_blockSortingSignal )
         sig->changeSorting( static_cast<TQDir::SortSpec>( sortSpec ) );
@@ -459,7 +459,7 @@ void KFileDetailView::ensureItemVisible( const KFileItem *i )
     KFileListViewItem *item = (KFileListViewItem*) i->extraData( this );
 
     if ( item )
-        KListView::ensureItemVisible( item );
+        TDEListView::ensureItemVisible( item );
 }
 
 // we're in multiselection mode
@@ -504,7 +504,7 @@ KFileItem * KFileDetailView::prevItem( const KFileItem *fileItem ) const
 
 void KFileDetailView::keyPressEvent( TQKeyEvent *e )
 {
-    KListView::keyPressEvent( e );
+    TDEListView::keyPressEvent( e );
 
     if ( e->key() == Key_Return || e->key() == Key_Enter ) {
         if ( e->state() & ControlButton )
@@ -680,7 +680,7 @@ void KFileListViewItem::init()
 
 
 void KFileDetailView::virtual_hook( int id, void* data )
-{ KListView::virtual_hook( id, data );
+{ TDEListView::virtual_hook( id, data );
   KFileView::virtual_hook( id, data ); }
 
 #include "tdefiledetailview.moc"

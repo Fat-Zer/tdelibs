@@ -21,7 +21,7 @@
 
 #include <kdialogbase.h>
 
-class KListView;
+class TDEListView;
 class TDEConfigBase;
 
  /*
@@ -58,7 +58,7 @@ public slots:
 
 protected:
     class Item;
-    KListView *m_listView;
+    TDEListView *m_listView;
 
     class KCustomMenuEditorPrivate;
     KCustomMenuEditorPrivate *d;

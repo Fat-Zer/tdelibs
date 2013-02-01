@@ -24,7 +24,7 @@
 
 class KIconSelectActionPrivate;
 
-class KIconSelectAction : public KSelectAction
+class KIconSelectAction : public TDESelectAction
 {
 	Q_OBJECT
 public:

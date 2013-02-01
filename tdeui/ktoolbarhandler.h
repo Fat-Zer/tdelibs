@@ -23,8 +23,8 @@
 #include <tqguardedptr.h>
 #include <kxmlguiclient.h>
 
-class KMainWindow;
-class KToolBar;
+class TDEMainWindow;
+class TDEToolBar;
 
 namespace KDEPrivate
 {
@@ -35,11 +35,11 @@ class ToolBarHandler : public TQObject,
 {
     Q_OBJECT
 public:
-    ToolBarHandler( KMainWindow *mainWindow, const char *name = 0 );
-    ToolBarHandler( KMainWindow *mainWindow, TQObject *parent, const char *name = 0 );
+    ToolBarHandler( TDEMainWindow *mainWindow, const char *name = 0 );
+    ToolBarHandler( TDEMainWindow *mainWindow, TQObject *parent, const char *name = 0 );
     virtual ~ToolBarHandler();
 
-    KAction *toolBarMenuAction();
+    TDEAction *toolBarMenuAction();
 
 public slots:
     void setupActions();
@@ -48,17 +48,17 @@ private slots:
     void clientAdded( KXMLGUIClient *client );
 
 private:
-    void init( KMainWindow *mainWindow );
+    void init( TDEMainWindow *mainWindow );
     void connectToActionContainers();
-    void connectToActionContainer( KAction *action );
+    void connectToActionContainer( TDEAction *action );
     void connectToActionContainer( TQWidget *container );
 
     struct Data;
     Data *d;
 
-    TQGuardedPtr<KMainWindow> m_mainWindow;
-    TQPtrList<KAction> m_actions;
-    TQPtrList<KToolBar> m_toolBars;
+    TQGuardedPtr<TDEMainWindow> m_mainWindow;
+    TQPtrList<TDEAction> m_actions;
+    TQPtrList<TDEToolBar> m_toolBars;
 };
 
 } // namespace KDEPrivate

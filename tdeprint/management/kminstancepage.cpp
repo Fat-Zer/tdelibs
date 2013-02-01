@@ -41,7 +41,7 @@
 KMInstancePage::KMInstancePage(TQWidget *parent, const char *name)
 : TQWidget(parent,name)
 {
-	m_view = new KListBox(this);
+	m_view = new TDEListBox(this);
 	m_printer = 0;
 
 	initActions();

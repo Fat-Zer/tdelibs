@@ -63,7 +63,7 @@
 
 using namespace TDEIO;
 
-template class TQPtrList<KLaunchRequest>;
+template class TQPtrList<TDELaunchRequest>;
 template class TQPtrList<IdleSlave>;
 
 IdleSlave::IdleSlave(TDESocket *socket)
@@ -162,7 +162,7 @@ IdleSlave::age(time_t now)
    return (int) difftime(now, mBirthDate);
 }
 
-KLauncher::KLauncher(int _tdeinitSocket, bool new_startup)
+TDELauncher::TDELauncher(int _tdeinitSocket, bool new_startup)
 //  : TDEApplication( false, false ), // No Styles, No GUI
   : TDEApplication( false, true ),	// TQClipboard tries to construct a QWidget so a GUI is technically needed, even though it is not used
     DCOPObject("tdelauncher"),
@@ -186,7 +186,7 @@ KLauncher::KLauncher(int _tdeinitSocket, bool new_startup)
    if (domainname.status() != 0)
    {
       // Sever error!
-      tqDebug("KLauncher: Fatal error, can't create tempfile!");
+      tqDebug("TDELauncher: Fatal error, can't create tempfile!");
       ::exit(1);
    }
    mPoolSocketName = domainname.name();
@@ -224,12 +224,12 @@ KLauncher::KLauncher(int _tdeinitSocket, bool new_startup)
    write(tdeinitSocket, &request_header, sizeof(request_header));
 }
 
-KLauncher::~KLauncher()
+TDELauncher::~TDELauncher()
 {
    close();
 }
 
-void KLauncher::close()
+void TDELauncher::close()
 {
    if (!mPoolSocketName.isEmpty())
    {
@@ -244,15 +244,15 @@ void KLauncher::close()
 }
 
 void
-KLauncher::destruct(int exit_code)
+TDELauncher::destruct(int exit_code)
 {
-   if (kapp) ((KLauncher*)kapp)->close();
+   if (kapp) ((TDELauncher*)kapp)->close();
    // We don't delete kapp here, that's intentional.
    ::exit(exit_code);
 }
 
 bool
-KLauncher::process(const TQCString &fun, const TQByteArray &data,
+TDELauncher::process(const TQCString &fun, const TQByteArray &data,
                    TQCString &replyType, TQByteArray &replyData)
 {
    if ((fun == "exec_blind(TQCString,TQValueList<TQCString>)")
@@ -267,7 +267,7 @@ KLauncher::process(const TQCString &fun, const TQByteArray &data,
       stream >> name >> arg_list;
       if( fun == "exec_blind(TQCString,TQValueList<TQCString>,TQValueList<TQCString>,TQCString)" )
           stream >> envs >> startup_id;
-      kdDebug(7016) << "KLauncher: Got exec_blind('" << name << "', ...)" << endl;
+      kdDebug(7016) << "TDELauncher: Got exec_blind('" << name << "', ...)" << endl;
       exec_blind( name, arg_list, envs, startup_id);
       return true;
    }
@@ -315,29 +315,29 @@ KLauncher::process(const TQCString &fun, const TQByteArray &data,
       bool finished;
       if (strncmp(fun, "start_service_by_name(", 22) == 0)
       {
-         kdDebug(7016) << "KLauncher: Got start_service_by_name('" << serviceName << "', ...)" << endl;
+         kdDebug(7016) << "TDELauncher: Got start_service_by_name('" << serviceName << "', ...)" << endl;
          finished = start_service_by_name(serviceName, urls, envs, startup_id, bNoWait);
       }
       else if (strncmp(fun, "start_service_by_desktop_path(", 30) == 0)
       {
-         kdDebug(7016) << "KLauncher: Got start_service_by_desktop_path('" << serviceName << "', ...)" << endl;
+         kdDebug(7016) << "TDELauncher: Got start_service_by_desktop_path('" << serviceName << "', ...)" << endl;
          finished = start_service_by_desktop_path(serviceName, urls, envs, startup_id, bNoWait);
       }
       else if (strncmp(fun, "start_service_by_desktop_name(", 30) == 0)
       {
-         kdDebug(7016) << "KLauncher: Got start_service_by_desktop_name('" << serviceName << "', ...)" << endl;
+         kdDebug(7016) << "TDELauncher: Got start_service_by_desktop_name('" << serviceName << "', ...)" << endl;
          finished = start_service_by_desktop_name(serviceName, urls, envs, startup_id, bNoWait );
       }
       else if ((fun == "tdeinit_exec(TQString,TQStringList)")
               || (fun == "tdeinit_exec(TQString,TQStringList,TQValueList<TQCString>)")
               || (fun == "tdeinit_exec(TQString,TQStringList,TQValueList<TQCString>,TQCString)"))
       {
-         kdDebug(7016) << "KLauncher: Got tdeinit_exec('" << serviceName << "', ...)" << endl;
+         kdDebug(7016) << "TDELauncher: Got tdeinit_exec('" << serviceName << "', ...)" << endl;
          finished = tdeinit_exec(serviceName, urls, envs, startup_id, false);
       }
       else
       {
-         kdDebug(7016) << "KLauncher: Got tdeinit_exec_wait('" << serviceName << "', ...)" << endl;
+         kdDebug(7016) << "TDELauncher: Got tdeinit_exec_wait('" << serviceName << "', ...)" << endl;
          finished = tdeinit_exec(serviceName, urls, envs, startup_id, true);
       }
       if (!finished)
@@ -397,7 +397,7 @@ KLauncher::process(const TQCString &fun, const TQByteArray &data,
    else if (fun == "reparseConfiguration()")
    {
       TDEGlobal::config()->reparseConfiguration();
-      kdDebug(7016) << "KLauncher::process : reparseConfiguration" << endl;
+      kdDebug(7016) << "TDELauncher::process : reparseConfiguration" << endl;
       KProtocolManager::reparseConfiguration();
       IdleSlave *slave;
       for(slave = mSlaveList.first(); slave; slave = mSlaveList.next())
@@ -409,7 +409,7 @@ KLauncher::process(const TQCString &fun, const TQByteArray &data,
    {
       ::signal( SIGHUP, SIG_IGN);
       ::signal( SIGTERM, SIG_IGN);
-      kdDebug() << "KLauncher::process ---> terminateKDE" << endl;
+      kdDebug() << "TDELauncher::process ---> terminateKDE" << endl;
       tdelauncher_header request_header;
       request_header.cmd = LAUNCHER_TERMINATE_KDE;
       request_header.arg_length = 0;
@@ -418,14 +418,14 @@ KLauncher::process(const TQCString &fun, const TQByteArray &data,
    }
    else if (fun == "autoStart()")
    {
-      kdDebug() << "KLauncher::process ---> autoStart" << endl;
+      kdDebug() << "TDELauncher::process ---> autoStart" << endl;
       autoStart(1);
       replyType = "void";
       return true;
    }
    else if (fun == "autoStart(int)")
    {
-      kdDebug() << "KLauncher::process ---> autoStart(int)" << endl;
+      kdDebug() << "TDELauncher::process ---> autoStart(int)" << endl;
       TQDataStream stream(data, IO_ReadOnly);
       int phase;
       stream >> phase;
@@ -443,15 +443,15 @@ KLauncher::process(const TQCString &fun, const TQByteArray &data,
 }
 
 QCStringList
-KLauncher::interfaces()
+TDELauncher::interfaces()
 {
     QCStringList ifaces = DCOPObject::interfaces();
-    ifaces += "KLauncher";
+    ifaces += "TDELauncher";
     return ifaces;
 }
 
 QCStringList
-KLauncher::functions()
+TDELauncher::functions()
 {
     QCStringList funcs = DCOPObject::functions();
     funcs << "void exec_blind(TQCString,TQValueList<TQCString>)";
@@ -480,7 +480,7 @@ KLauncher::functions()
     return funcs;
 }
 
-void KLauncher::setLaunchEnv(const TQCString &name, const TQCString &_value)
+void TDELauncher::setLaunchEnv(const TQCString &name, const TQCString &_value)
 {
    TQCString value(_value);
    if (value.isNull())
@@ -522,7 +522,7 @@ read_socket(int sock, char *buffer, int len)
 
 
 void
-KLauncher::slotKDEInitData(int)
+TDELauncher::slotKDEInitData(int)
 {
    tdelauncher_header request_header;
    TQByteArray requestData;
@@ -572,25 +572,25 @@ KLauncher::slotKDEInitData(int)
      {
        case KService::DCOP_None:
        {
-         lastRequest->status = KLaunchRequest::Running;
+         lastRequest->status = TDELaunchRequest::Running;
          break;
        }
 
        case KService::DCOP_Unique:
        {
-         lastRequest->status = KLaunchRequest::Launching;
+         lastRequest->status = TDELaunchRequest::Launching;
          break;
        }
 
        case KService::DCOP_Wait:
        {
-         lastRequest->status = KLaunchRequest::Launching;
+         lastRequest->status = TDELaunchRequest::Launching;
          break;
        }
 
        case KService::DCOP_Multi:
        {
-         lastRequest->status = KLaunchRequest::Launching;
+         lastRequest->status = TDELaunchRequest::Launching;
          break;
        }
      }
@@ -599,7 +599,7 @@ KLauncher::slotKDEInitData(int)
    }
    if (lastRequest && (request_header.cmd == LAUNCHER_ERROR))
    {
-     lastRequest->status = KLaunchRequest::Error;
+     lastRequest->status = TDELaunchRequest::Error;
      if (!requestData.isEmpty())
         lastRequest->errorMsg = TQString::fromUtf8((char *) requestData.data());
      lastRequest = 0;
@@ -611,20 +611,20 @@ KLauncher::slotKDEInitData(int)
 }
 
 void
-KLauncher::processDied(pid_t pid, long /* exitStatus */)
+TDELauncher::processDied(pid_t pid, long /* exitStatus */)
 {
-   KLaunchRequest *request = requestList.first();
+   TDELaunchRequest *request = requestList.first();
    for(; request; request = requestList.next())
    {
       if (request->pid == pid)
       {
          if (request->dcop_service_type == KService::DCOP_Wait)
-            request->status = KLaunchRequest::Done;
+            request->status = TDELaunchRequest::Done;
          else if ((request->dcop_service_type == KService::DCOP_Unique) &&
 		(dcopClient()->isApplicationRegistered(request->dcop_name)))
-            request->status = KLaunchRequest::Running;
+            request->status = TDELaunchRequest::Running;
          else
-            request->status = KLaunchRequest::Error;
+            request->status = TDELaunchRequest::Error;
          requestDone(request);
          return;
       }
@@ -632,17 +632,17 @@ KLauncher::processDied(pid_t pid, long /* exitStatus */)
 }
 
 void
-KLauncher::slotAppRegistered(const TQCString &appId)
+TDELauncher::slotAppRegistered(const TQCString &appId)
 {
    const char *cAppId = appId.data();
    if (!cAppId) return;
 
-   KLaunchRequest *request = requestList.first();
-   KLaunchRequest *nextRequest;
+   TDELaunchRequest *request = requestList.first();
+   TDELaunchRequest *nextRequest;
    for(; request; request = nextRequest)
    {
       nextRequest = requestList.next();
-      if (request->status != KLaunchRequest::Launching)
+      if (request->status != TDELaunchRequest::Launching)
          continue;
 
       // For unique services check the requested service name first
@@ -650,7 +650,7 @@ KLauncher::slotAppRegistered(const TQCString &appId)
           ((appId == request->dcop_name) ||
            dcopClient()->isApplicationRegistered(request->dcop_name)))
       {
-         request->status = KLaunchRequest::Running;
+         request->status = TDELaunchRequest::Running;
          requestDone(request);
          continue;
       }
@@ -663,7 +663,7 @@ KLauncher::slotAppRegistered(const TQCString &appId)
           ((cAppId[l] == '\0') || (cAppId[l] == '-')))
       {
          request->dcop_name = appId;
-         request->status = KLaunchRequest::Running;
+         request->status = TDELaunchRequest::Running;
          requestDone(request);
          continue;
       }
@@ -671,7 +671,7 @@ KLauncher::slotAppRegistered(const TQCString &appId)
 }
 
 void
-KLauncher::autoStart(int phase)
+TDELauncher::autoStart(int phase)
 {
    if( mAutoStart.phase() >= phase )
        return;
@@ -690,7 +690,7 @@ KLauncher::autoStart(int phase)
 }
 
 void
-KLauncher::slotAutoStart()
+TDELauncher::slotAutoStart()
 {
    KService::Ptr s;
    do
@@ -727,10 +727,10 @@ KLauncher::slotAutoStart()
 }
 
 void
-KLauncher::requestDone(KLaunchRequest *request)
+TDELauncher::requestDone(TDELaunchRequest *request)
 {
-   if ((request->status == KLaunchRequest::Running) ||
-       (request->status == KLaunchRequest::Done))
+   if ((request->status == TDELaunchRequest::Running) ||
+       (request->status == TDELaunchRequest::Done))
    {
       DCOPresult.result = 0;
       DCOPresult.dcopName = request->dcop_name;
@@ -788,7 +788,7 @@ KLauncher::requestDone(KLaunchRequest *request)
 }
 
 void
-KLauncher::requestStart(KLaunchRequest *request)
+TDELauncher::requestStart(TDELaunchRequest *request)
 {
    requestList.append( request );
    // Send request to tdeinit.
@@ -879,17 +879,17 @@ KLauncher::requestStart(KLaunchRequest *request)
 }
 
 void
-KLauncher::exec_blind( const TQCString &name, const TQValueList<TQCString> &arg_list,
+TDELauncher::exec_blind( const TQCString &name, const TQValueList<TQCString> &arg_list,
     const TQValueList<TQCString> &envs, const TQCString& startup_id )
 {
-   KLaunchRequest *request = new KLaunchRequest;
+   TDELaunchRequest *request = new TDELaunchRequest;
    request->autoStart = false;
    request->name = name;
    request->arg_list =  arg_list;
    request->dcop_name = 0;
    request->dcop_service_type = KService::DCOP_None;
    request->pid = 0;
-   request->status = KLaunchRequest::Launching;
+   request->status = TDELaunchRequest::Launching;
    request->transaction = 0; // No confirmation is send
    request->envs = envs;
    // Find service, if any - strip path if needed
@@ -907,7 +907,7 @@ KLauncher::exec_blind( const TQCString &name, const TQValueList<TQCString> &arg_
 
 
 bool
-KLauncher::start_service_by_name(const TQString &serviceName, const TQStringList &urls,
+TDELauncher::start_service_by_name(const TQString &serviceName, const TQStringList &urls,
     const TQValueList<TQCString> &envs, const TQCString& startup_id, bool blind)
 {
    KService::Ptr service = 0;
@@ -924,7 +924,7 @@ KLauncher::start_service_by_name(const TQString &serviceName, const TQStringList
 }
 
 bool
-KLauncher::start_service_by_desktop_path(const TQString &serviceName, const TQStringList &urls,
+TDELauncher::start_service_by_desktop_path(const TQString &serviceName, const TQStringList &urls,
     const TQValueList<TQCString> &envs, const TQCString& startup_id, bool blind)
 {
    KService::Ptr service = 0;
@@ -949,7 +949,7 @@ KLauncher::start_service_by_desktop_path(const TQString &serviceName, const TQSt
 }
 
 bool
-KLauncher::start_service_by_desktop_name(const TQString &serviceName, const TQStringList &urls,
+TDELauncher::start_service_by_desktop_name(const TQString &serviceName, const TQStringList &urls,
     const TQValueList<TQCString> &envs, const TQCString& startup_id, bool blind)
 {
    KService::Ptr service = 0;
@@ -966,7 +966,7 @@ KLauncher::start_service_by_desktop_name(const TQString &serviceName, const TQSt
 }
 
 bool
-KLauncher::start_service(KService::Ptr service, const TQStringList &_urls,
+TDELauncher::start_service(KService::Ptr service, const TQStringList &_urls,
     const TQValueList<TQCString> &envs, const TQCString& startup_id, bool blind, bool autoStart)
 {
    TQStringList urls = _urls;
@@ -977,7 +977,7 @@ KLauncher::start_service(KService::Ptr service, const TQStringList &_urls,
       cancel_service_startup_info( NULL, startup_id, envs ); // cancel it if any
       return false;
    }
-   KLaunchRequest *request = new KLaunchRequest;
+   TDELaunchRequest *request = new TDELaunchRequest;
    request->autoStart = autoStart;
 
    if ((urls.count() > 1) && !service->allowMultipleFiles())
@@ -1047,7 +1047,7 @@ KLauncher::start_service(KService::Ptr service, const TQStringList &_urls,
 }
 
 void
-KLauncher::send_service_startup_info( KLaunchRequest *request, KService::Ptr service, const TQCString& startup_id,
+TDELauncher::send_service_startup_info( TDELaunchRequest *request, KService::Ptr service, const TQCString& startup_id,
     const TQValueList<TQCString> &envs )
 {
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
@@ -1102,7 +1102,7 @@ KLauncher::send_service_startup_info( KLaunchRequest *request, KService::Ptr ser
 }
 
 void
-KLauncher::cancel_service_startup_info( KLaunchRequest* request, const TQCString& startup_id,
+TDELauncher::cancel_service_startup_info( TDELaunchRequest* request, const TQCString& startup_id,
     const TQValueList<TQCString> &envs )
 {
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
@@ -1136,10 +1136,10 @@ KLauncher::cancel_service_startup_info( KLaunchRequest* request, const TQCString
 }
 
 bool
-KLauncher::tdeinit_exec(const TQString &app, const TQStringList &args,
+TDELauncher::tdeinit_exec(const TQString &app, const TQStringList &args,
    const TQValueList<TQCString> &envs, TQCString startup_id, bool wait)
 {
-   KLaunchRequest *request = new KLaunchRequest;
+   TDELaunchRequest *request = new TDELaunchRequest;
    request->autoStart = false;
 
    for(TQStringList::ConstIterator it = args.begin();
@@ -1178,7 +1178,7 @@ KLauncher::tdeinit_exec(const TQString &app, const TQStringList &args,
 }
 
 void
-KLauncher::queueRequest(KLaunchRequest *request)
+TDELauncher::queueRequest(TDELaunchRequest *request)
 {
    requestQueue.append( request );
    if (!bProcessingQueue)
@@ -1189,14 +1189,14 @@ KLauncher::queueRequest(KLaunchRequest *request)
 }
 
 void
-KLauncher::slotDequeue()
+TDELauncher::slotDequeue()
 {
    do {
-      KLaunchRequest *request = requestQueue.take(0);
+      TDELaunchRequest *request = requestQueue.take(0);
       // process request
-      request->status = KLaunchRequest::Launching;
+      request->status = TDELaunchRequest::Launching;
       requestStart(request);
-      if (request->status != KLaunchRequest::Launching)
+      if (request->status != TDELaunchRequest::Launching)
       {
          // Request handled.
          requestDone( request );
@@ -1207,7 +1207,7 @@ KLauncher::slotDequeue()
 }
 
 void
-KLauncher::createArgs( KLaunchRequest *request, const KService::Ptr service ,
+TDELauncher::createArgs( TDELaunchRequest *request, const KService::Ptr service ,
                        const TQStringList &urls)
 {
   TQStringList params = KRun::processDesktopExec(*service, urls, false);
@@ -1223,7 +1223,7 @@ KLauncher::createArgs( KLaunchRequest *request, const KService::Ptr service ,
 ///// IO-Slave functions
 
 pid_t
-KLauncher::requestHoldSlave(const KURL &url, const TQString &app_socket)
+TDELauncher::requestHoldSlave(const KURL &url, const TQString &app_socket)
 {
     IdleSlave *slave;
     for(slave = mSlaveList.first(); slave; slave = mSlaveList.next())
@@ -1242,7 +1242,7 @@ KLauncher::requestHoldSlave(const KURL &url, const TQString &app_socket)
 
 
 pid_t
-KLauncher::requestSlave(const TQString &protocol,
+TDELauncher::requestSlave(const TQString &protocol,
                         const TQString &host,
                         const TQString &app_socket,
                         TQString &error)
@@ -1292,7 +1292,7 @@ KLauncher::requestSlave(const TQString &protocol,
     arg_list.append(arg2);
     arg_list.append(arg3);
 
-//    kdDebug(7016) << "KLauncher: launching new slave " << _name << " with protocol=" << protocol << endl;
+//    kdDebug(7016) << "TDELauncher: launching new slave " << _name << " with protocol=" << protocol << endl;
     if (mSlaveDebug == arg1)
     {
        tdelauncher_header request_header;
@@ -1311,7 +1311,7 @@ KLauncher::requestSlave(const TQString &protocol,
 	   arg_list.prepend("--tool=memcheck");
     }
 
-    KLaunchRequest *request = new KLaunchRequest;
+    TDELaunchRequest *request = new TDELaunchRequest;
     request->autoStart = false;
     request->name = name;
     request->arg_list =  arg_list;
@@ -1321,7 +1321,7 @@ KLauncher::requestSlave(const TQString &protocol,
 #ifdef Q_WS_X11
     request->startup_id = "0";
 #endif
-    request->status = KLaunchRequest::Launching;
+    request->status = TDELaunchRequest::Launching;
     request->transaction = 0; // No confirmation is send
     requestStart(request);
     pid_t pid = request->pid;
@@ -1338,7 +1338,7 @@ KLauncher::requestSlave(const TQString &protocol,
 }
 
 void
-KLauncher::waitForSlave(pid_t pid)
+TDELauncher::waitForSlave(pid_t pid)
 {
     IdleSlave *slave;
     for(slave = mSlaveList.first(); slave; slave = mSlaveList.next())
@@ -1353,7 +1353,7 @@ KLauncher::waitForSlave(pid_t pid)
 }
 
 void
-KLauncher::acceptSlave(TDESocket *slaveSocket)
+TDELauncher::acceptSlave(TDESocket *slaveSocket)
 {
     IdleSlave *slave = new IdleSlave(slaveSocket);
     // Send it a SLAVE_STATUS command.
@@ -1368,7 +1368,7 @@ KLauncher::acceptSlave(TDESocket *slaveSocket)
 }
 
 void
-KLauncher::slotSlaveStatus(IdleSlave *slave)
+TDELauncher::slotSlaveStatus(IdleSlave *slave)
 {
     SlaveWaitRequest *waitRequest = mSlaveWaitRequest.first();
     while(waitRequest)
@@ -1390,7 +1390,7 @@ KLauncher::slotSlaveStatus(IdleSlave *slave)
 }
 
 void
-KLauncher::slotSlaveGone()
+TDELauncher::slotSlaveGone()
 {
     IdleSlave *slave = (IdleSlave *) sender();
     mSlaveList.removeRef(slave);
@@ -1401,7 +1401,7 @@ KLauncher::slotSlaveGone()
 }
 
 void
-KLauncher::idleTimeout()
+TDELauncher::idleTimeout()
 {
     bool keepOneFileSlave=true;
     time_t now = time(0);

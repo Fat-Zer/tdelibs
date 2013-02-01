@@ -666,7 +666,7 @@ public:
     /**
      * Constants that represent the items whose short-cut
      * key-binding is programmable.  The default key-bindings
-     * for these items are defined in KStdAccel.
+     * for these items are defined in TDEStdAccel.
      */
     enum KeyBindingType {
         /**
@@ -689,7 +689,7 @@ public:
 
 
     // Map for the key binding types mentioned above.
-    typedef TQMap<KeyBindingType, KShortcut> KeyBindingMap;
+    typedef TQMap<KeyBindingType, TDEShortcut> KeyBindingMap;
 
     /**
      * Default constructor.
@@ -885,7 +885,7 @@ public:
      * @return true if key-binding can successfully be set.
      * @see getKeyBinding
      */
-    bool setKeyBinding( KeyBindingType item , const KShortcut& key );
+    bool setKeyBinding( KeyBindingType item , const TDEShortcut& key );
 
     /**
      * Returns the key-binding used for the specified item.
@@ -899,7 +899,7 @@ public:
      * @return the key-binding used for the feature given by @p item.
      * @see setKeyBinding
      */
-    const KShortcut& getKeyBinding( KeyBindingType item ) const {
+    const TDEShortcut& getKeyBinding( KeyBindingType item ) const {
         return m_delegate ? m_delegate->getKeyBinding( item ) : m_keyMap[ item ];
     }
 

@@ -331,7 +331,7 @@ Applications may use additional actions that they defined themselves.
 You can get a list of the actions used by a certain applications by using the
 following dcop command:
 
-dcop <dcopid> qt objects | grep KActionCollection/ | cut -d '/' -f 3
+dcop <dcopid> qt objects | grep TDEActionCollection/ | cut -d '/' -f 3
 
 or with
 
@@ -660,7 +660,7 @@ KDE3 Kiosk Application API
 Three new methods have been added to TDEApplication:
 
 - bool authorize(QString action); // Generic actions
-- bool authorizeKAction(QString action); // For KActions exclusively
+- bool authorizeTDEAction(QString action); // For TDEActions exclusively
 - bool authorizeURLAction(QString, referringURL, destinationURL) // URL Handling
 
 Automatic Logout

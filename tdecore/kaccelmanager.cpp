@@ -63,7 +63,7 @@
 
 /*********************************************************************
 
- class KAcceleratorManagerPrivate - internal helper class
+ class TDEAcceleratorManagerPrivate - internal helper class
 
  This class does all the work to find accelerators for a hierarchy of
  widgets.
@@ -71,7 +71,7 @@
  *********************************************************************/
 
 
-class KAcceleratorManagerPrivate
+class TDEAcceleratorManagerPrivate
 {
 public:
 
@@ -79,7 +79,7 @@ public:
     static bool programmers_mode;
     static bool standardName(const TQString &str);
 
-    static bool checkChange(const KAccelString &as)  {
+    static bool checkChange(const TDEAccelString &as)  {
         TQString t2 = as.accelerated();
         TQString t1 = as.originalText();
         if (t1 != t2)
@@ -125,7 +125,7 @@ private:
     void addChild(Item *item);
 
     TQWidget       *m_widget;
-    KAccelString  m_content;
+    TDEAccelString  m_content;
     ItemList      *m_children;
     int           m_index;
 
@@ -133,28 +133,28 @@ private:
 };
 
 
-bool KAcceleratorManagerPrivate::programmers_mode = false;
-TQString KAcceleratorManagerPrivate::changed_string;
-TQString KAcceleratorManagerPrivate::added_string;
-TQString KAcceleratorManagerPrivate::removed_string;
+bool TDEAcceleratorManagerPrivate::programmers_mode = false;
+TQString TDEAcceleratorManagerPrivate::changed_string;
+TQString TDEAcceleratorManagerPrivate::added_string;
+TQString TDEAcceleratorManagerPrivate::removed_string;
 static TQStringList *kaccmp_sns = 0;
 static KStaticDeleter<TQStringList> kaccmp_sns_d;
-TQMap<TQWidget*, int> KAcceleratorManagerPrivate::ignored_widgets;
+TQMap<TQWidget*, int> TDEAcceleratorManagerPrivate::ignored_widgets;
 
-bool KAcceleratorManagerPrivate::standardName(const TQString &str)
+bool TDEAcceleratorManagerPrivate::standardName(const TQString &str)
 {
     if (!kaccmp_sns)
         kaccmp_sns_d.setObject(kaccmp_sns, new TQStringList(KStdAction::internal_stdNames()));
         return kaccmp_sns->contains(str);
 }
 
-KAcceleratorManagerPrivate::Item::~Item()
+TDEAcceleratorManagerPrivate::Item::~Item()
 {
     delete m_children;
 }
 
 
-void KAcceleratorManagerPrivate::Item::addChild(Item *item)
+void TDEAcceleratorManagerPrivate::Item::addChild(Item *item)
 {
     if (!m_children) {
         m_children = new ItemList;
@@ -164,7 +164,7 @@ void KAcceleratorManagerPrivate::Item::addChild(Item *item)
     m_children->append(item);
 }
 
-void KAcceleratorManagerPrivate::manage(TQWidget *widget)
+void TDEAcceleratorManagerPrivate::manage(TQWidget *widget)
 {
     if (!widget)
     {
@@ -175,7 +175,7 @@ void KAcceleratorManagerPrivate::manage(TQWidget *widget)
     if (dynamic_cast<TQPopupMenu*>(widget))
     {
         // create a popup accel manager that can deal with dynamic menus
-        KPopupAccelManager::manage(static_cast<TQPopupMenu*>(widget));
+        TDEPopupAccelManager::manage(static_cast<TQPopupMenu*>(widget));
         return;
     }
 
@@ -189,13 +189,13 @@ void KAcceleratorManagerPrivate::manage(TQWidget *widget)
 }
 
 
-void KAcceleratorManagerPrivate::calculateAccelerators(Item *item, TQString &used)
+void TDEAcceleratorManagerPrivate::calculateAccelerators(Item *item, TQString &used)
 {
     if (!item->m_children)
         return;
 
     // collect the contents
-    KAccelStringList contents;
+    TDEAccelStringList contents;
     for (Item *it = item->m_children->first(); it != 0;
          it = item->m_children->next())
     {
@@ -203,7 +203,7 @@ void KAcceleratorManagerPrivate::calculateAccelerators(Item *item, TQString &use
     }
 
     // find the right accelerators
-    KAccelManagerAlgorithm::findAccelerators(contents, used);
+    TDEAccelManagerAlgorithm::findAccelerators(contents, used);
 
     // write them back into the widgets
     int cnt = -1;
@@ -261,7 +261,7 @@ void KAcceleratorManagerPrivate::calculateAccelerators(Item *item, TQString &use
 }
 
 
-void KAcceleratorManagerPrivate::traverseChildren(TQWidget *widget, Item *item)
+void TDEAcceleratorManagerPrivate::traverseChildren(TQWidget *widget, Item *item)
 {
   TQObjectList *childList = widget->queryList(TQWIDGET_OBJECT_NAME_STRING, 0, false, false);
   for ( TQObject *it = childList->first(); it; it = childList->next() )
@@ -271,7 +271,7 @@ void KAcceleratorManagerPrivate::traverseChildren(TQWidget *widget, Item *item)
     if ( !w->isVisibleTo( widget ) || ( w->isTopLevel() && dynamic_cast<TQPopupMenu*>(w) == NULL ) )
         continue;
 
-    if ( KAcceleratorManagerPrivate::ignored_widgets.find( w ) != KAcceleratorManagerPrivate::ignored_widgets.end() )
+    if ( TDEAcceleratorManagerPrivate::ignored_widgets.find( w ) != TDEAcceleratorManagerPrivate::ignored_widgets.end() )
         continue;
 
     manageWidget(w, item);
@@ -279,7 +279,7 @@ void KAcceleratorManagerPrivate::traverseChildren(TQWidget *widget, Item *item)
   delete childList;
 }
 
-void KAcceleratorManagerPrivate::manageWidget(TQWidget *w, Item *item)
+void TDEAcceleratorManagerPrivate::manageWidget(TQWidget *w, Item *item)
 {
   // first treat the special cases
 
@@ -301,7 +301,7 @@ void KAcceleratorManagerPrivate::manageWidget(TQWidget *w, Item *item)
   if (popupMenu)
   {
       // create a popup accel manager that can deal with dynamic menus
-      KPopupAccelManager::manage(popupMenu);
+      TDEPopupAccelManager::manage(popupMenu);
       return;
   }
 
@@ -368,26 +368,26 @@ void KAcceleratorManagerPrivate::manageWidget(TQWidget *w, Item *item)
         i->m_widget = w;
 
         // put some more weight on the usual action elements
-        int weight = KAccelManagerAlgorithm::DEFAULT_WEIGHT;
+        int weight = TDEAccelManagerAlgorithm::DEFAULT_WEIGHT;
         if (dynamic_cast<TQPushButton*>(w) || dynamic_cast<TQCheckBox*>(w) || dynamic_cast<TQRadioButton*>(w) || dynamic_cast<TQLabel*>(w))
-            weight = KAccelManagerAlgorithm::ACTION_ELEMENT_WEIGHT;
+            weight = TDEAccelManagerAlgorithm::ACTION_ELEMENT_WEIGHT;
 
         // don't put weight on group boxes, as usually the contents are more important
         if (dynamic_cast<TQGroupBox*>(w))
-            weight = KAccelManagerAlgorithm::GROUP_BOX_WEIGHT;
+            weight = TDEAccelManagerAlgorithm::GROUP_BOX_WEIGHT;
 
         // put a lot of extra weight on the KDialogBaseButton's
         if (w->inherits("KDialogBaseButton"))
-            weight += KAccelManagerAlgorithm::DIALOG_BUTTON_EXTRA_WEIGHT;
+            weight += TDEAccelManagerAlgorithm::DIALOG_BUTTON_EXTRA_WEIGHT;
 
-        i->m_content = KAccelString(content, weight);
+        i->m_content = TDEAccelString(content, weight);
         item->addChild(i);
     }
   }
   traverseChildren(w, item);
 }
 
-void KAcceleratorManagerPrivate::manageTabBar(TQTabBar *bar, Item *item)
+void TDEAcceleratorManagerPrivate::manageTabBar(TQTabBar *bar, Item *item)
 {
   for (int i=0; i<bar->count(); i++)
   {
@@ -399,11 +399,11 @@ void KAcceleratorManagerPrivate::manageTabBar(TQTabBar *bar, Item *item)
     item->addChild(it);
     it->m_widget = bar;
     it->m_index = i;
-    it->m_content = KAccelString(content);
+    it->m_content = TDEAccelString(content);
   }
 }
 
-void KAcceleratorManagerPrivate::manageMenuBar(TQMenuBar *mbar, Item *item)
+void TDEAcceleratorManagerPrivate::manageMenuBar(TQMenuBar *mbar, Item *item)
 {
     TQMenuItem *mitem;
     TQString s;
@@ -424,9 +424,9 @@ void KAcceleratorManagerPrivate::manageMenuBar(TQMenuBar *mbar, Item *item)
             Item *it = new Item;
             item->addChild(it);
             it->m_content =
-                KAccelString(s,
+                TDEAccelString(s,
                              // menu titles are important, so raise the weight
-                             KAccelManagerAlgorithm::MENU_TITLE_WEIGHT);
+                             TDEAccelManagerAlgorithm::MENU_TITLE_WEIGHT);
 
             it->m_widget = mbar;
             it->m_index = i;
@@ -434,49 +434,49 @@ void KAcceleratorManagerPrivate::manageMenuBar(TQMenuBar *mbar, Item *item)
 
         // have a look at the popup as well, if present
         if (mitem->popup())
-            KPopupAccelManager::manage(mitem->popup());
+            TDEPopupAccelManager::manage(mitem->popup());
     }
 }
 
 
 /*********************************************************************
 
- class KAcceleratorManager - main entry point
+ class TDEAcceleratorManager - main entry point
 
  This class is just here to provide a clean public API...
 
  *********************************************************************/
 
-void KAcceleratorManager::manage(TQWidget *widget)
+void TDEAcceleratorManager::manage(TQWidget *widget)
 {
-    KAcceleratorManager::manage(widget, false);
+    TDEAcceleratorManager::manage(widget, false);
 }
 
-void KAcceleratorManager::manage(TQWidget *widget, bool programmers_mode)
+void TDEAcceleratorManager::manage(TQWidget *widget, bool programmers_mode)
 {
-    kdDebug(131) << "KAcceleratorManager::manage\n";
-    KAcceleratorManagerPrivate::changed_string = TQString::null;
-    KAcceleratorManagerPrivate::added_string = TQString::null;
-    KAcceleratorManagerPrivate::removed_string = TQString::null;
-    KAcceleratorManagerPrivate::programmers_mode = programmers_mode;
-    KAcceleratorManagerPrivate::manage(widget);
+    kdDebug(131) << "TDEAcceleratorManager::manage\n";
+    TDEAcceleratorManagerPrivate::changed_string = TQString::null;
+    TDEAcceleratorManagerPrivate::added_string = TQString::null;
+    TDEAcceleratorManagerPrivate::removed_string = TQString::null;
+    TDEAcceleratorManagerPrivate::programmers_mode = programmers_mode;
+    TDEAcceleratorManagerPrivate::manage(widget);
 }
 
-void KAcceleratorManager::last_manage(TQString &added,  TQString &changed, TQString &removed)
+void TDEAcceleratorManager::last_manage(TQString &added,  TQString &changed, TQString &removed)
 {
-    added = KAcceleratorManagerPrivate::added_string;
-    changed = KAcceleratorManagerPrivate::changed_string;
-    removed = KAcceleratorManagerPrivate::removed_string;
+    added = TDEAcceleratorManagerPrivate::added_string;
+    changed = TDEAcceleratorManagerPrivate::changed_string;
+    removed = TDEAcceleratorManagerPrivate::removed_string;
 }
 
 
 /*********************************************************************
 
- class KAccelString - a string with weighted characters
+ class TDEAccelString - a string with weighted characters
 
  *********************************************************************/
 
-KAccelString::KAccelString(const TQString &input, int initialWeight)
+TDEAccelString::TDEAccelString(const TQString &input, int initialWeight)
   : m_pureText(input), m_weight()
 {
     m_orig_accel = m_pureText.find("(!)&");
@@ -495,7 +495,7 @@ KAccelString::KAccelString(const TQString &input, int initialWeight)
     m_orig_accel = m_accel = stripAccelerator(m_pureText);
 
     if (initialWeight == -1)
-        initialWeight = KAccelManagerAlgorithm::DEFAULT_WEIGHT;
+        initialWeight = TDEAccelManagerAlgorithm::DEFAULT_WEIGHT;
 
     calculateWeights(initialWeight);
 
@@ -503,13 +503,13 @@ KAccelString::KAccelString(const TQString &input, int initialWeight)
 }
 
 
-TQString KAccelString::accelerated() const
+TQString TDEAccelString::accelerated() const
 {
   TQString result = m_origText;
   if (result.isEmpty())
       return result;
 
-  if (KAcceleratorManagerPrivate::programmers_mode)
+  if (TDEAcceleratorManagerPrivate::programmers_mode)
   {
     if (m_accel != m_orig_accel) {
       int oa = m_orig_accel;
@@ -532,7 +532,7 @@ TQString KAccelString::accelerated() const
 }
 
 
-TQChar KAccelString::accelerator() const
+TQChar TDEAccelString::accelerator() const
 {
   if ((m_accel < 0) || (m_accel > (int)m_pureText.length()))
     return TQChar();
@@ -541,7 +541,7 @@ TQChar KAccelString::accelerator() const
 }
 
 
-void KAccelString::calculateWeights(int initialWeight)
+void TDEAccelString::calculateWeights(int initialWeight)
 {
   m_weight.resize(m_pureText.length());
 
@@ -556,12 +556,12 @@ void KAccelString::calculateWeights(int initialWeight)
 
     // add special weight to first character
     if (pos == 0)
-      weight += KAccelManagerAlgorithm::FIRST_CHARACTER_EXTRA_WEIGHT;
+      weight += TDEAccelManagerAlgorithm::FIRST_CHARACTER_EXTRA_WEIGHT;
 
     // add weight to word beginnings
     if (start_character)
     {
-      weight += KAccelManagerAlgorithm::WORD_BEGINNING_EXTRA_WEIGHT;
+      weight += TDEAccelManagerAlgorithm::WORD_BEGINNING_EXTRA_WEIGHT;
       start_character = false;
     }
 
@@ -571,10 +571,10 @@ void KAccelString::calculateWeights(int initialWeight)
 
     // try to preserve the wanted accelarators
     if ((int)pos == accel()) {
-        weight += KAccelManagerAlgorithm::WANTED_ACCEL_EXTRA_WEIGHT;
-        // kdDebug(131) << "wanted " << m_pureText << " " << KAcceleratorManagerPrivate::standardName(m_origText) << endl;
-        if (KAcceleratorManagerPrivate::standardName(m_origText))  {
-            weight += KAccelManagerAlgorithm::STANDARD_ACCEL;
+        weight += TDEAccelManagerAlgorithm::WANTED_ACCEL_EXTRA_WEIGHT;
+        // kdDebug(131) << "wanted " << m_pureText << " " << TDEAcceleratorManagerPrivate::standardName(m_origText) << endl;
+        if (TDEAcceleratorManagerPrivate::standardName(m_origText))  {
+            weight += TDEAccelManagerAlgorithm::STANDARD_ACCEL;
         }
     }
 
@@ -592,7 +592,7 @@ void KAccelString::calculateWeights(int initialWeight)
 }
 
 
-int KAccelString::stripAccelerator(TQString &text)
+int TDEAccelString::stripAccelerator(TQString &text)
 {
   // Note: this code is derived from TQAccel::shortcutKey
   int p = 0;
@@ -621,7 +621,7 @@ int KAccelString::stripAccelerator(TQString &text)
 }
 
 
-int KAccelString::maxWeight(int &index, const TQString &used)
+int TDEAccelString::maxWeight(int &index, const TQString &used)
 {
   int max = 0;
   index = -1;
@@ -638,7 +638,7 @@ int KAccelString::maxWeight(int &index, const TQString &used)
 }
 
 
-void KAccelString::dump()
+void TDEAccelString::dump()
 {
   TQString s;
   for (uint i=0; i<m_weight.count(); ++i)
@@ -680,13 +680,13 @@ void KAccelString::dump()
 
  *********************************************************************/
 
-void KAccelManagerAlgorithm::findAccelerators(KAccelStringList &result, TQString &used)
+void TDEAccelManagerAlgorithm::findAccelerators(TDEAccelStringList &result, TQString &used)
 {
     kdDebug(131) << "findAccelerators\n";
-  KAccelStringList accel_strings = result;
+  TDEAccelStringList accel_strings = result;
 
   // initally remove all accelerators
-  for (KAccelStringList::Iterator it = result.begin(); it != result.end(); ++it) {
+  for (TDEAccelStringList::Iterator it = result.begin(); it != result.end(); ++it) {
     (*it).setAccel(-1);
   }
 
@@ -720,18 +720,18 @@ void KAccelManagerAlgorithm::findAccelerators(KAccelStringList &result, TQString
     }
 
     // make sure we don't visit this one again
-    accel_strings[index] = KAccelString();
+    accel_strings[index] = TDEAccelString();
   }
 }
 
 
 /*********************************************************************
 
- class KPopupAccelManager - managing TQPopupMenu widgets dynamically
+ class TDEPopupAccelManager - managing TQPopupMenu widgets dynamically
 
  *********************************************************************/
 
-KPopupAccelManager::KPopupAccelManager(TQPopupMenu *popup)
+TDEPopupAccelManager::TDEPopupAccelManager(TQPopupMenu *popup)
   : TQObject(popup), m_popup(popup), m_count(-1)
 {
     aboutToShow(); // do one check and then connect to show
@@ -739,7 +739,7 @@ KPopupAccelManager::KPopupAccelManager(TQPopupMenu *popup)
 }
 
 
-void KPopupAccelManager::aboutToShow()
+void TDEPopupAccelManager::aboutToShow()
 {
   // Note: we try to be smart and avoid recalculating the accelerators
   // whenever possible. Unfortunately, there is no way to know if an
@@ -754,7 +754,7 @@ void KPopupAccelManager::aboutToShow()
   }
   else
   {
-    KAccelStringList entries;
+    TDEAccelStringList entries;
     findMenuEntries(entries);
     if (entries != m_entries)
     {
@@ -765,18 +765,18 @@ void KPopupAccelManager::aboutToShow()
 }
 
 
-void KPopupAccelManager::calculateAccelerators()
+void TDEPopupAccelManager::calculateAccelerators()
 {
   // find the new accelerators
   TQString used;
-  KAccelManagerAlgorithm::findAccelerators(m_entries, used);
+  TDEAccelManagerAlgorithm::findAccelerators(m_entries, used);
 
   // change the menu entries
   setMenuEntries(m_entries);
 }
 
 
-void KPopupAccelManager::findMenuEntries(KAccelStringList &list)
+void TDEPopupAccelManager::findMenuEntries(TDEAccelStringList &list)
 {
   TQMenuItem *mitem;
   TQString s;
@@ -797,16 +797,16 @@ void KPopupAccelManager::findMenuEntries(KAccelStringList &list)
     if (s.contains('\t'))
         weight = 0;
 
-    list.append(KAccelString(s, weight));
+    list.append(TDEAccelString(s, weight));
 
     // have a look at the popup as well, if present
     if (mitem->popup())
-        KPopupAccelManager::manage(mitem->popup());
+        TDEPopupAccelManager::manage(mitem->popup());
   }
 }
 
 
-void KPopupAccelManager::setMenuEntries(const KAccelStringList &list)
+void TDEPopupAccelManager::setMenuEntries(const TDEAccelStringList &list)
 {
   TQMenuItem *mitem;
 
@@ -817,18 +817,18 @@ void KPopupAccelManager::setMenuEntries(const KAccelStringList &list)
     if (mitem->isSeparator())
       continue;
 
-    if (KAcceleratorManagerPrivate::checkChange(list[cnt]))
+    if (TDEAcceleratorManagerPrivate::checkChange(list[cnt]))
         mitem->setText(list[cnt].accelerated());
     cnt++;
   }
 }
 
 
-void KPopupAccelManager::manage(TQPopupMenu *popup)
+void TDEPopupAccelManager::manage(TQPopupMenu *popup)
 {
   // don't add more than one manager to a popup
-  if (popup->child(0, "KPopupAccelManager", false) == 0 )
-    new KPopupAccelManager(popup);
+  if (popup->child(0, "TDEPopupAccelManager", false) == 0 )
+    new TDEPopupAccelManager(popup);
 }
 
 void QWidgetStackAccelManager::manage( TQWidgetStack *stack )
@@ -847,7 +847,7 @@ QWidgetStackAccelManager::QWidgetStackAccelManager(TQWidgetStack *stack)
 bool QWidgetStackAccelManager::eventFilter ( TQObject * watched, TQEvent * e )
 {
     if ( e->type() == TQEvent::Show && tqApp->activeWindow() ) {
-        KAcceleratorManager::manage( TQT_TQWIDGET(tqApp->activeWindow()) );
+        TDEAcceleratorManager::manage( TQT_TQWIDGET(tqApp->activeWindow()) );
         watched->removeEventFilter( this );
     }
     return false;
@@ -864,9 +864,9 @@ void QWidgetStackAccelManager::aboutToShow(TQWidget *child)
     child->installEventFilter( this );
 }
 
-void KAcceleratorManager::setNoAccel( TQWidget *widget )
+void TDEAcceleratorManager::setNoAccel( TQWidget *widget )
 {
-    KAcceleratorManagerPrivate::ignored_widgets[widget] = 1;
+    TDEAcceleratorManagerPrivate::ignored_widgets[widget] = 1;
 }
 
 #include "kaccelmanager_private.moc"

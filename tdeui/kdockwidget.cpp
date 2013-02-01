@@ -91,7 +91,7 @@ static const char* const not_close_xpm[]={
 "#####"};
 
 /**
- * A special kind of KMainWindow that is able to have dockwidget child widgets.
+ * A special kind of TDEMainWindow that is able to have dockwidget child widgets.
  *
  * The main widget should be a dockwidget where other dockwidgets can be docked to
  * the left, right, top, bottom or to the middle.
@@ -100,7 +100,7 @@ static const char* const not_close_xpm[]={
  * @author Max Judin.
 */
 KDockMainWindow::KDockMainWindow( TQWidget* parent, const char *name, WFlags f)
-:KMainWindow( parent, name, f )
+:TDEMainWindow( parent, name, f )
 {
   TQString new_name = TQString(name) + TQString("_DockManager");
   dockManager = new KDockManager( this, new_name.latin1() );
@@ -126,7 +126,7 @@ void KDockMainWindow::setView( TQWidget *view )
   }
 
 #ifndef NO_KDE2
-  KMainWindow::setCentralWidget(view);
+  TDEMainWindow::setCentralWidget(view);
 #else
   TQMainWindow::setCentralWidget(view);
 #endif
@@ -1653,7 +1653,7 @@ KDockManager::KDockManager( TQWidget* mainWindow , const char* name )
   menuData->setAutoDelete( true );
 
 #ifndef NO_KDE2
-  menu = new KPopupMenu();
+  menu = new TDEPopupMenu();
 #else
   menu = new TQPopupMenu();
 #endif
@@ -3320,10 +3320,10 @@ void KDockManager::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
 void KDockMainWindow::virtual_hook( int id, void* data )
-{ KMainWindow::virtual_hook( id, data ); }
+{ TDEMainWindow::virtual_hook( id, data ); }
 
 void KDockArea::virtual_hook( int, void* )
-{ /*KMainWindow::virtual_hook( id, data );*/ }
+{ /*TDEMainWindow::virtual_hook( id, data );*/ }
 
 
 #ifndef NO_INCLUDE_MOCFILES // for Qt-only projects, because tmake doesn't take this name

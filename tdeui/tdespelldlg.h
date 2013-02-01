@@ -26,7 +26,7 @@ class TQStringList;
 class TQLabel;
 class TQListViewItem;
 class TQPushButton;
-class KListBox;
+class TDEListBox;
 class KLineEdit;
 class KProgress;
 
@@ -51,7 +51,7 @@ class TDEUI_EXPORT KSpellDlg : public KDialogBase
   KSpellDlgPrivate *d;
   KLineEdit *editbox;
   KProgress *progbar;
-  KListBox *listbox;
+  TDEListBox *listbox;
   TQStringList *sugg;
   TQPushButton *qpbrep, *qpbrepa;
   TQLabel *wordlabel;

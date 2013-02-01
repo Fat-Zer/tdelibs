@@ -3,7 +3,7 @@
 
 
 class Win
-    : public KMainWindow
+    : public TDEMainWindow
 {
     Q_OBJECT
     KParts::Part* p;

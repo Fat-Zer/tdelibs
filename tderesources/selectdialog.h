@@ -30,7 +30,7 @@
 
 #include <kdialog.h>
 
-class KListBox;
+class TDEListBox;
 
 namespace KRES {
 
@@ -77,7 +77,7 @@ class TDERESOURCES_EXPORT SelectDialog : KDialog
     static Resource *getResource( TQPtrList<Resource> list, TQWidget *parent = 0 );
 
   private:
-    KListBox *mResourceId;
+    TDEListBox *mResourceId;
 
     TQMap<int, Resource*> mResourceMap;
 };

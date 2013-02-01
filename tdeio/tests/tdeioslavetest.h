@@ -26,7 +26,7 @@
 #include "tdeio/statusbarprogress.h"
 #include "tdeio/slave.h"
 
-class KioslaveTest : public KMainWindow {
+class KioslaveTest : public TDEMainWindow {
   Q_OBJECT
 
 public:

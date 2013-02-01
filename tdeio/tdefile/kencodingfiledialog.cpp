@@ -44,7 +44,7 @@ KEncodingFileDialog::KEncodingFileDialog(const TQString& startDir, const TQStrin
   
   setOperationMode( type );
     
-  KToolBar *tb = toolBar();
+  TDEToolBar *tb = toolBar();
   tb->insertSeparator();
   int index = tb->insertCombo(TQStringList(), -1 /*id*/, false /*writable*/, 0 /*signal*/, 0 /*receiver*/, 0 /*slot*/ );
   d->encoding = tb->getCombo( tb->idAt( index ) );
@@ -180,7 +180,7 @@ KEncodingFileDialog::Result KEncodingFileDialog::getSaveFileNameAndEncoding(cons
 
     TQString filename = dlg.selectedFile();
     if (!filename.isEmpty())
-        KRecentDocument::add(filename);
+        TDERecentDocument::add(filename);
 
     Result res;
     res.fileNames<<filename;
@@ -204,7 +204,7 @@ KEncodingFileDialog::Result  KEncodingFileDialog::getSaveURLAndEncoding(const TQ
 
     KURL url = dlg.selectedURL();
     if (url.isValid())
-        KRecentDocument::add( url );
+        TDERecentDocument::add( url );
 
     Result res;
     res.URLs<<url;

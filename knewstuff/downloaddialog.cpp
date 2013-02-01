@@ -50,18 +50,18 @@ struct DownloadDialog::Private
 {
     TQString m_providerlist;
     TQWidget *m_page;
-    KListView *m_lvtmp_r, *m_lvtmp_d, *m_lvtmp_l;
+    TDEListView *m_lvtmp_r, *m_lvtmp_d, *m_lvtmp_l;
     TQPtrList<Entry> m_installlist;
     TQMap<TDEIO::Job*, Provider*> m_variantjobs;
     TQMap<TDEIO::Job*, TQStringList> m_variants;
     TQMap<Provider*, Provider*> m_newproviders;
 };
 
-class NumSortListViewItem : public KListViewItem
+class NumSortListViewItem : public TDEListViewItem
 {
   public:
   NumSortListViewItem( TQListView * parent, TQString label1, TQString label2 = TQString::null, TQString label3 = TQString::null, TQString label4 = TQString::null, TQString label5 = TQString::null, TQString label6 = TQString::null, TQString label7 = TQString::null, TQString label8 = TQString::null )  :
-  KListViewItem( parent, label1, label2, label3, label4, label5, label6, label7, label8 )
+  TDEListViewItem( parent, label1, label2, label3, label4, label5, label6, label7, label8 )
   {
   }
 
@@ -72,15 +72,15 @@ class NumSortListViewItem : public KListViewItem
       s.sprintf("%08d", text(col).toInt());
       return s;
     }
-    return KListViewItem::key( col, asc );
+    return TDEListViewItem::key( col, asc );
   }
 };
 
-class DateSortListViewItem : public KListViewItem
+class DateSortListViewItem : public TDEListViewItem
 {
   public:
   DateSortListViewItem( TQListView * parent, TQString label1, TQString label2 = TQString::null, TQString label3 = TQString::null, TQString label4 = TQString::null, TQString label5 = TQString::null, TQString label6 = TQString::null, TQString label7 = TQString::null, TQString label8 = TQString::null )  :
-  KListViewItem( parent, label1, label2, label3, label4, label5, label6, label7, label8 )
+  TDEListViewItem( parent, label1, label2, label3, label4, label5, label6, label7, label8 )
   {
   }
 
@@ -92,7 +92,7 @@ class DateSortListViewItem : public KListViewItem
       s.sprintf("%08d", date.year() * 366 + date.dayOfYear());
       return s;
     }
-    return KListViewItem::key( col, asc );
+    return TDEListViewItem::key( col, asc );
   }
 };
 
@@ -157,7 +157,7 @@ DownloadDialog::~DownloadDialog()
 {
     for (TQMap<TQWidget *, TQValueList<TQPushButton *>* >::const_iterator it = m_buttons.constBegin(); it != m_buttons.constEnd(); ++it)
         delete it.data();
-    for (TQMap<TQWidget *, TQValueList<KListView *>* >::const_iterator it = m_map.constBegin(); it != m_map.constEnd(); ++it)
+    for (TQMap<TQWidget *, TQValueList<TDEListView *>* >::const_iterator it = m_map.constBegin(); it != m_map.constEnd(); ++it)
         delete it.data();
     delete d;
 }
@@ -174,11 +174,11 @@ void DownloadDialog::load(TQString providerList)
 
 void DownloadDialog::clear()
 {
-  TQMap<TQWidget*, TQValueList<KListView*>* >::Iterator it;
-  TQMap<TQWidget*, TQValueList<KListView*>* >::Iterator end(m_map.end());
+  TQMap<TQWidget*, TQValueList<TDEListView*>* >::Iterator it;
+  TQMap<TQWidget*, TQValueList<TDEListView*>* >::Iterator end(m_map.end());
   for(it = m_map.begin(); it != end; ++it)
   {
-    TQValueList<KListView*> *v = it.data();
+    TQValueList<TDEListView*> *v = it.data();
     kdDebug() << "clear listviews in " << v << endl;
     if(v)
     {
@@ -266,19 +266,19 @@ void DownloadDialog::addProvider(Provider *p)
   TQHBoxLayout *box = new TQHBoxLayout(frame);
   box->add(ctl);
 
-  d->m_lvtmp_r = new KListView(w_r);
+  d->m_lvtmp_r = new TDEListView(w_r);
   d->m_lvtmp_r->addColumn(i18n("Name"));
   d->m_lvtmp_r->addColumn(i18n("Version"));
   d->m_lvtmp_r->addColumn(i18n("Rating"));
   d->m_lvtmp_r->setSorting(2, false);
 
-  d->m_lvtmp_d = new KListView(w_d);
+  d->m_lvtmp_d = new TDEListView(w_d);
   d->m_lvtmp_d->addColumn(i18n("Name"));
   d->m_lvtmp_d->addColumn(i18n("Version"));
   d->m_lvtmp_d->addColumn(i18n("Downloads"));
   d->m_lvtmp_d->setSorting(2, false);
 
-  d->m_lvtmp_l = new KListView(w_l);
+  d->m_lvtmp_l = new TDEListView(w_l);
   d->m_lvtmp_l->addColumn(i18n("Name"));
   d->m_lvtmp_l->addColumn(i18n("Version"));
   d->m_lvtmp_l->addColumn(i18n("Release Date"));
@@ -315,7 +315,7 @@ void DownloadDialog::addProvider(Provider *p)
   TQVBoxLayout *box4 = new TQVBoxLayout(w_l);
   box4->add(d->m_lvtmp_l);
 
-  TQValueList<KListView*> *v = new TQValueList<KListView*>;
+  TQValueList<TDEListView*> *v = new TQValueList<TDEListView*>;
   *v << d->m_lvtmp_r << d->m_lvtmp_d << d->m_lvtmp_l;
   m_map[frame] = v;
   m_rts[frame] = rt;
@@ -423,19 +423,19 @@ void DownloadDialog::addEntry(Entry *entry, const TQStringList& variants)
 
   if(variants.contains("score"))
   {
-    KListViewItem *tmp_r = new NumSortListViewItem(lv_r,
+    TDEListViewItem *tmp_r = new NumSortListViewItem(lv_r,
       entry->name(lang), entry->version(), TQString("%1").arg(entry->rating()));
     tmp_r->setPixmap(0, pix);
   }
   if(variants.contains("downloads"))
   {
-    KListViewItem *tmp_d = new NumSortListViewItem(lv_d,
+    TDEListViewItem *tmp_d = new NumSortListViewItem(lv_d,
       entry->name(lang), entry->version(), TQString("%1").arg(entry->downloads()));
     tmp_d->setPixmap(0, pix);
   }
   if(variants.contains("latest"))
   {
-    KListViewItem *tmp_l = new DateSortListViewItem(lv_l,
+    TDEListViewItem *tmp_l = new DateSortListViewItem(lv_l,
       entry->name(lang), entry->version(), TDEGlobal::locale()->formatDate(entry->releaseDate()));
     tmp_l->setPixmap(0, pix);
   }

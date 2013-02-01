@@ -11,7 +11,7 @@ PluginSpellCheck::PluginSpellCheck( TQObject* parent, const char* name,
                                     const TQStringList& )
     : Plugin( parent, name )
 {
-    (void) new KAction( "&Select current line (plugin)", 0, this, TQT_SLOT(slotSpellCheck()),
+    (void) new TDEAction( "&Select current line (plugin)", 0, this, TQT_SLOT(slotSpellCheck()),
                         actionCollection(), "spellcheck" );
 }
 

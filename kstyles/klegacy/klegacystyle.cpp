@@ -2979,7 +2979,7 @@ void KLegacyStyle::drawTab(TQPainter *p, const TQTabBar *tabbar, TQTab *tab, boo
 
 
 void KLegacyStyle::drawKBarHandle(TQPainter *p, int x, int y, int w, int h,
-				  const TQColorGroup &g, KToolBarPos type, TQBrush *fill)
+				  const TQColorGroup &g, TDEToolBarPos type, TQBrush *fill)
 {
     GtkObject *gobj = priv->gtkDict.find(TQToolBar::staticMetaObject());
 

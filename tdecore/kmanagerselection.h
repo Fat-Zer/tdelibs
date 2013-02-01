@@ -36,7 +36,7 @@ DEALINGS IN THE SOFTWARE.
 
 #include <X11/Xlib.h>
 
-class KSelectionOwnerPrivate;
+class TDESelectionOwnerPrivate;
 
 /**
  This class implements claiming and owning manager selections, as described
@@ -47,7 +47,7 @@ class KSelectionOwnerPrivate;
  @since 3.2
  @short ICCCM manager selection owner
 */
-class TDECORE_EXPORT KSelectionOwner
+class TDECORE_EXPORT TDESelectionOwner
     : public TQObject
     {
     Q_OBJECT
@@ -60,7 +60,7 @@ class TDECORE_EXPORT KSelectionOwner
          * @param screen X screen, or -1 for default
          * @param parent parent object, or NULL if there is none
          */
-        KSelectionOwner( Atom selection, int screen = -1, TQObject* parent = NULL );
+        TDESelectionOwner( Atom selection, int screen = -1, TQObject* parent = NULL );
         /**
          * @overload
          * This constructor accepts the selection name and creates the appropriate atom
@@ -70,11 +70,11 @@ class TDECORE_EXPORT KSelectionOwner
          * @param screen X screen, or -1 for default
          * @param parent parent object, or NULL if there is none
          */
-        KSelectionOwner( const char* selection, int screen = -1, TQObject* parent = NULL );
+        TDESelectionOwner( const char* selection, int screen = -1, TQObject* parent = NULL );
         /**
          * Destructor. Calls release().
          */
-	virtual ~KSelectionOwner();
+	virtual ~TDESelectionOwner();
         /**
          * This function attemps to claim ownership of the manager selection, using
          * the current X timestamp. If @p force is false, and the selection is already
@@ -157,10 +157,10 @@ class TDECORE_EXPORT KSelectionOwner
     protected:
         virtual void virtual_hook( int id, void* data );
     private:
-        KSelectionOwnerPrivate* d;
+        TDESelectionOwnerPrivate* d;
     };
 
-class KSelectionWatcherPrivate;
+class TDESelectionWatcherPrivate;
 
 /**
  This class implements watching manager selections, as described in the ICCCM
@@ -170,7 +170,7 @@ class KSelectionWatcherPrivate;
  @since 3.2
  @short ICCCM manager selection watching
 */
-class TDECORE_EXPORT KSelectionWatcher
+class TDECORE_EXPORT TDESelectionWatcher
     : public TQObject
     {
     Q_OBJECT
@@ -183,7 +183,7 @@ class TDECORE_EXPORT KSelectionWatcher
          * @param screen X screen, or -1 for default
          * @param parent parent object, or NULL if there is none
          */
-        KSelectionWatcher( Atom selection, int screen = -1, TQObject* parent = NULL );
+        TDESelectionWatcher( Atom selection, int screen = -1, TQObject* parent = NULL );
         /**
          * @overload
          * This constructor accepts the selection name and creates the appropriate atom
@@ -193,8 +193,8 @@ class TDECORE_EXPORT KSelectionWatcher
          * @param screen X screen, or -1 for default
          * @param parent parent object, or NULL if there is none
          */
-        KSelectionWatcher( const char* selection, int screen = -1, TQObject* parent = NULL );
-	virtual ~KSelectionWatcher();
+        TDESelectionWatcher( const char* selection, int screen = -1, TQObject* parent = NULL );
+	virtual ~TDESelectionWatcher();
         /**
          * Return the current owner of the manager selection, if any.
          */
@@ -226,7 +226,7 @@ class TDECORE_EXPORT KSelectionWatcher
     protected:
         virtual void virtual_hook( int id, void* data );
     private:
-        KSelectionWatcherPrivate* d;
+        TDESelectionWatcherPrivate* d;
     };
 
 #endif

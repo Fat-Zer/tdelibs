@@ -94,7 +94,7 @@ public:
     int margin;     // dtto
     bool fallback_mode; // dtto
 #ifdef Q_WS_X11
-    KSelectionWatcher* selection;
+    TDESelectionWatcher* selection;
 #endif
     TQTimer selection_timer;
     TQSize min_size;
@@ -177,7 +177,7 @@ void KMenuBar::setTopLevelMenuInternal(bool top_level)
   if ( isTopLevelMenu() )
   {
 #ifdef Q_WS_X11
-      d->selection = new KSelectionWatcher( KMenuBarPrivate::makeSelectionAtom(),
+      d->selection = new TDESelectionWatcher( KMenuBarPrivate::makeSelectionAtom(),
           DefaultScreen( tqt_xdisplay()));
       connect( d->selection, TQT_SIGNAL( newOwner( Window )),
           this, TQT_SLOT( updateFallbackSize()));

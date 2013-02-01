@@ -28,7 +28,7 @@
 
 #include <tdelibs_export.h>
 
-class KAction;
+class TDEAction;
 class KXMLGUIFactoryPrivate;
 class KXMLGUIClient;
 class KXMLGUIBuilder;
@@ -52,7 +52,7 @@ class BuildHelper;
  * and merging the GUI from an unlimited number of clients.
  *
  * Each client provides XML through a TQDomDocument and actions through a
- * KActionCollection . The XML document contains the rules for how to merge the
+ * TDEActionCollection . The XML document contains the rules for how to merge the
  * GUI.
  *
  * KXMLGUIFactory processes the DOM tree provided by a client and plugs in the client's actions,
@@ -124,7 +124,7 @@ class TDEUI_EXPORT KXMLGUIFactory : public TQObject
    */
   void removeClient( KXMLGUIClient *client );
 
-  void plugActionList( KXMLGUIClient *client, const TQString &name, const TQPtrList<KAction> &actionList );
+  void plugActionList( KXMLGUIClient *client, const TQString &name, const TQPtrList<TDEAction> &actionList );
   void unplugActionList( KXMLGUIClient *client, const TQString &name );
 
   /**
@@ -206,8 +206,8 @@ class TDEUI_EXPORT KXMLGUIFactory : public TQObject
   TQPtrList<TQWidget> findRecursive( KXMLGUI::ContainerNode *node, const TQString &tagName );
 
   void applyActionProperties( const TQDomElement &element );
-  void configureAction( KAction *action, const TQDomNamedNodeMap &attributes );
-  void configureAction( KAction *action, const TQDomAttr &attribute );
+  void configureAction( TDEAction *action, const TQDomNamedNodeMap &attributes );
+  void configureAction( TDEAction *action, const TQDomAttr &attribute );
 
 protected:
   virtual void virtual_hook( int id, void* data );

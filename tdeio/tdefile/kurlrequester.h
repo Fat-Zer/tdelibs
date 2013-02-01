@@ -269,7 +269,7 @@ private:
 protected slots:
     /**
      * Called when the button is pressed to open the filedialog.
-     * Also called when KStdAccel::Open (default is Ctrl-O) is pressed.
+     * Also called when TDEStdAccel::Open (default is Ctrl-O) is pressed.
      */
     void slotOpenDialog();
 

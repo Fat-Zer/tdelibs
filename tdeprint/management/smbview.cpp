@@ -38,7 +38,7 @@
 //*********************************************************************************************
 
 SmbView::SmbView(TQWidget *parent, const char *name)
-: KListView(parent,name)
+: TDEListView(parent,name)
 {
 	addColumn(i18n("Printer"));
 	addColumn(i18n("Comment"));

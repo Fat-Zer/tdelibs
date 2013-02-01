@@ -3,7 +3,7 @@
 
 #include <kmainwindow.h>
 
-class MainWindow : public KMainWindow
+class MainWindow : public TDEMainWindow
 {
     Q_OBJECT
 public:

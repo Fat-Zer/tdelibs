@@ -130,7 +130,7 @@ struct DocWordCompletionPluginViewPrivate
   TQString last;         // last word we were trying to match
   TQString lastIns;      // latest applied completion
   TQRegExp re;           // hrm
-  KToggleAction *autopopup; // for accessing state
+  TDEToggleAction *autopopup; // for accessing state
   uint treshold;        // the required length of a word before popping up the completion list automatically
   int directionalPos;   // be able to insert "" at the correct time
 };
@@ -145,15 +145,15 @@ DocWordCompletionPluginView::DocWordCompletionPluginView( uint treshold, bool au
   view->insertChildClient( this );
   setInstance( KGenericFactory<DocWordCompletionPlugin>::instance() );
 
-  (void) new KAction( i18n("Reuse Word Above"), CTRL+Key_8, this,
+  (void) new TDEAction( i18n("Reuse Word Above"), CTRL+Key_8, this,
     TQT_SLOT(completeBackwards()), actionCollection(), "doccomplete_bw" );
-  (void) new KAction( i18n("Reuse Word Below"), CTRL+Key_9, this,
+  (void) new TDEAction( i18n("Reuse Word Below"), CTRL+Key_9, this,
     TQT_SLOT(completeForwards()), actionCollection(), "doccomplete_fw" );
-  (void) new KAction( i18n("Pop Up Completion List"), 0, this,
+  (void) new TDEAction( i18n("Pop Up Completion List"), 0, this,
     TQT_SLOT(popupCompletionList()), actionCollection(), "doccomplete_pu" );
-  (void) new KAction( i18n("Shell Completion"), 0, this,
+  (void) new TDEAction( i18n("Shell Completion"), 0, this,
     TQT_SLOT(shellComplete()), actionCollection(), "doccomplete_sh" );
-  d->autopopup = new KToggleAction( i18n("Automatic Completion Popup"), 0, this,
+  d->autopopup = new TDEToggleAction( i18n("Automatic Completion Popup"), 0, this,
     TQT_SLOT(toggleAutoPopup()), actionCollection(), "enable_autopopup" );
 
   d->autopopup->setChecked( autopopup );

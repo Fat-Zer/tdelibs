@@ -82,7 +82,7 @@ konqueror versions of the views.
 
 This class inherits KParts::ReadOnlyPart, and provides a BrowserExtension.
 It integrates KonqFileManagerWidget as its KParts widget, and provides
-KActions for it.
+TDEActions for it.
 
 Important :
 

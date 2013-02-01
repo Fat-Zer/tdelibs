@@ -388,7 +388,7 @@ void ContainerNode::unplugActions( BuildState &state )
     ContainerClientListIt clientIt( clients );
 
     /*
-        Disabled because it means in KToolBar::saveState isHidden is always true then,
+        Disabled because it means in TDEToolBar::saveState isHidden is always true then,
         which is clearly wrong.
 
     if ( clients.count() == 1 && clientIt.current()->client == client &&
@@ -606,7 +606,7 @@ bool BuildHelper::processActionElement( const TQDomElement &e, int idx )
     assert( m_state.guiClient );
 
     // look up the action and plug it in
-    KAction *action = m_state.guiClient->action( e );
+    TDEAction *action = m_state.guiClient->action( e );
 
     //kdDebug() << "BuildHelper::processActionElement " << e.attribute( "name" ) << " -> " << action << " (in " << m_state.guiClient->actionCollection() << ")" << endl;
     if ( !action )

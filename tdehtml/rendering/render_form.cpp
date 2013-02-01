@@ -311,7 +311,7 @@ LineEditWidget::LineEditWidget(DOM::HTMLInputElementImpl* input, TDEHTMLView* vi
     : KLineEdit(parent, "__tdehtml"), m_input(input), m_view(view), m_spell(0)
 {
     setMouseTracking(true);
-    KActionCollection *ac = new KActionCollection(this);
+    TDEActionCollection *ac = new TDEActionCollection(this);
     m_spellAction = KStdAction::spelling( TQT_TQOBJECT(this), TQT_SLOT( slotCheckSpelling() ), ac );
 }
 
@@ -971,7 +971,7 @@ void RenderSelect::updateFromElement()
         }
 
         if (m_useListBox && oldMultiple != m_multiple) {
-            static_cast<KListBox*>(m_widget)->setSelectionMode(m_multiple ? TQListBox::Extended : TQListBox::Single);
+            static_cast<TDEListBox*>(m_widget)->setSelectionMode(m_multiple ? TQListBox::Extended : TQListBox::Single);
         }
         m_selectionChanged = true;
         m_optionsChanged = true;
@@ -985,7 +985,7 @@ void RenderSelect::updateFromElement()
         int listIndex;
 
         if(m_useListBox) {
-            static_cast<KListBox*>(m_widget)->clear();
+            static_cast<TDEListBox*>(m_widget)->clear();
         }
 
         else
@@ -999,7 +999,7 @@ void RenderSelect::updateFromElement()
 
                 if(m_useListBox) {
                     TQListBoxText *item = new TQListBoxText(TQString(text.implementation()->s, text.implementation()->l));
-                    static_cast<KListBox*>(m_widget)
+                    static_cast<TDEListBox*>(m_widget)
                         ->insertItem(item, listIndex);
                     item->setSelectable(false);
                 }
@@ -1022,7 +1022,7 @@ void RenderSelect::updateFromElement()
                 }
 
                 if(m_useListBox) {
-                    KListBox *l = static_cast<KListBox*>(m_widget);
+                    TDEListBox *l = static_cast<TDEListBox*>(m_widget);
                     l->insertItem(text, listIndex);
                     DOMString disabled = optElem->getAttribute(ATTR_DISABLED);
                     if (!disabled.isNull() && l->item( listIndex )) {
@@ -1083,7 +1083,7 @@ void RenderSelect::layout( )
 
     // calculate size
     if(m_useListBox) {
-        KListBox* w = static_cast<KListBox*>(m_widget);
+        TDEListBox* w = static_cast<TDEListBox*>(m_widget);
 
         TQListBoxItem* p = w->firstItem();
         int width = 0;
@@ -1105,7 +1105,7 @@ void RenderSelect::layout( )
         // the average of that is IMHO kMin(number of elements, 10)
         // so I did that ;-)
         if(size < 1)
-            size = kMin(static_cast<KListBox*>(m_widget)->count(), 10u);
+            size = kMin(static_cast<TDEListBox*>(m_widget)->count(), 10u);
 
         width += 2*w->frameWidth() + w->verticalScrollBar()->sizeHint().width();
         height = size*height + 2*w->frameWidth();
@@ -1208,7 +1208,7 @@ void RenderSelect::slotSelectionChanged() // emitted by the listbox only
         // again with updateSelection.
         if ( listItems[i]->id() == ID_OPTION )
             static_cast<HTMLOptionElementImpl*>( listItems[i] )
-                ->m_selected = static_cast<KListBox*>( m_widget )->isSelected( i );
+                ->m_selected = static_cast<TDEListBox*>( m_widget )->isSelected( i );
 
     ref();
     element()->onChange();
@@ -1220,9 +1220,9 @@ void RenderSelect::setOptionsChanged(bool _optionsChanged)
     m_optionsChanged = _optionsChanged;
 }
 
-KListBox* RenderSelect::createListBox()
+TDEListBox* RenderSelect::createListBox()
 {
-    KListBox *lb = new KListBox(view()->viewport(), "__tdehtml");
+    TDEListBox *lb = new TDEListBox(view()->viewport(), "__tdehtml");
     lb->setSelectionMode(m_multiple ? TQListBox::Extended : TQListBox::Single);
     // ### looks broken
     //lb->setAutoMask(true);
@@ -1247,7 +1247,7 @@ void RenderSelect::updateSelection()
     int i;
     if (m_useListBox) {
         // if multi-select, we select only the new selected index
-        KListBox *listBox = static_cast<KListBox*>(m_widget);
+        TDEListBox *listBox = static_cast<TDEListBox*>(m_widget);
         for (i = 0; i < int(listItems.size()); i++)
             listBox->setSelected(i,listItems[i]->id() == ID_OPTION &&
                                  static_cast<HTMLOptionElementImpl*>(listItems[i])->selected());
@@ -1294,7 +1294,7 @@ TextAreaWidget::TextAreaWidget(int wrap, TQWidget* parent)
     setAutoMask(true);
     setMouseTracking(true);
 
-    KActionCollection *ac = new KActionCollection(this);
+    TDEActionCollection *ac = new TDEActionCollection(this);
     m_findAction = KStdAction::find( TQT_TQOBJECT(this), TQT_SLOT( slotFind() ), ac );
     m_findNextAction = KStdAction::findNext( TQT_TQOBJECT(this), TQT_SLOT( slotFindNext() ), ac );
     m_replaceAction = KStdAction::replace( TQT_TQOBJECT(this), TQT_SLOT( slotReplace() ), ac );

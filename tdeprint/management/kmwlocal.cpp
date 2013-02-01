@@ -41,7 +41,7 @@ KMWLocal::KMWLocal(TQWidget *parent, const char *name)
 	m_initialized = false;
 	m_block = false;
 
-	m_ports = new KListView(this);
+	m_ports = new TDEListView(this);
 	m_ports->setFrameStyle(TQFrame::WinPanel|TQFrame::Sunken);
 	m_ports->setLineWidth(1);
 	m_ports->header()->hide();

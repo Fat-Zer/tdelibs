@@ -24,7 +24,7 @@
 #include <tqptrdict.h>
 #include "dom/dom_core.h"
 
-class DOMTreeView : public KListView
+class DOMTreeView : public TDEListView
 {
     Q_OBJECT
     public: 

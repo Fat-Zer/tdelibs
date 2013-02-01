@@ -27,8 +27,8 @@
 
 #include <tdelibs_export.h>
 
-class KActionCollection;
-class KPopupMenu;
+class TDEActionCollection;
+class TDEPopupMenu;
 class TQWidget;
 
 class TDEAboutData;
@@ -44,10 +44,10 @@ class KHelpMenuPrivate;
  * This class provides the standard %KDE help menu with the default "about"
  * dialog boxes and help entry.
  *
- * This class is used in KMainWindow so
+ * This class is used in TDEMainWindow so
  * normally you don't need to use this class yourself. However, if you
  * need the help menu or any of its dialog boxes in your code that is
- * not subclassed from KMainWindow you should use this class.
+ * not subclassed from TDEMainWindow you should use this class.
  *
  * The usage is simple:
  *
@@ -64,7 +64,7 @@ class KHelpMenuPrivate;
  * \endcode
  *
  * IMPORTANT:
- * The first time you use KHelpMenu::menu(), a KPopupMenu object is
+ * The first time you use KHelpMenu::menu(), a TDEPopupMenu object is
  * allocated. Only one object is created by the class so if you call
  * KHelpMenu::menu() twice or more, the same pointer is returned. The class
  * will destroy the popupmenu in the destructor so do not delete this
@@ -115,7 +115,7 @@ class KHelpMenuPrivate;
  * void MyClass::myFunc()
  * {
  *   KHelpMenu *helpMenu = new KHelpMenu( this );
- *   KPopupMenu *help = mHelpMenu->menu();
+ *   TDEPopupMenu *help = mHelpMenu->menu();
  *   help->connectItem( KHelpMenu::menuAboutApp, this, TQT_SLOT(myDialogSlot()) );
  * }
  *
@@ -171,12 +171,12 @@ class TDEUI_EXPORT KHelpMenu : public TQObject
      * @param aboutData User and app data used in the About app dialog
      * @param showWhatsThis Decides whether a "Whats this" entry will be
      *        added to the dialog.
-     * @param actions KActionCollection that is used instead of the
+     * @param actions TDEActionCollection that is used instead of the
      *        standard actions.
      *
      */
     KHelpMenu( TQWidget *parent, const TDEAboutData *aboutData,
-	       bool showWhatsThis=true, KActionCollection *actions = 0 );
+	       bool showWhatsThis=true, TDEActionCollection *actions = 0 );
 
     /**
      * Destructor
@@ -192,7 +192,7 @@ class TDEUI_EXPORT KHelpMenu : public TQObject
      * Note: This method will only create one instance of the menu. If
      * you call this method twice or more the same pointer is returned
      */
-    KPopupMenu *menu();
+    TDEPopupMenu *menu();
 
   public slots:
     /**
@@ -261,7 +261,7 @@ class TDEUI_EXPORT KHelpMenu : public TQObject
     void showAboutApplication();
 
   private:
-    KPopupMenu   *mMenu;
+    TDEPopupMenu   *mMenu;
     KDialogBase  *mAboutApp;
     KAboutKDE    *mAboutKDE;
     KBugReport   *mBugReport;

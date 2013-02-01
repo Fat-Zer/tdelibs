@@ -33,12 +33,12 @@ class ScriptLoader : virtual public QObject
 		/** 
 		* Default Constructor
 		*/
-		ScriptLoader(KMainWindow *parent=0);
+		ScriptLoader(TDEMainWindow *parent=0);
 		~ScriptLoader();
-		/** Return the a KSelectAction with all of the scripts
-		 * @returns KSelectAction containing access to all of the scripts
+		/** Return the a TDESelectAction with all of the scripts
+		 * @returns TDESelectAction containing access to all of the scripts
 		 */
-		KSelectAction *getScripts();
+		TDESelectAction *getScripts();
 	public slots:
 		/** Run the current action.
 		*/
@@ -52,8 +52,8 @@ class ScriptLoader : virtual public QObject
 		virtual void done(int errorCode);
 	private:
 		TQPtrList<KScriptInterface> m_scripts;
-		KSelectAction *m_theAction;
+		TDESelectAction *m_theAction;
 		int m_currentSelection;
-		KMainWindow *m_parent;
+		TDEMainWindow *m_parent;
 };
 #endif

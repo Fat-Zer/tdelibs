@@ -511,7 +511,7 @@ int main(int argc, char *argv[])
 
     // create widgets
     KateFactory *fac = KateFactory::self();
-    KMainWindow *toplevel = new KMainWindow();
+    TDEMainWindow *toplevel = new TDEMainWindow();
     KateDocument *part = new KateDocument(/*bSingleViewMode*/true,
                                           /*bBrowserView*/false,
                                           /*bReadOnly*/false,

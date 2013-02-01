@@ -30,7 +30,7 @@
 class DrOptionView;
 class DrMain;
 
-class TDEPRINT_EXPORT DrListView : public KListView
+class TDEPRINT_EXPORT DrListView : public TDEListView
 {
 public:
 	DrListView(TQWidget *parent = 0, const char *name = 0);

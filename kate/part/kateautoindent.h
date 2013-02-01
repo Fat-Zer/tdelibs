@@ -190,9 +190,9 @@ class KateAutoIndent : public TQObject
 
 /**
  * This action provides a list of available indenters and gets plugged
- * into the KateView's KActionCollection.
+ * into the KateView's TDEActionCollection.
  */
-class KateViewIndentationAction : public KActionMenu
+class KateViewIndentationAction : public TDEActionMenu
 {
   Q_OBJECT
 

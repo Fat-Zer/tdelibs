@@ -541,8 +541,8 @@ KateSchemaConfigFontTab::KateSchemaConfigFontTab( TQWidget *parent, const char *
     // sizemanagment
   TQGridLayout *grid = new TQGridLayout( this, 1, 1 );
 
-  m_fontchooser = new KFontChooser ( this, 0L, false, TQStringList(), false );
-  m_fontchooser->enableColumn(KFontChooser::StyleList, false);
+  m_fontchooser = new TDEFontChooser ( this, 0L, false, TQStringList(), false );
+  m_fontchooser->enableColumn(TDEFontChooser::StyleList, false);
   grid->addWidget( m_fontchooser, 0, 0);
 
   connect (this, TQT_SIGNAL( changed()), parent->parentWidget(), TQT_SLOT (slotChanged()));
@@ -1078,7 +1078,7 @@ void KateStyleListView::showPopupMenu( KateStyleListItem *i, const TQPoint &glob
 {
   if ( !dynamic_cast<KateStyleListItem*>(i) ) return;
 
-  KPopupMenu m( this );
+  TDEPopupMenu m( this );
   KateAttribute *is = i->style();
   int id;
   // the title is used, because the menu obscures the context name when

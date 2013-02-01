@@ -32,7 +32,7 @@
  *
  * @author Malte Starostik <malte@kde.org>
  */
-class TDEUI_EXPORT KFontCombo : public KComboBox
+class TDEUI_EXPORT TDEFontCombo : public KComboBox
 {
     Q_OBJECT
     TQ_PROPERTY(TQString family READ currentFont WRITE setCurrentFont)
@@ -48,7 +48,7 @@ public:
      * @param parent The parent widget
      * @param name The object name for the widget
      */
-    KFontCombo(TQWidget *parent, const char *name = 0);
+    TDEFontCombo(TQWidget *parent, const char *name = 0);
     /**
      * Constructor that takes an already initialzed font list
      *
@@ -56,11 +56,11 @@ public:
      * @param parent The parent widget
      * @param name The object name for the widget
      */
-    KFontCombo(const TQStringList &fonts, TQWidget *parent, const char *name = 0);
+    TDEFontCombo(const TQStringList &fonts, TQWidget *parent, const char *name = 0);
     /**
      * Destructor
      */
-    virtual ~KFontCombo();
+    virtual ~TDEFontCombo();
 
     /**
      * Sets the font list.
@@ -168,11 +168,11 @@ private:
     void init();
 
 private:
-    friend class KFontListItem;
+    friend class TDEFontListItem;
 protected:
     virtual void virtual_hook( int id, void* data );
 private:
-    struct KFontComboPrivate *d;
+    struct TDEFontComboPrivate *d;
 };
 
 #endif

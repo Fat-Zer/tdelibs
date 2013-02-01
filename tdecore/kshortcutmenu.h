@@ -27,16 +27,16 @@
 
 class TQLabel;
 
-class KAccelActions;
+class TDEAccelActions;
 
 /**
  * @internal
  */
-class TDECORE_EXPORT KShortcutMenu : public TQPopupMenu
+class TDECORE_EXPORT TDEShortcutMenu : public TQPopupMenu
 {
 	Q_OBJECT
  public:
-	KShortcutMenu( TQWidget* pParent, KAccelActions* pActions, KKeySequence seq );
+	TDEShortcutMenu( TQWidget* pParent, TDEAccelActions* pActions, KKeySequence seq );
 
 	bool insertAction( uint iAction, KKeySequence seq );
 
@@ -52,7 +52,7 @@ class TDECORE_EXPORT KShortcutMenu : public TQPopupMenu
  private:
 	typedef TQMap<uint, KKeySequence> IndexToKKeySequence;
 	
-	KAccelActions* m_pActions;
+	TDEAccelActions* m_pActions;
 	KKeySequence m_seq;
 	TQLabel* pTitle;
 	IndexToKKeySequence m_seqs;

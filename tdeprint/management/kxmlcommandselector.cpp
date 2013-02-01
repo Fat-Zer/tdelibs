@@ -273,7 +273,7 @@ void KXmlCommandSelector::slotXmlCommandToggled( bool on )
 
 void KXmlCommandSelector::slotHelpCommand()
 {
-	KPopupFrame *pop = new KPopupFrame( m_helpbtn );
+	TDEPopupFrame *pop = new TDEPopupFrame( m_helpbtn );
 	KActiveLabel *lab = new KActiveLabel( m_help, pop );
 	lab->resize( lab->sizeHint() );
 	pop->setMainWidget( lab );

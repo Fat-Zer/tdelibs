@@ -143,7 +143,7 @@ KACLListViewItem::KACLListViewItem( TQListView* parent,
                                     KACLListView::EntryType _type,
                                     unsigned short _value, bool defaults,
                                     const TQString& _qualifier )
- : KListViewItem( parent, parent->lastItem() ), // we want to append
+ : TDEListViewItem( parent, parent->lastItem() ), // we want to append
    type( _type ), value( _value ), isDefault( defaults ),
    qualifier( _qualifier ), isPartial( false )
 {
@@ -204,7 +204,7 @@ void KACLListViewItem::paintCell( TQPainter* p, const TQColorGroup &cg,
         mycg.setColor( TQColorGroup::Text, TQColor( 100, 100, 100 ) );
         p->setFont( font );
     }
-    KListViewItem::paintCell( p, mycg, column, width, alignment );
+    TDEListViewItem::paintCell( p, mycg, column, width, alignment );
 
     KACLListViewItem *below =0;
     if ( itemBelow() )
@@ -556,7 +556,7 @@ void EditACLEntryDialog::slotSelectionChanged( int id )
 
 
 KACLListView::KACLListView( TQWidget* parent, const char* name )
- : KListView( parent, name ),
+ : TDEListView( parent, name ),
    m_hasMask( false ), m_allowDefaults( false )
 {
     // Add the columns
@@ -753,7 +753,7 @@ void KACLListView::contentsMousePressEvent( TQMouseEvent * e )
     if ( !clickedItem ) return;
     // if the click is on an as yet unselected item, select it first
     if ( !clickedItem->isSelected() )
-        KListView::contentsMousePressEvent( e );
+        TDEListView::contentsMousePressEvent( e );
 
     if ( !currentItem() ) return;
     int column = header()->sectionAt( e->x() );
@@ -770,7 +770,7 @@ void KACLListView::contentsMousePressEvent( TQMouseEvent * e )
             perm = ACL_EXECUTE;
             break;
         default:
-            return KListView::contentsMousePressEvent( e );
+            return TDEListView::contentsMousePressEvent( e );
     }
     KACLListViewItem* referenceItem = static_cast<KACLListViewItem*>( clickedItem );
     unsigned short referenceHadItSet = referenceItem->value & perm;

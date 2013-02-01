@@ -107,7 +107,7 @@ void MainWidget::resizeEvent( TQResizeEvent *pRSE)
    setSysButtonsAtMenuPosition();
 }
 
-RestartWidget::RestartWidget():KMainWindow()
+RestartWidget::RestartWidget():TDEMainWindow()
 {
     mdimode=KMdi::ChildframeMode;
     TQVBoxLayout* bl = new TQVBoxLayout(this);

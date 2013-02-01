@@ -135,17 +135,17 @@ void KPixmapRegionSelectorWidget::updatePixmap()
 }
 
 
-KPopupMenu *KPixmapRegionSelectorWidget::createPopupMenu()
+TDEPopupMenu *KPixmapRegionSelectorWidget::createPopupMenu()
 {
-   KPopupMenu *popup=new KPopupMenu(this, "PixmapRegionSelectorPopup");
+   TDEPopupMenu *popup=new TDEPopupMenu(this, "PixmapRegionSelectorPopup");
    popup->insertTitle(i18n("Image Operations"));
    
-   KAction *action = new KAction(i18n("&Rotate Clockwise"), "rotate_cw",
+   TDEAction *action = new TDEAction(i18n("&Rotate Clockwise"), "rotate_cw",
                                 0, TQT_TQOBJECT(this), TQT_SLOT(rotateClockwise()),
                                 TQT_TQOBJECT(popup), "rotateclockwise");
    action->plug(popup);
 
-   action = new KAction(i18n("Rotate &Counterclockwise"), "rotate_ccw",
+   action = new TDEAction(i18n("Rotate &Counterclockwise"), "rotate_ccw",
                                 0, TQT_TQOBJECT(this), TQT_SLOT(rotateCounterclockwise()),
                                 TQT_TQOBJECT(popup), "rotatecounterclockwise");
    action->plug(popup);
@@ -215,7 +215,7 @@ bool KPixmapRegionSelectorWidget::eventFilter(TQObject *obj, TQEvent *ev)
 
       if ( mev->button() == Qt::RightButton )
       {
-         KPopupMenu *popup = createPopupMenu( );
+         TDEPopupMenu *popup = createPopupMenu( );
          popup->exec( mev->globalPos() );
          delete popup;
          return TRUE;

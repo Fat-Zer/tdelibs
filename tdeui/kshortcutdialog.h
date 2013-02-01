@@ -25,42 +25,42 @@
 
 class TQVBox;
 class KPushButton;
-class KShortcutDialogSimple;
-class KShortcutDialogAdvanced;
+class TDEShortcutDialogSimple;
+class TDEShortcutDialogAdvanced;
 
 /**
  * @short Dialog for configuring a shortcut.
  *
- * This dialog allows configuring a single KShortcut. KKeyDialog
+ * This dialog allows configuring a single TDEShortcut. KKeyDialog
  * should be usually used instead.
  *
  * @internal
  * @see KKeyDialog
  * @since 3.4
  */
-class TDEUI_EXPORT KShortcutDialog : public KDialogBase
+class TDEUI_EXPORT TDEShortcutDialog : public KDialogBase
 {
 	Q_OBJECT
 public:
-	KShortcutDialog( const KShortcut& shortcut, bool bQtShortcut, TQWidget* parent = 0, const char* name = 0 );
-	~KShortcutDialog();
+	TDEShortcutDialog( const TDEShortcut& shortcut, bool bQtShortcut, TQWidget* parent = 0, const char* name = 0 );
+	~TDEShortcutDialog();
 
-	void setShortcut( const KShortcut & shortcut );
-	const KShortcut& shortcut() const { return m_shortcut; }
+	void setShortcut( const TDEShortcut & shortcut );
+	const TDEShortcut& shortcut() const { return m_shortcut; }
 
 private:
 	// true if qt shortcut, false if native shortcut
 	bool m_bQtShortcut;
 
-	KShortcut m_shortcut;
+	TDEShortcut m_shortcut;
 	bool m_bGrab;
 	KPushButton* m_ptxtCurrent;
 	uint m_iSeq;
 	uint m_iKey;
 	bool m_bRecording;
 	uint m_mod;
-	KShortcutDialogSimple *m_simple;
-	KShortcutDialogAdvanced *m_adv;
+	TDEShortcutDialogSimple *m_simple;
+	TDEShortcutDialogAdvanced *m_adv;
 	TQVBox *m_stack;
 	
 	void updateShortcutDisplay();
@@ -89,7 +89,7 @@ protected slots:
 	void slotMultiKeyMode( bool bOn );
 
 private:
-        class KShortcutDialogPrivate* d;
+        class TDEShortcutDialogPrivate* d;
         static bool s_showMore;
 };
 

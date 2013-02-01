@@ -58,21 +58,21 @@ public:
 }
 
 MainWindow::MainWindow( TQWidget* parent,  const char *name, WFlags f )
-    : KMainWindow( parent, name, f )
+    : TDEMainWindow( parent, name, f )
 {
   d = new MainWindowPrivate();
   PartBase::setPartObject( TQT_TQOBJECT(this) );
 }
 
 MainWindow::MainWindow( const char *name, WFlags f )
-  : KMainWindow( 0L, name, f )
+  : TDEMainWindow( 0L, name, f )
 {
   d = new MainWindowPrivate();
   PartBase::setPartObject( TQT_TQOBJECT(this) );
 }
 
 MainWindow::MainWindow( int cflags, TQWidget* parent,  const char *name, WFlags f )
-    : KMainWindow( cflags, parent, name, f )
+    : TDEMainWindow( cflags, parent, name, f )
 {
   d = new MainWindowPrivate();
   PartBase::setPartObject( TQT_TQOBJECT(this) );

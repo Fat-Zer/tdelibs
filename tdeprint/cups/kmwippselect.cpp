@@ -38,7 +38,7 @@ KMWIppSelect::KMWIppSelect(TQWidget *parent, const char *name)
 	m_title = i18n("Remote IPP Printer Selection");
 	m_nextpage = KMWizard::Driver;
 
-	m_list = new KListBox(this);
+	m_list = new TDEListBox(this);
 
 	TQVBoxLayout	*lay = new TQVBoxLayout(this, 0, 0);
 	lay->addWidget(m_list);

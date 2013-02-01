@@ -36,22 +36,22 @@ class TQFont;
 class TQGroupBox;
 class TQLabel;
 class TQStringList;
-class KListBox;
+class TDEListBox;
 class KIntNumInput;
 /**
  * @short A font selection widget.
  *
- * While KFontChooser as an ordinary widget can be embedded in
+ * While TDEFontChooser as an ordinary widget can be embedded in
  * custom dialogs and therefore is very flexible, in most cases
  * it is preferable to use the convenience functions in
- * KFontDialog.
+ * TDEFontDialog.
  *
  * \image html kfontchooser.png "KDE Font Chooser"
  *
  * @author Preston Brown <pbrown@kde.org>, Bernd Wuebben <wuebben@kde.org>
  * @version $Id$
  */
-class TDEUI_EXPORT KFontChooser : public TQWidget
+class TDEUI_EXPORT TDEFontChooser : public TQWidget
 {
   Q_OBJECT
   TQ_PROPERTY( TQFont font READ font WRITE setFont )
@@ -79,8 +79,8 @@ public:
    * <p>Consider the following code snippet;
    * \code
    *    TQStringList list;
-   *    KFontChooser::getFontList(list,SmoothScalableFonts);
-   *    KFontChooser chooseFont = new KFontChooser(0, "FontList", false, list);
+   *    TDEFontChooser::getFontList(list,SmoothScalableFonts);
+   *    TDEFontChooser chooseFont = new TDEFontChooser(0, "FontList", false, list);
    * \endcode
    * <p>
    * The above creates a font chooser dialog with only SmoothScaleble fonts.
@@ -94,7 +94,7 @@ public:
    *        If that has not been created, X is queried, and all fonts
    *        available on the system are displayed.
    * @param diff Display the difference version dialog.
-   *        See KFontDialog::getFontDiff().
+   *        See TDEFontDialog::getFontDiff().
    * @param makeFrame Draws a frame with titles around the contents.
    * @param visibleListSize The minimum number of visible entries in the
    *        fontlists.
@@ -105,7 +105,7 @@ public:
    *        *sizeIsRelativeState, user choice may be retrieved by
    *        calling sizeIsRelative().
    */
-  KFontChooser(TQWidget *parent = 0L, const char *name = 0L,
+  TDEFontChooser(TQWidget *parent = 0L, const char *name = 0L,
 	       bool onlyFixed = false,
 	       const TQStringList &fontList = TQStringList(),
 	       bool makeFrame = true, int visibleListSize=8,
@@ -114,7 +114,7 @@ public:
   /**
    * Destructs the font chooser.
    */
-  virtual ~KFontChooser();
+  virtual ~TDEFontChooser();
 
   /**
    * Enables or disable a font column in the chooser.
@@ -245,7 +245,7 @@ public:
    *
    * @param list The list is returned here.
    * @param fontListCriteria should contain all the restrictions for font selection as OR-ed values
-   *        @see KFontChooser::FontListCriteria for the individual values
+   *        @see TDEFontChooser::FontListCriteria for the individual values
    */
   static void getFontList( TQStringList &list, uint fontListCriteria);
 
@@ -291,9 +291,9 @@ private:
   TQCheckBox    *styleCheckbox;
   TQCheckBox    *sizeCheckbox;
   TQLabel       *sizeLabel;
-  KListBox     *familyListBox;
-  KListBox     *styleListBox;
-  KListBox     *sizeListBox;
+  TDEListBox     *familyListBox;
+  TDEListBox     *styleListBox;
+  TDEListBox     *sizeListBox;
   TQComboBox    *charsetsCombo; // BIC: remove in KDE4
   TQCheckBox    *sizeIsRelativeCheckBox;
 
@@ -308,17 +308,17 @@ private:
 protected:
   virtual void virtual_hook( int id, void* data );
 private:
-  class KFontChooserPrivate;
-  KFontChooserPrivate *d;
+  class TDEFontChooserPrivate;
+  TDEFontChooserPrivate *d;
 };
 
 /**
  * @short A font selection dialog.
  *
- * The KFontDialog provides a dialog for interactive font selection.
- * It is basically a thin wrapper around the KFontChooser widget,
+ * The TDEFontDialog provides a dialog for interactive font selection.
+ * It is basically a thin wrapper around the TDEFontChooser widget,
  * which can also be used standalone. In most cases, the simplest
- * use of this class is the static method KFontDialog::getFont(),
+ * use of this class is the static method TDEFontDialog::getFont(),
  * which pops up the dialog, allows the user to select a font, and
  * returns when the dialog is closed.
  *
@@ -326,8 +326,8 @@ private:
  *
  * \code
  *      TQFont myFont;
- *      int result = KFontDialog::getFont( myFont );
- *      if ( result == KFontDialog::Accepted )
+ *      int result = TDEFontDialog::getFont( myFont );
+ *      if ( result == TDEFontDialog::Accepted )
  *            ...
  * \endcode
  *
@@ -336,7 +336,7 @@ private:
  * @author Preston Brown <pbrown@kde.org>, Bernd Wuebben <wuebben@kde.org>
  * @version $Id$
  */
-class TDEUI_EXPORT KFontDialog : public KDialogBase  {
+class TDEUI_EXPORT TDEFontDialog : public KDialogBase  {
     Q_OBJECT
 
 public:
@@ -362,7 +362,7 @@ public:
    *        calling sizeIsRelative().
    *
    */
-  KFontDialog( TQWidget *parent = 0L, const char *name = 0,
+  TDEFontDialog( TQWidget *parent = 0L, const char *name = 0,
 	       bool onlyFixed = false, bool modal = false,
 	       const TQStringList &fontlist = TQStringList(),
 	       bool makeFrame = true, bool diff = false,
@@ -434,11 +434,11 @@ public:
    *        difference selection bitmask should be written.
    *        Check the returned bitmask like:
    *        \code
-   *        if ( diffFlags & KFontChooser::FontDiffFamily )
+   *        if ( diffFlags & TDEFontChooser::FontDiffFamily )
    *            [...]
-   *        if ( diffFlags & KFontChooser::FontDiffStyle )
+   *        if ( diffFlags & TDEFontChooser::FontDiffStyle )
    *            [...]
-   *        if ( diffFlags & KFontChooser::FontDiffSize )
+   *        if ( diffFlags & TDEFontChooser::FontDiffSize )
    *            [...]
    *        \endcode
    * @param onlyFixed if true, only select from fixed-width fonts.
@@ -491,13 +491,13 @@ signals:
   void fontSelected( const TQFont &font );
 
 protected:
-  KFontChooser *chooser;
+  TDEFontChooser *chooser;
 
 protected:
   virtual void virtual_hook( int id, void* data );
 private:
-  class KFontDialogPrivate;
-  KFontDialogPrivate *d;
+  class TDEFontDialogPrivate;
+  TDEFontDialogPrivate *d;
 
 };
 

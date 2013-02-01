@@ -83,7 +83,7 @@ int NameSortedInfoList::compareItems( TQPtrCollection::Item s1, TQPtrCollection:
 } // namespace
 
 KWindowListMenu::KWindowListMenu(TQWidget *parent, const char *name)
-  : KPopupMenu(parent, name)
+  : TDEPopupMenu(parent, name)
 {
     twin_module = new KWinModule(TQT_TQOBJECT(this));
 
@@ -251,7 +251,7 @@ void KWindowListMenu::slotCascadeWindows()
 }
 
 void KWindowListMenu::virtual_hook( int id, void* data )
-{ KPopupMenu::virtual_hook( id, data ); }
+{ TDEPopupMenu::virtual_hook( id, data ); }
 
 #endif // Q_WS_X11
 

@@ -30,84 +30,84 @@
 #include <kshortcut.h>
 #include <kshortcutlist.h>
 
-namespace KStdAccel
+namespace TDEStdAccel
 {
 
-struct KStdAccelInfo
+struct TDEStdAccelInfo
 {
 	StdAccel id;
 	const char* psName;
 	const char* psDesc;
 	int cutDefault, cutDefault4, cutDefault3B, cutDefault4B;
-	KShortcut cut;
+	TDEShortcut cut;
 	bool bInitialized;
 };
 
-/** Array of predefined KStdAccelInfo objects, which cover all
+/** Array of predefined TDEStdAccelInfo objects, which cover all
     the "standard" accelerators. Each enum value from StdAccel
     should appear in this table.
 */
-static KStdAccelInfo g_infoStdAccel[] =
+static TDEStdAccelInfo g_infoStdAccel[] =
 {
-	{AccelNone,            "Group:File", I18N_NOOP("File"), 0, 0, 0, 0, KShortcut(), false },
-	{ Open,                I18N_NOOP("Open"), 0,     Qt::CTRL+Qt::Key_O, 0, 0, 0, KShortcut(), false },
-	{ New,                 I18N_NOOP("New"), 0,      Qt::CTRL+Qt::Key_N, 0, 0, 0, KShortcut(), false },
-	{ Close,               I18N_NOOP("Close"), 0,    Qt::CTRL+Qt::Key_W, Qt::CTRL+Qt::Key_Escape, 0, Qt::CTRL+Qt::Key_W, KShortcut(), false },
-	{ Save,                I18N_NOOP("Save"), 0,     Qt::CTRL+Qt::Key_S, 0, 0, 0, KShortcut(), false },
-	{ Print,               I18N_NOOP("Print"), 0,    Qt::CTRL+Qt::Key_P, 0, 0, 0, KShortcut(), false },
-	{ Quit,                I18N_NOOP("Quit"), 0,     Qt::CTRL+Qt::Key_Q, 0, 0, 0, KShortcut(), false },
-	{AccelNone,            "Group:Edit", I18N_NOOP("Edit"), 0, 0, 0, 0, KShortcut(), false },
-	{ Undo,                I18N_NOOP("Undo"), 0,     Qt::CTRL+Qt::Key_Z, 0, 0, 0, KShortcut(), false },
-	{ Redo,                I18N_NOOP("Redo"), 0,     Qt::CTRL+Qt::SHIFT+Qt::Key_Z, 0, 0, 0, KShortcut(), false },
-	{ Cut,                 I18N_NOOP("Cut"), 0,      Qt::CTRL+Qt::Key_X, 0, Qt::SHIFT+Qt::Key_Delete, 0, KShortcut(), false },
-	{ Copy,                I18N_NOOP("Copy"), 0,     Qt::CTRL+Qt::Key_C, 0, Qt::CTRL+Qt::Key_Insert, 0, KShortcut(), false },
-	{ Paste,               I18N_NOOP("Paste"), 0,    Qt::CTRL+Qt::Key_V, 0, Qt::SHIFT+Qt::Key_Insert, 0, KShortcut(), false },
-	{ PasteSelection,      I18N_NOOP("Paste Selection"), 0, 0, 0, Qt::CTRL+Qt::SHIFT+Qt::Key_Insert, 0, KShortcut(), false },
-	{ SelectAll,           "SelectAll", I18N_NOOP("Select All"), Qt::CTRL+Qt::Key_A, 0, 0, 0, KShortcut(), false },
-	{ Deselect,            I18N_NOOP("Deselect"), 0, Qt::CTRL+Qt::SHIFT+Qt::Key_A, 0, 0, 0, KShortcut(), false },
-	{ DeleteWordBack,      "DeleteWordBack", I18N_NOOP("Delete Word Backwards"), Qt::CTRL+Qt::Key_Backspace, 0, 0, 0, KShortcut(), false },
-	{ DeleteWordForward,   "DeleteWordForward", I18N_NOOP("Delete Word Forward"), Qt::CTRL+Qt::Key_Delete, 0,  0, 0, KShortcut(), false },
-	{ Find,                I18N_NOOP("Find"), 0,     Qt::CTRL+Qt::Key_F, 0, 0, 0, KShortcut(), false },
-	{ FindNext,            "FindNext", I18N_NOOP("Find Next"), Qt::Key_F3, 0, 0, 0, KShortcut(), false },
-	{ FindPrev,            "FindPrev", I18N_NOOP("Find Prev"), Qt::SHIFT+Qt::Key_F3, 0, 0, 0, KShortcut(), false },
-	{ Replace,             I18N_NOOP("Replace"), 0,  Qt::CTRL+Qt::Key_R, 0, 0, 0, KShortcut(), false },
-	{AccelNone,            "Group:Navigation", I18N_NOOP("Navigation"), 0, 0, 0, 0, KShortcut(), false },
-	{ Home,                I18N_NOOP2("Opposite to End","Home"), 0,     Qt::CTRL+Qt::Key_Home, 0, Qt::Key_HomePage, 0, KShortcut(), false },
-	{ End,                 I18N_NOOP("End"), 0,      Qt::CTRL+Qt::Key_End, 0, 0, 0, KShortcut(), false },
-	{ BeginningOfLine,     "BeginningOfLine", I18N_NOOP("Beginning of Line"), Qt::Key_Home, 0, 0, 0, KShortcut(), false},
-	{ EndOfLine,           "EndOfLine", I18N_NOOP("End of Line"), Qt::Key_End, 0, 0, 0, KShortcut(), false},
-	{ Prior,               I18N_NOOP("Prior"), 0,    TQt::Key_Prior, 0, 0, 0, KShortcut(), false },
-	{ Next,                I18N_NOOP2("Opposite to Prior","Next"), 0,     TQt::Key_Next, 0, 0, 0, KShortcut(), false },
-	{ GotoLine,            "GotoLine", I18N_NOOP("Go to Line"), Qt::CTRL+Qt::Key_G, 0, 0, 0, KShortcut(), false },
-	{ AddBookmark,         "AddBookmark", I18N_NOOP("Add Bookmark"), Qt::CTRL+Qt::Key_B, 0, 0, 0, KShortcut(), false },
-	{ ZoomIn,              "ZoomIn", I18N_NOOP("Zoom In"), Qt::CTRL+Qt::Key_Plus, 0, 0, 0, KShortcut(), false },
-	{ ZoomOut,             "ZoomOut", I18N_NOOP("Zoom Out"), Qt::CTRL+Qt::Key_Minus, 0, 0, 0, KShortcut(), false },
-	{ Up,                  I18N_NOOP("Up"), 0,       Qt::ALT+Qt::Key_Up, 0, 0, 0, KShortcut(), false },
-	{ Back,                I18N_NOOP("Back"), 0,     Qt::ALT+Qt::Key_Left, 0, Qt::Key_Back, 0, KShortcut(), false },
-	{ Forward,             I18N_NOOP("Forward"), 0,  Qt::ALT+Qt::Key_Right, 0, Qt::Key_Forward, 0, KShortcut(), false },
-	{ Reload,              I18N_NOOP("Reload"), 0,   Qt::Key_F5, 0, Qt::Key_Refresh, 0, KShortcut(), false },
-	{ PopupMenuContext,    "PopupMenuContext", I18N_NOOP("Popup Menu Context"), Qt::Key_Menu, 0, 0, 0, KShortcut(), false },
-	{ ShowMenubar,         "ShowMenubar", I18N_NOOP("Show Menu Bar"), Qt::CTRL+Qt::Key_M, 0, 0, 0, KShortcut(), false },
-	{ BackwardWord,        "BackwardWord", I18N_NOOP("Backward Word"), Qt::CTRL+Qt::Key_Left, 0, 0, 0, KShortcut(), false },
-	{ ForwardWord,         "ForwardWord", I18N_NOOP("Forward Word"), Qt::CTRL+Qt::Key_Right, 0, 0, 0, KShortcut(), false },
-	{ TabNext,             I18N_NOOP("Activate Next Tab"), 0,  Qt::CTRL+Qt::Key_Period, 0, Qt::CTRL+Qt::Key_BracketRight, 0, KShortcut(), false },
-	{ TabPrev,             I18N_NOOP("Activate Previous Tab"), 0,   Qt::CTRL+Qt::Key_Comma, 0, Qt::CTRL+Qt::Key_BracketLeft, 0, KShortcut(), false },
-	{ FullScreen,          "FullScreen", I18N_NOOP("Full Screen Mode"), Qt::CTRL+Qt::SHIFT+Qt::Key_F, 0, 0, 0, KShortcut(), false },
-	{AccelNone,            "Group:Help", I18N_NOOP("Help"), 0, 0, 0, 0, KShortcut(), false },
-	{ Help,                I18N_NOOP("Help"), 0,     Qt::Key_F1, 0, 0, 0, KShortcut(), false },
-	{ WhatsThis,           "WhatsThis", I18N_NOOP("What's This"), Qt::SHIFT+Qt::Key_F1, 0, 0, 0, KShortcut(), false },
-	{AccelNone,            "Group:TextCompletion", I18N_NOOP("Text Completion"), 0, 0, 0, 0, KShortcut(), false },
-	{ TextCompletion,      "TextCompletion", I18N_NOOP("Text Completion"), Qt::CTRL+Qt::Key_E, 0, 0, 0, KShortcut(), false },
-	{ PrevCompletion,      "PrevCompletion", I18N_NOOP("Previous Completion Match"), Qt::CTRL+Qt::Key_Up, 0, 0, 0, KShortcut(), false },
-	{ NextCompletion,      "NextCompletion", I18N_NOOP("Next Completion Match"), Qt::CTRL+Qt::Key_Down, 0, 0, 0, KShortcut(), false },
-	{ SubstringCompletion, "SubstringCompletion", I18N_NOOP("Substring Completion"), Qt::CTRL+Qt::Key_T, 0, 0, 0, KShortcut(), false },
-	{ RotateUp,            "RotateUp", I18N_NOOP("Previous Item in List"), Qt::Key_Up, 0, 0, 0, KShortcut(), false },
-	{ RotateDown,          "RotateDown", I18N_NOOP("Next Item in List"), Qt::Key_Down, 0, 0, 0, KShortcut(), false },
-	{ AccelNone,           0, 0, 0, 0, 0, 0, KShortcut(), false }
+	{AccelNone,            "Group:File", I18N_NOOP("File"), 0, 0, 0, 0, TDEShortcut(), false },
+	{ Open,                I18N_NOOP("Open"), 0,     Qt::CTRL+Qt::Key_O, 0, 0, 0, TDEShortcut(), false },
+	{ New,                 I18N_NOOP("New"), 0,      Qt::CTRL+Qt::Key_N, 0, 0, 0, TDEShortcut(), false },
+	{ Close,               I18N_NOOP("Close"), 0,    Qt::CTRL+Qt::Key_W, Qt::CTRL+Qt::Key_Escape, 0, Qt::CTRL+Qt::Key_W, TDEShortcut(), false },
+	{ Save,                I18N_NOOP("Save"), 0,     Qt::CTRL+Qt::Key_S, 0, 0, 0, TDEShortcut(), false },
+	{ Print,               I18N_NOOP("Print"), 0,    Qt::CTRL+Qt::Key_P, 0, 0, 0, TDEShortcut(), false },
+	{ Quit,                I18N_NOOP("Quit"), 0,     Qt::CTRL+Qt::Key_Q, 0, 0, 0, TDEShortcut(), false },
+	{AccelNone,            "Group:Edit", I18N_NOOP("Edit"), 0, 0, 0, 0, TDEShortcut(), false },
+	{ Undo,                I18N_NOOP("Undo"), 0,     Qt::CTRL+Qt::Key_Z, 0, 0, 0, TDEShortcut(), false },
+	{ Redo,                I18N_NOOP("Redo"), 0,     Qt::CTRL+Qt::SHIFT+Qt::Key_Z, 0, 0, 0, TDEShortcut(), false },
+	{ Cut,                 I18N_NOOP("Cut"), 0,      Qt::CTRL+Qt::Key_X, 0, Qt::SHIFT+Qt::Key_Delete, 0, TDEShortcut(), false },
+	{ Copy,                I18N_NOOP("Copy"), 0,     Qt::CTRL+Qt::Key_C, 0, Qt::CTRL+Qt::Key_Insert, 0, TDEShortcut(), false },
+	{ Paste,               I18N_NOOP("Paste"), 0,    Qt::CTRL+Qt::Key_V, 0, Qt::SHIFT+Qt::Key_Insert, 0, TDEShortcut(), false },
+	{ PasteSelection,      I18N_NOOP("Paste Selection"), 0, 0, 0, Qt::CTRL+Qt::SHIFT+Qt::Key_Insert, 0, TDEShortcut(), false },
+	{ SelectAll,           "SelectAll", I18N_NOOP("Select All"), Qt::CTRL+Qt::Key_A, 0, 0, 0, TDEShortcut(), false },
+	{ Deselect,            I18N_NOOP("Deselect"), 0, Qt::CTRL+Qt::SHIFT+Qt::Key_A, 0, 0, 0, TDEShortcut(), false },
+	{ DeleteWordBack,      "DeleteWordBack", I18N_NOOP("Delete Word Backwards"), Qt::CTRL+Qt::Key_Backspace, 0, 0, 0, TDEShortcut(), false },
+	{ DeleteWordForward,   "DeleteWordForward", I18N_NOOP("Delete Word Forward"), Qt::CTRL+Qt::Key_Delete, 0,  0, 0, TDEShortcut(), false },
+	{ Find,                I18N_NOOP("Find"), 0,     Qt::CTRL+Qt::Key_F, 0, 0, 0, TDEShortcut(), false },
+	{ FindNext,            "FindNext", I18N_NOOP("Find Next"), Qt::Key_F3, 0, 0, 0, TDEShortcut(), false },
+	{ FindPrev,            "FindPrev", I18N_NOOP("Find Prev"), Qt::SHIFT+Qt::Key_F3, 0, 0, 0, TDEShortcut(), false },
+	{ Replace,             I18N_NOOP("Replace"), 0,  Qt::CTRL+Qt::Key_R, 0, 0, 0, TDEShortcut(), false },
+	{AccelNone,            "Group:Navigation", I18N_NOOP("Navigation"), 0, 0, 0, 0, TDEShortcut(), false },
+	{ Home,                I18N_NOOP2("Opposite to End","Home"), 0,     Qt::CTRL+Qt::Key_Home, 0, Qt::Key_HomePage, 0, TDEShortcut(), false },
+	{ End,                 I18N_NOOP("End"), 0,      Qt::CTRL+Qt::Key_End, 0, 0, 0, TDEShortcut(), false },
+	{ BeginningOfLine,     "BeginningOfLine", I18N_NOOP("Beginning of Line"), Qt::Key_Home, 0, 0, 0, TDEShortcut(), false},
+	{ EndOfLine,           "EndOfLine", I18N_NOOP("End of Line"), Qt::Key_End, 0, 0, 0, TDEShortcut(), false},
+	{ Prior,               I18N_NOOP("Prior"), 0,    TQt::Key_Prior, 0, 0, 0, TDEShortcut(), false },
+	{ Next,                I18N_NOOP2("Opposite to Prior","Next"), 0,     TQt::Key_Next, 0, 0, 0, TDEShortcut(), false },
+	{ GotoLine,            "GotoLine", I18N_NOOP("Go to Line"), Qt::CTRL+Qt::Key_G, 0, 0, 0, TDEShortcut(), false },
+	{ AddBookmark,         "AddBookmark", I18N_NOOP("Add Bookmark"), Qt::CTRL+Qt::Key_B, 0, 0, 0, TDEShortcut(), false },
+	{ ZoomIn,              "ZoomIn", I18N_NOOP("Zoom In"), Qt::CTRL+Qt::Key_Plus, 0, 0, 0, TDEShortcut(), false },
+	{ ZoomOut,             "ZoomOut", I18N_NOOP("Zoom Out"), Qt::CTRL+Qt::Key_Minus, 0, 0, 0, TDEShortcut(), false },
+	{ Up,                  I18N_NOOP("Up"), 0,       Qt::ALT+Qt::Key_Up, 0, 0, 0, TDEShortcut(), false },
+	{ Back,                I18N_NOOP("Back"), 0,     Qt::ALT+Qt::Key_Left, 0, Qt::Key_Back, 0, TDEShortcut(), false },
+	{ Forward,             I18N_NOOP("Forward"), 0,  Qt::ALT+Qt::Key_Right, 0, Qt::Key_Forward, 0, TDEShortcut(), false },
+	{ Reload,              I18N_NOOP("Reload"), 0,   Qt::Key_F5, 0, Qt::Key_Refresh, 0, TDEShortcut(), false },
+	{ PopupMenuContext,    "PopupMenuContext", I18N_NOOP("Popup Menu Context"), Qt::Key_Menu, 0, 0, 0, TDEShortcut(), false },
+	{ ShowMenubar,         "ShowMenubar", I18N_NOOP("Show Menu Bar"), Qt::CTRL+Qt::Key_M, 0, 0, 0, TDEShortcut(), false },
+	{ BackwardWord,        "BackwardWord", I18N_NOOP("Backward Word"), Qt::CTRL+Qt::Key_Left, 0, 0, 0, TDEShortcut(), false },
+	{ ForwardWord,         "ForwardWord", I18N_NOOP("Forward Word"), Qt::CTRL+Qt::Key_Right, 0, 0, 0, TDEShortcut(), false },
+	{ TabNext,             I18N_NOOP("Activate Next Tab"), 0,  Qt::CTRL+Qt::Key_Period, 0, Qt::CTRL+Qt::Key_BracketRight, 0, TDEShortcut(), false },
+	{ TabPrev,             I18N_NOOP("Activate Previous Tab"), 0,   Qt::CTRL+Qt::Key_Comma, 0, Qt::CTRL+Qt::Key_BracketLeft, 0, TDEShortcut(), false },
+	{ FullScreen,          "FullScreen", I18N_NOOP("Full Screen Mode"), Qt::CTRL+Qt::SHIFT+Qt::Key_F, 0, 0, 0, TDEShortcut(), false },
+	{AccelNone,            "Group:Help", I18N_NOOP("Help"), 0, 0, 0, 0, TDEShortcut(), false },
+	{ Help,                I18N_NOOP("Help"), 0,     Qt::Key_F1, 0, 0, 0, TDEShortcut(), false },
+	{ WhatsThis,           "WhatsThis", I18N_NOOP("What's This"), Qt::SHIFT+Qt::Key_F1, 0, 0, 0, TDEShortcut(), false },
+	{AccelNone,            "Group:TextCompletion", I18N_NOOP("Text Completion"), 0, 0, 0, 0, TDEShortcut(), false },
+	{ TextCompletion,      "TextCompletion", I18N_NOOP("Text Completion"), Qt::CTRL+Qt::Key_E, 0, 0, 0, TDEShortcut(), false },
+	{ PrevCompletion,      "PrevCompletion", I18N_NOOP("Previous Completion Match"), Qt::CTRL+Qt::Key_Up, 0, 0, 0, TDEShortcut(), false },
+	{ NextCompletion,      "NextCompletion", I18N_NOOP("Next Completion Match"), Qt::CTRL+Qt::Key_Down, 0, 0, 0, TDEShortcut(), false },
+	{ SubstringCompletion, "SubstringCompletion", I18N_NOOP("Substring Completion"), Qt::CTRL+Qt::Key_T, 0, 0, 0, TDEShortcut(), false },
+	{ RotateUp,            "RotateUp", I18N_NOOP("Previous Item in List"), Qt::Key_Up, 0, 0, 0, TDEShortcut(), false },
+	{ RotateDown,          "RotateDown", I18N_NOOP("Next Item in List"), Qt::Key_Down, 0, 0, 0, TDEShortcut(), false },
+	{ AccelNone,           0, 0, 0, 0, 0, 0, TDEShortcut(), false }
 };
 
-/** Search for the KStdAccelInfo object associated with the given @p id. */
-static KStdAccelInfo* infoPtr( StdAccel id )
+/** Search for the TDEStdAccelInfo object associated with the given @p id. */
+static TDEStdAccelInfo* infoPtr( StdAccel id )
 {
 	if( id != AccelNone ) {
 		// Linear search. Changing the data structure doesn't seem possible
@@ -127,10 +127,10 @@ static KStdAccelInfo* infoPtr( StdAccel id )
 static void initialize( StdAccel id )
 {
 	TDEConfigGroupSaver saver( TDEGlobal::config(), "Shortcuts" );
-	KStdAccelInfo* pInfo = infoPtr( id );
+	TDEStdAccelInfo* pInfo = infoPtr( id );
 
 	if( !pInfo ) {
-		kdWarning(125) << "KStdAccel: id not found!" << endl; // -- ellis
+		kdWarning(125) << "TDEStdAccel: id not found!" << endl; // -- ellis
 		return;
 	}
 
@@ -147,7 +147,7 @@ static void initialize( StdAccel id )
 
 TQString name( StdAccel id )
 {
-	KStdAccelInfo* pInfo = infoPtr( id );
+	TDEStdAccelInfo* pInfo = infoPtr( id );
 	if( !pInfo )
 		return TQString::null;
 	return pInfo->psName;
@@ -155,27 +155,27 @@ TQString name( StdAccel id )
 
 TQString label( StdAccel id )
 {
-	KStdAccelInfo* pInfo = infoPtr( id );
+	TDEStdAccelInfo* pInfo = infoPtr( id );
 	if( !pInfo )
 		return TQString::null;
 	return i18n((pInfo->psDesc) ? pInfo->psDesc : pInfo->psName);
 }
 
-// TODO: Add psWhatsThis entry to KStdAccelInfo
+// TODO: Add psWhatsThis entry to TDEStdAccelInfo
 TQString whatsThis( StdAccel /*id*/ )
 {
-//	KStdAccelInfo* pInfo = infoPtr( id );
+//	TDEStdAccelInfo* pInfo = infoPtr( id );
 //	if( pInfo && pInfo->psWhatsThis )
 //		return i18n(pInfo->psWhatsThis);
 //	else
 		return TQString::null;
 }
 
-const KShortcut& shortcut( StdAccel id )
+const TDEShortcut& shortcut( StdAccel id )
 {
-	KStdAccelInfo* pInfo = infoPtr( id );
+	TDEStdAccelInfo* pInfo = infoPtr( id );
 	if( !pInfo )
-		return KShortcut::null();
+		return TDEShortcut::null();
 
 	if( !pInfo->bInitialized )
 		initialize( id );
@@ -199,17 +199,17 @@ StdAccel findStdAccel( const KKeySequence& seq )
 	return AccelNone;
 }
 
-KShortcut shortcutDefault( StdAccel id )
+TDEShortcut shortcutDefault( StdAccel id )
 {
-	return (KAccelAction::useFourModifierKeys())
+	return (TDEAccelAction::useFourModifierKeys())
 		? shortcutDefault4(id) : shortcutDefault3(id);
 }
 
-KShortcut shortcutDefault3( StdAccel id )
+TDEShortcut shortcutDefault3( StdAccel id )
 {
-	KShortcut cut;
+	TDEShortcut cut;
 
-	KStdAccelInfo* pInfo = infoPtr( id );
+	TDEStdAccelInfo* pInfo = infoPtr( id );
 	if( pInfo ) {
 		if( pInfo->cutDefault )
 			cut.init( pInfo->cutDefault );
@@ -222,13 +222,13 @@ KShortcut shortcutDefault3( StdAccel id )
 	return cut;
 }
 
-KShortcut shortcutDefault4( StdAccel id )
+TDEShortcut shortcutDefault4( StdAccel id )
 {
-	KShortcut cut;
+	TDEShortcut cut;
 
-	KStdAccelInfo* pInfo = infoPtr( id );
+	TDEStdAccelInfo* pInfo = infoPtr( id );
 	if( pInfo ) {
-		KStdAccelInfo& info = *pInfo;
+		TDEStdAccelInfo& info = *pInfo;
 		KKeySequence key2;
 
 		cut.init( (info.cutDefault4) ?
@@ -247,13 +247,13 @@ KShortcut shortcutDefault4( StdAccel id )
 }
 
 #if 0 // unused
-void createAccelActions( KAccelActions& actions )
+void createAccelActions( TDEAccelActions& actions )
 {
 	actions.clear();
 
 	for( uint i = 0; g_infoStdAccel[i].psName != 0; i++ ) {
 		StdAccel id = g_infoStdAccel[i].id;
-		KStdAccelInfo* pInfo = &g_infoStdAccel[i];
+		TDEStdAccelInfo* pInfo = &g_infoStdAccel[i];
 
 		if( id != AccelNone ) {
 			actions.insert( pInfo->psName,
@@ -267,54 +267,54 @@ void createAccelActions( KAccelActions& actions )
 }
 #endif
 
-const KShortcut& open()                  { return shortcut( Open ); }
-const KShortcut& openNew()               { return shortcut( New ); }
-const KShortcut& close()                 { return shortcut( Close ); }
-const KShortcut& save()                  { return shortcut( Save ); }
-const KShortcut& print()                 { return shortcut( Print ); }
-const KShortcut& quit()                  { return shortcut( Quit ); }
-const KShortcut& cut()                   { return shortcut( Cut ); }
-const KShortcut& copy()                  { return shortcut( Copy ); }
-const KShortcut& paste()                 { return shortcut( Paste ); }
-const KShortcut& pasteSelection()        { return shortcut( PasteSelection ); }
-const KShortcut& deleteWordBack()        { return shortcut( DeleteWordBack ); }
-const KShortcut& deleteWordForward()     { return shortcut( DeleteWordForward ); }
-const KShortcut& undo()                  { return shortcut( Undo ); }
-const KShortcut& redo()                  { return shortcut( Redo ); }
-const KShortcut& find()                  { return shortcut( Find ); }
-const KShortcut& findNext()              { return shortcut( FindNext ); }
-const KShortcut& findPrev()              { return shortcut( FindPrev ); }
-const KShortcut& replace()               { return shortcut( Replace ); }
-const KShortcut& home()                  { return shortcut( Home ); }
-const KShortcut& end()                   { return shortcut( End ); }
-const KShortcut& beginningOfLine()       { return shortcut( BeginningOfLine ); }
-const KShortcut& endOfLine()             { return shortcut( EndOfLine ); }
-const KShortcut& prior()                 { return shortcut( Prior ); }
-const KShortcut& next()                  { return shortcut( Next ); }
-const KShortcut& backwardWord()          { return shortcut( BackwardWord ); }
-const KShortcut& forwardWord()           { return shortcut( ForwardWord ); }
-const KShortcut& gotoLine()              { return shortcut( GotoLine ); }
-const KShortcut& addBookmark()           { return shortcut( AddBookmark ); }
-const KShortcut& tabNext()               { return shortcut( TabNext ); }
-const KShortcut& tabPrev()               { return shortcut( TabPrev ); }
-const KShortcut& fullScreen()            { return shortcut( FullScreen ); }
-const KShortcut& zoomIn()                { return shortcut( ZoomIn ); }
-const KShortcut& zoomOut()               { return shortcut( ZoomOut ); }
-const KShortcut& help()                  { return shortcut( Help ); }
-const KShortcut& completion()            { return shortcut( TextCompletion ); }
-const KShortcut& prevCompletion()        { return shortcut( PrevCompletion ); }
-const KShortcut& nextCompletion()        { return shortcut( NextCompletion ); }
-const KShortcut& rotateUp()              { return shortcut( RotateUp ); }
-const KShortcut& rotateDown()            { return shortcut( RotateDown ); }
-const KShortcut& substringCompletion()   { return shortcut( SubstringCompletion ); }
-const KShortcut& popupMenuContext()      { return shortcut( PopupMenuContext ); }
-const KShortcut& whatsThis()             { return shortcut( WhatsThis ); }
-const KShortcut& reload()                { return shortcut( Reload ); }
-const KShortcut& selectAll()             { return shortcut( SelectAll ); }
-const KShortcut& up()                    { return shortcut( Up ); }
-const KShortcut& back()                  { return shortcut( Back ); }
-const KShortcut& forward()               { return shortcut( Forward ); }
-const KShortcut& showMenubar()           { return shortcut( ShowMenubar ); }
+const TDEShortcut& open()                  { return shortcut( Open ); }
+const TDEShortcut& openNew()               { return shortcut( New ); }
+const TDEShortcut& close()                 { return shortcut( Close ); }
+const TDEShortcut& save()                  { return shortcut( Save ); }
+const TDEShortcut& print()                 { return shortcut( Print ); }
+const TDEShortcut& quit()                  { return shortcut( Quit ); }
+const TDEShortcut& cut()                   { return shortcut( Cut ); }
+const TDEShortcut& copy()                  { return shortcut( Copy ); }
+const TDEShortcut& paste()                 { return shortcut( Paste ); }
+const TDEShortcut& pasteSelection()        { return shortcut( PasteSelection ); }
+const TDEShortcut& deleteWordBack()        { return shortcut( DeleteWordBack ); }
+const TDEShortcut& deleteWordForward()     { return shortcut( DeleteWordForward ); }
+const TDEShortcut& undo()                  { return shortcut( Undo ); }
+const TDEShortcut& redo()                  { return shortcut( Redo ); }
+const TDEShortcut& find()                  { return shortcut( Find ); }
+const TDEShortcut& findNext()              { return shortcut( FindNext ); }
+const TDEShortcut& findPrev()              { return shortcut( FindPrev ); }
+const TDEShortcut& replace()               { return shortcut( Replace ); }
+const TDEShortcut& home()                  { return shortcut( Home ); }
+const TDEShortcut& end()                   { return shortcut( End ); }
+const TDEShortcut& beginningOfLine()       { return shortcut( BeginningOfLine ); }
+const TDEShortcut& endOfLine()             { return shortcut( EndOfLine ); }
+const TDEShortcut& prior()                 { return shortcut( Prior ); }
+const TDEShortcut& next()                  { return shortcut( Next ); }
+const TDEShortcut& backwardWord()          { return shortcut( BackwardWord ); }
+const TDEShortcut& forwardWord()           { return shortcut( ForwardWord ); }
+const TDEShortcut& gotoLine()              { return shortcut( GotoLine ); }
+const TDEShortcut& addBookmark()           { return shortcut( AddBookmark ); }
+const TDEShortcut& tabNext()               { return shortcut( TabNext ); }
+const TDEShortcut& tabPrev()               { return shortcut( TabPrev ); }
+const TDEShortcut& fullScreen()            { return shortcut( FullScreen ); }
+const TDEShortcut& zoomIn()                { return shortcut( ZoomIn ); }
+const TDEShortcut& zoomOut()               { return shortcut( ZoomOut ); }
+const TDEShortcut& help()                  { return shortcut( Help ); }
+const TDEShortcut& completion()            { return shortcut( TextCompletion ); }
+const TDEShortcut& prevCompletion()        { return shortcut( PrevCompletion ); }
+const TDEShortcut& nextCompletion()        { return shortcut( NextCompletion ); }
+const TDEShortcut& rotateUp()              { return shortcut( RotateUp ); }
+const TDEShortcut& rotateDown()            { return shortcut( RotateDown ); }
+const TDEShortcut& substringCompletion()   { return shortcut( SubstringCompletion ); }
+const TDEShortcut& popupMenuContext()      { return shortcut( PopupMenuContext ); }
+const TDEShortcut& whatsThis()             { return shortcut( WhatsThis ); }
+const TDEShortcut& reload()                { return shortcut( Reload ); }
+const TDEShortcut& selectAll()             { return shortcut( SelectAll ); }
+const TDEShortcut& up()                    { return shortcut( Up ); }
+const TDEShortcut& back()                  { return shortcut( Back ); }
+const TDEShortcut& forward()               { return shortcut( Forward ); }
+const TDEShortcut& showMenubar()           { return shortcut( ShowMenubar ); }
 
 //---------------------------------------------------------------------
 // ShortcutList
@@ -345,24 +345,24 @@ TQString ShortcutList::label( uint i ) const
 TQString ShortcutList::whatsThis( uint ) const
 	{ return TQString::null; }
 
-const KShortcut& ShortcutList::shortcut( uint i ) const
+const TDEShortcut& ShortcutList::shortcut( uint i ) const
 {
 	if( !g_infoStdAccel[i].bInitialized )
 		initialize( g_infoStdAccel[i].id );
 	return g_infoStdAccel[i].cut;
 }
 
-const KShortcut& ShortcutList::shortcutDefault( uint i ) const
+const TDEShortcut& ShortcutList::shortcutDefault( uint i ) const
 {
-	static KShortcut cut;
-	cut = KStdAccel::shortcutDefault( g_infoStdAccel[i].id );
+	static TDEShortcut cut;
+	cut = TDEStdAccel::shortcutDefault( g_infoStdAccel[i].id );
 	return cut;
 }
 
 bool ShortcutList::isConfigurable( uint i ) const
 	{ return (g_infoStdAccel[i].id != AccelNone); }
 
-bool ShortcutList::setShortcut( uint i, const KShortcut& cut )
+bool ShortcutList::setShortcut( uint i, const TDEShortcut& cut )
 	{ g_infoStdAccel[i].cut = cut; return true; }
 
 TQVariant ShortcutList::getOther( Other, uint ) const

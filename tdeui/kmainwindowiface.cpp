@@ -28,7 +28,7 @@
 #include <tqclipboard.h>
 
 
-KMainWindowInterface::KMainWindowInterface(KMainWindow * mainWindow)
+TDEMainWindowInterface::TDEMainWindowInterface(TDEMainWindow * mainWindow)
 	: DCOPObject( mainWindow->name()) 
 {
 	m_MainWindow = mainWindow;
@@ -36,30 +36,30 @@ KMainWindowInterface::KMainWindowInterface(KMainWindow * mainWindow)
 	m_dcopPropertyProxy = new KDCOPPropertyProxy(TQT_TQOBJECT(m_MainWindow));
 }
 
-KMainWindowInterface::~KMainWindowInterface()
+TDEMainWindowInterface::~TDEMainWindowInterface()
 {
 	delete m_dcopActionProxy;
         delete m_dcopPropertyProxy;
 }
 
-QCStringList KMainWindowInterface::actions()
+QCStringList TDEMainWindowInterface::actions()
 {
 	delete m_dcopActionProxy;
 	m_dcopActionProxy = new KDCOPActionProxy( m_MainWindow->actionCollection(), this );
 	QCStringList tmp_actions;
-	TQValueList<KAction *> lst = m_dcopActionProxy->actions();
-	TQValueList<KAction *>::ConstIterator it = lst.begin();
-	TQValueList<KAction *>::ConstIterator end = lst.end();
+	TQValueList<TDEAction *> lst = m_dcopActionProxy->actions();
+	TQValueList<TDEAction *>::ConstIterator it = lst.begin();
+	TQValueList<TDEAction *>::ConstIterator end = lst.end();
 	for (; it != end; ++it )
 		if ((*it)->isPlugged())
 			tmp_actions.append( (TQCString)(*it)->name() );
 	return tmp_actions;
 }
-bool KMainWindowInterface::activateAction( TQCString action)
+bool TDEMainWindowInterface::activateAction( TQCString action)
 {
 	delete m_dcopActionProxy;
 	m_dcopActionProxy = new KDCOPActionProxy( m_MainWindow->actionCollection(), this );
-	KAction *tmp_Action = m_dcopActionProxy->action(action);
+	TDEAction *tmp_Action = m_dcopActionProxy->action(action);
 	if (tmp_Action)
 	{
 		tmp_Action->activate();
@@ -68,11 +68,11 @@ bool KMainWindowInterface::activateAction( TQCString action)
 	else
 		return false;
 }
-bool KMainWindowInterface::disableAction( TQCString action)
+bool TDEMainWindowInterface::disableAction( TQCString action)
 {
 	delete m_dcopActionProxy;
 	m_dcopActionProxy = new KDCOPActionProxy( m_MainWindow->actionCollection(), this );
-	KAction *tmp_Action = m_dcopActionProxy->action(action);
+	TDEAction *tmp_Action = m_dcopActionProxy->action(action);
 	if (tmp_Action)
 	{
 		tmp_Action->setEnabled(false);
@@ -81,11 +81,11 @@ bool KMainWindowInterface::disableAction( TQCString action)
 	else
 		return false;
 }
-bool KMainWindowInterface::enableAction( TQCString action)
+bool TDEMainWindowInterface::enableAction( TQCString action)
 {
 	delete m_dcopActionProxy;
 	m_dcopActionProxy = new KDCOPActionProxy( m_MainWindow->actionCollection(), this );
-	KAction *tmp_Action = m_dcopActionProxy->action(action);
+	TDEAction *tmp_Action = m_dcopActionProxy->action(action);
 	if (tmp_Action)
 	{
 		tmp_Action->setEnabled(true);
@@ -94,11 +94,11 @@ bool KMainWindowInterface::enableAction( TQCString action)
 	else
 		return false;
 }
-bool KMainWindowInterface::actionIsEnabled( TQCString action)
+bool TDEMainWindowInterface::actionIsEnabled( TQCString action)
 {
 	delete m_dcopActionProxy;
 	m_dcopActionProxy = new KDCOPActionProxy( m_MainWindow->actionCollection(), this );
-	KAction *tmp_Action = m_dcopActionProxy->action(action);
+	TDEAction *tmp_Action = m_dcopActionProxy->action(action);
 	if (tmp_Action)
 	{
 		return tmp_Action->isEnabled();
@@ -106,11 +106,11 @@ bool KMainWindowInterface::actionIsEnabled( TQCString action)
 	else
 		return false;
 }
-TQCString KMainWindowInterface::actionToolTip( TQCString action)
+TQCString TDEMainWindowInterface::actionToolTip( TQCString action)
 {
 	delete m_dcopActionProxy;
 	m_dcopActionProxy = new KDCOPActionProxy( m_MainWindow->actionCollection(), this );
-	KAction *tmp_Action = m_dcopActionProxy->action(action);
+	TDEAction *tmp_Action = m_dcopActionProxy->action(action);
 	if (tmp_Action)
 	{
 		return tmp_Action->toolTip().utf8();
@@ -119,74 +119,74 @@ TQCString KMainWindowInterface::actionToolTip( TQCString action)
 		return "Error no such object!";
 }
 
-DCOPRef KMainWindowInterface::action( const TQCString &name )
+DCOPRef TDEMainWindowInterface::action( const TQCString &name )
 {
 	return DCOPRef( kapp->dcopClient()->appId(), m_dcopActionProxy->actionObjectId( name ) );
 }
 
-TQMap<TQCString,DCOPRef> KMainWindowInterface::actionMap()
+TQMap<TQCString,DCOPRef> TDEMainWindowInterface::actionMap()
 {
 	return m_dcopActionProxy->actionMap();
 }
 
-int KMainWindowInterface::getWinID()
+int TDEMainWindowInterface::getWinID()
 {
 	return (int) m_MainWindow->winId();
 }
-void KMainWindowInterface::grabWindowToClipBoard()
+void TDEMainWindowInterface::grabWindowToClipBoard()
 {
 	TQClipboard *clipboard = TQApplication::clipboard();
 	clipboard->setPixmap(TQPixmap::grabWidget(m_MainWindow));
 }
-void KMainWindowInterface::hide()
+void TDEMainWindowInterface::hide()
 {
 	m_MainWindow->hide();
 }
-void KMainWindowInterface::maximize()
+void TDEMainWindowInterface::maximize()
 {
 	m_MainWindow->showMaximized();
 }
-void KMainWindowInterface::minimize()
+void TDEMainWindowInterface::minimize()
 {
 	m_MainWindow->showMinimized();
 }
-void KMainWindowInterface::resize(int newX, int newY)
+void TDEMainWindowInterface::resize(int newX, int newY)
 {
 	m_MainWindow->resize(newX, newY);
 }
-void KMainWindowInterface::move(int newX, int newY)
+void TDEMainWindowInterface::move(int newX, int newY)
 {
 	m_MainWindow->move(newX, newY);
 }
-void KMainWindowInterface::setGeometry(int newX, int newY, int newWidth, int newHeight)
+void TDEMainWindowInterface::setGeometry(int newX, int newY, int newWidth, int newHeight)
 {
 	m_MainWindow->setGeometry(newX, newY, newWidth, newHeight);
 }
-void KMainWindowInterface::raise()
+void TDEMainWindowInterface::raise()
 {
 	m_MainWindow->raise();
 }
-void KMainWindowInterface::lower()
+void TDEMainWindowInterface::lower()
 {
 	m_MainWindow->lower();
 }
-void KMainWindowInterface::restore()
+void TDEMainWindowInterface::restore()
 {
 	m_MainWindow->showNormal();
 }
-void KMainWindowInterface::close()
+void TDEMainWindowInterface::close()
 {
 	m_MainWindow->close();
 }
-void KMainWindowInterface::show()
+void TDEMainWindowInterface::show()
 {
 	m_MainWindow->show();
 }
-QCStringList KMainWindowInterface::functionsDynamic()
+QCStringList TDEMainWindowInterface::functionsDynamic()
 {
 	return m_dcopPropertyProxy->functions();
 }
-bool KMainWindowInterface::processDynamic(const TQCString &fun, const TQByteArray &data, TQCString& replyType, TQByteArray &replyData)
+bool TDEMainWindowInterface::processDynamic(const TQCString &fun, const TQByteArray &data, TQCString& replyType, TQByteArray &replyData)
 {
 	return m_dcopPropertyProxy->processPropertyRequest( fun, data, replyType, replyData);
 

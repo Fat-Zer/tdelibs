@@ -226,8 +226,8 @@ void KURLRequester::init()
     myCompletion = new KURLCompletion();
     d->setCompletionObject( myCompletion );
 
-    KAccel *accel = new KAccel( this );
-    accel->insert( KStdAccel::Open, TQT_TQOBJECT(this), TQT_SLOT( slotOpenDialog() ));
+    TDEAccel *accel = new TDEAccel( this );
+    accel->insert( TDEStdAccel::Open, TQT_TQOBJECT(this), TQT_SLOT( slotOpenDialog() ));
     accel->readSettings();
 }
 

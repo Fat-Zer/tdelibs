@@ -62,7 +62,7 @@ Tue Feb 15 14:21:41 2000  Carsten Pfeiffer  <pfeiffer@kde.org>
 	
 	* kdiroperator.cpp (setSorting): 
 	added setSorting() and sorting() to keep sorting when switching views
-	a few cosmetic and KAction changes
+	a few cosmetic and TDEAction changes
 
 Sun Feb 13 00:45:12 2000  Carsten Pfeiffer  <pfeiffer@kde.org>
 
@@ -87,7 +87,7 @@ Fri Feb 11 12:17:59 2000  Carsten Pfeiffer  <pfeiffer@kde.org>
 Thu Feb 10 17:06:36 2000  Carsten Pfeiffer  <pfeiffer@kde.org>
 
 	* kdiroperator.cpp (connectView): 
-	- Now that KToggleAction is fixed, I can commit the new stuff:
+	- Now that TDEToggleAction is fixed, I can commit the new stuff:
 	  Offer Actions for all the common functionality, i.e. sorting, setting
 	  the view, home(), cdUp(), back, forward, etc.
 	  All actions are exposed through a QActionCollection

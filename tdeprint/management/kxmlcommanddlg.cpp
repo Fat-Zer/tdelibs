@@ -84,7 +84,7 @@ KXmlCommandAdvancedDlg::KXmlCommandAdvancedDlg(TQWidget *parent, const char *nam
 	m_xmlcmd = 0;
 
 	m_command = new TQLineEdit(this);
-	m_view = new KListView(this);
+	m_view = new TDEListView(this);
 	m_view->addColumn("");
 	m_view->header()->hide();
 	m_view->setSorting(-1);
@@ -137,7 +137,7 @@ KXmlCommandAdvancedDlg::KXmlCommandAdvancedDlg(TQWidget *parent, const char *nam
 	TQLabel	*m_editlab2 = new TQLabel(i18n("Ma&ximum value:"), w1);
 	m_editlab1->setBuddy(m_edit1);
 	m_editlab2->setBuddy(m_edit2);
-	m_values = new KListView(w2);
+	m_values = new TDEListView(w2);
 	m_values->addColumn(i18n("Name"));
 	m_values->addColumn(i18n("Description"));
 	m_values->setAllColumnsShowFocus(true);
@@ -841,7 +841,7 @@ KXmlCommandDlg::KXmlCommandDlg(TQWidget *parent, const char *name)
 
 	m_description = new TQLineEdit(topmain);
 	m_idname = new TQLabel(topmain);
-	m_requirements = new KListView(m_gb2);
+	m_requirements = new TDEListView(m_gb2);
 	m_requirements->addColumn("");
 	m_requirements->header()->hide();
 	m_addreq = new TQToolButton(m_gb2);
@@ -850,8 +850,8 @@ KXmlCommandDlg::KXmlCommandDlg(TQWidget *parent, const char *name)
 	m_removereq->setIconSet(SmallIconSet("editdelete"));
 	TQPushButton	*m_edit = new KPushButton(KGuiItem(i18n("&Edit Command..."), "edit"), topmain);
 	m_mimetype = new TQComboBox(dummy);
-	m_availablemime = new KListBox(m_gb1);
-	m_selectedmime = new KListBox(m_gb1);
+	m_availablemime = new TDEListBox(m_gb1);
+	m_selectedmime = new TDEListBox(m_gb1);
 	m_addmime = new TQToolButton(m_gb1);
 	m_addmime->setIconSet(TQApplication::reverseLayout()? SmallIconSet("forward") : SmallIconSet("back"));
 	m_removemime = new TQToolButton(m_gb1);

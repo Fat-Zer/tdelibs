@@ -217,7 +217,7 @@ bool KDataToolInfo::isValid() const
  *************************************************/
 KDataToolAction::KDataToolAction( const TQString & text, const KDataToolInfo & info, const TQString & command,
                                     TQObject * parent, const char * name )
-    : KAction( text, info.iconName(), 0, parent, name ),
+    : TDEAction( text, info.iconName(), 0, parent, name ),
       m_command( command ),
       m_info( info )
 {
@@ -228,13 +228,13 @@ void KDataToolAction::slotActivated()
     emit toolActivated( m_info, m_command );
 }
 
-TQPtrList<KAction> KDataToolAction::dataToolActionList( const TQValueList<KDataToolInfo> & tools, const TQObject *receiver, const char* slot )
+TQPtrList<TDEAction> KDataToolAction::dataToolActionList( const TQValueList<KDataToolInfo> & tools, const TQObject *receiver, const char* slot )
 {
-    TQPtrList<KAction> actionList;
+    TQPtrList<TDEAction> actionList;
     if ( tools.isEmpty() )
         return actionList;
 
-    actionList.append( new KActionSeparator() );
+    actionList.append( new TDEActionSeparator() );
     TQValueList<KDataToolInfo>::ConstIterator entry = tools.begin();
     for( ; entry != tools.end(); ++entry )
     {
@@ -277,7 +277,7 @@ TDEInstance* KDataTool::instance() const
 }
 
 void KDataToolAction::virtual_hook( int id, void* data )
-{ KAction::virtual_hook( id, data ); }
+{ TDEAction::virtual_hook( id, data ); }
 
 void KDataTool::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }

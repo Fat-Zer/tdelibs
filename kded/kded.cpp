@@ -468,7 +468,7 @@ void Kded::runDelayedCheck()
 void Kded::recreate(bool initial)
 {
    m_recreateBusy = true;
-   // Using KLauncher here is difficult since we might not have a
+   // Using TDELauncher here is difficult since we might not have a
    // database
 
    if (!initial)

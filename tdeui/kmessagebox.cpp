@@ -224,10 +224,10 @@ int KMessageBox::createKMessageBox(KDialogBase *dialog, TQPixmap icon,
     lay->addWidget( label2 );
     lay->addStretch();
 
-    KListBox *listbox = 0;
+    TDEListBox *listbox = 0;
     if (!strlist.isEmpty())
     {
-       listbox=new KListBox( topcontents );
+       listbox=new TDEListBox( topcontents );
        listbox->insertStringList( strlist );
        listbox->setSelectionMode( TQListBox::NoSelection );
        topcontents->setStretchFactor(listbox, 1);

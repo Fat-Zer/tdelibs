@@ -22,7 +22,7 @@
 
 #include <kaction.h>
 
-class TDEPRINT_EXPORT PluginAction : public KAction
+class TDEPRINT_EXPORT PluginAction : public TDEAction
 {
 	Q_OBJECT
 

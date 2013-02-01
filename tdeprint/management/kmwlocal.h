@@ -25,7 +25,7 @@
 #include <tqstringlist.h>
 
 class TQLineEdit;
-class KListView;
+class TDEListView;
 class TQListViewItem;
 
 class KMWLocal : public KMWizardPage
@@ -47,7 +47,7 @@ protected:
 	TQListViewItem* lookForItem( const TQString& );
 
 protected:
-	KListView	*m_ports;
+	TDEListView	*m_ports;
 	TQLineEdit	*m_localuri;
 	TQStringList	m_uris;
 	TQListViewItem	*m_parents[4];

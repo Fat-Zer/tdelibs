@@ -25,8 +25,8 @@
 #include <kaction.h>
 #include "tdemdidefines.h"
 
-class KMainWindow;
-class KToolBar;
+class TDEMainWindow;
+class TDEToolBar;
 class KMdiToolViewAccessor;
 class KMdiMainFrm;
 class KDockWidget;
@@ -104,26 +104,26 @@ private:
 	KMdi::MdiMode m_mdiMode;
 
 	TQGuardedPtr<KMdiMainFrm> m_mdiMainFrm;
-	TQPtrList<KAction> m_toolViewActions;
-	TQPtrList<KAction> m_documentViewActions;
+	TQPtrList<TDEAction> m_toolViewActions;
+	TQPtrList<TDEAction> m_documentViewActions;
 
-	KActionMenu *m_docMenu;
-	KActionMenu *m_toolMenu;
-	KSelectAction *m_mdiModeAction;
+	TDEActionMenu *m_docMenu;
+	TDEActionMenu *m_toolMenu;
+	TDESelectAction *m_mdiModeAction;
 
-	KActionMenu *m_gotoToolDockMenu;
+	TDEActionMenu *m_gotoToolDockMenu;
 };
 
 /**
- * A KToggleAction specifically for toggling the showing
+ * A TDEToggleAction specifically for toggling the showing
  * or the hiding of a KMDI tool view
  */
-class KMDI_EXPORT ToggleToolViewAction: public KToggleAction
+class KMDI_EXPORT ToggleToolViewAction: public TDEToggleAction
 {
 	Q_OBJECT
 public:
 
-	ToggleToolViewAction( const TQString& text, const KShortcut& cut = KShortcut(), KDockWidget *dw = 0, KMdiMainFrm *mdiMainFrm = 0,
+	ToggleToolViewAction( const TQString& text, const TDEShortcut& cut = TDEShortcut(), KDockWidget *dw = 0, KMdiMainFrm *mdiMainFrm = 0,
 	                      TQObject* parent = 0, const char* name = 0 );
 
 	virtual ~ToggleToolViewAction();

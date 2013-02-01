@@ -52,14 +52,14 @@
 K_EXPORT_COMPONENT_FACTORY( libtdecertpart, KParts::GenericFactory<KCertPart> )
 
 
-KX509Item::KX509Item(KListViewItem *parent, KSSLCertificate *x) :
-			KListViewItem(parent, 0L)
+KX509Item::KX509Item(TDEListViewItem *parent, KSSLCertificate *x) :
+			TDEListViewItem(parent, 0L)
 {
 	setup(x);
 }
 
-KX509Item::KX509Item(KListView *parent, KSSLCertificate *x) :
-			KListViewItem(parent)
+KX509Item::KX509Item(TDEListView *parent, KSSLCertificate *x) :
+			TDEListViewItem(parent)
 {
 	setup(x);
 }
@@ -98,8 +98,8 @@ KX509Item::~KX509Item()
 }
 
 
-KPKCS12Item::KPKCS12Item(KListViewItem *parent, KSSLPKCS12 *x) :
-			KListViewItem(parent, 0L)
+KPKCS12Item::KPKCS12Item(TDEListViewItem *parent, KSSLPKCS12 *x) :
+			TDEListViewItem(parent, 0L)
 {
 	cert = x;
 	if (x) {
@@ -155,13 +155,13 @@ setWidget(_frame);
 _baseGrid = new TQGridLayout(_frame, 15, 9, KDialog::marginHint(),
 		KDialog::spacingHint());
 
-_sideList = new KListView(_frame);
+_sideList = new TDEListView(_frame);
 _sideList->setRootIsDecorated(true);
 _sideList->addColumn(i18n("Certificates"));
-_parentCA = new KListViewItem(_sideList, i18n("Signers"));
+_parentCA = new TDEListViewItem(_sideList, i18n("Signers"));
 _parentCA->setExpandable(true);
 _sideList->setOpen(_parentCA, true);
-_parentP12 = new KListViewItem(_sideList, i18n("Client"));
+_parentP12 = new TDEListViewItem(_sideList, i18n("Client"));
 _parentP12->setExpandable(true);
 _sideList->setOpen(_parentP12, true);
 

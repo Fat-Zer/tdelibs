@@ -376,7 +376,7 @@ void KNSPluginWizard::initConfirmationPage()
 
         m_confirmationVBox = new TQVBox(this);
         new TQLabel(i18n("The following plugins are available."), m_confirmationVBox);
-        m_pluginListView = new KListView(m_confirmationVBox);        
+        m_pluginListView = new TDEListView(m_confirmationVBox);        
         m_pluginListView->addColumn(i18n("Name"));
         m_pluginListView->setSelectionMode(TQListView::Single);
         new TQLabel(i18n("Click on next to install the selected plugin."), m_confirmationVBox);

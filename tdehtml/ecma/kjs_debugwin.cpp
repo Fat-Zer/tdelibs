@@ -347,7 +347,7 @@ void EvalMultiLineEdit::keyPressEvent(TQKeyEvent * e)
 }
 //-------------------------------------------------------------------------
 KJSDebugWin::KJSDebugWin(TQWidget *parent, const char *name)
-  : KMainWindow(parent, name, (WFlags)WType_TopLevel), TDEInstance("kjs_debugger")
+  : TDEMainWindow(parent, name, (WFlags)WType_TopLevel), TDEInstance("kjs_debugger")
 {
   m_breakpoints = 0;
   m_breakpointCount = 0;
@@ -436,27 +436,27 @@ KJSDebugWin::KJSDebugWin(TQWidget *parent, const char *name)
   vl->addWidget(hsplitter);
 
   // actions
-  KPopupMenu *debugMenu = new KPopupMenu(this);
+  TDEPopupMenu *debugMenu = new TDEPopupMenu(this);
   menuBar()->insertItem("&Debug",debugMenu);
 
-  m_actionCollection = new KActionCollection(this);
+  m_actionCollection = new TDEActionCollection(this);
   m_actionCollection->setInstance(this);
 
   // Venkman use F12, KDevelop F10
-  KShortcut scNext = KShortcut(KKeySequence(KKey(Qt::Key_F12)));
+  TDEShortcut scNext = TDEShortcut(KKeySequence(KKey(Qt::Key_F12)));
   scNext.append(KKeySequence(KKey(Qt::Key_F10)));
-  m_nextAction       = new KAction(i18n("Next breakpoint","&Next"),"dbgnext",scNext,TQT_TQOBJECT(this),TQT_SLOT(slotNext()),
+  m_nextAction       = new TDEAction(i18n("Next breakpoint","&Next"),"dbgnext",scNext,TQT_TQOBJECT(this),TQT_SLOT(slotNext()),
 				   m_actionCollection,"next");
-  m_stepAction       = new KAction(i18n("&Step"),"dbgstep",KShortcut(Qt::Key_F11),TQT_TQOBJECT(this),TQT_SLOT(slotStep()),
+  m_stepAction       = new TDEAction(i18n("&Step"),"dbgstep",TDEShortcut(Qt::Key_F11),TQT_TQOBJECT(this),TQT_SLOT(slotStep()),
 				   m_actionCollection,"step");
   // Venkman use F5, Kdevelop F9
-  KShortcut scCont = KShortcut(KKeySequence(KKey(Qt::Key_F5)));
+  TDEShortcut scCont = TDEShortcut(KKeySequence(KKey(Qt::Key_F5)));
   scCont.append(KKeySequence(KKey(Qt::Key_F9)));
-  m_continueAction   = new KAction(i18n("&Continue"),"dbgrun",scCont,TQT_TQOBJECT(this),TQT_SLOT(slotContinue()),
+  m_continueAction   = new TDEAction(i18n("&Continue"),"dbgrun",scCont,TQT_TQOBJECT(this),TQT_SLOT(slotContinue()),
 				   m_actionCollection,"cont");
-  m_stopAction       = new KAction(i18n("St&op"),"stop",KShortcut(Qt::Key_F4),TQT_TQOBJECT(this),TQT_SLOT(slotStop()),
+  m_stopAction       = new TDEAction(i18n("St&op"),"stop",TDEShortcut(Qt::Key_F4),TQT_TQOBJECT(this),TQT_SLOT(slotStop()),
 				   m_actionCollection,"stop");
-  m_breakAction      = new KAction(i18n("&Break at Next Statement"),"dbgrunto",KShortcut(Qt::Key_F8),TQT_TQOBJECT(this),TQT_SLOT(slotBreakNext()),
+  m_breakAction      = new TDEAction(i18n("&Break at Next Statement"),"dbgrunto",TDEShortcut(Qt::Key_F8),TQT_TQOBJECT(this),TQT_SLOT(slotBreakNext()),
 				   m_actionCollection,"breaknext");
 
 

@@ -26,8 +26,8 @@
 #include <tqobject.h>
 #include <tdelibs_export.h>
 
-class KAction;
-class KActionCollection;
+class TDEAction;
+class TDEActionCollection;
 class TQPopupMenu;
 
 /**
@@ -171,7 +171,7 @@ public:
      * into a toolbar.
      * @param actionCollection the parent collection
      */
-    KCommandHistory(KActionCollection *actionCollection, bool withMenus = true);
+    KCommandHistory(TDEActionCollection *actionCollection, bool withMenus = true);
 
     /**
      * Destructs the command history object.
@@ -222,12 +222,12 @@ public:
 public slots:
     /**
      * Undoes the last action.
-     * Call this if you don't use the builtin KActions.
+     * Call this if you don't use the builtin TDEActions.
      */
     virtual void undo();
     /**
      * Redoes the last undone action.
-     * Call this if you don't use the builtin KActions.
+     * Call this if you don't use the builtin TDEActions.
      */
     virtual void redo();
     /**
@@ -275,7 +275,7 @@ private:
     void clipCommands();  // ensures that the limits are kept
 
     TQPtrList<KCommand> m_commands;
-    KAction *m_undo, *m_redo;
+    TDEAction *m_undo, *m_redo;
     TQPopupMenu *m_undoPopup, *m_redoPopup;
     int m_undoLimit, m_redoLimit;
     bool m_first;  // attention: it's the first command in the list!

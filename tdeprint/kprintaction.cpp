@@ -40,21 +40,21 @@ public:
 };
 
 KPrintAction::KPrintAction(const TQString& text, PrinterType type, TQWidget *parentWidget, TQObject *parent, const char *name)
-: KActionMenu(text, parent, name)
+: TDEActionMenu(text, parent, name)
 {
 	d = new KPrintActionPrivate();
 	initialize(type, parentWidget);
 }
 
 KPrintAction::KPrintAction(const TQString& text, const TQIconSet& icon, PrinterType type, TQWidget *parentWidget, TQObject *parent, const char *name)
-: KActionMenu(text, icon, parent, name)
+: TDEActionMenu(text, icon, parent, name)
 {
 	d = new KPrintActionPrivate();
 	initialize(type, parentWidget);
 }
 
 KPrintAction::KPrintAction(const TQString& text, const TQString& icon, PrinterType type, TQWidget *parentWidget, TQObject *parent, const char *name)
-: KActionMenu(text, icon, parent, name)
+: TDEActionMenu(text, icon, parent, name)
 {
 	d = new KPrintActionPrivate();
 	initialize(type, parentWidget);

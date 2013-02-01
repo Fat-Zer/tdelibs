@@ -81,26 +81,26 @@ public:
 	KPrintPreviewPrivate(KPrintPreview *dlg) : gvpart_(0)
 	{
 		mainwidget_ = new TQWidget(dlg, "MainWidget");
-		toolbar_ = new KToolBar(mainwidget_, "PreviewToolBar", true);
-		actions_ = new KActionCollection(dlg);
-		accel_ = new KAccel(dlg);
+		toolbar_ = new TDEToolBar(mainwidget_, "PreviewToolBar", true);
+		actions_ = new TDEActionCollection(dlg);
+		accel_ = new TDEAccel(dlg);
 		previewonly_ = false;
 	}
 	~KPrintPreviewPrivate()
 	{
 		if (gvpart_) delete gvpart_;
 	}
-	void plugAction(KAction *act)
+	void plugAction(TDEAction *act)
 	{
 		act->plug(toolbar_);
 		act->plugAccel(accel_);
 	}
 
 	KParts::ReadOnlyPart	*gvpart_;
-	KToolBar		*toolbar_;
-	KActionCollection	*actions_;
+	TDEToolBar		*toolbar_;
+	TDEActionCollection	*actions_;
 	TQWidget		*mainwidget_;
-	KAccel			*accel_;
+	TDEAccel			*accel_;
 	bool			previewonly_;
 };
 
@@ -157,8 +157,8 @@ KPrintPreview::KPrintPreview(TQWidget *parent, bool previewOnly)
 		KStdAction::close(TQT_TQOBJECT(this), TQT_SLOT(reject()), d->actions_, "close_print");
 	else
 	{
-		new KAction(i18n("Print"), "fileprint", Qt::Key_Return, TQT_TQOBJECT(this), TQT_SLOT(accept()), d->actions_, "continue_print");
-		new KAction(i18n("Cancel"), "stop", Qt::Key_Escape, TQT_TQOBJECT(this), TQT_SLOT(reject()), d->actions_, "stop_print");
+		new TDEAction(i18n("Print"), "fileprint", Qt::Key_Return, TQT_TQOBJECT(this), TQT_SLOT(accept()), d->actions_, "continue_print");
+		new TDEAction(i18n("Cancel"), "stop", Qt::Key_Escape, TQT_TQOBJECT(this), TQT_SLOT(reject()), d->actions_, "stop_print");
 	}
 
 }
@@ -193,13 +193,13 @@ void KPrintPreview::initView(KLibFactory *factory)
 				TQDomElement a = acts.item( i ).toElement();
 				if ( a.attribute( "name" ) == "goToPage" )
 					continue;
-				KAction *act = d->gvpart_->action( a );
+				TDEAction *act = d->gvpart_->action( a );
 				if ( act != 0 )
 					d->plugAction( act );
 			}
 		}
 		/*
-		KAction	*act;
+		TDEAction	*act;
 		d->toolbar_->insertLineSeparator();
 		if ((act = d->gvpart_->action("zoomIn")) != 0)
 			d->plugAction(act);
@@ -212,8 +212,8 @@ void KPrintPreview::initView(KLibFactory *factory)
 			d->plugAction(act);
 			*/
 	}
-	d->toolbar_->setIconText(KToolBar::IconTextRight);
-	d->toolbar_->setBarPos(KToolBar::Top);
+	d->toolbar_->setIconText(TDEToolBar::IconTextRight);
+	d->toolbar_->setBarPos(TDEToolBar::Top);
 	d->toolbar_->setMovingEnabled(false);
 	//d->adjustSize();
 

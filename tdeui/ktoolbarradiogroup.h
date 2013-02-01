@@ -26,19 +26,19 @@
 
 #include <tdelibs_export.h>
 
-class KToolBar;
-class KToolBarButtonList;
-class KToolBarRadioGroupPrivate;
+class TDEToolBar;
+class TDEToolBarButtonList;
+class TDEToolBarRadioGroupPrivate;
 
 /*************************************************************************
- *                          KToolBarRadioGroup                                  *
+ *                          TDEToolBarRadioGroup                                  *
  *************************************************************************/
  /**
   * @short Class for group of radio butons in toolbar.
   *
-  * KToolBarRadioGroup is class for group of radio butons in toolbar.
+  * TDEToolBarRadioGroup is class for group of radio butons in toolbar.
   * Take toggle buttons which you already inserted into toolbar,
-  * create KToolBarRadioGroup instance and add them here.
+  * create TDEToolBarRadioGroup instance and add them here.
   * All buttons will emit signals toggled (bool) (or you can
   * use sitgnal toggled (int id) from toolbar). When one button is set
   * down, all others are unset. All buttons emit signals - those who
@@ -46,19 +46,19 @@ class KToolBarRadioGroupPrivate;
   *
   * @author Sven Radej <radej@kde.org>
   */
-class TDEUI_EXPORT KToolBarRadioGroup : public TQObject
+class TDEUI_EXPORT TDEToolBarRadioGroup : public TQObject
 {
   Q_OBJECT
 
 public:
   /**
-   * Constructor. Parent must be KToolBar .
+   * Constructor. Parent must be TDEToolBar .
    */
-  KToolBarRadioGroup (KToolBar *_parent, const char *_name=0);
+  TDEToolBarRadioGroup (TDEToolBar *_parent, const char *_name=0);
   /**
    * Destructor.
    */
-  ~KToolBarRadioGroup ();
+  ~TDEToolBarRadioGroup ();
 
   /**
    * Adds button to group. Button cannot be unset by mouse clicks (you
@@ -79,10 +79,10 @@ public slots:
   void slotToggled (int);
 
 private:
-  KToolBarButtonList *buttons;
-  KToolBar *tb;
+  TDEToolBarButtonList *buttons;
+  TDEToolBar *tb;
 
-  KToolBarRadioGroupPrivate *d;
+  TDEToolBarRadioGroupPrivate *d;
 };
 
 #endif

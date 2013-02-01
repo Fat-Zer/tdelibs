@@ -23,7 +23,7 @@
 #include <kbookmarkmenu.h>
 
 class TQTextStream;
-class KPopupMenu;
+class TDEPopupMenu;
 
 
 class TDEIO_EXPORT KFileBookmarkHandler : public TQObject, public KBookmarkOwner
@@ -40,7 +40,7 @@ public:
     virtual void openBookmarkURL( const TQString& url ) { emit openURL( url ); }
     virtual TQString currentURL() const;
 
-    KPopupMenu *menu() const { return m_menu; }
+    TDEPopupMenu *menu() const { return m_menu; }
 
 signals:
     void openURL( const TQString& url );
@@ -49,7 +49,7 @@ private:
     void importOldBookmarks( const TQString& path, KBookmarkManager *manager );
 
     KFileDialog *m_dialog;
-    KPopupMenu *m_menu;
+    TDEPopupMenu *m_menu;
     KBookmarkMenu *m_bookmarkMenu;
 
 protected:

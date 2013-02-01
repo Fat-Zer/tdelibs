@@ -31,19 +31,19 @@
 
  int main( int argc, char **argv )
 {
-  TDEApplication app( argc, argv, "KFontDialogTest" );
+  TDEApplication app( argc, argv, "TDEFontDialogTest" );
 
   TDEConfig aConfig;
-  aConfig.setGroup( "KFontDialog-test" );
+  aConfig.setGroup( "TDEFontDialog-test" );
 
   app.setFont(TQFont("Helvetica",12));
 
   //  TQFont font = TQFont("Times",18,TQFont::Bold);
 
   TQFont font = aConfig.readFontEntry( "Chosen" );
-  int nRet = KFontDialog::getFont(font);
+  int nRet = TDEFontDialog::getFont(font);
   int flags;
-  nRet = KFontDialog::getFontDiff(font, flags);
+  nRet = TDEFontDialog::getFontDiff(font, flags);
   aConfig.writeEntry( "Chosen", font, true );
 
   aConfig.sync();

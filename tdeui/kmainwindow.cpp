@@ -57,7 +57,7 @@
 #include <ctype.h>
 #include <assert.h>
 
-class KMainWindowPrivate {
+class TDEMainWindowPrivate {
 public:
     bool showHelpMenu:1;
 
@@ -67,16 +67,16 @@ public:
     bool care_about_geometry:1;
     bool shuttingDown:1;
     TQString autoSaveGroup;
-    KAccel * kaccel;
-    KMainWindowInterface *m_interface;
+    TDEAccel * kaccel;
+    TDEMainWindowInterface *m_interface;
     KDEPrivate::ToolBarHandler *toolBarHandler;
     TQTimer* settingsTimer;
-    KToggleAction *showStatusBarAction;
+    TDEToggleAction *showStatusBarAction;
     TQRect defaultWindowSize;
     TQPtrList<TQDockWindow> hiddenDockWindows;
 };
 
-TQPtrList<KMainWindow>* KMainWindow::memberList = 0L;
+TQPtrList<TDEMainWindow>* TDEMainWindow::memberList = 0L;
 static bool no_query_exit = false;
 static KMWSessionManaged* ksm = 0;
 static KStaticDeleter<KMWSessionManaged> ksmd;
@@ -93,13 +93,13 @@ public:
     bool saveState( TQSessionManager& )
     {
         TDEConfig* config = TDEApplication::kApplication()->sessionConfig();
-        if ( KMainWindow::memberList->first() ){
+        if ( TDEMainWindow::memberList->first() ){
             // According to Jochen Wilhelmy <digisnap@cs.tu-berlin.de>, this
             // hook is useful for better document orientation
-            KMainWindow::memberList->first()->saveGlobalProperties(config);
+            TDEMainWindow::memberList->first()->saveGlobalProperties(config);
         }
 
-        TQPtrListIterator<KMainWindow> it(*KMainWindow::memberList);
+        TQPtrListIterator<TDEMainWindow> it(*TDEMainWindow::memberList);
         int n = 0;
         for (it.toFirst(); it.current(); ++it){
             n++;
@@ -115,10 +115,10 @@ public:
         // not really a fast method but the only compatible one
         if ( sm.allowsInteraction() ) {
             bool canceled = false;
-            TQPtrListIterator<KMainWindow> it(*KMainWindow::memberList);
+            TQPtrListIterator<TDEMainWindow> it(*TDEMainWindow::memberList);
             ::no_query_exit = true;
             for (it.toFirst(); it.current() && !canceled;){
-                KMainWindow *window = *it;
+                TDEMainWindow *window = *it;
                 ++it; // Update now, the current window might get deleted
                 if ( !window->testWState( TQt::WState_ForceHide ) ) {
                     TQCloseEvent e;
@@ -144,9 +144,9 @@ public:
             if (canceled)
                return false;
 
-            KMainWindow* last = 0;
+            TDEMainWindow* last = 0;
             for (it.toFirst(); it.current() && !canceled; ++it){
-                KMainWindow *window = *it;
+                TDEMainWindow *window = *it;
                 if ( !window->testWState( TQt::WState_ForceHide ) ) {
                     last = window;
                 }
@@ -164,19 +164,19 @@ public:
 
 static bool being_first = true;
 
-KMainWindow::KMainWindow( TQWidget* parent, const char *name, WFlags f )
+TDEMainWindow::TDEMainWindow( TQWidget* parent, const char *name, WFlags f )
     : TQMainWindow( parent, name, f ), KXMLGUIBuilder( this ), helpMenu2( 0 ), factory_( 0 )
 {
-    initKMainWindow(name, 0);
+    initTDEMainWindow(name, 0);
 }
 
-KMainWindow::KMainWindow( int cflags, TQWidget* parent, const char *name, WFlags f )
+TDEMainWindow::TDEMainWindow( int cflags, TQWidget* parent, const char *name, WFlags f )
     : TQMainWindow( parent, name, f ), KXMLGUIBuilder( this ), helpMenu2( 0 ), factory_( 0 )
 {
-    initKMainWindow(name, cflags);
+    initTDEMainWindow(name, cflags);
 }
 
-void KMainWindow::initKMainWindow(const char *name, int cflags)
+void TDEMainWindow::initTDEMainWindow(const char *name, int cflags)
 {
     KWhatsThisManager::init ();
     setDockMenuEnabled( false );
@@ -185,7 +185,7 @@ void KMainWindow::initKMainWindow(const char *name, int cflags)
     actionCollection()->setWidget( this );
     connect(kapp, TQT_SIGNAL(shutDown()), this, TQT_SLOT(shuttingDown()));
     if( !memberList )
-        memberList = new TQPtrList<KMainWindow>;
+        memberList = new TQPtrList<TDEMainWindow>;
 
     if ( !ksm )
         ksm = ksmd.setObject(ksm, new KMWSessionManaged());
@@ -233,7 +233,7 @@ void KMainWindow::initKMainWindow(const char *name, int cflags)
 
     memberList->append( this );
 
-    d = new KMainWindowPrivate;
+    d = new TDEMainWindowPrivate;
     d->showHelpMenu = true;
     d->settingsDirty = false;
     d->autoSaveSettings = false;
@@ -255,13 +255,13 @@ void KMainWindow::initKMainWindow(const char *name, int cflags)
     if ( cflags & NoDCOPObject)
         d->m_interface = 0;
     else
-        d->m_interface = new KMainWindowInterface(this);
+        d->m_interface = new TDEMainWindowInterface(this);
 
     if (!kapp->authorize("movable_toolbars"))
         setDockWindowsMovable(false);
 }
 
-KAction *KMainWindow::toolBarMenuAction()
+TDEAction *TDEMainWindow::toolBarMenuAction()
 {
     if ( !d->toolBarHandler )
 	return 0;
@@ -270,13 +270,13 @@ KAction *KMainWindow::toolBarMenuAction()
 }
 
 
-void KMainWindow::setupToolbarMenuActions()
+void TDEMainWindow::setupToolbarMenuActions()
 {
     if ( d->toolBarHandler )
         d->toolBarHandler->setupActions();
 }
 
-void KMainWindow::parseGeometry(bool parsewidth)
+void TDEMainWindow::parseGeometry(bool parsewidth)
 {
     assert ( !kapp->geometryArgument().isNull() );
     assert ( d->care_about_geometry );
@@ -311,7 +311,7 @@ void KMainWindow::parseGeometry(bool parsewidth)
 #endif
 }
 
-KMainWindow::~KMainWindow()
+TDEMainWindow::~TDEMainWindow()
 {
     delete d->settingsTimer;
     TQMenuBar* mb = internalMenuBar();
@@ -321,7 +321,7 @@ KMainWindow::~KMainWindow()
     memberList->remove( this );
 }
 
-KPopupMenu* KMainWindow::helpMenu( const TQString &aboutAppText, bool showWhatsThis )
+TDEPopupMenu* TDEMainWindow::helpMenu( const TQString &aboutAppText, bool showWhatsThis )
 {
     if( !mHelpMenu ) {
         if ( aboutAppText.isEmpty() )
@@ -338,7 +338,7 @@ KPopupMenu* KMainWindow::helpMenu( const TQString &aboutAppText, bool showWhatsT
     return mHelpMenu->menu();
 }
 
-KPopupMenu* KMainWindow::customHelpMenu( bool showWhatsThis )
+TDEPopupMenu* TDEMainWindow::customHelpMenu( bool showWhatsThis )
 {
     if( !mHelpMenu ) {
         mHelpMenu = new KHelpMenu( this, TQString::null, showWhatsThis );
@@ -349,7 +349,7 @@ KPopupMenu* KMainWindow::customHelpMenu( bool showWhatsThis )
     return mHelpMenu->menu();
 }
 
-bool KMainWindow::canBeRestored( int number )
+bool TDEMainWindow::canBeRestored( int number )
 {
     if ( !kapp->isRestored() )
         return false;
@@ -361,7 +361,7 @@ bool KMainWindow::canBeRestored( int number )
     return number >= 1 && number <= n;
 }
 
-const TQString KMainWindow::classNameOfToplevel( int number )
+const TQString TDEMainWindow::classNameOfToplevel( int number )
 {
     if ( !kapp->isRestored() )
         return TQString::null;
@@ -378,7 +378,7 @@ const TQString KMainWindow::classNameOfToplevel( int number )
         return config->readEntry( TQString::fromLatin1("ClassName") );
 }
 
-void KMainWindow::show()
+void TDEMainWindow::show()
 {
     TQMainWindow::show();
 
@@ -388,7 +388,7 @@ void KMainWindow::show()
     d->hiddenDockWindows.clear();
 }
 
-void KMainWindow::hide()
+void TDEMainWindow::hide()
 {
     if ( isVisible() ) {
 
@@ -408,27 +408,27 @@ void KMainWindow::hide()
     TQWidget::hide();
 }
 
-bool KMainWindow::restore( int number, bool show )
+bool TDEMainWindow::restore( int number, bool show )
 {
     if ( !canBeRestored( number ) )
         return false;
     TDEConfig *config = kapp->sessionConfig();
     if ( readPropertiesInternal( config, number ) ){
         if ( show )
-            KMainWindow::show();
+            TDEMainWindow::show();
         return false;
     }
     return false;
 }
 
-KXMLGUIFactory *KMainWindow::guiFactory()
+KXMLGUIFactory *TDEMainWindow::guiFactory()
 {
     if ( !factory_ )
         factory_ = new KXMLGUIFactory( this, TQT_TQOBJECT(this), "guifactory" );
     return factory_;
 }
 
-int KMainWindow::configureToolbars()
+int TDEMainWindow::configureToolbars()
 {
     saveMainWindowSettings(TDEGlobal::config());
     KEditToolbar dlg(actionCollection(), xmlFile(), true, this);
@@ -436,17 +436,17 @@ int KMainWindow::configureToolbars()
     return dlg.exec();
 }
 
-void KMainWindow::saveNewToolbarConfig()
+void TDEMainWindow::saveNewToolbarConfig()
 {
     createGUI(xmlFile());
     applyMainWindowSettings( TDEGlobal::config() );
 }
 
-void KMainWindow::setupGUI( int options, const TQString & xmlfile ) {
+void TDEMainWindow::setupGUI( int options, const TQString & xmlfile ) {
     setupGUI(TQSize(), options, xmlfile);
 }
 
-void KMainWindow::setupGUI( TQSize defaultSize, int options, const TQString & xmlfile ) {
+void TDEMainWindow::setupGUI( TQSize defaultSize, int options, const TQString & xmlfile ) {
     if( options & Keys ){
         KStdAction::keyBindings(guiFactory(),
                     TQT_SLOT(configureShortcuts()), actionCollection());
@@ -488,7 +488,7 @@ void KMainWindow::setupGUI( TQSize defaultSize, int options, const TQString & xm
 
 }
 
-void KMainWindow::createGUI( const TQString &xmlfile, bool _conserveMemory )
+void TDEMainWindow::createGUI( const TQString &xmlfile, bool _conserveMemory )
 {
     // disabling the updates prevents unnecessary redraws
     setUpdatesEnabled( false );
@@ -544,7 +544,7 @@ void KMainWindow::createGUI( const TQString &xmlfile, bool _conserveMemory )
       // using stuff like the toolbar editor ).
       // In addition we have to take care of not removing containers
       // like popupmenus, defined in the XML document.
-      // this code should probably go into a separate method in KMainWindow.
+      // this code should probably go into a separate method in TDEMainWindow.
       // there's just one problem: I'm bad in finding names ;-) , so
       // I skipped this ;-)
 
@@ -568,27 +568,27 @@ void KMainWindow::createGUI( const TQString &xmlfile, bool _conserveMemory )
     updateGeometry();
 }
 
-void KMainWindow::setHelpMenuEnabled(bool showHelpMenu)
+void TDEMainWindow::setHelpMenuEnabled(bool showHelpMenu)
 {
     d->showHelpMenu = showHelpMenu;
 }
 
-bool KMainWindow::isHelpMenuEnabled()
+bool TDEMainWindow::isHelpMenuEnabled()
 {
     return d->showHelpMenu;
 }
 
-void KMainWindow::setCaption( const TQString &caption )
+void TDEMainWindow::setCaption( const TQString &caption )
 {
     setPlainCaption( kapp->makeStdCaption(caption) );
 }
 
-void KMainWindow::setCaption( const TQString &caption, bool modified )
+void TDEMainWindow::setCaption( const TQString &caption, bool modified )
 {
     setPlainCaption( kapp->makeStdCaption(caption, true, modified) );
 }
 
-void KMainWindow::setPlainCaption( const TQString &caption )
+void TDEMainWindow::setPlainCaption( const TQString &caption )
 {
     TQMainWindow::setCaption( caption );
 #if defined Q_WS_X11
@@ -597,7 +597,7 @@ void KMainWindow::setPlainCaption( const TQString &caption )
 #endif
 }
 
-void KMainWindow::appHelpActivated( void )
+void TDEMainWindow::appHelpActivated( void )
 {
     if( !mHelpMenu ) {
         mHelpMenu = new KHelpMenu( this );
@@ -607,7 +607,7 @@ void KMainWindow::appHelpActivated( void )
     mHelpMenu->appHelpActivated();
 }
 
-void KMainWindow::slotStateChanged(const TQString &newstate)
+void TDEMainWindow::slotStateChanged(const TQString &newstate)
 {
   stateChanged(newstate, KXMLGUIClient::StateNoReverse);
 }
@@ -615,7 +615,7 @@ void KMainWindow::slotStateChanged(const TQString &newstate)
 /*
  * Get rid of this for KDE 4.0
  */
-void KMainWindow::slotStateChanged(const TQString &newstate,
+void TDEMainWindow::slotStateChanged(const TQString &newstate,
                                    KXMLGUIClient::ReverseStateChange reverse)
 {
   stateChanged(newstate, reverse);
@@ -624,14 +624,14 @@ void KMainWindow::slotStateChanged(const TQString &newstate,
 /*
  * Enable this for KDE 4.0
  */
-// void KMainWindow::slotStateChanged(const TQString &newstate,
+// void TDEMainWindow::slotStateChanged(const TQString &newstate,
 //                                    bool reverse)
 // {
 //   stateChanged(newstate,
 //                reverse ? KXMLGUIClient::StateReverse : KXMLGUIClient::StateNoReverse);
 // }
 
-void KMainWindow::closeEvent ( TQCloseEvent *e )
+void TDEMainWindow::closeEvent ( TQCloseEvent *e )
 {
     // Save settings if auto-save is enabled, and settings have changed
     if (d->settingsDirty && d->autoSaveSettings)
@@ -641,7 +641,7 @@ void KMainWindow::closeEvent ( TQCloseEvent *e )
         e->accept();
 
         int not_withdrawn = 0;
-        TQPtrListIterator<KMainWindow> it(*KMainWindow::memberList);
+        TQPtrListIterator<TDEMainWindow> it(*TDEMainWindow::memberList);
         for (it.toFirst(); it.current(); ++it){
             if ( !it.current()->isHidden() && it.current()->isTopLevel() && it.current() != this )
                 not_withdrawn++;
@@ -661,35 +661,35 @@ void KMainWindow::closeEvent ( TQCloseEvent *e )
     }
 }
 
-bool KMainWindow::queryExit()
+bool TDEMainWindow::queryExit()
 {
     return true;
 }
 
-bool KMainWindow::queryClose()
+bool TDEMainWindow::queryClose()
 {
     return true;
 }
 
-void KMainWindow::saveGlobalProperties( TDEConfig*  )
+void TDEMainWindow::saveGlobalProperties( TDEConfig*  )
 {
 }
 
-void KMainWindow::readGlobalProperties( TDEConfig*  )
+void TDEMainWindow::readGlobalProperties( TDEConfig*  )
 {
 }
 
 #if defined(KDE_COMPAT)
-void KMainWindow::updateRects()
+void TDEMainWindow::updateRects()
 {
 }
 #endif
 
-void KMainWindow::showAboutApplication()
+void TDEMainWindow::showAboutApplication()
 {
 }
 
-void KMainWindow::savePropertiesInternal( TDEConfig *config, int number )
+void TDEMainWindow::savePropertiesInternal( TDEConfig *config, int number )
 {
     bool oldASWS = d->autoSaveWindowSize;
     d->autoSaveWindowSize = true; // make saveMainWindowSettings save the window size
@@ -713,9 +713,9 @@ void KMainWindow::savePropertiesInternal( TDEConfig *config, int number )
     d->autoSaveWindowSize = oldASWS;
 }
 
-void KMainWindow::saveMainWindowSettings(TDEConfig *config, const TQString &configGroup)
+void TDEMainWindow::saveMainWindowSettings(TDEConfig *config, const TQString &configGroup)
 {
-    kdDebug(200) << "KMainWindow::saveMainWindowSettings " << configGroup << endl;
+    kdDebug(200) << "TDEMainWindow::saveMainWindowSettings " << configGroup << endl;
     TQString oldGroup;
 
     if (!configGroup.isEmpty())
@@ -746,8 +746,8 @@ void KMainWindow::saveMainWindowSettings(TDEConfig *config, const TQString &conf
     }
 
     int n = 1; // Toolbar counter. toolbars are counted from 1,
-    KToolBar *toolbar = 0;
-    TQPtrListIterator<KToolBar> it( toolBarIterator() );
+    TDEToolBar *toolbar = 0;
+    TQPtrListIterator<TDEToolBar> it( toolBarIterator() );
     while ( ( toolbar = it.current() ) ) {
         ++it;
         TQString group;
@@ -766,7 +766,7 @@ void KMainWindow::saveMainWindowSettings(TDEConfig *config, const TQString &conf
        config->setGroup(oldGroup);
 }
 
-void KMainWindow::setStandardToolBarMenuEnabled( bool enable )
+void TDEMainWindow::setStandardToolBarMenuEnabled( bool enable )
 {
     if ( enable ) {
         if ( d->toolBarHandler )
@@ -788,12 +788,12 @@ void KMainWindow::setStandardToolBarMenuEnabled( bool enable )
     }
 }
 
-bool KMainWindow::isStandardToolBarMenuEnabled() const
+bool TDEMainWindow::isStandardToolBarMenuEnabled() const
 {
     return ( d->toolBarHandler );
 }
 
-void KMainWindow::createStandardStatusBarAction(){
+void TDEMainWindow::createStandardStatusBarAction(){
   if(!d->showStatusBarAction){
     d->showStatusBarAction = KStdAction::showStatusbar(TQT_TQOBJECT(this), TQT_SLOT(setSettingsDirty()), actionCollection());
     KStatusBar *sb = statusBar(); // Creates statusbar if it doesn't exist already.
@@ -802,7 +802,7 @@ void KMainWindow::createStandardStatusBarAction(){
   }
 }
 
-bool KMainWindow::readPropertiesInternal( TDEConfig *config, int number )
+bool TDEMainWindow::readPropertiesInternal( TDEConfig *config, int number )
 {
     if ( number == 1 )
         readGlobalProperties( config );
@@ -826,14 +826,14 @@ bool KMainWindow::readPropertiesInternal( TDEConfig *config, int number )
     return true;
 }
 
-void KMainWindow::applyMainWindowSettings(TDEConfig *config, const TQString &configGroup)
+void TDEMainWindow::applyMainWindowSettings(TDEConfig *config, const TQString &configGroup)
 {
     return applyMainWindowSettings(config,configGroup,false);
 }
 
-void KMainWindow::applyMainWindowSettings(TDEConfig *config, const TQString &configGroup,bool force)
+void TDEMainWindow::applyMainWindowSettings(TDEConfig *config, const TQString &configGroup,bool force)
 {
-    kdDebug(200) << "KMainWindow::applyMainWindowSettings" << endl;
+    kdDebug(200) << "TDEMainWindow::applyMainWindowSettings" << endl;
 
     TDEConfigGroupSaver saver( config, configGroup.isEmpty() ? config->group() : configGroup );
 
@@ -860,8 +860,8 @@ void KMainWindow::applyMainWindowSettings(TDEConfig *config, const TQString &con
     }
 
     int n = 1; // Toolbar counter. toolbars are counted from 1,
-    KToolBar *toolbar;
-    TQPtrListIterator<KToolBar> it( toolBarIterator() ); // must use own iterator
+    TDEToolBar *toolbar;
+    TQPtrListIterator<TDEToolBar> it( toolBarIterator() ); // must use own iterator
 
     for ( ; it.current(); ++it) {
         toolbar= it.current();
@@ -881,9 +881,9 @@ void KMainWindow::applyMainWindowSettings(TDEConfig *config, const TQString &con
     finalizeGUI( true );
 }
 
-void KMainWindow::finalizeGUI( bool force )
+void TDEMainWindow::finalizeGUI( bool force )
 {
-    //kdDebug(200) << "KMainWindow::finalizeGUI force=" << force << endl;
+    //kdDebug(200) << "TDEMainWindow::finalizeGUI force=" << force << endl;
     // The whole reason for this is that moveToolBar relies on the indexes
     // of the other toolbars, so in theory it should be called only once per
     // toolbar, but in increasing order of indexes.
@@ -891,7 +891,7 @@ void KMainWindow::finalizeGUI( bool force )
     // we call positionYourself again for each of them, but this time
     // the toolbariterator should give them in the proper order.
     // Both the XMLGUI and applySettings call this, hence "force" for the latter.
-    TQPtrListIterator<KToolBar> it( toolBarIterator() );
+    TQPtrListIterator<TDEToolBar> it( toolBarIterator() );
     for ( ; it.current() ; ++it ) {
         it.current()->positionYourself( force );
     }
@@ -899,7 +899,7 @@ void KMainWindow::finalizeGUI( bool force )
     d->settingsDirty = false;
 }
 
-void KMainWindow::saveWindowSize( TDEConfig * config ) const
+void TDEMainWindow::saveWindowSize( TDEConfig * config ) const
 {
   int scnum = TQApplication::desktop()->screenNumber(parentWidget());
   TQRect desk = TQApplication::desktop()->screenGeometry(scnum);
@@ -931,7 +931,7 @@ void KMainWindow::saveWindowSize( TDEConfig * config ) const
      config->writeEntry(heightString, h );
 }
 
-void KMainWindow::restoreWindowSize( TDEConfig * config )
+void TDEMainWindow::restoreWindowSize( TDEConfig * config )
 {
     if (d->care_about_geometry) {
         parseGeometry(true);
@@ -977,19 +977,19 @@ void KMainWindow::restoreWindowSize( TDEConfig * config )
     }
 }
 
-bool KMainWindow::initialGeometrySet() const
+bool TDEMainWindow::initialGeometrySet() const
 {
     return d->care_about_geometry;
 }
 
-void KMainWindow::ignoreInitialGeometry()
+void TDEMainWindow::ignoreInitialGeometry()
 {
     d->care_about_geometry = false;
 }
 
-void KMainWindow::setSettingsDirty()
+void TDEMainWindow::setSettingsDirty()
 {
-    //kdDebug(200) << "KMainWindow::setSettingsDirty" << endl;
+    //kdDebug(200) << "TDEMainWindow::setSettingsDirty" << endl;
     d->settingsDirty = true;
     if ( d->autoSaveSettings )
     {
@@ -1004,17 +1004,17 @@ void KMainWindow::setSettingsDirty()
     }
 }
 
-bool KMainWindow::settingsDirty() const
+bool TDEMainWindow::settingsDirty() const
 {
     return d->settingsDirty;
 }
 
-TQString KMainWindow::settingsGroup() const
+TQString TDEMainWindow::settingsGroup() const
 {
     return d->autoSaveGroup;
 }
 
-void KMainWindow::setAutoSaveSettings( const TQString & groupName, bool saveWindowSize )
+void TDEMainWindow::setAutoSaveSettings( const TQString & groupName, bool saveWindowSize )
 {
     d->autoSaveSettings = true;
     d->autoSaveGroup = groupName;
@@ -1029,27 +1029,27 @@ void KMainWindow::setAutoSaveSettings( const TQString & groupName, bool saveWind
     applyMainWindowSettings( TDEGlobal::config(), groupName );
 }
 
-void KMainWindow::resetAutoSaveSettings()
+void TDEMainWindow::resetAutoSaveSettings()
 {
     d->autoSaveSettings = false;
     if ( d->settingsTimer )
         d->settingsTimer->stop();
 }
 
-bool KMainWindow::autoSaveSettings() const
+bool TDEMainWindow::autoSaveSettings() const
 {
     return d->autoSaveSettings;
 }
 
-TQString KMainWindow::autoSaveGroup() const
+TQString TDEMainWindow::autoSaveGroup() const
 {
     return d->autoSaveGroup;
 }
 
-void KMainWindow::saveAutoSaveSettings()
+void TDEMainWindow::saveAutoSaveSettings()
 {
     Q_ASSERT( d->autoSaveSettings );
-    //kdDebug(200) << "KMainWindow::saveAutoSaveSettings -> saving settings" << endl;
+    //kdDebug(200) << "TDEMainWindow::saveAutoSaveSettings -> saving settings" << endl;
     saveMainWindowSettings( TDEGlobal::config(), d->autoSaveGroup );
     TDEGlobal::config()->sync();
     d->settingsDirty = false;
@@ -1057,18 +1057,18 @@ void KMainWindow::saveAutoSaveSettings()
         d->settingsTimer->stop();
 }
 
-void KMainWindow::resizeEvent( TQResizeEvent * )
+void TDEMainWindow::resizeEvent( TQResizeEvent * )
 {
     if ( d->autoSaveWindowSize )
         setSettingsDirty();
 }
 
-bool KMainWindow::hasMenuBar()
+bool TDEMainWindow::hasMenuBar()
 {
     return (internalMenuBar());
 }
 
-KMenuBar *KMainWindow::menuBar()
+KMenuBar *TDEMainWindow::menuBar()
 {
     KMenuBar * mb = internalMenuBar();
     if ( !mb ) {
@@ -1080,7 +1080,7 @@ KMenuBar *KMainWindow::menuBar()
     return mb;
 }
 
-KStatusBar *KMainWindow::statusBar()
+KStatusBar *TDEMainWindow::statusBar()
 {
     KStatusBar * sb = internalStatusBar();
     if ( !sb ) {
@@ -1092,7 +1092,7 @@ KStatusBar *KMainWindow::statusBar()
     return sb;
 }
 
-void KMainWindow::shuttingDown()
+void TDEMainWindow::shuttingDown()
 {
     // Needed for Qt <= 3.0.3 at least to prevent reentrancy
     // when queryExit() shows a dialog. Check before removing!
@@ -1107,7 +1107,7 @@ void KMainWindow::shuttingDown()
 
 }
 
-KMenuBar *KMainWindow::internalMenuBar()
+KMenuBar *TDEMainWindow::internalMenuBar()
 {
     TQObjectList *l = queryList( "KMenuBar", 0, false, false );
     if ( !l || !l->first() ) {
@@ -1120,7 +1120,7 @@ KMenuBar *KMainWindow::internalMenuBar()
     return m;
 }
 
-KStatusBar *KMainWindow::internalStatusBar()
+KStatusBar *TDEMainWindow::internalStatusBar()
 {
     TQObjectList *l = queryList( "KStatusBar", 0, false, false );
     if ( !l || !l->first() ) {
@@ -1133,70 +1133,70 @@ KStatusBar *KMainWindow::internalStatusBar()
     return s;
 }
 
-void KMainWindow::childEvent( TQChildEvent* e)
+void TDEMainWindow::childEvent( TQChildEvent* e)
 {
     TQMainWindow::childEvent( e );
 }
 
-KToolBar *KMainWindow::toolBar( const char * name )
+TDEToolBar *TDEMainWindow::toolBar( const char * name )
 {
     if (!name)
        name = "mainToolBar";
-    KToolBar *tb = (KToolBar*)child( name, "KToolBar" );
+    TDEToolBar *tb = (TDEToolBar*)child( name, "TDEToolBar" );
     if ( tb )
         return tb;
     bool honor_mode = (!strcmp(name, "mainToolBar"));
 
     if ( builderClient() )
-        return new KToolBar(this, name, honor_mode); // XMLGUI constructor
+        return new TDEToolBar(this, name, honor_mode); // XMLGUI constructor
     else
-        return new KToolBar(this, DockTop, false, name, honor_mode ); // non-XMLGUI
+        return new TDEToolBar(this, DockTop, false, name, honor_mode ); // non-XMLGUI
 }
 
-TQPtrListIterator<KToolBar> KMainWindow::toolBarIterator()
+TQPtrListIterator<TDEToolBar> TDEMainWindow::toolBarIterator()
 {
     toolbarList.clear();
     TQPtrList<TQToolBar> lst;
     for ( int i = (int)TQMainWindow::DockUnmanaged; i <= (int)DockMinimized; ++i ) {
         lst = toolBars( (ToolBarDock)i );
         for ( TQToolBar *tb = lst.first(); tb; tb = lst.next() ) {
-            if ( !tb->inherits( "KToolBar" ) )
+            if ( !tb->inherits( "TDEToolBar" ) )
                 continue;
-            toolbarList.append( (KToolBar*)tb );
+            toolbarList.append( (TDEToolBar*)tb );
         }
     }
-    return TQPtrListIterator<KToolBar>( toolbarList );
+    return TQPtrListIterator<TDEToolBar>( toolbarList );
 }
 
-KAccel * KMainWindow::accel()
+TDEAccel * TDEMainWindow::accel()
 {
     if ( !d->kaccel )
-        d->kaccel = new KAccel( this, "kmw-kaccel" );
+        d->kaccel = new TDEAccel( this, "kmw-kaccel" );
     return d->kaccel;
 }
 
-void KMainWindow::paintEvent( TQPaintEvent * pe )
+void TDEMainWindow::paintEvent( TQPaintEvent * pe )
 {
     TQMainWindow::paintEvent(pe); //Upcall to handle SH_MainWindow_SpaceBelowMenuBar rendering
 }
 
-TQSize KMainWindow::sizeForCentralWidgetSize(TQSize size)
+TQSize TDEMainWindow::sizeForCentralWidgetSize(TQSize size)
 {
-    KToolBar *tb = (KToolBar*)child( "mainToolBar", "KToolBar" );
+    TDEToolBar *tb = (TDEToolBar*)child( "mainToolBar", "TDEToolBar" );
     if (tb && !tb->isHidden()) {
         switch( tb->barPos() )
         {
-          case KToolBar::Top:
-          case KToolBar::Bottom:
+          case TDEToolBar::Top:
+          case TDEToolBar::Bottom:
             size += TQSize(0, tb->sizeHint().height());
             break;
 
-          case KToolBar::Left:
-          case KToolBar::Right:
+          case TDEToolBar::Left:
+          case TDEToolBar::Right:
             size += TQSize(toolBar()->sizeHint().width(), 0);
             break;
 
-          case KToolBar::Flat:
+          case TDEToolBar::Flat:
             size += TQSize(0, 3+kapp->style().pixelMetric( TQStyle::PM_DockWindowHandleExtent ));
             break;
 
@@ -1222,24 +1222,24 @@ TQSize KMainWindow::sizeForCentralWidgetSize(TQSize size)
 #warning Remove, should be in Qt
 #endif
 #endif
-void KMainWindow::setIcon( const TQPixmap& p )
+void TDEMainWindow::setIcon( const TQPixmap& p )
 {
     TQMainWindow::setIcon( p );
 #ifdef Q_WS_X11 
     // Qt3 doesn't support _NET_WM_ICON, but TDEApplication::setTopWidget(), which
-    // is used by KMainWindow, sets it
+    // is used by TDEMainWindow, sets it
     KWin::setIcons( winId(), p, TQPixmap());
 #endif
 }
 
-TQPtrList<KMainWindow>* KMainWindow::getMemberList() { return memberList; }
+TQPtrList<TDEMainWindow>* TDEMainWindow::getMemberList() { return memberList; }
 
 // why do we support old gcc versions? using KXMLGUIBuilder::finalizeGUI;
 // DF: because they compile KDE much faster :)
-void KMainWindow::finalizeGUI( KXMLGUIClient *client )
+void TDEMainWindow::finalizeGUI( KXMLGUIClient *client )
 { KXMLGUIBuilder::finalizeGUI( client ); }
 
-void KMainWindow::virtual_hook( int id, void* data )
+void TDEMainWindow::virtual_hook( int id, void* data )
 { KXMLGUIBuilder::virtual_hook( id, data );
   KXMLGUIClient::virtual_hook( id, data ); }
 

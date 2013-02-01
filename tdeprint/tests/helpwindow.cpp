@@ -39,7 +39,7 @@
 
 HelpWindow::HelpWindow( const TQString& home_, const TQString& _path,
 			TQWidget* parent, const char *name )
-    : KMainWindow( parent, name, WDestructiveClose ),
+    : TDEMainWindow( parent, name, WDestructiveClose ),
       pathCombo( 0 ), selectedURL()
 {
     readHistory();

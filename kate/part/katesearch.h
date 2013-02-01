@@ -37,7 +37,7 @@ class KateView;
 class KateDocument;
 class KateSuperRangeList;
 
-class KActionCollection;
+class TDEActionCollection;
 
 class KateSearch : public TQObject
 {
@@ -87,7 +87,7 @@ class KateSearch : public TQObject
     KateSearch( KateView* );
     ~KateSearch();
 
-    void createActions( KActionCollection* );
+    void createActions( TDEActionCollection* );
 
   public slots:
     void find();

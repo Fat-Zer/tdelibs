@@ -203,12 +203,12 @@ int KMJobManager::actions()
 	return 0;
 }
 
-TQValueList<KAction*> KMJobManager::createPluginActions(KActionCollection*)
+TQValueList<TDEAction*> KMJobManager::createPluginActions(TDEActionCollection*)
 {
-	return TQValueList<KAction*>();
+	return TQValueList<TDEAction*>();
 }
 
-void KMJobManager::validatePluginActions(KActionCollection*, const TQPtrList<KMJob>&)
+void KMJobManager::validatePluginActions(TDEActionCollection*, const TQPtrList<KMJob>&)
 {
 }
 

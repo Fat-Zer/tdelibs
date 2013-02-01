@@ -453,13 +453,13 @@ TQString KMLprManager::printOptions(KPrinter *prt)
 	return TQString::null;
 }
 
-void KMLprManager::createPluginActions(KActionCollection *coll)
+void KMLprManager::createPluginActions(TDEActionCollection *coll)
 {
-	KAction	*act = new KAction(i18n("&Edit printcap Entry..."), "tdeprint_report", 0, this, TQT_SLOT(slotEditPrintcap()), coll, "plugin_editprintcap");
+	TDEAction	*act = new TDEAction(i18n("&Edit printcap Entry..."), "tdeprint_report", 0, this, TQT_SLOT(slotEditPrintcap()), coll, "plugin_editprintcap");
 	act->setGroup("plugin");
 }
 
-void KMLprManager::validatePluginActions(KActionCollection *coll, KMPrinter *prt)
+void KMLprManager::validatePluginActions(TDEActionCollection *coll, KMPrinter *prt)
 {
 	m_currentprinter = prt;
 	// FIXME: disabled until completion

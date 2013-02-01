@@ -67,7 +67,7 @@
 class KPluginInfoLVI : public TQCheckListItem
 {
 public:
-    KPluginInfoLVI( KPluginInfo *pluginInfo, KListView *parent )
+    KPluginInfoLVI( KPluginInfo *pluginInfo, TDEListView *parent )
     : TQCheckListItem( parent, pluginInfo->name(), TQCheckListItem::CheckBox ), m_pluginInfo( pluginInfo )
     {
     }
@@ -86,15 +86,15 @@ private:
 class KPluginListViewToolTip : public TQToolTip
 {
 public:
-	KPluginListViewToolTip( TQWidget *parent, KListView *lv );
+	KPluginListViewToolTip( TQWidget *parent, TDEListView *lv );
 
 	void maybeTip( const TQPoint &pos );
 
 private:
-	KListView *m_listView;
+	TDEListView *m_listView;
 };
 
-KPluginListViewToolTip::KPluginListViewToolTip( TQWidget *parent, KListView *lv )
+KPluginListViewToolTip::KPluginListViewToolTip( TQWidget *parent, TDEListView *lv )
 : TQToolTip( parent ), m_listView( lv )
 {
 }
@@ -182,7 +182,7 @@ void KPluginSelectionWidget::init( const TQValueList<KPluginInfo*> & plugininfos
 {
     // setup Widgets
     ( new TQVBoxLayout( this, 0, KDialog::spacingHint() ) )->setAutoAdd( true );
-    KListView * listview = new KListView( this );
+    TDEListView * listview = new TDEListView( this );
     d->tooltip = new KPluginListViewToolTip( listview->viewport(), listview );
     connect( listview, TQT_SIGNAL( pressed( TQListViewItem * ) ), this,
             TQT_SLOT( executed( TQListViewItem * ) ) );
@@ -195,7 +195,7 @@ void KPluginSelectionWidget::init( const TQValueList<KPluginInfo*> & plugininfos
     listview->setSizePolicy( TQSizePolicy::Minimum, TQSizePolicy::Preferred );
     listview->setAcceptDrops( false );
     listview->setFullWidth( true );
-    listview->setSelectionModeExt( KListView::Single );
+    listview->setSelectionModeExt( TDEListView::Single );
     listview->setAllColumnsShowFocus( true );
     listview->addColumn( i18n( "Name" ) );
     for( TQValueList<KPluginInfo*>::ConstIterator it = plugininfos.begin();

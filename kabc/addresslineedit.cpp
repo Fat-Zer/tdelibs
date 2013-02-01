@@ -156,12 +156,12 @@ void AddressLineEdit::keyPressEvent(TQKeyEvent *e)
 {
     bool accept = false;
 
-    if (KStdAccel::shortcut(KStdAccel::SubstringCompletion).contains(KKey(e)))
+    if (TDEStdAccel::shortcut(TDEStdAccel::SubstringCompletion).contains(KKey(e)))
     {
         doCompletion(true);
         accept = true;
     }
-    else if (KStdAccel::shortcut(KStdAccel::TextCompletion).contains(KKey(e)))
+    else if (TDEStdAccel::shortcut(TDEStdAccel::TextCompletion).contains(KKey(e)))
     {
         int len = text().length();
         

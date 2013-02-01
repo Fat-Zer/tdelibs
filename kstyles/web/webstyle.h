@@ -210,7 +210,7 @@ class WebStyle : public KStyle
        bool tickBelow
       );
 
-    void drawKToolBar
+    void drawTDEToolBar
       (
        TQPainter *, 
        int x, 
@@ -218,7 +218,7 @@ class WebStyle : public KStyle
        int w, 
        int h,
        const TQColorGroup &, 
-       KToolBarPos,
+       TDEToolBarPos,
        TQBrush * fill = 0
       );
 
@@ -230,7 +230,7 @@ class WebStyle : public KStyle
        int w, 
        int h,
        const TQColorGroup &,
-       KToolBarPos, 
+       TDEToolBarPos, 
        TQBrush * fill = 0
       );
 
@@ -246,7 +246,7 @@ class WebStyle : public KStyle
        TQBrush * fill = 0
       );
 
-    void drawKToolBarButton
+    void drawTDEToolBarButton
       (
        TQPainter * p, 
        int x, 
@@ -258,7 +258,7 @@ class WebStyle : public KStyle
        bool raised = true, 
        bool enabled = true,
        bool popup = false,
-       KToolButtonType = Icon,
+       TDEToolButtonType = Icon,
        const TQString & btext = TQString::null,
        const TQPixmap * = 0,
        TQFont * = 0,

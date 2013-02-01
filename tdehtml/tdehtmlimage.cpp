@@ -80,20 +80,20 @@ TDEHTMLImage::TDEHTMLImage( TQWidget *parentWidget, const char *widgetName,
     m_ext = new TDEHTMLImageBrowserExtension( this, "be" );
 
     // Remove unnecessary actions.
-    KAction *encodingAction = actionCollection()->action( "setEncoding" );
+    TDEAction *encodingAction = actionCollection()->action( "setEncoding" );
     if ( encodingAction )
     {
         encodingAction->unplugAll();
         delete encodingAction;
     }
-    KAction *viewSourceAction= actionCollection()->action( "viewDocumentSource" );
+    TDEAction *viewSourceAction= actionCollection()->action( "viewDocumentSource" );
     if ( viewSourceAction )
     {
         viewSourceAction->unplugAll();
         delete viewSourceAction;
     }
 
-    KAction *selectAllAction= actionCollection()->action( "selectAll" );
+    TDEAction *selectAllAction= actionCollection()->action( "selectAll" );
     if ( selectAllAction )
     {
         selectAllAction->unplugAll();

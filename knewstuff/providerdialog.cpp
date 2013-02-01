@@ -34,11 +34,11 @@
 
 using namespace KNS;
 
-class ProviderItem : public KListViewItem
+class ProviderItem : public TDEListViewItem
 {
   public:
-    ProviderItem( KListView *parent, Provider *provider ) :
-      KListViewItem( parent ), mProvider( provider )
+    ProviderItem( TDEListView *parent, Provider *provider ) :
+      TDEListViewItem( parent ), mProvider( provider )
     {
       setText( 0, provider->name() );
     }
@@ -61,7 +61,7 @@ ProviderDialog::ProviderDialog( Engine *engine, TQWidget *parent ) :
   TQLabel *description = new TQLabel( i18n("Please select one of the providers listed below:"), topPage );
   topLayout->addWidget( description );
 
-  mListView = new KListView( topPage );
+  mListView = new TDEListView( topPage );
   mListView->addColumn( i18n("Name") );
   topLayout->addWidget( mListView );
 }

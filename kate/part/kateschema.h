@@ -90,13 +90,13 @@ class KateSchemaManager
 };
 
 
-class KateViewSchemaAction : public KActionMenu
+class KateViewSchemaAction : public TDEActionMenu
 {
   Q_OBJECT
 
   public:
     KateViewSchemaAction(const TQString& text, TQObject* parent = 0, const char* name = 0)
-       : KActionMenu(text, parent, name) { init(); };
+       : TDEActionMenu(text, parent, name) { init(); };
 
     ~KateViewSchemaAction(){;};
 
@@ -226,7 +226,7 @@ class KateSchemaConfigFontTab : public TQWidget
     void changed(); // connected to parentWidget()->parentWidget() TQT_SLOT(slotChanged)
 
   private:
-    class KFontChooser *m_fontchooser;
+    class TDEFontChooser *m_fontchooser;
     FontMap m_fonts;
     int m_schema;
 

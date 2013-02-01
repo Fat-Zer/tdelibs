@@ -35,7 +35,7 @@ namespace KSettings
 class ComponentsDialog::ComponentsDialogPrivate
 {
     public:
-        KListView * listview;
+        TDEListView * listview;
         TQFrame * infowidget;
         TQLabel * iconwidget;
         TQLabel * commentwidget;
@@ -51,7 +51,7 @@ ComponentsDialog::ComponentsDialog( TQWidget * parent, const char * name )
     TQWidget * page = new TQWidget( this );
     setMainWidget( page );
     ( new TQHBoxLayout( page, 0, KDialog::spacingHint() ) )->setAutoAdd( true );
-    d->listview = new KListView( page );
+    d->listview = new TDEListView( page );
     d->listview->setMinimumSize( 200, 200 );
     d->infowidget = new TQFrame( page );
     d->infowidget->setMinimumSize( 200, 200 );
@@ -68,7 +68,7 @@ ComponentsDialog::ComponentsDialog( TQWidget * parent, const char * name )
     d->listview->setRootIsDecorated( true );
     d->listview->setSorting( -1 );
     d->listview->setAcceptDrops( false );
-    d->listview->setSelectionModeExt( KListView::Single );
+    d->listview->setSelectionModeExt( TDEListView::Single );
     d->listview->setAllColumnsShowFocus( true );
 
     connect( d->listview, TQT_SIGNAL( pressed( TQListViewItem * ) ), this,

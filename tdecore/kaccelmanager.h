@@ -37,7 +37,7 @@ class TQString;
  * @since 3.1
 */
 
-class TDECORE_EXPORT KAcceleratorManager
+class TDECORE_EXPORT TDEAcceleratorManager
 {
 public:
 
@@ -69,7 +69,7 @@ public:
      *
      * TODO KDE4: merge with the above
      * @param widget The toplevel widget you want to manage.
-     * @param programmers_mode if true, KAcceleratorManager adds (&) for removed
+     * @param programmers_mode if true, TDEAcceleratorManager adds (&) for removed
      *             accels and & before added accels
      */
     static void manage(TQWidget *widget, bool programmers_mode);

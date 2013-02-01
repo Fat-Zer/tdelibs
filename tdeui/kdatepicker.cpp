@@ -387,7 +387,7 @@ KDatePicker::selectYearClicked()
   }
 
   int year;
-  KPopupFrame* popup = new KPopupFrame(this);
+  TDEPopupFrame* popup = new TDEPopupFrame(this);
   KDateInternalYearSelector* picker = new KDateInternalYearSelector(popup);
   // -----
   picker->resize(picker->sizeHint());

@@ -72,7 +72,7 @@ information and then waiting for a sufficient long period, e.. 5 minutes,
 before actually removing the image data.
 
 I can also imagine a scenario where the index information is only used very 
-temporarily, e.g. during the creation of a KMainWindow (mmap the file in the 
+temporarily, e.g. during the creation of a TDEMainWindow (mmap the file in the 
 constructor, unmap it from the next event loop) that way icons can be removed 
 from the index and after e.g. a timeout of 5 minutes one can be relatively 
 sure that the index will no longer be used.

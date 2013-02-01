@@ -29,7 +29,7 @@
 using namespace TDEIO;
 
 KioslaveTest::KioslaveTest( TQString src, TQString dest, uint op, uint pr )
-  : KMainWindow(0, "")
+  : TDEMainWindow(0, "")
 {
 
   job = 0L;

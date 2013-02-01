@@ -1168,7 +1168,7 @@ void KateIconBorder::showMarkMenu( uint line, const TQPoint& pos )
 //END KateIconBorder
 
 KateViewEncodingAction::KateViewEncodingAction(KateDocument *_doc, KateView *_view, const TQString& text, TQObject* parent, const char* name)
-       : KActionMenu (text, parent, name), doc(_doc), view (_view)
+       : TDEActionMenu (text, parent, name), doc(_doc), view (_view)
 {
   connect(popupMenu(),TQT_SIGNAL(aboutToShow()),this,TQT_SLOT(slotAboutToShow()));
 }

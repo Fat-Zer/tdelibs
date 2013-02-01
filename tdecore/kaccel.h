@@ -27,11 +27,11 @@
 
 class TQPopupMenu; // for obsolete insertItem() methods below
 class TQWidget;
-class KAccelAction;
-class KAccelActions;
+class TDEAccelAction;
+class TDEAccelActions;
 class TDEConfigBase;
 
-class KAccelPrivate;
+class TDEAccelPrivate;
 /**
  * Handle shortcuts.
  *
@@ -39,17 +39,17 @@ class KAccelPrivate;
  * through application configuration files or through the
  * KKeyChooser GUI.
  *
- * A KAccel contains a list of accelerator actions.
+ * A TDEAccel contains a list of accelerator actions.
  *
  * For example, CTRL+Key_P could be a shortcut for printing a document. The key
  * codes are listed in tqnamespace.h. "Print" could be the action name for printing.
  * The action name identifies the shortcut in configuration files and the
  * KKeyChooser GUI.
  *
- * A KAccel object handles key events sent to its parent widget and to all
- * children of this parent widget.  The most recently created KAccel object
- * has precedence over any KAccel objects created before it.
- * When a shortcut pressed, KAccel calls the slot to which it has been
+ * A TDEAccel object handles key events sent to its parent widget and to all
+ * children of this parent widget.  The most recently created TDEAccel object
+ * has precedence over any TDEAccel objects created before it.
+ * When a shortcut pressed, TDEAccel calls the slot to which it has been
  * connected. If you want to set global accelerators, independent of the window
  * which has the focus, use TDEGlobalAccel.
  *
@@ -69,14 +69,14 @@ class KAccelPrivate;
  * The translated first argument for insertItem() is used only
  * in the configuration dialog.
  *\code
- * KAccel* pAccel = new KAccel( this );
+ * TDEAccel* pAccel = new TDEAccel( this );
  *
  * // Insert an action "Scroll Up" which is associated with the "Up" key:
  * pAccel->insert( "Scroll Up", i18n("Scroll up"),
  *                       i18n("Scroll up the current document by one line."),
  *                       Qt::Key_Up, this, TQT_SLOT(slotScrollUp()) );
  * // Insert an standard acclerator action.
- * pAccel->insert( KStdAccel::Print, this, TQT_SLOT(slotPrint()) );
+ * pAccel->insert( TDEStdAccel::Print, this, TQT_SLOT(slotPrint()) );
  *
  * // Update the shortcuts by read any user-defined settings from the
  * // application's config file.
@@ -85,56 +85,56 @@ class KAccelPrivate;
  *
  * @short Configurable shortcut support for widgets.
  * @see TDEGlobalAccel
- * @see KAccelShortcutList
+ * @see TDEAccelShortcutList
  * @see KKeyChooser
  * @see KKeyDialog
  */
 
-class TDECORE_EXPORT KAccel : public TQAccel
+class TDECORE_EXPORT TDEAccel : public TQAccel
 {
 	Q_OBJECT
  public:
 	/**
-	 * Creates a new KAccel that watches @p pParent, which is also
+	 * Creates a new TDEAccel that watches @p pParent, which is also
 	 * the QObject's parent.
 	 *
 	 * @param pParent the parent and widget to watch for key strokes
 	 * @param psName the name of the QObject
 	 */
-	KAccel( TQWidget* pParent, const char* psName = 0 );
+	TDEAccel( TQWidget* pParent, const char* psName = 0 );
 
 	/**
-	 * Creates a new KAccel that watches @p watch.
+	 * Creates a new TDEAccel that watches @p watch.
 	 *
 	 * @param watch the widget to watch for key strokes
 	 * @param parent the parent of the QObject
 	 * @param psName the name of the QObject
 	 */
-	KAccel( TQWidget* watch, TQObject* parent, const char* psName = 0 );
-	virtual ~KAccel();
+	TDEAccel( TQWidget* watch, TQObject* parent, const char* psName = 0 );
+	virtual ~TDEAccel();
 
 	/**
 	 * @internal
-	 * Returns the KAccel's @p KAccelActions, a list of @p KAccelAction.
-	 * @return the KAccelActions of the KAccel
+	 * Returns the TDEAccel's @p TDEAccelActions, a list of @p TDEAccelAction.
+	 * @return the TDEAccelActions of the TDEAccel
 	 */
-	KAccelActions& actions();
+	TDEAccelActions& actions();
 
 	/**
 	 * @internal
-	 * Returns the KAccel's @p KAccelActions, a list of @p KAccelAction.
-	 * @return the KAccelActions of the KAccel
+	 * Returns the TDEAccel's @p TDEAccelActions, a list of @p TDEAccelAction.
+	 * @return the TDEAccelActions of the TDEAccel
 	 */
-	const KAccelActions& actions() const;
+	const TDEAccelActions& actions() const;
 
 	/**
-	 * Checks whether the KAccel is active.
+	 * Checks whether the TDEAccel is active.
 	 * @return true if the TQAccel is enabled
 	 */
 	bool isEnabled();
 
 	/**
-	 * Enables or disables the KAccel.
+	 * Enables or disables the TDEAccel.
 	 * @param bEnabled true to enable, false to disable
 	 */
 	void setEnabled( bool bEnabled );
@@ -172,16 +172,16 @@ class TDECORE_EXPORT KAccel : public TQAccel
 	 * @param bConfigurable Allow the user to change this shortcut if set to 'true'.
 	 * @param bEnabled The action will be activated by the shortcut if set to 'true'.
 	 */
-	KAccelAction* insert( const TQString& sAction, const TQString& sLabel, const TQString& sWhatsThis,
-	                 const KShortcut& cutDef,
+	TDEAccelAction* insert( const TQString& sAction, const TQString& sLabel, const TQString& sWhatsThis,
+	                 const TDEShortcut& cutDef,
 	                 const TQObject* pObjSlot, const char* psMethodSlot,
 	                 bool bConfigurable = true, bool bEnabled = true );
 	/**
 	 * Same as first insert(), but with separate shortcuts defined for
 	 * 3- and 4- modifier defaults.
 	 */
-	KAccelAction* insert( const TQString& sAction, const TQString& sLabel, const TQString& sWhatsThis,
-	                 const KShortcut& cutDef3, const KShortcut& cutDef4,
+	TDEAccelAction* insert( const TQString& sAction, const TQString& sLabel, const TQString& sWhatsThis,
+	                 const TDEShortcut& cutDef3, const TDEShortcut& cutDef4,
 	                 const TQObject* pObjSlot, const char* psMethodSlot,
 	                 bool bConfigurable = true, bool bEnabled = true );
 	/**
@@ -201,16 +201,16 @@ class TDECORE_EXPORT KAccel : public TQAccel
 	 * @param bConfigurable Allow the user to change this shortcut if set to 'true'.
 	 * @param bEnabled The action will be activated by the shortcut if set to 'true'.
 	 */
-	KAccelAction* insert( const char* psAction, const KShortcut& cutDef,
+	TDEAccelAction* insert( const char* psAction, const TDEShortcut& cutDef,
 	                 const TQObject* pObjSlot, const char* psMethodSlot,
 	                 bool bConfigurable = true, bool bEnabled = true );
 	/**
 	 * Similar to the first insert() method, but with the action
 	 * name, short description, help text, and default shortcuts all
 	 * set according to one of the standard accelerators.
-	 * @see KStdAccel.
+	 * @see TDEStdAccel.
 	 */
-	KAccelAction* insert( KStdAccel::StdAccel id,
+	TDEAccelAction* insert( TDEStdAccel::StdAccel id,
 	                 const TQObject* pObjSlot, const char* psMethodSlot,
 	                 bool bConfigurable = true, bool bEnabled = true );
 
@@ -237,7 +237,7 @@ class TDECORE_EXPORT KAccel : public TQAccel
 	 * @param sAction the name of the action
 	 * @return the action's shortcut, or a null shortcut if not found
 	 */
-	const KShortcut& shortcut( const TQString& sAction ) const;
+	const TDEShortcut& shortcut( const TQString& sAction ) const;
 
 	/**
 	 * Set the shortcut to be associated with the action named by @p sAction.
@@ -245,7 +245,7 @@ class TDECORE_EXPORT KAccel : public TQAccel
 	 * @param shortcut the shortcut to set
 	 * @return true if successful, false otherwise
 	 */
-	bool setShortcut( const TQString& sAction, const KShortcut &shortcut );
+	bool setShortcut( const TQString& sAction, const TDEShortcut &shortcut );
 
 	/**
 	 * Set the slot to be called when the shortcut of the action named
@@ -329,7 +329,7 @@ class TDECORE_EXPORT KAccel : public TQAccel
 	/**
 	 * @deprecated use insert
 	 */
-	bool insertStdItem( KStdAccel::StdAccel id, const TQString& descr = TQString::null ) KDE_DEPRECATED;
+	bool insertStdItem( TDEStdAccel::StdAccel id, const TQString& descr = TQString::null ) KDE_DEPRECATED;
 	/**
 	 * @deprecated use insert
 	 */
@@ -338,7 +338,7 @@ class TDECORE_EXPORT KAccel : public TQAccel
 	 * @deprecated use insert( accel, pObjSlot, psMethodSlot );
 	 *
 	 */
-	KDE_DEPRECATED bool connectItem( KStdAccel::StdAccel accel, const TQObject* pObjSlot, const char* psMethodSlot )
+	KDE_DEPRECATED bool connectItem( TDEStdAccel::StdAccel accel, const TQObject* pObjSlot, const char* psMethodSlot )
 		{ return insert( accel, pObjSlot, psMethodSlot ); }
 	/**
 	 * @deprecated use remove
@@ -355,7 +355,7 @@ class TDECORE_EXPORT KAccel : public TQAccel
 	/**
 	 * @deprecated see KDE3PORTING.html
 	 */
-	void changeMenuAccel( TQPopupMenu *menu, int id, KStdAccel::StdAccel accel ) KDE_DEPRECATED;
+	void changeMenuAccel( TQPopupMenu *menu, int id, TDEStdAccel::StdAccel accel ) KDE_DEPRECATED;
 	/**
 	 * @deprecated
 	 */
@@ -383,8 +383,8 @@ class TDECORE_EXPORT KAccel : public TQAccel
         /** \internal */
 	virtual void virtual_hook( int id, void* data );
  private:
-	class KAccelPrivate* d;
-	friend class KAccelPrivate;
+	class TDEAccelPrivate* d;
+	friend class TDEAccelPrivate;
 };
 
 #endif // _KACCEL_H

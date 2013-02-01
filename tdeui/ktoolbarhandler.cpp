@@ -44,14 +44,14 @@ namespace
     class BarActionBuilder
     {
     public:
-        BarActionBuilder( KActionCollection *actionCollection, KMainWindow *mainWindow, TQPtrList<KToolBar> &oldToolBarList )
+        BarActionBuilder( TDEActionCollection *actionCollection, TDEMainWindow *mainWindow, TQPtrList<TDEToolBar> &oldToolBarList )
             : m_actionCollection( actionCollection ), m_mainWindow( mainWindow ), m_needsRebuild( false )
         {
             TQPtrList<TQDockWindow> dockWindows = m_mainWindow->dockWindows();
             TQPtrListIterator<TQDockWindow> dockWindowIt( dockWindows );
             for ( ; dockWindowIt.current(); ++dockWindowIt ) {
 
-                KToolBar *toolBar = tqt_dynamic_cast<KToolBar *>( dockWindowIt.current() );
+                TDEToolBar *toolBar = tqt_dynamic_cast<TDEToolBar *>( dockWindowIt.current() );
                 if ( !toolBar )
                     continue;
 
@@ -67,30 +67,30 @@ namespace
 
         bool needsRebuild() const { return m_needsRebuild; }
 
-        TQPtrList<KAction> create()
+        TQPtrList<TDEAction> create()
         {
             if ( !m_needsRebuild )
-                return TQPtrList<KAction>();
+                return TQPtrList<TDEAction>();
 
-            TQPtrListIterator<KToolBar> toolBarIt( m_toolBars );
+            TQPtrListIterator<TDEToolBar> toolBarIt( m_toolBars );
             for ( ; toolBarIt.current(); ++toolBarIt )
                 handleToolBar( toolBarIt.current() );
 
-            TQPtrList<KAction> actions;
+            TQPtrList<TDEAction> actions;
 
             if ( m_toolBarActions.count() == 0 )
                 return actions;
 
             if ( m_toolBarActions.count() == 1 ) {
-                KToggleToolBarAction* action = static_cast<KToggleToolBarAction *>( m_toolBarActions.getFirst() );
+                TDEToggleToolBarAction* action = static_cast<TDEToggleToolBarAction *>( m_toolBarActions.getFirst() );
                 action->setText( i18n( "Show Toolbar" ) );
                 action->setCheckedState( i18n( "Hide Toolbar" ) );
                 return m_toolBarActions;
             }
 
-            KActionMenu *menuAction = new KActionMenu( i18n( "Toolbars" ), m_actionCollection, "toolbars_submenu_action" );
+            TDEActionMenu *menuAction = new TDEActionMenu( i18n( "Toolbars" ), m_actionCollection, "toolbars_submenu_action" );
 
-            TQPtrListIterator<KAction> actionIt( m_toolBarActions );
+            TQPtrListIterator<TDEAction> actionIt( m_toolBarActions );
             for ( ; actionIt.current(); ++actionIt )
                 menuAction->insert( actionIt.current() );
 
@@ -98,12 +98,12 @@ namespace
             return actions;
         }
 
-        const TQPtrList<KToolBar> &toolBars() const { return m_toolBars; }
+        const TQPtrList<TDEToolBar> &toolBars() const { return m_toolBars; }
 
     private:
-        void handleToolBar( KToolBar *toolBar )
+        void handleToolBar( TDEToolBar *toolBar )
         {
-            KToggleToolBarAction *action = new KToggleToolBarAction(
+            TDEToggleToolBarAction *action = new TDEToggleToolBarAction(
                 toolBar,
                 toolBar->label(),
                 m_actionCollection,
@@ -112,11 +112,11 @@ namespace
             m_toolBarActions.append( action );
         }
 
-        KActionCollection *m_actionCollection;
-        KMainWindow *m_mainWindow;
+        TDEActionCollection *m_actionCollection;
+        TDEMainWindow *m_mainWindow;
 
-        TQPtrList<KToolBar> m_toolBars;
-        TQPtrList<KAction> m_toolBarActions;
+        TQPtrList<TDEToolBar> m_toolBars;
+        TQPtrList<TDEAction> m_toolBarActions;
 
         bool m_needsRebuild : 1;
     };
@@ -124,13 +124,13 @@ namespace
 
 using namespace KDEPrivate;
 
-ToolBarHandler::ToolBarHandler( KMainWindow *mainWindow, const char *name )
+ToolBarHandler::ToolBarHandler( TDEMainWindow *mainWindow, const char *name )
     : TQObject( mainWindow, name ), KXMLGUIClient( mainWindow )
 {
     init( mainWindow );
 }
 
-ToolBarHandler::ToolBarHandler( KMainWindow *mainWindow, TQObject *parent, const char *name )
+ToolBarHandler::ToolBarHandler( TDEMainWindow *mainWindow, TQObject *parent, const char *name )
     : TQObject( parent, name ), KXMLGUIClient( mainWindow )
 {
     init( mainWindow );
@@ -142,7 +142,7 @@ ToolBarHandler::~ToolBarHandler()
     m_actions.clear();
 }
 
-KAction *ToolBarHandler::toolBarMenuAction()
+TDEAction *ToolBarHandler::toolBarMenuAction()
 {
     assert( m_actions.count() == 1 );
     return m_actions.getFirst();
@@ -167,7 +167,7 @@ void ToolBarHandler::setupActions()
     m_actions = builder.create();
 
     /*
-    for (  TQPtrListIterator<KToolBar> toolBarIt( m_toolBars );
+    for (  TQPtrListIterator<TDEToolBar> toolBarIt( m_toolBars );
            toolBarIt.current(); ++toolBarIt )
         toolBarIt.current()->disconnect( this );
         */
@@ -175,13 +175,13 @@ void ToolBarHandler::setupActions()
     m_toolBars = builder.toolBars();
 
     /*
-    for (  TQPtrListIterator<KToolBar> toolBarIt( m_toolBars );
+    for (  TQPtrListIterator<TDEToolBar> toolBarIt( m_toolBars );
            toolBarIt.current(); ++toolBarIt )
         connect( toolBarIt.current(), TQT_SIGNAL( destroyed() ),
                  this, TQT_SLOT( setupActions() ) );
                  */
 
-    if (kapp && kapp->authorizeKAction("options_show_toolbar"))
+    if (kapp && kapp->authorizeTDEAction("options_show_toolbar"))
 	plugActionList( actionListName, m_actions );
 
     connectToActionContainers();
@@ -193,7 +193,7 @@ void ToolBarHandler::clientAdded( KXMLGUIClient *client )
         setupActions();
 }
 
-void ToolBarHandler::init( KMainWindow *mainWindow )
+void ToolBarHandler::init( TDEMainWindow *mainWindow )
 {
     d = 0;
     m_mainWindow = mainWindow;
@@ -218,12 +218,12 @@ void ToolBarHandler::init( KMainWindow *mainWindow )
 
 void ToolBarHandler::connectToActionContainers()
 {
-    TQPtrListIterator<KAction> actionIt( m_actions );
+    TQPtrListIterator<TDEAction> actionIt( m_actions );
     for ( ; actionIt.current(); ++actionIt )
         connectToActionContainer( actionIt.current() );
 }
 
-void ToolBarHandler::connectToActionContainer( KAction *action )
+void ToolBarHandler::connectToActionContainer( TDEAction *action )
 {
     uint containerCount = action->containerCount();
     for ( uint i = 0; i < containerCount; ++i )

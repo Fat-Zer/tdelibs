@@ -309,8 +309,8 @@ in that case the signal connection will always be deleted.
 A receiver can create a non-volatile connection while the sender doesn't (yet)
 exist. An anonymous DCOP connection should always be non-volatile.
 
-The following example shows how KLauncher emits a signal whenever it notices
-that an application that was started via KLauncher terminates.
+The following example shows how TDELauncher emits a signal whenever it notices
+that an application that was started via TDELauncher terminates.
 
    QByteArray params;
    QDataStream stream(params, IO_WriteOnly);
@@ -319,7 +319,7 @@ that an application that was started via KLauncher terminates.
 
 The task manager of the TDE panel connects to this signal. It uses an 
 anonymous connection (it doesn't require that the signal is being emitted
-by KLauncher) that is non-volatile:
+by TDELauncher) that is non-volatile:
 
    connectDCOPSignal(0, 0, "clientDied(pid_t)", "clientDied(pid_t)", false);
 

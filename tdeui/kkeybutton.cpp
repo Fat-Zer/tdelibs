@@ -72,7 +72,7 @@ KKeyButton::KKeyButton(TQWidget *parent, const char *name)
 	setFocusPolicy( TQ_StrongFocus );
 	m_bEditing = false;
 	connect( this, TQT_SIGNAL(clicked()), this, TQT_SLOT(captureShortcut()) );
-	setShortcut( KShortcut(), true );
+	setShortcut( TDEShortcut(), true );
 }
 
 KKeyButton::~KKeyButton ()
@@ -80,7 +80,7 @@ KKeyButton::~KKeyButton ()
 	delete d;
 }
 
-void KKeyButton::setShortcut( const KShortcut& cut, bool bQtShortcut )
+void KKeyButton::setShortcut( const TDEShortcut& cut, bool bQtShortcut )
 {
 	d->bQtShortcut = bQtShortcut;
 	m_cut = cut;
@@ -90,7 +90,7 @@ void KKeyButton::setShortcut( const KShortcut& cut, bool bQtShortcut )
 }
 
 // deprecated //
-void KKeyButton::setShortcut( const KShortcut& cut )
+void KKeyButton::setShortcut( const TDEShortcut& cut )
 {
 	setShortcut( cut, false );
 }
@@ -103,13 +103,13 @@ void KKeyButton::setText( const TQString& text )
 
 void KKeyButton::captureShortcut()
 {
-	KShortcut cut;
+	TDEShortcut cut;
 
 	m_bEditing = true;
 	repaint();
 
         {
-	KShortcutDialog dlg( m_cut, d->bQtShortcut, this );
+	TDEShortcutDialog dlg( m_cut, d->bQtShortcut, this );
 	if( dlg.exec() == KDialog::Accepted )
                 cut = dlg.shortcut();
         } // emit the signal after the dialog is destroyed, otherwise it still has grab

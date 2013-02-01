@@ -233,7 +233,7 @@ void Slave::hold(const KURL &url)
       emit slaveDied(this);
    }
    deref();
-   // Call KLauncher::waitForSlave(pid);
+   // Call TDELauncher::waitForSlave(pid);
    {
       DCOPClient *client = kapp->dcopClient();
       if (!client->isAttached())

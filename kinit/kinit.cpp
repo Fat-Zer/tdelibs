@@ -1074,9 +1074,9 @@ static void launcher_died()
       return;
    }
 
-   // KLauncher died... restart
+   // TDELauncher died... restart
 #ifndef NDEBUG
-   fprintf(stderr, "[tdeinit] KLauncher died unexpectedly.\n");
+   fprintf(stderr, "[tdeinit] TDELauncher died unexpectedly.\n");
 #endif
    // Make sure it's really dead.
    if (d.launcher_pid)
@@ -1092,7 +1092,7 @@ static void launcher_died()
 
    pid_t pid = launch( 1, "tdelauncher", 0 );
 #ifndef NDEBUG
-   fprintf(stderr, "[tdeinit] Relaunching KLauncher, pid = %ld result = %d\n", (long) pid, d.result);
+   fprintf(stderr, "[tdeinit] Relaunching TDELauncher, pid = %ld result = %d\n", (long) pid, d.result);
 #endif
 }
 
@@ -1819,7 +1819,7 @@ int main(int argc, char **argv, char **envp)
       else
          pid = launch( 1, "tdelauncher", 0 );
 #ifndef NDEBUG
-      fprintf(stderr, "[tdeinit] Launched KLauncher, pid = %ld result = %d\n", (long) pid, d.result);
+      fprintf(stderr, "[tdeinit] Launched TDELauncher, pid = %ld result = %d\n", (long) pid, d.result);
 #endif
       handle_requests(pid); // Wait for tdelauncher to be ready
    }

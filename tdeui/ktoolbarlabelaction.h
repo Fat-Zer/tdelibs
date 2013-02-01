@@ -25,7 +25,7 @@ class TQLabel;
 /**
  * @short Class to display a label in a toolbar.
  *
- * KToolBarLabelAction is a convenience class for displaying a label in a
+ * TDEToolBarLabelAction is a convenience class for displaying a label in a
  * toolbar.
  *
  * It provides easy access to the label's #setBuddy(TQWidget*) and #buddy()
@@ -38,7 +38,7 @@ class TQLabel;
  *   = new KWidgetAction(findCombo, i18n("F&ind Combo"), Qt::Key_F6, this,
  *                       TQT_SLOT(slotFocus()), actionCollection(), "find_combo");
  *
- * new KToolBarLabelAction(findCombo, i18n("F&ind "), 0, this,
+ * new TDEToolBarLabelAction(findCombo, i18n("F&ind "), 0, this,
  *                         TQT_SLOT(slotFocus()), actionCollection(),
  *             "find_label");
  *
@@ -46,7 +46,7 @@ class TQLabel;
  *
  * @author Felix Berger <felixberger@beldesign.de>
  */
-class TDEUI_EXPORT KToolBarLabelAction : public KWidgetAction
+class TDEUI_EXPORT TDEToolBarLabelAction : public KWidgetAction
 {
 public:
   /**
@@ -59,10 +59,10 @@ public:
    * @param parent This action's parent.
    * @param name An internal name for this action.
    */
-  KToolBarLabelAction(const TQString &text,
-		      const KShortcut &cut,
+  TDEToolBarLabelAction(const TQString &text,
+		      const TDEShortcut &cut,
 		      const TQObject *receiver, const char *slot,
-		      KActionCollection *parent, const char *name);
+		      TDEActionCollection *parent, const char *name);
   /**
    * Constructs a toolbar label setting a buddy for the label.
    *
@@ -75,10 +75,10 @@ public:
    * @param parent This action's parent.
    * @param name An internal name for this action.
    */
-  KToolBarLabelAction(TQWidget* buddy, const TQString &text,
-		      const KShortcut &cut,
+  TDEToolBarLabelAction(TQWidget* buddy, const TQString &text,
+		      const TDEShortcut &cut,
 		      const TQObject *receiver, const char *slot,
-		      KActionCollection *parent, const char *name);
+		      TDEActionCollection *parent, const char *name);
   /**
    * Constructs a toolbar label for a label.
    *
@@ -98,11 +98,11 @@ public:
    * @param parent This action's parent.
    * @param name An internal name for this action.
    */
-  KToolBarLabelAction(TQLabel* label, const KShortcut &cut, 
+  TDEToolBarLabelAction(TQLabel* label, const TDEShortcut &cut, 
 		      const TQObject *receiver, const char *slot,
-		      KActionCollection* parent, const char *name);
+		      TDEActionCollection* parent, const char *name);
 
-  virtual ~KToolBarLabelAction();
+  virtual ~TDEToolBarLabelAction();
   /**
    * Reimplemented to update both the action's text and the label's text.
    */
@@ -128,8 +128,8 @@ protected:
   virtual void virtual_hook(int id, void* data);
 
 private:
-  class KToolBarLabelActionPrivate;
-  KToolBarLabelActionPrivate *d;
+  class TDEToolBarLabelActionPrivate;
+  TDEToolBarLabelActionPrivate *d;
   void init();
 };
 

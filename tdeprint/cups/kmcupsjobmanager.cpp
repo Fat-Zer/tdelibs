@@ -352,10 +352,10 @@ bool KMCupsJobManager::jobIppReport(KMJob *j)
 	return result;
 }
 
-TQValueList<KAction*> KMCupsJobManager::createPluginActions(KActionCollection *coll)
+TQValueList<TDEAction*> KMCupsJobManager::createPluginActions(TDEActionCollection *coll)
 {
-	TQValueList<KAction*>	list;
-	KAction	*act(0);
+	TQValueList<TDEAction*>	list;
+	TDEAction	*act(0);
 
 	list <<  (act = new PluginAction(0, i18n("&Job IPP Report"), "tdeprint_report", 0, coll, "plugin_ipp"));
 	act->setGroup("plugin");
@@ -369,7 +369,7 @@ TQValueList<KAction*> KMCupsJobManager::createPluginActions(KActionCollection *c
 	return list;
 }
 
-void KMCupsJobManager::validatePluginActions(KActionCollection *coll, const TQPtrList<KMJob>& joblist)
+void KMCupsJobManager::validatePluginActions(TDEActionCollection *coll, const TQPtrList<KMJob>& joblist)
 {
 	TQPtrListIterator<KMJob>	it(joblist);
 	bool	flag(true);
@@ -380,7 +380,7 @@ void KMCupsJobManager::validatePluginActions(KActionCollection *coll, const TQPt
 			/*&& !it.current()->isRemote()*/);
 	}
 	flag = (flag && joblist.count() > 0);
-	KAction *a;
+	TDEAction *a;
 	if ( ( a = coll->action( "plugin_ipp" ) ) )
 		a->setEnabled( joblist.count() == 1 );
 	if ( ( a = coll->action( "plugin_prioup" ) ) )

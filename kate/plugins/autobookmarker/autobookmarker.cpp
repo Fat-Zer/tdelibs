@@ -253,7 +253,7 @@ void ABGlobal::writeConfig()
 class AutoBookmarkEntItem : public QListViewItem
 {
   public:
-    AutoBookmarkEntItem( KListView *lv, AutoBookmarkEnt *e )
+    AutoBookmarkEntItem( TDEListView *lv, AutoBookmarkEnt *e )
         : TQListViewItem( lv ),
         ent( e )
       {
@@ -383,7 +383,7 @@ AutoBookmarkerConfigPage::AutoBookmarkerConfigPage( TQWidget *parent, const char
 
   TQLabel *l = new TQLabel( i18n("&Patterns"), this );
   lo->addWidget( l );
-  lvPatterns = new KListView( this );
+  lvPatterns = new TDEListView( this );
   lvPatterns->addColumn( i18n("Pattern") );
   lvPatterns->addColumn( i18n("Mime Types") );
   lvPatterns->addColumn( i18n("File Masks") );

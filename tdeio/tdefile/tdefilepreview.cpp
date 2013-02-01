@@ -254,7 +254,7 @@ KFileItem * KFilePreview::prevItem( const KFileItem *item ) const
     return left->prevItem( item );
 }
 
-KActionCollection * KFilePreview::actionCollection() const
+TDEActionCollection * KFilePreview::actionCollection() const
 {
     if ( left )
         return left->actionCollection();

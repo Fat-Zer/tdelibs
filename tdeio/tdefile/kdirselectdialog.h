@@ -29,7 +29,7 @@ class TDEConfig;
 class KFileTreeBranch;
 class KFileTreeView;
 class KFileTreeViewItem;
-class KToggleAction;
+class TDEToggleAction;
 
 /**
  * A pretty dialog for a KDirSelect control for selecting directories.
@@ -106,7 +106,7 @@ private slots:
     void slotURLActivated( const TQString& );
     void slotNextDirToList( KFileTreeViewItem *dirItem );
     void slotComboTextChanged( const TQString& text );
-    void slotContextMenu( KListView *, TQListViewItem *, const TQPoint & );
+    void slotContextMenu( TDEListView *, TQListViewItem *, const TQPoint & );
     void slotShowHiddenFoldersToggled();
     void slotMkdir();
 
@@ -118,7 +118,7 @@ private:
 
     KFileTreeView *m_treeView;
     TQPopupMenu *m_contextMenu;
-    KToggleAction *m_showHiddenFolders;
+    TDEToggleAction *m_showHiddenFolders;
     bool m_localOnly;
 
 protected:

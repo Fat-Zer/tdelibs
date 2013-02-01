@@ -157,13 +157,13 @@ KDateTable::~KDateTable()
 
 void KDateTable::initAccels()
 {
-  KAccel* accel = new KAccel(this, "date table accel");
-  accel->insert(KStdAccel::Next, TQT_TQOBJECT(this), TQT_SLOT(nextMonth()));
-  accel->insert(KStdAccel::Prior, TQT_TQOBJECT(this), TQT_SLOT(previousMonth()));
-  accel->insert(KStdAccel::Home, TQT_TQOBJECT(this), TQT_SLOT(beginningOfMonth()));
-  accel->insert(KStdAccel::End, TQT_TQOBJECT(this), TQT_SLOT(endOfMonth()));
-  accel->insert(KStdAccel::BeginningOfLine, TQT_TQOBJECT(this), TQT_SLOT(beginningOfWeek()));
-  accel->insert(KStdAccel::EndOfLine, TQT_TQOBJECT(this), TQT_SLOT(endOfWeek()));
+  TDEAccel* accel = new TDEAccel(this, "date table accel");
+  accel->insert(TDEStdAccel::Next, TQT_TQOBJECT(this), TQT_SLOT(nextMonth()));
+  accel->insert(TDEStdAccel::Prior, TQT_TQOBJECT(this), TQT_SLOT(previousMonth()));
+  accel->insert(TDEStdAccel::Home, TQT_TQOBJECT(this), TQT_SLOT(beginningOfMonth()));
+  accel->insert(TDEStdAccel::End, TQT_TQOBJECT(this), TQT_SLOT(endOfMonth()));
+  accel->insert(TDEStdAccel::BeginningOfLine, TQT_TQOBJECT(this), TQT_SLOT(beginningOfWeek()));
+  accel->insert(TDEStdAccel::EndOfLine, TQT_TQOBJECT(this), TQT_SLOT(endOfWeek()));
   accel->readSettings();
 }
 
@@ -499,7 +499,7 @@ KDateTable::contentsMousePressEvent(TQMouseEvent *e)
 
   if (  e->button() == Qt::RightButton && d->popupMenuEnabled )
   {
-        KPopupMenu *menu = new KPopupMenu();
+        TDEPopupMenu *menu = new TDEPopupMenu();
         menu->insertTitle( TDEGlobal::locale()->formatDate(clickedDate) );
         emit aboutToShowContextMenu( menu, clickedDate );
         menu->popup(e->globalPos());
@@ -905,31 +905,31 @@ KDateInternalYearSelector::setYear(int year)
   setText(temp);
 }
 
-class KPopupFrame::KPopupFramePrivate
+class TDEPopupFrame::TDEPopupFramePrivate
 {
     public:
-        KPopupFramePrivate() : exec(false) {}
+        TDEPopupFramePrivate() : exec(false) {}
 
         bool exec;
 };
 
-KPopupFrame::KPopupFrame(TQWidget* parent, const char*  name)
+TDEPopupFrame::TDEPopupFrame(TQWidget* parent, const char*  name)
   : TQFrame(parent, name, (WFlags)WType_Popup),
     result(0), // rejected
     main(0),
-    d(new KPopupFramePrivate)
+    d(new TDEPopupFramePrivate)
 {
   setFrameStyle(TQFrame::Box|TQFrame::Raised);
   setMidLineWidth(2);
 }
 
-KPopupFrame::~KPopupFrame()
+TDEPopupFrame::~TDEPopupFrame()
 {
     delete d;
 }
 
 void
-KPopupFrame::keyPressEvent(TQKeyEvent* e)
+TDEPopupFrame::keyPressEvent(TQKeyEvent* e)
 {
   if(e->key()==Key_Escape)
     {
@@ -940,7 +940,7 @@ KPopupFrame::keyPressEvent(TQKeyEvent* e)
 }
 
 void
-KPopupFrame::close(int r)
+TDEPopupFrame::close(int r)
 {
   result=r;
   d->exec = false;
@@ -948,7 +948,7 @@ KPopupFrame::close(int r)
 }
 
 void
-KPopupFrame::hide()
+TDEPopupFrame::hide()
 {
     TQFrame::hide();
     if (d->exec)
@@ -959,7 +959,7 @@ KPopupFrame::hide()
 }
 
 void
-KPopupFrame::setMainWidget(TQWidget* m)
+TDEPopupFrame::setMainWidget(TQWidget* m)
 {
   main=m;
   if(main)
@@ -969,7 +969,7 @@ KPopupFrame::setMainWidget(TQWidget* m)
 }
 
 void
-KPopupFrame::resizeEvent(TQResizeEvent*)
+TDEPopupFrame::resizeEvent(TQResizeEvent*)
 {
   if(main)
     {
@@ -979,7 +979,7 @@ KPopupFrame::resizeEvent(TQResizeEvent*)
 }
 
 void
-KPopupFrame::popup(const TQPoint &pos)
+TDEPopupFrame::popup(const TQPoint &pos)
 {
   // Make sure the whole popup is visible.
   TQRect d = TDEGlobalSettings::desktopGeometry(pos);
@@ -1003,7 +1003,7 @@ KPopupFrame::popup(const TQPoint &pos)
 }
 
 int
-KPopupFrame::exec(TQPoint pos)
+TDEPopupFrame::exec(TQPoint pos)
 {
   popup(pos);
   repaint();
@@ -1017,12 +1017,12 @@ KPopupFrame::exec(TQPoint pos)
 }
 
 int
-KPopupFrame::exec(int x, int y)
+TDEPopupFrame::exec(int x, int y)
 {
   return exec(TQPoint(x, y));
 }
 
-void KPopupFrame::virtual_hook( int, void* )
+void TDEPopupFrame::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
 void KDateTable::virtual_hook( int, void* )

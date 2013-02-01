@@ -44,7 +44,7 @@ class KInputDialogPrivate
     KIntSpinBox *m_intSpinBox;
     KDoubleSpinBox *m_doubleSpinBox;
     KComboBox *m_comboBox;
-    KListBox *m_listBox;
+    TDEListBox *m_listBox;
     KTextEdit *m_textEdit;
 };
 
@@ -187,7 +187,7 @@ KInputDialog::KInputDialog( const TQString &caption, const TQString &label,
     slotUpdateButtons( d->m_comboBox->currentText() );
     d->m_comboBox->setFocus();
   } else {
-    d->m_listBox = new KListBox( frame );
+    d->m_listBox = new TDEListBox( frame );
     d->m_listBox->insertStringList( list );
     d->m_listBox->setSelected( current, true );
     d->m_listBox->ensureCurrentVisible();
@@ -217,7 +217,7 @@ KInputDialog::KInputDialog( const TQString &caption, const TQString &label,
   d->m_label = new TQLabel( label, frame );
   layout->addWidget( d->m_label );
 
-  d->m_listBox = new KListBox( frame );
+  d->m_listBox = new TDEListBox( frame );
   d->m_listBox->insertStringList( list );
   layout->addWidget( d->m_listBox );
 
@@ -456,7 +456,7 @@ KComboBox *KInputDialog::comboBox() const
   return d->m_comboBox;
 }
 
-KListBox *KInputDialog::listBox() const
+TDEListBox *KInputDialog::listBox() const
 {
   return d->m_listBox;
 }

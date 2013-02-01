@@ -37,7 +37,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 class KWinModule;
 class KWindowListMenuPrivate;
 
-class TDEUI_EXPORT KWindowListMenu : public KPopupMenu
+class TDEUI_EXPORT KWindowListMenu : public TDEPopupMenu
 {
     Q_OBJECT
 

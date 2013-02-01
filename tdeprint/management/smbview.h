@@ -25,7 +25,7 @@
 class TDEProcess;
 class KTempFile;
 
-class SmbView : public KListView
+class SmbView : public TDEListView
 {
 	Q_OBJECT
 public:

@@ -52,13 +52,13 @@ namespace TDEIO
   class TransferJob;
 }
 
-class KAccel;
+class TDEAccel;
 class KColorButton;
 class KComboBox;
 class KIntNumInput;
 class KKeyButton;
 class KKeyChooser;
-class KMainWindow;
+class TDEMainWindow;
 class KPushButton;
 class KRegExpDialog;
 class KIntNumInput;
@@ -235,7 +235,7 @@ class KateEditKeyConfiguration: public KateConfigPage
     bool m_ready;
     class KateDocument *m_doc;
     KKeyChooser* m_keyChooser;
-    class KActionCollection *m_ac;
+    class TDEActionCollection *m_ac;
 };
 
 class KateSaveConfigTab : public KateConfigPage
@@ -263,7 +263,7 @@ class KateSaveConfigTab : public KateConfigPage
 
 class KatePartPluginListItem;
 
-class KatePartPluginListView : public KListView
+class KatePartPluginListView : public TDEListView
 {
   Q_OBJECT
 

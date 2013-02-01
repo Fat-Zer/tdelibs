@@ -44,15 +44,15 @@ class TQListView;
 class KLineEdit;
 class KBookmark;
 class KBookmarkGroup;
-class KAction;
-class KActionMenu;
-class KActionCollection;
+class TDEAction;
+class TDEActionMenu;
+class TDEActionCollection;
 class KBookmarkOwner;
 class KBookmarkMenu;
 class KBookmarkBar;
-class KPopupMenu;
+class TDEPopupMenu;
 
-class KImportedBookmarksActionMenu : public KActionMenu {
+class KImportedBookmarksActionMenu : public TDEActionMenu {
   Q_OBJECT
   TQ_PROPERTY( TQString type READ type WRITE setType )
   TQ_PROPERTY( TQString location READ location WRITE setLocation )
@@ -67,13 +67,13 @@ private:
 public:
   KImportedBookmarksActionMenu( 
     const TQString &text, const TQString& sIconName,
-    KActionCollection* parent, const char* name)
-  : KActionMenu(text, sIconName, parent, name) {
+    TDEActionCollection* parent, const char* name)
+  : TDEActionMenu(text, sIconName, parent, name) {
      ;
   }
 };
 
-class KBookmarkActionMenu : public KActionMenu {
+class KBookmarkActionMenu : public TDEActionMenu {
   Q_OBJECT
   TQ_PROPERTY( TQString url READ url WRITE setUrl )
   TQ_PROPERTY( TQString address READ address WRITE setAddress )
@@ -92,13 +92,13 @@ private:
 public:
   KBookmarkActionMenu( 
     const TQString &text, const TQString& sIconName,
-    KActionCollection* parent, const char* name)
-  : KActionMenu(text, sIconName, parent, name) {
+    TDEActionCollection* parent, const char* name)
+  : TDEActionMenu(text, sIconName, parent, name) {
      ;
   }
 };
 
-class KBookmarkAction : public KAction {
+class KBookmarkAction : public TDEAction {
   Q_OBJECT
   TQ_PROPERTY( TQString url READ url WRITE setUrl )
   TQ_PROPERTY( TQString address READ address WRITE setAddress )
@@ -113,15 +113,15 @@ private:
 public:
   // KDE4: remove
   KBookmarkAction(
-    const TQString& text, const TQString& sIconName, const KShortcut& cut,
+    const TQString& text, const TQString& sIconName, const TDEShortcut& cut,
     const TQObject* receiver, const char* slot,
-    KActionCollection* parent, const char* name)
-  : KAction(text, sIconName, cut, receiver, slot, parent, name) {
+    TDEActionCollection* parent, const char* name)
+  : TDEAction(text, sIconName, cut, receiver, slot, parent, name) {
   }
   KBookmarkAction(
-    const TQString& text, const TQString& sIconName, const KShortcut& cut,
-    KActionCollection* parent, const char* name)
-  : KAction(text, sIconName, cut, parent, name) {
+    const TQString& text, const TQString& sIconName, const TDEShortcut& cut,
+    TDEActionCollection* parent, const char* name)
+  : TDEAction(text, sIconName, cut, parent, name) {
   }
 };
 

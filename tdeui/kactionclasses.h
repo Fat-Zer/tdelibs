@@ -44,18 +44,18 @@ class TQComboBox;
 class TQPoint;
 class TQIconSet;
 class TQString;
-class KToolBar;
+class TDEToolBar;
 
-class KAccel;
-class KAccelActions;
+class TDEAccel;
+class TDEAccelActions;
 class TDEConfig;
 class TDEConfigBase;
 class KURL;
 class TDEInstance;
-class KToolBar;
-class KActionCollection;
-class KPopupMenu;
-class KMainWindow;
+class TDEToolBar;
+class TDEActionCollection;
+class TDEPopupMenu;
+class TDEMainWindow;
 
 /**
  *  @short Checkbox like action.
@@ -65,7 +65,7 @@ class KMainWindow;
  *  This action provides two states: checked or not.
  *
  */
-class TDEUI_EXPORT KToggleAction : public KAction
+class TDEUI_EXPORT TDEToggleAction : public TDEAction
 {
     Q_OBJECT
     
@@ -83,7 +83,7 @@ public:
      * @param parent This action's parent.
      * @param name An internal name for this action.
      */
-    KToggleAction( const TQString& text, const KShortcut& cut = KShortcut(), TQObject* parent = 0, const char* name = 0 );
+    TDEToggleAction( const TQString& text, const TDEShortcut& cut = TDEShortcut(), TQObject* parent = 0, const char* name = 0 );
 
     /**
      *  @param text The text that will be displayed.
@@ -93,7 +93,7 @@ public:
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KToggleAction( const TQString& text, const KShortcut& cut,
+    TDEToggleAction( const TQString& text, const TDEShortcut& cut,
                    const TQObject* receiver, const char* slot, TQObject* parent, const char* name = 0 );
 
     /**
@@ -103,7 +103,7 @@ public:
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KToggleAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut = KShortcut(),
+    TDEToggleAction( const TQString& text, const TQIconSet& pix, const TDEShortcut& cut = TDEShortcut(),
              TQObject* parent = 0, const char* name = 0 );
 
     /**
@@ -113,7 +113,7 @@ public:
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KToggleAction( const TQString& text, const TQString& pix, const KShortcut& cut = KShortcut(),
+    TDEToggleAction( const TQString& text, const TQString& pix, const TDEShortcut& cut = TDEShortcut(),
                    TQObject* parent = 0, const char* name = 0 );
 
     /**
@@ -125,7 +125,7 @@ public:
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KToggleAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut,
+    TDEToggleAction( const TQString& text, const TQIconSet& pix, const TDEShortcut& cut,
                    const TQObject* receiver, const char* slot, TQObject* parent, const char* name = 0 );
 
     /**
@@ -137,7 +137,7 @@ public:
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KToggleAction( const TQString& text, const TQString& pix, const KShortcut& cut,
+    TDEToggleAction( const TQString& text, const TQString& pix, const TDEShortcut& cut,
                    const TQObject* receiver, const char* slot,
                    TQObject* parent, const char* name = 0 );
 
@@ -145,12 +145,12 @@ public:
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KToggleAction( TQObject* parent = 0, const char* name = 0 );
+    TDEToggleAction( TQObject* parent = 0, const char* name = 0 );
 
     /**
      * Destructor
      */
-    virtual ~KToggleAction();
+    virtual ~TDEToggleAction();
 
     /**
      *  "Plug" or insert this action into a given widget.
@@ -158,7 +158,7 @@ public:
      *  This will typically be a menu or a toolbar.  From this point
      *  on, you will never need to directly manipulate the item in the
      *  menu or toolbar.  You do all enabling/disabling/manipulation
-     *  directly with your KToggleAction object.
+     *  directly with your TDEToggleAction object.
      *
      *  @param widget The GUI element to display this action.
      *  @param index  The index of the item.
@@ -218,8 +218,8 @@ signals:
 protected:
     virtual void virtual_hook( int id, void* data );
 private:
-    class KToggleActionPrivate;
-    KToggleActionPrivate *d;
+    class TDEToggleActionPrivate;
+    TDEToggleActionPrivate *d;
 };
 
 /**
@@ -228,7 +228,7 @@ private:
  * An action that operates like a radio button. At any given time
  * only a single action from the group will be active.
  */
-class TDEUI_EXPORT KRadioAction : public KToggleAction
+class TDEUI_EXPORT TDERadioAction : public TDEToggleAction
 {
   Q_OBJECT
   
@@ -243,7 +243,7 @@ public:
      * @param parent This action's parent.
      * @param name An internal name for this action.
      */
-    KRadioAction( const TQString& text, const KShortcut& cut = KShortcut(), TQObject* parent = 0, const char* name = 0 );
+    TDERadioAction( const TQString& text, const TDEShortcut& cut = TDEShortcut(), TQObject* parent = 0, const char* name = 0 );
 
     /**
      *  @param text The text that will be displayed.
@@ -253,7 +253,7 @@ public:
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KRadioAction( const TQString& text, const KShortcut& cut,
+    TDERadioAction( const TQString& text, const TDEShortcut& cut,
                   const TQObject* receiver, const char* slot, TQObject* parent, const char* name = 0 );
 
     /**
@@ -263,7 +263,7 @@ public:
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KRadioAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut = KShortcut(),
+    TDERadioAction( const TQString& text, const TQIconSet& pix, const TDEShortcut& cut = TDEShortcut(),
                   TQObject* parent = 0, const char* name = 0 );
 
     /**
@@ -273,7 +273,7 @@ public:
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KRadioAction( const TQString& text, const TQString& pix, const KShortcut& cut = KShortcut(),
+    TDERadioAction( const TQString& text, const TQString& pix, const TDEShortcut& cut = TDEShortcut(),
                   TQObject* parent = 0, const char* name = 0 );
 
     /**
@@ -285,7 +285,7 @@ public:
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KRadioAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut,
+    TDERadioAction( const TQString& text, const TQIconSet& pix, const TDEShortcut& cut,
                   const TQObject* receiver, const char* slot, TQObject* parent, const char* name = 0 );
 
     /**
@@ -297,7 +297,7 @@ public:
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KRadioAction( const TQString& text, const TQString& pix, const KShortcut& cut,
+    TDERadioAction( const TQString& text, const TQString& pix, const TDEShortcut& cut,
                   const TQObject* receiver, const char* slot,
                   TQObject* parent, const char* name = 0 );
 
@@ -305,7 +305,7 @@ public:
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KRadioAction( TQObject* parent = 0, const char* name = 0 );
+    TDERadioAction( TQObject* parent = 0, const char* name = 0 );
 
 protected:
     virtual void slotActivated();
@@ -313,8 +313,8 @@ protected:
 protected:
     virtual void virtual_hook( int id, void* data );
 private:
-    class KRadioActionPrivate;
-    KRadioActionPrivate *d;
+    class TDERadioActionPrivate;
+    TDERadioActionPrivate *d;
 };
 
 /**
@@ -328,7 +328,7 @@ private:
  *  the formerly checked item becomes unchecked.
  *  There can be only one item checked at a time.
  */
-class TDEUI_EXPORT KSelectAction : public KAction
+class TDEUI_EXPORT TDESelectAction : public TDEAction
 {
     Q_OBJECT
     
@@ -350,7 +350,7 @@ public:
      * @param parent This action's parent.
      * @param name An internal name for this action.
      */
-    KSelectAction( const TQString& text, const KShortcut& cut = KShortcut(), TQObject* parent = 0, const char* name = 0 );
+    TDESelectAction( const TQString& text, const TDEShortcut& cut = TDEShortcut(), TQObject* parent = 0, const char* name = 0 );
 
     /**
      *  @param text The text that will be displayed.
@@ -360,7 +360,7 @@ public:
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KSelectAction( const TQString& text, const KShortcut& cut,
+    TDESelectAction( const TQString& text, const TDEShortcut& cut,
                    const TQObject* receiver, const char* slot, TQObject* parent, const char* name = 0 );
 
     /**
@@ -370,7 +370,7 @@ public:
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KSelectAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut = KShortcut(),
+    TDESelectAction( const TQString& text, const TQIconSet& pix, const TDEShortcut& cut = TDEShortcut(),
              TQObject* parent = 0, const char* name = 0 );
 
     /**
@@ -380,7 +380,7 @@ public:
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KSelectAction( const TQString& text, const TQString& pix, const KShortcut& cut = KShortcut(),
+    TDESelectAction( const TQString& text, const TQString& pix, const TDEShortcut& cut = TDEShortcut(),
                    TQObject* parent = 0, const char* name = 0 );
 
     /**
@@ -392,7 +392,7 @@ public:
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KSelectAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut,
+    TDESelectAction( const TQString& text, const TQIconSet& pix, const TDEShortcut& cut,
                    const TQObject* receiver, const char* slot, TQObject* parent, const char* name = 0 );
 
     /**
@@ -404,7 +404,7 @@ public:
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KSelectAction( const TQString& text, const TQString& pix, const KShortcut& cut,
+    TDESelectAction( const TQString& text, const TQString& pix, const TDEShortcut& cut,
                    const TQObject* receiver, const char* slot,
                    TQObject* parent, const char* name = 0 );
 
@@ -412,12 +412,12 @@ public:
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KSelectAction( TQObject* parent = 0, const char* name = 0 );
+    TDESelectAction( TQObject* parent = 0, const char* name = 0 );
 
     /**
      * Destructor
      */
-    virtual ~KSelectAction();
+    virtual ~TDESelectAction();
 
     /**
      *  "Plug" or insert this action into a given widget.
@@ -425,7 +425,7 @@ public:
      *  This will typically be a menu or a toolbar.
      *  From this point on, you will never need to directly
      *  manipulate the item in the menu or toolbar.
-     *  You do all enabling/disabling/manipulation directly with your KSelectAction object.
+     *  You do all enabling/disabling/manipulation directly with your TDESelectAction object.
      *
      *  @param widget The GUI element to display this action.
      *  @param index  The index of the item.
@@ -572,16 +572,16 @@ protected:
     virtual void virtual_hook( int id, void* data );
 private:
     void setupMenu() const;
-    class KSelectActionPrivate;
-    KSelectActionPrivate *d;
+    class TDESelectActionPrivate;
+    TDESelectActionPrivate *d;
 
 };
 
-/// Remove this class in KDE-4.0. It doesn't add _anything_ to KSelectAction
+/// Remove this class in KDE-4.0. It doesn't add _anything_ to TDESelectAction
 /**
- * @deprecated Use KSelectAction instead.
+ * @deprecated Use TDESelectAction instead.
  */
-class TDEUI_EXPORT_DEPRECATED KListAction : public KSelectAction
+class TDEUI_EXPORT_DEPRECATED TDEListAction : public TDESelectAction
 {
     Q_OBJECT
     
@@ -596,7 +596,7 @@ public:
      * @param parent This action's parent.
      * @param name An internal name for this action.
      */
-    KListAction( const TQString& text, const KShortcut& cut = KShortcut(), TQObject* parent = 0,
+    TDEListAction( const TQString& text, const TDEShortcut& cut = TDEShortcut(), TQObject* parent = 0,
                   const char* name = 0 );
 
     /**
@@ -607,7 +607,7 @@ public:
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KListAction( const TQString& text, const KShortcut& cut, const TQObject* receiver,
+    TDEListAction( const TQString& text, const TDEShortcut& cut, const TQObject* receiver,
                   const char* slot, TQObject* parent, const char* name = 0 );
 
     /**
@@ -617,7 +617,7 @@ public:
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KListAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut = KShortcut(),
+    TDEListAction( const TQString& text, const TQIconSet& pix, const TDEShortcut& cut = TDEShortcut(),
                       TQObject* parent = 0, const char* name = 0 );
 
     /**
@@ -627,7 +627,7 @@ public:
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KListAction( const TQString& text, const TQString& pix, const KShortcut& cut = KShortcut(),
+    TDEListAction( const TQString& text, const TQString& pix, const TDEShortcut& cut = TDEShortcut(),
                       TQObject* parent = 0, const char* name = 0 );
 
     /**
@@ -639,7 +639,7 @@ public:
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KListAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut,
+    TDEListAction( const TQString& text, const TQIconSet& pix, const TDEShortcut& cut,
                           const TQObject* receiver, const char* slot, TQObject* parent,
                   const char* name = 0 );
 
@@ -652,7 +652,7 @@ public:
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KListAction( const TQString& text, const TQString& pix, const KShortcut& cut,
+    TDEListAction( const TQString& text, const TQString& pix, const TDEShortcut& cut,
                  const TQObject* receiver, const char* slot, TQObject* parent,
                  const char* name = 0 );
 
@@ -660,12 +660,12 @@ public:
      *  @param parent This action's parent.
      *  @param name An internal name for this action.
      */
-    KListAction( TQObject* parent = 0, const char* name = 0 );
+    TDEListAction( TQObject* parent = 0, const char* name = 0 );
 
     /**
      * Destructor
      */
-    virtual ~KListAction();
+    virtual ~TDEListAction();
 
 
     virtual TQString currentText() const;
@@ -683,8 +683,8 @@ public slots:
 protected:
     virtual void virtual_hook( int id, void* data );
 private:
-    class KListActionPrivate;
-    KListActionPrivate *d;
+    class TDEListActionPrivate;
+    TDEListActionPrivate *d;
 };
 
 /**
@@ -697,7 +697,7 @@ private:
  *
  *  @author Michael Koch
  */
-class TDEUI_EXPORT KRecentFilesAction : public KListAction  // TODO public KSelectAction
+class TDEUI_EXPORT TDERecentFilesAction : public TDEListAction  // TODO public TDESelectAction
 {
   Q_OBJECT
   
@@ -710,7 +710,7 @@ public:
    *  @param name An internal name for this action.
    *  @param maxItems The maximum number of files to display
    */
-  KRecentFilesAction( const TQString& text, const KShortcut& cut,
+  TDERecentFilesAction( const TQString& text, const TDEShortcut& cut,
                       TQObject* parent, const char* name = 0,
                       uint maxItems = 10 );
 
@@ -724,7 +724,7 @@ public:
    *  @param name An internal name for this action.
    *  @param maxItems The maximum number of files to display
    */
-  KRecentFilesAction( const TQString& text, const KShortcut& cut,
+  TDERecentFilesAction( const TQString& text, const TDEShortcut& cut,
                       const TQObject* receiver, const char* slot,
                       TQObject* parent, const char* name = 0,
                       uint maxItems = 10 );
@@ -737,7 +737,7 @@ public:
    *  @param name An internal name for this action.
    *  @param maxItems The maximum number of files to display
    */
-  KRecentFilesAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut,
+  TDERecentFilesAction( const TQString& text, const TQIconSet& pix, const TDEShortcut& cut,
                       TQObject* parent, const char* name = 0,
                       uint maxItems = 10 );
 
@@ -749,7 +749,7 @@ public:
    *  @param name An internal name for this action.
    *  @param maxItems The maximum number of files to display
    */
-  KRecentFilesAction( const TQString& text, const TQString& pix, const KShortcut& cut,
+  TDERecentFilesAction( const TQString& text, const TQString& pix, const TDEShortcut& cut,
                       TQObject* parent, const char* name = 0,
                       uint maxItems = 10 );
 
@@ -764,7 +764,7 @@ public:
    *  @param name An internal name for this action.
    *  @param maxItems The maximum number of files to display
    */
-  KRecentFilesAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut,
+  TDERecentFilesAction( const TQString& text, const TQIconSet& pix, const TDEShortcut& cut,
                       const TQObject* receiver, const char* slot,
                       TQObject* parent, const char* name = 0,
                       uint maxItems = 10 );
@@ -780,7 +780,7 @@ public:
    *  @param name An internal name for this action.
    *  @param maxItems The maximum number of files to display
    */
-  KRecentFilesAction( const TQString& text, const TQString& pix, const KShortcut& cut,
+  TDERecentFilesAction( const TQString& text, const TQString& pix, const TDEShortcut& cut,
                       const TQObject* receiver, const char* slot,
                       TQObject* parent, const char* name = 0,
                       uint maxItems = 10 );
@@ -790,13 +790,13 @@ public:
    *  @param name An internal name for this action.
    *  @param maxItems The maximum number of files to display
    */
-  KRecentFilesAction( TQObject* parent = 0, const char* name = 0,
+  TDERecentFilesAction( TQObject* parent = 0, const char* name = 0,
                       uint maxItems = 10 );
 
   /**
    *  Destructor.
    */
-  virtual ~KRecentFilesAction();
+  virtual ~TDERecentFilesAction();
 
   virtual int plug( TQWidget *widget, int index = -1 );
 
@@ -903,44 +903,44 @@ protected:
 private:
   void init();
 
-  class KRecentFilesActionPrivate;
-  KRecentFilesActionPrivate *d;
+  class TDERecentFilesActionPrivate;
+  TDERecentFilesActionPrivate *d;
 };
 
-class TDEUI_EXPORT KFontAction : public KSelectAction
+class TDEUI_EXPORT TDEFontAction : public TDESelectAction
 {
     Q_OBJECT
     
     TQ_PROPERTY( TQString font READ font WRITE setFont )
 public:
-    KFontAction( const TQString& text, const KShortcut& cut = KShortcut(), TQObject* parent = 0,
+    TDEFontAction( const TQString& text, const TDEShortcut& cut = TDEShortcut(), TQObject* parent = 0,
                  const char* name = 0 );
-    KFontAction( const TQString& text, const KShortcut& cut,
+    TDEFontAction( const TQString& text, const TDEShortcut& cut,
                  const TQObject* receiver, const char* slot, TQObject* parent,
                  const char* name = 0 );
-    KFontAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut = KShortcut(),
+    TDEFontAction( const TQString& text, const TQIconSet& pix, const TDEShortcut& cut = TDEShortcut(),
                  TQObject* parent = 0, const char* name = 0 );
-    KFontAction( const TQString& text, const TQString& pix, const KShortcut& cut = KShortcut(),
+    TDEFontAction( const TQString& text, const TQString& pix, const TDEShortcut& cut = TDEShortcut(),
                  TQObject* parent = 0, const char* name = 0 );
-    KFontAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut,
+    TDEFontAction( const TQString& text, const TQIconSet& pix, const TDEShortcut& cut,
                  const TQObject* receiver, const char* slot, TQObject* parent,
                  const char* name = 0 );
-    KFontAction( const TQString& text, const TQString& pix, const KShortcut& cut,
+    TDEFontAction( const TQString& text, const TQString& pix, const TDEShortcut& cut,
                  const TQObject* receiver, const char* slot, TQObject* parent,
                  const char* name = 0 );
 
 // The ctors with fontListCriteria were added after 3.3-beta1.
 // This define is used in koffice. Remove when koffice has a dependency on tdelibs-3.3 or more.
 #define KFONTACTION_HAS_CRITERIA_ARG
-    KFontAction( uint fontListCriteria, const TQString& text,
-                 const KShortcut& cut = KShortcut(), TQObject* parent = 0,
+    TDEFontAction( uint fontListCriteria, const TQString& text,
+                 const TDEShortcut& cut = TDEShortcut(), TQObject* parent = 0,
                  const char* name = 0 );
-    KFontAction( uint fontListCriteria, const TQString& text, const TQString& pix,
-                 const KShortcut& cut = KShortcut(),
+    TDEFontAction( uint fontListCriteria, const TQString& text, const TQString& pix,
+                 const TDEShortcut& cut = TDEShortcut(),
                  TQObject* parent = 0, const char* name = 0 );
 
-    KFontAction( TQObject* parent = 0, const char* name = 0 );
-    ~KFontAction();
+    TDEFontAction( TQObject* parent = 0, const char* name = 0 );
+    ~TDEFontAction();
 
     TQString font() const {
         return currentText();
@@ -954,33 +954,33 @@ public slots:
 protected:
     virtual void virtual_hook( int id, void* data );
 private:
-    class KFontActionPrivate;
-    KFontActionPrivate *d;
+    class TDEFontActionPrivate;
+    TDEFontActionPrivate *d;
 };
 
-class TDEUI_EXPORT KFontSizeAction : public KSelectAction
+class TDEUI_EXPORT TDEFontSizeAction : public TDESelectAction
 {
     Q_OBJECT
     
     TQ_PROPERTY( int fontSize READ fontSize WRITE setFontSize )
 public:
-    KFontSizeAction( const TQString& text, const KShortcut& cut = KShortcut(), TQObject* parent = 0,
+    TDEFontSizeAction( const TQString& text, const TDEShortcut& cut = TDEShortcut(), TQObject* parent = 0,
                      const char* name = 0 );
-    KFontSizeAction( const TQString& text, const KShortcut& cut, const TQObject* receiver,
+    TDEFontSizeAction( const TQString& text, const TDEShortcut& cut, const TQObject* receiver,
                      const char* slot, TQObject* parent, const char* name = 0 );
-    KFontSizeAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut = KShortcut(),
+    TDEFontSizeAction( const TQString& text, const TQIconSet& pix, const TDEShortcut& cut = TDEShortcut(),
                      TQObject* parent = 0, const char* name = 0 );
-    KFontSizeAction( const TQString& text, const TQString& pix, const KShortcut& cut = KShortcut(),
+    TDEFontSizeAction( const TQString& text, const TQString& pix, const TDEShortcut& cut = TDEShortcut(),
                      TQObject* parent = 0, const char* name = 0 );
-    KFontSizeAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut,
+    TDEFontSizeAction( const TQString& text, const TQIconSet& pix, const TDEShortcut& cut,
                      const TQObject* receiver, const char* slot,
                      TQObject* parent, const char* name = 0 );
-    KFontSizeAction( const TQString& text, const TQString& pix, const KShortcut& cut,
+    TDEFontSizeAction( const TQString& text, const TQString& pix, const TDEShortcut& cut,
                      const TQObject* receiver, const char* slot,
                      TQObject* parent, const char* name = 0 );
-    KFontSizeAction( TQObject* parent = 0, const char* name = 0 );
+    TDEFontSizeAction( TQObject* parent = 0, const char* name = 0 );
 
-    virtual ~KFontSizeAction();
+    virtual ~TDEFontSizeAction();
 
     virtual int fontSize() const;
 
@@ -990,7 +990,7 @@ public slots:
 protected slots:
     virtual void slotActivated( int );
     virtual void slotActivated( const TQString& );
-    virtual void slotActivated() { KAction::slotActivated(); }
+    virtual void slotActivated() { TDEAction::slotActivated(); }
 
 signals:
     void fontSizeChanged( int );
@@ -1002,22 +1002,22 @@ private:
 protected:
     virtual void virtual_hook( int id, void* data );
 private:
-    class KFontSizeActionPrivate;
-    KFontSizeActionPrivate *d;
+    class TDEFontSizeActionPrivate;
+    TDEFontSizeActionPrivate *d;
 };
 
 
 /**
- * A KActionMenu is an action that holds a sub-menu of other actions.
+ * A TDEActionMenu is an action that holds a sub-menu of other actions.
  * insert() and remove() allow to insert and remove actions into this action-menu.
  * Plugged in a popupmenu, it will create a submenu.
  * Plugged in a toolbar, it will create a button with a popup menu.
  *
  * This is the action used by the XMLGUI since it holds other actions.
- * If you want a submenu for selecting one tool among many (without icons), see KSelectAction.
+ * If you want a submenu for selecting one tool among many (without icons), see TDESelectAction.
  * See also setDelayed about the main action.
  */
-class TDEUI_EXPORT KActionMenu : public KAction
+class TDEUI_EXPORT TDEActionMenu : public TDEAction
 {
   Q_OBJECT
   
@@ -1025,29 +1025,29 @@ class TDEUI_EXPORT KActionMenu : public KAction
   TQ_PROPERTY( bool stickyMenu READ stickyMenu WRITE setStickyMenu )
 
 public:
-    KActionMenu( const TQString& text, TQObject* parent = 0,
+    TDEActionMenu( const TQString& text, TQObject* parent = 0,
                  const char* name = 0 );
-    KActionMenu( const TQString& text, const TQIconSet& icon,
+    TDEActionMenu( const TQString& text, const TQIconSet& icon,
                  TQObject* parent = 0, const char* name = 0 );
-    KActionMenu( const TQString& text, const TQString& icon,
+    TDEActionMenu( const TQString& text, const TQString& icon,
                  TQObject* parent = 0, const char* name = 0 );
-    KActionMenu( TQObject* parent = 0, const char* name = 0 );
-    virtual ~KActionMenu();
+    TDEActionMenu( TQObject* parent = 0, const char* name = 0 );
+    virtual ~TDEActionMenu();
 
-    virtual void insert( KAction*, int index = -1 );
-    virtual void remove( KAction* );
+    virtual void insert( TDEAction*, int index = -1 );
+    virtual void remove( TDEAction* );
 
-    KPopupMenu* popupMenu() const;
+    TDEPopupMenu* popupMenu() const;
     void popup( const TQPoint& global );
 
     /**
      * Returns true if this action creates a delayed popup menu
-     * when plugged in a KToolbar.
+     * when plugged in a TDEToolbar.
      */
     bool delayed() const;
     /**
      * If set to true, this action will create a delayed popup menu
-     * when plugged in a KToolbar. Otherwise it creates a normal popup.
+     * when plugged in a TDEToolbar. Otherwise it creates a normal popup.
      * Default: delayed
      *
      * Remember that if the "main" action (the toolbar button itself)
@@ -1056,7 +1056,7 @@ public:
      * On the opposite, if the main action can be clicked, it can only happen
      * in a toolbar: in a menu, the parent of a submenu can't be activated.
      * To get a "normal" menu item when plugged a menu (and no submenu)
-     * use KToolBarPopupAction.
+     * use TDEToolBarPopupAction.
      */
     void setDelayed(bool _delayed);
 
@@ -1067,7 +1067,7 @@ public:
     bool stickyMenu() const;
     /**
      * If set to true, this action will create a sticky popup menu
-     * when plugged in a KToolbar.
+     * when plugged in a TDEToolbar.
      * "Sticky", means it's visible until a selection is made or the mouse is
      * clicked elsewhere. This feature allows you to make a selection without
      * having to press and hold down the mouse while making a selection.
@@ -1080,8 +1080,8 @@ public:
 protected:
     virtual void virtual_hook( int id, void* data );
 private:
-    class KActionMenuPrivate;
-    KActionMenuPrivate *d;
+    class TDEActionMenuPrivate;
+    TDEActionMenuPrivate *d;
 };
 
 /**
@@ -1091,7 +1091,7 @@ private:
  * that has more detail in a toolbar than in a menu (e.g. tool chooser
  * with "Other" leading to a dialog...).
  */
-class TDEUI_EXPORT KToolBarPopupAction : public KAction
+class TDEUI_EXPORT TDEToolBarPopupAction : public TDEAction
 {
   Q_OBJECT
   
@@ -1102,7 +1102,7 @@ public:
     //Not all constructors - because we need an icon, since this action only makes
     // sense when being plugged at least in a toolbar.
     /**
-     * Create a KToolBarPopupAction, with a text, an icon, an optional accelerator,
+     * Create a TDEToolBarPopupAction, with a text, an icon, an optional accelerator,
      * parent and name.
      *
      * @param text The text that will be displayed.
@@ -1111,11 +1111,11 @@ public:
      * @param parent This action's parent.
      * @param name An internal name for this action.
      */
-    KToolBarPopupAction( const TQString& text, const TQString& icon, const KShortcut& cut = KShortcut(),
+    TDEToolBarPopupAction( const TQString& text, const TQString& icon, const TDEShortcut& cut = TDEShortcut(),
                          TQObject* parent = 0, const char* name = 0 );
 
     /**
-     * Create a KToolBarPopupAction, with a text, an icon, an accelerator,
+     * Create a TDEToolBarPopupAction, with a text, an icon, an accelerator,
      * a slot connected to the action, parent and name.
      *
      * If you do not want or have a keyboard accelerator, set the
@@ -1129,12 +1129,12 @@ public:
      * @param parent This action's parent.
      * @param name An internal name for this action.
      */
-    KToolBarPopupAction( const TQString& text, const TQString& icon, const KShortcut& cut,
+    TDEToolBarPopupAction( const TQString& text, const TQString& icon, const TDEShortcut& cut,
                          const TQObject* receiver, const char* slot,
                          TQObject* parent = 0, const char* name = 0 );
 
     /**
-     * Create a KToolBarPopupAction, with a KGuiItem, an accelerator,
+     * Create a TDEToolBarPopupAction, with a KGuiItem, an accelerator,
      * a slot connected to the action, parent and name. The text and the
      * icon are taken from the KGuiItem.
      *
@@ -1148,11 +1148,11 @@ public:
      * @param parent This action's parent.
      * @param name An internal name for this action.
      */
-    KToolBarPopupAction( const KGuiItem& item, const KShortcut& cut,
+    TDEToolBarPopupAction( const KGuiItem& item, const TDEShortcut& cut,
                          const TQObject* receiver, const char* slot,
-                         KActionCollection* parent, const char* name );
+                         TDEActionCollection* parent, const char* name );
 
-    virtual ~KToolBarPopupAction();
+    virtual ~TDEToolBarPopupAction();
 
     virtual int plug( TQWidget *widget, int index = -1 );
 
@@ -1161,16 +1161,16 @@ public:
      * button. You may want to plug items into it on creation, or connect to
      * aboutToShow for a more dynamic menu.
      */
-    KPopupMenu *popupMenu() const;
+    TDEPopupMenu *popupMenu() const;
 
     /**
      * Returns true if this action creates a delayed popup menu
-     * when plugged in a KToolbar.
+     * when plugged in a TDEToolbar.
      */
     bool delayed() const;
     /**
      * If set to true, this action will create a delayed popup menu
-     * when plugged in a KToolbar. Otherwise it creates a normal popup.
+     * when plugged in a TDEToolbar. Otherwise it creates a normal popup.
      * Default: delayed.
      */
     void setDelayed(bool delayed);
@@ -1181,7 +1181,7 @@ public:
     bool stickyMenu() const;
     /**
      * If set to true, this action will create a sticky popup menu
-     * when plugged in a KToolbar.
+     * when plugged in a TDEToolbar.
      * "Sticky", means it's visible until a selection is made or the mouse is
      * clicked elsewhere. This feature allows you to make a selection without
      * having to press and hold down the mouse while making a selection.
@@ -1191,14 +1191,14 @@ public:
     void setStickyMenu(bool sticky);
 
 private:
-    KPopupMenu *m_popup;
+    TDEPopupMenu *m_popup;
     bool m_delayed:1;
     bool m_stickyMenu:1;
 protected:
     virtual void virtual_hook( int id, void* data );
 private:
-    class KToolBarPopupActionPrivate;
-    KToolBarPopupActionPrivate *d;
+    class TDEToolBarPopupActionPrivate;
+    TDEToolBarPopupActionPrivate *d;
 };
 
 /**
@@ -1214,38 +1214,38 @@ private:
  * visibility has changed, whenever it changes.
  * @since 3.1
  */
-class TDEUI_EXPORT KToggleToolBarAction : public KToggleAction
+class TDEUI_EXPORT TDEToggleToolBarAction : public TDEToggleAction
 {
     Q_OBJECT
     
 public:
     /**
-     * Create a KToggleToolbarAction that manages the toolbar
+     * Create a TDEToggleToolbarAction that manages the toolbar
      * named toolBarName. This can be either the name of a
      * toolbar in an xml ui file, or a toolbar programmatically
      * created with that name.
      */
-    KToggleToolBarAction( const char* toolBarName, const TQString& text,
-                          KActionCollection* parent, const char* name );
-    KToggleToolBarAction( KToolBar *toolBar, const TQString &text,
-                          KActionCollection *parent, const char *name );
-    virtual ~KToggleToolBarAction();
+    TDEToggleToolBarAction( const char* toolBarName, const TQString& text,
+                          TDEActionCollection* parent, const char* name );
+    TDEToggleToolBarAction( TDEToolBar *toolBar, const TQString &text,
+                          TDEActionCollection *parent, const char *name );
+    virtual ~TDEToggleToolBarAction();
 
     virtual int plug( TQWidget * widget, int index = -1 );
 
-    KToolBar *toolBar() { return m_toolBar; }
+    TDEToolBar *toolBar() { return m_toolBar; }
 
 public slots:
     virtual void setChecked( bool );
 
 private:
     TQCString               m_toolBarName;
-    TQGuardedPtr<KToolBar>  m_toolBar;
+    TQGuardedPtr<TDEToolBar>  m_toolBar;
 protected:
     virtual void virtual_hook( int id, void* data );
 private:
-    class KToggleToolBarActionPrivate;
-    KToggleToolBarActionPrivate *d;
+    class TDEToggleToolBarActionPrivate;
+    TDEToggleToolBarActionPrivate *d;
 };
 
 /**
@@ -1261,13 +1261,13 @@ private:
  * still needs to explicitly set the window state though.
  * @since 3.2
  */
-class TDEUI_EXPORT KToggleFullScreenAction : public KToggleAction
+class TDEUI_EXPORT TDEToggleFullScreenAction : public TDEToggleAction
 {
     Q_OBJECT
     
 public:
     /**
-     * Create a KToggleFullScreenAction
+     * Create a TDEToggleFullScreenAction
      *  @param cut The corresponding keyboard accelerator (shortcut).
      *  @param receiver The SLOT's parent.
      *  @param slot The TQT_SLOT to invoke to execute this action.
@@ -1275,11 +1275,11 @@ public:
      *  @param window the window that will switch to/from full screen mode
      *  @param name An internal name for this action.
      */
-    KToggleFullScreenAction( const KShortcut &cut,
+    TDEToggleFullScreenAction( const TDEShortcut &cut,
                              const TQObject* receiver, const char* slot,
                              TQObject* parent, TQWidget* window,
                              const char* name );
-    virtual ~KToggleFullScreenAction();
+    virtual ~TDEToggleFullScreenAction();
 
     /**
      * Sets the window that will be related to this action.
@@ -1297,8 +1297,8 @@ private:
 protected:
     virtual void virtual_hook( int id, void* data );
 private:
-    class KToggleFullScreenActionPrivate;
-    KToggleFullScreenActionPrivate *d;
+    class TDEToggleFullScreenActionPrivate;
+    TDEToggleFullScreenActionPrivate *d;
 };
 
 
@@ -1306,7 +1306,7 @@ private:
  * An action that automatically embeds a widget into a
  * toolbar.
  */
-class TDEUI_EXPORT KWidgetAction : public KAction
+class TDEUI_EXPORT KWidgetAction : public TDEAction
 {
     Q_OBJECT
     
@@ -1317,9 +1317,9 @@ public:
      * a toolbar.
      */
     KWidgetAction( TQWidget* widget, const TQString& text,
-                   const KShortcut& cut,
+                   const TDEShortcut& cut,
                    const TQObject* receiver, const char* slot,
-                   KActionCollection* parent, const char* name );
+                   TDEActionCollection* parent, const char* name );
     virtual ~KWidgetAction();
 
     /**
@@ -1331,7 +1331,7 @@ public:
 
     /**
      * Plug the action. The widget passed to the constructor
-     * will be reparented to w, which must inherit KToolBar.
+     * will be reparented to w, which must inherit TDEToolBar.
      */
     virtual int plug( TQWidget* widget, int index = -1 );
     /**
@@ -1351,21 +1351,21 @@ private:
     KWidgetActionPrivate *d;
 };
 
-class TDEUI_EXPORT KActionSeparator : public KAction
+class TDEUI_EXPORT TDEActionSeparator : public TDEAction
 {
     Q_OBJECT
     
 public:
-    KActionSeparator( TQObject* parent = 0, const char* name = 0 );
-    virtual ~KActionSeparator();
+    TDEActionSeparator( TQObject* parent = 0, const char* name = 0 );
+    virtual ~TDEActionSeparator();
 
     virtual int plug( TQWidget *widget, int index = -1 );
 
 protected:
     virtual void virtual_hook( int id, void* data );
 private:
-    class KActionSeparatorPrivate;
-    KActionSeparatorPrivate *d;
+    class TDEActionSeparatorPrivate;
+    TDEActionSeparatorPrivate *d;
 };
 
 /**
@@ -1378,13 +1378,13 @@ private:
  *
  * @since 3.2
  */
-class TDEUI_EXPORT KPasteTextAction: public KAction
+class TDEUI_EXPORT TDEPasteTextAction: public TDEAction
 {
     Q_OBJECT
     
 public:
     /**
-     * Create a KPasteTextAction, with a text, an icon, an accelerator,
+     * Create a TDEPasteTextAction, with a text, an icon, an accelerator,
      * a slot connected to the action, parent and name.
      *
      * If you do not want or have a keyboard accelerator, set the
@@ -1398,11 +1398,11 @@ public:
      * @param parent This action's parent.
      * @param name An internal name for this action.
      */
-    KPasteTextAction( const TQString& text, const TQString& icon, const KShortcut& cut,
+    TDEPasteTextAction( const TQString& text, const TQString& icon, const TDEShortcut& cut,
                   const TQObject* receiver, const char* slot,
                   TQObject* parent = 0, const char* name = 0 );
 
-    virtual ~KPasteTextAction();
+    virtual ~TDEPasteTextAction();
 
     /**
     * Controls the behavior of the clipboard history menu popup.
@@ -1427,10 +1427,10 @@ protected:
     virtual void virtual_hook( int id, void* data );
 
 private:
-    KPopupMenu *m_popup;
+    TDEPopupMenu *m_popup;
     bool m_mixedMode;
-    class KPasteTextActionPrivate;
-    KPasteTextActionPrivate *d;
+    class TDEPasteTextActionPrivate;
+    TDEPasteTextActionPrivate *d;
 };
 
 #endif

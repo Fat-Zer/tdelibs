@@ -126,7 +126,7 @@ KPFilterPage::KPFilterPage(TQWidget *parent, const char *name)
 	m_activefilters.setAutoDelete(true);
 	m_valid = true;
 
-	m_view = new KListView(this);
+	m_view = new TDEListView(this);
 	  TQWhatsThis::add(m_view, whatsThisFilterchainListView);
 	m_view->addColumn("");
 	m_view->setFrameStyle(TQFrame::WinPanel|TQFrame::Sunken);

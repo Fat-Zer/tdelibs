@@ -252,29 +252,29 @@ void TDEHTMLPart::init( TDEHTMLView *view, GUIProfile prof )
   d->m_bMousePressed = false;
   d->m_bRightMousePressed = false;
   d->m_bCleared = false;
-  d->m_paViewDocument = new KAction( i18n( "View Do&cument Source" ), CTRL + Key_U, this, TQT_SLOT( slotViewDocumentSource() ), actionCollection(), "viewDocumentSource" );
-  d->m_paViewFrame = new KAction( i18n( "View Frame Source" ), 0, this, TQT_SLOT( slotViewFrameSource() ), actionCollection(), "viewFrameSource" );
-  d->m_paViewInfo = new KAction( i18n( "View Document Information" ), CTRL+Key_I, this, TQT_SLOT( slotViewPageInfo() ), actionCollection(), "viewPageInfo" );
-  d->m_paSaveBackground = new KAction( i18n( "Save &Background Image As..." ), 0, this, TQT_SLOT( slotSaveBackground() ), actionCollection(), "saveBackground" );
+  d->m_paViewDocument = new TDEAction( i18n( "View Do&cument Source" ), CTRL + Key_U, this, TQT_SLOT( slotViewDocumentSource() ), actionCollection(), "viewDocumentSource" );
+  d->m_paViewFrame = new TDEAction( i18n( "View Frame Source" ), 0, this, TQT_SLOT( slotViewFrameSource() ), actionCollection(), "viewFrameSource" );
+  d->m_paViewInfo = new TDEAction( i18n( "View Document Information" ), CTRL+Key_I, this, TQT_SLOT( slotViewPageInfo() ), actionCollection(), "viewPageInfo" );
+  d->m_paSaveBackground = new TDEAction( i18n( "Save &Background Image As..." ), 0, this, TQT_SLOT( slotSaveBackground() ), actionCollection(), "saveBackground" );
   d->m_paSaveDocument = KStdAction::saveAs( this, TQT_SLOT( slotSaveDocument() ), actionCollection(), "saveDocument" );
   if ( parentPart() )
-      d->m_paSaveDocument->setShortcut( KShortcut() ); // avoid clashes
-  d->m_paSaveFrame = new KAction( i18n( "Save &Frame As..." ), 0, this, TQT_SLOT( slotSaveFrame() ), actionCollection(), "saveFrame" );
-  d->m_paSecurity = new KAction( i18n( "Security..." ), "decrypted", 0, this, TQT_SLOT( slotSecurity() ), actionCollection(), "security" );
+      d->m_paSaveDocument->setShortcut( TDEShortcut() ); // avoid clashes
+  d->m_paSaveFrame = new TDEAction( i18n( "Save &Frame As..." ), 0, this, TQT_SLOT( slotSaveFrame() ), actionCollection(), "saveFrame" );
+  d->m_paSecurity = new TDEAction( i18n( "Security..." ), "decrypted", 0, this, TQT_SLOT( slotSecurity() ), actionCollection(), "security" );
   d->m_paSecurity->setWhatsThis( i18n( "Security Settings<p>"
                                        "Shows the certificate of the displayed page. Only "
 				       "pages that have been transmitted using a secure, encrypted connection have a "
 				       "certificate.<p> "
 				       "Hint: If the image shows a closed lock, the page has been transmitted over a "
 				       "secure connection.") );
-  d->m_paDebugRenderTree = new KAction( i18n( "Print Rendering Tree to STDOUT" ), ALT + CTRL + SHIFT + Key_A, this, TQT_SLOT( slotDebugRenderTree() ), actionCollection(), "debugRenderTree" );
-  d->m_paDebugDOMTree = new KAction( i18n( "Print DOM Tree to STDOUT" ), ALT + CTRL + SHIFT + Key_D, this, TQT_SLOT( slotDebugDOMTree() ), actionCollection(), "debugDOMTree" );
-  d->m_paStopAnimations = new KAction( i18n( "Stop Animated Images" ), 0, this, TQT_SLOT( slotStopAnimations() ), actionCollection(), "stopAnimations" );
+  d->m_paDebugRenderTree = new TDEAction( i18n( "Print Rendering Tree to STDOUT" ), ALT + CTRL + SHIFT + Key_A, this, TQT_SLOT( slotDebugRenderTree() ), actionCollection(), "debugRenderTree" );
+  d->m_paDebugDOMTree = new TDEAction( i18n( "Print DOM Tree to STDOUT" ), ALT + CTRL + SHIFT + Key_D, this, TQT_SLOT( slotDebugDOMTree() ), actionCollection(), "debugDOMTree" );
+  d->m_paStopAnimations = new TDEAction( i18n( "Stop Animated Images" ), 0, this, TQT_SLOT( slotStopAnimations() ), actionCollection(), "stopAnimations" );
 
-  d->m_paSetEncoding = new KActionMenu( i18n( "Set &Encoding" ), "charset", actionCollection(), "setEncoding" );
+  d->m_paSetEncoding = new TDEActionMenu( i18n( "Set &Encoding" ), "charset", actionCollection(), "setEncoding" );
   d->m_paSetEncoding->setDelayed( false );
 
-  d->m_automaticDetection = new KPopupMenu( 0L );
+  d->m_automaticDetection = new TDEPopupMenu( 0L );
 
   d->m_automaticDetection->insertItem( i18n( "Semi-Automatic" ), 0 );
   d->m_automaticDetection->insertItem( i18n( "Arabic" ), 1 );
@@ -296,10 +296,10 @@ void TDEHTMLPart::init( TDEHTMLView *view, GUIProfile prof )
 
   d->m_paSetEncoding->popupMenu()->insertItem( i18n( "Automatic Detection" ), d->m_automaticDetection, 0 );
 
-  d->m_paSetEncoding->insert( new KActionSeparator( actionCollection() ) );
+  d->m_paSetEncoding->insert( new TDEActionSeparator( actionCollection() ) );
 
 
-  d->m_manualDetection = new KSelectAction( i18n( "short for Manual Detection", "Manual" ), 0, this, TQT_SLOT( slotSetEncoding() ), actionCollection(), "manualDetection" );
+  d->m_manualDetection = new TDESelectAction( i18n( "short for Manual Detection", "Manual" ), 0, this, TQT_SLOT( slotSetEncoding() ), actionCollection(), "manualDetection" );
   TQStringList encodings = TDEGlobal::charsets()->descriptiveEncodingNames();
   d->m_manualDetection->setItems( encodings );
   d->m_manualDetection->setCurrentItem( -1 );
@@ -354,7 +354,7 @@ void TDEHTMLPart::init( TDEHTMLView *view, GUIProfile prof )
   }
 
 
-  d->m_paUseStylesheet = new KSelectAction( i18n( "Use S&tylesheet"), 0, this, TQT_SLOT( slotUseStylesheet() ), actionCollection(), "useStylesheet" );
+  d->m_paUseStylesheet = new TDESelectAction( i18n( "Use S&tylesheet"), 0, this, TQT_SLOT( slotUseStylesheet() ), actionCollection(), "useStylesheet" );
 
   if ( prof == BrowserViewGUI ) {
       d->m_paIncZoomFactor = new TDEHTMLZoomFactorAction( this, true, i18n(
@@ -385,37 +385,37 @@ void TDEHTMLPart::init( TDEHTMLView *view, GUIProfile prof )
 				       "Find the previous occurrence of the text that you "
 				       "have found using the <b>Find Text</b> function" ) );
 
-  d->m_paFindAheadText = new KAction( i18n("Find Text as You Type"), KShortcut( '/' ), this, TQT_SLOT( slotFindAheadText()),
+  d->m_paFindAheadText = new TDEAction( i18n("Find Text as You Type"), TDEShortcut( '/' ), this, TQT_SLOT( slotFindAheadText()),
       actionCollection(), "findAheadText");
-  d->m_paFindAheadLinks = new KAction( i18n("Find Links as You Type"), KShortcut( '\'' ), this, TQT_SLOT( slotFindAheadLink()),
+  d->m_paFindAheadLinks = new TDEAction( i18n("Find Links as You Type"), TDEShortcut( '\'' ), this, TQT_SLOT( slotFindAheadLink()),
       actionCollection(), "findAheadLink");
   d->m_paFindAheadText->setEnabled( false );
   d->m_paFindAheadLinks->setEnabled( false );
 
   if ( parentPart() )
   {
-      d->m_paFind->setShortcut( KShortcut() ); // avoid clashes
-      d->m_paFindNext->setShortcut( KShortcut() ); // avoid clashes
-      d->m_paFindPrev->setShortcut( KShortcut() ); // avoid clashes
-      d->m_paFindAheadText->setShortcut( KShortcut());
-      d->m_paFindAheadLinks->setShortcut( KShortcut());
+      d->m_paFind->setShortcut( TDEShortcut() ); // avoid clashes
+      d->m_paFindNext->setShortcut( TDEShortcut() ); // avoid clashes
+      d->m_paFindPrev->setShortcut( TDEShortcut() ); // avoid clashes
+      d->m_paFindAheadText->setShortcut( TDEShortcut());
+      d->m_paFindAheadLinks->setShortcut( TDEShortcut());
   }
 
-  d->m_paPrintFrame = new KAction( i18n( "Print Frame..." ), "frameprint", 0, this, TQT_SLOT( slotPrintFrame() ), actionCollection(), "printFrame" );
+  d->m_paPrintFrame = new TDEAction( i18n( "Print Frame..." ), "frameprint", 0, this, TQT_SLOT( slotPrintFrame() ), actionCollection(), "printFrame" );
   d->m_paPrintFrame->setWhatsThis( i18n( "Print Frame<p>"
 					 "Some pages have several frames. To print only a single frame, click "
 					 "on it and then use this function." ) );
 
   d->m_paSelectAll = KStdAction::selectAll( this, TQT_SLOT( slotSelectAll() ), actionCollection(), "selectAll" );
   if ( parentPart() )
-      d->m_paSelectAll->setShortcut( KShortcut() ); // avoid clashes
+      d->m_paSelectAll->setShortcut( TDEShortcut() ); // avoid clashes
 
-  d->m_paToggleCaretMode = new KToggleAction(i18n("Toggle Caret Mode"),
+  d->m_paToggleCaretMode = new TDEToggleAction(i18n("Toggle Caret Mode"),
   				Key_F7, this, TQT_SLOT(slotToggleCaretMode()),
                                 actionCollection(), "caretMode");
   d->m_paToggleCaretMode->setChecked(isCaretMode());
   if (parentPart())
-      d->m_paToggleCaretMode->setShortcut(KShortcut()); // avoid clashes
+      d->m_paToggleCaretMode->setShortcut(TDEShortcut()); // avoid clashes
 
   // set the default java(script) flags according to the current host.
   d->m_bOpenMiddleClick = d->m_settings->isOpenMiddleClickEnabled();
@@ -1119,7 +1119,7 @@ void TDEHTMLPart::disableJSErrorExtension() {
 }
 
 void TDEHTMLPart::jsErrorDialogContextMenu() {
-  KPopupMenu *m = new KPopupMenu(0L);
+  TDEPopupMenu *m = new TDEPopupMenu(0L);
   m->insertItem(i18n("&Hide Errors"), this, TQT_SLOT(removeJSErrorExtension()));
   m->insertItem(i18n("&Disable Error Reporting"), this, TQT_SLOT(disableJSErrorExtension()));
   m->popup(TQCursor::pos());
@@ -1348,10 +1348,10 @@ void TDEHTMLPart::setAutoloadImages( bool enable )
     d->m_paLoadImages = 0;
   }
   else if ( !d->m_paLoadImages )
-    d->m_paLoadImages = new KAction( i18n( "Display Images on Page" ), "images_display", 0, this, TQT_SLOT( slotLoadImages() ), actionCollection(), "loadImages" );
+    d->m_paLoadImages = new TDEAction( i18n( "Display Images on Page" ), "images_display", 0, this, TQT_SLOT( slotLoadImages() ), actionCollection(), "loadImages" );
 
   if ( d->m_paLoadImages ) {
-    TQPtrList<KAction> lst;
+    TQPtrList<TDEAction> lst;
     lst.append( d->m_paLoadImages );
     plugActionList( "loadImages", lst );
   }
@@ -6637,7 +6637,7 @@ void TDEHTMLPart::guiActivateEvent( KParts::GUIActivateEvent *event )
 
     if ( !d->m_settings->autoLoadImages() && d->m_paLoadImages )
     {
-        TQPtrList<KAction> lst;
+        TQPtrList<TDEAction> lst;
         lst.append( d->m_paLoadImages );
         plugActionList( "loadImages", lst );
     }
@@ -7311,7 +7311,7 @@ void TDEHTMLPart::launchWalletManager()
 void TDEHTMLPart::walletMenu()
 {
 #ifndef TDEHTML_NO_WALLET
-  KPopupMenu *m = new KPopupMenu(0L);
+  TDEPopupMenu *m = new TDEPopupMenu(0L);
   m->insertItem(i18n("&Close Wallet"), this, TQT_SLOT(slotWalletClosed()));
   m->popup(TQCursor::pos());
 #endif // TDEHTML_NO_WALLET
@@ -7355,10 +7355,10 @@ void TDEHTMLPart::setDebugScript( bool enable )
   unplugActionList( "debugScriptList" );
   if ( enable ) {
     if (!d->m_paDebugScript) {
-      d->m_paDebugScript = new KAction( i18n( "JavaScript &Debugger" ), 0, this, TQT_SLOT( slotDebugScript() ), actionCollection(), "debugScript" );
+      d->m_paDebugScript = new TDEAction( i18n( "JavaScript &Debugger" ), 0, this, TQT_SLOT( slotDebugScript() ), actionCollection(), "debugScript" );
     }
     d->m_paDebugScript->setEnabled( d->m_frame ? d->m_frame->m_jscript : 0L );
-    TQPtrList<KAction> lst;
+    TQPtrList<TDEAction> lst;
     lst.append( d->m_paDebugScript );
     plugActionList( "debugScriptList", lst );
   }
@@ -7407,7 +7407,7 @@ void TDEHTMLPart::setSuppressedPopupIndicator( bool enable, TDEHTMLPart *originP
 }
 
 void TDEHTMLPart::suppressedPopupMenu() {
-  KPopupMenu *m = new KPopupMenu(0L);
+  TDEPopupMenu *m = new TDEPopupMenu(0L);
   m->setCheckable(true);
   if ( d->m_openableSuppressedPopups )
       m->insertItem(i18n("&Show Blocked Popup Window","Show %n Blocked Popup Windows", d->m_openableSuppressedPopups), this, TQT_SLOT(showSuppressedPopups()));

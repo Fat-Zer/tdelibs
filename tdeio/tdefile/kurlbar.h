@@ -483,14 +483,14 @@ class TQDragObject;
 class KURLBarToolTip;
 
 /**
- * This is the listbox used in KURLBar. It is a subclass of KListBox to support
+ * This is the listbox used in KURLBar. It is a subclass of TDEListBox to support
  * drag & drop and to set up the row / column mode.
  *
  * The widget has just one row or one column, depending on orientation().
  *
  * @author Carsten Pfeiffer <pfeiffer@kde.org>
  */
-class TDEIO_EXPORT KURLBarListBox : public KListBox
+class TDEIO_EXPORT KURLBarListBox : public TDEListBox
 {
     Q_OBJECT
 

@@ -113,7 +113,7 @@ ConfigPage::ConfigPage( TQWidget *parent, const char *name )
   mFamilyCombo = new KComboBox( false, groupBox );
   groupBoxLayout->addMultiCellWidget( mFamilyCombo, 0, 0, 0, 1 );
 
-  mListView = new KListView( groupBox );
+  mListView = new TDEListView( groupBox );
   mListView->setAllColumnsShowFocus( true );
   mListView->setFullWidth( true );
   mListView->addColumn( i18n( "Name" ) );

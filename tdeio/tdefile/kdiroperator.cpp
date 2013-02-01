@@ -87,7 +87,7 @@ public:
     TQString lastURL; // used for highlighting a directory on cdUp
     bool onlyDoubleClickSelectsFiles;
     TQTimer *progressDelayTimer;
-    KActionSeparator *viewActionSeparator;
+    TDEActionSeparator *viewActionSeparator;
     int dropOptions;
 
     TDEConfig *config;
@@ -192,10 +192,10 @@ void KDirOperator::insertViewDependentActions()
    {
       if (viewActionCollection)
       {
-         disconnect( viewActionCollection, TQT_SIGNAL( inserted( KAction * )),
-               this, TQT_SLOT( slotViewActionAdded( KAction * )));
-         disconnect( viewActionCollection, TQT_SIGNAL( removed( KAction * )),
-               this, TQT_SLOT( slotViewActionRemoved( KAction * )));
+         disconnect( viewActionCollection, TQT_SIGNAL( inserted( TDEAction * )),
+               this, TQT_SLOT( slotViewActionAdded( TDEAction * )));
+         disconnect( viewActionCollection, TQT_SIGNAL( removed( TDEAction * )),
+               this, TQT_SLOT( slotViewActionRemoved( TDEAction * )));
       }
 
       viewActionMenu->popupMenu()->clear();
@@ -223,24 +223,24 @@ void KDirOperator::insertViewDependentActions()
          TQStringList groups = viewActionCollection->groups();
          groups.prepend( TQString::null ); // actions without group
          TQStringList::ConstIterator git = groups.begin();
-         KActionPtrList list;
-         KAction *sep = actionCollection()->action("separator");
+         TDEActionPtrList list;
+         TDEAction *sep = actionCollection()->action("separator");
          for ( ; git != groups.end(); ++git )
          {
             if ( git != groups.begin() )
                viewActionMenu->insert( sep );
 
             list = viewActionCollection->actions( *git );
-            KActionPtrList::ConstIterator it = list.begin();
+            TDEActionPtrList::ConstIterator it = list.begin();
             for ( ; it != list.end(); ++it )
                viewActionMenu->insert( *it );
          }
       }
 
-      connect( viewActionCollection, TQT_SIGNAL( inserted( KAction * )),
-               TQT_SLOT( slotViewActionAdded( KAction * )));
-      connect( viewActionCollection, TQT_SIGNAL( removed( KAction * )),
-               TQT_SLOT( slotViewActionRemoved( KAction * )));
+      connect( viewActionCollection, TQT_SIGNAL( inserted( TDEAction * )),
+               TQT_SLOT( slotViewActionAdded( TDEAction * )));
+      connect( viewActionCollection, TQT_SIGNAL( removed( TDEAction * )),
+               TQT_SLOT( slotViewActionRemoved( TDEAction * )));
    }
 }
 
@@ -271,7 +271,7 @@ void KDirOperator::setPreviewWidget(const TQWidget *w)
     delete myPreview;
     myPreview = w;
 
-    KToggleAction *preview = static_cast<KToggleAction*>(myActionCollection->action("preview"));
+    TDEToggleAction *preview = static_cast<TDEToggleAction*>(myActionCollection->action("preview"));
     preview->setEnabled( w != 0L );
     preview->setChecked( w != 0L );
     setView( static_cast<KFile::FileView>(m_viewKind) );
@@ -326,7 +326,7 @@ void KDirOperator::slotDefaultPreview()
     m_viewKind = m_viewKind | KFile::PreviewContents;
     if ( !myPreview ) {
         myPreview = new KFileMetaPreview( this );
-        (static_cast<KToggleAction*>( myActionCollection->action("preview") ))->setChecked(true);
+        (static_cast<TDEToggleAction*>( myActionCollection->action("preview") ))->setChecked(true);
     }
 
     setView( static_cast<KFile::FileView>(m_viewKind) );
@@ -555,12 +555,12 @@ TDEIO::CopyJob * KDirOperator::trash( const KFileItemList& items,
     return 0L;
 }
 
-void KDirOperator::trashSelected(KAction::ActivationReason reason, TQt::ButtonState state)
+void KDirOperator::trashSelected(TDEAction::ActivationReason reason, TQt::ButtonState state)
 {
     if ( !m_fileView )
         return;
 
-    if ( reason == KAction::PopupMenuActivation && ( state & ShiftButton ) ) {
+    if ( reason == TDEAction::PopupMenuActivation && ( state & ShiftButton ) ) {
         deleteSelected();
 	return;
     }
@@ -809,7 +809,7 @@ void KDirOperator::setMimeFilter( const TQStringList& mimetypes )
 
 bool KDirOperator::checkPreviewSupport()
 {
-    KToggleAction *previewAction = static_cast<KToggleAction*>( myActionCollection->action( "preview" ));
+    TDEToggleAction *previewAction = static_cast<TDEToggleAction*>( myActionCollection->action( "preview" ));
 
     bool hasPreviewSupport = false;
     TDEConfig *kc = TDEGlobal::config();
@@ -1253,9 +1253,9 @@ void KDirOperator::slotCompletionMatch(const TQString& match)
 
 void KDirOperator::setupActions()
 {
-    myActionCollection = new KActionCollection( topLevelWidget(), TQT_TQOBJECT(this), "KDirOperator::myActionCollection" );
+    myActionCollection = new TDEActionCollection( topLevelWidget(), TQT_TQOBJECT(this), "KDirOperator::myActionCollection" );
 
-    actionMenu = new KActionMenu( i18n("Menu"), myActionCollection, "popupMenu" );
+    actionMenu = new TDEActionMenu( i18n("Menu"), myActionCollection, "popupMenu" );
     upAction = KStdAction::up( TQT_TQOBJECT(this), TQT_SLOT( cdUp() ), myActionCollection, "up" );
     upAction->setText( i18n("Parent Folder") );
     backAction = KStdAction::back( TQT_TQOBJECT(this), TQT_SLOT( back() ), myActionCollection, "back" );
@@ -1263,33 +1263,33 @@ void KDirOperator::setupActions()
     homeAction = KStdAction::home( TQT_TQOBJECT(this), TQT_SLOT( home() ), myActionCollection, "home" );
     homeAction->setText(i18n("Home Folder"));
     reloadAction = KStdAction::redisplay( TQT_TQOBJECT(this), TQT_SLOT(rereadDir()), myActionCollection, "reload" );
-    actionSeparator = new KActionSeparator( myActionCollection, "separator" );
-    d->viewActionSeparator = new KActionSeparator( myActionCollection,
+    actionSeparator = new TDEActionSeparator( myActionCollection, "separator" );
+    d->viewActionSeparator = new TDEActionSeparator( myActionCollection,
                                                    "viewActionSeparator" );
-    mkdirAction = new KAction( i18n("New Folder..."), 0,
+    mkdirAction = new TDEAction( i18n("New Folder..."), 0,
                                  TQT_TQOBJECT(this), TQT_SLOT( mkdir() ), myActionCollection, "mkdir" );
-    KAction* trash = new KAction( i18n( "Move to Trash" ), "edittrash", Key_Delete, myActionCollection, "trash" );
-    connect( trash, TQT_SIGNAL( activated( KAction::ActivationReason, TQt::ButtonState ) ),
-	     this, TQT_SLOT( trashSelected( KAction::ActivationReason, TQt::ButtonState ) ) );
-    new KAction( i18n( "Delete" ), "editdelete", SHIFT+Key_Delete, TQT_TQOBJECT(this),
+    TDEAction* trash = new TDEAction( i18n( "Move to Trash" ), "edittrash", Key_Delete, myActionCollection, "trash" );
+    connect( trash, TQT_SIGNAL( activated( TDEAction::ActivationReason, TQt::ButtonState ) ),
+	     this, TQT_SLOT( trashSelected( TDEAction::ActivationReason, TQt::ButtonState ) ) );
+    new TDEAction( i18n( "Delete" ), "editdelete", SHIFT+Key_Delete, TQT_TQOBJECT(this),
                   TQT_SLOT( deleteSelected() ), myActionCollection, "delete" );
     mkdirAction->setIcon( TQString::fromLatin1("folder_new") );
     reloadAction->setText( i18n("Reload") );
-    reloadAction->setShortcut( KStdAccel::shortcut( KStdAccel::Reload ));
+    reloadAction->setShortcut( TDEStdAccel::shortcut( TDEStdAccel::Reload ));
 
 
     // the sort menu actions
-    sortActionMenu = new KActionMenu( i18n("Sorting"), myActionCollection, "sorting menu");
-    byNameAction = new KRadioAction( i18n("By Name"), 0,
+    sortActionMenu = new TDEActionMenu( i18n("Sorting"), myActionCollection, "sorting menu");
+    byNameAction = new TDERadioAction( i18n("By Name"), 0,
                                      TQT_TQOBJECT(this), TQT_SLOT( slotSortByName() ),
                                      myActionCollection, "by name" );
-    byDateAction = new KRadioAction( i18n("By Date"), 0,
+    byDateAction = new TDERadioAction( i18n("By Date"), 0,
                                      TQT_TQOBJECT(this), TQT_SLOT( slotSortByDate() ),
                                      myActionCollection, "by date" );
-    bySizeAction = new KRadioAction( i18n("By Size"), 0,
+    bySizeAction = new TDERadioAction( i18n("By Size"), 0,
                                      TQT_TQOBJECT(this), TQT_SLOT( slotSortBySize() ),
                                      myActionCollection, "by size" );
-    reverseAction = new KToggleAction( i18n("Reverse"), 0,
+    reverseAction = new TDEToggleAction( i18n("Reverse"), 0,
                                        TQT_TQOBJECT(this), TQT_SLOT( slotSortReversed() ),
                                        myActionCollection, "reversed" );
 
@@ -1299,9 +1299,9 @@ void KDirOperator::setupActions()
     bySizeAction->setExclusiveGroup( sortGroup );
 
 
-    dirsFirstAction = new KToggleAction( i18n("Folders First"), 0,
+    dirsFirstAction = new TDEToggleAction( i18n("Folders First"), 0,
                                          myActionCollection, "dirs first");
-    caseInsensitiveAction = new KToggleAction(i18n("Case Insensitive"), 0,
+    caseInsensitiveAction = new TDEToggleAction(i18n("Case Insensitive"), 0,
                                               myActionCollection, "case insensitive" );
 
     connect( dirsFirstAction, TQT_SIGNAL( toggled( bool ) ),
@@ -1312,24 +1312,24 @@ void KDirOperator::setupActions()
 
 
     // the view menu actions
-    viewActionMenu = new KActionMenu( i18n("&View"), myActionCollection, "view menu" );
+    viewActionMenu = new TDEActionMenu( i18n("&View"), myActionCollection, "view menu" );
     connect( viewActionMenu->popupMenu(), TQT_SIGNAL( aboutToShow() ),
              TQT_SLOT( insertViewDependentActions() ));
 
-    shortAction = new KRadioAction( i18n("Short View"), "view_multicolumn",
-                                    KShortcut(), myActionCollection, "short view" );
-    detailedAction = new KRadioAction( i18n("Detailed View"), "view_detailed",
-                                       KShortcut(), myActionCollection, "detailed view" );
+    shortAction = new TDERadioAction( i18n("Short View"), "view_multicolumn",
+                                    TDEShortcut(), myActionCollection, "short view" );
+    detailedAction = new TDERadioAction( i18n("Detailed View"), "view_detailed",
+                                       TDEShortcut(), myActionCollection, "detailed view" );
 
-    showHiddenAction = new KToggleAction( i18n("Show Hidden Files"), KShortcut(),
+    showHiddenAction = new TDEToggleAction( i18n("Show Hidden Files"), TDEShortcut(),
                                           myActionCollection, "show hidden" );
 //    showHiddenAction->setCheckedState( i18n("Hide Hidden Files") );
-    separateDirsAction = new KToggleAction( i18n("Separate Folders"), KShortcut(),
+    separateDirsAction = new TDEToggleAction( i18n("Separate Folders"), TDEShortcut(),
                                             TQT_TQOBJECT(this),
                                             TQT_SLOT(slotSeparateDirs()),
                                             myActionCollection, "separate dirs" );
-    KToggleAction *previewAction = new KToggleAction(i18n("Show Preview"),
-                                                     "thumbnail", KShortcut(),
+    TDEToggleAction *previewAction = new TDEToggleAction(i18n("Show Preview"),
+                                                     "thumbnail", TDEShortcut(),
                                                      myActionCollection,
                                                      "preview" );
     previewAction->setCheckedState(i18n("Hide Preview"));
@@ -1348,7 +1348,7 @@ void KDirOperator::setupActions()
     connect( showHiddenAction, TQT_SIGNAL( toggled( bool ) ),
              TQT_SLOT( slotToggleHidden( bool ) ));
 
-    new KAction( i18n("Properties"), KShortcut(ALT+Key_Return), TQT_TQOBJECT(this),
+    new TDEAction( i18n("Properties"), TDEShortcut(ALT+Key_Return), TQT_TQOBJECT(this),
                  TQT_SLOT(slotProperties()), myActionCollection, "properties" );
 }
 
@@ -1533,7 +1533,7 @@ void KDirOperator::writeConfig( TDEConfig *kc, const TQString& group )
             kc->writeEntry( TQString::fromLatin1("Separate Directories"),
                             separateDirsAction->isChecked() );
 
-        KToggleAction *previewAction = static_cast<KToggleAction*>(myActionCollection->action("preview"));
+        TDEToggleAction *previewAction = static_cast<TDEToggleAction*>(myActionCollection->action("preview"));
         if ( previewAction->isEnabled() ) {
             bool hasPreview = previewAction->isChecked();
             kc->writeEntry( TQString::fromLatin1("Show Preview"), hasPreview );
@@ -1633,7 +1633,7 @@ void KDirOperator::clearHistory()
     forwardAction->setEnabled( false );
 }
 
-void KDirOperator::slotViewActionAdded( KAction *action )
+void KDirOperator::slotViewActionAdded( TDEAction *action )
 {
     if ( viewActionMenu->popupMenu()->count() == 5 ) // need to add a separator
 	viewActionMenu->insert( d->viewActionSeparator );
@@ -1641,7 +1641,7 @@ void KDirOperator::slotViewActionAdded( KAction *action )
     viewActionMenu->insert( action );
 }
 
-void KDirOperator::slotViewActionRemoved( KAction *action )
+void KDirOperator::slotViewActionRemoved( TDEAction *action )
 {
     viewActionMenu->remove( action );
 

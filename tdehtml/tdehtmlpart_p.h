@@ -54,8 +54,8 @@
 
 class KFind;
 class KFindDialog;
-class KPopupMenu;
-class KSelectAction;
+class TDEPopupMenu;
+class TDESelectAction;
 class KURLLabel;
 class KJavaAppletContext;
 class KJSErrorDlg;
@@ -393,30 +393,30 @@ public:
   int m_delayRedirect;
   TQString m_redirectURL;
 
-  KAction *m_paViewDocument;
-  KAction *m_paViewFrame;
-  KAction *m_paViewInfo;
-  KAction *m_paSaveBackground;
-  KAction *m_paSaveDocument;
-  KAction *m_paSaveFrame;
-  KAction *m_paSecurity;
-  KActionMenu *m_paSetEncoding;
-  KSelectAction *m_paUseStylesheet;
+  TDEAction *m_paViewDocument;
+  TDEAction *m_paViewFrame;
+  TDEAction *m_paViewInfo;
+  TDEAction *m_paSaveBackground;
+  TDEAction *m_paSaveDocument;
+  TDEAction *m_paSaveFrame;
+  TDEAction *m_paSecurity;
+  TDEActionMenu *m_paSetEncoding;
+  TDESelectAction *m_paUseStylesheet;
   TDEHTMLZoomFactorAction *m_paIncZoomFactor;
   TDEHTMLZoomFactorAction *m_paDecZoomFactor;
-  KAction *m_paLoadImages;
-  KAction *m_paFind;
-  KAction *m_paFindNext;
-  KAction *m_paFindPrev;
-  KAction *m_paFindAheadText;
-  KAction *m_paFindAheadLinks;
-  KAction *m_paPrintFrame;
-  KAction *m_paSelectAll;
-  KAction *m_paDebugScript;
-  KAction *m_paDebugDOMTree;
-  KAction *m_paDebugRenderTree;
-  KAction *m_paStopAnimations;
-  KToggleAction *m_paToggleCaretMode;
+  TDEAction *m_paLoadImages;
+  TDEAction *m_paFind;
+  TDEAction *m_paFindNext;
+  TDEAction *m_paFindPrev;
+  TDEAction *m_paFindAheadText;
+  TDEAction *m_paFindAheadLinks;
+  TDEAction *m_paPrintFrame;
+  TDEAction *m_paSelectAll;
+  TDEAction *m_paDebugScript;
+  TDEAction *m_paDebugDOMTree;
+  TDEAction *m_paDebugRenderTree;
+  TDEAction *m_paStopAnimations;
+  TDEToggleAction *m_paToggleCaretMode;
 
   KParts::PartManager *m_manager;
 
@@ -548,8 +548,8 @@ public:
   bool m_newJSInterpreterExists; // set to 1 by setOpenedByJS, for window.open
 
   tdehtml::Decoder::AutoDetectLanguage m_autoDetectLanguage;
-  KPopupMenu *m_automaticDetection;
-  KSelectAction *m_manualDetection;
+  TDEPopupMenu *m_automaticDetection;
+  TDESelectAction *m_manualDetection;
 
   void setFlagRecursively(bool TDEHTMLPartPrivate::*flag, bool value);
   /** returns the caret node */

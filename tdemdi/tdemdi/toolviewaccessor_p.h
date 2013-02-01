@@ -48,7 +48,7 @@ class ToolViewAccessorPrivate
 
     TQGuardedPtr<KDockWidget> widgetContainer;
     TQWidget *widget;
-    TQGuardedPtr<KAction> action;
+    TQGuardedPtr<TDEAction> action;
 };
 
 }

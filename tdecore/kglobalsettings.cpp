@@ -186,7 +186,7 @@ bool TDEGlobalSettings::showContextMenusOnPress ()
 int TDEGlobalSettings::contextMenuKey ()
 {
     TDEConfigGroup g(TDEGlobal::config(), "Shortcuts");
-    KShortcut cut (g.readEntry ("PopupMenuContext", "Menu"));
+    TDEShortcut cut (g.readEntry ("PopupMenuContext", "Menu"));
     return cut.keyCodeQt();
 }
 

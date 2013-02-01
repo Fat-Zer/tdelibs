@@ -78,7 +78,7 @@ public:
   TQDomDocument m_document;
   XmlType      m_type;
   bool         m_isModified;
-  KActionCollection* m_actionCollection;
+  TDEActionCollection* m_actionCollection;
 
   ToolbarList  m_barList;
 };
@@ -88,7 +88,7 @@ typedef TQValueList<XmlData> XmlDataList;
 class ToolbarItem : public TQListViewItem
 {
 public:
-  ToolbarItem(KListView *parent, const TQString& tag = TQString::null, const TQString& name = TQString::null, const TQString& statusText = TQString::null)
+  ToolbarItem(TDEListView *parent, const TQString& tag = TQString::null, const TQString& name = TQString::null, const TQString& statusText = TQString::null)
     : TQListViewItem(parent),
       m_tag(tag),
       m_name(name),
@@ -96,7 +96,7 @@ public:
   {
   }
 
-  ToolbarItem(KListView *parent, TQListViewItem *item, const TQString &tag = TQString::null, const TQString& name = TQString::null, const TQString& statusText = TQString::null)
+  ToolbarItem(TDEListView *parent, TQListViewItem *item, const TQString &tag = TQString::null, const TQString& name = TQString::null, const TQString& statusText = TQString::null)
     : TQListViewItem(parent, item),
       m_tag(tag),
       m_name(name),
@@ -175,11 +175,11 @@ public:
   }
 };
 
-class ToolbarListView : public KListView
+class ToolbarListView : public TDEListView
 {
 public:
   ToolbarListView(TQWidget *parent=0, const char *name=0)
-    : KListView(parent, name)
+    : TDEListView(parent, name)
   {
   }
 protected:
@@ -214,7 +214,7 @@ public:
      * In a KParts application we let create a KXMLGUIClient create a dummy one,
      * but it probably isn't used.
      */
-  KEditToolbarWidgetPrivate(TDEInstance *instance, KActionCollection* collection)
+  KEditToolbarWidgetPrivate(TDEInstance *instance, TDEActionCollection* collection)
       : m_collection( collection )
   {
     m_instance = instance;
@@ -337,8 +337,8 @@ public:
   }
 #endif
 
-  //TQValueList<KAction*> m_actionList;
-  KActionCollection* m_collection;
+  //TQValueList<TDEAction*> m_actionList;
+  TDEActionCollection* m_collection;
   TDEInstance         *m_instance;
 
   XmlData*     m_currentXmlData;
@@ -368,14 +368,14 @@ public:
 
     // Save parameters for recreating widget after resetting toolbar
     bool m_global;
-    KActionCollection* m_collection;
+    TDEActionCollection* m_collection;
     TQString m_file;
     KXMLGUIFactory* m_factory;
 };
 
 const char *KEditToolbar::s_defaultToolbar = 0L;
 
-KEditToolbar::KEditToolbar(KActionCollection *collection, const TQString& file,
+KEditToolbar::KEditToolbar(TDEActionCollection *collection, const TQString& file,
                            bool global, TQWidget* parent, const char* name)
   : KDialogBase(Swallow, i18n("Configure Toolbars"), Default|Ok|Apply|Cancel, Ok, parent, name),
     m_widget(new KEditToolbarWidget(TQString::fromLatin1(s_defaultToolbar), collection, file, global, this))
@@ -386,7 +386,7 @@ KEditToolbar::KEditToolbar(KActionCollection *collection, const TQString& file,
     d->m_file = file;
 }
 
-KEditToolbar::KEditToolbar(const TQString& defaultToolbar, KActionCollection *collection,
+KEditToolbar::KEditToolbar(const TQString& defaultToolbar, TDEActionCollection *collection,
                            const TQString& file, bool global,
                            TQWidget* parent, const char* name)
   : KDialogBase(Swallow, i18n("Configure Toolbars"), Default|Ok|Apply|Cancel, Ok, parent, name),
@@ -537,7 +537,7 @@ void KEditToolbar::setDefaultToolbar(const char *toolbarName)
     s_defaultToolbar = toolbarName;
 }
 
-KEditToolbarWidget::KEditToolbarWidget(KActionCollection *collection,
+KEditToolbarWidget::KEditToolbarWidget(TDEActionCollection *collection,
                                        const TQString& file,
                                        bool global, TQWidget *parent)
   : TQWidget(parent),
@@ -551,7 +551,7 @@ KEditToolbarWidget::KEditToolbarWidget(KActionCollection *collection,
 }
 
 KEditToolbarWidget::KEditToolbarWidget(const TQString& defaultToolbar,
-                                       KActionCollection *collection,
+                                       TDEActionCollection *collection,
                                        const TQString& file, bool global,
                                        TQWidget *parent)
   : TQWidget(parent),
@@ -594,7 +594,7 @@ KEditToolbarWidget::~KEditToolbarWidget()
     delete d;
 }
 
-void KEditToolbarWidget::initNonKPart(KActionCollection *collection,
+void KEditToolbarWidget::initNonKPart(TDEActionCollection *collection,
                                       const TQString& file, bool global)
 {
   //d->m_actionList = collection->actions();
@@ -805,10 +805,10 @@ void KEditToolbarWidget::setupLayout()
   m_activeList->setSorting(-1);
   active_label->setBuddy(m_activeList);
 
-  connect(m_inactiveList, TQT_SIGNAL(dropped(KListView*,TQDropEvent*,TQListViewItem*)),
-          this,              TQT_SLOT(slotDropped(KListView*,TQDropEvent*,TQListViewItem*)));
-  connect(m_activeList, TQT_SIGNAL(dropped(KListView*,TQDropEvent*,TQListViewItem*)),
-          this,            TQT_SLOT(slotDropped(KListView*,TQDropEvent*,TQListViewItem*)));
+  connect(m_inactiveList, TQT_SIGNAL(dropped(TDEListView*,TQDropEvent*,TQListViewItem*)),
+          this,              TQT_SLOT(slotDropped(TDEListView*,TQDropEvent*,TQListViewItem*)));
+  connect(m_activeList, TQT_SIGNAL(dropped(TDEListView*,TQDropEvent*,TQListViewItem*)),
+          this,            TQT_SLOT(slotDropped(TDEListView*,TQDropEvent*,TQListViewItem*)));
   connect(m_activeList, TQT_SIGNAL(selectionChanged(TQListViewItem *)),
           this,         TQT_SLOT(slotActiveSelected(TQListViewItem *)));
   connect(m_activeList, TQT_SIGNAL( doubleClicked( TQListViewItem *, const TQPoint &, int  )),
@@ -960,7 +960,7 @@ void KEditToolbarWidget::loadActionList(TQDomElement& elem)
   m_downAction->setEnabled(false);
 
   // We'll use this action collection
-  KActionCollection* actionCollection = d->m_currentXmlData->m_actionCollection;
+  TDEActionCollection* actionCollection = d->m_currentXmlData->m_actionCollection;
 
   // store the names of our active actions
   TQMap<TQString, bool> active_list;
@@ -1008,7 +1008,7 @@ void KEditToolbarWidget::loadActionList(TQDomElement& elem)
     // putting any action into any client...
     for (unsigned int i = 0;  i < actionCollection->count(); i++)
     {
-      KAction *action = actionCollection->action( i );
+      TDEAction *action = actionCollection->action( i );
 
       // do we have a match?
       if (it.attribute( attrName ) == action->name())
@@ -1031,7 +1031,7 @@ void KEditToolbarWidget::loadActionList(TQDomElement& elem)
   // go through the rest of the collection
   for (int i = actionCollection->count() - 1; i > -1; --i)
   {
-    KAction *action = actionCollection->action( i );
+    TDEAction *action = actionCollection->action( i );
 
     // skip our active ones
     if (active_list.contains(action->name()))
@@ -1053,7 +1053,7 @@ void KEditToolbarWidget::loadActionList(TQDomElement& elem)
   act->setText(1, SEPARATORSTRING);
 }
 
-KActionCollection *KEditToolbarWidget::actionCollection() const
+TDEActionCollection *KEditToolbarWidget::actionCollection() const
 {
   return d->m_collection;
 }
@@ -1135,7 +1135,7 @@ void KEditToolbarWidget::slotActiveSelected(TQListViewItem *item)
   }
 }
 
-void KEditToolbarWidget::slotDropped(KListView *list, TQDropEvent *e, TQListViewItem *after)
+void KEditToolbarWidget::slotDropped(TDEListView *list, TQDropEvent *e, TQListViewItem *after)
 {
   ToolbarItem *item = new ToolbarItem(m_inactiveList); // needs parent, use inactiveList temporarily
   if(!ToolbarItemDrag::decode(e, *item)) {

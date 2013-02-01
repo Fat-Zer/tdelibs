@@ -43,18 +43,18 @@ class TQListView;
 class KLineEdit;
 class KBookmark;
 class KBookmarkGroup;
-class KAction;
-class KActionMenu;
-class KActionCollection;
+class TDEAction;
+class TDEActionMenu;
+class TDEActionCollection;
 class KBookmarkOwner;
 class KBookmarkMenu;
-class KPopupMenu;
+class TDEPopupMenu;
 
 namespace TDEIO { class Job; }
 
 /**
  * This class provides a bookmark menu.  It is typically used in
- * cooperation with KActionMenu but doesn't have to be.
+ * cooperation with TDEActionMenu but doesn't have to be.
  *
  * If you use this class by itself, then it will use KDE defaults for
  * everything -- the bookmark path, bookmark editor, bookmark launcher..
@@ -66,7 +66,7 @@ namespace TDEIO { class Job; }
  *
  * Using this class is very simple:
  *
- * 1) Create a popup menu (either KActionMenu or KPopupMenu will do)
+ * 1) Create a popup menu (either TDEActionMenu or TDEPopupMenu will do)
  * 2) Instantiate a new KBookmarkMenu object using the above popup
  *    menu as a parameter
  * 3) Insert your (now full) popup menu wherever you wish
@@ -90,7 +90,7 @@ public:
    * @param mgr The bookmark manager to use (i.e. for reading and writing)
    * @param owner implementation of the KBookmarkOwner callback interface.
    * @param parentMenu menu to be filled
-   * @param collec parent collection for the KActions. 
+   * @param collec parent collection for the TDEActions. 
    *  Only used for other menus than the toplevel one.
    * @param root true for the toplevel menu
    * @param add true to show the "Add Bookmark" and "New Folder" entries
@@ -102,8 +102,8 @@ public:
    * An _empty_ parentAddress denotes the toplevel bookmark menu
    */
   KBookmarkMenu( KBookmarkManager* mgr,
-                 KBookmarkOwner * owner, KPopupMenu * parentMenu,
-                 KActionCollection * collec, bool root, bool add = true,
+                 KBookmarkOwner * owner, TDEPopupMenu * parentMenu,
+                 TDEActionCollection * collec, bool root, bool add = true,
                  const TQString & parentAddress = "" );
 
   ~KBookmarkMenu();
@@ -169,8 +169,8 @@ public slots: // public for bookmark bar
 
 protected slots:
   void slotAboutToShow();
-  void slotAboutToShowContextMenu( KPopupMenu *, int, TQPopupMenu * );
-  void slotActionHighlighted( KAction * );
+  void slotAboutToShowContextMenu( TDEPopupMenu *, int, TQPopupMenu * );
+  void slotActionHighlighted( TDEAction * );
 
   void slotRMBActionRemove( int );
   void slotRMBActionInsert( int );
@@ -182,7 +182,7 @@ protected slots:
   /**
    * @ since 3.4
    */
-  void slotBookmarkSelected( KAction::ActivationReason reason, TQt::ButtonState state );
+  void slotBookmarkSelected( TDEAction::ActivationReason reason, TQt::ButtonState state );
   void slotAddBookmarksList();
   void slotAddBookmark();
   void slotNewFolder();
@@ -214,16 +214,16 @@ protected:
    * The menu in which we plug our actions.
    * Supplied in the constructor.
    */
-  KPopupMenu * m_parentMenu;
+  TDEPopupMenu * m_parentMenu;
   /**
    * List of our sub menus
    */
   TQPtrList<KBookmarkMenu> m_lstSubMenus;
-  KActionCollection * m_actionCollection;
+  TDEActionCollection * m_actionCollection;
   /**
    * List of our actions.
    */
-  TQPtrList<KAction> m_actions;
+  TQPtrList<TDEAction> m_actions;
   /**
    * Parent bookmark for this menu.
    */
@@ -236,13 +236,13 @@ protected:
 };
 
 /**
- * A class connected to KNSBookmarkImporter, to fill KActionMenus.
+ * A class connected to KNSBookmarkImporter, to fill TDEActionMenus.
  */
 class TDEIO_EXPORT KBookmarkMenuNSImporter : public TQObject
 {
   Q_OBJECT
 public:
-  KBookmarkMenuNSImporter( KBookmarkManager* mgr, KBookmarkMenu * menu, KActionCollection * act ) :
+  KBookmarkMenuNSImporter( KBookmarkManager* mgr, KBookmarkMenu * menu, TDEActionCollection * act ) :
      m_menu(menu), m_actionCollection(act), m_pManager(mgr) {}
 
   void openNSBookmarks();
@@ -258,7 +258,7 @@ protected slots:
 protected:
   TQPtrStack<KBookmarkMenu> mstack;
   KBookmarkMenu * m_menu;
-  KActionCollection * m_actionCollection;
+  TDEActionCollection * m_actionCollection;
   KBookmarkManager* m_pManager;
 };
 

@@ -62,9 +62,9 @@
 #include <kstdguiitem.h>
 #include <kpushbutton.h>
 
-bool KShortcutDialog::s_showMore = false;
+bool TDEShortcutDialog::s_showMore = false;
 
-KShortcutDialog::KShortcutDialog( const KShortcut& shortcut, bool bQtShortcut, TQWidget* parent, const char* name )
+TDEShortcutDialog::TDEShortcutDialog( const TDEShortcut& shortcut, bool bQtShortcut, TQWidget* parent, const char* name )
 : KDialogBase( parent, name, true, i18n("Configure Shortcut"),
                KDialogBase::Details|KDialogBase::Ok|KDialogBase::Cancel, KDialogBase::Cancel, true )
 {
@@ -75,9 +75,9 @@ KShortcutDialog::KShortcutDialog( const KShortcut& shortcut, bool bQtShortcut, T
         m_stack->setMargin(0);
         setMainWidget(m_stack);
         
-        m_simple = new KShortcutDialogSimple(m_stack);
+        m_simple = new TDEShortcutDialogSimple(m_stack);
 
-        m_adv = new KShortcutDialogAdvanced(m_stack);
+        m_adv = new TDEShortcutDialogAdvanced(m_stack);
         m_adv->hide();
         
 	m_bQtShortcut = bQtShortcut;
@@ -127,19 +127,19 @@ KShortcutDialog::KShortcutDialog( const KShortcut& shortcut, bool bQtShortcut, T
 	#endif
 }
 
-KShortcutDialog::~KShortcutDialog()
+TDEShortcutDialog::~TDEShortcutDialog()
 {
 	TDEConfigGroup group(TDEGlobal::config(), "General");
 	group.writeEntry("ShowAlternativeShortcutConfig", s_showMore);
 }
 
-void KShortcutDialog::setShortcut( const KShortcut & shortcut )
+void TDEShortcutDialog::setShortcut( const TDEShortcut & shortcut )
 {
 	m_shortcut = shortcut;
 	updateShortcutDisplay();
 }
 
-void KShortcutDialog::updateShortcutDisplay()
+void TDEShortcutDialog::updateShortcutDisplay()
 {
 	TQString s[2] = { m_shortcut.seq(0).toString(), m_shortcut.seq(1).toString() };
 
@@ -190,13 +190,13 @@ void KShortcutDialog::updateShortcutDisplay()
 	enableButton(Details, bLessOk);
 }
 
-void KShortcutDialog::slotDetails()
+void TDEShortcutDialog::slotDetails()
 {
 	s_showMore = (m_adv->isHidden());
 	updateDetails();
 }
 
-void KShortcutDialog::updateDetails()
+void TDEShortcutDialog::updateDetails()
 {
 	bool showAdvanced = s_showMore || (m_shortcut.count() > 1);
 	setDetails(showAdvanced);
@@ -224,7 +224,7 @@ void KShortcutDialog::updateDetails()
 	adjustSize();
 }
 
-void KShortcutDialog::slotSelectPrimary()
+void TDEShortcutDialog::slotSelectPrimary()
 {
 	m_bRecording = false;
 	m_iSeq = 0;
@@ -235,7 +235,7 @@ void KShortcutDialog::slotSelectPrimary()
 	updateShortcutDisplay();
 }
 
-void KShortcutDialog::slotSelectAlternate()
+void TDEShortcutDialog::slotSelectAlternate()
 {
 	m_bRecording = false;
 	m_iSeq = 1;
@@ -246,20 +246,20 @@ void KShortcutDialog::slotSelectAlternate()
 	updateShortcutDisplay();
 }
 
-void KShortcutDialog::slotClearShortcut()
+void TDEShortcutDialog::slotClearShortcut()
 {
 	m_shortcut.setSeq( 0, KKeySequence() );
 	updateShortcutDisplay();
 }
 
-void KShortcutDialog::slotClearPrimary()
+void TDEShortcutDialog::slotClearPrimary()
 {
 	m_shortcut.setSeq( 0, KKeySequence() );
 	m_adv->m_btnPrimary->setChecked( true );
 	slotSelectPrimary();
 }
 
-void KShortcutDialog::slotClearAlternate()
+void TDEShortcutDialog::slotClearAlternate()
 {
 	if( m_shortcut.count() == 2 )
 		m_shortcut.init( m_shortcut.seq(0) );
@@ -267,7 +267,7 @@ void KShortcutDialog::slotClearAlternate()
 	slotSelectAlternate();
 }
 
-void KShortcutDialog::slotMultiKeyMode( bool bOn )
+void TDEShortcutDialog::slotMultiKeyMode( bool bOn )
 {
 	// If turning off multi-key mode during a recording,
 	if( !bOn && m_bRecording ) {
@@ -281,7 +281,7 @@ void KShortcutDialog::slotMultiKeyMode( bool bOn )
 /* we don't use the generic Qt code on X11 because it allows us 
  to grab the keyboard so that all keypresses are seen
  */
-bool KShortcutDialog::x11Event( XEvent *pEvent )
+bool TDEShortcutDialog::x11Event( XEvent *pEvent )
 {
 	switch( pEvent->type ) {
 		case XKeyPress:
@@ -348,7 +348,7 @@ static bool convertSymXToMod( uint keySymX, uint* pmod )
 	return true;
 }
 
-void KShortcutDialog::x11KeyPressEvent( XEvent* pEvent )
+void TDEShortcutDialog::x11KeyPressEvent( XEvent* pEvent )
 {
 	KKeyNative keyNative( pEvent );
 	uint keyModX = keyNative.mod();
@@ -370,7 +370,7 @@ void KShortcutDialog::x11KeyPressEvent( XEvent* pEvent )
 	updateShortcutDisplay();
 }
 
-void KShortcutDialog::x11KeyReleaseEvent( XEvent* pEvent )
+void TDEShortcutDialog::x11KeyReleaseEvent( XEvent* pEvent )
 {
 	// We're only interested in the release of modifier keys,
 	//  and then only when it's for the first key in a sequence.
@@ -391,7 +391,7 @@ void KShortcutDialog::x11KeyReleaseEvent( XEvent* pEvent )
 	}
 }
 #elif defined(Q_WS_WIN)
-void KShortcutDialog::keyPressEvent( TQKeyEvent * e )
+void TDEShortcutDialog::keyPressEvent( TQKeyEvent * e )
 {
 	kdDebug() << e->text() << " " << (int)e->text()[0].latin1()<<  " " << (int)e->ascii() << endl;
 	//if key is a letter, it must be stored as lowercase
@@ -457,7 +457,7 @@ void KShortcutDialog::keyPressEvent( TQKeyEvent * e )
 	}
 }
 
-bool KShortcutDialog::event ( TQEvent * e )
+bool TDEShortcutDialog::event ( TQEvent * e )
 {
 	if (e->type()==TQEvent::KeyRelease) {
 		int modQt = KKeyServer::qtButtonStateToMod( static_cast<TQKeyEvent*>(e)->state() );
@@ -488,7 +488,7 @@ bool KShortcutDialog::event ( TQEvent * e )
 }
 #endif
 
-void KShortcutDialog::keyPressed( KKey key )
+void TDEShortcutDialog::keyPressed( KKey key )
 {
 	kdDebug(125) << "keyPressed: " << key.toString() << endl;
 

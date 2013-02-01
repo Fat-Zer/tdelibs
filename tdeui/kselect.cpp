@@ -235,14 +235,14 @@ void KXYSelector::drawCursor( TQPainter *p, int xp, int yp )
  */
 
 
-KSelector::KSelector( TQWidget *parent, const char *name )
+TDESelector::TDESelector( TQWidget *parent, const char *name )
 	: TQWidget( parent, name ), TQRangeControl()
 {
 	_orientation = Qt::Horizontal;
 	_indent = true;
 }
 
-KSelector::KSelector( Orientation o, TQWidget *parent, const char *name )
+TDESelector::TDESelector( Orientation o, TQWidget *parent, const char *name )
 	: TQWidget( parent, name ), TQRangeControl()
 {
 	_orientation = o;
@@ -250,11 +250,11 @@ KSelector::KSelector( Orientation o, TQWidget *parent, const char *name )
 }
 
 
-KSelector::~KSelector()
+TDESelector::~TDESelector()
 {}
 
 
-TQRect KSelector::contentsRect() const
+TQRect TDESelector::contentsRect() const
 {
 	int w = style().pixelMetric(TQStyle::PM_DefaultFrameWidth);
 	int iw = (w < 5) ? 5 : w;
@@ -264,7 +264,7 @@ TQRect KSelector::contentsRect() const
 		return TQRect( iw, w, width() - 2 * iw, height() - w * 2 - 5 );
 }
 
-void KSelector::paintEvent( TQPaintEvent * )
+void TDESelector::paintEvent( TQPaintEvent * )
 {
 	TQPainter painter;
 	int w = style().pixelMetric(TQStyle::PM_DefaultFrameWidth);
@@ -292,23 +292,23 @@ void KSelector::paintEvent( TQPaintEvent * )
 	painter.end();
 }
 
-void KSelector::mousePressEvent( TQMouseEvent *e )
+void TDESelector::mousePressEvent( TQMouseEvent *e )
 {
 	moveArrow( e->pos() );
 }
 
-void KSelector::mouseMoveEvent( TQMouseEvent *e )
+void TDESelector::mouseMoveEvent( TQMouseEvent *e )
 {
 	moveArrow( e->pos() );
 }
 
-void KSelector::wheelEvent( TQWheelEvent *e )
+void TDESelector::wheelEvent( TQWheelEvent *e )
 {
 	int val = value() + e->delta()/120;
 	setValue( val );
 }
 
-void KSelector::valueChange()
+void TDESelector::valueChange()
 {
 	TQPainter painter;
 	TQPoint pos;
@@ -326,7 +326,7 @@ void KSelector::valueChange()
 	emit valueChanged( value() );
 }
 
-void KSelector::moveArrow( const TQPoint &pos )
+void TDESelector::moveArrow( const TQPoint &pos )
 {
 	int val;
 	int w = style().pixelMetric(TQStyle::PM_DefaultFrameWidth);
@@ -342,7 +342,7 @@ void KSelector::moveArrow( const TQPoint &pos )
 	setValue( val );
 }
 
-TQPoint KSelector::calcArrowPos( int val )
+TQPoint TDESelector::calcArrowPos( int val )
 {
 	TQPoint p;
 
@@ -364,10 +364,10 @@ TQPoint KSelector::calcArrowPos( int val )
 	return p;
 }
 
-void KSelector::drawContents( TQPainter * )
+void TDESelector::drawContents( TQPainter * )
 {}
 
-void KSelector::drawArrow( TQPainter *painter, bool show, const TQPoint &pos )
+void TDESelector::drawArrow( TQPainter *painter, bool show, const TQPoint &pos )
 {
   if ( show )
   {
@@ -404,7 +404,7 @@ void KSelector::drawArrow( TQPainter *painter, bool show, const TQPoint &pos )
 //----------------------------------------------------------------------------
 
 KGradientSelector::KGradientSelector( TQWidget *parent, const char *name )
-    : KSelector( parent, name )
+    : TDESelector( parent, name )
 {
     init();
 }
@@ -412,7 +412,7 @@ KGradientSelector::KGradientSelector( TQWidget *parent, const char *name )
 
 KGradientSelector::KGradientSelector( Orientation o, TQWidget *parent,
 		const char *name )
-	: KSelector( o, parent, name )
+	: TDESelector( o, parent, name )
 {
     init();
 }
@@ -524,11 +524,11 @@ void KGradientSelector::drawContents( TQPainter *painter )
 void KXYSelector::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
-void KSelector::virtual_hook( int, void* )
+void TDESelector::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
 void KGradientSelector::virtual_hook( int id, void* data )
-{ KSelector::virtual_hook( id, data ); }
+{ TDESelector::virtual_hook( id, data ); }
 
 #include "kselect.moc"
 

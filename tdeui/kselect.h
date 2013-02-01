@@ -148,7 +148,7 @@ private:
 
 
 /**
- * KSelector is the base class for other widgets which
+ * TDESelector is the base class for other widgets which
  * provides the ability to choose from a one-dimensional
  * range of values. An example is the KGradientSelector
  * which allows to choose from a range of colors.
@@ -156,7 +156,7 @@ private:
  * A custom drawing routine for the widget surface has
  * to be provided by the subclass.
  */
-class TDEUI_EXPORT KSelector : public TQWidget, public TQRangeControl
+class TDEUI_EXPORT TDESelector : public TQWidget, public TQRangeControl
 {
   Q_OBJECT
   TQ_PROPERTY( int value READ value WRITE setValue )
@@ -167,16 +167,16 @@ public:
   /**
    * Constructs a horizontal one-dimensional selection widget.
    */
-  KSelector( TQWidget *parent=0, const char *name=0 );
+  TDESelector( TQWidget *parent=0, const char *name=0 );
   /**
    * Constructs a one-dimensional selection widget with
    * a given orientation.
    */
-  KSelector( Orientation o, TQWidget *parent = 0L, const char *name = 0L );
+  TDESelector( Orientation o, TQWidget *parent = 0L, const char *name = 0L );
   /*
    * Destructs the widget.
    */
-  ~KSelector();
+  ~TDESelector();
 
   /**
    * @return the orientation of the widget.
@@ -277,8 +277,8 @@ private:
 protected:
   virtual void virtual_hook( int id, void* data );
 private:
-  class KSelectorPrivate;
-  KSelectorPrivate *d;
+  class TDESelectorPrivate;
+  TDESelectorPrivate *d;
 };
 
 
@@ -290,7 +290,7 @@ private:
  * \image html kgradientselector.png "KDE Gradient Selector Widget"
  *
  **/
-class TDEUI_EXPORT KGradientSelector : public KSelector
+class TDEUI_EXPORT KGradientSelector : public TDESelector
 {
   Q_OBJECT
 

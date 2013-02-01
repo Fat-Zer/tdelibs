@@ -42,7 +42,7 @@ class TQWidget;
  * key bindings through application configuration files or through the
  * KKeyChooser GUI.
  *
- * A KAccel contains a list of accelerator items. Each accelerator item
+ * A TDEAccel contains a list of accelerator items. Each accelerator item
  * consists of an action name and a keyboard code combined with modifiers
  * (Shift, Ctrl and Alt.)
  *
@@ -55,7 +55,7 @@ class TQWidget;
  * connected. Accelerator items can be connected so that a key will activate
  * two different slots.
  *
- * A KAccel object handles key events sent to its parent widget and to all
+ * A TDEAccel object handles key events sent to its parent widget and to all
  * children of this parent widget.
  *
  * Key binding reconfiguration during run time can be prevented by specifying
@@ -74,33 +74,33 @@ class TQWidget;
  * The translated first argument for insertItem() is used only
  * in the configuration dialog.
  *\code
- * KAccel *a = new KAccel( myWindow );
+ * TDEAccel *a = new TDEAccel( myWindow );
  * // Insert an action "Scroll Up" which is associated with the "Up" key:
  * a->insertItem( i18n("Scroll Up"), "Scroll Up", "Up" );
  * // Insert an action "Scroll Down" which is not associated with any key:
  * a->insertItem( i18n("Scroll Down"), "Scroll Down", 0);
  * a->connectItem( "Scroll up", myWindow, TQT_SLOT( scrollUp() ) );
- * // a->insertStdItem( KStdAccel::Print ); //not necessary, since it
+ * // a->insertStdItem( TDEStdAccel::Print ); //not necessary, since it
  *	// is done automatially with the
  *	// connect below!
- * a->connectItem(KStdAccel::Print, myWindow, TQT_SLOT( printDoc() ) );
+ * a->connectItem(TDEStdAccel::Print, myWindow, TQT_SLOT( printDoc() ) );
  *
  * a->readSettings();
  *\endcode
  *
  * If a shortcut has a menu entry as well, you could insert them like
- * this. The example is again the KStdAccel::Print from above.
+ * this. The example is again the TDEStdAccel::Print from above.
  *
  * \code
  * int id;
  * id = popup->insertItem("&Print",this, TQT_SLOT(printDoc()));
- * a->changeMenuAccel(popup, id, KStdAccel::Print );
+ * a->changeMenuAccel(popup, id, TDEStdAccel::Print );
  * \endcode
  *
  * If you want a somewhat "exotic" name for your standard print action, like
  *   id = popup->insertItem(i18n("Print &Document"),this, TQT_SLOT(printDoc()));
  * it might be a good idea to insert the standard action before as
- *          a->insertStdItem( KStdAccel::Print, i18n("Print Document") )
+ *          a->insertStdItem( TDEStdAccel::Print, i18n("Print Document") )
  * as well, so that the user can easily find the corresponding function.
  *
  * This technique works for other actions as well.  Your "scroll up" function
@@ -118,10 +118,10 @@ class TQWidget;
  * @short Configurable key binding support.
  */
 
-class TDECORE_EXPORT KAccelBase
+class TDECORE_EXPORT TDEAccelBase
 {
  public:
-	/** Initialization mode of the KAccelBase, used in constructor. */
+	/** Initialization mode of the TDEAccelBase, used in constructor. */
 	enum Init { QT_KEYS = 0x00, NATIVE_KEYS = 0x01 };
 
 	/** Enum for kinds of signals which may be emitted. */
@@ -130,32 +130,32 @@ class TDECORE_EXPORT KAccelBase
 	/** Constructor. @p fInitCode should be a bitwise OR of
 	*   values from the Init enum.
 	*/
-	KAccelBase( int fInitCode );
-	virtual ~KAccelBase();
+	TDEAccelBase( int fInitCode );
+	virtual ~TDEAccelBase();
 
 	/** Returns number of actions in this handler. */
 	uint actionCount() const;
 	/** Returns a list of all the actions in this handler. */
-	KAccelActions& actions();
+	TDEAccelActions& actions();
 	/** Returns whether this accelerator handler is enabled or not. */
 	bool isEnabled() const;
 
-	/** Returns a pointer to the KAccelAction named @p sAction. */
-	KAccelAction* actionPtr( const TQString& sAction );
+	/** Returns a pointer to the TDEAccelAction named @p sAction. */
+	TDEAccelAction* actionPtr( const TQString& sAction );
 	/** Const version of the above. */
-	const KAccelAction* actionPtr( const TQString& sAction ) const;
-	/** Returns a pointer to the KAccelAction associated with
+	const TDEAccelAction* actionPtr( const TQString& sAction ) const;
+	/** Returns a pointer to the TDEAccelAction associated with
 	*   the key @p key. This function takes into account the
 	*   key mapping defined in the constructor.
 	*
 	*   May return 0 if no (or more than one)
 	*   action is associated with the key.
 	*/
-	KAccelAction* actionPtr( const KKey& key );
+	TDEAccelAction* actionPtr( const KKey& key );
 	/** Basically the same as above, except a KKeyServer::Key
 	*   already has a key mapping defined (either NATIVE_KEYS or not).
 	*/
-	KAccelAction* actionPtr( const KKeyServer::Key& key );
+	TDEAccelAction* actionPtr( const KKeyServer::Key& key );
 
 	/** Returns the name of the configuration group these
 	*   accelerators are stored in. The default is "Shortcuts".
@@ -181,10 +181,10 @@ class TDECORE_EXPORT KAccelBase
 // Procedures for manipulating Actions.
 	//void clearActions();
 
-	KAccelAction* insert( const TQString& sName, const TQString& sDesc );
-	KAccelAction* insert(
+	TDEAccelAction* insert( const TQString& sName, const TQString& sDesc );
+	TDEAccelAction* insert(
 	                 const TQString& sAction, const TQString& sDesc, const TQString& sHelp,
-	                 const KShortcut& rgCutDefaults3, const KShortcut& rgCutDefaults4,
+	                 const TDEShortcut& rgCutDefaults3, const TDEShortcut& rgCutDefaults4,
 	                 const TQObject* pObjSlot, const char* psMethodSlot,
 			 bool bConfigurable = true, bool bEnabled = true );
 	bool remove( const TQString& sAction );
@@ -192,7 +192,7 @@ class TDECORE_EXPORT KAccelBase
 
 	bool updateConnections();
 
-	bool setShortcut( const TQString& sAction, const KShortcut& cut );
+	bool setShortcut( const TQString& sAction, const TDEShortcut& cut );
 
 // Modify individual Action sub-items
 	bool setActionEnabled( const TQString& sAction, bool bEnable );
@@ -218,7 +218,7 @@ class TDECORE_EXPORT KAccelBase
 
  // Protected methods
  protected:
-	void slotRemoveAction( KAccelAction* );
+	void slotRemoveAction( TDEAccelAction* );
 
 	struct X;
 
@@ -226,8 +226,8 @@ class TDECORE_EXPORT KAccelBase
 	 * @param rgKeys constructed list of keys
 	 */
 	void createKeyList( TQValueVector<struct X>& rgKeys );
-	bool insertConnection( KAccelAction* );
-	bool removeConnection( KAccelAction* );
+	bool insertConnection( TDEAccelAction* );
+	bool removeConnection( TDEAccelAction* );
 
 	/** Emits a signal.
 	 * @param signal signal to be emitted
@@ -237,14 +237,14 @@ class TDECORE_EXPORT KAccelBase
 	 * @param action action to be executed when key is pressed
 	 * @param key key which causes the action to be executed
 	 */
-	virtual bool connectKey( KAccelAction& action, const KKeyServer::Key& key ) = 0;
+	virtual bool connectKey( TDEAccelAction& action, const KKeyServer::Key& key ) = 0;
 	/** Defines a key which activates the accelerator
 	 * @param key key which causes the action to be executed
 	 */
 	virtual bool connectKey( const KKeyServer::Key& key) = 0;
 	/** Removes the key from accelerator so it no longer executes the action
 	 */
-	virtual bool disconnectKey( KAccelAction&, const KKeyServer::Key& ) = 0;
+	virtual bool disconnectKey( TDEAccelAction&, const KKeyServer::Key& ) = 0;
 	/** Removes the key from accelerator
 	 */
 	virtual bool disconnectKey( const KKeyServer::Key& ) = 0;
@@ -253,30 +253,30 @@ class TDECORE_EXPORT KAccelBase
         virtual bool isEnabledInternal() const;
 	struct ActionInfo
 	{
-		KAccelAction* pAction;
+		TDEAccelAction* pAction;
 		uint iSeq, iVariation;
 		//ActionInfo* pInfoNext; // nil if only one action uses this key.
 
 		ActionInfo() { pAction = 0; iSeq = 0xffff; iVariation = 0xffff; }
-		ActionInfo( KAccelAction* _pAction, uint _iSeq, uint _iVariation )
+		ActionInfo( TDEAccelAction* _pAction, uint _iSeq, uint _iVariation )
 			{ pAction = _pAction; iSeq = _iSeq; iVariation = _iVariation; }
 	};
 	typedef TQMap<KKeyServer::Key, ActionInfo> KKeyToActionMap;
 
-	KAccelActions m_rgActions;
+	TDEAccelActions m_rgActions;
 	KKeyToActionMap m_mapKeyToAction;
-	TQValueList<KAccelAction*> m_rgActionsNonUnique;
+	TQValueList<TDEAccelAction*> m_rgActionsNonUnique;
 	bool m_bNativeKeys; // Use native key codes instead of Qt codes
 	bool m_bEnabled;
 	bool m_bConfigIsGlobal;
 	TQString m_sConfigGroup;
 	bool m_bAutoUpdate;
-	KAccelAction* mtemp_pActionRemoving;
+	TDEAccelAction* mtemp_pActionRemoving;
 
  private:
-	KAccelBase& operator =( const KAccelBase& );
+	TDEAccelBase& operator =( const TDEAccelBase& );
 
-	friend class KAccelActions;
+	friend class TDEAccelActions;
 };
 
 #endif // _KACCELBASE_H

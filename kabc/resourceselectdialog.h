@@ -26,7 +26,7 @@
 #include <kdialog.h>
 #include <kdemacros.h>
 
-class KListBox;
+class TDEListBox;
 
 namespace KABC {
 
@@ -48,7 +48,7 @@ class KABC_EXPORT_DEPRECATED ResourceSelectDialog : KDialog
     static Resource *getResource( AddressBook *ab, TQWidget *parent = 0 );
 
   private:
-    KListBox *mResourceId;
+    TDEListBox *mResourceId;
     TQMap<int, Resource*> mResourceMap;
 };
 

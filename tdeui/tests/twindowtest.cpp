@@ -26,19 +26,19 @@
 //#include <dclock.h>
 
 /*
- Ok this is a constructor of our top widget. It inherits KMainWindow.
+ Ok this is a constructor of our top widget. It inherits TDEMainWindow.
  In constructor wi will create all of our interface elements:
  menubar, toolbar(s), statusbar, and main widget. Non of those
  interface is obligatory, i.e. you don't have to use menubar,
  toolbars or statusbar if you don't want to. Theoreticly, you
  don't need even main widget (but in that case, you'll get blank
- KMainWindow).
+ TDEMainWindow).
  */
 
 static int itemId = 0;
 
 testWindow::testWindow (TQWidget *parent, const char *name)
-    : KMainWindow (parent,name)
+    : TDEMainWindow (parent,name)
 {
     ena=false;
     setCaption("test window");
@@ -153,7 +153,7 @@ setAutoSaveSettings();
     tb->alignItemRight (6);
 
     // Another toolbar
-    tb1 = new KToolBar(this, TQMainWindow::DockTop); // this one is normal and has separators
+    tb1 = new TDEToolBar(this, TQMainWindow::DockTop); // this one is normal and has separators
 
 
     pix = BarIcon("filenew");
@@ -194,7 +194,7 @@ setAutoSaveSettings();
     tb1->setToggle(7);
 
     //Create
-    rg = new KToolBarRadioGroup (tb1);
+    rg = new TDEToolBarRadioGroup (tb1);
 
     rg->addButton(4);
     rg->addButton(5);
@@ -230,7 +230,7 @@ setAutoSaveSettings();
     //... and main widget
     setCentralWidget (widget);
 
-    // This is not strictly related to toolbars, menubars or KMainWindow.
+    // This is not strictly related to toolbars, menubars or TDEMainWindow.
     // Setup popup for completions
     completions = new TQPopupMenu;
   
@@ -328,7 +328,7 @@ void testWindow::slotCompletion()
   completions->popup(TQCursor::pos()); // This popup should understunf keys up and down
 
   /* This is just an example. KLined automatically sets cursor at end of string
-   when ctrl-d or ctrl-s is pressed. KToolBar will also put cursor at end of text in Lined
+   when ctrl-d or ctrl-s is pressed. TDEToolBar will also put cursor at end of text in Lined
    after inserting text with setLinedText (...).
   */
 

@@ -23,15 +23,15 @@
 #include <dcopref.h>
 #include <tdelibs_export.h>
 
-class KActionCollection;
-class KAction;
+class TDEActionCollection;
+class TDEAction;
 
 /**
  * @short A proxy class publishing a DCOP interface for actions.
  *
- * The KDCOPActionProxy class provides an easy way to publish a collection of KAction objects
+ * The KDCOPActionProxy class provides an easy way to publish a collection of TDEAction objects
  * through DCOP. For the DCOP client the exported actions behave like full-fledged DCOP objects,
- * providing full access to the KAction object functionality in the server.
+ * providing full access to the TDEAction object functionality in the server.
  *
  * This class can generate DCOP object ids for given action objects, which it automatically
  * processes, as being a DCOPObjectProxy .
@@ -41,13 +41,13 @@ class TDEUI_EXPORT KDCOPActionProxy : public DCOPObjectProxy
 public:
   /**
    * Constructs a dcop action proxy, being able to export the actions of the provided
-   * KActionCollection through DCOP, using the parent DCOPObject's object id to
+   * TDEActionCollection through DCOP, using the parent DCOPObject's object id to
    * generate unique object ids for the actions.
    */
-  KDCOPActionProxy( KActionCollection *actionCollection, DCOPObject *parent );
+  KDCOPActionProxy( TDEActionCollection *actionCollection, DCOPObject *parent );
   /**
    * Use this constructor if do not want to provide the exportable actions through a
-   * KActionCollection . You have to reimplement the virtual actions() and
+   * TDEActionCollection . You have to reimplement the virtual actions() and
    * action() methods if you use this constructor.
    */
   KDCOPActionProxy( DCOPObject *parent );
@@ -58,14 +58,14 @@ public:
 
   /**
    * Returns a list of exportable actions. The default implementation returns a list of actions
-   * provided by a KActionCollection, if the first constructor has been used.
+   * provided by a TDEActionCollection, if the first constructor has been used.
    */
-  virtual TQValueList<KAction *> actions() const;
+  virtual TQValueList<TDEAction *> actions() const;
   /**
    * Returns an action object with the given name. The default implementation queries the action object
-   * from the KActionCollection, if the first constructor has been used.
+   * from the TDEActionCollection, if the first constructor has been used.
    */
-  virtual KAction *action( const char *name ) const;
+  virtual TDEAction *action( const char *name ) const;
 
   /**
    * Use this method to retrieve a DCOP object id for an action with the given name.
@@ -98,9 +98,9 @@ public:
    * action object.
    */
   virtual bool processAction( const TQCString &obj, const TQCString &fun, const TQByteArray &data,
-                              TQCString &replyType, TQByteArray &replyData, KAction *action );
+                              TQCString &replyType, TQByteArray &replyData, TDEAction *action );
 private:
-  void init( KActionCollection *collection, DCOPObject *parent );
+  void init( TDEActionCollection *collection, DCOPObject *parent );
 
 protected:
   virtual void virtual_hook( int id, void* data );

@@ -22,7 +22,7 @@
 
 #include <tqwidget.h>
 
-class KListView;
+class TDEListView;
 class TQListViewItem;
 class TQPushButton;
 
@@ -46,7 +46,7 @@ private slots:
 	void slotSelected(TQListViewItem*);
 
 private:
-	KListView	*m_view;
+	TDEListView	*m_view;
 	TQPushButton	*m_add, *m_remove;
 };
 

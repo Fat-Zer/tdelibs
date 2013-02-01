@@ -143,10 +143,10 @@ class KABC_EXPORT AddresseeDialog : public KDialogBase
 
     bool mMultiple;
 
-    KListView *mAddresseeList;
+    TDEListView *mAddresseeList;
     KLineEdit *mAddresseeEdit;
 
-    KListView *mSelectedList;
+    TDEListView *mSelectedList;
 
     AddressBook *mAddressBook;
 

@@ -29,7 +29,7 @@
 KFileTreeViewItem::KFileTreeViewItem( KFileTreeViewItem *parent,
 				      KFileItem* item,
 				      KFileTreeBranch *brnch )
-   : KListViewItem( parent ),
+   : TDEListViewItem( parent ),
      m_tdefileitem( item ),
      m_branch( brnch ),
      m_wasListed(false)
@@ -42,7 +42,7 @@ KFileTreeViewItem::KFileTreeViewItem( KFileTreeViewItem *parent,
 KFileTreeViewItem::KFileTreeViewItem( KFileTreeView* parent,
 				      KFileItem* item,
 				      KFileTreeBranch *brnch )
-   :KListViewItem( (TQListView*)parent ),
+   :TDEListViewItem( (TQListView*)parent ),
     m_tdefileitem(item ),
     m_branch( brnch ),
     m_wasListed(false)

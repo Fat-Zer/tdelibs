@@ -441,17 +441,17 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
 {
     KKey key( e );
 
-    if ( KStdAccel::copy().contains( key ) )
+    if ( TDEStdAccel::copy().contains( key ) )
     {
         copy();
         return;
     }
-    else if ( KStdAccel::paste().contains( key ) )
+    else if ( TDEStdAccel::paste().contains( key ) )
     {
         paste();
         return;
     }
-    else if ( KStdAccel::pasteSelection().contains( key ) )
+    else if ( TDEStdAccel::pasteSelection().contains( key ) )
     {
         TQString text = TQApplication::clipboard()->text( TQClipboard::Selection);
         insert( text );
@@ -459,22 +459,22 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
         return;
     }
 
-    else if ( KStdAccel::cut().contains( key ) )
+    else if ( TDEStdAccel::cut().contains( key ) )
     {
         cut();
         return;
     }
-    else if ( KStdAccel::undo().contains( key ) )
+    else if ( TDEStdAccel::undo().contains( key ) )
     {
         undo();
         return;
     }
-    else if ( KStdAccel::redo().contains( key ) )
+    else if ( TDEStdAccel::redo().contains( key ) )
     {
         redo();
         return;
     }
-    else if ( KStdAccel::deleteWordBack().contains( key ) )
+    else if ( TDEStdAccel::deleteWordBack().contains( key ) )
     {
         cursorWordBackward(true);
         if ( hasSelectedText() )
@@ -483,7 +483,7 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
         e->accept();
         return;
     }
-    else if ( KStdAccel::deleteWordForward().contains( key ) )
+    else if ( TDEStdAccel::deleteWordForward().contains( key ) )
     {
         // Workaround for QT bug where
         cursorWordForward(true);
@@ -493,25 +493,25 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
         e->accept();
         return;
     }
-    else if ( KStdAccel::backwardWord().contains( key ) )
+    else if ( TDEStdAccel::backwardWord().contains( key ) )
     {
       cursorWordBackward(false);
       e->accept();
       return;
     }
-    else if ( KStdAccel::forwardWord().contains( key ) )
+    else if ( TDEStdAccel::forwardWord().contains( key ) )
     {
       cursorWordForward(false);
       e->accept();
       return;
     }
-    else if ( KStdAccel::beginningOfLine().contains( key ) )
+    else if ( TDEStdAccel::beginningOfLine().contains( key ) )
     {
       home(false);
       e->accept();
       return;
     }
-    else if ( KStdAccel::endOfLine().contains( key ) )
+    else if ( TDEStdAccel::endOfLine().contains( key ) )
     {
       end(false);
       e->accept();
@@ -723,9 +723,9 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
         else if ( mode == TDEGlobalSettings::CompletionShell )
         {
             // Handles completion.
-            KShortcut cut;
+            TDEShortcut cut;
             if ( keys[TextCompletion].isNull() )
-                cut = KStdAccel::shortcut(KStdAccel::TextCompletion);
+                cut = TDEStdAccel::shortcut(TDEStdAccel::TextCompletion);
             else
                 cut = keys[TextCompletion];
 
@@ -752,9 +752,9 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
         if ( mode != TDEGlobalSettings::CompletionNone )
         {
             // Handles previous match
-            KShortcut cut;
+            TDEShortcut cut;
             if ( keys[PrevCompletionMatch].isNull() )
-                cut = KStdAccel::shortcut(KStdAccel::PrevCompletion);
+                cut = TDEStdAccel::shortcut(TDEStdAccel::PrevCompletion);
             else
                 cut = keys[PrevCompletionMatch];
 
@@ -769,7 +769,7 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
 
             // Handles next match
             if ( keys[NextCompletionMatch].isNull() )
-                cut = KStdAccel::shortcut(KStdAccel::NextCompletion);
+                cut = TDEStdAccel::shortcut(TDEStdAccel::NextCompletion);
             else
                 cut = keys[NextCompletionMatch];
 
@@ -786,9 +786,9 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
         // substring completion
         if ( compObj() )
         {
-            KShortcut cut;
+            TDEShortcut cut;
             if ( keys[SubstringCompletion].isNull() )
-                cut = KStdAccel::shortcut(KStdAccel::SubstringCompletion);
+                cut = TDEStdAccel::shortcut(TDEStdAccel::SubstringCompletion);
             else
                 cut = keys[SubstringCompletion];
 
@@ -893,7 +893,7 @@ TQPopupMenu *KLineEdit::createPopupMenu()
         subMenu->insertItem( i18n("Short Automatic"), ShortAutoCompletion );
         subMenu->insertItem( i18n("Dropdown List && Automatic"), PopupAutoCompletion );
 
-        subMenu->setAccel( KStdAccel::completion(), ShellCompletion );
+        subMenu->setAccel( TDEStdAccel::completion(), ShellCompletion );
 
         TDEGlobalSettings::Completion mode = completionMode();
         subMenu->setItemChecked( NoCompletion,
@@ -1124,13 +1124,13 @@ void KLineEdit::userCancelled(const TQString & cancelText)
 
 bool KLineEdit::overrideAccel (const TQKeyEvent* e)
 {
-    KShortcut scKey;
+    TDEShortcut scKey;
 
     KKey key( e );
     KeyBindingMap keys = getKeyBindings();
 
     if (keys[TextCompletion].isNull())
-        scKey = KStdAccel::shortcut(KStdAccel::TextCompletion);
+        scKey = TDEStdAccel::shortcut(TDEStdAccel::TextCompletion);
     else
         scKey = keys[TextCompletion];
 
@@ -1138,7 +1138,7 @@ bool KLineEdit::overrideAccel (const TQKeyEvent* e)
         return true;
 
     if (keys[NextCompletionMatch].isNull())
-        scKey = KStdAccel::shortcut(KStdAccel::NextCompletion);
+        scKey = TDEStdAccel::shortcut(TDEStdAccel::NextCompletion);
     else
         scKey = keys[NextCompletionMatch];
 
@@ -1146,7 +1146,7 @@ bool KLineEdit::overrideAccel (const TQKeyEvent* e)
         return true;
 
     if (keys[PrevCompletionMatch].isNull())
-        scKey = KStdAccel::shortcut(KStdAccel::PrevCompletion);
+        scKey = TDEStdAccel::shortcut(TDEStdAccel::PrevCompletion);
     else
         scKey = keys[PrevCompletionMatch];
 
@@ -1154,27 +1154,27 @@ bool KLineEdit::overrideAccel (const TQKeyEvent* e)
         return true;
 
     // Override all the text manupilation accelerators...
-    if ( KStdAccel::copy().contains( key ) )
+    if ( TDEStdAccel::copy().contains( key ) )
         return true;
-    else if ( KStdAccel::paste().contains( key ) )
+    else if ( TDEStdAccel::paste().contains( key ) )
         return true;
-    else if ( KStdAccel::cut().contains( key ) )
+    else if ( TDEStdAccel::cut().contains( key ) )
         return true;
-    else if ( KStdAccel::undo().contains( key ) )
+    else if ( TDEStdAccel::undo().contains( key ) )
         return true;
-    else if ( KStdAccel::redo().contains( key ) )
+    else if ( TDEStdAccel::redo().contains( key ) )
         return true;
-    else if (KStdAccel::deleteWordBack().contains( key ))
+    else if (TDEStdAccel::deleteWordBack().contains( key ))
         return true;
-    else if (KStdAccel::deleteWordForward().contains( key ))
+    else if (TDEStdAccel::deleteWordForward().contains( key ))
         return true;
-    else if (KStdAccel::forwardWord().contains( key ))
+    else if (TDEStdAccel::forwardWord().contains( key ))
         return true;
-    else if (KStdAccel::backwardWord().contains( key ))
+    else if (TDEStdAccel::backwardWord().contains( key ))
         return true;
-    else if (KStdAccel::beginningOfLine().contains( key ))
+    else if (TDEStdAccel::beginningOfLine().contains( key ))
         return true;
-    else if (KStdAccel::endOfLine().contains( key ))
+    else if (TDEStdAccel::endOfLine().contains( key ))
         return true;
 
     if (d->completionBox && d->completionBox->isVisible ())

@@ -72,7 +72,7 @@
 #include <kgenericfactory.h>
 #include <tdeparts/browserextension.h>
 
-class KActionMenu;
+class TDEActionMenu;
 class KonqDirPart;
 class KLineEdit;
 class RsyncConfigDialog;

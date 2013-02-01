@@ -132,7 +132,7 @@ public:
 	KMdiFocusList *focusList;
 	int m_styleIDEAlMode;
 	int m_toolviewStyle;
-	KAction *closeWindowAction;
+	TDEAction *closeWindowAction;
 };
 
 //============ constructor ============//
@@ -217,7 +217,7 @@ KMdiMainFrm::KMdiMainFrm( TQWidget* parentWidget, const char* name, KMdi::MdiMod
 
 	m_pPlacingMenu = new TQPopupMenu( this, "placing_menu" );
 
-	d->closeWindowAction = new KAction(i18n("&Close"), KStdAccel::close(),
+	d->closeWindowAction = new TDEAction(i18n("&Close"), TDEStdAccel::close(),
 	                                   TQT_TQOBJECT(this), TQT_SLOT(closeActiveView()), actionCollection(), "window_close");
 
 	// the MDI view taskbar
@@ -1196,10 +1196,10 @@ bool KMdiMainFrm::eventFilter( TQObject * /*obj*/, TQEvent *e )
 	{
 		if ( switching() )
 		{
-			KAction * a = actionCollection() ->action( "view_last_window" ) ;
+			TDEAction * a = actionCollection() ->action( "view_last_window" ) ;
 			if ( a )
 			{
-				const KShortcut cut( a->shortcut() );
+				const TDEShortcut cut( a->shortcut() );
 				const KKeySequence& seq = cut.seq( 0 );
 				const KKey& key = seq.key( 0 );
 				int modFlags = key.modFlags();
@@ -1222,7 +1222,7 @@ bool KMdiMainFrm::eventFilter( TQObject * /*obj*/, TQEvent *e )
 			}
 			else
 			{
-				kdDebug(760) << "KAction( \"view_last_window\") not found." << endl;
+				kdDebug(760) << "TDEAction( \"view_last_window\") not found." << endl;
 			}
 		}
 	}

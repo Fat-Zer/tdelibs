@@ -30,12 +30,12 @@
 
 using namespace KNS;
 
-KAction* KNS::standardAction(const TQString& what,
+TDEAction* KNS::standardAction(const TQString& what,
                              const TQObject *recvr,
-                             const char *slot, KActionCollection* parent,
+                             const char *slot, TDEActionCollection* parent,
                              const char *name)
 {
-    return new KAction(i18n("Download New %1").arg(what), "knewstuff",
+    return new TDEAction(i18n("Download New %1").arg(what), "knewstuff",
                        0, recvr, slot, parent, name);
 }
 

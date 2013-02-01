@@ -25,17 +25,17 @@
 #include <kpixmap.h>
 #include <tdelibs_export.h>
 /**
- * @short KPopupMenu title widget.
+ * @short TDEPopupMenu title widget.
  *
- * Title widget for use in KPopupMenu.
+ * Title widget for use in TDEPopupMenu.
  *
  * You usually don't have to create this manually since
- * KPopupMenu::insertTitle will do it for you, but it is allowed if
+ * TDEPopupMenu::insertTitle will do it for you, but it is allowed if
  * you wish to customize it's look.
  *
  * @author Daniel M. Duley <mosfet@kde.org>
  */
-class TDEUI_EXPORT KPopupTitle : public TQWidget
+class TDEUI_EXPORT TDEPopupTitle : public TQWidget
 {
     Q_OBJECT
 
@@ -44,19 +44,19 @@ public:
      * Constructs a title widget with the user specified gradient, pixmap,
      * and colors.
      */
-    KPopupTitle(TQWidget *parent=0, const char *name=0);
+    TDEPopupTitle(TQWidget *parent=0, const char *name=0);
     /**
      * @deprecated
      * Constructs a title widget with the specified gradient and colors.
      */
-    KPopupTitle(KPixmapEffect::GradientType gradient, const TQColor &color,
+    TDEPopupTitle(KPixmapEffect::GradientType gradient, const TQColor &color,
                 const TQColor &textColor, TQWidget *parent=0,
                 const char *name=0) KDE_DEPRECATED;
     /**
      * @deprecated
      * Constructs a title widget with the specified pixmap and colors.
      */
-    KPopupTitle(const KPixmap &background, const TQColor &color,
+    TDEPopupTitle(const KPixmap &background, const TQColor &color,
                 const TQColor &textColor, TQWidget *parent=0,
                 const char *name=0) KDE_DEPRECATED;
     /**
@@ -98,14 +98,14 @@ protected:
 protected:
     virtual void virtual_hook( int id, void* data );
 private:
-    class KPopupTitlePrivate;
-    KPopupTitlePrivate *d;
+    class TDEPopupTitlePrivate;
+    TDEPopupTitlePrivate *d;
 };
 
 /**
  * @short A menu with title items.
  *
- * KPopupMenu is a class for menus with standard title items and keyboard
+ * TDEPopupMenu is a class for menus with standard title items and keyboard
  * accessibility for popups with many options and/or varying options. It acts
  * identically to TQPopupMenu, with the addition of insertTitle(),
  * changeTitle(), setKeyboardShortcutsEnabled() and
@@ -120,19 +120,19 @@ private:
  * @author Daniel M. Duley <mosfet@kde.org>
  * @author Hamish Rodda <rodda@kde.org>
  */
-class TDEUI_EXPORT KPopupMenu : public TQPopupMenu {
+class TDEUI_EXPORT TDEPopupMenu : public TQPopupMenu {
     Q_OBJECT
     
 public:
     /**
-     * Constructs a KPopupMenu.
+     * Constructs a TDEPopupMenu.
      */
-    KPopupMenu(TQWidget *parent=0, const char *name=0);
+    TDEPopupMenu(TQWidget *parent=0, const char *name=0);
 
     /**
      * Destructs the object
      */
-    ~KPopupMenu();
+    ~TDEPopupMenu();
 
     /**
      * Inserts a title item with no icon.
@@ -191,7 +191,7 @@ public:
      * Obsolete method provided for backwards compatibility only. Use the
      * normal constructor and insertTitle instead.
      */
-    KPopupMenu(const TQString &title, TQWidget *parent=0, const char *name=0) KDE_DEPRECATED;
+    TDEPopupMenu(const TQString &title, TQWidget *parent=0, const char *name=0) KDE_DEPRECATED;
 
     /**
      * @deprecated
@@ -219,10 +219,10 @@ public:
     void hideContextMenu();
 
     /**
-     * Returns the KPopupMenu associated with the current context menu
+     * Returns the TDEPopupMenu associated with the current context menu
      * @since 3.2
      */
-    static KPopupMenu* contextMenuFocus();
+    static TDEPopupMenu* contextMenuFocus();
 
     /**
      * returns the ID of the menuitem associated with the current context menu
@@ -250,7 +250,7 @@ signals:
      * @param ctxMenu The context menu itself
      * @since 3.2
      */
-    void aboutToShowContextMenu(KPopupMenu* menu, int menuItem, TQPopupMenu* ctxMenu);
+    void aboutToShowContextMenu(TDEPopupMenu* menu, int menuItem, TQPopupMenu* ctxMenu);
 
 protected:
     virtual void closeEvent(TQCloseEvent *);
@@ -275,8 +275,8 @@ protected slots:
     void ctxMenuHideShowingMenu();
 
 private:
-    class KPopupMenuPrivate;
-    KPopupMenuPrivate *d;
+    class TDEPopupMenuPrivate;
+    TDEPopupMenuPrivate *d;
 };
 
 #endif

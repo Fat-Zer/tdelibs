@@ -26,7 +26,7 @@ NotepadPart::NotepadPart( TQWidget* parentWidget, const char*,
   m_edit = new TQMultiLineEdit( parentWidget, "NotepadPart's multiline edit" );
   setWidget( m_edit );
 
-  (void)new KAction( "Search and replace", 0, this, TQT_SLOT( slotSearchReplace() ), actionCollection(), "searchreplace" );
+  (void)new TDEAction( "Search and replace", 0, this, TQT_SLOT( slotSearchReplace() ), actionCollection(), "searchreplace" );
   setXMLFile( "notepadpart.rc" );
   setReadWrite( true );
 }

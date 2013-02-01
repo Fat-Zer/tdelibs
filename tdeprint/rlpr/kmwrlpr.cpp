@@ -50,7 +50,7 @@ KMWRlpr::KMWRlpr(TQWidget *parent, const char *name)
 	m_title = i18n("Remote LPD Queue Settings");
 	m_nextpage = KMWizard::Name;
 
-	m_view = new KListView(this);
+	m_view = new TDEListView(this);
 	m_view->setFrameStyle(TQFrame::WinPanel|TQFrame::Sunken);
 	m_view->setLineWidth(1);
 	m_view->addColumn(TQString::fromLatin1(""));

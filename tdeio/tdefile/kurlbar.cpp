@@ -406,7 +406,7 @@ void KURLBar::setListBox( KURLBarListBox *view )
         m_listBox->resize( width(), height() );
     }
 
-    m_listBox->setSelectionMode( KListBox::Single );
+    m_listBox->setSelectionMode( TDEListBox::Single );
     paletteChange( palette() );
     m_listBox->setFocusPolicy( TQ_TabFocus );
 
@@ -829,7 +829,7 @@ bool KURLBar::editItem( KURLBarItem *item )
 
 
 KURLBarListBox::KURLBarListBox( TQWidget *parent, const char *name )
-    : KListBox( parent, name )
+    : TDEListBox( parent, name )
 {
     m_toolTip = new KURLBarToolTip( this );
     setAcceptDrops( true );
@@ -1043,7 +1043,7 @@ void KURLBar::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
 void KURLBarListBox::virtual_hook( int id, void* data )
-{ KListBox::virtual_hook( id, data ); }
+{ TDEListBox::virtual_hook( id, data ); }
 
 
 #include "kurlbar.moc"

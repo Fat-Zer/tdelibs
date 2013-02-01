@@ -569,7 +569,7 @@ void KThemeStyle::polish( const TQStyleControlElementData &ceData, ControlElemen
         {
             w->setBackgroundMode( TQWidget::NoBackground );
         }
-        else if ( w->inherits( "KToolBarSeparator" ) || w->inherits( "QToolBarSeparator" ) )
+        else if ( w->inherits( "TDEToolBarSeparator" ) || w->inherits( "QToolBarSeparator" ) )
         {
             w->setBackgroundMode( TQWidget::PaletteBackground );
         }
@@ -652,7 +652,7 @@ void KThemeStyle::unPolish( const TQStyleControlElementData &ceData, ControlElem
             w->setBackgroundMode( TQWidget::PaletteButton );
 
         //For toolbar internal separators, return to button, too (can't use tqqt_cast here since don't have access to the class)
-        else if ( w->inherits( "KToolBarSeparator" ) || w->inherits( "QToolBarSeparator" ) )
+        else if ( w->inherits( "TDEToolBarSeparator" ) || w->inherits( "QToolBarSeparator" ) )
             w->setBackgroundMode( TQWidget::PaletteButton );
 
         //For scrollbars, we don't do much, since the widget queries the style on the switch

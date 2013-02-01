@@ -204,7 +204,7 @@ void Part::setWidget( TQWidget *widget )
 
   // Since KParts objects are XML-based, shortcuts should
   //  be connected to the widget when the XML settings
-  //  are processed, rather than on KAction construction.
+  //  are processed, rather than on TDEAction construction.
   actionCollection()->setAutoConnectShortcuts( false );
 }
 

@@ -260,7 +260,7 @@ void KHSSelector::drawPalette( TQPixmap *pixmap )
 //-----------------------------------------------------------------------------
 
 KValueSelector::KValueSelector( TQWidget *parent, const char *name )
-	: KSelector( Qt::Vertical, parent, name ), _hue(0), _sat(0)
+	: TDESelector( Qt::Vertical, parent, name ), _hue(0), _sat(0)
 {
 	setRange( 0, 255 );
 	pixmap.setOptimization( TQPixmap::BestOptim );
@@ -268,7 +268,7 @@ KValueSelector::KValueSelector( TQWidget *parent, const char *name )
 
 KValueSelector::KValueSelector(Orientation o, TQWidget *parent, const char *name
  )
-	: KSelector( o, parent, name), _hue(0), _sat(0)
+	: TDESelector( o, parent, name), _hue(0), _sat(0)
 {
 	setRange( 0, 255 );
 	pixmap.setOptimization( TQPixmap::BestOptim );
@@ -590,7 +590,7 @@ KPaletteTable::KPaletteTable( TQWidget *parent, int minWidth, int cols)
   sv->setFixedSize(minSize);
   layout->addWidget(sv);
 
-  mNamedColorList = new KListBox( this, "namedColorList", 0 );
+  mNamedColorList = new TDEListBox( this, "namedColorList", 0 );
   mNamedColorList->setFixedSize(minSize);
   mNamedColorList->hide();
   layout->addWidget(mNamedColorList);
@@ -1597,7 +1597,7 @@ void KHSSelector::virtual_hook( int id, void* data )
 { KXYSelector::virtual_hook( id, data ); }
 
 void KValueSelector::virtual_hook( int id, void* data )
-{ KSelector::virtual_hook( id, data ); }
+{ TDESelector::virtual_hook( id, data ); }
 
 void KPaletteTable::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }

@@ -27,7 +27,7 @@ Part1::Part1( TQObject *parent, TQWidget * parentWidget )
   setWidget( m_edit );
   setXMLFile( "tdepartstest_part1.rc" );
 
-  /*KAction * paBlah = */ new KAction( "Blah", "filemail", 0, actionCollection(), "p1_blah" );
+  /*TDEAction * paBlah = */ new TDEAction( "Blah", "filemail", 0, actionCollection(), "p1_blah" );
 }
 
 Part1::~Part1()

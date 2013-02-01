@@ -36,7 +36,7 @@
    - KDockTabGroup                 - minor helper class
    - KDockWidget                   - IMPORTANT CLASS: the one and only dockwidget class
    - KDockManager                  - helper class
-   - KDockMainWindow               - IMPORTANT CLASS: a special KMainWindow that can have dockwidgets
+   - KDockMainWindow               - IMPORTANT CLASS: a special TDEMainWindow that can have dockwidgets
    - KDockArea                     - like KDockMainWindow but inherits just QWidget
 
    IMPORTANT Note: This file compiles also in Qt-only mode by using the NO_KDE2 precompiler definition!
@@ -80,7 +80,7 @@ class TQHBoxLayout;
 class TQPixmap;
 
 #ifndef NO_KDE2
-class KToolBar;
+class TDEToolBar;
 class TDEConfig;
 #else
 class TQToolBar;
@@ -1269,7 +1269,7 @@ private:
 };
 
 /**
- * A special kind of KMainWindow that is able to have dockwidget child widgets (and member of the dockwidget class set).
+ * A special kind of TDEMainWindow that is able to have dockwidget child widgets (and member of the dockwidget class set).
  *
  * The main widget should be a KDockWidget where other KDockWidget can be docked to
  * the left, right, top, bottom or to the middle.
@@ -1311,7 +1311,7 @@ private:
  *
  * @author Max Judin (documentation: Falk Brettschneider).
  */
-class TDEUI_EXPORT KDockMainWindow : public KMainWindow
+class TDEUI_EXPORT KDockMainWindow : public TDEMainWindow
 {
   Q_OBJECT
   

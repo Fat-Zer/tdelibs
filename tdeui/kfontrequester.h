@@ -31,7 +31,7 @@ class TQPushButton;
 
 /**
  * This class provides a widget with a lineedit and a button, which invokes
- * a font dialog (KFontDialog).
+ * a font dialog (TDEFontDialog).
  *
  * The lineedit provides a preview of the selected font. The preview text can
  * be customized. You can also have the font dialog show only the fixed fonts.
@@ -41,7 +41,7 @@ class TQPushButton;
  * @author Nadeem Hasan <nhasan@kde.org>
  *
  */
-class TDEUI_EXPORT KFontRequester : public TQWidget
+class TDEUI_EXPORT TDEFontRequester : public TQWidget
 {
   Q_OBJECT
 
@@ -59,7 +59,7 @@ class TDEUI_EXPORT KFontRequester : public TQWidget
      * @param onlyFixed Only display fonts which have fixed-width character
      *        sizes.
      */
-    KFontRequester( TQWidget *parent=0L, const char *name=0L,
+    TDEFontRequester( TQWidget *parent=0L, const char *name=0L,
         bool onlyFixed=false );
 
     /**
@@ -147,8 +147,8 @@ class TDEUI_EXPORT KFontRequester : public TQWidget
 
   private:
 
-    class KFontRequesterPrivate;
-    KFontRequesterPrivate *d;
+    class TDEFontRequesterPrivate;
+    TDEFontRequesterPrivate *d;
 };
 
 #endif // KFONTREQUESTER_H

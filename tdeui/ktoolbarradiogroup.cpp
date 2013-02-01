@@ -27,31 +27,31 @@
 #include "ktoolbarbutton.h"
 
 /*************************************************************************
- *                          KToolBarRadioGroup                                  *
+ *                          TDEToolBarRadioGroup                                  *
  *************************************************************************/
 
 
-KToolBarRadioGroup::KToolBarRadioGroup (KToolBar *_parent, const char *_name)
+TDEToolBarRadioGroup::TDEToolBarRadioGroup (TDEToolBar *_parent, const char *_name)
 : TQObject(_parent, _name)
 {
-  buttons = new KToolBarButtonList();
+  buttons = new TDEToolBarButtonList();
   tb = _parent;
   connect (tb, TQT_SIGNAL(toggled(int)), this, TQT_SLOT(slotToggled(int)));
 }
 
-KToolBarRadioGroup::~KToolBarRadioGroup()
+TDEToolBarRadioGroup::~TDEToolBarRadioGroup()
 {
   delete buttons;
 }
 
-void KToolBarRadioGroup::addButton (int id)
+void TDEToolBarRadioGroup::addButton (int id)
 {
-    KToolBarButton *b = tb->getButton( id );
+    TDEToolBarButton *b = tb->getButton( id );
     b->setRadio( true );
     buttons->insert( id, b );
 }
 
-void KToolBarRadioGroup::removeButton (int id)
+void TDEToolBarRadioGroup::removeButton (int id)
 {
   if (!buttons->find(id))
      return;
@@ -59,11 +59,11 @@ void KToolBarRadioGroup::removeButton (int id)
   buttons->remove(id);
 }
 
-void KToolBarRadioGroup::slotToggled(int id)
+void TDEToolBarRadioGroup::slotToggled(int id)
 {
   if (buttons->find(id) && buttons->find(id)->isOn())
   {
-    TQIntDictIterator<KToolBarButton> it(*buttons);
+    TQIntDictIterator<TDEToolBarButton> it(*buttons);
     while (it.current())
     {
       if (it.currentKey() != id)

@@ -22,7 +22,7 @@
 
 #include "kmconfigpage.h"
 
-class KListView;
+class TDEListView;
 class KURLRequester;
 class TQPushButton;
 class TQCheckBox;
@@ -46,7 +46,7 @@ protected slots:
 
 private:
 	TQCheckBox	*m_embedfonts;
-	KListView	*m_fontpath;
+	TDEListView	*m_fontpath;
 	KURLRequester	*m_addpath;
 	TQPushButton	*m_up, *m_down, *m_add, *m_remove;
 };

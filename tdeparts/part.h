@@ -29,8 +29,8 @@
 
 class TDEInstance;
 class TQWidget;
-class KAction;
-class KActionCollection;
+class TDEAction;
+class TDEActionCollection;
 class TQEvent;
 struct QUnknownInterface;
 
@@ -554,7 +554,7 @@ public:
    * Destructor.
    * Applications using a ReadWritePart should make sure, before
    * destroying it, to call closeURL().
-   * In KMainWindow::queryClose(), for instance, they should allow
+   * In TDEMainWindow::queryClose(), for instance, they should allow
    * closing only if the return value of closeURL() was true.
    * This allows to cancel.
    */
@@ -578,7 +578,7 @@ public:
 
   /**
    * If the document has been modified, ask the user to save changes.
-   * This method is meant to be called from KMainWindow::queryClose().
+   * This method is meant to be called from TDEMainWindow::queryClose().
    * It will also be called from closeURL().
    *
    * @return true if closeURL() can be called without the user losing
@@ -605,7 +605,7 @@ public:
   /**
    * Call this method instead of the above if you need control if
    * the save prompt is shown. For example, if you call queryClose()
-   * from KMainWindow::queryClose(), you would not want to prompt
+   * from TDEMainWindow::queryClose(), you would not want to prompt
    * again when closing the url.
    *
    * Equivalent to promptToSave ? closeURL() : ReadOnlyPart::closeURL()

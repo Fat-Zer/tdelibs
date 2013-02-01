@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
     TDEHTMLFactory *fac = new TDEHTMLFactory(true);
 #endif
 
-    KMainWindow *toplevel = new KMainWindow();
+    TDEMainWindow *toplevel = new TDEMainWindow();
     TDEHTMLPart *doc = new TDEHTMLPart( toplevel, 0, toplevel, 0, TDEHTMLPart::BrowserViewGUI );
 
     Dummy *dummy = new Dummy( doc );
@@ -105,14 +105,14 @@ int main(int argc, char *argv[])
     e.setAttribute( "name", "print" );
     toolBar.insertBefore( e, toolBar.firstChild() );
 
-    (void)new KAction( "Reload", "reload", Qt::Key_F5, dummy, TQT_SLOT( reload() ), doc->actionCollection(), "reload" );
-    (void)new KAction( "Benchmark...", 0, 0, dummy, TQT_SLOT( doBenchmark() ), doc->actionCollection(), "debugDoBenchmark" );
-    KAction* kprint = new KAction( "Print", "print", 0, doc->browserExtension(), TQT_SLOT( print() ), doc->actionCollection(), "print" );
+    (void)new TDEAction( "Reload", "reload", Qt::Key_F5, dummy, TQT_SLOT( reload() ), doc->actionCollection(), "reload" );
+    (void)new TDEAction( "Benchmark...", 0, 0, dummy, TQT_SLOT( doBenchmark() ), doc->actionCollection(), "debugDoBenchmark" );
+    TDEAction* kprint = new TDEAction( "Print", "print", 0, doc->browserExtension(), TQT_SLOT( print() ), doc->actionCollection(), "print" );
     kprint->setEnabled(true);
-    KToggleAction *ta = new KToggleAction( "Navigable", "editclear", 0, doc->actionCollection(), "navigable" );
+    TDEToggleAction *ta = new TDEToggleAction( "Navigable", "editclear", 0, doc->actionCollection(), "navigable" );
     ta->setChecked(doc->isCaretMode());
     TQWidget::connect(ta, TQT_SIGNAL(toggled(bool)), dummy, TQT_SLOT( toggleNavigable(bool) ));
-    ta = new KToggleAction( "Editable", "edit", 0, doc->actionCollection(), "editable" );
+    ta = new TDEToggleAction( "Editable", "edit", 0, doc->actionCollection(), "editable" );
     ta->setChecked(doc->isEditable());
     TQWidget::connect(ta, TQT_SIGNAL(toggled(bool)), dummy, TQT_SLOT( toggleEditable(bool) ));
     toplevel->guiFactory()->addClient( doc );

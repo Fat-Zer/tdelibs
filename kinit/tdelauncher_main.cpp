@@ -41,7 +41,7 @@ static void sig_handler(int sig_num)
    signal( SIGHUP, SIG_IGN);
    signal( SIGTERM, SIG_IGN);
    fprintf(stderr, "[tdelauncher] Exiting on signal %d\n", sig_num);
-   KLauncher::destruct(255);
+   TDELauncher::destruct(255);
 }
 
 static KCmdLineOptions options[] =
@@ -62,10 +62,10 @@ extern "C" KDE_EXPORT int kdemain( int argc, char**argv )
 
    TQCString cname = TDEApplication::launcher();
    char *name = cname.data();
-   TDECmdLineArgs::init(argc, argv, name, "KLauncher", "A service launcher.",
+   TDECmdLineArgs::init(argc, argv, name, "TDELauncher", "A service launcher.",
                        "v1.0");
 
-   KLauncher::addCmdLineOptions();
+   TDELauncher::addCmdLineOptions();
    TDECmdLineArgs::addCmdLineOptions( options );
 
    // WABA: Make sure not to enable session management.
@@ -101,7 +101,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char**argv )
       // Try again...
    }
    
-   KLauncher *launcher = new KLauncher(LAUNCHER_FD, args->isSet("new-startup"));
+   TDELauncher *launcher = new TDELauncher(LAUNCHER_FD, args->isSet("new-startup"));
    launcher->dcopClient()->setDefaultObject( name );
    launcher->dcopClient()->setDaemonMode( true );
 

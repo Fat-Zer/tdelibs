@@ -36,7 +36,7 @@ using namespace std;
 KabAPI::KabAPI(TQWidget* parent, const char* name)
   : KDialogBase(parent, name),
     book(0),
-    listbox(new KListBox(this)),
+    listbox(new TDEListBox(this)),
     selection(-1)
 {
   TQ_CHECK_PTR(listbox);

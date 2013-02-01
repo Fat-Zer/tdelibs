@@ -41,39 +41,39 @@ class TQComboBox;
 class TQPoint;
 class TQIconSet;
 class TQString;
-class KToolBar;
+class TDEToolBar;
 
-class KAccel;
-class KAccelActions;
+class TDEAccel;
+class TDEAccelActions;
 class TDEConfig;
 class TDEConfigBase;
 class KURL;
 class TDEInstance;
-class KToolBar;
-class KActionCollection;
-class KPopupMenu;
-class KMainWindow;
+class TDEToolBar;
+class TDEActionCollection;
+class TDEPopupMenu;
+class TDEMainWindow;
 
 /**
  * @short Class to encapsulate user-driven action or event
  *
- * The KAction class (and derived and super classes) provides a way to
+ * The TDEAction class (and derived and super classes) provides a way to
  * easily encapsulate a "real" user-selected action or event in your
  * program.
  *
  * For instance, a user may want to @p paste the contents of
  * the clipboard or @p scroll @p down a document or @p quit the
  * application.  These are all @p actions -- events that the
- * user causes to happen.  The KAction class allows the developer to
+ * user causes to happen.  The TDEAction class allows the developer to
  * deal with these actions in an easy and intuitive manner.
  *
- * Specifically, the KAction class encapsulated the various attributes
+ * Specifically, the TDEAction class encapsulated the various attributes
  * to an event/action.  For instance, an action might have an icon
  * that goes along with it (a clipboard for a "paste" action or
  * scissors for a "cut" action).  The action might have some text to
  * describe the action.  It will certainly have a method or function
  * that actually @p executes the action!  All these attributes
- * are contained within the KAction object.
+ * are contained within the TDEAction object.
  *
  * The advantage of dealing with Actions is that you can manipulate
  * the Action without regard to the GUI representation of it.  For
@@ -86,7 +86,7 @@ class KMainWindow;
  * similar code - but has to be done twice!
  *
  * With the Action concept, you simply "plug" the Action into whatever
- * GUI element you want.  The KAction class will then take care of
+ * GUI element you want.  The TDEAction class will then take care of
  * correctly defining the menu item (with icons, accelerators, text,
  * etc) or toolbar button.. or whatever.  From then on, if you
  * manipulate the Action at all, the effect will propogate through all
@@ -99,7 +99,7 @@ class KMainWindow;
  * one-to-one relationship between the "real" action and @p all
  * GUI representations of it.
  *
- * KAction emits the activated() signal if the user activated the
+ * TDEAction emits the activated() signal if the user activated the
  * corresponding GUI element ( menu item, toolbar button, etc. )
  *
  * If you are in the situation of wanting to map the activated()
@@ -113,7 +113,7 @@ class KMainWindow;
  *          this, TQT_SLOT( moveWindowToDesktop( int ) ) );
  *
  * for ( uint i = 0; i < numberOfDesktops; ++i ) {
- *     KAction *desktopAction = new KAction( i18n( "Move Window to Desktop %i" ).arg( i ), ... );
+ *     TDEAction *desktopAction = new TDEAction( i18n( "Move Window to Desktop %i" ).arg( i ), ... );
  *     connect( desktopAction, TQT_SIGNAL( activated() ), desktopNumberMapper, TQT_SLOT( map() ) );
  *     desktopNumberMapper->setMapping( desktopAction, i );
  * }
@@ -125,7 +125,7 @@ class KMainWindow;
  *
  * @li Decide which attributes you want to associate with a given
  *     action (icons, text, keyboard shortcut, etc)
- * @li Create the action using KAction (or derived or super class).
+ * @li Create the action using TDEAction (or derived or super class).
  * @li "Plug" the Action into whatever GUI element you want.  Typically,
  *      this will be a menu or toolbar.
  *
@@ -133,8 +133,8 @@ class KMainWindow;
  *
  * Here is an example of enabling a "New [document]" action
  * \code
- * KAction *newAct = new KAction(i18n("&New"), "filenew",
- *                               KStdAccel::shortcut(KStdAccel::New),
+ * TDEAction *newAct = new TDEAction(i18n("&New"), "filenew",
+ *                               TDEStdAccel::shortcut(TDEStdAccel::New),
  *                               this, TQT_SLOT(fileNew()),
  *                               actionCollection(), "new");
  * \endcode
@@ -166,14 +166,14 @@ class KMainWindow;
  * and both the menuitem in File and the toolbar button will instantly
  * be disabled.
  *
- * Do not delete a KAction object without unplugging it from all its
+ * Do not delete a TDEAction object without unplugging it from all its
  * containers. The simplest way to do that is to use the unplugAll()
  * as in the following example:
  * \code
  * newAct->unplugAll();
  * delete newAct;
  * \endcode
- * Normally you will not need to do this as KActionCollection manages
+ * Normally you will not need to do this as TDEActionCollection manages
  * everything for you.
  *
  * Note: if you are using a "standard" action like "new", "paste",
@@ -183,10 +183,10 @@ class KMainWindow;
  *
  * <b>Usage Within the XML Framework:</b>\n
  *
- * If you are using KAction within the context of the XML menu and
+ * If you are using TDEAction within the context of the XML menu and
  * toolbar building framework, then there are a few tiny changes.  The
  * first is that you must insert your new action into an action
- * collection.  The action collection (a KActionCollection) is,
+ * collection.  The action collection (a TDEActionCollection) is,
  * logically enough, a central collection of all of the actions
  * defined in your application.  The XML UI framework code in KXMLGUI
  * classes needs access to this collection in order to build up the
@@ -199,9 +199,9 @@ class KMainWindow;
  *
  * @see KStdAction
  */
-class TDEUI_EXPORT KAction : public TQObject
+class TDEUI_EXPORT TDEAction : public TQObject
 {
-  friend class KActionCollection;
+  friend class TDEActionCollection;
   Q_OBJECT
   TQ_PROPERTY( int containerCount READ containerCount )
   TQ_PROPERTY( TQString plainText READ plainText )
@@ -221,7 +221,7 @@ public:
      * If you do not want or have a keyboard shortcut,
      * set the @p cut param to 0.
      *
-     * This is the most common KAction used when you do not have a
+     * This is the most common TDEAction used when you do not have a
      * corresponding icon (note that it won't appear in the current version
      * of the "Edit ToolBar" dialog, because an action needs an icon to be
      * plugged in a toolbar...).
@@ -233,9 +233,9 @@ public:
      * @param parent This action's parent.
      * @param name An internal name for this action.
      */
-    KAction( const TQString& text, const KShortcut& cut,
+    TDEAction( const TQString& text, const TDEShortcut& cut,
              const TQObject* receiver, const char* slot,
-             KActionCollection* parent, const char* name );
+             TDEActionCollection* parent, const char* name );
 
     /**
      * Constructs an action with text, icon, potential keyboard
@@ -245,7 +245,7 @@ public:
      * If you do not want or have a keyboard shortcut, set the
      * @p cut param to 0.
      *
-     * This is the other common KAction used.  Use it when you
+     * This is the other common TDEAction used.  Use it when you
      * @p do have a corresponding icon.
      *
      * @param text The text that will be displayed.
@@ -256,9 +256,9 @@ public:
      * @param parent This action's parent.
      * @param name An internal name for this action.
      */
-    KAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut,
+    TDEAction( const TQString& text, const TQIconSet& pix, const TDEShortcut& cut,
              const TQObject* receiver, const char* slot,
-             KActionCollection* parent, const char* name );
+             TDEActionCollection* parent, const char* name );
 
     /**
      * Constructs an action with text, icon, potential keyboard
@@ -269,7 +269,7 @@ public:
      * If you do not want or have a keyboard shortcut, set the
      * @p cut param to 0.
      *
-     * This is the other common KAction used.  Use it when you
+     * This is the other common TDEAction used.  Use it when you
      * @p do have a corresponding icon.
      *
      * @param text The text that will be displayed.
@@ -280,9 +280,9 @@ public:
      * @param parent This action's parent.
      * @param name An internal name for this action.
      */
-    KAction( const TQString& text, const TQString& pix, const KShortcut& cut,
+    TDEAction( const TQString& text, const TQString& pix, const TDEShortcut& cut,
              const TQObject* receiver, const char* slot,
-             KActionCollection* parent, const char* name );
+             TDEActionCollection* parent, const char* name );
 
     /**
      * The same as the above constructor, but with a KGuiItem providing
@@ -295,49 +295,49 @@ public:
      * @param parent This action's parent.
      * @param name An internal name for this action.
      */
-    KAction( const KGuiItem& item, const KShortcut& cut,
+    TDEAction( const KGuiItem& item, const TDEShortcut& cut,
              const TQObject* receiver, const char* slot,
-             KActionCollection* parent, const char* name );
+             TDEActionCollection* parent, const char* name );
 
 	/**
 	 * @obsolete
 	 */
-	KAction( const TQString& text, const KShortcut& cut = KShortcut(), TQObject* parent = 0, const char* name = 0 );
+	TDEAction( const TQString& text, const TDEShortcut& cut = TDEShortcut(), TQObject* parent = 0, const char* name = 0 );
 	/**
 	 * @obsolete
 	 */
-	KAction( const TQString& text, const KShortcut& cut,
+	TDEAction( const TQString& text, const TDEShortcut& cut,
 		const TQObject* receiver, const char* slot, TQObject* parent, const char* name = 0 );
 	/**
 	 * @obsolete
 	 */
-	KAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut = KShortcut(),
+	TDEAction( const TQString& text, const TQIconSet& pix, const TDEShortcut& cut = TDEShortcut(),
 		TQObject* parent = 0, const char* name = 0 );
 	/**
 	 * @obsolete
 	 */
-	KAction( const TQString& text, const TQString& pix, const KShortcut& cut = KShortcut(),
+	TDEAction( const TQString& text, const TQString& pix, const TDEShortcut& cut = TDEShortcut(),
 		TQObject* parent = 0, const char* name = 0 );
 	/**
 	 * @obsolete
 	 */
-	KAction( const TQString& text, const TQIconSet& pix, const KShortcut& cut,
+	TDEAction( const TQString& text, const TQIconSet& pix, const TDEShortcut& cut,
 		const TQObject* receiver, const char* slot, TQObject* parent, const char* name = 0 );
 	/**
 	 * @obsolete
 	 */
-	KAction( const TQString& text, const TQString& pix, const KShortcut& cut,
+	TDEAction( const TQString& text, const TQString& pix, const TDEShortcut& cut,
 		const TQObject* receiver, const char* slot, TQObject* parent,
 		const char* name = 0 );
 	/**
 	 * @obsolete
 	 */
-	KAction( TQObject* parent = 0, const char* name = 0 );
+	TDEAction( TQObject* parent = 0, const char* name = 0 );
 
     /**
      * Standard destructor
      */
-    virtual ~KAction();
+    virtual ~TDEAction();
 
     /**
      * "Plug" or insert this action into a given widget.
@@ -346,7 +346,7 @@ public:
      * typically be a menu or a toolbar.  From this point on, you will
      * never need to directly manipulate the item in the menu or
      * toolbar.  You do all enabling/disabling/manipulation directly
-     * with your KAction object.
+     * with your TDEAction object.
      *
      * @param widget The GUI element to display this action
      * @param index The position into which the action is plugged. If
@@ -357,14 +357,14 @@ public:
     /**
      * @deprecated.  Shouldn't be used.  No substitute available.
      *
-     * "Plug" or insert this action into a given KAccel.
+     * "Plug" or insert this action into a given TDEAccel.
      *
-     * @param accel The KAccel collection which holds this accel
+     * @param accel The TDEAccel collection which holds this accel
      * @param configurable If the shortcut is configurable via
-     * the KAccel configuration dialog (this is somehow deprecated since
-     * there is now a KAction key configuration dialog).
+     * the TDEAccel configuration dialog (this is somehow deprecated since
+     * there is now a TDEAction key configuration dialog).
      */
-    virtual void plugAccel(KAccel *accel, bool configurable = true) KDE_DEPRECATED;
+    virtual void plugAccel(TDEAccel *accel, bool configurable = true) KDE_DEPRECATED;
 
     /**
      * "Unplug" or remove this action from a given widget.
@@ -382,7 +382,7 @@ public:
 
     /**
      * @deprecated.  Complement method to plugAccel().
-     * Disconnect this action from the KAccel.
+     * Disconnect this action from the TDEAccel.
      */
     virtual void unplugAccel() KDE_DEPRECATED;
 
@@ -430,11 +430,11 @@ public:
     /**
      * Get the keyboard shortcut associated with this action.
      */
-    virtual const KShortcut& shortcut() const;
+    virtual const TDEShortcut& shortcut() const;
     /**
      * Get the default shortcut for this action.
      */
-    virtual const KShortcut& shortcutDefault() const;
+    virtual const TDEShortcut& shortcutDefault() const;
 
     // These two methods are for TQ_PROPERTY
     TQString shortcutText() const;
@@ -477,7 +477,7 @@ public:
 
     virtual TQString icon() const;
 
-    KActionCollection *parentCollection() const;
+    TDEActionCollection *parentCollection() const;
 
     /**
      * @internal
@@ -503,7 +503,7 @@ public slots:
     /**
      * Sets the keyboard shortcut associated with this action.
      */
-    virtual bool setShortcut( const KShortcut& );
+    virtual bool setShortcut( const TDEShortcut& );
 
     virtual void setGroup( const TQString& );
 
@@ -525,9 +525,9 @@ public slots:
      * For the tooltip to show up on the statusbar you will need to connect
      * a couple of the actionclass signals to the toolbar.
      * The easiest way of doing this is in your main window class, when you create
-     * a statusbar.  See the KActionCollection class for more details.
+     * a statusbar.  See the TDEActionCollection class for more details.
      *
-     * @see KActionCollection
+     * @see TDEActionCollection
      *
      */
     virtual void setToolTip( const TQString& );
@@ -573,7 +573,7 @@ protected slots:
     void slotButtonClicked( int, TQt::ButtonState state ); // KDE4: make virtual
 
 protected:
-    KToolBar* toolBar( int index ) const;
+    TDEToolBar* toolBar( int index ) const;
     TQPopupMenu* popupMenu( int index ) const;
     void removeContainer( int index );
     int findContainer( const TQWidget* widget ) const;
@@ -593,7 +593,7 @@ protected:
     virtual void updateToolTip( int id );
     virtual void updateWhatsThis( int i );
 
-    KActionCollection *m_parentCollection;
+    TDEActionCollection *m_parentCollection;
     TQString whatsThisWithIcon() const;
     /**
      * Return the underlying KGuiItem
@@ -620,19 +620,19 @@ signals:
      *
      * @since 3.4
      */
-    void activated( KAction::ActivationReason reason, TQt::ButtonState state );
+    void activated( TDEAction::ActivationReason reason, TQt::ButtonState state );
     void enabled( bool );
 
 private:
-    void initPrivate( const TQString& text, const KShortcut& cut,
+    void initPrivate( const TQString& text, const TDEShortcut& cut,
                   const TQObject* receiver, const char* slot );
-    KAccel* kaccelCurrent();
-    bool initShortcut( const KShortcut& );
+    TDEAccel* kaccelCurrent();
+    bool initShortcut( const TDEShortcut& );
     void plugShortcut();
-    bool updateKAccelShortcut( KAccel* kaccel );
-    void insertKAccel( KAccel* );
-    /** @internal To be used exclusively by KActionCollection::removeWidget(). */
-    void removeKAccel( KAccel* );
+    bool updateTDEAccelShortcut( TDEAccel* kaccel );
+    void insertTDEAccel( TDEAccel* );
+    /** @internal To be used exclusively by TDEActionCollection::removeWidget(). */
+    void removeTDEAccel( TDEAccel* );
 
 #ifndef KDE_NO_COMPAT
 public:
@@ -666,8 +666,8 @@ public:
 protected:
     virtual void virtual_hook( int id, void* data );
 private:
-    class KActionPrivate;
-    KActionPrivate* const d;
+    class TDEActionPrivate;
+    TDEActionPrivate* const d;
 };
 
 #include <kactioncollection.h>

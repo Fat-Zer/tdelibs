@@ -48,7 +48,7 @@ private:
   * This allows me to test KMdiMainFrm::read/writeDockConfig by
   * closing and restarting the MainWidget via checkbox click.
   */
-class RestartWidget : public KMainWindow
+class RestartWidget : public TDEMainWindow
 {
     Q_OBJECT
 // methods

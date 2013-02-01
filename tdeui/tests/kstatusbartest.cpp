@@ -16,7 +16,7 @@
 #include "kstatusbartest.h"
 
 testWindow::testWindow (TQWidget *, const char *name)
-    : KMainWindow (0, name)
+    : TDEMainWindow (0, name)
  {
     // Setup Menus
     menuBar = new KMenuBar (this);

@@ -175,7 +175,7 @@ namespace TDEIO {
         { self()->_removeSlaveOnHold(); }
 
         /**
-         * Send the slave that was put on hold back to KLauncher. This
+         * Send the slave that was put on hold back to TDELauncher. This
          * allows another process to take over the slave and resume the job
          * that was started.
          */
@@ -231,7 +231,7 @@ namespace TDEIO {
         { return self()->_disconnectSlave(slave); }
 
         /**
-         * Send the slave that was put on hold back to KLauncher. This
+         * Send the slave that was put on hold back to TDELauncher. This
          * allows another process to take over the slave and resume the job
          * the that was started.
          * Register the mainwindow @p wid with the KIO subsystem
@@ -273,9 +273,9 @@ namespace TDEIO {
         { return TQObject::connect(sender, signal, member); }
 
         /**
-         * When true, the next job will check whether KLauncher has a slave 
+         * When true, the next job will check whether TDELauncher has a slave 
          * on hold that is suitable for the job.
-	 * @param b true when KLauncher has a job on hold
+	 * @param b true when TDELauncher has a job on hold
          */
         static void checkSlaveOnHold(bool b) { self()->_checkSlaveOnHold(b); }
 

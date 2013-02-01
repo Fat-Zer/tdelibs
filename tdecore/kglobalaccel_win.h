@@ -30,7 +30,7 @@
 /**
  * @internal
  */
-class TDEGlobalAccelPrivate : public TQWidget, public KAccelBase
+class TDEGlobalAccelPrivate : public TQWidget, public TDEAccelBase
 {
 	friend class TDEGlobalAccel;
 	Q_OBJECT
@@ -41,9 +41,9 @@ class TDEGlobalAccelPrivate : public TQWidget, public KAccelBase
 	virtual void setEnabled( bool bEnabled );
 
 	virtual bool emitSignal( Signal signal );
-	virtual bool connectKey( KAccelAction& action, const KKeyServer::Key& key );
+	virtual bool connectKey( TDEAccelAction& action, const KKeyServer::Key& key );
 	virtual bool connectKey( const KKeyServer::Key& key );
-	virtual bool disconnectKey( KAccelAction& action, const KKeyServer::Key& key );
+	virtual bool disconnectKey( TDEAccelAction& action, const KKeyServer::Key& key );
 	virtual bool disconnectKey( const KKeyServer::Key& key );
 
  protected:
@@ -51,7 +51,7 @@ class TDEGlobalAccelPrivate : public TQWidget, public KAccelBase
 	/**
 	 * @param bGrab Set to true to grab key, false to ungrab key.
 	 */
-	bool grabKey( const KKeyServer::Key&, bool bGrab, KAccelAction* );
+	bool grabKey( const KKeyServer::Key&, bool bGrab, TDEAccelAction* );
 
 	/**
 	 * Filters X11 events ev for key bindings in the accelerator dictionary.
@@ -63,7 +63,7 @@ class TDEGlobalAccelPrivate : public TQWidget, public KAccelBase
 //	virtual bool x11Event( XEvent* );
 //	void x11MappingNotify();
 //	bool x11KeyPress( const XEvent *pEvent );
-	void activate( KAccelAction* pAction, const KKeySequence& seq );
+	void activate( TDEAccelAction* pAction, const KKeySequence& seq );
 	virtual bool isEnabledInternal() const;
 	static void blockShortcuts( bool block );
 	void disableBlocking( bool disable );

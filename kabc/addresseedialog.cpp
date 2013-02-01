@@ -66,7 +66,7 @@ AddresseeDialog::AddresseeDialog( TQWidget *parent, bool multiple ) :
   TQBoxLayout *listLayout = new TQVBoxLayout;
   topLayout->addLayout( listLayout );
 
-  mAddresseeList = new KListView( topWidget );
+  mAddresseeList = new TDEListView( topWidget );
   mAddresseeList->addColumn( i18n("Name") );
   mAddresseeList->addColumn( i18n("Email") );
   mAddresseeList->setAllColumnsShowFocus( true );
@@ -96,7 +96,7 @@ AddresseeDialog::AddresseeDialog( TQWidget *parent, bool multiple ) :
                                               topWidget );
     selectedLayout->addWidget( selectedGroup );
 
-    mSelectedList = new KListView( selectedGroup );
+    mSelectedList = new TDEListView( selectedGroup );
     mSelectedList->addColumn( i18n("Name") );
     mSelectedList->addColumn( i18n("Email") );
     mSelectedList->setAllColumnsShowFocus( true );

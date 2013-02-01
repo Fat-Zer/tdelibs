@@ -149,14 +149,14 @@ private:
   TDEHTMLPopupGUIClientPrivate *d;
 };
 
-class TDEHTMLZoomFactorAction : public KAction
+class TDEHTMLZoomFactorAction : public TDEAction
 {
     Q_OBJECT
 public:
     //BCI: remove in KDE 4
     TDEHTMLZoomFactorAction( TDEHTMLPart *part, bool direction, const TQString &text, const TQString &icon, const TQObject *receiver, const char *slot, TQObject *parent, const char *name );
     TDEHTMLZoomFactorAction( TDEHTMLPart *part, bool direction, const TQString &text,
-            const TQString &icon, const KShortcut& cut, const TQObject *receiver,
+            const TQString &icon, const TDEShortcut& cut, const TQObject *receiver,
             const char *slot, TQObject *parent, const char *name );
     virtual ~TDEHTMLZoomFactorAction();
 
@@ -165,7 +165,7 @@ public:
 private slots:
     void slotActivated( int );
 protected slots:
-    void slotActivated() { KAction::slotActivated(); }
+    void slotActivated() { TDEAction::slotActivated(); }
 private:
     void init(TDEHTMLPart *part, bool direction);
 private:

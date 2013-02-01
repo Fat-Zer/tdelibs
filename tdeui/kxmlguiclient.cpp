@@ -53,7 +53,7 @@ public:
   TDEInstance *m_instance;
 
   TQDomDocument m_doc;
-  KActionCollection *m_actionCollection;
+  TDEActionCollection *m_actionCollection;
   TQDomDocument m_buildDocument;
   TQGuardedPtr<KXMLGUIFactory> m_factory;
   KXMLGUIClient *m_parent;
@@ -90,9 +90,9 @@ KXMLGUIClient::~KXMLGUIClient()
   delete d;
 }
 
-KAction *KXMLGUIClient::action( const char *name ) const
+TDEAction *KXMLGUIClient::action( const char *name ) const
 {
-  KAction* act = actionCollection()->action( name );
+  TDEAction* act = actionCollection()->action( name );
   if ( !act ) {
     TQPtrListIterator<KXMLGUIClient> childIt( d->m_children );
     for (; childIt.current(); ++childIt ) {
@@ -104,17 +104,17 @@ KAction *KXMLGUIClient::action( const char *name ) const
   return act;
 }
 
-KActionCollection *KXMLGUIClient::actionCollection() const
+TDEActionCollection *KXMLGUIClient::actionCollection() const
 {
   if ( !d->m_actionCollection )
   {
-    d->m_actionCollection = new KActionCollection(
-      "KXMLGUIClient-KActionCollection", this );
+    d->m_actionCollection = new TDEActionCollection(
+      "KXMLGUIClient-TDEActionCollection", this );
   }
   return d->m_actionCollection;
 }
 
-KAction *KXMLGUIClient::action( const TQDomElement &element ) const
+TDEAction *KXMLGUIClient::action( const TQDomElement &element ) const
 {
   static const TQString &attrName = TDEGlobal::staticQString( "name" );
   return actionCollection()->action( element.attribute( attrName ).latin1() );
@@ -248,7 +248,7 @@ void KXMLGUIClient::setDOMDocument( const TQDomDocument &document, bool merge )
   setXMLGUIBuildDocument( TQDomDocument() );
 }
 
-bool KXMLGUIClient::mergeXML( TQDomElement &base, const TQDomElement &additive, KActionCollection *actionCollection )
+bool KXMLGUIClient::mergeXML( TQDomElement &base, const TQDomElement &additive, TDEActionCollection *actionCollection )
 {
   static const TQString &tagAction = TDEGlobal::staticQString( "Action" );
   static const TQString &tagMerge = TDEGlobal::staticQString( "Merge" );
@@ -292,7 +292,7 @@ bool KXMLGUIClient::mergeXML( TQDomElement &base, const TQDomElement &additive, 
     {
       TQCString name =  e.attribute( attrName ).utf8(); // WABA
       if ( !actionCollection->action( name.data() ) ||
-           (kapp && !kapp->authorizeKAction(name)))
+           (kapp && !kapp->authorizeTDEAction(name)))
       {
         // remove this child as we aren't using it
         base.removeChild( e );
@@ -602,7 +602,7 @@ KXMLGUIBuilder *KXMLGUIClient::clientBuilder() const
   return d->m_builder;
 }
 
-void KXMLGUIClient::plugActionList( const TQString &name, const TQPtrList<KAction> &actionList )
+void KXMLGUIClient::plugActionList( const TQString &name, const TQPtrList<TDEAction> &actionList )
 {
   if ( !d->m_factory )
     return;
@@ -908,7 +908,7 @@ void KXMLGUIClient::stateChanged(const TQString &newstate, KXMLGUIClient::Revers
   for ( TQStringList::Iterator it = stateChange.actionsToEnable.begin();
         it != stateChange.actionsToEnable.end(); ++it ) {
 
-    KAction *action = actionCollection()->action((*it).latin1());
+    TDEAction *action = actionCollection()->action((*it).latin1());
     if (action) action->setEnabled(setTrue);
   }
 
@@ -917,7 +917,7 @@ void KXMLGUIClient::stateChanged(const TQString &newstate, KXMLGUIClient::Revers
   for ( TQStringList::Iterator it = stateChange.actionsToDisable.begin();
         it != stateChange.actionsToDisable.end(); ++it ) {
 
-    KAction *action = actionCollection()->action((*it).latin1());
+    TDEAction *action = actionCollection()->action((*it).latin1());
     if (action) action->setEnabled(setFalse);
   }
 

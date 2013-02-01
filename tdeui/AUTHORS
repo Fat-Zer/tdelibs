@@ -27,17 +27,17 @@ DnD stuff, TDESocket and TDEServerSocket classes, KPixmap
 
 Alexander Sanda <alex@darkstar.ping.at>
 Read and write numerical config entries, KPanner, KTabControl,
-KPopupMenu, KMessageBox, KEdit widgets. 
+TDEPopupMenu, KMessageBox, KEdit widgets. 
 
 Martin Jones <mjones@powerup.com.au>
-Bugfixes in KPixmap and KURL, KColorDialog, KSelector
+Bugfixes in KPixmap and KURL, KColorDialog, TDESelector
 KColorButton
 
 Keith Brown <kbrown@pdq.net>
 KTreeList class
 
 Bernd Johannes Wuebben <wuebben@math.cornell.edu>
-KFontDialog class
+TDEFontDialog class
 
 Tim D. Gilman <tdgilman@best.com>
 KDatePicker, KDateTable class
@@ -49,7 +49,7 @@ Christoph Neerfeld <Christoph.Neerfeld@mail.bonn.netsurf.de>
 KIconLoader class
 
 Sven Radej <sven.radej@iname.com>
-KLineEdit, KCombo, KToolbar, KStatusBar
+KLineEdit, KCombo, TDEToolbar, KStatusBar
 
 Rainer Bawidamann <Rainer.Bawidamann@wohnheim.uni-ulm.de>
 Rubberbanding in KTreeList
@@ -65,7 +65,7 @@ KWMModuleApplication, tearing/docking of ktoolbar and kmenubar, heavy
 modifications to kbutton
 
 Stephan Kulow <coolo@kde.org>
-first versions of KTopLevelWidget and KToolBar, heavy modifications to
+first versions of KTopLevelWidget and TDEToolBar, heavy modifications to
 automake and autoconf
 
 Joerg Habenicht <j.habenicht@europemail.com>
@@ -93,5 +93,5 @@ Falk Brettschneider <gigafalk@yahoo.com>
 contributes for the Dockwidget class set
 
 Holger Freyther <freyther@yahoo.com>
-KDialogBase, KGuiItem, KStdGuiItem, KAction,
+KDialogBase, KGuiItem, KStdGuiItem, TDEAction,
 added KMessageBox::questionYesNoCancel( )

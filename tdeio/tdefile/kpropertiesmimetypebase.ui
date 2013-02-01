@@ -30,7 +30,7 @@
                 <cstring>listView</cstring>
             </property>
         </widget>
-        <widget class="KListView">
+        <widget class="TDEListView">
             <column>
                 <property name="text">
                     <string>Mimetype</string>

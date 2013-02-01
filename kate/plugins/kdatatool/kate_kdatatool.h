@@ -26,7 +26,7 @@
 #include <kxmlguiclient.h>
 #include <tqguardedptr.h>
 
-class KActionMenu;
+class TDEActionMenu;
 class KDataToolInfo;
 
 namespace KTextEditor
@@ -62,9 +62,9 @@ private:
 	bool m_singleWord;
 	int m_singleWord_line, m_singleWord_start, m_singleWord_end;
 	TQString m_wordUnderCursor;
-	TQPtrList<KAction> m_actionList;
-	TQGuardedPtr<KActionMenu> m_menu;
-	KAction *m_notAvailable;
+	TQPtrList<TDEAction> m_actionList;
+	TQGuardedPtr<TDEActionMenu> m_menu;
+	TDEAction *m_notAvailable;
 protected slots:
 	void aboutToShow();
 	void slotToolActivated( const KDataToolInfo &datatoolinfo, const TQString &string );

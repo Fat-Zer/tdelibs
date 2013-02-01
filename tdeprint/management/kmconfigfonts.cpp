@@ -47,7 +47,7 @@ KMConfigFonts::KMConfigFonts(TQWidget *parent, const char *name)
 	TQGroupBox	*box2 = new TQGroupBox(0, Qt::Vertical, i18n("Fonts Path"), this);
 
 	m_embedfonts = new TQCheckBox(i18n("&Embed fonts in PostScript data when printing"), box);
-	m_fontpath = new KListView(box2);
+	m_fontpath = new TDEListView(box2);
 	m_fontpath->addColumn("");
 	m_fontpath->header()->setStretchEnabled(true, 0);
 	m_fontpath->header()->hide();

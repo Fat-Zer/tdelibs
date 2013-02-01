@@ -77,8 +77,8 @@ static TQString makeTextNodeMod(KBookmark bk, const TQString &m_nodename, const 
 /********************************************************************/
 
 KBookmarkMenu::KBookmarkMenu( KBookmarkManager* mgr,
-                              KBookmarkOwner * _owner, KPopupMenu * _parentMenu,
-                              KActionCollection *collec, bool _isRoot, bool _add,
+                              KBookmarkOwner * _owner, TDEPopupMenu * _parentMenu,
+                              TDEActionCollection *collec, bool _isRoot, bool _add,
                               const TQString & parentAddress )
   : TQObject(),
     m_bIsRoot(_isRoot), m_bAddBookmark(_add),
@@ -96,9 +96,9 @@ KBookmarkMenu::KBookmarkMenu( KBookmarkManager* mgr,
   if (m_actionCollection)
   {
     m_actionCollection->setHighlightingEnabled(true);
-    disconnect( m_actionCollection, TQT_SIGNAL( actionHighlighted( KAction * ) ), 0, 0 );
-    connect( m_actionCollection, TQT_SIGNAL( actionHighlighted( KAction * ) ),
-             this, TQT_SLOT( slotActionHighlighted( KAction * ) ) );
+    disconnect( m_actionCollection, TQT_SIGNAL( actionHighlighted( TDEAction * ) ), 0, 0 );
+    connect( m_actionCollection, TQT_SIGNAL( actionHighlighted( TDEAction * ) ),
+             this, TQT_SLOT( slotActionHighlighted( TDEAction * ) ) );
   }
 
   m_bNSBookmark = m_parentAddress.isNull();
@@ -112,8 +112,8 @@ KBookmarkMenu::KBookmarkMenu( KBookmarkManager* mgr,
     if ( KBookmarkSettings::self()->m_contextmenu )
     {
       (void) _parentMenu->contextMenu();
-      connect( _parentMenu, TQT_SIGNAL( aboutToShowContextMenu(KPopupMenu*, int, TQPopupMenu*) ),
-               this, TQT_SLOT( slotAboutToShowContextMenu(KPopupMenu*, int, TQPopupMenu*) ));
+      connect( _parentMenu, TQT_SIGNAL( aboutToShowContextMenu(TDEPopupMenu*, int, TQPopupMenu*) ),
+               this, TQT_SLOT( slotAboutToShowContextMenu(TDEPopupMenu*, int, TQPopupMenu*) ));
     }
 
     if ( m_bIsRoot )
@@ -142,7 +142,7 @@ KBookmarkMenu::KBookmarkMenu( KBookmarkManager* mgr,
 KBookmarkMenu::~KBookmarkMenu()
 {
   //kdDebug(7043) << "KBookmarkMenu::~KBookmarkMenu() " << this << endl;
-  TQPtrListIterator<KAction> it( m_actions );
+  TQPtrListIterator<TDEAction> it( m_actions );
   for (; it.current(); ++it )
     it.current()->unplugAll();
 
@@ -169,7 +169,7 @@ TQString KBookmarkMenu::s_highlightedAddress;
 TQString KBookmarkMenu::s_highlightedImportType;
 TQString KBookmarkMenu::s_highlightedImportLocation;
 
-void KBookmarkMenu::slotActionHighlighted( KAction* action )
+void KBookmarkMenu::slotActionHighlighted( TDEAction* action )
 {
   if (action->isA("KBookmarkActionMenu") || action->isA("KBookmarkAction"))
   {
@@ -231,12 +231,12 @@ KBookmark RMB::atAddress(const TQString & address)
   return bookmark;
 }
 
-void KBookmarkMenu::slotAboutToShowContextMenu( KPopupMenu*, int, TQPopupMenu* contextMenu )
+void KBookmarkMenu::slotAboutToShowContextMenu( TDEPopupMenu*, int, TQPopupMenu* contextMenu )
 {
   //kdDebug(7043) << "KBookmarkMenu::slotAboutToShowContextMenu" << s_highlightedAddress << endl;
   if (s_highlightedAddress.isNull())
   {
-    KPopupMenu::contextMenuFocus()->hideContextMenu();
+    TDEPopupMenu::contextMenuFocus()->hideContextMenu();
     return;
   }
   contextMenu->clear();
@@ -411,7 +411,7 @@ void RMB::slotRMBActionCopyLocation( int val )
 }
 
 void RMB::hidePopup() {
-  KPopupMenu::contextMenuFocus()->hideContextMenu();
+  TDEPopupMenu::contextMenuFocus()->hideContextMenu();
 }
 
 /********************************************************************/
@@ -467,7 +467,7 @@ void KBookmarkMenu::refill()
   //kdDebug(7043) << "KBookmarkMenu::refill()" << endl;
   m_lstSubMenus.clear();
 
-  TQPtrListIterator<KAction> it( m_actions );
+  TQPtrListIterator<TDEAction> it( m_actions );
   for (; it.current(); ++it )
     it.current()->unplug( m_parentMenu );
 
@@ -480,12 +480,12 @@ void KBookmarkMenu::refill()
 
 void KBookmarkMenu::addAddBookmarksList()
 {
-  if (!kapp->authorizeKAction("bookmarks"))
+  if (!kapp->authorizeTDEAction("bookmarks"))
      return;
 
   TQString title = i18n( "Bookmark Tabs as Folder..." );
 
-  KAction * paAddBookmarksList = new KAction( title,
+  TDEAction * paAddBookmarksList = new TDEAction( title,
                                           "bookmarks_list_add",
                                           0,
                                           this,
@@ -500,14 +500,14 @@ void KBookmarkMenu::addAddBookmarksList()
 
 void KBookmarkMenu::addAddBookmark()
 {
-  if (!kapp->authorizeKAction("bookmarks"))
+  if (!kapp->authorizeTDEAction("bookmarks"))
      return;
 
   TQString title = i18n( "Add Bookmark" );
 
-  KAction * paAddBookmarks = new KAction( title,
+  TDEAction * paAddBookmarks = new TDEAction( title,
                                           "bookmark_add",
-                                          m_bIsRoot && m_bAddShortcuts ? KStdAccel::addBookmark() : KShortcut(),
+                                          m_bIsRoot && m_bAddShortcuts ? TDEStdAccel::addBookmark() : TDEShortcut(),
                                           this,
                                           TQT_SLOT( slotAddBookmark() ),
                                           m_actionCollection, m_bIsRoot ? "add_bookmark" : 0 );
@@ -520,10 +520,10 @@ void KBookmarkMenu::addAddBookmark()
 
 void KBookmarkMenu::addEditBookmarks()
 {
-  if (!kapp->authorizeKAction("bookmarks"))
+  if (!kapp->authorizeTDEAction("bookmarks"))
      return;
 
-  KAction * m_paEditBookmarks = KStdAction::editBookmarks( m_pManager, TQT_SLOT( slotEditBookmarks() ),
+  TDEAction * m_paEditBookmarks = KStdAction::editBookmarks( m_pManager, TQT_SLOT( slotEditBookmarks() ),
                                                              m_actionCollection, "edit_bookmarks" );
   m_paEditBookmarks->plug( m_parentMenu );
   m_paEditBookmarks->setToolTip( i18n( "Edit your bookmark collection in a separate window" ) );
@@ -532,7 +532,7 @@ void KBookmarkMenu::addEditBookmarks()
 
 void KBookmarkMenu::addNewFolder()
 {
-  if (!kapp->authorizeKAction("bookmarks"))
+  if (!kapp->authorizeTDEAction("bookmarks"))
      return;
 
   TQString title = i18n( "&New Bookmark Folder..." );
@@ -540,7 +540,7 @@ void KBookmarkMenu::addNewFolder()
   while ( ( p = title.find( '&' ) ) >= 0 )
     title.remove( p, 1 );
 
-  KAction * paNewFolder = new KAction( title,
+  TDEAction * paNewFolder = new TDEAction( title,
                                        "folder_new", //"folder",
                                        0,
                                        this,
@@ -555,7 +555,7 @@ void KBookmarkMenu::addNewFolder()
 
 void KBookmarkMenu::fillBookmarkMenu()
 {
-  if (!kapp->authorizeKAction("bookmarks"))
+  if (!kapp->authorizeTDEAction("bookmarks"))
      return;
 
   if ( m_bIsRoot )
@@ -594,7 +594,7 @@ void KBookmarkMenu::fillBookmarkMenu()
           haveSep = true;
        }
 
-       KActionMenu * actionMenu;
+       TDEActionMenu * actionMenu;
        actionMenu = new KImportedBookmarksActionMenu(
                               info.name, info.type,
                               m_actionCollection, "kbookmarkmenu" );
@@ -638,9 +638,9 @@ void KBookmarkMenu::fillBookmarkMenu()
       else
       {
         //kdDebug(7043) << "Creating URL bookmark menu item for " << bm.text() << endl;
-        KAction * action = new KBookmarkAction( text, bm.icon(), 0, m_actionCollection, 0 );
-        connect(action, TQT_SIGNAL( activated ( KAction::ActivationReason, TQt::ButtonState )),
-                this, TQT_SLOT( slotBookmarkSelected( KAction::ActivationReason, TQt::ButtonState ) ));
+        TDEAction * action = new KBookmarkAction( text, bm.icon(), 0, m_actionCollection, 0 );
+        connect(action, TQT_SIGNAL( activated ( TDEAction::ActivationReason, TQt::ButtonState )),
+                this, TQT_SLOT( slotBookmarkSelected( TDEAction::ActivationReason, TQt::ButtonState ) ));
 
         action->setProperty( "url", bm.url().url() );
         action->setProperty( "address", bm.address() );
@@ -654,7 +654,7 @@ void KBookmarkMenu::fillBookmarkMenu()
     else
     {
       //kdDebug(7043) << "Creating bookmark submenu named " << bm.text() << endl;
-      KActionMenu * actionMenu = new KBookmarkActionMenu( text, bm.icon(),
+      TDEActionMenu * actionMenu = new KBookmarkActionMenu( text, bm.icon(),
                                                           m_actionCollection,
                                                           "kbookmarkmenu" );
       actionMenu->setProperty( "address", bm.address() );
@@ -681,7 +681,7 @@ void KBookmarkMenu::fillBookmarkMenu()
 
     if ( KBookmarkSettings::self()->m_quickactions )
     {
-      KActionMenu * actionMenu = new KActionMenu( i18n("Quick Actions"), m_actionCollection, 0L );
+      TDEActionMenu * actionMenu = new TDEActionMenu( i18n("Quick Actions"), m_actionCollection, 0L );
       fillContextMenu( actionMenu->popupMenu(), m_parentAddress, 1 );
       actionMenu->plug( m_parentMenu );
       m_actions.append( actionMenu );
@@ -743,11 +743,11 @@ void KBookmarkMenu::slotNewFolder()
   }
 }
 
-void KBookmarkMenu::slotBookmarkSelected( KAction::ActivationReason /*reason*/, TQt::ButtonState state )
+void KBookmarkMenu::slotBookmarkSelected( TDEAction::ActivationReason /*reason*/, TQt::ButtonState state )
 {
   kdDebug(7043) << "KBookmarkMenu::slotBookmarkSelected()" << endl;
   if ( !m_pOwner ) return; // this view doesn't handle bookmarks...
-  const KAction* action =  dynamic_cast<const KAction *>(sender());
+  const TDEAction* action =  dynamic_cast<const TDEAction *>(sender());
   if(action)
   {
       const TQString& url = sender()->property("url").toString();
@@ -758,7 +758,7 @@ void KBookmarkMenu::slotBookmarkSelected( KAction::ActivationReason /*reason*/, 
 
 void KBookmarkMenu::slotBookmarkSelected()
 {
-    slotBookmarkSelected(KAction::PopupMenuActivation, Qt::NoButton);
+    slotBookmarkSelected(TDEAction::PopupMenuActivation, Qt::NoButton);
 }
 
 KExtendedBookmarkOwner* KBookmarkMenu::extOwner()
@@ -1057,9 +1057,9 @@ void KBookmarkMenuNSImporter::newBookmark( const TQString & text, const TQCStrin
 {
   TQString _text = KStringHandler::csqueeze(text);
   _text.replace( '&', "&&" );
-  KAction * action = new KBookmarkAction(_text, "html", 0, 0, "", m_actionCollection, 0);
-  connect(action, TQT_SIGNAL( activated ( KAction::ActivationReason, TQt::ButtonState )),
-          m_menu, TQT_SLOT( slotBookmarkSelected( KAction::ActivationReason, TQt::ButtonState ) ));
+  TDEAction * action = new KBookmarkAction(_text, "html", 0, 0, "", m_actionCollection, 0);
+  connect(action, TQT_SIGNAL( activated ( TDEAction::ActivationReason, TQt::ButtonState )),
+          m_menu, TQT_SLOT( slotBookmarkSelected( TDEAction::ActivationReason, TQt::ButtonState ) ));
   action->setProperty( "url", url );
   action->setToolTip( url );
   action->plug( mstack.top()->m_parentMenu );
@@ -1070,7 +1070,7 @@ void KBookmarkMenuNSImporter::newFolder( const TQString & text, bool, const TQSt
 {
   TQString _text = KStringHandler::csqueeze(text);
   _text.replace( '&', "&&" );
-  KActionMenu * actionMenu = new KActionMenu( _text, "folder", m_actionCollection, 0L );
+  TDEActionMenu * actionMenu = new TDEActionMenu( _text, "folder", m_actionCollection, 0L );
   actionMenu->plug( mstack.top()->m_parentMenu );
   mstack.top()->m_actions.append( actionMenu );
   KBookmarkMenu *subMenu = new KBookmarkMenu( m_pManager, m_menu->m_pOwner, actionMenu->popupMenu(),

@@ -63,7 +63,7 @@ private:
  * 3. retrieve the root item with KFileTreeBranch::root() and set it open
  *    if desired. That starts the listing.
  */
-class TDEIO_EXPORT KFileTreeView : public KListView
+class TDEIO_EXPORT KFileTreeView : public TDEListView
 {
     Q_OBJECT
 public:

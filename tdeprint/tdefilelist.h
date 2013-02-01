@@ -24,7 +24,7 @@
 #include <tqptrlist.h>
 #include <kurl.h>
 
-class KListView;
+class TDEListView;
 class TQToolButton;
 class TQListViewItem;
 
@@ -54,7 +54,7 @@ protected:
 	void selection(TQPtrList<TQListViewItem>&);
 
 private:
-	KListView	*m_files;
+	TDEListView	*m_files;
 	TQToolButton	*m_add, *m_remove, *m_open, *m_up, *m_down;
 	bool		m_block;
 };

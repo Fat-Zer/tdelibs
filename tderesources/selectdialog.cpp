@@ -48,7 +48,7 @@ SelectDialog::SelectDialog( TQPtrList<Resource> list, TQWidget *parent,
   TQGroupBox *groupBox = new TQGroupBox( 2, Qt::Horizontal,  this );
   groupBox->setTitle( i18n( "Resources" ) );
 
-  mResourceId = new KListBox( groupBox );
+  mResourceId = new TDEListBox( groupBox );
 
   mainLayout->addWidget( groupBox );
 

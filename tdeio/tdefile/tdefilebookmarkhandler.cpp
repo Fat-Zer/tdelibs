@@ -32,7 +32,7 @@ KFileBookmarkHandler::KFileBookmarkHandler( KFileDialog *dialog )
       KBookmarkOwner(),
       m_dialog( dialog )
 {
-    m_menu = new KPopupMenu( dialog, "bookmark menu" );
+    m_menu = new TDEPopupMenu( dialog, "bookmark menu" );
 
     TQString file = locate( "data", "tdefile/bookmarks.xml" );
     if ( file.isEmpty() )

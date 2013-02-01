@@ -41,13 +41,13 @@ public:
 };
 
 KPanelMenu::KPanelMenu(const TQString &startDir, TQWidget *parent, const char *name)
-  : KPopupMenu(parent, name)
+  : TDEPopupMenu(parent, name)
 {
     init(startDir);
 }
 
 KPanelMenu::KPanelMenu(TQWidget *parent, const char *name)
-  : KPopupMenu(parent, name)
+  : TDEPopupMenu(parent, name)
 {
     init();
 }
@@ -67,7 +67,7 @@ void KPanelMenu::init(const TQString& path)
     config->setGroup("menus");
     d->clearDelay = config->readNumEntry("MenuCacheTime", 60000); // 1 minute
 
-    //KAcceleratorManager::manage(this);
+    //TDEAcceleratorManager::manage(this);
     setKeyboardShortcutsEnabled(true);
 }
 
@@ -154,5 +154,5 @@ void KPanelMenu::internalInitialize()
 }
 
 void KPanelMenu::virtual_hook( int id, void* data )
-{ KPopupMenu::virtual_hook( id, data ); }
+{ TDEPopupMenu::virtual_hook( id, data ); }
 

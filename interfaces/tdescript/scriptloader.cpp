@@ -33,11 +33,11 @@
 #include <tqfileinfo.h>
 
 
-ScriptLoader::ScriptLoader(KMainWindow *parent) : TQObject (parent)
+ScriptLoader::ScriptLoader(TDEMainWindow *parent) : TQObject (parent)
 {
 	m_parent = parent;
 	m_scripts.clear();
-  	m_theAction = new KSelectAction ( i18n("KDE Scripts"),
+  	m_theAction = new TDESelectAction ( i18n("KDE Scripts"),
 		0,
 		this,
 		TQT_SLOT(runAction()),
@@ -51,7 +51,7 @@ ScriptLoader::~ScriptLoader()
 	m_scripts.clear();
 }
 
-KSelectAction * ScriptLoader::getScripts()
+TDESelectAction * ScriptLoader::getScripts()
 {
 	// Get the available scripts for this application.
 	TQStringList pluginList = "";

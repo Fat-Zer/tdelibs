@@ -39,7 +39,7 @@ namespace KMediaPlayer
  *
  * There are two servicetypes for Player:  KMediaPlayer/Player and
  * KMediaPlayer/Engine.  KMediaPlayer/Player provides a widget (accessable
- * through view as well as XML GUI KActions.  KMediaPlayer/Engine omits
+ * through view as well as XML GUI TDEActions.  KMediaPlayer/Engine omits
  * the user interface facets, for those who wish to provide their own
  * interface.
  */

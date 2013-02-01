@@ -122,10 +122,10 @@ KDirSelectDialog::KDirSelectDialog(const TQString &startDir, bool localOnly,
              TQT_SLOT( slotComboTextChanged( const TQString& ) ));
 
     m_contextMenu = new TQPopupMenu( this );
-    KAction* newFolder = new KAction( i18n("New Folder..."), "folder_new", 0, TQT_TQOBJECT(this), TQT_SLOT( slotMkdir() ), TQT_TQOBJECT(this));
+    TDEAction* newFolder = new TDEAction( i18n("New Folder..."), "folder_new", 0, TQT_TQOBJECT(this), TQT_SLOT( slotMkdir() ), TQT_TQOBJECT(this));
     newFolder->plug(m_contextMenu);
     m_contextMenu->insertSeparator();
-    m_showHiddenFolders = new KToggleAction ( i18n( "Show Hidden Folders" ), 0, TQT_TQOBJECT(this),
+    m_showHiddenFolders = new TDEToggleAction ( i18n( "Show Hidden Folders" ), 0, TQT_TQOBJECT(this),
                                         TQT_SLOT( slotShowHiddenFoldersToggled() ), TQT_TQOBJECT(this));
     m_showHiddenFolders->plug(m_contextMenu);
 
@@ -153,8 +153,8 @@ KDirSelectDialog::KDirSelectDialog(const TQString &startDir, bool localOnly,
 
     connect( m_treeView, TQT_SIGNAL( currentChanged( TQListViewItem * )),
              TQT_SLOT( slotCurrentChanged() ));
-    connect( m_treeView, TQT_SIGNAL( contextMenu( KListView *, TQListViewItem *, const TQPoint & )),
-             TQT_SLOT( slotContextMenu( KListView *, TQListViewItem *, const TQPoint & )));
+    connect( m_treeView, TQT_SIGNAL( contextMenu( TDEListView *, TQListViewItem *, const TQPoint & )),
+             TQT_SLOT( slotContextMenu( TDEListView *, TQListViewItem *, const TQPoint & )));
 
     connect( d->urlCombo, TQT_SIGNAL( activated( const TQString& )),
              TQT_SLOT( slotURLActivated( const TQString& )));
@@ -307,7 +307,7 @@ void KDirSelectDialog::accept()
         if ( !item->isDir() )
             dir = dir.upURL();
 
-        KRecentDirs::add(d->recentDirClass, dir.url());
+        TDERecentDirs::add(d->recentDirClass, dir.url());
     }
 
     d->urlCombo->addToHistory( item->url().prettyURL() );
@@ -395,7 +395,7 @@ void KDirSelectDialog::slotComboTextChanged( const TQString& text )
     }
 }
 
-void KDirSelectDialog::slotContextMenu( KListView *, TQListViewItem *, const TQPoint& pos )
+void KDirSelectDialog::slotContextMenu( TDEListView *, TQListViewItem *, const TQPoint& pos )
 {
     m_contextMenu->popup( pos );
 }

@@ -5,24 +5,24 @@
 #include <kaction.h>
 
 //---------------------------------------------------------------------
-// class KActionShortcutList
+// class TDEActionShortcutList
 //---------------------------------------------------------------------
 
-class KAccelShortcutListPrivate;
-class TDEUI_EXPORT KActionShortcutList : public KShortcutList
+class TDEAccelShortcutListPrivate;
+class TDEUI_EXPORT TDEActionShortcutList : public TDEShortcutList
 {
  public:
-	KActionShortcutList( KActionCollection* );
-	virtual ~KActionShortcutList();
+	TDEActionShortcutList( TDEActionCollection* );
+	virtual ~TDEActionShortcutList();
 
 	virtual uint count() const;
 	virtual TQString name( uint index ) const;
 	virtual TQString label( uint index ) const;
 	virtual TQString whatsThis( uint index ) const;
-	virtual const KShortcut& shortcut( uint index ) const;
-	virtual const KShortcut& shortcutDefault( uint index ) const;
+	virtual const TDEShortcut& shortcut( uint index ) const;
+	virtual const TDEShortcut& shortcutDefault( uint index ) const;
 	virtual bool isConfigurable( uint index ) const;
-	virtual bool setShortcut( uint index, const KShortcut& shortcut );
+	virtual bool setShortcut( uint index, const TDEShortcut& shortcut );
 
 	virtual const TDEInstance* instance() const;
 
@@ -31,36 +31,36 @@ class TDEUI_EXPORT KActionShortcutList : public KShortcutList
 
 	virtual bool save() const;
 
-	const KAction *action( uint ) const;
+	const TDEAction *action( uint ) const;
 
  protected:
-	KActionCollection& m_actions;
+	TDEActionCollection& m_actions;
 
  protected:
         virtual void virtual_hook( int id, void* data );
  private:
-	KAccelShortcutListPrivate* d;
+	TDEAccelShortcutListPrivate* d;
 };
 
 //---------------------------------------------------------------------
-// class KActionPtrShortcutList
+// class TDEActionPtrShortcutList
 //---------------------------------------------------------------------
 
-class KAccelShortcutListPrivate;
-class TDEUI_EXPORT KActionPtrShortcutList : public KShortcutList
+class TDEAccelShortcutListPrivate;
+class TDEUI_EXPORT TDEActionPtrShortcutList : public TDEShortcutList
 {
  public:
-	KActionPtrShortcutList( KActionPtrList& );
-	virtual ~KActionPtrShortcutList();
+	TDEActionPtrShortcutList( TDEActionPtrList& );
+	virtual ~TDEActionPtrShortcutList();
 
 	virtual uint count() const;
 	virtual TQString name( uint index ) const;
 	virtual TQString label( uint index ) const;
 	virtual TQString whatsThis( uint index ) const;
-	virtual const KShortcut& shortcut( uint index ) const;
-	virtual const KShortcut& shortcutDefault( uint index ) const;
+	virtual const TDEShortcut& shortcut( uint index ) const;
+	virtual const TDEShortcut& shortcutDefault( uint index ) const;
 	virtual bool isConfigurable( uint index ) const;
-	virtual bool setShortcut( uint index, const KShortcut& shortcut);
+	virtual bool setShortcut( uint index, const TDEShortcut& shortcut);
 
 	virtual TQVariant getOther( Other, uint index ) const;
 	virtual bool setOther( Other, uint index, TQVariant );
@@ -68,12 +68,12 @@ class TDEUI_EXPORT KActionPtrShortcutList : public KShortcutList
 	virtual bool save() const;
 
  protected:
-	KActionPtrList& m_actions;
+	TDEActionPtrList& m_actions;
 
  protected:
        virtual void virtual_hook( int id, void* data );
  private:
-	KAccelShortcutListPrivate* d;
+	TDEAccelShortcutListPrivate* d;
 };
 
 #endif // !_KACTIONSHORTCUTLIST_H

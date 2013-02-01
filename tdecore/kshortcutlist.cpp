@@ -12,23 +12,23 @@
 #include "kshortcutlist.h"
 
 //---------------------------------------------------------------------
-// KShortcutList
+// TDEShortcutList
 //---------------------------------------------------------------------
 
-KShortcutList::KShortcutList()
+TDEShortcutList::TDEShortcutList()
 {
 }
 
-KShortcutList::~KShortcutList()
+TDEShortcutList::~TDEShortcutList()
 {
 }
 
-bool KShortcutList::isGlobal( uint ) const
+bool TDEShortcutList::isGlobal( uint ) const
 {
 	return false;
 }
 
-int KShortcutList::index( const TQString& sName ) const
+int TDEShortcutList::index( const TQString& sName ) const
 {
 	uint nSize = count();
         for( uint i = 0;
@@ -39,7 +39,7 @@ int KShortcutList::index( const TQString& sName ) const
 	return -1;
 }
 
-int KShortcutList::index( const KKeySequence& seq ) const
+int TDEShortcutList::index( const KKeySequence& seq ) const
 {
 	if( seq.isNull() )
 		return -1;
@@ -53,24 +53,24 @@ int KShortcutList::index( const KKeySequence& seq ) const
 	return -1;
 }
 
-const TDEInstance* KShortcutList::instance() const
+const TDEInstance* TDEShortcutList::instance() const
 {
 	return 0;
 }
 
-TQVariant KShortcutList::getOther( Other, uint ) const
+TQVariant TDEShortcutList::getOther( Other, uint ) const
 {
 	return TQVariant();
 }
 
-bool KShortcutList::setOther( Other, uint, TQVariant )
+bool TDEShortcutList::setOther( Other, uint, TQVariant )
 {
 	return false;
 }
 
-bool KShortcutList::readSettings( const TQString& sConfigGroup, TDEConfigBase* pConfig )
+bool TDEShortcutList::readSettings( const TQString& sConfigGroup, TDEConfigBase* pConfig )
 {
-	kdDebug(125) << "KShortcutList::readSettings( \"" << sConfigGroup << "\", " << pConfig << " ) start" << endl;
+	kdDebug(125) << "TDEShortcutList::readSettings( \"" << sConfigGroup << "\", " << pConfig << " ) start" << endl;
 	if( !pConfig )
 		pConfig = TDEGlobal::config();
 	TQString sGroup = (!sConfigGroup.isEmpty()) ? sConfigGroup : TQString("Shortcuts");
@@ -92,9 +92,9 @@ bool KShortcutList::readSettings( const TQString& sConfigGroup, TDEConfigBase* p
 			TQString sEntry = pConfig->readEntry( name(i) );
 			if( !sEntry.isEmpty() ) {
 				if( sEntry == "none" )
-					setShortcut( i, KShortcut() );
+					setShortcut( i, TDEShortcut() );
 				else
-					setShortcut( i, KShortcut(sEntry) );
+					setShortcut( i, TDEShortcut(sEntry) );
 			}
 			else // default shortcut
 				setShortcut( i, shortcutDefault(i) );
@@ -102,13 +102,13 @@ bool KShortcutList::readSettings( const TQString& sConfigGroup, TDEConfigBase* p
 		}
 	}
 
-	kdDebug(125) << "KShortcutList::readSettings done" << endl;
+	kdDebug(125) << "TDEShortcutList::readSettings done" << endl;
 	return true;
 }
 
-bool KShortcutList::writeSettings( const TQString &sConfigGroup, TDEConfigBase* pConfig, bool bWriteAll, bool bGlobal ) const
+bool TDEShortcutList::writeSettings( const TQString &sConfigGroup, TDEConfigBase* pConfig, bool bWriteAll, bool bGlobal ) const
 {
-	kdDebug(125) << "KShortcutList::writeSettings( " << sConfigGroup << ", " << pConfig << ", " << bWriteAll << ", " << bGlobal << " )" << endl;
+	kdDebug(125) << "TDEShortcutList::writeSettings( " << sConfigGroup << ", " << pConfig << ", " << bWriteAll << ", " << bGlobal << " )" << endl;
 	if( !pConfig )
 		pConfig = TDEGlobal::config();
 
@@ -149,72 +149,72 @@ bool KShortcutList::writeSettings( const TQString &sConfigGroup, TDEConfigBase* 
 }
 
 //---------------------------------------------------------------------
-// KAccelShortcutList
+// TDEAccelShortcutList
 //---------------------------------------------------------------------
 
-class KAccelShortcutListPrivate
+class TDEAccelShortcutListPrivate
 {
 	public:
 		TQString m_configGroup;
 };
 
-KAccelShortcutList::KAccelShortcutList( KAccel* pAccel )
+TDEAccelShortcutList::TDEAccelShortcutList( TDEAccel* pAccel )
 : m_actions( pAccel->actions() )
 {
-	d=new KAccelShortcutListPrivate;
+	d=new TDEAccelShortcutListPrivate;
 	m_bGlobal = false;
 	d->m_configGroup=pAccel->configGroup();
 }
 
-KAccelShortcutList::KAccelShortcutList( TDEGlobalAccel* pAccel )
+TDEAccelShortcutList::TDEAccelShortcutList( TDEGlobalAccel* pAccel )
 : m_actions( pAccel->actions() )
 {
-	d=new KAccelShortcutListPrivate;
+	d=new TDEAccelShortcutListPrivate;
 	m_bGlobal = true;
 	d->m_configGroup=pAccel->configGroup();
 }
 
-KAccelShortcutList::KAccelShortcutList( KAccelActions& actions, bool bGlobal )
+TDEAccelShortcutList::TDEAccelShortcutList( TDEAccelActions& actions, bool bGlobal )
 : m_actions( actions )
 {
-	d=new KAccelShortcutListPrivate;
+	d=new TDEAccelShortcutListPrivate;
 	m_bGlobal = bGlobal;
 }
 
 
-KAccelShortcutList::~KAccelShortcutList()
+TDEAccelShortcutList::~TDEAccelShortcutList()
 	{  delete d;}
-uint KAccelShortcutList::count() const
+uint TDEAccelShortcutList::count() const
 	{ return m_actions.count(); }
-TQString KAccelShortcutList::name( uint i ) const
+TQString TDEAccelShortcutList::name( uint i ) const
 	{ return m_actions.actionPtr(i)->name(); }
-TQString KAccelShortcutList::label( uint i ) const
+TQString TDEAccelShortcutList::label( uint i ) const
 	{ return m_actions.actionPtr(i)->label(); }
-TQString KAccelShortcutList::whatsThis( uint i ) const
+TQString TDEAccelShortcutList::whatsThis( uint i ) const
 	{ return m_actions.actionPtr(i)->whatsThis(); }
-const KShortcut& KAccelShortcutList::shortcut( uint i ) const
+const TDEShortcut& TDEAccelShortcutList::shortcut( uint i ) const
 	{ return m_actions.actionPtr(i)->shortcut(); }
-const KShortcut& KAccelShortcutList::shortcutDefault( uint i ) const
+const TDEShortcut& TDEAccelShortcutList::shortcutDefault( uint i ) const
 	{ return m_actions.actionPtr(i)->shortcutDefault(); }
-bool KAccelShortcutList::isConfigurable( uint i ) const
+bool TDEAccelShortcutList::isConfigurable( uint i ) const
 	{ return m_actions.actionPtr(i)->isConfigurable(); }
-bool KAccelShortcutList::setShortcut( uint i, const KShortcut& cut )
+bool TDEAccelShortcutList::setShortcut( uint i, const TDEShortcut& cut )
 	{ return m_actions.actionPtr(i)->setShortcut( cut ); }
-TQVariant KAccelShortcutList::getOther( Other, uint ) const
+TQVariant TDEAccelShortcutList::getOther( Other, uint ) const
 	{ return TQVariant(); }
-bool KAccelShortcutList::isGlobal( uint ) const
+bool TDEAccelShortcutList::isGlobal( uint ) const
 	{ return m_bGlobal; }
-bool KAccelShortcutList::setOther( Other, uint, TQVariant )
+bool TDEAccelShortcutList::setOther( Other, uint, TQVariant )
 	{ return false; }
-bool KAccelShortcutList::save() const
+bool TDEAccelShortcutList::save() const
 	{ return writeSettings( d->m_configGroup ); }
 
-void KShortcutList::virtual_hook( int, void* )
+void TDEShortcutList::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
-void KAccelShortcutList::virtual_hook( int id, void* data )
-{ KShortcutList::virtual_hook( id, data ); }
+void TDEAccelShortcutList::virtual_hook( int id, void* data )
+{ TDEShortcutList::virtual_hook( id, data ); }
 
-void KStdAccel::ShortcutList::virtual_hook( int id, void* data )
-{ KShortcutList::virtual_hook( id, data ); }
+void TDEStdAccel::ShortcutList::virtual_hook( int id, void* data )
+{ TDEShortcutList::virtual_hook( id, data ); }
 

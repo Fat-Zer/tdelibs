@@ -4,8 +4,8 @@
 #include <tqwidget.h>
 
 class KIconView;
-class KListView;
-class KListBox;
+class TDEListView;
+class TDEListBox;
 class TQButtonGroup;
 class TQLabel;
 
@@ -32,8 +32,8 @@ public slots:
     void slotDoubleClicked( TQIconViewItem* ) { tqDebug("DOUBLE CLICK");}
 protected:
     KIconView* m_pIconView;
-    KListView* m_pListView;
-    KListBox* m_pListBox;
+    TDEListView* m_pListView;
+    TDEListBox* m_pListBox;
 
     TQButtonGroup* m_pbgView;
     TQButtonGroup* m_pbgMode;

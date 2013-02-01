@@ -22,15 +22,15 @@
 #include <klistview.h>
 
 /**
- * the editor for a KListView.  please don't use this.
+ * the editor for a TDEListView.  please don't use this.
  * @internal
  **/
-class TDEUI_EXPORT KListViewLineEdit : public KLineEdit
+class TDEUI_EXPORT TDEListViewLineEdit : public KLineEdit
 {
 Q_OBJECT
 public:
-	KListViewLineEdit(KListView *parent);
-	~KListViewLineEdit();
+	TDEListViewLineEdit(TDEListView *parent);
+	~TDEListViewLineEdit();
 
 	TQListViewItem *currentItem() const;
 
@@ -52,7 +52,7 @@ protected:
 	void terminate(bool commit);
 	TQListViewItem *item;
 	int col;
-	KListView* const p;
+	TDEListView* const p;
 
 protected slots:
 	void slotSelectionChanged();

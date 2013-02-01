@@ -368,7 +368,7 @@ void KXMLGUIFactory::removeClient( KXMLGUIClient *client )
     // reset some variables
     d->BuildState::reset();
 
-    // This will destruct the KAccel object built around the given widget.
+    // This will destruct the TDEAccel object built around the given widget.
     client->prepareXMLUnplug( d->builder->widget() );
 
     d->popState();
@@ -468,7 +468,7 @@ TQPtrList<TQWidget> KXMLGUIFactory::findRecursive( KXMLGUI::ContainerNode *node,
 }
 
 void KXMLGUIFactory::plugActionList( KXMLGUIClient *client, const TQString &name,
-                                     const TQPtrList<KAction> &actionList )
+                                     const TQPtrList<TDEAction> &actionList )
 {
     d->pushState();
     d->guiClient = client;
@@ -506,7 +506,7 @@ void KXMLGUIFactory::applyActionProperties( const TQDomElement &actionPropElemen
         if ( e.tagName().lower() != tagAction )
             continue;
 
-        KAction *action = d->guiClient->action( e );
+        TDEAction *action = d->guiClient->action( e );
         if ( !action )
             continue;
 
@@ -514,7 +514,7 @@ void KXMLGUIFactory::applyActionProperties( const TQDomElement &actionPropElemen
     }
 }
 
-void KXMLGUIFactory::configureAction( KAction *action, const TQDomNamedNodeMap &attributes )
+void KXMLGUIFactory::configureAction( TDEAction *action, const TQDomNamedNodeMap &attributes )
 {
     for ( uint i = 0; i < attributes.length(); i++ )
     {
@@ -526,7 +526,7 @@ void KXMLGUIFactory::configureAction( KAction *action, const TQDomNamedNodeMap &
     }
 }
 
-void KXMLGUIFactory::configureAction( KAction *action, const TQDomAttr &attribute )
+void KXMLGUIFactory::configureAction( TDEAction *action, const TQDomAttr &attribute )
 {
     static const TQString &attrShortcut = TDEGlobal::staticQString( "shortcut" );
 

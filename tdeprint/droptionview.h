@@ -27,7 +27,7 @@
 class TQLineEdit;
 class TQSlider;
 class TQLabel;
-class KListBox;
+class TDEListBox;
 class TQListBoxItem;
 class TQVButtonGroup;
 class TQWidgetStack;
@@ -92,7 +92,7 @@ protected slots:
 	void slotSelectionChanged();
 
 private:
-	KListBox	*m_list;
+	TDEListBox	*m_list;
 	TQStringList	m_choices;
 };
 

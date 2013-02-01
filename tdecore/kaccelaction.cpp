@@ -21,7 +21,7 @@
 */
 
 #include "kaccelaction.h"
-#include "kaccelbase.h"   // for KAccelBase::slotRemoveAction() & emitSignal()
+#include "kaccelbase.h"   // for TDEAccelBase::slotRemoveAction() & emitSignal()
 
 #include <tqkeycode.h>
 
@@ -34,19 +34,19 @@
 #include <kshortcutlist.h>
 
 //---------------------------------------------------------------------
-// KAccelAction
+// TDEAccelAction
 //---------------------------------------------------------------------
 
-class KAccelActionPrivate
+class TDEAccelActionPrivate
 {
  public:
 	uint m_nConnections;
 };
 
-KAccelAction::KAccelAction()
+TDEAccelAction::TDEAccelAction()
 {
-	//kdDebug(125) << "KAccelAction(): this = " << this << endl;
-	d = new KAccelActionPrivate;
+	//kdDebug(125) << "TDEAccelAction(): this = " << this << endl;
+	d = new TDEAccelActionPrivate;
 	m_pObjSlot = 0;
 	m_psMethodSlot = 0;
 	m_bConfigurable = true;
@@ -55,33 +55,33 @@ KAccelAction::KAccelAction()
 	d->m_nConnections = 0;
 }
 
-KAccelAction::KAccelAction( const KAccelAction& action )
+TDEAccelAction::TDEAccelAction( const TDEAccelAction& action )
 {
-	//kdDebug(125) << "KAccelAction( copy from \"" << action.m_sName << "\" ): this = " << this << endl;
-	d = new KAccelActionPrivate;
+	//kdDebug(125) << "TDEAccelAction( copy from \"" << action.m_sName << "\" ): this = " << this << endl;
+	d = new TDEAccelActionPrivate;
 	*this = action;
 }
 
-KAccelAction::KAccelAction( const TQString& sName, const TQString& sLabel, const TQString& sWhatsThis,
-			const KShortcut& cutDef3, const KShortcut& cutDef4,
+TDEAccelAction::TDEAccelAction( const TQString& sName, const TQString& sLabel, const TQString& sWhatsThis,
+			const TDEShortcut& cutDef3, const TDEShortcut& cutDef4,
 			const TQObject* pObjSlot, const char* psMethodSlot,
 			bool bConfigurable, bool bEnabled )
 {
-	//kdDebug(125) << "KAccelAction( \"" << sName << "\" ): this = " << this << endl;
-	d = new KAccelActionPrivate;
+	//kdDebug(125) << "TDEAccelAction( \"" << sName << "\" ): this = " << this << endl;
+	d = new TDEAccelActionPrivate;
 	init( sName, sLabel, sWhatsThis,
 		cutDef3, cutDef4,
 		pObjSlot, psMethodSlot,
 		bConfigurable, bEnabled );
 }
 
-KAccelAction::~KAccelAction()
+TDEAccelAction::~TDEAccelAction()
 {
-	//kdDebug(125) << "\t\t\tKAccelAction::~KAccelAction( \"" << m_sName << "\" ): this = " << this << endl;
+	//kdDebug(125) << "\t\t\tTDEAccelAction::~TDEAccelAction( \"" << m_sName << "\" ): this = " << this << endl;
 	delete d;
 }
 
-void KAccelAction::clear()
+void TDEAccelAction::clear()
 {
 	m_cut.clear();
 	m_pObjSlot = 0;
@@ -92,8 +92,8 @@ void KAccelAction::clear()
 	d->m_nConnections = 0;
 }
 
-bool KAccelAction::init( const TQString& sName, const TQString& sLabel, const TQString& sWhatsThis,
-			const KShortcut& rgCutDefaults3, const KShortcut& rgCutDefaults4,
+bool TDEAccelAction::init( const TQString& sName, const TQString& sLabel, const TQString& sWhatsThis,
+			const TDEShortcut& rgCutDefaults3, const TDEShortcut& rgCutDefaults4,
 			const TQObject* pObjSlot, const char* psMethodSlot,
 			bool bConfigurable, bool bEnabled )
 {
@@ -110,11 +110,11 @@ bool KAccelAction::init( const TQString& sName, const TQString& sLabel, const TQ
 	m_cut = shortcutDefault();
 	d->m_nConnections = 0;
 	if( !m_bEnabled )
-		kdDebug(125) << "KAccelAction::init( \"" << sName << "\" ): created with enabled = false" << endl;
+		kdDebug(125) << "TDEAccelAction::init( \"" << sName << "\" ): created with enabled = false" << endl;
 	return true;
 }
 
-KAccelAction& KAccelAction::operator =( const KAccelAction& action )
+TDEAccelAction& TDEAccelAction::operator =( const TDEAccelAction& action )
 {
 	m_sName          = action.m_sName;
 	m_sLabel         = action.m_sLabel;
@@ -132,37 +132,37 @@ KAccelAction& KAccelAction::operator =( const KAccelAction& action )
 	return *this;
 }
 
-void KAccelAction::setName( const TQString& s )
+void TDEAccelAction::setName( const TQString& s )
 	{ m_sName = s; }
-void KAccelAction::setLabel( const TQString& s )
+void TDEAccelAction::setLabel( const TQString& s )
 	{ m_sLabel = s; }
-void KAccelAction::setWhatsThis( const TQString& s )
+void TDEAccelAction::setWhatsThis( const TQString& s )
 	{ m_sWhatsThis = s; }
 
-bool KAccelAction::setShortcut( const KShortcut& cut )
+bool TDEAccelAction::setShortcut( const TDEShortcut& cut )
 {
 	m_cut = cut;
 	return true;
 }
 
-void KAccelAction::setSlot( const TQObject* pObjSlot, const char* psMethodSlot )
+void TDEAccelAction::setSlot( const TQObject* pObjSlot, const char* psMethodSlot )
 {
 	m_pObjSlot = pObjSlot;
 	m_psMethodSlot = psMethodSlot;
 }
 
-void KAccelAction::setConfigurable( bool b )
+void TDEAccelAction::setConfigurable( bool b )
 	{ m_bConfigurable = b; }
-void KAccelAction::setEnabled( bool b )
+void TDEAccelAction::setEnabled( bool b )
 	{ m_bEnabled = b; }
 
-TQString KAccelAction::toString() const
+TQString TDEAccelAction::toString() const
 	{ return m_cut.toString(); }
 
-TQString KAccelAction::toStringInternal() const
+TQString TDEAccelAction::toStringInternal() const
 	{ return m_cut.toStringInternal( &shortcutDefault() ); }
 
-bool KAccelAction::setKeySequence( uint i, const KKeySequence& seq )
+bool TDEAccelAction::setKeySequence( uint i, const KKeySequence& seq )
 {
 	if( i < m_cut.count() ) {
 		m_cut.setSeq( i, seq );
@@ -172,12 +172,12 @@ bool KAccelAction::setKeySequence( uint i, const KKeySequence& seq )
 	return false;
 }
 
-void KAccelAction::clearShortcut()
+void TDEAccelAction::clearShortcut()
 {
 	m_cut.clear();
 }
 
-bool KAccelAction::contains( const KKeySequence& seq )
+bool TDEAccelAction::contains( const KKeySequence& seq )
 {
 	return m_cut.contains( seq );
 	for( uint i = 0; i < m_cut.count(); i++ ) {
@@ -187,90 +187,90 @@ bool KAccelAction::contains( const KKeySequence& seq )
 	return false;
 }
 
-const KShortcut& KAccelAction::shortcutDefault() const
+const TDEShortcut& TDEAccelAction::shortcutDefault() const
 	{ return (useFourModifierKeys()) ? m_cutDefault4 : m_cutDefault3; }
-bool KAccelAction::isConnected() const
+bool TDEAccelAction::isConnected() const
 	{ return d->m_nConnections; }
-void KAccelAction::incConnections()
+void TDEAccelAction::incConnections()
 	{ d->m_nConnections++; }
-void KAccelAction::decConnections()
+void TDEAccelAction::decConnections()
 	{ if( d->m_nConnections > 0 ) d->m_nConnections--; }
 
 // Indicate whether to default to the 3- or 4- modifier keyboard schemes
-int KAccelAction::g_bUseFourModifierKeys = -1;
+int TDEAccelAction::g_bUseFourModifierKeys = -1;
 
-bool KAccelAction::useFourModifierKeys()
+bool TDEAccelAction::useFourModifierKeys()
 {
-	if( KAccelAction::g_bUseFourModifierKeys == -1 ) {
+	if( TDEAccelAction::g_bUseFourModifierKeys == -1 ) {
 		// Read in whether to use 4 modifier keys
 		TDEConfigGroupSaver cgs( TDEGlobal::config(), "Keyboard" );
 		bool b = TDEGlobal::config()->readBoolEntry( "Use Four Modifier Keys",  false );
-		KAccelAction::g_bUseFourModifierKeys = b && KKeyNative::keyboardHasWinKey();
+		TDEAccelAction::g_bUseFourModifierKeys = b && KKeyNative::keyboardHasWinKey();
 	}
-	return KAccelAction::g_bUseFourModifierKeys == 1;
+	return TDEAccelAction::g_bUseFourModifierKeys == 1;
 }
 
-void KAccelAction::useFourModifierKeys( bool b )
+void TDEAccelAction::useFourModifierKeys( bool b )
 {
-	if( KAccelAction::g_bUseFourModifierKeys != (int)b ) {
-		KAccelAction::g_bUseFourModifierKeys = b && KKeyNative::keyboardHasWinKey();
+	if( TDEAccelAction::g_bUseFourModifierKeys != (int)b ) {
+		TDEAccelAction::g_bUseFourModifierKeys = b && KKeyNative::keyboardHasWinKey();
 		// If we're 'turning off' the meta key or, if we're turning it on,
 		//  the keyboard must actually have a meta key.
 		if( b && !KKeyNative::keyboardHasWinKey() )
 			kdDebug(125) << "Tried to use four modifier keys on a keyboard layout without a Meta key.\n";
 	}
 	TDEConfigGroupSaver cgs( TDEGlobal::config(), "Keyboard" );
-	TDEGlobal::config()->writeEntry( "Use Four Modifier Keys", KAccelAction::g_bUseFourModifierKeys, true, true);
+	TDEGlobal::config()->writeEntry( "Use Four Modifier Keys", TDEAccelAction::g_bUseFourModifierKeys, true, true);
 
-	kdDebug(125) << "bUseFourModifierKeys = " << KAccelAction::g_bUseFourModifierKeys << endl;
+	kdDebug(125) << "bUseFourModifierKeys = " << TDEAccelAction::g_bUseFourModifierKeys << endl;
 }
 
 //---------------------------------------------------------------------
-// KAccelActions
+// TDEAccelActions
 //---------------------------------------------------------------------
 
-class KAccelActionsPrivate
+class TDEAccelActionsPrivate
 {
  public:
 };
 
-KAccelActions::KAccelActions()
+TDEAccelActions::TDEAccelActions()
 {
-	kdDebug(125) << "KAccelActions(): this = " << this << endl;
+	kdDebug(125) << "TDEAccelActions(): this = " << this << endl;
 	initPrivate( 0 );
 }
 
-KAccelActions::KAccelActions( const KAccelActions& actions )
+TDEAccelActions::TDEAccelActions( const TDEAccelActions& actions )
 {
-	kdDebug(125) << "KAccelActions( actions = " << &actions << " ): this = " << this << endl;
+	kdDebug(125) << "TDEAccelActions( actions = " << &actions << " ): this = " << this << endl;
 	initPrivate( 0 );
 	init( actions );
 }
 
-KAccelActions::KAccelActions( KAccelBase* pKAccelBase )
+TDEAccelActions::TDEAccelActions( TDEAccelBase* pTDEAccelBase )
 {
-	kdDebug(125) << "KAccelActions( KAccelBase = " << pKAccelBase << " ): this = " << this << endl;
-	initPrivate( pKAccelBase );
+	kdDebug(125) << "TDEAccelActions( TDEAccelBase = " << pTDEAccelBase << " ): this = " << this << endl;
+	initPrivate( pTDEAccelBase );
 }
 
-KAccelActions::~KAccelActions()
+TDEAccelActions::~TDEAccelActions()
 {
-	//kdDebug(125) << "KAccelActions::~KAccelActions(): this = " << this << endl;
+	//kdDebug(125) << "TDEAccelActions::~TDEAccelActions(): this = " << this << endl;
 	clear();
 	//delete d;
 }
 
-void KAccelActions::initPrivate( KAccelBase* pKAccelBase )
+void TDEAccelActions::initPrivate( TDEAccelBase* pTDEAccelBase )
 {
-	m_pKAccelBase = pKAccelBase;
+	m_pTDEAccelBase = pTDEAccelBase;
 	m_nSizeAllocated = m_nSize = 0;
 	m_prgActions = 0;
-	//d = new KAccelActionsPrivate;
+	//d = new TDEAccelActionsPrivate;
 }
 
-void KAccelActions::clear()
+void TDEAccelActions::clear()
 {
-	kdDebug(125) << "\tKAccelActions::clear()" << endl;
+	kdDebug(125) << "\tTDEAccelActions::clear()" << endl;
 	for( uint i = 0; i < m_nSize; i++ )
 		delete m_prgActions[i];
 	delete[] m_prgActions;
@@ -279,14 +279,14 @@ void KAccelActions::clear()
 	m_prgActions = 0;
 }
 
-bool KAccelActions::init( const KAccelActions& actions )
+bool TDEAccelActions::init( const TDEAccelActions& actions )
 {
 	clear();
 	resize( actions.count() );
 	for( uint i = 0; i < m_nSize; i++ ) {
-		KAccelAction* pAction = actions.m_prgActions[i];
+		TDEAccelAction* pAction = actions.m_prgActions[i];
 		if( pAction )
-			m_prgActions[i] = new KAccelAction( *pAction );
+			m_prgActions[i] = new TDEAccelAction( *pAction );
 		else
 			m_prgActions[i] = 0;
 	}
@@ -294,22 +294,22 @@ bool KAccelActions::init( const KAccelActions& actions )
 	return true;
 }
 
-bool KAccelActions::init( TDEConfigBase& config, const TQString& sGroup )
+bool TDEAccelActions::init( TDEConfigBase& config, const TQString& sGroup )
 {
-	kdDebug(125) << "KAccelActions::init( " << sGroup << " )" << endl;
+	kdDebug(125) << "TDEAccelActions::init( " << sGroup << " )" << endl;
 	TQMap<TQString, TQString> mapEntry = config.entryMap( sGroup );
 	resize( mapEntry.count() );
 
 	TQMap<TQString, TQString>::Iterator it( mapEntry.begin() );
 	for( uint i = 0; it != mapEntry.end(); ++it, i++ ) {
 		TQString sShortcuts = *it;
-		KShortcut cuts;
+		TDEShortcut cuts;
 
 		kdDebug(125) << it.key() << " = " << sShortcuts << endl;
 		if( !sShortcuts.isEmpty() && sShortcuts != "none" )
 			cuts.init( sShortcuts );
 
-		m_prgActions[i] = new KAccelAction( it.key(), it.key(), it.key(),
+		m_prgActions[i] = new TDEAccelAction( it.key(), it.key(), it.key(),
 			cuts, cuts,
 			0, 0,          // pObjSlot, psMethodSlot,
 			true, false ); // bConfigurable, bEnabled
@@ -318,11 +318,11 @@ bool KAccelActions::init( TDEConfigBase& config, const TQString& sGroup )
 	return true;
 }
 
-void KAccelActions::resize( uint nSize )
+void TDEAccelActions::resize( uint nSize )
 {
 	if( nSize > m_nSizeAllocated ) {
 		uint nSizeAllocated = ((nSize/10) + 1) * 10;
-		KAccelAction** prgActions = new KAccelAction* [nSizeAllocated];
+		TDEAccelAction** prgActions = new TDEAccelAction* [nSizeAllocated];
 
 		// Copy pointers over to new array
 		for( uint i = 0; i < m_nSizeAllocated; i++ )
@@ -340,21 +340,21 @@ void KAccelActions::resize( uint nSize )
 	m_nSize = nSize;
 }
 
-void KAccelActions::insertPtr( KAccelAction* pAction )
+void TDEAccelActions::insertPtr( TDEAccelAction* pAction )
 {
 	resize( m_nSize + 1 );
 	m_prgActions[m_nSize-1] = pAction;
 }
 
-void KAccelActions::updateShortcuts( KAccelActions& actions2 )
+void TDEAccelActions::updateShortcuts( TDEAccelActions& actions2 )
 {
-	kdDebug(125) << "KAccelActions::updateShortcuts()" << endl;
+	kdDebug(125) << "TDEAccelActions::updateShortcuts()" << endl;
 	bool bChanged = false;
 
 	for( uint i = 0; i < m_nSize; i++ ) {
-		KAccelAction* pAction = m_prgActions[i];
+		TDEAccelAction* pAction = m_prgActions[i];
 		if( pAction && pAction->m_bConfigurable ) {
-			KAccelAction* pAction2 = actions2.actionPtr( pAction->m_sName );
+			TDEAccelAction* pAction2 = actions2.actionPtr( pAction->m_sName );
 			if( pAction2 ) {
 				TQString sOld = pAction->m_cut.toStringInternal();
 				pAction->m_cut = pAction2->m_cut;
@@ -371,68 +371,68 @@ void KAccelActions::updateShortcuts( KAccelActions& actions2 )
 		emitKeycodeChanged();
 }
 
-int KAccelActions::actionIndex( const TQString& sAction ) const
+int TDEAccelActions::actionIndex( const TQString& sAction ) const
 {
 	for( uint i = 0; i < m_nSize; i++ ) {
 		if( m_prgActions[i] == 0 )
-			kdWarning(125) << "KAccelActions::actionPtr( " << sAction << " ): encountered null pointer at m_prgActions[" << i << "]" << endl;
+			kdWarning(125) << "TDEAccelActions::actionPtr( " << sAction << " ): encountered null pointer at m_prgActions[" << i << "]" << endl;
 		else if( m_prgActions[i]->m_sName == sAction )
 			return (int) i;
 	}
 	return -1;
 }
 
-KAccelAction* KAccelActions::actionPtr( uint i )
+TDEAccelAction* TDEAccelActions::actionPtr( uint i )
 {
 	return m_prgActions[i];
 }
 
-const KAccelAction* KAccelActions::actionPtr( uint i ) const
+const TDEAccelAction* TDEAccelActions::actionPtr( uint i ) const
 {
 	return m_prgActions[i];
 }
 
-KAccelAction* KAccelActions::actionPtr( const TQString& sAction )
+TDEAccelAction* TDEAccelActions::actionPtr( const TQString& sAction )
 {
 	int i = actionIndex( sAction );
 	return (i >= 0) ? m_prgActions[i] : 0;
 }
 
-const KAccelAction* KAccelActions::actionPtr( const TQString& sAction ) const
+const TDEAccelAction* TDEAccelActions::actionPtr( const TQString& sAction ) const
 {
 	int i = actionIndex( sAction );
 	return (i >= 0) ? m_prgActions[i] : 0;
 }
 
-KAccelAction* KAccelActions::actionPtr( KKeySequence cut )
+TDEAccelAction* TDEAccelActions::actionPtr( KKeySequence cut )
 {
 	for( uint i = 0; i < m_nSize; i++ ) {
 		if( m_prgActions[i] == 0 )
-			kdWarning(125) << "KAccelActions::actionPtr( " << cut.toStringInternal() << " ): encountered null pointer at m_prgActions[" << i << "]" << endl;
+			kdWarning(125) << "TDEAccelActions::actionPtr( " << cut.toStringInternal() << " ): encountered null pointer at m_prgActions[" << i << "]" << endl;
 		else if( m_prgActions[i]->contains( cut ) )
 			return m_prgActions[i];
 	}
 	return 0;
 }
 
-KAccelAction& KAccelActions::operator []( uint i )
+TDEAccelAction& TDEAccelActions::operator []( uint i )
 {
 	return *actionPtr( i );
 }
 
-const KAccelAction& KAccelActions::operator []( uint i ) const
+const TDEAccelAction& TDEAccelActions::operator []( uint i ) const
 {
 	return *actionPtr( i );
 }
 
-KAccelAction* KAccelActions::insert( const TQString& sName, const TQString& sLabel )
+TDEAccelAction* TDEAccelActions::insert( const TQString& sName, const TQString& sLabel )
 {
 	if( actionPtr( sName ) ) {
-		kdWarning(125) << "KAccelActions::insertLabel( " << sName << ", " << sLabel << " ): action with same name already present." << endl;
+		kdWarning(125) << "TDEAccelActions::insertLabel( " << sName << ", " << sLabel << " ): action with same name already present." << endl;
 		return 0;
 	}
 
-	KAccelAction* pAction = new KAccelAction;
+	TDEAccelAction* pAction = new TDEAccelAction;
 	pAction->m_sName = sName;
 	pAction->m_sLabel = sLabel;
 	pAction->m_bConfigurable = false;
@@ -442,38 +442,38 @@ KAccelAction* KAccelActions::insert( const TQString& sName, const TQString& sLab
 	return pAction;
 }
 
-KAccelAction* KAccelActions::insert( const TQString& sAction, const TQString& sLabel, const TQString& sWhatsThis,
-			const KShortcut& rgCutDefaults3, const KShortcut& rgCutDefaults4,
+TDEAccelAction* TDEAccelActions::insert( const TQString& sAction, const TQString& sLabel, const TQString& sWhatsThis,
+			const TDEShortcut& rgCutDefaults3, const TDEShortcut& rgCutDefaults4,
 			const TQObject* pObjSlot, const char* psMethodSlot,
 			bool bConfigurable, bool bEnabled )
 {
-	//kdDebug(125) << "KAccelActions::insert()2 begin" << endl;
+	//kdDebug(125) << "TDEAccelActions::insert()2 begin" << endl;
 	if( actionPtr( sAction ) ) {
-		kdWarning(125) << "KAccelActions::insert( " << sAction << " ): action with same name already present." << endl;
+		kdWarning(125) << "TDEAccelActions::insert( " << sAction << " ): action with same name already present." << endl;
 		return 0;
 	}
 
-	KAccelAction* pAction = new KAccelAction(
+	TDEAccelAction* pAction = new TDEAccelAction(
 		sAction, sLabel, sWhatsThis,
 		rgCutDefaults3, rgCutDefaults4,
 		pObjSlot, psMethodSlot,
 		bConfigurable, bEnabled );
 	insertPtr( pAction );
 
-	//kdDebug(125) << "KAccelActions::insert()2 end" << endl;
+	//kdDebug(125) << "TDEAccelActions::insert()2 end" << endl;
 	return pAction;
 }
 
-bool KAccelActions::remove( const TQString& sAction )
+bool TDEAccelActions::remove( const TQString& sAction )
 {
-	kdDebug(125) << "KAccelActions::remove( \"" << sAction << "\" ): this = " << this << " m_pKAccelBase = " << m_pKAccelBase << endl;
+	kdDebug(125) << "TDEAccelActions::remove( \"" << sAction << "\" ): this = " << this << " m_pTDEAccelBase = " << m_pTDEAccelBase << endl;
 
 	int iAction = actionIndex( sAction );
 	if( iAction < 0 )
 		return false;
 
-	if( m_pKAccelBase )
-		m_pKAccelBase->slotRemoveAction( m_prgActions[iAction] );
+	if( m_pTDEAccelBase )
+		m_pTDEAccelBase->slotRemoveAction( m_prgActions[iAction] );
 	delete m_prgActions[iAction];
 
 	for( uint i = iAction; i < m_nSize - 1; i++ )
@@ -483,39 +483,39 @@ bool KAccelActions::remove( const TQString& sAction )
 	return true;
 }
 
-bool KAccelActions::readActions( const TQString& sConfigGroup, TDEConfigBase* pConfig )
+bool TDEAccelActions::readActions( const TQString& sConfigGroup, TDEConfigBase* pConfig )
 {
-	KAccelShortcutList accelList(*this, false);
+	TDEAccelShortcutList accelList(*this, false);
 	return accelList.readSettings( sConfigGroup, pConfig );
 }
 
 /*
-	1) KAccelAction = "Something"
+	1) TDEAccelAction = "Something"
 		1) KKeySequence = "Meta+X,Asterisk"
-			1) KAccelSequence = "Meta+X"
+			1) TDEAccelSequence = "Meta+X"
 				1) KKeySequence = Meta+X
-			2) KAccelSequence = "Asterisk"
+			2) TDEAccelSequence = "Asterisk"
 				1) KKeySequence = Shift+8 (English layout)
 				2) KKeySequence = Keypad_Asterisk
 		2) KKeySequence = "Alt+F2"
-			1) KAccelSequence = "Alt+F2"
+			1) TDEAccelSequence = "Alt+F2"
 				1) KKeySequence = Alt+F2
 	-> "Something=Meta+X,Asterisk;Alt+F2"
 */
-bool KAccelActions::writeActions( const TQString &sGroup, TDEConfigBase* pConfig,
+bool TDEAccelActions::writeActions( const TQString &sGroup, TDEConfigBase* pConfig,
 			bool bWriteAll, bool bGlobal ) const
 {
-	kdDebug(125) << "KAccelActions::writeActions( " << sGroup << ", " << pConfig << ", " << bWriteAll << ", " << bGlobal << " )" << endl;
+	kdDebug(125) << "TDEAccelActions::writeActions( " << sGroup << ", " << pConfig << ", " << bWriteAll << ", " << bGlobal << " )" << endl;
 	if( !pConfig )
 		pConfig = TDEGlobal::config();
 	TDEConfigGroupSaver cs( pConfig, sGroup );
 
 	for( uint i = 0; i < m_nSize; i++ ) {
 		if( m_prgActions[i] == 0 ) {
-			kdWarning(125) << "KAccelActions::writeActions(): encountered null pointer at m_prgActions[" << i << "]" << endl;
+			kdWarning(125) << "TDEAccelActions::writeActions(): encountered null pointer at m_prgActions[" << i << "]" << endl;
 			continue;
 		}
-		const KAccelAction& action = *m_prgActions[i];
+		const TDEAccelAction& action = *m_prgActions[i];
 
 		TQString s;
 		bool bConfigHasAction = !pConfig->readEntry( action.m_sName ).isEmpty();
@@ -555,11 +555,11 @@ bool KAccelActions::writeActions( const TQString &sGroup, TDEConfigBase* pConfig
 	return true;
 }
 
-void KAccelActions::emitKeycodeChanged()
+void TDEAccelActions::emitKeycodeChanged()
 {
-	if( m_pKAccelBase )
-		m_pKAccelBase->emitSignal( KAccelBase::KEYCODE_CHANGED );
+	if( m_pTDEAccelBase )
+		m_pTDEAccelBase->emitSignal( TDEAccelBase::KEYCODE_CHANGED );
 }
 
-uint KAccelActions::count() const
+uint TDEAccelActions::count() const
 	{ return m_nSize; }

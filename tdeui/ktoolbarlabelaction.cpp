@@ -21,10 +21,10 @@
 #include <tqlabel.h>
 #include <tqapplication.h>
 
-class KToolBarLabelAction::KToolBarLabelActionPrivate
+class TDEToolBarLabelAction::TDEToolBarLabelActionPrivate
 {
 public:
-  KToolBarLabelActionPrivate()
+  TDEToolBarLabelActionPrivate()
     : m_label(0)
   {
   }
@@ -32,53 +32,53 @@ public:
 };
 
 
-KToolBarLabelAction::KToolBarLabelAction(const TQString &text,
-					 const KShortcut &cut,
+TDEToolBarLabelAction::TDEToolBarLabelAction(const TQString &text,
+					 const TDEShortcut &cut,
 					 const TQObject *receiver, 
 					 const char *slot,
-					 KActionCollection *parent,
+					 TDEActionCollection *parent,
 					 const char *name)
   : KWidgetAction(new TQLabel(text, 0, "kde toolbar widget"), text, cut,
 		  receiver, slot, parent, name), 
-    d(new KToolBarLabelActionPrivate)
+    d(new TDEToolBarLabelActionPrivate)
 {
   init();
 }
 
-KToolBarLabelAction::KToolBarLabelAction(TQWidget* buddy, 
+TDEToolBarLabelAction::TDEToolBarLabelAction(TQWidget* buddy, 
 					 const TQString &text,
-					 const KShortcut &cut,
+					 const TDEShortcut &cut,
 					 const TQObject *receiver, 
 					 const char *slot,
- 					 KActionCollection *parent, 
+ 					 TDEActionCollection *parent, 
 					 const char *name)
   : KWidgetAction(new TQLabel(buddy, text, 0, "kde toolbar widget"), text, 
 		  cut, receiver, slot, parent, name),
-    d(new KToolBarLabelActionPrivate)
+    d(new TDEToolBarLabelActionPrivate)
 {
   init();
 }
 
-KToolBarLabelAction::KToolBarLabelAction(TQLabel* label, 
-					 const KShortcut &cut, 
+TDEToolBarLabelAction::TDEToolBarLabelAction(TQLabel* label, 
+					 const TDEShortcut &cut, 
 					 const TQObject *receiver,
 					 const char *slot,
-					 KActionCollection* parent, 
+					 TDEActionCollection* parent, 
 					 const char *name)
   : KWidgetAction(label, label->text(), cut, receiver, slot, parent, name),
-    d(new KToolBarLabelActionPrivate)
+    d(new TDEToolBarLabelActionPrivate)
 {
   Q_ASSERT(TQString::fromLatin1("kde toolbar widget") == label->name());
   init();
 }
 
-KToolBarLabelAction::~KToolBarLabelAction()
+TDEToolBarLabelAction::~TDEToolBarLabelAction()
 {
   delete d;
   d = 0;
 }
 
-void KToolBarLabelAction::init()
+void TDEToolBarLabelAction::init()
 {
   d->m_label = static_cast<TQLabel*>(widget());
   /* these lines were copied from Konqueror's KonqDraggableLabel class in
@@ -90,28 +90,28 @@ void KToolBarLabelAction::init()
   d->m_label->adjustSize();
 }
 
-void KToolBarLabelAction::setText(const TQString& text)
+void TDEToolBarLabelAction::setText(const TQString& text)
 {
   KWidgetAction::setText(text);
   d->m_label->setText(text);
 }
 
-void KToolBarLabelAction::setBuddy(TQWidget* buddy)
+void TDEToolBarLabelAction::setBuddy(TQWidget* buddy)
 {
   d->m_label->setBuddy(buddy);
 }
 
-TQWidget* KToolBarLabelAction::buddy() const
+TQWidget* TDEToolBarLabelAction::buddy() const
 {
   return d->m_label->buddy();
 }
 
-TQLabel* KToolBarLabelAction::label() const
+TQLabel* TDEToolBarLabelAction::label() const
 {
   return d->m_label;
 }
 
-void KToolBarLabelAction::virtual_hook(int, void*)
+void TDEToolBarLabelAction::virtual_hook(int, void*)
 {
 
 }

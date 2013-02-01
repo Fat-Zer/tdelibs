@@ -191,7 +191,7 @@ void OptionStringView::setValue(const TQString& val)
 OptionListView::OptionListView(TQWidget *parent, const char *name)
 : OptionBaseView(parent,name)
 {
-	m_list = new KListBox(this);
+	m_list = new TDEListBox(this);
 
 	TQVBoxLayout	*main_ = new TQVBoxLayout(this, 0, 10);
 	main_->addWidget(m_list);

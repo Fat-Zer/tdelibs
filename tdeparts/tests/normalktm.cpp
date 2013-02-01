@@ -29,21 +29,21 @@ Shell::Shell()
   TQPopupMenu * pFile = new TQPopupMenu( this );
   menuBar()->insertItem( "File", pFile );
   TQObject * coll = this;
-  KAction * paLocal = new KAction( "&View local file", 0, this, TQT_SLOT( slotFileOpen() ), coll, "open_local_file" );
+  TDEAction * paLocal = new TDEAction( "&View local file", 0, this, TQT_SLOT( slotFileOpen() ), coll, "open_local_file" );
   // No XML : we need to plug our actions ourselves
   paLocal->plug( pFile );
 
-  KAction * paRemote = new KAction( "&View remote file", 0, this, TQT_SLOT( slotFileOpenRemote() ), coll, "open_remote_file" );
+  TDEAction * paRemote = new TDEAction( "&View remote file", 0, this, TQT_SLOT( slotFileOpenRemote() ), coll, "open_remote_file" );
   paRemote->plug( pFile );
 
-  m_paEditFile = new KAction( "&Edit file", 0, this, TQT_SLOT( slotFileEdit() ), coll, "edit_file" );
+  m_paEditFile = new TDEAction( "&Edit file", 0, this, TQT_SLOT( slotFileEdit() ), coll, "edit_file" );
   m_paEditFile->plug( pFile );
 
-  m_paCloseEditor = new KAction( "&Close file editor", 0, this, TQT_SLOT( slotFileCloseEditor() ), coll, "close_editor" );
+  m_paCloseEditor = new TDEAction( "&Close file editor", 0, this, TQT_SLOT( slotFileCloseEditor() ), coll, "close_editor" );
   m_paCloseEditor->setEnabled(false);
   m_paCloseEditor->plug( pFile );
 
-  KAction * paQuit = new KAction( "&Quit", 0, this, TQT_SLOT( close() ), coll, "shell_quit" );
+  TDEAction * paQuit = new TDEAction( "&Quit", 0, this, TQT_SLOT( close() ), coll, "shell_quit" );
   paQuit->setIconSet(TQIconSet(BarIcon("exit")));
   paQuit->plug( pFile );
 

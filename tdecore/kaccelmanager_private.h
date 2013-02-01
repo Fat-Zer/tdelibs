@@ -39,12 +39,12 @@ class TQWidgetStack;
  * @author Matthias Hoelzer-Kluepfel <mhk@kde.org>
 */
 
-class KAccelString
+class TDEAccelString
 {
 public:
 
-  KAccelString() : m_pureText(), m_accel(-1) {}
-  KAccelString(const TQString &input, int initalWeight=-1);
+  TDEAccelString() : m_pureText(), m_accel(-1) {}
+  TDEAccelString(const TQString &input, int initalWeight=-1);
 
   void calculateWeights(int initialWeight);
 
@@ -61,7 +61,7 @@ public:
 
   int maxWeight(int &index, const TQString &used);
 
-  bool operator == (const KAccelString &c) const { return m_pureText == c.m_pureText && m_accel == c.m_accel && m_orig_accel == c.m_orig_accel; }
+  bool operator == (const TDEAccelString &c) const { return m_pureText == c.m_pureText && m_accel == c.m_accel && m_orig_accel == c.m_orig_accel; }
 
 
 private:
@@ -77,7 +77,7 @@ private:
 };
 
 
-typedef TQValueList<KAccelString> KAccelStringList;
+typedef TQValueList<TDEAccelString> TDEAccelStringList;
 
 
 /**
@@ -87,7 +87,7 @@ typedef TQValueList<KAccelString> KAccelStringList;
  * @author Matthias Hoelzer-Kluepfel <mhk@kde.org>
 */
 
-class KAccelManagerAlgorithm
+class TDEAccelManagerAlgorithm
 {
 public:
 
@@ -114,7 +114,7 @@ public:
   };
 
   /// Method to call to find the best distribution of accelerators.
-  static void findAccelerators(KAccelStringList &result, TQString &used);
+  static void findAccelerators(TDEAccelStringList &result, TQString &used);
 
 };
 
@@ -131,7 +131,7 @@ class TQPopupMenu;
  * @author Matthias Hoelzer-Kluepfel <mhk@kde.org>
 */
 
-class KPopupAccelManager : public TQObject
+class TDEPopupAccelManager : public TQObject
 {
   Q_OBJECT
 
@@ -142,7 +142,7 @@ public:
 
 protected:
 
-  KPopupAccelManager(TQPopupMenu *popup);
+  TDEPopupAccelManager(TQPopupMenu *popup);
 
 
 private slots:
@@ -154,11 +154,11 @@ private:
 
   void calculateAccelerators();
 
-  void findMenuEntries(KAccelStringList &list);
-  void setMenuEntries(const KAccelStringList &list);
+  void findMenuEntries(TDEAccelStringList &list);
+  void setMenuEntries(const TDEAccelStringList &list);
 
   TQPopupMenu       *m_popup;
-  KAccelStringList m_entries;
+  TDEAccelStringList m_entries;
   int              m_count;
 
 };
@@ -188,7 +188,7 @@ private:
   void calculateAccelerators();
 
   TQWidgetStack     *m_stack;
-  KAccelStringList m_entries;
+  TDEAccelStringList m_entries;
 
 };
 

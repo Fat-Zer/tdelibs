@@ -30,7 +30,7 @@
 QDirMultiLineEdit::QDirMultiLineEdit(TQWidget *parent, const char *name)
 : TQWidget(parent, name)
 {
-	m_view = new KListView(this);
+	m_view = new TDEListView(this);
 	m_view->header()->hide();
 	m_view->addColumn("");
 	m_view->setFullWidth(true);

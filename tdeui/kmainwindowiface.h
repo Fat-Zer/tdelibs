@@ -27,32 +27,32 @@
 
 class KDCOPActionProxy;
 class KDCOPPropertyProxy;
-class KMainWindow;
+class TDEMainWindow;
 
 /**
- * @short DCOP interface to KMainWindow.
+ * @short DCOP interface to TDEMainWindow.
  *
- * This is the main interface to the KMainWindow.  This will provide a consistent
+ * This is the main interface to the TDEMainWindow.  This will provide a consistent
  * DCOP interface to all KDE applications that use it.
  *
  * @author Ian Reinhart Geiser <geiseri@yahoo.com>
  */
-class TDEUI_EXPORT KMainWindowInterface : virtual public DCOPObject
+class TDEUI_EXPORT TDEMainWindowInterface : virtual public DCOPObject
 {
 K_DCOP
 
 public:
 	/**
 	Construct a new interface object.
-	@param mainWindow - The parent KMainWindow object
-	that will provide us with the KAction objects.
+	@param mainWindow - The parent TDEMainWindow object
+	that will provide us with the TDEAction objects.
 	*/
-	KMainWindowInterface( KMainWindow * mainWindow );
+	TDEMainWindowInterface( TDEMainWindow * mainWindow );
 	/**
 	Destructor
 	Cleans up the dcop action proxy object.
 	**/
-	~KMainWindowInterface();
+	~TDEMainWindowInterface();
 
 	QCStringList functionsDynamic();
 	bool processDynamic(const TQCString &fun, const TQByteArray &data, TQCString& replyType, TQByteArray &replyData);
@@ -106,7 +106,7 @@ k_dcop:
 	TQCString actionToolTip( TQCString action);
 
 	/**
-	Returns a dcop reference to the selected KAction
+	Returns a dcop reference to the selected TDEAction
 	@param name The name of the action.  The names of valid
 	actions can be found by calling actions().
 	@return A DCOPRef for the kaction.
@@ -151,7 +151,7 @@ k_dcop:
 //	QCStringList getQTProperties();
 
 private:
-	KMainWindow *m_MainWindow;
+	TDEMainWindow *m_MainWindow;
 	KDCOPActionProxy *m_dcopActionProxy;
 	KDCOPPropertyProxy *m_dcopPropertyProxy;
 };

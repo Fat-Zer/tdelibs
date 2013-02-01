@@ -34,12 +34,12 @@ class TQKeyEvent;
  * An item for the listiew, that has a reference to its corresponding
  * KFileItem.
  */
-class TDEIO_EXPORT KFileListViewItem : public KListViewItem
+class TDEIO_EXPORT KFileListViewItem : public TDEListViewItem
 {
 public:
     KFileListViewItem( TQListView *parent, const TQString &text,
 		       const TQPixmap &icon, KFileItem *fi )
-	: KListViewItem( parent, text ), inf( fi ) {
+	: TDEListViewItem( parent, text ), inf( fi ) {
         setPixmap( 0, icon );
         setText( 0, text );
     }
@@ -48,14 +48,14 @@ public:
      * @since 3.1
      */
     KFileListViewItem( TQListView *parent, KFileItem *fi )
-        : KListViewItem( parent ), inf( fi ) {
+        : TDEListViewItem( parent ), inf( fi ) {
         init();
     }
 
     KFileListViewItem( TQListView *parent, const TQString &text,
 		       const TQPixmap &icon, KFileItem *fi,
 		       TQListViewItem *after)
-	: KListViewItem( parent, after ), inf( fi ) {
+	: TDEListViewItem( parent, after ), inf( fi ) {
         setPixmap( 0, icon );
         setText( 0, text );
     }
@@ -106,7 +106,7 @@ private:
  * @see KCombiView
  * @see KFileIconView
  */
-class TDEIO_EXPORT KFileDetailView : public KListView, public KFileView
+class TDEIO_EXPORT KFileDetailView : public TDEListView, public KFileView
 {
     Q_OBJECT
 
@@ -193,9 +193,9 @@ private slots:
     void slotAutoOpen();
 
 private:
-    virtual void insertItem(TQListViewItem *i) { KListView::insertItem(i); }
-    virtual void setSorting(int i, bool b) { KListView::setSorting(i, b); }
-    virtual void setSelected(TQListViewItem *i, bool b) { KListView::setSelected(i, b); }
+    virtual void insertItem(TQListViewItem *i) { TDEListView::insertItem(i); }
+    virtual void setSorting(int i, bool b) { TDEListView::setSorting(i, b); }
+    virtual void setSelected(TQListViewItem *i, bool b) { TDEListView::setSelected(i, b); }
 
     inline KFileListViewItem * viewItem( const KFileItem *item ) const {
         if ( item )

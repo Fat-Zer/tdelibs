@@ -30,7 +30,7 @@
 
 #include <assert.h>
 
-class MainWindow : public KMainWindow
+class MainWindow : public TDEMainWindow
 {
 public:
   MainWindow()
@@ -47,7 +47,7 @@ public:
 
 
     // first constructor
-    KToolBarLabelAction* label1 = new KToolBarLabelAction("&Label 1", 0,
+    TDEToolBarLabelAction* label1 = new TDEToolBarLabelAction("&Label 1", 0,
 							  0, 0,
 							  actionCollection(),
 							  "label1");
@@ -55,8 +55,8 @@ public:
     KLineEdit* lineEdit = new KLineEdit(this);
     new KWidgetAction(lineEdit, "Line Edit", 0, this, 0,
 		      actionCollection(), "lineEdit");
-    KToolBarLabelAction* label2 = 
-      new KToolBarLabelAction(lineEdit, "L&abel 2", 0, 0, 0,
+    TDEToolBarLabelAction* label2 = 
+      new TDEToolBarLabelAction(lineEdit, "L&abel 2", 0, 0, 0,
 			      actionCollection(),
 			      "label2");
 
@@ -69,7 +69,7 @@ public:
       ("&Really long, long, long and boring text goes here", this, 
         "kde toolbar widget");
 
-    KToolBarLabelAction* label3 = new KToolBarLabelAction(customLabel, 0, 0, 0,
+    TDEToolBarLabelAction* label3 = new TDEToolBarLabelAction(customLabel, 0, 0, 0,
  							  actionCollection(),
 							  "label3");
   

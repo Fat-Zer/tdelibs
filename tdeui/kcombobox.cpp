@@ -616,12 +616,12 @@ void KHistoryCombo::keyPressEvent( TQKeyEvent *e )
     KKey event_key( e );
 
     // going up in the history, rotating when reaching TQListBox::count()
-    if ( KStdAccel::rotateUp().contains(event_key) )
+    if ( TDEStdAccel::rotateUp().contains(event_key) )
         rotateUp();
 
     // going down in the history, no rotation possible. Last item will be
     // the text that was in the lineedit before Up was called.
-    else if ( KStdAccel::rotateDown().contains(event_key) )
+    else if ( TDEStdAccel::rotateDown().contains(event_key) )
         rotateDown();
     else
         KComboBox::keyPressEvent( e );
@@ -745,12 +745,12 @@ KHistoryComboEditor::KHistoryComboEditor( const TQStringList& entries, TQWidget 
     clearSearch->setTextLabel(i18n("Clear Search"), true);
     clearSearch->setIconSet(SmallIconSet(TQApplication::reverseLayout() ? "clear_left" : "locationbar_erase"));
     TQLabel* slbl = new TQLabel(i18n("&Search:"), searchbox);
-    KListViewSearchLine* listViewSearch = new KListViewSearchLine(searchbox);
+    TDEListViewSearchLine* listViewSearch = new TDEListViewSearchLine(searchbox);
     slbl->setBuddy(listViewSearch);
     connect(clearSearch, TQT_SIGNAL(pressed()), listViewSearch, TQT_SLOT(clear()));
 
     // Add ListView
-    m_pListView = new KListView( box );
+    m_pListView = new TDEListView( box );
     listViewSearch->setListView(m_pListView);
     m_pListView->setAllColumnsShowFocus(true);
     m_pListView->header()->hide();

@@ -5,7 +5,7 @@
 
 class DemoWidget : public TQWidget {
 private:
-    KPopupMenu *menu;
+    TDEPopupMenu *menu;
     
 void mousePressEvent(TQMouseEvent *)
 {
@@ -20,7 +20,7 @@ void paintEvent(TQPaintEvent *)
 public:
     DemoWidget() : TQWidget()
     {
-        menu = new KPopupMenu("Popup Menu:");
+        menu = new TDEPopupMenu("Popup Menu:");
         menu->insertItem("Item1");
         menu->insertItem("Item2");
         menu->insertSeparator();

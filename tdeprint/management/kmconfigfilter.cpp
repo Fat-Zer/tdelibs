@@ -43,10 +43,10 @@ KMConfigFilter::KMConfigFilter(TQWidget *parent, const char *name)
 
 	TQGroupBox	*box = new TQGroupBox(0, Qt::Vertical, i18n("Printer Filter"), this);
 
-	m_list1 = new KListBox(box);
-	m_list1->setSelectionMode(KListBox::Extended);
-	m_list2 = new KListBox(box);
-	m_list2->setSelectionMode(KListBox::Extended);
+	m_list1 = new TDEListBox(box);
+	m_list1->setSelectionMode(TDEListBox::Extended);
+	m_list2 = new TDEListBox(box);
+	m_list2->setSelectionMode(TDEListBox::Extended);
 	m_add = new TQToolButton( box );
 	m_add->setIconSet(TQApplication::reverseLayout() ? SmallIconSet( "back" ) : SmallIconSet( "forward" ));
 	m_remove = new TQToolButton( box );
@@ -97,7 +97,7 @@ void KMConfigFilter::loadConfig(TDEConfig *conf)
 	{
 		if (!it.current()->isSpecial() && !it.current()->isVirtual())
 		{
-			KListBox	*lb = (m_plist.find(it.current()->printerName()) == m_plist.end() ? m_list1 : m_list2);
+			TDEListBox	*lb = (m_plist.find(it.current()->printerName()) == m_plist.end() ? m_list1 : m_list2);
 			lb->insertItem(SmallIcon(it.current()->pixmap()), it.current()->printerName());
 		}
 	}
@@ -116,7 +116,7 @@ void KMConfigFilter::saveConfig(TDEConfig *conf)
 	conf->writeEntry("LocationRe", m_locationre->text());
 }
 
-void KMConfigFilter::transfer(KListBox *from, KListBox *to)
+void KMConfigFilter::transfer(TDEListBox *from, TDEListBox *to)
 {
 	for (uint i=0; i<from->count();)
 	{
@@ -143,7 +143,7 @@ void KMConfigFilter::slotRemoveClicked()
 
 void KMConfigFilter::slotSelectionChanged()
 {
-	const KListBox	*lb = static_cast<const KListBox*>(sender());
+	const TDEListBox	*lb = static_cast<const TDEListBox*>(sender());
 	if (!lb)
 		return;
 	TQToolButton	*pb = (lb == m_list1 ? m_add : m_remove);

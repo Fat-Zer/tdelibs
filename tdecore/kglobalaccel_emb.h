@@ -11,8 +11,8 @@ public:
 
 	virtual void setEnabled( bool bEnabled );
 
-	virtual bool connectKey( KAccelAction&, KKeySequence );
-	virtual bool disconnectKey( KAccelAction&, KKeySequence );
+	virtual bool connectKey( TDEAccelAction&, KKeySequence );
+	virtual bool disconnectKey( TDEAccelAction&, KKeySequence );
 };
 
 #endif // _KGLOBALACCEL_EMB_H

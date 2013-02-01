@@ -98,7 +98,7 @@ public:
 
     void ensureItemVisible( const KFileItem * );
 
-    virtual KActionCollection * actionCollection() const;
+    virtual TDEActionCollection * actionCollection() const;
 
     virtual void setAcceptDrops(bool b);
 

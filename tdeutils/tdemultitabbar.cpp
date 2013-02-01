@@ -870,7 +870,7 @@ KMultiTabBar::~KMultiTabBar() {
 
 /*int KMultiTabBar::insertButton(TQPixmap pic,int id ,const TQString&)
 {
-  (new KToolbarButton(pic,id,m_internal))->show();
+  (new TDEToolbarButton(pic,id,m_internal))->show();
   return 0;
 }*/
 

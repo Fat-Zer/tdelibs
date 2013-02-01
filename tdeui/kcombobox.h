@@ -77,7 +77,7 @@ class KURL;
  * and consider using TQGuardedPtr<KCompletion>.
  *
  * The default key-bindings for completion and rotation is determined from the
- * global settings in KStdAccel. These values, however, can be overridden
+ * global settings in TDEStdAccel. These values, however, can be overridden
  * locally by invoking KCompletionBase::setKeyBinding(). The values can
  * easily be reverted back to the default setting, by simply calling
  * useGlobalSettings(). An alternate method would be to default individual
@@ -815,7 +815,7 @@ protected:
     virtual void virtual_hook( int id, void* data );
 
 private:
-    KListView *m_pListView;
+    TDEListView *m_pListView;
 
     class KHistoryComboEditorPrivate;
     KHistoryComboEditorPrivate* const d;

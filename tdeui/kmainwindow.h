@@ -28,7 +28,7 @@
 #include <tqmetaobject.h>
 #include <ktoolbar.h>
 
-class KPopupMenu;
+class TDEPopupMenu;
 class KXMLGUIFactory;
 class TDEConfig;
 class KHelpMenu;
@@ -36,9 +36,9 @@ class KStatusBar;
 class TQStatusBar;
 class KMenuBar;
 class KMWSessionManaged;
-class KMainWindowPrivate;
-class KAccel;
-class KToolBarMenuAction;
+class TDEMainWindowPrivate;
+class TDEAccel;
+class TDEToolBarMenuAction;
 class DCOPObject;
 
 #define KDE_DEFAULT_WINDOWFLAGS WType_TopLevel | WDestructiveClose
@@ -53,7 +53,7 @@ class DCOPObject;
  * It manages the geometry for all its children, including your
  * main widget.
  *
- * Normally, you will inherit from KMainWindow,
+ * Normally, you will inherit from TDEMainWindow,
  * then construct (or use some existing) widget as
  * your main view. You can set only one main view.
  *
@@ -61,18 +61,18 @@ class DCOPObject;
  * and only one statusbar.
  *
  * The toolbars, menubar, and statusbar can be created by the
- * KMainWindow and - unlike the old KMainWindow - may, but do not
- * have to, be deleted by you. KMainWindow will handle that internally.
+ * TDEMainWindow and - unlike the old TDEMainWindow - may, but do not
+ * have to, be deleted by you. TDEMainWindow will handle that internally.
  *
  * Height and width can be operated independently from each other. Simply
  * define the minimum/maximum height/width of your main widget and
- * KMainWindow will take this into account. For fixed size windows set
+ * TDEMainWindow will take this into account. For fixed size windows set
  * your main widget to a fixed size.
  *
  * Fixed aspect ratios (heightForWidth()) and fixed width widgets are
  * not supported.
 *
- * KMainWindow will set icon, mini icon and caption, which it gets
+ * TDEMainWindow will set icon, mini icon and caption, which it gets
  * from TDEApplication. It provides full session management, and
  * will save its position, geometry and positions of toolbars and
  * menubar on logout. If you want to save additional data, reimplement
@@ -85,7 +85,7 @@ class DCOPObject;
  * There are also kRestoreMainWindows convenience functions which
  * can restore all your windows on next login.
  *
- *  Note that a KMainWindow per-default is created with the
+ *  Note that a TDEMainWindow per-default is created with the
  *  WDestructiveClose flag, i.e. it is automatically destroyed when the
  *  window is closed. If you do not want this behavior, specify 0 as
  *  widget flag in the constructor.
@@ -95,7 +95,7 @@ class DCOPObject;
 
  */
 
-class TDEUI_EXPORT KMainWindow : public TQMainWindow, public KXMLGUIBuilder, virtual public KXMLGUIClient
+class TDEUI_EXPORT TDEMainWindow : public TQMainWindow, public KXMLGUIBuilder, virtual public KXMLGUIClient
 {
     friend class KMWSessionManaged;
     Q_OBJECT
@@ -105,15 +105,15 @@ public:
      * Construct a main window.
      *
      * @param parent The widget parent. This is usually 0 but it may also be the window
-     * group leader. In that case, the KMainWindow becomes sort of a
+     * group leader. In that case, the TDEMainWindow becomes sort of a
      * secondary window.
      *
      * @param name The object name. For session management and window management to work
      * properly, all main windows in the application should have a
-     * different name. When passing 0 (the default), KMainWindow will create
+     * different name. When passing 0 (the default), TDEMainWindow will create
      * a unique name, but it's recommended to explicitly pass a window name that will
      * also describe the type of the window. If there can be several windows of the same
-     * type, append '#' (hash) to the name, and KMainWindow will append numbers to make
+     * type, append '#' (hash) to the name, and TDEMainWindow will append numbers to make
      * the names unique. For example, for a mail client which has one main window showing
      * the mails and folders, and which can also have one or more windows for composing
      * mails, the name for the folders window should be e.g. "mainwindow" and
@@ -128,25 +128,25 @@ public:
      *
      * @see http://doc.trolltech.com/3.2/tqt.html#WidgetFlags-enum
      *
-     * KMainWindows must be created on the heap with 'new', like:
+     * TDEMainWindows must be created on the heap with 'new', like:
      * \code
-     * KMainWindow *kmw = new KMainWindow (...);
+     * TDEMainWindow *kmw = new TDEMainWindow (...);
      * \endcode
      **/
 #ifdef qdoc
-    KMainWindow( TQWidget* parent = 0, const char *name = 0, WFlags f = WType_TopLevel | WDestructiveClose );
+    TDEMainWindow( TQWidget* parent = 0, const char *name = 0, WFlags f = WType_TopLevel | WDestructiveClose );
 #else
-    KMainWindow( TQWidget* parent = 0, const char *name = 0, WFlags f = (WFlags)(WType_TopLevel | WDestructiveClose) );
+    TDEMainWindow( TQWidget* parent = 0, const char *name = 0, WFlags f = (WFlags)(WType_TopLevel | WDestructiveClose) );
 #endif
 
     /**
      * Flags that can be passed in an argument to the constructor to
      * change the behavior.
      *
-     * NoDCOPObject tells KMainWindow not to create a KMainWindowInterface.
+     * NoDCOPObject tells TDEMainWindow not to create a TDEMainWindowInterface.
      * This can be useful in particular for inherited classes, which
      * might want to create more specific dcop interfaces. It's a good
-     * idea to use KMainWindowInterface as the base class for such interfaces
+     * idea to use TDEMainWindowInterface as the base class for such interfaces
      * though (to provide the standard mainwindow functionality via DCOP).
      */
     enum CreationFlags
@@ -155,14 +155,14 @@ public:
     };
 
     /**
-     * Overloaded constructor which allows passing some KMainWindow::CreationFlags.
+     * Overloaded constructor which allows passing some TDEMainWindow::CreationFlags.
      *
      * @since 3.2
      */
 #ifdef qdoc
-    KMainWindow( int cflags, TQWidget* parent = 0, const char *name = 0, WFlags f = WType_TopLevel | WDestructiveClose );
+    TDEMainWindow( int cflags, TQWidget* parent = 0, const char *name = 0, WFlags f = WType_TopLevel | WDestructiveClose );
 #else
-    KMainWindow( int cflags, TQWidget* parent = 0, const char *name = 0, WFlags f = (WFlags)(WType_TopLevel | WDestructiveClose) );
+    TDEMainWindow( int cflags, TQWidget* parent = 0, const char *name = 0, WFlags f = (WFlags)(WType_TopLevel | WDestructiveClose) );
 #endif
 
     /**
@@ -171,7 +171,7 @@ public:
      * Will also destroy the toolbars, and menubar if
      * needed.
      */
-    virtual ~KMainWindow();
+    virtual ~TDEMainWindow();
 
     /**
      * Retrieve the standard help menu.
@@ -183,7 +183,7 @@ public:
      *
      * Example (adding a standard help menu to your application):
      * \code
-     * KPopupMenu *help = helpMenu( <myTextString> );
+     * TDEPopupMenu *help = helpMenu( <myTextString> );
      * menuBar()->insertItem( i18n("&Help"), help );
      * \endcode
      *
@@ -197,7 +197,7 @@ public:
      *
      * @return A standard help menu.
      */
-    KPopupMenu* helpMenu( const TQString &aboutAppText = TQString::null,
+    TDEPopupMenu* helpMenu( const TQString &aboutAppText = TQString::null,
 			  bool showWhatsThis = true );
 
     /**
@@ -222,7 +222,7 @@ public:
      *
      * @return A standard help menu.
      */
-    KPopupMenu* customHelpMenu( bool showWhatsThis = true );
+    TDEPopupMenu* customHelpMenu( bool showWhatsThis = true );
 
     /**
      * <b>Session Management</b>
@@ -236,7 +236,7 @@ public:
      * \code
      * if (kapp->isRestored()){
      *   int n = 1;
-     *   while (KMainWindow::canBeRestored(n)){
+     *   while (TDEMainWindow::canBeRestored(n)){
      *     (new childMW)->restore(n);
      *     n++;
      *   }
@@ -250,7 +250,7 @@ public:
      * application.
      *
      * If your application uses different kinds of toplevel
-     * windows, then you can use KMainWindow::classNameOfToplevel(n)
+     * windows, then you can use TDEMainWindow::classNameOfToplevel(n)
      * to determine the exact type before calling the childMW
      * constructor in the example from above.
      *
@@ -270,7 +270,7 @@ public:
      * less code to write.
      *
      * For new code or if you have more than one kind of toplevel
-     * widget (each derived from KMainWindow, of course), you can
+     * widget (each derived from TDEMainWindow, of course), you can
      * use the templated kRestoreMainWindows global functions:
      *
      * \code
@@ -381,23 +381,23 @@ public:
      *
      * Note that tooltips for kactions in actionCollection() are not
      * automatically connected to this statusBar.
-     * See the KActionCollection documentation for more details.
+     * See the TDEActionCollection documentation for more details.
      *
-     * @see KActionCollection
+     * @see TDEActionCollection
      */
     KStatusBar *statusBar();
 
     /**
-     * List of members of KMainWindow class.
+     * List of members of TDEMainWindow class.
      */
-    static TQPtrList<KMainWindow>* memberList;
+    static TQPtrList<TDEMainWindow>* memberList;
 
     //KDE4: replace with memberList() and make memberList member private
     /**
-     * List of members of KMainWindow class.
+     * List of members of TDEMainWindow class.
      * @since 3.4
      */
-    static TQPtrList<KMainWindow>* getMemberList();
+    static TQPtrList<TDEMainWindow>* getMemberList();
 
     /**
      * Returns a pointer to the toolbar with the specified name.
@@ -409,18 +409,18 @@ public:
      *
      * @return A pointer to the toolbar
      **/
-    KToolBar *toolBar( const char *name=0 );
+    TDEToolBar *toolBar( const char *name=0 );
 
     /**
      * @return An iterator over the list of all toolbars for this window.
      */
-    TQPtrListIterator<KToolBar> toolBarIterator();
+    TQPtrListIterator<TDEToolBar> toolBarIterator();
 
     /**
-     * @return A KAccel instance bound to this mainwindow. Used automatically
-     * by KAction to make keybindings work in all cases.
+     * @return A TDEAccel instance bound to this mainwindow. Used automatically
+     * by TDEAction to make keybindings work in all cases.
      */
-    KAccel *accel();
+    TDEAccel *accel();
 
     void setFrameBorderWidth( int ) {}
 
@@ -437,11 +437,11 @@ public:
      * when saving.
      *
      * Typically, you will call setAutoSaveSettings() in your
-     * KMainWindow-inherited class constructor, and it will take care
+     * TDEMainWindow-inherited class constructor, and it will take care
      * of restoring and saving automatically. Make sure you call this
      * _after all_ your *bars have been created.
      *
-     * To make sure that KMainWindow propertly obtains the default
+     * To make sure that TDEMainWindow propertly obtains the default
      * size of the window you should do the following:
      * - Remove hard coded resize() calls in the constructor or main, they
      *   should be removed in favor of letting the automatic resizing
@@ -504,8 +504,8 @@ public:
     void saveMainWindowSettings(TDEConfig *config, const TQString &groupName = TQString::null);
 
     /**
-     * Sets whether KMainWindow should provide a menu that allows showing/hiding
-     * the available toolbars ( using KToggleToolBarAction ) . In case there
+     * Sets whether TDEMainWindow should provide a menu that allows showing/hiding
+     * the available toolbars ( using TDEToggleToolBarAction ) . In case there
      * is only one toolbar configured a simple 'Show \<toolbar name here\>' menu item
      * is shown.
      *
@@ -527,8 +527,8 @@ public:
 
 
     /**
-     * Sets whether KMainWindow should provide a menu that allows showing/hiding
-     * of the statusbar ( using KToggleStatusBarAction ).
+     * Sets whether TDEMainWindow should provide a menu that allows showing/hiding
+     * of the statusbar ( using TDEToggleStatusBarAction ).
      *
      * The menu / menu item is implemented using xmlgui. It will be inserted
      * in your menu structure in the 'Settings' menu.
@@ -537,13 +537,13 @@ public:
      * ( or similar ).
      *
      * If an application maintains the action on its own (i.e. never calls
-     * this function) a connection needs to be made to let KMainWindow
+     * this function) a connection needs to be made to let TDEMainWindow
      * know when that status (hidden/shown) of the statusbar has changed.
      * For example:
      * connect(action, TQT_SIGNAL(activated()),
      *         kmainwindow, TQT_SLOT(setSettingsDirty()));
      * Otherwise the status (hidden/show) of the statusbar might not be saved
-     * by KMainWindow.
+     * by TDEMainWindow.
      * @since 3.2
      */
     void createStandardStatusBarAction();
@@ -622,10 +622,10 @@ public:
      * Returns a pointer to the mainwindows action responsible for the toolbars menu
      * @since 3.1
      */
-    KAction *toolBarMenuAction();
+    TDEAction *toolBarMenuAction();
 
     /**
-     * @internal for KToolBar
+     * @internal for TDEToolBar
      * @since 3.3.1
      */
     void setupToolbarMenuActions();
@@ -874,7 +874,7 @@ protected:
      * to save its state.
      *
      * You @em must @em not change the group of the @p tdeconfig object, since
-     * KMainWindow uses one group for each window.  Please
+     * TDEMainWindow uses one group for each window.  Please
      * reimplement these function in childclasses.
      *
      * Note: No user interaction is allowed
@@ -1007,16 +1007,16 @@ private:
     KStatusBar *internalStatusBar();
     KHelpMenu *mHelpMenu, *helpMenu2;
     KXMLGUIFactory *factory_;
-    TQPtrList<KToolBar> toolbarList;
+    TQPtrList<TDEToolBar> toolbarList;
 protected:
     virtual void virtual_hook( int id, void* data );
 private:
-    KMainWindowPrivate *d;
-    void initKMainWindow(const char *name, int cflags);
+    TDEMainWindowPrivate *d;
+    void initTDEMainWindow(const char *name, int cflags);
 };
 
 #define RESTORE(type) { int n = 1;\
-    while (KMainWindow::canBeRestored(n)){\
+    while (TDEMainWindow::canBeRestored(n)){\
       (new type)->restore(n);\
       n++;}}
 
@@ -1027,15 +1027,15 @@ private:
  *  number of template arguments) are a replacement for the RESTORE
  *  macro provided in earlier versions of KDE. The old RESTORE macro
  *  is still provided for backwards compatibility. See
- *  KMainWindow documentation for more.
+ *  TDEMainWindow documentation for more.
  *
  * \since KDE 3.2
  *
  **/
 template <typename T>
 inline void kRestoreMainWindows() {
-  for ( int n = 1 ; KMainWindow::canBeRestored( n ) ; ++n ) {
-    const TQString className = KMainWindow::classNameOfToplevel( n );
+  for ( int n = 1 ; TDEMainWindow::canBeRestored( n ) ; ++n ) {
+    const TQString className = TDEMainWindow::classNameOfToplevel( n );
     if ( className == TQString::fromLatin1( T::staticMetaObject()->className() ) )
       (new T)->restore( n );
   }
@@ -1046,8 +1046,8 @@ inline void kRestoreMainWindows() {
   const char * classNames[2];
   classNames[0] = T0::staticMetaObject()->className();
   classNames[1] = T1::staticMetaObject()->className();
-  for ( int n = 1 ; KMainWindow::canBeRestored( n ) ; ++n ) {
-    const TQString className = KMainWindow::classNameOfToplevel( n );
+  for ( int n = 1 ; TDEMainWindow::canBeRestored( n ) ; ++n ) {
+    const TQString className = TDEMainWindow::classNameOfToplevel( n );
     if ( className == TQString::fromLatin1( classNames[0] ) )
       (new T0)->restore( n );
     else if ( className == TQString::fromLatin1( classNames[1] ) )
@@ -1061,8 +1061,8 @@ inline void kRestoreMainWindows() {
   classNames[0] = T0::staticMetaObject()->className();
   classNames[1] = T1::staticMetaObject()->className();
   classNames[2] = T2::staticMetaObject()->className();
-  for ( int n = 1 ; KMainWindow::canBeRestored( n ) ; ++n ) {
-    const TQString className = KMainWindow::classNameOfToplevel( n );
+  for ( int n = 1 ; TDEMainWindow::canBeRestored( n ) ; ++n ) {
+    const TQString className = TDEMainWindow::classNameOfToplevel( n );
     if ( className == TQString::fromLatin1( classNames[0] ) )
       (new T0)->restore( n );
     else if ( className == TQString::fromLatin1( classNames[1] ) )

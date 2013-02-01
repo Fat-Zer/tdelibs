@@ -184,7 +184,7 @@ void DockApplication::initMenuBar()
 void DockApplication::initToolBars()
 {
   TQPixmap p(folder);
-  KToolBar* tool_bar_0 = toolBar(0);
+  TDEToolBar* tool_bar_0 = toolBar(0);
   tool_bar_0->setFullSize(false);
   tool_bar_0->insertButton( p, 1 );
   tool_bar_0->insertButton(p, 2 );

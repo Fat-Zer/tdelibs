@@ -77,7 +77,7 @@
  * + Add more Deref classes so that we can access a wider variety of
  * collections.
  * */
-namespace KAccelGen
+namespace TDEAccelGen
 {
 
 // HELPERS
@@ -274,7 +274,7 @@ generateFromKeys(const TQMap<TQString,Data>& source, TQStringList& target)
 }
 
 
-} // end namespace KAccelGen
+} // end namespace TDEAccelGen
 
 #endif
 

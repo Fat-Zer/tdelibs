@@ -22,7 +22,7 @@
 #include <klineedit.h>
 #include <tqhbox.h>
 
-class KListView;
+class TDEListView;
 class TQListViewItem;
 class TQToolButton;
 
@@ -31,12 +31,12 @@ class TQToolButton;
  * listview based on a simple text search.
  *
  * No changes to the application other than instantiating this class with an
- * appropriate KListView should be needed.
+ * appropriate TDEListView should be needed.
  *
  * If you want the clear button and the search label, you should take a look at
- * the KListViewSearchLineWidget
+ * the TDEListViewSearchLineWidget
  *
- * @note { When iterating over items in the KListView, make sure that
+ * @note { When iterating over items in the TDEListView, make sure that
  * the iterator only includes visible items (for example, by adding
  * TQListViewItemIterator::Visible to the iterator flags). Otherwise,
  * actions (such as deletion) may be taken on items that have been
@@ -44,31 +44,31 @@ class TQToolButton;
  * @since 3.3
  */
 
-class TDEUI_EXPORT KListViewSearchLine : public KLineEdit
+class TDEUI_EXPORT TDEListViewSearchLine : public KLineEdit
 {
     Q_OBJECT
 
 public:
 
     /**
-     * Constructs a KListViewSearchLine with \a listView being the KListView to
+     * Constructs a TDEListViewSearchLine with \a listView being the TDEListView to
      * be filtered.
      *
      * If \a listView is null then the widget will be disabled until a listview
      * is set with setListView().
      */
-    KListViewSearchLine(TQWidget *parent = 0, KListView *listView = 0, const char *name = 0);
+    TDEListViewSearchLine(TQWidget *parent = 0, TDEListView *listView = 0, const char *name = 0);
 
     /**
-     * Constructs a KListViewSearchLine without any KListView to filter. The
-     * KListView object has to be set later with setListView(). 
+     * Constructs a TDEListViewSearchLine without any TDEListView to filter. The
+     * TDEListView object has to be set later with setListView(). 
      */
-    KListViewSearchLine(TQWidget *parent, const char *name);
+    TDEListViewSearchLine(TQWidget *parent, const char *name);
 
     /**
-     * Destroys the KListViewSearchLine.
+     * Destroys the TDEListViewSearchLine.
      */
-    virtual ~KListViewSearchLine();
+    virtual ~TDEListViewSearchLine();
 
     /**
      * Returns true if the search is case sensitive.  This defaults to false.
@@ -98,7 +98,7 @@ public:
      *
      * @see setListView()
      */
-    KListView *listView() const;
+    TDEListView *listView() const;
 
 public slots:
     /**
@@ -136,12 +136,12 @@ public slots:
     void setSearchColumns(const TQValueList<int> &columns);
 
     /**
-     * Sets the KListView that is filtered by this search line.  If \a lv is null
+     * Sets the TDEListView that is filtered by this search line.  If \a lv is null
      * then the widget will be disabled.
      *
      * @see listView()
      */
-    void setListView(KListView *lv);
+    void setListView(TDEListView *lv);
 
 protected:
 
@@ -206,43 +206,43 @@ private slots:
     void searchColumnsMenuActivated(int);
 
 private:
-    class KListViewSearchLinePrivate;
-    KListViewSearchLinePrivate *d;
+    class TDEListViewSearchLinePrivate;
+    TDEListViewSearchLinePrivate *d;
 };
 
 /**
- * Creates a widget featuring a KListViewSearchLine, a label with the text
+ * Creates a widget featuring a TDEListViewSearchLine, a label with the text
  * "Search" and a button to clear the search.
  *
  * @since 3.4
  */
-class TDEUI_EXPORT KListViewSearchLineWidget : public TQHBox
+class TDEUI_EXPORT TDEListViewSearchLineWidget : public TQHBox
 {
     Q_OBJECT
 
 public:
     /**
-     * Creates a KListViewSearchLineWidget for \a listView with \a parent as the
+     * Creates a TDEListViewSearchLineWidget for \a listView with \a parent as the
      * parent with and \a name.
      */
-    KListViewSearchLineWidget(KListView *listView = 0, TQWidget *parent = 0,
+    TDEListViewSearchLineWidget(TDEListView *listView = 0, TQWidget *parent = 0,
                               const char *name = 0);
 
     /**
-     * Destroys the KListViewSearchLineWidget
+     * Destroys the TDEListViewSearchLineWidget
      */
-    ~KListViewSearchLineWidget();
+    ~TDEListViewSearchLineWidget();
 
     /**
      * Creates the search line.  This can be useful to reimplement in cases where
-     * a KListViewSearchLine subclass is used.
+     * a TDEListViewSearchLine subclass is used.
      */
-    virtual KListViewSearchLine *createSearchLine(KListView *listView);
+    virtual TDEListViewSearchLine *createSearchLine(TDEListView *listView);
 
     /**
      * Returns a pointer to the search line.
      */
-    KListViewSearchLine *searchLine() const;
+    TDEListViewSearchLine *searchLine() const;
 
 protected slots:
     /**
@@ -257,8 +257,8 @@ private slots:
     void positionInToolBar();
 
 private:
-    class KListViewSearchLineWidgetPrivate;
-    KListViewSearchLineWidgetPrivate *d;
+    class TDEListViewSearchLineWidgetPrivate;
+    TDEListViewSearchLineWidgetPrivate *d;
 };
 
 #endif

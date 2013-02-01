@@ -20,7 +20,7 @@
 #ifndef TDEFILETREEVIEWTEST
 #define TDEFILETREEVIEWTEST
 
-class testFrame: public KMainWindow
+class testFrame: public TDEMainWindow
 {
    Q_OBJECT
 public:

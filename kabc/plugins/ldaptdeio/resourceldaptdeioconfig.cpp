@@ -293,7 +293,7 @@ AttributesDialog::AttributesDialog( const TQMap<TQString, TQString> &attributes,
     }
   }
 
-  KAcceleratorManager::manage( this );
+  TDEAcceleratorManager::manage( this );
 }
 
 AttributesDialog::~AttributesDialog()

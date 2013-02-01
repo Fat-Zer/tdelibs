@@ -89,10 +89,10 @@ public:
     /**
      * This overrides KFileView::actionCollection() by returning
      * the actionCollection() of the KFileView (member left) it contains.
-     * This means that KFilePreview will never create a KActionCollection
+     * This means that KFilePreview will never create a TDEActionCollection
      * object of its own.
      */
-    virtual KActionCollection * actionCollection() const;
+    virtual TDEActionCollection * actionCollection() const;
 
     void ensureItemVisible(const KFileItem *);
 

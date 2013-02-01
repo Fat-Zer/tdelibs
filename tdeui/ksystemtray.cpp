@@ -54,7 +54,7 @@ public:
         delete actionCollection;
     }
 
-    KActionCollection* actionCollection;
+    TDEActionCollection* actionCollection;
     bool on_all_desktops; // valid only when the parent widget was hidden
 };
 
@@ -66,7 +66,7 @@ KSystemTray::KSystemTray( TQWidget* parent, const char* name )
 #endif
 
     d = new KSystemTrayPrivate;
-    d->actionCollection = new KActionCollection(this);
+    d->actionCollection = new TDEActionCollection(this);
 
 #ifdef Q_WS_X11
     KWin::setSystemTrayWindowFor( winId(), parent?parent->topLevelWidget()->winId(): tqt_xrootwin() );
@@ -74,14 +74,14 @@ KSystemTray::KSystemTray( TQWidget* parent, const char* name )
     setBackgroundMode(X11ParentRelative);
     setBackgroundOrigin(WindowOrigin);
     hasQuit = 0;
-    menu = new KPopupMenu( this );
+    menu = new TDEPopupMenu( this );
     menu->insertTitle( kapp->miniIcon(), kapp->caption() );
     move( -1000, -1000 );
     KStdAction::quit(TQT_TQOBJECT(this), TQT_SLOT(maybeQuit()), d->actionCollection);
 
     if (parentWidget())
     {
-        new KAction(i18n("Minimize"), KShortcut(),
+        new TDEAction(i18n("Minimize"), TDEShortcut(),
                     TQT_TQOBJECT(this), TQT_SLOT( minimizeRestoreAction() ),
                     d->actionCollection, "minimizeRestore");
 #ifdef Q_WS_X11
@@ -112,7 +112,7 @@ void KSystemTray::showEvent( TQShowEvent * )
 {
     if ( !hasQuit ) {
 	menu->insertSeparator();
-        KAction* action = d->actionCollection->action("minimizeRestore");
+        TDEAction* action = d->actionCollection->action("minimizeRestore");
 
         if (action)
         {
@@ -136,7 +136,7 @@ void KSystemTray::enterEvent( TQEvent* e )
     TQLabel::enterEvent( e );
 }
 
-KPopupMenu* KSystemTray::contextMenu() const
+TDEPopupMenu* KSystemTray::contextMenu() const
 {
     return menu;
 }
@@ -155,7 +155,7 @@ void KSystemTray::mousePressEvent( TQMouseEvent *e )
 	// fall through
     case Qt::RightButton:
 	if ( parentWidget() ) {
-            KAction* action = d->actionCollection->action("minimizeRestore");
+            TDEAction* action = d->actionCollection->action("minimizeRestore");
 	    if ( parentWidget()->isVisible() )
 		action->setText( i18n("&Minimize") );
 	    else
@@ -175,7 +175,7 @@ void KSystemTray::mouseReleaseEvent( TQMouseEvent * )
 }
 
 
-void KSystemTray::contextMenuAboutToShow( KPopupMenu* )
+void KSystemTray::contextMenuAboutToShow( TDEPopupMenu* )
 {
 }
 
@@ -307,7 +307,7 @@ void KSystemTray::minimizeRestore( bool restore )
 #endif
 }
 
-KActionCollection* KSystemTray::actionCollection()
+TDEActionCollection* KSystemTray::actionCollection()
 {
     return d->actionCollection;
 }

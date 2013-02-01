@@ -97,7 +97,7 @@ KFileList::KFileList(TQWidget *parent, const char *name)
 
 	m_block = false;
 
-	m_files = new KListView(this);
+	m_files = new TDEListView(this);
 	m_files->addColumn(i18n("Name"));
 	m_files->addColumn(i18n("Type"));
 	m_files->addColumn(i18n("Path"));

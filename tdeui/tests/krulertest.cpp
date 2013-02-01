@@ -51,7 +51,7 @@ MouseWidget::resizeEvent( TQResizeEvent *r )
 
 
 KRulerTest::KRulerTest( const char *name )
-  : KMainWindow(0, name)
+  : TDEMainWindow(0, name)
 {
   mainframe = new TQFrame(this);
 

@@ -272,7 +272,7 @@ public:
   bool guiEnabled : 1;
   /**
    * This counter indicates when to exit the application.
-   * It starts at 1, is decremented in KMainWindow when the last window is closed, but
+   * It starts at 1, is decremented in TDEMainWindow when the last window is closed, but
    * is incremented by operations that should outlive the last window closed
    * (e.g. a file copy for a file manager, or 'compacting folders on exit' for a mail client).
    */
@@ -468,7 +468,7 @@ void TDEApplication::removeX11EventFilter( const TQWidget* filter )
 // FIXME: remove this when we've get a better method of
 // customizing accelerator handling -- hopefully in Qt.
 // For now, this is set whenever an accelerator is overridden
-// in KAccelEventHandler so that the AccelOverride isn't sent twice. -- ellis, 19/10/02
+// in TDEAccelEventHandler so that the AccelOverride isn't sent twice. -- ellis, 19/10/02
 extern bool kde_g_bKillAccelOverride;
 
 bool TDEApplication::notify(TQObject *receiver, TQEvent *event)
@@ -489,7 +489,7 @@ bool TDEApplication::notify(TQObject *receiver, TQEvent *event)
 
     if ((t == TQEvent::AccelOverride) || (t == TQEvent::KeyPress))
     {
-       static const KShortcut& _selectAll = KStdAccel::selectAll();
+       static const TDEShortcut& _selectAll = TDEStdAccel::selectAll();
        TQLineEdit *edit = ::tqqt_cast<TQLineEdit *>(receiver);
        if (edit)
        {
@@ -1297,7 +1297,7 @@ void TDEApplication::commitData( TQSessionManager& sm )
         bool canceled = false;
         TQWidget* w = list->first();
         while ( !canceled && w ) {
-            if ( !w->testWState( WState_ForceHide ) && !w->inherits("KMainWindow") ) {
+            if ( !w->testWState( WState_ForceHide ) && !w->inherits("TDEMainWindow") ) {
                 TQCloseEvent e;
                 sendEvent( w, &e );
                 canceled = !e.isAccepted();
@@ -2458,7 +2458,7 @@ void TDEApplication::kdisplaySetFont()
     TQApplication::setFont(TDEGlobalSettings::generalFont(), true);
     TQApplication::setFont(TDEGlobalSettings::menuFont(), true, TQMENUBAR_OBJECT_NAME_STRING);
     TQApplication::setFont(TDEGlobalSettings::menuFont(), true, TQPOPUPMENU_OBJECT_NAME_STRING);
-    TQApplication::setFont(TDEGlobalSettings::menuFont(), true, "KPopupTitle");
+    TQApplication::setFont(TDEGlobalSettings::menuFont(), true, "TDEPopupTitle");
 
     // "patch" standard TQStyleSheet to follow our fonts
     TQStyleSheet* sheet = TQStyleSheet::defaultSheet();
@@ -2544,11 +2544,11 @@ void TDEApplication::installKDEPropertyMap()
     kdeMap->insert( "KDateWidget", "date" );
     kdeMap->insert( "KDateTimeWidget", "dateTime" );
     kdeMap->insert( "KEditListBox", "items" );
-    kdeMap->insert( "KFontCombo", "family" );
-    kdeMap->insert( "KFontRequester", "font" );
-    kdeMap->insert( "KFontChooser", "font" );
+    kdeMap->insert( "TDEFontCombo", "family" );
+    kdeMap->insert( "TDEFontRequester", "font" );
+    kdeMap->insert( "TDEFontChooser", "font" );
     kdeMap->insert( "KHistoryCombo", "currentItem" );
-    kdeMap->insert( "KListBox", "currentItem" );
+    kdeMap->insert( "TDEListBox", "currentItem" );
     kdeMap->insert( "KLineEdit", "text" );
     kdeMap->insert( "KRestrictedLine", "text" );
     kdeMap->insert( "KSqueezedTextLabel", "text" );
@@ -3033,7 +3033,7 @@ startServiceInternal( const TQCString &function,
         function, params, replyType, replyData))
    {
         if (error)
-           *error = i18n("KLauncher could not be reached via DCOP.\n");
+           *error = i18n("TDELauncher could not be reached via DCOP.\n");
         if (!kapp)
            delete dcopClient;
         return -1;
@@ -3255,7 +3255,7 @@ void TDEApplication::setTopWidget( TQWidget *topWidget )
       return;
 
     // set the specified caption
-    if ( !topWidget->inherits("KMainWindow") ) { // KMainWindow does this already for us
+    if ( !topWidget->inherits("TDEMainWindow") ) { // TDEMainWindow does this already for us
         topWidget->setCaption( caption() );
     }
 
@@ -3356,7 +3356,7 @@ bool TDEApplication::authorize(const TQString &genericAction)
    return config->readBoolEntry(genericAction, true);
 }
 
-bool TDEApplication::authorizeKAction(const char *action)
+bool TDEApplication::authorizeTDEAction(const char *action)
 {
    if (!d->actionRestrictions || !action)
       return true;

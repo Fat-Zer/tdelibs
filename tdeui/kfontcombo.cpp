@@ -41,9 +41,9 @@
 #include <X11/Xft/Xft.h>
 
 
-struct KFontComboPrivate
+struct TDEFontComboPrivate
 {
-    KFontComboPrivate()
+    TDEFontComboPrivate()
         : bold(false),
           italic(false),
           underline(false),
@@ -65,11 +65,11 @@ struct KFontComboPrivate
     TQString defaultFamily;
 };
 
-class KFontListItem : public TQListBoxItem
+class TDEFontListItem : public TQListBoxItem
 {
 public:
-    KFontListItem(const TQString &fontName, KFontCombo *combo);
-    virtual ~KFontListItem();
+    TDEFontListItem(const TQString &fontName, TDEFontCombo *combo);
+    virtual ~TDEFontListItem();
 
     virtual int width(const TQListBox *) const;
     virtual int height(const TQListBox *) const;
@@ -83,13 +83,13 @@ private:
     void createFont();
 
 private:
-    KFontCombo *m_combo;
+    TDEFontCombo *m_combo;
     TQString m_fontName;
     TQFont *m_font;
     bool m_canPaintName;
 };
 
-KFontListItem::KFontListItem(const TQString &fontName, KFontCombo *combo)
+TDEFontListItem::TDEFontListItem(const TQString &fontName, TDEFontCombo *combo)
     : TQListBoxItem(combo->listBox()),
       m_combo(combo),
       m_fontName(fontName),
@@ -99,19 +99,19 @@ KFontListItem::KFontListItem(const TQString &fontName, KFontCombo *combo)
     setText(fontName);
 }
 
-KFontListItem::~KFontListItem()
+TDEFontListItem::~TDEFontListItem()
 {
     delete m_font;
 }
 
-int KFontListItem::width(const TQListBox *lb) const
+int TDEFontListItem::width(const TQListBox *lb) const
 {
     if (m_font)
        return TQFontMetrics(*m_font).width(text()) + 6;
     return lb->fontMetrics().width(text()) + 6;
 }
 
-int KFontListItem::height(const TQListBox *lb) const
+int TDEFontListItem::height(const TQListBox *lb) const
 {
     if (m_combo->d->displayFonts)
         return m_combo->d->lineSpacing + 2;
@@ -119,7 +119,7 @@ int KFontListItem::height(const TQListBox *lb) const
     return fm.lineSpacing() + 2;
 }
 
-void KFontListItem::paint(TQPainter *p)
+void TDEFontListItem::paint(TQPainter *p)
 {
     if (m_combo->d->displayFonts)
     {
@@ -144,7 +144,7 @@ void KFontListItem::paint(TQPainter *p)
     }
 }
 
-void KFontListItem::updateFont()
+void TDEFontListItem::updateFont()
 {
     if (!m_font)
         return;
@@ -156,7 +156,7 @@ void KFontListItem::updateFont()
     m_font->setPointSize(m_combo->d->size);
 }
 
-void KFontListItem::createFont()
+void TDEFontListItem::createFont()
 {
     if (m_font)
         return;
@@ -172,33 +172,33 @@ void KFontListItem::createFont()
     updateFont();
 }
 
-KFontCombo::KFontCombo(TQWidget *parent, const char *name)
+TDEFontCombo::TDEFontCombo(TQWidget *parent, const char *name)
     : KComboBox(true, parent, name)
 {
     init();
     TQStringList families;
-    KFontChooser::getFontList(families, 0);
+    TDEFontChooser::getFontList(families, 0);
     setFonts(families);
 }
 
-KFontCombo::KFontCombo(const TQStringList &fonts, TQWidget *parent, const char *name)
+TDEFontCombo::TDEFontCombo(const TQStringList &fonts, TQWidget *parent, const char *name)
     : KComboBox(true, parent, name)
 {
     init();
     setFonts(fonts);
 }
 
-void KFontCombo::setFonts(const TQStringList &fonts)
+void TDEFontCombo::setFonts(const TQStringList &fonts)
 {
     clear();
     for (TQStringList::ConstIterator it = fonts.begin(); it != fonts.end(); ++it)
-        new KFontListItem(*it, this);
+        new TDEFontListItem(*it, this);
 }
 
 /*
- * Maintenance note: Keep in sync with KFontAction::setFont()
+ * Maintenance note: Keep in sync with TDEFontAction::setFont()
  */
-void KFontCombo::setCurrentFont(const TQString &family)
+void TDEFontCombo::setCurrentFont(const TQString &family)
 {
     TQString lowerName = family.lower();
     int c = count();
@@ -257,27 +257,27 @@ void KFontCombo::setCurrentFont(const TQString &family)
        setCurrentFont( realFamily );
 }
 
-void KFontCombo::slotModified( int )
+void TDEFontCombo::slotModified( int )
 {
    d->modified = 1;
 }
 
-TQString KFontCombo::currentFont() const
+TQString TDEFontCombo::currentFont() const
 {
    if (d->modified)
       return currentText();
    return d->defaultFamily;
 }
 
-void KFontCombo::setCurrentItem(int i)
+void TDEFontCombo::setCurrentItem(int i)
 {
     d->modified = true;
     TQComboBox::setCurrentItem(i);
 }
 
-void KFontCombo::init()
+void TDEFontCombo::init()
 {
-    d = new KFontComboPrivate;
+    d = new TDEFontComboPrivate;
     d->displayFonts = displayFonts();
     setInsertionPolicy(NoInsertion);
     setAutoCompletion(true);
@@ -285,12 +285,12 @@ void KFontCombo::init()
     connect( this, TQT_SIGNAL(highlighted(int)), TQT_SLOT(slotModified(int)));
 }
 
-KFontCombo::~KFontCombo()
+TDEFontCombo::~TDEFontCombo()
 {
     delete d;
 }
 
-void KFontCombo::setBold(bool bold)
+void TDEFontCombo::setBold(bool bold)
 {
     if (d->bold == bold)
         return;
@@ -298,12 +298,12 @@ void KFontCombo::setBold(bool bold)
     updateFonts();
 }
 
-bool KFontCombo::bold() const
+bool TDEFontCombo::bold() const
 {
     return d->bold;
 }
 
-void KFontCombo::setItalic(bool italic)
+void TDEFontCombo::setItalic(bool italic)
 {
     if (d->italic == italic)
         return;
@@ -311,12 +311,12 @@ void KFontCombo::setItalic(bool italic)
     updateFonts();
 }
 
-bool KFontCombo::italic() const
+bool TDEFontCombo::italic() const
 {
     return d->italic;
 }
 
-void KFontCombo::setUnderline(bool underline)
+void TDEFontCombo::setUnderline(bool underline)
 {
     if (d->underline == underline)
         return;
@@ -324,12 +324,12 @@ void KFontCombo::setUnderline(bool underline)
     updateFonts();
 }
 
-bool KFontCombo::underline() const
+bool TDEFontCombo::underline() const
 {
     return d->underline;
 }
 
-void KFontCombo::setStrikeOut(bool strikeOut)
+void TDEFontCombo::setStrikeOut(bool strikeOut)
 {
     if (d->strikeOut == strikeOut)
         return;
@@ -337,12 +337,12 @@ void KFontCombo::setStrikeOut(bool strikeOut)
     updateFonts();
 }
 
-bool KFontCombo::strikeOut() const
+bool TDEFontCombo::strikeOut() const
 {
     return d->strikeOut;
 }
 
-void KFontCombo::setSize(int size)
+void TDEFontCombo::setSize(int size)
 {
     if (d->size == size)
         return;
@@ -354,29 +354,29 @@ void KFontCombo::setSize(int size)
     updateFonts();
 }
 
-int KFontCombo::size() const
+int TDEFontCombo::size() const
 {
     return d->size;
 }
 
-void KFontCombo::updateFonts()
+void TDEFontCombo::updateFonts()
 {
     if (!d->displayFonts)
         return;
 
     for (unsigned int i = 0; i < listBox()->count(); ++i)
     {
-        KFontListItem *item = static_cast<KFontListItem *>(listBox()->item(i));
+        TDEFontListItem *item = static_cast<TDEFontListItem *>(listBox()->item(i));
         item->updateFont();
     }
 }
 
-bool KFontCombo::displayFonts()
+bool TDEFontCombo::displayFonts()
 {
     TDEConfigGroupSaver saver(TDEGlobal::config(), "KDE");
     return TDEGlobal::config()->readBoolEntry("DisplayFontItems", true);
 }
 
-void KFontCombo::virtual_hook( int id, void* data )
+void TDEFontCombo::virtual_hook( int id, void* data )
 { KComboBox::virtual_hook( id, data ); }
 

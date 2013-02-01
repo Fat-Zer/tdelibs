@@ -42,29 +42,29 @@ class TQComboBox;
 class TQPoint;
 class TQIconSet;
 class TQString;
-class KToolBar;
+class TDEToolBar;
 
-class KAccel;
-class KAccelActions;
+class TDEAccel;
+class TDEAccelActions;
 class TDEConfig;
 class TDEConfigBase;
 class KURL;
 class TDEInstance;
-class KToolBar;
-class KActionCollection;
-class KPopupMenu;
-class KMainWindow;
+class TDEToolBar;
+class TDEActionCollection;
+class TDEPopupMenu;
+class TDEMainWindow;
 class KXMLGUIClient;
 
-typedef TQValueList<KAction *> KActionPtrList;
+typedef TQValueList<TDEAction *> TDEActionPtrList;
 
 /**
- * A managed set of KAction objects.
+ * A managed set of TDEAction objects.
  * 
- * If you set the tooltips on KActions and want the tooltip to show in statusbar
+ * If you set the tooltips on TDEActions and want the tooltip to show in statusbar
  * (recommended) then you will need to connect a couple of the actionclass signals
  * to the toolbar.
- * The easiest way of doing this is in your KMainWindow subclass, where you create
+ * The easiest way of doing this is in your TDEMainWindow subclass, where you create
  * a statusbar, do:
  *
  * \code
@@ -75,25 +75,25 @@ typedef TQValueList<KAction *> KActionPtrList;
  *           statusBar(), TQT_SLOT( clear() ) );
  * \endcode
  */
-class TDEUI_EXPORT KActionCollection : public TQObject
+class TDEUI_EXPORT TDEActionCollection : public TQObject
 {
-  friend class KAction;
+  friend class TDEAction;
   friend class KXMLGUIClient;
 
   Q_OBJECT
 
 public:
-  KActionCollection( TQWidget *parent, const char *name = 0, TDEInstance *instance = 0 );
+  TDEActionCollection( TQWidget *parent, const char *name = 0, TDEInstance *instance = 0 );
   /**
    * Use this constructor if you want the collection's actions to restrict
    * their accelerator keys to @p watch rather than the @p parent.  If
    * you don't require shortcuts, you can pass a null to the @p watch parameter.
    */
-  KActionCollection( TQWidget *watch, TQObject* parent, const char *name = 0, TDEInstance *instance = 0 );
+  TDEActionCollection( TQWidget *watch, TQObject* parent, const char *name = 0, TDEInstance *instance = 0 );
 #ifndef KDE_NO_COMPAT
-  KActionCollection( const KActionCollection &copy );
+  TDEActionCollection( const TDEActionCollection &copy );
 #endif
-  virtual ~KActionCollection();
+  virtual ~TDEActionCollection();
 
   /**
    * This sets the widget to which the keyboard shortcuts should be attached.
@@ -124,69 +124,69 @@ public:
    * would have been ScopeWidget, but that would cause some backwards
    * compatibility problems.
    */
-  //void setDefaultScope( KAction::Scope );
+  //void setDefaultScope( TDEAction::Scope );
 
   /**
    * Doc/View model.  This lets you add the action collection of a document
    * to a view's action collection.
    */
-  bool addDocCollection( KActionCollection* pDoc );
+  bool addDocCollection( TDEActionCollection* pDoc );
 
   /** Returns the number of widgets which this collection is associated with. */
   //uint widgetCount() const;
 
   /**
-   * Returns true if the collection has its own KAccel object.  This will be
+   * Returns true if the collection has its own TDEAccel object.  This will be
    * the case if it was constructed with a valid widget ptr or if setWidget()
    * was called.
    */
-  //bool ownsKAccel() const;
+  //bool ownsTDEAccel() const;
 
   /** @deprecated  Deprecated because of ambiguous name.  Use kaccel() */
-  virtual KAccel* accel() KDE_DEPRECATED;
+  virtual TDEAccel* accel() KDE_DEPRECATED;
   /** @deprecated  Deprecated because of ambiguous name.  Use kaccel() */
-  virtual const KAccel* accel() const KDE_DEPRECATED;
+  virtual const TDEAccel* accel() const KDE_DEPRECATED;
 
-  /** Returns the KAccel object of the most recently set widget. */
-  KAccel* kaccel();
-  /** Returns the KAccel object of the most recently set widget. Const version for convenience. */
-  const KAccel* kaccel() const;
+  /** Returns the TDEAccel object of the most recently set widget. */
+  TDEAccel* kaccel();
+  /** Returns the TDEAccel object of the most recently set widget. Const version for convenience. */
+  const TDEAccel* kaccel() const;
 
-  /** @internal, for KAction::kaccelCurrent() */
-  KAccel* builderKAccel() const;
-  /** Returns the KAccel object associated with widget #. */
-  //KAccel* widgetKAccel( uint i );
-  //const KAccel* widgetKAccel( uint i ) const;
+  /** @internal, for TDEAction::kaccelCurrent() */
+  TDEAccel* builderTDEAccel() const;
+  /** Returns the TDEAccel object associated with widget #. */
+  //TDEAccel* widgetTDEAccel( uint i );
+  //const TDEAccel* widgetTDEAccel( uint i ) const;
 
   /** Returns the number of actions in the collection */
   virtual uint count() const;
   bool isEmpty() const { return (count() == 0); }
   /**
-   * Return the KAction* at position "index" in the action collection.
+   * Return the TDEAction* at position "index" in the action collection.
    * @see count()
    */
-  virtual KAction* action( int index ) const;
+  virtual TDEAction* action( int index ) const;
   /**
-   * Find an action (optionally, of a given subclass of KAction) in the action collection.
-   * @param name Name of the KAction.
-   * @param classname Name of the KAction subclass.
-   * @return A pointer to the first KAction in the collection which matches the parameters or
+   * Find an action (optionally, of a given subclass of TDEAction) in the action collection.
+   * @param name Name of the TDEAction.
+   * @param classname Name of the TDEAction subclass.
+   * @return A pointer to the first TDEAction in the collection which matches the parameters or
    * null if nothing matches.
    */
-  virtual KAction* action( const char* name, const char* classname = 0 ) const;
+  virtual TDEAction* action( const char* name, const char* classname = 0 ) const;
 
-  /** Returns a list of all the groups of all the KActions in this action collection.
-   * @see KAction::group()
-   * @see KAction::setGroup()
+  /** Returns a list of all the groups of all the TDEActions in this action collection.
+   * @see TDEAction::group()
+   * @see TDEAction::setGroup()
    */
   virtual TQStringList groups() const;
   /**
    * Returns the list of actions in a particular group managed by this action collection.
    * @param group The name of the group.
    */
-  virtual KActionPtrList actions( const TQString& group ) const;
+  virtual TDEActionPtrList actions( const TQString& group ) const;
   /** Returns the list of actions managed by this action collection. */
-  virtual KActionPtrList actions() const;
+  virtual TDEActionPtrList actions() const;
 
   /**
    * Used for reading shortcut configuration from a non-XML rc file.
@@ -212,7 +212,7 @@ public:
 
   //TODO FOR KDE4 make this default true
   /**
-   * Enable highlighting notification for specific KActions.
+   * Enable highlighting notification for specific TDEActions.
    * This is false by default, so, by default, the highlighting
    * signals will not be emitted.
    * 
@@ -234,11 +234,11 @@ public:
   bool highlightingEnabled() const;
 
   /**
-   * Call this function if you want to receive a signal whenever a KAction is highlighted in a menu or a toolbar.
+   * Call this function if you want to receive a signal whenever a TDEAction is highlighted in a menu or a toolbar.
    * This is only needed if you do not add this action to this container.
    * You will generally not need to call this function.
    * 
-   * @param container A container in which the KAction is plugged (must inherit TQPopupMenu or KToolBar)
+   * @param container A container in which the TDEAction is plugged (must inherit TQPopupMenu or TDEToolBar)
    * @param action The action you are interested in
    * @see disconnectHighlight()
    * @see actionHighlighted()
@@ -246,13 +246,13 @@ public:
    * @see highlightingEnabled()
    * @see actionHighlighted()
    */
-  void connectHighlight( TQWidget *container, KAction *action );
+  void connectHighlight( TQWidget *container, TDEAction *action );
   /**
    * Disconnect highlight notifications for a particular pair of contianer and action.
    * This is only needed if you do not add this action to this container.
    * You will generally not need to call this function.
    * 
-   * @param container A container in which the KAction is plugged (must inherit TQPopupMenu or KToolBar)
+   * @param container A container in which the TDEAction is plugged (must inherit TQPopupMenu or TDEToolBar)
    * @param action The action you are interested in
    * @see connectHighlight()
    * @see actionHighlighted()
@@ -260,7 +260,7 @@ public:
    * @see highlightingEnabled()
    * @see actionHighlighted()
    */
-  void disconnectHighlight( TQWidget *container, KAction *action );
+  void disconnectHighlight( TQWidget *container, TDEAction *action );
 
   /**
    * The parent KXMLGUIClient, return 0L if not available.
@@ -268,8 +268,8 @@ public:
   const KXMLGUIClient *parentGUIClient() const;
 
 signals:
-  void inserted( KAction* );
-  void removed( KAction* );
+  void inserted( TDEAction* );
+  void removed( TDEAction* );
 
   /** Emitted when @p action is highlighted.
    *  This is only emitted if you have setHighlightingEnabled()
@@ -279,7 +279,7 @@ signals:
    * @see setHighlightingEnabled()
    * @see highlightingEnabled()
    */
-  void actionHighlighted( KAction *action );
+  void actionHighlighted( TDEAction *action );
   /** Emitted when @p action is highlighed or loses highlighting.
    *  This is only emitted if you have setHighlightingEnabled()
    * @see connectHighlight()
@@ -288,7 +288,7 @@ signals:
    * @see setHighlightingEnabled()
    * @see highlightingEnabled()
    */
-  void actionHighlighted( KAction *action, bool highlight );
+  void actionHighlighted( TDEAction *action, bool highlight );
   /** Emitted when an action is highlighted, with text
    *  being the tooltip for the action.
    *  This is only emitted if you have setHighlightingEnabled()
@@ -309,7 +309,7 @@ signals:
 private:
   /**
    * @internal Only to be called by KXMLGUIFactory::addClient().
-   * When actions are being connected, KAction needs to know what
+   * When actions are being connected, TDEAction needs to know what
    * widget it should connect widget-scope actions to, and what
    * main window it should connect
    */
@@ -317,12 +317,12 @@ private:
   void endXMLPlug();
   /** @internal.  Only to be called by KXMLGUIFactory::removeClient() */
   void prepareXMLUnplug();
-  void unplugShortcuts( KAccel* kaccel );
+  void unplugShortcuts( TDEAccel* kaccel );
 
   void _clear();
-  void _insert( KAction* );
-  void _remove( KAction* );
-  KAction* _take( KAction* );
+  void _insert( TDEAction* );
+  void _remove( TDEAction* );
+  TDEAction* _take( TDEAction* );
 
 private slots:
    void slotMenuItemHighlighted( int id );
@@ -331,11 +331,11 @@ private slots:
    void slotDestroyed();
 
 private:
-   KAction *findAction( TQWidget *container, int id );
+   TDEAction *findAction( TQWidget *container, int id );
 
 #ifndef KDE_NO_COMPAT
 public:
-  KActionCollection( TQObject *parent, const char *name = 0, TDEInstance *instance = 0 );
+  TDEActionCollection( TQObject *parent, const char *name = 0, TDEInstance *instance = 0 );
 #endif
 
 public:
@@ -344,34 +344,34 @@ public:
    * Generally you don't have to call this. The action inserts itself automatically
    * into its parent collection. This can be useful however for a short-lived
    * collection (e.g. for a popupmenu, where the signals from the collection are needed too).
-   * (don't forget that in the simple case, a list of actions should be a simple KActionPtrList).
+   * (don't forget that in the simple case, a list of actions should be a simple TDEActionPtrList).
    * If you manually insert actions into a 2nd collection, don't forget to take them out
    * again before destroying the collection.
-   * @param action The KAction to add.
+   * @param action The TDEAction to add.
    */
-  void insert( KAction* action);
+  void insert( TDEAction* action);
 
   /**
    * Removes an action from the collection and deletes it.
-   * Since the KAction destructor removes the action from the collection, you generally
+   * Since the TDEAction destructor removes the action from the collection, you generally
    * don't have to call this.
-   * @param action The KAction to remove.
+   * @param action The TDEAction to remove.
    */
-  void remove( KAction* action );
+  void remove( TDEAction* action );
 
   /**
    * Removes an action from the collection.
-   * Since the KAction destructor removes the action from the collection, you generally
+   * Since the TDEAction destructor removes the action from the collection, you generally
    * don't have to call this.
    * @return NULL if not found else returns action.
-   * @param action the KAction to remove.
+   * @param action the TDEAction to remove.
    */
-  KAction* take( KAction* action );
+  TDEAction* take( TDEAction* action );
 
 #ifndef KDE_NO_COMPAT
-  KActionCollection operator+ ( const KActionCollection& ) const;
-  KActionCollection& operator= ( const KActionCollection& );
-  KActionCollection& operator+= ( const KActionCollection& );
+  TDEActionCollection operator+ ( const TDEActionCollection& ) const;
+  TDEActionCollection& operator= ( const TDEActionCollection& );
+  TDEActionCollection& operator+= ( const TDEActionCollection& );
 #endif // !KDE_NO_COMPAT
 
   // KDE4: clear() doesn't need to be a slot
@@ -385,9 +385,9 @@ public slots:
 protected:
     virtual void virtual_hook( int id, void* data );
 private:
-    KActionCollection( const char* name, const KXMLGUIClient* parent );
-    class KActionCollectionPrivate;
-    KActionCollectionPrivate *d;
+    TDEActionCollection( const char* name, const KXMLGUIClient* parent );
+    class TDEActionCollectionPrivate;
+    TDEActionCollectionPrivate *d;
 };
 
 #endif

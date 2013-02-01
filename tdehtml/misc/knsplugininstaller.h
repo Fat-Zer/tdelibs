@@ -222,7 +222,7 @@ private:
     TQWidget *m_finishWidget;
     
     // plugin list
-    KListView *m_pluginListView;
+    TDEListView *m_pluginListView;
     
     // licence stuff
     TQLabel *m_licencePageLabel;

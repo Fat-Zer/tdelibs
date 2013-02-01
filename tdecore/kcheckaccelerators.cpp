@@ -83,7 +83,7 @@ KCheckAccelerators::KCheckAccelerators( TQObject* parent )
     TDEConfigGroupSaver saver( TDEGlobal::config(), "Development" );
     TQString sKey = TDEGlobal::config()->readEntry( "CheckAccelerators" ).stripWhiteSpace();
     if( !sKey.isEmpty() ) {
-      KShortcut cuts( sKey );
+      TDEShortcut cuts( sKey );
       if( cuts.count() > 0 )
         key = int(cuts.seq(0).qt());
     }
@@ -177,9 +177,9 @@ void KCheckAccelerators::checkAccelerators( bool automatic )
     if ( !actWin )
         return;
 
-    KAcceleratorManager::manage(actWin);
+    TDEAcceleratorManager::manage(actWin);
     TQString a, c, r;
-    KAcceleratorManager::last_manage(a, c,  r);
+    TDEAcceleratorManager::last_manage(a, c,  r);
 
     if (automatic) // for now we only show dialogs on F12 checks
         return;

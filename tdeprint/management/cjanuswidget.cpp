@@ -79,7 +79,7 @@ void CJanusWidget::CListBoxItem::paint(TQPainter *p)
 
 //***********************************************************************************
 
-class CJanusWidget::CListBox : public KListBox
+class CJanusWidget::CListBox : public TDEListBox
 {
 public:
 	CListBox(TQWidget *parent = 0, const char *name = 0);
@@ -92,7 +92,7 @@ protected:
 };
 
 CJanusWidget::CListBox::CListBox(TQWidget *parent, const char *name)
-: KListBox(parent,name)
+: TDEListBox(parent,name)
 {
 	verticalScrollBar()->installEventFilter(this);
 }
@@ -105,7 +105,7 @@ bool CJanusWidget::CListBox::eventFilter(TQObject *o, TQEvent *e)
 {
 	if (e->type() == TQEvent::Show || e->type() == TQEvent::Hide)
 		computeWidth();
-	return KListBox::eventFilter(o,e);
+	return TDEListBox::eventFilter(o,e);
 }
 
 void CJanusWidget::CListBox::computeWidth()

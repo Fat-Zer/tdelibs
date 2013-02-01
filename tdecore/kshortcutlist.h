@@ -28,31 +28,31 @@ class TQVariant;
 class TDEConfigBase;
 class TDEInstance;
 class KKeySequence;
-class KShortcut;
+class TDEShortcut;
 
 /**********************************************************************
 * This is a wrapper class which allows a function to use one interface
-* to KActionCollection, KAccelActions, and KActionPtrList.
+* to TDEActionCollection, TDEAccelActions, and TDEActionPtrList.
 **********************************************************************/
 
 /**
- * KShortcutList is an abstract base class for
- * KAccelShortcutList and KStdAccel::ShortcutList. It gives
+ * TDEShortcutList is an abstract base class for
+ * TDEAccelShortcutList and TDEStdAccel::ShortcutList. It gives
  * you an unified interface for accessing the accelerator lists
- * of KAccel (using KAccelShortcutList),
- * TDEGlobalAccel (using KAccelShortcutList), and
- * KStdAccel (using KStdAccel::ShortcutList).
+ * of TDEAccel (using TDEAccelShortcutList),
+ * TDEGlobalAccel (using TDEAccelShortcutList), and
+ * TDEStdAccel (using TDEStdAccel::ShortcutList).
  *
  * @short Base class for accessing accelerator lists
  */
-class TDECORE_EXPORT KShortcutList
+class TDECORE_EXPORT TDEShortcutList
 {
  public:
         /**
 	 * Default constructor.
 	 */
-	KShortcutList();
-	virtual ~KShortcutList();
+	TDEShortcutList();
+	virtual ~TDEShortcutList();
 
 	/**
 	 * Returns the number of entries.
@@ -90,7 +90,7 @@ class TDECORE_EXPORT KShortcutList
 	 * @return the shortcut
 	 * @see shortcutDefault()
 	 */
-	virtual const KShortcut& shortcut( uint index ) const = 0;
+	virtual const TDEShortcut& shortcut( uint index ) const = 0;
 
 	/**
 	 * Returns default shortcut with the given @p index.
@@ -98,7 +98,7 @@ class TDECORE_EXPORT KShortcutList
 	 * @return the default shortcut
 	 * @see shortcut()
 	 */
-	virtual const KShortcut& shortcutDefault( uint index ) const = 0;
+	virtual const TDEShortcut& shortcutDefault( uint index ) const = 0;
 
 	/**
 	 * Checks whether the shortcut with the given @p index is configurable.
@@ -112,7 +112,7 @@ class TDECORE_EXPORT KShortcutList
 	 * @param index the index of the shortcut (must be < count())
 	 * @param shortcut the shortcut
 	 */
-	virtual bool setShortcut( uint index, const KShortcut &shortcut ) = 0;
+	virtual bool setShortcut( uint index, const TDEShortcut &shortcut ) = 0;
 
 	/**
 	 * Checks whether the shortcut with the given @p index is saved in the
@@ -180,56 +180,56 @@ class TDECORE_EXPORT KShortcutList
 	/// used to extend the interface with virtuals without breaking binary compatibility
         virtual void virtual_hook( int id, void* data );
  private:
-	class KShortcutListPrivate* d;
+	class TDEShortcutListPrivate* d;
 };
 
 //---------------------------------------------------------------------
-// KAccelShortcutList
+// TDEAccelShortcutList
 //---------------------------------------------------------------------
 
-class KAccel;
-class KAccelActions;
+class TDEAccel;
+class TDEAccelActions;
 class TDEGlobalAccel;
 
 /**
- * KShortcutList implementation to access KAccel and
+ * TDEShortcutList implementation to access TDEAccel and
  * TDEGlobalAccel lists.
  */
-class TDECORE_EXPORT KAccelShortcutList : public KShortcutList
+class TDECORE_EXPORT TDEAccelShortcutList : public TDEShortcutList
 {
  public:
         /**
-	 * Creates a new KShortcutList that accesses the given KAccel.
+	 * Creates a new TDEShortcutList that accesses the given TDEAccel.
 	 * @param accel the accelerators to access
 	 */
-	KAccelShortcutList( KAccel* accel );
+	TDEAccelShortcutList( TDEAccel* accel );
 
         /**
-	 * Creates a new KShortcutList that accesses the given
+	 * Creates a new TDEShortcutList that accesses the given
 	 * TDEGlobalAccel.
 	 * @param accel the accelerators to access
 	 */
-	KAccelShortcutList( TDEGlobalAccel* accel );
+	TDEAccelShortcutList( TDEGlobalAccel* accel );
 
         /**
 	 * @internal
-	 * Creates a new KShortcutList that accesses the given
-	 * KAccelActions collection.
+	 * Creates a new TDEShortcutList that accesses the given
+	 * TDEAccelActions collection.
 	 * @param actions the actions to access
 	 * @param bGlobal true to save the actions in the global
 	 *        configuration file
 	 */
-	KAccelShortcutList( KAccelActions &actions, bool bGlobal );
-	virtual ~KAccelShortcutList();
+	TDEAccelShortcutList( TDEAccelActions &actions, bool bGlobal );
+	virtual ~TDEAccelShortcutList();
 
 	virtual uint count() const;
 	virtual TQString name( uint index ) const;
 	virtual TQString label( uint index ) const;
 	virtual TQString whatsThis( uint index ) const;
-	virtual const KShortcut& shortcut( uint index ) const;
-	virtual const KShortcut& shortcutDefault( uint index ) const;
+	virtual const TDEShortcut& shortcut( uint index ) const;
+	virtual const TDEShortcut& shortcutDefault( uint index ) const;
 	virtual bool isConfigurable( uint index ) const;
-	virtual bool setShortcut( uint index , const KShortcut& shortcut );
+	virtual bool setShortcut( uint index , const TDEShortcut& shortcut );
 	virtual bool isGlobal( uint index ) const;
 
 	/** \internal */
@@ -241,26 +241,26 @@ class TDECORE_EXPORT KAccelShortcutList : public KShortcutList
 
  protected:
 	/** Actions (collection) for this shortcut list. Set by constructor. */
-	KAccelActions& m_actions;
+	TDEAccelActions& m_actions;
 	/** Is this shortcut list global? Access through isGlobal() */
 	bool m_bGlobal;
 
  protected:
 	virtual void virtual_hook( int id, void* data );
  private:
-	class KAccelShortcutListPrivate* d;
+	class TDEAccelShortcutListPrivate* d;
 };
 
-namespace KStdAccel {
+namespace TDEStdAccel {
 //---------------------------------------------------------------------
 // ShortcutList
 //---------------------------------------------------------------------
 
 /**
- * KShortcutList implementation that accesses KStdAccel
+ * TDEShortcutList implementation that accesses TDEStdAccel
  * actions.
  */
-class TDECORE_EXPORT ShortcutList : public KShortcutList
+class TDECORE_EXPORT ShortcutList : public TDEShortcutList
 {
  public:
         /**
@@ -273,10 +273,10 @@ class TDECORE_EXPORT ShortcutList : public KShortcutList
 	virtual TQString name( uint index ) const;
 	virtual TQString label( uint index ) const;
 	virtual TQString whatsThis( uint index ) const;
-	virtual const KShortcut& shortcut( uint index ) const;
-	virtual const KShortcut& shortcutDefault( uint index ) const;
+	virtual const TDEShortcut& shortcut( uint index ) const;
+	virtual const TDEShortcut& shortcutDefault( uint index ) const;
 	virtual bool isConfigurable( uint index ) const;
-	virtual bool setShortcut( uint index , const KShortcut& shortcut );
+	virtual bool setShortcut( uint index , const TDEShortcut& shortcut );
 
 	/** \internal */
 	virtual TQVariant getOther( Other, uint index ) const;

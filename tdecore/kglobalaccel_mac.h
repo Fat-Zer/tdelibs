@@ -6,11 +6,11 @@
 #include "kshortcut.h"
 #include "kaccelbase.h"
 
-class TDEGlobalAccelPrivate: public KAccelBase
+class TDEGlobalAccelPrivate: public TDEAccelBase
 {
 public:
     TDEGlobalAccelPrivate()
-        : KAccelBase(KAccelBase::NATIVE_KEYS)
+        : TDEAccelBase(TDEAccelBase::NATIVE_KEYS)
     {}
 
     // reimplemented pure virtuals
@@ -18,11 +18,11 @@ public:
     { Q_UNUSED(bEnabled); }
     bool emitSignal( Signal signal )
     { Q_UNUSED(signal); return false; }
-    bool connectKey( KAccelAction& action, const KKeyServer::Key& key)
+    bool connectKey( TDEAccelAction& action, const KKeyServer::Key& key)
     { Q_UNUSED(action); Q_UNUSED(key); return false; }
     bool connectKey( const KKeyServer::Key& key)
     { Q_UNUSED(key); return false; }
-    bool disconnectKey( KAccelAction&, const KKeyServer::Key& key)
+    bool disconnectKey( TDEAccelAction&, const KKeyServer::Key& key)
     { Q_UNUSED(key); return false; }
     bool disconnectKey( const KKeyServer::Key& )
     { return false; }

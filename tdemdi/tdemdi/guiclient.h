@@ -28,8 +28,8 @@
 
 #include <tdemdi/global.h>
 
-class KMainWindow;
-class KToolBar;
+class TDEMainWindow;
+class TDEToolBar;
 
 namespace KMDI {
   class MainWindow;
@@ -67,21 +67,21 @@ class GUIClient : public TQObject, public KXMLGUIClient
     GUIClientPrivate *d;
 
     TQGuardedPtr<KMDI::MainWindow> m_mdiMainFrm;
-    TQPtrList<KAction> m_toolViewActions;
-    TQPtrList<KAction> m_documentViewActions;
+    TQPtrList<TDEAction> m_toolViewActions;
+    TQPtrList<TDEAction> m_documentViewActions;
 
-    KActionMenu *m_docMenu;
-    KActionMenu *m_toolMenu;
+    TDEActionMenu *m_docMenu;
+    TDEActionMenu *m_toolMenu;
 
-    KActionMenu *m_gotoToolDockMenu;
+    TDEActionMenu *m_gotoToolDockMenu;
 };
 
-class ToggleToolViewAction:public KToggleAction
+class ToggleToolViewAction:public TDEToggleAction
 {
   Q_OBJECT
 
   public:
-    ToggleToolViewAction ( const TQString& text, const KShortcut& cut = KShortcut(),
+    ToggleToolViewAction ( const TQString& text, const TDEShortcut& cut = TDEShortcut(),
                            KDockWidget *dw=0,KMDI::MainWindow *mdiMainFrm=0, TQObject* parent = 0, const char* name = 0 );
 
     virtual ~ToggleToolViewAction();

@@ -41,15 +41,15 @@ class MainWindowPrivate;
  * and don't forget to call setXMLFile() in the inherited constructor.
  *
  * It implements all internal interfaces in the case of a
- * KMainWindow as host: the builder and servant interface (for menu
+ * TDEMainWindow as host: the builder and servant interface (for menu
  * merging).
  */
-class KPARTS_EXPORT MainWindow : public KMainWindow, virtual public PartBase
+class KPARTS_EXPORT MainWindow : public TDEMainWindow, virtual public PartBase
 {
   Q_OBJECT
  public:
   /**
-   * Constructor, same signature as KMainWindow.
+   * Constructor, same signature as TDEMainWindow.
    */
 #ifdef qdoc
   MainWindow( TQWidget* parent,  const char *name = 0L, WFlags f = WType_TopLevel | WDestructiveClose );
@@ -65,7 +65,7 @@ class KPARTS_EXPORT MainWindow : public KMainWindow, virtual public PartBase
   MainWindow( const char *name = 0L, WFlags f = (WFlags)WDestructiveClose );
 #endif
   /**
-   * Constructor with creation flags, see KMainWindow.
+   * Constructor with creation flags, see TDEMainWindow.
    * @since 3.2
    */
 #ifdef qdoc

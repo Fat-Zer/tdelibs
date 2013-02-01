@@ -28,7 +28,7 @@
 #include <kfontdialog.h>
 #include <klocale.h>
 
-KFontRequester::KFontRequester( TQWidget *parent, const char *name,
+TDEFontRequester::TDEFontRequester( TQWidget *parent, const char *name,
     bool onlyFixed ) : TQWidget( parent, name ),
     m_onlyFixed( onlyFixed )
 {
@@ -49,7 +49,7 @@ KFontRequester::KFontRequester( TQWidget *parent, const char *name,
   setToolTip();
 }
 
-void KFontRequester::setFont( const TQFont &font, bool onlyFixed )
+void TDEFontRequester::setFont( const TQFont &font, bool onlyFixed )
 {
   m_selFont = font;
   m_onlyFixed = onlyFixed;
@@ -58,21 +58,21 @@ void KFontRequester::setFont( const TQFont &font, bool onlyFixed )
   emit fontSelected( m_selFont );
 }
 
-void KFontRequester::setSampleText( const TQString &text )
+void TDEFontRequester::setSampleText( const TQString &text )
 {
   m_sampleText = text;
   displaySampleText();
 }
 
-void KFontRequester::setTitle( const TQString &title )
+void TDEFontRequester::setTitle( const TQString &title )
 {
   m_title = title;
   setToolTip();
 }
 
-void KFontRequester::buttonClicked()
+void TDEFontRequester::buttonClicked()
 {
-  int result = KFontDialog::getFont( m_selFont, m_onlyFixed, parentWidget() );
+  int result = TDEFontDialog::getFont( m_selFont, m_onlyFixed, parentWidget() );
 
   if ( result == KDialog::Accepted )
   {
@@ -81,7 +81,7 @@ void KFontRequester::buttonClicked()
   }
 }
 
-void KFontRequester::displaySampleText()
+void TDEFontRequester::displaySampleText()
 {
   m_sampleLabel->setFont( m_selFont );
 
@@ -96,7 +96,7 @@ void KFontRequester::displaySampleText()
     m_sampleLabel->setText( m_sampleText );
 }
 
-void KFontRequester::setToolTip()
+void TDEFontRequester::setToolTip()
 {
   TQToolTip::remove( m_button );
   TQToolTip::add( m_button, i18n( "Click to select a font" ) );

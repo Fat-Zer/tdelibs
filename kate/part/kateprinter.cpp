@@ -888,7 +888,7 @@ void KatePrintHeaderFooter::setHFFont()
 {
   TQFont fnt( lFontPreview->font() );
   // display a font dialog
-  if ( KFontDialog::getFont( fnt, false, this ) == KFontDialog::Accepted )
+  if ( TDEFontDialog::getFont( fnt, false, this ) == TDEFontDialog::Accepted )
   {
     // change strFont
     strFont = fnt.toString();

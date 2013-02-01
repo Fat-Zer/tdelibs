@@ -33,7 +33,7 @@
 
 static KKey* g_pspec = 0;
 static KKeySequence* g_pseq = 0;
-static KShortcut* g_pcut = 0;
+static TDEShortcut* g_pcut = 0;
 
 //----------------------------------------------------
 // KKey
@@ -396,28 +396,28 @@ KKeySequence& KKeySequence::null()
 }
 
 //---------------------------------------------------------------------
-// KShortcut
+// TDEShortcut
 //---------------------------------------------------------------------
 
-KShortcut::KShortcut()                            { clear(); }
-KShortcut::KShortcut( int keyQt )                 { init( keyQt ); }
-KShortcut::KShortcut( const TQKeySequence& key )   { init( key ); }
-KShortcut::KShortcut( const KKey& key )           { init( key ); }
-KShortcut::KShortcut( const KKeySequence& seq )   { init( seq ); }
-KShortcut::KShortcut( const KShortcut& cut )      { init( cut ); }
-KShortcut::KShortcut( const char* ps )            { init( TQString(ps) ); }
-KShortcut::KShortcut( const TQString& s )          { init( s ); }
+TDEShortcut::TDEShortcut()                            { clear(); }
+TDEShortcut::TDEShortcut( int keyQt )                 { init( keyQt ); }
+TDEShortcut::TDEShortcut( const TQKeySequence& key )   { init( key ); }
+TDEShortcut::TDEShortcut( const KKey& key )           { init( key ); }
+TDEShortcut::TDEShortcut( const KKeySequence& seq )   { init( seq ); }
+TDEShortcut::TDEShortcut( const TDEShortcut& cut )      { init( cut ); }
+TDEShortcut::TDEShortcut( const char* ps )            { init( TQString(ps) ); }
+TDEShortcut::TDEShortcut( const TQString& s )          { init( s ); }
 
-KShortcut::~KShortcut()
+TDEShortcut::~TDEShortcut()
 {
 }
 
-void KShortcut::clear()
+void TDEShortcut::clear()
 {
 	m_nSeqs = 0;
 }
 
-bool KShortcut::init( int keyQt )
+bool TDEShortcut::init( int keyQt )
 {
 	if( keyQt ) {
 		m_nSeqs = 1;
@@ -427,28 +427,28 @@ bool KShortcut::init( int keyQt )
 	return true;
 }
 
-bool KShortcut::init( const TQKeySequence& key )
+bool TDEShortcut::init( const TQKeySequence& key )
 {
 	m_nSeqs = 1;
 	m_rgseq[0].init( key );
 	return true;
 }
 
-bool KShortcut::init( const KKey& spec )
+bool TDEShortcut::init( const KKey& spec )
 {
 	m_nSeqs = 1;
 	m_rgseq[0].init( spec );
 	return true;
 }
 
-bool KShortcut::init( const KKeySequence& seq )
+bool TDEShortcut::init( const KKeySequence& seq )
 {
 	m_nSeqs = 1;
 	m_rgseq[0] = seq;
 	return true;
 }
 
-bool KShortcut::init( const KShortcut& cut )
+bool TDEShortcut::init( const TDEShortcut& cut )
 {
 	m_nSeqs = cut.m_nSeqs;
 	for( uint i = 0; i < m_nSeqs; i++ )
@@ -456,7 +456,7 @@ bool KShortcut::init( const KShortcut& cut )
 	return true;
 }
 
-bool KShortcut::init( const TQString& s )
+bool TDEShortcut::init( const TQString& s )
 {
 	bool bRet = true;
 	TQStringList rgs = TQStringList::split( ';', s );
@@ -480,7 +480,7 @@ bool KShortcut::init( const TQString& s )
 	if( !s.isEmpty() ) {
 		TQString sDebug;
 		TQTextStream os( &sDebug, IO_WriteOnly );
-		os << "KShortcut::init( \"" << s << "\" ): ";
+		os << "TDEShortcut::init( \"" << s << "\" ): ";
 		for( uint i = 0; i < m_nSeqs; i++ ) {
 			os << " m_rgseq[" << i << "]: ";
 			KKeyServer::Variations vars;
@@ -494,29 +494,29 @@ bool KShortcut::init( const TQString& s )
 	return bRet;
 }
 
-uint KShortcut::count() const
+uint TDEShortcut::count() const
 {
 	return m_nSeqs;
 }
 
-const KKeySequence& KShortcut::seq( uint i ) const
+const KKeySequence& TDEShortcut::seq( uint i ) const
 {
 	return (i < m_nSeqs) ? m_rgseq[i] : KKeySequence::null();
 }
 
-int KShortcut::keyCodeQt() const
+int TDEShortcut::keyCodeQt() const
 {
 	if( m_nSeqs >= 1 )
 		return m_rgseq[0].keyCodeQt();
 	return TQKeySequence();
 }
 
-bool KShortcut::isNull() const
+bool TDEShortcut::isNull() const
 {
 	return m_nSeqs == 0;
 }
 
-int KShortcut::compare( const KShortcut& cut ) const
+int TDEShortcut::compare( const TDEShortcut& cut ) const
 {
 	for( uint i = 0; i < m_nSeqs && i < cut.m_nSeqs; i++ ) {
 		int ret = m_rgseq[i].compare( cut.m_rgseq[i] );
@@ -526,12 +526,12 @@ int KShortcut::compare( const KShortcut& cut ) const
 	return m_nSeqs - cut.m_nSeqs;
 }
 
-bool KShortcut::contains( const KKey& key ) const
+bool TDEShortcut::contains( const KKey& key ) const
 {
 	return contains( KKeySequence(key) );
 }
 
-bool KShortcut::contains( const KKeyNative& keyNative ) const
+bool TDEShortcut::contains( const KKeyNative& keyNative ) const
 {
 	KKey key = keyNative.key();
 	key.simplify();
@@ -545,7 +545,7 @@ bool KShortcut::contains( const KKeyNative& keyNative ) const
 	return false;
 }
 
-bool KShortcut::contains( const KKeySequence& seq ) const
+bool TDEShortcut::contains( const KKeySequence& seq ) const
 {
 	for( uint i = 0; i < count(); i++ ) {
 		if( !m_rgseq[i].isNull() && m_rgseq[i] == seq )
@@ -554,7 +554,7 @@ bool KShortcut::contains( const KKeySequence& seq ) const
 	return false;
 }
 
-bool KShortcut::setSeq( uint iSeq, const KKeySequence& seq )
+bool TDEShortcut::setSeq( uint iSeq, const KKeySequence& seq )
 {
 	// TODO: check if seq is null, and act accordingly.
 	if( iSeq <= m_nSeqs && iSeq < MAX_SEQUENCES ) {
@@ -566,7 +566,7 @@ bool KShortcut::setSeq( uint iSeq, const KKeySequence& seq )
 		return false;
 }
 
-void KShortcut::remove( const KKeySequence& seq )
+void TDEShortcut::remove( const KKeySequence& seq )
 {
 	if (seq.isNull()) return;
 	
@@ -581,7 +581,7 @@ void KShortcut::remove( const KKeySequence& seq )
 	}
 }
 
-bool KShortcut::append( const KKeySequence& seq )
+bool TDEShortcut::append( const KKeySequence& seq )
 {
 	if( m_nSeqs < MAX_SEQUENCES ) {
 		if( !seq.isNull() ) {
@@ -593,7 +593,7 @@ bool KShortcut::append( const KKeySequence& seq )
 		return false;
 }
 
-bool KShortcut::append( const KKey& spec )
+bool TDEShortcut::append( const KKey& spec )
 {
 	if( m_nSeqs < MAX_SEQUENCES ) {
 		m_rgseq[m_nSeqs].init( spec );
@@ -603,7 +603,7 @@ bool KShortcut::append( const KKey& spec )
 		return false;
 }
 
-bool KShortcut::append( const KShortcut& cut )
+bool TDEShortcut::append( const TDEShortcut& cut )
 {
 	uint seqs = m_nSeqs, co = cut.count();
 	for( uint i=0; i<co; i++ ) {
@@ -621,7 +621,7 @@ bool KShortcut::append( const KShortcut& cut )
 	return true;
 }
 
-KShortcut::operator TQKeySequence () const
+TDEShortcut::operator TQKeySequence () const
 {
 	if( count() >= 1 )
 		return m_rgseq[0].qt();
@@ -629,7 +629,7 @@ KShortcut::operator TQKeySequence () const
 		return TQKeySequence();
 }
 
-TQString KShortcut::toString() const
+TQString TDEShortcut::toString() const
 {
 	TQString s;
 
@@ -642,7 +642,7 @@ TQString KShortcut::toString() const
 	return s;
 }
 
-TQString KShortcut::toStringInternal( const KShortcut* pcutDefault ) const
+TQString TDEShortcut::toStringInternal( const TDEShortcut* pcutDefault ) const
 {
 	TQString s;
 
@@ -661,10 +661,10 @@ TQString KShortcut::toStringInternal( const KShortcut* pcutDefault ) const
 	return s;
 }
 
-KShortcut& KShortcut::null()
+TDEShortcut& TDEShortcut::null()
 {
 	if( !g_pcut )
-		g_pcut = new KShortcut;
+		g_pcut = new TDEShortcut;
 	if( !g_pcut->isNull() )
 		g_pcut->clear();
 	return *g_pcut;

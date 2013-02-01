@@ -55,7 +55,7 @@ struct ListProgressColumnConfig
 * List view in the UIServer.
 * @internal
 */
-class TDEIO_EXPORT ListProgress : public KListView {
+class TDEIO_EXPORT ListProgress : public TDEListView {
 
   Q_OBJECT
 
@@ -214,7 +214,7 @@ class UIServerSystemTray;
  *
  * @internal
  */
-class TDEIO_EXPORT UIServer : public KMainWindow, public DCOPObject {
+class TDEIO_EXPORT UIServer : public TDEMainWindow, public DCOPObject {
 
   K_DCOP
   Q_OBJECT
@@ -382,7 +382,7 @@ protected slots:
 
   void slotJobCanceled( ProgressItem * );
   void slotApplyConfig();
-  void slotShowContextMenu(KListView*, TQListViewItem *item, const TQPoint& pos);
+  void slotShowContextMenu(TDEListView*, TQListViewItem *item, const TQPoint& pos);
 
 protected:
 
@@ -396,7 +396,7 @@ protected:
   TQTimer* updateTimer;
   ListProgress* listProgress;
 
-  KToolBar::BarPosition toolbarPos;
+  TDEToolBar::BarPosition toolbarPos;
   TQString properties;
 
   void applySettings();

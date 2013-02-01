@@ -965,7 +965,7 @@ WebStyle::drawSlider
 }
 
   void
-WebStyle::drawKToolBar
+WebStyle::drawTDEToolBar
 (
  TQPainter * p,
  int x,
@@ -973,7 +973,7 @@ WebStyle::drawKToolBar
  int w,
  int h,
  const TQColorGroup & g,
- KToolBarPos /* pos */,
+ TDEToolBarPos /* pos */,
  TQBrush * /* fill */
 )
 {
@@ -993,7 +993,7 @@ WebStyle::drawKBarHandle
  int w,
  int h,
  const TQColorGroup & g,
- KToolBarPos /* pos */,
+ TDEToolBarPos /* pos */,
  TQBrush * /* fill */
 )
 {
@@ -1025,7 +1025,7 @@ WebStyle::drawKMenuBar
 }
 
   void
-WebStyle::drawKToolBarButton
+WebStyle::drawTDEToolBarButton
 (
  TQPainter * p,
  int x,
@@ -1037,7 +1037,7 @@ WebStyle::drawKToolBarButton
  bool raised,
  bool enabled,
  bool popup,
- KToolButtonType type,
+ TDEToolButtonType type,
  const TQString & btext,
  const TQPixmap * pixmap,
  TQFont * font,

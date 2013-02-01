@@ -130,7 +130,7 @@ Scheduler::Scheduler()
            coSlaveTimer(0, "Scheduler::coSlaveTimer"),
            cleanupTimer(0, "Scheduler::cleanupTimer")
 {
-    checkOnHold = true; // !! Always check with KLauncher for the first request.
+    checkOnHold = true; // !! Always check with TDELauncher for the first request.
     slaveOnHold = 0;
     protInfoDict = new ProtocolInfoDict;
     slaveList = new SlaveList;

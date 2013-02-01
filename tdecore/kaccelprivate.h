@@ -4,22 +4,22 @@
 #include "kkeyserver_x11.h"
 #include <tqtimer.h>
 
-class KAccelAction;
+class TDEAccelAction;
 
 /**
  * @internal
  */
-class TDECORE_EXPORT KAccelPrivate : public TQObject, public KAccelBase
+class TDECORE_EXPORT TDEAccelPrivate : public TQObject, public TDEAccelBase
 {
 	Q_OBJECT
  public:
-	KAccel* m_pAccel;
+	TDEAccel* m_pAccel;
 	TQWidget* m_pWatch;
 	TQMap<int, int> m_mapIDToKey;
-	TQMap<int, KAccelAction*> m_mapIDToAction;
+	TQMap<int, TDEAccelAction*> m_mapIDToAction;
 	TQTimer m_timerShowMenu;
 
-	KAccelPrivate( KAccel* pParent, TQWidget* pWatch );
+	TDEAccelPrivate( TDEAccel* pParent, TQWidget* pWatch );
 
 	virtual void setEnabled( bool bEnabled );
 
@@ -27,19 +27,19 @@ class TDECORE_EXPORT KAccelPrivate : public TQObject, public KAccelBase
 
 	virtual bool removeAction( const TQString& sAction );
 
-	virtual bool emitSignal( KAccelBase::Signal signal );
-	virtual bool connectKey( KAccelAction& action, const KKeyServer::Key& key );
+	virtual bool emitSignal( TDEAccelBase::Signal signal );
+	virtual bool connectKey( TDEAccelAction& action, const KKeyServer::Key& key );
 	virtual bool connectKey( const KKeyServer::Key& key );
-	virtual bool disconnectKey( KAccelAction& action, const KKeyServer::Key& key );
+	virtual bool disconnectKey( TDEAccelAction& action, const KKeyServer::Key& key );
 	virtual bool disconnectKey( const KKeyServer::Key& key );
 
  signals:
 	void menuItemActivated();
-	void menuItemActivated(KAccelAction*);
+	void menuItemActivated(TDEAccelAction*);
 
  private:
 #ifndef Q_WS_WIN /** @todo TEMP: new implementation (commit #424926) didn't work */
-	void emitActivatedSignal(KAccelAction*);
+	void emitActivatedSignal(TDEAccelAction*);
 #endif
 
  private slots:

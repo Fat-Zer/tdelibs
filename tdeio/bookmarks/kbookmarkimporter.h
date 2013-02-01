@@ -31,7 +31,7 @@
 /**
  * A class for importing NS bookmarks
  * KEditBookmarks uses it to insert bookmarks into its DOM tree,
- * and KActionMenu uses it to create actions directly.
+ * and TDEActionMenu uses it to create actions directly.
  * @since 3.2
  */
 class TDEIO_EXPORT KBookmarkImporterBase : public TQObject

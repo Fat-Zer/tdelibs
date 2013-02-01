@@ -94,7 +94,7 @@ class UIServerSystemTray:public KSystemTray
       UIServerSystemTray(UIServer* uis)
          :KSystemTray(uis)
       {
-         KPopupMenu* pop= contextMenu();
+         TDEPopupMenu* pop= contextMenu();
          pop->insertItem(i18n("Settings..."), uis, TQT_SLOT(slotConfigure()));
          pop->insertItem(i18n("Remove"), uis, TQT_SLOT(slotRemoveSystemTrayIcon()));
          setPixmap(loadIcon("filesave"));
@@ -118,7 +118,7 @@ class ProgressConfigDialog:public KDialogBase
       TQCheckBox *m_statusBarCb;
       TQCheckBox *m_headerCb;
       TQCheckBox *m_fixedWidthCb;
-      KListView *m_columns;
+      TDEListView *m_columns;
       TQCheckListItem *(m_items[ListProgress::TB_MAX]);
 };
 
@@ -134,7 +134,7 @@ ProgressConfigDialog::ProgressConfigDialog(TQWidget *parent)
    m_statusBarCb=new TQCheckBox(i18n("Show statusbar"), plainPage());
    m_fixedWidthCb=new TQCheckBox(i18n("Column widths are user adjustable"), plainPage());
    TQLabel *label=new TQLabel(i18n("Show information:"), plainPage());
-   m_columns=new KListView(plainPage());
+   m_columns=new TDEListView(plainPage());
 
    m_columns->addColumn("info");
    m_columns->setSorting(-1);
@@ -455,7 +455,7 @@ void ProgressItem::updateVisibility()
 
 //-----------------------------------------------------------------------------
 ListProgress::ListProgress (TQWidget *parent, const char *name)
-: KListView (parent, name)
+: TDEListView (parent, name)
 {
 
   // enable selection of more than one item
@@ -584,7 +584,7 @@ void ListProgress::writeSettings() {
 
 
 UIServer::UIServer()
-:KMainWindow(0, "")
+:TDEMainWindow(0, "")
 ,DCOPObject("UIServer")
 ,m_shuttingDown(false)
 ,m_configDialog(0)
@@ -602,7 +602,7 @@ UIServer::UIServer()
                           TQT_SIGNAL(clicked()), TQT_TQOBJECT(this),
                           TQT_SLOT(slotConfigure()), true, i18n("Settings..."));
 
-  toolBar()->setBarPos( KToolBar::Left );
+  toolBar()->setBarPos( TDEToolBar::Left );
 
   // setup statusbar
   statusBar()->insertItem( i18n(" Files: %1 ").arg( 0 ), ID_TOTAL_FILES);
@@ -619,8 +619,8 @@ UIServer::UIServer()
            TQT_SLOT( slotSelection() ) );
   connect( listProgress, TQT_SIGNAL( executed( TQListViewItem* ) ),
            TQT_SLOT( slotToggleDefaultProgress( TQListViewItem* ) ) );
-  connect( listProgress, TQT_SIGNAL( contextMenu( KListView*, TQListViewItem *, const TQPoint &)),
-           TQT_SLOT(slotShowContextMenu(KListView*, TQListViewItem *, const TQPoint&)));
+  connect( listProgress, TQT_SIGNAL( contextMenu( TDEListView*, TQListViewItem *, const TQPoint &)),
+           TQT_SLOT(slotShowContextMenu(TDEListView*, TQListViewItem *, const TQPoint&)));
 
 
   // setup animation timer
@@ -671,7 +671,7 @@ void UIServer::applySettings()
      toolBar()->show();
 }
 
-void UIServer::slotShowContextMenu(KListView*, TQListViewItem* item, const TQPoint& pos)
+void UIServer::slotShowContextMenu(TDEListView*, TQListViewItem* item, const TQPoint& pos)
 {
    if (m_contextMenu==0)
    {
@@ -1355,7 +1355,7 @@ void UIServer::slotCancelCurrent() {
 
 void UIServer::resizeEvent(TQResizeEvent* e)
 {
-   KMainWindow::resizeEvent(e);
+   TDEMainWindow::resizeEvent(e);
    writeSettings();
 }
 

@@ -40,12 +40,12 @@
 #include "tdefiletreeviewitem.h"
 
 KFileTreeView::KFileTreeView( TQWidget *parent, const char *name )
-    : KListView( parent, name ),
+    : TDEListView( parent, name ),
       m_wantOpenFolderPixmaps( true ),
       m_toolTip( this )
 {
     setDragEnabled(true);
-    setSelectionModeExt( KListView::Single );
+    setSelectionModeExt( TDEListView::Single );
 
     m_animationTimer = new TQTimer( this );
     connect( m_animationTimer, TQT_SIGNAL( timeout() ),
@@ -235,8 +235,8 @@ bool KFileTreeView::acceptDrag(TQDropEvent* e ) const
    // kdDebug(250) << "canDecode: " << KURLDrag::canDecode(e) << endl;
    // kdDebug(250) << "action: " << e->action() << endl;
 
-   /*  KListView::acceptDrag(e);  */
-   /* this is what KListView does:
+   /*  TDEListView::acceptDrag(e);  */
+   /* this is what TDEListView does:
     * acceptDrops() && itemsMovable() && (e->source()==viewport());
     * ask acceptDrops and itemsMovable, but not the third
     */
@@ -672,6 +672,6 @@ void KFileTreeViewToolTip::maybeTip( const TQPoint & )
 }
 
 void KFileTreeView::virtual_hook( int id, void* data )
-{ KListView::virtual_hook( id, data ); }
+{ TDEListView::virtual_hook( id, data ); }
 
 #include "tdefiletreeview.moc"

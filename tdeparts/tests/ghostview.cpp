@@ -20,10 +20,10 @@ Shell::Shell()
 {
   setXMLFile( "ghostviewtest_shell.rc" );
 
-  KAction * paOpen = new KAction( "&Open file" , "fileopen", 0, this,
+  TDEAction * paOpen = new TDEAction( "&Open file" , "fileopen", 0, this,
     TQT_SLOT( slotFileOpen() ), actionCollection(), "file_open" );
 
-  KAction * paQuit = new KAction( "&Quit" , "exit", 0, this, TQT_SLOT( close() ), actionCollection(), "file_quit" );
+  TDEAction * paQuit = new TDEAction( "&Quit" , "exit", 0, this, TQT_SLOT( close() ), actionCollection(), "file_quit" );
 
   // Try to find a postscript component first
   TDETrader::OfferList offers = TDETrader::self()->query("application/postscript", "('KParts/ReadOnlyPart' in ServiceTypes) or ('Browser/View' in ServiceTypes)");

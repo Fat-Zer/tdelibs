@@ -511,11 +511,11 @@ bool KMManager::invokeOptionsDialog(TQWidget *parent)
 	return false;
 }
 
-void KMManager::createPluginActions(KActionCollection*)
+void KMManager::createPluginActions(TDEActionCollection*)
 {
 }
 
-void KMManager::validatePluginActions(KActionCollection*, KMPrinter*)
+void KMManager::validatePluginActions(TDEActionCollection*, KMPrinter*)
 {
 }
 

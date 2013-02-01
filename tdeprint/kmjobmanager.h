@@ -33,8 +33,8 @@
 
 class KMJob;
 class KMThreadJob;
-class KActionCollection;
-class KAction;
+class TDEActionCollection;
+class TDEAction;
 
 /**
  * @internal
@@ -78,8 +78,8 @@ public:
 	KMThreadJob* threadJob();
 
 	virtual int actions();
-	virtual TQValueList<KAction*> createPluginActions(KActionCollection*);
-	virtual void validatePluginActions(KActionCollection*, const TQPtrList<KMJob>&);
+	virtual TQValueList<TDEAction*> createPluginActions(TDEActionCollection*);
+	virtual void validatePluginActions(TDEActionCollection*, const TQPtrList<KMJob>&);
 	virtual bool doPluginAction(int, const TQPtrList<KMJob>&);
 
 protected:

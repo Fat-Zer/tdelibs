@@ -90,7 +90,7 @@ KCustomMenuEditor::KCustomMenuEditor(TQWidget *parent)
 {
     d = new KCustomMenuEditorPrivate;
    TQHBox *page = makeHBoxMainWidget();
-   m_listView = new KListView(page);
+   m_listView = new TDEListView(page);
    m_listView->addColumn(i18n("Menu"));
    m_listView->setFullWidth(true);
    m_listView->setSorting(-1);

@@ -47,7 +47,7 @@
  * a single ':' the file-class is specific to the current application.
  * If the file-class starts with '::' it is global to all applications.
  */
-class TDEIO_EXPORT KRecentDirs
+class TDEIO_EXPORT TDERecentDirs
 {
 public:
     /**

@@ -37,7 +37,7 @@
 class KMimeTypeChooserPrivate
 {
   public:
-    KListView *lvMimeTypes;
+    TDEListView *lvMimeTypes;
     TQPushButton *btnEditMimeType;
 
     TQString defaultgroup;
@@ -70,7 +70,7 @@ KMimeTypeChooser::KMimeTypeChooser( const TQString &text,
     new TQLabel( text, this );
   }
 
-  d->lvMimeTypes = new KListView( this );
+  d->lvMimeTypes = new TDEListView( this );
 
   d->lvMimeTypes->addColumn( i18n("Mime Type") );
 //   d->lvMimeTypes->setColumnWidthMode( 0, TQListView::Manual );

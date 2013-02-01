@@ -558,7 +558,7 @@ int main(int argc, char *argv[])
 
     // create widgets
     TDEHTMLFactory *fac = new TDEHTMLFactory();
-    KMainWindow *toplevel = new KMainWindow();
+    TDEMainWindow *toplevel = new TDEMainWindow();
     TDEHTMLPart *part = new TDEHTMLPart( toplevel, 0, toplevel, 0, TDEHTMLPart::BrowserViewGUI );
 
     toplevel->setCentralWidget( part->widget() );

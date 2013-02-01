@@ -55,7 +55,7 @@ public:
         }
     }
 
-    TQGuardedPtr<KActionCollection> actions;
+    TQGuardedPtr<TDEActionCollection> actions;
     int dropOptions;
 };
 
@@ -362,10 +362,10 @@ void KFileView::listingCompleted()
     // empty default impl.
 }
 
-KActionCollection * KFileView::actionCollection() const
+TDEActionCollection * KFileView::actionCollection() const
 {
     if ( !d->actions )
-        d->actions = new KActionCollection( widget(), "KFileView::d->actions" );
+        d->actions = new TDEActionCollection( widget(), "KFileView::d->actions" );
     return d->actions;
 }
 
