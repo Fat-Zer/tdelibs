@@ -552,7 +552,7 @@ bool TDEApplication::notify(TQObject *receiver, TQEvent *event)
         TQWidget* w = TQT_TQWIDGET( receiver );
 #if defined Q_WS_X11
         if( w->isTopLevel() && !startupId().isEmpty() && !TQT_TQSHOWEVENT(event)->spontaneous()) // TODO better done using window group leader?
-            KStartupInfo::setWindowStartupId( w->winId(), startupId());
+            TDEStartupInfo::setWindowStartupId( w->winId(), startupId());
 #endif
         if( w->isTopLevel() && !w->testWFlags( WX11BypassWM ) && !w->isPopup() && !event->spontaneous())
         {
@@ -586,7 +586,7 @@ bool TDEApplication::notify(TQObject *receiver, TQEvent *event)
 void TDEApplication::checkAppStartedSlot()
 {
 #if defined Q_WS_X11
-    KStartupInfo::handleAutoAppStartedSending();
+    TDEStartupInfo::handleAutoAppStartedSending();
 #endif
 }
 
@@ -3024,7 +3024,7 @@ startServiceInternal( const TQCString &function,
    stream << envs;
 #if defined Q_WS_X11
    // make sure there is id, so that user timestamp exists
-   stream << ( startup_id.isEmpty() ? KStartupInfo::createNewStartupId() : startup_id );
+   stream << ( startup_id.isEmpty() ? TDEStartupInfo::createNewStartupId() : startup_id );
 #endif
    if( function.left( 12 ) != "tdeinit_exec" )
        stream << noWait;
@@ -3266,7 +3266,7 @@ void TDEApplication::setTopWidget( TQWidget *topWidget )
     KWin::setIcons(topWidget->winId(), icon(), miniIcon() ); // NET_WM hints for KWin
 
     // set the app startup notification window property
-    KStartupInfo::setWindowStartupId( topWidget->winId(), startupId());
+    TDEStartupInfo::setWindowStartupId( topWidget->winId(), startupId());
 #endif
 }
 
@@ -3280,7 +3280,7 @@ void TDEApplication::setStartupId( const TQCString& startup_id )
     if( startup_id == d->startup_id )
         return;
 #if defined Q_WS_X11
-    KStartupInfo::handleAutoAppStartedSending(); // finish old startup notification if needed
+    TDEStartupInfo::handleAutoAppStartedSending(); // finish old startup notification if needed
 #endif
     if( startup_id.isEmpty())
         d->startup_id = "0";
@@ -3288,7 +3288,7 @@ void TDEApplication::setStartupId( const TQCString& startup_id )
         {
         d->startup_id = startup_id;
 #if defined Q_WS_X11
-        KStartupInfoId id;
+        TDEStartupInfoId id;
         id.initId( startup_id );
         long timestamp = id.timestamp();
         if( timestamp != 0 )
@@ -3302,8 +3302,8 @@ void TDEApplication::setStartupId( const TQCString& startup_id )
 void TDEApplication::read_app_startup_id()
 {
 #if defined Q_WS_X11
-    KStartupInfoId id = KStartupInfo::currentStartupIdEnv();
-    KStartupInfo::resetStartupEnv();
+    TDEStartupInfoId id = TDEStartupInfo::currentStartupIdEnv();
+    TDEStartupInfo::resetStartupEnv();
     d->startup_id = id.id();
 #endif
 }

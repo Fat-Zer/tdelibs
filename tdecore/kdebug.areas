@@ -16,7 +16,7 @@
 160        tdecore (KNotifyClient)
 170        tdecore (KNetwork socket)
 171        tdecore (KSocks)
-172        tdecore (KStartupInfo)
+172        tdecore (TDEStartupInfo)
 173        tdecore (KLocale)
 174        tdecore (KProcIO)
 175        tdecore (TDEProcess)

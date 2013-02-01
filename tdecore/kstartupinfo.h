@@ -39,10 +39,10 @@ DEALINGS IN THE SOFTWARE.
 #include <tqvaluelist.h>
 #include "tdelibs_export.h"
 
-class KStartupInfoId;
-class KStartupInfoData;
+class TDEStartupInfoId;
+class TDEStartupInfoData;
 
-class KStartupInfoPrivate;
+class TDEStartupInfoPrivate;
 
 /**
  * Class for manipulating the application startup notification.
@@ -59,12 +59,12 @@ class KStartupInfoPrivate;
  * to its slots. It will automatically detect started applications and when
  * they are ready.
  *
- * @see KStartupInfoId
- * @see KStartupInfoData
+ * @see TDEStartupInfoId
+ * @see TDEStartupInfoData
  *
  * @author Lubos Lunak <l.lunak@kde.org>
  */
-class TDECORE_EXPORT KStartupInfo
+class TDECORE_EXPORT TDEStartupInfo
     : public TQObject
     {
     Q_OBJECT
@@ -151,7 +151,7 @@ class TDECORE_EXPORT KStartupInfo
 	 * @param name the name of the TQObject (can be 0 for no name)
 	 *
 	 */
-	KStartupInfo( int flags, TQObject* parent = NULL, const char* name = NULL );
+	TDEStartupInfo( int flags, TQObject* parent = NULL, const char* name = NULL );
 	/**
 	 * Creates an instance that will receive the startup notifications.
 	 *
@@ -163,8 +163,8 @@ class TDECORE_EXPORT KStartupInfo
 	 *
 	 * @obsolete
 	 */
-        KStartupInfo( bool clean_on_cantdetect, TQObject* parent = 0, const char* name = 0 );
-        virtual ~KStartupInfo();
+        TDEStartupInfo( bool clean_on_cantdetect, TQObject* parent = 0, const char* name = 0 );
+        virtual ~TDEStartupInfo();
 	/**
 	 * Sends given notification data about started application
 	 * with the given startup identification. If no notification for this identification
@@ -174,10 +174,10 @@ class TDECORE_EXPORT KStartupInfo
 	 * @param id the id of the application
 	 * @param data the application's data
 	 * @return true if successful, false otherwise
-	 * @see KStartupInfoId
-	 * @see KStartupInfoData
+	 * @see TDEStartupInfoId
+	 * @see TDEStartupInfoData
 	 */
-        static bool sendStartup( const KStartupInfoId& id, const KStartupInfoData& data );
+        static bool sendStartup( const TDEStartupInfoId& id, const TDEStartupInfoData& data );
 
 	/**
 	 * Like sendStartup , uses dpy instead of tqt_xdisplay() for sending the info.
@@ -187,8 +187,8 @@ class TDECORE_EXPORT KStartupInfo
 	 * @param data the application's data
 	 * @return true if successful, false otherwise
 	 */
-        static bool sendStartupX( Display* dpy, const KStartupInfoId& id,
-            const KStartupInfoData& data );
+        static bool sendStartupX( Display* dpy, const TDEStartupInfoId& id,
+            const TDEStartupInfoData& data );
 
 	/**
 	 * Sends given notification data about started application
@@ -197,10 +197,10 @@ class TDECORE_EXPORT KStartupInfo
 	 * @param id the id of the application
 	 * @param data the application's data
 	 * @return true if successful, false otherwise
-	 * @see KStartupInfoId
-	 * @see KStartupInfoData
+	 * @see TDEStartupInfoId
+	 * @see TDEStartupInfoData
 	 */
-        static bool sendChange( const KStartupInfoId& id, const KStartupInfoData& data );
+        static bool sendChange( const TDEStartupInfoId& id, const TDEStartupInfoData& data );
 
 	/**
 	 * Like sendChange , uses dpy instead of tqt_xdisplay() for sending the info.
@@ -209,15 +209,15 @@ class TDECORE_EXPORT KStartupInfo
 	 * @param data the application's data
 	 * @return true if successful, false otherwise
 	 */
-        static bool sendChangeX( Display* dpy, const KStartupInfoId& id,
-            const KStartupInfoData& data );
+        static bool sendChangeX( Display* dpy, const TDEStartupInfoId& id,
+            const TDEStartupInfoData& data );
 
 	/**
 	 * Ends startup notification with the given identification.
 	 * @param id the id of the application
 	 * @return true if successful, false otherwise
 	 */
-        static bool sendFinish( const KStartupInfoId& id );
+        static bool sendFinish( const TDEStartupInfoId& id );
 
 	/**
 	 * Like sendFinish , uses dpy instead of tqt_xdisplay() for sending the info.
@@ -225,7 +225,7 @@ class TDECORE_EXPORT KStartupInfo
 	 * @param id the id of the application
 	 * @return true if successful, false otherwise
 	 */
-        static bool sendFinishX( Display* dpy, const KStartupInfoId& id );
+        static bool sendFinishX( Display* dpy, const TDEStartupInfoId& id );
 
 	/**
 	 * Ends startup notification with the given identification and the given data ( e.g.
@@ -234,7 +234,7 @@ class TDECORE_EXPORT KStartupInfo
 	 * @param data the application's data
 	 * @return true if successful, false otherwise
 	 */
-        static bool sendFinish( const KStartupInfoId& id, const KStartupInfoData& data );
+        static bool sendFinish( const TDEStartupInfoId& id, const TDEStartupInfoData& data );
 
 	/**
 	 * Like sendFinish , uses dpy instead of tqt_xdisplay() for sending the info.
@@ -243,8 +243,8 @@ class TDECORE_EXPORT KStartupInfo
 	 * @param data the application's data
 	 * @return true if successful, false otherwise
 	 */
-        static bool sendFinishX( Display* dpy, const KStartupInfoId& id,
-            const KStartupInfoData& data );
+        static bool sendFinishX( Display* dpy, const TDEStartupInfoId& id,
+            const TDEStartupInfoData& data );
 
 	/**
 	 * Returns the current startup notification identification for the current
@@ -252,7 +252,7 @@ class TDECORE_EXPORT KStartupInfo
 	 * unsets the variable and you have to use TDEApplication::startupId .
 	 * @return the current startup notification identification
 	 */
-        static KStartupInfoId currentStartupIdEnv();
+        static TDEStartupInfoId currentStartupIdEnv();
 	/**
 	 * Unsets the startup notification environment variable.
 	 */
@@ -277,7 +277,7 @@ class TDECORE_EXPORT KStartupInfo
 	 * @param id if found, the id of the startup notification will be written here
 	 * @return the result of the operation
 	 */
-        startup_t checkStartup( WId w, KStartupInfoId& id );
+        startup_t checkStartup( WId w, TDEStartupInfoId& id );
 	/**
 	 * Checks if the given windows matches any existing startup notification, and
 	 * if yes, returns the notification data in data.
@@ -285,7 +285,7 @@ class TDECORE_EXPORT KStartupInfo
 	 * @param data if found, the data of the startup notification will be written here
 	 * @return the result of the operation
 	 */
-        startup_t checkStartup( WId w, KStartupInfoData& data );
+        startup_t checkStartup( WId w, TDEStartupInfoData& data );
 	/**
 	 * Checks if the given windows matches any existing startup notification, and
 	 * if yes, returns the identification in id and notification data in data.
@@ -294,7 +294,7 @@ class TDECORE_EXPORT KStartupInfo
 	 * @param data if found, the data of the startup notification will be written here
 	 * @return the result of the operation
 	 */
-        startup_t checkStartup( WId w, KStartupInfoId& id, KStartupInfoData& data );
+        startup_t checkStartup( WId w, TDEStartupInfoId& id, TDEStartupInfoData& data );
 	/**
 	 * Sets the timeout for notifications, after this timeout a notification is removed.
 	 * @param secs the new timeout in seconds
@@ -327,20 +327,20 @@ class TDECORE_EXPORT KStartupInfo
 	 * @param id the notification identification
 	 * @param data the notification data
 	 */
-        void gotNewStartup( const KStartupInfoId& id, const KStartupInfoData& data );
+        void gotNewStartup( const TDEStartupInfoId& id, const TDEStartupInfoData& data );
 	/**
 	 * Emitted when a startup notification changes.
 	 * @param id the notification identification
 	 * @param data the notification data
 	 */
-        void gotStartupChange( const KStartupInfoId& id, const KStartupInfoData& data );
+        void gotStartupChange( const TDEStartupInfoId& id, const TDEStartupInfoData& data );
 	/**
 	 * Emitted when a startup notification is removed (either because it was detected
 	 * that the application is ready or because of a timeout).
 	 * @param id the notification identification
 	 * @param data the notification data
 	 */
-        void gotRemoveStartup( const KStartupInfoId& id, const KStartupInfoData& data );
+        void gotRemoveStartup( const TDEStartupInfoId& id, const TDEStartupInfoData& data );
     protected:
 	/**
 	 * 
@@ -354,32 +354,32 @@ class TDECORE_EXPORT KStartupInfo
 	void slot_window_added( WId w );
     private:
         void init( int flags );
-        friend class KStartupInfoPrivate;
+        friend class TDEStartupInfoPrivate;
         void got_startup_info( const TQString& msg_P, bool update_only_P );
         void got_remove_startup_info( const TQString& msg_P );
-        void new_startup_info_internal( const KStartupInfoId& id_P,
+        void new_startup_info_internal( const TDEStartupInfoId& id_P,
             Data& data_P, bool update_only_P );
-        void remove_startup_info_internal( const KStartupInfoId& id_P );
-        void remove_startup_pids( const KStartupInfoId& id, const KStartupInfoData& data );
-        void remove_startup_pids( const KStartupInfoData& data );
-        startup_t check_startup_internal( WId w, KStartupInfoId* id, KStartupInfoData* data );
-        bool find_id( const TQCString& id_P, KStartupInfoId* id_O,
-            KStartupInfoData* data_O );
-        bool find_pid( pid_t pid_P, const TQCString& hostname, KStartupInfoId* id_O,
-            KStartupInfoData* data_O );
+        void remove_startup_info_internal( const TDEStartupInfoId& id_P );
+        void remove_startup_pids( const TDEStartupInfoId& id, const TDEStartupInfoData& data );
+        void remove_startup_pids( const TDEStartupInfoData& data );
+        startup_t check_startup_internal( WId w, TDEStartupInfoId* id, TDEStartupInfoData* data );
+        bool find_id( const TQCString& id_P, TDEStartupInfoId* id_O,
+            TDEStartupInfoData* data_O );
+        bool find_pid( pid_t pid_P, const TQCString& hostname, TDEStartupInfoId* id_O,
+            TDEStartupInfoData* data_O );
         bool find_wclass( TQCString res_name_P, TQCString res_class_P,
-            KStartupInfoId* id_O, KStartupInfoData* data_O );
+            TDEStartupInfoId* id_O, TDEStartupInfoData* data_O );
         static TQCString get_window_hostname( WId w_P );
         void startups_cleanup_internal( bool age_P );
         void clean_all_noncompliant();
         static TQString check_required_startup_fields( const TQString& msg,
-            const KStartupInfoData& data, int screen );
+            const TDEStartupInfoData& data, int screen );
         bool clean_on_cantdetect_; // KDE4 remove unused
         unsigned int timeout;
-        KStartupInfoPrivate* d;
+        TDEStartupInfoPrivate* d;
     };
 
-class KStartupInfoIdPrivate;
+class TDEStartupInfoIdPrivate;
 
 /**
  * Class representing an identification of application startup notification.
@@ -387,24 +387,24 @@ class KStartupInfoIdPrivate;
  * Every existing notification about a starting application has its own unique
  * identification, that's used to identify and manipulate the notification.
  *
- * @see KStartupInfo
- * @see KStartupInfoData
+ * @see TDEStartupInfo
+ * @see TDEStartupInfoData
  *
  * @author Lubos Lunak <l.lunak@kde.org>
  */
-class TDECORE_EXPORT KStartupInfoId
+class TDECORE_EXPORT TDEStartupInfoId
     {
     public:
 	/**
 	 * Overloaded operator.
 	 * @return true if the notification identifications are the same
 	 */
-        bool operator==( const KStartupInfoId& id ) const;
+        bool operator==( const TDEStartupInfoId& id ) const;
 	/**
 	 * Overloaded operator.
 	 * @return true if the notification identifications are different
 	 */
-        bool operator!=( const KStartupInfoId& id ) const;
+        bool operator!=( const TDEStartupInfoId& id ) const;
 	/**
 	 * Checks whether the identifier is valid.
 	 * @return true if this object doesn't represent a valid notification identification
@@ -437,22 +437,22 @@ class TDECORE_EXPORT KStartupInfoId
 	/**
 	 * Creates an empty identification
 	 */
-        KStartupInfoId();
+        TDEStartupInfoId();
 	/**
 	 * Copy constructor.
 	 */
-        KStartupInfoId( const KStartupInfoId& data );
-        ~KStartupInfoId();
-        KStartupInfoId& operator=( const KStartupInfoId& data );
-        bool operator<( const KStartupInfoId& id ) const;
+        TDEStartupInfoId( const TDEStartupInfoId& data );
+        ~TDEStartupInfoId();
+        TDEStartupInfoId& operator=( const TDEStartupInfoId& data );
+        bool operator<( const TDEStartupInfoId& id ) const;
     private:
-        KStartupInfoId( const TQString& txt );
+        TDEStartupInfoId( const TQString& txt );
         TQString to_text() const;
-        friend class KStartupInfo;
-        KStartupInfoIdPrivate* d;
+        friend class TDEStartupInfo;
+        TDEStartupInfoIdPrivate* d;
     };
 
-class KStartupInfoDataPrivate;
+class TDEStartupInfoDataPrivate;
 
 /**
  * Class representing data about an application startup notification.
@@ -460,12 +460,12 @@ class KStartupInfoDataPrivate;
  * Such data include the icon of the starting application, the desktop on which
  * the application should start, the binary name of the application, etc.
  *
- * @see KStartupInfo
- * @see KStartupInfoId
+ * @see TDEStartupInfo
+ * @see TDEStartupInfoId
  *
  * @author Lubos Lunak <l.lunak@kde.org>
  */
-class TDECORE_EXPORT KStartupInfoData
+class TDECORE_EXPORT TDEStartupInfoData
     {
     public:
 	/**
@@ -608,13 +608,13 @@ class TDECORE_EXPORT KStartupInfoData
 	
 	/**
 	 * Return the silence status for the startup notification.
-	 * @return KStartupInfoData::Yes if visual feedback is silenced
+	 * @return TDEStartupInfoData::Yes if visual feedback is silenced
 	 * @since 3.1.1
 	 */
 	TriState silent() const;
         
         /**
-         * @obsolete Timestamp is already assigned in KStartupInfoId::initId().
+         * @obsolete Timestamp is already assigned in TDEStartupInfoId::initId().
          * Sets timestamp for the startup notification. The timestamp is expressed
          * as XServer time, and is used to prevent activation of the matching
          * window if user interaction took place after this timestamp.
@@ -624,7 +624,7 @@ class TDECORE_EXPORT KStartupInfoData
         void setTimestamp( unsigned long time );
         
         /**
-         * @obsolete Use KStartupInfoId::timestamp().
+         * @obsolete Use TDEStartupInfoId::timestamp().
          * Return the timestamp for the startup notification, or -1 if no timestamp
          * is set.
          */
@@ -670,26 +670,26 @@ class TDECORE_EXPORT KStartupInfoData
 	 * or the name, won't be rewritten if already set.
 	 * @param data the data to update
 	 */
-        void update( const KStartupInfoData& data );
+        void update( const TDEStartupInfoData& data );
 
 	/**
 	 * Constructor. Initializes all the data to their default empty values.
 	 */
-        KStartupInfoData();
+        TDEStartupInfoData();
 
 	/**
 	 * Copy constructor.
 	 */
-        KStartupInfoData( const KStartupInfoData& data );
-        ~KStartupInfoData();
-        KStartupInfoData& operator=( const KStartupInfoData& data );
+        TDEStartupInfoData( const TDEStartupInfoData& data );
+        ~TDEStartupInfoData();
+        TDEStartupInfoData& operator=( const TDEStartupInfoData& data );
     private:
-        KStartupInfoData( const TQString& txt );
+        TDEStartupInfoData( const TQString& txt );
         TQString to_text() const;
         void remove_pid( pid_t pid );
-        friend class KStartupInfo;
-        friend class KStartupInfo::Data;
-        KStartupInfoDataPrivate* d;
+        friend class TDEStartupInfo;
+        friend class TDEStartupInfo::Data;
+        TDEStartupInfoDataPrivate* d;
     };
 
 #endif //Q_WS_X11

@@ -758,9 +758,9 @@ KLauncher::requestDone(KLaunchRequest *request)
             dpy = XOpenDisplay( request->startup_dpy );
          if( dpy )
          {
-            KStartupInfoId id;
+            TDEStartupInfoId id;
             id.initId( request->startup_id );
-            KStartupInfo::sendFinishX( dpy, id );
+            TDEStartupInfo::sendFinishX( dpy, id );
             if( mCached_dpy != dpy && mCached_dpy != NULL )
                XCloseDisplay( mCached_dpy );
             mCached_dpy = dpy;
@@ -1051,7 +1051,7 @@ KLauncher::send_service_startup_info( KLaunchRequest *request, KService::Ptr ser
     const TQValueList<TQCString> &envs )
 {
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
-//#ifdef Q_WS_X11 // KStartup* isn't implemented for Qt/Embedded yet
+//#ifdef Q_WS_X11 // TDEStartup* isn't implemented for Qt/Embedded yet
     request->startup_id = "0";
     if( startup_id == "0" )
         return;
@@ -1059,7 +1059,7 @@ KLauncher::send_service_startup_info( KLaunchRequest *request, KService::Ptr ser
     TQCString wmclass;
     if( !KRun::checkStartupNotify( TQString::null, service, &silent, &wmclass ))
         return;
-    KStartupInfoId id;
+    TDEStartupInfoId id;
     id.initId( startup_id );
     const char* dpy_str = NULL;
     for( TQValueList<TQCString>::ConstIterator it = envs.begin();
@@ -1082,16 +1082,16 @@ KLauncher::send_service_startup_info( KLaunchRequest *request, KService::Ptr ser
 
     request->startup_dpy = dpy_str;
 
-    KStartupInfoData data;
+    TDEStartupInfoData data;
     data.setName( service->name());
     data.setIcon( service->icon());
     data.setDescription( i18n( "Launching %1" ).arg( service->name()));
     if( !wmclass.isEmpty())
         data.setWMClass( wmclass );
     if( silent )
-        data.setSilent( KStartupInfoData::Yes );
+        data.setSilent( TDEStartupInfoData::Yes );
     // the rest will be sent by tdeinit
-    KStartupInfo::sendStartupX( dpy, id, data );
+    TDEStartupInfo::sendStartupX( dpy, id, data );
     if( mCached_dpy != dpy && mCached_dpy != NULL )
         XCloseDisplay( mCached_dpy );
     mCached_dpy = dpy;
@@ -1106,7 +1106,7 @@ KLauncher::cancel_service_startup_info( KLaunchRequest* request, const TQCString
     const TQValueList<TQCString> &envs )
 {
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
-//#ifdef Q_WS_X11 // KStartup* isn't implemented for Qt/Embedded yet
+//#ifdef Q_WS_X11 // TDEStartup* isn't implemented for Qt/Embedded yet
     if( request != NULL )
         request->startup_id = "0";
     if( !startup_id.isEmpty() && startup_id != "0" )
@@ -1125,9 +1125,9 @@ KLauncher::cancel_service_startup_info( KLaunchRequest* request, const TQCString
             dpy = XOpenDisplay( dpy_str );
         if( dpy == NULL )
             return;
-        KStartupInfoId id;
+        TDEStartupInfoId id;
         id.initId( startup_id );
-        KStartupInfo::sendFinishX( dpy, id );
+        TDEStartupInfo::sendFinishX( dpy, id );
         if( mCached_dpy != dpy && mCached_dpy != NULL )
            XCloseDisplay( mCached_dpy );
         mCached_dpy = dpy;

@@ -1071,7 +1071,7 @@ public:
    * Sets a new value for the application startup notification window property for newly
    * created toplevel windows. 
    * @param startup_id the startup notification identifier
-   * @see KStartupInfo::setNewStartupId
+   * @see TDEStartupInfo::setNewStartupId
    */
   void setStartupId( const TQCString& startup_id );
 

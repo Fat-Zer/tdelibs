@@ -206,7 +206,7 @@ void KIOExec::slotRunApp()
 
 #ifdef Q_WS_X11
     // propagate the startup indentification to the started process
-    KStartupInfoId id;
+    TDEStartupInfoId id;
     id.initId( kapp->startupId());
     id.setupStartupEnv();
 #endif
@@ -216,7 +216,7 @@ void KIOExec::slotRunApp()
     proc.start( TDEProcess::Block );
 
 #ifdef Q_WS_X11
-    KStartupInfo::resetStartupEnv();
+    TDEStartupInfo::resetStartupEnv();
 #endif
 
     kdDebug() << "EXEC done" << endl;

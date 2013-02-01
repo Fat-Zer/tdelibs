@@ -482,8 +482,8 @@ class TDEIO_EXPORT TDEProcessRunner : public TQObject
   public:
 
     static pid_t run(TDEProcess *, const TQString & binName);
-#ifdef Q_WS_X11 // We don't have KStartupInfo in Qt/Embedded
-    static pid_t run(TDEProcess *, const TQString & binName, const KStartupInfoId& id );
+#ifdef Q_WS_X11 // We don't have TDEStartupInfo in Qt/Embedded
+    static pid_t run(TDEProcess *, const TQString & binName, const TDEStartupInfoId& id );
 #endif
 
     virtual ~TDEProcessRunner();
@@ -497,15 +497,15 @@ class TDEIO_EXPORT TDEProcessRunner : public TQObject
   private:
 
     TDEProcessRunner(TDEProcess *, const TQString & binName);
-#ifdef Q_WS_X11 // We don't have KStartupInfo in Qt/Embedded
-    TDEProcessRunner(TDEProcess *, const TQString & binName, const KStartupInfoId& id );
+#ifdef Q_WS_X11 // We don't have TDEStartupInfo in Qt/Embedded
+    TDEProcessRunner(TDEProcess *, const TQString & binName, const TDEStartupInfoId& id );
 #endif
     TDEProcessRunner();
 
     TDEProcess * process_;
     TQString binName;
-#ifdef Q_WS_X11 // We don't have KStartupInfo in Qt/Embedded
-    KStartupInfoId id_;
+#ifdef Q_WS_X11 // We don't have TDEStartupInfo in Qt/Embedded
+    TDEStartupInfoId id_;
 #endif
 };
 

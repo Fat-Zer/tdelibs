@@ -152,7 +152,7 @@ void KCMShellMultiDialog::activate( TQCString asn_id )
 {
     kdDebug(780) << k_funcinfo << endl;
 
-    KStartupInfo::setNewStartupId( this, asn_id );
+    TDEStartupInfo::setNewStartupId( this, asn_id );
 }
 
 void KCMShell::setDCOPName(const TQCString &dcopName, bool rootMode )

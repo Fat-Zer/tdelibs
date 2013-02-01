@@ -27,7 +27,7 @@ DEALINGS IN THE SOFTWARE.
 // kdDebug() can't be turned off in tdeinit
 #if 0
 #define KSTARTUPINFO_ALL_DEBUG
-#warning Extra KStartupInfo debug messages enabled.
+#warning Extra TDEStartupInfo debug messages enabled.
 #endif
 
 #include <tqwidget.h>
@@ -80,31 +80,31 @@ static TQString escape_str( const TQString& str_P );
 
 static Atom utf8_string_atom = None;
 
-class KStartupInfo::Data
-    : public KStartupInfoData
+class TDEStartupInfo::Data
+    : public TDEStartupInfoData
     {
     public:
-        Data() : KStartupInfoData(), age(0) {} // just because it's in a QMap
+        Data() : TDEStartupInfoData(), age(0) {} // just because it's in a QMap
         Data( const TQString& txt_P )
-            : KStartupInfoData( txt_P ), age( 0 ) {}
+            : TDEStartupInfoData( txt_P ), age( 0 ) {}
         unsigned int age;
     };
 
-struct KStartupInfoPrivate
+struct TDEStartupInfoPrivate
     {
     public:
-        TQMap< KStartupInfoId, KStartupInfo::Data > startups;
+        TQMap< TDEStartupInfoId, TDEStartupInfo::Data > startups;
 	// contains silenced ASN's only if !AnnounceSilencedChanges
-        TQMap< KStartupInfoId, KStartupInfo::Data > silent_startups;
+        TQMap< TDEStartupInfoId, TDEStartupInfo::Data > silent_startups;
         // contains ASN's that had change: but no new: yet
-        TQMap< KStartupInfoId, KStartupInfo::Data > uninited_startups;
+        TQMap< TDEStartupInfoId, TDEStartupInfo::Data > uninited_startups;
 #ifdef Q_WS_X11
         KWinModule* wm_module;
         KXMessages msgs;
 #endif
 	TQTimer* cleanup;
 	int flags;
-	KStartupInfoPrivate( int flags_P )
+	TDEStartupInfoPrivate( int flags_P )
     	    :
 #ifdef Q_WS_X11
 	    msgs( NET_STARTUP_MSG, NULL, false ),
@@ -112,21 +112,21 @@ struct KStartupInfoPrivate
 	      flags( flags_P ) {}
     };
 
-KStartupInfo::KStartupInfo( int flags_P, TQObject* parent_P, const char* name_P )
+TDEStartupInfo::TDEStartupInfo( int flags_P, TQObject* parent_P, const char* name_P )
     : TQObject( parent_P, name_P ),
         timeout( 60 ), d( NULL )
     {
     init( flags_P );
     }
 
-KStartupInfo::KStartupInfo( bool clean_on_cantdetect_P, TQObject* parent_P, const char* name_P )
+TDEStartupInfo::TDEStartupInfo( bool clean_on_cantdetect_P, TQObject* parent_P, const char* name_P )
     : TQObject( parent_P, name_P ),
         timeout( 60 ), d( NULL )
     {
     init( clean_on_cantdetect_P ? CleanOnCantDetect : 0 );
     }
 
-void KStartupInfo::init( int flags_P )
+void TDEStartupInfo::init( int flags_P )
     {
     // d == NULL means "disabled"
     if( !TDEApplication::kApplication())
@@ -134,7 +134,7 @@ void KStartupInfo::init( int flags_P )
     if( !TDEApplication::kApplication()->getDisplay())
         return;
 
-    d = new KStartupInfoPrivate( flags_P );
+    d = new TDEStartupInfoPrivate( flags_P );
 #ifdef Q_WS_X11
     if( !( d->flags & DisableKWinModule ))
         {
@@ -150,12 +150,12 @@ void KStartupInfo::init( int flags_P )
     connect( d->cleanup, TQT_SIGNAL( timeout()), TQT_SLOT( startups_cleanup()));
     }
 
-KStartupInfo::~KStartupInfo()
+TDEStartupInfo::~TDEStartupInfo()
     {
     delete d;
     }
 
-void KStartupInfo::got_message( const TQString& msg_P )
+void TDEStartupInfo::got_message( const TQString& msg_P )
     {
 // TODO do something with SCREEN= ?
     kdDebug( 172 ) << "got:" << msg_P << endl;
@@ -186,12 +186,12 @@ class DelayedWindowEvent
     };
 }
 
-void KStartupInfo::slot_window_added( WId w_P )
+void TDEStartupInfo::slot_window_added( WId w_P )
     {
     kapp->postEvent( this, new DelayedWindowEvent( w_P ));
     }
 
-void KStartupInfo::customEvent( TQCustomEvent* e_P )
+void TDEStartupInfo::customEvent( TQCustomEvent* e_P )
     {
     if( e_P->type() == TQEvent::User + 15 )
 	window_added( static_cast< DelayedWindowEvent* >( e_P )->w );
@@ -199,10 +199,10 @@ void KStartupInfo::customEvent( TQCustomEvent* e_P )
 	TQObject::customEvent( e_P );
     }
 
-void KStartupInfo::window_added( WId w_P )
+void TDEStartupInfo::window_added( WId w_P )
     {
-    KStartupInfoId id;
-    KStartupInfoData data;
+    TDEStartupInfoId id;
+    TDEStartupInfoData data;
     startup_t ret = check_startup_internal( w_P, &id, &data );
     switch( ret )
         {
@@ -218,16 +218,16 @@ void KStartupInfo::window_added( WId w_P )
         }
     }
 
-void KStartupInfo::got_startup_info( const TQString& msg_P, bool update_P )
+void TDEStartupInfo::got_startup_info( const TQString& msg_P, bool update_P )
     {
-    KStartupInfoId id( msg_P );
+    TDEStartupInfoId id( msg_P );
     if( id.none())
         return;
-    KStartupInfo::Data data( msg_P );
+    TDEStartupInfo::Data data( msg_P );
     new_startup_info_internal( id, data, update_P );
     }
 
-void KStartupInfo::new_startup_info_internal( const KStartupInfoId& id_P,
+void TDEStartupInfo::new_startup_info_internal( const TDEStartupInfoId& id_P,
     Data& data_P, bool update_P )
     {
     if( d == NULL )
@@ -298,10 +298,10 @@ void KStartupInfo::new_startup_info_internal( const KStartupInfoId& id_P,
     d->cleanup->start( 1000 ); // 1 sec
     }
 
-void KStartupInfo::got_remove_startup_info( const TQString& msg_P )
+void TDEStartupInfo::got_remove_startup_info( const TQString& msg_P )
     {
-    KStartupInfoId id( msg_P );
-    KStartupInfoData data( msg_P );
+    TDEStartupInfoId id( msg_P );
+    TDEStartupInfoData data( msg_P );
     if( data.pids().count() > 0 )
         {
         if( !id.none())
@@ -313,7 +313,7 @@ void KStartupInfo::got_remove_startup_info( const TQString& msg_P )
     remove_startup_info_internal( id );
     }
 
-void KStartupInfo::remove_startup_info_internal( const KStartupInfoId& id_P )
+void TDEStartupInfo::remove_startup_info_internal( const TDEStartupInfoId& id_P )
     {
     if( d == NULL )
         return;
@@ -336,11 +336,11 @@ void KStartupInfo::remove_startup_info_internal( const KStartupInfoId& id_P )
     return;
     }
 
-void KStartupInfo::remove_startup_pids( const KStartupInfoData& data_P )
+void TDEStartupInfo::remove_startup_pids( const TDEStartupInfoData& data_P )
     { // first find the matching info
     if( d == NULL )
         return;
-    for( TQMap< KStartupInfoId, Data >::Iterator it = d->startups.begin();
+    for( TQMap< TDEStartupInfoId, Data >::Iterator it = d->startups.begin();
          it != d->startups.end();
          ++it )
         {
@@ -353,8 +353,8 @@ void KStartupInfo::remove_startup_pids( const KStartupInfoData& data_P )
         }
     }
 
-void KStartupInfo::remove_startup_pids( const KStartupInfoId& id_P,
-    const KStartupInfoData& data_P )
+void TDEStartupInfo::remove_startup_pids( const TDEStartupInfoId& id_P,
+    const TDEStartupInfoData& data_P )
     {
     if( d == NULL )
         return;
@@ -376,7 +376,7 @@ void KStartupInfo::remove_startup_pids( const KStartupInfoId& id_P,
     	remove_startup_info_internal( id_P );
     }
 
-bool KStartupInfo::sendStartup( const KStartupInfoId& id_P, const KStartupInfoData& data_P )
+bool TDEStartupInfo::sendStartup( const TDEStartupInfoId& id_P, const TDEStartupInfoData& data_P )
     {
     if( id_P.none())
         return false;
@@ -389,8 +389,8 @@ bool KStartupInfo::sendStartup( const KStartupInfoId& id_P, const KStartupInfoDa
     return true;
     }
 
-bool KStartupInfo::sendStartupX( Display* disp_P, const KStartupInfoId& id_P,
-    const KStartupInfoData& data_P )
+bool TDEStartupInfo::sendStartupX( Display* disp_P, const TDEStartupInfoId& id_P,
+    const TDEStartupInfoData& data_P )
     {
     if( id_P.none())
         return false;
@@ -403,7 +403,7 @@ bool KStartupInfo::sendStartupX( Display* disp_P, const KStartupInfoId& id_P,
     return KXMessages::broadcastMessageX( disp_P, NET_STARTUP_MSG, msg, -1, false );
     }
 
-TQString KStartupInfo::check_required_startup_fields( const TQString& msg, const KStartupInfoData& data_P,
+TQString TDEStartupInfo::check_required_startup_fields( const TQString& msg, const TDEStartupInfoData& data_P,
     int screen )
     {
     TQString ret = msg;
@@ -420,7 +420,7 @@ TQString KStartupInfo::check_required_startup_fields( const TQString& msg, const
     return ret;
     }
 
-bool KStartupInfo::sendChange( const KStartupInfoId& id_P, const KStartupInfoData& data_P )
+bool TDEStartupInfo::sendChange( const TDEStartupInfoId& id_P, const TDEStartupInfoData& data_P )
     {
     if( id_P.none())
         return false;
@@ -432,8 +432,8 @@ bool KStartupInfo::sendChange( const KStartupInfoId& id_P, const KStartupInfoDat
     return true;
     }
 
-bool KStartupInfo::sendChangeX( Display* disp_P, const KStartupInfoId& id_P,
-    const KStartupInfoData& data_P )
+bool TDEStartupInfo::sendChangeX( Display* disp_P, const TDEStartupInfoId& id_P,
+    const TDEStartupInfoData& data_P )
     {
     if( id_P.none())
         return false;
@@ -445,7 +445,7 @@ bool KStartupInfo::sendChangeX( Display* disp_P, const KStartupInfoId& id_P,
     return KXMessages::broadcastMessageX( disp_P, NET_STARTUP_MSG, msg, -1, false );
     }
 
-bool KStartupInfo::sendFinish( const KStartupInfoId& id_P )
+bool TDEStartupInfo::sendFinish( const TDEStartupInfoId& id_P )
     {
     if( id_P.none())
         return false;
@@ -456,7 +456,7 @@ bool KStartupInfo::sendFinish( const KStartupInfoId& id_P )
     return true;
     }
 
-bool KStartupInfo::sendFinishX( Display* disp_P, const KStartupInfoId& id_P )
+bool TDEStartupInfo::sendFinishX( Display* disp_P, const TDEStartupInfoId& id_P )
     {
     if( id_P.none())
         return false;
@@ -467,7 +467,7 @@ bool KStartupInfo::sendFinishX( Display* disp_P, const KStartupInfoId& id_P )
     return KXMessages::broadcastMessageX( disp_P, NET_STARTUP_MSG, msg, -1, false );
     }
 
-bool KStartupInfo::sendFinish( const KStartupInfoId& id_P, const KStartupInfoData& data_P )
+bool TDEStartupInfo::sendFinish( const TDEStartupInfoId& id_P, const TDEStartupInfoData& data_P )
     {
 //    if( id_P.none()) // id may be none, the pids and hostname matter then
 //        return false;
@@ -479,8 +479,8 @@ bool KStartupInfo::sendFinish( const KStartupInfoId& id_P, const KStartupInfoDat
     return true;
     }
 
-bool KStartupInfo::sendFinishX( Display* disp_P, const KStartupInfoId& id_P,
-    const KStartupInfoData& data_P )
+bool TDEStartupInfo::sendFinishX( Display* disp_P, const TDEStartupInfoId& id_P,
+    const TDEStartupInfoData& data_P )
     {
 //    if( id_P.none()) // id may be none, the pids and hostname matter then
 //        return false;
@@ -492,58 +492,58 @@ bool KStartupInfo::sendFinishX( Display* disp_P, const KStartupInfoId& id_P,
     return KXMessages::broadcastMessageX( disp_P, NET_STARTUP_MSG, msg, -1, false );
     }
 
-void KStartupInfo::appStarted()
+void TDEStartupInfo::appStarted()
     {
     if( kapp != NULL )  // TDEApplication constructor unsets the env. variable
         appStarted( kapp->startupId());
     else
-        appStarted( KStartupInfo::currentStartupIdEnv().id());
+        appStarted( TDEStartupInfo::currentStartupIdEnv().id());
     }
 
-void KStartupInfo::appStarted( const TQCString& startup_id )
+void TDEStartupInfo::appStarted( const TQCString& startup_id )
     {
-    KStartupInfoId id;
+    TDEStartupInfoId id;
     id.initId( startup_id );
     if( id.none())
         return;
     if( kapp != NULL )
-        KStartupInfo::sendFinish( id );
+        TDEStartupInfo::sendFinish( id );
     else if( getenv( "DISPLAY" ) != NULL ) // don't rely on tqt_xdisplay()
         {
 #ifdef Q_WS_X11
         Display* disp = XOpenDisplay( NULL );
         if( disp != NULL )
             {
-            KStartupInfo::sendFinishX( disp, id );
+            TDEStartupInfo::sendFinishX( disp, id );
             XCloseDisplay( disp );
             }
 #endif
         }
     }
 
-void KStartupInfo::disableAutoAppStartedSending( bool disable )
+void TDEStartupInfo::disableAutoAppStartedSending( bool disable )
     {
     auto_app_started_sending = !disable;
     }
 
-void KStartupInfo::silenceStartup( bool silence )
+void TDEStartupInfo::silenceStartup( bool silence )
     {
-    KStartupInfoId id;
+    TDEStartupInfoId id;
     id.initId( kapp->startupId());
     if( id.none())
         return;
-    KStartupInfoData data;
-    data.setSilent( silence ? KStartupInfoData::Yes : KStartupInfoData::No );
+    TDEStartupInfoData data;
+    data.setSilent( silence ? TDEStartupInfoData::Yes : TDEStartupInfoData::No );
     sendChange( id, data );
     }
 
-void KStartupInfo::handleAutoAppStartedSending()
+void TDEStartupInfo::handleAutoAppStartedSending()
     {
     if( auto_app_started_sending )
         appStarted();
     }
 
-void KStartupInfo::setNewStartupId( TQWidget* window, const TQCString& startup_id )
+void TDEStartupInfo::setNewStartupId( TQWidget* window, const TQCString& startup_id )
     {
     bool activate = true;
     kapp->setStartupId( startup_id );
@@ -554,7 +554,7 @@ void KStartupInfo::setNewStartupId( TQWidget* window, const TQCString& startup_i
             NETRootInfo i( tqt_xdisplay(), NET::Supported );
             if( i.isSupported( NET::WM2StartupId ))
                 {
-                KStartupInfo::setWindowStartupId( window->winId(), startup_id );
+                TDEStartupInfo::setWindowStartupId( window->winId(), startup_id );
                 activate = false; // WM will take care of it
                 }
             }
@@ -568,32 +568,32 @@ void KStartupInfo::setNewStartupId( TQWidget* window, const TQCString& startup_i
             KWin::forceActiveWindow( window->winId());
             }
         }
-    KStartupInfo::handleAutoAppStartedSending();
+    TDEStartupInfo::handleAutoAppStartedSending();
     }
 
-KStartupInfo::startup_t KStartupInfo::checkStartup( WId w_P, KStartupInfoId& id_O,
-    KStartupInfoData& data_O )
+TDEStartupInfo::startup_t TDEStartupInfo::checkStartup( WId w_P, TDEStartupInfoId& id_O,
+    TDEStartupInfoData& data_O )
     {
     return check_startup_internal( w_P, &id_O, &data_O );
     }
 
-KStartupInfo::startup_t KStartupInfo::checkStartup( WId w_P, KStartupInfoId& id_O )
+TDEStartupInfo::startup_t TDEStartupInfo::checkStartup( WId w_P, TDEStartupInfoId& id_O )
     {
     return check_startup_internal( w_P, &id_O, NULL );
     }
 
-KStartupInfo::startup_t KStartupInfo::checkStartup( WId w_P, KStartupInfoData& data_O )
+TDEStartupInfo::startup_t TDEStartupInfo::checkStartup( WId w_P, TDEStartupInfoData& data_O )
     {
     return check_startup_internal( w_P, NULL, &data_O );
     }
 
-KStartupInfo::startup_t KStartupInfo::checkStartup( WId w_P )
+TDEStartupInfo::startup_t TDEStartupInfo::checkStartup( WId w_P )
     {
     return check_startup_internal( w_P, NULL, NULL );
     }
 
-KStartupInfo::startup_t KStartupInfo::check_startup_internal( WId w_P, KStartupInfoId* id_O,
-    KStartupInfoData* data_O )
+TDEStartupInfo::startup_t TDEStartupInfo::check_startup_internal( WId w_P, TDEStartupInfoId* id_O,
+    TDEStartupInfoData* data_O )
     {
     if( d == NULL )
         return NoMatch;
@@ -661,13 +661,13 @@ KStartupInfo::startup_t KStartupInfo::check_startup_internal( WId w_P, KStartupI
     return CantDetect;
     }
 
-bool KStartupInfo::find_id( const TQCString& id_P, KStartupInfoId* id_O,
-    KStartupInfoData* data_O )
+bool TDEStartupInfo::find_id( const TQCString& id_P, TDEStartupInfoId* id_O,
+    TDEStartupInfoData* data_O )
     {
     if( d == NULL )
         return false;
     kdDebug( 172 ) << "find_id:" << id_P << endl;
-    KStartupInfoId id;
+    TDEStartupInfoId id;
     id.initId( id_P );
     if( d->startups.contains( id ))
         {
@@ -681,13 +681,13 @@ bool KStartupInfo::find_id( const TQCString& id_P, KStartupInfoId* id_O,
     return false;
     }
 
-bool KStartupInfo::find_pid( pid_t pid_P, const TQCString& hostname_P,
-    KStartupInfoId* id_O, KStartupInfoData* data_O )
+bool TDEStartupInfo::find_pid( pid_t pid_P, const TQCString& hostname_P,
+    TDEStartupInfoId* id_O, TDEStartupInfoData* data_O )
     {
     if( d == NULL )
         return false;
     kdDebug( 172 ) << "find_pid:" << pid_P << endl;
-    for( TQMap< KStartupInfoId, Data >::Iterator it = d->startups.begin();
+    for( TQMap< TDEStartupInfoId, Data >::Iterator it = d->startups.begin();
          it != d->startups.end();
          ++it )
         {
@@ -706,15 +706,15 @@ bool KStartupInfo::find_pid( pid_t pid_P, const TQCString& hostname_P,
     return false;
     }
 
-bool KStartupInfo::find_wclass( TQCString res_name, TQCString res_class,
-    KStartupInfoId* id_O, KStartupInfoData* data_O )
+bool TDEStartupInfo::find_wclass( TQCString res_name, TQCString res_class,
+    TDEStartupInfoId* id_O, TDEStartupInfoData* data_O )
     {
     if( d == NULL )
         return false;
     res_name = res_name.lower();
     res_class = res_class.lower();
     kdDebug( 172 ) << "find_wclass:" << res_name << ":" << res_class << endl;
-    for( TQMap< KStartupInfoId, Data >::Iterator it = d->startups.begin();
+    for( TQMap< TDEStartupInfoId, Data >::Iterator it = d->startups.begin();
          it != d->startups.end();
          ++it )
         {
@@ -758,7 +758,7 @@ static TQCString read_startup_id_property( WId w_P )
 
 #endif
 
-TQCString KStartupInfo::windowStartupId( WId w_P )
+TQCString TDEStartupInfo::windowStartupId( WId w_P )
     {
 #ifdef Q_WS_X11
     if( net_startup_atom == None )
@@ -780,7 +780,7 @@ TQCString KStartupInfo::windowStartupId( WId w_P )
 #endif
     }
 
-void KStartupInfo::setWindowStartupId( WId w_P, const TQCString& id_P )
+void TDEStartupInfo::setWindowStartupId( WId w_P, const TQCString& id_P )
     {
 #ifdef Q_WS_X11
     if( id_P.isNull())
@@ -794,7 +794,7 @@ void KStartupInfo::setWindowStartupId( WId w_P, const TQCString& id_P )
 #endif
     }
 
-TQCString KStartupInfo::get_window_hostname( WId w_P )
+TQCString TDEStartupInfo::get_window_hostname( WId w_P )
     {
 #ifdef Q_WS_X11
     XTextProperty tp;
@@ -816,19 +816,19 @@ TQCString KStartupInfo::get_window_hostname( WId w_P )
     return TQCString();
     }
 
-void KStartupInfo::setTimeout( unsigned int secs_P )
+void TDEStartupInfo::setTimeout( unsigned int secs_P )
     {
     timeout = secs_P;
  // schedule removing entries that are older than the new timeout
     TQTimer::singleShot( 0, this, TQT_SLOT( startups_cleanup_no_age()));
     }
 
-void KStartupInfo::startups_cleanup_no_age()
+void TDEStartupInfo::startups_cleanup_no_age()
     {
     startups_cleanup_internal( false );
     }
 
-void KStartupInfo::startups_cleanup()
+void TDEStartupInfo::startups_cleanup()
     {
     if( d == NULL )
         return;
@@ -841,11 +841,11 @@ void KStartupInfo::startups_cleanup()
     startups_cleanup_internal( true );
     }
 
-void KStartupInfo::startups_cleanup_internal( bool age_P )
+void TDEStartupInfo::startups_cleanup_internal( bool age_P )
     {
     if( d == NULL )
         return;
-    for( TQMap< KStartupInfoId, Data >::Iterator it = d->startups.begin();
+    for( TQMap< TDEStartupInfoId, Data >::Iterator it = d->startups.begin();
          it != d->startups.end();
          )
         {
@@ -856,7 +856,7 @@ void KStartupInfo::startups_cleanup_internal( bool age_P )
 	    tout *= 20;
         if( ( *it ).age >= tout )
             {
-            const KStartupInfoId& key = it.key();
+            const TDEStartupInfoId& key = it.key();
             ++it;
             kdDebug( 172 ) << "startups entry timeout:" << key.id() << endl;
             remove_startup_info_internal( key );
@@ -864,7 +864,7 @@ void KStartupInfo::startups_cleanup_internal( bool age_P )
         else
             ++it;
         }
-    for( TQMap< KStartupInfoId, Data >::Iterator it = d->silent_startups.begin();
+    for( TQMap< TDEStartupInfoId, Data >::Iterator it = d->silent_startups.begin();
          it != d->silent_startups.end();
          )
         {
@@ -875,7 +875,7 @@ void KStartupInfo::startups_cleanup_internal( bool age_P )
 	    tout *= 20;
         if( ( *it ).age >= tout )
             {
-            const KStartupInfoId& key = it.key();
+            const TDEStartupInfoId& key = it.key();
             ++it;
             kdDebug( 172 ) << "silent entry timeout:" << key.id() << endl;
             remove_startup_info_internal( key );
@@ -883,7 +883,7 @@ void KStartupInfo::startups_cleanup_internal( bool age_P )
         else
             ++it;
         }
-    for( TQMap< KStartupInfoId, Data >::Iterator it = d->uninited_startups.begin();
+    for( TQMap< TDEStartupInfoId, Data >::Iterator it = d->uninited_startups.begin();
          it != d->uninited_startups.end();
          )
         {
@@ -894,7 +894,7 @@ void KStartupInfo::startups_cleanup_internal( bool age_P )
 	    tout *= 20;
         if( ( *it ).age >= tout )
             {
-            const KStartupInfoId& key = it.key();
+            const TDEStartupInfoId& key = it.key();
             ++it;
             kdDebug( 172 ) << "uninited entry timeout:" << key.id() << endl;
             remove_startup_info_internal( key );
@@ -904,11 +904,11 @@ void KStartupInfo::startups_cleanup_internal( bool age_P )
         }
     }
 
-void KStartupInfo::clean_all_noncompliant()
+void TDEStartupInfo::clean_all_noncompliant()
     {
     if( d == NULL )
         return;
-    for( TQMap< KStartupInfoId, Data >::Iterator it = d->startups.begin();
+    for( TQMap< TDEStartupInfoId, Data >::Iterator it = d->startups.begin();
          it != d->startups.end();
          )
         {
@@ -917,14 +917,14 @@ void KStartupInfo::clean_all_noncompliant()
             ++it;
             continue;
             }
-        const KStartupInfoId& key = it.key();
+        const TDEStartupInfoId& key = it.key();
         ++it;
         kdDebug( 172 ) << "entry cleaning:" << key.id() << endl;
         remove_startup_info_internal( key );
         }
     }
 
-TQCString KStartupInfo::createNewStartupId()
+TQCString TDEStartupInfo::createNewStartupId()
     {
     // Assign a unique id, use hostname+time+pid, that should be 200% unique.
     // Also append the user timestamp (for focus stealing prevention).
@@ -941,26 +941,26 @@ TQCString KStartupInfo::createNewStartupId()
     }
 
 
-struct KStartupInfoIdPrivate
+struct TDEStartupInfoIdPrivate
     {
-    KStartupInfoIdPrivate() : id( "" ) {}
+    TDEStartupInfoIdPrivate() : id( "" ) {}
     TQCString id; // id
     };
 
-const TQCString& KStartupInfoId::id() const
+const TQCString& TDEStartupInfoId::id() const
     {
     return d->id;
     }
 
 
-TQString KStartupInfoId::to_text() const
+TQString TDEStartupInfoId::to_text() const
     {
     return TQString::fromLatin1( " ID=\"%1\" " ).arg( escape_str( id()));
     }
 
-KStartupInfoId::KStartupInfoId( const TQString& txt_P )
+TDEStartupInfoId::TDEStartupInfoId( const TQString& txt_P )
     {
-    d = new KStartupInfoIdPrivate;
+    d = new TDEStartupInfoIdPrivate;
     TQStringList items = get_fields( txt_P );
     const TQString id_str = TQString::fromLatin1( "ID=" );
     for( TQStringList::Iterator it = items.begin();
@@ -972,7 +972,7 @@ KStartupInfoId::KStartupInfoId( const TQString& txt_P )
         }
     }
 
-void KStartupInfoId::initId( const TQCString& id_P )
+void TDEStartupInfoId::initId( const TQCString& id_P )
     {
     if( !id_P.isEmpty())
         {
@@ -991,10 +991,10 @@ void KStartupInfoId::initId( const TQCString& id_P )
 #endif
         return;
         }
-    d->id = KStartupInfo::createNewStartupId();
+    d->id = TDEStartupInfo::createNewStartupId();
     }
 
-bool KStartupInfoId::setupStartupEnv() const
+bool TDEStartupInfoId::setupStartupEnv() const
     {
     if( id().isEmpty())
         {
@@ -1004,10 +1004,10 @@ bool KStartupInfoId::setupStartupEnv() const
     return setenv( NET_STARTUP_ENV, id(), true ) == 0;
     }
 
-KStartupInfoId KStartupInfo::currentStartupIdEnv()
+TDEStartupInfoId TDEStartupInfo::currentStartupIdEnv()
     {
     const char* startup_env = getenv( NET_STARTUP_ENV );
-    KStartupInfoId id;
+    TDEStartupInfoId id;
     if( startup_env != NULL && *startup_env != '\0' )
         id.d->id = startup_env;
     else
@@ -1015,57 +1015,57 @@ KStartupInfoId KStartupInfo::currentStartupIdEnv()
     return id;
     }
 
-void KStartupInfo::resetStartupEnv()
+void TDEStartupInfo::resetStartupEnv()
     {
     unsetenv( NET_STARTUP_ENV );
     }
 
-KStartupInfoId::KStartupInfoId()
+TDEStartupInfoId::TDEStartupInfoId()
     {
-    d = new KStartupInfoIdPrivate;
+    d = new TDEStartupInfoIdPrivate;
     }
 
-KStartupInfoId::~KStartupInfoId()
+TDEStartupInfoId::~TDEStartupInfoId()
     {
     delete d;
     }
 
-KStartupInfoId::KStartupInfoId( const KStartupInfoId& id_P )
+TDEStartupInfoId::TDEStartupInfoId( const TDEStartupInfoId& id_P )
     {
-    d = new KStartupInfoIdPrivate( *id_P.d );
+    d = new TDEStartupInfoIdPrivate( *id_P.d );
     }
 
-KStartupInfoId& KStartupInfoId::operator=( const KStartupInfoId& id_P )
+TDEStartupInfoId& TDEStartupInfoId::operator=( const TDEStartupInfoId& id_P )
     {
     if( &id_P == this )
         return *this;
     delete d;
-    d = new KStartupInfoIdPrivate( *id_P.d );
+    d = new TDEStartupInfoIdPrivate( *id_P.d );
     return *this;
     }
 
-bool KStartupInfoId::operator==( const KStartupInfoId& id_P ) const
+bool TDEStartupInfoId::operator==( const TDEStartupInfoId& id_P ) const
     {
     return id() == id_P.id();
     }
 
-bool KStartupInfoId::operator!=( const KStartupInfoId& id_P ) const
+bool TDEStartupInfoId::operator!=( const TDEStartupInfoId& id_P ) const
     {
     return !(*this == id_P );
     }
 
 // needed for QMap
-bool KStartupInfoId::operator<( const KStartupInfoId& id_P ) const
+bool TDEStartupInfoId::operator<( const TDEStartupInfoId& id_P ) const
     {
     return id() < id_P.id();
     }
 
-bool KStartupInfoId::none() const
+bool TDEStartupInfoId::none() const
     {
     return d->id.isEmpty() || d->id == "0";
     }
 
-unsigned long KStartupInfoId::timestamp() const
+unsigned long TDEStartupInfoId::timestamp() const
     {
     if( none())
         return 0;
@@ -1097,14 +1097,14 @@ unsigned long KStartupInfoId::timestamp() const
                 return time;
             }
         }
-    // bah ... old KStartupInfo or a problem
+    // bah ... old TDEStartupInfo or a problem
     return 0;
     }
 
-struct KStartupInfoDataPrivate
+struct TDEStartupInfoDataPrivate
     {
-    KStartupInfoDataPrivate() : desktop( 0 ), wmclass( "" ), hostname( "" ),
-	silent( KStartupInfoData::Unknown ), timestamp( -1U ), screen( -1 ), xinerama( -1 ), launched_by( 0 ) {}
+    TDEStartupInfoDataPrivate() : desktop( 0 ), wmclass( "" ), hostname( "" ),
+	silent( TDEStartupInfoData::Unknown ), timestamp( -1U ), screen( -1 ), xinerama( -1 ), launched_by( 0 ) {}
     TQString bin;
     TQString name;
     TQString description;
@@ -1113,14 +1113,14 @@ struct KStartupInfoDataPrivate
     TQValueList< pid_t > pids;
     TQCString wmclass;
     TQCString hostname;
-    KStartupInfoData::TriState silent;
+    TDEStartupInfoData::TriState silent;
     unsigned long timestamp;
     int screen;
     int xinerama;
     WId launched_by;
     };
 
-TQString KStartupInfoData::to_text() const
+TQString TDEStartupInfoData::to_text() const
     {
     TQString ret = "";
     if( !d->bin.isEmpty())
@@ -1155,9 +1155,9 @@ TQString KStartupInfoData::to_text() const
     return ret;
     }
 
-KStartupInfoData::KStartupInfoData( const TQString& txt_P )
+TDEStartupInfoData::TDEStartupInfoData( const TQString& txt_P )
     {
-    d = new KStartupInfoDataPrivate;
+    d = new TDEStartupInfoDataPrivate;
     TQStringList items = get_fields( txt_P );
     const TQString bin_str = TQString::fromLatin1( "BIN=" );
     const TQString name_str = TQString::fromLatin1( "NAME=" );
@@ -1209,21 +1209,21 @@ KStartupInfoData::KStartupInfoData( const TQString& txt_P )
         }
     }
 
-KStartupInfoData::KStartupInfoData( const KStartupInfoData& data )
+TDEStartupInfoData::TDEStartupInfoData( const TDEStartupInfoData& data )
 {
-    d = new KStartupInfoDataPrivate( *data.d );
+    d = new TDEStartupInfoDataPrivate( *data.d );
 }
 
-KStartupInfoData& KStartupInfoData::operator=( const KStartupInfoData& data )
+TDEStartupInfoData& TDEStartupInfoData::operator=( const TDEStartupInfoData& data )
 {
     if( &data == this )
         return *this;
     delete d;
-    d = new KStartupInfoDataPrivate( *data.d );
+    d = new TDEStartupInfoDataPrivate( *data.d );
     return *this;
 }
 
-void KStartupInfoData::update( const KStartupInfoData& data_P )
+void TDEStartupInfoData::update( const TDEStartupInfoData& data_P )
     {
     if( !data_P.bin().isEmpty())
         d->bin = data_P.bin();
@@ -1255,105 +1255,105 @@ void KStartupInfoData::update( const KStartupInfoData& data_P )
         d->launched_by = data_P.launchedBy();
     }
 
-KStartupInfoData::KStartupInfoData()
+TDEStartupInfoData::TDEStartupInfoData()
 {
-    d = new KStartupInfoDataPrivate;
+    d = new TDEStartupInfoDataPrivate;
 }
 
-KStartupInfoData::~KStartupInfoData()
+TDEStartupInfoData::~TDEStartupInfoData()
 {
     delete d;
 }
 
-void KStartupInfoData::setBin( const TQString& bin_P )
+void TDEStartupInfoData::setBin( const TQString& bin_P )
     {
     d->bin = bin_P;
     }
 
-const TQString& KStartupInfoData::bin() const
+const TQString& TDEStartupInfoData::bin() const
     {
     return d->bin;
     }
 
-void KStartupInfoData::setName( const TQString& name_P )
+void TDEStartupInfoData::setName( const TQString& name_P )
     {
     d->name = name_P;
     }
 
-const TQString& KStartupInfoData::name() const
+const TQString& TDEStartupInfoData::name() const
     {
     return d->name;
     }
 
-const TQString& KStartupInfoData::findName() const
+const TQString& TDEStartupInfoData::findName() const
     {
     if( !name().isEmpty())
         return name();
     return bin();
     }
 
-void KStartupInfoData::setDescription( const TQString& desc_P )
+void TDEStartupInfoData::setDescription( const TQString& desc_P )
     {
     d->description = desc_P;
     }
 
-const TQString& KStartupInfoData::description() const
+const TQString& TDEStartupInfoData::description() const
     {
     return d->description;
     }
 
-const TQString& KStartupInfoData::findDescription() const
+const TQString& TDEStartupInfoData::findDescription() const
     {
     if( !description().isEmpty())
         return description();
     return name();
     }
 
-void KStartupInfoData::setIcon( const TQString& icon_P )
+void TDEStartupInfoData::setIcon( const TQString& icon_P )
     {
     d->icon = icon_P;
     }
 
-const TQString& KStartupInfoData::findIcon() const
+const TQString& TDEStartupInfoData::findIcon() const
     {
     if( !icon().isEmpty())
         return icon();
     return bin();
     }
 
-const TQString& KStartupInfoData::icon() const
+const TQString& TDEStartupInfoData::icon() const
     {
     return d->icon;
     }
 
-void KStartupInfoData::setDesktop( int desktop_P )
+void TDEStartupInfoData::setDesktop( int desktop_P )
     {
     d->desktop = desktop_P;
     }
 
-int KStartupInfoData::desktop() const
+int TDEStartupInfoData::desktop() const
     {
     return d->desktop;
     }
 
-void KStartupInfoData::setWMClass( const TQCString& wmclass_P )
+void TDEStartupInfoData::setWMClass( const TQCString& wmclass_P )
     {
     d->wmclass = wmclass_P;
     }
 
-const TQCString KStartupInfoData::findWMClass() const
+const TQCString TDEStartupInfoData::findWMClass() const
     {
     if( !WMClass().isEmpty() && WMClass() != "0" )
         return WMClass();
     return bin().utf8();
     }
 
-const TQCString& KStartupInfoData::WMClass() const
+const TQCString& TDEStartupInfoData::WMClass() const
     {
     return d->wmclass;
     }
 
-void KStartupInfoData::setHostname( const TQCString& hostname_P )
+void TDEStartupInfoData::setHostname( const TQCString& hostname_P )
     {
     if( !hostname_P.isNull())
         d->hostname = hostname_P;
@@ -1367,78 +1367,78 @@ void KStartupInfoData::setHostname( const TQCString& hostname_P )
         }
     }
 
-const TQCString& KStartupInfoData::hostname() const
+const TQCString& TDEStartupInfoData::hostname() const
     {
     return d->hostname;
     }
 
-void KStartupInfoData::addPid( pid_t pid_P )
+void TDEStartupInfoData::addPid( pid_t pid_P )
     {
     if( !d->pids.contains( pid_P ))
         d->pids.append( pid_P );
     }
 
-void KStartupInfoData::remove_pid( pid_t pid_P )
+void TDEStartupInfoData::remove_pid( pid_t pid_P )
     {
     d->pids.remove( pid_P );
     }
 
-const TQValueList< pid_t >& KStartupInfoData::pids() const
+const TQValueList< pid_t >& TDEStartupInfoData::pids() const
     {
     return d->pids;
     }
 
-bool KStartupInfoData::is_pid( pid_t pid_P ) const
+bool TDEStartupInfoData::is_pid( pid_t pid_P ) const
     {
     return d->pids.contains( pid_P );
     }
 
-void KStartupInfoData::setSilent( TriState state_P )
+void TDEStartupInfoData::setSilent( TriState state_P )
     {
     d->silent = state_P;
     }
 
-KStartupInfoData::TriState KStartupInfoData::silent() const
+TDEStartupInfoData::TriState TDEStartupInfoData::silent() const
     {
     return d->silent;
     }
 
-void KStartupInfoData::setTimestamp( unsigned long time )
+void TDEStartupInfoData::setTimestamp( unsigned long time )
     {
     d->timestamp = time;
     }
 
-unsigned long KStartupInfoData::timestamp() const
+unsigned long TDEStartupInfoData::timestamp() const
     {
     return d->timestamp;
     }
 
-void KStartupInfoData::setScreen( int screen )
+void TDEStartupInfoData::setScreen( int screen )
     {
     d->screen = screen;
     }
 
-int KStartupInfoData::screen() const
+int TDEStartupInfoData::screen() const
     {
     return d->screen;
     }
 
-void KStartupInfoData::setXinerama( int xinerama )
+void TDEStartupInfoData::setXinerama( int xinerama )
     {
     d->xinerama = xinerama;
     }
 
-int KStartupInfoData::xinerama() const
+int TDEStartupInfoData::xinerama() const
     {
     return d->xinerama;
     }
 
-void KStartupInfoData::setLaunchedBy( WId window )
+void TDEStartupInfoData::setLaunchedBy( WId window )
     {
     d->launched_by = window;
     }
 
-WId KStartupInfoData::launchedBy() const
+WId TDEStartupInfoData::launchedBy() const
     {
     return d->launched_by;
     }

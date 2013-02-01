@@ -318,7 +318,7 @@ const char* get_env_var( const char* var, int envc, const char* envs )
 
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
 //#ifdef Q_WS_X11 // FIXME(E): Implement for Qt/Embedded
-static void init_startup_info( KStartupInfoId& id, const char* bin,
+static void init_startup_info( TDEStartupInfoId& id, const char* bin,
     int envc, const char* envs )
 {
     const char* dpy = get_env_var( DISPLAY"=", envc, envs );
@@ -328,26 +328,26 @@ static void init_startup_info( KStartupInfoId& id, const char* bin,
     if( X11_startup_notify_display == NULL )
         return;
     X11_startup_notify_fd = XConnectionNumber( X11_startup_notify_display );
-    KStartupInfoData data;
+    TDEStartupInfoData data;
     int desktop = get_current_desktop( X11_startup_notify_display );
     data.setDesktop( desktop );
     data.setBin( bin );
-    KStartupInfo::sendChangeX( X11_startup_notify_display, id, data );
+    TDEStartupInfo::sendChangeX( X11_startup_notify_display, id, data );
     XFlush( X11_startup_notify_display );
 }
 
-static void complete_startup_info( KStartupInfoId& id, pid_t pid )
+static void complete_startup_info( TDEStartupInfoId& id, pid_t pid )
 {
     if( X11_startup_notify_display == NULL )
         return;
     if( pid == 0 ) // failure
-        KStartupInfo::sendFinishX( X11_startup_notify_display, id );
+        TDEStartupInfo::sendFinishX( X11_startup_notify_display, id );
     else
     {
-        KStartupInfoData data;
+        TDEStartupInfoData data;
         data.addPid( pid );
         data.setHostname();
-        KStartupInfo::sendChangeX( X11_startup_notify_display, id, data );
+        TDEStartupInfo::sendChangeX( X11_startup_notify_display, id, data );
     }
     XCloseDisplay( X11_startup_notify_display );
     X11_startup_notify_display = NULL;
@@ -482,7 +482,7 @@ static pid_t launch(int argc, const char *_name, const char *args,
 
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
 //#ifdef Q_WS_X11
-  KStartupInfoId startup_id;
+  TDEStartupInfoId startup_id;
   startup_id.initId( startup_id_str );
   if( !startup_id.none())
       init_startup_info( startup_id, name, envc, envs );
@@ -551,7 +551,7 @@ static pid_t launch(int argc, const char *_name, const char *args,
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
 //#ifdef Q_WS_X11
       if( startup_id.none())
-          KStartupInfo::resetStartupEnv();
+          TDEStartupInfo::resetStartupEnv();
       else
           startup_id.setupStartupEnv();
 #endif

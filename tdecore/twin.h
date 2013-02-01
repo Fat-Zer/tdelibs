@@ -509,7 +509,7 @@ private:
 #endif
     /**
      * @deprecated
-     * Use KStartupInfo::appStarted
+     * Use TDEStartupInfo::appStarted
      */
     static void appStarted() KDE_DEPRECATED;
 };

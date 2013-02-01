@@ -731,7 +731,7 @@ void KWin::lowerWindow( WId win )
 void KWin::appStarted()
 {
 #ifdef Q_WS_X11
-    KStartupInfo::appStarted();
+    TDEStartupInfo::appStarted();
 #endif
 }
 

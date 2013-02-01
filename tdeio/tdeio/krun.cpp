@@ -563,13 +563,13 @@ static pid_t runCommandInternal( TDEProcess* proc, const KService* service, cons
 #ifdef Q_WS_X11 // Startup notification doesn't work with QT/E, service isn't needed without Startup notification
   bool silent;
   TQCString wmclass;
-  KStartupInfoId id;
+  TDEStartupInfoId id;
   bool startup_notify = ( asn != "0" && KRun::checkStartupNotify( binName, service, &silent, &wmclass ));
   if( startup_notify )
   {
       id.initId( asn );
       id.setupStartupEnv();
-      KStartupInfoData data;
+      TDEStartupInfoData data;
       data.setHostname();
       data.setBin( bin );
       if( !execName.isEmpty())
@@ -584,19 +584,19 @@ static pid_t runCommandInternal( TDEProcess* proc, const KService* service, cons
       if( !wmclass.isEmpty())
           data.setWMClass( wmclass );
       if( silent )
-          data.setSilent( KStartupInfoData::Yes );
+          data.setSilent( TDEStartupInfoData::Yes );
       data.setDesktop( KWin::currentDesktop());
       if( window )
           data.setLaunchedBy( window->winId());
-      KStartupInfo::sendStartup( id, data );
+      TDEStartupInfo::sendStartup( id, data );
   }
   pid_t pid = TDEProcessRunner::run( proc, binName, id );
   if( startup_notify && pid )
   {
-      KStartupInfoData data;
+      TDEStartupInfoData data;
       data.addPid( pid );
-      KStartupInfo::sendChange( id, data );
-      KStartupInfo::resetStartupEnv();
+      TDEStartupInfo::sendChange( id, data );
+      TDEStartupInfo::resetStartupEnv();
   }
   return pid;
 #else
@@ -807,14 +807,14 @@ pid_t KRun::run( const KService& _service, const KURL::List& _urls, TQWidget* wi
   if( window != NULL )
   {
     if( myasn.isEmpty())
-        myasn = KStartupInfo::createNewStartupId();
+        myasn = TDEStartupInfo::createNewStartupId();
     if( myasn != "0" )
     {
-        KStartupInfoId id;
+        TDEStartupInfoId id;
         id.initId( myasn );
-        KStartupInfoData data;
+        TDEStartupInfoData data;
         data.setLaunchedBy( window->winId());
-        KStartupInfo::sendChange( id, data );
+        TDEStartupInfo::sendChange( id, data );
     }
   }
 
@@ -1484,7 +1484,7 @@ TDEProcessRunner::run(TDEProcess * p, const TQString & binName)
 
 #ifdef Q_WS_X11
 pid_t
-TDEProcessRunner::run(TDEProcess * p, const TQString & binName, const KStartupInfoId& id )
+TDEProcessRunner::run(TDEProcess * p, const TQString & binName, const TDEStartupInfoId& id )
 {
   return (new TDEProcessRunner(p, binName, id))->pid();
 }
@@ -1505,7 +1505,7 @@ TDEProcessRunner::TDEProcessRunner(TDEProcess * p, const TQString & _binName )
 }
 
 #ifdef Q_WS_X11
-TDEProcessRunner::TDEProcessRunner(TDEProcess * p, const TQString & _binName, const KStartupInfoId& id )
+TDEProcessRunner::TDEProcessRunner(TDEProcess * p, const TQString & _binName, const TDEStartupInfoId& id )
   : TQObject(),
     process_(p),
     binName( _binName ),
@@ -1559,10 +1559,10 @@ TDEProcessRunner::slotProcessExited(TDEProcess * p)
 #ifdef Q_WS_X11
   if( !id_.none())
   {
-      KStartupInfoData data;
+      TDEStartupInfoData data;
       data.addPid( pid()); // announce this pid for the startup notification has finished
       data.setHostname();
-      KStartupInfo::sendFinish( id_, data );
+      TDEStartupInfo::sendFinish( id_, data );
   }
 #endif
   deleteLater();

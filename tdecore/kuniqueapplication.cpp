@@ -186,17 +186,17 @@ KUniqueApplication::start()
 #if 0
 #ifdef Q_WS_X11
            // say we're up and running ( probably no new window will appear )
-           KStartupInfoId id;
+           TDEStartupInfoId id;
            if( kapp != NULL ) // TDEApplication constructor unsets the env. variable
                id.initId( kapp->startupId());
            else
-               id = KStartupInfo::currentStartupIdEnv();
+               id = TDEStartupInfo::currentStartupIdEnv();
            if( !id.none())
            {
                Display* disp = XOpenDisplay( NULL );
                if( disp != NULL ) // use extra X connection
                {
-                   KStartupInfo::sendFinishX( disp, id );
+                   TDEStartupInfo::sendFinishX( disp, id );
                    XCloseDisplay( disp );
                }
            }
@@ -210,19 +210,19 @@ KUniqueApplication::start()
 
      {
 #ifdef Q_WS_X11
-         KStartupInfoId id;
+         TDEStartupInfoId id;
          if( kapp != NULL ) // TDEApplication constructor unsets the env. variable
              id.initId( kapp->startupId());
          else
-             id = KStartupInfo::currentStartupIdEnv();
+             id = TDEStartupInfo::currentStartupIdEnv();
          if( !id.none())
          { // notice about pid change
             Display* disp = XOpenDisplay( NULL );
             if( disp != NULL ) // use extra X connection
                {
-               KStartupInfoData data;
+               TDEStartupInfoData data;
                data.addPid( getpid());
-               KStartupInfo::sendChangeX( disp, id, data );
+               TDEStartupInfo::sendChangeX( disp, id, data );
                XCloseDisplay( disp );
                }
          }
@@ -273,11 +273,11 @@ KUniqueApplication::start()
 
      TQCString new_asn_id;
 #if defined Q_WS_X11
-     KStartupInfoId id;
+     TDEStartupInfoId id;
      if( kapp != NULL ) // TDEApplication constructor unsets the env. variable
          id.initId( kapp->startupId());
      else
-         id = KStartupInfo::currentStartupIdEnv();
+         id = TDEStartupInfo::currentStartupIdEnv();
      if( !id.none())
          new_asn_id = id.id();
 #endif
@@ -381,11 +381,11 @@ void KUniqueApplication::newInstanceNoFork()
   // KDE4 remove
   // A hack to make startup notification stop for apps which override newInstance()
   // and reuse an already existing window there, but use KWin::activateWindow()
-  // instead of KStartupInfo::setNewStartupId(). Therefore KWin::activateWindow()
+  // instead of TDEStartupInfo::setNewStartupId(). Therefore KWin::activateWindow()
   // for now sets this flag. Automatically ending startup notification always
   // would cause problem if the new window would show up with a small delay.
   if( s_handleAutoStarted )
-      KStartupInfo::handleAutoAppStartedSending();
+      TDEStartupInfo::handleAutoAppStartedSending();
 #endif
   // What to do with the return value ?
 }
@@ -445,7 +445,7 @@ KUniqueApplication::processDelayed()
        d->firstInstance = false;
 #if defined Q_WS_X11
        if( s_handleAutoStarted )
-           KStartupInfo::handleAutoAppStartedSending(); // KDE4 remove?
+           TDEStartupInfo::handleAutoAppStartedSending(); // KDE4 remove?
 #endif
        TQDataStream rs(replyData, IO_WriteOnly);
        rs << exitCode;
@@ -476,7 +476,7 @@ int KUniqueApplication::newInstance()
     // and what's important, it does it properly. If you reimplement newInstance(),
     // and don't call the inherited one, use this (but NOT when newInstance()
     // is called for the first time, like here).
-      KStartupInfo::setNewStartupId( mainWidget(), kapp->startupId());
+      TDEStartupInfo::setNewStartupId( mainWidget(), kapp->startupId());
 #endif
     }
   }

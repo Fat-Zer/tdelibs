@@ -44,7 +44,7 @@ InfoOutput=4
 [129]
 InfoOutput=4
 
-# KStartupInfo debug info off
+# TDEStartupInfo debug info off
 [172]
 InfoOutput=4
 
