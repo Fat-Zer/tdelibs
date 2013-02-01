@@ -326,7 +326,7 @@ void KDoubleValidator::setAcceptLocalizedNumbers( bool accept ) {
 TQValidator::State KDoubleValidator::validate( TQString & input, int & p ) const {
   TQString s = input;
   if ( acceptLocalizedNumbers() ) {
-    KLocale * l = TDEGlobal::locale();
+    TDELocale * l = TDEGlobal::locale();
     // ok, we have to re-format the number to have:
     // 1. decimalSymbol == '.'
     // 2. negativeSign  == '-'

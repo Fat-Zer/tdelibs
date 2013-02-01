@@ -25,7 +25,7 @@
 #include <tqstring.h>
 #include "tdelibs_export.h"
 
-class KLocale;
+class TDELocale;
 
 class KCalendarSystemPrivate;
 
@@ -47,7 +47,7 @@ public:
    *
    * @param locale It will use this locale for translations, 0 means global.
    */
-  KCalendarSystem(const KLocale * locale = 0);
+  KCalendarSystem(const TDELocale * locale = 0);
 
   /**
    * Descructor.
@@ -348,7 +348,7 @@ protected:
    * Gets the locale the calendar uses for translations. Set in
    * the constructor.
    */
-  const KLocale * locale() const;
+  const TDELocale * locale() const;
 
 private:
   KCalendarSystemPrivate * d;

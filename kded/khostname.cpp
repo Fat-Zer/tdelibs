@@ -365,7 +365,7 @@ void KHostName::changeSessionManager()
 
 int main(int argc, char **argv)
 {
-   KLocale::setMainCatalogue("tdelibs");
+   TDELocale::setMainCatalogue("tdelibs");
    TDEAboutData d(appName, I18N_NOOP("KDontChangeTheHostName"), appVersion,
                 I18N_NOOP("Informs TDE about a change in hostname"),
                 TDEAboutData::License_GPL, "(c) 2001 Waldo Bastian");

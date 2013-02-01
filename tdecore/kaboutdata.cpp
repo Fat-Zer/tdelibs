@@ -267,7 +267,7 @@ TDEAboutData::internalProgramName() const
 }
 
 // KCrash should call as few things as possible and should avoid e.g. malloc()
-// because it may deadlock. Since i18n() needs it, when KLocale is available
+// because it may deadlock. Since i18n() needs it, when TDELocale is available
 // the i18n() call will be done here in advance.
 void
 TDEAboutData::translateInternalProgramName() const

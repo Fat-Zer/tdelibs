@@ -14,7 +14,7 @@
 #include <klocale.h>
 #include <kcmdlineargs.h>
 
-class KLocale;
+class TDELocale;
 
 void test(TQDate & date);
 
@@ -81,7 +81,7 @@ int main(int argc, char **argv) {
 
 void test(TQDate & date) {
 
-        kdDebug() << "(KLocale) readDate" << endl;
+        kdDebug() << "(TDELocale) readDate" << endl;
 
         kdDebug() << "Created calendar: " << TDEGlobal::locale()->calendar()->calendarName() << endl;
 
@@ -117,8 +117,8 @@ void test(TQDate & date) {
  	kdDebug() << "It's week number " << TDEGlobal::locale()->calendar()->weekNumber(date) << endl;
 
 
-	kdDebug() << "(KLocale) Formatted date: " << TDEGlobal::locale()->formatDate(date) << endl;
-	kdDebug() << "(KLocale) Short formatted date: " << TDEGlobal::locale()->formatDate(date, true) << endl;
+	kdDebug() << "(TDELocale) Formatted date: " << TDEGlobal::locale()->formatDate(date) << endl;
+	kdDebug() << "(TDELocale) Short formatted date: " << TDEGlobal::locale()->formatDate(date, true) << endl;
 
 	kdDebug() << "That month have : " << TDEGlobal::locale()->calendar()->daysInMonth(date) << " days" << endl;
 

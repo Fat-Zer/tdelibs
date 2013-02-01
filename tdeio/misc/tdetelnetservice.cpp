@@ -37,7 +37,7 @@ static const KCmdLineOptions options[] =
 
 int main(int argc, char **argv)
 {
-	KLocale::setMainCatalogue("tdelibs");
+	TDELocale::setMainCatalogue("tdelibs");
 	TDECmdLineArgs::init(argc, argv, "tdetelnetservice", I18N_NOOP("telnet service"),
 			   I18N_NOOP("telnet protocol handler"), "unknown");
 	TDECmdLineArgs::addCmdLineOptions(options);

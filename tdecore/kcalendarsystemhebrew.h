@@ -37,7 +37,7 @@ class KCalendarSystemHebrewPrivate;
  * The Hebrew calendar is the traditional Islamic calendar used in the Midle
  * East.
  *
- * @see KLocale,KCalendarSystem,KCalendarSystemFactory
+ * @see TDELocale,KCalendarSystem,KCalendarSystemFactory
  *
  * @author Hans Petter Bieker <bieker@kde.org>
  * @since 3.2
@@ -46,7 +46,7 @@ class TDECORE_EXPORT KCalendarSystemHebrew : public KCalendarSystem
 {
 public:
   /** Constructor. Just like KCalendarSystem::KCalendarSystem(). */
-  KCalendarSystemHebrew(const KLocale * locale = 0);
+  KCalendarSystemHebrew(const TDELocale * locale = 0);
   virtual ~KCalendarSystemHebrew();
 
   virtual int year (const TQDate & date) const;

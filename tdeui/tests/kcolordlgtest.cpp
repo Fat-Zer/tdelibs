@@ -26,7 +26,7 @@ int main( int argc, char *argv[] )
 {
 	TQColor color;
 
-	KLocale::setMainCatalogue("tdelibs");
+	TDELocale::setMainCatalogue("tdelibs");
 	TQApplication::setColorMode( TQApplication::CustomColors );
 	TDEApplication a( argc, argv, "KColorDialogTest" );
         TDEConfig aConfig;

@@ -135,7 +135,7 @@ They have been replaced by TQCString and KMD5::Digest. <br>
 The API has been cleaned up, it is no longer necessary to call finalize(). 
 Simply remove any calls to it. 
 
-<H4>KLocale</H4>
+<H4>TDELocale</H4>
 <li>charset() has been removed. You might want to use encoding() instead.
 <li>setCharset(const TQString &amp;) has been removed. You might want to use
 setEncoding(int) instead.
@@ -143,9 +143,9 @@ setEncoding(int) instead.
 <li>formatNumber(const TQString &amp;) has been removed.
 <li>languages() has been removed. Use languageList() instead.
 <li>All references to monthName(), monthNamePossessive(), and weekDayName()
-should be replaced with methods from KLocale::calendar().
+should be replaced with methods from TDELocale::calendar().
 <li>Hard coded date handling or date handling with TQDate should in most
-cases be replaced by methods in KLocale::calendar().
+cases be replaced by methods in TDELocale::calendar().
 
 <H4>Accelerators Keys</H4>
 <h5>KAccel</h5>

@@ -66,7 +66,7 @@ void TDEConfigBase::setLocale()
   if (TDEGlobal::locale())
     aLocaleString = TDEGlobal::locale()->language().utf8();
   else
-    aLocaleString = KLocale::defaultLanguage().utf8();
+    aLocaleString = TDELocale::defaultLanguage().utf8();
   if (backEnd)
      backEnd->setLocaleString(aLocaleString);
 }

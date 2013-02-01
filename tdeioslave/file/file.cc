@@ -112,7 +112,7 @@ extern "C" { KDE_EXPORT int kdemain(int argc, char **argv); }
 
 int kdemain( int argc, char **argv )
 {
-  KLocale::setMainCatalogue("tdelibs");
+  TDELocale::setMainCatalogue("tdelibs");
   TDEInstance instance( "tdeio_file" );
   ( void ) TDEGlobal::locale();
 

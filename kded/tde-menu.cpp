@@ -107,7 +107,7 @@ static void findMenuEntry(KServiceGroup::Ptr parent, const TQString &name, const
 
 int main(int argc, char **argv)
 {
-   KLocale::setMainCatalogue("tdelibs");
+   TDELocale::setMainCatalogue("tdelibs");
    const char *description = I18N_NOOP("TDE Menu query tool.\n"
    "This tool can be used to find in which menu a specific application is shown.\n"
    "The --highlight option can be used to visually indicate to the user where\n"
@@ -126,7 +126,7 @@ int main(int argc, char **argv)
    k.disableSessionManagement();
 
    // this program is in tdelibs so it uses tdelibs as catalog
-   KLocale::setMainCatalogue("tdelibs");
+   TDELocale::setMainCatalogue("tdelibs");
 
    TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
    if (args->count() != 1)

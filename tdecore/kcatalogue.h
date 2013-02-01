@@ -31,7 +31,7 @@ class KCataloguePrivate;
  * This class abstracts a gettext message catalog. It will take care of
  * opening the file and reading the catalog.
  *
- * @see KLocale
+ * @see TDELocale
  */
 //REVISED: hausmann
 class TDECORE_EXPORT KCatalogue

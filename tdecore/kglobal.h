@@ -27,7 +27,7 @@ class TDESharedConfig;
 class KIconLoader;
 class TDEHardwareDevices;
 class TDEGlobalNetworkManager;
-class KLocale;
+class TDELocale;
 class TDEStandardDirs;
 class KStaticDeleterBase;
 class KStaticDeleterList;
@@ -95,7 +95,7 @@ public:
      * Returns the global locale object.
      * @return the global locale object
      */
-    static KLocale              *locale();
+    static TDELocale              *locale();
 
     /**
      * The global charset manager.
@@ -168,7 +168,7 @@ public:
     //private:
     static  KStringDict         *_stringDict;
     static  TDEInstance           *_instance;
-    static  KLocale             *_locale;
+    static  TDELocale             *_locale;
     static  KCharsets	        *_charsets;
     static  KStaticDeleterList  *_staticDeleters;
 

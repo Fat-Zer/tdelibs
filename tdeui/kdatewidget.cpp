@@ -72,7 +72,7 @@ KDateWidget::KDateWidget( TQDate date, TQWidget *parent,
 void KDateWidget::init()
 {
   d = new KDateWidgetPrivate;
-  KLocale *locale = TDEGlobal::locale();
+  TDELocale *locale = TDEGlobal::locale();
   TQHBoxLayout *layout = new TQHBoxLayout(this, 0, KDialog::spacingHint());
   layout->setAutoAdd(true);
   d->m_day = new KDateWidgetSpinBox(1, 1, this);
@@ -96,7 +96,7 @@ void KDateWidget::init()
 void KDateWidget::init(const TQDate& date)
 {
   d = new KDateWidgetPrivate;
-  KLocale *locale = TDEGlobal::locale();
+  TDELocale *locale = TDEGlobal::locale();
   TQHBoxLayout *layout = new TQHBoxLayout(this, 0, KDialog::spacingHint());
   layout->setAutoAdd(true);
   d->m_day = new KDateWidgetSpinBox(1, 1, this);

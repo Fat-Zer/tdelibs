@@ -98,7 +98,7 @@ extern "C" {
 
 int kdemain( int argc, char **argv )
 {
-  KLocale::setMainCatalogue("tdelibs");
+  TDELocale::setMainCatalogue("tdelibs");
   TDEInstance instance( "tdeio_http" );
   ( void ) TDEGlobal::locale();
 

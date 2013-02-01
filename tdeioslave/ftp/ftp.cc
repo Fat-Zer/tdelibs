@@ -139,7 +139,7 @@ extern "C" { KDE_EXPORT int kdemain(int argc, char **argv); }
 
 int kdemain( int argc, char **argv )
 {
-  KLocale::setMainCatalogue("tdelibs");
+  TDELocale::setMainCatalogue("tdelibs");
   TDEInstance instance( "tdeio_ftp" );
   ( void ) TDEGlobal::locale();
 
@@ -1926,7 +1926,7 @@ bool Ftp::ftpReadDir(FtpEntry& de)
       // Get day number (always second field)
       tmptr->tm_mday = atoi( p_date_2 );
       // Get month from first field
-      // NOTE : no, we don't want to use KLocale here
+      // NOTE : no, we don't want to use TDELocale here
       // It seems all FTP servers use the English way
       //kdDebug(7102) << "Looking for month " << p_date_1 << endl;
       static const char * s_months[12] = { "Jan", "Feb", "Mar", "Apr", "May", "Jun",

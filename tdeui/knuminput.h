@@ -863,7 +863,7 @@ public:
   bool acceptLocalizedNumbers() const;
 
   /** Sets whether to use and accept localized numbers as returned by
-      KLocale::formatNumber() */
+      TDELocale::formatNumber() */
   virtual void setAcceptLocalizedNumbers( bool accept );
 
   /** Sets a new range for the spin box values. Note that @p lower, @p

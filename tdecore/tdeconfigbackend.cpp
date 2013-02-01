@@ -385,7 +385,7 @@ bool TDEConfigINIBackEnd::parseConfigFiles()
     TQString bootLanguage;
     if (useKDEGlobals && localeString.isEmpty() && !TDEGlobal::_locale) {
        // Boot strap language
-       bootLanguage = KLocale::_initLanguage(pConfig);
+       bootLanguage = TDELocale::_initLanguage(pConfig);
        setLocaleString(bootLanguage.utf8());
     }
 
@@ -415,7 +415,7 @@ bool TDEConfigINIBackEnd::parseConfigFiles()
     TQString currentLanguage;
     if (!bootLanguage.isEmpty())
     {
-       currentLanguage = KLocale::_initLanguage(pConfig);
+       currentLanguage = TDELocale::_initLanguage(pConfig);
        // If the file changed the language, we need to read the file again
        // with the new language setting.
        if (bootLanguage != currentLanguage)
@@ -730,9 +730,9 @@ tqWarning("SIGBUS while reading %s", rFile.name().latin1());
          pConfig->putData(aEntryKey, aEntry, false);
       }
    }
-   // Look up translations using KLocale
+   // Look up translations using TDELocale
    // https://launchpad.net/distros/ubuntu/+spec/langpacks-desktopfiles-kde
-   // This calls KLocale up to 10 times for each config file (and each TDEConfig has up to 4 files)
+   // This calls TDELocale up to 10 times for each config file (and each TDEConfig has up to 4 files)
    // so I'll see how much of a performance hit it is
    // it also only acts on the last group in a file
    // Ideas: only translate most important fields, only translate "Desktop Entry" files,
@@ -741,7 +741,7 @@ tqWarning("SIGBUS while reading %s", rFile.name().latin1());
      TQFile file("file.txt");
      if (foundGettextDomain) {
 
-       KLocale locale(gettextDomain);
+       TDELocale locale(gettextDomain);
 
        TQString language = locale.language();
        translateKey(locale, aCurrentGroup, TQCString("Name"));
@@ -772,7 +772,7 @@ tqWarning("SIGBUS while reading %s", rFile.name().latin1());
 #endif
 }
 
-void TDEConfigINIBackEnd::translateKey(KLocale& locale, TQCString currentGroup, TQCString key) {
+void TDEConfigINIBackEnd::translateKey(TDELocale& locale, TQCString currentGroup, TQCString key) {
   KEntryKey entryKey = KEntryKey(currentGroup, key);
   KEntry entry = pConfig->lookupData(entryKey);
   if (TQString(entry.mValue) != "") {

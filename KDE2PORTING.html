@@ -21,7 +21,7 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
 <LI><A HREF="#automoc">automoc/am_edit, Makefile.am tags</A></LI>
 <LI><A HREF="#TDEApplication">TDEApplication</A></LI>
 <LI><A HREF="#TDECmdLineArgs">TDECmdLineArgs</A></LI>
-<LI><A HREF="#KLocale">KLocale</A></LI>
+<LI><A HREF="#TDELocale">TDELocale</A></LI>
 <LI><A HREF="#TDEGlobal">TDEGlobal: access to KDE global objects.</A></LI>
 <LI><A HREF="#KIconLoader">KIconLoader</A></LI>
 <LI><A HREF="#KTMainWindow">KTMainWindow</A></LI>
@@ -109,7 +109,7 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
 
 <H3><A NAME="TDEApplication">TDEApplication</A></H3>
 
-  doesn't hold any longer a KLocale instance. With this getLocale()
+  doesn't hold any longer a TDELocale instance. With this getLocale()
   and isLocaleInstantiated are now replaced by TDEGlobal::locale()<P>
 
   it also doesn't hold a KiconLoader instance. As this also getIconLoader()
@@ -179,7 +179,7 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
-<H3><A NAME="KLocale">KLocale</A></H3>
+<H3><A NAME="TDELocale">TDELocale</A></H3>
 
   i18n is no longer a macro<P>
 
@@ -206,7 +206,7 @@ must have created a TDEApplication object before the methods can be used.<P>
     <PRE>
       #include &lt;kglobal.h&gt;
       #include &lt;tdeconfig.h&gt;      // Needed to use TDEConfig
-      #include &lt;klocale.h&gt;      // Needed to use KLocale
+      #include &lt;klocale.h&gt;      // Needed to use TDELocale
       #include &lt;kiconloader.h&gt;  // Needed to use KIconLoader
     </PRE>
   </TD>

@@ -460,7 +460,7 @@ TQString KBugReport::text() const
      bodyText += line;
   }
 
-  if (severity == TQString::fromLatin1("i18n") && TDEGlobal::locale()->language() != KLocale::defaultLanguage()) {
+  if (severity == TQString::fromLatin1("i18n") && TDEGlobal::locale()->language() != TDELocale::defaultLanguage()) {
       // Case 1 : i18n bug
       TQString package = TQString::fromLatin1("i18n_%1").arg(TDEGlobal::locale()->language());
       package = package.replace(TQString::fromLatin1("_"), TQString::fromLatin1("-"));

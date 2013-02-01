@@ -34,7 +34,7 @@ class TQDateTime;
 class TDEGlobal;
 class TDEConfig;
 class TDEConfigBase;
-class KLocalePrivate;
+class TDELocalePrivate;
 class KCatalogue;
 class KCalendarSystem;
 
@@ -44,7 +44,7 @@ class KCalendarSystem;
 
 #ifndef I18N_NOOP
 /**
- * \relates KLocale
+ * \relates TDELocale
  * I18N_NOOP marks a string to be translated without translating it.
  * Do not use this unless you know you need it.
  * http://developer.kde.org/documentation/other/developer-faq.html#q2.11.2
@@ -54,7 +54,7 @@ class KCalendarSystem;
 
 #ifndef I18N_NOOP2
 /**
- * \relates KLocale
+ * \relates TDELocale
  *  If the string is too ambiguous to be translated well to a non-english
  *  language, use this instead of I18N_NOOP to separate lookup string and english.
  * \warning You need to call i18n( comment, stringVar ) later on, not just i18n( stringVar ).
@@ -64,7 +64,7 @@ class KCalendarSystem;
 #endif
 
 /**
- * \relates KLocale
+ * \relates TDELocale
  *  i18n is the function that does everything you need to translate
  *  a string. You just wrap around every user visible string a i18n
  *  call to get a TQString with the string in the user's preferred
@@ -78,7 +78,7 @@ class KCalendarSystem;
 TDECORE_EXPORT TQString i18n(const char *text);
 
 /**
- * \relates KLocale
+ * \relates TDELocale
  *  If the string is too ambiguous to be translated well to a non-english
  *  language, use this form of i18n to separate lookup string and english
  *  text.
@@ -87,7 +87,7 @@ TDECORE_EXPORT TQString i18n(const char *text);
 TDECORE_EXPORT TQString i18n(const char *comment, const char *text);
 
 /**
- * \relates KLocale
+ * \relates TDELocale
  *  If you want to handle plural forms, use this form of i18n.
  *  @param singular the singular form of the word, for example "file".
   * @param plural the plural form of the word. Must contain a "%n" that will
@@ -100,7 +100,7 @@ TDECORE_EXPORT TQString i18n(const char *comment, const char *text);
 TDECORE_EXPORT TQString i18n(const char *singular, const char *plural, unsigned long n);
 
 /**
- * \relates KLocale
+ * \relates TDELocale
  * Qt3's uic generates i18n( "msg", "comment" ) calls which conflict
  * with our i18n method. We use uic -tr tr2i18n to redirect
  * to the right i18n() function
@@ -111,52 +111,52 @@ inline TQString tr2i18n(const char* message, const char* =0) {
 
 /**
   *
-  * KLocale provides support for country specific stuff like
+  * TDELocale provides support for country specific stuff like
   * the national language.
   *
-  * KLocale supports translating, as well as specifying the format
+  * TDELocale supports translating, as well as specifying the format
   * for numbers, currency, time, and date.
   *
   * @author Stephan Kulow <coolo@kde.org>, Preston Brown <pbrown@kde.org>,
   * Hans Petter Bieker <bieker@kde.org>, Lukas Tinkl <lukas.tinkl@suse.cz>
   * @short class for supporting locale settings and national language
   */
-class TDECORE_EXPORT KLocale
+class TDECORE_EXPORT TDELocale
 {
   friend class TDEGlobal; // for initInstance()
 public:
   /**
-   * Constructs a KLocale with the given catalog name.
+   * Constructs a TDELocale with the given catalog name.
    * The constructor looks for an entry Locale/Language in the
    * configuration file.
    * If no config file is specified, it will also look for languages
    * using the environment variables (TDE_LANG, LC_MESSAGES, LC_ALL, LANG),
-   * as well as the global configuration file. If KLocale is not able to use
+   * as well as the global configuration file. If TDELocale is not able to use
    * any of the specified languages, the default language (en_US) will be
    * used.
    *
    * If you specify a configuration file, it has to be valid until
-   * the KLocale object is destroyed.
+   * the TDELocale object is destroyed.
    *
    * @param catalog The name of the main language file
    * @param config The configuration file to use.
    */
-  KLocale( const TQString& catalog, TDEConfig *config = 0 );
+  TDELocale( const TQString& catalog, TDEConfig *config = 0 );
 
   /**
    * Copy constructor.
    */
-  KLocale( const KLocale & rhs );
+  TDELocale( const TDELocale & rhs );
 
   /**
    * Assignment operator.
    */
-  KLocale& operator= ( const KLocale & rhs );
+  TDELocale& operator= ( const TDELocale & rhs );
 
   /**
    * Destructor.
    */
-  ~KLocale();
+  ~TDELocale();
 
   /**
    * Translates the string into the corresponding string in
@@ -877,14 +877,14 @@ public:
    *
    * Please use setWeekStartDay instead.
    *
-   * Changes how KLocale defines the first day in week.
+   * Changes how TDELocale defines the first day in week.
    *
    * @param start True if Monday is the first day in the week
    */
   void setWeekStartsMonday(bool start) KDE_DEPRECATED; //### remove for KDE 4.0
 
   /**
-   * Changes how KLocale defines the first day in week.
+   * Changes how TDELocale defines the first day in week.
    *
    * @param day first day of the week (Monday=1..Sunday=7) as integer
    * @since 3.1
@@ -1105,10 +1105,10 @@ public:
 			  TQString & charset);
 
   /**
-   * Use this as main catalog for *all* KLocales, if not the appname
+   * Use this as main catalog for *all* TDELocales, if not the appname
    * will be used. This function is best to be the very first instruction
    * in your program's main function as it only has an effect before the
-   * first KLocale object is created.
+   * first TDELocale object is created.
    *
    * @param catalog Catalogue to override all other main catalogues.
    */
@@ -1173,7 +1173,7 @@ private:
 
 protected:
   /**
-   * @internal Creates a KLocale object for TDEGlobal and inits the locale
+   * @internal Creates a TDELocale object for TDEGlobal and inits the locale
    * pointer.
    */
   static void initInstance();
@@ -1344,7 +1344,7 @@ private:
   bool m_positivePrefixCurrencySymbol;
   bool m_negativePrefixCurrencySymbol;
 
-  KLocalePrivate *d;
+  TDELocalePrivate *d;
 };
 
 #endif

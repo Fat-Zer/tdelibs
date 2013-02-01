@@ -35,7 +35,7 @@ class KCalendarSystemHijriPrivate;
  * The Hijri calendar is the traditional Islamic calendar used in the Midle
  * East.
  *
- * @see KLocale,KCalendarSystem,KCalendarSystemFactory
+ * @see TDELocale,KCalendarSystem,KCalendarSystemFactory
  *
  * @author Carlos Moro <cfmoro@correo.uniovi.es>
  * @since 3.2
@@ -44,7 +44,7 @@ class TDECORE_EXPORT KCalendarSystemHijri : public KCalendarSystem
 {
 public:
   /** Constructor. Just like KCalendarSystem::KCalendarSystem(). */
-  KCalendarSystemHijri(const KLocale * locale = 0);
+  KCalendarSystemHijri(const TDELocale * locale = 0);
   virtual ~KCalendarSystemHijri();
 
   virtual int year (const TQDate & date) const;

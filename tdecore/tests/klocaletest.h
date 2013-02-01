@@ -7,7 +7,7 @@
 
 class TQLabel;
 
-/** test: a small test program for KLocale
+/** test: a small test program for TDELocale
     */
 class Test : public TQWidget
 {

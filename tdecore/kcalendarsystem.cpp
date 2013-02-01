@@ -30,10 +30,10 @@
 class KCalendarSystemPrivate
 {
 public:
-  const KLocale * locale;
+  const TDELocale * locale;
 };
 
-KCalendarSystem::KCalendarSystem(const KLocale * locale)
+KCalendarSystem::KCalendarSystem(const TDELocale * locale)
   : d(new KCalendarSystemPrivate)
 {
   d->locale = locale;
@@ -44,7 +44,7 @@ KCalendarSystem::~KCalendarSystem()
   delete d;
 }
 
-const KLocale * KCalendarSystem::locale() const
+const TDELocale * KCalendarSystem::locale() const
 {
   if ( d->locale )
     return d->locale;

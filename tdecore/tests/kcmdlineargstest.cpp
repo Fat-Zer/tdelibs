@@ -24,7 +24,7 @@ static KCmdLineOptions options[] =
 int
 main(int argc, char *argv[])
 {
-   KLocale::setMainCatalogue("tdelibs");
+   TDELocale::setMainCatalogue("tdelibs");
    TDECmdLineArgs::init( argc, argv, "testapp", description, version);
 
    TDECmdLineArgs::addCmdLineOptions( options ); // Add my own options.

@@ -51,7 +51,7 @@ static const char * const SYSTEM_MESSAGES = "tdelibs";
 
 static const char *maincatalogue = 0;
 
-class KLocalePrivate
+class TDELocalePrivate
 {
 public:
   int weekStartDay;
@@ -65,7 +65,7 @@ public:
   TDEConfig * config;
   bool formatInited;
   int /*TQPrinter::PageSize*/ pageSize;
-  KLocale::MeasureSystem measureSystem;
+  TDELocale::MeasureSystem measureSystem;
   TQStringList langTwoAlpha;
   TDEConfig *languages;
 
@@ -79,11 +79,11 @@ public:
   bool useMainCatalogue;
 };
 
-static KLocale *this_klocale = 0;
+static TDELocale *this_klocale = 0;
 
-KLocale::KLocale( const TQString & catalog, TDEConfig * config )
+TDELocale::TDELocale( const TQString & catalog, TDEConfig * config )
 {
-  d = new KLocalePrivate;
+  d = new TDELocalePrivate;
   d->config = config;
   d->languages = 0;
   d->calendar = 0;
@@ -103,7 +103,7 @@ KLocale::KLocale( const TQString & catalog, TDEConfig * config )
   initMainCatalogues(catalog);
 }
 
-TQString KLocale::_initLanguage(TDEConfigBase *config)
+TQString TDELocale::_initLanguage(TDEConfigBase *config)
 {
   if (this_klocale)
   {
@@ -115,7 +115,7 @@ TQString KLocale::_initLanguage(TDEConfigBase *config)
   return TQString::null;
 }
 
-void KLocale::initMainCatalogues(const TQString & catalog)
+void TDELocale::initMainCatalogues(const TQString & catalog)
 {
   // Use the first non-null string.
   TQString mainCatalogue = catalog;
@@ -128,7 +128,7 @@ void KLocale::initMainCatalogues(const TQString & catalog)
   }
 
   if (mainCatalogue.isEmpty()) {
-    kdDebug(173) << "KLocale instance created called without valid "
+    kdDebug(173) << "TDELocale instance created called without valid "
                  << "catalog! Give an argument or call setMainCatalogue "
                  << "before init" << endl;
   }
@@ -144,7 +144,7 @@ void KLocale::initMainCatalogues(const TQString & catalog)
   }
 }
 
-void KLocale::initLanguageList(TDEConfig * config, bool useEnv)
+void TDELocale::initLanguageList(TDEConfig * config, bool useEnv)
 {
   TDEConfigGroupSaver saver(config, "Locale");
 
@@ -193,7 +193,7 @@ void KLocale::initLanguageList(TDEConfig * config, bool useEnv)
   setLanguage( languageList );
 }
 
-void KLocale::initPluralTypes()
+void TDELocale::initPluralTypes()
 {
   for ( TQValueList<KCatalogue>::Iterator it = d->catalogues.begin();
     it != d->catalogues.end();
@@ -206,7 +206,7 @@ void KLocale::initPluralTypes()
 }
 
 
-int KLocale::pluralType( const TQString & language )
+int TDELocale::pluralType( const TQString & language )
 {
   for ( TQValueList<KCatalogue>::ConstIterator it = d->catalogues.begin();
     it != d->catalogues.end();
@@ -220,7 +220,7 @@ int KLocale::pluralType( const TQString & language )
   return -1;
 }
 
-int KLocale::pluralType( const KCatalogue& catalog )
+int TDELocale::pluralType( const KCatalogue& catalog )
 {
     const char* pluralFormString =
     I18N_NOOP("_: Dear translator, please do not translate this string "
@@ -285,28 +285,28 @@ int KLocale::pluralType( const KCatalogue& catalog )
     }
 }
 
-void KLocale::doFormatInit() const
+void TDELocale::doFormatInit() const
 {
   if ( d->formatInited ) return;
 
-  KLocale * that = const_cast<KLocale *>(this);
+  TDELocale * that = const_cast<TDELocale *>(this);
   that->initFormat();
 
   d->formatInited = true;
 }
 
-void KLocale::initFormat()
+void TDELocale::initFormat()
 {
   TDEConfig *config = d->config;
   if (!config) config = TDEGlobal::instance()->config();
   Q_ASSERT( config );
 
-  kdDebug(173) << "KLocale::initFormat" << endl;
+  kdDebug(173) << "TDELocale::initFormat" << endl;
 
   // make sure the config files are read using the correct locale
-  // ### Why not add a TDEConfigBase::setLocale( const KLocale * )?
+  // ### Why not add a TDEConfigBase::setLocale( const TDELocale * )?
   // ### Then we could remove this hack
-  KLocale *lsave = TDEGlobal::_locale;
+  TDELocale *lsave = TDEGlobal::_locale;
   TDEGlobal::_locale = this;
 
   TDEConfigGroupSaver saver(config, "Locale");
@@ -388,7 +388,7 @@ void KLocale::initFormat()
   TDEGlobal::_locale = lsave;
 }
 
-bool KLocale::setCountry(const TQString & country)
+bool TDELocale::setCountry(const TQString & country)
 {
   // Check if the file exists too??
   if ( country.isEmpty() )
@@ -401,7 +401,7 @@ bool KLocale::setCountry(const TQString & country)
   return true;
 }
 
-TQString KLocale::catalogueFileName(const TQString & language,
+TQString TDELocale::catalogueFileName(const TQString & language,
 				   const KCatalogue & catalog)
 {
   TQString path = TQString::fromLatin1("%1/LC_MESSAGES/%2.mo")
@@ -415,7 +415,7 @@ TQString KLocale::catalogueFileName(const TQString & language,
   return fileName;
 }
 
-bool KLocale::setLanguage(const TQString & language)
+bool TDELocale::setLanguage(const TQString & language)
 {
   if ( d->languageList.contains( language ) ) {
  	 d->languageList.remove( language );
@@ -433,7 +433,7 @@ bool KLocale::setLanguage(const TQString & language)
   return true; // Maybe the mo-files for this language are empty, but in principle we can speak all languages
 }
 
-bool KLocale::setLanguage(const TQStringList & languages)
+bool TDELocale::setLanguage(const TQStringList & languages)
 {
   TQStringList languageList( languages );
   // This list might contain
@@ -484,7 +484,7 @@ bool KLocale::setLanguage(const TQStringList & languages)
   return true; // we found something. Maybe it's only English, but we found something
 }
 
-bool KLocale::isApplicationTranslatedInto( const TQString & language)
+bool TDELocale::isApplicationTranslatedInto( const TQString & language)
 {
   if ( language.isEmpty() ) {
     return false;
@@ -518,7 +518,7 @@ bool KLocale::isApplicationTranslatedInto( const TQString & language)
   return ! sAbsFileName.isEmpty();
 }
 
-void KLocale::splitLocale(const TQString & aStr,
+void TDELocale::splitLocale(const TQString & aStr,
 			  TQString & language,
 			  TQString & country,
 			  TQString & chrset)
@@ -551,17 +551,17 @@ void KLocale::splitLocale(const TQString & aStr,
   language = str;
 }
 
-TQString KLocale::language() const
+TQString TDELocale::language() const
 {
   return m_language;
 }
 
-TQString KLocale::country() const
+TQString TDELocale::country() const
 {
   return m_country;
 }
 
-TQString KLocale::monthName(int i, bool shortName) const
+TQString TDELocale::monthName(int i, bool shortName) const
 {
   if ( shortName )
     switch ( i )
@@ -599,7 +599,7 @@ TQString KLocale::monthName(int i, bool shortName) const
   return TQString::null;
 }
 
-TQString KLocale::monthNamePossessive(int i, bool shortName) const
+TQString TDELocale::monthNamePossessive(int i, bool shortName) const
 {
   if ( shortName )
     switch ( i )
@@ -637,12 +637,12 @@ TQString KLocale::monthNamePossessive(int i, bool shortName) const
   return TQString::null;
 }
 
-TQString KLocale::weekDayName (int i, bool shortName) const
+TQString TDELocale::weekDayName (int i, bool shortName) const
 {
   return calendar()->weekDayName(i, shortName);
 }
 
-void KLocale::insertCatalogue( const TQString & catalog )
+void TDELocale::insertCatalogue( const TQString & catalog )
 {
   if ( !d->catalogNames.contains( catalog) ) {
     d->catalogNames.append( catalog );
@@ -650,7 +650,7 @@ void KLocale::insertCatalogue( const TQString & catalog )
   updateCatalogues( ); // evaluate the changed list and generate the neccessary KCatalog objects
 }
 
-void KLocale::updateCatalogues( )
+void TDELocale::updateCatalogues( )
 {
   // some changes have occured. Maybe we have learned or forgotten some languages.
   // Maybe the language precedence has changed.
@@ -691,7 +691,7 @@ void KLocale::updateCatalogues( )
 
 
 
-void KLocale::removeCatalogue(const TQString &catalog)
+void TDELocale::removeCatalogue(const TQString &catalog)
 {
   if ( d->catalogNames.contains( catalog )) {
     d->catalogNames.remove( catalog );
@@ -700,7 +700,7 @@ void KLocale::removeCatalogue(const TQString &catalog)
   }
 }
 
-void KLocale::setActiveCatalogue(const TQString &catalog)
+void TDELocale::setActiveCatalogue(const TQString &catalog)
 {
   if ( d->catalogNames.contains( catalog ) ) {
     d->catalogNames.remove( catalog );
@@ -709,7 +709,7 @@ void KLocale::setActiveCatalogue(const TQString &catalog)
   }
 }
 
-KLocale::~KLocale()
+TDELocale::~TDELocale()
 {
   delete d->calendar;
   delete d->languages;
@@ -717,7 +717,7 @@ KLocale::~KLocale()
   d = 0L;
 }
 
-TQString KLocale::translate_priv(const char *msgid,
+TQString TDELocale::translate_priv(const char *msgid,
 				const char *fallback,
 				const char **translated,
 				int* pluralType ) const
@@ -727,7 +727,7 @@ TQString KLocale::translate_priv(const char *msgid,
   }
   if (!msgid || !msgid[0])
     {
-      kdWarning() << "KLocale: trying to look up \"\" in catalog. "
+      kdWarning() << "TDELocale: trying to look up \"\" in catalog. "
 		   << "Fix the program" << endl;
       return TQString::null;
     }
@@ -766,16 +766,16 @@ TQString KLocale::translate_priv(const char *msgid,
   return TQString::fromUtf8( fallback );
 }
 
-TQString KLocale::translate(const char* msgid) const
+TQString TDELocale::translate(const char* msgid) const
 {
   return translate_priv(msgid, msgid);
 }
 
-TQString KLocale::translate( const char *index, const char *fallback) const
+TQString TDELocale::translate( const char *index, const char *fallback) const
 {
   if (!index || !index[0] || !fallback || !fallback[0])
     {
-      kdDebug(173) << "KLocale: trying to look up \"\" in catalog. "
+      kdDebug(173) << "TDELocale: trying to look up \"\" in catalog. "
 		   << "Fix the program" << endl;
       return TQString::null;
     }
@@ -807,12 +807,12 @@ static TQString put_n_in(const TQString &orig, unsigned long n)
       kdError() << "translation of \"" << singular << "\" doesn't contain " << x << " different plural forms as expected\n"; \
       return TQString( "BROKEN TRANSLATION %1" ).arg( singular ); }
 
-TQString KLocale::translate( const char *singular, const char *plural,
+TQString TDELocale::translate( const char *singular, const char *plural,
                             unsigned long n ) const
 {
   if (!singular || !singular[0] || !plural || !plural[0])
     {
-      kdWarning() << "KLocale: trying to look up \"\" in catalog. "
+      kdWarning() << "TDELocale: trying to look up \"\" in catalog. "
 		   << "Fix the program" << endl;
       return TQString::null;
     }
@@ -960,11 +960,11 @@ TQString KLocale::translate( const char *singular, const char *plural,
   return TQString::null;
 }
 
-TQString KLocale::translateQt( const char *context, const char *source,
+TQString TDELocale::translateQt( const char *context, const char *source,
 			      const char *message) const
 {
   if (!source || !source[0]) {
-    kdWarning() << "KLocale: trying to look up \"\" in catalog. "
+    kdWarning() << "TDELocale: trying to look up \"\" in catalog. "
 		<< "Fix the program" << endl;
     return TQString::null;
   }
@@ -1004,97 +1004,97 @@ TQString KLocale::translateQt( const char *context, const char *source,
   return TQString::null;
 }
 
-bool KLocale::nounDeclension() const
+bool TDELocale::nounDeclension() const
 {
   doFormatInit();
   return d->nounDeclension;
 }
 
-bool KLocale::dateMonthNamePossessive() const
+bool TDELocale::dateMonthNamePossessive() const
 {
   doFormatInit();
   return d->dateMonthNamePossessive;
 }
 
-int KLocale::weekStartDay() const
+int TDELocale::weekStartDay() const
 {
   doFormatInit();
   return d->weekStartDay;
 }
 
-bool KLocale::weekStartsMonday() const //deprecated
+bool TDELocale::weekStartsMonday() const //deprecated
 {
   doFormatInit();
   return (d->weekStartDay==1);
 }
 
-TQString KLocale::decimalSymbol() const
+TQString TDELocale::decimalSymbol() const
 {
   doFormatInit();
   return m_decimalSymbol;
 }
 
-TQString KLocale::thousandsSeparator() const
+TQString TDELocale::thousandsSeparator() const
 {
   doFormatInit();
   return m_thousandsSeparator;
 }
 
-TQString KLocale::currencySymbol() const
+TQString TDELocale::currencySymbol() const
 {
   doFormatInit();
   return m_currencySymbol;
 }
 
-TQString KLocale::monetaryDecimalSymbol() const
+TQString TDELocale::monetaryDecimalSymbol() const
 {
   doFormatInit();
   return m_monetaryDecimalSymbol;
 }
 
-TQString KLocale::monetaryThousandsSeparator() const
+TQString TDELocale::monetaryThousandsSeparator() const
 {
   doFormatInit();
   return m_monetaryThousandsSeparator;
 }
 
-TQString KLocale::positiveSign() const
+TQString TDELocale::positiveSign() const
 {
   doFormatInit();
   return m_positiveSign;
 }
 
-TQString KLocale::negativeSign() const
+TQString TDELocale::negativeSign() const
 {
   doFormatInit();
   return m_negativeSign;
 }
 
-int KLocale::fracDigits() const
+int TDELocale::fracDigits() const
 {
   doFormatInit();
   return m_fracDigits;
 }
 
-bool KLocale::positivePrefixCurrencySymbol() const
+bool TDELocale::positivePrefixCurrencySymbol() const
 {
   doFormatInit();
   return m_positivePrefixCurrencySymbol;
 }
 
-bool KLocale::negativePrefixCurrencySymbol() const
+bool TDELocale::negativePrefixCurrencySymbol() const
 {
   doFormatInit();
   return m_negativePrefixCurrencySymbol;
 }
 
-KLocale::SignPosition KLocale::positiveMonetarySignPosition() const
+TDELocale::SignPosition TDELocale::positiveMonetarySignPosition() const
 {
   doFormatInit();
   return m_positiveMonetarySignPosition;
 }
 
-KLocale::SignPosition KLocale::negativeMonetarySignPosition() const
+TDELocale::SignPosition TDELocale::negativeMonetarySignPosition() const
 {
   doFormatInit();
   return m_negativeMonetarySignPosition;
@@ -1127,7 +1127,7 @@ static void _insertSeparator(TQString &str, const TQString &separator,
   str = mainPart + fracPart;
 }
 
-TQString KLocale::formatMoney(double num,
+TQString TDELocale::formatMoney(double num,
 			     const TQString & symbol,
 			     int precision) const
 {
@@ -1188,24 +1188,24 @@ TQString KLocale::formatMoney(double num,
   return res;
 }
 
-TQString KLocale::formatMoney(const TQString &numStr) const
+TQString TDELocale::formatMoney(const TQString &numStr) const
 {
   return formatMoney(numStr.toDouble());
 }
 
-TQString KLocale::formatNumber(double num, int precision) const
+TQString TDELocale::formatNumber(double num, int precision) const
 {
   if (precision == -1) precision = 2;
   // no need to round since TQString::number does this for us
   return formatNumber(TQString::number(num, 'f', precision), false, 0);
 }
 
-TQString KLocale::formatLong(long num) const
+TQString TDELocale::formatLong(long num) const
 {
   return formatNumber((double)num, 0);
 }
 
-TQString KLocale::formatNumber(const TQString &numStr) const
+TQString TDELocale::formatNumber(const TQString &numStr) const
 {
   return formatNumber(numStr, true, 2);
 }
@@ -1301,7 +1301,7 @@ static void _round(TQString &str, int precision)
   if (precision == 0) str = str.section('.', 0, 0);
 }
 
-TQString KLocale::formatNumber(const TQString &numStr, bool round,
+TQString TDELocale::formatNumber(const TQString &numStr, bool round,
 			      int precision) const
 {
   TQString tmpString = numStr;
@@ -1335,7 +1335,7 @@ TQString KLocale::formatNumber(const TQString &numStr, bool round,
   return mantString +  expString;
 }
 
-TQString KLocale::formatDate(const TQDate &pDate, bool shortFormat) const
+TQString TDELocale::formatDate(const TQDate &pDate, bool shortFormat) const
 {
   const TQString rst = shortFormat?dateFormatShort():dateFormat();
 
@@ -1410,12 +1410,12 @@ TQString KLocale::formatDate(const TQDate &pDate, bool shortFormat) const
   return buffer;
 }
 
-void KLocale::setMainCatalogue(const char *catalog)
+void TDELocale::setMainCatalogue(const char *catalog)
 {
   maincatalogue = catalog;
 }
 
-double KLocale::readNumber(const TQString &_str, bool * ok) const
+double TDELocale::readNumber(const TQString &_str, bool * ok) const
 {
   TQString str = _str.stripWhiteSpace();
   bool neg = str.find(negativeSign()) == 0;
@@ -1480,7 +1480,7 @@ double KLocale::readNumber(const TQString &_str, bool * ok) const
   return tot.toDouble(ok);
 }
 
-double KLocale::readMoney(const TQString &_str, bool * ok) const
+double TDELocale::readMoney(const TQString &_str, bool * ok) const
 {
   TQString str = _str.stripWhiteSpace();
   bool neg = false;
@@ -1594,7 +1594,7 @@ static int readInt(const TQString &str, uint &pos)
   return result;
 }
 
-TQDate KLocale::readDate(const TQString &intstr, bool* ok) const
+TQDate TDELocale::readDate(const TQString &intstr, bool* ok) const
 {
   TQDate date;
   date = readDate(intstr, ShortFormat, ok);
@@ -1602,15 +1602,15 @@ TQDate KLocale::readDate(const TQString &intstr, bool* ok) const
   return readDate(intstr, NormalFormat, ok);
 }
 
-TQDate KLocale::readDate(const TQString &intstr, ReadDateFlags flags, bool* ok) const
+TQDate TDELocale::readDate(const TQString &intstr, ReadDateFlags flags, bool* ok) const
 {
   TQString fmt = ((flags & ShortFormat) ? dateFormatShort() : dateFormat()).simplifyWhiteSpace();
   return readDate( intstr, fmt, ok );
 }
 
-TQDate KLocale::readDate(const TQString &intstr, const TQString &fmt, bool* ok) const
+TQDate TDELocale::readDate(const TQString &intstr, const TQString &fmt, bool* ok) const
 {
-  //kdDebug() << "KLocale::readDate intstr=" << intstr << " fmt=" << fmt << endl;
+  //kdDebug() << "TDELocale::readDate intstr=" << intstr << " fmt=" << fmt << endl;
   TQString str = intstr.simplifyWhiteSpace().lower();
   int day = -1, month = -1;
   // allow the year to be omitted if not in the format
@@ -1722,7 +1722,7 @@ TQDate KLocale::readDate(const TQString &intstr, const TQString &fmt, bool* ok) 
     error = true;
   }
 
-  //kdDebug(173) << "KLocale::readDate day=" << day << " month=" << month << " year=" << year << endl;
+  //kdDebug(173) << "TDELocale::readDate day=" << day << " month=" << month << " year=" << year << endl;
   if ( year != -1 && month != -1 && day != -1 && !error)
   {
     if (ok) *ok = true;
@@ -1739,7 +1739,7 @@ TQDate KLocale::readDate(const TQString &intstr, const TQString &fmt, bool* ok) 
   }
 }
 
-TQTime KLocale::readTime(const TQString &intstr, bool *ok) const
+TQTime TDELocale::readTime(const TQString &intstr, bool *ok) const
 {
   TQTime _time;
   _time = readTime(intstr, WithSeconds, ok);
@@ -1747,7 +1747,7 @@ TQTime KLocale::readTime(const TQString &intstr, bool *ok) const
   return readTime(intstr, WithoutSeconds, ok);
 }
 
-TQTime KLocale::readTime(const TQString &intstr, ReadTimeFlags flags, bool *ok) const
+TQTime TDELocale::readTime(const TQString &intstr, ReadTimeFlags flags, bool *ok) const
 {
   TQString str = intstr.simplifyWhiteSpace().lower();
   TQString Format = timeFormat().simplifyWhiteSpace();
@@ -1855,12 +1855,12 @@ TQTime KLocale::readTime(const TQString &intstr, ReadTimeFlags flags, bool *ok) 
 }
 
 //BIC: merge with below
-TQString KLocale::formatTime(const TQTime &pTime, bool includeSecs) const
+TQString TDELocale::formatTime(const TQTime &pTime, bool includeSecs) const
 {
   return formatTime( pTime, includeSecs, false );
 }
 
-TQString KLocale::formatTime(const TQTime &pTime, bool includeSecs, bool isDuration) const
+TQString TDELocale::formatTime(const TQTime &pTime, bool includeSecs, bool isDuration) const
 {
   const TQString rst = timeFormat();
 
@@ -1946,7 +1946,7 @@ TQString KLocale::formatTime(const TQTime &pTime, bool includeSecs, bool isDurat
     return ret;
 }
 
-bool KLocale::use12Clock() const
+bool TDELocale::use12Clock() const
 {
   if ((timeFormat().contains(TQString::fromLatin1("%I")) > 0) ||
       (timeFormat().contains(TQString::fromLatin1("%l")) > 0))
@@ -1955,17 +1955,17 @@ bool KLocale::use12Clock() const
     return false;
 }
 
-TQString KLocale::languages() const
+TQString TDELocale::languages() const
 {
   return d->languageList.join( TQString::fromLatin1(":") );
 }
 
-TQStringList KLocale::languageList() const
+TQStringList TDELocale::languageList() const
 {
   return d->languageList;
 }
 
-TQString KLocale::formatDateTime(const TQDateTime &pDateTime,
+TQString TDELocale::formatDateTime(const TQDateTime &pDateTime,
 				bool shortFormat,
 				bool includeSeconds) const
 {
@@ -1976,7 +1976,7 @@ TQString KLocale::formatDateTime(const TQDateTime &pDateTime,
 
 TQString i18n(const char* text)
 {
-  register KLocale *instance = TDEGlobal::locale();
+  register TDELocale *instance = TDEGlobal::locale();
   if (instance)
     return instance->translate(text);
   return TQString::fromUtf8(text);
@@ -1984,7 +1984,7 @@ TQString i18n(const char* text)
 
 TQString i18n(const char* index, const char *text)
 {
-  register KLocale *instance = TDEGlobal::locale();
+  register TDELocale *instance = TDEGlobal::locale();
   if (instance)
     return instance->translate(index, text);
   return TQString::fromUtf8(text);
@@ -1992,7 +1992,7 @@ TQString i18n(const char* index, const char *text)
 
 TQString i18n(const char* singular, const char* plural, unsigned long n)
 {
-  register KLocale *instance = TDEGlobal::locale();
+  register TDELocale *instance = TDEGlobal::locale();
   if (instance)
     return instance->translate(singular, plural, n);
   if (n == 1)
@@ -2001,23 +2001,23 @@ TQString i18n(const char* singular, const char* plural, unsigned long n)
     return put_n_in(TQString::fromUtf8(plural), n);
 }
 
-void KLocale::initInstance()
+void TDELocale::initInstance()
 {
   if (TDEGlobal::_locale)
     return;
 
   TDEInstance *app = TDEGlobal::instance();
   if (app) {
-    TDEGlobal::_locale = new KLocale(TQString::fromLatin1(app->instanceName()));
+    TDEGlobal::_locale = new TDELocale(TQString::fromLatin1(app->instanceName()));
 
     // only do this for the global instance
     TQTextCodec::setCodecForLocale(TDEGlobal::_locale->codecForEncoding());
   }
   else
-    kdDebug(173) << "no app name available using KLocale - nothing to do\n";
+    kdDebug(173) << "no app name available using TDELocale - nothing to do\n";
 }
 
-TQString KLocale::langLookup(const TQString &fname, const char *rtype)
+TQString TDELocale::langLookup(const TQString &fname, const char *rtype)
 {
   TQStringList search;
 
@@ -2049,12 +2049,12 @@ TQString KLocale::langLookup(const TQString &fname, const char *rtype)
   return TQString::null;
 }
 
-bool KLocale::useDefaultLanguage() const
+bool TDELocale::useDefaultLanguage() const
 {
   return language() == defaultLanguage();
 }
 
-void KLocale::initEncoding(TDEConfig *)
+void TDELocale::initEncoding(TDEConfig *)
 {
   const int mibDefault = 4; // ISO 8859-1
 
@@ -2070,65 +2070,65 @@ void KLocale::initEncoding(TDEConfig *)
   Q_ASSERT( d->codecForEncoding );
 }
 
-void KLocale::initFileNameEncoding(TDEConfig *)
+void TDELocale::initFileNameEncoding(TDEConfig *)
 {
   // If the following environment variable is set, assume all filenames
   // are in UTF-8 regardless of the current C locale.
   d->utf8FileEncoding = getenv("TDE_UTF8_FILENAMES") != 0;
   if (d->utf8FileEncoding)
   {
-    TQFile::setEncodingFunction(KLocale::encodeFileNameUTF8);
-    TQFile::setDecodingFunction(KLocale::decodeFileNameUTF8);
+    TQFile::setEncodingFunction(TDELocale::encodeFileNameUTF8);
+    TQFile::setDecodingFunction(TDELocale::decodeFileNameUTF8);
   }
   // Otherwise, stay with QFile's default filename encoding functions
   // which, on Unix platforms, use the locale's codec.
 }
 
 #ifdef USE_QT3
-TQCString KLocale::encodeFileNameUTF8( const TQString & fileName )
+TQCString TDELocale::encodeFileNameUTF8( const TQString & fileName )
 #endif // USE_QT3
 #ifdef USE_QT4
-QByteArray KLocale::encodeFileNameUTF8( const QString & fileName )
+QByteArray TDELocale::encodeFileNameUTF8( const QString & fileName )
 #endif // USE_QT4
 {
   return TQString(fileName).utf8();
 }
 
 #ifdef USE_QT3
-TQString KLocale::decodeFileNameUTF8( const TQCString & localFileName )
+TQString TDELocale::decodeFileNameUTF8( const TQCString & localFileName )
 #endif // USE_QT3
 #ifdef USE_QT4
-QString KLocale::decodeFileNameUTF8( const QByteArray & localFileName )
+QString TDELocale::decodeFileNameUTF8( const QByteArray & localFileName )
 #endif // USE_QT4
 {
   return TQString::fromUtf8(localFileName);
 }
 
-void KLocale::setDateFormat(const TQString & format)
+void TDELocale::setDateFormat(const TQString & format)
 {
   doFormatInit();
   m_dateFormat = format.stripWhiteSpace();
 }
 
-void KLocale::setDateFormatShort(const TQString & format)
+void TDELocale::setDateFormatShort(const TQString & format)
 {
   doFormatInit();
   m_dateFormatShort = format.stripWhiteSpace();
 }
 
-void KLocale::setDateMonthNamePossessive(bool possessive)
+void TDELocale::setDateMonthNamePossessive(bool possessive)
 {
   doFormatInit();
   d->dateMonthNamePossessive = possessive;
 }
 
-void KLocale::setTimeFormat(const TQString & format)
+void TDELocale::setTimeFormat(const TQString & format)
 {
   doFormatInit();
   m_timeFormat = format.stripWhiteSpace();
 }
 
-void KLocale::setWeekStartsMonday(bool start) //deprecated
+void TDELocale::setWeekStartsMonday(bool start) //deprecated
 {
   doFormatInit();
   if (start)
@@ -2137,7 +2137,7 @@ void KLocale::setWeekStartsMonday(bool start) //deprecated
     d->weekStartDay = 7;
 }
 
-void KLocale::setWeekStartDay(int day)
+void TDELocale::setWeekStartDay(int day)
 {
   doFormatInit();
   if (day>7 || day<1)
@@ -2146,134 +2146,134 @@ void KLocale::setWeekStartDay(int day)
     d->weekStartDay = day;
 }
 
-TQString KLocale::dateFormat() const
+TQString TDELocale::dateFormat() const
 {
   doFormatInit();
   return m_dateFormat;
 }
 
-TQString KLocale::dateFormatShort() const
+TQString TDELocale::dateFormatShort() const
 {
   doFormatInit();
   return m_dateFormatShort;
 }
 
-TQString KLocale::timeFormat() const
+TQString TDELocale::timeFormat() const
 {
   doFormatInit();
   return m_timeFormat;
 }
 
-void KLocale::setDecimalSymbol(const TQString & symbol)
+void TDELocale::setDecimalSymbol(const TQString & symbol)
 {
   doFormatInit();
   m_decimalSymbol = symbol.stripWhiteSpace();
 }
 
-void KLocale::setThousandsSeparator(const TQString & separator)
+void TDELocale::setThousandsSeparator(const TQString & separator)
 {
   doFormatInit();
   // allow spaces here
   m_thousandsSeparator = separator;
 }
 
-void KLocale::setPositiveSign(const TQString & sign)
+void TDELocale::setPositiveSign(const TQString & sign)
 {
   doFormatInit();
   m_positiveSign = sign.stripWhiteSpace();
 }
 
-void KLocale::setNegativeSign(const TQString & sign)
+void TDELocale::setNegativeSign(const TQString & sign)
 {
   doFormatInit();
   m_negativeSign = sign.stripWhiteSpace();
 }
 
-void KLocale::setPositiveMonetarySignPosition(SignPosition signpos)
+void TDELocale::setPositiveMonetarySignPosition(SignPosition signpos)
 {
   doFormatInit();
   m_positiveMonetarySignPosition = signpos;
 }
 
-void KLocale::setNegativeMonetarySignPosition(SignPosition signpos)
+void TDELocale::setNegativeMonetarySignPosition(SignPosition signpos)
 {
   doFormatInit();
   m_negativeMonetarySignPosition = signpos;
 }
 
-void KLocale::setPositivePrefixCurrencySymbol(bool prefix)
+void TDELocale::setPositivePrefixCurrencySymbol(bool prefix)
 {
   doFormatInit();
   m_positivePrefixCurrencySymbol = prefix;
 }
 
-void KLocale::setNegativePrefixCurrencySymbol(bool prefix)
+void TDELocale::setNegativePrefixCurrencySymbol(bool prefix)
 {
   doFormatInit();
   m_negativePrefixCurrencySymbol = prefix;
 }
 
-void KLocale::setFracDigits(int digits)
+void TDELocale::setFracDigits(int digits)
 {
   doFormatInit();
   m_fracDigits = digits;
 }
 
-void KLocale::setMonetaryThousandsSeparator(const TQString & separator)
+void TDELocale::setMonetaryThousandsSeparator(const TQString & separator)
 {
   doFormatInit();
   // allow spaces here
   m_monetaryThousandsSeparator = separator;
 }
 
-void KLocale::setMonetaryDecimalSymbol(const TQString & symbol)
+void TDELocale::setMonetaryDecimalSymbol(const TQString & symbol)
 {
   doFormatInit();
   m_monetaryDecimalSymbol = symbol.stripWhiteSpace();
 }
 
-void KLocale::setCurrencySymbol(const TQString & symbol)
+void TDELocale::setCurrencySymbol(const TQString & symbol)
 {
   doFormatInit();
   m_currencySymbol = symbol.stripWhiteSpace();
 }
 
-int KLocale::pageSize() const
+int TDELocale::pageSize() const
 {
   doFormatInit();
   return d->pageSize;
 }
 
-void KLocale::setPageSize(int pageSize)
+void TDELocale::setPageSize(int pageSize)
 {
   // #### check if it's in range??
   doFormatInit();
   d->pageSize = pageSize;
 }
 
-KLocale::MeasureSystem KLocale::measureSystem() const
+TDELocale::MeasureSystem TDELocale::measureSystem() const
 {
   doFormatInit();
   return d->measureSystem;
 }
 
-void KLocale::setMeasureSystem(MeasureSystem value)
+void TDELocale::setMeasureSystem(MeasureSystem value)
 {
   doFormatInit();
   d->measureSystem = value;
 }
 
-TQString KLocale::defaultLanguage()
+TQString TDELocale::defaultLanguage()
 {
   return TQString::fromLatin1("en_US");
 }
 
-TQString KLocale::defaultCountry()
+TQString TDELocale::defaultCountry()
 {
   return TQString::fromLatin1("C");
 }
 
-const char * KLocale::encoding() const
+const char * TDELocale::encoding() const
 {
 #ifdef Q_WS_WIN
   if (0==qstrcmp("System", codecForEncoding()->name()))
@@ -2290,24 +2290,24 @@ const char * KLocale::encoding() const
   return codecForEncoding()->name();
 }
 
-int KLocale::encodingMib() const
+int TDELocale::encodingMib() const
 {
   return codecForEncoding()->mibEnum();
 }
 
-int KLocale::fileEncodingMib() const
+int TDELocale::fileEncodingMib() const
 {
   if (d->utf8FileEncoding)
      return 106;
   return codecForEncoding()->mibEnum();
 }
 
-TQTextCodec * KLocale::codecForEncoding() const
+TQTextCodec * TDELocale::codecForEncoding() const
 {
   return d->codecForEncoding;
 }
 
-bool KLocale::setEncoding(int mibEnum)
+bool TDELocale::setEncoding(int mibEnum)
 {
   TQTextCodec * codec = TQTextCodec::codecForMib(mibEnum);
   if (codec)
@@ -2316,7 +2316,7 @@ bool KLocale::setEncoding(int mibEnum)
   return codec != 0;
 }
 
-TQStringList KLocale::languagesTwoAlpha() const
+TQStringList TDELocale::languagesTwoAlpha() const
 {
   if (d->langTwoAlpha.count())
      return d->langTwoAlpha;
@@ -2356,7 +2356,7 @@ TQStringList KLocale::languagesTwoAlpha() const
   return result;
 }
 
-TQStringList KLocale::allLanguagesTwoAlpha() const
+TQStringList TDELocale::allLanguagesTwoAlpha() const
 {
   if (!d->languages)
     d->languages = new TDEConfig("all_languages", true, false, "locale");
@@ -2364,7 +2364,7 @@ TQStringList KLocale::allLanguagesTwoAlpha() const
   return d->languages->groupList();
 }
 
-TQString KLocale::twoAlphaToLanguageName(const TQString &code) const
+TQString TDELocale::twoAlphaToLanguageName(const TQString &code) const
 {
   if (!d->languages)
     d->languages = new TDEConfig("all_languages", true, false, "locale");
@@ -2377,7 +2377,7 @@ TQString KLocale::twoAlphaToLanguageName(const TQString &code) const
   return d->languages->readEntry("Name");
 }
 
-TQStringList KLocale::allCountriesTwoAlpha() const
+TQStringList TDELocale::allCountriesTwoAlpha() const
 {
   TQStringList countries;
   TQStringList paths = TDEGlobal::dirs()->findAllResources("locale", "l10n/*/entry.desktop");
@@ -2391,14 +2391,14 @@ TQStringList KLocale::allCountriesTwoAlpha() const
   return countries;
 }
 
-TQString KLocale::twoAlphaToCountryName(const TQString &code) const
+TQString TDELocale::twoAlphaToCountryName(const TQString &code) const
 {
   TDEConfig cfg("l10n/"+code.lower()+"/entry.desktop", true, false, "locale");
   cfg.setGroup("KCM Locale");
   return cfg.readEntry("Name");
 }
 
-void KLocale::setCalendar(const TQString & calType)
+void TDELocale::setCalendar(const TQString & calType)
 {
   doFormatInit();
 
@@ -2408,14 +2408,14 @@ void KLocale::setCalendar(const TQString & calType)
   d->calendar = 0;
 }
 
-TQString KLocale::calendarType() const
+TQString TDELocale::calendarType() const
 {
   doFormatInit();
 
   return d->calendarType;
 }
 
-const KCalendarSystem * KLocale::calendar() const
+const KCalendarSystem * TDELocale::calendar() const
 {
   doFormatInit();
 
@@ -2426,14 +2426,14 @@ const KCalendarSystem * KLocale::calendar() const
   return d->calendar;
 }
 
-KLocale::KLocale(const KLocale & rhs)
+TDELocale::TDELocale(const TDELocale & rhs)
 {
-  d = new KLocalePrivate;
+  d = new TDELocalePrivate;
 
   *this = rhs;
 }
 
-KLocale & KLocale::operator=(const KLocale & rhs)
+TDELocale & TDELocale::operator=(const TDELocale & rhs)
 {
   // Numbers and money
   m_decimalSymbol = rhs.m_decimalSymbol;
@@ -2465,8 +2465,8 @@ KLocale & KLocale::operator=(const KLocale & rhs)
   return *this;
 }
 
-bool KLocale::setCharset(const TQString & ) { return true; }
-TQString KLocale::charset() const { return TQString::fromLatin1("UTF-8"); }
+bool TDELocale::setCharset(const TQString & ) { return true; }
+TQString TDELocale::charset() const { return TQString::fromLatin1("UTF-8"); }
 
 // KDE4: remove
 #if 0

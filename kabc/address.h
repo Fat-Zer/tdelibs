@@ -281,7 +281,7 @@ class KABC_EXPORT Address
 
     /**
       Returns ISO code for a localized country name. Only localized country
-      names will be understood. This might be replaced by a KLocale method in
+      names will be understood. This might be replaced by a TDELocale method in
       the future.
       @param cname  name of the country
       @return       two digit ISO code
@@ -290,7 +290,7 @@ class KABC_EXPORT Address
 
     /**
       Returns a localized country name for a ISO code. 
-      This might be replaced by a KLocale method in the future.
+      This might be replaced by a TDELocale method in the future.
       @param ISOname two digit ISO code
       @return        localized name of the country
       @since 3.2

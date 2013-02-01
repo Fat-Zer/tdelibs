@@ -26,7 +26,7 @@
 #include "tdelibs_export.h"
 
 class KCalendarSystem;
-class KLocale;
+class TDELocale;
 
 /**
  * Factory class for calendar types
@@ -50,7 +50,7 @@ public:
    * @return a KCalendarSystem object
    */
   static KCalendarSystem *create (const TQString & calType = TQString::fromLatin1("gregorian"),
-                                  const KLocale * locale = 0);
+                                  const TDELocale * locale = 0);
 
   /**
    * Gets list of names of supported calendar systems

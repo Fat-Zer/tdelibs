@@ -101,7 +101,7 @@ TDEInstance *TDEGlobal::instance()
     return _instance;
 }
 
-KLocale	*TDEGlobal::locale()
+TDELocale	*TDEGlobal::locale()
 {
     if( _locale == 0 ) {
 	if (!_instance)
@@ -109,7 +109,7 @@ KLocale	*TDEGlobal::locale()
         kglobal_init();
 
         // will set _locale if it works - otherwise 0 is returned
-        KLocale::initInstance();
+        TDELocale::initInstance();
         if( _instance->aboutData())
             _instance->aboutData()->translateInternalProgramName();
     }
@@ -217,7 +217,7 @@ TDEGlobal::deleteStaticDeleters()
 KStringDict     *TDEGlobal::_stringDict   = 0;
 TDEInstance       *TDEGlobal::_instance     = 0;
 TDEInstance       *TDEGlobal::_activeInstance = 0;
-KLocale         *TDEGlobal::_locale	= 0;
+TDELocale         *TDEGlobal::_locale	= 0;
 KCharsets       *TDEGlobal::_charsets	= 0;
 KStaticDeleterList *TDEGlobal::_staticDeleters = 0;
 

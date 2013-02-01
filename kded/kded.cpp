@@ -885,7 +885,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
      TDECmdLineArgs::addCmdLineOptions( options );
 
      // this program is in tdelibs so it uses tdelibs as catalog
-     KLocale::setMainCatalogue("tdelibs");
+     TDELocale::setMainCatalogue("tdelibs");
 
      // WABA: Make sure not to enable session management.
      putenv(strdup("SESSION_MANAGER="));

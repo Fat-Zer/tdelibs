@@ -259,7 +259,7 @@ static bool is_leap_year(int year)
 }
 
 // Ok
-KCalendarSystemHebrew::KCalendarSystemHebrew(const KLocale * locale)
+KCalendarSystemHebrew::KCalendarSystemHebrew(const TDELocale * locale)
   : KCalendarSystem(locale)
 {
 }

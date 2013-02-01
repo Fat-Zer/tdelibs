@@ -51,7 +51,7 @@ bool checkDate(TQString txt, TQDate a, TQDate b)
 Test::Test( TQWidget *parent, const char *name )
   : TQWidget( parent, name )
 {
-  setCaption("Testing KLocale");
+  setCaption("Testing TDELocale");
 
   TQWidget *d = tqApp->desktop();
   setGeometry((d->width()-320)>>1, (d->height()-160)>>1, 420, 420);
@@ -99,7 +99,7 @@ void Test::createFields()
 
 int main( int argc, char ** argv )
 {
-  KLocale::setMainCatalogue("tdelibs");
+  TDELocale::setMainCatalogue("tdelibs");
   TDEApplication a( argc, argv, "klocaletest" );
 
   TDEGlobal::locale()->setLanguage(TQString::fromLatin1("en_US"));
@@ -142,7 +142,7 @@ int main( int argc, char ** argv )
         tqDebug( "%s", TQString::number( num, 'g', 12 ).latin1() ); // warning this is the only way to see all decimals
         check("readNumber(1.12345678912)",ok && num==1.12345678912?"yes":"no","yes");
   // bug 95511
-  KLocale locale(*TDEGlobal::locale());
+  TDELocale locale(*TDEGlobal::locale());
   locale.setCurrencySymbol("$$");
   num = locale.readMoney("1,234,567.89$$", &ok);
   check("readMoney(1,234,567.89$$)",ok?"yes":"no","yes");
@@ -166,10 +166,10 @@ int main( int argc, char ** argv )
   check("readTime(\"foo\")", (!ok && !time.isValid()) ?
         "invalid" : "valid", "invalid");
 
-  time = TDEGlobal::locale()->readTime( "11:22:33", KLocale::WithoutSeconds, &ok );
+  time = TDEGlobal::locale()->readTime( "11:22:33", TDELocale::WithoutSeconds, &ok );
   check("readTime(\"11:22:33\", WithoutSeconds)", (!ok && !time.isValid()) ?
         "invalid" : "valid", "invalid");
-  time = TDEGlobal::locale()->readTime( "11:22", KLocale::WithoutSeconds, &ok );
+  time = TDEGlobal::locale()->readTime( "11:22", TDELocale::WithoutSeconds, &ok );
   check("readTime(\"11:22\", WithoutSeconds)", (ok && time == TQTime(11, 22, 0)) ?
         "yes" : "no", "yes");
 

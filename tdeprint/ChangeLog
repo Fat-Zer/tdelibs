@@ -59,7 +59,7 @@ Since 2.2 release, Michael Goffioul <tdeprint@swing.be>
     printers (to not confuse the CUPS daemon for example)
   * Improved how the default printer is selected in print dialog to
     work in any cases
-  * General: make use of KLocale::pageSize() to determine the default
+  * General: make use of TDELocale::pageSize() to determine the default
     page size (used for example for pseudo printers and classes)
   * Wizard: fix buffer overflow when adding a remote LPD queue having
     a lot of jobs waiting

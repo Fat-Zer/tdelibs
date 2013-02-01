@@ -113,7 +113,7 @@ void printResult(const TQString &s)
 
 int main(int argc, char **argv)
 {
-    KLocale::setMainCatalogue("tdelibs");
+    TDELocale::setMainCatalogue("tdelibs");
     TDEAboutData about("tde-config", "tde-config", "1.0", description, TDEAboutData::License_GPL, "(C) 2000 Stephan Kulow");
     TDECmdLineArgs::init( argc, argv, &about);
 
@@ -176,7 +176,7 @@ int main(int argc, char **argv)
             "kcfg", I18N_NOOP("Configuration description files"),
             "lib", I18N_NOOP("Libraries"),
             "include", I18N_NOOP("Includes/Headers"),
-            "locale", I18N_NOOP("Translation files for KLocale"),
+            "locale", I18N_NOOP("Translation files for TDELocale"),
             "mime", I18N_NOOP("Mime types"),
             "module", I18N_NOOP("Loadable modules"),
             "qtplugins", I18N_NOOP("Qt plugins"),

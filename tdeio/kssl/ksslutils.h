@@ -41,7 +41,7 @@ class TQDateTime;
 #ifdef KSSL_HAVE_SSL
 // This functionality is missing in OpenSSL
 /**
- *  Convert an ASN1 UTCTIME value to a string.  Uses KLocale settings.
+ *  Convert an ASN1 UTCTIME value to a string.  Uses TDELocale settings.
  *
  *  @param tm the OpenSSL ASN1_UTCTIME pointer
  *
@@ -51,7 +51,7 @@ class TQDateTime;
 KDE_EXPORT TQString ASN1_UTCTIME_QString(ASN1_UTCTIME *tm);
 
 /**
- *  Convert an ASN1 UTCTIME value to a TQDateTime.  Uses KLocale settings.
+ *  Convert an ASN1 UTCTIME value to a TQDateTime.  Uses TDELocale settings.
  *
  *  @param tm the OpenSSL ASN1_UTCTIME pointer
  *  @param isGmt set to 1 if the date is set to GMT

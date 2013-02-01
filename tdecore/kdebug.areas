@@ -17,7 +17,7 @@
 170        tdecore (KNetwork socket)
 171        tdecore (KSocks)
 172        tdecore (TDEStartupInfo)
-173        tdecore (KLocale)
+173        tdecore (TDELocale)
 174        tdecore (KProcIO)
 175        tdecore (TDEProcess)
 176        tdecore (KWin)

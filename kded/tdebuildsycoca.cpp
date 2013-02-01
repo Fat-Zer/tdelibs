@@ -717,7 +717,7 @@ public:
 
 extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
 {
-   KLocale::setMainCatalogue("tdelibs");
+   TDELocale::setMainCatalogue("tdelibs");
    TDEAboutData d(appName, I18N_NOOP("KBuildSycoca"), appVersion,
                 I18N_NOOP("Rebuilds the system configuration cache."),
                 TDEAboutData::License_GPL, "(c) 1999-2002 KDE Developers");
@@ -764,8 +764,8 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
    KCrash::setApplicationName(TQString(appName));
 
    // this program is in tdelibs so it uses tdelibs as catalog
-   KLocale::setMainCatalogue("tdelibs");
-   // force generating of KLocale object. if not, the database will get
+   TDELocale::setMainCatalogue("tdelibs");
+   // force generating of TDELocale object. if not, the database will get
    // be translated
    TDEGlobal::locale();
    TDEGlobal::dirs()->addResourceType("app-reg", "share/application-registry" );

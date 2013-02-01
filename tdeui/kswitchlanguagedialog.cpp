@@ -241,7 +241,7 @@ KSwitchLanguageDialogPrivate::KSwitchLanguageDialogPrivate(
 
 void KSwitchLanguageDialogPrivate::fillApplicationLanguages(KLanguageButton *button)
 {
-    KLocale *locale = TDEGlobal::locale();
+    TDELocale *locale = TDEGlobal::locale();
     TQStringList allLanguages = locale->allLanguagesTwoAlpha();
     for ( TQStringList::ConstIterator it = allLanguages.begin(); it != allLanguages.end(); ++it )
     {

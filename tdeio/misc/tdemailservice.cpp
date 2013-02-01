@@ -28,7 +28,7 @@ static const KCmdLineOptions options[] =
 
 int main( int argc, char **argv )
 {
-    KLocale::setMainCatalogue("tdelibs");
+    TDELocale::setMainCatalogue("tdelibs");
     TDECmdLineArgs::init( argc, argv, "tdemailservice", I18N_NOOP("KMailService"), I18N_NOOP("Mail service"), "unknown" );
     TDECmdLineArgs::addCmdLineOptions( options );
 

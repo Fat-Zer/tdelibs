@@ -29,7 +29,7 @@
 
 #include "kcalendarsystemgregorian.h"
 
-KCalendarSystemGregorian::KCalendarSystemGregorian(const KLocale * locale)
+KCalendarSystemGregorian::KCalendarSystemGregorian(const TDELocale * locale)
   : KCalendarSystem(locale)
 {
 }

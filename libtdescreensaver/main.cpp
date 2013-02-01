@@ -93,7 +93,7 @@ typedef WId Window;
 
 KDE_EXPORT int main(int argc, char *argv[])
 {
-    KLocale::setMainCatalogue("libtdescreensaver");
+    TDELocale::setMainCatalogue("libtdescreensaver");
     TDECmdLineArgs::init(argc, argv, kss_applicationName, kss_description, kss_version);
 
     TDECmdLineArgs::addCmdLineOptions(options);

@@ -37,7 +37,7 @@ class TDECORE_EXPORT KCalendarSystemJalali : public KCalendarSystem
 {
 public:
   /** Constructor. Just like KCalendarSystem::KCalendarSystem(). */
-  KCalendarSystemJalali(const KLocale * locale = 0);
+  KCalendarSystemJalali(const TDELocale * locale = 0);
   virtual ~KCalendarSystemJalali();
 
 

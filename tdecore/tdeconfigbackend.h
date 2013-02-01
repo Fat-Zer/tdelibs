@@ -128,7 +128,7 @@ public:
   /**
    * Set the locale string that defines the current language.
    * @param _localeString the identifier of the language
-   * @see KLocale
+   * @see TDELocale
    */
   void setLocaleString(const TQCString &_localeString) { localeString = _localeString; }
 
@@ -252,9 +252,9 @@ protected:
 			     bool bGlobal = false, bool bDefault = false);
 
   // Kubuntu patch, 2006-08-03
-  // looks up a key in with KLocale
+  // looks up a key in with TDELocale
   // see https://launchpad.net/distros/ubuntu/+spec/langpacks-desktopfiles-kde
-  void translateKey(KLocale& locale, TQCString currentGroup, TQCString key);
+  void translateKey(TDELocale& locale, TQCString currentGroup, TQCString key);
 
   /**
    * Writes configuration file back.

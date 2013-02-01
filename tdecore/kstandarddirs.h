@@ -77,7 +77,7 @@ class TDEStandardDirsPrivate;
  * @li html - HTML documentation.
  * @li icon - Icons, see KIconLoader.
  * @li lib - Libraries.
- * @li locale - Translation files for KLocale.
+ * @li locale - Translation files for TDELocale.
  * @li mime - Mime types.
  * @li module - Module (dynamically loaded library).
  * @li qtplugins - Qt plugins (dynamically loaded objects for Qt)
