@@ -20,6 +20,7 @@
 #ifndef KLISTVIEW_H
 #define KLISTVIEW_H
 
+#include <tqheader.h>
 #include <tqlistview.h>
 
 #include <tqptrlist.h>
