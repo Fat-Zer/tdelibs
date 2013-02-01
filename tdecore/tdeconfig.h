@@ -176,7 +176,7 @@ public:
    * Otherwise there is a risk of deadlock.
    * @since 3.3
    */
-  KLockFile::Ptr lockFile( bool bGlobal=false );
+  TDELockFile::Ptr lockFile( bool bGlobal=false );
 
 protected:
 

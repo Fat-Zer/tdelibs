@@ -46,14 +46,14 @@ EditorChooser::EditorChooser(TQWidget *parent,const char *name) :
   grid->addWidget( d->chooser, 0, 0);
 
 
-	KTrader::OfferList offers = KTrader::self()->query("text/plain", "'KTextEditor/Document' in ServiceTypes");
+	TDETrader::OfferList offers = TDETrader::self()->query("text/plain", "'KTextEditor/Document' in ServiceTypes");
 	TDEConfig *config=new TDEConfig("default_components");
   	config->setGroup("KTextEditor");
   	TQString editor = config->readPathEntry("embeddedEditor");
 
         if (editor.isEmpty()) editor="katepart";
 
-	for (KTrader::OfferList::Iterator it = offers.begin(); it != offers.end(); ++it)
+	for (TDETrader::OfferList::Iterator it = offers.begin(); it != offers.end(); ++it)
 	{
     		if ((*it)->desktopEntryName().contains(editor))
 		{
@@ -62,7 +62,7 @@ EditorChooser::EditorChooser(TQWidget *parent,const char *name) :
 		}
   	}
 
-  	for (KTrader::OfferList::Iterator it = offers.begin(); it != offers.end(); ++it)
+  	for (TDETrader::OfferList::Iterator it = offers.begin(); it != offers.end(); ++it)
   	{
     		d->chooser->editorCombo->insertItem((*it)->name());
 		d->elements.append((*it)->desktopEntryName());

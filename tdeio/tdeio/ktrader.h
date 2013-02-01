@@ -48,7 +48,7 @@
  * then will use KRun::run() to invoke the application.  In "trader-speak",
  * this looks like this:
  * \code
- * KTrader::OfferList offers = KTrader::self()->query("text/html", "Type == 'Application'");
+ * TDETrader::OfferList offers = TDETrader::self()->query("text/html", "Type == 'Application'");
  * KService::Ptr ptr = offers.first();
  * KURL::List lst;
  * lst.append("http://www.kde.org/index.html");
@@ -57,7 +57,7 @@
  *
  * Now, say that you want to list all KParts component that can handle HTML. 
  * \code
- * KTrader::OfferList offers = KTrader::self()->query("text/html", "KParts/ReadOnlyPart");
+ * TDETrader::OfferList offers = TDETrader::self()->query("text/html", "KParts/ReadOnlyPart");
  * \endcode
  *
  * If you want to get the preferred KParts component for text/html you could use
@@ -82,7 +82,7 @@
  *        applications or components.
  * @author Torben Weis <weis@kde.org>
  */
-class TDEIO_EXPORT KTrader : public TQObject
+class TDEIO_EXPORT TDETrader : public TQObject
 {
     Q_OBJECT
 public:
@@ -95,10 +95,10 @@ public:
     /**
      * Standard destructor
      */
-    virtual ~KTrader();
+    virtual ~TDETrader();
 
     /**
-     * The main function in the KTrader class.
+     * The main function in the TDETrader class.
      *
      * It will return a list of services that match your
      * specifications.  The only required parameter is the service
@@ -158,24 +158,24 @@ public:
                      const TQString& preferences /*= TQString::null*/) const;
 
     /**
-     * This is a static pointer to a KTrader instance.
+     * This is a static pointer to a TDETrader instance.
      *
      *  You will need
-     * to use this to access the KTrader functionality since the
+     * to use this to access the TDETrader functionality since the
      * constuctors are protected.
      *
-     * @return Static KTrader instance
+     * @return Static TDETrader instance
      */
-    static KTrader* self();
+    static TDETrader* self();
 
 protected:
     /**
      * @internal
      */
-    KTrader();
+    TDETrader();
 
 private:
-    static KTrader* s_self;
+    static TDETrader* s_self;
 protected:
     virtual void virtual_hook( int id, void* data );
 };
@@ -185,7 +185,7 @@ protected:
  *
  * @section Literals
  *
- * As elementary atoms of the constraint language, KTrader supports
+ * As elementary atoms of the constraint language, TDETrader supports
  * booleans, integers, floats and strings. Boolean literals are
  * @a TRUE and @a FALSE . Integers can be positive or negative,
  * i.e. @a 42 and @a -10 are legal values. Floating point
@@ -277,7 +277,7 @@ protected:
  *
  * The following examples show filters for .desktop files.
  * <tt>Type</tt>, <tt>ServiceTypes</tt> and <tt>MimeType</tt> are
- * properties in .desktop files. Be aware that within KTrader MimeType
+ * properties in .desktop files. Be aware that within TDETrader MimeType
  * properties are understood as ServiceTypes ones.
  *
  *

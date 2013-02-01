@@ -7,12 +7,12 @@
 #include <stdlib.h>
 #define YY_NO_UNPUT
 
-char* KTraderParse_putSymbol( char *_name );
-char *KTraderParse_putSymbolInBrackets( char *_name );
-char* KTraderParse_putString( char *_name );
+char* TDETraderParse_putSymbol( char *_name );
+char *TDETraderParse_putSymbolInBrackets( char *_name );
+char* TDETraderParse_putString( char *_name );
 int yywrap();
 int kiotraderlex(void);
-void KTraderParse_initFlex( const char *_code );
+void TDETraderParse_initFlex( const char *_code );
 
 %}
 
@@ -39,16 +39,16 @@ DIGIT    [0-9]
 "TRUE" { yylval.valb = 1; return VAL_BOOL; }
 "FALSE" { yylval.valb = 0; return VAL_BOOL; }
 
-"'"[^']*"'" { yylval.name = KTraderParse_putString( yytext ); return VAL_STRING; }
+"'"[^']*"'" { yylval.name = TDETraderParse_putString( yytext ); return VAL_STRING; }
 
 "-"{DIGIT}+  { yylval.vali = atoi( yytext ); return VAL_NUM; }
 {DIGIT}+  { yylval.vali = atoi( yytext ); return VAL_NUM; }
 
 {DIGIT}*"\."{DIGIT}+ { yylval.vald = atof( yytext ); return VAL_FLOAT; }
 
-\[[a-zA-Z][a-zA-Z0-9\-]*\] { yylval.name = KTraderParse_putSymbolInBrackets( yytext ); return VAL_ID; }
+\[[a-zA-Z][a-zA-Z0-9\-]*\] { yylval.name = TDETraderParse_putSymbolInBrackets( yytext ); return VAL_ID; }
 
-[a-zA-Z][a-zA-Z0-9]* { yylval.name = KTraderParse_putSymbol( yytext ); return VAL_ID; }
+[a-zA-Z][a-zA-Z0-9]* { yylval.name = TDETraderParse_putSymbol( yytext ); return VAL_ID; }
 
 [ \t\n]+          /* eat up whitespace */
 
@@ -56,7 +56,7 @@ DIGIT    [0-9]
 
 %%
 
-char* KTraderParse_putSymbolInBrackets( char *_name )
+char* TDETraderParse_putSymbolInBrackets( char *_name )
 {
   int l = strlen( _name )-1;
   char *p = (char *)malloc( l );
@@ -69,7 +69,7 @@ char* KTraderParse_putSymbolInBrackets( char *_name )
   return p;
 }
 
-char *KTraderParse_putSymbol( char *_name )
+char *TDETraderParse_putSymbol( char *_name )
 {
   char *p = (char*)malloc( strlen( _name ) + 1 );
   if (p != NULL)
@@ -79,7 +79,7 @@ char *KTraderParse_putSymbol( char *_name )
   return p;
 }
 
-char* KTraderParse_putString( char *_str )
+char* TDETraderParse_putString( char *_str )
 {
   int l = strlen( _str );
   char *p = (char*)malloc( l );
@@ -114,7 +114,7 @@ char* KTraderParse_putString( char *_str )
   return p;
 }
 
-void KTraderParse_initFlex( const char *_code )
+void TDETraderParse_initFlex( const char *_code )
 {
   yy_switch_to_buffer( yy_scan_string( _code ) );
 }

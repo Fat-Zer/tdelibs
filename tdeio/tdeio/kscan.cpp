@@ -28,7 +28,7 @@
 KScanDialog * KScanDialog::getScanDialog( TQWidget *parent, const char *name,
 					  bool modal )
 {
-    KTrader::OfferList offers = KTrader::self()->query("KScan/KScanDialog");
+    TDETrader::OfferList offers = TDETrader::self()->query("KScan/KScanDialog");
     if ( offers.isEmpty() )
 	return 0L;
 	
@@ -71,7 +71,7 @@ bool KScanDialog::setup()
 KOCRDialog * KOCRDialog::getOCRDialog( TQWidget *parent, const char *name,
 					  bool modal )
 {
-    KTrader::OfferList offers = KTrader::self()->query("KScan/KOCRDialog");
+    TDETrader::OfferList offers = TDETrader::self()->query("KScan/KOCRDialog");
     if ( offers.isEmpty() )
 	return 0L;
 	

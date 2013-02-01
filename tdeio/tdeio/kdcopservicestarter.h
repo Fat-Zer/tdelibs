@@ -26,7 +26,7 @@ class KDCOPServiceStarter;
 class TQCString;
 
 /**
- * A generic DCOP service starter, using KTrader.
+ * A generic DCOP service starter, using TDETrader.
  * The default implementation starts new processes, but this interface can
  * also be reimplemented by specific applications to provide dlopened in-process DCOP objects.
  * @author David Faure <faure@kde.org>
@@ -46,8 +46,8 @@ public:
      * this method will call startServiceFor to start it.
      *
      * @param serviceType the type of service we're looking for
-     * @param constraint see KTrader
-     * @param preferences see KTrader
+     * @param constraint see TDETrader
+     * @param preferences see TDETrader
      * @param error On failure, @p error contains a description of the error
      *         that occurred. If the pointer is 0, the argument will be
      *         ignored
@@ -67,15 +67,15 @@ public:
     /**
      * Find an implementation of the given @p serviceType,
      * and start it, to use its DCOP interface.
-     * The default implementation uses KTrader to find the preferred Application,
+     * The default implementation uses TDETrader to find the preferred Application,
      * and then starts it using kapp->startService...
      *
      * However applications (like kontact) can reimplement this method, to provide
      * an in-process way of loading the implementation for this service type.
      *
      * @param serviceType the type of service we're looking for
-     * @param constraint see KTrader
-     * @param preferences see KTrader
+     * @param constraint see TDETrader
+     * @param preferences see TDETrader
      * @param error On failure, @p error contains a description of the error
      *         that occurred. If the pointer is 0, the argument will be
      *         ignored

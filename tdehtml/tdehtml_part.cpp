@@ -4652,20 +4652,20 @@ KParts::ReadOnlyPart *TDEHTMLPart::createPart( TQWidget *parentWidget, const cha
   if ( !serviceName.isEmpty() )
     constr.append( TQString::fromLatin1( "Name == '%1'" ).arg( serviceName ) );
 
-  KTrader::OfferList offers = KTrader::self()->query( mimetype, "KParts/ReadOnlyPart", constr, TQString() );
+  TDETrader::OfferList offers = TDETrader::self()->query( mimetype, "KParts/ReadOnlyPart", constr, TQString() );
 
   if ( offers.isEmpty() ) {
     int pos = mimetype.find( "-plugin" );
     if (pos < 0)
         return 0L;
     TQString stripped_mime = mimetype.left( pos );
-    offers = KTrader::self()->query( stripped_mime, "KParts/ReadOnlyPart", constr, TQString() );
+    offers = TDETrader::self()->query( stripped_mime, "KParts/ReadOnlyPart", constr, TQString() );
     if ( offers.isEmpty() )
         return 0L;
   }
 
-  KTrader::OfferList::ConstIterator it = offers.begin();
-  const KTrader::OfferList::ConstIterator itEnd = offers.end();
+  TDETrader::OfferList::ConstIterator it = offers.begin();
+  const TDETrader::OfferList::ConstIterator itEnd = offers.end();
   for ( ; it != itEnd; ++it )
   {
     KService::Ptr service = (*it);

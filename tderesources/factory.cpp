@@ -58,9 +58,9 @@ Factory *Factory::self( const TQString& resourceFamily )
 Factory::Factory( const TQString& resourceFamily ) :
   mResourceFamily( resourceFamily )
 {
-  KTrader::OfferList plugins = KTrader::self()->query( "KResources/Plugin", TQString( "[X-TDE-ResourceFamily] == '%1'" )
+  TDETrader::OfferList plugins = TDETrader::self()->query( "KResources/Plugin", TQString( "[X-TDE-ResourceFamily] == '%1'" )
                                                 .arg( resourceFamily ) );
-  KTrader::OfferList::ConstIterator it;
+  TDETrader::OfferList::ConstIterator it;
   for ( it = plugins.begin(); it != plugins.end(); ++it ) {
     TQVariant type = (*it)->property( "X-TDE-ResourceType" );
     if ( !type.toString().isEmpty() )

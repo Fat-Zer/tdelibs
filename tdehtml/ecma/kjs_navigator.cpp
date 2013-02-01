@@ -291,9 +291,9 @@ PluginBase::PluginBase(ExecState *exec, bool loadPluginInfo)
         plugins->setAutoDelete( true );
         mimes->setAutoDelete( true );
 
-        // read in using KTrader
-        KTrader::OfferList offers = KTrader::self()->query("Browser/View");
-        KTrader::OfferList::iterator it;
+        // read in using TDETrader
+        TDETrader::OfferList offers = TDETrader::self()->query("Browser/View");
+        TDETrader::OfferList::iterator it;
         for ( it = offers.begin(); it != offers.end(); ++it ) {
 
             TQVariant pluginsinfo = (**it).property( "X-TDE-BrowserView-PluginsInfo" );

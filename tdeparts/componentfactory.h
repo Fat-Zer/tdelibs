@@ -307,7 +307,7 @@ namespace KParts
          * \endcode
          *
          * @param serviceType the type of service for which to find a plugin
-         * @param constraint an optional constraint to pass to the trader (see TDEIO::KTrader)
+         * @param constraint an optional constraint to pass to the trader (see TDEIO::TDETrader)
          * @param parent the parent object for the part itself
          * @param name the name that will be given to the part
          * @param args A list of string arguments, passed to the factory and possibly
@@ -325,7 +325,7 @@ namespace KParts
                                            const TQStringList &args = TQStringList(),
                                            int *error = 0 )
         {
-            KTrader::OfferList offers = KTrader::self()->query( serviceType, constraint );
+            TDETrader::OfferList offers = TDETrader::self()->query( serviceType, constraint );
             if ( offers.isEmpty() )
             {
                 if ( error )
@@ -354,7 +354,7 @@ namespace KParts
          * \endcode
          *
          * @param serviceType the type of service for which to find a part, e.g. a mimetype
-         * @param constraint an optional constraint to pass to the trader (see KTrader)
+         * @param constraint an optional constraint to pass to the trader (see TDETrader)
          * @param parentWidget the parent widget, will be set as the parent of the part's widget
          * @param widgetName the name that will be given to the part's widget
          * @param parent the parent object for the part itself
@@ -376,7 +376,7 @@ namespace KParts
                                                const TQStringList &args = TQStringList(),
                                                int *error = 0 )
         {
-            KTrader::OfferList offers = KTrader::self()->query( serviceType, TQString::fromLatin1("KParts/ReadOnlyPart"), constraint, TQString::null );
+            TDETrader::OfferList offers = TDETrader::self()->query( serviceType, TQString::fromLatin1("KParts/ReadOnlyPart"), constraint, TQString::null );
             if ( offers.isEmpty() )
             {
                 if ( error )

@@ -15,7 +15,7 @@
  * To check if kregexpeditor in tdeutils is installed and available use this line:
  * 
  * \code
- * bool installed=!KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty();
+ * bool installed=!TDETrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty();
  * \endcode
  *
  * The following is a template for what you need to do to create an instance of the

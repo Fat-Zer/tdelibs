@@ -942,7 +942,7 @@ KFilePlugin* KFileMetaInfoProvider::loadPlugin( const TQString& mimeType, const 
         queryMimeType = "KFilePlugin";
         // hopefully using KFilePlugin as genericMimeType too isn't a problem
     }
-    const KTrader::OfferList offers = KTrader::self()->query( queryMimeType, "KFilePlugin", query, TQString::null );
+    const TDETrader::OfferList offers = TDETrader::self()->query( queryMimeType, "KFilePlugin", query, TQString::null );
     if ( offers.isEmpty() )
         return 0;
     KService::Ptr service = *(offers.begin());
@@ -1122,8 +1122,8 @@ TQStringList KFileMetaInfoProvider::supportedMimeTypes() const
     TQStringList allMimeTypes;
     TQString tdefilePlugin = "KFilePlugin";
 
-    KTrader::OfferList offers = KTrader::self()->query( "KFilePlugin" );
-    KTrader::OfferListIterator it = offers.begin();
+    TDETrader::OfferList offers = TDETrader::self()->query( "KFilePlugin" );
+    TDETrader::OfferListIterator it = offers.begin();
     for ( ; it != offers.end(); ++it )
     {
         const TQStringList mimeTypes = (*it)->serviceTypes();

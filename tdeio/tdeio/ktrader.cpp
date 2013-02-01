@@ -27,18 +27,18 @@
 #include <kstaticdeleter.h>
 #include <kdebug.h>
 
-template class KStaticDeleter<KTrader>;
+template class KStaticDeleter<TDETrader>;
 
 using namespace TDEIO;
 
-class KTraderSorter
+class TDETraderSorter
 {
 public:
-  KTraderSorter() { m_pService = 0; };
-  KTraderSorter( const KTraderSorter& s ) : m_userPreference( s.m_userPreference ),
+  TDETraderSorter() { m_pService = 0; };
+  TDETraderSorter( const TDETraderSorter& s ) : m_userPreference( s.m_userPreference ),
     m_bAllowAsDefault( s.m_bAllowAsDefault ),
     m_traderPreference( s.m_traderPreference ), m_pService( s.m_pService ) { }
-  KTraderSorter( const KService::Ptr &_service, double _pref1, int _pref2, bool _default )
+  TDETraderSorter( const KService::Ptr &_service, double _pref1, int _pref2, bool _default )
   { m_pService = _service;
     m_userPreference = _pref2;
     m_traderPreference = _pref1;
@@ -47,7 +47,7 @@ public:
 
   KService::Ptr service() const { return m_pService; }
 
-  bool operator< ( const KTraderSorter& ) const;
+  bool operator< ( const TDETraderSorter& ) const;
 
 private:
   /**
@@ -69,7 +69,7 @@ private:
   KService::Ptr m_pService;
 };
 
-bool KTraderSorter::operator< ( const KTraderSorter& _o ) const
+bool TDETraderSorter::operator< ( const TDETraderSorter& _o ) const
 {
   if ( _o.m_bAllowAsDefault && !m_bAllowAsDefault )
     return true;
@@ -84,32 +84,32 @@ bool KTraderSorter::operator< ( const KTraderSorter& _o ) const
 
 // --------------------------------------------------
 
-KTrader* KTrader::s_self = 0;
-static KStaticDeleter<KTrader> ktradersd;
+TDETrader* TDETrader::s_self = 0;
+static KStaticDeleter<TDETrader> ktradersd;
 
-KTrader* KTrader::self()
+TDETrader* TDETrader::self()
 {
     if ( !s_self )
-	ktradersd.setObject( s_self, new KTrader );
+	ktradersd.setObject( s_self, new TDETrader );
 
     return s_self;
 }
 
-KTrader::KTrader()
+TDETrader::TDETrader()
 {
 }
 
-KTrader::~KTrader()
+TDETrader::~TDETrader()
 {
 }
 
-KTrader::OfferList KTrader::query( const TQString& _servicetype, const TQString& _constraint,
+TDETrader::OfferList TDETrader::query( const TQString& _servicetype, const TQString& _constraint,
                                    const TQString& _preferences ) const
 {
     return query( _servicetype, TQString::null, _constraint, _preferences );
 }
 
-KTrader::OfferList KTrader::query( const TQString& _servicetype, const TQString& _genericServiceType,
+TDETrader::OfferList TDETrader::query( const TQString& _servicetype, const TQString& _genericServiceType,
                                    const TQString& _constraint,
                                    const TQString& _preferences ) const
 {
@@ -124,7 +124,7 @@ KTrader::OfferList KTrader::query( const TQString& _servicetype, const TQString&
     prefs = TDEIO::parsePreferences( _preferences );
 
   KServiceTypeProfile::OfferList lst;
-  KTrader::OfferList ret;
+  TDETrader::OfferList ret;
 
   // Get all services of this service type.
   lst = KServiceTypeProfile::offers( _servicetype, _genericServiceType );
@@ -147,17 +147,17 @@ KTrader::OfferList KTrader::query( const TQString& _servicetype, const TQString&
 
   if ( !!prefs )
   {
-    TQValueList<KTraderSorter> sorter;
+    TQValueList<TDETraderSorter> sorter;
     KServiceTypeProfile::OfferList::Iterator it = lst.begin();
     for( ; it != lst.end(); ++it )
     {
       PreferencesReturn p = matchPreferences( prefs, (*it).service(), lst );
       if ( p.type == PreferencesReturn::PRT_DOUBLE )
-	sorter.append( KTraderSorter( (*it).service(), p.f, (*it).preference(), (*it).allowAsDefault() ) );
+	sorter.append( TDETraderSorter( (*it).service(), p.f, (*it).preference(), (*it).allowAsDefault() ) );
     }
     qBubbleSort( sorter );
 
-    TQValueList<KTraderSorter>::Iterator it2 = sorter.begin();
+    TQValueList<TDETraderSorter>::Iterator it2 = sorter.begin();
     for( ; it2 != sorter.end(); ++it2 )
       ret.prepend( (*it2).service() );
   }
@@ -180,7 +180,7 @@ KTrader::OfferList KTrader::query( const TQString& _servicetype, const TQString&
   return ret;
 }
 
-void KTrader::virtual_hook( int, void* )
+void TDETrader::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
 #include "ktrader.moc"

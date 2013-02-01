@@ -522,9 +522,9 @@ void KPropertiesDialog::insertPages()
       " ([X-TDE-Protocol] == '%1'  )   )"          ).arg(item->url().protocol());
 
   kdDebug( 250 ) << "trader query: " << query << endl;
-  KTrader::OfferList offers = KTrader::self()->query( mimetype, query );
-  KTrader::OfferList::ConstIterator it = offers.begin();
-  KTrader::OfferList::ConstIterator end = offers.end();
+  TDETrader::OfferList offers = TDETrader::self()->query( mimetype, query );
+  TDETrader::OfferList::ConstIterator it = offers.begin();
+  TDETrader::OfferList::ConstIterator end = offers.end();
   for (; it != end; ++it )
   {
     KPropsDlgPlugin *plugin = KParts::ComponentFactory

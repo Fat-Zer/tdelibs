@@ -168,17 +168,17 @@ RenameDlg::RenameDlg(TQWidget *parent, const TQString & _caption,
         // Figure out the mimetype and load one plugin
         // (This is the only mode that is handled by plugins)
         pluginHandling();
-        KTrader::OfferList plugin_offers;
+        TDETrader::OfferList plugin_offers;
         if( d->mimeSrc != KMimeType::defaultMimeType()   ){
-            plugin_offers = KTrader::self()->query(d->mimeSrc, "'RenameDlg/Plugin' in ServiceTypes");
+            plugin_offers = TDETrader::self()->query(d->mimeSrc, "'RenameDlg/Plugin' in ServiceTypes");
 
         }else if(d->mimeDest != KMimeType::defaultMimeType() ) {
-            plugin_offers = KTrader::self()->query(d->mimeDest, "'RenameDlg/Plugin' in ServiceTypes");
+            plugin_offers = TDETrader::self()->query(d->mimeDest, "'RenameDlg/Plugin' in ServiceTypes");
         }
         if(!plugin_offers.isEmpty() ){
             kdDebug(7024) << "Offers" << endl;
-            KTrader::OfferList::ConstIterator it = plugin_offers.begin();
-            KTrader::OfferList::ConstIterator end = plugin_offers.end();
+            TDETrader::OfferList::ConstIterator it = plugin_offers.begin();
+            TDETrader::OfferList::ConstIterator end = plugin_offers.end();
             for( ; it != end; ++it ){
                 TQString libName = (*it)->library();
                 if( libName.isEmpty() ){

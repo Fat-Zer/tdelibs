@@ -1443,8 +1443,8 @@ void TDEApplication::startKdeinit()
 {
 #ifndef Q_WS_WIN //TODO
   TDEInstance inst( "starttdeinitlock" );
-  KLockFile lock( locateLocal( "tmp", "starttdeinitlock", &inst ));
-  if( lock.lock( KLockFile::LockNoBlock ) != KLockFile::LockOK ) {
+  TDELockFile lock( locateLocal( "tmp", "starttdeinitlock", &inst ));
+  if( lock.lock( TDELockFile::LockNoBlock ) != TDELockFile::LockOK ) {
      lock.lock();
      DCOPClient cl;
      if( cl.attach())

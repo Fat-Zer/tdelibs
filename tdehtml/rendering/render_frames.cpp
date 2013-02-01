@@ -812,7 +812,7 @@ void RenderPartObject::updateWidget()
                   // It is ActiveX, but the nsplugin system handling
                   // should also work, that's why we don't override the
                   // serviceType with application/x-activex-handler
-                  // but let the KTrader in tdehtmlpart::createPart() detect
+                  // but let the TDETrader in tdehtmlpart::createPart() detect
                   // the user's preference: launch with activex viewer or
                   // with nspluginviewer (Niko)
                   serviceType = "application/x-shockwave-flash";

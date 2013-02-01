@@ -150,7 +150,7 @@ class KateFactory
      * on start detected plugins
      * @return list of all at launch detected tdetexteditor::plugins
      */
-    inline const KTrader::OfferList &plugins () { return m_plugins; };
+    inline const TDETrader::OfferList &plugins () { return m_plugins; };
 
     /**
      * global dirwatch
@@ -261,7 +261,7 @@ class KateFactory
     /**
      * at start found plugins
      */
-    KTrader::OfferList m_plugins;
+    TDETrader::OfferList m_plugins;
 
     /**
      * fallback document config

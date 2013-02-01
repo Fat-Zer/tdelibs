@@ -154,8 +154,8 @@ void MetaInfoJob::slotMetaInfo(TDEIO::Job*, const TQByteArray &data)
 TQStringList MetaInfoJob::availablePlugins()
 {
     TQStringList result;
-    KTrader::OfferList plugins = KTrader::self()->query("KFilePlugin");
-    for (KTrader::OfferList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it)
+    TDETrader::OfferList plugins = TDETrader::self()->query("KFilePlugin");
+    for (TDETrader::OfferList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it)
         result.append((*it)->desktopEntryName());
     return result;
 }
@@ -163,8 +163,8 @@ TQStringList MetaInfoJob::availablePlugins()
 TQStringList MetaInfoJob::supportedMimeTypes()
 {
     TQStringList result;
-    KTrader::OfferList plugins = KTrader::self()->query("KFilePlugin");
-    for (KTrader::OfferList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it)
+    TDETrader::OfferList plugins = TDETrader::self()->query("KFilePlugin");
+    for (TDETrader::OfferList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it)
         result += (*it)->property("MimeTypes").toStringList();
     return result;
 }

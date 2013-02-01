@@ -436,12 +436,12 @@ char *yytext;
 #include <stdlib.h>
 #define YY_NO_UNPUT
 
-char* KTraderParse_putSymbol( char *_name );
-char *KTraderParse_putSymbolInBrackets( char *_name );
-char* KTraderParse_putString( char *_name );
+char* TDETraderParse_putSymbol( char *_name );
+char *TDETraderParse_putSymbolInBrackets( char *_name );
+char* TDETraderParse_putString( char *_name );
 int yywrap();
 int kiotraderlex(void);
-void KTraderParse_initFlex( const char *_code );
+void TDETraderParse_initFlex( const char *_code );
 
 #line 447 "lex.c"
 
@@ -763,7 +763,7 @@ YY_RULE_SETUP
 case 17:
 YY_RULE_SETUP
 #line 42 "lex.l"
-{ yylval.name = KTraderParse_putString( yytext ); return VAL_STRING; }
+{ yylval.name = TDETraderParse_putString( yytext ); return VAL_STRING; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
@@ -783,12 +783,12 @@ YY_RULE_SETUP
 case 21:
 YY_RULE_SETUP
 #line 49 "lex.l"
-{ yylval.name = KTraderParse_putSymbolInBrackets( yytext ); return VAL_ID; }
+{ yylval.name = TDETraderParse_putSymbolInBrackets( yytext ); return VAL_ID; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
 #line 51 "lex.l"
-{ yylval.name = KTraderParse_putSymbol( yytext ); return VAL_ID; }
+{ yylval.name = TDETraderParse_putSymbol( yytext ); return VAL_ID; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
@@ -1689,7 +1689,7 @@ int main()
 #line 57 "lex.l"
 
 
-char* KTraderParse_putSymbolInBrackets( char *_name )
+char* TDETraderParse_putSymbolInBrackets( char *_name )
 {
   int l = strlen( _name )-1;
   char *p = (char *)malloc( l );
@@ -1702,7 +1702,7 @@ char* KTraderParse_putSymbolInBrackets( char *_name )
   return p;
 }
 
-char *KTraderParse_putSymbol( char *_name )
+char *TDETraderParse_putSymbol( char *_name )
 {
   char *p = (char*)malloc( strlen( _name ) + 1 );
   if (p != NULL)
@@ -1712,7 +1712,7 @@ char *KTraderParse_putSymbol( char *_name )
   return p;
 }
 
-char* KTraderParse_putString( char *_str )
+char* TDETraderParse_putString( char *_str )
 {
   int l = strlen( _str );
   char *p = (char*)malloc( l );
@@ -1747,7 +1747,7 @@ char* KTraderParse_putString( char *_str )
   return p;
 }
 
-void KTraderParse_initFlex( const char *_code )
+void TDETraderParse_initFlex( const char *_code )
 {
   yy_switch_to_buffer( yy_scan_string( _code ) );
 }

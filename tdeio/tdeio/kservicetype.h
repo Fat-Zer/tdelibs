@@ -210,7 +210,7 @@ public:
    * Returns all services supporting the given servicetype name.
    * This doesn't take care of the user profile.
    * In fact it is used by KServiceTypeProfile,
-   * which is used by KTrader, and that's the one you should use.
+   * which is used by TDETrader, and that's the one you should use.
    * @param _servicetype the name of the service type to search
    * @return the list of all services of the given type
    */

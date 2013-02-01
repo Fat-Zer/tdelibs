@@ -26,11 +26,11 @@ Shell::Shell()
   KAction * paQuit = new KAction( "&Quit" , "exit", 0, this, TQT_SLOT( close() ), actionCollection(), "file_quit" );
 
   // Try to find a postscript component first
-  KTrader::OfferList offers = KTrader::self()->query("application/postscript", "('KParts/ReadOnlyPart' in ServiceTypes) or ('Browser/View' in ServiceTypes)");
+  TDETrader::OfferList offers = TDETrader::self()->query("application/postscript", "('KParts/ReadOnlyPart' in ServiceTypes) or ('Browser/View' in ServiceTypes)");
 
   KLibFactory *factory = 0;
   m_gvpart = 0;
-  KTrader::OfferList::Iterator it(offers.begin());
+  TDETrader::OfferList::Iterator it(offers.begin());
   for( ; it != offers.end(); ++it)
   {
     KService::Ptr ptr = (*it);

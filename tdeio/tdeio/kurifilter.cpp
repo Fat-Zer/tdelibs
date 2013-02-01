@@ -426,10 +426,10 @@ TQStringList KURIFilter::pluginNames() const
 
 void KURIFilter::loadPlugins()
 {
-    KTrader::OfferList offers = KTrader::self()->query( "KURIFilter/Plugin" );
+    TDETrader::OfferList offers = TDETrader::self()->query( "KURIFilter/Plugin" );
 
-    KTrader::OfferList::ConstIterator it = offers.begin();
-    KTrader::OfferList::ConstIterator end = offers.end();
+    TDETrader::OfferList::ConstIterator it = offers.begin();
+    TDETrader::OfferList::ConstIterator end = offers.end();
 
     for (; it != end; ++it )
     {

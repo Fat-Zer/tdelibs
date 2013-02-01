@@ -105,13 +105,13 @@ private:
  * of a service type.
  * It consists of a list of services (service offers) for the service type
  * that is sorted by the user's preference.
- * KTrader uses KServiceTypeProfile to sort its results, so usually
- * you can just use KTrader to find the user's preferred service.
+ * TDETrader uses KServiceTypeProfile to sort its results, so usually
+ * you can just use TDETrader to find the user's preferred service.
  *
  * @see KService
  * @see KServiceType
  * @see KServiceOffer
- * @see KTrader
+ * @see TDETrader
  * @short Represents the user's preferences for services of a service type
  */
 class TDEIO_EXPORT KServiceTypeProfile
@@ -168,12 +168,12 @@ public:
 
   /**
    * Returns the offers associated with a given servicetype, sorted by preference.
-   * This is what KTrader uses to get the list of offers, before applying the
+   * This is what TDETrader uses to get the list of offers, before applying the
    * constraints and preferences.
    *
    * If @p genericServiceType is specified, a list is returned with
    * the offers associated with the combination of the two service types.
-   * This is almost like an "foo in ServiceTypes" constraint in the KTrader,
+   * This is almost like an "foo in ServiceTypes" constraint in the TDETrader,
    * but the difference is that to order the offers, we will look at entries
    * specifically for those two service types. Typically, this is used for
    * getting the list of embeddable components that can handle a given mimetype.

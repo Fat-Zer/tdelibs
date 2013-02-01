@@ -276,7 +276,7 @@ const TQValueList<KService::Ptr> & KPluginInfo::kcmServices() const
 {
     if ( !d->kcmservicesCached )
     {
-        d->kcmservices = KTrader::self()->query( "TDECModule", "'" + d->pluginName +
+        d->kcmservices = TDETrader::self()->query( "TDECModule", "'" + d->pluginName +
             "' in [X-TDE-ParentComponents]" );
         kdDebug( 703 ) << "found " << d->kcmservices.count() << " offers for " <<
             d->pluginName << endl;

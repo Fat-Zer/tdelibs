@@ -48,10 +48,10 @@ KFilterBase * KFilterBase::findFilterByFileName( const TQString & fileName )
 
 KFilterBase * KFilterBase::findFilterByMimeType( const TQString & mimeType )
 {
-    KTrader::OfferList offers = KTrader::self()->query( "TDECompressionFilter",
+    TDETrader::OfferList offers = TDETrader::self()->query( "TDECompressionFilter",
                                                         TQString("'") + mimeType + "' in ServiceTypes" );
-    KTrader::OfferList::ConstIterator it = offers.begin();
-    KTrader::OfferList::ConstIterator end = offers.end();
+    TDETrader::OfferList::ConstIterator it = offers.begin();
+    TDETrader::OfferList::ConstIterator end = offers.end();
 
     kdDebug(7005) << "KFilterBase::findFilterByMimeType(" << mimeType << ") got " << offers.count() << " offers" << endl;
     for (; it != end; ++it )

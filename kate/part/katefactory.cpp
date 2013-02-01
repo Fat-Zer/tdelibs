@@ -71,7 +71,7 @@ KateFactory::KateFactory ()
              I18N_NOOP( "Embeddable editor component" ), TDEAboutData::License_LGPL_V2,
              I18N_NOOP( "(c) 2000-2004 The Kate Authors" ), 0, "http://kate.kde.org")
  , m_instance (&m_aboutData)
- , m_plugins (KTrader::self()->query("KTextEditor/Plugin"))
+ , m_plugins (TDETrader::self()->query("KTextEditor/Plugin"))
  , m_jscript (0)
 {
   // set s_self

@@ -28,7 +28,7 @@
  * KServiceTypeProfile:
  * Stores the user's preferences for services bound to mimetypes/servicetypes.
  *
- * KTrader:
+ * TDETrader:
  * Use it to query for which services implement a given mimetype/servicetype.
  * Has its own language, in order to allow complex queries.
  *

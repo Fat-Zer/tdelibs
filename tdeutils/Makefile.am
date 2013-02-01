@@ -3,7 +3,7 @@ INCLUDES = -I$(top_srcdir)/interfaces/kregexpeditor $(all_includes)
 
 lib_LTLIBRARIES   = libtdeutils.la
 libtdeutils_la_LDFLAGS = $(all_libraries) -no-undefined -version-info 3:0:2
-# Needs KTrader
+# Needs TDETrader
 libtdeutils_la_LIBADD  = ../tdeio/libtdeio.la ksettings/libksettings.la $(LIB_QT) $(top_builddir)/dcop/libDCOP.la $(LIB_TDEUI) $(LIB_TDECORE) $(LIB_X11)
 
 libtdeutils_la_SOURCES = kfind.cpp kfinddialog.cpp kreplace.cpp \

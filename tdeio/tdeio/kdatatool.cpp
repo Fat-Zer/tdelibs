@@ -177,7 +177,7 @@ TQValueList<KDataToolInfo> KDataToolInfo::query( const TQString& datatype, const
         else
             constr = constr + " and " + tmp;
     }
-/* Bug in KTrader ? Test with HEAD-tdelibs!
+/* Bug in TDETrader ? Test with HEAD-tdelibs!
     if ( instance )
     {
         TQString tmp = TQString::fromLatin1( "not ('%1' in ExcludeFrom)" ).arg( instance->instanceName() );
@@ -189,9 +189,9 @@ TQValueList<KDataToolInfo> KDataToolInfo::query( const TQString& datatype, const
 
     // Query the trader
     //kdDebug() << "KDataToolInfo::query " << constr << endl;
-    KTrader::OfferList offers = KTrader::self()->query( "KDataTool", constr );
+    TDETrader::OfferList offers = TDETrader::self()->query( "KDataTool", constr );
 
-    KTrader::OfferList::ConstIterator it = offers.begin();
+    TDETrader::OfferList::ConstIterator it = offers.begin();
     for( ; it != offers.end(); ++it )
     {
         // Temporary replacement for the non-working trader query above

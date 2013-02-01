@@ -58,7 +58,7 @@ int KDCOPServiceStarter::findServiceFor( const TQString& serviceType,
     if ( !constraint.isEmpty() )
         constraint += " and ";
     constraint += "exist [X-DCOP-ServiceName]";
-    KTrader::OfferList offers = KTrader::self()->query(serviceType, "Application", constraint, preferences);
+    TDETrader::OfferList offers = TDETrader::self()->query(serviceType, "Application", constraint, preferences);
     if ( offers.isEmpty() ) {
         if ( error )
             *error = i18n("No service implementing %1").arg( serviceType );
@@ -88,7 +88,7 @@ int KDCOPServiceStarter::startServiceFor( const TQString& serviceType,
                                           const TQString& preferences,
                                           TQString *error, TQCString* dcopService, int /*flags*/ )
 {
-    KTrader::OfferList offers = KTrader::self()->query(serviceType, "Application", constraint, preferences);
+    TDETrader::OfferList offers = TDETrader::self()->query(serviceType, "Application", constraint, preferences);
     if ( offers.isEmpty() )
         return -1;
     KService::Ptr ptr = offers.first();

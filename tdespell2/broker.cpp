@@ -174,7 +174,7 @@ Settings* Broker::settings() const
 void Broker::loadPlugins()
 {
     d->plugins = KPluginInfo::fromServices(
-        KTrader::self()->query( "KSpell/Client" ) );
+        TDETrader::self()->query( "KSpell/Client" ) );
 
     for ( KPluginInfo::List::Iterator itr = d->plugins.begin();
           itr != d->plugins.end(); ++itr ) {

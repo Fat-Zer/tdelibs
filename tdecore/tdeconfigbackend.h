@@ -151,7 +151,7 @@ public:
    * @param bGlobal If true, returns a lock file object for kdeglobals
    * @since 3.3
    */
-  KLockFile::Ptr lockFile( bool bGlobal = false );
+  TDELockFile::Ptr lockFile( bool bGlobal = false );
 
 #ifdef KDE_NO_COMPAT
 private:

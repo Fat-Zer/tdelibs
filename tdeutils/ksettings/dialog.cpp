@@ -467,7 +467,7 @@ TQValueList<KService::Ptr> Dialog::parentComponentsServices(
 	constraint = "('" + constraint + "' in [X-TDE-ParentComponents])";
 
 	kdDebug( 700 ) << "constraint = " << constraint << endl;
-	return KTrader::self()->query( "TDECModule", constraint );
+	return TDETrader::self()->query( "TDECModule", constraint );
 }
 
 bool Dialog::isPluginForKCMEnabled( TDECModuleInfo * moduleinfo ) const

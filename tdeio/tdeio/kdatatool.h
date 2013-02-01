@@ -164,7 +164,7 @@ public:
     bool isValid() const;
 
     /**
-     * Queries the KTrader about installed KDataTool implementations.
+     * Queries the TDETrader about installed KDataTool implementations.
      * @param datatype a type that the application can 'export' to the tools (e.g. TQString)
      * @param mimetype the mimetype of the data (e.g. text/plain)
      * @param instance the application (or the part)'s instance (to check if a tool is excluded from this part,

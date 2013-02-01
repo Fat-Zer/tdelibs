@@ -159,10 +159,10 @@ PreviewJob::~PreviewJob()
 void PreviewJob::startPreview()
 {
     // Load the list of plugins to determine which mimetypes are supported
-    KTrader::OfferList plugins = KTrader::self()->query("ThumbCreator");
+    TDETrader::OfferList plugins = TDETrader::self()->query("ThumbCreator");
     TQMap<TQString, KService::Ptr> mimeMap;
 
-    for (KTrader::OfferList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it)
+    for (TDETrader::OfferList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it)
         if (!d->enabledPlugins || d->enabledPlugins->contains((*it)->desktopEntryName()))
     {
         TQStringList mimeTypes = (*it)->property("MimeTypes").toStringList();
@@ -551,8 +551,8 @@ void PreviewJob::emitFailed(const KFileItem *item)
 TQStringList PreviewJob::availablePlugins()
 {
     TQStringList result;
-    KTrader::OfferList plugins = KTrader::self()->query("ThumbCreator");
-    for (KTrader::OfferList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it)
+    TDETrader::OfferList plugins = TDETrader::self()->query("ThumbCreator");
+    for (TDETrader::OfferList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it)
         if (!result.contains((*it)->desktopEntryName()))
             result.append((*it)->desktopEntryName());
     return result;
@@ -561,8 +561,8 @@ TQStringList PreviewJob::availablePlugins()
 TQStringList PreviewJob::supportedMimeTypes()
 {
     TQStringList result;
-    KTrader::OfferList plugins = KTrader::self()->query("ThumbCreator");
-    for (KTrader::OfferList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it)
+    TDETrader::OfferList plugins = TDETrader::self()->query("ThumbCreator");
+    for (TDETrader::OfferList::ConstIterator it = plugins.begin(); it != plugins.end(); ++it)
         result += (*it)->property("MimeTypes").toStringList();
     return result;
 }

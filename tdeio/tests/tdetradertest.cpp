@@ -33,7 +33,7 @@ static KCmdLineOptions options[] =
 
 int main( int argc, char **argv )
 {
-  TDECmdLineArgs::init( argc, argv, "tdetradertest", "KTradertest", "A KTrader testing tool", "0.0" );
+  TDECmdLineArgs::init( argc, argv, "tdetradertest", "TDETradertest", "A TDETrader testing tool", "0.0" );
 
   TDECmdLineArgs::addCmdLineOptions( options );
 
@@ -62,13 +62,13 @@ int main( int argc, char **argv )
   printf( "constraint is : %s\n", constraint.local8Bit().data() );
   printf( "preference is : %s\n", preference.local8Bit().data() );
 
-  KTrader::OfferList offers = KTrader::self()->query( query, genericServiceType, constraint, preference );
+  TDETrader::OfferList offers = TDETrader::self()->query( query, genericServiceType, constraint, preference );
 
   printf("got %d offers.\n", offers.count());
 
   int i = 0;
-  KTrader::OfferList::ConstIterator it = offers.begin();
-  KTrader::OfferList::ConstIterator end = offers.end();
+  TDETrader::OfferList::ConstIterator it = offers.begin();
+  TDETrader::OfferList::ConstIterator end = offers.end();
   for (; it != end; ++it, ++i )
   {
     printf("---- Offer %d ----\n", i);

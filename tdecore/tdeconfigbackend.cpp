@@ -236,8 +236,8 @@ class TDEConfigBackEnd::TDEConfigBackEndPrivate
 public:
    TQDateTime localLastModified;
    uint      localLastSize;
-   KLockFile::Ptr localLockFile;
-   KLockFile::Ptr globalLockFile;
+   TDELockFile::Ptr localLockFile;
+   TDELockFile::Ptr globalLockFile;
 };
 
 void TDEConfigBackEnd::changeFileName(const TQString &_fileName,
@@ -270,7 +270,7 @@ void TDEConfigBackEnd::changeFileName(const TQString &_fileName,
    d->globalLockFile = 0;
 }
 
-KLockFile::Ptr TDEConfigBackEnd::lockFile(bool bGlobal)
+TDELockFile::Ptr TDEConfigBackEnd::lockFile(bool bGlobal)
 {
    if (bGlobal)
    {
@@ -279,7 +279,7 @@ KLockFile::Ptr TDEConfigBackEnd::lockFile(bool bGlobal)
       
       if (!mGlobalFileName.isEmpty())
       {
-         d->globalLockFile = new KLockFile(mGlobalFileName+".lock");
+         d->globalLockFile = new TDELockFile(mGlobalFileName+".lock");
          return d->globalLockFile;
       }
    }
@@ -290,7 +290,7 @@ KLockFile::Ptr TDEConfigBackEnd::lockFile(bool bGlobal)
       
       if (!mLocalFileName.isEmpty())
       {
-         d->localLockFile = new KLockFile(mLocalFileName+".lock");
+         d->localLockFile = new TDELockFile(mLocalFileName+".lock");
          return d->localLockFile;
       }
    }
@@ -815,7 +815,7 @@ void TDEConfigINIBackEnd::sync(bool bMerge)
     // it wasn't SUID.
     if (checkAccess(mLocalFileName, W_OK)) {
       // File is writable
-      KLockFile::Ptr lf;
+      TDELockFile::Ptr lf;
 
       bool mergeLocalFile = bMerge;
       // Check if the file has been updated since.
@@ -827,7 +827,7 @@ void TDEConfigINIBackEnd::sync(bool bMerge)
 
          if (lf) 
          {
-            lf->lock( KLockFile::LockForce );
+            lf->lock( TDELockFile::LockForce );
             // But what if the locking failed? Ignore it for now...
          }
          
@@ -873,13 +873,13 @@ void TDEConfigINIBackEnd::sync(bool bMerge)
 
     // can we allow the write? (see above)
     if (checkAccess ( mGlobalFileName, W_OK )) {
-      KLockFile::Ptr lf = lockFile(true); // Lock file for global file
+      TDELockFile::Ptr lf = lockFile(true); // Lock file for global file
       if (lf && lf->isLocked())
          lf = 0; // Already locked, we don't need to lock/unlock again
 
       if (lf) 
       {
-         lf->lock( KLockFile::LockForce );
+         lf->lock( TDELockFile::LockForce );
          // But what if the locking failed? Ignore it for now...
       }
       writeConfigFile( mGlobalFileName, true, bMerge ); // Always merge

@@ -277,7 +277,7 @@ void TDEConfig::setFileWriteMode(int mode)
   backEnd->setFileWriteMode(mode);
 }
 
-KLockFile::Ptr TDEConfig::lockFile(bool bGlobal)
+TDELockFile::Ptr TDEConfig::lockFile(bool bGlobal)
 {
   TDEConfigINIBackEnd *aBackEnd = dynamic_cast<TDEConfigINIBackEnd*>(backEnd);
   if (!aBackEnd) return 0;

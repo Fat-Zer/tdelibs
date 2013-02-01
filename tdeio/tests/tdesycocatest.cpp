@@ -182,9 +182,9 @@ int main(int argc, char *argv[])
    }
 
    debug("Querying trader for Konqueror/Plugin");
-   KTrader::OfferList traderoffers = KTrader::self()->query("Konqueror/Plugin");
+   TDETrader::OfferList traderoffers = TDETrader::self()->query("Konqueror/Plugin");
    debug(TQString("got %1 offers").arg(traderoffers.count()));
-   KTrader::OfferList::Iterator trit = traderoffers.begin();
+   TDETrader::OfferList::Iterator trit = traderoffers.begin();
    for ( ; trit != traderoffers.end() ; trit++ )
    {
      debug((*trit)->name());
