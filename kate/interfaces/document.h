@@ -27,7 +27,7 @@
 #include <tdetexteditor/documentinfo.h>
 #include <tdetexteditor/selectioninterface.h>
 #include <tdetexteditor/selectioninterfaceext.h>
-#include <tdetexteditor/bloctdeselectioninterface.h>
+#include <tdetexteditor/blockselectioninterface.h>
 #include <tdetexteditor/searchinterface.h>
 #include <tdetexteditor/highlightinginterface.h>
 #include <tdetexteditor/configinterface.h>

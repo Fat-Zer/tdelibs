@@ -21,7 +21,7 @@ SOURCES = \
     tdetexteditor.cpp \
     editinterface.cpp editinterfaceext.cpp \
     clipboardinterface.cpp  selectioninterface.cpp searchinterface.cpp \
-    codecompletioninterface.cpp wordwrapinterface.cpp bloctdeselectioninterface.cpp \
+    codecompletioninterface.cpp wordwrapinterface.cpp blockselectioninterface.cpp \
     configinterface.cpp cursorinterface.cpp  dynwordwrapinterface.cpp \
     printinterface.cpp highlightinginterface.cpp markinterface.cpp \
     popupmenuinterface.cpp undointerface.cpp viewcursorinterface.cpp \
@@ -30,7 +30,7 @@ SOURCES = \
     searchdcopinterface.cpp  markinterfaceextension.cpp \
     configinterfaceextension.cpp encodinginterface.cpp sessionconfiginterface.cpp \
     viewstatusmsginterface.cpp  editorchooser.cpp \
-    bloctdeselectiondcopinterface.cpp documentinfo.cpp documentdcopinfo.cpp\
+    blockselectiondcopinterface.cpp documentinfo.cpp documentdcopinfo.cpp\
     encodingdcopinterface.cpp \
     printdcopinterface.cpp  \
     undodcopinterface.cpp viewcursordcopinterface.cpp \
@@ -48,7 +48,7 @@ undodcopinterface_skel.cpp \
 printdcopinterface_skel.cpp \
 encodingdcopinterface_skel.cpp \
 documentdcopinfo_skel.cpp \
-bloctdeselectiondcopinterface_skel.cpp \
+blockselectiondcopinterface_skel.cpp \
 searchdcopinterface_skel.cpp \
 selectiondcopinterface_skel.cpp \
 clipboarddcopinterface_skel.cpp \
@@ -61,7 +61,7 @@ undodcopinterface_stub.cpp \
 printdcopinterface_stub.cpp \
 encodingdcopinterface_stub.cpp \
 documentdcopinfo_stub.cpp \
-bloctdeselectiondcopinterface_stub.cpp \
+blockselectiondcopinterface_stub.cpp \
 searchdcopinterface_stub.cpp \
 selectiondcopinterface_stub.cpp \
 clipboarddcopinterface_stub.cpp \

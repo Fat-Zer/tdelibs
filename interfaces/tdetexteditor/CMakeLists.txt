@@ -37,7 +37,7 @@ install( FILES
     document.h view.h editor.h plugin.h editinterface.h
     undointerface.h selectioninterface.h cursorinterface.h
     clipboardinterface.h popupmenuinterface.h viewcursorinterface.h
-    searchinterface.h highlightinginterface.h bloctdeselectioninterface.h
+    searchinterface.h highlightinginterface.h blockselectioninterface.h
     codecompletioninterface.h configinterface.h markinterface.h
     printinterface.h wordwrapinterface.h dynwordwrapinterface.h
     markinterfaceextension.h configinterfaceextension.h
@@ -69,7 +69,7 @@ set( target tdetexteditor )
 set( ${target}_SRCS
   tdetexteditor.cpp
   editinterface.cpp clipboardinterface.cpp  selectioninterface.cpp searchinterface.cpp
-  codecompletioninterface.cpp wordwrapinterface.cpp bloctdeselectioninterface.cpp
+  codecompletioninterface.cpp wordwrapinterface.cpp blockselectioninterface.cpp
   configinterface.cpp cursorinterface.cpp  dynwordwrapinterface.cpp
   printinterface.cpp highlightinginterface.cpp markinterface.cpp
   popupmenuinterface.cpp undointerface.cpp viewcursorinterface.cpp
@@ -78,8 +78,8 @@ set( ${target}_SRCS
   searchdcopinterface.cpp searchdcopinterface.skel markinterfaceextension.cpp
   configinterfaceextension.cpp encodinginterface.cpp sessionconfiginterface.cpp
   viewstatusmsginterface.cpp editorchooser_ui.ui editorchooser.cpp
-  bloctdeselectiondcopinterface.cpp documentinfo.cpp documentdcopinfo.cpp
-  bloctdeselectiondcopinterface.skel documentdcopinfo.skel encodingdcopinterface.cpp
+  blockselectiondcopinterface.cpp documentinfo.cpp documentdcopinfo.cpp
+  blockselectiondcopinterface.skel documentdcopinfo.skel encodingdcopinterface.cpp
   encodingdcopinterface.skel printdcopinterface.cpp printdcopinterface.skel
   undodcopinterface.cpp undodcopinterface.skel viewcursordcopinterface.cpp
   viewcursordcopinterface.skel viewstatusmsgdcopinterface.cpp
