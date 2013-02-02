@@ -48,8 +48,8 @@
 #include <tdefiledialog.h>
 #include <tdeio/job.h>
 #include <kprocess.h>
-#include <ktoolbarbutton.h>
-#include <ktoolbar.h>
+#include <tdetoolbarbutton.h>
+#include <tdetoolbar.h>
 #include <ksavefile.h>
 #include <kurldrag.h>
 #include <kstringhandler.h>

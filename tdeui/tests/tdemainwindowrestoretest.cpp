@@ -1,5 +1,5 @@
 
-#include "kmainwindowrestoretest.h"
+#include "tdemainwindowrestoretest.h"
 
 #include <kapplication.h>
 
@@ -14,7 +14,7 @@
 
 int main( int argc, char * argv[] ) {
 
-  TDEApplication app( argc, argv, "kmainwindowrestoretest" );
+  TDEApplication app( argc, argv, "tdemainwindowrestoretest" );
 
   if ( kapp->isRestored() ) {
     kRestoreMainWindows< MainWin1, MainWin2, MainWin3 >();
@@ -38,4 +38,4 @@ int main( int argc, char * argv[] ) {
   return app.exec();
 }
 
-#include "kmainwindowrestoretest.moc"
+#include "tdemainwindowrestoretest.moc"

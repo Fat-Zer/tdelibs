@@ -31,8 +31,8 @@
 #include <kimageeffect.h>
 #include <kdebug.h>
 #include <klocale.h>
-#include <kpopupmenu.h>
-#include <kaction.h>
+#include <tdepopupmenu.h>
+#include <tdeaction.h>
 #include <stdlib.h>
 #include <tqcursor.h>
 #include <tqapplication.h>

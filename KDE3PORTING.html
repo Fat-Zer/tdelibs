@@ -154,9 +154,9 @@ not be available.
 <ul>
 	<li> TDEAccel::insertItem() and TDEAccel::connectItem().
 <pre>
-	- kaccel-&gt;insertItem( i18n("Scroll Up"), "Scroll Up", "Up" );
-	- kaccel-&gt;connectItem( "Scroll Up", this, TQT_SLOT(scrollUp()) );
-	+ kaccel-&gt;insert( "Scroll Up", i18n("Scroll Up"), TQString::null,
+	- tdeaccel-&gt;insertItem( i18n("Scroll Up"), "Scroll Up", "Up" );
+	- tdeaccel-&gt;connectItem( "Scroll Up", this, TQT_SLOT(scrollUp()) );
+	+ tdeaccel-&gt;insert( "Scroll Up", i18n("Scroll Up"), TQString::null,
 		Key_Up, this, TQT_SLOT(scrollUp()) );
 </pre>
 	Note that a What's This parameter is now a part of the insert function.
@@ -168,8 +168,8 @@ not be available.
 	can replace it.  Note, however, that this would be handled automatically
 	by using TDEAction instead.
 <pre>
-	- kaccel-&gt;changeMenuAccel( menu, id, "file_open" );
-	+ menu-&gt;setAccel( kaccel-&gt;shortcut( "file_open" ).keyCodeQt(), id );
+	- tdeaccel-&gt;changeMenuAccel( menu, id, "file_open" );
+	+ menu-&gt;setAccel( tdeaccel-&gt;shortcut( "file_open" ).keyCodeQt(), id );
 </pre>
 	</li>
 </ul>

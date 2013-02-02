@@ -32,7 +32,7 @@
 
 #include <kcompletion.h>
 #include <kdialogbase.h>
-#include <klistview.h>
+#include <tdelistview.h>
 
 class TQListBoxItem;
 class TQPopupMenu;

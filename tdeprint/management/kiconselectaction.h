@@ -20,7 +20,7 @@
 #ifndef KICONSELECTACTION_H
 #define KICONSELECTACTION_H
 
-#include <kaction.h>
+#include <tdeaction.h>
 
 class KIconSelectActionPrivate;
 

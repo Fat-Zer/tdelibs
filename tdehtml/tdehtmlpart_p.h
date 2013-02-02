@@ -29,7 +29,7 @@
 #include <kcursor.h>
 #include <klibloader.h>
 #include <kxmlguifactory.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <tdeparts/partmanager.h>
 #include <tdeparts/statusbarextension.h>
 #include <tdeparts/browserextension.h>

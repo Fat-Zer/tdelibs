@@ -1,4 +1,4 @@
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kapplication.h>
 #include <kdialogbase.h>
 #include <tqvbox.h>
@@ -6,7 +6,7 @@
 
 int main( int argc, char **argv )
 {
-	TDEApplication app( argc, argv, "klistviewtest" );
+	TDEApplication app( argc, argv, "tdelistviewtest" );
 	KDialogBase dialog;
 	TDEListView *view = new TDEListView( dialog.makeVBoxMainWidget() );
 	view->setSelectionModeExt( TDEListView::FileManager );

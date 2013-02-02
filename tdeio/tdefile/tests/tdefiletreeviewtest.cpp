@@ -21,7 +21,7 @@
 
 #include <kglobal.h>
 #include <kiconloader.h>
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 #include <kapplication.h>
 #include <kurl.h>
 #include <kdebug.h>

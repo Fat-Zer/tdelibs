@@ -21,7 +21,7 @@
 #define _KGLOBALACCEL_H_
 
 #include <tqobject.h>
-#include <kshortcut.h>
+#include <tdeshortcut.h>
 
 class TQPopupMenu;
 class TQWidget;

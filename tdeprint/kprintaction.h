@@ -20,7 +20,7 @@
 #ifndef KPRINTACTION_H
 #define KPRINTACTION_H
 
-#include <kaction.h>
+#include <tdeaction.h>
 
 class KPrinter;
 

@@ -23,13 +23,13 @@
 
 #include "kencodingfiledialog.h"
 #include <kcombobox.h>
-#include <ktoolbar.h>
+#include <tdetoolbar.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <kcharsets.h>
 #include <tqtextcodec.h>
 #include <kdiroperator.h>
-#include <krecentdocument.h>
+#include <tderecentdocument.h>
 
 struct KEncodingFileDialogPrivate
 {

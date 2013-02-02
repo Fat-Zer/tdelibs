@@ -27,7 +27,7 @@
 #include <tqwidget.h>
 #include <kdockwidget.h>
 #include <tqguardedptr.h>
-#include <kaction.h>
+#include <tdeaction.h>
 
 class KMDI_EXPORT KMdiToolViewAccessorPrivate {
 public:

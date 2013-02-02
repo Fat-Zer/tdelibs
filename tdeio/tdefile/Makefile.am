@@ -29,7 +29,7 @@ METASOURCES = AUTO
 include_HEADERS = tdefiledialog.h kencodingfiledialog.h\
 	kdiroperator.h tdefileview.h tdefilefiltercombo.h \
 	tdefiledetailview.h kcombiview.h kdiskfreesp.h \
-	tdefileiconview.h krecentdocument.h \
+	tdefileiconview.h tderecentdocument.h \
 	kurlrequester.h tdefilepreview.h tdefile.h \
 	kurlcombobox.h kurlrequesterdlg.h kopenwith.h kpropsdlg.h \
 	kicondialog.h kdirsize.h kpreviewwidgetbase.h kimagefilepreview.h tdefilesharedlg.h \
@@ -37,18 +37,18 @@ include_HEADERS = tdefiledialog.h kencodingfiledialog.h\
 	kdirselectdialog.h kurlbar.h kpropertiesdialog.h knotifydialog.h \
 	kcustommenueditor.h knotifywidgetbase.h
 
-noinst_HEADERS = config-tdefile.h krecentdirs.h kmetaprops.h \
+noinst_HEADERS = config-tdefile.h tderecentdirs.h kmetaprops.h \
 	tdefilebookmarkhandler.h tdefilemetainfowidget.h kopenwith_p.h \
 	tdefilespeedbar.h kpreviewprops.h kacleditwidget.h kacleditwidget_p.h images.h
 
 libtdefile_la_SOURCES = \
 	tdefilefiltercombo.cpp \
 	tdefileview.cpp tdefileiconview.cpp \
-	krecentdocument.cpp tdefiledialog.cpp kdiroperator.cpp \
+	tderecentdocument.cpp tdefiledialog.cpp kdiroperator.cpp \
 	tdefiledetailview.cpp kcombiview.cpp kurlrequester.cpp \
 	tdefilepreview.cpp kurlcombobox.cpp kurlrequesterdlg.cpp \
 	kopenwith.cpp kpropertiesdialog.cpp kicondialog.cpp kdirsize.cpp \
-	krecentdirs.cpp kdiskfreesp.cpp kimagefilepreview.cpp tdefilesharedlg.cpp \
+	tderecentdirs.cpp kdiskfreesp.cpp kimagefilepreview.cpp tdefilesharedlg.cpp \
 	kurlbar.cpp kmetaprops.cpp kpreviewprops.cpp \
 	tdefiletreeview.cpp tdefiletreeviewitem.cpp tdefiletreebranch.cpp \
 	kdirselectdialog.cpp tdefilebookmarkhandler.cpp \

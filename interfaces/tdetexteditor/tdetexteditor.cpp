@@ -24,7 +24,7 @@
 #include "plugin.h"
 #include "editor.h"
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <tdeparts/factory.h>
 #include <tdeparts/componentfactory.h>
 

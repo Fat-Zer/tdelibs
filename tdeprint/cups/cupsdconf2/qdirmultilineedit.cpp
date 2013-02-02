@@ -22,7 +22,7 @@
 #include <tqlayout.h>
 #include <tqheader.h>
 #include <tqpushbutton.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <klocale.h>
 #include <tdefiledialog.h>
 #include <kiconloader.h>

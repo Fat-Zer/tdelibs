@@ -38,13 +38,13 @@ namespace KTextEditor
     /**
     * Returns the status of the selection mode - true indicates block selection mode is on.
     * If this is true, selections applied via the SelectionInterface are handled as
-    * blockselections and the paste functions of the ClipboardInterface works on
+    * bloctdeselections and the paste functions of the ClipboardInterface works on
     * rectangular blocks of text rather than normal. (copy too, but thats clear I hope ;)
     */
 		bool blockSelectionMode ();
 
 		/**
-		* set blockselection mode to state "on"
+		* set bloctdeselection mode to state "on"
 		*/
 		bool setBlockSelectionMode (bool on) ;
 

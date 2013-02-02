@@ -48,13 +48,13 @@
 #include <kglobal.h>
 #include <kglobalsettings.h>
 #include <tqlineedit.h>
-#include <klistbox.h>
+#include <tdelistbox.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
 #include <knuminput.h>
 
-#include "kfontdialog.moc"
+#include "tdefontdialog.moc"
 
 static int minimumListWidth( const TQListBox *list )
 {

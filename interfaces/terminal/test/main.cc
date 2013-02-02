@@ -2,7 +2,7 @@
 #include <tdeparts/part.h>
 #include <ktrader.h>
 #include <klibloader.h>
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 #include <kaboutdata.h>
 #include <kcmdlineargs.h>
 #include <kapplication.h>

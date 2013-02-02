@@ -26,9 +26,9 @@
 
 #include <kapplication.h>
 #include <klocale.h>
-#include <klistbox.h>
+#include <tdelistbox.h>
 #include <kcombobox.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <klineedit.h>
 #include <kpushbutton.h>
 #include <kprogress.h>

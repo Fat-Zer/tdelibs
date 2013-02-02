@@ -22,8 +22,8 @@
 #include <tqpopupmenu.h>
 #include <kiconloader.h>
 #include <kdebug.h>
-#include <ktoolbar.h>
-#include <ktoolbarbutton.h>
+#include <tdetoolbar.h>
+#include <tdetoolbarbutton.h>
 
 class KIconSelectActionPrivate
 {

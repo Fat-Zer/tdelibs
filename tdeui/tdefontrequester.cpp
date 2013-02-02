@@ -17,7 +17,7 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include "kfontrequester.h"
+#include "tdefontrequester.h"
 
 #include <tqlabel.h>
 #include <tqpushbutton.h>
@@ -25,7 +25,7 @@
 #include <tqtooltip.h>
 #include <tqwhatsthis.h>
 
-#include <kfontdialog.h>
+#include <tdefontdialog.h>
 #include <klocale.h>
 
 TDEFontRequester::TDEFontRequester( TQWidget *parent, const char *name,
@@ -121,7 +121,7 @@ void TDEFontRequester::setToolTip()
   }
 }
 
-#include "kfontrequester.moc"
+#include "tdefontrequester.moc"
 
 /* vim: et sw=2 ts=2
 */

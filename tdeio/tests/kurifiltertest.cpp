@@ -182,13 +182,13 @@ int main(int argc, char **argv)
 
     // Enable verbosity for debugging
     {
-      KSimpleConfig cfg( "kshorturifilterrc" );
+      KSimpleConfig cfg( "tdeshorturifilterrc" );
       cfg.writeEntry( "Verbose", true );
       cfg.sync();
     }
 
     TQStringList minicliFilters;
-    minicliFilters << "kshorturifilter" << "kurisearchfilter" << "localdomainurifilter";
+    minicliFilters << "tdeshorturifilter" << "kurisearchfilter" << "localdomainurifilter";
 
     // URI that should require no filtering
     filter( "http://www.kde.org", "http://www.kde.org", KURIFilterData::NET_PROTOCOL );
@@ -213,8 +213,8 @@ int main(int argc, char **argv)
     filter( "ftp://username@ftp.kde.org:500", "ftp://username@ftp.kde.org:500", KURIFilterData::NET_PROTOCOL );
 
     // ShortURI/LocalDomain filter tests. NOTE: any of these tests can fail
-    // if you have specified your own patterns in kshorturifilterrc. For
-    // examples, see $TDEDIR/share/config/kshorturifilterrc .
+    // if you have specified your own patterns in tdeshorturifilterrc. For
+    // examples, see $TDEDIR/share/config/tdeshorturifilterrc .
     filter( "linuxtoday.com", "http://linuxtoday.com", KURIFilterData::NET_PROTOCOL );
     filter( "LINUXTODAY.COM", "http://linuxtoday.com", KURIFilterData::NET_PROTOCOL );
     filter( "kde.org", "http://kde.org", KURIFilterData::NET_PROTOCOL );
@@ -240,10 +240,10 @@ int main(int argc, char **argv)
     // filter( "localhost/~blah", "http://localhost.localdomain/~blah", KURIFilterData::NET_PROTOCOL );
 
     filter( "/", "/", KURIFilterData::LOCAL_DIR );
-    filter( "/", "/", KURIFilterData::LOCAL_DIR, "kshorturifilter" );
-    filter( "~/.bashrc", TQDir::homeDirPath().local8Bit()+"/.bashrc", KURIFilterData::LOCAL_FILE, "kshorturifilter" );
-    filter( "~", TQDir::homeDirPath().local8Bit(), KURIFilterData::LOCAL_DIR, "kshorturifilter", "/tmp" );
-    filter( "~foobar", 0, KURIFilterData::ERROR, "kshorturifilter" );
+    filter( "/", "/", KURIFilterData::LOCAL_DIR, "tdeshorturifilter" );
+    filter( "~/.bashrc", TQDir::homeDirPath().local8Bit()+"/.bashrc", KURIFilterData::LOCAL_FILE, "tdeshorturifilter" );
+    filter( "~", TQDir::homeDirPath().local8Bit(), KURIFilterData::LOCAL_DIR, "tdeshorturifilter", "/tmp" );
+    filter( "~foobar", 0, KURIFilterData::ERROR, "tdeshorturifilter" );
     filter( "user@host.domain", "mailto:user@host.domain", KURIFilterData::NET_PROTOCOL ); // new in KDE-3.2
 
     // Windows style SMB (UNC) URL. Should be converted into the valid smb format...
@@ -333,8 +333,8 @@ int main(int argc, char **argv)
     // the shortURI filter will return the string
     // itself if the requested environment variable
     // is not already set.
-    filter( "$QTDIR", 0, KURIFilterData::LOCAL_DIR, "kshorturifilter" ); //use specific filter.
-    filter( "$HOME", home, KURIFilterData::LOCAL_DIR, "kshorturifilter" ); //use specific filter.
+    filter( "$QTDIR", 0, KURIFilterData::LOCAL_DIR, "tdeshorturifilter" ); //use specific filter.
+    filter( "$HOME", home, KURIFilterData::LOCAL_DIR, "tdeshorturifilter" ); //use specific filter.
 
 
     TQCString sc;
@@ -348,10 +348,10 @@ int main(int argc, char **argv)
     filter( sc.sprintf("gg%cé", delimiter) /*eaccent in utf8*/, "http://www.google.com/search?q=%C3%A9&ie=UTF-8&oe=UTF-8", KURIFilterData::NET_PROTOCOL );
     filter( sc.sprintf("gg%cпрйвет", delimiter) /* greetings in russian utf-8*/, "http://www.google.com/search?q=%D0%BF%D1%80%D0%B9%D0%B2%D0%B5%D1%82&ie=UTF-8&oe=UTF-8", KURIFilterData::NET_PROTOCOL );
 
-    // Absolute Path tests for kshorturifilter
-    filter( "./", tdehome+"/share", KURIFilterData::LOCAL_DIR, "kshorturifilter", tdehome+"/share/" ); // cleanDirPath removes the trailing slash
-    filter( "../", tdehome, KURIFilterData::LOCAL_DIR, "kshorturifilter", tdehome+"/share" );
-    filter( "config", tdehome+"/share/config", KURIFilterData::LOCAL_DIR, "kshorturifilter", tdehome+"/share" );
+    // Absolute Path tests for tdeshorturifilter
+    filter( "./", tdehome+"/share", KURIFilterData::LOCAL_DIR, "tdeshorturifilter", tdehome+"/share/" ); // cleanDirPath removes the trailing slash
+    filter( "../", tdehome, KURIFilterData::LOCAL_DIR, "tdeshorturifilter", tdehome+"/share" );
+    filter( "config", tdehome+"/share/config", KURIFilterData::LOCAL_DIR, "tdeshorturifilter", tdehome+"/share" );
 
     // Clean up
     TDEIO::NetAccess::del( tdehome, 0 );

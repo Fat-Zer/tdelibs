@@ -19,7 +19,7 @@
 #ifndef KNOTIFYDIALOG_H
 #define KNOTIFYDIALOG_H
 
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kdialogbase.h>
 #include <kinstance.h>
 #include <kglobal.h>

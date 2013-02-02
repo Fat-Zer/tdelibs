@@ -52,7 +52,7 @@
 #include <klocale.h>
 #include <kglobal.h>
 #include <kapplication.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <tdeconfig.h>
 #include <tdefiledialog.h>
 #include <kmessagebox.h>
@@ -3976,7 +3976,7 @@ void KateDocument::transform( KateView *v, const KateTextCursor &c,
         {
           // If bol or the character before is not in a word, up this one:
           // 1. if both start and p is 0, upper char.
-          // 2. if blockselect or first line, and p == 0 and start-1 is not in a word, upper
+          // 2. if bloctdeselect or first line, and p == 0 and start-1 is not in a word, upper
           // 3. if p-1 is not in a word, upper.
           if ( ( ! start && ! p ) ||
                    ( ( ln == selstart.line() || v->blockSelectionMode() ) &&

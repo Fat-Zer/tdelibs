@@ -24,7 +24,7 @@
 #include <tqwidget.h>
 #include <tqptrstack.h>
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kcompletion.h>
 #include <kdirlister.h>
 #include <tdefileview.h>

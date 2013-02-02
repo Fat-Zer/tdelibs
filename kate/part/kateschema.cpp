@@ -32,11 +32,11 @@
 #include <kcolorbutton.h>
 #include <kcombobox.h>
 #include <kinputdialog.h>
-#include <kfontdialog.h>
+#include <tdefontdialog.h>
 #include <kdebug.h>
 #include <kiconloader.h>
 #include <kmessagebox.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <kcolordialog.h>
 #include <kapplication.h>
 #include <kaboutdata.h>

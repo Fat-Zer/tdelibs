@@ -41,8 +41,8 @@
 #include <twin.h>
 #include <kdialog.h>
 #include <ksystemtray.h>
-#include <kpopupmenu.h>
-#include <kaction.h>
+#include <tdepopupmenu.h>
+#include <tdeaction.h>
 
 #include <tqcheckbox.h>
 #include <tqlabel.h>

@@ -38,7 +38,7 @@
 #include <knotifyclient.h>
 #include <kglobal.h>
 #include <kcharsets.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 
 #include <tqcursor.h>
 #include <tqpainter.h>

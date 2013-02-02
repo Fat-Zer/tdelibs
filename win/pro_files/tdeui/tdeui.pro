@@ -18,10 +18,10 @@ SOURCES = \
 kaboutapplication.cpp \
 kaboutdialog.cpp \
 kaboutkde.cpp \
-kactionclasses.cpp \
-kactioncollection.cpp \
-kaction.cpp \
-kactionselector.cpp \
+tdeactionclasses.cpp \
+tdeactioncollection.cpp \
+tdeaction.cpp \
+tdeactionselector.cpp \
 kactivelabel.cpp \
 kanimwidget.cpp \
 karrowbutton.cpp \
@@ -52,9 +52,9 @@ keditcl1.cpp \
 keditcl2.cpp \
 keditlistbox.cpp \
 kedittoolbar.cpp \
-kfontcombo.cpp \
-kfontdialog.cpp \
-kfontrequester.cpp \
+tdefontcombo.cpp \
+tdefontdialog.cpp \
+tdefontrequester.cpp \
 kguiitem.cpp \
 khelpmenu.cpp \
 kiconview.cpp \
@@ -66,11 +66,11 @@ klanguagebutton.cpp \
 kled.cpp \
 klineedit.cpp \
 klineeditdlg.cpp \
-klistbox.cpp \
-klistview.cpp \
-klistviewsearchline.cpp \
-kmainwindowiface.cpp \
-kmainwindow.cpp \
+tdelistbox.cpp \
+tdelistview.cpp \
+tdelistviewsearchline.cpp \
+tdemainwindowiface.cpp \
+tdemainwindow.cpp \
 kmenubar.cpp \
 knuminput.cpp \
 knumvalidator.cpp \
@@ -83,16 +83,16 @@ kpassivepopup.cpp \
 kpixmapio.cpp \
 kpixmapregionselectordialog.cpp \
 kpixmapregionselectorwidget.cpp \
-kpopupmenu.cpp \
+tdepopupmenu.cpp \
 kprogress.cpp \
 kpushbutton.cpp \
 krestrictedline.cpp \
 krootpixmap.cpp \
 kruler.cpp \
 ksconfig.cpp \
-kselect.cpp \
+tdeselect.cpp \
 kseparator.cpp \
-kshortcutdialog.cpp \
+tdeshortcutdialog.cpp \
 tdespell.cpp \
 tdespelldlg.cpp \
 ksplashscreen.cpp \
@@ -107,10 +107,10 @@ ktabctl.cpp \
 ktextbrowser.cpp \
 ktextedit.cpp \
 ktip.cpp \
-ktoolbar.cpp \
-ktoolbarbutton.cpp \
-ktoolbarhandler.cpp \
-ktoolbarradiogroup.cpp \
+tdetoolbar.cpp \
+tdetoolbarbutton.cpp \
+tdetoolbarhandler.cpp \
+tdetoolbarradiogroup.cpp \
 kurllabel.cpp \
 kwhatsthismanager.cpp \
 twindowinfo.cpp \
@@ -137,12 +137,12 @@ exists( kmessagebox_win.cpp ) {
 
 # generated:
 SOURCES += \
-kmainwindowiface_stub.cpp \
-kmainwindowiface_skel.cpp
+tdemainwindowiface_stub.cpp \
+tdemainwindowiface_skel.cpp
 
 FORMS = \
-kshortcutdialog_advanced.ui \
-kshortcutdialog_simple.ui \
+tdeshortcutdialog_advanced.ui \
+tdeshortcutdialog_simple.ui \
 tdespellui.ui
 
 HEADERS =

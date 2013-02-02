@@ -1,7 +1,7 @@
 #include "notepad.h" // this plugin applies to a notepad part
 #include <tqmultilineedit.h>
 #include "plugin_spellcheck.h"
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kgenericfactory.h>
 #include <kmessagebox.h>
 #include <klocale.h>

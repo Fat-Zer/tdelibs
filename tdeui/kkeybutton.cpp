@@ -19,7 +19,7 @@
 */
 
 #include "kkeybutton.h"
-#include "kshortcutdialog.h"
+#include "tdeshortcutdialog.h"
 
 #include <tqcursor.h>
 #include <tqdrawutil.h>

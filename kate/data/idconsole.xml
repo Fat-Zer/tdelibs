@@ -197,7 +197,7 @@
 <item> host_speeds </item>
 <item> hostname </item>
 <item> hpkextract </item>
-<item> hpklist </item>
+<item> hptdelist </item>
 <item> hpkremove </item>
 <item> hpkval </item>
 <item> hud_centerid </item>

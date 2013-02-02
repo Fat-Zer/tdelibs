@@ -27,7 +27,7 @@
 #include <tqstrlist.h>
 #include <tqtooltip.h>
 
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kdirnotify.h>
 #include <tdeio/job.h>
 #include <tdefiletreeviewitem.h>

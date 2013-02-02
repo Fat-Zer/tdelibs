@@ -21,7 +21,7 @@
 #define _KSHORTCUTDIALOG_H_
 
 #include "kdialogbase.h"
-#include "kshortcut.h"
+#include "tdeshortcut.h"
 
 class TQVBox;
 class KPushButton;

@@ -1,4 +1,4 @@
-#include <klistview.h>
+#include <tdelistview.h>
 #include "main.h"
 
 #ifndef TEST_H

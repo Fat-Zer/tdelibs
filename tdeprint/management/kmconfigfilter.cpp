@@ -31,7 +31,7 @@
 #include <klocale.h>
 #include <tdeconfig.h>
 #include <kiconloader.h>
-#include <klistbox.h>
+#include <tdelistbox.h>
 #include <kdialog.h>
 
 KMConfigFilter::KMConfigFilter(TQWidget *parent, const char *name)

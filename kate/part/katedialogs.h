@@ -29,7 +29,7 @@
 
 #include "../interfaces/document.h"
 
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kdialogbase.h>
 #include <kmimetype.h>
 

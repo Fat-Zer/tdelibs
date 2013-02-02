@@ -20,7 +20,7 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include "kaccelbase.h"
+#include "tdeaccelbase.h"
 
 #include <tqkeycode.h>
 #include <tqlabel.h>
@@ -33,7 +33,7 @@
 #include <kkeynative.h>
 #include "kkeyserver.h"
 #include <klocale.h>
-#include "kshortcutmenu.h"
+#include "tdeshortcutmenu.h"
 
 //---------------------------------------------------------------------
 // class TDEAccelBase::ActionInfo

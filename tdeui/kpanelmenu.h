@@ -26,7 +26,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define __KPANELMENU_H__
 
 #include <tqstring.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <kgenericfactory.h>
 
 class KPanelMenuPrivate;

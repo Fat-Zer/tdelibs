@@ -22,17 +22,17 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef __kactioncollection_h__
-#define __kactioncollection_h__
+#ifndef __tdeactioncollection_h__
+#define __tdeactioncollection_h__
 
-#include <kaction.h>
+#include <tdeaction.h>
 
 #include <tqkeysequence.h>
 #include <tqobject.h>
 #include <tqvaluelist.h>
 #include <tqguardedptr.h>
 #include <kguiitem.h>
-#include <kshortcut.h>
+#include <tdeshortcut.h>
 #include <kstdaction.h>
 #include <kicontheme.h>
 
@@ -142,17 +142,17 @@ public:
    */
   //bool ownsTDEAccel() const;
 
-  /** @deprecated  Deprecated because of ambiguous name.  Use kaccel() */
+  /** @deprecated  Deprecated because of ambiguous name.  Use tdeaccel() */
   virtual TDEAccel* accel() KDE_DEPRECATED;
-  /** @deprecated  Deprecated because of ambiguous name.  Use kaccel() */
+  /** @deprecated  Deprecated because of ambiguous name.  Use tdeaccel() */
   virtual const TDEAccel* accel() const KDE_DEPRECATED;
 
   /** Returns the TDEAccel object of the most recently set widget. */
-  TDEAccel* kaccel();
+  TDEAccel* tdeaccel();
   /** Returns the TDEAccel object of the most recently set widget. Const version for convenience. */
-  const TDEAccel* kaccel() const;
+  const TDEAccel* tdeaccel() const;
 
-  /** @internal, for TDEAction::kaccelCurrent() */
+  /** @internal, for TDEAction::tdeaccelCurrent() */
   TDEAccel* builderTDEAccel() const;
   /** Returns the TDEAccel object associated with widget #. */
   //TDEAccel* widgetTDEAccel( uint i );
@@ -317,7 +317,7 @@ private:
   void endXMLPlug();
   /** @internal.  Only to be called by KXMLGUIFactory::removeClient() */
   void prepareXMLUnplug();
-  void unplugShortcuts( TDEAccel* kaccel );
+  void unplugShortcuts( TDEAccel* tdeaccel );
 
   void _clear();
   void _insert( TDEAction* );

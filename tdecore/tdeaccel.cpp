@@ -17,7 +17,7 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include "kaccel.h"
+#include "tdeaccel.h"
 
 #include <tqaccel.h>
 #include <tqguardedptr.h>
@@ -26,13 +26,13 @@
 #include <tqstring.h>
 #include <tqtimer.h>
 
-#include "kaccelbase.h"
+#include "tdeaccelbase.h"
 #include <kapplication.h>
 #include <kdebug.h>
 #include <klocale.h>
-#include <kshortcut.h>
+#include <tdeshortcut.h>
 
-#include "kaccelprivate.h"
+#include "tdeaccelprivate.h"
 
 #ifdef Q_WS_X11
 #	include <X11/Xlib.h>
@@ -43,7 +43,7 @@
 #	endif
 #endif
 
-// TODO: Put in kaccelbase.cpp
+// TODO: Put in tdeaccelbase.cpp
 //---------------------------------------------------------------------
 // TDEAccelEventHandler
 //---------------------------------------------------------------------
@@ -659,5 +659,5 @@ TQString TDEAccel::findKey( int key ) const
 void TDEAccel::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
-#include "kaccel.moc"
-#include "kaccelprivate.moc"
+#include "tdeaccel.moc"
+#include "tdeaccelprivate.moc"

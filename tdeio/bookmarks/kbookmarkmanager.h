@@ -167,7 +167,7 @@ public:
 
     /**
      * @return true if the NS bookmarks should be dynamically shown
-     *         in the toplevel kactionmenu
+     *         in the toplevel tdeactionmenu
      * @deprecated
      */
     bool showNSBookmarks() const;

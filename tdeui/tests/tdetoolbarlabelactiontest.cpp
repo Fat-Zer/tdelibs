@@ -19,11 +19,11 @@
 #include <tqguardedptr.h>
 
 #include <kapplication.h>
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 #include <klineedit.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kstandarddirs.h>
-#include <ktoolbarlabelaction.h>
+#include <tdetoolbarlabelaction.h>
 #include <ksqueezedtextlabel.h> 
 #include <kdebug.h>
 #include <tqvbox.h>
@@ -78,13 +78,13 @@ public:
 
     // customLabel->setText("&test me again some time soon");
     
-    createGUI("ktoolbarlabelactiontestui.rc");
+    createGUI("tdetoolbarlabelactiontestui.rc");
   }
 };
 
 int main( int argc, char **argv )
 {
-  TDEApplication app( argc, argv, "ktoolbarlabelactiontest" );
+  TDEApplication app( argc, argv, "tdetoolbarlabelactiontest" );
 
   TDEGlobal::instance()->dirs()->addResourceDir("data", ".");
 

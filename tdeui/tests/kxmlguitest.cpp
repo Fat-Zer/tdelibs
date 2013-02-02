@@ -1,10 +1,10 @@
 #include "kxmlguitest.h"
 #include <kapplication.h>
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 #include <kxmlguifactory.h>
 #include <kxmlguiclient.h>
 #include <kxmlguibuilder.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kdebug.h>
 #include <kstdaction.h>
 #include <kstandarddirs.h>

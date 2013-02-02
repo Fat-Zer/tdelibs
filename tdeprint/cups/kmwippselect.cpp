@@ -23,7 +23,7 @@
 #include "cupsinfos.h"
 #include "ipprequest.h"
 
-#include <klistbox.h>
+#include <tdelistbox.h>
 #include <tqlayout.h>
 #include <klocale.h>
 #include <kdebug.h>

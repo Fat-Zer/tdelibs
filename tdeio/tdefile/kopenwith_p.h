@@ -21,7 +21,7 @@
 #define __open_with_p_h__
 
 #include <kurl.h>
-#include <klistview.h>
+#include <tdelistview.h>
 
 class KURLRequester;
 

@@ -28,11 +28,11 @@
 #include <kbookmarkmenu.h>
 #include <kdebug.h>
 
-#include <ktoolbar.h>
-#include <ktoolbarbutton.h>
+#include <tdetoolbar.h>
+#include <tdetoolbarbutton.h>
 
 #include <tdeconfig.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 
 #include "kbookmarkdrag.h"
 #include "kbookmarkmenu_p.h"

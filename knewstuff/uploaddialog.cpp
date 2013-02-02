@@ -26,7 +26,7 @@
 #include <tqstring.h>
 #include <ktextedit.h>
 
-#include <klistview.h>
+#include <tdelistview.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kurlrequester.h>

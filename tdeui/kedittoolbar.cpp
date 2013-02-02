@@ -31,7 +31,7 @@
 #include <tqapplication.h>
 #include <tqtextstream.h>
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kstandarddirs.h>
 #include <klocale.h>
 #include <kicontheme.h>
@@ -41,7 +41,7 @@
 #include <kxmlguifactory.h>
 #include <kseparator.h>
 #include <tdeconfig.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kdebug.h>
 #include <kpushbutton.h>
 #include <kprocio.h>

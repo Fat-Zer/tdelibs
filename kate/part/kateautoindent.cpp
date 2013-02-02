@@ -29,7 +29,7 @@
 
 #include <klocale.h>
 #include <kdebug.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 
 #include <cctype>
 

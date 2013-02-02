@@ -17,7 +17,7 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include "kshortcut.h"
+#include "tdeshortcut.h"
 #include "kkeynative.h"
 #include "kkeyserver.h"
 

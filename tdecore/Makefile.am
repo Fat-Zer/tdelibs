@@ -42,14 +42,14 @@ include_HEADERS = tdeconfig.h tdeconfigskeleton.h \
 	kcmdlineargs.h tdeconfigbackend.h kapp.h kapplication.h kuniqueapp.h \
 	kuniqueapplication.h kcharsets.h tdeversion.h kpty.h kprocess.h \
 	kprocctrl.h klocale.h kicontheme.h kiconloader.h kdebug.h \
-	twinmodule.h twin.h krootprop.h kshortcut.h kkeynative.h kaccel.h \
-	kglobalaccel.h kstdaccel.h kshortcutlist.h kcatalogue.h \
+	twinmodule.h twin.h krootprop.h tdeshortcut.h kkeynative.h tdeaccel.h \
+	kglobalaccel.h tdestdaccel.h tdeshortcutlist.h kcatalogue.h \
 	kregexp.h kcompletion.h kstringhandler.h \
 	kstddirs.h kstandarddirs.h kglobal.h kglobalsettings.h ksharedptr.h \
 	kallocator.h kvmallocator.h kcrash.h krfcdate.h \
 	kinstance.h kpalette.h kipc.h klibloader.h ktempfile.h ksavefile.h \
 	krandomsequence.h knotifyclient.h kiconeffect.h \
-	kaudioplayer.h kdcoppropertyproxy.h netwm.h kaccelmanager.h \
+	kaudioplayer.h kdcoppropertyproxy.h netwm.h tdeaccelmanager.h \
 	netwm_def.h kpixmapprovider.h kunload.h kstaticdeleter.h \
 	kextsock.h kextendedsocket.h ksockaddr.h kprocio.h kasyncio.h \
 	kbufferedio.h kurldrag.h kmimesourcefactory.h kmdcodec.h ksocks.h \
@@ -81,10 +81,10 @@ libtdefakes_pic.a: libtdefakes.la
 	ar cru libtdefakes_pic.a fakes_pic.o vsnprintf_pic.o
 	ranlib libtdefakes_pic.a
 
-noinst_HEADERS = kaccelaction.h kaccelbase.h kaccelprivate.h kckey.h \
+noinst_HEADERS = tdeaccelaction.h tdeaccelbase.h tdeaccelprivate.h kckey.h \
 	kcompletion_private.h netwm_p.h \
 	kglobalaccel_x11.h kglobalaccel_win.h kkeyserver_x11.h kkeyserver.h \
-	kregpriv.h kshortcutmenu.h tdesycocadict.h tdesycocafactory.h netsupp.h \
+	kregpriv.h tdeshortcutmenu.h tdesycocadict.h tdesycocafactory.h netsupp.h \
 	kcheckaccelerators.h kcalendarsystemgregorian.h \
 	kcalendarsystemhijri.h kcalendarsystemhebrew.h kcalendarsystemjalali.h \
 	kprotocolinfofactory.h kqiodevicegzip_p.h kiconloader_p.h
@@ -95,13 +95,13 @@ libtdecore_la_SOURCES = libintl.cpp kapplication.cpp \
 	kstandarddirs.cpp ksock.cpp kpty.cpp kprocess.cpp kprocctrl.cpp \
 	klocale.cpp krfcdate.cpp kiconeffect.cpp kicontheme.cpp \
 	kiconloader.cpp twin.cpp twinmodule.cpp krootprop.cpp kcharsets.cpp \
-	kckey.cpp kshortcut.cpp kkeynative_x11.cpp kkeyserver_x11.cpp \
-	kaccelaction.cpp kshortcutmenu.cpp kaccelbase.cpp kaccel.cpp \
-	kglobalaccel_x11.cpp kglobalaccel.cpp kstdaccel.cpp kshortcutlist.cpp \
+	kckey.cpp tdeshortcut.cpp kkeynative_x11.cpp kkeyserver_x11.cpp \
+	tdeaccelaction.cpp tdeshortcutmenu.cpp tdeaccelbase.cpp tdeaccel.cpp \
+	kglobalaccel_x11.cpp kglobalaccel.cpp tdestdaccel.cpp tdeshortcutlist.cpp \
 	kcrash.cpp kurl.cpp kregexp.cpp kglobal.cpp kglobalsettings.cpp \
 	kallocator.cpp kvmallocator.cpp kmimesourcefactory.cpp \
 	kinstance.cpp kpalette.cpp kipc.cpp klibloader.cpp ktempfile.cpp \
-	kuniqueapplication.cpp kaccelmanager.cpp \
+	kuniqueapplication.cpp tdeaccelmanager.cpp \
 	ksavefile.cpp krandomsequence.cpp kstringhandler.cpp kcompletion.cpp \
 	kcmdlineargs.cpp kaboutdata.cpp kcompletionbase.cpp knotifyclient.cpp \
 	kaudioplayer.cpp kdcoppropertyproxy.cpp \

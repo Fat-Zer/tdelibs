@@ -695,7 +695,7 @@ static KCmdLineOptions options[] = {
    { "nosignal", I18N_NOOP("Do not signal applications to update"), 0 },
    { "noincremental", I18N_NOOP("Disable incremental update, re-read everything"), 0 },
    { "checkstamps", I18N_NOOP("Check file timestamps"), 0 },
-   { "nochectdefiles", I18N_NOOP("Disable checking files (dangerous)"), 0 },
+   { "nocheckfiles", I18N_NOOP("Disable checking files (dangerous)"), 0 },
    { "global", I18N_NOOP("Create global database"), 0 },
    { "menutest", I18N_NOOP("Perform menu generation test run only"), 0 },
    { "track <menu-id>", I18N_NOOP("Track menu id for debug purposes"), 0 },
@@ -798,10 +798,10 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
    }
    fprintf(stderr, "[tdebuildsycoca] %s running...\n", appName);
 
-   bool chectdefiles = bGlobalDatabase || args->isSet("chectdefiles");
+   bool checkfiles = bGlobalDatabase || args->isSet("checkfiles");
 
-   bool incremental = !bGlobalDatabase && args->isSet("incremental") && chectdefiles;
-   if (incremental || !chectdefiles)
+   bool incremental = !bGlobalDatabase && args->isSet("incremental") && checkfiles;
+   if (incremental || !checkfiles)
    {
      KSycoca::self()->disableAutoRebuild(); // Prevent deadlock
      TQString current_language = TDEGlobal::locale()->language();
@@ -814,14 +814,14 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
          (KSycoca::self()->timeStamp() == 0))
      {
         incremental = false;
-        chectdefiles = true;
+        checkfiles = true;
         delete KSycoca::self();
      }
    }
 
    g_changeList = new TQStringList;
 
-   bool checkstamps = incremental && args->isSet("checkstamps") && chectdefiles;
+   bool checkstamps = incremental && args->isSet("checkstamps") && checkfiles;
    TQ_UINT32 filestamp = 0;
    TQStringList oldresourcedirs;
    if( checkstamps && incremental )
@@ -861,7 +861,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
 
    newTimestamp = (TQ_UINT32) time(0);
 
-   if( chectdefiles && ( !checkstamps || !KBuildSycoca::checkTimestamps( filestamp, oldresourcedirs )))
+   if( checkfiles && ( !checkstamps || !KBuildSycoca::checkTimestamps( filestamp, oldresourcedirs )))
    {
       TQCString qSycocaPath = TQFile::encodeName(sycocaPath());
       cSycocaPath = qSycocaPath.data();

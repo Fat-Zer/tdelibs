@@ -24,7 +24,7 @@
 #include "katedocument.h"
 #include "kateview.h"
 
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <klocale.h>
 
 KateBrowserExtension::KateBrowserExtension( KateDocument* doc )

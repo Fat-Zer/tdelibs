@@ -24,17 +24,17 @@
 */
 //$Id$
 
-#ifndef __kactionclasses_h__
-#define __kactionclasses_h__
+#ifndef __tdeactionclasses_h__
+#define __tdeactionclasses_h__
 
-#include <kaction.h>
+#include <tdeaction.h>
 
 #include <tqkeysequence.h>
 #include <tqobject.h>
 #include <tqvaluelist.h>
 #include <tqguardedptr.h>
 #include <kguiitem.h>
-#include <kshortcut.h>
+#include <tdeshortcut.h>
 #include <kstdaction.h>
 #include <kicontheme.h>
 

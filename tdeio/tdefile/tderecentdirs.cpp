@@ -25,7 +25,7 @@
  * SUCH DAMAGE.
  *
  */
-#include <krecentdirs.h>
+#include <tderecentdirs.h>
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
 #include <kglobalsettings.h>
@@ -52,7 +52,7 @@ static TDEConfig *recentdirs_readList(TQString &key, TQStringList &result, bool 
    if (key[1] == ':') 
    {
       key = key.mid(2);
-      config = new KSimpleConfig(TQString::fromLatin1("krecentdirsrc"), readOnly);
+      config = new KSimpleConfig(TQString::fromLatin1("tderecentdirsrc"), readOnly);
    }
    else
    {

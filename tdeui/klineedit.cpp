@@ -33,8 +33,8 @@
 #include <tqtooltip.h>
 #include <kcursor.h>
 #include <klocale.h>
-#include <kstdaccel.h>
-#include <kpopupmenu.h>
+#include <tdestdaccel.h>
+#include <tdepopupmenu.h>
 #include <kdebug.h>
 #include <kcompletionbox.h>
 #include <kurl.h>

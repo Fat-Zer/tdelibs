@@ -23,14 +23,14 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include "kactioncollection.h"
-#include "kactionshortcutlist.h"
-#include "ktoolbar.h"
+#include "tdeactioncollection.h"
+#include "tdeactionshortcutlist.h"
+#include "tdetoolbar.h"
 #include "kxmlguifactory.h"
 #include "kxmlguiclient.h"
 
-#include <kaccel.h>
-#include <kaccelbase.h>
+#include <tdeaccel.h>
+#include <tdeaccelbase.h>
 #include <kapplication.h>
 #include <kdebug.h>
 
@@ -48,7 +48,7 @@ public:
     //m_iWidgetCurrent = 0;
     m_bAutoConnectShortcuts = true;
     m_widget = 0;
-    m_kaccel = m_builderTDEAccel = 0;
+    m_tdeaccel = m_builderTDEAccel = 0;
     m_dctHighlightContainers.setAutoDelete( true );
     m_highlight = false;
     m_currentHighlightAction = 0;
@@ -62,10 +62,10 @@ public:
   //bool m_bOneTDEAccelOnly;
   //int m_iWidgetCurrent;
   //TQValueList<TQWidget*> m_widgetList;
-  //TQValueList<TDEAccel*> m_kaccelList;
+  //TQValueList<TDEAccel*> m_tdeaccelList;
   TQValueList<TDEActionCollection*> m_docList;
   TQWidget *m_widget;
-  TDEAccel *m_kaccel;
+  TDEAccel *m_tdeaccel;
   TDEAccel *m_builderTDEAccel;
 
   TQAsciiDict<TDEAction> m_actionDict;
@@ -84,7 +84,7 @@ TDEActionCollection::TDEActionCollection( TQWidget *parent, const char *name,
   d = new TDEActionCollectionPrivate;
   if( parent )
     setWidget( parent );
-  //d->m_bOneTDEAccelOnly = (d->m_kaccelList.count() > 0);
+  //d->m_bOneTDEAccelOnly = (d->m_tdeaccelList.count() > 0);
   setInstance( instance );
 }
 
@@ -97,7 +97,7 @@ TDEActionCollection::TDEActionCollection( TQWidget *watch, TQObject* parent, con
   d = new TDEActionCollectionPrivate;
   if( watch )
     setWidget( watch );
-  //d->m_bOneTDEAccelOnly = (d->m_kaccelList.count() > 0);
+  //d->m_bOneTDEAccelOnly = (d->m_tdeaccelList.count() > 0);
   setInstance( instance );
 }
 
@@ -113,7 +113,7 @@ TDEActionCollection::TDEActionCollection( TQObject *parent, const char *name,
   TQWidget* w = tqt_dynamic_cast<TQWidget*>( parent );
   if( w )
     setWidget( w );
-  //d->m_bOneTDEAccelOnly = (d->m_kaccelList.count() > 0);
+  //d->m_bOneTDEAccelOnly = (d->m_tdeaccelList.count() > 0);
   setInstance( instance );
 }
 
@@ -144,7 +144,7 @@ TDEActionCollection::~TDEActionCollection()
       pAction->m_parentCollection = 0L;
   }
 
-  delete d->m_kaccel;
+  delete d->m_tdeaccel;
   delete d->m_builderTDEAccel;
   delete d; d = 0;
 }
@@ -158,7 +158,7 @@ void TDEActionCollection::setWidget( TQWidget* w )
   //else
   if ( !d->m_widget ) {
     d->m_widget = w;
-    d->m_kaccel = new TDEAccel( w, this, "TDEActionCollection-TDEAccel" );
+    d->m_tdeaccel = new TDEAccel( w, this, "TDEActionCollection-TDEAccel" );
   }
   else if ( d->m_widget != w )
     kdWarning(129) << "TDEActionCollection::setWidget(): tried to change widget from " << d->m_widget << " to " << w << endl;
@@ -192,13 +192,13 @@ void TDEActionCollection::beginXMLPlug( TQWidget *widget )
 void TDEActionCollection::endXMLPlug()
 {
 	kdDebug(129) << "TDEActionCollection::endXMLPlug(): this = " <<  this << endl;
-	//s_kaccelXML = 0;
+	//s_tdeaccelXML = 0;
 }
 
 void TDEActionCollection::prepareXMLUnplug()
 {
 	kdDebug(129) << "TDEActionCollection::prepareXMLUnplug(): this = " <<  this << endl;
-	unplugShortcuts( d->m_kaccel );
+	unplugShortcuts( d->m_tdeaccel );
 
 	if( d->m_builderTDEAccel ) {
 		unplugShortcuts( d->m_builderTDEAccel );
@@ -207,15 +207,15 @@ void TDEActionCollection::prepareXMLUnplug()
 	}
 }
 
-void TDEActionCollection::unplugShortcuts( TDEAccel* kaccel )
+void TDEActionCollection::unplugShortcuts( TDEAccel* tdeaccel )
 {
   for ( TQAsciiDictIterator<TDEAction> it( d->m_actionDict ); it.current(); ++it ) {
     TDEAction* pAction = it.current();
-    pAction->removeTDEAccel( kaccel );
+    pAction->removeTDEAccel( tdeaccel );
   }
 
   for( uint i = 0; i < d->m_docList.count(); i++ )
-    d->m_docList[i]->unplugShortcuts( kaccel );
+    d->m_docList[i]->unplugShortcuts( tdeaccel );
 }
 
 /*void TDEActionCollection::addWidget( TQWidget* w )
@@ -230,7 +230,7 @@ void TDEActionCollection::unplugShortcuts( TDEAccel* kaccel )
   }
     d->m_iWidgetCurrent = d->m_widgetList.count();
     d->m_widgetList.append( w );
-    d->m_kaccelList.append( new TDEAccel( w, this, "TDEActionCollection-TDEAccel" ) );
+    d->m_tdeaccelList.append( new TDEAccel( w, this, "TDEActionCollection-TDEAccel" ) );
   }
 }
 
@@ -241,7 +241,7 @@ void TDEActionCollection::removeWidget( TQWidget* w )
     for( uint i = 0; i < d->m_widgetList.count(); i++ ) {
       if( d->m_widgetList[i] == w ) {
         // Remove TDEAccel object from children.
-        TDEAccel* pTDEAccel = d->m_kaccelList[i];
+        TDEAccel* pTDEAccel = d->m_tdeaccelList[i];
         for ( TQAsciiDictIterator<TDEAction> it( d->m_actionDict ); it.current(); ++it ) {
           TDEAction* pAction = it.current();
           if ( pAction->m_parentCollection == this ) {
@@ -251,7 +251,7 @@ void TDEActionCollection::removeWidget( TQWidget* w )
         delete pTDEAccel;
 
         d->m_widgetList.remove( d->m_widgetList.at( i ) );
-        d->m_kaccelList.remove( d->m_kaccelList.at( i ) );
+        d->m_tdeaccelList.remove( d->m_tdeaccelList.at( i ) );
 
         if( d->m_iWidgetCurrent == (int)i )
           d->m_iWidgetCurrent = -1;
@@ -276,25 +276,25 @@ uint TDEActionCollection::widgetCount() const
 
 const TDEAccel* TDEActionCollection::widgetTDEAccel( uint i ) const
 {
-  return d->m_kaccelList[i];
+  return d->m_tdeaccelList[i];
 }*/
 
-TDEAccel* TDEActionCollection::kaccel()
+TDEAccel* TDEActionCollection::tdeaccel()
 {
-  //if( d->m_kaccelList.count() > 0 )
-  //  return d->m_kaccelList[d->m_iWidgetCurrent];
+  //if( d->m_tdeaccelList.count() > 0 )
+  //  return d->m_tdeaccelList[d->m_iWidgetCurrent];
   //else
   //  return 0;
-  return d->m_kaccel;
+  return d->m_tdeaccel;
 }
 
-const TDEAccel* TDEActionCollection::kaccel() const
+const TDEAccel* TDEActionCollection::tdeaccel() const
 {
-  //if( d->m_kaccelList.count() > 0 )
-  //  return d->m_kaccelList[d->m_iWidgetCurrent];
+  //if( d->m_tdeaccelList.count() > 0 )
+  //  return d->m_tdeaccelList[d->m_iWidgetCurrent];
   //else
   //  return 0;
-  return d->m_kaccel;
+  return d->m_tdeaccel;
 }
 
 // Return the key to use in d->m_actionDict for the given action.
@@ -334,7 +334,7 @@ void TDEActionCollection::_remove( TDEAction* action )
 
   emit removed( action );
   // note that we delete the action without its parent collection set to 0.
-  // This triggers kaccel::remove, to remove any shortcut.
+  // This triggers tdeaccel::remove, to remove any shortcut.
   delete a;
 }
 
@@ -366,8 +366,8 @@ void TDEActionCollection::insert( TDEAction* action )   { _insert( action ); }
 void TDEActionCollection::remove( TDEAction* action )   { _remove( action ); }
 TDEAction* TDEActionCollection::take( TDEAction* action ) { return _take( action ); }
 void TDEActionCollection::clear()                     { _clear(); }
-TDEAccel* TDEActionCollection::accel()                  { return kaccel(); }
-const TDEAccel* TDEActionCollection::accel() const      { return kaccel(); }
+TDEAccel* TDEActionCollection::accel()                  { return tdeaccel(); }
+const TDEAccel* TDEActionCollection::accel() const      { return tdeaccel(); }
 TDEAccel* TDEActionCollection::builderTDEAccel() const    { return d->m_builderTDEAccel; }
 
 TDEAction* TDEActionCollection::action( const char* name, const char* classname ) const
@@ -651,9 +651,9 @@ TDEActionCollection &TDEActionCollection::operator=( const TDEActionCollection &
   //d->m_bOneTDEAccelOnly = copy.d->m_bOneTDEAccelOnly;
   //d->m_iWidgetCurrent = copy.d->m_iWidgetCurrent;
   //d->m_widgetList = copy.d->m_widgetList;
-  //d->m_kaccelList = copy.d->m_kaccelList;
+  //d->m_tdeaccelList = copy.d->m_tdeaccelList;
   d->m_widget = copy.d->m_widget;
-  d->m_kaccel = copy.d->m_kaccel;
+  d->m_tdeaccel = copy.d->m_tdeaccel;
   d->m_actionDict = copy.d->m_actionDict;
   setInstance( copy.instance() );
   return *this;
@@ -799,4 +799,4 @@ void TDEActionCollection::virtual_hook( int, void* )
 /* vim: et sw=2 ts=2
  */
 
-#include "kactioncollection.moc"
+#include "tdeactioncollection.moc"

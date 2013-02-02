@@ -1,7 +1,7 @@
 #ifndef _TDEUI_TESTS_KMAINWINDOWRESTORETEST_H_
 #define _TDEUI_TESTS_KMAINWINDOWRESTORETEST_H_
 
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 
 class MainWin1 : public TDEMainWindow {
   Q_OBJECT

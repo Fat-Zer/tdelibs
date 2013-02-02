@@ -57,7 +57,7 @@
 #include <tqwhatsthis.h>
 #include <klocale.h>
 #include <kdebug.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kmessagebox.h>
 
 #include "config.h"

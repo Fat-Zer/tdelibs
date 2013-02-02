@@ -77,8 +77,8 @@
 #include <kdatastream.h>
 #include <klibloader.h>
 #include <kmimesourcefactory.h>
-#include <kstdaccel.h>
-#include <kaccel.h>
+#include <tdestdaccel.h>
+#include <tdeaccel.h>
 #include "kcheckaccelerators.h"
 #include <tqptrdict.h>
 #include <kmacroexpander.h>

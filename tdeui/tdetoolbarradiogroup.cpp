@@ -22,9 +22,9 @@
 
 #include <config.h>
 
-#include "ktoolbarradiogroup.h"
-#include "ktoolbar.h"
-#include "ktoolbarbutton.h"
+#include "tdetoolbarradiogroup.h"
+#include "tdetoolbar.h"
+#include "tdetoolbarbutton.h"
 
 /*************************************************************************
  *                          TDEToolBarRadioGroup                                  *
@@ -73,5 +73,5 @@ void TDEToolBarRadioGroup::slotToggled(int id)
   }
 }
 
-#include "ktoolbarradiogroup.moc"
+#include "tdetoolbarradiogroup.moc"
 

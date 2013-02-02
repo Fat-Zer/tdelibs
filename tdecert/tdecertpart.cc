@@ -40,7 +40,7 @@
 #include <kprocess.h>
 #include <tqtabwidget.h>
 #include <kseparator.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <tdeio/kmimemagic.h>
 #include <tqmultilineedit.h>
 #include <tqregexp.h>

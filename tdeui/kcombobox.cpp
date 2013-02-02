@@ -29,12 +29,12 @@
 #include <kcursor.h>
 #include <kiconloader.h>
 #include <kicontheme.h>
-#include <klistviewsearchline.h>
+#include <tdelistviewsearchline.h>
 #include <klineedit.h>
 #include <klocale.h>
 #include <knotifyclient.h>
 #include <kpixmapprovider.h>
-#include <kstdaccel.h>
+#include <tdestdaccel.h>
 #include <kurl.h>
 #include <kurldrag.h>
 

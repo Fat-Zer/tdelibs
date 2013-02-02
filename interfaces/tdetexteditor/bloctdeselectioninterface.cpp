@@ -18,8 +18,8 @@
 
 // $Id$
 
-#include "blockselectioninterface.h"
-#include "blockselectiondcopinterface.h"
+#include "bloctdeselectioninterface.h"
+#include "bloctdeselectiondcopinterface.h"
 #include "document.h"
 
 namespace KTextEditor

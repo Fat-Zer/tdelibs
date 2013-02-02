@@ -37,7 +37,7 @@
 #include <kcursor.h>
 #include <kstandarddirs.h>
 #include <kstaticdeleter.h>
-#include <kstdaccel.h>
+#include <tdestdaccel.h>
 #include <kurldrag.h>
 
 #include <kabc/stdaddressbook.h>

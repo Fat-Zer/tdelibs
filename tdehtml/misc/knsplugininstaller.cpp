@@ -25,7 +25,7 @@
 
 #include <kdebug.h>
 #include <kdiroperator.h> 
-#include <klistview.h>
+#include <tdelistview.h>
 #include <klocale.h>
 #include <kstddirs.h>
 #include <ktempfile.h> 

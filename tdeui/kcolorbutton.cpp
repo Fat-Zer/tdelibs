@@ -26,7 +26,7 @@
 #include <tqclipboard.h>
 #include <tqstyle.h>
 #include <kglobalsettings.h>
-#include <kstdaccel.h>
+#include <tdestdaccel.h>
 #include "kcolordialog.h"
 #include "kcolorbutton.h"
 #include "kcolordrag.h"

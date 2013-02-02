@@ -37,7 +37,7 @@
 #include <kdialog.h>
 #include <klocale.h>
 #include <kiconloader.h>
-#include <ktoolbar.h>
+#include <tdetoolbar.h>
 #include <klineedit.h>
 #include <kdebug.h>
 #include <knotifyclient.h>

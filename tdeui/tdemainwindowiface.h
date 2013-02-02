@@ -109,7 +109,7 @@ k_dcop:
 	Returns a dcop reference to the selected TDEAction
 	@param name The name of the action.  The names of valid
 	actions can be found by calling actions().
-	@return A DCOPRef for the kaction.
+	@return A DCOPRef for the tdeaction.
 	**/
 	DCOPRef action( const TQCString &name );
 

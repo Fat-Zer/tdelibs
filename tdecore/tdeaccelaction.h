@@ -25,7 +25,7 @@
 #include <tqstring.h>
 #include <tqvaluevector.h>
 
-#include <kshortcut.h>
+#include <tdeshortcut.h>
 
 class TDEAccelBase;
 

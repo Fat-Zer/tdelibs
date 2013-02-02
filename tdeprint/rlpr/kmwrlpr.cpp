@@ -28,7 +28,7 @@
 #include <tqlabel.h>
 #include <tqlineedit.h>
 #include <tqheader.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <klocale.h>
 #include <kiconloader.h>
 

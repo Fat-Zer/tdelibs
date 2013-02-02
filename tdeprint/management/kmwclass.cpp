@@ -26,7 +26,7 @@
 #include <tqlayout.h>
 #include <tqlabel.h>
 #include <tqtoolbutton.h>
-#include <klistbox.h>
+#include <tdelistbox.h>
 #include <klocale.h>
 #include <kiconloader.h>
 

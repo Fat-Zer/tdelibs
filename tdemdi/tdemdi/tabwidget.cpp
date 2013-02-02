@@ -40,7 +40,7 @@
 */
 
 #include <ktabbar.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <kdebug.h>
 
 #include <tqobjectlist.h>

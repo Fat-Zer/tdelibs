@@ -26,8 +26,8 @@
 #include <tqvbox.h>
 
 #include <tdeparts/part.h>
-#include <kaccel.h>
-#include <kaction.h>
+#include <tdeaccel.h>
+#include <tdeaction.h>
 #include <klibloader.h>
 #include <ktrader.h>
 #include <kuserprofile.h>
@@ -38,7 +38,7 @@
 #include <kmessagebox.h>
 #include <kdebug.h>
 #include <tdeconfig.h>
-#include <ktoolbar.h>
+#include <tdetoolbar.h>
 #include <kmimetype.h>
 
 KPreviewProc::KPreviewProc()

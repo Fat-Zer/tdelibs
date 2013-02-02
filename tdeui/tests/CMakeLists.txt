@@ -27,21 +27,21 @@ set( test_PROGS
   kcolortest kcolordlgtest kcomboboxtest kcompletiontest
   kdatepicktest kdatewidgettest kdialogbasetest
   kdockwidgetdemo kdockwidgettest
-  kdualcolortest keditlistboxtest kfontdialogtest
+  kdualcolortest keditlistboxtest tdefontdialogtest
   kgradienttest khashtest kdesattest
   kledtest klineedittest klineeditdlgtest
   kmessageboxtest knuminputtest
   kpalettetest
-  kpopuptest kprogresstest krulertest kseparatortest
+  tdepopuptest kprogresstest krulertest kseparatortest
   kstatusbartest ktabctltest
   kunbalancedgrdtest twindowtest kwizardtest
   itemcontainertest kpanelmenutest kedittest
-  kxmlguitest kaccelgentest ksystemtraytest klistviewtest
-  ktextedittest kmainwindowtest kmainwindowrestoretest
-  kactiontest kdatetimewidgettest ktimewidgettest
+  kxmlguitest tdeaccelgentest ksystemtraytest tdelistviewtest
+  ktextedittest tdemainwindowtest tdemainwindowrestoretest
+  tdeactiontest kdatetimewidgettest ktimewidgettest
   tdespelltest kinputdialogtest ktabwidgettest kwordwraptest
   kdocktest qxembedtest ksqueezedtextlabeltest
-  kpixmapregionselectordialogtest kjanuswidgettest ktoolbarlabelactiontest
+  kpixmapregionselectordialogtest kjanuswidgettest tdetoolbarlabelactiontest
 )
 
 foreach( PROG ${test_PROGS} )

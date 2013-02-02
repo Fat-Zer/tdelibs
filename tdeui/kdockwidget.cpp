@@ -36,8 +36,8 @@
 #include <tdeconfig.h>
 #include <kglobal.h>
 #include <klocale.h>
-#include <ktoolbar.h>
-#include <kpopupmenu.h>
+#include <tdetoolbar.h>
+#include <tdepopupmenu.h>
 #include <twin.h>
 #include <kdebug.h>
 #include <kglobalsettings.h>

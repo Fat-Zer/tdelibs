@@ -26,7 +26,7 @@
 
 #include "kateview.h"
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kstdaction.h>
 #include <tdespell.h>
 #include <ksconfig.h>

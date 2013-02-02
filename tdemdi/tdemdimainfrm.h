@@ -33,7 +33,7 @@
 
 #include <tdeparts/dockmainwindow.h>
 #include <kmenubar.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 
 #include <tqptrlist.h>
 #include <tqrect.h>

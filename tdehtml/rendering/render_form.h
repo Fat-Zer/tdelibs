@@ -41,7 +41,7 @@ class QListboxItem;
 #include <tqradiobutton.h>
 #include <tqpushbutton.h>
 #include <tqhbox.h>
-#include <klistbox.h>
+#include <tdelistbox.h>
 #include <kcombobox.h>
 #include "dom/dom_misc.h"
 

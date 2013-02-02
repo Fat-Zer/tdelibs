@@ -30,7 +30,7 @@
 #include "tdelibs_export.h"
 #include <kglobalsettings.h>
 #include <ksortablevaluelist.h>
-#include <kshortcut.h>
+#include <tdeshortcut.h>
 
 class KCompTreeNode;
 class KCompletionPrivate;

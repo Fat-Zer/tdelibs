@@ -25,7 +25,7 @@
 
 #include <kdialogbase.h>
 #include <kicontheme.h>
-#include <klistbox.h>
+#include <tdelistbox.h>
 #include <kurl.h>
 
 class TDEConfig;

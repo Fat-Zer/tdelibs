@@ -813,7 +813,7 @@ void KSpell::checkList2 ()
   // send next word
   if (wlIt != wordlist->end())
   {
-    kdDebug(750) << "KS::cklist2 " << lastpos << ": " << *wlIt << endl;
+    kdDebug(750) << "KS::ctdelist2 " << lastpos << ": " << *wlIt << endl;
 
     d->endOfResponse = false;
     bool put;
@@ -937,7 +937,7 @@ void KSpell::checkList4 ()
   {
   case KS_REPLACE:
   case KS_REPLACEALL:
-    kdDebug(750) << "KS: cklist4: lastpos: " << lastpos << endl;
+    kdDebug(750) << "KS: ctdelist4: lastpos: " << lastpos << endl;
     old = *(--wlIt);
     ++wlIt;
     // replace word

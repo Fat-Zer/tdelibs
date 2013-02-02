@@ -20,7 +20,7 @@
 #define _KSTDACTION_PRIVATE_H_
 
 #include <klocale.h>
-#include <kstdaccel.h>
+#include <tdestdaccel.h>
 
 namespace KStdAction
 {

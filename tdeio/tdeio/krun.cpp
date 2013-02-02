@@ -37,7 +37,7 @@
 #include "tdeio/scheduler.h"
 #include "tdeio/netaccess.h"
 #include "tdefile/kopenwith.h"
-#include "tdefile/krecentdocument.h"
+#include "tdefile/tderecentdocument.h"
 
 #include <kdatastream.h>
 #include <kmessageboxwrapper.h>

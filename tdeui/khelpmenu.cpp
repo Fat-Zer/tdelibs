@@ -30,7 +30,7 @@
 #include <kaboutapplication.h>
 #include <kaboutdata.h>
 #include <kaboutkde.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kapplication.h>
 #include <kbugreport.h>
 #include <kdialogbase.h>
@@ -38,8 +38,8 @@
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kpopupmenu.h>
-#include <kstdaccel.h>
+#include <tdepopupmenu.h>
+#include <tdestdaccel.h>
 #include <kstdaction.h>
 #include <kstandarddirs.h>
 

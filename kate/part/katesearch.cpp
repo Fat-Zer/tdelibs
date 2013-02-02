@@ -696,7 +696,7 @@ bool KateSearch::doSearch( const TQString& text )
     col = foundCol+1;
   }
   while (s.flags.selected && m_view->blockSelectionMode() && found);
-  // in the case we want to search in selection + blockselection we need to loop
+  // in the case we want to search in selection + bloctdeselection we need to loop
 
   if( !found ) return false;
 

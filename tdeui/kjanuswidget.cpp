@@ -41,7 +41,7 @@
 #include <kseparator.h>
 #include <kdebug.h>
 #include "kjanuswidget.h"
-#include <klistview.h>
+#include <tdelistview.h>
 #include "kpushbutton.h"
 #include "kguiitem.h"
 

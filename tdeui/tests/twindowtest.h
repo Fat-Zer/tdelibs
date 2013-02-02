@@ -6,8 +6,8 @@
 #include <tqprogressbar.h>
 #include <kmenubar.h>
 #include <kstatusbar.h>
-#include <ktoolbar.h>
-#include <kmainwindow.h>
+#include <tdetoolbar.h>
+#include <tdemainwindow.h>
 
 class TQMultiLineEdit;
 class TDEToolBarRadioGroup;

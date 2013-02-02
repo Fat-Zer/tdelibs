@@ -30,7 +30,7 @@
 #include <tqfont.h>
 
 #include <tdeconfig.h>
-#include <kaction.h>
+#include <tdeaction.h>
 
 class KateView;
 class KateStyleListItem;

@@ -26,9 +26,9 @@
 #include "css/cssstyleselector.h"
 #include "html/html_imageimpl.h"
 #include "rendering/render_style.h"
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 #include <kcmdlineargs.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include "domtreeview.h"
 #include <tdefiledialog.h>
 

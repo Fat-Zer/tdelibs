@@ -25,7 +25,7 @@
 #include <tqguardedptr.h>
 #include <tqptrlist.h>
 #include <kbookmark.h>
-#include <kaction.h>
+#include <tdeaction.h>
 
 class TDEToolBar;
 class KBookmarkMenu;

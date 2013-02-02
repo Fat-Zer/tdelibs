@@ -35,7 +35,7 @@
 #include <kdebug.h>
 #include <kprinter.h>
 #include <kprocess.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kmessagebox.h>
 #include <klibloader.h>
 

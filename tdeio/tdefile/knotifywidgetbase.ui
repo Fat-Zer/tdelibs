@@ -458,7 +458,7 @@
 </tabstops>
 <includes>
     <include location="global" impldecl="in implementation">kdialog.h</include>
-    <include location="global" impldecl="in implementation">klistview.h</include>
+    <include location="global" impldecl="in implementation">tdelistview.h</include>
     <include location="global" impldecl="in implementation">kurlrequester.h</include>
     <include location="global" impldecl="in implementation">klineedit.h</include>
     <include location="global" impldecl="in implementation">kpushbutton.h</include>

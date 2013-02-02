@@ -10,7 +10,7 @@
 #include <tqtimer.h>
 
 #include <ktabbar.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include "tdemdidocumentviewtabwidget.h"
 
 KMdiDocumentViewTabWidget::KMdiDocumentViewTabWidget( TQWidget* parent, const char* name ) : KTabWidget( parent, name )

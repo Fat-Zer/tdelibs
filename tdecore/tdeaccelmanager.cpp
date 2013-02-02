@@ -17,7 +17,7 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include "kaccelmanager.h"
+#include "tdeaccelmanager.h"
 
 #include <tqapplication.h>
 #include <tqcheckbox.h>
@@ -45,7 +45,7 @@
 #include <kdebug.h>
 
 
-#include "kaccelmanager_private.h"
+#include "tdeaccelmanager_private.h"
 #include "../tdeui/kstdaction_p.h"
 #include "../tdeutils/tdemultitabbar.h"
 
@@ -869,4 +869,4 @@ void TDEAcceleratorManager::setNoAccel( TQWidget *widget )
     TDEAcceleratorManagerPrivate::ignored_widgets[widget] = 1;
 }
 
-#include "kaccelmanager_private.moc"
+#include "tdeaccelmanager_private.moc"

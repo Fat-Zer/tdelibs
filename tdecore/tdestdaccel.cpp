@@ -19,16 +19,16 @@
 */
 #define __KSTDACCEL_CPP_ 1
 
-#include "kstdaccel.h"
+#include "tdestdaccel.h"
 
-#include "kaccelaction.h"
-#include "kaccelbase.h"
+#include "tdeaccelaction.h"
+#include "tdeaccelbase.h"
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <kglobal.h>
 #include <klocale.h>
-#include <kshortcut.h>
-#include <kshortcutlist.h>
+#include <tdeshortcut.h>
+#include <tdeshortcutlist.h>
 
 namespace TDEStdAccel
 {

@@ -11,7 +11,7 @@
 #include <kaboutdata.h>
 #include <kapplication.h>
 #include <kdebug.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <klocale.h>
 #include <kstatusbar.h>
 #include <kstandarddirs.h>

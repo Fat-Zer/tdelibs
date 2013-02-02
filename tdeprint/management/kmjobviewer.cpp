@@ -30,13 +30,13 @@
 #include "kmconfigpage.h"
 #include "kprinter.h"
 
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kstatusbar.h>
 #include <tqpopupmenu.h>
 #include <kmessagebox.h>
 #include <klocale.h>
-#include <kpopupmenu.h>
-#include <kaction.h>
+#include <tdepopupmenu.h>
+#include <tdeaction.h>
 #include <kstdaction.h>
 #include <kiconloader.h>
 #include <kapplication.h>

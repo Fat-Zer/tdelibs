@@ -22,7 +22,7 @@
 #define __DOCKMAINWINDOW_H
 
 #include <tqptrlist.h>
-#include <kaction.h>
+#include <tdeaction.h>
 
 #include <kdockwidget.h>
 

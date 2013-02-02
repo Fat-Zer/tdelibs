@@ -115,7 +115,7 @@ using namespace DOM;
 
 #include "tdehtmlpart_p.h"
 #include "kpassivepopup.h"
-#include "kpopupmenu.h"
+#include "tdepopupmenu.h"
 #include "rendering/render_form.h"
 #include <twin.h>
 

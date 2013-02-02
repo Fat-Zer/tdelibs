@@ -21,7 +21,7 @@
 #define tdefile_tree_view_item_h
 
 #include <tqptrlist.h>
-#include <klistview.h>
+#include <tdelistview.h>
 
 #include <tdefileitem.h>
 #include <tdeio/global.h>

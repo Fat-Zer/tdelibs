@@ -28,9 +28,9 @@ check_PROGRAMS = tdeconfigtestgui klocaletest kprocesstest ksimpleconfigtest \
 	cplusplustest kiconloadertest kresolvertest kmdcodectest knotifytest \
 	ksortablevaluelisttest krfcdatetest testqtargs kprociotest \
 	kcharsetstest kcalendartest kmacroexpandertest kshelltest \
-	kxerrorhandlertest startserviceby kstdacceltest kglobaltest ktimezonestest
+	kxerrorhandlertest startserviceby tdestdacceltest kglobaltest ktimezonestest
 
-TESTS = kurltest kstdacceltest
+TESTS = kurltest tdestdacceltest
 
 noinst_HEADERS = klocaletest.h kprocesstest.h KIDLTest.h \
 		kipctest.h kprociotest.h
@@ -75,7 +75,7 @@ kmacroexpandertest_SOURCES = kmacroexpandertest.cpp
 kshelltest_SOURCES = kshelltest.cpp
 kxerrorhandlertest_SOURCES = kxerrorhandlertest.cpp
 startserviceby_SOURCES = startserviceby.cpp
-kstdacceltest_SOURCES = kstdacceltest.cpp
+tdestdacceltest_SOURCES = tdestdacceltest.cpp
 kglobaltest_SOURCES = kglobaltest.cpp
 ktimezonestest_SOURCES = ktimezonestest.cpp
 

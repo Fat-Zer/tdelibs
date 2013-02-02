@@ -2,7 +2,7 @@
 
 #include <kapplication.h>
 #include <kdebug.h>
-#include <kstdaccel.h>
+#include <tdestdaccel.h>
 #include <stdlib.h> // for exit
 
 static bool check(TQString txt, TQString a, TQString b)
@@ -24,7 +24,7 @@ static bool check(TQString txt, TQString a, TQString b)
 int main(int argc, char *argv[])
 {
   TDEApplication::disableAutoDcopRegistration();
-  TDEApplication app(argc,argv,"kstdacceltest",false,false);
+  TDEApplication app(argc,argv,"tdestdacceltest",false,false);
 
   check( "shortcutDefault FullScreen", TDEStdAccel::shortcutDefault( TDEStdAccel::FullScreen ).toString(), "Ctrl+Shift+F" );
   check( "shortcutDefault BeginningOfLine", TDEStdAccel::shortcutDefault( TDEStdAccel::BeginningOfLine ).toString(), "Home" );

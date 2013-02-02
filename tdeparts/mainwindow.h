@@ -21,9 +21,9 @@
 #define __MAINWINDOW_H
 
 #include <tqptrlist.h>
-#include <kaction.h>
+#include <tdeaction.h>
 
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 
 #include <tdeparts/part.h>
 

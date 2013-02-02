@@ -23,7 +23,7 @@
 #include <tqmap.h>
 #include <tqpopupmenu.h>
 
-#include "kshortcut.h"
+#include "tdeshortcut.h"
 
 class TQLabel;
 

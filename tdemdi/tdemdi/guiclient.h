@@ -1,7 +1,7 @@
 /* This file is part of the KDE libraries
    Copyright (C) 2003 Joseph Wenninger <jowenn@kde.org>
    Copyright (C) 2004 Christoph Cullmann <cullmann@kde.org>
-   based on ktoolbarhandler.cpp: Copyright (C) 2002 Simon Hausmann <hausmann@kde.org>
+   based on tdetoolbarhandler.cpp: Copyright (C) 2002 Simon Hausmann <hausmann@kde.org>
 
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public
@@ -24,7 +24,7 @@
 #include <tqobject.h>
 #include <tqguardedptr.h>
 #include <kxmlguiclient.h>
-#include <kaction.h>
+#include <tdeaction.h>
 
 #include <tdemdi/global.h>
 

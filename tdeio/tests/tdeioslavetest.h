@@ -19,7 +19,7 @@
 #include <tqbuttongroup.h>
 #include <tqwidget.h>
 
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 
 #include "tdeio/job.h"
 #include "tdeio/global.h"

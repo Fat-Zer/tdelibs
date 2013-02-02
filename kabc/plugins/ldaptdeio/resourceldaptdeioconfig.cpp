@@ -29,7 +29,7 @@
 #include <tqhbuttongroup.h>
 #include <tqradiobutton.h>
 
-#include <kaccelmanager.h>
+#include <tdeaccelmanager.h>
 #include <kcombobox.h>
 #include <kdebug.h>
 #include <kdialogbase.h>

@@ -4,7 +4,7 @@
 #include <kmenubar.h>
 #include <tqpopupmenu.h>
 #include <kstatusbar.h>
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 
 class TQMultiLineEdit;
 

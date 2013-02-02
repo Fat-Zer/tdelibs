@@ -22,7 +22,7 @@
 #define DRIVERVIEW_H
 
 #include <tqwidget.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <tqmap.h>
 
 #include <tdelibs_export.h>

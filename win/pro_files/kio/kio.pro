@@ -145,8 +145,8 @@ tdefile/kopenwith.cpp \
 tdefile/kpreviewprops.cpp \
 tdefile/kpreviewwidgetbase.cpp \
 tdefile/kpropertiesdialog.cpp \
-tdefile/krecentdirs.cpp \
-tdefile/krecentdocument.cpp \
+tdefile/tderecentdirs.cpp \
+tdefile/tderecentdocument.cpp \
 tdefile/kurlbar.cpp \
 tdefile/kurlcombobox.cpp \
 tdefile/kurlrequester.cpp \

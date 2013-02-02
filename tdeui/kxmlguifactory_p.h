@@ -24,7 +24,7 @@
 #include <tqdom.h>
 #include <tqvaluestack.h>
 
-#include <kaction.h>
+#include <tdeaction.h>
 
 class TQWidget;
 class KXMLGUIClient;

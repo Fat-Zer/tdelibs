@@ -75,14 +75,14 @@ install( FILES
     kapp.h kapplication.h kuniqueapp.h kuniqueapplication.h
     kcharsets.h tdeversion.h kpty.h kprocess.h kprocctrl.h
     klocale.h kicontheme.h kiconloader.h kdebug.h twinmodule.h
-    twin.h krootprop.h kshortcut.h kkeynative.h kaccel.h
-    kglobalaccel.h kstdaccel.h kshortcutlist.h kcatalogue.h
+    twin.h krootprop.h tdeshortcut.h kkeynative.h tdeaccel.h
+    kglobalaccel.h tdestdaccel.h tdeshortcutlist.h kcatalogue.h
     kregexp.h kcompletion.h kstringhandler.h kstddirs.h
     kstandarddirs.h kglobal.h kglobalsettings.h ksharedptr.h
     kallocator.h kvmallocator.h kcrash.h krfcdate.h kinstance.h
     kpalette.h kipc.h klibloader.h ktempfile.h ksavefile.h
     krandomsequence.h knotifyclient.h kiconeffect.h kaudioplayer.h
-    kdcoppropertyproxy.h netwm.h kaccelmanager.h netwm_def.h
+    kdcoppropertyproxy.h netwm.h tdeaccelmanager.h netwm_def.h
     kpixmapprovider.h kunload.h kstaticdeleter.h kextsock.h
     kextendedsocket.h ksockaddr.h kprocio.h kasyncio.h kbufferedio.h
     kurldrag.h kmimesourcefactory.h kmdcodec.h ksocks.h tdesycoca.h
@@ -126,13 +126,13 @@ set( ${target}_SRCS
   ksock.cpp kpty.cpp kprocess.cpp kprocctrl.cpp klocale.cpp
   krfcdate.cpp kiconeffect.cpp kicontheme.cpp kiconloader.cpp
   twin.cpp twinmodule.cpp krootprop.cpp kcharsets.cpp
-  kckey.cpp kshortcut.cpp kkeynative_x11.cpp kkeyserver_x11.cpp
-  kaccelaction.cpp kshortcutmenu.cpp kaccelbase.cpp kaccel.cpp
-  kglobalaccel_x11.cpp kglobalaccel.cpp kstdaccel.cpp kshortcutlist.cpp
+  kckey.cpp tdeshortcut.cpp kkeynative_x11.cpp kkeyserver_x11.cpp
+  tdeaccelaction.cpp tdeshortcutmenu.cpp tdeaccelbase.cpp tdeaccel.cpp
+  kglobalaccel_x11.cpp kglobalaccel.cpp tdestdaccel.cpp tdeshortcutlist.cpp
   kcrash.cpp kurl.cpp kregexp.cpp kglobal.cpp kglobalsettings.cpp
   kallocator.cpp kvmallocator.cpp kmimesourcefactory.cpp
   kinstance.cpp kpalette.cpp kipc.cpp klibloader.cpp ktempfile.cpp
-  kuniqueapplication.cpp kaccelmanager.cpp ksavefile.cpp
+  kuniqueapplication.cpp tdeaccelmanager.cpp ksavefile.cpp
   krandomsequence.cpp kstringhandler.cpp kcompletion.cpp
   kcmdlineargs.cpp kaboutdata.cpp kcompletionbase.cpp knotifyclient.cpp
   kaudioplayer.cpp kdcoppropertyproxy.cpp ksockaddr.cpp

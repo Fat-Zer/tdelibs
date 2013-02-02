@@ -33,7 +33,7 @@
 #include <kiconloader.h>
 #include <kurlrequester.h>
 #include <tdefile.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kdialog.h>
 
 KMConfigFonts::KMConfigFonts(TQWidget *parent, const char *name)

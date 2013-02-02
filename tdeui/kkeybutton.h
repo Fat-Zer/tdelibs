@@ -21,7 +21,7 @@
 #define _KKEYBUTTON_H_
 
 #include <tqpushbutton.h>
-#include <kshortcut.h>
+#include <tdeshortcut.h>
 
 /**
  * @short A push button that looks like a keyboard key.

@@ -26,7 +26,7 @@
 #include "kxmlguibuilder.h"
 #include <tqmainwindow.h>
 #include <tqmetaobject.h>
-#include <ktoolbar.h>
+#include <tdetoolbar.h>
 
 class TDEPopupMenu;
 class KXMLGUIFactory;
@@ -379,7 +379,7 @@ public:
      *
      * If there is no status bar yet, one will be created.
      *
-     * Note that tooltips for kactions in actionCollection() are not
+     * Note that tooltips for tdeactions in actionCollection() are not
      * automatically connected to this statusBar.
      * See the TDEActionCollection documentation for more details.
      *
@@ -541,7 +541,7 @@ public:
      * know when that status (hidden/shown) of the statusbar has changed.
      * For example:
      * connect(action, TQT_SIGNAL(activated()),
-     *         kmainwindow, TQT_SLOT(setSettingsDirty()));
+     *         tdemainwindow, TQT_SLOT(setSettingsDirty()));
      * Otherwise the status (hidden/show) of the statusbar might not be saved
      * by TDEMainWindow.
      * @since 3.2

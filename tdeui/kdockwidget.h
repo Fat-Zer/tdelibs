@@ -55,13 +55,13 @@
 #include <tqtabwidget.h>
 
 #ifndef NO_KDE2
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 #include <netwm_def.h>
 #else
 
 #include <tqmainwindow.h>
 #include "exportdockclass.h"
-#include "dummykmainwindow.h"
+#include "dummytdemainwindow.h"
 #endif
 
 class KDockSplitter;

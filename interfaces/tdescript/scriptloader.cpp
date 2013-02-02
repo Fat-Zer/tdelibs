@@ -26,7 +26,7 @@
 #include <tdeconfig.h>
 #include <kdesktopfile.h>
 #include <kstandarsdirs.h>
-#include <kstdaccel.h>
+#include <tdestdaccel.h>
 #include <kdebug.h>
 
 #include <tqdir.h>

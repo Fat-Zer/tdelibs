@@ -29,7 +29,7 @@
 #include <tqtimer.h>
 #include <tqtooltip.h>
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kapplication.h>
 #include <klocale.h>
 #include <tdefileitem.h>

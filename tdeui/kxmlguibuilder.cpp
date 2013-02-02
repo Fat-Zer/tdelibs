@@ -21,11 +21,11 @@
 #include "kapplication.h"
 #include "kxmlguibuilder.h"
 #include "kmenubar.h"
-#include "kpopupmenu.h"
-#include "ktoolbar.h"
+#include "tdepopupmenu.h"
+#include "tdetoolbar.h"
 #include "kstatusbar.h"
-#include "kmainwindow.h"
-#include "kaction.h"
+#include "tdemainwindow.h"
+#include "tdeaction.h"
 #include "kglobalsettings.h"
 #include <klocale.h>
 #include <kiconloader.h>
@@ -139,7 +139,7 @@ TQWidget *KXMLGUIBuilder::createContainer( TQWidget *parent, int index, const TQ
   if ( element.tagName().lower() == d->tagMenu )
   {
     // Look up to see if we are inside a mainwindow. If yes, then
-    // use it as parent widget (to get kaction to plug itself into the
+    // use it as parent widget (to get tdeaction to plug itself into the
     // mainwindow). Don't use a popupmenu as parent widget, otherwise
     // the popup won't be hidden if it is used as a standalone menu as well.
     // And we don't want to set the parent for a standalone popupmenu,

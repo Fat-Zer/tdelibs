@@ -16,7 +16,7 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include "ktoolbarlabelaction.h"
+#include "tdetoolbarlabelaction.h"
 
 #include <tqlabel.h>
 #include <tqapplication.h>

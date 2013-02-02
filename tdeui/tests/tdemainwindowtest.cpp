@@ -5,7 +5,7 @@
 #include <kstatusbar.h>
 #include <kmenubar.h>
 
-#include "kmainwindowtest.h"
+#include "tdemainwindowtest.h"
 
 MainWindow::MainWindow()
 {
@@ -24,7 +24,7 @@ void MainWindow::showMessage()
 
 int main( int argc, char **argv )
 {
-    TDEApplication app( argc, argv, "kmainwindowtest" );
+    TDEApplication app( argc, argv, "tdemainwindowtest" );
 
     MainWindow* mw = new MainWindow; // deletes itself when closed
     mw->show();
@@ -32,7 +32,7 @@ int main( int argc, char **argv )
     return app.exec();
 }
 
-#include "kmainwindowtest.moc"
+#include "tdemainwindowtest.moc"
 
 /* vim: et sw=4 ts=4
  */

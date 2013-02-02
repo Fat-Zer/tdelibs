@@ -30,7 +30,7 @@
 
 #ifdef USE_POSIX_ACL
 
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kacl.h>
 #include <tdefileitem.h>
 

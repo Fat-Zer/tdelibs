@@ -39,11 +39,11 @@
 #include <unistd.h>
 #include <stdio.h>
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kcmdlineargs.h>
 #include "katefactory.h"
 #include <tdeio/job.h>
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 #include <ksimpleconfig.h>
 #include <kglobalsettings.h>
 

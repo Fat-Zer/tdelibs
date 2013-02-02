@@ -22,7 +22,7 @@
 #include <tqtimer.h>
 #include <tqpainter.h>
 #include <tqimage.h>
-#include <ktoolbar.h>
+#include <tdetoolbar.h>
 #include <kdebug.h>
 #include <kiconloader.h>
 

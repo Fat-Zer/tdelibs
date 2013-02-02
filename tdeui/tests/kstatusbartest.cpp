@@ -11,7 +11,7 @@
 
 #include "kstatusbar.h"
 #include <kapplication.h>
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 #include <kmenubar.h>
 #include "kstatusbartest.h"
 

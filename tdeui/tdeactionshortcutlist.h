@@ -1,8 +1,8 @@
 #ifndef _KACTIONSHORTCUTLIST_H
 #define _KACTIONSHORTCUTLIST_H
 
-#include <kshortcutlist.h>
-#include <kaction.h>
+#include <tdeshortcutlist.h>
+#include <tdeaction.h>
 
 //---------------------------------------------------------------------
 // class TDEActionShortcutList

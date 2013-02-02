@@ -34,7 +34,7 @@
 #include <kcolorbutton.h>
 #include <kdebug.h>
 #include <kdialog.h> // for spacingHint()
-#include <kfontdialog.h>
+#include <tdefontdialog.h>
 #include <klocale.h>
 #include <kprinter.h>
 #include <kurl.h>

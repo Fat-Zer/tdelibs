@@ -19,8 +19,8 @@
 #ifndef _script_loader_h
 #define _script_loader_h
 #include <tqptrlist.h>
-#include <kmainwindow.h>
-#include <kaction.h>
+#include <tdemainwindow.h>
+#include <tdeaction.h>
 #include <tdescript/scriptinterface.h>
 
 /**

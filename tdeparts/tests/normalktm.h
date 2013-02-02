@@ -3,7 +3,7 @@
 #define __normalktm_h__
 
 #include <tdeparts/part.h>
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 
 class TDEAction;
 class TQWidget;

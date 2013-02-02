@@ -17,7 +17,7 @@
 */
 
 
-#include "kactionselector.h"
+#include "tdeactionselector.h"
 
 #include <klocale.h>
 #include <kiconloader.h>
@@ -537,4 +537,4 @@ int TDEActionSelector::insertionIndex( TQListBox *lb, InsertionPolicy policy )
 }
 
 //END Private Methods
-#include "kactionselector.moc"
+#include "tdeactionselector.moc"

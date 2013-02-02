@@ -35,7 +35,7 @@
 #include <tqpixmap.h>
 #include <tqgridview.h>
 
-#include "kselect.h"
+#include "tdeselect.h"
 
 class TQComboBox;
 class TQLineEdit;

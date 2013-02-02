@@ -19,11 +19,11 @@
 */
 
 #include "config.h"
-#include "kaction.h"
+#include "tdeaction.h"
 #include "kmessagebox.h"
-#include "kshortcut.h"
+#include "tdeshortcut.h"
 #include "ksystemtray.h"
-#include "kpopupmenu.h"
+#include "tdepopupmenu.h"
 #include "kapplication.h"
 #include "klocale.h"
 #include "kaboutdata.h"

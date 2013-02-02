@@ -14,9 +14,9 @@
 #include <khelpmenu.h>
 #include <kcmdlineargs.h>
 #include <kmenubar.h>
-#include <ktoolbarradiogroup.h>
+#include <tdetoolbarradiogroup.h>
 #include <kiconloader.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <tqmultilineedit.h>
 #include "twindowtest.h"
 

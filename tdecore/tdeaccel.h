@@ -21,8 +21,8 @@
 #define _KACCEL_H
 
 #include <tqaccel.h>
-#include <kshortcut.h>
-#include <kstdaccel.h>
+#include <tdeshortcut.h>
+#include <tdestdaccel.h>
 #include "tdelibs_export.h"
 
 class TQPopupMenu; // for obsolete insertItem() methods below

@@ -20,8 +20,8 @@
 #include <kglobal.h>
 #include <tdeconfig.h>
 #include <kiconview.h>
-#include <klistview.h>
-#include <klistbox.h>
+#include <tdelistview.h>
+#include <tdelistbox.h>
 
 #include "itemcontainertest.h"
 

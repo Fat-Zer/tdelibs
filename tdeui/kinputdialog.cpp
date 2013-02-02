@@ -29,7 +29,7 @@
 #include <klineedit.h>
 #include <knuminput.h>
 #include <kcombobox.h>
-#include <klistbox.h>
+#include <tdelistbox.h>
 #include <ktextedit.h>
 
 #include "kinputdialog.h"

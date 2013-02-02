@@ -25,7 +25,7 @@
 #include <kipc.h> 
 #include <kdebug.h>
 
-#include "klistbox.h"
+#include "tdelistbox.h"
 
 TDEListBox::TDEListBox( TQWidget *parent, const char *name, WFlags f )
     : TQListBox( parent, name, f ), d(0)
@@ -263,4 +263,4 @@ void TDEListBox::slotMouseButtonClicked( int btn, TQListBoxItem *item, const TQP
 void TDEListBox::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
-#include "klistbox.moc"
+#include "tdelistbox.moc"

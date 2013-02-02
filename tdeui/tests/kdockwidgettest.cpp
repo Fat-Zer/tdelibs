@@ -19,7 +19,7 @@
 #include <kiconloader.h>
 #include <kstatusbar.h>
 #include <kmenubar.h>
-#include <ktoolbar.h>
+#include <tdetoolbar.h>
 #include <tqvbox.h>
 
 static const char*folder[]={

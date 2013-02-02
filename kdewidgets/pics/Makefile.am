@@ -1,15 +1,15 @@
 kdewidgetsdata_DATA =  klineedit.png ktextbrowser.png kpasswordedit.png kdatewidget.png \
-             kfontrequester.png kurlrequester.png kcombobox.png kiconview.png kintspinbox.png \
+             tdefontrequester.png kurlrequester.png kcombobox.png kiconview.png kintspinbox.png \
              kled.png ksqueezedtextlabel.png  kprogress.png kurllabel.png \
              kruler.png tdecmodule.png kdoublespinbox.png kdoublenuminput.png \
-             klistbox.png klistview.png kactivelabel.png kiconbutton.png \
+             tdelistbox.png tdelistview.png kactivelabel.png kiconbutton.png \
              kcolorcombo.png khsselector.png kcolorbutton.png \
              kgradientselector.png kdualcolorbutton.png ktimewidget.png \
              kpushbutton.png kcharselect.png kdatepicker.png \
-             kdialog.png keditlistbox.png kfontcombo.png khistorycombo.png \
+             kdialog.png keditlistbox.png tdefontcombo.png khistorycombo.png \
              kintnuminput.png krestrictedline.png ktextedit.png \
              kurlcomborequester.png kkeybutton.png kpalettetable.png \
-	     kactionselector.png kdatetable.png kdatetimewidget.png 
+	     tdeactionselector.png kdatetable.png kdatetimewidget.png 
 
 
 kdewidgetsdatadir = $(kde_datadir)/kdewidgets/pics

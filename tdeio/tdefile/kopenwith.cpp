@@ -53,7 +53,7 @@
 #include <dcopclient.h>
 #include <kmimetype.h>
 #include <kservicegroup.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <tdesycoca.h>
 #include <kstdguiitem.h>
 

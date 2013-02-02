@@ -23,9 +23,9 @@
  */
 #include "config.h"
 
-#include "kmainwindow.h"
-#include "kmainwindowiface.h"
-#include "ktoolbarhandler.h"
+#include "tdemainwindow.h"
+#include "tdemainwindowiface.h"
+#include "tdetoolbarhandler.h"
 #include "kwhatsthismanager_p.h"
 #include <tqsessionmanager.h>
 #include <tqobjectlist.h>
@@ -34,8 +34,8 @@
 #include <tqwidgetlist.h>
 #include <tqtimer.h>
 
-#include <kaccel.h>
-#include <kaction.h>
+#include <tdeaccel.h>
+#include <tdeaction.h>
 #include <kapplication.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
@@ -44,7 +44,7 @@
 #include <kstatusbar.h>
 #include <twin.h>
 #include <kedittoolbar.h>
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 
 #include <klocale.h>
 #include <kstandarddirs.h>
@@ -67,7 +67,7 @@ public:
     bool care_about_geometry:1;
     bool shuttingDown:1;
     TQString autoSaveGroup;
-    TDEAccel * kaccel;
+    TDEAccel * tdeaccel;
     TDEMainWindowInterface *m_interface;
     KDEPrivate::ToolBarHandler *toolBarHandler;
     TQTimer* settingsTimer;
@@ -238,7 +238,7 @@ void TDEMainWindow::initTDEMainWindow(const char *name, int cflags)
     d->settingsDirty = false;
     d->autoSaveSettings = false;
     d->autoSaveWindowSize = true; // for compatibility
-    d->kaccel = actionCollection()->kaccel();
+    d->tdeaccel = actionCollection()->tdeaccel();
     d->toolBarHandler = 0;
     d->settingsTimer = 0;
     d->showStatusBarAction = NULL;
@@ -1170,9 +1170,9 @@ TQPtrListIterator<TDEToolBar> TDEMainWindow::toolBarIterator()
 
 TDEAccel * TDEMainWindow::accel()
 {
-    if ( !d->kaccel )
-        d->kaccel = new TDEAccel( this, "kmw-kaccel" );
-    return d->kaccel;
+    if ( !d->tdeaccel )
+        d->tdeaccel = new TDEAccel( this, "kmw-tdeaccel" );
+    return d->tdeaccel;
 }
 
 void TDEMainWindow::paintEvent( TQPaintEvent * pe )
@@ -1245,5 +1245,5 @@ void TDEMainWindow::virtual_hook( int id, void* data )
 
 
 
-#include "kmainwindow.moc"
+#include "tdemainwindow.moc"
 

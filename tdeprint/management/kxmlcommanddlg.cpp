@@ -37,12 +37,12 @@
 #include <tqwhatsthis.h>
 #include <tqapplication.h>
 
-#include <klistview.h>
+#include <tdelistview.h>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kdialogbase.h>
 #include <kseparator.h>
-#include <klistbox.h>
+#include <tdelistbox.h>
 #include <kmimetype.h>
 #include <kmessagebox.h>
 #include <kapplication.h>

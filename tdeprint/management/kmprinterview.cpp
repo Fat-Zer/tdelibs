@@ -26,7 +26,7 @@
 
 #include <tqlayout.h>
 #include <tqpopupmenu.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <klocale.h>
 
 KMPrinterView::KMPrinterView(TQWidget *parent, const char *name)

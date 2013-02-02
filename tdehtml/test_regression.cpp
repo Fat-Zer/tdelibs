@@ -59,11 +59,11 @@
 #define HTML_DEFAULT_VIEW_FANTASY_FONT "helvetica"
 
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kcmdlineargs.h>
 #include "tdehtml_factory.h"
 #include <tdeio/job.h>
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 #include <ksimpleconfig.h>
 #include <kglobalsettings.h>
 

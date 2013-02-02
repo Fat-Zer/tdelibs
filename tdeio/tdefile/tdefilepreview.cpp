@@ -19,7 +19,7 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <tdefilepreview.h>
 #include <tdefilepreview.moc>
 #include <klocale.h>

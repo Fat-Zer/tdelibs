@@ -31,7 +31,7 @@
 
 #include <tqguardedptr.h>
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <tdeio/global.h>
 
 /**

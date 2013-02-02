@@ -22,7 +22,7 @@
 #include "kmthreadjob.h"
 #include "kmfactory.h"
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kdebug.h>
 #include <tdeconfig.h>
 

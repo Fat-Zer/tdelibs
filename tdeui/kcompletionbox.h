@@ -25,7 +25,7 @@
 
 class TQEvent;
 #include <tqstringlist.h>
-#include <klistbox.h>
+#include <tdelistbox.h>
 
 /**
  * @short A helper widget for "completion-widgets" (KLineEdit, KComboBox))

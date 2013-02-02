@@ -17,14 +17,14 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "kmainwindowiface.h"
+#include "tdemainwindowiface.h"
 
 #include <dcopclient.h>
 #include <kapplication.h>
 #include <kdcopactionproxy.h>
 #include <kdcoppropertyproxy.h>
-#include <kmainwindow.h>
-#include <kaction.h>
+#include <tdemainwindow.h>
+#include <tdeaction.h>
 #include <tqclipboard.h>
 
 

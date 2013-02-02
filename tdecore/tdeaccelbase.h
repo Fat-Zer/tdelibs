@@ -26,7 +26,7 @@
 #include <tqvaluevector.h>
 #include <tqvaluelist.h>
 
-#include "kaccelaction.h"
+#include "tdeaccelaction.h"
 #include "kkeyserver.h"
 
 class TQPopupMenu;

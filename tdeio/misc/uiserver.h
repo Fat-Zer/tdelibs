@@ -27,9 +27,9 @@
 #include <tdeio/global.h>
 #include <tdeio/authinfo.h>
 #include <kurl.h>
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 #include <kdatastream.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <ksslcertdlg.h>
 
 class ListProgress;

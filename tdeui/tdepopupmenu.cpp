@@ -27,7 +27,7 @@
 
 #include <tqstyle.h>
 
-#include "kpopupmenu.h"
+#include "tdepopupmenu.h"
 
 #include <kdebug.h>
 #include <kapplication.h>
@@ -691,4 +691,4 @@ void TDEPopupTitle::virtual_hook( int, void* )
 void TDEPopupMenu::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
-#include "kpopupmenu.moc"
+#include "tdepopupmenu.moc"

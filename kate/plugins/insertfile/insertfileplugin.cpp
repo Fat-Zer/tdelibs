@@ -25,7 +25,7 @@
 
 #include <assert.h>
 #include <tdeio/job.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <tdefiledialog.h>
 #include <kgenericfactory.h>
 #include <klocale.h>

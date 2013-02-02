@@ -23,7 +23,7 @@
 #include "kcmenumngr.h"
 #include "kglobal.h"
 #include "tdeconfig.h"
-#include "kshortcut.h"
+#include "tdeshortcut.h"
 
 #undef KeyPress
 #undef None

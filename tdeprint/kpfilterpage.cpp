@@ -26,7 +26,7 @@
 #include <tqtooltip.h>
 #include <tqlayout.h>
 #include <tqwhatsthis.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kmessagebox.h>

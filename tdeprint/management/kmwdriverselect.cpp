@@ -26,7 +26,7 @@
 #include <tqlabel.h>
 #include <tqlayout.h>
 #include <kpushbutton.h>
-#include <klistbox.h>
+#include <tdelistbox.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 

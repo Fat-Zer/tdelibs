@@ -23,7 +23,7 @@
 
 #include <tqdict.h>
 #include <kdialogbase.h>
-#include <klistview.h>
+#include <tdelistview.h>
 
 class TQButtonGroup;
 class TQCheckBox;

@@ -1,5 +1,5 @@
-#include "blockselectiondcopinterface.h"
-#include "blockselectioninterface.h"
+#include "bloctdeselectiondcopinterface.h"
+#include "bloctdeselectioninterface.h"
 
 #include <dcopclient.h>
 using namespace KTextEditor;

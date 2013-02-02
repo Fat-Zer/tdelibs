@@ -28,7 +28,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "kpanelmenu.h"
 #include "kpanelmenu.moc"
-//#include "kaccelmanager.h"
+//#include "tdeaccelmanager.h"
 
 
 class KPanelMenuPrivate

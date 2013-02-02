@@ -21,7 +21,7 @@
 #define KTIMEZONEWIDGET_H
 
 #include <tdelibs_export.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <tqstring.h>
 
 class KTimezone;

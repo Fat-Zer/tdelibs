@@ -25,7 +25,7 @@
 #include <tqlineedit.h>
 #include <tqslider.h>
 #include <tqlabel.h>
-#include <klistbox.h>
+#include <tdelistbox.h>
 #include <tqvbuttongroup.h>
 #include <tqradiobutton.h>
 #include <tqwidgetstack.h>

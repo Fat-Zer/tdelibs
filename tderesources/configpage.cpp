@@ -33,7 +33,7 @@
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
 #include <kurlrequester.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kbuttonbox.h>
 #include <ktrader.h>
 #include <kinputdialog.h>

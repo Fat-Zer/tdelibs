@@ -61,10 +61,10 @@
 #include <kglobal.h>
 #include <kcharsets.h>
 #include <kmessagebox.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kstdaction.h>
 #include <kxmlguifactory.h>
-#include <kaccel.h>
+#include <tdeaccel.h>
 #include <klibloader.h>
 #include <kencodingfiledialog.h>
 #include <tdemultipledrag.h>

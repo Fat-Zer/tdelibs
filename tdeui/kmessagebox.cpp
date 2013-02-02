@@ -36,7 +36,7 @@
 #include <kdebug.h>
 #include <kdialogbase.h>
 #include <kguiitem.h>
-#include <klistbox.h>
+#include <tdelistbox.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <knotifyclient.h>

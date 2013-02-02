@@ -16,14 +16,14 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "ktoolbarhandler.h"
+#include "tdetoolbarhandler.h"
 
 #include <tqpopupmenu.h>
 #include <kapplication.h>
-#include <ktoolbar.h>
-#include <kmainwindow.h>
+#include <tdetoolbar.h>
+#include <tdemainwindow.h>
 #include <klocale.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <assert.h>
 
 namespace
@@ -240,7 +240,7 @@ void ToolBarHandler::connectToActionContainer( TQWidget *container )
              this, TQT_SLOT( setupActions() ) );
 }
 
-#include "ktoolbarhandler.moc"
+#include "tdetoolbarhandler.moc"
 
 /* vim: et sw=4 ts=4
  */

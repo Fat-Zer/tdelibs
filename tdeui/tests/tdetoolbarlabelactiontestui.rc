@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui name="ktoolbarlabelactiontest" version="0.1">
+<kpartgui name="tdetoolbarlabelactiontest" version="0.1">
 <ToolBar>
 <Action name="label1"/>
 <Action name="label2"/>

@@ -28,7 +28,7 @@
 #ifndef _KMDITASKBAR_H_
 #define _KMDITASKBAR_H_
 
-#include <ktoolbar.h>
+#include <tdetoolbar.h>
 #include <tqptrlist.h>
 #include <tqpixmap.h>
 #include <tqlabel.h>

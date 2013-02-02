@@ -24,7 +24,7 @@
 #include <tqobjectlist.h>
 
 #include <kstatusbar.h>
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 #include <kdebug.h>
 #include <tdelibs_export.h>
 #include <tdeparts/part.h>

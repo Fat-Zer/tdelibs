@@ -122,7 +122,7 @@ extern "C" {
 #include <kpreviewprops.h>
 #include <kprocess.h>
 #include <krun.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kacl.h>
 #include "tdefilesharedlg.h"
 

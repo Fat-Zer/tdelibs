@@ -33,7 +33,7 @@
 #include <kiconloader.h>
 #include <knuminput.h>
 #include <klocale.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 
 #include <tqregexp.h>
 #include <tqcheckbox.h>

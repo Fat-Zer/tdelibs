@@ -42,25 +42,25 @@
 #include <tqstyle.h>
 #include <tqlayout.h>
 
-#include <ktoolbar.h>
-#include <kmainwindow.h>
+#include <tdetoolbar.h>
+#include <tdemainwindow.h>
 #include <klineedit.h>
 #include <kseparator.h>
 #include <klocale.h>
 #include <kapplication.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kstdaction.h>
 #include <kglobal.h>
 #include <tdeconfig.h>
 #include <kiconloader.h>
 #include <kcombobox.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <kanimwidget.h>
 #include <kedittoolbar.h>
 #include <kipc.h>
 #include <twin.h>
 #include <kdebug.h>
-#include <ktoolbarbutton.h>
+#include <tdetoolbarbutton.h>
 
 enum {
     CONTEXT_TOP = 0,
@@ -2260,5 +2260,5 @@ void TDEToolBar::removeWidgetInternal( TQWidget * w )
 void TDEToolBar::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
-#include "ktoolbar.moc"
+#include "tdetoolbar.moc"
 

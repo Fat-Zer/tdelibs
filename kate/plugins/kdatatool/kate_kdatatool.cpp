@@ -20,13 +20,13 @@
 #include "kate_kdatatool.h"
 #include "kate_kdatatool.moc"
 #include <kgenericfactory.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <tdetexteditor/view.h>
 #include <kdebug.h>
 #include <kdatatool.h>
 #include <tdetexteditor/document.h>
 #include <tdetexteditor/selectioninterface.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <tdetexteditor/viewcursorinterface.h>
 #include <tdetexteditor/editinterface.h>
 #include <kmessagebox.h>

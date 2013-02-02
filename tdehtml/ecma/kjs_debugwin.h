@@ -34,7 +34,7 @@
 #include <tqptrstack.h>
 #include <tqcheckbox.h>
 #include <kdialogbase.h>
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 #include <tqscrollview.h>
 
 #include <kjs/debugger.h>

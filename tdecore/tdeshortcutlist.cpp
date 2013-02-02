@@ -1,15 +1,15 @@
 #include <tqstring.h>
 #include <tqvariant.h>
 
-#include <kaccel.h>
-#include "kaccelaction.h"
+#include <tdeaccel.h>
+#include "tdeaccelaction.h"
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <kglobal.h>
 #include <kglobalaccel.h>
 #include <kinstance.h>
-#include <kshortcut.h>
-#include "kshortcutlist.h"
+#include <tdeshortcut.h>
+#include "tdeshortcutlist.h"
 
 //---------------------------------------------------------------------
 // TDEShortcutList

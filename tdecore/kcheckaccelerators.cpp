@@ -26,7 +26,7 @@
 #include "config.h"
 
 #include "kcheckaccelerators.h"
-#include "kaccelmanager.h"
+#include "tdeaccelmanager.h"
 #include <tqpopupmenu.h>
 #include <tqapplication.h>
 #include <tqdialog.h>
@@ -42,7 +42,7 @@
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <kglobal.h>
-#include <kshortcut.h>
+#include <tdeshortcut.h>
 #include <klocale.h>
 
 /*

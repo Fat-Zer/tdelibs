@@ -22,14 +22,14 @@
 #include <tqwhatsthis.h>
 
 #include <kaboutdata.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kglobal.h>
 #include <kiconloader.h>
 #include <klocale.h>
-#include <kstdaccel.h>
-#include <kmainwindow.h>
+#include <tdestdaccel.h>
+#include <tdemainwindow.h>
 #include "kstdaction_p.h"
 
 namespace KStdAction

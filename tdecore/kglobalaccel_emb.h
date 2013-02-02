@@ -1,8 +1,8 @@
 #ifndef _KGLOBALACCEL_EMB_H
 #define _KGLOBALACCEL_EMB_H
 
-#include "kaccelbase.h"
-#include "kshortcut.h"
+#include "tdeaccelbase.h"
+#include "tdeshortcut.h"
 
 class TDEGlobalAccelPrivate
 {

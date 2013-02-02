@@ -7,9 +7,9 @@ more logical grouping.
 
 dmalloc.cpp
 kaboutdata.cpp		David Faure <faure@kde.org>
-kaccel.cpp		Ellis Whitehead <ellis@kde.org>
-kaccelaction.cpp	Ellis Whitehead <ellis@kde.org>
-kaccelbase.cpp		Ellis Whitehead <ellis@kde.org>
+tdeaccel.cpp		Ellis Whitehead <ellis@kde.org>
+tdeaccelaction.cpp	Ellis Whitehead <ellis@kde.org>
+tdeaccelbase.cpp		Ellis Whitehead <ellis@kde.org>
 kallocator.cpp		Waldo Bastian <bastian@kde.org>
 kappdcopiface.cpp
 kapplication.cpp	Waldo Bastian <bastian@kde.org>
@@ -56,13 +56,13 @@ kregexp.cpp
 krfcdate.cpp		Waldo Bastian <bastian@kde.org>
 krootprop.cpp   	Lubos Lunak <l.lunak@kde.org>
 ksavefile.cpp		Waldo Bastian <bastian@kde.org>
-kshortcut.cpp		Ellis Whitehead <ellis@kde.org>
+tdeshortcut.cpp		Ellis Whitehead <ellis@kde.org>
 ksimpleconfig.cpp	Waldo Bastian <bastian@kde.org>
 ksocks.cpp
 kstandarddirs.cpp	Waldo Bastian <bastian@kde.org>
 kstartupinfo.cpp	Lubos Lunak <l.lunak@kde.org>
 kstaticdeleter.cpp	Stephan Kulow <coolo@kde.org>
-kstdaccel.cpp		Ellis Whitehead <ellis@kde.org>
+tdestdaccel.cpp		Ellis Whitehead <ellis@kde.org>
 kstringhandler.cpp
 tdesycoca.cpp		Waldo Bastian <bastian@kde.org>
 tdesycocadict.cpp		Waldo Bastian <bastian@kde.org>
@@ -109,7 +109,7 @@ kprotocolinfofactory.cpp	Torben Weis <weis@kde.org> (copyright)
 kprotocolinfofactory.cpp	Waldo Bastian <bastian@kde.org> (copyright)
 kpty.cpp
 kshell.cpp		Oswald Buddenhagen <ossi@kde.org> (copyright)
-kshortcutmenu.cpp	Ellis Whitehead <ellis@kde.org> (copyright)
+tdeshortcutmenu.cpp	Ellis Whitehead <ellis@kde.org> (copyright)
 ktempdir.cpp		Joseph Wenninger <jowenn@kde.org> (copyright)
 kuser.cpp		Tim Jansen <tim@tjansen.de> (copyright)
 kvmallocator.cpp	Waldo Bastian (bastian@kde.org) (copyright)

@@ -29,7 +29,7 @@
 
 #include "kkeyserver_x11.h"
 #include "kkeynative.h"
-#include "kshortcut.h"
+#include "tdeshortcut.h"
 
 #include <tdeconfig.h>
 #include <kdebug.h>
@@ -1020,7 +1020,7 @@ void Variations::init( const KKey& key, bool bQt )
 
 } // end of namespace KKeyServer block
 
-// FIXME: This needs to be moved to kshortcut.cpp, and create a 
+// FIXME: This needs to be moved to tdeshortcut.cpp, and create a 
 //  KKeyServer::method which it will call.
 // Alt+SysReq => Alt+Print
 // Ctrl+Shift+Plus => Ctrl+Plus (en)

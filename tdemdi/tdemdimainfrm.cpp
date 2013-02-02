@@ -49,7 +49,7 @@
 #include <tdeversion.h>
 #include <tqtabwidget.h>
 #include <klocale.h>
-#include <kstdaccel.h>
+#include <tdestdaccel.h>
 
 #include <kiconloader.h>
 #include <tdemdidockcontainer.h>

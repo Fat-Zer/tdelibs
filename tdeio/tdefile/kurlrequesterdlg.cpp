@@ -26,13 +26,13 @@
 #include <tqstring.h>
 #include <tqtoolbutton.h>
 
-#include <kaccel.h>
+#include <tdeaccel.h>
 #include <tdefiledialog.h>
 #include <kglobal.h>
 #include <kiconloader.h>
 #include <klineedit.h>
 #include <klocale.h>
-#include <krecentdocument.h>
+#include <tderecentdocument.h>
 #include <kurl.h>
 #include <kurlrequester.h>
 

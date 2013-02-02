@@ -16,12 +16,12 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "klistviewsearchline.h"
+#include "tdelistviewsearchline.h"
 
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kiconloader.h>
-#include <ktoolbar.h>
-#include <ktoolbarbutton.h>
+#include <tdetoolbar.h>
+#include <tdetoolbarbutton.h>
 #include <kdebug.h>
 #include <klocale.h>
 
@@ -498,4 +498,4 @@ void TDEListViewSearchLineWidget::positionInToolBar()
         d->searchLine->show();
 }
 
-#include "klistviewsearchline.moc"
+#include "tdelistviewsearchline.moc"

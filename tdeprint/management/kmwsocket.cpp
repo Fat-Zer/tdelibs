@@ -22,7 +22,7 @@
 #include "kmwizard.h"
 #include "kmprinter.h"
 
-#include <klistview.h>
+#include <tdelistview.h>
 #include <tqheader.h>
 #include <tqlineedit.h>
 #include <tqlabel.h>

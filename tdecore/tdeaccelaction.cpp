@@ -20,8 +20,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include "kaccelaction.h"
-#include "kaccelbase.h"   // for TDEAccelBase::slotRemoveAction() & emitSignal()
+#include "tdeaccelaction.h"
+#include "tdeaccelbase.h"   // for TDEAccelBase::slotRemoveAction() & emitSignal()
 
 #include <tqkeycode.h>
 
@@ -31,7 +31,7 @@
 #include <kglobal.h>
 #include <kkeynative.h>
 #include <klocale.h>
-#include <kshortcutlist.h>
+#include <tdeshortcutlist.h>
 
 //---------------------------------------------------------------------
 // TDEAccelAction

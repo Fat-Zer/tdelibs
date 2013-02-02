@@ -27,7 +27,7 @@
 #include <tdeparts/part.h>
 #include <tqptrlist.h>
 #include <tqlistview.h>
-#include <klistview.h>
+#include <tdelistview.h>
 
 class KSSLCertBox;
 class TQFrame;

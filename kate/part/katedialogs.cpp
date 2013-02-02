@@ -42,7 +42,7 @@
 #include <tdeio/jobclasses.h>
 #include <tdeio/netaccess.h>
 
-#include <kaccel.h>
+#include <tdeaccel.h>
 #include <kapplication.h>
 #include <kbuttonbox.h>
 #include <kcharsets.h>
@@ -52,20 +52,20 @@
 #include <kcombobox.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
-#include <kfontdialog.h>
+#include <tdefontdialog.h>
 #include <kglobal.h>
 #include <kglobalsettings.h>
 #include <kiconloader.h>
 #include <kkeybutton.h>
 #include <kkeydialog.h>
 #include <klineedit.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kmimetypechooser.h>
 #include <knuminput.h>
 #include <tdeparts/componentfactory.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <kprocess.h>
 #include <kprocio.h>
 #include <kregexpeditorinterface.h>

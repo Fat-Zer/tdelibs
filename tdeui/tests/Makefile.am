@@ -26,21 +26,21 @@ check_PROGRAMS = kaboutdialogtest kblendtest kbuttonboxtest kcharselecttest \
 	kcolortest kcolordlgtest kcomboboxtest kcompletiontest \
 	kdatepicktest kdatewidgettest kdialogbasetest \
 	kdockwidgetdemo kdockwidgettest \
-	kdualcolortest keditlistboxtest kfontdialogtest \
+	kdualcolortest keditlistboxtest tdefontdialogtest \
 	kgradienttest khashtest kdesattest\
 	kledtest klineedittest klineeditdlgtest \
 	kmessageboxtest knuminputtest \
 	kpalettetest \
-	kpopuptest kprogresstest krulertest kseparatortest \
+	tdepopuptest kprogresstest krulertest kseparatortest \
 	kstatusbartest ktabctltest \
 	kunbalancedgrdtest twindowtest kwizardtest \
 	itemcontainertest kpanelmenutest kedittest \
-	kxmlguitest kaccelgentest ksystemtraytest klistviewtest \
-	ktextedittest kmainwindowtest kmainwindowrestoretest \
-	kactiontest kdatetimewidgettest ktimewidgettest \
+	kxmlguitest tdeaccelgentest ksystemtraytest tdelistviewtest \
+	ktextedittest tdemainwindowtest tdemainwindowrestoretest \
+	tdeactiontest kdatetimewidgettest ktimewidgettest \
 	tdespelltest kinputdialogtest ktabwidgettest kwordwraptest \
 	kdocktest qxembedtest ksqueezedtextlabeltest \
-	kpixmapregionselectordialogtest kjanuswidgettest ktoolbarlabelactiontest
+	kpixmapregionselectordialogtest kjanuswidgettest tdetoolbarlabelactiontest
 
 METASOURCES = AUTO
 
@@ -62,7 +62,7 @@ kdialogbasetest_SOURCES = kdialogbasetest.cpp
 kdualcolortest_SOURCES = kdualcolortest.cpp
 kedittest_SOURCES = kedittest.cpp
 keditlistboxtest_SOURCES = keditlistboxtest.cpp
-kfontdialogtest_SOURCES = kfontdialogtest.cpp
+tdefontdialogtest_SOURCES = tdefontdialogtest.cpp
 kgradienttest_SOURCES = kgradienttest.cpp
 khashtest_SOURCES = khashtest.cpp
 kledtest_SOURCES = kledtest.cpp
@@ -71,7 +71,7 @@ klineeditdlgtest_SOURCES = klineeditdlgtest.cpp
 kmessageboxtest_SOURCES = kmessageboxtest.cpp
 knuminputtest_SOURCES = knuminputtest.cpp
 kpalettetest_SOURCES = kpalettetest.cpp
-kpopuptest_SOURCES = kpopuptest.cpp
+tdepopuptest_SOURCES = tdepopuptest.cpp
 kprogresstest_SOURCES = kprogresstest.cpp
 krulertest_SOURCES = krulertest.cpp
 kseparatortest_SOURCES = kseparatortest.cpp
@@ -86,13 +86,13 @@ kpanelmenutest_SOURCES = kpanelmenutest.cpp
 kdockwidgetdemo_SOURCES = kdockwidgetdemo.cpp
 kdockwidgettest_SOURCES = kdockwidgettest.cpp
 kxmlguitest_SOURCES = kxmlguitest.cpp
-kaccelgentest_SOURCES = kaccelgentest.cpp
+tdeaccelgentest_SOURCES = tdeaccelgentest.cpp
 ksystemtraytest_SOURCES = ksystemtraytest.cpp
-klistviewtest_SOURCES = klistviewtest.cpp
+tdelistviewtest_SOURCES = tdelistviewtest.cpp
 ktextedittest_SOURCES = ktextedittest.cpp
-kmainwindowtest_SOURCES = kmainwindowtest.cpp
-kmainwindowrestoretest_SOURCES = kmainwindowrestoretest.cpp
-kactiontest_SOURCES = kactiontest.cpp
+tdemainwindowtest_SOURCES = tdemainwindowtest.cpp
+tdemainwindowrestoretest_SOURCES = tdemainwindowrestoretest.cpp
+tdeactiontest_SOURCES = tdeactiontest.cpp
 tdespelltest_SOURCES = tdespelltest.cpp
 kinputdialogtest_SOURCES = kinputdialogtest.cpp
 ktabwidgettest_SOURCES = ktabwidgettest.cpp
@@ -102,4 +102,4 @@ qxembedtest_SOURCES=qxembedtest.cpp
 ksqueezedtextlabeltest_SOURCES = ksqueezedtextlabeltest.cpp
 kjanuswidgettest_SOURCES = kjanuswidgettest.cpp
 kpixmapregionselectordialogtest_SOURCES = kpixmapregionselectordialogtest.cpp
-ktoolbarlabelactiontest_SOURCES = ktoolbarlabelactiontest.cpp
+tdetoolbarlabelactiontest_SOURCES = tdetoolbarlabelactiontest.cpp

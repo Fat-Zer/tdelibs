@@ -32,11 +32,11 @@
 #include <tqdatetime.h>
 #include <tqvariant.h>
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kdebug.h>
 #include <kinstance.h>
 #include <kglobal.h>
-#include <kshortcut.h>
+#include <tdeshortcut.h>
 #include <kstandarddirs.h>
 #include <kkeydialog.h>
 

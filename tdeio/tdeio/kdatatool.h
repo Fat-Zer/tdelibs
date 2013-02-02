@@ -24,7 +24,7 @@
 #include <tqobject.h>
 #include <tqvaluelist.h>
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kservice.h>
 
 class KDataTool;

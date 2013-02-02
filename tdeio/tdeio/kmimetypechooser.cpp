@@ -20,7 +20,7 @@
 
 #include <tdeconfig.h>
 #include <kiconloader.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <klocale.h>
 #include <kmimetype.h>
 #include <kprocess.h>

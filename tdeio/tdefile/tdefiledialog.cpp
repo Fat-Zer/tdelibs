@@ -42,8 +42,8 @@
 #include <tqwhatsthis.h>
 #include <tqfiledialog.h>
 
-#include <kaccel.h>
-#include <kaction.h>
+#include <tdeaccel.h>
+#include <tdeaction.h>
 #include <kapplication.h>
 #include <kcharsets.h>
 #include <kcmdlineargs.h>
@@ -61,16 +61,16 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kmimetype.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <kprotocolinfo.h>
 #include <kpushbutton.h>
-#include <krecentdirs.h>
+#include <tderecentdirs.h>
 #include <kshell.h>
 #include <kstandarddirs.h>
 #include <kstdguiitem.h>
 #include <kstaticdeleter.h>
-#include <ktoolbar.h>
-#include <ktoolbarbutton.h>
+#include <tdetoolbar.h>
+#include <tdetoolbarbutton.h>
 #include <kurl.h>
 #include <kurlcombobox.h>
 #include <kurlcompletion.h>
@@ -81,7 +81,7 @@
 
 #include <kdirselectdialog.h>
 #include <tdefileview.h>
-#include <krecentdocument.h>
+#include <tderecentdocument.h>
 #include <tdefilefiltercombo.h>
 #include <kdiroperator.h>
 #include <kimagefilepreview.h>

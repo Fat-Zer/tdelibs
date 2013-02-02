@@ -25,10 +25,10 @@
 #include <kcharsets.h>
 #include <tdeconfig.h>
 #include <kglobal.h>
-#include <kfontdialog.h>
+#include <tdefontdialog.h>
 
-#include "kfontcombo.h"
-#include "kfontcombo.moc"
+#include "tdefontcombo.h"
+#include "tdefontcombo.moc"
 
 #include <ft2build.h>
 #include <fontconfig/fontconfig.h>

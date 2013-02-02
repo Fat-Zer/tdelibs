@@ -1,7 +1,7 @@
 #ifndef KMAINWINDOWTEST_H
 #define KMAINWINDOWTEST_H
 
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 
 class MainWindow : public TDEMainWindow
 {

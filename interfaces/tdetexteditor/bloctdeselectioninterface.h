@@ -16,8 +16,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef __tdetexteditor_blockselectioninterface_h__
-#define __tdetexteditor_blockselectioninterface_h__
+#ifndef __tdetexteditor_bloctdeselectioninterface_h__
+#define __tdetexteditor_bloctdeselectioninterface_h__
 
 #include <tdelibs_export.h>
 
@@ -51,7 +51,7 @@ class KTEXTEDITOR_EXPORT BlockSelectionInterface
     /**
     * Returns the status of the selection mode - true indicates block selection mode is on.
     * If this is true, selections applied via the SelectionInterface are handled as
-    * blockselections and the paste functions of the ClipboardInterface works on
+    * bloctdeselections and the paste functions of the ClipboardInterface works on
     * rectangular blocks of text rather than normal. (copy too, but thats clear I hope ;)
     */
     virtual bool blockSelectionMode () = 0;

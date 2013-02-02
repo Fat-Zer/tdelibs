@@ -11,7 +11,7 @@
 #ifndef HELPWINDOW_H
 #define HELPWINDOW_H
 
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 #include <tqtextbrowser.h>
 #include <tqstringlist.h>
 #include <tqmap.h>

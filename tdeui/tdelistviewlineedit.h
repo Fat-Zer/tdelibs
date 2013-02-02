@@ -19,7 +19,7 @@
 #define KLISTVIEWLINEEDIT_H
 
 #include <klineedit.h>
-#include <klistview.h>
+#include <tdelistview.h>
 
 /**
  * the editor for a TDEListView.  please don't use this.

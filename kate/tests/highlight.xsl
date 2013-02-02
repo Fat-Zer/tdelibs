@@ -3,7 +3,7 @@
 <!--
 	This file is freely distributable, created by Wilbert Berendsen (wbsoft@xs4all.nl)
 
-	This is just a simple XSLT file that converts some HTML pages to a XBEL bookmarklist.
+	This is just a simple XSLT file that converts some HTML pages to a XBEL bookmartdelist.
 	It is included here to test the new XSLT highlighting by Peter Lammich.
 	
 	TODO: add better test file.

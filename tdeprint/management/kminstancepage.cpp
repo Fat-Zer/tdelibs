@@ -32,7 +32,7 @@
 #include <tqpushbutton.h>
 #include <kmessagebox.h>
 #include <kinputdialog.h>
-#include <klistbox.h>
+#include <tdelistbox.h>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kstandarddirs.h>

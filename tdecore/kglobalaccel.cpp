@@ -29,9 +29,9 @@
 #endif
 
 #include <tqstring.h>
-#include "kaccelbase.h"
+#include "tdeaccelbase.h"
 #include <kdebug.h>
-#include <kshortcut.h>
+#include <tdeshortcut.h>
 #include <klocale.h>
 
 //----------------------------------------------------

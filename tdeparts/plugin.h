@@ -21,7 +21,7 @@
 #define PLUGIN_H
 
 #include <tqobject.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kxmlguiclient.h>
 
 class TDEInstance;

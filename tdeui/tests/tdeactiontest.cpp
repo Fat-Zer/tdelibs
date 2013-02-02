@@ -2,13 +2,13 @@
 #include <tqguardedptr.h>
 
 #include <kapplication.h>
-#include <kaction.h>
+#include <tdeaction.h>
 
 #include <assert.h>
 
 int main( int argc, char **argv )
 {
-    TDEApplication app( argc, argv, "kactiontest" );
+    TDEApplication app( argc, argv, "tdeactiontest" );
 
     TDEActionCollection coll( static_cast<TQObject *>( 0 ) );
 

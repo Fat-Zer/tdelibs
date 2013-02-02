@@ -20,7 +20,7 @@
 #ifndef SMBVIEW_H
 #define SMBVIEW_H
 
-#include <klistview.h>
+#include <tdelistview.h>
 
 class TDEProcess;
 class KTempFile;

@@ -18,7 +18,7 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kapplication.h>
 #include <kdebug.h>
 #include <klocale.h>

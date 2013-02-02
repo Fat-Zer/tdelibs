@@ -29,7 +29,7 @@
 #endif // Q_MOC_RUN
 
 #ifdef USE_POSIX_ACL
-#include <klistview.h>
+#include <tdelistview.h>
 #include <sys/acl.h>
 #include <kacl.h>
 #include <tdefileitem.h>

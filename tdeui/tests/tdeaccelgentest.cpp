@@ -1,4 +1,4 @@
-#include "kaccelgen.h"
+#include "tdeaccelgen.h"
 
 #include <tqstringlist.h>
 

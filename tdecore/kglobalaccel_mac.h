@@ -3,8 +3,8 @@
 
 #include <tqwidget.h>
 
-#include "kshortcut.h"
-#include "kaccelbase.h"
+#include "tdeshortcut.h"
+#include "tdeaccelbase.h"
 
 class TDEGlobalAccelPrivate: public TDEAccelBase
 {

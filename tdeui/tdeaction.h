@@ -23,15 +23,15 @@
 */
 //$Id$
 
-#ifndef __kaction_h__
-#define __kaction_h__
+#ifndef __tdeaction_h__
+#define __tdeaction_h__
 
 #include <tqkeysequence.h>
 #include <tqobject.h>
 #include <tqvaluelist.h>
 #include <tqguardedptr.h>
 #include <kguiitem.h>
-#include <kshortcut.h>
+#include <tdeshortcut.h>
 #include <kstdaction.h>
 #include <kicontheme.h>
 
@@ -414,7 +414,7 @@ public:
     TQWidget* representative( int index ) const;
     int containerCount() const;
     /// @since 3.1
-    uint kaccelCount() const;
+    uint tdeaccelCount() const;
 
     virtual bool hasIcon() const;
 #ifndef KDE_NO_COMPAT
@@ -626,10 +626,10 @@ signals:
 private:
     void initPrivate( const TQString& text, const TDEShortcut& cut,
                   const TQObject* receiver, const char* slot );
-    TDEAccel* kaccelCurrent();
+    TDEAccel* tdeaccelCurrent();
     bool initShortcut( const TDEShortcut& );
     void plugShortcut();
-    bool updateTDEAccelShortcut( TDEAccel* kaccel );
+    bool updateTDEAccelShortcut( TDEAccel* tdeaccel );
     void insertTDEAccel( TDEAccel* );
     /** @internal To be used exclusively by TDEActionCollection::removeWidget(). */
     void removeTDEAccel( TDEAccel* );
@@ -670,7 +670,7 @@ private:
     TDEActionPrivate* const d;
 };
 
-#include <kactioncollection.h>
-#include <kactionclasses.h>
+#include <tdeactioncollection.h>
+#include <tdeactionclasses.h>
 
 #endif

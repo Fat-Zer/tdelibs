@@ -26,7 +26,7 @@
 #define XEvent void
 #endif
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <klocale.h>
 #include "kvideowidget.h"
 

@@ -21,7 +21,7 @@
 #define KSTDACCEL_H
 
 #include <tqstring.h>
-#include <kshortcut.h>
+#include <tdeshortcut.h>
 #include "tdelibs_export.h"
 
 class TQKeyEvent;
@@ -35,7 +35,7 @@ class TDEAccelActions;
  * so do not hardcode the default behavior.
  *
  * If you want real configurable keybindings in your applications,
- * please checkout the class TDEAccel in kaccel.h
+ * please checkout the class TDEAccel in tdeaccel.h
  * @see TDEAccelShortcutList
  */
 namespace TDEStdAccel

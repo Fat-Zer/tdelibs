@@ -523,17 +523,17 @@ private:
  * of the filters you want to use to a TQStringList and invoke
  * the appropriate filtering function. The examples below show
  * the use of specific filters. The first one uses a single
- * filter called kshorturifilter while the second example uses
+ * filter called tdeshorturifilter while the second example uses
  * multiple filters:
  *
  * \code
  * TQString text = "kde.org";
- * bool filtered = KURIFilter::self()->filterURI( text, "kshorturifilter" );
+ * bool filtered = KURIFilter::self()->filterURI( text, "tdeshorturifilter" );
  * \endcode
  *
  * \code
  * TQStringList list;
- * list << "kshorturifilter" << "localdomainfilter";
+ * list << "tdeshorturifilter" << "localdomainfilter";
  * bool filtered = KURIFilter::self()->filterURI( text, list );
  * \endcode
  *

@@ -24,7 +24,7 @@
 #include <tqpixmap.h>
 #include <tqsplitter.h>
 
-#include <klistbox.h>
+#include <tdelistbox.h>
 #include <tqstringlist.h>
 #include <tqmap.h>
 

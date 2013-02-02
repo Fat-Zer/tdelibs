@@ -18,7 +18,7 @@
 #ifndef DOMTREEVIEW_H
 #define DOMTREEVIEW_H
 
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kdebug.h>
 #include <tqlistview.h>
 #include <tqptrdict.h>

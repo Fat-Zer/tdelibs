@@ -23,7 +23,7 @@
 #include <tqstringlist.h>
 #include <tqvaluestack.h>
 
-#include <kactionclasses.h>
+#include <tdeactionclasses.h>
 #include <kapplication.h>
 #include <kcombobox.h>
 #include <tdeconfig.h>
@@ -33,7 +33,7 @@
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kprotocolinfo.h>
-#include <krecentdirs.h>
+#include <tderecentdirs.h>
 #include <kshell.h>
 #include <kurl.h>
 #include <kurlcompletion.h>

@@ -61,20 +61,20 @@ WhatsThis=A TQCombo Box showing the installed system fonts (with preview)
 Group=Input (KDE)
 
 [TDEFontChooser]
-IncludeFile=kfontdialog.h
-IconSet=kfontcombo.png
+IncludeFile=tdefontdialog.h
+IconSet=tdefontcombo.png
 ToolTip=Font Chooser (KDE)
 WhatsThis=A font type, size and style selection widget complete with preview
 Group=Input (KDE)
 
 [TDEFontRequester]
-IncludeFile=kfontrequester.h
+IncludeFile=tdefontrequester.h
 ToolTip=Font Requester (KDE)
 WhatsThis=A compact font selection and preview widget
 Group=Input (KDE)
 
 [KGradientSelector]
-IncludeFile=kselect.h
+IncludeFile=tdeselect.h
 WhatsThis=A widget that allows the user to select two colors to form a gradient
 Group=Graphics (KDE)
 
@@ -115,7 +115,7 @@ ConstructorArgs=(parent, 0, name)
 
 [TDEListViewSearchLineWidget]
 ToolTip=ListView Search Line Widget (KDE)
-IncludeFile=klistviewsearchline.h
+IncludeFile=tdelistviewsearchline.h
 Group=Input (KDE)
 ConstructorArgs=(0, parent, name)
 
@@ -244,7 +244,7 @@ Group=Display (KDE)
 ConstructorArgs=(parent)
 
 [TDEActionSelector]
-IncludeFile=kactionselector.h
+IncludeFile=tdeactionselector.h
 ToolTip=A widget for selecting and arranging actions/objects
 Group=Views (KDE)
 

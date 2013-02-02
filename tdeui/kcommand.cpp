@@ -19,12 +19,12 @@
 */
 
 #include "kcommand.h"
-#include <kaction.h>
-#include <kstdaccel.h>
+#include <tdeaction.h>
+#include <tdestdaccel.h>
 #include <kstdaction.h>
 #include <kdebug.h>
 #include <klocale.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 
 KCommand::~KCommand()
 {

@@ -34,8 +34,8 @@
 #include <klineedit.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kpopupmenu.h>
-#include <kstdaccel.h>
+#include <tdepopupmenu.h>
+#include <tdestdaccel.h>
 #include <kstdaction.h>
 #include <kstringhandler.h>
 

@@ -20,7 +20,7 @@
 #ifndef PLUGINACTION_H
 #define PLUGINACTION_H
 
-#include <kaction.h>
+#include <tdeaction.h>
 
 class TDEPRINT_EXPORT PluginAction : public TDEAction
 {

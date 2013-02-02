@@ -31,7 +31,7 @@
 #include <tqtimer.h>
 #include <tqvbox.h>
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kdialog.h>
@@ -40,7 +40,7 @@
 #include <kinputdialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <kprogress.h>
 #include <kstdaction.h>
 #include <tdeio/job.h>
@@ -50,7 +50,7 @@
 #include <tdeio/renamedlg.h>
 #include <kpropertiesdialog.h>
 #include <kservicetypefactory.h>
-#include <kstdaccel.h>
+#include <tdestdaccel.h>
 #include <kde_file.h>
 
 #include "config-tdefile.h"

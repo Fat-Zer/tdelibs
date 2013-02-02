@@ -20,7 +20,7 @@
 #include <kdialog.h>
 #include <kdebug.h>
 #include <tdefile.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
 #include <ktimezones.h>

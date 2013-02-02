@@ -25,7 +25,7 @@
  * SUCH DAMAGE.
  *
  */
-#include <krecentdocument.h>
+#include <tderecentdocument.h>
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
 #include <kapplication.h>

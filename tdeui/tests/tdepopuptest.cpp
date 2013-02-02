@@ -1,7 +1,7 @@
 #include <kapplication.h>
 #include <tqwidget.h>
 #include <tqcursor.h>
-#include "kpopupmenu.h"
+#include "tdepopupmenu.h"
 
 class DemoWidget : public TQWidget {
 private:
@@ -30,7 +30,7 @@ public:
 
 int main(int argc, char **argv)
 {
-    TDEApplication app(argc, argv, "kpopupmenutest");
+    TDEApplication app(argc, argv, "tdepopupmenutest");
     DemoWidget w;
     app.setMainWidget(&w);
     w.setFont(TQFont("helvetica", 12, TQFont::Bold), true);

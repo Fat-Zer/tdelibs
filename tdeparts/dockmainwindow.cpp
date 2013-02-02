@@ -22,7 +22,7 @@
 #include <tdeparts/dockmainwindow.h>
 #include <tdeparts/event.h>
 #include <tdeparts/part.h>
-#include <kaccel.h>
+#include <tdeaccel.h>
 #include <tdeparts/plugin.h>
 #include <kstatusbar.h>
 #include <kinstance.h>

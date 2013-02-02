@@ -65,7 +65,7 @@ static void runBuildSycoca(TQObject *callBackObj=0, const char *callBackSlot=0)
    if(checkStamps)
       args.append("--checkstamps");
    if(delayedCheck)
-      args.append("--nochectdefiles");
+      args.append("--nocheckfiles");
    else
       checkStamps = false; // useful only during kded startup
    if (callBackObj)

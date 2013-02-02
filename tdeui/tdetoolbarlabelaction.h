@@ -18,7 +18,7 @@
 #ifndef KTOOLBARLABELACTION_H
 #define KTOOLBARLABELACTION_H
 
-#include <kactionclasses.h>
+#include <tdeactionclasses.h>
 
 class TQLabel;
 

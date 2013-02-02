@@ -31,7 +31,7 @@
 #include <tdefiledialog.h>
 #include <klocale.h>
 #include <kiconloader.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <krun.h>
 #include <kmimetype.h>
 

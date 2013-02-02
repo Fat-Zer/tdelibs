@@ -28,10 +28,10 @@
 #include <kcursor.h>
 #include <kdebug.h>
 #include <kcmenumngr.h>
-#include <kfontdialog.h>
+#include <tdefontdialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kstdaccel.h>
+#include <tdestdaccel.h>
 #include <kurldrag.h>
 
 #include "keditcl.h"

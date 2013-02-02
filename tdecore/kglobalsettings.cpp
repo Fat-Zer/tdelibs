@@ -41,10 +41,10 @@ static QRgb qt_colorref2qrgb(COLORREF col)
 
 #include <kdebug.h>
 #include <kglobal.h>
-#include <kshortcut.h>
+#include <tdeshortcut.h>
 #include <kstandarddirs.h>
 #include <kcharsets.h>
-#include <kaccel.h>
+#include <tdeaccel.h>
 #include <klocale.h>
 #include <tqfontinfo.h>
 #include <stdlib.h>

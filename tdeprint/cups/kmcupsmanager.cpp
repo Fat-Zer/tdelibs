@@ -48,7 +48,7 @@
 #include <tdesocketbase.h>
 #include <klibloader.h>
 #include <kmessagebox.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kdialogbase.h>
 #include <kextendedsocket.h>
 #include <kprocess.h>

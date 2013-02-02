@@ -43,13 +43,13 @@
 #include <tqlayout.h>
 #include <tqpopupmenu.h>
 #include <kmessagebox.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <klocale.h>
 #include <tdeconfig.h>
-#include <ktoolbar.h>
-#include <ktoolbarbutton.h>
+#include <tdetoolbar.h>
+#include <tdetoolbarbutton.h>
 #include <kdebug.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <klibloader.h>
 #include <kdialogbase.h>
 #include <ksimpleconfig.h>

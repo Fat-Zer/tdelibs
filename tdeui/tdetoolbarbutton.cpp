@@ -24,8 +24,8 @@
 #include <config.h>
 #include <string.h>
 
-#include "ktoolbarbutton.h"
-#include "ktoolbar.h"
+#include "tdetoolbarbutton.h"
+#include "tdetoolbar.h"
 
 #include <tqstyle.h>
 #include <tqimage.h>
@@ -46,7 +46,7 @@
 #include <kiconloader.h>
 
 // needed to get our instance
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 
 template class TQIntDict<TDEToolBarButton>;
 
@@ -778,4 +778,4 @@ TDEToolBarButtonList::TDEToolBarButtonList()
 void TDEToolBarButton::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
-#include "ktoolbarbutton.moc"
+#include "tdetoolbarbutton.moc"

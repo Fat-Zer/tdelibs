@@ -34,8 +34,8 @@
 #include <kipc.h>
 #include <kdebug.h>
 
-#include "klistview.h"
-#include "klistviewlineedit.h"
+#include "tdelistview.h"
+#include "tdelistviewlineedit.h"
 
 class TDEListView::Tooltip : public TQToolTip
 {
@@ -2405,7 +2405,7 @@ void TDEListView::selectAll( bool select )
 void TDEListView::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
-#include "klistview.moc"
-#include "klistviewlineedit.moc"
+#include "tdelistview.moc"
+#include "tdelistviewlineedit.moc"
 
 // vim: noet

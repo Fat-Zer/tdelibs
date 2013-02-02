@@ -24,7 +24,7 @@
 #include "kmcupsmanager.h"
 #include "networkscanner.h"
 
-#include <klistview.h>
+#include <tdelistview.h>
 #include <tqheader.h>
 #include <kpushbutton.h>
 #include <tqlineedit.h>

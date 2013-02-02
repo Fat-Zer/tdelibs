@@ -72,7 +72,7 @@
 #include <kprinter.h>
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
-#include <kstdaccel.h>
+#include <tdestdaccel.h>
 #include <kstringhandler.h>
 #include <kurldrag.h>
 

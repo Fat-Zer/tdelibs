@@ -22,7 +22,7 @@
 #include <tqdrawutil.h>
 #include <tqstyle.h>
 #include <kimageeffect.h>
-#include "kselect.h"
+#include "tdeselect.h"
 
 #define STORE_W 8
 #define STORE_W2 STORE_W * 2
@@ -530,5 +530,5 @@ void TDESelector::virtual_hook( int, void* )
 void KGradientSelector::virtual_hook( int id, void* data )
 { TDESelector::virtual_hook( id, data ); }
 
-#include "kselect.moc"
+#include "tdeselect.moc"
 

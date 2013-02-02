@@ -24,12 +24,12 @@ if ( system( $cmd ) != 0 ) {
   exit 1;
 }
 
-chectdefile( $file_h );
-chectdefile( $file_cpp );
+checkfile( $file_h );
+checkfile( $file_cpp );
 
 exit 0;
 
-sub chectdefile()
+sub checkfile()
 {
   my $file = shift;
 

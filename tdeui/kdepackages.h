@@ -693,7 +693,7 @@ const char * const packages[] = {
 "tdeio/zeroconf",
 "tdeio/zip",
 "kiosk",
-"kiosk/tdeiosktool",
+"kiosk/kiosktool",
 "kipiplugins",
 "kipiplugins/GPSSync",
 "kipiplugins/HTMLExport",

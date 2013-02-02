@@ -1,6 +1,6 @@
 /* This file is part of the KDE libraries
   Copyright (C) 2003 Joseph Wenninger <jowenn@kde.org>
-  based on ktoolbarhandler.cpp: Copyright (C) 2002 Simon Hausmann <hausmann@kde.org>
+  based on tdetoolbarhandler.cpp: Copyright (C) 2002 Simon Hausmann <hausmann@kde.org>
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Library General Public
@@ -23,10 +23,10 @@
 #include <tqpopupmenu.h>
 #include <kapplication.h>
 #include <tdeconfig.h>
-#include <ktoolbar.h>
-#include <kmainwindow.h>
+#include <tdetoolbar.h>
+#include <tdemainwindow.h>
 #include <klocale.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <tqstring.h>
 #include <assert.h>
 #include <kdebug.h>
@@ -134,7 +134,7 @@ KMDIGUIClient::KMDIGUIClient( KMdiMainFrm* mdiMainFrm, bool showMDIModeAction, c
 		setXML( completeDescription, false /*merge*/ );
 	}
 
-	if ( actionCollection() ->kaccel() == 0 )
+	if ( actionCollection() ->tdeaccel() == 0 )
 		actionCollection() ->setWidget( mdiMainFrm );
 	m_toolMenu = new TDEActionMenu( i18n( "Tool &Views" ), actionCollection(), "tdemdi_toolview_menu" );
 	if ( showMDIModeAction )

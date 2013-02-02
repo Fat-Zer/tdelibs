@@ -25,7 +25,7 @@
 #include <tqcombobox.h>
 #include <tqlabel.h>
 #include <tqheader.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <tqlayout.h>
 #include <tqwidgetstack.h>
 #include <klocale.h>

@@ -38,7 +38,7 @@
 #include <kmimetype.h>
 #include <klocale.h>
 #include <kregexp.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <kglobalsettings.h>
 #include <kdebug.h>
 #include <kstandarddirs.h>

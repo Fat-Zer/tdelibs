@@ -25,7 +25,7 @@
 
 #include <kdialogbase.h>
 #include <klineedit.h>
-#include <klistview.h>
+#include <tdelistview.h>
 
 #include "addressbook.h"
 

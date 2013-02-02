@@ -23,24 +23,24 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include "kaction.h"
+#include "tdeaction.h"
 
 #include <assert.h>
 
 #include <tqtooltip.h>
 #include <tqwhatsthis.h>
 
-#include <kaccel.h>
-#include <kaccelbase.h>
-#include <kaccelprivate.h>
+#include <tdeaccel.h>
+#include <tdeaccelbase.h>
+#include <tdeaccelprivate.h>
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kguiitem.h>
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 #include <kmenubar.h>
-#include <kpopupmenu.h>
-#include <ktoolbar.h>
-#include <ktoolbarbutton.h>
+#include <tdepopupmenu.h>
+#include <tdetoolbar.h>
+#include <tdetoolbarbutton.h>
 
 #include <ft2build.h>
 #include <X11/Xdefs.h>
@@ -88,12 +88,12 @@ class TDEAction::TDEActionPrivate : public KGuiItem
 public:
   TDEActionPrivate() : KGuiItem()
   {
-    m_kaccel = 0;
+    m_tdeaccel = 0;
     m_configurable = true;
   }
 
-  TDEAccel *m_kaccel;
-  TQValueList<TDEAccel*> m_kaccelList;
+  TDEAccel *m_tdeaccel;
+  TQValueList<TDEAccel*> m_tdeaccelList;
 
   TQString m_groupText;
   TQString m_group;
@@ -223,7 +223,7 @@ TDEAction::~TDEAction()
 {
     kdDebug(129) << "TDEAction::~TDEAction( this = \"" << name() << "\" )" << endl; // -- ellis
 #ifndef KDE_NO_COMPAT
-     if (d->m_kaccel)
+     if (d->m_tdeaccel)
        unplugAccel();
 #endif
 
@@ -231,7 +231,7 @@ TDEAction::~TDEAction()
     if ( m_parentCollection ) {
         m_parentCollection->take( this );
 
-        const TQValueList<TDEAccel*> & accelList = d->m_kaccelList;
+        const TQValueList<TDEAccel*> & accelList = d->m_tdeaccelList;
         TQValueList<TDEAccel*>::const_iterator itr = accelList.constBegin();
         const TQValueList<TDEAccel*>::const_iterator itrEnd = accelList.constEnd();
 
@@ -272,7 +272,7 @@ void TDEAction::initPrivate( const TQString& text, const TDEShortcut& cut,
 
 bool TDEAction::isPlugged() const
 {
-  return (!d->m_containers.empty()) || d->m_kaccel;
+  return (!d->m_containers.empty()) || d->m_tdeaccel;
 }
 
 bool TDEAction::isPlugged( const TQWidget *container ) const
@@ -353,7 +353,7 @@ shortcut may be set:
 
 On Construction: [via initShortcut()]
 	insert into TDEAccel of m_parentCollection,
-		if kaccel() && isAutoConnectShortcuts() exists
+		if tdeaccel() && isAutoConnectShortcuts() exists
 
 On Plug: [via plug() -> plugShortcut()]
 	insert into TDEAccel of m_parentCollection, if exists and not already inserted into
@@ -363,12 +363,12 @@ On Read XML: [via setShortcut()]
 	insert into TDEAccel of m_parentCollection, if exists and not already inserted into
 */
 
-TDEAccel* TDEAction::kaccelCurrent()
+TDEAccel* TDEAction::tdeaccelCurrent()
 {
   if( m_parentCollection && m_parentCollection->builderTDEAccel() )
     return m_parentCollection->builderTDEAccel();
-  else if( m_parentCollection && m_parentCollection->kaccel() )
-    return m_parentCollection->kaccel();
+  else if( m_parentCollection && m_parentCollection->tdeaccel() )
+    return m_parentCollection->tdeaccel();
   else
     return 0L;
 }
@@ -382,9 +382,9 @@ bool TDEAction::initShortcut( const TDEShortcut& cut )
     if( qstrcmp( name(), "unnamed" ) &&
         m_parentCollection &&
         m_parentCollection->isAutoConnectShortcuts() &&
-        m_parentCollection->kaccel() )
+        m_parentCollection->tdeaccel() )
     {
-        insertTDEAccel( m_parentCollection->kaccel() );
+        insertTDEAccel( m_parentCollection->tdeaccel() );
         return true;
     }
     return false;
@@ -393,21 +393,21 @@ bool TDEAction::initShortcut( const TDEShortcut& cut )
 // Only to be called from plug()
 void TDEAction::plugShortcut()
 {
-  TDEAccel* const kaccel = kaccelCurrent();
+  TDEAccel* const tdeaccel = tdeaccelCurrent();
 
-  //kdDebug(129) << "TDEAction::plugShortcut(): this = " << this << " kaccel() = " << (m_parentCollection ? m_parentCollection->kaccel() : 0) << endl;
-  if( kaccel && qstrcmp( name(), "unnamed" ) ) {
+  //kdDebug(129) << "TDEAction::plugShortcut(): this = " << this << " tdeaccel() = " << (m_parentCollection ? m_parentCollection->tdeaccel() : 0) << endl;
+  if( tdeaccel && qstrcmp( name(), "unnamed" ) ) {
     // Check if already plugged into current TDEAccel object
-    const TQValueList<TDEAccel*> & accelList = d->m_kaccelList;
+    const TQValueList<TDEAccel*> & accelList = d->m_tdeaccelList;
     TQValueList<TDEAccel*>::const_iterator itr = accelList.constBegin();
     const TQValueList<TDEAccel*>::const_iterator itrEnd = accelList.constEnd();
 
     for( ; itr != itrEnd; ++itr) {
-      if( (*itr) == kaccel )
+      if( (*itr) == tdeaccel )
         return;
     }
 
-    insertTDEAccel( kaccel );
+    insertTDEAccel( tdeaccel );
   }
 }
 
@@ -416,31 +416,31 @@ bool TDEAction::setShortcut( const TDEShortcut& cut )
   bool bChanged = (d->m_cut != cut);
   d->m_cut = cut;
 
-  TDEAccel* const kaccel = kaccelCurrent();
+  TDEAccel* const tdeaccel = tdeaccelCurrent();
   bool bInsertRequired = true;
   // Apply new shortcut to all existing TDEAccel objects
 
-  const TQValueList<TDEAccel*> & accelList = d->m_kaccelList;
+  const TQValueList<TDEAccel*> & accelList = d->m_tdeaccelList;
   TQValueList<TDEAccel*>::const_iterator itr = accelList.constBegin();
   const TQValueList<TDEAccel*>::const_iterator itrEnd = accelList.constEnd();
 
   for( ; itr != itrEnd; ++itr) {
     // Check whether shortcut has already been plugged into
-    //  the current kaccel object.
-    if( (*itr) == kaccel )
+    //  the current tdeaccel object.
+    if( (*itr) == tdeaccel )
       bInsertRequired = false;
     if( bChanged )
       updateTDEAccelShortcut( *itr );
   }
 
   // Only insert action into TDEAccel if it has a valid name,
-  if( kaccel && bInsertRequired && qstrcmp( name(), "unnamed" ) )
-    insertTDEAccel( kaccel );
+  if( tdeaccel && bInsertRequired && qstrcmp( name(), "unnamed" ) )
+    insertTDEAccel( tdeaccel );
 
   if( bChanged ) {
 #ifndef KDE_NO_COMPAT    // KDE 4: remove
-    if ( d->m_kaccel )
-      d->m_kaccel->setShortcut( name(), cut );
+    if ( d->m_tdeaccel )
+      d->m_tdeaccel->setShortcut( name(), cut );
 #endif    // KDE 4: remove end
       int len = containerCount();
       for( int i = 0; i < len; ++i )
@@ -449,7 +449,7 @@ bool TDEAction::setShortcut( const TDEShortcut& cut )
   return true;
 }
 
-bool TDEAction::updateTDEAccelShortcut( TDEAccel* kaccel )
+bool TDEAction::updateTDEAccelShortcut( TDEAccel* tdeaccel )
 {
   // Check if action is permitted
   if (kapp && !kapp->authorizeTDEAction(name()))
@@ -457,46 +457,46 @@ bool TDEAction::updateTDEAccelShortcut( TDEAccel* kaccel )
 
   bool b = true;
 
-  if ( !kaccel->actions().actionPtr( name() ) ) {
+  if ( !tdeaccel->actions().actionPtr( name() ) ) {
     if(!d->m_cut.isNull() ) {
       kdDebug(129) << "Inserting " << name() << ", " << d->text() << ", " << d->plainText() << endl;
-      b = kaccel->insert( name(), d->plainText(), TQString::null,
+      b = tdeaccel->insert( name(), d->plainText(), TQString::null,
           d->m_cut,
           this, TQT_SLOT(slotActivated()),
           isShortcutConfigurable(), isEnabled() );
     }
   }
   else
-    b = kaccel->setShortcut( name(), d->m_cut );
+    b = tdeaccel->setShortcut( name(), d->m_cut );
 
   return b;
 }
 
-void TDEAction::insertTDEAccel( TDEAccel* kaccel )
+void TDEAction::insertTDEAccel( TDEAccel* tdeaccel )
 {
-  //kdDebug(129) << "TDEAction::insertTDEAccel( " << kaccel << " ): this = " << this << endl;
-  if ( !kaccel->actions().actionPtr( name() ) ) {
-    if( updateTDEAccelShortcut( kaccel ) ) {
-      d->m_kaccelList.append( kaccel );
-      connect( kaccel, TQT_SIGNAL(destroyed()), this, TQT_SLOT(slotDestroyed()) );
+  //kdDebug(129) << "TDEAction::insertTDEAccel( " << tdeaccel << " ): this = " << this << endl;
+  if ( !tdeaccel->actions().actionPtr( name() ) ) {
+    if( updateTDEAccelShortcut( tdeaccel ) ) {
+      d->m_tdeaccelList.append( tdeaccel );
+      connect( tdeaccel, TQT_SIGNAL(destroyed()), this, TQT_SLOT(slotDestroyed()) );
     }
   }
   else
-    kdWarning(129) << "TDEAction::insertTDEAccel( kaccel = " << kaccel << " ): TDEAccel object already contains an action name \"" << name() << "\"" << endl; // -- ellis
+    kdWarning(129) << "TDEAction::insertTDEAccel( tdeaccel = " << tdeaccel << " ): TDEAccel object already contains an action name \"" << name() << "\"" << endl; // -- ellis
 }
 
-void TDEAction::removeTDEAccel( TDEAccel* kaccel )
+void TDEAction::removeTDEAccel( TDEAccel* tdeaccel )
 {
   //kdDebug(129) << "TDEAction::removeTDEAccel( " << i << " ): this = " << this << endl;
-  TQValueList<TDEAccel*> & accelList = d->m_kaccelList;
+  TQValueList<TDEAccel*> & accelList = d->m_tdeaccelList;
   TQValueList<TDEAccel*>::iterator itr = accelList.begin();
   const TQValueList<TDEAccel*>::iterator itrEnd = accelList.end();
 
   for( ; itr != itrEnd; ++itr) {
-    if( (*itr) == kaccel ) {
-      kaccel->remove( name() );
+    if( (*itr) == tdeaccel ) {
+      tdeaccel->remove( name() );
       accelList.remove( itr );
-      disconnect( kaccel, TQT_SIGNAL(destroyed()), this, TQT_SLOT(slotDestroyed()) );
+      disconnect( tdeaccel, TQT_SIGNAL(destroyed()), this, TQT_SLOT(slotDestroyed()) );
       break;
     }
   }
@@ -525,10 +525,10 @@ void TDEAction::updateShortcut( int i )
 
 void TDEAction::updateShortcut( TQPopupMenu* menu, int id )
 {
-  //kdDebug(129) << "TDEAction::updateShortcut(): this = " << this << " d->m_kaccelList.count() = " << d->m_kaccelList.count() << endl;
+  //kdDebug(129) << "TDEAction::updateShortcut(): this = " << this << " d->m_tdeaccelList.count() = " << d->m_tdeaccelList.count() << endl;
   // If the action has a TDEAccel object,
   //  show the string representation of its shortcut.
-  if ( d->m_kaccel || d->m_kaccelList.count() ) {
+  if ( d->m_tdeaccel || d->m_tdeaccelList.count() ) {
     TQString s = menu->text( id );
     int i = s.find( '\t' );
     if ( i >= 0 )
@@ -637,8 +637,8 @@ int TDEAction::plug( TQWidget *w, int index )
   // David: Well, it doesn't matter much, things still work (e.g. Undo in koffice) via TQAccel.
   // We should probably re-enable the warning for things that only TDEAccel can do, though - e.g. WIN key (mapped to Meta).
 #if 0 //ndef NDEBUG
-  TDEAccel* kaccel = kaccelCurrent();
-  if( !d->m_cut.isNull() && !kaccel ) {
+  TDEAccel* tdeaccel = tdeaccelCurrent();
+  if( !d->m_cut.isNull() && !tdeaccel ) {
     kdDebug(129) << "TDEAction::plug(): has no TDEAccel object; this = " << this << " name = " << name() << " parentCollection = " << m_parentCollection << endl; // ellis
   }
 #endif
@@ -654,7 +654,7 @@ int TDEAction::plug( TQWidget *w, int index )
     TQPopupMenu* menu = static_cast<TQPopupMenu*>( w );
     int id;
     // Don't insert shortcut into menu if it's already in a TDEAccel object.
-    int keyQt = (d->m_kaccelList.count() || d->m_kaccel) ? 0 : d->m_cut.keyCodeQt();
+    int keyQt = (d->m_tdeaccelList.count() || d->m_tdeaccel) ? 0 : d->m_cut.keyCodeQt();
 
     if ( d->hasIcon() )
     {
@@ -674,7 +674,7 @@ int TDEAction::plug( TQWidget *w, int index )
 
     // If the shortcut is already in a TDEAccel object, then
     //  we need to set the menu item's shortcut text.
-    if ( d->m_kaccelList.count() || d->m_kaccel )
+    if ( d->m_tdeaccelList.count() || d->m_tdeaccel )
         updateShortcut( menu, id );
 
     // call setItemEnabled only if the item really should be disabled,
@@ -775,7 +775,7 @@ void TDEAction::plugAccel(TDEAccel *kacc, bool configurable)
   kdWarning(129) << "TDEAction::plugAccel(): call to deprecated action." << endl;
   kdDebug(129) << kdBacktrace() << endl;
   //kdDebug(129) << "TDEAction::plugAccel( kacc = " << kacc << " ): name \"" << name() << "\"" << endl;
-  if ( d->m_kaccel )
+  if ( d->m_tdeaccel )
     unplugAccel();
 
   // If the parent collection's accel ptr isn't set yet
@@ -786,13 +786,13 @@ void TDEAction::plugAccel(TDEAccel *kacc, bool configurable)
   //  if it does not already contain an action with the same name.
   if ( !kacc->actions().actionPtr(name()) )
   {
-    d->m_kaccel = kacc;
-    d->m_kaccel->insert(name(), d->plainText(), TQString::null,
+    d->m_tdeaccel = kacc;
+    d->m_tdeaccel->insert(name(), d->plainText(), TQString::null,
         TDEShortcut(d->m_cut),
         this, TQT_SLOT(slotActivated()),
         configurable, isEnabled());
-    connect(d->m_kaccel, TQT_SIGNAL(destroyed()), this, TQT_SLOT(slotDestroyed()));
-    //connect(d->m_kaccel, TQT_SIGNAL(keycodeChanged()), this, TQT_SLOT(slotKeycodeChanged()));
+    connect(d->m_tdeaccel, TQT_SIGNAL(destroyed()), this, TQT_SLOT(slotDestroyed()));
+    //connect(d->m_tdeaccel, TQT_SIGNAL(keycodeChanged()), this, TQT_SLOT(slotKeycodeChanged()));
   }
   else
     kdWarning(129) << "TDEAction::plugAccel( kacc = " << kacc << " ): TDEAccel object already contains an action name \"" << name() << "\"" << endl; // -- ellis
@@ -801,10 +801,10 @@ void TDEAction::plugAccel(TDEAccel *kacc, bool configurable)
 void TDEAction::unplugAccel()
 {
   //kdDebug(129) << "TDEAction::unplugAccel() " << this << " " << name() << endl;
-  if ( d->m_kaccel )
+  if ( d->m_tdeaccel )
   {
-    d->m_kaccel->remove(name());
-    d->m_kaccel = 0;
+    d->m_tdeaccel->remove(name());
+    d->m_tdeaccel = 0;
   }
 }
 
@@ -816,7 +816,7 @@ void TDEAction::plugMainWindowAccel( TQWidget *w )
   while ( !tl->isDialog() && ( n = tl->parentWidget() ) ) // lookup parent and store
     tl = n;
 
-  TDEMainWindow * mw = tqt_dynamic_cast<TDEMainWindow *>(tl); // try to see if it's a kmainwindow
+  TDEMainWindow * mw = tqt_dynamic_cast<TDEMainWindow *>(tl); // try to see if it's a tdemainwindow
   if (mw)
     plugAccel( mw->accel() );
   else
@@ -825,17 +825,17 @@ void TDEAction::plugMainWindowAccel( TQWidget *w )
 
 void TDEAction::setEnabled(bool enable)
 {
-  //kdDebug(129) << "TDEAction::setEnabled( " << enable << " ): this = " << this << " d->m_kaccelList.count() = " << d->m_kaccelList.count() << endl;
+  //kdDebug(129) << "TDEAction::setEnabled( " << enable << " ): this = " << this << " d->m_tdeaccelList.count() = " << d->m_tdeaccelList.count() << endl;
   if ( enable == d->isEnabled() )
     return;
 
 #ifndef KDE_NO_COMPAT
   // KDE 4: remove
-  if (d->m_kaccel)
-    d->m_kaccel->setEnabled(name(), enable);
+  if (d->m_tdeaccel)
+    d->m_tdeaccel->setEnabled(name(), enable);
 #endif  // KDE 4: remove end
 
-  const TQValueList<TDEAccel*> & accelList = d->m_kaccelList;
+  const TQValueList<TDEAccel*> & accelList = d->m_tdeaccelList;
   TQValueList<TDEAccel*>::const_iterator itr = accelList.constBegin();
   const TQValueList<TDEAccel*>::const_iterator itrEnd = accelList.constEnd();
 
@@ -874,13 +874,13 @@ void TDEAction::setText( const TQString& text )
 {
 #ifndef KDE_NO_COMPAT
   // KDE 4: remove
-  if (d->m_kaccel) {
-    TDEAccelAction* pAction = d->m_kaccel->actions().actionPtr(name());
+  if (d->m_tdeaccel) {
+    TDEAccelAction* pAction = d->m_tdeaccel->actions().actionPtr(name());
     if (pAction)
       pAction->setLabel( text );
   }
 #endif  // KDE 4: remove end
-  const TQValueList<TDEAccel*> & accelList = d->m_kaccelList;
+  const TQValueList<TDEAccel*> & accelList = d->m_tdeaccelList;
   TQValueList<TDEAccel*>::const_iterator itr = accelList.constBegin();
   const TQValueList<TDEAccel*>::const_iterator itrEnd = accelList.constEnd();
 
@@ -1074,9 +1074,9 @@ int TDEAction::containerCount() const
   return d->m_containers.count();
 }
 
-uint TDEAction::kaccelCount() const
+uint TDEAction::tdeaccelCount() const
 {
-  return d->m_kaccelList.count();
+  return d->m_tdeaccelList.count();
 }
 
 void TDEAction::addContainer( TQWidget* c, int id )
@@ -1164,13 +1164,13 @@ void TDEAction::slotDestroyed()
   const TQObject* const o = TQT_TQOBJECT_CONST(sender());
 
 #ifndef KDE_NO_COMPAT  // KDE 4: remove
-  if ( o == d->m_kaccel )
+  if ( o == d->m_tdeaccel )
   {
-    d->m_kaccel = 0;
+    d->m_tdeaccel = 0;
     return;
   }
 #endif  // KDE 4: remove end
-  TQValueList<TDEAccel*> & accelList = d->m_kaccelList;
+  TQValueList<TDEAccel*> & accelList = d->m_tdeaccelList;
   TQValueList<TDEAccel*>::iterator itr = accelList.begin();
   const TQValueList<TDEAccel*>::iterator itrEnd = accelList.end();
 
@@ -1258,7 +1258,7 @@ void TDEAction::removeContainer( int index )
 void TDEAction::slotKeycodeChanged()
 {
   kdDebug(129) << "TDEAction::slotKeycodeChanged()" << endl; // -- ellis
-  TDEAccelAction* pAction = d->m_kaccel->actions().actionPtr(name());
+  TDEAccelAction* pAction = d->m_tdeaccel->actions().actionPtr(name());
   if( pAction )
     setShortcut(pAction->shortcut());
 }
@@ -1285,4 +1285,4 @@ void TDEAction::virtual_hook( int, void* )
 /* vim: et sw=2 ts=2
  */
 
-#include "kaction.moc"
+#include "tdeaction.moc"

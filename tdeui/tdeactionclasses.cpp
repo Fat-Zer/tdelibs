@@ -24,7 +24,7 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include "kactionclasses.h"
+#include "tdeactionclasses.h"
 
 #include <assert.h>
 #include <ft2build.h>
@@ -41,18 +41,18 @@
 
 #include <dcopclient.h>
 #include <dcopref.h>
-#include <kaccel.h>
+#include <tdeaccel.h>
 #include <kapplication.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
-#include <kfontcombo.h>
-#include <kfontdialog.h>
+#include <tdefontcombo.h>
+#include <tdefontdialog.h>
 #include <klocale.h>
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 #include <kmenubar.h>
-#include <kpopupmenu.h>
-#include <ktoolbar.h>
-#include <ktoolbarbutton.h>
+#include <tdepopupmenu.h>
+#include <tdetoolbar.h>
+#include <tdetoolbarbutton.h>
 #include <kurl.h>
 #include <kstandarddirs.h>
 #include <kstringhandler.h>
@@ -2027,7 +2027,7 @@ int TDEToggleToolBarAction::plug( TQWidget* w, int index )
     while ( !tl->isDialog() && ( n = tl->parentWidget() ) ) // lookup parent and store
       tl = n;
 
-    TDEMainWindow * mw = tqt_dynamic_cast<TDEMainWindow *>(tl); // try to see if it's a kmainwindow
+    TDEMainWindow * mw = tqt_dynamic_cast<TDEMainWindow *>(tl); // try to see if it's a tdemainwindow
 
     if ( mw )
         m_toolBar = mw->toolBar( m_toolBarName );
@@ -2418,4 +2418,4 @@ void TDEPasteTextAction::virtual_hook( int id, void* data )
 /* vim: et sw=2 ts=2
  */
 
-#include "kactionclasses.moc"
+#include "tdeactionclasses.moc"

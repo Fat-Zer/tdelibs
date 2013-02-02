@@ -20,7 +20,7 @@
 
 #include <klocale.h>
 #include <kbuttonbox.h>
-#include <klistbox.h>
+#include <tdelistbox.h>
 #include <kstdguiitem.h>
 
 #include <tqgroupbox.h>

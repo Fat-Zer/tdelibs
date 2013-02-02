@@ -23,7 +23,7 @@
 #include "kmmanager.h"
 #include "driver.h"
 
-#include <klistbox.h>
+#include <tdelistbox.h>
 #include <kpushbutton.h>
 #include <tqcheckbox.h>
 #include <kcursor.h>

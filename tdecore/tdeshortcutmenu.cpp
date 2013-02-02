@@ -21,10 +21,10 @@
 #include <tqlabel.h>
 #include <tqpopupmenu.h>
 
-#include "kaccelaction.h"
+#include "tdeaccelaction.h"
 #include <kdebug.h>
 #include <kglobalsettings.h>
-#include "kshortcutmenu.h"
+#include "tdeshortcutmenu.h"
 //#include <kkeynative.h>
 
 TDEShortcutMenu::TDEShortcutMenu( TQWidget* pParent, TDEAccelActions* pActions, KKeySequence seq )
@@ -158,4 +158,4 @@ void TDEShortcutMenu::keepItemsMatching( KKey key )
 	updateShortcuts();
 }
 
-#include "kshortcutmenu.moc"
+#include "tdeshortcutmenu.moc"

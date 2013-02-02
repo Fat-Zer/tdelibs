@@ -4,7 +4,7 @@ lib_LTLIBRARIES = libtdetexteditor.la
 
 libtdetexteditor_la_SOURCES = tdetexteditor.cpp \
     editinterface.cpp clipboardinterface.cpp  selectioninterface.cpp searchinterface.cpp \
-    codecompletioninterface.cpp wordwrapinterface.cpp blockselectioninterface.cpp \
+    codecompletioninterface.cpp wordwrapinterface.cpp bloctdeselectioninterface.cpp \
     configinterface.cpp cursorinterface.cpp  dynwordwrapinterface.cpp \
     printinterface.cpp highlightinginterface.cpp markinterface.cpp \
     popupmenuinterface.cpp undointerface.cpp viewcursorinterface.cpp \
@@ -13,8 +13,8 @@ libtdetexteditor_la_SOURCES = tdetexteditor.cpp \
     searchdcopinterface.cpp searchdcopinterface.skel markinterfaceextension.cpp \
     configinterfaceextension.cpp encodinginterface.cpp sessionconfiginterface.cpp \
     viewstatusmsginterface.cpp editorchooser_ui.ui editorchooser.cpp \
-    blockselectiondcopinterface.cpp documentinfo.cpp documentdcopinfo.cpp\
-    blockselectiondcopinterface.skel documentdcopinfo.skel encodingdcopinterface.cpp \
+    bloctdeselectiondcopinterface.cpp documentinfo.cpp documentdcopinfo.cpp\
+    bloctdeselectiondcopinterface.skel documentdcopinfo.skel encodingdcopinterface.cpp \
     encodingdcopinterface.skel printdcopinterface.cpp printdcopinterface.skel \
     undodcopinterface.cpp undodcopinterface.skel viewcursordcopinterface.cpp \
     viewcursordcopinterface.skel viewstatusmsgdcopinterface.cpp \
@@ -29,7 +29,7 @@ tdetexteditorinclude_HEADERS = document.h view.h editor.h plugin.h editinterface
                              selectioninterface.h cursorinterface.h \
                              clipboardinterface.h popupmenuinterface.h \
                              viewcursorinterface.h searchinterface.h highlightinginterface.h \
-                             blockselectioninterface.h codecompletioninterface.h \
+                             bloctdeselectioninterface.h codecompletioninterface.h \
                              configinterface.h markinterface.h printinterface.h wordwrapinterface.h \
                              dynwordwrapinterface.h markinterfaceextension.h configinterfaceextension.h \
                              encodinginterface.h viewstatusmsginterface.h  sessionconfiginterface.h editorchooser.h \

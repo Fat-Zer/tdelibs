@@ -31,7 +31,7 @@
 
 #include <kdialogbase.h>
 #include <klocale.h>
-#include <kaction.h>
+#include <tdeaction.h>
 
 #include "kbookmark.h"
 #include "kbookmarkmanager.h"

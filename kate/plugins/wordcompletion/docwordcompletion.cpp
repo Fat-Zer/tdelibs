@@ -38,7 +38,7 @@
 #include <kdialog.h>
 #include <kgenericfactory.h>
 #include <klocale.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <knotifyclient.h>
 #include <tdeparts/part.h>
 #include <kiconloader.h>

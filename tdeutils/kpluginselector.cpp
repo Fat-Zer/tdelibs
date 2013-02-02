@@ -36,7 +36,7 @@
 
 #include <kdebug.h>
 #include <klocale.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <ksimpleconfig.h>
 #include <kdialog.h>
 #include <kglobal.h>

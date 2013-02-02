@@ -22,7 +22,7 @@
 #include <tqwidgetstack.h>
 #include <tqlabel.h>
 #include <tqpainter.h>
-#include <klistbox.h>
+#include <tdelistbox.h>
 #include <tqlayout.h>
 #include <kseparator.h>
 

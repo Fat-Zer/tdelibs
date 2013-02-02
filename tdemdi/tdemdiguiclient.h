@@ -22,7 +22,7 @@
 #include <tqobject.h>
 #include <tqguardedptr.h>
 #include <kxmlguiclient.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include "tdemdidefines.h"
 
 class TDEMainWindow;

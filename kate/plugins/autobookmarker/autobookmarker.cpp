@@ -28,12 +28,12 @@
 #include <tdetexteditor/documentinfo.h>
 #include <tdetexteditor/document.h>
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kapplication.h>
 #include <tdeconfig.h>
 #include <kgenericfactory.h>
 #include <kiconloader.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <klocale.h>
 #include <kmimetype.h>
 #include <kmimetypechooser.h>

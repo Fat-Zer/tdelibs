@@ -47,12 +47,12 @@
 #include <kglobal.h>
 #include <kmessagebox.h>
 #include <kguiitem.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <kmenubar.h>
-#include <kaction.h>
-#include <kactioncollection.h>
+#include <tdeaction.h>
+#include <tdeactioncollection.h>
 #include <kglobalsettings.h>
-#include <kshortcut.h>
+#include <tdeshortcut.h>
 #include <tdeconfig.h>
 #include <tdeconfigbase.h>
 #include <kapplication.h>

@@ -25,7 +25,7 @@ class KFileItem;
 class TQWidget;
 class TQKeyEvent;
 
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kmimetyperesolver.h>
 
 #include "tdefileview.h"

@@ -49,7 +49,7 @@
 #include <kglobal.h>
 #include <kglobalsettings.h>
 #include <kiconloader.h>
-#include <klistbox.h>
+#include <tdelistbox.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kseparator.h>

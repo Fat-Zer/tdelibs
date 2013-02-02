@@ -23,9 +23,9 @@
 #include <tqmap.h>
 #include <tqwidget.h>
 
-#include "kaccelbase.h"
+#include "tdeaccelbase.h"
 #include "kkeyserver_x11.h"
-#include "kshortcut.h"
+#include "tdeshortcut.h"
 
 /**
  * @internal

@@ -15,7 +15,7 @@
 #include <kapplication.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <klocale.h>
 
 Part1::Part1( TQObject *parent, TQWidget * parentWidget )

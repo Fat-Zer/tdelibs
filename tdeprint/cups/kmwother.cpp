@@ -30,7 +30,7 @@
 #include <tqdict.h>
 
 #include <klocale.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kiconloader.h>
 #include <kdebug.h>
 

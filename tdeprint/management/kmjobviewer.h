@@ -24,7 +24,7 @@
 #warning internal header, do not use except if you are a TDEPrint developer
 #endif
 
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 #include "kmprinterpage.h"
 #include "kpreloadobject.h"
 

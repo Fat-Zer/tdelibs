@@ -14,7 +14,7 @@
 #include <tqpixmap.h>
 #include <tqpopupmenu.h>
 #include <kmenubar.h>
-#include <ktoolbar.h>
+#include <tdetoolbar.h>
 #include <kstatusbar.h>
 #include <tqtoolbutton.h>
 #include <tqiconset.h>

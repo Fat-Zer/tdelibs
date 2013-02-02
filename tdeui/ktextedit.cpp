@@ -27,7 +27,7 @@
 #include <tdespell.h>
 #include <kcursor.h>
 #include <kglobalsettings.h>
-#include <kstdaccel.h>
+#include <tdestdaccel.h>
 #include <kiconloader.h>
 #include <klocale.h>
 

@@ -24,7 +24,7 @@
 #include <tqtooltip.h>
 #include <tqapplication.h>
 
-#include <kaccel.h>
+#include <tdeaccel.h>
 #include <kcombobox.h>
 #include <kdebug.h>
 #include <kdialog.h>

@@ -17,7 +17,7 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include "kshortcutdialog.h"
+#include "tdeshortcutdialog.h"
 
 #include <tqvariant.h>
 
@@ -41,8 +41,8 @@
 # include <kkeyserver.h>
 #endif
 
-#include <kshortcutdialog_simple.h>
-#include <kshortcutdialog_advanced.h>
+#include <tdeshortcutdialog_simple.h>
+#include <tdeshortcutdialog_advanced.h>
 
 #include <tqbuttongroup.h>
 #include <tqcheckbox.h>
@@ -526,4 +526,4 @@ void TDEShortcutDialog::keyPressed( KKey key )
 		TQTimer::singleShot(500, this, TQT_SLOT(accept()));
 }
 
-#include "kshortcutdialog.moc"
+#include "tdeshortcutdialog.moc"

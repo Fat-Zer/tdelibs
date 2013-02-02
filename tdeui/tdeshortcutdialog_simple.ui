@@ -105,7 +105,7 @@
     </grid>
 </widget>
 <includes>
-    <include location="global" impldecl="in declaration">kshortcut.h</include>
+    <include location="global" impldecl="in declaration">tdeshortcut.h</include>
     <include location="global" impldecl="in declaration">kdialog.h</include>
     <include location="global" impldecl="in implementation">kpushbutton.h</include>
 </includes>

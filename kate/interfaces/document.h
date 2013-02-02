@@ -27,7 +27,7 @@
 #include <tdetexteditor/documentinfo.h>
 #include <tdetexteditor/selectioninterface.h>
 #include <tdetexteditor/selectioninterfaceext.h>
-#include <tdetexteditor/blockselectioninterface.h>
+#include <tdetexteditor/bloctdeselectioninterface.h>
 #include <tdetexteditor/searchinterface.h>
 #include <tdetexteditor/highlightinginterface.h>
 #include <tdetexteditor/configinterface.h>
@@ -38,7 +38,7 @@
 #include <tdetexteditor/printinterface.h>
 #include <tdetexteditor/variableinterface.h>
 
-#include <kaction.h>
+#include <tdeaction.h>
 
 class KCompletion;
 

@@ -26,7 +26,7 @@
 
 #include <tqwidget.h>
 #include <tdeprint/kpreloadobject.h>
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 
 class KMManager;
 class KMPrinterView;

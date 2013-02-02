@@ -310,7 +310,7 @@ Following the command, you can have several place holders which will be replaced
 <includes>
     <include location="global" impldecl="in implementation">klineedit.h</include>
     <include location="global" impldecl="in implementation">kurlrequester.h</include>
-    <include location="global" impldecl="in implementation">klistview.h</include>
+    <include location="global" impldecl="in implementation">tdelistview.h</include>
 </includes>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>

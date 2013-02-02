@@ -75,19 +75,19 @@
 #include <kinstance.h>
 
 #include <twin.h>
-#include <kaction.h>
-#include <kpopupmenu.h>
+#include <tdeaction.h>
+#include <tdepopupmenu.h>
 #include <kmessagebox.h>
 #include <kiconloader.h>
 #include <kprogressbox.h>
 #include <kpassdlg.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <kapplication.h>
 #include <tdeconfigdialog.h>
 
 #include <kdirlister.h>
 #include <kstandarddirs.h>
-#include <klistviewsearchline.h>
+#include <tdelistviewsearchline.h>
 #include <kiconviewsearchline.h>
 #include <kstaticdeleter.h>
 #include <kgenericfactory.h>
