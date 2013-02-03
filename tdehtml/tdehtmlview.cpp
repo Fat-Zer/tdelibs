@@ -493,7 +493,7 @@ TDEHTMLView::TDEHTMLView( TDEHTMLPart *part, TQWidget *parent, const char *name)
     d = new TDEHTMLViewPrivate;
     TQScrollView::setVScrollBarMode(d->vmode);
     TQScrollView::setHScrollBarMode(d->hmode);
-    connect(kapp, TQT_SIGNAL(kdisplayPaletteChanged()), this, TQT_SLOT(slotPaletteChanged()));
+    connect(kapp, TQT_SIGNAL(tdedisplayPaletteChanged()), this, TQT_SLOT(slotPaletteChanged()));
     connect(this, TQT_SIGNAL(contentsMoving(int, int)), this, TQT_SLOT(slotScrollBarMoved()));
 
     // initialize QScrollView

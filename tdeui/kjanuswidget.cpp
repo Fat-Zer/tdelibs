@@ -197,7 +197,7 @@ KJanusWidget::KJanusWidget( TQWidget *parent, const char *name, int face )
   }
 
   if ( kapp )
-    connect(kapp,TQT_SIGNAL(kdisplayFontChanged()),TQT_SLOT(slotFontChanged()));
+    connect(kapp,TQT_SIGNAL(tdedisplayFontChanged()),TQT_SLOT(slotFontChanged()));
   mValid = true;
 
   setSwallowedWidget(0); // Set default size if 'mFace' is Swallow.

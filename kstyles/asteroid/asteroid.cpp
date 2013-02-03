@@ -94,7 +94,7 @@ TQ_EXPORT_PLUGIN(AsteroidStylePlugin);
 AsteroidStyle::AsteroidStyle() : KStyle(AllowMenuTransparency)
 {
 	if (tqApp->inherits("TDEApplication")) {
-		connect(tqApp, TQT_SIGNAL(kdisplayPaletteChanged()), TQT_SLOT(paletteChanged()));
+		connect(tqApp, TQT_SIGNAL(tdedisplayPaletteChanged()), TQT_SLOT(paletteChanged()));
 	}
 
 	backwards = TQApplication::reverseLayout();

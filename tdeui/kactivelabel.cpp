@@ -51,7 +51,7 @@ void KActiveLabel::init()
            this, TQT_SLOT(openLink(const TQString &)));
    if (kapp)
    {
-      connect(kapp, TQT_SIGNAL(kdisplayPaletteChanged()),
+      connect(kapp, TQT_SIGNAL(tdedisplayPaletteChanged()),
               this, TQT_SLOT(paletteChanged()));
    }
 }

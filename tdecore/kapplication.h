@@ -1406,7 +1406,7 @@ signals:
    * Normally, widgets will update their palette automatically, but you
    * should connect to this to program special behavior.
    */
-  void kdisplayPaletteChanged();
+  void tdedisplayPaletteChanged();
 
   /**
    * Emitted when TDEApplication has changed its GUI style in response to a KControl request.
@@ -1415,7 +1415,7 @@ signals:
    * respond to an explicit setGUIStyle() call), but you should connect to
    * this to program special behavior.
    */
-  void kdisplayStyleChanged();
+  void tdedisplayStyleChanged();
 
   /**
    * Emitted when TDEApplication has changed its font in response to a KControl request.
@@ -1428,11 +1428,11 @@ signals:
    *       reimplement TQWidget::fontChange(). This is the preferred way
    *       to get informed about font updates.
    */
-  void kdisplayFontChanged();
+  void tdedisplayFontChanged();
 
   /**
    * Emitted when TDEApplication has changed either its GUI style, its font or its palette
-   * in response to a kdisplay request. Normally, widgets will update their styles
+   * in response to a tdedisplay request. Normally, widgets will update their styles
    * automatically, but you should connect to this to program special
    * behavior. */
   void appearanceChanged();
@@ -1528,9 +1528,9 @@ signals:
 
 private:
   void propagateSettings(SettingsCategory category);
-  void kdisplaySetPalette();
-  void kdisplaySetStyle();
-  void kdisplaySetFont();
+  void tdedisplaySetPalette();
+  void tdedisplaySetStyle();
+  void tdedisplaySetFont();
   void applyGUIStyle();
   static void sigpipeHandler(int);
 

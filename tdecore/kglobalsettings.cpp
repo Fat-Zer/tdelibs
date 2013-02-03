@@ -266,7 +266,7 @@ TQColor TDEGlobalSettings::buttonTextColor()
 
 // IMPORTANT:
 //  This function should be kept in sync with
-//   TDEApplication::kdisplaySetPalette()
+//   TDEApplication::tdedisplaySetPalette()
 TQColor TDEGlobalSettings::baseColor()
 {
     TDEConfigGroup g( TDEGlobal::config(), "General" );
@@ -275,7 +275,7 @@ TQColor TDEGlobalSettings::baseColor()
 
 // IMPORTANT:
 //  This function should be kept in sync with
-//   TDEApplication::kdisplaySetPalette()
+//   TDEApplication::tdedisplaySetPalette()
 TQColor TDEGlobalSettings::textColor()
 {
     TDEConfigGroup g( TDEGlobal::config(), "General" );
@@ -284,7 +284,7 @@ TQColor TDEGlobalSettings::textColor()
 
 // IMPORTANT:
 //  This function should be kept in sync with
-//   TDEApplication::kdisplaySetPalette()
+//   TDEApplication::tdedisplaySetPalette()
 TQColor TDEGlobalSettings::highlightedTextColor()
 {
     TDEConfigGroup g( TDEGlobal::config(), "General" );
@@ -293,7 +293,7 @@ TQColor TDEGlobalSettings::highlightedTextColor()
 
 // IMPORTANT:
 //  This function should be kept in sync with
-//   TDEApplication::kdisplaySetPalette()
+//   TDEApplication::tdedisplaySetPalette()
 TQColor TDEGlobalSettings::highlightColor()
 {
     initColors();

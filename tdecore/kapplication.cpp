@@ -953,9 +953,9 @@ void TDEApplication::init(bool GUIenabled)
         }
 
     }
-    kdisplaySetStyle();
-    kdisplaySetFont();
-//    kdisplaySetPalette(); done by kdisplaySetStyle
+    tdedisplaySetStyle();
+    tdedisplaySetFont();
+//    tdedisplaySetPalette(); done by tdedisplaySetStyle
     propagateSettings(SETTINGS_QT);
 
     // Set default mime-source factory
@@ -2124,7 +2124,7 @@ bool TDEApplication::x11EventFilter( XEvent *_event )
             {
             case KIPC::StyleChanged:
                 TDEGlobal::config()->reparseConfiguration();
-                kdisplaySetStyle();
+                tdedisplaySetStyle();
                 break;
 
             case KIPC::ToolbarStyleChanged:
@@ -2135,13 +2135,13 @@ bool TDEApplication::x11EventFilter( XEvent *_event )
 
             case KIPC::PaletteChanged:
                 TDEGlobal::config()->reparseConfiguration();
-                kdisplaySetPalette();
+                tdedisplaySetPalette();
                 break;
 
             case KIPC::FontChanged:
                 TDEGlobal::config()->reparseConfiguration();
                 TDEGlobalSettings::rereadFontSettings();
-                kdisplaySetFont();
+                tdedisplaySetFont();
                 break;
 
             case KIPC::BackgroundChanged:
@@ -2296,7 +2296,7 @@ void TDEApplication::applyGUIStyle()
     else
         setStyle(d->overrideStyle);
     // Reread palette from config file.
-    kdisplaySetPalette();
+    tdedisplaySetPalette();
 }
 
 TQString TDEApplication::caption() const
@@ -2435,7 +2435,7 @@ TQPalette TDEApplication::createApplicationPalette( TDEConfig *config, int contr
 }
 
 
-void TDEApplication::kdisplaySetPalette()
+void TDEApplication::tdedisplaySetPalette()
 {
 #ifdef Q_WS_MACX
     //Can I have this on other platforms, please!? --Sam
@@ -2448,12 +2448,12 @@ void TDEApplication::kdisplaySetPalette()
     }
 #endif
     TQApplication::setPalette( createApplicationPalette(), true);
-    emit kdisplayPaletteChanged();
+    emit tdedisplayPaletteChanged();
     emit appearanceChanged();
 }
 
 
-void TDEApplication::kdisplaySetFont()
+void TDEApplication::tdedisplaySetFont()
 {
     TQApplication::setFont(TDEGlobalSettings::generalFont(), true);
     TQApplication::setFont(TDEGlobalSettings::menuFont(), true, TQMENUBAR_OBJECT_NAME_STRING);
@@ -2466,17 +2466,17 @@ void TDEApplication::kdisplaySetFont()
     sheet->item ("code")->setFontFamily (TDEGlobalSettings::fixedFont().family());
     sheet->item ("tt")->setFontFamily (TDEGlobalSettings::fixedFont().family());
 
-    emit kdisplayFontChanged();
+    emit tdedisplayFontChanged();
     emit appearanceChanged();
 }
 
 
-void TDEApplication::kdisplaySetStyle()
+void TDEApplication::tdedisplaySetStyle()
 {
     if (useStyles)
     {
         applyGUIStyle();
-        emit kdisplayStyleChanged();
+        emit tdedisplayStyleChanged();
         emit appearanceChanged();
     }
 }
