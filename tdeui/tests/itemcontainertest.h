@@ -3,7 +3,7 @@
 
 #include <tqwidget.h>
 
-class KIconView;
+class TDEIconView;
 class TDEListView;
 class TDEListBox;
 class TQButtonGroup;
@@ -31,7 +31,7 @@ public slots:
     void slotClicked( TQIconViewItem* ) { tqDebug("CLICK");}
     void slotDoubleClicked( TQIconViewItem* ) { tqDebug("DOUBLE CLICK");}
 protected:
-    KIconView* m_pIconView;
+    TDEIconView* m_pIconView;
     TDEListView* m_pListView;
     TDEListBox* m_pListBox;
 

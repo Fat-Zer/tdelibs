@@ -113,7 +113,7 @@ public:
 };
 
 KFileIconView::KFileIconView(TQWidget *parent, const char *name)
-    : KIconView(parent, name), KFileView()
+    : TDEIconView(parent, name), KFileView()
 {
     d = new KFileIconViewPrivate( this );
 
@@ -126,8 +126,8 @@ KFileIconView::KFileIconView(TQWidget *parent, const char *name)
     setArrangement( TopToBottom );
     setAutoArrange( true );
     setItemsMovable( false );
-    setMode( KIconView::Select );
-    KIconView::setSorting( true );
+    setMode( TDEIconView::Select );
+    TDEIconView::setSorting( true );
     // as long as TQIconView only shows tooltips when the cursor is over the
     // icon (and not the text), we have to create our own tooltips
     setShowToolTips( false );
@@ -286,12 +286,12 @@ void KFileIconView::slotActivateMenu( TQIconViewItem* item, const TQPoint& pos )
 void KFileIconView::hideEvent( TQHideEvent *e )
 {
     removeToolTip();
-    KIconView::hideEvent( e );
+    TDEIconView::hideEvent( e );
 }
 
 void KFileIconView::keyPressEvent( TQKeyEvent *e )
 {
-    KIconView::keyPressEvent( e );
+    TDEIconView::keyPressEvent( e );
 
     // ignore Ctrl-Return so that the dialog can catch it.
     if ( (e->state() & ControlButton) &&
@@ -303,7 +303,7 @@ void KFileIconView::setSelected( const KFileItem *info, bool enable )
 {
     KFileIconViewItem *item = viewItem( info );
     if ( item )
-        KIconView::setSelected( item, enable, true );
+        TDEIconView::setSelected( item, enable, true );
 }
 
 void KFileIconView::selectAll()
@@ -312,24 +312,24 @@ void KFileIconView::selectAll()
         KFileView::selectionMode() == KFile::Single)
 	return;
 
-    KIconView::selectAll( true );
+    TDEIconView::selectAll( true );
 }
 
 void KFileIconView::clearSelection()
 {
-    KIconView::clearSelection();
+    TDEIconView::clearSelection();
 }
 
 void KFileIconView::invertSelection()
 {
-    KIconView::invertSelection();
+    TDEIconView::invertSelection();
 }
 
 void KFileIconView::clearView()
 {
     m_resolver->m_lstPendingMimeIconItems.clear();
 
-    KIconView::clear();
+    TDEIconView::clear();
     stopPreview();
 }
 
@@ -376,7 +376,7 @@ void KFileIconView::setCurrentItem( const KFileItem *item )
 {
     KFileIconViewItem *it = viewItem( item );
     if ( it )
-        KIconView::setCurrentItem( it );
+        TDEIconView::setCurrentItem( it );
 }
 
 KFileItem * KFileIconView::currentFileItem() const
@@ -510,7 +510,7 @@ void KFileIconView::ensureItemVisible( const KFileItem *i )
 {
     KFileIconViewItem *item = viewItem( i );
     if ( item )
-	KIconView::ensureItemVisible( item );
+	TDEIconView::ensureItemVisible( item );
 }
 
 void KFileIconView::slotSelectionChanged()
@@ -538,7 +538,7 @@ void KFileIconView::slotSmallColumns()
     setSpacing( 0 );
 
     d->noArrangement = false; // now we can arrange
-    setIconSize( KIcon::SizeSmall );
+    setIconSize( TDEIcon::SizeSmall );
 }
 
 void KFileIconView::slotLargeRows()
@@ -547,14 +547,14 @@ void KFileIconView::slotLargeRows()
     // setIconSize() all call arrangeItemsInGrid() :( Prevent this.
     d->noArrangement = true; // stop arrangeItemsInGrid()!
 
-    setGridX( TDEGlobal::iconLoader()->currentSize( KIcon::Desktop ) + 50 );
+    setGridX( TDEGlobal::iconLoader()->currentSize( TDEIcon::Desktop ) + 50 );
     setItemTextPos( Bottom );
     setArrangement( LeftToRight );
     setWordWrapIconText( true );
     setSpacing( 5 ); // default in QIconView
 
     d->noArrangement = false; // now we can arrange
-    setIconSize( KIcon::SizeMedium );
+    setIconSize( TDEIcon::SizeMedium );
 }
 
 void KFileIconView::stopPreview()
@@ -612,11 +612,11 @@ void KFileIconView::gotPreview( const KFileItem *item, const TQPixmap& pix )
 {
     KFileIconViewItem *it = viewItem( item );
     if ( it )
-        if( item->overlays() & KIcon::HiddenOverlay )
+        if( item->overlays() & TDEIcon::HiddenOverlay )
         {
             TQPixmap p( pix );
 
-            KIconEffect::semiTransparent( p );
+            TDEIconEffect::semiTransparent( p );
             it->setPixmap( p );
         }
         else
@@ -697,7 +697,7 @@ void KFileIconView::setSorting( TQDir::SortSpec spec )
                                                 spec ));
     }
 
-    KIconView::setSorting( true, !isReversed() );
+    TDEIconView::setSorting( true, !isReversed() );
     sort( !isReversed() );
 }
 
@@ -725,8 +725,8 @@ void KFileIconView::listingCompleted()
         bool block = signalsBlocked();
         blockSignals( true );
         TQIconViewItem *item = viewItem( firstFileItem() );
-        KIconView::setCurrentItem( item );
-        KIconView::setSelected( item, false );
+        TDEIconView::setCurrentItem( item );
+        TDEIconView::setSelected( item, false );
         blockSignals( block );
     }
 
@@ -743,7 +743,7 @@ bool KFileIconView::eventFilter( TQObject *o, TQEvent *e )
             removeToolTip();
     }
 
-    return KIconView::eventFilter( o, e );
+    return TDEIconView::eventFilter( o, e );
 }
 
 /////////////////////////////////////////////////////////////////
@@ -751,7 +751,7 @@ bool KFileIconView::eventFilter( TQObject *o, TQEvent *e )
 // ### workaround for Qt3 Bug
 void KFileIconView::showEvent( TQShowEvent *e )
 {
-    KIconView::showEvent( e );
+    TDEIconView::showEvent( e );
 }
 
 
@@ -794,7 +794,7 @@ void KFileIconView::arrangeItemsInGrid( bool update )
     if ( d->noArrangement )
         return;
 
-    KIconView::arrangeItemsInGrid( update );
+    TDEIconView::arrangeItemsInGrid( update );
 }
 
 void KFileIconView::zoomIn()
@@ -937,7 +937,7 @@ void KFileIconView::contentsDropEvent( TQDropEvent *e )
 }
 
 void KFileIconView::virtual_hook( int id, void* data )
-{ KIconView::virtual_hook( id, data );
+{ TDEIconView::virtual_hook( id, data );
   KFileView::virtual_hook( id, data ); }
 
 #include "tdefileiconview.moc"

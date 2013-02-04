@@ -81,7 +81,7 @@ SourceDisplay::SourceDisplay(KJSDebugWin *debugWin, TQWidget *parent, const char
 {
   verticalScrollBar()->setLineStep(TQFontMetrics(m_font).height());
   viewport()->setBackgroundMode(TQt::NoBackground);
-  m_breakpointIcon = TDEGlobal::iconLoader()->loadIcon("stop",KIcon::Small);
+  m_breakpointIcon = TDEGlobal::iconLoader()->loadIcon("stop",TDEIcon::Small);
 }
 
 SourceDisplay::~SourceDisplay()
@@ -297,8 +297,8 @@ KJSErrorDialog::KJSErrorDialog(TQWidget *parent, const TQString& errorMessage, b
 
   TQLabel *iconLabel = new TQLabel("",page);
   iconLabel->setPixmap(TDEGlobal::iconLoader()->loadIcon("messagebox_critical",
-						       KIcon::NoGroup,KIcon::SizeMedium,
-						       KIcon::DefaultState,0,true));
+						       TDEIcon::NoGroup,TDEIcon::SizeMedium,
+						       TDEIcon::DefaultState,0,true));
 
   TQWidget *contents = new TQWidget(page);
   TQLabel *label = new TQLabel(errorMessage,contents);
@@ -361,7 +361,7 @@ KJSDebugWin::KJSDebugWin(TQWidget *parent, const char *name)
   m_execsAlloc = 0;
   m_steppingDepth = 0;
 
-  m_stopIcon = TDEGlobal::iconLoader()->loadIcon("stop",KIcon::Small);
+  m_stopIcon = TDEGlobal::iconLoader()->loadIcon("stop",TDEIcon::Small);
   m_emptyIcon = TQPixmap(m_stopIcon.width(),m_stopIcon.height());
   TQBitmap emptyMask(m_stopIcon.width(),m_stopIcon.height(),true);
   m_emptyIcon.setMask(emptyMask);

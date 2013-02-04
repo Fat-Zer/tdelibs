@@ -913,9 +913,9 @@ int TDEToolBar::iconSize() const
 int TDEToolBar::iconSizeDefault() const
 {
 	if (!::qstrcmp(name(), "mainToolBar"))
-		return TDEGlobal::iconLoader()->currentSize(KIcon::MainToolbar);
+		return TDEGlobal::iconLoader()->currentSize(TDEIcon::MainToolbar);
 
-	return TDEGlobal::iconLoader()->currentSize(KIcon::Toolbar);
+	return TDEGlobal::iconLoader()->currentSize(TDEIcon::Toolbar);
 }
 
 void TDEToolBar::setEnableContextMenu(bool enable )
@@ -1452,9 +1452,9 @@ void TDEToolBar::resizeEvent( TQResizeEvent *e )
 
 void TDEToolBar::slotIconChanged(int group)
 {
-    if ((group != KIcon::Toolbar) && (group != KIcon::MainToolbar))
+    if ((group != TDEIcon::Toolbar) && (group != TDEIcon::MainToolbar))
         return;
-    if ((group == KIcon::MainToolbar) != !::qstrcmp(name(), "mainToolBar"))
+    if ((group == TDEIcon::MainToolbar) != !::qstrcmp(name(), "mainToolBar"))
         return;
 
     doModeChange();
@@ -2062,14 +2062,14 @@ TDEPopupMenu *TDEToolBar::contextMenu()
   TDEPopupMenu *size = new TDEPopupMenu( context, "size" );
   size->insertItem( i18n("Default"), CONTEXT_ICONSIZES );
   // Query the current theme for available sizes
-  KIconTheme *theme = TDEGlobal::instance()->iconLoader()->theme();
+  TDEIconTheme *theme = TDEGlobal::instance()->iconLoader()->theme();
   TQValueList<int> avSizes;
   if (theme)
   {
       if (!::qstrcmp(name(), "mainToolBar"))
-          avSizes = theme->querySizes( KIcon::MainToolbar);
+          avSizes = theme->querySizes( TDEIcon::MainToolbar);
       else
-          avSizes = theme->querySizes( KIcon::Toolbar);
+          avSizes = theme->querySizes( TDEIcon::Toolbar);
   }
 
   d->iconSizes = avSizes;

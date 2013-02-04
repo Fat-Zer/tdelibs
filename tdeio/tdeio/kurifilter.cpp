@@ -186,7 +186,7 @@ TQString KURIFilterData::iconName()
                 if (service && service->icon() != TQString::fromLatin1( "unknown" )) {
                     m_strIconName = service->icon();
                 }
-                else if ( !TDEGlobal::iconLoader()->loadIcon( exeName, KIcon::NoGroup, 16, KIcon::DefaultState, 0, true ).isNull() ) {
+                else if ( !TDEGlobal::iconLoader()->loadIcon( exeName, TDEIcon::NoGroup, 16, TDEIcon::DefaultState, 0, true ).isNull() ) {
                     m_strIconName = exeName;
                 }
                 else {
@@ -200,7 +200,7 @@ TQString KURIFilterData::iconName()
 		if (service && service->icon() != TQString::fromLatin1( "unknown" )) {
 			m_strIconName = service->icon();
 		}
-		else if ( !TDEGlobal::iconLoader()->loadIcon( exeName, KIcon::NoGroup, 16, KIcon::DefaultState, 0, true ).isNull() ) {
+		else if ( !TDEGlobal::iconLoader()->loadIcon( exeName, TDEIcon::NoGroup, 16, TDEIcon::DefaultState, 0, true ).isNull() ) {
 			m_strIconName = exeName;
 		}
 		else {

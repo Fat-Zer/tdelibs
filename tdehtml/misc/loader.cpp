@@ -1356,7 +1356,7 @@ void Cache::init()
         nullPixmap = new TQPixmap;
 
     if ( !brokenPixmap )
-        brokenPixmap = new TQPixmap(TDEHTMLFactory::instance()->iconLoader()->loadIcon("file_broken", KIcon::Desktop, 16, KIcon::DisabledState));
+        brokenPixmap = new TQPixmap(TDEHTMLFactory::instance()->iconLoader()->loadIcon("file_broken", TDEIcon::Desktop, 16, TDEIcon::DisabledState));
 
     if ( !blockedPixmap ) {
         blockedPixmap = new TQPixmap();

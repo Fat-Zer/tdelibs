@@ -60,8 +60,8 @@ public:
       // to accelators, replace them with two ampersands.
       serviceName.replace("&", "&&");
 
-      TQPixmap normal = TDEGlobal::instance()->iconLoader()->loadIcon(s->icon(), KIcon::Small,
-                              0, KIcon::DefaultState, 0L, true);
+      TQPixmap normal = TDEGlobal::instance()->iconLoader()->loadIcon(s->icon(), TDEIcon::Small,
+                              0, TDEIcon::DefaultState, 0L, true);
 
       // make sure they are not larger than 16x16
       if (normal.width() > 16 || normal.height() > 16) {

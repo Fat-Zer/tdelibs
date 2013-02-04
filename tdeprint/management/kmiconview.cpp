@@ -104,7 +104,7 @@ void KMIconViewItem::updatePrinter(KMPrinter *p, int mode)
 	}
 	if (mode != m_mode || ((oldstate&0x4) != (m_state&0x4)) || (p && p->pixmap() != m_pixmap))
 	{
-		int	iconstate = (m_state&0x4 ? (int)KIcon::DefaultState : (int)KIcon::LockOverlay);
+		int	iconstate = (m_state&0x4 ? (int)TDEIcon::DefaultState : (int)TDEIcon::LockOverlay);
 		if (p)
 			m_pixmap = p->pixmap();
 		m_mode = mode;
@@ -119,9 +119,9 @@ void KMIconViewItem::updatePrinter(KMPrinter *p, int mode)
 }
 
 KMIconView::KMIconView(TQWidget *parent, const char *name)
-: KIconView(parent,name)
+: TDEIconView(parent,name)
 {
-	setMode(KIconView::Select);
+	setMode(TDEIconView::Select);
 	setSelectionMode(TQIconView::Single);
 	setItemsMovable(false);
 	setResizeMode(TQIconView::Adjust);

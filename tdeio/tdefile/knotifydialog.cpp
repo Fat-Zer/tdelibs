@@ -251,7 +251,7 @@ KNotifyWidget::KNotifyWidget( TQWidget *parent, const char *name,
     d->pixmaps[COL_SOUND]   = psound;
     d->pixmaps[COL_TASKBAR] = ptaskbar;
 
-    int w = KIcon::SizeSmall + 6;
+    int w = TDEIcon::SizeSmall + 6;
 
     TQHeader *header = m_listview->header();
     header->setLabel( COL_EXECUTE, pexec,    TQString::null, w );

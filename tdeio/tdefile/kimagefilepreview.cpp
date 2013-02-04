@@ -160,8 +160,8 @@ void KImageFilePreview::slotFailed( const KFileItem* item )
     if ( item->isDir() )
         imageLabel->clear();
     else if ( item->url() == currentURL ) // should always be the case
-        imageLabel->setPixmap( SmallIcon( "file_broken", KIcon::SizeLarge,
-                                          KIcon::DisabledState ));
+        imageLabel->setPixmap( SmallIcon( "file_broken", TDEIcon::SizeLarge,
+                                          TDEIcon::DisabledState ));
 }
 
 void KImageFilePreview::slotResult( TDEIO::Job *job )

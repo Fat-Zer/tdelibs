@@ -351,7 +351,7 @@ void KPasswordDialog::init()
 
     // Row 1: pixmap + prompt
     TQLabel *lbl;
-    const TQPixmap pix( TDEGlobal::iconLoader()->loadIcon( d->iconName, KIcon::NoGroup, KIcon::SizeHuge, 0, 0, true));
+    const TQPixmap pix( TDEGlobal::iconLoader()->loadIcon( d->iconName, TDEIcon::NoGroup, TDEIcon::SizeHuge, 0, 0, true));
     if (!pix.isNull()) {
 	lbl = new TQLabel(m_pMain);
 	lbl->setPixmap(pix);

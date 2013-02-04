@@ -26,7 +26,7 @@ TQPixmap KURLPixmapProvider::pixmapFor( const TQString& url, int size ) {
 	    u.setPath( url );
 	else
 	    u = url;
-	return KMimeType::pixmapForURL( u, 0, KIcon::Desktop, size );
+	return KMimeType::pixmapForURL( u, 0, TDEIcon::Desktop, size );
     }
 
 void KURLPixmapProvider::virtual_hook( int id, void* data )

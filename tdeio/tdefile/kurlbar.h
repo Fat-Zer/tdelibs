@@ -58,7 +58,7 @@ public:
     KURLBarItem( KURLBar *parent, const KURL& url, bool persistent,
                  const TQString& description = TQString::null,
                  const TQString& icon = TQString::null,
-                 KIcon::Group group = KIcon::Panel );
+                 TDEIcon::Group group = TDEIcon::Panel );
 
     /**
      * Creates a persistent KURLBarItem to be used in the @p parent KURLBar. You need
@@ -75,7 +75,7 @@ public:
     KURLBarItem( KURLBar *parent, const KURL& url,
                  const TQString& description = TQString::null,
                  const TQString& icon = TQString::null,
-                 KIcon::Group group = KIcon::Panel );
+                 TDEIcon::Group group = TDEIcon::Panel );
 
     /**
      * Destroys the item
@@ -89,11 +89,11 @@ public:
      */
     void setURL( const KURL& url );
     /**
-     * @p sets the icon for this item. See KIconLoader for a description
+     * @p sets the icon for this item. See TDEIconLoader for a description
      * of the icon groups.
      * @see icon
      */
-    void setIcon( const TQString& icon, KIcon::Group group = KIcon::Panel );
+    void setIcon( const TQString& icon, TDEIcon::Group group = TDEIcon::Panel );
     /**
      * Sets the description of this item that will be shown as item-text.
      * @see description
@@ -144,7 +144,7 @@ public:
      * returns the icon-group of this item (determines icon-effects).
      * @see setIcon
      */
-    KIcon::Group iconGroup() const              { return m_group; }
+    TDEIcon::Group iconGroup() const              { return m_group; }
     /**
      * returns the pixmap  of this item.
      */
@@ -178,7 +178,7 @@ protected:
 
 private:
     int iconSize() const;
-    void init( const TQString& icon, KIcon::Group group,
+    void init( const TQString& icon, TDEIcon::Group group,
                const TQString& description, bool persistent );
 
     KURL m_url;
@@ -186,7 +186,7 @@ private:
     TQString m_icon;
     TQString m_toolTip;
     TQPixmap m_pixmap;
-    KIcon::Group m_group;
+    TDEIcon::Group m_group;
     KURLBar *m_parent;
     bool m_appLocal :1;
 
@@ -257,7 +257,7 @@ public:
                                       const TQString& description,
                                       bool applicationLocal = true,
                                       const TQString& icon = TQString::null,
-                                      KIcon::Group group = KIcon::Panel );
+                                      TDEIcon::Group group = TDEIcon::Panel );
     /**
      * Inserts a new dynamic item into the KURLBar and returns the created
      * KURLBarItem.
@@ -271,7 +271,7 @@ public:
     virtual KURLBarItem * insertDynamicItem( const KURL& url,
                                              const TQString& description,
                                              const TQString& icon = TQString::null,
-                                             KIcon::Group group = KIcon::Panel );
+                                             TDEIcon::Group group = TDEIcon::Panel );
     /**
      * The items can be arranged either vertically in one column or
      * horizontally in one row.
@@ -299,13 +299,13 @@ public:
 
     /**
      * Sets the default iconsize to be used for items inserted with
-     * insertItem. By default KIcon::SizeMedium.
+     * insertItem. By default TDEIcon::SizeMedium.
      * @see iconsize
      */
     virtual void setIconSize( int size );
     /**
      * @returns the default iconsize used for items inserted with
-     * insertItem. By default KIcon::SizeMedium
+     * insertItem. By default TDEIcon::SizeMedium
      * @see setIconSize
      */
     int iconSize() const { return m_iconSize; }
@@ -553,7 +553,7 @@ private:
 
 
 class TQCheckBox;
-class KIconButton;
+class TDEIconButton;
 class KLineEdit;
 class KURLRequester;
 
@@ -601,7 +601,7 @@ public:
     KURLBarItemDialog( bool allowGlobal, const KURL& url,
                        const TQString& description, TQString icon,
                        bool appLocal = true,
-                       int iconSize = KIcon::SizeMedium,
+                       int iconSize = TDEIcon::SizeMedium,
                        TQWidget *parent = 0, const char *name = 0 );
     /**
      * Destroys the dialog.
@@ -640,9 +640,9 @@ protected:
      */
     KLineEdit     * m_edit;
     /**
-     * The KIconButton to configure the icon
+     * The TDEIconButton to configure the icon
      */
-    KIconButton   * m_iconButton;
+    TDEIconButton   * m_iconButton;
     /**
      * The TQCheckBox to modify the local/global setting
      */

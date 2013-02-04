@@ -119,7 +119,7 @@ void ComponentsDialog::show()
         TQCheckListItem * item = new TQCheckListItem( d->listview, ( *it )->name(),
                 TQCheckListItem::CheckBox );
         if( ! ( *it )->icon().isEmpty() )
-            item->setPixmap( 0, SmallIcon( ( *it )->icon(), IconSize( KIcon::Small ) ) );
+            item->setPixmap( 0, SmallIcon( ( *it )->icon(), IconSize( TDEIcon::Small ) ) );
         item->setOn( ( *it )->isPluginEnabled() );
         d->plugininfomap[ item ] = ( *it );
     }
@@ -144,7 +144,7 @@ void ComponentsDialog::executed( TQListViewItem * item )
     info->setPluginEnabled( checked );
     //checkDependencies( info );
     // show info about the component on the right
-    d->iconwidget->setPixmap( SmallIcon( info->icon(), KIcon::SizeLarge ) );
+    d->iconwidget->setPixmap( SmallIcon( info->icon(), TDEIcon::SizeLarge ) );
     d->commentwidget->setText( info->comment() );
     //d->descriptionwidget->setText( info->description() );
 }

@@ -242,11 +242,11 @@ void DownloadDialog::addProvider(Provider *p)
     }
     else
     {
-      pix = TDEGlobal::iconLoader()->loadIcon(p->icon().path(), KIcon::Panel);
+      pix = TDEGlobal::iconLoader()->loadIcon(p->icon().path(), TDEIcon::Panel);
       ret = true;
     }
   }
-  if(!ret) pix = TDEGlobal::iconLoader()->loadIcon("knewstuff", KIcon::Panel);
+  if(!ret) pix = TDEGlobal::iconLoader()->loadIcon("knewstuff", TDEIcon::Panel);
   frame = addPage(p->name(), p->name(), pix);
   m_frame = frame;
 
@@ -415,8 +415,8 @@ void DownloadDialog::addEntry(Entry *entry, const TQStringList& variants)
 
   installed = installStatus(entry);
 
-  if(installed > 0) pix = TDEGlobal::iconLoader()->loadIcon("ok", KIcon::Small);
-  else if(installed < 0) pix = TDEGlobal::iconLoader()->loadIcon("history", KIcon::Small);
+  if(installed > 0) pix = TDEGlobal::iconLoader()->loadIcon("ok", TDEIcon::Small);
+  else if(installed < 0) pix = TDEGlobal::iconLoader()->loadIcon("history", TDEIcon::Small);
   else pix = TQPixmap();
 
   TQString lang = TDEGlobal::locale()->language();
@@ -550,7 +550,7 @@ void DownloadDialog::install(Entry *e)
   kapp->config()->writeEntry(m_entryname, TQString(e->releaseDate().toString(Qt::ISODate)));
   kapp->config()->sync();
 
-  TQPixmap pix = TDEGlobal::iconLoader()->loadIcon("ok", KIcon::Small);
+  TQPixmap pix = TDEGlobal::iconLoader()->loadIcon("ok", TDEIcon::Small);
 
   TQString lang = TDEGlobal::locale()->language();
   

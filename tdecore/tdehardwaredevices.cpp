@@ -286,7 +286,7 @@ TDEGenericDevice* TDEGenericDevice::parentDevice() {
 	return m_parentDevice;
 }
 
-TQPixmap TDEGenericDevice::icon(KIcon::StdSizes size) {
+TQPixmap TDEGenericDevice::icon(TDEIcon::StdSizes size) {
 	return TDEGlobal::hardwareDevices()->getDeviceTypeIconFromType(type(), size);
 }
 
@@ -541,7 +541,7 @@ TQString TDEStorageDevice::friendlyName() {
 TQString TDEStorageDevice::friendlyDeviceType() {
 	TQString ret = i18n("Hard Disk Drive");
 
-	// Keep this in sync with TDEStorageDevice::icon(KIcon::StdSizes size) below
+	// Keep this in sync with TDEStorageDevice::icon(TDEIcon::StdSizes size) below
 	if (isDiskOfType(TDEDiskDeviceType::Floppy)) {
 		ret = i18n("Floppy Drive");
 	}
@@ -602,7 +602,7 @@ TQString TDEStorageDevice::friendlyDeviceType() {
 	return ret;
 }
 
-TQPixmap TDEStorageDevice::icon(KIcon::StdSizes size) {
+TQPixmap TDEStorageDevice::icon(TDEIcon::StdSizes size) {
 	TQPixmap ret = DesktopIcon("hdd_unmount", size);
 
 	if (isDiskOfType(TDEDiskDeviceType::Floppy)) {
@@ -5495,7 +5495,7 @@ TQString TDEHardwareDevices::getFriendlyDeviceTypeStringFromType(TDEGenericDevic
 	return ret;
 }
 
-TQPixmap TDEHardwareDevices::getDeviceTypeIconFromType(TDEGenericDeviceType::TDEGenericDeviceType query, KIcon::StdSizes size) {
+TQPixmap TDEHardwareDevices::getDeviceTypeIconFromType(TDEGenericDeviceType::TDEGenericDeviceType query, TDEIcon::StdSizes size) {
 	TQPixmap ret = DesktopIcon("misc", size);
 
 // 	// Keep this in sync with the TDEGenericDeviceType definition in the header

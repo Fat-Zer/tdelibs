@@ -60,7 +60,7 @@ TDEActionSelector::TDEActionSelector( TQWidget *parent, const char *name )
   d->selectedInsertionPolicy = BelowCurrent;
   d->showUpDownButtons = true;
 
-  //int isz = IconSize( KIcon::Small );
+  //int isz = IconSize( TDEIcon::Small );
 
   TQHBoxLayout *lo = new TQHBoxLayout( this );
   lo->setSpacing( KDialog::spacingHint() );

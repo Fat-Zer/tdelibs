@@ -848,12 +848,12 @@ void KFileDialog::init(const TQString& startDir, const TQString& filter, TQWidge
     u.setPath( TQDir::rootDirPath() );
     TQString text = i18n("Root Folder: %1").arg( u.path() );
     d->pathCombo->addDefaultURL( u,
-                                 KMimeType::pixmapForURL( u, 0, KIcon::Small ),
+                                 KMimeType::pixmapForURL( u, 0, TDEIcon::Small ),
                                  text );
 
     u.setPath( TQDir::homeDirPath() );
     text = i18n("Home Folder: %1").arg( u.path( +1 ) );
-    d->pathCombo->addDefaultURL( u, KMimeType::pixmapForURL( u, 0, KIcon::Small ),
+    d->pathCombo->addDefaultURL( u, KMimeType::pixmapForURL( u, 0, TDEIcon::Small ),
                                  text );
 
     KURL docPath;
@@ -863,14 +863,14 @@ void KFileDialog::init(const TQString& startDir, const TQString& filter, TQWidge
     {
         text = i18n("Documents: %1").arg( docPath.path( +1 ) );
         d->pathCombo->addDefaultURL( docPath,
-                                     KMimeType::pixmapForURL( docPath, 0, KIcon::Small ),
+                                     KMimeType::pixmapForURL( docPath, 0, TDEIcon::Small ),
                                      text );
     }
 
     u.setPath( TDEGlobalSettings::desktopPath() );
     text = i18n("Desktop: %1").arg( u.path( +1 ) );
     d->pathCombo->addDefaultURL( u,
-                                 KMimeType::pixmapForURL( u, 0, KIcon::Small ),
+                                 KMimeType::pixmapForURL( u, 0, TDEIcon::Small ),
                                  text );
 
     d->url = getStartURL( startDir, d->fileClass );

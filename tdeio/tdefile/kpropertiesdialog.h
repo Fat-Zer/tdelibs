@@ -42,7 +42,7 @@ class TQPushButton;
 class KLineEdit;
 class KURLRequester;
 class TQButton;
-class KIconButton;
+class TDEIconButton;
 class KPropsDlgPlugin;
 class TQComboBox;
 
@@ -670,7 +670,7 @@ public:
 
 private:
   KURLRequester *URLEdit;
-  KIconButton *iconBox;
+  TDEIconButton *iconBox;
 
   TQString URLStr;
   TQString iconStr;
@@ -746,8 +746,8 @@ private:
   TQLabel* mountpoint;
   TQCheckBox* readonly;
   void* unused;
-  //KIconButton* mounted;
-  KIconButton* unmounted;
+  //TDEIconButton* mounted;
+  TDEIconButton* unmounted;
 
   TQStringList m_devicelist;
   int indexDevice;

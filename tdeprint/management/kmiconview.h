@@ -45,7 +45,7 @@ private:
 	bool		m_isclass;
 };
 
-class KMIconView : public KIconView
+class KMIconView : public TDEIconView
 {
 	Q_OBJECT
 public:

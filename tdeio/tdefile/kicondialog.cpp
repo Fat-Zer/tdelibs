@@ -49,11 +49,11 @@
 #include <svgicons/ksvgiconpainter.h>
 #endif
 
-class KIconCanvas::KIconCanvasPrivate
+class TDEIconCanvas::TDEIconCanvasPrivate
 {
   public:
-    KIconCanvasPrivate() { m_bLoading = false; }
-    ~KIconCanvasPrivate() {}
+    TDEIconCanvasPrivate() { m_bLoading = false; }
+    ~TDEIconCanvasPrivate() {}
     bool m_bLoading;
 };
 
@@ -85,13 +85,13 @@ public:
 };
 
 /*
- * KIconCanvas: Iconview for the iconloader dialog.
+ * TDEIconCanvas: Iconview for the iconloader dialog.
  */
 
-KIconCanvas::KIconCanvas(TQWidget *parent, const char *name)
-    : KIconView(parent, name)
+TDEIconCanvas::TDEIconCanvas(TQWidget *parent, const char *name)
+    : TDEIconView(parent, name)
 {
-    d = new KIconCanvasPrivate;
+    d = new TDEIconCanvasPrivate;
     mpTimer = new TQTimer(this);
     connect(mpTimer, TQT_SIGNAL(timeout()), TQT_SLOT(slotLoadFiles()));
     connect(this, TQT_SIGNAL(currentChanged(TQIconViewItem *)),
@@ -101,13 +101,13 @@ KIconCanvas::KIconCanvas(TQWidget *parent, const char *name)
     setShowToolTips(true);
 }
 
-KIconCanvas::~KIconCanvas()
+TDEIconCanvas::~TDEIconCanvas()
 {
     delete mpTimer;
     delete d;
 }
 
-void KIconCanvas::loadFiles(const TQStringList& files)
+void TDEIconCanvas::loadFiles(const TQStringList& files)
 {
     clear();
     mFiles = files;
@@ -116,7 +116,7 @@ void KIconCanvas::loadFiles(const TQStringList& files)
     d->m_bLoading = false;
 }
 
-void KIconCanvas::slotLoadFiles()
+void TDEIconCanvas::slotLoadFiles()
 {
     setResizeMode(Fixed);
     TQApplication::setOverrideCursor(tqwaitCursor);
@@ -199,65 +199,65 @@ void KIconCanvas::slotLoadFiles()
     setResizeMode(Adjust);
 }
 
-TQString KIconCanvas::getCurrent() const
+TQString TDEIconCanvas::getCurrent() const
 {
     if (!currentItem())
 	return TQString::null;
     return currentItem()->key();
 }
 
-void KIconCanvas::stopLoading()
+void TDEIconCanvas::stopLoading()
 {
     d->m_bLoading = false;
 }
 
-void KIconCanvas::slotCurrentChanged(TQIconViewItem *item)
+void TDEIconCanvas::slotCurrentChanged(TQIconViewItem *item)
 {
     emit nameChanged((item != 0L) ? item->text() : TQString::null);
 }
 
-class KIconDialog::KIconDialogPrivate
+class TDEIconDialog::TDEIconDialogPrivate
 {
   public:
-    KIconDialogPrivate() {
+    TDEIconDialogPrivate() {
         m_bStrictIconSize = true;
 	m_bLockUser = false;
 	m_bLockCustomDir = false;
 	searchLine = 0;
     }
-    ~KIconDialogPrivate() {}
+    ~TDEIconDialogPrivate() {}
     bool m_bStrictIconSize, m_bLockUser, m_bLockCustomDir;
     TQString custom;
     TQString customLocation;
-    KIconViewSearchLine *searchLine;
+    TDEIconViewSearchLine *searchLine;
 };
 
 /*
- * KIconDialog: Dialog for selecting icons. Both system and user
+ * TDEIconDialog: Dialog for selecting icons. Both system and user
  * specified icons can be chosen.
  */
 
-KIconDialog::KIconDialog(TQWidget *parent, const char *name)
+TDEIconDialog::TDEIconDialog(TQWidget *parent, const char *name)
     : KDialogBase(parent, name, true, i18n("Select Icon"), Ok|Cancel, Ok)
 {
-    d = new KIconDialogPrivate;
+    d = new TDEIconDialogPrivate;
     mpLoader = TDEGlobal::iconLoader();
     init();
 }
 
-KIconDialog::KIconDialog(KIconLoader *loader, TQWidget *parent,
+TDEIconDialog::TDEIconDialog(TDEIconLoader *loader, TQWidget *parent,
 	const char *name)
     : KDialogBase(parent, name, true, i18n("Select Icon"), Ok|Cancel, Ok)
 {
-    d = new KIconDialogPrivate;
+    d = new TDEIconDialogPrivate;
     mpLoader = loader;
     init();
 }
 
-void KIconDialog::init()
+void TDEIconDialog::init()
 {
-    mGroupOrSize = KIcon::Desktop;
-    mContext = KIcon::Any;
+    mGroupOrSize = TDEIcon::Desktop;
+    mContext = TDEIcon::Any;
     mType = 0;
     mFileList = TDEGlobal::dirs()->findAllResources("appicon", TQString::fromLatin1("*.png"));
 
@@ -297,7 +297,7 @@ void KIconDialog::init()
     TQLabel *searchLabel = new TQLabel(i18n("&Search:"), main);
     searchLayout->addWidget(searchLabel);
 
-    d->searchLine = new KIconViewSearchLine(main, "searchLine");
+    d->searchLine = new TDEIconViewSearchLine(main, "searchLine");
     searchLayout->addWidget(d->searchLine);
     searchLabel->setBuddy(d->searchLine);
 
@@ -310,7 +310,7 @@ void KIconDialog::init()
     TQWhatsThis::add(d->searchLine, wtstr);
 
 
-    mpCanvas = new KIconCanvas(main);
+    mpCanvas = new TDEIconCanvas(main);
     connect(mpCanvas, TQT_SIGNAL(executed(TQIconViewItem *)), TQT_SLOT(slotAcceptIcons()));
     connect(mpCanvas, TQT_SIGNAL(returnPressed(TQIconViewItem *)), TQT_SLOT(slotAcceptIcons()));
     mpCanvas->setMinimumSize(400, 125);
@@ -339,19 +339,19 @@ void KIconDialog::init()
         I18N_NOOP( "Mimetypes" ),
         I18N_NOOP( "Places" ),
         I18N_NOOP( "Status" ) };
-    static const KIcon::Context context_id[] = {
-        KIcon::Action,
-        KIcon::Animation,
-        KIcon::Application,
-        KIcon::Category,
-        KIcon::Device,
-        KIcon::Emblem,
-        KIcon::Emote,
-        KIcon::FileSystem,
-        KIcon::International,
-        KIcon::MimeType,
-        KIcon::Place,
-        KIcon::StatusIcon };
+    static const TDEIcon::Context context_id[] = {
+        TDEIcon::Action,
+        TDEIcon::Animation,
+        TDEIcon::Application,
+        TDEIcon::Category,
+        TDEIcon::Device,
+        TDEIcon::Emblem,
+        TDEIcon::Emote,
+        TDEIcon::FileSystem,
+        TDEIcon::International,
+        TDEIcon::MimeType,
+        TDEIcon::Place,
+        TDEIcon::StatusIcon };
     mNumContext = 0;
     int cnt = sizeof( context_text ) / sizeof( context_text[ 0 ] );
     // check all 3 arrays have same sizes
@@ -376,18 +376,18 @@ void KIconDialog::init()
 }
 
 
-KIconDialog::~KIconDialog()
+TDEIconDialog::~TDEIconDialog()
 {
     delete d;
 }
 
-void KIconDialog::slotAcceptIcons()
+void TDEIconDialog::slotAcceptIcons()
 {
   d->custom=TQString::null;
   slotOk();
 }
 
-void KIconDialog::showIcons()
+void TDEIconDialog::showIcons()
 {
     mpCanvas->clear();
     TQStringList filelist;
@@ -417,40 +417,40 @@ void KIconDialog::showIcons()
     mpCanvas->loadFiles(filelist);
 }
 
-void KIconDialog::setStrictIconSize(bool b)
+void TDEIconDialog::setStrictIconSize(bool b)
 {
     d->m_bStrictIconSize=b;
 }
 
-bool KIconDialog::strictIconSize() const
+bool TDEIconDialog::strictIconSize() const
 {
     return d->m_bStrictIconSize;
 }
 
-void KIconDialog::setIconSize( int size )
+void TDEIconDialog::setIconSize( int size )
 {
-    // see KIconLoader, if you think this is weird
+    // see TDEIconLoader, if you think this is weird
     if ( size == 0 )
-        mGroupOrSize = KIcon::Desktop; // default Group
+        mGroupOrSize = TDEIcon::Desktop; // default Group
     else
-        mGroupOrSize = -size; // yes, KIconLoader::queryIconsByContext is weird
+        mGroupOrSize = -size; // yes, TDEIconLoader::queryIconsByContext is weird
 }
 
-int KIconDialog::iconSize() const
+int TDEIconDialog::iconSize() const
 {
     // 0 or any other value ==> mGroupOrSize is a group, so we return 0
     return (mGroupOrSize < 0) ? -mGroupOrSize : 0;
 }
 
 #ifndef KDE_NO_COMPAT
-TQString KIconDialog::selectIcon(KIcon::Group group, KIcon::Context context, bool user)
+TQString TDEIconDialog::selectIcon(TDEIcon::Group group, TDEIcon::Context context, bool user)
 {
     setup( group, context, false, 0, user );
     return openDialog();
 }
 #endif
 
-void KIconDialog::setup(KIcon::Group group, KIcon::Context context,
+void TDEIconDialog::setup(TDEIcon::Group group, TDEIcon::Context context,
                         bool strictIconSize, int iconSize, bool user )
 {
     d->m_bStrictIconSize = strictIconSize;
@@ -463,7 +463,7 @@ void KIconDialog::setup(KIcon::Group group, KIcon::Context context,
     setContext( context );
 }
 
-void KIconDialog::setup(KIcon::Group group, KIcon::Context context,
+void TDEIconDialog::setup(TDEIcon::Group group, TDEIcon::Context context,
                         bool strictIconSize, int iconSize, bool user,
                         bool lockUser, bool lockCustomDir )
 {
@@ -481,7 +481,7 @@ void KIconDialog::setup(KIcon::Group group, KIcon::Context context,
     setContext( context );
 }
 
-void KIconDialog::setContext( KIcon::Context context )
+void TDEIconDialog::setContext( TDEIcon::Context context )
 {
     mContext = context;
     for( int i = 0;
@@ -494,12 +494,12 @@ void KIconDialog::setContext( KIcon::Context context )
         }
 }
 
-void KIconDialog::setCustomLocation( const TQString& location )
+void TDEIconDialog::setCustomLocation( const TQString& location )
 {
     d->customLocation = location;
 }
 
-TQString KIconDialog::openDialog()
+TQString TDEIconDialog::openDialog()
 {
     showIcons();
 
@@ -516,14 +516,14 @@ TQString KIconDialog::openDialog()
     return TQString::null;
 }
 
-void KIconDialog::showDialog()
+void TDEIconDialog::showDialog()
 {
     setModal(false);
     showIcons();
     show();
 }
 
-void KIconDialog::slotOk()
+void TDEIconDialog::slotOk()
 {
     TQString name;
     if (!d->custom.isNull())
@@ -544,11 +544,11 @@ void KIconDialog::slotOk()
     KDialogBase::slotOk();
 }
 
-TQString KIconDialog::getIcon(KIcon::Group group, KIcon::Context context,
+TQString TDEIconDialog::getIcon(TDEIcon::Group group, TDEIcon::Context context,
                              bool strictIconSize, int iconSize, bool user,
                              TQWidget *parent, const TQString &caption)
 {
-    KIconDialog dlg(parent, "icon dialog");
+    TDEIconDialog dlg(parent, "icon dialog");
     dlg.setup( group, context, strictIconSize, iconSize, user );
     if (!caption.isNull())
         dlg.setCaption(caption);
@@ -556,7 +556,7 @@ TQString KIconDialog::getIcon(KIcon::Group group, KIcon::Context context,
     return dlg.openDialog();
 }
 
-void KIconDialog::slotButtonClicked(int id)
+void TDEIconDialog::slotButtonClicked(int id)
 {
     TQString file;
 
@@ -609,13 +609,13 @@ void KIconDialog::slotButtonClicked(int id)
     }
 }
 
-void KIconDialog::slotContext(int id)
+void TDEIconDialog::slotContext(int id)
 {
-    mContext = static_cast<KIcon::Context>( mContextMap[ id ] );
+    mContext = static_cast<TDEIcon::Context>( mContextMap[ id ] );
     showIcons();
 }
 
-void KIconDialog::slotStartLoading(int steps)
+void TDEIconDialog::slotStartLoading(int steps)
 {
     if (steps < 10)
 	mpProgress->hide();
@@ -627,7 +627,7 @@ void KIconDialog::slotStartLoading(int steps)
     }
 }
 
-void KIconDialog::slotProgress(int p)
+void TDEIconDialog::slotProgress(int p)
 {
     mpProgress->setProgress(p);
     // commented out the following since setProgress already paints ther
@@ -635,46 +635,46 @@ void KIconDialog::slotProgress(int p)
     //mpProgress->repaint();
 }
 
-void KIconDialog::slotFinished()
+void TDEIconDialog::slotFinished()
 {
     mpProgress->hide();
 }
 
-class KIconButton::KIconButtonPrivate
+class TDEIconButton::TDEIconButtonPrivate
 {
   public:
-    KIconButtonPrivate() {
+    TDEIconButtonPrivate() {
         m_bStrictIconSize = false;
-        iconSize = 0; // let KIconLoader choose the default
+        iconSize = 0; // let TDEIconLoader choose the default
     }
-    ~KIconButtonPrivate() {}
+    ~TDEIconButtonPrivate() {}
     bool m_bStrictIconSize;
     int iconSize;
 };
 
 
 /*
- * KIconButton: A "choose icon" pushbutton.
+ * TDEIconButton: A "choose icon" pushbutton.
  */
 
-KIconButton::KIconButton(TQWidget *parent, const char *name)
+TDEIconButton::TDEIconButton(TQWidget *parent, const char *name)
     : TQPushButton(parent, name)
 {
     init( TDEGlobal::iconLoader() );
 }
 
-KIconButton::KIconButton(KIconLoader *loader,
+TDEIconButton::TDEIconButton(TDEIconLoader *loader,
 	TQWidget *parent, const char *name)
     : TQPushButton(parent, name)
 {
     init( loader );
 }
 
-void KIconButton::init( KIconLoader *loader )
+void TDEIconButton::init( TDEIconLoader *loader )
 {
-    d = new KIconButtonPrivate;
-    mGroup = KIcon::Desktop;
-    mContext = KIcon::Application;
+    d = new TDEIconButtonPrivate;
+    mGroup = TDEIcon::Desktop;
+    mContext = TDEIcon::Application;
     mbUser = false;
 
     mpLoader = loader;
@@ -682,47 +682,47 @@ void KIconButton::init( KIconLoader *loader )
     connect(this, TQT_SIGNAL(clicked()), TQT_SLOT(slotChangeIcon()));
 }
 
-KIconButton::~KIconButton()
+TDEIconButton::~TDEIconButton()
 {
     delete mpDialog;
     delete d;
 }
 
-void KIconButton::setStrictIconSize(bool b)
+void TDEIconButton::setStrictIconSize(bool b)
 {
     d->m_bStrictIconSize=b;
 }
 
-bool KIconButton::strictIconSize() const
+bool TDEIconButton::strictIconSize() const
 {
     return d->m_bStrictIconSize;
 }
 
-void KIconButton::setIconSize( int size )
+void TDEIconButton::setIconSize( int size )
 {
     d->iconSize = size;
 }
 
-int KIconButton::iconSize() const
+int TDEIconButton::iconSize() const
 {
     return d->iconSize;
 }
 
-void KIconButton::setIconType(KIcon::Group group, KIcon::Context context, bool user)
+void TDEIconButton::setIconType(TDEIcon::Group group, TDEIcon::Context context, bool user)
 {
     mGroup = group;
     mContext = context;
     mbUser = user;
 }
 
-void KIconButton::setIcon(const TQString& icon)
+void TDEIconButton::setIcon(const TQString& icon)
 {
     mIcon = icon;
     setIconSet(mpLoader->loadIconSet(mIcon, mGroup, d->iconSize));
 
     if (!mpDialog)
     {
-        mpDialog = new KIconDialog(mpLoader, this);
+        mpDialog = new TDEIconDialog(mpLoader, this);
         connect(mpDialog, TQT_SIGNAL(newIconName(const TQString&)), TQT_SLOT(newIconName(const TQString&)));
     }
 
@@ -730,17 +730,17 @@ void KIconButton::setIcon(const TQString& icon)
       mpDialog->setCustomLocation( TQFileInfo( mpLoader->iconPath(mIcon, mGroup, true) ).dirPath( true ) );
 }
 
-void KIconButton::resetIcon()
+void TDEIconButton::resetIcon()
 {
     mIcon = TQString::null;
     setIconSet(TQIconSet());
 }
 
-void KIconButton::slotChangeIcon()
+void TDEIconButton::slotChangeIcon()
 {
     if (!mpDialog)
     {
-        mpDialog = new KIconDialog(mpLoader, this);
+        mpDialog = new TDEIconDialog(mpLoader, this);
         connect(mpDialog, TQT_SIGNAL(newIconName(const TQString&)), TQT_SLOT(newIconName(const TQString&)));
     }
 
@@ -748,7 +748,7 @@ void KIconButton::slotChangeIcon()
     mpDialog->showDialog();
 }
 
-void KIconButton::newIconName(const TQString& name)
+void TDEIconButton::newIconName(const TQString& name)
 {
     if (name.isEmpty())
         return;
@@ -763,10 +763,10 @@ void KIconButton::newIconName(const TQString& name)
     emit iconChanged(name);
 }
 
-void KIconCanvas::virtual_hook( int id, void* data )
-{ KIconView::virtual_hook( id, data ); }
+void TDEIconCanvas::virtual_hook( int id, void* data )
+{ TDEIconView::virtual_hook( id, data ); }
 
-void KIconDialog::virtual_hook( int id, void* data )
+void TDEIconDialog::virtual_hook( int id, void* data )
 { KDialogBase::virtual_hook( id, data ); }
 
 #include "kicondialog.moc"

@@ -489,7 +489,7 @@ void KHistoryCombo::addToHistory( const TQString& item )
 
     // now add the item
     if ( myPixProvider )
-        insertItem( myPixProvider->pixmapFor(item, KIcon::SizeSmall), item, 0);
+        insertItem( myPixProvider->pixmapFor(item, TDEIcon::SizeSmall), item, 0);
     else
         insertItem( item, 0 );
 
@@ -679,7 +679,7 @@ void KHistoryCombo::insertItems( const TQStringList& items )
         const TQString item = *it;
         if ( !item.isEmpty() ) { // only insert non-empty items
             if ( myPixProvider )
-                insertItem( myPixProvider->pixmapFor(item, KIcon::SizeSmall),
+                insertItem( myPixProvider->pixmapFor(item, TDEIcon::SizeSmall),
                             item );
             else
                 insertItem( item );

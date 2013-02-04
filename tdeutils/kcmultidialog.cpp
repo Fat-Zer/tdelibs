@@ -254,12 +254,12 @@ void KCMultiDialog::addModule(const TDECModuleInfo& moduleinfo,
                 parentmodulenames += moduleinfo.moduleName();
                 page = addHBoxPage( parentmodulenames, moduleinfo.comment(),
                         SmallIcon( moduleinfo.icon(),
-                            IconSize( KIcon::Small ) ) );
+                            IconSize( TDEIcon::Small ) ) );
                 break;
             case IconList:
                 page = addHBoxPage( moduleinfo.moduleName(),
                         moduleinfo.comment(), DesktopIcon( moduleinfo.icon(),
-                            KIcon::SizeMedium ) );
+                            TDEIcon::SizeMedium ) );
                 break;
             case Plain:
                 page = plainPage();

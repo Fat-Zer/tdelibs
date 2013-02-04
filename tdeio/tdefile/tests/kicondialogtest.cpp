@@ -5,9 +5,9 @@ int main( int argc, char **argv )
 {
     TDEApplication app( argc, argv, "kicondialogtest" );
 
-//    KIconDialog::getIcon(); 
+//    TDEIconDialog::getIcon(); 
 
-    KIconButton button;
+    TDEIconButton button;
     app.setMainWidget( &button );
     button.show();
  

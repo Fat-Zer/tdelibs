@@ -40,7 +40,7 @@ Christian Czezatke <e9025461@student.tuwien.ac.at>
 TDEProcess class
 
 Matthias Ettrich <ettrich@kde.org>
-KWM, Changes to TDEApplication and KIconLoader
+KWM, Changes to TDEApplication and TDEIconLoader
 
 Stephan Kulow <coolo@kde.org>
 heavy modifications to KURL, autoconf and automake stuff

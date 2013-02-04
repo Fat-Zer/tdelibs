@@ -46,7 +46,7 @@ Nicolas Hadacek <hadacek@kde.org>
 Key configuration classes, bug fixes
 
 Christoph Neerfeld <Christoph.Neerfeld@mail.bonn.netsurf.de>
-KIconLoader class
+TDEIconLoader class
 
 Sven Radej <sven.radej@iname.com>
 KLineEdit, KCombo, TDEToolbar, KStatusBar

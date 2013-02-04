@@ -663,7 +663,7 @@ int TDEAction::plug( TQWidget *w, int index )
           instance = m_parentCollection->instance();
         else
           instance = TDEGlobal::instance();
-        id = menu->insertItem( d->iconSet( KIcon::Small, 0, instance ), d->text(), this,//dsweet
+        id = menu->insertItem( d->iconSet( TDEIcon::Small, 0, instance ), d->text(), this,//dsweet
                                  TQT_SLOT( slotPopupActivated() ), keyQt,
                                  -1, index );
     }
@@ -945,12 +945,12 @@ void TDEAction::updateIcon( int id )
 
   if ( ::tqqt_cast<TQPopupMenu *>( w ) ) {
     int itemId_ = itemId( id );
-    static_cast<TQPopupMenu*>(w)->changeItem( itemId_, d->iconSet( KIcon::Small ), d->text() );
+    static_cast<TQPopupMenu*>(w)->changeItem( itemId_, d->iconSet( TDEIcon::Small ), d->text() );
     if (!d->m_cut.isNull())
       updateShortcut( static_cast<TQPopupMenu*>(w), itemId_ );
   }
   else if ( ::tqqt_cast<TQMenuBar *>( w ) )
-    static_cast<TQMenuBar*>(w)->changeItem( itemId( id ), d->iconSet( KIcon::Small ), d->text() );
+    static_cast<TQMenuBar*>(w)->changeItem( itemId( id ), d->iconSet( TDEIcon::Small ), d->text() );
   else if ( ::tqqt_cast<TDEToolBar *>( w ) )
     static_cast<TDEToolBar *>(w)->setButtonIcon( itemId( id ), d->iconName() );
 }
@@ -988,11 +988,11 @@ void TDEAction::updateIconSet( int id )
     if ( icon().isEmpty() && d->hasIcon() ) // only if there is no named icon ( scales better )
       static_cast<TDEToolBar *>(w)->setButtonIconSet( itemId( id ), d->iconSet() );
     else
-      static_cast<TDEToolBar *>(w)->setButtonIconSet( itemId( id ), d->iconSet( KIcon::Small ) );
+      static_cast<TDEToolBar *>(w)->setButtonIconSet( itemId( id ), d->iconSet( TDEIcon::Small ) );
   }
 }
 
-TQIconSet TDEAction::iconSet( KIcon::Group group, int size ) const
+TQIconSet TDEAction::iconSet( TDEIcon::Group group, int size ) const
 {
     return d->iconSet( group, size );
 }

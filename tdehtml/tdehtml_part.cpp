@@ -607,7 +607,7 @@ bool TDEHTMLPart::openURL( const KURL &url )
     if (userAgent != KProtocolManager::userAgentForHost(TQString())) {
       if (!d->m_statusBarUALabel) {
         d->m_statusBarUALabel = new KURLLabel(d->m_statusBarExtension->statusBar());
-        d->m_statusBarUALabel->setFixedHeight(instance()->iconLoader()->currentSize(KIcon::Small));
+        d->m_statusBarUALabel->setFixedHeight(instance()->iconLoader()->currentSize(TDEIcon::Small));
         d->m_statusBarUALabel->setSizePolicy(TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Fixed));
         d->m_statusBarUALabel->setUseCursor(false);
         d->m_statusBarExtension->addStatusBarItem(d->m_statusBarUALabel, 0, false);
@@ -1074,7 +1074,7 @@ KJSErrorDlg *TDEHTMLPart::jsErrorExtension() {
 
   if (!d->m_statusBarJSErrorLabel) {
     d->m_statusBarJSErrorLabel = new KURLLabel(d->m_statusBarExtension->statusBar());
-    d->m_statusBarJSErrorLabel->setFixedHeight(instance()->iconLoader()->currentSize(KIcon::Small));
+    d->m_statusBarJSErrorLabel->setFixedHeight(instance()->iconLoader()->currentSize(TDEIcon::Small));
     d->m_statusBarJSErrorLabel->setSizePolicy(TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Fixed));
     d->m_statusBarJSErrorLabel->setUseCursor(false);
     d->m_statusBarExtension->addStatusBarItem(d->m_statusBarJSErrorLabel, 0, false);
@@ -1524,7 +1524,7 @@ void TDEHTMLPart::setPageSecurity( PageSecurity sec )
   emit d->m_extension->setPageSecurity( sec );
   if ( sec != NotCrypted && !d->m_statusBarIconLabel && !parentPart() ) {
     d->m_statusBarIconLabel = new KURLLabel( d->m_statusBarExtension->statusBar() );
-    d->m_statusBarIconLabel->setFixedHeight( instance()->iconLoader()->currentSize(KIcon::Small) );
+    d->m_statusBarIconLabel->setFixedHeight( instance()->iconLoader()->currentSize(TDEIcon::Small) );
     d->m_statusBarIconLabel->setSizePolicy(TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Fixed ));
     d->m_statusBarIconLabel->setUseCursor( false );
     d->m_statusBarExtension->addStatusBarItem( d->m_statusBarIconLabel, 0, false );
@@ -6406,13 +6406,13 @@ void TDEHTMLPart::tdehtmlMouseMoveEvent( tdehtml::MouseMoveEvent *event )
     {
       img = static_cast<HTMLImageElementImpl *>(innerNode.handle());
       u = KURL( completeURL( tdehtml::parseURL(img->getAttribute(ATTR_SRC)).string() ) );
-      pix = KMimeType::mimeType("image/png")->pixmap(KIcon::Desktop);
+      pix = KMimeType::mimeType("image/png")->pixmap(TDEIcon::Desktop);
     }
     else
     {
       // Text or image link...
       u = completeURL( d->m_strSelectedURL );
-      pix = KMimeType::pixmapForURL(u, 0, KIcon::Desktop, KIcon::SizeMedium);
+      pix = KMimeType::pixmapForURL(u, 0, TDEIcon::Desktop, TDEIcon::SizeMedium);
     }
 
     u.setPass(TQString());
@@ -7248,7 +7248,7 @@ void TDEHTMLPart::walletOpened(KWallet::Wallet *wallet) {
 
   if (!d->m_statusBarWalletLabel) {
     d->m_statusBarWalletLabel = new KURLLabel(d->m_statusBarExtension->statusBar());
-    d->m_statusBarWalletLabel->setFixedHeight(instance()->iconLoader()->currentSize(KIcon::Small));
+    d->m_statusBarWalletLabel->setFixedHeight(instance()->iconLoader()->currentSize(TDEIcon::Small));
     d->m_statusBarWalletLabel->setSizePolicy(TQSizePolicy(TQSizePolicy::Fixed, TQSizePolicy::Fixed));
     d->m_statusBarWalletLabel->setUseCursor(false);
     d->m_statusBarExtension->addStatusBarItem(d->m_statusBarWalletLabel, 0, false);
@@ -7385,7 +7385,7 @@ void TDEHTMLPart::setSuppressedPopupIndicator( bool enable, TDEHTMLPart *originP
 
     if ( enable && !d->m_statusBarPopupLabel ) {
         d->m_statusBarPopupLabel = new KURLLabel( d->m_statusBarExtension->statusBar() );
-        d->m_statusBarPopupLabel->setFixedHeight( instance()->iconLoader()->currentSize( KIcon::Small) );
+        d->m_statusBarPopupLabel->setFixedHeight( instance()->iconLoader()->currentSize( TDEIcon::Small) );
         d->m_statusBarPopupLabel->setSizePolicy( TQSizePolicy( TQSizePolicy::Fixed, TQSizePolicy::Fixed ));
         d->m_statusBarPopupLabel->setUseCursor( false );
         d->m_statusBarExtension->addStatusBarItem( d->m_statusBarPopupLabel, 0, false );

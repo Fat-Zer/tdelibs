@@ -188,7 +188,7 @@ KTipDialog::KTipDialog(KTipDatabase *db, TQWidget *parent, const char *name)
     {
 	img = TQImage(locate("data", "kdewizard/pics/wizard_small.png"));
 	// colorize and check to figure the correct color
-	KIconEffect::colorize(img, mBlendedColor, 1.0);
+	TDEIconEffect::colorize(img, mBlendedColor, 1.0);
 	QRgb colPixel( img.pixel(0,0) );
 
 	mBlendedColor = TQColor(tqRed(colPixel),tqGreen(colPixel),tqBlue(colPixel));
@@ -206,8 +206,8 @@ KTipDialog::KTipDialog(KTipDatabase *db, TQWidget *parent, const char *name)
     setCaption(i18n("Tip of the Day"));
 #ifdef Q_WS_X11
     KWin::setIcons( winId(),
-                    TDEGlobal::iconLoader()->loadIcon( "idea", KIcon::NoGroup, 32 ),
-                    TDEGlobal::iconLoader()->loadIcon( "idea", KIcon::NoGroup, 16 ) );
+                    TDEGlobal::iconLoader()->loadIcon( "idea", TDEIcon::NoGroup, 32 ),
+                    TDEGlobal::iconLoader()->loadIcon( "idea", TDEIcon::NoGroup, 16 ) );
 #endif
     TQVBoxLayout *vbox = new TQVBoxLayout(this, marginHint(), spacingHint());
 

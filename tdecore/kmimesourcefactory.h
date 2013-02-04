@@ -29,7 +29,7 @@ class KMimeSourceFactoryPrivate;
 class TDEInstance;
 
 /**
- * An extension to TQMimeSourceFactory that uses KIconLoader to
+ * An extension to TQMimeSourceFactory that uses TDEIconLoader to
  * find images.
  *
  * Normally you don't have to instantiate this class at all, TDEApplication does that for
@@ -46,7 +46,7 @@ public:
    *
    * @param loader is the iconloader used to find images.
    */
-  KMimeSourceFactory (KIconLoader* loader = TDEGlobal::iconLoader());
+  KMimeSourceFactory (TDEIconLoader* loader = TDEGlobal::iconLoader());
 
   /**
    * Destructor.

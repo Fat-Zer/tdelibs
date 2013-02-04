@@ -337,7 +337,7 @@ TQPixmap KURLComboBox::getPixmap( const KURL& url ) const
     if ( myMode == Directories )
         return d->dirpix;
     else
-        return KMimeType::pixmapForURL( url, 0, KIcon::Small );
+        return KMimeType::pixmapForURL( url, 0, TDEIcon::Small );
 }
 
 

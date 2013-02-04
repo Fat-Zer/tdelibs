@@ -207,7 +207,7 @@ void KPluginSelectionWidget::init( const TQValueList<KPluginInfo*> & plugininfos
         {
             TQCheckListItem * item = new KPluginInfoLVI( *it, listview );
             if( ! ( *it )->icon().isEmpty() )
-                item->setPixmap( 0, SmallIcon( ( *it )->icon(), IconSize( KIcon::Small ) ) );
+                item->setPixmap( 0, SmallIcon( ( *it )->icon(), IconSize( TDEIcon::Small ) ) );
             item->setOn( ( *it )->isPluginEnabled() );
             d->pluginInfoMap.insert( item, *it );
         }

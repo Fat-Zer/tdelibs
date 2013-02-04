@@ -59,8 +59,8 @@ void KMPropertyPage::addPropPage(KMPropWidget *w)
 
 		TQPixmap icon = TDEGlobal::instance()->iconLoader()->loadIcon(
 		                                                           w->pixmap(),
-		                                                           KIcon::NoGroup,
-		                                                           KIcon::SizeMedium
+		                                                           TDEIcon::NoGroup,
+		                                                           TDEIcon::SizeMedium
  		                                                          );
 		addPage(ctn,w->title(),w->header(),icon);
 	}

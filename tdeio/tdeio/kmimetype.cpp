@@ -450,10 +450,10 @@ KMimeType::~KMimeType()
 {
 }
 
-TQPixmap KMimeType::pixmap( KIcon::Group _group, int _force_size, int _state,
+TQPixmap KMimeType::pixmap( TDEIcon::Group _group, int _force_size, int _state,
                            TQString * _path ) const
 {
-  KIconLoader *iconLoader=TDEGlobal::iconLoader();
+  TDEIconLoader *iconLoader=TDEGlobal::iconLoader();
   TQString iconName=icon( TQString::null, false );
   if (!iconLoader->extraDesktopThemesAdded())
   {
@@ -466,10 +466,10 @@ TQPixmap KMimeType::pixmap( KIcon::Group _group, int _force_size, int _state,
   return iconLoader->loadIcon( iconName , _group, _force_size, _state, _path, false );
 }
 
-TQPixmap KMimeType::pixmap( const KURL& _url, KIcon::Group _group, int _force_size,
+TQPixmap KMimeType::pixmap( const KURL& _url, TDEIcon::Group _group, int _force_size,
                            int _state, TQString * _path ) const
 {
-  KIconLoader *iconLoader=TDEGlobal::iconLoader();
+  TDEIconLoader *iconLoader=TDEGlobal::iconLoader();
   TQString iconName=icon( _url, _url.isLocalFile() );
   if (!iconLoader->extraDesktopThemesAdded())
   {
@@ -482,10 +482,10 @@ TQPixmap KMimeType::pixmap( const KURL& _url, KIcon::Group _group, int _force_si
   return iconLoader->loadIcon( iconName , _group, _force_size, _state, _path, false );
 }
 
-TQPixmap KMimeType::pixmapForURL( const KURL & _url, mode_t _mode, KIcon::Group _group,
+TQPixmap KMimeType::pixmapForURL( const KURL & _url, mode_t _mode, TDEIcon::Group _group,
                                  int _force_size, int _state, TQString * _path )
 {
-  KIconLoader *iconLoader=TDEGlobal::iconLoader();
+  TDEIconLoader *iconLoader=TDEGlobal::iconLoader();
   TQString iconName = iconForURL( _url, _mode );
 
   if (!iconLoader->extraDesktopThemesAdded())
@@ -745,7 +745,7 @@ TQString KDEDesktopMimeType::icon( const KURL& _url, bool _is_local ) const
   return icon;
 }
 
-TQPixmap KDEDesktopMimeType::pixmap( const KURL& _url, KIcon::Group _group, int _force_size,
+TQPixmap KDEDesktopMimeType::pixmap( const KURL& _url, TDEIcon::Group _group, int _force_size,
                                     int _state, TQString * _path ) const
 {
   TQString _icon = icon( _url, _url.isLocalFile() );

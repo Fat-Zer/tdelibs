@@ -196,9 +196,9 @@ void TDEToolBarButton::modeChange()
   int pix_width  = d->m_iconSize;
   if ( d->m_iconSize == 0 ) {
       if (d->m_parent && !strcmp(d->m_parent->name(), "mainToolBar"))
-          pix_width = IconSize( KIcon::MainToolbar );
+          pix_width = IconSize( TDEIcon::MainToolbar );
       else
-          pix_width = IconSize( KIcon::Toolbar );
+          pix_width = IconSize( TDEIcon::Toolbar );
   }
   int pix_height = pix_width;
 
@@ -284,10 +284,10 @@ void TDEToolBarButton::setIcon( const TQString &icon )
   // TQObject::name() return "const char *" instead of TQString.
   if (d->m_parent && !strcmp(d->m_parent->name(), "mainToolBar"))
     TQToolButton::setIconSet( d->m_instance->iconLoader()->loadIconSet(
-        d->m_iconName, KIcon::MainToolbar, d->m_iconSize ));
+        d->m_iconName, TDEIcon::MainToolbar, d->m_iconSize ));
   else
     TQToolButton::setIconSet( d->m_instance->iconLoader()->loadIconSet(
-        d->m_iconName, KIcon::Toolbar, d->m_iconSize ));
+        d->m_iconName, TDEIcon::Toolbar, d->m_iconSize ));
 }
 
 void TDEToolBarButton::setIconSet( const TQIconSet &iconset )
@@ -327,10 +327,10 @@ void TDEToolBarButton::setDefaultIcon( const TQString& icon )
   TQIconSet set = iconSet();
   TQPixmap pm;
   if (d->m_parent && !strcmp(d->m_parent->name(), "mainToolBar"))
-    pm = d->m_instance->iconLoader()->loadIcon( icon, KIcon::MainToolbar,
+    pm = d->m_instance->iconLoader()->loadIcon( icon, TDEIcon::MainToolbar,
         d->m_iconSize );
   else
-    pm = d->m_instance->iconLoader()->loadIcon( icon, KIcon::Toolbar,
+    pm = d->m_instance->iconLoader()->loadIcon( icon, TDEIcon::Toolbar,
         d->m_iconSize );
   set.setPixmap( pm, TQIconSet::Automatic, TQIconSet::Normal );
   TQToolButton::setIconSet( set );
@@ -341,10 +341,10 @@ void TDEToolBarButton::setDisabledIcon( const TQString& icon )
   TQIconSet set = iconSet();
   TQPixmap pm;
   if (d->m_parent && !strcmp(d->m_parent->name(), "mainToolBar"))
-    pm = d->m_instance->iconLoader()->loadIcon( icon, KIcon::MainToolbar,
+    pm = d->m_instance->iconLoader()->loadIcon( icon, TDEIcon::MainToolbar,
         d->m_iconSize );
   else
-    pm = d->m_instance->iconLoader()->loadIcon( icon, KIcon::Toolbar,
+    pm = d->m_instance->iconLoader()->loadIcon( icon, TDEIcon::Toolbar,
         d->m_iconSize );
   set.setPixmap( pm, TQIconSet::Automatic, TQIconSet::Disabled );
   TQToolButton::setIconSet( set );

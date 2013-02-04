@@ -26,7 +26,7 @@ class KMPrinter;
 class TQLineEdit;
 class TQCheckBox;
 class TQComboBox;
-class KIconButton;
+class TDEIconButton;
 class KXmlCommandSelector;
 
 class KMSpecialPrinterDlg : public KDialogBase
@@ -50,7 +50,7 @@ private:
 	TQComboBox	*m_mimetype;
 	TQCheckBox	*m_usefile;
 	TQStringList	m_mimelist;
-	KIconButton	*m_icon;
+	TDEIconButton	*m_icon;
 	KXmlCommandSelector	*m_command;
 };
 

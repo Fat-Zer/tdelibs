@@ -1,5 +1,5 @@
 /*
-* Tests the item container widgets KIconView, TDEListView, TDEListBox
+* Tests the item container widgets TDEIconView, TDEListView, TDEListBox
 *
 * Copyright (c) 2000 by Michael Reiher <michael.reiher@gmx.de>
 *
@@ -97,8 +97,8 @@ TopLevel::TopLevel(TQWidget *parent, const char *name)
     TDEGlobal::config()->reparseConfiguration();
 
     //Create IconView
-    TQGroupBox* gbIconView = new TQGroupBox( 1, Qt::Horizontal, "KIconView", this);
-    m_pIconView = new KIconView( gbIconView );
+    TQGroupBox* gbIconView = new TQGroupBox( 1, Qt::Horizontal, "TDEIconView", this);
+    m_pIconView = new TDEIconView( gbIconView );
     hBox->addWidget( gbIconView );
     hBox->addSpacing( 5 );
     connect( m_pIconView, TQT_SIGNAL( executed( TQIconViewItem* ) ),
@@ -151,22 +151,22 @@ void TopLevel::slotSwitchMode( int id )
 
   switch( id ) {
   case TopLevel::NoSelection:
-    m_pIconView->setSelectionMode( KIconView::NoSelection );
+    m_pIconView->setSelectionMode( TDEIconView::NoSelection );
     m_pListView->setSelectionMode( TQListView::NoSelection );
     m_pListBox->setSelectionMode( TDEListBox::NoSelection );
     break;
   case TopLevel::Single:
-    m_pIconView->setSelectionMode( KIconView::Single );
+    m_pIconView->setSelectionMode( TDEIconView::Single );
     m_pListView->setSelectionMode( TQListView::Single );
     m_pListBox->setSelectionMode( TDEListBox::Single );
     break;
   case TopLevel::Multi:
-    m_pIconView->setSelectionMode( KIconView::Multi );
+    m_pIconView->setSelectionMode( TDEIconView::Multi );
     m_pListView->setSelectionMode( TQListView::Multi );
     m_pListBox->setSelectionMode( TDEListBox::Multi );
     break;
   case TopLevel::Extended:
-    m_pIconView->setSelectionMode( KIconView::Extended );
+    m_pIconView->setSelectionMode( TDEIconView::Extended );
     m_pListView->setSelectionMode( TQListView::Extended );
     m_pListBox->setSelectionMode( TDEListBox::Extended );
     break;
@@ -177,7 +177,7 @@ void TopLevel::slotSwitchMode( int id )
 
 void TopLevel::slotIconViewExec( TQIconViewItem* item )
 {
-  m_plblWidget->setText("KIconView");
+  m_plblWidget->setText("TDEIconView");
   m_plblSignal->setText("executed");
   if( item ) 
     m_plblItem->setText( item->text() );

@@ -163,7 +163,7 @@ class KateDocument : public Kate::Document,
     KTextEditor::ConfigPage *configPage (uint number = 0, TQWidget *parent = 0, const char *name=0 );
     TQString configPageName (uint number = 0) const;
     TQString configPageFullName (uint number = 0) const;
-    TQPixmap configPagePixmap (uint number = 0, int size = KIcon::SizeSmall) const;
+    TQPixmap configPagePixmap (uint number = 0, int size = TDEIcon::SizeSmall) const;
 
   //
   // KTextEditor::EditInterface stuff

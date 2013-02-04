@@ -74,7 +74,7 @@ TDESharedConfig *TDEGlobal::sharedConfig()
     return _instance->sharedConfig();
 }
 
-KIconLoader *TDEGlobal::iconLoader()
+TDEIconLoader *TDEGlobal::iconLoader()
 {
     MYASSERT(_instance);
 

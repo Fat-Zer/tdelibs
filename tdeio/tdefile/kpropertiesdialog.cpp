@@ -858,7 +858,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
 
   if ( !isDevice && !isTrash && (bDesktopFile || S_ISDIR(mode)) && !d->bMultiple /*not implemented for multiple*/ )
   {
-    KIconButton *iconButton = new KIconButton( d->m_frame );
+    TDEIconButton *iconButton = new TDEIconButton( d->m_frame );
     int bsize = 66 + 2 * iconButton->style().pixelMetric(TQStyle::PM_ButtonMargin);
     iconButton->setFixedSize(bsize, bsize);
     iconButton->setIconSize(48);
@@ -872,11 +872,11 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
       config.setDesktopGroup();
       iconStr = config.readEntry( "Icon" );
       if ( config.hasDeviceType() )
-	iconButton->setIconType( KIcon::Desktop, KIcon::Device );
+	iconButton->setIconType( TDEIcon::Desktop, TDEIcon::Device );
       else
-	iconButton->setIconType( KIcon::Desktop, KIcon::Application );
+	iconButton->setIconType( TDEIcon::Desktop, TDEIcon::Application );
     } else
-      iconButton->setIconType( KIcon::Desktop, KIcon::Place );
+      iconButton->setIconType( TDEIcon::Desktop, TDEIcon::Place );
     iconButton->setIcon(iconStr);
     iconArea = iconButton;
     connect( iconButton, TQT_SIGNAL( iconChanged(TQString) ),
@@ -885,7 +885,7 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
     TQLabel *iconLabel = new TQLabel( d->m_frame );
     int bsize = 66 + 2 * iconLabel->style().pixelMetric(TQStyle::PM_ButtonMargin);
     iconLabel->setFixedSize(bsize, bsize);
-    iconLabel->setPixmap( TDEGlobal::iconLoader()->loadIcon( iconStr, KIcon::Desktop, 48) );
+    iconLabel->setPixmap( TDEGlobal::iconLoader()->loadIcon( iconStr, TDEIcon::Desktop, 48) );
     iconArea = iconLabel;
   }
   grid->addWidget(iconArea, curRow, 0, Qt::AlignLeft);
@@ -1427,7 +1427,7 @@ void KFilePropsPlugin::slotCopyFinished( TDEIO::Job * job )
 
 void KFilePropsPlugin::applyIconChanges()
 {
-  KIconButton *iconButton = ::tqqt_cast<KIconButton *>( iconArea );
+  TDEIconButton *iconButton = ::tqqt_cast<TDEIconButton *>( iconArea );
   if ( !iconButton || !d->bIconChanged )
     return;
   // handle icon changes - only local files (or pseudo-local) for now
@@ -2915,10 +2915,10 @@ KDevicePropsPlugin::KDevicePropsPlugin( KPropertiesDialog *_props ) : KPropsDlgP
   KSeparator* sep = new KSeparator( KSeparator::HLine, d->m_frame);
   layout->addMultiCellWidget(sep, 6, 6, 0, 1);
 
-  unmounted = new KIconButton( d->m_frame );
+  unmounted = new TDEIconButton( d->m_frame );
   int bsize = 66 + 2 * unmounted->style().pixelMetric(TQStyle::PM_ButtonMargin);
   unmounted->setFixedSize(bsize, bsize);
-  unmounted->setIconType(KIcon::Desktop, KIcon::Device);
+  unmounted->setIconType(TDEIcon::Desktop, TDEIcon::Device);
   layout->addWidget(unmounted, 7, 0);
 
   label = new TQLabel( i18n("Unmounted Icon"),  d->m_frame );
@@ -3272,7 +3272,7 @@ void KDesktopPropsPlugin::slotAddFiletype()
         }
 
         TQListViewItem *item = new TQListViewItem(majorGroup, min, (*it)->comment());
-        item->setPixmap(0, (*it)->pixmap(KIcon::Small, IconSize(KIcon::Small)));
+        item->setPixmap(0, (*it)->pixmap(TDEIcon::Small, IconSize(TDEIcon::Small)));
      }
      TQMapIterator<TQString,TQListViewItem*> mit = majorMap.find( "all" );
      if ( mit != majorMap.end())

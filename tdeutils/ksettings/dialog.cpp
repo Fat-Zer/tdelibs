@@ -221,7 +221,7 @@ class PageNode
 				TQPixmap icon;
 				if( ! m_value.group->icon.isNull() )
 					icon = SmallIcon( m_value.group->icon,
-							IconSize( KIcon::Small ) );
+							IconSize( TDEIcon::Small ) );
 				TQVBox * page = dlg->addVBoxPage( m_value.group->name,
 						TQString::null, icon );
 				TQLabel * comment = new TQLabel( m_value.group->comment, page );

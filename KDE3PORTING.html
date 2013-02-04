@@ -211,10 +211,10 @@ The preferred means of defining a shortcut, however, is to use <b>TDEAction</b>.
 		</table></li-->
 </ul>
 
-<H4>KIconLoader, KIconTheme</H4>
-Methods now use KIcon::Group and KIcon::Context instead of int as types for group and context arguments.
+<H4>TDEIconLoader, TDEIconTheme</H4>
+Methods now use TDEIcon::Group and TDEIcon::Context instead of int as types for group and context arguments.
 The change should affect only code using hardcoded numeric values instead of using the proper enum constants.
-This applies to classes KIconLoader, KIconTheme and (in kio and tdefile) KMimeType, KService, KIconDialog, KIconButton,
+This applies to classes TDEIconLoader, TDEIconTheme and (in kio and tdefile) KMimeType, KService, TDEIconDialog, TDEIconButton,
 KURLBar and KURLBarItem.
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
@@ -323,13 +323,13 @@ present in Qt3/KDE3. KThemeBase is no longer in tdeui, but in kstyles/kthemestyl
 as its use is basically limited to KThemeStyle.
 
 <H4>TDEAction, TDEToolBar, TDEToolBarButton and icons</H4>
-The preferred way for specifying icons is passing the icon names (and the icons will be loaded by KIconLoader),
+The preferred way for specifying icons is passing the icon names (and the icons will be loaded by TDEIconLoader),
 instead of using TQIconSet or TQPixmap. This results in always using the correct icon size and allows delayed
 on-demand icon loading.
 <p>
 Method TDEAction::hasIconSet() has been renamed to TDEAction::hasIcon(), the old name will still work unless KDE_NO_COMPAT is defined.
 TDEAction::iconSet() now has an argument specifying icon group, the old TDEAction::iconSet() is still available unless KDE_NO_COMPAT
-is defined and returns KIcon::Small iconset, just like in KDE2.
+is defined and returns TDEIcon::Small iconset, just like in KDE2.
 <p>
 TDEToolBarButton methods setPixmap(), setDefaultPixmap(), setDisabledPixmap(), setDefaultIcon() and setDisabledIcon() are deprecated.
 Use TDEToolBarButton::setIcon() (preferred) or TDEToolBarButton::setIconSet() instead.
@@ -420,7 +420,7 @@ The merging of libtdeio, libtdesycoca, libtdefile and libkssl into a single libt
 allowed to fix this dependency problem: KRun can now use the OpenWith dialog directly.
 
 <H4>KMimeType, KService</H4>
-Methods now use KIcon::Group and KIcon::Context instead of int as types for group and context arguments.
+Methods now use TDEIcon::Group and TDEIcon::Context instead of int as types for group and context arguments.
 The change should affect only code using hardcoded numeric values instead of using the proper enum constants.
 
 <H4>KFilterDev</H4>
@@ -563,7 +563,7 @@ flexibility and efficiency.
 <br><br>
 Sorting has changed radically. Previously, KFileView had protected methods QuickSort,
 compareItems() and mergeLists() to sort directory entries for displaying in the views. Now,
-KFileView does not do any sorting anymore. Instead, the view's (i.e. KIconView, TDEListView)
+KFileView does not do any sorting anymore. Instead, the view's (i.e. TDEIconView, TDEListView)
 sorting is utilized by letting its view-items provide a TQString key() method. Therefore,
 KFileView offers the two methods
 <ul>
@@ -613,8 +613,8 @@ have been merged into the new method activate( const KFileItem * ).
 <br><br>
 Carsten Pfeiffer <A HREF="mailto:pfeiffer@kde.org">pfeiffer@kde.org</A>
 
-<H4>KIconDialog, KIconButton, KURLBar, KURLBarItem</H4>
-Methods now use KIcon::Group and KIcon::Context instead of int as types for group and context arguments.
+<H4>TDEIconDialog, TDEIconButton, KURLBar, KURLBarItem</H4>
+Methods now use TDEIcon::Group and TDEIcon::Context instead of int as types for group and context arguments.
 The change should affect only code using hardcoded numeric values instead of using the proper enum constants.
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>

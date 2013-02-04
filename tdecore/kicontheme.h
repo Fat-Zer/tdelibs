@@ -10,8 +10,8 @@
  *
  */
 
-#ifndef __KIconTheme_h_Included__
-#define __KIconTheme_h_Included__
+#ifndef __TDEIconTheme_h_Included__
+#define __TDEIconTheme_h_Included__
 
 #include <tqstring.h>
 #include <tqstringlist.h>
@@ -20,23 +20,23 @@
 #include "tdelibs_export.h"
 
 class TDEConfig;
-class KIconThemeDir;
+class TDEIconThemeDir;
 
-class KIconThemePrivate;
+class TDEIconThemePrivate;
 
-class KIconPrivate;
+class TDEIconPrivate;
 
 /**
- * One icon as found by KIconTheme. Also serves as a namespace containing
+ * One icon as found by TDEIconTheme. Also serves as a namespace containing
  * icon related constants.
- * @see KIconEffect
- * @see KIconTheme
- * @see KIconLoader
+ * @see TDEIconEffect
+ * @see TDEIconTheme
+ * @see TDEIconLoader
  */
-class TDECORE_EXPORT KIcon
+class TDECORE_EXPORT TDEIcon
 {
 public:
-    KIcon() { size = 0; }
+    TDEIcon() { size = 0; }
 
     /**
      * Return true if this icon is valid, false otherwise.
@@ -81,7 +81,7 @@ public:
     };
 
     // if you add a group here, make sure to change the config reading in
-    // KIconLoader too
+    // TDEIconLoader too
     /**
      * The group of the icon.
      */
@@ -173,18 +173,18 @@ public:
     TQString path;
 
 private:
-    KIconPrivate *d;
+    TDEIconPrivate *d;
 };
 
-inline KIcon::Group& operator++(KIcon::Group& group) { group = static_cast<KIcon::Group>(group+1); return group; }
-inline KIcon::Group operator++(KIcon::Group& group,int) { KIcon::Group ret = group; ++group; return ret; }
+inline TDEIcon::Group& operator++(TDEIcon::Group& group) { group = static_cast<TDEIcon::Group>(group+1); return group; }
+inline TDEIcon::Group operator++(TDEIcon::Group& group,int) { TDEIcon::Group ret = group; ++group; return ret; }
 
 /**
  * Class to use/access icon themes in KDE. This class is used by the
  * iconloader but can be used by others too.
- * @see KIconLoader
+ * @see TDEIconLoader
  */
-class TDECORE_EXPORT KIconTheme
+class TDECORE_EXPORT TDEIconTheme
 {
 public:
     /**
@@ -193,8 +193,8 @@ public:
      * @param appName the name of the application. Can be null. This argument
      *        allows applications to have themed application icons.
      */
-    KIconTheme(const TQString& name, const TQString& appName=TQString::null);
-    ~KIconTheme();
+    TDEIconTheme(const TQString& name, const TQString& appName=TQString::null);
+    ~TDEIconTheme();
 
     /**
      * The stylized name of the icon theme.
@@ -281,17 +281,17 @@ public:
 
     /**
      * The default size of this theme for a certain icon group.
-     * @param group The icon group. See KIcon::Group.
+     * @param group The icon group. See TDEIcon::Group.
      * @return The default size in pixels for the given icon group.
      */
-    int defaultSize(KIcon::Group group) const;
+    int defaultSize(TDEIcon::Group group) const;
 
     /**
      * Query available sizes for a group.
-     * @param group The icon group. See KIcon::Group.
+     * @param group The icon group. See TDEIcon::Group.
      * @return a list of available sized for the given group
      */
-    TQValueList<int> querySizes(KIcon::Group group) const;
+    TQValueList<int> querySizes(TDEIcon::Group group) const;
 
     /**
      * Query available icons for a size and context.
@@ -299,7 +299,7 @@ public:
      * @param context the context of the icons
      * @return the list of icon names
      */
-    TQStringList queryIcons(int size, KIcon::Context context = KIcon::Any) const;
+    TQStringList queryIcons(int size, TDEIcon::Context context = TDEIcon::Any) const;
 
     /**
      * Query available icons for a context and preferred size.
@@ -307,26 +307,26 @@ public:
      * @param context the context of the icons
      * @return the list of icon names
      */
-    TQStringList queryIconsByContext(int size, KIcon::Context context = KIcon::Any) const;
+    TQStringList queryIconsByContext(int size, TDEIcon::Context context = TDEIcon::Any) const;
 
 
     /**
      * Lookup an icon in the theme.
      * @param name The name of the icon, without extension.
      * @param size The desired size of the icon.
-     * @param match The matching mode. KIcon::MatchExact returns an icon
-     * only if matches exactly. KIcon::MatchBest returns the best matching
+     * @param match The matching mode. TDEIcon::MatchExact returns an icon
+     * only if matches exactly. TDEIcon::MatchBest returns the best matching
      * icon.
-     * @return A KIcon class that describes the icon. If an icon is found,
-     * @see KIcon::isValid will return true, and false otherwise.
+     * @return A TDEIcon class that describes the icon. If an icon is found,
+     * @see TDEIcon::isValid will return true, and false otherwise.
      */
-    KIcon iconPath(const TQString& name, int size, KIcon::MatchType match) const;
+    TDEIcon iconPath(const TQString& name, int size, TDEIcon::MatchType match) const;
     
     /**
      * Returns true if the theme has any icons for the given context.
      * @since 3.5.5
      */
-    bool hasContext( KIcon::Context context ) const;
+    bool hasContext( TDEIcon::Context context ) const;
 
     /**
      * List all icon themes installed on the system, global and local.
@@ -359,8 +359,8 @@ private:
     int mDepth;
     TQString mDir, mName, mDesc;
     TQStringList mInherits;
-    TQPtrList<KIconThemeDir> mDirs;
-    KIconThemePrivate *d;
+    TQPtrList<TDEIconThemeDir> mDirs;
+    TDEIconThemePrivate *d;
 
     static TQString *_theme;
     static TQStringList *_theme_list;

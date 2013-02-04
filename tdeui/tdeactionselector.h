@@ -115,7 +115,7 @@ public:
   /**
     This enum identifies the icon sizes, used for the move buttons.
     The values correspond to the following pixel sizes:
-    @li SmallIcon - the return value of IconSize( KIcon::Small ), the user defined size
+    @li SmallIcon - the return value of IconSize( TDEIcon::Small ), the user defined size
                 of a small icon in KDE. This is the default setting.
     @li Small - 16px
     @li Medium - 22px
@@ -274,7 +274,7 @@ public:
     Sets the iconset for button @p button to @p iconset.
     You can use this method to et a costum icon set. Either
     created by TQIconSet, or use the application instance of
-    KIconLoader (recommended).
+    TDEIconLoader (recommended).
   */
   void setButtonIconSet( const TQIconSet &iconset, MoveButton button );
 

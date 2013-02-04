@@ -1516,7 +1516,7 @@ signals:
 
   /**
    * @internal
-   * Used to notify KIconLoader objects that they need to reload.
+   * Used to notify TDEIconLoader objects that they need to reload.
    */
   void updateIconLoaders();
 

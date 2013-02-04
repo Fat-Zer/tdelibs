@@ -308,9 +308,9 @@ KService::~KService()
   delete d;
 }
 
-TQPixmap KService::pixmap( KIcon::Group _group, int _force_size, int _state, TQString * _path ) const
+TQPixmap KService::pixmap( TDEIcon::Group _group, int _force_size, int _state, TQString * _path ) const
 {
-  KIconLoader *iconLoader=TDEGlobal::iconLoader();
+  TDEIconLoader *iconLoader=TDEGlobal::iconLoader();
   if (!iconLoader->extraDesktopThemesAdded())
   {
       TQPixmap pixmap=iconLoader->loadIcon( m_strIcon, _group, _force_size, _state, _path, true );

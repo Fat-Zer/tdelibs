@@ -75,7 +75,7 @@ class TDEStandardDirsPrivate;
  * @li data - Where applications store data.
  * @li exe - Executables in $prefix/bin. findExe() for a function that takes $PATH into account.
  * @li html - HTML documentation.
- * @li icon - Icons, see KIconLoader.
+ * @li icon - Icons, see TDEIconLoader.
  * @li lib - Libraries.
  * @li locale - Translation files for TDELocale.
  * @li mime - Mime types.

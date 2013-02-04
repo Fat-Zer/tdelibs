@@ -205,7 +205,7 @@ void TDEToggleAction::updateChecked( int id )
     else {
       const KGuiItem* gui = d->m_checked ? d->m_checkedGuiItem : &guiItem();
       if ( d->m_checkedGuiItem->hasIcon() )
-          pm->changeItem( itemId_, gui->iconSet( KIcon::Small ), gui->text() );
+          pm->changeItem( itemId_, gui->iconSet( TDEIcon::Small ), gui->text() );
       else
           pm->changeItem( itemId_, gui->text() );
 
@@ -228,7 +228,7 @@ void TDEToggleAction::updateChecked( int id )
       static_cast<TDEToolBar*>( w )->setButton( itemId( id ), d->m_checked );
       if ( d->m_checkedGuiItem && d->m_checkedGuiItem->hasIcon() ) {
         const KGuiItem* gui = d->m_checked ? d->m_checkedGuiItem : &guiItem();
-        static_cast<TDEToolBar*>( w )->setButtonIconSet( itemId( id ), gui->iconSet( KIcon::Toolbar ) );
+        static_cast<TDEToolBar*>( w )->setButtonIconSet( itemId( id ), gui->iconSet( TDEIcon::Toolbar ) );
       }
     }
   }

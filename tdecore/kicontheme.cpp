@@ -37,7 +37,7 @@
 
 #include "kicontheme.h"
 
-class KIconThemePrivate
+class TDEIconThemePrivate
 {
 public:
     TQString example, screenshot;
@@ -49,18 +49,18 @@ public:
 /**
  * A subdirectory in an icon theme.
  */
-class KIconThemeDir
+class TDEIconThemeDir
 {
 public:
-    KIconThemeDir(const TQString& dir, const TDEConfigBase *config);
+    TDEIconThemeDir(const TQString& dir, const TDEConfigBase *config);
 
     bool isValid() const { return mbValid; }
     TQString iconPath(const TQString& name) const;
     TQStringList iconList() const;
     TQString dir() const { return mDir; }
 
-    KIcon::Context context() const { return mContext; }
-    KIcon::Type type() const { return mType; }
+    TDEIcon::Context context() const { return mContext; }
+    TDEIcon::Type type() const { return mType; }
     int size() const { return mSize; }
     int minSize() const { return mMinSize; }
     int maxSize() const { return mMaxSize; }
@@ -68,8 +68,8 @@ public:
 
 private:
     bool mbValid;
-    KIcon::Type mType;
-    KIcon::Context mContext;
+    TDEIcon::Type mType;
+    TDEIcon::Context mContext;
     int mSize, mMinSize, mMaxSize;
     int mThreshold;
 
@@ -77,11 +77,11 @@ private:
 };
 
 
-/*** KIconTheme ***/
+/*** TDEIconTheme ***/
 
-KIconTheme::KIconTheme(const TQString& name, const TQString& appName)
+TDEIconTheme::TDEIconTheme(const TQString& name, const TQString& appName)
 {
-    d = new KIconThemePrivate;
+    d = new TDEIconThemePrivate;
 
     TQStringList icnlibs;
     TQStringList::ConstIterator it, itDir;
@@ -168,7 +168,7 @@ KIconTheme::KIconTheme(const TQString& name, const TQString& appName)
 	{
 	    if (TDEStandardDirs::exists(*itDir + *it + "/"))
 	    {
-	        KIconThemeDir *dir = new KIconThemeDir(*itDir + *it, &cfg);
+	        TDEIconThemeDir *dir = new TDEIconThemeDir(*itDir + *it, &cfg);
 	        if (!dir->isValid())
 	        {
 	            kdDebug(264) << "Icon directory " << *itDir << " group " << *it << " not valid.\n";
@@ -183,9 +183,9 @@ KIconTheme::KIconTheme(const TQString& name, const TQString& appName)
     // Expand available sizes for scalable icons to their full range
     int i;
     TQMap<int,TQValueList<int> > scIcons;
-    for (KIconThemeDir *dir=mDirs.first(); dir!=0L; dir=mDirs.next())
+    for (TDEIconThemeDir *dir=mDirs.first(); dir!=0L; dir=mDirs.next())
     {
-        if ((dir->type() == KIcon::Scalable) && !scIcons.contains(dir->size()))
+        if ((dir->type() == TDEIcon::Scalable) && !scIcons.contains(dir->size()))
         {
             TQValueList<int> lst;
             for (i=dir->minSize(); i<=dir->maxSize(); i++)
@@ -219,31 +219,31 @@ KIconTheme::KIconTheme(const TQString& name, const TQString& appName)
 
 }
 
-KIconTheme::~KIconTheme()
+TDEIconTheme::~TDEIconTheme()
 {
     delete d;
 }
 
-bool KIconTheme::isValid() const
+bool TDEIconTheme::isValid() const
 {
     return !mDirs.isEmpty();
 }
 
-bool KIconTheme::isHidden() const
+bool TDEIconTheme::isHidden() const
 {
     return d->hidden;
 }
 
-TQString KIconTheme::example() const { return d->example; }
-TQString KIconTheme::screenshot() const { return d->screenshot; }
-TQString KIconTheme::linkOverlay() const { return d->linkOverlay; }
-TQString KIconTheme::lockOverlay() const { return d->lockOverlay; }
-TQString KIconTheme::zipOverlay() const { return d->zipOverlay; }
-TQString KIconTheme::shareOverlay() const { return d->shareOverlay; }
+TQString TDEIconTheme::example() const { return d->example; }
+TQString TDEIconTheme::screenshot() const { return d->screenshot; }
+TQString TDEIconTheme::linkOverlay() const { return d->linkOverlay; }
+TQString TDEIconTheme::lockOverlay() const { return d->lockOverlay; }
+TQString TDEIconTheme::zipOverlay() const { return d->zipOverlay; }
+TQString TDEIconTheme::shareOverlay() const { return d->shareOverlay; }
 
-int KIconTheme::defaultSize(KIcon::Group group) const
+int TDEIconTheme::defaultSize(TDEIcon::Group group) const
 {
-    if ((group < 0) || (group >= KIcon::LastGroup))
+    if ((group < 0) || (group >= TDEIcon::LastGroup))
     {
         kdDebug(264) << "Illegal icon group: " << group << "\n";
         return -1;
@@ -251,10 +251,10 @@ int KIconTheme::defaultSize(KIcon::Group group) const
     return mDefSize[group];
 }
 
-TQValueList<int> KIconTheme::querySizes(KIcon::Group group) const
+TQValueList<int> TDEIconTheme::querySizes(TDEIcon::Group group) const
 {
     TQValueList<int> empty;
-    if ((group < 0) || (group >= KIcon::LastGroup))
+    if ((group < 0) || (group >= TDEIcon::LastGroup))
     {
         kdDebug(264) << "Illegal icon group: " << group << "\n";
         return empty;
@@ -262,32 +262,32 @@ TQValueList<int> KIconTheme::querySizes(KIcon::Group group) const
     return mSizes[group];
 }
 
-TQStringList KIconTheme::queryIcons(int size, KIcon::Context context) const
+TQStringList TDEIconTheme::queryIcons(int size, TDEIcon::Context context) const
 {
     int delta = 1000, dw;
 
-    TQPtrListIterator<KIconThemeDir> dirs(mDirs);
-    KIconThemeDir *dir;
+    TQPtrListIterator<TDEIconThemeDir> dirs(mDirs);
+    TDEIconThemeDir *dir;
 
     // Try to find exact match
     TQStringList result;
     for ( ; dirs.current(); ++dirs)
     {
         dir = dirs.current();
-        if ((context != KIcon::Any) && (context != dir->context()))
+        if ((context != TDEIcon::Any) && (context != dir->context()))
             continue;
-        if ((dir->type() == KIcon::Fixed) && (dir->size() == size))
+        if ((dir->type() == TDEIcon::Fixed) && (dir->size() == size))
         {
             result += dir->iconList();
             continue;
         }
-        if ((dir->type() == KIcon::Scalable) &&
+        if ((dir->type() == TDEIcon::Scalable) &&
             (size >= dir->minSize()) && (size <= dir->maxSize()))
         {
             result += dir->iconList();
             continue;
         }
-	if ((dir->type() == KIcon::Threshold) &&
+	if ((dir->type() == TDEIcon::Threshold) &&
             (abs(size-dir->size())<dir->threshold()))
             result+=dir->iconList();
     }
@@ -297,11 +297,11 @@ TQStringList KIconTheme::queryIcons(int size, KIcon::Context context) const
     dirs.toFirst();
 
     // Find close match
-    KIconThemeDir *best = 0L;
+    TDEIconThemeDir *best = 0L;
     for ( ; dirs.current(); ++dirs)
     {
         dir = dirs.current();
-        if ((context != KIcon::Any) && (context != dir->context()))
+        if ((context != TDEIcon::Any) && (context != dir->context()))
             continue;
         dw = dir->size() - size;
         if ((dw > 6) || (abs(dw) >= abs(delta)))
@@ -315,11 +315,11 @@ TQStringList KIconTheme::queryIcons(int size, KIcon::Context context) const
     return best->iconList();
 }
 
-TQStringList KIconTheme::queryIconsByContext(int size, KIcon::Context context) const
+TQStringList TDEIconTheme::queryIconsByContext(int size, TDEIcon::Context context) const
 {
-    TQPtrListIterator<KIconThemeDir> dirs(mDirs);
+    TQPtrListIterator<TDEIconThemeDir> dirs(mDirs);
     int dw;
-    KIconThemeDir *dir;
+    TDEIconThemeDir *dir;
 
     // We want all the icons for a given context, but we prefer icons
     // of size size . Note that this may (will) include duplicate icons
@@ -332,7 +332,7 @@ TQStringList KIconTheme::queryIconsByContext(int size, KIcon::Context context) c
     for ( ; dirs.current(); ++dirs)
     {
         dir = dirs.current();
-        if ((context != KIcon::Any) && (context != dir->context()))
+        if ((context != TDEIcon::Any) && (context != dir->context()))
             continue;
         dw = abs(dir->size() - size);
         iconlist[(dw<127)?dw:127]+=dir->iconList();
@@ -344,50 +344,50 @@ TQStringList KIconTheme::queryIconsByContext(int size, KIcon::Context context) c
     return iconlistResult;
 }
 
-bool KIconTheme::hasContext(KIcon::Context context) const
+bool TDEIconTheme::hasContext(TDEIcon::Context context) const
 {
-    TQPtrListIterator<KIconThemeDir> dirs(mDirs);
-    KIconThemeDir *dir;
+    TQPtrListIterator<TDEIconThemeDir> dirs(mDirs);
+    TDEIconThemeDir *dir;
 
     for ( ; dirs.current(); ++dirs)
     {
         dir = dirs.current();
-        if ((context == KIcon::Any) || (context == dir->context()))
+        if ((context == TDEIcon::Any) || (context == dir->context()))
             return true;
     }
     return false;
 }
 
-KIcon KIconTheme::iconPath(const TQString& name, int size, KIcon::MatchType match) const
+TDEIcon TDEIconTheme::iconPath(const TQString& name, int size, TDEIcon::MatchType match) const
 {
-    KIcon icon;
+    TDEIcon icon;
     TQString path;
     int delta = -1000, dw;
-    KIconThemeDir *dir;
+    TDEIconThemeDir *dir;
 
     dw = 1000; // shut up, gcc
-    TQPtrListIterator<KIconThemeDir> dirs(mDirs);
+    TQPtrListIterator<TDEIconThemeDir> dirs(mDirs);
     for ( ; dirs.current(); ++dirs)
     {
         dir = dirs.current();
 
-        if (match == KIcon::MatchExact)
+        if (match == TDEIcon::MatchExact)
         {
-            if ((dir->type() == KIcon::Fixed) && (dir->size() != size))
+            if ((dir->type() == TDEIcon::Fixed) && (dir->size() != size))
                 continue;
-            if ((dir->type() == KIcon::Scalable) &&
+            if ((dir->type() == TDEIcon::Scalable) &&
                 ((size < dir->minSize()) || (size > dir->maxSize())))
               continue;
-            if ((dir->type() == KIcon::Threshold) &&
+            if ((dir->type() == TDEIcon::Threshold) &&
 		(abs(dir->size()-size) > dir->threshold()))
                 continue;
         } else
         {
           // dw < 0 means need to scale up to get an icon of the requested size
-          if (dir->type() == KIcon::Fixed)
+          if (dir->type() == TDEIcon::Fixed)
           {
             dw = dir->size() - size;
-          } else if (dir->type() == KIcon::Scalable)
+          } else if (dir->type() == TDEIcon::Scalable)
           {
             if (size < dir->minSize())
               dw = dir->minSize() - size;
@@ -395,7 +395,7 @@ KIcon KIconTheme::iconPath(const TQString& name, int size, KIcon::MatchType matc
               dw = dir->maxSize() - size;
             else
               dw = 0;
-          } else if (dir->type() == KIcon::Threshold)
+          } else if (dir->type() == TDEIcon::Threshold)
           {
             if (size < dir->size() - dir->threshold())
               dw = dir->size() - dir->threshold() - size;
@@ -423,7 +423,7 @@ KIcon KIconTheme::iconPath(const TQString& name, int size, KIcon::MatchType matc
         icon.context = dir->context();
 
         // if we got in MatchExact that far, we find no better
-        if (match == KIcon::MatchExact)
+        if (match == TDEIcon::MatchExact)
             return icon;
 	else
         {
@@ -435,13 +435,13 @@ KIcon KIconTheme::iconPath(const TQString& name, int size, KIcon::MatchType matc
 }
 
 // static
-TQString *KIconTheme::_theme = 0L;
+TQString *TDEIconTheme::_theme = 0L;
 
 // static
-TQStringList *KIconTheme::_theme_list = 0L;
+TQStringList *TDEIconTheme::_theme_list = 0L;
 
 // static
-TQString KIconTheme::current()
+TQString TDEIconTheme::current()
 {
     // Static pointer because of unloading problems wrt DSO's.
     if (_theme != 0L)
@@ -463,7 +463,7 @@ TQString KIconTheme::current()
 }
 
 // static
-TQStringList KIconTheme::list()
+TQStringList TDEIconTheme::list()
 {
     // Static pointer because of unloading problems wrt DSO's.
     if (_theme_list != 0L)
@@ -489,7 +489,7 @@ TQStringList KIconTheme::list()
                 continue;
             if (!TDEStandardDirs::exists(*it + *it2 + "/index.desktop") && !TDEStandardDirs::exists(*it + *it2 + "/index.theme"))
                 continue;
-		KIconTheme oink(*it2);
+		TDEIconTheme oink(*it2);
 	    if (!oink.isValid()) continue;
 
 	    if (!_theme_list->contains(*it2))
@@ -500,7 +500,7 @@ TQStringList KIconTheme::list()
 }
 
 // static
-void KIconTheme::reconfigure()
+void TDEIconTheme::reconfigure()
 {
     delete _theme;
     _theme=0L;
@@ -509,75 +509,75 @@ void KIconTheme::reconfigure()
 }
 
 // static
-TQString KIconTheme::defaultThemeName()
+TQString TDEIconTheme::defaultThemeName()
 {
     return TQString::fromLatin1("crystalsvg");
 }
 
-/*** KIconThemeDir ***/
+/*** TDEIconThemeDir ***/
 
-KIconThemeDir::KIconThemeDir(const TQString& dir, const TDEConfigBase *config)
+TDEIconThemeDir::TDEIconThemeDir(const TQString& dir, const TDEConfigBase *config)
 {
     mbValid = false;
     mDir = dir;
     mSize = config->readNumEntry("Size");
     mMinSize = 1;    // just set the variables to something
     mMaxSize = 50;   // meaningful in case someone calls minSize or maxSize
-    mType = KIcon::Fixed;
+    mType = TDEIcon::Fixed;
 
     if (mSize == 0)
         return;
 
     TQString tmp = config->readEntry("Context");
     if (tmp == "Devices")
-        mContext = KIcon::Device;
+        mContext = TDEIcon::Device;
     else if (tmp == "MimeTypes")
-        mContext = KIcon::MimeType;
+        mContext = TDEIcon::MimeType;
     else if (tmp == "FileSystems")
-        mContext = KIcon::FileSystem;
+        mContext = TDEIcon::FileSystem;
     else if (tmp == "Applications")
-        mContext = KIcon::Application;
+        mContext = TDEIcon::Application;
     else if (tmp == "Actions")
-        mContext = KIcon::Action;
+        mContext = TDEIcon::Action;
     else if (tmp == "Animations")
-        mContext = KIcon::Animation;
+        mContext = TDEIcon::Animation;
     else if (tmp == "Categories")
-        mContext = KIcon::Category;
+        mContext = TDEIcon::Category;
     else if (tmp == "Emblems")
-        mContext = KIcon::Emblem;
+        mContext = TDEIcon::Emblem;
     else if (tmp == "Emotes")
-        mContext = KIcon::Emote;
+        mContext = TDEIcon::Emote;
     else if (tmp == "International")
-        mContext = KIcon::International;
+        mContext = TDEIcon::International;
     else if (tmp == "Places")
-        mContext = KIcon::Place;
+        mContext = TDEIcon::Place;
     else if (tmp == "Status")
-        mContext = KIcon::StatusIcon;
+        mContext = TDEIcon::StatusIcon;
     else {
         kdDebug(264) << "Invalid Context= line for icon theme: " << mDir << "\n";
         return;
     }
     tmp = config->readEntry("Type");
     if (tmp == "Fixed")
-        mType = KIcon::Fixed;
+        mType = TDEIcon::Fixed;
     else if (tmp == "Scalable")
-        mType = KIcon::Scalable;
+        mType = TDEIcon::Scalable;
     else if (tmp == "Threshold")
-        mType = KIcon::Threshold;
+        mType = TDEIcon::Threshold;
     else {
         kdDebug(264) << "Invalid Type= line for icon theme: " <<  mDir << "\n";
         return;
     }
-    if (mType == KIcon::Scalable)
+    if (mType == TDEIcon::Scalable)
     {
         mMinSize = config->readNumEntry("MinSize", mSize);
         mMaxSize = config->readNumEntry("MaxSize", mSize);
-    } else if (mType == KIcon::Threshold)
+    } else if (mType == TDEIcon::Threshold)
 	mThreshold = config->readNumEntry("Threshold", 2);
     mbValid = true;
 }
 
-TQString KIconThemeDir::iconPath(const TQString& name) const
+TQString TDEIconThemeDir::iconPath(const TQString& name) const
 {
     if (!mbValid)
         return TQString::null;
@@ -589,7 +589,7 @@ TQString KIconThemeDir::iconPath(const TQString& name) const
     return TQString::null;
 }
 
-TQStringList KIconThemeDir::iconList() const
+TQStringList TDEIconThemeDir::iconList() const
 {
     TQDir dir(mDir);
 #ifdef HAVE_LIBART

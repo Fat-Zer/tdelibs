@@ -39,7 +39,7 @@ KFileSpeedBar::KFileSpeedBar( TQWidget *parent, const char *name )
     TDEConfigGroupSaver cs( config, ConfigGroup );
     m_initializeSpeedbar = config->readBoolEntry( "Set speedbar defaults",
                                                    true );
-    setIconSize(KIcon::SizeSmallMedium);
+    setIconSize(TDEIcon::SizeSmallMedium);
     readConfig( TDEGlobal::config(), "KFileDialog Speedbar" );
 
     if ( m_initializeSpeedbar )

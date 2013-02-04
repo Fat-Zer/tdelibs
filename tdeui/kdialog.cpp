@@ -342,8 +342,8 @@ KSMModalDialogHeader::KSMModalDialogHeader(TQWidget* parent)
 	seperatorbox->setMargin(0);
 
 	TQWidget* ticon = new TQWidget( frame );
-	KIconLoader * ldr = TDEGlobal::iconLoader();
-	TQPixmap trinityPixmap = ldr->loadIcon("kmenu", KIcon::Panel, KIcon::SizeLarge, KIcon::DefaultState, 0L, true);
+	TDEIconLoader * ldr = TDEGlobal::iconLoader();
+	TQPixmap trinityPixmap = ldr->loadIcon("kmenu", TDEIcon::Panel, TDEIcon::SizeLarge, TDEIcon::DefaultState, 0L, true);
 
 	// Manually draw the alpha portions of the icon onto the widget background color...
 	TQRgb backgroundRgb = ticon->paletteBackgroundColor().rgb();

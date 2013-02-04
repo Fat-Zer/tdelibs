@@ -24,7 +24,7 @@
 class KCharsets;
 class TDEConfig;
 class TDESharedConfig;
-class KIconLoader;
+class TDEIconLoader;
 class TDEHardwareDevices;
 class TDEGlobalNetworkManager;
 class TDELocale;
@@ -77,7 +77,7 @@ public:
      *  Returns an iconloader object.
      * @return the global iconloader object
      */
-    static KIconLoader	        *iconLoader();
+    static TDEIconLoader	        *iconLoader();
 
     /**
      *  Returns a TDEHardwareDevices object.

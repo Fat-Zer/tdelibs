@@ -25,10 +25,10 @@
 #include <tdetoolbar.h>
 #include <tdetoolbarbutton.h>
 
-class KIconSelectActionPrivate
+class TDEIconSelectActionPrivate
 {
 public:
-	KIconSelectActionPrivate()
+	TDEIconSelectActionPrivate()
 	{
 		m_menu = 0;
 	}
@@ -36,18 +36,18 @@ public:
 	TQPopupMenu*	m_menu;
 };
 
-KIconSelectAction::KIconSelectAction(const TQString& text, int accel, TQObject* parent, const char* name)
+TDEIconSelectAction::TDEIconSelectAction(const TQString& text, int accel, TQObject* parent, const char* name)
 : TDESelectAction(text, accel, parent, name)
 {
-	d = new KIconSelectActionPrivate;
+	d = new TDEIconSelectActionPrivate;
 }
 
-KIconSelectAction::~KIconSelectAction()
+TDEIconSelectAction::~TDEIconSelectAction()
 {
 	delete d;
 }
 
-void KIconSelectAction::updateIcons()
+void TDEIconSelectAction::updateIcons()
 {
 	if (d->m_menu)
 	{
@@ -57,7 +57,7 @@ void KIconSelectAction::updateIcons()
 	}
 }
 
-void KIconSelectAction::createPopupMenu()
+void TDEIconSelectAction::createPopupMenu()
 {
 	if (!d->m_menu)
 	{
@@ -66,14 +66,14 @@ void KIconSelectAction::createPopupMenu()
 	}
 }
 
-void KIconSelectAction::setItems(const TQStringList& lst, const TQStringList& iconlst)
+void TDEIconSelectAction::setItems(const TQStringList& lst, const TQStringList& iconlst)
 {
 	TDESelectAction::setItems(lst);
 	d->m_iconlst = iconlst;
 	updateIcons();
 }
 
-int KIconSelectAction::plug(TQWidget* widget, int index)
+int TDEIconSelectAction::plug(TQWidget* widget, int index)
 {
 	int	value(-1);
 	if (widget->inherits(TQPOPUPMENU_OBJECT_NAME_STRING))
@@ -101,7 +101,7 @@ int KIconSelectAction::plug(TQWidget* widget, int index)
 	return value;
 }
 
-void KIconSelectAction::updateCurrentItem(int id)
+void TDEIconSelectAction::updateCurrentItem(int id)
 {
 	TQWidget*	w = container(id);
 	if (w->inherits("TDEToolBar"))
@@ -110,7 +110,7 @@ void KIconSelectAction::updateCurrentItem(int id)
 		TDESelectAction::updateCurrentItem(id);
 }
 
-void KIconSelectAction::setCurrentItem(int index)
+void TDEIconSelectAction::setCurrentItem(int index)
 {
 	TDESelectAction::setCurrentItem(index);
 }

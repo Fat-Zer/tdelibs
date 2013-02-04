@@ -731,7 +731,7 @@ public slots:
      * Example (adding a help button to the first toolbar):
      *
      * \code
-     * KIconLoader &loader = *TDEGlobal::iconLoader();
+     * TDEIconLoader &loader = *TDEGlobal::iconLoader();
      * TQPixmap pixmap = loader.loadIcon( "help" );
      * toolBar(0)->insertButton( pixmap, 0, TQT_SIGNAL(clicked()),
      *   this, TQT_SLOT(appHelpActivated()), true, i18n("Help") );

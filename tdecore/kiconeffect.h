@@ -10,8 +10,8 @@
  * exact licensing terms.
  */
 
-#ifndef __KIconEffect_h_Included__
-#define __KIconEffect_h_Included__
+#ifndef __TDEIconEffect_h_Included__
+#define __TDEIconEffect_h_Included__
 
 #include <tqimage.h>
 #include <tqpixmap.h>
@@ -21,7 +21,7 @@
 
 class TQWidget;
 
-class KIconEffectPrivate;
+class TDEIconEffectPrivate;
 
 /**
  * Applies effects to icons.
@@ -29,16 +29,16 @@ class KIconEffectPrivate;
  * This class applies effects to icons depending on their state and
  * group. For example, it can be used to make all disabled icons
  * in a toolbar gray.
- * @see KIcon
+ * @see TDEIcon
  */
-class TDECORE_EXPORT KIconEffect
+class TDECORE_EXPORT TDEIconEffect
 {
 public:
   /**
-   * Create a new KIconEffect.
+   * Create a new TDEIconEffect.
    */
-    KIconEffect();
-    ~KIconEffect();
+    TDEIconEffect();
+    ~TDEIconEffect();
 
     /**
      * This is the enumeration of all possible icon effects.
@@ -63,12 +63,12 @@ public:
 
     /**
      * Tests whether an effect has been configured for the given icon group.
-     * @param group the group to check, see KIcon::Group
-     * @param state the state to check, see KIcon::States
+     * @param group the group to check, see TDEIcon::Group
+     * @param state the state to check, see TDEIcon::States
      * @returns true if an effect is configured for the given @p group
      * in @p state, otherwise false.
-     * @see KIcon::Group
-     * KIcon::States
+     * @see TDEIcon::Group
+     * TDEIcon::States
      */
     bool hasEffect(int group, int state) const;
 
@@ -76,8 +76,8 @@ public:
      * Returns a fingerprint for the effect by encoding
      * the given @p group and @p state into a TQString. This
      * is useful for caching.
-     * @param group the group, see KIcon::Group
-     * @param state the state, see KIcon::States
+     * @param group the group, see TDEIcon::Group
+     * @param state the state, see TDEIcon::States
      * @return the fingerprint of the given @p group+@p state
      */
      TQString fingerprint(int group, int state) const;
@@ -86,8 +86,8 @@ public:
      * Applies an effect to an image. The effect to apply depends on the
      * @p group and @p state parameters, and is configured by the user.
      * @param src The image.
-     * @param group The group for the icon, see KIcon::Group
-     * @param state The icon's state, see KIcon::States
+     * @param group The group for the icon, see TDEIcon::Group
+     * @param state The icon's state, see TDEIcon::States
      * @return An image with the effect applied.
      */
     TQImage apply(TQImage src, int group, int state) const;
@@ -95,7 +95,7 @@ public:
     /**
      * Applies an effect to an image.
      * @param src The image.
-     * @param effect The effect to apply, one of KIconEffect::Effects.
+     * @param effect The effect to apply, one of TDEIconEffect::Effects.
      * @param value Strength of the effect. 0 <= @p value <= 1.
      * @param rgb Color parameter for effects that need one.
      * @param trans Add Transparency if trans = true.
@@ -111,8 +111,8 @@ public:
     /**
      * Applies an effect to a pixmap.
      * @param src The pixmap.
-     * @param group The group for the icon, see KIcon::Group
-     * @param state The icon's state, see KIcon::States
+     * @param group The group for the icon, see TDEIcon::Group
+     * @param state The icon's state, see TDEIcon::States
      * @return A pixmap with the effect applied.
      */
     TQPixmap apply(TQPixmap src, int group, int state) const;
@@ -120,7 +120,7 @@ public:
     /**
      * Applies an effect to a pixmap.
      * @param src The pixmap.
-     * @param effect The effect to apply, one of KIconEffect::Effects.
+     * @param effect The effect to apply, one of TDEIconEffect::Effects.
      * @param value Strength of the effect. 0 <= @p value <= 1.
      * @param rgb Color parameter for effects that need one.
      * @param trans Add Transparency if trans = true.
@@ -225,7 +225,7 @@ private:
     float mValue[6][3];
     TQColor mColor[6][3];
     bool mTrans[6][3];
-    KIconEffectPrivate *d;
+    TDEIconEffectPrivate *d;
 };
 
 #endif

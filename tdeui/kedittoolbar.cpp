@@ -767,10 +767,10 @@ void KEditToolbarWidget::setupLayout()
           this,           TQT_SLOT(slotToolbarSelected(const TQString&)));
 
 //  TQPushButton *new_toolbar = new TQPushButton(i18n("&New"), this);
-//  new_toolbar->setPixmap(BarIcon("filenew", KIcon::SizeSmall));
+//  new_toolbar->setPixmap(BarIcon("filenew", TDEIcon::SizeSmall));
 //  new_toolbar->setEnabled(false); // disabled until implemented
 //  TQPushButton *del_toolbar = new TQPushButton(i18n("&Delete"), this);
-//  del_toolbar->setPixmap(BarIcon("editdelete", KIcon::SizeSmall));
+//  del_toolbar->setPixmap(BarIcon("editdelete", TDEIcon::SizeSmall));
 //  del_toolbar->setEnabled(false); // disabled until implemented
 
   // our list of inactive actions
@@ -966,7 +966,7 @@ void KEditToolbarWidget::loadActionList(TQDomElement& elem)
   TQMap<TQString, bool> active_list;
 
   // see if our current action is in this toolbar
-  KIconLoader *loader = TDEGlobal::instance()->iconLoader();
+  TDEIconLoader *loader = TDEGlobal::instance()->iconLoader();
   TQDomNode n = elem.lastChild();
   for( ; !n.isNull(); n = n.previousSibling() )
   {
@@ -1018,9 +1018,9 @@ void KEditToolbarWidget::loadActionList(TQDomElement& elem)
         act->setText(1, action->plainText());
         if (action->hasIcon())
           if (!action->icon().isEmpty())
-            act->setPixmap(0, loader->loadIcon(action->icon(), KIcon::Toolbar, 16, KIcon::DefaultState, 0, true) );
+            act->setPixmap(0, loader->loadIcon(action->icon(), TDEIcon::Toolbar, 16, TDEIcon::DefaultState, 0, true) );
           else // Has iconset
-            act->setPixmap(0, action->iconSet(KIcon::Toolbar).pixmap());
+            act->setPixmap(0, action->iconSet(TDEIcon::Toolbar).pixmap());
 
         active_list.insert(action->name(), true);
         break;
@@ -1041,9 +1041,9 @@ void KEditToolbarWidget::loadActionList(TQDomElement& elem)
     act->setText(1, action->plainText());
     if (action->hasIcon())
       if (!action->icon().isEmpty())
-        act->setPixmap(0, loader->loadIcon(action->icon(), KIcon::Toolbar, 16, KIcon::DefaultState, 0, true) );
+        act->setPixmap(0, loader->loadIcon(action->icon(), TDEIcon::Toolbar, 16, TDEIcon::DefaultState, 0, true) );
       else // Has iconset
-        act->setPixmap(0, action->iconSet(KIcon::Toolbar).pixmap());
+        act->setPixmap(0, action->iconSet(TDEIcon::Toolbar).pixmap());
   }
 
   // finally, add default separators to the inactive list
@@ -1373,7 +1373,7 @@ void KEditToolbarWidget::updateLocal(TQDomElement& elem)
 
 void KEditToolbarWidget::slotChangeIcon()
 {
-  // We can't use KIconChooser here, since it's in libtdeio
+  // We can't use TDEIconChooser here, since it's in libtdeio
   // ##### KDE4: reconsider this, e.g. move KEditToolbar to libtdeio
   
   //if the process is already running (e.g. when somebody clicked the change button twice (see #127149)) - do nothing... 

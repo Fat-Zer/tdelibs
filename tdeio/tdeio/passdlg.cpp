@@ -82,7 +82,7 @@ void PasswordDialog::init( const TQString& prompt, const TQString& user,
 
     // Row 0: pixmap  prompt
     TQLabel* lbl;
-    TQPixmap pix( TDEGlobal::iconLoader()->loadIcon( "password", KIcon::NoGroup, KIcon::SizeHuge, 0, 0, true));
+    TQPixmap pix( TDEGlobal::iconLoader()->loadIcon( "password", TDEIcon::NoGroup, TDEIcon::SizeHuge, 0, 0, true));
     if ( !pix.isNull() )
     {
         lbl = new TQLabel( main );

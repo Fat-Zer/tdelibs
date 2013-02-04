@@ -141,7 +141,7 @@ void TDECModuleContainer::addModule( const TQString& module )
 	allModules.append( proxy );
 
 	d->tabWidget->addTab( proxy, TQIconSet(TDEGlobal::iconLoader()->loadIcon(
-					proxy->moduleInfo().icon(), KIcon::Desktop)),
+					proxy->moduleInfo().icon(), TDEIcon::Desktop)),
 			/* QT eats ampersands for dinner. But not this time. */
 			proxy->moduleInfo().moduleName().replace( "&", "&&" ));
 

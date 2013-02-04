@@ -11,8 +11,8 @@
  * exact licensing terms.
  */
 
-#ifndef __KIconDialog_h__
-#define __KIconDialog_h__
+#ifndef __TDEIconDialog_h__
+#define __TDEIconDialog_h__
 
 #include <tqstring.h>
 #include <tqstringlist.h>
@@ -27,18 +27,18 @@ class TQTimer;
 class TQKeyEvent;
 class TQRadioButton;
 class KProgress;
-class KIconLoader;
+class TDEIconLoader;
 
 /**
- * Icon canvas for KIconDialog.
+ * Icon canvas for TDEIconDialog.
  */
-class TDEIO_EXPORT KIconCanvas: public KIconView
+class TDEIO_EXPORT TDEIconCanvas: public TDEIconView
 {
     Q_OBJECT
 
 public:
-    KIconCanvas(TQWidget *parent=0L, const char *name=0L);
-    ~KIconCanvas();
+    TDEIconCanvas(TQWidget *parent=0L, const char *name=0L);
+    ~TDEIconCanvas();
 
     /**
      * Load icons into the canvas.
@@ -71,14 +71,14 @@ private slots:
 private:
     TQStringList mFiles;
     TQTimer *mpTimer;
-    KIconLoader *mpLoader; // unused
+    TDEIconLoader *mpLoader; // unused
 
 protected:
     virtual void virtual_hook( int id, void* data );
 
 private:
-    class KIconCanvasPrivate;
-    KIconCanvasPrivate *d;
+    class TDEIconCanvasPrivate;
+    TDEIconCanvasPrivate *d;
 };
 
 
@@ -88,7 +88,7 @@ private:
  *
  * @short An icon selection dialog.
  */
-class TDEIO_EXPORT KIconDialog: public KDialogBase
+class TDEIO_EXPORT TDEIconDialog: public KDialogBase
 {
     Q_OBJECT
 
@@ -96,16 +96,16 @@ public:
     /**
      * Constructs an icon selection dialog using the global iconloader.
      */
-    KIconDialog(TQWidget *parent=0L, const char *name=0L);
+    TDEIconDialog(TQWidget *parent=0L, const char *name=0L);
     /**
      * Constructs an icon selection dialog using a specific iconloader.
      */
-    KIconDialog(KIconLoader *loader, TQWidget *parent=0,
+    TDEIconDialog(TDEIconLoader *loader, TQWidget *parent=0,
 	    const char *name=0);
     /**
      * Destructs the dialog.
      */
-    ~KIconDialog();
+    ~TDEIconDialog();
 
     /**
      * Sets a strict icon size policy for allowed icons. When true,
@@ -126,7 +126,7 @@ public:
 
     /**
      * Sets the size of the icons to be shown / selected.
-     * @see KIcon::StdSizes
+     * @see TDEIcon::StdSizes
      * @see iconSize
      */
     void setIconSize(int size);
@@ -141,16 +141,16 @@ public:
     /**
      * @deprecated in KDE 3.0, use the static method getIcon instead.
      */
-    TQString selectIcon(KIcon::Group group=KIcon::Desktop, KIcon::Context
-	    context=KIcon::Application, bool user=false);
+    TQString selectIcon(TDEIcon::Group group=TDEIcon::Desktop, TDEIcon::Context
+	    context=TDEIcon::Application, bool user=false);
 #endif
 
     /**
      * Allows you to set the same parameters as in the class method
      * getIcon().
      */
-    void setup( KIcon::Group group,
-                KIcon::Context context = KIcon::Application,
+    void setup( TDEIcon::Group group,
+                TDEIcon::Context context = TDEIcon::Application,
                 bool strictIconSize = false, int iconSize = 0,
                 bool user = false );
 
@@ -163,14 +163,14 @@ public:
      * @since 3.3
      */
 
-    void setup( KIcon::Group group, KIcon::Context context,
+    void setup( TDEIcon::Group group, TDEIcon::Context context,
                 bool strictIconSize, int iconSize, bool user, bool lockUser,
                 bool lockCustomDir );
 
     /**
      * exec()utes this modal dialog and returns the name of the selected icon,
      * or TQString::null if the dialog was aborted.
-     * @returns the name of the icon, suitable for loading with KIconLoader.
+     * @returns the name of the icon, suitable for loading with TDEIconLoader.
      * @see getIcon
      */
     TQString openDialog();
@@ -197,11 +197,11 @@ public:
      * @param user Begin with the "user icons" instead of "system icons".
      * @param parent The parent widget of the dialog.
      * @param caption The caption to use for the dialog.
-     * @return The name of the icon, suitable for loading with KIconLoader.
+     * @return The name of the icon, suitable for loading with TDEIconLoader.
      * @version New in 3.0
      */
-    static TQString getIcon(KIcon::Group group=KIcon::Desktop,
-                           KIcon::Context context=KIcon::Application,
+    static TQString getIcon(TDEIcon::Group group=TDEIcon::Desktop,
+                           TDEIcon::Context context=TDEIcon::Application,
                            bool strictIconSize=false, int iconSize = 0,
                            bool user=false, TQWidget *parent=0,
                            const TQString &caption=TQString::null);
@@ -222,10 +222,10 @@ private slots:
 private:
     void init();
     void showIcons();
-    void setContext( KIcon::Context context );
+    void setContext( TDEIcon::Context context );
 
     int mGroupOrSize;
-    KIcon::Context mContext;
+    TDEIcon::Context mContext;
     int mType;
 
     TQStringList mFileList;
@@ -233,28 +233,28 @@ private:
     TQPushButton *mpBrowseBut;
     TQRadioButton *mpRb1, *mpRb2;
     KProgress *mpProgress;
-    KIconLoader *mpLoader;
-    KIconCanvas *mpCanvas;
+    TDEIconLoader *mpLoader;
+    TDEIconCanvas *mpCanvas;
     int mNumContext;
-    KIcon::Context mContextMap[ 12 ]; // must match KIcon::Context size, code has assert
+    TDEIcon::Context mContextMap[ 12 ]; // must match TDEIcon::Context size, code has assert
 
 protected:
     virtual void virtual_hook( int id, void* data );
 private:
-    class KIconDialogPrivate;
-    KIconDialogPrivate *d;
+    class TDEIconDialogPrivate;
+    TDEIconDialogPrivate *d;
 };
 
 
 /**
  * A pushbutton for choosing an icon. Pressing on the button will open a
- * KIconDialog for the user to select an icon. The current icon will be
+ * TDEIconDialog for the user to select an icon. The current icon will be
  * displayed on the button.
  *
- * @see KIconDialog
+ * @see TDEIconDialog
  * @short A push button that allows selection of an icon.
  */
-class TDEIO_EXPORT KIconButton: public TQPushButton
+class TDEIO_EXPORT TDEIconButton: public TQPushButton
 {
     Q_OBJECT
     TQ_PROPERTY( TQString icon READ icon WRITE setIcon RESET resetIcon )
@@ -263,18 +263,18 @@ class TDEIO_EXPORT KIconButton: public TQPushButton
 
 public:
     /**
-     * Constructs a KIconButton using the global iconloader.
+     * Constructs a TDEIconButton using the global iconloader.
      */
-    KIconButton(TQWidget *parent=0L, const char *name=0L);
+    TDEIconButton(TQWidget *parent=0L, const char *name=0L);
 
     /**
-     * Constructs a KIconButton using a specific KIconLoader.
+     * Constructs a TDEIconButton using a specific TDEIconLoader.
      */
-    KIconButton(KIconLoader *loader, TQWidget *parent, const char *name=0L);
+    TDEIconButton(TDEIconLoader *loader, TQWidget *parent, const char *name=0L);
     /**
      * Destructs the button.
      */
-    ~KIconButton();
+    ~TDEIconButton();
 
     /**
      * Sets a strict icon size policy for allowed icons. When true,
@@ -288,10 +288,10 @@ public:
     bool strictIconSize() const;
 
     /**
-     * Sets the icon group and context. Use KIcon::NoGroup if you want to
+     * Sets the icon group and context. Use TDEIcon::NoGroup if you want to
      * allow icons for any group in the given context.
      */
-    void setIconType(KIcon::Group group, KIcon::Context context, bool user=false);
+    void setIconType(TDEIcon::Group group, TDEIcon::Context context, bool user=false);
 
     /**
      * Sets the button's initial icon.
@@ -310,7 +310,7 @@ public:
 
     /**
      * Sets the size of the icon to be shown / selected.
-     * @see KIcon::StdSizes
+     * @see TDEIcon::StdSizes
      * @see iconSize
      */
     void setIconSize( int size );
@@ -333,18 +333,18 @@ private slots:
     void newIconName(const TQString& name);
 
 private:
-    void init( KIconLoader *loader );
+    void init( TDEIconLoader *loader );
 
     bool mbUser;
-    KIcon::Group mGroup;
-    KIcon::Context mContext;
+    TDEIcon::Group mGroup;
+    TDEIcon::Context mContext;
 
     TQString mIcon;
-    KIconDialog *mpDialog;
-    KIconLoader *mpLoader;
-    class KIconButtonPrivate;
-    KIconButtonPrivate *d;
+    TDEIconDialog *mpDialog;
+    TDEIconLoader *mpLoader;
+    class TDEIconButtonPrivate;
+    TDEIconButtonPrivate *d;
 };
 
 
-#endif // __KIconDialog_h__
+#endif // __TDEIconDialog_h__

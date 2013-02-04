@@ -39,20 +39,20 @@
  * TQIconView::selectionChanged() signal.
  *
  **/
-class TDEUI_EXPORT KIconView : public TQIconView
+class TDEUI_EXPORT TDEIconView : public TQIconView
 {
-  friend class KIconViewItem;
+  friend class TDEIconViewItem;
   Q_OBJECT
   TQ_ENUMS( Mode )
   TQ_PROPERTY( Mode mode READ mode WRITE setMode )
 
 public:
-  KIconView( TQWidget *parent = 0, const char *name = 0, WFlags f = 0 );
+  TDEIconView( TQWidget *parent = 0, const char *name = 0, WFlags f = 0 );
 
-  ~KIconView();
+  ~TDEIconView();
 
   /**
-   * KIconView has two different operating modes. Execute mode is depending
+   * TDEIconView has two different operating modes. Execute mode is depending
    * on the configuration of single-click or double-click where the signal
    * executed() will be emitted upon click/double-click.
    * In Select mode, this signal will not be emitted.
@@ -180,7 +180,7 @@ protected:
   /**
    * This method allows to handle correctly cases where a subclass
    * needs the held() signal to not be triggered without calling
-   * a KIconView::contentsDrag*Event() method (which have side effects
+   * a TDEIconView::contentsDrag*Event() method (which have side effects
    * because they forward to TQIconView).
    */
   void cancelPendingHeldSignal();
@@ -191,11 +191,11 @@ private slots:
 
 private:
   /**
-   * @internal. For use by KIconViewItem.
+   * @internal. For use by TDEIconViewItem.
    */
   TQFontMetrics *itemFontMetrics() const;
   /**
-   * @internal. For use by KIconViewItem.
+   * @internal. For use by TDEIconViewItem.
    */
   TQPixmap selectedIconPixmap( TQPixmap *pix, const TQColor &col ) const;
 
@@ -210,40 +210,40 @@ private:
 protected:
   virtual void virtual_hook( int id, void* data );
 private:
-  class KIconViewPrivate;
-  KIconViewPrivate *d;
+  class TDEIconViewPrivate;
+  TDEIconViewPrivate *d;
 };
 
 class KWordWrap;
 /**
  * @short A variant of TQIconViewItem that wraps words better.
  *
- * KIconViewItem exists to improve the word-wrap functionality of QIconViewItem
- * Use KIconViewItem instead of TQIconViewItem for any iconview item you might have :)
+ * TDEIconViewItem exists to improve the word-wrap functionality of QIconViewItem
+ * Use TDEIconViewItem instead of TQIconViewItem for any iconview item you might have :)
  *
  * @author David Faure <david@mandrakesoft.com>
  */
-class TDEUI_EXPORT KIconViewItem : public TQIconViewItem
+class TDEUI_EXPORT TDEIconViewItem : public TQIconViewItem
 {
 public:
     // Need to redefine all the constructors - I want Java !
-    KIconViewItem( TQIconView *parent )
+    TDEIconViewItem( TQIconView *parent )
         : TQIconViewItem( parent ) { init(); } // We need to call it because the parent ctor won't call our reimplementation :(((
-    KIconViewItem( TQIconView *parent, TQIconViewItem *after )
+    TDEIconViewItem( TQIconView *parent, TQIconViewItem *after )
         : TQIconViewItem( parent, after ) { init(); }
-    KIconViewItem( TQIconView *parent, const TQString &text )
+    TDEIconViewItem( TQIconView *parent, const TQString &text )
         : TQIconViewItem( parent, text ) { init(); }
-    KIconViewItem( TQIconView *parent, TQIconViewItem *after, const TQString &text )
+    TDEIconViewItem( TQIconView *parent, TQIconViewItem *after, const TQString &text )
         : TQIconViewItem( parent, after, text ) { init(); }
-    KIconViewItem( TQIconView *parent, const TQString &text, const TQPixmap &icon )
+    TDEIconViewItem( TQIconView *parent, const TQString &text, const TQPixmap &icon )
         : TQIconViewItem( parent, text, icon ) { init(); }
-    KIconViewItem( TQIconView *parent, TQIconViewItem *after, const TQString &text, const TQPixmap &icon )
+    TDEIconViewItem( TQIconView *parent, TQIconViewItem *after, const TQString &text, const TQPixmap &icon )
         : TQIconViewItem( parent, after, text, icon ) { init(); }
-    KIconViewItem( TQIconView *parent, const TQString &text, const TQPicture &picture )
+    TDEIconViewItem( TQIconView *parent, const TQString &text, const TQPicture &picture )
         : TQIconViewItem( parent, text, picture ) { init(); }
-    KIconViewItem( TQIconView *parent, TQIconViewItem *after, const TQString &text, const TQPicture &picture )
+    TDEIconViewItem( TQIconView *parent, TQIconViewItem *after, const TQString &text, const TQPicture &picture )
         : TQIconViewItem( parent, after, text, picture ) { init(); }
-    virtual ~KIconViewItem();
+    virtual ~TDEIconViewItem();
 
    /**
     * Using this function, you can specify a custom size for the pixmap. The
@@ -274,8 +274,8 @@ protected:
 
 private:
     KWordWrap* m_wordWrap;
-    struct KIconViewItemPrivate;
-    KIconViewItemPrivate *d;
+    struct TDEIconViewItemPrivate;
+    TDEIconViewItemPrivate *d;
 };
 
 #endif

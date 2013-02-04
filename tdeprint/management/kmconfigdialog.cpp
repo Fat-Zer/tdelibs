@@ -62,8 +62,8 @@ void KMConfigDialog::addConfigPage(KMConfigPage *page)
 	{
 		TQPixmap icon = TDEGlobal::instance()->iconLoader()->loadIcon(
 		                                                           page->pagePixmap(),
-		                                                           KIcon::NoGroup,
-                        	                                           KIcon::SizeMedium
+		                                                           TDEIcon::NoGroup,
+                        	                                           TDEIcon::SizeMedium
 		                                                          );
 
 		TQFrame	*frame = addPage(page->pageName(),page->pageHeader(),icon);

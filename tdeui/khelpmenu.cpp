@@ -127,7 +127,7 @@ TDEPopupMenu* KHelpMenu::menu()
     bool need_separator = false;
     if (kapp->authorizeTDEAction("help_contents"))
     {
-      mMenu->insertItem( BarIcon( "contents", KIcon::SizeSmall),
+      mMenu->insertItem( BarIcon( "contents", TDEIcon::SizeSmall),
                      TQString(i18n( "%1 &Handbook" ).arg( appName)) ,menuHelpContents );
       mMenu->connectItem( menuHelpContents, this, TQT_SLOT(appHelpActivated()) );
       mMenu->setAccel( TDEStdAccel::shortcut(TDEStdAccel::Help), menuHelpContents );

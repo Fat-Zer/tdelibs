@@ -138,8 +138,8 @@ void CupsdDialog::addConfPage(CupsdPage *page)
 {
 	TQPixmap icon = TDEGlobal::instance()->iconLoader()->loadIcon(
 	                                                           page->pixmap(),
-                                                                   KIcon::NoGroup,
-                                                                   KIcon::SizeMedium
+                                                                   TDEIcon::NoGroup,
+                                                                   TDEIcon::SizeMedium
 	                                                          );
 
 	TQVBox	*box = addVBoxPage(page->pageLabel(), page->header(), icon);

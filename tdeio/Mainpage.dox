@@ -41,7 +41,7 @@
  * The file dialog provides different views; there is a vertically scrolling
  * view based on TDEListView, showing things like filename, file size,
  * permissions etc. in separate columns. And there is a horizontally scrolling
- * view based on KIconView. Additionally, there are some compound views,
+ * view based on TDEIconView. Additionally, there are some compound views,
  * like a view using the icon-view for files on the right side and another
  * view for directories on the left. A view, that shows a preview for the
  * currently selected file (using TDEIO::PreviewJob to generate previews)
@@ -67,8 +67,8 @@
  * The KPropertiesDialog is extensible with plugin-pages via the
  * KPropsDlgPlugin class.
  *
- * The KIconDialog class shows a list of icons installed on the system (as
- * accessible via KIconLoader) and allows the user to select one.
+ * The TDEIconDialog class shows a list of icons installed on the system (as
+ * accessible via TDEIconLoader) and allows the user to select one.
  *
  * KOpenWithDlg implements a dialog to choose an application from, that is
  * to be run, e.g. to let the user choose an application to open a file/url
@@ -97,7 +97,7 @@
  * The base class for all views to be used with KDirOperator.
  *
  * KFileIconView:
- * The KFileView based on KIconView.
+ * The KFileView based on TDEIconView.
  *
  * KFileDetailView:
  * The KFileView based on TDEListView.

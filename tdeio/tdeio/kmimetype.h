@@ -120,13 +120,13 @@ public:
    * @param group The icon group where the icon is going to be used.
    * @param force_size Override globallly configured icon size.
    *        Use 0 for the default size
-   * @param state The icon state, one of: @p KIcon::DefaultState,
-   *         @p KIcon::ActiveState or @p KIcon::DisabledState.
+   * @param state The icon state, one of: @p TDEIcon::DefaultState,
+   *         @p TDEIcon::ActiveState or @p TDEIcon::DisabledState.
    * @param path Output parameter to get the full path. Seldom needed.
    *              Ignored if 0
    * @return the pixmap of the mime type, can be a default icon if not found
    */
-  virtual TQPixmap pixmap( KIcon::Group group, int force_size = 0, int state = 0,
+  virtual TQPixmap pixmap( TDEIcon::Group group, int force_size = 0, int state = 0,
                           TQString * path = 0L ) const;
 
   /**
@@ -139,13 +139,13 @@ public:
    * @param _group The icon group where the icon is going to be used.
    * @param _force_size Override globallly configured icon size.
    *        Use 0 for the default size
-   * @param _state The icon state, one of: KIcon::DefaultState,
-   * KIcon::ActiveState or KIcon::DisabledState.
+   * @param _state The icon state, one of: TDEIcon::DefaultState,
+   * TDEIcon::ActiveState or TDEIcon::DisabledState.
    * @param _path Output parameter to get the full path. Seldom needed.
    *              Ignored if 0
    * @return the pixmap of the URL, can be a default icon if not found
    */
-  virtual TQPixmap pixmap( const KURL& _url, KIcon::Group _group, int _force_size = 0,
+  virtual TQPixmap pixmap( const KURL& _url, TDEIcon::Group _group, int _force_size = 0,
 	    int _state = 0, TQString * _path = 0L ) const;
 
   /**
@@ -160,19 +160,19 @@ public:
    * @param _group The icon group where the icon is going to be used.
    * @param _force_size Override globally configured icon size.
    *        Use 0 for the default size
-   * @param _state The icon state, one of: KIcon::DefaultState,
-   * KIcon::ActiveState or KIcon::DisabledState.
+   * @param _state The icon state, one of: TDEIcon::DefaultState,
+   * TDEIcon::ActiveState or TDEIcon::DisabledState.
    * @param _path Output parameter to get the full path. Seldom needed.
    *              Ignored if 0
    * @return the pixmap of the URL, can be a default icon if not found
    */
-  static TQPixmap pixmapForURL( const KURL & _url, mode_t _mode = 0, KIcon::Group _group = KIcon::Desktop,
+  static TQPixmap pixmapForURL( const KURL & _url, mode_t _mode = 0, TDEIcon::Group _group = TDEIcon::Desktop,
                                int _force_size = 0, int _state = 0, TQString * _path = 0L );
 
 
   /**
    * The same functionality as pixmapForURL(), but this method returns the name
-   * of the icon to load. You'll have to use KIconLoader to load the pixmap for it.
+   * of the icon to load. You'll have to use TDEIconLoader to load the pixmap for it.
    * The advantage of this method is that you can store the result, and then use it
    * later on for any kind of size.
    * @param _url URL for the file
@@ -537,7 +537,7 @@ public:
 
   virtual TQString icon( const TQString& _url, bool _is_local ) const;
   virtual TQString icon( const KURL& _url, bool _is_local ) const;
-  virtual TQPixmap pixmap( const KURL& _url, KIcon::Group _group, int _force_size = 0,
+  virtual TQPixmap pixmap( const KURL& _url, TDEIcon::Group _group, int _force_size = 0,
                           int _state = 0, TQString * _path = 0L ) const;
   virtual TQString comment( const TQString& _url, bool _is_local ) const;
   virtual TQString comment( const KURL& _url, bool _is_local ) const;
@@ -603,7 +603,7 @@ public:
   static pid_t run( const KURL& _url, bool _is_local );
 
 protected:
-  virtual TQPixmap pixmap( KIcon::Group group, int force_size = 0, int state = 0,
+  virtual TQPixmap pixmap( TDEIcon::Group group, int force_size = 0, int state = 0,
                           TQString * path = 0L ) const
      { return KMimeType::pixmap( group, force_size, state, path ); }
 

@@ -35,10 +35,10 @@
 
 typedef TQValueList <TQIconViewItem *> QIconViewItemList;
 
-class KIconViewSearchLine::KIconViewSearchLinePrivate
+class TDEIconViewSearchLine::TDEIconViewSearchLinePrivate
 {
 public:
-  KIconViewSearchLinePrivate() :
+  TDEIconViewSearchLinePrivate() :
     iconView( 0 ),
     caseSensitive( DEFAULT_CASESENSITIVE ),
     activeSearch( false ),
@@ -54,7 +54,7 @@ public:
 /******************************************************************************
  * Public Methods                                                             *
  *****************************************************************************/
-KIconViewSearchLine::KIconViewSearchLine( TQWidget *parent,
+TDEIconViewSearchLine::TDEIconViewSearchLine( TQWidget *parent,
 					  TQIconView *iconView,
 					  const char *name ) :
   KLineEdit( parent, name )
@@ -63,25 +63,25 @@ KIconViewSearchLine::KIconViewSearchLine( TQWidget *parent,
   init( iconView );
 }
 
-KIconViewSearchLine::KIconViewSearchLine( TQWidget *parent, const char *name ) :
+TDEIconViewSearchLine::TDEIconViewSearchLine( TQWidget *parent, const char *name ) :
   KLineEdit( parent, name )
 {
   d = NULL;
   init( NULL );
 }
 
-KIconViewSearchLine::~KIconViewSearchLine()
+TDEIconViewSearchLine::~TDEIconViewSearchLine()
 {
   clear(); // empty hiddenItems, returning items back to iconView
   delete d;
 }
 
-bool KIconViewSearchLine::caseSensitive() const
+bool TDEIconViewSearchLine::caseSensitive() const
 {
   return d->caseSensitive;
 }
 
-TQIconView *KIconViewSearchLine::iconView() const
+TQIconView *TDEIconViewSearchLine::iconView() const
 {
   return d->iconView;
 }
@@ -89,7 +89,7 @@ TQIconView *KIconViewSearchLine::iconView() const
 /******************************************************************************
  * Public Slots                                                               *
  *****************************************************************************/
-void KIconViewSearchLine::updateSearch( const TQString &s )
+void TDEIconViewSearchLine::updateSearch( const TQString &s )
 {
 	long original_count;
 	int original_hiddenListChanged;
@@ -125,7 +125,7 @@ void KIconViewSearchLine::updateSearch( const TQString &s )
 	d->iconView->ensureItemVisible( currentItem );
 }
 
-void KIconViewSearchLine::clear()
+void TDEIconViewSearchLine::clear()
 {
 	// Clear hidden list, give items back to TQIconView, if it still exists
 	TQIconViewItem *item = NULL;
@@ -142,16 +142,16 @@ void KIconViewSearchLine::clear()
 	KLineEdit::clear();
 }
 
-void KIconViewSearchLine::iconDeleted(const TQString &filename) {
+void TDEIconViewSearchLine::iconDeleted(const TQString &filename) {
 	// Do nothing...
 }
 
-void KIconViewSearchLine::setCaseSensitive( bool cs )
+void TDEIconViewSearchLine::setCaseSensitive( bool cs )
 {
   d->caseSensitive = cs;
 }
 
-void KIconViewSearchLine::setIconView( TQIconView *iv )
+void TDEIconViewSearchLine::setIconView( TQIconView *iv )
 {
   if ( d->iconView != NULL )
     disconnect( d->iconView, TQT_SIGNAL( destroyed() ),
@@ -172,7 +172,7 @@ void KIconViewSearchLine::setIconView( TQIconView *iv )
 /******************************************************************************
  * Protected Methods                                                          *
  *****************************************************************************/
-bool KIconViewSearchLine::itemMatches( const TQIconViewItem *item,
+bool TDEIconViewSearchLine::itemMatches( const TQIconViewItem *item,
 				       const TQString &s ) const
 {
   if ( s.isEmpty() )
@@ -185,10 +185,10 @@ bool KIconViewSearchLine::itemMatches( const TQIconViewItem *item,
   return ( itemtext.find( s, 0, caseSensitive() ) >= 0 );
 }
 
-void KIconViewSearchLine::init( TQIconView *iconView )
+void TDEIconViewSearchLine::init( TQIconView *iconView )
 {
   delete d;
-  d = new KIconViewSearchLinePrivate;
+  d = new TDEIconViewSearchLinePrivate;
 
   d->iconView = iconView;
 
@@ -205,7 +205,7 @@ void KIconViewSearchLine::init( TQIconView *iconView )
     setEnabled( false );
 }
 
-void KIconViewSearchLine::hideItem( TQIconViewItem *item )
+void TDEIconViewSearchLine::hideItem( TQIconViewItem *item )
 {
   if ( ( item == NULL ) || ( d->iconView == NULL ) )
     return;
@@ -213,7 +213,7 @@ void KIconViewSearchLine::hideItem( TQIconViewItem *item )
   item->setVisible(false);
 }
 
-void KIconViewSearchLine::showItem( TQIconViewItem *item )
+void TDEIconViewSearchLine::showItem( TQIconViewItem *item )
 {
   if ( d->iconView == NULL )
     {
@@ -229,14 +229,14 @@ void KIconViewSearchLine::showItem( TQIconViewItem *item )
 /******************************************************************************
  * Protected Slots                                                            *
  *****************************************************************************/
-void KIconViewSearchLine::queueSearch( const TQString &s )
+void TDEIconViewSearchLine::queueSearch( const TQString &s )
 {
   d->queuedSearches++;
   d->search = s;
   TQTimer::singleShot( 200, this, TQT_SLOT( activateSearch() ) );
 }
 
-void KIconViewSearchLine::activateSearch()
+void TDEIconViewSearchLine::activateSearch()
 {
   d->queuedSearches--;
 
@@ -253,7 +253,7 @@ void KIconViewSearchLine::activateSearch()
 /******************************************************************************
  * Private Slots                                                              *
  *****************************************************************************/
-void KIconViewSearchLine::iconViewDeleted()
+void TDEIconViewSearchLine::iconViewDeleted()
 {
   d->iconView = NULL;
   setEnabled( false );

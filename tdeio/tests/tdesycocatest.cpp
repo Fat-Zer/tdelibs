@@ -202,7 +202,7 @@ int main(int argc, char *argv[])
    //
    debug("\nTrying findByURL for folder_home.png");
    TQString fh;
-   (void)k.iconLoader()->loadIcon("folder_home.png",KIcon::Desktop,0,KIcon::DefaultState,&fh);
+   (void)k.iconLoader()->loadIcon("folder_home.png",TDEIcon::Desktop,0,TDEIcon::DefaultState,&fh);
    mf  = KMimeType::findByURL( fh, 0, true, false );
    assert( mf );
    check( "A PNG's mimetype", mf->name(), "image/png" );

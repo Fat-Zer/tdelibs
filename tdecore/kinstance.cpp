@@ -259,11 +259,11 @@ void TDEInstance::setConfigName(const TQString &configName)
     d->configName = configName;
 }
 
-KIconLoader *TDEInstance::iconLoader() const
+TDEIconLoader *TDEInstance::iconLoader() const
 {
     DEBUG_CHECK_ALIVE
     if( _iconLoader == 0 ) {
-	_iconLoader = new KIconLoader( _name, dirs() );
+	_iconLoader = new TDEIconLoader( _name, dirs() );
     	_iconLoader->enableDelayedIconSetLoading( true );
     }
 
@@ -293,7 +293,7 @@ TDEGlobalNetworkManager *TDEInstance::networkManager() const
 void TDEInstance::newIconLoader() const
 {
     DEBUG_CHECK_ALIVE
-    KIconTheme::reconfigure();
+    TDEIconTheme::reconfigure();
     _iconLoader->reconfigure( _name, dirs() );
 }
 

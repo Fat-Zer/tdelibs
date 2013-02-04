@@ -830,11 +830,11 @@ public:
 
   /**
    * Set the icon size to load. Usually you should not call
-   * this, the icon size is taken care of by KIconLoader
+   * this, the icon size is taken care of by TDEIconLoader
    * and globally configured.
    * By default, the toolbar will load icons of size 32 for main
    * toolbars and 22 for other toolbars
-   * @see KIconLoader.
+   * @see TDEIconLoader.
    *
    * @param size The size to use
    */

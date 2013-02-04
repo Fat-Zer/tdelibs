@@ -193,7 +193,7 @@ void KFileList::addFiles(const KURL::List& files)
 		{
 			KMimeType::Ptr	mime = KMimeType::findByURL( *it, 0, true, false);
 			item = new TQListViewItem(m_files, item, (*it).fileName(), mime->comment(), (*it).url());
-			item->setPixmap(0, mime->pixmap(*it, KIcon::Small));
+			item->setPixmap(0, mime->pixmap(*it, TDEIcon::Small));
 		}
 
 		slotSelectionChanged();
@@ -218,7 +218,7 @@ void KFileList::setFileList(const TQStringList& files)
 		KURL	url = KURL::fromPathOrURL( *it );
 		KMimeType::Ptr	mime = KMimeType::findByURL(url, 0, true, false);
 		item = new TQListViewItem(m_files, item, url.fileName(), mime->comment(), url.url());
-		item->setPixmap(0, mime->pixmap(url, KIcon::Small));
+		item->setPixmap(0, mime->pixmap(url, TDEIcon::Small));
 	}
 	slotSelectionChanged();
 }

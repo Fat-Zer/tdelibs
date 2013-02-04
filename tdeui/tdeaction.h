@@ -466,14 +466,14 @@ public:
      * Get the TQIconSet from which the icons used to display this action will
      * be chosen.
      *
-     * In KDE4 set group default to KIcon::Small while removing the other
+     * In KDE4 set group default to TDEIcon::Small while removing the other
      * iconSet() function.
      */
-    virtual TQIconSet iconSet( KIcon::Group group, int size=0 ) const;
+    virtual TQIconSet iconSet( TDEIcon::Group group, int size=0 ) const;
     /**
      * Remove in KDE4
      */
-    TQIconSet iconSet() const { return iconSet( KIcon::Small ); }
+    TQIconSet iconSet() const { return iconSet( TDEIcon::Small ); }
 
     virtual TQString icon() const;
 

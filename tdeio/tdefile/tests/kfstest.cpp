@@ -125,7 +125,7 @@ int main(int argc, char **argv)
     }
 
     else if (argv1 == TQString::fromLatin1("icon")) {
-    	KIconDialog dlg;
+    	TDEIconDialog dlg;
 	TQString icon = dlg.selectIcon();
 	kdDebug() << icon << endl;
     }

@@ -9,8 +9,8 @@
  * exact licensing terms.
  */
 
-#ifndef __KIconLoader_h_Included__
-#define __KIconLoader_h_Included__
+#ifndef __TDEIconLoader_h_Included__
+#define __TDEIconLoader_h_Included__
 
 #include <tqstring.h>
 #include <tqpixmap.h>
@@ -18,31 +18,31 @@
 
 // Grmbl, X headers.....
 #ifdef Status
-#define KIconLoaderXStatus Status
+#define TDEIconLoaderXStatus Status
 #undef Status
 #endif
 #include <tqmovie.h>
-#ifdef KIconLoaderXStatus
+#ifdef TDEIconLoaderXStatus
 #define Status int
-#undef KIconLoaderXStatus
+#undef TDEIconLoaderXStatus
 #endif
 
 #include <kglobal.h>
 #include <kinstance.h>
 #include <kicontheme.h>
 
-struct KIconGroup;
-class KIconThemeNode;
+struct TDEIconGroup;
+class TDEIconThemeNode;
 class TDEConfig;
-struct KIconLoaderPrivate;
+struct TDEIconLoaderPrivate;
 class TDEStandardDirs;
-class KIconEffect;
+class TDEIconEffect;
 
 
 /**
  * Iconloader for KDE.
  *
- * KIconLoader will load the current icon theme and all its base themes.
+ * TDEIconLoader will load the current icon theme and all its base themes.
  * Icons will be searched in any of these themes. Additionally, it caches
  * icons and applies effects according the the user's preferences.
  *
@@ -55,12 +55,12 @@ class KIconEffect;
  *
  * The standard groups are defined below.
  *
- * @li KIcon::Desktop: Icons in the iconview of konqueror, kdesktop and similar apps.
- * @li KIcon::Toolbar: Icons in toolbars.
- * @li KIcon::MainToolbar: Icons in the main toolbars.
- * @li KIcon::Small: Various small (typical 16x16) places: titlebars, listviews
+ * @li TDEIcon::Desktop: Icons in the iconview of konqueror, kdesktop and similar apps.
+ * @li TDEIcon::Toolbar: Icons in toolbars.
+ * @li TDEIcon::MainToolbar: Icons in the main toolbars.
+ * @li TDEIcon::Small: Various small (typical 16x16) places: titlebars, listviews
  * and menu entries.
- * @li KIcon::Panel: Icons in kicker's panel
+ * @li TDEIcon::Panel: Icons in kicker's panel
  *
  * The icons are stored on disk in an icon theme or in a standalone
  * directory. The icon theme directories contain multiple sizes and/or
@@ -74,7 +74,7 @@ class KIconEffect;
  * "User".
  *
  */
-class TDECORE_EXPORT KIconLoader
+class TDECORE_EXPORT TDEIconLoader
 {
 public:
 
@@ -92,12 +92,12 @@ public:
      * @see TDEGlobal::iconLoader()
      * @see TDEInstance::iconLoader()
      */
-    KIconLoader(const TQString& appname=TQString::null, TDEStandardDirs *dirs = 0);
+    TDEIconLoader(const TQString& appname=TQString::null, TDEStandardDirs *dirs = 0);
 
     /**
      * Cleanup
      */
-    ~KIconLoader();
+    ~TDEIconLoader();
 
     /**
      * Adds @p appname to the list of application specific directories.
@@ -116,7 +116,7 @@ public:
      * @param group The icon group. This will specify the size of and effects to
      * be applied to the icon.
      * @param size If nonzero, this overrides the size specified by @p group.
-     *             See KIcon::StdSizes.
+     *             See TDEIcon::StdSizes.
      * @param state The icon state: @p DefaultState, @p ActiveState or
      * @p DisabledState. Depending on the user's preferences, the iconloader
      * may apply a visual effect to hint about its state.
@@ -126,8 +126,8 @@ public:
      * @return the TQPixmap. Can be null when not found, depending on
      *         @p canReturnNull.
      */
-    TQPixmap loadIcon(const TQString& name, KIcon::Group group, int size=0,
-		     int state=KIcon::DefaultState, TQString *path_store=0L,
+    TQPixmap loadIcon(const TQString& name, TDEIcon::Group group, int size=0,
+		     int state=TDEIcon::DefaultState, TQString *path_store=0L,
 		     bool canReturnNull=false) const;
 
     /**
@@ -138,7 +138,7 @@ public:
      * @param group The icon group. This will specify the size of and effects to
      * be applied to the icon.
      * @param size If nonzero, this overrides the size specified by @p group.
-     *             See KIcon::StdSizes.
+     *             See TDEIcon::StdSizes.
      * @param canReturnNull Can return a null iconset? If false, iconset
      * containing the "unknown" pixmap is returned when no appropriate icon has
      * been found.
@@ -148,10 +148,10 @@ public:
      *          @p canReturnNull.
      * @since 3.5
      */
-    TQIconSet loadIconSet(const TQString& name, KIcon::Group group, int size,
+    TQIconSet loadIconSet(const TQString& name, TDEIcon::Group group, int size,
                          bool canReturnNull, bool immediateExistenceCheck);
 
-    // KDE4 merge as (const TQString&,KIcon::Group,int=0,bool=false,bool=true);
+    // KDE4 merge as (const TQString&,TDEIcon::Group,int=0,bool=false,bool=true);
     /**
      * Creates an icon set, that will do on-demand loading of the icon.
      * Loading itself is done by calling loadIcon .
@@ -160,7 +160,7 @@ public:
      * @param group The icon group. This will specify the size of and effects to
      * be applied to the icon.
      * @param size If nonzero, this overrides the size specified by @p group.
-     *             See KIcon::StdSizes.
+     *             See TDEIcon::StdSizes.
      * @param canReturnNull Can return a null iconset? If false, iconset
      * containing the "unknown" pixmap is returned when no appropriate icon has
      * been found.
@@ -168,10 +168,10 @@ public:
      *          @p canReturnNull.
      * @since 3.1
      */
-    TQIconSet loadIconSet(const TQString& name, KIcon::Group group, int size,
+    TQIconSet loadIconSet(const TQString& name, TDEIcon::Group group, int size,
                          bool canReturnNull);
 
-    // KDE4 merge as (const TQString&,KIcon::Group,int=0,bool=false,bool=true);
+    // KDE4 merge as (const TQString&,TDEIcon::Group,int=0,bool=false,bool=true);
     /**
      * Creates an icon set, that will do on-demand loading of the icon.
      * Loading itself is done by calling loadIcon .
@@ -180,10 +180,10 @@ public:
      * @param group The icon group. This will specify the size of and effects to
      * be applied to the icon.
      * @param size If nonzero, this overrides the size specified by @p group.
-     *             See KIcon::StdSizes.
+     *             See TDEIcon::StdSizes.
      * @return the icon set. Can be null when not found
      */
-    TQIconSet loadIconSet(const TQString& name, KIcon::Group group, int size=0);
+    TQIconSet loadIconSet(const TQString& name, TDEIcon::Group group, int size=0);
 
     /**
      * Returns the path of an icon.
@@ -193,7 +193,7 @@ public:
      * @param group_or_size If positive, search icons whose size is
      * specified by the icon group @p group_or_size. If negative, search
      * icons whose size is - @p group_or_size.
-     *             See KIcon::Group and KIcon::StdSizes
+     *             See TDEIcon::Group and TDEIcon::StdSizes
      * @param canReturnNull Can return a null string? If not, a path to the
      *                      "unknown" icon will be returned.
      * @return the path of an icon, can be null or the "unknown" icon when
@@ -207,21 +207,21 @@ public:
      * @param name The name of the icon.
      * @param group The icon group. See loadIcon().
      * @param size Override the default size for @p group.
-     *             See KIcon::StdSizes.
+     *             See TDEIcon::StdSizes.
      * @return A TQMovie object. Can be null if not found.
      */
-    TQMovie loadMovie(const TQString& name, KIcon::Group group, int size=0) const;
+    TQMovie loadMovie(const TQString& name, TDEIcon::Group group, int size=0) const;
 
     /**
      * Returns the path to an animated icon.
      * @param name The name of the icon.
      * @param group The icon group. See loadIcon().
      * @param size Override the default size for @p group.
-     *             See KIcon::StdSizes.
+     *             See TDEIcon::StdSizes.
      * @return the full path to the movie, ready to be passed to QMovie's constructor.
      * Empty string if not found.
      */
-    TQString moviePath(const TQString& name, KIcon::Group group, int size=0) const;
+    TQString moviePath(const TQString& name, TDEIcon::Group group, int size=0) const;
 
     /**
      * Loads an animated icon as a series of still frames. If you want to load
@@ -229,11 +229,11 @@ public:
      * @param name The name of the icon.
      * @param group The icon group. See loadIcon().
      * @param size Override the default size for @p group.
-     *             See KIcon::StdSizes.
+     *             See TDEIcon::StdSizes.
      * @return A TQStringList containing the absolute path of all the frames
      * making up the animation.
      */
-    TQStringList loadAnimated(const TQString& name, KIcon::Group group, int size=0) const;
+    TQStringList loadAnimated(const TQString& name, TDEIcon::Group group, int size=0) const;
 
     /**
      * Queries all available icons for a specific group, having a specific
@@ -241,30 +241,30 @@ public:
      * @param group_or_size If positive, search icons whose size is
      * specified by the icon group @p group_or_size. If negative, search
      * icons whose size is - @p group_or_size.
-     *             See KIcon::Group and KIcon::StdSizes
+     *             See TDEIcon::Group and TDEIcon::StdSizes
      * @param context The icon context.
      * @return a list of all icons
      */
-    TQStringList queryIcons(int group_or_size, KIcon::Context context=KIcon::Any) const;
+    TQStringList queryIcons(int group_or_size, TDEIcon::Context context=TDEIcon::Any) const;
 
     /**
      * Queries all available icons for a specific context.
      * @param group_or_size The icon preferred group or size. If available
      * at this group or size, those icons will be returned, in other case,
      * icons of undefined size will be returned. Positive numbers are groups,
-     * negative numbers are negated sizes. See KIcon::Group and
-     * KIcon::StdSizes
+     * negative numbers are negated sizes. See TDEIcon::Group and
+     * TDEIcon::StdSizes
      * @param context The icon context.
      * @return A TQStringList containing the icon names
      * available for that context
      */
     TQStringList queryIconsByContext(int group_or_size,
-				    KIcon::Context context=KIcon::Any) const;
+				    TDEIcon::Context context=TDEIcon::Any) const;
 
     /**
      * @internal
      */
-    bool hasContext( KIcon::Context context ) const;
+    bool hasContext( TDEIcon::Context context ) const;
 
     /**
      * Returns a list of all icons (*.png or *.xpm extension) in the
@@ -280,20 +280,20 @@ public:
      * @param group the group to check.
      * @return the current size for an icon group.
      */
-    int currentSize(KIcon::Group group) const;
+    int currentSize(TDEIcon::Group group) const;
 
     /**
      * Returns a pointer to the current theme. Can be used to query
      * available and default sizes for groups.
      * @return a pointer to the current theme. 0 if no theme set.
      */
-    KIconTheme *theme() const;
+    TDEIconTheme *theme() const;
 
     /**
-     * Returns a pointer to the KIconEffect object used by the icon loader.
-     * @return the KIconEffect.
+     * Returns a pointer to the TDEIconEffect object used by the icon loader.
+     * @return the TDEIconEffect.
      */
-    KIconEffect *iconEffect() const;
+    TDEIconEffect *iconEffect() const;
 
     /**
      * Called by TDEInstance::newIconLoader to reconfigure the icon loader.
@@ -317,7 +317,7 @@ public:
      * @return true if alpha blending is desired
      * @obsolete
      */
-    bool alphaBlending( KIcon::Group group ) const;
+    bool alphaBlending( TDEIcon::Group group ) const;
 
     /**
      * Adds all the default themes from other desktops at the end of
@@ -344,7 +344,7 @@ public:
      * The default is disabled, as the iconloader object must not be
      * destroyed before all those iconsets are destroyed.
      *
-     * (Some broken applications use temporary KIconLoader objects).
+     * (Some broken applications use temporary TDEIconLoader objects).
      * Every TDEInstance 's iconloader has this feature enabled.
      *
      * @param enable true to enable delayed icon loading, false to disable
@@ -375,7 +375,7 @@ public:
      * tries to find an icon with the name. It tries some extension and
      * match strategies
      */
-    KIcon findMatchingIcon(const TQString& name, int size) const;
+    TDEIcon findMatchingIcon(const TQString& name, int size) const;
 
     /**
      * @internal
@@ -394,7 +394,7 @@ public:
      * below (the fallbacks of the theme) in the tree.
      * @internal
      */
-    void addBaseThemes(KIconThemeNode *node, const TQString &appname);
+    void addBaseThemes(TDEIconThemeNode *node, const TQString &appname);
 
     /**
      * @internal
@@ -434,120 +434,120 @@ public:
     /**
      * Loads all the different sizes for an iconset.
      */
-    TQIconSet loadIconSetNonDelayed( const TQString& name, KIcon::Group group,
+    TQIconSet loadIconSetNonDelayed( const TQString& name, TDEIcon::Group group,
                                     int size, bool canReturnNull );
 
     // @internal the data object
-    KIconLoaderPrivate *d;
+    TDEIconLoaderPrivate *d;
 };
 
 /**
- * \relates KIconLoader
+ * \relates TDEIconLoader
  * Load a desktop icon.
  */
 TDECORE_EXPORT TQPixmap DesktopIcon(const TQString& name, int size=0,
-		    int state=KIcon::DefaultState,
+		    int state=TDEIcon::DefaultState,
 		    TDEInstance *instance=TDEGlobal::instance());
 
 /**
- * \relates KIconLoader
+ * \relates TDEIconLoader
  * Load a desktop icon.
  */
 TDECORE_EXPORT TQPixmap DesktopIcon(const TQString& name, TDEInstance *instance);
 
 /**
- * \relates KIconLoader
+ * \relates TDEIconLoader
  * Load a desktop icon, and apply the necessary effects to get an IconSet.
  */
 TDECORE_EXPORT TQIconSet DesktopIconSet(const TQString& name, int size=0,
 		    TDEInstance *instance=TDEGlobal::instance());
 
 /**
- * \relates KIconLoader
+ * \relates TDEIconLoader
  * Load a toolbar icon.
  */
-TDECORE_EXPORT TQPixmap BarIcon(const TQString& name, int size=0, int state=KIcon::DefaultState,
+TDECORE_EXPORT TQPixmap BarIcon(const TQString& name, int size=0, int state=TDEIcon::DefaultState,
 	TDEInstance *instance=TDEGlobal::instance());
 
 /**
- * \relates KIconLoader
+ * \relates TDEIconLoader
  * Load a toolbar icon.
  */
 TDECORE_EXPORT TQPixmap BarIcon(const TQString& name, TDEInstance *instance);
 
 /**
- * \relates KIconLoader
+ * \relates TDEIconLoader
  * Load a toolbar icon, and apply the necessary effects to get an IconSet.
  */
 TDECORE_EXPORT TQIconSet BarIconSet(const TQString& name, int size=0,
 		    TDEInstance *instance=TDEGlobal::instance());
 
 /**
- * \relates KIconLoader
+ * \relates TDEIconLoader
  * Load a small icon.
  */
 TDECORE_EXPORT TQPixmap SmallIcon(const TQString& name, int size=0,
-		  int state=KIcon::DefaultState,
+		  int state=TDEIcon::DefaultState,
 		  TDEInstance *instance=TDEGlobal::instance());
 
 /**
- * \relates KIconLoader
+ * \relates TDEIconLoader
  * Load a small icon.
  */
 TDECORE_EXPORT TQPixmap SmallIcon(const TQString& name, TDEInstance *instance);
 
 /**
- * \relates KIconLoader
+ * \relates TDEIconLoader
  * Load a small icon, and apply the necessary effects to get an IconSet.
  */
 TDECORE_EXPORT TQIconSet SmallIconSet(const TQString& name, int size=0,
 		    TDEInstance *instance=TDEGlobal::instance());
 
 /**
- * \relates KIconLoader
+ * \relates TDEIconLoader
  * Load a main toolbar icon.
  */
 TDECORE_EXPORT TQPixmap MainBarIcon(const TQString& name, int size=0,
-		    int state=KIcon::DefaultState,
+		    int state=TDEIcon::DefaultState,
 		    TDEInstance *instance=TDEGlobal::instance());
 
 /**
- * \relates KIconLoader
+ * \relates TDEIconLoader
  * Load a main toolbar icon.
  */
 TDECORE_EXPORT TQPixmap MainBarIcon(const TQString& name, TDEInstance *instance);
 
 /**
- * \relates KIconLoader
+ * \relates TDEIconLoader
  * Load a main toolbar icon, and apply the effects to get an IconSet.
  */
 TDECORE_EXPORT TQIconSet MainBarIconSet(const TQString& name, int size=0,
 		    TDEInstance *instance=TDEGlobal::instance());
 
 /**
- * \relates KIconLoader
+ * \relates TDEIconLoader
  * Load a user icon. User icons are searched in $appdir/pics.
  */
-TDECORE_EXPORT TQPixmap UserIcon(const TQString& name, int state=KIcon::DefaultState,
+TDECORE_EXPORT TQPixmap UserIcon(const TQString& name, int state=TDEIcon::DefaultState,
 	TDEInstance *instance=TDEGlobal::instance());
 
 /**
- * \relates KIconLoader
+ * \relates TDEIconLoader
  * Load a user icon. User icons are searched in $appdir/pics.
  */
 TDECORE_EXPORT TQPixmap UserIcon(const TQString& name, TDEInstance *instance);
 
 /**
- * \relates KIconLoader
+ * \relates TDEIconLoader
  * Load a user icon, and apply the effects to get an IconSet.
  */
 TDECORE_EXPORT TQIconSet UserIconSet(const TQString& name,
 	TDEInstance *instance=TDEGlobal::instance());
 
 /**
- * \relates KIconLoader
+ * \relates TDEIconLoader
  * Returns the current icon size for a specific group.
  */
-TDECORE_EXPORT int IconSize(KIcon::Group group, TDEInstance *instance=TDEGlobal::instance());
+TDECORE_EXPORT int IconSize(TDEIcon::Group group, TDEInstance *instance=TDEGlobal::instance());
 
-#endif // __KIconLoader_h_Included__
+#endif // __TDEIconLoader_h_Included__

@@ -301,7 +301,7 @@ void KFileDetailView::updateView( bool b )
     TQListViewItemIterator it( (TQListView*)this );
     for ( ; it.current(); ++it ) {
         KFileListViewItem *item=static_cast<KFileListViewItem *>(it.current());
-        item->setPixmap( 0, item->fileInfo()->pixmap(KIcon::SizeSmall) );
+        item->setPixmap( 0, item->fileInfo()->pixmap(TDEIcon::SizeSmall) );
     }
 }
 
@@ -543,9 +543,9 @@ TQDragObject *KFileDetailView::dragObject()
     }
     TQPixmap pixmap;
     if( urls.count() > 1 )
-        pixmap = DesktopIcon( "tdemultiple", KIcon::SizeSmall );
+        pixmap = DesktopIcon( "tdemultiple", TDEIcon::SizeSmall );
     if( pixmap.isNull() )
-        pixmap = currentFileItem()->pixmap( KIcon::SizeSmall );
+        pixmap = currentFileItem()->pixmap( TDEIcon::SizeSmall );
 
     TQPoint hotspot;
     hotspot.setX( pixmap.width() / 2 );
@@ -668,7 +668,7 @@ void KFileDetailView::contentsDropEvent( TQDropEvent *e )
 
 void KFileListViewItem::init()
 {
-    KFileListViewItem::setPixmap( COL_NAME, inf->pixmap(KIcon::SizeSmall));
+    KFileListViewItem::setPixmap( COL_NAME, inf->pixmap(TDEIcon::SizeSmall));
 
     setText( COL_NAME, inf->text() );
     setText( COL_SIZE, TDEGlobal::locale()->formatNumber( inf->size(), 0));

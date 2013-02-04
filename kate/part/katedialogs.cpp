@@ -1226,7 +1226,7 @@ void KatePartPluginConfigPage::slotConfigure()
       path.clear();
       path << cife->configPageName( i );
       page = kd->addVBoxPage( path, cife->configPageFullName (i),
-                                cife->configPagePixmap(i, KIcon::SizeMedium) );
+                                cife->configPagePixmap(i, TDEIcon::SizeMedium) );
     }
     else
     {

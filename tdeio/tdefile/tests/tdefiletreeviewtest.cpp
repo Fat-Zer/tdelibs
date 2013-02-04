@@ -66,9 +66,9 @@ void testFrame::showPath( const KURL &url )
 {
    TQString fname = "TestBranch"; // url.fileName ();
    /* try a user icon */
-   KIconLoader *loader = TDEGlobal::iconLoader();
-   TQPixmap pix = loader->loadIcon( "contents2", KIcon::Small );
-   TQPixmap pixOpen = loader->loadIcon( "contents", KIcon::Small );
+   TDEIconLoader *loader = TDEGlobal::iconLoader();
+   TQPixmap pix = loader->loadIcon( "contents2", TDEIcon::Small );
+   TQPixmap pixOpen = loader->loadIcon( "contents", TDEIcon::Small );
 
    KFileTreeBranch *nb = treeView->addBranch( url, fname, pix );
 

@@ -21,7 +21,7 @@
 class TDEStandardDirs;
 class TDEAboutData;
 class TDEConfig;
-class KIconLoader;
+class TDEIconLoader;
 class KCharsets;
 class TQFont;
 class TDEInstancePrivate;
@@ -108,7 +108,7 @@ class TDECORE_EXPORT TDEInstance
      *  Returns an iconloader object.
      * @return the iconloader object.
      */
-    KIconLoader	       *iconLoader() const;
+    TDEIconLoader	       *iconLoader() const;
 
     /**
      *  Returns a TDEHardwareDevices object.
@@ -166,7 +166,7 @@ private:
     mutable TDEStandardDirs       *_dirs;
 
     mutable TDEConfig             *_config;
-    mutable KIconLoader         *_iconLoader;
+    mutable TDEIconLoader         *_iconLoader;
 
     mutable TDEHardwareDevices  *_hardwaredevices;
     mutable TDEGlobalNetworkManager  *_networkmanager;

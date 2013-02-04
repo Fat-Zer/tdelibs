@@ -37,18 +37,18 @@ class TQLabel;
  * An item for the iconview, that has a reference to its corresponding
  * KFileItem.
  */
-class TDEIO_EXPORT KFileIconViewItem : public KIconViewItem
+class TDEIO_EXPORT KFileIconViewItem : public TDEIconViewItem
 {
 public:
     KFileIconViewItem( TQIconView *parent, const TQString &text,
 		       const TQPixmap &pixmap,
 		       KFileItem *fi )
-	: KIconViewItem( parent, text, pixmap ), inf( fi ) {}
+	: TDEIconViewItem( parent, text, pixmap ), inf( fi ) {}
     /**
      * @since 3.1
      */
     KFileIconViewItem( TQIconView *parent, KFileItem *fi )
-	: KIconViewItem( parent ), inf( fi ) {}
+	: TDEIconViewItem( parent ), inf( fi ) {}
 
     virtual ~KFileIconViewItem();
 
@@ -80,7 +80,7 @@ namespace TDEIO {
  * @see KCombiView
  * @see KFileDetailView
  */
-class TDEIO_EXPORT KFileIconView : public KIconView, public KFileView
+class TDEIO_EXPORT KFileIconView : public TDEIconView, public KFileView
 {
     Q_OBJECT
 
@@ -114,12 +114,12 @@ public:
     virtual KFileItem * prevItem( const KFileItem * ) const;
 
     /**
-     * Sets the size of the icons to show. Defaults to KIcon::SizeSmall.
+     * Sets the size of the icons to show. Defaults to TDEIcon::SizeSmall.
      */
     void setIconSize( int size );
 
     /**
-     * Sets the size of the previews. Defaults to KIcon::SizeLarge.
+     * Sets the size of the previews. Defaults to TDEIcon::SizeLarge.
      */
     void setPreviewSize( int size );
 
@@ -150,7 +150,7 @@ public:
     TQScrollView *scrollWidget() const { return (TQScrollView*) this; }
     void setAcceptDrops(bool b) 
     {  
-      KIconView::setAcceptDrops(b); 
+      TDEIconView::setAcceptDrops(b); 
       viewport()->setAcceptDrops(b);
     }
 
@@ -239,9 +239,9 @@ private:
     int th;
     int myIconSize;
 
-    virtual void insertItem(TQIconViewItem *a, TQIconViewItem *b) { KIconView::insertItem(a, b); }
-    virtual void setSelectionMode(TQIconView::SelectionMode m) { KIconView::setSelectionMode(m); }
-    virtual void setSelected(TQIconViewItem *i, bool a, bool b) { KIconView::setSelected(i, a, b); }
+    virtual void insertItem(TQIconViewItem *a, TQIconViewItem *b) { TDEIconView::insertItem(a, b); }
+    virtual void setSelectionMode(TQIconView::SelectionMode m) { TDEIconView::setSelectionMode(m); }
+    virtual void setSelected(TQIconViewItem *i, bool a, bool b) { TDEIconView::setSelected(i, a, b); }
 
     bool canPreview( const KFileItem * ) const;
     void stopPreview();

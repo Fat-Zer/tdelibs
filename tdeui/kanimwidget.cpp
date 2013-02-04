@@ -185,7 +185,7 @@ void KAnimWidget::updateIcons()
   if (parent()->inherits( "TDEToolBar" ))
     d->size = ((TDEToolBar*)parent())->iconSize();
   if (!d->size)
-     d->size = TDEGlobal::iconLoader()->currentSize(KIcon::MainToolbar);
+     d->size = TDEGlobal::iconLoader()->currentSize(TDEIcon::MainToolbar);
 
   TQString path = TDEGlobal::iconLoader()->iconPath(d->icon_name, -d->size);
   TQImage img(path);

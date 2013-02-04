@@ -570,7 +570,7 @@ void KPrintDialog::initialize(KPrinter *printer)
 				sep = true;
 				d->m_printers->insertItem(TQPixmap(), TQString::fromLatin1("--------"));
 			}
-			d->m_printers->insertItem(SmallIcon(it.current()->pixmap(),0,(it.current()->isValid() ? (int)KIcon::DefaultState : (int)KIcon::LockOverlay)),it.current()->name(),false/*sep*/);
+			d->m_printers->insertItem(SmallIcon(it.current()->pixmap(),0,(it.current()->isValid() ? (int)TDEIcon::DefaultState : (int)TDEIcon::LockOverlay)),it.current()->name(),false/*sep*/);
 			if (it.current()->isSoftDefault())
 				defsoft = d->m_printers->count()-1;
 			if (it.current()->isHardDefault())

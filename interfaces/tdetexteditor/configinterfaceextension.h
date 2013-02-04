@@ -95,7 +95,7 @@ class KTEXTEDITOR_EXPORT ConfigInterfaceExtension
   
     virtual TQString configPageName (uint number = 0) const = 0;
     virtual TQString configPageFullName (uint number = 0) const = 0;
-    virtual TQPixmap configPagePixmap (uint number = 0, int size = KIcon::SizeSmall) const = 0;
+    virtual TQPixmap configPagePixmap (uint number = 0, int size = TDEIcon::SizeSmall) const = 0;
     
     
   private:

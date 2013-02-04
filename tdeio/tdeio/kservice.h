@@ -129,7 +129,7 @@ public:
    *         null if not set
    * @see icon()
    */
-  TQPixmap pixmap( KIcon::Group _group, int _force_size = 0, int _state = 0,
+  TQPixmap pixmap( TDEIcon::Group _group, int _force_size = 0, int _state = 0,
                   TQString * _path = 0L ) const;
   /**
    * Checks whethe the service should be run in a terminal.

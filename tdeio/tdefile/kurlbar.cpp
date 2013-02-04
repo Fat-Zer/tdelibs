@@ -89,8 +89,8 @@ public:
 
 KURLBarItem::KURLBarItem( KURLBar *parent,
                           const KURL& url, bool persistent, const TQString& description,
-                          const TQString& icon, KIcon::Group group )
-    : TQListBoxPixmap( KIconLoader::unknown() /*, parent->listBox()*/ ),
+                          const TQString& icon, TDEIcon::Group group )
+    : TQListBoxPixmap( TDEIconLoader::unknown() /*, parent->listBox()*/ ),
       m_url( url ),
       m_pixmap( 0L ),
       m_parent( parent ),
@@ -101,8 +101,8 @@ KURLBarItem::KURLBarItem( KURLBar *parent,
 
 KURLBarItem::KURLBarItem( KURLBar *parent,
                           const KURL& url, const TQString& description,
-                          const TQString& icon, KIcon::Group group )
-    : TQListBoxPixmap( KIconLoader::unknown() /*, parent->listBox()*/ ),
+                          const TQString& icon, TDEIcon::Group group )
+    : TQListBoxPixmap( TDEIconLoader::unknown() /*, parent->listBox()*/ ),
       m_url( url ),
       m_pixmap( 0L ),
       m_parent( parent ),
@@ -111,7 +111,7 @@ KURLBarItem::KURLBarItem( KURLBar *parent,
     init( icon, group, description, true /*persistent*/ );
 }
 
-void KURLBarItem::init( const TQString& icon, KIcon::Group group,
+void KURLBarItem::init( const TQString& icon, TDEIcon::Group group,
                         const TQString& description, bool persistent )
 {
     d = new KURLBarItemPrivate;
@@ -134,7 +134,7 @@ void KURLBarItem::setURL( const KURL& url )
         setText( url.fileName() );
 }
 
-void KURLBarItem::setIcon( const TQString& icon, KIcon::Group group )
+void KURLBarItem::setIcon( const TQString& icon, TDEIcon::Group group )
 {
     m_icon  = icon;
     m_group = group;
@@ -143,7 +143,7 @@ void KURLBarItem::setIcon( const TQString& icon, KIcon::Group group )
         m_pixmap = KMimeType::pixmapForURL( m_url, 0, group, iconSize() );
     else
         m_pixmap = TDEGlobal::iconLoader()->loadIcon( icon, group, iconSize(),
-                                                    KIcon::DefaultState );
+                                                    TDEIcon::DefaultState );
 }
 
 void KURLBarItem::setDescription( const TQString& desc )
@@ -203,7 +203,7 @@ void KURLBarItem::paint( TQPainter *p )
         p->setPen( oldPen );
     }
 
-    if ( m_parent->iconSize() < KIcon::SizeMedium ) {
+    if ( m_parent->iconSize() < TDEIcon::SizeMedium ) {
         // small icon -> draw icon next to text
 
         // ### mostly cut & paste of TQListBoxPixmap::paint() until Qt 3.1
@@ -274,7 +274,7 @@ TQSize KURLBarItem::sizeHint() const
     int hmin = 0;
     const KURLBarListBox *lb =static_cast<const KURLBarListBox*>(listBox());
 
-    if ( m_parent->iconSize() < KIcon::SizeMedium ) {
+    if ( m_parent->iconSize() < TDEIcon::SizeMedium ) {
         wmin = TQListBoxPixmap::width( lb ) + KDialog::spacingHint() * 2;
         hmin = TQListBoxPixmap::height( lb ) + KDialog::spacingHint() * 2;
     }
@@ -336,7 +336,7 @@ KURLBar::KURLBar( bool useGlobalItems, TQWidget *parent, const char *name, WFlag
       m_isModified( false ),
       m_isImmutable( false ),
       m_listBox( 0L ),
-      m_iconSize( KIcon::SizeMedium )
+      m_iconSize( TDEIcon::SizeMedium )
 {
     d = new KURLBarPrivate();
 
@@ -359,7 +359,7 @@ KURLBar::~KURLBar()
 
 KURLBarItem * KURLBar::insertItem(const KURL& url, const TQString& description,
                                   bool applicationLocal,
-                                  const TQString& icon, KIcon::Group group )
+                                  const TQString& icon, TDEIcon::Group group )
 {
     KURLBarItem *item = new KURLBarItem(this, url, description, icon, group);
     item->setApplicationLocal( applicationLocal );
@@ -368,7 +368,7 @@ KURLBarItem * KURLBar::insertItem(const KURL& url, const TQString& description,
 }
 
 KURLBarItem * KURLBar::insertDynamicItem(const KURL& url, const TQString& description,
-                                         const TQString& icon, KIcon::Group group )
+                                         const TQString& icon, TDEIcon::Group group )
 {
     KURLBarItem *item = new KURLBarItem(this, url, false, description, icon, group);
     m_listBox->insertItem( item );
@@ -622,7 +622,7 @@ void KURLBar::readItem( int i, TDEConfig *config, bool applicationLocal )
                 description,
                 applicationLocal,
                 config->readEntry( TQString("Icon_") + number ),
-                static_cast<KIcon::Group>(
+                static_cast<TDEIcon::Group>(
                     config->readNumEntry( TQString("IconGroup_") + number )) );
 }
 
@@ -737,7 +737,7 @@ void KURLBar::slotContextMenuRequested( TQListBoxItem *_item, const TQPoint& pos
 
     KURL lastURL = m_activeItem ? m_activeItem->url() : KURL();
 
-    bool smallIcons = m_iconSize < KIcon::SizeMedium;
+    bool smallIcons = m_iconSize < TDEIcon::SizeMedium;
     TQPopupMenu *popup = new TQPopupMenu();
     popup->insertItem( smallIcons ?
                        i18n("&Large Icons") : i18n("&Small Icons"),
@@ -761,7 +761,7 @@ void KURLBar::slotContextMenuRequested( TQListBoxItem *_item, const TQPoint& pos
     int result = popup->exec( pos );
     switch ( result ) {
         case IconSize:
-            setIconSize( smallIcons ? KIcon::SizeMedium : KIcon::SizeSmallMedium );
+            setIconSize( smallIcons ? TDEIcon::SizeMedium : TDEIcon::SizeSmallMedium );
             m_listBox->triggerUpdate( true );
             break;
         case AddItem:
@@ -966,7 +966,7 @@ KURLBarItemDialog::KURLBarItemDialog( bool allowGlobal, const KURL& url,
     whatsThisText = i18n("<qt>This is the icon that will appear in the Quick Access panel.<p>"
                          "Click on the button to select a different icon.</qt>");
     label = new TQLabel( i18n("Choose an &icon:"), grid );
-    m_iconButton = new KIconButton( grid, "icon button" );
+    m_iconButton = new TDEIconButton( grid, "icon button" );
     m_iconButton->setIconSize( iconSize );
     if ( icon.isEmpty() )
         icon = KMimeType::iconForURL( url );

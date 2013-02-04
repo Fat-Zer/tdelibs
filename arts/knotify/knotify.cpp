@@ -591,11 +591,11 @@ bool KNotify::notifyByPassivePopup( const TQString &text,
                                     TDEConfig* eventsFile,
                                     WId senderWinId )
 {
-    KIconLoader iconLoader( appName );
+    TDEIconLoader iconLoader( appName );
     if ( eventsFile != NULL ) {
         TDEConfigGroup config( eventsFile, "!Global!" );
         TQString iconName = config.readEntry( "IconName", appName );
-        TQPixmap icon = iconLoader.loadIcon( iconName, KIcon::Small );
+        TQPixmap icon = iconLoader.loadIcon( iconName, TDEIcon::Small );
         TQString title = config.readEntry( "Comment", appName );
         KPassivePopup::message(title, text, icon, senderWinId);
     } else

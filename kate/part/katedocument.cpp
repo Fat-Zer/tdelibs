@@ -1998,7 +1998,7 @@ void KateDocument::configDialog()
     path.clear();
     path << KTextEditor::configInterfaceExtension (this)->configPageName (i);
     TQVBox *page = kd->addVBoxPage(path, KTextEditor::configInterfaceExtension (this)->configPageFullName (i),
-                              KTextEditor::configInterfaceExtension (this)->configPagePixmap(i, KIcon::SizeMedium) );
+                              KTextEditor::configInterfaceExtension (this)->configPagePixmap(i, TDEIcon::SizeMedium) );
 
     editorPages.append (KTextEditor::configInterfaceExtension (this)->configPage(i, page));
   }

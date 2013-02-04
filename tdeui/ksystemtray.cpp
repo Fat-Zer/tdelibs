@@ -317,12 +317,12 @@ TQPixmap KSystemTray::loadIcon( const TQString &icon, TDEInstance *instance )
     TDEConfig *appCfg = kapp->config();
     TDEConfigGroupSaver configSaver(appCfg, "System Tray");
     int iconWidth = appCfg->readNumEntry("systrayIconWidth", 22);
-    return instance->iconLoader()->loadIcon( icon, KIcon::Panel, iconWidth );
+    return instance->iconLoader()->loadIcon( icon, TDEIcon::Panel, iconWidth );
 }
 
 TQPixmap KSystemTray::loadSizedIcon( const TQString &icon, int iconWidth, TDEInstance *instance )
 {
-    return instance->iconLoader()->loadIcon( icon, KIcon::Panel, iconWidth );
+    return instance->iconLoader()->loadIcon( icon, TDEIcon::Panel, iconWidth );
 }
 
 void KSystemTray::setPixmap( const TQPixmap& p )

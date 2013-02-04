@@ -570,7 +570,7 @@ bool TDEApplication::notify(TQObject *receiver, TQEvent *event)
             static TQPixmap* ic = NULL;
             if( ic == NULL )
                 ic = new TQPixmap( TDEGlobal::iconLoader()->loadIcon( iconName(),
-                    KIcon::NoGroup, 0, KIcon::DefaultState, NULL, true ));
+                    TDEIcon::NoGroup, 0, TDEIcon::DefaultState, NULL, true ));
             if( !ic->isNull())
             {
                 w->setIcon( *ic );
@@ -978,7 +978,7 @@ void TDEApplication::init(bool GUIenabled)
 #ifdef Q_WS_MACX
   if (GUIenabled) {
       TQPixmap pixmap = TDEGlobal::iconLoader()->loadIcon( TDECmdLineArgs::appName(),
-              KIcon::NoGroup, KIcon::SizeLarge, KIcon::DefaultState, 0L, false );
+              TDEIcon::NoGroup, TDEIcon::SizeLarge, TDEIcon::DefaultState, 0L, false );
       if (!pixmap.isNull()) {
           TQImage i = pixmap.convertToImage().convertDepth(32).smoothScale(40, 40);
           for(int y = 0; y < i.height(); y++) {

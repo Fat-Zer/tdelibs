@@ -975,13 +975,13 @@ void TDEHTMLView::viewportMousePressEvent( TQMouseEvent *_mouse )
             pixmap.fill( TQColor( tqRgba( 127, 127, 127, 127 ) ) );
 
             TQPainter p( &pixmap );
-            icon = TDEGlobal::iconLoader()->loadIcon( "1uparrow", KIcon::Small );
+            icon = TDEGlobal::iconLoader()->loadIcon( "1uparrow", TDEIcon::Small );
             p.drawPixmap( 16, 0, icon );
-            icon = TDEGlobal::iconLoader()->loadIcon( "1leftarrow", KIcon::Small );
+            icon = TDEGlobal::iconLoader()->loadIcon( "1leftarrow", TDEIcon::Small );
             p.drawPixmap( 0, 16, icon );
-            icon = TDEGlobal::iconLoader()->loadIcon( "1downarrow", KIcon::Small );
+            icon = TDEGlobal::iconLoader()->loadIcon( "1downarrow", TDEIcon::Small );
             p.drawPixmap( 16, 32,icon  );
-            icon = TDEGlobal::iconLoader()->loadIcon( "1rightarrow", KIcon::Small );
+            icon = TDEGlobal::iconLoader()->loadIcon( "1rightarrow", TDEIcon::Small );
             p.drawPixmap( 32, 16, icon );
             p.drawEllipse( 23, 23, 2, 2 );
 
@@ -1269,7 +1269,7 @@ void TDEHTMLView::viewportMouseMoveEvent( TQMouseEvent * _mouse )
 
     if ( ( mailtoCursor || newWindowCursor ) && isVisible() && hasFocus() ) {
 #ifdef Q_WS_X11
-        TQPixmap icon_pixmap = TDEGlobal::iconLoader()->loadIcon( mailtoCursor ? "mail_generic" : "window_new", KIcon::Small, 0, KIcon::DefaultState, 0, true );
+        TQPixmap icon_pixmap = TDEGlobal::iconLoader()->loadIcon( mailtoCursor ? "mail_generic" : "window_new", TDEIcon::Small, 0, TDEIcon::DefaultState, 0, true );
 
         if (d->cursor_icon_widget) {
             const TQPixmap *pm = d->cursor_icon_widget->backgroundPixmap();

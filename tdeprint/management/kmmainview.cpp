@@ -174,7 +174,7 @@ void KMMainView::saveSettings()
 
 void KMMainView::initActions()
 {
-	KIconSelectAction	*vact = new KIconSelectAction(i18n("&View"),0,m_actions,"view_change");
+	TDEIconSelectAction	*vact = new TDEIconSelectAction(i18n("&View"),0,m_actions,"view_change");
 	TQStringList	iconlst;
 	iconlst << "view_icon" << "view_detailed" << "view_tree";
 	vact->setItems(TQStringList::split(',',i18n("&Icons,&List,&Tree"),false), iconlst);
@@ -201,7 +201,7 @@ void KMMainView::initActions()
 	new TDEAction(i18n("Configure &Manager..."),"tdeprint_configmgr",0,TQT_TQOBJECT(this),TQT_SLOT(slotManagerConfigure()),m_actions,"manager_configure");
 	new TDEAction(i18n("Initialize Manager/&View"),"reload",0,TQT_TQOBJECT(this),TQT_SLOT(slotInit()),m_actions,"view_refresh");
 
-	KIconSelectAction	*dact = new KIconSelectAction(i18n("&Orientation"),0,m_actions,"orientation_change");
+	TDEIconSelectAction	*dact = new TDEIconSelectAction(i18n("&Orientation"),0,m_actions,"orientation_change");
 	iconlst.clear();
 	iconlst << "view_top_bottom" << "view_left_right";
 	dact->setItems(TQStringList::split(',',i18n("&Vertical,&Horizontal"),false), iconlst);
