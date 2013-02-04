@@ -423,7 +423,7 @@ void KThemeBase::readConfig( TQt::GUIStyle /*style*/ )
     TQSettings config;
     if (configDirName.isEmpty() || configDirName == ".")
     {
-    	KStyleDirs::dirs()->addToSearch( "themerc", config );
+    	TDEStyleDirs::dirs()->addToSearch( "themerc", config );
     }
     else config.insertSearchPath( TQSettings::Unix, configDirName );
 
@@ -525,7 +525,7 @@ void KThemeBase::readConfig( TQt::GUIStyle /*style*/ )
 }
 
 KThemeBase::KThemeBase( const TQString& dir, const TQString & configFile )
-        : KStyle( FilledFrameWorkaround ), configFileName( configFile )
+        : TDEStyle( FilledFrameWorkaround ), configFileName( configFile )
 {
     d = new KThemeBasePrivate;
     if ( configFileName.isEmpty() )
@@ -648,7 +648,7 @@ KThemeBase::~KThemeBase()
         if ( grHighColors[ i ] )
             delete( grHighColors[ i ] );
     }
-    KStyleDirs::release();
+    TDEStyleDirs::release();
     delete cache;
     delete d;
 }
@@ -656,7 +656,7 @@ KThemeBase::~KThemeBase()
 TQImage* KThemeBase::loadImage( const TQString &name )
 {
     TQImage * image = new TQImage;
-    TQString path = KStyleDirs::dirs()->findResource( "themepixmap",name );
+    TQString path = TDEStyleDirs::dirs()->findResource( "themepixmap",name );
     image->load( path );
     if ( !image->isNull() )
         return ( image );
@@ -668,7 +668,7 @@ TQImage* KThemeBase::loadImage( const TQString &name )
 KThemePixmap* KThemeBase::loadPixmap( const TQString &name )
 {
     KThemePixmap * pixmap = new KThemePixmap( false );
-    TQString path = KStyleDirs::dirs()->findResource( "themepixmap", name );
+    TQString path = TDEStyleDirs::dirs()->findResource( "themepixmap", name );
     pixmap->load( path );
     if ( !pixmap->isNull() )
         return pixmap;

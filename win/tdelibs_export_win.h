@@ -114,7 +114,7 @@
 # define TDESU_EXPORT KDE_IMPORT
 #endif
 
-// all KStyle libs
+// all TDEStyle libs
 #ifdef MAKE_KSTYLE_LIB
 # define KSTYLE_EXPORT KDE_EXPORT
 #else

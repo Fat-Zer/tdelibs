@@ -1,7 +1,7 @@
 /*
  * $Id$
  * 
- * KStyle
+ * TDEStyle
  * Copyright (C) 2001-2002 Karol Szwed <gallium@kde.org>
  * 
  * TQWindowsStyle CC_ListView and style images were kindly donated by TrollTech,
@@ -38,11 +38,11 @@
 
 class KPixmap;
 
-struct KStylePrivate;
+struct TDEStylePrivate;
 /** 
  * Simplifies and extends the TQStyle API to make style coding easier.
  *  
- * The KStyle class provides a simple internal menu transparency engine
+ * The TDEStyle class provides a simple internal menu transparency engine
  * which attempts to use XRender for accelerated blending where requested,
  * or falls back to fast internal software tinting/blending routines.
  * It also simplifies more complex portions of the TQStyle API, such as
@@ -54,7 +54,7 @@ struct KStylePrivate;
  * @author Karol Szwed (gallium@kde.org)
  * @version $Id$
  */
-class TDEFX_EXPORT KStyle: public TQCommonStyle
+class TDEFX_EXPORT TDEStyle: public TQCommonStyle
 {
 	Q_OBJECT
 	
@@ -62,12 +62,12 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 	public:
 
 		/**
-		 * KStyle Flags:
+		 * TDEStyle Flags:
 		 * 
 		 * @li Default - Default style setting, where menu transparency
 		 * and the FilledFrameWorkaround are disabled.
 		 * 
-		 * @li AllowMenuTransparency - Enable this flag to use KStyle's 
+		 * @li AllowMenuTransparency - Enable this flag to use TDEStyle's 
 		 * internal menu transparency engine.
 		 * 
 		 * @li FilledFrameWorkaround - Enable this flag to facilitate 
@@ -77,15 +77,15 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 		 * this workaround to enable painting of gradients in menubars and 
 		 * toolbars.
 		 */
-		typedef uint KStyleFlags;
-		enum KStyleOption {
+		typedef uint TDEStyleFlags;
+		enum TDEStyleOption {
 			Default 	      =		0x00000000, //!< All options disabled
 			AllowMenuTransparency =		0x00000001, //!< Internal transparency enabled
 			FilledFrameWorkaround = 	0x00000002  //!< Filled frames enabled
 		};
 
 		/**
-		 * KStyle ScrollBarType:
+		 * TDEStyle ScrollBarType:
 		 *
 		 * Allows the style writer to easily select what type of scrollbar
 		 * should be used without having to duplicate large amounts of source
@@ -105,9 +105,9 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 		 * @li NextStyleScrollBar - Similar to the PlatinumStyle scroll bar, but
 		 * with the buttons grouped on the opposite end of the scrollbar.
 		 *
-		 * @see KStyle::KStyle()
+		 * @see TDEStyle::TDEStyle()
 		 */
-		enum KStyleScrollBarType {
+		enum TDEStyleScrollBarType {
 			WindowsStyleScrollBar  = 	0x00000000, //!< two button, windows style
 			PlatinumStyleScrollBar = 	0x00000001, //!< two button, platinum style
 			ThreeButtonScrollBar   = 	0x00000002, //!< three buttons, %KDE style
@@ -115,31 +115,31 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 		};
 
 		/** 
-		 * Constructs a KStyle object.
+		 * Constructs a TDEStyle object.
 		 *
-		 * Select the appropriate KStyle flags and scrollbar type
+		 * Select the appropriate TDEStyle flags and scrollbar type
 		 * for your style. The user's style preferences selected in KControl
 		 * are read by using TQSettings and are automatically applied to the style.
-		 * As a fallback, KStyle paints progressbars and tabbars. It inherits from
+		 * As a fallback, TDEStyle paints progressbars and tabbars. It inherits from
 		 * TQCommonStyle for speed, so don't expect much to be implemented. 
 		 *
 		 * It is advisable to use a currently implemented style such as the HighColor
-		 * style as a foundation for any new KStyle, so the limited number of
+		 * style as a foundation for any new TDEStyle, so the limited number of
 		 * drawing fallbacks should not prove problematic.
 		 *
 		 * @param flags the style to be applied
 		 * @param sbtype the scroll bar type
-		 * @see KStyle::KStyleFlags
-		 * @see KStyle::KStyleScrollBarType
+		 * @see TDEStyle::TDEStyleFlags
+		 * @see TDEStyle::TDEStyleScrollBarType
 		 * @author Karol Szwed (gallium@kde.org)
 		 */
-		KStyle( KStyleFlags flags = KStyle::Default, 
-			KStyleScrollBarType sbtype = KStyle::WindowsStyleScrollBar );
+		TDEStyle( TDEStyleFlags flags = TDEStyle::Default, 
+			TDEStyleScrollBarType sbtype = TDEStyle::WindowsStyleScrollBar );
 
 		/** 
-		 * Destructs the KStyle object.
+		 * Destructs the TDEStyle object.
 		 */
-		~KStyle();
+		~TDEStyle();
 
 		/**
 		 * Returns the default widget style depending on color depth.
@@ -152,19 +152,19 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 		 * This function is only provided for convenience. It allows
 		 * you to make a late decision about what scrollbar type to use for the
 		 * style after performing some processing in your style's constructor.
-		 * In most situations however, setting the scrollbar type via the KStyle
+		 * In most situations however, setting the scrollbar type via the TDEStyle
 		 * constructor should suffice.
 		 * @param sbtype the scroll bar type
-		 * @see KStyle::KStyleScrollBarType
+		 * @see TDEStyle::TDEStyleScrollBarType
 		 */
-		void setScrollBarType(KStyleScrollBarType sbtype);
+		void setScrollBarType(TDEStyleScrollBarType sbtype);
 
 		/**
-		 * Returns the KStyle flags used to initialize the style.
+		 * Returns the TDEStyle flags used to initialize the style.
 		 *
 		 * This is used solely for the kcmstyle module, and hence is internal.
 		 */
-		KStyleFlags styleFlags() const;
+		TDEStyleFlags styleFlags() const;
 
 		// ---------------------------------------------------------------------------
 
@@ -173,7 +173,7 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 		 * menu and the background to create different menu transparency effects.
 		 * For example, you can fill the pixmap "pix" with a gradient based on the
 		 * popup's colorGroup, a texture, or some other fancy painting routine.
-		 * KStyle will then internally blend this pixmap with a snapshot of the
+		 * TDEStyle will then internally blend this pixmap with a snapshot of the
 		 * background behind the popupMenu to create the illusion of transparency.
 		 * 
 		 * This virtual is never called if XRender/Software blending is disabled by
@@ -183,20 +183,20 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 						    const TQPopupMenu* popup ) const;
 
 		/**
-		 * KStyle Primitive Elements:
+		 * TDEStyle Primitive Elements:
 		 *
-		 * The KStyle class extends the Qt's Style API by providing certain 
-		 * simplifications for parts of TQStyle. To do this, the KStylePrimitive
+		 * The TDEStyle class extends the Qt's Style API by providing certain 
+		 * simplifications for parts of TQStyle. To do this, the TDEStylePrimitive
 		 * elements were defined, which are very similar to Qt's PrimitiveElement.
 		 * 
 		 * The first three Handle primitives simplify and extend PE_DockWindowHandle, 
-		 * so do not reimplement PE_DockWindowHandle if you want the KStyle handle 
+		 * so do not reimplement PE_DockWindowHandle if you want the TDEStyle handle 
 		 * simplifications to be operable. Similarly do not reimplement CC_Slider,
-		 * SC_SliderGroove and SC_SliderHandle when using the KStyle slider
-		 * primitives. KStyle automatically double-buffers slider painting
-		 * when they are drawn via these KStyle primitives to avoid flicker.
+		 * SC_SliderGroove and SC_SliderHandle when using the TDEStyle slider
+		 * primitives. TDEStyle automatically double-buffers slider painting
+		 * when they are drawn via these TDEStyle primitives to avoid flicker.
 		 *
-		 * @li KPE_DockWindowHandle - This primitive is already implemented in KStyle,
+		 * @li KPE_DockWindowHandle - This primitive is already implemented in TDEStyle,
 		 * and paints a bevelled rect with the DockWindow caption text. Re-implement
 		 * this primitive to perform other more fancy effects when drawing the dock window
 		 * handle.
@@ -218,14 +218,14 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 		 * paint the slider handle. The default implementation paints a filled rect of
 		 * arbitrary color.
 		 *
-		 * @li KPE_ListViewExpander - This primitive is already implemented in KStyle. It
+		 * @li KPE_ListViewExpander - This primitive is already implemented in TDEStyle. It
 		 * is used to draw the Expand/Collapse element in QListViews. To indicate the 
 		 * expanded state, the style flags are set to Style_Off, while Style_On implies collapsed.
 		 *
-		 * @li KPE_ListViewBranch - This primitive is already implemented in KStyle. It is
+		 * @li KPE_ListViewBranch - This primitive is already implemented in TDEStyle. It is
 		 * used to draw the ListView branches where necessary.
 		 */
-		enum KStylePrimitive {
+		enum TDEStylePrimitive {
 			KPE_DockWindowHandle,
 			KPE_ToolBarHandle,
 			KPE_GeneralHandle,
@@ -239,7 +239,7 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 
 		// Old API
 		// DEPRECATED
-		virtual void drawKStylePrimitive( KStylePrimitive kpe,
+		virtual void drawTDEStylePrimitive( TDEStylePrimitive kpe,
 					TQPainter* p,
 					const TQWidget* widget,
 					const TQRect &r,
@@ -250,13 +250,13 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 		/**
 		 * This function is identical to Qt's TQStyle::tqdrawPrimitive(), except that 
 		 * it adds one further parameter, 'widget', that can be used to determine 
-		 * the widget state of the KStylePrimitive in question.
+		 * the widget state of the TDEStylePrimitive in question.
 		 *
-		 * @see KStyle::KStylePrimitive
+		 * @see TDEStyle::TDEStylePrimitive
 		 * @see TQStyle::tqdrawPrimitive
 		 * @see TQStyle::drawComplexControl
 		 */
-		virtual void drawKStylePrimitive( KStylePrimitive kpe,
+		virtual void drawTDEStylePrimitive( TDEStylePrimitive kpe,
 					TQPainter* p,
 					const TQStyleControlElementData &ceData,
 					ControlElementFlags elementFlags,
@@ -267,7 +267,7 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 					const TQWidget* widget = 0 ) const;
 
 
-		enum KStylePixelMetric {
+		enum TDEStylePixelMetric {
 			KPM_MenuItemSeparatorHeight		= 0x00000001,
 			KPM_MenuItemHMargin			= 0x00000002,
 			KPM_MenuItemVMargin			= 0x00000004,
@@ -279,7 +279,7 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 			KPM_ListViewBranchThickness		= 0x00000100
 		};
 
-		int kPixelMetric( KStylePixelMetric kpm, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQWidget* widget = 0 ) const;
+		int kPixelMetric( TDEStylePixelMetric kpm, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQWidget* widget = 0 ) const;
 
 		// ---------------------------------------------------------------------------
 
@@ -368,13 +368,13 @@ class TDEFX_EXPORT KStyle: public TQCommonStyle
 
 	private:
 		// Disable copy constructor and = operator
-		KStyle( const KStyle & );
-		KStyle& operator=( const KStyle & );
+		TDEStyle( const TDEStyle & );
+		TDEStyle& operator=( const TDEStyle & );
 
 	protected:
 		virtual void virtual_hook( int id, void* data );
 	private:
-		KStylePrivate *d;
+		TDEStylePrivate *d;
 };
 
 

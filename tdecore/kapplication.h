@@ -45,7 +45,7 @@ struct _IceConn;
 class TQPopupMenu;
 class TQStrList;
 class KSessionManaged;
-class KStyle;
+class TDEStyle;
 class KURL;
 
 #define kapp TDEApplication::kApplication()
@@ -872,7 +872,7 @@ public:
   /**
    * @deprecated
    */
-  KDE_DEPRECATED KStyle* kstyle() const { return 0; }
+  KDE_DEPRECATED TDEStyle* kstyle() const { return 0; }
 
   /**
    * Builds a caption that contains the application name along with the

@@ -6,7 +6,7 @@ KDialogBase, KAboutDialog (based on work by Mirko), KHelpMenu, KTextBrowser
 and various adjustments here and there.
 
 Daniel M. Duley <mosfet@kde.org>
-Maintainer of KPixmapEffect, KStyle, KThemeStyle, and KThemeBase - as well as 
+Maintainer of KPixmapEffect, TDEStyle, KThemeStyle, and KThemeBase - as well as 
 general misc coding here and there. 
 
 Matthias Kalle Dalheimer <kalle@kde.org>:

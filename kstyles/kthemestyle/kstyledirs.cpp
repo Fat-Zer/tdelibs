@@ -25,19 +25,19 @@
 #include <kstandarddirs.h>
 #include "kstyledirs.h"
 
-KStyleDirs* KStyleDirs::instance = 0;
+TDEStyleDirs* TDEStyleDirs::instance = 0;
 
-KStyleDirs::KStyleDirs()
+TDEStyleDirs::TDEStyleDirs()
 {
     addResourceType( "themepixmap", TDEStandardDirs::kde_default( "data" ) + "kstyle/pixmaps/" );
     addResourceType( "themerc", TDEStandardDirs::kde_default( "data" ) + "kstyle/themes/" );
 }
 
-KStyleDirs::~KStyleDirs()
+TDEStyleDirs::~TDEStyleDirs()
 {
 }
 
-void KStyleDirs::addToSearch( const char* type, TQSettings& s ) const
+void TDEStyleDirs::addToSearch( const char* type, TQSettings& s ) const
 {
     const TQStringList & dirs = resourceDirs(type);
     for ( int c = dirs.size()-1; c >= 0 ; c-- )

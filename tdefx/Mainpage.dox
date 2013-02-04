@@ -23,7 +23,7 @@
  * architecture extensions that are useful when processing images,
  * such as MMX, SSE, 3DNow! and AltiVec.
  *
- * KStyle is the base class for the %Trinity widget styles. It simplifies
+ * TDEStyle is the base class for the %Trinity widget styles. It simplifies
  * and extends the QStyle API in order to make style coding easier.
  * It also provides an internal menu transparency and drop shadow
  * engine, which means that all styles inheriting this class will

@@ -37,7 +37,7 @@
 #endif // QT_PLUGIN
 
 
-class Q_EXPORT_STYLE_LIGHT_V3 LightStyleV3 : public KStyle
+class Q_EXPORT_STYLE_LIGHT_V3 LightStyleV3 : public TDEStyle
 {
     Q_OBJECT
     TQStyle *basestyle;

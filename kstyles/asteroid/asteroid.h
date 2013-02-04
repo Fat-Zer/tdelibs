@@ -9,7 +9,7 @@
 
 #include <kstyle.h>
 
-class AsteroidStyle : public KStyle
+class AsteroidStyle : public TDEStyle
 {
 	Q_OBJECT
 	
@@ -34,7 +34,7 @@ public:
 	                           const TQColorGroup &,
 	                           const TQPopupMenu *) const;
 	
-	void drawKStylePrimitive(KStylePrimitive,
+	void drawTDEStylePrimitive(TDEStylePrimitive,
 	                         TQPainter *,
 	                         const TQStyleControlElementData &ceData,
 	                         ControlElementFlags elementFlags,
@@ -98,7 +98,7 @@ public:
 
 	int pixelMetric(PixelMetric, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQWidget * = 0) const;
 
-	int kPixelMetric( KStylePixelMetric kpm, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQWidget* /* widget */) const;
+	int kPixelMetric( TDEStylePixelMetric kpm, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQWidget* /* widget */) const;
 
 	TQRect subRect(SubRect, const TQStyleControlElementData &ceData, const ControlElementFlags elementFlags, const TQWidget *) const;
 

@@ -1,6 +1,6 @@
 /*
  *
- * KStyle
+ * TDEStyle
  * Copyright (C) 2001-2002 Karol Szwed <gallium@kde.org>
  *
  * TQWindowsStyle CC_ListView and style images were kindly donated by TrollTech,
@@ -124,7 +124,7 @@ namespace
 	static bool useDropShadow(TQWidget* w)
 	{
 		return w && w->metaObject() && 
-			w->metaObject()->findProperty("KStyleMenuDropShadow") != -1;
+			w->metaObject()->findProperty("TDEStyleMenuDropShadow") != -1;
 	}
 }
 
@@ -133,7 +133,7 @@ namespace
 class TransparencyHandler : public TQObject
 {
 	public:
-		TransparencyHandler(KStyle* style, TransparencyEngine tEngine,
+		TransparencyHandler(TDEStyle* style, TransparencyEngine tEngine,
 							float menuOpacity, bool useDropShadow);
 		~TransparencyHandler();
 		bool eventFilter(TQObject* object, TQEvent* event);
@@ -154,12 +154,12 @@ class TransparencyHandler : public TQObject
 		bool    dropShadow;
 		float   opacity;
 		TQPixmap pix;
-		KStyle* kstyle;
+		TDEStyle* kstyle;
 		TransparencyEngine te;
 };
 } // namespace
 
-struct KStylePrivate
+struct TDEStylePrivate
 {
 	bool  highcolor                : 1;
 	bool  useFilledFrameWorkaround : 1;
@@ -174,9 +174,9 @@ struct KStylePrivate
 	float menuOpacity;
 
 	TransparencyEngine   transparencyEngine;
-	KStyle::KStyleScrollBarType  scrollbarType;
+	TDEStyle::TDEStyleScrollBarType  scrollbarType;
 	TransparencyHandler* menuHandler;
-	KStyle::KStyleFlags flags;
+	TDEStyle::TDEStyleFlags flags;
 	
 	//For KPE_ListViewBranch
 	TQBitmap *verticalLine;
@@ -186,8 +186,8 @@ struct KStylePrivate
 // -----------------------------------------------------------------------------
 
 
-KStyle::KStyle( KStyleFlags flags, KStyleScrollBarType sbtype )
-	: TQCommonStyle(), d(new KStylePrivate)
+TDEStyle::TDEStyle( TDEStyleFlags flags, TDEStyleScrollBarType sbtype )
+	: TQCommonStyle(), d(new TDEStylePrivate)
 {
 	d->flags = flags;
 	bool useMenuTransparency    = (flags & AllowMenuTransparency);
@@ -197,18 +197,18 @@ KStyle::KStyle( KStyleFlags flags, KStyleScrollBarType sbtype )
 
 	// Read style settings
 	TQSettings settings;
-	d->popupMenuDelay       = settings.readNumEntry ("/KStyle/Settings/PopupMenuDelay", 256);
-	d->sloppySubMenus       = settings.readBoolEntry("/KStyle/Settings/SloppySubMenus", false);
-	d->etchDisabledText     = settings.readBoolEntry("/KStyle/Settings/EtchDisabledText", true);
-	d->menuAltKeyNavigation = settings.readBoolEntry("/KStyle/Settings/MenuAltKeyNavigation", true);
-	d->scrollablePopupmenus = settings.readBoolEntry("/KStyle/Settings/ScrollablePopupMenus", false);
-	d->autoHideAccelerators = settings.readBoolEntry("/KStyle/Settings/AutoHideAccelerators", false);
-	d->menuDropShadow       = settings.readBoolEntry("/KStyle/Settings/MenuDropShadow", false);
-	d->semiTransparentRubberband = settings.readBoolEntry("/KStyle/Settings/SemiTransparentRubberband", false);
+	d->popupMenuDelay       = settings.readNumEntry ("/TDEStyle/Settings/PopupMenuDelay", 256);
+	d->sloppySubMenus       = settings.readBoolEntry("/TDEStyle/Settings/SloppySubMenus", false);
+	d->etchDisabledText     = settings.readBoolEntry("/TDEStyle/Settings/EtchDisabledText", true);
+	d->menuAltKeyNavigation = settings.readBoolEntry("/TDEStyle/Settings/MenuAltKeyNavigation", true);
+	d->scrollablePopupmenus = settings.readBoolEntry("/TDEStyle/Settings/ScrollablePopupMenus", false);
+	d->autoHideAccelerators = settings.readBoolEntry("/TDEStyle/Settings/AutoHideAccelerators", false);
+	d->menuDropShadow       = settings.readBoolEntry("/TDEStyle/Settings/MenuDropShadow", false);
+	d->semiTransparentRubberband = settings.readBoolEntry("/TDEStyle/Settings/SemiTransparentRubberband", false);
 	d->menuHandler = NULL;
 
 	if (useMenuTransparency) {
-		TQString effectEngine = settings.readEntry("/KStyle/Settings/MenuTransparencyEngine", "Disabled");
+		TQString effectEngine = settings.readEntry("/TDEStyle/Settings/MenuTransparencyEngine", "Disabled");
 
 #ifdef HAVE_XRENDER
 		if (effectEngine == "XRender")
@@ -226,7 +226,7 @@ KStyle::KStyle( KStyleFlags flags, KStyleScrollBarType sbtype )
 
 		if (d->transparencyEngine != Disabled) {
 			// Create an instance of the menu transparency handler
-			d->menuOpacity = settings.readDoubleEntry("/KStyle/Settings/MenuOpacity", 0.90);
+			d->menuOpacity = settings.readDoubleEntry("/TDEStyle/Settings/MenuOpacity", 0.90);
 			d->menuHandler = new TransparencyHandler(this, d->transparencyEngine,
 													 d->menuOpacity, d->menuDropShadow);
 		}
@@ -241,7 +241,7 @@ KStyle::KStyle( KStyleFlags flags, KStyleScrollBarType sbtype )
 }
 
 
-KStyle::~KStyle()
+TDEStyle::~TDEStyle()
 {
 	delete d->verticalLine;
 	delete d->horizontalLine;
@@ -253,7 +253,7 @@ KStyle::~KStyle()
 }
 
 
-TQString KStyle::defaultStyle()
+TQString TDEStyle::defaultStyle()
 {
 	if (TQPixmap::defaultDepth() > 8)
 	   return TQString("plastik");
@@ -261,7 +261,7 @@ TQString KStyle::defaultStyle()
 	   return TQString("light, 3rd revision");
 }
 
-void KStyle::polish( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *ptr )
+void TDEStyle::polish( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *ptr )
 {
 	if (ceData.widgetObjectTypes.contains(TQWIDGET_OBJECT_NAME_STRING)) {
 		TQWidget* widget = reinterpret_cast<TQWidget*>(ptr);
@@ -285,7 +285,7 @@ void KStyle::polish( const TQStyleControlElementData &ceData, ControlElementFlag
 }
 
 
-void KStyle::unPolish( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *ptr )
+void TDEStyle::unPolish( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *ptr )
 {
 	if (ceData.widgetObjectTypes.contains(TQWIDGET_OBJECT_NAME_STRING)) {
 		TQWidget* widget = reinterpret_cast<TQWidget*>(ptr);
@@ -304,7 +304,7 @@ void KStyle::unPolish( const TQStyleControlElementData &ceData, ControlElementFl
 
 
 // Style changes (should) always re-polish popups.
-void KStyle::polishPopupMenu( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *ptr )
+void TDEStyle::polishPopupMenu( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *ptr )
 {
     if ( !(ceData.windowState & WState_Polished ) ) {
         widgetActionRequest(ceData, elementFlags, ptr, WAR_SetCheckable);
@@ -324,26 +324,26 @@ void KStyle::polishPopupMenu( const TQStyleControlElementData &ceData, ControlEl
 
 
 // -----------------------------------------------------------------------------
-// KStyle extensions
+// TDEStyle extensions
 // -----------------------------------------------------------------------------
 
-void KStyle::setScrollBarType(KStyleScrollBarType sbtype)
+void TDEStyle::setScrollBarType(TDEStyleScrollBarType sbtype)
 {
 	d->scrollbarType = sbtype;
 }
 
-KStyle::KStyleFlags KStyle::styleFlags() const
+TDEStyle::TDEStyleFlags TDEStyle::styleFlags() const
 {
 	return d->flags;
 }
 
-void KStyle::renderMenuBlendPixmap( KPixmap &pix, const TQColorGroup &cg,
+void TDEStyle::renderMenuBlendPixmap( KPixmap &pix, const TQColorGroup &cg,
 	const TQPopupMenu* /* popup */ ) const
 {
 	pix.fill(cg.button());	// Just tint as the default behavior
 }
 
-void KStyle::drawKStylePrimitive( KStylePrimitive kpe,
+void TDEStyle::drawTDEStylePrimitive( TDEStylePrimitive kpe,
 								  TQPainter* p,
 								  const TQWidget* widget,
 								  const TQRect &r,
@@ -352,10 +352,10 @@ void KStyle::drawKStylePrimitive( KStylePrimitive kpe,
 								  const TQStyleOption &opt ) const
 {
 	TQStyleControlElementData ceData = populateControlElementDataFromWidget(widget, TQStyleOption());
-	drawKStylePrimitive(kpe, p, ceData, getControlElementFlagsForObject(widget, ceData.widgetObjectTypes, TQStyleOption()), r, cg, flags, opt);
+	drawTDEStylePrimitive(kpe, p, ceData, getControlElementFlagsForObject(widget, ceData.widgetObjectTypes, TQStyleOption()), r, cg, flags, opt);
 }
 
-void KStyle::drawKStylePrimitive( KStylePrimitive kpe,
+void TDEStyle::drawTDEStylePrimitive( TDEStylePrimitive kpe,
 								  TQPainter* p,
 								  const TQStyleControlElementData &ceData,
 								  ControlElementFlags elementFlags,
@@ -543,7 +543,7 @@ void KStyle::drawKStylePrimitive( KStylePrimitive kpe,
 }
 
 
-int KStyle::kPixelMetric( KStylePixelMetric kpm, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQWidget* /* widget */) const
+int TDEStyle::kPixelMetric( TDEStylePixelMetric kpm, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQWidget* /* widget */) const
 {
 	int value;
 	switch(kpm)
@@ -571,7 +571,7 @@ int KStyle::kPixelMetric( KStylePixelMetric kpm, const TQStyleControlElementData
 
 // #ifdef USE_QT4 // tdebindings / smoke needs this function declaration available at all times.  Furthermore I don't think it would hurt to have the declaration available at all times...so leave these commented out for now
 
-//void KStyle::drawPrimitive( TQ_ControlElement pe,
+//void TDEStyle::drawPrimitive( TQ_ControlElement pe,
 //							TQPainter* p,
 // 							const TQStyleControlElementData &ceData,
 // 							ControlElementFlags elementFlags,
@@ -591,7 +591,7 @@ int KStyle::kPixelMetric( KStylePixelMetric kpm, const TQStyleControlElementData
 
 // -----------------------------------------------------------------------------
 
-void KStyle::drawPrimitive( TQ_PrimitiveElement pe,
+void TDEStyle::drawPrimitive( TQ_PrimitiveElement pe,
 							TQPainter* p,
 							const TQStyleControlElementData &ceData,
 							ControlElementFlags elementFlags,
@@ -619,16 +619,16 @@ void KStyle::drawPrimitive( TQ_PrimitiveElement pe,
 			(parent->inherits(TQMAINWINDOW_OBJECT_NAME_STRING)) ))	// Collapsed dock
 
 			// Draw a toolbar handle
-			drawKStylePrimitive( KPE_ToolBarHandle, p, ceData, elementFlags, r, cg, flags, opt, widget );
+			drawTDEStylePrimitive( KPE_ToolBarHandle, p, ceData, elementFlags, r, cg, flags, opt, widget );
 
 		else if (ceData.widgetObjectTypes.contains(TQDOCKWINDOWHANDLE_OBJECT_NAME_STRING))
 
 			// Draw a dock window handle
-			drawKStylePrimitive( KPE_DockWindowHandle, p, ceData, elementFlags, r, cg, flags, opt, widget );
+			drawTDEStylePrimitive( KPE_DockWindowHandle, p, ceData, elementFlags, r, cg, flags, opt, widget );
 
 		else
 			// General handle, probably a kicker applet handle.
-			drawKStylePrimitive( KPE_GeneralHandle, p, ceData, elementFlags, r, cg, flags, opt, widget );
+			drawTDEStylePrimitive( KPE_GeneralHandle, p, ceData, elementFlags, r, cg, flags, opt, widget );
 #if TQT_VERSION >= 0x030300
 #ifdef HAVE_XRENDER
 	} else if ( d->semiTransparentRubberband && pe == TQStyle::PE_RubberBand ) {
@@ -686,7 +686,7 @@ void KStyle::drawPrimitive( TQ_PrimitiveElement pe,
 
 
 
-void KStyle::drawControl( TQ_ControlElement element,
+void TDEStyle::drawControl( TQ_ControlElement element,
 						  TQPainter* p,
 						  const TQStyleControlElementData &ceData,
 						  ControlElementFlags elementFlags,
@@ -988,7 +988,7 @@ void KStyle::drawControl( TQ_ControlElement element,
 }
 
 
-TQRect KStyle::subRect(SubRect r, const TQStyleControlElementData &ceData, const ControlElementFlags elementFlags, const TQWidget* widget) const
+TQRect TDEStyle::subRect(SubRect r, const TQStyleControlElementData &ceData, const ControlElementFlags elementFlags, const TQWidget* widget) const
 {
 	switch(r)
 	{
@@ -1010,7 +1010,7 @@ TQRect KStyle::subRect(SubRect r, const TQStyleControlElementData &ceData, const
 }
 
 
-int KStyle::pixelMetric(PixelMetric m, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQWidget* widget) const
+int TDEStyle::pixelMetric(PixelMetric m, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQWidget* widget) const
 {
 	switch(m)
 	{
@@ -1132,7 +1132,7 @@ static TQListViewItem* nextVisibleSibling(TQListViewItem* item)
     return sibling;
 }
 
-void KStyle::drawComplexControl( TQ_ComplexControl control,
+void TDEStyle::drawComplexControl( TQ_ComplexControl control,
 								 TQPainter* p,
 								 const TQStyleControlElementData &ceData,
 								 ControlElementFlags elementFlags,
@@ -1248,7 +1248,7 @@ void KStyle::drawComplexControl( TQ_ComplexControl control,
 
 			// Draw slider groove
 			if ((controls & SC_SliderGroove) && groove.isValid()) {
-				drawKStylePrimitive( KPE_SliderGroove, &p2, ceData, elementFlags, groove, cg, flags, opt, widget );
+				drawTDEStylePrimitive( KPE_SliderGroove, &p2, ceData, elementFlags, groove, cg, flags, opt, widget );
 
 				// Draw the focus rect around the groove
 				if (elementFlags & CEF_HasFocus) {
@@ -1265,7 +1265,7 @@ void KStyle::drawComplexControl( TQ_ComplexControl control,
 			if ((controls & SC_SliderHandle) && handle.isValid()) {
 				if (active == SC_SliderHandle)
 					flags |= Style_Active;
-				drawKStylePrimitive( KPE_SliderHandle, &p2, ceData, elementFlags, handle, cg, flags, opt, widget );
+				drawTDEStylePrimitive( KPE_SliderHandle, &p2, ceData, elementFlags, handle, cg, flags, opt, widget );
 			}
 
 			p2.end();
@@ -1352,8 +1352,8 @@ void KStyle::drawComplexControl( TQ_ComplexControl control,
 							boxrect = TQRect( bx-4, linebot-4, 9, 9 );
 							boxflags = child->isOpen() ? TQStyle::Style_Off : TQStyle::Style_On;
 
-							// KStyle extension: Draw the box and expand/collapse indicator
-							drawKStylePrimitive( KPE_ListViewExpander, p, ceData, elementFlags, boxrect, cg, boxflags, opt, NULL );
+							// TDEStyle extension: Draw the box and expand/collapse indicator
+							drawTDEStylePrimitive( KPE_ListViewExpander, p, ceData, elementFlags, boxrect, cg, boxflags, opt, NULL );
 
 							// dotlinery
 							p->setPen( cg.mid() );
@@ -1406,8 +1406,8 @@ void KStyle::drawComplexControl( TQ_ComplexControl control,
 						branchrect  = TQRect( point, other-(thickness/2), end-point, thickness );
 						branchflags = TQStyle::Style_Horizontal;
 
-						// KStyle extension: Draw the horizontal branch
-						drawKStylePrimitive( KPE_ListViewBranch, p, ceData, elementFlags, branchrect, cg, branchflags, opt, NULL );
+						// TDEStyle extension: Draw the horizontal branch
+						drawTDEStylePrimitive( KPE_ListViewBranch, p, ceData, elementFlags, branchrect, cg, branchflags, opt, NULL );
 
 					} else {
 						// Vertical branch
@@ -1422,8 +1422,8 @@ void KStyle::drawComplexControl( TQ_ComplexControl control,
 						else
 							branchflags = TQStyle::Style_Default;
 
-						// KStyle extension: Draw the vertical branch
-						drawKStylePrimitive( KPE_ListViewBranch, p, ceData, elementFlags, branchrect, cg, branchflags, opt, NULL );
+						// TDEStyle extension: Draw the vertical branch
+						drawTDEStylePrimitive( KPE_ListViewBranch, p, ceData, elementFlags, branchrect, cg, branchflags, opt, NULL );
 					}
 				}
 			}
@@ -1438,7 +1438,7 @@ void KStyle::drawComplexControl( TQ_ComplexControl control,
 }
 
 
-TQStyle::SubControl KStyle::querySubControl( TQ_ComplexControl control,
+TQStyle::SubControl TDEStyle::querySubControl( TQ_ComplexControl control,
 											const TQStyleControlElementData &ceData,
 											ControlElementFlags elementFlags,
 											const TQPoint &pos,
@@ -1456,7 +1456,7 @@ TQStyle::SubControl KStyle::querySubControl( TQ_ComplexControl control,
 }
 
 
-TQRect KStyle::querySubControlMetrics( TQ_ComplexControl control,
+TQRect TDEStyle::querySubControlMetrics( TQ_ComplexControl control,
 									  const TQStyleControlElementData &ceData,
 									  ControlElementFlags elementFlags,
 									  SubControl sc,
@@ -1842,7 +1842,7 @@ static const char* const critical_xpm[]={
 "...........aaaaaaaaaaa..........",
 ".............aaaaaaa............"};
 
-TQPixmap KStyle::stylePixmap( StylePixmap stylepixmap,
+TQPixmap TDEStyle::stylePixmap( StylePixmap stylepixmap,
 						  const TQStyleControlElementData &ceData,
 						  ControlElementFlags elementFlags,
 						  const TQStyleOption& opt,
@@ -1876,7 +1876,7 @@ TQPixmap KStyle::stylePixmap( StylePixmap stylepixmap,
 }
 
 
-int KStyle::styleHint( TQ_StyleHint sh, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags,
+int TDEStyle::styleHint( TQ_StyleHint sh, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags,
 					   const TQStyleOption &opt, TQStyleHintReturn* shr, const TQWidget* w) const
 {
 	switch (sh)
@@ -1935,7 +1935,7 @@ int KStyle::styleHint( TQ_StyleHint sh, const TQStyleControlElementData &ceData,
 }
 
 
-bool KStyle::objectEventHandler( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void* source, TQEvent *event )
+bool TDEStyle::objectEventHandler( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void* source, TQEvent *event )
 {
 	if (ceData.widgetObjectTypes.contains(TQOBJECT_OBJECT_NAME_STRING)) {
 		TQObject* object = reinterpret_cast<TQObject*>(source);
@@ -1990,10 +1990,10 @@ bool KStyle::objectEventHandler( const TQStyleControlElementData &ceData, Contro
 
 
 // -----------------------------------------------------------------------------
-// I N T E R N A L -  KStyle menu transparency handler
+// I N T E R N A L -  TDEStyle menu transparency handler
 // -----------------------------------------------------------------------------
 
-TransparencyHandler::TransparencyHandler( KStyle* style,
+TransparencyHandler::TransparencyHandler( TDEStyle* style,
 	TransparencyEngine tEngine, float menuOpacity, bool useDropShadow )
 	: TQObject()
 {
@@ -2401,7 +2401,7 @@ void TransparencyHandler::XRenderBlendToPixmap(const TQWidget* p)
 }
 #endif
 
-void KStyle::virtual_hook( int, void* )
+void TDEStyle::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
 // HACK for gtk-qt-engine
@@ -2409,7 +2409,7 @@ void KStyle::virtual_hook( int, void* )
 extern "C" KDE_EXPORT
 void kde_kstyle_set_scrollbar_type_windows( void* style )
 {
-    ((KStyle*)style)->setScrollBarType( KStyle::WindowsStyleScrollBar );
+    ((TDEStyle*)style)->setScrollBarType( TDEStyle::WindowsStyleScrollBar );
 }
 
 // vim: set noet ts=4 sw=4:

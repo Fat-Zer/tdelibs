@@ -18,7 +18,7 @@
    Copyright (C) 2000 Daniel M. Duley       <mosfet@kde.org>
              (C) 2000 Dirk Mueller          <mueller@kde.org>
              (C) 2001 Martijn Klingens      <klingens@kde.org>
-   Progressbar code based on KStyle,
+   Progressbar code based on TDEStyle,
    Copyright (C) 2001-2002 Karol Szwed <gallium@kde.org>
 
    This library is free software; you can redistribute it and/or
@@ -54,7 +54,7 @@ class TQSettings;
 class TQTab;
 class TQTimer;
 
-class PlastikStyle : public KStyle
+class PlastikStyle : public TDEStyle
 {
     Q_OBJECT
 
@@ -66,7 +66,7 @@ public:
     void polish(const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *);
     void unPolish(const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *);
 
-    void drawKStylePrimitive(KStylePrimitive kpe,
+    void drawTDEStylePrimitive(TDEStylePrimitive kpe,
                              TQPainter* p,
                              const TQStyleControlElementData &ceData,
                              ControlElementFlags elementFlags,

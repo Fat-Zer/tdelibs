@@ -45,7 +45,7 @@
 // The Light Style, 3rd revision
 
 LightStyleV3::LightStyleV3()
-    : KStyle(AllowMenuTransparency)
+    : TDEStyle(AllowMenuTransparency)
 {
     basestyle = TQStyleFactory::create( "Windows" );
     if ( ! basestyle )
@@ -61,7 +61,7 @@ LightStyleV3::~LightStyleV3()
 
 void LightStyleV3::polishPopupMenu( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *ptr )
 {
-    KStyle::polishPopupMenu(ceData, elementFlags, ptr);
+    TDEStyle::polishPopupMenu(ceData, elementFlags, ptr);
     // empty to satisy pure virtual requirements
 }
 

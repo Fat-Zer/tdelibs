@@ -28,7 +28,7 @@ class TQScrollBar;
 class TQPushButton;
 class TQWidget;
 
-class WebStyle : public KStyle
+class WebStyle : public TDEStyle
 {
   public:
 

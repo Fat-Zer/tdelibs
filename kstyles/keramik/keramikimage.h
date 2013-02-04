@@ -12,7 +12,7 @@
              (C) 2000 Dirk Mueller          <mueller@kde.org>
              (C) 2001 Martijn Klingens      <klingens@kde.org>
 
-    Progressbar code based on KStyle, Copyright (C) 2001-2002 Karol Szwed <gallium@kde.org>
+    Progressbar code based on TDEStyle, Copyright (C) 2001-2002 Karol Szwed <gallium@kde.org>
 
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public

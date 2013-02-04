@@ -31,7 +31,7 @@
 class KLegacyStylePrivate;
 
 
-class Q_EXPORT KLegacyStyle : public KStyle {
+class Q_EXPORT KLegacyStyle : public TDEStyle {
     Q_OBJECT
 public:
     KLegacyStyle(void);

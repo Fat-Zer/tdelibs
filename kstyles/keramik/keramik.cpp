@@ -12,7 +12,7 @@
              (C) 2000 Dirk Mueller          <mueller@kde.org>
              (C) 2001 Martijn Klingens      <klingens@kde.org>
 
-   Progressbar code based on KStyle, Copyright (C) 2001-2002 Karol Szwed <gallium@kde.org>,
+   Progressbar code based on TDEStyle, Copyright (C) 2001-2002 Karol Szwed <gallium@kde.org>,
    Improvements to progressbar animation from Plastik, Copyright (C) 2003 Sandro Giessl <sandro@giessl.com>
 
    This library is free software; you can redistribute it and/or
@@ -237,7 +237,7 @@ TQRect KeramikStyle::subRect(SubRect r, const TQStyleControlElementData &ceData,
 		}
 
 		default:
-			return KStyle::subRect( r, ceData, elementFlags, widget );
+			return TDEStyle::subRect( r, ceData, elementFlags, widget );
 	}
 }
 
@@ -269,14 +269,14 @@ TQPixmap KeramikStyle::stylePixmap(StylePixmap stylepixmap,
 			break;
 	}
 
-	return KStyle::stylePixmap(stylepixmap, ceData, elementFlags, opt, widget);
+	return TDEStyle::stylePixmap(stylepixmap, ceData, elementFlags, opt, widget);
 }
 
 
 
 
 KeramikStyle::KeramikStyle()
-	:KStyle( AllowMenuTransparency | FilledFrameWorkaround, ThreeButtonScrollBar ),
+	:TDEStyle( AllowMenuTransparency | FilledFrameWorkaround, ThreeButtonScrollBar ),
 		maskMode(false), formMode(false),
 		toolbarBlendWidget(0), titleBarMode(None), flatMode(false), customScrollMode(false), kickerMode(false)
 {
@@ -379,7 +379,7 @@ void KeramikStyle::polish(const TQStyleControlElementData &ceData, ControlElemen
 		}
 	}
 
-	KStyle::polish(ceData, elementFlags, ptr);
+	TDEStyle::polish(ceData, elementFlags, ptr);
 }
 
 void KeramikStyle::unPolish(const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *ptr)
@@ -418,7 +418,7 @@ void KeramikStyle::unPolish(const TQStyleControlElementData &ceData, ControlElem
 		}
 	}
 
-	KStyle::unPolish(ceData, elementFlags, ptr);
+	TDEStyle::unPolish(ceData, elementFlags, ptr);
 }
 
 void KeramikStyle::progressBarDestroyed(TQObject* obj)
@@ -985,7 +985,7 @@ void KeramikStyle::drawPrimitive( TQ_PrimitiveElement pe,
 					return;
 				}
 			}
-			KStyle::drawPrimitive(pe, p, ceData, elementFlags, r, cg, flags, opt);
+			TDEStyle::drawPrimitive(pe, p, ceData, elementFlags, r, cg, flags, opt);
 			break;
 		}
 		case PE_WindowFrame:
@@ -1014,7 +1014,7 @@ void KeramikStyle::drawPrimitive( TQ_PrimitiveElement pe,
 				p->drawLine(x+1, y+1, x+1, y2-1);
 				p->setPen(oldPen);
 			} else
-				KStyle::drawPrimitive(pe, p, ceData, elementFlags, r, cg, flags, opt);
+				TDEStyle::drawPrimitive(pe, p, ceData, elementFlags, r, cg, flags, opt);
 
 			break;
 		}
@@ -1215,12 +1215,12 @@ void KeramikStyle::drawPrimitive( TQ_PrimitiveElement pe,
 
 			}
 			else
-				KStyle::drawPrimitive( pe, p, ceData, elementFlags, r, cg, flags, opt );
+				TDEStyle::drawPrimitive( pe, p, ceData, elementFlags, r, cg, flags, opt );
 		}
 	}
 }
 
-void KeramikStyle::drawKStylePrimitive( KStylePrimitive kpe,
+void KeramikStyle::drawTDEStylePrimitive( TDEStylePrimitive kpe,
 										  TQPainter* p,
 										  const TQStyleControlElementData &ceData,
 										  ControlElementFlags elementFlags,
@@ -1350,7 +1350,7 @@ void KeramikStyle::drawKStylePrimitive( KStylePrimitive kpe,
 
 
 		default:
-			KStyle::drawKStylePrimitive( kpe, p, ceData, elementFlags, r, cg, flags, opt, widget);
+			TDEStyle::drawTDEStylePrimitive( kpe, p, ceData, elementFlags, r, cg, flags, opt, widget);
 	}
 }
 
@@ -1539,7 +1539,7 @@ void KeramikStyle::drawControl( TQ_ControlElement element,
 				//	nr.setWidth(r.width()-2); //Account for shadow
 			}
 
-			KStyle::drawControl(element, p, ceData, elementFlags, nr, cg, flags, opt, widget);
+			TDEStyle::drawControl(element, p, ceData, elementFlags, nr, cg, flags, opt, widget);
 			break;
 		}
 
@@ -1602,7 +1602,7 @@ void KeramikStyle::drawControl( TQ_ControlElement element,
 										 tb->orientation() == Qt::Horizontal);
 			}
 			else
-				KStyle::drawControl( (TQ_ControlElement)CE_DockWindowEmptyArea, p, ceData, elementFlags,
+				TDEStyle::drawControl( (TQ_ControlElement)CE_DockWindowEmptyArea, p, ceData, elementFlags,
 					r, cg, flags, opt, widget );
 			break;
 		}
@@ -1958,7 +1958,7 @@ void KeramikStyle::drawControl( TQ_ControlElement element,
 
 
 		default:
-			KStyle::drawControl(element, p, ceData, elementFlags, r, cg, flags, opt, widget);
+			TDEStyle::drawControl(element, p, ceData, elementFlags, r, cg, flags, opt, widget);
 	}
 }
 
@@ -2353,7 +2353,7 @@ void KeramikStyle::drawComplexControl( TQ_ComplexControl control,
 		case CC_TitleBar:
 			titleBarMode = Regular; //Handle buttons on titlebar different from toolbuttons
 		default:
-			KStyle::drawComplexControl( control, p, ceData, elementFlags,
+			TDEStyle::drawComplexControl( control, p, ceData, elementFlags,
 						r, cg, flags, controls, active, opt, widget );
 
 			titleBarMode = None;
@@ -2457,7 +2457,7 @@ int KeramikStyle::pixelMetric(PixelMetric m, const TQStyleControlElementData &ce
 			return 2;
 
 		default:
-			return KStyle::pixelMetric(m, ceData, elementFlags, widget);
+			return TDEStyle::pixelMetric(m, ceData, elementFlags, widget);
 	}
 }
 
@@ -2500,7 +2500,7 @@ TQSize KeramikStyle::sizeFromContents( ContentsType contents,
 			}
 			else
 			{
-				return KStyle::sizeFromContents( contents, ceData, elementFlags, contentSize, opt, widget );
+				return TDEStyle::sizeFromContents( contents, ceData, elementFlags, contentSize, opt, widget );
 			}
 		}
 
@@ -2568,7 +2568,7 @@ TQSize KeramikStyle::sizeFromContents( ContentsType contents,
 		}
 		
 		default:
-			return KStyle::sizeFromContents( contents, ceData, elementFlags, contentSize, opt, widget );
+			return TDEStyle::sizeFromContents( contents, ceData, elementFlags, contentSize, opt, widget );
 	}
 }
 
@@ -2580,7 +2580,7 @@ TQStyle::SubControl KeramikStyle::querySubControl( TQ_ComplexControl control,
                                                   const TQStyleOption& opt,
                                                   const TQWidget* widget ) const
 {
-	SubControl result = KStyle::querySubControl( control, ceData, elementFlags, point, opt, widget );
+	SubControl result = TDEStyle::querySubControl( control, ceData, elementFlags, point, opt, widget );
 	if ( control == CC_ScrollBar && result == SC_ScrollBarAddLine )
 	{
 		TQRect addline = querySubControlMetrics( control, ceData, elementFlags, result, opt, widget );
@@ -2771,7 +2771,7 @@ TQRect KeramikStyle::querySubControlMetrics( TQ_ComplexControl control,
 		}
 		default: break;
 	}
-	return KStyle::querySubControlMetrics( control, ceData, elementFlags, subcontrol, opt, widget );
+	return TDEStyle::querySubControlMetrics( control, ceData, elementFlags, subcontrol, opt, widget );
 }
 
 
@@ -2791,7 +2791,7 @@ TQRect KeramikStyle::querySubControlMetrics( TQ_ComplexControl control,
 
 bool KeramikStyle::objectEventHandler( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void* source, TQEvent *event )
 {
-	if (KStyle::objectEventHandler( ceData, elementFlags, source, event ))
+	if (TDEStyle::objectEventHandler( ceData, elementFlags, source, event ))
 		return true;
 
 	if (ceData.widgetObjectTypes.contains(TQOBJECT_OBJECT_NAME_STRING)) {
@@ -2993,7 +2993,7 @@ int KeramikStyle::styleHint(StyleHint sh, const TQStyleControlElementData &ceDat
 			ret = 1;
 			break;
 		default:
-			ret = KStyle::styleHint(sh, ceData, elementFlags, opt, returnData, w);
+			ret = TDEStyle::styleHint(sh, ceData, elementFlags, opt, returnData, w);
 			break;
 	}
 

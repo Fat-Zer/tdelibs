@@ -2,13 +2,13 @@
 #include <klocale.h>
 
 extern "C" {
-    KStyle* allocate();
+    TDEStyle* allocate();
     int minor_version();
     int major_version();
     const char *description();
 }
 
-KStyle* allocate()
+TDEStyle* allocate()
 {
     return(new KLegacyStyle());
 }

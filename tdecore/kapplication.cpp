@@ -2277,7 +2277,7 @@ void TDEApplication::applyGUIStyle()
     if ( !useStyles ) return;
 
     TDEConfigGroup pConfig (TDEGlobal::config(), "General");
-    TQString defaultStyle = KStyle::defaultStyle();
+    TQString defaultStyle = TDEStyle::defaultStyle();
     TQString styleStr = pConfig.readEntry("widgetStyle", defaultStyle);
 
     if (d->overrideStyle.isEmpty()) {

@@ -116,7 +116,7 @@ public:
                                      const TQStyleOption& = TQStyleOption::Default,
                                      const TQWidget* widget = 0 ) const;
 
-    virtual void drawKStylePrimitive( KStylePrimitive kpe,
+    virtual void drawTDEStylePrimitive( TDEStylePrimitive kpe,
                                       TQPainter* p,
                                       const TQStyleControlElementData &ceData,
                                       ControlElementFlags elementFlags,

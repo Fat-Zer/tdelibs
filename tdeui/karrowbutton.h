@@ -30,7 +30,7 @@ class KArrowButtonPrivate;
  * Draws a button which shows an arrow pointing into a certain direction. The
  * arrow's alignment on the button depends on the direction it's pointing to,
  * e.g. a left arrow is aligned at the left border, a upwards arrow at the top
- * border. This class honors the currently configured KStyle when drawing
+ * border. This class honors the currently configured TDEStyle when drawing
  * the arrow.
  *
  * @author Frerich Raabe

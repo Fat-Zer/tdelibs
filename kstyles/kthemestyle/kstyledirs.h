@@ -39,13 +39,13 @@
 * It add share/apps/kstyle/themes as "themerc",
 *    share/apps/kstyle/pixmaps "themepixmap"
 */
-class KStyleDirs: public TDEStandardDirs
+class TDEStyleDirs: public TDEStandardDirs
 {
 public:
-    static KStyleDirs* dirs()
+    static TDEStyleDirs* dirs()
     {
         if ( !instance)
-            instance = new KStyleDirs;
+            instance = new TDEStyleDirs;
         return instance;
     }
 
@@ -60,7 +60,7 @@ public:
 
     For example, when one does the following:
     TQSettings settings;
-    KStyleDirs dirs;
+    TDEStyleDirs dirs;
     dirs.addToSearch("config",settings);
 
     The one can do settings.readEntry("kstyle/KDE/WidgetStyle") to access a settings in kstylerc.
@@ -68,15 +68,15 @@ public:
     void addToSearch( const char* type, TQSettings& q) const; //Better name?
 
 protected:
-    static KStyleDirs* instance;
+    static TDEStyleDirs* instance;
     /**
     Creates an instance of the class, and calculates the path information.
     */
-    KStyleDirs();
-    KStyleDirs(const KStyleDirs&);
-    KStyleDirs& operator= (const KStyleDirs&);
+    TDEStyleDirs();
+    TDEStyleDirs(const TDEStyleDirs&);
+    TDEStyleDirs& operator= (const TDEStyleDirs&);
 
-    virtual ~KStyleDirs();
+    virtual ~TDEStyleDirs();
 };
 
 #endif
