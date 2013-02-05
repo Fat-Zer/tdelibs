@@ -135,7 +135,7 @@ public:
 private:
     uint myWeight;
     KCompTreeNodeList	myChildren;
-    static KZoneAllocator alloc;
+    static TDEZoneAllocator alloc;
 };
 
 

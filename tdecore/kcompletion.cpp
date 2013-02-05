@@ -881,7 +881,7 @@ KCompTreeNode *KCompTreeNodeList::at(uint index) const
     return cur;
 }
 
-KZoneAllocator KCompTreeNode::alloc(8192);
+TDEZoneAllocator KCompTreeNode::alloc(8192);
 
 void KCompletion::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }

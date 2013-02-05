@@ -29,7 +29,7 @@
 #include <tqvaluelist.h>
 #include "tdelibs_export.h"
 
-class KZoneAllocatorPrivate;
+class TDEZoneAllocatorPrivate;
 
 
 /**
@@ -43,19 +43,19 @@ class KZoneAllocatorPrivate;
  * memory though.
  * @author Waldo Bastian <bastian@kde.org>, Michael Matz <matz@kde.org>
  */
-class TDECORE_EXPORT KZoneAllocator
+class TDECORE_EXPORT TDEZoneAllocator
 {
 public:
     /**
-     * Creates a KZoneAllocator object.
+     * Creates a TDEZoneAllocator object.
      * @param _blockSize Size in bytes of the blocks requested from malloc.
      */
-    KZoneAllocator(unsigned long _blockSize = 8*1024);
+    TDEZoneAllocator(unsigned long _blockSize = 8*1024);
 
     /**
      * Destructs the ZoneAllocator and free all memory allocated by it.
      */
-    ~KZoneAllocator();
+    ~TDEZoneAllocator();
 
     /**
      * Allocates a memory block.
@@ -78,7 +78,7 @@ public:
      * more time then the normal calls, and that after this list is built, i.e.
      * generally if deallocate() is used at all, also allocate() is a
      * little bit slower.  This means, that if you want to squeeze out the last
-     * bit performance you would want to use KZoneAllocator as an obstack, i.e.
+     * bit performance you would want to use TDEZoneAllocator as an obstack, i.e.
      * just use the functions allocate() and free_since().  All the
      * remaining memory is returned to the system if the zone allocator
      * is destroyed.
@@ -93,7 +93,7 @@ public:
      *
      * The intended use is something along the lines of:
      * \code
-     * KZoneAllocator alloc(8192);
+     * TDEZoneAllocator alloc(8192);
      * void *remember_me = alloc.allocate(0);
      * for (int i = 0; i < 1000; i++)
      *   do_something_with (alloc.allocate(12));
@@ -134,7 +134,7 @@ protected:
     /** Flag the hashes as in need of reorganization. @internal */
     bool hashDirty;
 private:
-    KZoneAllocatorPrivate *d;
+    TDEZoneAllocatorPrivate *d;
 };
 
 #endif
