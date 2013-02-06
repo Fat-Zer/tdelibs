@@ -815,7 +815,7 @@ const char * const packages[] = {
 "knetload",
 "knetload/Linux Statistics",
 "knetwalk",
-"knetwortdeconf",
+"knetworkconf",
 "knetworkmanager",
 "knetworkmanager/802.1x",
 "knetworkmanager/cellular",
