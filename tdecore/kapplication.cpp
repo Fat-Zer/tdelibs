@@ -1646,10 +1646,10 @@ void TDEApplication::parseCommandLine( )
     if (!nocrashhandler && args->isSet("crashhandler"))
     {
         // set default crash handler / set emergency save function to nothing
-        KCrash::setCrashHandler(KCrash::defaultCrashHandler);
-        KCrash::setEmergencySaveFunction(NULL);
+        TDECrash::setCrashHandler(TDECrash::defaultCrashHandler);
+        TDECrash::setEmergencySaveFunction(NULL);
 
-        KCrash::setApplicationName(TQString(args->appName()));
+        TDECrash::setApplicationName(TQString(args->appName()));
     }
 
 #ifdef Q_WS_X11

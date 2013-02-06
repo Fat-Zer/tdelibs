@@ -21,7 +21,7 @@ v1.0:
       <IncludeRules context="oneliners" />
     </context>
     <context name="oneliners" attribute="Normal" lineEndContext="#pop">
-      <StringDetect attribute="Crash" context="#stay" String="[KCrash Handler]" />
+      <StringDetect attribute="Crash" context="#stay" String="[TDECrash Handler]" />
       <StringDetect String="Thread" firstNonSpace="true" context="thread" />
       <StringDetect String="[Current thread" firstNonSpace="true" context="thread" />
     </context>

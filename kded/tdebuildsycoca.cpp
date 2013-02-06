@@ -759,9 +759,9 @@ extern "C" KDE_EXPORT int kdemain(int argc, char **argv)
    }
 #endif
 
-   KCrash::setCrashHandler(KCrash::defaultCrashHandler);
-   KCrash::setEmergencySaveFunction(crashHandler);
-   KCrash::setApplicationName(TQString(appName));
+   TDECrash::setCrashHandler(TDECrash::defaultCrashHandler);
+   TDECrash::setEmergencySaveFunction(crashHandler);
+   TDECrash::setApplicationName(TQString(appName));
 
    // this program is in tdelibs so it uses tdelibs as catalog
    TDELocale::setMainCatalogue("tdelibs");

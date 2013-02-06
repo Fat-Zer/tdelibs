@@ -105,7 +105,7 @@ extern "C" KDE_EXPORT int kdemain( int argc, char**argv )
    launcher->dcopClient()->setDefaultObject( name );
    launcher->dcopClient()->setDaemonMode( true );
 
-   KCrash::setEmergencySaveFunction(sig_handler);
+   TDECrash::setEmergencySaveFunction(sig_handler);
    signal( SIGHUP, sig_handler);
    signal( SIGPIPE, SIG_IGN);
    signal( SIGTERM, sig_handler);

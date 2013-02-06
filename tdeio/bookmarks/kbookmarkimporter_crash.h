@@ -34,12 +34,12 @@
  * A class for importing all crash sessions as bookmarks
  * @deprecated
  */
-class TDEIO_EXPORT_DEPRECATED KCrashBookmarkImporter : public TQObject
+class TDEIO_EXPORT_DEPRECATED TDECrashBookmarkImporter : public TQObject
 {
     Q_OBJECT
 public:
-    KCrashBookmarkImporter( const TQString & fileName ) : m_fileName(fileName) {}
-    ~KCrashBookmarkImporter() {}
+    TDECrashBookmarkImporter( const TQString & fileName ) : m_fileName(fileName) {}
+    ~TDECrashBookmarkImporter() {}
     void parseCrashBookmarks( bool del = true );
     static TQString crashBookmarksDir( );
     static TQStringList getCrashLogs(); // EMPTY!
@@ -57,10 +57,10 @@ protected:
  * A class for importing all crash sessions as bookmarks
  * @since 3.2
  */
-class TDEIO_EXPORT KCrashBookmarkImporterImpl : public KBookmarkImporterBase
+class TDEIO_EXPORT TDECrashBookmarkImporterImpl : public KBookmarkImporterBase
 {
 public:
-    KCrashBookmarkImporterImpl() : m_shouldDelete(false) { }
+    TDECrashBookmarkImporterImpl() : m_shouldDelete(false) { }
     void setShouldDelete(bool);
     virtual void parse();
     virtual TQString findDefaultLocation(bool forSaving = false) const;
@@ -68,7 +68,7 @@ public:
 private:
     bool m_shouldDelete;
     TQMap<TQString, TQString> parseCrashLog_noemit( const TQString & filename, bool del );
-    class KCrashBookmarkImporterImplPrivate *d;
+    class TDECrashBookmarkImporterImplPrivate *d;
 };
 
 #endif

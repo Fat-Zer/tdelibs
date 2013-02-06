@@ -170,7 +170,7 @@ SlaveBase::SlaveBase( const TQCString &protocol,
 #ifdef Q_OS_UNIX
     if (!getenv("TDE_DEBUG"))
     {
-        KCrash::setCrashHandler( sigsegv_handler );
+        TDECrash::setCrashHandler( sigsegv_handler );
         signal(SIGILL,&sigsegv_handler);
         signal(SIGTRAP,&sigsegv_handler);
         signal(SIGABRT,&sigsegv_handler);

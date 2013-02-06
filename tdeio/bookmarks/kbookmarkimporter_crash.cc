@@ -40,12 +40,12 @@
 typedef TQMap<TQString, TQString> ViewMap;
 
 // KDE 4.0: remove this BC keeping stub
-void KCrashBookmarkImporter::parseCrashLog( TQString /*filename*/, bool /*del*/ ) 
+void TDECrashBookmarkImporter::parseCrashLog( TQString /*filename*/, bool /*del*/ ) 
 {
     ;
 }
 
-ViewMap KCrashBookmarkImporterImpl::parseCrashLog_noemit( const TQString & filename, bool del ) 
+ViewMap TDECrashBookmarkImporterImpl::parseCrashLog_noemit( const TQString & filename, bool del ) 
 {
     static const int g_lineLimit = 16*1024;
 
@@ -88,12 +88,12 @@ ViewMap KCrashBookmarkImporterImpl::parseCrashLog_noemit( const TQString & filen
     return views;
 }
 
-TQStringList KCrashBookmarkImporter::getCrashLogs() 
+TQStringList TDECrashBookmarkImporter::getCrashLogs() 
 {
-    return KCrashBookmarkImporterImpl::getCrashLogs();
+    return TDECrashBookmarkImporterImpl::getCrashLogs();
 }
 
-TQStringList KCrashBookmarkImporterImpl::getCrashLogs() 
+TQStringList TDECrashBookmarkImporterImpl::getCrashLogs() 
 {
     TQMap<TQString, bool> activeLogs;
 
@@ -127,7 +127,7 @@ TQStringList KCrashBookmarkImporterImpl::getCrashLogs()
         activeLogs[ret] = true;
     }
 
-    TQDir d( KCrashBookmarkImporterImpl().findDefaultLocation() );
+    TQDir d( TDECrashBookmarkImporterImpl().findDefaultLocation() );
     d.setSorting( TQDir::Time );
     d.setFilter( TQDir::Files );
     d.setNameFilter( "konqueror-crash-*.log" );
@@ -154,10 +154,10 @@ TQStringList KCrashBookmarkImporterImpl::getCrashLogs()
     return crashFiles;
 }
 
-void KCrashBookmarkImporterImpl::parse() 
+void TDECrashBookmarkImporterImpl::parse() 
 {
     TQDict<bool> signatureMap;
-    TQStringList crashFiles = KCrashBookmarkImporterImpl::getCrashLogs();
+    TQStringList crashFiles = TDECrashBookmarkImporterImpl::getCrashLogs();
     int count = 1;
     for ( TQStringList::Iterator it = crashFiles.begin(); it != crashFiles.end(); ++it ) 
     {
@@ -185,29 +185,29 @@ void KCrashBookmarkImporterImpl::parse()
     }
 }
 
-TQString KCrashBookmarkImporter::crashBookmarksDir() 
+TQString TDECrashBookmarkImporter::crashBookmarksDir() 
 {
-    static KCrashBookmarkImporterImpl *p = 0;
+    static TDECrashBookmarkImporterImpl *p = 0;
     if (!p)
-        p = new KCrashBookmarkImporterImpl;
+        p = new TDECrashBookmarkImporterImpl;
     return p->findDefaultLocation();
 }
 
-void KCrashBookmarkImporterImpl::setShouldDelete( bool shouldDelete ) 
+void TDECrashBookmarkImporterImpl::setShouldDelete( bool shouldDelete ) 
 {
     m_shouldDelete = shouldDelete;
 }
 
-void KCrashBookmarkImporter::parseCrashBookmarks( bool del ) 
+void TDECrashBookmarkImporter::parseCrashBookmarks( bool del ) 
 {
-    KCrashBookmarkImporterImpl importer;
+    TDECrashBookmarkImporterImpl importer;
     importer.setFilename( m_fileName );
     importer.setShouldDelete( del );
     importer.setupSignalForwards( &importer, this );
     importer.parse();
 }
 
-TQString KCrashBookmarkImporterImpl::findDefaultLocation( bool ) const 
+TQString TDECrashBookmarkImporterImpl::findDefaultLocation( bool ) const 
 {
     return locateLocal( "tmp", "" );
 }

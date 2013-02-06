@@ -450,7 +450,7 @@ tqWarning("Last DCOP call before KDED crash was from application '%s'\n"
 
 void Kded::installCrashHandler()
 {
-   KCrash::setEmergencySaveFunction(crashHandler);
+   TDECrash::setEmergencySaveFunction(crashHandler);
 }
 
 void Kded::recreate()
