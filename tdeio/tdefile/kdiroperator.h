@@ -319,27 +319,27 @@ class TDEIO_EXPORT KDirOperator : public TQWidget
     int numFiles() const;
 
     /**
-     * @returns a KCompletion object, containing all filenames and
+     * @returns a TDECompletion object, containing all filenames and
      * directories of the current directory/URL.
      * You can use it to insert it into a KLineEdit or KComboBox
      * Note: it will only contain files, after prepareCompletionObjects()
      * has been called. It will be implicitly called from makeCompletion()
      * or makeDirCompletion()
      */
-    KCompletion * completionObject() const {
-	return const_cast<KCompletion *>( &myCompletion );
+    TDECompletion * completionObject() const {
+	return const_cast<TDECompletion *>( &myCompletion );
     }
 
     /**
-     * @returns a KCompletion object, containing only all directories of the
+     * @returns a TDECompletion object, containing only all directories of the
      * current directory/URL.
      * You can use it to insert it into a KLineEdit or KComboBox
      * Note: it will only contain directories, after
      * prepareCompletionObjects() has been called. It will be implicitly
      * called from makeCompletion() or makeDirCompletion()
      */
-    KCompletion *dirCompletionObject() const {
-	return const_cast<KCompletion *>( &myDirCompletion );
+    TDECompletion *dirCompletionObject() const {
+	return const_cast<TDECompletion *>( &myDirCompletion );
     }
 
     /**
@@ -838,8 +838,8 @@ private:
     KDirLister *dir;
     KURL currUrl;
 
-    KCompletion myCompletion;
-    KCompletion myDirCompletion;
+    TDECompletion myCompletion;
+    TDECompletion myDirCompletion;
     bool myCompleteListDirty;
     TQDir::SortSpec mySorting;
 

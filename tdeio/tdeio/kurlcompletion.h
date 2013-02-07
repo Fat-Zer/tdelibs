@@ -38,7 +38,7 @@ class KURLCompletionPrivate;
  * @short Completion of a single URL
  * @author David Smith <dsmith@algonet.se>
  */
-class TDEIO_EXPORT KURLCompletion : public KCompletion
+class TDEIO_EXPORT KURLCompletion : public TDECompletion
 {
 	Q_OBJECT
 
@@ -168,10 +168,10 @@ public:
 
 	class MyURL;
 protected:
-	// Called by KCompletion, adds '/' to directories
+	// Called by TDECompletion, adds '/' to directories
 	void postProcessMatch( TQString *match ) const;
 	void postProcessMatches( TQStringList *matches ) const;
-	void postProcessMatches( KCompletionMatches* matches ) const;
+	void postProcessMatches( TDECompletionMatches* matches ) const;
 
 	virtual void customEvent( TQCustomEvent *e );
 

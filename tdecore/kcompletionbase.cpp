@@ -22,7 +22,7 @@
 
 #include <kcompletion.h>
 
-KCompletionBase::KCompletionBase()
+TDECompletionBase::TDECompletionBase()
 {
     m_delegate = 0L;
     // Assign the default completion type to use.
@@ -38,7 +38,7 @@ KCompletionBase::KCompletionBase()
     setup( false, false, false );
 }
 
-KCompletionBase::~KCompletionBase()
+TDECompletionBase::~TDECompletionBase()
 {
     if( m_bAutoDelCompObj && m_pCompObj )
     {
@@ -46,7 +46,7 @@ KCompletionBase::~KCompletionBase()
     }
 }
 
-void KCompletionBase::setDelegate( KCompletionBase *delegate )
+void TDECompletionBase::setDelegate( TDECompletionBase *delegate )
 {
     m_delegate = delegate;
 
@@ -59,20 +59,20 @@ void KCompletionBase::setDelegate( KCompletionBase *delegate )
     }
 }
 
-KCompletion* KCompletionBase::completionObject( bool hsig )
+TDECompletion* TDECompletionBase::completionObject( bool hsig )
 {
     if ( m_delegate )
         return m_delegate->completionObject( hsig );
     
     if ( !m_pCompObj )
     {
-        setCompletionObject( new KCompletion(), hsig );
+        setCompletionObject( new TDECompletion(), hsig );
 	m_bAutoDelCompObj = true;
     }
     return m_pCompObj;
 }
 
-void KCompletionBase::setCompletionObject( KCompletion* compObj, bool hsig )
+void TDECompletionBase::setCompletionObject( TDECompletion* compObj, bool hsig )
 {
     if ( m_delegate ) {
         m_delegate->setCompletionObject( compObj, hsig );
@@ -90,7 +90,7 @@ void KCompletionBase::setCompletionObject( KCompletion* compObj, bool hsig )
 }
 
 // BC: Inline this function and possibly rename it to setHandleEvents??? (DA)
-void KCompletionBase::setHandleSignals( bool handle )
+void TDECompletionBase::setHandleSignals( bool handle )
 {
     if ( m_delegate )
         m_delegate->setHandleSignals( handle );
@@ -98,7 +98,7 @@ void KCompletionBase::setHandleSignals( bool handle )
         m_bHandleSignals = handle;
 }
 
-void KCompletionBase::setCompletionMode( TDEGlobalSettings::Completion mode )
+void TDECompletionBase::setCompletionMode( TDEGlobalSettings::Completion mode )
 {
     if ( m_delegate ) {
         m_delegate->setCompletionMode( mode );
@@ -106,13 +106,13 @@ void KCompletionBase::setCompletionMode( TDEGlobalSettings::Completion mode )
     }
     
     m_iCompletionMode = mode;
-    // Always sync up KCompletion mode with ours as long as we
+    // Always sync up TDECompletion mode with ours as long as we
     // are performing completions.
     if( m_pCompObj && m_iCompletionMode != TDEGlobalSettings::CompletionNone )
         m_pCompObj->setCompletionMode( m_iCompletionMode );
 }
 
-bool KCompletionBase::setKeyBinding( KeyBindingType item, const TDEShortcut& cut )
+bool TDECompletionBase::setKeyBinding( KeyBindingType item, const TDEShortcut& cut )
 {
     if ( m_delegate )
         return m_delegate->setKeyBinding( item, cut );
@@ -127,7 +127,7 @@ bool KCompletionBase::setKeyBinding( KeyBindingType item, const TDEShortcut& cut
     return true;
 }
 
-void KCompletionBase::useGlobalKeyBindings()
+void TDECompletionBase::useGlobalKeyBindings()
 {
     if ( m_delegate ) {
         m_delegate->useGlobalKeyBindings();
@@ -141,7 +141,7 @@ void KCompletionBase::useGlobalKeyBindings()
     m_keyMap.insert( SubstringCompletion, 0 );
 }
 
-void KCompletionBase::setup( bool autodel, bool hsig, bool esig )
+void TDECompletionBase::setup( bool autodel, bool hsig, bool esig )
 {
     if ( m_delegate ) {
         m_delegate->setup( autodel, hsig, esig );

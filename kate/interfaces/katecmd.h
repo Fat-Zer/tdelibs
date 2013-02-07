@@ -53,12 +53,12 @@ class KATEPARTINTERFACES_EXPORT KateCmd
 };
 
 /**
- * A KCompletion object that completes last ?unquoted? word in the string
+ * A TDECompletion object that completes last ?unquoted? word in the string
  * passed. Dont mistake "shell" for anything related to quoting, this
  * simply mimics shell tab completion by completing the last word in the
  * provided text.
  */
-class KATEPARTINTERFACES_EXPORT KateCmdShellCompletion : public KCompletion
+class KATEPARTINTERFACES_EXPORT KateCmdShellCompletion : public TDECompletion
 {
   public:
     KateCmdShellCompletion();
@@ -72,10 +72,10 @@ class KATEPARTINTERFACES_EXPORT KateCmdShellCompletion : public KCompletion
     TQString makeCompletion(const TQString &text);
 
   protected:
-        // Called by KCompletion
+        // Called by TDECompletion
     void postProcessMatch( TQString *match ) const;
     void postProcessMatches( TQStringList *matches ) const;
-    void postProcessMatches( KCompletionMatches *matches ) const;
+    void postProcessMatches( TDECompletionMatches *matches ) const;
 
   private:
   /**

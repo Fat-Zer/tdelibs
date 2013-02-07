@@ -25,7 +25,7 @@
 #include "../interfaces/view.h"
 
 class KateDocument;
-class KCompletion;
+class TDECompletion;
 
 namespace KateCommands
 {
@@ -59,7 +59,7 @@ class CoreCommands : public Kate::Command, public Kate::CommandExtension
     /**
     * override completionObject from interfaces/document.h .
     */
-    KCompletion *completionObject( const TQString &cmd, Kate::View *view );
+    TDECompletion *completionObject( const TQString &cmd, Kate::View *view );
 };
 
 /**

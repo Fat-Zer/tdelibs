@@ -124,7 +124,7 @@ public:
 		 receiver, TQT_SIGNAL( returnPressed( const TQString& ) ));
     }
 
-    void setCompletionObject( KCompletion *comp ) {
+    void setCompletionObject( TDECompletion *comp ) {
 	if ( combo )
 	    combo->setCompletionObject( comp );
 	else

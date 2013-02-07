@@ -171,7 +171,7 @@ class TDECORE_EXPORT TDEGlobalSettings
     static bool showContextMenusOnPress ();
 
     /**
-     * This enum describes the completion mode used for by the KCompletion class.
+     * This enum describes the completion mode used for by the TDECompletion class.
      * See <a href="http://developer.kde.org/documentation/standards/kde/style/keys/completion.html">
      * the styleguide</a>.
      **/

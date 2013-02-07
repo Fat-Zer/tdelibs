@@ -38,7 +38,7 @@ class TQListBoxItem;
 class TQPopupMenu;
 class TQLineEdit;
 
-class KCompletionBox;
+class TDECompletionBox;
 class KURL;
 
 /**
@@ -64,7 +64,7 @@ class KURL;
  *
  * KCombobox by default creates a completion object when you invoke the
  * completionObject( bool ) member function for the first time or
- * explicitly use setCompletionObject( KCompletion*, bool ) to assign your
+ * explicitly use setCompletionObject( TDECompletion*, bool ) to assign your
  * own completion object.  Additionally, to make this widget more functional,
  * KComboBox will by default handle text rotation and completion events
  * internally whenever a completion object is created through either one of the
@@ -74,11 +74,11 @@ class KURL;
  *
  * Beware: The completion object can be deleted on you, especially if a call
  * such as setEditable(false) is made.  Store the pointer at your own risk,
- * and consider using TQGuardedPtr<KCompletion>.
+ * and consider using TQGuardedPtr<TDECompletion>.
  *
  * The default key-bindings for completion and rotation is determined from the
  * global settings in TDEStdAccel. These values, however, can be overridden
- * locally by invoking KCompletionBase::setKeyBinding(). The values can
+ * locally by invoking TDECompletionBase::setKeyBinding(). The values can
  * easily be reverted back to the default setting, by simply calling
  * useGlobalSettings(). An alternate method would be to default individual
  * key-bindings by usning setKeyBinding() with the default second argument.
@@ -93,8 +93,8 @@ class KURL;
  * words do not do the following:
  *
  * \code
- * KComboBox* combo = new KCompletionBox(true, this, "mywidget");
- * KCompletion* comp = combo->completionObject();
+ * KComboBox* combo = new TDECompletionBox(true, this, "mywidget");
+ * TDECompletion* comp = combo->completionObject();
  * combo->setEditable( false );
  * comp->clear(); // CRASH: completion object does not exist anymore.
  * \endcode
@@ -112,7 +112,7 @@ class KURL;
  *
  * \code
  * KComboBox *combo = new KComboBox( true, this, "mywidget" );
- * KCompletion *comp = combo->completionObject();
+ * TDECompletion *comp = combo->completionObject();
  * // Connect to the return pressed signal - optional
  * connect(combo,TQT_SIGNAL(returnPressed(const TQString&)),comp,TQT_SLOT(addItem(const TQString&)));
  *
@@ -141,14 +141,14 @@ class KURL;
  * // Tell the widget not to handle completion and rotation
  * combo->setHandleSignals( false );
  * // Set your own completion key for manual completions.
- * combo->setKeyBinding( KCompletionBase::TextCompletion, Qt::End );
+ * combo->setKeyBinding( TDECompletionBase::TextCompletion, Qt::End );
  * // Hide the context (popup) menu
  * combo->setContextMenuEnabled( false );
  * \endcode
  *
  * @author Dawit Alemayehu <adawit@kde.org>
  */
-class TDEUI_EXPORT KComboBox : public TQComboBox, public KCompletionBase
+class TDEUI_EXPORT KComboBox : public TQComboBox, public TDECompletionBase
 {
   Q_OBJECT
   TQ_PROPERTY( bool autoCompletion READ autoCompletion WRITE setAutoCompletion )
@@ -338,7 +338,7 @@ public:
      * @param create Set this to false if you don't want the box to be created
      *               i.e. to test if it is available.
      */
-    KCompletionBox * completionBox( bool create = true );
+    TDECompletionBox * completionBox( bool create = true );
 
     /**
      * Re-implemented for internal reasons.  API remains unaffected.
@@ -393,7 +393,7 @@ signals:
     * Note that this signal is @em NOT emitted if the completion
     * mode is set to CompletionNone.
     */
-    void textRotation( KCompletionBase::KeyBindingType );
+    void textRotation( TDECompletionBase::KeyBindingType );
 
     /**
      * Emitted whenever the completion mode is changed by the user
@@ -431,7 +431,7 @@ public slots:
     *
     * @param type The key-binding invoked.
     */
-    void rotateText( KCompletionBase::KeyBindingType type );
+    void rotateText( TDECompletionBase::KeyBindingType type );
 
     /**
      * Sets the completed text in the line-edit appropriately.
@@ -622,13 +622,13 @@ public:
      * than one KHistoryCombo.
      *
      * Note: When @p setCompletionList is true, the items are inserted into the
-     * KCompletion object with mode KCompletion::Insertion and the mode is set
-     * to KCompletion::Weighted afterwards.
+     * TDECompletion object with mode TDECompletion::Insertion and the mode is set
+     * to TDECompletion::Weighted afterwards.
      *
      * @see historyItems
      * @see KComboBox::completionObject
-     * @see KCompletion::setItems
-     * @see KCompletion::items
+     * @see TDECompletion::setItems
+     * @see TDECompletion::items
      */
     void setHistoryItems( TQStringList items, bool setCompletionList );
 

@@ -194,7 +194,7 @@ public:
 
   /**
    * @return the lineedit used for inline renaming.
-   * Use that to setup a KCompletion or TQValidator for the lineedit
+   * Use that to setup a TDECompletion or TQValidator for the lineedit
    *
    * @since 3.2
    */

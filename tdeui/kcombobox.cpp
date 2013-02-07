@@ -169,7 +169,7 @@ void KComboBox::makeCompletion( const TQString& text )
     }
 }
 
-void KComboBox::rotateText( KCompletionBase::KeyBindingType type )
+void KComboBox::rotateText( TDECompletionBase::KeyBindingType type )
 {
     if ( d->klineEdit )
         d->klineEdit->rotateText( type );
@@ -226,7 +226,7 @@ void KComboBox::setCompletedItems( const TQStringList& items )
         d->klineEdit->setCompletedItems( items );
 }
 
-KCompletionBox * KComboBox::completionBox( bool create )
+TDECompletionBox * KComboBox::completionBox( bool create )
 {
     if ( d->klineEdit )
         return d->klineEdit->completionBox( create );
@@ -271,7 +271,7 @@ void KComboBox::setLineEdit( TQLineEdit *edit )
     if ( d->klineEdit )
     {
         // someone calling KComboBox::setEditable( false ) destroys our
-        // lineedit without us noticing. And KCompletionBase::delegate would
+        // lineedit without us noticing. And TDECompletionBase::delegate would
         // be a dangling pointer then, so prevent that. Note: only do this
         // when it is a KLineEdit!
         connect( edit, TQT_SIGNAL( destroyed() ), TQT_SLOT( lineEditDeleted() ));
@@ -286,8 +286,8 @@ void KComboBox::setLineEdit( TQLineEdit *edit )
                  TQT_SIGNAL( substringCompletion( const TQString& )) );
 
         connect( d->klineEdit,
-                 TQT_SIGNAL( textRotation( KCompletionBase::KeyBindingType )),
-                 TQT_SIGNAL( textRotation( KCompletionBase::KeyBindingType )) );
+                 TQT_SIGNAL( textRotation( TDECompletionBase::KeyBindingType )),
+                 TQT_SIGNAL( textRotation( TDECompletionBase::KeyBindingType )) );
 
         connect( d->klineEdit,
                  TQT_SIGNAL( completionModeChanged( TDEGlobalSettings::Completion )),
@@ -333,7 +333,7 @@ void KComboBox::lineEditDeleted()
     // yes, we need those ugly casts due to the multiple inheritance
     // sender() is guaranteed to be a KLineEdit (see the connect() to the
     // destroyed() signal
-    const KCompletionBase *base = static_cast<const KCompletionBase*>( static_cast<const KLineEdit*>( sender() ));
+    const TDECompletionBase *base = static_cast<const TDECompletionBase*>( static_cast<const KLineEdit*>( sender() ));
 
     // is it our delegate, that is destroyed?
     if ( base == delegate() )
@@ -378,7 +378,7 @@ void KHistoryCombo::init( bool useCompletion )
     setMaxCount( 50 );
 
     if ( useCompletion )
-        completionObject()->setOrder( KCompletion::Weighted );
+        completionObject()->setOrder( TDECompletion::Weighted );
 
     setInsertionPolicy( NoInsertion );
     myIterateIndex = -1;
@@ -421,10 +421,10 @@ void KHistoryCombo::setHistoryItems( TQStringList items,
 
     if ( setCompletionList && useCompletion() ) {
         // we don't have any weighting information here ;(
-        KCompletion *comp = completionObject();
-        comp->setOrder( KCompletion::Insertion );
+        TDECompletion *comp = completionObject();
+        comp->setOrder( TDECompletion::Insertion );
         comp->setItems( items );
-        comp->setOrder( KCompletion::Weighted );
+        comp->setOrder( TDECompletion::Weighted );
     }
 
     clearEdit();
@@ -718,7 +718,7 @@ bool KHistoryCombo::isHistoryEditorEnabled() const
 }
 
 void KComboBox::virtual_hook( int id, void* data )
-{ KCompletionBase::virtual_hook( id, data ); }
+{ TDECompletionBase::virtual_hook( id, data ); }
 
 void KHistoryCombo::virtual_hook( int id, void* data )
 { KComboBox::virtual_hook( id, data ); }

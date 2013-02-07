@@ -139,8 +139,8 @@ KComboBoxTest::KComboBoxTest(TQWidget* widget, const char* name )
   // Setup konq's combobox
   KSimpleConfig historyConfig( "konq_history" );
   historyConfig.setGroup( "Location Bar" );
-  KCompletion * s_pCompletion = new KCompletion;
-  s_pCompletion->setOrder( KCompletion::Weighted );
+  TDECompletion * s_pCompletion = new TDECompletion;
+  s_pCompletion->setOrder( TDECompletion::Weighted );
   s_pCompletion->setItems( historyConfig.readListEntry( "ComboContents" ) );
   s_pCompletion->setCompletionMode( TDEGlobalSettings::completionMode() );
   m_konqc->setCompletionObject( s_pCompletion );

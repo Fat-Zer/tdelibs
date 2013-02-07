@@ -33,7 +33,7 @@
 
 #include "kcompletionbox.h"
 
-class KCompletionBox::KCompletionBoxPrivate
+class TDECompletionBox::TDECompletionBoxPrivate
 {
 public:
     TQWidget *m_parent; // necessary to set the focus back
@@ -44,8 +44,8 @@ public:
     bool emitSelected;
 };
 
-KCompletionBox::KCompletionBox( TQWidget *parent, const char *name )
- :TDEListBox( parent, name, (WFlags)WType_Popup ), d(new KCompletionBoxPrivate)
+TDECompletionBox::TDECompletionBox( TQWidget *parent, const char *name )
+ :TDEListBox( parent, name, (WFlags)WType_Popup ), d(new TDECompletionBoxPrivate)
 {
 
     d->m_parent        = parent;
@@ -76,13 +76,13 @@ KCompletionBox::KCompletionBox( TQWidget *parent, const char *name )
              TQT_SLOT( slotItemClicked( TQListBoxItem * )) );
 }
 
-KCompletionBox::~KCompletionBox()
+TDECompletionBox::~TDECompletionBox()
 {
     d->m_parent = 0L;
     delete d;
 }
 
-TQStringList KCompletionBox::items() const
+TQStringList TDECompletionBox::items() const
 {
     TQStringList list;
 
@@ -96,7 +96,7 @@ TQStringList KCompletionBox::items() const
     return list;
 }
 
-void KCompletionBox::slotActivated( TQListBoxItem *item )
+void TDECompletionBox::slotActivated( TQListBoxItem *item )
 {
     if ( !item )
         return;
@@ -105,7 +105,7 @@ void KCompletionBox::slotActivated( TQListBoxItem *item )
     emit activated( item->text() );
 }
 
-bool KCompletionBox::eventFilter( TQObject *o, TQEvent *e )
+bool TDECompletionBox::eventFilter( TQObject *o, TQEvent *e )
 {
     int type = e->type();
 
@@ -247,7 +247,7 @@ bool KCompletionBox::eventFilter( TQObject *o, TQEvent *e )
 }
 
 
-void KCompletionBox::popup()
+void TDECompletionBox::popup()
 {
     if ( count() == 0 )
         hide();
@@ -265,7 +265,7 @@ void KCompletionBox::popup()
     }
 }
 
-void KCompletionBox::sizeAndPosition()
+void TDECompletionBox::sizeAndPosition()
 {
     int currentGeom = height();
     TQPoint currentPos = pos();
@@ -297,7 +297,7 @@ void KCompletionBox::sizeAndPosition()
     }
 }
 
-void KCompletionBox::show()
+void TDECompletionBox::show()
 {
     d->upwardBox = false;
     if ( d->m_parent ) {
@@ -309,19 +309,19 @@ void KCompletionBox::show()
     // are pretty b0rked.
     //triggerUpdate( true );
 
-    // Workaround for I'm not sure whose bug - if this KCompletionBox' parent
+    // Workaround for I'm not sure whose bug - if this TDECompletionBox' parent
     // is in a layout, that layout will detect inserting new child (posted
     // ChildInserted event), and will trigger relayout (post LayoutHint event).
     // TQWidget::show() sends also posted ChildInserted events for the parent,
     // and later all LayoutHint events, which causes layout updating.
-    // The problem is, KCompletionBox::eventFilter() detects resizing
+    // The problem is, TDECompletionBox::eventFilter() detects resizing
     // of the parent, and calls hide() - and this hide() happen in the middle
     // of show(), causing inconsistent state. I'll try to submit a Qt patch too.
     tqApp->sendPostedEvents();
     TDEListBox::show();
 }
 
-void KCompletionBox::hide()
+void TDECompletionBox::hide()
 {
     if ( d->m_parent )
         tqApp->removeEventFilter( this );
@@ -329,7 +329,7 @@ void KCompletionBox::hide()
     TDEListBox::hide();
 }
 
-TQRect KCompletionBox::calculateGeometry() const
+TQRect TDECompletionBox::calculateGeometry() const
 {
     int x = 0, y = 0;
     int ih = itemHeight();
@@ -373,12 +373,12 @@ TQRect KCompletionBox::calculateGeometry() const
     return TQRect(x, y, w, h);
 }
 
-TQSize KCompletionBox::sizeHint() const
+TQSize TDECompletionBox::sizeHint() const
 {
     return calculateGeometry().size();
 }
 
-void KCompletionBox::down()
+void TDECompletionBox::down()
 {
     int i = currentItem();
 
@@ -393,57 +393,57 @@ void KCompletionBox::down()
         setCurrentItem( i + 1 );
 }
 
-void KCompletionBox::up()
+void TDECompletionBox::up()
 {
     if ( currentItem() > 0 )
         setCurrentItem( currentItem() - 1 );
 }
 
-void KCompletionBox::pageDown()
+void TDECompletionBox::pageDown()
 {
     int i = currentItem() + numItemsVisible();
     i = i > (int)count() - 1 ? (int)count() - 1 : i;
     setCurrentItem( i );
 }
 
-void KCompletionBox::pageUp()
+void TDECompletionBox::pageUp()
 {
     int i = currentItem() - numItemsVisible();
     i = i < 0 ? 0 : i;
     setCurrentItem( i );
 }
 
-void KCompletionBox::home()
+void TDECompletionBox::home()
 {
     setCurrentItem( 0 );
 }
 
-void KCompletionBox::end()
+void TDECompletionBox::end()
 {
     setCurrentItem( count() -1 );
 }
 
-void KCompletionBox::setTabHandling( bool enable )
+void TDECompletionBox::setTabHandling( bool enable )
 {
     d->tabHandling = enable;
 }
 
-bool KCompletionBox::isTabHandling() const
+bool TDECompletionBox::isTabHandling() const
 {
     return d->tabHandling;
 }
 
-void KCompletionBox::setCancelledText( const TQString& text )
+void TDECompletionBox::setCancelledText( const TQString& text )
 {
     d->cancelText = text;
 }
 
-TQString KCompletionBox::cancelledText() const
+TQString TDECompletionBox::cancelledText() const
 {
     return d->cancelText;
 }
 
-void KCompletionBox::canceled()
+void TDECompletionBox::canceled()
 {
     if ( !d->cancelText.isNull() )
         emit userCancelled( d->cancelText );
@@ -451,7 +451,7 @@ void KCompletionBox::canceled()
         hide();
 }
 
-class KCompletionBoxItem : public TQListBoxItem
+class TDECompletionBoxItem : public TQListBoxItem
 {
 public:
     //Returns true if dirty.
@@ -465,7 +465,7 @@ public:
 };
 
 
-void KCompletionBox::insertItems( const TQStringList& items, int index )
+void TDECompletionBox::insertItems( const TQStringList& items, int index )
 {
     bool block = signalsBlocked();
     blockSignals( true );
@@ -474,7 +474,7 @@ void KCompletionBox::insertItems( const TQStringList& items, int index )
     d->down_workaround = true;
 }
 
-void KCompletionBox::setItems( const TQStringList& items )
+void TDECompletionBox::setItems( const TQStringList& items )
 {
     bool block = signalsBlocked();
     blockSignals( true );
@@ -494,7 +494,7 @@ void KCompletionBox::setItems( const TQStringList& items )
 
         for ( ; it != itEnd; ++it) {
             if ( item ) {
-                const bool changed = ((KCompletionBoxItem*)item)->reuse( *it );
+                const bool changed = ((TDECompletionBoxItem*)item)->reuse( *it );
                 dirty = dirty || changed;
                 item = item->next();
             }
@@ -527,12 +527,12 @@ void KCompletionBox::setItems( const TQStringList& items )
     d->down_workaround = true;
 }
 
-void KCompletionBox::slotCurrentChanged()
+void TDECompletionBox::slotCurrentChanged()
 {
     d->down_workaround = false;
 }
 
-void KCompletionBox::slotItemClicked( TQListBoxItem *item )
+void TDECompletionBox::slotItemClicked( TQListBoxItem *item )
 {
     if ( item )
     {
@@ -546,17 +546,17 @@ void KCompletionBox::slotItemClicked( TQListBoxItem *item )
     }
 }
 
-void KCompletionBox::setActivateOnSelect(bool state)
+void TDECompletionBox::setActivateOnSelect(bool state)
 {
     d->emitSelected = state;
 }
 
-bool KCompletionBox::activateOnSelect() const
+bool TDECompletionBox::activateOnSelect() const
 {
     return d->emitSelected;
 }
 
-void KCompletionBox::virtual_hook( int id, void* data )
+void TDECompletionBox::virtual_hook( int id, void* data )
 { TDEListBox::virtual_hook( id, data ); }
 
 #include "kcompletionbox.moc"

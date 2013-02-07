@@ -56,10 +56,10 @@ public:
 	TQString makeCompletion(const TQString &text);
 
 protected:
-	// Called by KCompletion
+	// Called by TDECompletion
 	void postProcessMatch( TQString *match ) const;
 	void postProcessMatches( TQStringList *matches ) const;
-        void postProcessMatches( KCompletionMatches *matches ) const;
+        void postProcessMatches( TDECompletionMatches *matches ) const;
 
 private:
 	// Find the part of text that should be completed

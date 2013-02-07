@@ -505,7 +505,7 @@ void RenderLineEdit::highLightWord( unsigned int length, unsigned int pos )
 void RenderLineEdit::slotReturnPressed()
 {
     // don't submit the form when return was pressed in a completion-popup
-    KCompletionBox *box = widget()->completionBox(false);
+    TDECompletionBox *box = widget()->completionBox(false);
 
     if ( box && box->isVisible() && box->currentItem() != -1 ) {
       box->hide();

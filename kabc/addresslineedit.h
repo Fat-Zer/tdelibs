@@ -107,7 +107,7 @@ private:
   TQString m_typedText; // unused
 
   static bool s_addressesDirty;
-  static KCompletion *s_completion;
+  static TDECompletion *s_completion;
   static TQTimer *s_LDAPTimer;
   static LdapSearch *s_LDAPSearch;
   static TQString *s_LDAPText;

@@ -40,7 +40,7 @@
 
 #include <tdeaction.h>
 
-class KCompletion;
+class TDECompletion;
 
 /**
  * Kate namespace
@@ -146,7 +146,7 @@ class CommandExtension
     virtual void flagCompletions( TQStringList& /*list*/ ) {;}
 
     /**
-     * @return a KCompletion object that will substitute the command line default
+     * @return a TDECompletion object that will substitute the command line default
      * one while typing the first argument to the command. The text will be
      * added to the command seperated by one space character.
      *
@@ -154,7 +154,7 @@ class CommandExtension
      *
      * @param cmdname The command name associated with this request.
      */
-    virtual KCompletion *completionObject( const TQString & cmdname, Kate::View * /*view*/ ) { Q_UNUSED(cmdname); return 0L; }
+    virtual TDECompletion *completionObject( const TQString & cmdname, Kate::View * /*view*/ ) { Q_UNUSED(cmdname); return 0L; }
 
     /**
      * @return whether this command wants to process text interactively given the @p cmdname.

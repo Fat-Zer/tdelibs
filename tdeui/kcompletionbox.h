@@ -31,7 +31,7 @@ class TQEvent;
  * @short A helper widget for "completion-widgets" (KLineEdit, KComboBox))
  *
  * A little utility class for "completion-widgets", like KLineEdit or
- * KComboBox. KCompletionBox is a listbox, displayed as a rectangle without
+ * KComboBox. TDECompletionBox is a listbox, displayed as a rectangle without
  * any window decoration, usually directly under the lineedit or combobox.
  * It is filled with all possible matches for a completion, so the user
  * can select the one he wants.
@@ -40,7 +40,7 @@ class TQEvent;
  *
  * @author Carsten Pfeiffer <pfeiffer@kde.org>
  */
-class TDEUI_EXPORT KCompletionBox : public TDEListBox
+class TDEUI_EXPORT TDECompletionBox : public TDEListBox
 {
     Q_OBJECT
     TQ_PROPERTY( bool isTabHandling READ isTabHandling WRITE setTabHandling )
@@ -49,17 +49,17 @@ class TDEUI_EXPORT KCompletionBox : public TDEListBox
 
 public:
     /**
-     * Constructs a KCompletionBox.
+     * Constructs a TDECompletionBox.
      *
      * The parent widget is used to give the focus back when pressing the
      * up-button on the very first item.
      */
-    KCompletionBox( TQWidget *parent, const char *name = 0 );
+    TDECompletionBox( TQWidget *parent, const char *name = 0 );
 
     /**
      * Destroys the box
      */
-    ~KCompletionBox();
+    ~TDECompletionBox();
 
     virtual TQSize sizeHint() const;
 
@@ -238,8 +238,8 @@ protected:
     virtual void virtual_hook( int id, void* data );
 
 private:
-    class KCompletionBoxPrivate;
-    KCompletionBoxPrivate* const d;
+    class TDECompletionBoxPrivate;
+    TDECompletionBoxPrivate* const d;
 };
 
 

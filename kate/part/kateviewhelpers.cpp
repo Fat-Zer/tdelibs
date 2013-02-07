@@ -272,7 +272,7 @@ class KateCmdLnWhatsThis : public TQWhatsThis
  * This class provide completion of flags. It shows a short description of
  * each flag, and flags are appended.
  */
-class KateCmdLineFlagCompletion : public KCompletion
+class KateCmdLineFlagCompletion : public TDECompletion
 {
   public:
     KateCmdLineFlagCompletion() {;}
@@ -365,7 +365,7 @@ void KateCmdLine::slotReturnPressed ( const TQString& text )
   // clean up
   if ( m_oldCompletionObject )
   {
-    KCompletion *c = completionObject();
+    TDECompletion *c = completionObject();
     setCompletionObject( m_oldCompletionObject );
     m_oldCompletionObject = 0;
     delete c;
@@ -465,7 +465,7 @@ void KateCmdLine::keyPressEvent( TQKeyEvent *ev )
         // clean up if needed
         if ( m_oldCompletionObject )
         {
-          KCompletion *c = completionObject();
+          TDECompletion *c = completionObject();
           setCompletionObject( m_oldCompletionObject );
           m_oldCompletionObject = 0;
           delete c;
@@ -483,7 +483,7 @@ void KateCmdLine::keyPressEvent( TQKeyEvent *ev )
       Kate::CommandExtension *ce = dynamic_cast<Kate::CommandExtension*>(m_command);
       if ( ce )
       {
-        KCompletion *cmpl = ce->completionObject( text().left( m_cmdend ).stripWhiteSpace(), m_view );
+        TDECompletion *cmpl = ce->completionObject( text().left( m_cmdend ).stripWhiteSpace(), m_view );
         if ( cmpl )
         {
         // save the old completion object and use what the command provides

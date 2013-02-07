@@ -462,7 +462,7 @@ public:
 	TDEIO::ListJob *list_job; // kio job to list directories
 
 	TQString prepend; // text to prepend to listed items
-	TQString compl_text; // text to pass on to KCompletion
+	TQString compl_text; // text to pass on to TDECompletion
 
 	// Filters for files read with  kio
 	bool list_urls_only_exe; // true = only list executables
@@ -486,13 +486,13 @@ KURLCompletionPrivate::~KURLCompletionPrivate()
 // KURLCompletion
 //
 
-KURLCompletion::KURLCompletion() : KCompletion()
+KURLCompletion::KURLCompletion() : TDECompletion()
 {
 	init();
 }
 
 
-KURLCompletion::KURLCompletion( Mode mode ) : KCompletion()
+KURLCompletion::KURLCompletion( Mode mode ) : TDECompletion()
 {
 	init();
 	setMode ( mode );
@@ -653,15 +653,15 @@ TQString KURLCompletion::makeCompletion(const TQString &text)
 /*
  * finished
  *
- * Go on and call KCompletion.
+ * Go on and call TDECompletion.
  * Called when all matches have been added
  */
 TQString KURLCompletion::finished()
 {
 	if ( d->last_compl_type == CTInfo )
-		return KCompletion::makeCompletion( d->compl_text.lower() );
+		return TDECompletion::makeCompletion( d->compl_text.lower() );
 	else
-		return KCompletion::makeCompletion( d->compl_text );
+		return TDECompletion::makeCompletion( d->compl_text );
 }
 
 /*
@@ -1104,7 +1104,7 @@ bool KURLCompletion::urlCompletion(const MyURL &url, TQString *match)
 /*
  * addMatches
  *
- * Called to add matches to KCompletion
+ * Called to add matches to TDECompletion
  */
 void KURLCompletion::addMatches( const TQStringList &matches )
 {
@@ -1311,7 +1311,7 @@ void KURLCompletion::slotIOFinished( TDEIO::Job * job )
 
 		d->list_job = 0L;
 
-		finished(); // will call KCompletion::makeCompletion()
+		finished(); // will call TDECompletion::makeCompletion()
 
 	}
 	else {
@@ -1345,7 +1345,7 @@ void KURLCompletion::slotIOFinished( TDEIO::Job * job )
 /*
  * postProcessMatch, postProcessMatches
  *
- * Called by KCompletion before emitting match() and matches()
+ * Called by TDECompletion before emitting match() and matches()
  *
  * Append '/' to directories for file completion. This is
  * done here to avoid stat()'ing a lot of files
@@ -1405,10 +1405,10 @@ void KURLCompletion::postProcessMatches( TQStringList * matches ) const
 	}
 }
 
-void KURLCompletion::postProcessMatches( KCompletionMatches * matches ) const
+void KURLCompletion::postProcessMatches( TDECompletionMatches * matches ) const
 {
 	if ( !matches->isEmpty() && d->last_compl_type == CTFile ) {
-		KCompletionMatches::Iterator it = matches->begin();
+		TDECompletionMatches::Iterator it = matches->begin();
 		for (; it != matches->end(); ++it ) {
 			adjustMatch( (*it).value() );
 		}
@@ -1598,7 +1598,7 @@ static TQString unescape(const TQString &text)
 }
 
 void KURLCompletion::virtual_hook( int id, void* data )
-{ KCompletion::virtual_hook( id, data ); }
+{ TDECompletion::virtual_hook( id, data ); }
 
 #include "kurlcompletion.moc"
 

@@ -24,36 +24,36 @@
 #include <tqstring.h>
 #include <ksortablevaluelist.h>
 
-class KCompTreeNode;
+class TDECompTreeNode;
 
 #include <kallocator.h>
 
 /**
  * @internal
  */
-class TDECORE_EXPORT KCompTreeNodeList
+class TDECORE_EXPORT TDECompTreeNodeList
 {
 public:
-    KCompTreeNodeList() : first(0), last(0), m_count(0) {}
-    KCompTreeNode *begin() const { return first; }
-    KCompTreeNode *end() const { return last; }
+    TDECompTreeNodeList() : first(0), last(0), m_count(0) {}
+    TDECompTreeNode *begin() const { return first; }
+    TDECompTreeNode *end() const { return last; }
 
-    KCompTreeNode *at(uint index) const;
-    void append(KCompTreeNode *item); 
-    void prepend(KCompTreeNode *item); 
-    void insert(KCompTreeNode *after, KCompTreeNode *item);
-    KCompTreeNode *remove(KCompTreeNode *item);
+    TDECompTreeNode *at(uint index) const;
+    void append(TDECompTreeNode *item); 
+    void prepend(TDECompTreeNode *item); 
+    void insert(TDECompTreeNode *after, TDECompTreeNode *item);
+    TDECompTreeNode *remove(TDECompTreeNode *item);
     uint count() const { return m_count; }
 
 private:
-    KCompTreeNode *first, *last;
+    TDECompTreeNode *first, *last;
     uint m_count;
 };
 
-typedef KCompTreeNodeList KCompTreeChildren;
+typedef TDECompTreeNodeList TDECompTreeChildren;
 
 /**
- * A helper class for KCompletion. Implements a tree of TQChar.
+ * A helper class for TDECompletion. Implements a tree of TQChar.
  *
  * The tree looks like this (containing the items "kde", "kde-ui",
  * "kde-core" and "pfeiffer". Every item is delimited with TQChar( 0x0 )
@@ -81,14 +81,14 @@ typedef KCompTreeNodeList KCompTreeChildren;
  * @author Carsten Pfeiffer <pfeiffer@kde.org>
  * @internal
  */
-class TDECORE_EXPORT KCompTreeNode : public TQChar
+class TDECORE_EXPORT TDECompTreeNode : public TQChar
 {
 public:
-    KCompTreeNode() : TQChar(), myWeight(0) {}
-    KCompTreeNode( const TQChar& ch, uint weight = 0 )
+    TDECompTreeNode() : TQChar(), myWeight(0) {}
+    TDECompTreeNode( const TQChar& ch, uint weight = 0 )
         : TQChar( ch ),
           myWeight( weight ) {}
-    ~KCompTreeNode();
+    ~TDECompTreeNode();
 
     void * operator new( size_t s ) {
       return alloc.allocate( s );
@@ -99,12 +99,12 @@ public:
 
     // Returns a child of this node matching ch, if available.
     // Otherwise, returns 0L
-    inline KCompTreeNode * find( const TQChar& ch ) const {
-      KCompTreeNode * cur = myChildren.begin();
+    inline TDECompTreeNode * find( const TQChar& ch ) const {
+      TDECompTreeNode * cur = myChildren.begin();
       while (cur && (*cur != ch)) cur = cur->next;
       return cur;
     }
-    KCompTreeNode *	insert( const TQChar&, bool sorted );
+    TDECompTreeNode *	insert( const TQChar&, bool sorted );
     void 		remove( const TQString& );
 
     inline int		childrenCount() const { return myChildren.count(); }
@@ -115,51 +115,51 @@ public:
     inline void decline() 	{ myWeight--; 		}
     inline uint weight() const 	{ return myWeight; 	}
 
-    inline const KCompTreeChildren * children() const {
+    inline const TDECompTreeChildren * children() const {
 	return &myChildren;
     }
-    inline const KCompTreeNode * childAt(int index) const {
+    inline const TDECompTreeNode * childAt(int index) const {
 	return myChildren.at(index);
     }
-    inline const KCompTreeNode * firstChild() const {
+    inline const TDECompTreeNode * firstChild() const {
 	return myChildren.begin();
     }
-    inline const KCompTreeNode * lastChild()  const {
+    inline const TDECompTreeNode * lastChild()  const {
 	return myChildren.end();
     }
 
-    /* We want to handle a list of KCompTreeNodes on our own, to not
+    /* We want to handle a list of TDECompTreeNodes on our own, to not
        need to use TQValueList<>.  And to make it even more fast we don't
        use an accessor, but just a public member.  */
-    KCompTreeNode *next;
+    TDECompTreeNode *next;
 private:
     uint myWeight;
-    KCompTreeNodeList	myChildren;
+    TDECompTreeNodeList	myChildren;
     static TDEZoneAllocator alloc;
 };
 
 
 
 // some more helper stuff
-typedef KSortableValueList<TQString> KCompletionMatchesList;
+typedef KSortableValueList<TQString> TDECompletionMatchesList;
 
 /**
  * @internal
  */
-class TDECORE_EXPORT KCompletionMatchesWrapper
+class TDECORE_EXPORT TDECompletionMatchesWrapper
 {
 public:
-    KCompletionMatchesWrapper( bool sort = false )
-        : sortedList( sort ? new KCompletionMatchesList : 0L ),
+    TDECompletionMatchesWrapper( bool sort = false )
+        : sortedList( sort ? new TDECompletionMatchesList : 0L ),
           dirty( false )
     {}
-    ~KCompletionMatchesWrapper() {
+    ~TDECompletionMatchesWrapper() {
         delete sortedList;
     }
 
     void setSorting( bool sort ) {
         if ( sort && !sortedList )
-            sortedList = new KCompletionMatchesList;
+            sortedList = new TDECompletionMatchesList;
         else if ( !sort ) {
             delete sortedList;
             sortedList = 0L;
@@ -208,7 +208,7 @@ public:
     TQStringList list() const;
 
     mutable TQStringList stringList;
-    KCompletionMatchesList *sortedList;
+    TDECompletionMatchesList *sortedList;
     mutable bool dirty;
 };
 

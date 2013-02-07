@@ -55,7 +55,7 @@
 
 using namespace KABC;
 
-KCompletion * AddressLineEdit::s_completion = 0L;
+TDECompletion * AddressLineEdit::s_completion = 0L;
 bool AddressLineEdit::s_addressesDirty = false;
 TQTimer* AddressLineEdit::s_LDAPTimer = 0L;
 LdapSearch* AddressLineEdit::s_LDAPSearch = 0L;
@@ -63,7 +63,7 @@ TQString* AddressLineEdit::s_LDAPText = 0L;
 AddressLineEdit* AddressLineEdit::s_LDAPLineEdit = 0L;
 TDEConfig *AddressLineEdit::s_config = 0L;
 
-static KStaticDeleter<KCompletion> completionDeleter;
+static KStaticDeleter<TDECompletion> completionDeleter;
 static KStaticDeleter<TQTimer> ldapTimerDeleter;
 static KStaticDeleter<LdapSearch> ldapSearchDeleter;
 static KStaticDeleter<TQString> ldapTextDeleter;
@@ -93,8 +93,8 @@ AddressLineEdit::AddressLineEdit(TQWidget* parent,
 void AddressLineEdit::init()
 {
   if ( !s_completion ) {
-      completionDeleter.setObject( s_completion, new KCompletion() );
-      s_completion->setOrder( KCompletion::Sorted );
+      completionDeleter.setObject( s_completion, new TDECompletion() );
+      s_completion->setOrder( TDECompletion::Sorted );
       s_completion->setIgnoreCase( true );
   }
 
@@ -115,7 +115,7 @@ void AddressLineEdit::init()
       connect( this, TQT_SIGNAL( completion(const TQString&)),
                this, TQT_SLOT(slotCompletion() ));
       
-      KCompletionBox *box = completionBox();
+      TDECompletionBox *box = completionBox();
       connect( box, TQT_SIGNAL( highlighted( const TQString& )),
                this, TQT_SLOT( slotPopupCompletion( const TQString& ) ));
       connect( box, TQT_SIGNAL( userCancelled( const TQString& )),

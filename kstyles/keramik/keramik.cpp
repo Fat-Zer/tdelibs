@@ -354,7 +354,7 @@ void KeramikStyle::polish(const TQStyleControlElementData &ceData, ControlElemen
 	
 		else if ( widget->parentWidget() &&
 				( ( widget->inherits( TQLISTBOX_OBJECT_NAME_STRING ) && widget->parentWidget()->inherits( TQCOMBOBOX_OBJECT_NAME_STRING ) ) ||
-					widget->inherits( "KCompletionBox" ) ) ) {
+					widget->inherits( "TDECompletionBox" ) ) ) {
 			TQListBox* listbox = (TQListBox*) widget;
 			listbox->setLineWidth( 4 );
 			listbox->setBackgroundMode( NoBackground );
@@ -399,7 +399,7 @@ void KeramikStyle::unPolish(const TQStyleControlElementData &ceData, ControlElem
 	
 		else if ( widget->parentWidget() &&
 				( ( widget->inherits( TQLISTBOX_OBJECT_NAME_STRING ) && widget->parentWidget()->inherits( TQCOMBOBOX_OBJECT_NAME_STRING ) ) ||
-					widget->inherits( "KCompletionBox" ) ) ) {
+					widget->inherits( "TDECompletionBox" ) ) ) {
 			TQListBox* listbox = (TQListBox*) widget;
 			listbox->setLineWidth( 1 );
 			listbox->setBackgroundMode( PaletteBackground );

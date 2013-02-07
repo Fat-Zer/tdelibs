@@ -77,7 +77,7 @@ TQString KShellCompletion::makeCompletion(const TQString &text)
 /*
  * postProcessMatch, postProcessMatches
  *
- * Called by KCompletion before emitting match() and matches()
+ * Called by TDECompletion before emitting match() and matches()
  *
  * Add add the part of the text that was not completed
  * Add quotes when needed
@@ -121,11 +121,11 @@ void KShellCompletion::postProcessMatches( TQStringList *matches ) const
 	}
 }
 
-void KShellCompletion::postProcessMatches( KCompletionMatches *matches ) const
+void KShellCompletion::postProcessMatches( TDECompletionMatches *matches ) const
 {
 	KURLCompletion::postProcessMatches( matches );
 
-	for ( KCompletionMatches::Iterator it = matches->begin();
+	for ( TDECompletionMatches::Iterator it = matches->begin();
 		  it != matches->end(); it++ )
 	{
 		if ( !(*it).value().isNull() ) {

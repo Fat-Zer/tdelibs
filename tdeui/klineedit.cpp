@@ -93,7 +93,7 @@ public:
     int squeezedStart;
     BackgroundMode bgMode;
     TQString squeezedText;
-    KCompletionBox *completionBox;
+    TDECompletionBox *completionBox;
 
     TQString clickMessage;
     bool drawClickMsg:1;
@@ -171,7 +171,7 @@ void KLineEdit::setCompletionMode( TDEGlobalSettings::Completion mode )
     else
         d->autoSuggest = false;
 
-    KCompletionBase::setCompletionMode( mode );
+    TDECompletionBase::setCompletionMode( mode );
 }
 
 void KLineEdit::setCompletedText( const TQString& t, bool marked )
@@ -202,16 +202,16 @@ void KLineEdit::setCompletedText( const TQString& text )
     setCompletedText( text, marked );
 }
 
-void KLineEdit::rotateText( KCompletionBase::KeyBindingType type )
+void KLineEdit::rotateText( TDECompletionBase::KeyBindingType type )
 {
-    KCompletion* comp = compObj();
+    TDECompletion* comp = compObj();
     if ( comp &&
-       (type == KCompletionBase::PrevCompletionMatch ||
-        type == KCompletionBase::NextCompletionMatch ) )
+       (type == TDECompletionBase::PrevCompletionMatch ||
+        type == TDECompletionBase::NextCompletionMatch ) )
     {
        TQString input;
 
-       if (type == KCompletionBase::PrevCompletionMatch)
+       if (type == TDECompletionBase::PrevCompletionMatch)
           comp->previousMatch();
        else
           comp->nextMatch();
@@ -225,7 +225,7 @@ void KLineEdit::rotateText( KCompletionBase::KeyBindingType type )
 
 void KLineEdit::makeCompletion( const TQString& text )
 {
-    KCompletion *comp = compObj();
+    TDECompletion *comp = compObj();
     TDEGlobalSettings::Completion mode = completionMode();
 
     if ( !comp || mode == TDEGlobalSettings::CompletionNone )
@@ -761,9 +761,9 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
             if ( cut.contains( key ) )
             {
                 if ( emitSignals() )
-                    emit textRotation( KCompletionBase::PrevCompletionMatch );
+                    emit textRotation( TDECompletionBase::PrevCompletionMatch );
                 if ( handleSignals() )
-                    rotateText( KCompletionBase::PrevCompletionMatch );
+                    rotateText( TDECompletionBase::PrevCompletionMatch );
                 return;
             }
 
@@ -776,9 +776,9 @@ void KLineEdit::keyPressEvent( TQKeyEvent *e )
             if ( cut.contains( key ) )
             {
                 if ( emitSignals() )
-                    emit textRotation( KCompletionBase::NextCompletionMatch );
+                    emit textRotation( TDECompletionBase::NextCompletionMatch );
                 if ( handleSignals() )
-                    rotateText( KCompletionBase::NextCompletionMatch );
+                    rotateText( TDECompletionBase::NextCompletionMatch );
                 return;
             }
         }
@@ -1080,7 +1080,7 @@ void KLineEdit::setURL( const KURL& url )
     setText( url.prettyURL() );
 }
 
-void KLineEdit::setCompletionBox( KCompletionBox *box )
+void KLineEdit::setCompletionBox( TDECompletionBox *box )
 {
     if ( d->completionBox )
         return;
@@ -1259,19 +1259,19 @@ void KLineEdit::setCompletedItems( const TQStringList& items, bool autoSuggest )
     }
 }
 
-KCompletionBox * KLineEdit::completionBox( bool create )
+TDECompletionBox * KLineEdit::completionBox( bool create )
 {
     if ( create && !d->completionBox ) {
-        setCompletionBox( new KCompletionBox( this, "completion box" ) );
+        setCompletionBox( new TDECompletionBox( this, "completion box" ) );
         d->completionBox->setFont(font());
     }
 
     return d->completionBox;
 }
 
-void KLineEdit::setCompletionObject( KCompletion* comp, bool hsig )
+void KLineEdit::setCompletionObject( TDECompletion* comp, bool hsig )
 {
-    KCompletion *oldComp = compObj();
+    TDECompletion *oldComp = compObj();
     if ( oldComp && handleSignals() )
         disconnect( oldComp, TQT_SIGNAL( matches( const TQStringList& )),
                     this, TQT_SLOT( setCompletedItems( const TQStringList& )));
@@ -1280,7 +1280,7 @@ void KLineEdit::setCompletionObject( KCompletion* comp, bool hsig )
       connect( comp, TQT_SIGNAL( matches( const TQStringList& )),
                this, TQT_SLOT( setCompletedItems( const TQStringList& )));
 
-    KCompletionBase::setCompletionObject( comp, hsig );
+    TDECompletionBase::setCompletionObject( comp, hsig );
 }
 
 // TQWidget::create() turns off mouse-Tracking which would break auto-hiding
@@ -1379,4 +1379,4 @@ TQString KLineEdit::clickMessage() const
 
 
 void KLineEdit::virtual_hook( int id, void* data )
-{ KCompletionBase::virtual_hook( id, data ); }
+{ TDECompletionBase::virtual_hook( id, data ); }

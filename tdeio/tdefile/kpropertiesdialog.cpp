@@ -1749,8 +1749,8 @@ KFilePermissionsPropsPlugin::KFilePermissionsPropsPlugin( KPropertiesDialog *_pr
   if (IamRoot && isLocal)
   {
     usrEdit = new KLineEdit( gb );
-    KCompletion *kcom = usrEdit->completionObject();
-    kcom->setOrder(KCompletion::Sorted);
+    TDECompletion *kcom = usrEdit->completionObject();
+    kcom->setOrder(TDECompletion::Sorted);
     setpwent();
     for (i=0; ((user = getpwent()) != 0L) && (i < maxEntries); i++)
       kcom->addItem(TQString::fromLatin1(user->pw_name));
@@ -1829,7 +1829,7 @@ KFilePermissionsPropsPlugin::KFilePermissionsPropsPlugin( KPropertiesDialog *_pr
   if (IamRoot && isLocal)
   {
     grpEdit = new KLineEdit(gb);
-    KCompletion *kcom = new KCompletion;
+    TDECompletion *kcom = new TDECompletion;
     kcom->setItems(groupList);
     grpEdit->setCompletionObject(kcom, true);
     grpEdit->setAutoDeleteCompletionObject( true );
@@ -3487,8 +3487,8 @@ void KDesktopPropsPlugin::slotAdvanced()
     w->dcopCombo->setCurrentItem(0);
 
   // Provide username completion up to 1000 users.
-  KCompletion *kcom = new KCompletion;
-  kcom->setOrder(KCompletion::Sorted);
+  TDECompletion *kcom = new TDECompletion;
+  kcom->setOrder(TDECompletion::Sorted);
   struct passwd *pw;
   int i, maxEntries = 1000;
   setpwent();
@@ -3761,8 +3761,8 @@ KExecPropsPlugin::KExecPropsPlugin( KPropertiesDialog *_props )
   enableSuidEdit();
 
   // Provide username completion up to 1000 users.
-  KCompletion *kcom = new KCompletion;
-  kcom->setOrder(KCompletion::Sorted);
+  TDECompletion *kcom = new TDECompletion;
+  kcom->setOrder(TDECompletion::Sorted);
   struct passwd *pw;
   int i, maxEntries = 1000;
   setpwent();
