@@ -38,21 +38,21 @@ class TQLabel;
 class TQVBoxLayout;
 class TQTabWidget;
 class KURLLabel;
-class KAboutContainer;
-class KAboutContainerBase;
+class TDEAboutContainer;
+class TDEAboutContainerBase;
 
-class KAboutWidgetPrivate;
+class TDEAboutWidgetPrivate;
 
-class KAboutContainerPrivate;
+class TDEAboutContainerPrivate;
 /**
- *  KAboutContainer can be used to make a application specific AboutDialog.
+ *  TDEAboutContainer can be used to make a application specific AboutDialog.
  */
-class TDEUI_EXPORT KAboutContainer : public TQFrame
+class TDEUI_EXPORT TDEAboutContainer : public TQFrame
 {
   Q_OBJECT
 
   public:
-    KAboutContainer( TQWidget *parent=0, const char *name=0,
+    TDEAboutContainer( TQWidget *parent=0, const char *name=0,
 		     int margin=0, int spacing=0,
 		     int childAlignment = AlignCenter,
 		     int innerAlignment = AlignCenter );
@@ -80,21 +80,21 @@ class TDEUI_EXPORT KAboutContainer : public TQFrame
   private:
     TQVBoxLayout *mVbox;
     int mAlignment;
-    KAboutContainerPrivate* const d;
+    TDEAboutContainerPrivate* const d;
 };
 
-class KAboutContributorPrivate;
+class TDEAboutContributorPrivate;
 
 /**
- * Used internally by KAboutWidget
+ * Used internally by TDEAboutWidget
  * @internal
  */
-class TDEUI_EXPORT KAboutContributor : public TQFrame
+class TDEUI_EXPORT TDEAboutContributor : public TQFrame
 {
   Q_OBJECT
 
   public:
-    KAboutContributor( TQWidget *parent=0, const char *name=0,
+    TDEAboutContributor( TQWidget *parent=0, const char *name=0,
 		       const TQString &username=TQString::null,
 		       const TQString &email=TQString::null,
 		       const TQString &url=TQString::null,
@@ -137,17 +137,17 @@ class TDEUI_EXPORT KAboutContributor : public TQFrame
     bool mShowHeader;
     bool mShowBold;
 
-    KAboutContributorPrivate* const d;
+    TDEAboutContributorPrivate* const d;
 
 	virtual void setName(const char *_name) { TQFrame::setName(_name); }
 };
 
 /**
- * KAboutWidget is the main widget for KAboutDialog.
+ * TDEAboutWidget is the main widget for TDEAboutDialog.
  *
  * It has a minimum size set.
  */
-class TDEUI_EXPORT KAboutWidget : public TQWidget
+class TDEUI_EXPORT TDEAboutWidget : public TQWidget
 {
   Q_OBJECT
 
@@ -156,7 +156,7 @@ public:
   /**
    * The Qt constructor.
    */
-  KAboutWidget(TQWidget* parent=0, const char* name=0 );
+  TDEAboutWidget(TQWidget* parent=0, const char* name=0 );
 
   /**
    * Adjust the minimum size (after setting the properties of the image and
@@ -229,11 +229,11 @@ protected:
   /**
    * The application developer.
    */
-  KAboutContributor *author;
+  TDEAboutContributor *author;
   /**
    * The application maintainer.
    */
-  KAboutContributor *maintainer;
+  TDEAboutContributor *maintainer;
   /**
    * Show the maintainer?
    */
@@ -241,21 +241,21 @@ protected:
   /**
    * A set of people who contributed to the application.
    */
-  TQPtrList<KAboutContributor> contributors;
+  TQPtrList<TDEAboutContributor> contributors;
   // #########################################################################
   //
 private:
-  KAboutWidgetPrivate* const d;
+  TDEAboutWidgetPrivate* const d;
 };
 
-class KAboutDialogPrivate;
+class TDEAboutDialogPrivate;
 /**
  * A KDialogBase with predefined main widget.
  *
  * As a KDialogBase it uses your application wide settings
  * for KDialogBase
  * objects (base frame tiles, main frame tiles etc).
- * To use it, simply create a KAboutDialog object, set all (or some) of its
+ * To use it, simply create a TDEAboutDialog object, set all (or some) of its
  * properties and show it. Do not derive it to create your own about dialog
  * until you need some cool features that are unsupported and you have
  * contacted me to add them.
@@ -280,7 +280,7 @@ class KAboutDialogPrivate;
  * @author Mirko Boehm (mirko@kde.org) and Espen Sand (espensa@online.no)
  * @see KDialogBase
  */
-class TDEUI_EXPORT KAboutDialog : public KDialogBase
+class TDEUI_EXPORT TDEAboutDialog : public KDialogBase
 {
   Q_OBJECT
 
@@ -311,7 +311,7 @@ class TDEUI_EXPORT KAboutDialog : public KDialogBase
      * addContributor(), or setVersion().
      * The dialog will be laid out automatically.
      */
-    KAboutDialog( TQWidget *parent=0, const char *name=0, bool modal=true );
+    TDEAboutDialog( TQWidget *parent=0, const char *name=0, bool modal=true );
 
    /**
     * The extended constructor. (Constructor II).
@@ -338,7 +338,7 @@ class TDEUI_EXPORT KAboutDialog : public KDialogBase
     * @param user3 User button3 text.
     *
     */
-    KAboutDialog( int dialogLayout, const TQString &caption, int buttonMask,
+    TDEAboutDialog( int dialogLayout, const TQString &caption, int buttonMask,
 		  ButtonCode defaultButton, TQWidget *parent=0,
 		  const char *name=0, bool modal=false, bool separator = false,
 		  const TQString &user1 = TQString::null,
@@ -394,7 +394,7 @@ class TDEUI_EXPORT KAboutDialog : public KDialogBase
    * (Constructor II only)
    * Define the program logo to be shown in the dialog.  Use this to override the
    * default program logo.  For example, use this function if the 
-   * KAboutDialog is for a panel applet and you want to override the
+   * TDEAboutDialog is for a panel applet and you want to override the
    * appletproxy logo with your own pixmap.
    *
    * @param fileName Path to file containing logo data in a format that 
@@ -415,7 +415,7 @@ class TDEUI_EXPORT KAboutDialog : public KDialogBase
    * (Constructor II only)
    * Define the program logo to be shown in the dialog.  Use this to override the
    * default program logo. For example, use this function if the 
-   * KAboutDialog is for a panel applet and you want to override the
+   * TDEAboutDialog is for a panel applet and you want to override the
    * appletproxy logo with your own pixmap.
    *
    * @param pixmap The logo pixmap.
@@ -497,7 +497,7 @@ class TDEUI_EXPORT KAboutDialog : public KDialogBase
    *        respect to each other.
    * @return The new container.
    */
-  KAboutContainer *addContainerPage( const TQString &title,
+  TDEAboutContainer *addContainerPage( const TQString &title,
     int childAlignment = AlignCenter, int innerAlignment = AlignCenter );
 
   /**
@@ -512,7 +512,7 @@ class TDEUI_EXPORT KAboutDialog : public KDialogBase
    *        respect to each other.
    * @return The new container.
    */
-  KAboutContainer *addScrolledContainerPage( const TQString &title,
+  TDEAboutContainer *addScrolledContainerPage( const TQString &title,
     int childAlignment = AlignCenter, int innerAlignment = AlignCenter );
 
   /**
@@ -525,7 +525,7 @@ class TDEUI_EXPORT KAboutDialog : public KDialogBase
    *        respect to each other.
    * @return The new container.
    */
-  KAboutContainer *addContainer( int childAlignment, int innerAlignment );
+  TDEAboutContainer *addContainer( int childAlignment, int innerAlignment );
 
   /**
    * (Constructor II only)
@@ -596,12 +596,12 @@ protected:
   /**
    * The main widget (Constructor I)
    */
-  KAboutWidget * about;
+  TDEAboutWidget * about;
 
   /**
    * The main widget (Constructor II)
    */
-  KAboutContainerBase *mContainerBase;
+  TDEAboutContainerBase *mContainerBase;
 
   // -------------------------------------------------------------------------
 protected slots:
@@ -627,7 +627,7 @@ protected slots:
 protected:
   virtual void virtual_hook( int id, void* data );
 private:
-  KAboutDialogPrivate* const d;
+  TDEAboutDialogPrivate* const d;
 };
 
 #endif // defined KABOUTDIALOG_H

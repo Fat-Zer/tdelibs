@@ -32,7 +32,7 @@ class TDEPopupMenu;
 class TQWidget;
 
 class TDEAboutData;
-class KAboutKDE;
+class TDEAboutKDE;
 class KBugReport;
 class KDialogBase;
 class KHelpMenuPrivate;
@@ -263,7 +263,7 @@ class TDEUI_EXPORT KHelpMenu : public TQObject
   private:
     TDEPopupMenu   *mMenu;
     KDialogBase  *mAboutApp;
-    KAboutKDE    *mAboutKDE;
+    TDEAboutKDE    *mAboutKDE;
     KBugReport   *mBugReport;
 
     TQString      mAboutAppText;

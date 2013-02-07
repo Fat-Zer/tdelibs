@@ -27,7 +27,7 @@
 #ifndef _KABOUTDATA_H_
 #define _KABOUTDATA_H_
 
-class KAboutPersonPrivate;
+class TDEAboutPersonPrivate;
 class TDEAboutDataPrivate;
 
 /**
@@ -51,7 +51,7 @@ class TDEAboutDataPrivate;
  *   TDECmdLineArgs::init(argc, argv, &about);
  * \endcode
  */
-class TDECORE_EXPORT KAboutPerson
+class TDECORE_EXPORT TDEAboutPerson
 {
 public:
     /**
@@ -67,7 +67,7 @@ public:
      *
      * @param webAddress Home page of the person.
      */
-    KAboutPerson( const char *name, const char *task,
+    TDEAboutPerson( const char *name, const char *task,
                   const char *emailAddress, const char *webAddress )
     {
       mName = name;
@@ -79,7 +79,7 @@ public:
      * @internal
      * Don't use. Required by QValueList
      */
-    KAboutPerson() {}
+    TDEAboutPerson() {}
 
     /**
      * The person's name
@@ -115,10 +115,10 @@ private:
     const char *mEmailAddress;
     const char *mWebAddress;
 
-    KAboutPersonPrivate *d;
+    TDEAboutPersonPrivate *d;
 };
 
-class KAboutTranslatorPrivate;
+class TDEAboutTranslatorPrivate;
 /**
  * This structure is used to store information about a translator.
  * It can store the translator's name and an email address.
@@ -126,12 +126,12 @@ class KAboutTranslatorPrivate;
  * but it can be used elsewhere as well.
  * Normally you should at least define the translator's name.
  *
- * It's not possible to use KAboutPerson for this, because
- * KAboutPerson stores internally only const char* pointers, but the
+ * It's not possible to use TDEAboutPerson for this, because
+ * TDEAboutPerson stores internally only const char* pointers, but the
  * translator information is generated dynamically from the translation
  * of a dummy string.
 */
-class TDECORE_EXPORT KAboutTranslator
+class TDECORE_EXPORT TDEAboutTranslator
 {
 public:
     /**
@@ -141,7 +141,7 @@ public:
      *
      * @param emailAddress The email address of the person.
      */
-    KAboutTranslator(const TQString & name=TQString::null,
+    TDEAboutTranslator(const TQString & name=TQString::null,
                      const TQString & emailAddress=TQString::null);
 
     /**
@@ -161,7 +161,7 @@ public:
 private:
     TQString mName;
     TQString mEmail;
-    KAboutTranslatorPrivate* d;
+    TDEAboutTranslatorPrivate* d;
 };
 
 
@@ -169,10 +169,10 @@ private:
  * This class is used to store information about a program. It can store
  * such values as version number, program name, home page, email address
  * for bug reporting, multiple authors and contributors
- * (using KAboutPerson), license and copyright information.
+ * (using TDEAboutPerson), license and copyright information.
  *
  * Currently, the values set here are shown by the "About" box
- * (see KAboutDialog), used by the bug report dialog (see KBugReport),
+ * (see TDEAboutDialog), used by the bug report dialog (see KBugReport),
  * and by the help shown on command line (see TDECmdLineArgs).
  *
  * @short Holds information needed by the "About" box and other
@@ -318,7 +318,7 @@ class TDECORE_EXPORT TDEAboutData
      *
      * @param name the name of the translator
      * @param emailAddress the email address of the translator
-     * @see KAboutTranslator
+     * @see TDEAboutTranslator
      */
     void setTranslator(const char* name, const char* emailAddress);
 
@@ -521,19 +521,19 @@ class TDECORE_EXPORT TDEAboutData
      * Returns a list of authors.
      * @return author information (list of persons).
      */
-    const TQValueList<KAboutPerson> authors() const;
+    const TQValueList<TDEAboutPerson> authors() const;
 
     /**
      * Returns a list of persons who contributed.
      * @return credit information (list of persons).
      */
-    const TQValueList<KAboutPerson> credits() const;
+    const TQValueList<TDEAboutPerson> credits() const;
 
     /**
      * Returns a list of translators.
      * @return translators information (list of persons)
      */
-    const TQValueList<KAboutTranslator> translators() const;
+    const TQValueList<TDEAboutTranslator> translators() const;
 
     /**
      * Returns a message about the translation team.
@@ -618,8 +618,8 @@ class TDECORE_EXPORT TDEAboutData
     const char *mOtherText;
     const char *mHomepageAddress;
     const char *mBugEmailAddress;
-    TQValueList<KAboutPerson> mAuthorList;
-    TQValueList<KAboutPerson> mCreditList;
+    TQValueList<TDEAboutPerson> mAuthorList;
+    TQValueList<TDEAboutPerson> mCreditList;
     const char *mLicenseText;
     static const char *defaultBugTracker;
 

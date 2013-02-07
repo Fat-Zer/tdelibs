@@ -37,7 +37,7 @@
  * @author Espen Sand (espen@kde.org)
  */
 
-class TDEUI_EXPORT KAboutKDE : public KAboutDialog
+class TDEUI_EXPORT TDEAboutKDE : public TDEAboutDialog
 {
   public:
     /**
@@ -53,7 +53,7 @@ class TDEUI_EXPORT KAboutKDE : public KAboutDialog
      *        made visible using TQWidget::show(). Otherwise it will be
      *        modal and must be made visible using TQWidget::exec()
      */
-    KAboutKDE( TQWidget *parent=0, const char *name=0, bool modal=true );
+    TDEAboutKDE( TQWidget *parent=0, const char *name=0, bool modal=true );
 };
 
 

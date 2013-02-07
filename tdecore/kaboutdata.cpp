@@ -26,13 +26,13 @@
 #include <tqtextstream.h>
 
 TQString
-KAboutPerson::name() const
+TDEAboutPerson::name() const
 {
    return TQString::fromUtf8(mName);
 }
 
 TQString
-KAboutPerson::task() const
+TDEAboutPerson::task() const
 {
    if (mTask && *mTask)
       return i18n(mTask);
@@ -41,32 +41,32 @@ KAboutPerson::task() const
 }
 
 TQString
-KAboutPerson::emailAddress() const
+TDEAboutPerson::emailAddress() const
 {
    return TQString::fromUtf8(mEmailAddress);
 }
 
 
 TQString
-KAboutPerson::webAddress() const
+TDEAboutPerson::webAddress() const
 {
    return TQString::fromUtf8(mWebAddress);
 }
 
 
-KAboutTranslator::KAboutTranslator(const TQString & name,
+TDEAboutTranslator::TDEAboutTranslator(const TQString & name,
                 const TQString & emailAddress)
 {
     mName=name;
     mEmail=emailAddress;
 }
 
-TQString KAboutTranslator::name() const
+TQString TDEAboutTranslator::name() const
 {
     return mName;
 }
 
-TQString KAboutTranslator::emailAddress() const
+TQString TDEAboutTranslator::emailAddress() const
 {
     return mEmail;
 }
@@ -141,14 +141,14 @@ void
 TDEAboutData::addAuthor( const char *name, const char *task,
 		    const char *emailAddress, const char *webAddress )
 {
-  mAuthorList.append(KAboutPerson(name,task,emailAddress,webAddress));
+  mAuthorList.append(TDEAboutPerson(name,task,emailAddress,webAddress));
 }
 
 void
 TDEAboutData::addCredit( const char *name, const char *task,
 		    const char *emailAddress, const char *webAddress )
 {
-  mCreditList.append(KAboutPerson(name,task,emailAddress,webAddress));
+  mCreditList.append(TDEAboutPerson(name,task,emailAddress,webAddress));
 }
 
 void
@@ -320,22 +320,22 @@ TDEAboutData::bugAddress() const
    return TQString::fromLatin1(mBugEmailAddress);
 }
 
-const TQValueList<KAboutPerson>
+const TQValueList<TDEAboutPerson>
 TDEAboutData::authors() const
 {
    return mAuthorList;
 }
 
-const TQValueList<KAboutPerson>
+const TQValueList<TDEAboutPerson>
 TDEAboutData::credits() const
 {
    return mCreditList;
 }
 
-const TQValueList<KAboutTranslator>
+const TQValueList<TDEAboutTranslator>
 TDEAboutData::translators() const
 {
-    TQValueList<KAboutTranslator> personList;
+    TQValueList<TDEAboutTranslator> personList;
 
     if(d->translatorName == 0)
         return personList;
@@ -375,7 +375,7 @@ TDEAboutData::translators() const
 
         TQString name=*nit;
 
-        personList.append(KAboutTranslator(name.stripWhiteSpace(), email.stripWhiteSpace()));
+        personList.append(TDEAboutTranslator(name.stripWhiteSpace(), email.stripWhiteSpace()));
     }
 
     return personList;

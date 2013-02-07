@@ -175,7 +175,7 @@ public:
     /**
      * The instance currently active (useful in a multi-instance
      * application, such as a KParts application).
-     * Don't use this - it's mainly for KAboutDialog and KBugReport.
+     * Don't use this - it's mainly for TDEAboutDialog and KBugReport.
      * @internal
      */
     static void setActiveInstance(TDEInstance *d);

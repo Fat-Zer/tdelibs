@@ -196,7 +196,7 @@ void KHelpMenu::aboutApplication()
   {
     if( !mAboutApp )
     {
-      mAboutApp = new KAboutApplication( d->mAboutData, mParent, "about", false );
+      mAboutApp = new TDEAboutApplication( d->mAboutData, mParent, "about", false );
       connect( mAboutApp, TQT_SIGNAL(finished()), this, TQT_SLOT( dialogFinished()) );
     }
     mAboutApp->show();
@@ -238,7 +238,7 @@ void KHelpMenu::aboutKDE()
 {
   if( !mAboutKDE )
   {
-    mAboutKDE = new KAboutKDE( mParent, "aboutkde", false );
+    mAboutKDE = new TDEAboutKDE( mParent, "aboutkde", false );
     connect( mAboutKDE, TQT_SIGNAL(finished()), this, TQT_SLOT( dialogFinished()) );
   }
   mAboutKDE->show();

@@ -37,7 +37,7 @@
 281        tdeui (TDECModule)
 282        tdeui (KDockWidget)
 290        tdeui (KPixmapIO)
-291        tdeui (KAboutDialog)
+291        tdeui (TDEAboutDialog)
 292        tdeui (KComboBox)
 293        tdeui (KLineEdit)
 294        tdeui (KEdit)

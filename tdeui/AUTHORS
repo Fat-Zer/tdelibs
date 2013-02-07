@@ -2,7 +2,7 @@ Dawit Alemayehu <adawit@earthlink.net>
 KLineEdit, KComboBox
 
 Espen Sand <espen@kde.org>:
-KDialogBase, KAboutDialog (based on work by Mirko), KHelpMenu, KTextBrowser
+KDialogBase, TDEAboutDialog (based on work by Mirko), KHelpMenu, KTextBrowser
 and various adjustments here and there.
 
 Daniel M. Duley <mosfet@kde.org>

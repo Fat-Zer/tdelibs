@@ -607,10 +607,10 @@ TDECmdLineArgs::parseAllArgs()
          } else if ( ::qstrcmp( option, "author") == 0 ) {
              enable_i18n();
        if ( about ) {
-         const TQValueList<KAboutPerson> authors = about->authors();
+         const TQValueList<TDEAboutPerson> authors = about->authors();
          if ( !authors.isEmpty() ) {
            TQString authorlist;
-           for (TQValueList<KAboutPerson>::ConstIterator it = authors.begin(); it != authors.end(); ++it ) {
+           for (TQValueList<TDEAboutPerson>::ConstIterator it = authors.begin(); it != authors.end(); ++it ) {
              TQString email;
              if ( !(*it).emailAddress().isEmpty() )
                email = " <" + (*it).emailAddress() + ">";

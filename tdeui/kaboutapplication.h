@@ -41,7 +41,7 @@
  * @author Waldo Bastian (bastian@kde.org) and Espen Sand (espen@kde.org)
  */
 
-class TDEUI_EXPORT KAboutApplication : public KAboutDialog
+class TDEUI_EXPORT TDEAboutApplication : public TDEAboutDialog
 {
   public:
     /**
@@ -57,7 +57,7 @@ class TDEUI_EXPORT KAboutApplication : public KAboutDialog
      *        made visible using TQWidget::show(). Otherwise it will be
      *        modal and must be made visible using TQWidget::exec().
      */
-    KAboutApplication( TQWidget *parent=0, const char *name=0, bool modal=true );
+    TDEAboutApplication( TQWidget *parent=0, const char *name=0, bool modal=true );
 
     /**
      * Constructor. Mostly does the same stuff as the previous constructor, except
@@ -76,12 +76,12 @@ class TDEUI_EXPORT KAboutApplication : public KAboutDialog
      *        made visible using TQWidget::show(). Otherwise it will be
      *        modal and must be made visible using TQWidget::exec().
      */
-    KAboutApplication( const TDEAboutData *aboutData, TQWidget *parent=0, const char *name=0, bool modal=true );
+    TDEAboutApplication( const TDEAboutData *aboutData, TQWidget *parent=0, const char *name=0, bool modal=true );
 
 /*
  FIXME: The two constructors should be replaced with the following  after the lib freeze:
 
-    KAboutApplication( const TDEAboutData *aboutData=0, TQWidget *parent=0, const char *name=0, bool modal=true );
+    TDEAboutApplication( const TDEAboutData *aboutData=0, TQWidget *parent=0, const char *name=0, bool modal=true );
 
  This will make buildDialog() obsolete as well (Frerich).
 */

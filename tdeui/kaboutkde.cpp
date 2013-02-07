@@ -26,8 +26,8 @@
 #include <kstandarddirs.h>
 
 
-KAboutKDE::KAboutKDE( TQWidget *parent, const char *name, bool modal )
-  :KAboutDialog( KAboutDialog::AbtKDEStandard, TQString::fromLatin1("TDE"),
+TDEAboutKDE::TDEAboutKDE( TQWidget *parent, const char *name, bool modal )
+  :TDEAboutDialog( TDEAboutDialog::AbtKDEStandard, TQString::fromLatin1("TDE"),
 		 KDialogBase::Help|KDialogBase::Close, KDialogBase::Close,
 		 parent, name, modal )
 {

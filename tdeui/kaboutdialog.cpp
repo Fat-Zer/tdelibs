@@ -42,7 +42,7 @@
 #include <kdebug.h>
 
 //MOC_SKIP_BEGIN
-template class TQPtrList<KAboutContributor>;
+template class TQPtrList<TDEAboutContributor>;
 //MOC_SKIP_END
 
 #define WORKTEXT_IDENTATION 16
@@ -54,10 +54,10 @@ template class TQPtrList<KAboutContributor>;
 #include "kaboutdialog_private.moc"
 // ##############################################################
 
-class KAboutTabWidget : public TQTabWidget
+class TDEAboutTabWidget : public TQTabWidget
 {
 public:
-    KAboutTabWidget( TQWidget* parent ) : TQTabWidget( parent ) {}
+    TDEAboutTabWidget( TQWidget* parent ) : TQTabWidget( parent ) {}
     TQSize sizeHint() const {
 	return TQTabWidget::sizeHint().expandedTo( tabBar()->sizeHint() + TQSize(4,4) );
     }
@@ -66,7 +66,7 @@ public:
 
 
 
-KAboutContributor::KAboutContributor( TQWidget *_parent, const char *wname,
+TDEAboutContributor::TDEAboutContributor( TQWidget *_parent, const char *wname,
 			              const TQString &_name,const TQString &_email,
 			              const TQString &_url, const TQString &_work,
 			              bool showHeader, bool showFrame,
@@ -113,7 +113,7 @@ KAboutContributor::KAboutContributor( TQWidget *_parent, const char *wname,
 }
 
 
-void KAboutContributor::setName( const TQString &_text, const TQString &_header,
+void TDEAboutContributor::setName( const TQString &_text, const TQString &_header,
 				 bool _update )
 {
   mLabel[0]->setText(_header);
@@ -122,7 +122,7 @@ void KAboutContributor::setName( const TQString &_text, const TQString &_header,
 }
 
 
-void KAboutContributor::setEmail( const TQString &_text, const TQString &_header,
+void TDEAboutContributor::setEmail( const TQString &_text, const TQString &_header,
 				  bool _update )
 {
   mLabel[1]->setText(_header);
@@ -133,7 +133,7 @@ void KAboutContributor::setEmail( const TQString &_text, const TQString &_header
 }
 
 
-void KAboutContributor::setURL( const TQString &_text, const TQString &_header,
+void TDEAboutContributor::setURL( const TQString &_text, const TQString &_header,
 				bool _update )
 {
   mLabel[2]->setText(_header);
@@ -144,7 +144,7 @@ void KAboutContributor::setURL( const TQString &_text, const TQString &_header,
 }
 
 
-void KAboutContributor::setWork( const TQString &_text, const TQString &_header,
+void TDEAboutContributor::setWork( const TQString &_text, const TQString &_header,
 				 bool _update )
 {
   mLabel[3]->setText(_header);
@@ -153,32 +153,32 @@ void KAboutContributor::setWork( const TQString &_text, const TQString &_header,
 }
 
 
-TQString KAboutContributor::getName( void ) const
+TQString TDEAboutContributor::getName( void ) const
 {
   return mText[0]->text();
 }
 
 
-TQString KAboutContributor::getEmail( void ) const
+TQString TDEAboutContributor::getEmail( void ) const
 {
   return mText[1]->text();
 }
 
 
-TQString KAboutContributor::getURL( void ) const
+TQString TDEAboutContributor::getURL( void ) const
 {
   return mText[2]->text();
 }
 
 
-TQString KAboutContributor::getWork( void ) const
+TQString TDEAboutContributor::getWork( void ) const
 {
   return mText[3]->text();
 }
 
 
 
-void KAboutContributor::updateLayout( void )
+void TDEAboutContributor::updateLayout( void )
 {
   delete layout();
 
@@ -260,7 +260,7 @@ void KAboutContributor::updateLayout( void )
 }
 
 
-void KAboutContributor::fontChange( const TQFont &/*oldFont*/ )
+void TDEAboutContributor::fontChange( const TQFont &/*oldFont*/ )
 {
   if( mShowBold )
   {
@@ -272,28 +272,28 @@ void KAboutContributor::fontChange( const TQFont &/*oldFont*/ )
 }
 
 
-TQSize KAboutContributor::sizeHint( void ) const
+TQSize TDEAboutContributor::sizeHint( void ) const
 {
   return minimumSizeHint();
 }
 
 
-void KAboutContributor::urlClickedSlot( const TQString &u )
+void TDEAboutContributor::urlClickedSlot( const TQString &u )
 {
   emit openURL(u);
 }
 
 
-void KAboutContributor::emailClickedSlot( const TQString &e )
+void TDEAboutContributor::emailClickedSlot( const TQString &e )
 {
   emit sendEmail( mText[0]->text(), e ) ;
 }
 
 
 //
-// Internal widget for the KAboutDialog class.
+// Internal widget for the TDEAboutDialog class.
 //
-KAboutContainerBase::KAboutContainerBase( int layoutType, TQWidget *_parent,
+TDEAboutContainerBase::TDEAboutContainerBase( int layoutType, TQWidget *_parent,
 					  char *_name )
   : TQWidget( _parent, _name ),
     mImageLabel(0), mTitleLabel(0), mIconLabel(0),mVersionLabel(0),
@@ -369,7 +369,7 @@ KAboutContainerBase::KAboutContainerBase( int layoutType, TQWidget *_parent,
 
   if( layoutType & AbtTabbed )
   {
-    mPageTab = new KAboutTabWidget( this );
+    mPageTab = new TDEAboutTabWidget( this );
     if( !mPageTab ) { return; }
     hbox->addWidget( mPageTab, 10 );
   }
@@ -422,17 +422,17 @@ KAboutContainerBase::KAboutContainerBase( int layoutType, TQWidget *_parent,
 }
 
 
-void KAboutContainerBase::show( void )
+void TDEAboutContainerBase::show( void )
 {
     TQWidget::show();
 }
 
-TQSize KAboutContainerBase::sizeHint( void ) const
+TQSize TDEAboutContainerBase::sizeHint( void ) const
 {
     return minimumSize().expandedTo( TQSize( TQWidget::sizeHint().width(), 0 ) );
 }
 
-void KAboutContainerBase::fontChange( const TQFont &/*oldFont*/ )
+void TDEAboutContainerBase::fontChange( const TQFont &/*oldFont*/ )
 {
   if( mTitleLabel )
   {
@@ -457,7 +457,7 @@ void KAboutContainerBase::fontChange( const TQFont &/*oldFont*/ )
   update();
 }
 
-TQFrame *KAboutContainerBase::addTextPage( const TQString &title,
+TQFrame *TDEAboutContainerBase::addTextPage( const TQString &title,
 					  const TQString &text,
 					  bool richText, int numLines )
 {
@@ -492,7 +492,7 @@ TQFrame *KAboutContainerBase::addTextPage( const TQString &title,
   return page;
 }
 
-TQFrame *KAboutContainerBase::addLicensePage( const TQString &title,
+TQFrame *TDEAboutContainerBase::addLicensePage( const TQString &title,
 					  const TQString &text, int numLines)
 {
   TQFrame* const page = addEmptyPage( title );
@@ -512,7 +512,7 @@ TQFrame *KAboutContainerBase::addLicensePage( const TQString &title,
 }
 
 
-KAboutContainer *KAboutContainerBase::addContainerPage( const TQString &title,
+TDEAboutContainer *TDEAboutContainerBase::addContainerPage( const TQString &title,
 							int childAlignment,
 							int innerAlignment )
 {
@@ -522,7 +522,7 @@ KAboutContainer *KAboutContainerBase::addContainerPage( const TQString &title,
     return 0;
   }
 
-  KAboutContainer* const container = new KAboutContainer( mPageTab, "container",
+  TDEAboutContainer* const container = new TDEAboutContainer( mPageTab, "container",
     KDialog::spacingHint(), KDialog::spacingHint(), childAlignment,
 						  innerAlignment );
   mPageTab->addTab( container, title );
@@ -536,7 +536,7 @@ KAboutContainer *KAboutContainerBase::addContainerPage( const TQString &title,
 }
 
 
-KAboutContainer *KAboutContainerBase::addScrolledContainerPage(
+TDEAboutContainer *TDEAboutContainerBase::addScrolledContainerPage(
 				      const TQString &title,
 				      int childAlignment,
 				      int innerAlignment )
@@ -553,7 +553,7 @@ KAboutContainer *KAboutContainerBase::addScrolledContainerPage(
   scrollView->viewport()->setBackgroundMode( PaletteBackground );
   vbox->addWidget( scrollView );
 
-  KAboutContainer* const container = new KAboutContainer( scrollView, "container",
+  TDEAboutContainer* const container = new TDEAboutContainer( scrollView, "container",
     KDialog::spacingHint(), KDialog::spacingHint(), childAlignment,
     innerAlignment );
   scrollView->addChild( container );
@@ -568,7 +568,7 @@ KAboutContainer *KAboutContainerBase::addScrolledContainerPage(
 }
 
 
-TQFrame *KAboutContainerBase::addEmptyPage( const TQString &title )
+TQFrame *TDEAboutContainerBase::addEmptyPage( const TQString &title )
 {
   if( !mPageTab )
   {
@@ -584,10 +584,10 @@ TQFrame *KAboutContainerBase::addEmptyPage( const TQString &title )
 }
 
 
-KAboutContainer *KAboutContainerBase::addContainer( int childAlignment,
+TDEAboutContainer *TDEAboutContainerBase::addContainer( int childAlignment,
 						    int innerAlignment )
 {
-  KAboutContainer* const container = new KAboutContainer( this, "container",
+  TDEAboutContainer* const container = new TDEAboutContainer( this, "container",
     0, KDialog::spacingHint(), childAlignment, innerAlignment );
   mTopLayout->addWidget( container, 0, childAlignment );
 
@@ -601,7 +601,7 @@ KAboutContainer *KAboutContainerBase::addContainer( int childAlignment,
 
 
 
-void KAboutContainerBase::setTitle( const TQString &title )
+void TDEAboutContainerBase::setTitle( const TQString &title )
 {
   if( !mTitleLabel )
   {
@@ -612,7 +612,7 @@ void KAboutContainerBase::setTitle( const TQString &title )
 }
 
 
-void KAboutContainerBase::setImage( const TQString &fileName )
+void TDEAboutContainerBase::setImage( const TQString &fileName )
 {
   if( !mImageLabel )
   {
@@ -631,7 +631,7 @@ void KAboutContainerBase::setImage( const TQString &fileName )
   mImageFrame->layout()->activate();
 }
 
-void KAboutContainerBase::setProgramLogo( const TQString &fileName )
+void TDEAboutContainerBase::setProgramLogo( const TQString &fileName )
 {
   if( fileName.isNull() )
   {
@@ -642,7 +642,7 @@ void KAboutContainerBase::setProgramLogo( const TQString &fileName )
   setProgramLogo( logo );
 }
 
-void KAboutContainerBase::setProgramLogo( const TQPixmap &pixmap )
+void TDEAboutContainerBase::setProgramLogo( const TQPixmap &pixmap )
 {
   if( !mIconLabel )
   {
@@ -655,7 +655,7 @@ void KAboutContainerBase::setProgramLogo( const TQPixmap &pixmap )
   }
 }
 
-void KAboutContainerBase::setImageBackgroundColor( const TQColor &color )
+void TDEAboutContainerBase::setImageBackgroundColor( const TQColor &color )
 {
   if( mImageFrame )
   {
@@ -664,7 +664,7 @@ void KAboutContainerBase::setImageBackgroundColor( const TQColor &color )
 }
 
 
-void KAboutContainerBase::setImageFrame( bool state )
+void TDEAboutContainerBase::setImageFrame( bool state )
 {
   if( mImageFrame )
   {
@@ -682,7 +682,7 @@ void KAboutContainerBase::setImageFrame( bool state )
 }
 
 
-void KAboutContainerBase::setProduct( const TQString &appName,
+void TDEAboutContainerBase::setProduct( const TQString &appName,
 				      const TQString &version,
 				      const TQString &author,
 				      const TQString &year )
@@ -720,18 +720,18 @@ void KAboutContainerBase::setProduct( const TQString &appName,
 }
 
 
-void KAboutContainerBase::slotMouseTrack( int mode, const TQMouseEvent *e )
+void TDEAboutContainerBase::slotMouseTrack( int mode, const TQMouseEvent *e )
 {
   emit mouseTrack( mode, e );
 }
 
 
-void KAboutContainerBase::slotUrlClick( const TQString &url )
+void TDEAboutContainerBase::slotUrlClick( const TQString &url )
 {
   emit urlClick( url );
 }
 
-void KAboutContainerBase::slotMailClick( const TQString &_name,
+void TDEAboutContainerBase::slotMailClick( const TQString &_name,
 					 const TQString &_address )
 {
   emit mailClick( _name, _address );
@@ -739,7 +739,7 @@ void KAboutContainerBase::slotMailClick( const TQString &_name,
 
 
 
-KAboutContainer::KAboutContainer( TQWidget *_parent, const char *_name,
+TDEAboutContainer::TDEAboutContainer( TQWidget *_parent, const char *_name,
 				  int _margin, int _spacing,
 				  int childAlignment, int innerAlignment )
   : TQFrame( _parent, _name ), d(0)
@@ -781,7 +781,7 @@ KAboutContainer::KAboutContainer( TQWidget *_parent, const char *_name,
 }
 
 
-void KAboutContainer::childEvent( TQChildEvent *e )
+void TDEAboutContainer::childEvent( TQChildEvent *e )
 {
   if( !e->inserted() || !e->child()->isWidgetType() )
   {
@@ -806,7 +806,7 @@ void KAboutContainer::childEvent( TQChildEvent *e )
 }
 
 
-TQSize KAboutContainer::sizeHint( void ) const
+TQSize TDEAboutContainer::sizeHint( void ) const
 {
   //
   // The size is computed by adding the sizeHint().height() of all
@@ -864,24 +864,24 @@ TQSize KAboutContainer::sizeHint( void ) const
 }
 
 
-TQSize KAboutContainer::minimumSizeHint( void ) const
+TQSize TDEAboutContainer::minimumSizeHint( void ) const
 {
   return sizeHint();
 }
 
 
-void KAboutContainer::addWidget( TQWidget *widget )
+void TDEAboutContainer::addWidget( TQWidget *widget )
 {
   widget->reparent( this, 0, TQPoint(0,0) );
 }
 
 
-void KAboutContainer::addPerson( const TQString &_name, const TQString &_email,
+void TDEAboutContainer::addPerson( const TQString &_name, const TQString &_email,
 				 const TQString &_url, const TQString &_task,
 				 bool showHeader, bool showFrame,bool showBold)
 {
 
-  KAboutContributor* const cont = new KAboutContributor( this, "pers",
+  TDEAboutContributor* const cont = new TDEAboutContributor( this, "pers",
     _name, _email, _url, _task, showHeader, showFrame, showBold );
   connect( cont, TQT_SIGNAL( openURL(const TQString&)),
 	   this, TQT_SIGNAL( urlClick(const TQString &)));
@@ -890,7 +890,7 @@ void KAboutContainer::addPerson( const TQString &_name, const TQString &_email,
 }
 
 
-void KAboutContainer::addTitle( const TQString &title, int alignment,
+void TDEAboutContainer::addTitle( const TQString &title, int alignment,
 				bool showFrame, bool showBold )
 {
 
@@ -909,7 +909,7 @@ void KAboutContainer::addTitle( const TQString &title, int alignment,
 }
 
 
-void KAboutContainer::addImage( const TQString &fileName, int alignment )
+void TDEAboutContainer::addImage( const TQString &fileName, int alignment )
 {
   if( fileName.isNull() )
   {
@@ -930,19 +930,19 @@ void KAboutContainer::addImage( const TQString &fileName, int alignment )
 #if 0
 //MOC_SKIP_BEGIN
 
-/** Every person displayed is stored in a KAboutContributor object.
+/** Every person displayed is stored in a TDEAboutContributor object.
  *  Every contributor, the author and/or the maintainer of the application are
  *  stored in objects of this local class. Every single field may be empty.
- *  To add a contributor, create a KAboutContributor object as a child of your
- *  @ref KAboutDialog, set its contents and add it using add addContributor. */
-class KAboutContributor : public QFrame
+ *  To add a contributor, create a TDEAboutContributor object as a child of your
+ *  @ref TDEAboutDialog, set its contents and add it using add addContributor. */
+class TDEAboutContributor : public QFrame
 {
   // ############################################################################
   Q_OBJECT
   // ----------------------------------------------------------------------------
 public:
   /** The Qt constructor. */
-  KAboutContributor(TQWidget* parent=0, const char* name=0);
+  TDEAboutContributor(TQWidget* parent=0, const char* name=0);
   /** Set the name (a literal string). */
   void setName(const TQString&);
   /** Get the name. */
@@ -958,7 +958,7 @@ public:
   /** The tasks the person worked on (a literal string). More than one line is
    *  possible, but very long texts might look ugly. */
   void setWork(const TQString&);
-  /** The size hint. Very important here, since KAboutWidget relies on it for
+  /** The size hint. Very important here, since TDEAboutWidget relies on it for
    *  geometry management. */
   TQSize sizeHint();
   TQSize minimumSizeHint(void);
@@ -997,7 +997,7 @@ signals:
 
 
 
-KAboutContributor::KAboutContributor(TQWidget* parent, const char* n)
+TDEAboutContributor::TDEAboutContributor(TQWidget* parent, const char* n)
   : TQFrame(parent, n),
     name(new TQLabel(this)),
     email(new KURLLabel(this)),
@@ -1006,7 +1006,7 @@ KAboutContributor::KAboutContributor(TQWidget* parent, const char* n)
   // ############################################################
   if(name==0 || email==0)
     { // this will nearly never happen (out of memory in about box?)
-      kdDebug() << "KAboutContributor::KAboutContributor: Out of memory." << endl;
+      kdDebug() << "TDEAboutContributor::TDEAboutContributor: Out of memory." << endl;
       tqApp->quit();
     }
   setFrameStyle(TQFrame::Panel | TQFrame::Raised);
@@ -1019,7 +1019,7 @@ KAboutContributor::KAboutContributor(TQWidget* parent, const char* n)
 }
 
 void
-KAboutContributor::setName(const TQString& n)
+TDEAboutContributor::setName(const TQString& n)
 {
   // ############################################################
   name->setText(n);
@@ -1027,14 +1027,14 @@ KAboutContributor::setName(const TQString& n)
 }
 
 QString
-KAboutContributor::getName()
+TDEAboutContributor::getName()
 {
   // ###########################################################
   return name->text();
   // ###########################################################
 }
 void
-KAboutContributor::setURL(const TQString& u)
+TDEAboutContributor::setURL(const TQString& u)
 {
   // ###########################################################
   url->setText(u);
@@ -1042,7 +1042,7 @@ KAboutContributor::setURL(const TQString& u)
 }
 
 QString
-KAboutContributor::getURL()
+TDEAboutContributor::getURL()
 {
   // ###########################################################
   return url->text();
@@ -1050,7 +1050,7 @@ KAboutContributor::getURL()
 }
 
 void
-KAboutContributor::setEmail(const TQString& e)
+TDEAboutContributor::setEmail(const TQString& e)
 {
   // ###########################################################
   email->setText(e);
@@ -1058,7 +1058,7 @@ KAboutContributor::setEmail(const TQString& e)
 }
 
 QString
-KAboutContributor::getEmail()
+TDEAboutContributor::getEmail()
 {
   // ###########################################################
   return email->text();
@@ -1066,25 +1066,25 @@ KAboutContributor::getEmail()
 }
 
 void
-KAboutContributor::emailClickedSlot(const TQString& e)
+TDEAboutContributor::emailClickedSlot(const TQString& e)
 {
   // ###########################################################
-  kdDebug() << "KAboutContributor::emailClickedSlot: called." << endl;
+  kdDebug() << "TDEAboutContributor::emailClickedSlot: called." << endl;
   emit(sendEmail(name->text(), e));
   // ###########################################################
 }
 
 void
-KAboutContributor::urlClickedSlot(const TQString& u)
+TDEAboutContributor::urlClickedSlot(const TQString& u)
 {
   // ###########################################################
-  kdDebug() << "KAboutContributor::urlClickedSlot: called." << endl;
+  kdDebug() << "TDEAboutContributor::urlClickedSlot: called." << endl;
   emit(openURL(u));
   // ###########################################################
 }
 
 void
-KAboutContributor::setWork(const TQString& w)
+TDEAboutContributor::setWork(const TQString& w)
 {
   // ###########################################################
   work=w;
@@ -1096,7 +1096,7 @@ KAboutContributor::setWork(const TQString& w)
 
 #if 0
 QSize
-KAboutContributor::sizeHint()
+TDEAboutContributor::sizeHint()
 {
   // ############################################################################
   const int FrameWidth=frameWidth();
@@ -1128,13 +1128,13 @@ KAboutContributor::sizeHint()
   // ############################################################################
 }
 
-TQSize KAboutContributor::minimumSizeHint(void)
+TQSize TDEAboutContributor::minimumSizeHint(void)
 {
   return( sizeHint() );
 }
 
 
-void KAboutContributor::show( void )
+void TDEAboutContributor::show( void )
 {
   TQFrame::show();
   setMinimumSize( sizeHint() );
@@ -1143,7 +1143,7 @@ void KAboutContributor::show( void )
 
 
 void
-KAboutContributor::resizeEvent(TQResizeEvent*)
+TDEAboutContributor::resizeEvent(TQResizeEvent*)
 { // the widgets are simply aligned from top to bottom, since the parent is
   // expected to respect the size hint
   // ############################################################################
@@ -1166,7 +1166,7 @@ KAboutContributor::resizeEvent(TQResizeEvent*)
 
 
 void
-KAboutContributor::paintEvent(TQPaintEvent* e)
+TDEAboutContributor::paintEvent(TQPaintEvent* e)
 { // the widgets are simply aligned from top to bottom, since the parent is
   // expected to respect the size hint (the widget is only used locally by now)
   // ############################################################################
@@ -1186,7 +1186,7 @@ KAboutContributor::paintEvent(TQPaintEvent* e)
 
 
 #if 0
-TQSize KAboutContributor::sizeHint( void )
+TQSize TDEAboutContributor::sizeHint( void )
 {
   int s = KDialog::spacingHint();
   int h = fontMetrics().lineSpacing()*3 + 2*s;
@@ -1239,7 +1239,7 @@ TQSize KAboutContributor::sizeHint( void )
 // The widgets are simply aligned from top to bottom, since the parent is
 // expected to respect the size hint
 //
-void KAboutContributor::resizeEvent(TQResizeEvent*)
+void TDEAboutContributor::resizeEvent(TQResizeEvent*)
 {
   int x = frameWidth();
   int s = KDialog::spacingHint();
@@ -1273,7 +1273,7 @@ void KAboutContributor::resizeEvent(TQResizeEvent*)
 
 
 
-void KAboutContributor::paintEvent( TQPaintEvent *e )
+void TDEAboutContributor::paintEvent( TQPaintEvent *e )
 {
   TQFrame::paintEvent(e);
   if(work.isEmpty()) return;
@@ -1305,13 +1305,13 @@ void KAboutContributor::paintEvent( TQPaintEvent *e )
 
 
 
-KAboutWidget::KAboutWidget(TQWidget *_parent, const char *_name)
+TDEAboutWidget::TDEAboutWidget(TQWidget *_parent, const char *_name)
   : TQWidget(_parent, _name),
     version(new TQLabel(this)),
     cont(new TQLabel(this)),
     logo(new TQLabel(this)),
-    author(new KAboutContributor(this)),
-    maintainer(new KAboutContributor(this)),
+    author(new TDEAboutContributor(this)),
+    maintainer(new TDEAboutContributor(this)),
     showMaintainer(false),
     d(0)
 {
@@ -1319,7 +1319,7 @@ KAboutWidget::KAboutWidget(TQWidget *_parent, const char *_name)
   if( !version || !cont || !logo || !author || !maintainer )
   {
     // this will nearly never happen (out of memory in about box?)
-    kdDebug() << "KAboutWidget::KAboutWidget: Out of memory." << endl;
+    kdDebug() << "TDEAboutWidget::TDEAboutWidget: Out of memory." << endl;
     tqApp->quit();
   }
   // -----
@@ -1341,7 +1341,7 @@ KAboutWidget::KAboutWidget(TQWidget *_parent, const char *_name)
 
 
 void
-KAboutWidget::adjust()
+TDEAboutWidget::adjust()
 {
   // #################################################################
   int cx, cy, tempx;
@@ -1371,8 +1371,8 @@ KAboutWidget::adjust()
     {
       cx=QMAX(cx, cont->sizeHint().width());
       cy+=cont->sizeHint().height()+Grid;
-      TQPtrListIterator<KAboutContributor> _pos(contributors);
-      KAboutContributor* currEntry;
+      TQPtrListIterator<TDEAboutContributor> _pos(contributors);
+      TDEAboutContributor* currEntry;
       while ( (currEntry = _pos.current()) )
 	{
 	  ++_pos;
@@ -1385,25 +1385,25 @@ KAboutWidget::adjust()
 }
 
 void
-KAboutWidget::setLogo(const TQPixmap& i)
+TDEAboutWidget::setLogo(const TQPixmap& i)
 {
   // ############################################################################
   logo->setPixmap(i);
   // ############################################################################
 }
 
-void KAboutWidget::sendEmailSlot(const TQString &_name, const TQString &_email)
+void TDEAboutWidget::sendEmailSlot(const TQString &_name, const TQString &_email)
 {
   emit(sendEmail(_name, _email));
 }
 
-void KAboutWidget::openURLSlot(const TQString& _url)
+void TDEAboutWidget::openURLSlot(const TQString& _url)
 {
   emit(openURL(_url));
 }
 
 void
-KAboutWidget::setAuthor(const TQString &_name, const TQString &_email,
+TDEAboutWidget::setAuthor(const TQString &_name, const TQString &_email,
 			const TQString &_url, const TQString &_w)
 {
   // ############################################################################
@@ -1415,7 +1415,7 @@ KAboutWidget::setAuthor(const TQString &_name, const TQString &_email,
 }
 
 void
-KAboutWidget::setMaintainer(const TQString &_name, const TQString &_email,
+TDEAboutWidget::setMaintainer(const TQString &_name, const TQString &_email,
 			    const TQString &_url, const TQString &_w)
 {
   // ############################################################################
@@ -1428,11 +1428,11 @@ KAboutWidget::setMaintainer(const TQString &_name, const TQString &_email,
 }
 
 void
-KAboutWidget::addContributor(const TQString &_name, const TQString &_email,
+TDEAboutWidget::addContributor(const TQString &_name, const TQString &_email,
 			     const TQString &_url, const TQString &_w)
 {
   // ############################################################################
-  KAboutContributor* const c=new KAboutContributor(this);
+  TDEAboutContributor* const c=new TDEAboutContributor(this);
   // -----
   c->setName(_name);
   c->setEmail(_email);
@@ -1446,7 +1446,7 @@ KAboutWidget::addContributor(const TQString &_name, const TQString &_email,
 }
 
 void
-KAboutWidget::setVersion(const TQString &_name)
+TDEAboutWidget::setVersion(const TQString &_name)
 {
   // ############################################################################
   version->setText(_name);
@@ -1454,7 +1454,7 @@ KAboutWidget::setVersion(const TQString &_name)
 }
 
 void
-KAboutWidget::resizeEvent(TQResizeEvent*)
+TDEAboutWidget::resizeEvent(TQResizeEvent*)
 {
   // ############################################################################
   int _x=0, _y, cx, tempx, tempy;
@@ -1484,8 +1484,8 @@ KAboutWidget::resizeEvent(TQResizeEvent*)
     } else {
       cont->hide();
     }
-  TQPtrListIterator<KAboutContributor> _pos(contributors);
-  KAboutContributor* currEntry;
+  TQPtrListIterator<TDEAboutContributor> _pos(contributors);
+  TDEAboutContributor* currEntry;
   while( (currEntry = _pos.current()) )
     {
       ++_pos;
@@ -1503,15 +1503,15 @@ KAboutWidget::resizeEvent(TQResizeEvent*)
   // ############################################################################
 }
 
-KAboutDialog::KAboutDialog(TQWidget *_parent, const char *_name, bool modal)
+TDEAboutDialog::TDEAboutDialog(TQWidget *_parent, const char *_name, bool modal)
   : KDialogBase(_parent, _name, modal, TQString::null, Ok, Ok ),
-    about(new KAboutWidget(this)), mContainerBase(0), d(0)
+    about(new TDEAboutWidget(this)), mContainerBase(0), d(0)
 {
   // #################################################################
   if(!about)
   {
     // this will nearly never happen (out of memory in about box?)
-    kdDebug() << "KAboutDialog::KAboutDialog: Out of memory." << endl;
+    kdDebug() << "TDEAboutDialog::TDEAboutDialog: Out of memory." << endl;
     tqApp->quit();
   }
   setMainWidget(about);
@@ -1523,7 +1523,7 @@ KAboutDialog::KAboutDialog(TQWidget *_parent, const char *_name, bool modal)
 }
 
 
-KAboutDialog::KAboutDialog( int layoutType, const TQString &_caption,
+TDEAboutDialog::TDEAboutDialog( int layoutType, const TQString &_caption,
 			    int buttonMask, ButtonCode defaultButton,
 			    TQWidget *_parent, const char *_name, bool modal,
 			    bool separator, const TQString &user1,
@@ -1534,7 +1534,7 @@ KAboutDialog::KAboutDialog( int layoutType, const TQString &_caption,
 {
   setPlainCaption( i18n("About %1").arg(_caption) );
 
-  mContainerBase = new KAboutContainerBase( layoutType, this );
+  mContainerBase = new TDEAboutContainerBase( layoutType, this );
   setMainWidget(mContainerBase);
 
   connect( mContainerBase, TQT_SIGNAL(urlClick(const TQString &)),
@@ -1546,7 +1546,7 @@ KAboutDialog::KAboutDialog( int layoutType, const TQString &_caption,
 }
 
 
-void KAboutDialog::show( void )
+void TDEAboutDialog::show( void )
 {
   adjust();
   if( mContainerBase ) { mContainerBase->show(); }
@@ -1554,7 +1554,7 @@ void KAboutDialog::show( void )
 }
 
 
-void KAboutDialog::show( TQWidget * /*centerParent*/ )
+void TDEAboutDialog::show( TQWidget * /*centerParent*/ )
 {
   adjust();
   if( mContainerBase ) { mContainerBase->show(); }
@@ -1562,7 +1562,7 @@ void KAboutDialog::show( TQWidget * /*centerParent*/ )
 }
 
 
-void KAboutDialog::adjust()
+void TDEAboutDialog::adjust()
 {
   if( !about ) { return; }
   about->adjust();
@@ -1571,14 +1571,14 @@ void KAboutDialog::adjust()
 }
 
 
-void KAboutDialog::setLogo(const TQPixmap& i)
+void TDEAboutDialog::setLogo(const TQPixmap& i)
 {
   if( !about ) { return; }
   about->setLogo(i);
 }
 
 
-void KAboutDialog::setMaintainer(const TQString &_name, const TQString &_email,
+void TDEAboutDialog::setMaintainer(const TQString &_name, const TQString &_email,
 				 const TQString &_url, const TQString &_w)
 {
   // #################################################################
@@ -1587,7 +1587,7 @@ void KAboutDialog::setMaintainer(const TQString &_name, const TQString &_email,
   // #################################################################
 }
 
-void KAboutDialog::setAuthor(const TQString &_name, const TQString &_email,
+void TDEAboutDialog::setAuthor(const TQString &_name, const TQString &_email,
 			     const TQString &_url, const TQString &_work)
 {
   // #################################################################
@@ -1596,7 +1596,7 @@ void KAboutDialog::setAuthor(const TQString &_name, const TQString &_email,
   // #################################################################
 }
 
-void KAboutDialog::addContributor(const TQString &_name, const TQString &_email,
+void TDEAboutDialog::addContributor(const TQString &_name, const TQString &_email,
 				  const TQString &_url, const TQString &_w)
 {
   // #################################################################
@@ -1605,7 +1605,7 @@ void KAboutDialog::addContributor(const TQString &_name, const TQString &_email,
   // #################################################################
 }
 
-void KAboutDialog::setVersion(const TQString &_name)
+void TDEAboutDialog::setVersion(const TQString &_name)
 {
   // #################################################################
   if( !about ) { return; }
@@ -1613,40 +1613,40 @@ void KAboutDialog::setVersion(const TQString &_name)
   // #################################################################
 }
 
-void KAboutDialog::sendEmailSlot(const TQString& /*name*/, const TQString& email)
+void TDEAboutDialog::sendEmailSlot(const TQString& /*name*/, const TQString& email)
 {
   if ( kapp )
       kapp->invokeMailer( email, TQString::null );
   /*
-  kdDebug() << "KAboutDialog::sendEmailSlot: request to send an email to "
+  kdDebug() << "TDEAboutDialog::sendEmailSlot: request to send an email to "
 	<< name << ", " << email << endl;
   emit(sendEmail(name, email));
   */
 }
 
-void KAboutDialog::openURLSlot(const TQString& url)
+void TDEAboutDialog::openURLSlot(const TQString& url)
 {
   if ( kapp )
       kapp->invokeBrowser( url );
-  //kdDebug() << "KAboutDialog::openURLSlot: request to open URL " << url << endl;
+  //kdDebug() << "TDEAboutDialog::openURLSlot: request to open URL " << url << endl;
   //emit(openURL(url));
 }
 
 
-void KAboutDialog::mouseTrackSlot( int /*mode*/, const TQMouseEvent * /*e*/ )
+void TDEAboutDialog::mouseTrackSlot( int /*mode*/, const TQMouseEvent * /*e*/ )
 {
   // By default we do nothing. This method must be reimplemented.
 }
 
 
-TQFrame *KAboutDialog::addTextPage( const TQString &title, const TQString &text,
+TQFrame *TDEAboutDialog::addTextPage( const TQString &title, const TQString &text,
 				   bool richText, int numLines )
 {
   if( !mContainerBase ) { return 0; }
   return mContainerBase->addTextPage( title, text, richText, numLines );
 }
 
-TQFrame *KAboutDialog::addLicensePage( const TQString &title, const TQString &text,
+TQFrame *TDEAboutDialog::addLicensePage( const TQString &title, const TQString &text,
 				   int numLines )
 {
   if( !mContainerBase ) { return 0; }
@@ -1654,7 +1654,7 @@ TQFrame *KAboutDialog::addLicensePage( const TQString &title, const TQString &te
 }
 
 
-KAboutContainer *KAboutDialog::addContainerPage( const TQString &title,
+TDEAboutContainer *TDEAboutDialog::addContainerPage( const TQString &title,
 				  int childAlignment, int innerAlignment )
 {
   if( !mContainerBase ) { return 0; }
@@ -1663,7 +1663,7 @@ KAboutContainer *KAboutDialog::addContainerPage( const TQString &title,
 }
 
 
-KAboutContainer *KAboutDialog::addScrolledContainerPage( const TQString &title,
+TDEAboutContainer *TDEAboutDialog::addScrolledContainerPage( const TQString &title,
 				  int childAlignment, int innerAlignment )
 {
   if( !mContainerBase ) { return 0; }
@@ -1673,14 +1673,14 @@ KAboutContainer *KAboutDialog::addScrolledContainerPage( const TQString &title,
 
 
 
-TQFrame *KAboutDialog::addPage( const TQString &title )
+TQFrame *TDEAboutDialog::addPage( const TQString &title )
 {
   if( !mContainerBase ) { return 0; }
   return mContainerBase->addEmptyPage( title );
 }
 
 
-KAboutContainer *KAboutDialog::addContainer( int childAlignment,
+TDEAboutContainer *TDEAboutDialog::addContainer( int childAlignment,
 					     int innerAlignment )
 {
   if( !mContainerBase ) { return 0; }
@@ -1688,53 +1688,53 @@ KAboutContainer *KAboutDialog::addContainer( int childAlignment,
 }
 
 
-void KAboutDialog::setTitle( const TQString &title )
+void TDEAboutDialog::setTitle( const TQString &title )
 {
   if( !mContainerBase ) { return; }
   mContainerBase->setTitle( title );
 }
 
 
-void KAboutDialog::setImage( const TQString &fileName )
+void TDEAboutDialog::setImage( const TQString &fileName )
 {
   if( !mContainerBase ) { return; }
   mContainerBase->setImage( fileName );
 }
 
 // KDE4: remove
-void KAboutDialog::setIcon( const TQString &fileName )
+void TDEAboutDialog::setIcon( const TQString &fileName )
 {
   if( !mContainerBase ) { return; }
   mContainerBase->setProgramLogo( fileName );
 }
 
-void KAboutDialog::setProgramLogo( const TQString &fileName )
+void TDEAboutDialog::setProgramLogo( const TQString &fileName )
 {
   if( !mContainerBase ) { return; }
   mContainerBase->setProgramLogo( fileName );
 }
 
-void KAboutDialog::setProgramLogo( const TQPixmap &pixmap )
+void TDEAboutDialog::setProgramLogo( const TQPixmap &pixmap )
 {
   if( !mContainerBase ) { return; }
   mContainerBase->setProgramLogo( pixmap );
 }
 
-void KAboutDialog::setImageBackgroundColor( const TQColor &color )
+void TDEAboutDialog::setImageBackgroundColor( const TQColor &color )
 {
   if( !mContainerBase ) { return; }
   mContainerBase->setImageBackgroundColor( color );
 }
 
 
-void KAboutDialog::setImageFrame( bool state )
+void TDEAboutDialog::setImageFrame( bool state )
 {
   if( !mContainerBase ) { return; }
   mContainerBase->setImageFrame( state );
 }
 
 
-void KAboutDialog::setProduct( const TQString &appName, const TQString &version,
+void TDEAboutDialog::setProduct( const TQString &appName, const TQString &version,
 			       const TQString &author, const TQString &year )
 {
   if( !mContainerBase ) { return; }
@@ -1743,16 +1743,16 @@ void KAboutDialog::setProduct( const TQString &appName, const TQString &version,
 
 
 
-void KAboutDialog::imageURL( TQWidget *_parent, const TQString &_caption,
+void TDEAboutDialog::imageURL( TQWidget *_parent, const TQString &_caption,
 			     const TQString &_path, const TQColor &_imageColor,
 			     const TQString &_url )
 {
-  KAboutDialog a( AbtImageOnly, TQString::null, Close, Close, _parent, "image", true );
+  TDEAboutDialog a( AbtImageOnly, TQString::null, Close, Close, _parent, "image", true );
   a.setPlainCaption( _caption );
   a.setImage( _path );
   a.setImageBackgroundColor( _imageColor );
 
-  KAboutContainer* const c = a.addContainer( AlignCenter, AlignCenter );
+  TDEAboutContainer* const c = a.addContainer( AlignCenter, AlignCenter );
   if( c )
   {
     c->addPerson( TQString::null, TQString::null, _url, TQString::null );
@@ -1792,6 +1792,6 @@ void KImageTrackLabel::mouseMoveEvent ( TQMouseEvent *e )
   emit mouseTrack( MouseDoubleClick, e );
 }
 
-void KAboutDialog::virtual_hook( int id, void* data )
+void TDEAboutDialog::virtual_hook( int id, void* data )
 { KDialogBase::virtual_hook( id, data ); }
 

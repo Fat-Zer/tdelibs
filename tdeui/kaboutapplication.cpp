@@ -33,9 +33,9 @@
 #include <kactivelabel.h>
 #include "ktextedit.h"
 
-KAboutApplication::KAboutApplication( TQWidget *parent, const char *name,
+TDEAboutApplication::TDEAboutApplication( TQWidget *parent, const char *name,
               bool modal )
-  :KAboutDialog( AbtTabbed|AbtProduct,
+  :TDEAboutDialog( AbtTabbed|AbtProduct,
                  kapp ? kapp->caption() : TQString::null,
                  Close, Close,
      parent, name, modal )
@@ -43,15 +43,15 @@ KAboutApplication::KAboutApplication( TQWidget *parent, const char *name,
   buildDialog(TDEGlobal::instance()->aboutData());
 }
 
-KAboutApplication::KAboutApplication( const TDEAboutData *aboutData, TQWidget *parent,
+TDEAboutApplication::TDEAboutApplication( const TDEAboutData *aboutData, TQWidget *parent,
                                       const char *name, bool modal )
-  :KAboutDialog( AbtTabbed|AbtProduct, aboutData->programName(), Close, Close,
+  :TDEAboutDialog( AbtTabbed|AbtProduct, aboutData->programName(), Close, Close,
      parent, name, modal )
 {
   buildDialog(aboutData);
 }
 
-void KAboutApplication::buildDialog( const TDEAboutData *aboutData )
+void TDEAboutApplication::buildDialog( const TDEAboutData *aboutData )
 {
   if( !aboutData )
   {
@@ -61,7 +61,7 @@ void KAboutApplication::buildDialog( const TDEAboutData *aboutData )
 
     //i18n "??" is displayed as (pseudo-)version when no data is known about the application
     setProduct( kapp ? kapp->caption() : TQString::null, i18n("??"), TQString::null, TQString::null );
-    KAboutContainer *appPage = addContainerPage( i18n("&About"));
+    TDEAboutContainer *appPage = addContainerPage( i18n("&About"));
 
     TQString appPageText =
       i18n("No information available.\n"
@@ -85,7 +85,7 @@ void KAboutApplication::buildDialog( const TDEAboutData *aboutData )
   if (!aboutData->copyrightStatement().isEmpty())
     appPageText += "\n" + aboutData->copyrightStatement()+"\n";
 
-  KAboutContainer *appPage = addContainerPage( i18n("&About"));
+  TDEAboutContainer *appPage = addContainerPage( i18n("&About"));
 
   TQLabel *appPageLabel = new TQLabel( appPageText, 0 );
   appPage->addWidget( appPageLabel );
@@ -105,7 +105,7 @@ void KAboutApplication::buildDialog( const TDEAboutData *aboutData )
   {
     TQString authorPageTitle = authorCount == 1 ?
       i18n("A&uthor") : i18n("A&uthors");
-    KAboutContainer *authorPage = addScrolledContainerPage( authorPageTitle );
+    TDEAboutContainer *authorPage = addScrolledContainerPage( authorPageTitle );
 
     if (!aboutData->customAuthorTextEnabled() || !aboutData->customAuthorRichText().isEmpty ())
     {
@@ -133,7 +133,7 @@ void KAboutApplication::buildDialog( const TDEAboutData *aboutData )
       authorPage->addWidget( activeLabel );
     }
 
-    TQValueList<KAboutPerson>::ConstIterator it;
+    TQValueList<TDEAboutPerson>::ConstIterator it;
     for (it = aboutData->authors().begin();
    it != aboutData->authors().end(); ++it)
     {
@@ -145,9 +145,9 @@ void KAboutApplication::buildDialog( const TDEAboutData *aboutData )
   int creditsCount = aboutData->credits().count();
   if (creditsCount)
   {
-    KAboutContainer *creditsPage =
+    TDEAboutContainer *creditsPage =
       addScrolledContainerPage( i18n("&Thanks To") );
-    TQValueList<KAboutPerson>::ConstIterator it;
+    TQValueList<TDEAboutPerson>::ConstIterator it;
     for (it = aboutData->credits().begin();
    it != aboutData->credits().end(); ++it)
     {
@@ -156,13 +156,13 @@ void KAboutApplication::buildDialog( const TDEAboutData *aboutData )
     }
   }
 
-  const TQValueList<KAboutTranslator> translatorList = aboutData->translators();
+  const TQValueList<TDEAboutTranslator> translatorList = aboutData->translators();
 
   if(translatorList.count() > 0)
   {
       TQString text = "<qt>";
 
-      TQValueList<KAboutTranslator>::ConstIterator it;
+      TQValueList<TDEAboutTranslator>::ConstIterator it;
       for(it = translatorList.begin(); it != translatorList.end(); ++it)
       {
    text += TQString("<p>%1<br>&nbsp;&nbsp;&nbsp;"
