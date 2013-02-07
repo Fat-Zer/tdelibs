@@ -5,10 +5,10 @@
 #include <kcmdlineargs.h>
 
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
     { "+url", "the path or url to the file/dir for which to show properties", 0 },
-    KCmdLineLastOption
+    TDECmdLineLastOption
 };
 
 int main ( int argc, char** argv )

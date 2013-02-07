@@ -9,7 +9,7 @@
 
 #define I18N_NOOP
 
- static KCmdLineOptions options[] = 
+ static TDECmdLineOptions options[] = 
   {
      { "+file", "File name", 0 },
      { "addgroup ", "Add a group to a file", 0},
@@ -23,7 +23,7 @@
      { "set ", "Set the value of --item in --group", 0},
      { "groups",  "list the groups of this file", 0 },
      { "mimetypeinfo ", "the mimetype info for a mimetype", 0 },
-     KCmdLineLastOption
+     TDECmdLineLastOption
   };
   
 void printKeyValues(KFileMetaInfo& info)

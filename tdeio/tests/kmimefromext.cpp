@@ -23,10 +23,10 @@
 
 #include <stdio.h>
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
   { "+filename", "the filename to test", 0 },
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 int main(int argc, char *argv[])

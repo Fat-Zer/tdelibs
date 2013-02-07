@@ -13,10 +13,10 @@
 
 using namespace KABC;
 
-static const KCmdLineOptions options[] =
+static const TDECmdLineOptions options[] =
 {
   {"list <listname>", I18N_NOOP("Show distribution list with name <listname>"), 0},
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 

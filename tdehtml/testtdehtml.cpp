@@ -32,7 +32,7 @@
 #include "domtreeview.h"
 #include <tdefiledialog.h>
 
-static KCmdLineOptions options[] = { { "+file", "url to open", 0 } , KCmdLineLastOption };
+static TDECmdLineOptions options[] = { { "+file", "url to open", 0 } , TDECmdLineLastOption };
 
 int main(int argc, char *argv[])
 {

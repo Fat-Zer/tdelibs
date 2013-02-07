@@ -54,10 +54,10 @@ static const char description[] = I18N_NOOP("TDE HTTP cache maintenance tool");
 
 static const char version[] = "1.0.0";
 
-static const KCmdLineOptions options[] =
+static const TDECmdLineOptions options[] =
 {
    {"clear-all", I18N_NOOP("Empty the cache"), 0},
-   KCmdLineLastOption
+   TDECmdLineLastOption
 };
 
 struct FileInfo {

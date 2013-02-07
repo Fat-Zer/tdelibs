@@ -37,13 +37,13 @@
 
 using namespace KABC;
 
-static const KCmdLineOptions options[] =
+static const TDECmdLineOptions options[] =
 {
   { "disable-autostart", I18N_NOOP( "Disable automatic startup on login" ), 0 },
   { "quiet", "", 0 },
   { "o", 0, 0 },
   { "override", I18N_NOOP( "Override existing entries" ), "1" },
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 void readKMailEntry( const TQString &kmailEntry, KABC::AddressBook *ab )

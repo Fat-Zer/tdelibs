@@ -480,7 +480,7 @@ void KioslaveTest::stopJob() {
 
 static const char version[] = "v0.0.0 0000";   // :-)
 static const char description[] = "Test for tdeioslaves";
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
  { "s", 0, 0 },
  { "src <src>", "Source URL", "" },
@@ -490,7 +490,7 @@ static KCmdLineOptions options[] =
  { "operation <operation>", "Operation (list,listrecursive,stat,get,put,copy,move,del,shred,mkdir)", "copy" },
  { "p", 0, 0 },
  { "progress <progress>", "Progress Type (none,default,status)", "default" },
- KCmdLineLastOption
+ TDECmdLineLastOption
 };
 
 int main(int argc, char **argv) {

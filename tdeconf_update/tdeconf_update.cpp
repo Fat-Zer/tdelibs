@@ -38,12 +38,12 @@
 #include <kinstance.h>
 #include <ktempfile.h>
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
         { "debug", I18N_NOOP("Keep output results from scripts"), 0 },
 	{ "check <update-file>", I18N_NOOP("Check whether config file itself requires updating"), 0 },
 	{ "+[file]", I18N_NOOP("File to read update instructions from"), 0 },
-        KCmdLineLastOption
+        TDECmdLineLastOption
 };
 
 class KonfUpdate

@@ -69,7 +69,7 @@ void parseEntry(PairList &list, xmlNodePtr cur, int base)
 
 }
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
     { "stylesheet <xsl>",  I18N_NOOP( "Stylesheet to use" ), 0 },
     { "stdout", I18N_NOOP( "Output whole document to stdout" ), 0 },
@@ -81,7 +81,7 @@ static KCmdLineOptions options[] =
     { "srcdir <dir>", I18N_NOOP( "Set the srcdir, for tdelibs" ), 0},
     { "param <key>=<value>", I18N_NOOP( "Parameters to pass to the stylesheet" ), 0},
     { "+xml", I18N_NOOP("The file to transform"), 0},
-    KCmdLineLastOption // End of options.
+    TDECmdLineLastOption // End of options.
 };
 
 

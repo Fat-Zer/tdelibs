@@ -16,10 +16,10 @@
 
 #include "kdirwatchtest.h"
 
-static const KCmdLineOptions options[] =
+static const TDECmdLineOptions options[] =
 {
   {"+[directory ...]", "Directory(ies) to watch", 0},
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 

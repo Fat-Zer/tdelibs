@@ -10,10 +10,10 @@
 
 using namespace KABC;
 
-static const KCmdLineOptions options[] =
+static const TDECmdLineOptions options[] =
 {
   {"multiple", I18N_NOOP("Allow selection of multiple addressees"), 0},
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 int main(int argc,char **argv)

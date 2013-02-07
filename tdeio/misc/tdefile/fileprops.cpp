@@ -194,7 +194,7 @@ TQStringList FileProps::createKeyValueList( const KFileMetaInfoGroup& g,
 
 // tdefile --mimetype --listsupported --listavailable --listpreferred --listwritable --getValue "key" --setValue "key=value" --allValues --preferredValues --dialog --quiet file [file...]
 // "key" may be a list of keys, separated by commas
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
     { "m", 0, 0 }, // short option for --mimetype
     { "nomimetype", I18N_NOOP("Do not print the mimetype of the given file(s)"), 0 },
@@ -253,7 +253,7 @@ static KCmdLineOptions options[] =
 
     { "+[files]",
       I18N_NOOP("The file (or a number of files) to operate on."), 0 },
-    KCmdLineLastOption
+    TDECmdLineLastOption
 };
 
 

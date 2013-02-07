@@ -22,13 +22,13 @@
 #include <kapplication.h>
 #include <stdio.h>
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
   { "+query", "the query", 0 },
   { "+[genericServiceType]", "Application (default), or KParts/ReadOnlyPart", 0 },
   { "+[constraint]", "constraint", 0 },
   { "+[preference]", "preference", 0 },
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 int main( int argc, char **argv )

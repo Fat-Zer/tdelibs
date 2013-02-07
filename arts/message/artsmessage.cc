@@ -39,7 +39,7 @@ Gnome, etc. and used instead.
 #include <kcmdlineargs.h>
 
 // command line options
-static KCmdLineOptions options[] = 
+static TDECmdLineOptions options[] = 
   {
 	  { "e", 0,0 },
 	  { "error", I18N_NOOP("Display error message (default)"), 0 },
@@ -48,7 +48,7 @@ static KCmdLineOptions options[] =
 	  { "i", 0, 0 },
 	  { "info", I18N_NOOP("Display informational message"), 0 },
 	  { "+message", I18N_NOOP("Message string to be displayed"), 0 },
-	  KCmdLineLastOption // End of options.
+	  TDECmdLineLastOption // End of options.
   };
 
 TDEAboutData aboutData("artsmessage", I18N_NOOP("artsmessage"), "0.1",

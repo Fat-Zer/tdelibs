@@ -24,10 +24,10 @@
 #include <kcmdlineargs.h>
 #include <kapplication.h>
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
 	{ "+[file]", I18N_NOOP("Configuration file to load"), 0},
-	KCmdLineLastOption
+	TDECmdLineLastOption
 };
 
 extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])

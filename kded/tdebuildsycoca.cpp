@@ -691,7 +691,7 @@ TQStringList KBuildSycoca::existingResourceDirs()
    return *dirs;
 }
 
-static KCmdLineOptions options[] = {
+static TDECmdLineOptions options[] = {
    { "nosignal", I18N_NOOP("Do not signal applications to update"), 0 },
    { "noincremental", I18N_NOOP("Disable incremental update, re-read everything"), 0 },
    { "checkstamps", I18N_NOOP("Check file timestamps"), 0 },
@@ -703,7 +703,7 @@ static KCmdLineOptions options[] = {
    { "silent", I18N_NOOP("Silent - work without windows and stderr"), 0 },
    { "showprogress", I18N_NOOP("Show progress information (even if 'silent' mode is on)"), 0 },
 #endif
-   KCmdLineLastOption
+   TDECmdLineLastOption
 };
 
 static const char appName[] = "tdebuildsycoca";

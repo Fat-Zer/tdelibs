@@ -26,11 +26,11 @@
 
 #include "downloaddialog.h"
 
-static const KCmdLineOptions op[] =
+static const TDECmdLineOptions op[] =
 {
 	{"type <type>", I18N_NOOP("Display only media of this type"), 0},
 	{"+[providerlist]", I18N_NOOP("Provider list to use"), 0},
-	KCmdLineLastOption
+	TDECmdLineLastOption
 };
 
 int main(int argc, char **argv)

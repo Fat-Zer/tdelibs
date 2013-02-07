@@ -38,10 +38,10 @@ int main(int argc, char **argv)
 {
     const char *version = "0.5";
     const char *description = "Unit test for .netrc and kionetrc parser.";
-    KCmdLineOptions options[] =
+    TDECmdLineOptions options[] =
     {
         { "+command", "[url1,url2 ,...]", 0 },
-        KCmdLineLastOption
+        TDECmdLineLastOption
     };
 
     TDECmdLineArgs::init( argc, argv, "kionetrctest", description, version );

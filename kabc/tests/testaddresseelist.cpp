@@ -10,11 +10,11 @@
 
 using namespace KABC;
 
-static const KCmdLineOptions options[] =
+static const TDECmdLineOptions options[] =
 {
   { "save", "", 0 },
   { "number", "", 0 },
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 int main(int /*argc*/,char /* **argv*/)

@@ -37,12 +37,12 @@ static const char description[] =
 
 static const char version[] = "0.1";
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
     {"query [regexp]", I18N_NOOP("Only run modules whose filenames match the regexp."), "^tdeunittest_.*\\.la$"},
     {"folder [folder]", I18N_NOOP("Only run tests modules which are found in the folder. Use the query option to select modules."), "."},
     { "enable-dbgcap", I18N_NOOP("Disables debug capturing. You typically use this option when you use the GUI."), 0},
-    KCmdLineLastOption
+    TDECmdLineLastOption
 };
 
 

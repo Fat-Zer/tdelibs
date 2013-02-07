@@ -39,13 +39,13 @@
 
 #include <iostream>
 
-static const KCmdLineOptions options[] =
+static const TDECmdLineOptions options[] =
 {
   { "d", 0, 0 },
   { "directory <dir>", I18N_NOOP("Directory to generate files in"), "." },
   { "+file.kcfg", I18N_NOOP("Input kcfg XML file"), 0 },
   { "+file.kcfgc", I18N_NOOP("Code generation options file"), 0 },
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 

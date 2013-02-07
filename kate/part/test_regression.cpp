@@ -371,7 +371,7 @@ static TQString findMostRecentFailureSnapshot() {
     return dir[0].mid(sizeof failureSnapshotPrefix - 1);
 }
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
     { "b", 0, 0 },
     { "base <base_dir>", "Directory containing tests, basedir and output directories.", 0},
@@ -390,7 +390,7 @@ static KCmdLineOptions options[] =
     { "output <directory>", "Put output in <directory> instead of <base_dir>/output", 0 } ,
     { "+[base_dir]", "Directory containing tests,basedir and output directories. Only regarded if -b is not specified.", 0 } ,
     { "+[testcases]", "Relative path to testcase, or directory of testcases to be run (equivalent to -t).", 0 } ,
-    KCmdLineLastOption
+    TDECmdLineLastOption
 };
 
 int main(int argc, char *argv[])

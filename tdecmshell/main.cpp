@@ -51,7 +51,7 @@ using namespace std;
 
 KService::List m_modules;
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
     { "list", I18N_NOOP("List all possible modules"), 0},
     { "+module", I18N_NOOP("Configuration module to open"), 0 },
@@ -59,7 +59,7 @@ static KCmdLineOptions options[] =
     { "embed <id>", I18N_NOOP("Embeds the module with buttons in window with id <id>"), 0 },
     { "embed-proxy <id>", I18N_NOOP("Embeds the module without buttons in window with id <id>"), 0 },
     { "silent", I18N_NOOP("Do not display main window"), 0 },
-    KCmdLineLastOption
+    TDECmdLineLastOption
 };
 
 static void listModules(const TQString &baseGroup)

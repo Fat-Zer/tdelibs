@@ -33,11 +33,11 @@
 #include "vcardconverter.h"
 #include "vcard.h"
 
-static const KCmdLineOptions options[] =
+static const TDECmdLineOptions options[] =
 {
   {"vcard21", I18N_NOOP("vCard 2.1"), 0},
   {"+inputfile", I18N_NOOP("Input file"), 0},
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 int main( int argc, char **argv )

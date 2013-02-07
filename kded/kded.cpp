@@ -730,11 +730,11 @@ void KHostnameD::checkHostname()
 }
 
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
   { "check", I18N_NOOP("Check Sycoca database only once"), 0 },
   { "new-startup", "Internal", 0 },
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 class KDEDQtDCOPObject : public DCOPObject

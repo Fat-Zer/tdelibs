@@ -153,14 +153,14 @@ void LockWidget::unlock()
 }
 
 
-static const KCmdLineOptions options[] =
+static const TDECmdLineOptions options[] =
 {
   { "a", 0, 0 },
   { "addressbook", "Standard address book", 0 },
   { "d", 0, 0 },
   { "diraddressbook", "Standard address book directory resource", 0 },
   { "+identifier", "Identifier of resource to be locked, e.g. filename", 0 },
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 int main(int argc,char **argv)

@@ -91,10 +91,10 @@ void Shell::slotFileOpen()
      openURL( url );
 }
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
  { "+file(s)",          "Files to load", 0 },
- KCmdLineLastOption
+ TDECmdLineLastOption
 };
 static const char version[] = "v0.0.1 2000 (c) David Faure";
 static const char description[] = "This is a test shell for the kghostview part.";

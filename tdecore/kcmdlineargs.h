@@ -37,7 +37,7 @@ typedef TQValueList<TQCString> QCStringList;
  *
  * @see TDECmdLineArgs for additional usage information
  */
-struct TDECORE_EXPORT KCmdLineOptions
+struct TDECORE_EXPORT TDECmdLineOptions
 {
    /**
     * The name of the argument as it should be called on the command line and
@@ -65,13 +65,13 @@ struct TDECORE_EXPORT KCmdLineOptions
    const char *def; // Default
 };
 
-#define KCmdLineLastOption { 0, 0, 0 }
+#define TDECmdLineLastOption { 0, 0, 0 }
 
 class TDECmdLineArgsList;
 class TDEApplication;
 class KUniqueApplication;
-class KCmdLineParsedOptions;
-class KCmdLineParsedArgs;
+class TDECmdLineParsedOptions;
+class TDECmdLineParsedArgs;
 class TDEAboutData;
 class TDECmdLineArgsPrivate;
 
@@ -136,10 +136,10 @@ class TDECmdLineArgsPrivate;
  *  \endcode
  *
  *  The options that an application supports are configured using the
- *  KCmdLineOptions class. An example is shown below:
+ *  TDECmdLineOptions class. An example is shown below:
  *
  *  \code
- *  static const KCmdLineOptions options[] =
+ *  static const TDECmdLineOptions options[] =
  *  {
  *     { "a", I18N_NOOP("A short binary option"), 0 },
  *     { "b \<file>", I18N_NOOP("A short option which takes an argument"), 0 },
@@ -160,7 +160,7 @@ class TDECmdLineArgsPrivate;
  *     { "+[arg1]", I18N_NOOP("An optional argument 'arg1'"), 0 },
  *     { "!+command", I18N_NOOP("A required argument 'command', that can contain multiple words, even starting with '-'"), 0 },
  *     { "", I18N_NOOP("Additional help text not associated with any particular option") 0 },
- *     KCmdLineLastOption // End of options.
+ *     TDECmdLineLastOption // End of options.
  *  };
  *  \endcode
  *
@@ -299,13 +299,13 @@ public:
    * The list of options should look like this:
    *
    * \code
-   * static KCmdLineOptions options[] =
+   * static TDECmdLineOptions options[] =
    * {
    *    { "option1 \<argument>", I18N_NOOP("Description 1"), "my_extra_arg" },
    *    { "o", 0, 0 },
    *    { "option2", I18N_NOOP("Description 2"), 0 },
    *    { "nooption3", I18N_NOOP("Description 3"), 0 },
-   *    KCmdLineLastOption
+   *    TDECmdLineLastOption
    * }
    * \endcode
    *
@@ -354,7 +354,7 @@ public:
    * @param id A name with which these options can be identified, can be 0.
    * @param afterId The options are inserted after this set of options, can be 0.
    */
-  static void addCmdLineOptions( const KCmdLineOptions *options,
+  static void addCmdLineOptions( const TDECmdLineOptions *options,
 				 const char *name=0, const char *id = 0,
 				 const char *afterId=0);
 
@@ -415,7 +415,7 @@ public:
   /**
    *  Read out a string option.
    *
-   *  The option must have a corresponding KCmdLineOptions entry
+   *  The option must have a corresponding TDECmdLineOptions entry
    *  of the form:
    *  \code
    *    { "option \<argument>", I18N_NOOP("Description"), "default" }
@@ -435,7 +435,7 @@ public:
   /**
    *  Read out all occurrences of a string option.
    *
-   *  The option must have a corresponding KCmdLineOptions entry
+   *  The option must have a corresponding TDECmdLineOptions entry
    *  of the form:
    *  \code
    *    { "option \<argument>", I18N_NOOP("Description"), "default" }
@@ -457,11 +457,11 @@ public:
    *
    *  @return The value of the option. It will be true if the option
    *  was specifically turned on in the command line, or if the option
-   *  is turned on by default (in the KCmdLineOptions list) and was
+   *  is turned on by default (in the TDECmdLineOptions list) and was
    *  not specifically turned off in the command line. Equivalently,
    *  it will be false if the option was specifically turned off in
    *  the command line, or if the option is turned off by default (in
-   *  the KCmdLineOptions list) and was not specifically turned on in
+   *  the TDECmdLineOptions list) and was not specifically turned on in
    *  the command line.
    */
   bool isSet(const char *option) const;
@@ -553,7 +553,7 @@ protected:
    * @internal
    *  Constructor.
    */
-  TDECmdLineArgs( const KCmdLineOptions *_options, const char *_name,
+  TDECmdLineArgs( const TDECmdLineOptions *_options, const char *_name,
                 const char *_id);
 
   /**
@@ -666,11 +666,11 @@ private:
 
   static void printQ(const TQString &msg);
 
-  const KCmdLineOptions *options;
+  const TDECmdLineOptions *options;
   const char *name;
   const char *id;
-  KCmdLineParsedOptions *parsedOptionList;
-  KCmdLineParsedArgs *parsedArgList;
+  TDECmdLineParsedOptions *parsedOptionList;
+  TDECmdLineParsedArgs *parsedArgList;
   bool isQt;
 
   static TDECmdLineArgsList *argsList; // All options.

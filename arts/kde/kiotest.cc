@@ -12,10 +12,10 @@ using namespace std;
 using namespace Arts;
 
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
     { "+[URL]", I18N_NOOP("URL to open"), 0 },
-    KCmdLineLastOption
+    TDECmdLineLastOption
 };
 
 int main(int argc, char **argv)

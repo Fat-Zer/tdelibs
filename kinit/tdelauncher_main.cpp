@@ -44,10 +44,10 @@ static void sig_handler(int sig_num)
    TDELauncher::destruct(255);
 }
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
   { "new-startup", "Internal", 0 },
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 extern "C" KDE_EXPORT int kdemain( int argc, char**argv )

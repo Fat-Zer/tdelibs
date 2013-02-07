@@ -5,10 +5,10 @@
 #include <kcmdlineargs.h>
 #include <iostream>
 
-static const KCmdLineOptions options[] =
+static const TDECmdLineOptions options[] =
 {
    { "+file", "The image file to open", 0 },
-   KCmdLineLastOption
+   TDECmdLineLastOption
 };
 
 int main(int argc, char**argv)

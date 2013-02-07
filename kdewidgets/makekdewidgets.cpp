@@ -107,14 +107,14 @@ static const char endCreate[] = "	return 0;\n"
                                  "KDE_Q_EXPORT_PLUGIN(%PluginName)\n";
 
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
     {
         { "+file", I18N_NOOP( "Input file" ), 0 },
         { "o <file>", I18N_NOOP( "Output file" ), 0 },
         { "n <plugin name>", I18N_NOOP( "Name of the plugin class to generate" ), "WidgetsPlugin" },
         { "g <group>", I18N_NOOP( "Default widget group name to display in designer" ), "Custom" },
         { "p <pixmap dir>", I18N_NOOP( "Embed pixmaps from a source directory" ), 0 },
-        KCmdLineLastOption
+        TDECmdLineLastOption
     };
 
 static TQString buildWidgetDef( const TQString &name, TDEConfig &input, const TQString &group );

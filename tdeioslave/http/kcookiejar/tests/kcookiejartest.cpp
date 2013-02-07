@@ -39,10 +39,10 @@ static TQCString *nextYear;
 static TDEConfig *config = 0;
 
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
     { "+testfile", "Regression test to run", 0},
-    KCmdLineLastOption
+    TDECmdLineLastOption
 };
 
 static void FAIL(const TQString &msg)

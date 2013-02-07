@@ -57,10 +57,10 @@ void SpeedTest::finished(Job*) {
     kapp->quit();
 }
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
   { "+[URL]", "the URL to list", 0 },
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 int main(int argc, char **argv) {

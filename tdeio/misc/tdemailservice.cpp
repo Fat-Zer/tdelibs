@@ -20,10 +20,10 @@
 #include <klocale.h>
 #include <kcmdlineargs.h>
 
-static const KCmdLineOptions options[] =
+static const TDECmdLineOptions options[] =
 {
     { "+url", 0, 0 },
-    KCmdLineLastOption
+    TDECmdLineLastOption
 };
 
 int main( int argc, char **argv )

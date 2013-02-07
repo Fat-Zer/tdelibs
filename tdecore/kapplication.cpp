@@ -1505,7 +1505,7 @@ void TDEApplication::dcopFailure(const TQString &msg)
   }
 }
 
-static const KCmdLineOptions qt_options[] =
+static const TDECmdLineOptions qt_options[] =
 {
   //FIXME: Check if other options are specific to Qt/X11
 #ifdef Q_WS_X11
@@ -1539,10 +1539,10 @@ static const KCmdLineOptions qt_options[] =
    { "qws", I18N_NOOP("forces the application to run as QWS Server"), 0},
 #endif
    { "reverse", I18N_NOOP("mirrors the whole layout of widgets"), 0},
-   KCmdLineLastOption
+   TDECmdLineLastOption
 };
 
-static const KCmdLineOptions kde_options[] =
+static const TDECmdLineOptions kde_options[] =
 {
    { "caption <caption>",       I18N_NOOP("Use 'caption' as name in the titlebar"), 0},
    { "icon <icon>",             I18N_NOOP("Use 'icon' as the application icon"), 0},
@@ -1556,7 +1556,7 @@ static const KCmdLineOptions kde_options[] =
    { "smkey <sessionKey>", 0, 0}, // this option is obsolete and exists only to allow smooth upgrades from sessions
                                   // saved under Qt 3.0.x -- Qt 3.1.x includes the session key now automatically in
 				  // the session id (Simon)
-   KCmdLineLastOption
+   TDECmdLineLastOption
 };
 
 void

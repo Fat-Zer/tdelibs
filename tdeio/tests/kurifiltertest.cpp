@@ -145,10 +145,10 @@ static const char programName[] = I18N_NOOP("kurifiltertest");
 static const char description[] = I18N_NOOP("Unit test for the URI filter plugin framework.");
 static const char version[] = "1.5";
 
-static const KCmdLineOptions options[] =
+static const TDECmdLineOptions options[] =
 {
    { "s", I18N_NOOP("Use space as keyword delimeter for web shortcuts"), 0},
-   KCmdLineLastOption
+   TDECmdLineLastOption
 };
 
 int main(int argc, char **argv)

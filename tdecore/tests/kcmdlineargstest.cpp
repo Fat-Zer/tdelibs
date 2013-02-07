@@ -11,13 +11,13 @@
 static const char version[] = "v0.0.2 1999 (c) Waldo Bastian";
 static const char description[] = I18N_NOP("This is a test program.");
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
  { "test",		I18N_NOP("do a short test only, note that\n"
 				  "this is rather long comment"), 0 },
  { "baud <baudrate>",	I18N_NOP("set baudrate"), "9600" },
  { "+file(s)",		I18N_NOP("Files to load"), 0 },
- KCmdLineLastOption
+ TDECmdLineLastOption
 };
 
 #if 1

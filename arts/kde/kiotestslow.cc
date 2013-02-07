@@ -78,10 +78,10 @@ public:
 REGISTER_IMPLEMENTATION(KIOTestSlow_impl);
 };
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
     { "+[URL]", I18N_NOOP("URL to open"), 0 },
-    KCmdLineLastOption
+    TDECmdLineLastOption
 };
 
 #undef USE_FILEINPUTSTREAM

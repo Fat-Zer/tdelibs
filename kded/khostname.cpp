@@ -37,10 +37,10 @@
 #include <kprocess.h>
 #include <kde_file.h>
 
-static KCmdLineOptions options[] = {
+static TDECmdLineOptions options[] = {
    { "+old", I18N_NOOP("Old hostname"), 0 },
    { "+new", I18N_NOOP("New hostname"), 0 },
-   KCmdLineLastOption
+   TDECmdLineLastOption
 };
 
 static const char appName[] = "kdontchangethehostname";

@@ -56,14 +56,14 @@
 template class TQAsciiDict<TQCString>;
 template class TQPtrList<TDECmdLineArgs>;
 
-class KCmdLineParsedOptions : public TQAsciiDict<TQCString>
+class TDECmdLineParsedOptions : public TQAsciiDict<TQCString>
 {
 public:
-   KCmdLineParsedOptions()
+   TDECmdLineParsedOptions()
      : TQAsciiDict<TQCString>( 7 ) { }
 
    // WABA: Huh?
-   // The compiler doesn't find KCmdLineParsedOptions::write(s) by itself ???
+   // The compiler doesn't find TDECmdLineParsedOptions::write(s) by itself ???
    // WABA: No, because there is another write function that hides the
    // write function in the base class even though this function has a
    // different signature. (obscure C++ feature)
@@ -91,10 +91,10 @@ protected:
 
 };
 
-class KCmdLineParsedArgs : public TQStrList
+class TDECmdLineParsedArgs : public TQStrList
 {
 public:
-   KCmdLineParsedArgs()
+   TDECmdLineParsedArgs()
      : TQStrList( true ) { }
    TQDataStream& save( TQDataStream &s) const
    { return TQGList::write(s); }
@@ -203,7 +203,7 @@ const char * TDECmdLineArgs::appName()
 }
 
 void
-TDECmdLineArgs::addCmdLineOptions( const KCmdLineOptions *options, const char *name,
+TDECmdLineArgs::addCmdLineOptions( const TDECmdLineOptions *options, const char *name,
          const char *id, const char *afterId)
 {
    if (!argsList)
@@ -352,7 +352,7 @@ void TDECmdLineArgs::removeArgs(const char *id)
  *  +4 - no more options follow         // !fork
  */
 static int
-findOption(const KCmdLineOptions *options, TQCString &opt,
+findOption(const TDECmdLineOptions *options, TQCString &opt,
            const char *&opt_name, const char *&def, bool &enabled)
 {
    int result;
@@ -549,7 +549,7 @@ TDECmdLineArgs::parseAllArgs()
    TDECmdLineArgs *appOptions = argsList->last();
    if (!appOptions->id)
    {
-     const KCmdLineOptions *option = appOptions->options;
+     const TDECmdLineOptions *option = appOptions->options;
      while(option && option->name)
      {
        if (option->name[0] == '+')
@@ -801,7 +801,7 @@ TDECmdLineArgs::usage(const char *id)
    TDECmdLineArgs *appOptions = argsList->last();
    if (!appOptions->id)
    {
-     const KCmdLineOptions *option = appOptions->options;
+     const TDECmdLineOptions *option = appOptions->options;
      while(option && option->name)
      {
        if (option->name[0] == '+')
@@ -864,7 +864,7 @@ TDECmdLineArgs::usage(const char *id)
 
      while (args)
      {
-       const KCmdLineOptions *option = args->options;
+       const TDECmdLineOptions *option = args->options;
        TQCString opt = "";
 //
        while(option && option->name)
@@ -986,7 +986,7 @@ TDECmdLineArgs::usage(const char *id)
  *
  *  The given arguments are assumed to be constants.
  */
-TDECmdLineArgs::TDECmdLineArgs( const KCmdLineOptions *_options,
+TDECmdLineArgs::TDECmdLineArgs( const TDECmdLineOptions *_options,
                             const char *_name, const char *_id)
   : options(_options), name(_name), id(_id)
 {
@@ -1045,8 +1045,8 @@ TDECmdLineArgs::save( TQDataStream &ds) const
 void
 TDECmdLineArgs::load( TQDataStream &ds)
 {
-   if (!parsedOptionList) parsedOptionList = new KCmdLineParsedOptions;
-   if (!parsedArgList) parsedArgList = new KCmdLineParsedArgs;
+   if (!parsedOptionList) parsedOptionList = new TDECmdLineParsedOptions;
+   if (!parsedArgList) parsedArgList = new TDECmdLineParsedArgs;
 
    parsedOptionList->load( ds );
    parsedArgList->load( ds );
@@ -1076,7 +1076,7 @@ TDECmdLineArgs::setOption(const TQCString &opt, bool enabled)
       addArgument(arg);
    }
    if (!parsedOptionList) {
-  parsedOptionList = new KCmdLineParsedOptions;
+  parsedOptionList = new TDECmdLineParsedOptions;
   parsedOptionList->setAutoDelete(true);
    }
 
@@ -1106,7 +1106,7 @@ TDECmdLineArgs::setOption(const TQCString &opt, const char *value)
 #endif
    }
    if (!parsedOptionList) {
-  parsedOptionList = new KCmdLineParsedOptions;
+  parsedOptionList = new TDECmdLineParsedOptions;
   parsedOptionList->setAutoDelete(true);
    }
 
@@ -1272,15 +1272,15 @@ void
 TDECmdLineArgs::addArgument(const char *argument)
 {
    if (!parsedArgList)
-      parsedArgList = new KCmdLineParsedArgs;
+      parsedArgList = new TDECmdLineParsedArgs;
 
    parsedArgList->append(argument);
 }
 
-static const KCmdLineOptions kde_tempfile_option[] =
+static const TDECmdLineOptions kde_tempfile_option[] =
 {
    { "tempfile",       I18N_NOOP("The files/URLs opened by the application will be deleted after use"), 0},
-   KCmdLineLastOption
+   TDECmdLineLastOption
 };
 
 void

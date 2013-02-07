@@ -43,13 +43,13 @@ extern "C"
     TQDialog *kss_setup();
 }
 
-static const KCmdLineOptions options[] =
+static const TDECmdLineOptions options[] =
 {
   { "setup", I18N_NOOP("Setup screen saver"), 0 },
   { "window-id wid", I18N_NOOP("Run in the specified XWindow"), 0 },
   { "root", I18N_NOOP("Run in the root XWindow"), 0 },
   { "demo", I18N_NOOP("Start screen saver in demo mode"), "default"},
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 static void crashHandler( int  )

@@ -5,11 +5,11 @@
 #include <klocale.h>
 #include <kglobal.h>
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
 	{ "tdeconfig", I18N_NOOP("Configure TDE Print"), 0 },
 	{ "serverconfig", I18N_NOOP("Configure print server"), 0 },
-	KCmdLineLastOption
+	TDECmdLineLastOption
 };
 
 extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])

@@ -143,7 +143,7 @@ SampleTest - 1 test passed, 1 test failed
  *
  * static const char description[] = I18N_NOOP("SampleTests");
  * static const char version[] = "0.1";
- * static KCmdLineOptions options[] = { KCmdLineLastOption };
+ * static TDECmdLineOptions options[] = { TDECmdLineLastOption };
  *
  * int main( int argc, char** argv )
  * {

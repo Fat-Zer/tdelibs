@@ -64,10 +64,10 @@ bool KUniqueApplication::s_multipleInstances = false;
 bool KUniqueApplication::s_uniqueTestDone = false;
 bool KUniqueApplication::s_handleAutoStarted = false;
 
-static KCmdLineOptions kunique_options[] =
+static TDECmdLineOptions kunique_options[] =
 {
   { "nofork", "Don't run in the background.", 0 },
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 struct DCOPRequest {

@@ -9,10 +9,10 @@
 #include "java/kjavaapplet.h"
 #include "java/kjavaappletwidget.h"
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
     { "+[tdelibs_path]", "path to tdelibs directory", 0 },
-    KCmdLineLastOption
+    TDECmdLineLastOption
 };
 
 int main(int argc, char **argv)

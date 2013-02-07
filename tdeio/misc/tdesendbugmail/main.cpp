@@ -18,10 +18,10 @@
 
 #include "smtp.h"
 
-static KCmdLineOptions options[] = {
+static TDECmdLineOptions options[] = {
     { "subject <argument>", I18N_NOOP("Subject line"), 0 },
     { "recipient <argument>", I18N_NOOP("Recipient"), "submit@bugs.kde.org" },
-    KCmdLineLastOption
+    TDECmdLineLastOption
 };
 
 void BugMailer::slotError(int errornum) {

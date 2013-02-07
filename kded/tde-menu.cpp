@@ -32,14 +32,14 @@
 #include "kservicegroup.h"
 #include "kstandarddirs.h"
 
-static KCmdLineOptions options[] = {
+static TDECmdLineOptions options[] = {
    { "utf8", I18N_NOOP("Output data in UTF-8 instead of local encoding"), 0 },
    { "print-menu-id", I18N_NOOP("Print menu-id of the menu that contains\nthe application"), 0 },
    { "print-menu-name", I18N_NOOP("Print menu name (caption) of the menu that\ncontains the application"), 0 },
    { "highlight", I18N_NOOP("Highlight the entry in the menu"), 0 },
    { "nocache-update", I18N_NOOP("Do not check if sycoca database is up to date"), 0 },
    { "+<application-id>", I18N_NOOP("The id of the menu entry to locate"), 0 },
-   KCmdLineLastOption
+   TDECmdLineLastOption
 };
 
 static const char appName[] = "tde-menu";

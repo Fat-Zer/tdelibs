@@ -49,13 +49,13 @@
 static const char description[] =
         I18N_NOOP("KIO Exec - Opens remote files, watches modifications, asks for upload");
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
    { "tempfiles", I18N_NOOP("Treat URLs as local files and delete them afterwards"), 0 },
    { "suggestedfilename <file name>", I18N_NOOP("Suggested file name for the downloaded file"), 0 },
    { "+command", I18N_NOOP("Command to execute"), 0 },
    { "+[URLs]", I18N_NOOP("URL(s) or local file(s) used for 'command'"), 0 },
-   KCmdLineLastOption
+   TDECmdLineLastOption
 };
 
 

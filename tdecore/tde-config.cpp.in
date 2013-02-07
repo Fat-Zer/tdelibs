@@ -13,7 +13,7 @@
 
 static const char *description = I18N_NOOP("A little program to output installation paths");
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
     { "expandvars", I18N_NOOP("expand ${prefix} and ${exec_prefix} in output"), 0 },
     { "prefix",	   I18N_NOOP("Compiled in prefix for TDE libraries"), 0 },

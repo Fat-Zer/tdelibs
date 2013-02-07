@@ -20,7 +20,7 @@ void test(TQDate & date);
 
 static const char description[] = "KCalendarTest";
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
   { "help", I18N_NOOP("Prints this help"), 0 },
   { "type hijri|gregorian|jalali|hebrew", I18N_NOOP("Supported calendar types"), 0 },
