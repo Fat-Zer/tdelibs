@@ -36,7 +36,7 @@
 #include <tdestdaccel.h>
 #include <tdepopupmenu.h>
 #include <kdebug.h>
-#include <kcompletionbox.h>
+#include <tdecompletionbox.h>
 #include <kurl.h>
 #include <kurldrag.h>
 #include <kiconloader.h>

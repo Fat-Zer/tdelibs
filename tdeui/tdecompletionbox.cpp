@@ -31,7 +31,7 @@
 #include <knotifyclient.h>
 #include <kglobalsettings.h>
 
-#include "kcompletionbox.h"
+#include "tdecompletionbox.h"
 
 class TDECompletionBox::TDECompletionBoxPrivate
 {
@@ -559,4 +559,4 @@ bool TDECompletionBox::activateOnSelect() const
 void TDECompletionBox::virtual_hook( int id, void* data )
 { TDEListBox::virtual_hook( id, data ); }
 
-#include "kcompletionbox.moc"
+#include "tdecompletionbox.moc"

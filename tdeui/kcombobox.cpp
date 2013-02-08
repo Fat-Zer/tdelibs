@@ -25,7 +25,7 @@
 #include <tqpopupmenu.h>
 #include <tqapplication.h>
 
-#include <kcompletionbox.h>
+#include <tdecompletionbox.h>
 #include <kcursor.h>
 #include <kiconloader.h>
 #include <kicontheme.h>

@@ -66,7 +66,7 @@ install( FILES
     kedittoolbar.h kdockwidget.h kanimwidget.h
     krootpixmap.h kaboutkde.h kaboutapplication.h
     kpanelapplet.h kpushbutton.h kdcopactionproxy.h kcolorcombo.h
-    kpanelextension.h kcompletionbox.h ksqueezedtextlabel.h
+    kpanelextension.h tdecompletionbox.h ksqueezedtextlabel.h
     kcommand.h twindowlistmenu.h tdefontcombo.h tdeaccelgen.h ktip.h
     kdatewidget.h karrowbutton.h kguiitem.h kstdguiitem.h
     kstringvalidator.h twindowinfo.h
@@ -129,7 +129,7 @@ set( ${target}_SRCS
   kanimwidget.cpp krootpixmap.cpp kaboutkde.cpp
   kaboutapplication.cpp kpanelapplet.cpp kdcopactionproxy.cpp
   kcolorcombo.cpp kpushbutton.cpp kpanelextension.cpp
-  kcompletionbox.cpp ksqueezedtextlabel.cpp tdecmodule.cpp
+  tdecompletionbox.cpp ksqueezedtextlabel.cpp tdecmodule.cpp
   kcommand.cpp twindowlistmenu.cpp tdefontcombo.cpp ktip.cpp
   kdatewidget.cpp karrowbutton.cpp tdemainwindowiface.cpp
   tdemainwindowiface.skel kguiitem.cpp kstdguiitem.cpp

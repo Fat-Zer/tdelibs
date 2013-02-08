@@ -12,7 +12,7 @@
 #include <klocale.h>
 #include <klineedit.h>
 #include <kglobalsettings.h>
-#include <kcompletionbox.h>
+#include <tdecompletionbox.h>
 
 #include "klineedittest.h"
 

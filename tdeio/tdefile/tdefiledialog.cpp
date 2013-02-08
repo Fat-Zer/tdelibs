@@ -47,7 +47,7 @@
 #include <kapplication.h>
 #include <kcharsets.h>
 #include <kcmdlineargs.h>
-#include <kcompletionbox.h>
+#include <tdecompletionbox.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <kglobal.h>

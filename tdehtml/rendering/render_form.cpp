@@ -23,7 +23,7 @@
  *
  */
 
-#include <kcompletionbox.h>
+#include <tdecompletionbox.h>
 #include <kcursor.h>
 #include <kdebug.h>
 #include <tdefiledialog.h>

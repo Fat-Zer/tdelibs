@@ -23,7 +23,7 @@ kcolordialog.cpp	Waldo Bastian <bastian@kde.org>
 kcolordrag.cpp
 kcombobox.cpp   	Dawit Alemayehu <adawit@kde.org>, Carsten Pfeiffer <pfeiffer@kde.org>
 kcommand.cpp		Werner Trobin <trobin@kde.org>
-kcompletionbox.cpp	Carsten Pfeiffer <pfeiffer@kde.org>
+tdecompletionbox.cpp	Carsten Pfeiffer <pfeiffer@kde.org>
 kcursor.cpp		Carsten Pfeiffer <pfeiffer@kde.org>
 kdatepicker.cpp
 kdatetbl.cpp

@@ -37,7 +37,7 @@ kcolordialog.cpp \
 kcolordrag.cpp \
 kcombobox.cpp \
 kcommand.cpp \
-kcompletionbox.cpp \
+tdecompletionbox.cpp \
 tdeconfigdialog.cpp \
 kcursor.cpp \
 kdatepicker.cpp \
