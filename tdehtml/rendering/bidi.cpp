@@ -877,7 +877,7 @@ bool RenderBlock::clearLineOfPageBreaks(InlineFlowBox* lineBox)
                 lineBox->verticallyAlignBoxes(m_height);
             }
 #ifdef PAGE_DEBUG
-            kdDebug(6040) << "Cleared line " << lineBox->yPos() - oldYPos << "px" << endl;
+            kdDebug(6040) << "Cleared line " << lineBox->yPos() << "px" << endl;
 #endif
             setContainsPageBreak(true);
         }
@@ -1254,8 +1254,8 @@ void RenderBlock::bidiReorderLine(const BidiIterator &start, const BidiIterator 
     }
 
 #if BIDI_DEBUG > 0
-    kdDebug(6041) << "reached end of line current=" << current.obj << "/" << current.pos
-		  << ", eor=" << eor.obj << "/" << eor.pos << endl;
+//    kdDebug(6041) << "reached end of line current=" << current.obj << "/" << current.pos
+//		  << ", eor=" << eor.obj << "/" << eor.pos << endl;
 #endif
     if ( !emptyRun && bidi.sor != bidi.current ) {
 	    bidi.eor = bidi.last;
@@ -1286,10 +1286,10 @@ void RenderBlock::bidiReorderLine(const BidiIterator &start, const BidiIterator 
 #if BIDI_DEBUG > 0
     kdDebug(6041) << "lineLow = " << (uint)levelLow << ", lineHigh = " << (uint)levelHigh << endl;
     kdDebug(6041) << "logical order is:" << endl;
-    TQPtrListIterator<BidiRun> it2(runs);
-    BidiRun *r2;
-    for ( ; (r2 = it2.current()); ++it2 )
-        kdDebug(6041) << "    " << r2 << "  start=" << r2->start << "  stop=" << r2->stop << "  level=" << (uint)r2->level << endl;
+//    TQPtrListIterator<BidiRun> it2(runs);
+//    BidiRun *r2;
+//    for ( ; (r2 = it2.current()); ++it2 )
+//        kdDebug(6041) << "    " << r2 << "  start=" << r2->start << "  stop=" << r2->stop << "  level=" << (uint)r2->level << endl;
 #endif
 
     int count = sBidiRunCount - 1;
@@ -1318,8 +1318,8 @@ void RenderBlock::bidiReorderLine(const BidiIterator &start, const BidiIterator 
 
 #if BIDI_DEBUG > 0
     kdDebug(6041) << "visual order is:" << endl;
-    for (BidiRun* curr = sFirstRun; curr; curr = curr->nextRun)
-        kdDebug(6041) << "    " << curr << endl;
+//    for (BidiRun* curr = sFirstRun; curr; curr = curr->nextRun)
+//        kdDebug(6041) << "    " << curr << endl;
 #endif
 }
 

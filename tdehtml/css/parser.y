@@ -86,7 +86,7 @@ static inline int getValueID(const char *tagStr, int len)
 %union {
     CSSRuleImpl *rule;
     CSSSelector *selector;
-    QPtrList<CSSSelector> *selectorList;
+    TQPtrList<CSSSelector> *selectorList;
     bool ok;
     MediaListImpl *mediaList;
     CSSMediaRuleImpl *mediaRule;
@@ -525,7 +525,7 @@ ruleset:
 selector_list:
     selector %prec UNIMPORTANT_TOK {
 	if ( $1 ) {
-	    $$ = new QPtrList<CSSSelector>;
+	    $$ = new TQPtrList<CSSSelector>;
             $$->setAutoDelete( true );
 #ifdef CSS_DEBUG
 	    kdDebug( 6080 ) << "   got simple selector:" << endl;

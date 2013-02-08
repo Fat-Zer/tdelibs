@@ -436,8 +436,9 @@ void HTMLElementImpl::addHTMLColor( int id, const DOMString &c )
 
 	    color.sprintf("#%02x%02x%02x", colors[0], colors[1], colors[2] );
 // 	    tqDebug( "trying to add fixed color string '%s'", color.latin1() );
-	    if ( m_styleDecls->setProperty(id, DOMString(color), false, true) )
+	    if ( m_styleDecls->setProperty(id, DOMString(color), false, true) ) {
 		return;
+	    }
 	}
     }
     m_styleDecls->setProperty(id, CSS_VAL_BLACK, false, true);
