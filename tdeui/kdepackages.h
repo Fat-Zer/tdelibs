@@ -638,7 +638,7 @@ const char * const packages[] = {
 "kicker/minipagerapplet",
 "kicker/multiscreen",
 "kicker/naughtyapplet",
-"kicker/quictdelauncher",
+"kicker/quicklauncher",
 "kicker/sidebar",
 "kicker/systemtray",
 "kicker/taskbarapplet",
