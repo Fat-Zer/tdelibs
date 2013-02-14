@@ -2,7 +2,7 @@
 #include <kmimetype.h>
 #include <kservicetype.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 
 int main(int argc, char *argv[])

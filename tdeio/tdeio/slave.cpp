@@ -38,7 +38,7 @@
 #include <klocale.h>
 #include <kglobal.h>
 #include <kstandarddirs.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <ktempfile.h>
 #include <ksock.h>
 #include <kprocess.h>

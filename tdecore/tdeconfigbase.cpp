@@ -27,7 +27,7 @@
 #include <tqdir.h>
 #include <tqtextstream.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <kcharsets.h>

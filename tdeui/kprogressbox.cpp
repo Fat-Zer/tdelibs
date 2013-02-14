@@ -37,7 +37,7 @@
 #include "ktextedit.h"
 #include "kprogressbox.h"
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klocale.h>
 #include <twin.h>
 

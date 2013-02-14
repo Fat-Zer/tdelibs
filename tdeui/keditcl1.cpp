@@ -24,7 +24,7 @@
 #include <tqtextstream.h>
 #include <tqtimer.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kcursor.h>
 #include <kdebug.h>
 #include <kcmenumngr.h>

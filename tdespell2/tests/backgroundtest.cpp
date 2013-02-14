@@ -24,7 +24,7 @@
 #include "broker.h"
 using namespace KSpell2;
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 
 const char *text = "Rationale \

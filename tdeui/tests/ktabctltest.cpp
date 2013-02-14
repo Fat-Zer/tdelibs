@@ -2,7 +2,7 @@
  *
  */
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tqpushbutton.h>
 #include <tqlabel.h>
 #include <tqobject.h>

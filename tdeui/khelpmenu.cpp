@@ -27,11 +27,11 @@
 #include <tqwhatsthis.h>
 #include <tqwidget.h>
 
-#include <kaboutapplication.h>
-#include <kaboutdata.h>
-#include <kaboutkde.h>
+#include <tdeaboutapplication.h>
+#include <tdeaboutdata.h>
+#include <tdeabouttde.h>
 #include <tdeaction.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kbugreport.h>
 #include <kdialogbase.h>
 #include <khelpmenu.h>

@@ -24,7 +24,7 @@
 #include <tqvaluestack.h>
 
 #include <tdeactionclasses.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kcombobox.h>
 #include <tdeconfig.h>
 #include <tdefiledialog.h>

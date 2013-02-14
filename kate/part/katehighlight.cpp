@@ -44,7 +44,7 @@
 #include <kstandarddirs.h>
 #include <kmessagebox.h>
 #include <kstaticdeleter.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 #include <tqstringlist.h>
 #include <tqtextstream.h>

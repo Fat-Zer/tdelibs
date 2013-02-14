@@ -11,7 +11,7 @@
 #include"config.h"
 
 #include <tqdir.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kstandarddirs.h>
 #include <tqstring.h>
 #include <tqregexp.h>

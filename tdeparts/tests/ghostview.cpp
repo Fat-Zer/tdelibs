@@ -1,11 +1,11 @@
 #include <kiconloader.h>
 #include <kstandarddirs.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeaction.h>
 #include <klocale.h>
 #include <tdefiledialog.h>
 #include <kmessagebox.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <klibloader.h>
 
 #include <tqwidget.h>

@@ -54,7 +54,7 @@
 #include <kdialogbase.h>
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kprocess.h>
 
 #undef m_manager

@@ -134,10 +134,10 @@ SampleTest - 1 test passed, 1 test failed
  * looks like this:
  *
  * @code
- * #include <kaboutdata.h>
- * #include <kapplication.h>
- * #include <kcmdlineargs.h>
- * #include <kcmdlineargs.h>
+ * #include <tdeaboutdata.h>
+ * #include <tdeapplication.h>
+ * #include <tdecmdlineargs.h>
+ * #include <tdecmdlineargs.h>
  * #include <klocale.h>
  * #include <tdeunittest/runnergui.h>
  *

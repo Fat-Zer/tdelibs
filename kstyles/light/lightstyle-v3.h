@@ -28,7 +28,7 @@
 #include <tqcommonstyle.h>
 #endif // QT_H
 
-#include "kstyle.h"
+#include "tdestyle.h"
 
 #ifdef QT_PLUGIN
 #  define Q_EXPORT_STYLE_LIGHT_V3

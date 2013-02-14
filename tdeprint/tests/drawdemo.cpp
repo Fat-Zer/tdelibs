@@ -14,7 +14,7 @@
 #include <tqpushbutton.h>
 #include <tqradiobutton.h>
 #include <tqbuttongroup.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tqapplication.h>
 #include <math.h>
 

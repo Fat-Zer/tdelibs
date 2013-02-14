@@ -18,7 +18,7 @@
  **/
 
 #include "kprintprocess.h"
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klocale.h>
 #include <tqfile.h>
 

@@ -19,7 +19,7 @@
  */
 
 #include <tdeconfig.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdialog.h>
 #include <kwhatsthismanager_p.h>
 #include <kdebug.h>

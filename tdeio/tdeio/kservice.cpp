@@ -37,7 +37,7 @@
 #include <tqtl.h>
 
 #include <ksimpleconfig.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kdesktopfile.h>
 #include <kglobal.h>

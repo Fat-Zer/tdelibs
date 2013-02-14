@@ -27,7 +27,7 @@
 
 #include "kdebugdcopiface.h"
 
-#include "kapplication.h"
+#include "tdeapplication.h"
 #include "kglobal.h"
 #include "kinstance.h"
 #include "kstandarddirs.h"

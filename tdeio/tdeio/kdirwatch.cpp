@@ -54,7 +54,7 @@
 #include <tqstringlist.h>
 #include <tqtimer.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <tdeconfig.h>
 #include <kglobal.h>

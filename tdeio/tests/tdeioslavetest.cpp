@@ -14,8 +14,8 @@
 #include <tqdir.h>
 
 #include <kacl.h>
-#include <kapplication.h>
-#include <kcmdlineargs.h>
+#include <tdeapplication.h>
+#include <tdecmdlineargs.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kurl.h>

@@ -46,7 +46,7 @@
 
 #include <dcopclient.h>
 #include <dcopref.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kprocess.h>
 #include <kdebug.h>
 #include <kdesktopfile.h>

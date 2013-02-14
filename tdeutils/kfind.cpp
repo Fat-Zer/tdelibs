@@ -21,7 +21,7 @@
 
 #include "kfind.h"
 #include "kfinddialog.h"
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <tqlabel.h>

@@ -28,7 +28,7 @@
 #include <tderecentdocument.h>
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kurl.h>
 #include <kdebug.h>
 #include <kmimetype.h>

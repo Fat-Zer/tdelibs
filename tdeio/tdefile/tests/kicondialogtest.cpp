@@ -1,4 +1,4 @@
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kicondialog.h>
 
 int main( int argc, char **argv )

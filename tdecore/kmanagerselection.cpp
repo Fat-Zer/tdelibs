@@ -47,7 +47,7 @@ DEALINGS IN THE SOFTWARE.
 
 #include <kdebug.h>
 #include <tqwidget.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kxerrorhandler.h>
 #include <X11/Xatom.h>
 

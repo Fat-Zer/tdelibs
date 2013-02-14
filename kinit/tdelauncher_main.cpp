@@ -22,9 +22,9 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-#include "kapplication.h"
+#include "tdeapplication.h"
 #include "tdelauncher.h"
-#include "kcmdlineargs.h"
+#include "tdecmdlineargs.h"
 #include "kcrash.h"
 #include "kdebug.h"
 #include <stdio.h>

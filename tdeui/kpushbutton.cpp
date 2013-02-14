@@ -29,7 +29,7 @@
 #include <tdeconfig.h>
 #include <kglobal.h>
 #include <kipc.h> 
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 class KPushButton::KPushButtonPrivate
 {

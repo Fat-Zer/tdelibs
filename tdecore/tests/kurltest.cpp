@@ -2,7 +2,7 @@
 
 #include <kurl.h>
 #include <stdio.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <stdlib.h>
 #include <kdebug.h>
 #include <kglobal.h>
@@ -10,7 +10,7 @@
 #include <tqtextcodec.h>
 #include <tqdatastream.h>
 #include <assert.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 
 static bool check(TQString txt, TQString a, TQString b)
 {

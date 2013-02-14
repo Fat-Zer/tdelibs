@@ -57,7 +57,7 @@
 #include <kglobal.h>
 #include <tdeconfig.h>
 #include <klibloader.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klocale.h>
 
 #ifdef HAVE_SYS_PRCTL_H

@@ -17,7 +17,7 @@
 #include <tqobject.h>
 
 #include "kdirwatch.h"
-#include "kapplication.h"
+#include "tdeapplication.h"
 
 #include <tdeunittest/tester.h>
 #include <tdeunittest/module.h>

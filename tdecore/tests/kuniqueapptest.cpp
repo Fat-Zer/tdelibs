@@ -22,8 +22,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <kcmdlineargs.h>
-#include <kaboutdata.h>
+#include <tdecmdlineargs.h>
+#include <tdeaboutdata.h>
 
 class TestApp : public KUniqueApplication
 {

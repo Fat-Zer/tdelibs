@@ -21,9 +21,9 @@
 
 // $Id$
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kmessagebox.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kprocess.h>

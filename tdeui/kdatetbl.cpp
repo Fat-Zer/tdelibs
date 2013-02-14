@@ -35,7 +35,7 @@
 #include <tdeconfig.h>
 #include <kglobal.h>
 #include <kglobalsettings.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeaccel.h>
 #include <klocale.h>
 #include <kdebug.h>

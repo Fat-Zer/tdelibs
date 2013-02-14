@@ -50,7 +50,7 @@ include_HEADERS = kprogressbox.h kprogress.h kcolordlg.h \
 		klineeditdlg.h kinputdialog.h kactivelabel.h \
 		kcharselect.h kcolordrag.h qxembed.h \
 		knumvalidator.h kdialog.h kdialogbase.h \
-		kjanuswidget.h kaboutdialog.h \
+		kjanuswidget.h tdeaboutdialog.h \
 		kauthicon.h kmessagebox.h ksharedpixmap.h \
 		kdualcolorbtn.h kdualcolorbutton.h tdetoolbarbutton.h \
 		tdetoolbarradiogroup.h ktextbrowser.h \
@@ -61,7 +61,7 @@ include_HEADERS = kprogressbox.h kprogress.h kcolordlg.h \
 		kxmlguiclient.h kxmlgui.h kxmlguibuilder.h kxmlguifactory.h \
 		kpixmapio.h kwordwrap.h \
 		kedittoolbar.h kdockwidget.h kanimwidget.h \
-		krootpixmap.h kaboutkde.h kaboutapplication.h \
+		krootpixmap.h tdeabouttde.h tdeaboutapplication.h \
 		kpanelapplet.h kpushbutton.h kdcopactionproxy.h kcolorcombo.h \
 		kpanelextension.h tdecompletionbox.h ksqueezedtextlabel.h \
 		kcommand.h twindowlistmenu.h tdefontcombo.h tdeaccelgen.h ktip.h \
@@ -98,7 +98,7 @@ libtdeui_la_SOURCES = \
 		kruler.cpp kcursor.cpp klineeditdlg.cpp  \
 		kcharselect.cpp kcolordrag.cpp  \
 		knumvalidator.cpp kdialog.cpp kdialogbase.cpp \
-		kjanuswidget.cpp kaboutdialog.cpp \
+		kjanuswidget.cpp tdeaboutdialog.cpp \
 		kauthicon.cpp kmessagebox.cpp kdualcolorbutton.cpp \
 		tdetoolbarradiogroup.cpp tdetoolbarbutton.cpp \
 		ktextbrowser.cpp khelpmenu.cpp kswitchlanguagedialog.cpp \
@@ -107,8 +107,8 @@ libtdeui_la_SOURCES = \
 		kcombobox.cpp kpassdlg.cpp kxmlguiclient.cpp kxmlguifactory.cpp \
 		kxmlguifactory_p.cpp kxmlguibuilder.cpp kedittoolbar.cpp \
 		kpanelappmenu.cpp kdockwidget.cpp kdockwidget_private.cpp \
-		kanimwidget.cpp krootpixmap.cpp kaboutkde.cpp \
-		kaboutapplication.cpp kpanelapplet.cpp kdcopactionproxy.cpp \
+		kanimwidget.cpp krootpixmap.cpp tdeabouttde.cpp \
+		tdeaboutapplication.cpp kpanelapplet.cpp kdcopactionproxy.cpp \
 		kcolorcombo.cpp kpushbutton.cpp kpanelextension.cpp \
 		tdecompletionbox.cpp ksqueezedtextlabel.cpp tdecmodule.cpp \
 		kcommand.cpp twindowlistmenu.cpp tdefontcombo.cpp ktip.cpp \

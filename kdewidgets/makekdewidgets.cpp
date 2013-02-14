@@ -1,7 +1,7 @@
 /* Copyright (C) 2004-2005 ian reinhart geiser <geiseri@sourcextreme.com> */
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <kinstance.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <tdeconfig.h>
 #include <kmacroexpander.h>
 #include <kdebug.h>

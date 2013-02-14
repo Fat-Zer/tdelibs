@@ -35,7 +35,7 @@
 #undef QT_NO_TRANSLATION
 #undef TQT_NO_TRANSLATION
 #include <tqtranslator.h>
-#include "kapplication.h"
+#include "tdeapplication.h"
 #define QT_NO_TRANSLATION
 #define TQT_NO_TRANSLATION
 #include <tqdir.h>
@@ -65,13 +65,13 @@
 #include <kstandarddirs.h>
 #include <kdebug.h>
 #include <klocale.h>
-#include <kstyle.h>
+#include <tdestyle.h>
 #include <kiconloader.h>
 #include <kclipboard.h>
 #include <tdeconfig.h>
 #include <ksimpleconfig.h>
-#include <kcmdlineargs.h>
-#include <kaboutdata.h>
+#include <tdecmdlineargs.h>
+#include <tdeaboutdata.h>
 #include <kglobalsettings.h>
 #include <kcrash.h>
 #include <kdatastream.h>
@@ -3635,4 +3635,4 @@ void TDEApplication::virtual_hook( int id, void* data )
 void KSessionManaged::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
-#include "kapplication.moc"
+#include "tdeapplication.moc"

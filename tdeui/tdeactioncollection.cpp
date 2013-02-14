@@ -31,7 +31,7 @@
 
 #include <tdeaccel.h>
 #include <tdeaccelbase.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 
 #include <tqpopupmenu.h>

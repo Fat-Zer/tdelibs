@@ -1,7 +1,7 @@
 
 #include "tdemainwindowrestoretest.h"
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 #include <tqlabel.h>
 

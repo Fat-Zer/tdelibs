@@ -23,7 +23,7 @@
 
 #include <tqlayout.h>
 
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <tdeconfigskeleton.h>
 #include <tdeconfigdialogmanager.h>
 #include <kdebug.h>

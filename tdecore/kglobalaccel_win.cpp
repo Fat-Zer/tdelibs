@@ -31,7 +31,7 @@
 #include <tqwidget.h>
 #include <tqmetaobject.h>
 #include <private/qucomextra_p.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kkeynative.h>
 

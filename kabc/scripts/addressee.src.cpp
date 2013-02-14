@@ -24,7 +24,7 @@
 
 #include <ksharedptr.h>
 #include <kdebug.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klocale.h>
 
 #include "addresseehelper.h"

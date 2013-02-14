@@ -23,9 +23,9 @@
 #include <tqdatastream.h>
 #include <tqptrstack.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kstandarddirs.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeconfig.h>
 #include <dcopclient.h>
 #include <kdebug.h>

@@ -32,7 +32,7 @@
 
 #include <kdebug.h>
 #include <kstandarddirs.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kde_file.h>
 
 #include "client.h"

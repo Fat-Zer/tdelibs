@@ -29,7 +29,7 @@
 #include <rendering/render_object.h>
 #include <tqptrlist.h>
 #include <kstaticdeleter.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeconfig.h>
 #include <tqtooltip.h>
 

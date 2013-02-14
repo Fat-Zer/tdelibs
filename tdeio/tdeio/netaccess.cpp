@@ -33,7 +33,7 @@
 #include <tqfile.h>
 #include <tqmetaobject.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klocale.h>
 #include <ktempfile.h>
 #include <kdebug.h>

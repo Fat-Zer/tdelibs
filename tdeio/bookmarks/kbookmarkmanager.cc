@@ -32,7 +32,7 @@
 #include <kmessagebox.h>
 #include <kprocess.h>
 #include <klocale.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <dcopclient.h>
 #include <tqfile.h>
 #include <tqfileinfo.h>

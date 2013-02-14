@@ -31,10 +31,10 @@
 #include <tdeconfig.h>
 #include <ksimpleconfig.h>
 #include <klocale.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <kglobal.h>
 #include <kstandarddirs.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <kinstance.h>
 #include <ktempfile.h>
 

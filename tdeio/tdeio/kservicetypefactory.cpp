@@ -24,7 +24,7 @@
 #include "kmimetype.h"
 #include "kuserprofile.h"
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <assert.h>
 #include <kstringhandler.h>

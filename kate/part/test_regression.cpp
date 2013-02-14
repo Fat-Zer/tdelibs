@@ -31,7 +31,7 @@
 #include <pwd.h>
 #include <signal.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kstandarddirs.h>
 #include <tqimage.h>
 #include <tqfile.h>
@@ -40,7 +40,7 @@
 #include <stdio.h>
 
 #include <tdeaction.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include "katefactory.h"
 #include <tdeio/job.h>
 #include <tdemainwindow.h>

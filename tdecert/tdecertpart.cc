@@ -22,7 +22,7 @@
 #include "tdecertpart.h"
 #include <tdeparts/genericfactory.h>
 #include <kinstance.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <tqframe.h>
 #include <klocale.h>
 #include <kdebug.h>

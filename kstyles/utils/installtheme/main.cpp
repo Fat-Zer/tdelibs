@@ -25,8 +25,8 @@
 #include <tqstringlist.h>
 #include <tqsettings.h>
 
-#include <kapplication.h>
-#include <kcmdlineargs.h>
+#include <tdeapplication.h>
+#include <tdecmdlineargs.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <ksimpleconfig.h>

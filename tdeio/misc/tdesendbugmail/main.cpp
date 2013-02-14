@@ -8,11 +8,11 @@
 
 #include <tqtextstream.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kemailsettings.h>
 #include <klocale.h>
-#include <kcmdlineargs.h>
-#include <kaboutdata.h>
+#include <tdecmdlineargs.h>
+#include <tdeaboutdata.h>
 #include <kdebug.h>
 #include <tdeconfig.h>
 

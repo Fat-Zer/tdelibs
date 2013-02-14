@@ -19,8 +19,8 @@
 
 #include <assert.h>
 
-#include <kcmdlineargs.h>
-#include <kapplication.h>
+#include <tdecmdlineargs.h>
+#include <tdeapplication.h>
 #include <tqeventloop.h>
 #include <kpushbutton.h>
 #include "../kreplace.h"

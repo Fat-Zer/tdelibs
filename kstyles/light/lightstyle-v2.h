@@ -24,7 +24,7 @@
 #define LIGHTSTYLE_V2_H
 
 
-#include <kstyle.h>
+#include <tdestyle.h>
 
 
 #ifdef QT_PLUGIN

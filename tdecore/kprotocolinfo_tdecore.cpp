@@ -27,7 +27,7 @@
 
 #include <kstandarddirs.h>
 #include <kglobal.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <ksimpleconfig.h>
 #include <tdeconfig.h>

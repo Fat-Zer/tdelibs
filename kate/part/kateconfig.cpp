@@ -27,7 +27,7 @@
 
 #include <math.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeconfig.h>
 #include <kglobalsettings.h>
 #include <kcharsets.h>

@@ -19,7 +19,7 @@
 #include "tdetoolbarhandler.h"
 
 #include <tqpopupmenu.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdetoolbar.h>
 #include <tdemainwindow.h>
 #include <klocale.h>

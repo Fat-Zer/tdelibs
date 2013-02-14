@@ -29,7 +29,7 @@
 
 #include <unistd.h>
 #include <stdlib.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tqdialog.h>
 #include <tqfile.h>
 #include <tqfileinfo.h>

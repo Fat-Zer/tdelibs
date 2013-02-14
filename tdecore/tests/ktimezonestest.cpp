@@ -1,5 +1,5 @@
 #include "ktimezones.h"
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <stdio.h>
 #include <stdlib.h>
 

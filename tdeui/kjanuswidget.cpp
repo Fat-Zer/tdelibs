@@ -33,7 +33,7 @@
 #include <tqpainter.h>
 #include <tqstyle.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdialog.h> // Access to some static members
 #include <klocale.h>
 #include <kglobal.h>

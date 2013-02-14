@@ -31,7 +31,7 @@
 #include <klocale.h>
 #include <kdebug.h>
 #include <kseparator.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kstdguiitem.h>
 
 #include "kmwinfopage.h"

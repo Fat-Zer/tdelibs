@@ -41,7 +41,7 @@
 #include <tqwhatsthis.h>
 #include <tqtooltip.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kcharsets.h>
 #include <tdeconfig.h>
 #include <kdialog.h>

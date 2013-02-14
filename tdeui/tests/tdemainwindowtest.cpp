@@ -1,7 +1,7 @@
 #include <tqtimer.h>
 #include <tqlabel.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kstatusbar.h>
 #include <kmenubar.h>
 

@@ -23,9 +23,9 @@
 #include <dcopclient.h>
 #include <dcopref.h>
 
-#include "kaboutdata.h"
-#include "kapplication.h"
-#include "kcmdlineargs.h"
+#include "tdeaboutdata.h"
+#include "tdeapplication.h"
+#include "tdecmdlineargs.h"
 #include "kglobal.h"
 #include "klocale.h"
 #include "kservice.h"

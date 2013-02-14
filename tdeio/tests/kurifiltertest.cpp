@@ -22,10 +22,10 @@
 #include <iostream>
 #include <stdlib.h>
 
-#include <kaboutdata.h>
-#include <kapplication.h>
+#include <tdeaboutdata.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <kstandarddirs.h>
 #include <ksimpleconfig.h>
 

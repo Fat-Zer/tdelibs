@@ -26,7 +26,7 @@ DEALINGS IN THE SOFTWARE.
 
 #include "kxmessages.h"
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 #ifdef Q_WS_X11 // FIXME(E): Figure out what parts we can/should emulate in QT/E
 

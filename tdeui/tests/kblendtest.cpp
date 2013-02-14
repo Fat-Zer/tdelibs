@@ -1,5 +1,5 @@
 #include "kblendtest.h"
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kimageeffect.h>
 #include <tqpainter.h>
 #include <tqdatetime.h>

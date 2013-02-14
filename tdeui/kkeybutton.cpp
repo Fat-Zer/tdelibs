@@ -24,7 +24,7 @@
 #include <tqcursor.h>
 #include <tqdrawutil.h>
 #include <tqpainter.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kglobalaccel.h>
 #include <klocale.h>

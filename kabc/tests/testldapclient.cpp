@@ -18,9 +18,9 @@
 
 #include "testldapclient.h"
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 
 #include <tqeventloop.h>
 

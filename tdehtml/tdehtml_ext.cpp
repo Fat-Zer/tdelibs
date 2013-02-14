@@ -53,7 +53,7 @@
 #include <ksavefile.h>
 #include <kurldrag.h>
 #include <kstringhandler.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kmessagebox.h>
 #include <kstandarddirs.h>
 #include <krun.h>

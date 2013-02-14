@@ -1,7 +1,7 @@
 
 #include <tqguardedptr.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeaction.h>
 
 #include <assert.h>

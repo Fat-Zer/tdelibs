@@ -20,7 +20,7 @@
 
 #include <stdlib.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kcrash.h>
 #include <kdebug.h>
 #include <klocale.h>

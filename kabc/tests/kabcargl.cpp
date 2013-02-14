@@ -22,10 +22,10 @@
 #include <tqtextstream.h>
 #include <tqregexp.h>
 
-#include <kaboutdata.h>
-#include <kapplication.h>
+#include <tdeaboutdata.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <kglobal.h>
 #include <kstandarddirs.h>
 

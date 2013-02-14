@@ -26,7 +26,7 @@
 //----------------------------------------------------------------------------
 
 #ifndef NO_KDE
-# include <kapplication.h>
+# include <tdeapplication.h>
  TDEApplication* theApp;
 #else
 # include <tqapplication.h>

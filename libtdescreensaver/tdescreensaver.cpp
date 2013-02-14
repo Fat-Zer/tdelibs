@@ -20,7 +20,7 @@
 
 #include <tqpainter.h>
 #include <tqtimer.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include "tdescreensaver.h"
 #ifdef Q_WS_X11
 #include <X11/Xlib.h>

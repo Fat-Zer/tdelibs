@@ -1,4 +1,4 @@
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tqwidget.h>
 #include <tqcursor.h>
 #include "tdepopupmenu.h"

@@ -29,8 +29,8 @@
 #include <tdeconfig.h>
 #include <kstandarddirs.h>
 #include <kuniqueapplication.h>
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
+#include <tdeaboutdata.h>
+#include <tdecmdlineargs.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <dcopclient.h>

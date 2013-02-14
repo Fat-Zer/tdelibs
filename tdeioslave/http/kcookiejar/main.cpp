@@ -22,9 +22,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 #include <dcopclient.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <klocale.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 static const char description[] =
 	I18N_NOOP("HTTP Cookie Daemon");

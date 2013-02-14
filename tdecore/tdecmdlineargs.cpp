@@ -35,10 +35,10 @@
 #include <tqasciidict.h>
 #include <tqstrlist.h>
 
-#include "kcmdlineargs.h"
-#include <kaboutdata.h>
+#include "tdecmdlineargs.h"
+#include <tdeaboutdata.h>
 #include <klocale.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kglobal.h>
 #include <kstringhandler.h>
 #include <kstaticdeleter.h>

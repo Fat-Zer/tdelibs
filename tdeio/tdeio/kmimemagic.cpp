@@ -18,7 +18,7 @@
 */
 #include "kmimemagic.h"
 #include <kdebug.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tqfile.h>
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>

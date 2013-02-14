@@ -1,7 +1,7 @@
 #include "scriptmanager.h"
 #include <tdeparts/part.h>
 #include <tdeparts/componentfactory.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdesktopfile.h>
 #include <kstandarddirs.h>
 

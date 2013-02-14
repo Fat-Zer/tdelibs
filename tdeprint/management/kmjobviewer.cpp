@@ -39,7 +39,7 @@
 #include <tdeaction.h>
 #include <kstdaction.h>
 #include <kiconloader.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kcursor.h>
 #include <kmenubar.h>
 #include <kdebug.h>

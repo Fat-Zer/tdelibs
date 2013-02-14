@@ -37,7 +37,7 @@
 #include <kurl.h>
 #include <kdebug.h>
 #include <kmimetype.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 using namespace std;
 

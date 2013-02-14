@@ -1,7 +1,7 @@
 #include <kmacroexpander.h>
 
-#include <kapplication.h>
-#include <kcmdlineargs.h>
+#include <tdeapplication.h>
+#include <tdecmdlineargs.h>
 #include <kdebug.h>
 
 #include <stdlib.h>

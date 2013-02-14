@@ -24,7 +24,7 @@
 
 #include <ktrader.h>
 #include <kinstance.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 
 // katepart version must be a string in double quotes, format: "x.x"
 #define KATEPART_VERSION "2.5"

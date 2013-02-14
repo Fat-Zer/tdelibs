@@ -1,15 +1,15 @@
 // -*- c++ -*-
 
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <klocale.h>
 #include <kinstance.h>
 #include <kstandarddirs.h>
 #include <kglobal.h>
 #include <kglobalsettings.h>
 #include <stdio.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <config.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 static const char *description = I18N_NOOP("A little program to output installation paths");
 

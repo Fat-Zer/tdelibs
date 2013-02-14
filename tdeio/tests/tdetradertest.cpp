@@ -16,10 +16,10 @@
  *  Boston, MA 02110-1301, USA.
  */
 
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <ktrader.h>
 #include <kmimetype.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <stdio.h>
 
 static TDECmdLineOptions options[] =

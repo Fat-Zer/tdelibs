@@ -1,6 +1,6 @@
 #include "kdualcolortest.h"
 #include <kdualcolorbutton.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klocale.h>
 #include <tqlayout.h>
 #include <tqpalette.h>

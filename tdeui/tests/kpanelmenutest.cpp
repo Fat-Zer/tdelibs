@@ -1,5 +1,5 @@
 #include "kpanelmenutest.h"
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kstandarddirs.h>
 #include <dcopclient.h>
 

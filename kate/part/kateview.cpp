@@ -55,7 +55,7 @@
 #include <tdeconfig.h>
 #include <kurldrag.h>
 #include <kdebug.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kcursor.h>
 #include <klocale.h>
 #include <kglobal.h>

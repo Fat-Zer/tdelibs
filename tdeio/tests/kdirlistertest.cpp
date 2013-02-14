@@ -21,7 +21,7 @@
 #include <tqlayout.h>
 #include <tqpushbutton.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdirlister.h>
 #include <kdebug.h>
 

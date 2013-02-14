@@ -37,8 +37,8 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kstringhandler.h>
 
 #include <netwm.h> 
-#include <kapplication.h>
-#include <kstyle.h>
+#include <tdeapplication.h>
+#include <tdestyle.h>
 #include <dcopclient.h>
 
 #undef Bool

@@ -34,7 +34,7 @@ Copyright (C) 1998, 1999, 2000 KDE Team
 #include <kpixmap.h>
 #include <tqintcache.h>
 #include <tqstring.h>
-#include <kstyle.h>
+#include <tdestyle.h>
 #include <tqsettings.h>
 #include <tqpalette.h> // for QColorGroup
 #include "kstyledirs.h"

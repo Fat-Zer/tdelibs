@@ -32,7 +32,7 @@
 #define kde_socklen_t ksocklen_t 
 #endif 
 
-#include "kapplication.h"
+#include "tdeapplication.h"
 
 #include "ksocks.h"
 #include "tdesocketaddress.h"

@@ -37,7 +37,7 @@
 
 #include <kcursor.h>
 #include <kdebug.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kglobalsettings.h>
 #include <kurldrag.h>
 

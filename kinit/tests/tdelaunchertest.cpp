@@ -19,7 +19,7 @@
 */
 
 #include <tqstring.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <dcopclient.h>
 #include <stdio.h>
 #include <tqvaluelist.h>

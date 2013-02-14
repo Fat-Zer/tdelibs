@@ -45,7 +45,7 @@
 #include <tdelistbox.h>
 #include <kmimetype.h>
 #include <kmessagebox.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kguiitem.h>
 

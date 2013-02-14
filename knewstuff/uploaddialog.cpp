@@ -32,7 +32,7 @@
 #include <kurlrequester.h>
 #include <kmessagebox.h>
 #include <tdeconfig.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kuser.h>
 
 #include "engine.h"

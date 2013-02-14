@@ -52,7 +52,7 @@
 #include <tqmenubar.h>
 
 #include <kmenubar.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <tdeversion.h>
 #include <tqtabwidget.h>

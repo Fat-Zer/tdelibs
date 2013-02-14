@@ -17,11 +17,11 @@
 */
 
 #define private public
-#include "kapplication.h"
+#include "tdeapplication.h"
 #include <stdio.h>
 
-#include <kcmdlineargs.h>
-#include <kaboutdata.h>
+#include <tdecmdlineargs.h>
+#include <tdeaboutdata.h>
 #include <kglobalsettings.h>
 #include <tdesycoca.h>
 

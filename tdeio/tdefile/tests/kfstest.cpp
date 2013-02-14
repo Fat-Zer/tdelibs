@@ -32,7 +32,7 @@
 #include <tdefileiconview.h>
 #include <kmessagebox.h>
 #include <tdeconfig.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kurl.h>
 #include <kurlbar.h>
 #include <kdiroperator.h>

@@ -40,7 +40,7 @@
 #include <kurl.h>
 #include <kurldrag.h>
 #include <kiconloader.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 #include "klineedit.h"
 #include "klineedit.moc"

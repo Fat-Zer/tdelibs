@@ -25,7 +25,7 @@
 #include <tqfileinfo.h>
 #include <tqdir.h>
 #include <klocale.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
 

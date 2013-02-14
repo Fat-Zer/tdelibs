@@ -52,7 +52,7 @@
 #include <tqtimer.h>
 #include <tqvbox.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <kglobal.h>

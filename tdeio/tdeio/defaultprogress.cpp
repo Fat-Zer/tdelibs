@@ -22,7 +22,7 @@
 #include <tqdatetime.h>
 #include <tqcheckbox.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kdialog.h>
 #include <kstringhandler.h>

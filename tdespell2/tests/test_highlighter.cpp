@@ -22,7 +22,7 @@
 #include "dictionary.h"
 #include "filter.h"
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 
 #include <tqtextedit.h>

@@ -53,7 +53,7 @@
 #include <tqcstring.h>
 #include <tqdatastream.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 #include <kprotocolmanager.h>
 #include <kde_file.h>

@@ -19,7 +19,7 @@
 #include <tqptrlist.h>
 
 #include "krandomsequence.h"
-#include "kapplication.h"
+#include "tdeapplication.h"
 
 #include <stdio.h>
 

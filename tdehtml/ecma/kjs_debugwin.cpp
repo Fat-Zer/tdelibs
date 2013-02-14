@@ -55,7 +55,7 @@
 #include <tdeshortcut.h>
 #include <tdeconfig.h>
 #include <tdeconfigbase.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <dcop/dcopclient.h>
 #include <kstringhandler.h> 
 

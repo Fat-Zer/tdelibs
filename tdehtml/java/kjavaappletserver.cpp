@@ -29,7 +29,7 @@
 #include <tdeconfig.h>
 #include <klocale.h>
 #include <tdeparts/browserextension.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kstandarddirs.h>
 
 #include <tdeio/job.h>

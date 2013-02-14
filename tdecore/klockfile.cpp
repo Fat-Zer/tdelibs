@@ -37,8 +37,8 @@
 #include <tqtextstream.h>
 
 #include <kde_file.h>
-#include <kapplication.h>
-#include <kcmdlineargs.h>
+#include <tdeapplication.h>
+#include <tdecmdlineargs.h>
 #include <kglobal.h>
 #include <ktempfile.h>
 

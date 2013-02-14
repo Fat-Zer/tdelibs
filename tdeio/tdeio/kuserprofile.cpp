@@ -22,7 +22,7 @@
 #include "kservicetypefactory.h"
 
 #include <tdeconfig.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kglobal.h>
 #include <kdebug.h>
 #include <kstaticdeleter.h>

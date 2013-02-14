@@ -15,9 +15,9 @@ system( bash kdcopidl )
 TARGET		= tdeui$$KDEBUG
 
 SOURCES = \
-kaboutapplication.cpp \
-kaboutdialog.cpp \
-kaboutkde.cpp \
+tdeaboutapplication.cpp \
+tdeaboutdialog.cpp \
+tdeabouttde.cpp \
 tdeactionclasses.cpp \
 tdeactioncollection.cpp \
 tdeaction.cpp \

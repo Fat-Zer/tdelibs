@@ -22,7 +22,7 @@
 #include <ctime>
 
 #include <dcopclient.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klocale.h>
 #include <knotifyclient.h>
 #include <kprotocolmanager.h>

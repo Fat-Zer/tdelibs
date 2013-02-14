@@ -27,9 +27,9 @@
 #include <dcopclient.h>
 #include <qxembed.h>
 
-#include <kaboutdata.h>
-#include <kapplication.h>
-#include <kcmdlineargs.h>
+#include <tdeaboutdata.h>
+#include <tdeapplication.h>
+#include <tdecmdlineargs.h>
 #include <tdecmoduleinfo.h>
 #include <tdecmoduleloader.h>
 #include <tdecmoduleproxy.h>

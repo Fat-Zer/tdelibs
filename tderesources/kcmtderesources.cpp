@@ -21,7 +21,7 @@
 
 #include <tqlayout.h>
 
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <kgenericfactory.h>
 #include <klocale.h>
 

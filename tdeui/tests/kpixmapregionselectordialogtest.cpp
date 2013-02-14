@@ -1,8 +1,8 @@
 #include "kpixmapregionselectordialog.h"
 #include <tqpixmap.h>
 #include <tqimage.h>
-#include <kapplication.h>
-#include <kcmdlineargs.h>
+#include <tdeapplication.h>
+#include <tdecmdlineargs.h>
 #include <iostream>
 
 static const TDECmdLineOptions options[] =

@@ -18,9 +18,9 @@
 #include <xslt.h>
 #include <tqfile.h>
 #include <tqdir.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <klocale.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <stdlib.h>
 #include <kdebug.h>
 #include <tqtextcodec.h>

@@ -19,7 +19,7 @@
 #ifndef _KCONFIG_TEST_H
 #define _KCONFIG_TEST_H
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tqdialog.h>
 #include <tqfile.h>
 #include <tqfileinfo.h>

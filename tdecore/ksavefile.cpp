@@ -36,7 +36,7 @@
 #include <tqdir.h>
 
 #include <kde_file.h>
-#include "kapplication.h"
+#include "tdeapplication.h"
 #include "ksavefile.h"
 #include "kstandarddirs.h"
 

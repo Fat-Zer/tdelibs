@@ -61,7 +61,7 @@
 #include "xml/dom2_rangeimpl.h"
 #endif
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kcursor.h>
 #include <kdebug.h>
 #include <kdialogbase.h>

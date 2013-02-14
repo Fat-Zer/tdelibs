@@ -21,9 +21,9 @@
 #include <tqtoolbutton.h>
 #include <tqwhatsthis.h>
 
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <tdeaction.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kglobal.h>
 #include <kiconloader.h>

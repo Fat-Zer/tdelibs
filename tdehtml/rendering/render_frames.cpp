@@ -38,7 +38,7 @@
 #include "tdehtml_part.h"
 #include "misc/knsplugininstaller.h"
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kmessagebox.h>
 #include <kmimetype.h>
 #include <klocale.h>

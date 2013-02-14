@@ -21,7 +21,7 @@
 
 #include <dcopclient.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdecmoduleproxy.h>
 #include <kdebug.h>
 

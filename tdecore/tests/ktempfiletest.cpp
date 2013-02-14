@@ -17,7 +17,7 @@
 */
 
 #include "ktempfile.h"
-#include "kapplication.h"
+#include "tdeapplication.h"
 #include "kstandarddirs.h"
 #include <tqstring.h>
 

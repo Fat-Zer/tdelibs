@@ -3,7 +3,7 @@
  * License: GPL V2
  */
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kinputdialog.h>
 #include <kdebug.h>
 

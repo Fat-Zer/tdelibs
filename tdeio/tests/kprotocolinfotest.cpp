@@ -18,10 +18,10 @@
 
 #include <kprotocolinfo.h>
 #include <kprotocolmanager.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kglobalsettings.h>
-#include <kcmdlineargs.h>
-#include <kaboutdata.h>
+#include <tdecmdlineargs.h>
+#include <tdeaboutdata.h>
 #include <kdebug.h>
 #include <assert.h>
 

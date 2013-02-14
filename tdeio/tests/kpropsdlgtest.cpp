@@ -1,8 +1,8 @@
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klocale.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <kpropertiesdialog.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 
 
 static TDECmdLineOptions options[] =

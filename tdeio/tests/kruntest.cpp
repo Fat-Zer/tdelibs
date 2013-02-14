@@ -21,7 +21,7 @@
 
 #include "kruntest.h"
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kshell.h>
 #include <kservice.h>

@@ -32,7 +32,7 @@
 #include <tdeconfig.h>
 #include <klocale.h>
 #include <kdebug.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klibloader.h>
 #include <unistd.h>
 

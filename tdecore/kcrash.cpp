@@ -46,9 +46,9 @@
 #include <tqwindowdefs.h>
 #include <kglobal.h>
 #include <kinstance.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <kdebug.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <dcopclient.h>
 
 #include <../kinit/tdelauncher_cmds.h>

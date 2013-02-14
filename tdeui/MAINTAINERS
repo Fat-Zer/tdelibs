@@ -5,9 +5,9 @@ that class.
 When adding yourself as a maintainer, don't be afraid to reorder the files to a
 more logical grouping.
 
-kaboutapplication.cpp
-kaboutdialog.cpp
-kaboutkde.cpp
+tdeaboutapplication.cpp
+tdeaboutdialog.cpp
+tdeabouttde.cpp
 tdeaction.cpp		Holger Freyther <freyther@kde.org>, Martijn Klingens <klingens@kde.org>
 kanimwidget.cpp		Waldo Bastian <bastian@kde.org>
 karrowbutton.cpp	Frerich Raabe <raabe@kde.org>

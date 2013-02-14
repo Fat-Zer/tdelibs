@@ -77,7 +77,7 @@
 #include "html/html_tableimpl.h"
 #include "html/html_objectimpl.h"
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeio/job.h>
 
 #include <stdlib.h>

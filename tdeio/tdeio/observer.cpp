@@ -22,7 +22,7 @@
 #include <assert.h>
 
 #include <kdebug.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <dcopclient.h>
 #include <kurl.h>
 

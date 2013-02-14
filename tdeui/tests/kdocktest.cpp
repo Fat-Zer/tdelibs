@@ -1,6 +1,6 @@
 #include "kdocktest.h"
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kiconloader.h>
 
 #include <tqwidget.h>

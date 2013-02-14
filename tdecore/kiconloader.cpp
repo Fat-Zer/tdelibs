@@ -26,7 +26,7 @@
 #include <tqmovie.h>
 #include <tqbitmap.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kipc.h>
 #include <kdebug.h>
 #include <kstandarddirs.h>

@@ -37,7 +37,7 @@
 #include <tdeio/tdefileshare.h>
 #include <kseparator.h>
 #include <tqpushbutton.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <ksimpleconfig.h>
 #include <kmessagebox.h>
 

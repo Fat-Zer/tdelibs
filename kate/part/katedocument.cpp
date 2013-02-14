@@ -51,7 +51,7 @@
 
 #include <klocale.h>
 #include <kglobal.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdepopupmenu.h>
 #include <tdeconfig.h>
 #include <tdefiledialog.h>

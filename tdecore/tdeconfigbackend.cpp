@@ -41,7 +41,7 @@
 
 #include "tdeconfigbackend.h"
 #include "tdeconfigbase.h"
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kglobal.h>
 #include <kprocess.h>
 #include <klocale.h>

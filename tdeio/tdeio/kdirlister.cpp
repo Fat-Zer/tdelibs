@@ -26,7 +26,7 @@
 #include <tqtimer.h>
 #include <tqeventloop.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <tdeio/job.h>

@@ -8,7 +8,7 @@
 #include <kuserprofile.h>
 #include <kprotocolinfo.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 #include <stdio.h>
 

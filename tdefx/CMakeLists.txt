@@ -27,7 +27,7 @@ link_directories(
 
 install( FILES
     kpixmap.h kpixmapsplitter.h kpixmapeffect.h
-    kimageeffect.h kdrawutil.h kstyle.h kcpuinfo.h
+    kimageeffect.h kdrawutil.h tdestyle.h kcpuinfo.h
   DESTINATION ${INCLUDE_INSTALL_DIR} )
 
 
@@ -37,7 +37,7 @@ set( target tdefx )
 
 set( ${target}_SRCS
   kpixmap.cpp kpixmapsplitter.cpp kpixmapeffect.cpp
-  kimageeffect.cpp kdrawutil.cpp kstyle.cpp kcpuinfo.cpp
+  kimageeffect.cpp kdrawutil.cpp tdestyle.cpp kcpuinfo.cpp
 )
 
 tde_add_library( ${target} SHARED AUTOMOC

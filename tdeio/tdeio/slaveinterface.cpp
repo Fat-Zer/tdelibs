@@ -27,7 +27,7 @@
 #include <unistd.h>
 #include <signal.h>
 #include <tdeio/observer.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <dcopclient.h>
 #include <time.h>
 #include <tqtimer.h>

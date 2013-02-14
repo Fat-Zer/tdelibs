@@ -24,9 +24,9 @@
 #include <tqdatetime.h>
 #include <tqstring.h>
 
-#include <kapplication.h>
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
+#include <tdeapplication.h>
+#include <tdeaboutdata.h>
+#include <tdecmdlineargs.h>
 #include <kstandarddirs.h>
 
 #include "../kcookiejar.cpp"

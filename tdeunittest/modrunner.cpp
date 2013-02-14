@@ -26,8 +26,8 @@
 #include <kdebug.h>
 #include <kglobal.h>
 #include <kinstance.h>
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
+#include <tdeaboutdata.h>
+#include <tdecmdlineargs.h>
 #include <klocale.h>
 
 #include "runner.h"

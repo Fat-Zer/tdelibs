@@ -25,7 +25,7 @@
 #include <tqpainter.h>
 #include <tqpixmap.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdefileitem.h>
 #include <kglobal.h>
 #include <kglobalsettings.h>

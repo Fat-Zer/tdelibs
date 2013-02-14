@@ -41,7 +41,7 @@ extern "C" {
 #include <tqtimer.h>
 #include <tqfile.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <ksimpleconfig.h>

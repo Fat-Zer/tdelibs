@@ -1,4 +1,4 @@
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <keditlistbox.h>
 #include <kcombobox.h>
 

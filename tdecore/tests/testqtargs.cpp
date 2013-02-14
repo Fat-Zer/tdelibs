@@ -28,7 +28,7 @@
   --bg is aliased to --background but If you try it with --background or 
   -background, you get the same thing.
 
-  in tdecore/kapplication.cpp, TDECmdLineOption qt_options is defined and used 
+  in tdecore/tdeapplication.cpp, TDECmdLineOption qt_options is defined and used 
   by the static method Kapplication::addCmdLineOptions to add the Qt options
   but its' entries look like this:
 
@@ -43,9 +43,9 @@ application palette (light and dark shades are\ncalculated)."), 0},
 
 */
 
-#include <kapplication.h>
-#include <kcmdlineargs.h>
-#include <kaboutdata.h>
+#include <tdeapplication.h>
+#include <tdecmdlineargs.h>
+#include <tdeaboutdata.h>
 #include <klocale.h>
 
 static const TDECmdLineOptions options[] =

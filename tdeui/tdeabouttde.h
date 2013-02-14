@@ -22,7 +22,7 @@
 #ifndef _KABOUT_KDE_H_
 #define _KABOUT_KDE_H_
 
-#include <kaboutdialog.h>
+#include <tdeaboutdialog.h>
 
 /**
  * @short Standard "About KDE" dialog box,

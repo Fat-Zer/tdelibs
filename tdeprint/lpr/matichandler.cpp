@@ -31,7 +31,7 @@
 
 #include <klocale.h>
 #include <kstandarddirs.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kprocess.h>
 #include <tqfile.h>

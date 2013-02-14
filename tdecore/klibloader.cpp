@@ -25,7 +25,7 @@
 #include <tqtimer.h>
 #include <tqobjectdict.h>
 
-#include "kapplication.h"
+#include "tdeapplication.h"
 #include "klibloader.h"
 #include "kstandarddirs.h"
 #include "kdebug.h"

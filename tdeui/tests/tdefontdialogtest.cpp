@@ -24,7 +24,7 @@
 */
 
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include "tdefontdialog.h"
 #include <tdeconfig.h>
 

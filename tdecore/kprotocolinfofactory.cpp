@@ -19,7 +19,7 @@
 
 #include <kstandarddirs.h>
 #include <kglobal.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <tdesycoca.h>
 #include <tdesycocadict.h>

@@ -33,7 +33,7 @@
 #define __keramik_h__
 
 #include <tqframe.h>
-#include <kstyle.h>
+#include <tdestyle.h>
 
 #include "pixmaploader.h"
 

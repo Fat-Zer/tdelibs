@@ -25,7 +25,7 @@
 #ifndef   __KLegacyStyle_hh
 #define   __KLegacyStyle_hh
 
-#include <kstyle.h>
+#include <tdestyle.h>
 
 // forward declaration
 class KLegacyStylePrivate;

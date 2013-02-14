@@ -33,10 +33,10 @@ Gnome, etc. and used instead.
 
 #include <klocale.h>
 #include <kglobal.h>
-#include <kapplication.h>
-#include <kaboutdata.h>
+#include <tdeapplication.h>
+#include <tdeaboutdata.h>
 #include <kmessagebox.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 
 // command line options
 static TDECmdLineOptions options[] = 

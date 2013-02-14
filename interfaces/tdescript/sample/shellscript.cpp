@@ -19,7 +19,7 @@
 
 #include "shellscript.h"
 #include <kdebug.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <dcopclient.h>
 
 #include <kgenericfactory.h>

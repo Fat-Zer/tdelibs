@@ -21,7 +21,7 @@
 #ifndef _KUNIQUEAPP_H
 #define _KUNIQUEAPP_H
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <dcopobject.h>
 
 class KUniqueApplicationPrivate;
@@ -36,7 +36,7 @@ class KUniqueApplicationPrivate;
  * the information to the first instance and then quit.
  *
  * The .desktop file for the application should state X-DCOP-ServiceType=Unique,
- * see kapplication.h
+ * see tdeapplication.h
  *
  * If your application is used to open files, it should also support the --tempfile
  * option (see TDECmdLineArgs::addTempFileOption()), to delete tempfiles after use.

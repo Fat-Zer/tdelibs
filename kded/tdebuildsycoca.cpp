@@ -40,7 +40,7 @@
 #include <tqtimer.h>
 
 #include <assert.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <dcopclient.h>
 #include <kglobal.h>
 #include <kdebug.h>
@@ -48,8 +48,8 @@
 #include <kstandarddirs.h>
 #include <ksavefile.h>
 #include <klocale.h>
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
+#include <tdeaboutdata.h>
+#include <tdecmdlineargs.h>
 #include <kcrash.h>
 
 #ifdef KBUILDSYCOCA_GUI // KBUILDSYCOCA_GUI is used on win32 to build 

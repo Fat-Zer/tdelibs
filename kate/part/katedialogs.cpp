@@ -43,7 +43,7 @@
 #include <tdeio/netaccess.h>
 
 #include <tdeaccel.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kbuttonbox.h>
 #include <kcharsets.h>
 #include <kcolorbutton.h>

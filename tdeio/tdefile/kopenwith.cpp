@@ -34,7 +34,7 @@
 #include <tqstyle.h>
 #include <tqwhatsthis.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kbuttonbox.h>
 #include <kcombobox.h>
 #include <kdesktopfile.h>

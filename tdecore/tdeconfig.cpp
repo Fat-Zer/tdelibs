@@ -32,7 +32,7 @@
 
 #include <tqfileinfo.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include "tdeconfigbackend.h"
 
 #include "tdeconfig.h"

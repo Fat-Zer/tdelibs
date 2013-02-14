@@ -44,12 +44,12 @@
 
 // KDE headers
 #include <dcopclient.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #ifndef WITHOUT_ARTS
 #include <kartsdispatcher.h>
 #include <kartsserver.h>
 #endif
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <kglobal.h>

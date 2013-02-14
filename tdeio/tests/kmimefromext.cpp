@@ -18,8 +18,8 @@
 
 #include <ktrader.h>
 #include <kmimetype.h>
-#include <kcmdlineargs.h>
-#include <kapplication.h>
+#include <tdecmdlineargs.h>
+#include <tdeapplication.h>
 
 #include <stdio.h>
 

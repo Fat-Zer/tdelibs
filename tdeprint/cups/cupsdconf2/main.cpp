@@ -21,8 +21,8 @@
 
 #include <tqfile.h>
 #include <klocale.h>
-#include <kcmdlineargs.h>
-#include <kapplication.h>
+#include <tdecmdlineargs.h>
+#include <tdeapplication.h>
 
 static TDECmdLineOptions options[] =
 {

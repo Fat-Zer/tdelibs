@@ -1,7 +1,7 @@
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
+#include <tdeaboutdata.h>
+#include <tdecmdlineargs.h>
 
 #include "authinfo.h"
 

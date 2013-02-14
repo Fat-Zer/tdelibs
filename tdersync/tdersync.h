@@ -61,7 +61,7 @@
 #include <kprogressbox.h>
 #include <kpassdlg.h>
 #include <tdelistview.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeconfigdialog.h>
 
 #include <kdirlister.h>

@@ -35,8 +35,8 @@
 #include <dcopclient.h>
 #include <qxembed.h>
 
-#include <kapplication.h>
-#include <kaboutdata.h>
+#include <tdeapplication.h>
+#include <tdeaboutdata.h>
 #include <tdecmodule.h>
 #include <tdecmoduleinfo.h>
 #include <tdecmoduleloader.h>

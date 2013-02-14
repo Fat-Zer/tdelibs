@@ -44,9 +44,9 @@
 
 #include <tdeaccel.h>
 #include <tdeaction.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kcharsets.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <tdecompletionbox.h>
 #include <tdeconfig.h>
 #include <kdebug.h>

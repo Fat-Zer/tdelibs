@@ -24,7 +24,7 @@
 
 #include <dcopobject.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kcmultidialog.h>
 
 /**

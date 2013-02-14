@@ -37,13 +37,13 @@ pixmaploader.cpp
 
 #compile in tdefx
 SOURCES += \
-../../../tdefx/kstyle.cpp \
+../../../tdefx/tdestyle.cpp \
 ../../../tdefx/kimageeffect.cpp \
 ../../../tdefx/kpixmapeffect.cpp \
 ../../../tdefx/kpixmap.cpp
 
 system( moc thinkeramik.h -o moc/thinkeramik.moc )
-system( moc ../../../tdefx/kstyle.h -o moc/kstyle.moc )
+system( moc ../../../tdefx/tdestyle.h -o moc/tdestyle.moc )
 
 
 system( bash ./genemb.sh )

@@ -1,4 +1,4 @@
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeio/defaultprogress.h>
 #include <kurl.h>
 #include <kdebug.h>

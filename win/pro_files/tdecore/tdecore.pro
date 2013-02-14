@@ -38,9 +38,9 @@ kcalendarsystemgregorian.cpp \
 kcalendarsystemhebrew.cpp \
 kcalendarsystemhijri.cpp \
 kcalendarsystemjalali.cpp \
-kaboutdata.cpp \
+tdeaboutdata.cpp \
 kstringhandler.cpp \
-kcmdlineargs.cpp \
+tdecmdlineargs.cpp \
 kurldrag.cpp \
 kurl.cpp \
 kidna.cpp \
@@ -83,7 +83,7 @@ kuniqueapplication.cpp \
 tdesycoca.cpp \
 tdesycocadict.cpp \
 tdesycocafactory.cpp \
-kapplication.cpp \
+tdeapplication.cpp \
 kapplication_win.cpp \
 kappdcopiface.cpp \
 kprocctrl.cpp \

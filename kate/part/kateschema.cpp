@@ -38,8 +38,8 @@
 #include <kmessagebox.h>
 #include <tdepopupmenu.h>
 #include <kcolordialog.h>
-#include <kapplication.h>
-#include <kaboutdata.h>
+#include <tdeapplication.h>
+#include <tdeaboutdata.h>
 #include <tdetexteditor/markinterface.h>
 
 #include <tqbuttongroup.h>

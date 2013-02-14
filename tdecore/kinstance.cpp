@@ -26,7 +26,7 @@
 #include "kiconloader.h"
 #include "tdehardwaredevices.h"
 #include "tdenetworkconnections.h"
-#include "kaboutdata.h"
+#include "tdeaboutdata.h"
 #include "kstandarddirs.h"
 #include "kdebug.h"
 #include "kglobal.h"

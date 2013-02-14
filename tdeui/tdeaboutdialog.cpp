@@ -31,13 +31,13 @@
 #include <tqtabwidget.h>
 #include <tqtabbar.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kglobal.h>
 #include <kglobalsettings.h>
 #include <klocale.h>
 #include <ktextbrowser.h>
 #include <kurllabel.h>
-#include <kaboutdialog.h>
+#include <tdeaboutdialog.h>
 #include <kaboutdialog_private.h>
 #include <kdebug.h>
 
@@ -50,7 +50,7 @@ template class TQPtrList<TDEAboutContributor>;
 
 // ##############################################################
 // MOC OUTPUT FILES:
-#include "kaboutdialog.moc"
+#include "tdeaboutdialog.moc"
 #include "kaboutdialog_private.moc"
 // ##############################################################
 

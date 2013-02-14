@@ -24,9 +24,9 @@
 #include "tdeshortcut.h"
 #include "ksystemtray.h"
 #include "tdepopupmenu.h"
-#include "kapplication.h"
+#include "tdeapplication.h"
 #include "klocale.h"
-#include "kaboutdata.h"
+#include "tdeaboutdata.h"
 
 #ifdef Q_WS_X11
 #include <twin.h>

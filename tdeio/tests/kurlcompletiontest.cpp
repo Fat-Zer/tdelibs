@@ -16,14 +16,14 @@
  *  Boston, MA 02110-1301, USA.
  */
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kurlcompletion.h>
 #include <kdebug.h>
 #include <tqdir.h>
 #include <assert.h>
 #include <tqfile.h>
 #include <ktempdir.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <unistd.h>
 
 class KURLCompletionTest

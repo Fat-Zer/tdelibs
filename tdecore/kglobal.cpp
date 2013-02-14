@@ -27,8 +27,8 @@
 #include <tqptrlist.h>
 #include "kglobal.h"
 
-#include <kapplication.h>
-#include <kaboutdata.h>
+#include <tdeapplication.h>
+#include <tdeaboutdata.h>
 #include <kdebug.h>
 #include <tdeconfig.h>
 #include <klocale.h>

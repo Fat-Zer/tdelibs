@@ -19,7 +19,7 @@
 
 #include "kactivelabel.h"
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tqregexp.h>
 #include <tqwhatsthis.h>
 #include <tqsimplerichtext.h>

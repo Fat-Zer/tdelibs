@@ -25,7 +25,7 @@
 #include <tdeparts/part.h>
 #include <tdeparts/factory.h>
 #include <tdeparts/browserextension.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <tqdatetime.h>
 
 class TDEHTMLPart;

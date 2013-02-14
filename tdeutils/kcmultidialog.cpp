@@ -26,8 +26,8 @@
 #include <tqlayout.h>
 #include <tqpushbutton.h>
 
-#include <kaboutdata.h>
-#include <kapplication.h>
+#include <tdeaboutdata.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kiconloader.h>
 #include <klibloader.h>

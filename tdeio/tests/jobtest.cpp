@@ -22,11 +22,11 @@
 #include <config.h>
 
 #include <kurl.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klargefile.h>
 #include <tdeio/netaccess.h>
 #include <kdebug.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <kprotocolinfo.h>
 
 #include <tqfileinfo.h>

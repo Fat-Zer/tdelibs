@@ -32,7 +32,7 @@
 #include <kmessagebox.h>
 #include <kactivelabel.h>
 #include <kdebug.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdialog.h>
 
 KPFilterPage::KPFilterPage(TQWidget *parent, const char *name)

@@ -18,7 +18,7 @@
 
 #include <tqguardedptr.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdemainwindow.h>
 #include <klineedit.h>
 #include <tdelistview.h>

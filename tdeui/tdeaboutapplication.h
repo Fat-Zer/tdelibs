@@ -23,8 +23,8 @@
 #ifndef _KABOUT_APPLICATION_H_
 #define _KABOUT_APPLICATION_H_
 
-#include <kaboutdata.h>
-#include <kaboutdialog.h>
+#include <tdeaboutdata.h>
+#include <tdeaboutdialog.h>
 
 /**
  * @short Standard "About Application" dialog box.

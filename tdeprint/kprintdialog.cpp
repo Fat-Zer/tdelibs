@@ -61,7 +61,7 @@
 #include <tdeconfig.h>
 #include <kguiitem.h>
 #include <kstdguiitem.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeio/renamedlg.h>
 
 #include <time.h>

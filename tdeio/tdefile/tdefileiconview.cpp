@@ -30,7 +30,7 @@
 #include <tqtooltip.h>
 
 #include <tdeaction.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klocale.h>
 #include <tdefileitem.h>
 #include <kiconeffect.h>

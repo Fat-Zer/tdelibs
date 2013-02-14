@@ -22,7 +22,7 @@
 
 #ifdef Q_WS_X11
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <krootprop.h>
 #include <ksharedpixmap.h>
 #include <kdebug.h>

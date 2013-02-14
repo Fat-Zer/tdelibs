@@ -31,7 +31,7 @@
 #include <kdebug.h>
 #include <kglobal.h>
 #include <tdespell.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 #include "ksyntaxhighlighter.h"
 

@@ -21,9 +21,9 @@
 #include <tqfile.h>
 #include <tqptrlist.h>
 
-#include <kaboutdata.h>
-#include <kapplication.h>
-#include <kcmdlineargs.h>
+#include <tdeaboutdata.h>
+#include <tdeapplication.h>
+#include <tdecmdlineargs.h>
 #include <tdefilemetainfo.h>
 #include <klocale.h>
 #include <kpropertiesdialog.h>

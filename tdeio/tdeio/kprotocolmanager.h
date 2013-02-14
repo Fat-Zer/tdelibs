@@ -22,7 +22,7 @@
 
 #include <tqstringlist.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeio/global.h>
 
 /** @deprecated Use KProtocolManager::defaultUserAgent() instead. */

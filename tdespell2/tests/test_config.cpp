@@ -20,7 +20,7 @@
  */
 #include "configdialog.h"
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 using namespace KSpell2;
 

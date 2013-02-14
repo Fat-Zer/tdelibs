@@ -48,7 +48,7 @@
 #include <tqdir.h>
 
 #include "kglobal.h"
-#include "kapplication.h"
+#include "tdeapplication.h"
 #include "kinstance.h"
 #include "ktempdir.h"
 #include "kstandarddirs.h"

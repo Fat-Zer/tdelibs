@@ -11,7 +11,7 @@
 #include <tqlayout.h>
 #include <tqvgroupbox.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <knuminput.h>
 
 #include "knuminputtest.h"

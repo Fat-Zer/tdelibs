@@ -21,7 +21,7 @@
 #include <tqptrlist.h>
 
 #include "krandomsequence.h"
-#include "kapplication.h"
+#include "tdeapplication.h"
 
 const int    KRandomSequence::m_nShuffleTableSize = 32;
 

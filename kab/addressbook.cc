@@ -21,7 +21,7 @@
 #include <tqfileinfo.h>
 #include <tqstringlist.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kglobal.h>
 #include <kstandarddirs.h>
 #include <klocale.h>

@@ -353,7 +353,7 @@ KDE_EXPORT void TQApplication::setPalette( const TQPalette &, bool ,
     done = true;
 }
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 void TDEApplication::dcopFailure( const TQString & )
 {
     tqDebug( "TDEApplication::dcopFailure" );

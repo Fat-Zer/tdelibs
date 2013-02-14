@@ -21,7 +21,7 @@
 #include "kqiodevicegzip_p.h"
 #include "kentities.c"
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <tdeconfig.h>

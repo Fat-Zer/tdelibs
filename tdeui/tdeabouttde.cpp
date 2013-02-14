@@ -20,8 +20,8 @@
  */
 
 // I (espen) prefer that header files are included alphabetically
-#include <kaboutkde.h>
-#include <kapplication.h>
+#include <tdeabouttde.h>
+#include <tdeapplication.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
 

@@ -30,7 +30,7 @@
 #include <tqtimer.h>
 #include <tqwhatsthis.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeconfigskeleton.h>
 #include <kdebug.h>
 #include <kglobal.h>

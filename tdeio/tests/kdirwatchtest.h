@@ -17,7 +17,7 @@
 #include <tqobject.h>
 
 #include "kdirwatch.h"
-#include "kapplication.h"
+#include "tdeapplication.h"
 
 class myTest : public TQObject 
 {

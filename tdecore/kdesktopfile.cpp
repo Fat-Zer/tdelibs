@@ -31,7 +31,7 @@
 #include <kdebug.h>
 #include "kurl.h"
 #include "tdeconfigbackend.h"
-#include "kapplication.h"
+#include "tdeapplication.h"
 #include "kstandarddirs.h"
 #include "kmountpoint.h"
 #include "kcatalogue.h"

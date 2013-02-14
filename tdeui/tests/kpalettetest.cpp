@@ -1,5 +1,5 @@
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tqwidget.h>
 #include <tqtimer.h>
 #include <stdlib.h>

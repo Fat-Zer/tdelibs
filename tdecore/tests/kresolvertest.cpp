@@ -40,8 +40,8 @@
 #include <ksocks.h>
 #include <ksockaddr.h>
 #include <kextsock.h>
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
+#include <tdeaboutdata.h>
+#include <tdecmdlineargs.h>
 
 #include "netsupp.h"
 

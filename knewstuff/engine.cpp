@@ -22,7 +22,7 @@
 #include <tqdom.h>
 #include <tqfileinfo.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <tdeio/job.h>
 #include <klocale.h>

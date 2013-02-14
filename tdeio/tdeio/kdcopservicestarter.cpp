@@ -18,7 +18,7 @@
 
 #include "kdcopservicestarter.h"
 #include "ktrader.h"
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include "kservice.h"
 #include <kstaticdeleter.h>
 #include <kdebug.h>

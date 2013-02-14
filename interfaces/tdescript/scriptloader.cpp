@@ -18,7 +18,7 @@
 */
 #include "scriptloader.h"
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeparts/part.h>
 #include <tdeparts/componentfactory.h>
 #include <kglobal.h>

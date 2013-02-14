@@ -22,7 +22,7 @@
 #include "guiclient.moc"
 
 #include <tqpopupmenu.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeconfig.h>
 #include <tdetoolbar.h>
 #include <klocale.h>

@@ -43,10 +43,10 @@ extern "C" {
 #include <tqfileinfo.h>
 
 #include <kglobal.h>
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
+#include <tdeaboutdata.h>
+#include <tdecmdlineargs.h>
 #include <kiconloader.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kstandarddirs.h>
 
 /* return application name */

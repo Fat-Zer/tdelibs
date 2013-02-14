@@ -37,7 +37,7 @@
 #include <tqtextcodec.h>
 #include <tqtimer.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
 #include <klocale.h>

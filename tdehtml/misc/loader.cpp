@@ -56,7 +56,7 @@
 #include <tqmovie.h>
 #include <tqwidget.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeio/job.h>
 #include <tdeio/jobclasses.h>
 #include <kglobal.h>

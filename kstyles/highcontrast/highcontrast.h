@@ -41,7 +41,7 @@
 #include <tqintdict.h>
 #include <kdrawutil.h>
 #include <kpixmap.h>
-#include <kstyle.h>
+#include <tdestyle.h>
 
 
 class TQPopupMenu;

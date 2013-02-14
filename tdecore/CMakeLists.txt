@@ -71,8 +71,8 @@ link_directories(
 install( FILES
     tdeconfig.h tdeconfigskeleton.h tdeconfigdata.h ksimpleconfig.h
     tdeconfigdialogmanager.h tdeconfigbase.h kdesktopfile.h
-    kurl.h ksock.h kaboutdata.h kcmdlineargs.h tdeconfigbackend.h
-    kapp.h kapplication.h kuniqueapp.h kuniqueapplication.h
+    kurl.h ksock.h tdeaboutdata.h tdecmdlineargs.h tdeconfigbackend.h
+    kapp.h tdeapplication.h kuniqueapp.h kuniqueapplication.h
     kcharsets.h tdeversion.h kpty.h kprocess.h kprocctrl.h
     klocale.h kicontheme.h kiconloader.h kdebug.h twinmodule.h
     twin.h krootprop.h tdeshortcut.h kkeynative.h tdeaccel.h
@@ -120,7 +120,7 @@ install( FILES eventsrc
 set( target tdecore )
 
 set( ${target}_SRCS
-  libintl.cpp kapplication.cpp kdebug.cpp netwm.cpp
+  libintl.cpp tdeapplication.cpp kdebug.cpp netwm.cpp
   tdeconfigbase.cpp tdeconfig.cpp ksimpleconfig.cpp tdeconfigbackend.cpp
   kmanagerselection.cpp kdesktopfile.cpp kstandarddirs.cpp
   ksock.cpp kpty.cpp kprocess.cpp kprocctrl.cpp klocale.cpp
@@ -134,7 +134,7 @@ set( ${target}_SRCS
   kinstance.cpp kpalette.cpp kipc.cpp klibloader.cpp ktempfile.cpp
   kuniqueapplication.cpp tdeaccelmanager.cpp ksavefile.cpp
   krandomsequence.cpp kstringhandler.cpp kcompletion.cpp
-  kcmdlineargs.cpp kaboutdata.cpp kcompletionbase.cpp knotifyclient.cpp
+  tdecmdlineargs.cpp tdeaboutdata.cpp kcompletionbase.cpp knotifyclient.cpp
   kaudioplayer.cpp kdcoppropertyproxy.cpp ksockaddr.cpp
   kextsock.cpp netsupp.cpp kprocio.cpp kbufferedio.cpp
   kpixmapprovider.cpp kurldrag.cpp kmdcodec.cpp ksocks.cpp

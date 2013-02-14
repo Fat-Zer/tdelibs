@@ -30,7 +30,7 @@
 #include "misc/arena.h"
 
 #include <kinstance.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <klocale.h>
 
 #include <assert.h>

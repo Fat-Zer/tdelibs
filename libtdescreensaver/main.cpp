@@ -27,8 +27,8 @@
 #include <klocale.h>
 #include <kglobal.h>
 #include <kdebug.h>
-#include <kcmdlineargs.h>
-#include <kapplication.h>
+#include <tdecmdlineargs.h>
+#include <tdeapplication.h>
 #include <kcrash.h>
 
 #include "tdescreensaver.h"

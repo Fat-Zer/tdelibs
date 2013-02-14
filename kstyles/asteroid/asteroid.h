@@ -7,7 +7,7 @@
 #ifndef __ASTEROID_H
 #define __ASTEROID_H
 
-#include <kstyle.h>
+#include <tdestyle.h>
 
 class AsteroidStyle : public TDEStyle
 {

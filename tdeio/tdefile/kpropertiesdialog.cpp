@@ -85,7 +85,7 @@ extern "C" {
 }
 #endif
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdialog.h>
 #include <kdirsize.h>
 #include <kdirwatch.h>

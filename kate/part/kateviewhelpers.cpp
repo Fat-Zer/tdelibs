@@ -32,7 +32,7 @@
 #include "kateview.h"
 #include "kateviewinternal.h"
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kglobalsettings.h>
 #include <klocale.h>
 #include <knotifyclient.h>

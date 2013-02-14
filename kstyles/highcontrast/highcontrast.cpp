@@ -776,7 +776,7 @@ void HighContrastStyle::drawTDEStylePrimitive (TDEStylePrimitive kpe,
 			break;
 		}
 		case KPE_ListViewBranch: 
-			// TODO Draw (thick) dotted line. Check kstyle.cpp
+			// TODO Draw (thick) dotted line. Check tdestyle.cpp
 			// Fall down for now
 		default:
 			TDEStyle::drawTDEStylePrimitive( kpe, p, ceData, elementFlags, r, cg, flags, opt, widget);
@@ -1194,7 +1194,7 @@ void HighContrastStyle::drawControlMask (TQ_ControlElement element,
 }
 
 // Helper to find the next sibling that's not hidden
-// Lifted from kstyle.cpp
+// Lifted from tdestyle.cpp
 static TQListViewItem* nextVisibleSibling(TQListViewItem* item)
 {
     TQListViewItem* sibling = item;
@@ -1329,7 +1329,7 @@ void HighContrastStyle::drawComplexControl (TQ_ComplexControl control,
 		// -------------------------------------------------------------------
 		case CC_ListView: {
 			/*
-			 * Sigh... Lifted and modified from kstyle.cpp 
+			 * Sigh... Lifted and modified from tdestyle.cpp 
 			 */
 			/* 
 			 * Many thanks to TrollTech AS for donating CC_ListView from TQWindowsStyle.

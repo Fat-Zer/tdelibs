@@ -63,7 +63,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <kurllabel.h>
 #include <klineedit.h>
 #include <kiconloader.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 #ifdef Q_WS_X11
 #include <X11/Xlib.h>

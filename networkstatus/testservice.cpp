@@ -21,7 +21,7 @@
 
 #include <tqtimer.h>
 #include <dcopclient.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include "provideriface.h"
 
 #include "testservice.h"

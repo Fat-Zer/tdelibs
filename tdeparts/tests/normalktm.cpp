@@ -9,7 +9,7 @@
 
 #include <kiconloader.h>
 #include <kstandarddirs.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kmessagebox.h>
 #include <tdeaction.h>
 #include <klocale.h>

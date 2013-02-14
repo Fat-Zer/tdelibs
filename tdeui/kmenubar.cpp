@@ -35,7 +35,7 @@
 #include <tdeconfig.h>
 #include <kglobalsettings.h>
 #include <kmenubar.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kglobal.h>
 #include <kdebug.h>
 #include <kmanagerselection.h>

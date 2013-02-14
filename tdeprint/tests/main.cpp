@@ -9,7 +9,7 @@
 *****************************************************************************/
 
 #include "helpwindow.h"
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tqwindowsstyle.h>
 #include <tqstylesheet.h>
 #include <stdlib.h>

@@ -32,7 +32,7 @@
 #include <tqregexp.h>
 #include <knumvalidator.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klocale.h>
 #include <kextsock.h>
 #include <kdebug.h>

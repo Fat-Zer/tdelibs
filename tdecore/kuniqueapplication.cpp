@@ -34,9 +34,9 @@
 #include <tqtimer.h>
 
 #include <dcopclient.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <kstandarddirs.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 
 #if defined Q_WS_X11
 #include <twin.h> 

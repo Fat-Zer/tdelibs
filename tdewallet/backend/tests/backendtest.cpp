@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tqstring.h>
 
 #include "tdewalletbackend.h"

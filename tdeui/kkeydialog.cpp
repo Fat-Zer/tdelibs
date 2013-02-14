@@ -39,7 +39,7 @@
 #include <tdeaction.h>
 #include <tdeaccelaction.h>
 #include <tdeactionshortcutlist.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <kglobal.h>
@@ -51,7 +51,7 @@
 #include <tdeshortcut.h>
 #include <tdeshortcutlist.h>
 #include <kxmlguifactory.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <kstaticdeleter.h>
 
 #ifdef Q_WS_X11

@@ -55,7 +55,7 @@ DEALINGS IN THE SOFTWARE.
 #include <netwm.h>
 #endif
 #include <kdebug.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <signal.h>
 #ifdef Q_WS_X11
 #include <twinmodule.h>

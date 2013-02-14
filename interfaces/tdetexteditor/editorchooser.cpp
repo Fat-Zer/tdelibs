@@ -8,7 +8,7 @@
 #include <kservice.h>
 #include <klocale.h>
 #include <tqlabel.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tqlayout.h>
 
 #include "editorchooser_ui.h"

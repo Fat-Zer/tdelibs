@@ -24,7 +24,7 @@
 #include <tqlabel.h>
 #include <tqlayout.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klocale.h>
 #include <tdelistbox.h>
 #include <kcombobox.h>

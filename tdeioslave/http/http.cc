@@ -62,7 +62,7 @@
 #include <kmimemagic.h>
 #include <dcopclient.h>
 #include <kdatastream.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kstandarddirs.h>
 #include <kstringhandler.h>
 #include <kremoteencoding.h>

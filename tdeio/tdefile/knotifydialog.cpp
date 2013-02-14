@@ -18,8 +18,8 @@
 
 #include <dcopclient.h>
 
-#include <kaboutdata.h>
-#include <kapplication.h>
+#include <tdeaboutdata.h>
+#include <tdeapplication.h>
 #include <kaudioplayer.h>
 #include <kcombobox.h>
 #include <tdeconfig.h>

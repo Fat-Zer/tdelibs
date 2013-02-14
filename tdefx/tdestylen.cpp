@@ -27,7 +27,7 @@
 #include "config.h"
 #endif
 
-#include "kstyle.h"
+#include "tdestyle.h"
 
 #include <tqapplication.h>
 #include <tqbitmap.h>
@@ -2415,4 +2415,4 @@ void kde_kstyle_set_scrollbar_type_windows( void* style )
 // vim: set noet ts=4 sw=4:
 // kate: indent-width 4; replace-tabs off; tab-width 4; space-indent off;
 
-#include "kstyle.moc"
+#include "tdestyle.moc"

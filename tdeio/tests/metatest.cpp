@@ -1,6 +1,6 @@
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdefilemetainfo.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <tqstringlist.h>
 #include <tqimage.h>
 #include <kdebug.h>

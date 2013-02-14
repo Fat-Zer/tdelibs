@@ -49,7 +49,7 @@
 #include <tqtextstream.h>
 
 #include "kglobal.h"
-#include "kapplication.h"
+#include "tdeapplication.h"
 #include "kinstance.h"
 #include "ktempfile.h"
 #include "kstandarddirs.h"

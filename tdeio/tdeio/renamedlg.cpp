@@ -32,7 +32,7 @@
 
 #include <kmessagebox.h>
 #include <kpushbutton.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeio/global.h>
 #include <ktrader.h>
 #include <klibloader.h>

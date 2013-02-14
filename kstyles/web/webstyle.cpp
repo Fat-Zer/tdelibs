@@ -32,7 +32,7 @@
 #include <tqdrawutil.h>
 #include <tqpainter.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdrawutil.h>
 #include <klocale.h>
 #include <kiconloader.h>

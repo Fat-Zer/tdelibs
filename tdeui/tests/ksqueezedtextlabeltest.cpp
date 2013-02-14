@@ -1,5 +1,5 @@
 #include "ksqueezedtextlabel.h"
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 int main( int argc, char **argv )
 {

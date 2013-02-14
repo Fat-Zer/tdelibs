@@ -24,7 +24,7 @@
 #include <string.h>
 
 #include <tqdatetime.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kswap.h>
 #include <kmdcodec.h>
 #include <kdebug.h>

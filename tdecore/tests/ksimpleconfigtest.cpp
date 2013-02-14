@@ -6,7 +6,7 @@
 // demonstrates use of KSimpleConfig class
 
 #include <ksimpleconfig.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <unistd.h>
 #include <stdio.h>
 

@@ -33,7 +33,7 @@
 #include <tdeaccel.h>
 #include <tdeaccelbase.h>
 #include <tdeaccelprivate.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kguiitem.h>
 #include <tdemainwindow.h>

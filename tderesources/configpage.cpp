@@ -25,7 +25,7 @@
 #include <tqlabel.h>
 #include <tqlayout.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kcombobox.h>
 #include <kdebug.h>
 #include <klocale.h>

@@ -20,7 +20,7 @@
 #ifndef WEB_STYLE_H
 #define WEB_STYLE_H
 
-#include <kstyle.h>
+#include <tdestyle.h>
 #include <tqpalette.h>
 
 class TQPainter;

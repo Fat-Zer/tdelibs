@@ -1,5 +1,5 @@
 #include "ktimewidget.h"
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klocale.h>
 
 int main(int argc, char** argv)

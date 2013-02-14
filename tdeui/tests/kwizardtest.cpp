@@ -20,7 +20,7 @@
 
 #include <tqlabel.h>
 #include <tqlayout.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kwizard.h>
 
 int main(int argc, char **argv)

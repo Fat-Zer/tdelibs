@@ -91,7 +91,7 @@ using namespace DOM;
 #include <ktempfile.h>
 #include <kglobalsettings.h>
 #include <kurldrag.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeparts/browserinterface.h>
 #if !defined(QT_NO_DRAGANDDROP)
 #include <tdemultipledrag.h>

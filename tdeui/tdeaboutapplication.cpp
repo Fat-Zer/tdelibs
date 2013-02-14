@@ -23,10 +23,10 @@
 // I (espen) prefer that header files are included alphabetically
 
 #include <tqlabel.h>
-#include <kaboutapplication.h>
+#include <tdeaboutapplication.h>
 #include <kaboutdialog_private.h>
-#include <kaboutdata.h>
-#include <kapplication.h>
+#include <tdeaboutdata.h>
+#include <tdeapplication.h>
 #include <kglobal.h>
 #include <klocale.h>
 #include <kurllabel.h>

@@ -33,7 +33,7 @@
 
 #include "kdatepicker.h"
 #include <kglobal.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdialog.h>
 #include <klocale.h>
 #include <kiconloader.h>

@@ -1,7 +1,7 @@
 #include <kiconloader.h>
 #include <tqdatetime.h>
 #include <stdio.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <stdlib.h>
 #include <kdebug.h>
 

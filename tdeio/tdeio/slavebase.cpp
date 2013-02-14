@@ -44,7 +44,7 @@
 
 #include <dcopclient.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <ksock.h>
 #include <kcrash.h>
 #include <tdesu/client.h>

@@ -32,7 +32,7 @@
 #include <ktrader.h>
 #include <kuserprofile.h>
 #include <krun.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kstandarddirs.h>
 #include <klocale.h>
 #include <kmessagebox.h>

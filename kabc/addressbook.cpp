@@ -22,7 +22,7 @@
 #include <tqregexp.h>
 #include <tqtimer.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kglobal.h>
 #include <kinstance.h>

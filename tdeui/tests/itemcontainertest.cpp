@@ -16,7 +16,7 @@
 #include <tqcheckbox.h>
 #include <tqlabel.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kglobal.h>
 #include <tdeconfig.h>
 #include <kiconview.h>

@@ -39,7 +39,7 @@
 #ifndef __PLASTIK_H
 #define __PLASTIK_H
 
-#include <kstyle.h>
+#include <tdestyle.h>
 #include <tqbitmap.h>
 #include <tqintcache.h>
 

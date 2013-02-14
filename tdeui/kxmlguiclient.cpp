@@ -32,7 +32,7 @@
 #include <kstandarddirs.h>
 #include <kdebug.h>
 #include <tdeaction.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 #include <assert.h>
 

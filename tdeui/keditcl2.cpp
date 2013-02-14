@@ -31,7 +31,7 @@
 #include <tqhbox.h>
 #include <tqpopupmenu.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kcombobox.h>
 #include <knuminput.h>
 #include <kmessagebox.h>

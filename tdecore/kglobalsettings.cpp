@@ -25,7 +25,7 @@
 
 #include <tdeconfig.h>
 #include <ksimpleconfig.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 #include <kipc.h>
 

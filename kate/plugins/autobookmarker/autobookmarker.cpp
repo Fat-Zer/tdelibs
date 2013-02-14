@@ -29,7 +29,7 @@
 #include <tdetexteditor/document.h>
 
 #include <tdeaction.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeconfig.h>
 #include <kgenericfactory.h>
 #include <kiconloader.h>

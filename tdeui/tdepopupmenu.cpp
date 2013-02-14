@@ -30,7 +30,7 @@
 #include "tdepopupmenu.h"
 
 #include <kdebug.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 TDEPopupTitle::TDEPopupTitle(TQWidget *parent, const char *name)
     : TQWidget(parent, name)

@@ -33,7 +33,7 @@
 #include <kiconloader.h>
 #include <kstandarddirs.h>
 #include <twin.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tqlayout.h>
 #include <tqtimer.h>
 #include <tqregexp.h>

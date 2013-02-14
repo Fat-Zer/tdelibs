@@ -1,5 +1,5 @@
 #include "kcustommenueditor.h"
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klocale.h>
 #include <tdeconfig.h>
 

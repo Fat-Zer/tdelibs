@@ -1,6 +1,6 @@
 #include "kmmanager.h"
-#include <kcmdlineargs.h>
-#include <kapplication.h>
+#include <tdecmdlineargs.h>
+#include <tdeapplication.h>
 #include <kmessagebox.h>
 #include <klocale.h>
 #include <kglobal.h>

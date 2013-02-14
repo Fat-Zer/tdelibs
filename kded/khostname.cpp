@@ -28,10 +28,10 @@
 
 #include <dcopclient.h>
 
-#include <kcmdlineargs.h>
-#include <kapplication.h>
+#include <tdecmdlineargs.h>
+#include <tdeapplication.h>
 #include <klocale.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <kglobal.h>
 #include <kstandarddirs.h>
 #include <kprocess.h>

@@ -29,7 +29,7 @@
 #include <tqtextstream.h>
 #include <tqurl.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <kmdcodec.h>

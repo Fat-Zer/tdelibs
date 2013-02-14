@@ -1,4 +1,4 @@
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdirselectdialog.h>
 #include <kmessagebox.h>
 #include <kurl.h>

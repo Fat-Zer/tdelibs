@@ -19,7 +19,7 @@
 
 #include <tqdict.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 #include "historyprovider.h"
 

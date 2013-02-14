@@ -40,7 +40,7 @@
 #include <klocale.h>
 #include <ksimpleconfig.h>
 #include <kstaticdeleter.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <dcopclient.h>
 #include <dcopref.h>
 #include <tdeio/authinfo.h>

@@ -32,7 +32,7 @@
 
 #include <kdebug.h>
 #include <kiconloader.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeconfig.h>
 #include <klocale.h>
 

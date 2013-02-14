@@ -1,5 +1,5 @@
 #include "kxmlguitest.h"
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdemainwindow.h>
 #include <kxmlguifactory.h>
 #include <kxmlguiclient.h>

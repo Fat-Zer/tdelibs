@@ -30,7 +30,7 @@
 #include <kdebug.h>
 #include "klibloader.h"
 #include <tdeconfig.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 #include <sys/types.h>
 #include <sys/socket.h>

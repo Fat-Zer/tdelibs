@@ -18,7 +18,7 @@
 */
 
 #include "kappdcopiface.h"
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <dcopclient.h>
 #include <kglobal.h>
 #include <tdeconfig.h>

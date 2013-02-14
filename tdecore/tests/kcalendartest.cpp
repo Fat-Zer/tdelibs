@@ -7,12 +7,12 @@
 
 #include <tqstringlist.h>
 
-#include <kapplication.h>
-#include <kaboutdata.h>
+#include <tdeapplication.h>
+#include <tdeaboutdata.h>
 #include <kdebug.h>
 #include <kglobal.h>
 #include <klocale.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 
 class TDELocale;
 

@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <kmedia2.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <connect.h>
 #include <klocale.h>
-#include <kapplication.h>
-#include <kaboutdata.h>
+#include <tdeapplication.h>
+#include <tdeaboutdata.h>
 #include "qiomanager.h"
 #include "artskde.h"
 

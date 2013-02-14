@@ -30,7 +30,7 @@
 #include <kateschema.h>
 #include <katetextline.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kcolorbutton.h>
 #include <kdebug.h>
 #include <kdialog.h> // for spacingHint()

@@ -26,7 +26,7 @@
 #include "remoteservice.h"
 #include "query.h"
 #include "servicebrowser.h"
-#include <kapplication.h>
+#include <tdeapplication.h>
 #ifdef HAVE_DNSSD
 #ifdef AVAHI_API_0_6
 #include <avahi-client/lookup.h>

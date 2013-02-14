@@ -2,7 +2,7 @@
 
 #include <tqstringlist.h>
 #include <tdefiledialog.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kmessagebox.h>
 #include <tqtimer.h>
 

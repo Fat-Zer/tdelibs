@@ -4,7 +4,7 @@
 #include <tdeparts/factory.h>
 #include <tdeparts/part.h>
 #include <kgenericfactory.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <kdebug.h>
 
 namespace KParts

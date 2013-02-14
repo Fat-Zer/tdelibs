@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 #include "decoder.h"
-#include "kapplication.h"
+#include "tdeapplication.h"
 #include "html_document.h"
 #include "htmltokenizer.h"
 // to be able to delete a static protected member pointer in kbrowser...
@@ -27,7 +27,7 @@
 #include "html/html_imageimpl.h"
 #include "rendering/render_style.h"
 #include <tdemainwindow.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <tdeaction.h>
 #include "domtreeview.h"
 #include <tdefiledialog.h>

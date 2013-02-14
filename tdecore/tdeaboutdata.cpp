@@ -20,7 +20,7 @@
  */
 
 
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <kstandarddirs.h>
 #include <tqfile.h>
 #include <tqtextstream.h>

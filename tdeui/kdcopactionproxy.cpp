@@ -20,7 +20,7 @@
 #include "kdcopactionproxy.h"
 
 #include <dcopclient.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tdeaction.h>
 #include <kdebug.h>
 #include <kdcoppropertyproxy.h>

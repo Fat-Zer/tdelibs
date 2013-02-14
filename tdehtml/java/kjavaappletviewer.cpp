@@ -30,12 +30,12 @@
 #include <tqlabel.h>
 
 #include <klibloader.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <kstaticdeleter.h>
 #include <klocale.h>
 #include <kstatusbar.h>
 #include <kiconloader.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <tdeconfig.h>
 #include <tdeio/authinfo.h>

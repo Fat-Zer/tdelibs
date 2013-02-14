@@ -491,7 +491,7 @@ A few back-of-the-napkin tests folks:
 
 Code:
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 int main(int argc, char **argv)
 {

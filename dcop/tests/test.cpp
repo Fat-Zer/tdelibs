@@ -1,8 +1,8 @@
 #include "test.h"
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <iostream>
 #include <dcopclient.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 
 
 

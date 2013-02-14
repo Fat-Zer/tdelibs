@@ -9,10 +9,10 @@
 #include <stdlib.h>
 
 #include <kstatusbar.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kcombobox.h>
 #include <khelpmenu.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <kmenubar.h>
 #include <tdetoolbarradiogroup.h>
 #include <kiconloader.h>

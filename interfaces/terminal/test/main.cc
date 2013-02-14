@@ -3,9 +3,9 @@
 #include <ktrader.h>
 #include <klibloader.h>
 #include <tdemainwindow.h>
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
-#include <kapplication.h>
+#include <tdeaboutdata.h>
+#include <tdecmdlineargs.h>
+#include <tdeapplication.h>
 #include <tqdir.h>
 #include <assert.h>
 #include <kmessagebox.h>

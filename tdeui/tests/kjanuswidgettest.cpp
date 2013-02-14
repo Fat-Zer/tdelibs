@@ -1,4 +1,4 @@
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kjanuswidget.h>
 
 #include <tqstring.h>

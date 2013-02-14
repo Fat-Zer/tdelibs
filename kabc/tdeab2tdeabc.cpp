@@ -22,9 +22,9 @@
 #include <tqtextstream.h>
 
 #include <kabapi.h>
-#include <kaboutdata.h>
-#include <kapplication.h>
-#include <kcmdlineargs.h>
+#include <tdeaboutdata.h>
+#include <tdeapplication.h>
+#include <tdecmdlineargs.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <kglobal.h>

@@ -25,7 +25,7 @@
 
 #include <tqpushbutton.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 
 #include "knewstuff.h"

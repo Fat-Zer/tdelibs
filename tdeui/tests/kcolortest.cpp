@@ -1,6 +1,6 @@
 
 #include "kcolortest.h"
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kimageeffect.h>
 #include <stdio.h>
 #include <tqdatetime.h>

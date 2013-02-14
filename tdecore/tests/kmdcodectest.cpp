@@ -28,8 +28,8 @@
 
 #include <kdebug.h>
 #include <klocale.h>
-#include <kcmdlineargs.h>
-#include <kapplication.h>
+#include <tdecmdlineargs.h>
+#include <tdeapplication.h>
 
 #include <kmdcodec.h>
 

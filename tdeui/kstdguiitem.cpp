@@ -20,7 +20,7 @@
 
 #include <kguiitem.h>
 #include <klocale.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 KGuiItem KStdGuiItem::guiItem ( StdItem ui_enum )
 {

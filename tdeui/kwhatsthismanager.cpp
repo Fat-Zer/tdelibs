@@ -22,7 +22,7 @@
 #include <kdebug.h>
 #include <tqtextedit.h>
 #include <klocale.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 KWhatsThisManager *KWhatsThisManager::s_instance = 0;
 

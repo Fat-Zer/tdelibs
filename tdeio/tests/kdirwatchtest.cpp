@@ -12,7 +12,7 @@
 #include <tqfile.h>
 
 #include <kdebug.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 
 #include "kdirwatchtest.h"
 

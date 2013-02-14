@@ -29,7 +29,7 @@
 #include <kpushbutton.h>
 #include <tqlayout.h>
 #include <klocale.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kmessagebox.h>
 #include <kguiitem.h>
 #include <tdeio/netaccess.h>

@@ -12,7 +12,7 @@
 #include <tqvbox.h>
 
 #include <kiconloader.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
 #include <tdeaction.h>

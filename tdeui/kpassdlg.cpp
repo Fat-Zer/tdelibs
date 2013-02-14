@@ -36,11 +36,11 @@
 
 #include <kglobal.h>
 #include <kdebug.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kmessagebox.h>
-#include <kaboutdialog.h>
+#include <tdeaboutdialog.h>
 #include <tdeconfig.h>
 #include <kstandarddirs.h>
 #include <kprogress.h>

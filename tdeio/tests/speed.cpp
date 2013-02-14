@@ -17,11 +17,11 @@
  *  Boston, MA 02110-1301, USA.
  */
 #include <kdebug.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <time.h>
 #include "speed.h"
 #include <tdeio/job.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <tqdir.h>
 #include <tdeio/global.h>
 

@@ -33,7 +33,7 @@
 #include <tqtl.h>
 #include <tqdir.h>
 #include <tqguardedptr.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kstandarddirs.h>
 #include <kglobal.h>
 #include <tdeconfig.h>

@@ -26,7 +26,7 @@
 #include <tqlayout.h>
 #include <tqlabel.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klocale.h>
 #include <kurl.h>
 #include <kpushbutton.h>

@@ -24,7 +24,7 @@
 #include <tqglobal.h>
 #include <tqpixmapcache.h>
 #include <dcopclient.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdcopservicestarter.h> 
 #include <kdebug.h>
 #include <kmessagebox.h>

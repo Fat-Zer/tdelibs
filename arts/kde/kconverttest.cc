@@ -4,9 +4,9 @@
 #include <tqobject.h>
 
 #include <klocale.h>
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
-#include <kapplication.h>
+#include <tdeaboutdata.h>
+#include <tdecmdlineargs.h>
+#include <tdeapplication.h>
 
 #include <flowsystem.h>
 #include <kplayobject.h>

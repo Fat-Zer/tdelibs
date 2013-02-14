@@ -29,7 +29,7 @@
  * until the buffer is small enough again.
  */
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <tdeio/job.h>
 #include <tdeio/kmimetype.h>

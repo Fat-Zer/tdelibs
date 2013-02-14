@@ -1,4 +1,4 @@
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdialogbase.h>
 
 #include <tqstring.h>

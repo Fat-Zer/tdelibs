@@ -34,7 +34,7 @@
 #include <tqwhatsthis.h>
 #include <tqlayout.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kseparator.h>
