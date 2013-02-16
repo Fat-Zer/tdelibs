@@ -10,7 +10,7 @@ LIBS += $$KDELIBDESTDIR/tdecore$$KDELIB_SUFFIX \
     $$KDELIBDESTDIR\kdewin32$$KDELIB_SUFFIX
 
 INCLUDEPATH += $(KDELIBS)/interfaces $(KDELIBS)/interfaces/tdetexteditor \
- $(KDELIBS)/kabc
+ $(KDELIBS)/tdeabc
 
 TARGET		= tdetexteditor$$KDEBUG
 

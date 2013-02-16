@@ -1,7 +1,7 @@
 SUBDIRS = vcard vcardparser . formats plugins scripts tests
 
 # Make sure $(all_includes) remains last!
-INCLUDES = -I$(top_builddir)/kabc -I$(top_srcdir)/kabc -I$(top_srcdir)/kab \
+INCLUDES = -I$(top_builddir)/tdeabc -I$(top_srcdir)/tdeabc -I$(top_srcdir)/kab \
            -I$(srcdir)/vcard/include -I$(srcdir)/vcardparser/ \
            -I$(srcdir)/vcard/include/generated \
            -I$(srcdir)/vcardparser $(all_includes)
@@ -38,7 +38,7 @@ libkabc_la_SOURCES = \
   sortmode.cpp
 
 
-kabcincludedir = $(includedir)/kabc
+kabcincludedir = $(includedir)/tdeabc
 kabcinclude_HEADERS = address.h addressbook.h addressee.h addresseedialog.h \
   agent.h distributionlist.h distributionlistdialog.h distributionlisteditor.h \
   errorhandler.h field.h format.h formatfactory.h formatplugin.h geo.h key.h \
@@ -65,7 +65,7 @@ managerdir = $(kde_servicesdir)/tderesources
 DOXYGEN_REFERENCES = tdecore tdeui
 
 map_DATA = countrytransl.map
-mapdir = $(kde_datadir)/kabc
+mapdir = $(kde_datadir)/tdeabc
 
 EXTRA_DIST = $(map_DATA)
 

@@ -24,7 +24,7 @@ link_directories(
 
 install( FILES
     vcard.h vcardline.h vcardparser.h
-  DESTINATION ${INCLUDE_INSTALL_DIR}/kabc )
+  DESTINATION ${INCLUDE_INSTALL_DIR}/tdeabc )
 
 
 ##### vcards ####################################

@@ -10,8 +10,8 @@
 #################################################
 
 include_directories(
-  ${CMAKE_BINARY_DIR}/kabc
-  ${CMAKE_SOURCE_DIR}/kabc
+  ${CMAKE_BINARY_DIR}/tdeabc
+  ${CMAKE_SOURCE_DIR}/tdeabc
 
   ${TQT_INCLUDE_DIRS}
   ${CMAKE_BINARY_DIR}/tdecore

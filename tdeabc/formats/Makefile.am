@@ -1,4 +1,4 @@
-INCLUDES = -I$(top_srcdir)/kabc -I$(top_builddir)/kabc $(all_includes)
+INCLUDES = -I$(top_srcdir)/tdeabc -I$(top_builddir)/tdeabc $(all_includes)
 
 kde_module_LTLIBRARIES = kabcformat_binary.la
 
@@ -15,7 +15,7 @@ noinst_HEADERS = binaryformat.h
 METASOURCES = AUTO
 
 messages: rc.cpp
-	$(XGETTEXT) *.cpp -o $(podir)/kabcformat_binary.pot
+	$(XGETTEXT) *.cpp -o $(podir)/tdeabcformat_binary.pot
 
 linkdir = $(kde_datadir)/tdeabc/formats
 link_DATA = binary.desktop

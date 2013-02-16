@@ -15,14 +15,14 @@ include_directories(
   ${CMAKE_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_BINARY_DIR}/tdecore
-  ${CMAKE_BINARY_DIR}/kabc
+  ${CMAKE_BINARY_DIR}/tdeabc
   ${CMAKE_SOURCE_DIR}
   ${CMAKE_SOURCE_DIR}/dcop
   ${CMAKE_SOURCE_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/tdeui
   ${CMAKE_SOURCE_DIR}/tdeio
   ${CMAKE_SOURCE_DIR}/tdeio/tdeio
-  ${CMAKE_SOURCE_DIR}/kabc
+  ${CMAKE_SOURCE_DIR}/tdeabc
   ${CMAKE_SOURCE_DIR}/interfaces
 )
 

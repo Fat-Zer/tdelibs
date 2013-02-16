@@ -1,4 +1,4 @@
-INCLUDES = -I$(top_srcdir)/kabc -I$(top_builddir)/kabc $(all_includes)
+INCLUDES = -I$(top_srcdir)/tdeabc -I$(top_builddir)/tdeabc $(all_includes)
 
 # these are the headers for your project
 noinst_HEADERS = resourceldaptdeioconfig.h
@@ -17,12 +17,12 @@ kabc_ldaptdeio_la_LIBADD	= libkabc_ldaptdeio.la $(LIB_QT) $(LIB_TDECORE)
 METASOURCES = AUTO
 
 messages: rc.cpp
-	$(XGETTEXT) *.cpp -o $(podir)/kabc_ldaptdeio.pot
+	$(XGETTEXT) *.cpp -o $(podir)/tdeabc_ldaptdeio.pot
 
-kabcincludedir = $(includedir)/kabc
+kabcincludedir = $(includedir)/tdeabc
 kabcinclude_HEADERS = resourceldaptdeio.h
 
-servicedir = $(kde_servicesdir)/tderesources/kabc
+servicedir = $(kde_servicesdir)/tderesources/tdeabc
 service_DATA = ldaptdeio.desktop
 
 resourceldaptdeioplugin.lo: ../../addressee.h

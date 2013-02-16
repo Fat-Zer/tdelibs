@@ -1,4 +1,4 @@
-INCLUDES = -I$(top_srcdir)/tdeio -I$(top_srcdir) -I$(top_srcdir)/interfaces -I$(top_builddir)/interfaces  -I$(top_srcdir)/kabc -I$(top_builddir)/kabc $(all_includes)
+INCLUDES = -I$(top_srcdir)/tdeio -I$(top_srcdir) -I$(top_srcdir)/interfaces -I$(top_builddir)/interfaces  -I$(top_srcdir)/tdeabc -I$(top_builddir)/tdeabc $(all_includes)
 
 lib_LTLIBRARIES = libtdetexteditor.la
 

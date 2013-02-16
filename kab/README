@@ -1,4 +1,4 @@
-Note: libkab is now obsolete. Please use libkabc in tdelibs/kabc. libkab is
+Note: libkab is now obsolete. Please use libkabc in tdelibs/tdeabc. libkab is
 no longer installed. It's only needed for the conversion tool converting
 libkab data to libkabc data.
 

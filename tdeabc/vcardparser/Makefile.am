@@ -1,9 +1,9 @@
-INCLUDES = -I$(top_builddir)/kabc -I$(top_srcdir)/kabc $(all_includes)
+INCLUDES = -I$(top_builddir)/tdeabc -I$(top_srcdir)/tdeabc $(all_includes)
 
 noinst_LTLIBRARIES = libvcards.la
 libvcards_la_SOURCES = vcard.cpp vcardline.cpp vcardparser.cpp
 
-vcardsincludedir = $(includedir)/kabc
+vcardsincludedir = $(includedir)/tdeabc
 vcardsinclude_HEADERS = vcard.h vcardline.h vcardparser.h
 
 check_PROGRAMS = testread testwrite testread2

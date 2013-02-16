@@ -1,4 +1,4 @@
-INCLUDES = -I$(top_builddir)/kabc -I$(top_srcdir)/kabc -I$(top_builddir) $(all_includes)
+INCLUDES = -I$(top_builddir)/tdeabc -I$(top_srcdir)/tdeabc -I$(top_builddir) $(all_includes)
 
 # these are the headers for your project
 noinst_HEADERS = resourcedirconfig.h
@@ -17,12 +17,12 @@ kabc_dir_la_LIBADD = libkabc_dir.la $(LIB_QT) $(LIB_TDECORE)
 METASOURCES = AUTO
 
 messages: rc.cpp
-	$(XGETTEXT) *.cpp -o $(podir)/kabc_dir.pot
+	$(XGETTEXT) *.cpp -o $(podir)/tdeabc_dir.pot
 
-kabcincludedir = $(includedir)/kabc
+kabcincludedir = $(includedir)/tdeabc
 kabcinclude_HEADERS = resourcedir.h
 
-servicedir = $(kde_servicesdir)/tderesources/kabc
+servicedir = $(kde_servicesdir)/tderesources/tdeabc
 service_DATA = dir.desktop
 
 resourcedirplugin.lo: ../../addressee.h

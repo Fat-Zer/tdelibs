@@ -1,4 +1,4 @@
-INCLUDES = -I$(top_srcdir)/kabc -I$(top_builddir)/kabc $(all_includes)
+INCLUDES = -I$(top_srcdir)/tdeabc -I$(top_builddir)/tdeabc $(all_includes)
 
 # these are the headers for your project
 noinst_HEADERS   = resourcesql.h resourcesqlconfig.h
@@ -13,7 +13,7 @@ kabc_sql_la_LIBADD	= ../../libkabc.la ../../../tdeui/libtdeui.la
 METASOURCES = AUTO
 
 messages: rc.cpp
-	$(XGETTEXT) *.cpp -o $(podir)/kabc_sql.pot
+	$(XGETTEXT) *.cpp -o $(podir)/tdeabc_sql.pot
 
 linkdir		= $(kde_datadir)/tderesources/contact
 link_DATA	= sql.desktop

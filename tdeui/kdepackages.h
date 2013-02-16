@@ -439,7 +439,7 @@ const char * const packages[] = {
 "kdepasswd",
 "tdepimlibs",
 "tdepimlibs/gpgme++",
-"tdepimlibs/kabc",
+"tdepimlibs/tdeabc",
 "tdepimlibs/kblog",
 "tdepimlibs/kcal",
 "tdepimlibs/kldap",

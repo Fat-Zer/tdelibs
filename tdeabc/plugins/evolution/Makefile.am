@@ -1,4 +1,4 @@
-INCLUDES = -I$(top_builddir)/kabc -I$(top_srcdir)/kabc $(all_includes)
+INCLUDES = -I$(top_builddir)/tdeabc -I$(top_srcdir)/tdeabc $(all_includes)
 
 # these are the headers for your project
 noinst_HEADERS   = resourceevo.h dbwrapper.h
@@ -13,7 +13,7 @@ kabc_evo_la_LIBADD	= ../../../tdeabc/libkabc.la ../../../tdeui/libtdeui.la -ldb 
 METASOURCES = AUTO
 
 messages: rc.cpp
-	$(XGETTEXT) *.cpp -o $(podir)/kabc_evolution.pot
+	$(XGETTEXT) *.cpp -o $(podir)/tdeabc_evolution.pot
 
-servicedir = $(kde_servicesdir)/tderesources/kabc
+servicedir = $(kde_servicesdir)/tderesources/tdeabc
 service_DATA = evolution.desktop

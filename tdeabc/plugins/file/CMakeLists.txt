@@ -11,8 +11,8 @@
 
 include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
-  ${CMAKE_BINARY_DIR}/kabc
-  ${CMAKE_SOURCE_DIR}/kabc
+  ${CMAKE_BINARY_DIR}/tdeabc
+  ${CMAKE_SOURCE_DIR}/tdeabc
 
   ${TQT_INCLUDE_DIRS}
   ${CMAKE_BINARY_DIR}/tdecore
@@ -34,12 +34,12 @@ link_directories(
 
 install( FILES
     resourcefile.h
-  DESTINATION ${INCLUDE_INSTALL_DIR}/kabc )
+  DESTINATION ${INCLUDE_INSTALL_DIR}/tdeabc )
 
 
 ##### other data ################################
 
-install( FILES file.desktop DESTINATION ${SERVICES_INSTALL_DIR}/tderesources/kabc )
+install( FILES file.desktop DESTINATION ${SERVICES_INSTALL_DIR}/tderesources/tdeabc )
 
 
 ##### kabc_file (library) #######################

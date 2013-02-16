@@ -1,4 +1,4 @@
-INCLUDES = -I$(top_srcdir)/kabc -I$(top_builddir)/kabc $(all_includes)
+INCLUDES = -I$(top_srcdir)/tdeabc -I$(top_builddir)/tdeabc $(all_includes)
 
 # these are the headers for your project
 noinst_HEADERS = resourcenetconfig.h
@@ -17,12 +17,12 @@ kabc_net_la_LIBADD	= libkabc_net.la
 METASOURCES = AUTO
 
 messages: rc.cpp
-	$(XGETTEXT) *.cpp -o $(podir)/kabc_net.pot
+	$(XGETTEXT) *.cpp -o $(podir)/tdeabc_net.pot
 
-kabcincludedir = $(includedir)/kabc
+kabcincludedir = $(includedir)/tdeabc
 kabcinclude_HEADERS = resourcenet.h
 
-servicedir = $(kde_servicesdir)/tderesources/kabc
+servicedir = $(kde_servicesdir)/tderesources/tdeabc
 service_DATA = net.desktop
 
 resourcenetplugin.lo: ../../addressee.h
