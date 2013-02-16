@@ -49,7 +49,7 @@ using namespace KABC;
 
 extern "C"
 {
-  void *init_kabc_dir()
+  void *init_tdeabc_dir()
   {
     return new KRES::PluginFactory<ResourceDir,ResourceDirConfig>();
   }

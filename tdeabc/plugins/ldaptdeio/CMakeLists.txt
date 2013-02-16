@@ -42,9 +42,9 @@ install( FILES
 install( FILES ldaptdeio.desktop DESTINATION ${SERVICES_INSTALL_DIR}/tderesources/tdeabc )
 
 
-##### kabc_ldaptdeio ##############################
+##### tdeabc_ldaptdeio ##############################
 
-set( target kabc_ldaptdeio )
+set( target tdeabc_ldaptdeio )
 
 set( ${target}_SRCS
   resourceldaptdeio.cpp resourceldaptdeioconfig.cpp
@@ -58,9 +58,9 @@ tde_add_library( ${target} SHARED AUTOMOC
 )
 
 
-##### kabc_ldaptdeio ##############################
+##### tdeabc_ldaptdeio ##############################
 
-set( target kabc_ldaptdeio )
+set( target tdeabc_ldaptdeio )
 
 set( ${target}_SRCS
   resourceldaptdeioplugin.cpp
@@ -68,6 +68,6 @@ set( ${target}_SRCS
 
 tde_add_kpart( ${target}
   SOURCES ${${target}_SRCS}
-  LINK kabc_ldaptdeio-shared
+  LINK tdeabc_ldaptdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

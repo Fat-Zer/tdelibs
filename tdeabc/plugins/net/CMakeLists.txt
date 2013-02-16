@@ -42,9 +42,9 @@ install( FILES
 install( FILES net.desktop DESTINATION ${SERVICES_INSTALL_DIR}/tderesources/tdeabc )
 
 
-##### kabc_net (library) ########################
+##### tdeabc_net (library) ########################
 
-set( target kabc_net )
+set( target tdeabc_net )
 
 set( ${target}_SRCS
   resourcenet.cpp resourcenetconfig.cpp
@@ -58,9 +58,9 @@ tde_add_library( ${target} SHARED AUTOMOC
 )
 
 
-##### kabc_net (module) #########################
+##### tdeabc_net (module) #########################
 
-set( target kabc_net )
+set( target tdeabc_net )
 
 set( ${target}_SRCS
   resourcenetplugin.cpp
@@ -68,6 +68,6 @@ set( ${target}_SRCS
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK kabc_net-shared
+  LINK tdeabc_net-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

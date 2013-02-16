@@ -42,9 +42,9 @@ install( FILES
 install( FILES file.desktop DESTINATION ${SERVICES_INSTALL_DIR}/tderesources/tdeabc )
 
 
-##### kabc_file (library) #######################
+##### tdeabc_file (library) #######################
 
-set( target kabc_file )
+set( target tdeabc_file )
 
 set( ${target}_SRCS
   resourcefile.cpp resourcefileconfig.cpp
@@ -58,9 +58,9 @@ tde_add_library( ${target} SHARED AUTOMOC
 )
 
 
-##### kabc_file (module) ########################
+##### tdeabc_file (module) ########################
 
-set( target kabc_file )
+set( target tdeabc_file )
 
 set( ${target}_SRCS
   resourcefileplugin.cpp
@@ -68,6 +68,6 @@ set( ${target}_SRCS
 
 tde_add_kpart( ${target}
   SOURCES ${${target}_SRCS}
-  LINK kabc_file-shared
+  LINK tdeabc_file-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

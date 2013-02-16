@@ -28,9 +28,9 @@ using namespace KABC;
 
 extern "C"
 {
-  KDE_EXPORT void *init_kabc_ldaptdeio()
+  KDE_EXPORT void *init_tdeabc_ldaptdeio()
   {
-    TDEGlobal::locale()->insertCatalogue("kabc_ldaptdeio");
+    TDEGlobal::locale()->insertCatalogue("tdeabc_ldaptdeio");
     return new KRES::PluginFactory<ResourceLDAPTDEIO, ResourceLDAPTDEIOConfig>();
   }
 }

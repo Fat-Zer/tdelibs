@@ -3,16 +3,16 @@ INCLUDES = -I$(top_builddir)/tdeabc -I$(top_srcdir)/tdeabc -I$(top_builddir) $(a
 # these are the headers for your project
 noinst_HEADERS = resourcedirconfig.h
 
-lib_LTLIBRARIES = libkabc_dir.la
-libkabc_dir_la_SOURCES = resourcedir.cpp resourcedirconfig.cpp
-libkabc_dir_la_LDFLAGS = $(KDE_RPATH) $(all_libraries) -version-info 1:0:0 -no-undefined 
-libkabc_dir_la_LIBADD = $(LIB_KABC) $(LIB_QT) $(top_builddir)/tderesources/libtderesources.la $(LIB_TDECORE) $(LIB_TDEFILE) $(LIB_TDEUI)
-libkabc_dir_la_COMPILE_FIRST = $(top_builddir)/tdeabc/addressee.h
+lib_LTLIBRARIES = libtdeabc_dir.la
+libtdeabc_dir_la_SOURCES = resourcedir.cpp resourcedirconfig.cpp
+libtdeabc_dir_la_LDFLAGS = $(KDE_RPATH) $(all_libraries) -version-info 1:0:0 -no-undefined 
+libtdeabc_dir_la_LIBADD = $(LIB_KABC) $(LIB_QT) $(top_builddir)/tderesources/libtderesources.la $(LIB_TDECORE) $(LIB_TDEFILE) $(LIB_TDEUI)
+libtdeabc_dir_la_COMPILE_FIRST = $(top_builddir)/tdeabc/addressee.h
 
-kde_module_LTLIBRARIES = kabc_dir.la
-kabc_dir_la_SOURCES = resourcedirplugin.cpp
-kabc_dir_la_LDFLAGS = -module $(KDE_PLUGIN) $(KDE_RPATH) $(all_libraries) -no-undefined
-kabc_dir_la_LIBADD = libkabc_dir.la $(LIB_QT) $(LIB_TDECORE)
+kde_module_LTLIBRARIES = tdeabc_dir.la
+tdeabc_dir_la_SOURCES = resourcedirplugin.cpp
+tdeabc_dir_la_LDFLAGS = -module $(KDE_PLUGIN) $(KDE_RPATH) $(all_libraries) -no-undefined
+tdeabc_dir_la_LIBADD = libtdeabc_dir.la $(LIB_QT) $(LIB_TDECORE)
 
 METASOURCES = AUTO
 

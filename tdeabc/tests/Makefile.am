@@ -18,8 +18,8 @@ testldapclient_SOURCES = testldapclient.cpp
 EXTRA_PROGRAMS = testkabc testkabcdlg testdistlist bigread bigwrite testdb \
   testaddressee testaddresseelist testaddressfmt kabcargl testaddresslineedit
 
-testkabc_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
-testkabc_SOURCES = testkabc.cpp
+testtdeabc_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
+testtdeabc_SOURCES = testkabc.cpp
 
 testaddressee_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
 testaddressee_SOURCES = testaddressee.cpp
@@ -40,11 +40,11 @@ testaddresslineedit_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(L
 testaddresslineedit_SOURCES = testaddresslineedit.cpp
 
 bigread_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
-bigread_LDADD = ../libkabc.la $(top_builddir)/tdeabc/plugins/file/libkabc_file.la
+bigread_LDADD = ../libkabc.la $(top_builddir)/tdeabc/plugins/file/libtdeabc_file.la
 bigread_SOURCES = bigread.cpp
 
 bigwrite_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
-bigwrite_LDADD = ../libkabc.la $(top_builddir)/tdeabc/plugins/file/libkabc_file.la
+bigwrite_LDADD = ../libkabc.la $(top_builddir)/tdeabc/plugins/file/libtdeabc_file.la
 bigwrite_SOURCES = bigwrite.cpp
 
 testdb_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
