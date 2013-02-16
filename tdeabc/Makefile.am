@@ -19,13 +19,13 @@ addressee.cpp addressee.h field.cpp: \
 
 CLEANFILES = addressee.h addressee.cpp field.cpp
 
-lib_LTLIBRARIES = libkabc.la
-libkabc_la_LDFLAGS = $(KDE_RPATH) $(all_libraries) -version-info 3:0:2 -no-undefined
-libkabc_la_LIBADD = vcard/libvcard.la vcardparser/libvcards.la $(LIB_KIO) \
+lib_LTLIBRARIES = libtdeabc.la
+libtdeabc_la_LDFLAGS = $(KDE_RPATH) $(all_libraries) -version-info 3:0:2 -no-undefined
+libtdeabc_la_LIBADD = vcard/libvcard.la vcardparser/libvcards.la $(LIB_KIO) \
                     $(top_builddir)/tderesources/libtderesources.la $(LIB_QT) $(top_builddir)/dcop/libDCOP.la $(LIB_TDEUI) $(LIB_TDECORE)
-libkabc_la_COMPILE_FIRST = addressee.h
+libtdeabc_la_COMPILE_FIRST = addressee.h
 
-libkabc_la_SOURCES = \
+libtdeabc_la_SOURCES = \
   address.cpp addressbook.cpp addressee.cpp addresseedialog.cpp agent.cpp \
   distributionlist.cpp distributionlistdialog.cpp distributionlisteditor.cpp \
   errorhandler.cpp field.cpp formatfactory.cpp geo.cpp key.cpp \
@@ -38,8 +38,8 @@ libkabc_la_SOURCES = \
   sortmode.cpp
 
 
-kabcincludedir = $(includedir)/tdeabc
-kabcinclude_HEADERS = address.h addressbook.h addressee.h addresseedialog.h \
+tdeabcincludedir = $(includedir)/tdeabc
+tdeabcinclude_HEADERS = address.h addressbook.h addressee.h addresseedialog.h \
   agent.h distributionlist.h distributionlistdialog.h distributionlisteditor.h \
   errorhandler.h field.h format.h formatfactory.h formatplugin.h geo.h key.h \
   phonenumber.h picture.h plugin.h resource.h \
@@ -53,13 +53,13 @@ METASOURCES = AUTO
 bin_PROGRAMS = tdeab2tdeabc
 
 tdeab2tdeabc_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
-tdeab2tdeabc_LDADD = libkabc.la ../kab/libkab.la
+tdeab2tdeabc_LDADD = libtdeabc.la ../kab/libkab.la
 tdeab2tdeabc_SOURCES = tdeab2tdeabc.cpp
 
 autostart_DATA = tdeab2tdeabc.desktop
 autostartdir = $(datadir)/autostart
 
-manager_DATA = kabc_manager.desktop
+manager_DATA = tdeabc_manager.desktop
 managerdir = $(kde_servicesdir)/tderesources
 
 DOXYGEN_REFERENCES = tdecore tdeui
