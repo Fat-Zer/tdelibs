@@ -32,7 +32,7 @@
 
 #include <tdeapplication.h>
 #include <kdebug.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 
 #include "css/csshelper.h"
 #include "misc/helper.h"

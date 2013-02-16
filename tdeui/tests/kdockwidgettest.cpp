@@ -18,7 +18,7 @@
 #include <tdeapplication.h>
 #include <kiconloader.h>
 #include <kstatusbar.h>
-#include <kmenubar.h>
+#include <tdemenubar.h>
 #include <tdetoolbar.h>
 #include <tqvbox.h>
 

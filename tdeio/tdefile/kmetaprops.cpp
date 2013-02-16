@@ -23,9 +23,9 @@
 #include <kdebug.h>
 #include <tdefilemetainfowidget.h>
 #include <tdefilemetainfo.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
+#include <tdelocale.h>
 #include <kprotocolinfo.h>
 
 #include <tqvalidator.h>

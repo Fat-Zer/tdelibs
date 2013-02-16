@@ -25,7 +25,7 @@
 #include "kscrollview.h"
 #include <kdebug.h>
 #include <tdeconfig.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 struct KScrollView::KScrollViewPrivate {
     KScrollViewPrivate() : dx(0), dy(0), ddx(0), ddy(0), rdx(0), rdy(0), scrolling(false) {}

@@ -35,7 +35,7 @@ using namespace std;
 
 #include <kdebug.h>
 #include <klibloader.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kstandarddirs.h>
 
 #include "runner.h"

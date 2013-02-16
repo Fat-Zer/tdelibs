@@ -28,7 +28,7 @@
 #include <tqlabel.h>
 #include <tqapplication.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 #include <kiconloader.h>
 #include <tdelistbox.h>

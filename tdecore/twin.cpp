@@ -37,16 +37,16 @@
 #include "twin.h"
 #include "tdeapplication.h"
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kiconloader.h>
 #include <kdebug.h>
 
 #include <kdatastream.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <dcopclient.h>
 #include <dcopref.h>
 #ifdef Q_WS_X11
-#include <kstartupinfo.h>
+#include <tdestartupinfo.h>
 #include <kxerrorhandler.h>
 
 #include <X11/Xlib.h>

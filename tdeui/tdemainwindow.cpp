@@ -40,13 +40,13 @@
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <khelpmenu.h>
-#include <kmenubar.h>
+#include <tdemenubar.h>
 #include <kstatusbar.h>
 #include <twin.h>
 #include <kedittoolbar.h>
 #include <tdemainwindow.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 #include <kstaticdeleter.h>
 #if defined Q_WS_X11

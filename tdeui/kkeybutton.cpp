@@ -27,7 +27,7 @@
 #include <tdeapplication.h>
 #include <kdebug.h>
 #include <kglobalaccel.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "config.h"
 #ifdef Q_WS_X11

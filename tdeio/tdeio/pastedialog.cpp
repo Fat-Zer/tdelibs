@@ -20,7 +20,7 @@
 
 #include <klineedit.h>
 #include <kmimetype.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include <tqlayout.h>
 #include <tqlabel.h>

@@ -27,7 +27,7 @@
 #include <tdeconfig.h>
 #include <kstaticdeleter.h>
 #include <kprotocolinfo.h>
-#include <kprotocolmanager.h>
+#include <tdeprotocolmanager.h>
 
 #include "slaveconfig.h"
 

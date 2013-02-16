@@ -35,7 +35,7 @@
 #include "kprogress.h"
 
 #include <tdeapplication.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <twin.h>
 
 KProgress::KProgress(TQWidget *parent, const char *name, WFlags f)

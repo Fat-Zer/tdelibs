@@ -29,12 +29,12 @@
 #include <kpushbutton.h>
 #include <tqlineedit.h>
 #include <tqlabel.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tqtextview.h>
 #include <tqlayout.h>
 #include <tqregexp.h>
 #include <kseparator.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 #include <kguiitem.h>
 #include <kurl.h>

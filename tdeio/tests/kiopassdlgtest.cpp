@@ -1,7 +1,7 @@
 #include <tdeapplication.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeaboutdata.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tdecmdlineargs.h>
 
 #include "passdlg.h"

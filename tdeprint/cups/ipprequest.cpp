@@ -24,8 +24,8 @@
 #include <string>
 #include <cups/language.h>
 #include <kdebug.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <tqdatetime.h>
 #include <tqregexp.h>
 #include <cups/cups.h>

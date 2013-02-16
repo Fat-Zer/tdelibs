@@ -34,8 +34,8 @@
 #include <tqmetaobject.h>
 
 #include <tdeapplication.h>
-#include <klocale.h>
-#include <ktempfile.h>
+#include <tdelocale.h>
+#include <tdetempfile.h>
 #include <kdebug.h>
 #include <kurl.h>
 #include <tdeio/job.h>

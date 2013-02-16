@@ -23,7 +23,7 @@
 #include <tqstring.h>
 #include <stdio.h>
 #include <errno.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 
 class KSaveFilePrivate;
 

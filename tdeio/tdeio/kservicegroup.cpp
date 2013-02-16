@@ -19,9 +19,9 @@
 #include <tqdir.h>
 
 #include <kiconloader.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kstandarddirs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include <ksortablevaluelist.h>
 

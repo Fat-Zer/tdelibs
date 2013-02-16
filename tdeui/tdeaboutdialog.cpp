@@ -32,9 +32,9 @@
 #include <tqtabbar.h>
 
 #include <tdeapplication.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
+#include <tdelocale.h>
 #include <ktextbrowser.h>
 #include <kurllabel.h>
 #include <tdeaboutdialog.h>

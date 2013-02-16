@@ -17,7 +17,7 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include <kstaticdeleter.h>
 #include <config-tdefile.h>

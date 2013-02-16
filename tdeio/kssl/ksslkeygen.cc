@@ -25,12 +25,12 @@
 
 #include <tdeapplication.h>
 #include <kdebug.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kopenssl.h>
 #include <kprogress.h>
 #include <kstandarddirs.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 #include <tdewallet.h>
 
 #include <tqlineedit.h>

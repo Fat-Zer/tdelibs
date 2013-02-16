@@ -23,7 +23,7 @@
 #endif
 
 #include <kpassdlg.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include "ksslpemcallback.h"
 
 int KSSLPemCallback(char *buf, int size, int rwflag, void *userdata) {

@@ -45,7 +45,7 @@ DEALINGS IN THE SOFTWARE.
 #define QT_CLEAN_NAMESPACE
 #endif
 
-#include "kstartupinfo.h"
+#include "tdestartupinfo.h"
 
 #include <unistd.h>
 #include <sys/time.h>
@@ -1525,5 +1525,5 @@ static TQString escape_str( const TQString& str_P )
     return ret;
     }
 
-#include "kstartupinfo.moc"
+#include "tdestartupinfo.moc"
 #endif

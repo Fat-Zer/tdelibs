@@ -22,7 +22,7 @@
 #include <tqtimer.h>
 #include <kdebug.h>
 #include <kdirnotify_stub.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <tdefileitem.h>
 #include <tdefileview.h>
 #include <kmimetype.h>

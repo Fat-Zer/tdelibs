@@ -55,10 +55,10 @@
 
 #include <tqlistview.h>
 #include <tqwhatsthis.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include <tdeaction.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 #include "config.h"
 

@@ -27,7 +27,7 @@
 #include "kateview.h"
 #include "katerenderer.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdialogbase.h>
 #include <kcolorbutton.h>
 #include <kcombobox.h>
@@ -35,7 +35,7 @@
 #include <tdefontdialog.h>
 #include <kdebug.h>
 #include <kiconloader.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tdepopupmenu.h>
 #include <kcolordialog.h>
 #include <tdeapplication.h>

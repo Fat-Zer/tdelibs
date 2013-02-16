@@ -33,12 +33,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqptrlist.h>
 
 #include <kinstance.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdecmdlineargs.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kstandarddirs.h>
 #include <dcopclient.h>
-#include <kprotocolmanager.h>
+#include <tdeprotocolmanager.h>
 
 #include <unistd.h>
 

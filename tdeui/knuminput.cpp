@@ -44,8 +44,8 @@
 #include <tqspinbox.h>
 #include <tqstyle.h>
 
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 
 #include "kdialog.h"

@@ -23,7 +23,7 @@
 #include <tqgroupbox.h>
 #include <tqlayout.h>
 #include <tqwhatsthis.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <knuminput.h>
 
 KPHpgl2Page::KPHpgl2Page(TQWidget *parent, const char *name)

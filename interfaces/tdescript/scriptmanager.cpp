@@ -5,8 +5,8 @@
 #include <kdesktopfile.h>
 #include <kstandarddirs.h>
 
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kdebug.h>
 
 //using namespace KScriptInterface;

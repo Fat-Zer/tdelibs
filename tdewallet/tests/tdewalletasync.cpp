@@ -5,7 +5,7 @@
 #include <tdeapplication.h>
 #include <tdecmdlineargs.h>
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kstandarddirs.h>
 #include <dcopclient.h>
 #include <tdewallet.h>

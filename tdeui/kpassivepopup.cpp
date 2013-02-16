@@ -22,7 +22,7 @@
 #include <kdialog.h>
 #include <kpixmap.h>
 #include <kpixmapeffect.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 
 #include "config.h"
 #ifdef Q_WS_X11

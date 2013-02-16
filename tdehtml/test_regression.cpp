@@ -65,7 +65,7 @@
 #include <tdeio/job.h>
 #include <tdemainwindow.h>
 #include <ksimpleconfig.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 
 #include <tqcolor.h>
 #include <tqcursor.h>

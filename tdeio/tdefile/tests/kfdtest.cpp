@@ -3,7 +3,7 @@
 #include <tqstringlist.h>
 #include <tdefiledialog.h>
 #include <tdeapplication.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tqtimer.h>
 
 KFDTest::KFDTest( const TQString& startDir, TQObject *parent, const char *name )

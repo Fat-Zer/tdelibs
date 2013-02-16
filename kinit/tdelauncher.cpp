@@ -32,16 +32,16 @@
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <klibloader.h>
-#include <klocale.h>
-#include <kprotocolmanager.h>
+#include <tdelocale.h>
+#include <tdeprotocolmanager.h>
 #include <kprotocolinfo.h>
 #include <krun.h>
 #include <kstandarddirs.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 #include <kurl.h>
 
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
-#include <kstartupinfo.h> // schroder
+#include <tdestartupinfo.h> // schroder
 #endif
 
 

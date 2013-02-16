@@ -30,9 +30,9 @@
 #include <tqlabel.h>
 
 #include <tdeapplication.h>
-#include <kglobal.h>
-#include <klocale.h>
-#include <kglobalsettings.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
+#include <tdeglobalsettings.h>
 #include <kpushbutton.h>
 #include <kstdguiitem.h>
 #include <kseparator.h>

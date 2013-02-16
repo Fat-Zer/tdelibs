@@ -29,7 +29,7 @@
 #include <tdeio/netaccess.h>
 #include <kurldrag.h>
 #include <tdefiledialog.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 #include <tdelistview.h>
 #include <krun.h>

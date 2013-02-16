@@ -24,16 +24,16 @@
 #include "tdeio/netaccess.h"
 #include "tdeio/observer.h"
 #include "tdeio/renamedlg.h"
-#include "tdeio/kprotocolmanager.h"
+#include "tdeio/tdeprotocolmanager.h"
 
 #include <kurl.h>
 #include <kurldrag.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kinputdialog.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kmimetype.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 
 #include <tqapplication.h>
 #include <tqclipboard.h>

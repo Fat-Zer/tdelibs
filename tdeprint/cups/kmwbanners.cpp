@@ -27,7 +27,7 @@
 #include <tqlabel.h>
 #include <tqlayout.h>
 #include <tqmap.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 TQStringList defaultBanners()
 {

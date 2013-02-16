@@ -17,15 +17,15 @@
  */
 
 #include "browserrun.h"
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tdefiledialog.h>
 #include <tdeio/job.h>
 #include <tdeio/scheduler.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kprocess.h>
 #include <kstringhandler.h>
 #include <kuserprofile.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 #include <kdebug.h>
 #include <kstandarddirs.h>
 #include <assert.h>

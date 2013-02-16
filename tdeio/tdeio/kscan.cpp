@@ -19,7 +19,7 @@
 
 #include <tqfile.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <ktrader.h>
 
 #include "kscan.h"

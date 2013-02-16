@@ -23,7 +23,7 @@
 
 #include <tqwidget.h>
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kdebug.h>
 
 #include <assert.h>

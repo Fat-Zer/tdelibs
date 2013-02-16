@@ -46,7 +46,7 @@ tdeio/kdcopservicestarter.cpp \
 tdeio/kdirlister.cpp \
 tdeio/kdirnotify.cpp \
 tdeio/kdirwatch.cpp \
-tdeio/kemailsettings.cpp \
+tdeio/tdeemailsettings.cpp \
 tdeio/tdefilefilter.cpp \
 tdeio/tdefileitem.cpp \
 tdeio/tdefilemetainfo.cpp \
@@ -59,7 +59,7 @@ tdeio/kmimetype.cpp \
 tdeio/kmimetypechooser.cpp \
 tdeio/knfsshare.cpp \
 tdeio/kprotocolinfo.cpp \
-tdeio/kprotocolmanager.cpp \
+tdeio/tdeprotocolmanager.cpp \
 tdeio/kremoteencoding.cpp \
 tdeio/krun.cpp \
 tdeio/ksambashare.cpp \
@@ -118,7 +118,7 @@ bookmarks/kbookmarkmenu.cc \
 \
 tdefile/kcombiview.cpp \
 tdefile/kcustommenueditor.cpp \
-tdefile/kdiroperator.cpp \
+tdefile/tdediroperator.cpp \
 tdefile/kdirselectdialog.cpp \
 tdefile/kdirsize.cpp \
 tdefile/kdiskfreesp.cpp \

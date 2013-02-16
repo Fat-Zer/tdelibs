@@ -26,8 +26,8 @@
 #include <tqstring.h>
 
 #include "knumvalidator.h"
-#include <klocale.h>
-#include <kglobal.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
 #include <kdebug.h>
 
 ///////////////////////////////////////////////////////////////

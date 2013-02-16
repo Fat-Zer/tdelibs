@@ -27,7 +27,7 @@
 #include <tqdatetime.h>
 #include <tqlineedit.h>
 #include <tqwhatsthis.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kseparator.h>
 #include <knuminput.h>
 

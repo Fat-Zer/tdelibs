@@ -20,9 +20,9 @@
 #include <ltdl.h>
 #include "kimageio.h"
 #include "kimageiofactory.h"
-#include <klocale.h>
+#include <tdelocale.h>
 #include <klibloader.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kmimetype.h>
 #include <tdesycocaentry.h>
 #include <tdesycoca.h>

@@ -24,8 +24,8 @@
 
 #include <tdeconfig.h>
 #include <kstandarddirs.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
 #include <kdebug.h>
 
 #include "kstringhandler.h"

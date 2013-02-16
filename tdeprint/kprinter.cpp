@@ -35,15 +35,15 @@
 #include <tqguardedptr.h>
 #include <tdeapplication.h>
 #include <kstandarddirs.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeconfig.h>
 #include <krun.h>
 #include <knotifyclient.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kprocess.h>
 #include <klibloader.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 static void dumpOptions(const TQMap<TQString,TQString>& opts);
 static void reportError(KPrinter*);

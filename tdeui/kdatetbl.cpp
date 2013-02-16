@@ -33,11 +33,11 @@
 //      dateSelected(TQDate)
 
 #include <tdeconfig.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
 #include <tdeapplication.h>
 #include <tdeaccel.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include <knotifyclient.h>
 #include <kcalendarsystem.h>

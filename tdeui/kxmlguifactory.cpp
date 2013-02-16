@@ -35,7 +35,7 @@
 #include <tdeaction.h>
 #include <kdebug.h>
 #include <kinstance.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeshortcut.h>
 #include <kstandarddirs.h>
 #include <kkeydialog.h>

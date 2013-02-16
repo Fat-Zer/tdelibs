@@ -22,8 +22,8 @@
 #include <tqlayout.h>
 
 #include <tdefilemetapreview.h>
-#include <kglobalsettings.h>
-#include <klocale.h>
+#include <tdeglobalsettings.h>
+#include <tdelocale.h>
 
 class KPreviewPropsPlugin::KPreviewPropsPluginPrivate
 {

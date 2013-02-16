@@ -38,10 +38,10 @@
 #include "xml/dom_nodeimpl.h"
 #include "tdehtmlpart_p.h"
 #include <tdehtml_part.h>
-#include <kprotocolmanager.h>
+#include <tdeprotocolmanager.h>
 #include <kdebug.h>
-#include <kmessagebox.h>
-#include <klocale.h>
+#include <tdemessagebox.h>
+#include <tdelocale.h>
 #include <unistd.h>
 #include <signal.h>
 #include <sys/time.h>

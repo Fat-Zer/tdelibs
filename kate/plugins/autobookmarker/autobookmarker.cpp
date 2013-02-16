@@ -34,7 +34,7 @@
 #include <kgenericfactory.h>
 #include <kiconloader.h>
 #include <tdelistview.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kmimetype.h>
 #include <kmimetypechooser.h>
 #include <kprocess.h>

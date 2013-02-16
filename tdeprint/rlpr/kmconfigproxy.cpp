@@ -21,7 +21,7 @@
 #include "kmproxywidget.h"
 
 #include <tqlayout.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 KMConfigProxy::KMConfigProxy(TQWidget *parent)
 : KMConfigPage(parent,"Proxy")

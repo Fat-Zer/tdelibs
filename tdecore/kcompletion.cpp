@@ -20,9 +20,9 @@
 
 #include <tdeapplication.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <knotifyclient.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 #include <tqptrvector.h>
 

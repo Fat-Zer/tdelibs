@@ -20,7 +20,7 @@
 #include "kappdcopiface.h"
 #include <tdeapplication.h>
 #include <dcopclient.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeconfig.h>
 
 

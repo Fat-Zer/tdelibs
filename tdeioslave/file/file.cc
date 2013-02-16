@@ -75,8 +75,8 @@
 #include <kurl.h>
 #include <kinstance.h>
 #include <ksimpleconfig.h>
-#include <ktempfile.h>
-#include <klocale.h>
+#include <tdetempfile.h>
+#include <tdelocale.h>
 #include <tqfile.h>
 #include <tqstrlist.h>
 #include "file.h"
@@ -93,7 +93,7 @@
 #include <kstandarddirs.h>
 #include <tdeio/ioslave_defaults.h>
 #include <klargefile.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kmimetype.h>
 
 using namespace TDEIO;

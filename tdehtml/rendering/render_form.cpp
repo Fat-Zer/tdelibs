@@ -30,8 +30,8 @@
 #include <kfind.h>
 #include <kfinddialog.h>
 #include <kiconloader.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kreplace.h>
 #include <kreplacedialog.h>
 #include <tdespell.h>

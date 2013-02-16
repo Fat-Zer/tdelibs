@@ -27,13 +27,13 @@
 
 #include <kdebug.h>
 #include <tdeconfig.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeparts/browserextension.h>
 #include <tdeapplication.h>
 #include <kstandarddirs.h>
 
 #include <tdeio/job.h>
-#include <tdeio/kprotocolmanager.h>
+#include <tdeio/tdeprotocolmanager.h>
 #include <ksslcertificate.h>
 #include <ksslcertchain.h>
 #include <kssl.h>

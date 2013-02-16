@@ -27,7 +27,7 @@
 #include <tqpixmap.h>
 #include <tqvaluelist.h>
 #include <kicontheme.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 /**
  * @short An abstract class for GUI data such as ToolTip and Icon.

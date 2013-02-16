@@ -23,8 +23,8 @@
 #include <tqptrdict.h>
 #include <tqwindowdefs.h>
 
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 
 using namespace KNS;
 

@@ -37,7 +37,7 @@
 #include <tdeconfig.h>
 #include <kdialog.h>
 #include <kgenericfactory.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeaction.h>
 #include <knotifyclient.h>
 #include <tdeparts/part.h>

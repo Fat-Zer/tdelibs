@@ -42,7 +42,7 @@ extern "C" {
 #include <tqstringlist.h>
 #include <tqfileinfo.h>
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeaboutdata.h>
 #include <tdecmdlineargs.h>
 #include <kiconloader.h>

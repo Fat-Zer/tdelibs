@@ -8,7 +8,7 @@
 #include <tdeapplication.h>
 #include <tqdir.h>
 #include <assert.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <cassert>
 #include "main.h"
 #include "main.moc"

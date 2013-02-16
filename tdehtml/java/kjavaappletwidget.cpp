@@ -24,7 +24,7 @@
 
 #include <twin.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include <tqlabel.h>
 

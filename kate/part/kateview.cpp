@@ -57,10 +57,10 @@
 #include <kdebug.h>
 #include <tdeapplication.h>
 #include <kcursor.h>
-#include <klocale.h>
-#include <kglobal.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
 #include <kcharsets.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tdeaction.h>
 #include <kstdaction.h>
 #include <kxmlguifactory.h>
@@ -68,7 +68,7 @@
 #include <klibloader.h>
 #include <kencodingfiledialog.h>
 #include <tdemultipledrag.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 #include <ksavefile.h>
 
 #include <tqfont.h>

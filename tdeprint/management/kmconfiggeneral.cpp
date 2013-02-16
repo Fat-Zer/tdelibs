@@ -26,13 +26,13 @@
 #include <tqwhatsthis.h>
 
 #include <kpushbutton.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kurlrequester.h>
 #include <krun.h>
 #include <kmimemagic.h>
 #include <tdeconfig.h>
 #include <knuminput.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kcursor.h>
 #include <klineedit.h>
 #include <kguiitem.h>

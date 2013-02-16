@@ -20,7 +20,7 @@
 #include "cupsddialog.h"
 
 #include <tqfile.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdecmdlineargs.h>
 #include <tdeapplication.h>
 

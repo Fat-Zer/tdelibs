@@ -2,9 +2,9 @@
 #include <kstandarddirs.h>
 #include <tdeapplication.h>
 #include <tdeaction.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdefiledialog.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tdecmdlineargs.h>
 #include <klibloader.h>
 

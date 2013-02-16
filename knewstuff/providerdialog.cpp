@@ -23,8 +23,8 @@
 #include <tqlabel.h>
 
 #include <tdelistview.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 
 #include "engine.h"
 #include "provider.h"

@@ -23,10 +23,10 @@
 #include <tqstringlist.h>
 #include <tqsocketnotifier.h>
 
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 #include <ksimpledirwatch.h>
 #include <kstandarddirs.h>
 

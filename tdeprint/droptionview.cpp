@@ -34,7 +34,7 @@
 
 #include <kcursor.h>
 #include <kdialog.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 OptionBaseView::OptionBaseView(TQWidget *parent, const char *name)
 : TQWidget(parent,name)

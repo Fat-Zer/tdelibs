@@ -36,9 +36,9 @@
 #include <tqpaintdevicemetrics.h>
 #include <tqapplication.h>
 #include <kdebug.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kinputdialog.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kmdcodec.h>
 #include <tdeparts/browserinterface.h>
 #include <twin.h>
@@ -50,7 +50,7 @@
 #ifndef KONQ_EMBEDDED
 #include <kbookmarkmanager.h>
 #endif
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <assert.h>
 #include <tqstyle.h>
 #include <tqobjectlist.h>

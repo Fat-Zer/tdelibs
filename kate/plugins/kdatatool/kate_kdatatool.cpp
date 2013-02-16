@@ -29,7 +29,7 @@
 #include <tdepopupmenu.h>
 #include <tdetexteditor/viewcursorinterface.h>
 #include <tdetexteditor/editinterface.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 //END includes
 
 

@@ -23,7 +23,7 @@
 #include "kmprinter.h"
 #include "util.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kpushbutton.h>
 #include <tqlayout.h>
 #include <tqlineedit.h>

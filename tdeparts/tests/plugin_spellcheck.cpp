@@ -3,8 +3,8 @@
 #include "plugin_spellcheck.h"
 #include <tdeaction.h>
 #include <kgenericfactory.h>
-#include <kmessagebox.h>
-#include <klocale.h>
+#include <tdemessagebox.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 
 PluginSpellCheck::PluginSpellCheck( TQObject* parent, const char* name, 

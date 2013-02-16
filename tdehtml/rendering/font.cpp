@@ -33,7 +33,7 @@
 #include "tdehtml_settings.h"
 
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 #include <tqpainter.h>
 #include <tqfontdatabase.h>

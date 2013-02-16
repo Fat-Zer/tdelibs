@@ -32,7 +32,7 @@
 #include <tqstringlist.h>
 #include "kckey.h"
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #ifdef Q_WS_X11
 #define XK_MISCELLANY

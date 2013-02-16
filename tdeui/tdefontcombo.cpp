@@ -24,7 +24,7 @@
 
 #include <kcharsets.h>
 #include <tdeconfig.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdefontdialog.h>
 
 #include "tdefontcombo.h"

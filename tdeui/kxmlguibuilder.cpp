@@ -20,14 +20,14 @@
 
 #include "tdeapplication.h"
 #include "kxmlguibuilder.h"
-#include "kmenubar.h"
+#include "tdemenubar.h"
 #include "tdepopupmenu.h"
 #include "tdetoolbar.h"
 #include "kstatusbar.h"
 #include "tdemainwindow.h"
 #include "tdeaction.h"
-#include "kglobalsettings.h"
-#include <klocale.h>
+#include "tdeglobalsettings.h"
+#include <tdelocale.h>
 #include <kiconloader.h>
 #include <kdebug.h>
 #include <tqobjectlist.h>

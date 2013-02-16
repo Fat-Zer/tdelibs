@@ -25,7 +25,7 @@
 #include <tqlayout.h>
 
 #include <tdeapplication.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdelistbox.h>
 #include <kcombobox.h>
 #include <tdelistview.h>

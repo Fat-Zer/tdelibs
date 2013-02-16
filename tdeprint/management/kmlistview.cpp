@@ -23,7 +23,7 @@
 
 #include <tqheader.h>
 #include <tqpainter.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 #include <kcursor.h>
 

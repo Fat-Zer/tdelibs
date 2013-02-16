@@ -19,7 +19,7 @@
 #include <tqfile.h>
 #include <tqdir.h>
 #include <tdecmdlineargs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeaboutdata.h>
 #include <stdlib.h>
 #include <kdebug.h>

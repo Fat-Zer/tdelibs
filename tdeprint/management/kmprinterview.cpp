@@ -27,7 +27,7 @@
 #include <tqlayout.h>
 #include <tqpopupmenu.h>
 #include <tdeaction.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 KMPrinterView::KMPrinterView(TQWidget *parent, const char *name)
 : TQWidgetStack(parent,name), m_type(KMPrinterView::Icons)

@@ -45,7 +45,7 @@
 #include <tqnamespace.h>
 #include <tqimage.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 
 //////////////////////////////////////////////////////////////////////////////

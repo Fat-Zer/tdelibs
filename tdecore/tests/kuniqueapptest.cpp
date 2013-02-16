@@ -17,7 +17,7 @@
 */
 
 #include "kuniqueapplication.h"
-#include "kglobalsettings.h"
+#include "tdeglobalsettings.h"
 
 #include <unistd.h>
 #include <stdlib.h>

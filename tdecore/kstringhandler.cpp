@@ -18,7 +18,7 @@
 */
 
 #include "kstringhandler.h"
-#include "kglobal.h"
+#include "tdeglobal.h"
 
 static void parsePythonRange( const TQCString &range, uint &start, uint &end )
 {

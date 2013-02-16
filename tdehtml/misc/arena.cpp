@@ -45,7 +45,7 @@
 #include <config.h>
 #include <stdlib.h>
 #include <string.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include "arena.h"
 
 #ifdef HAVE_GETPAGESIZE

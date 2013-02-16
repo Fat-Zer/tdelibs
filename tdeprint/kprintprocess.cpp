@@ -19,7 +19,7 @@
 
 #include "kprintprocess.h"
 #include <tdeapplication.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqfile.h>
 
 KPrintProcess::KPrintProcess()

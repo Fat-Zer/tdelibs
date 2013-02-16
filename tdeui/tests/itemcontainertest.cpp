@@ -17,7 +17,7 @@
 #include <tqlabel.h>
 
 #include <tdeapplication.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeconfig.h>
 #include <kiconview.h>
 #include <tdelistview.h>

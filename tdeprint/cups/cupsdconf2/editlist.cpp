@@ -22,7 +22,7 @@
 #include <tdelistbox.h>
 #include <kpushbutton.h>
 #include <tqlayout.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 #include <kguiitem.h>
 

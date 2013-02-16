@@ -54,8 +54,8 @@ tdelistbox.cpp
 tdelistview.cpp
 tdemainwindow.cpp
 tdemainwindowiface.cpp
-kmenubar.cpp
-kmessagebox.cpp		Waldo Bastian <bastian@kde.org>
+tdemenubar.cpp
+tdemessagebox.cpp		Waldo Bastian <bastian@kde.org>
 knuminput.cpp           Dirk Mueller <mueller@kde.org>
 knumvalidator.cpp
 kpanelapplet.cpp

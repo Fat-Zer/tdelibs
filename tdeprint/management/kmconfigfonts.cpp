@@ -28,7 +28,7 @@
 #include <tqsettings.h>
 #include <tqwhatsthis.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 #include <kiconloader.h>
 #include <kurlrequester.h>

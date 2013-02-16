@@ -28,9 +28,9 @@
 #include <tdeconfig.h>
 #include "kckey.h"
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kkeynative.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeshortcutlist.h>
 
 //---------------------------------------------------------------------

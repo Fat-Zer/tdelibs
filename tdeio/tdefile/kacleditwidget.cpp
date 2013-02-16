@@ -38,7 +38,7 @@
 #include <tqwidgetstack.h>
 #include <tqheader.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdefileitem.h>
 #include <kdebug.h>
 #include <kdialog.h>

@@ -24,11 +24,11 @@
 #include "knsplugininstaller.moc"
 
 #include <kdebug.h>
-#include <kdiroperator.h> 
+#include <tdediroperator.h> 
 #include <tdelistview.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstddirs.h>
-#include <ktempfile.h> 
+#include <tdetempfile.h> 
 #include <netaccess.h>
 
 #include <tqbuttongroup.h>

@@ -43,7 +43,7 @@
 #define _KMDI_MAINWINDOW_H_
 
 #include <tdeparts/dockmainwindow.h>
-#include <kmenubar.h>
+#include <tdemenubar.h>
 #include <tdepopupmenu.h>
 
 #include <tqptrlist.h>

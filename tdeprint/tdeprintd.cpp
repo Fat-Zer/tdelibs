@@ -21,9 +21,9 @@
 #include "kprintprocess.h"
 
 #include <tqfile.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <knotifyclient.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kdebug.h>
 #include <dcopclient.h>
 #include <tdeio/passdlg.h>

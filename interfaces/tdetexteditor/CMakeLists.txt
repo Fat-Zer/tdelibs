@@ -90,7 +90,7 @@ set( ${target}_SRCS
 tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 0.0.0
-  LINK tdeui-shared kabc-shared tdeparts-shared
+  LINK tdeui-shared tdeabc-shared tdeparts-shared
   DEPENDENCIES dcopidl dcopidl2cpp
   DESTINATION ${LIB_INSTALL_DIR}
 )

@@ -21,7 +21,7 @@
 #include "kcolordrag.h"
 #include "dcolorarrow.xbm"
 #include "dcolorreset.xpm"
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <tqpainter.h>
 #include <tqbitmap.h>
 #include <tqdrawutil.h>

@@ -21,7 +21,7 @@
 
 // Derived hebrew kde calendar class
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 
 #include "kcalendarsystemhebrew.h"

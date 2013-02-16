@@ -38,8 +38,8 @@
 #include <kdialogbase.h>
 #include <kdirlister.h>
 #include <kinputdialog.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <tdepopupmenu.h>
 #include <kprogress.h>
 #include <kstdaction.h>
@@ -55,7 +55,7 @@
 
 #include "config-tdefile.h"
 #include "kcombiview.h"
-#include "kdiroperator.h"
+#include "tdediroperator.h"
 #include "tdefiledetailview.h"
 #include "tdefileiconview.h"
 #include "tdefilepreview.h"
@@ -1737,4 +1737,4 @@ TQString KDirOperator::viewConfigGroup() const
 void KDirOperator::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
-#include "kdiroperator.moc"
+#include "tdediroperator.moc"

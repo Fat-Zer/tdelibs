@@ -29,9 +29,9 @@
 #include <ksavefile.h>
 #include <dcopref.h>
 #include <tqregexp.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kprocess.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeapplication.h>
 #include <dcopclient.h>
 #include <tqfile.h>

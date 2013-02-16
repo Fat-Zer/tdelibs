@@ -48,7 +48,7 @@
 #include <ksock.h>
 #include <kcrash.h>
 #include <tdesu/client.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <ksocks.h>
 
 #include "kremoteencoding.h"

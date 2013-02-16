@@ -1,11 +1,11 @@
 // -*- c++ -*-
 
 #include <tdecmdlineargs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kinstance.h>
 #include <kstandarddirs.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
 #include <stdio.h>
 #include <tdeaboutdata.h>
 #include <config.h>

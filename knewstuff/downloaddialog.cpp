@@ -21,12 +21,12 @@
 #include "downloaddialog.h"
 #include "downloaddialog.moc"
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdelistview.h>
 #include <kdebug.h>
 #include <tdeio/job.h>
 #include <tdeio/netaccess.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kurl.h>
 #include <tdeconfig.h>
 #include <tdeapplication.h>

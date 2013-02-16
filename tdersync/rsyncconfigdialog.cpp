@@ -71,13 +71,13 @@
 #include <tqbuttongroup.h>
 
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kinstance.h>
 
 #include <twin.h>
 #include <tdeaction.h>
 #include <tdepopupmenu.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kiconloader.h>
 #include <kprogressbox.h>
 #include <kpassdlg.h>

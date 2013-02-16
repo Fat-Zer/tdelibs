@@ -21,9 +21,9 @@
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <tdeio/job.h>
-#include <kglobal.h>
-#include <kmessagebox.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdemessagebox.h>
+#include <tdelocale.h>
 
 #include <tqptrdict.h>
 #include <tqwindowdefs.h>

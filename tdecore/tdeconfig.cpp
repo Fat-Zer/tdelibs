@@ -36,7 +36,7 @@
 #include "tdeconfigbackend.h"
 
 #include "tdeconfig.h"
-#include "kglobal.h"
+#include "tdeglobal.h"
 #include "kstandarddirs.h"
 #include "kstaticdeleter.h"
 #include <tqtimer.h>

@@ -35,7 +35,7 @@
 
 #include <kurl.h>
 #include <kprocess.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kgenericfactory.h>
 #include <kdebug.h>
 

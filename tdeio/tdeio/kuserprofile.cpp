@@ -23,7 +23,7 @@
 
 #include <tdeconfig.h>
 #include <tdeapplication.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kdebug.h>
 #include <kstaticdeleter.h>
 

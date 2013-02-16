@@ -27,7 +27,7 @@
 #include "katejscript.h"
 #include "kateview.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include <tdepopupmenu.h>
 

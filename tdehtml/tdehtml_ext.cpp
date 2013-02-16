@@ -44,7 +44,7 @@
 #include <tqdragobject.h>
 
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdefiledialog.h>
 #include <tdeio/job.h>
 #include <kprocess.h>
@@ -54,7 +54,7 @@
 #include <kurldrag.h>
 #include <kstringhandler.h>
 #include <tdeapplication.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kstandarddirs.h>
 #include <krun.h>
 #include <kurifilter.h>

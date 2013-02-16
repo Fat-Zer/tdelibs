@@ -32,7 +32,7 @@
 #include <tqvaluelist.h>
 
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 #include "xml/dom_docimpl.h"
 #include "misc/tdehtmllayout.h"

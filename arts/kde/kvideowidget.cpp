@@ -27,7 +27,7 @@
 #endif
 
 #include <tdeaction.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include "kvideowidget.h"
 
 

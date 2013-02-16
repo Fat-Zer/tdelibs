@@ -32,7 +32,7 @@
 #include <kdebug.h>
 #include <kmimetype.h>
 #include <kdatastream.h> // needed for serialization of bool
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeio/global.h>
 
 #include "tdefilemetainfo.h"

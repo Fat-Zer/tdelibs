@@ -28,11 +28,11 @@
 #include <tqtextstream.h>
 #include <tqdir.h>
 #include <tqfileinfo.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 #include <kurl.h>
 #include <kdebug.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 #include <unistd.h>
 

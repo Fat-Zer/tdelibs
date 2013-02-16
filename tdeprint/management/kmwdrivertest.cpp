@@ -28,9 +28,9 @@
 #include <tqlabel.h>
 #include <kpushbutton.h>
 #include <tqlayout.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeapplication.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kguiitem.h>
 #include <tdeio/netaccess.h>
 

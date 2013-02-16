@@ -67,7 +67,7 @@
 #include <kdialogbase.h>
 #include <kiconloader.h>
 #include <kimageio.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <knotifyclient.h>
 #include <kprinter.h>
 #include <ksimpleconfig.h>

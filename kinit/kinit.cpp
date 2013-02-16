@@ -54,11 +54,11 @@
 #include <tqfont.h>
 #include <kinstance.h>
 #include <kstandarddirs.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeconfig.h>
 #include <klibloader.h>
 #include <tdeapplication.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #ifdef HAVE_SYS_PRCTL_H
 #include <sys/prctl.h>
@@ -68,7 +68,7 @@
 #endif
 
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
-#include <kstartupinfo.h> // schroder
+#include <tdestartupinfo.h> // schroder
 #endif
 
 #include <tdeversion.h>

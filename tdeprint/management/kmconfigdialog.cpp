@@ -30,7 +30,7 @@
 #include "kmconfigjobs.h"
 
 #include <tqlayout.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 #include <tdeconfig.h>
 

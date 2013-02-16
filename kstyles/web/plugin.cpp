@@ -1,4 +1,4 @@
-#include <klocale.h>
+#include <tdelocale.h>
 #include "webstyle.h"
 
 extern "C"

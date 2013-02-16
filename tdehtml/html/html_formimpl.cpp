@@ -47,12 +47,12 @@
 #include "rendering/render_form.h"
 
 #include <kcharsets.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kdebug.h>
 #include <kmimetype.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tdeapplication.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #ifndef TDEHTML_NO_WALLET
 #include <tdewallet.h>
 #endif

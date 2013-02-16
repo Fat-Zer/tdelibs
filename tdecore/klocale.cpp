@@ -33,7 +33,7 @@
 #include <tqregexp.h>
 
 #include "kcatalogue.h"
-#include "kglobal.h"
+#include "tdeglobal.h"
 #include "kstandarddirs.h"
 #include "ksimpleconfig.h"
 #include "kinstance.h"
@@ -41,7 +41,7 @@
 #include "kdebug.h"
 #include "kcalendarsystem.h"
 #include "kcalendarsystemfactory.h"
-#include "klocale.h"
+#include "tdelocale.h"
 
 #ifdef Q_WS_WIN
 #include <windows.h>

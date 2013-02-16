@@ -23,7 +23,7 @@
 #include "table_layout.h"
 #include "render_table.h"
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 using namespace tdehtml;
 

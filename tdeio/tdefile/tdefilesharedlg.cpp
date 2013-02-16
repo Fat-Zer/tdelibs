@@ -27,8 +27,8 @@
 #include <tqlineedit.h>
 #include <kprocess.h>
 #include <kprocio.h>
-#include <klocale.h>
-#include <kglobalsettings.h>
+#include <tdelocale.h>
+#include <tdeglobalsettings.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
 #include <stdio.h>
@@ -39,7 +39,7 @@
 #include <tqpushbutton.h>
 #include <tdeapplication.h>
 #include <ksimpleconfig.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 class KFileSharePropsPlugin::Private
 {

@@ -26,8 +26,8 @@
 #include <tqlayout.h>
 #include <tqregexp.h>
 #include <kcombobox.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kdebug.h>
 
 /**

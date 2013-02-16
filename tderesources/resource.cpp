@@ -24,7 +24,7 @@
 #include <kdebug.h>
 #include <tdeapplication.h>
 #include <tdeconfig.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include "resource.h"
 
 using namespace KRES;

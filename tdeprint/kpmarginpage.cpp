@@ -31,9 +31,9 @@
 #include <tqpaintdevicemetrics.h>
 
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 KPMarginPage::KPMarginPage(KPrinter *prt, DrMain *driver, TQWidget *parent, const char *name)
 : KPrintDialogPage(0, driver, parent, name)

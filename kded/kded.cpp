@@ -38,8 +38,8 @@
 #include <kuniqueapplication.h>
 #include <tdecmdlineargs.h>
 #include <tdeaboutdata.h>
-#include <klocale.h>
-#include <kglobal.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
 #include <kprocess.h>
 #include <kdebug.h>
 #include <kdirwatch.h>

@@ -21,7 +21,7 @@
  *
  */
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 /*
  * These are the constants and functions I extracted from The GIMP source

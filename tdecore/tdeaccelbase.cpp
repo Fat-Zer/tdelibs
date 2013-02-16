@@ -29,10 +29,10 @@
 #include <tdeconfig.h>
 #include "kckey.h"
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kkeynative.h>
 #include "kkeyserver.h"
-#include <klocale.h>
+#include <tdelocale.h>
 #include "tdeshortcutmenu.h"
 
 //---------------------------------------------------------------------

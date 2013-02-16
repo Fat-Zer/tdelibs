@@ -48,7 +48,7 @@ tdecore \
 tdeui \
 kio \
 tderesources \
-kabc/vcard \
+tdeabc/vcard \
 kabc \
 tdeutils \
 tdeparts \

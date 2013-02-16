@@ -31,7 +31,7 @@
 #include <kicontheme.h>
 #include <tdelistviewsearchline.h>
 #include <klineedit.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <knotifyclient.h>
 #include <kpixmapprovider.h>
 #include <tdestdaccel.h>

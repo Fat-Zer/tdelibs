@@ -1,6 +1,6 @@
 #include "kcustommenueditor.h"
 #include <tdeapplication.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 
 int main(int argc, char** argv)

@@ -2,7 +2,7 @@
 #include <kmedia2.h>
 #include <tdecmdlineargs.h>
 #include <connect.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeapplication.h>
 #include <tdeaboutdata.h>
 #include "qiomanager.h"

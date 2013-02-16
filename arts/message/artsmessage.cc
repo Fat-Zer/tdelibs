@@ -31,11 +31,11 @@ Gnome, etc. and used instead.
 
 #include <tqregexp.h>
 
-#include <klocale.h>
-#include <kglobal.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
 #include <tdeapplication.h>
 #include <tdeaboutdata.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tdecmdlineargs.h>
 
 // command line options

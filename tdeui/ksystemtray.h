@@ -18,7 +18,7 @@
 #ifndef KSYSTEMTRAY_H
 #define KSYSTEMTRAY_H
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tqlabel.h>
 
 class TDEActionCollection;

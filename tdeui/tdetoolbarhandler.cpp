@@ -22,7 +22,7 @@
 #include <tdeapplication.h>
 #include <tdetoolbar.h>
 #include <tdemainwindow.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeaction.h>
 #include <assert.h>
 

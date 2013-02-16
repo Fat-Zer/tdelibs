@@ -21,9 +21,9 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <klineedit.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 #include <tqgroupbox.h>
 #include <tqlabel.h>

@@ -32,10 +32,10 @@
 #include <tqtimer.h>
 
 #include "kdatepicker.h"
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeapplication.h>
 #include <kdialog.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 #include <tdetoolbar.h>
 #include <klineedit.h>

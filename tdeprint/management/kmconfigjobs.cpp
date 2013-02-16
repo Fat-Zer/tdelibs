@@ -23,7 +23,7 @@
 #include <tqlayout.h>
 
 #include <knuminput.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 #include <kdialog.h>
 

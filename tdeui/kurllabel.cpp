@@ -27,7 +27,7 @@
 #include <tqapplication.h>
 
 #include <kcursor.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 
 #include "kurllabel.h"
 

@@ -22,9 +22,9 @@
  //kde includes
 #include <kdebug.h>
 #include <kinputdialog.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kmdcodec.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kpassdlg.h>
 #include <kprocio.h>
 

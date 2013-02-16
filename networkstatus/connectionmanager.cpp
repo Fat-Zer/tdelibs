@@ -20,8 +20,8 @@
 */
 
 #include <tdeapplication.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kstaticdeleter.h>
 
 #include "clientiface_stub.h"

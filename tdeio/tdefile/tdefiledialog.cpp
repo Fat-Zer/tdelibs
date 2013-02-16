@@ -50,16 +50,16 @@
 #include <tdecompletionbox.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
 #include <kiconloader.h>
 #include <kimageio.h>
 #include <tdeio/job.h>
 #include <tdeio/netaccess.h>
 #include <tdeio/scheduler.h>
 #include <tdeio/kservicetypefactory.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kmimetype.h>
 #include <tdepopupmenu.h>
 #include <kprotocolinfo.h>
@@ -83,7 +83,7 @@
 #include <tdefileview.h>
 #include <tderecentdocument.h>
 #include <tdefilefiltercombo.h>
-#include <kdiroperator.h>
+#include <tdediroperator.h>
 #include <kimagefilepreview.h>
 
 #include <tdefilespeedbar.h>

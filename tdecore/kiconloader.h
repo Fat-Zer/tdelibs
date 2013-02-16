@@ -27,7 +27,7 @@
 #undef TDEIconLoaderXStatus
 #endif
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kinstance.h>
 #include <kicontheme.h>
 

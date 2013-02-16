@@ -23,7 +23,7 @@
 #include <stdlib.h> // getenv
 
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kstandarddirs.h>
 #include <kservice.h>
 #include <kde_file.h>

@@ -34,13 +34,13 @@
 
 #ifndef NO_KDE2
 #include <tdeconfig.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <tdetoolbar.h>
 #include <tdepopupmenu.h>
 #include <twin.h>
 #include <kdebug.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 
 #include "config.h"
 #ifdef Q_WS_X11

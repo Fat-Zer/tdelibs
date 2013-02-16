@@ -34,7 +34,7 @@
 #include <tqstringlist.h>
 #include <tqvariant.h>
 #include <tdeconfig.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 
   /**
    * @short Class for storing a preferences setting

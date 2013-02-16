@@ -1,7 +1,7 @@
 #ifndef test_kstatusbar_h
 #define test_kstatusbar_h
 
-#include <kmenubar.h>
+#include <tdemenubar.h>
 #include <tqpopupmenu.h>
 #include <kstatusbar.h>
 #include <tdemainwindow.h>

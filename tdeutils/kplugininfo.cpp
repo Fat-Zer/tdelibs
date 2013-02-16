@@ -22,7 +22,7 @@
 #include <ktrader.h>
 #include <kdebug.h>
 #include <tdeconfigbase.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kstandarddirs.h>
 #include <kdesktopfile.h>
 #include <kservice.h>

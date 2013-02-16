@@ -22,7 +22,7 @@
 #include "kservice.h"
 #include <kstaticdeleter.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <dcopclient.h>
 
 static KStaticDeleter<KDCOPServiceStarter> dss_sd;

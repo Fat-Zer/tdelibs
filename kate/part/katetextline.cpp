@@ -23,7 +23,7 @@
 #include "katetextline.h"
 #include "katerenderer.h"
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 #include <tqregexp.h>
 

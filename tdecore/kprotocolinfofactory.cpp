@@ -18,7 +18,7 @@
 */
 
 #include <kstandarddirs.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeapplication.h>
 #include <kdebug.h>
 #include <tdesycoca.h>

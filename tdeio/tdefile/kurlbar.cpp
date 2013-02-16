@@ -33,12 +33,12 @@
 #include <tdeaboutdata.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kicondialog.h>
 #include <kiconloader.h>
 #include <kinstance.h>
 #include <klineedit.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kmimetype.h>
 #include <kprotocolinfo.h>
 #include <kstringhandler.h>

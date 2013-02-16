@@ -53,7 +53,7 @@
 #include <tqdir.h>
 
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kinstance.h>
 #include <kmimemagic.h>
 #include <kmimetype.h>

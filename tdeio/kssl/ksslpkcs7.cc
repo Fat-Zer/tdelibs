@@ -29,7 +29,7 @@
 #include <tqfile.h>
 #include <ksslall.h>
 #include <kdebug.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 #include <kmdcodec.h>
 
 #include <assert.h>

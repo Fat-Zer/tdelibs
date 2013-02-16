@@ -32,7 +32,7 @@
 #include <klibloader.h>
 #include <tdeaboutdata.h>
 #include <kstaticdeleter.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstatusbar.h>
 #include <kiconloader.h>
 #include <tdeapplication.h>

@@ -26,9 +26,9 @@
 #include <tqheader.h>
 #include <tqlineedit.h>
 #include <tqlabel.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tqlayout.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 #include <kseparator.h>
 

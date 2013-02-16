@@ -31,11 +31,11 @@
 #include <tqfile.h>
 
 #include <tdeapplication.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <kprocess.h>
 #include <kiconloader.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <ksqueezedtextlabel.h>
 #include <kurllabel.h>
 #include <kstdguiitem.h>

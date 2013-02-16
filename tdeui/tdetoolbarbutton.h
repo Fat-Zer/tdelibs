@@ -27,7 +27,7 @@
 #include <tqtoolbutton.h>
 #include <tqintdict.h>
 #include <tqstring.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 class TDEToolBar;
 class TDEToolBarButtonPrivate;

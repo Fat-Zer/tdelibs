@@ -26,7 +26,7 @@
 #include <kdebug.h>
 #include <assert.h>
 #include <tqpainter.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 #include "rendering/render_flow.h"
 #include "rendering/render_text.h"

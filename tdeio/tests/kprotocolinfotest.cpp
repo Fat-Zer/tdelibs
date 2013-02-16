@@ -17,9 +17,9 @@
  */
 
 #include <kprotocolinfo.h>
-#include <kprotocolmanager.h>
+#include <tdeprotocolmanager.h>
 #include <tdeapplication.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <tdecmdlineargs.h>
 #include <tdeaboutdata.h>
 #include <kdebug.h>

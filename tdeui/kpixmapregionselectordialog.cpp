@@ -21,7 +21,7 @@
 #include <kdialogbase.h>
 #include <tqdialog.h>
 #include <tqdesktopwidget.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdialog.h>
 
 KPixmapRegionSelectorDialog::KPixmapRegionSelectorDialog(TQWidget *parent,

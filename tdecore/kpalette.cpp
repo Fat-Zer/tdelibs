@@ -24,7 +24,7 @@
 #include <tqfile.h>
 #include <tqtextstream.h>
 #include <kstandarddirs.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <ksavefile.h>
 #include <kstringhandler.h>
 

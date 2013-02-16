@@ -22,7 +22,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #include "kshred.h"
 #include <time.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include <stdlib.h>
 #include <tdeapplication.h>

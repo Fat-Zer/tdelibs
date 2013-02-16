@@ -28,7 +28,7 @@
 #include <tqwhatsthis.h>
 
 #include <kcursor.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kseparator.h>
 #include <kdialog.h>
 #include <kdebug.h>

@@ -23,7 +23,7 @@
 
 #include <kfilterdev.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqfile.h>
 #include <math.h>
 

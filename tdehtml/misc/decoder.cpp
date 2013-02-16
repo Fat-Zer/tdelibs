@@ -39,12 +39,12 @@ using namespace tdehtml;
 #include <tqregexp.h>
 #include <tqtextcodec.h>
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kcharsets.h>
 
 #include <ctype.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 
 

@@ -26,7 +26,7 @@
 #include <tqfileinfo.h>
 #include <tqtextstream.h>
 #include <tqregexp.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
 

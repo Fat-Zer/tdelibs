@@ -37,13 +37,13 @@
 #include <kdialogbase.h>
 #include <kguiitem.h>
 #include <tdelistbox.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <knotifyclient.h>
 #include <kstdguiitem.h>
 #include <kactivelabel.h>
 #include <kiconloader.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 
 #ifdef Q_WS_X11
 #include <X11/Xlib.h>

@@ -28,10 +28,10 @@
 #include <tdeaction.h>
 #include <tdefiledialog.h>
 #include <kgenericfactory.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kpushbutton.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 #include <kurl.h>
 
 #include <tqfile.h>

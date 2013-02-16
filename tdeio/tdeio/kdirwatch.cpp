@@ -57,7 +57,7 @@
 #include <tdeapplication.h>
 #include <kdebug.h>
 #include <tdeconfig.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kstaticdeleter.h>
 #include <kde_file.h>
 

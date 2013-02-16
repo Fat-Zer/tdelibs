@@ -16,7 +16,7 @@
    Boston, MA 02110-1301, USA.
 */
 /*
-* kglobal.cpp -- Implementation of class TDEGlobal.
+* tdeglobal.cpp -- Implementation of class TDEGlobal.
 * Author:	Sirtaj Singh Kang
 * Version:	$Id$
 * Generated:	Sat May  1 02:08:43 EST 1999
@@ -25,13 +25,13 @@
 #include <tqglobal.h>
 #include <tqdict.h>
 #include <tqptrlist.h>
-#include "kglobal.h"
+#include "tdeglobal.h"
 
 #include <tdeapplication.h>
 #include <tdeaboutdata.h>
 #include <kdebug.h>
 #include <tdeconfig.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kcharsets.h>
 #include <kiconloader.h>
 #include <tdehardwaredevices.h>

@@ -27,8 +27,8 @@
 
 #include <tdeapplication.h>
 #include <tdecmdlineargs.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
 

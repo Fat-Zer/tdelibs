@@ -33,8 +33,8 @@
 
 #include <tdeconfig.h>
 #include <kdebug.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 
 #ifdef Q_WS_X11
 # define XK_MISCELLANY

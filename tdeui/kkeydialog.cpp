@@ -42,12 +42,12 @@
 #include <tdeapplication.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kglobalaccel.h>
 #include <kiconloader.h>
 #include <tdelistviewsearchline.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <tdeshortcut.h>
 #include <tdeshortcutlist.h>
 #include <kxmlguifactory.h>

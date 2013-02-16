@@ -35,7 +35,7 @@
 #include <tqevent.h>
 #include <tqapplication.h>
 #include <tqlineedit.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <tqobjectlist.h>
 #include <tqvaluevector.h>
 

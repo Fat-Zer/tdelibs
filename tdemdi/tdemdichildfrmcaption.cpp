@@ -38,7 +38,7 @@
 #include "tdemdichildfrm.h"
 #include "tdemdichildarea.h"
 #include "tdemdimainfrm.h"
-#include <klocale.h>
+#include <tdelocale.h>
 #include <iostream>
 
 #ifdef Q_WS_WIN 

@@ -4,7 +4,7 @@
 #include <tqpopupmenu.h>
 #include <tqtimer.h>
 #include <tqprogressbar.h>
-#include <kmenubar.h>
+#include <tdemenubar.h>
 #include <kstatusbar.h>
 #include <tdetoolbar.h>
 #include <tdemainwindow.h>

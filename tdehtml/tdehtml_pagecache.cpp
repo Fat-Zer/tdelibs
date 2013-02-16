@@ -21,7 +21,7 @@
 #include "tdehtml_pagecache.h"
 
 #include <kstaticdeleter.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 #include <kstandarddirs.h>
 
 #include <tqintdict.h>

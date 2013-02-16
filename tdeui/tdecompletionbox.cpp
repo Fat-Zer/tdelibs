@@ -29,7 +29,7 @@
 #include <kdebug.h>
 #include <tdeconfig.h>
 #include <knotifyclient.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 
 #include "tdecompletionbox.h"
 

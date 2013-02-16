@@ -43,7 +43,7 @@ install( FILES
     kcolordialog.h tdeselect.h
     kdatepik.h kdatepicker.h kdatetbl.h tdefontdialog.h tdepopupmenu.h
     tdefontrequester.h ktabctl.h kstatusbar.h
-    tdemainwindow.h tdemainwindowiface.h tdetoolbar.h kmenubar.h
+    tdemainwindow.h tdemainwindowiface.h tdetoolbar.h tdemenubar.h
     knuminput.h kseparator.h klineedit.h
     krestrictedline.h kcolorbutton.h kcolorbtn.h
     ksystemtray.h kdockwindow.h kbuttonbox.h
@@ -54,7 +54,7 @@ install( FILES
     kcharselect.h kcolordrag.h qxembed.h
     knumvalidator.h kdialog.h kdialogbase.h
     kjanuswidget.h tdeaboutdialog.h
-    kauthicon.h kmessagebox.h ksharedpixmap.h
+    kauthicon.h tdemessagebox.h ksharedpixmap.h
     kdualcolorbtn.h kdualcolorbutton.h tdetoolbarbutton.h
     tdetoolbarradiogroup.h ktextbrowser.h
     tdeaction.h tdeactioncollection.h tdeactionclasses.h khelpmenu.h kswitchlanguagedialog.h
@@ -103,7 +103,7 @@ set( ${target}_SRCS
   qxembed.cpp ksharedpixmap.cpp kpixmapio.cpp
   tdepopupmenu.cpp tdetoolbar.cpp tdeaction.cpp kstdaction.cpp
   tdeactioncollection.cpp tdeactionclasses.cpp
-  kurllabel.cpp kmenubar.cpp kinputdialog.cpp
+  kurllabel.cpp tdemenubar.cpp kinputdialog.cpp
   knuminput.cpp klineedit.cpp tdelistview.cpp kprogress.cpp
   kprogressbox.cpp kcolordialog.cpp tdeselect.cpp kdatepicker.cpp
   kdatetbl.cpp tdefontrequester.cpp tdefontdialog.cpp ktabctl.cpp
@@ -118,7 +118,7 @@ set( ${target}_SRCS
   kcharselect.cpp kcolordrag.cpp
   knumvalidator.cpp kdialog.cpp kdialogbase.cpp
   kjanuswidget.cpp tdeaboutdialog.cpp
-  kauthicon.cpp kmessagebox.cpp kdualcolorbutton.cpp
+  kauthicon.cpp tdemessagebox.cpp kdualcolorbutton.cpp
   tdetoolbarradiogroup.cpp tdetoolbarbutton.cpp
   ktextbrowser.cpp khelpmenu.cpp kswitchlanguagedialog.cpp
   kcmenumngr.cpp kpanelmenu.cpp

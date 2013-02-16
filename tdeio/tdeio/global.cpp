@@ -33,9 +33,9 @@
 #include "tdeio/job.h"
 
 #include <kdebug.h>
-#include <klocale.h>
-#include <kglobal.h>
-#include <kprotocolmanager.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
+#include <tdeprotocolmanager.h>
 #include <kde_file.h>
 
 #ifdef HAVE_VOLMGT

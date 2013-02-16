@@ -41,7 +41,7 @@
 
 #include <tqtimer.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kprocio.h>
 #include <kurl.h>
 

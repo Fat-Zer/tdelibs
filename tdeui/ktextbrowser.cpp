@@ -20,7 +20,7 @@
 
 #include <tqpopupmenu.h>
 #include <tdeapplication.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <ktextbrowser.h>
 #include <kcursor.h>
 #include <kurl.h>

@@ -25,7 +25,7 @@
 #include <tdeconfig.h>
 #include <tdetoolbar.h>
 #include <tdemainwindow.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeaction.h>
 #include <tqstring.h>
 #include <assert.h>

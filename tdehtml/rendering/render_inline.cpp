@@ -23,7 +23,7 @@
  *
  */
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 #include "rendering/render_arena.h"
 #include "rendering/render_inline.h"

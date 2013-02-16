@@ -21,7 +21,7 @@
 
 #include <tdecmdlineargs.h>
 #include <tdeaboutdata.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kdebug.h>
 
 int

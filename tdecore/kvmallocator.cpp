@@ -31,7 +31,7 @@
 #include <tqintdict.h>
 #include <tqmap.h>
 
-#include <ktempfile.h>
+#include <tdetempfile.h>
 #include <kdebug.h>
 
 #include "kvmallocator.h"

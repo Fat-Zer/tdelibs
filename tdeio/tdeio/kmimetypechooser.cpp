@@ -21,7 +21,7 @@
 #include <tdeconfig.h>
 #include <kiconloader.h>
 #include <tdelistview.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kmimetype.h>
 #include <kprocess.h>
 #include <krun.h>

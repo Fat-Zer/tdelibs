@@ -47,9 +47,9 @@
 #include <kdebug.h>
 #include <tdefontcombo.h>
 #include <tdefontdialog.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdemainwindow.h>
-#include <kmenubar.h>
+#include <tdemenubar.h>
 #include <tdepopupmenu.h>
 #include <tdetoolbar.h>
 #include <tdetoolbarbutton.h>

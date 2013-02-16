@@ -1,5 +1,5 @@
 #include <tdeapplication.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include "kcharselect.h"
 
 int main (int argc,char **argv)

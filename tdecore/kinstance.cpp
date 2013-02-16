@@ -21,7 +21,7 @@
 #include <unistd.h>
 
 #include "tdeconfig.h"
-#include "klocale.h"
+#include "tdelocale.h"
 #include "kcharsets.h"
 #include "kiconloader.h"
 #include "tdehardwaredevices.h"
@@ -29,7 +29,7 @@
 #include "tdeaboutdata.h"
 #include "kstandarddirs.h"
 #include "kdebug.h"
-#include "kglobal.h"
+#include "tdeglobal.h"
 #include "kmimesourcefactory.h"
 
 #include <tqfont.h>

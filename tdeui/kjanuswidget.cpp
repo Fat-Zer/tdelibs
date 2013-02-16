@@ -35,9 +35,9 @@
 
 #include <tdeapplication.h>
 #include <kdialog.h> // Access to some static members
-#include <klocale.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
 #include <kseparator.h>
 #include <kdebug.h>
 #include "kjanuswidget.h"

@@ -23,7 +23,7 @@
 #ifndef _KSTATIC_DELETER_H_
 #define _KSTATIC_DELETER_H_
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 /**
  * Static deleters are used to manage static resources. They can register

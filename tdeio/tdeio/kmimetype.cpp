@@ -52,7 +52,7 @@
 #include <kdesktopfile.h>
 #include <kdirwatch.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
 #include <kurl.h>

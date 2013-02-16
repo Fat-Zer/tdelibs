@@ -25,8 +25,8 @@
 #include <tqcheckbox.h>
 #include <tqaccel.h>
 #include <kdemacros.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kstandarddirs.h>
 #include <kiconloader.h>
 #include <kdialogbase.h>

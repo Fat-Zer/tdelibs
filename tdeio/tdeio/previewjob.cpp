@@ -43,10 +43,10 @@
 #include <kdatastream.h> // Do not remove, needed for correct bool serialization
 #include <tdefileitem.h>
 #include <tdeapplication.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 #include <ktrader.h>
 #include <kmdcodec.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kstandarddirs.h>
 
 #include <tdeio/kservice.h>

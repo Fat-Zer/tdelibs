@@ -29,16 +29,16 @@
 #include <tdeapplication.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tdeio/job.h>
 #include <krun.h>
 #include <tdeio/netaccess.h>
 #include <kprocess.h>
 #include <kservice.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdecmdlineargs.h>
 #include <tdeaboutdata.h>
-#include <kstartupinfo.h>
+#include <tdestartupinfo.h>
 #include <kshell.h>
 #include <kde_file.h>
 

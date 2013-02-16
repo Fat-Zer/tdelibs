@@ -23,7 +23,7 @@
 #include "kmpropertypage.h"
 #include "kminstancepage.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 #include <kdialog.h>
 

@@ -1,9 +1,9 @@
 #include "kmmanager.h"
 #include <tdecmdlineargs.h>
 #include <tdeapplication.h>
-#include <kmessagebox.h>
-#include <klocale.h>
-#include <kglobal.h>
+#include <tdemessagebox.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
 
 static TDECmdLineOptions options[] =
 {

@@ -59,7 +59,7 @@
 #include <tdeapplication.h>
 #include <tdeio/job.h>
 #include <tdeio/jobclasses.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kimageio.h>
 #include <kcharsets.h>
 #include <kiconloader.h>
@@ -71,7 +71,7 @@
 #ifdef IMAGE_TITLES
 #include <tqfile.h>
 #include <tdefilemetainfo.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 #endif
 
 #include "html/html_documentimpl.h"

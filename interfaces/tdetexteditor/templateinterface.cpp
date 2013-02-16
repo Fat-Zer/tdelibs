@@ -22,11 +22,11 @@
 #include <addressee.h>
 #include <addresseedialog.h>
 #include <tqstring.h>
-#include <klocale.h>
-#include <kglobal.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
 #include <tqdatetime.h>
 #include <tqregexp.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kcalendarsystem.h>
 #include <unistd.h>
 

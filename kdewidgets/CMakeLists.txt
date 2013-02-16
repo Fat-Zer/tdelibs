@@ -61,6 +61,6 @@ add_custom_command( OUTPUT kdewidgets.cpp
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK kabc-shared
+  LINK tdeabc-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}/plugins/designer
 )

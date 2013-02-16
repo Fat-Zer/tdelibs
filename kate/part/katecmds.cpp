@@ -32,7 +32,7 @@
 #include "../interfaces/katecmd.h"
 
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kurl.h>
 #include <kshellcompletion.h>
 

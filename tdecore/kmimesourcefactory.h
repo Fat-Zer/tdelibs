@@ -23,7 +23,7 @@
 #define KMIMESOURCEFACTORY_H
 
 #include <tqmime.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 class KMimeSourceFactoryPrivate;
 class TDEInstance;

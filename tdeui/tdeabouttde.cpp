@@ -22,7 +22,7 @@
 // I (espen) prefer that header files are included alphabetically
 #include <tdeabouttde.h>
 #include <tdeapplication.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 
 

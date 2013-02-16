@@ -31,9 +31,9 @@
 #include "kateconfig.h"
 #include "katehighlight.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstdaction.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kstringhandler.h>
 #include <kdebug.h>
 #include <kfinddialog.h>

@@ -34,11 +34,11 @@
 #include <tqfocusdata.h>
 
 #include <tdeapplication.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 #include <kiconloader.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
 #include <kseparator.h>
 #include <kurllabel.h>
 #include <kdebug.h>

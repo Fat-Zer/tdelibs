@@ -30,8 +30,8 @@ DEALINGS IN THE SOFTWARE.
 #include <tqsettings.h>
 #include <tqcolor.h>
 #include <tqgroupbox.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <kcolorbutton.h>
 #include <kdemacros.h>
 

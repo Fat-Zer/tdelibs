@@ -40,8 +40,8 @@
 
 #include <tdeapplication.h>
 #include <kdebug.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
 #include <kiconeffect.h>
 #include <kiconloader.h>
 

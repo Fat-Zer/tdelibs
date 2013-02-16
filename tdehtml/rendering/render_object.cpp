@@ -45,7 +45,7 @@
 #include "misc/loader.h"
 
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tqpainter.h>
 #include "tdehtmlview.h"
 #include <tdehtml_part.h>

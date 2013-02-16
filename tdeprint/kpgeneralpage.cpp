@@ -34,7 +34,7 @@
 #include <kdebug.h>
 #include <kdialog.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 // Some ID's
 #define ORIENT_PORTRAIT_ID	0

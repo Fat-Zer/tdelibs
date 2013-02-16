@@ -22,7 +22,7 @@
 
 #include <kpushbutton.h>
 #include <tqlayout.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kseparator.h>
 #include <kguiitem.h>
 

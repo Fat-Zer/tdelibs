@@ -33,16 +33,16 @@
 #include "kateconfig.h"
 
 #include <tdeconfig.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kinstance.h>
 #include <kmimetype.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kregexp.h>
 #include <tdepopupmenu.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kdebug.h>
 #include <kstandarddirs.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kstaticdeleter.h>
 #include <tdeapplication.h>
 

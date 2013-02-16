@@ -44,7 +44,7 @@
 #include <errno.h>
 
 #include <tqwindowdefs.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kinstance.h>
 #include <tdeaboutdata.h>
 #include <kdebug.h>

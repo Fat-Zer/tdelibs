@@ -23,7 +23,7 @@
 #include <tqregexp.h>
 #include <kprocess.h>
 #include <kprocio.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstaticdeleter.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>

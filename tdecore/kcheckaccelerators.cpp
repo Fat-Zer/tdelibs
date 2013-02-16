@@ -41,9 +41,9 @@
 
 #include <tdeconfig.h>
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeshortcut.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 /*
 

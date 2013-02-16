@@ -29,9 +29,9 @@
 
 #include <tqtimer.h>
 #include <tqfile.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 #include "tdeio/job.h"
 #include "tdeio/chmodjob.h"

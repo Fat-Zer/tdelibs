@@ -30,7 +30,7 @@
 #include <kipc.h>
 #include <kdebug.h>
 #include <kstandarddirs.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeconfig.h>
 #include <ksimpleconfig.h>
 #include <kinstance.h>

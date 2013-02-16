@@ -29,7 +29,7 @@
 #include "tdehtml_part.h"
 
 #include <kstringhandler.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kdebug.h>
 
 #include "rendering/render_image.h"

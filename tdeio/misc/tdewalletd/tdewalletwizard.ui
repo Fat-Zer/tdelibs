@@ -531,7 +531,7 @@
 </tabstops>
 <includes>
     <include location="global" impldecl="in declaration">tqcheckbox.h</include>
-    <include location="global" impldecl="in implementation">klocale.h</include>
+    <include location="global" impldecl="in implementation">tdelocale.h</include>
     <include location="local" impldecl="in implementation">tdewalletwizard.ui.h</include>
 </includes>
 <Q_SLOTS>

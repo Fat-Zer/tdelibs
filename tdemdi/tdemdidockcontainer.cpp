@@ -28,13 +28,13 @@
 #include <tqtimer.h>
 #include <tqtooltip.h>
 #include <tdemultitabbar.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 
 #include <kdebug.h>
 #include <kiconloader.h>
 #include <tdeapplication.h>
 #include <tdeconfig.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 //TODO: Well, this is already defined in tdeui/kdockwidget.cpp
 static const char* const tdemdi_not_close_xpm[] =

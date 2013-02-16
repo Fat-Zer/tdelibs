@@ -21,7 +21,7 @@
 
 #include "katefont.h"
 
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 
 #include <tqfontinfo.h>
 

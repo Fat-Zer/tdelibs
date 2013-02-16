@@ -18,7 +18,7 @@
 
 #ifndef KMESSAGEBOXWRAPPER_H
 #define KMESSAGEBOXWRAPPER_H
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tdeapplication.h>
 #include <kdebug.h>
 

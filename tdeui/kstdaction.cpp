@@ -25,9 +25,9 @@
 #include <tdeaction.h>
 #include <tdeapplication.h>
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdestdaccel.h>
 #include <tdemainwindow.h>
 #include "kstdaction_p.h"

@@ -47,9 +47,9 @@
 #include <tdeapplication.h>
 #include <kdebug.h>
 #include <kurl.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kcharsets.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 
 #include "css/cssproperties.h"
 #include "css/cssstyleselector.h"

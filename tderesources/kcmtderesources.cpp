@@ -23,7 +23,7 @@
 
 #include <tdeaboutdata.h>
 #include <kgenericfactory.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "configpage.h"
 

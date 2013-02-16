@@ -29,7 +29,7 @@
 #include <tqlineedit.h>
 #include <tqheader.h>
 #include <tdelistview.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 
 static TQListViewItem* rlpr_findChild(TQListViewItem *c, const TQString& txt)

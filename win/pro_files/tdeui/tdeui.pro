@@ -71,7 +71,7 @@ tdelistview.cpp \
 tdelistviewsearchline.cpp \
 tdemainwindowiface.cpp \
 tdemainwindow.cpp \
-kmenubar.cpp \
+tdemenubar.cpp \
 knuminput.cpp \
 knumvalidator.cpp \
 kpanelapplet.cpp \
@@ -132,7 +132,7 @@ exists( kmessagebox_win.cpp ) {
  SOURCES += kmessagebox_win.cpp
 }
 !exists( kmessagebox_win.cpp ) {
- SOURCES += kmessagebox.cpp
+ SOURCES += tdemessagebox.cpp
 }
 
 # generated:

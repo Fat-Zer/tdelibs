@@ -27,10 +27,10 @@ kcrash.cpp		Waldo Bastian <bastian@kde.org>
 kdcoppropertyproxy.cpp
 kdebug.cpp		Stephan Kulow <coolo@kde.org>
 kdesktopfile.cpp
-kglobal.cpp		Stephan Kulow <coolo@kde.org>
+tdeglobal.cpp		Stephan Kulow <coolo@kde.org>
 kglobalaccel.cpp	Ellis Whitehead <ellis@kde.org>
 kglobalaccel_x11.cpp	Ellis Whitehead <ellis@kde.org>
-kglobalsettings.cpp	David Faure <faure@kde.org>
+tdeglobalsettings.cpp	David Faure <faure@kde.org>
 kiconeffect.cpp
 kiconloader.cpp
 kicontheme.cpp
@@ -41,7 +41,7 @@ kkeynative_x11.cpp	Ellis Whitehead <ellis@kde.org>
 kkeysequence.cpp	Ellis Whitehead <ellis@kde.org>
 kkeysequence_emb.cpp	Ellis Whitehead <ellis@kde.org>
 klibloader.cpp
-klocale.cpp		Hans Petter Bieker <bieker@kde.org>
+tdelocale.cpp		Hans Petter Bieker <bieker@kde.org>
 kmdcodec.cpp
 kmimesourcefactory.cpp
 tdemultipledrag.cpp	David Faure <faure@kde.org>
@@ -60,14 +60,14 @@ tdeshortcut.cpp		Ellis Whitehead <ellis@kde.org>
 ksimpleconfig.cpp	Waldo Bastian <bastian@kde.org>
 ksocks.cpp
 kstandarddirs.cpp	Waldo Bastian <bastian@kde.org>
-kstartupinfo.cpp	Lubos Lunak <l.lunak@kde.org>
+tdestartupinfo.cpp	Lubos Lunak <l.lunak@kde.org>
 kstaticdeleter.cpp	Stephan Kulow <coolo@kde.org>
 tdestdaccel.cpp		Ellis Whitehead <ellis@kde.org>
 kstringhandler.cpp
 tdesycoca.cpp		Waldo Bastian <bastian@kde.org>
 tdesycocadict.cpp		Waldo Bastian <bastian@kde.org>
 tdesycocafactory.cpp	Waldo Bastian <bastian@kde.org>
-ktempfile.cpp		Waldo Bastian <bastian@kde.org>
+tdetempfile.cpp		Waldo Bastian <bastian@kde.org>
 kuniqueapplication.cpp	Waldo Bastian <bastian@kde.org>
 kurl.cpp		Waldo Bastian <bastian@kde.org>
 kurldrag.cpp		David Faure <faure@kde.org>

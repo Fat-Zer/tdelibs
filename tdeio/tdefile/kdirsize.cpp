@@ -19,7 +19,7 @@
 
 #include "kdirsize.h"
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tqapplication.h>
 #include <tqtimer.h>
 #include <config-tdefile.h>

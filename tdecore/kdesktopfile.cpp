@@ -35,7 +35,7 @@
 #include "kstandarddirs.h"
 #include "kmountpoint.h"
 #include "kcatalogue.h"
-#include "klocale.h"
+#include "tdelocale.h"
 
 #include "kdesktopfile.h"
 #include "kdesktopfile.moc"

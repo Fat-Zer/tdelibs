@@ -46,18 +46,18 @@
 #include <tqvbox.h>
 #include <tqlayout.h>
 #include <tqregexp.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tqdir.h>
 #include <tqtooltip.h>
 #include <tqwhatsthis.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 #include <tdefiledialog.h>
 #include <kurlrequester.h>
 #include <klineedit.h>
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeconfig.h>
 #include <kguiitem.h>
 #include <kstdguiitem.h>

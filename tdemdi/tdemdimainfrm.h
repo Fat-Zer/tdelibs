@@ -32,7 +32,7 @@
 #define _KMDIMAINFRM_H_
 
 #include <tdeparts/dockmainwindow.h>
-#include <kmenubar.h>
+#include <tdemenubar.h>
 #include <tdepopupmenu.h>
 
 #include <tqptrlist.h>

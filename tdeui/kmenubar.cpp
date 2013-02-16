@@ -33,10 +33,10 @@
 #include <tqtimer.h>
 
 #include <tdeconfig.h>
-#include <kglobalsettings.h>
-#include <kmenubar.h>
+#include <tdeglobalsettings.h>
+#include <tdemenubar.h>
 #include <tdeapplication.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kdebug.h>
 #include <kmanagerselection.h>
 
@@ -568,4 +568,4 @@ void KMenuBar::drawContents( TQPainter* p )
 void KMenuBar::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
-#include "kmenubar.moc"
+#include "tdemenubar.moc"

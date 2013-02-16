@@ -27,8 +27,8 @@
 #include "kwordwrap.h"
 #include <tdeconfig.h>
 #include <kdebug.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
 #include <tdeapplication.h>
 #include <kipc.h> 
 

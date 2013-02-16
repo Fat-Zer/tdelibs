@@ -5,10 +5,10 @@
 #include <tqlayout.h>
 #include <tqvgroupbox.h>
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeconfig.h>
 #include <klibloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdemediaplayer/player.h>
 #include <kmimetype.h>
 #include <tdeparts/componentfactory.h>

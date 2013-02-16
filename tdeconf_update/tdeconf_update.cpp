@@ -30,13 +30,13 @@
 
 #include <tdeconfig.h>
 #include <ksimpleconfig.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdecmdlineargs.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kstandarddirs.h>
 #include <tdeaboutdata.h>
 #include <kinstance.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 
 static TDECmdLineOptions options[] =
 {

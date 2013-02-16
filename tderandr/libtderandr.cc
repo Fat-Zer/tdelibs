@@ -26,8 +26,8 @@
 #include <tqtimer.h>
 #include <tqstringlist.h>
 
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <tdeapplication.h>
 
 #include <stdlib.h>

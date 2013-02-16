@@ -12,7 +12,7 @@
 #include "kstatusbar.h"
 #include <tdeapplication.h>
 #include <tdemainwindow.h>
-#include <kmenubar.h>
+#include <tdemenubar.h>
 #include "kstatusbartest.h"
 
 testWindow::testWindow (TQWidget *, const char *name)

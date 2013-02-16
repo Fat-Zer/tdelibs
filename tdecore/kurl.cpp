@@ -27,7 +27,7 @@
 // KDE_QT_ONLY is first used for dcop/client (e.g. marshalling)
 #ifndef KDE_QT_ONLY
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kidna.h>
 #include <kprotocolinfo.h>
 #endif

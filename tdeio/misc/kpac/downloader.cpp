@@ -24,8 +24,8 @@
 #include <tqtextcodec.h>
 
 #include <kcharsets.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <tdeio/job.h>
 
 #include "downloader.moc"

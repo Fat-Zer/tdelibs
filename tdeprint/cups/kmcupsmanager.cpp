@@ -42,12 +42,12 @@
 
 #include <kdebug.h>
 #include <tdeapplication.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 #include <kstandarddirs.h>
 #include <tdesocketbase.h>
 #include <klibloader.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tdeaction.h>
 #include <kdialogbase.h>
 #include <kextendedsocket.h>

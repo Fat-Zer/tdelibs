@@ -32,7 +32,7 @@
 #include <tdeconfig.h>
 #include <tqtooltip.h>
 #include <kcursor.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdestdaccel.h>
 #include <tdepopupmenu.h>
 #include <kdebug.h>

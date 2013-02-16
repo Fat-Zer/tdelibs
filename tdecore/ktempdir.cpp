@@ -47,7 +47,7 @@
 #include <tqdatetime.h>
 #include <tqdir.h>
 
-#include "kglobal.h"
+#include "tdeglobal.h"
 #include "tdeapplication.h"
 #include "kinstance.h"
 #include "ktempdir.h"

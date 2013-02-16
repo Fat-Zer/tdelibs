@@ -39,9 +39,9 @@
 #include "misc/knsplugininstaller.h"
 
 #include <tdeapplication.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kmimetype.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include <tqtimer.h>
 #include <tqpainter.h>

@@ -19,7 +19,7 @@
 #ifndef _KSTDACTION_PRIVATE_H_
 #define _KSTDACTION_PRIVATE_H_
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdestdaccel.h>
 
 namespace KStdAction

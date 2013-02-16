@@ -26,7 +26,7 @@
 #include <tqtextstream.h>
 #include <tqregexp.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kprocess.h>
 #include <stdlib.h>
 

@@ -29,9 +29,9 @@
 #include <tqrect.h>
 
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeconfig.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kicontheme.h>
 #include "kiconeffect.h"
 

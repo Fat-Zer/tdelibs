@@ -26,7 +26,7 @@
 #include "kprotocolinfofactory.h"
 
 #include <kstandarddirs.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeapplication.h>
 #include <kdebug.h>
 #include <ksimpleconfig.h>

@@ -96,9 +96,9 @@ extern "C" {
 #include <kicondialog.h>
 #include <kurl.h>
 #include <kurlrequester.h>
-#include <klocale.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
 #include <kstandarddirs.h>
 #include <tdeio/job.h>
 #include <tdeio/chmodjob.h>
@@ -109,7 +109,7 @@ extern "C" {
 #include <kmimetype.h>
 #include <kmountpoint.h>
 #include <kiconloader.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kservice.h>
 #include <kcompletion.h>
 #include <klineedit.h>

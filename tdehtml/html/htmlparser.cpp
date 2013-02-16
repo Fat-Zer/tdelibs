@@ -56,7 +56,7 @@
 
 #include "html/htmlparser.h"
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 using namespace DOM;
 using namespace tdehtml;

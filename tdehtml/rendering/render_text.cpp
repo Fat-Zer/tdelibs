@@ -43,7 +43,7 @@
 #include <tqimage.h>
 #include <tqpainter.h>
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <assert.h>
 #include <limits.h>
 #include <math.h>

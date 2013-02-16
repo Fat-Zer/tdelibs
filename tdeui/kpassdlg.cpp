@@ -34,12 +34,12 @@
 #include <tqptrdict.h>
 #include <tqtimer.h>
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kdebug.h>
 #include <tdeapplication.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tdeaboutdialog.h>
 #include <tdeconfig.h>
 #include <kstandarddirs.h>

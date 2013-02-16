@@ -27,9 +27,9 @@
 #include <tqlayout.h>
 #include <tqwhatsthis.h>
 #include <tdelistview.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kactivelabel.h>
 #include <kdebug.h>
 #include <tdeapplication.h>

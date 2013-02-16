@@ -25,9 +25,9 @@
 #include <tqtextstream.h>
 
 #include <tdeconfig.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
+#include <tdelocale.h>
 #include <kprotocolinfo.h>
 #include <kstandarddirs.h>
 #include <kurl.h>

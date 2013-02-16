@@ -41,8 +41,8 @@ install( FILES
     kurlcompletion.h kshellcompletion.h tdefileitem.h
     tdefileshare.h ksambashare.h knfsshare.h kdirlister.h
     kservicegroup.h kimageio.h kdirnotify.h kdirnotify_stub.h
-    kurlpixmapprovider.h kprotocolinfo.h kprotocolmanager.h
-    kfilterbase.h kfilterdev.h kemailsettings.h kscan.h
+    kurlpixmapprovider.h kprotocolinfo.h tdeprotocolmanager.h
+    kfilterbase.h kfilterdev.h tdeemailsettings.h kscan.h
     kdatatool.h karchive.h tdefilefilter.h tdefilemetainfo.h
     renamedlgplugin.h kmimetyperesolver.h kdcopservicestarter.h
     kremoteencoding.h kmimetypechooser.h
@@ -71,7 +71,7 @@ install( FILES
 set( target tdeiocore )
 
 set( ${target}_SRCS
-  authinfo.cpp kshred.cpp kprotocolmanager.cpp slave.cpp
+  authinfo.cpp kshred.cpp tdeprotocolmanager.cpp slave.cpp
   slaveinterface.cpp observer.stub sessiondata.cpp
   scheduler.cpp connection.cpp job.cpp global.cpp
   slaveconfig.cpp kurlpixmapprovider.cpp netaccess.cpp
@@ -79,7 +79,7 @@ set( ${target}_SRCS
   slavebase.cpp passdlg.cpp forwardingslavebase.cpp
   progressbase.cpp defaultprogress.cpp statusbarprogress.cpp
   kdirnotify.cpp kdirnotify.skel kdirnotify_stub.cpp
-  observer.cpp ../misc/uiserver.stub observer.skel kemailsettings.cpp
+  observer.cpp ../misc/uiserver.stub observer.skel tdeemailsettings.cpp
   kprotocolinfo.cpp renamedlg.cpp skipdlg.cpp kremoteencoding.cpp
   kmimetypechooser.cpp
 )

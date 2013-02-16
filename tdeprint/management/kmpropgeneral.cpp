@@ -25,7 +25,7 @@
 
 #include <tqlabel.h>
 #include <tqlayout.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 KMPropGeneral::KMPropGeneral(TQWidget *parent, const char *name)
 : KMPropWidget(parent,name)

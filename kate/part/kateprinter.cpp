@@ -35,7 +35,7 @@
 #include <kdebug.h>
 #include <kdialog.h> // for spacingHint()
 #include <tdefontdialog.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kprinter.h>
 #include <kurl.h>
 #include <kuser.h> // for loginName

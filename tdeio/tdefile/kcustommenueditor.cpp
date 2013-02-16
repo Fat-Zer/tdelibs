@@ -24,8 +24,8 @@
 #include <tqdir.h>
 
 #include <kbuttonbox.h>
-#include <klocale.h>
-#include <kglobal.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
 #include <kiconloader.h>
 #include <tdelistview.h>
 #include <kservice.h>

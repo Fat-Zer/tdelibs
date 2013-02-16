@@ -46,11 +46,11 @@
 #include <tdemainwindow.h>
 #include <klineedit.h>
 #include <kseparator.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeapplication.h>
 #include <tdeaction.h>
 #include <kstdaction.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeconfig.h>
 #include <kiconloader.h>
 #include <kcombobox.h>

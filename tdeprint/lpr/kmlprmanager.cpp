@@ -30,13 +30,13 @@
 
 #include <tqfileinfo.h>
 #include <tqptrlist.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
 #include <kprinter.h>
 #include <kprocess.h>
 #include <tdeaction.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <klibloader.h>
 
 #include <stdlib.h>

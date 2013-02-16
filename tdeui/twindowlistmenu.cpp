@@ -33,7 +33,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <twin.h> 
 #include <twinmodule.h> 
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstringhandler.h>
 
 #include <netwm.h> 

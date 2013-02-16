@@ -36,7 +36,7 @@
 #include "tdehtml_part.h"
 #include <tqvariant.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 using namespace DOM;
 using namespace tdehtml;

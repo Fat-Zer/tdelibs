@@ -23,7 +23,7 @@
 #include <tqstringlist.h>
 #include <tqasciidict.h>
 #include <tqptrlist.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 #include <stdlib.h> // For backwards compatibility
 

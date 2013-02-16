@@ -25,7 +25,7 @@
 #include "xml/dom_docimpl.h"
 #include "tdehtmlview.h"
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kdebug.h>
 
 using namespace tdehtml;

@@ -24,7 +24,7 @@
 #include <tqprogressdialog.h>
 #include <tqfileinfo.h>
 #include <tqdir.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeapplication.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>

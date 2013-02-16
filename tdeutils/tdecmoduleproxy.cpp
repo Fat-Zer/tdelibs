@@ -42,7 +42,7 @@
 #include <tdecmoduleloader.h>
 #include <kdebug.h>
 #include <kdialog.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kprocess.h>
 #include <kservice.h>
 #include <kstandarddirs.h>

@@ -23,7 +23,7 @@
 #include <tdestdaccel.h>
 #include <kstdaction.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdepopupmenu.h>
 
 KCommand::~KCommand()

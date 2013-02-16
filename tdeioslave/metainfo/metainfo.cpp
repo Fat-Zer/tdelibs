@@ -24,7 +24,7 @@
 #include <kmimetype.h>
 #include <kdebug.h>
 #include <tdefilemetainfo.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <stdlib.h>
 
 #include "metainfo.h"

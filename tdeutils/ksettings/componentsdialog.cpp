@@ -18,7 +18,7 @@
 */
 
 #include "ksettings/componentsdialog.h"
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqlayout.h>
 #include <tdelistview.h>
 #include <tqlabel.h>

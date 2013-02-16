@@ -22,7 +22,7 @@
 #include <tqvaluelist.h>
 #include <tqstring.h>
 #include <tqimage.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #ifndef _KABOUTDATA_H_
 #define _KABOUTDATA_H_

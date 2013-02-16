@@ -3,7 +3,7 @@
 #ifndef TEST8A_H
 #define TEST8A_H
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeconfigskeleton.h>
 #include <kdebug.h>
 

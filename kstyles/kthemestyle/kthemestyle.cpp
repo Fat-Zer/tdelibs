@@ -53,7 +53,7 @@ Port version 0.9.7
 #include <tqpalette.h>
 #include <tqtabbar.h>
 #include <tqtoolbutton.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kdrawutil.h>
 #include <tqdrawutil.h>
 #include <tqprogressbar.h>

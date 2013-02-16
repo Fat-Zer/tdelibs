@@ -10,9 +10,9 @@
 #include <kiconloader.h>
 #include <kstandarddirs.h>
 #include <tdeapplication.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tdeaction.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 Shell::Shell()
 {

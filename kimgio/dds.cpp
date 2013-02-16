@@ -24,7 +24,7 @@
 #include <tqimage.h>
 #include <tqdatastream.h>
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kdebug.h>
 
 #include <math.h> // sqrtf

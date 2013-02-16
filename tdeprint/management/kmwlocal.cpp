@@ -23,13 +23,13 @@
 #include "kmfactory.h"
 #include "kmmanager.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqlayout.h>
 #include <tqlineedit.h>
 #include <tqlabel.h>
 #include <tqheader.h>
 #include <tdelistview.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kiconloader.h>
 
 KMWLocal::KMWLocal(TQWidget *parent, const char *name)

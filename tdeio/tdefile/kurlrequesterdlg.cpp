@@ -28,10 +28,10 @@
 
 #include <tdeaccel.h>
 #include <tdefiledialog.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kiconloader.h>
 #include <klineedit.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tderecentdocument.h>
 #include <kurl.h>
 #include <kurlrequester.h>

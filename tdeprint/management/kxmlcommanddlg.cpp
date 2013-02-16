@@ -38,13 +38,13 @@
 #include <tqapplication.h>
 
 #include <tdelistview.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 #include <kdialogbase.h>
 #include <kseparator.h>
 #include <tdelistbox.h>
 #include <kmimetype.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tdeapplication.h>
 #include <kdebug.h>
 #include <kguiitem.h>

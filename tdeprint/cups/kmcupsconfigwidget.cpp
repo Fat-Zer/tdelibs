@@ -28,7 +28,7 @@
 #include <tqpushbutton.h>
 #include <tqvalidator.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kcursor.h>
 #include <tdeconfig.h>
 #include <kstringhandler.h>

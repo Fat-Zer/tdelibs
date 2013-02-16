@@ -27,7 +27,7 @@
 #include <tqfile.h>
 #include <tqtextstream.h>
 #include <tqvaluestack.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include <unistd.h>
 

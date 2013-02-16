@@ -24,8 +24,8 @@
 #include <signal.h>
 
 #include <tqdialog.h>
-#include <klocale.h>
-#include <kglobal.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
 #include <kdebug.h>
 #include <tdecmdlineargs.h>
 #include <tdeapplication.h>

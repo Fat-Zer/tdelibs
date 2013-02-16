@@ -22,10 +22,10 @@
 // systems.
 // Also default gregorian and factory classes
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 #include "kcalendarsystem.h"
-#include "klocale.h"
+#include "tdelocale.h"
 
 class KCalendarSystemPrivate
 {

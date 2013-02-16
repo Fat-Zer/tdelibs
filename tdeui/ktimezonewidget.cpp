@@ -21,7 +21,7 @@
 #include <kdebug.h>
 #include <tdefile.h>
 #include <tdelistview.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 #include <ktimezones.h>
 #include <ktimezonewidget.h>

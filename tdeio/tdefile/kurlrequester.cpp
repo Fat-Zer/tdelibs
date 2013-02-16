@@ -30,10 +30,10 @@
 #include <kdialog.h>
 #include <kdirselectdialog.h>
 #include <tdefiledialog.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kiconloader.h>
 #include <klineedit.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kurlcompletion.h>
 #include <kurldrag.h>
 #include <kprotocolinfo.h>

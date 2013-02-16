@@ -48,7 +48,7 @@
 #include <ksslx509v3.h>
 #include <ksslpkcs12.h>
 #include <ksslsession.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <ksocks.h>
 
 #define sk_dup d->kossl->sk_dup

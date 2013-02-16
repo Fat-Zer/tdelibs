@@ -37,7 +37,7 @@
 #include <kdebug.h>
 #include <kguiitem.h>
 #include <tdemainwindow.h>
-#include <kmenubar.h>
+#include <tdemenubar.h>
 #include <tdepopupmenu.h>
 #include <tdetoolbar.h>
 #include <tdetoolbarbutton.h>

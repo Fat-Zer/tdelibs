@@ -29,7 +29,7 @@
 #include "klibloader.h"
 #include "kstandarddirs.h"
 #include "kdebug.h"
-#include "klocale.h"
+#include "tdelocale.h"
 
 #include "ltdl.h"
 

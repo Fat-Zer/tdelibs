@@ -25,8 +25,8 @@
 #include <kmimetype.h>
 #include <kstringhandler.h>
 #include <kinputdialog.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <assert.h>
 #include <tdeapplication.h>
 #include <dcopclient.h>

@@ -1,4 +1,4 @@
-#include <klocale.h>
+#include <tdelocale.h>
 /****************************************************************************
 ** Form implementation generated from reading ui file './kcompletiontest.ui'
 **

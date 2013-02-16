@@ -26,9 +26,9 @@
 #include <kpushbutton.h>
 #include <tqlabel.h>
 #include <tqwidgetstack.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tqlayout.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include <kseparator.h>
 #include <tdeapplication.h>

@@ -48,10 +48,10 @@
 #include <tqdatastream.h>
 #include <tqtextstream.h>
 
-#include "kglobal.h"
+#include "tdeglobal.h"
 #include "tdeapplication.h"
 #include "kinstance.h"
-#include "ktempfile.h"
+#include "tdetempfile.h"
 #include "kstandarddirs.h"
 #include "kde_file.h"
 #include "kdebug.h"

@@ -5,7 +5,7 @@
 #include "tdeaccelaction.h"
 #include <tdeconfig.h>
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kglobalaccel.h>
 #include <kinstance.h>
 #include <tdeshortcut.h>

@@ -35,11 +35,11 @@
 
 #include <dcopclient.h>
 #include <kdebug.h>
-#include <klocale.h>
-#include <kglobal.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
 #include <kstandarddirs.h>
 #include <tdeapplication.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 #include <ksock.h>
 #include <kprocess.h>
 #include <klibloader.h>
@@ -48,7 +48,7 @@
 #include "tdeio/slave.h"
 #include "tdeio/kservice.h"
 #include <tdeio/global.h>
-#include <kprotocolmanager.h>
+#include <tdeprotocolmanager.h>
 #include <kprotocolinfo.h>
 
 #ifdef HAVE_PATHS_H

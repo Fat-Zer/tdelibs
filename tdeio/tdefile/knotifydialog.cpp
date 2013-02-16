@@ -29,8 +29,8 @@
 #include <kiconloader.h>
 #include <kicontheme.h>
 #include <klineedit.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <knotifyclient.h>
 #include <knotifydialog.h>
 #include <kstandarddirs.h>

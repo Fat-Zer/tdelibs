@@ -13,14 +13,14 @@
 #include <kcombobox.h>
 #include <khelpmenu.h>
 #include <tdecmdlineargs.h>
-#include <kmenubar.h>
+#include <tdemenubar.h>
 #include <tdetoolbarradiogroup.h>
 #include <kiconloader.h>
 #include <tdepopupmenu.h>
 #include <tqmultilineedit.h>
 #include "twindowtest.h"
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 
 //#include <dclock.h>

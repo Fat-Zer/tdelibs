@@ -23,7 +23,7 @@
 
 #include <tqlabel.h>
 #include <tqlayout.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 KMPropBackend::KMPropBackend(TQWidget *parent, const char *name)
 : KMPropWidget(parent,name)

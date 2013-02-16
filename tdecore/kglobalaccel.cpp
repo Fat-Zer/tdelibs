@@ -32,7 +32,7 @@
 #include "tdeaccelbase.h"
 #include <kdebug.h>
 #include <tdeshortcut.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 //----------------------------------------------------
 

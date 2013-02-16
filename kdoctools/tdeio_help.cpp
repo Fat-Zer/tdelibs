@@ -25,8 +25,8 @@
 
 #include <kdebug.h>
 #include <kurl.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 #include <kinstance.h>
 

@@ -37,9 +37,9 @@
 
 #include <kstandarddirs.h>
 #include <kmdcodec.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqdatetime.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 
 #include <sys/types.h>
 

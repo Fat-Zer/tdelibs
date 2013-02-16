@@ -22,8 +22,8 @@
 #include <tqpushbutton.h>
 
 #include <kiconloader.h>
-#include <klocale.h>
-#include <kglobalsettings.h>
+#include <tdelocale.h>
+#include <tdeglobalsettings.h>
 #include <kstdguiitem.h>
 
 #include "kwizard.h"

@@ -23,8 +23,8 @@
 
 #include "broker.h"
 
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
 

@@ -24,7 +24,7 @@
 #include <tqlabel.h>
 #include <tqlayout.h>
 #include <tqgroupbox.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 
 KMConfigLpr::KMConfigLpr(TQWidget *parent, const char *name)

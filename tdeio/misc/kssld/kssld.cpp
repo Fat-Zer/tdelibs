@@ -42,7 +42,7 @@
 #include <unistd.h>
 #include <tqfile.h>
 #include <tqsortedlist.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
 #include <tqdatetime.h>

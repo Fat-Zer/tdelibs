@@ -26,10 +26,10 @@
 #include <tqsyntaxhighlighter.h>
 #include <tqtimer.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdespell.h>
 #include <tdeapplication.h>
 

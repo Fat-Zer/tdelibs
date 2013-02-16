@@ -27,7 +27,7 @@
 #include <tqlabel.h>
 
 #include <tdeapplication.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kurl.h>
 #include <kpushbutton.h>
 #include <kstdguiitem.h>

@@ -42,12 +42,12 @@
 #include <assert.h>
 #include <tdeapplication.h>
 #include <dcopclient.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kdebug.h>
 #include <kdirwatch.h>
 #include <kstandarddirs.h>
 #include <ksavefile.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeaboutdata.h>
 #include <tdecmdlineargs.h>
 #include <kcrash.h>
@@ -55,7 +55,7 @@
 #ifdef KBUILDSYCOCA_GUI // KBUILDSYCOCA_GUI is used on win32 to build 
                         // GUI version of tdebuildsycoca, so-called "tdebuildsycocaw".
 # include <tqlabel.h>
-# include <kmessagebox.h>
+# include <tdemessagebox.h>
   bool silent;
   bool showprogress;
 #endif

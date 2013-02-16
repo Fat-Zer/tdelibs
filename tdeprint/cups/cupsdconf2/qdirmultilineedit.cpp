@@ -23,7 +23,7 @@
 #include <tqheader.h>
 #include <tqpushbutton.h>
 #include <tdelistview.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdefiledialog.h>
 #include <kiconloader.h>
 

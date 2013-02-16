@@ -28,11 +28,11 @@
 
 #include <tdeapplication.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeio/job.h>
-#include <kmessagebox.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
+#include <tdemessagebox.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
 #include <kstaticdeleter.h>
 #include <kprotocolinfo.h>
 

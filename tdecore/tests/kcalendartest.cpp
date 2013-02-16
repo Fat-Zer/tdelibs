@@ -10,8 +10,8 @@
 #include <tdeapplication.h>
 #include <tdeaboutdata.h>
 #include <kdebug.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <tdecmdlineargs.h>
 
 class TDELocale;

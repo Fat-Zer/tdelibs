@@ -21,7 +21,7 @@
 
 #include <tqcheckbox.h>
 #include <kurlrequester.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdialog.h>
 #include <tdeconfig.h>
 #include <tqgroupbox.h>

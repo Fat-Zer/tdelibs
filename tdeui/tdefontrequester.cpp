@@ -26,7 +26,7 @@
 #include <tqwhatsthis.h>
 
 #include <tdefontdialog.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 TDEFontRequester::TDEFontRequester( TQWidget *parent, const char *name,
     bool onlyFixed ) : TQWidget( parent, name ),

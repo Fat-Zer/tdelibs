@@ -25,9 +25,9 @@
 #include "kmprinter.h"
 #include "driver.h"
 
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tqtabwidget.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kpushbutton.h>
 #include <kguiitem.h>
 

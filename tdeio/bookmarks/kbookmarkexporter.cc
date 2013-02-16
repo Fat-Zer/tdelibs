@@ -24,7 +24,7 @@
 #include <tqstylesheet.h>
 
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "kbookmarkmanager.h"
 #include "kbookmarkexporter.h"

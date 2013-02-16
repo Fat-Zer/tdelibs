@@ -23,7 +23,7 @@
 #include <tqlabel.h>
 #include <tqtooltip.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "connectionmanager.h"
 

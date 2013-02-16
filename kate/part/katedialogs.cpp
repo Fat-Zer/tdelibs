@@ -53,15 +53,15 @@
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <tdefontdialog.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
 #include <kiconloader.h>
 #include <kkeybutton.h>
 #include <kkeydialog.h>
 #include <klineedit.h>
 #include <tdelistview.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kmimetypechooser.h>
 #include <knuminput.h>
 #include <tdeparts/componentfactory.h>
@@ -72,7 +72,7 @@
 #include <krun.h>
 #include <kseparator.h>
 #include <kstandarddirs.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 
 #include <tqbuttongroup.h>
 #include <tqcheckbox.h>

@@ -40,9 +40,9 @@
 #include <tdeapplication.h>
 #include <kdebug.h>
 #include <kdesktopfile.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeconfigbase.h>
 #include <kstandarddirs.h>
 #include <dcopclient.h>

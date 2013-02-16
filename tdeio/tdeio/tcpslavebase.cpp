@@ -43,19 +43,19 @@
 #include <kdebug.h>
 #include <ksslall.h>
 #include <ksslcertdlg.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #ifndef Q_WS_WIN //temporary
 #include <kresolver.h>
 #endif
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <dcopclient.h>
 #include <tqcstring.h>
 #include <tqdatastream.h>
 
 #include <tdeapplication.h>
 
-#include <kprotocolmanager.h>
+#include <tdeprotocolmanager.h>
 #include <kde_file.h>
 
 #include "tdeio/tcpslavebase.h"

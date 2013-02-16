@@ -24,14 +24,14 @@
 #include <kinstance.h>
 #include <tdeaboutdata.h>
 #include <tqframe.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include <tqlabel.h>
 #include <tqlayout.h>
 #include <tqbutton.h>
 #include <tqpushbutton.h>
 #include <tqcombobox.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kpassdlg.h>
 #include <ksslall.h>
 #include <kopenssl.h>

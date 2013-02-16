@@ -23,8 +23,8 @@
 #include <tqlineedit.h>
 
 #include "knuminput.h"
-#include "kglobal.h"
-#include "klocale.h"
+#include "tdeglobal.h"
+#include "tdelocale.h"
 #include "kcalendarsystem.h"
 //#include "kdatepicker.h"
 #include "kdialog.h"

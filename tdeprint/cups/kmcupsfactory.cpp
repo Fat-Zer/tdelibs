@@ -22,7 +22,7 @@
 #include "kmcupsuimanager.h"
 #include "kcupsprinterimpl.h"
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kgenericfactory.h>
 
 typedef K_TYPELIST_4( KMCupsManager, KMCupsJobManager, KMCupsUiManager, KCupsPrinterImpl ) Products;

@@ -32,14 +32,14 @@
 #include <tqfile.h>
 #include <tqregexp.h>
 #include <kinputdialog.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <dcopclient.h>
 #include <tdeapplication.h>
 #include <kstandarddirs.h>
 #include <kdatastream.h>
 #include <kdebug.h>
 #include <kmimemagic.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kprocess.h>
 #include <tdeconfig.h>
 

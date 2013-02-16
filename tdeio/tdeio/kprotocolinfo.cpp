@@ -24,7 +24,7 @@
 
 #include "kprotocolinfo.h"
 #include "kprotocolinfofactory.h"
-#include "kprotocolmanager.h"
+#include "tdeprotocolmanager.h"
 
 // Most of this class is implemented in tdecore/kprotocolinfo_tdecore.cpp
 // This file only contains a few static class-functions that depend on

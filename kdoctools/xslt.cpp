@@ -12,7 +12,7 @@
 #include <xslt.h>
 #include <kinstance.h>
 #include "tdeio_help.h"
-#include <klocale.h>
+#include <tdelocale.h>
 #include <assert.h>
 #include <kfilterbase.h>
 #include <kfilterdev.h>

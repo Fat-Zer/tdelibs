@@ -30,8 +30,8 @@
 #include <tqtimer.h>
 
 #include <tdeapplication.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kdebug.h>
 #include <tdeio/passdlg.h>
 #include <tdewallet.h>

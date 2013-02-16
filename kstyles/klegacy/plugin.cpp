@@ -1,5 +1,5 @@
 #include "klegacystyle.h"
-#include <klocale.h>
+#include <tdelocale.h>
 
 extern "C" {
     TDEStyle* allocate();

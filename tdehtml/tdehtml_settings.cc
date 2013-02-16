@@ -21,14 +21,14 @@
 
 #include "tdehtml_settings.h"
 #include "tdehtmldefaults.h"
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <tdeconfig.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include <tqregexp.h>
 #include <tqvaluevector.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 /**
  * @internal

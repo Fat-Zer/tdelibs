@@ -12,7 +12,7 @@
 #ifdef HAVE_STDINT_H
 #include <stdint.h>
 #endif
-#include <ktempfile.h>
+#include <tdetempfile.h>
 #include <tqcolor.h>
 #include <tqcstring.h>
 #include <tqfile.h>

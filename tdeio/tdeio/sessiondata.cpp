@@ -23,11 +23,11 @@
 
 #include <kdebug.h>
 #include <tdeconfig.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <kcharsets.h>
 #include <dcopclient.h>
-#include <kprotocolmanager.h>
+#include <tdeprotocolmanager.h>
 #include <kstandarddirs.h>
 
 #include <tdesu/client.h>

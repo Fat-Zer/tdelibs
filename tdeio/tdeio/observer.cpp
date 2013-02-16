@@ -34,12 +34,12 @@
 #include "passdlg.h"
 #include "slavebase.h"
 #include "observer_stub.h"
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <ksslinfodlg.h>
 #include <ksslcertdlg.h>
 #include <ksslcertificate.h>
 #include <ksslcertchain.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 using namespace TDEIO;
 

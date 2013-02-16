@@ -26,7 +26,7 @@
 #include <tqptrdict.h>
 
 #include <kdialogbase.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kservice.h>
 
 class TDECModuleProxy;

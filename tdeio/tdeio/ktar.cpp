@@ -30,7 +30,7 @@
 #include <tqfile.h>
 #include <kdebug.h>
 #include <kmimetype.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 
 #include <kfilterdev.h>
 #include <kfilterbase.h>

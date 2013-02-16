@@ -23,7 +23,7 @@
 #include "kprinter.h"
 #include <tqstring.h>
 #include <kurl.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 KURL smbToUrl(const TQString& work, const TQString& server, const TQString& printer);
 void urlToSmb(const KURL& url, TQString& work, TQString& server, TQString& printer);

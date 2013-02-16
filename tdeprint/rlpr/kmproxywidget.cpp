@@ -24,7 +24,7 @@
 #include <tqcheckbox.h>
 #include <tqlayout.h>
 #include <tqvalidator.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 #include <kcursor.h>
 

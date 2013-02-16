@@ -13,7 +13,7 @@
 #include <tqstatusbar.h>
 #include <tqpixmap.h>
 #include <tqpopupmenu.h>
-#include <kmenubar.h>
+#include <tdemenubar.h>
 #include <tdetoolbar.h>
 #include <kstatusbar.h>
 #include <tqtoolbutton.h>

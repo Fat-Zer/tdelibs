@@ -27,7 +27,7 @@
 #include "kmpropdriver.h"
 
 #include <tqfile.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 KMLpdUiManager::KMLpdUiManager(TQObject *parent, const char *name)
 : KMUiManager(parent,name)

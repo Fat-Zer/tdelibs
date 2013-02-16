@@ -23,8 +23,8 @@
 #include "kjavaappletserver.h"
 #include "kjavaprocess.h"
 #include "kjavaapplet.h"
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kdebug.h>
 #include <tqmap.h>
 #include <tqguardedptr.h>

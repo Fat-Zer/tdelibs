@@ -17,7 +17,7 @@
 */
 
 #include "kuniqueapplication.h"
-#include "kglobal.h"
+#include "tdeglobal.h"
 #include "kdebug.h"
 #include "ksock.h"
 #include "ksockaddr.h"

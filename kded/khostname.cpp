@@ -30,9 +30,9 @@
 
 #include <tdecmdlineargs.h>
 #include <tdeapplication.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeaboutdata.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kstandarddirs.h>
 #include <kprocess.h>
 #include <kde_file.h>

@@ -35,12 +35,12 @@
 #include <tqcstring.h>
 
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdelistview.h>
 #include <ksimpleconfig.h>
 #include <kdialog.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
 #include <kstandarddirs.h>
 #include <ktabctl.h>
 #include <tdecmoduleinfo.h>

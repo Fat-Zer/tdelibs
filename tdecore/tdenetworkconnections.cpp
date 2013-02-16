@@ -23,7 +23,7 @@
 
 #include <tqtimer.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 // #define DEBUG_SIGNAL_QUEUE 1
 

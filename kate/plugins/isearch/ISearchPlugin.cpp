@@ -21,7 +21,7 @@
 #include <tqstyle.h>
 #include <tqpopupmenu.h>
 #include <kgenericfactory.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeaction.h>
 #include <kcombobox.h>
 #include <tdeconfig.h>

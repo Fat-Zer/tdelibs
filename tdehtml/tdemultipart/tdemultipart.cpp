@@ -22,11 +22,11 @@
 #include <tqvbox.h>
 #include <kinstance.h>
 #include <kmimetype.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeio/job.h>
 #include <tqfile.h>
-#include <ktempfile.h>
-#include <kmessagebox.h>
+#include <tdetempfile.h>
+#include <tdemessagebox.h>
 #include <tdeparts/componentfactory.h>
 #include <tdeparts/genericfactory.h>
 #include <tdehtml_part.h>

@@ -26,9 +26,9 @@
 #include <tqpushbutton.h>
 #include <tqtooltip.h>
 
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "ktabbar.h"
 #include "ktabwidget.h"

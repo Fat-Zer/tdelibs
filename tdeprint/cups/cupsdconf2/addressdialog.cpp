@@ -24,7 +24,7 @@
 #include <tqlabel.h>
 #include <tqlayout.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 AddressDialog::AddressDialog(TQWidget *parent, const char *name)
 	: KDialogBase(Swallow, i18n("ACL Address"), Ok|Cancel, Ok, parent, name, true, true)

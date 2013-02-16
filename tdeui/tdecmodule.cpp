@@ -27,9 +27,9 @@
 #include <tdeconfigskeleton.h>
 #include <tdeconfigdialogmanager.h>
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kinstance.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "tdecmodule.h"
 #include "tdecmodule.moc"

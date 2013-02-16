@@ -38,7 +38,7 @@
 #include <tqfile.h>
 
 #include "kdebug.h"
-#include "klocale.h"
+#include "tdelocale.h"
 //#include "kextsock.h"
 
 #ifndef HAVE_STRUCT_SOCKADDR_IN6

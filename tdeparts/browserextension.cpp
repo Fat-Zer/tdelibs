@@ -29,8 +29,8 @@
 #include <tqstylesheet.h>
 
 #include <kdebug.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kstaticdeleter.h>
 #include <kurifilter.h>
 #include <assert.h>

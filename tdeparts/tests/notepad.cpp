@@ -12,7 +12,7 @@
 #include <tdeapplication.h>
 #include <kdebug.h>
 #include <tdeaction.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstatusbar.h>
 #include <kstandarddirs.h>
 

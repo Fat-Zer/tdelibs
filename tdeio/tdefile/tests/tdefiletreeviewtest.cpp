@@ -19,7 +19,7 @@
 
 #include <tqdir.h>
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kiconloader.h>
 #include <tdemainwindow.h>
 #include <tdeapplication.h>

@@ -20,7 +20,7 @@
 #include "kmconfigcups.h"
 #include "kmcupsconfigwidget.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 #include <kdialog.h>
 

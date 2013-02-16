@@ -22,7 +22,7 @@
 #include "partmanager.h"
 #include <tdeparts/event.h>
 #include <tdeparts/part.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kdebug.h>
 
 #include <tqapplication.h>

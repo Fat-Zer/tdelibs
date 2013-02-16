@@ -34,8 +34,8 @@
 #include <tqlayout.h>
 #include <tqwhatsthis.h>
 #include <tqgroupbox.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kicondialog.h>
 #include <tdefiledialog.h>
 #include <kseparator.h>

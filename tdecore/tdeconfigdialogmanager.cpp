@@ -33,7 +33,7 @@
 #include <tdeapplication.h>
 #include <tdeconfigskeleton.h>
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 #include <assert.h>
 

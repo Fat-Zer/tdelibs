@@ -19,7 +19,7 @@
 
 #include <tdeio/global.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "httpfilter.h"
 

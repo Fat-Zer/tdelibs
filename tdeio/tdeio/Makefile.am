@@ -53,8 +53,8 @@ include_HEADERS = \
 	kshellcompletion.h tdefileitem.h tdefileshare.h ksambashare.h knfsshare.h \
     kdirlister.h kservicegroup.h \
 	kimageio.h kdirnotify.h kdirnotify_stub.h \
-	kurlpixmapprovider.h kprotocolinfo.h kprotocolmanager.h \
-	kfilterbase.h kfilterdev.h kemailsettings.h kscan.h kdatatool.h \
+	kurlpixmapprovider.h kprotocolinfo.h tdeprotocolmanager.h \
+	kfilterbase.h kfilterdev.h tdeemailsettings.h kscan.h kdatatool.h \
 	karchive.h tdefilefilter.h tdefilemetainfo.h renamedlgplugin.h \
 	kmimetyperesolver.h kdcopservicestarter.h kremoteencoding.h \
 	kmimetypechooser.h 
@@ -67,7 +67,7 @@ include_HEADERS += kacl.h
 
 libtdeiocore_la_SOURCES = authinfo.cpp \
 	kshred.cpp \
-	kprotocolmanager.cpp \
+	tdeprotocolmanager.cpp \
 	slave.cpp slaveinterface.cpp observer.stub \
 	sessiondata.cpp	scheduler.cpp \
 	connection.cpp \
@@ -81,7 +81,7 @@ libtdeiocore_la_SOURCES = authinfo.cpp \
 	statusbarprogress.cpp \
 	kdirnotify.cpp kdirnotify.skel kdirnotify_stub.cpp \
 	observer.cpp uiserver.stub observer.skel \
-	kemailsettings.cpp  \
+	tdeemailsettings.cpp  \
 	kprotocolinfo.cpp \
 	renamedlg.cpp skipdlg.cpp kremoteencoding.cpp \
 	kmimetypechooser.cpp

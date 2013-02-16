@@ -1,7 +1,7 @@
 #include "kdatewidget.h"
 #include <tqlineedit.h>
 #include <tdeapplication.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 int main(int argc, char** argv)
 {

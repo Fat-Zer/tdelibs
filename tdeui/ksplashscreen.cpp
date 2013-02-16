@@ -18,8 +18,8 @@
 */
 
 #include <tdeconfig.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
 
 #include <tqpixmap.h>
 

@@ -46,7 +46,7 @@ application palette (light and dark shades are\ncalculated)."), 0},
 #include <tdeapplication.h>
 #include <tdecmdlineargs.h>
 #include <tdeaboutdata.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 static const TDECmdLineOptions options[] =
 {

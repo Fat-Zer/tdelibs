@@ -28,7 +28,7 @@
 
 #include <tdeapplication.h>
 #include <dcopclient.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kdebug.h>
 #include <kprocess.h>
 #include <kstandarddirs.h>

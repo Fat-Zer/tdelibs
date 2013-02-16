@@ -29,7 +29,7 @@
 #include "tdeaccelbase.h"
 #include <tdeapplication.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeshortcut.h>
 
 #include "tdeaccelprivate.h"

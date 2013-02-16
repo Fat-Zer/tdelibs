@@ -3,7 +3,7 @@
 
 #include <tdeapplication.h>
 #include <kstatusbar.h>
-#include <kmenubar.h>
+#include <tdemenubar.h>
 
 #include "tdemainwindowtest.h"
 

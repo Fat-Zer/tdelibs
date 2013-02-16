@@ -36,8 +36,8 @@
 #include <kdialogbase.h>
 #include <khelpmenu.h>
 #include <kiconloader.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <tdepopupmenu.h>
 #include <tdestdaccel.h>
 #include <kstdaction.h>

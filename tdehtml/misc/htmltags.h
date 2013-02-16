@@ -5,7 +5,7 @@
 #define TDEHTML_TAGS_H
 
 #include "dom/dom_string.h"
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 KDE_NO_EXPORT const char* getTagName(unsigned short id);
 

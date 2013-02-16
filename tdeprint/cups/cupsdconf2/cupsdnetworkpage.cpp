@@ -29,7 +29,7 @@
 #include <tqlayout.h>
 #include <tqwhatsthis.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <knuminput.h>
 
 CupsdNetworkPage::CupsdNetworkPage(TQWidget *parent, const char *name)

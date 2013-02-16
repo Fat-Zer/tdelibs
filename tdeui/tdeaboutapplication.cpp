@@ -27,8 +27,8 @@
 #include <kaboutdialog_private.h>
 #include <tdeaboutdata.h>
 #include <tdeapplication.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <kurllabel.h>
 #include <kactivelabel.h>
 #include "ktextedit.h"

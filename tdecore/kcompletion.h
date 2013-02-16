@@ -28,7 +28,7 @@
 #include <tqguardedptr.h>
 
 #include "tdelibs_export.h"
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <ksortablevaluelist.h>
 #include <tdeshortcut.h>
 

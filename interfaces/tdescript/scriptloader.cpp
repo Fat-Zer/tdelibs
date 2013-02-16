@@ -21,8 +21,8 @@
 #include <tdeapplication.h>
 #include <tdeparts/part.h>
 #include <tdeparts/componentfactory.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 #include <kdesktopfile.h>
 #include <kstandarsdirs.h>

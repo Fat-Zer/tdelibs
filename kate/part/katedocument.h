@@ -38,7 +38,7 @@
 #include <dcopobject.h>
 
 #include <kmimetype.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include <tqintdict.h>
 #include <tqmap.h>

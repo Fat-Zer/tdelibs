@@ -21,7 +21,7 @@
 #include "kpqtpage.h"
 #include "kprinterpropertydialog.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 KMExtUiManager::KMExtUiManager(TQObject *parent, const char *name, const TQStringList & /*args*/)
 : KMUiManager(parent,name)

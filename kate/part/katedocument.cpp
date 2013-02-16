@@ -49,24 +49,24 @@
 
 #include <tdeparts/event.h>
 
-#include <klocale.h>
-#include <kglobal.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
 #include <tdeapplication.h>
 #include <tdepopupmenu.h>
 #include <tdeconfig.h>
 #include <tdefiledialog.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kstdaction.h>
 #include <kiconloader.h>
 #include <kxmlguifactory.h>
 #include <kdialogbase.h>
 #include <kdebug.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <klibloader.h>
 #include <kdirwatch.h>
 #include <twin.h>
 #include <kencodingfiledialog.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 #include <kmdcodec.h>
 #include <kstandarddirs.h>
 

@@ -49,7 +49,7 @@ class TDEStartupInfoPrivate;
  *
  * This class can be used to send information about started application,
  * change the information and receive this information. For detailed
- * description, see tdelibs/tdecore/README.kstartupinfo.
+ * description, see tdelibs/tdecore/README.tdestartupinfo.
  *
  * You usually don't need to use this class for sending the notification
  * information, as KDE libraries should do this when an application is

@@ -19,7 +19,7 @@
 
 #include <tdeapplication.h>
 #include <kstandarddirs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kurl.h>
 
 #include "kcheckaccelerators.h"

@@ -61,10 +61,10 @@
 #include <tqsqlpropertymap.h>
 #endif
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdestyle.h>
 #include <kiconloader.h>
 #include <kclipboard.h>
@@ -72,7 +72,7 @@
 #include <ksimpleconfig.h>
 #include <tdecmdlineargs.h>
 #include <tdeaboutdata.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kcrash.h>
 #include <kdatastream.h>
 #include <klibloader.h>
@@ -89,7 +89,7 @@
 #include <kglobalaccel.h>
 
 #if defined Q_WS_X11
-#include <kstartupinfo.h>
+#include <tdestartupinfo.h>
 #endif
 
 #include <dcopclient.h>

@@ -1,6 +1,6 @@
 #include <tdeapplication.h>
 #include <kdirselectdialog.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kurl.h>
 
 int main( int argc, char **argv )

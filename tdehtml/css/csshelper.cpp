@@ -28,7 +28,7 @@
 #include <tqfontdatabase.h>
 
 #include <kcharsets.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kdebug.h>
 
 #include "rendering/render_style.h"

@@ -31,7 +31,7 @@ include_directories(
 
 install( FILES
     tdefiledialog.h kencodingfiledialog.h
-    kdiroperator.h tdefileview.h tdefilefiltercombo.h
+    tdediroperator.h tdefileview.h tdefilefiltercombo.h
     tdefiledetailview.h kcombiview.h kdiskfreesp.h
     tdefileiconview.h tderecentdocument.h
     kurlrequester.h tdefilepreview.h tdefile.h
@@ -56,7 +56,7 @@ set( target tdefile )
 
 set( ${target}_SRCS
   tdefilefiltercombo.cpp tdefileview.cpp tdefileiconview.cpp
-  tderecentdocument.cpp tdefiledialog.cpp kdiroperator.cpp
+  tderecentdocument.cpp tdefiledialog.cpp tdediroperator.cpp
   tdefiledetailview.cpp kcombiview.cpp kurlrequester.cpp
   tdefilepreview.cpp kurlcombobox.cpp kurlrequesterdlg.cpp
   kopenwith.cpp kpropertiesdialog.cpp kicondialog.cpp

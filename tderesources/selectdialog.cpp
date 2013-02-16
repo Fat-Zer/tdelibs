@@ -23,8 +23,8 @@
 
 #include <kbuttonbox.h>
 #include <tdelistbox.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 
 #include <tqgroupbox.h>
 #include <tqlayout.h>

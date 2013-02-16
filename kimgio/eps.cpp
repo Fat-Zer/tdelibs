@@ -6,7 +6,7 @@
 #include <tqpainter.h>
 #include <tqprinter.h>
 #include <tdeapplication.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 #include <kdebug.h>
 #include "eps.h"
 

@@ -51,12 +51,12 @@
 #include <tqpopupmenu.h>
 #include <tqmenubar.h>
 
-#include <kmenubar.h>
+#include <tdemenubar.h>
 #include <tdeapplication.h>
 #include <kdebug.h>
 #include <tdeversion.h>
 #include <tqtabwidget.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include <kiconloader.h>
 #include "dockcontainer.h"

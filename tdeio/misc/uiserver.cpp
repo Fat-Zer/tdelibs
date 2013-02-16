@@ -31,12 +31,12 @@
 #include <kuniqueapplication.h>
 #include <tdeaboutdata.h>
 #include <tdecmdlineargs.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <dcopclient.h>
 #include <kstatusbar.h>
 #include <kdebug.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tdesu/client.h>
 #include <twin.h>
 #include <kdialog.h>

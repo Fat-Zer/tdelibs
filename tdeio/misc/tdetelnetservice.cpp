@@ -22,10 +22,10 @@
 // $Id$
 
 #include <tdeapplication.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tdecmdlineargs.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kprocess.h>
 #include <ksimpleconfig.h>
 

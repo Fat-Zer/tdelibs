@@ -27,7 +27,7 @@ METASOURCES = AUTO
 #SUBDIRS = . acl_prop_page
 
 include_HEADERS = tdefiledialog.h kencodingfiledialog.h\
-	kdiroperator.h tdefileview.h tdefilefiltercombo.h \
+	tdediroperator.h tdefileview.h tdefilefiltercombo.h \
 	tdefiledetailview.h kcombiview.h kdiskfreesp.h \
 	tdefileiconview.h tderecentdocument.h \
 	kurlrequester.h tdefilepreview.h tdefile.h \
@@ -44,7 +44,7 @@ noinst_HEADERS = config-tdefile.h tderecentdirs.h kmetaprops.h \
 libtdefile_la_SOURCES = \
 	tdefilefiltercombo.cpp \
 	tdefileview.cpp tdefileiconview.cpp \
-	tderecentdocument.cpp tdefiledialog.cpp kdiroperator.cpp \
+	tderecentdocument.cpp tdefiledialog.cpp tdediroperator.cpp \
 	tdefiledetailview.cpp kcombiview.cpp kurlrequester.cpp \
 	tdefilepreview.cpp kurlcombobox.cpp kurlrequesterdlg.cpp \
 	kopenwith.cpp kpropertiesdialog.cpp kicondialog.cpp kdirsize.cpp \

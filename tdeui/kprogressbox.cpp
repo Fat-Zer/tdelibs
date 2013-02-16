@@ -38,7 +38,7 @@
 #include "kprogressbox.h"
 
 #include <tdeapplication.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <twin.h>
 
 struct KProgressBoxDialog::KProgressBoxDialogPrivate

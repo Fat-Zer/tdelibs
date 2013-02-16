@@ -24,7 +24,7 @@
 #include "kmdriverdb.h"
 
 #include <tqlayout.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 KMWDriver::KMWDriver(TQWidget *parent, const char *name)
 : KMWizardPage(parent,name)

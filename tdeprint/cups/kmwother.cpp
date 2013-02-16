@@ -29,7 +29,7 @@
 #include <tqheader.h>
 #include <tqdict.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdelistview.h>
 #include <kiconloader.h>
 #include <kdebug.h>

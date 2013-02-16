@@ -28,8 +28,8 @@
 #include <tqtextstream.h>
 
 #include <tdeapplication.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <kcharsets.h>
 
 #include "tdeconfigbase.h"

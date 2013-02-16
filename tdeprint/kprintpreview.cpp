@@ -34,8 +34,8 @@
 #include <krun.h>
 #include <tdeapplication.h>
 #include <kstandarddirs.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kdebug.h>
 #include <tdeconfig.h>
 #include <tdetoolbar.h>

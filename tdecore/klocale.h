@@ -39,7 +39,7 @@ class KCatalogue;
 class KCalendarSystem;
 
 /**
- * \file klocale.h
+ * \file tdelocale.h
  */
 
 #ifndef I18N_NOOP

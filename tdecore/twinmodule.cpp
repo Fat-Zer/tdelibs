@@ -30,7 +30,7 @@
 #include "kdebug.h"
 #include <tqtl.h>
 #include <tqptrlist.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <dcopclient.h>
 #include "netwm.h"
 

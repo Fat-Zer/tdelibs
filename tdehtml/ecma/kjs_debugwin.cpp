@@ -41,17 +41,17 @@
 #include <tqpainter.h>
 #include <tqscrollbar.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include <kiconloader.h>
-#include <kglobal.h>
-#include <kmessagebox.h>
+#include <tdeglobal.h>
+#include <tdemessagebox.h>
 #include <kguiitem.h>
 #include <tdepopupmenu.h>
-#include <kmenubar.h>
+#include <tdemenubar.h>
 #include <tdeaction.h>
 #include <tdeactioncollection.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <tdeshortcut.h>
 #include <tdeconfig.h>
 #include <tdeconfigbase.h>

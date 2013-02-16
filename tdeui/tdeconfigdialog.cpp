@@ -23,7 +23,7 @@
 
 #include <tdeconfigskeleton.h>
 #include <tdeconfigdialogmanager.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 #include <kdebug.h>
 

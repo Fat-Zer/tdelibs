@@ -20,7 +20,7 @@
 #include <tdeapplication.h>
 #include "kcolordialog.h"
 #include <tdeconfig.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 int main( int argc, char *argv[] )
 {

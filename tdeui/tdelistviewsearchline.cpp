@@ -23,7 +23,7 @@
 #include <tdetoolbar.h>
 #include <tdetoolbarbutton.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include <tqapplication.h>
 #include <tqtimer.h>

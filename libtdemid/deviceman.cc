@@ -67,7 +67,7 @@
 
 #if 1
 #include <kinstance.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeconfig.h>
 #endif
 

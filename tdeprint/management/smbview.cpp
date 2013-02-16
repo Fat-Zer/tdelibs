@@ -20,14 +20,14 @@
 #include "smbview.h"
 
 #include <kprocess.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 #include <tqheader.h>
 #include <tqapplication.h>
 
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kcursor.h>
 
 #include <tqfile.h>

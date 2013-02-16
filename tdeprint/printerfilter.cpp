@@ -22,7 +22,7 @@
 #include "kmfactory.h"
 
 #include <tdeconfig.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kdebug.h>
 
 PrinterFilter::PrinterFilter(TQObject *parent, const char *name)

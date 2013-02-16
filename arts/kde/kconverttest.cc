@@ -3,7 +3,7 @@
 #include <tqfile.h>
 #include <tqobject.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeaboutdata.h>
 #include <tdecmdlineargs.h>
 #include <tdeapplication.h>

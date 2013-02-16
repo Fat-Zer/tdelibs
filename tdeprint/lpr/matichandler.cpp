@@ -29,7 +29,7 @@
 #include "util.h"
 #include "foomatic2loader.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 #include <tdeapplication.h>
 #include <kdebug.h>

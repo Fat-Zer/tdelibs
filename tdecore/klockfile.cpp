@@ -39,8 +39,8 @@
 #include <kde_file.h>
 #include <tdeapplication.h>
 #include <tdecmdlineargs.h>
-#include <kglobal.h>
-#include <ktempfile.h>
+#include <tdeglobal.h>
+#include <tdetempfile.h>
 
 // TODO: http://www.spinnaker.de/linux/nfs-locking.html
 // TODO: Make regression test

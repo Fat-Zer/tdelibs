@@ -138,7 +138,7 @@ SampleTest - 1 test passed, 1 test failed
  * #include <tdeapplication.h>
  * #include <tdecmdlineargs.h>
  * #include <tdecmdlineargs.h>
- * #include <klocale.h>
+ * #include <tdelocale.h>
  * #include <tdeunittest/runnergui.h>
  *
  * static const char description[] = I18N_NOOP("SampleTests");

@@ -50,7 +50,7 @@
 #include "xml/dom2_eventsimpl.h"
 
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include "html_elementimpl.h"
 
 using namespace DOM;

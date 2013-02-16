@@ -24,7 +24,7 @@
 #include "tdehtml_run.h"
 #include <tdeio/job.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include "tdehtml_ext.h"
 #include <tqwidget.h>
 

@@ -39,7 +39,7 @@
 #include "tdemdichildfrm.h"
 #include "tdemdidefines.h"
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqiconset.h>
 
 //============ KMdiChildView ============//

@@ -9,7 +9,7 @@
 #include <tdeapplication.h>
 #include <kdebug.h>
 #include <kdialog.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 #include <ksimpleconfig.h>
 

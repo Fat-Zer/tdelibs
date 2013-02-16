@@ -24,7 +24,7 @@
 
 #include <tdeconfig.h>
 #include <kdesktopfile.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kstandarddirs.h>
 
 #include <stdlib.h>

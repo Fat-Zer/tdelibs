@@ -9,9 +9,9 @@
 #include <tdeapplication.h>
 #include <kdebug.h>
 #include <kdialog.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <klineedit.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <tdecompletionbox.h>
 
 #include "klineedittest.h"

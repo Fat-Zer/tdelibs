@@ -31,7 +31,7 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <tqcstring.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "tdelauncher_cmds.h"
 

@@ -22,8 +22,8 @@
 #include <tqtimer.h>
 
 #include <kdebug.h>
-#include <klocale.h>
-#include <kglobal.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
 #include <tdeapplication.h>
 #include <kiconloader.h>
 #include <dcopclient.h>

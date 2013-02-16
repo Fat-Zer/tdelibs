@@ -34,7 +34,7 @@
 #include "../interfaces/katecmd.h"
 
 #include <kvmallocator.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdirwatch.h>
 #include <kstaticdeleter.h>
 

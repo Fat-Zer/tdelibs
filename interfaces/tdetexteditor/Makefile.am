@@ -46,7 +46,7 @@ servicetype_DATA = tdetexteditor.desktop tdetexteditoreditor.desktop tdetextedit
 kcm_tdetexteditor_DATA = kcm_tdetexteditor.desktop
 kcm_tdetexteditordir = $(kde_datadir)/kcm_componentchooser
 
-templateinterface.lo: $(top_builddir)/kabc/addressee.h
+templateinterface.lo: $(top_builddir)/tdeabc/addressee.h
 
 include ../../admin/Doxyfile.am
 

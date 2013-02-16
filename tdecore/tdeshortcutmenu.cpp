@@ -23,7 +23,7 @@
 
 #include "tdeaccelaction.h"
 #include <kdebug.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include "tdeshortcutmenu.h"
 //#include <kkeynative.h>
 

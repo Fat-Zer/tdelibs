@@ -19,7 +19,7 @@
 
 #include <tqtimer.h>
 
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kcursor.h>
 #include <tdeapplication.h>
 #include <kipc.h> 

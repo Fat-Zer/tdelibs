@@ -26,7 +26,7 @@
 #include <tqstring.h>
 #include <tqmap.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include "klibloader.h"
 #include <tdeconfig.h>

@@ -30,12 +30,12 @@
 
 #include <tdefiledialog.h>
 #include <tdefileiconview.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tdeconfig.h>
 #include <tdeapplication.h>
 #include <kurl.h>
 #include <kurlbar.h>
-#include <kdiroperator.h>
+#include <tdediroperator.h>
 #include <tdefile.h>
 #include <kdebug.h>
 #include <kicondialog.h>

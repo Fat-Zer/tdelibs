@@ -29,7 +29,7 @@
 #include <tqradiobutton.h>
 #include <tqwhatsthis.h>
 #include <knuminput.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 #include <kseparator.h>
 #include <kdebug.h>

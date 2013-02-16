@@ -21,7 +21,7 @@
 #include <tqwidget.h>
 #include <tqpopupmenu.h>
 #include "kcmenumngr.h"
-#include "kglobal.h"
+#include "tdeglobal.h"
 #include "tdeconfig.h"
 #include "tdeshortcut.h"
 

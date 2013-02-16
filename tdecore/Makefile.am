@@ -41,19 +41,19 @@ include_HEADERS = tdeconfig.h tdeconfigskeleton.h \
 	tdeconfigbase.h kdesktopfile.h kurl.h ksock.h tdeaboutdata.h \
 	tdecmdlineargs.h tdeconfigbackend.h kapp.h tdeapplication.h kuniqueapp.h \
 	kuniqueapplication.h kcharsets.h tdeversion.h kpty.h kprocess.h \
-	kprocctrl.h klocale.h kicontheme.h kiconloader.h kdebug.h \
+	kprocctrl.h tdelocale.h kicontheme.h kiconloader.h kdebug.h \
 	twinmodule.h twin.h krootprop.h tdeshortcut.h kkeynative.h tdeaccel.h \
 	kglobalaccel.h tdestdaccel.h tdeshortcutlist.h kcatalogue.h \
 	kregexp.h kcompletion.h kstringhandler.h \
-	kstddirs.h kstandarddirs.h kglobal.h kglobalsettings.h ksharedptr.h \
+	kstddirs.h kstandarddirs.h tdeglobal.h tdeglobalsettings.h ksharedptr.h \
 	kallocator.h kvmallocator.h kcrash.h krfcdate.h \
-	kinstance.h kpalette.h kipc.h klibloader.h ktempfile.h ksavefile.h \
+	kinstance.h kpalette.h kipc.h klibloader.h tdetempfile.h ksavefile.h \
 	krandomsequence.h knotifyclient.h kiconeffect.h \
 	kaudioplayer.h kdcoppropertyproxy.h netwm.h tdeaccelmanager.h \
 	netwm_def.h kpixmapprovider.h kunload.h kstaticdeleter.h \
 	kextsock.h kextendedsocket.h ksockaddr.h kprocio.h kasyncio.h \
 	kbufferedio.h kurldrag.h kmimesourcefactory.h kmdcodec.h ksocks.h \
-	tdesycoca.h tdesycocaentry.h tdesycocatype.h kxmessages.h kstartupinfo.h \
+	tdesycoca.h tdesycocaentry.h tdesycocatype.h kxmessages.h tdestartupinfo.h \
 	klargefile.h tdemultipledrag.h kgenericfactory.h kgenericfactory.tcc \
 	ktypelist.h ksortablevaluelist.h kdebugclasses.h kclipboard.h \
 	kcalendarsystem.h kcalendarsystemfactory.h kmacroexpander.h \
@@ -93,14 +93,14 @@ libtdecore_la_SOURCES = libintl.cpp tdeapplication.cpp \
 	kdebug.cpp netwm.cpp tdeconfigbase.cpp tdeconfig.cpp  ksimpleconfig.cpp \
 	tdeconfigbackend.cpp kmanagerselection.cpp kdesktopfile.cpp \
 	kstandarddirs.cpp ksock.cpp kpty.cpp kprocess.cpp kprocctrl.cpp \
-	klocale.cpp krfcdate.cpp kiconeffect.cpp kicontheme.cpp \
+	tdelocale.cpp krfcdate.cpp kiconeffect.cpp kicontheme.cpp \
 	kiconloader.cpp twin.cpp twinmodule.cpp krootprop.cpp kcharsets.cpp \
 	kckey.cpp tdeshortcut.cpp kkeynative_x11.cpp kkeyserver_x11.cpp \
 	tdeaccelaction.cpp tdeshortcutmenu.cpp tdeaccelbase.cpp tdeaccel.cpp \
 	kglobalaccel_x11.cpp kglobalaccel.cpp tdestdaccel.cpp tdeshortcutlist.cpp \
-	kcrash.cpp kurl.cpp kregexp.cpp kglobal.cpp kglobalsettings.cpp \
+	kcrash.cpp kurl.cpp kregexp.cpp tdeglobal.cpp tdeglobalsettings.cpp \
 	kallocator.cpp kvmallocator.cpp kmimesourcefactory.cpp \
-	kinstance.cpp kpalette.cpp kipc.cpp klibloader.cpp ktempfile.cpp \
+	kinstance.cpp kpalette.cpp kipc.cpp klibloader.cpp tdetempfile.cpp \
 	kuniqueapplication.cpp tdeaccelmanager.cpp \
 	ksavefile.cpp krandomsequence.cpp kstringhandler.cpp kcompletion.cpp \
 	tdecmdlineargs.cpp tdeaboutdata.cpp kcompletionbase.cpp knotifyclient.cpp \
@@ -109,7 +109,7 @@ libtdecore_la_SOURCES = libintl.cpp tdeapplication.cpp \
 	kpixmapprovider.cpp kurldrag.cpp \
 	kmdcodec.cpp ksocks.cpp fakes.c vsnprintf.c \
 	tdesycoca.cpp tdesycocadict.cpp tdesycocafactory.cpp tdesycoca.skel \
-	kxmessages.cpp kstartupinfo.cpp kcatalogue.cpp kasyncio.cpp \
+	kxmessages.cpp tdestartupinfo.cpp kcatalogue.cpp kasyncio.cpp \
 	tdemultipledrag.cpp kstaticdeleter.cpp kappdcopiface.cpp \
 	kappdcopiface.skel kclipboard.cpp kcheckaccelerators.cpp \
 	tdeversion.cpp kdebugdcopiface.cpp kdebugdcopiface.skel \

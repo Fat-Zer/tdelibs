@@ -30,7 +30,7 @@
 #include <kdebug.h>
 #include <kdialog.h>
 #include <klineedit.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeapplication.h>
 #include <knotifyclient.h>
 

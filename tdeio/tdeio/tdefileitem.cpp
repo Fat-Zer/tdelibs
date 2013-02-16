@@ -41,11 +41,11 @@
 #include <tdefilemetainfo.h>
 #include <ksambashare.h>
 #include <knfsshare.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
 #include <kiconloader.h>
 #include <klargefile.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kmimetype.h>
 #include <krun.h>
 

@@ -3,7 +3,7 @@
 
 #include "test2.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 Test2::Test2(  )
   : MyPrefs( TQString::fromLatin1( "korganizerrc" ) )

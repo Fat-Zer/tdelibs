@@ -21,7 +21,7 @@
 #include "kprinter.h"
 
 #include <kstandarddirs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 KFoomaticPrinterImpl::KFoomaticPrinterImpl(TQObject *parent, const char *name, const TQStringList & /*args*/)
 : KPrinterImpl(parent,name)

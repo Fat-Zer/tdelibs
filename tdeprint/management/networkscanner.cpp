@@ -30,9 +30,9 @@
 #include <tqlineedit.h>
 #include <tqregexp.h>
 #include <tqsocket.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kextendedsocket.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <knumvalidator.h>
 #include <kdebug.h>
 #include <unistd.h>

@@ -23,8 +23,8 @@
 
 #include <dcopref.h>
 #include <kdebug.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 #include <kstandarddirs.h>
 #include <klibloader.h>
@@ -34,7 +34,7 @@
 #include <tdeio/ioslave_defaults.h>
 #include <tdeio/http_slave_defaults.h>
 
-#include "kprotocolmanager.h"
+#include "tdeprotocolmanager.h"
 
 class
 KProtocolManagerPrivate

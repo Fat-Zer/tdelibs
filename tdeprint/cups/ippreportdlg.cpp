@@ -21,9 +21,9 @@
 #include "ipprequest.h"
 #include "kprinter.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kguiitem.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kdebug.h>
 #include <ktextedit.h>
 #include <tqsimplerichtext.h>

@@ -23,7 +23,7 @@
 
 #include <tqlabel.h>
 #include <tqlineedit.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqvalidator.h>
 
 #include <cups/http.h>

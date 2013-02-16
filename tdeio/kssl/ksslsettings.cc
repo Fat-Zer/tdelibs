@@ -33,7 +33,7 @@
 #include <tqsortedlist.h>
 
 #include "ksslsettings.h"
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
 

@@ -49,8 +49,8 @@
         *   (<a target="_top" href="interfaces/html/classes.html">classes</a>)\n
 	*   <i>Defines interfaces for common components so that new implementations
 	*   can be dropped in.</i>
-	* - <a target="_top" href="kabc/html/index.html"><b>kabc</b></a>
-        *   (<a target="_top" href="kabc/html/classes.html">classes</a>)\n
+	* - <a target="_top" href="tdeabc/html/index.html"><b>kabc</b></a>
+        *   (<a target="_top" href="tdeabc/html/classes.html">classes</a>)\n
 	*   <i>Access to the Trinity address book.</i>
 	* - <a target="_top" href="tderesources/html/index.html"><b>tderesources</b></a>
         *   (<a target="_top" href="tderesources/html/classes.html">classes</a>)\n

@@ -36,15 +36,15 @@
 #include "messagewindow.h"
 
 #include <tqdockarea.h>
-#include <kmenubar.h>
+#include <tdemenubar.h>
 #include <tqtimer.h>
 #include <tqcombobox.h>
 #include <tqlabel.h>
 #include <tqlayout.h>
 #include <tqpopupmenu.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tdeaction.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 #include <tdetoolbar.h>
 #include <tdetoolbarbutton.h>

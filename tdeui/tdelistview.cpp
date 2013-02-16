@@ -27,7 +27,7 @@
 #include <tqstyle.h>
 #include <tqpainter.h>
 
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <tdeconfig.h>
 #include <kcursor.h>
 #include <tdeapplication.h>

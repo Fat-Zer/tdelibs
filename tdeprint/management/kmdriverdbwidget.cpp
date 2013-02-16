@@ -28,12 +28,12 @@
 #include <tqcheckbox.h>
 #include <kcursor.h>
 #include <tqapplication.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tqlayout.h>
 #include <tqlabel.h>
 #include <tqstrlist.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kcursor.h>
 #include <tdefiledialog.h>
 #include <kguiitem.h>

@@ -26,7 +26,7 @@
 #include <tqstring.h>
 #include <tqdict.h>
 #include <tqstringlist.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 class TDEConfig;
 class TDEStandardDirsPrivate;

@@ -56,9 +56,9 @@
 #include "rendering/render_frames.h"
 #include "rendering/render_layer.h"
 
-#include "kmessagebox.h"
+#include "tdemessagebox.h"
 #include <kstringhandler.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include <kdebug.h>
 

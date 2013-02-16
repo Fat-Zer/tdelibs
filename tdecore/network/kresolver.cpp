@@ -54,7 +54,7 @@
 #endif
 
 // KDE
-#include <klocale.h>
+#include <tdelocale.h>
 
 // Us
 #include "kresolver.h"

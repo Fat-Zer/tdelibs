@@ -25,7 +25,7 @@
 #include <tqlabel.h>
 #include <tqtimer.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "kauthicon.h"
 

@@ -23,9 +23,9 @@
 
 #include <dcopclient.h>
 #include <tdeapplication.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <knotifyclient.h>
-#include <kprotocolmanager.h>
+#include <tdeprotocolmanager.h>
 
 #include "proxyscout.moc"
 #include "discovery.h"

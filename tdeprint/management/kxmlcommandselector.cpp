@@ -30,9 +30,9 @@
 #include <tqtooltip.h>
 #include <tqlineedit.h>
 #include <kinputdialog.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tdefiledialog.h>
 #include <kseparator.h>
 #include <kguiitem.h>

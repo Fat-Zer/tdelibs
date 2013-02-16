@@ -33,10 +33,10 @@
 #include "kateviewinternal.h"
 
 #include <tdeapplication.h>
-#include <kglobalsettings.h>
-#include <klocale.h>
+#include <tdeglobalsettings.h>
+#include <tdelocale.h>
 #include <knotifyclient.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kcharsets.h>
 #include <tdepopupmenu.h>
 

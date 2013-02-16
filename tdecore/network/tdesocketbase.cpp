@@ -24,7 +24,7 @@
 
 #include <config.h>
 #include <tqmutex.h>
-#include "klocale.h"
+#include "tdelocale.h"
 
 #include "tdesocketbase.h"
 #include "tdesocketdevice.h"

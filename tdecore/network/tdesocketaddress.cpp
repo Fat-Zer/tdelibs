@@ -36,7 +36,7 @@
 #include <tqfile.h>
 #include <tqobject.h>
 
-#include "klocale.h"
+#include "tdelocale.h"
 #include "tdesocketaddress.h"
 
 #include "netsupp.h"

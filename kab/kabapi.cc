@@ -18,8 +18,8 @@
 
 #include "kabapi.h"
 #include <tdelistbox.h>
-#include <kmessagebox.h>
-#include <klocale.h>
+#include <tdemessagebox.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 
 

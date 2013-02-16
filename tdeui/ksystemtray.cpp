@@ -20,12 +20,12 @@
 
 #include "config.h"
 #include "tdeaction.h"
-#include "kmessagebox.h"
+#include "tdemessagebox.h"
 #include "tdeshortcut.h"
 #include "ksystemtray.h"
 #include "tdepopupmenu.h"
 #include "tdeapplication.h"
-#include "klocale.h"
+#include "tdelocale.h"
 #include "tdeaboutdata.h"
 
 #ifdef Q_WS_X11

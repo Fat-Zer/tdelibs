@@ -38,9 +38,9 @@
 #include <tqtimer.h>
 
 #include <tdeapplication.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include "tdespell.h"
 #include "tdespelldlg.h"
 #include <twin.h>

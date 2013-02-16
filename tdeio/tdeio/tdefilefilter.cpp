@@ -21,7 +21,7 @@
 #include <tqregexp.h>
 
 #include <tdefileitem.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 #include "tdefilefilter.h"
 

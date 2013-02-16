@@ -49,9 +49,9 @@ kstandarddirs.cpp \
 tdeconfig.cpp \
 tdeconfigdialogmanager.cpp \
 kcharsets.cpp \
-kglobal.cpp \
+tdeglobal.cpp \
 kdebug.cpp \
-ktempfile.cpp \
+tdetempfile.cpp \
 ktempdir.cpp \
 ksavefile.cpp \
 tdeconfigbackend.cpp \
@@ -70,11 +70,11 @@ tdeshortcutmenu.cpp \
 tdeshortcutlist.cpp \
 kinstance.cpp \
 tdeversion.cpp \
-klocale.cpp \
+tdelocale.cpp \
 kicontheme.cpp \
 kiconloader.cpp \
 kiconeffect.cpp \
-kglobalsettings.cpp \
+tdeglobalsettings.cpp \
 kckey.cpp \
 kglobalaccel.cpp \
 kglobalaccel_win.cpp \
@@ -120,7 +120,7 @@ kqiodevicegzip_p.cpp
 #network/tdesocketdevice.cpp \
 #network/ksockssocketdevice.cpp
 
-#kstartupinfo.cpp \
+#tdestartupinfo.cpp \
 #todo: kextsock.cpp \
 #todo: ksock.cpp \
 #todo: ksocks.cpp \

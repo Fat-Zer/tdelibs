@@ -24,7 +24,7 @@
 #include <tqstringlist.h>
 #include <tqregexp.h>
 #include <tqheader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 
 KPFileSelectPage::KPFileSelectPage(TQWidget *parent, const char *name)

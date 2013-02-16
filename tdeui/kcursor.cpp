@@ -30,7 +30,7 @@
 #include <tqtimer.h>
 #include <tqwidget.h>
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeconfig.h>
 #include <tqscrollview.h>
 

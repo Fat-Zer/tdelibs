@@ -14,9 +14,9 @@
 #include <kiconloader.h>
 #include <tdeapplication.h>
 #include <kdebug.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tdeaction.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 Part1::Part1( TQObject *parent, TQWidget * parentWidget )
  : KParts::ReadOnlyPart( parent, "Part1" )

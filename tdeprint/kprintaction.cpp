@@ -23,7 +23,7 @@
 #include <tdeprint/kmmanager.h>
 #include <kiconloader.h>
 #include <tdepopupmenu.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 class KPrintAction::KPrintActionPrivate
 {

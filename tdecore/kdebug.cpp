@@ -28,12 +28,12 @@
 #include "kdebugdcopiface.h"
 
 #include "tdeapplication.h"
-#include "kglobal.h"
+#include "tdeglobal.h"
 #include "kinstance.h"
 #include "kstandarddirs.h"
 
 #include <tqmessagebox.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqfile.h>
 #include <tqintdict.h>
 #include <tqstring.h>

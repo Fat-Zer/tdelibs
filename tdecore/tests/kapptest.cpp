@@ -22,7 +22,7 @@
 
 #include <tdecmdlineargs.h>
 #include <tdeaboutdata.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <tdesycoca.h>
 
 int

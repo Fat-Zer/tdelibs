@@ -37,12 +37,12 @@
 #include <kdebug.h>
 #include <kdialogbase.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kservice.h>
 #include <kservicegroup.h>
-#include <kstartupinfo.h>
+#include <tdestartupinfo.h>
 #include <twin.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 #include "main.h"
 #include "main.moc"

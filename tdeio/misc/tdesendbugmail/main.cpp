@@ -9,8 +9,8 @@
 #include <tqtextstream.h>
 
 #include <tdeapplication.h>
-#include <kemailsettings.h>
-#include <klocale.h>
+#include <tdeemailsettings.h>
+#include <tdelocale.h>
 #include <tdecmdlineargs.h>
 #include <tdeaboutdata.h>
 #include <kdebug.h>

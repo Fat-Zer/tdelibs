@@ -26,10 +26,10 @@
  *	$Id$
  */
 
-#include "kemailsettings.h"
+#include "tdeemailsettings.h"
 
 #include <tdeconfig.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 
 class KEMailSettingsPrivate {

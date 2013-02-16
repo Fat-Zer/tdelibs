@@ -25,7 +25,7 @@
 #include "tdeconfigdata.h"
 #include <tdeconfigbase.h>
 #include <klockfile.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include "tdelibs_export.h"
 
 class TQFile;

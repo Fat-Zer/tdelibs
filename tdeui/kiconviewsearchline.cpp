@@ -27,7 +27,7 @@
 #include "kiconviewsearchline.h"
 
 #include <tqiconview.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqtimer.h>
 #include <kdebug.h>
 

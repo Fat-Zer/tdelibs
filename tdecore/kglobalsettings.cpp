@@ -16,7 +16,7 @@
    Boston, MA 02110-1301, USA.
 */
 #include "config.h"
-#include "kglobalsettings.h"
+#include "tdeglobalsettings.h"
 
 #include <tqdir.h>
 #include <tqpixmap.h>
@@ -40,12 +40,12 @@ static QRgb qt_colorref2qrgb(COLORREF col)
 #endif
 
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeshortcut.h>
 #include <kstandarddirs.h>
 #include <kcharsets.h>
 #include <tdeaccel.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqfontinfo.h>
 #include <stdlib.h>
 #include <kprotocolinfo.h>

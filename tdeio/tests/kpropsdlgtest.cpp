@@ -1,5 +1,5 @@
 #include <tdeapplication.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeaboutdata.h>
 #include <kpropertiesdialog.h>
 #include <tdecmdlineargs.h>

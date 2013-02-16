@@ -30,9 +30,9 @@
 #include <tdeaboutdata.h>
 #include <tdeapplication.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdecmdlineargs.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeconfig.h>
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
@@ -1151,7 +1151,7 @@ int main( int argc, char **argv )
   if ( headerIncludes.count() > 0 ) h << endl;
 
   if ( !singleton && cfgFileNameArg && parameters.isEmpty() )
-    h << "#include <kglobal.h>" << endl;
+    h << "#include <tdeglobal.h>" << endl;
 
   h << "#include <tdeconfigskeleton.h>" << endl;
   h << "#include <kdebug.h>" << endl << endl;
@@ -1421,7 +1421,7 @@ int main( int argc, char **argv )
 
   cpp << "#include \"" << headerFileName << "\"" << endl << endl;
 
-  if ( setUserTexts ) cpp << "#include <klocale.h>" << endl << endl;
+  if ( setUserTexts ) cpp << "#include <tdelocale.h>" << endl << endl;
 
   // Header required by singleton implementation
   if ( singleton )

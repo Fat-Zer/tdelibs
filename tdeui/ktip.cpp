@@ -37,16 +37,16 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tdeapplication.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kpushbutton.h>
 #include <kseparator.h>
 #include <kstandarddirs.h>
 #include <kstdguiitem.h>
 #include <ktextbrowser.h>
 #include <kiconeffect.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 
 #ifdef Q_WS_X11
 #include <twin.h>

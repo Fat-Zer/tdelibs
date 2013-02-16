@@ -32,7 +32,7 @@
 #include <tqmap.h>
 #include <tqregexp.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 #include <tdeconfig.h>
 #include <kprocess.h>

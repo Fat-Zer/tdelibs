@@ -23,7 +23,7 @@
 #include <tqspinbox.h>
 #include <tqlayout.h>
 #include <tqregexp.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 SizeWidget::SizeWidget( TQWidget *parent, const char *name )
 	: TQWidget( parent, name )

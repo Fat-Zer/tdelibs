@@ -26,8 +26,8 @@
 #include <tqlabel.h>
 #include <tqlayout.h>
 #include <tqlineedit.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <tqmessagebox.h>
 #include <tqfile.h>
 #include <tdeio/passdlg.h>

@@ -29,9 +29,9 @@
 
 #include <tdeapplication.h>
 #include <tdeconfig.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kcharsets.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kfinddialog.h>
 #include <kreplacedialog.h>
 #include <kinstance.h>

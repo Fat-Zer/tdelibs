@@ -33,7 +33,7 @@
 #include <tqframe.h>
 #include <tqiconset.h>
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 class TQDomElement;
 class TQSize;

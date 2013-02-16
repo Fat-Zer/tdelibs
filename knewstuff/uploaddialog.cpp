@@ -27,10 +27,10 @@
 #include <ktextedit.h>
 
 #include <tdelistview.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include <kurlrequester.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tdeconfig.h>
 #include <tdeapplication.h>
 #include <kuser.h>

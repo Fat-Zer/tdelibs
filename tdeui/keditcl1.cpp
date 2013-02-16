@@ -29,8 +29,8 @@
 #include <kdebug.h>
 #include <kcmenumngr.h>
 #include <tdefontdialog.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <tdestdaccel.h>
 #include <kurldrag.h>
 

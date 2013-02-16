@@ -33,11 +33,11 @@
 
 #include <tdeaction.h>
 #include <kstandarddirs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kicontheme.h>
 #include <kiconloader.h>
 #include <kinstance.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kxmlguifactory.h>
 #include <kseparator.h>
 #include <tdeconfig.h>

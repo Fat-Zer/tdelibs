@@ -28,9 +28,9 @@
 #include <tqlayout.h>
 #include <tqwhatsthis.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 CupsdSecurityPage::CupsdSecurityPage(TQWidget *parent, const char *name)
 	: CupsdPage(parent, name)

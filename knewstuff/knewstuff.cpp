@@ -21,7 +21,7 @@
 #include <tdeaction.h>
 #include <tdeapplication.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 
 #include "engine.h"

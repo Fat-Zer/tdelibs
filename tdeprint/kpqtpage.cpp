@@ -32,7 +32,7 @@
 #include <tqwhatsthis.h>
 
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 
 #define ORIENT_PORTRAIT_ID	0

@@ -16,7 +16,7 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include "ktempfile.h"
+#include "tdetempfile.h"
 #include "tdeapplication.h"
 #include "kstandarddirs.h"
 #include <tqstring.h>

@@ -42,12 +42,12 @@ extern "C" {
 #include <tqfile.h>
 
 #include <tdeapplication.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <ksimpleconfig.h>
 #include <kdebug.h>
 #include <kdialog.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kdatastream.h>
 #include <tdemainwindow.h>
 #include <kde_file.h>
@@ -60,14 +60,14 @@ extern "C" {
 #include "kdirwatch.h"
 #include "kmimemagic.h"
 #include "kprotocolinfo.h"
-#include "kprotocolmanager.h"
+#include "tdeprotocolmanager.h"
 
 #include "tdeio/observer.h"
 
 #include "kssl/ksslcsessioncache.h"
 
 #include <kdirnotify_stub.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 #include <dcopclient.h>
 
 #ifdef Q_OS_UNIX

@@ -22,7 +22,7 @@
 #include <tdelistview.h>
 #include <kdialogbase.h>
 #include <kinstance.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 #include "knotifywidgetbase.h"
 

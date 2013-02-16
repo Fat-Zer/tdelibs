@@ -31,8 +31,8 @@
 #include <tdeconfig.h>
 #include <kdebug.h>
 #include <klineedit.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kprocess.h>
 #include <kstandarddirs.h>
 #include <kstdguiitem.h>
@@ -50,7 +50,7 @@
 #include "kdepackages.h"
 #include <kcombobox.h>
 #include <config.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 #include <tqtextstream.h>
 #include <tqfile.h>
 

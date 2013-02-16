@@ -28,7 +28,7 @@
 #include <tqtimer.h>
 #include <tqstring.h>
 #include <kurl.h>
-#include <kstartupinfo.h>
+#include <tdestartupinfo.h>
 
 class TDEProcess;
 class KService;

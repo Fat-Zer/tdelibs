@@ -31,7 +31,7 @@
 #include <tdespell.h>
 #include <ksconfig.h>
 #include <kdebug.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 KateSpell::KateSpell( KateView* view )
   : TQObject( view )

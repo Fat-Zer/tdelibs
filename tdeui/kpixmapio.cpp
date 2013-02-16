@@ -18,7 +18,7 @@
 #include <tqcolor.h>
 #include <tqglobal.h>
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
 

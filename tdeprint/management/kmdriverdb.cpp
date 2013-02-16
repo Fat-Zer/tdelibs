@@ -29,7 +29,7 @@
 #include <tqfileinfo.h>
 #include <kstandarddirs.h>
 #include <tdeapplication.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 KMDriverDB* KMDriverDB::m_self = 0;
 

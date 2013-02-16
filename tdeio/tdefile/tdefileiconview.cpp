@@ -31,10 +31,10 @@
 
 #include <tdeaction.h>
 #include <tdeapplication.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdefileitem.h>
 #include <kiconeffect.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kurldrag.h>
 #include <tdeio/previewjob.h>
 

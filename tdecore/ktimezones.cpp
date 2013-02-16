@@ -24,7 +24,7 @@
 #include <kmdcodec.h>
 #include <kprocess.h>
 #include <kstringhandler.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 
 #include <tqdatetime.h>
 #include <tqfile.h>

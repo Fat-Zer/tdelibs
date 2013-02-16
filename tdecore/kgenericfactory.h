@@ -23,8 +23,8 @@
 #include <ktypelist.h>
 #include <kinstance.h>
 #include <kgenericfactory.tcc>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 
 /* @internal */

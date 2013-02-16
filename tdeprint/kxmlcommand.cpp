@@ -30,13 +30,13 @@
 #include <tqmap.h>
 #include <tqvaluelist.h>
 #include <kstandarddirs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <ksimpleconfig.h>
 #include <kdialogbase.h>
 #include <kdebug.h>
 #include <kprocess.h>
 #include <klibloader.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 static void setOptionText(DrBase *opt, const TQString& s)
 {

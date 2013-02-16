@@ -33,11 +33,11 @@
 
 #include <tqdir.h>
 #include <tqvbox.h>
-#include <kmessagebox.h>
-#include <klocale.h>
+#include <tdemessagebox.h>
+#include <tdelocale.h>
 #include <tqfile.h>
 #include <tqfileinfo.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kiconloader.h>
 #include <tqstringlist.h>
 #include <tqwhatsthis.h>

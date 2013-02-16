@@ -34,9 +34,9 @@
 #include <tdeapplication.h>
 #include <kcombobox.h>
 #include <knuminput.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <knotifyclient.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include <kiconloader.h>
 

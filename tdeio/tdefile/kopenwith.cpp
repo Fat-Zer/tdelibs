@@ -39,9 +39,9 @@
 #include <kcombobox.h>
 #include <kdesktopfile.h>
 #include <kdialog.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <klineedit.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 #include <kmimemagic.h>
 #include <krun.h>

@@ -24,7 +24,7 @@
 
 #include "klegacystyle.h"
 #include "klegacystyle.moc"
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 
 #define INCLUDE_MENUITEM_DEF

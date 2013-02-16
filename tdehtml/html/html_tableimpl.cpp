@@ -43,7 +43,7 @@
 #include "rendering/render_table.h"
 
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 using namespace tdehtml;
 using namespace DOM;

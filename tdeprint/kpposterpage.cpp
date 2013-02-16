@@ -31,7 +31,7 @@
 #include <tqlineedit.h>
 #include <tqwhatsthis.h>
 #include <kpushbutton.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <knuminput.h>
 #include <kiconloader.h>
 

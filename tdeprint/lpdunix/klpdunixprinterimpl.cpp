@@ -22,7 +22,7 @@
 
 #include <tqfile.h>
 #include <kstandarddirs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kmacroexpander.h>
 
 KLpdUnixPrinterImpl::KLpdUnixPrinterImpl(TQObject *parent, const char *name, const TQStringList & /*args*/)

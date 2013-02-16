@@ -23,7 +23,7 @@
 #define _KCOMBIVIEW_H
 
 #include <tqsplitter.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include <tdefile.h>
 #include <tdefileview.h>

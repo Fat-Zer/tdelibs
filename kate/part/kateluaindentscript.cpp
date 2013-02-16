@@ -32,8 +32,8 @@
 #include <kstandarddirs.h>
 
 #include <tdeconfig.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 
 extern "C" {
 #include <lua.h> 

@@ -27,11 +27,11 @@
 
 #include <tdeapplication.h>
 #include <tdefileitem.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
 #include <kiconloader.h>
 #include <kicontheme.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include <kurldrag.h>
 

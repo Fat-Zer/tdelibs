@@ -1,6 +1,6 @@
 Sat Feb 26 00:26:55 2000  Carsten Pfeiffer  <pfeiffer@kde.org>
 
-	* kdiroperator.cpp:
+	* tdediroperator.cpp:
 	lottsa changes, e.g. action handling more clear now.
 	fixed completed item not clearning the previous selection
 
@@ -17,7 +17,7 @@ Sat Feb 26 00:26:55 2000  Carsten Pfeiffer  <pfeiffer@kde.org>
 
 Sun Feb 20 01:50:44 2000  Carsten Pfeiffer  <pfeiffer@kde.org>
 
-	* kdiroperator.*, tdefiledialog.* (saveConfig): 
+	* tdediroperator.*, tdefiledialog.* (saveConfig): 
 	implemented loading, saving and applying configuration
 
 	* tdefiledialog.cpp (setURL): 
@@ -37,7 +37,7 @@ Thu Feb 17 19:09:54 2000  Carsten Pfeiffer  <pfeiffer@kde.org>
 	Added KDirComboBox and replaced the directory combobox with it. It
 	even does something now :) Items need to be indented tho.
 
-	* tdefilereader.cpp, kdiroperator.{cpp,h}: 
+	* tdefilereader.cpp, tdediroperator.{cpp,h}: 
 	fixed showHidden default
 
 Tue Feb 15 14:21:41 2000  Carsten Pfeiffer  <pfeiffer@kde.org>
@@ -60,7 +60,7 @@ Tue Feb 15 14:21:41 2000  Carsten Pfeiffer  <pfeiffer@kde.org>
 	added static methods for multiselection
 	added getOpenURL(), getOpenURLs and getSaveURL()
 	
-	* kdiroperator.cpp (setSorting): 
+	* tdediroperator.cpp (setSorting): 
 	added setSorting() and sorting() to keep sorting when switching views
 	a few cosmetic and TDEAction changes
 
@@ -86,7 +86,7 @@ Fri Feb 11 12:17:59 2000  Carsten Pfeiffer  <pfeiffer@kde.org>
 
 Thu Feb 10 17:06:36 2000  Carsten Pfeiffer  <pfeiffer@kde.org>
 
-	* kdiroperator.cpp (connectView): 
+	* tdediroperator.cpp (connectView): 
 	- Now that TDEToggleAction is fixed, I can commit the new stuff:
 	  Offer Actions for all the common functionality, i.e. sorting, setting
 	  the view, home(), cdUp(), back, forward, etc.
@@ -107,7 +107,7 @@ Thu Feb 10 17:06:36 2000  Carsten Pfeiffer  <pfeiffer@kde.org>
 
 Thu Feb 10 12:59:29 2000  Carsten Pfeiffer  <pfeiffer@kde.org>
 
-	* kdiroperator.cpp (insertNewFiles): 
+	* tdediroperator.cpp (insertNewFiles): 
 	aahhh, finally fixed that infinite loop in KFileView::mergeLists
 	clear the view before calling view->addItemList( currentContents );
 
@@ -173,7 +173,7 @@ Sat Jan 29 15:33:37 2000  Carsten Pfeiffer  <pfeiffer@kde.org>
 	* tdefileviewitem.cpp:
 	- added time_t mTime() to enable sorting by modification time
 	
-	* kdiroperator.cpp:
+	* tdediroperator.cpp:
 	- offer sorting options in popupmenu
 	- use checkAccess before creating directories. I guess this will again
 	  change when the new kio will be used, tho. 

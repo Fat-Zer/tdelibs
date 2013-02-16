@@ -21,7 +21,7 @@
 #include <kdebug.h>
 #include <kstatusbar.h>
 #include <tdeconfig.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 
 KStatusBarLabel::KStatusBarLabel( const TQString& text, int _id,

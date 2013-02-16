@@ -31,8 +31,8 @@
 #include <kdebug.h>
 #include <kiconloader.h>
 #include <klibloader.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kprocess.h>
 #include <krun.h>
 #include <kstdguiitem.h>

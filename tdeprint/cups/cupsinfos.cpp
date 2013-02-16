@@ -24,7 +24,7 @@
 
 #include <tdeio/passdlg.h>
 #include <tdeio/authinfo.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 #include <tdeapplication.h>
 #include <dcopclient.h>

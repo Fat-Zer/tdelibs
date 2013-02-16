@@ -27,8 +27,8 @@
 #include <tqlayout.h>
 #include <kpushbutton.h>
 #include <tdelistbox.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 
 KMWDriverSelect::KMWDriverSelect(TQWidget *parent, const char *name)
 : KMWizardPage(parent,name)

@@ -55,10 +55,10 @@
 #include <tdeapplication.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kiconloader.h>
 #include <kkeynative.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstdguiitem.h>
 #include <kpushbutton.h>
 

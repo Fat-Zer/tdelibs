@@ -30,7 +30,7 @@
 #include <tqlayout.h>
 #include <kimageeffect.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdepopupmenu.h>
 #include <tdeaction.h>
 #include <stdlib.h>

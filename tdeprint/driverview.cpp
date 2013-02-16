@@ -27,7 +27,7 @@
 #include <tqheader.h>
 #include <tqlayout.h>
 #include <tqwhatsthis.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 DrListView::DrListView(TQWidget *parent, const char *name)
 : TDEListView(parent,name)

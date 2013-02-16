@@ -19,7 +19,7 @@
 
 #include "tdeactionselector.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 #include <kdialog.h> // for spacingHint()
 #include <kdebug.h>

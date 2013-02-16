@@ -30,7 +30,7 @@
 #include <tdeconfig.h>
 #include <kiconloader.h>
 #include <klineedit.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 
 using namespace TDEIO;

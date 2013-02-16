@@ -26,10 +26,10 @@
 #include <ksyntaxhighlighter.h>
 #include <tdespell.h>
 #include <kcursor.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <tdestdaccel.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 class KTextEdit::KTextEditPrivate
 {

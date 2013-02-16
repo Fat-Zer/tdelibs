@@ -21,7 +21,7 @@
 #include "tdefile_elf.h"
 
 #include <kprocess.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kgenericfactory.h>
 #include <kstringvalidator.h>
 #include <kdebug.h>

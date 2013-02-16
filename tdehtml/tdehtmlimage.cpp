@@ -32,7 +32,7 @@
 #include <tdeio/job.h>
 #include <kinstance.h>
 #include <kmimetype.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 K_EXPORT_COMPONENT_FACTORY( tdehtmlimagefactory /*NOT the part name, see Makefile.am*/, TDEHTMLImageFactory )
 

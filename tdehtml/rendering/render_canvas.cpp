@@ -29,7 +29,7 @@
 #include "tdehtmlview.h"
 #include "tdehtml_part.h"
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 using namespace tdehtml;
 

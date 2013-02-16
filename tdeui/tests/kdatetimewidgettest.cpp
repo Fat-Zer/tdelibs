@@ -1,6 +1,6 @@
 #include "kdatetimewidget.h"
 #include <tdeapplication.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 int main(int argc, char** argv)
 {

@@ -6,7 +6,7 @@
 #include <tdeconfig.h>
 #include <tqstringlist.h>
 #include <kservice.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqlabel.h>
 #include <tdeapplication.h>
 #include <tqlayout.h>

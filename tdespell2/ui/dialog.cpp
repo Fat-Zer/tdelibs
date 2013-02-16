@@ -28,7 +28,7 @@
 #include "settings.h"
 
 #include <tdeconfig.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 
 #include <tqlistview.h>

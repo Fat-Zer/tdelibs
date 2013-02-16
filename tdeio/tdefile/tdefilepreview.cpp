@@ -22,7 +22,7 @@
 #include <tdeaction.h>
 #include <tdefilepreview.h>
 #include <tdefilepreview.moc>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include <tqlabel.h>
 

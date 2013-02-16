@@ -27,7 +27,7 @@
 #include <tdeapplication.h>
 #include <kdcopservicestarter.h> 
 #include <kdebug.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <ksimpleconfig.h>
 #include <kiconloader.h>
 #include <kservice.h>

@@ -26,7 +26,7 @@
 #include <artsflow.h>
 #include <soundserver.h>
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kdebug.h>
 
 #include <tqstring.h>

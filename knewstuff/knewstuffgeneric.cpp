@@ -24,11 +24,11 @@
 #include <tqdir.h>
 
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kprocess.h>
 #include <tdeconfig.h>
 #include <kstandarddirs.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <ktar.h>
 
 #include "entry.h"

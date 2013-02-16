@@ -30,7 +30,7 @@
 #include <tqlistview.h>
 
 #include <kdialogbase.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeaction.h>
 
 #include "kbookmark.h"

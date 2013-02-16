@@ -5,7 +5,7 @@
 #include <tdeapplication.h>
 #include <stdlib.h>
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kcharsets.h>
 #include <tqtextcodec.h>
 #include <tqdatastream.h>

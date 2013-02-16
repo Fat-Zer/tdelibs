@@ -1,6 +1,6 @@
 #include <config.h>
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <stdio.h>
 #include <tdeapplication.h>
 #include <stdlib.h>

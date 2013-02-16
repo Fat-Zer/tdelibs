@@ -28,8 +28,8 @@
 #include <dcopclient.h>
 
 #include <kdebug.h>
-#include <kglobal.h>
-#include <kprotocolmanager.h>
+#include <tdeglobal.h>
+#include <tdeprotocolmanager.h>
 #include <kprotocolinfo.h>
 #include <assert.h>
 #include <kstaticdeleter.h>

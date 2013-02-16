@@ -47,8 +47,8 @@
 #include <tdeio/job.h>
 #include <kprotocolinfo.h>
 #include <tdeconfig.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <kde_file.h>
 
 #include <sys/types.h>

@@ -45,11 +45,11 @@
 #include <kcharsets.h>
 #include <tdeconfig.h>
 #include <kdialog.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
 #include <tqlineedit.h>
 #include <tdelistbox.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
 #include <knuminput.h>

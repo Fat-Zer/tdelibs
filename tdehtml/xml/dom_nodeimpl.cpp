@@ -33,7 +33,7 @@
 #include "xml/dom_nodeimpl.h"
 #include "xml/dom_restyler.h"
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kdebug.h>
 
 #include "rendering/render_text.h"

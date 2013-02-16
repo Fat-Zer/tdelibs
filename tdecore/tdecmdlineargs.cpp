@@ -37,9 +37,9 @@
 
 #include "tdecmdlineargs.h"
 #include <tdeaboutdata.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeapplication.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kstringhandler.h>
 #include <kstaticdeleter.h>
 

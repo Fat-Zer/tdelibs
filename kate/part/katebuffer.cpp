@@ -31,7 +31,7 @@
 #include "kateautoindent.h"
 
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kcharsets.h>
 
 #include <tqpopupmenu.h>

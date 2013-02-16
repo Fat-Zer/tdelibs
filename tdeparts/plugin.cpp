@@ -34,7 +34,7 @@
 #include <kstandarddirs.h>
 #include <kdebug.h>
 #include <kxmlguifactory.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tdeconfig.h>
 #include <ksimpleconfig.h>
 

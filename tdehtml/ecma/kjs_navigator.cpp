@@ -21,13 +21,13 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include <kstandarddirs.h>
 #include <tdeconfig.h>
 #include <kdebug.h>
 
-#include <tdeio/kprotocolmanager.h>
+#include <tdeio/tdeprotocolmanager.h>
 #include <tdeio/kmimetype.h>
 #include <tdeio/kservice.h>
 #include <tdeio/ktrader.h>

@@ -40,7 +40,7 @@
 
 #if defined Q_WS_X11
 #include <twin.h> 
-#include <kstartupinfo.h> 
+#include <tdestartupinfo.h> 
 #endif
 
 #include <tdeconfig.h>

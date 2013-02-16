@@ -46,7 +46,7 @@
 #include <tqptrstack.h>
 #include <tqpaintdevicemetrics.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstaticdeleter.h>
 
 #include "rendering/counter_tree.h"
@@ -60,7 +60,7 @@
 #include "tdehtmlview.h"
 #include "tdehtml_part.h"
 
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kstringhandler.h>
 #include <krfcdate.h>
 #include "tdehtml_settings.h"

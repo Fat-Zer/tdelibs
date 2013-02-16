@@ -25,9 +25,9 @@
 #include <tqtimer.h>
 #include <tqpixmap.h>
 #include <kprinter.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kcursor.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 
 PosterPreview::PosterPreview( TQWidget *parent, const char *name )
 	: TQFrame( parent, name )

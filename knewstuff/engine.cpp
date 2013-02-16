@@ -25,8 +25,8 @@
 #include <tdeapplication.h>
 #include <kdebug.h>
 #include <tdeio/job.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kstandarddirs.h>
 
 #include "knewstuff.h"

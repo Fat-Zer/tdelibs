@@ -30,15 +30,15 @@
 #include <tqlineedit.h>
 #include <tqdir.h>
 
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kpushbutton.h>
 #include <tdeapplication.h>
 #include <tdeio/global.h>
 #include <ktrader.h>
 #include <klibloader.h>
 #include <kdialog.h>
-#include <klocale.h>
-#include <kglobal.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
 #include <kdebug.h>
 #include <kurl.h>
 #include <kmimetype.h>

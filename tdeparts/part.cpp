@@ -33,9 +33,9 @@
 #include <tqfileinfo.h>
 
 #include <kinstance.h>
-#include <klocale.h>
-#include <ktempfile.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdetempfile.h>
+#include <tdemessagebox.h>
 #include <tdeio/job.h>
 #include <kstandarddirs.h>
 #include <tdefiledialog.h>

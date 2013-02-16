@@ -19,7 +19,7 @@
 
 #include "tdehtml_printsettings.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqcheckbox.h>
 #include <tqlayout.h>
 #include <tqwhatsthis.h>

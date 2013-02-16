@@ -28,7 +28,7 @@
 #include <tdelistview.h>
 #include <tqlayout.h>
 #include <tqwidgetstack.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 
 EditEntryDialog::EditEntryDialog(PrintcapEntry *entry, TQWidget *parent, const char *name)

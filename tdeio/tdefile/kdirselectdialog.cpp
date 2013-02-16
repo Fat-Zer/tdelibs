@@ -29,9 +29,9 @@
 #include <tdeconfig.h>
 #include <tdefiledialog.h>
 #include <tdefilespeedbar.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kprotocolinfo.h>
 #include <tderecentdirs.h>
 #include <kshell.h>
@@ -41,7 +41,7 @@
 #include <kinputdialog.h>
 #include <tdeio/netaccess.h>
 #include <tdeio/renamedlg.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 #include "tdefiletreeview.h"
 #include "kdirselectdialog.h"

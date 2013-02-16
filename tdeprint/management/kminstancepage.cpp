@@ -30,10 +30,10 @@
 #include <tqregexp.h>
 #include <tqwhatsthis.h>
 #include <tqpushbutton.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kinputdialog.h>
 #include <tdelistbox.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>

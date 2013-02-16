@@ -20,7 +20,7 @@
 #include <kuniqueapplication.h>
 #include <tdeaboutdata.h>
 #include <tdecmdlineargs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <dcopclient.h>
 
 #include <tqvaluelist.h>

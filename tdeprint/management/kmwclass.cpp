@@ -27,7 +27,7 @@
 #include <tqlabel.h>
 #include <tqtoolbutton.h>
 #include <tdelistbox.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 
 KMWClass::KMWClass(TQWidget *parent, const char *name)

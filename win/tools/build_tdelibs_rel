@@ -48,7 +48,7 @@ tdeui \
 kstyles/thinkeramik/widget-engine \
 kio \
 tderesources \
-kabc/vcard \
+tdeabc/vcard \
 kabc \
 tdeutils \
 tdeparts \

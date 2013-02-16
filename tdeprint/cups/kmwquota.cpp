@@ -27,7 +27,7 @@
 #include <tqlabel.h>
 #include <tqcombobox.h>
 #include <tqlayout.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #ifdef HAVE_LIMITS_H
 #include <limits.h>

@@ -44,7 +44,7 @@
 #include <kurl.h>
 #include <tdeapplication.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kprotocolinfo.h>
 #include <kstandarddirs.h>
 #include <kprocess.h>
@@ -55,7 +55,7 @@
 #include <tqdatetime.h>
 #include <tqregexp.h>
 #include <kdesktopfile.h>
-#include <kstartupinfo.h>
+#include <tdestartupinfo.h>
 #include <kmacroexpander.h>
 #include <kshell.h>
 #include <kde_file.h>
