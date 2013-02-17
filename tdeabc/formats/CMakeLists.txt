@@ -32,9 +32,9 @@ link_directories(
 install( FILES binary.desktop DESTINATION ${DATA_INSTALL_DIR}/tdeabc/formats )
 
 
-##### kabcformat_binary #########################
+##### tdeabcformat_binary #########################
 
-set( target kabcformat_binary )
+set( target tdeabcformat_binary )
 
 set( ${target}_SRCS
   binaryformat.cpp

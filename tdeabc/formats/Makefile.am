@@ -1,12 +1,12 @@
 INCLUDES = -I$(top_srcdir)/tdeabc -I$(top_builddir)/tdeabc $(all_includes)
 
-kde_module_LTLIBRARIES = kabcformat_binary.la
+kde_module_LTLIBRARIES = tdeabcformat_binary.la
 
-kabcformat_binary_la_SOURCES = binaryformat.cpp
-kabcformat_binary_la_LDFLAGS =  -module $(KDE_PLUGIN) $(KDE_RPATH) $(all_libraries) \
+tdeabcformat_binary_la_SOURCES = binaryformat.cpp
+tdeabcformat_binary_la_LDFLAGS =  -module $(KDE_PLUGIN) $(KDE_RPATH) $(all_libraries) \
                                 -no-undefined
-kabcformat_binary_la_LIBADD  = $(LIB_KABC) $(LIB_QT) $(LIB_TDECORE)
-kabcformat_binary_la_COMPILE_FIRST = $(top_builddir)/tdeabc/addressee.h
+tdeabcformat_binary_la_LIBADD  = $(LIB_KABC) $(LIB_QT) $(LIB_TDECORE)
+tdeabcformat_binary_la_COMPILE_FIRST = $(top_builddir)/tdeabc/addressee.h
 
 # these are the headers for your project
 noinst_HEADERS = binaryformat.h
