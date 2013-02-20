@@ -29,7 +29,7 @@
 
 #include "addressbook.h"
 
-namespace KABC {
+namespace TDEABC {
 
 /**
   @short Special ListViewItem, that is used by the AddresseeDialog.

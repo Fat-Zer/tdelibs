@@ -26,7 +26,7 @@
 
 #include <tdelibs_export.h>
 
-namespace KABC {
+namespace TDEABC {
 
 /**
   This class provides locking functionality for a file, directory or an

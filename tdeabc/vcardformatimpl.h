@@ -33,7 +33,7 @@
 #include <VCard.h>
 #endif 
 
-namespace KABC {
+namespace TDEABC {
 
 class AddressBook;
 

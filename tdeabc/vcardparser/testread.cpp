@@ -74,11 +74,11 @@ int main( int argc, char **argv )
   text = s.read();
   file.close();
 
-  KABC::VCardConverter converter;
-  KABC::Addressee::List list = converter.parseVCards( text );
+  TDEABC::VCardConverter converter;
+  TDEABC::Addressee::List list = converter.parseVCards( text );
 
   if ( args->isSet( "vcard21" ) ) {
-    text = converter.createVCards( list, KABC::VCardConverter::v2_1 ); // uses version 2.1
+    text = converter.createVCards( list, TDEABC::VCardConverter::v2_1 ); // uses version 2.1
   } else {
     text = converter.createVCards( list ); // uses version 3.0
   }

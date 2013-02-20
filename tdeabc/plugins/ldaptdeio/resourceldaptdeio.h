@@ -28,7 +28,7 @@
 
 class TDEConfig;
 
-namespace KABC {
+namespace TDEABC {
 
 class KABC_EXPORT ResourceLDAPTDEIO : public Resource
 {

@@ -12,7 +12,7 @@
 #include "resourceevo.h"
 
 using namespace Evolution;
-using namespace KABC;
+using namespace TDEABC;
 
 class EvolutionFactory : public KRES::PluginFactoryBase
 {

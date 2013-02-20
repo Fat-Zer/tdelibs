@@ -25,7 +25,7 @@
 
 #include <tdelibs_export.h>
 
-namespace KABC {
+namespace TDEABC {
 
 /**
  * @short A class to store an encryption key.

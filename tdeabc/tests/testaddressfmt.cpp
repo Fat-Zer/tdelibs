@@ -8,7 +8,7 @@
 #include "addressbook.h"
 #include "address.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 static const TDECmdLineOptions options[] =
 {

@@ -13,7 +13,7 @@
 #include "resourcesql.h"
 #endif
 
-using namespace KABC;
+using namespace TDEABC;
 
 int main(int argc,char **argv)
 {

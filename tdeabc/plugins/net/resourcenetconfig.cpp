@@ -31,7 +31,7 @@
 
 #include "resourcenetconfig.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 ResourceNetConfig::ResourceNetConfig( TQWidget* parent, const char* name )
     : ConfigWidget( parent, name ), mInEditMode( false )

@@ -25,13 +25,13 @@
 
 #include <tdeabc/addressee.h>
 
-namespace KABC {
+namespace TDEABC {
 
 /**
   @short Sort method for sorting an addressee list.
 
   This interface should be reimplemented by classes which shall act as
-  SortModes for KABC::AddresseeList.
+  SortModes for TDEABC::AddresseeList.
 */
 class KABC_EXPORT SortMode
 {
@@ -40,7 +40,7 @@ class KABC_EXPORT SortMode
       Reimplement this method and return whether the first contact is 'smaller'
       than the second.
      */
-    virtual bool lesser( const KABC::Addressee &first, const KABC::Addressee &second ) const = 0;
+    virtual bool lesser( const TDEABC::Addressee &first, const TDEABC::Addressee &second ) const = 0;
 };
 
 class KABC_EXPORT NameSortMode : public SortMode
@@ -73,7 +73,7 @@ class KABC_EXPORT NameSortMode : public SortMode
     /**
       Returns whether the first contact is 'smaller' then the second.
      */
-    virtual bool lesser( const KABC::Addressee&, const KABC::Addressee& ) const;
+    virtual bool lesser( const TDEABC::Addressee&, const TDEABC::Addressee& ) const;
 
   private:
     NameType mNameType;
@@ -94,15 +94,15 @@ class KABC_EXPORT FieldSortMode : public SortMode
       @param field The field.
       @param ascending true for ascending sort, false for descending.
      */
-    FieldSortMode( KABC::Field *field, bool ascending = true );
+    FieldSortMode( TDEABC::Field *field, bool ascending = true );
 
     /**
       Returns whether the first contact is 'smaller' then the second.
      */
-    virtual bool lesser( const KABC::Addressee&, const KABC::Addressee& ) const;
+    virtual bool lesser( const TDEABC::Addressee&, const TDEABC::Addressee& ) const;
 
   private:
-    KABC::Field *mField;
+    TDEABC::Field *mField;
     bool mAscendingOrder;
 
     class FieldSortModePrivate;

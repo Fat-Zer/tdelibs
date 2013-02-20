@@ -22,7 +22,7 @@
 
 #include "geo.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 Geo::Geo()
   : mLatitude( 91 ), mLongitude( 181 ), mValidLat( false ), mValidLong( false )
@@ -93,12 +93,12 @@ TQString Geo::asString() const
   return "(" + TQString::number(mLatitude) + "," + TQString::number(mLongitude) + ")";
 }
 
-TQDataStream &KABC::operator<<( TQDataStream &s, const Geo &geo )
+TQDataStream &TDEABC::operator<<( TQDataStream &s, const Geo &geo )
 {
     return s << (float)geo.mLatitude << (float)geo.mLongitude;
 }
 
-TQDataStream &KABC::operator>>( TQDataStream &s, Geo &geo )
+TQDataStream &TDEABC::operator>>( TQDataStream &s, Geo &geo )
 {
     s >> geo.mLatitude >> geo.mLongitude;
 

@@ -27,7 +27,7 @@
 
 #define FOLD_WIDTH 75
 
-using namespace KABC;
+using namespace TDEABC;
 
 static TQString backslash( "\\\\" );
 static TQString comma( "\\," );

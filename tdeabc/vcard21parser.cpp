@@ -25,7 +25,7 @@
 #include "vcard21parser.h"
 #include "vcardconverter.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 bool VCardLineX::isValid() const
 {
@@ -199,15 +199,15 @@ VCard21Parser::~VCard21Parser()
 {
 }
 
-void VCard21Parser::readFromString(KABC::AddressBook *addressbook, const TQString &data)
+void VCard21Parser::readFromString(TDEABC::AddressBook *addressbook, const TQString &data)
 {
-  KABC::Addressee mAddressee = readFromString(data);
+  TDEABC::Addressee mAddressee = readFromString(data);
   addressbook->insertAddressee(mAddressee);
 }
 
-KABC::Addressee VCard21Parser::readFromString( const TQString &data)
+TDEABC::Addressee VCard21Parser::readFromString( const TQString &data)
 {
-  KABC::Addressee addressee;
+  TDEABC::Addressee addressee;
   VCard21ParserImpl *vCard = VCard21ParserImpl::parseVCard(data);
   TQString tmpStr;
 
@@ -369,9 +369,9 @@ KABC::Addressee VCard21Parser::readFromString( const TQString &data)
 
 
 
-KABC::Address VCard21Parser::readAddressFromQStringList ( const TQStringList &data, const int type )
+TDEABC::Address VCard21Parser::readAddressFromQStringList ( const TQStringList &data, const int type )
 {
-  KABC::Address mAddress;
+  TDEABC::Address mAddress;
   mAddress.setType( type );
 
   if ( data.count() > 0 )

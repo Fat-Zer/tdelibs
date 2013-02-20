@@ -24,7 +24,7 @@
 #include <tdelocale.h>
 #include <kdebug.h>
 
-using namespace KABC;
+using namespace TDEABC;
 
 LockNull::LockNull( bool allowAccess )
   : Lock( TQString::null ), mAllowAccess( allowAccess )

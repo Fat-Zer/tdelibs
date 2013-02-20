@@ -26,7 +26,7 @@
 #include <tqstringlist.h>
 #include <tqvaluelist.h>
 
-namespace KABC {
+namespace TDEABC {
 
 class VCard
 {

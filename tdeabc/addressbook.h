@@ -29,7 +29,7 @@
 #include "addressee.h"
 #include "field.h"
 
-namespace KABC {
+namespace TDEABC {
 
 class ErrorHandler;
 class Resource;

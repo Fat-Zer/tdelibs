@@ -31,7 +31,7 @@
 #include "addresseedialog.h"
 #include "addresseedialog.moc"
 
-using namespace KABC;
+using namespace TDEABC;
 
 AddresseeItem::AddresseeItem( TQListView *parent, const Addressee &addressee ) :
   TQListViewItem( parent ),

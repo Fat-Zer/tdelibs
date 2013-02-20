@@ -28,7 +28,7 @@
 
 #include <tdeabc/resource.h>
 
-namespace KABC {
+namespace TDEABC {
 
 class FormatPlugin;
 class ResourceConfigWidget;
@@ -122,7 +122,7 @@ class KABC_EXPORT ResourceFile : public Resource
 
     /**
       Remove a addressee from its source.
-      This method is mainly called by KABC::AddressBook.
+      This method is mainly called by TDEABC::AddressBook.
      */
     virtual void removeAddressee( const Addressee& addr );
 

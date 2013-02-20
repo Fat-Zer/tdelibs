@@ -98,8 +98,8 @@ typedef TQMap<TQString, ContactPresenceListCurrent> PresenceStringMap;
  * availability, capability and presence (online status) of IM-contacts.
  *
  * @see KIMIface
- * @see KABC::AddressBook
- * @see KABC::Addressee
+ * @see TDEABC::AddressBook
+ * @see TDEABC::Addressee
  *
  * @since 3.3
  * @author Will Stephenson <lists@stevello.free-online.co.uk>
@@ -161,7 +161,7 @@ class KIMPROXY_EXPORT KIMProxy : public TQObject, virtual public KIMProxyIface
 		 * @see onlineContacts()
 		 * @see fileTransferContacts()
 		 * @see isPresent()
-		 * @see KABC::Addressee::uid()
+		 * @see TDEABC::Addressee::uid()
 		 */
 		TQStringList allContacts();
 
@@ -177,7 +177,7 @@ class KIMPROXY_EXPORT KIMProxy : public TQObject, virtual public KIMProxyIface
 		 * @see onlineContacts()
 		 * @see fileTransferContacts()
 		 * @see messageContact()
-		 * @see KABC::Addressee::uid()
+		 * @see TDEABC::Addressee::uid()
 		 */
 		TQStringList reachableContacts();
 
@@ -197,7 +197,7 @@ class KIMPROXY_EXPORT KIMProxy : public TQObject, virtual public KIMProxyIface
 		 * @see fileTransferContacts()
 		 * @see messageContact()
 		 * @see chatWithContact()
-		 * @see KABC::Addressee::uid()
+		 * @see TDEABC::Addressee::uid()
 		 */
 		TQStringList onlineContacts();
 
@@ -219,7 +219,7 @@ class KIMPROXY_EXPORT KIMProxy : public TQObject, virtual public KIMProxyIface
 		 * @see reachableContacts()
 		 * @see onlineContacts()
 		 * @see canReceiveFiles()
-		 * @see KABC::Addressee::uid()
+		 * @see TDEABC::Addressee::uid()
 		 */
 		TQStringList fileTransferContacts();
 
@@ -239,7 +239,7 @@ class KIMPROXY_EXPORT KIMProxy : public TQObject, virtual public KIMProxyIface
 		 * @see allContacts()
 		 * @see presenceString()
 		 * @see presenceNumeric()
-		 * @see KABC::Addressee::uid()
+		 * @see TDEABC::Addressee::uid()
 		 */
 		bool isPresent( const TQString& uid );
 
@@ -261,7 +261,7 @@ class KIMPROXY_EXPORT KIMProxy : public TQObject, virtual public KIMProxyIface
 		 * @see isPresent()
 		 * @see presenceString()
 		 * @see presenceNumeric()
-		 * @see KABC::Addressee::uid()
+		 * @see TDEABC::Addressee::uid()
 		 */
 		TQString displayName( const TQString& uid );
 
@@ -302,7 +302,7 @@ class KIMPROXY_EXPORT KIMProxy : public TQObject, virtual public KIMProxyIface
 		 * @see presenceString()
 		 * @see presenceIcon()
 		 * @see KIMIface::presenceStatus()
-		 * @see KABC::Addressee::uid()
+		 * @see TDEABC::Addressee::uid()
 		 */
 		int presenceNumeric( const TQString& uid );
 
@@ -338,7 +338,7 @@ class KIMPROXY_EXPORT KIMProxy : public TQObject, virtual public KIMProxyIface
 		 * @see isPresent()
 		 * @see presenceNumeric()
 		 * @see presenceIcon()
-		 * @see KABC::Addressee::uid()
+		 * @see TDEABC::Addressee::uid()
 		 */
 		TQString presenceString( const TQString& uid );
 
@@ -367,7 +367,7 @@ class KIMPROXY_EXPORT KIMProxy : public TQObject, virtual public KIMProxyIface
 		 * @see isPresent()
 		 * @see presenceString()
 		 * @see presenceNumeric()
-		 * @see KABC::Addressee::uid()
+		 * @see TDEABC::Addressee::uid()
 		 */
 		TQPixmap presenceIcon( const TQString& uid );
 
@@ -384,7 +384,7 @@ class KIMPROXY_EXPORT KIMProxy : public TQObject, virtual public KIMProxyIface
 		 * @return whether the specified contact can receive files
 		 *
 		 * @see fileTransferContacts()
-		 * @see KABC::Addressee::uid()
+		 * @see TDEABC::Addressee::uid()
 		 */
 		bool canReceiveFiles( const TQString & uid );
 
@@ -409,7 +409,7 @@ class KIMPROXY_EXPORT KIMProxy : public TQObject, virtual public KIMProxyIface
 		 * @return whether the specified contact can respond
 		 *
 		 * @see isPresent()
-		 * @see KABC::Addressee::uid()
+		 * @see TDEABC::Addressee::uid()
 		 */
 		bool canRespond( const TQString & uid );
 
@@ -427,7 +427,7 @@ class KIMPROXY_EXPORT KIMProxy : public TQObject, virtual public KIMProxyIface
 		 * @see KIMIface::protocols()
 		 * @see addContact()
 		 * @see isPresent()
-		 * @see KABC::Addressee::uid()
+		 * @see TDEABC::Addressee::uid()
 		 */
 		TQString locate( const TQString & contactId, const TQString & protocol );
 
@@ -449,7 +449,7 @@ class KIMPROXY_EXPORT KIMProxy : public TQObject, virtual public KIMProxyIface
 		 *         supported or if the contact is unknown
 		 *
 		 * @see isPresent()
-		 * @see KABC::Addressee::uid()
+		 * @see TDEABC::Addressee::uid()
 		 */
 		TQString context( const TQString & uid );
 
@@ -462,7 +462,7 @@ class KIMPROXY_EXPORT KIMProxy : public TQObject, virtual public KIMProxyIface
 		 * @see sendFile()
 		 * @see isPresent()
 		 * @see reachableContacts()
-		 * @see KABC::Addressee::uid()
+		 * @see TDEABC::Addressee::uid()
 		 */
 		void chatWithContact( const TQString& uid );
 
@@ -479,7 +479,7 @@ class KIMPROXY_EXPORT KIMProxy : public TQObject, virtual public KIMProxyIface
 		 * @see sendFile()
 		 * @see isPresent()
 		 * @see reachableContacts()
-		 * @see KABC::Addressee::uid()
+		 * @see TDEABC::Addressee::uid()
 		 */
 		void messageContact( const TQString& uid, const TQString& message );
 
@@ -498,7 +498,7 @@ class KIMPROXY_EXPORT KIMProxy : public TQObject, virtual public KIMProxyIface
 		 * @see chatWithContact()
 		 * @see isPresent()
 		 * @see fileTransferContacts()
-		 * @see KABC::Addressee::uid()
+		 * @see TDEABC::Addressee::uid()
 		 */
 		void sendFile(const TQString &uid, const KURL &sourceURL,
 			 const TQString &altFileName = TQString::null, uint fileSize = 0);
@@ -586,7 +586,7 @@ class KIMPROXY_EXPORT KIMProxy : public TQObject, virtual public KIMProxyIface
 		 * @see isPresent()
 		 * @see presenceNumeric()
 		 * @see presenceIcon()
-		 * @see KABC::Addressee::uid()
+		 * @see TDEABC::Addressee::uid()
 		 */
 		void sigContactPresenceChanged( const TQString &uid );
 

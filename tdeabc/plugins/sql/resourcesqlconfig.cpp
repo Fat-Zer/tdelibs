@@ -29,7 +29,7 @@
 #include "resource.h"
 #include "resourcesqlconfig.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 ResourceSqlConfig::ResourceSqlConfig( TQWidget* parent,  const char* name )
     : ResourceConfigWidget( parent, name )
@@ -77,7 +77,7 @@ ResourceSqlConfig::ResourceSqlConfig( TQWidget* parent,  const char* name )
 void ResourceSqlConfig::loadSettings( TDEConfig *config )
 {
   mUser->setText( config->readEntry( "SqlUser" ) );
-  mPassword->setText( KABC::Resource::cryptStr( config->readEntry( "SqlPassword" ) ) );
+  mPassword->setText( TDEABC::Resource::cryptStr( config->readEntry( "SqlPassword" ) ) );
   mDbName->setText( config->readEntry( "SqlName" ) );
   mHost->setText( config->readEntry( "SqlHost" ) );
   mPort->setValue( config->readNumEntry( "SqlPort" ) );
@@ -86,7 +86,7 @@ void ResourceSqlConfig::loadSettings( TDEConfig *config )
 void ResourceSqlConfig::saveSettings( TDEConfig *config )
 {
   config->writeEntry( "SqlUser", mUser->text() );
-  config->writeEntry( "SqlPassword", KABC::Resource::cryptStr( mPassword->text() ) );
+  config->writeEntry( "SqlPassword", TDEABC::Resource::cryptStr( mPassword->text() ) );
   config->writeEntry( "SqlName", mDbName->text() );
   config->writeEntry( "SqlHost", mHost->text() );
   config->writeEntry( "SqlPort", mPort->value() );

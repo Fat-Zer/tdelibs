@@ -21,7 +21,7 @@
 #include "resourcenet.h"
 #include "resourcenetconfig.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 extern "C"
 {

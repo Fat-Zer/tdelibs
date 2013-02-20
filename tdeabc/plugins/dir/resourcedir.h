@@ -30,7 +30,7 @@
 
 class TQTimer;
 
-namespace KABC {
+namespace TDEABC {
 
 class FormatPlugin;
 class Lock;
@@ -82,7 +82,7 @@ class KABC_EXPORT ResourceDir : public Resource
   
     /**
       Remove a addressee from its source.
-      This method is mainly called by KABC::AddressBook.
+      This method is mainly called by TDEABC::AddressBook.
      */
     virtual void removeAddressee( const Addressee& addr );
 

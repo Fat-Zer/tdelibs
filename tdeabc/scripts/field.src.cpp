@@ -25,7 +25,7 @@
 #include "field.h"
 #include "address.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 class Field::FieldImpl
 {
@@ -113,7 +113,7 @@ TQString Field::categoryLabel( int category )
   }
 }
 
-TQString Field::value( const KABC::Addressee &a )
+TQString Field::value( const TDEABC::Addressee &a )
 {
   switch ( mImpl->fieldId() ) {
     --CASEVALUE--
@@ -213,7 +213,7 @@ TQString Field::value( const KABC::Addressee &a )
   }
 }
 
-bool Field::setValue( KABC::Addressee &a, const TQString &value )
+bool Field::setValue( TDEABC::Addressee &a, const TQString &value )
 {
   switch ( mImpl->fieldId() ) {
     --CASESETVALUE--
@@ -261,84 +261,84 @@ bool Field::setValue( KABC::Addressee &a, const TQString &value )
       }
     case FieldImpl::HomeAddressStreet:
       {
-        KABC::Address address = a.address( Address::Home );
+        TDEABC::Address address = a.address( Address::Home );
         address.setStreet( value );
         a.insertAddress( address );
         return true;
       }
     case FieldImpl::HomeAddressLocality:
       {
-        KABC::Address address = a.address( Address::Home );
+        TDEABC::Address address = a.address( Address::Home );
         address.setLocality( value );
         a.insertAddress( address );
         return true;
       }
     case FieldImpl::HomeAddressRegion:
       {
-        KABC::Address address = a.address( Address::Home );
+        TDEABC::Address address = a.address( Address::Home );
         address.setRegion( value );
         a.insertAddress( address );
         return true;
       }
     case FieldImpl::HomeAddressPostalCode:
       {
-        KABC::Address address = a.address( Address::Home );
+        TDEABC::Address address = a.address( Address::Home );
         address.setPostalCode( value );
         a.insertAddress( address );
         return true;
       }
     case FieldImpl::HomeAddressCountry:
       {
-        KABC::Address address = a.address( Address::Home );
+        TDEABC::Address address = a.address( Address::Home );
         address.setCountry( value );
         a.insertAddress( address );
         return true;
       }
     case FieldImpl::HomeAddressLabel:
       {
-        KABC::Address address = a.address( Address::Home );
+        TDEABC::Address address = a.address( Address::Home );
         address.setLabel( value );
         a.insertAddress( address );
         return true;
       }
     case FieldImpl::BusinessAddressStreet:
       {
-        KABC::Address address = a.address( Address::Work );
+        TDEABC::Address address = a.address( Address::Work );
         address.setStreet( value );
         a.insertAddress( address );
         return true;
       }
     case FieldImpl::BusinessAddressLocality:
       {
-        KABC::Address address = a.address( Address::Work );
+        TDEABC::Address address = a.address( Address::Work );
         address.setLocality( value );
         a.insertAddress( address );
         return true;
       }
     case FieldImpl::BusinessAddressRegion:
       {
-        KABC::Address address = a.address( Address::Work );
+        TDEABC::Address address = a.address( Address::Work );
         address.setRegion( value );
         a.insertAddress( address );
         return true;
       }
     case FieldImpl::BusinessAddressPostalCode:
       {
-        KABC::Address address = a.address( Address::Work );
+        TDEABC::Address address = a.address( Address::Work );
         address.setPostalCode( value );
         a.insertAddress( address );
         return true;
       }
     case FieldImpl::BusinessAddressCountry:
       {
-        KABC::Address address = a.address( Address::Work );
+        TDEABC::Address address = a.address( Address::Work );
         address.setCountry( value );
         a.insertAddress( address );
         return true;
       }
     case FieldImpl::BusinessAddressLabel:
       {
-        KABC::Address address = a.address( Address::Work );
+        TDEABC::Address address = a.address( Address::Work );
         address.setLabel( value );
         a.insertAddress( address );
         return true;
@@ -354,7 +354,7 @@ bool Field::setValue( KABC::Addressee &a, const TQString &value )
   }
 }
 
-TQString Field::sortKey( const KABC::Addressee &a )
+TQString Field::sortKey( const TDEABC::Addressee &a )
 {
   switch ( mImpl->fieldId() ) {
     --CASEVALUE--

@@ -28,7 +28,7 @@
 
 class TDEConfig;
 
-namespace KABC {
+namespace TDEABC {
 
 class KABC_EXPORT Field
 {
@@ -78,18 +78,18 @@ public:
    * Addressee. Returns TQString::null, if it is not possible to convert the
    * value to a string.
    */
-  virtual TQString value( const KABC::Addressee & );
+  virtual TQString value( const TDEABC::Addressee & );
 
   /**
    * Sets the value of the field in the given Addressee. Returns true on success
    * or false, if the given string couldn't be converted to a valid value.
    */
-  virtual bool setValue( KABC::Addressee &, const TQString & );
+  virtual bool setValue( TDEABC::Addressee &, const TQString & );
 
   /**
    * Returns a string, that can be used for sorting.
    */
-  TQString sortKey( const KABC::Addressee & );
+  TQString sortKey( const TDEABC::Addressee & );
 
   /**
    * Returns, if the field is a user-defined field.

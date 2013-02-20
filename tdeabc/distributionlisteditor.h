@@ -28,7 +28,7 @@ class TQListView;
 class TQComboBox;
 class TQButtonGroup;
 
-namespace KABC {
+namespace TDEABC {
 
 class AddressBook;
 class DistributionListManager;

@@ -30,7 +30,7 @@ makekdewidgets_LDADD = $(LIB_QT) ../tdecore/libtdecore.la
 
 kde_widget_LTLIBRARIES = kdewidgets.la
 kdewidgets_la_LDFLAGS = $(KDE_PLUGIN) -module $(all_libraries)
-kdewidgets_la_LIBADD = $(LIB_KIO) $(LIB_KABC) $(LIB_QT) $(LIB_TDEUI) $(LIB_TDECORE)
+kdewidgets_la_LIBADD = $(LIB_KIO) $(LIB_TDEABC) $(LIB_QT) $(LIB_TDEUI) $(LIB_TDECORE)
 kdewidgets_la_SOURCES = classpreviews.cpp kdewidgets.cpp
 
 kdewidgets.cpp: $(srcdir)/kde.widgets makekdewidgets

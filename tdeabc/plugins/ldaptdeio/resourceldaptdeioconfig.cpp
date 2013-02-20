@@ -43,7 +43,7 @@
 #include "resourceldaptdeioconfig.h"
 #include "resourceldaptdeioconfig.moc"
 
-using namespace KABC;
+using namespace TDEABC;
 
 ResourceLDAPTDEIOConfig::ResourceLDAPTDEIOConfig( TQWidget* parent,  const char* name )
   : KRES::ConfigWidget( parent, name )

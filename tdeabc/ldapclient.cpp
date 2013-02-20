@@ -39,7 +39,7 @@
 #include "ldif.h"
 #include "ldapurl.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 class LdapClient::LdapClientPrivate{
 public:
@@ -285,8 +285,8 @@ LdapSearch::LdapSearch()
       attrs << "cn" << "mail" << "givenname" << "sn";
       ldapClient->setAttrs( attrs );
 
-      connect( ldapClient, TQT_SIGNAL( result( const KABC::LdapObject& ) ),
-               this, TQT_SLOT( slotLDAPResult( const KABC::LdapObject& ) ) );
+      connect( ldapClient, TQT_SIGNAL( result( const TDEABC::LdapObject& ) ),
+               this, TQT_SLOT( slotLDAPResult( const TDEABC::LdapObject& ) ) );
       connect( ldapClient, TQT_SIGNAL( done() ),
                this, TQT_SLOT( slotLDAPDone() ) );
       connect( ldapClient, TQT_SIGNAL( error( const TQString& ) ),
@@ -338,7 +338,7 @@ void LdapSearch::cancelSearch()
   mResults.clear();
 }
 
-void LdapSearch::slotLDAPResult( const KABC::LdapObject& obj )
+void LdapSearch::slotLDAPResult( const TDEABC::LdapObject& obj )
 {
   mResults.append( obj );
   if ( !mDataTimer.isActive() )
@@ -381,7 +381,7 @@ void LdapSearch::makeSearchData( TQStringList& ret, LdapResultList& resList )
 {
   TQString search_text_upper = mSearchText.upper();
 
-  TQValueList< KABC::LdapObject >::ConstIterator it1;
+  TQValueList< TDEABC::LdapObject >::ConstIterator it1;
   for ( it1 = mResults.begin(); it1 != mResults.end(); ++it1 ) {
     TQString name, mail, givenname, sn;
 

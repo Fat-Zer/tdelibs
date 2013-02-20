@@ -30,7 +30,7 @@
 
 #include "vcardtool.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 static bool needsEncoding( const TQString &value )
 {
@@ -459,8 +459,8 @@ Addressee::List VCardTool::parseVCards( const TQString& vcard )
             type += mAddressTypeMap[ (*it).lower() ];
 
           bool available = false;
-          KABC::Address::List addressList = addr.addresses();
-          KABC::Address::List::Iterator it;
+          TDEABC::Address::List addressList = addr.addresses();
+          TDEABC::Address::List::Iterator it;
           for ( it = addressList.begin(); it != addressList.end(); ++it ) {
             if ( (*it).type() == type ) {
               (*it).setLabel( (*lineIt).value().asString() );
@@ -471,7 +471,7 @@ Addressee::List VCardTool::parseVCards( const TQString& vcard )
           }
 
           if ( !available ) { // a standalone LABEL tag
-            KABC::Address address( type );
+            TDEABC::Address address( type );
             address.setLabel( (*lineIt).value().asString() );
             addr.insertAddress( address );
           }

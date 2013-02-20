@@ -24,7 +24,7 @@
 
 #include "addresseehelper.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 AddresseeHelper * AddresseeHelper::s_self;
 
@@ -39,11 +39,11 @@ AddresseeHelper *AddresseeHelper::self()
 
 AddresseeHelper::AddresseeHelper()
   : TQObject( tqApp ),
-    DCOPObject( "KABC::AddresseeHelper" )
+    DCOPObject( "TDEABC::AddresseeHelper" )
 {
   initSettings();
 
-  connectDCOPSignal( "kaddressbook", "KABC::AddressBookConfig",
+  connectDCOPSignal( "kaddressbook", "TDEABC::AddressBookConfig",
                      "changed()", "initSettings()", false );
 }
 

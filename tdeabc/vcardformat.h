@@ -24,7 +24,7 @@
 
 #include "format.h"
 
-namespace KABC {
+namespace TDEABC {
 
 class AddressBook;
 class VCardFormatImpl;

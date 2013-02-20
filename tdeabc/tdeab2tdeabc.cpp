@@ -35,7 +35,7 @@
 #include "addressbook.h"
 #include "stdaddressbook.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 static const TDECmdLineOptions options[] =
 {
@@ -46,7 +46,7 @@ static const TDECmdLineOptions options[] =
   TDECmdLineLastOption
 };
 
-void readKMailEntry( const TQString &kmailEntry, KABC::AddressBook *ab )
+void readKMailEntry( const TQString &kmailEntry, TDEABC::AddressBook *ab )
 {
   kdDebug() << "KMAILENTRY: " << kmailEntry << endl;
 
@@ -105,9 +105,9 @@ void readKMailEntry( const TQString &kmailEntry, KABC::AddressBook *ab )
   kdDebug() << "  NAME    : " << name    << endl;
   kdDebug() << "  COMMENT : " << comment << endl;
 
-  KABC::Addressee::List al = ab->findByEmail( email );
+  TDEABC::Addressee::List al = ab->findByEmail( email );
   if ( al.isEmpty() ) {
-    KABC::Addressee a;
+    TDEABC::Addressee a;
     a.setNameFromString( name );
     a.insertEmail( email );
     a.setNote( comment );
@@ -118,7 +118,7 @@ void readKMailEntry( const TQString &kmailEntry, KABC::AddressBook *ab )
   }
 }
 
-void importKMailAddressBook( KABC::AddressBook *ab )
+void importKMailAddressBook( TDEABC::AddressBook *ab )
 {
   TQString fileName = locateLocal( "data", "kmail/addressbook" );
   TQString kmailConfigName = locate( "config", "kmailrc" );
@@ -278,7 +278,7 @@ void readKAddressBookEntries( const TQString &dataString, Addressee &a )
   if ( !otherAddress.isEmpty() ) a.insertAddress( otherAddress );
 }
 
-void importKab( KABC::AddressBook *ab, bool override, bool quiet )
+void importKab( TDEABC::AddressBook *ab, bool override, bool quiet )
 {
   TQString fileName = TDEGlobal::dirs()->saveLocation( "data", "kab/" );
   fileName += "addressbook.kab";
@@ -463,7 +463,7 @@ int main( int argc, char **argv )
     config->writeEntry( "EnableAutostart", false );
   }
 
-  KABC::AddressBook *kabcBook = StdAddressBook::self();
+  TDEABC::AddressBook *kabcBook = StdAddressBook::self();
 
   importKMailAddressBook( kabcBook );
 

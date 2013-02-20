@@ -33,7 +33,7 @@
 
 #include <tdeio/job.h>
 
-namespace KABC {
+namespace TDEABC {
 
 class LdapClient;
 typedef TQValueList<TQByteArray> LdapAttrValue;
@@ -103,7 +103,7 @@ class KABC_EXPORT LdapClient : public TQObject
     /*! Emitted once for each object returned
      * from the query
      */
-    void result( const KABC::LdapObject& );
+    void result( const TDEABC::LdapObject& );
 
   public slots:
     /*!
@@ -221,11 +221,11 @@ class KABC_EXPORT LdapSearch : public TQObject
     void searchData( const TQStringList& );
     /// Another form for the results, with separate fields
     /// (This signal can be emitted many times)
-    void searchData( const KABC::LdapResultList& );
+    void searchData( const TDEABC::LdapResultList& );
     void searchDone();
 
   private slots:
-    void slotLDAPResult( const KABC::LdapObject& );
+    void slotLDAPResult( const TDEABC::LdapObject& );
     void slotLDAPError( const TQString& );
     void slotLDAPDone();
     void slotDataTimer();

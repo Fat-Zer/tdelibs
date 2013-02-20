@@ -29,7 +29,7 @@
 #include "resourcesql.h"
 #include "resourcesqlconfig.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 extern "C"
 {

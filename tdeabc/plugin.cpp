@@ -20,7 +20,7 @@
 
 #include "plugin.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 Plugin::Plugin()
 {

@@ -20,7 +20,7 @@
 
 #include "picture.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 Picture::Picture()
   : mIntern( false )
@@ -106,13 +106,13 @@ TQString Picture::asString() const
     return mUrl;
 }
 
-TQDataStream &KABC::operator<<( TQDataStream &s, const Picture &picture )
+TQDataStream &TDEABC::operator<<( TQDataStream &s, const Picture &picture )
 {
   return s << picture.mIntern << picture.mUrl << picture.mType;
 //  return s << picture.mIntern << picture.mUrl << picture.mType << picture.mData;
 }
 
-TQDataStream &KABC::operator>>( TQDataStream &s, Picture &picture )
+TQDataStream &TDEABC::operator>>( TQDataStream &s, Picture &picture )
 {
   s >> picture.mIntern >> picture.mUrl >> picture.mType;
 //  s >> picture.mIntern >> picture.mUrl >> picture.mType >> picture.mData;

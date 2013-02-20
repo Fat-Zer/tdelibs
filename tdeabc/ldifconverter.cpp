@@ -49,7 +49,7 @@
 #include "ldifconverter.h"
 #include "vcardconverter.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 /* generate LDIF stream */
 

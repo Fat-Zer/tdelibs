@@ -31,7 +31,7 @@
   static data, shared by ALL addressee objects
 */
 
-namespace KABC {
+namespace TDEABC {
 
 class KABC_EXPORT AddresseeHelper : public TQObject, public DCOPObject
 {

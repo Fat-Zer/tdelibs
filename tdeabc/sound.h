@@ -26,7 +26,7 @@
 
 #include <tdelibs_export.h>
 
-namespace KABC {
+namespace TDEABC {
 
 /** @short Class that holds a Sound clip for a contact.
  *

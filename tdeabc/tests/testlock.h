@@ -42,7 +42,7 @@ class KABC_EXPORT LockWidget : public TQWidget
     void updateLockView();
     
   private:
-    KABC::Lock *mLock;
+    TDEABC::Lock *mLock;
 
     TQLabel *mStatus;
     TQListView *mLockView;

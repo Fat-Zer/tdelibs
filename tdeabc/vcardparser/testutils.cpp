@@ -2,7 +2,7 @@
 #include <tdeabc/addressee.h>
 #include <tqfile.h>
 
-using namespace KABC;
+using namespace TDEABC;
 
 Addressee
 vcard1()

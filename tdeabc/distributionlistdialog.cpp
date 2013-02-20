@@ -38,7 +38,7 @@
 #include "distributionlistdialog.h"
 #include "distributionlistdialog.moc"
 
-using namespace KABC;
+using namespace TDEABC;
 
 DistributionListDialog::DistributionListDialog( AddressBook *addressBook, TQWidget *parent)
     : KDialogBase( parent, "", true, i18n("Configure Distribution Lists"), Ok, Ok, true)

@@ -27,7 +27,7 @@
 #include <tqmap.h>
 #include <tqstring.h>
 
-namespace KABC {
+namespace TDEABC {
 
 class VCardLine
 {

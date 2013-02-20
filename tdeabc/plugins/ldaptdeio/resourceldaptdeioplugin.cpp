@@ -24,7 +24,7 @@
 #include <tdeglobal.h>
 #include <tdelocale.h>
 
-using namespace KABC;
+using namespace TDEABC;
 
 extern "C"
 {

@@ -22,7 +22,7 @@
 
 #include <tqdatastream.h>
 
-using namespace KABC;
+using namespace TDEABC;
 
 Sound::Sound()
   : mIntern( false )
@@ -104,13 +104,13 @@ TQString Sound::asString() const
     return mUrl;
 }
 
-TQDataStream &KABC::operator<<( TQDataStream &s, const Sound &sound )
+TQDataStream &TDEABC::operator<<( TQDataStream &s, const Sound &sound )
 {
   return s << sound.mIntern << sound.mUrl;
 //  return s << sound.mIntern << sound.mUrl << sound.mData;
 }
 
-TQDataStream &KABC::operator>>( TQDataStream &s, Sound &sound )
+TQDataStream &TDEABC::operator>>( TQDataStream &s, Sound &sound )
 {
   s >> sound.mIntern >> sound.mUrl;
 //  s >> sound.mIntern >> sound.mUrl >> sound.mData;

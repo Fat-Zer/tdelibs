@@ -44,7 +44,7 @@
 
 #include "resourcefile.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 ResourceFile::ResourceFile( const TDEConfig *config )
   : Resource( config ), mFormat( 0 ),

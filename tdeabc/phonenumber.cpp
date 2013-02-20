@@ -23,7 +23,7 @@
 
 #include "phonenumber.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 PhoneNumber::PhoneNumber() :
   mType( Home )
@@ -200,12 +200,12 @@ TQString PhoneNumber::typeLabel( int type )
   }
 }
 
-TQDataStream &KABC::operator<<( TQDataStream &s, const PhoneNumber &phone )
+TQDataStream &TDEABC::operator<<( TQDataStream &s, const PhoneNumber &phone )
 {
     return s << phone.mId << phone.mType << phone.mNumber;
 }
 
-TQDataStream &KABC::operator>>( TQDataStream &s, PhoneNumber &phone )
+TQDataStream &TDEABC::operator>>( TQDataStream &s, PhoneNumber &phone )
 {
     s >> phone.mId >> phone.mType >> phone.mNumber;
 

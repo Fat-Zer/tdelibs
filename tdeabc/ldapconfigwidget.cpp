@@ -42,7 +42,7 @@
 #include "ldapconfigwidget.h"
 #include "ldapconfigwidget.moc"
 
-using namespace KABC;
+using namespace TDEABC;
 
 LdapConfigWidget::LdapConfigWidget( TQWidget* parent,
   const char* name, WFlags fl ) : TQWidget( parent, name, fl )

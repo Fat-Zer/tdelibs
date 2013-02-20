@@ -26,7 +26,7 @@
 #include "addressbook.h"
 #include "plugin.h"
 
-namespace KABC {
+namespace TDEABC {
 
 /**
  * @short Helper class for handling coordinated save of address books.

@@ -29,7 +29,7 @@
 
 #include <tqfile.h>
 
-using namespace KABC;
+using namespace TDEABC;
 
 TQMap<TQString, TQString> *Address::mISOMap = 0;
 static KStaticDeleter< TQMap<TQString, TQString> > isoMapDeleter;
@@ -572,7 +572,7 @@ TQString Address::ISOtoCountry( const TQString &ISOname )
   return ISOname;
 }
 
-TQDataStream &KABC::operator<<( TQDataStream &s, const Address &addr )
+TQDataStream &TDEABC::operator<<( TQDataStream &s, const Address &addr )
 {
     return s << addr.mId << addr.mType << addr.mPostOfficeBox <<
 	    addr.mExtended << addr.mStreet << addr.mLocality <<
@@ -580,7 +580,7 @@ TQDataStream &KABC::operator<<( TQDataStream &s, const Address &addr )
 	    addr.mLabel;
 }
 
-TQDataStream &KABC::operator>>( TQDataStream &s, Address &addr )
+TQDataStream &TDEABC::operator>>( TQDataStream &s, Address &addr )
 {
     s >> addr.mId >> addr.mType >> addr.mPostOfficeBox >> addr.mExtended >>
 	    addr.mStreet >> addr.mLocality >> addr.mRegion >>

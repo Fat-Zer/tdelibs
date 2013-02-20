@@ -28,7 +28,7 @@
 
 class TQWidget;
 
-namespace KABC {
+namespace TDEABC {
 
 /**
   Abstract class that provides displaying of error messages.

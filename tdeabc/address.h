@@ -45,7 +45,7 @@
 #define KABC_FMTTAG_condwhite  TQString("%w")
 #define KABC_FMTTAG_purgeempty TQString("%0")
 
-namespace KABC {
+namespace TDEABC {
 
 /**
   @short Postal address information.

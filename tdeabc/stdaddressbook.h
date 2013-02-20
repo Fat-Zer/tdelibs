@@ -23,7 +23,7 @@
 
 #include "addressbook.h"
 
-namespace KABC {
+namespace TDEABC {
 
 /**
   Standard KDE address book
@@ -37,19 +37,19 @@ namespace KABC {
   Example:
 
   \code
-  KABC::AddressBook *ab = KABC::StdAddressBook::self();
+  TDEABC::AddressBook *ab = TDEABC::StdAddressBook::self();
 
   AddressBook::Ticket *ticket = ab->requestSaveTicket();
 
   if ( ticket ) {
-    KABC::AddressBook::Iterator it;
+    TDEABC::AddressBook::Iterator it;
     for ( it = ab->begin(); it != ab->end(); ++it ) {
       kdDebug() << "UID=" << (*it).uid() << endl;
 
       // do some other stuff
     }
 
-    KABC::StdAddressBook::save( ticket );
+    TDEABC::StdAddressBook::save( ticket );
   }
   \endcode
 */

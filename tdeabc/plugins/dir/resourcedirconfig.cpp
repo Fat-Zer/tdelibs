@@ -32,7 +32,7 @@
 
 #include "resourcedirconfig.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 ResourceDirConfig::ResourceDirConfig( TQWidget* parent,  const char* name )
     : KRES::ConfigWidget( parent, name )
@@ -86,7 +86,7 @@ void ResourceDirConfig::loadSettings( KRES::Resource *res )
 
   mFileNameEdit->setURL( resource->path() );
   if ( mFileNameEdit->url().isEmpty() )
-    mFileNameEdit->setURL( KABC::StdAddressBook::directoryName() );
+    mFileNameEdit->setURL( TDEABC::StdAddressBook::directoryName() );
 }
 
 void ResourceDirConfig::saveSettings( KRES::Resource *res )

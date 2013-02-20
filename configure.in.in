@@ -249,7 +249,7 @@ AC_SUBST(LIBRESOLV)
 AC_SUBST(LIBICE)
 
 AC_SUBST(LIB_KAB, '$(top_builddir)/kab/libkab.la')
-AC_SUBST(LIB_KABC, '$(top_builddir)/tdeabc/libkabc.la')
+AC_SUBST(LIB_TDEABC, '$(top_builddir)/tdeabc/libkabc.la')
 AC_SUBST(LIB_TDECORE, '$(top_builddir)/tdecore/libtdecore.la')
 AC_SUBST(LIB_TDEUI, '$(top_builddir)/tdeui/libtdeui.la')
 AC_SUBST(LIB_KIO, '$(top_builddir)/tdeio/libtdeio.la')

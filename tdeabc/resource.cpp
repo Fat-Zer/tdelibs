@@ -23,7 +23,7 @@
 
 #include "resource.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 Ticket::Ticket( Resource *resource )
   : mResource( resource )

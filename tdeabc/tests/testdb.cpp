@@ -8,7 +8,7 @@
 #include "vcardformat.h"
 #include "resourcesql.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 int main(int argc,char **argv)
 {

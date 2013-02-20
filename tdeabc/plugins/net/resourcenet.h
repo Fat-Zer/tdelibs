@@ -35,7 +35,7 @@ namespace TDEIO {
 class Job;
 }
 
-namespace KABC {
+namespace TDEABC {
 
 class FormatPlugin;
 

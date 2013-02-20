@@ -28,7 +28,7 @@
 
 class TDEListBox;
 
-namespace KABC {
+namespace TDEABC {
 
 class AddressBook;
 class Resource;

@@ -26,7 +26,7 @@
 #include "field.h"
 #include "sortmode.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 //
 //
@@ -230,11 +230,11 @@ void AddresseeList::sortByField( Field *field )
   if ( count() == 0 )
     return;
 
-  KABC::FieldSortMode *mode = new KABC::FieldSortMode( sActiveField, !mReverseSorting );
+  TDEABC::FieldSortMode *mode = new TDEABC::FieldSortMode( sActiveField, !mReverseSorting );
 
-  KABC::Addressee::setSortMode( mode );
+  TDEABC::Addressee::setSortMode( mode );
   qHeapSort( *this );
-  KABC::Addressee::setSortMode( 0 );
+  TDEABC::Addressee::setSortMode( 0 );
 
   delete mode;
 }
@@ -244,9 +244,9 @@ void AddresseeList::sortByMode( SortMode *mode )
   if ( count() == 0 )
     return;
 
-  KABC::Addressee::setSortMode( mode );
+  TDEABC::Addressee::setSortMode( mode );
   qHeapSort( *this );
-  KABC::Addressee::setSortMode( 0 );
+  TDEABC::Addressee::setSortMode( 0 );
 }
 
 Field*

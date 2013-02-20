@@ -25,7 +25,7 @@
 
 #include "addressbook.h"
 
-namespace KABC {
+namespace TDEABC {
 
 class DistributionListManager;
 
@@ -180,7 +180,7 @@ class KABC_EXPORT DistributionListManager
   Exapmle:
 
   \code
-  KABC::DistributionListWatcher *watchdog = KABC::DistributionListWatcher::self()
+  TDEABC::DistributionListWatcher *watchdog = TDEABC::DistributionListWatcher::self()
 
   connect( watchdog, TQT_SIGNAL( changed() ), TQT_SLOT( doSomething() ) );
   \endcode

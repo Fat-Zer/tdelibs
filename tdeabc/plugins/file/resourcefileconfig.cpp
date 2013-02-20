@@ -34,7 +34,7 @@
 
 #include "resourcefileconfig.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 ResourceFileConfig::ResourceFileConfig( TQWidget* parent,  const char* name )
     : ConfigWidget( parent, name )
@@ -90,7 +90,7 @@ void ResourceFileConfig::loadSettings( KRES::Resource *res  )
 
   mFileNameEdit->setURL( resource->fileName() );
   if ( mFileNameEdit->url().isEmpty() )
-    mFileNameEdit->setURL( KABC::StdAddressBook::fileName() );
+    mFileNameEdit->setURL( TDEABC::StdAddressBook::fileName() );
 }
 
 void ResourceFileConfig::saveSettings( KRES::Resource *res )

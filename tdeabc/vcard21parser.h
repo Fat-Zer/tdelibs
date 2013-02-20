@@ -132,7 +132,7 @@
 #define VC_ERR_INVALID_NAME        5
 #define VC_ERR_MISSING_MANDATORY   6
 
-namespace KABC {
+namespace TDEABC {
 
 class AddressBook;
 
@@ -160,17 +160,17 @@ public:
    * @param ab  The address book.
    * @param str The vcard string.
    */
-  void readFromString( KABC::AddressBook *ab, const TQString &str );
+  void readFromString( TDEABC::AddressBook *ab, const TQString &str );
 
   /**
    * FIXME: we need a writeToString method
-   * TQString writeToString (KABC::AddressBook *);
+   * TQString writeToString (TDEABC::AddressBook *);
    */
 
   /**
    * Parses a string in vcard2.1 format and returns the inherent addressee.
    */
-  KABC::Addressee readFromString( const TQString &data);
+  TDEABC::Addressee readFromString( const TQString &data);
 
   /**
    * Helper method to store a address.
@@ -178,7 +178,7 @@ public:
    * @param data  A string list, that is filled with 'street', 'house number' ...
    * @param type  The type of the returned address.
    */
-  static KABC::Address readAddressFromQStringList (const TQStringList &data, const int type);
+  static TDEABC::Address readAddressFromQStringList (const TQStringList &data, const int type);
 };
 
 }

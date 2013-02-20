@@ -16,7 +16,7 @@
 #include "agent.h"
 #include "vcardconverter.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 int main(int argc,char **argv)
 {

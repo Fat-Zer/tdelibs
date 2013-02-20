@@ -38,7 +38,7 @@ class KComboBox;
 class KLineEdit;
 class KProgressDialog;
 
-namespace KABC {
+namespace TDEABC {
 
   /**
     @short LDAP Configuration widget
@@ -252,7 +252,7 @@ namespace KABC {
        * Returns a LDAP Url constructed from the settings given.
        * Extensions are filled for use in the LDAP ioslave
        */
-      KABC::LDAPUrl url() const;
+      TDEABC::LDAPUrl url() const;
 
     private slots:
       void setLDAPPort();

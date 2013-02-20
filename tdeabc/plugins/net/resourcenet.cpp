@@ -35,7 +35,7 @@
 
 #include "resourcenet.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 class ResourceNet::ResourceNetPrivate
 {

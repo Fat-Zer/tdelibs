@@ -36,7 +36,7 @@
 #include "distributionlisteditor.h"
 #include "distributionlisteditor.moc"
 
-using namespace KABC;
+using namespace TDEABC;
 
 EmailSelectDialog::EmailSelectDialog( const TQStringList &emails, const TQString &current,
                                       TQWidget *parent ) :

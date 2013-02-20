@@ -23,7 +23,7 @@
 
 #include "key.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 Key::Key( const TQString &text, int type )
   : mTextData( text ), mIsBinary( false ), mType( type )
@@ -138,13 +138,13 @@ TQString Key::typeLabel( int type )
   }
 }
 
-TQDataStream &KABC::operator<<( TQDataStream &s, const Key &key )
+TQDataStream &TDEABC::operator<<( TQDataStream &s, const Key &key )
 {
     return s << key.mId << key.mIsBinary << key.mTextData << key.mBinaryData <<
              key.mCustomTypeString << key.mType;
 }
 
-TQDataStream &KABC::operator>>( TQDataStream &s, Key &key )
+TQDataStream &TDEABC::operator>>( TQDataStream &s, Key &key )
 {
     s >> key.mId >> key.mIsBinary >> key.mTextData >> key.mBinaryData >>
     key.mCustomTypeString >> key.mType;

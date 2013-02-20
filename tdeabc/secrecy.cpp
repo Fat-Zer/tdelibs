@@ -22,7 +22,7 @@
 
 #include "secrecy.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 Secrecy::Secrecy( int type )
   : mType( type )
@@ -87,12 +87,12 @@ TQString Secrecy::asString() const
   return typeLabel( mType );
 }
 
-TQDataStream &KABC::operator<<( TQDataStream &s, const Secrecy &secrecy )
+TQDataStream &TDEABC::operator<<( TQDataStream &s, const Secrecy &secrecy )
 {
     return s << secrecy.mType;
 }
 
-TQDataStream &KABC::operator>>( TQDataStream &s, Secrecy &secrecy )
+TQDataStream &TDEABC::operator>>( TQDataStream &s, Secrecy &secrecy )
 {
     s >> secrecy.mType;
 

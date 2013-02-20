@@ -34,7 +34,7 @@
 
 #define BINARY_FORMAT_VERSION 1
 
-using namespace KABC;
+using namespace TDEABC;
 
 extern "C"
 {

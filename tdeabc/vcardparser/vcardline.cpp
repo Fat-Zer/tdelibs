@@ -20,7 +20,7 @@
 
 #include "vcardline.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 class VCardLine::VCardLinePrivate
 {

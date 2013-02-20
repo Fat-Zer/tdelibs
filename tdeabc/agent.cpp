@@ -22,7 +22,7 @@
 
 #include "agent.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 Agent::Agent()
   : mAddressee( 0 ), mIntern( false )
@@ -122,7 +122,7 @@ TQString Agent::asString() const
     return mUrl;
 }
 
-TQDataStream &KABC::operator<<( TQDataStream &s, const Agent &agent )
+TQDataStream &TDEABC::operator<<( TQDataStream &s, const Agent &agent )
 {
   TQ_UINT32 hasAddressee = ( agent.mAddressee != 0 );
 
@@ -133,7 +133,7 @@ TQDataStream &KABC::operator<<( TQDataStream &s, const Agent &agent )
   return s;
 }
 
-TQDataStream &KABC::operator>>( TQDataStream &s, Agent &agent )
+TQDataStream &TDEABC::operator>>( TQDataStream &s, Agent &agent )
 {
   TQ_UINT32 hasAddressee;
 

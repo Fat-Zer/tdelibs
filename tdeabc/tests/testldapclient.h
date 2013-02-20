@@ -22,7 +22,7 @@
 #include <tqobject.h>
 
 #include "../ldapclient.h"
-typedef KABC::LdapClient LdapClient;
+typedef TDEABC::LdapClient LdapClient;
 
 class TestLDAPClient : public TQObject
 {
@@ -38,7 +38,7 @@ public:
     void testIntevation();
 
 private slots:
-    void slotLDAPResult( const KABC::LdapObject& );
+    void slotLDAPResult( const TDEABC::LdapObject& );
     void slotLDAPError( const TQString& );
     void slotLDAPDone();
 

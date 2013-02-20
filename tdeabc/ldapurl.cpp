@@ -24,7 +24,7 @@
 
 #include "ldapurl.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 LDAPUrl::LDAPUrl()
 {

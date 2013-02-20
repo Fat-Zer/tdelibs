@@ -30,7 +30,7 @@
 #include "addressbook.h"
 #include "vcardformatimpl.h"
 
-using namespace KABC;
+using namespace TDEABC;
 using namespace VCARD;
 
 bool VCardFormatImpl::load( Addressee &addressee, TQFile *file )

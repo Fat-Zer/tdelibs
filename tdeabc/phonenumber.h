@@ -26,7 +26,7 @@
 
 #include <tdelibs_export.h>
 
-namespace KABC {
+namespace TDEABC {
 
 /**
   @short Phonenumber information.

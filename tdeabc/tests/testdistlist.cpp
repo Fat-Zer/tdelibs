@@ -11,7 +11,7 @@
 #include "distributionlisteditor.h"
 #include "distributionlist.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 static const TDECmdLineOptions options[] =
 {

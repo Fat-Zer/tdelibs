@@ -26,7 +26,7 @@
 #include "addressee.h"
 #include "addresseelist.h"
 
-namespace KABC {
+namespace TDEABC {
 
   /**
    * A set of functions to convert a string with LDIF information to addressees 

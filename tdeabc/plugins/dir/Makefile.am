@@ -6,7 +6,7 @@ noinst_HEADERS = resourcedirconfig.h
 lib_LTLIBRARIES = libtdeabc_dir.la
 libtdeabc_dir_la_SOURCES = resourcedir.cpp resourcedirconfig.cpp
 libtdeabc_dir_la_LDFLAGS = $(KDE_RPATH) $(all_libraries) -version-info 1:0:0 -no-undefined 
-libtdeabc_dir_la_LIBADD = $(LIB_KABC) $(LIB_QT) $(top_builddir)/tderesources/libtderesources.la $(LIB_TDECORE) $(LIB_TDEFILE) $(LIB_TDEUI)
+libtdeabc_dir_la_LIBADD = $(LIB_TDEABC) $(LIB_QT) $(top_builddir)/tderesources/libtderesources.la $(LIB_TDECORE) $(LIB_TDEFILE) $(LIB_TDEUI)
 libtdeabc_dir_la_COMPILE_FIRST = $(top_builddir)/tdeabc/addressee.h
 
 kde_module_LTLIBRARIES = tdeabc_dir.la

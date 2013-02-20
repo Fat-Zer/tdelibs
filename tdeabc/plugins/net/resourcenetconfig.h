@@ -26,7 +26,7 @@
 
 #include <tderesources/configwidget.h>
 
-namespace KABC {
+namespace TDEABC {
 
 class KABC_EXPORT ResourceNetConfig : public KRES::ConfigWidget
 { 

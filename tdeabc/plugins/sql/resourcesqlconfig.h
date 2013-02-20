@@ -26,7 +26,7 @@
 class KLineEdit;
 class TQSpinBox;
 
-namespace KABC {
+namespace TDEABC {
 
 class ResourceSqlConfig : public ResourceConfigWidget
 { 

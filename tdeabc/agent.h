@@ -27,7 +27,7 @@ class TQDataStream;
 
 #include <tdelibs_export.h>
 
-namespace KABC {
+namespace TDEABC {
 
 class Addressee;
 

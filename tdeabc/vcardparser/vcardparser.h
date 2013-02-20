@@ -23,7 +23,7 @@
 
 #include "vcard.h"
 
-namespace KABC {
+namespace TDEABC {
 
 class VCardParser
 {

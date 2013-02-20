@@ -30,7 +30,7 @@
 
 #include "formatfactory.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 FormatFactory *FormatFactory::mSelf = 0;
 static KStaticDeleter<FormatFactory> factoryDeleter;

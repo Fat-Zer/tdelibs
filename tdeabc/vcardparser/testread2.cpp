@@ -3,7 +3,7 @@
 #include <vcardconverter.h>
 #include <kdebug.h>
 
-using namespace KABC;
+using namespace TDEABC;
 
 int
 main()

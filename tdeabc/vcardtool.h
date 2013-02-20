@@ -26,7 +26,7 @@
 
 class TQDateTime;
 
-namespace KABC {
+namespace TDEABC {
 
 class Agent;
 class Key;

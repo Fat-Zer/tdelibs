@@ -25,7 +25,7 @@
 
 #include "addressee.h"
 
-namespace KABC {
+namespace TDEABC {
 
 /**
   @short Class to converting contact objects into vCard format and vice versa.

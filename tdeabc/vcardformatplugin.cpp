@@ -26,7 +26,7 @@
 
 #include "vcardformatplugin.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 VCardFormatPlugin::VCardFormatPlugin()
 {

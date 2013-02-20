@@ -28,7 +28,7 @@
 
 #include "errorhandler.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 void ConsoleErrorHandler::error( const TQString &msg )
 {

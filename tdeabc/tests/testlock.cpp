@@ -45,7 +45,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-using namespace KABC;
+using namespace TDEABC;
 
 LockWidget::LockWidget( const TQString &identifier )
 {

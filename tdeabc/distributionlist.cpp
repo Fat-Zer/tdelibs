@@ -28,7 +28,7 @@
 
 #include "distributionlist.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 DistributionList::DistributionList( DistributionListManager *manager,
                                     const TQString &name ) :

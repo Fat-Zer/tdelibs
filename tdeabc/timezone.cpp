@@ -22,7 +22,7 @@
 
 #include "timezone.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 TimeZone::TimeZone() :
   mOffset( 0 ), mValid( false )
@@ -71,12 +71,12 @@ TQString TimeZone::asString() const
   return TQString::number( mOffset );
 }
 
-TQDataStream &KABC::operator<<( TQDataStream &s, const TimeZone &zone )
+TQDataStream &TDEABC::operator<<( TQDataStream &s, const TimeZone &zone )
 {
     return s << zone.mOffset;
 }
 
-TQDataStream &KABC::operator>>( TQDataStream &s, TimeZone &zone )
+TQDataStream &TDEABC::operator>>( TQDataStream &s, TimeZone &zone )
 {
     s >> zone.mOffset;
     zone.mValid = true;

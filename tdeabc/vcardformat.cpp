@@ -22,7 +22,7 @@
 
 #include "vcardformat.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 VCardFormat::VCardFormat()
 {

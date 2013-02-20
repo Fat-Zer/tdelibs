@@ -32,7 +32,7 @@
 
 class TDEConfig;
 
-namespace KABC {
+namespace TDEABC {
 
 class LdapSearch;
 

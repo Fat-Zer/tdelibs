@@ -35,7 +35,7 @@
 #include "addressbook.h"
 #include "addressbook.moc"
 
-using namespace KABC;
+using namespace TDEABC;
 
 struct AddressBook::AddressBookData
 {
@@ -685,14 +685,14 @@ bool AddressBook::addCustomField( const TQString &label, int category,
   return true;
 }
 
-TQDataStream &KABC::operator<<( TQDataStream &s, const AddressBook &ab )
+TQDataStream &TDEABC::operator<<( TQDataStream &s, const AddressBook &ab )
 {
   if (!ab.d) return s;
 
   return s;// << ab.d->mAddressees;
 }
 
-TQDataStream &KABC::operator>>( TQDataStream &s, AddressBook &ab )
+TQDataStream &TDEABC::operator>>( TQDataStream &s, AddressBook &ab )
 {
   if (!ab.d) return s;
 

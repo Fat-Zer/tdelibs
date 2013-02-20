@@ -26,7 +26,7 @@
 
 #include "addressee.h"
 
-namespace KABC {
+namespace TDEABC {
 
 class Field;
 class SortField;
@@ -178,9 +178,9 @@ class KABC_EXPORT AddresseeList : public TQValueList<Addressee>
      * class MySortingTrait {
      *   public:
      *     // eq returns true if a1 and a2 are equal
-     *     static bool eq(KABC::Addressee a1, KABC::Addressee a2);
+     *     static bool eq(TDEABC::Addressee a1, TDEABC::Addressee a2);
      *     // lt returns true is a1 is "less than" a2
-     *     static bool lt(KABC::Addressee a1, KABC::Addressee a2);
+     *     static bool lt(TDEABC::Addressee a1, TDEABC::Addressee a2);
      * };
      * \endcode
      * You can then pass this class to the sortByTrait method like this:

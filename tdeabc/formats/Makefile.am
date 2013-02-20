@@ -5,7 +5,7 @@ kde_module_LTLIBRARIES = tdeabcformat_binary.la
 tdeabcformat_binary_la_SOURCES = binaryformat.cpp
 tdeabcformat_binary_la_LDFLAGS =  -module $(KDE_PLUGIN) $(KDE_RPATH) $(all_libraries) \
                                 -no-undefined
-tdeabcformat_binary_la_LIBADD  = $(LIB_KABC) $(LIB_QT) $(LIB_TDECORE)
+tdeabcformat_binary_la_LIBADD  = $(LIB_TDEABC) $(LIB_QT) $(LIB_TDECORE)
 tdeabcformat_binary_la_COMPILE_FIRST = $(top_builddir)/tdeabc/addressee.h
 
 # these are the headers for your project

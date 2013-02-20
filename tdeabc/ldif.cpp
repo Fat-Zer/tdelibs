@@ -23,7 +23,7 @@
 
 #include "ldif.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 LDIF::LDIF()
 {

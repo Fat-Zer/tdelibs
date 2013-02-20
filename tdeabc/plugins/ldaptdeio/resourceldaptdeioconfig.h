@@ -40,7 +40,7 @@ class TQString;
 class KComboBox;
 class KLineEdit;
 
-namespace KABC {
+namespace TDEABC {
 
 class KABC_EXPORT ResourceLDAPTDEIOConfig : public KRES::ConfigWidget
 { 

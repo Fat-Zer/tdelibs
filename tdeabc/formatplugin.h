@@ -26,7 +26,7 @@
 #include "plugin.h"
 #include "resource.h"
 
-namespace KABC {
+namespace TDEABC {
 
 class AddressBook;
 class Addressee;

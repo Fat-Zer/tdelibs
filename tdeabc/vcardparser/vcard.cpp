@@ -20,7 +20,7 @@
 
 #include "vcard.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 VCard::VCard()
 {

@@ -28,7 +28,7 @@
 
 class TQSqlDatabase;
 
-namespace KABC {
+namespace TDEABC {
 
 class ResourceSql : public Resource
 {

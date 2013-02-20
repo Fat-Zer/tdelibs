@@ -11,7 +11,7 @@
 #include "vcardformat.h"
 #include "phonenumber.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 static const TDECmdLineOptions options[] =
 {

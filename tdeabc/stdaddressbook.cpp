@@ -33,7 +33,7 @@
 
 #include "stdaddressbook.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 StdAddressBook *StdAddressBook::mSelf = 0;
 bool StdAddressBook::mAutomaticSave = true;

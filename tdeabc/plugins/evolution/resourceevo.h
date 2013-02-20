@@ -4,7 +4,7 @@ namespace Evolution {
     class DBWrapper;
 }
 
-namespace KABC {
+namespace TDEABC {
     class ResourceEvolution : public Resource {
     public:
         ResourceEvolution( const TDEConfig* config );

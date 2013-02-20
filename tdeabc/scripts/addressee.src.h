@@ -39,7 +39,7 @@
 #include "sound.h"
 #include "timezone.h"
 
-namespace KABC {
+namespace TDEABC {
 
 class Resource;
 class Field;
@@ -383,7 +383,7 @@ class KABC_EXPORT Addressee
      */
     bool changed() const;
 
-    static void setSortMode( KABC::SortMode *mode );
+    static void setSortMode( TDEABC::SortMode *mode );
 
     bool operator< ( const Addressee &addr );
 
@@ -396,7 +396,7 @@ class KABC_EXPORT Addressee
   private:
     static AddresseeData* shared_null;
     static AddresseeData* makeSharedNull();
-    static KABC::SortMode *mSortMode;
+    static TDEABC::SortMode *mSortMode;
 };
 
 KABC_EXPORT TQDataStream &operator<<( TQDataStream &, const Addressee & );

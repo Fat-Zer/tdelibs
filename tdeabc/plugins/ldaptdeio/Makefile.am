@@ -6,7 +6,7 @@ noinst_HEADERS = resourceldaptdeioconfig.h
 lib_LTLIBRARIES = libtdeabc_ldaptdeio.la
 libtdeabc_ldaptdeio_la_SOURCES = resourceldaptdeio.cpp resourceldaptdeioconfig.cpp
 libtdeabc_ldaptdeio_la_LDFLAGS = $(KDE_RPATH) $(all_libraries) -version-info 1:0:0 -no-undefined
-libtdeabc_ldaptdeio_la_LIBADD	= $(LIB_KABC) $(LIB_KIO) $(LIB_QT) $(top_builddir)/tderesources/libtderesources.la $(LIB_TDEUI) $(LIB_TDECORE)
+libtdeabc_ldaptdeio_la_LIBADD	= $(LIB_TDEABC) $(LIB_KIO) $(LIB_QT) $(top_builddir)/tderesources/libtderesources.la $(LIB_TDEUI) $(LIB_TDECORE)
 libtdeabc_ldaptdeio_la_COMPILE_FIRST = $(top_builddir)/tdeabc/addressee.h
 
 kde_module_LTLIBRARIES = tdeabc_ldaptdeio.la

@@ -29,7 +29,7 @@
 
 #include "formatplugin.h"
 
-namespace KABC {
+namespace TDEABC {
 
 struct FormatInfo
 {
@@ -44,12 +44,12 @@ struct FormatInfo
  * Example:
  *
  * \code
- * KABC::FormatFactory *factory = KABC::FormatFactory::self();
+ * TDEABC::FormatFactory *factory = TDEABC::FormatFactory::self();
  *
  * TQStringList list = factory->formats();
  * TQStringList::Iterator it;
  * for ( it = list.begin(); it != list.end(); ++it ) {
- *   KABC::FormatPlugin *format = factory->format( (*it) );
+ *   TDEABC::FormatPlugin *format = factory->format( (*it) );
  *   // do something with format
  * }
  * \endcode

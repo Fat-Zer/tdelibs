@@ -45,7 +45,7 @@
 
 #include "resourcedir.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 extern "C"
 {

@@ -45,7 +45,7 @@ namespace KRES {
  * Example:
  *
  * \code
- * KABC::Factory *factory = KABC::Factory::self( "contact" );
+ * TDEABC::Factory *factory = TDEABC::Factory::self( "contact" );
  *
  * // to allow a transparent configuration of resources, we have
  * // to use a tdeconfig object.
@@ -53,7 +53,7 @@ namespace KRES {
  * config.writePathEntry( "FileName", "/home/foobar/test.vcf" );// resource dependend
  * config.writeEntry( "FileFormat", "vcard" );                  // resource dependend
  *
- * KABC::Resource *res = factory->resource( "file", &config );
+ * TDEABC::Resource *res = factory->resource( "file", &config );
  *
  * // do something with resource
  *

@@ -31,7 +31,7 @@
 
 #include "resourceselectdialog.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 ResourceSelectDialog::ResourceSelectDialog( AddressBook *ab, TQWidget *parent, const char *name )
     : KDialog( parent, name, true )

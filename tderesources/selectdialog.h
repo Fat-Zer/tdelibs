@@ -43,9 +43,9 @@ class Resource;
  *
  * \code
  *
- * TQPtrList<Resource> list = ... // can be retrived from KRES::Manager (e.g. KABC::AddressBook)
+ * TQPtrList<Resource> list = ... // can be retrived from KRES::Manager (e.g. TDEABC::AddressBook)
  *
- * KABC::Resource *res = KABC::SelectDialog::getResource( list, parentWdg );
+ * TDEABC::Resource *res = TDEABC::SelectDialog::getResource( list, parentWdg );
  * if ( !res ) {
  *   // no resource selected
  * } else {

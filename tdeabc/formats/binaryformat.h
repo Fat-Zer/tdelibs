@@ -22,7 +22,7 @@
 
 #include "formatplugin.h"
 
-namespace KABC {
+namespace TDEABC {
 
 class AddressBook;
 class Addressee;

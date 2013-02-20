@@ -24,7 +24,7 @@
 
 #include "vcardconverter.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 struct VCardConverter::VCardConverterData
 {
@@ -101,17 +101,17 @@ bool VCardConverter::addresseeToVCard( const Addressee &addr, TQString &str, Ver
 
 /* Helper functions */
 
-TQString KABC::dateToVCardString( const TQDateTime &dateTime )
+TQString TDEABC::dateToVCardString( const TQDateTime &dateTime )
 {
   return dateTime.toString("yyyyMMddThhmmssZ");
 }
 
-TQString KABC::dateToVCardString( const TQDate &date )
+TQString TDEABC::dateToVCardString( const TQDate &date )
 {
   return date.toString("yyyyMMdd");
 }
 
-TQDateTime KABC::VCardStringToDate( const TQString &dateString )
+TQDateTime TDEABC::VCardStringToDate( const TQString &dateString )
 {
   TQDate date;
   TQTime time;

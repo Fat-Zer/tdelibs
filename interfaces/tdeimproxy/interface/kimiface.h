@@ -40,7 +40,7 @@
  *
  * Contacts are identified using unique identifier strings (UID) used by
  * KABC, the KDE address book library.
- * The UID generation is handled by KABC::Addressee so the your application
+ * The UID generation is handled by TDEABC::Addressee so the your application
  * will either have to access the address book or provide a possibility
  * for associating a contact of your application with an entry of the address
  * book.
@@ -76,8 +76,8 @@
  * @c SOURCES list in your @c Makefile.am
  *
  * @see KIMProxy
- * @see KABC::AddressBook
- * @see KABC::Addressee
+ * @see TDEABC::AddressBook
+ * @see TDEABC::Addressee
  *
  * @since 3.3
  * @author Will Stephenson <lists@stevello.free-online.co.uk>
@@ -100,7 +100,7 @@ k_dcop:
 	 * @see onlineContacts()
 	 * @see fileTransferContacts()
 	 * @see isPresent()
-	 * @see KABC::Addressee::uid()
+	 * @see TDEABC::Addressee::uid()
 	 */
 	virtual TQStringList allContacts() = 0;
 
@@ -120,7 +120,7 @@ k_dcop:
 	 * @see onlineContacts()
 	 * @see fileTransferContacts()
 	 * @see messageContact()
-	 * @see KABC::Addressee::uid()
+	 * @see TDEABC::Addressee::uid()
 	 */
 	virtual TQStringList reachableContacts() = 0;
 
@@ -138,7 +138,7 @@ k_dcop:
 	 * @see fileTransferContacts()
 	 * @see messageContact()
 	 * @see chatWithContact()
-	 * @see KABC::Addressee::uid()
+	 * @see TDEABC::Addressee::uid()
 	 */
 	virtual TQStringList onlineContacts() = 0;
 
@@ -163,7 +163,7 @@ k_dcop:
 	 * @see onlineContacts()
 	 * @see canReceiveFiles()
 	 * @see sendFile()
-	 * @see KABC::Addressee::uid()
+	 * @see TDEABC::Addressee::uid()
 	 */
 	virtual TQStringList fileTransferContacts() = 0;
 
@@ -180,7 +180,7 @@ k_dcop:
 	 * @see allContacts()
 	 * @see presenceString()
 	 * @see presenceStatus()
-	 * @see KABC::Addressee::uid()
+	 * @see TDEABC::Addressee::uid()
 	 */
 	virtual bool isPresent( const TQString & uid ) = 0;
 
@@ -198,7 +198,7 @@ k_dcop:
 	 * @see isPresent()
 	 * @see presenceString()
 	 * @see presenceStatus()
-	 * @see KABC::Addressee::uid()
+	 * @see TDEABC::Addressee::uid()
 	 */
 	virtual TQString displayName( const TQString & uid ) = 0;
 
@@ -215,7 +215,7 @@ k_dcop:
 	 *
 	 * @see isPresent()
 	 * @see presenceStatus()
-	 * @see KABC::Addressee::uid()
+	 * @see TDEABC::Addressee::uid()
 	 */
 	virtual TQString presenceString( const TQString & uid ) = 0;
 
@@ -245,7 +245,7 @@ k_dcop:
 	 *
 	 * @see isPresent()
 	 * @see presenceString()
-	 * @see KABC::Addressee::uid()
+	 * @see TDEABC::Addressee::uid()
 	 */
 	virtual int presenceStatus( const TQString & uid ) = 0;
 
@@ -256,7 +256,7 @@ k_dcop:
 	 * @return whether the specified contact can receive files
 	 *
 	 * @see fileTransferContacts()
-	 * @see KABC::Addressee::uid()
+	 * @see TDEABC::Addressee::uid()
 	 */
 	virtual bool canReceiveFiles( const TQString & uid ) = 0;
 
@@ -274,7 +274,7 @@ k_dcop:
 	 * @return whether the specified contact can respond
 	 *
 	 * @see isPresent()
-	 * @see KABC::Addressee::uid()
+	 * @see TDEABC::Addressee::uid()
 	 */
 	virtual bool canRespond( const TQString & uid ) = 0;
 
@@ -291,7 +291,7 @@ k_dcop:
 	 * @see protocols()
 	 * @see addContact()
 	 * @see isPresent()
-	 * @see KABC::Addressee::uid()
+	 * @see TDEABC::Addressee::uid()
 	 */
 	virtual TQString locate( const TQString & contactId, const TQString & protocol ) = 0;
 
@@ -310,7 +310,7 @@ k_dcop:
 	 * @see isPresent()
 	 * @see presenceString()
 	 * @see presenceStatus()
-	 * @see KABC::Addressee::uid()
+	 * @see TDEABC::Addressee::uid()
 	 */
 	virtual TQPixmap icon( const TQString & uid ) = 0;
 
@@ -325,7 +325,7 @@ k_dcop:
 	 *         supported or if the contact is unknown
 	 *
 	 * @see isPresent()
-	 * @see KABC::Addressee::uid()
+	 * @see TDEABC::Addressee::uid()
 	 */
 	virtual TQString context( const TQString & uid ) = 0;
 
@@ -372,7 +372,7 @@ k_dcop:
 	 * @see sendFile()
 	 * @see isPresent()
 	 * @see reachableContacts()
-	 * @see KABC::Addressee::uid()
+	 * @see TDEABC::Addressee::uid()
 	 */
 	virtual void messageContact( const TQString &uid, const TQString& message ) = 0;
 
@@ -410,7 +410,7 @@ k_dcop:
 	 * @see sendFile()
 	 * @see isPresent()
 	 * @see reachableContacts()
-	 * @see KABC::Addressee::uid()
+	 * @see TDEABC::Addressee::uid()
 	 */
 	virtual void chatWithContact( const TQString &uid ) = 0;
 
@@ -436,7 +436,7 @@ k_dcop:
 	 * @see chatWithContact()
 	 * @see isPresent()
 	 * @see fileTransferContacts()
-	 * @see KABC::Addressee::uid()
+	 * @see TDEABC::Addressee::uid()
 	 */
 	virtual void sendFile(const TQString &uid, const KURL &sourceURL,
 		const TQString &altFileName = TQString::null, uint fileSize = 0) = 0;
@@ -479,7 +479,7 @@ k_dcop_signals:
 	 * @param presence the new presence's numeric value. See presenceStatus()
 	 *
 	 * @see presenceStatus()
-	 * @see KABC::Addressee::uid()
+	 * @see TDEABC::Addressee::uid()
 	 * @see DCOPClient::appId()
 	 */
 	void contactPresenceChanged( TQString uid, TQCString appId, int presence );

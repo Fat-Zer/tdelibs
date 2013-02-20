@@ -54,16 +54,16 @@ void TemplateInterface::setTemplateInterfaceDCOPSuffix ( const TQCString &suffix
 
 #define INITKABC do { \
   if (addrBook==0) { \
-    addrBook=KABC::StdAddressBook::self(); \
+    addrBook=TDEABC::StdAddressBook::self(); \
     userAddress=addrBook->whoAmI(); \
     if (userAddress.isEmpty()) { \
       if ( KMessageBox::questionYesNo(parentWindow, \
            i18n( "This template uses personal data that is stored in the TDE addressbook, but you have not selected a personal entry. You can still use the template without one, but you will have to type personal data. Would you like to select one now?" ), \
            "Personal data requested", \
            KStdGuiItem::yes(), KStdGuiItem::no(), "select personal data entry") == KMessageBox::Yes ) { \
-        userAddress = KABC::AddresseeDialog::getAddressee(parentWindow); \
+        userAddress = TDEABC::AddresseeDialog::getAddressee(parentWindow); \
         if ( ! userAddress.isEmpty() ) \
-          KABC::StdAddressBook::self()->setWhoAmI( userAddress ); \
+          TDEABC::StdAddressBook::self()->setWhoAmI( userAddress ); \
       }\
       /*return false;//no, why??*/ \
     } \
@@ -72,8 +72,8 @@ void TemplateInterface::setTemplateInterfaceDCOPSuffix ( const TQCString &suffix
 
 bool TemplateInterface::expandMacros( TQMap<TQString, TQString> &map, TQWidget *parentWindow )
 {
-  KABC::StdAddressBook *addrBook = 0;
-  KABC::Addressee userAddress;
+  TDEABC::StdAddressBook *addrBook = 0;
+  TDEABC::Addressee userAddress;
   TQDateTime datetime = TQDateTime::currentDateTime();
   TQDate date = TQT_TQDATE_OBJECT(datetime.date());
   TQTime time = TQT_TQTIME_OBJECT(datetime.time());

@@ -22,7 +22,7 @@
 
 #include "sortmode.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 NameSortMode::NameSortMode()
  : mNameType( FormattedName ), mAscendingOrder( true ), d( 0 )
@@ -35,7 +35,7 @@ NameSortMode::NameSortMode( NameType type, bool ascending )
 {
 }
 
-bool NameSortMode::lesser( const KABC::Addressee &first, const KABC::Addressee &second ) const
+bool NameSortMode::lesser( const TDEABC::Addressee &first, const TDEABC::Addressee &second ) const
 {
   bool lesser = false;
 
@@ -60,12 +60,12 @@ bool NameSortMode::lesser( const KABC::Addressee &first, const KABC::Addressee &
   return lesser;
 }
 
-FieldSortMode::FieldSortMode( KABC::Field *field, bool ascending )
+FieldSortMode::FieldSortMode( TDEABC::Field *field, bool ascending )
   : mField( field ), mAscendingOrder( ascending ), d( 0 )
 {
 }
 
-bool FieldSortMode::lesser( const KABC::Addressee &first, const KABC::Addressee &second ) const
+bool FieldSortMode::lesser( const TDEABC::Addressee &first, const TDEABC::Addressee &second ) const
 {
   if ( !mField )
     return false;

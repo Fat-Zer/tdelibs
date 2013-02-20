@@ -53,7 +53,7 @@
 //=============================================================================
 
 
-using namespace KABC;
+using namespace TDEABC;
 
 TDECompletion * AddressLineEdit::s_completion = 0L;
 bool AddressLineEdit::s_addressesDirty = false;
@@ -559,8 +559,8 @@ TQStringList AddressLineEdit::addresses()
   TQString endQuote("\" ");
   TQString addr, email;
 
-  KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
-  KABC::AddressBook::Iterator it;
+  TDEABC::AddressBook *addressBook = TDEABC::StdAddressBook::self();
+  TDEABC::AddressBook::Iterator it;
   for( it = addressBook->begin(); it != addressBook->end(); ++it ) {
     TQStringList emails = (*it).emails();
     
@@ -598,7 +598,7 @@ TQStringList AddressLineEdit::addresses()
     }
   }
   
-  KABC::DistributionListManager manager( addressBook );
+  TDEABC::DistributionListManager manager( addressBook );
   manager.load();
   result += manager.listNames();
 

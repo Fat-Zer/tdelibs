@@ -25,7 +25,7 @@
 
 #include "lock.h"
 
-namespace KABC {
+namespace TDEABC {
 
 /**
   This class provides a lock without actually locking. It can be constructed in

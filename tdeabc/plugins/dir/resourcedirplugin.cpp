@@ -21,7 +21,7 @@
 #include "resourcedir.h"
 #include "resourcedirconfig.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 extern "C"
 {

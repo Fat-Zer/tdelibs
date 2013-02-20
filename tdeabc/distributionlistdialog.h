@@ -29,7 +29,7 @@ class TQListView;
 class TQComboBox;
 class TQButtonGroup;
 
-namespace KABC {
+namespace TDEABC {
 
 class AddressBook;
 class DistributionListEditorWidget;
@@ -46,8 +46,8 @@ class DistributionListManager;
   Example:
  
   \code
-  KABC::DistributionListDialog *dlg = new
-          KABC::DistributionListDialog( KABC::StdAddressBook::self(), this );
+  TDEABC::DistributionListDialog *dlg = new
+          TDEABC::DistributionListDialog( TDEABC::StdAddressBook::self(), this );
  
   dlg->exec();
   \endcode

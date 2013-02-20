@@ -97,8 +97,8 @@ void TestLDAPClient::testIntevation()
   // But this certainly looks fishy, it might break on non-utf8 systems.
   TQString filter = "&(|(objectclass=person)(objectclass=groupofnames)(mail=*))(|(cn=*Ägypten MDK*)(sn=*Ägypten MDK*))";
 
-  connect( mClient, TQT_SIGNAL( result( const KABC::LdapObject& ) ),
-           this, TQT_SLOT( slotLDAPResult( const KABC::LdapObject& ) ) );
+  connect( mClient, TQT_SIGNAL( result( const TDEABC::LdapObject& ) ),
+           this, TQT_SLOT( slotLDAPResult( const TDEABC::LdapObject& ) ) );
   connect( mClient, TQT_SIGNAL( done() ),
            this, TQT_SLOT( slotLDAPDone() ) );
   connect( mClient, TQT_SIGNAL( error( const TQString& ) ),
@@ -123,11 +123,11 @@ static TQString asUtf8( const TQByteArray &val )
     return TQString::fromUtf8( data, val.size() );
 }
 
-static TQString join( const KABC::LdapAttrValue& lst, const TQString& sep )
+static TQString join( const TDEABC::LdapAttrValue& lst, const TQString& sep )
 {
   TQString res;
   bool already = false;
-  for ( KABC::LdapAttrValue::ConstIterator it = lst.begin(); it != lst.end(); ++it ) {
+  for ( TDEABC::LdapAttrValue::ConstIterator it = lst.begin(); it != lst.end(); ++it ) {
     if ( already )
       res += sep;
     already = TRUE;
@@ -136,7 +136,7 @@ static TQString join( const KABC::LdapAttrValue& lst, const TQString& sep )
   return res;
 }
 
-void TestLDAPClient::slotLDAPResult( const KABC::LdapObject& obj )
+void TestLDAPClient::slotLDAPResult( const TDEABC::LdapObject& obj )
 {
   TQString cn = join( obj.attrs[ "cn" ], ", " );
   kdDebug() << " cn:" << cn << endl;

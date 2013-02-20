@@ -33,7 +33,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-using namespace KABC;
+using namespace TDEABC;
 
 Lock::Lock( const TQString &identifier )
   : mIdentifier( identifier )

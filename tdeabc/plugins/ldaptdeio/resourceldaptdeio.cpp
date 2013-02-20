@@ -41,7 +41,7 @@
 #include "resourceldaptdeio.h"
 #include "resourceldaptdeioconfig.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 // Hack from Netaccess
 void tqt_enter_modal( TQWidget *widget );
@@ -659,7 +659,7 @@ void ResourceLDAPTDEIO::data( TDEIO::Job *, const TQByteArray &data )
         } else if ( name == mAttributes[ "uid" ].lower() ) {
           d->mAddr.setUid( TQString::fromUtf8( value, value.size() ) );
         } else if ( name == mAttributes[ "jpegPhoto" ].lower() ) {
-          KABC::Picture photo;
+          TDEABC::Picture photo;
           TQImage img( value );
           if ( !img.isNull() ) {
             photo.setData( img );

@@ -42,15 +42,15 @@ int main( int argc, char **argv )
   TDEApplication app( false, false );
   
 
-  KABC::Addressee addressee;
+  TDEABC::Addressee addressee;
 
   addressee.setNameFromString( "Mr. Tobias Koenig Jr." );
   addressee.setNickName( "tokoe" );
   addressee.setBirthday( TQDate( 1982, 7, 19 ) );
   addressee.setMailer( "mutt1.2" );
-  addressee.setTimeZone( KABC::TimeZone( +2 ) );
+  addressee.setTimeZone( TDEABC::TimeZone( +2 ) );
 
-  KABC::Geo geo;
+  TDEABC::Geo geo;
   geo.setLatitude( 30 );
   geo.setLongitude( 51 );
   addressee.setGeo( geo );
@@ -63,17 +63,17 @@ int main( int argc, char **argv )
   addressee.setRevision( TQDateTime::currentDateTime() );
   addressee.setSortString( "koenig" );
   addressee.setUrl( KURL( "http://wgess16.dyndns.org") );
-  addressee.setSecrecy(  KABC::Secrecy( KABC::Secrecy::Confidential ) );
+  addressee.setSecrecy(  TDEABC::Secrecy( TDEABC::Secrecy::Confidential ) );
 /*
   TQImage img;
   img.load( "testimg.png", "PNG" );
-  KABC::Picture photo;
+  TDEABC::Picture photo;
   photo.setData( img );
   addressee.setPhoto( photo );
 
   TQImage img2;
   img2.load( "testimg.png", "PNG" );
-  KABC::Picture logo;
+  TDEABC::Picture logo;
   logo.setData( img2 );
   addressee.setLogo( logo );
 
@@ -81,26 +81,26 @@ int main( int argc, char **argv )
   soundFile.open( IO_ReadOnly );
   TQByteArray data = soundFile.readAll();
   soundFile.close();
-  KABC::Sound sound;
+  TDEABC::Sound sound;
   sound.setData( data );
   addressee.setSound( sound );
 */
   addressee.insertEmail( "tokoe@kde.org", true );
   addressee.insertEmail( "tokoe82@yahoo.de", true );
 
-  KABC::PhoneNumber phone1( "3541523475", KABC::PhoneNumber::Pref | KABC::PhoneNumber::Home );
-  KABC::PhoneNumber phone2( "+46745673475", KABC::PhoneNumber::Work );
+  TDEABC::PhoneNumber phone1( "3541523475", TDEABC::PhoneNumber::Pref | TDEABC::PhoneNumber::Home );
+  TDEABC::PhoneNumber phone2( "+46745673475", TDEABC::PhoneNumber::Work );
   addressee.insertPhoneNumber( phone1 );
   addressee.insertPhoneNumber( phone2 );
 
-  KABC::Key key( "secret key", KABC::Key::X509 );
+  TDEABC::Key key( "secret key", TDEABC::Key::X509 );
   addressee.insertKey( key );
 
   TQStringList categories;
   categories << "Friends" << "School" << "KDE";
   addressee.setCategories( categories );
 
-  KABC::Address a( KABC::Address::Work | KABC::Address::Postal | KABC::Address::Parcel );
+  TDEABC::Address a( TDEABC::Address::Work | TDEABC::Address::Postal | TDEABC::Address::Parcel );
   a.setStreet( "6544 Battleford Drive" );
   a.setLocality( "Raleigh" );
   a.setRegion( "NC" );
@@ -112,14 +112,14 @@ int main( int argc, char **argv )
   addressee.insertCustom( "2hsdf", "ertuer", "iurt" );
   addressee.insertCustom( "3hsdf", "ertuer", "iurt" );
 
-  KABC::Addressee::List list;
+  TDEABC::Addressee::List list;
   for ( int i = 0; i < 1000; ++i ) {
-    KABC::Addressee addr = addressee;
+    TDEABC::Addressee addr = addressee;
     addr.setUid( TQString::number( i ) );
     list.append( addr );
   }
 
-  KABC::VCardConverter converter;
+  TDEABC::VCardConverter converter;
   TQString txt = converter.createVCards( list );
 
   TQFile file( "out.vcf" );

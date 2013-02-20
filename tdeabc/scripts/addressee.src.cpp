@@ -34,7 +34,7 @@
 
 #include "addressee.h"
 
-using namespace KABC;
+using namespace TDEABC;
 
 static bool matchBinaryPattern( int value, int pattern );
 
@@ -42,7 +42,7 @@ template <class L>
 static bool listEquals( const TQValueList<L>&, const TQValueList<L>& );
 static bool emailsEquals( const TQStringList&, const TQStringList& );
 
-KABC::SortMode *Addressee::mSortMode = 0;
+TDEABC::SortMode *Addressee::mSortMode = 0;
 
 struct Addressee::AddresseeData : public TDEShared
 {
@@ -1032,7 +1032,7 @@ bool Addressee::changed() const
   return mData->changed;
 }
 
-void Addressee::setSortMode( KABC::SortMode *mode )
+void Addressee::setSortMode( TDEABC::SortMode *mode )
 {
   mSortMode = mode;
 }
@@ -1045,7 +1045,7 @@ bool Addressee::operator< ( const Addressee &addr )
     return mSortMode->lesser( *this, addr );
 }
 
-TQDataStream &KABC::operator<<( TQDataStream &s, const Addressee &a )
+TQDataStream &TDEABC::operator<<( TQDataStream &s, const Addressee &a )
 {
   if (!a.mData) return s;
 
@@ -1061,7 +1061,7 @@ TQDataStream &KABC::operator<<( TQDataStream &s, const Addressee &a )
   return s;
 }
 
-TQDataStream &KABC::operator>>( TQDataStream &s, Addressee &a )
+TQDataStream &TDEABC::operator>>( TQDataStream &s, Addressee &a )
 {
   if (!a.mData)
     return s;
