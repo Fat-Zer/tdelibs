@@ -3,7 +3,7 @@ TEMPLATE	= app
 include( $(KDELIBS)/win/common.pro )
 
 
-TARGET = makekdewidgets
+TARGET = maketdewidgets
 DESTDIR = .
 
 win32 {
@@ -11,7 +11,7 @@ win32 {
 #CONFIG += windows
 }
 
-SOURCES = makekdewidgets.cpp
+SOURCES = maketdewidgets.cpp
 
 HEADERS = 
 

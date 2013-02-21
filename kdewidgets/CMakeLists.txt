@@ -32,12 +32,12 @@ link_directories(
 )
 
 
-##### makekdewidgets ############################
+##### maketdewidgets ############################
 
-set( target makekdewidgets )
+set( target maketdewidgets )
 
 set( ${target}_SRCS
-  makekdewidgets.cpp
+  maketdewidgets.cpp
 )
 
 tde_add_executable( ${target}
@@ -55,8 +55,8 @@ set( ${target}_SRCS
 )
 
 add_custom_command( OUTPUT kdewidgets.cpp
-  COMMAND ./makekdewidgets -o kdewidgets.cpp ${CMAKE_CURRENT_SOURCE_DIR}/kde.widgets
-  DEPENDS makekdewidgets ${CMAKE_CURRENT_SOURCE_DIR}/kde.widgets
+  COMMAND ./maketdewidgets -o kdewidgets.cpp ${CMAKE_CURRENT_SOURCE_DIR}/kde.widgets
+  DEPENDS maketdewidgets ${CMAKE_CURRENT_SOURCE_DIR}/kde.widgets
 )
 
 tde_add_kpart( ${target} AUTOMOC

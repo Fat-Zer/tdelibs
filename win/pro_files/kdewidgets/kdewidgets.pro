@@ -3,7 +3,7 @@ CONFIG += trinitylib #this is a dynamic kde library
 
 include( $(KDELIBS)/win/common.pro )
 
-system( makekdewidgets -o kdewidgets.cpp kde.widgets )
+system( maketdewidgets -o kdewidgets.cpp kde.widgets )
 
 #no _d because it's a special case
 

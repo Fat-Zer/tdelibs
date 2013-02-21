@@ -1,4 +1,4 @@
-These are the tests for the current makekdewidgets.
+These are the tests for the current maketdewidgets.
 
 Currently there are two modes generated, and the checksums checked.
 These files are correct and build plugins that are functionally 
