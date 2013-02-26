@@ -245,7 +245,7 @@ private:
 	FILE *	m_infile;			/* File being corrected */
 	FILE *	m_outfile;		/* Corrected copy of infile */
 
-	char *	m_astdefilename;		/* File specified in -f option */
+	char *	m_askfilename;		/* File specified in -f option */
 
 	int	m_changes;		/* NZ if changes made to cur. file */
 	int	m_readonly;		/* NZ if current file is readonly */

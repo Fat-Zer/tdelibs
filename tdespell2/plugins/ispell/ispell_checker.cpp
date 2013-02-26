@@ -197,7 +197,7 @@ ISpellChecker::ISpellChecker()
      m_chartypes(NULL),
      m_infile(NULL),
      m_outfile(NULL),
-     m_astdefilename(NULL),
+     m_askfilename(NULL),
      m_Trynum(0),
      m_translate_in(0)
 {
