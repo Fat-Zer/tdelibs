@@ -35,7 +35,7 @@ DEALINGS IN THE SOFTWARE.
 #include <kcolorbutton.h>
 #include <kdemacros.h>
 
-#include "plastitdeconf.h"
+#include "plastikconf.h"
 
 extern "C"
 {
@@ -220,4 +220,4 @@ void PlastikStyleConfig::updateChanged()
 		emit changed(true);
 }
 
-#include "plastitdeconf.moc"
+#include "plastikconf.moc"
