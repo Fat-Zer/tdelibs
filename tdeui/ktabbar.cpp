@@ -26,9 +26,9 @@
 #include <tqpushbutton.h>
 #include <tqtooltip.h>
 
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "ktabbar.h"
 #include "ktabwidget.h"
@@ -123,7 +123,7 @@ void KTabBar::mouseMoveEvent( TQMouseEvent *e )
           mDragSwitchTab = 0;
         }
 
-        int delay = KGlobalSettings::dndEventDelay();
+        int delay = TDEGlobalSettings::dndEventDelay();
         TQPoint newPos = e->pos();
         if( newPos.x() > mDragStart.x()+delay || newPos.x() < mDragStart.x()-delay ||
             newPos.y() > mDragStart.y()+delay || newPos.y() < mDragStart.y()-delay )
@@ -136,7 +136,7 @@ void KTabBar::mouseMoveEvent( TQMouseEvent *e )
     }
     else if ( e->state() == Qt::MidButton ) {
         if (mReorderStartTab==-1) {
-            int delay = KGlobalSettings::dndEventDelay();
+            int delay = TDEGlobalSettings::dndEventDelay();
             TQPoint newPos = e->pos();
             if( newPos.x() > mDragStart.x()+delay || newPos.x() < mDragStart.x()-delay ||
                 newPos.y() > mDragStart.y()+delay || newPos.y() < mDragStart.y()-delay )
@@ -191,7 +191,7 @@ void KTabBar::mouseMoveEvent( TQMouseEvent *e )
                 }
 
                 mHoverCloseButton = new TQPushButton( this );
-                mHoverCloseButton->setIconSet( KGlobal::iconLoader()->loadIconSet("fileclose", KIcon::Toolbar, KIcon::SizeSmall) );
+                mHoverCloseButton->setIconSet( TDEGlobal::iconLoader()->loadIconSet("fileclose", TDEIcon::Toolbar, TDEIcon::SizeSmall) );
                 mHoverCloseButton->setGeometry( rect );
                 TQToolTip::add(mHoverCloseButton,i18n("Close this tab"));
                 mHoverCloseButton->setFlat(true);

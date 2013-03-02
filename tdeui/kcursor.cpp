@@ -30,8 +30,8 @@
 #include <tqtimer.h>
 #include <tqwidget.h>
 
-#include <kglobal.h>
-#include <kconfig.h>
+#include <tdeglobal.h>
+#include <tdeconfig.h>
 #include <tqscrollview.h>
 
 #include "kcursor_private.h"
@@ -46,8 +46,8 @@ TQCursor KCursor::handCursor()
 
         if (!hand_cursor)
         {
-                KConfig *config = KGlobal::config();
-                KConfigGroupSaver saver( config, "General" );
+                TDEConfig *config = TDEGlobal::config();
+                TDEConfigGroupSaver saver( config, "General" );
 
 #ifndef Q_WS_WIN // this mask doesn't work too well on win32
                 if ( config->readEntry("handCursorStyle", "Windows") == "Windows" )
@@ -369,8 +369,8 @@ KCursorPrivate::KCursorPrivate()
 {
     hideCursorDelay = 5000; // 5s default value
 
-    KConfig *kc = KGlobal::config();
-    KConfigGroupSaver ks( kc, TQString::fromLatin1("KDE") );
+    TDEConfig *kc = TDEGlobal::config();
+    TDEConfigGroupSaver ks( kc, TQString::fromLatin1("KDE") );
     enabled = kc->readBoolEntry(
 		  TQString::fromLatin1("Autohiding cursor enabled"), true );
 }

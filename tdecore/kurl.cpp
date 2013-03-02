@@ -27,7 +27,7 @@
 // KDE_QT_ONLY is first used for dcop/client (e.g. marshalling)
 #ifndef KDE_QT_ONLY
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kidna.h>
 #include <kprotocolinfo.h>
 #endif
@@ -334,14 +334,14 @@ static TQString cleanpath(const TQString &_path, bool cleanDirSeparator, bool de
   if (decodeDots)
   {
 #ifndef KDE_QT_ONLY
-     static const TQString &encodedDot = KGlobal::staticQString("%2e");
+     static const TQString &encodedDot = TDEGlobal::staticQString("%2e");
 #else
      TQString encodedDot("%2e");
 #endif
      if (path.find(encodedDot, 0, false) != -1)
      {
 #ifndef KDE_QT_ONLY
-        static const TQString &encodedDOT = KGlobal::staticQString("%2E"); // Uppercase!
+        static const TQString &encodedDOT = TDEGlobal::staticQString("%2E"); // Uppercase!
 #else
         TQString encodedDOT("%2E");
 #endif
@@ -2340,7 +2340,7 @@ KURL::URIMode KURL::uriModeForProtocol(const TQString& protocol)
     KURL::URIMode mode = Auto;
     if (protocol == fileProt)
         return URL;
-    if (KGlobal::_instance)
+    if (TDEGlobal::_instance)
         mode = KProtocolInfo::uriParseMode(protocol);
     if (mode == Auto ) {
 #else

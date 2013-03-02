@@ -23,10 +23,10 @@
 #include <tqdatastream.h>
 #include <tqptrstack.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kstandarddirs.h>
-#include <kapplication.h>
-#include <kconfig.h>
+#include <tdeapplication.h>
+#include <tdeconfig.h>
 #include <dcopclient.h>
 #include <kdebug.h>
 #include <kstaticdeleter.h>
@@ -51,12 +51,12 @@ static bool canAvoidStartupEvent( const TQString& event, const TQString& appname
         return false;
     }
     // starttde event is in global events file
-    static KConfig* configfile = appname != "ksmserver"
-        ? new KConfig( appname + ".eventsrc", true, false )
-        : new KConfig( "knotify.eventsrc", true, false );
-    static KConfig* eventsfile = appname != "ksmserver"
-        ? new KConfig( appname + "/eventsrc", true, false, "data" )
-        : new KConfig( "knotify/eventsrc", true, false, "data" );
+    static TDEConfig* configfile = appname != "ksmserver"
+        ? new TDEConfig( appname + ".eventsrc", true, false )
+        : new TDEConfig( "knotify.eventsrc", true, false );
+    static TDEConfig* eventsfile = appname != "ksmserver"
+        ? new TDEConfig( appname + "/eventsrc", true, false, "data" )
+        : new TDEConfig( "knotify/eventsrc", true, false, "data" );
     configfile->setGroup( event );
     eventsfile->setGroup( event );
     int ev1 = configfile->readNumEntry( "presentation", -2 );
@@ -178,7 +178,7 @@ int KNotifyClient::getPresentation(const TQString &eventname)
 	int present;
 	if (eventname.isEmpty()) return Default;
 
-	KConfig eventsfile( KNotifyClient::instance()->instanceName()+".eventsrc", true, false);
+	TDEConfig eventsfile( KNotifyClient::instance()->instanceName()+".eventsrc", true, false);
 	eventsfile.setGroup(eventname);
 
 	present=eventsfile.readNumEntry("presentation", -1);
@@ -190,7 +190,7 @@ TQString KNotifyClient::getFile(const TQString &eventname, int present)
 {
 	if (eventname.isEmpty()) return TQString::null;
 
-	KConfig eventsfile( KNotifyClient::instance()->instanceName()+".eventsrc", true, false);
+	TDEConfig eventsfile( KNotifyClient::instance()->instanceName()+".eventsrc", true, false);
 	eventsfile.setGroup(eventname);
 
 	switch (present)
@@ -209,7 +209,7 @@ int KNotifyClient::getDefaultPresentation(const TQString &eventname)
 	int present;
 	if (eventname.isEmpty()) return Default;
 
-	KConfig eventsfile( KNotifyClient::instance()->instanceName()+"/eventsrc", true, false, "data");
+	TDEConfig eventsfile( KNotifyClient::instance()->instanceName()+"/eventsrc", true, false, "data");
 	eventsfile.setGroup(eventname);
 
 	present=eventsfile.readNumEntry("default_presentation", -1);
@@ -221,7 +221,7 @@ TQString KNotifyClient::getDefaultFile(const TQString &eventname, int present)
 {
 	if (eventname.isEmpty()) return TQString::null;
 
-	KConfig eventsfile( KNotifyClient::instance()->instanceName()+"/eventsrc", true, false, "data");
+	TDEConfig eventsfile( KNotifyClient::instance()->instanceName()+"/eventsrc", true, false, "data");
 	eventsfile.setGroup(eventname);
 
 	switch (present)
@@ -241,7 +241,7 @@ bool KNotifyClient::startDaemon()
   if (!kapp->dcopClient()->isApplicationRegistered(daemonName)) {
     if( firstTry ) {
       firstTry = false;
-      return KApplication::startServiceByDesktopName(daemonName) == 0;
+      return TDEApplication::startServiceByDesktopName(daemonName) == 0;
     }
     return false;
   }
@@ -277,7 +277,7 @@ void KNotifyClient::beep(const TQString& reason)
 }
 
 
-KInstance * KNotifyClient::instance() {
+TDEInstance * KNotifyClient::instance() {
     return KNotifyClient::Instance::current();
 }
 
@@ -296,7 +296,7 @@ public:
 		else if (!m_instances.isEmpty())
 		{
 			kdWarning(160) << "Tried to remove an Instance that is not the current," << endl;
-			kdWarning(160) << "Resetting to the main KApplication." << endl;
+			kdWarning(160) << "Resetting to the main TDEApplication." << endl;
 			m_instances.clear();
 		}
 		else
@@ -322,18 +322,18 @@ static KStaticDeleter<KNotifyClient::InstanceStack > instancesDeleter;
 
 struct KNotifyClient::InstancePrivate
 {
-    KInstance *instance;
+    TDEInstance *instance;
     bool useSystemBell;
 };
 
-KNotifyClient::Instance::Instance(KInstance *instance)
+KNotifyClient::Instance::Instance(TDEInstance *instance)
 {
     d = new InstancePrivate;
     d->instance = instance;
     instances()->push(this);
 
-    KConfig *config = instance->config();
-    KConfigGroupSaver cs( config, "General" );
+    TDEConfig *config = instance->config();
+    TDEConfigGroupSaver cs( config, "General" );
     d->useSystemBell = config->readBoolEntry( "UseSystemBell", false );
 }
 
@@ -360,7 +360,7 @@ bool KNotifyClient::Instance::useSystemBell() const
 // static methods
 
 // We always return a valid KNotifyClient::Instance here. If no special one
-// is available, we have a default-instance with kapp as KInstance.
+// is available, we have a default-instance with kapp as TDEInstance.
 // We make sure to always have that default-instance in the stack, because
 // the stack might have gotten cleared in the destructor.
 // We can't use QStack::setAutoDelete( true ), because no instance besides
@@ -370,7 +370,7 @@ KNotifyClient::Instance * KNotifyClient::Instance::currentInstance()
 	return instances()->currentInstance();
 }
 
-KInstance *KNotifyClient::Instance::current()
+TDEInstance *KNotifyClient::Instance::current()
 {
     return currentInstance()->d->instance;
 }

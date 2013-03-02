@@ -25,28 +25,28 @@
 
 #include "kiconview.h"
 #include "kwordwrap.h"
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
-#include <kapplication.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
+#include <tdeapplication.h>
 #include <kipc.h> 
 
 #include <kcursor.h>
 #include <kpixmap.h>
 #include <kpixmapeffect.h>
 
-class KIconView::KIconViewPrivate
+class TDEIconView::TDEIconViewPrivate
 {
 public:
-    KIconViewPrivate() {
-        mode = KIconView::Execute;
+    TDEIconViewPrivate() {
+        mode = TDEIconView::Execute;
         fm = 0L;
         doAutoSelect = true;
         textHeight = 0;
         dragHoldItem = 0L;
     }
-    KIconView::Mode mode;
+    TDEIconView::Mode mode;
     bool doAutoSelect;
     TQFontMetrics *fm;
     TQPixmapCache maskCache;
@@ -56,16 +56,16 @@ public:
     TQTimer doubleClickIgnoreTimer;
 };
 
-KIconView::KIconView( TQWidget *parent, const char *name, WFlags f )
+TDEIconView::TDEIconView( TQWidget *parent, const char *name, WFlags f )
     : TQIconView( parent, name, f )
 {
-    d = new KIconViewPrivate;
+    d = new TDEIconViewPrivate;
 
     connect( this, TQT_SIGNAL( onViewport() ),
              this, TQT_SLOT( slotOnViewport() ) );
     connect( this, TQT_SIGNAL( onItem( TQIconViewItem * ) ),
              this, TQT_SLOT( slotOnItem( TQIconViewItem * ) ) );
-    slotSettingsChanged( KApplication::SETTINGS_MOUSE );
+    slotSettingsChanged( TDEApplication::SETTINGS_MOUSE );
     if ( kapp ) { // maybe null when used inside designer
         connect( kapp, TQT_SIGNAL( settingsChanged(int) ), TQT_SLOT( slotSettingsChanged(int) ) );
         kapp->addKipcEventMask( KIPC::SettingsChanged );
@@ -80,24 +80,24 @@ KIconView::KIconView( TQWidget *parent, const char *name, WFlags f )
     connect( &d->dragHoldTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(slotDragHoldTimeout()) );
 }
 
-KIconView::~KIconView()
+TDEIconView::~TDEIconView()
 {
     delete d->fm;
     delete d;
 }
 
 
-void KIconView::setMode( KIconView::Mode mode )
+void TDEIconView::setMode( TDEIconView::Mode mode )
 {
     d->mode = mode;
 }
 
-KIconView::Mode KIconView::mode() const
+TDEIconView::Mode TDEIconView::mode() const
 {
     return d->mode;
 }
 
-void KIconView::slotOnItem( TQIconViewItem *item )
+void TDEIconView::slotOnItem( TQIconViewItem *item )
 {
     if ( item ) {
         if ( m_bUseSingle ) {
@@ -112,7 +112,7 @@ void KIconView::slotOnItem( TQIconViewItem *item )
     }
 }
 
-void KIconView::slotOnViewport()
+void TDEIconView::slotOnViewport()
 {
     if ( m_bUseSingle && m_bChangeCursorOverItem )
         viewport()->unsetCursor();
@@ -121,12 +121,12 @@ void KIconView::slotOnViewport()
     m_pCurrentItem = 0L;
 }
 
-void KIconView::slotSettingsChanged(int category)
+void TDEIconView::slotSettingsChanged(int category)
 {
-    if ( category != KApplication::SETTINGS_MOUSE )
+    if ( category != TDEApplication::SETTINGS_MOUSE )
       return;
-    m_bUseSingle = KGlobalSettings::singleClick();
-    //kdDebug() << "KIconView::slotSettingsChanged for mouse, usesingle=" << m_bUseSingle << endl;
+    m_bUseSingle = TDEGlobalSettings::singleClick();
+    //kdDebug() << "TDEIconView::slotSettingsChanged for mouse, usesingle=" << m_bUseSingle << endl;
 
     disconnect( this, TQT_SIGNAL( mouseButtonClicked( int, TQIconViewItem *,
 						  const TQPoint & ) ),
@@ -150,14 +150,14 @@ void KIconView::slotSettingsChanged(int category)
 // 					  const TQPoint & ) ) );
     }
 
-    m_bChangeCursorOverItem = KGlobalSettings::changeCursorOverIcon();
-    m_autoSelectDelay = m_bUseSingle ? KGlobalSettings::autoSelectDelay() : -1;
+    m_bChangeCursorOverItem = TDEGlobalSettings::changeCursorOverIcon();
+    m_autoSelectDelay = m_bUseSingle ? TDEGlobalSettings::autoSelectDelay() : -1;
 
     if( !m_bUseSingle || !m_bChangeCursorOverItem )
         viewport()->unsetCursor();
 }
 
-void KIconView::slotAutoSelect()
+void TDEIconView::slotAutoSelect()
 {
   // check that the item still exists
   if( index( m_pCurrentItem ) == -1 || !d->doAutoSelect )
@@ -167,7 +167,7 @@ void KIconView::slotAutoSelect()
   if( !hasFocus() )
     setFocus();
 
-  ButtonState keybstate = KApplication::keyboardMouseState();
+  ButtonState keybstate = TDEApplication::keyboardMouseState();
   TQIconViewItem* previousItem = currentItem();
   setCurrentItem( m_pCurrentItem );
 
@@ -232,18 +232,18 @@ void KIconView::slotAutoSelect()
       setSelected( m_pCurrentItem, true );
   }
   else
-    kdDebug() << "KIconView: That's not supposed to happen!!!!" << endl;
+    kdDebug() << "TDEIconView: That's not supposed to happen!!!!" << endl;
 }
 
-void KIconView::emitExecute( TQIconViewItem *item, const TQPoint &pos )
+void TDEIconView::emitExecute( TQIconViewItem *item, const TQPoint &pos )
 {
   if ( d->mode != Execute )
   {
-    // kdDebug() << "KIconView::emitExecute : not in execute mode !" << endl;
+    // kdDebug() << "TDEIconView::emitExecute : not in execute mode !" << endl;
     return;
   }
 
-  ButtonState keybstate = KApplication::keyboardMouseState();
+  ButtonState keybstate = TDEApplication::keyboardMouseState();
 
   m_pAutoSelect->stop();
 
@@ -256,7 +256,7 @@ void KIconView::emitExecute( TQIconViewItem *item, const TQPoint &pos )
   }
 }
 
-void KIconView::updateDragHoldItem( TQDropEvent *e )
+void TDEIconView::updateDragHoldItem( TQDropEvent *e )
 {
   TQIconViewItem *item = findItem( e->pos() );
 
@@ -274,21 +274,21 @@ void KIconView::updateDragHoldItem( TQDropEvent *e )
   }
 }
 
-void KIconView::focusOutEvent( TQFocusEvent *fe )
+void TDEIconView::focusOutEvent( TQFocusEvent *fe )
 {
   m_pAutoSelect->stop();
 
   TQIconView::focusOutEvent( fe );
 }
 
-void KIconView::leaveEvent( TQEvent *e )
+void TDEIconView::leaveEvent( TQEvent *e )
 {
   m_pAutoSelect->stop();
 
   TQIconView::leaveEvent( e );
 }
 
-void KIconView::contentsMousePressEvent( TQMouseEvent *e )
+void TDEIconView::contentsMousePressEvent( TQMouseEvent *e )
 {
   if( (selectionMode() == Extended) && (e->state() & ShiftButton) && !(e->state() & ControlButton) ) {
     bool block = signalsBlocked();
@@ -303,7 +303,7 @@ void KIconView::contentsMousePressEvent( TQMouseEvent *e )
   d->doAutoSelect = false;
 }
 
-void KIconView::contentsMouseDoubleClickEvent ( TQMouseEvent * e )
+void TDEIconView::contentsMouseDoubleClickEvent ( TQMouseEvent * e )
 {
   TQIconView::contentsMouseDoubleClickEvent( e );
 
@@ -318,9 +318,9 @@ void KIconView::contentsMouseDoubleClickEvent ( TQMouseEvent * e )
   d->doubleClickIgnoreTimer.start(0, true);
 }
 
-void KIconView::slotMouseButtonClicked( int btn, TQIconViewItem *item, const TQPoint &pos )
+void TDEIconView::slotMouseButtonClicked( int btn, TQIconViewItem *item, const TQPoint &pos )
 {
-  //kdDebug() << " KIconView::slotMouseButtonClicked() item=" << item << endl;
+  //kdDebug() << " TDEIconView::slotMouseButtonClicked() item=" << item << endl;
   if( d->doubleClickIgnoreTimer.isActive() )
     return; // Ignore double click
     
@@ -328,19 +328,19 @@ void KIconView::slotMouseButtonClicked( int btn, TQIconViewItem *item, const TQP
     emitExecute( item, pos );
 }
 
-void KIconView::contentsMouseReleaseEvent( TQMouseEvent *e )
+void TDEIconView::contentsMouseReleaseEvent( TQMouseEvent *e )
 {
     d->doAutoSelect = true;
     TQIconView::contentsMouseReleaseEvent( e );
 }
 
-void KIconView::contentsDragEnterEvent( TQDragEnterEvent *e )
+void TDEIconView::contentsDragEnterEvent( TQDragEnterEvent *e )
 {
     updateDragHoldItem( e );
     TQIconView::contentsDragEnterEvent( e );
 }
 
-void KIconView::contentsDragLeaveEvent( TQDragLeaveEvent *e )
+void TDEIconView::contentsDragLeaveEvent( TQDragLeaveEvent *e )
 {
     d->dragHoldTimer.stop();
     d->dragHoldItem = 0L;
@@ -348,19 +348,19 @@ void KIconView::contentsDragLeaveEvent( TQDragLeaveEvent *e )
 }
 
 
-void KIconView::contentsDragMoveEvent( TQDragMoveEvent *e )
+void TDEIconView::contentsDragMoveEvent( TQDragMoveEvent *e )
 {
     updateDragHoldItem( e );
     TQIconView::contentsDragMoveEvent( e );
 }
 
-void KIconView::contentsDropEvent( TQDropEvent* e )
+void TDEIconView::contentsDropEvent( TQDropEvent* e )
 {
     d->dragHoldTimer.stop();
     TQIconView::contentsDropEvent( e );
 }
 
-void KIconView::slotDragHoldTimeout()
+void TDEIconView::slotDragHoldTimeout()
 {
     TQIconViewItem *tmp = d->dragHoldItem;
     d->dragHoldItem = 0L;
@@ -368,7 +368,7 @@ void KIconView::slotDragHoldTimeout()
     emit held( tmp );
 }
 
-void KIconView::takeItem( TQIconViewItem * item )
+void TDEIconView::takeItem( TQIconViewItem * item )
 {
     if ( item == d->dragHoldItem )
     {
@@ -379,13 +379,13 @@ void KIconView::takeItem( TQIconViewItem * item )
     TQIconView::takeItem( item );
 }
 
-void KIconView::cancelPendingHeldSignal()
+void TDEIconView::cancelPendingHeldSignal()
 {
     d->dragHoldTimer.stop();
     d->dragHoldItem = 0L;
 }
 
-void KIconView::wheelEvent( TQWheelEvent *e )
+void TDEIconView::wheelEvent( TQWheelEvent *e )
 {
     if (horizontalScrollBar() && (arrangement() == TQIconView::TopToBottom)) {
         TQWheelEvent ce(e->pos(), e->delta(), e->state(), Qt::Horizontal);
@@ -398,14 +398,14 @@ void KIconView::wheelEvent( TQWheelEvent *e )
     TQIconView::wheelEvent(e);
 }
 
-void KIconView::setFont( const TQFont &font )
+void TDEIconView::setFont( const TQFont &font )
 {
     delete d->fm;
     d->fm = 0L;
     TQIconView::setFont( font );
 }
 
-TQFontMetrics *KIconView::itemFontMetrics() const
+TQFontMetrics *TDEIconView::itemFontMetrics() const
 {
     if (!d->fm) {
         // TQIconView creates one too, but we can't access it
@@ -414,7 +414,7 @@ TQFontMetrics *KIconView::itemFontMetrics() const
     return d->fm;
 }
 
-TQPixmap KIconView::selectedIconPixmap( TQPixmap *pix, const TQColor &col ) const
+TQPixmap TDEIconView::selectedIconPixmap( TQPixmap *pix, const TQColor &col ) const
 {
     TQPixmap m;
     if ( d->maskCache.find( TQString::number( pix->serialNumber() ), m ) )
@@ -424,12 +424,12 @@ TQPixmap KIconView::selectedIconPixmap( TQPixmap *pix, const TQColor &col ) cons
     return m;
 }
 
-int KIconView::iconTextHeight() const
+int TDEIconView::iconTextHeight() const
 {
     return d->textHeight > 0 ? d->textHeight : ( wordWrapIconText() ? 99 : 1 );
 }
 
-void KIconView::setIconTextHeight( int n )
+void TDEIconView::setIconTextHeight( int n )
 {
     int oldHeight = iconTextHeight();
     if ( n > 1 )
@@ -447,27 +447,27 @@ void KIconView::setIconTextHeight( int n )
 
 /////////////
 
-struct KIconViewItem::KIconViewItemPrivate
+struct TDEIconViewItem::TDEIconViewItemPrivate
 {
     TQSize m_pixmapSize;
 };
 
-void KIconViewItem::init()
+void TDEIconViewItem::init()
 {
     m_wordWrap = 0L;
     d = 0L;
     calcRect();
 }
 
-KIconViewItem::~KIconViewItem()
+TDEIconViewItem::~TDEIconViewItem()
 {
     delete m_wordWrap;
     delete d;
 }
 
-void KIconViewItem::calcRect( const TQString& text_ )
+void TDEIconViewItem::calcRect( const TQString& text_ )
 {
-    bool drawRoundedRect = KGlobalSettings::iconUseRoundedRect();
+    bool drawRoundedRect = TDEGlobalSettings::iconUseRoundedRect();
 
     Q_ASSERT( iconView() );
     if ( !iconView() )
@@ -475,14 +475,14 @@ void KIconViewItem::calcRect( const TQString& text_ )
     delete m_wordWrap;
     m_wordWrap = 0L;
 #ifndef NDEBUG // be faster for the end-user, such a bug will have been fixed before hand :)
-    if ( !iconView()->inherits("KIconView") )
+    if ( !iconView()->inherits("TDEIconView") )
     {
-        kdWarning() << "KIconViewItem used in a " << iconView()->className() << " !!" << endl;
+        kdWarning() << "TDEIconViewItem used in a " << iconView()->className() << " !!" << endl;
         return;
     }
 #endif
-    //kdDebug() << "KIconViewItem::calcRect - " << text() << endl;
-    KIconView *view = static_cast<KIconView *>(iconView());
+    //kdDebug() << "TDEIconViewItem::calcRect - " << text() << endl;
+    TDEIconView *view = static_cast<TDEIconView *>(iconView());
     TQRect itemIconRect = pixmapRect();
     TQRect itemTextRect = textRect();
     TQRect itemRect = rect();
@@ -532,7 +532,7 @@ void KIconViewItem::calcRect( const TQString& text_ )
     t = text_.isEmpty() ? text() : text_;
     
     // Max text height
-    int nbLines = static_cast<KIconView*>( iconView() )->iconTextHeight();
+    int nbLines = static_cast<TDEIconView*>( iconView() )->iconTextHeight();
     int height = nbLines > 0 ? fm->height() * nbLines : 0xFFFFFFFF;
     
     // Should not be higher than pixmap if text is alongside icons
@@ -629,16 +629,16 @@ void KIconViewItem::calcRect( const TQString& text_ )
 
 }
 
-void KIconViewItem::paintItem( TQPainter *p, const TQColorGroup &cg )
+void TDEIconViewItem::paintItem( TQPainter *p, const TQColorGroup &cg )
 {
     TQIconView* view = iconView();
     Q_ASSERT( view );
     if ( !view )
         return;
 #ifndef NDEBUG // be faster for the end-user, such a bug will have been fixed before hand :)
-    if ( !view->inherits("KIconView") )
+    if ( !view->inherits("TDEIconView") )
     {
-        kdWarning() << "KIconViewItem used in a " << view->className() << " !!" << endl;
+        kdWarning() << "TDEIconViewItem used in a " << view->className() << " !!" << endl;
         return;
     }
 #endif
@@ -651,14 +651,14 @@ void KIconViewItem::paintItem( TQPainter *p, const TQColorGroup &cg )
     p->restore();
 }
 
-KWordWrap * KIconViewItem::wordWrap()
+KWordWrap * TDEIconViewItem::wordWrap()
 {
     return m_wordWrap;
 }
 
-void KIconViewItem::paintPixmap( TQPainter *p, const TQColorGroup &cg )
+void TDEIconViewItem::paintPixmap( TQPainter *p, const TQColorGroup &cg )
 {
-    KIconView *kview = static_cast<KIconView *>(iconView());
+    TDEIconView *kview = static_cast<TDEIconView *>(iconView());
 
 #ifndef QT_NO_PICTURE
     if ( picture() ) {
@@ -702,9 +702,9 @@ void KIconViewItem::paintPixmap( TQPainter *p, const TQColorGroup &cg )
     }
 }
 
-void KIconViewItem::paintText( TQPainter *p, const TQColorGroup &cg )
+void TDEIconViewItem::paintText( TQPainter *p, const TQColorGroup &cg )
 {
-    bool drawRoundedRect = KGlobalSettings::iconUseRoundedRect();
+    bool drawRoundedRect = TDEGlobalSettings::iconUseRoundedRect();
     int textX;
     if (drawRoundedRect == true)
       textX = textRect( false ).x() + 4;
@@ -732,20 +732,20 @@ void KIconViewItem::paintText( TQPainter *p, const TQColorGroup &cg )
     m_wordWrap->drawText( p, textX, textY, align | KWordWrap::Truncate );
 }
 
-TQSize KIconViewItem::pixmapSize() const
+TQSize TDEIconViewItem::pixmapSize() const
 {
     return d ? d->m_pixmapSize : TQSize( 0, 0 );
 }
 
-void KIconViewItem::setPixmapSize( const TQSize& size )
+void TDEIconViewItem::setPixmapSize( const TQSize& size )
 {
     if ( !d )
-        d = new KIconViewItemPrivate;
+        d = new TDEIconViewItemPrivate;
 
     d->m_pixmapSize = size;
 }
 
-void KIconView::virtual_hook( int, void* )
+void TDEIconView::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
 #include "kiconview.moc"

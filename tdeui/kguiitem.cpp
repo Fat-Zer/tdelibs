@@ -149,7 +149,7 @@ TQString KGuiItem::plainText() const
     return stripped;
 }
 
-TQIconSet KGuiItem::iconSet( KIcon::Group group, int size, KInstance* instance ) const
+TQIconSet KGuiItem::iconSet( TDEIcon::Group group, int size, TDEInstance* instance ) const
 {
     if( d->m_hasIcon )
     {

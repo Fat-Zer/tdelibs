@@ -30,10 +30,10 @@
 #include <tqregexp.h>
 #include <tqwhatsthis.h>
 #include <tqpushbutton.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kinputdialog.h>
-#include <klistbox.h>
-#include <klocale.h>
+#include <tdelistbox.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
@@ -41,7 +41,7 @@
 KMInstancePage::KMInstancePage(TQWidget *parent, const char *name)
 : TQWidget(parent,name)
 {
-	m_view = new KListBox(this);
+	m_view = new TDEListBox(this);
 	m_printer = 0;
 
 	initActions();

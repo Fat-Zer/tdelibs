@@ -33,20 +33,20 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include <tqtextstream.h>
 #include <tqimage.h>
 
-#include <kaboutdata.h>
-#include <kapplication.h>
-#include <kconfig.h>
+#include <tdeaboutdata.h>
+#include <tdeapplication.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kpushbutton.h>
 #include <kseparator.h>
 #include <kstandarddirs.h>
 #include <kstdguiitem.h>
 #include <ktextbrowser.h>
 #include <kiconeffect.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 
 #ifdef Q_WS_X11
 #include <twin.h>
@@ -59,7 +59,7 @@ KTipDatabase::KTipDatabase(const TQString &_tipFile)
 {
     TQString tipFile = _tipFile;
     if (tipFile.isEmpty())
-	tipFile = TQString::fromLatin1(KGlobal::instance()->aboutData()->appName()) + "/tips";
+	tipFile = TQString::fromLatin1(TDEGlobal::instance()->aboutData()->appName()) + "/tips";
 
     loadTips(tipFile);
 
@@ -72,7 +72,7 @@ KTipDatabase::KTipDatabase( const TQStringList& tipsFiles )
 {
    if ( tipsFiles.isEmpty() || ( ( tipsFiles.count() == 1 ) && tipsFiles.first().isEmpty() ) )
    {
-       addTips(TQString::fromLatin1(KGlobal::instance()->aboutData()->appName()) + "/tips");
+       addTips(TQString::fromLatin1(TDEGlobal::instance()->aboutData()->appName()) + "/tips");
    }
    else
    {
@@ -180,7 +180,7 @@ KTipDialog::KTipDialog(KTipDatabase *db, TQWidget *parent, const char *name)
     TQImage img;
     int h,s,v;
 
-    mBlendedColor = KGlobalSettings::activeTitleColor();
+    mBlendedColor = TDEGlobalSettings::activeTitleColor();
     mBlendedColor.hsv(&h,&s,&v);
     mBlendedColor.setHsv(h, int(s*(71/76.0)), int(v*(67/93.0)));
 
@@ -188,17 +188,17 @@ KTipDialog::KTipDialog(KTipDatabase *db, TQWidget *parent, const char *name)
     {
 	img = TQImage(locate("data", "kdewizard/pics/wizard_small.png"));
 	// colorize and check to figure the correct color
-	KIconEffect::colorize(img, mBlendedColor, 1.0);
+	TDEIconEffect::colorize(img, mBlendedColor, 1.0);
 	QRgb colPixel( img.pixel(0,0) );
 
 	mBlendedColor = TQColor(tqRed(colPixel),tqGreen(colPixel),tqBlue(colPixel));
     }
 
-    mBaseColor = KGlobalSettings::alternateBackgroundColor();
+    mBaseColor = TDEGlobalSettings::alternateBackgroundColor();
     mBaseColor.hsv(&h,&s,&v);
     mBaseColor.setHsv(h, int(s*(10/6.0)), int(v*(93/99.0)));
 
-    mTextColor = KGlobalSettings::textColor();
+    mTextColor = TDEGlobalSettings::textColor();
 
 
     mDatabase = db;
@@ -206,8 +206,8 @@ KTipDialog::KTipDialog(KTipDatabase *db, TQWidget *parent, const char *name)
     setCaption(i18n("Tip of the Day"));
 #ifdef Q_WS_X11
     KWin::setIcons( winId(),
-                    KGlobal::iconLoader()->loadIcon( "idea", KIcon::NoGroup, 32 ),
-                    KGlobal::iconLoader()->loadIcon( "idea", KIcon::NoGroup, 16 ) );
+                    TDEGlobal::iconLoader()->loadIcon( "idea", TDEIcon::NoGroup, 32 ),
+                    TDEGlobal::iconLoader()->loadIcon( "idea", TDEIcon::NoGroup, 16 ) );
 #endif
     TQVBoxLayout *vbox = new TQVBoxLayout(this, marginHint(), spacingHint());
 
@@ -222,7 +222,7 @@ KTipDialog::KTipDialog(KTipDatabase *db, TQWidget *parent, const char *name)
 	TQLabel *titlePane = new TQLabel(this);
 	titlePane->setBackgroundPixmap(locate("data", "tdeui/pics/ktip-background.png"));
 	titlePane->setText(i18n("Did you know...?\n"));
-	titlePane->setFont(TQFont(KGlobalSettings::generalFont().family(), 20, TQFont::Bold));
+	titlePane->setFont(TQFont(TDEGlobalSettings::generalFont().family(), 20, TQFont::Bold));
 	titlePane->setAlignment(TQLabel::AlignCenter);
 	pl->addWidget(titlePane, 100);
     }
@@ -244,7 +244,7 @@ KTipDialog::KTipDialog(KTipDatabase *db, TQWidget *parent, const char *name)
 
     mTipText->setWrapPolicy( TQTextEdit::AtWordOrDocumentBoundary );
     mTipText->mimeSourceFactory()->addFilePath(
-	KGlobal::dirs()->findResourceDir("data", "kdewizard/pics")+"kdewizard/pics/");
+	TDEGlobal::dirs()->findResourceDir("data", "kdewizard/pics")+"kdewizard/pics/");
     mTipText->setFrameStyle(TQFrame::NoFrame | TQFrame::Plain);
     mTipText->setHScrollBarMode(TQScrollView::AlwaysOff);
     mTipText->setLinkUnderline(false);
@@ -258,7 +258,7 @@ KTipDialog::KTipDialog(KTipDatabase *db, TQWidget *parent, const char *name)
     pal.setColor( TQPalette::Inactive, TQColorGroup::Link, mBlendedColor );
     mTipText->setPalette(pal);
 
-    TQStringList icons = KGlobal::dirs()->resourceDirs("icon");
+    TQStringList icons = TDEGlobal::dirs()->resourceDirs("icon");
     TQStringList::Iterator it;
     for (it = icons.begin(); it != icons.end(); ++it)
         mTipText->mimeSourceFactory()->addFilePath(*it);
@@ -273,7 +273,7 @@ KTipDialog::KTipDialog(KTipDatabase *db, TQWidget *parent, const char *name)
 	resize(550, 230);
         TQSize sh = size();
 
-        TQRect rect = KGlobalSettings::splashScreenDesktopGeometry();
+        TQRect rect = TDEGlobalSettings::splashScreenDesktopGeometry();
 
         move(rect.x() + (rect.width() - sh.width())/2,
 	rect.y() + (rect.height() - sh.height())/2);
@@ -301,7 +301,7 @@ KTipDialog::KTipDialog(KTipDatabase *db, TQWidget *parent, const char *name)
     ok->setDefault(true);
     hbox2->addWidget(ok);
 
-    KConfigGroup config(kapp->config(), "TipOfDay");
+    TDEConfigGroup config(kapp->config(), "TipOfDay");
     mTipOnStart->setChecked(config.readBoolEntry("RunOnStart", true));
 
     connect(next, TQT_SIGNAL(clicked()), this, TQT_SLOT(nextTip()));
@@ -332,7 +332,7 @@ void KTipDialog::showTip(TQWidget *parent, const TQString &tipFile, bool force)
 
 void KTipDialog::showMultiTip(TQWidget *parent, const TQStringList &tipFiles, bool force)
 {
-    KConfigGroup configGroup(kapp->config(), "TipOfDay");
+    TDEConfigGroup configGroup(kapp->config(), "TipOfDay");
 
     const bool runOnStart = configGroup.readBoolEntry("RunOnStart", true);
 
@@ -374,7 +374,7 @@ static TQString fixTip(TQString tip)
     if (iconRegExp.search(tip)>-1) {
       TQString iconName = iconRegExp.cap(1);
       if (!iconName.isEmpty())
-         if (KGlobal::dirs()->findResource("icon", iconName).isEmpty())
+         if (TDEGlobal::dirs()->findResource("icon", iconName).isEmpty())
            tip.replace("crystalsvg","hicolor");
     }
 
@@ -418,7 +418,7 @@ static TQString fixTip(TQString tip)
 
   void KTipDialog::setShowOnStart(bool on)
   {
-      KConfigGroup config(kapp->config(), "TipOfDay");
+      TDEConfigGroup config(kapp->config(), "TipOfDay");
       config.writeEntry("RunOnStart", on);
       config.sync();
   }

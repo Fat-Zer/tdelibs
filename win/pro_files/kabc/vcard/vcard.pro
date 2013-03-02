@@ -7,8 +7,8 @@ DEFINES += MAKE_KVCARD_LIB
 
 LIBS += $$KDELIBDESTDIR\tdecore$$KDELIB_SUFFIX 
 
-INCLUDEPATH += $(KDELIBS)/kabc/vcard/include $(KDELIBS)/kabc/vcard/include/generated \
-	$(KDELIBS)/kabc/vcardparser
+INCLUDEPATH += $(KDELIBS)/tdeabc/vcard/include $(KDELIBS)/tdeabc/vcard/include/generated \
+	$(KDELIBS)/tdeabc/vcardparser
 
 system( bash kmoc )
 system( bash kdcopidl )

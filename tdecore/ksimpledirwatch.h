@@ -63,7 +63,7 @@ class KSimpleDirWatchPrivate;
   * @short Class for watching directory and file changes.
   * @author Sven Radej <sven@lisa.exp.univie.ac.at>
   */
-class KIO_EXPORT KSimpleDirWatch : public TQObject
+class TDEIO_EXPORT KSimpleDirWatch : public TQObject
 {
   Q_OBJECT
     

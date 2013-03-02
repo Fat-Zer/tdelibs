@@ -17,7 +17,7 @@
 */
 #ifndef _KATE_KEY_INTERCEPTOR_FUNCTOR_H
 #define _KATE_KEY_INTERCEPTOR_FUNCTOR_H
-#include <kshortcut.h>
+#include <tdeshortcut.h>
 class KateKeyInterceptorFunctor {
   public:
   virtual bool operator()(KKey key)=0;

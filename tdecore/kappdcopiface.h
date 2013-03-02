@@ -26,12 +26,12 @@
 #include <dcopref.h>
 #include "tdelibs_export.h"
 
-class KApplication;
+class TDEApplication;
 
 /**
-This is the main interface to the KApplication.  This will provide a consistant
+This is the main interface to the TDEApplication.  This will provide a consistant
 dcop interface to all KDE applications that use it.
-@short DCOP interface to KApplication.
+@short DCOP interface to TDEApplication.
 @author Ian Reinhart Geiser <geiseri@yahoo.com>
 */
 class TDECORE_EXPORT KAppDCOPInterface : virtual public DCOPObject
@@ -41,10 +41,10 @@ K_DCOP
 public:
 	/**
 	Construct a new interface object.
-	@param theKapp - The parent KApplication object
+	@param theKapp - The parent TDEApplication object
 	    that will provide us with the functional interface.
 	*/
-	KAppDCOPInterface( KApplication * theKapp );
+	KAppDCOPInterface( TDEApplication * theKapp );
 	/**
 	Destructor
 	Cleans up the dcop connection.
@@ -65,14 +65,14 @@ k_dcop:
 
 	void updateUserTimestamp( ulong time );
 	/**
-	Send a fake keypress to all KApplication instances
+	Send a fake keypress to all TDEApplication instances
 	For internal use in connecting insecure function keys to
 	KDE applications while the X keyboard is locked.
 	**/
 	void sendFakeKey( unsigned int keyCode);
 
 private:
-	KApplication *m_KApplication;
+	TDEApplication *m_TDEApplication;
 };
 
 #endif

@@ -27,9 +27,9 @@
 #include <tqmap.h>
 
 #include <klanguagebutton.h>
-#include <kconfig.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdeconfig.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kdebug.h>
 #include <kpushbutton.h>
 
@@ -114,7 +114,7 @@ KSwitchLanguageDialog::KSwitchLanguageDialog(
     
     if (defaultLanguages.count() == 0)
     {
-        d->addLanguageButton(KGlobal::locale()->defaultLanguage(), true);
+        d->addLanguageButton(TDEGlobal::locale()->defaultLanguage(), true);
     }
     
     TQHBoxLayout *addButtonHorizontalLayout = new TQHBoxLayout();
@@ -185,7 +185,7 @@ void KSwitchLanguageDialog::languageOnButtonChanged(const TQString & languageCod
         {
             //update all buttons which have matching id
             //might update buttons which were not changed, but well...
-            languageButton->setText(KGlobal::locale()->twoAlphaToLanguageName(languageCode));
+            languageButton->setText(TDEGlobal::locale()->twoAlphaToLanguageName(languageCode));
         }
     }
 }
@@ -207,12 +207,12 @@ void KSwitchLanguageDialog::slotOk()
         first = false;
     }
     
-    KConfig *config = KGlobal::config();
+    TDEConfig *config = TDEGlobal::config();
     
     if (d->applicationLanguageList().join(":") != languageString)
     {
         //list is different from defaults or saved languages list
-        KConfigGroup group(config, "Locale");
+        TDEConfigGroup group(config, "Locale");
     
         group.writeEntry("Language", languageString);
         config->sync();
@@ -241,7 +241,7 @@ KSwitchLanguageDialogPrivate::KSwitchLanguageDialogPrivate(
 
 void KSwitchLanguageDialogPrivate::fillApplicationLanguages(KLanguageButton *button)
 {
-    KLocale *locale = KGlobal::locale();
+    TDELocale *locale = TDEGlobal::locale();
     TQStringList allLanguages = locale->allLanguagesTwoAlpha();
     for ( TQStringList::ConstIterator it = allLanguages.begin(); it != allLanguages.end(); ++it )
     {
@@ -258,12 +258,12 @@ void KSwitchLanguageDialogPrivate::fillApplicationLanguages(KLanguageButton *but
 
 TQStringList KSwitchLanguageDialogPrivate::applicationLanguageList()
 {
-    KConfig *config = KGlobal::config();
+    TDEConfig *config = TDEGlobal::config();
     TQStringList languagesList;
     
     if (config->hasGroup("Locale"))
     {
-        KConfigGroupSaver saver(config, "Locale");
+        TDEConfigGroupSaver saver(config, "Locale");
         
         if (config->hasKey("Language"))
         {
@@ -272,7 +272,7 @@ TQStringList KSwitchLanguageDialogPrivate::applicationLanguageList()
     }
     if (languagesList.empty())
     {
-        languagesList = KGlobal::locale()->languageList();
+        languagesList = TDEGlobal::locale()->languageList();
     }
     return languagesList;
 }
@@ -283,7 +283,7 @@ void KSwitchLanguageDialogPrivate::addLanguageButton(const TQString & languageCo
     
     KLanguageButton *languageButton = new KLanguageButton(page);
     
-    languageButton->setText(KGlobal::locale()->twoAlphaToLanguageName(languageCode));
+    languageButton->setText(TDEGlobal::locale()->twoAlphaToLanguageName(languageCode));
     
     fillApplicationLanguages(languageButton);
     

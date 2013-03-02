@@ -50,7 +50,7 @@
  */
 
 #include "kbuttonbox.moc"
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kguiitem.h>
 #include <kpushbutton.h>
 #include <tqptrlist.h>

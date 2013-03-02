@@ -25,7 +25,7 @@
 #include <tqlabel.h>
 #include <kimageeffect.h>
 
-class KPopupMenu;
+class TDEPopupMenu;
 
 #include <tdelibs_export.h>
 
@@ -135,9 +135,9 @@ public slots:
 
 protected:
    /**
-    * Creates a KPopupMenu with the menu that appears when clicking with the right button on the label
+    * Creates a TDEPopupMenu with the menu that appears when clicking with the right button on the label
     */
-   virtual KPopupMenu *createPopupMenu();
+   virtual TDEPopupMenu *createPopupMenu();
 
 private:
    bool eventFilter(TQObject *obj, TQEvent *ev);

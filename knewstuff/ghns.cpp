@@ -25,11 +25,11 @@
 #include <tqtextstream.h>
 #include <tqlabel.h>
 
-#include <kaboutdata.h>
-#include <kapplication.h>
+#include <tdeaboutdata.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
-#include <klocale.h>
-#include <kcmdlineargs.h>
+#include <tdelocale.h>
+#include <tdecmdlineargs.h>
 #include <kprocess.h>
 #include <kdialog.h>
 
@@ -78,10 +78,10 @@ void GhnsWidget::downloadWallpapers()
 
 int main(int argc,char **argv)
 {
-  KAboutData aboutData("ghns","Get Hot New Stuff","0.1");
-  KCmdLineArgs::init(argc,argv,&aboutData);
+  TDEAboutData aboutData("ghns","Get Hot New Stuff","0.1");
+  TDECmdLineArgs::init(argc,argv,&aboutData);
 
-  KApplication app;
+  TDEApplication app;
 
   GhnsWidget wid;
   app.setMainWidget( &wid );

@@ -186,7 +186,7 @@
  *
  * There are two methods of making DCOP calls from your application to %KTTSD.
  *
- *   - Manually code them using dcopClient object.  See tdebase/konqueror/kttsplugin/khtmlkttsd.cpp
+ *   - Manually code them using dcopClient object.  See tdebase/konqueror/kttsplugin/tdehtmlkttsd.cpp
  *     for an example.  This method is recommended if you want to make a few simple calls to KTTSD.
  *   - Use kspeech_stub as described below.  This method generates the marshalling code for you
  *     and is recommended for a more complex speech-enabled applications.  kcmkttsmgr in the
@@ -219,7 +219,7 @@
      client->attach();
      if (!client->isApplicationRegistered("kttsd")) {
          TQString error;
-         if (KApplication::startServiceByDesktopName("kttsd", TQStringList(), &error))
+         if (TDEApplication::startServiceByDesktopName("kttsd", TQStringList(), &error))
              cout << "Starting KTTSD failed with message " << error << endl;
      }
    @endverbatim
@@ -227,7 +227,7 @@
  * If you want to detect if KTTSD is installed without starting it, use this code.
  *
    @verbatim
-     KTrader::OfferList offers = KTrader::self()->query("DCOP/Text-to-Speech", "Name == 'KTTSD'");
+     TDETrader::OfferList offers = TDETrader::self()->query("DCOP/Text-to-Speech", "Name == 'KTTSD'");
      if (offers.count() > 0)
      {
        // KTTSD is installed.

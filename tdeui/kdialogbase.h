@@ -831,7 +831,7 @@ class TDEUI_EXPORT KDialogBase : public KDialog
     * If no size is saved for one dimension of the screen, sizeHint() is returned.
     *
     * @param groupName Name of the group to read from. The old group
-    *                  of KGlobal::config is preserved.
+    *                  of TDEGlobal::config is preserved.
     */
    TQSize configDialogSize( const TQString& groupName ) const;
 
@@ -839,12 +839,12 @@ class TDEUI_EXPORT KDialogBase : public KDialog
     * read the dialogs size from the configuration according to the screen size.
     * If no size is saved for one dimension of the screen, sizeHint() is returned.
     *
-    * @param config The KConfig object to read from
+    * @param config The TDEConfig object to read from
     * @param groupName Name of the group to read from. The old group
-    *                  of KGlobal::config is preserved.
+    *                  of TDEGlobal::config is preserved.
     * @since 3.2
     */
-   TQSize configDialogSize( KConfig& config, const TQString& groupName ) const;
+   TQSize configDialogSize( TDEConfig& config, const TQString& groupName ) const;
 
    /**
     * save the dialogs size dependant on the screen dimension either to the
@@ -860,14 +860,14 @@ class TDEUI_EXPORT KDialogBase : public KDialog
    /**
     * save the dialogs size dependant on the screen dimension.
     *
-    * @param config The KConfig object to write to.
+    * @param config The TDEConfig object to write to.
     * @param groupName The group to which the dialogs size is saved. See
     * configDialogSize to read the size.
     * @param global Set to true if the entry should go to the global config.
     *        Default is false.
     * @since 3.2
     */
-   void saveDialogSize( KConfig& config, const TQString& groupName,
+   void saveDialogSize( TDEConfig& config, const TQString& groupName,
 			     bool global=false ) const;
 
     /**

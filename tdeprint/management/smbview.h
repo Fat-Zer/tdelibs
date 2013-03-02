@@ -20,12 +20,12 @@
 #ifndef SMBVIEW_H
 #define SMBVIEW_H
 
-#include <klistview.h>
+#include <tdelistview.h>
 
-class KProcess;
+class TDEProcess;
 class KTempFile;
 
-class SmbView : public KListView
+class SmbView : public TDEListView
 {
 	Q_OBJECT
 public:
@@ -49,15 +49,15 @@ protected:
 	void processShares();
 
 protected slots:
-	void slotReceivedStdout(KProcess*, char*, int);
-	void slotProcessExited(KProcess*);
+	void slotReceivedStdout(TDEProcess*, char*, int);
+	void slotProcessExited(TDEProcess*);
 	void slotSelectionChanged(TQListViewItem*);
 
 private:
 	enum State { GroupListing, ServerListing, ShareListing, Idle };
 	int 		m_state;
 	TQListViewItem	*m_current;
-	KProcess	*m_proc;
+	TDEProcess	*m_proc;
 	TQString	m_buffer;
 	TQString	m_login, m_password;
 	KTempFile	*m_passwdFile;

@@ -18,15 +18,15 @@
  *  Boston, MA 02110-1301, USA.
  */
 
-#include <kconfig.h>
-#include <kapplication.h>
+#include <tdeconfig.h>
+#include <tdeapplication.h>
 #include <kdialog.h>
 #include <kwhatsthismanager_p.h>
 #include <kdebug.h>
 #include <kstaticdeleter.h>
 #include <kiconloader.h>
-#include <kglobalsettings.h>
-#include <klocale.h>
+#include <tdeglobalsettings.h>
+#include <tdelocale.h>
 
 #include <tqlayout.h>
 #include <tqobjectlist.h>
@@ -178,7 +178,7 @@ void KDialog::resizeLayout( TQLayoutItem *lay, int margin, int spacing )
 static TQRect screenRect( TQWidget *w, int screen )
 {
   TQDesktopWidget *desktop = TQApplication::desktop();
-  KConfig gc("kdeglobals", false, false);
+  TDEConfig gc("kdeglobals", false, false);
   gc.setGroup("Windows");
   if (desktop->isVirtualDesktop() &&
       gc.readBoolEntry("XineramaEnabled", true) &&
@@ -342,8 +342,8 @@ KSMModalDialogHeader::KSMModalDialogHeader(TQWidget* parent)
 	seperatorbox->setMargin(0);
 
 	TQWidget* ticon = new TQWidget( frame );
-	KIconLoader * ldr = KGlobal::iconLoader();
-	TQPixmap trinityPixmap = ldr->loadIcon("kmenu", KIcon::Panel, KIcon::SizeLarge, KIcon::DefaultState, 0L, true);
+	TDEIconLoader * ldr = TDEGlobal::iconLoader();
+	TQPixmap trinityPixmap = ldr->loadIcon("kmenu", TDEIcon::Panel, TDEIcon::SizeLarge, TDEIcon::DefaultState, 0L, true);
 
 	// Manually draw the alpha portions of the icon onto the widget background color...
 	TQRgb backgroundRgb = ticon->paletteBackgroundColor().rgb();
@@ -431,7 +431,7 @@ KSMModalDialog::KSMModalDialog(TQWidget* parent)
 
 	// Center the dialog
 	TQSize sh = sizeHint();
-	TQRect rect = KGlobalSettings::desktopGeometry(TQCursor::pos());
+	TQRect rect = TDEGlobalSettings::desktopGeometry(TQCursor::pos());
 	move(rect.x() + (rect.width() - sh.width())/2, rect.y() + (rect.height() - sh.height())/2);
 
 	show();

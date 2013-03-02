@@ -1,6 +1,6 @@
 ## Makefile.am for libtdesu
 
-INCLUDES = -I$(top_srcdir)/kio/ $(all_includes)
+INCLUDES = -I$(top_srcdir)/tdeio/ $(all_includes)
 
 lib_LTLIBRARIES = libtdesu.la
 libtdesu_la_SOURCES = client.cpp process.cpp kcookie.cpp su.cpp ssh.cpp stub.cpp tdesu_pty.cpp

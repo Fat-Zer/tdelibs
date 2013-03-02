@@ -35,9 +35,9 @@
 
 #include <kdebug.h>
 #include <kstandarddirs.h>
-#include <klocale.h>
-#include <kmessagebox.h>
-#include <kconfig.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
+#include <tdeconfig.h>
 
 #include <kjs/function_object.h>
 #include <kjs/interpreter.h>
@@ -52,7 +52,7 @@
 
 namespace KJS {
 
-// taken from khtml
+// taken from tdehtml
 // therefor thx to:
 // Copyright (C) 1999-2003 Harri Porten (porten@kde.org)
 // Copyright (C) 2001-2003 David Faure (faure@kde.org)
@@ -642,7 +642,7 @@ void KateJScriptManager::collectScripts (bool force)
     return;
 
   // We'll store the scripts list in this config
-  KConfig config("katepartjscriptrc", false, false);
+  TDEConfig config("katepartjscriptrc", false, false);
 
   // figure out if the kate install is too new
   config.setGroup ("General");
@@ -653,7 +653,7 @@ void KateJScriptManager::collectScripts (bool force)
   }
 
   // Let's get a list of all the .js files
-  TQStringList list = KGlobal::dirs()->findAllResources("data","katepart/scripts/*.js",false,true);
+  TQStringList list = TDEGlobal::dirs()->findAllResources("data","katepart/scripts/*.js",false,true);
 
   // Let's iterate through the list and build the Mode List
   for ( TQStringList::Iterator it = list.begin(); it != list.end(); ++it )
@@ -685,10 +685,10 @@ void KateJScriptManager::collectScripts (bool force)
 
       if (dfi.exists())
       {
-        KConfig df (desktopFile, true, false);
+        TDEConfig df (desktopFile, true, false);
         df.setDesktopGroup ();
 
-        // get cmdname, fallback to baseName, if it is empty, therefor not use the kconfig fallback
+        // get cmdname, fallback to baseName, if it is empty, therefor not use the tdeconfig fallback
         TQString cmdname = df.readEntry ("X-Kate-Command");
         if (cmdname.isEmpty())
         {
@@ -778,7 +778,7 @@ bool KateJScriptManager::help( Kate::View *, const TQString &cmd, TQString &msg 
   if (!m_scripts[cmd] || !m_scripts[cmd]->desktopFileExists)
     return false;
 
-  KConfig df (m_scripts[cmd]->desktopFilename(), true, false);
+  TDEConfig df (m_scripts[cmd]->desktopFilename(), true, false);
   df.setDesktopGroup ();
 
   msg = df.readEntry ("X-Kate-Help");
@@ -1016,7 +1016,7 @@ void KateIndentJScriptManager::collectScripts (bool force)
 
 
   // We'll store the scripts list in this config
-  KConfig config("katepartindentjscriptrc", false, false);
+  TDEConfig config("katepartindentjscriptrc", false, false);
 #if 0
   // figure out if the kate install is too new
   config.setGroup ("General");
@@ -1028,7 +1028,7 @@ void KateIndentJScriptManager::collectScripts (bool force)
 #endif
 
   // Let's get a list of all the .js files
-  TQStringList list = KGlobal::dirs()->findAllResources("data","katepart/scripts/indent/*.js",false,true);
+  TQStringList list = TDEGlobal::dirs()->findAllResources("data","katepart/scripts/indent/*.js",false,true);
 
   // Let's iterate through the list and build the Mode List
   for ( TQStringList::Iterator it = list.begin(); it != list.end(); ++it )

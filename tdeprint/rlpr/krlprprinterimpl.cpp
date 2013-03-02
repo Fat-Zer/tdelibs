@@ -25,8 +25,8 @@
 
 #include <tqfile.h>
 #include <kstandarddirs.h>
-#include <kconfig.h>
-#include <klocale.h>
+#include <tdeconfig.h>
+#include <tdelocale.h>
 
 KRlprPrinterImpl::KRlprPrinterImpl(TQObject *parent, const char *name, const TQStringList & /*args*/)
 : KPrinterImpl(parent,name)
@@ -47,7 +47,7 @@ bool KRlprPrinterImpl::setupCommand(TQString& cmd, KPrinter *printer)
 	QString	host(rpr->option("host")), queue(rpr->option("queue"));
 	if (!host.isEmpty() && !queue.isEmpty())
 	{
-		QString		exestr = KStandardDirs::findExe("rlpr");
+		QString		exestr = TDEStandardDirs::findExe("rlpr");
 		if (exestr.isEmpty())
 		{
 			printer->setErrorMessage(i18n("The <b>%1</b> executable could not be found in your path. Check your installation.").arg("rlpr"));
@@ -57,7 +57,7 @@ bool KRlprPrinterImpl::setupCommand(TQString& cmd, KPrinter *printer)
 		cmd = TQString::fromLatin1("%1 -H %2 -P %3 -\\#%4").arg(exestr).arg(quote(host)).arg(quote(queue)).arg(printer->numCopies());
 
 		// proxy settings
-		KConfig	*conf = KMFactory::self()->printConfig();
+		TDEConfig	*conf = KMFactory::self()->printConfig();
 		conf->setGroup("RLPR");
 		QString	host = conf->readEntry("ProxyHost",TQString::null), port = conf->readEntry("ProxyPort",TQString::null);
 		if (!host.isEmpty())

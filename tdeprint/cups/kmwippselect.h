@@ -22,7 +22,7 @@
 
 #include "kmwizardpage.h"
 
-class KListBox;
+class TDEListBox;
 
 class KMWIppSelect : public KMWizardPage
 {
@@ -34,7 +34,7 @@ public:
 	void updatePrinter(KMPrinter*);
 
 private:
-	KListBox	*m_list;
+	TDEListBox	*m_list;
 };
 
 #endif

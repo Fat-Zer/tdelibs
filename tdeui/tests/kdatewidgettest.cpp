@@ -1,12 +1,12 @@
 #include "kdatewidget.h"
 #include <tqlineedit.h>
-#include <kapplication.h>
-#include <klocale.h>
+#include <tdeapplication.h>
+#include <tdelocale.h>
 
 int main(int argc, char** argv)
 {
-  KLocale::setMainCatalogue("tdelibs");
-  KApplication app(argc, argv, "KDateWidgettest");
+  TDELocale::setMainCatalogue("tdelibs");
+  TDEApplication app(argc, argv, "KDateWidgettest");
   KDateWidget dateWidget;
   app.setMainWidget(&dateWidget);
   dateWidget.show();

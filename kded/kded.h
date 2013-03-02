@@ -29,15 +29,15 @@
 #include <dcopclient.h>
 #include <dcopobject.h>
 
-#include <ksycoca.h>
-#include <ksycocatype.h>
+#include <tdesycoca.h>
+#include <tdesycocatype.h>
 #include <kdedmodule.h>
 #include <klibloader.h>
 
 class KDirWatch;
 class KService;
 
-// No need for this in libkio - apps only get readonly access
+// No need for this in libtdeio - apps only get readonly access
 class Kded : public TQObject, public DCOPObject, public DCOPObjectProxy
 {
   Q_OBJECT

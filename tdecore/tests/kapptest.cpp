@@ -17,24 +17,24 @@
 */
 
 #define private public
-#include "kapplication.h"
+#include "tdeapplication.h"
 #include <stdio.h>
 
-#include <kcmdlineargs.h>
-#include <kaboutdata.h>
-#include <kglobalsettings.h>
-#include <ksycoca.h>
+#include <tdecmdlineargs.h>
+#include <tdeaboutdata.h>
+#include <tdeglobalsettings.h>
+#include <tdesycoca.h>
 
 int
 main(int argc, char *argv[])
 {
-   KAboutData about("kapptest", "kapptest", "version");
-   KCmdLineArgs::init(argc, argv, &about);
+   TDEAboutData about("kapptest", "kapptest", "version");
+   TDECmdLineArgs::init(argc, argv, &about);
 
-   KApplication a;
+   TDEApplication a;
 
    KSycoca *s = KSycoca::self();
   
    tqWarning("s->language() %s", s->language().latin1());
-   tqWarning("Offset of aIconName: %ld", (long) &(static_cast<KApplication *>(0)->aIconName));
+   tqWarning("Offset of aIconName: %ld", (long) &(static_cast<TDEApplication *>(0)->aIconName));
 }

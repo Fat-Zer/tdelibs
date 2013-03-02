@@ -20,12 +20,12 @@
 
 #include <tqlabel.h>
 #include <tqlayout.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kwizard.h>
 
 int main(int argc, char **argv)
 {
-  KApplication a(argc,argv,"kwizardtest");
+  TDEApplication a(argc,argv,"kwizardtest");
   KWizard *wiz = new KWizard(0, "kwizardtest", false);
   TQObject::connect((TQObject*) wiz->cancelButton(), TQT_SIGNAL(clicked()),
 		   &a, TQT_SLOT(quit()));

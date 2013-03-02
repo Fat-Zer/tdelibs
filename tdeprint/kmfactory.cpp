@@ -32,18 +32,18 @@
 #include <tqsettings.h>
 
 #include <klibloader.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kstandarddirs.h>
 #include <kiconloader.h>
 #include <kdebug.h>
-#include <kmessagebox.h>
-#include <klocale.h>
+#include <tdemessagebox.h>
+#include <tdelocale.h>
 #include <ksimpleconfig.h>
 #include <kstaticdeleter.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <dcopclient.h>
 #include <dcopref.h>
-#include <kio/authinfo.h>
+#include <tdeio/authinfo.h>
 
 #include <unistd.h>
 
@@ -113,8 +113,8 @@ KMFactory::KMFactory()
 	if ( !ok )
 		settings.writeEntry( "/qt/embedFonts", true );
 
-	KGlobal::iconLoader()->addAppDir("tdeprint");
-        KGlobal::locale()->insertCatalogue("tdeprint");
+	TDEGlobal::iconLoader()->addAppDir("tdeprint");
+        TDEGlobal::locale()->insertCatalogue("tdeprint");
 
 	// create DCOP signal connection
 	connectDCOPSignal(0, 0, "pluginChanged(pid_t)", "slot_pluginChanged(pid_t)", false);
@@ -224,11 +224,11 @@ void KMFactory::loadFactory(const TQString& syst)
 	}
 }
 
-KConfig* KMFactory::printConfig(const TQString& group)
+TDEConfig* KMFactory::printConfig(const TQString& group)
 {
 	if (!m_printconfig)
 	{
-		m_printconfig = new KConfig("tdeprintrc");
+		m_printconfig = new TDEConfig("tdeprintrc");
 		TQ_CHECK_PTR(m_printconfig);
 	}
 	if (!group.isEmpty())
@@ -238,7 +238,7 @@ KConfig* KMFactory::printConfig(const TQString& group)
 
 TQString KMFactory::printSystem()
 {
-	KConfig	*conf = printConfig();
+	TDEConfig	*conf = printConfig();
 	conf->setGroup("General");
 	TQString	sys = conf->readEntry("PrintSystem");
 	if (sys.isEmpty())
@@ -276,7 +276,7 @@ void KMFactory::reload(const TQString& syst, bool saveSyst)
 	unload();
 	if (saveSyst)
 	{
-		KConfig	*conf = printConfig();
+		TDEConfig	*conf = printConfig();
 		conf->setGroup("General");
 		conf->writeEntry("PrintSystem", syst);
 		conf->sync();
@@ -403,7 +403,7 @@ void KMFactory::slot_configChanged()
 
 void KMFactory::saveConfig()
 {
-	KConfig	*conf = printConfig();
+	TDEConfig	*conf = printConfig();
 	conf->sync();
 	kdDebug(500) << "KMFactory (" << getpid() << ") emitting DCOP signal configChanged()" << endl;
 	emit configChanged();

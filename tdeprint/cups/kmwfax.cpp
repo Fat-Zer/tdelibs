@@ -25,8 +25,8 @@
 
 #include <tqlabel.h>
 #include <tqlayout.h>
-#include <klistbox.h>
-#include <klocale.h>
+#include <tdelistbox.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 #include <kurl.h>
 
@@ -41,7 +41,7 @@ KMWFax::KMWFax(TQWidget *parent, const char *name)
 
 	TQLabel	*lab = new TQLabel(this);
 	lab->setText(i18n("<p>Select the device which your serial Fax/Modem is connected to.</p>"));
-	m_list = new KListBox(this);
+	m_list = new TDEListBox(this);
 
 	TQVBoxLayout	*l1 = new TQVBoxLayout(this,0,10);
 	l1->addWidget(lab,0);

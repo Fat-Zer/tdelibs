@@ -22,9 +22,9 @@
 
 #include <tqfile.h>
 #include <tqregexp.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include <stdlib.h>
 #include <cups/cups.h>
@@ -607,7 +607,7 @@ bool CupsdConf::parseOption(const TQString& line)
 
 bool CupsdConf::loadAvailableResources()
 {
-	KConfig	conf("tdeprintrc");
+	TDEConfig	conf("tdeprintrc");
 	conf.setGroup("CUPS");
 	TQString	host = conf.readEntry("Host",cupsServer());
 	int 	port = conf.readNumEntry("Port",ippPort());

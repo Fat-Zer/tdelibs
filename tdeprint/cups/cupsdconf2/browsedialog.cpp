@@ -28,7 +28,7 @@
 #include <tqwhatsthis.h>
 #include <tqregexp.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 BrowseDialog::BrowseDialog(TQWidget *parent, const char *name)
 	: KDialogBase(parent, name, true, TQString::null, Ok|Cancel, Ok, true)

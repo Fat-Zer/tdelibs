@@ -17,14 +17,14 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <ktextedit.h>
 
 #include <tqfile.h>
 
 int main( int argc, char **argv )
 {
-    KApplication app( argc, argv, "ktextedittest" );
+    TDEApplication app( argc, argv, "ktextedittest" );
     KTextEdit *edit = new KTextEdit();
     edit->setReadOnly( true );
     edit->setCheckSpellingEnabled( true );

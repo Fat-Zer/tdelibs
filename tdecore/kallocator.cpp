@@ -30,7 +30,7 @@
 #include "kallocator.h"
 #include <kdebug.h>
 
-class KZoneAllocator::MemBlock
+class TDEZoneAllocator::MemBlock
 {
   public:
     MemBlock(size_t s) : size(s), ref(0), older(0), newer(0)
@@ -45,7 +45,7 @@ class KZoneAllocator::MemBlock
     MemBlock *newer;
 };
 
-KZoneAllocator::KZoneAllocator(unsigned long _blockSize)
+TDEZoneAllocator::TDEZoneAllocator(unsigned long _blockSize)
 : currentBlock(0), blockSize(1), blockOffset(0), log2(0), num_blocks(0), 
   hashList(0), hashSize(0), hashDirty(true)
 {
@@ -56,7 +56,7 @@ KZoneAllocator::KZoneAllocator(unsigned long _blockSize)
   blockOffset = blockSize + 1;
 }
 
-KZoneAllocator::~KZoneAllocator()
+TDEZoneAllocator::~TDEZoneAllocator()
 {
   unsigned int count = 0;
   if (hashList) {
@@ -80,7 +80,7 @@ KZoneAllocator::~KZoneAllocator()
 #endif
 }
 
-void KZoneAllocator::insertHash(MemBlock *b)
+void TDEZoneAllocator::insertHash(MemBlock *b)
 {
   unsigned long adr = ((unsigned long)b->begin) & (~(blockSize - 1));
   unsigned long end = ((unsigned long)b->begin) + blockSize;
@@ -99,7 +99,7 @@ void KZoneAllocator::insertHash(MemBlock *b)
     @param b block to add
     @internal
 */
-void KZoneAllocator::addBlock(MemBlock *b)
+void TDEZoneAllocator::addBlock(MemBlock *b)
 {
   b->newer = 0;
   b->older = currentBlock;
@@ -119,7 +119,7 @@ void KZoneAllocator::addBlock(MemBlock *b)
 }
 
 /** Reinitialize hash list. @internal */
-void KZoneAllocator::initHash()
+void TDEZoneAllocator::initHash()
 {
   if (hashList) {
     for (unsigned int i = 0; i < hashSize; i++)
@@ -145,7 +145,7 @@ void KZoneAllocator::initHash()
     @param b block to delete
     @internal
 */
-void KZoneAllocator::delBlock(MemBlock *b)
+void TDEZoneAllocator::delBlock(MemBlock *b)
 {
   /* Update also the hashlists if we aren't going to reconstruct them
      soon.  */
@@ -181,7 +181,7 @@ void KZoneAllocator::delBlock(MemBlock *b)
 }
 
 void *
-KZoneAllocator::allocate(size_t _size)
+TDEZoneAllocator::allocate(size_t _size)
 {
    // Use the size of (void *) as alignment
    const size_t alignment = sizeof(void *) - 1;
@@ -190,7 +190,7 @@ KZoneAllocator::allocate(size_t _size)
    if ((unsigned long) _size + blockOffset > blockSize)
    {
       if (_size > blockSize) {
-	tqDebug("KZoneAllocator: allocating more than %lu bytes", blockSize);
+	tqDebug("TDEZoneAllocator: allocating more than %lu bytes", blockSize);
 	return 0;
       }
       addBlock(new MemBlock(blockSize));
@@ -204,7 +204,7 @@ KZoneAllocator::allocate(size_t _size)
 }
 
 void
-KZoneAllocator::deallocate(void *ptr)
+TDEZoneAllocator::deallocate(void *ptr)
 {
   if (hashDirty)
     initHash();
@@ -237,7 +237,7 @@ KZoneAllocator::deallocate(void *ptr)
 }
 
 void
-KZoneAllocator::free_since(void *ptr)
+TDEZoneAllocator::free_since(void *ptr)
 {
   /* If we have a hashList and it's not yet dirty, see, if we will dirty
      it by removing too many blocks.  This will make the below delBlock()s

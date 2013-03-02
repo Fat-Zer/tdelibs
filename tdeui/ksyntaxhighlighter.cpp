@@ -26,12 +26,12 @@
 #include <tqsyntaxhighlighter.h>
 #include <tqtimer.h>
 
-#include <klocale.h>
-#include <kconfig.h>
+#include <tdelocale.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
-#include <kglobal.h>
-#include <kspell.h>
-#include <kapplication.h>
+#include <tdeglobal.h>
+#include <tdespell.h>
+#include <tdeapplication.h>
 
 #include "ksyntaxhighlighter.h"
 
@@ -234,7 +234,7 @@ TQStringList KSpellingHighlighter::personalWords()
     l.append( "KMail" );
     l.append( "KOrganizer" );
     l.append( "KAddressBook" );
-    l.append( "KHTML" );
+    l.append( "TDEHTML" );
     l.append( "KIO" );
     l.append( "KJS" );
     l.append( "Konqueror" );
@@ -290,8 +290,8 @@ KDictSpellingHighlighter::KDictSpellingHighlighter( TQTextEdit *textEdit,
     d->checksDone = 0;
     d->completeRehighlightRequired = false;
 
-    KConfig *config = KGlobal::config();
-    KConfigGroupSaver cs( config, "KSpell" );
+    TDEConfig *config = TDEGlobal::config();
+    TDEConfigGroupSaver cs( config, "KSpell" );
     d->disablePercentage = config->readNumEntry( "KSpell_AsYouTypeDisablePercentage", 42 );
     d->disablePercentage = QMIN( d->disablePercentage, 101 );
     d->disableWordCount = config->readNumEntry( "KSpell_AsYouTypeDisableWordCount", 100 );
@@ -335,7 +335,7 @@ KDictSpellingHighlighter::~KDictSpellingHighlighter()
 void KDictSpellingHighlighter::slotSpellReady( KSpell *spell )
 {
     kdDebug(0) << "KDictSpellingHighlighter::slotSpellReady( " << spell << " )" << endl;
-    KConfigGroup cg( KGlobal::config(),"KSpell" );
+    TDEConfigGroup cg( TDEGlobal::config(),"KSpell" );
     if ( cg.readEntry("KSpell_DoSpellChecking") != "0" )
     {
       if ( d->globalConfig ) {
@@ -371,7 +371,7 @@ bool KDictSpellingHighlighter::isMisspelled( const TQString &word )
     // This debug is expensive, only enable it locally
     //kdDebug(0) << "KDictSpellingHighlighter::isMisspelled( \"" << word << "\" )" << endl;
     // Normally isMisspelled would look up a dictionary and return
-    // true or false, but kspell is asynchronous and slow so things
+    // true or false, but tdespell is asynchronous and slow so things
     // get tricky...
     // For auto detection ignore signature and reply prefix
     if ( !d->autoReady )
@@ -539,8 +539,8 @@ void KDictSpellingHighlighter::slotLocalSpellConfigChanged()
 
 TQString KDictSpellingHighlighter::spellKey()
 {
-    KConfig *config = KGlobal::config();
-    KConfigGroupSaver cs( config, "KSpell" );
+    TDEConfig *config = TDEGlobal::config();
+    TDEConfigGroupSaver cs( config, "KSpell" );
     config->reparseConfiguration();
     TQString key;
     key += TQString::number( config->readNumEntry( "KSpell_NoRootAffix", 0 ));

@@ -1,5 +1,5 @@
 
-INCLUDES= -I$(top_srcdir) -I$(top_srcdir)/kioslave -I$(top_srcdir)/kioslave/bzip2 $(all_includes) $(LIBXML_CFLAGS) $(LIBXSLT_CFLAGS)
+INCLUDES= -I$(top_srcdir) -I$(top_srcdir)/tdeioslave -I$(top_srcdir)/tdeioslave/bzip2 $(all_includes) $(LIBXML_CFLAGS) $(LIBXSLT_CFLAGS)
 AM_LDFLAGS = $(KDE_RPATH) $(LIBXML_RPATH) $(LIBXSLT_RPATH) $(all_libraries)
 
 noinst_LTLIBRARIES = libkbzipfilter_dummy.la
@@ -8,17 +8,17 @@ libkbzipfilter_dummy_la_SOURCES = kbzip2filter.cpp
 
 ####### Files
 
-kde_module_LTLIBRARIES = kio_help.la kio_ghelp.la
+kde_module_LTLIBRARIES = tdeio_help.la tdeio_ghelp.la
 
-kio_help_la_SOURCES = kio_help.cpp main.cpp xslt.cpp
-kio_help_la_LIBADD = $(LIBXSLT_LIBS) $(LIBXML_LIBS)  libkbzipfilter_dummy.la $(LIB_KIO) $(LIBBZ2) $(LIB_QT) $(LIB_TDECORE)
-kio_help_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
+tdeio_help_la_SOURCES = tdeio_help.cpp main.cpp xslt.cpp
+tdeio_help_la_LIBADD = $(LIBXSLT_LIBS) $(LIBXML_LIBS)  libkbzipfilter_dummy.la $(LIB_KIO) $(LIBBZ2) $(LIB_QT) $(LIB_TDECORE)
+tdeio_help_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
 
-kio_ghelp_la_SOURCES = kio_help.cpp main_ghelp.cpp xslt.cpp
-kio_ghelp_la_LIBADD = $(LIBXSLT_LIBS) $(LIBXML_LIBS) libkbzipfilter_dummy.la $(LIB_KIO) $(LIBBZ2) $(LIB_QT) $(LIB_TDECORE)
-kio_ghelp_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
+tdeio_ghelp_la_SOURCES = tdeio_help.cpp main_ghelp.cpp xslt.cpp
+tdeio_ghelp_la_LIBADD = $(LIBXSLT_LIBS) $(LIBXML_LIBS) libkbzipfilter_dummy.la $(LIB_KIO) $(LIBBZ2) $(LIB_QT) $(LIB_TDECORE)
+tdeio_ghelp_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
 
-noinst_HEADERS = kio_help.h
+noinst_HEADERS = tdeio_help.h
 
 kdelnk_DATA = help.protocol ghelp.protocol
 kdelnkdir = $(kde_servicesdir)
@@ -36,12 +36,12 @@ bin_SCRIPTS = checkXML
 
 METASOURCES = AUTO
 
-update_DATA = kio_help.upd
-update_SCRIPTS = move_kio_help_cache.sh
-updatedir = $(kde_datadir)/kconf_update
+update_DATA = tdeio_help.upd
+update_SCRIPTS = move_tdeio_help_cache.sh
+updatedir = $(kde_datadir)/tdeconf_update
 
 messages:
-	$(XGETTEXT) *.cpp -o $(podir)/kio_help.pot
+	$(XGETTEXT) *.cpp -o $(podir)/tdeio_help.pot
 
 install-data-local:
 	@(for subdir in customization docbook; do \
@@ -59,7 +59,7 @@ uninstall-local:
 	-rm -rf $(DESTDIR)$(kde_datadir)/ksgmltools2/docbook
 
 kbzip2filter.cpp:
-	-$(LN_S) $(srcdir)/../kioslave/bzip2/kbzip2filter.cpp .
+	-$(LN_S) $(srcdir)/../tdeioslave/bzip2/kbzip2filter.cpp .
 
 CLEANFILES = kbzip2filter.cpp xslt_pure.o xslt_pure.cpp checkXML
 

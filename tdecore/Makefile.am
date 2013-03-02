@@ -27,7 +27,7 @@ SVGICONS=svgicons
 SVGICON_LIB=svgicons/libkdesvgicons.la
 endif
 
-SUBDIRS = malloc network $(SVGICONS) . kconfig_compiler tests
+SUBDIRS = malloc network $(SVGICONS) . tdeconfig_compiler tests
 
 # For the future: examine if condensing the tons of *_LDFLAGS variables
 # into $(all_libraries) isn't better
@@ -36,25 +36,25 @@ AM_LDFLAGS = $(LDFLAGS_AS_NEEDED) $(LDFLAGS_NEW_DTAGS)
 lib_LTLIBRARIES = libtdefakes.la libtdecore.la
 lib_LIBRARIES = libtdefakes_nonpic.a libtdefakes_pic.a
 
-include_HEADERS = kconfig.h kconfigskeleton.h \
-	kconfigdata.h ksimpleconfig.h kconfigdialogmanager.h \
-	kconfigbase.h kdesktopfile.h kurl.h ksock.h kaboutdata.h \
-	kcmdlineargs.h kconfigbackend.h kapp.h kapplication.h kuniqueapp.h \
+include_HEADERS = tdeconfig.h tdeconfigskeleton.h \
+	tdeconfigdata.h ksimpleconfig.h tdeconfigdialogmanager.h \
+	tdeconfigbase.h kdesktopfile.h kurl.h ksock.h tdeaboutdata.h \
+	tdecmdlineargs.h tdeconfigbackend.h kapp.h tdeapplication.h kuniqueapp.h \
 	kuniqueapplication.h kcharsets.h tdeversion.h kpty.h kprocess.h \
-	kprocctrl.h klocale.h kicontheme.h kiconloader.h kdebug.h \
-	twinmodule.h twin.h krootprop.h kshortcut.h kkeynative.h kaccel.h \
-	kglobalaccel.h kstdaccel.h kshortcutlist.h kcatalogue.h \
+	kprocctrl.h tdelocale.h kicontheme.h kiconloader.h kdebug.h \
+	twinmodule.h twin.h krootprop.h tdeshortcut.h kkeynative.h tdeaccel.h \
+	kglobalaccel.h tdestdaccel.h tdeshortcutlist.h kcatalogue.h \
 	kregexp.h kcompletion.h kstringhandler.h \
-	kstddirs.h kstandarddirs.h kglobal.h kglobalsettings.h ksharedptr.h \
+	kstddirs.h kstandarddirs.h tdeglobal.h tdeglobalsettings.h ksharedptr.h \
 	kallocator.h kvmallocator.h kcrash.h krfcdate.h \
-	kinstance.h kpalette.h kipc.h klibloader.h ktempfile.h ksavefile.h \
+	kinstance.h kpalette.h kipc.h klibloader.h tdetempfile.h ksavefile.h \
 	krandomsequence.h knotifyclient.h kiconeffect.h \
-	kaudioplayer.h kdcoppropertyproxy.h netwm.h kaccelmanager.h \
+	kaudioplayer.h kdcoppropertyproxy.h netwm.h tdeaccelmanager.h \
 	netwm_def.h kpixmapprovider.h kunload.h kstaticdeleter.h \
 	kextsock.h kextendedsocket.h ksockaddr.h kprocio.h kasyncio.h \
 	kbufferedio.h kurldrag.h kmimesourcefactory.h kmdcodec.h ksocks.h \
-	ksycoca.h ksycocaentry.h ksycocatype.h kxmessages.h kstartupinfo.h \
-	klargefile.h kmultipledrag.h kgenericfactory.h kgenericfactory.tcc \
+	tdesycoca.h tdesycocaentry.h tdesycocatype.h kxmessages.h tdestartupinfo.h \
+	klargefile.h tdemultipledrag.h kgenericfactory.h kgenericfactory.tcc \
 	ktypelist.h ksortablevaluelist.h kdebugclasses.h kclipboard.h \
 	kcalendarsystem.h kcalendarsystemfactory.h kmacroexpander.h \
 	kmanagerselection.h kmountpoint.h kuser.h klockfile.h \
@@ -81,36 +81,36 @@ libtdefakes_pic.a: libtdefakes.la
 	ar cru libtdefakes_pic.a fakes_pic.o vsnprintf_pic.o
 	ranlib libtdefakes_pic.a
 
-noinst_HEADERS = kaccelaction.h kaccelbase.h kaccelprivate.h kckey.h \
+noinst_HEADERS = tdeaccelaction.h tdeaccelbase.h tdeaccelprivate.h kckey.h \
 	kcompletion_private.h netwm_p.h \
 	kglobalaccel_x11.h kglobalaccel_win.h kkeyserver_x11.h kkeyserver.h \
-	kregpriv.h kshortcutmenu.h ksycocadict.h ksycocafactory.h netsupp.h \
+	kregpriv.h tdeshortcutmenu.h tdesycocadict.h tdesycocafactory.h netsupp.h \
 	kcheckaccelerators.h kcalendarsystemgregorian.h \
 	kcalendarsystemhijri.h kcalendarsystemhebrew.h kcalendarsystemjalali.h \
 	kprotocolinfofactory.h kqiodevicegzip_p.h kiconloader_p.h
 
-libtdecore_la_SOURCES = libintl.cpp kapplication.cpp \
-	kdebug.cpp netwm.cpp kconfigbase.cpp kconfig.cpp  ksimpleconfig.cpp \
-	kconfigbackend.cpp kmanagerselection.cpp kdesktopfile.cpp \
+libtdecore_la_SOURCES = libintl.cpp tdeapplication.cpp \
+	kdebug.cpp netwm.cpp tdeconfigbase.cpp tdeconfig.cpp  ksimpleconfig.cpp \
+	tdeconfigbackend.cpp kmanagerselection.cpp kdesktopfile.cpp \
 	kstandarddirs.cpp ksock.cpp kpty.cpp kprocess.cpp kprocctrl.cpp \
-	klocale.cpp krfcdate.cpp kiconeffect.cpp kicontheme.cpp \
+	tdelocale.cpp krfcdate.cpp kiconeffect.cpp kicontheme.cpp \
 	kiconloader.cpp twin.cpp twinmodule.cpp krootprop.cpp kcharsets.cpp \
-	kckey.cpp kshortcut.cpp kkeynative_x11.cpp kkeyserver_x11.cpp \
-	kaccelaction.cpp kshortcutmenu.cpp kaccelbase.cpp kaccel.cpp \
-	kglobalaccel_x11.cpp kglobalaccel.cpp kstdaccel.cpp kshortcutlist.cpp \
-	kcrash.cpp kurl.cpp kregexp.cpp kglobal.cpp kglobalsettings.cpp \
+	kckey.cpp tdeshortcut.cpp kkeynative_x11.cpp kkeyserver_x11.cpp \
+	tdeaccelaction.cpp tdeshortcutmenu.cpp tdeaccelbase.cpp tdeaccel.cpp \
+	kglobalaccel_x11.cpp kglobalaccel.cpp tdestdaccel.cpp tdeshortcutlist.cpp \
+	kcrash.cpp kurl.cpp kregexp.cpp tdeglobal.cpp tdeglobalsettings.cpp \
 	kallocator.cpp kvmallocator.cpp kmimesourcefactory.cpp \
-	kinstance.cpp kpalette.cpp kipc.cpp klibloader.cpp ktempfile.cpp \
-	kuniqueapplication.cpp kaccelmanager.cpp \
+	kinstance.cpp kpalette.cpp kipc.cpp klibloader.cpp tdetempfile.cpp \
+	kuniqueapplication.cpp tdeaccelmanager.cpp \
 	ksavefile.cpp krandomsequence.cpp kstringhandler.cpp kcompletion.cpp \
-	kcmdlineargs.cpp kaboutdata.cpp kcompletionbase.cpp knotifyclient.cpp \
+	tdecmdlineargs.cpp tdeaboutdata.cpp kcompletionbase.cpp knotifyclient.cpp \
 	kaudioplayer.cpp kdcoppropertyproxy.cpp \
 	ksockaddr.cpp kextsock.cpp netsupp.cpp kprocio.cpp kbufferedio.cpp \
 	kpixmapprovider.cpp kurldrag.cpp \
 	kmdcodec.cpp ksocks.cpp fakes.c vsnprintf.c \
-	ksycoca.cpp ksycocadict.cpp ksycocafactory.cpp ksycoca.skel \
-	kxmessages.cpp kstartupinfo.cpp kcatalogue.cpp kasyncio.cpp \
-	kmultipledrag.cpp kstaticdeleter.cpp kappdcopiface.cpp \
+	tdesycoca.cpp tdesycocadict.cpp tdesycocafactory.cpp tdesycoca.skel \
+	kxmessages.cpp tdestartupinfo.cpp kcatalogue.cpp kasyncio.cpp \
+	tdemultipledrag.cpp kstaticdeleter.cpp kappdcopiface.cpp \
 	kappdcopiface.skel kclipboard.cpp kcheckaccelerators.cpp \
 	tdeversion.cpp kdebugdcopiface.cpp kdebugdcopiface.skel \
 	kcalendarsystem.cpp kcalendarsystemgregorian.cpp \
@@ -118,7 +118,7 @@ libtdecore_la_SOURCES = libintl.cpp kapplication.cpp \
 	kcalendarsystemfactory.cpp kmacroexpander.cpp kidna.cpp \
 	ktempdir.cpp kshell.cpp kmountpoint.cpp kcalendarsystemjalali.cpp \
 	kprotocolinfo_tdecore.cpp kprotocolinfofactory.cpp kxerrorhandler.cpp \
-	kuser.cpp kconfigskeleton.cpp kconfigdialogmanager.cpp klockfile.cpp \
+	kuser.cpp tdeconfigskeleton.cpp tdeconfigdialogmanager.cpp klockfile.cpp \
 	kqiodevicegzip_p.cpp ktimezones.cpp
 
 libtdecore_la_LDFLAGS = $(QT_LDFLAGS) $(KDE_RPATH) $(KDE_MT_LDFLAGS) $(X_LDFLAGS) $(USER_LDFLAGS) -version-info 6:0:2 -no-undefined
@@ -143,16 +143,16 @@ kckey_h : $(srcdir)/generate_keys.sh $(QNAMESPACE_H)
 install-data-local:
 	$(mkinstalldirs) $(DESTDIR)$(kde_locale)
 	$(INSTALL_DATA) $(srcdir)/all_languages.desktop $(DESTDIR)$(kde_locale)/all_languages
-	$(mkinstalldirs) $(DESTDIR)$(includedir)/kio
+	$(mkinstalldirs) $(DESTDIR)$(includedir)/tdeio
 	$(mkinstalldirs) $(DESTDIR)$(kde_datadir)/knotify
 	$(INSTALL_DATA) $(srcdir)/eventsrc $(DESTDIR)$(kde_datadir)/knotify/eventsrc
-	$(INSTALL_DATA) $(srcdir)/kmdcodec_compat.h $(DESTDIR)$(includedir)/kio/kmdcodec.h
+	$(INSTALL_DATA) $(srcdir)/kmdcodec_compat.h $(DESTDIR)$(includedir)/tdeio/kmdcodec.h
 	rm -f "$(DESTDIR)$(kde_confdir)/colors/40 Colors"
 	rm -f $(DESTDIR)$(kde_confdir)/colors/Web
 	rm -f $(DESTDIR)$(kde_confdir)/colors/Royal
 
 uninstall-local:
-	-rm -f $(DESTDIR)$(includedir)/kio/kmdcodec.h
+	-rm -f $(DESTDIR)$(includedir)/tdeio/kmdcodec.h
 
 # If you add a color palette file here, please change tdelibs/tdeui/kcolordialog.cpp too to allow to translate the name
 colors_DATA = 40.colors Web.colors Royal.colors Rainbow.colors
@@ -188,7 +188,7 @@ install-exec-hook:
 
 DISTCLEANFILES = tde-config.cpp
 
-DOXYGEN_REFERENCES = dcop tdeui kparts kio
+DOXYGEN_REFERENCES = dcop tdeui tdeparts kio
 DOXYGEN_EXCLUDE = malloc kde_file.h
 DOXYGEN_SET_WARN_IF_UNDOCUMENTED = YES
 

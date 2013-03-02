@@ -23,9 +23,9 @@
 #include "katedocument.h"
 #include "kateview.h"
 
-#include <klocale.h>
-#include <kaction.h>
-#include <kpopupmenu.h>
+#include <tdelocale.h>
+#include <tdeaction.h>
+#include <tdepopupmenu.h>
 #include <kstringhandler.h>
 #include <kxmlguiclient.h>
 #include <kxmlguifactory.h>
@@ -71,34 +71,34 @@ KateBookmarks::~KateBookmarks()
 {
 }
 
-void KateBookmarks::createActions( KActionCollection* ac )
+void KateBookmarks::createActions( TDEActionCollection* ac )
 {
-  m_bookmarkToggle = new KToggleAction(
+  m_bookmarkToggle = new TDEToggleAction(
     i18n("Set &Bookmark"), "bookmark", CTRL+Key_B,
     this, TQT_SLOT(toggleBookmark()),
     ac, "bookmarks_toggle" );
   m_bookmarkToggle->setWhatsThis(i18n("If a line has no bookmark then add one, otherwise remove it."));
   m_bookmarkToggle->setCheckedState( i18n("Clear &Bookmark") );
 
-  m_bookmarkClear = new KAction(
+  m_bookmarkClear = new TDEAction(
     i18n("Clear &All Bookmarks"), 0,
     this, TQT_SLOT(clearBookmarks()),
     ac, "bookmarks_clear");
   m_bookmarkClear->setWhatsThis(i18n("Remove all bookmarks of the current document."));
 
-  m_goNext = new KAction(
+  m_goNext = new TDEAction(
     i18n("Next Bookmark"), "next", ALT + Key_PageDown,
     this, TQT_SLOT(goNext()),
     ac, "bookmarks_next");
   m_goNext->setWhatsThis(i18n("Go to the next bookmark."));
 
-  m_goPrevious = new KAction(
+  m_goPrevious = new TDEAction(
     i18n("Previous Bookmark"), "previous", ALT + Key_PageUp,
     this, TQT_SLOT(goPrevious()),
     ac, "bookmarks_previous");
   m_goPrevious->setWhatsThis(i18n("Go to the previous bookmark."));
 
-  m_bookmarksMenu = (new KActionMenu(i18n("&Bookmarks"), ac, "bookmarks"))->popupMenu();
+  m_bookmarksMenu = (new TDEActionMenu(i18n("&Bookmarks"), ac, "bookmarks"))->popupMenu();
 
   //connect the aboutToShow() and aboutToHide() signals with
   //the bookmarkMenuAboutToShow() and bookmarkMenuAboutToHide() slots

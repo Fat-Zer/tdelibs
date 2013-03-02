@@ -1,7 +1,7 @@
 /*
  $Id$
 
- Simple helper routines for style's use of KStandardDirs with TQSettings, etc.
+ Simple helper routines for style's use of TDEStandardDirs with TQSettings, etc.
 
  This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public
@@ -25,19 +25,19 @@
 #include <kstandarddirs.h>
 #include "kstyledirs.h"
 
-KStyleDirs* KStyleDirs::instance = 0;
+TDEStyleDirs* TDEStyleDirs::instance = 0;
 
-KStyleDirs::KStyleDirs()
+TDEStyleDirs::TDEStyleDirs()
 {
-    addResourceType( "themepixmap", KStandardDirs::kde_default( "data" ) + "kstyle/pixmaps/" );
-    addResourceType( "themerc", KStandardDirs::kde_default( "data" ) + "kstyle/themes/" );
+    addResourceType( "themepixmap", TDEStandardDirs::kde_default( "data" ) + "kstyle/pixmaps/" );
+    addResourceType( "themerc", TDEStandardDirs::kde_default( "data" ) + "kstyle/themes/" );
 }
 
-KStyleDirs::~KStyleDirs()
+TDEStyleDirs::~TDEStyleDirs()
 {
 }
 
-void KStyleDirs::addToSearch( const char* type, TQSettings& s ) const
+void TDEStyleDirs::addToSearch( const char* type, TQSettings& s ) const
 {
     const TQStringList & dirs = resourceDirs(type);
     for ( int c = dirs.size()-1; c >= 0 ; c-- )

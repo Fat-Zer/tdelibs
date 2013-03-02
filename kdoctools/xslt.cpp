@@ -11,8 +11,8 @@
 #include <tqregexp.h>
 #include <xslt.h>
 #include <kinstance.h>
-#include "kio_help.h"
-#include <klocale.h>
+#include "tdeio_help.h"
+#include <tdelocale.h>
 #include <assert.h>
 #include <kfilterbase.h>
 #include <kfilterdev.h>
@@ -114,7 +114,7 @@ xmlParserInputPtr meinExternalEntityLoader(const char *URL, const char *ID,
 	URL = "docbook/xml-dtd-4.1.2/docbookx.dtd";
 
     TQString file;
-    if (KStandardDirs::exists( TQDir::currentDirPath() + "/" + URL ) )
+    if (TDEStandardDirs::exists( TQDir::currentDirPath() + "/" + URL ) )
         file = TQDir::currentDirPath() + "/" + URL;
     else
         file = locate("dtd", URL);
@@ -179,14 +179,14 @@ TQString splitOut(const TQString &parsed, int index)
     return filedata;
 }
 
-void fillInstance(KInstance &ins, const TQString &srcdir) {
+void fillInstance(TDEInstance &ins, const TQString &srcdir) {
     TQString catalogs;
 
     if ( srcdir.isEmpty() ) {
         catalogs += ins.dirs()->findResource("data", "ksgmltools2/customization/catalog");
         catalogs += ':';
         catalogs += ins.dirs()->findResource("data", "ksgmltools2/docbook/xml-dtd-4.2/docbook.cat");
-        ins.dirs()->addResourceType("dtd", KStandardDirs::kde_default("data") + "ksgmltools2");
+        ins.dirs()->addResourceType("dtd", TDEStandardDirs::kde_default("data") + "ksgmltools2");
     } else {
         catalogs += srcdir +"/customization/catalog:" + srcdir + "/docbook/xml-dtd-4.2/docbook.cat";
         ins.dirs()->addResourceDir("dtd", srcdir);
@@ -287,7 +287,7 @@ TQString lookForCache( const TQString &filename )
         return output;
     if ( readCache( filename,
                     locateLocal( "cache",
-                                 "kio_help" + cache +
+                                 "tdeio_help" + cache +
                                  "cache.bz2" ), output ) )
         return output;
 

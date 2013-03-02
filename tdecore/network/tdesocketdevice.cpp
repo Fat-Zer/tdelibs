@@ -60,14 +60,14 @@
 
 using namespace KNetwork;
 
-class KNetwork::KSocketDevicePrivate
+class KNetwork::TDESocketDevicePrivate
 {
 public:
   mutable TQSocketNotifier *input, *output, *exception;
-  KSocketAddress local, peer;
+  TDESocketAddress local, peer;
   int af;
 
-  inline KSocketDevicePrivate()
+  inline TDESocketDevicePrivate()
   {
     input = output = exception = 0L;
     af = 0;
@@ -75,16 +75,16 @@ public:
 };
 
 
-KSocketDevice::KSocketDevice(const KSocketBase* parent)
-  : m_sockfd(-1), d(new KSocketDevicePrivate)
+TDESocketDevice::TDESocketDevice(const TDESocketBase* parent)
+  : m_sockfd(-1), d(new TDESocketDevicePrivate)
 {
   setSocketDevice(this);
   if (parent)
     setSocketOptions(parent->socketOptions());
 }
 
-KSocketDevice::KSocketDevice(int fd)
-  : m_sockfd(fd), d(new KSocketDevicePrivate)
+TDESocketDevice::TDESocketDevice(int fd)
+  : m_sockfd(fd), d(new TDESocketDevicePrivate)
 {
   setState(IO_Open);
   setFlags(IO_Sequential | IO_Raw | IO_ReadWrite);
@@ -92,26 +92,26 @@ KSocketDevice::KSocketDevice(int fd)
   d->af = localAddress().family();
 }
 
-KSocketDevice::KSocketDevice(bool, const KSocketBase* parent)
-  : m_sockfd(-1), d(new KSocketDevicePrivate)
+TDESocketDevice::TDESocketDevice(bool, const TDESocketBase* parent)
+  : m_sockfd(-1), d(new TDESocketDevicePrivate)
 {
   // do not set parent
   if (parent)
     setSocketOptions(parent->socketOptions());
 }
 
-KSocketDevice::~KSocketDevice()
+TDESocketDevice::~TDESocketDevice()
 {
   close();			// deletes the notifiers
   unsetSocketDevice(); 		// prevent double deletion
   delete d;
 }
 
-bool KSocketDevice::setSocketOptions(int opts)
+bool TDESocketDevice::setSocketOptions(int opts)
 {
   // must call parent
   TQMutexLocker locker(mutex());
-  KSocketBase::setSocketOptions(opts);
+  TDESocketBase::setSocketOptions(opts);
 
   if (m_sockfd == -1)
     return true;		// flags are stored
@@ -171,13 +171,13 @@ bool KSocketDevice::setSocketOptions(int opts)
   return true;			// all went well
 }
 
-bool KSocketDevice::open(TQ_OpenMode)
+bool TDESocketDevice::open(TQ_OpenMode)
 {
   resetError();
   return false;
 }
 
-void KSocketDevice::close()
+void TDESocketDevice::close()
 {
   resetError();
   if (m_sockfd != -1)
@@ -198,7 +198,7 @@ void KSocketDevice::close()
   m_sockfd = -1;
 }
 
-bool KSocketDevice::create(int family, int type, int protocol)
+bool TDESocketDevice::create(int family, int type, int protocol)
 {
   resetError();
 
@@ -224,12 +224,12 @@ bool KSocketDevice::create(int family, int type, int protocol)
   return true;		// successfully created
 }
 
-bool KSocketDevice::create(const KResolverEntry& address)
+bool TDESocketDevice::create(const KResolverEntry& address)
 {
   return create(address.family(), address.socketType(), address.protocol());
 }
 
-bool KSocketDevice::bind(const KResolverEntry& address)
+bool TDESocketDevice::bind(const KResolverEntry& address)
 {
   resetError();
 
@@ -252,7 +252,7 @@ bool KSocketDevice::bind(const KResolverEntry& address)
   return true;
 }
 
-bool KSocketDevice::listen(int backlog)
+bool TDESocketDevice::listen(int backlog)
 {
   if (m_sockfd != -1)
     {
@@ -273,7 +273,7 @@ bool KSocketDevice::listen(int backlog)
   return false;
 }
 
-bool KSocketDevice::connect(const KResolverEntry& address)
+bool TDESocketDevice::connect(const KResolverEntry& address)
 {
   resetError();
 
@@ -306,7 +306,7 @@ bool KSocketDevice::connect(const KResolverEntry& address)
   return true;			// all is well
 }
 
-KSocketDevice* KSocketDevice::accept()
+TDESocketDevice* TDESocketDevice::accept()
 {
   if (m_sockfd == -1)
     {
@@ -327,17 +327,17 @@ KSocketDevice* KSocketDevice::accept()
       return NULL;
     }
 
-  return new KSocketDevice(newfd);
+  return new TDESocketDevice(newfd);
 }
 
-bool KSocketDevice::disconnect()
+bool TDESocketDevice::disconnect()
 {
   resetError();
 
   if (m_sockfd == -1)
     return false;		// can't create
 
-  KSocketAddress address;
+  TDESocketAddress address;
   address.setFamily(AF_UNSPEC);
   if (kde_connect(m_sockfd, address.address(), address.length()) == -1)
     {
@@ -365,10 +365,10 @@ bool KSocketDevice::disconnect()
 }
 
 #ifdef USE_QT3
-TQ_LONG KSocketDevice::bytesAvailable() const
+TQ_LONG TDESocketDevice::bytesAvailable() const
 #endif
 #ifdef USE_QT4
-qint64 KSocketDevice::bytesAvailable() const
+qint64 TDESocketDevice::bytesAvailable() const
 #endif
 {
   if (m_sockfd == -1)
@@ -381,7 +381,7 @@ qint64 KSocketDevice::bytesAvailable() const
   return nchars;
 }
 
-TQ_LONG KSocketDevice::waitForMore(int msecs, bool *timeout)
+TQ_LONG TDESocketDevice::waitForMore(int msecs, bool *timeout)
 {
   if (m_sockfd == -1)
     return -1;			// there won't ever be anything to read...
@@ -393,7 +393,7 @@ TQ_LONG KSocketDevice::waitForMore(int msecs, bool *timeout)
   return bytesAvailable();
 }
 
-static int do_read_common(int sockfd, char *data, TQ_ULONG maxlen, KSocketAddress* from, ssize_t &retval, bool peek = false)
+static int do_read_common(int sockfd, char *data, TQ_ULONG maxlen, TDESocketAddress* from, ssize_t &retval, bool peek = false)
 {
   socklen_t len;
   if (from)
@@ -407,19 +407,19 @@ static int do_read_common(int sockfd, char *data, TQ_ULONG maxlen, KSocketAddres
   if (retval == -1)
     {
       if (errno == EAGAIN || errno == EWOULDBLOCK)
-	return KSocketDevice::WouldBlock;
+	return TDESocketDevice::WouldBlock;
       else
-	return KSocketDevice::UnknownError;
+	return TDESocketDevice::UnknownError;
     }
   if (retval == 0)
-    return KSocketDevice::RemotelyDisconnected;
+    return TDESocketDevice::RemotelyDisconnected;
 
   if (from)
     from->setLength(len);
   return 0;
 }
 
-TQT_TQIO_LONG KSocketDevice::tqreadBlock(char *data, TQT_TQIO_ULONG maxlen)
+TQT_TQIO_LONG TDESocketDevice::tqreadBlock(char *data, TQT_TQIO_ULONG maxlen)
 {
   resetError();
   if (m_sockfd == -1)
@@ -440,7 +440,7 @@ TQT_TQIO_LONG KSocketDevice::tqreadBlock(char *data, TQT_TQIO_ULONG maxlen)
   return retval;
 }
 
-TQT_TQIO_LONG KSocketDevice::tqreadBlock(char *data, TQT_TQIO_ULONG maxlen, KSocketAddress &from)
+TQT_TQIO_LONG TDESocketDevice::tqreadBlock(char *data, TQT_TQIO_ULONG maxlen, TDESocketAddress &from)
 {
   resetError();
   if (m_sockfd == -1)
@@ -461,7 +461,7 @@ TQT_TQIO_LONG KSocketDevice::tqreadBlock(char *data, TQT_TQIO_ULONG maxlen, KSoc
   return retval;
 }
 
-TQ_LONG KSocketDevice::peekBlock(char *data, TQ_ULONG maxlen)
+TQ_LONG TDESocketDevice::peekBlock(char *data, TQ_ULONG maxlen)
 {
   resetError();
   if (m_sockfd == -1)
@@ -482,7 +482,7 @@ TQ_LONG KSocketDevice::peekBlock(char *data, TQ_ULONG maxlen)
   return retval;
 }
 
-TQ_LONG KSocketDevice::peekBlock(char *data, TQ_ULONG maxlen, KSocketAddress& from)
+TQ_LONG TDESocketDevice::peekBlock(char *data, TQ_ULONG maxlen, TDESocketAddress& from)
 {
   resetError();
   if (m_sockfd == -1)
@@ -503,12 +503,12 @@ TQ_LONG KSocketDevice::peekBlock(char *data, TQ_ULONG maxlen, KSocketAddress& fr
   return retval;
 }
 
-TQT_TQIO_LONG KSocketDevice::tqwriteBlock(const char *data, TQT_TQIO_ULONG len)
+TQT_TQIO_LONG TDESocketDevice::tqwriteBlock(const char *data, TQT_TQIO_ULONG len)
 {
-  return tqwriteBlock(data, len, KSocketAddress());
+  return tqwriteBlock(data, len, TDESocketAddress());
 }
 
-TQT_TQIO_LONG KSocketDevice::tqwriteBlock(const char *data, TQT_TQIO_ULONG len, const KSocketAddress& to)
+TQT_TQIO_LONG TDESocketDevice::tqwriteBlock(const char *data, TQT_TQIO_ULONG len, const TDESocketAddress& to)
 {
   resetError();
   if (m_sockfd == -1)
@@ -532,20 +532,20 @@ TQT_TQIO_LONG KSocketDevice::tqwriteBlock(const char *data, TQT_TQIO_ULONG len, 
   return retval;
 }
 
-KSocketAddress KSocketDevice::localAddress() const
+TDESocketAddress TDESocketDevice::localAddress() const
 {
   if (m_sockfd == -1)
-    return KSocketAddress();	// not open, empty value
+    return TDESocketAddress();	// not open, empty value
 
   if (d->local.family() != AF_UNSPEC)
     return d->local;
 
   socklen_t len;
-  KSocketAddress localAddress;
+  TDESocketAddress localAddress;
   localAddress.setLength(len = 32);	// arbitrary value
   if (kde_getsockname(m_sockfd, localAddress.address(), &len) == -1)
     // error!
-    return d->local = KSocketAddress();
+    return d->local = TDESocketAddress();
 
 #ifdef HAVE_STRUCT_SOCKADDR_SA_LEN
   len = localAddress.address()->sa_len;
@@ -563,25 +563,25 @@ KSocketAddress KSocketDevice::localAddress() const
   localAddress.setLength(len);
   if (kde_getsockname(m_sockfd, localAddress.address(), &len) == -1)
     // error!
-    return d->local = KSocketAddress();
+    return d->local = TDESocketAddress();
 
   return d->local = localAddress;
 }
 
-KSocketAddress KSocketDevice::peerAddress() const
+TDESocketAddress TDESocketDevice::peerAddress() const
 {
   if (m_sockfd == -1)
-    return KSocketAddress();	// not open, empty value
+    return TDESocketAddress();	// not open, empty value
 
   if (d->peer.family() != AF_UNSPEC)
     return d->peer;
 
   socklen_t len;
-  KSocketAddress peerAddress;
+  TDESocketAddress peerAddress;
   peerAddress.setLength(len = 32);	// arbitrary value
   if (kde_getpeername(m_sockfd, peerAddress.address(), &len) == -1)
     // error!
-    return d->peer = KSocketAddress();
+    return d->peer = TDESocketAddress();
 
 #ifdef HAVE_STRUCT_SOCKADDR_SA_LEN
   len = peerAddress.address()->sa_len;
@@ -599,19 +599,19 @@ KSocketAddress KSocketDevice::peerAddress() const
   peerAddress.setLength(len);
   if (kde_getpeername(m_sockfd, peerAddress.address(), &len) == -1)
     // error!
-    return d->peer = KSocketAddress();
+    return d->peer = TDESocketAddress();
 
   return d->peer = peerAddress;
 }
 
-KSocketAddress KSocketDevice::externalAddress() const
+TDESocketAddress TDESocketDevice::externalAddress() const
 {
   // for normal sockets, the externally visible address is the same
   // as the local address
   return localAddress();
 }
 
-TQSocketNotifier* KSocketDevice::readNotifier() const
+TQSocketNotifier* TDESocketDevice::readNotifier() const
 {
   if (d->input)
     return d->input;
@@ -629,7 +629,7 @@ TQSocketNotifier* KSocketDevice::readNotifier() const
   return d->input = createNotifier(TQSocketNotifier::Read);
 }
 
-TQSocketNotifier* KSocketDevice::writeNotifier() const
+TQSocketNotifier* TDESocketDevice::writeNotifier() const
 {
   if (d->output)
     return d->output;
@@ -647,7 +647,7 @@ TQSocketNotifier* KSocketDevice::writeNotifier() const
   return d->output = createNotifier(TQSocketNotifier::Write);
 }
 
-TQSocketNotifier* KSocketDevice::exceptionNotifier() const
+TQSocketNotifier* TDESocketDevice::exceptionNotifier() const
 {
   if (d->exception)
     return d->exception;
@@ -665,7 +665,7 @@ TQSocketNotifier* KSocketDevice::exceptionNotifier() const
   return d->exception = createNotifier(TQSocketNotifier::Exception);
 }
 
-bool KSocketDevice::poll(bool *input, bool *output, bool *exception,
+bool TDESocketDevice::poll(bool *input, bool *output, bool *exception,
 			 int timeout, bool* timedout)
 {
   if (m_sockfd == -1)
@@ -787,13 +787,13 @@ bool KSocketDevice::poll(bool *input, bool *output, bool *exception,
 #endif
 }
 
-bool KSocketDevice::poll(int timeout, bool *timedout)
+bool TDESocketDevice::poll(int timeout, bool *timedout)
 {
   bool input, output, exception;
   return poll(&input, &output, &exception, timeout, timedout);
 }
 
-TQSocketNotifier* KSocketDevice::createNotifier(TQSocketNotifier::Type type) const
+TQSocketNotifier* TDESocketDevice::createNotifier(TQSocketNotifier::Type type) const
 {
   if (m_sockfd == -1)
     return 0L;
@@ -836,14 +836,14 @@ namespace
   };
 }
 
-static KSocketDeviceFactoryBase* defaultImplFactory;
+static TDESocketDeviceFactoryBase* defaultImplFactory;
 static TQMutex defaultImplFactoryMutex;
-typedef TQMap<int, KSocketDeviceFactoryBase* > factoryMap;
+typedef TQMap<int, TDESocketDeviceFactoryBase* > factoryMap;
 static factoryMap factories;
  
-KSocketDevice* KSocketDevice::createDefault(KSocketBase* parent)
+TDESocketDevice* TDESocketDevice::createDefault(TDESocketBase* parent)
 {
-  KSocketDevice* device = dynamic_cast<KSocketDevice*>(parent);
+  TDESocketDevice* device = dynamic_cast<TDESocketDevice*>(parent);
   if (device != 0L)
     return device;
 
@@ -853,12 +853,12 @@ KSocketDevice* KSocketDevice::createDefault(KSocketBase* parent)
     return defaultImplFactory->create(parent);
 
   // the really default
-  return new KSocketDevice(parent);
+  return new TDESocketDevice(parent);
 }
 
-KSocketDevice* KSocketDevice::createDefault(KSocketBase* parent, int capabilities)
+TDESocketDevice* TDESocketDevice::createDefault(TDESocketBase* parent, int capabilities)
 {
-  KSocketDevice* device = dynamic_cast<KSocketDevice*>(parent);
+  TDESocketDevice* device = dynamic_cast<TDESocketDevice*>(parent);
   if (device != 0L)
     return device;
 
@@ -872,16 +872,16 @@ KSocketDevice* KSocketDevice::createDefault(KSocketBase* parent, int capabilitie
   return 0L;			// no default
 }
 
-KSocketDeviceFactoryBase*
-KSocketDevice::setDefaultImpl(KSocketDeviceFactoryBase* factory)
+TDESocketDeviceFactoryBase*
+TDESocketDevice::setDefaultImpl(TDESocketDeviceFactoryBase* factory)
 {
   TQMutexLocker locker(&defaultImplFactoryMutex);
-  KSocketDeviceFactoryBase* old = defaultImplFactory;
+  TDESocketDeviceFactoryBase* old = defaultImplFactory;
   defaultImplFactory = factory;
   return old;
 }
 
-void KSocketDevice::addNewImpl(KSocketDeviceFactoryBase* factory, int capabilities)
+void TDESocketDevice::addNewImpl(TDESocketDeviceFactoryBase* factory, int capabilities)
 {
   TQMutexLocker locker(&defaultImplFactoryMutex);
   if (factories.contains(capabilities))

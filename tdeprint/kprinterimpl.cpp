@@ -32,16 +32,16 @@
 #include <tqfile.h>
 #include <tqregexp.h>
 #include <kinputdialog.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <dcopclient.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kstandarddirs.h>
 #include <kdatastream.h>
 #include <kdebug.h>
 #include <kmimemagic.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kprocess.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include <stdlib.h>
 
@@ -158,9 +158,9 @@ bool KPrinterImpl::printFiles(KPrinter *p, const TQStringList& f, bool flag)
 				}
 				else
 				{
-					KProcess proc;
+					TDEProcess proc;
 					proc << (flag?"mv":"cp") << f[0] << p->outputFileName();
-					if (!proc.start(KProcess::Block) || !proc.normalExit() || proc.exitStatus() != 0)
+					if (!proc.start(TDEProcess::Block) || !proc.normalExit() || proc.exitStatus() != 0)
 					{
 						p->setErrorMessage(i18n("Cannot save print file to %1. Check that you have write access to it.").arg(p->outputFileName()));
 						return false;
@@ -223,7 +223,7 @@ int KPrinterImpl::dcopPrint(const TQString& cmd, const TQStringList& files, bool
 void KPrinterImpl::statusMessage(const TQString& msg, KPrinter *printer)
 {
 	kdDebug(500) << "tdeprint: status message: " << msg << endl;
-	KConfig	*conf = KMFactory::self()->printConfig();
+	TDEConfig	*conf = KMFactory::self()->printConfig();
 	conf->setGroup("General");
 	if (!conf->readBoolEntry("ShowStatusMsg", true))
 		return;
@@ -296,7 +296,7 @@ TQString KPrinterImpl::tempFile()
 {
 	TQString	f;
 	// be sure the file doesn't exist
-	do f = locateLocal("tmp","tdeprint_") + KApplication::randomString(8); while (TQFile::exists(f));
+	do f = locateLocal("tmp","tdeprint_") + TDEApplication::randomString(8); while (TQFile::exists(f));
 	return f;
 }
 
@@ -573,7 +573,7 @@ bool KPrinterImpl::setupSpecialCommand(TQString& cmd, KPrinter *p, const TQStrin
 }
 
 TQString KPrinterImpl::quote(const TQString& s)
-{ return KProcess::quote(s); }
+{ return TDEProcess::quote(s); }
 
 void KPrinterImpl::saveOptions(const TQMap<TQString,TQString>& opts)
 {
@@ -583,7 +583,7 @@ void KPrinterImpl::saveOptions(const TQMap<TQString,TQString>& opts)
 
 void KPrinterImpl::loadAppOptions()
 {
-	KConfig	*conf = KGlobal::config();
+	TDEConfig	*conf = TDEGlobal::config();
 	conf->setGroup("KPrinter Settings");
 	TQStringList	opts = conf->readListEntry("ApplicationOptions");
 	for (uint i=0; i<opts.count(); i+=2)
@@ -598,7 +598,7 @@ void KPrinterImpl::saveAppOptions()
 		if (it.key().startsWith("app-"))
 			optlist << it.key() << it.data();
 
-	KConfig	*conf = KGlobal::config();
+	TDEConfig	*conf = TDEGlobal::config();
 	conf->setGroup("KPrinter Settings");
 	conf->writeEntry("ApplicationOptions", optlist);
 }

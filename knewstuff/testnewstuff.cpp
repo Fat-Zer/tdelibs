@@ -24,11 +24,11 @@
 #include <tqfile.h>
 #include <tqtextstream.h>
 
-#include <kaboutdata.h>
-#include <kapplication.h>
+#include <tdeaboutdata.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
-#include <klocale.h>
-#include <kcmdlineargs.h>
+#include <tdelocale.h>
+#include <tdecmdlineargs.h>
 #include <kprocess.h>
 #include <kdialog.h>
 
@@ -54,9 +54,9 @@ bool TestNewStuff::install( const TQString &fileName )
 
 bool TestNewStuff::createUploadFile( const TQString &fileName )
 {
-  KProcess p;
+  TDEProcess p;
   p << "touch" << fileName;
-  p.start(KProcess::Block);
+  p.start(TDEProcess::Block);
   kdDebug() << "TestNewStuff::createUploadFile(): " << fileName << endl;
   return true;
 }
@@ -107,10 +107,10 @@ void MyWidget::upload()
 
 int main(int argc,char **argv)
 {
-  KAboutData aboutData("knewstufftest","KNewStuff Test","0.1");
-  KCmdLineArgs::init(argc,argv,&aboutData);
+  TDEAboutData aboutData("knewstufftest","KNewStuff Test","0.1");
+  TDECmdLineArgs::init(argc,argv,&aboutData);
 
-  KApplication app;
+  TDEApplication app;
 
   MyWidget wid;
   app.setMainWidget( &wid );

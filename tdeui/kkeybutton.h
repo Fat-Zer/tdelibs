@@ -21,7 +21,7 @@
 #define _KKEYBUTTON_H_
 
 #include <tqpushbutton.h>
-#include <kshortcut.h>
+#include <tdeshortcut.h>
 
 /**
  * @short A push button that looks like a keyboard key.
@@ -52,10 +52,10 @@ class TDEUI_EXPORT KKeyButton: public TQPushButton
 	virtual ~KKeyButton();
 
 	/** @deprecated Use setShortcut( cut, false ) instead */
-	void setShortcut( const KShortcut& cut ) KDE_DEPRECATED;
+	void setShortcut( const TDEShortcut& cut ) KDE_DEPRECATED;
 	/// @since 3.1
-	void setShortcut( const KShortcut& cut, bool bQtShortcut );
-	const KShortcut& shortcut() const
+	void setShortcut( const TDEShortcut& cut, bool bQtShortcut );
+	const TDEShortcut& shortcut() const
 		{ return m_cut; }
 
 	/**
@@ -64,7 +64,7 @@ class TDEUI_EXPORT KKeyButton: public TQPushButton
 	void setText( const TQString& text );
 
  signals:
-	void capturedShortcut( const KShortcut& );
+	void capturedShortcut( const TDEShortcut& );
 
  public slots:
 	/**
@@ -74,7 +74,7 @@ class TDEUI_EXPORT KKeyButton: public TQPushButton
 	void captureShortcut();
 
  protected:
-	KShortcut m_cut;
+	TDEShortcut m_cut;
 	bool m_bEditing;
 
 	/**

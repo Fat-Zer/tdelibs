@@ -20,11 +20,11 @@
 #define __KATE_FACTORY_H__
 
 #include "katejscript.h"
-#include <kparts/factory.h>
+#include <tdeparts/factory.h>
 
 #include <ktrader.h>
 #include <kinstance.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 
 // katepart version must be a string in double quotes, format: "x.x"
 #define KATEPART_VERSION "2.5"
@@ -87,7 +87,7 @@ class KateFactory
      * public accessor to the instance
      * @return instance
      */
-    inline KInstance *instance () { return &m_instance; };
+    inline TDEInstance *instance () { return &m_instance; };
 
     /**
      * register document at the factory
@@ -148,9 +148,9 @@ class KateFactory
 
     /**
      * on start detected plugins
-     * @return list of all at launch detected ktexteditor::plugins
+     * @return list of all at launch detected tdetexteditor::plugins
      */
-    inline const KTrader::OfferList &plugins () { return m_plugins; };
+    inline const TDETrader::OfferList &plugins () { return m_plugins; };
 
     /**
      * global dirwatch
@@ -221,12 +221,12 @@ class KateFactory
     /**
      * about data (authors and more)
      */
-    KAboutData m_aboutData;
+    TDEAboutData m_aboutData;
 
     /**
      * our kinstance
      */
-    KInstance m_instance;
+    TDEInstance m_instance;
 
     /**
      * registered docs
@@ -261,7 +261,7 @@ class KateFactory
     /**
      * at start found plugins
      */
-    KTrader::OfferList m_plugins;
+    TDETrader::OfferList m_plugins;
 
     /**
      * fallback document config

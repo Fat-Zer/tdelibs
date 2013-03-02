@@ -45,15 +45,15 @@
 #include <tqspinbox.h>
 #include <tqtimer.h>
 
-#include <kapplication.h>
-#include <kconfig.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
+#include <tdeapplication.h>
+#include <tdeconfig.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
 #include <kiconloader.h>
 #include <klineedit.h>
-#include <klistbox.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelistbox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kseparator.h>
 #include <kpalette.h>
 #include <kimageeffect.h>
@@ -260,7 +260,7 @@ void KHSSelector::drawPalette( TQPixmap *pixmap )
 //-----------------------------------------------------------------------------
 
 KValueSelector::KValueSelector( TQWidget *parent, const char *name )
-	: KSelector( Qt::Vertical, parent, name ), _hue(0), _sat(0)
+	: TDESelector( Qt::Vertical, parent, name ), _hue(0), _sat(0)
 {
 	setRange( 0, 255 );
 	pixmap.setOptimization( TQPixmap::BestOptim );
@@ -268,7 +268,7 @@ KValueSelector::KValueSelector( TQWidget *parent, const char *name )
 
 KValueSelector::KValueSelector(Orientation o, TQWidget *parent, const char *name
  )
-	: KSelector( o, parent, name), _hue(0), _sat(0)
+	: TDESelector( o, parent, name), _hue(0), _sat(0)
 {
 	setRange( 0, 255 );
 	pixmap.setOptimization( TQPixmap::BestOptim );
@@ -429,7 +429,7 @@ void KColorCells::mouseMoveEvent( TQMouseEvent *e )
     if( !(e->state() & Qt::LeftButton)) return;
 
     if(inMouse) {
-        int delay = KGlobalSettings::dndEventDelay();
+        int delay = TDEGlobalSettings::dndEventDelay();
         if(e->x() > mPos.x()+delay || e->x() < mPos.x()-delay ||
            e->y() > mPos.y()+delay || e->y() < mPos.y()-delay){
             // Drag color object
@@ -590,7 +590,7 @@ KPaletteTable::KPaletteTable( TQWidget *parent, int minWidth, int cols)
   sv->setFixedSize(minSize);
   layout->addWidget(sv);
 
-  mNamedColorList = new KListBox( this, "namedColorList", 0 );
+  mNamedColorList = new TDEListBox( this, "namedColorList", 0 );
   mNamedColorList->setFixedSize(minSize);
   mNamedColorList->hide();
   layout->addWidget(mNamedColorList);
@@ -645,7 +645,7 @@ KPaletteTable::readNamedColor( void )
     return; // Strings already present
   }
 
-  KGlobal::locale()->insertCatalogue("tdelibs_colors");
+  TDEGlobal::locale()->insertCatalogue("tdelibs_colors");
 
   //
   // Code somewhat inspired by KPalette.
@@ -1254,7 +1254,7 @@ void KColorDialog::slotDefaultColorClicked()
 void
 KColorDialog::readSettings()
 {
-  KConfigGroup group( KGlobal::config(), "Colors" );
+  TDEConfigGroup group( TDEGlobal::config(), "Colors" );
 
   TQString palette = group.readEntry("CurrentPalette");
   d->table->setPalette(palette);
@@ -1263,7 +1263,7 @@ KColorDialog::readSettings()
 void
 KColorDialog::slotWriteSettings()
 {
-  KConfigGroup group( KGlobal::config(), "Colors" );
+  TDEConfigGroup group( TDEGlobal::config(), "Colors" );
 
   TQString palette = d->table->palette();
   if (!group.hasDefault("CurrentPalette") &&
@@ -1597,7 +1597,7 @@ void KHSSelector::virtual_hook( int id, void* data )
 { KXYSelector::virtual_hook( id, data ); }
 
 void KValueSelector::virtual_hook( int id, void* data )
-{ KSelector::virtual_hook( id, data ); }
+{ TDESelector::virtual_hook( id, data ); }
 
 void KPaletteTable::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }

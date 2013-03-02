@@ -29,8 +29,8 @@ class KMConfigCups : public KMConfigPage
 public:
 	KMConfigCups(TQWidget *parent = 0);
 
-	void loadConfig(KConfig*);
-	void saveConfig(KConfig*);
+	void loadConfig(TDEConfig*);
+	void saveConfig(TDEConfig*);
 
 private:
 	KMCupsConfigWidget	*m_widget;

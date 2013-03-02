@@ -22,7 +22,7 @@
 #include "kmprinter.h"
 
 #include <tqfile.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 static const char *pt_pagesize[] = {
 	"ledger", I18N_NOOP("Ledger"),

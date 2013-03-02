@@ -1,28 +1,28 @@
 #include "kmmanager.h"
-#include <kcmdlineargs.h>
-#include <kapplication.h>
-#include <kmessagebox.h>
-#include <klocale.h>
-#include <kglobal.h>
+#include <tdecmdlineargs.h>
+#include <tdeapplication.h>
+#include <tdemessagebox.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
 	{ "tdeconfig", I18N_NOOP("Configure TDE Print"), 0 },
 	{ "serverconfig", I18N_NOOP("Configure print server"), 0 },
-	KCmdLineLastOption
+	TDECmdLineLastOption
 };
 
 extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
 {
-	KCmdLineArgs::init(argc, argv, "kaddprinterwizard",
+	TDECmdLineArgs::init(argc, argv, "kaddprinterwizard",
 			I18N_NOOP("Start the add printer wizard"),
 			"0.1");
-	KCmdLineArgs::addCmdLineOptions(options);
+	TDECmdLineArgs::addCmdLineOptions(options);
 	
-	KGlobal::locale()->setMainCatalogue("tdelibs");
+	TDEGlobal::locale()->setMainCatalogue("tdelibs");
 
-	KApplication app;
-	KCmdLineArgs	*args = KCmdLineArgs::parsedArgs();
+	TDEApplication app;
+	TDECmdLineArgs	*args = TDECmdLineArgs::parsedArgs();
 	bool	doConfig = args->isSet("tdeconfig");
 	bool	doSrvConfig = args->isSet("serverconfig");
 

@@ -24,11 +24,11 @@
 #include <tqdir.h>
 
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kprocess.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kstandarddirs.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <ktar.h>
 
 #include "entry.h"
@@ -40,7 +40,7 @@ using namespace std;
 KNewStuffGeneric::KNewStuffGeneric( const TQString &type, TQWidget *parent )
   : KNewStuff( type, parent )
 {
-  mConfig = KGlobal::config();
+  mConfig = TDEGlobal::config();
 }
 
 KNewStuffGeneric::~KNewStuffGeneric()
@@ -72,9 +72,9 @@ bool KNewStuffGeneric::install( const TQString &fileName )
     for ( TQStringList::iterator it = list.begin(); it != list.end(); ++it ) {
         list2 << (*it).replace("%f", fileName);
     }
-    KProcess proc;
+    TDEProcess proc;
     proc << list2;
-    proc.start( KProcess::Block );
+    proc.start( TDEProcess::Block );
   }
 
   return true;
@@ -134,7 +134,7 @@ TQString KNewStuffGeneric::downloadDestination( KNS::Entry *entry )
 {
   TQString file = destinationPath(entry);
 
-  if ( KStandardDirs::exists( file ) ) {
+  if ( TDEStandardDirs::exists( file ) ) {
     int result = KMessageBox::warningContinueCancel( parentWidget(),
         i18n("The file '%1' already exists. Do you want to overwrite it?")
         .arg( file ),

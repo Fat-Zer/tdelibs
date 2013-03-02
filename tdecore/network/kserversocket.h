@@ -30,14 +30,14 @@
 
 namespace KNetwork {
 
-class KSocketDevice;
+class TDESocketDevice;
 class KStreamSocket; 
 class KResolver;
 class KResolverResults;
 
-class KServerSocketPrivate;
+class TDEServerSocketPrivate;
 /**
- * @class KServerSocket kserversocket.h kserversocket.h
+ * @class TDEServerSocket kserversocket.h kserversocket.h
  * @brief A server socket for accepting connections.
  *
  * This class provides functionality for creating a socket to
@@ -49,7 +49,7 @@ class KServerSocketPrivate;
  * A typical example would look like:
  * \code
  *   TQString service = "http";
- *   KServerSocket *ss = new KServerSocket(service);
+ *   TDEServerSocket *ss = new TDEServerSocket(service);
  *   connect(ss, TQT_SIGNAL(readyAccept()), this, TQT_SLOT(slotReadyAccept()));
  *   connect(ss, TQT_SIGNAL(gotError(int)), this, TQT_SLOT(slotSocketError(int)));
  *   ss->listen();
@@ -70,14 +70,14 @@ class KServerSocketPrivate;
  *
  * For another example of usage, this below code attempts to make a connection on any port within a range:
  * \code
- *   KServerSocket *ss = new KServerSocket();
+ *   TDEServerSocket *ss = new TDEServerSocket();
  *   ss->setFamily(KResolver::InetFamily);
  *   bool found = false;
  *   for( unsigned int port = firstport; port <= lastport; ++port) {
  *     ss->setAddress( TQString::number( port ) );
  *     bool success = ss->listen();
  *     if( found = ( success && ss->error() == 
- *                              KSocketBase::NoError ) )
+ *                              TDESocketBase::NoError ) )
  *       break;
  *     ss->close();
  *   }
@@ -95,16 +95,16 @@ class KServerSocketPrivate;
  *
  * It is important to note that @ref accept can return either an
  * object of type KNetwork::KStreamSocket or
- * KNetwork::KBufferedSocket (default). If you want to accept a
+ * KNetwork::TDEBufferedSocket (default). If you want to accept a
  * non-buffered socket, you must first call setAcceptBuffered.
  *
- * @warning If you use KServerSocket in an auxiliary (non-GUI) thread,
+ * @warning If you use TDEServerSocket in an auxiliary (non-GUI) thread,
  *          you need to accept only KNetwork::KStreamSocket objects.
  *
- * @see KNetwork::KStreamSocket, KNetwork::KBufferedSocket
+ * @see KNetwork::KStreamSocket, KNetwork::TDEBufferedSocket
  * @author Thiago Macieira <thiago@kde.org>
  */
-class TDECORE_EXPORT KServerSocket: public TQObject, public KPassiveSocketBase
+class TDECORE_EXPORT TDEServerSocket: public TQObject, public KPassiveSocketBase
 {
   Q_OBJECT
   
@@ -119,7 +119,7 @@ public:
    * @param parent		the parent TQObject object
    * @param name		the name of this object
    */
-  KServerSocket(TQObject* parent = 0L, const char *name = 0L);
+  TDEServerSocket(TQObject* parent = 0L, const char *name = 0L);
 
   /**
    * Construct this object specifying the service to listen on.
@@ -138,7 +138,7 @@ public:
    * @param parent		the parent TQObject object
    * @param name		the name of this object
    */
-  KServerSocket(const TQString& service, TQObject* parent = 0L, const char *name = 0L);
+  TDEServerSocket(const TQString& service, TQObject* parent = 0L, const char *name = 0L);
 
   /**
    * Construct this object specifying the node and service names to listen on.
@@ -158,7 +158,7 @@ public:
    * @param parent		the parent TQObject object
    * @param name		the name of this object
    */
-  KServerSocket(const TQString& node, const TQString& service,
+  TDEServerSocket(const TQString& node, const TQString& service,
 		TQObject* parent = 0L, const char *name = 0L);
 
   /**
@@ -167,11 +167,11 @@ public:
    * Note, however, that accepted sockets do not get closed when this
    * object closes.
    */
-  ~KServerSocket();
+  ~TDEServerSocket();
 
 protected:
   /**
-   * Sets the socket options. Reimplemented from KSocketBase.
+   * Sets the socket options. Reimplemented from TDESocketBase.
    */
   virtual bool setSocketOptions(int opts);
 
@@ -201,7 +201,7 @@ public:
    *
    * This is useful, for instance, when IP addresses are in
    * their string representation (such as "1.2.3.4") or come
-   * from other sources like @ref KSocketAddress.
+   * from other sources like @ref TDESocketAddress.
    *
    * @param enable	whether to enable
    */
@@ -268,7 +268,7 @@ public:
    * emitted (only once, even if we're doing a double lookup).
    * If the lookup failed (for any of the two lookups) the 
    * @ref gotError signal will be emitted with the appropriate
-   * error condition (see @ref KSocketBase::SocketError).
+   * error condition (see @ref TDESocketBase::SocketError).
    *
    * This function returns true on success and false on error. Note that
    * this is not the lookup result!
@@ -306,7 +306,7 @@ public:
   virtual bool bind();
 
   /**
-   * Connect this socket to this specific address. Reimplemented from KSocketBase.
+   * Connect this socket to this specific address. Reimplemented from TDESocketBase.
    *
    * Unlike @ref bind(const TQString&, const TQString&) above, this function
    * really does bind the socket. No lookup is performed. The @ref bound signal
@@ -338,7 +338,7 @@ public:
    * Toggles whether the accepted socket will be buffered or not.
    * That is, the @ref accept function will always return a KStreamSocket
    * object or descended from it. If buffering is enabled, the class
-   * to be returned will be KBufferedSocket.
+   * to be returned will be TDEBufferedSocket.
    *
    * By default, this flag is set to true.
    *
@@ -361,7 +361,7 @@ public:
    *       the base class for active sockets, but it is guaranteed
    *       that the object will be a KStreamSocket or derived from it.
    *
-   * @sa KBufferedSocket
+   * @sa TDEBufferedSocket
    * @sa setAcceptBuffered
    */
   virtual KActiveSocketBase* accept();
@@ -369,12 +369,12 @@ public:
   /**
    * Returns this socket's local address.
    */
-  virtual KSocketAddress localAddress() const;
+  virtual TDESocketAddress localAddress() const;
 
   /**
    * Returns this socket's externally-visible address if know.
    */
-  virtual KSocketAddress externalAddress() const;
+  virtual TDESocketAddress externalAddress() const;
 
 private slots:
   void lookupFinishedSlot();
@@ -425,10 +425,10 @@ private:
   bool doListen();
 
 private:
-  KServerSocket(const KServerSocket&);
-  KServerSocket& operator=(const KServerSocket&);
+  TDEServerSocket(const TDEServerSocket&);
+  TDEServerSocket& operator=(const TDEServerSocket&);
 
-  KServerSocketPrivate *d;
+  TDEServerSocketPrivate *d;
 };
 
 }				// namespace KNetwork

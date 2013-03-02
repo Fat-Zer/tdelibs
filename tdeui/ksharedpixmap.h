@@ -11,8 +11,8 @@
  * version 2 of the License, or (at your option) any later version.
  */
 
-#ifndef __KSharedPixmap_h_Included__
-#define __KSharedPixmap_h_Included__
+#ifndef __TDESharedPixmap_h_Included__
+#define __TDESharedPixmap_h_Included__
 
 #include <kpixmap.h>
 
@@ -26,7 +26,7 @@
 #include <tqpixmap.h>
 #include <tqwidget.h>
 
-class KSharedPixmapPrivate;
+class TDESharedPixmapPrivate;
 
 /**
  * Shared pixmap client.
@@ -35,7 +35,7 @@ class KSharedPixmapPrivate;
  * by a global id string, and can be accessed by all X clients.
  *
  * This class is a client class to shared pixmaps in KDE. You can use it
- * to copy (a part of) a shared pixmap into. KSharedPixmap inherits KPixmap
+ * to copy (a part of) a shared pixmap into. TDESharedPixmap inherits KPixmap
  * for that purpose.
  *
  * The server part of shared pixmaps is not implemented here. 
@@ -44,7 +44,7 @@ class KSharedPixmapPrivate;
  *
  * An example: copy from a shared pixmap:
  * \code
- *   KSharedPixmap *pm = new KSharedPixmap;
+ *   TDESharedPixmap *pm = new TDESharedPixmap;
  *   connect(pm, TQT_SIGNAL(done(bool)), TQT_SLOT(slotDone(bool)));
  *   pm->loadFromShared("My Pixmap");
  * \endcode
@@ -53,7 +53,7 @@ class KSharedPixmapPrivate;
  * @version $Id$
  *
  */
-class TDEUI_EXPORT KSharedPixmap: 
+class TDEUI_EXPORT TDESharedPixmap: 
     public TQWidget,
     public KPixmap
 {
@@ -65,12 +65,12 @@ public:
     /**
      * Construct an empty pixmap.
      */
-    KSharedPixmap();
+    TDESharedPixmap();
 
     /**
      * Destroys the pixmap.
      */
-    ~KSharedPixmap();
+    ~TDESharedPixmap();
 
     /**
      * Load from a shared pixmap reference. The signal done() is emitted
@@ -80,7 +80,7 @@ public:
      * @param rect If you pass a nonzero rectangle, a tile is generated which 
      * is able to fill up the specified rectangle completely. This is solely 
      * for optimization: in some cases the tile will be much smaller than the 
-     * original pixmap. It reflects KSharedPixmap's original use: sharing
+     * original pixmap. It reflects TDESharedPixmap's original use: sharing
      * of the desktop background to achieve pseudo transparency.
      * @return True if the shared pixmap exists and loading has started
      * successfully, false otherwise.
@@ -110,11 +110,11 @@ private:
     bool copy(const TQString & id, const TQRect & rect);
     void init();
 
-    KSharedPixmapPrivate *d;
+    TDESharedPixmapPrivate *d;
 };
 #else // WIN32, Qt Embedded
 // Let's simply assume KPixmap will do for now. Yes, I know that's broken.
-#define KSharedPixmap KPixmap
+#define TDESharedPixmap KPixmap
 #endif
 
 #endif

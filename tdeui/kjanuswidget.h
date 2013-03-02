@@ -24,11 +24,11 @@
 #include <tqpixmap.h>
 #include <tqsplitter.h>
 
-#include <klistbox.h>
+#include <tdelistbox.h>
 #include <tqstringlist.h>
 #include <tqmap.h>
 
-class KListView;
+class TDEListView;
 
 class TQGrid;
 class TQHBox;
@@ -69,7 +69,7 @@ class TDEUI_EXPORT KJanusWidget : public TQWidget
   Q_OBJECT
 
   private:
-    class IconListBox : public KListBox
+    class IconListBox : public TDEListBox
     {
       friend class KJanusWidget;
 
@@ -586,7 +586,7 @@ class TDEUI_EXPORT KJanusWidget : public TQWidget
     TQStringList *mTitleList;
 
     int          mFace;
-    KListView    *mTreeList;
+    TDEListView    *mTreeList;
     IconListBox  *mIconList;
     TQWidgetStack *mPageStack;
     TQLabel       *mTitleLabel;

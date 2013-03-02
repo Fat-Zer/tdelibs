@@ -28,9 +28,9 @@
 #include <tqpushbutton.h>
 #include <tqvalidator.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kcursor.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kstringhandler.h>
 
 class PortValidator : public TQIntValidator
@@ -143,7 +143,7 @@ void KMCupsConfigWidget::save(bool sync)
 	if (sync) inf->save();
 }
 
-void KMCupsConfigWidget::saveConfig(KConfig *conf)
+void KMCupsConfigWidget::saveConfig(TDEConfig *conf)
 {
 	conf->setGroup("CUPS");
 	conf->writeEntry("Host",m_host->text());

@@ -24,7 +24,7 @@
 #include <tqcombobox.h>
 #include <tqlabel.h>
 #include <tqlayout.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqwhatsthis.h>
 
 PluginComboBox::PluginComboBox(TQWidget *parent, const char *name)

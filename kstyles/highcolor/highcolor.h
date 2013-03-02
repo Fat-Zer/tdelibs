@@ -34,7 +34,7 @@
 #include <tqintdict.h>
 #include <kdrawutil.h>
 #include <kpixmap.h>
-#include <kstyle.h>
+#include <tdestyle.h>
 
 
 enum GradientType{ VSmall=0, VMed, VLarge, HMed, HLarge, GradientCount };
@@ -55,7 +55,7 @@ class GradientSet
 
 class TQPopupMenu;
 
-class HighColorStyle : public KStyle
+class HighColorStyle : public TDEStyle
 {
 	Q_OBJECT
 
@@ -71,7 +71,7 @@ class HighColorStyle : public KStyle
 		void renderMenuBlendPixmap( KPixmap& pix, const TQColorGroup &cg,
 								 	const TQPopupMenu* popup ) const;
 
-		void drawKStylePrimitive( KStylePrimitive kpe,
+		void drawTDEStylePrimitive( TDEStylePrimitive kpe,
 					TQPainter* p,
 					const TQStyleControlElementData &ceData,
 					ControlElementFlags elementFlags,

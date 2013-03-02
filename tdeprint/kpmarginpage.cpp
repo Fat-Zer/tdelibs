@@ -31,9 +31,9 @@
 #include <tqpaintdevicemetrics.h>
 
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 KPMarginPage::KPMarginPage(KPrinter *prt, DrMain *driver, TQWidget *parent, const char *name)
 : KPrintDialogPage(0, driver, parent, name)
@@ -62,7 +62,7 @@ void KPMarginPage::initPageSize(const TQString& ps, bool landscape)
 	// first retrieve the Qt values for page size and margins
 	TQPrinter	prt(TQPrinter::PrinterResolution);
 	prt.setFullPage(true);
-	prt.setPageSize((TQPrinter::PageSize)(ps.isEmpty() ? KGlobal::locale()->pageSize() : ps.toInt()));
+	prt.setPageSize((TQPrinter::PageSize)(ps.isEmpty() ? TDEGlobal::locale()->pageSize() : ps.toInt()));
 	TQPaintDeviceMetrics	metrics(&prt);
 	float	w = metrics.width();
 	float	h = metrics.height();

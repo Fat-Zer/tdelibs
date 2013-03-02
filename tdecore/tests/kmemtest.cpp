@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <stdlib.h>
 #include <errno.h>
 #include <string.h>
@@ -235,9 +235,9 @@ int main(int argc, char *argv[])
   }
 //  showMem("second");
 
-    KApplication app(argc,argv,"kurltest");
+    TDEApplication app(argc,argv,"kurltest");
 
-//  showMem("After KApplication constructor");
+//  showMem("After TDEApplication constructor");
 
 //  malloc(10*1024);
 

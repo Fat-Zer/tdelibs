@@ -29,9 +29,9 @@
 #include <tqrect.h>
 
 #include <kdebug.h>
-#include <kglobal.h>
-#include <kconfig.h>
-#include <kglobalsettings.h>
+#include <tdeglobal.h>
+#include <tdeconfig.h>
+#include <tdeglobalsettings.h>
 #include <kicontheme.h>
 #include "kiconeffect.h"
 
@@ -42,28 +42,28 @@ static bool tqt_has_xft=true;
 extern bool tqt_use_xrender;
 extern bool tqt_has_xft;
 #endif
-class KIconEffectPrivate
+class TDEIconEffectPrivate
 {
 public:
 	TQString mKey[6][3];
 	TQColor  mColor2[6][3];
 };
 
-KIconEffect::KIconEffect()
+TDEIconEffect::TDEIconEffect()
 {
-    d = new KIconEffectPrivate;
+    d = new TDEIconEffectPrivate;
     init();
 }
 
-KIconEffect::~KIconEffect()
+TDEIconEffect::~TDEIconEffect()
 {
     delete d;
     d = 0L;
 }
 
-void KIconEffect::init()
+void TDEIconEffect::init()
 {
-    KConfig *config = KGlobal::config();
+    TDEConfig *config = TDEGlobal::config();
 
     int i, j, effect=-1;
     TQStringList groups;
@@ -86,7 +86,7 @@ void KIconEffect::init()
     TQString _none("none");
     TQString _tomonochrome("tomonochrome");
 
-    KConfigGroupSaver cs(config, "default");
+    TDEConfigGroupSaver cs(config, "default");
 
     for (it=groups.begin(), i=0; it!=groups.end(); it++, i++)
     {
@@ -137,14 +137,14 @@ void KIconEffect::init()
     }    
 }
 
-bool KIconEffect::hasEffect(int group, int state) const
+bool TDEIconEffect::hasEffect(int group, int state) const
 {
     return mEffect[group][state] != NoEffect;
 }
 
-TQString KIconEffect::fingerprint(int group, int state) const
+TQString TDEIconEffect::fingerprint(int group, int state) const
 {
-    if ( group >= KIcon::LastGroup ) return "";
+    if ( group >= TDEIcon::LastGroup ) return "";
     TQString cached = d->mKey[group][state];
     if (cached.isEmpty())
     {
@@ -172,14 +172,14 @@ TQString KIconEffect::fingerprint(int group, int state) const
     return cached;
 }
 
-TQImage KIconEffect::apply(TQImage image, int group, int state) const
+TQImage TDEIconEffect::apply(TQImage image, int group, int state) const
 {
-    if (state >= KIcon::LastState)
+    if (state >= TDEIcon::LastState)
     {
 	kdDebug(265) << "Illegal icon state: " << state << "\n";
 	return image;
     }
-    if (group >= KIcon::LastGroup)
+    if (group >= TDEIcon::LastGroup)
     {
 	kdDebug(265) << "Illegal icon group: " << group << "\n";
 	return image;
@@ -188,12 +188,12 @@ TQImage KIconEffect::apply(TQImage image, int group, int state) const
 	    mColor[group][state], d->mColor2[group][state], mTrans[group][state]);
 }
 
-TQImage KIconEffect::apply(TQImage image, int effect, float value, const TQColor col, bool trans) const
+TQImage TDEIconEffect::apply(TQImage image, int effect, float value, const TQColor col, bool trans) const
 {
-    return apply (image, effect, value, col, KGlobalSettings::baseColor(), trans);
+    return apply (image, effect, value, col, TDEGlobalSettings::baseColor(), trans);
 }
 
-TQImage KIconEffect::apply(TQImage image, int effect, float value, const TQColor col, const TQColor col2, bool trans) const
+TQImage TDEIconEffect::apply(TQImage image, int effect, float value, const TQColor col, const TQColor col2, bool trans) const
 {
     if (effect >= LastEffect )
     {
@@ -229,14 +229,14 @@ TQImage KIconEffect::apply(TQImage image, int effect, float value, const TQColor
     return image;
 }
 
-TQPixmap KIconEffect::apply(TQPixmap pixmap, int group, int state) const
+TQPixmap TDEIconEffect::apply(TQPixmap pixmap, int group, int state) const
 {
-    if (state >= KIcon::LastState)
+    if (state >= TDEIcon::LastState)
     {
 	kdDebug(265) << "Illegal icon state: " << state << "\n";
 	return pixmap;
     }
-    if (group >= KIcon::LastGroup)
+    if (group >= TDEIcon::LastGroup)
     {
 	kdDebug(265) << "Illegal icon group: " << group << "\n";
 	return pixmap;
@@ -245,13 +245,13 @@ TQPixmap KIconEffect::apply(TQPixmap pixmap, int group, int state) const
 	    mColor[group][state], d->mColor2[group][state], mTrans[group][state]);
 }
 
-TQPixmap KIconEffect::apply(TQPixmap pixmap, int effect, float value,
+TQPixmap TDEIconEffect::apply(TQPixmap pixmap, int effect, float value,
 	const TQColor col, bool trans) const
 {
-    return apply (pixmap, effect, value, col, KGlobalSettings::baseColor(), trans);
+    return apply (pixmap, effect, value, col, TDEGlobalSettings::baseColor(), trans);
 }
 
-TQPixmap KIconEffect::apply(TQPixmap pixmap, int effect, float value,
+TQPixmap TDEIconEffect::apply(TQPixmap pixmap, int effect, float value,
 	const TQColor col, const TQColor col2, bool trans) const
 {
     TQPixmap result;
@@ -282,7 +282,7 @@ TQPixmap KIconEffect::apply(TQPixmap pixmap, int effect, float value,
 // Taken from KImageEffect. We don't want to link tdecore to tdeui! As long
 // as this code is not too big, it doesn't seem much of a problem to me.
 
-void KIconEffect::toGray(TQImage &img, float value)
+void TDEIconEffect::toGray(TQImage &img, float value)
 {
     int pixels = (img.depth() > 8) ? img.width()*img.height()
 	    : img.numColors();
@@ -304,7 +304,7 @@ void KIconEffect::toGray(TQImage &img, float value)
     }
 }
 
-void KIconEffect::colorize(TQImage &img, const TQColor &col, float value)
+void TDEIconEffect::colorize(TQImage &img, const TQColor &col, float value)
 {
     int pixels = (img.depth() > 8) ? img.width()*img.height()
 	    : img.numColors();
@@ -345,7 +345,7 @@ void KIconEffect::colorize(TQImage &img, const TQColor &col, float value)
     }
 }
 
-void KIconEffect::toMonochrome(TQImage &img, const TQColor &black, const TQColor &white, float value) {
+void TDEIconEffect::toMonochrome(TQImage &img, const TQColor &black, const TQColor &white, float value) {
    int pixels = (img.depth() > 8) ? img.width()*img.height() : img.numColors();
    unsigned int *data = img.depth() > 8 ? (unsigned int *) img.bits()
          : (unsigned int *) img.tqcolorTable();
@@ -395,7 +395,7 @@ void KIconEffect::toMonochrome(TQImage &img, const TQColor &black, const TQColor
    }
 }
 
-void KIconEffect::deSaturate(TQImage &img, float value)
+void TDEIconEffect::deSaturate(TQImage &img, float value)
 {
     int pixels = (img.depth() > 8) ? img.width()*img.height()
 	    : img.numColors();
@@ -413,7 +413,7 @@ void KIconEffect::deSaturate(TQImage &img, float value)
     }
 }
 
-void KIconEffect::toGamma(TQImage &img, float value)
+void TDEIconEffect::toGamma(TQImage &img, float value)
 {
     int pixels = (img.depth() > 8) ? img.width()*img.height()
 	    : img.numColors();
@@ -435,7 +435,7 @@ void KIconEffect::toGamma(TQImage &img, float value)
     }
 }
 
-void KIconEffect::semiTransparent(TQImage &img)
+void TDEIconEffect::semiTransparent(TQImage &img)
 {
     img.setAlphaBuffer(true);
 
@@ -509,7 +509,7 @@ void KIconEffect::semiTransparent(TQImage &img)
     }
 }
 
-void KIconEffect::semiTransparent(TQPixmap &pix)
+void TDEIconEffect::semiTransparent(TQPixmap &pix)
 {
     if ( tqt_use_xrender && tqt_has_xft )
     {
@@ -540,7 +540,7 @@ void KIconEffect::semiTransparent(TQPixmap &pix)
     pix.setMask(mask);
 }
 
-TQImage KIconEffect::doublePixels(TQImage src) const
+TQImage TDEIconEffect::doublePixels(TQImage src) const
 {
     TQImage dst;
     if (src.depth() == 1)
@@ -589,7 +589,7 @@ TQImage KIconEffect::doublePixels(TQImage src) const
     return dst;
 }
 
-void KIconEffect::overlay(TQImage &src, TQImage &overlay)
+void TDEIconEffect::overlay(TQImage &src, TQImage &overlay)
 {
     if (src.depth() != overlay.depth())
     {
@@ -704,12 +704,12 @@ void KIconEffect::overlay(TQImage &src, TQImage &overlay)
 }
 
     void
-KIconEffect::visualActivate(TQWidget * widget, TQRect rect)
+TDEIconEffect::visualActivate(TQWidget * widget, TQRect rect)
 {
-    if (!KGlobalSettings::visualActivate())
+    if (!TDEGlobalSettings::visualActivate())
         return;
 
-    uint actSpeed = KGlobalSettings::visualActivateSpeed();
+    uint actSpeed = TDEGlobalSettings::visualActivateSpeed();
 
     uint actCount = QMIN(rect.width(), rect.height()) / 2;
 
@@ -772,9 +772,9 @@ KIconEffect::visualActivate(TQWidget * widget, TQRect rect)
 }
 
 void
-KIconEffect::visualActivate(TQWidget * widget, TQRect rect, TQPixmap *pixmap)
+TDEIconEffect::visualActivate(TQWidget * widget, TQRect rect, TQPixmap *pixmap)
 {
-    if (!KGlobalSettings::visualActivate())
+    if (!TDEGlobalSettings::visualActivate())
         return;
 
     // Image too big to display smoothly
@@ -783,7 +783,7 @@ KIconEffect::visualActivate(TQWidget * widget, TQRect rect, TQPixmap *pixmap)
 	return;
     }
 
-    uint actSpeed = KGlobalSettings::visualActivateSpeed();
+    uint actSpeed = TDEGlobalSettings::visualActivateSpeed();
     uint actCount = TQMIN(rect.width(), rect.height()) / 4;
 
 

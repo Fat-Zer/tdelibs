@@ -32,7 +32,7 @@
 #include "../interfaces/katecmd.h"
 
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kurl.h>
 #include <kshellcompletion.h>
 
@@ -279,7 +279,7 @@ bool KateCommands::CoreCommands::exec(Kate::View *view,
   KCC_ERR( i18n("Unknown command '%1'").arg(cmd) );
 }
 
-KCompletion *KateCommands::CoreCommands::completionObject( const TQString &cmd, Kate::View *view )
+TDECompletion *KateCommands::CoreCommands::completionObject( const TQString &cmd, Kate::View *view )
 {
   if ( cmd == "set-highlight" )
   {

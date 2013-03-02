@@ -59,8 +59,8 @@ Arts::SoundServerV2 KArtsServer::server(void)
 
 	// aRts seems not to be running, let's try to run it
 	// First, let's read the configuration as in kcmarts
-	KConfig config("kcmartsrc", false /*bReadOnly*/, false /*bUseKDEGlobals*/);
-	KProcess proc;
+	TDEConfig config("kcmartsrc", false /*bReadOnly*/, false /*bUseKDEGlobals*/);
+	TDEProcess proc;
 
 	config.setGroup("Arts");
 
@@ -77,16 +77,16 @@ Arts::SoundServerV2 KArtsServer::server(void)
 
 	X11CommConfig.sync();
 	
-	proc << TQFile::encodeName(KStandardDirs::findExe(TQString::fromLatin1("tdeinit_wrapper"))).data();
+	proc << TQFile::encodeName(TDEStandardDirs::findExe(TQString::fromLatin1("tdeinit_wrapper"))).data();
 
 	if(rt)
-		proc << TQFile::encodeName(KStandardDirs::findExe(TQString::fromLatin1("artswrapper"))).data();
+		proc << TQFile::encodeName(TDEStandardDirs::findExe(TQString::fromLatin1("artswrapper"))).data();
 	else
-		proc << TQFile::encodeName(KStandardDirs::findExe(TQString::fromLatin1("artsd"))).data();
+		proc << TQFile::encodeName(TDEStandardDirs::findExe(TQString::fromLatin1("artsd"))).data();
 
 	proc << TQStringList::split( " ", config.readEntry( "Arguments", "-F 10 -S 4096 -s 60 -m artsmessage -l 3 -f" ) );
 
-	if(proc.start(KProcess::Block) && proc.normalExit())
+	if(proc.start(TDEProcess::Block) && proc.normalExit())
 	{
 		// We could have a race-condition here.
 		// The correct way to do it is to make artsd fork-and-exit

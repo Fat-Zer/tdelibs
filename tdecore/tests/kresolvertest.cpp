@@ -40,8 +40,8 @@
 #include <ksocks.h>
 #include <ksockaddr.h>
 #include <kextsock.h>
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
+#include <tdeaboutdata.h>
+#include <tdecmdlineargs.h>
 
 #include "netsupp.h"
 
@@ -213,7 +213,7 @@ bool testKernel()
 
   printf("succeeded\n");
 
-  KSocketAddress *ksin = KExtendedSocket::localAddress(sock);
+  TDESocketAddress *ksin = KExtendedSocket::localAddress(sock);
   if (ksin != NULL)
     {
       printf("\tWe got socket %s\n", (const char*)ksin->pretty().latin1());
@@ -410,8 +410,8 @@ int TestApp::newInstance(TQValueList<TQCString> /*params*/)
 
 int main(int argc, char **argv)
 {
-  KAboutData about("socktest2", "SockTest", "1.0");
-  KCmdLineArgs::init(argc, argv, &about);
+  TDEAboutData about("socktest2", "SockTest", "1.0");
+  TDECmdLineArgs::init(argc, argv, &about);
   KUniqueApplication::addCmdLineOptions();
 
   /*  TestApp a;

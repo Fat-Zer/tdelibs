@@ -67,7 +67,7 @@ static LightStyleV2Private *singleton = 0;
 
 
 LightStyleV2::LightStyleV2()
-    : KStyle(AllowMenuTransparency)
+    : TDEStyle(AllowMenuTransparency)
 {
     if (! singleton)
 	singleton = new LightStyleV2Private;
@@ -85,7 +85,7 @@ LightStyleV2::~LightStyleV2()
 
 void LightStyleV2::polishPopupMenu( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *ptr )
 {
-    KStyle::polishPopupMenu(ceData, elementFlags, ptr);
+    TDEStyle::polishPopupMenu(ceData, elementFlags, ptr);
 }
 
 static void drawLightBevel(TQPainter *p, const TQRect &r, const TQColorGroup &cg,

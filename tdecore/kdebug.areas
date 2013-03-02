@@ -5,69 +5,69 @@
 #
 #Format : number<tab>description
 
-125        tdecore (KAccel)
+125        tdecore (TDEAccel)
 126        tdecore (KURL)
 127        kio (KProtocolInfo)
 128        tdecore (KRegExp)
-129        tdecore (KAction)
+129        tdecore (TDEAction)
 130        kio (KPasswdServer)
-131        tdecore (KAcceleratorManager)
+131        tdecore (TDEAcceleratorManager)
 150        tdecore (KLibLoader)
 160        tdecore (KNotifyClient)
 170        tdecore (KNetwork socket)
 171        tdecore (KSocks)
-172        tdecore (KStartupInfo)
-173        tdecore (KLocale)
+172        tdecore (TDEStartupInfo)
+173        tdecore (TDELocale)
 174        tdecore (KProcIO)
-175        tdecore (KProcess)
+175        tdecore (TDEProcess)
 176        tdecore (KWin)
-177        tdecore (KConfigSkeleton)
-178        tdecore (KConfigDialogManager)
+177        tdecore (TDEConfigSkeleton)
+178        tdecore (TDEConfigDialogManager)
 179        tdecore (KNetwork resolver)
 180        tdecore (tdelibs)
-200        tdeui (KMainWindow)
-220        tdeui (KToolBar)
+200        tdeui (TDEMainWindow)
+220        tdeui (TDEToolBar)
 230        tdeui (KCommand)
 240        tdeui (tdelibs)
-250        kfile (tdelibs)
-264        tdecore (KIconLoader)
-265        tdecore (KIconEffect)
+250        tdefile (tdelibs)
+264        tdecore (TDEIconLoader)
+265        tdecore (TDEIconEffect)
 270        tdeui (KRootPixmap)
-280        tdeui (KSharedPixmap)
-281        tdeui (KCModule)
+280        tdeui (TDESharedPixmap)
+281        tdeui (TDECModule)
 282        tdeui (KDockWidget)
 290        tdeui (KPixmapIO)
-291        tdeui (KAboutDialog)
+291        tdeui (TDEAboutDialog)
 292        tdeui (KComboBox)
 293        tdeui (KLineEdit)
 294        tdeui (KEdit)
 295        tdeui (KMenuBar)
-296        tdeui (KPopupMenu)
+296        tdeui (TDEPopupMenu)
 298        tdeui (KDatePicker)
 399        kimgio
 400        artskde
 500        tdeprint
-700        kutils (KSettings::Dialog)
-701        kutils (KSettings::Dispatcher)
-702        kutils (KPluginSelector)
-703        kutils (KPluginInfo)
-704        kutils (KSettings::ComponentsDialog)
-710        kutils (KCMultiDialog)
-711        kutils (KCModuleProxy)
-712        kutils (KCModuleInfo)
-713        kutils (KCModuleContainer)
-750        kspell (tdelibs)
-760        kmdi
-780        kcmshell (tdelibs)
-790        kimproxy (tdelibs)
+700        tdeutils (KSettings::Dialog)
+701        tdeutils (KSettings::Dispatcher)
+702        tdeutils (KPluginSelector)
+703        tdeutils (KPluginInfo)
+704        tdeutils (KSettings::ComponentsDialog)
+710        tdeutils (KCMultiDialog)
+711        tdeutils (TDECModuleProxy)
+712        tdeutils (TDECModuleInfo)
+713        tdeutils (TDECModuleContainer)
+750        tdespell (tdelibs)
+760        tdemdi
+780        tdecmshell (tdelibs)
+790        tdeimproxy (tdelibs)
 800        kabapi (tdelibs)
 900        tdesu (tdelibs)
 912        ksmartcard (tdelibs)
 
 
-1000        kparts
-1001        kparts (mainwindow)
-1002        kparts (factory)
+1000        tdeparts
+1001        tdeparts (mainwindow)
+1002        tdeparts (factory)
 
 # tdebase
 1201        konqtree
@@ -87,15 +87,15 @@
 1216        twin (client errors)
 1217        khotkeys
 1218        ksmserver
-1219        media kioslave
-1220        remote kioslave
+1219        media tdeioslave
+1220        remote tdeioslave
 
 1400        khelpcenter (tdebase)
 1401        kcmhelpcenter
 1402        khc_indexbuilder
 
 1420        kikbd
-1421        ki18b_keys (kcmodule)
+1421        ki18b_keys (tdecmodule)
 
 1430        nspluginviewer (Qt/Xt)
 1431        nspluginviewer (plugin)
@@ -116,7 +116,7 @@
 2003        ksim
 2100	    kgpg
 2200	    kdf
-2300        kwallet
+2300        tdewallet
 
 # 2500-2999 Reserved for private use
 
@@ -182,9 +182,9 @@
 5600        kontact (core)
 5601        kontact (interfaces)
 5602        kontact (plugins)
-5650        kresources
+5650        tderesources
 5700        kabc
-5710        kabc/vcard
+5710        tdeabc/vcard
 5720        kaddressbook
 5800        libkcal
 5850        korganizer
@@ -197,30 +197,30 @@
 5960        kandy
 5970        karm
 
-# libkhtml
-6000        khtml
-6005        khtml (encoding)
-6010        khtml (dom)
-6020        khtml (xml)
-6030        khtml (html)
-6031        khtml (frames & objects)
-6035        khtml (parser)
-6036        khtml (tokenizer)
-6040        khtml (render)
-6041        khtml (bidi)
-6045        khtml (rendering tree)
-6050        khtml (part)
-6060        khtml (cache)
-6061        khtml (cache-expiredates)
-6070        khtml (jscript)
-6080        khtml (css)
-6090        khtml (memory)
+# libtdehtml
+6000        tdehtml
+6005        tdehtml (encoding)
+6010        tdehtml (dom)
+6020        tdehtml (xml)
+6030        tdehtml (html)
+6031        tdehtml (frames & objects)
+6035        tdehtml (parser)
+6036        tdehtml (tokenizer)
+6040        tdehtml (render)
+6041        tdehtml (bidi)
+6045        tdehtml (rendering tree)
+6050        tdehtml (part)
+6060        tdehtml (cache)
+6061        tdehtml (cache-expiredates)
+6070        tdehtml (jscript)
+6080        tdehtml (css)
+6090        tdehtml (memory)
 6100        kjas
-6200        khtml (caret)
-6201        khtml (caret table)
-6210        khtml (editor)
+6200        tdehtml (caret)
+6201        tdehtml (caret table)
+6210        tdehtml (editor)
 
-# libkio
+# libtdeio
 7000        kio
 7001        kio (KDirWatch)
 7002        kio (Slave)
@@ -228,20 +228,20 @@
 7004        kio (KDirListerCache)
 7005        kio (Filter)
 7006        kio (Scheduler)
-7007        kio (KIOJob)
+7007        kio (TDEIOJob)
 7009        kio (KMimeType)
 7010        kio (KRun)
 7011        kio (KSycoca)
 7012        kio (KService*)
 7013        kio (KPing)
-7014        kio (KTrader)
+7014        kio (TDETrader)
 7015        kio (KAutoMount)
-7016        kio (KLauncher)
+7016        kio (TDELauncher)
 7017        kio (KIOConnection)
 7018        kio (KMimeMagic)
-7019        kio (kioslave)
+7019        kio (tdeioslave)
 7020        kded
-7021        kbuildsycoca
+7021        tdebuildsycoca
 7022        kurifilter
 7023        kurifilter (plugins)
 7024        kio (UIServer)
@@ -260,35 +260,35 @@
 7042        KAr
 7043        kio (bookmarks)
 
-# 71xx      are for kioslaves
-7101        kio_file
-7102        kio_ftp
-7103        kio_http
+# 71xx      are for tdeioslaves
+7101        tdeio_file
+7102        tdeio_ftp
+7103        tdeio_http
 7104        kcookiejar
-7105        kio_pop3
-7106        kio_smb
-7107        kio_man
-7108        kio_info
-7109        kio_tar
-7110        kio_gzip
-7111        kio_sql
-7112        kio_smtp
-7113        kio_http_debug
-7114        kio_nntp
-7115        kio_thumbnail
-7116        kio_imap
-7117        kio_audiocd
-7118        kio_bzip2
-7119        kio_help
-7120        kio_sftp
-7121        kio_nfs
-7122        kio_sieve
-7123        kio_kamera
-7124        kio_cgi
-7125        kio_ldap
-7126        kio_devices
-7127        kio_fish
-7128        kio_svn
+7105        tdeio_pop3
+7106        tdeio_smb
+7107        tdeio_man
+7108        tdeio_info
+7109        tdeio_tar
+7110        tdeio_gzip
+7111        tdeio_sql
+7112        tdeio_smtp
+7113        tdeio_http_debug
+7114        tdeio_nntp
+7115        tdeio_thumbnail
+7116        tdeio_imap
+7117        tdeio_audiocd
+7118        tdeio_bzip2
+7119        tdeio_help
+7120        tdeio_sftp
+7121        tdeio_nfs
+7122        tdeio_sieve
+7123        tdeio_kamera
+7124        tdeio_cgi
+7125        tdeio_ldap
+7126        tdeio_devices
+7127        tdeio_fish
+7128        tdeio_svn
 
 # tdesdk
 8100        kompare
@@ -427,8 +427,8 @@
 20011        KDB (Connection)
 20012        KDB (plugin)
 
-#kfilereplace
-23000 	     KFileReplace (kfilereplacepart)
+#tdefilereplace
+23000 	     KFileReplace (tdefilereplacepart)
 
 #klinkstatus
 23100        KLinkStatus
@@ -556,7 +556,7 @@
 66666	noatun
 67000	kscd
 67100	kmix
-67200	kmid
+67200	tdemid
 
 # tdebindings
 70001	dcoppython

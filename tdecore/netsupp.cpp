@@ -37,7 +37,7 @@
 
 #include "config.h"
 #include "kdebug.h"
-#include "klocale.h"
+#include "tdelocale.h"
 
 #ifndef IN6_IS_ADDR_V4MAPPED
 #define NEED_IN6_TESTS

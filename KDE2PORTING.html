@@ -19,25 +19,25 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
 <LI><A HREF="#gettingstarted">Getting Started</A></LI>
 <LI><A HREF="#general">Global changes</A></LI>
 <LI><A HREF="#automoc">automoc/am_edit, Makefile.am tags</A></LI>
-<LI><A HREF="#KApplication">KApplication</A></LI>
-<LI><A HREF="#KCmdLineArgs">KCmdLineArgs</A></LI>
-<LI><A HREF="#KLocale">KLocale</A></LI>
-<LI><A HREF="#KGlobal">KGlobal: access to KDE global objects.</A></LI>
-<LI><A HREF="#KIconLoader">KIconLoader</A></LI>
+<LI><A HREF="#TDEApplication">TDEApplication</A></LI>
+<LI><A HREF="#TDECmdLineArgs">TDECmdLineArgs</A></LI>
+<LI><A HREF="#TDELocale">TDELocale</A></LI>
+<LI><A HREF="#TDEGlobal">TDEGlobal: access to KDE global objects.</A></LI>
+<LI><A HREF="#TDEIconLoader">TDEIconLoader</A></LI>
 <LI><A HREF="#KTMainWindow">KTMainWindow</A></LI>
 <LI><A HREF="#KHelpMenu">KHelpMenu</A></LI>
-<LI><A HREF="#KToolBar">KToolBar</A></LI>
+<LI><A HREF="#TDEToolBar">TDEToolBar</A></LI>
 <LI><A HREF="#launching">Starting other programs</A></LI>
-<LI><A HREF="#khtmlw">khtmlw</A></LI>
+<LI><A HREF="#tdehtmlw">tdehtmlw</A></LI>
 <LI><A HREF="#KIntegerLine">KIntegerLine, KIntLineEdit</A></LI>
 <LI><A HREF="#KDNDIcon">KDNDIcon, KDNDDropZone, KDNDWidget, tdecore/drag.h</A></LI>
-<LI><A HREF="#KConfigBase">KConfigBase, KConfig, KSimpleConfig</A></LI>
+<LI><A HREF="#TDEConfigBase">TDEConfigBase, TDEConfig, KSimpleConfig</A></LI>
 <LI><A HREF="#libkfm">libkfm</A></LI>
 <LI><A HREF="#KDialog">KDialog</A></LI>
 <LI><A HREF="#kcharsets">kcharsets</A></LI>
 <LI><A HREF="#KWizard">KWizard, KNoteBook</A></LI>
 <LI><A HREF="#KSpinBox">KSpinBox, KNumericSpinBox</A></LI>
-<LI><A HREF="#KClipboard">KClipboard</A></LI>
+<LI><A HREF="#TDEClipboard">TDEClipboard</A></LI>
 <LI><A HREF="#KPanner">KPanner, KNewPanner</A></LI>
 <LI><A HREF="#KTreeList">KTreeList, KTreeListItem</A></LI>
 <LI><A HREF="#KMsgBox">KMsgBox</A></LI>
@@ -45,8 +45,8 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
 <LI><A HREF="#KQuickHelp">KQuickHelp</A></LI>
 <LI><A HREF="#KPixmapgradientFill">KPixmap::gradientFill</A></LI>
 <LI><A HREF="#KTabListBox">KTabListBox</A></LI>
-<LI><A HREF="#KToolBarButton">KToolBarButton &amp; KRadioGroup</A></LI>
-<LI><A HREF="#KAccel">KAccel</A></LI>
+<LI><A HREF="#TDEToolBarButton">TDEToolBarButton &amp; TDERadioGroup</A></LI>
+<LI><A HREF="#TDEAccel">TDEAccel</A></LI>
 <LI><A HREF="#kstring">kstring.h / KString</A></LI>
 <LI><A HREF="#ktopwidget">ktopwidget.h / KTopWidget</A></LI>
 <LI><A HREF="#kbutton">kbutton.h / KButton</A></LI>
@@ -107,14 +107,14 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
-<H3><A NAME="KApplication">KApplication</A></H3>
+<H3><A NAME="TDEApplication">TDEApplication</A></H3>
 
-  doesn't hold any longer a KLocale instance. With this getLocale()
-  and isLocaleInstantiated are now replaced by KGlobal::locale()<P>
+  doesn't hold any longer a TDELocale instance. With this getLocale()
+  and isLocaleInstantiated are now replaced by TDEGlobal::locale()<P>
 
   it also doesn't hold a KiconLoader instance. As this also getIconLoader()
   has been removed. Replace kapp-&gt;getIconLoader()-&gt;loadIcon() with
-  BarIcon() or use KGlobal::iconLoader() instead of getIconLoader()<P>
+  BarIcon() or use TDEGlobal::iconLoader() instead of getIconLoader()<P>
 
   kde_*dir() have been removed as they require a unique top level directory
   for all applications (TDEDIR). This concept doesn't exist in KDE 2.0
@@ -125,16 +125,16 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
   Replace code that uses kde_*dir() + filename with calls to
   locate(filetype, filename) where filetype is what * used to be
   in kde_*dir(). locate is defined as function in kstddirs.h to call
-  KGlobal::dirs()-&gt;findResource.<P>
+  TDEGlobal::dirs()-&gt;findResource.<P>
 
   Use locateLocal to get the path of a writable file. For instance,
-  KApplication::localconfigdir()+filename is now locateLocal( "config", filename ),
-  but for most cases, simply using KGlobal::config() is enough, if you're happy
+  TDEApplication::localconfigdir()+filename is now locateLocal( "config", filename ),
+  but for most cases, simply using TDEGlobal::config() is enough, if you're happy
   with saving the application's configuration into appnamerc, or
   KSimpleConfig cfg("anothercfgfile") to create a config file with another name.<P>
 
   generalFont() and fixedFont() are deprecated and will be removed soon.
-  Please use KGlobalSettings::generalFont() and KGlobalSettings::fixedFont() instead.<P>
+  Please use TDEGlobalSettings::generalFont() and TDEGlobalSettings::fixedFont() instead.<P>
 
   appName() is deprecated. Please use TQApplication::name() or instanceName
   instead.<P>
@@ -142,20 +142,20 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
   The methods tempSaveName() and checkRecoverFile() return QString
   now. The returned values must _not_ be free()d.<P>
 
-  helpMenu() has been moved to KMainWindow. aboutKDE(), aboutApp() and
-  appHelpActivated() have all been removed See section for KMainWindow
+  helpMenu() has been moved to TDEMainWindow. aboutKDE(), aboutApp() and
+  appHelpActivated() have all been removed See section for TDEMainWindow
   for more info.<P>
 
-  The KApplication constructor has changed. Command line arguments and
-  program name should no longer be passed to KApplication but to 
-  KCmdLineArgs. KCmdLineArgs performs command line parsing and a command
+  The TDEApplication constructor has changed. Command line arguments and
+  program name should no longer be passed to TDEApplication but to 
+  TDECmdLineArgs. TDECmdLineArgs performs command line parsing and a command
   line help. See below for more info.<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
-<H3><A NAME="KCmdLineArgs">KCmdLineArgs</A></H3>
+<H3><A NAME="TDECmdLineArgs">TDECmdLineArgs</A></H3>
 
-  KCmdLineArgs is a new class that handles command line parsing and
+  TDECmdLineArgs is a new class that handles command line parsing and
   command line help. It is now required that your application
   specifies at least:<P>
   <UL>
@@ -165,25 +165,25 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
 	<LI>All command line options that it supports.
   </UL>
  
-  KCmdLineArgs itself will add the command line options supported by Qt 
-  and KApplication.<P>
+  TDECmdLineArgs itself will add the command line options supported by Qt 
+  and TDEApplication.<P>
 
-  You can also use the KAboutData class to specify name, description and 
+  You can also use the TDEAboutData class to specify name, description and 
   version.<P>
 
-  In return for this information you can query KCmdLineArgs whether an 
+  In return for this information you can query TDECmdLineArgs whether an 
   certain option was specified on the command line and your application 
   now automatically supports --help and --version. It aborts with a
   useful error message when the command line contains a syntax error.
-  See tdelibs/tdecore/kcmdlineargs.h for more info.<P>
+  See tdelibs/tdecore/tdecmdlineargs.h for more info.<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
-<H3><A NAME="KLocale">KLocale</A></H3>
+<H3><A NAME="TDELocale">TDELocale</A></H3>
 
   i18n is no longer a macro<P>
 
-  KApplication::getApplication()-&gt;getLocale()-&gt;translate<P>
+  TDEApplication::getApplication()-&gt;getLocale()-&gt;translate<P>
 
   but a function on its own. klocale is obsolete and replace every call
   to klocale-&gt;translate with i18n.<P>
@@ -193,21 +193,21 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
-<H3><A NAME="KGlobal">KGlobal: access to KDE global objects.</A></H3>
+<H3><A NAME="TDEGlobal">TDEGlobal: access to KDE global objects.</A></H3>
 
-KGlobal allows centralized access to KDE global objects without including
+TDEGlobal allows centralized access to KDE global objects without including
 extraneous headers. object creation is deferred if possible.<P>
 
 All methods are static and headers for returned types are not included. You
-must have created a KApplication object before the methods can be used.<P>
+must have created a TDEApplication object before the methods can be used.<P>
 <TABLE BORDER="0">
 <TR>
   <TD COLSPAN="2">
     <PRE>
-      #include &lt;kglobal.h&gt;
-      #include &lt;kconfig.h&gt;      // Needed to use KConfig
-      #include &lt;klocale.h&gt;      // Needed to use KLocale
-      #include &lt;kiconloader.h&gt;  // Needed to use KIconLoader
+      #include &lt;tdeglobal.h&gt;
+      #include &lt;tdeconfig.h&gt;      // Needed to use TDEConfig
+      #include &lt;tdelocale.h&gt;      // Needed to use TDELocale
+      #include &lt;kiconloader.h&gt;  // Needed to use TDEIconLoader
     </PRE>
   </TD>
 </TR>
@@ -215,11 +215,11 @@ must have created a KApplication object before the methods can be used.<P>
   <TD>
     <PRE>
     ...
-        	KConfig *appcfg = KGlobal::config();
+        	TDEConfig *appcfg = TDEGlobal::config();
 	        TQString mystr	 = i18n( "This is a string" );
 
 
-		KIconLoader *loader = KGlobal::iconLoader();
+		TDEIconLoader *loader = TDEGlobal::iconLoader();
     </PRE>
   </TD>
 </TR>
@@ -227,9 +227,9 @@ must have created a KApplication object before the methods can be used.<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
-<H3><A NAME="KIconLoader">KIconLoader</A></H3>
+<H3><A NAME="TDEIconLoader">TDEIconLoader</A></H3>
 
-KIconLoader in 1.1 used to mix icons for applications and for toolbars.
+TDEIconLoader in 1.1 used to mix icons for applications and for toolbars.
 This has changed, so you may notice that your application doesn't find
 the right icons. loadIcon (used by BarIcon) returns only toolbar icons.<P>
 If you need icons for applications, use loadApplicationIcon.<P>
@@ -248,9 +248,9 @@ in stripping off the .xpm part<P>
 
 <H3><A NAME="KTMainWindow">KTMainWindow</A></H3>
 
-KTMainWindow has been replaced with KMainWindow.<p>
+KTMainWindow has been replaced with TDEMainWindow.<p>
 
-The KMainWindow constructor needs a parent widget as first argument. 
+The TDEMainWindow constructor needs a parent widget as first argument. 
 You can use 0 for this.<p>
 setView() has been replaced with setCentralWidget().<p>
 view() has been replaced with centralWidget().<p>
@@ -271,26 +271,26 @@ mainViewGeometry() instead.<P>
 
 <H3><A NAME="KHelpMenu">KHelpMenu</A></H3>
 
-helpMenu() has been moved to KMainWindow from KApplication (kapp).<P>
+helpMenu() has been moved to TDEMainWindow from TDEApplication (kapp).<P>
 
 Both the "About KDE" and the "About &lt;Application&gt;" dialog boxes
 are now modeless. "About KDE" is a completely new widget.<P>
 
-If you used in the toplevel window (that is derived from KMainWindow)
+If you used in the toplevel window (that is derived from TDEMainWindow)
 "kapp-&gt;helpMenu( bool, TQString )" to get the help menu
 you must now change this to "helpMenu( TQString )". The TQString defaults
 to TQString::null so it is sufficient to write helpMenu().<P>
 
-The old aboutKDE(), aboutApp() and appHelpActivated() of KApplication
+The old aboutKDE(), aboutApp() and appHelpActivated() of TDEApplication
 have all been removed. If you need direct access to these or need
 access to a help menu in a class that is not derived from
-KMainWindow then allocate an instance of the new class KHelpMenu.
+TDEMainWindow then allocate an instance of the new class KHelpMenu.
 See KDE 2.0 API reference or khelpmenu.h (tdeui) for additional info.<P>
 Espen Sand &lt;<A HREF="mailto:espen@kde.org">espen@kde.org</A>&gt;<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
-<H3><A NAME="KToolBar">KToolBar</A></H3>
+<H3><A NAME="TDEToolBar">TDEToolBar</A></H3>
 
 enable(...) is depreciated, use show()/hide() instead.<p>
 enableFloating(...) has been removed, use enableMoving() instead.<p>
@@ -309,9 +309,9 @@ you should or should not use them.
 <H4>1. fork + exec</H4>
 <P>
 You never want to use this unless you have a very good reason why it is 
-impossible to use KProcess.
+impossible to use TDEProcess.
 </P>
-<H4>2. KProcess</H4>
+<H4>2. TDEProcess</H4>
 <P>
 You want to use this if you need to start a new process which needs to be a 
 child of your process, e.g. because you want to catch stdout/stderr or need 
@@ -323,7 +323,7 @@ off with KProcIO
 
 <H4>3. KProcIO</H4>
 <P>
-Like KProcess. Unlike KProcess, this class actually makes it easy to 
+Like TDEProcess. Unlike TDEProcess, this class actually makes it easy to 
 send data to and receive data from the process.
 
 </P>
@@ -347,38 +347,38 @@ This makes KRun the recommended way to run another program in KDE 2.
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
-<H3><A NAME="khtmlw">khtmlw</A></H3>
+<H3><A NAME="tdehtmlw">tdehtmlw</A></H3>
 
-khtmlw has been replaced with khtml.<BR>
+tdehtmlw has been replaced with tdehtml.<BR>
 <UL>
-	<LI>KHTMLView has vanished. Just use KHTMLWidget, which does scrollbar
+	<LI>TDEHTMLView has vanished. Just use TDEHTMLWidget, which does scrollbar
   managing for free.
 
 	<LI>A lot of the API has changed. If you just want to open a file/URL,
   you just need to do:<P>
   <PRE>
-	KHTMLWidget *w = new KHTMLWidget();
+	TDEHTMLWidget *w = new TDEHTMLWidget();
 	w-&gt;openURL(myURL);
   </PRE>
 
-	<LI>khtml uses QString's instead of char *'s now. This means, that most
+	<LI>tdehtml uses QString's instead of char *'s now. This means, that most
   of the api has changed. In all functions:<P>
   <PRE>
      const char * -&gt; QString
      TQStrList -&gt; QStringList
   </PRE>
-  The only exception for the moment is KHTMLWidget::write(), which does
+  The only exception for the moment is TDEHTMLWidget::write(), which does
   also exist in a const char * version.<P>
 
 
-<LI>you won't need the getKHTMLWiget function anymore. Just replace
-	getKHTMLWidget-&gt;xxx() with xxx()<P>
+<LI>you won't need the getTDEHTMLWiget function anymore. Just replace
+	getTDEHTMLWidget-&gt;xxx() with xxx()<P>
 <LI>xxx(TQString) -&gt; xxx(const TQString &amp;)<P>
 <LI>consistent naming. All getXyz() functions are renamed to xyz()<P>
 <LI>replaced/changed functions:<P>
 <TABLE BORDER="1">
 <TR>
-<TD>KHTMLWidget::setDefaultFontBase()</TD>
+<TD>TDEHTMLWidget::setDefaultFontBase()</TD>
 <TD>-&gt; setFontSizes()</TD>
 </TR>
 <TR>
@@ -406,7 +406,7 @@ khtmlw has been replaced with khtml.<BR>
 </TR>
 </TABLE><P>
 
-<LI>Don't forget to change the link-flags! (-lkhtml -lkjava instead of -lkhtmlw)
+<LI>Don't forget to change the link-flags! (-ltdehtml -lkjava instead of -ltdehtmlw)
 </UL>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
@@ -469,17 +469,17 @@ are necessary to convert your old KDND-based stuff to Qt DND.<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
-<H3><A NAME="KConfigBase">KConfigBase, KConfig, KSimpleConfig</A></H3>
+<H3><A NAME="TDEConfigBase">TDEConfigBase, TDEConfig, KSimpleConfig</A></H3>
 
   These classes have been largely re-implemented.  The external API
   remains mostly the same, with the single notable change that
   the groupIterator and entryIterator methods have been removed and
   instead replaced by groupList (which returns a TQStringList of groups)
   and entryMap(const TQString &amp;group) (which returns a TQMap of entries
-  in the specified group).  This is due to internal changes in KConfig
+  in the specified group).  This is due to internal changes in TDEConfig
   which would make providing iterators possibly rather difficult.<P>
 
-  Much more extensive documentation on the KConfig and friends API can
+  Much more extensive documentation on the TDEConfig and friends API can
   be found in the kdoc generated documentation from the header files,
   and in tdecore/KCONFIG_DESIGN.<P>
 
@@ -501,20 +501,20 @@ are necessary to convert your old KDND-based stuff to Qt DND.<P>
 <H3><A NAME="libkfm">libkfm has disappeared</A></H3>
 
   Lots of other functionalities have been taken out of kfm, some being
-  now in libkio, some in libkonq.<P>
+  now in libtdeio, some in libkonq.<P>
  <STRONG> Replacement table :</STRONG><P>
 <TABLE BORDER="1">
 
-<TR><TD>KFM::download         </TD><TD>-&gt; KIO::NetAccess::download (tdelibs/kio/netaccess.h)</TD></TR>
-<TR><TD>KFM::removeTempFile   </TD><TD>-&gt; KIO::NetAccess::removeTempFile</TD></TR>
+<TR><TD>KFM::download         </TD><TD>-&gt; TDEIO::NetAccess::download (tdelibs/tdeio/netaccess.h)</TD></TR>
+<TR><TD>KFM::removeTempFile   </TD><TD>-&gt; TDEIO::NetAccess::removeTempFile</TD></TR>
 <TR><TD COLSPAN="2" ROWSPAN="0">refreshDesktop, sortDesktop, selectRootIcons : removed; kdesktop handles it</TD></TR>
 <TR><TD>KFM::configure        </TD><TD>-&gt; see konqueror DCOP interface</TD></TR>
-<TR><TD>KFM::openURL          </TD><TD>-&gt; "(void) new KRun (url)" (tdelibs/kio/krun.h)</TD></TR>
+<TR><TD>KFM::openURL          </TD><TD>-&gt; "(void) new KRun (url)" (tdelibs/tdeio/krun.h)</TD></TR>
 <TR><TD>KFM::refreshDirectory </TD><TD>-&gt; not needed anymore since konqy/kdesktop use KDirWatch</TD></TR>
-<TR><TD>KFM::openProperties   </TD><TD>-&gt; "(void) new KPropertiesDialog (url)" (tdelibs/kfile/kpropsdlg.h)</TD></TR>
-<TR><TD>KFM::exec             </TD><TD>-&gt; "(void) new KRun (url)" (tdelibs/kio/krun.h)</TD></TR>
-<TR><TD>KFM::copy, KFM::move  </TD><TD>-&gt; KIO::Job (async, see kio/job.h)<BR>
-                            or KIO::NetAccess (sync, see kio/netaccess.h)</TD></TR>
+<TR><TD>KFM::openProperties   </TD><TD>-&gt; "(void) new KPropertiesDialog (url)" (tdelibs/tdefile/kpropsdlg.h)</TD></TR>
+<TR><TD>KFM::exec             </TD><TD>-&gt; "(void) new KRun (url)" (tdelibs/tdeio/krun.h)</TD></TR>
+<TR><TD>KFM::copy, KFM::move  </TD><TD>-&gt; TDEIO::Job (async, see tdeio/job.h)<BR>
+                            or TDEIO::NetAccess (sync, see tdeio/netaccess.h)</TD></TR>
 <TR><TD>DlgLocation           </TD><TD>-&gt; Use KLineEditDlg (tdeui/klineeditdlg.h) instead</TD></TR>
 </TABLE>
 
@@ -534,7 +534,7 @@ The kcharsets class has been completely rewritten, and most of it has
 vanished, since support for it moved to Qt.<P>
 
 Most applications will only need to replace kapp-&gt;getKCharsets() with
-KGlobal::charsets().<P>
+TDEGlobal::charsets().<P>
 
 For conversion of various input formats to QStrings, please have a
 look at TQTextCodec and classes derived from it.<P>
@@ -570,9 +570,9 @@ HINTS:<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
-<H3><A NAME="KClipboard">KClipboard</A></H3>
+<H3><A NAME="TDEClipboard">TDEClipboard</A></H3>
 
-KClipboard has been removed. In case you've been using KClipboard,
+TDEClipboard has been removed. In case you've been using TDEClipboard,
 QClipboard is the way to go now, as it has all the functionality the K
 version had, and more.<P>
 
@@ -588,7 +588,7 @@ this:<P>
 <TABLE><TR><TD>
     TQSplitter *split = new TQSplitter( parent );<BR>
     TQListBox *lb = new TQListBox( split );<BR>
-    KListView *lv = new KListView( split );<BR>
+    TDEListView *lv = new TDEListView( split );<BR>
     TQMultiLineEdit *ed = new TQMultiLineEdit( split );
 </TD></TR></TABLE>
 
@@ -600,17 +600,17 @@ possible if you call setOpaqueResize(true).<P>
 
 <H3><A NAME="KTreeList">KTreeList, KTreeListItem</A></H3>
 
-Use KListView, TQListViewItem instead. API is almost the same, you only
-need to add a Column (KListView::addColum) before KListView is useable.<P>
+Use TDEListView, TQListViewItem instead. API is almost the same, you only
+need to add a Column (TDEListView::addColum) before TDEListView is useable.<P>
 
-KListView has no addChild(), insertItem() and removeItem() calls. Inserting
-a root item is done by constructing a TQListViewItem with the KListView
+TDEListView has no addChild(), insertItem() and removeItem() calls. Inserting
+a root item is done by constructing a TQListViewItem with the TDEListView
 passed as the parent widget. adding a child item is done by constructing
 a TQListViewItem with the parent item as parameter. removeItem() should
 be replaced by delete &lt;pointer to item&gt;.<P>
 
 The root items are not shown in a tree fashion by default. to get this,
-use KListView::setDecorativeRoot(true).<P>
+use TDEListView::setDecorativeRoot(true).<P>
 
 Expanding and collapsing can by done by using TQListViewItem::setOpen(bool).<P>
 
@@ -685,24 +685,24 @@ unbalancedGradient(), hash(), desaturate(), pattern(), fade(), blend() etc.<P>
 
 <H3><A NAME="KTabListBox">KTabListBox</A></H3>
 
-This widget has been replaced by the almighty KListView. Everything said
+This widget has been replaced by the almighty TDEListView. Everything said
 about KTreeList could be repeated here. The good thing is, that you now
 can combine TreeView's and normal Tablists without problems.<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
-<H3><A NAME="KToolBarButton">KToolBarButton &amp; KRadioGroup</A></H3>
+<H3><A NAME="TDEToolBarButton">TDEToolBarButton &amp; TDERadioGroup</A></H3>
 
-If you need to do anything with KToolBarButton you now need to include 
-&lt;ktoolbarbutton.h&gt; KRadioGroup has been renamed to KToolBarRadioGroup and
-requires you to include &lt;ktoolbarradiogroup.h&gt;<P>
+If you need to do anything with TDEToolBarButton you now need to include 
+&lt;tdetoolbarbutton.h&gt; TDERadioGroup has been renamed to TDEToolBarRadioGroup and
+requires you to include &lt;tdetoolbarradiogroup.h&gt;<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
-<H3><A NAME="KAccel">KAccel</A></H3>
+<H3><A NAME="TDEAccel">TDEAccel</A></H3>
 
 The functions keyToString() and stringToKey() which were previously
-declared globally in kaccel.h are now static methods in KAccel.<P>
+declared globally in tdeaccel.h are now static methods in TDEAccel.<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
@@ -716,7 +716,7 @@ The file has been removed completely, use TQString instead. (<A HREF="mailto:mir
 
 <H3><A NAME="ktopwidget">ktopwidget.h / KTopWidget</A></H3>
 
-KMainWindow replaces this class completely. ktopwidget.h does not
+TDEMainWindow replaces this class completely. ktopwidget.h does not
 exist in KDE 2. (<A HREF="mailto:mirko@kde.org">mirko@kde.org</A>)<P>
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
@@ -754,7 +754,7 @@ Please adjust your code accordingly.<P>
 
 <H3><A NAME="KDockWidget">KDockWidget</A></H3>
 
-KDockWidget inherits form KMainWindow instead of KTMainWindow now.
+KDockWidget inherits form TDEMainWindow instead of KTMainWindow now.
 See <A HREF="KTMainWindow">KTMainWindow</A> for more details.
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
@@ -792,7 +792,7 @@ Matthias Hoelzer-Kluepfel &lt;<A HREF="mailto:hoelzer@kde.org">hoelzer@kde.org</
 The KWMModuleApplication has been removed. Instead, use the class
 KWinModule in libtdecore. The API is a bit cleaner but very similar,
 so you will feel comfortable immediately. One of the advantages of
-KWinModule is that it doesn't require a special KApplication
+KWinModule is that it doesn't require a special TDEApplication
 subclass. This lead to many problems and misunderstandings in the
 past. KWinModule is now just an object that emits fancy signals (and
 provides some useful lists, like the list of all managed windows).

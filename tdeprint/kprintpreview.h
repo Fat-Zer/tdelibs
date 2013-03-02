@@ -47,7 +47,7 @@ private:
 	KPrintPreviewPrivate	*d;
 };
 
-class KPreviewProc : public KProcess
+class KPreviewProc : public TDEProcess
 {
 	Q_OBJECT
 public:
@@ -57,7 +57,7 @@ public:
 	bool startPreview();
 
 protected slots:
-	void slotProcessExited(KProcess*);
+	void slotProcessExited(TDEProcess*);
 private:
 	bool m_bOk;
 };

@@ -25,7 +25,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #ifndef __twindowlistmenu_h__
 #define __twindowlistmenu_h__
 
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 #include <tqmap.h>
 
 #ifdef Q_MOC_RUN
@@ -37,7 +37,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 class KWinModule;
 class KWindowListMenuPrivate;
 
-class TDEUI_EXPORT KWindowListMenu : public KPopupMenu
+class TDEUI_EXPORT KWindowListMenu : public TDEPopupMenu
 {
     Q_OBJECT
 

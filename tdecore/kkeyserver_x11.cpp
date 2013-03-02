@@ -29,12 +29,12 @@
 
 #include "kkeyserver_x11.h"
 #include "kkeynative.h"
-#include "kshortcut.h"
+#include "tdeshortcut.h"
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 
 #ifdef Q_WS_X11
 # define XK_MISCELLANY
@@ -361,7 +361,7 @@ bool initializeMods()
 
 	XFreeModifiermap( xmk );
 
-	//KConfigGroupSaver cgs( KGlobal::config(), "Keyboard" );
+	//TDEConfigGroupSaver cgs( TDEGlobal::config(), "Keyboard" );
 	// read in mod that win should be attached to
 
 	g_bInitializedMods = true;
@@ -380,11 +380,11 @@ static void initializeVariations()
 
 static void intializeKKeyLabels()
 {
-	KConfigGroupSaver cgs( KGlobal::config(), "Keyboard" );
-	g_rgModInfo[0].sLabel = KGlobal::config()->readEntry( "Label Shift", i18n(g_rgModInfo[0].psName) );
-	g_rgModInfo[1].sLabel = KGlobal::config()->readEntry( "Label Ctrl", i18n(g_rgModInfo[1].psName) );
-	g_rgModInfo[2].sLabel = KGlobal::config()->readEntry( "Label Alt", i18n(g_rgModInfo[2].psName) );
-	g_rgModInfo[3].sLabel = KGlobal::config()->readEntry( "Label Win", i18n(g_rgModInfo[3].psName) );
+	TDEConfigGroupSaver cgs( TDEGlobal::config(), "Keyboard" );
+	g_rgModInfo[0].sLabel = TDEGlobal::config()->readEntry( "Label Shift", i18n(g_rgModInfo[0].psName) );
+	g_rgModInfo[1].sLabel = TDEGlobal::config()->readEntry( "Label Ctrl", i18n(g_rgModInfo[1].psName) );
+	g_rgModInfo[2].sLabel = TDEGlobal::config()->readEntry( "Label Alt", i18n(g_rgModInfo[2].psName) );
+	g_rgModInfo[3].sLabel = TDEGlobal::config()->readEntry( "Label Win", i18n(g_rgModInfo[3].psName) );
 	g_bMacLabels = (g_rgModInfo[2].sLabel == "Command");
 	g_bInitializedKKeyLabels = true;
 }
@@ -1020,7 +1020,7 @@ void Variations::init( const KKey& key, bool bQt )
 
 } // end of namespace KKeyServer block
 
-// FIXME: This needs to be moved to kshortcut.cpp, and create a 
+// FIXME: This needs to be moved to tdeshortcut.cpp, and create a 
 //  KKeyServer::method which it will call.
 // Alt+SysReq => Alt+Print
 // Ctrl+Shift+Plus => Ctrl+Plus (en)

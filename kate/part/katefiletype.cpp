@@ -25,15 +25,15 @@
 #include "kateview.h"
 #include "katefactory.h"
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kmimemagic.h>
 #include <kmimetype.h>
 #include <kmimetypechooser.h>
 #include <kdebug.h>
 #include <kiconloader.h>
 #include <knuminput.h>
-#include <klocale.h>
-#include <kpopupmenu.h>
+#include <tdelocale.h>
+#include <tdepopupmenu.h>
 
 #include <tqregexp.h>
 #include <tqcheckbox.h>
@@ -72,7 +72,7 @@ KateFileTypeManager::~KateFileTypeManager ()
 //
 void KateFileTypeManager::update ()
 {
-  KConfig config ("katefiletyperc", false, false);
+  TDEConfig config ("katefiletyperc", false, false);
 
   TQStringList g (config.groupList());
   g.sort ();
@@ -101,7 +101,7 @@ void KateFileTypeManager::update ()
 //
 void KateFileTypeManager::save (TQPtrList<KateFileType> *v)
 {
-  KConfig config ("katefiletyperc", false, false);
+  TDEConfig config ("katefiletyperc", false, false);
 
   TQStringList newg;
   for (uint z=0; z < v->count(); z++)

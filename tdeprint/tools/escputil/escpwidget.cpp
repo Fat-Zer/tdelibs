@@ -25,8 +25,8 @@
 #include <tqcheckbox.h>
 #include <tqaccel.h>
 #include <kdemacros.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kstandarddirs.h>
 #include <kiconloader.h>
 #include <kdialogbase.h>
@@ -67,9 +67,9 @@ EscpWidget::EscpWidget(TQWidget *parent, const char *name)
 {
 	m_hasoutput = false;
 
-	connect(&m_proc, TQT_SIGNAL(processExited(KProcess*)), TQT_SLOT(slotProcessExited(KProcess*)));
-	connect(&m_proc, TQT_SIGNAL(receivedStdout(KProcess*,char*,int)), TQT_SLOT(slotReceivedStdout(KProcess*,char*,int)));
-	connect(&m_proc, TQT_SIGNAL(receivedStderr(KProcess*,char*,int)), TQT_SLOT(slotReceivedStderr(KProcess*,char*,int)));
+	connect(&m_proc, TQT_SIGNAL(processExited(TDEProcess*)), TQT_SLOT(slotProcessExited(TDEProcess*)));
+	connect(&m_proc, TQT_SIGNAL(receivedStdout(TDEProcess*,char*,int)), TQT_SLOT(slotReceivedStdout(TDEProcess*,char*,int)));
+	connect(&m_proc, TQT_SIGNAL(receivedStderr(TDEProcess*,char*,int)), TQT_SLOT(slotReceivedStderr(TDEProcess*,char*,int)));
 
 	TQPushButton	*cleanbtn = new TQPushButton(this, "-c");
 	cleanbtn->setPixmap(DesktopIcon("exec"));
@@ -173,7 +173,7 @@ void EscpWidget::startCommand(const TQString& arg)
 		return;
 	}
 
-	TQString	exestr = KStandardDirs::findExe("escputil");
+	TQString	exestr = TDEStandardDirs::findExe("escputil");
 	if (exestr.isEmpty())
 	{
 		KMessageBox::error(this, i18n("The executable escputil cannot be found in your "
@@ -196,7 +196,7 @@ void EscpWidget::startCommand(const TQString& arg)
 	m_hasoutput = ( arg == "-i" || arg == "-d" );
 	for ( TQValueList<TQCString>::ConstIterator it=m_proc.args().begin(); it!=m_proc.args().end(); ++it )
 		kdDebug() << "ARG: " << *it << endl;
-	if (m_proc.start(KProcess::NotifyOnExit, KProcess::AllOutput))
+	if (m_proc.start(TDEProcess::NotifyOnExit, TDEProcess::AllOutput))
 		setEnabled(false);
 	else
 	{
@@ -206,7 +206,7 @@ void EscpWidget::startCommand(const TQString& arg)
 	}
 }
 
-void EscpWidget::slotProcessExited(KProcess*)
+void EscpWidget::slotProcessExited(TDEProcess*)
 {
 	setEnabled(true);
 	if (!m_proc.normalExit() || m_proc.exitStatus() != 0)
@@ -229,13 +229,13 @@ void EscpWidget::slotProcessExited(KProcess*)
 	m_hasoutput = false;
 }
 
-void EscpWidget::slotReceivedStdout(KProcess*, char *buf, int len)
+void EscpWidget::slotReceivedStdout(TDEProcess*, char *buf, int len)
 {
 	TQString	bufstr = TQCString(buf, len);
 	m_outbuffer.append(bufstr);
 }
 
-void EscpWidget::slotReceivedStderr(KProcess*, char *buf, int len)
+void EscpWidget::slotReceivedStderr(TDEProcess*, char *buf, int len)
 {
 	TQString	bufstr = TQCString(buf, len);
 	m_errorbuffer.append(bufstr);

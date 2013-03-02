@@ -23,7 +23,7 @@
 #include "util.h"
 
 #include <tqtextview.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqlayout.h>
 
 KMWEnd::KMWEnd(TQWidget *parent, const char *name)

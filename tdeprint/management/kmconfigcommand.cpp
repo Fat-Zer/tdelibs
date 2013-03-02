@@ -24,7 +24,7 @@
 #include <tqgroupbox.h>
 #include <tqlayout.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdialog.h>
 
 KMConfigCommand::KMConfigCommand(TQWidget *parent, const char *name)

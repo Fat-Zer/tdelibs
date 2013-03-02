@@ -25,7 +25,7 @@
 #include "lprsettings.h"
 
 #include <tqptrlist.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 KMLprJobManager::KMLprJobManager(TQObject *parent, const char *name, const TQStringList & /*args*/)
 : KMJobManager(parent, name)

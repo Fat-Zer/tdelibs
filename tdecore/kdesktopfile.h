@@ -19,7 +19,7 @@
 #ifndef _KDESKTOPFILE_H
 #define _KDESKTOPFILE_H
 
-#include "kconfig.h"
+#include "tdeconfig.h"
 #include "tdelibs_export.h"
 
 class KDesktopFilePrivate;
@@ -28,10 +28,10 @@ class KDesktopFilePrivate;
  * KDE Desktop File Management.
  *
  * @author Pietro Iglio <iglio@kde.org>
- * @see  KConfigBase  KConfig
+ * @see  TDEConfigBase  TDEConfig
  * @short KDE Desktop File Management class
  */
-class TDECORE_EXPORT KDesktopFile : public KConfig
+class TDECORE_EXPORT KDesktopFile : public TDEConfig
 {
   Q_OBJECT
 

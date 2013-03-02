@@ -21,7 +21,7 @@
 
 #include <config.h>
 
-#include "klauncher_cmds.h"
+#include "tdelauncher_cmds.h"
 
 #include <sys/types.h>
 #include <sys/param.h>
@@ -310,7 +310,7 @@ int main(int argc, char **argv)
    int kwrapper = 0;
    long arg_count;
    long env_count;
-   klauncher_header header;
+   tdelauncher_header header;
    char *start, *p, *buffer;
    char cwd[8192];
    const char *tty = NULL;

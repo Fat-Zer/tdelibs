@@ -23,8 +23,8 @@
 
 #include <tqlabel.h>
 #include <tqlineedit.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <tqregexp.h>
 
 KMWName::KMWName(TQWidget *parent, const char *name)

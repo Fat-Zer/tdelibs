@@ -45,15 +45,15 @@ public:
   KResolverEntry proxy;
   TQCString request;
   TQCString reply;
-  KSocketAddress peer;
+  TDESocketAddress peer;
 
   KHttpProxySocketDevicePrivate()
     : proxy(KHttpProxySocketDevice::defaultProxy)
   { }
 };
 
-KHttpProxySocketDevice::KHttpProxySocketDevice(const KSocketBase* parent)
-  : KSocketDevice(parent), d(new KHttpProxySocketDevicePrivate)
+KHttpProxySocketDevice::KHttpProxySocketDevice(const TDESocketBase* parent)
+  : TDESocketDevice(parent), d(new KHttpProxySocketDevicePrivate)
 {
 }
 
@@ -66,7 +66,7 @@ KHttpProxySocketDevice::KHttpProxySocketDevice(const KResolverEntry& proxy)
 KHttpProxySocketDevice::~KHttpProxySocketDevice()
 {
   // nothing special to be done during closing
-  // KSocketDevice::~KSocketDevice closes the socket
+  // TDESocketDevice::~TDESocketDevice closes the socket
 
   delete d;
 }
@@ -90,27 +90,27 @@ void KHttpProxySocketDevice::setProxyServer(const KResolverEntry& proxy)
 void KHttpProxySocketDevice::close()
 {
   d->reply = d->request = TQCString();
-  d->peer = KSocketAddress();
-  KSocketDevice::close();
+  d->peer = TDESocketAddress();
+  TDESocketDevice::close();
 }
 
-KSocketAddress KHttpProxySocketDevice::peerAddress() const
+TDESocketAddress KHttpProxySocketDevice::peerAddress() const
 {
   if (isOpen())
     return d->peer;
-  return KSocketAddress();
+  return TDESocketAddress();
 }
 
-KSocketAddress KHttpProxySocketDevice::externalAddress() const
+TDESocketAddress KHttpProxySocketDevice::externalAddress() const
 {
-  return KSocketAddress();
+  return TDESocketAddress();
 }
 
 bool KHttpProxySocketDevice::connect(const KResolverEntry& address)
 {
   if (d->proxy.family() == AF_UNSPEC)
     // no proxy server set !
-    return KSocketDevice::connect(address);
+    return TDESocketDevice::connect(address);
 
   if (isOpen())
     {
@@ -148,7 +148,7 @@ bool KHttpProxySocketDevice::connect(const TQString& node, const TQString& servi
   if (m_sockfd == -1)
     {
       // must create the socket
-      if (!KSocketDevice::connect(d->proxy))
+      if (!TDESocketDevice::connect(d->proxy))
 	return false;		// also unable to contact proxy server
       setState(0);		// unset open flag
 
@@ -170,7 +170,7 @@ bool KHttpProxySocketDevice::connect(const TQString& node, const TQString& servi
 bool KHttpProxySocketDevice::parseServerReply()
 {
   // make sure we're connected
-  if (!KSocketDevice::connect(d->proxy))
+  if (!TDESocketDevice::connect(d->proxy))
     if (error() == InProgress)
       return true;
     else if (error() != NoError)

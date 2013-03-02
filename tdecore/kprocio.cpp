@@ -31,8 +31,8 @@
 
 class KProcIOPrivate {
 public:
-  KProcIOPrivate() : comm(KProcess::All) {}
-  KProcess::Communication comm;
+  KProcIOPrivate() : comm(TDEProcess::All) {}
+  TDEProcess::Communication comm;
 };
 
 KProcIO::KProcIO ( TQTextCodec *_codec)
@@ -67,14 +67,14 @@ KProcIO::resetAll ()
   rbi=0;
   readsignalon=writeready=true;
 
-  disconnect (this, TQT_SIGNAL (receivedStdout (KProcess *, char *, int)),
-	   this, TQT_SLOT (received (KProcess *, char *, int)));
+  disconnect (this, TQT_SIGNAL (receivedStdout (TDEProcess *, char *, int)),
+	   this, TQT_SLOT (received (TDEProcess *, char *, int)));
 
-  disconnect (this, TQT_SIGNAL (receivedStderr (KProcess *, char *, int)),
-	   this, TQT_SLOT (received (KProcess *, char *, int)));
+  disconnect (this, TQT_SIGNAL (receivedStderr (TDEProcess *, char *, int)),
+	   this, TQT_SLOT (received (TDEProcess *, char *, int)));
 
-  disconnect (this, TQT_SIGNAL (wroteStdin(KProcess *)),
-	   this, TQT_SLOT (sent (KProcess *)));
+  disconnect (this, TQT_SIGNAL (wroteStdin(TDEProcess *)),
+	   this, TQT_SLOT (sent (TDEProcess *)));
 
   outbuffer.clear();
 
@@ -87,19 +87,19 @@ void KProcIO::setComm (Communication comm)
 
 bool KProcIO::start (RunMode runmode, bool includeStderr)
 {
-  connect (this, TQT_SIGNAL (receivedStdout (KProcess *, char *, int)),
-	   this, TQT_SLOT (received (KProcess *, char *, int)));
+  connect (this, TQT_SIGNAL (receivedStdout (TDEProcess *, char *, int)),
+	   this, TQT_SLOT (received (TDEProcess *, char *, int)));
   
   if (includeStderr)
   {
-     connect (this, TQT_SIGNAL (receivedStderr (KProcess *, char *, int)),
-              this, TQT_SLOT (received (KProcess *, char *, int)));
+     connect (this, TQT_SIGNAL (receivedStderr (TDEProcess *, char *, int)),
+              this, TQT_SLOT (received (TDEProcess *, char *, int)));
   }
 
-  connect (this, TQT_SIGNAL (wroteStdin(KProcess *)),
-	   this, TQT_SLOT (sent (KProcess *)));
+  connect (this, TQT_SIGNAL (wroteStdin(TDEProcess *)),
+	   this, TQT_SLOT (sent (TDEProcess *)));
            
-  return KProcess::start (runmode, d->comm);
+  return TDEProcess::start (runmode, d->comm);
 }
 
 bool KProcIO::writeStdin (const TQString &line, bool appendnewline)
@@ -131,7 +131,7 @@ bool KProcIO::writeStdin (const TQCString &line, bool appendnewline)
   if (writeready)
   {
      writeready=false;
-     return KProcess::writeStdin( b->data(), b->size() );
+     return TDEProcess::writeStdin( b->data(), b->size() );
   }
   return true;
 }
@@ -146,7 +146,7 @@ bool KProcIO::writeStdin(const TQByteArray &data)
   if (writeready)
   {
      writeready=false;
-     return KProcess::writeStdin( b->data(), b->size() );
+     return TDEProcess::writeStdin( b->data(), b->size() );
   }
   return true;
 }
@@ -163,7 +163,7 @@ void KProcIO::closeWhenDone()
   return;
 }
 
-void KProcIO::sent(KProcess *)
+void KProcIO::sent(TDEProcess *)
 {
   outbuffer.removeFirst();
 
@@ -180,13 +180,13 @@ void KProcIO::sent(KProcess *)
      }
      else
      {
-        KProcess::writeStdin(b->data(), b->size());
+        TDEProcess::writeStdin(b->data(), b->size());
      }
   }
 
 }
 
-void KProcIO::received (KProcess *, char *buffer, int buflen)
+void KProcIO::received (TDEProcess *, char *buffer, int buflen)
 {
   recvbuffer += TQCString(buffer, buflen+1);
 
@@ -270,7 +270,7 @@ int KProcIO::readln (TQString &line, bool autoAck, bool *partial)
 }
 
 void KProcIO::virtual_hook( int id, void* data )
-{ KProcess::virtual_hook( id, data ); }
+{ TDEProcess::virtual_hook( id, data ); }
 
 #include "kprocio.moc"
 

@@ -1,10 +1,10 @@
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <dcopclient.h>
 
 int main( int argc, char** argv )
 {
-    KApplication app( argc, argv, "KIDLTestClient", false );
+    TDEApplication app( argc, argv, "KIDLTestClient", false );
 
     kapp->dcopClient()->attach();
     // kapp->dcopClient()->registerAs( "kidlclienttest" );
@@ -27,8 +27,8 @@ debug("sending configure to object KonquerorIface in konqueror");
       debug("ko");
 
 /// BROADCAST
-debug("sending databaseChanged to object ksycoca in all apps");
-    if (kapp->dcopClient()->send( "*", "ksycoca", "databaseChanged()", data ))
+debug("sending databaseChanged to object tdesycoca in all apps");
+    if (kapp->dcopClient()->send( "*", "tdesycoca", "databaseChanged()", data ))
       debug("ok");
     else
       debug("ko");

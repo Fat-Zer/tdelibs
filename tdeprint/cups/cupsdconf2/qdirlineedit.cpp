@@ -22,7 +22,7 @@
 #include <tqlineedit.h>
 #include <tqlayout.h>
 #include <kpushbutton.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kiconloader.h>
 
 QDirLineEdit::QDirLineEdit(bool file, TQWidget *parent, const char *name)

@@ -31,9 +31,9 @@ install( FILES
   DESTINATION ${INCLUDE_INSTALL_DIR}/dnssd )
 
 
-##### kdnssd ####################################
+##### tdednssd ####################################
 
-set( target kdnssd )
+set( target tdednssd )
 
 set( ${target}_SRCS
   remoteservice.cpp responder.cpp servicebase.cpp
@@ -45,6 +45,6 @@ tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 1.0.0
   LINK tdecore-shared
-  DEPENDENCIES kconfig_compiler
+  DEPENDENCIES tdeconfig_compiler
   DESTINATION ${LIB_INSTALL_DIR}
 )

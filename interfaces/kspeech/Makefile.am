@@ -6,5 +6,5 @@ include_HEADERS = kspeech.h kspeechsink.h
 # Define DCOP/Text-to-Speech Service Type.
 kde_servicetypes_DATA = dcoptexttospeech.desktop
 
-DOXYGEN_REFERENCES = tdecore dcop kio tdeui kparts
+DOXYGEN_REFERENCES = tdecore dcop kio tdeui tdeparts
 include ../../admin/Doxyfile.am

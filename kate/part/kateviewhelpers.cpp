@@ -32,13 +32,13 @@
 #include "kateview.h"
 #include "kateviewinternal.h"
 
-#include <kapplication.h>
-#include <kglobalsettings.h>
-#include <klocale.h>
+#include <tdeapplication.h>
+#include <tdeglobalsettings.h>
+#include <tdelocale.h>
 #include <knotifyclient.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kcharsets.h>
-#include <kpopupmenu.h>
+#include <tdepopupmenu.h>
 
 #include <tqcursor.h>
 #include <tqpainter.h>
@@ -272,7 +272,7 @@ class KateCmdLnWhatsThis : public TQWhatsThis
  * This class provide completion of flags. It shows a short description of
  * each flag, and flags are appended.
  */
-class KateCmdLineFlagCompletion : public KCompletion
+class KateCmdLineFlagCompletion : public TDECompletion
 {
   public:
     KateCmdLineFlagCompletion() {;}
@@ -365,7 +365,7 @@ void KateCmdLine::slotReturnPressed ( const TQString& text )
   // clean up
   if ( m_oldCompletionObject )
   {
-    KCompletion *c = completionObject();
+    TDECompletion *c = completionObject();
     setCompletionObject( m_oldCompletionObject );
     m_oldCompletionObject = 0;
     delete c;
@@ -465,7 +465,7 @@ void KateCmdLine::keyPressEvent( TQKeyEvent *ev )
         // clean up if needed
         if ( m_oldCompletionObject )
         {
-          KCompletion *c = completionObject();
+          TDECompletion *c = completionObject();
           setCompletionObject( m_oldCompletionObject );
           m_oldCompletionObject = 0;
           delete c;
@@ -483,7 +483,7 @@ void KateCmdLine::keyPressEvent( TQKeyEvent *ev )
       Kate::CommandExtension *ce = dynamic_cast<Kate::CommandExtension*>(m_command);
       if ( ce )
       {
-        KCompletion *cmpl = ce->completionObject( text().left( m_cmdend ).stripWhiteSpace(), m_view );
+        TDECompletion *cmpl = ce->completionObject( text().left( m_cmdend ).stripWhiteSpace(), m_view );
         if ( cmpl )
         {
         // save the old completion object and use what the command provides
@@ -1151,7 +1151,7 @@ void KateIconBorder::showMarkMenu( uint line, const TQPoint& pos )
   {
      KateViewConfig::global()->setDefaultMarkType (vec[result-100]);
      // flush config, otherwise it isn't nessecarily done
-     KConfig *config = kapp->config();
+     TDEConfig *config = kapp->config();
      config->setGroup("Kate View Defaults");
      KateViewConfig::global()->writeConfig( config );
   }
@@ -1168,14 +1168,14 @@ void KateIconBorder::showMarkMenu( uint line, const TQPoint& pos )
 //END KateIconBorder
 
 KateViewEncodingAction::KateViewEncodingAction(KateDocument *_doc, KateView *_view, const TQString& text, TQObject* parent, const char* name)
-       : KActionMenu (text, parent, name), doc(_doc), view (_view)
+       : TDEActionMenu (text, parent, name), doc(_doc), view (_view)
 {
   connect(popupMenu(),TQT_SIGNAL(aboutToShow()),this,TQT_SLOT(slotAboutToShow()));
 }
 
 void KateViewEncodingAction::slotAboutToShow()
 {
-  TQStringList modes (KGlobal::charsets()->descriptiveEncodingNames());
+  TQStringList modes (TDEGlobal::charsets()->descriptiveEncodingNames());
 
   popupMenu()->clear ();
   for (uint z=0; z<modes.size(); ++z)
@@ -1183,7 +1183,7 @@ void KateViewEncodingAction::slotAboutToShow()
     popupMenu()->insertItem ( modes[z], this, TQT_SLOT(setMode(int)), 0,  z);
 
     bool found = false;
-    TQTextCodec *codecForEnc = KGlobal::charsets()->codecForName(KGlobal::charsets()->encodingForName(modes[z]), found);
+    TQTextCodec *codecForEnc = TDEGlobal::charsets()->codecForName(TDEGlobal::charsets()->encodingForName(modes[z]), found);
 
     if (found && codecForEnc)
     {
@@ -1195,8 +1195,8 @@ void KateViewEncodingAction::slotAboutToShow()
 
 void KateViewEncodingAction::setMode (int mode)
 {
-  TQStringList modes (KGlobal::charsets()->descriptiveEncodingNames());
-  doc->config()->setEncoding( KGlobal::charsets()->encodingForName( modes[mode] ) );
+  TQStringList modes (TDEGlobal::charsets()->descriptiveEncodingNames());
+  doc->config()->setEncoding( TDEGlobal::charsets()->encodingForName( modes[mode] ) );
   // now we don't want the encoding changed again unless the user does so using the menu.
   doc->setEncodingSticky( true );
   doc->reloadFile();

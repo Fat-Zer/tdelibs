@@ -21,7 +21,7 @@
 
 #include <tqfile.h>
 #include <tqregexp.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 
 TQString Comment::comment()

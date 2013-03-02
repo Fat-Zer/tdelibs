@@ -24,7 +24,7 @@
 #include <tqstringlist.h>
 
 /**
- * Service group factory for building ksycoca
+ * Service group factory for building tdesycoca
  * @internal
  */
 class KBuildServiceGroupFactory : public KServiceGroupFactory

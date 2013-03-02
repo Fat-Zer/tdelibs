@@ -24,8 +24,8 @@
 #include <tqlabel.h>
 #include <tqlayout.h>
 #include <tqgroupbox.h>
-#include <klocale.h>
-#include <kconfig.h>
+#include <tdelocale.h>
+#include <tdeconfig.h>
 
 KMConfigLpr::KMConfigLpr(TQWidget *parent, const char *name)
 : KMConfigPage(parent, name)
@@ -45,12 +45,12 @@ KMConfigLpr::KMConfigLpr(TQWidget *parent, const char *name)
 	l0->addStretch(1);
 }
 
-void KMConfigLpr::loadConfig(KConfig*)
+void KMConfigLpr::loadConfig(TDEConfig*)
 {
 	m_mode->setCurrentItem(LprSettings::self()->mode());
 }
 
-void KMConfigLpr::saveConfig(KConfig *conf)
+void KMConfigLpr::saveConfig(TDEConfig *conf)
 {
 	LprSettings::self()->setMode((LprSettings::Mode)(m_mode->currentItem()));
 

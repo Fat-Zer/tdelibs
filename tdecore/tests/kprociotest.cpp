@@ -1,5 +1,5 @@
 //
-//  MAIN -- a little demo of the capabilities of the "KProcess" class
+//  MAIN -- a little demo of the capabilities of the "TDEProcess" class
 //
 //  version 0.2, Aug 2nd 1997
 //  $Id$
@@ -13,7 +13,7 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 #include <signal.h>
 
@@ -32,7 +32,7 @@ werke\nmerkt\nich\nund\nden\nbrauch\nund\nmit\ngeistesstaerke\ntu\nich\nwunder\n
 int main(int argc, char *argv[])
 {
  Dummy dummy; 
- KApplication app(argc, argv, "kprociotest");
+ TDEApplication app(argc, argv, "kprociotest");
 
  printf("Welcome to the KProcIO Demo Application!\n");
 
@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
  
  p << "rev";
  
- p.connect(&p, TQT_SIGNAL(processExited(KProcess*)), &dummy, TQT_SLOT(printMessage(KProcess*)));
+ p.connect(&p, TQT_SIGNAL(processExited(TDEProcess*)), &dummy, TQT_SLOT(printMessage(TDEProcess*)));
  p.connect(&p, TQT_SIGNAL(readReady(KProcIO*)), &dummy, TQT_SLOT(gotOutput(KProcIO*)));
 
  bool b;

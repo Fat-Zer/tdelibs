@@ -33,7 +33,7 @@ Starting an application linked against libqt, libtdecore and libtdeui
 in the conventional way takes approx. 150ms on a Pentium III - 500Mhz. 
 Starting the same application via tdeinit takes less than 10ms.
 
-(application without KApplication constructor, the KApplication 
+(application without TDEApplication constructor, the TDEApplication 
 constructor requires an extra 100ms in both cases)
 
 Memory Usage
@@ -43,16 +43,16 @@ An application linked against libqt, libtdecore and libtdeui started
 in the conventional way requires about 498Kb memory. 
 (average of 10 instances) If the same application is started via
 tdeinit it requires about 142Kb. A difference of 356Kb (application 
-without KApplication constructor) 
+without TDEApplication constructor) 
 
-If we take the KApplication constructor into account, an application
+If we take the TDEApplication constructor into account, an application
 started in the conventional way takes about 679Kb memory while the same
 application started via tdeinit requires about 380Kb. Here the difference
 is somewhat less, 299Kb. This seems to be caused by the fact that the
 dynamic linker does "lazy linking". We can force the linker to link
 everything at startup by specifying "LD_BIND_NOW=true". When tdeinit is
 started with this option on, tdeinit is back to its full efficiency, an
-application with a KApplication constructor now uses 338Kb of memory.
+application with a TDEApplication constructor now uses 338Kb of memory.
 A difference of 341Kb with the normal case.
 
 Adapting programs to use tdeinit.

@@ -34,10 +34,10 @@
 #include <tqlayout.h>
 #include <tqwhatsthis.h>
 #include <tqgroupbox.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kicondialog.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kseparator.h>
 
 KMSpecialPrinterDlg::KMSpecialPrinterDlg(TQWidget *parent, const char *name)
@@ -88,7 +88,7 @@ KMSpecialPrinterDlg::KMSpecialPrinterDlg(TQWidget *parent, const char *name)
 	TQLabel	*m_extensionlabel = new TQLabel(i18n("Filename e&xtension:"), m_outfile_gb);
 	m_extensionlabel->setBuddy(m_extension);
 
-	m_icon = new KIconButton(dummy);
+	m_icon = new TDEIconButton(dummy);
 	m_icon->setIcon("fileprint");
 	m_icon->setFixedSize(TQSize(48,48));
 

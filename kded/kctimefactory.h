@@ -19,11 +19,11 @@
 #ifndef __k_ctime_factory_h__
 #define __k_ctime_factory_h__
 
-#include <ksycocafactory.h>
+#include <tdesycocafactory.h>
 #include <tqdict.h>
 
 /**
- * Service group factory for building ksycoca
+ * Service group factory for building tdesycoca
  * @internal
  */
 class KCTimeInfo : public KSycocaFactory

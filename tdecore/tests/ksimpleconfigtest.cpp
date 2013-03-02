@@ -6,7 +6,7 @@
 // demonstrates use of KSimpleConfig class
 
 #include <ksimpleconfig.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <unistd.h>
 #include <stdio.h>
 
@@ -20,7 +20,7 @@
 
 int main( int argc, char **argv )
 {
-  KApplication  a( argc, argv, "kconfigtest" );
+  TDEApplication  a( argc, argv, "tdeconfigtest" );
 
   KSimpleConfig aConfig( _PATH_TMP"/simpleconfig.cfg" );
 

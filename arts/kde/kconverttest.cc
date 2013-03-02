@@ -3,10 +3,10 @@
 #include <tqfile.h>
 #include <tqobject.h>
 
-#include <klocale.h>
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
-#include <kapplication.h>
+#include <tdelocale.h>
+#include <tdeaboutdata.h>
+#include <tdecmdlineargs.h>
+#include <tdeapplication.h>
 
 #include <flowsystem.h>
 #include <kplayobject.h>
@@ -18,10 +18,10 @@
 using namespace std;
 using namespace Arts;
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
     { "+[URL]", I18N_NOOP("URL to open"), 0 },
-    KCmdLineLastOption
+    TDECmdLineLastOption
 };
 
 KConvertTest::KConvertTest()
@@ -55,13 +55,13 @@ void KConvertTest::slotRawStreamFinished()
 
 int main(int argc, char **argv)
 {
-	KAboutData aboutData("kconverttest", I18N_NOOP("KConvertTest"), I18N_NOOP("0.1"), "", KAboutData::License_GPL, "");
+	TDEAboutData aboutData("kconverttest", I18N_NOOP("KConvertTest"), I18N_NOOP("0.1"), "", TDEAboutData::License_GPL, "");
 							  
-	KCmdLineArgs::init(argc, argv, &aboutData);
-	KCmdLineArgs::addCmdLineOptions(options); 	
-	KApplication app;
+	TDECmdLineArgs::init(argc, argv, &aboutData);
+	TDECmdLineArgs::addCmdLineOptions(options); 	
+	TDEApplication app;
 
-	KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+	TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
 	KURL url;
 	

@@ -32,12 +32,12 @@
 #include <tqtimer.h>
 
 #include "kdatepicker.h"
-#include <kglobal.h>
-#include <kapplication.h>
+#include <tdeglobal.h>
+#include <tdeapplication.h>
 #include <kdialog.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
-#include <ktoolbar.h>
+#include <tdetoolbar.h>
 #include <klineedit.h>
 #include <kdebug.h>
 #include <knotifyclient.h>
@@ -65,7 +65,7 @@ public:
 void KDatePicker::fillWeeksCombo(const TQDate &date)
 {
   // every year can have a different number of weeks
-  const KCalendarSystem * calendar = KGlobal::locale()->calendar();
+  const KCalendarSystem * calendar = TDEGlobal::locale()->calendar();
 
   // it could be that we had 53,1..52 and now 1..53 which is the same number but different
   // so always fill with new values
@@ -150,9 +150,9 @@ void KDatePicker::init( const TQDate &dt )
   line = new KLineEdit(this);
   val = new KDateValidator(this);
   table = new KDateTable(this);
-  fontsize = KGlobalSettings::generalFont().pointSize();
+  fontsize = TDEGlobalSettings::generalFont().pointSize();
   if (fontsize == -1)
-     fontsize = TQFontInfo(KGlobalSettings::generalFont()).pointSize();
+     fontsize = TQFontInfo(TDEGlobalSettings::generalFont()).pointSize();
 
   fontsize++; // Make a little bigger
 
@@ -247,9 +247,9 @@ KDatePicker::dateChangedSlot(TQDate date)
 {
     kdDebug(298) << "KDatePicker::dateChangedSlot: date changed (" << date.year() << "/" << date.month() << "/" << date.day() << ")." << endl;
 
-    const KCalendarSystem * calendar = KGlobal::locale()->calendar();
+    const KCalendarSystem * calendar = TDEGlobal::locale()->calendar();
 
-    line->setText(KGlobal::locale()->formatDate(date, true));
+    line->setText(TDEGlobal::locale()->formatDate(date, true));
     selectMonth->setText(calendar->monthName(date, false));
     fillWeeksCombo(date);
 
@@ -301,7 +301,7 @@ void
 KDatePicker::monthForwardClicked()
 {
     TQDate temp;
-    temp = KGlobal::locale()->calendar()->addMonths( table->getDate(), 1 );
+    temp = TDEGlobal::locale()->calendar()->addMonths( table->getDate(), 1 );
 
     setDate( temp );
 }
@@ -310,7 +310,7 @@ void
 KDatePicker::monthBackwardClicked()
 {
     TQDate temp;
-    temp = KGlobal::locale()->calendar()->addMonths( table->getDate(), -1 );
+    temp = TDEGlobal::locale()->calendar()->addMonths( table->getDate(), -1 );
 
     setDate( temp );
 }
@@ -319,7 +319,7 @@ void
 KDatePicker::yearForwardClicked()
 {
     TQDate temp;
-    temp = KGlobal::locale()->calendar()->addYears( table->getDate(), 1 );
+    temp = TDEGlobal::locale()->calendar()->addYears( table->getDate(), 1 );
 
     setDate( temp );
 }
@@ -328,7 +328,7 @@ void
 KDatePicker::yearBackwardClicked()
 {
     TQDate temp;
-    temp = KGlobal::locale()->calendar()->addYears( table->getDate(), -1 );
+    temp = TDEGlobal::locale()->calendar()->addYears( table->getDate(), -1 );
 
     setDate( temp );
 }
@@ -338,7 +338,7 @@ void KDatePicker::selectWeekClicked() {}  // ### in 3.2 obsolete; kept for binar
 void
 KDatePicker::weekSelected(int week)
 {
-  const KCalendarSystem * calendar = KGlobal::locale()->calendar();
+  const KCalendarSystem * calendar = TDEGlobal::locale()->calendar();
 
   TQDate date = table->getDate();
   int year = calendar->year(date);
@@ -355,7 +355,7 @@ void
 KDatePicker::selectMonthClicked()
 {
   // every year can have different month names (in some calendar systems)
-  const KCalendarSystem * calendar = KGlobal::locale()->calendar();
+  const KCalendarSystem * calendar = TDEGlobal::locale()->calendar();
   TQDate date = table->getDate();
   int i, month, months = calendar->monthsInYear(date);
 
@@ -379,7 +379,7 @@ KDatePicker::selectMonthClicked()
 void
 KDatePicker::selectYearClicked()
 {
-  const KCalendarSystem * calendar = KGlobal::locale()->calendar();
+  const KCalendarSystem * calendar = TDEGlobal::locale()->calendar();
 
   if (selectYear->state() == TQButton::Off)
   {
@@ -387,7 +387,7 @@ KDatePicker::selectYearClicked()
   }
 
   int year;
-  KPopupFrame* popup = new KPopupFrame(this);
+  TDEPopupFrame* popup = new TDEPopupFrame(this);
   KDateInternalYearSelector* picker = new KDateInternalYearSelector(popup);
   // -----
   picker->resize(picker->sizeHint());
@@ -499,8 +499,8 @@ KDatePicker::setFontSize(int s)
 
   for (int i = 1; ; ++i)
     {
-      TQString str = KGlobal::locale()->calendar()->monthName(i,
-         KGlobal::locale()->calendar()->year(table->getDate()), false);
+      TQString str = TDEGlobal::locale()->calendar()->monthName(i,
+         TDEGlobal::locale()->calendar()->year(table->getDate()), false);
       if (str.isNull()) break;
       r=metrics.boundingRect(str);
       maxMonthRect.setWidth(QMAX(r.width(), maxMonthRect.width()));

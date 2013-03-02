@@ -30,7 +30,7 @@ class TQStyleSheet;
 class TQTextEdit;
 
 /**
- * This class is used automatically by KMainWindow and KDialog to attach a
+ * This class is used automatically by TDEMainWindow and KDialog to attach a
  * What's This templates to all new widgets. If you don't use either of those
  * classes and want this functionality, call KWhatsThisManager::init () before
  * creating any widgets.

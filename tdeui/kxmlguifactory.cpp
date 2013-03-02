@@ -32,11 +32,11 @@
 #include <tqdatetime.h>
 #include <tqvariant.h>
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kdebug.h>
 #include <kinstance.h>
-#include <kglobal.h>
-#include <kshortcut.h>
+#include <tdeglobal.h>
+#include <tdeshortcut.h>
 #include <kstandarddirs.h>
 #include <kkeydialog.h>
 
@@ -51,9 +51,9 @@ class KXMLGUIFactoryPrivate : public BuildState
 public:
     KXMLGUIFactoryPrivate()
     {
-        static const TQString &defaultMergingName = KGlobal::staticQString( "<default>" );
-        static const TQString &actionList = KGlobal::staticQString( "actionlist" );
-        static const TQString &name = KGlobal::staticQString( "name" );
+        static const TQString &defaultMergingName = TDEGlobal::staticQString( "<default>" );
+        static const TQString &actionList = TDEGlobal::staticQString( "actionlist" );
+        static const TQString &name = TDEGlobal::staticQString( "name" );
 
         m_rootNode = new ContainerNode( 0L, TQString::null, 0L );
         m_defaultMergingName = defaultMergingName;
@@ -96,14 +96,14 @@ public:
     BuildStateStack m_stateStack;
 };
 
-TQString KXMLGUIFactory::readConfigFile( const TQString &filename, const KInstance *instance )
+TQString KXMLGUIFactory::readConfigFile( const TQString &filename, const TDEInstance *instance )
 {
     return readConfigFile( filename, false, instance );
 }
 
-TQString KXMLGUIFactory::readConfigFile( const TQString &filename, bool never_null, const KInstance *_instance )
+TQString KXMLGUIFactory::readConfigFile( const TQString &filename, bool never_null, const TDEInstance *_instance )
 {
-    const KInstance *instance = _instance ? _instance : KGlobal::instance();
+    const TDEInstance *instance = _instance ? _instance : TDEGlobal::instance();
     TQString xml_file;
 
     if (!TQDir::isRelativePath(filename))
@@ -140,9 +140,9 @@ TQString KXMLGUIFactory::readConfigFile( const TQString &filename, bool never_nu
 }
 
 bool KXMLGUIFactory::saveConfigFile( const TQDomDocument& doc,
-                                     const TQString& filename, const KInstance *_instance )
+                                     const TQString& filename, const TDEInstance *_instance )
 {
-    const KInstance *instance = _instance ? _instance : KGlobal::instance();
+    const TDEInstance *instance = _instance ? _instance : TDEGlobal::instance();
     TQString xml_file(filename);
 
     if (TQDir::isRelativePath(xml_file))
@@ -224,7 +224,7 @@ KXMLGUIFactory::~KXMLGUIFactory()
 void KXMLGUIFactory::addClient( KXMLGUIClient *client )
 {
     kdDebug(1002) << "KXMLGUIFactory::addClient( " << client << " )" << endl; // ellis
-    static const TQString &actionPropElementName = KGlobal::staticQString( "ActionProperties" );
+    static const TQString &actionPropElementName = TDEGlobal::staticQString( "ActionProperties" );
 
     if ( client->factory() ) {
         if ( client->factory() == this )
@@ -368,7 +368,7 @@ void KXMLGUIFactory::removeClient( KXMLGUIClient *client )
     // reset some variables
     d->BuildState::reset();
 
-    // This will destruct the KAccel object built around the given widget.
+    // This will destruct the TDEAccel object built around the given widget.
     client->prepareXMLUnplug( d->builder->widget() );
 
     d->popState();
@@ -468,7 +468,7 @@ TQPtrList<TQWidget> KXMLGUIFactory::findRecursive( KXMLGUI::ContainerNode *node,
 }
 
 void KXMLGUIFactory::plugActionList( KXMLGUIClient *client, const TQString &name,
-                                     const TQPtrList<KAction> &actionList )
+                                     const TQPtrList<TDEAction> &actionList )
 {
     d->pushState();
     d->guiClient = client;
@@ -497,7 +497,7 @@ void KXMLGUIFactory::unplugActionList( KXMLGUIClient *client, const TQString &na
 
 void KXMLGUIFactory::applyActionProperties( const TQDomElement &actionPropElement )
 {
-    static const TQString &tagAction = KGlobal::staticQString( "action" );
+    static const TQString &tagAction = TDEGlobal::staticQString( "action" );
 
     for (TQDomNode n = actionPropElement.firstChild();
          !n.isNull(); n = n.nextSibling() )
@@ -506,7 +506,7 @@ void KXMLGUIFactory::applyActionProperties( const TQDomElement &actionPropElemen
         if ( e.tagName().lower() != tagAction )
             continue;
 
-        KAction *action = d->guiClient->action( e );
+        TDEAction *action = d->guiClient->action( e );
         if ( !action )
             continue;
 
@@ -514,7 +514,7 @@ void KXMLGUIFactory::applyActionProperties( const TQDomElement &actionPropElemen
     }
 }
 
-void KXMLGUIFactory::configureAction( KAction *action, const TQDomNamedNodeMap &attributes )
+void KXMLGUIFactory::configureAction( TDEAction *action, const TQDomNamedNodeMap &attributes )
 {
     for ( uint i = 0; i < attributes.length(); i++ )
     {
@@ -526,9 +526,9 @@ void KXMLGUIFactory::configureAction( KAction *action, const TQDomNamedNodeMap &
     }
 }
 
-void KXMLGUIFactory::configureAction( KAction *action, const TQDomAttr &attribute )
+void KXMLGUIFactory::configureAction( TDEAction *action, const TQDomAttr &attribute )
 {
-    static const TQString &attrShortcut = KGlobal::staticQString( "shortcut" );
+    static const TQString &attrShortcut = TDEGlobal::staticQString( "shortcut" );
 
     TQString attrName = attribute.name();
     // If the attribute is a deprecated "accel", change to "shortcut".
@@ -588,8 +588,8 @@ TQDomElement KXMLGUIFactory::actionPropertiesElement( TQDomDocument& doc )
 
 TQDomElement KXMLGUIFactory::findActionByName( TQDomElement& elem, const TQString& sName, bool create )
 {
-        static const TQString& attrName = KGlobal::staticQString( "name" );
-	static const TQString& tagAction = KGlobal::staticQString( "Action" );
+        static const TQString& attrName = TDEGlobal::staticQString( "name" );
+	static const TQString& tagAction = TDEGlobal::staticQString( "Action" );
 	for( TQDomNode it = elem.firstChild(); !it.isNull(); it = it.nextSibling() ) {
 		TQDomElement e = it.toElement();
 		if( e.attribute( attrName ) == sName )

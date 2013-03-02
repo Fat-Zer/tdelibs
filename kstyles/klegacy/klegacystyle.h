@@ -25,13 +25,13 @@
 #ifndef   __KLegacyStyle_hh
 #define   __KLegacyStyle_hh
 
-#include <kstyle.h>
+#include <tdestyle.h>
 
 // forward declaration
 class KLegacyStylePrivate;
 
 
-class Q_EXPORT KLegacyStyle : public KStyle {
+class Q_EXPORT KLegacyStyle : public TDEStyle {
     Q_OBJECT
 public:
     KLegacyStyle(void);
@@ -60,7 +60,7 @@ public:
     
     // toolbar stuffs
     virtual void drawKBarHandle(TQPainter *p, int x, int y, int w, int h,
-                                const TQColorGroup &g, KToolBarPos type, TQBrush *fill = 0);
+                                const TQColorGroup &g, TDEToolBarPos type, TQBrush *fill = 0);
     virtual void drawKickerHandle(TQPainter *p, int x, int y, int w, int h,
                                   const TQColorGroup &g, TQBrush *fill = 0);
     virtual void drawKickerAppletHandle(TQPainter *p, int x, int y, int w, int h,

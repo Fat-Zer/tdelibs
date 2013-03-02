@@ -46,7 +46,7 @@ class Button : public KPushButton
          * @param what text describing what is being downloaded. will be
          *        shown on the button as "Download New <what>"
          * @param providerList the URL to the list of providers; if empty
-         *        we first try the ProvidersUrl from KGlobal::config, then we
+         *        we first try the ProvidersUrl from TDEGlobal::config, then we
          *        fall back to a hardcoded value
          * @param resourceType the Hotstuff data type for this downlaod such
          *        as "korganizer/calendar"

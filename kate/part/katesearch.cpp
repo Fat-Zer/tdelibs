@@ -31,9 +31,9 @@
 #include "kateconfig.h"
 #include "katehighlight.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstdaction.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kstringhandler.h>
 #include <kdebug.h>
 #include <kfinddialog.h>
@@ -66,7 +66,7 @@ KateSearch::~KateSearch()
   delete m_arbitraryHLList;
 }
 
-void KateSearch::createActions( KActionCollection* ac )
+void KateSearch::createActions( TDEActionCollection* ac )
 {
   KStdAction::find( this, TQT_SLOT(find()), ac )->setWhatsThis(
     i18n("Look up the first occurrence of a piece of text or regular expression."));

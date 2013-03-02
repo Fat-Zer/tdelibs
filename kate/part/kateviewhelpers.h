@@ -21,7 +21,7 @@
 #ifndef __KATE_VIEW_HELPERS_H__
 #define __KATE_VIEW_HELPERS_H__
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <klineedit.h>
 
 #include <tqwidget.h>
@@ -115,7 +115,7 @@ class KateCmdLine : public KLineEdit
     uint m_histpos; ///< position in the history
     uint m_cmdend; ///< the point where a command ends in the text, if we have a valid one.
     Kate::Command *m_command; ///< For completing flags/args and interactiveness
-    class KCompletion *m_oldCompletionObject; ///< save while completing command args.
+    class TDECompletion *m_oldCompletionObject; ///< save while completing command args.
     class KateCmdLnWhatsThis *m_help;
 };
 
@@ -182,7 +182,7 @@ class KateIconBorder : public TQWidget
     mutable TQColor m_oldBackgroundColor;
 };
 
-class KateViewEncodingAction : public KActionMenu
+class KateViewEncodingAction : public TDEActionMenu
 {
   Q_OBJECT
 

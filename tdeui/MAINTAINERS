@@ -5,10 +5,10 @@ that class.
 When adding yourself as a maintainer, don't be afraid to reorder the files to a
 more logical grouping.
 
-kaboutapplication.cpp
-kaboutdialog.cpp
-kaboutkde.cpp
-kaction.cpp		Holger Freyther <freyther@kde.org>, Martijn Klingens <klingens@kde.org>
+tdeaboutapplication.cpp
+tdeaboutdialog.cpp
+tdeabouttde.cpp
+tdeaction.cpp		Holger Freyther <freyther@kde.org>, Martijn Klingens <klingens@kde.org>
 kanimwidget.cpp		Waldo Bastian <bastian@kde.org>
 karrowbutton.cpp	Frerich Raabe <raabe@kde.org>
 kauthicon.cpp
@@ -16,14 +16,14 @@ kbugreport.cpp
 kbuttonbox.cpp
 kcharselect.cpp
 kcmenumngr.cpp
-kcmodule.cpp
+tdecmodule.cpp
 kcolorbutton.cpp
 kcolorcombo.cpp
 kcolordialog.cpp	Waldo Bastian <bastian@kde.org>
 kcolordrag.cpp
 kcombobox.cpp   	Dawit Alemayehu <adawit@kde.org>, Carsten Pfeiffer <pfeiffer@kde.org>
 kcommand.cpp		Werner Trobin <trobin@kde.org>
-kcompletionbox.cpp	Carsten Pfeiffer <pfeiffer@kde.org>
+tdecompletionbox.cpp	Carsten Pfeiffer <pfeiffer@kde.org>
 kcursor.cpp		Carsten Pfeiffer <pfeiffer@kde.org>
 kdatepicker.cpp
 kdatetbl.cpp
@@ -39,8 +39,8 @@ keditcl1.cpp		Waldo Bastian <bastian@kde.org>
 keditcl2.cpp		Waldo Bastian <bastian@kde.org>
 keditlistbox.cpp
 kedittoolbar.cpp
-kfontcombo.cpp
-kfontdialog.cpp
+tdefontcombo.cpp
+tdefontdialog.cpp
 kguiitem.cpp		Holger Freyther <freyther@kde.org>, Martijn Klingens <klingens@kde.org>
 khelpmenu.cpp
 kiconview.cpp
@@ -50,12 +50,12 @@ kkeydialog.cpp		Ellis Whitehead <ellis@kde.org>
 kled.cpp
 klineedit.cpp   	Dawit Alemayehu <adawit@kde.org>, Carsten Pfeiffer <pfeiffer@kde.org>
 klineeditdlg.cpp
-klistbox.cpp
-klistview.cpp
-kmainwindow.cpp
-kmainwindowiface.cpp
-kmenubar.cpp
-kmessagebox.cpp		Waldo Bastian <bastian@kde.org>
+tdelistbox.cpp
+tdelistview.cpp
+tdemainwindow.cpp
+tdemainwindowiface.cpp
+tdemenubar.cpp
+tdemessagebox.cpp		Waldo Bastian <bastian@kde.org>
 knuminput.cpp           Dirk Mueller <mueller@kde.org>
 knumvalidator.cpp
 kpanelapplet.cpp
@@ -64,16 +64,16 @@ kpanelextension.cpp
 kpanelmenu.cpp
 kpassdlg.cpp		Waldo Bastian <bastian@kde.org>
 kpixmapio.cpp
-kpopupmenu.cpp		Holger Freyther <freyther@kde.org>
+tdepopupmenu.cpp		Holger Freyther <freyther@kde.org>
 kprogress.cpp
 kpushbutton.cpp		Carsten Pfeiffer <pfeiffer@kde.org>, Martijn Klingens <klingens@kde.org>
 krestrictedline.cpp
 krootpixmap.cpp
 kruler.cpp
-kselect.cpp
+tdeselect.cpp
 kseparator.cpp		Waldo Bastian <bastian@kde.org>
 ksharedpixmap.cpp
-kshortcutdialog.cpp	Ellis Whitehead <ellis@kde.org>
+tdeshortcutdialog.cpp	Ellis Whitehead <ellis@kde.org>
 ksqueezedtextlabel.cpp
 kstatusbar.cpp
 kstdaction.cpp
@@ -84,9 +84,9 @@ ktabctl.cpp
 ktextbrowser.cpp
 ktimewidget             Hans Petter Bieker <bieker@kde.org>
 ktip.cpp
-ktoolbar.cpp		Waldo Bastian <bastian@kde.org>
-ktoolbarbutton.cpp	Waldo Bastian <bastian@kde.org>
-ktoolbarradiogroup.cpp
+tdetoolbar.cpp		Waldo Bastian <bastian@kde.org>
+tdetoolbarbutton.cpp	Waldo Bastian <bastian@kde.org>
+tdetoolbarradiogroup.cpp
 kurllabel.cpp
 twindowlistmenu.cpp
 kwizard.cpp

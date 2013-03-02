@@ -33,9 +33,9 @@
 #include <tqcstring.h>
 #include <tqfile.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 
 #include "su.h"
@@ -55,7 +55,7 @@ SuProcess::SuProcess(const TQCString &user, const TQCString &command)
     m_User = user;
     m_Command = command;
 
-    KConfig* config = KGlobal::config();
+    TDEConfig* config = TDEGlobal::config();
     config->setGroup("super-user-command");
     superUserCommand = config->readEntry("super-user-command", DEFAULT_SUPER_USER_COMMAND);
     if ( superUserCommand != "sudo" && superUserCommand != "su" ) {
@@ -128,8 +128,8 @@ int SuProcess::exec(const char *password, int check)
  
     if (::access(command, X_OK) != 0)
     {
-      ///        command = TQFile::encodeName(KGlobal::dirs()->findExe("su"));
-        command = TQFile::encodeName( KGlobal::dirs()->findExe(superUserCommand.ascii()) );
+      ///        command = TQFile::encodeName(TDEGlobal::dirs()->findExe("su"));
+        command = TQFile::encodeName( TDEGlobal::dirs()->findExe(superUserCommand.ascii()) );
         if (command.isEmpty())
             return check ? SuNotFound : -1;
     }

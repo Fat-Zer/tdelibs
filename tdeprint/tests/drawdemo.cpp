@@ -14,7 +14,7 @@
 #include <tqpushbutton.h>
 #include <tqradiobutton.h>
 #include <tqbuttongroup.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tqapplication.h>
 #include <math.h>
 
@@ -245,7 +245,7 @@ void DrawView::resizeEvent( TQResizeEvent * )
 
 int main( int argc, char **argv )
 {
-    KApplication app( argc, argv, "drawdemo" );
+    TDEApplication app( argc, argv, "drawdemo" );
     DrawView   draw;
     app.setMainWidget( &draw );
     draw.show();

@@ -24,12 +24,12 @@
 #include <tqdatetime.h>
 #include <tqstring.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 
 #include "kcalendarsystemgregorian.h"
 
-KCalendarSystemGregorian::KCalendarSystemGregorian(const KLocale * locale)
+KCalendarSystemGregorian::KCalendarSystemGregorian(const TDELocale * locale)
   : KCalendarSystem(locale)
 {
 }

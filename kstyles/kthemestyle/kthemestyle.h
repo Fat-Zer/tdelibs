@@ -72,8 +72,8 @@ public:
     /**
      * Constructs a new KThemeStyle object.
      *
-     * @param configDir The directory which has the KConfig file.
-     * @param configFile A KConfig file to use as the theme configuration.
+     * @param configDir The directory which has the TDEConfig file.
+     * @param configFile A TDEConfig file to use as the theme configuration.
      * Defaults to ~/.kderc.
      */
     KThemeStyle( const TQString& configDir, const TQString &configFile = TQString::null );
@@ -116,7 +116,7 @@ public:
                                      const TQStyleOption& = TQStyleOption::Default,
                                      const TQWidget* widget = 0 ) const;
 
-    virtual void drawKStylePrimitive( KStylePrimitive kpe,
+    virtual void drawTDEStylePrimitive( TDEStylePrimitive kpe,
                                       TQPainter* p,
                                       const TQStyleControlElementData &ceData,
                                       ControlElementFlags elementFlags,

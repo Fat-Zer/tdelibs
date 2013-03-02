@@ -23,7 +23,7 @@
 #include <tqfile.h>
 #include <tqstringlist.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <stdlib.h>
 #include <math.h>
 

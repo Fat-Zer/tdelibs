@@ -18,8 +18,8 @@
 #include <tqcolor.h>
 #include <tqglobal.h>
 
-#include <kglobal.h>
-#include <kconfig.h>
+#include <tdeglobal.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 
 #include <sys/types.h>
@@ -87,7 +87,7 @@ KPixmapIO::KPixmapIO()
 
 #ifdef HAVE_MITSHM
     setShmPolicy(ShmDontKeep);
-    KConfig *config = KGlobal::config();
+    TDEConfig *config = TDEGlobal::config();
     if (!config->readBoolEntry("UseMitShm", true))
 	return;
 

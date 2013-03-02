@@ -30,10 +30,10 @@ libtdefx_la_NMCHECKWEAK = $(srcdir)/libtdefx_weak.nmcheck $(top_srcdir)/tdecore/
 	$(top_srcdir)/tdecore/standard_weak.nmcheck
 
 include_HEADERS = kpixmap.h kpixmapsplitter.h \
-	kpixmapeffect.h kimageeffect.h kdrawutil.h kstyle.h kcpuinfo.h
+	kpixmapeffect.h kimageeffect.h kdrawutil.h tdestyle.h kcpuinfo.h
 
 libtdefx_la_SOURCES = kpixmap.cpp kpixmapsplitter.cpp \
-		kpixmapeffect.cpp kimageeffect.cpp kdrawutil.cpp kstyle.cpp \
+		kpixmapeffect.cpp kimageeffect.cpp kdrawutil.cpp tdestyle.cpp \
 		kcpuinfo.cpp
 
 METASOURCES = AUTO

@@ -4,16 +4,16 @@
 #include <tqpopupmenu.h>
 #include <tqtimer.h>
 #include <tqprogressbar.h>
-#include <kmenubar.h>
+#include <tdemenubar.h>
 #include <kstatusbar.h>
-#include <ktoolbar.h>
-#include <kmainwindow.h>
+#include <tdetoolbar.h>
+#include <tdemainwindow.h>
 
 class TQMultiLineEdit;
-class KToolBarRadioGroup;
+class TDEToolBarRadioGroup;
 class KHelpMenu;
 
-class testWindow  : public KMainWindow
+class testWindow  : public TDEMainWindow
 {
     Q_OBJECT
 
@@ -56,8 +56,8 @@ protected:
     TQPopupMenu *toolBarMenu;
     KStatusBar *statusBar;
     KHelpMenu *helpMenu;
-    KToolBar *tb;
-    KToolBar *tb1;
+    TDEToolBar *tb;
+    TDEToolBar *tb1;
     bool lineL;
     bool exitB;
     bool greenF;
@@ -65,7 +65,7 @@ protected:
     TQMultiLineEdit *widget;
     TQTimer *timer;
     TQProgressBar *pr;
-    KToolBarRadioGroup *rg;
+    TDEToolBarRadioGroup *rg;
 };
 #endif
 

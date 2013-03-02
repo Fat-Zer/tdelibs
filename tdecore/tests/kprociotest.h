@@ -1,5 +1,5 @@
 //
-//  DUMMY -- A dummy class with a slot to demonstrate KProcess signals
+//  DUMMY -- A dummy class with a slot to demonstrate TDEProcess signals
 //
 //  version 0.2, Aug 2nd 1997
 //
@@ -20,7 +20,7 @@ class Dummy : public TQObject
  Q_OBJECT
 
  public slots:
-   void printMessage(KProcess *proc)
+   void printMessage(TDEProcess *proc)
    {
      printf("Process %d exited!\n", (int)proc->getPid()); 
    } 

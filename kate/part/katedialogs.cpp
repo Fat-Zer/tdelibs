@@ -35,44 +35,44 @@
 #include "kateview.h"
 
 
-#include <ktexteditor/configinterfaceextension.h>
-#include <ktexteditor/plugin.h>
+#include <tdetexteditor/configinterfaceextension.h>
+#include <tdetexteditor/plugin.h>
 
-#include <kio/job.h>
-#include <kio/jobclasses.h>
-#include <kio/netaccess.h>
+#include <tdeio/job.h>
+#include <tdeio/jobclasses.h>
+#include <tdeio/netaccess.h>
 
-#include <kaccel.h>
-#include <kapplication.h>
+#include <tdeaccel.h>
+#include <tdeapplication.h>
 #include <kbuttonbox.h>
 #include <kcharsets.h>
 #include <kcolorbutton.h>
 #include <kcolorcombo.h>
 #include <kcolordialog.h>
 #include <kcombobox.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
-#include <kfontdialog.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
+#include <tdefontdialog.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
 #include <kiconloader.h>
 #include <kkeybutton.h>
 #include <kkeydialog.h>
 #include <klineedit.h>
-#include <klistview.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelistview.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kmimetypechooser.h>
 #include <knuminput.h>
-#include <kparts/componentfactory.h>
-#include <kpopupmenu.h>
+#include <tdeparts/componentfactory.h>
+#include <tdepopupmenu.h>
 #include <kprocess.h>
 #include <kprocio.h>
 #include <kregexpeditorinterface.h>
 #include <krun.h>
 #include <kseparator.h>
 #include <kstandarddirs.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 
 #include <tqbuttongroup.h>
 #include <tqcheckbox.h>
@@ -999,7 +999,7 @@ void KateSaveConfigTab::apply()
 
   KateDocumentConfig::global()->setConfigFlags(configFlags);
 
-  KateDocumentConfig::global()->setEncoding((m_encoding->currentItem() == 0) ? "" : KGlobal::charsets()->encodingForName(m_encoding->currentText()));
+  KateDocumentConfig::global()->setEncoding((m_encoding->currentItem() == 0) ? "" : TDEGlobal::charsets()->encodingForName(m_encoding->currentText()));
 
   KateDocumentConfig::global()->setEol(m_eol->currentItem());
   KateDocumentConfig::global()->setAllowEolDetection(allowEolDetection->isChecked());
@@ -1013,12 +1013,12 @@ void KateSaveConfigTab::reload()
   m_encoding->clear ();
   m_encoding->insertItem (i18n("TDE Default"));
   m_encoding->setCurrentItem(0);
-  TQStringList encodings (KGlobal::charsets()->descriptiveEncodingNames());
+  TQStringList encodings (TDEGlobal::charsets()->descriptiveEncodingNames());
   int insert = 1;
   for (uint i=0; i < encodings.count(); i++)
   {
     bool found = false;
-    TQTextCodec *codecForEnc = KGlobal::charsets()->codecForName(KGlobal::charsets()->encodingForName(encodings[i]), found);
+    TQTextCodec *codecForEnc = TDEGlobal::charsets()->codecForName(TDEGlobal::charsets()->encodingForName(encodings[i]), found);
 
     if (found)
     {
@@ -1095,7 +1095,7 @@ void KatePartPluginListItem::stateChange(bool b)
 
 //BEGIN PluginListView
 KatePartPluginListView::KatePartPluginListView(TQWidget *parent, const char *name)
-  : KListView(parent, name)
+  : TDEListView(parent, name)
 {
 }
 
@@ -1226,7 +1226,7 @@ void KatePartPluginConfigPage::slotConfigure()
       path.clear();
       path << cife->configPageName( i );
       page = kd->addVBoxPage( path, cife->configPageFullName (i),
-                                cife->configPagePixmap(i, KIcon::SizeMedium) );
+                                cife->configPagePixmap(i, TDEIcon::SizeMedium) );
     }
     else
     {
@@ -1369,7 +1369,7 @@ void KateHlConfigPage::apply ()
   for ( TQIntDictIterator<KateHlData> it( hlDataDict ); it.current(); ++it )
     KateHlManager::self()->getHl( it.currentKey() )->setData( it.current() );
 
-  KateHlManager::self()->getKConfig()->sync ();
+  KateHlManager::self()->getTDEConfig()->sync ();
 }
 
 void KateHlConfigPage::reload ()
@@ -1453,20 +1453,20 @@ KateHlDownloadDialog::KateHlDownloadDialog(TQWidget *parent, const char *name, b
   new TQLabel(i18n("<b>Note:</b> New versions are selected automatically."), vbox);
   actionButton (User1)->setIconSet(SmallIconSet("ok"));
 
-  transferJob = KIO::get(
+  transferJob = TDEIO::get(
     KURL(TQString(HLDOWNLOADPATH)
        + TQString("update-")
        + TQString(KATEPART_VERSION)
        + TQString(".xml")), true, true );
-  connect(transferJob, TQT_SIGNAL(data(KIO::Job *, const TQByteArray &)),
-    this, TQT_SLOT(listDataReceived(KIO::Job *, const TQByteArray &)));
-//        void data( KIO::Job *, const TQByteArray &data);
+  connect(transferJob, TQT_SIGNAL(data(TDEIO::Job *, const TQByteArray &)),
+    this, TQT_SLOT(listDataReceived(TDEIO::Job *, const TQByteArray &)));
+//        void data( TDEIO::Job *, const TQByteArray &data);
   resize(450, 400);
 }
 
 KateHlDownloadDialog::~KateHlDownloadDialog(){}
 
-void KateHlDownloadDialog::listDataReceived(KIO::Job *, const TQByteArray &data)
+void KateHlDownloadDialog::listDataReceived(TDEIO::Job *, const TQByteArray &data)
 {
   if (!transferJob || transferJob->isErrorPage())
   {
@@ -1529,7 +1529,7 @@ void KateHlDownloadDialog::listDataReceived(KIO::Job *, const TQByteArray &data)
 
 void KateHlDownloadDialog::slotUser1()
 {
-  TQString destdir=KGlobal::dirs()->saveLocation("data","katepart/syntax/");
+  TQString destdir=TDEGlobal::dirs()->saveLocation("data","katepart/syntax/");
   for (TQListViewItem *it=list->firstChild();it;it=it->nextSibling())
   {
     if (list->isSelected(it))
@@ -1538,7 +1538,7 @@ void KateHlDownloadDialog::slotUser1()
       TQString filename=src.fileName(false);
       TQString dest = destdir+filename;
 
-      KIO::NetAccess::download(src,dest, this);
+      TDEIO::NetAccess::download(src,dest, this);
     }
   }
 
@@ -1640,16 +1640,16 @@ KateModOnHdPrompt::~KateModOnHdPrompt()
 
 void KateModOnHdPrompt::slotDiff()
 {
-  // Start a KProcess that creates a diff
+  // Start a TDEProcess that creates a diff
   KProcIO *p = new KProcIO();
-  p->setComm( KProcess::All );
+  p->setComm( TDEProcess::All );
   *p << "diff" << "-u" << "-" <<  m_doc->url().path();
-  connect( p, TQT_SIGNAL(processExited(KProcess*)), this, TQT_SLOT(slotPDone(KProcess*)) );
+  connect( p, TQT_SIGNAL(processExited(TDEProcess*)), this, TQT_SLOT(slotPDone(TDEProcess*)) );
   connect( p, TQT_SIGNAL(readReady(KProcIO*)), this, TQT_SLOT(slotPRead(KProcIO*)) );
 
   setCursor( WaitCursor );
 
-  p->start( KProcess::NotifyOnExit, true );
+  p->start( TDEProcess::NotifyOnExit, true );
 
   uint lastln =  m_doc->numLines();
   for ( uint l = 0; l <  lastln; l++ )
@@ -1678,7 +1678,7 @@ void KateModOnHdPrompt::slotPRead( KProcIO *p)
     p->ackRead();
 }
 
-void KateModOnHdPrompt::slotPDone( KProcess *p )
+void KateModOnHdPrompt::slotPDone( TDEProcess *p )
 {
   setCursor( ArrowCursor );
   if( ! m_tmpfile )

@@ -32,20 +32,20 @@
 // When a date is selected by the user, it emits a signal:
 //      dateSelected(TQDate)
 
-#include <kconfig.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
-#include <kapplication.h>
-#include <kaccel.h>
-#include <klocale.h>
+#include <tdeconfig.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
+#include <tdeapplication.h>
+#include <tdeaccel.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include <knotifyclient.h>
 #include <kcalendarsystem.h>
-#include <kshortcut.h>
-#include <kstdaccel.h>
+#include <tdeshortcut.h>
+#include <tdestdaccel.h>
 #include "kdatepicker.h"
 #include "kdatetbl.h"
-#include "kpopupmenu.h"
+#include "tdepopupmenu.h"
 #include <tqdatetime.h>
 #include <tqguardedptr.h>
 #include <tqstring.h>
@@ -99,7 +99,7 @@ KDateValidator::validate(TQString& text, int&) const
 TQValidator::State
 KDateValidator::date(const TQString& text, TQDate& d) const
 {
-  TQDate tmp = KGlobal::locale()->readDate(text);
+  TQDate tmp = TDEGlobal::locale()->readDate(text);
   if (!tmp.isNull())
     {
       d = tmp;
@@ -129,7 +129,7 @@ KDateTable::KDateTable(TQWidget *parent, TQDate date_, const char* name, WFlags 
   setNumCols(7); // 7 days a week
   setHScrollBarMode(AlwaysOff);
   setVScrollBarMode(AlwaysOff);
-  viewport()->setEraseColor(KGlobalSettings::baseColor());
+  viewport()->setEraseColor(TDEGlobalSettings::baseColor());
   setDate(date_); // this initializes firstday, numdays, numDaysPrevMonth
 
   initAccels();
@@ -145,7 +145,7 @@ KDateTable::KDateTable(TQWidget *parent, const char* name, WFlags f)
   setNumCols(7); // 7 days a week
   setHScrollBarMode(AlwaysOff);
   setVScrollBarMode(AlwaysOff);
-  viewport()->setEraseColor(KGlobalSettings::baseColor());
+  viewport()->setEraseColor(TDEGlobalSettings::baseColor());
   setDate(TQDate::currentDate()); // this initializes firstday, numdays, numDaysPrevMonth
   initAccels();
 }
@@ -157,20 +157,20 @@ KDateTable::~KDateTable()
 
 void KDateTable::initAccels()
 {
-  KAccel* accel = new KAccel(this, "date table accel");
-  accel->insert(KStdAccel::Next, TQT_TQOBJECT(this), TQT_SLOT(nextMonth()));
-  accel->insert(KStdAccel::Prior, TQT_TQOBJECT(this), TQT_SLOT(previousMonth()));
-  accel->insert(KStdAccel::Home, TQT_TQOBJECT(this), TQT_SLOT(beginningOfMonth()));
-  accel->insert(KStdAccel::End, TQT_TQOBJECT(this), TQT_SLOT(endOfMonth()));
-  accel->insert(KStdAccel::BeginningOfLine, TQT_TQOBJECT(this), TQT_SLOT(beginningOfWeek()));
-  accel->insert(KStdAccel::EndOfLine, TQT_TQOBJECT(this), TQT_SLOT(endOfWeek()));
+  TDEAccel* accel = new TDEAccel(this, "date table accel");
+  accel->insert(TDEStdAccel::Next, TQT_TQOBJECT(this), TQT_SLOT(nextMonth()));
+  accel->insert(TDEStdAccel::Prior, TQT_TQOBJECT(this), TQT_SLOT(previousMonth()));
+  accel->insert(TDEStdAccel::Home, TQT_TQOBJECT(this), TQT_SLOT(beginningOfMonth()));
+  accel->insert(TDEStdAccel::End, TQT_TQOBJECT(this), TQT_SLOT(endOfMonth()));
+  accel->insert(TDEStdAccel::BeginningOfLine, TQT_TQOBJECT(this), TQT_SLOT(beginningOfWeek()));
+  accel->insert(TDEStdAccel::EndOfLine, TQT_TQOBJECT(this), TQT_SLOT(endOfWeek()));
   accel->readSettings();
 }
 
 int KDateTable::posFromDate( const TQDate &dt )
 {
-  const KCalendarSystem * calendar = KGlobal::locale()->calendar();
-  const int firstWeekDay = KGlobal::locale()->weekStartDay();
+  const KCalendarSystem * calendar = TDEGlobal::locale()->calendar();
+  const int firstWeekDay = TDEGlobal::locale()->weekStartDay();
   int pos = calendar->day( dt );
   int offset = (firstday - firstWeekDay + 7) % 7;
   // make sure at least one day of the previous month is visible.
@@ -182,10 +182,10 @@ int KDateTable::posFromDate( const TQDate &dt )
 TQDate KDateTable::dateFromPos( int pos )
 {
   TQDate pCellDate;
-  const KCalendarSystem * calendar = KGlobal::locale()->calendar();
+  const KCalendarSystem * calendar = TDEGlobal::locale()->calendar();
   calendar->setYMD(pCellDate, calendar->year(date), calendar->month(date), 1);
 
-  int firstWeekDay = KGlobal::locale()->weekStartDay();
+  int firstWeekDay = TDEGlobal::locale()->weekStartDay();
   int offset = (firstday - firstWeekDay + 7) % 7;
   // make sure at least one day of the previous month is visible.
   // adjust this <1 if more days should be forced visible:
@@ -211,14 +211,14 @@ KDateTable::paintEmptyArea(TQPainter *paint, int, int, int, int)
 void
 KDateTable::paintCell(TQPainter *painter, int row, int col)
 {
-  const KCalendarSystem * calendar = KGlobal::locale()->calendar();
+  const KCalendarSystem * calendar = TDEGlobal::locale()->calendar();
 
   TQRect rect;
   TQString text;
   TQPen pen;
   int w=cellWidth();
   int h=cellHeight();
-  TQFont font=KGlobalSettings::generalFont();
+  TQFont font=TDEGlobalSettings::generalFont();
   // -----
 
   if(row == 0)
@@ -226,7 +226,7 @@ KDateTable::paintCell(TQPainter *painter, int row, int col)
       font.setBold(true);
       painter->setFont(font);
       bool normalday = true;
-      int firstWeekDay = KGlobal::locale()->weekStartDay();
+      int firstWeekDay = TDEGlobal::locale()->weekStartDay();
       int daynum = ( col+firstWeekDay < 8 ) ? col+firstWeekDay :
                                               col+firstWeekDay-7;
       if ( daynum == calendar->weekDayOfPray() ||
@@ -234,8 +234,8 @@ KDateTable::paintCell(TQPainter *painter, int row, int col)
           normalday=false;
 
 			TQBrush brushInvertTitle(colorGroup().base());
-			TQColor titleColor(isEnabled()?( KGlobalSettings::activeTitleColor() ):( KGlobalSettings::inactiveTitleColor() ) );
-			TQColor textColor(isEnabled()?( KGlobalSettings::activeTextColor() ):( KGlobalSettings::inactiveTextColor() ) );
+			TQColor titleColor(isEnabled()?( TDEGlobalSettings::activeTitleColor() ):( TDEGlobalSettings::inactiveTitleColor() ) );
+			TQColor textColor(isEnabled()?( TDEGlobalSettings::activeTextColor() ):( TDEGlobalSettings::inactiveTextColor() ) );
       if (!normalday)
         {
           painter->setPen(textColor);
@@ -298,7 +298,7 @@ KDateTable::paintCell(TQPainter *painter, int row, int col)
         }
 
       pen=painter->pen();
-      int firstWeekDay=KGlobal::locale()->weekStartDay();
+      int firstWeekDay=TDEGlobal::locale()->weekStartDay();
       int offset=firstday-firstWeekDay;
       if(offset<1)
         offset+=7;
@@ -339,13 +339,13 @@ KDateTable::paintCell(TQPainter *painter, int row, int col)
 
 void KDateTable::nextMonth()
 {
-    const KCalendarSystem * calendar = KGlobal::locale()->calendar();
+    const KCalendarSystem * calendar = TDEGlobal::locale()->calendar();
   setDate(calendar->addMonths( date, 1 ));
 }
 
 void KDateTable::previousMonth()
 {
-  const KCalendarSystem * calendar = KGlobal::locale()->calendar();
+  const KCalendarSystem * calendar = TDEGlobal::locale()->calendar();
   setDate(calendar->addMonths( date, -1 ));
 }
 
@@ -433,7 +433,7 @@ KDateTable::setFontSize(int size)
   maxCell.setHeight(0);
   for(count=0; count<7; ++count)
     {
-      rect=metrics.boundingRect(KGlobal::locale()->calendar()
+      rect=metrics.boundingRect(TDEGlobal::locale()->calendar()
                                 ->weekDayName(count+1, true));
       maxCell.setWidth(QMAX(maxCell.width(), rect.width()));
       maxCell.setHeight(QMAX(maxCell.height(), rect.height()));
@@ -499,8 +499,8 @@ KDateTable::contentsMousePressEvent(TQMouseEvent *e)
 
   if (  e->button() == Qt::RightButton && d->popupMenuEnabled )
   {
-        KPopupMenu *menu = new KPopupMenu();
-        menu->insertTitle( KGlobal::locale()->formatDate(clickedDate) );
+        TDEPopupMenu *menu = new TDEPopupMenu();
+        menu->insertTitle( TDEGlobal::locale()->formatDate(clickedDate) );
         emit aboutToShowContextMenu( menu, clickedDate );
         menu->popup(e->globalPos());
   }
@@ -524,7 +524,7 @@ KDateTable::setDate(const TQDate& date_)
       emit(dateChanged(date));
       changed=true;
     }
-  const KCalendarSystem * calendar = KGlobal::locale()->calendar();
+  const KCalendarSystem * calendar = TDEGlobal::locale()->calendar();
 
   calendar->setYMD(temp, calendar->year(date), calendar->month(date), 1);
   //temp.setYMD(date.year(), date.month(), 1);
@@ -614,7 +614,7 @@ KDateInternalWeekSelector::KDateInternalWeekSelector
 {
   TQFont font;
   // -----
-  font=KGlobalSettings::generalFont();
+  font=TDEGlobalSettings::generalFont();
   setFont(font);
   setFrameStyle(TQFrame::NoFrame);
   setValidator(val);
@@ -686,7 +686,7 @@ KDateInternalMonthPicker::KDateInternalMonthPicker
   // -----
   activeCol = -1;
   activeRow = -1;
-  font=KGlobalSettings::generalFont();
+  font=TDEGlobalSettings::generalFont();
   setFont(font);
   setHScrollBarMode(AlwaysOff);
   setVScrollBarMode(AlwaysOff);
@@ -694,17 +694,17 @@ KDateInternalMonthPicker::KDateInternalMonthPicker
   setNumCols(3);
   d = new KDateInternalMonthPrivate(date.year(), date.month(), date.day());
   // For monthsInYear != 12
-  setNumRows( (KGlobal::locale()->calendar()->monthsInYear(date) + 2) / 3);
+  setNumRows( (TDEGlobal::locale()->calendar()->monthsInYear(date) + 2) / 3);
   // enable to find drawing failures:
   // setTableFlags(Tbl_clipCellPainting);
-  viewport()->setEraseColor(KGlobalSettings::baseColor()); // for consistency with the datepicker
+  viewport()->setEraseColor(TDEGlobalSettings::baseColor()); // for consistency with the datepicker
   // ----- find the preferred size
   //       (this is slow, possibly, but unfortunately it is needed here):
   TQFontMetrics metrics(font);
   for(int i = 1; ; ++i)
     {
-      TQString str = KGlobal::locale()->calendar()->monthName(i,
-         KGlobal::locale()->calendar()->year(date), false);
+      TQString str = TDEGlobal::locale()->calendar()->monthName(i,
+         TDEGlobal::locale()->calendar()->year(date), false);
       if (str.isNull()) break;
       rect=metrics.boundingRect(str);
       if(max.width()<rect.width()) max.setWidth(rect.width());
@@ -728,7 +728,7 @@ KDateInternalMonthPicker::getResult() const
 void
 KDateInternalMonthPicker::setupPainter(TQPainter *p)
 {
-  p->setPen(KGlobalSettings::textColor());
+  p->setPen(TDEGlobalSettings::textColor());
 }
 
 void
@@ -745,8 +745,8 @@ KDateInternalMonthPicker::paintCell(TQPainter* painter, int row, int col)
   TQString text;
   // ----- find the number of the cell:
   index=3*row+col+1;
-  text=KGlobal::locale()->calendar()->monthName(index,
-    KGlobal::locale()->calendar()->year(TQDate(d->year, d->month,
+  text=TDEGlobal::locale()->calendar()->monthName(index,
+    TDEGlobal::locale()->calendar()->year(TQDate(d->year, d->month,
     d->day)), false);
   painter->drawText(0, 0, cellWidth(), cellHeight(), AlignCenter, text);
   if ( activeCol == col && activeRow == row )
@@ -855,7 +855,7 @@ KDateInternalYearSelector::KDateInternalYearSelector
 {
   TQFont font;
   // -----
-  font=KGlobalSettings::generalFont();
+  font=TDEGlobalSettings::generalFont();
   setFont(font);
   setFrameStyle(TQFrame::NoFrame);
   // we have to respect the limits of TQDate here, I fear:
@@ -879,7 +879,7 @@ KDateInternalYearSelector::yearEnteredSlot()
       return;
     }
   //date.setYMD(year, 1, 1);
-  KGlobal::locale()->calendar()->setYMD(date, year, 1, 1);
+  TDEGlobal::locale()->calendar()->setYMD(date, year, 1, 1);
   if(!date.isValid())
     {
       KNotifyClient::beep();
@@ -905,31 +905,31 @@ KDateInternalYearSelector::setYear(int year)
   setText(temp);
 }
 
-class KPopupFrame::KPopupFramePrivate
+class TDEPopupFrame::TDEPopupFramePrivate
 {
     public:
-        KPopupFramePrivate() : exec(false) {}
+        TDEPopupFramePrivate() : exec(false) {}
 
         bool exec;
 };
 
-KPopupFrame::KPopupFrame(TQWidget* parent, const char*  name)
+TDEPopupFrame::TDEPopupFrame(TQWidget* parent, const char*  name)
   : TQFrame(parent, name, (WFlags)WType_Popup),
     result(0), // rejected
     main(0),
-    d(new KPopupFramePrivate)
+    d(new TDEPopupFramePrivate)
 {
   setFrameStyle(TQFrame::Box|TQFrame::Raised);
   setMidLineWidth(2);
 }
 
-KPopupFrame::~KPopupFrame()
+TDEPopupFrame::~TDEPopupFrame()
 {
     delete d;
 }
 
 void
-KPopupFrame::keyPressEvent(TQKeyEvent* e)
+TDEPopupFrame::keyPressEvent(TQKeyEvent* e)
 {
   if(e->key()==Key_Escape)
     {
@@ -940,7 +940,7 @@ KPopupFrame::keyPressEvent(TQKeyEvent* e)
 }
 
 void
-KPopupFrame::close(int r)
+TDEPopupFrame::close(int r)
 {
   result=r;
   d->exec = false;
@@ -948,7 +948,7 @@ KPopupFrame::close(int r)
 }
 
 void
-KPopupFrame::hide()
+TDEPopupFrame::hide()
 {
     TQFrame::hide();
     if (d->exec)
@@ -959,7 +959,7 @@ KPopupFrame::hide()
 }
 
 void
-KPopupFrame::setMainWidget(TQWidget* m)
+TDEPopupFrame::setMainWidget(TQWidget* m)
 {
   main=m;
   if(main)
@@ -969,7 +969,7 @@ KPopupFrame::setMainWidget(TQWidget* m)
 }
 
 void
-KPopupFrame::resizeEvent(TQResizeEvent*)
+TDEPopupFrame::resizeEvent(TQResizeEvent*)
 {
   if(main)
     {
@@ -979,10 +979,10 @@ KPopupFrame::resizeEvent(TQResizeEvent*)
 }
 
 void
-KPopupFrame::popup(const TQPoint &pos)
+TDEPopupFrame::popup(const TQPoint &pos)
 {
   // Make sure the whole popup is visible.
-  TQRect d = KGlobalSettings::desktopGeometry(pos);
+  TQRect d = TDEGlobalSettings::desktopGeometry(pos);
 
   int x = pos.x();
   int y = pos.y();
@@ -1003,7 +1003,7 @@ KPopupFrame::popup(const TQPoint &pos)
 }
 
 int
-KPopupFrame::exec(TQPoint pos)
+TDEPopupFrame::exec(TQPoint pos)
 {
   popup(pos);
   repaint();
@@ -1017,12 +1017,12 @@ KPopupFrame::exec(TQPoint pos)
 }
 
 int
-KPopupFrame::exec(int x, int y)
+TDEPopupFrame::exec(int x, int y)
 {
   return exec(TQPoint(x, y));
 }
 
-void KPopupFrame::virtual_hook( int, void* )
+void TDEPopupFrame::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
 void KDateTable::virtual_hook( int, void* )

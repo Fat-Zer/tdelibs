@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=LDAP
+Name[bn]=এল-ডি-এ-পি (LDAP)
+Name[hi]=एलडीएपी (LDAP)
+Name[te]=ఎల్డిఏపి
+X-TDE-Library=tdeabc_ldaptdeio
+Type=Service
+ServiceTypes=KResources/Plugin
+X-TDE-ResourceFamily=contact
+X-TDE-ResourceType=ldaptdeio

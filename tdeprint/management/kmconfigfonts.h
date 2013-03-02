@@ -22,7 +22,7 @@
 
 #include "kmconfigpage.h"
 
-class KListView;
+class TDEListView;
 class KURLRequester;
 class TQPushButton;
 class TQCheckBox;
@@ -33,8 +33,8 @@ class KMConfigFonts : public KMConfigPage
 public:
 	KMConfigFonts(TQWidget *parent = 0, const char *name = 0);
 
-	void loadConfig(KConfig*);
-	void saveConfig(KConfig*);
+	void loadConfig(TDEConfig*);
+	void saveConfig(TDEConfig*);
 
 protected slots:
 	void slotUp();
@@ -46,7 +46,7 @@ protected slots:
 
 private:
 	TQCheckBox	*m_embedfonts;
-	KListView	*m_fontpath;
+	TDEListView	*m_fontpath;
 	KURLRequester	*m_addpath;
 	TQPushButton	*m_up, *m_down, *m_add, *m_remove;
 };

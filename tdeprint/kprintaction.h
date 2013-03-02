@@ -20,11 +20,11 @@
 #ifndef KPRINTACTION_H
 #define KPRINTACTION_H
 
-#include <kaction.h>
+#include <tdeaction.h>
 
 class KPrinter;
 
-class TDEPRINT_EXPORT KPrintAction : public KActionMenu
+class TDEPRINT_EXPORT KPrintAction : public TDEActionMenu
 {
 	Q_OBJECT
 public:

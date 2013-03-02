@@ -22,7 +22,7 @@
 #include <tqstyle.h>
 #include <tqstylesheet.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kiconloader.h>
 #include <kstringhandler.h>
 
@@ -42,9 +42,9 @@ public:
 
     KTabWidgetPrivate() {
         m_automaticResizeTabs = false;
-        KConfigGroupSaver groupsaver(KGlobal::config(), "General");
-        m_maxLength = KGlobal::config()->readNumEntry("MaximumTabLength", 30);
-        m_minLength = KGlobal::config()->readNumEntry("MinimumTabLength", 3);
+        TDEConfigGroupSaver groupsaver(TDEGlobal::config(), "General");
+        m_maxLength = TDEGlobal::config()->readNumEntry("MaximumTabLength", 30);
+        m_minLength = TDEGlobal::config()->readNumEntry("MinimumTabLength", 3);
         m_CurrentMaxLength = m_minLength;
     }
 };
@@ -414,7 +414,7 @@ void KTabWidget::moveTab( int from, int to )
     blockSignals(true);
     removePage( w );
 
-    // Work-around kmdi brain damage which calls showPage() in insertTab()
+    // Work-around tdemdi brain damage which calls showPage() in insertTab()
     TQTab * t = new TQTab();
     t->setText(tablabel);
     TQTabWidget::insertTab( w, t, to );

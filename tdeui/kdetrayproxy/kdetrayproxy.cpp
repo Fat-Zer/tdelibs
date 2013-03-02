@@ -19,7 +19,7 @@
 
 #include "kdetrayproxy.h"
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <netwm.h>
 #include <X11/Xlib.h>
@@ -182,11 +182,11 @@ void KDETrayProxy::withdrawWindow( Window w )
 #include "kdetrayproxy.moc"
 
 #if 0
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 int main( int argc, char* argv[] )
     {
-    KCmdLineArgs::init( argc, argv, "a", "b", "c", "d" );
-    KApplication app( false ); // no styles
+    TDECmdLineArgs::init( argc, argv, "a", "b", "c", "d" );
+    TDEApplication app( false ); // no styles
     app.disableSessionManagement();
     KDETrayProxy proxy;
     return app.exec();

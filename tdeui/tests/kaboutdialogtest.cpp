@@ -8,19 +8,19 @@
  * $Revision$
  */
 
-#include "kaboutdialog.h"
+#include "tdeaboutdialog.h"
 // #include <kimgio.h>
 #include <tqimage.h>
-#include <kapplication.h>
-#include <klocale.h>
+#include <tdeapplication.h>
+#include <tdelocale.h>
 
 int main(int argc, char** argv)
 {
-  (void)new KApplication(argc, argv, "KAboutDialogTest");
+  (void)new TDEApplication(argc, argv, "TDEAboutDialogTest");
   TQImage logo;
   TQImage bg;
   TQPixmap pix;
-  KAboutDialog about;
+  TDEAboutDialog about;
   // -----
   // kimgioRegister();
   if(logo.load("RayTracedGear.png"))
@@ -45,8 +45,8 @@ int main(int argc, char** argv)
 //      ("Cl&ose", "Close this dialog.",
 //       "<b>Close</b> the dialog<br>"
 //  	  "<i>(there are no settings to save).</i>");
-  about.setCaption("KAboutDialog example");
-  about.setVersion("KAboutDialog, Draft Study");
+  about.setCaption("TDEAboutDialog example");
+  about.setVersion("TDEAboutDialog, Draft Study");
   about.setHelp("kdehelp/intro.html", "intro");
   // ----- set the application author:
   about.setAuthor

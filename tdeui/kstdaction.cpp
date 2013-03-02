@@ -21,15 +21,15 @@
 #include <tqtoolbutton.h>
 #include <tqwhatsthis.h>
 
-#include <kaboutdata.h>
-#include <kaction.h>
-#include <kapplication.h>
+#include <tdeaboutdata.h>
+#include <tdeaction.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kiconloader.h>
-#include <klocale.h>
-#include <kstdaccel.h>
-#include <kmainwindow.h>
+#include <tdelocale.h>
+#include <tdestdaccel.h>
+#include <tdemainwindow.h>
 #include "kstdaction_p.h"
 
 namespace KStdAction
@@ -40,9 +40,9 @@ TQStringList stdNames()
     return internal_stdNames();
 }
 
-KAction* create( StdAction id, const char *name, const TQObject *recvr, const char *slot, KActionCollection* parent )
+TDEAction* create( StdAction id, const char *name, const TQObject *recvr, const char *slot, TDEActionCollection* parent )
 {
-	KAction* pAction = 0;
+	TDEAction* pAction = 0;
 	const KStdActionInfo* pInfo = infoPtr( id );
 	kdDebug(125) << "KStdAction::create( " << id << "=" << (pInfo ? pInfo->psName : (const char*)0) << ", " << parent << ", " << name << " )" << endl; // ellis
 	if( pInfo ) {
@@ -64,13 +64,13 @@ KAction* create( StdAction id, const char *name, const TQObject *recvr, const ch
 		 case Preferences:
 		 case HelpContents:
 			{
-			const KAboutData *aboutData = KGlobal::instance()->aboutData();
+			const TDEAboutData *aboutData = TDEGlobal::instance()->aboutData();
 			/* TODO KDE4
-			const KAboutData *aboutData;
+			const TDEAboutData *aboutData;
 			if ( parent )
 			    aboutData = parent->instance()->aboutData();
 			else
-			    aboutData = KGlobal::instance()->aboutData();
+			    aboutData = TDEGlobal::instance()->aboutData();
 			*/
 			TQString appName = (aboutData) ? aboutData->programName() : TQString::fromLatin1(tqApp->name());
 			sLabel = i18n(pInfo->psLabel).arg(appName);
@@ -86,10 +86,10 @@ KAction* create( StdAction id, const char *name, const TQObject *recvr, const ch
 			if (id == LastPage) iconName = "start";
 		}
 
-		KShortcut cut = KStdAccel::shortcut(pInfo->idAccel);
+		TDEShortcut cut = TDEStdAccel::shortcut(pInfo->idAccel);
 		switch( id ) {
 		 case OpenRecent:
-			pAction = new KRecentFilesAction( sLabel, pInfo->psIconName, cut,
+			pAction = new TDERecentFilesAction( sLabel, pInfo->psIconName, cut,
 					recvr, slot,
 					parent, (name) ? name : pInfo->psName );
 			break;
@@ -97,8 +97,8 @@ KAction* create( StdAction id, const char *name, const TQObject *recvr, const ch
 		 case ShowToolbar:
 		 case ShowStatusbar:
 		 {
-			KToggleAction *ret;
-			ret = new KToggleAction( sLabel, pInfo->psIconName, cut,
+			TDEToggleAction *ret;
+			ret = new TDEToggleAction( sLabel, pInfo->psIconName, cut,
 					recvr, slot,
 					parent, (name) ? name : pInfo->psName );
 			ret->setChecked( true );
@@ -107,8 +107,8 @@ KAction* create( StdAction id, const char *name, const TQObject *recvr, const ch
 		 }
 		 case FullScreen:
 		 {
-			KToggleFullScreenAction *ret;
-			ret = new KToggleFullScreenAction( cut, recvr, slot,
+			TDEToggleFullScreenAction *ret;
+			ret = new TDEToggleFullScreenAction( cut, recvr, slot,
 					parent, NULL, (name) ? name : pInfo->psName );
 			ret->setChecked( false );
 			pAction = ret;
@@ -116,15 +116,15 @@ KAction* create( StdAction id, const char *name, const TQObject *recvr, const ch
 		 }
          case PasteText:
          {
-            KPasteTextAction *ret;
-            ret = new KPasteTextAction(sLabel, iconName, cut,
+            TDEPasteTextAction *ret;
+            ret = new TDEPasteTextAction(sLabel, iconName, cut,
 					recvr, slot,
 					parent, (name) ? name : pInfo->psName );
             pAction = ret;
             break;
          }
 		 default:
-			pAction = new KAction( sLabel, iconName, cut,
+			pAction = new TDEAction( sLabel, iconName, cut,
 					recvr, slot,
 					parent, (name) ? name : pInfo->psName );
 			break;
@@ -139,103 +139,103 @@ const char* name( StdAction id )
 	return (pInfo) ? pInfo->psName : 0;
 }
 
-KAction *openNew( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *openNew( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( New, name, recvr, slot, parent ); }
-KAction *open( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *open( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( Open, name, recvr, slot, parent ); }
-KRecentFilesAction *openRecent( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
-	{ return (KRecentFilesAction*) KStdAction::create( OpenRecent, name, recvr, slot, parent ); }
-KAction *save( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDERecentFilesAction *openRecent( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
+	{ return (TDERecentFilesAction*) KStdAction::create( OpenRecent, name, recvr, slot, parent ); }
+TDEAction *save( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( Save, name, recvr, slot, parent ); }
-KAction *saveAs( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *saveAs( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( SaveAs, name, recvr, slot, parent ); }
-KAction *revert( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *revert( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( Revert, name, recvr, slot, parent ); }
-KAction *print( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *print( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( Print, name, recvr, slot, parent ); }
-KAction *printPreview( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *printPreview( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( PrintPreview, name, recvr, slot, parent ); }
-KAction *close( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *close( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( Close, name, recvr, slot, parent ); }
-KAction *mail( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *mail( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( Mail, name, recvr, slot, parent ); }
-KAction *quit( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *quit( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( Quit, name, recvr, slot, parent ); }
-KAction *undo( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *undo( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( Undo, name, recvr, slot, parent ); }
-KAction *redo( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *redo( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( Redo, name, recvr, slot, parent ); }
-KAction *cut( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *cut( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( Cut, name, recvr, slot, parent ); }
-KAction *copy( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *copy( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( Copy, name, recvr, slot, parent ); }
-KAction *paste( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *paste( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( Paste, name, recvr, slot, parent ); }
-KAction *pasteText( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *pasteText( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( PasteText, name, recvr, slot, parent ); }
-KAction *clear( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *clear( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( Clear, name, recvr, slot, parent ); }
-KAction *selectAll( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *selectAll( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( SelectAll, name, recvr, slot, parent ); }
-KAction *deselect( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *deselect( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( Deselect, name, recvr, slot, parent ); }
-KAction *find( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *find( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( Find, name, recvr, slot, parent ); }
-KAction *findNext( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *findNext( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( FindNext, name, recvr, slot, parent ); }
-KAction *findPrev( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *findPrev( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( FindPrev, name, recvr, slot, parent ); }
-KAction *replace( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *replace( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( Replace, name, recvr, slot, parent ); }
-KAction *actualSize( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *actualSize( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( ActualSize, name, recvr, slot, parent ); }
-KAction *fitToPage( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *fitToPage( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( FitToPage, name, recvr, slot, parent ); }
-KAction *fitToWidth( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *fitToWidth( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( FitToWidth, name, recvr, slot, parent ); }
-KAction *fitToHeight( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *fitToHeight( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( FitToHeight, name, recvr, slot, parent ); }
-KAction *zoomIn( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *zoomIn( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( ZoomIn, name, recvr, slot, parent ); }
-KAction *zoomOut( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *zoomOut( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( ZoomOut, name, recvr, slot, parent ); }
-KAction *zoom( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *zoom( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( Zoom, name, recvr, slot, parent ); }
-KAction *redisplay( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *redisplay( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( Redisplay, name, recvr, slot, parent ); }
-KAction *up( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *up( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( Up, name, recvr, slot, parent ); }
-KAction *back( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *back( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( Back, name, recvr, slot, parent ); }
-KAction *forward( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *forward( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( Forward, name, recvr, slot, parent ); }
-KAction *home( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *home( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( Home, name, recvr, slot, parent ); }
-KAction *prior( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *prior( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( Prior, name, recvr, slot, parent ); }
-KAction *next( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *next( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( Next, name, recvr, slot, parent ); }
-KAction *goTo( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *goTo( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( Goto, name, recvr, slot, parent ); }
-KAction *gotoPage( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *gotoPage( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( GotoPage, name, recvr, slot, parent ); }
-KAction *gotoLine( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *gotoLine( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( GotoLine, name, recvr, slot, parent ); }
-KAction *firstPage( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *firstPage( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( FirstPage, name, recvr, slot, parent ); }
-KAction *lastPage( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *lastPage( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( LastPage, name, recvr, slot, parent ); }
-KAction *addBookmark( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *addBookmark( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( AddBookmark, name, recvr, slot, parent ); }
-KAction *editBookmarks( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *editBookmarks( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( EditBookmarks, name, recvr, slot, parent ); }
-KAction *spelling( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *spelling( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( Spelling, name, recvr, slot, parent ); }
 
-KToggleAction *showMenubar( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *_name )
+TDEToggleAction *showMenubar( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *_name )
 {
-    KToggleAction *ret;
-    ret = new KToggleAction(i18n("Show &Menubar"), "showmenu", KStdAccel::shortcut(KStdAccel::ShowMenubar), recvr, slot,
+    TDEToggleAction *ret;
+    ret = new TDEToggleAction(i18n("Show &Menubar"), "showmenu", TDEStdAccel::shortcut(TDEStdAccel::ShowMenubar), recvr, slot,
                             parent, _name ? _name : name(ShowMenubar));
     ret->setWhatsThis( i18n( "Show Menubar<p>"
                              "Shows the menubar again after it has been hidden" ) );
@@ -248,10 +248,10 @@ KToggleAction *showMenubar( const TQObject *recvr, const char *slot, KActionColl
 }
 
 // obsolete
-KToggleAction *showToolbar( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *_name )
+TDEToggleAction *showToolbar( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *_name )
 {
-    KToggleAction *ret;
-    ret = new KToggleAction(i18n("Show &Toolbar"), 0, recvr, slot, parent,
+    TDEToggleAction *ret;
+    ret = new TDEToggleAction(i18n("Show &Toolbar"), 0, recvr, slot, parent,
                             _name ? _name : name(ShowToolbar));
     ret->setChecked(true);
     return ret;
@@ -259,19 +259,19 @@ KToggleAction *showToolbar( const TQObject *recvr, const char *slot, KActionColl
 }
 
 // obsolete
-KToggleToolBarAction *showToolbar( const char* toolBarName, KActionCollection* parent, const char *_name )
+TDEToggleToolBarAction *showToolbar( const char* toolBarName, TDEActionCollection* parent, const char *_name )
 {
-    KToggleToolBarAction *ret;
-    ret = new KToggleToolBarAction(toolBarName, i18n("Show &Toolbar"), parent,
+    TDEToggleToolBarAction *ret;
+    ret = new TDEToggleToolBarAction(toolBarName, i18n("Show &Toolbar"), parent,
                             _name ? _name : name(ShowToolbar));
     return ret;
 }
 
-KToggleAction *showStatusbar( const TQObject *recvr, const char *slot,
-                                         KActionCollection* parent, const char *_name )
+TDEToggleAction *showStatusbar( const TQObject *recvr, const char *slot,
+                                         TDEActionCollection* parent, const char *_name )
 {
-    KToggleAction *ret;
-    ret = new KToggleAction(i18n("Show St&atusbar"), 0, recvr, slot, parent,
+    TDEToggleAction *ret;
+    ret = new TDEToggleAction(i18n("Show St&atusbar"), 0, recvr, slot, parent,
                             _name ? _name : name(ShowStatusbar));
     ret->setWhatsThis( i18n( "Show Statusbar<p>"
                              "Shows the statusbar, which is the bar at the bottom of the window used for status information." ) );
@@ -284,40 +284,40 @@ KToggleAction *showStatusbar( const TQObject *recvr, const char *slot,
     return ret;
 }
 
-KToggleFullScreenAction *fullScreen( const TQObject *recvr, const char *slot, KActionCollection* parent,
+TDEToggleFullScreenAction *fullScreen( const TQObject *recvr, const char *slot, TDEActionCollection* parent,
     TQWidget* window, const char *name )
 {
-    KToggleFullScreenAction *ret;
-    ret = static_cast< KToggleFullScreenAction* >( KStdAction::create( FullScreen, name, recvr, slot, parent ));
+    TDEToggleFullScreenAction *ret;
+    ret = static_cast< TDEToggleFullScreenAction* >( KStdAction::create( FullScreen, name, recvr, slot, parent ));
     ret->setWindow( window );
     return ret;
 }
 
-KAction *saveOptions( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *saveOptions( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( SaveOptions, name, recvr, slot, parent ); }
-KAction *keyBindings( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *keyBindings( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( KeyBindings, name, recvr, slot, parent ); }
-KAction *preferences( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *preferences( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( Preferences, name, recvr, slot, parent ); }
-KAction *configureToolbars( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *configureToolbars( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( ConfigureToolbars, name, recvr, slot, parent ); }
-KAction *configureNotifications( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *configureNotifications( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( ConfigureNotifications, name, recvr, slot, parent ); }
-KAction *help( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *help( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( Help, name, recvr, slot, parent ); }
-KAction *helpContents( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *helpContents( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( HelpContents, name, recvr, slot, parent ); }
-KAction *whatsThis( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *whatsThis( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( WhatsThis, name, recvr, slot, parent ); }
-KAction *tipOfDay( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *tipOfDay( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( TipofDay, name, recvr, slot, parent ); }
-KAction *reportBug( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *reportBug( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( ReportBug, name, recvr, slot, parent ); }
-KAction *switchApplicationLanguage( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *switchApplicationLanguage( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( SwitchApplicationLanguage, name, recvr, slot, parent ); }
-KAction *aboutApp( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *aboutApp( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( AboutApp, name, recvr, slot, parent ); }
-KAction *aboutKDE( const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name )
+TDEAction *aboutKDE( const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name )
 	{ return KStdAction::create( AboutKDE, name, recvr, slot, parent ); }
 
 }

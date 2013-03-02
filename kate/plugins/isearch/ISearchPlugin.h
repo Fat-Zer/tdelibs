@@ -19,12 +19,12 @@
 #ifndef _ISearchPlugin_H_
 #define _ISearchPlugin_H_
 
-#include <ktexteditor/plugin.h>
-#include <ktexteditor/view.h>
-#include <ktexteditor/document.h>
-#include <ktexteditor/searchinterface.h>
-#include <ktexteditor/viewcursorinterface.h>
-#include <ktexteditor/selectioninterface.h>        
+#include <tdetexteditor/plugin.h>
+#include <tdetexteditor/view.h>
+#include <tdetexteditor/document.h>
+#include <tdetexteditor/searchinterface.h>
+#include <tdetexteditor/viewcursorinterface.h>
+#include <tdetexteditor/selectioninterface.h>        
 
 #include <kxmlguiclient.h>
 #include <tqobject.h>
@@ -92,8 +92,8 @@ private:
 	KTextEditor::SearchInterface* m_searchIF;
 	KTextEditor::ViewCursorInterface* m_cursorIF;
 	KTextEditor::SelectionInterface* m_selectIF;
-	KAction*               m_searchForwardAction;
-	KAction*               m_searchBackwardAction;
+	TDEAction*               m_searchForwardAction;
+	TDEAction*               m_searchBackwardAction;
 	KWidgetAction*         m_comboAction;
 	TQGuardedPtr<TQLabel>    m_label;
 	TQGuardedPtr<KHistoryCombo> m_combo;

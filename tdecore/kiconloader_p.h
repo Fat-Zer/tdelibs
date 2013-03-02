@@ -9,8 +9,8 @@
  * exact licensing terms.
  */
 
-#ifndef __KIconLoader_p_h_Included__
-#define __KIconLoader_p_h_Included__
+#ifndef __TDEIconLoader_p_h_Included__
+#define __TDEIconLoader_p_h_Included__
 
 #include <tqobject.h>
 #include <tqstringlist.h>
@@ -19,37 +19,37 @@
 #include <kiconeffect.h>
 #include <tqdict.h>
 
-class KIconThemeNode
+class TDEIconThemeNode
 {
 public:
-    KIconThemeNode(KIconTheme *_theme);
-    ~KIconThemeNode();
+    TDEIconThemeNode(TDEIconTheme *_theme);
+    ~TDEIconThemeNode();
 
-    void queryIcons(TQStringList *lst, int size, KIcon::Context context) const;
-    void queryIconsByContext(TQStringList *lst, int size, KIcon::Context context) const;
-    KIcon findIcon(const TQString& name, int size, KIcon::MatchType match) const;
+    void queryIcons(TQStringList *lst, int size, TDEIcon::Context context) const;
+    void queryIconsByContext(TQStringList *lst, int size, TDEIcon::Context context) const;
+    TDEIcon findIcon(const TQString& name, int size, TDEIcon::MatchType match) const;
     void printTree(TQString& dbgString) const;
 
-    KIconTheme *theme;
+    TDEIconTheme *theme;
 };
 
-class KIconLoaderPrivate : public TQObject
+class TDEIconLoaderPrivate : public TQObject
 {
     Q_OBJECT
 public:
     TQStringList mThemesInTree;
-    KIconGroup *mpGroups;
-    KIconThemeNode *mpThemeRoot;
-    KStandardDirs *mpDirs;
-    KIconLoader *q;
-    KIconEffect mpEffect;
+    TDEIconGroup *mpGroups;
+    TDEIconThemeNode *mpThemeRoot;
+    TDEStandardDirs *mpDirs;
+    TDEIconLoader *q;
+    TDEIconEffect mpEffect;
     TQDict<TQImage> imgDict;
     TQImage lastImage; // last loaded image without effect applied
     TQString lastImageKey; // key for icon without effect
     TQString appname;
-    int lastIconType; // see KIcon::type
-    int lastIconThreshold; // see KIcon::threshold
-    TQPtrList<KIconThemeNode> links;
+    int lastIconType; // see TDEIcon::type
+    int lastIconThreshold; // see TDEIcon::threshold
+    TQPtrList<TDEIconThemeNode> links;
     bool extraDesktopIconsLoaded;
     bool delayedLoading;
 
@@ -57,4 +57,4 @@ public slots:
     void reconfigure();
 };
 
-#endif // __KIconLoader_p_h_Included__
+#endif // __TDEIconLoader_p_h_Included__

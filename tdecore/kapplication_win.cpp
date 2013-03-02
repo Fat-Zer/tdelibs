@@ -17,9 +17,9 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kstandarddirs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kurl.h>
 
 #include "kcheckaccelerators.h"
@@ -32,7 +32,7 @@
 #include "shellapi.h"
 
 /**
- * MS Windows-related actions for KApplication startup.
+ * MS Windows-related actions for TDEApplication startup.
  * 
  * - Use Qt translation which will be usable for TQFileDialog 
  *    and other Qt-only GUIs. The "qt_<language>.qm" file should be stored
@@ -40,10 +40,10 @@
  *
  * @internal
 */
-void KApplication_init_windows(bool /*GUIenabled*/)
+void TDEApplication_init_windows(bool /*GUIenabled*/)
 {
-	TQString qt_transl_file = ::locate( "locale", KGlobal::locale()->language() 
-		+ "/LC_MESSAGES/qt_" + KGlobal::locale()->language() + ".qm" );
+	TQString qt_transl_file = ::locate( "locale", TDEGlobal::locale()->language() 
+		+ "/LC_MESSAGES/qt_" + TDEGlobal::locale()->language() + ".qm" );
 	QTranslator *qt_transl = new QTranslator();
 	if (qt_transl->load( qt_transl_file, ""))
 		kapp->installTranslator( qt_transl );
@@ -54,11 +54,11 @@ void KApplication_init_windows(bool /*GUIenabled*/)
 //unsafe; create kapplication_p.h instead!
 typedef void* IceIOErrorHandler;
 
-class KApplicationPrivate
+class TDEApplicationPrivate
 {
 public:
-  KApplicationPrivate();
-  ~KApplicationPrivate();
+  TDEApplicationPrivate();
+  ~TDEApplicationPrivate();
 
   bool actionRestrictions : 1;
   bool guiEnabled : 1;
@@ -74,12 +74,12 @@ public:
   QAssistantClient* qassistantclient;
 };
 
-void KApplication::invokeHelp( const TQString& anchor,
+void TDEApplication::invokeHelp( const TQString& anchor,
 	const TQString& _appname, const TQCString& startup_id ) const
 {
 	if (!d->qassistantclient) {
 		d->qassistantclient = new QAssistantClient(
-			KStandardDirs::findExe( "assistant" ), 0);
+			TDEStandardDirs::findExe( "assistant" ), 0);
 		TQStringList args;
 		args << "-profile";
 		args << TQDir::convertSeparators( locate("html", TQString(name())+"/"+TQString(name())+".adp") );
@@ -90,14 +90,14 @@ void KApplication::invokeHelp( const TQString& anchor,
 
 // on win32, for invoking browser we're using win32 API
 // see kapplication_win.cpp
-void KApplication::invokeBrowser( const TQString &url, const TQCString& startup_id )
+void TDEApplication::invokeBrowser( const TQString &url, const TQCString& startup_id )
 {
 	TQCString s = url.latin1();
 	const unsigned short *l = (const unsigned short *)s.data();
 	ShellExecuteA(0, "open", s.data(), 0, 0, SW_NORMAL);
 }
 
-void KApplication::invokeMailer(const TQString &to, const TQString &cc, const TQString &bcc,
+void TDEApplication::invokeMailer(const TQString &to, const TQString &cc, const TQString &bcc,
                                 const TQString &subject, const TQString &body,
                                 const TQString & /*messageFile TODO*/, const TQStringList &attachURLs,
                                 const TQCString& startup_id )

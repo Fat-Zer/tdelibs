@@ -26,12 +26,12 @@
 #include <tqmovie.h>
 #include <tqbitmap.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kipc.h>
 #include <kdebug.h>
 #include <kstandarddirs.h>
-#include <kglobal.h>
-#include <kconfig.h>
+#include <tdeglobal.h>
+#include <tdeconfig.h>
 #include <ksimpleconfig.h>
 #include <kinstance.h>
 
@@ -55,19 +55,19 @@
 
 #include "kiconloader_p.h"
 
-/*** KIconThemeNode: A node in the icon theme dependancy tree. ***/
+/*** TDEIconThemeNode: A node in the icon theme dependancy tree. ***/
 
-KIconThemeNode::KIconThemeNode(KIconTheme *_theme)
+TDEIconThemeNode::TDEIconThemeNode(TDEIconTheme *_theme)
 {
     theme = _theme;
 }
 
-KIconThemeNode::~KIconThemeNode()
+TDEIconThemeNode::~TDEIconThemeNode()
 {
     delete theme;
 }
 
-void KIconThemeNode::printTree(TQString& dbgString) const
+void TDEIconThemeNode::printTree(TQString& dbgString) const
 {
     /* This method doesn't have much sense anymore, so maybe it should
        be removed in the (near?) future */
@@ -76,30 +76,30 @@ void KIconThemeNode::printTree(TQString& dbgString) const
     dbgString += ")";
 }
 
-void KIconThemeNode::queryIcons(TQStringList *result,
-				int size, KIcon::Context context) const
+void TDEIconThemeNode::queryIcons(TQStringList *result,
+				int size, TDEIcon::Context context) const
 {
     // add the icons of this theme to it
     *result += theme->queryIcons(size, context);
 }
 
-void KIconThemeNode::queryIconsByContext(TQStringList *result,
-				int size, KIcon::Context context) const
+void TDEIconThemeNode::queryIconsByContext(TQStringList *result,
+				int size, TDEIcon::Context context) const
 {
     // add the icons of this theme to it
     *result += theme->queryIconsByContext(size, context);
 }
 
-KIcon KIconThemeNode::findIcon(const TQString& name, int size,
-			       KIcon::MatchType match) const
+TDEIcon TDEIconThemeNode::findIcon(const TQString& name, int size,
+			       TDEIcon::MatchType match) const
 {
     return theme->iconPath(name, size, match);
 }
 
 
-/*** KIconGroup: Icon type description. ***/
+/*** TDEIconGroup: Icon type description. ***/
 
-struct KIconGroup
+struct TDEIconGroup
 {
     int size;
     bool dblPixels;
@@ -108,33 +108,33 @@ struct KIconGroup
 
 #define KICONLOADER_CHECKS
 #ifdef KICONLOADER_CHECKS
-// Keep a list of recently created and destroyed KIconLoader instances in order
+// Keep a list of recently created and destroyed TDEIconLoader instances in order
 // to detect bugs like #68528.
-struct KIconLoaderDebug
+struct TDEIconLoaderDebug
     {
-    KIconLoaderDebug( KIconLoader* l, const TQString& a )
+    TDEIconLoaderDebug( TDEIconLoader* l, const TQString& a )
         : loader( l ), appname( a ), valid( true )
         {}
-    KIconLoaderDebug() {}; // this TQValueList feature annoys me
-    KIconLoader* loader;
+    TDEIconLoaderDebug() {}; // this TQValueList feature annoys me
+    TDEIconLoader* loader;
     TQString appname;
     bool valid;
     TQString delete_bt;
     };
 
-static TQValueList< KIconLoaderDebug > *kiconloaders;
+static TQValueList< TDEIconLoaderDebug > *kiconloaders;
 #endif
 
-/*** KIconLoader: the icon loader ***/
+/*** TDEIconLoader: the icon loader ***/
 
-KIconLoader::KIconLoader(const TQString& _appname, KStandardDirs *_dirs)
+TDEIconLoader::TDEIconLoader(const TQString& _appname, TDEStandardDirs *_dirs)
 {
 #ifdef KICONLOADER_CHECKS
     if( kiconloaders == NULL )
-        kiconloaders = new TQValueList< KIconLoaderDebug>();
-    // check for the (very unlikely case) that new KIconLoader gets allocated
+        kiconloaders = new TQValueList< TDEIconLoaderDebug>();
+    // check for the (very unlikely case) that new TDEIconLoader gets allocated
     // at exactly same address like some previous one
-    for( TQValueList< KIconLoaderDebug >::Iterator it = kiconloaders->begin();
+    for( TQValueList< TDEIconLoaderDebug >::Iterator it = kiconloaders->begin();
          it != kiconloaders->end();
          )
         {
@@ -143,9 +143,9 @@ KIconLoader::KIconLoader(const TQString& _appname, KStandardDirs *_dirs)
         else
             ++it;
         }
-    kiconloaders->append( KIconLoaderDebug( this, _appname ));
+    kiconloaders->append( TDEIconLoaderDebug( this, _appname ));
 #endif
-    d = new KIconLoaderPrivate;
+    d = new TDEIconLoaderPrivate;
     d->q = this;
     d->mpGroups = 0L;
     d->imgDict.setAutoDelete(true);
@@ -159,7 +159,7 @@ KIconLoader::KIconLoader(const TQString& _appname, KStandardDirs *_dirs)
     init( _appname, _dirs );
 }
 
-void KIconLoader::reconfigure( const TQString& _appname, KStandardDirs *_dirs )
+void TDEIconLoader::reconfigure( const TQString& _appname, TDEStandardDirs *_dirs )
 {
     d->links.clear();
     d->imgDict.clear();
@@ -171,7 +171,7 @@ void KIconLoader::reconfigure( const TQString& _appname, KStandardDirs *_dirs )
     init( _appname, _dirs );
 }
 
-void KIconLoader::init( const TQString& _appname, KStandardDirs *_dirs )
+void TDEIconLoader::init( const TQString& _appname, TDEStandardDirs *_dirs )
 {
     // If this is unequal to 0, the iconloader is initialized
     // successfully.
@@ -184,42 +184,42 @@ void KIconLoader::init( const TQString& _appname, KStandardDirs *_dirs )
     if (_dirs)
         d->mpDirs = _dirs;
     else
-        d->mpDirs = KGlobal::dirs();
+        d->mpDirs = TDEGlobal::dirs();
 
     TQString appname = _appname;
     if (appname.isEmpty())
-        appname = KGlobal::instance()->instanceName();
+        appname = TDEGlobal::instance()->instanceName();
 
     // Add the default theme and its base themes to the theme tree
-    KIconTheme *def = new KIconTheme(KIconTheme::current(), appname);
+    TDEIconTheme *def = new TDEIconTheme(TDEIconTheme::current(), appname);
     if (!def->isValid())
     {
         delete def;
         // warn, as this is actually a small penalty hit
         kdDebug(264) << "Couldn't find current icon theme, falling back to default." << endl;
-	def = new KIconTheme(KIconTheme::defaultThemeName(), appname);
+	def = new TDEIconTheme(TDEIconTheme::defaultThemeName(), appname);
         if (!def->isValid())
         {
             kdError(264) << "Error: standard icon theme"
-                         << " \"" << KIconTheme::defaultThemeName() << "\" "
+                         << " \"" << TDEIconTheme::defaultThemeName() << "\" "
                          << " not found!" << endl;
             d->mpGroups=0L;
             return;
         }
     }
-    d->mpThemeRoot = new KIconThemeNode(def);
+    d->mpThemeRoot = new TDEIconThemeNode(def);
     d->links.append(d->mpThemeRoot);
-    d->mThemesInTree += KIconTheme::current();
+    d->mThemesInTree += TDEIconTheme::current();
     addBaseThemes(d->mpThemeRoot, appname);
 
     // These have to match the order in kicontheme.h
     static const char * const groups[] = { "Desktop", "Toolbar", "MainToolbar", "Small", "Panel", 0L };
-    KConfig *config = KGlobal::config();
-    KConfigGroupSaver cs(config, "dummy");
+    TDEConfig *config = TDEGlobal::config();
+    TDEConfigGroupSaver cs(config, "dummy");
 
     // loading config and default sizes
-    d->mpGroups = new KIconGroup[(int) KIcon::LastGroup];
-    for (KIcon::Group i=KIcon::FirstGroup; i<KIcon::LastGroup; i++)
+    d->mpGroups = new TDEIconGroup[(int) TDEIcon::LastGroup];
+    for (TDEIcon::Group i=TDEIcon::FirstGroup; i<TDEIcon::LastGroup; i++)
     {
 	if (groups[i] == 0L)
 	    break;
@@ -236,10 +236,10 @@ void KIconLoader::init( const TQString& _appname, KStandardDirs *_dirs )
     }
 
     // Insert application specific themes at the top.
-    d->mpDirs->addResourceType("appicon", KStandardDirs::kde_default("data") +
+    d->mpDirs->addResourceType("appicon", TDEStandardDirs::kde_default("data") +
 		appname + "/pics/");
     // ################## KDE4: consider removing the toolbar directory
-    d->mpDirs->addResourceType("appicon", KStandardDirs::kde_default("data") +
+    d->mpDirs->addResourceType("appicon", TDEStandardDirs::kde_default("data") +
 		appname + "/toolbar/");
 
     // Add legacy icon dirs.
@@ -260,10 +260,10 @@ void KIconLoader::init( const TQString& _appname, KStandardDirs *_dirs )
 #endif
 }
 
-KIconLoader::~KIconLoader()
+TDEIconLoader::~TDEIconLoader()
 {
 #ifdef KICONLOADER_CHECKS
-    for( TQValueList< KIconLoaderDebug >::Iterator it = kiconloaders->begin();
+    for( TQValueList< TDEIconLoaderDebug >::Iterator it = kiconloaders->begin();
          it != kiconloaders->end();
          ++it )
         {
@@ -282,34 +282,34 @@ KIconLoader::~KIconLoader()
     delete d;
 }
 
-void KIconLoader::enableDelayedIconSetLoading( bool enable )
+void TDEIconLoader::enableDelayedIconSetLoading( bool enable )
 {
     d->delayedLoading = enable;
 }
 
-bool KIconLoader::isDelayedIconSetLoadingEnabled() const
+bool TDEIconLoader::isDelayedIconSetLoadingEnabled() const
 {
     return d->delayedLoading;
 }
 
-void KIconLoader::addAppDir(const TQString& appname)
+void TDEIconLoader::addAppDir(const TQString& appname)
 {
-    d->mpDirs->addResourceType("appicon", KStandardDirs::kde_default("data") +
+    d->mpDirs->addResourceType("appicon", TDEStandardDirs::kde_default("data") +
 		appname + "/pics/");
     // ################## KDE4: consider removing the toolbar directory
-    d->mpDirs->addResourceType("appicon", KStandardDirs::kde_default("data") +
+    d->mpDirs->addResourceType("appicon", TDEStandardDirs::kde_default("data") +
 		appname + "/toolbar/");
     addAppThemes(appname);
 }
 
-void KIconLoader::addAppThemes(const TQString& appname)
+void TDEIconLoader::addAppThemes(const TQString& appname)
 {
-    if ( KIconTheme::current() != KIconTheme::defaultThemeName() )
+    if ( TDEIconTheme::current() != TDEIconTheme::defaultThemeName() )
     {
-        KIconTheme *def = new KIconTheme(KIconTheme::current(), appname);
+        TDEIconTheme *def = new TDEIconTheme(TDEIconTheme::current(), appname);
         if (def->isValid())
         {
-            KIconThemeNode* node = new KIconThemeNode(def);
+            TDEIconThemeNode* node = new TDEIconThemeNode(def);
             d->links.append(node);
             addBaseThemes(node, appname);
         }
@@ -317,13 +317,13 @@ void KIconLoader::addAppThemes(const TQString& appname)
             delete def;
     }
 
-    KIconTheme *def = new KIconTheme(KIconTheme::defaultThemeName(), appname);
-    KIconThemeNode* node = new KIconThemeNode(def);
+    TDEIconTheme *def = new TDEIconTheme(TDEIconTheme::defaultThemeName(), appname);
+    TDEIconThemeNode* node = new TDEIconThemeNode(def);
     d->links.append(node);
     addBaseThemes(node, appname);
 }
 
-void KIconLoader::addBaseThemes(KIconThemeNode *node, const TQString &appname)
+void TDEIconLoader::addBaseThemes(TDEIconThemeNode *node, const TQString &appname)
 {
     TQStringList lst = node->theme->inherits();
     TQStringList::ConstIterator it;
@@ -332,24 +332,24 @@ void KIconLoader::addBaseThemes(KIconThemeNode *node, const TQString &appname)
     {
 	if( d->mThemesInTree.contains(*it) && (*it) != "hicolor")
 	    continue;
-	KIconTheme *theme = new KIconTheme(*it,appname);
+	TDEIconTheme *theme = new TDEIconTheme(*it,appname);
 	if (!theme->isValid()) {
 	    delete theme;
 	    continue;
 	}
-        KIconThemeNode *n = new KIconThemeNode(theme);
+        TDEIconThemeNode *n = new TDEIconThemeNode(theme);
 	d->mThemesInTree.append(*it);
 	d->links.append(n);
 	addBaseThemes(n, appname);
     }
 }
 
-void KIconLoader::addExtraDesktopThemes()
+void TDEIconLoader::addExtraDesktopThemes()
 {
     if ( d->extraDesktopIconsLoaded ) return;
 
     TQStringList list;
-    TQStringList icnlibs = KGlobal::dirs()->resourceDirs("icon");
+    TQStringList icnlibs = TDEGlobal::dirs()->resourceDirs("icon");
     TQStringList::ConstIterator it;
     char buf[1000];
     int r;
@@ -362,8 +362,8 @@ void KIconLoader::addExtraDesktopThemes()
 	TQStringList::ConstIterator it2;
 	for (it2=lst.begin(); it2!=lst.end(); ++it2)
 	{
-	    if (!KStandardDirs::exists(*it + *it2 + "/index.desktop")
-		&& !KStandardDirs::exists(*it + *it2 + "/index.theme"))
+	    if (!TDEStandardDirs::exists(*it + *it2 + "/index.desktop")
+		&& !TDEStandardDirs::exists(*it + *it2 + "/index.theme"))
 		continue;
 	    r=readlink( TQFile::encodeName(*it + *it2) , buf, sizeof(buf)-1);
 	    if ( r>0 )
@@ -384,8 +384,8 @@ void KIconLoader::addExtraDesktopThemes()
 		continue;
 	if ( *it == TQString("default.tde") ) continue;
 
-	KIconTheme *def = new KIconTheme( *it, "" );
-	KIconThemeNode* node = new KIconThemeNode(def);
+	TDEIconTheme *def = new TDEIconTheme( *it, "" );
+	TDEIconThemeNode* node = new TDEIconThemeNode(def);
 	d->mThemesInTree.append(*it);
 	d->links.append(node);
 	addBaseThemes(node, "" );
@@ -395,26 +395,26 @@ void KIconLoader::addExtraDesktopThemes()
 
 }
 
-bool KIconLoader::extraDesktopThemesAdded() const
+bool TDEIconLoader::extraDesktopThemesAdded() const
 {
     return d->extraDesktopIconsLoaded;
 }
 
-TQString KIconLoader::removeIconExtension(const TQString &name) const
+TQString TDEIconLoader::removeIconExtension(const TQString &name) const
 {
     int extensionLength=0;
 
     TQString ext = name.right(4);
 
-    static const TQString &png_ext = KGlobal::staticQString(".png");
-    static const TQString &xpm_ext = KGlobal::staticQString(".xpm");
+    static const TQString &png_ext = TDEGlobal::staticQString(".png");
+    static const TQString &xpm_ext = TDEGlobal::staticQString(".xpm");
     if (ext == png_ext || ext == xpm_ext)
       extensionLength=4;
 #ifdef HAVE_LIBART
     else
     {
-	static const TQString &svgz_ext = KGlobal::staticQString(".svgz");
-	static const TQString &svg_ext = KGlobal::staticQString(".svg");
+	static const TQString &svgz_ext = TDEGlobal::staticQString(".svgz");
+	static const TQString &svg_ext = TDEGlobal::staticQString(".svg");
 
 	if (name.right(5) == svgz_ext)
 	    extensionLength=5;
@@ -430,14 +430,14 @@ TQString KIconLoader::removeIconExtension(const TQString &name) const
     return name;
 }
 
-TQString KIconLoader::removeIconExtensionInternal(const TQString &name) const
+TQString TDEIconLoader::removeIconExtensionInternal(const TQString &name) const
 {
     TQString name_noext = removeIconExtension(name);
 
 #ifndef NDEBUG
     if (name != name_noext)
     {
-	kdDebug(264) << "Application " << KGlobal::instance()->instanceName()
+	kdDebug(264) << "Application " << TDEGlobal::instance()->instanceName()
 		     << " loads icon " << name << " with extension." << endl;
     }
 #endif
@@ -445,21 +445,21 @@ TQString KIconLoader::removeIconExtensionInternal(const TQString &name) const
     return name_noext;
 }
 
-KIcon KIconLoader::findMatchingIcon(const TQString& name, int size) const
+TDEIcon TDEIconLoader::findMatchingIcon(const TQString& name, int size) const
 {
-    KIcon icon;
+    TDEIcon icon;
 
     const TQString *ext[4];
     int count=0;
-    static const TQString &png_ext = KGlobal::staticQString(".png");
+    static const TQString &png_ext = TDEGlobal::staticQString(".png");
     ext[count++]=&png_ext;
 #ifdef HAVE_LIBART
-    static const TQString &svgz_ext = KGlobal::staticQString(".svgz");
+    static const TQString &svgz_ext = TDEGlobal::staticQString(".svgz");
     ext[count++]=&svgz_ext;
-    static const TQString &svg_ext = KGlobal::staticQString(".svg");
+    static const TQString &svg_ext = TDEGlobal::staticQString(".svg");
     ext[count++]=&svg_ext;
 #endif
-    static const TQString &xpm_ext = KGlobal::staticQString(".xpm");
+    static const TQString &xpm_ext = TDEGlobal::staticQString(".xpm");
     ext[count++]=&xpm_ext;
 
     /* JRT: To follow the XDG spec, the order in which we look for an
@@ -474,18 +474,18 @@ KIcon KIconLoader::findMatchingIcon(const TQString& name, int size) const
        and so on
 
        */
-    for ( KIconThemeNode *themeNode = d->links.first() ; themeNode ;
+    for ( TDEIconThemeNode *themeNode = d->links.first() ; themeNode ;
 	themeNode = d->links.next() )
     {
 	for (int i = 0 ; i < count ; i++)
 	{
-	    icon = themeNode->theme->iconPath(name + *ext[i], size, KIcon::MatchExact);
+	    icon = themeNode->theme->iconPath(name + *ext[i], size, TDEIcon::MatchExact);
 	    if (icon.isValid()) goto icon_found ;
 	}
 
 	for (int i = 0 ; i < count ; i++)
 	{
-	    icon = themeNode->theme->iconPath(name + *ext[i], size, KIcon::MatchBest);
+	    icon = themeNode->theme->iconPath(name + *ext[i], size, TDEIcon::MatchBest);
 	    if (icon.isValid()) goto icon_found;	
 	}
     }
@@ -493,11 +493,11 @@ KIcon KIconLoader::findMatchingIcon(const TQString& name, int size) const
     return icon;
 }
 
-inline TQString KIconLoader::unknownIconPath( int size ) const
+inline TQString TDEIconLoader::unknownIconPath( int size ) const
 {
-    static const TQString &str_unknown = KGlobal::staticQString("unknown");
+    static const TQString &str_unknown = TDEGlobal::staticQString("unknown");
 
-    KIcon icon = findMatchingIcon(str_unknown, size);
+    TDEIcon icon = findMatchingIcon(str_unknown, size);
     if (!icon.isValid())
     {
         kdDebug(264) << "Warning: could not find \"Unknown\" icon for size = "
@@ -509,7 +509,7 @@ inline TQString KIconLoader::unknownIconPath( int size ) const
 
 // Finds the absolute path to an icon.
 
-TQString KIconLoader::iconPath(const TQString& _name, int group_or_size,
+TQString TDEIconLoader::iconPath(const TQString& _name, int group_or_size,
 			      bool canReturnNull) const
 {
     if (d->mpThemeRoot == 0L)
@@ -521,15 +521,15 @@ TQString KIconLoader::iconPath(const TQString& _name, int group_or_size,
     TQString name = removeIconExtensionInternal( _name );
 
     TQString path;
-    if (group_or_size == KIcon::User)
+    if (group_or_size == TDEIcon::User)
     {
-	static const TQString &png_ext = KGlobal::staticQString(".png");
-	static const TQString &xpm_ext = KGlobal::staticQString(".xpm");
+	static const TQString &png_ext = TDEGlobal::staticQString(".png");
+	static const TQString &xpm_ext = TDEGlobal::staticQString(".xpm");
 	path = d->mpDirs->findResource("appicon", name + png_ext);
 
 #ifdef HAVE_LIBART
-	static const TQString &svgz_ext = KGlobal::staticQString(".svgz");
-	static const TQString &svg_ext = KGlobal::staticQString(".svg");
+	static const TQString &svgz_ext = TDEGlobal::staticQString(".svgz");
+	static const TQString &svg_ext = TDEGlobal::staticQString(".svg");
 	if (path.isEmpty())
 	    path = d->mpDirs->findResource("appicon", name + svgz_ext);
 	if (path.isEmpty())
@@ -540,7 +540,7 @@ TQString KIconLoader::iconPath(const TQString& _name, int group_or_size,
 	return path;
     }
 
-    if (group_or_size >= KIcon::LastGroup)
+    if (group_or_size >= TDEIcon::LastGroup)
     {
 	kdDebug(264) << "Illegal icon group: " << group_or_size << endl;
 	return path;
@@ -559,12 +559,12 @@ TQString KIconLoader::iconPath(const TQString& _name, int group_or_size,
             return unknownIconPath(size);
     }
 
-    KIcon icon = findMatchingIcon(name, size);
+    TDEIcon icon = findMatchingIcon(name, size);
 
     if (!icon.isValid())
     {
 	// Try "User" group too.
-	path = iconPath(name, KIcon::User, true);
+	path = iconPath(name, TDEIcon::User, true);
 	if (!path.isEmpty() || canReturnNull)
 	    return path;
 
@@ -576,7 +576,7 @@ TQString KIconLoader::iconPath(const TQString& _name, int group_or_size,
     return icon.path;
 }
 
-TQPixmap KIconLoader::loadIcon(const TQString& _name, KIcon::Group group, int size,
+TQPixmap TDEIconLoader::loadIcon(const TQString& _name, TDEIcon::Group group, int size,
                               int state, TQString *path_store, bool canReturnNull) const
 {
     TQString name = _name;
@@ -595,10 +595,10 @@ TQPixmap KIconLoader::loadIcon(const TQString& _name, KIcon::Group group, int si
     }
     if (!TQDir::isRelativePath(name)) absolutePath=true;
 
-    static const TQString &str_unknown = KGlobal::staticQString("unknown");
+    static const TQString &str_unknown = TDEGlobal::staticQString("unknown");
 
     // Special case for "User" icons.
-    if (group == KIcon::User)
+    if (group == TDEIcon::User)
     {
 	key = "$kicou_";
         key += TQString::number(size); key += '_';
@@ -608,13 +608,13 @@ TQPixmap KIconLoader::loadIcon(const TQString& _name, KIcon::Group group, int si
 	    return pix;
 
 	TQString path = (absolutePath) ? name :
-			iconPath(name, KIcon::User, canReturnNull);
+			iconPath(name, TDEIcon::User, canReturnNull);
 	if (path.isEmpty())
 	{
 	    if (canReturnNull)
 		return pix;
 	    // We don't know the desired size: use small
-	    path = iconPath(str_unknown, KIcon::Small, true);
+	    path = iconPath(str_unknown, TDEIcon::Small, true);
 	    if (path.isEmpty())
 	    {
 		kdDebug(264) << "Warning: Cannot find \"unknown\" icon." << endl;
@@ -637,24 +637,24 @@ TQPixmap KIconLoader::loadIcon(const TQString& _name, KIcon::Group group, int si
 
     // Regular case: Check parameters
 
-    if ((group < -1) || (group >= KIcon::LastGroup))
+    if ((group < -1) || (group >= TDEIcon::LastGroup))
     {
 	kdDebug(264) << "Illegal icon group: " << group << endl;
-	group = KIcon::Desktop;
+	group = TDEIcon::Desktop;
     }
 
-    int overlay = (state & KIcon::OverlayMask);
-    state &= ~KIcon::OverlayMask;
-    if ((state < 0) || (state >= KIcon::LastState))
+    int overlay = (state & TDEIcon::OverlayMask);
+    state &= ~TDEIcon::OverlayMask;
+    if ((state < 0) || (state >= TDEIcon::LastState))
     {
 	kdDebug(264) << "Illegal icon state: " << state << endl;
-	state = KIcon::DefaultState;
+	state = TDEIcon::DefaultState;
     }
 
     if (size == 0 && group < 0)
     {
 	kdDebug(264) << "Neither size nor group specified!" << endl;
-	group = KIcon::Desktop;
+	group = TDEIcon::Desktop;
     }
 
     if (!absolutePath)
@@ -705,11 +705,11 @@ TQPixmap KIconLoader::loadIcon(const TQString& _name, KIcon::Group group, int si
          noEffectKey != d->lastImageKey )
     {
         // No? load it.
-        KIcon icon;
+        TDEIcon icon;
         if (absolutePath && !favIconOverlay)
         {
-            icon.context=KIcon::Any;
-            icon.type=KIcon::Scalable;
+            icon.context=TDEIcon::Any;
+            icon.type=TDEIcon::Scalable;
             icon.path=name;
         }
         else
@@ -721,7 +721,7 @@ TQPixmap KIconLoader::loadIcon(const TQString& _name, KIcon::Group group, int si
             {
                 // Try "User" icon too. Some apps expect this.
                 if (!name.isEmpty())
-                    pix = loadIcon(name, KIcon::User, size, state, path_store, true);
+                    pix = loadIcon(name, TDEIcon::User, size, state, path_store, true);
                 if (!pix.isNull() || canReturnNull) {
                     TQPixmapCache::insert(key, pix);
                     return pix;
@@ -789,20 +789,20 @@ TQPixmap KIconLoader::loadIcon(const TQString& _name, KIcon::Group group, int si
     if (overlay)
     {
 	TQImage *ovl;
-	KIconTheme *theme = d->mpThemeRoot->theme;
-	if ((overlay & KIcon::LockOverlay) &&
+	TDEIconTheme *theme = d->mpThemeRoot->theme;
+	if ((overlay & TDEIcon::LockOverlay) &&
 		((ovl = loadOverlay(theme->lockOverlay(), size)) != 0L))
-	    KIconEffect::overlay(*img, *ovl);
-	if ((overlay & KIcon::LinkOverlay) &&
+	    TDEIconEffect::overlay(*img, *ovl);
+	if ((overlay & TDEIcon::LinkOverlay) &&
 		((ovl = loadOverlay(theme->linkOverlay(), size)) != 0L))
-	    KIconEffect::overlay(*img, *ovl);
-	if ((overlay & KIcon::ZipOverlay) &&
+	    TDEIconEffect::overlay(*img, *ovl);
+	if ((overlay & TDEIcon::ZipOverlay) &&
 		((ovl = loadOverlay(theme->zipOverlay(), size)) != 0L))
-	    KIconEffect::overlay(*img, *ovl);
-	if ((overlay & KIcon::ShareOverlay) &&
+	    TDEIconEffect::overlay(*img, *ovl);
+	if ((overlay & TDEIcon::ShareOverlay) &&
 	    ((ovl = loadOverlay(theme->shareOverlay(), size)) != 0L))
-	  KIconEffect::overlay(*img, *ovl);
-        if (overlay & KIcon::HiddenOverlay)
+	  TDEIconEffect::overlay(*img, *ovl);
+        if (overlay & TDEIcon::HiddenOverlay)
         {
 	    if (img->depth() != 32)
 	        *img = img->convertDepth(32);
@@ -816,11 +816,11 @@ TQPixmap KIconLoader::loadIcon(const TQString& _name, KIcon::Group group, int si
     }
 
     // Scale the icon and apply effects if necessary
-    if (iconType == KIcon::Scalable && size != img->width())
+    if (iconType == TDEIcon::Scalable && size != img->width())
     {
         *img = img->smoothScale(size, size);
     }
-    if (iconType == KIcon::Threshold && size != img->width())
+    if (iconType == TDEIcon::Threshold && size != img->width())
     {
 	if ( abs(size-img->width())>iconThreshold )
 	    *img = img->smoothScale(size, size);
@@ -868,14 +868,14 @@ TQPixmap KIconLoader::loadIcon(const TQString& _name, KIcon::Group group, int si
     return pix;
 }
 
-TQImage *KIconLoader::loadOverlay(const TQString &name, int size) const
+TQImage *TDEIconLoader::loadOverlay(const TQString &name, int size) const
 {
     TQString key = name + '_' + TQString::number(size);
     TQImage *image = d->imgDict.find(key);
     if (image != 0L)
 	return image;
 
-    KIcon icon = findMatchingIcon(name, size);
+    TDEIcon icon = findMatchingIcon(name, size);
     if (!icon.isValid())
     {
 	kdDebug(264) << "Overlay " << name << "not found." << endl;
@@ -892,7 +892,7 @@ TQImage *KIconLoader::loadOverlay(const TQString &name, int size) const
 
 
 
-TQMovie KIconLoader::loadMovie(const TQString& name, KIcon::Group group, int size) const
+TQMovie TDEIconLoader::loadMovie(const TQString& name, TDEIcon::Group group, int size) const
 {
     TQString file = moviePath( name, group, size );
     if (file.isEmpty())
@@ -904,23 +904,23 @@ TQMovie KIconLoader::loadMovie(const TQString& name, KIcon::Group group, int siz
     return TQMovie(file);
 }
 
-TQString KIconLoader::moviePath(const TQString& name, KIcon::Group group, int size) const
+TQString TDEIconLoader::moviePath(const TQString& name, TDEIcon::Group group, int size) const
 {
     if (!d->mpGroups) return TQString::null;
 
-    if ( (group < -1 || group >= KIcon::LastGroup) && group != KIcon::User )
+    if ( (group < -1 || group >= TDEIcon::LastGroup) && group != TDEIcon::User )
     {
 	kdDebug(264) << "Illegal icon group: " << group << endl;
-	group = KIcon::Desktop;
+	group = TDEIcon::Desktop;
     }
     if (size == 0 && group < 0)
     {
 	kdDebug(264) << "Neither size nor group specified!" << endl;
-	group = KIcon::Desktop;
+	group = TDEIcon::Desktop;
     }
 
     TQString file = name + ".mng";
-    if (group == KIcon::User)
+    if (group == TDEIcon::User)
     {
 	file = d->mpDirs->findResource("appicon", file);
     }
@@ -929,15 +929,15 @@ TQString KIconLoader::moviePath(const TQString& name, KIcon::Group group, int si
 	if (size == 0)
 	    size = d->mpGroups[group].size;
 
-        KIcon icon;
+        TDEIcon icon;
 
-	for ( KIconThemeNode *themeNode = d->links.first() ; themeNode ;
+	for ( TDEIconThemeNode *themeNode = d->links.first() ; themeNode ;
 		themeNode = d->links.next() )
 	{
-	    icon = themeNode->theme->iconPath(file, size, KIcon::MatchExact);
+	    icon = themeNode->theme->iconPath(file, size, TDEIcon::MatchExact);
 	    if (icon.isValid()) goto icon_found ;
 
-		icon = themeNode->theme->iconPath(file, size, KIcon::MatchBest);
+		icon = themeNode->theme->iconPath(file, size, TDEIcon::MatchBest);
 	    if (icon.isValid()) goto icon_found ;
 	}
 
@@ -948,32 +948,32 @@ TQString KIconLoader::moviePath(const TQString& name, KIcon::Group group, int si
 }
 
 
-TQStringList KIconLoader::loadAnimated(const TQString& name, KIcon::Group group, int size) const
+TQStringList TDEIconLoader::loadAnimated(const TQString& name, TDEIcon::Group group, int size) const
 {
     TQStringList lst;
 
     if (!d->mpGroups) return lst;
 
-    if ((group < -1) || (group >= KIcon::LastGroup))
+    if ((group < -1) || (group >= TDEIcon::LastGroup))
     {
 	kdDebug(264) << "Illegal icon group: " << group << endl;
-	group = KIcon::Desktop;
+	group = TDEIcon::Desktop;
     }
     if ((size == 0) && (group < 0))
     {
 	kdDebug(264) << "Neither size nor group specified!" << endl;
-	group = KIcon::Desktop;
+	group = TDEIcon::Desktop;
     }
 
     TQString file = name + "/0001";
-    if (group == KIcon::User)
+    if (group == TDEIcon::User)
     {
 	file = d->mpDirs->findResource("appicon", file + ".png");
     } else
     {
 	if (size == 0)
 	    size = d->mpGroups[group].size;
-	KIcon icon = findMatchingIcon(file, size);
+	TDEIcon icon = findMatchingIcon(file, size);
 	file = icon.isValid() ? icon.path : TQString::null;
 
     }
@@ -999,17 +999,17 @@ TQStringList KIconLoader::loadAnimated(const TQString& name, KIcon::Group group,
     return lst;
 }
 
-KIconTheme *KIconLoader::theme() const
+TDEIconTheme *TDEIconLoader::theme() const
 {
     if (d->mpThemeRoot) return d->mpThemeRoot->theme;
     return 0L;
 }
 
-int KIconLoader::currentSize(KIcon::Group group) const
+int TDEIconLoader::currentSize(TDEIcon::Group group) const
 {
     if (!d->mpGroups) return -1;
 
-    if (group < 0 || group >= KIcon::LastGroup)
+    if (group < 0 || group >= TDEIcon::LastGroup)
     {
 	kdDebug(264) << "Illegal icon group: " << group << endl;
 	return -1;
@@ -1017,7 +1017,7 @@ int KIconLoader::currentSize(KIcon::Group group) const
     return d->mpGroups[group].size;
 }
 
-TQStringList KIconLoader::queryIconsByDir( const TQString& iconsDir ) const
+TQStringList TDEIconLoader::queryIconsByDir( const TQString& iconsDir ) const
 {
   TQDir dir(iconsDir);
   TQStringList lst = dir.entryList("*.png;*.xpm", TQDir::Files);
@@ -1028,11 +1028,11 @@ TQStringList KIconLoader::queryIconsByDir( const TQString& iconsDir ) const
   return result;
 }
 
-TQStringList KIconLoader::queryIconsByContext(int group_or_size,
-					    KIcon::Context context) const
+TQStringList TDEIconLoader::queryIconsByContext(int group_or_size,
+					    TDEIcon::Context context) const
 {
     TQStringList result;
-    if (group_or_size >= KIcon::LastGroup)
+    if (group_or_size >= TDEIcon::LastGroup)
     {
 	kdDebug(264) << "Illegal icon group: " << group_or_size << endl;
 	return result;
@@ -1043,7 +1043,7 @@ TQStringList KIconLoader::queryIconsByContext(int group_or_size,
     else
 	size = -group_or_size;
 
-    for ( KIconThemeNode *themeNode = d->links.first() ; themeNode ;
+    for ( TDEIconThemeNode *themeNode = d->links.first() ; themeNode ;
             themeNode = d->links.next() )
        themeNode->queryIconsByContext(&result, size, context);
 
@@ -1069,10 +1069,10 @@ TQStringList KIconLoader::queryIconsByContext(int group_or_size,
 
 }
 
-TQStringList KIconLoader::queryIcons(int group_or_size, KIcon::Context context) const
+TQStringList TDEIconLoader::queryIcons(int group_or_size, TDEIcon::Context context) const
 {
     TQStringList result;
-    if (group_or_size >= KIcon::LastGroup)
+    if (group_or_size >= TDEIcon::LastGroup)
     {
 	kdDebug(264) << "Illegal icon group: " << group_or_size << endl;
 	return result;
@@ -1083,7 +1083,7 @@ TQStringList KIconLoader::queryIcons(int group_or_size, KIcon::Context context) 
     else
 	size = -group_or_size;
 
-    for ( KIconThemeNode *themeNode = d->links.first() ; themeNode ;
+    for ( TDEIconThemeNode *themeNode = d->links.first() ; themeNode ;
             themeNode = d->links.next() )
        themeNode->queryIcons(&result, size, context);
 
@@ -1108,26 +1108,26 @@ TQStringList KIconLoader::queryIcons(int group_or_size, KIcon::Context context) 
     return res2;
 }
 
-// used by KIconDialog to find out which contexts to offer in a combobox
-bool KIconLoader::hasContext(KIcon::Context context) const
+// used by TDEIconDialog to find out which contexts to offer in a combobox
+bool TDEIconLoader::hasContext(TDEIcon::Context context) const
 {
-    for ( KIconThemeNode *themeNode = d->links.first() ; themeNode ;
+    for ( TDEIconThemeNode *themeNode = d->links.first() ; themeNode ;
             themeNode = d->links.next() )
        if( themeNode->theme->hasContext( context ))
            return true;
     return false;
 }
 
-KIconEffect * KIconLoader::iconEffect() const
+TDEIconEffect * TDEIconLoader::iconEffect() const
 {
     return &d->mpEffect;
 }
 
-bool KIconLoader::alphaBlending(KIcon::Group group) const
+bool TDEIconLoader::alphaBlending(TDEIcon::Group group) const
 {
     if (!d->mpGroups) return false;
 
-    if (group < 0 || group >= KIcon::LastGroup)
+    if (group < 0 || group >= TDEIcon::LastGroup)
     {
 	kdDebug(264) << "Illegal icon group: " << group << endl;
 	return false;
@@ -1135,103 +1135,103 @@ bool KIconLoader::alphaBlending(KIcon::Group group) const
     return d->mpGroups[group].alphaBlending;
 }
 
-TQIconSet KIconLoader::loadIconSet(const TQString& name, KIcon::Group group, int size, bool canReturnNull)
+TQIconSet TDEIconLoader::loadIconSet(const TQString& name, TDEIcon::Group group, int size, bool canReturnNull)
 {
     return loadIconSet( name, group, size, canReturnNull, true );
 }
 
-TQIconSet KIconLoader::loadIconSet(const TQString& name, KIcon::Group group, int size)
+TQIconSet TDEIconLoader::loadIconSet(const TQString& name, TDEIcon::Group group, int size)
 {
     return loadIconSet( name, group, size, false );
 }
 
 /*** class for delayed icon loading for TQIconSet ***/
 
-class KIconFactory
+class TDEIconFactory
     : public TQIconFactory
     {
     public:
-        KIconFactory( const TQString& iconName_P, KIcon::Group group_P,
-            int size_P, KIconLoader* loader_P );
-        KIconFactory( const TQString& iconName_P, KIcon::Group group_P,
-            int size_P, KIconLoader* loader_P, bool canReturnNull );
+        TDEIconFactory( const TQString& iconName_P, TDEIcon::Group group_P,
+            int size_P, TDEIconLoader* loader_P );
+        TDEIconFactory( const TQString& iconName_P, TDEIcon::Group group_P,
+            int size_P, TDEIconLoader* loader_P, bool canReturnNull );
         virtual TQPixmap* createPixmap( const TQIconSet&, TQIconSet::Size, TQIconSet::Mode, TQIconSet::State );
     private:
         TQString iconName;
-        KIcon::Group group;
+        TDEIcon::Group group;
         int size;
-        KIconLoader* loader;
+        TDEIconLoader* loader;
         bool canReturnNull;
     };
 
 
-TQIconSet KIconLoader::loadIconSet( const TQString& name, KIcon::Group g, int s,
+TQIconSet TDEIconLoader::loadIconSet( const TQString& name, TDEIcon::Group g, int s,
     bool canReturnNull, bool immediateExistenceCheck)
 {
     if ( !d->delayedLoading )
         return loadIconSetNonDelayed( name, g, s, canReturnNull );
 
     if (g < -1 || g > 6) {
-        kdDebug() << "KIconLoader::loadIconSet " << name << " " << (int)g << " " << s << endl;
+        kdDebug() << "TDEIconLoader::loadIconSet " << name << " " << (int)g << " " << s << endl;
         tqDebug("%s", kdBacktrace().latin1());
         abort();
     }
 
     if(canReturnNull && immediateExistenceCheck)
     { // we need to find out if the icon actually exists
-        TQPixmap pm = loadIcon( name, g, s, KIcon::DefaultState, NULL, true );
+        TQPixmap pm = loadIcon( name, g, s, TDEIcon::DefaultState, NULL, true );
         if( pm.isNull())
             return TQIconSet();
 
         TQIconSet ret( pm );
-        ret.installIconFactory( new KIconFactory( name, g, s, this ));
+        ret.installIconFactory( new TDEIconFactory( name, g, s, this ));
         return ret;
     }
 
     TQIconSet ret;
-    ret.installIconFactory( new KIconFactory( name, g, s, this, canReturnNull ));
+    ret.installIconFactory( new TDEIconFactory( name, g, s, this, canReturnNull ));
     return ret;
 }
 
-TQIconSet KIconLoader::loadIconSetNonDelayed( const TQString& name,
-                                             KIcon::Group g,
+TQIconSet TDEIconLoader::loadIconSetNonDelayed( const TQString& name,
+                                             TDEIcon::Group g,
                                              int s, bool canReturnNull )
 {
     TQIconSet iconset;
-    TQPixmap tmp = loadIcon(name, g, s, KIcon::ActiveState, NULL, canReturnNull);
+    TQPixmap tmp = loadIcon(name, g, s, TDEIcon::ActiveState, NULL, canReturnNull);
     iconset.setPixmap( tmp, TQIconSet::Small, TQIconSet::Active );
     // we don't use QIconSet's resizing anyway
     iconset.setPixmap( tmp, TQIconSet::Large, TQIconSet::Active );
-    tmp = loadIcon(name, g, s, KIcon::DisabledState, NULL, canReturnNull);
+    tmp = loadIcon(name, g, s, TDEIcon::DisabledState, NULL, canReturnNull);
     iconset.setPixmap( tmp, TQIconSet::Small, TQIconSet::Disabled );
     iconset.setPixmap( tmp, TQIconSet::Large, TQIconSet::Disabled );
-    tmp = loadIcon(name, g, s, KIcon::DefaultState, NULL, canReturnNull);
+    tmp = loadIcon(name, g, s, TDEIcon::DefaultState, NULL, canReturnNull);
     iconset.setPixmap( tmp, TQIconSet::Small, TQIconSet::Normal );
     iconset.setPixmap( tmp, TQIconSet::Large, TQIconSet::Normal );
     return iconset;
 }
 
-KIconFactory::KIconFactory( const TQString& iconName_P, KIcon::Group group_P,
-    int size_P, KIconLoader* loader_P )
+TDEIconFactory::TDEIconFactory( const TQString& iconName_P, TDEIcon::Group group_P,
+    int size_P, TDEIconLoader* loader_P )
     : iconName( iconName_P ), group( group_P ), size( size_P ), loader( loader_P )
 {
     canReturnNull = false;
     setAutoDelete( true );
 }
 
-KIconFactory::KIconFactory( const TQString& iconName_P, KIcon::Group group_P,
-    int size_P, KIconLoader* loader_P, bool canReturnNull_P )
+TDEIconFactory::TDEIconFactory( const TQString& iconName_P, TDEIcon::Group group_P,
+    int size_P, TDEIconLoader* loader_P, bool canReturnNull_P )
     : iconName( iconName_P ), group( group_P ), size( size_P ),
       loader( loader_P ), canReturnNull( canReturnNull_P)
 {
     setAutoDelete( true );
 }
 
-TQPixmap* KIconFactory::createPixmap( const TQIconSet&, TQIconSet::Size, TQIconSet::Mode mode_P, TQIconSet::State )
+TQPixmap* TDEIconFactory::createPixmap( const TQIconSet&, TQIconSet::Size, TQIconSet::Mode mode_P, TQIconSet::State )
     {
 #ifdef KICONLOADER_CHECKS
     bool found = false;
-    for( TQValueList< KIconLoaderDebug >::Iterator it = kiconloaders->begin();
+    for( TQValueList< TDEIconLoaderDebug >::Iterator it = kiconloaders->begin();
          it != kiconloaders->end();
          ++it )
         {
@@ -1241,10 +1241,10 @@ TQPixmap* KIconFactory::createPixmap( const TQIconSet&, TQIconSet::Size, TQIconS
             if( !(*it).valid )
                 {
 #ifdef NDEBUG
-                loader = KGlobal::iconLoader();
+                loader = TDEGlobal::iconLoader();
                 iconName = "no_way_man_you_will_get_broken_icon";
 #else
-                kdWarning() << "Using already destroyed KIconLoader for loading an icon!" << endl;
+                kdWarning() << "Using already destroyed TDEIconLoader for loading an icon!" << endl;
                 kdWarning() << "Appname:" << (*it).appname << ", icon:" << iconName << endl;
                 kdWarning() << "Deleted at:" << endl;
                 kdWarning() << (*it).delete_bt << endl;
@@ -1260,10 +1260,10 @@ TQPixmap* KIconFactory::createPixmap( const TQIconSet&, TQIconSet::Size, TQIconS
     if( !found )
         {
 #ifdef NDEBUG
-        loader = KGlobal::iconLoader();
+        loader = TDEGlobal::iconLoader();
         iconName = "no_way_man_you_will_get_broken_icon";
 #else
-        kdWarning() << "Using unknown KIconLoader for loading an icon!" << endl;
+        kdWarning() << "Using unknown TDEIconLoader for loading an icon!" << endl;
         kdWarning() << "Icon:" << iconName << endl;
         kdWarning() << kdBacktrace() << endl;
         abort();
@@ -1271,15 +1271,15 @@ TQPixmap* KIconFactory::createPixmap( const TQIconSet&, TQIconSet::Size, TQIconS
 #endif
         }
 #endif
-    // TQIconSet::Mode to KIcon::State conversion
-    static const KIcon::States tbl[] = { KIcon::DefaultState, KIcon::DisabledState, KIcon::ActiveState };
-    int state = KIcon::DefaultState;
+    // TQIconSet::Mode to TDEIcon::State conversion
+    static const TDEIcon::States tbl[] = { TDEIcon::DefaultState, TDEIcon::DisabledState, TDEIcon::ActiveState };
+    int state = TDEIcon::DefaultState;
     if( mode_P <= TQIconSet::Active )
         state = tbl[ mode_P ];
-    if( group >= 0 && state == KIcon::ActiveState )
+    if( group >= 0 && state == TDEIcon::ActiveState )
     { // active and normal icon are usually the same
-	if( loader->iconEffect()->fingerprint(group, KIcon::ActiveState )
-            == loader->iconEffect()->fingerprint(group, KIcon::DefaultState ))
+	if( loader->iconEffect()->fingerprint(group, TDEIcon::ActiveState )
+            == loader->iconEffect()->fingerprint(group, TDEIcon::DefaultState ))
             return 0; // so let TQIconSet simply duplicate it
     }
     // ignore passed size
@@ -1291,107 +1291,107 @@ TQPixmap* KIconFactory::createPixmap( const TQIconSet&, TQIconSet::Size, TQIconS
 // Easy access functions
 
 TQPixmap DesktopIcon(const TQString& name, int force_size, int state,
-	KInstance *instance)
+	TDEInstance *instance)
 {
-    KIconLoader *loader = instance->iconLoader();
-    return loader->loadIcon(name, KIcon::Desktop, force_size, state);
+    TDEIconLoader *loader = instance->iconLoader();
+    return loader->loadIcon(name, TDEIcon::Desktop, force_size, state);
 }
 
-TQPixmap DesktopIcon(const TQString& name, KInstance *instance)
+TQPixmap DesktopIcon(const TQString& name, TDEInstance *instance)
 {
-    return DesktopIcon(name, 0, KIcon::DefaultState, instance);
+    return DesktopIcon(name, 0, TDEIcon::DefaultState, instance);
 }
 
-TQIconSet DesktopIconSet(const TQString& name, int force_size, KInstance *instance)
+TQIconSet DesktopIconSet(const TQString& name, int force_size, TDEInstance *instance)
 {
-    KIconLoader *loader = instance->iconLoader();
-    return loader->loadIconSet( name, KIcon::Desktop, force_size );
+    TDEIconLoader *loader = instance->iconLoader();
+    return loader->loadIconSet( name, TDEIcon::Desktop, force_size );
 }
 
 TQPixmap BarIcon(const TQString& name, int force_size, int state,
-	KInstance *instance)
+	TDEInstance *instance)
 {
-    KIconLoader *loader = instance->iconLoader();
-    return loader->loadIcon(name, KIcon::Toolbar, force_size, state);
+    TDEIconLoader *loader = instance->iconLoader();
+    return loader->loadIcon(name, TDEIcon::Toolbar, force_size, state);
 }
 
-TQPixmap BarIcon(const TQString& name, KInstance *instance)
+TQPixmap BarIcon(const TQString& name, TDEInstance *instance)
 {
-    return BarIcon(name, 0, KIcon::DefaultState, instance);
+    return BarIcon(name, 0, TDEIcon::DefaultState, instance);
 }
 
-TQIconSet BarIconSet(const TQString& name, int force_size, KInstance *instance)
+TQIconSet BarIconSet(const TQString& name, int force_size, TDEInstance *instance)
 {
-    KIconLoader *loader = instance->iconLoader();
-    return loader->loadIconSet( name, KIcon::Toolbar, force_size );
+    TDEIconLoader *loader = instance->iconLoader();
+    return loader->loadIconSet( name, TDEIcon::Toolbar, force_size );
 }
 
 TQPixmap SmallIcon(const TQString& name, int force_size, int state,
-	KInstance *instance)
+	TDEInstance *instance)
 {
-    KIconLoader *loader = instance->iconLoader();
-    return loader->loadIcon(name, KIcon::Small, force_size, state);
+    TDEIconLoader *loader = instance->iconLoader();
+    return loader->loadIcon(name, TDEIcon::Small, force_size, state);
 }
 
-TQPixmap SmallIcon(const TQString& name, KInstance *instance)
+TQPixmap SmallIcon(const TQString& name, TDEInstance *instance)
 {
-    return SmallIcon(name, 0, KIcon::DefaultState, instance);
+    return SmallIcon(name, 0, TDEIcon::DefaultState, instance);
 }
 
-TQIconSet SmallIconSet(const TQString& name, int force_size, KInstance *instance)
+TQIconSet SmallIconSet(const TQString& name, int force_size, TDEInstance *instance)
 {
-    KIconLoader *loader = instance->iconLoader();
-    return loader->loadIconSet( name, KIcon::Small, force_size );
+    TDEIconLoader *loader = instance->iconLoader();
+    return loader->loadIconSet( name, TDEIcon::Small, force_size );
 }
 
 TQPixmap MainBarIcon(const TQString& name, int force_size, int state,
-	KInstance *instance)
+	TDEInstance *instance)
 {
-    KIconLoader *loader = instance->iconLoader();
-    return loader->loadIcon(name, KIcon::MainToolbar, force_size, state);
+    TDEIconLoader *loader = instance->iconLoader();
+    return loader->loadIcon(name, TDEIcon::MainToolbar, force_size, state);
 }
 
-TQPixmap MainBarIcon(const TQString& name, KInstance *instance)
+TQPixmap MainBarIcon(const TQString& name, TDEInstance *instance)
 {
-    return MainBarIcon(name, 0, KIcon::DefaultState, instance);
+    return MainBarIcon(name, 0, TDEIcon::DefaultState, instance);
 }
 
-TQIconSet MainBarIconSet(const TQString& name, int force_size, KInstance *instance)
+TQIconSet MainBarIconSet(const TQString& name, int force_size, TDEInstance *instance)
 {
-    KIconLoader *loader = instance->iconLoader();
-    return loader->loadIconSet( name, KIcon::MainToolbar, force_size );
+    TDEIconLoader *loader = instance->iconLoader();
+    return loader->loadIconSet( name, TDEIcon::MainToolbar, force_size );
 }
 
-TQPixmap UserIcon(const TQString& name, int state, KInstance *instance)
+TQPixmap UserIcon(const TQString& name, int state, TDEInstance *instance)
 {
-    KIconLoader *loader = instance->iconLoader();
-    return loader->loadIcon(name, KIcon::User, 0, state);
+    TDEIconLoader *loader = instance->iconLoader();
+    return loader->loadIcon(name, TDEIcon::User, 0, state);
 }
 
-TQPixmap UserIcon(const TQString& name, KInstance *instance)
+TQPixmap UserIcon(const TQString& name, TDEInstance *instance)
 {
-    return UserIcon(name, KIcon::DefaultState, instance);
+    return UserIcon(name, TDEIcon::DefaultState, instance);
 }
 
-TQIconSet UserIconSet(const TQString& name, KInstance *instance)
+TQIconSet UserIconSet(const TQString& name, TDEInstance *instance)
 {
-    KIconLoader *loader = instance->iconLoader();
-    return loader->loadIconSet( name, KIcon::User );
+    TDEIconLoader *loader = instance->iconLoader();
+    return loader->loadIconSet( name, TDEIcon::User );
 }
 
-int IconSize(KIcon::Group group, KInstance *instance)
+int IconSize(TDEIcon::Group group, TDEInstance *instance)
 {
-    KIconLoader *loader = instance->iconLoader();
+    TDEIconLoader *loader = instance->iconLoader();
     return loader->currentSize(group);
 }
 
-TQPixmap KIconLoader::unknown()
+TQPixmap TDEIconLoader::unknown()
 {
     TQPixmap pix;
     if ( TQPixmapCache::find("unknown", pix) )
             return pix;
 
-    TQString path = KGlobal::iconLoader()->iconPath("unknown", KIcon::Small, true);
+    TQString path = TDEGlobal::iconLoader()->iconPath("unknown", TDEIcon::Small, true);
     if (path.isEmpty())
     {
 	kdDebug(264) << "Warning: Cannot find \"unknown\" icon." << endl;
@@ -1405,7 +1405,7 @@ TQPixmap KIconLoader::unknown()
     return pix;
 }
 
-void KIconLoaderPrivate::reconfigure()
+void TDEIconLoaderPrivate::reconfigure()
 {
   q->reconfigure(appname, mpDirs);
 }

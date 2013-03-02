@@ -20,8 +20,8 @@
 #include "kmdriverdialog.h"
 #include "driverview.h"
 
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 
 KMDriverDialog::KMDriverDialog(TQWidget *parent, const char *name)
 : KDialogBase(KDialogBase::Swallow,i18n("Configure"),KDialogBase::Ok|KDialogBase::Cancel,KDialogBase::Ok,parent,name,true,false)

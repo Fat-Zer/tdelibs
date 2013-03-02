@@ -17,19 +17,19 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include "kcolordialog.h"
-#include <kconfig.h>
-#include <klocale.h>
+#include <tdeconfig.h>
+#include <tdelocale.h>
 
 int main( int argc, char *argv[] )
 {
 	TQColor color;
 
-	KLocale::setMainCatalogue("tdelibs");
+	TDELocale::setMainCatalogue("tdelibs");
 	TQApplication::setColorMode( TQApplication::CustomColors );
-	KApplication a( argc, argv, "KColorDialogTest" );
-        KConfig aConfig;
+	TDEApplication a( argc, argv, "KColorDialogTest" );
+        TDEConfig aConfig;
         aConfig.setGroup( "KColorDialog-test" );
     
 	color = aConfig.readColorEntry( "Chosen" );

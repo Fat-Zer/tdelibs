@@ -20,15 +20,15 @@
 INCLUDES= -I$(srcdir)/.. -I$(top_srcdir) $(all_includes)
 
 lib_LTLIBRARIES =
-tdeinit_LTLIBRARIES = kded.la kbuildsycoca.la
+tdeinit_LTLIBRARIES = kded.la tdebuildsycoca.la
 
 kded_la_LDFLAGS = $(all_libraries) -module -avoid-version
 kded_la_LIBADD = $(LIB_KIO) $(LIB_QT) $(LIB_TDECORE) $(top_builddir)/dcop/libDCOP.la $(LIB_X11)
 kded_la_SOURCES = kded.cpp kdedmodule.cpp
 
-kbuildsycoca_la_LDFLAGS = $(all_libraries) -module -avoid-version
-kbuildsycoca_la_LIBADD = $(LIB_KIO) $(LIB_QT) $(top_builddir)/dcop/libDCOP.la $(LIB_TDECORE)
-kbuildsycoca_la_SOURCES = kbuildsycoca.cpp kbuildservicetypefactory.cpp \
+tdebuildsycoca_la_LDFLAGS = $(all_libraries) -module -avoid-version
+tdebuildsycoca_la_LIBADD = $(LIB_KIO) $(LIB_QT) $(top_builddir)/dcop/libDCOP.la $(LIB_TDECORE)
+tdebuildsycoca_la_SOURCES = tdebuildsycoca.cpp kbuildservicetypefactory.cpp \
 				kbuildservicefactory.cpp \
 				kbuildservicegroupfactory.cpp \
 				kbuildimageiofactory.cpp \
@@ -36,25 +36,25 @@ kbuildsycoca_la_SOURCES = kbuildsycoca.cpp kbuildservicetypefactory.cpp \
 				kctimefactory.cpp \
 				vfolder_menu.cpp
 
-bin_PROGRAMS = kdontchangethehostname kde-menu kmimelist
+bin_PROGRAMS = kdontchangethehostname tde-menu tdemimelist
 
-kdontchangethehostname_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+kdontchangethehostname_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
 kdontchangethehostname_LDADD = $(LIB_TDECORE)
 kdontchangethehostname_SOURCES = khostname.cpp
 
-kmimelist_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
-kmimelist_LDADD = ../kio/libkio.la
-kmimelist_SOURCES = kmimelist.cpp
+tdemimelist_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
+tdemimelist_LDADD = ../tdeio/libtdeio.la
+tdemimelist_SOURCES = tdemimelist.cpp
 
-kde_menu_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -lktexteditor
+kde_menu_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
 kde_menu_LDADD = $(LIB_KIO)
-kde_menu_SOURCES = kde-menu.cpp
+kde_menu_SOURCES = tde-menu.cpp
 
 METASOURCES = AUTO
 
 include_HEADERS = kdedmodule.h
 
-noinst_HEADERS = kbuildsycoca.h kbuildservicetypefactory.h \
+noinst_HEADERS = tdebuildsycoca.h kbuildservicetypefactory.h \
 		kbuildservicefactory.h kbuildservicegroupfactory.h \
 		kbuildimageiofactory.h kresourcelist.h \
 		kbuildprotocolinfofactory.h
@@ -65,7 +65,7 @@ servicetypedir = $(kde_servicetypesdir)
 xdg_menu_DATA = applications.menu applications.menu-no-kde
 
 update_DATA = kded.upd
-updatedir = $(kde_datadir)/kconf_update
+updatedir = $(kde_datadir)/tdeconf_update
 
 include $(top_srcdir)/admin/Doxyfile.am
 

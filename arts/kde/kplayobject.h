@@ -126,7 +126,7 @@ class PlayObjectFactory;
   * This class acts as a general interface to the KDE multimedia framework.
   * You basically point the Playobject to an URL and say "play", and it will
   * automatically decode and play and / or display the file or stream.
-  * For non-local media, it will make extensive use of KIOInputStream to
+  * For non-local media, it will make extensive use of TDEIOInputStream to
   * directly play the content from the remote location without having to
   * download it to a temporary local file first.
   *

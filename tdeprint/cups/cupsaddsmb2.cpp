@@ -26,11 +26,11 @@
 #include <tqlabel.h>
 #include <tqlayout.h>
 #include <tqlineedit.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <tqmessagebox.h>
 #include <tqfile.h>
-#include <kio/passdlg.h>
+#include <tdeio/passdlg.h>
 #include <kdebug.h>
 #include <kseparator.h>
 #include <kactivelabel.h>
@@ -47,9 +47,9 @@ CupsAddSmb::CupsAddSmb(TQWidget *parent, const char *name)
 	m_state = None;
 	m_status = false;
 	m_actionindex = 0;
-	connect(&m_proc, TQT_SIGNAL(receivedStdout(KProcess*,char*,int)), TQT_SLOT(slotReceived(KProcess*,char*,int)));
-	connect(&m_proc, TQT_SIGNAL(receivedStderr(KProcess*,char*,int)), TQT_SLOT(slotReceived(KProcess*,char*,int)));
-	connect(&m_proc, TQT_SIGNAL(processExited(KProcess*)), TQT_SLOT(slotProcessExited(KProcess*)));
+	connect(&m_proc, TQT_SIGNAL(receivedStdout(TDEProcess*,char*,int)), TQT_SLOT(slotReceived(TDEProcess*,char*,int)));
+	connect(&m_proc, TQT_SIGNAL(receivedStderr(TDEProcess*,char*,int)), TQT_SLOT(slotReceived(TDEProcess*,char*,int)));
+	connect(&m_proc, TQT_SIGNAL(processExited(TDEProcess*)), TQT_SLOT(slotProcessExited(TDEProcess*)));
 
 	m_side = new SidePixmap(this);
 	m_doit = new TQPushButton(i18n("&Export"), this);
@@ -145,7 +145,7 @@ void CupsAddSmb::slotActionClicked()
 		m_proc.kill();
 }
 
-void CupsAddSmb::slotReceived(KProcess*, char *buf, int buflen)
+void CupsAddSmb::slotReceived(TDEProcess*, char *buf, int buflen)
 {
 	TQString	line;
 	int		index(0);
@@ -309,7 +309,7 @@ void CupsAddSmb::doNextAction()
 	}
 }
 
-void CupsAddSmb::slotProcessExited(KProcess*)
+void CupsAddSmb::slotProcessExited(TDEProcess*)
 {
 	kdDebug(500) << "PROCESS EXITED (" << m_state << ")" << endl;
 	if (m_proc.normalExit() && m_state != Start && m_status)
@@ -470,7 +470,7 @@ bool CupsAddSmb::startProcess()
 	m_actionindex = 0;
 	m_buffer.clear();
 	kdDebug(500) << "PROCESS STARTED = " << m_proc.args()[0] << endl;
-	return m_proc.start(KProcess::NotifyOnExit, KProcess::All);
+	return m_proc.start(TDEProcess::NotifyOnExit, TDEProcess::All);
 }
 
 #include "cupsaddsmb2.moc"

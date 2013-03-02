@@ -57,10 +57,10 @@ void KMPropertyPage::addPropPage(KMPropWidget *w)
 		ctn->setWidget(w);
 		connect(ctn,TQT_SIGNAL(enable(bool)),TQT_SLOT(slotEnable(bool)));
 
-		TQPixmap icon = KGlobal::instance()->iconLoader()->loadIcon(
+		TQPixmap icon = TDEGlobal::instance()->iconLoader()->loadIcon(
 		                                                           w->pixmap(),
-		                                                           KIcon::NoGroup,
-		                                                           KIcon::SizeMedium
+		                                                           TDEIcon::NoGroup,
+		                                                           TDEIcon::SizeMedium
  		                                                          );
 		addPage(ctn,w->title(),w->header(),icon);
 	}

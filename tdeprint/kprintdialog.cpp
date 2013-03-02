@@ -46,23 +46,23 @@
 #include <tqvbox.h>
 #include <tqlayout.h>
 #include <tqregexp.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tqdir.h>
 #include <tqtooltip.h>
 #include <tqwhatsthis.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kurlrequester.h>
 #include <klineedit.h>
 #include <kdebug.h>
-#include <kglobal.h>
-#include <kconfig.h>
+#include <tdeglobal.h>
+#include <tdeconfig.h>
 #include <kguiitem.h>
 #include <kstdguiitem.h>
-#include <kapplication.h>
-#include <kio/renamedlg.h>
+#include <tdeapplication.h>
+#include <tdeio/renamedlg.h>
 
 #include <time.h>
 
@@ -439,7 +439,7 @@ KPrintDialog::KPrintDialog(TQWidget *parent, const char *name)
 	}
 	else
 	{
-		KConfig	*config = KGlobal::config();
+		TDEConfig	*config = TDEGlobal::config();
 		config->setGroup("KPrinter Settings");
 		expandDialog(!config->readBoolEntry("DialogReduced", (KMFactory::self()->settings()->application != KPrinter::StandAlone)));
 	}
@@ -447,7 +447,7 @@ KPrintDialog::KPrintDialog(TQWidget *parent, const char *name)
 
 KPrintDialog::~KPrintDialog()
 {
-	KConfig	*config = KGlobal::config();
+	TDEConfig	*config = TDEGlobal::config();
 	config->setGroup("KPrinter Settings");
 	config->writeEntry("DialogReduced", d->m_reduced);
 
@@ -570,7 +570,7 @@ void KPrintDialog::initialize(KPrinter *printer)
 				sep = true;
 				d->m_printers->insertItem(TQPixmap(), TQString::fromLatin1("--------"));
 			}
-			d->m_printers->insertItem(SmallIcon(it.current()->pixmap(),0,(it.current()->isValid() ? (int)KIcon::DefaultState : (int)KIcon::LockOverlay)),it.current()->name(),false/*sep*/);
+			d->m_printers->insertItem(SmallIcon(it.current()->pixmap(),0,(it.current()->isValid() ? (int)TDEIcon::DefaultState : (int)TDEIcon::LockOverlay)),it.current()->name(),false/*sep*/);
 			if (it.current()->isSoftDefault())
 				defsoft = d->m_printers->count()-1;
 			if (it.current()->isHardDefault())
@@ -730,19 +730,19 @@ bool KPrintDialog::checkOutputFile()
 			{
 				//value = (KMessageBox::warningYesNo(this,i18n("File \"%1\" already exists. Overwrite?").arg(f.absFilePath())) == KMessageBox::Yes);
 				time_t mtimeDest = f.lastModified().toTime_t();
-				KIO::RenameDlg dlg( this, i18n( "Print" ), TQString::null, d->m_file->url(),
-						KIO::M_OVERWRITE, ( time_t ) -1, f.size(), ( time_t ) -1, f.created().toTime_t() , mtimeDest+1, mtimeDest, true );
+				TDEIO::RenameDlg dlg( this, i18n( "Print" ), TQString::null, d->m_file->url(),
+						TDEIO::M_OVERWRITE, ( time_t ) -1, f.size(), ( time_t ) -1, f.created().toTime_t() , mtimeDest+1, mtimeDest, true );
 				int result = dlg.exec();
 				switch ( result )
 				{
-					case KIO::R_OVERWRITE:
+					case TDEIO::R_OVERWRITE:
 						value = true;
 						break;
 					default:
-					case KIO::R_CANCEL:
+					case TDEIO::R_CANCEL:
 						value = false;
 						break;
-					case KIO::R_RENAME:
+					case TDEIO::R_RENAME:
 						url = dlg.newDestURL();
 						d->m_file->setURL( url.path() );
 						value = true;

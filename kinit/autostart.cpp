@@ -22,9 +22,9 @@
 
 #include "autostart.h"
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdesktopfile.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kstandarddirs.h>
 
 #include <stdlib.h>
@@ -49,14 +49,14 @@ AutoStart::AutoStart( bool new_startup )
 {
   m_startList = new AutoStartList;
   m_startList->setAutoDelete(true);
-  KGlobal::dirs()->addResourceType("autostart", "share/autostart");
+  TDEGlobal::dirs()->addResourceType("autostart", "share/autostart");
   TQString xdgdirs = getenv("XDG_CONFIG_DIRS");
   if (xdgdirs.isEmpty())
         xdgdirs = "/etc/xdg";
 
   TQStringList xdgdirslist = TQStringList::split( ':', xdgdirs );
   for ( TQStringList::Iterator itr = xdgdirslist.begin(); itr != xdgdirslist.end(); ++itr ) {
-	KGlobal::dirs()->addResourceDir("autostart", (*itr) +"/autostart");
+	TDEGlobal::dirs()->addResourceDir("autostart", (*itr) +"/autostart");
   }
 }
 
@@ -102,7 +102,7 @@ static bool startCondition(const TQString &condition)
   if (list[0].isEmpty() || list[2].isEmpty()) 
      return true;
 
-  KConfig config(list[0], true, false);
+  TDEConfig config(list[0], true, false);
   if (!list[1].isEmpty())
      config.setGroup(list[1]);
 
@@ -114,8 +114,8 @@ static bool startCondition(const TQString &condition)
 void
 AutoStart::loadAutoStartList()
 {
-   TQStringList files = KGlobal::dirs()->findAllResources("xdgconf-autostart", "*.desktop", false, true);
-   TQStringList kdefiles = KGlobal::dirs()->findAllResources("autostart", "*.desktop", false, true);
+   TQStringList files = TDEGlobal::dirs()->findAllResources("xdgconf-autostart", "*.desktop", false, true);
+   TQStringList kdefiles = TDEGlobal::dirs()->findAllResources("autostart", "*.desktop", false, true);
    files += kdefiles;
    
    for(TQStringList::ConstIterator it = files.begin();
@@ -143,7 +143,7 @@ AutoStart::loadAutoStartList()
            localit != files.end();
            ++localit)
        {
-           if (((*localit).startsWith(KGlobal::dirs()->localxdgconfdir()) == true) || ((*localit).startsWith(KGlobal::dirs()->localtdedir()) == true)) {
+           if (((*localit).startsWith(TDEGlobal::dirs()->localxdgconfdir()) == true) || ((*localit).startsWith(TDEGlobal::dirs()->localtdedir()) == true)) {
                // Same local file name?
                TQString localOuter;
                TQString localInner;

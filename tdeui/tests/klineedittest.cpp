@@ -4,15 +4,15 @@
 #include <tqhbox.h>
 #include <tqtimer.h>
 
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
-#include <kapplication.h>
+#include <tdeaboutdata.h>
+#include <tdecmdlineargs.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kdialog.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <klineedit.h>
-#include <kglobalsettings.h>
-#include <kcompletionbox.h>
+#include <tdeglobalsettings.h>
+#include <tdecompletionbox.h>
 
 #include "klineedittest.h"
 
@@ -118,11 +118,11 @@ void KLineEditTest::slotHide()
 
 int main ( int argc, char **argv)
 {
-    KAboutData aboutData( "klineedittest", "klineedittest", "1.0" );
-    KCmdLineArgs::init(argc, argv, &aboutData);
-    KApplication::addCmdLineOptions();
+    TDEAboutData aboutData( "klineedittest", "klineedittest", "1.0" );
+    TDECmdLineArgs::init(argc, argv, &aboutData);
+    TDEApplication::addCmdLineOptions();
     
-    KApplication a;    
+    TDEApplication a;    
     KLineEditTest *t = new KLineEditTest();
     //t->lineEdit()->setTrapReturnKey( true );
     //t->lineEdit()->completionBox()->setTabHandling( false );

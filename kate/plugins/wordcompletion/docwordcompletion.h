@@ -29,10 +29,10 @@
 #ifndef _DocWordCompletionPlugin_h_
 #define _DocWordCompletionPlugin_h_
 
-#include <ktexteditor/plugin.h>
-#include <ktexteditor/view.h>
-#include <ktexteditor/codecompletioninterface.h>
-#include <ktexteditor/configinterfaceextension.h>
+#include <tdetexteditor/plugin.h>
+#include <tdetexteditor/view.h>
+#include <tdetexteditor/codecompletioninterface.h>
+#include <tdetexteditor/configinterfaceextension.h>
 #include <kxmlguiclient.h>
 
 #include <tqevent.h>

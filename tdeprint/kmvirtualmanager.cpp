@@ -28,11 +28,11 @@
 #include <tqtextstream.h>
 #include <tqdir.h>
 #include <tqfileinfo.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 #include <kurl.h>
 #include <kdebug.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 #include <unistd.h>
 
@@ -297,7 +297,7 @@ void KMVirtualManager::triggerSave()
 	QString	filename;
 	if (getuid() == 0)
 	{
-		if (KStandardDirs::makeDir(TQFile::decodeName("/etc/cups")))
+		if (TDEStandardDirs::makeDir(TQFile::decodeName("/etc/cups")))
 			filename = TQFile::decodeName("/etc/cups/lpoptions");
 	}
 	else

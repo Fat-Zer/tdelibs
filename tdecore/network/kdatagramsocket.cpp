@@ -153,7 +153,7 @@ KDatagramPacket KDatagramSocket::receive()
     }
 
   TQByteArray data(size);
-  KSocketAddress address;
+  TDESocketAddress address;
   
   // now do the reading
   size = tqreadBlock(data.data(), size, address);
@@ -170,7 +170,7 @@ TQ_LONG KDatagramSocket::send(const KDatagramPacket& packet)
   return tqwriteBlock(packet.data(), packet.size(), packet.address());
 }
 
-TQ_LONG KDatagramSocket::tqwriteBlock(const char *data, TQ_ULONG len, const KSocketAddress& to)
+TQ_LONG KDatagramSocket::tqwriteBlock(const char *data, TQ_ULONG len, const TDESocketAddress& to)
 {
   if (to.family() != AF_UNSPEC)
     {

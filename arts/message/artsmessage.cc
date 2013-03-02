@@ -31,15 +31,15 @@ Gnome, etc. and used instead.
 
 #include <tqregexp.h>
 
-#include <klocale.h>
-#include <kglobal.h>
-#include <kapplication.h>
-#include <kaboutdata.h>
-#include <kmessagebox.h>
-#include <kcmdlineargs.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
+#include <tdeapplication.h>
+#include <tdeaboutdata.h>
+#include <tdemessagebox.h>
+#include <tdecmdlineargs.h>
 
 // command line options
-static KCmdLineOptions options[] = 
+static TDECmdLineOptions options[] = 
   {
 	  { "e", 0,0 },
 	  { "error", I18N_NOOP("Display error message (default)"), 0 },
@@ -48,21 +48,21 @@ static KCmdLineOptions options[] =
 	  { "i", 0, 0 },
 	  { "info", I18N_NOOP("Display informational message"), 0 },
 	  { "+message", I18N_NOOP("Message string to be displayed"), 0 },
-	  KCmdLineLastOption // End of options.
+	  TDECmdLineLastOption // End of options.
   };
 
-KAboutData aboutData("artsmessage", I18N_NOOP("artsmessage"), "0.1",
+TDEAboutData aboutData("artsmessage", I18N_NOOP("artsmessage"), "0.1",
 					 I18N_NOOP("Utility to display aRts error messages"),
-					 KAboutData::License_GPL, "(c) 2001, Jeff Tranter", 0, 0, "tranter@kde.org");
+					 TDEAboutData::License_GPL, "(c) 2001, Jeff Tranter", 0, 0, "tranter@kde.org");
 
 int main(int argc, char **argv) {
 	aboutData.addAuthor("Jeff Tranter", 0, "tranter@kde.org");
-	KGlobal::locale()->setMainCatalogue("tdelibs");
-	KCmdLineArgs::init(argc, argv, &aboutData);
-	KCmdLineArgs::addCmdLineOptions(options);
-	KApplication app;
+	TDEGlobal::locale()->setMainCatalogue("tdelibs");
+	TDECmdLineArgs::init(argc, argv, &aboutData);
+	TDECmdLineArgs::addCmdLineOptions(options);
+	TDEApplication app;
 	
-	KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+	TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 	TQString msg;
 
 	// must be at least one argument

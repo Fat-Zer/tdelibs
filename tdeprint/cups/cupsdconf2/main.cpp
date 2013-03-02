@@ -20,24 +20,24 @@
 #include "cupsddialog.h"
 
 #include <tqfile.h>
-#include <klocale.h>
-#include <kcmdlineargs.h>
-#include <kapplication.h>
+#include <tdelocale.h>
+#include <tdecmdlineargs.h>
+#include <tdeapplication.h>
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
 	{ "+[file]", I18N_NOOP("Configuration file to load"), 0},
-	KCmdLineLastOption
+	TDECmdLineLastOption
 };
 
 extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
 {
-	KCmdLineArgs::init(argc,argv,"cupsdconf",
+	TDECmdLineArgs::init(argc,argv,"cupsdconf",
 			   I18N_NOOP("A CUPS configuration tool"),
 			   I18N_NOOP("A CUPS configuration tool"),"0.0.1");
-	KCmdLineArgs::addCmdLineOptions(options);
-	KApplication	app;
-	KCmdLineArgs	*args = KCmdLineArgs::parsedArgs();
+	TDECmdLineArgs::addCmdLineOptions(options);
+	TDEApplication	app;
+	TDECmdLineArgs	*args = TDECmdLineArgs::parsedArgs();
 
 	KURL	configfile;
 	if (args->count() > 0)

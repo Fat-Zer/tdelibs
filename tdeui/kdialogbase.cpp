@@ -33,12 +33,12 @@
 #include <tqtimer.h>
 #include <tqfocusdata.h>
 
-#include <kapplication.h>
-#include <klocale.h>
-#include <kconfig.h>
+#include <tdeapplication.h>
+#include <tdelocale.h>
+#include <tdeconfig.h>
 #include <kiconloader.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
 #include <kseparator.h>
 #include <kurllabel.h>
 #include <kdebug.h>
@@ -656,7 +656,7 @@ void KDialogBase::makeButtonBox( int buttonMask, ButtonCode defaultButton,
     }
   }
 
-  setButtonStyle( KGlobalSettings::buttonLayout() );
+  setButtonStyle( TDEGlobalSettings::buttonLayout() );
 }
 
 
@@ -1740,11 +1740,11 @@ void KDialogBase::showTile( bool state )
 
 TQSize KDialogBase::configDialogSize( const TQString& groupName ) const
 {
-   return configDialogSize( *KGlobal::config(), groupName );
+   return configDialogSize( *TDEGlobal::config(), groupName );
 }
 
 
-TQSize KDialogBase::configDialogSize( KConfig& config,
+TQSize KDialogBase::configDialogSize( TDEConfig& config,
 				      const TQString& groupName ) const
 {
    int w, h;
@@ -1754,7 +1754,7 @@ TQSize KDialogBase::configDialogSize( KConfig& config,
    w = sizeHint().width();
    h = sizeHint().height();
 
-   KConfigGroupSaver cs(&config, groupName);
+   TDEConfigGroupSaver cs(&config, groupName);
    w = config.readNumEntry( TQString::fromLatin1("Width %1").arg( desk.width()), w );
    h = config.readNumEntry( TQString::fromLatin1("Height %1").arg( desk.height()), h );
 
@@ -1764,17 +1764,17 @@ TQSize KDialogBase::configDialogSize( KConfig& config,
 
 void KDialogBase::saveDialogSize( const TQString& groupName, bool global )
 {
-   saveDialogSize( *KGlobal::config(), groupName, global );
+   saveDialogSize( *TDEGlobal::config(), groupName, global );
 }
 
 
-void KDialogBase::saveDialogSize( KConfig& config, const TQString& groupName,
+void KDialogBase::saveDialogSize( TDEConfig& config, const TQString& groupName,
 				      bool global ) const
 {
    int scnum = TQApplication::desktop()->screenNumber(parentWidget());
    TQRect desk = TQApplication::desktop()->screenGeometry(scnum);
 
-   KConfigGroupSaver cs(&config, groupName);
+   TDEConfigGroupSaver cs(&config, groupName);
    TQSize sizeToSave = size();
 
    config.writeEntry( TQString::fromLatin1("Width %1").arg( desk.width()),

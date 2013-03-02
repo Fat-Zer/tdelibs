@@ -28,7 +28,7 @@
 #include <tqintdict.h>
 
 class KPrintProcess;
-class KProcess;
+class TDEProcess;
 class StatusWindow;
 
 class KDEPrintd : public KDEDModule

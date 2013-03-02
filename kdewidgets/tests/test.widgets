@@ -1,7 +1,7 @@
 [Global]
 PluginName=KDEWidgets
 Includes=kinstance.h,classpreviews.h
-Init=new KInstance("kdewidgets");
+Init=new TDEInstance("kdewidgets");
 
 [KActiveLabel]
 ToolTip=Active Label (KDE)
@@ -26,7 +26,7 @@ Group=Graphics (KDE)
 ToolTip=Combo Box (KDE)
 Group=Input (KDE)
 
-[KCModule]
+[TDECModule]
 ToolTip=KControl Center Module (KDE)
 IsContainer=true
 Group=Container (KDE)
@@ -55,26 +55,26 @@ Group=Graphics (KDE)
 ToolTip=Fullfeatured edit box with buttons (KDE)
 Group=Views (KDE)
 
-[KFontCombo]
+[TDEFontCombo]
 ToolTip=Font Combo Box (KDE)
 WhatsThis=A QCombo Box showing the installed system fonts (with preview)
 Group=Input (KDE)
 
-[KFontChooser]
-IncludeFile=kfontdialog.h
-IconSet=kfontcombo.png
+[TDEFontChooser]
+IncludeFile=tdefontdialog.h
+IconSet=tdefontcombo.png
 ToolTip=Font Chooser (KDE)
 WhatsThis=A font type, size and style selection widget complete with preview
 Group=Input (KDE)
 
-[KFontRequester]
-IncludeFile=kfontrequester.h
+[TDEFontRequester]
+IncludeFile=tdefontrequester.h
 ToolTip=Font Requester (KDE)
 WhatsThis=A compact font selection and preview widget
 Group=Input (KDE)
 
 [KGradientSelector]
-IncludeFile=kselect.h
+IncludeFile=tdeselect.h
 WhatsThis=A widget that allows the user to select two colors to form a gradient
 Group=Graphics (KDE)
 
@@ -94,12 +94,12 @@ ToolTip=LED Widget (KDE)
 WhatsThis=A widget showing a light emitter diode
 Group=Display (KDE)
 
-[KListBox]
+[TDEListBox]
 ToolTip=Extended List Box (KDE)
 WhatsThis=An improved version of the QListBox that follows KDE settings
 Group=Views (KDE)
 
-[KListView]
+[TDEListView]
 ToolTip=Extended List View (KDE)
 WhatsThis=An improved version of the QListView that allows certain KDE extensions
 Group=Views (KDE)
@@ -134,12 +134,12 @@ Group=Buttons (KDE)
 ToolTip=Line Edit for restricted input (KDE)
 Group=Input (KDE)
 
-[KIconButton]
+[TDEIconButton]
 IncludeFile=kicondialog.h
 ToolTip=Button for selecting an icon (KDE)
 Group=Buttons (KDE)
 
-[KIconView]
+[TDEIconView]
 IncludeFile=kiconview.h
 ToolTip=Extended Icon View (KDE)
 WhatsThis=An improved version of the QIconView that allows certain KDE extensions
@@ -232,8 +232,8 @@ ToolTip=A widget that provides a image preview of a URL
 Group=Display (KDE)
 ConstructorArgs=(parent)
 
-[KActionSelector]
-IncludeFile=kactionselector.h
+[TDEActionSelector]
+IncludeFile=tdeactionselector.h
 ToolTip=A widget for selecting and arranging actions/objects
 Group=Views (KDE)
 
@@ -260,8 +260,8 @@ ToolTip=A color palette in table form.
 Group=Display (KDE)
 ConstructorArgs=(parent, 210, 16)
 
-[KABC::AddressLineEdit]
-IncludeFile=kabc/addresslineedit.h
+[TDEABC::AddressLineEdit]
+IncludeFile=tdeabc/addresslineedit.h
 ToolTip=A lineedit with LDAP and kabc completion.
 Group=Input (KDE)
 ConstructorArgs=(parent, true, name)

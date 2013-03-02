@@ -31,9 +31,9 @@
 #include <tqfileinfo.h>
 #include <kstandarddirs.h>
 
-#include <kconfig.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeconfig.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 
 extern "C" {
 #include <lua.h> 
@@ -371,7 +371,7 @@ void KateLUAIndentScriptManager::collectScripts (bool force)
       <<"================================================="<<endl;
 
   // We'll store the scripts list in this config
-  KConfig config("katepartluaindentscriptrc", false, false);
+  TDEConfig config("katepartluaindentscriptrc", false, false);
 #if 0
   // figure out if the kate install is too new
   config.setGroup ("General");
@@ -383,7 +383,7 @@ void KateLUAIndentScriptManager::collectScripts (bool force)
 #endif
 
   // Let's get a list of all the .js files
-  TQStringList list = KGlobal::dirs()->findAllResources("data","katepart/scripts/indent/*.lua",false,true);
+  TQStringList list = TDEGlobal::dirs()->findAllResources("data","katepart/scripts/indent/*.lua",false,true);
 
   // Let's iterate through the list and build the Mode List
   for ( TQStringList::Iterator it = list.begin(); it != list.end(); ++it )

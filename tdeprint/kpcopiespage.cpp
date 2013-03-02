@@ -34,8 +34,8 @@
 #include <tqwhatsthis.h>
 #include <tqlayout.h>
 
-#include <kapplication.h>
-#include <klocale.h>
+#include <tdeapplication.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 #include <kseparator.h>
 

@@ -30,21 +30,21 @@
 
 #include <kdebug.h>
 #include "kurl.h"
-#include "kconfigbackend.h"
-#include "kapplication.h"
+#include "tdeconfigbackend.h"
+#include "tdeapplication.h"
 #include "kstandarddirs.h"
 #include "kmountpoint.h"
 #include "kcatalogue.h"
-#include "klocale.h"
+#include "tdelocale.h"
 
 #include "kdesktopfile.h"
 #include "kdesktopfile.moc"
 
 KDesktopFile::KDesktopFile(const TQString &fileName, bool bReadOnly,
 			   const char * resType)
-  : KConfig(TQString::fromLatin1(""), bReadOnly, false)
+  : TDEConfig(TQString::fromLatin1(""), bReadOnly, false)
 {
-  // KConfigBackEnd will try to locate the filename that is provided
+  // TDEConfigBackEnd will try to locate the filename that is provided
   // based on the resource type specified, _only_ if the filename
   // is not an absolute path.
   backEnd->changeFileName(fileName, resType, false);
@@ -67,7 +67,7 @@ TQString KDesktopFile::locateLocal(const TQString &path)
     if (!TQDir::isRelativePath(local))
     {
       // Relative wrt apps?
-      local = KGlobal::dirs()->relativeLocation("apps", path);
+      local = TDEGlobal::dirs()->relativeLocation("apps", path);
     }
 
     if (TQDir::isRelativePath(local))
@@ -78,7 +78,7 @@ TQString KDesktopFile::locateLocal(const TQString &path)
     {
       // XDG Desktop menu items come with absolute paths, we need to 
       // extract their relative path and then build a local path.
-      local = KGlobal::dirs()->relativeLocation("xdgdata-dirs", local);
+      local = TDEGlobal::dirs()->relativeLocation("xdgdata-dirs", local);
       if (!TQDir::isRelativePath(local))
       {
         // Hm, that didn't work...
@@ -98,7 +98,7 @@ TQString KDesktopFile::locateLocal(const TQString &path)
     {
       // XDG Desktop menu items come with absolute paths, we need to 
       // extract their relative path and then build a local path.
-      local = KGlobal::dirs()->relativeLocation("xdgdata-apps", path);
+      local = TDEGlobal::dirs()->relativeLocation("xdgdata-apps", path);
       if (!TQDir::isRelativePath(local))
       {
         // What now? Use filename only and hope for the best.
@@ -133,7 +133,7 @@ bool KDesktopFile::isAuthorizedDesktopFile(const TQString& path)
   if (TQDir::isRelativePath(path))
      return true; // Relative paths are ok.
      
-  KStandardDirs *dirs = KGlobal::dirs();
+  TDEStandardDirs *dirs = TDEGlobal::dirs();
   if (TQDir::isRelativePath( dirs->relativeLocation("apps", path) ))
      return true;
   if (TQDir::isRelativePath( dirs->relativeLocation("xdgdata-apps", path) ))
@@ -157,7 +157,7 @@ TQString KDesktopFile::translatedEntry(const char* key) const
     TQString fName = fileName();
     fName = fName.mid(fName.findRev('/')+1);
     TQString po_lookup_key = TQString::fromLatin1(key) + "(" + fName + "): " + value;
-    TQString po_value = KGlobal::locale()->translate(po_lookup_key.utf8().data());
+    TQString po_value = TDEGlobal::locale()->translate(po_lookup_key.utf8().data());
 
     if (po_value == po_lookup_key)
       return value;
@@ -346,7 +346,7 @@ KDesktopFile::sortOrder() const
 }
 
 void KDesktopFile::virtual_hook( int id, void* data )
-{ KConfig::virtual_hook( id, data ); }
+{ TDEConfig::virtual_hook( id, data ); }
 
 TQString KDesktopFile::readDocPath() const
 {
@@ -361,7 +361,7 @@ TQString KDesktopFile::readDocPath() const
 KDesktopFile* KDesktopFile::copyTo(const TQString &file) const
 {
   KDesktopFile *config = new KDesktopFile(TQString::null, false);
-  KConfig::copyTo(file, config);
+  TDEConfig::copyTo(file, config);
   config->setDesktopGroup();
   return config;
 }

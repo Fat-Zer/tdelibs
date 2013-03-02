@@ -26,9 +26,9 @@
 
 #include <tqfile.h>
 #include <kstandarddirs.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <ksimpleconfig.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 
 #include <unistd.h>
@@ -47,7 +47,7 @@ bool KMSpecialManager::savePrinters()
 	if (getuid() == 0)
 	{
 		confname = locate("data", "tdeprint/specials.desktop");
-		if (confname.startsWith(KGlobal::dirs()->localtdedir()))
+		if (confname.startsWith(TDEGlobal::dirs()->localtdedir()))
 		{
 			// seems there's a problem here
 			m_mgr->setErrorMsg(i18n("A file share/tdeprint/specials.desktop was found in your "
@@ -107,8 +107,8 @@ bool KMSpecialManager::loadPrinters()
 	if (m_loaded) return true;
 
 	bool	result(true);
-	TQString	localDir = KGlobal::dirs()->localtdedir();
-	TQStringList	files = KGlobal::dirs()->findAllResources("data", "tdeprint/specials.desktop");
+	TQString	localDir = TDEGlobal::dirs()->localtdedir();
+	TQStringList	files = TDEGlobal::dirs()->findAllResources("data", "tdeprint/specials.desktop");
 	// local files should processed last, so we need to reorder the list
 	// and put local files at the end
 	TQStringList	orderedFiles;

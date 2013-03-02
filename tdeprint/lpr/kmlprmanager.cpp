@@ -30,13 +30,13 @@
 
 #include <tqfileinfo.h>
 #include <tqptrlist.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
 #include <kprinter.h>
 #include <kprocess.h>
-#include <kaction.h>
-#include <kmessagebox.h>
+#include <tdeaction.h>
+#include <tdemessagebox.h>
 #include <klibloader.h>
 
 #include <stdlib.h>
@@ -137,7 +137,7 @@ void KMLprManager::initHandlers()
 	insertHandler(new LPRngToolHandler(this));
 
 	// now load external handlers
-	TQStringList	l = KGlobal::dirs()->findAllResources("data", "tdeprint/lpr/*.la");
+	TQStringList	l = TDEGlobal::dirs()->findAllResources("data", "tdeprint/lpr/*.la");
 	for (TQStringList::ConstIterator it=l.begin(); it!=l.end(); ++it)
 	{
 		KLibrary	*library = KLibLoader::self()->library(TQFile::encodeName(*it));
@@ -345,7 +345,7 @@ bool KMLprManager::createPrinter(KMPrinter *prt)
 		return false;
 	}
 	sd.append("/").append(prt->printerName());
-	if (!KStandardDirs::makeDir(sd, 0755))
+	if (!TDEStandardDirs::makeDir(sd, 0755))
 	{
 		setErrorMsg(i18n("Unable to create the spool directory %1. Check that you "
 		                 "have the required permissions for that operation.").arg(sd));
@@ -405,7 +405,7 @@ bool KMLprManager::removePrinter(KMPrinter *prt)
 			{
 				// printcap file saved, entry can be deleted now
 				delete entry;
-				status =  (::system(TQFile::encodeName("rm -rf " + KProcess::quote(sd))) == 0);
+				status =  (::system(TQFile::encodeName("rm -rf " + TDEProcess::quote(sd))) == 0);
 				if (!status)
 					setErrorMsg(i18n("Unable to remove spool directory %1. "
 					                 "Check that you have write permissions "
@@ -453,13 +453,13 @@ TQString KMLprManager::printOptions(KPrinter *prt)
 	return TQString::null;
 }
 
-void KMLprManager::createPluginActions(KActionCollection *coll)
+void KMLprManager::createPluginActions(TDEActionCollection *coll)
 {
-	KAction	*act = new KAction(i18n("&Edit printcap Entry..."), "tdeprint_report", 0, this, TQT_SLOT(slotEditPrintcap()), coll, "plugin_editprintcap");
+	TDEAction	*act = new TDEAction(i18n("&Edit printcap Entry..."), "tdeprint_report", 0, this, TQT_SLOT(slotEditPrintcap()), coll, "plugin_editprintcap");
 	act->setGroup("plugin");
 }
 
-void KMLprManager::validatePluginActions(KActionCollection *coll, KMPrinter *prt)
+void KMLprManager::validatePluginActions(TDEActionCollection *coll, KMPrinter *prt)
 {
 	m_currentprinter = prt;
 	// FIXME: disabled until completion

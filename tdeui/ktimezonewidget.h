@@ -21,7 +21,7 @@
 #define KTIMEZONEWIDGET_H
 
 #include <tdelibs_export.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <tqstring.h>
 
 class KTimezone;
@@ -49,7 +49,7 @@ class KTimezoneWidgetPrivate;
  * \code
  *
  *  m_timezones =  new KTimezoneWidget(this, "Timezones", vcalendarTimezones);
- *  m_timezones->setSelectionModeExt(KListView::Multi);
+ *  m_timezones->setSelectionModeExt(TDEListView::Multi);
  *  ...
  * \endcode
  *
@@ -57,7 +57,7 @@ class KTimezoneWidgetPrivate;
  * @since 3.5
  */
 class TDEUI_EXPORT KTimezoneWidget :
-    public KListView
+    public TDEListView
 {
     Q_OBJECT
 
@@ -98,7 +98,7 @@ public:
      * transformed via an i18n lookup, so the caller should previously have
      * set the timezone catalogue:
      * \code
-     * KGlobal::locale()->insertCatalogue("timezones");
+     * TDEGlobal::locale()->insertCatalogue("timezones");
      * \endcode
      *
      * @return formatted timezone name.

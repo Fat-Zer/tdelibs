@@ -42,11 +42,11 @@ extern "C" {
 #include <tqstringlist.h>
 #include <tqfileinfo.h>
 
-#include <kglobal.h>
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
+#include <tdeglobal.h>
+#include <tdeaboutdata.h>
+#include <tdecmdlineargs.h>
 #include <kiconloader.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kstandarddirs.h>
 
 /* return application name */
@@ -536,18 +536,18 @@ int main_console(int argc, char **argv)
 		case MODE_TDE_AUTOADD_ICON:
 		{
 			printf("Searching for standard icon for name %s in the following directories:\n\r", argv[PARAM_ICON_NAME]);
-			KApplication::disableAutoDcopRegistration();
-			KAboutData aboutd("tdelfeditor", "tdelfeditor", "0.0.1");
-			KCmdLineArgs::init(&aboutd);
-			KApplication app(false, false);
+			TDEApplication::disableAutoDcopRegistration();
+			TDEAboutData aboutd("tdelfeditor", "tdelfeditor", "0.0.1");
+			TDECmdLineArgs::init(&aboutd);
+			TDEApplication app(false, false);
 
-			TQStringList rds = KGlobal::dirs()->resourceDirs("icon");
+			TQStringList rds = TDEGlobal::dirs()->resourceDirs("icon");
 			for ( TQStringList::Iterator it = rds.begin(); it != rds.end(); ++it ) {
 				printf(" * %s\n\r", (*it).ascii()); fflush(stdout);
 			}
-			TQString systemIcon = KGlobal::iconLoader()->iconPath(argv[PARAM_ICON_NAME], 0, true);
+			TQString systemIcon = TDEGlobal::iconLoader()->iconPath(argv[PARAM_ICON_NAME], 0, true);
 			if (systemIcon.isNull()) {
-				systemIcon = KGlobal::iconLoader()->iconPath(argv[PARAM_ICON_NAME], 0, false);
+				systemIcon = TDEGlobal::iconLoader()->iconPath(argv[PARAM_ICON_NAME], 0, false);
 				printf("NOT FOUND, refusing to add unknown icon (this message is harmless)\n\r");
 				section = ICON_SECTION;
 				clear_resource(handle, section);

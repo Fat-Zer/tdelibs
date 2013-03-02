@@ -9,12 +9,12 @@
 #
 #################################################
 
-add_subdirectory( ktexteditor )
-add_subdirectory( kscript )
+add_subdirectory( tdetexteditor )
+add_subdirectory( tdescript )
 add_subdirectory( kregexpeditor )
-add_subdirectory( kmediaplayer )
-add_subdirectory( kio )
+add_subdirectory( tdemediaplayer )
+add_subdirectory( tdeio )
 add_subdirectory( terminal )
 add_subdirectory( khexedit )
-add_subdirectory( kimproxy )
+add_subdirectory( tdeimproxy )
 add_subdirectory( kspeech )

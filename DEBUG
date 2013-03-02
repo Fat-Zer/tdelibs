@@ -68,7 +68,7 @@ Current language:  auto; currently c++
 (gdb)  
 
 You can now set breakpoints everywhere. For example lets set a breakpoint 
-in the KApplication constructor. Unfortunately gdb is not very good in 
+in the TDEApplication constructor. Unfortunately gdb is not very good in 
 handling C++ names, so it is not really possible to specify the constructor
 directly after the break command. Instead we look up a line of source
 code where we want to place the breakpoint. An external editor is of great 
@@ -79,11 +79,11 @@ are interested in and verify that we have found the correct source line:
 215         parseCommandLine( argc, argv );
 216     }
 217
-218     KApplication::KApplication( bool allowStyles, bool GUIenabled ) :
-219       QApplication( *KCmdLineArgs::qt_argc(), *KCmdLineArgs::qt_argv(),
+218     TDEApplication::TDEApplication( bool allowStyles, bool GUIenabled ) :
+219       QApplication( *TDECmdLineArgs::tqt_argc(), *TDECmdLineArgs::tqt_argv(),
 220                     GUIenabled ),
-221       KInstance( KCmdLineArgs::about),
-222       d (new KApplicationPrivate)
+221       TDEInstance( TDECmdLineArgs::about),
+222       d (new TDEApplicationPrivate)
 223     {
 224         if (!GUIenabled)
 (gdb) break 224
@@ -92,14 +92,14 @@ Breakpoint 2 at 0x4048aa7e: file kapp.cpp, line 224.
 
 We can now continue the execution of kedit. Execution will stop when it hits
 a breakpoint of when the program exits. In this case execution will stop
-in the first line of the KApplication constructor:
+in the first line of the TDEApplication constructor:
 
 (gdb) continue
 Continuing.
 Qt: gdb: -nograb added to command-line options.
          Use the -dograb option to enforce grabbing.
  
-Breakpoint 2, KApplication::KApplication (this=0xbffff6a8, allowStyles=true,
+Breakpoint 2, TDEApplication::TDEApplication (this=0xbffff6a8, allowStyles=true,
     GUIenabled=true) at kapp.cpp:224
 224         if (!GUIenabled)
 (gdb) 

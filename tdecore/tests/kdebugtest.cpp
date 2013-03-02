@@ -26,7 +26,7 @@ public:
     kdDebug(2 == 2) << "this is right " << perror << endl;
     kdDebug() << "Before instance creation" << endl;
     kdDebug(1202) << "Before instance creation" << endl;
-    KInstance i("kdebugtest");
+    TDEInstance i("kdebugtest");
     kdDebug(1) << "kDebugInfo with inexisting area number" << endl;
     kdDebug(1202) << "This number has a value of " << 5 << endl;
     // kdDebug() << "This number should come out as appname " << 5 << " " << "test" << endl;

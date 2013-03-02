@@ -44,30 +44,30 @@
 #include <errno.h>
 
 #include <tqwindowdefs.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kinstance.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <kdebug.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <dcopclient.h>
 
-#include <../kinit/klauncher_cmds.h>
+#include <../kinit/tdelauncher_cmds.h>
 
 #if defined Q_WS_X11
 #include <X11/Xlib.h>
 #endif
 
-KCrash::HandlerType KCrash::_emergencySaveFunction = 0;
-KCrash::HandlerType KCrash::_crashHandler = 0;
-const char *KCrash::appName = 0;
-const char *KCrash::appPath = 0;
-bool KCrash::safer = false;
+TDECrash::HandlerType TDECrash::_emergencySaveFunction = 0;
+TDECrash::HandlerType TDECrash::_crashHandler = 0;
+const char *TDECrash::appName = 0;
+const char *TDECrash::appPath = 0;
+bool TDECrash::safer = false;
 
 // This function sets the function which should be called when the
 // application crashes and the
 // application is asked to try to save its data.
 void
-KCrash::setEmergencySaveFunction (HandlerType saveFunction)
+TDECrash::setEmergencySaveFunction (HandlerType saveFunction)
 {
   _emergencySaveFunction = saveFunction;
 
@@ -83,7 +83,7 @@ KCrash::setEmergencySaveFunction (HandlerType saveFunction)
 // This function sets the function which should be responsible for
 // the application crash handling.
 void
-KCrash::setCrashHandler (HandlerType handler)
+TDECrash::setCrashHandler (HandlerType handler)
 {
 #ifdef Q_OS_UNIX
   if (!handler)
@@ -116,7 +116,7 @@ KCrash::setCrashHandler (HandlerType handler)
 }
 
 void
-KCrash::defaultCrashHandler (int sig)
+TDECrash::defaultCrashHandler (int sig)
 {
 #ifdef Q_OS_UNIX
   // WABA: Do NOT use kdDebug() in this function because it is much too risky!
@@ -148,10 +148,10 @@ KCrash::defaultCrashHandler (int sig)
       if (appName)
       {
 #ifndef NDEBUG
-        fprintf(stderr, "[kcrash] KCrash: crashing... crashRecursionCounter = %d\n", crashRecursionCounter);
-        fprintf(stderr, "[kcrash] KCrash: Application Name = %s path = %s pid = %d\n", appName ? appName : "<unknown>" , appPath ? appPath : "<unknown>", getpid());
+        fprintf(stderr, "[kcrash] TDECrash: crashing... crashRecursionCounter = %d\n", crashRecursionCounter);
+        fprintf(stderr, "[kcrash] TDECrash: Application Name = %s path = %s pid = %d\n", appName ? appName : "<unknown>" , appPath ? appPath : "<unknown>", getpid());
 #else
-        fprintf(stderr, "[kcrash] KCrash: Application '%s' crashing...\n", appName ? appName : "<unknown>");
+        fprintf(stderr, "[kcrash] TDECrash: Application '%s' crashing...\n", appName ? appName : "<unknown>");
 #endif
 
           const char * argv[24]; // don't forget to update this
@@ -176,7 +176,7 @@ KCrash::defaultCrashHandler (int sig)
           // we have already tested this
           argv[i++] = "--appname";
           argv[i++] = appName;
-          if (KApplication::loadedByKdeinit)
+          if (TDEApplication::loadedByKdeinit)
             argv[i++] = "--tdeinit";
 
           // only add apppath if it's not NULL
@@ -196,8 +196,8 @@ KCrash::defaultCrashHandler (int sig)
           argv[i++] = "--pid";
           argv[i++] = pidtxt;
 
-          const KInstance *instance = KGlobal::_instance;
-          const KAboutData *about = instance ? instance->aboutData() : 0;
+          const TDEInstance *instance = TDEGlobal::_instance;
+          const TDEAboutData *about = instance ? instance->aboutData() : 0;
           if (about) {
             if (about->internalVersion()) {
               argv[i++] = "--appversion";
@@ -254,7 +254,7 @@ static int write_socket(int sock, char *buffer, int len);
 static int read_socket(int sock, char *buffer, int len);
 static int openSocket();
 
-void KCrash::startDrKonqi( const char* argv[], int argc )
+void TDECrash::startDrKonqi( const char* argv[], int argc )
 {
   int socket = openSocket();
   if( socket < -1 )
@@ -262,7 +262,7 @@ void KCrash::startDrKonqi( const char* argv[], int argc )
     startDirectly( argv, argc );
     return;
   }
-  klauncher_header header;
+  tdelauncher_header header;
   header.cmd = LAUNCHER_EXEC_NEW;
   const int BUFSIZE = 8192; // make sure this is big enough
   char buffer[ BUFSIZE + 10 ];
@@ -277,7 +277,7 @@ void KCrash::startDrKonqi( const char* argv[], int argc )
     int len = strlen( argv[ i ] ) + 1; // include terminating \0
     if( pos + len > BUFSIZE )
     {
-      fprintf( stderr, "[kcrash] BUFSIZE in KCrash not big enough!\n" );
+      fprintf( stderr, "[kcrash] BUFSIZE in TDECrash not big enough!\n" );
       startDirectly( argv, argc );
       return;
     }
@@ -315,9 +315,9 @@ void KCrash::startDrKonqi( const char* argv[], int argc )
 }
 
 // If we can't reach tdeinit we can still at least try to fork()
-void KCrash::startDirectly( const char* argv[], int )
+void TDECrash::startDirectly( const char* argv[], int )
 {
-  fprintf( stderr, "[kcrash] KCrash cannot reach tdeinit, launching directly.\n" );
+  fprintf( stderr, "[kcrash] TDECrash cannot reach tdeinit, launching directly.\n" );
   pid_t pid = fork();
   if (pid <= 0)
   {

@@ -30,9 +30,9 @@
 #include "kmconfigjobs.h"
 
 #include <tqlayout.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 KMConfigDialog::KMConfigDialog(TQWidget *parent, const char *name)
 : KDialogBase(IconList,i18n("TDE Print Configuration"),Ok|Cancel,Ok,parent,name,true,true)
@@ -47,7 +47,7 @@ KMConfigDialog::KMConfigDialog(TQWidget *parent, const char *name)
 	KMFactory::self()->uiManager()->setupConfigDialog(this);
 
 	// initialize pages
-	KConfig	*conf = KMFactory::self()->printConfig();
+	TDEConfig	*conf = KMFactory::self()->printConfig();
 	TQPtrListIterator<KMConfigPage>	it(m_pages);
 	for (;it.current();++it)
 		it.current()->loadConfig(conf);
@@ -60,10 +60,10 @@ void KMConfigDialog::addConfigPage(KMConfigPage *page)
 {
 	if (page)
 	{
-		TQPixmap icon = KGlobal::instance()->iconLoader()->loadIcon(
+		TQPixmap icon = TDEGlobal::instance()->iconLoader()->loadIcon(
 		                                                           page->pagePixmap(),
-		                                                           KIcon::NoGroup,
-                        	                                           KIcon::SizeMedium
+		                                                           TDEIcon::NoGroup,
+                        	                                           TDEIcon::SizeMedium
 		                                                          );
 
 		TQFrame	*frame = addPage(page->pageName(),page->pageHeader(),icon);
@@ -77,7 +77,7 @@ void KMConfigDialog::addConfigPage(KMConfigPage *page)
 void KMConfigDialog::slotOk()
 {
 	// save configuration
-	KConfig	*conf = KMFactory::self()->printConfig();
+	TDEConfig	*conf = KMFactory::self()->printConfig();
 	TQPtrListIterator<KMConfigPage>	it(m_pages);
 	for (;it.current();++it)
 		it.current()->saveConfig(conf);

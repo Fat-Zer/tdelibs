@@ -26,8 +26,8 @@
 #define XEvent void
 #endif
 
-#include <kaction.h>
-#include <klocale.h>
+#include <tdeaction.h>
+#include <tdelocale.h>
 #include "kvideowidget.h"
 
 
@@ -101,22 +101,22 @@ void KVideoWidget::init(void)
     videoHeight	     = 0;
 
     // Setup actions
-    new KToggleAction( i18n("Fullscreen &Mode"), "window_fullscreen",
+    new TDEToggleAction( i18n("Fullscreen &Mode"), "window_fullscreen",
 		       CTRL+SHIFT+Key_F, TQT_TQOBJECT(this), TQT_SLOT(fullscreenActivated()),
 		       actionCollection(), "fullscreen_mode" );
-    new KRadioAction( i18n("&Half Size"), ALT+Key_0,
+    new TDERadioAction( i18n("&Half Size"), ALT+Key_0,
 		      TQT_TQOBJECT(this), TQT_SLOT(halfSizeActivated()),
 		      actionCollection(), "half_size" );
-    new KRadioAction( i18n("&Normal Size"), ALT+Key_1,
+    new TDERadioAction( i18n("&Normal Size"), ALT+Key_1,
 		      TQT_TQOBJECT(this), TQT_SLOT(normalSizeActivated()),
 		      actionCollection(), "normal_size" );
-    new KRadioAction( i18n("&Double Size"), ALT+Key_2,
+    new TDERadioAction( i18n("&Double Size"), ALT+Key_2,
 		      TQT_TQOBJECT(this), TQT_SLOT(doubleSizeActivated()),
 		      actionCollection(), "double_size" );
 
-    ((KToggleAction *)action( "half_size" ))->setExclusiveGroup( "KVideoWidget::zoom" );
-    ((KToggleAction *)action( "normal_size" ))->setExclusiveGroup( "KVideoWidget::zoom" );
-    ((KToggleAction *)action( "double_size" ))->setExclusiveGroup( "KVideoWidget::zoom" );
+    ((TDEToggleAction *)action( "half_size" ))->setExclusiveGroup( "KVideoWidget::zoom" );
+    ((TDEToggleAction *)action( "normal_size" ))->setExclusiveGroup( "KVideoWidget::zoom" );
+    ((TDEToggleAction *)action( "double_size" ))->setExclusiveGroup( "KVideoWidget::zoom" );
 
     action("double_size")->setEnabled(false);
     action("half_size")->setEnabled(false);
@@ -232,29 +232,29 @@ bool KVideoWidget::isEmbedded()
 
 bool KVideoWidget::isFullscreen()
 {
-    return ((KToggleAction *)action( "fullscreen_mode" ))->isChecked();
+    return ((TDEToggleAction *)action( "fullscreen_mode" ))->isChecked();
 }
 
 bool KVideoWidget::isHalfSize()
 {
-    return ((KToggleAction *)action( "half_size" ))->isChecked();
+    return ((TDEToggleAction *)action( "half_size" ))->isChecked();
 }
 
 bool KVideoWidget::isNormalSize()
 {
-    return ((KToggleAction *)action( "normal_size" ))->isChecked();
+    return ((TDEToggleAction *)action( "normal_size" ))->isChecked();
 }
 
 bool KVideoWidget::isDoubleSize()
 {
-    return ((KToggleAction *)action( "double_size" ))->isChecked();
+    return ((TDEToggleAction *)action( "double_size" ))->isChecked();
 }
 
 void KVideoWidget::setFullscreen()
 {
     if (!isFullscreen())
     {
-	((KToggleAction *)action( "fullscreen_mode" ))->setChecked( true );
+	((TDEToggleAction *)action( "fullscreen_mode" ))->setChecked( true );
 	fullscreenActivated();
     }
 }
@@ -263,26 +263,26 @@ void KVideoWidget::setWindowed()
 {
     if (isFullscreen())
     {
-	((KToggleAction *)action( "fullscreen_mode" ))->setChecked( false );
+	((TDEToggleAction *)action( "fullscreen_mode" ))->setChecked( false );
 	fullscreenActivated();
     }
 }
 
 void KVideoWidget::setHalfSize()
 {
-    ((KToggleAction *)action( "half_size" ))->setChecked( true );
+    ((TDEToggleAction *)action( "half_size" ))->setChecked( true );
     halfSizeActivated();
 }
 
 void KVideoWidget::setNormalSize()
 {
-    ((KToggleAction *)action( "normal_size" ))->setChecked( true );
+    ((TDEToggleAction *)action( "normal_size" ))->setChecked( true );
     normalSizeActivated();
 }
 
 void KVideoWidget::setDoubleSize()
 {
-    ((KToggleAction *)action( "double_size" ))->setChecked( true );
+    ((TDEToggleAction *)action( "double_size" ))->setChecked( true );
     doubleSizeActivated();
 }
 
@@ -323,18 +323,18 @@ void KVideoWidget::resizeEvent( TQResizeEvent *event )
     {
 	if (width() == QMAX( (videoWidth / 2), minimumWidth() ) &&
 	         height() == QMAX( (videoHeight / 2), minimumHeight() ))
-	    ((KToggleAction *)action( "half_size" ))->setChecked( true );
+	    ((TDEToggleAction *)action( "half_size" ))->setChecked( true );
 	else if (width() == QMAX( videoWidth, minimumWidth() ) &&
 		 height() == QMAX( videoHeight, minimumHeight() ))
-	    ((KToggleAction *)action( "normal_size" ))->setChecked( true );
+	    ((TDEToggleAction *)action( "normal_size" ))->setChecked( true );
 	else if (width() == QMAX( (2 * videoWidth), minimumWidth() ) &&
 		 height() == QMAX( (2 * videoHeight), minimumHeight() ))
-	    ((KToggleAction *)action( "double_size" ))->setChecked( true );
+	    ((TDEToggleAction *)action( "double_size" ))->setChecked( true );
 	else
 	{
-	    ((KToggleAction *)action( "half_size" ))->setChecked( false );
-	    ((KToggleAction *)action( "normal_size" ))->setChecked( false );
-	    ((KToggleAction *)action( "double_size" ))->setChecked( false );
+	    ((TDEToggleAction *)action( "half_size" ))->setChecked( false );
+	    ((TDEToggleAction *)action( "normal_size" ))->setChecked( false );
+	    ((TDEToggleAction *)action( "double_size" ))->setChecked( false );
 	}
     }
 }

@@ -23,7 +23,7 @@
 
 #include "knewstuff.h"
 
-class KConfig;
+class TDEConfig;
 
 /**
  * @short Basic KNewStuff class with predefined actions.
@@ -80,7 +80,7 @@ class KDE_EXPORT KNewStuffGeneric : public KNewStuff
   private:
     TQString destinationPath( KNS::Entry *entry );
 
-    KConfig *mConfig;
+    TDEConfig *mConfig;
 };
 
 #endif

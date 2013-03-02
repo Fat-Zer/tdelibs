@@ -27,20 +27,20 @@
 #include "kateview.h"
 #include "katerenderer.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdialogbase.h>
 #include <kcolorbutton.h>
 #include <kcombobox.h>
 #include <kinputdialog.h>
-#include <kfontdialog.h>
+#include <tdefontdialog.h>
 #include <kdebug.h>
 #include <kiconloader.h>
-#include <kmessagebox.h>
-#include <kpopupmenu.h>
+#include <tdemessagebox.h>
+#include <tdepopupmenu.h>
 #include <kcolordialog.h>
-#include <kapplication.h>
-#include <kaboutdata.h>
-#include <ktexteditor/markinterface.h>
+#include <tdeapplication.h>
+#include <tdeaboutdata.h>
+#include <tdetexteditor/markinterface.h>
 
 #include <tqbuttongroup.h>
 #include <tqcheckbox.h>
@@ -155,12 +155,12 @@ class KateStyleListCaption : public TQListViewItem
 //BEGIN KateSchemaManager
 TQString KateSchemaManager::normalSchema ()
 {
-  return KApplication::kApplication()->aboutData()->appName () + TQString (" - Normal");
+  return TDEApplication::kApplication()->aboutData()->appName () + TQString (" - Normal");
 }
 
 TQString KateSchemaManager::printingSchema ()
 {
-  return KApplication::kApplication()->aboutData()->appName () + TQString (" - Printing");
+  return TDEApplication::kApplication()->aboutData()->appName () + TQString (" - Printing");
 }
 
 KateSchemaManager::KateSchemaManager ()
@@ -194,7 +194,7 @@ void KateSchemaManager::update (bool readfromfile)
 // get the right group
 // special handling of the default schemas ;)
 //
-KConfig *KateSchemaManager::schema (uint number)
+TDEConfig *KateSchemaManager::schema (uint number)
 {
   if ((number>1) && (number < m_schemas.count()))
     m_config.setGroup (m_schemas[number]);
@@ -209,7 +209,7 @@ KConfig *KateSchemaManager::schema (uint number)
 void KateSchemaManager::addSchema (const TQString &t)
 {
   m_config.setGroup (t);
-  m_config.writeEntry("Color Background", KGlobalSettings::baseColor());
+  m_config.writeEntry("Color Background", TDEGlobalSettings::baseColor());
 
   update (false);
 }
@@ -419,12 +419,12 @@ void KateSchemaConfigColorTab::schemaChanged ( int newSchema )
   if ( ! m_schemas.contains( newSchema ) )
   {
     // fallback defaults
-    TQColor tmp0 (KGlobalSettings::baseColor());
-    TQColor tmp1 (KGlobalSettings::highlightColor());
-    TQColor tmp2 (KGlobalSettings::alternateBackgroundColor());
+    TQColor tmp0 (TDEGlobalSettings::baseColor());
+    TQColor tmp1 (TDEGlobalSettings::highlightColor());
+    TQColor tmp2 (TDEGlobalSettings::alternateBackgroundColor());
     TQColor tmp3 ( "#FFFF99" );
     TQColor tmp4 (tmp2.dark());
-    TQColor tmp5 ( KGlobalSettings::textColor() );
+    TQColor tmp5 ( TDEGlobalSettings::textColor() );
     TQColor tmp6 ( "#EAE9E8" );
     TQColor tmp7 ( "#000000" );
 
@@ -440,7 +440,7 @@ void KateSchemaConfigColorTab::schemaChanged ( int newSchema )
     mark[6] = Qt::red;
 
     SchemaColors c;
-    KConfig *config = KateFactory::self()->schemaManager()->schema(newSchema);
+    TDEConfig *config = KateFactory::self()->schemaManager()->schema(newSchema);
 
     c.back= config->readColorEntry("Color Background", &tmp0);
     c.selected = config->readColorEntry("Color Selection", &tmp1);
@@ -493,7 +493,7 @@ void KateSchemaConfigColorTab::apply ()
   for ( it =  m_schemas.begin(); it !=  m_schemas.end(); ++it )
   {
     kdDebug(13030)<<"APPLY scheme = "<<it.key()<<endl;
-    KConfig *config = KateFactory::self()->schemaManager()->schema( it.key() );
+    TDEConfig *config = KateFactory::self()->schemaManager()->schema( it.key() );
     kdDebug(13030)<<"Using config group "<<config->group()<<endl;
     SchemaColors c = it.data();
 
@@ -541,8 +541,8 @@ KateSchemaConfigFontTab::KateSchemaConfigFontTab( TQWidget *parent, const char *
     // sizemanagment
   TQGridLayout *grid = new TQGridLayout( this, 1, 1 );
 
-  m_fontchooser = new KFontChooser ( this, 0L, false, TQStringList(), false );
-  m_fontchooser->enableColumn(KFontChooser::StyleList, false);
+  m_fontchooser = new TDEFontChooser ( this, 0L, false, TQStringList(), false );
+  m_fontchooser->enableColumn(TDEFontChooser::StyleList, false);
   grid->addWidget( m_fontchooser, 0, 0);
 
   connect (this, TQT_SIGNAL( changed()), parent->parentWidget(), TQT_SLOT (slotChanged()));
@@ -578,7 +578,7 @@ void KateSchemaConfigFontTab::schemaChanged( int newSchema )
 
   m_schema = newSchema;
 
-  TQFont f (KGlobalSettings::fixedFont());
+  TQFont f (TDEGlobalSettings::fixedFont());
 
   m_fontchooser->disconnect ( this );
   m_fontchooser->setFont ( KateFactory::self()->schemaManager()->schema( newSchema )->readFontEntry("Font", &f) );
@@ -635,11 +635,11 @@ void KateSchemaConfigFontColorTab::schemaChanged (uint schema)
 
   // set colors
   TQPalette p ( m_defaultStyles->palette() );
-  TQColor _c ( KGlobalSettings::baseColor() );
+  TQColor _c ( TDEGlobalSettings::baseColor() );
   p.setColor( TQColorGroup::Base,
     KateFactory::self()->schemaManager()->schema(schema)->
       readColorEntry( "Color Background", &_c ) );
-  _c = KGlobalSettings::highlightColor();
+  _c = TDEGlobalSettings::highlightColor();
   p.setColor( TQColorGroup::Highlight,
     KateFactory::self()->schemaManager()->schema(schema)->
       readColorEntry( "Color Selection", &_c ) );
@@ -759,14 +759,14 @@ void KateSchemaConfigHighlightTab::schemaChanged (uint schema)
 
   // Set listview colors
   // We do that now, because we can now get the "normal text" color.
-  // TODO this reads of the KConfig object, which should be changed when
+  // TODO this reads of the TDEConfig object, which should be changed when
   // the color tab is fixed.
   TQPalette p ( m_styles->palette() );
-  TQColor _c ( KGlobalSettings::baseColor() );
+  TQColor _c ( TDEGlobalSettings::baseColor() );
   p.setColor( TQColorGroup::Base,
     KateFactory::self()->schemaManager()->schema(m_schema)->
       readColorEntry( "Color Background", &_c ) );
-  _c = KGlobalSettings::highlightColor();
+  _c = TDEGlobalSettings::highlightColor();
   p.setColor( TQColorGroup::Highlight,
     KateFactory::self()->schemaManager()->schema(m_schema)->
       readColorEntry( "Color Selection", &_c ) );
@@ -865,7 +865,7 @@ KateSchemaConfigPage::KateSchemaConfigPage( TQWidget *parent, KateDocument *doc 
   hbHl = new TQHBox( this );
   layout->add (hbHl);
   hbHl->setSpacing( KDialog::spacingHint() );
-  lHl = new TQLabel( i18n("&Default schema for %1:").arg(KApplication::kApplication()->aboutData()->programName ()), hbHl );
+  lHl = new TQLabel( i18n("&Default schema for %1:").arg(TDEApplication::kApplication()->aboutData()->programName ()), hbHl );
   defaultSchemaCombo = new TQComboBox( false, hbHl );
   lHl->setBuddy( defaultSchemaCombo );
 
@@ -905,7 +905,7 @@ void KateSchemaConfigPage::apply()
   KateRendererConfig::global()->reloadSchema();
 
   // sync the hl config for real
-  KateHlManager::self()->getKConfig()->sync ();
+  KateHlManager::self()->getTDEConfig()->sync ();
 }
 
 void KateSchemaConfigPage::reload()
@@ -1066,7 +1066,7 @@ KateStyleListView::KateStyleListView( TQWidget *parent, bool showUseDefaults )
   connect( this, TQT_SIGNAL(contextMenuRequested(TQListViewItem*,const TQPoint&, int)),
            this, TQT_SLOT(showPopupMenu(TQListViewItem*, const TQPoint&)) );
   // grap the bg color, selected color and default font
-  normalcol = KGlobalSettings::textColor();
+  normalcol = TDEGlobalSettings::textColor();
   bgcol = KateRendererConfig::global()->backgroundColor();
   selcol = KateRendererConfig::global()->selectionColor();
   docfont = *KateRendererConfig::global()->font();
@@ -1078,7 +1078,7 @@ void KateStyleListView::showPopupMenu( KateStyleListItem *i, const TQPoint &glob
 {
   if ( !dynamic_cast<KateStyleListItem*>(i) ) return;
 
-  KPopupMenu m( this );
+  TDEPopupMenu m( this );
   KateAttribute *is = i->style();
   int id;
   // the title is used, because the menu obscures the context name when

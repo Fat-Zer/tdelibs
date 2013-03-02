@@ -24,14 +24,14 @@
 #include <tqtextstream.h>
 #include <tqtimer.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kcursor.h>
 #include <kdebug.h>
 #include <kcmenumngr.h>
-#include <kfontdialog.h>
-#include <klocale.h>
-#include <kmessagebox.h>
-#include <kstdaccel.h>
+#include <tdefontdialog.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
+#include <tdestdaccel.h>
 #include <kurldrag.h>
 
 #include "keditcl.h"
@@ -466,48 +466,48 @@ void KEdit::keyPressEvent ( TQKeyEvent *e)
 
   killing = false;
 
-  if ( KStdAccel::copy().contains( key ) )
+  if ( TDEStdAccel::copy().contains( key ) )
     copy();
   else if ( isReadOnly() )
     TQMultiLineEdit::keyPressEvent( e );
   // If this is an unmodified printable key, send it directly to TQMultiLineEdit.
   else if ( !(key.keyCodeQt() & (CTRL | ALT)) && !e->text().isEmpty() && TQString(e->text()).unicode()->isPrint() )
     TQMultiLineEdit::keyPressEvent( e );
-  else if ( KStdAccel::paste().contains( key ) ) {
+  else if ( TDEStdAccel::paste().contains( key ) ) {
     paste();
     setModified(true);
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::cut().contains( key ) ) {
+  else if ( TDEStdAccel::cut().contains( key ) ) {
     cut();
     setModified(true);
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::undo().contains( key ) ) {
+  else if ( TDEStdAccel::undo().contains( key ) ) {
     undo();
     setModified(true);
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::redo().contains( key ) ) {
+  else if ( TDEStdAccel::redo().contains( key ) ) {
     redo();
     setModified(true);
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::deleteWordBack().contains( key ) ) {
+  else if ( TDEStdAccel::deleteWordBack().contains( key ) ) {
     moveCursor(MoveWordBackward, true);
     if (hasSelectedText())
       del();
     setModified(true);
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::deleteWordForward().contains( key ) ) {
+  else if ( TDEStdAccel::deleteWordForward().contains( key ) ) {
     moveCursor(MoveWordForward, true);
     if (hasSelectedText())
       del();
     setModified(true);
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::backwardWord().contains( key ) ) {
+  else if ( TDEStdAccel::backwardWord().contains( key ) ) {
     CursorAction action = MoveWordBackward;
     int para, index;
     getCursorPosition( &para, & index );
@@ -516,7 +516,7 @@ void KEdit::keyPressEvent ( TQKeyEvent *e)
     moveCursor(action, false );
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::forwardWord().contains( key ) ) {
+  else if ( TDEStdAccel::forwardWord().contains( key ) ) {
     CursorAction action = MoveWordForward;
     int para, index;
     getCursorPosition( &para, & index );
@@ -525,27 +525,27 @@ void KEdit::keyPressEvent ( TQKeyEvent *e)
     moveCursor( action, false );
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::next().contains( key ) ) {
+  else if ( TDEStdAccel::next().contains( key ) ) {
     moveCursor( MovePgDown, false );
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::prior().contains( key ) ) {
+  else if ( TDEStdAccel::prior().contains( key ) ) {
     moveCursor( MovePgUp, false );
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::home().contains( key ) ) {
+  else if ( TDEStdAccel::home().contains( key ) ) {
     moveCursor( MoveHome, false );
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::end().contains( key ) ) {
+  else if ( TDEStdAccel::end().contains( key ) ) {
     moveCursor( MoveEnd, false );
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::beginningOfLine().contains( key ) ) {
+  else if ( TDEStdAccel::beginningOfLine().contains( key ) ) {
     moveCursor( MoveLineStart, false);
     slotCursorPositionChanged();
   }
-  else if ( KStdAccel::endOfLine().contains( key ) ) {
+  else if ( TDEStdAccel::endOfLine().contains( key ) ) {
     moveCursor( MoveLineEnd, false);
     slotCursorPositionChanged();
   }
@@ -567,7 +567,7 @@ void KEdit::installRBPopup(TQPopupMenu *p) {
 void KEdit::selectFont(){
 
   TQFont font = this->font();
-  KFontDialog::getFont(font);
+  TDEFontDialog::getFont(font);
   this->setFont(font);
 
 }

@@ -1,9 +1,9 @@
 #include "ksqueezedtextlabel.h"
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 int main( int argc, char **argv )
 {
-	KApplication app( argc, argv, "KSqueezedTextLabelTest" );
+	TDEApplication app( argc, argv, "KSqueezedTextLabelTest" );
 
 	KSqueezedTextLabel l( "This is a rather long string", 0);
 	app.setMainWidget( &l );

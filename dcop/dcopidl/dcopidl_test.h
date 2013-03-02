@@ -14,7 +14,7 @@ class Test2;
 // this has to work too
 #include <tqstring.h>
 
-typedef TQMap<KIO::Job *, KIODownload> KIODownloadMap;
+typedef TQMap<TDEIO::Job *, KIODownload> KIODownloadMap;
 class Test3;
 
 // Those namespaces are opened and closed, so they should be just ignored
@@ -78,7 +78,7 @@ private:
     Test3 *doc();
 
     struct KIODownload;
-    typedef TQMap<KIO::Job *, KIODownload> KIODownloadMap;
+    typedef TQMap<TDEIO::Job *, KIODownload> KIODownloadMap;
 };
 
 class Test2 : public DCOPObject

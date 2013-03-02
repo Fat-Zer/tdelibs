@@ -28,19 +28,19 @@
 //BEGIN includes
 #include "docwordcompletion.h"
 
-#include <ktexteditor/document.h>
-#include <ktexteditor/viewcursorinterface.h>
-#include <ktexteditor/editinterface.h>
-#include <ktexteditor/variableinterface.h>
+#include <tdetexteditor/document.h>
+#include <tdetexteditor/viewcursorinterface.h>
+#include <tdetexteditor/editinterface.h>
+#include <tdetexteditor/variableinterface.h>
 
-#include <kapplication.h>
-#include <kconfig.h>
+#include <tdeapplication.h>
+#include <tdeconfig.h>
 #include <kdialog.h>
 #include <kgenericfactory.h>
-#include <klocale.h>
-#include <kaction.h>
+#include <tdelocale.h>
+#include <tdeaction.h>
 #include <knotifyclient.h>
-#include <kparts/part.h>
+#include <tdeparts/part.h>
 #include <kiconloader.h>
 
 #include <tqregexp.h>
@@ -57,7 +57,7 @@
 //END
 
 //BEGIN DocWordCompletionPlugin
-K_EXPORT_COMPONENT_FACTORY( ktexteditor_docwordcompletion, KGenericFactory<DocWordCompletionPlugin>( "ktexteditor_docwordcompletion" ) )
+K_EXPORT_COMPONENT_FACTORY( tdetexteditor_docwordcompletion, KGenericFactory<DocWordCompletionPlugin>( "tdetexteditor_docwordcompletion" ) )
 DocWordCompletionPlugin::DocWordCompletionPlugin( TQObject *parent,
                             const char* name,
                             const TQStringList& /*args*/ )
@@ -68,7 +68,7 @@ DocWordCompletionPlugin::DocWordCompletionPlugin( TQObject *parent,
 
 void DocWordCompletionPlugin::readConfig()
 {
-  KConfig *config = kapp->config();
+  TDEConfig *config = kapp->config();
   config->setGroup( "DocWordCompletion Plugin" );
   m_treshold = config->readNumEntry( "treshold", 3 );
   m_autopopup = config->readBoolEntry( "autopopup", true );
@@ -76,7 +76,7 @@ void DocWordCompletionPlugin::readConfig()
 
 void DocWordCompletionPlugin::writeConfig()
 {
-  KConfig *config = kapp->config();
+  TDEConfig *config = kapp->config();
   config->setGroup("DocWordCompletion Plugin");
   config->writeEntry("autopopup", m_autopopup );
   config->writeEntry("treshold", m_treshold );
@@ -130,7 +130,7 @@ struct DocWordCompletionPluginViewPrivate
   TQString last;         // last word we were trying to match
   TQString lastIns;      // latest applied completion
   TQRegExp re;           // hrm
-  KToggleAction *autopopup; // for accessing state
+  TDEToggleAction *autopopup; // for accessing state
   uint treshold;        // the required length of a word before popping up the completion list automatically
   int directionalPos;   // be able to insert "" at the correct time
 };
@@ -145,15 +145,15 @@ DocWordCompletionPluginView::DocWordCompletionPluginView( uint treshold, bool au
   view->insertChildClient( this );
   setInstance( KGenericFactory<DocWordCompletionPlugin>::instance() );
 
-  (void) new KAction( i18n("Reuse Word Above"), CTRL+Key_8, this,
+  (void) new TDEAction( i18n("Reuse Word Above"), CTRL+Key_8, this,
     TQT_SLOT(completeBackwards()), actionCollection(), "doccomplete_bw" );
-  (void) new KAction( i18n("Reuse Word Below"), CTRL+Key_9, this,
+  (void) new TDEAction( i18n("Reuse Word Below"), CTRL+Key_9, this,
     TQT_SLOT(completeForwards()), actionCollection(), "doccomplete_fw" );
-  (void) new KAction( i18n("Pop Up Completion List"), 0, this,
+  (void) new TDEAction( i18n("Pop Up Completion List"), 0, this,
     TQT_SLOT(popupCompletionList()), actionCollection(), "doccomplete_pu" );
-  (void) new KAction( i18n("Shell Completion"), 0, this,
+  (void) new TDEAction( i18n("Shell Completion"), 0, this,
     TQT_SLOT(shellComplete()), actionCollection(), "doccomplete_sh" );
-  d->autopopup = new KToggleAction( i18n("Automatic Completion Popup"), 0, this,
+  d->autopopup = new TDEToggleAction( i18n("Automatic Completion Popup"), 0, this,
     TQT_SLOT(toggleAutoPopup()), actionCollection(), "enable_autopopup" );
 
   d->autopopup->setChecked( autopopup );

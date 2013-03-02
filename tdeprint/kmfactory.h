@@ -39,7 +39,7 @@ class KXmlCommandManager;
 class KMSpecialManager;
 class KPrinterImpl;
 class KLibFactory;
-class KConfig;
+class TDEConfig;
 class KPReloadObject;
 
 class TDEPRINT_EXPORT KMFactory : public TQObject, public DCOPObject
@@ -72,7 +72,7 @@ public:
 	KMSpecialManager* specialManager();
 	KXmlCommandManager* commandManager();
 	KPrinterImpl* printerImplementation();
-	KConfig* printConfig(const TQString& group = TQString::null);
+	TDEConfig* printConfig(const TQString& group = TQString::null);
 	TQString printSystem();
 	TQValueList<PluginInfo> pluginList();
 	PluginInfo pluginInfo(const TQString& name);
@@ -121,7 +121,7 @@ private:
 	KPrinterImpl		*m_implementation;
 	KLibFactory		*m_factory;
 
-	KConfig			*m_printconfig;
+	TDEConfig			*m_printconfig;
 	Settings		*m_settings;
 	TQPtrList<KPReloadObject> m_objects;
 };

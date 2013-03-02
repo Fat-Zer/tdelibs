@@ -19,14 +19,14 @@
 */
 
 #include "config.h"
-#include "kaction.h"
-#include "kmessagebox.h"
-#include "kshortcut.h"
+#include "tdeaction.h"
+#include "tdemessagebox.h"
+#include "tdeshortcut.h"
 #include "ksystemtray.h"
-#include "kpopupmenu.h"
-#include "kapplication.h"
-#include "klocale.h"
-#include "kaboutdata.h"
+#include "tdepopupmenu.h"
+#include "tdeapplication.h"
+#include "tdelocale.h"
+#include "tdeaboutdata.h"
 
 #ifdef Q_WS_X11
 #include <twin.h>
@@ -36,7 +36,7 @@
 
 #include <kimageeffect.h>
 #include <kiconloader.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include <tqapplication.h>
 #include <tqbitmap.h>
@@ -54,7 +54,7 @@ public:
         delete actionCollection;
     }
 
-    KActionCollection* actionCollection;
+    TDEActionCollection* actionCollection;
     bool on_all_desktops; // valid only when the parent widget was hidden
 };
 
@@ -66,7 +66,7 @@ KSystemTray::KSystemTray( TQWidget* parent, const char* name )
 #endif
 
     d = new KSystemTrayPrivate;
-    d->actionCollection = new KActionCollection(this);
+    d->actionCollection = new TDEActionCollection(this);
 
 #ifdef Q_WS_X11
     KWin::setSystemTrayWindowFor( winId(), parent?parent->topLevelWidget()->winId(): tqt_xrootwin() );
@@ -74,14 +74,14 @@ KSystemTray::KSystemTray( TQWidget* parent, const char* name )
     setBackgroundMode(X11ParentRelative);
     setBackgroundOrigin(WindowOrigin);
     hasQuit = 0;
-    menu = new KPopupMenu( this );
+    menu = new TDEPopupMenu( this );
     menu->insertTitle( kapp->miniIcon(), kapp->caption() );
     move( -1000, -1000 );
     KStdAction::quit(TQT_TQOBJECT(this), TQT_SLOT(maybeQuit()), d->actionCollection);
 
     if (parentWidget())
     {
-        new KAction(i18n("Minimize"), KShortcut(),
+        new TDEAction(i18n("Minimize"), TDEShortcut(),
                     TQT_TQOBJECT(this), TQT_SLOT( minimizeRestoreAction() ),
                     d->actionCollection, "minimizeRestore");
 #ifdef Q_WS_X11
@@ -95,7 +95,7 @@ KSystemTray::KSystemTray( TQWidget* parent, const char* name )
     {
         d->on_all_desktops = false;
     }
-    setCaption( KGlobal::instance()->aboutData()->programName());
+    setCaption( TDEGlobal::instance()->aboutData()->programName());
     setAlignment( alignment() | Qt::AlignVCenter | Qt::AlignHCenter );
 
     // Handle the possibility that the requested system tray size is something other than 22x22 pixels, per the Free Desktop specifications
@@ -112,7 +112,7 @@ void KSystemTray::showEvent( TQShowEvent * )
 {
     if ( !hasQuit ) {
 	menu->insertSeparator();
-        KAction* action = d->actionCollection->action("minimizeRestore");
+        TDEAction* action = d->actionCollection->action("minimizeRestore");
 
         if (action)
         {
@@ -136,7 +136,7 @@ void KSystemTray::enterEvent( TQEvent* e )
     TQLabel::enterEvent( e );
 }
 
-KPopupMenu* KSystemTray::contextMenu() const
+TDEPopupMenu* KSystemTray::contextMenu() const
 {
     return menu;
 }
@@ -155,7 +155,7 @@ void KSystemTray::mousePressEvent( TQMouseEvent *e )
 	// fall through
     case Qt::RightButton:
 	if ( parentWidget() ) {
-            KAction* action = d->actionCollection->action("minimizeRestore");
+            TDEAction* action = d->actionCollection->action("minimizeRestore");
 	    if ( parentWidget()->isVisible() )
 		action->setText( i18n("&Minimize") );
 	    else
@@ -175,7 +175,7 @@ void KSystemTray::mouseReleaseEvent( TQMouseEvent * )
 }
 
 
-void KSystemTray::contextMenuAboutToShow( KPopupMenu* )
+void KSystemTray::contextMenuAboutToShow( TDEPopupMenu* )
 {
 }
 
@@ -307,22 +307,22 @@ void KSystemTray::minimizeRestore( bool restore )
 #endif
 }
 
-KActionCollection* KSystemTray::actionCollection()
+TDEActionCollection* KSystemTray::actionCollection()
 {
     return d->actionCollection;
 }
 
-TQPixmap KSystemTray::loadIcon( const TQString &icon, KInstance *instance )
+TQPixmap KSystemTray::loadIcon( const TQString &icon, TDEInstance *instance )
 {
-    KConfig *appCfg = kapp->config();
-    KConfigGroupSaver configSaver(appCfg, "System Tray");
+    TDEConfig *appCfg = kapp->config();
+    TDEConfigGroupSaver configSaver(appCfg, "System Tray");
     int iconWidth = appCfg->readNumEntry("systrayIconWidth", 22);
-    return instance->iconLoader()->loadIcon( icon, KIcon::Panel, iconWidth );
+    return instance->iconLoader()->loadIcon( icon, TDEIcon::Panel, iconWidth );
 }
 
-TQPixmap KSystemTray::loadSizedIcon( const TQString &icon, int iconWidth, KInstance *instance )
+TQPixmap KSystemTray::loadSizedIcon( const TQString &icon, int iconWidth, TDEInstance *instance )
 {
-    return instance->iconLoader()->loadIcon( icon, KIcon::Panel, iconWidth );
+    return instance->iconLoader()->loadIcon( icon, TDEIcon::Panel, iconWidth );
 }
 
 void KSystemTray::setPixmap( const TQPixmap& p )

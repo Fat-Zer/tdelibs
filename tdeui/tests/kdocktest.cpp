@@ -1,6 +1,6 @@
 #include "kdocktest.h"
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kiconloader.h>
 
 #include <tqwidget.h>
@@ -54,7 +54,7 @@ DockTest::DockTest( TQWidget* parent )
 int
 main( int argc, char** argv )
 {
-  KApplication a( argc,argv, "docktest" );
+  TDEApplication a( argc,argv, "docktest" );
   DockTest* ap = new DockTest();
   ap->setCaption("DockWidget demo");
   a.setMainWidget( ap );

@@ -23,7 +23,7 @@
 #include <tqdatetime.h>
 #include <tqstring.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 
 #include "kcalendarsystemhijri.h"
@@ -178,7 +178,7 @@ static void gregorianToHijri(const TQDate & date, int * pYear, int * pMonth,
     *pDay = islamic.getDay();
 }
 
-KCalendarSystemHijri::KCalendarSystemHijri(const KLocale * locale)
+KCalendarSystemHijri::KCalendarSystemHijri(const TDELocale * locale)
   : KCalendarSystem(locale)
 {
 }

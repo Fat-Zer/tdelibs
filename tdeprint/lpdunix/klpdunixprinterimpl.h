@@ -22,7 +22,7 @@
 
 #include "kprinterimpl.h"
 
-class KProcess;
+class TDEProcess;
 
 class KLpdUnixPrinterImpl : public KPrinterImpl
 {

@@ -27,13 +27,13 @@
 
 class KXMLGUIBuilderPrivate;
 class TQWidget;
-class KInstance;
+class TDEInstance;
 class KXMLGUIClient;
 
 /**
  * Abstract interface for a "GUI builder", used by the GUIFactory
- * This interface is implemented by KMainWindow for the case where
- * the toplevel widget is a KMainWindow. Other implementations may appear
+ * This interface is implemented by TDEMainWindow for the case where
+ * the toplevel widget is a TDEMainWindow. Other implementations may appear
  * in the future (dialogs for instance)
  */
 class TDEUI_EXPORT KXMLGUIBuilder
@@ -48,9 +48,9 @@ class TDEUI_EXPORT KXMLGUIBuilder
   /* @internal */
   void setBuilderClient( KXMLGUIClient *client );
   /* @internal */
-  KInstance *builderInstance() const;
+  TDEInstance *builderInstance() const;
   /* @internal */
-  void setBuilderInstance( KInstance *instance );
+  void setBuilderInstance( TDEInstance *instance );
   /* @internal */
   TQWidget *widget();
 

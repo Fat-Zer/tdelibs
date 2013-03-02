@@ -2,7 +2,7 @@
  *
  */
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tqpushbutton.h>
 #include <tqlabel.h>
 #include <tqobject.h>
@@ -30,7 +30,7 @@
 
 TQFont default_font("Helvetica", 12);
 
-KApplication *a;
+TDEApplication *a;
 
 TopLevel::TopLevel(TQWidget *parent, const char *name)
     : TQWidget(parent, name)
@@ -90,7 +90,7 @@ void TopLevel::okPressed()
 
 int main( int argc, char ** argv )
 {
-    a = new KApplication ( argc, argv, "KTabCtlTest" );
+    a = new TDEApplication ( argc, argv, "KTabCtlTest" );
 
     a->setFont(default_font);
 

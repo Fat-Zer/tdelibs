@@ -18,17 +18,17 @@
  **/
 
 #include "kprintprocess.h"
-#include <kapplication.h>
-#include <klocale.h>
+#include <tdeapplication.h>
+#include <tdelocale.h>
 #include <tqfile.h>
 
 KPrintProcess::KPrintProcess()
 : KShellProcess()
 {
 	// redirect everything to a single buffer
-	connect(this,TQT_SIGNAL(receivedStdout(KProcess*,char*,int)),TQT_SLOT(slotReceivedStderr(KProcess*,char*,int)));
-	connect(this,TQT_SIGNAL(receivedStderr(KProcess*,char*,int)),TQT_SLOT(slotReceivedStderr(KProcess*,char*,int)));
-	connect( this, TQT_SIGNAL( processExited( KProcess* ) ), TQT_SLOT( slotExited( KProcess* ) ) );
+	connect(this,TQT_SIGNAL(receivedStdout(TDEProcess*,char*,int)),TQT_SLOT(slotReceivedStderr(TDEProcess*,char*,int)));
+	connect(this,TQT_SIGNAL(receivedStderr(TDEProcess*,char*,int)),TQT_SLOT(slotReceivedStderr(TDEProcess*,char*,int)));
+	connect( this, TQT_SIGNAL( processExited( TDEProcess* ) ), TQT_SLOT( slotExited( TDEProcess* ) ) );
 	m_state = None;
 }
 
@@ -53,7 +53,7 @@ bool KPrintProcess::print()
 	return start(NotifyOnExit,All);
 }
 
-void KPrintProcess::slotReceivedStderr(KProcess *proc, char *buf, int len)
+void KPrintProcess::slotReceivedStderr(TDEProcess *proc, char *buf, int len)
 {
 	if (proc == this)
 	{
@@ -62,7 +62,7 @@ void KPrintProcess::slotReceivedStderr(KProcess *proc, char *buf, int len)
 	}
 }
 
-void KPrintProcess::slotExited( KProcess* )
+void KPrintProcess::slotExited( TDEProcess* )
 {
 	switch ( m_state )
 	{

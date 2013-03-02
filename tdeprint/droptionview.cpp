@@ -25,7 +25,7 @@
 #include <tqlineedit.h>
 #include <tqslider.h>
 #include <tqlabel.h>
-#include <klistbox.h>
+#include <tdelistbox.h>
 #include <tqvbuttongroup.h>
 #include <tqradiobutton.h>
 #include <tqwidgetstack.h>
@@ -34,7 +34,7 @@
 
 #include <kcursor.h>
 #include <kdialog.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 OptionBaseView::OptionBaseView(TQWidget *parent, const char *name)
 : TQWidget(parent,name)
@@ -191,7 +191,7 @@ void OptionStringView::setValue(const TQString& val)
 OptionListView::OptionListView(TQWidget *parent, const char *name)
 : OptionBaseView(parent,name)
 {
-	m_list = new KListBox(this);
+	m_list = new TDEListBox(this);
 
 	TQVBoxLayout	*main_ = new TQVBoxLayout(this, 0, 10);
 	main_->addWidget(m_list);

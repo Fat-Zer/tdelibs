@@ -33,15 +33,15 @@
 #include <tqpainter.h>
 #include <tqstyle.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdialog.h> // Access to some static members
-#include <klocale.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
 #include <kseparator.h>
 #include <kdebug.h>
 #include "kjanuswidget.h"
-#include <klistview.h>
+#include <tdelistview.h>
 #include "kpushbutton.h"
 #include "kguiitem.h"
 
@@ -110,7 +110,7 @@ KJanusWidget::KJanusWidget( TQWidget *parent, const char *name, int face )
       d->mListFrame = new TQWidget( d->mSplitter );
       TQVBoxLayout *dummy = new TQVBoxLayout( d->mListFrame, 0, KDialog::spacingHint() );
       dummy->setAutoAdd( true );
-      mTreeList = new KListView( d->mListFrame );
+      mTreeList = new TDEListView( d->mListFrame );
       mTreeList->addColumn( TQString::null );
       mTreeList->header()->hide();
       mTreeList->setRootIsDecorated(true);
@@ -197,7 +197,7 @@ KJanusWidget::KJanusWidget( TQWidget *parent, const char *name, int face )
   }
 
   if ( kapp )
-    connect(kapp,TQT_SIGNAL(kdisplayFontChanged()),TQT_SLOT(slotFontChanged()));
+    connect(kapp,TQT_SIGNAL(tdedisplayFontChanged()),TQT_SLOT(slotFontChanged()));
   mValid = true;
 
   setSwallowedWidget(0); // Set default size if 'mFace' is Swallow.
@@ -703,7 +703,7 @@ void KJanusWidget::slotFontChanged()
 {
   if( mTitleLabel )
   {
-    mTitleLabel->setFont( KGlobalSettings::generalFont() );
+    mTitleLabel->setFont( TDEGlobalSettings::generalFont() );
     TQFont titleFont( mTitleLabel->font() );
     titleFont.setBold( true );
     mTitleLabel->setFont( titleFont );
@@ -939,7 +939,7 @@ bool KJanusWidget::eventFilter( TQObject *o, TQEvent *e )
 
 KJanusWidget::IconListBox::IconListBox( TQWidget *parent, const char *name,
 					WFlags f )
-  :KListBox( parent, name, f ), mShowAll(false), mHeightValid(false),
+  :TDEListBox( parent, name, f ), mShowAll(false), mHeightValid(false),
    mWidthValid(false),
    mOldItem(0) 
 {
@@ -1008,7 +1008,7 @@ void KJanusWidget::IconListBox::setShowAll( bool showAll )
 
 void KJanusWidget::IconListBox::leaveEvent( TQEvent *ev )
 {
-  KListBox::leaveEvent( ev ); 
+  TDEListBox::leaveEvent( ev ); 
 
   if ( mOldItem && !mOldItem->isSelected() )
   {
@@ -1020,7 +1020,7 @@ void KJanusWidget::IconListBox::leaveEvent( TQEvent *ev )
 // hack because qt does not support Q_OBJECT in nested classes
 void KJanusWidget::IconListBox::slotOnItem(TQListBoxItem *qitem)
 {
-  KListBox::slotOnItem( qitem );
+  TDEListBox::slotOnItem( qitem );
 
   if ( qitem == mOldItem )
   {

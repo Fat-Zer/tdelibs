@@ -54,7 +54,7 @@
 #endif
 
 // KDE
-#include <klocale.h>
+#include <tdelocale.h>
 
 // Us
 #include "kresolver.h"
@@ -75,7 +75,7 @@ using namespace KNetwork::Internal;
 class KNetwork::KResolverEntryPrivate: public TQShared
 {
 public:
-  KSocketAddress addr;
+  TDESocketAddress addr;
   int socktype;
   int protocol;
   TQString canonName;
@@ -93,7 +93,7 @@ KResolverEntry::KResolverEntry() :
 }
 
 // constructor with stuff
-KResolverEntry::KResolverEntry(const KSocketAddress& addr, int socktype, int protocol,
+KResolverEntry::KResolverEntry(const TDESocketAddress& addr, int socktype, int protocol,
 			       const TQString& canonName, const TQCString& encodedName) :
   d(new KResolverEntryPrivate)
 {
@@ -110,7 +110,7 @@ KResolverEntry::KResolverEntry(const struct sockaddr* sa, TQ_UINT16 salen, int s
 			       const TQCString& encodedName) :
   d(new KResolverEntryPrivate)
 {
-  d->addr = KSocketAddress(sa, salen);
+  d->addr = TDESocketAddress(sa, salen);
   d->socktype = socktype;
   d->protocol = protocol;
   d->canonName = canonName;
@@ -135,9 +135,9 @@ KResolverEntry::~KResolverEntry()
 }
 
 // returns the socket address
-KSocketAddress KResolverEntry::address() const
+TDESocketAddress KResolverEntry::address() const
 {
-  return d ? d->addr : KSocketAddress();
+  return d ? d->addr : TDESocketAddress();
 }
 
 // returns the length

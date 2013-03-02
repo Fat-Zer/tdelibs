@@ -25,14 +25,14 @@
 #include <tqlayout.h>
 #include <tqtimer.h>
 
-#include <kapplication.h>
-#include <kconfig.h>
+#include <tdeapplication.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <kdialog.h>
-#include <kfiledialog.h>
-#include <kglobal.h>
+#include <tdefiledialog.h>
+#include <tdeglobal.h>
 #include <klineedit.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kpushbutton.h>
 #include <kstdguiitem.h>
 
@@ -80,7 +80,7 @@ KSpellConfig::KSpellConfig( TQWidget *parent, const char *name,
   , clientcombo(0)
 {
   d = new KSpellConfigPrivate;
-  kc = KGlobal::config();
+  kc = TDEGlobal::config();
 
   if( !_ksc )
   {
@@ -181,7 +181,7 @@ KSpellConfig::dictFromList() const
 bool
 KSpellConfig::readGlobalSettings()
 {
-  KConfigGroupSaver cs( kc,"KSpell" );
+  TDEConfigGroupSaver cs( kc,"KSpell" );
 
   setNoRootAffix   ( kc->readNumEntry("KSpell_NoRootAffix", 0) );
   setRunTogether   ( kc->readNumEntry("KSpell_RunTogether", 0) );
@@ -196,7 +196,7 @@ KSpellConfig::readGlobalSettings()
 bool
 KSpellConfig::writeGlobalSettings ()
 {
-  KConfigGroupSaver cs( kc,"KSpell" );
+  TDEConfigGroupSaver cs( kc,"KSpell" );
 
   kc->writeEntry ("KSpell_NoRootAffix",(int) noRootAffix(), true, true);
   kc->writeEntry ("KSpell_RunTogether", (int) runTogether(), true, true);
@@ -277,12 +277,12 @@ KSpellConfig::interpret( TQString &fname, TQString &lname,
   // but since aspell 0.6 also 3-character ISO-codes can be used
   if ( (dname.length() == 2) || (dname.length() == 3) ) {
     lname = dname;
-    hname = KGlobal::locale()->twoAlphaToLanguageName( lname );
+    hname = TDEGlobal::locale()->twoAlphaToLanguageName( lname );
   }
   else if ( (dname.length() == 5) && (dname[2] == '_') ) {
     lname = dname.left(2);
-    hname = KGlobal::locale()->twoAlphaToLanguageName(lname);
-    TQString country = KGlobal::locale()->twoAlphaToCountryName( dname.right(2) );
+    hname = TDEGlobal::locale()->twoAlphaToLanguageName(lname);
+    TQString country = TDEGlobal::locale()->twoAlphaToCountryName( dname.right(2) );
     if ( extension.isEmpty() )
       extension = country;
     else
@@ -363,9 +363,9 @@ KSpellConfig::interpret( TQString &fname, TQString &lname,
   }
 
   //We have explicitly chosen English as the default here.
-  if ( ( KGlobal::locale()->language() == TQString::fromLatin1("C") &&
+  if ( ( TDEGlobal::locale()->language() == TQString::fromLatin1("C") &&
          lname==TQString::fromLatin1("en") ) ||
-       KGlobal::locale()->language() == lname )
+       TDEGlobal::locale()->language() == lname )
     return true;
 
   return false;
@@ -965,7 +965,7 @@ void KSpellConfig::activateHelp( void )
 
 void KSpellConfig::sHelp( void )
 {
-  kapp->invokeHelp("configuration", "kspell");
+  kapp->invokeHelp("configuration", "tdespell");
 }
 
 /*

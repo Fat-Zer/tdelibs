@@ -31,8 +31,8 @@
 #include <kinstance.h>
 #include <kstandarddirs.h>
 #include <kdebug.h>
-#include <kaction.h>
-#include <kapplication.h>
+#include <tdeaction.h>
+#include <tdeapplication.h>
 
 #include <assert.h>
 
@@ -41,7 +41,7 @@ class KXMLGUIClientPrivate
 public:
   KXMLGUIClientPrivate()
   {
-    m_instance = KGlobal::instance();
+    m_instance = TDEGlobal::instance();
     m_parent = 0L;
     m_builder = 0L;
     m_actionCollection = 0;
@@ -50,10 +50,10 @@ public:
   {
   }
 
-  KInstance *m_instance;
+  TDEInstance *m_instance;
 
   TQDomDocument m_doc;
-  KActionCollection *m_actionCollection;
+  TDEActionCollection *m_actionCollection;
   TQDomDocument m_buildDocument;
   TQGuardedPtr<KXMLGUIFactory> m_factory;
   KXMLGUIClient *m_parent;
@@ -90,9 +90,9 @@ KXMLGUIClient::~KXMLGUIClient()
   delete d;
 }
 
-KAction *KXMLGUIClient::action( const char *name ) const
+TDEAction *KXMLGUIClient::action( const char *name ) const
 {
-  KAction* act = actionCollection()->action( name );
+  TDEAction* act = actionCollection()->action( name );
   if ( !act ) {
     TQPtrListIterator<KXMLGUIClient> childIt( d->m_children );
     for (; childIt.current(); ++childIt ) {
@@ -104,23 +104,23 @@ KAction *KXMLGUIClient::action( const char *name ) const
   return act;
 }
 
-KActionCollection *KXMLGUIClient::actionCollection() const
+TDEActionCollection *KXMLGUIClient::actionCollection() const
 {
   if ( !d->m_actionCollection )
   {
-    d->m_actionCollection = new KActionCollection(
-      "KXMLGUIClient-KActionCollection", this );
+    d->m_actionCollection = new TDEActionCollection(
+      "KXMLGUIClient-TDEActionCollection", this );
   }
   return d->m_actionCollection;
 }
 
-KAction *KXMLGUIClient::action( const TQDomElement &element ) const
+TDEAction *KXMLGUIClient::action( const TQDomElement &element ) const
 {
-  static const TQString &attrName = KGlobal::staticQString( "name" );
+  static const TQString &attrName = TDEGlobal::staticQString( "name" );
   return actionCollection()->action( element.attribute( attrName ).latin1() );
 }
 
-KInstance *KXMLGUIClient::instance() const
+TDEInstance *KXMLGUIClient::instance() const
 {
   return d->m_instance;
 }
@@ -154,7 +154,7 @@ void KXMLGUIClient::reloadXML()
         setXMLFile( file );
 }
 
-void KXMLGUIClient::setInstance( KInstance *instance )
+void KXMLGUIClient::setInstance( TDEInstance *instance )
 {
   d->m_instance = instance;
   actionCollection()->setInstance( instance );
@@ -248,19 +248,19 @@ void KXMLGUIClient::setDOMDocument( const TQDomDocument &document, bool merge )
   setXMLGUIBuildDocument( TQDomDocument() );
 }
 
-bool KXMLGUIClient::mergeXML( TQDomElement &base, const TQDomElement &additive, KActionCollection *actionCollection )
+bool KXMLGUIClient::mergeXML( TQDomElement &base, const TQDomElement &additive, TDEActionCollection *actionCollection )
 {
-  static const TQString &tagAction = KGlobal::staticQString( "Action" );
-  static const TQString &tagMerge = KGlobal::staticQString( "Merge" );
-  static const TQString &tagSeparator = KGlobal::staticQString( "Separator" );
-  static const TQString &attrName = KGlobal::staticQString( "name" );
-  static const TQString &attrAppend = KGlobal::staticQString( "append" );
-  static const TQString &attrWeakSeparator = KGlobal::staticQString( "weakSeparator" );
-  static const TQString &tagMergeLocal = KGlobal::staticQString( "MergeLocal" );
-  static const TQString &tagText = KGlobal::staticQString( "text" );
-  static const TQString &attrAlreadyVisited = KGlobal::staticQString( "alreadyVisited" );
-  static const TQString &attrNoMerge = KGlobal::staticQString( "noMerge" );
-  static const TQString &attrOne = KGlobal::staticQString( "1" );
+  static const TQString &tagAction = TDEGlobal::staticQString( "Action" );
+  static const TQString &tagMerge = TDEGlobal::staticQString( "Merge" );
+  static const TQString &tagSeparator = TDEGlobal::staticQString( "Separator" );
+  static const TQString &attrName = TDEGlobal::staticQString( "name" );
+  static const TQString &attrAppend = TDEGlobal::staticQString( "append" );
+  static const TQString &attrWeakSeparator = TDEGlobal::staticQString( "weakSeparator" );
+  static const TQString &tagMergeLocal = TDEGlobal::staticQString( "MergeLocal" );
+  static const TQString &tagText = TDEGlobal::staticQString( "text" );
+  static const TQString &attrAlreadyVisited = TDEGlobal::staticQString( "alreadyVisited" );
+  static const TQString &attrNoMerge = TDEGlobal::staticQString( "noMerge" );
+  static const TQString &attrOne = TDEGlobal::staticQString( "1" );
 
   // there is a possibility that we don't want to merge in the
   // additive.. rather, we might want to *replace* the base with the
@@ -292,7 +292,7 @@ bool KXMLGUIClient::mergeXML( TQDomElement &base, const TQDomElement &additive, 
     {
       TQCString name =  e.attribute( attrName ).utf8(); // WABA
       if ( !actionCollection->action( name.data() ) ||
-           (kapp && !kapp->authorizeKAction(name)))
+           (kapp && !kapp->authorizeTDEAction(name)))
       {
         // remove this child as we aren't using it
         base.removeChild( e );
@@ -501,9 +501,9 @@ bool KXMLGUIClient::mergeXML( TQDomElement &base, const TQDomElement &additive, 
 
 TQDomElement KXMLGUIClient::findMatchingElement( const TQDomElement &base, const TQDomElement &additive )
 {
-  static const TQString &tagAction = KGlobal::staticQString( "Action" );
-  static const TQString &tagMergeLocal = KGlobal::staticQString( "MergeLocal" );
-  static const TQString &attrName = KGlobal::staticQString( "name" );
+  static const TQString &tagAction = TDEGlobal::staticQString( "Action" );
+  static const TQString &tagMergeLocal = TDEGlobal::staticQString( "MergeLocal" );
+  static const TQString &attrName = TDEGlobal::staticQString( "name" );
 
   TQDomNode n = additive.firstChild();
   while ( !n.isNull() )
@@ -602,7 +602,7 @@ KXMLGUIBuilder *KXMLGUIClient::clientBuilder() const
   return d->m_builder;
 }
 
-void KXMLGUIClient::plugActionList( const TQString &name, const TQPtrList<KAction> &actionList )
+void KXMLGUIClient::plugActionList( const TQString &name, const TQPtrList<TDEAction> &actionList )
 {
   if ( !d->m_factory )
     return;
@@ -908,7 +908,7 @@ void KXMLGUIClient::stateChanged(const TQString &newstate, KXMLGUIClient::Revers
   for ( TQStringList::Iterator it = stateChange.actionsToEnable.begin();
         it != stateChange.actionsToEnable.end(); ++it ) {
 
-    KAction *action = actionCollection()->action((*it).latin1());
+    TDEAction *action = actionCollection()->action((*it).latin1());
     if (action) action->setEnabled(setTrue);
   }
 
@@ -917,7 +917,7 @@ void KXMLGUIClient::stateChanged(const TQString &newstate, KXMLGUIClient::Revers
   for ( TQStringList::Iterator it = stateChange.actionsToDisable.begin();
         it != stateChange.actionsToDisable.end(); ++it ) {
 
-    KAction *action = actionCollection()->action((*it).latin1());
+    TDEAction *action = actionCollection()->action((*it).latin1());
     if (action) action->setEnabled(setFalse);
   }
 

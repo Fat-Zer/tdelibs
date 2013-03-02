@@ -1,23 +1,23 @@
 #include "kpixmapregionselectordialog.h"
 #include <tqpixmap.h>
 #include <tqimage.h>
-#include <kapplication.h>
-#include <kcmdlineargs.h>
+#include <tdeapplication.h>
+#include <tdecmdlineargs.h>
 #include <iostream>
 
-static const KCmdLineOptions options[] =
+static const TDECmdLineOptions options[] =
 {
    { "+file", "The image file to open", 0 },
-   KCmdLineLastOption
+   TDECmdLineLastOption
 };
 
 int main(int argc, char**argv)
 {
-  KCmdLineArgs::init(argc, argv, "test", "test" ,"test" ,"1.0");
-  KCmdLineArgs::addCmdLineOptions( options );
-  KApplication app("test");
+  TDECmdLineArgs::init(argc, argv, "test", "test" ,"test" ,"1.0");
+  TDECmdLineArgs::addCmdLineOptions( options );
+  TDEApplication app("test");
 
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+  TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
   if (args->count()!=1)
   {
     std::cout << "Usage: kpixmapregionselectordialogtest <imageFile>" << std::endl;

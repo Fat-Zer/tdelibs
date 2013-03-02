@@ -26,7 +26,7 @@
 #include <tqlabel.h>
 #include <tqlayout.h>
 #include <tqcombobox.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <keditlistbox.h>
 
 KMWUsers::KMWUsers(TQWidget *parent, const char *name)

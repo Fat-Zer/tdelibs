@@ -20,7 +20,7 @@
 #include "kmextmanager.h"
 #include "kmprinter.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 KMExtManager::KMExtManager(TQObject *parent, const char *name, const TQStringList & /*args*/)
 : KMManager(parent,name)

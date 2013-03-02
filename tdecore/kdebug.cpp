@@ -27,13 +27,13 @@
 
 #include "kdebugdcopiface.h"
 
-#include "kapplication.h"
-#include "kglobal.h"
+#include "tdeapplication.h"
+#include "tdeglobal.h"
 #include "kinstance.h"
 #include "kstandarddirs.h"
 
 #include <tqmessagebox.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqfile.h>
 #include <tqintdict.h>
 #include <tqstring.h>
@@ -55,7 +55,7 @@
 #include <syslog.h>
 #include <errno.h>
 #include <string.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include "kstaticdeleter.h"
 #include <config.h>
 
@@ -81,8 +81,8 @@ static TQCString getDescrFromNum(unsigned int _num)
 {
   if (!KDebugCache) {
     kdd.setObject(KDebugCache, new TQIntDict<KDebugEntry>( 601 ));
-    // Do not call this deleter from ~KApplication
-    KGlobal::unregisterStaticDeleter(&kdd);
+    // Do not call this deleter from ~TDEApplication
+    TDEGlobal::unregisterStaticDeleter(&kdd);
     KDebugCache->setAutoDelete(true);
   }
 
@@ -162,7 +162,7 @@ struct kDebugPrivate {
 
   TQCString aAreaName;
   unsigned int oldarea;
-  KConfig *config;
+  TDEConfig *config;
 };
 
 static kDebugPrivate *kDebug_data = 0;
@@ -175,8 +175,8 @@ static void kDebugBackend( unsigned short nLevel, unsigned int nArea, const char
   if ( !kDebug_data )
   {
       pcd.setObject(kDebug_data, new kDebugPrivate());
-      // Do not call this deleter from ~KApplication
-      KGlobal::unregisterStaticDeleter(&pcd);
+      // Do not call this deleter from ~TDEApplication
+      TDEGlobal::unregisterStaticDeleter(&pcd);
 
       // create the dcop interface if it has not been created yet
       if (!kDebugDCOPIface)
@@ -185,25 +185,25 @@ static void kDebugBackend( unsigned short nLevel, unsigned int nArea, const char
       }
   }
 
-  if (!kDebug_data->config && KGlobal::_instance )
+  if (!kDebug_data->config && TDEGlobal::_instance )
   {
-      kDebug_data->config = new KConfig("kdebugrc", false, false);
+      kDebug_data->config = new TDEConfig("kdebugrc", false, false);
       kDebug_data->config->setGroup("0");
 
       //AB: this is necessary here, otherwise all output with area 0 won't be
       //prefixed with anything, unless something with area != 0 is called before
-      if ( KGlobal::_instance )
-        kDebug_data->aAreaName = KGlobal::instance()->instanceName();
+      if ( TDEGlobal::_instance )
+        kDebug_data->aAreaName = TDEGlobal::instance()->instanceName();
   }
 
   if (kDebug_data->config && kDebug_data->oldarea != nArea) {
     kDebug_data->config->setGroup( TQString::number(static_cast<int>(nArea)) );
     kDebug_data->oldarea = nArea;
-    if ( nArea > 0 && KGlobal::_instance )
+    if ( nArea > 0 && TDEGlobal::_instance )
       kDebug_data->aAreaName = getDescrFromNum(nArea);
     if ((nArea == 0) || kDebug_data->aAreaName.isEmpty())
-      if ( KGlobal::_instance )
-        kDebug_data->aAreaName = KGlobal::instance()->instanceName();
+      if ( TDEGlobal::_instance )
+        kDebug_data->aAreaName = TDEGlobal::instance()->instanceName();
   }
 
   int nPriority = 0;

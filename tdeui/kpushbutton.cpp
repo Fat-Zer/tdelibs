@@ -25,11 +25,11 @@
 
 #include "config.h"
 
-#include <kglobalsettings.h>
-#include <kconfig.h>
-#include <kglobal.h>
+#include <tdeglobalsettings.h>
+#include <tdeconfig.h>
+#include <tdeglobal.h>
 #include <kipc.h> 
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 class KPushButton::KPushButtonPrivate
 {
@@ -114,7 +114,7 @@ void KPushButton::init( const KGuiItem &item )
 
 void KPushButton::readSettings()
 {
-    s_useIcons = KGlobalSettings::showIconsOnPushButtons();
+    s_useIcons = TDEGlobalSettings::showIconsOnPushButtons();
 }
 
 void KPushButton::setGuiItem( const KGuiItem& item )
@@ -195,7 +195,7 @@ void KPushButton::mouseMoveEvent( TQMouseEvent *e )
 
     if ( (e->state() & Qt::LeftButton) &&
          (e->pos() - startPos).manhattanLength() >
-         KGlobalSettings::dndEventDelay() )
+         TDEGlobalSettings::dndEventDelay() )
     {
         startDrag();
         setDown( false );

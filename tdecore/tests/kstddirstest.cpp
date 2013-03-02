@@ -1,14 +1,14 @@
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kinstance.h>
 #include <kstandarddirs.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 int main(int argc, char **argv)
 {
-  KApplication a(argc, argv, "whatever", false);
-  KStandardDirs t;
-  KConfig config; // to add custom entries - a bit tricky :/
+  TDEApplication a(argc, argv, "whatever", false);
+  TDEStandardDirs t;
+  TDEConfig config; // to add custom entries - a bit tricky :/
 
   TQStringList list;
   TQString s;

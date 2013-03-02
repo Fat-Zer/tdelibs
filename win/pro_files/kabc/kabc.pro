@@ -5,11 +5,11 @@ include( $(KDELIBS)/win/common.pro )
 # needed to export library classes:
 DEFINES += MAKE_KABC_LIB
 LIBS += $$KDELIBDESTDIR\tdecore$$KDELIB_SUFFIX $$KDELIBDESTDIR\tdeui$$KDELIB_SUFFIX \
-	$$KDELIBDESTDIR\kresources$$KDELIB_SUFFIX $$KDELIBDESTDIR\dcop$$KDELIB_SUFFIX \
+	$$KDELIBDESTDIR\tderesources$$KDELIB_SUFFIX $$KDELIBDESTDIR\dcop$$KDELIB_SUFFIX \
 	$$KDELIBDESTDIR\kio$$KDELIB_SUFFIX $$KDELIBDESTDIR\kvcard$$KDELIB_SUFFIX
 
-INCLUDEPATH += $(KDELIBS)/kabc/vcard/include $(KDELIBS)/kabc/vcard/include/generated \
-	$(KDELIBS)/kabc/vcardparser
+INCLUDEPATH += $(KDELIBS)/tdeabc/vcard/include $(KDELIBS)/tdeabc/vcard/include/generated \
+	$(KDELIBS)/tdeabc/vcardparser
 
 system( bash kmoc )
 system( bash kdcopidl )

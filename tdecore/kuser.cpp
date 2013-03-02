@@ -32,7 +32,7 @@
 #include <grp.h>
 
 
-class KUserPrivate : public KShared
+class KUserPrivate : public TDEShared
 {
 public:
 	bool valid;
@@ -271,7 +271,7 @@ TQStringList KUser::allUserNames() {
 KUser::~KUser() {
 }
 
-class KUserGroupPrivate : public KShared
+class KUserGroupPrivate : public TDEShared
 {
 public:
   bool valid;

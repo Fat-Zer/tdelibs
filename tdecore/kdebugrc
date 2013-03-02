@@ -32,7 +32,7 @@
 # AbortFatal=1
 #
 
-# KAccel debug info off
+# TDEAccel debug info off
 [125]
 InfoOutput=4
 
@@ -40,19 +40,19 @@ InfoOutput=4
 [131]
 InfoOutput=4
 
-# KAction debug info off
+# TDEAction debug info off
 [129]
 InfoOutput=4
 
-# KStartupInfo debug info off
+# TDEStartupInfo debug info off
 [172]
 InfoOutput=4
 
-# KLocale debug info off
+# TDELocale debug info off
 [173]
 InfoOutput=4
 
-# KMainWindow debug info off
+# TDEMainWindow debug info off
 [200]
 InfoOutput=4
 
@@ -60,7 +60,7 @@ InfoOutput=4
 [250]
 InfoOutput=4
 
-# KIconloader debug info off
+# TDEIconloader debug info off
 [264]
 InfoOutput=4
 
@@ -96,7 +96,7 @@ InfoOutput=4
 [5400]
 InfoOutput=4
 
-# kabc/vcard
+# tdeabc/vcard
 [5710]
 InfoOutput=4
 
@@ -112,7 +112,7 @@ InfoOutput=4
 [5901]
 InfoOutput=4
 
-# kio_http_debug debug info off
+# tdeio_http_debug debug info off
 [7113]
 InfoOutput=4
 
@@ -120,7 +120,7 @@ InfoOutput=4
 [7118]
 InfoOutput=4
 
-# kio_nntp debug info off
+# tdeio_nntp debug info off
 [7114]
 InfoOutput=4
 

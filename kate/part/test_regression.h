@@ -165,7 +165,7 @@ class RegressionTest : public TQObject
   Q_OBJECT
 public:
 
-    RegressionTest(KateDocument *part, KConfig *baseConfig,
+    RegressionTest(KateDocument *part, TDEConfig *baseConfig,
                    const TQString &baseDir, const TQString &outputDir,
                    bool _genOutput);
     ~RegressionTest();
@@ -181,21 +181,21 @@ public:
     void rereadConfig();
     static void createMissingDirs(const TQString &path);
 
-    void setFailureSnapshotConfig(KConfig *cfg, const TQString &snapshotname);
-    void setFailureSnapshotSaver(KConfig *cfg, const TQString &snapshotname);
+    void setFailureSnapshotConfig(TDEConfig *cfg, const TQString &snapshotname);
+    void setFailureSnapshotSaver(TDEConfig *cfg, const TQString &snapshotname);
 
     void createLink( const TQString& test, int failures );
     void doFailureReport( const TQString& test, int failures );
 
     KateDocument *m_part;
     KateView *m_view;
-    KConfig *m_baseConfig;
+    TDEConfig *m_baseConfig;
     TQString m_baseDir;
     TQString m_outputDir;
     bool m_genOutput;
     TQString m_currentBase;
-    KConfig *m_failureComp;
-    KConfig *m_failureSave;
+    TDEConfig *m_failureComp;
+    TDEConfig *m_failureSave;
 
     TQString m_currentOutput;
     TQString m_currentCategory;

@@ -241,7 +241,7 @@ private:
 
 /**
  * A mini-button usually placed in the dockpanel.
- * @internal (but used by kmdi/dockcontainer.cpp)
+ * @internal (but used by tdemdi/dockcontainer.cpp)
  *
  * @author Max Judin.
 */

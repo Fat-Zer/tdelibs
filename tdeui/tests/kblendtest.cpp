@@ -1,5 +1,5 @@
 #include "kblendtest.h"
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kimageeffect.h>
 #include <tqpainter.h>
 #include <tqdatetime.h>
@@ -89,7 +89,7 @@ void KBlendWidget::paintEvent(TQPaintEvent */*ev*/)
 
 int main(int argc, char **argv)
 {
-    KApplication app(argc, argv, "KBlendTest");
+    TDEApplication app(argc, argv, "KBlendTest");
     KBlendWidget w;
     app.setMainWidget(&w);
     w.show();

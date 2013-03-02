@@ -19,7 +19,7 @@
 
 	*/
 
-#include <kio/kmimetype.h>
+#include <tdeio/kmimetype.h>
 #include "artskde.h"
 #include "kplayobjectcreator.h"
 #include "kplayobjectcreator.moc"
@@ -53,8 +53,8 @@ bool KDE::PlayObjectCreator::create(const KURL& url, bool createBUS, const TQObj
 		m_createBUS = createBUS;
 
 		// This is the RightWay(tm) according to stw
-		Arts::KIOInputStream_impl* instream_impl = new Arts::KIOInputStream_impl();
-		m_instream = Arts::KIOInputStream::_from_base(instream_impl);
+		Arts::TDEIOInputStream_impl* instream_impl = new Arts::TDEIOInputStream_impl();
+		m_instream = Arts::TDEIOInputStream::_from_base(instream_impl);
 
 		// signal will be called once the ioslave knows the mime-type of the stream
 		connect(instream_impl, TQT_SIGNAL(mimeTypeFound(const TQString &)),

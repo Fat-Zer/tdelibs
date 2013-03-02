@@ -18,9 +18,9 @@
 #include <xslt.h>
 #include <tqfile.h>
 #include <tqdir.h>
-#include <kcmdlineargs.h>
-#include <klocale.h>
-#include <kaboutdata.h>
+#include <tdecmdlineargs.h>
+#include <tdelocale.h>
+#include <tdeaboutdata.h>
 #include <stdlib.h>
 #include <kdebug.h>
 #include <tqtextcodec.h>
@@ -69,7 +69,7 @@ void parseEntry(PairList &list, xmlNodePtr cur, int base)
 
 }
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
     { "stylesheet <xsl>",  I18N_NOOP( "Stylesheet to use" ), 0 },
     { "stdout", I18N_NOOP( "Output whole document to stdout" ), 0 },
@@ -81,7 +81,7 @@ static KCmdLineOptions options[] =
     { "srcdir <dir>", I18N_NOOP( "Set the srcdir, for tdelibs" ), 0},
     { "param <key>=<value>", I18N_NOOP( "Parameters to pass to the stylesheet" ), 0},
     { "+xml", I18N_NOOP("The file to transform"), 0},
-    KCmdLineLastOption // End of options.
+    TDECmdLineLastOption // End of options.
 };
 
 
@@ -91,19 +91,19 @@ int main(int argc, char **argv) {
 
     // xsltSetGenericDebugFunc(stderr, NULL);
 
-    KAboutData aboutData( "meinproc", I18N_NOOP("XML-Translator" ),
+    TDEAboutData aboutData( "meinproc", I18N_NOOP("XML-Translator" ),
 	"$Revision$",
 	I18N_NOOP("TDE Translator for XML"));
 
-    KCmdLineArgs::init(argc, argv, &aboutData);
-    KCmdLineArgs::addCmdLineOptions( options );
+    TDECmdLineArgs::init(argc, argv, &aboutData);
+    TDECmdLineArgs::addCmdLineOptions( options );
 
-    KLocale::setMainCatalogue("kio_help");
-    KInstance ins("meinproc");
-    KGlobal::locale();
+    TDELocale::setMainCatalogue("tdeio_help");
+    TDEInstance ins("meinproc");
+    TDEGlobal::locale();
 
 
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+    TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
     if ( args->count() != 1 ) {
         args->usage();
         return ( 1 );
@@ -163,7 +163,7 @@ int main(int argc, char **argv) {
         exe = XMLLINT;
 #endif
         if ( (::access( TQFile::encodeName( exe ), X_OK )!=0) ) {
-            exe = KStandardDirs::findExe( "xmllint" );
+            exe = TDEStandardDirs::findExe( "xmllint" );
             if (exe.isEmpty())
                 exe = locate( "exe", "xmllint" );
         }
@@ -171,7 +171,7 @@ int main(int argc, char **argv) {
             chdir( TQFile::encodeName( file.dirPath( true ) ) );
             TQString cmd = exe;
             cmd += " --catalogs --valid --noout ";
-            cmd += KProcess::quote(file.fileName());
+            cmd += TDEProcess::quote(file.fileName());
             cmd += " 2>&1";
             FILE *xmllint = popen( TQFile::encodeName( cmd ), "r");
             char buf[ 512 ];

@@ -25,7 +25,7 @@
 #include <tqptrlist.h>
 #include "kasyncio.h"
 
-class KBufferedIOPrivate;
+class TDEBufferedIOPrivate;
 /**
  * This abstract class implements basic functionality for buffered
  * input/output.
@@ -39,7 +39,7 @@ class KBufferedIOPrivate;
  * written using QSocket's buffering characteristics will be more easily
  * ported to the more powerful KExtendedSocket class.
  *
- * KBufferedIO already provides a powerful internal buffering algorithm. However,
+ * TDEBufferedIO already provides a powerful internal buffering algorithm. However,
  * this does not include the I/O itself, which must be implemented in
  * derived classes. Thus, to implement a class that does some I/O, you must
  * override, in addition to the pure virtual TQIODevice methods, these two:
@@ -53,14 +53,14 @@ class KBufferedIOPrivate;
  * @author Thiago Macieira <thiagom@mail.com>
  * @short Buffered I/O
  */
-class TDECORE_EXPORT KBufferedIO: public KAsyncIO
+class TDECORE_EXPORT TDEBufferedIO: public KAsyncIO
 {
   Q_OBJECT
   
 
 protected:
   // no default public constructor
-  KBufferedIO();
+  TDEBufferedIO();
 
 public:
   /**
@@ -79,7 +79,7 @@ public:
    * Destroys this class. The flushing of the buffers is implementation dependant.
    * The default implementation discards the contents
    */
-  virtual ~KBufferedIO();
+  virtual ~TDEBufferedIO();
 
   /**
    * Closes the stream now, discarding the contents of the
@@ -294,7 +294,7 @@ protected:
 protected:
   virtual void virtual_hook( int id, void* data );
 private:
-  KBufferedIOPrivate *d;
+  TDEBufferedIOPrivate *d;
 };
 
 #endif // KBUFFEREDIO_H

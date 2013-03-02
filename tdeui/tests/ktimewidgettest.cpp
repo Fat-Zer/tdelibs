@@ -1,11 +1,11 @@
 #include "ktimewidget.h"
-#include <kapplication.h>
-#include <klocale.h>
+#include <tdeapplication.h>
+#include <tdelocale.h>
 
 int main(int argc, char** argv)
 {
-  KLocale::setMainCatalogue("tdelibs");
-  KApplication app(argc, argv, "KTimeWidgettest");
+  TDELocale::setMainCatalogue("tdelibs");
+  TDEApplication app(argc, argv, "KTimeWidgettest");
   KTimeWidget timeWidget;
   app.setMainWidget(&timeWidget);
   timeWidget.show();

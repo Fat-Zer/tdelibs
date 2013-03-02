@@ -38,13 +38,13 @@ class TQTextStream;
  * The attribute stores the index to a table that contains fonts and colors
  * and also if a character is selected.
  */
-class KateTextLine : public KShared
+class KateTextLine : public TDEShared
 {
   public:
     /**
      * Define a Shared-Pointer type
      */
-    typedef KSharedPtr<KateTextLine> Ptr;
+    typedef TDESharedPtr<KateTextLine> Ptr;
 
   public:
     /**

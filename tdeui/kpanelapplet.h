@@ -25,9 +25,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #define __kpanelapplet_h__
 
 #include <tqframe.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
-class KConfig;
+class TDEConfig;
 class TQPopupMenu;
 
 /**
@@ -55,7 +55,7 @@ class TQPopupMenu;
  *
  * \b X-TDE-UniqueApplet \n
  *
- * Similar to KApplication and KUniqueApplication there are
+ * Similar to TDEApplication and KUniqueApplication there are
  * two types of panel applets. Use unique applets when it makes no
  * sence to run more than one instance of a applet in the panel. A
  * good example for unique applets is the taskbar applet.  Use normal
@@ -80,7 +80,7 @@ class TQPopupMenu;
  * {
  *     KPanelApplet* init(TQWidget *parent, const TQString& configFile)
  *     {
- *         KGlobal::locale()->insertCatalogue("exampleapplet");
+ *         TDEGlobal::locale()->insertCatalogue("exampleapplet");
  *         return new ExampleApplet(configFile, KPanelApplet::Normal,
  *                       KPanelApplet::About | KPanelApplet::Help | KPanelApplet::Preferences,
  *                       parent, "exampleapplet");
@@ -176,7 +176,7 @@ public:
     virtual int heightForWidth(int width) const { return width; }
 
     /**
-     * Always use this KConfig object to save/load your applet's configuration.
+     * Always use this TDEConfig object to save/load your applet's configuration.
      *
      * For unique applets this config object will write to a config file called
      * \<appletname\>rc in the user's local %KDE directory.
@@ -184,8 +184,8 @@ public:
      * For normal applets this config object will write to a instance specific config file
      * called \<appletname\>\<instanceid\>rc in the user's local %KDE directory.
      **/
-    KConfig* config() const { return _config; }
-    KSharedConfig::Ptr sharedConfig() const;
+    TDEConfig* config() const { return _config; }
+    TDESharedConfig::Ptr sharedConfig() const;
 
     /**
      * @return Type indicating the applet's type.
@@ -384,7 +384,7 @@ private:
     Type         _type;
     Position     _position;
     Alignment    _alignment;
-    KConfig*     _config;
+    TDEConfig*     _config;
     int          _actions;
 protected:
     virtual void virtual_hook( int id, void* data );

@@ -29,7 +29,7 @@
 LpqHelper::LpqHelper(TQObject *parent, const char *name)
 : TQObject(parent, name)
 {
-	m_exepath = KStandardDirs::findExe("lpq");
+	m_exepath = TDEStandardDirs::findExe("lpq");
 }
 
 LpqHelper::~LpqHelper()
@@ -83,7 +83,7 @@ KMJob* LpqHelper::parseLineLPRng(const TQString& line)
 void LpqHelper::listJobs(TQPtrList<KMJob>& jobs, const TQString& prname, int limit)
 {
 	KPipeProcess	proc;
-	if (!m_exepath.isEmpty() && proc.open(m_exepath + " -P " + KProcess::quote(prname)))
+	if (!m_exepath.isEmpty() && proc.open(m_exepath + " -P " + TDEProcess::quote(prname)))
 	{
 		TQTextStream	t(&proc);
 		TQString		line;

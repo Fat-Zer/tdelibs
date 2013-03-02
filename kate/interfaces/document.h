@@ -19,28 +19,28 @@
 #ifndef _KATE_DOCUMENT_INCLUDE_
 #define _KATE_DOCUMENT_INCLUDE_
 
-#include <ktexteditor/document.h>
-#include <ktexteditor/view.h>
-#include <ktexteditor/editinterface.h>
-#include <ktexteditor/undointerface.h>
-#include <ktexteditor/cursorinterface.h>
-#include <ktexteditor/documentinfo.h>
-#include <ktexteditor/selectioninterface.h>
-#include <ktexteditor/selectioninterfaceext.h>
-#include <ktexteditor/blockselectioninterface.h>
-#include <ktexteditor/searchinterface.h>
-#include <ktexteditor/highlightinginterface.h>
-#include <ktexteditor/configinterface.h>
-#include <ktexteditor/configinterfaceextension.h>
-#include <ktexteditor/markinterface.h>
-#include <ktexteditor/markinterfaceextension.h>
-#include <ktexteditor/wordwrapinterface.h>
-#include <ktexteditor/printinterface.h>
-#include <ktexteditor/variableinterface.h>
+#include <tdetexteditor/document.h>
+#include <tdetexteditor/view.h>
+#include <tdetexteditor/editinterface.h>
+#include <tdetexteditor/undointerface.h>
+#include <tdetexteditor/cursorinterface.h>
+#include <tdetexteditor/documentinfo.h>
+#include <tdetexteditor/selectioninterface.h>
+#include <tdetexteditor/selectioninterfaceext.h>
+#include <tdetexteditor/blockselectioninterface.h>
+#include <tdetexteditor/searchinterface.h>
+#include <tdetexteditor/highlightinginterface.h>
+#include <tdetexteditor/configinterface.h>
+#include <tdetexteditor/configinterfaceextension.h>
+#include <tdetexteditor/markinterface.h>
+#include <tdetexteditor/markinterfaceextension.h>
+#include <tdetexteditor/wordwrapinterface.h>
+#include <tdetexteditor/printinterface.h>
+#include <tdetexteditor/variableinterface.h>
 
-#include <kaction.h>
+#include <tdeaction.h>
 
-class KCompletion;
+class TDECompletion;
 
 /**
  * Kate namespace
@@ -77,13 +77,13 @@ class KATEPARTINTERFACES_EXPORT ConfigPage : public KTextEditor::ConfigPage
     void slotChanged();
 };
 
-class KATEPARTINTERFACES_EXPORT ActionMenu : public KActionMenu
+class KATEPARTINTERFACES_EXPORT ActionMenu : public TDEActionMenu
 {
   Q_OBJECT
 
   public:
     ActionMenu ( const TQString& text, TQObject* parent = 0, const char* name = 0 )
-      : KActionMenu(text, parent, name) { ; };
+      : TDEActionMenu(text, parent, name) { ; };
     virtual ~ActionMenu () { ; };
 
   public:
@@ -146,7 +146,7 @@ class CommandExtension
     virtual void flagCompletions( TQStringList& /*list*/ ) {;}
 
     /**
-     * @return a KCompletion object that will substitute the command line default
+     * @return a TDECompletion object that will substitute the command line default
      * one while typing the first argument to the command. The text will be
      * added to the command seperated by one space character.
      *
@@ -154,7 +154,7 @@ class CommandExtension
      *
      * @param cmdname The command name associated with this request.
      */
-    virtual KCompletion *completionObject( const TQString & cmdname, Kate::View * /*view*/ ) { Q_UNUSED(cmdname); return 0L; }
+    virtual TDECompletion *completionObject( const TQString & cmdname, Kate::View * /*view*/ ) { Q_UNUSED(cmdname); return 0L; }
 
     /**
      * @return whether this command wants to process text interactively given the @p cmdname.

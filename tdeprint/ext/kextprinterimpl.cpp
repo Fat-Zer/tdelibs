@@ -22,8 +22,8 @@
 
 #include <tqfile.h>
 #include <kstandarddirs.h>
-#include <kconfig.h>
-#include <klocale.h>
+#include <tdeconfig.h>
+#include <tdelocale.h>
 
 KExtPrinterImpl::KExtPrinterImpl(TQObject *parent, const char *name, const TQStringList & /*args*/)
 : KPrinterImpl(parent,name)

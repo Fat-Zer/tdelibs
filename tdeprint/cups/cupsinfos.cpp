@@ -22,11 +22,11 @@
 #include "kmtimer.h"
 #include "messagewindow.h"
 
-#include <kio/passdlg.h>
-#include <kio/authinfo.h>
-#include <klocale.h>
-#include <kconfig.h>
-#include <kapplication.h>
+#include <tdeio/passdlg.h>
+#include <tdeio/authinfo.h>
+#include <tdelocale.h>
+#include <tdeconfig.h>
+#include <tdeapplication.h>
 #include <dcopclient.h>
 #include <kdebug.h>
 #include <kstringhandler.h>
@@ -117,7 +117,7 @@ const char* CupsInfos::getPasswordCB()
 
 void CupsInfos::load()
 {
-	KConfig	*conf_ = KMFactory::self()->printConfig();
+	TDEConfig	*conf_ = KMFactory::self()->printConfig();
 	conf_->setGroup("CUPS");
 	host_ = conf_->readEntry("Host",TQString::fromLatin1(cupsServer()));
 	port_ = conf_->readNumEntry("Port",ippPort());
@@ -141,7 +141,7 @@ void CupsInfos::load()
 
 void CupsInfos::save()
 {
-	KConfig	*conf_ = KMFactory::self()->printConfig();
+	TDEConfig	*conf_ = KMFactory::self()->printConfig();
 	conf_->setGroup("CUPS");
 	conf_->writeEntry("Host",host_);
 	conf_->writeEntry("Port",port_);

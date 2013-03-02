@@ -23,7 +23,7 @@
 #include <tqwidget.h>
 #include <tqpixmap.h>
 
-class KListBox;
+class TDEListBox;
 class TQPushButton;
 
 class EditList : public TQWidget
@@ -53,7 +53,7 @@ protected slots:
 	void slotSelected(int);
 
 private:
-	KListBox	*list_;
+	TDEListBox	*list_;
 	TQPushButton	*addbtn_, *editbtn_, *delbtn_, *defbtn_;
 };
 

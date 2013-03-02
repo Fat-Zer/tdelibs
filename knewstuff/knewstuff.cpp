@@ -18,10 +18,10 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <kaction.h>
-#include <kapplication.h>
+#include <tdeaction.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 
 #include "engine.h"
@@ -30,12 +30,12 @@
 
 using namespace KNS;
 
-KAction* KNS::standardAction(const TQString& what,
+TDEAction* KNS::standardAction(const TQString& what,
                              const TQObject *recvr,
-                             const char *slot, KActionCollection* parent,
+                             const char *slot, TDEActionCollection* parent,
                              const char *name)
 {
-    return new KAction(i18n("Download New %1").arg(what), "knewstuff",
+    return new TDEAction(i18n("Download New %1").arg(what), "knewstuff",
                        0, recvr, slot, parent, name);
 }
 
@@ -71,8 +71,8 @@ void KNewStuff::download()
 
 TQString KNewStuff::downloadDestination( Entry * )
 {
-  return KGlobal::dirs()->saveLocation( "tmp" ) +
-         KApplication::randomString( 10 );
+  return TDEGlobal::dirs()->saveLocation( "tmp" ) +
+         TDEApplication::randomString( 10 );
 }
 
 void KNewStuff::upload()

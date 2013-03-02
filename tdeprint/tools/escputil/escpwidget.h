@@ -37,16 +37,16 @@ public:
 	void setPrinterName(const TQString&);
 
 protected slots:
-	void slotReceivedStdout(KProcess*, char*, int);
-	void slotReceivedStderr(KProcess*, char*, int);
-	void slotProcessExited(KProcess*);
+	void slotReceivedStdout(TDEProcess*, char*, int);
+	void slotReceivedStderr(TDEProcess*, char*, int);
+	void slotProcessExited(TDEProcess*);
 	void slotButtonClicked();
 
 protected:
 	void startCommand(const TQString& arg);
 
 private:
-	KProcess	m_proc;
+	TDEProcess	m_proc;
 	KURL		m_deviceURL;
 	TQString		m_errorbuffer, m_outbuffer;
 	TQLabel		*m_printer, *m_device;

@@ -24,7 +24,7 @@
 
 #include <tqlabel.h>
 #include <tqlayout.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 KMPropBanners::KMPropBanners(TQWidget *parent, const char *name)
 : KMPropWidget(parent,name)

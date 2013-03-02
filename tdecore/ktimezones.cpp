@@ -24,7 +24,7 @@
 #include <kmdcodec.h>
 #include <kprocess.h>
 #include <kstringhandler.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 
 #include <tqdatetime.h>
 #include <tqfile.h>
@@ -203,7 +203,7 @@ bool KTimezone::isValidLongitude(float longitude)
 }
 
 KTimezone::KTimezone(
-    KSharedPtr<KTimezoneSource> db, const TQString& name,
+    TDESharedPtr<KTimezoneSource> db, const TQString& name,
     const TQString &countryCode, float latitude, float longitude,
     const TQString &comment) :
     m_db(db),
@@ -400,7 +400,7 @@ const KTimezones::ZoneMap KTimezones::allZones()
                     "/bin/awk" << "'{print \"??\\t+9999+99999\\t\" $2}'";
                 // Note the use of blocking here...it is a trivial amount of data!
                 temp.close();
-                reader.start(KProcess::Block);
+                reader.start(TDEProcess::Block);
                 f.setName(temp.name());
                 if (!temp.status() || !f.open(IO_ReadOnly))
                 {
@@ -415,7 +415,7 @@ const KTimezones::ZoneMap KTimezones::allZones()
     TQTextStream str(&f);
     TQRegExp lineSeparator("[ \t]");
     TQRegExp ordinateSeparator("[+-]");
-    KSharedPtr<KTimezoneSource> db(new KTimezoneSource(m_zoneinfoDir));
+    TDESharedPtr<KTimezoneSource> db(new KTimezoneSource(m_zoneinfoDir));
     while (!str.atEnd())
     {
         TQString line = str.readLine();

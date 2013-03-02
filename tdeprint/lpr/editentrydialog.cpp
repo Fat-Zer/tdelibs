@@ -25,10 +25,10 @@
 #include <tqcombobox.h>
 #include <tqlabel.h>
 #include <tqheader.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <tqlayout.h>
 #include <tqwidgetstack.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 
 EditEntryDialog::EditEntryDialog(PrintcapEntry *entry, TQWidget *parent, const char *name)
@@ -39,7 +39,7 @@ EditEntryDialog::EditEntryDialog(PrintcapEntry *entry, TQWidget *parent, const c
 
 	TQLabel	*lab0 = new TQLabel(i18n("Aliases:"), w);
 	m_aliases = new TQLineEdit(w);
-	m_view = new KListView(w);
+	m_view = new TDEListView(w);
 	m_view->addColumn("");
 	m_view->header()->hide();
 	m_type = new TQComboBox(w);

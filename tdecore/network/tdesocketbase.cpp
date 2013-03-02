@@ -24,31 +24,31 @@
 
 #include <config.h>
 #include <tqmutex.h>
-#include "klocale.h"
+#include "tdelocale.h"
 
 #include "tdesocketbase.h"
 #include "tdesocketdevice.h"
 
 using namespace KNetwork;
 
-class KNetwork::KSocketBasePrivate
+class KNetwork::TDESocketBasePrivate
 {
 public:
   int socketOptions;
   int socketError;
   int capabilities;
 
-  mutable KSocketDevice* device;
+  mutable TDESocketDevice* device;
 
   TQMutex mutex;
 
-  KSocketBasePrivate()
+  TDESocketBasePrivate()
     : mutex(true)		// create recursive
   { }
 };
 
-KSocketBase::KSocketBase()
-  : d(new KSocketBasePrivate)
+TDESocketBase::TDESocketBase()
+  : d(new TDESocketBasePrivate)
 {
   d->socketOptions = Blocking;
   d->socketError = 0;
@@ -56,64 +56,64 @@ KSocketBase::KSocketBase()
   d->capabilities = 0;
 }
 
-KSocketBase::~KSocketBase()
+TDESocketBase::~TDESocketBase()
 {
   delete d->device;
   delete d;
 }
 
-bool KSocketBase::setSocketOptions(int opts)
+bool TDESocketBase::setSocketOptions(int opts)
 {
   d->socketOptions = opts;
   return true;
 }
 
-int KSocketBase::socketOptions() const
+int TDESocketBase::socketOptions() const
 {
   return d->socketOptions;
 }
 
-bool KSocketBase::setBlocking(bool enable)
+bool TDESocketBase::setBlocking(bool enable)
 {
   return setSocketOptions((socketOptions() & ~Blocking) | (enable ? Blocking : 0));
 }
 
-bool KSocketBase::blocking() const
+bool TDESocketBase::blocking() const
 {
   return socketOptions() & Blocking;
 }
 
-bool KSocketBase::setAddressReuseable(bool enable)
+bool TDESocketBase::setAddressReuseable(bool enable)
 {
   return setSocketOptions((socketOptions() & ~AddressReuseable) | (enable ? AddressReuseable : 0));
 }
 
-bool KSocketBase::addressReuseable() const
+bool TDESocketBase::addressReuseable() const
 {
   return socketOptions() & AddressReuseable;
 }
 
-bool KSocketBase::setIPv6Only(bool enable)
+bool TDESocketBase::setIPv6Only(bool enable)
 {
   return setSocketOptions((socketOptions() & ~IPv6Only) | (enable ? IPv6Only : 0));
 }
 
-bool KSocketBase::isIPv6Only() const
+bool TDESocketBase::isIPv6Only() const
 {
   return socketOptions() & IPv6Only;
 }
 
-bool KSocketBase::setBroadcast(bool enable)
+bool TDESocketBase::setBroadcast(bool enable)
 {
   return setSocketOptions((socketOptions() & ~Broadcast) | (enable ? Broadcast : 0));
 }
 
-bool KSocketBase::broadcast() const
+bool TDESocketBase::broadcast() const
 {
   return socketOptions() & Broadcast;
 }
 
-KSocketDevice* KSocketBase::socketDevice() const
+TDESocketDevice* TDESocketBase::socketDevice() const
 {
   if (d->device)
     return d->device;
@@ -123,47 +123,47 @@ KSocketDevice* KSocketBase::socketDevice() const
   if (d->device)
     return d->device;
 
-  KSocketBase* that = const_cast<KSocketBase*>(this);
-  KSocketDevice* dev = 0;
+  TDESocketBase* that = const_cast<TDESocketBase*>(this);
+  TDESocketDevice* dev = 0;
   if (d->capabilities)
-    dev = KSocketDevice::createDefault(that, d->capabilities);
+    dev = TDESocketDevice::createDefault(that, d->capabilities);
   if (!dev)
-    dev = KSocketDevice::createDefault(that);
+    dev = TDESocketDevice::createDefault(that);
   that->setSocketDevice(dev);
   return d->device;
 }
 
-void KSocketBase::setSocketDevice(KSocketDevice* device)
+void TDESocketBase::setSocketDevice(TDESocketDevice* device)
 {
   TQMutexLocker locker(mutex());
   if (d->device == 0L)
     d->device = device;
 }
 
-int KSocketBase::setRequestedCapabilities(int add, int remove)
+int TDESocketBase::setRequestedCapabilities(int add, int remove)
 {
   d->capabilities |= add;
   d->capabilities &= ~remove;
   return d->capabilities;
 }
 
-bool KSocketBase::hasDevice() const
+bool TDESocketBase::hasDevice() const
 {
   return d->device != 0L;
 }
 
-void KSocketBase::setError(SocketError error)
+void TDESocketBase::setError(SocketError error)
 {
   d->socketError = error;
 }
 
-KSocketBase::SocketError KSocketBase::error() const
+TDESocketBase::SocketError TDESocketBase::error() const
 {
-  return static_cast<KSocketBase::SocketError>(d->socketError);
+  return static_cast<TDESocketBase::SocketError>(d->socketError);
 }
 
 // static
-TQString KSocketBase::errorString(KSocketBase::SocketError code)
+TQString TDESocketBase::errorString(TDESocketBase::SocketError code)
 {
   TQString reason;
   switch (code)
@@ -256,7 +256,7 @@ TQString KSocketBase::errorString(KSocketBase::SocketError code)
 }
 
 // static
-bool KSocketBase::isFatalError(int code)
+bool TDESocketBase::isFatalError(int code)
 {
   switch (code)
     {
@@ -270,12 +270,12 @@ bool KSocketBase::isFatalError(int code)
   return true;
 }
 
-void KSocketBase::unsetSocketDevice()
+void TDESocketBase::unsetSocketDevice()
 {
   d->device = 0L;
 }
 
-TQMutex* KSocketBase::mutex() const
+TQMutex* TDESocketBase::mutex() const
 {
   return &d->mutex;
 }
@@ -308,13 +308,13 @@ int KActiveSocketBase::putch(int ch)
 
 void KActiveSocketBase::setError(int status, SocketError error)
 {
-  KSocketBase::setError(error);
+  TDESocketBase::setError(error);
   setStatus(status);
 }
 
 void KActiveSocketBase::resetError()
 {
-  KSocketBase::setError(NoError);
+  TDESocketBase::setError(NoError);
   resetStatus();
 }
 

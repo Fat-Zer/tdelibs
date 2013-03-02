@@ -131,7 +131,7 @@ public:
      *
      * @param parent Parent widget of TipDialog.
      * @param tipFile The name of the tip file. It has be relative to the "data"
-     *                resource of KStandardDirs
+     *                resource of TDEStandardDirs
      * @param force If true, the dialog is show, even when the users
      *              disabled it.
      */
@@ -144,7 +144,7 @@ public:
      *
      * @param parent Parent widget of TipDialog.
      * @param tipFiles A List of tip files. Each has be relative to the "data"
-     *                resource of KStandardDirs
+     *                resource of TDEStandardDirs
      * @param force If true, the dialog is show, even when the users
      *              disabled it.
      */

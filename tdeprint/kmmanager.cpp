@@ -29,10 +29,10 @@
 #include <zlib.h>
 #include <tqfile.h>
 #include <kstandarddirs.h>
-#include <kconfig.h>
-#include <klocale.h>
+#include <tdeconfig.h>
+#include <tdelocale.h>
 #include <kdebug.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klibloader.h>
 #include <unistd.h>
 
@@ -362,7 +362,7 @@ bool KMManager::uncompressFile(const TQString& filename, TQString& destname)
 		if ((uchar)(buf[0]) == 037 && (uchar)(buf[1]) == 0213)
 		{
 			f.close();
-			destname = locateLocal("tmp","tdeprint_") + KApplication::randomString(8);
+			destname = locateLocal("tmp","tdeprint_") + TDEApplication::randomString(8);
 			f.setName(destname);
 
 			if (f.open(IO_WriteOnly))
@@ -418,7 +418,7 @@ bool KMManager::configureServer(TQWidget*)
 
 TQString KMManager::testPage()
 {
-	KConfig	*conf = KMFactory::self()->printConfig();
+	TDEConfig	*conf = KMFactory::self()->printConfig();
 	conf->setGroup("General");
 	QString	tpage = conf->readPathEntry("TestPage");
 	if (tpage.isEmpty())
@@ -511,11 +511,11 @@ bool KMManager::invokeOptionsDialog(TQWidget *parent)
 	return false;
 }
 
-void KMManager::createPluginActions(KActionCollection*)
+void KMManager::createPluginActions(TDEActionCollection*)
 {
 }
 
-void KMManager::validatePluginActions(KActionCollection*, KMPrinter*)
+void KMManager::validatePluginActions(TDEActionCollection*, KMPrinter*)
 {
 }
 

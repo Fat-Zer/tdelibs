@@ -23,8 +23,8 @@
 #ifndef _AUTOBOOKMARKER_H_
 #define _AUTOBOOKMARKER_H_
 
-#include <ktexteditor/plugin.h>
-#include <ktexteditor/configinterfaceextension.h>
+#include <tdetexteditor/plugin.h>
+#include <tdetexteditor/configinterfaceextension.h>
 
 #include <kdialogbase.h>
 
@@ -111,7 +111,7 @@ class AutoBookmarkerConfigPage : public KTextEditor::ConfigPage
     void slotEdit();
 
   private:
-    class KListView *lvPatterns;
+    class TDEListView *lvPatterns;
     class TQPushButton *btnNew, *btnDel, *btnEdit;
     ABEntityList *m_ents;
 };

@@ -21,16 +21,16 @@
 #include <tqstyle.h>
 #include <tqpopupmenu.h>
 #include <kgenericfactory.h>
-#include <klocale.h>
-#include <kaction.h>
+#include <tdelocale.h>
+#include <tdeaction.h>
 #include <kcombobox.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 
 #include "ISearchPlugin.h"
 #include "ISearchPlugin.moc"
 
-K_EXPORT_COMPONENT_FACTORY( ktexteditor_isearch, KGenericFactory<ISearchPlugin>( "ktexteditor_isearch" ) )
+K_EXPORT_COMPONENT_FACTORY( tdetexteditor_isearch, KGenericFactory<ISearchPlugin>( "tdetexteditor_isearch" ) )
 
 ISearchPluginView::ISearchPluginView( KTextEditor::View *view )
 	: TQObject ( view ), KXMLGUIClient (view)
@@ -64,11 +64,11 @@ ISearchPluginView::ISearchPluginView( KTextEditor::View *view )
 
 	setInstance( KGenericFactory<ISearchPlugin>::instance() );
 
-	m_searchForwardAction = new KAction(
+	m_searchForwardAction = new TDEAction(
 		i18n("Search Incrementally"), CTRL+ALT+Key_F,
 		this, TQT_SLOT(slotSearchForwardAction()),
 		actionCollection(), "edit_isearch" );
-	m_searchBackwardAction = new KAction(
+	m_searchBackwardAction = new TDEAction(
 		i18n("Search Incrementally Backwards"), CTRL+ALT+SHIFT+Key_F,
 		this, TQT_SLOT(slotSearchBackwardAction()),
 		actionCollection(), "edit_isearch_reverse" );
@@ -97,13 +97,13 @@ ISearchPluginView::ISearchPluginView( KTextEditor::View *view )
 	m_comboAction->setAutoSized( true );
 	m_comboAction->setShortcutConfigurable( false );
 
-	KActionMenu* optionMenu = new KActionMenu(
+	TDEActionMenu* optionMenu = new TDEActionMenu(
 		i18n("Search Options"), "configure",
 		actionCollection(), "isearch_options" );
 	optionMenu->setDelayed( false );
 
-	KToggleAction* action = new KToggleAction(
-		i18n("Case Sensitive"), KShortcut(),
+	TDEToggleAction* action = new TDEToggleAction(
+		i18n("Case Sensitive"), TDEShortcut(),
 		actionCollection(), "isearch_case_sensitive" );
 	action->setShortcutConfigurable( false );
 	connect( action, TQT_SIGNAL(toggled(bool)),
@@ -111,8 +111,8 @@ ISearchPluginView::ISearchPluginView( KTextEditor::View *view )
 	action->setChecked( m_caseSensitive );
 	optionMenu->insert( action );
 
-	action = new KToggleAction(
-		i18n("From Beginning"), KShortcut(),
+	action = new TDEToggleAction(
+		i18n("From Beginning"), TDEShortcut(),
 		actionCollection(), "isearch_from_beginning" );
 	action->setShortcutConfigurable( false );
 	connect( action, TQT_SIGNAL(toggled(bool)),
@@ -120,8 +120,8 @@ ISearchPluginView::ISearchPluginView( KTextEditor::View *view )
 	action->setChecked( m_fromBeginning );
 	optionMenu->insert( action );
 
-	action = new KToggleAction(
-		i18n("Regular Expression"), KShortcut(),
+	action = new TDEToggleAction(
+		i18n("Regular Expression"), TDEShortcut(),
 		actionCollection(), "isearch_reg_exp" );
 	action->setShortcutConfigurable( false );
 	connect( action, TQT_SIGNAL(toggled(bool)),
@@ -129,17 +129,17 @@ ISearchPluginView::ISearchPluginView( KTextEditor::View *view )
 	action->setChecked( m_regExp );
 	optionMenu->insert( action );
 
-// 	optionMenu->insert( new KActionSeparator() );
+// 	optionMenu->insert( new TDEActionSeparator() );
 //
-// 	action = new KToggleAction(
-// 		i18n("Auto-Wrap Search"), KShortcut(),
+// 	action = new TDEToggleAction(
+// 		i18n("Auto-Wrap Search"), TDEShortcut(),
 // 		actionCollection(), "isearch_auto_wrap" );
 // 	connect( action, TQT_SIGNAL(toggled(bool)),
 // 	         this, TQT_SLOT(setAutoWrap(bool)) );
 // 	action->setChecked( m_autoWrap );
 // 	optionMenu->insert( action );
 
-	setXMLFile( "ktexteditor_isearchui.rc" );
+	setXMLFile( "tdetexteditor_isearchui.rc" );
 }
 
 ISearchPluginView::~ISearchPluginView()
@@ -170,12 +170,12 @@ void ISearchPluginView::setView( KTextEditor::View* view )
 
 void ISearchPluginView::readConfig()
 {
-    // KConfig* config = instance()->config();
+    // TDEConfig* config = instance()->config();
 }
 
 void ISearchPluginView::writeConfig()
 {
-    // KConfig* config = instance()->config();
+    // TDEConfig* config = instance()->config();
 }
 
 void ISearchPluginView::setCaseSensitive( bool caseSensitive )

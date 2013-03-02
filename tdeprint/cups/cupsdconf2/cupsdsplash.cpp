@@ -22,7 +22,7 @@
 #include <tqlabel.h>
 #include <tqpixmap.h>
 #include <tqlayout.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 
 CupsdSplash::CupsdSplash(TQWidget *parent, const char *name)

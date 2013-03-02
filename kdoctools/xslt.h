@@ -7,7 +7,7 @@
 TQString transform(const TQString &file, const TQString& stylesheet,
                   const TQValueVector<const char *> &params = TQValueVector<const char *>());
 TQString splitOut(const TQString &parsed, int index);
-void fillInstance(KInstance &ins, const TQString &srcdir = TQString::null );
+void fillInstance(TDEInstance &ins, const TQString &srcdir = TQString::null );
 bool saveToCache( const TQString &contents, const TQString &filename );
 TQString lookForCache( const TQString &filename );
 TQCString fromUnicode( const TQString &data );

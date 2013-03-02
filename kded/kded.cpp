@@ -36,16 +36,16 @@
 #include <dcopclient.h>
 
 #include <kuniqueapplication.h>
-#include <kcmdlineargs.h>
-#include <kaboutdata.h>
-#include <klocale.h>
-#include <kglobal.h>
+#include <tdecmdlineargs.h>
+#include <tdeaboutdata.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
 #include <kprocess.h>
 #include <kdebug.h>
 #include <kdirwatch.h>
 #include <kstandarddirs.h>
 #include <kdatastream.h>
-#include <kio/global.h>
+#include <tdeio/global.h>
 #include <kservicetype.h>
 
 #ifdef Q_WS_X11
@@ -72,20 +72,20 @@ static void runBuildSycoca(TQObject *callBackObj=0, const char *callBackSlot=0)
    {
       TQByteArray data;
       TQDataStream dataStream( data, IO_WriteOnly );
-      dataStream << TQString("kbuildsycoca") << args;
-      TQCString _launcher = KApplication::launcher();
+      dataStream << TQString("tdebuildsycoca") << args;
+      TQCString _launcher = TDEApplication::launcher();
 
       kapp->dcopClient()->callAsync(_launcher, _launcher, "tdeinit_exec_wait(TQString,TQStringList)", data, callBackObj, callBackSlot);
    }
    else
    {
-      KApplication::tdeinitExecWait( "kbuildsycoca", args );
+      TDEApplication::tdeinitExecWait( "tdebuildsycoca", args );
    }
 }
 
 static void runKonfUpdate()
 {
-   KApplication::tdeinitExecWait( "kconf_update", TQStringList(), 0, 0, "0" /*no startup notification*/ );
+   TDEApplication::tdeinitExecWait( "tdeconf_update", TQStringList(), 0, 0, "0" /*no startup notification*/ );
 }
 
 static void runDontChangeHostname(const TQCString &oldName, const TQCString &newName)
@@ -93,22 +93,22 @@ static void runDontChangeHostname(const TQCString &oldName, const TQCString &new
    TQStringList args;
    args.append(TQFile::decodeName(oldName));
    args.append(TQFile::decodeName(newName));
-   KApplication::tdeinitExecWait( "kdontchangethehostname", args );
+   TDEApplication::tdeinitExecWait( "kdontchangethehostname", args );
 }
 
 Kded::Kded(bool checkUpdates, bool new_startup)
-  : DCOPObject("kbuildsycoca"), DCOPObjectProxy(),
+  : DCOPObject("tdebuildsycoca"), DCOPObjectProxy(),
     b_checkUpdates(checkUpdates),
     m_needDelayedCheck(false),
     m_newStartup( new_startup )
 {
   _self = this;
   TQCString cPath;
-  TQCString ksycoca_env = getenv("TDESYCOCA");
-  if (ksycoca_env.isEmpty())
-     cPath = TQFile::encodeName(KGlobal::dirs()->saveLocation("tmp")+"ksycoca");
+  TQCString tdesycoca_env = getenv("TDESYCOCA");
+  if (tdesycoca_env.isEmpty())
+     cPath = TQFile::encodeName(TDEGlobal::dirs()->saveLocation("tmp")+"tdesycoca");
   else
-     cPath = ksycoca_env;
+     cPath = tdesycoca_env;
   m_pTimer = new TQTimer(this);
   connect(m_pTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(recreate()));
 
@@ -139,7 +139,7 @@ bool Kded::process(const TQCString &obj, const TQCString &fun,
                    const TQByteArray &data,
                    TQCString &replyType, TQByteArray &replyData)
 {
-  if (obj == "ksycoca") return false; // Ignore this one.
+  if (obj == "tdesycoca") return false; // Ignore this one.
 
   if (m_dontLoad[obj])
      return false;
@@ -155,7 +155,7 @@ bool Kded::process(const TQCString &obj, const TQCString &fun,
 void Kded::initModules()
 {
      m_dontLoad.clear();
-     KConfig *config = kapp->config();
+     TDEConfig *config = kapp->config();
      bool kde_running = !( getenv( "TDE_FULL_SESSION" ) == NULL || getenv( "TDE_FULL_SESSION" )[ 0 ] == '\0' );
     // not the same user like the one running the session (most likely we're run via sudo or something)
     if( getenv( "TDE_SESSION_UID" ) != NULL && uid_t( atoi( getenv( "TDE_SESSION_UID" ))) != getuid())
@@ -225,7 +225,7 @@ void Kded::initModules()
 void Kded::loadSecondPhase()
 {
      kdDebug(7020) << "Loading second phase autoload" << endl;
-     KConfig *config = kapp->config();
+     TDEConfig *config = kapp->config();
      KService::List kdedModules = KServiceType::offers("KDEDModule");
      for(KService::List::ConstIterator it = kdedModules.begin(); it != kdedModules.end(); ++it)
      {
@@ -450,7 +450,7 @@ tqWarning("Last DCOP call before KDED crash was from application '%s'\n"
 
 void Kded::installCrashHandler()
 {
-   KCrash::setEmergencySaveFunction(crashHandler);
+   TDECrash::setEmergencySaveFunction(crashHandler);
 }
 
 void Kded::recreate()
@@ -468,7 +468,7 @@ void Kded::runDelayedCheck()
 void Kded::recreate(bool initial)
 {
    m_recreateBusy = true;
-   // Using KLauncher here is difficult since we might not have a
+   // Using TDELauncher here is difficult since we might not have a
    // database
 
    if (!initial)
@@ -484,7 +484,7 @@ void Kded::recreate(bool initial)
       recreateDone();
       if(delayedCheck)
       {
-         // do a proper ksycoca check after a delay
+         // do a proper tdesycoca check after a delay
          TQTimer::singleShot( 60000, this, TQT_SLOT( runDelayedCheck()));
          m_needDelayedCheck = true;
          delayedCheck = false;
@@ -665,7 +665,7 @@ KUpdateD::KUpdateD()
     TQObject::connect( m_pDirWatch, TQT_SIGNAL(dirty(const TQString&)),
            this, TQT_SLOT(slotNewUpdateFile()));
 
-    TQStringList dirs = KGlobal::dirs()->findDirs("data", "kconf_update");
+    TQStringList dirs = TDEGlobal::dirs()->findDirs("data", "tdeconf_update");
     for( TQStringList::ConstIterator it = dirs.begin();
          it != dirs.end();
          ++it )
@@ -730,11 +730,11 @@ void KHostnameD::checkHostname()
 }
 
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
   { "check", I18N_NOOP("Check Sycoca database only once"), 0 },
   { "new-startup", "Internal", 0 },
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 class KDEDQtDCOPObject : public DCOPObject
@@ -872,26 +872,26 @@ public:
 
 extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
 {
-     KAboutData aboutData( "kded", I18N_NOOP("TDE Daemon"),
+     TDEAboutData aboutData( "kded", I18N_NOOP("TDE Daemon"),
         "$Id$",
         I18N_NOOP("TDE Daemon - triggers Sycoca database updates when needed"));
 
-     KApplication::installSigpipeHandler();
+     TDEApplication::installSigpipeHandler();
 
-     KCmdLineArgs::init(argc, argv, &aboutData);
+     TDECmdLineArgs::init(argc, argv, &aboutData);
 
      KUniqueApplication::addCmdLineOptions();
 
-     KCmdLineArgs::addCmdLineOptions( options );
+     TDECmdLineArgs::addCmdLineOptions( options );
 
      // this program is in tdelibs so it uses tdelibs as catalog
-     KLocale::setMainCatalogue("tdelibs");
+     TDELocale::setMainCatalogue("tdelibs");
 
      // WABA: Make sure not to enable session management.
      putenv(strdup("SESSION_MANAGER="));
 
      // Parse command line before checking DCOP
-     KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+     TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
      // Check DCOP communication.
      {
@@ -904,8 +904,8 @@ extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
         }
      }
 
-     KInstance *instance = new KInstance(&aboutData);
-     KConfig *config = instance->config(); // Enable translations.
+     TDEInstance *instance = new TDEInstance(&aboutData);
+     TDEConfig *config = instance->config(); // Enable translations.
 
      if (args->isSet("check"))
      {
@@ -957,11 +957,11 @@ extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
      // During startup kdesktop waits for KDED to finish.
      // Send a notifyDatabaseChanged signal even if the database hasn't
      // changed.
-     // If the database changed, kbuildsycoca's signal didn't go anywhere
+     // If the database changed, tdebuildsycoca's signal didn't go anywhere
      // anyway, because it was too early, so let's send this signal
      // unconditionnally (David)
      TQByteArray data;
-     client->send( "*", "ksycoca", "notifyDatabaseChanged()", data );
+     client->send( "*", "tdesycoca", "notifyDatabaseChanged()", data );
      client->send( "ksplash", "", "upAndRunning(TQString)",  TQString("kded"));
 #ifdef Q_WS_X11
      XEvent e;

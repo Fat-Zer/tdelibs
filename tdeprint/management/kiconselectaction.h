@@ -20,16 +20,16 @@
 #ifndef KICONSELECTACTION_H
 #define KICONSELECTACTION_H
 
-#include <kaction.h>
+#include <tdeaction.h>
 
-class KIconSelectActionPrivate;
+class TDEIconSelectActionPrivate;
 
-class KIconSelectAction : public KSelectAction
+class TDEIconSelectAction : public TDESelectAction
 {
 	Q_OBJECT
 public:
-	KIconSelectAction(const TQString& text, int accel = 0, TQObject* parent = 0, const char* name = 0);
-	virtual ~KIconSelectAction();
+	TDEIconSelectAction(const TQString& text, int accel = 0, TQObject* parent = 0, const char* name = 0);
+	virtual ~TDEIconSelectAction();
 
 	virtual int plug(TQWidget* widget, int index = -1);
 
@@ -43,7 +43,7 @@ protected:
 	virtual void updateCurrentItem(int id);
 
 private:
-	KIconSelectActionPrivate*	d;
+	TDEIconSelectActionPrivate*	d;
 };
 
 #endif

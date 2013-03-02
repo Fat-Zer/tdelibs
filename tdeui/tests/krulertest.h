@@ -3,8 +3,8 @@
 #ifndef krulertest_h
 #define krulertest_h
 
-#include <kapplication.h>
-#include <kmainwindow.h>
+#include <tdeapplication.h>
+#include <tdemainwindow.h>
 #include <tqwidget.h>
 #include <tqcheckbox.h>
 #include <tqradiobutton.h>
@@ -42,7 +42,7 @@ private:
 };
 
 
-class KRulerTest : public KMainWindow
+class KRulerTest : public TDEMainWindow
 {
 Q_OBJECT
 public:

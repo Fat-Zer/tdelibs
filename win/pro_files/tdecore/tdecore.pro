@@ -38,52 +38,52 @@ kcalendarsystemgregorian.cpp \
 kcalendarsystemhebrew.cpp \
 kcalendarsystemhijri.cpp \
 kcalendarsystemjalali.cpp \
-kaboutdata.cpp \
+tdeaboutdata.cpp \
 kstringhandler.cpp \
-kcmdlineargs.cpp \
+tdecmdlineargs.cpp \
 kurldrag.cpp \
 kurl.cpp \
 kidna.cpp \
 kstaticdeleter.cpp \
 kstandarddirs.cpp \
-kconfig.cpp \
-kconfigdialogmanager.cpp \
+tdeconfig.cpp \
+tdeconfigdialogmanager.cpp \
 kcharsets.cpp \
-kglobal.cpp \
+tdeglobal.cpp \
 kdebug.cpp \
-ktempfile.cpp \
+tdetempfile.cpp \
 ktempdir.cpp \
 ksavefile.cpp \
-kconfigbackend.cpp \
-kconfigbase.cpp \
-kconfigskeleton.cpp \
+tdeconfigbackend.cpp \
+tdeconfigbase.cpp \
+tdeconfigskeleton.cpp \
 klockfile.cpp \
-kstdaccel.cpp \
+tdestdaccel.cpp \
 kcheckaccelerators.cpp \
 kkeyserver_x11.cpp \
 kkeynative_x11.cpp \
-kaccelbase.cpp \
-kaccel.cpp \
-kaccelmanager.cpp \
-kshortcut.cpp \
-kshortcutmenu.cpp \
-kshortcutlist.cpp \
+tdeaccelbase.cpp \
+tdeaccel.cpp \
+tdeaccelmanager.cpp \
+tdeshortcut.cpp \
+tdeshortcutmenu.cpp \
+tdeshortcutlist.cpp \
 kinstance.cpp \
 tdeversion.cpp \
-klocale.cpp \
+tdelocale.cpp \
 kicontheme.cpp \
 kiconloader.cpp \
 kiconeffect.cpp \
-kglobalsettings.cpp \
+tdeglobalsettings.cpp \
 kckey.cpp \
 kglobalaccel.cpp \
 kglobalaccel_win.cpp \
-kaccelaction.cpp \
+tdeaccelaction.cpp \
 kuniqueapplication.cpp \
-ksycoca.cpp \
-ksycocadict.cpp \
-ksycocafactory.cpp \
-kapplication.cpp \
+tdesycoca.cpp \
+tdesycocadict.cpp \
+tdesycocafactory.cpp \
+tdeapplication.cpp \
 kapplication_win.cpp \
 kappdcopiface.cpp \
 kprocctrl.cpp \
@@ -96,7 +96,7 @@ kmdcodec.cpp \
 kdcoppropertyproxy.cpp \
 klibloader.cpp \
 kprotocolinfo_tdecore.cpp \
-../kio/kio/kprotocolinfo.cpp \
+../tdeio/tdeio/kprotocolinfo.cpp \
 kprotocolinfofactory.cpp \
 kmountpoint.cpp \
 kmacroexpander.cpp \
@@ -105,7 +105,7 @@ kclipboard.cpp \
 kdebugdcopiface.cpp \
 krandomsequence.cpp \
 krfcdate.cpp \
-kmultipledrag.cpp \
+tdemultipledrag.cpp \
 kipc.cpp \
 kuser.cpp \
 kaudioplayer.cpp \
@@ -120,7 +120,7 @@ kqiodevicegzip_p.cpp
 #network/tdesocketdevice.cpp \
 #network/ksockssocketdevice.cpp
 
-#kstartupinfo.cpp \
+#tdestartupinfo.cpp \
 #todo: kextsock.cpp \
 #todo: ksock.cpp \
 #todo: ksocks.cpp \
@@ -130,8 +130,8 @@ kqiodevicegzip_p.cpp
 SOURCES += \
 kappdcopiface_stub.cpp \
 kappdcopiface_skel.cpp \
-ksycoca_stub.cpp \
-ksycoca_skel.cpp \
+tdesycoca_stub.cpp \
+tdesycoca_skel.cpp \
 kdebugdcopiface_stub.cpp \
 kdebugdcopiface_skel.cpp
 

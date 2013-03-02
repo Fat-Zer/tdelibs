@@ -28,7 +28,7 @@
 
 #include <kurl.h>
 
-namespace KIO { class Job; }
+namespace TDEIO { class Job; }
 
 namespace KNS {
 
@@ -186,7 +186,7 @@ class KDE_EXPORT ProviderLoader : public TQObject
      *
      * @param type data type such as 'kdesktop/wallpaper'.
      * @param providerList the URl to the list of providers; if empty
-     *    we first try the ProvidersUrl from KGlobal::config, then we
+     *    we first try the ProvidersUrl from TDEGlobal::config, then we
      *    fall back to a hardcoded value.
      */
     void load( const TQString &type, const TQString &providerList = TQString::null );
@@ -198,8 +198,8 @@ class KDE_EXPORT ProviderLoader : public TQObject
     void providersLoaded( Provider::List * );
 
   protected slots:
-    void slotJobData( KIO::Job *, const TQByteArray & );
-    void slotJobResult( KIO::Job * );
+    void slotJobData( TDEIO::Job *, const TQByteArray & );
+    void slotJobResult( TDEIO::Job * );
 
   private:
     TQWidget *mParentWidget;

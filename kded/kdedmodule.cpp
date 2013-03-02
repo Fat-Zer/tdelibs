@@ -24,9 +24,9 @@
 
 #include "kded.h"
 #include "kdedmodule.h"
-#include "kconfigdata.h"
+#include "tdeconfigdata.h"
 
-typedef TQMap<KEntryKey, KSharedPtr<KShared> > KDEDObjectMap;
+typedef TQMap<KEntryKey, TDESharedPtr<TDEShared> > KDEDObjectMap;
 
 class KDEDModulePrivate
 {
@@ -62,7 +62,7 @@ void KDEDModule::resetIdle()
       d->timer.start(d->timeout, true);
 }
 
-void KDEDModule::insert(const TQCString &app, const TQCString &key, KShared *obj)
+void KDEDModule::insert(const TQCString &app, const TQCString &key, TDEShared *obj)
 {
    if (!d->objMap)
       d->objMap = new KDEDObjectMap;
@@ -74,13 +74,13 @@ void KDEDModule::insert(const TQCString &app, const TQCString &key, KShared *obj
    KEntryKey indexKey(app, key);
 
    // Prevent deletion in case the same object is inserted again.
-   KSharedPtr<KShared> _obj = obj; 
+   TDESharedPtr<TDEShared> _obj = obj; 
 
    d->objMap->replace(indexKey, _obj);
    resetIdle();
 }
 
-KShared * KDEDModule::find(const TQCString &app, const TQCString &key)
+TDEShared * KDEDModule::find(const TQCString &app, const TQCString &key)
 {
    if (!d->objMap)
       return 0;

@@ -26,9 +26,9 @@
 #include "kmprinter.h"
 #include "kmmainview.h"
 
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kdialogbase.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 extern "C"
 {

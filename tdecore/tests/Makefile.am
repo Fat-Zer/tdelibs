@@ -21,16 +21,16 @@ INCLUDES = -I$(top_srcdir)/tdecore $(all_includes)
 
 AM_LDFLAGS = $(QT_LDFLAGS) $(X_LDFLAGS) $(KDE_RPATH)
 
-check_PROGRAMS = kconfigtestgui klocaletest kprocesstest ksimpleconfigtest \
+check_PROGRAMS = tdeconfigtestgui klocaletest kprocesstest ksimpleconfigtest \
 	kstddirstest kurltest kuniqueapptest ktempfiletest krandomsequencetest \
 	kdebugtest ksocktest kstringhandlertest kcmdlineargstest kapptest \
 	kmemtest kidlservertest kidlclienttest dcopkonqtest kipctest \
 	cplusplustest kiconloadertest kresolvertest kmdcodectest knotifytest \
 	ksortablevaluelisttest krfcdatetest testqtargs kprociotest \
 	kcharsetstest kcalendartest kmacroexpandertest kshelltest \
-	kxerrorhandlertest startserviceby kstdacceltest kglobaltest ktimezonestest
+	kxerrorhandlertest startserviceby tdestdacceltest kglobaltest ktimezonestest
 
-TESTS = kurltest kstdacceltest
+TESTS = kurltest tdestdacceltest
 
 noinst_HEADERS = klocaletest.h kprocesstest.h KIDLTest.h \
 		kipctest.h kprociotest.h
@@ -38,10 +38,10 @@ noinst_HEADERS = klocaletest.h kprocesstest.h KIDLTest.h \
 METASOURCES = AUTO
 
 LDADD = ../libtdecore.la
-kconfigtestgui_SOURCES = kconfigtestgui.cpp
+tdeconfigtestgui_SOURCES = tdeconfigtestgui.cpp
 kdebugtest_SOURCES = kdebugtest.cpp
 klocaletest_SOURCES = klocaletest.cpp
-#klocaletest2_SOURCES = klocaletest2.cpp klocale.cpp libintl.cpp kcatalogue.cpp
+#klocaletest2_SOURCES = klocaletest2.cpp tdelocale.cpp libintl.cpp kcatalogue.cpp
 #kcatalogue_SOURCES = kcatalogue.cpp libintl.cpp
 ksimpleconfigtest_SOURCES = ksimpleconfigtest.cpp
 kurltest_SOURCES = kurltest.cpp
@@ -75,12 +75,12 @@ kmacroexpandertest_SOURCES = kmacroexpandertest.cpp
 kshelltest_SOURCES = kshelltest.cpp
 kxerrorhandlertest_SOURCES = kxerrorhandlertest.cpp
 startserviceby_SOURCES = startserviceby.cpp
-kstdacceltest_SOURCES = kstdacceltest.cpp
+tdestdacceltest_SOURCES = tdestdacceltest.cpp
 kglobaltest_SOURCES = kglobaltest.cpp
 ktimezonestest_SOURCES = ktimezonestest.cpp
 
-check_LTLIBRARIES = kunittest_kconfig.la
+check_LTLIBRARIES = tdeunittest_tdeconfig.la
 
-kunittest_kconfig_la_SOURCES = kconfigtest.cpp
-kunittest_kconfig_la_LIBADD = $(LIB_KUNITTEST)
-kunittest_kconfig_la_LDFLAGS = -module $(KDE_CHECK_PLUGIN)
+tdeunittest_tdeconfig_la_SOURCES = tdeconfigtest.cpp
+tdeunittest_tdeconfig_la_LIBADD = $(LIB_KUNITTEST)
+tdeunittest_tdeconfig_la_LDFLAGS = -module $(KDE_CHECK_PLUGIN)

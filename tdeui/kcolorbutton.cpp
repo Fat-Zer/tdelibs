@@ -25,8 +25,8 @@
 #include <tqapplication.h>
 #include <tqclipboard.h>
 #include <tqstyle.h>
-#include <kglobalsettings.h>
-#include <kstdaccel.h>
+#include <tdeglobalsettings.h>
+#include <tdestdaccel.h>
 #include "kcolordialog.h"
 #include "kcolorbutton.h"
 #include "kcolordrag.h"
@@ -153,11 +153,11 @@ void KColorButton::keyPressEvent( TQKeyEvent *e )
 {
   KKey key( e );
 
-  if ( KStdAccel::copy().contains( key ) ) {
+  if ( TDEStdAccel::copy().contains( key ) ) {
     TQMimeSource* mime = new KColorDrag( color() );
     TQApplication::clipboard()->setData( mime, TQClipboard::Clipboard );
   }
-  else if ( KStdAccel::paste().contains( key ) ) {
+  else if ( TDEStdAccel::paste().contains( key ) ) {
     TQColor color;
     KColorDrag::decode( TQApplication::clipboard()->data( TQClipboard::Clipboard ), color );
     setColor( color );
@@ -175,7 +175,7 @@ void KColorButton::mousePressEvent( TQMouseEvent *e)
 void KColorButton::mouseMoveEvent( TQMouseEvent *e)
 {
   if( (e->state() & Qt::LeftButton) &&
-    (e->pos()-mPos).manhattanLength() > KGlobalSettings::dndEventDelay() )
+    (e->pos()-mPos).manhattanLength() > TDEGlobalSettings::dndEventDelay() )
   {
     // Drag color object
     KColorDrag *dg = new KColorDrag( color(), this);

@@ -1,6 +1,6 @@
-#include <kcmdlineargs.h>
-#include <klocale.h>
-#include <kapplication.h>
+#include <tdecmdlineargs.h>
+#include <tdelocale.h>
+#include <tdeapplication.h>
 
 #include <stdio.h>
 
@@ -11,30 +11,30 @@
 static const char version[] = "v0.0.2 1999 (c) Waldo Bastian";
 static const char description[] = I18N_NOP("This is a test program.");
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
  { "test",		I18N_NOP("do a short test only, note that\n"
 				  "this is rather long comment"), 0 },
  { "baud <baudrate>",	I18N_NOP("set baudrate"), "9600" },
  { "+file(s)",		I18N_NOP("Files to load"), 0 },
- KCmdLineLastOption
+ TDECmdLineLastOption
 };
 
 #if 1
 int
 main(int argc, char *argv[])
 {
-   KLocale::setMainCatalogue("tdelibs");
-   KCmdLineArgs::init( argc, argv, "testapp", description, version);
+   TDELocale::setMainCatalogue("tdelibs");
+   TDECmdLineArgs::init( argc, argv, "testapp", description, version);
 
-   KCmdLineArgs::addCmdLineOptions( options ); // Add my own options.
+   TDECmdLineArgs::addCmdLineOptions( options ); // Add my own options.
 
    // MyWidget::addCmdLineOptions();
 
-   KApplication k( false, false /*true, true*/ );
+   TDEApplication k( false, false /*true, true*/ );
 
    // Get application specific arguments
-   KCmdLineArgs *args = KCmdLineArgs::parsedArgs(); 
+   TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs(); 
    // Check if an option is set
    if (args->isSet("test"))
    {
@@ -79,9 +79,9 @@ main(int argc, char *argv[])
 int
 main(int argc, char *argv[])
 {
-   KCmdLineArgs::init( argc, argv, "testapp", description, version);
+   TDECmdLineArgs::init( argc, argv, "testapp", description, version);
 
-   KApplication k( true, true );
+   TDEApplication k( true, true );
 
    k.exec();
    return 0;

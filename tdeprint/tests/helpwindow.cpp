@@ -13,8 +13,8 @@
 #include <tqstatusbar.h>
 #include <tqpixmap.h>
 #include <tqpopupmenu.h>
-#include <kmenubar.h>
-#include <ktoolbar.h>
+#include <tdemenubar.h>
+#include <tdetoolbar.h>
 #include <kstatusbar.h>
 #include <tqtoolbutton.h>
 #include <tqiconset.h>
@@ -39,7 +39,7 @@
 
 HelpWindow::HelpWindow( const TQString& home_, const TQString& _path,
 			TQWidget* parent, const char *name )
-    : KMainWindow( parent, name, WDestructiveClose ),
+    : TDEMainWindow( parent, name, WDestructiveClose ),
       pathCombo( 0 ), selectedURL()
 {
     readHistory();

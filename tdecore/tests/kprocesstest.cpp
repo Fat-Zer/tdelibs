@@ -1,5 +1,5 @@
 //
-//  MAIN -- a little demo of the capabilities of the "KProcess" class
+//  MAIN -- a little demo of the capabilities of the "TDEProcess" class
 //
 //  version 0.2, Aug 2nd 1997
 //  $Id$
@@ -13,7 +13,7 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 #include <signal.h>
 
@@ -32,12 +32,12 @@ werke\nmerkt\nich\nund\nden\nbrauch\nund\nmit\ngeistesstaerke\ntu\nich\nwunder\n
 
 int main(int argc, char *argv[])
 {
- KProcess p1, p2, p3, p4;
+ TDEProcess p1, p2, p3, p4;
  Dummy dummy; 
- KApplication app(argc, argv, "kprocesstest");
+ TDEApplication app(argc, argv, "kprocesstest");
 
 
- printf("Welcome to the KProcess Demo Application!\n");
+ printf("Welcome to the TDEProcess Demo Application!\n");
 
  //
  // The kghostview demo -- Starts a kghostview instance blocking. -- After
@@ -46,39 +46,39 @@ int main(int argc, char *argv[])
  //
 
  p1 << "kghostview";
- TQObject::connect(&p1, TQT_SIGNAL(processExited(KProcess *)),  &dummy, TQT_SLOT(printMessage(KProcess *)));
+ TQObject::connect(&p1, TQT_SIGNAL(processExited(TDEProcess *)),  &dummy, TQT_SLOT(printMessage(TDEProcess *)));
  
  printf("starting kghostview blocking (close to continue)\n");
- p1.start(KProcess::Block);
+ p1.start(TDEProcess::Block);
  printf("restarting kghostview non blocking\n");
  p1.start();
 
 
  //
  // A konsole with tcsh to demonstrate how to pass command line options to a process
- // with "KProcess" (is run blocking)
+ // with "TDEProcess" (is run blocking)
  //
 
  printf("Starting konsole with /bin/tcsh as shell (close to continue)\n");
  p2 << "konsole" << "-e" << "/bin/tcsh";
  p2.setWorkingDirectory("/tmp");
- TQObject::connect(&p2, TQT_SIGNAL(processExited(KProcess *)),  &dummy, TQT_SLOT(printMessage(KProcess *)));
- p2.start(KProcess::Block);
+ TQObject::connect(&p2, TQT_SIGNAL(processExited(TDEProcess *)),  &dummy, TQT_SLOT(printMessage(TDEProcess *)));
+ p2.start(TDEProcess::Block);
 
  //
  // Getting the output from a process. "ls" with parameter "-l" is called and it output is captured
  //
 
  p3 << "ls" << "-l";
- TQObject::connect(&p3, TQT_SIGNAL(processExited(KProcess *)), 
-		  &dummy, TQT_SLOT(printMessage(KProcess *)));
+ TQObject::connect(&p3, TQT_SIGNAL(processExited(TDEProcess *)), 
+		  &dummy, TQT_SLOT(printMessage(TDEProcess *)));
 
- TQObject::connect(&p3, TQT_SIGNAL(receivedStdout(KProcess *, char *, int)),
-		  &dummy, TQT_SLOT(gotOutput(KProcess *, char *, int)));
- TQObject::connect(&p3, TQT_SIGNAL(receivedStderr(KProcess *, char *, int)),
-		  &dummy, TQT_SLOT(gotOutput(KProcess *, char *, int)));
+ TQObject::connect(&p3, TQT_SIGNAL(receivedStdout(TDEProcess *, char *, int)),
+		  &dummy, TQT_SLOT(gotOutput(TDEProcess *, char *, int)));
+ TQObject::connect(&p3, TQT_SIGNAL(receivedStderr(TDEProcess *, char *, int)),
+		  &dummy, TQT_SLOT(gotOutput(TDEProcess *, char *, int)));
 
- p3.start(KProcess::NotifyOnExit, KProcess::AllOutput);
+ p3.start(TDEProcess::NotifyOnExit, TDEProcess::AllOutput);
  
 
  //
@@ -93,18 +93,18 @@ int main(int argc, char *argv[])
  //
 
  p4 << "sort";
- TQObject::connect(&p4, TQT_SIGNAL(processExited(KProcess *)), 
-		  &dummy, TQT_SLOT(printMessage(KProcess *)));
+ TQObject::connect(&p4, TQT_SIGNAL(processExited(TDEProcess *)), 
+		  &dummy, TQT_SLOT(printMessage(TDEProcess *)));
 
- TQObject::connect(&p4, TQT_SIGNAL(receivedStdout(KProcess *, char *, int)),
-		  &dummy, TQT_SLOT(gotOutput(KProcess *, char *, int)));
- TQObject::connect(&p4, TQT_SIGNAL(receivedStderr(KProcess *, char *, int)),
-		  &dummy, TQT_SLOT(gotOutput(KProcess *, char *, int)));
+ TQObject::connect(&p4, TQT_SIGNAL(receivedStdout(TDEProcess *, char *, int)),
+		  &dummy, TQT_SLOT(gotOutput(TDEProcess *, char *, int)));
+ TQObject::connect(&p4, TQT_SIGNAL(receivedStderr(TDEProcess *, char *, int)),
+		  &dummy, TQT_SLOT(gotOutput(TDEProcess *, char *, int)));
 
- TQObject::connect(&p4, TQT_SIGNAL(wroteStdin(KProcess *)),
-		  &dummy, TQT_SLOT(outputDone(KProcess *)));
+ TQObject::connect(&p4, TQT_SIGNAL(wroteStdin(TDEProcess *)),
+		  &dummy, TQT_SLOT(outputDone(TDEProcess *)));
 
- p4.start(KProcess::NotifyOnExit, KProcess::All);
+ p4.start(TDEProcess::NotifyOnExit, TDEProcess::All);
  printf("after p4.start");
  p4.writeStdin(txt, strlen(txt)); 
 

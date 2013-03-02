@@ -25,7 +25,7 @@
 #include <tqdict.h>
 #include <tqstringlist.h>
 
-class KListView;
+class TDEListView;
 class KXmlCommand;
 class TQListViewItem;
 class TQToolButton;
@@ -57,7 +57,7 @@ protected:
 	TQStringList activeList();
     void updateButton();
 private:
-	KListView		*m_view;
+	TDEListView		*m_view;
 	TQStringList		m_filters;	// <idname,description> pairs
 	TQDict<KXmlCommand>	m_activefilters;
 	TQToolButton		*m_add, *m_remove, *m_up, *m_down, *m_configure;

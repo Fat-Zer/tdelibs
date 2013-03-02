@@ -19,25 +19,25 @@
 #include "insertfileplugin.h"
 #include "insertfileplugin.moc"
 
-#include <ktexteditor/document.h>
-#include <ktexteditor/viewcursorinterface.h>
-#include <ktexteditor/editinterface.h>
+#include <tdetexteditor/document.h>
+#include <tdetexteditor/viewcursorinterface.h>
+#include <tdetexteditor/editinterface.h>
 
 #include <assert.h>
-#include <kio/job.h>
-#include <kaction.h>
-#include <kfiledialog.h>
+#include <tdeio/job.h>
+#include <tdeaction.h>
+#include <tdefiledialog.h>
 #include <kgenericfactory.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kpushbutton.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 #include <kurl.h>
 
 #include <tqfile.h>
 #include <tqtextstream.h>
 
-K_EXPORT_COMPONENT_FACTORY( ktexteditor_insertfile, KGenericFactory<InsertFilePlugin>( "ktexteditor_insertfile" ) )
+K_EXPORT_COMPONENT_FACTORY( tdetexteditor_insertfile, KGenericFactory<InsertFilePlugin>( "tdetexteditor_insertfile" ) )
 
 
 //BEGIN InsertFilePlugin
@@ -76,8 +76,8 @@ InsertFilePluginView::InsertFilePluginView( KTextEditor::View *view, const char 
   view->insertChildClient( this );
   setInstance( KGenericFactory<InsertFilePlugin>::instance() );
   _job = 0;
-  (void) new KAction( i18n("Insert File..."), 0, this, TQT_SLOT(slotInsertFile()), actionCollection(), "tools_insert_file" );
-  setXMLFile( "ktexteditor_insertfileui.rc" );
+  (void) new TDEAction( i18n("Insert File..."), 0, this, TQT_SLOT(slotInsertFile()), actionCollection(), "tools_insert_file" );
+  setXMLFile( "tdetexteditor_insertfileui.rc" );
 }
 
 void InsertFilePluginView::slotInsertFile()
@@ -103,12 +103,12 @@ void InsertFilePluginView::slotInsertFile()
 
     KURL destURL;
     destURL.setPath( _tmpfile );
-    _job = KIO::file_copy( _file, destURL, 0600, true, false, true );
-    connect( _job, TQT_SIGNAL( result( KIO::Job * ) ), this, TQT_SLOT( slotFinished ( KIO::Job * ) ) );
+    _job = TDEIO::file_copy( _file, destURL, 0600, true, false, true );
+    connect( _job, TQT_SIGNAL( result( TDEIO::Job * ) ), this, TQT_SLOT( slotFinished ( TDEIO::Job * ) ) );
   }
 }
 
-void InsertFilePluginView::slotFinished( KIO::Job *job )
+void InsertFilePluginView::slotFinished( TDEIO::Job *job )
 {
   assert( job == _job );
   _job = 0;

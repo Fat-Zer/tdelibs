@@ -30,7 +30,7 @@
 
 #include <tdelibs_export.h>
 
-class KPopupMenu;
+class TDEPopupMenu;
 
 /** Week selection widget.
 * @internal
@@ -163,7 +163,7 @@ private:
  * @author Tim Gilman, Mirko Boehm
  * @version $Id$
  */
-class TDEUI_EXPORT KPopupFrame : public TQFrame
+class TDEUI_EXPORT TDEPopupFrame : public TQFrame
 {
   Q_OBJECT
 protected:
@@ -194,11 +194,11 @@ public:
   /**
    * The contructor. Creates a dialog without buttons.
    */
-  KPopupFrame(TQWidget* parent=0, const char*  name=0);
+  TDEPopupFrame(TQWidget* parent=0, const char*  name=0);
   /**
    * The destructor.
    */
-  ~KPopupFrame();
+  ~TDEPopupFrame();
   /**
    * Set the main widget. You cannot set the main widget from the constructor,
    * since it must be a child of the frame itselfes.
@@ -231,8 +231,8 @@ private:
 protected:
   virtual void virtual_hook( int id, void* data );
 private:
-  class KPopupFramePrivate;
-  KPopupFramePrivate *d;
+  class TDEPopupFramePrivate;
+  TDEPopupFramePrivate *d;
 };
 
 /**
@@ -425,7 +425,7 @@ signals:
      *
      * @since 3.2
      */
-    void aboutToShowContextMenu( KPopupMenu * menu, const TQDate &date);
+    void aboutToShowContextMenu( TDEPopupMenu * menu, const TQDate &date);
 
 private slots:
   void nextMonth();

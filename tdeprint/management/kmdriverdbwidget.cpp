@@ -23,21 +23,21 @@
 #include "kmmanager.h"
 #include "driver.h"
 
-#include <klistbox.h>
+#include <tdelistbox.h>
 #include <kpushbutton.h>
 #include <tqcheckbox.h>
 #include <kcursor.h>
 #include <tqapplication.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tqlayout.h>
 #include <tqlabel.h>
 #include <tqstrlist.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kcursor.h>
-#include <kfiledialog.h>
+#include <tdefiledialog.h>
 #include <kguiitem.h>
-#include <kio/netaccess.h>
+#include <tdeio/netaccess.h>
 
 KMDriverDbWidget::KMDriverDbWidget(TQWidget *parent, const char *name)
 : TQWidget(parent,name)
@@ -46,8 +46,8 @@ KMDriverDbWidget::KMDriverDbWidget(TQWidget *parent, const char *name)
 	m_valid = false;
 
 	// build widget
-	m_manu = new KListBox(this);
-	m_model = new KListBox(this);
+	m_manu = new TDEListBox(this);
+	m_model = new TDEListBox(this);
 	m_postscript = new TQCheckBox(i18n("&PostScript printer"),this);
 	m_raw = new TQCheckBox(i18n("&Raw printer (no driver needed)"),this);
 	m_postscript->setCursor(KCursor::handCursor());
@@ -234,7 +234,7 @@ void KMDriverDbWidget::slotOtherClicked()
 		if ( !url.isEmpty() )
 		{
 			TQString filename;
-			if ( KIO::NetAccess::download( url, filename, this ) )
+			if ( TDEIO::NetAccess::download( url, filename, this ) )
 			{
 				DrMain	*driver = KMFactory::self()->manager()->loadFileDriver(filename);
 				if (driver)
@@ -255,7 +255,7 @@ void KMDriverDbWidget::slotOtherClicked()
 				}
 				else
 				{
-					KIO::NetAccess::removeTempFile( filename );
+					TDEIO::NetAccess::removeTempFile( filename );
 					KMessageBox::error(this,"<qt>"+i18n("Wrong driver format.")+"<p>"+KMManager::self()->errorMsg()+"</p></qt>");
 				}
 			}

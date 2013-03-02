@@ -34,7 +34,7 @@
 #include <kdebug.h>
 #include <kdialog.h>
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 // Some ID's
 #define ORIENT_PORTRAIT_ID	0
@@ -440,7 +440,7 @@ void KPGeneralPage::initialize()
 			for ( int i=HIGHSIZE_BEGIN+1; i<DEFAULT_SIZE; i+=2 )
 				m_pagesize->insertItem(i18n(default_size[i]));
 		// set default page size using locale settings
-		TQString	psname = pageSizeToPageName((KPrinter::PageSize)(KGlobal::locale()->pageSize()));
+		TQString	psname = pageSizeToPageName((KPrinter::PageSize)(TDEGlobal::locale()->pageSize()));
 		int index = findOption(default_size, DEFAULT_SIZE, psname);
 		if (index >= 0)
 			m_pagesize->setCurrentItem(index);

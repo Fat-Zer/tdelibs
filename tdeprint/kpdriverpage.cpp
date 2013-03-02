@@ -22,7 +22,7 @@
 #include "driver.h"
 
 #include <tqlayout.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 KPDriverPage::KPDriverPage(KMPrinter *p, DrMain *d, TQWidget *parent, const char *name)
 : KPrintDialogPage(p,d,parent,name)

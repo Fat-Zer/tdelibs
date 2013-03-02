@@ -17,15 +17,15 @@
  **/
 
 #include "kbuildservicetypefactory.h"
-#include "ksycoca.h"
-#include "ksycocadict.h"
+#include "tdesycoca.h"
+#include "tdesycocadict.h"
 #include "kresourcelist.h"
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kstandarddirs.h>
 #include <kmessageboxwrapper.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <assert.h>
 #include <kdesktopfile.h>
 

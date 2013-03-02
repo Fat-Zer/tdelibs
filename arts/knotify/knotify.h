@@ -25,8 +25,8 @@
 #include <dcopobject.h>
 
 class KNotifyPrivate;
-class KProcess;
-class KConfig;
+class TDEProcess;
+class TDEConfig;
 
 class KNotify : public TQObject, public DCOPObject
 {
@@ -75,7 +75,7 @@ private:
 	bool notifyByLogfile(const TQString &text, const TQString &file);
 	bool notifyByStderr(const TQString &text);
 	bool notifyByPassivePopup(const TQString &text, const TQString &appName,
-                                  KConfig* eventsFile, WId winId );
+                                  TDEConfig* eventsFile, WId winId );
 	bool notifyByExecute(const TQString &command, 
                              const TQString& event, 
                              const TQString& fromApp, 
@@ -98,7 +98,7 @@ private:
 
 private slots:
     void playTimeout();
-    void slotPlayerProcessExited( KProcess *proc );
+    void slotPlayerProcessExited( TDEProcess *proc );
     void restartedArtsd();
 
 private:

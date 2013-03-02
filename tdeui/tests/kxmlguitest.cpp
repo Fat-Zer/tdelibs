@@ -1,10 +1,10 @@
 #include "kxmlguitest.h"
-#include <kapplication.h>
-#include <kmainwindow.h>
+#include <tdeapplication.h>
+#include <tdemainwindow.h>
 #include <kxmlguifactory.h>
 #include <kxmlguiclient.h>
 #include <kxmlguibuilder.h>
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kdebug.h>
 #include <kstdaction.h>
 #include <kstandarddirs.h>
@@ -18,13 +18,13 @@ void Client::slotSec()
 
 int main( int argc, char **argv )
 {
-    KApplication app( argc, argv, "kxmlguitest" );
+    TDEApplication app( argc, argv, "kxmlguitest" );
 
     // KXMLGUIClient looks in the "data" resource for the .rc files
     // Let's add $PWD (ideally $srcdir instead...) to it
-    KGlobal::dirs()->addResourceDir( "data", TQDir::currentDirPath() );
+    TDEGlobal::dirs()->addResourceDir( "data", TQDir::currentDirPath() );
 
-    KMainWindow *mainwindow = new KMainWindow;
+    TDEMainWindow *mainwindow = new TDEMainWindow;
 
     TQLineEdit* line = new TQLineEdit( mainwindow );
     mainwindow->setCentralWidget( line );
@@ -36,10 +36,10 @@ int main( int argc, char **argv )
     KXMLGUIFactory *factory = new KXMLGUIFactory( builder );
 
     Client *shell = new Client;
-    shell->setInstance( new KInstance( "konqueror" ) );
+    shell->setInstance( new TDEInstance( "konqueror" ) );
     shell->instance()->dirs()->addResourceDir( "data", TQDir::currentDirPath() );
 
-    (void)new KAction( "Split", "view_left_right", 0, 0, 0, shell->actionCollection(), "splitviewh" );
+    (void)new TDEAction( "Split", "view_left_right", 0, 0, 0, shell->actionCollection(), "splitviewh" );
 
     shell->setXMLFile( "./kxmlguitest_shell.rc" );
 
@@ -47,8 +47,8 @@ int main( int argc, char **argv )
 
     Client *part = new Client;
 
-    (void)new KAction( "decfont", "viewmag-", 0, 0, 0, part->actionCollection(), "decFontSizes" );
-    (void)new KAction( "sec", "unlock", Qt::ALT + Qt::Key_1, part, TQT_SLOT( slotSec() ), part->actionCollection(), "security" );
+    (void)new TDEAction( "decfont", "viewmag-", 0, 0, 0, part->actionCollection(), "decFontSizes" );
+    (void)new TDEAction( "sec", "unlock", Qt::ALT + Qt::Key_1, part, TQT_SLOT( slotSec() ), part->actionCollection(), "security" );
 
     part->setXMLFile( "./kxmlguitest_part.rc" );
 

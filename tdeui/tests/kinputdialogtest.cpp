@@ -3,7 +3,7 @@
  * License: GPL V2
  */
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kinputdialog.h>
 #include <kdebug.h>
 
@@ -12,7 +12,7 @@
 
 int main( int argc, char *argv[] )
 {
-  KApplication app( argc, argv, "kinputdialogtest" );
+  TDEApplication app( argc, argv, "kinputdialogtest" );
 
   bool ok;
   TQString svalue;

@@ -29,7 +29,7 @@ class TQTabWidget;
 class TQVBoxLayout;
 
 /**
- * Used internally by KAboutContainerBase
+ * Used internally by TDEAboutContainerBase
  * @internal
  */
 class KImageTrackLabel : public TQLabel
@@ -58,15 +58,15 @@ class KImageTrackLabel : public TQLabel
     virtual void mouseMoveEvent ( TQMouseEvent *e );
 };
 
-class KAboutContainer;
+class TDEAboutContainer;
 
-class KAboutContainerBasePrivate;
+class TDEAboutContainerBasePrivate;
 
 /**
- * Used internally by KAboutDialog
+ * Used internally by TDEAboutDialog
  * @internal
  */
-class KAboutContainerBase : public TQWidget
+class TDEAboutContainerBase : public TQWidget
 {
   Q_OBJECT
 
@@ -86,7 +86,7 @@ class KAboutContainerBase : public TQWidget
     };
 
   public:
-    KAboutContainerBase( int layoutType, TQWidget *parent = 0, char *name = 0 );
+    TDEAboutContainerBase( int layoutType, TQWidget *parent = 0, char *name = 0 );
     virtual void show( void );
     virtual TQSize sizeHint( void ) const;
 
@@ -103,14 +103,14 @@ class KAboutContainerBase : public TQWidget
 			 bool richText=false, int numLines=10 );
     TQFrame *addLicensePage( const TQString &title, const TQString &text,
 			 int numLines=10 );
-    KAboutContainer *addContainerPage( const TQString &title,
+    TDEAboutContainer *addContainerPage( const TQString &title,
       int childAlignment = AlignCenter, int innerAlignment = AlignCenter );
-    KAboutContainer *addScrolledContainerPage( const TQString &title,
+    TDEAboutContainer *addScrolledContainerPage( const TQString &title,
       int childAlignment = AlignCenter, int innerAlignment = AlignCenter );
 
     TQFrame *addEmptyPage( const TQString &title );
 
-    KAboutContainer *addContainer( int childAlignment, int innerAlignment );
+    TDEAboutContainer *addContainer( int childAlignment, int innerAlignment );
 
   public slots:
     virtual void slotMouseTrack( int mode, const TQMouseEvent *e );
@@ -136,7 +136,7 @@ class KAboutContainerBase : public TQWidget
     TQTabWidget *mPageTab;
     TQFrame  *mPlainSpace;
 
-    KAboutContainerBasePrivate* const d;
+    TDEAboutContainerBasePrivate* const d;
 };
 
 

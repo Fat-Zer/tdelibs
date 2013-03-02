@@ -28,7 +28,7 @@
 #include <tqcombobox.h>
 #include <tqwhatsthis.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <knuminput.h>
 
 CupsdBrowsingPage::CupsdBrowsingPage(TQWidget *parent, const char *name)

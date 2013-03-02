@@ -53,7 +53,7 @@ Port version 0.9.7
 #include <tqpalette.h>
 #include <tqtabbar.h>
 #include <tqtoolbutton.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <kdrawutil.h>
 #include <tqdrawutil.h>
 #include <tqprogressbar.h>
@@ -130,7 +130,7 @@ public:
     TQStringList keys() const
     {
         TQSettings cfg;
-        KStyleDirs::dirs()->addToSearch( "config", cfg );
+        TDEStyleDirs::dirs()->addToSearch( "config", cfg );
 
         TQStringList keys;
         bool ok;
@@ -145,7 +145,7 @@ public:
     TQStyle* create( const TQString& key )
     {
         TQSettings cfg;
-        KStyleDirs::dirs()->addToSearch( "config", cfg );
+        TDEStyleDirs::dirs()->addToSearch( "config", cfg );
 
         TQString file = cfg.readEntry( "/kthemestyle/" + key + "/file" );
         if ( !key.isEmpty() )
@@ -330,7 +330,7 @@ TQRect KThemeStyle::subRect(SubRect sr, const TQStyleControlElementData &ceData,
             return checkbox;
         }
     }
-    return KStyle::subRect(sr, ceData, elementFlags, widget);
+    return TDEStyle::subRect(sr, ceData, elementFlags, widget);
 }
 
 int KThemeStyle::pixelMetric ( PixelMetric metric, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQWidget * widget ) const
@@ -515,7 +515,7 @@ bool KThemeStyle::objectEventHandler( const TQStyleControlElementData &ceData, C
         }
     }
 
-    return KStyle::objectEventHandler(ceData, elementFlags, source, event);
+    return TDEStyle::objectEventHandler(ceData, elementFlags, source, event);
 }
 
 void KThemeStyle::polish( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *ptr )
@@ -569,7 +569,7 @@ void KThemeStyle::polish( const TQStyleControlElementData &ceData, ControlElemen
         {
             w->setBackgroundMode( TQWidget::NoBackground );
         }
-        else if ( w->inherits( "KToolBarSeparator" ) || w->inherits( "QToolBarSeparator" ) )
+        else if ( w->inherits( "TDEToolBarSeparator" ) || w->inherits( "QToolBarSeparator" ) )
         {
             w->setBackgroundMode( TQWidget::PaletteBackground );
         }
@@ -626,7 +626,7 @@ void KThemeStyle::polish( const TQStyleControlElementData &ceData, ControlElemen
         }
     }
 
-    KStyle::polish( ceData, elementFlags, ptr );
+    TDEStyle::polish( ceData, elementFlags, ptr );
 }
 
 void KThemeStyle::unPolish( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *ptr )
@@ -652,7 +652,7 @@ void KThemeStyle::unPolish( const TQStyleControlElementData &ceData, ControlElem
             w->setBackgroundMode( TQWidget::PaletteButton );
 
         //For toolbar internal separators, return to button, too (can't use tqqt_cast here since don't have access to the class)
-        else if ( w->inherits( "KToolBarSeparator" ) || w->inherits( "QToolBarSeparator" ) )
+        else if ( w->inherits( "TDEToolBarSeparator" ) || w->inherits( "QToolBarSeparator" ) )
             w->setBackgroundMode( TQWidget::PaletteButton );
 
         //For scrollbars, we don't do much, since the widget queries the style on the switch
@@ -662,7 +662,7 @@ void KThemeStyle::unPolish( const TQStyleControlElementData &ceData, ControlElem
          w->unsetPalette();
     }
 
-    KStyle::unPolish( ceData, elementFlags, ptr );
+    TDEStyle::unPolish( ceData, elementFlags, ptr );
 }
 
 
@@ -1831,7 +1831,7 @@ void KThemeStyle::drawControlMask( ControlElement element,
 }
 
 
-void KThemeStyle::drawKStylePrimitive( KStylePrimitive kpe,
+void KThemeStyle::drawTDEStylePrimitive( TDEStylePrimitive kpe,
                                        TQPainter* p,
                                        const TQStyleControlElementData &ceData,
                                        ControlElementFlags elementFlags,
@@ -2004,7 +2004,7 @@ void KThemeStyle::drawKStylePrimitive( KStylePrimitive kpe,
 
     if ( !handled )
     {
-        KThemeBase::drawKStylePrimitive( kpe, p, ceData, elementFlags,
+        KThemeBase::drawTDEStylePrimitive( kpe, p, ceData, elementFlags,
                                          r, cg, flags, opt, widget );
     }
 

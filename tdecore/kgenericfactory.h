@@ -23,8 +23,8 @@
 #include <ktypelist.h>
 #include <kinstance.h>
 #include <kgenericfactory.tcc>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 
 /* @internal */
@@ -39,7 +39,7 @@ public:
         s_self = this;
         m_catalogueInitialized = false;
     }
-    KGenericFactoryBase( const KAboutData *data )
+    KGenericFactoryBase( const TDEAboutData *data )
         : m_aboutData(data)
     {
         s_self = this;
@@ -49,30 +49,30 @@ public:
     virtual ~KGenericFactoryBase()
     {
         if ( s_instance )
-            KGlobal::locale()->removeCatalogue( TQString::fromAscii( s_instance->instanceName() ) );
+            TDEGlobal::locale()->removeCatalogue( TQString::fromAscii( s_instance->instanceName() ) );
         delete s_instance;
         s_instance = 0;
         s_self = 0;
     }
 
-    static KInstance *instance();
+    static TDEInstance *instance();
 
 protected:
-    virtual KInstance *createInstance()
+    virtual TDEInstance *createInstance()
     {
         if ( m_aboutData )
-            return new KInstance( m_aboutData );
+            return new TDEInstance( m_aboutData );
         if ( m_instanceName.isEmpty() ) {
             kdWarning() << "KGenericFactory: instance requested but no instance name or about data passed to the constructor!" << endl;
             return 0;
         }
-        return new KInstance( m_instanceName );
+        return new TDEInstance( m_instanceName );
     }
 
     virtual void setupTranslations( void )
     {
         if ( instance() )
-            KGlobal::locale()->insertCatalogue( TQString::fromAscii( instance()->instanceName() ) );
+            TDEGlobal::locale()->insertCatalogue( TQString::fromAscii( instance()->instanceName() ) );
     }
 
     void initializeMessageCatalogue()
@@ -86,16 +86,16 @@ protected:
 
 private:
     TQCString m_instanceName;
-    const KAboutData *m_aboutData;
+    const TDEAboutData *m_aboutData;
     bool m_catalogueInitialized;
 
-    static KInstance *s_instance;
+    static TDEInstance *s_instance;
     static KGenericFactoryBase<T> *s_self;
 };
 
 /* @internal */
 template <class T>
-KInstance *KGenericFactoryBase<T>::s_instance = 0;
+TDEInstance *KGenericFactoryBase<T>::s_instance = 0;
 
 /* @internal */
 template <class T>
@@ -103,7 +103,7 @@ KGenericFactoryBase<T> *KGenericFactoryBase<T>::s_self = 0;
 
 /* @internal */
 template <class T>
-KInstance *KGenericFactoryBase<T>::instance()
+TDEInstance *KGenericFactoryBase<T>::instance()
 {
     if ( !s_instance && s_self )
         s_instance = s_self->createInstance();
@@ -141,17 +141,17 @@ KInstance *KGenericFactoryBase<T>::instance()
  * that the caller passed to KLibFactory's create method.
  *
  * In addition upon instantiation this template provides a central
- * KInstance object for your component, accessible through the
+ * TDEInstance object for your component, accessible through the
  * static instance() method. The instanceName argument of the
- * KGenericFactory constructor is passed to the KInstance object.
+ * KGenericFactory constructor is passed to the TDEInstance object.
  *
- * The creation of the KInstance object can be customized by inheriting
+ * The creation of the TDEInstance object can be customized by inheriting
  * from this template class and re-implementing the virtual createInstance
  * method. For example it could look like this:
  * \code
- *     KInstance *MyFactory::createInstance()
+ *     TDEInstance *MyFactory::createInstance()
  *     {
- *         return new KInstance( myAboutData );
+ *         return new TDEInstance( myAboutData );
  *     }
  * \endcode
  *
@@ -180,7 +180,7 @@ public:
     /**
      * @since 3.3
 	*/
-    KGenericFactory( const KAboutData *data )
+    KGenericFactory( const TDEAboutData *data )
         : KGenericFactoryBase<Product>( data )
     {}
 
@@ -224,17 +224,17 @@ protected:
  * that the caller passed to KLibFactory's create method.
  *
  * In addition upon instantiation this template provides a central
- * KInstance object for your component, accessible through the
+ * TDEInstance object for your component, accessible through the
  * static instance() method. The instanceName argument of the
- * KGenericFactory constructor is passed to the KInstance object.
+ * KGenericFactory constructor is passed to the TDEInstance object.
  *
- * The creation of the KInstance object can be customized by inheriting
+ * The creation of the TDEInstance object can be customized by inheriting
  * from this template class and re-implementing the virtual createInstance
  * method. For example it could look like this:
  * \code
- *     KInstance *MyFactory::createInstance()
+ *     TDEInstance *MyFactory::createInstance()
  *     {
- *         return new KInstance( myAboutData );
+ *         return new TDEInstance( myAboutData );
  *     }
  * \endcode
  *
@@ -275,7 +275,7 @@ public:
     /**
      * @since 3.3
 	*/
-    KGenericFactory( const KAboutData *data )
+    KGenericFactory( const TDEAboutData *data )
         : KGenericFactoryBase< KTypeList<Product, ProductListTail> >( data )
     {}
 
@@ -319,17 +319,17 @@ protected:
  * that the caller passed to KLibFactory's create method.
  *
  * In addition upon instantiation this template provides a central
- * KInstance object for your component, accessible through the
+ * TDEInstance object for your component, accessible through the
  * static instance() method. The instanceName argument of the
- * KGenericFactory constructor is passed to the KInstance object.
+ * KGenericFactory constructor is passed to the TDEInstance object.
  *
- * The creation of the KInstance object can be customized by inheriting
+ * The creation of the TDEInstance object can be customized by inheriting
  * from this template class and re-implementing the virtual createInstance
  * method. For example it could look like this:
  * \code
- *     KInstance *MyFactory::createInstance()
+ *     TDEInstance *MyFactory::createInstance()
  *     {
- *         return new KInstance( myAboutData );
+ *         return new TDEInstance( myAboutData );
  *     }
  * \endcode
  *
@@ -371,7 +371,7 @@ public:
 	/**
 	* @since 3.3
 	*/
-    KGenericFactory( const KAboutData *data )
+    KGenericFactory( const TDEAboutData *data )
         : KGenericFactoryBase< KTypeList<Product, ProductListTail> >( data )
     {}
 

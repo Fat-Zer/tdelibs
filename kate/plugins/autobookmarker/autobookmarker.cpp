@@ -23,18 +23,18 @@
 //BEGIN includes
 #include "autobookmarker.h"
 
-#include <ktexteditor/markinterfaceextension.h>
-#include <ktexteditor/editinterface.h>
-#include <ktexteditor/documentinfo.h>
-#include <ktexteditor/document.h>
+#include <tdetexteditor/markinterfaceextension.h>
+#include <tdetexteditor/editinterface.h>
+#include <tdetexteditor/documentinfo.h>
+#include <tdetexteditor/document.h>
 
-#include <kaction.h>
-#include <kapplication.h>
-#include <kconfig.h>
+#include <tdeaction.h>
+#include <tdeapplication.h>
+#include <tdeconfig.h>
 #include <kgenericfactory.h>
 #include <kiconloader.h>
-#include <klistview.h>
-#include <klocale.h>
+#include <tdelistview.h>
+#include <tdelocale.h>
 #include <kmimetype.h>
 #include <kmimetypechooser.h>
 #include <kprocess.h>
@@ -57,7 +57,7 @@
 //END includes
 
 //BEGIN AutoBookmarker
-K_EXPORT_COMPONENT_FACTORY( ktexteditor_autobookmarker, KGenericFactory<AutoBookmarker>( "ktexteditor_autobookmarker" ) )
+K_EXPORT_COMPONENT_FACTORY( tdetexteditor_autobookmarker, KGenericFactory<AutoBookmarker>( "tdetexteditor_autobookmarker" ) )
 
 AutoBookmarker::AutoBookmarker( TQObject *parent,
                             const char* name,
@@ -199,7 +199,7 @@ void ABGlobal::readConfig()
     m_ents = new ABEntityList;
   else
     m_ents->clear();
-  KConfig *config = new KConfig("ktexteditor_autobookmarkerrc");
+  TDEConfig *config = new TDEConfig("tdetexteditor_autobookmarkerrc");
 
   uint n( 0 );
   while ( config->hasGroup( TQString("autobookmark%1").arg( n ) ) )
@@ -225,7 +225,7 @@ void ABGlobal::readConfig()
 
 void ABGlobal::writeConfig()
 {
-  KConfig *config = new KConfig("ktexteditor_autobookmarkerrc");
+  TDEConfig *config = new TDEConfig("tdetexteditor_autobookmarkerrc");
 
   // clean the config object
   TQStringList l = config->groupList();
@@ -253,7 +253,7 @@ void ABGlobal::writeConfig()
 class AutoBookmarkEntItem : public QListViewItem
 {
   public:
-    AutoBookmarkEntItem( KListView *lv, AutoBookmarkEnt *e )
+    AutoBookmarkEntItem( TDEListView *lv, AutoBookmarkEnt *e )
         : TQListViewItem( lv ),
         ent( e )
       {
@@ -383,7 +383,7 @@ AutoBookmarkerConfigPage::AutoBookmarkerConfigPage( TQWidget *parent, const char
 
   TQLabel *l = new TQLabel( i18n("&Patterns"), this );
   lo->addWidget( l );
-  lvPatterns = new KListView( this );
+  lvPatterns = new TDEListView( this );
   lvPatterns->addColumn( i18n("Pattern") );
   lvPatterns->addColumn( i18n("Mime Types") );
   lvPatterns->addColumn( i18n("File Masks") );

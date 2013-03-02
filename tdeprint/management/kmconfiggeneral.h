@@ -32,8 +32,8 @@ class KMConfigGeneral : public KMConfigPage
 public:
 	KMConfigGeneral(TQWidget *parent = 0);
 
-	void loadConfig(KConfig*);
-	void saveConfig(KConfig*);
+	void loadConfig(TDEConfig*);
+	void saveConfig(TDEConfig*);
 
 protected slots:
 	void slotTestPagePreview();

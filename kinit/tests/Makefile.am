@@ -3,8 +3,8 @@
 INCLUDES=	-I$(srcdir)/../.. $(all_includes) 
 ####### Files
 
-check_PROGRAMS = klaunchertest
+check_PROGRAMS = tdelaunchertest
 
-klaunchertest_SOURCES = klaunchertest.cpp 
-klaunchertest_LDADD   = $(LIB_KIO)
+tdelaunchertest_SOURCES = tdelaunchertest.cpp 
+tdelaunchertest_LDADD   = $(LIB_KIO)
 

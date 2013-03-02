@@ -22,13 +22,13 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ******************************************************************/
 
-#include <kglobal.h>
-#include <kconfig.h>
+#include <tdeglobal.h>
+#include <tdeconfig.h>
 #include <tqtimer.h>
 
 #include "kpanelmenu.h"
 #include "kpanelmenu.moc"
-//#include "kaccelmanager.h"
+//#include "tdeaccelmanager.h"
 
 
 class KPanelMenuPrivate
@@ -41,13 +41,13 @@ public:
 };
 
 KPanelMenu::KPanelMenu(const TQString &startDir, TQWidget *parent, const char *name)
-  : KPopupMenu(parent, name)
+  : TDEPopupMenu(parent, name)
 {
     init(startDir);
 }
 
 KPanelMenu::KPanelMenu(TQWidget *parent, const char *name)
-  : KPopupMenu(parent, name)
+  : TDEPopupMenu(parent, name)
 {
     init();
 }
@@ -63,11 +63,11 @@ void KPanelMenu::init(const TQString& path)
     connect(this, TQT_SIGNAL(aboutToShow()), TQT_SLOT(slotAboutToShow()));
 
     // setup cache timer
-    KConfig *config = KGlobal::config();
+    TDEConfig *config = TDEGlobal::config();
     config->setGroup("menus");
     d->clearDelay = config->readNumEntry("MenuCacheTime", 60000); // 1 minute
 
-    //KAcceleratorManager::manage(this);
+    //TDEAcceleratorManager::manage(this);
     setKeyboardShortcutsEnabled(true);
 }
 
@@ -154,5 +154,5 @@ void KPanelMenu::internalInitialize()
 }
 
 void KPanelMenu::virtual_hook( int id, void* data )
-{ KPopupMenu::virtual_hook( id, data ); }
+{ TDEPopupMenu::virtual_hook( id, data ); }
 

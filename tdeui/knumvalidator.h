@@ -147,7 +147,7 @@ class TDEUI_EXPORT KFloatValidator : public TQValidator {
     virtual double top () const;
     /**
      * Sets the validator to be locale aware if @p is true. In this case, the
-     * character KLocale::decimalSymbol() from the global locale is recognized
+     * character TDELocale::decimalSymbol() from the global locale is recognized
      * as decimal separator.
      */
     void setAcceptLocalizedNumbers(bool b);
@@ -169,8 +169,8 @@ class TDEUI_EXPORT KFloatValidator : public TQValidator {
 
    KDoubleValidator extends TQDoubleValidator to be
    locale-aware. That means that - subject to not being disabled -
-   KLocale::decimalSymbol(), KLocale::thousandsSeparator()
-   and KLocale::positiveSign() and KLocale::negativeSign()
+   TDELocale::decimalSymbol(), TDELocale::thousandsSeparator()
+   and TDELocale::positiveSign() and TDELocale::negativeSign()
    are respected.
 
    @author Marc Mutz <mutz@kde.org>

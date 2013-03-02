@@ -37,8 +37,8 @@
 
 #include <kcursor.h>
 #include <kdebug.h>
-#include <kapplication.h>
-#include <kglobalsettings.h>
+#include <tdeapplication.h>
+#include <tdeglobalsettings.h>
 #include <kurldrag.h>
 
 #include <tqstyle.h>
@@ -2213,8 +2213,8 @@ void KateViewInternal::updateCursor( const KateTextCursor& newCursor, bool force
 
   if (m_cursorTimer.isActive ())
   {
-    if ( KApplication::cursorFlashTime() > 0 )
-      m_cursorTimer.start( KApplication::cursorFlashTime() / 2 );
+    if ( TDEApplication::cursorFlashTime() > 0 )
+      m_cursorTimer.start( TDEApplication::cursorFlashTime() / 2 );
     m_view->renderer()->setDrawCaret(true);
   }
 
@@ -2986,7 +2986,7 @@ void KateViewInternal::mouseMoveEvent( TQMouseEvent* e )
       TQPoint p( e->pos() - dragInfo.start );
 
       // we've left the drag square, we can start a real drag operation now
-      if( p.manhattanLength() > KGlobalSettings::dndEventDelay() )
+      if( p.manhattanLength() > TDEGlobalSettings::dndEventDelay() )
         doDrag();
 
       return;
@@ -3154,8 +3154,8 @@ void KateViewInternal::textHintTimeout ()
 
 void KateViewInternal::focusInEvent (TQFocusEvent *)
 {
-  if (KApplication::cursorFlashTime() > 0)
-    m_cursorTimer.start ( KApplication::cursorFlashTime() / 2 );
+  if (TDEApplication::cursorFlashTime() > 0)
+    m_cursorTimer.start ( TDEApplication::cursorFlashTime() / 2 );
 
   if (m_textHintEnabled)
     m_textHintTimer.start( m_textHintTimeout );
@@ -3480,8 +3480,8 @@ void KateViewInternal::imEndEvent( TQIMEvent *e )
   if ( e->text().length() > 0 ) {
     m_doc->insertText( cursor.line(), cursor.col(), e->text() );
 
-    if ( !m_cursorTimer.isActive() && KApplication::cursorFlashTime() > 0 )
-      m_cursorTimer.start ( KApplication::cursorFlashTime() / 2 );
+    if ( !m_cursorTimer.isActive() && TDEApplication::cursorFlashTime() > 0 )
+      m_cursorTimer.start ( TDEApplication::cursorFlashTime() / 2 );
 
     updateView( true );
     updateCursor( cursor, true );

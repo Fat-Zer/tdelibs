@@ -30,7 +30,7 @@ ASNs which will stay too long until a timeout ). For improving the quality
 of ASN and reducing the number of ASNs that don't detect when the application
 has started, some .desktop file entries may be helpful ( see below ).
  If you want to start an application in your code, prefer using KRun or
-KApplication::startServiceByXXX() calls. Classes like KProcess don't create
+TDEApplication::startServiceByXXX() calls. Classes like TDEProcess don't create
 ASN, so if you need to use it, you have to send it manually ( only in case
 ASN is useful in this case, it shouldn't be sent e.g. for system processes ).
  
@@ -84,16 +84,16 @@ value, and for apps which need it also X-TDE-WMClass should be set. This
 sometimes gives slightly better behavior than when these entries are not set.
 
 
-The KStartupInfo classes : 
+The TDEStartupInfo classes : 
 --------------------------
 
  In some cases, or if you are interested in getting the ASN information, you
-have to use the KStartupInfo classes in tdelibs/tdecore.
+have to use the TDEStartupInfo classes in tdelibs/tdecore.
 
 Receiving the application startup notification information :
 ------------------------------------------------------------
 
- Create an instance of class KStartupInfo and connect to its slots, they
+ Create an instance of class TDEStartupInfo and connect to its slots, they
 will be emitted whenever a ASN info is received.
  The clean_on_cantdetect argument to the constructor means whether all
 ASN info for non-compliant apps should be removed when a window is mapped
@@ -125,8 +125,8 @@ about the finished process should be sent. Since the application may
 have forked into background, the finish info should include the PID
 and hostname, and the notification will be stopped only if there's
 no other PID for it. On the other hand, if you simply really need
-to stop ASN, send only the identification ( KStartupInfo::sendFinish()
-with only KStartupInfoId argument ).
+to stop ASN, send only the identification ( TDEStartupInfo::sendFinish()
+with only TDEStartupInfoId argument ).
 
 
 
@@ -148,8 +148,8 @@ forks into background, it sends the PID change. That's how compliant
 applications should work, and this support for ASN should be provided
 by toolkits. All KDE application should be compliant by now, since
 tdelibs do all the necessary things. The KDE_STARTUP_ENV variable
-is read and unset in KApplication constructor, and _KDE_STARTUP_ID
-is set on every toplevel window in KApplication::setTopWidget().
+is read and unset in TDEApplication constructor, and _KDE_STARTUP_ID
+is set on every toplevel window in TDEApplication::setTopWidget().
  However, majority of applications aren't compliant now, and even
 if I succeed making this thing a standard ( part of NETWM_SPEC
 or whatever ), there still will be old applications that won't behave
@@ -171,11 +171,11 @@ is 'xemacs', but WM_CLASS is 'emacs', 'Emacs', so its X-TDE-WMClass
 in its .desktop file should be set to 'emacs' - the case doesn't
 matter ).
  The ASN identification string must be a unique string for every ASN.
-In KStartupInfo class, it's created as 'hostname;tm.sec;tm.usec;pid',
+In TDEStartupInfo class, it's created as 'hostname;tm.sec;tm.usec;pid',
 tm being the current time. If the identification string is set to "0",
-it means no ASN should be done ( e.g. for things like kio_uiserver,
+it means no ASN should be done ( e.g. for things like tdeio_uiserver,
 which shouldn't get ASN ). Empty identification string means the same
-like "0", except for the call to KStartupInfoId::initId(), where it means
+like "0", except for the call to TDEStartupInfoId::initId(), where it means
 to create a new one.
 
 

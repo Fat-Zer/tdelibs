@@ -18,11 +18,11 @@
 */
 
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <knotifyclient.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 #include <tqptrvector.h>
 
@@ -30,20 +30,20 @@
 #include "kcompletion_private.h"
 
 
-class KCompletionPrivate
+class TDECompletionPrivate
 {
 public:
     // not a member to avoid #including kcompletion_private.h from kcompletion.h
     // list used for nextMatch() and previousMatch()
-    KCompletionMatchesWrapper matches;
+    TDECompletionMatchesWrapper matches;
 };
 
-KCompletion::KCompletion()
+TDECompletion::TDECompletion()
 {
-    d = new KCompletionPrivate;
+    d = new TDECompletionPrivate;
 
-    myCompletionMode = KGlobalSettings::completionMode();
-    myTreeRoot = new KCompTreeNode;
+    myCompletionMode = TDEGlobalSettings::completionMode();
+    myTreeRoot = new TDECompTreeNode;
     myBeep       = true;
     myIgnoreCase = false;
     myHasMultipleMatches = false;
@@ -51,31 +51,31 @@ KCompletion::KCompletion()
     setOrder( Insertion );
 }
 
-KCompletion::~KCompletion()
+TDECompletion::~TDECompletion()
 {
     delete d;
     delete myTreeRoot;
 }
 
-void KCompletion::setOrder( CompOrder order )
+void TDECompletion::setOrder( CompOrder order )
 {
     myOrder = order;
     d->matches.setSorting( order == Weighted );
 }
 
-void KCompletion::setIgnoreCase( bool ignoreCase )
+void TDECompletion::setIgnoreCase( bool ignoreCase )
 {
     myIgnoreCase = ignoreCase;
 }
 
-void KCompletion::setItems( const TQStringList& items )
+void TDECompletion::setItems( const TQStringList& items )
 {
     clear();
     insertItems( items );
 }
 
 
-void KCompletion::insertItems( const TQStringList& items )
+void TDECompletion::insertItems( const TQStringList& items )
 {
     bool weighted = (myOrder == Weighted);
     TQStringList::ConstIterator it;
@@ -89,21 +89,21 @@ void KCompletion::insertItems( const TQStringList& items )
     }
 }
 
-TQStringList KCompletion::items() const
+TQStringList TDECompletion::items() const
 {
-    KCompletionMatchesWrapper list; // unsorted
+    TDECompletionMatchesWrapper list; // unsorted
     bool addWeight = (myOrder == Weighted);
     extractStringsFromNode( myTreeRoot, TQString::null, &list, addWeight );
 
     return list.list();
 }
 
-bool KCompletion::isEmpty() const
+bool TDECompletion::isEmpty() const
 {
   return (myTreeRoot->childrenCount() == 0);
 }
 
-void KCompletion::addItem( const TQString& item )
+void TDECompletion::addItem( const TQString& item )
 {
     d->matches.clear();
     myRotationIndex = 0;
@@ -112,12 +112,12 @@ void KCompletion::addItem( const TQString& item )
     addItem( item, 0 );
 }
 
-void KCompletion::addItem( const TQString& item, uint weight )
+void TDECompletion::addItem( const TQString& item, uint weight )
 {
     if ( item.isEmpty() )
         return;
 
-    KCompTreeNode *node = myTreeRoot;
+    TDECompTreeNode *node = myTreeRoot;
     uint len = item.length();
 
     bool sorted = (myOrder == Sorted);
@@ -139,7 +139,7 @@ void KCompletion::addItem( const TQString& item, uint weight )
 //     tqDebug("*** added: %s (%i)", item.latin1(), node->weight());
 }
 
-void KCompletion::addWeightedItem( const TQString& item )
+void TDECompletion::addWeightedItem( const TQString& item )
 {
     if ( myOrder != Weighted ) {
         addItem( item, 0 );
@@ -165,7 +165,7 @@ void KCompletion::addWeightedItem( const TQString& item )
 }
 
 
-void KCompletion::removeItem( const TQString& item )
+void TDECompletion::removeItem( const TQString& item )
 {
     d->matches.clear();
     myRotationIndex = 0;
@@ -175,23 +175,23 @@ void KCompletion::removeItem( const TQString& item )
 }
 
 
-void KCompletion::clear()
+void TDECompletion::clear()
 {
     d->matches.clear();
     myRotationIndex = 0;
     myLastString = TQString::null;
 
     delete myTreeRoot;
-    myTreeRoot = new KCompTreeNode;
+    myTreeRoot = new TDECompTreeNode;
 }
 
 
-TQString KCompletion::makeCompletion( const TQString& string )
+TQString TDECompletion::makeCompletion( const TQString& string )
 {
-    if ( myCompletionMode == KGlobalSettings::CompletionNone )
+    if ( myCompletionMode == TDEGlobalSettings::CompletionNone )
         return TQString::null;
 
-    //kdDebug(0) << "KCompletion: completing: " << string << endl;
+    //kdDebug(0) << "TDECompletion: completing: " << string << endl;
 
     d->matches.clear();
     myRotationIndex = 0;
@@ -200,7 +200,7 @@ TQString KCompletion::makeCompletion( const TQString& string )
 
     // in Shell-completion-mode, emit all matches when we get the same
     // complete-string twice
-    if ( myCompletionMode == KGlobalSettings::CompletionShell &&
+    if ( myCompletionMode == TDEGlobalSettings::CompletionShell &&
          string == myLastString ) {
         // Don't use d->matches since calling postProcessMatches()
         // on d->matches here would interfere with call to
@@ -219,8 +219,8 @@ TQString KCompletion::makeCompletion( const TQString& string )
 
     TQString completion;
     // in case-insensitive popup mode, we search all completions at once
-    if ( myCompletionMode == KGlobalSettings::CompletionPopup ||
-         myCompletionMode == KGlobalSettings::CompletionPopupAuto ) {
+    if ( myCompletionMode == TDEGlobalSettings::CompletionPopup ||
+         myCompletionMode == TDEGlobalSettings::CompletionPopupAuto ) {
         findAllCompletions( string, &d->matches, myHasMultipleMatches );
         if ( !d->matches.isEmpty() )
             completion = d->matches.first();
@@ -237,7 +237,7 @@ TQString KCompletion::makeCompletion( const TQString& string )
     postProcessMatch( &completion );
 
     if ( !string.isEmpty() ) { // only emit match when string is not empty
-        //kdDebug(0) << "KCompletion: Match: " << completion << endl;
+        //kdDebug(0) << "TDECompletion: Match: " << completion << endl;
         emit match( completion );
     }
 
@@ -248,11 +248,11 @@ TQString KCompletion::makeCompletion( const TQString& string )
 }
 
 
-TQStringList KCompletion::substringCompletion( const TQString& string ) const
+TQStringList TDECompletion::substringCompletion( const TQString& string ) const
 {
     // get all items in the tree, possibly in sorted order
     bool sorted = (myOrder == Weighted);
-    KCompletionMatchesWrapper allItems( sorted );
+    TDECompletionMatchesWrapper allItems( sorted );
     extractStringsFromNode( myTreeRoot, TQString::null, &allItems, false );
 
     TQStringList list = allItems.list();
@@ -288,17 +288,17 @@ TQStringList KCompletion::substringCompletion( const TQString& string ) const
 }
 
 
-void KCompletion::setCompletionMode( KGlobalSettings::Completion mode )
+void TDECompletion::setCompletionMode( TDEGlobalSettings::Completion mode )
 {
     myCompletionMode = mode;
 }
 
-TQStringList KCompletion::allMatches()
+TQStringList TDECompletion::allMatches()
 {
     // Don't use d->matches since calling postProcessMatches()
     // on d->matches here would interfere with call to
     // postProcessMatch() during rotation
-    KCompletionMatchesWrapper matches( myOrder == Weighted );
+    TDECompletionMatchesWrapper matches( myOrder == Weighted );
     bool dummy;
     findAllCompletions( myLastString, &matches, dummy );
     TQStringList l = matches.list();
@@ -306,22 +306,22 @@ TQStringList KCompletion::allMatches()
     return l;
 }
 
-KCompletionMatches KCompletion::allWeightedMatches()
+TDECompletionMatches TDECompletion::allWeightedMatches()
 {
     // Don't use d->matches since calling postProcessMatches()
     // on d->matches here would interfere with call to
     // postProcessMatch() during rotation
-    KCompletionMatchesWrapper matches( myOrder == Weighted );
+    TDECompletionMatchesWrapper matches( myOrder == Weighted );
     bool dummy;
     findAllCompletions( myLastString, &matches, dummy );
-    KCompletionMatches ret( matches );
+    TDECompletionMatches ret( matches );
     postProcessMatches( &ret );
     return ret;
 }
 
-TQStringList KCompletion::allMatches( const TQString &string )
+TQStringList TDECompletion::allMatches( const TQString &string )
 {
-    KCompletionMatchesWrapper matches( myOrder == Weighted );
+    TDECompletionMatchesWrapper matches( myOrder == Weighted );
     bool dummy;
     findAllCompletions( string, &matches, dummy );
     TQStringList l = matches.list();
@@ -329,12 +329,12 @@ TQStringList KCompletion::allMatches( const TQString &string )
     return l;
 }
 
-KCompletionMatches KCompletion::allWeightedMatches( const TQString &string )
+TDECompletionMatches TDECompletion::allWeightedMatches( const TQString &string )
 {
-    KCompletionMatchesWrapper matches( myOrder == Weighted );
+    TDECompletionMatchesWrapper matches( myOrder == Weighted );
     bool dummy;
     findAllCompletions( string, &matches, dummy );
-    KCompletionMatches ret( matches );
+    TDECompletionMatches ret( matches );
     postProcessMatches( &ret );
     return ret;
 }
@@ -343,7 +343,7 @@ KCompletionMatches KCompletion::allWeightedMatches( const TQString &string )
 ///////////////// tree operations ///////////////////
 
 
-TQString KCompletion::nextMatch()
+TQString TDECompletion::nextMatch()
 {
     TQString completion;
     myLastMatch = myCurrentMatch;
@@ -376,7 +376,7 @@ TQString KCompletion::nextMatch()
 
 
 
-TQString KCompletion::previousMatch()
+TQString TDECompletion::previousMatch()
 {
     TQString completion;
     myLastMatch = myCurrentMatch;
@@ -411,11 +411,11 @@ TQString KCompletion::previousMatch()
 
 
 // tries to complete "string" from the tree-root
-TQString KCompletion::findCompletion( const TQString& string )
+TQString TDECompletion::findCompletion( const TQString& string )
 {
     TQChar ch;
     TQString completion;
-    const KCompTreeNode *node = myTreeRoot;
+    const TDECompTreeNode *node = myTreeRoot;
 
     // start at the tree-root and try to find the search-string
     for( uint i = 0; i < string.length(); i++ ) {
@@ -442,7 +442,7 @@ TQString KCompletion::findCompletion( const TQString& string )
     if ( node && node->childrenCount() > 1 ) {
         myHasMultipleMatches = true;
     
-        if ( myCompletionMode == KGlobalSettings::CompletionAuto ) {
+        if ( myCompletionMode == TDEGlobalSettings::CompletionAuto ) {
             myRotationIndex = 1;
             if (myOrder != Weighted) {
                 while ( (node = node->firstChild()) ) {
@@ -456,12 +456,12 @@ TQString KCompletion::findCompletion( const TQString& string )
                 // don't just find the "first" match, but the one with the
                 // highest priority
         
-                const KCompTreeNode* temp_node = 0L;
+                const TDECompTreeNode* temp_node = 0L;
                 while(1) {
                     int count = node->childrenCount();
                     temp_node = node->firstChild();
                     uint weight = temp_node->weight();
-                    const KCompTreeNode* hit = temp_node;
+                    const TDECompTreeNode* hit = temp_node;
                     for( int i = 1; i < count; i++ ) {
                         temp_node = node->childAt(i);
                         if( temp_node->weight() > weight ) {
@@ -487,8 +487,8 @@ TQString KCompletion::findCompletion( const TQString& string )
 }
 
 
-void KCompletion::findAllCompletions(const TQString& string,
-                                     KCompletionMatchesWrapper *matches,
+void TDECompletion::findAllCompletions(const TQString& string,
+                                     TDECompletionMatchesWrapper *matches,
                                      bool& hasMultipleMatches) const
 {
     //kdDebug(0) << "*** finding all completions for " << string << endl;
@@ -504,7 +504,7 @@ void KCompletion::findAllCompletions(const TQString& string,
 
     TQChar ch;
     TQString completion;
-    const KCompTreeNode *node = myTreeRoot;
+    const TDECompTreeNode *node = myTreeRoot;
 
     // start at the tree-root and try to find the search-string
     for( uint i = 0; i < string.length(); i++ ) {
@@ -542,21 +542,21 @@ void KCompletion::findAllCompletions(const TQString& string,
 }
 
 
-void KCompletion::extractStringsFromNode( const KCompTreeNode *node,
+void TDECompletion::extractStringsFromNode( const TDECompTreeNode *node,
                                           const TQString& beginning,
-                                          KCompletionMatchesWrapper *matches,
+                                          TDECompletionMatchesWrapper *matches,
                                           bool addWeight ) const
 {
     if ( !node || !matches )
         return;
 
     // kDebug() << "Beginning: " << beginning << endl;
-    const KCompTreeChildren *list = node->children();
+    const TDECompTreeChildren *list = node->children();
     TQString string;
     TQString w;
 
     // loop thru all children
-    for ( KCompTreeNode *cur = list->begin(); cur ; cur = cur->next) {
+    for ( TDECompTreeNode *cur = list->begin(); cur ; cur = cur->next) {
         string = beginning;
         node = cur;
         if ( !node->isNull() )
@@ -585,10 +585,10 @@ void KCompletion::extractStringsFromNode( const KCompTreeNode *node,
     }
 }
 
-void KCompletion::extractStringsFromNodeCI( const KCompTreeNode *node,
+void TDECompletion::extractStringsFromNodeCI( const TDECompTreeNode *node,
                                             const TQString& beginning,
                                             const TQString& restString,
-                                            KCompletionMatchesWrapper *matches ) const
+                                            TDECompletionMatchesWrapper *matches ) const
 {
     if ( restString.isEmpty() ) {
         extractStringsFromNode( node, beginning, matches, false /*noweight*/ );
@@ -597,7 +597,7 @@ void KCompletion::extractStringsFromNodeCI( const KCompTreeNode *node,
 
     TQChar ch1 = restString.at(0);
     TQString newRest = restString.mid(1);
-    KCompTreeNode *child1, *child2;
+    TDECompTreeNode *child1, *child2;
 
     child1 = node->find( ch1 ); // the correct match
     if ( child1 )
@@ -619,7 +619,7 @@ void KCompletion::extractStringsFromNodeCI( const KCompTreeNode *node,
     }
 }
 
-void KCompletion::doBeep( BeepMode mode ) const
+void TDECompletion::doBeep( BeepMode mode ) const
 {
     if ( !myBeep )
         return;
@@ -632,14 +632,14 @@ void KCompletion::doBeep( BeepMode mode ) const
             text = i18n("You reached the end of the list\nof matching items.\n");
             break;
         case PartialMatch:
-            if ( myCompletionMode == KGlobalSettings::CompletionShell ||
-                 myCompletionMode == KGlobalSettings::CompletionMan ) {
+            if ( myCompletionMode == TDEGlobalSettings::CompletionShell ||
+                 myCompletionMode == TDEGlobalSettings::CompletionMan ) {
                 event = TQString::fromLatin1("Textcompletion: partial match");
                 text = i18n("The completion is ambiguous, more than one\nmatch is available.\n");
             }
             break;
         case NoMatch:
-            if ( myCompletionMode == KGlobalSettings::CompletionShell ) {
+            if ( myCompletionMode == TDEGlobalSettings::CompletionShell ) {
                 event = TQString::fromLatin1("Textcompletion: no match");
                 text = i18n("There is no matching item available.\n");
             }
@@ -660,12 +660,12 @@ void KCompletion::doBeep( BeepMode mode ) const
 // TQChar( 0x0 ) is used as the delimiter of a string; the last child of each
 // inserted string is 0x0.
 
-KCompTreeNode::~KCompTreeNode()
+TDECompTreeNode::~TDECompTreeNode()
 {
     // delete all children
-    KCompTreeNode *cur = myChildren.begin();
+    TDECompTreeNode *cur = myChildren.begin();
     while (cur) {
-        KCompTreeNode * next = cur->next;
+        TDECompTreeNode * next = cur->next;
         delete myChildren.remove(cur);
         cur = next;
     }
@@ -674,16 +674,16 @@ KCompTreeNode::~KCompTreeNode()
 
 // Adds a child-node "ch" to this node. If such a node is already existant,
 // it will not be created. Returns the new/existing node.
-KCompTreeNode * KCompTreeNode::insert( const TQChar& ch, bool sorted )
+TDECompTreeNode * TDECompTreeNode::insert( const TQChar& ch, bool sorted )
 {
-    KCompTreeNode *child = find( ch );
+    TDECompTreeNode *child = find( ch );
     if ( !child ) {
-        child = new KCompTreeNode( ch );
+        child = new TDECompTreeNode( ch );
 
         // FIXME, first (slow) sorted insertion implementation
         if ( sorted ) {
-            KCompTreeNode * prev = 0;
-            KCompTreeNode * cur = myChildren.begin();
+            TDECompTreeNode * prev = 0;
+            TDECompTreeNode * cur = myChildren.begin();
             while ( cur ) {
                 if ( ch > *cur ) {
                     prev = cur;
@@ -711,15 +711,15 @@ KCompTreeNode * KCompTreeNode::insert( const TQChar& ch, bool sorted )
 
 // Iteratively removes a string from the tree. The nicer recursive
 // version apparently was a little memory hungry (see #56757)
-void KCompTreeNode::remove( const TQString& str )
+void TDECompTreeNode::remove( const TQString& str )
 {
     TQString string = str;
     string += TQChar(0x0);
 
-    TQPtrVector<KCompTreeNode> deletables( string.length() + 1 );
+    TQPtrVector<TDECompTreeNode> deletables( string.length() + 1 );
 
-    KCompTreeNode *child = 0L;
-    KCompTreeNode *parent = this;
+    TDECompTreeNode *child = 0L;
+    TDECompTreeNode *parent = this;
     deletables.insert( 0, parent );
     
     uint i = 0;
@@ -743,7 +743,7 @@ void KCompTreeNode::remove( const TQString& str )
     }
 }
 
-TQStringList KCompletionMatchesWrapper::list() const 
+TQStringList TDECompletionMatchesWrapper::list() const 
 {
     if ( sortedList && dirty ) {
         sortedList->sort();
@@ -760,16 +760,16 @@ TQStringList KCompletionMatchesWrapper::list() const
     return stringList;
 }
 
-KCompletionMatches::KCompletionMatches( bool sort_P )
+TDECompletionMatches::TDECompletionMatches( bool sort_P )
     : _sorting( sort_P )
 {
 }
 
-KCompletionMatches::KCompletionMatches( const KCompletionMatchesWrapper& matches )
+TDECompletionMatches::TDECompletionMatches( const TDECompletionMatchesWrapper& matches )
     : _sorting( matches.sorting())
 {
     if( matches.sortedList != 0L )
-        KCompletionMatchesList::operator=( *matches.sortedList );
+        TDECompletionMatchesList::operator=( *matches.sortedList );
     else {
         TQStringList l = matches.list();
         for( TQStringList::ConstIterator it = l.begin();
@@ -779,14 +779,14 @@ KCompletionMatches::KCompletionMatches( const KCompletionMatchesWrapper& matches
     }
 }
 
-KCompletionMatches::~KCompletionMatches()
+TDECompletionMatches::~TDECompletionMatches()
 {
 }
 
-TQStringList KCompletionMatches::list( bool sort_P ) const
+TQStringList TDECompletionMatches::list( bool sort_P ) const
 {
     if( _sorting && sort_P )
-        const_cast< KCompletionMatches* >( this )->sort();
+        const_cast< TDECompletionMatches* >( this )->sort();
     TQStringList stringList;
     // high weight == sorted last -> reverse the sorting here
     for ( ConstIterator it = begin(); it != end(); ++it )
@@ -794,7 +794,7 @@ TQStringList KCompletionMatches::list( bool sort_P ) const
     return stringList;
 }
 
-void KCompletionMatches::removeDuplicates()
+void TDECompletionMatches::removeDuplicates()
 {
     Iterator it1, it2;
     for ( it1 = begin(); it1 != end(); ++it1 ) {
@@ -810,7 +810,7 @@ void KCompletionMatches::removeDuplicates()
     }
 }
 
-void KCompTreeNodeList::append(KCompTreeNode *item)
+void TDECompTreeNodeList::append(TDECompTreeNode *item)
 {
     m_count++;
     if (!last) {
@@ -824,7 +824,7 @@ void KCompTreeNodeList::append(KCompTreeNode *item)
     last = item;
 }
 
-void KCompTreeNodeList::prepend(KCompTreeNode *item)
+void TDECompTreeNodeList::prepend(TDECompTreeNode *item)
 {
     m_count++;
     if (!last) {
@@ -837,7 +837,7 @@ void KCompTreeNodeList::prepend(KCompTreeNode *item)
     first = item;
 }
 
-void KCompTreeNodeList::insert(KCompTreeNode *after, KCompTreeNode *item)
+void TDECompTreeNodeList::insert(TDECompTreeNode *after, TDECompTreeNode *item)
 {
     if (!after) {
         append(item);
@@ -853,11 +853,11 @@ void KCompTreeNodeList::insert(KCompTreeNode *after, KCompTreeNode *item)
         last = item;
 }
 
-KCompTreeNode *KCompTreeNodeList::remove(KCompTreeNode *item)
+TDECompTreeNode *TDECompTreeNodeList::remove(TDECompTreeNode *item)
 {
     if (!first || !item)
         return 0;
-    KCompTreeNode *cur = 0;
+    TDECompTreeNode *cur = 0;
 
     if (item == first)
         first = first->next;
@@ -874,19 +874,19 @@ KCompTreeNode *KCompTreeNodeList::remove(KCompTreeNode *item)
     return item;
 }
 
-KCompTreeNode *KCompTreeNodeList::at(uint index) const
+TDECompTreeNode *TDECompTreeNodeList::at(uint index) const
 {
-    KCompTreeNode *cur = first;
+    TDECompTreeNode *cur = first;
     while (index-- && cur) cur = cur->next;
     return cur;
 }
 
-KZoneAllocator KCompTreeNode::alloc(8192);
+TDEZoneAllocator TDECompTreeNode::alloc(8192);
 
-void KCompletion::virtual_hook( int, void* )
+void TDECompletion::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
-void KCompletionBase::virtual_hook( int, void* )
+void TDECompletionBase::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
 #include "kcompletion.moc"

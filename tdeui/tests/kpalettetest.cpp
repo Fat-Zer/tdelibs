@@ -1,5 +1,5 @@
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tqwidget.h>
 #include <tqtimer.h>
 #include <stdlib.h>
@@ -12,7 +12,7 @@
 
 int main( int argc, char **argv )
 {
-    KApplication a( argc, argv, "KPalettetest" );
+    TDEApplication a( argc, argv, "KPalettetest" );
 
     TQStringList palettes = KPalette::getPaletteList();
     for(TQStringList::ConstIterator it = palettes.begin(); 

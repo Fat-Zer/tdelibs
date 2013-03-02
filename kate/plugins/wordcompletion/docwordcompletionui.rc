@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartplugin name="ktexteditor_docwordcompletion" library="ktexteditor_docwordcompletion" version="4">
+<kpartplugin name="tdetexteditor_docwordcompletion" library="tdetexteditor_docwordcompletion" version="4">
 <MenuBar>
  <Menu name="tools"><Text>&amp;Tools</Text>
     <separator group="tools_operations" />

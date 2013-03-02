@@ -63,11 +63,11 @@
 # define TDEPRINT_EXPORT KDE_IMPORT
 #endif
 
-#ifndef KIO_EXPORT
+#ifndef TDEIO_EXPORT
 # ifdef MAKE_KIO_LIB
-#  define KIO_EXPORT KDE_EXPORT
+#  define TDEIO_EXPORT KDE_EXPORT
 # else
-#  define KIO_EXPORT KDE_IMPORT
+#  define TDEIO_EXPORT KDE_IMPORT
 # endif
 #endif
 
@@ -102,10 +102,10 @@
 # define KVCARD_EXPORT KDE_IMPORT
 #endif
 
-#ifdef MAKE_KRESOURCES_LIB
-# define KRESOURCES_EXPORT KDE_EXPORT
+#ifdef MAKE_TDERESOURCES_LIB
+# define TDERESOURCES_EXPORT KDE_EXPORT
 #else
-# define KRESOURCES_EXPORT KDE_IMPORT
+# define TDERESOURCES_EXPORT KDE_IMPORT
 #endif
 
 #ifdef MAKE_TDESU_LIB
@@ -114,7 +114,7 @@
 # define TDESU_EXPORT KDE_IMPORT
 #endif
 
-// all KStyle libs
+// all TDEStyle libs
 #ifdef MAKE_KSTYLE_LIB
 # define KSTYLE_EXPORT KDE_EXPORT
 #else
@@ -145,8 +145,8 @@
 # define KATEPART_EXPORT KDE_IMPORT
 #endif
 
-#ifdef MAKE_KHTML_LIB
-# define KHTML_EXPORT KDE_EXPORT
+#ifdef MAKE_TDEHTML_LIB
+# define TDEHTML_EXPORT KDE_EXPORT
 #else
-# define KHTML_EXPORT KDE_IMPORT
+# define TDEHTML_EXPORT KDE_IMPORT
 #endif

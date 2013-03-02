@@ -31,19 +31,19 @@
 #include <tqfileinfo.h>
 #include <tqdir.h>
 
-#include "kglobal.h"
+#include "tdeglobal.h"
 #include "kstandarddirs.h"
-#include "kconfigbackend.h"
+#include "tdeconfigbackend.h"
 
 #include "ksimpleconfig.h"
 
 KSimpleConfig::KSimpleConfig(const TQString &fileName, bool bReadOnly)
-  : KConfig(TQString::fromLatin1(""), bReadOnly, false)
+  : TDEConfig(TQString::fromLatin1(""), bReadOnly, false)
 {
-  // the difference between KConfig and KSimpleConfig is just that
+  // the difference between TDEConfig and KSimpleConfig is just that
   // for KSimpleConfig an absolute filename is guaranteed
   if (!fileName.isNull() && TQDir::isRelativePath(fileName)) {
-     backEnd->changeFileName( KGlobal::dirs()->
+     backEnd->changeFileName( TDEGlobal::dirs()->
 	saveLocation("config", TQString::null, !bReadOnly)+fileName, "config", false);
   } else {
      backEnd->changeFileName(fileName, "config", false);
@@ -52,16 +52,16 @@ KSimpleConfig::KSimpleConfig(const TQString &fileName, bool bReadOnly)
   reparseConfiguration();
 }
 
-KSimpleConfig::KSimpleConfig(KConfigBackEnd *backEnd, bool bReadOnly)
-  : KConfig(backEnd, bReadOnly)
+KSimpleConfig::KSimpleConfig(TDEConfigBackEnd *backEnd, bool bReadOnly)
+  : TDEConfig(backEnd, bReadOnly)
 {}
 
 KSimpleConfig::~KSimpleConfig()
 {
   // we need to call the KSimpleConfig version of sync.  Relying on the
-  // regular KConfig sync is bad, because the KSimpleConfig sync has
+  // regular TDEConfig sync is bad, because the KSimpleConfig sync has
   // different behavior.  Syncing here will insure that the sync() call
-  // in the KConfig destructor doesn't actually do anything.
+  // in the TDEConfig destructor doesn't actually do anything.
   sync();
 }
 
@@ -76,6 +76,6 @@ void KSimpleConfig::sync()
 }
 
 void KSimpleConfig::virtual_hook( int id, void* data )
-{ KConfig::virtual_hook( id, data ); }
+{ TDEConfig::virtual_hook( id, data ); }
 
 #include "ksimpleconfig.moc"

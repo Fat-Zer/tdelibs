@@ -6,10 +6,10 @@
 
 #include <assert.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kdialog.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 #include <ksimpleconfig.h>
 
@@ -52,7 +52,7 @@ KComboBoxTest::KComboBoxTest(TQWidget* widget, const char* name )
 
   m_ro = new KComboBox(hbox, "ReadOnlyCombo" );
   lbl->setBuddy (m_ro);
-  m_ro->setCompletionMode( KGlobalSettings::CompletionAuto );
+  m_ro->setCompletionMode( TDEGlobalSettings::CompletionAuto );
   TQObject::connect (m_ro, TQT_SIGNAL(activated(int)), TQT_SLOT(slotActivated(int)));
   TQObject::connect (m_ro, TQT_SIGNAL(activated(const TQString&)), TQT_SLOT (slotActivated(const TQString&)));
   vbox->addWidget (hbox);
@@ -139,10 +139,10 @@ KComboBoxTest::KComboBoxTest(TQWidget* widget, const char* name )
   // Setup konq's combobox
   KSimpleConfig historyConfig( "konq_history" );
   historyConfig.setGroup( "Location Bar" );
-  KCompletion * s_pCompletion = new KCompletion;
-  s_pCompletion->setOrder( KCompletion::Weighted );
+  TDECompletion * s_pCompletion = new TDECompletion;
+  s_pCompletion->setOrder( TDECompletion::Weighted );
   s_pCompletion->setItems( historyConfig.readListEntry( "ComboContents" ) );
-  s_pCompletion->setCompletionMode( KGlobalSettings::completionMode() );
+  s_pCompletion->setCompletionMode( TDEGlobalSettings::completionMode() );
   m_konqc->setCompletionObject( s_pCompletion );
 
   TQPixmap pix = SmallIcon("www");
@@ -217,7 +217,7 @@ void KComboBoxTest::quitApp()
 
 int main ( int argc, char **argv)
 {
-  KApplication a(argc, argv, "kcomboboxtest");
+  TDEApplication a(argc, argv, "kcomboboxtest");
   KComboBoxTest* t= new KComboBoxTest;
   a.setMainWidget (t);
   t->show ();

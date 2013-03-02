@@ -22,18 +22,18 @@
 // systems.
 // Also default gregorian and factory classes
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 #include "kcalendarsystem.h"
-#include "klocale.h"
+#include "tdelocale.h"
 
 class KCalendarSystemPrivate
 {
 public:
-  const KLocale * locale;
+  const TDELocale * locale;
 };
 
-KCalendarSystem::KCalendarSystem(const KLocale * locale)
+KCalendarSystem::KCalendarSystem(const TDELocale * locale)
   : d(new KCalendarSystemPrivate)
 {
   d->locale = locale;
@@ -44,12 +44,12 @@ KCalendarSystem::~KCalendarSystem()
   delete d;
 }
 
-const KLocale * KCalendarSystem::locale() const
+const TDELocale * KCalendarSystem::locale() const
 {
   if ( d->locale )
     return d->locale;
 
-  return KGlobal::locale();
+  return TDEGlobal::locale();
 }
 
 TQString KCalendarSystem::dayString(const TQDate & pDate, bool bShort) const

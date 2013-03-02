@@ -23,15 +23,15 @@
 #include "kmconfigpage.h"
 
 class KMProxyWidget;
-class KConfig;
+class TDEConfig;
 
 class KMConfigProxy : public KMConfigPage
 {
 public:
 	KMConfigProxy(TQWidget *parent = 0);
 
-	void loadConfig(KConfig*);
-	void saveConfig(KConfig*);
+	void loadConfig(TDEConfig*);
+	void saveConfig(TDEConfig*);
 
 private:
 	KMProxyWidget	*m_widget;

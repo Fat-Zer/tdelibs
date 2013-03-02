@@ -23,9 +23,9 @@ check-local: testwithpixmaps.cpp testkde.cpp
 # md5sum -c $(srcdir)/sums
 
 testwithpixmaps.cpp: $(srcdir)/test.widgets
-	../makekdewidgets -o testwithpixmaps.cpp -p $(top_srcdir)/kdewidgets/pics $(srcdir)/test.widgets
+	../maketdewidgets -o testwithpixmaps.cpp -p $(top_srcdir)/kdewidgets/pics $(srcdir)/test.widgets
 testkde.cpp: $(srcdir)/test.widgets
-	../makekdewidgets -o testkde.cpp $(srcdir)/test.widgets
+	../maketdewidgets -o testkde.cpp $(srcdir)/test.widgets
 
 CLEANFILES = testwithpixmaps.cpp testkde.cpp
 

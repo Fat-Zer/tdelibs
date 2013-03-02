@@ -28,11 +28,11 @@
 #include <tqlabel.h>
 #include <kpushbutton.h>
 #include <tqlayout.h>
-#include <klocale.h>
-#include <kapplication.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdeapplication.h>
+#include <tdemessagebox.h>
 #include <kguiitem.h>
-#include <kio/netaccess.h>
+#include <tdeio/netaccess.h>
 
 KMWDriverTest::KMWDriverTest(TQWidget *parent, const char *name)
 : KMWizardPage(parent,name)
@@ -105,7 +105,7 @@ void KMWDriverTest::initPrinter(KMPrinter *p)
 	{
 		m_driver = KMFactory::self()->manager()->loadFileDriver(drfile);
 		/* remove the temp file if it has been downloaded */
-		KIO::NetAccess::removeTempFile( drfile );
+		TDEIO::NetAccess::removeTempFile( drfile );
 	}
 	else if (p->dbEntry() != NULL)
 		m_driver = KMFactory::self()->manager()->loadDbDriver(p->dbEntry());
@@ -133,7 +133,7 @@ void KMWDriverTest::slotTest()
 {
 	if (!m_printer) return;
 
-	TQString	name = "tmpprinter_"+KApplication::randomString(8);
+	TQString	name = "tmpprinter_"+TDEApplication::randomString(8);
 	// save printer name (can be non empty when modifying a printer)
 	TQString	oldname = m_printer->name();
 

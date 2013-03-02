@@ -21,8 +21,8 @@
 #include <tqvariant.h>
 #include <kdebug.h>
 #include <tqtextedit.h>
-#include <klocale.h>
-#include <kapplication.h>
+#include <tdelocale.h>
+#include <tdeapplication.h>
 
 KWhatsThisManager *KWhatsThisManager::s_instance = 0;
 

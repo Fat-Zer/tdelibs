@@ -13,7 +13,7 @@ for the standard page.
 About 95% of the required features should be covered by now. Note that this
 number covers the core language elements only. Features like the famous
 roll-over buttons on the www are NOT part of the standard. Those extensions
-are added via a module loaded dynamically by the KHTML Widget.
+are added via a module loaded dynamically by the TDEHTML Widget.
 
 I'll provide some examples of how to extend this library for various needs at
 a later point in time. Feel free to contact me via mail if you have any

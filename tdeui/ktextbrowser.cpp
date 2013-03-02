@@ -19,8 +19,8 @@
 
 
 #include <tqpopupmenu.h>
-#include <kapplication.h>
-#include <kglobalsettings.h>
+#include <tdeapplication.h>
+#include <tdeglobalsettings.h>
 #include <ktextbrowser.h>
 #include <kcursor.h>
 #include <kurl.h>
@@ -112,7 +112,7 @@ void KTextBrowser::viewportMouseMoveEvent( TQMouseEvent* e)
 
 void KTextBrowser::contentsWheelEvent( TQWheelEvent *e )
 {
-    if ( KGlobalSettings::wheelMouseZooms() )
+    if ( TDEGlobalSettings::wheelMouseZooms() )
         TQTextBrowser::contentsWheelEvent( e );
     else // thanks, we don't want to zoom, so skip QTextEdit's impl.
         TQScrollView::contentsWheelEvent( e );

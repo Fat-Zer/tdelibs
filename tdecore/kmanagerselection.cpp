@@ -47,61 +47,61 @@ DEALINGS IN THE SOFTWARE.
 
 #include <kdebug.h>
 #include <tqwidget.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kxerrorhandler.h>
 #include <X11/Xatom.h>
 
-class KSelectionOwnerPrivate
+class TDESelectionOwnerPrivate
     : public QWidget
     {
     public:
-        KSelectionOwnerPrivate( KSelectionOwner* owner );
+        TDESelectionOwnerPrivate( TDESelectionOwner* owner );
     protected:
         virtual bool x11Event( XEvent* ev );
     private:
-        KSelectionOwner* owner;
+        TDESelectionOwner* owner;
     };
     
-KSelectionOwnerPrivate::KSelectionOwnerPrivate( KSelectionOwner* owner_P )
+TDESelectionOwnerPrivate::TDESelectionOwnerPrivate( TDESelectionOwner* owner_P )
     :   owner( owner_P )
     {
     kapp->installX11EventFilter( TQT_TQWIDGET(this) );
     }
     
-bool KSelectionOwnerPrivate::x11Event( XEvent* ev_P )
+bool TDESelectionOwnerPrivate::x11Event( XEvent* ev_P )
     {
     return owner->filterEvent( ev_P );
     }
     
-KSelectionOwner::KSelectionOwner( Atom selection_P, int screen_P, TQObject* parent_P )
+TDESelectionOwner::TDESelectionOwner( Atom selection_P, int screen_P, TQObject* parent_P )
     :   TQObject( parent_P ),
         selection( selection_P ),
         screen( screen_P >= 0 ? screen_P : DefaultScreen( tqt_xdisplay())),
         window( None ),
         timestamp( CurrentTime ),
         extra1( 0 ), extra2( 0 ),
-        d( new KSelectionOwnerPrivate( this ))
+        d( new TDESelectionOwnerPrivate( this ))
     {
     }
     
-KSelectionOwner::KSelectionOwner( const char* selection_P, int screen_P, TQObject* parent_P )
+TDESelectionOwner::TDESelectionOwner( const char* selection_P, int screen_P, TQObject* parent_P )
     :   TQObject( parent_P ),
         selection( XInternAtom( tqt_xdisplay(), selection_P, False )),
         screen( screen_P >= 0 ? screen_P : DefaultScreen( tqt_xdisplay())),
         window( None ),
         timestamp( CurrentTime ),
         extra1( 0 ), extra2( 0 ),
-        d( new KSelectionOwnerPrivate( this ))
+        d( new TDESelectionOwnerPrivate( this ))
     {
     }
 
-KSelectionOwner::~KSelectionOwner()
+TDESelectionOwner::~TDESelectionOwner()
     {
     release();
     delete d;
     }
         
-bool KSelectionOwner::claim( bool force_P, bool force_kill_P )
+bool TDESelectionOwner::claim( bool force_P, bool force_kill_P )
     {
     if( manager_atom == None )
         getAtoms();
@@ -179,7 +179,7 @@ bool KSelectionOwner::claim( bool force_P, bool force_kill_P )
     }
 
 // destroy resource first
-void KSelectionOwner::release()
+void TDESelectionOwner::release()
     {
     if( timestamp == CurrentTime )
         return;
@@ -188,20 +188,20 @@ void KSelectionOwner::release()
     timestamp = CurrentTime;
     }
 
-Window KSelectionOwner::ownerWindow() const
+Window TDESelectionOwner::ownerWindow() const
     {
     if( timestamp == CurrentTime )
         return None;
     return window;
     }
 
-void KSelectionOwner::setData( long extra1_P, long extra2_P )
+void TDESelectionOwner::setData( long extra1_P, long extra2_P )
     {
     extra1 = extra1_P;
     extra2 = extra2_P;
     }
     
-bool KSelectionOwner::filterEvent( XEvent* ev_P )
+bool TDESelectionOwner::filterEvent( XEvent* ev_P )
     {
     if( timestamp != CurrentTime && ev_P->xany.window == window )
         {
@@ -244,12 +244,12 @@ bool KSelectionOwner::filterEvent( XEvent* ev_P )
     return false;
     }
 
-bool KSelectionOwner::handleMessage( XEvent* )
+bool TDESelectionOwner::handleMessage( XEvent* )
     {
     return false;
     }
 
-void KSelectionOwner::filter_selection_request( XSelectionRequestEvent& ev_P )
+void TDESelectionOwner::filter_selection_request( XSelectionRequestEvent& ev_P )
     {
     if( timestamp == CurrentTime || ev_P.selection != selection )
         return;
@@ -311,7 +311,7 @@ void KSelectionOwner::filter_selection_request( XSelectionRequestEvent& ev_P )
     XSendEvent( tqt_xdisplay(), ev_P.requestor, False, 0, &ev );
     }
 
-bool KSelectionOwner::handle_selection( Atom target_P, Atom property_P, Window requestor_P )
+bool TDESelectionOwner::handle_selection( Atom target_P, Atom property_P, Window requestor_P )
     {
     if( target_P == xa_timestamp )
         {
@@ -328,7 +328,7 @@ bool KSelectionOwner::handle_selection( Atom target_P, Atom property_P, Window r
     return true;
     }
 
-void KSelectionOwner::replyTargets( Atom property_P, Window requestor_P )
+void TDESelectionOwner::replyTargets( Atom property_P, Window requestor_P )
     {
     Atom atoms[ 3 ] = { xa_multiple, xa_timestamp, xa_targets };
 //    kdDebug() << "Handling targets request" << endl;
@@ -336,12 +336,12 @@ void KSelectionOwner::replyTargets( Atom property_P, Window requestor_P )
         reinterpret_cast< unsigned char* >( atoms ), 3 );
     }
 
-bool KSelectionOwner::genericReply( Atom, Atom, Window )
+bool TDESelectionOwner::genericReply( Atom, Atom, Window )
     {
     return false;
     }
 
-void KSelectionOwner::getAtoms()
+void TDESelectionOwner::getAtoms()
     {
     if( manager_atom == None )
         {
@@ -356,66 +356,66 @@ void KSelectionOwner::getAtoms()
         }
     }
 
-Atom KSelectionOwner::manager_atom = None;
-Atom KSelectionOwner::xa_multiple = None;
-Atom KSelectionOwner::xa_targets = None;
-Atom KSelectionOwner::xa_timestamp = None;
+Atom TDESelectionOwner::manager_atom = None;
+Atom TDESelectionOwner::xa_multiple = None;
+Atom TDESelectionOwner::xa_targets = None;
+Atom TDESelectionOwner::xa_timestamp = None;
 
 //*******************************************
-// KSelectionWatcher
+// TDESelectionWatcher
 //*******************************************
 
 
-class KSelectionWatcherPrivate
+class TDESelectionWatcherPrivate
     : public QWidget
     {
     public:
-        KSelectionWatcherPrivate( KSelectionWatcher* watcher );
+        TDESelectionWatcherPrivate( TDESelectionWatcher* watcher );
     protected:
         virtual bool x11Event( XEvent* ev );
     private:
-        KSelectionWatcher* watcher;
+        TDESelectionWatcher* watcher;
     };
     
-KSelectionWatcherPrivate::KSelectionWatcherPrivate( KSelectionWatcher* watcher_P )
+TDESelectionWatcherPrivate::TDESelectionWatcherPrivate( TDESelectionWatcher* watcher_P )
     :   watcher( watcher_P )
     {
     kapp->installX11EventFilter( TQT_TQWIDGET(this) );
     }
     
-bool KSelectionWatcherPrivate::x11Event( XEvent* ev_P )
+bool TDESelectionWatcherPrivate::x11Event( XEvent* ev_P )
     {
     watcher->filterEvent( ev_P );
     return false;
     }
     
 
-KSelectionWatcher::KSelectionWatcher( Atom selection_P, int screen_P, TQObject* parent_P )
+TDESelectionWatcher::TDESelectionWatcher( Atom selection_P, int screen_P, TQObject* parent_P )
     :   TQObject( parent_P ),
         selection( selection_P ),
         screen( screen_P >= 0 ? screen_P : DefaultScreen( tqt_xdisplay())),
         selection_owner( None ),
-        d( new KSelectionWatcherPrivate( this ))
+        d( new TDESelectionWatcherPrivate( this ))
     {
     init();
     }
     
-KSelectionWatcher::KSelectionWatcher( const char* selection_P, int screen_P, TQObject* parent_P )
+TDESelectionWatcher::TDESelectionWatcher( const char* selection_P, int screen_P, TQObject* parent_P )
     :   TQObject( parent_P ),
         selection( XInternAtom( tqt_xdisplay(), selection_P, False )),
         screen( screen_P >= 0 ? screen_P : DefaultScreen( tqt_xdisplay())),
         selection_owner( None ),
-        d( new KSelectionWatcherPrivate( this ))
+        d( new TDESelectionWatcherPrivate( this ))
     {
     init();
     }
 
-KSelectionWatcher::~KSelectionWatcher()
+TDESelectionWatcher::~TDESelectionWatcher()
     {
     delete d;
     }
     
-void KSelectionWatcher::init()
+void TDESelectionWatcher::init()
     {
     if( manager_atom == None )
         {
@@ -429,7 +429,7 @@ void KSelectionWatcher::init()
         }
     }    
 
-Window KSelectionWatcher::owner()
+Window TDESelectionWatcher::owner()
     {
     Display* const dpy = tqt_xdisplay();
     KXErrorHandler handler;
@@ -451,7 +451,7 @@ Window KSelectionWatcher::owner()
     }
 
 // void return value in order to allow more watchers in one process
-void KSelectionWatcher::filterEvent( XEvent* ev_P )
+void TDESelectionWatcher::filterEvent( XEvent* ev_P )
     {
     if( ev_P->type == ClientMessage )
         {
@@ -478,12 +478,12 @@ void KSelectionWatcher::filterEvent( XEvent* ev_P )
     return;
     }
 
-Atom KSelectionWatcher::manager_atom = None;
+Atom TDESelectionWatcher::manager_atom = None;
 
-void KSelectionOwner::virtual_hook( int, void* )
+void TDESelectionOwner::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
-void KSelectionWatcher::virtual_hook( int, void* )
+void TDESelectionWatcher::virtual_hook( int, void* )
 { /*BASE::virtual_hook( id, data );*/ }
 
 #include "kmanagerselection.moc"

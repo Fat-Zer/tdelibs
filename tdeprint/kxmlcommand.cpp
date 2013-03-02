@@ -30,13 +30,13 @@
 #include <tqmap.h>
 #include <tqvaluelist.h>
 #include <kstandarddirs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <ksimpleconfig.h>
 #include <kdialogbase.h>
 #include <kdebug.h>
 #include <kprocess.h>
 #include <klibloader.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 static void setOptionText(DrBase *opt, const TQString& s)
 {
@@ -393,7 +393,7 @@ TQString KXmlCommand::buildCommand(const TQMap<TQString,TQString>& opts, bool pi
 				}
 				else
 				{
-					format.replace( re, KProcess::quote( dopt->valueText() ) );
+					format.replace( re, TDEProcess::quote( dopt->valueText() ) );
 				}
 				str.append(format).append(" ");
 			}
@@ -624,7 +624,7 @@ TQStringList KXmlCommandManager::commandList()
 {
 	if (d->m_cmdlist.isEmpty())
 	{
-		TQStringList	dirs = KGlobal::dirs()->findDirs("data", "tdeprint/filters/");
+		TQStringList	dirs = TDEGlobal::dirs()->findDirs("data", "tdeprint/filters/");
 
 		for (TQStringList::ConstIterator it=dirs.begin(); it!=dirs.end(); ++it)
 		{

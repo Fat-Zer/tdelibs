@@ -22,7 +22,7 @@
 
 #include <tqfile.h>
 #include <kstandarddirs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kmacroexpander.h>
 
 KLpdUnixPrinterImpl::KLpdUnixPrinterImpl(TQObject *parent, const char *name, const TQStringList & /*args*/)
@@ -47,9 +47,9 @@ void KLpdUnixPrinterImpl::initLprPrint(TQString& cmd, KPrinter *printer)
 // look for executable, starting with "lpr"
 TQString KLpdUnixPrinterImpl::executable()
 {
-	QString	exe = KStandardDirs::findExe("lpr");
+	QString	exe = TDEStandardDirs::findExe("lpr");
 	if (exe.isEmpty())
-		exe = KStandardDirs::findExe("lp");
+		exe = TDEStandardDirs::findExe("lp");
 	return exe;
 }
 

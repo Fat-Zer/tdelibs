@@ -24,9 +24,9 @@
 #include <tqgroupbox.h>
 #include <tqlabel.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kurlrequester.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdialog.h>
 
 KMConfigPreview::KMConfigPreview(TQWidget *parent, const char *name)
@@ -59,14 +59,14 @@ KMConfigPreview::KMConfigPreview(TQWidget *parent, const char *name)
 	m_program->setEnabled(false);
 }
 
-void KMConfigPreview::loadConfig(KConfig *conf)
+void KMConfigPreview::loadConfig(TDEConfig *conf)
 {
 	conf->setGroup("General");
 	m_useext->setChecked(conf->readBoolEntry("ExternalPreview", false));
 	m_program->setURL(conf->readPathEntry("PreviewCommand", "gv"));
 }
 
-void KMConfigPreview::saveConfig(KConfig *conf)
+void KMConfigPreview::saveConfig(TDEConfig *conf)
 {
 	conf->setGroup("General");
 	conf->writeEntry("ExternalPreview", m_useext->isChecked());

@@ -16,7 +16,7 @@
 #include <kinstance.h>
 #include <kdebug.h>
 #include <stdlib.h>
-#include "kio_help.h"
+#include "tdeio_help.h"
 #include <xslt.h>
 
 extern int xmlLoadExtDtdDefaultValue;
@@ -25,7 +25,7 @@ extern "C"
 {
     KDE_EXPORT int kdemain( int argc, char **argv )
     {
-        KInstance instance( "kio_help" );
+        TDEInstance instance( "tdeio_help" );
         fillInstance(instance);
         (void)instance.config(); // we need this one to make sure system globals are read
 
@@ -33,7 +33,7 @@ extern "C"
 
         if (argc != 4)
         {
-            fprintf(stderr, "Usage: kio_help protocol domain-socket1 domain-socket2\n");
+            fprintf(stderr, "Usage: tdeio_help protocol domain-socket1 domain-socket2\n");
             exit(-1);
         }
 

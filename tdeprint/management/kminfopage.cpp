@@ -23,7 +23,7 @@
 #include <tqpixmap.h>
 #include <tqlabel.h>
 #include <tqlayout.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 #include <kseparator.h>
 

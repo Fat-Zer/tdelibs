@@ -26,7 +26,7 @@
 #include "config.h"
 
 #include "kcheckaccelerators.h"
-#include "kaccelmanager.h"
+#include "tdeaccelmanager.h"
 #include <tqpopupmenu.h>
 #include <tqapplication.h>
 #include <tqdialog.h>
@@ -39,11 +39,11 @@
 #include <tqmetaobject.h>
 #include <tqcheckbox.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
-#include <kglobal.h>
-#include <kshortcut.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdeshortcut.h>
+#include <tdelocale.h>
 
 /*
 
@@ -80,15 +80,15 @@ KCheckAccelerators::KCheckAccelerators( TQObject* parent )
     : TQObject( parent, "kapp_accel_filter" ), key(0), block( false ), drklash(0)
 {
     parent->installEventFilter( this );
-    KConfigGroupSaver saver( KGlobal::config(), "Development" );
-    TQString sKey = KGlobal::config()->readEntry( "CheckAccelerators" ).stripWhiteSpace();
+    TDEConfigGroupSaver saver( TDEGlobal::config(), "Development" );
+    TQString sKey = TDEGlobal::config()->readEntry( "CheckAccelerators" ).stripWhiteSpace();
     if( !sKey.isEmpty() ) {
-      KShortcut cuts( sKey );
+      TDEShortcut cuts( sKey );
       if( cuts.count() > 0 )
         key = int(cuts.seq(0).qt());
     }
-    alwaysShow = KGlobal::config()->readBoolEntry( "AlwaysShowCheckAccelerators", false );
-    autoCheck = KGlobal::config()->readBoolEntry( "AutoCheckAccelerators", true );
+    alwaysShow = TDEGlobal::config()->readBoolEntry( "AlwaysShowCheckAccelerators", false );
+    autoCheck = TDEGlobal::config()->readBoolEntry( "AutoCheckAccelerators", true );
     connect( &autoCheckTimer, TQT_SIGNAL( timeout()), TQT_SLOT( autoCheckSlot()));
 }
 
@@ -177,9 +177,9 @@ void KCheckAccelerators::checkAccelerators( bool automatic )
     if ( !actWin )
         return;
 
-    KAcceleratorManager::manage(actWin);
+    TDEAcceleratorManager::manage(actWin);
     TQString a, c, r;
-    KAcceleratorManager::last_manage(a, c,  r);
+    TDEAcceleratorManager::last_manage(a, c,  r);
 
     if (automatic) // for now we only show dialogs on F12 checks
         return;

@@ -33,14 +33,14 @@ class KRootPropPrivate;
 /**
 * Access KDE desktop resources stored on the root window.
 *
-* A companion to the KConfig class.
+* A companion to the TDEConfig class.
 *
 * The KRootProp class is used for reading and writing configuration entries
 * to properties on the root window.
 *
 * All configuration entries are of the form "key=value".
 *
-* @see  KConfig::KConfig
+* @see  TDEConfig::TDEConfig
 * @author Mark Donohoe (donohe@kde.org)
 */
 class TDECORE_EXPORT KRootProp

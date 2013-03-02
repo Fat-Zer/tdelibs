@@ -22,11 +22,11 @@
 #include <tqdom.h>
 #include <tqfileinfo.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
-#include <kio/job.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdeio/job.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kstandarddirs.h>
 
 #include "knewstuff.h"
@@ -104,18 +104,18 @@ void Engine::getMetaInformation( Provider::List *providers )
   for ( p = providers->first(); p; p = providers->next() ) {
     if ( p->downloadUrl().isEmpty() ) continue;
 
-    KIO::TransferJob *job = KIO::get( p->downloadUrl(), false, false );
-    connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
-             TQT_SLOT( slotNewStuffJobResult( KIO::Job * ) ) );
-    connect( job, TQT_SIGNAL( data( KIO::Job *, const TQByteArray & ) ),
-             TQT_SLOT( slotNewStuffJobData( KIO::Job *, const TQByteArray & ) ) );
+    TDEIO::TransferJob *job = TDEIO::get( p->downloadUrl(), false, false );
+    connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ),
+             TQT_SLOT( slotNewStuffJobResult( TDEIO::Job * ) ) );
+    connect( job, TQT_SIGNAL( data( TDEIO::Job *, const TQByteArray & ) ),
+             TQT_SLOT( slotNewStuffJobData( TDEIO::Job *, const TQByteArray & ) ) );
 
     mNewStuffJobData.insert( job, "" );
     mProviderJobs[ job ] = p;
   }
 }
 
-void Engine::slotNewStuffJobData( KIO::Job *job, const TQByteArray &data )
+void Engine::slotNewStuffJobData( TDEIO::Job *job, const TQByteArray &data )
 {
   if ( data.isEmpty() ) return;
 
@@ -126,7 +126,7 @@ void Engine::slotNewStuffJobData( KIO::Job *job, const TQByteArray &data )
   mNewStuffJobData[ job ].append( TQString::fromUtf8( str ) );
 }
 
-void Engine::slotNewStuffJobResult( KIO::Job *job )
+void Engine::slotNewStuffJobResult( TDEIO::Job *job )
 {
   if ( job->error() ) {
     kdDebug() << "Error downloading new stuff descriptions." << endl;
@@ -199,12 +199,12 @@ void Engine::download( Entry *entry )
   kdDebug() << "  SOURCE: " << source.url() << endl;
   kdDebug() << "  DESTINATION: " << destination.url() << endl;
 
-  KIO::FileCopyJob *job = KIO::file_copy( source, destination, -1, true );
-  connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
-           TQT_SLOT( slotDownloadJobResult( KIO::Job * ) ) );
+  TDEIO::FileCopyJob *job = TDEIO::file_copy( source, destination, -1, true );
+  connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ),
+           TQT_SLOT( slotDownloadJobResult( TDEIO::Job * ) ) );
 }
 
-void Engine::slotDownloadJobResult( KIO::Job *job )
+void Engine::slotDownloadJobResult( TDEIO::Job *job )
 {
   if ( job->error() ) {
     kdDebug() << "Error downloading new stuff payload." << endl;
@@ -321,9 +321,9 @@ void Engine::upload( Entry *entry )
       KURL destination = mUploadProvider->uploadUrl();
       destination.setFileName( fi.fileName() );
 
-      KIO::FileCopyJob *job = KIO::file_copy( KURL::fromPathOrURL( mUploadFile ), destination );
-      connect( job, TQT_SIGNAL( result( KIO::Job * ) ),
-               TQT_SLOT( slotUploadPayloadJobResult( KIO::Job * ) ) );
+      TDEIO::FileCopyJob *job = TDEIO::file_copy( KURL::fromPathOrURL( mUploadFile ), destination );
+      connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ),
+               TQT_SLOT( slotUploadPayloadJobResult( TDEIO::Job * ) ) );
     } else {
       emit uploadFinished( false );
     }
@@ -364,7 +364,7 @@ bool Engine::createMetaFile( Entry *entry )
   return true;
 }
 
-void Engine::slotUploadPayloadJobResult( KIO::Job *job )
+void Engine::slotUploadPayloadJobResult( TDEIO::Job *job )
 {
   if ( job->error() ) {
     kdDebug() << "Error uploading new stuff payload." << endl;
@@ -383,12 +383,12 @@ void Engine::slotUploadPayloadJobResult( KIO::Job *job )
   KURL previewDestination = mUploadProvider->uploadUrl();
   previewDestination.setFileName( fi.fileName() );
 
-  KIO::FileCopyJob *newJob = KIO::file_copy( KURL::fromPathOrURL( mPreviewFile ), previewDestination );
-  connect( newJob, TQT_SIGNAL( result( KIO::Job * ) ),
-           TQT_SLOT( slotUploadPreviewJobResult( KIO::Job * ) ) );
+  TDEIO::FileCopyJob *newJob = TDEIO::file_copy( KURL::fromPathOrURL( mPreviewFile ), previewDestination );
+  connect( newJob, TQT_SIGNAL( result( TDEIO::Job * ) ),
+           TQT_SLOT( slotUploadPreviewJobResult( TDEIO::Job * ) ) );
 }
 
-void Engine::slotUploadPreviewJobResult( KIO::Job *job )
+void Engine::slotUploadPreviewJobResult( TDEIO::Job *job )
 {
   if ( job->error() ) {
     kdDebug() << "Error uploading new stuff preview." << endl;
@@ -402,12 +402,12 @@ void Engine::slotUploadPreviewJobResult( KIO::Job *job )
   KURL metaDestination = mUploadProvider->uploadUrl();
   metaDestination.setFileName( fi.fileName() );
 
-  KIO::FileCopyJob *newJob = KIO::file_copy( KURL::fromPathOrURL( mUploadMetaFile ), metaDestination );
-  connect( newJob, TQT_SIGNAL( result( KIO::Job * ) ),
-           TQT_SLOT( slotUploadMetaJobResult( KIO::Job * ) ) );
+  TDEIO::FileCopyJob *newJob = TDEIO::file_copy( KURL::fromPathOrURL( mUploadMetaFile ), metaDestination );
+  connect( newJob, TQT_SIGNAL( result( TDEIO::Job * ) ),
+           TQT_SLOT( slotUploadMetaJobResult( TDEIO::Job * ) ) );
 }
 
-void Engine::slotUploadMetaJobResult( KIO::Job *job )
+void Engine::slotUploadMetaJobResult( TDEIO::Job *job )
 {
   mUploadMetaFile = TQString::null;
   if ( job->error() ) {

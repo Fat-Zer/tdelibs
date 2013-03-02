@@ -31,27 +31,27 @@
 #include <tqwidget.h>
 #include <tqmetaobject.h>
 #include <private/qucomextra_p.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kkeynative.h>
 
 //----------------------------------------------------
 
-static TQValueList< KGlobalAccelPrivate* >* all_accels = 0;
+static TQValueList< TDEGlobalAccelPrivate* >* all_accels = 0;
 
-KGlobalAccelPrivate::KGlobalAccelPrivate()
-: KAccelBase( KAccelBase::NATIVE_KEYS )
+TDEGlobalAccelPrivate::TDEGlobalAccelPrivate()
+: TDEAccelBase( TDEAccelBase::NATIVE_KEYS )
 , m_blocked( false )
 , m_blockingDisabled( false )
 {
         if( all_accels == NULL )
-            all_accels = new TQValueList< KGlobalAccelPrivate* >;
+            all_accels = new TQValueList< TDEGlobalAccelPrivate* >;
         all_accels->append( this );
 	m_sConfigGroup = "Global Shortcuts";
 //	kapp->installX11EventFilter( this );
 }
 
-KGlobalAccelPrivate::~KGlobalAccelPrivate()
+TDEGlobalAccelPrivate::~TDEGlobalAccelPrivate()
 {
 	// TODO: Need to release all grabbed keys if the main window is not shutting down.
 	//for( CodeModMap::ConstIterator it = m_rgCodeModToAction.begin(); it != m_rgCodeModToAction.end(); ++it ) {
@@ -64,17 +64,17 @@ KGlobalAccelPrivate::~KGlobalAccelPrivate()
         }
 }
 
-void KGlobalAccelPrivate::setEnabled( bool bEnable )
+void TDEGlobalAccelPrivate::setEnabled( bool bEnable )
 {
 	m_bEnabled = bEnable;
 	//updateConnections();
 }
 
-void KGlobalAccelPrivate::blockShortcuts( bool block )
+void TDEGlobalAccelPrivate::blockShortcuts( bool block )
 {
         if( all_accels == NULL )
             return;
-        for( TQValueList< KGlobalAccelPrivate* >::ConstIterator it = all_accels->begin();
+        for( TQValueList< TDEGlobalAccelPrivate* >::ConstIterator it = all_accels->begin();
              it != all_accels->end();
              ++it ) {
             if( (*it)->m_blockingDisabled )
@@ -84,35 +84,35 @@ void KGlobalAccelPrivate::blockShortcuts( bool block )
         }
 }
 
-void KGlobalAccelPrivate::disableBlocking( bool block )
+void TDEGlobalAccelPrivate::disableBlocking( bool block )
 {
         m_blockingDisabled = block;
 }
 
-bool KGlobalAccelPrivate::isEnabledInternal() const
+bool TDEGlobalAccelPrivate::isEnabledInternal() const
 {
-        return KAccelBase::isEnabled() && !m_blocked;
+        return TDEAccelBase::isEnabled() && !m_blocked;
 }
 
-bool KGlobalAccelPrivate::emitSignal( Signal )
+bool TDEGlobalAccelPrivate::emitSignal( Signal )
 {
 	return false;
 }
 
-bool KGlobalAccelPrivate::connectKey( KAccelAction& action, const KKeyServer::Key& key )
+bool TDEGlobalAccelPrivate::connectKey( TDEAccelAction& action, const KKeyServer::Key& key )
 	{ return grabKey( key, true, &action ); }
-bool KGlobalAccelPrivate::connectKey( const KKeyServer::Key& key )
+bool TDEGlobalAccelPrivate::connectKey( const KKeyServer::Key& key )
 	{ return grabKey( key, true, 0 ); }
-bool KGlobalAccelPrivate::disconnectKey( KAccelAction& action, const KKeyServer::Key& key )
+bool TDEGlobalAccelPrivate::disconnectKey( TDEAccelAction& action, const KKeyServer::Key& key )
 	{ return grabKey( key, false, &action ); }
-bool KGlobalAccelPrivate::disconnectKey( const KKeyServer::Key& key )
+bool TDEGlobalAccelPrivate::disconnectKey( const KKeyServer::Key& key )
 	{ return grabKey( key, false, 0 ); }
 
-bool KGlobalAccelPrivate::grabKey( const KKeyServer::Key& key, bool bGrab, KAccelAction* pAction )
+bool TDEGlobalAccelPrivate::grabKey( const KKeyServer::Key& key, bool bGrab, TDEAccelAction* pAction )
 {
 	/*
 	if( !key.code() ) {
-		kdWarning(125) << "KGlobalAccelPrivate::grabKey( " << key.key().toStringInternal() << ", " << bGrab << ", \"" << (pAction ? pAction->name().latin1() : "(null)") << "\" ): Tried to grab key with null code." << endl;
+		kdWarning(125) << "TDEGlobalAccelPrivate::grabKey( " << key.key().toStringInternal() << ", " << bGrab << ", \"" << (pAction ? pAction->name().latin1() : "(null)") << "\" ): Tried to grab key with null code." << endl;
 		return false;
 	}
 
@@ -190,7 +190,7 @@ bool KGlobalAccelPrivate::grabKey( const KKeyServer::Key& key, bool bGrab, KAcce
 	return false;
 }
 
-/*bool KGlobalAccelPrivate::x11Event( XEvent* pEvent )
+/*bool TDEGlobalAccelPrivate::x11Event( XEvent* pEvent )
 {
 	//kdDebug(125) << "x11EventFilter( type = " << pEvent->type << " )" << endl;
 	switch( pEvent->type ) {
@@ -206,9 +206,9 @@ bool KGlobalAccelPrivate::grabKey( const KKeyServer::Key& key, bool bGrab, KAcce
 	}
 }
 
-void KGlobalAccelPrivate::x11MappingNotify()
+void TDEGlobalAccelPrivate::x11MappingNotify()
 {
-	kdDebug(125) << "KGlobalAccelPrivate::x11MappingNotify()" << endl;
+	kdDebug(125) << "TDEGlobalAccelPrivate::x11MappingNotify()" << endl;
 	if( m_bEnabled ) {
 		// Maybe the X modifier map has been changed.
 		KKeyServer::initializeMods();
@@ -218,7 +218,7 @@ void KGlobalAccelPrivate::x11MappingNotify()
 	}
 }
 
-bool KGlobalAccelPrivate::x11KeyPress( const XEvent *pEvent )
+bool TDEGlobalAccelPrivate::x11KeyPress( const XEvent *pEvent )
 {
 	// do not change this line unless you really really know what you are doing (Matthias)
 	if ( !TQWidget::keyboardGrabber() && !TQApplication::activePopupWidget() ) {
@@ -268,7 +268,7 @@ bool KGlobalAccelPrivate::x11KeyPress( const XEvent *pEvent )
 	if( !m_rgCodeModToAction.contains( codemod ) ) {
 #ifndef NDEBUG
 		for( CodeModMap::ConstIterator it = m_rgCodeModToAction.begin(); it != m_rgCodeModToAction.end(); ++it ) {
-			KAccelAction* pAction = *it;
+			TDEAccelAction* pAction = *it;
 			kdDebug(125) << "\tcode: " << TQString::number(it.key().code, 16) << " mod: " << TQString::number(it.key().mod, 16)
 				<< (pAction ? TQString(" name: \"%1\" shortcut: %2").arg(pAction->name()).arg(pAction->shortcut().toStringInternal()) : TQString::null)
 				<< endl;
@@ -276,7 +276,7 @@ bool KGlobalAccelPrivate::x11KeyPress( const XEvent *pEvent )
 #endif
 		return false;
 	}
-	KAccelAction* pAction = m_rgCodeModToAction[codemod];
+	TDEAccelAction* pAction = m_rgCodeModToAction[codemod];
 
 	if( !pAction ) {
                 static bool recursion_block = false;
@@ -297,9 +297,9 @@ bool KGlobalAccelPrivate::x11KeyPress( const XEvent *pEvent )
 	return true;
 }*/
 
-void KGlobalAccelPrivate::activate( KAccelAction* pAction, const KKeySequence& seq )
+void TDEGlobalAccelPrivate::activate( TDEAccelAction* pAction, const KKeySequence& seq )
 {
-	kdDebug(125) << "KGlobalAccelPrivate::activate( \"" << pAction->name() << "\" ) " << endl;
+	kdDebug(125) << "TDEGlobalAccelPrivate::activate( \"" << pAction->name() << "\" ) " << endl;
 
 	TQRegExp rexPassIndex( "([ ]*int[ ]*)" );
 	TQRegExp rexPassInfo( " TQString" );
@@ -333,9 +333,9 @@ void KGlobalAccelPrivate::activate( KAccelAction* pAction, const KKeySequence& s
 	}
 }
 
-void KGlobalAccelPrivate::slotActivated( int iAction )
+void TDEGlobalAccelPrivate::slotActivated( int iAction )
 {
-	KAccelAction* pAction = actions().actionPtr( iAction );
+	TDEAccelAction* pAction = actions().actionPtr( iAction );
 	if( pAction )
 		activate( pAction, KKeySequence() );
 }

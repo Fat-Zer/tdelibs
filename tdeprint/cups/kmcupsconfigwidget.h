@@ -24,7 +24,7 @@
 
 class TQLineEdit;
 class TQCheckBox;
-class KConfig;
+class TDEConfig;
 
 class KMCupsConfigWidget : public TQWidget
 {
@@ -33,7 +33,7 @@ public:
 
 	void load();
 	void save(bool sync = true);
-	void saveConfig(KConfig*);
+	void saveConfig(TDEConfig*);
 
 protected:
 	TQLineEdit	*m_host, *m_port, *m_login, *m_password;

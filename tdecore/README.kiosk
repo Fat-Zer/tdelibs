@@ -28,7 +28,7 @@ resources provided by the system were located under $TDEDIR and user-
 specific resources were located under $HOME/.trinity.
 
 In KDE2 resource management has been largely abstracted by the introduction
-of the KStandardDirs class and has become much more flexible. The user /
+of the TDEStandardDirs class and has become much more flexible. The user /
 administrator can now specify a variable number of locations where resources
 can be found. A list of locations can either be specified via $TDEDIRS
 (notice the extra 'S'), via /etc/kderc and even via the kdeglobals config 
@@ -64,7 +64,7 @@ that haven't explicitly changed the affected settings to something else.
 Starting with KDE3, configuration entries can be marked "immutable". When a
 configuration entry is immutable it means that configuration files that are
 read later will not be able to override its value. Immutable entries cannot
-be changed via KConfig and if the entry is present under $TDEHOME it will 
+be changed via TDEConfig and if the entry is present under $TDEHOME it will 
 be ignored.
 
 Entries can be marked immutable on 4 different levels:
@@ -331,7 +331,7 @@ Applications may use additional actions that they defined themselves.
 You can get a list of the actions used by a certain applications by using the
 following dcop command:
 
-dcop <dcopid> qt objects | grep KActionCollection/ | cut -d '/' -f 3
+dcop <dcopid> qt objects | grep TDEActionCollection/ | cut -d '/' -f 3
 
 or with
 
@@ -492,11 +492,11 @@ of these actions then the application will not appear in the TDE menu and will n
 be used by KDE for opening files.
 
 IMPORTANT NOTE:
-Changing restrictions may influence the data that is cached in the ksycoca
+Changing restrictions may influence the data that is cached in the tdesycoca
 database. Since changes to .../share/config/kdeglobals do not trigger an
-automatic ksycoca update you need to force an update manually.
-To force an update of the ksycoca database touch the file 
-.../share/services/update_ksycoca. This will force a user's sycoca database
+automatic tdesycoca update you need to force an update manually.
+To force an update of the tdesycoca database touch the file 
+.../share/services/update_tdesycoca. This will force a user's sycoca database
 to be rebuild the next time the user logs in.
 
 KDE3 URL Restrictions
@@ -616,7 +616,7 @@ tde-display.desktop
 tde-proxy.desktop
 tde-screensaver.desktop
 
-See also kcmshell --list for a list of all the base names.
+See also tdecmshell --list for a list of all the base names.
 
 Expansion of environment variables in KDE config files.
 =======================================================
@@ -657,10 +657,10 @@ Host[$e]=$(hostname)
 KDE3 Kiosk Application API
 ==========================
 
-Three new methods have been added to KApplication:
+Three new methods have been added to TDEApplication:
 
 - bool authorize(QString action); // Generic actions
-- bool authorizeKAction(QString action); // For KActions exclusively
+- bool authorizeTDEAction(QString action); // For TDEActions exclusively
 - bool authorizeURLAction(QString, referringURL, destinationURL) // URL Handling
 
 Automatic Logout

@@ -223,7 +223,7 @@
 <!ENTITY khelpcenter	"<application>KHelpCenter</application>">
 <!ENTITY khexedit	"<application>KHexEdit</application>">
 <!ENTITY kicker	"<application>Kicker</application>">
-<!ENTITY kiconedit	"<application>KIconEdit</application>">
+<!ENTITY kiconedit	"<application>TDEIconEdit</application>">
 <!ENTITY kig	"<application>Kig</application>">
 <!ENTITY kikbd	"<application>kikbd</application>">
 <!ENTITY kinfocenter    "<application>KInfoCenter</application>">
@@ -248,8 +248,8 @@
 <!ENTITY kmathtool "<application>KMathTool</application>">
 <!ENTITY kmenuedit	"<application>KMenuEdit</application>">
 <!ENTITY kmessedwords	"<application>KMessedWords</application>">
-<!ENTITY kmid	"<application>KMid</application>">
-<!ENTITY kmidi	"<application>KMidi</application>">
+<!ENTITY tdemid	"<application>KMid</application>">
+<!ENTITY tdemidi	"<application>KMidi</application>">
 <!ENTITY kmines	"<application>KMines</application>">
 <!ENTITY kmix	"<application>KMix</application>">
 <!ENTITY kmoon	"<application>KMoon</application>">
@@ -299,7 +299,7 @@
 <!ENTITY kruler	"<application>TDE Screen Ruler</application>">
 <!ENTITY ksame	"<application>KSame</application>">
 <!ENTITY kscd	"<application>KsCD</application>">
-<!ENTITY kscreensaver	"<application>KScreensaver</application>">
+<!ENTITY tdescreensaver	"<application>KScreensaver</application>">
 <!ENTITY ksgmltools	"<application>ksgmltools</application>">
 <!ENTITY kshisen	"<application>KShisen</application>">
 <!ENTITY ksim	"<application>KSim</application>">
@@ -311,7 +311,7 @@
 <!ENTITY ksnapshot	"<application>KSnapshot</application>">
 <!ENTITY ksokoban	"<application>KSokoban</application>">
 <!ENTITY kspaceduel	"<application>KSpaceDuel</application>">
-<!ENTITY kspell	"<application>KSpell</application>">
+<!ENTITY tdespell	"<application>KSpell</application>">
 <!ENTITY ksplash "<application>KSplash</application>">
 <!ENTITY kspread	"<application>KSpread</application>">
 <!ENTITY kstars	"<application>KStars</application>">
@@ -421,5 +421,5 @@
 <!ENTITY kontour	"<application>Kontour</application>">
 <!ENTITY kpanel	"<application>KPanel</application>">
 <!ENTITY kscore	"<application>KScore</application>">
-<!ENTITY tkmidi	"<application>tkmidi</application>">
+<!ENTITY ttdemidi	"<application>ttdemidi</application>">
 <!ENTITY quanta "<application>Quanta</application>">

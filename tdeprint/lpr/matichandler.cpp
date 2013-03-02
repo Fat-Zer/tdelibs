@@ -29,9 +29,9 @@
 #include "util.h"
 #include "foomatic2loader.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kprocess.h>
 #include <tqfile.h>
@@ -46,10 +46,10 @@ MaticHandler::MaticHandler(KMManager *mgr)
 {
 	TQString	PATH = getenv("PATH");
 	PATH.append(":/usr/sbin:/usr/local/sbin:/opt/sbin:/opt/local/sbin");
-	m_exematicpath = KStandardDirs::findExe("lpdomatic", PATH);
-	m_ncpath = KStandardDirs::findExe("nc");
-	m_smbpath = KStandardDirs::findExe("smbclient");
-	m_rlprpath = KStandardDirs::findExe("rlpr");
+	m_exematicpath = TDEStandardDirs::findExe("lpdomatic", PATH);
+	m_ncpath = TDEStandardDirs::findExe("nc");
+	m_smbpath = TDEStandardDirs::findExe("smbclient");
+	m_rlprpath = TDEStandardDirs::findExe("rlpr");
 }
 
 bool MaticHandler::validate(PrintcapEntry *entry)
@@ -225,7 +225,7 @@ DrMain* MaticHandler::loadDriver(KMPrinter*, PrintcapEntry *entry, bool)
 	// changing printer name), the template would be also removed
 	TQString	origfilename = maticFile(entry);
 	TQString	filename = locateLocal("tmp", "foomatic_" + kapp->randomString(8));
-	::system(TQFile::encodeName("cp " + KProcess::quote(origfilename) + " " + KProcess::quote(filename)));
+	::system(TQFile::encodeName("cp " + TDEProcess::quote(origfilename) + " " + TDEProcess::quote(filename)));
 	DrMain	*driver = Foomatic2Loader::loadDriver(filename);
 	if (driver)
 	{
@@ -248,7 +248,7 @@ DrMain* MaticHandler::loadDbDriver(const TQString& path)
 
 	TQString	tmpFile = locateLocal("tmp", "foomatic_" + kapp->randomString(8));
 	TQString	PATH = getenv("PATH") + TQString::fromLatin1(":/usr/sbin:/usr/local/sbin:/opt/sbin:/opt/local/sbin");
-	TQString	exe = KStandardDirs::findExe("foomatic-datafile", PATH);
+	TQString	exe = TDEStandardDirs::findExe("foomatic-datafile", PATH);
 	if (exe.isEmpty())
 	{
 		manager()->setErrorMsg(i18n("Unable to find the executable foomatic-datafile "
@@ -258,11 +258,11 @@ DrMain* MaticHandler::loadDbDriver(const TQString& path)
 
 	KPipeProcess	in;
 	TQFile		out(tmpFile);
-	TQString cmd = KProcess::quote(exe);
+	TQString cmd = TDEProcess::quote(exe);
 	cmd += " -t lpd -d ";
-	cmd += KProcess::quote(comps[2]);
+	cmd += TDEProcess::quote(comps[2]);
 	cmd += " -p ";
-	cmd += KProcess::quote(comps[1]);
+	cmd += TDEProcess::quote(comps[1]);
 	if (in.open(cmd) && out.open(IO_WriteOnly))
 	{
 		TQTextStream	tin(&in), tout(&out);
@@ -329,7 +329,7 @@ bool MaticHandler::savePrinterDriver(KMPrinter *prt, PrintcapEntry *entry, DrMai
 		inFile.close();
 		tmpFile.close();
 
-		TQString	cmd = "mv " + KProcess::quote(tmpFile.name()) + " " + KProcess::quote(outFile);
+		TQString	cmd = "mv " + TDEProcess::quote(tmpFile.name()) + " " + TDEProcess::quote(outFile);
 		int	status = ::system(TQFile::encodeName(cmd).data());
 		TQFile::remove(tmpFile.name());
 		result = (status != -1 && WEXITSTATUS(status) == 0);
@@ -352,7 +352,7 @@ bool MaticHandler::savePpdFile(DrMain *driver, const TQString& filename)
 		return true;
 
 	TQString	PATH = getenv("PATH") + TQString::fromLatin1(":/usr/sbin:/usr/local/sbin:/opt/sbin:/opt/local/sbin");
-	TQString	exe = KStandardDirs::findExe("foomatic-datafile", PATH);
+	TQString	exe = TDEStandardDirs::findExe("foomatic-datafile", PATH);
 	if (exe.isEmpty())
 	{
 		manager()->setErrorMsg(i18n("Unable to find the executable foomatic-datafile "

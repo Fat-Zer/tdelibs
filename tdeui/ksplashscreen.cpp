@@ -17,9 +17,9 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <kconfig.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
+#include <tdeconfig.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
 
 #include <tqpixmap.h>
 
@@ -27,7 +27,7 @@
 
 KSplashScreen::KSplashScreen(const TQPixmap &pixmap, WFlags f): TQSplashScreen(pixmap, f)
 {
-	TQRect desk = KGlobalSettings::splashScreenDesktopGeometry();
+	TQRect desk = TDEGlobalSettings::splashScreenDesktopGeometry();
 	resize(pixmap.width(), pixmap.height());
   setGeometry( ( desk.width() / 2 ) - ( width() / 2 ) + desk.left(),
       ( desk.height() / 2 ) - ( height() / 2 ) + desk.top(),

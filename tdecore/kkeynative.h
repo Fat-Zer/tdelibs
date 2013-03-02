@@ -23,7 +23,7 @@
 #ifndef __KKEYNATIVE_H
 #define __KKEYNATIVE_H
 
-#include <kshortcut.h>
+#include <tdeshortcut.h>
 
 #ifdef Q_WS_X11
 typedef union _XEvent XEvent;

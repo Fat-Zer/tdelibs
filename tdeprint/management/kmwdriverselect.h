@@ -23,7 +23,7 @@
 #include "kmwizardpage.h"
 #include "kmdbentry.h"
 
-class KListBox;
+class TDEListBox;
 class TQPushButton;
 
 class KMWDriverSelect : public KMWizardPage
@@ -40,7 +40,7 @@ protected slots:
 	void slotDriverComment();
 
 private:
-	KListBox	*m_list;
+	TDEListBox	*m_list;
 	KMDBEntryList	*m_entries;
 	TQPushButton	*m_drivercomment;
 };

@@ -24,8 +24,8 @@
 class TQMultiLineEdit;
 class TQLineEdit;
 class TQHButtonGroup;
-class KProcess;
-class KAboutData;
+class TDEProcess;
+class TDEAboutData;
 class KBugReportPrivate;
 
 /**
@@ -33,9 +33,9 @@ class KBugReportPrivate;
  *
  * All the information needed by the dialog box
  * (program name, version, bug-report address, etc.)
- * comes from the KAboutData class.
- * Make sure you create an instance of KAboutData and pass it
- * to KCmdLineArgs.
+ * comes from the TDEAboutData class.
+ * Make sure you create an instance of TDEAboutData and pass it
+ * to TDECmdLineArgs.
  *
  * @author David Faure <faure@kde.org>
  */
@@ -49,7 +49,7 @@ public:
    * since KHelpMenu takes care of the menu item
    * for "Report Bug..." and of creating a KBugReport dialog.
    */
-  KBugReport( TQWidget * parent = 0L, bool modal=true, const KAboutData *aboutData = 0L );
+  KBugReport( TQWidget * parent = 0L, bool modal=true, const TDEAboutData *aboutData = 0L );
   /**
    * Destructor
    */
@@ -57,7 +57,7 @@ public:
 
 protected slots:
   /**
-   * "Configure email" has been clicked - this calls kcmshell System/email
+   * "Configure email" has been clicked - this calls tdecmshell System/email
    */
   virtual void slotConfigureEmail();
   /**
@@ -100,8 +100,8 @@ protected:
    */
   bool sendBugReport();
 
-  KProcess * m_process;
-  const KAboutData * m_aboutData;
+  TDEProcess * m_process;
+  const TDEAboutData * m_aboutData;
 
   TQMultiLineEdit * m_lineedit;
   TQLineEdit * m_subject;

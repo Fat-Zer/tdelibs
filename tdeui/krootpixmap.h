@@ -20,7 +20,7 @@
 class TQRect;
 class TQWidget;
 class TQTimer;
-class KSharedPixmap;
+class TDESharedPixmap;
 class KRootPixmapData;
 
 /**
@@ -37,7 +37,7 @@ class KRootPixmapData;
  * Instead of using the default behavior, you can ask KRootPixmap
  * to emit a backgroundUpdated(const TQPixmap &) signal whenever
  * the background needs updating by using setCustomPainting(bool).
- * Alternatively by reimplementing updateBackground(KSharedPixmap*)
+ * Alternatively by reimplementing updateBackground(TDESharedPixmap*)
  * you can take complete control of the behavior.
  *
  * @author Geert Jansen <jansen@kde.org>
@@ -179,7 +179,7 @@ public slots:
     void setCustomPainting( bool enable ) { m_bCustomPaint = enable; }
 
     /**
-     * Asks KDesktop to export the desktop background as a KSharedPixmap.
+     * Asks KDesktop to export the desktop background as a TDESharedPixmap.
      * This method uses DCOP to call KBackgroundIface/setExport(int).
      */
     void enableExports();
@@ -209,7 +209,7 @@ protected:
      * applies the fade effect, then sets the target's background, or emits
      * backgroundUpdated(const TQPixmap &) depending on the painting mode.
      */
-    virtual void updateBackground( KSharedPixmap * );
+    virtual void updateBackground( TDESharedPixmap * );
 
 private slots:
     void slotBackgroundChanged(int);
@@ -229,7 +229,7 @@ private:
     TQRect m_Rect;
     TQWidget *m_pWidget;
     TQTimer *m_pTimer;
-    KSharedPixmap *m_pPixmap;
+    TDESharedPixmap *m_pPixmap;
     KRootPixmapData *d;
 
     void init();

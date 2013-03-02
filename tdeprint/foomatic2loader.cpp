@@ -24,7 +24,7 @@
 #include <tqregexp.h>
 #include <tqbuffer.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 void tdeprint_foomatic2scanner_init( TQIODevice* );
 void tdeprint_foomatic2scanner_terminate();

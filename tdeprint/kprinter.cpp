@@ -33,17 +33,17 @@
 #include <tqtl.h>
 #include <tqdir.h>
 #include <tqguardedptr.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kstandarddirs.h>
-#include <kglobal.h>
-#include <kconfig.h>
+#include <tdeglobal.h>
+#include <tdeconfig.h>
 #include <krun.h>
 #include <knotifyclient.h>
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kprocess.h>
 #include <klibloader.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 static void dumpOptions(const TQMap<TQString,TQString>& opts);
 static void reportError(KPrinter*);
@@ -174,7 +174,7 @@ void KPrinter::loadSettings()
 	setSearchName(option("kde-searchname"));
 	d->m_options.remove("kde-searchname");
 
-	KConfig	*conf = KGlobal::config(), *pconf = KMFactory::self()->printConfig();
+	TDEConfig	*conf = TDEGlobal::config(), *pconf = KMFactory::self()->printConfig();
 	conf->setGroup("KPrinter Settings");
 	pconf->setGroup("General");
 
@@ -199,7 +199,7 @@ void KPrinter::saveSettings()
 	}
 
 	// save latest used printer to config file
-	KConfig	*conf = KGlobal::config();
+	TDEConfig	*conf = TDEGlobal::config();
 	conf->setGroup("KPrinter Settings");
 	conf->writeEntry("Printer",searchName());
 	// latest used print command
@@ -850,7 +850,7 @@ void KPrinter::setFromTo(int m, int M)
 
 // if no page size defined, use the localized one
 KPrinter::PageSize KPrinter::pageSize() const
-{ return (option("kde-pagesize").isEmpty() ? (PageSize)KGlobal::locale()->pageSize() : (PageSize)option("kde-pagesize").toInt()); }
+{ return (option("kde-pagesize").isEmpty() ? (PageSize)TDEGlobal::locale()->pageSize() : (PageSize)option("kde-pagesize").toInt()); }
 
 KPrinter::PageSetType KPrinter::pageSet() const
 { return (option("kde-pageset").isEmpty() ? AllPages : (PageSetType)(option("kde-pageset").toInt())); }

@@ -22,8 +22,8 @@
 #include <tqpushbutton.h>
 
 #include <kiconloader.h>
-#include <klocale.h>
-#include <kglobalsettings.h>
+#include <tdelocale.h>
+#include <tdeglobalsettings.h>
 #include <kstdguiitem.h>
 
 #include "kwizard.h"
@@ -31,7 +31,7 @@
 KWizard::KWizard( TQWidget *parent, const char *name, bool modal, WFlags f )
             : TQWizard( parent, name, modal, f )
 {
-  bool useIcons = KGlobalSettings::showIconsOnPushButtons();
+  bool useIcons = TDEGlobalSettings::showIconsOnPushButtons();
 
   if ( useIcons )
   {

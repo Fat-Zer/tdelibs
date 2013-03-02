@@ -27,7 +27,7 @@
 
 /* TDE headers */
 #include <kdebug.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 /* TQDbus headers */
 #include <tqdbusconnection.h>

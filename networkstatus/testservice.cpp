@@ -21,7 +21,7 @@
 
 #include <tqtimer.h>
 #include <dcopclient.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include "provideriface.h"
 
 #include "testservice.h"
@@ -92,7 +92,7 @@ void TestService::slotStatusChange()
 
 int main( int argc, char** argv )
 {
-	KApplication app(argc, argv, "testdcop");
+	TDEApplication app(argc, argv, "testdcop");
 	TestService * test = new TestService;
 	Q_UNUSED( test );
 	return app.exec();

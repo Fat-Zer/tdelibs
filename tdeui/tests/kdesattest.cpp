@@ -1,5 +1,5 @@
 #include "kdesattest.h"
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kimageeffect.h>
 #include <tqpainter.h>
 #include <tqdatetime.h>
@@ -55,7 +55,7 @@ void KDesatWidget::paintEvent(TQPaintEvent */*ev*/)
 
 int main(int argc, char **argv)
 {
-    KApplication *app = new KApplication(argc, argv, "KDesatTest");
+    TDEApplication *app = new TDEApplication(argc, argv, "KDesatTest");
     KDesatWidget w;
     app->setMainWidget(&w);
     w.show();

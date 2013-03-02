@@ -26,7 +26,7 @@
 #include <tqregexp.h>
 #include <tqwhatsthis.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 KPTagsPage::KPTagsPage(bool ro, TQWidget *parent, const char *name)
 : KPrintDialogPage(parent, name)

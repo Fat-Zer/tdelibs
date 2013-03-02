@@ -9,4 +9,4 @@ QMAKE_CXXFLAGS += -DKBUILDSYCOCA_GUI
 
 include( "kded.pro" )
 
-TARGET		= kbuildsycocaw #gui version
+TARGET		= tdebuildsycocaw #gui version

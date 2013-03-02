@@ -40,7 +40,7 @@ class KDETrayProxy
         void dockWindow( Window w, Window owner );
         void withdrawWindow( Window w );
         static Atom makeSelectionAtom();
-        KSelectionWatcher selection;
+        TDESelectionWatcher selection;
         KWinModule module;
         TQValueList< Window > pending_windows;
         TQValueList< Window > tray_windows;

@@ -22,7 +22,7 @@
 
 #include "kmconfigpage.h"
 
-class KListBox;
+class TDEListBox;
 class TQToolButton;
 class TQLineEdit;
 
@@ -32,8 +32,8 @@ class KMConfigFilter : public KMConfigPage
 public:
 	KMConfigFilter(TQWidget *parent = 0, const char *name = 0);
 
-	void loadConfig(KConfig*);
-	void saveConfig(KConfig*);
+	void loadConfig(TDEConfig*);
+	void saveConfig(TDEConfig*);
 
 protected slots:
 	void slotSelectionChanged();
@@ -41,10 +41,10 @@ protected slots:
 	void slotRemoveClicked();
 
 protected:
-	void transfer(KListBox *from, KListBox *to);
+	void transfer(TDEListBox *from, TDEListBox *to);
 
 private:
-	KListBox	*m_list1, *m_list2;
+	TDEListBox	*m_list1, *m_list2;
 	TQToolButton	*m_add, *m_remove;
 	TQLineEdit	*m_locationre;
 };

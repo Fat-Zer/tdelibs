@@ -29,7 +29,7 @@
 #include "kmwbackend.h"
 #include "kmconfiglpr.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 KMLprUiManager::KMLprUiManager(TQObject *parent, const char *name, const TQStringList & /*args*/)
 : KMUiManager(parent,name)

@@ -25,11 +25,11 @@
 #include <tqtimer.h>
 #include <tqobjectdict.h>
 
-#include "kapplication.h"
+#include "tdeapplication.h"
 #include "klibloader.h"
 #include "kstandarddirs.h"
 #include "kdebug.h"
-#include "klocale.h"
+#include "tdelocale.h"
 
 #include "ltdl.h"
 
@@ -346,7 +346,7 @@ static inline TQCString makeLibName( const char* name )
 }
 
 //static
-TQString KLibLoader::findLibrary( const char * name, const KInstance * instance )
+TQString KLibLoader::findLibrary( const char * name, const TDEInstance * instance )
 {
     TQCString libname = makeLibName( name );
 

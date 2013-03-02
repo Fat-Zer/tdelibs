@@ -21,15 +21,15 @@
 #include "downloaddialog.h"
 #include "downloaddialog.moc"
 
-#include <klocale.h>
-#include <klistview.h>
+#include <tdelocale.h>
+#include <tdelistview.h>
 #include <kdebug.h>
-#include <kio/job.h>
-#include <kio/netaccess.h>
-#include <kmessagebox.h>
+#include <tdeio/job.h>
+#include <tdeio/netaccess.h>
+#include <tdemessagebox.h>
 #include <kurl.h>
-#include <kconfig.h>
-#include <kapplication.h>
+#include <tdeconfig.h>
+#include <tdeapplication.h>
 #include <kiconloader.h>
 
 #include <knewstuff/entry.h>
@@ -50,18 +50,18 @@ struct DownloadDialog::Private
 {
     TQString m_providerlist;
     TQWidget *m_page;
-    KListView *m_lvtmp_r, *m_lvtmp_d, *m_lvtmp_l;
+    TDEListView *m_lvtmp_r, *m_lvtmp_d, *m_lvtmp_l;
     TQPtrList<Entry> m_installlist;
-    TQMap<KIO::Job*, Provider*> m_variantjobs;
-    TQMap<KIO::Job*, TQStringList> m_variants;
+    TQMap<TDEIO::Job*, Provider*> m_variantjobs;
+    TQMap<TDEIO::Job*, TQStringList> m_variants;
     TQMap<Provider*, Provider*> m_newproviders;
 };
 
-class NumSortListViewItem : public KListViewItem
+class NumSortListViewItem : public TDEListViewItem
 {
   public:
   NumSortListViewItem( TQListView * parent, TQString label1, TQString label2 = TQString::null, TQString label3 = TQString::null, TQString label4 = TQString::null, TQString label5 = TQString::null, TQString label6 = TQString::null, TQString label7 = TQString::null, TQString label8 = TQString::null )  :
-  KListViewItem( parent, label1, label2, label3, label4, label5, label6, label7, label8 )
+  TDEListViewItem( parent, label1, label2, label3, label4, label5, label6, label7, label8 )
   {
   }
 
@@ -72,15 +72,15 @@ class NumSortListViewItem : public KListViewItem
       s.sprintf("%08d", text(col).toInt());
       return s;
     }
-    return KListViewItem::key( col, asc );
+    return TDEListViewItem::key( col, asc );
   }
 };
 
-class DateSortListViewItem : public KListViewItem
+class DateSortListViewItem : public TDEListViewItem
 {
   public:
   DateSortListViewItem( TQListView * parent, TQString label1, TQString label2 = TQString::null, TQString label3 = TQString::null, TQString label4 = TQString::null, TQString label5 = TQString::null, TQString label6 = TQString::null, TQString label7 = TQString::null, TQString label8 = TQString::null )  :
-  KListViewItem( parent, label1, label2, label3, label4, label5, label6, label7, label8 )
+  TDEListViewItem( parent, label1, label2, label3, label4, label5, label6, label7, label8 )
   {
   }
 
@@ -88,11 +88,11 @@ class DateSortListViewItem : public KListViewItem
     if (col == 2)
     {
       TQString s;
-      TQDate date = KGlobal::locale()->readDate(text(col));
+      TQDate date = TDEGlobal::locale()->readDate(text(col));
       s.sprintf("%08d", date.year() * 366 + date.dayOfYear());
       return s;
     }
-    return KListViewItem::key( col, asc );
+    return TDEListViewItem::key( col, asc );
   }
 };
 
@@ -157,7 +157,7 @@ DownloadDialog::~DownloadDialog()
 {
     for (TQMap<TQWidget *, TQValueList<TQPushButton *>* >::const_iterator it = m_buttons.constBegin(); it != m_buttons.constEnd(); ++it)
         delete it.data();
-    for (TQMap<TQWidget *, TQValueList<KListView *>* >::const_iterator it = m_map.constBegin(); it != m_map.constEnd(); ++it)
+    for (TQMap<TQWidget *, TQValueList<TDEListView *>* >::const_iterator it = m_map.constBegin(); it != m_map.constEnd(); ++it)
         delete it.data();
     delete d;
 }
@@ -174,11 +174,11 @@ void DownloadDialog::load(TQString providerList)
 
 void DownloadDialog::clear()
 {
-  TQMap<TQWidget*, TQValueList<KListView*>* >::Iterator it;
-  TQMap<TQWidget*, TQValueList<KListView*>* >::Iterator end(m_map.end());
+  TQMap<TQWidget*, TQValueList<TDEListView*>* >::Iterator it;
+  TQMap<TQWidget*, TQValueList<TDEListView*>* >::Iterator end(m_map.end());
   for(it = m_map.begin(); it != end; ++it)
   {
-    TQValueList<KListView*> *v = it.data();
+    TQValueList<TDEListView*> *v = it.data();
     kdDebug() << "clear listviews in " << v << endl;
     if(v)
     {
@@ -237,16 +237,16 @@ void DownloadDialog::addProvider(Provider *p)
   {
     if(!p->icon().protocol().isEmpty())
     {
-      ret = KIO::NetAccess::download(p->icon(), tmp, this);
+      ret = TDEIO::NetAccess::download(p->icon(), tmp, this);
       if(ret) pix = TQPixmap(tmp);
     }
     else
     {
-      pix = KGlobal::iconLoader()->loadIcon(p->icon().path(), KIcon::Panel);
+      pix = TDEGlobal::iconLoader()->loadIcon(p->icon().path(), TDEIcon::Panel);
       ret = true;
     }
   }
-  if(!ret) pix = KGlobal::iconLoader()->loadIcon("knewstuff", KIcon::Panel);
+  if(!ret) pix = TDEGlobal::iconLoader()->loadIcon("knewstuff", TDEIcon::Panel);
   frame = addPage(p->name(), p->name(), pix);
   m_frame = frame;
 
@@ -266,19 +266,19 @@ void DownloadDialog::addProvider(Provider *p)
   TQHBoxLayout *box = new TQHBoxLayout(frame);
   box->add(ctl);
 
-  d->m_lvtmp_r = new KListView(w_r);
+  d->m_lvtmp_r = new TDEListView(w_r);
   d->m_lvtmp_r->addColumn(i18n("Name"));
   d->m_lvtmp_r->addColumn(i18n("Version"));
   d->m_lvtmp_r->addColumn(i18n("Rating"));
   d->m_lvtmp_r->setSorting(2, false);
 
-  d->m_lvtmp_d = new KListView(w_d);
+  d->m_lvtmp_d = new TDEListView(w_d);
   d->m_lvtmp_d->addColumn(i18n("Name"));
   d->m_lvtmp_d->addColumn(i18n("Version"));
   d->m_lvtmp_d->addColumn(i18n("Downloads"));
   d->m_lvtmp_d->setSorting(2, false);
 
-  d->m_lvtmp_l = new KListView(w_l);
+  d->m_lvtmp_l = new TDEListView(w_l);
   d->m_lvtmp_l->addColumn(i18n("Name"));
   d->m_lvtmp_l->addColumn(i18n("Version"));
   d->m_lvtmp_l->addColumn(i18n("Release Date"));
@@ -315,7 +315,7 @@ void DownloadDialog::addProvider(Provider *p)
   TQVBoxLayout *box4 = new TQVBoxLayout(w_l);
   box4->add(d->m_lvtmp_l);
 
-  TQValueList<KListView*> *v = new TQValueList<KListView*>;
+  TQValueList<TDEListView*> *v = new TQValueList<TDEListView*>;
   *v << d->m_lvtmp_r << d->m_lvtmp_d << d->m_lvtmp_l;
   m_map[frame] = v;
   m_rts[frame] = rt;
@@ -331,7 +331,7 @@ void DownloadDialog::addProvider(Provider *p)
   TQTimer::singleShot(100, this, TQT_SLOT(slotFinish()));
 }
 
-void DownloadDialog::slotResult(KIO::Job *job)
+void DownloadDialog::slotResult(TDEIO::Job *job)
 {
   TQDomDocument dom;
   TQDomElement knewstuff;
@@ -392,7 +392,7 @@ int DownloadDialog::installStatus(Entry *entry)
   TQString datestring;
   int installed;
 
-  TQString lang = KGlobal::locale()->language();
+  TQString lang = TDEGlobal::locale()->language();
 
   kapp->config()->setGroup("KNewStuffStatus");
   datestring = kapp->config()->readEntry(entry->name(lang));
@@ -415,28 +415,28 @@ void DownloadDialog::addEntry(Entry *entry, const TQStringList& variants)
 
   installed = installStatus(entry);
 
-  if(installed > 0) pix = KGlobal::iconLoader()->loadIcon("ok", KIcon::Small);
-  else if(installed < 0) pix = KGlobal::iconLoader()->loadIcon("history", KIcon::Small);
+  if(installed > 0) pix = TDEGlobal::iconLoader()->loadIcon("ok", TDEIcon::Small);
+  else if(installed < 0) pix = TDEGlobal::iconLoader()->loadIcon("history", TDEIcon::Small);
   else pix = TQPixmap();
 
-  TQString lang = KGlobal::locale()->language();
+  TQString lang = TDEGlobal::locale()->language();
 
   if(variants.contains("score"))
   {
-    KListViewItem *tmp_r = new NumSortListViewItem(lv_r,
+    TDEListViewItem *tmp_r = new NumSortListViewItem(lv_r,
       entry->name(lang), entry->version(), TQString("%1").arg(entry->rating()));
     tmp_r->setPixmap(0, pix);
   }
   if(variants.contains("downloads"))
   {
-    KListViewItem *tmp_d = new NumSortListViewItem(lv_d,
+    TDEListViewItem *tmp_d = new NumSortListViewItem(lv_d,
       entry->name(lang), entry->version(), TQString("%1").arg(entry->downloads()));
     tmp_d->setPixmap(0, pix);
   }
   if(variants.contains("latest"))
   {
-    KListViewItem *tmp_l = new DateSortListViewItem(lv_l,
-      entry->name(lang), entry->version(), KGlobal::locale()->formatDate(entry->releaseDate()));
+    TDEListViewItem *tmp_l = new DateSortListViewItem(lv_l,
+      entry->name(lang), entry->version(), TDEGlobal::locale()->formatDate(entry->releaseDate()));
     tmp_l->setPixmap(0, pix);
   }
 
@@ -459,7 +459,7 @@ void DownloadDialog::addEntry(Entry *entry)
   kdDebug() << "added entry " << entry->name() << endl;
 }
 
-void DownloadDialog::slotData(KIO::Job *job, const TQByteArray &a)
+void DownloadDialog::slotData(TDEIO::Job *job, const TQByteArray &a)
 {
   TQCString tmp(a, a.size() + 1);
   m_data[job].append(TQString::fromUtf8(tmp));
@@ -470,7 +470,7 @@ void DownloadDialog::slotDetails()
   Entry *e = getEntry();
   if(!e) return;
 
-  TQString lang = KGlobal::locale()->language();
+  TQString lang = TDEGlobal::locale()->language();
 
   TQString info = i18n
   (
@@ -490,7 +490,7 @@ void DownloadDialog::slotDetails()
     ).arg(e->release()
     ).arg(e->rating()
     ).arg(e->downloads()
-    ).arg(KGlobal::locale()->formatDate(e->releaseDate())
+    ).arg(TDEGlobal::locale()->formatDate(e->releaseDate())
     ).arg(e->summary(lang)
   );
 
@@ -539,8 +539,8 @@ void DownloadDialog::slotInstall()
     KURL source = e->payload();
     KURL dest = KURL(m_s->downloadDestination(e));
 
-    KIO::FileCopyJob *job = KIO::file_copy(source, dest, -1, true);
-    connect(job, TQT_SIGNAL(result(KIO::Job*)), TQT_SLOT(slotInstalled(KIO::Job*)));
+    TDEIO::FileCopyJob *job = TDEIO::file_copy(source, dest, -1, true);
+    connect(job, TQT_SIGNAL(result(TDEIO::Job*)), TQT_SLOT(slotInstalled(TDEIO::Job*)));
   }
 }
 
@@ -550,9 +550,9 @@ void DownloadDialog::install(Entry *e)
   kapp->config()->writeEntry(m_entryname, TQString(e->releaseDate().toString(Qt::ISODate)));
   kapp->config()->sync();
 
-  TQPixmap pix = KGlobal::iconLoader()->loadIcon("ok", KIcon::Small);
+  TQPixmap pix = TDEGlobal::iconLoader()->loadIcon("ok", TDEIcon::Small);
 
-  TQString lang = KGlobal::locale()->language();
+  TQString lang = TDEGlobal::locale()->language();
   
   if(m_entryitem)
   {
@@ -580,12 +580,12 @@ void DownloadDialog::install(Entry *e)
   d->m_lvtmp_d->setEnabled( true );
 }
 
-void DownloadDialog::slotInstalled(KIO::Job *job)
+void DownloadDialog::slotInstalled(TDEIO::Job *job)
 {
   bool ret = job && (job->error() == 0);
   if(ret)
   {
-    KIO::FileCopyJob *cjob = ::tqqt_cast<KIO::FileCopyJob*>(job);
+    TDEIO::FileCopyJob *cjob = ::tqqt_cast<TDEIO::FileCopyJob*>(job);
     if(cjob)
     {
       ret = m_s->install(cjob->destURL().path());
@@ -640,12 +640,12 @@ void DownloadDialog::slotSelected()
   TQString tmp;
   bool enabled;
   Entry *e = getEntry();
-  TQString lang = KGlobal::locale()->language();
+  TQString lang = TDEGlobal::locale()->language();
   bool ret;
 
   if(e)
   {
-    TQString lang = KGlobal::locale()->language();
+    TQString lang = TDEGlobal::locale()->language();
 
     TQListViewItem *item;
     if(m_curtab != 0)
@@ -673,7 +673,7 @@ void DownloadDialog::slotSelected()
     }
     else
     {
-      ret = KIO::NetAccess::download(e->preview(lang), tmp, this);
+      ret = TDEIO::NetAccess::download(e->preview(lang), tmp, this);
     }
 
     TQString desc = TQString("<b>%1</b><br>").arg(e->name(lang));
@@ -685,7 +685,7 @@ void DownloadDialog::slotSelected()
     {
       desc += TQString("%1").arg(e->author());
     }
-    desc += TQString("<br>%1").arg(KGlobal::locale()->formatDate(e->releaseDate()));
+    desc += TQString("<br>%1").arg(TDEGlobal::locale()->formatDate(e->releaseDate()));
     desc += TQString("<br><br>");
     if(ret)
     {
@@ -728,7 +728,7 @@ Entry *DownloadDialog::getEntry()
 
   TQString entryName = entryItem->text(0);
 
-  TQString lang = KGlobal::locale()->language();
+  TQString lang = TDEGlobal::locale()->language();
 
   for(Entry *e = m_entries.first(); e; e = m_entries.next())
     if(e->name(lang) == entryName)
@@ -770,7 +770,7 @@ void DownloadDialog::slotPage(TQWidget *w)
 
 void DownloadDialog::loadProvider(Provider *p)
 {
-  TQMap<KIO::Job*, Provider*>::Iterator it;
+  TQMap<TDEIO::Job*, Provider*>::Iterator it;
 
   for(it = d->m_variantjobs.begin(); it != d->m_variantjobs.end(); it++)
   {
@@ -810,15 +810,15 @@ void DownloadDialog::loadProvider(Provider *p)
     TQString url = it.key();
     TQStringList urlvariants = it.data();
 
-    KIO::TransferJob *variantjob = KIO::get(url);
+    TDEIO::TransferJob *variantjob = TDEIO::get(url);
     d->m_newproviders[p] = p;
     d->m_variantjobs[variantjob] = p;
     d->m_variants[variantjob] = urlvariants;
     m_data[variantjob] = "";
 
-    connect(variantjob, TQT_SIGNAL(result(KIO::Job*)), TQT_SLOT(slotResult(KIO::Job*)));
-    connect(variantjob, TQT_SIGNAL(data(KIO::Job*, const TQByteArray&)),
-      TQT_SLOT(slotData(KIO::Job*, const TQByteArray&)));
+    connect(variantjob, TQT_SIGNAL(result(TDEIO::Job*)), TQT_SLOT(slotResult(TDEIO::Job*)));
+    connect(variantjob, TQT_SIGNAL(data(TDEIO::Job*, const TQByteArray&)),
+      TQT_SLOT(slotData(TDEIO::Job*, const TQByteArray&)));
   }
 
   if(variants.count() == 0) return;
@@ -827,7 +827,7 @@ void DownloadDialog::loadProvider(Provider *p)
 
   kdDebug() << "-- reached old downloadurl section; variants left: " << variants.count() << endl;
 
-  KIO::TransferJob *job = KIO::get(p->downloadUrl());
+  TDEIO::TransferJob *job = TDEIO::get(p->downloadUrl());
 
   d->m_newproviders[p] = p;
   d->m_variantjobs[job] = p;
@@ -835,9 +835,9 @@ void DownloadDialog::loadProvider(Provider *p)
   //m_jobs[job] = p; // not used anymore due to variants
   m_data[job] = "";
 
-  connect(job, TQT_SIGNAL(result(KIO::Job*)), TQT_SLOT(slotResult(KIO::Job*)));
-  connect(job, TQT_SIGNAL(data(KIO::Job*, const TQByteArray&)),
-    TQT_SLOT(slotData(KIO::Job*, const TQByteArray&)));
+  connect(job, TQT_SIGNAL(result(TDEIO::Job*)), TQT_SLOT(slotResult(TDEIO::Job*)));
+  connect(job, TQT_SIGNAL(data(TDEIO::Job*, const TQByteArray&)),
+    TQT_SLOT(slotData(TDEIO::Job*, const TQByteArray&)));
 }
 
 void DownloadDialog::setType(TQString type)

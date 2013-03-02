@@ -27,11 +27,11 @@
 
 #include <math.h>
 
-#include <kapplication.h>
-#include <kconfig.h>
-#include <kglobalsettings.h>
+#include <tdeapplication.h>
+#include <tdeconfig.h>
+#include <tdeglobalsettings.h>
 #include <kcharsets.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kfinddialog.h>
 #include <kreplacedialog.h>
 #include <kinstance.h>
@@ -114,7 +114,7 @@ KateDocumentConfig::KateDocumentConfig ()
   m_pluginsSet.fill (true);
 
   // init with defaults from config or really hardcoded ones
-  KConfig *config = kapp->config();
+  TDEConfig *config = kapp->config();
   config->setGroup("Kate Document Defaults");
   readConfig (config);
 }
@@ -149,7 +149,7 @@ KateDocumentConfig::~KateDocumentConfig ()
 {
 }
 
-void KateDocumentConfig::readConfig (KConfig *config)
+void KateDocumentConfig::readConfig (TDEConfig *config)
 {
   configStart ();
 
@@ -191,7 +191,7 @@ void KateDocumentConfig::readConfig (KConfig *config)
   configEnd ();
 }
 
-void KateDocumentConfig::writeConfig (KConfig *config)
+void KateDocumentConfig::writeConfig (TDEConfig *config)
 {
   config->writeEntry("Tab Width", tabWidth());
 
@@ -422,11 +422,11 @@ TQTextCodec *KateDocumentConfig::codec ()
   if (m_encodingSet || isGlobal())
   {
     if (m_encoding.isEmpty() && isGlobal())
-      return KGlobal::charsets()->codecForName (TQString::fromLatin1(KGlobal::locale()->encoding()));
+      return TDEGlobal::charsets()->codecForName (TQString::fromLatin1(TDEGlobal::locale()->encoding()));
     else if (m_encoding.isEmpty())
       return s_global->codec ();
     else
-      return KGlobal::charsets()->codecForName (m_encoding);
+      return TDEGlobal::charsets()->codecForName (m_encoding);
   }
 
   return s_global->codec ();
@@ -439,7 +439,7 @@ void KateDocumentConfig::setEncoding (const TQString &encoding)
   if (!enc.isEmpty())
   {
     bool found = false;
-    TQTextCodec *codec = KGlobal::charsets()->codecForName (encoding, found);
+    TQTextCodec *codec = TDEGlobal::charsets()->codecForName (encoding, found);
 
     if (!found || !codec)
       return;
@@ -631,7 +631,7 @@ KateViewConfig::KateViewConfig ()
   s_global = this;
 
   // init with defaults from config or really hardcoded ones
-  KConfig *config = kapp->config();
+  TDEConfig *config = kapp->config();
   config->setGroup("Kate View Defaults");
   readConfig (config);
 }
@@ -660,7 +660,7 @@ KateViewConfig::~KateViewConfig ()
 {
 }
 
-void KateViewConfig::readConfig (KConfig *config)
+void KateViewConfig::readConfig (TDEConfig *config)
 {
   configStart ();
 
@@ -693,7 +693,7 @@ void KateViewConfig::readConfig (KConfig *config)
   configEnd ();
 }
 
-void KateViewConfig::writeConfig (KConfig *config)
+void KateViewConfig::writeConfig (TDEConfig *config)
 {
   config->writeEntry( "Dynamic Word Wrap", dynWordWrap() );
   config->writeEntry( "Dynamic Word Wrap Indicators", dynWordWrapIndicators() );
@@ -1022,7 +1022,7 @@ KateRendererConfig::KateRendererConfig ()
   s_global = this;
 
   // init with defaults from config or really hardcoded ones
-  KConfig *config = kapp->config();
+  TDEConfig *config = kapp->config();
   config->setGroup("Kate Renderer Defaults");
   readConfig (config);
 }
@@ -1054,7 +1054,7 @@ KateRendererConfig::~KateRendererConfig ()
   delete m_font;
 }
 
-void KateRendererConfig::readConfig (KConfig *config)
+void KateRendererConfig::readConfig (TDEConfig *config)
 {
   configStart ();
 
@@ -1067,7 +1067,7 @@ void KateRendererConfig::readConfig (KConfig *config)
   configEnd ();
 }
 
-void KateRendererConfig::writeConfig (KConfig *config)
+void KateRendererConfig::writeConfig (TDEConfig *config)
 {
   config->writeEntry ("Schema", KateFactory::self()->schemaManager()->name(schema()));
 
@@ -1125,14 +1125,14 @@ void KateRendererConfig::setSchemaInternal( int schema )
   m_schemaSet = true;
   m_schema = schema;
 
-  KConfig *config (KateFactory::self()->schemaManager()->schema(schema));
+  TDEConfig *config (KateFactory::self()->schemaManager()->schema(schema));
 
-  TQColor tmp0 (KGlobalSettings::baseColor());
-  TQColor tmp1 (KGlobalSettings::highlightColor());
-  TQColor tmp2 (KGlobalSettings::alternateBackgroundColor());
+  TQColor tmp0 (TDEGlobalSettings::baseColor());
+  TQColor tmp1 (TDEGlobalSettings::highlightColor());
+  TQColor tmp2 (TDEGlobalSettings::alternateBackgroundColor());
   TQColor tmp3 ( "#FFFF99" );
   TQColor tmp4 (tmp2.dark());
-  TQColor tmp5 ( KGlobalSettings::textColor() );
+  TQColor tmp5 ( TDEGlobalSettings::textColor() );
   TQColor tmp6 ( "#EAE9E8" );
   TQColor tmp7 ( "#000000" );
 
@@ -1170,7 +1170,7 @@ void KateRendererConfig::setSchemaInternal( int schema )
     m_lineMarkerColor[index] = col;
   }
 
-  TQFont f (KGlobalSettings::fixedFont());
+  TQFont f (TDEGlobalSettings::fixedFont());
 
   if (!m_fontSet)
   {

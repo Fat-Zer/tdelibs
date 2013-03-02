@@ -1,11 +1,11 @@
 #include <string>
 #include <stdio.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <knotifyclient.h>
 
 int main(int argc, char **argv)
 {
-  KApplication app(argc, argv, "knotifytest");
+  TDEApplication app(argc, argv, "knotifytest");
 
 //
   while (1) {

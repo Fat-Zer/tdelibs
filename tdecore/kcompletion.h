@@ -28,15 +28,15 @@
 #include <tqguardedptr.h>
 
 #include "tdelibs_export.h"
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <ksortablevaluelist.h>
-#include <kshortcut.h>
+#include <tdeshortcut.h>
 
-class KCompTreeNode;
-class KCompletionPrivate;
-class KCompletionBasePrivate;
-class KCompletionMatchesWrapper;
-class KCompletionMatches;
+class TDECompTreeNode;
+class TDECompletionPrivate;
+class TDECompletionBasePrivate;
+class TDECompletionMatchesWrapper;
+class TDECompletionMatches;
 class TQPopupMenu;
 
 /**
@@ -49,13 +49,13 @@ class TQPopupMenu;
  * The user should be able to complete email-addresses, telephone-numbers,
  * commands, SQL queries, ...
  * Every time your program knows what the user can type into an edit-field, you
- * should offer completion. With KCompletion, this is very easy, and if you are
+ * should offer completion. With TDECompletion, this is very easy, and if you are
  * using a line edit widget ( KLineEdit), it is even more easy.
- * Basically, you tell a KCompletion object what strings should be completable
+ * Basically, you tell a TDECompletion object what strings should be completable
  * and whenever completion should be invoked, you call makeCompletion().
  * KLineEdit and (an editable) KComboBox even do this automatically for you.
  *
- * KCompletion offers the completed string via the signal match() and
+ * TDECompletion offers the completed string via the signal match() and
  * all matching strings (when the result is ambiguous) via the method
  * allMatches().
  *
@@ -75,11 +75,11 @@ class TQPopupMenu;
  *     subtle difference is, that it isn't invoked automatically while the user
  *     is typing, but only when the user presses a special key. The difference
  *     of manual and auto-completion is therefore only visible in UI classes,
- *     KCompletion needs to know whether to deliver partial matches
+ *     TDECompletion needs to know whether to deliver partial matches
  *     (shell completion) or whole matches (auto/manual completion), therefore
- * KGlobalSettings::CompletionMan and
- * KGlobalSettings::CompletionAuto have the exact same effect in
- *     KCompletion.
+ * TDEGlobalSettings::CompletionMan and
+ * TDEGlobalSettings::CompletionAuto have the exact same effect in
+ *     TDECompletion.
  *
  * @li shell completion works like how shells complete filenames:
  *     when multiple matches are available, the longest possible string of all
@@ -87,15 +87,15 @@ class TQPopupMenu;
  *     Iterating over all matching items (complete, not partial) is possible
  *     via nextMatch() and previousMatch().
  *
- * You don't have to worry much about that though, KCompletion handles
+ * You don't have to worry much about that though, TDECompletion handles
  * that for you, according to the setting setCompletionMode().
  * The default setting is globally configured by the user and read
- * from KGlobalSettings::completionMode().
+ * from TDEGlobalSettings::completionMode().
  *
  * A short example:
  * \code
- * KCompletion completion;
- * completion.setOrder( KCompletion::Sorted );
+ * TDECompletion completion;
+ * completion.setOrder( TDECompletion::Sorted );
  * completion.addItem( "pfeiffer@kde.org" );
  * completion.addItem( "coolo@kde.org" );
  * completion.addItem( "carpdjih@sp.zrz.tu-berlin.de" );
@@ -113,23 +113,23 @@ class TQPopupMenu;
  *
  * You can dynamically update the completable items by removing and adding them
  * whenever you want.
- * For advanced usage, you could even use multiple KCompletion objects. E.g.
+ * For advanced usage, you could even use multiple TDECompletion objects. E.g.
  * imagine an editor like kwrite with multiple open files. You could store
- * items of each file in a different KCompletion object, so that you know (and
+ * items of each file in a different TDECompletion object, so that you know (and
  * tell the user) where a completion comes from.
  *
- * Note: KCompletion does not work with strings that contain 0x0 characters
+ * Note: TDECompletion does not work with strings that contain 0x0 characters
  *       (unicode nul), as this is used internally as a delimiter.
  *
- * You may inherit from KCompletion and override makeCompletion() in
+ * You may inherit from TDECompletion and override makeCompletion() in
  * special cases (like reading directories/urls and then supplying the
- * contents to KCompletion, as KURLCompletion does), but generally, this is
+ * contents to TDECompletion, as KURLCompletion does), but generally, this is
  * not necessary.
  *
  *
  * @author Carsten Pfeiffer <pfeiffer@kde.org>
  */
-class TDECORE_EXPORT KCompletion : public TQObject
+class TDECORE_EXPORT TDECompletion : public TQObject
 {
     TQ_ENUMS( CompOrder )
     TQ_PROPERTY( CompOrder order READ order WRITE setOrder )
@@ -139,7 +139,7 @@ class TDECORE_EXPORT KCompletion : public TQObject
 
 public:
     /**
-     * Constants that represent the order in which KCompletion performs
+     * Constants that represent the order in which TDECompletion performs
      * completion-lookups.
      */
     enum CompOrder { Sorted,    ///< Use alphabetically sorted order
@@ -150,14 +150,14 @@ public:
     /**
      * Constructor, nothing special here :)
      */
-    KCompletion();
+    TDECompletion();
 
     // FIXME: copy constructor, assignment operator...
 
     /**
      * Destructor, nothing special here, either.
      */
-    virtual ~KCompletion();
+    virtual ~TDECompletion();
 
     /**
      * Attempts to find an item in the list of available completions,
@@ -224,8 +224,8 @@ public:
     virtual const TQString& lastMatch() const { return myLastMatch; }
 
     /**
-     * Returns a list of all items inserted into KCompletion. This is useful
-     * if you need to save the state of a KCompletion object and restore it
+     * Returns a list of all items inserted into TDECompletion. This is useful
+     * if you need to save the state of a TDECompletion object and restore it
      * later.
      *
      * Important note: when order() == Weighted, then every item in the
@@ -235,7 +235,7 @@ public:
      * This is necessary so that you can save the items along with its
      * weighting on disk and load them back with setItems(), restoring its
      * weight as well. If you really don't want the appended weightings, call
-     * setOrder( KCompletion::Insertion )
+     * setOrder( TDECompletion::Insertion )
      * before calling items().
      *
      * @return a list of all items
@@ -251,32 +251,32 @@ public:
     /**
      * Sets the completion mode to Auto/Manual, Shell or None.
      * If you don't set the mode explicitly, the global default value
-     * KGlobalSettings::completionMode() is used.
-     * KGlobalSettings::CompletionNone disables completion.
+     * TDEGlobalSettings::completionMode() is used.
+     * TDEGlobalSettings::CompletionNone disables completion.
      * @param mode the completion mode
      * @see completionMode
-     * @see KGlobalSettings::completionMode
+     * @see TDEGlobalSettings::completionMode
      */
-    virtual void setCompletionMode( KGlobalSettings::Completion mode );
+    virtual void setCompletionMode( TDEGlobalSettings::Completion mode );
 
     /**
      * Return the current completion mode.
-     * May be different from KGlobalSettings::completionMode(), if you
+     * May be different from TDEGlobalSettings::completionMode(), if you
      * explicitly called setCompletionMode().
      * @return the current completion mode
      * @see setCompletionMode
      */
-    KGlobalSettings::Completion completionMode() const {
+    TDEGlobalSettings::Completion completionMode() const {
         return myCompletionMode;
     }
 
     /**
-     * KCompletion offers three different ways in which it offers its items:
+     * TDECompletion offers three different ways in which it offers its items:
      * @li in the order of insertion
      * @li sorted alphabetically
      * @li weighted
      *
-     * Choosing weighted makes KCompletion perform an implicit weighting based
+     * Choosing weighted makes TDECompletion perform an implicit weighting based
      * on how often an item is inserted. Imagine a web browser with a location
      * bar, where the user enters URLs. The more often a URL is entered, the
      * higher priority it gets.
@@ -300,7 +300,7 @@ public:
     CompOrder order() const { return myOrder; }
 
     /**
-     * Setting this to true makes KCompletion behave case insensitively.
+     * Setting this to true makes TDECompletion behave case insensitively.
      * E.g. makeCompletion( "CA" ); might return "carp\@cs.tu-berlin.de".
      * Default is false (case sensitive).
      * @param ignoreCase true to ignore the case
@@ -309,7 +309,7 @@ public:
     virtual void setIgnoreCase( bool ignoreCase );
 
     /**
-     * Return whether KCompletion acts case insensitively or not.
+     * Return whether TDECompletion acts case insensitively or not.
      * Default is false (case sensitive).
      * @return true if the case will be ignored
      * @see setIgnoreCase
@@ -334,7 +334,7 @@ public:
     /**
      * Returns a list of all items matching the last completed string.
      * Might take some time, when you have LOTS of items.
-     * The matches are returned as KCompletionMatches, which also
+     * The matches are returned as TDECompletionMatches, which also
      * keeps the weight of the matches, allowing
      * you to modify some matches or merge them with matches
      * from another call to allWeightedMatches(), and sort the matches
@@ -343,14 +343,14 @@ public:
      * @return a list of all completion matches
      * @see substringCompletion
      */
-    KCompletionMatches allWeightedMatches();
+    TDECompletionMatches allWeightedMatches();
 
     /**
      * Returns a list of all items matching @p string.
      * @param string the string to match
      * @return a list of all matches
      */
-    KCompletionMatches allWeightedMatches( const TQString& string );
+    TDECompletionMatches allWeightedMatches( const TQString& string );
 
     /**
      * Enables/disables playing a sound when
@@ -368,7 +368,7 @@ public:
     virtual void setEnableSounds( bool enable ) { myBeep = enable; }
 
     /**
-     * Tells you whether KCompletion will play sounds on certain occasions.
+     * Tells you whether TDECompletion will play sounds on certain occasions.
      * Default is enabled.
      * @return true if sounds are enabled
      * @see enableSounds
@@ -444,7 +444,7 @@ public slots:
      * where number is an unsigned integer, specifying the weighting.
      *
      * If you don't like this, call
-     * setOrder( KCompletion::Insertion )
+     * setOrder( TDECompletion::Insertion )
      * before calling setItems().
      *
      * @param list the list of items that are available for completion
@@ -518,7 +518,7 @@ protected:
      * string that will be emitted.
      * This is necessary e.g. in KURLCompletion(), where files with spaces
      * in their names are shown escaped ("filename\ with\ spaces"), but stored
-     * unescaped inside KCompletion.
+     * unescaped inside TDECompletion.
      * Never delete that pointer!
      *
      * Default implementation does nothing.
@@ -549,34 +549,34 @@ protected:
      * @param matches the matches to process
      * @see postProcessMatch
      */
-    virtual void postProcessMatches( KCompletionMatches * matches ) const {Q_UNUSED(matches)}
+    virtual void postProcessMatches( TDECompletionMatches * matches ) const {Q_UNUSED(matches)}
 
 private:
     void            addWeightedItem( const TQString& );
     TQString         findCompletion( const TQString& string );
     void            findAllCompletions( const TQString&,
-                                        KCompletionMatchesWrapper *matches,
+                                        TDECompletionMatchesWrapper *matches,
                                         bool& hasMultipleMatches ) const;
 
-    void extractStringsFromNode( const KCompTreeNode *,
+    void extractStringsFromNode( const TDECompTreeNode *,
                                  const TQString& beginning,
-                                 KCompletionMatchesWrapper *matches,
+                                 TDECompletionMatchesWrapper *matches,
                                  bool addWeight = false ) const;
-    void extractStringsFromNodeCI( const KCompTreeNode *,
+    void extractStringsFromNodeCI( const TDECompTreeNode *,
                                    const TQString& beginning,
                                    const TQString& restString,
-                                   KCompletionMatchesWrapper *matches) const;
+                                   TDECompletionMatchesWrapper *matches) const;
 
     enum        BeepMode { NoMatch, PartialMatch, Rotation };
     void        doBeep( BeepMode ) const;
 
-    KGlobalSettings::Completion myCompletionMode;
+    TDEGlobalSettings::Completion myCompletionMode;
 
     CompOrder       myOrder;
     TQString         myLastString;
     TQString         myLastMatch;
     TQString         myCurrentMatch;
-    KCompTreeNode * myTreeRoot;
+    TDECompTreeNode * myTreeRoot;
     TQStringList     myRotations;
     bool            myBeep;
     bool            myIgnoreCase;
@@ -587,15 +587,15 @@ private:
 protected:
     virtual void virtual_hook( int id, void* data );
 private:
-    KCompletionPrivate *d;
+    TDECompletionPrivate *d;
 };
 
 // some more helper stuff
-typedef KSortableValueList<TQString> KCompletionMatchesList;
-class KCompletionMatchesPrivate;
+typedef KSortableValueList<TQString> TDECompletionMatchesList;
+class TDECompletionMatchesPrivate;
 
 /**
- * This structure is returned by KCompletion::allWeightedMatches .
+ * This structure is returned by TDECompletion::allWeightedMatches .
  * It also keeps the weight of the matches, allowing
  * you to modify some matches or merge them with matches
  * from another call to allWeightedMatches(), and sort the matches
@@ -603,24 +603,24 @@ class KCompletionMatchesPrivate;
  *
  * Example (a simplified example of what Konqueror's completion does):
  * \code
- * KCompletionMatches matches = completion->allWeightedMatches( location );
+ * TDECompletionMatches matches = completion->allWeightedMatches( location );
  * if( !location.startsWith( "www." ))
  matches += completion->allWeightedmatches( "www." + location" );
  * matches.removeDuplicates();
  * TQStringList list = matches.list();
  * \endcode
  *
- * @short List for keeping matches returned from KCompletion
+ * @short List for keeping matches returned from TDECompletion
  */
-class TDECORE_EXPORT KCompletionMatches : public KCompletionMatchesList
+class TDECORE_EXPORT TDECompletionMatches : public TDECompletionMatchesList
 {
 public:
-    KCompletionMatches( bool sort );
+    TDECompletionMatches( bool sort );
     /**
      * @internal
      */
-    KCompletionMatches( const KCompletionMatchesWrapper& matches );
-    ~KCompletionMatches();
+    TDECompletionMatches( const TDECompletionMatchesWrapper& matches );
+    ~TDECompletionMatches();
     /**
      * Removes duplicate matches. Needed only when you merged several matches
      * results and there's a possibility of duplicates.
@@ -643,7 +643,7 @@ public:
     }
 private:
     bool _sorting;
-    KCompletionMatchesPrivate* d;
+    TDECompletionMatchesPrivate* d;
 };
 
 /**
@@ -660,13 +660,13 @@ private:
  * @short An abstract class for adding text completion support to widgets.
  * @author Dawit Alemayehu <adawit@kde.org>
  */
-class TDECORE_EXPORT KCompletionBase
+class TDECORE_EXPORT TDECompletionBase
 {
 public:
     /**
      * Constants that represent the items whose short-cut
      * key-binding is programmable.  The default key-bindings
-     * for these items are defined in KStdAccel.
+     * for these items are defined in TDEStdAccel.
      */
     enum KeyBindingType {
         /**
@@ -689,17 +689,17 @@ public:
 
 
     // Map for the key binding types mentioned above.
-    typedef TQMap<KeyBindingType, KShortcut> KeyBindingMap;
+    typedef TQMap<KeyBindingType, TDEShortcut> KeyBindingMap;
 
     /**
      * Default constructor.
      */
-    KCompletionBase();
+    TDECompletionBase();
 
     /**
      * Destructor.
      */
-    virtual ~KCompletionBase();
+    virtual ~TDECompletionBase();
     
     /**
      * Returns a pointer to the current completion object.
@@ -716,7 +716,7 @@ public:
      * @param hsig if true, handles completion signals internally.
      * @return a pointer the completion object.
      */
-    KCompletion* completionObject( bool hsig = true );
+    TDECompletion* completionObject( bool hsig = true );
     
     /**
      * Sets up the completion object to be used.
@@ -731,10 +731,10 @@ public:
      * after calling this method. Be sure to set the bool argument to false, if
      * you want to handle the completion signals yourself.
      *
-     * @param compObj a KCompletion() or a derived child object.
+     * @param compObj a TDECompletion() or a derived child object.
      * @param hsig if true, handles completion signals internally.
      */
-    virtual void setCompletionObject( KCompletion* compObj, bool hsig = true );
+    virtual void setCompletionObject( TDECompletion* compObj, bool hsig = true );
 
     /**
      * Enables this object to handle completion and rotation
@@ -825,7 +825,7 @@ public:
      * Sets the type of completion to be used.
      *
      * The completion modes supported are those defined in
-     * KGlobalSettings().  See below.
+     * TDEGlobalSettings().  See below.
      *
      * @param mode Completion type:
      *   @li CompletionNone:  Disables completion feature.
@@ -841,17 +841,17 @@ public:
      *   @li CompletionPopup: Shows all available completions at once,
      *                        in a listbox popping up.
      */
-    virtual void setCompletionMode( KGlobalSettings::Completion mode );
+    virtual void setCompletionMode( TDEGlobalSettings::Completion mode );
 
     /**
      * Returns the current completion mode.
      *
-     * The return values are of type KGlobalSettings::Completion.
+     * The return values are of type TDEGlobalSettings::Completion.
      * See setCompletionMode() for details.
      *
      * @return the completion mode.
      */
-    KGlobalSettings::Completion completionMode() const {
+    TDEGlobalSettings::Completion completionMode() const {
         return m_delegate ? m_delegate->completionMode() : m_iCompletionMode;
     }
 
@@ -885,7 +885,7 @@ public:
      * @return true if key-binding can successfully be set.
      * @see getKeyBinding
      */
-    bool setKeyBinding( KeyBindingType item , const KShortcut& key );
+    bool setKeyBinding( KeyBindingType item , const TDEShortcut& key );
 
     /**
      * Returns the key-binding used for the specified item.
@@ -899,7 +899,7 @@ public:
      * @return the key-binding used for the feature given by @p item.
      * @see setKeyBinding
      */
-    const KShortcut& getKeyBinding( KeyBindingType item ) const {
+    const TDEShortcut& getKeyBinding( KeyBindingType item ) const {
         return m_delegate ? m_delegate->getKeyBinding( item ) : m_keyMap[ item ];
     }
 
@@ -908,7 +908,7 @@ public:
      *
      * This method changes the values of the key bindings for
      * rotation and completion features to the default values
-     * provided in KGlobalSettings.
+     * provided in TDEGlobalSettings.
      *
      * NOTE: By default inheriting widgets should uses the
      * global key-bindings so that there will be no need to
@@ -924,7 +924,7 @@ public:
      * implementations to set completed text appropriately.  It
      * is mostly relevant when the completion mode is set to
      * CompletionAuto and CompletionManual modes. See
-     * KCompletionBase::setCompletedText.
+     * TDECompletionBase::setCompletedText.
      * Does nothing in CompletionPopup mode, as all available
      * matches will be shown in the popup.
      *
@@ -943,14 +943,14 @@ public:
      * Returns a pointer to the completion object.
      *
      * This method is only different from completionObject()
-     * in that it does not create a new KCompletion object even if
+     * in that it does not create a new TDECompletion object even if
      * the internal pointer is @p NULL. Use this method to get the
      * pointer to a completion object when inheriting so that you
      * won't inadvertently create it!!
      *
      * @return the completion object or NULL if one does not exist.
      */
-    KCompletion* compObj() const { return m_delegate ? m_delegate->compObj() : (KCompletion*) m_pCompObj; }
+    TDECompletion* compObj() const { return m_delegate ? m_delegate->compObj() : (TDECompletion*) m_pCompObj; }
 
 protected:
     /**
@@ -968,14 +968,14 @@ protected:
      * set, all function calls will be forwarded to the delegation object.
      * @param delegate the delegation object, or 0 to remove it
      */
-    void setDelegate( KCompletionBase *delegate );
+    void setDelegate( TDECompletionBase *delegate );
 
     /**
      * Returns the delegation object.
      * @return the delegation object, or 0 if there is none
      * @see setDelegate()
      */
-    KCompletionBase *delegate() const { return m_delegate; }
+    TDECompletionBase *delegate() const { return m_delegate; }
 
 private:
     // This method simply sets the autodelete boolean for
@@ -992,19 +992,19 @@ private:
     // Determines whether this widget fires rotation signals
     bool m_bEmitSignals;
     // Stores the completion mode locally.
-    KGlobalSettings::Completion m_iCompletionMode;
+    TDEGlobalSettings::Completion m_iCompletionMode;
     // Pointer to Completion object.
-    TQGuardedPtr<KCompletion> m_pCompObj;
+    TQGuardedPtr<TDECompletion> m_pCompObj;
     // Keybindings
     KeyBindingMap m_keyMap;
-    // we may act as a proxy to another KCompletionBase object
-    KCompletionBase *m_delegate;
+    // we may act as a proxy to another TDECompletionBase object
+    TDECompletionBase *m_delegate;
 
     // BCI
 protected:
     virtual void virtual_hook( int id, void* data );
 private:
-    KCompletionBasePrivate *d;
+    TDECompletionBasePrivate *d;
 };
 
 #endif // KCOMPLETION_H

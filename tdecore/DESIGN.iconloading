@@ -58,7 +58,7 @@ can copy this pixmap:
    // p contains now 30x30 pixels of test.png.
 
 The only hard part is then to publish the icons in a way that applications 
-know what to copy. I'm thinking about a ksycoca-sort-of index that 
+know what to copy. I'm thinking about a tdesycoca-sort-of index that 
 applications can map and can use to do fast lookups with. This has no major 
 problems except for the race-condition that might exist when an icon is 
 removed. In that case you will remove it from the index first and then later 
@@ -72,14 +72,14 @@ information and then waiting for a sufficient long period, e.. 5 minutes,
 before actually removing the image data.
 
 I can also imagine a scenario where the index information is only used very 
-temporarily, e.g. during the creation of a KMainWindow (mmap the file in the 
+temporarily, e.g. during the creation of a TDEMainWindow (mmap the file in the 
 constructor, unmap it from the next event loop) that way icons can be removed 
 from the index and after e.g. a timeout of 5 minutes one can be relatively 
 sure that the index will no longer be used.
 
 I think the best way to distribute the index information is through the file 
 system but the update mechanism for this file should probably more complex 
-than the one used in ksycoca. Since ksycoca updates only happen once in a 
+than the one used in tdesycoca. Since tdesycoca updates only happen once in a 
 while, we can afford it to write out a whole new file. For icons this will 
 probably be more difficult since updates will be part of normal operation, if 
 the index file is rather large (no idea about that.. how much icons are in 
@@ -182,6 +182,6 @@ KDE 2.2: We deliver.
 <pmax> oh I see
 <Zogje> to answer you rfirst question: "won't the ipc be a bottleneck?" no, because you don't use ipc in the critical part (the icon loading)
 <pmax> yup I understand how it works now I think
-<Zogje> instead you access an index from disk which is quite fast (as fast as ksycoca)
+<Zogje> instead you access an index from disk which is quite fast (as fast as tdesycoca)
 <pmax> I think this will definitely speed things up on my machine since I have a relatively fast box with slow disks
 <Zogje> that's why I want to use the file-system instaed of X-properties

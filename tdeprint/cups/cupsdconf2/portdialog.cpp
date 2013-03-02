@@ -28,7 +28,7 @@
 #include <tqlayout.h>
 #include <tqwhatsthis.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 PortDialog::PortDialog(TQWidget *parent, const char *name)
 	: KDialogBase(parent, name, true, TQString::null, Ok|Cancel, Ok, true)

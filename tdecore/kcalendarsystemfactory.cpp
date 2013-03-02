@@ -41,7 +41,7 @@ KCalendarSystemFactory::~KCalendarSystemFactory()
 }
 
 KCalendarSystem *KCalendarSystemFactory::create( const TQString &calType,
-                                                 const KLocale * locale )
+                                                 const TDELocale * locale )
 {
   if ( calType == "hebrew" )
     return new KCalendarSystemHebrew(locale);

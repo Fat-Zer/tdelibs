@@ -1,5 +1,5 @@
 #include "kunbalancedgrdtest.h"
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kpixmapeffect.h>
 #include <tqpainter.h>
 #include <tqstring.h>
@@ -166,7 +166,7 @@ void myTopWidget::rebalance()
 
 int main(int argc, char **argv)
 {
-    KApplication *app = new KApplication(argc, argv, "KUnbalancedGradientTest");
+    TDEApplication *app = new TDEApplication(argc, argv, "KUnbalancedGradientTest");
     myTopWidget w;
     app->setMainWidget(&w);
     w.show();

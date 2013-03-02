@@ -24,7 +24,7 @@
 #include <tqvaluelist.h>
 #include <tqwidget.h>
 
-class KListBox;
+class TDEListBox;
 class KMPrinter;
 class TQButton;
 
@@ -50,7 +50,7 @@ protected:
 	void addButton(const TQString& text, const TQString& pixmap, const char *receiver);
 
 private:
-	KListBox		*m_view;
+	TDEListBox		*m_view;
 	TQValueList<TQButton*>	m_buttons;
 	KMPrinter		*m_printer;
 };

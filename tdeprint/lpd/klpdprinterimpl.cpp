@@ -22,7 +22,7 @@
 
 #include <tqfile.h>
 #include <kstandarddirs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 KLpdPrinterImpl::KLpdPrinterImpl(TQObject *parent, const char *name)
 : KPrinterImpl(parent,name)
@@ -35,7 +35,7 @@ KLpdPrinterImpl::~KLpdPrinterImpl()
 
 TQString KLpdPrinterImpl::executable()
 {
-	return KStandardDirs::findExe("lpr");
+	return TDEStandardDirs::findExe("lpr");
 }
 
 bool KLpdPrinterImpl::setupCommand(TQString& cmd, KPrinter *printer)

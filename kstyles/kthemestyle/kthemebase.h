@@ -6,7 +6,7 @@
 
  KDE3 port (C) 2001 Maksim Orlovich <mo002j@mail.rochester.edu>
 
- Palette setup code is from KApplication,
+ Palette setup code is from TDEApplication,
 Copyright (C) 1997 Matthias Kalle Dalheimer (kalle@kde.org)
 Copyright (C) 1998, 1999, 2000 KDE Team
 
@@ -34,7 +34,7 @@ Copyright (C) 1998, 1999, 2000 KDE Team
 #include <kpixmap.h>
 #include <tqintcache.h>
 #include <tqstring.h>
-#include <kstyle.h>
+#include <tdestyle.h>
 #include <tqsettings.h>
 #include <tqpalette.h> // for QColorGroup
 #include "kstyledirs.h"
@@ -211,7 +211,7 @@ class KThemeBasePrivate;
  *
  * @author Daniel M. Duley <mosfet@kde.org>
  */
-class KThemeBase: public KStyle
+class KThemeBase: public TDEStyle
 {
     Q_OBJECT
 public:
@@ -280,7 +280,7 @@ public:
         Background, RotSliderGroove, RotInactiveTab, RotActiveTab, WIDGETS};
 
     /**
-     * The scaling type specified by the KConfig file.
+     * The scaling type specified by the TDEConfig file.
      *
      * @param widget A Widgets enum value.
      *
@@ -288,7 +288,7 @@ public:
      */
     ScaleHint scaleHint( WidgetType widget ) const;
     /**
-     * The gradient type specified by the KConfig file.
+     * The gradient type specified by the TDEConfig file.
      *
      * @param widget A Widgets enum value.
      *
@@ -510,14 +510,14 @@ protected:
     */
     virtual int pixelMetric ( PixelMetric metric, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQWidget * widget = 0 ) const
     {
-        return KStyle::pixelMetric( metric, ceData, elementFlags, widget );
+        return TDEStyle::pixelMetric( metric, ceData, elementFlags, widget );
     }
 
     virtual void drawPrimitive ( PrimitiveElement pe, TQPainter * p, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQRect & r, const TQColorGroup & cg,
                                  SFlags flags = Style_Default,
                                  const TQStyleOption& option = TQStyleOption::Default ) const
     {
-        KStyle::tqdrawPrimitive ( pe, p, ceData, elementFlags, r, cg,
+        TDEStyle::tqdrawPrimitive ( pe, p, ceData, elementFlags, r, cg,
                                 flags, option );
     }
 
@@ -532,7 +532,7 @@ protected:
                               const TQStyleOption& opt = TQStyleOption::Default,
                               const TQWidget *widget = 0 ) const
     {
-        KStyle::drawControl( element, p, ceData, elementFlags,
+        TDEStyle::drawControl( element, p, ceData, elementFlags,
                              r, cg, how, opt, widget );
     }
 
@@ -544,7 +544,7 @@ protected:
                                   const TQStyleOption& opt = TQStyleOption::Default,
                                   const TQWidget *widget = 0 ) const
     {
-        KStyle::drawControlMask( element, p, ceData, elementFlags, r, opt, widget );
+        TDEStyle::drawControlMask( element, p, ceData, elementFlags, r, opt, widget );
     }
 
 
@@ -560,11 +560,11 @@ protected:
                                      const TQStyleOption& opt = TQStyleOption::Default,
                                      const TQWidget* widget = 0 ) const
     {
-        KStyle::drawComplexControl( control, p, ceData, elementFlags, r, cg, flags, controls, active, opt, widget );
+        TDEStyle::drawComplexControl( control, p, ceData, elementFlags, r, cg, flags, controls, active, opt, widget );
     }
 
 
-    virtual void drawKStylePrimitive( KStylePrimitive kpe,
+    virtual void drawTDEStylePrimitive( TDEStylePrimitive kpe,
                                       TQPainter* p,
                                       const TQStyleControlElementData &ceData,
                                       ControlElementFlags elementFlags,
@@ -574,7 +574,7 @@ protected:
                                       const TQStyleOption& opt = TQStyleOption::Default,
                                       const TQWidget* widget = 0 ) const
     {
-        KStyle::drawKStylePrimitive( kpe,
+        TDEStyle::drawTDEStylePrimitive( kpe,
                                      p, ceData, elementFlags, r,
                                      cg, flags, opt, widget );
     }
@@ -585,7 +585,7 @@ protected:
                            TQStyleHintReturn* returnData = 0,
                            const TQWidget *widget = 0 ) const
     {
-        return KStyle::styleHint( sh,
+        return TDEStyle::styleHint( sh,
                                   ceData,
                                   elementFlags,
                                   opt,
@@ -600,7 +600,7 @@ protected:
                                     const TQStyleOption& opt = TQStyleOption::Default,
                                     const TQWidget *widget = 0 ) const
     {
-        return KStyle::sizeFromContents( contents,
+        return TDEStyle::sizeFromContents( contents,
                                          ceData, elementFlags, contentsSize, opt, widget );
     }
 

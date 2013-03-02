@@ -26,8 +26,8 @@
 #include <tqlayout.h>
 #include <tqlabel.h>
 #include <tqtoolbutton.h>
-#include <klistbox.h>
-#include <klocale.h>
+#include <tdelistbox.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 
 KMWClass::KMWClass(TQWidget *parent, const char *name)
@@ -37,9 +37,9 @@ KMWClass::KMWClass(TQWidget *parent, const char *name)
 	m_title = i18n("Class Composition");
 	m_nextpage = KMWizard::Name;
 
-	m_list1 = new KListBox(this);
+	m_list1 = new TDEListBox(this);
 	m_list1->setSelectionMode(TQListBox::Extended);
-	m_list2 = new KListBox(this);
+	m_list2 = new TDEListBox(this);
 	m_list2->setSelectionMode(TQListBox::Extended);
 
 	TQToolButton	*add = new TQToolButton(this);

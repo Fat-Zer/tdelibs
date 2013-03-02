@@ -23,8 +23,8 @@
 #include "kmmanager.h"
 #include "kmtimer.h"
 
-#include <kmessagebox.h>
-#include <klocale.h>
+#include <tdemessagebox.h>
+#include <tdelocale.h>
 
 KMPropWidget::KMPropWidget(TQWidget *parent, const char *name)
 : TQWidget(parent,name)

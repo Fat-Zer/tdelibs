@@ -20,8 +20,8 @@
 #include "kdcopactionproxy.h"
 
 #include <dcopclient.h>
-#include <kapplication.h>
-#include <kaction.h>
+#include <tdeapplication.h>
+#include <tdeaction.h>
 #include <kdebug.h>
 #include <kdcoppropertyproxy.h>
 
@@ -37,13 +37,13 @@ public:
   {
   }
 
-  KActionCollection *m_actionCollection;
+  TDEActionCollection *m_actionCollection;
   DCOPObject *m_parent;
   TQCString m_prefix;
   int m_pos;
 };
 
-KDCOPActionProxy::KDCOPActionProxy( KActionCollection *actionCollection, DCOPObject *parent )
+KDCOPActionProxy::KDCOPActionProxy( TDEActionCollection *actionCollection, DCOPObject *parent )
 {
   init( actionCollection, parent );
 }
@@ -53,7 +53,7 @@ KDCOPActionProxy::KDCOPActionProxy( DCOPObject *parent )
   init( 0, parent );
 }
 
-void KDCOPActionProxy::init( KActionCollection *collection, DCOPObject *parent )
+void KDCOPActionProxy::init( TDEActionCollection *collection, DCOPObject *parent )
 {
   d = new KDCOPActionProxyPrivate;
   d->m_actionCollection = collection;
@@ -67,15 +67,15 @@ KDCOPActionProxy::~KDCOPActionProxy()
   delete d;
 }
 
-TQValueList<KAction *>KDCOPActionProxy::actions() const
+TQValueList<TDEAction *>KDCOPActionProxy::actions() const
 {
   if ( !d->m_actionCollection )
-    return TQValueList<KAction *>();
+    return TQValueList<TDEAction *>();
 
   return d->m_actionCollection->actions();
 }
 
-KAction *KDCOPActionProxy::action( const char *name ) const
+TDEAction *KDCOPActionProxy::action( const char *name ) const
 {
   if ( !d->m_actionCollection )
     return 0;
@@ -96,9 +96,9 @@ TQMap<TQCString,DCOPRef> KDCOPActionProxy::actionMap( const TQCString &appId ) c
   if ( id.isEmpty() )
     id = kapp->dcopClient()->appId();
 
-  TQValueList<KAction *> lst = actions();
-  TQValueList<KAction *>::ConstIterator it = lst.begin();
-  TQValueList<KAction *>::ConstIterator end = lst.end();
+  TQValueList<TDEAction *> lst = actions();
+  TQValueList<TDEAction *>::ConstIterator it = lst.begin();
+  TQValueList<TDEAction *>::ConstIterator end = lst.end();
   for (; it != end; ++it )
     res.insert( (*it)->name(), DCOPRef( id, actionObjectId( (*it)->name() ) ) );
 
@@ -111,7 +111,7 @@ bool KDCOPActionProxy::process( const TQCString &obj, const TQCString &fun, cons
   if ( obj.left( d->m_pos ) != d->m_prefix )
     return false;
 
-  KAction *act = action( obj.mid( d->m_pos ) );
+  TDEAction *act = action( obj.mid( d->m_pos ) );
   if ( !act )
     return false;
 
@@ -119,7 +119,7 @@ bool KDCOPActionProxy::process( const TQCString &obj, const TQCString &fun, cons
 }
 
 bool KDCOPActionProxy::processAction( const TQCString &, const TQCString &fun, const TQByteArray &data,
-                                      TQCString &replyType, TQByteArray &replyData, KAction *action )
+                                      TQCString &replyType, TQByteArray &replyData, TDEAction *action )
 {
   if ( fun == "activate()" )
   {

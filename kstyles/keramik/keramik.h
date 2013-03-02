@@ -33,13 +33,13 @@
 #define __keramik_h__
 
 #include <tqframe.h>
-#include <kstyle.h>
+#include <tdestyle.h>
 
 #include "pixmaploader.h"
 
 class TQProgressBar;
 
-class KeramikStyle : public KStyle
+class KeramikStyle : public TDEStyle
 {
 	Q_OBJECT
 
@@ -55,7 +55,7 @@ public:
 	void polish( TQPalette& );
 	void applicationPolish( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void * );
 
-	void drawKStylePrimitive( KStylePrimitive kpe,
+	void drawTDEStylePrimitive( TDEStylePrimitive kpe,
 	                          TQPainter* p,
 	                          const TQStyleControlElementData &ceData,
 	                          ControlElementFlags elementFlags,

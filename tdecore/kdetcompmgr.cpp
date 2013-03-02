@@ -21,12 +21,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <kapplication.h>
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
-#include <klocale.h>
+#include <tdeapplication.h>
+#include <tdeaboutdata.h>
+#include <tdecmdlineargs.h>
+#include <tdelocale.h>
 #include <kdebug.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 #include <pwd.h>
 #include <signal.h>
@@ -36,22 +36,22 @@ static const char description[] =
 
 static const char version[] = "0.1";
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
-    KCmdLineLastOption
+    TDECmdLineLastOption
 };
 
 int main(int argc, char **argv)
 {
-    KAboutData about("kdetcompmgr", I18N_NOOP("kdetcompmgr"), version, description,
-		     KAboutData::License_GPL, "(C) 2011 Timothy Pearson", 0, 0, "kb9vqf@pearsoncomputing.net");
+    TDEAboutData about("kdetcompmgr", I18N_NOOP("kdetcompmgr"), version, description,
+		     TDEAboutData::License_GPL, "(C) 2011 Timothy Pearson", 0, 0, "kb9vqf@pearsoncomputing.net");
     about.addAuthor( "Timothy Pearson", 0, "kb9vqf@pearsoncomputing.net" );
-    KCmdLineArgs::init(argc, argv, &about);
-    KCmdLineArgs::addCmdLineOptions( options );
+    TDECmdLineArgs::init(argc, argv, &about);
+    TDECmdLineArgs::addCmdLineOptions( options );
 
-    KApplication app;
+    TDEApplication app;
 
-    KConfig config("twinrc", true);
+    TDEConfig config("twinrc", true);
     config.setGroup( "Notification Messages" );
     if (!config.readBoolEntry("UseTranslucency",false)) {
         // Attempt to load the kompmgr pid file
@@ -97,7 +97,7 @@ int main(int argc, char **argv)
     }
 
      if (app.detectCompositionManagerAvailable(false, false)) {		// Perform a shallow check for the composite extension (a deep check would cause noticeable flicker)
-	KConfig config2("twinrc", true);
+	TDEConfig config2("twinrc", true);
 	config2.setGroup( "Notification Messages" );
 	if (config2.readBoolEntry("UseTranslucency",false)) {
 		app.detectCompositionManagerAvailable(true, true);

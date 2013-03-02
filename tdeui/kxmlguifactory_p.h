@@ -24,7 +24,7 @@
 #include <tqdom.h>
 #include <tqvaluestack.h>
 
-#include <kaction.h>
+#include <tdeaction.h>
 
 class TQWidget;
 class KXMLGUIClient;
@@ -36,21 +36,21 @@ namespace KXMLGUI
 
 struct BuildState;
 
-class TDEUI_EXPORT ActionList : public TQPtrList<KAction>
+class TDEUI_EXPORT ActionList : public TQPtrList<TDEAction>
 {
 public:
     ActionList() {}
-    ActionList( const TQPtrList<KAction> &rhs )
-        : TQPtrList<KAction>( rhs )
+    ActionList( const TQPtrList<TDEAction> &rhs )
+        : TQPtrList<TDEAction>( rhs )
     {}
-    ActionList &operator=( const TQPtrList<KAction> &rhs )
-    { TQPtrList<KAction>::operator=( rhs ); return *this; }
+    ActionList &operator=( const TQPtrList<TDEAction> &rhs )
+    { TQPtrList<TDEAction>::operator=( rhs ); return *this; }
 
     void plug( TQWidget *container, int index ) const;
     void unplug( TQWidget *container ) const;
 };
 
-typedef TQPtrListIterator<KAction> ActionListIt;
+typedef TQPtrListIterator<TDEAction> ActionListIt;
 typedef TQMap< TQString, ActionList > ActionListMap;
 
 /*

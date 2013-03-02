@@ -26,13 +26,13 @@
 #include <tqstring.h>
 #include <ktextedit.h>
 
-#include <klistview.h>
-#include <klocale.h>
+#include <tdelistview.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include <kurlrequester.h>
-#include <kmessagebox.h>
-#include <kconfig.h>
-#include <kapplication.h>
+#include <tdemessagebox.h>
+#include <tdeconfig.h>
+#include <tdeapplication.h>
 #include <kuser.h>
 
 #include "engine.h"
@@ -94,7 +94,7 @@ UploadDialog::UploadDialog( Engine *engine, TQWidget *parent ) :
   topLayout->addWidget( languageLabel, 6, 0 );
   mLanguageCombo = new TQComboBox( topPage );
   topLayout->addWidget( mLanguageCombo, 6, 1 );
-  mLanguageCombo->insertStringList( KGlobal::locale()->languageList() );
+  mLanguageCombo->insertStringList( TDEGlobal::locale()->languageList() );
 
   TQLabel *previewLabel = new TQLabel( i18n("Preview URL:"), topPage );
   topLayout->addWidget( previewLabel, 7, 0 );
@@ -136,7 +136,7 @@ void UploadDialog::slotOk()
   entry->setSummary( mSummaryEdit->text(), mLanguageCombo->currentText() );
 
   if ( mPayloadUrl.isValid() ) {
-    KConfig *conf = kapp->config();
+    TDEConfig *conf = kapp->config();
     conf->setGroup( TQString("KNewStuffUpload:%1").arg(mPayloadUrl.fileName()) );
     conf->writeEntry("name", mNameEdit->text());
     conf->writeEntry("author", mAuthorEdit->text());
@@ -164,7 +164,7 @@ void UploadDialog::setPayloadFile( const TQString &payloadFile )
 {
   mPayloadUrl = payloadFile;
 
-  KConfig *conf = kapp->config();
+  TDEConfig *conf = kapp->config();
   conf->setGroup( TQString("KNewStuffUpload:%1").arg(mPayloadUrl.fileName()) );
   TQString name = conf->readEntry("name");
   TQString author = conf->readEntry("author");

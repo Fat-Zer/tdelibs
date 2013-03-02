@@ -37,13 +37,13 @@
  * Communications Protocol.
  *
  * Messages with id code < 32 are called "System Messages". These are
- * directly handled by KApplication. Examples are: PaletteChanged and
- * StyleChanged. Messages with id code >= 32 are user messages. KApplication
+ * directly handled by TDEApplication. Examples are: PaletteChanged and
+ * StyleChanged. Messages with id code >= 32 are user messages. TDEApplication
  * emits the signal kipcMessage(id,arg) for each user message it receives.
  *
  * KIPC is implemented using X11 ClientMessage events.
  *
- * @see KApplication::kipcMessage()
+ * @see TDEApplication::kipcMessage()
  * @author Geert Jansen <jansen@kde.org>
  */
 class TDECORE_EXPORT KIPC

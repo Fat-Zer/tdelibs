@@ -174,7 +174,7 @@ KPixmap* GradientSet::gradient(GradientType type)
 // ---------------------------------------------------------------------------
 
 HighColorStyle::HighColorStyle( StyleType styleType ) 
-	: KStyle( AllowMenuTransparency | FilledFrameWorkaround, ThreeButtonScrollBar )
+	: TDEStyle( AllowMenuTransparency | FilledFrameWorkaround, ThreeButtonScrollBar )
 {
 	type = styleType;
 	highcolor = (type == HighColor && TQPixmap::defaultDepth() > 8);
@@ -209,7 +209,7 @@ void HighColorStyle::polish(const TQStyleControlElementData &ceData, ControlElem
 		}
 	}
 
-	KStyle::polish( ceData, elementFlags, ptr );
+	TDEStyle::polish( ceData, elementFlags, ptr );
 }
 
 
@@ -230,7 +230,7 @@ void HighColorStyle::unPolish(const TQStyleControlElementData &ceData, ControlEl
 		}
 	}
 
-	KStyle::unPolish( ceData, elementFlags, ptr );
+	TDEStyle::unPolish( ceData, elementFlags, ptr );
 }
 
 
@@ -796,7 +796,7 @@ void HighColorStyle::drawPrimitive( TQ_PrimitiveElement pe,
 				p->drawLine(x+1, y+1, x+1, y2-1);
 				p->setPen(oldPen);
 			} else
-				KStyle::drawPrimitive(pe, p, ceData, elementFlags, r, cg, flags, opt);
+				TDEStyle::drawPrimitive(pe, p, ceData, elementFlags, r, cg, flags, opt);
 
 			break;
 		}
@@ -959,13 +959,13 @@ void HighColorStyle::drawPrimitive( TQ_PrimitiveElement pe,
 				p->restore();
 			
 			} else
-				KStyle::drawPrimitive( pe, p, ceData, elementFlags, r, cg, flags, opt );
+				TDEStyle::drawPrimitive( pe, p, ceData, elementFlags, r, cg, flags, opt );
 		}
 	}
 }
 
 
-void HighColorStyle::drawKStylePrimitive( KStylePrimitive kpe,
+void HighColorStyle::drawTDEStylePrimitive( TDEStylePrimitive kpe,
 										  TQPainter* p,
 										  const TQStyleControlElementData &ceData,
 										  ControlElementFlags elementFlags,
@@ -1139,7 +1139,7 @@ void HighColorStyle::drawKStylePrimitive( KStylePrimitive kpe,
 		}
 
 		default:
-			KStyle::drawKStylePrimitive( kpe, p, ceData, elementFlags, r, cg, flags, opt, widget);
+			TDEStyle::drawTDEStylePrimitive( kpe, p, ceData, elementFlags, r, cg, flags, opt, widget);
 	}
 }
 
@@ -1515,7 +1515,7 @@ void HighColorStyle::drawControl( TQ_ControlElement element,
 		}
 
 		default:
-			KStyle::drawControl(element, p, ceData, elementFlags, r, cg, flags, opt, widget);
+			TDEStyle::drawControl(element, p, ceData, elementFlags, r, cg, flags, opt, widget);
 	}
 }
 
@@ -1543,7 +1543,7 @@ void HighColorStyle::drawControlMask( TQ_ControlElement element,
 		}
 
 		default:
-			KStyle::drawControlMask(element, p, ceData, elementFlags, r, opt, widget);
+			TDEStyle::drawControlMask(element, p, ceData, elementFlags, r, opt, widget);
 	}
 }
 
@@ -1728,7 +1728,7 @@ void HighColorStyle::drawComplexControl( TQ_ComplexControl control,
 
 
 		default:
-			KStyle::drawComplexControl(control, p, ceData, elementFlags,
+			TDEStyle::drawComplexControl(control, p, ceData, elementFlags,
 						r, cg, flags, controls, active, opt, widget);
 			break;
 	}
@@ -1759,7 +1759,7 @@ void HighColorStyle::drawComplexControlMask( TQ_ComplexControl control,
 		}
 
 		default:
-			KStyle::drawComplexControlMask(control, p, ceData, elementFlags, r, opt, widget);
+			TDEStyle::drawComplexControlMask(control, p, ceData, elementFlags, r, opt, widget);
 	}
 }
 
@@ -1786,7 +1786,7 @@ void HighColorStyle::drawItem( TQPainter *p,
 	} else
 		col = penColor;
 
-	KStyle::drawItem( p, r, flags, cg, enabled, pixmap,
+	TDEStyle::drawItem( p, r, flags, cg, enabled, pixmap,
 			text, len, col );
 }
 
@@ -1813,7 +1813,7 @@ TQRect HighColorStyle::subRect(SubRect r, const TQStyleControlElementData &ceDat
 					 wrect.width()  - dfw2 - dbw2 - 1,
 					 wrect.height() - dfw2 - dbw2 - 1);
 	} else
-		return KStyle::subRect(r, ceData, elementFlags, widget);
+		return TDEStyle::subRect(r, ceData, elementFlags, widget);
 }
 
 
@@ -1856,7 +1856,7 @@ int HighColorStyle::pixelMetric(PixelMetric m, const TQStyleControlElementData &
 			return 0;
 
 		default:
-			return KStyle::pixelMetric(m, ceData, elementFlags, widget);
+			return TDEStyle::pixelMetric(m, ceData, elementFlags, widget);
 	}
 }
 
@@ -1878,7 +1878,7 @@ int HighColorStyle::styleHint(StyleHint sh, const TQStyleControlElementData &ceD
 			}
 			break;
 		default:
-			ret = KStyle::styleHint(sh, ceData, elementFlags, opt, returnData, w);
+			ret = TDEStyle::styleHint(sh, ceData, elementFlags, opt, returnData, w);
 			break;
 	}
 
@@ -1984,7 +1984,7 @@ TQSize HighColorStyle::sizeFromContents( ContentsType contents,
 
 
 		default:
-			return KStyle::sizeFromContents( contents, ceData, elementFlags, contentSize, opt, widget );
+			return TDEStyle::sizeFromContents( contents, ceData, elementFlags, contentSize, opt, widget );
 	}
 }
 
@@ -2005,13 +2005,13 @@ TQPixmap HighColorStyle::stylePixmap(StylePixmap stylepixmap,
 			break;
 	}
 
-	return KStyle::stylePixmap(stylepixmap, ceData, elementFlags, opt, widget);
+	return TDEStyle::stylePixmap(stylepixmap, ceData, elementFlags, opt, widget);
 }
 
 
 bool HighColorStyle::objectEventHandler( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void* source, TQEvent *event )
 {
-	if (KStyle::objectEventHandler( ceData, elementFlags, source, event ))
+	if (TDEStyle::objectEventHandler( ceData, elementFlags, source, event ))
 		return true;
 
 	TQToolBar* toolbar;

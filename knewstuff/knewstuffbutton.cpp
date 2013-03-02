@@ -18,7 +18,7 @@
 */
 
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include "downloaddialog.h"
 #include "knewstuffbutton.h"

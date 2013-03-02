@@ -23,14 +23,14 @@
 #include <tqstringlist.h>
 #include <tqsocketnotifier.h>
 
-#include <kglobal.h>
-#include <klocale.h>
-#include <kconfig.h>
-#include <ktempfile.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
+#include <tdeconfig.h>
+#include <tdetempfile.h>
 #include <ksimpledirwatch.h>
 #include <kstandarddirs.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <dcopclient.h>
 
 #include <libudev.h>
@@ -286,8 +286,8 @@ TDEGenericDevice* TDEGenericDevice::parentDevice() {
 	return m_parentDevice;
 }
 
-TQPixmap TDEGenericDevice::icon(KIcon::StdSizes size) {
-	return KGlobal::hardwareDevices()->getDeviceTypeIconFromType(type(), size);
+TQPixmap TDEGenericDevice::icon(TDEIcon::StdSizes size) {
+	return TDEGlobal::hardwareDevices()->getDeviceTypeIconFromType(type(), size);
 }
 
 bool TDEGenericDevice::blacklistedForUpdate() {
@@ -299,7 +299,7 @@ void TDEGenericDevice::internalSetBlacklistedForUpdate(bool bl) {
 }
 
 TQString TDEGenericDevice::friendlyDeviceType() {
-	return KGlobal::hardwareDevices()->getFriendlyDeviceTypeStringFromType(type());
+	return TDEGlobal::hardwareDevices()->getFriendlyDeviceTypeStringFromType(type());
 }
 
 TQString TDEGenericDevice::busID() {
@@ -321,10 +321,10 @@ TQString TDEGenericDevice::friendlyName() {
 			m_friendlyName = friendlyDriverName;
 		}
 		else if (m_modAlias.lower().startsWith("pci")) {
-			m_friendlyName = KGlobal::hardwareDevices()->findPCIDeviceName(m_vendorID, m_modelID, m_subvendorID, m_submodelID);
+			m_friendlyName = TDEGlobal::hardwareDevices()->findPCIDeviceName(m_vendorID, m_modelID, m_subvendorID, m_submodelID);
 		}
 		else if (m_modAlias.lower().startsWith("usb")) {
-			m_friendlyName = KGlobal::hardwareDevices()->findUSBDeviceName(m_vendorID, m_modelID, m_subvendorID, m_submodelID);
+			m_friendlyName = TDEGlobal::hardwareDevices()->findUSBDeviceName(m_vendorID, m_modelID, m_subvendorID, m_submodelID);
 		}
 		else {
 			TQString acpigentype = systemPath();
@@ -333,7 +333,7 @@ TQString TDEGenericDevice::friendlyName() {
 			TQString pnpgentype = acpigentype;
 			pnpgentype.truncate(pnpgentype.find(":"));
 			if (pnpgentype.startsWith("PNP")) {
-				m_friendlyName = KGlobal::hardwareDevices()->findPNPDeviceName(pnpgentype);
+				m_friendlyName = TDEGlobal::hardwareDevices()->findPNPDeviceName(pnpgentype);
 			}
 			else if (acpigentype.startsWith("device:")) {
 				acpigentype.remove(0, acpigentype.findRev(":")+1);
@@ -541,7 +541,7 @@ TQString TDEStorageDevice::friendlyName() {
 TQString TDEStorageDevice::friendlyDeviceType() {
 	TQString ret = i18n("Hard Disk Drive");
 
-	// Keep this in sync with TDEStorageDevice::icon(KIcon::StdSizes size) below
+	// Keep this in sync with TDEStorageDevice::icon(TDEIcon::StdSizes size) below
 	if (isDiskOfType(TDEDiskDeviceType::Floppy)) {
 		ret = i18n("Floppy Drive");
 	}
@@ -602,7 +602,7 @@ TQString TDEStorageDevice::friendlyDeviceType() {
 	return ret;
 }
 
-TQPixmap TDEStorageDevice::icon(KIcon::StdSizes size) {
+TQPixmap TDEStorageDevice::icon(TDEIcon::StdSizes size) {
 	TQPixmap ret = DesktopIcon("hdd_unmount", size);
 
 	if (isDiskOfType(TDEDiskDeviceType::Floppy)) {
@@ -706,7 +706,7 @@ TQString TDEStorageDevice::mountPath() {
 	// where <something> is listed in <system path>/dm/name
 
 	// First, ensure that all device information (mainly holders/slaves) is accurate
-	KGlobal::hardwareDevices()->rescanDeviceInformation(this);
+	TDEGlobal::hardwareDevices()->rescanDeviceInformation(this);
 
 	TQString dmnodename = systemPath();
 	dmnodename.append("/dm/name");
@@ -746,7 +746,7 @@ TQString TDEStorageDevice::mountPath() {
 	TQStringList slaveDeviceList = holdingDevices();
 	for ( TQStringList::Iterator slavedevit = slaveDeviceList.begin(); slavedevit != slaveDeviceList.end(); ++slavedevit ) {
 		// Try to locate this device path in the TDE device tree
-		TDEHardwareDevices *hwdevices = KGlobal::hardwareDevices();
+		TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
 		TDEGenericDevice *hwdevice = hwdevices->findBySystemPath(*slavedevit);
 		if ((hwdevice) && (hwdevice->type() == TDEGenericDeviceType::Disk)) {
 			TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(hwdevice);
@@ -792,7 +792,7 @@ TQString TDEStorageDevice::mountDevice(TQString mediaName, TQString mountOptions
 	}
 
 	// Update internal mount data
-	KGlobal::hardwareDevices()->processModifiedMounts();
+	TDEGlobal::hardwareDevices()->processModifiedMounts();
 
 	ret = mountPath();
 
@@ -841,7 +841,7 @@ TQString TDEStorageDevice::mountEncryptedDevice(TQString passphrase, TQString me
 	}
 
 	// Update internal mount data
-	KGlobal::hardwareDevices()->processModifiedMounts();
+	TDEGlobal::hardwareDevices()->processModifiedMounts();
 
 	ret = mountPath();
 
@@ -879,7 +879,7 @@ bool TDEStorageDevice::unmountDevice(TQString* errRet, int* retcode) {
 	}
 
 	// Update internal mount data
-	KGlobal::hardwareDevices()->processModifiedMounts();
+	TDEGlobal::hardwareDevices()->processModifiedMounts();
 
 	return false;
 }
@@ -977,7 +977,25 @@ bool TDECPUDevice::canSetGovernor() {
 		return TRUE;
 	}
 	else {
+#ifdef WITH_UPOWER
+		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+		if (dbusConn.isConnected()) {
+			TQT_DBusProxy hardwareControl("org.trinitydesktop.hardwarecontrol", "/org/trinitydesktop/hardwarecontrol", "org.trinitydesktop.hardwarecontrol,CPUGovernor", dbusConn);
+	
+			// can set brightness?
+			TQValueList<TQT_DBusData> params;
+			params << TQT_DBusData::fromInt32(coreNumber());
+			TQT_DBusMessage reply = hardwareControl.sendWithReply("CanSetCPUGovernor", params);
+			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+				return reply[0].toVariant().value.toBool();
+			}
+		}
+		else {
+			return FALSE;
+		}
+#else // WITH_UPOWER
 		return FALSE;
+#endif// WITH_UPOWER
 	}
 }
 
@@ -989,9 +1007,25 @@ void TDECPUDevice::setGovernor(TQString gv) {
 		stream << gv.lower();
 		file.close();
 	}
+#ifdef WITH_UPOWER
+	else {
+		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+		if (dbusConn.isConnected()) {
+			TQT_DBusProxy hardwareControl("org.trinitydesktop.hardwarecontrol", "/org/trinitydesktop/hardwarecontrol", "org.trinitydesktop.hardwarecontrol.CPUGovernor", dbusConn);
+	
+			// set brightness
+			TQValueList<TQT_DBusData> params;
+			params << TQT_DBusData::fromInt32(coreNumber()) << TQT_DBusData::fromString(gv.lower());
+			hardwareControl.sendWithReply("SetCPUGovernor", params);
+		}
+		else {
+			return;
+		}
+	}
+#endif // WITH_UPOWER
 
 	// Force update of the device information object
-	KGlobal::hardwareDevices()->processModifiedCPUs();
+	TDEGlobal::hardwareDevices()->processModifiedCPUs();
 }
 
 bool TDECPUDevice::canSetMaximumScalingFrequency() {
@@ -1015,7 +1049,7 @@ void TDECPUDevice::setMaximumScalingFrequency(double fr) {
 	}
 
 	// Force update of the device information object
-	KGlobal::hardwareDevices()->processModifiedCPUs();
+	TDEGlobal::hardwareDevices()->processModifiedCPUs();
 }
 
 int TDECPUDevice::coreNumber() {
@@ -1183,7 +1217,7 @@ bool TDERootSystemDevice::canPowerOff() {
 	// Can we power down this system?
 	// This should probably be checked via DCOP and therefore interface with KDM
 
-	KConfig *config = KGlobal::config();
+	TDEConfig *config = TDEGlobal::config();
 	config->reparseConfiguration(); // config may have changed in the KControl module
 	
 	config->setGroup("General" );
@@ -1629,7 +1663,25 @@ bool TDEBacklightDevice::canSetBrightness() {
 		return TRUE;
 	}
 	else {
+#ifdef WITH_UPOWER
+		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+		if (dbusConn.isConnected()) {
+			TQT_DBusProxy hardwareControl("org.trinitydesktop.hardwarecontrol", "/org/trinitydesktop/hardwarecontrol", "org.trinitydesktop.hardwarecontrol,Brightness", dbusConn);
+	
+			// can set brightness?
+			TQValueList<TQT_DBusData> params;
+			params << TQT_DBusData::fromString(brightnessnode);
+			TQT_DBusMessage reply = hardwareControl.sendWithReply("CanSetBrightness", params);
+			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+				return reply[0].toVariant().value.toBool();
+			}
+		}
+		else {
+			return FALSE;
+		}
+#else // WITH_UPOWER
 		return FALSE;
+#endif// WITH_UPOWER
 	}
 }
 
@@ -1639,14 +1691,29 @@ int TDEBacklightDevice::rawBrightness() {
 
 void TDEBacklightDevice::setRawBrightness(int br) {
 	TQString brightnessnode = systemPath() + "/brightness";
+	TQString brightnessCommand = TQString("%1").arg(br);
 	TQFile file( brightnessnode );
 	if ( file.open( IO_WriteOnly ) ) {
-		TQString brightnessCommand;
-		brightnessCommand = TQString("%1").arg(br);
 		TQTextStream stream( &file );
 		stream << brightnessCommand;
 		file.close();
 	}
+#ifdef WITH_UPOWER
+	else {
+		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+		if (dbusConn.isConnected()) {
+			TQT_DBusProxy hardwareControl("org.trinitydesktop.hardwarecontrol", "/org/trinitydesktop/hardwarecontrol", "org.trinitydesktop.hardwarecontrol.Brightness", dbusConn);
+	
+			// set brightness
+			TQValueList<TQT_DBusData> params;
+			params << TQT_DBusData::fromString(brightnessnode) << TQT_DBusData::fromString(brightnessCommand);
+			hardwareControl.sendWithReply("SetBrightness", params);
+		}
+		else {
+			return;
+		}
+	}
+#endif // WITH_UPOWER
 }
 
 TDEMonitorDevice::TDEMonitorDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
@@ -2697,9 +2764,9 @@ TDEDiskDeviceType::TDEDiskDeviceType classifyDiskType(udev_device* dev, const TQ
 	return disktype;
 }
 
-	// KStandardDirs::kde_default
+	// TDEStandardDirs::kde_default
 
-typedef TQMap<TQString, TQString> KConfigMap;
+typedef TQMap<TQString, TQString> TDEConfigMap;
 
 TQString readUdevAttribute(udev_device* dev, TQString attr) {
 	return TQString(udev_device_get_property_value(dev, attr.ascii()));
@@ -2998,12 +3065,12 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDeviceByExternalRules(udev_
 		}
 	}
 	else {
-		TQStringList hardware_info_directories(KGlobal::dirs()->resourceDirs("data"));
+		TQStringList hardware_info_directories(TDEGlobal::dirs()->resourceDirs("data"));
 		TQString hardware_info_directory_suffix("tdehwlib/deviceclasses/");
 		TQString hardware_info_directory;
 	
 		// Scan the hardware_info_directory for configuration files
-		// For each one, open it with KConfig() and apply its rules to classify the device
+		// For each one, open it with TDEConfig() and apply its rules to classify the device
 		// FIXME
 		// Should this also scan up to <n> subdirectories for the files?  That feature might end up being too expensive...
 
@@ -3012,7 +3079,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDeviceByExternalRules(udev_
 			hardware_info_directory = (*it);
 			hardware_info_directory += hardware_info_directory_suffix;
 	
-			if (KGlobal::dirs()->exists(hardware_info_directory)) {
+			if (TDEGlobal::dirs()->exists(hardware_info_directory)) {
 				TQDir d(hardware_info_directory);
 				d.setFilter( TQDir::Files | TQDir::Hidden );
 				
@@ -3025,10 +3092,10 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDeviceByExternalRules(udev_
 						bool match = true;
 		
 						// Open the rules file
-						KConfig rulesFile(fi->absFilePath(), true, false);
+						TDEConfig rulesFile(fi->absFilePath(), true, false);
 						rulesFile.setGroup("Conditions");
-						KConfigMap conditionmap = rulesFile.entryMap("Conditions");
-						KConfigMap::Iterator cndit;
+						TDEConfigMap conditionmap = rulesFile.entryMap("Conditions");
+						TDEConfigMap::Iterator cndit;
 						for (cndit = conditionmap.begin(); cndit != conditionmap.end(); ++cndit) {
 							TQStringList conditionList = TQStringList::split(',', cndit.data(), false);
 							bool atleastonematch = false;
@@ -4391,7 +4458,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		}
 
 		// FIXME
-		// Much of the code in libkrandr should be integrated into/interfaced with this library
+		// Much of the code in libtderandr should be integrated into/interfaced with this library
 	}
 
 	if (device->type() == TDEGenericDeviceType::RootSystem) {
@@ -5059,7 +5126,7 @@ TQString TDEHardwareDevices::findPNPDeviceName(TQString pnpid) {
 	if (!pnp_id_map) {
 		pnp_id_map = new TDEDeviceIDMap;
 
-		TQStringList hardware_info_directories(KGlobal::dirs()->resourceDirs("data"));
+		TQStringList hardware_info_directories(TDEGlobal::dirs()->resourceDirs("data"));
 		TQString hardware_info_directory_suffix("tdehwlib/pnpdev/");
 		TQString hardware_info_directory;
 		TQString database_filename;
@@ -5068,7 +5135,7 @@ TQString TDEHardwareDevices::findPNPDeviceName(TQString pnpid) {
 			hardware_info_directory = (*it);
 			hardware_info_directory += hardware_info_directory_suffix;
 	
-			if (KGlobal::dirs()->exists(hardware_info_directory)) {
+			if (TDEGlobal::dirs()->exists(hardware_info_directory)) {
 				database_filename = hardware_info_directory + "pnp.ids";
 				if (TQFile::exists(database_filename)) {
 					break;
@@ -5129,7 +5196,7 @@ TQString TDEHardwareDevices::findMonitorManufacturerName(TQString dpyid) {
 	if (!dpy_id_map) {
 		dpy_id_map = new TDEDeviceIDMap;
 
-		TQStringList hardware_info_directories(KGlobal::dirs()->resourceDirs("data"));
+		TQStringList hardware_info_directories(TDEGlobal::dirs()->resourceDirs("data"));
 		TQString hardware_info_directory_suffix("tdehwlib/pnpdev/");
 		TQString hardware_info_directory;
 		TQString database_filename;
@@ -5138,7 +5205,7 @@ TQString TDEHardwareDevices::findMonitorManufacturerName(TQString dpyid) {
 			hardware_info_directory = (*it);
 			hardware_info_directory += hardware_info_directory_suffix;
 	
-			if (KGlobal::dirs()->exists(hardware_info_directory)) {
+			if (TDEGlobal::dirs()->exists(hardware_info_directory)) {
 				database_filename = hardware_info_directory + "dpy.ids";
 				if (TQFile::exists(database_filename)) {
 					break;
@@ -5428,7 +5495,7 @@ TQString TDEHardwareDevices::getFriendlyDeviceTypeStringFromType(TDEGenericDevic
 	return ret;
 }
 
-TQPixmap TDEHardwareDevices::getDeviceTypeIconFromType(TDEGenericDeviceType::TDEGenericDeviceType query, KIcon::StdSizes size) {
+TQPixmap TDEHardwareDevices::getDeviceTypeIconFromType(TDEGenericDeviceType::TDEGenericDeviceType query, TDEIcon::StdSizes size) {
 	TQPixmap ret = DesktopIcon("misc", size);
 
 // 	// Keep this in sync with the TDEGenericDeviceType definition in the header
@@ -5520,7 +5587,7 @@ TQPixmap TDEHardwareDevices::getDeviceTypeIconFromType(TDEGenericDeviceType::TDE
 		ret = DesktopIcon("kcmpci", size);
 	}
 	else if (query == TDEGenericDeviceType::Backlight) {
-		ret = DesktopIcon("kscreensaver", size);	// FIXME
+		ret = DesktopIcon("tdescreensaver", size);	// FIXME
 	}
 	else if (query == TDEGenericDeviceType::Battery) {
 		ret = DesktopIcon("energy", size);

@@ -17,13 +17,13 @@
 */
 
 #include "kuniqueapplication.h"
-#include "kglobalsettings.h"
+#include "tdeglobalsettings.h"
 
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <kcmdlineargs.h>
-#include <kaboutdata.h>
+#include <tdecmdlineargs.h>
+#include <tdeaboutdata.h>
 
 class TestApp : public KUniqueApplication
 {
@@ -43,8 +43,8 @@ TestApp::newInstance( )
 int
 main(int argc, char *argv[])
 {
-   KAboutData about("kuniqueapptest", "kuniqueapptest", "version");
-   KCmdLineArgs::init(argc, argv, &about);
+   TDEAboutData about("kuniqueapptest", "kuniqueapptest", "version");
+   TDECmdLineArgs::init(argc, argv, &about);
    KUniqueApplication::addCmdLineOptions();
 
    if (!TestApp::start())

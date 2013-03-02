@@ -46,7 +46,7 @@ class KClientSocketBasePrivate;
  * such as, and especially, name resolution and signals.
  *
  * @note This class is abstract. If you're looking for a normal,
- *       client socket class, see @ref KStreamSocket and KBufferedSocket
+ *       client socket class, see @ref KStreamSocket and TDEBufferedSocket
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
@@ -115,7 +115,7 @@ public:
 
 protected:
   /**
-   * Sets the socket options. Reimplemented from KSocketBase.
+   * Sets the socket options. Reimplemented from TDESocketBase.
    */
   virtual bool setSocketOptions(int opts);
 
@@ -160,7 +160,7 @@ public:
    *
    * This is useful, for instance, when IP addresses are in
    * their string representation (such as "1.2.3.4") or come
-   * from other sources like @ref KSocketAddress.
+   * from other sources like @ref TDESocketAddress.
    *
    * @param enable	whether to enable
    */
@@ -186,7 +186,7 @@ public:
    * emitted (only once, even if we're doing a double lookup).
    * If the lookup failed (for any of the two lookups) the 
    * @ref gotError signal will be emitted with the appropriate
-   * error condition (see @ref KSocketBase::SocketError).
+   * error condition (see @ref TDESocketBase::SocketError).
    *
    * This function returns true on success and false on error. Note that
    * this is not the lookup result!
@@ -216,7 +216,7 @@ public:
 		    const TQString& service = TQString::null) = 0;
 
   /**
-   * Reimplemented from KSocketBase. Connect this socket to this
+   * Reimplemented from TDESocketBase. Connect this socket to this
    * specific address.
    *
    * Unlike @ref bind(const TQString&, const TQString&) above, this function
@@ -258,7 +258,7 @@ public:
 
   /**
    * @overload
-   * Reimplemented from KSocketBase.
+   * Reimplemented from TDESocketBase.
    */
   virtual bool connect(const KResolverEntry& address);
 
@@ -300,7 +300,7 @@ public:
 
   /**
    * Returns the number of bytes available on this socket.
-   * Reimplemented from KSocketBase.
+   * Reimplemented from TDESocketBase.
    */
 #ifdef USE_QT3
   virtual TQ_LONG bytesAvailable() const;
@@ -310,52 +310,52 @@ public:
 #endif
 
   /**
-   * Waits for more data. Reimplemented from KSocketBase.
+   * Waits for more data. Reimplemented from TDESocketBase.
    */
   virtual TQ_LONG waitForMore(int msecs, bool *timeout = 0L);
 
   /**
-   * Reads data from a socket. Reimplemented from KSocketBase.
+   * Reads data from a socket. Reimplemented from TDESocketBase.
    */
   virtual TQT_TQIO_LONG tqreadBlock(char *data, TQT_TQIO_ULONG maxlen);
 
   /**
    * @overload
-   * Reads data from a socket. Reimplemented from KSocketBase.
+   * Reads data from a socket. Reimplemented from TDESocketBase.
    */
-  virtual TQT_TQIO_LONG tqreadBlock(char *data, TQT_TQIO_ULONG maxlen, KSocketAddress& from);
+  virtual TQT_TQIO_LONG tqreadBlock(char *data, TQT_TQIO_ULONG maxlen, TDESocketAddress& from);
 
   /**
-   * Peeks data from the socket. Reimplemented from KSocketBase.
+   * Peeks data from the socket. Reimplemented from TDESocketBase.
    */
   virtual TQ_LONG peekBlock(char *data, TQ_ULONG maxlen);
 
   /**
    * @overload
-   * Peeks data from the socket. Reimplemented from KSocketBase.
+   * Peeks data from the socket. Reimplemented from TDESocketBase.
    */
-  virtual TQ_LONG peekBlock(char *data, TQ_ULONG maxlen, KSocketAddress &from);
+  virtual TQ_LONG peekBlock(char *data, TQ_ULONG maxlen, TDESocketAddress &from);
 
   /**
-   * Writes data to the socket. Reimplemented from KSocketBase.
+   * Writes data to the socket. Reimplemented from TDESocketBase.
    */
   virtual TQT_TQIO_LONG tqwriteBlock(const char *data, TQT_TQIO_ULONG len);
 
   /**
    * @overload
-   * Writes data to the socket. Reimplemented from KSocketBase.
+   * Writes data to the socket. Reimplemented from TDESocketBase.
    */
-  virtual TQT_TQIO_LONG tqwriteBlock(const char *data, TQT_TQIO_ULONG len, const KSocketAddress& to);
+  virtual TQT_TQIO_LONG tqwriteBlock(const char *data, TQT_TQIO_ULONG len, const TDESocketAddress& to);
 
   /**
-   * Returns the local socket address. Reimplemented from KSocketBase.
+   * Returns the local socket address. Reimplemented from TDESocketBase.
    */
-  virtual KSocketAddress localAddress() const;
+  virtual TDESocketAddress localAddress() const;
 
   /**
-   * Returns the peer socket address. Reimplemented from KSocketBase.
+   * Returns the peer socket address. Reimplemented from TDESocketBase.
    */
-  virtual KSocketAddress peerAddress() const;
+  virtual TDESocketAddress peerAddress() const;
 
   /**
    * Returns true if the readyRead signal is set to be emitted.

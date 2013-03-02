@@ -26,13 +26,13 @@
 #include <tqwhatsthis.h>
 #include <tqregexp.h>
 
-#include <kaboutdata.h>
-#include <kapplication.h>
-#include <kconfig.h>
+#include <tdeaboutdata.h>
+#include <tdeapplication.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <klineedit.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kprocess.h>
 #include <kstandarddirs.h>
 #include <kstdguiitem.h>
@@ -50,7 +50,7 @@
 #include "kdepackages.h"
 #include <kcombobox.h>
 #include <config.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 #include <tqtextstream.h>
 #include <tqfile.h>
 
@@ -65,7 +65,7 @@ public:
     KURL url;
 };
 
-KBugReport::KBugReport( TQWidget * parentw, bool modal, const KAboutData *aboutData )
+KBugReport::KBugReport( TQWidget * parentw, bool modal, const TDEAboutData *aboutData )
   : KDialogBase( Plain,
                  i18n("Submit Bug Report"),
                  Ok | Cancel,
@@ -79,11 +79,11 @@ KBugReport::KBugReport( TQWidget * parentw, bool modal, const KAboutData *aboutD
   d = new KBugReportPrivate;
 
   // Use supplied aboutdata, otherwise the one from the active instance
-  // otherwise the KGlobal one. _activeInstance should neved be 0L in theory.
+  // otherwise the TDEGlobal one. _activeInstance should neved be 0L in theory.
   m_aboutData = aboutData
     ? aboutData
-    : ( KGlobal::_activeInstance ? KGlobal::_activeInstance->aboutData()
-                                 : KGlobal::instance()->aboutData() );
+    : ( TDEGlobal::_activeInstance ? TDEGlobal::_activeInstance->aboutData()
+                                 : TDEGlobal::instance()->aboutData() );
   m_process = 0;
   TQWidget * parent = plainPage();
   d->submitBugButton = 0;
@@ -318,12 +318,12 @@ void KBugReport::appChanged(int i)
 void KBugReport::slotConfigureEmail()
 {
   if (m_process) return;
-  m_process = new KProcess;
-  *m_process << TQString::fromLatin1("kcmshell") << TQString::fromLatin1("kcm_useraccount");
-  connect(m_process, TQT_SIGNAL(processExited(KProcess *)), TQT_SLOT(slotSetFrom()));
+  m_process = new TDEProcess;
+  *m_process << TQString::fromLatin1("tdecmshell") << TQString::fromLatin1("kcm_useraccount");
+  connect(m_process, TQT_SIGNAL(processExited(TDEProcess *)), TQT_SLOT(slotSetFrom()));
   if (!m_process->start())
   {
-    kdDebug() << "Couldn't start kcmshell.." << endl;
+    kdDebug() << "Couldn't start tdecmshell.." << endl;
     delete m_process;
     m_process = 0;
     return;
@@ -338,7 +338,7 @@ void KBugReport::slotSetFrom()
   m_configureEmail->setEnabled(true);
 
   // ### KDE4: why oh why is KEmailSettings in kio?
-  KConfig emailConf( TQString::fromLatin1("emaildefaults") );
+  TDEConfig emailConf( TQString::fromLatin1("emaildefaults") );
 
   // find out the default profile
   emailConf.setGroup( TQString::fromLatin1("Defaults") );
@@ -460,9 +460,9 @@ TQString KBugReport::text() const
      bodyText += line;
   }
 
-  if (severity == TQString::fromLatin1("i18n") && KGlobal::locale()->language() != KLocale::defaultLanguage()) {
+  if (severity == TQString::fromLatin1("i18n") && TDEGlobal::locale()->language() != TDELocale::defaultLanguage()) {
       // Case 1 : i18n bug
-      TQString package = TQString::fromLatin1("i18n_%1").arg(KGlobal::locale()->language());
+      TQString package = TQString::fromLatin1("i18n_%1").arg(TDEGlobal::locale()->language());
       package = package.replace(TQString::fromLatin1("_"), TQString::fromLatin1("-"));
       return TQString::fromLatin1("Package: %1").arg(package) +
           TQString::fromLatin1("\n"
@@ -489,20 +489,20 @@ bool KBugReport::sendBugReport()
     TQString::fromLatin1("submit@bugs.pearsoncomputing.net") );
 
   TQString command;
-  command = locate("exe", "ksendbugmail");
+  command = locate("exe", "tdesendbugmail");
   if (command.isEmpty())
-      command = KStandardDirs::findExe( TQString::fromLatin1("ksendbugmail") );
+      command = TDEStandardDirs::findExe( TQString::fromLatin1("tdesendbugmail") );
 
   KTempFile outputfile;
   outputfile.close();
 
   TQString subject = m_subject->text();
   command += " --subject ";
-  command += KProcess::quote(subject);
+  command += TDEProcess::quote(subject);
   command += " --recipient ";
-  command += KProcess::quote(recipient);
+  command += TDEProcess::quote(recipient);
   command += " > ";
-  command += KProcess::quote(outputfile.name());
+  command += TDEProcess::quote(outputfile.name());
 
   fflush(stdin);
   fflush(stderr);

@@ -28,7 +28,7 @@ class TQCheckBox;
 class TQComboBox;
 class TQLabel;
 
-class KConfig;
+class TDEConfig;
 class KSpellConfigPrivate;
 
 /**
@@ -238,7 +238,7 @@ class TDEUI_EXPORT KSpellConfig : public TQWidget
 
   protected slots:
     /**
-     * Invokes the help documentation for kspell
+     * Invokes the help documentation for tdespell
      */ 
     void sHelp();
     //void sBrowseDict();
@@ -264,7 +264,7 @@ class TDEUI_EXPORT KSpellConfig : public TQWidget
     TQString qspdict;		// -p [dict]
     TQStringList ignorelist;
     enum {rdictlist=3, rencoding=4, rhelp=6};
-    KConfig *kc;
+    TDEConfig *kc;
     int iclient;            // defaults to ispell, may be aspell, too
 
     TQCheckBox *cb1, *cb2;

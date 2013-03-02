@@ -22,7 +22,7 @@
 
 #include <tqgroupbox.h>
 
-class KConfig;
+class TDEConfig;
 class TQLineEdit;
 class TQCheckBox;
 
@@ -31,8 +31,8 @@ class KMProxyWidget : public TQGroupBox
 public:
 	KMProxyWidget(TQWidget *parent = 0, const char *name = 0);
 
-	void loadConfig(KConfig*);
-	void saveConfig(KConfig*);
+	void loadConfig(TDEConfig*);
+	void saveConfig(TDEConfig*);
 
 private:
 	TQLineEdit	*m_proxyhost;

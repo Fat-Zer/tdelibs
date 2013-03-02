@@ -29,7 +29,7 @@
 class KSocksTable;
 class KSocksPrivate;
 class KLibrary;
-class KConfigBase;
+class TDEConfigBase;
 struct sockaddr;
 
 typedef unsigned ksocklen_t;
@@ -185,10 +185,10 @@ public:
     *  Set this before the first call to KSocks::self() and it will use
     *  @p config to read its configuration from.
     */
-   static void setConfig(KConfigBase *config);
+   static void setConfig(TDEConfigBase *config);
 
 private:
-   KSocks(KConfigBase *config);
+   KSocks(TDEConfigBase *config);
    ~KSocks();
 
    void stopSocks();

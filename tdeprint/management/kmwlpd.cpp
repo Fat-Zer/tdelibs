@@ -23,11 +23,11 @@
 #include "kmprinter.h"
 
 #include <kurl.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqlabel.h>
 #include <kdebug.h>
 #include <tqlineedit.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kextsock.h>
 
 static bool checkLpdQueue(const char *host, const char *queue);

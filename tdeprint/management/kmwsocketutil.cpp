@@ -27,13 +27,13 @@
 #include <tqlabel.h>
 #include <tqcombobox.h>
 #include <tqpushbutton.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tqlayout.h>
 #include <tqregexp.h>
 #include <knumvalidator.h>
 
-#include <kapplication.h>
-#include <klocale.h>
+#include <tdeapplication.h>
+#include <tdelocale.h>
 #include <kextsock.h>
 #include <kdebug.h>
 
@@ -148,7 +148,7 @@ bool KMWSocketUtil::checkPrinter(const TQString& IPstr, int port, TQString* host
 		if (hostname)
 		{
 			TQString	portname;
-			KExtendedSocket::resolve((KSocketAddress*)(sock.peerAddress()), *hostname, portname);
+			KExtendedSocket::resolve((TDESocketAddress*)(sock.peerAddress()), *hostname, portname);
 		}
 		result = true;
 	}

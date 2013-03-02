@@ -24,8 +24,8 @@
 #include <string>
 #include <cups/language.h>
 #include <kdebug.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <tqdatetime.h>
 #include <tqregexp.h>
 #include <cups/cups.h>
@@ -208,8 +208,8 @@ void IppRequest::init()
 		request_ = 0;
 	}
 	request_ = ippNew();
-	//kdDebug(500) << "tdeprint: IPP request, lang=" << KGlobal::locale()->language() << endl;
-        TQCString langstr = KGlobal::locale()->language().latin1();
+	//kdDebug(500) << "tdeprint: IPP request, lang=" << TDEGlobal::locale()->language() << endl;
+        TQCString langstr = TDEGlobal::locale()->language().latin1();
 	cups_lang_t*	lang = cupsLangGet(langstr.data());
 	// default charset to UTF-8 (ugly hack)
 	lang->encoding = CUPS_UTF8;

@@ -1,14 +1,14 @@
 #include "klegacystyle.h"
-#include <klocale.h>
+#include <tdelocale.h>
 
 extern "C" {
-    KStyle* allocate();
+    TDEStyle* allocate();
     int minor_version();
     int major_version();
     const char *description();
 }
 
-KStyle* allocate()
+TDEStyle* allocate()
 {
     return(new KLegacyStyle());
 }

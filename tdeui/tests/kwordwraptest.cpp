@@ -16,14 +16,14 @@
  *  Boston, MA 02110-1301, USA.
  */
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <tqwidget.h>
 #include "kwordwrap.h"
 
 int main(int argc, char *argv[])
 {
-	KApplication app(argc, argv, "KWordWrapTest");
+	TDEApplication app(argc, argv, "KWordWrapTest");
 	
 	TQFont font( "helvetica", 12 ); // let's hope we all have the same...
 	TQFontMetrics fm( font );

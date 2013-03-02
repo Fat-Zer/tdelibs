@@ -23,10 +23,10 @@
 #ifdef Q_WS_X11 // not needed anyway :-)
 
 #include "krootprop.h"
-#include "kglobal.h"
-#include "klocale.h"
+#include "tdeglobal.h"
+#include "tdelocale.h"
 #include "kcharsets.h"
-#include "kapplication.h"
+#include "tdeapplication.h"
 #include <tqtextstream.h>
 
 #include <X11/Xlib.h>

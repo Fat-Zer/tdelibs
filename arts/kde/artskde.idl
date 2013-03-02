@@ -12,7 +12,7 @@ interface KFloatWatchProxy {
 /* 
  * used for deliviering MCOP data to the playobjects
  */
-interface KIOInputStream : InputStream {
+interface TDEIOInputStream : InputStream {
 	boolean openURL(string url);
 	
 	attribute long bufferPackets;

@@ -23,13 +23,13 @@
 #include "kmfactory.h"
 #include "kmmanager.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <tqlayout.h>
 #include <tqlineedit.h>
 #include <tqlabel.h>
 #include <tqheader.h>
-#include <klistview.h>
-#include <kmessagebox.h>
+#include <tdelistview.h>
+#include <tdemessagebox.h>
 #include <kiconloader.h>
 
 KMWLocal::KMWLocal(TQWidget *parent, const char *name)
@@ -41,7 +41,7 @@ KMWLocal::KMWLocal(TQWidget *parent, const char *name)
 	m_initialized = false;
 	m_block = false;
 
-	m_ports = new KListView(this);
+	m_ports = new TDEListView(this);
 	m_ports->setFrameStyle(TQFrame::WinPanel|TQFrame::Sunken);
 	m_ports->setLineWidth(1);
 	m_ports->header()->hide();

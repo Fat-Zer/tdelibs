@@ -91,12 +91,12 @@ public:
    * Any previous object inserted with the same values for @p app 
    * and @p key will be removed.
    */
-  void insert(const TQCString &app, const TQCString &key, KShared *obj);
+  void insert(const TQCString &app, const TQCString &key, TDEShared *obj);
 
   /**
    * Lookup object indexed with @p app and @p key
    */
-  KShared *find(const TQCString &app, const TQCString &key);
+  TDEShared *find(const TQCString &app, const TQCString &key);
   
   /**
    * remove object indexed with @p app and @p key.

@@ -14,7 +14,7 @@
  *               (C) 2000 Dirk Mueller          <mueller@kde.org>
  *               (C) 2001 Martijn Klingens      <klingens@kde.org>
  *
- * Includes portions from KStyle,
+ * Includes portions from TDEStyle,
  *     Copyright (C) 2001-2002 Karol Szwed <gallium@kde.org>
  *
  * Many thanks to Bradley T. Hughes for the 3 button scrollbar code.
@@ -41,12 +41,12 @@
 #include <tqintdict.h>
 #include <kdrawutil.h>
 #include <kpixmap.h>
-#include <kstyle.h>
+#include <tdestyle.h>
 
 
 class TQPopupMenu;
 
-class HighContrastStyle : public KStyle
+class HighContrastStyle : public TDEStyle
 {
 	Q_OBJECT
 
@@ -59,7 +59,7 @@ class HighContrastStyle : public KStyle
 		void polish( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void * );
 		void unPolish( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void * );
 
-		void drawKStylePrimitive( KStylePrimitive kpe,
+		void drawTDEStylePrimitive( TDEStylePrimitive kpe,
 					TQPainter* p,
 					const TQStyleControlElementData &ceData,
 					ControlElementFlags elementFlags,
@@ -137,7 +137,7 @@ class HighContrastStyle : public KStyle
 		int pixelMetric( PixelMetric m, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags,
 					const TQWidget *widget = 0 ) const;
 
-		int kPixelMetric( KStylePixelMetric m, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags,
+		int kPixelMetric( TDEStylePixelMetric m, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags,
 					const TQWidget *widget = 0 ) const;
 
 		TQSize sizeFromContents( ContentsType contents,

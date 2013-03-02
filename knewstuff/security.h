@@ -22,7 +22,7 @@
 #include <tqobject.h>
 
 class KProcIO;
-class KProcess;
+class TDEProcess;
 
 struct KeyStruct {
    TQString id;
@@ -120,7 +120,7 @@ private:
    TQString m_secretKey; /// the key used for signing
 
 private slots:
-   void slotProcessExited(KProcess *process);
+   void slotProcessExited(TDEProcess *process);
    void slotDataArrived(KProcIO *process);
 
 signals:

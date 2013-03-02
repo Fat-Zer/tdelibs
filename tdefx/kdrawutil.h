@@ -33,7 +33,7 @@
  */
 
 /**
- * @relates KStyle
+ * @relates TDEStyle
  * @c \#include @c <kdrawutil.h>
  *
  * Draws a Next-style button (solid black shadow with light and midlight highlight).
@@ -49,7 +49,7 @@ TDEFX_EXPORT void kDrawNextButton(TQPainter *p, const TQRect &r, const TQColorGr
                      bool sunken=false, const TQBrush *fill=0);
 
 /**
- * @relates KStyle
+ * @relates TDEStyle
  * @overload
  */
 TDEFX_EXPORT void kDrawNextButton(TQPainter *p, int x, int y, int w, int h,
@@ -57,7 +57,7 @@ TDEFX_EXPORT void kDrawNextButton(TQPainter *p, int x, int y, int w, int h,
                      const TQBrush *fill=0);
 
 /**
- * @relates KStyle
+ * @relates TDEStyle
  * @c \#include @c <kdrawutil.h>
  *
  * Draws a Be-style button.
@@ -73,7 +73,7 @@ TDEFX_EXPORT void kDrawBeButton(TQPainter *p, TQRect &r, const TQColorGroup &g,
                    bool sunken=false, const TQBrush *fill=0);
 
 /**
- * @relates KStyle
+ * @relates TDEStyle
  * @c \#include @c <kdrawutil.h>
  * @overload
  */
@@ -82,7 +82,7 @@ TDEFX_EXPORT void kDrawBeButton(TQPainter *p, int x, int y, int w, int h,
                    const TQBrush *fill=0);
 
 /**
- * @relates KStyle
+ * @relates TDEStyle
  * @c \#include @c <kdrawutil.h>
  *
  * Draws a rounded oval button. This function doesn't fill the button.
@@ -97,14 +97,14 @@ TDEFX_EXPORT void kDrawRoundButton(TQPainter *p, const TQRect &r, const TQColorG
                       bool sunken=false);
 
 /**
- * @relates KStyle
+ * @relates TDEStyle
  * @overload
  */
 TDEFX_EXPORT void kDrawRoundButton(TQPainter *p, int x, int y, int w, int h,
                       const TQColorGroup &g, bool sunken=false);
 
 /**
- * @relates KStyle
+ * @relates TDEStyle
  * @c \#include @c <kdrawutil.h>
  *
  * Sets a region to the pixels covered by a round button of the given
@@ -121,7 +121,7 @@ TDEFX_EXPORT void kDrawRoundButton(TQPainter *p, int x, int y, int w, int h,
 TDEFX_EXPORT void kRoundMaskRegion(TQRegion &r, int x, int y, int w, int h);
 
 /**
- * @relates KStyle
+ * @relates TDEStyle
  * @c \#include @c <kdrawutil.h>
  *
  * Paints the pixels covered by a round button of the given size with
@@ -138,7 +138,7 @@ TDEFX_EXPORT void kRoundMaskRegion(TQRegion &r, int x, int y, int w, int h);
 TDEFX_EXPORT void kDrawRoundMask(TQPainter *p, int x, int y, int w, int h, bool clear=false);
 
 /**
- * @relates KStyle
+ * @relates TDEStyle
  * @c \#include @c <kdrawutil.h>
  *
  * Paints the provided bitmaps in the painter, using the supplied colorgroup for
@@ -167,7 +167,7 @@ TDEFX_EXPORT void kColorBitmaps(TQPainter *p, const TQColorGroup &g, int x, int 
                    TQBitmap *blackColor=0, TQBitmap *whiteColor=0);
 
 /**
- * @relates KStyle
+ * @relates TDEStyle
  * @c \#include @c <kdrawutil.h>
  * @overload
  */

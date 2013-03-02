@@ -35,7 +35,7 @@
 
 class TQPopupMenu;
 
-class KCompletionBox;
+class TDECompletionBox;
 class KURL;
 
 /**
@@ -63,7 +63,7 @@ class KURL;
  *
  * This widget by default creates a completion object when you invoke
  * the completionObject( bool ) member function for the first time or
- * use setCompletionObject( KCompletion*, bool ) to assign your own
+ * use setCompletionObject( TDECompletion*, bool ) to assign your own
  * completion object.  Additionally, to make this widget more functional,
  * KLineEdit will by default handle the text rotation and completion
  * events internally when a completion object is created through either one
@@ -72,7 +72,7 @@ class KURL;
  * the above functions to false.
  *
  * The default key-bindings for completion and rotation is determined
- * from the global settings in KStdAccel. These values, however, can
+ * from the global settings in TDEStdAccel. These values, however, can
  * be overridden locally by invoking @p setKeyBinding(). You can easily
  * revert these settings back to the default by simply calling
  * @p useGlobalSettings(). An alternate method would be to default
@@ -80,9 +80,9 @@ class KURL;
  * second argument.
  *
  * If @p EchoMode for this widget is set to something other than @p TQLineEdit::Normal,
- * the completion mode will always be defaulted to KGlobalSettings::CompletionNone.
+ * the completion mode will always be defaulted to TDEGlobalSettings::CompletionNone.
  * This is done purposefully to guard against protected entries such as passwords being
- * cached in KCompletion's list. Hence, if the @p EchoMode is not TQLineEdit::Normal, the
+ * cached in TDECompletion's list. Hence, if the @p EchoMode is not TQLineEdit::Normal, the
  * completion mode is automatically disabled.
  *
  * A read-only KLineEdit will have the same background color as a
@@ -97,7 +97,7 @@ class KURL;
  *
  * \code
  * KLineEdit *edit = new KLineEdit( this, "mywidget" );
- * KCompletion *comp = edit->completionObject();
+ * TDECompletion *comp = edit->completionObject();
  * // Connect to the return pressed signal - optional
  * connect(edit,TQT_SIGNAL(returnPressed(const TQString&)),comp,TQT_SLOT(addItem(const TQString&)));
  * \endcode
@@ -127,7 +127,7 @@ class KURL;
  * edit->setHandleSignals( false );
  *
  * // Set your own key-bindings for a text completion mode.
- * edit->setKeyBinding( KCompletionBase::TextCompletion, Qt::End );
+ * edit->setKeyBinding( TDECompletionBase::TextCompletion, Qt::End );
  *
  * // Hide the context (popup) menu
  * edit->setContextMenuEnabled( false );
@@ -142,7 +142,7 @@ class KURL;
  * @author Dawit Alemayehu <adawit@kde.org>
  */
 
-class TDEUI_EXPORT KLineEdit : public TQLineEdit, public KCompletionBase
+class TDEUI_EXPORT KLineEdit : public TQLineEdit, public TDECompletionBase
 {
     friend class KComboBox;
 
@@ -197,14 +197,14 @@ public:
     void cursorAtEnd() { end( false ); }
 
     /**
-     * Re-implemented from KCompletionBase for internal reasons.
+     * Re-implemented from TDECompletionBase for internal reasons.
      *
      * This function is re-implemented in order to make sure that
      * the EchoMode is acceptable before we set the completion mode.
      *
-     * See KCompletionBase::setCompletionMode
+     * See TDECompletionBase::setCompletionMode
      */
-    virtual void setCompletionMode( KGlobalSettings::Completion mode );
+    virtual void setCompletionMode( TDEGlobalSettings::Completion mode );
 
    /**
     * Enables/disables the popup (context) menu.
@@ -269,18 +269,18 @@ public:
 
     /**
      * @returns the completion-box, that is used in completion mode
-     * KGlobalSettings::CompletionPopup.
+     * TDEGlobalSettings::CompletionPopup.
      * This method will create a completion-box if none is there, yet.
      *
      * @param create Set this to false if you don't want the box to be created
      *               i.e. to test if it is available.
      */
-    KCompletionBox * completionBox( bool create = true );
+    TDECompletionBox * completionBox( bool create = true );
 
     /**
      * Reimplemented for internal reasons, the API is not affected.
      */
-    virtual void setCompletionObject( KCompletion *, bool hsig = true );
+    virtual void setCompletionObject( TDECompletion *, bool hsig = true );
 
     /**
      * Reimplemented for internal reasons, the API is not affected.
@@ -320,13 +320,13 @@ public:
 
     /**
      * Set the completion-box to be used in completion mode
-     * KGlobalSettings::CompletionPopup.
+     * TDEGlobalSettings::CompletionPopup.
      * This will do nothing if a completion-box already exists.
      *
-     * @param box The KCompletionBox to set
+     * @param box The TDECompletionBox to set
      * @since 3.4
     */
-    void setCompletionBox( KCompletionBox *box );
+    void setCompletionBox( TDECompletionBox *box );
 
     /**
      * This makes the line edit display a grayed-out hinting text as long as
@@ -382,16 +382,16 @@ signals:
      * @p setKeyBinding for details.
      *
      * Note that this signal is @em not emitted if the completion
-     * mode is set to @p KGlobalSettings::CompletionNone or
+     * mode is set to @p TDEGlobalSettings::CompletionNone or
      * @p echoMode() is @em not  normal.
      */
-    void textRotation( KCompletionBase::KeyBindingType );
+    void textRotation( TDECompletionBase::KeyBindingType );
 
     /**
      * Emitted when the user changed the completion mode by using the
      * popupmenu.
      */
-    void completionModeChanged( KGlobalSettings::Completion );
+    void completionModeChanged( TDEGlobalSettings::Completion );
 
     /**
      * Emitted before the context menu is displayed.
@@ -424,10 +424,10 @@ public slots:
      *
      * @param type The key-binding invoked.
      */
-    void rotateText( KCompletionBase::KeyBindingType type );
+    void rotateText( TDECompletionBase::KeyBindingType type );
 
     /**
-     * See KCompletionBase::setCompletedText.
+     * See TDECompletionBase::setCompletedText.
      */
     virtual void setCompletedText( const TQString& );
 

@@ -23,8 +23,8 @@ include_directories(
   ${CMAKE_SOURCE_DIR}
   ${CMAKE_SOURCE_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/tdeui
-  ${CMAKE_SOURCE_DIR}/kio
-  ${CMAKE_SOURCE_DIR}/kio/kfile
+  ${CMAKE_SOURCE_DIR}/tdeio
+  ${CMAKE_SOURCE_DIR}/tdeio/tdefile
 )
 
 link_directories(
@@ -32,12 +32,12 @@ link_directories(
 )
 
 
-##### makekdewidgets ############################
+##### maketdewidgets ############################
 
-set( target makekdewidgets )
+set( target maketdewidgets )
 
 set( ${target}_SRCS
-  makekdewidgets.cpp
+  maketdewidgets.cpp
 )
 
 tde_add_executable( ${target}
@@ -55,12 +55,12 @@ set( ${target}_SRCS
 )
 
 add_custom_command( OUTPUT kdewidgets.cpp
-  COMMAND ./makekdewidgets -o kdewidgets.cpp ${CMAKE_CURRENT_SOURCE_DIR}/kde.widgets
-  DEPENDS makekdewidgets ${CMAKE_CURRENT_SOURCE_DIR}/kde.widgets
+  COMMAND ./maketdewidgets -o kdewidgets.cpp ${CMAKE_CURRENT_SOURCE_DIR}/kde.widgets
+  DEPENDS maketdewidgets ${CMAKE_CURRENT_SOURCE_DIR}/kde.widgets
 )
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK kabc-shared
+  LINK tdeabc-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}/plugins/designer
 )

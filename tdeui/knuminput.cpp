@@ -44,8 +44,8 @@
 #include <tqspinbox.h>
 #include <tqstyle.h>
 
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 
 #include "kdialog.h"
@@ -1129,7 +1129,7 @@ void KDoubleSpinBox::setLineStep( double step ) {
 
 TQString KDoubleSpinBox::mapValueToText( int value ) {
   if ( acceptLocalizedNumbers() )
-    return KGlobal::locale()
+    return TDEGlobal::locale()
       ->formatNumber( d->mapToDouble( value ), d->mPrecision );
   else
     return TQString().setNum( d->mapToDouble( value ), 'f', d->mPrecision );
@@ -1138,7 +1138,7 @@ TQString KDoubleSpinBox::mapValueToText( int value ) {
 int KDoubleSpinBox::mapTextToValue( bool * ok ) {
   double value;
   if ( acceptLocalizedNumbers() )
-    value = KGlobal::locale()->readNumber( cleanText(), ok );
+    value = TDEGlobal::locale()->readNumber( cleanText(), ok );
   else
     value = cleanText().toDouble( ok );
   if ( !*ok ) return 0;

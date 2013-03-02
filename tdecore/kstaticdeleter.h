@@ -23,18 +23,18 @@
 #ifndef _KSTATIC_DELETER_H_
 #define _KSTATIC_DELETER_H_
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 /**
  * Static deleters are used to manage static resources. They can register
- * themselves with KGlobal. KGlobal will call destructObject() when
- * KGlobal::deleteStaticDeleters() is called or when it the process
+ * themselves with TDEGlobal. TDEGlobal will call destructObject() when
+ * TDEGlobal::deleteStaticDeleters() is called or when it the process
  * finishes.
  *
  * @see KStaticDeleter
- * @see KGlobal::registerStaticDeleter()
- * @see KGlobal::unregisterStaticDeleter()
- * @see KGlobal::deleteStaticDeleters()
+ * @see TDEGlobal::registerStaticDeleter()
+ * @see TDEGlobal::unregisterStaticDeleter()
+ * @see TDEGlobal::deleteStaticDeleters()
  */
 class TDECORE_EXPORT KStaticDeleterBase {
 public:
@@ -42,7 +42,7 @@ public:
     /**
      * Should destruct the resources managed by this KStaticDeleterBase.
      * Usually you also want to call it in your destructor.
-     * @see KGlobal::deleteStaticDeleters()
+     * @see TDEGlobal::deleteStaticDeleters()
      */
     virtual void destructObject();
 };
@@ -76,7 +76,7 @@ public:
     KStaticDeleter() { deleteit = 0; globalReference = 0; array = false; }
     /**
      * Sets the object to delete and registers the object to be
-     * deleted to KGlobal. If the given object is 0, the former
+     * deleted to TDEGlobal. If the given object is 0, the former
      * registration is unregistered.
      * @param obj the object to delete
      * @param isArray tells the destructor to delete an array instead of an object
@@ -87,14 +87,14 @@ public:
         globalReference = 0;
 	array = isArray;
 	if (obj)
-            KGlobal::registerStaticDeleter(this);
+            TDEGlobal::registerStaticDeleter(this);
 	else
-	    KGlobal::unregisterStaticDeleter(this);
+	    TDEGlobal::unregisterStaticDeleter(this);
         return obj;
     }
     /**
      * Sets the object to delete and registers the object to be
-     * deleted to KGlobal. If the given object is 0, the former
+     * deleted to TDEGlobal. If the given object is 0, the former
      * registration is unregistered.
      * @param globalRef the static pointer where this object is stored
      * This pointer will be reset to 0 after deletion of the object.
@@ -106,9 +106,9 @@ public:
         deleteit = obj;
 	array = isArray;
 	if (obj)
-            KGlobal::registerStaticDeleter(this);
+            TDEGlobal::registerStaticDeleter(this);
 	else
-	    KGlobal::unregisterStaticDeleter(this);
+	    TDEGlobal::unregisterStaticDeleter(this);
         globalRef = obj;
 	return obj;
     }
@@ -127,7 +127,7 @@ public:
     	deleteit = 0;
     }
     virtual ~KStaticDeleter() {
-    	KGlobal::unregisterStaticDeleter(this);
+    	TDEGlobal::unregisterStaticDeleter(this);
 	destructObject();
     }
 private:

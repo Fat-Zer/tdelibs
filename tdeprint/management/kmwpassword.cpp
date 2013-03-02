@@ -26,7 +26,7 @@
 #include <tqvbuttongroup.h>
 #include <tqradiobutton.h>
 #include <tqlayout.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kcursor.h>
 
 #include <stdlib.h>

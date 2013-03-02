@@ -40,33 +40,33 @@
 #include "katefiletype.h"
 #include "kateschema.h"
 #include "katetemplatehandler.h"
-#include <ktexteditor/plugin.h>
+#include <tdetexteditor/plugin.h>
 
-#include <kio/job.h>
-#include <kio/netaccess.h>
-#include <kio/kfileitem.h>
+#include <tdeio/job.h>
+#include <tdeio/netaccess.h>
+#include <tdeio/tdefileitem.h>
 
 
-#include <kparts/event.h>
+#include <tdeparts/event.h>
 
-#include <klocale.h>
-#include <kglobal.h>
-#include <kapplication.h>
-#include <kpopupmenu.h>
-#include <kconfig.h>
-#include <kfiledialog.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
+#include <tdeapplication.h>
+#include <tdepopupmenu.h>
+#include <tdeconfig.h>
+#include <tdefiledialog.h>
+#include <tdemessagebox.h>
 #include <kstdaction.h>
 #include <kiconloader.h>
 #include <kxmlguifactory.h>
 #include <kdialogbase.h>
 #include <kdebug.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 #include <klibloader.h>
 #include <kdirwatch.h>
 #include <twin.h>
 #include <kencodingfiledialog.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 #include <kmdcodec.h>
 #include <kstandarddirs.h>
 
@@ -112,7 +112,7 @@ KateDocument::KateDocument ( bool bSingleViewMode, bool bBrowserView,
   // my dcop object
   setObjId ("KateDocument#"+documentDCOPSuffix());
 
-  // ktexteditor interfaces
+  // tdetexteditor interfaces
   setBlockSelectionInterfaceDCOPSuffix (documentDCOPSuffix());
   setConfigInterfaceDCOPSuffix (documentDCOPSuffix());
   setConfigInterfaceExtensionDCOPSuffix (documentDCOPSuffix());
@@ -1879,7 +1879,7 @@ void KateDocument::setDontChangeHlOnSave()
 //END
 
 //BEGIN KTextEditor::ConfigInterface stuff
-void KateDocument::readConfig(KConfig *config)
+void KateDocument::readConfig(TDEConfig *config)
 {
   config->setGroup("Kate Document Defaults");
 
@@ -1895,7 +1895,7 @@ void KateDocument::readConfig(KConfig *config)
   KateRendererConfig::global()->readConfig (config);
 }
 
-void KateDocument::writeConfig(KConfig *config)
+void KateDocument::writeConfig(TDEConfig *config)
 {
   config->setGroup("Kate Document Defaults");
 
@@ -1913,24 +1913,24 @@ void KateDocument::writeConfig(KConfig *config)
 
 void KateDocument::readConfig()
 {
-  KConfig *config = kapp->config();
+  TDEConfig *config = kapp->config();
   readConfig (config);
 }
 
 void KateDocument::writeConfig()
 {
-  KConfig *config = kapp->config();
+  TDEConfig *config = kapp->config();
   writeConfig (config);
   config->sync();
 }
 
-void KateDocument::readSessionConfig(KConfig *kconfig)
+void KateDocument::readSessionConfig(TDEConfig *tdeconfig)
 {
   // restore the url
-  KURL url (kconfig->readEntry("URL"));
+  KURL url (tdeconfig->readEntry("URL"));
 
   // get the encoding
-  TQString tmpenc=kconfig->readEntry("Encoding");
+  TQString tmpenc=tdeconfig->readEntry("Encoding");
   if (!tmpenc.isEmpty() && (tmpenc != encoding()))
     setEncoding(tmpenc);
 
@@ -1939,34 +1939,34 @@ void KateDocument::readSessionConfig(KConfig *kconfig)
     openURL (url);
 
   // restore the hl stuff
-  m_buffer->setHighlight(KateHlManager::self()->nameFind(kconfig->readEntry("Highlighting")));
+  m_buffer->setHighlight(KateHlManager::self()->nameFind(tdeconfig->readEntry("Highlighting")));
 
   if (hlMode() > 0)
     hlSetByUser = true;
 
   // indent mode
-  config()->setIndentationMode( (uint)kconfig->readNumEntry("Indentation Mode", config()->indentationMode() ) );
+  config()->setIndentationMode( (uint)tdeconfig->readNumEntry("Indentation Mode", config()->indentationMode() ) );
 
   // Restore Bookmarks
-  TQValueList<int> marks = kconfig->readIntListEntry("Bookmarks");
+  TQValueList<int> marks = tdeconfig->readIntListEntry("Bookmarks");
   for( uint i = 0; i < marks.count(); i++ )
     addMark( marks[i], KateDocument::markType01 );
 }
 
-void KateDocument::writeSessionConfig(KConfig *kconfig)
+void KateDocument::writeSessionConfig(TDEConfig *tdeconfig)
 {
-  if ( m_url.isLocalFile() && !KGlobal::dirs()->relativeLocation("tmp", m_url.path()).startsWith("/"))
+  if ( m_url.isLocalFile() && !TDEGlobal::dirs()->relativeLocation("tmp", m_url.path()).startsWith("/"))
        return;
   // save url
-  kconfig->writeEntry("URL", m_url.prettyURL() );
+  tdeconfig->writeEntry("URL", m_url.prettyURL() );
 
   // save encoding
-  kconfig->writeEntry("Encoding",encoding());
+  tdeconfig->writeEntry("Encoding",encoding());
 
   // save hl
-  kconfig->writeEntry("Highlighting", highlight()->name());
+  tdeconfig->writeEntry("Highlighting", highlight()->name());
 
-  kconfig->writeEntry("Indentation Mode", config()->indentationMode() );
+  tdeconfig->writeEntry("Indentation Mode", config()->indentationMode() );
 
   // Save Bookmarks
   TQValueList<int> marks;
@@ -1975,7 +1975,7 @@ void KateDocument::writeSessionConfig(KConfig *kconfig)
        ++it )
      marks << it.current()->line;
 
-  kconfig->writeEntry( "Bookmarks", marks );
+  tdeconfig->writeEntry( "Bookmarks", marks );
 }
 
 void KateDocument::configDialog()
@@ -1998,7 +1998,7 @@ void KateDocument::configDialog()
     path.clear();
     path << KTextEditor::configInterfaceExtension (this)->configPageName (i);
     TQVBox *page = kd->addVBoxPage(path, KTextEditor::configInterfaceExtension (this)->configPageFullName (i),
-                              KTextEditor::configInterfaceExtension (this)->configPagePixmap(i, KIcon::SizeMedium) );
+                              KTextEditor::configInterfaceExtension (this)->configPagePixmap(i, TDEIcon::SizeMedium) );
 
     editorPages.append (KTextEditor::configInterfaceExtension (this)->configPage(i, page));
   }
@@ -2302,14 +2302,14 @@ bool KateDocument::openURL( const KURL &url )
     m_tempFile = new KTempFile ();
     m_file = m_tempFile->name();
 
-    m_job = KIO::get ( url, false, isProgressInfoEnabled() );
+    m_job = TDEIO::get ( url, false, isProgressInfoEnabled() );
 
     // connect to slots
-    connect( m_job, TQT_SIGNAL( data( KIO::Job*, const TQByteArray& ) ),
-           TQT_SLOT( slotDataKate( KIO::Job*, const TQByteArray& ) ) );
+    connect( m_job, TQT_SIGNAL( data( TDEIO::Job*, const TQByteArray& ) ),
+           TQT_SLOT( slotDataKate( TDEIO::Job*, const TQByteArray& ) ) );
 
-    connect( m_job, TQT_SIGNAL( result( KIO::Job* ) ),
-           TQT_SLOT( slotFinishedKate( KIO::Job* ) ) );
+    connect( m_job, TQT_SIGNAL( result( TDEIO::Job* ) ),
+           TQT_SLOT( slotFinishedKate( TDEIO::Job* ) ) );
 
     TQWidget *w = widget ();
     if (!w && !m_views.isEmpty ())
@@ -2324,7 +2324,7 @@ bool KateDocument::openURL( const KURL &url )
   }
 }
 
-void KateDocument::slotDataKate ( KIO::Job *, const TQByteArray &data )
+void KateDocument::slotDataKate ( TDEIO::Job *, const TQByteArray &data )
 {
 //   kdDebug(13020) << "KateDocument::slotData" << endl;
 
@@ -2334,7 +2334,7 @@ void KateDocument::slotDataKate ( KIO::Job *, const TQByteArray &data )
   m_tempFile->file()->writeBlock (data);
 }
 
-void KateDocument::slotFinishedKate ( KIO::Job * job )
+void KateDocument::slotFinishedKate ( TDEIO::Job * job )
 {
 //   kdDebug(13020) << "KateDocument::slotJobFinished" << endl;
 
@@ -2373,7 +2373,7 @@ bool KateDocument::openFile()
   return openFile (0);
 }
 
-bool KateDocument::openFile(KIO::Job * job)
+bool KateDocument::openFile(TDEIO::Job * job)
 {
   m_loading = true;
   // add new m_file to dirwatch
@@ -2520,8 +2520,8 @@ bool KateDocument::save()
 
     // get the right permissions, start with safe default
     mode_t  perms = 0600;
-    KIO::UDSEntry fentry;
-    if (KIO::NetAccess::stat (url(), fentry, kapp->mainWidget()))
+    TDEIO::UDSEntry fentry;
+    if (TDEIO::NetAccess::stat (url(), fentry, kapp->mainWidget()))
     {
       kdDebug () << "stating succesfull: " << url() << endl;
       KFileItem item (fentry, url());
@@ -2530,8 +2530,8 @@ bool KateDocument::save()
 
     // first del existing file if any, than copy over the file we have
     // failure if a: the existing file could not be deleted, b: the file could not be copied
-    if ( (!KIO::NetAccess::exists( u, false, kapp->mainWidget() ) || KIO::NetAccess::del( u, kapp->mainWidget() ))
-          && KIO::NetAccess::file_copy( url(), u, perms, true, false, kapp->mainWidget() ) )
+    if ( (!TDEIO::NetAccess::exists( u, false, kapp->mainWidget() ) || TDEIO::NetAccess::del( u, kapp->mainWidget() ))
+          && TDEIO::NetAccess::file_copy( url(), u, perms, true, false, kapp->mainWidget() ) )
     {
       kdDebug(13020)<<"backing up successfull ("<<url().prettyURL()<<" -> "<<u.prettyURL()<<")"<<endl;
     }
@@ -2761,7 +2761,7 @@ bool KateDocument::closeURL()
   }
 
   //
-  // first call the normal kparts implementation
+  // first call the normal tdeparts implementation
   //
   if (!KParts::ReadWritePart::closeURL ())
     return false;

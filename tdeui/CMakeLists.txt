@@ -25,9 +25,9 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/dcop
   ${CMAKE_SOURCE_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/tdefx
-  ${CMAKE_SOURCE_DIR}/kio
-  ${CMAKE_SOURCE_DIR}/kio/kio
-  ${CMAKE_SOURCE_DIR}/kio/kfile
+  ${CMAKE_SOURCE_DIR}/tdeio
+  ${CMAKE_SOURCE_DIR}/tdeio/tdeio
+  ${CMAKE_SOURCE_DIR}/tdeio/tdefile
   ${FREETYPE_INCLUDE_DIRS}
 )
 
@@ -40,10 +40,10 @@ link_directories(
 
 install( FILES
     kprogressbox.h kprogress.h kcolordlg.h
-    kcolordialog.h kselect.h
-    kdatepik.h kdatepicker.h kdatetbl.h kfontdialog.h kpopupmenu.h
-    kfontrequester.h ktabctl.h kstatusbar.h
-    kmainwindow.h kmainwindowiface.h ktoolbar.h kmenubar.h
+    kcolordialog.h tdeselect.h
+    kdatepik.h kdatepicker.h kdatetbl.h tdefontdialog.h tdepopupmenu.h
+    tdefontrequester.h ktabctl.h kstatusbar.h
+    tdemainwindow.h tdemainwindowiface.h tdetoolbar.h tdemenubar.h
     knuminput.h kseparator.h klineedit.h
     krestrictedline.h kcolorbutton.h kcolorbtn.h
     ksystemtray.h kdockwindow.h kbuttonbox.h
@@ -53,30 +53,30 @@ install( FILES
     klineeditdlg.h kinputdialog.h kactivelabel.h
     kcharselect.h kcolordrag.h qxembed.h
     knumvalidator.h kdialog.h kdialogbase.h
-    kjanuswidget.h kaboutdialog.h
-    kauthicon.h kmessagebox.h ksharedpixmap.h
-    kdualcolorbtn.h kdualcolorbutton.h ktoolbarbutton.h
-    ktoolbarradiogroup.h ktextbrowser.h
-    kaction.h kactioncollection.h kactionclasses.h khelpmenu.h kswitchlanguagedialog.h
-    kcmodule.h kcmenumngr.h kpanelmenu.h kpanelappmenu.h
-    kactionshortcutlist.h kstdaction.h kcombobox.h
-    kiconview.h klistview.h klistbox.h kbugreport.h kpassdlg.h
+    kjanuswidget.h tdeaboutdialog.h
+    kauthicon.h tdemessagebox.h ksharedpixmap.h
+    kdualcolorbtn.h kdualcolorbutton.h tdetoolbarbutton.h
+    tdetoolbarradiogroup.h ktextbrowser.h
+    tdeaction.h tdeactioncollection.h tdeactionclasses.h khelpmenu.h kswitchlanguagedialog.h
+    tdecmodule.h kcmenumngr.h kpanelmenu.h kpanelappmenu.h
+    tdeactionshortcutlist.h kstdaction.h kcombobox.h
+    kiconview.h tdelistview.h tdelistbox.h kbugreport.h kpassdlg.h
     kxmlguiclient.h kxmlgui.h kxmlguibuilder.h kxmlguifactory.h
     kpixmapio.h kwordwrap.h
     kedittoolbar.h kdockwidget.h kanimwidget.h
-    krootpixmap.h kaboutkde.h kaboutapplication.h
+    krootpixmap.h tdeabouttde.h tdeaboutapplication.h
     kpanelapplet.h kpushbutton.h kdcopactionproxy.h kcolorcombo.h
-    kpanelextension.h kcompletionbox.h ksqueezedtextlabel.h
-    kcommand.h twindowlistmenu.h kfontcombo.h kaccelgen.h ktip.h
+    kpanelextension.h tdecompletionbox.h ksqueezedtextlabel.h
+    kcommand.h twindowlistmenu.h tdefontcombo.h tdeaccelgen.h ktip.h
     kdatewidget.h karrowbutton.h kguiitem.h kstdguiitem.h
     kstringvalidator.h twindowinfo.h
     ktextedit.h kpassivepopup.h
     kdatetimewidget.h ktimewidget.h ktimezonewidget.h kscrollview.h
-    kspell.h ksconfig.h kspelldlg.h ksyntaxhighlighter.h
-    ktabbar.h ktabwidget.h ksplashscreen.h kconfigdialog.h
-    kactionselector.h klanguagebutton.h klistviewsearchline.h
+    tdespell.h ksconfig.h tdespelldlg.h ksyntaxhighlighter.h
+    ktabbar.h ktabwidget.h ksplashscreen.h tdeconfigdialog.h
+    tdeactionselector.h klanguagebutton.h tdelistviewsearchline.h
     kpixmapregionselectorwidget.h kpixmapregionselectordialog.h
-    kiconviewsearchline.h ktoolbarlabelaction.h kshortcutdialog.h
+    kiconviewsearchline.h tdetoolbarlabelaction.h tdeshortcutdialog.h
   DESTINATION ${INCLUDE_INSTALL_DIR} )
 
 
@@ -101,48 +101,48 @@ set( target tdeui )
 
 set( ${target}_SRCS
   qxembed.cpp ksharedpixmap.cpp kpixmapio.cpp
-  kpopupmenu.cpp ktoolbar.cpp kaction.cpp kstdaction.cpp
-  kactioncollection.cpp kactionclasses.cpp
-  kurllabel.cpp kmenubar.cpp kinputdialog.cpp
-  knuminput.cpp klineedit.cpp klistview.cpp kprogress.cpp
-  kprogressbox.cpp kcolordialog.cpp kselect.cpp kdatepicker.cpp
-  kdatetbl.cpp kfontrequester.cpp kfontdialog.cpp ktabctl.cpp
-  kstatusbar.cpp kmainwindow.cpp
+  tdepopupmenu.cpp tdetoolbar.cpp tdeaction.cpp kstdaction.cpp
+  tdeactioncollection.cpp tdeactionclasses.cpp
+  kurllabel.cpp tdemenubar.cpp kinputdialog.cpp
+  knuminput.cpp klineedit.cpp tdelistview.cpp kprogress.cpp
+  kprogressbox.cpp kcolordialog.cpp tdeselect.cpp kdatepicker.cpp
+  kdatetbl.cpp tdefontrequester.cpp tdefontdialog.cpp ktabctl.cpp
+  kstatusbar.cpp tdemainwindow.cpp
   keditlistbox.cpp kscrollview.cpp
   kseparator.cpp krestrictedline.cpp
   kcolorbutton.cpp ksystemtray.cpp
   kbuttonbox.cpp keditcl1.cpp keditcl2.cpp kled.cpp
-  kshortcutdialog_simple.ui kshortcutdialog_advanced.ui
-  kshortcutdialog.cpp kkeybutton.cpp kkeydialog.cpp
+  tdeshortcutdialog_simple.ui tdeshortcutdialog_advanced.ui
+  tdeshortcutdialog.cpp kkeybutton.cpp kkeydialog.cpp
   kruler.cpp kcursor.cpp klineeditdlg.cpp
   kcharselect.cpp kcolordrag.cpp
   knumvalidator.cpp kdialog.cpp kdialogbase.cpp
-  kjanuswidget.cpp kaboutdialog.cpp
-  kauthicon.cpp kmessagebox.cpp kdualcolorbutton.cpp
-  ktoolbarradiogroup.cpp ktoolbarbutton.cpp
+  kjanuswidget.cpp tdeaboutdialog.cpp
+  kauthicon.cpp tdemessagebox.cpp kdualcolorbutton.cpp
+  tdetoolbarradiogroup.cpp tdetoolbarbutton.cpp
   ktextbrowser.cpp khelpmenu.cpp kswitchlanguagedialog.cpp
   kcmenumngr.cpp kpanelmenu.cpp
-  kiconview.cpp klistbox.cpp kwordwrap.cpp kbugreport.cpp
+  kiconview.cpp tdelistbox.cpp kwordwrap.cpp kbugreport.cpp
   kcombobox.cpp kpassdlg.cpp kxmlguiclient.cpp kxmlguifactory.cpp
   kxmlguifactory_p.cpp kxmlguibuilder.cpp kedittoolbar.cpp
   kpanelappmenu.cpp kdockwidget.cpp kdockwidget_private.cpp
-  kanimwidget.cpp krootpixmap.cpp kaboutkde.cpp
-  kaboutapplication.cpp kpanelapplet.cpp kdcopactionproxy.cpp
+  kanimwidget.cpp krootpixmap.cpp tdeabouttde.cpp
+  tdeaboutapplication.cpp kpanelapplet.cpp kdcopactionproxy.cpp
   kcolorcombo.cpp kpushbutton.cpp kpanelextension.cpp
-  kcompletionbox.cpp ksqueezedtextlabel.cpp kcmodule.cpp
-  kcommand.cpp twindowlistmenu.cpp kfontcombo.cpp ktip.cpp
-  kdatewidget.cpp karrowbutton.cpp kmainwindowiface.cpp
-  kmainwindowiface.skel kguiitem.cpp kstdguiitem.cpp
+  tdecompletionbox.cpp ksqueezedtextlabel.cpp tdecmodule.cpp
+  kcommand.cpp twindowlistmenu.cpp tdefontcombo.cpp ktip.cpp
+  kdatewidget.cpp karrowbutton.cpp tdemainwindowiface.cpp
+  tdemainwindowiface.skel kguiitem.cpp kstdguiitem.cpp
   kstringvalidator.cpp kactivelabel.cpp
   twindowinfo.cpp ktextedit.cpp kwizard.cpp kpassivepopup.cpp
-  ktoolbarhandler.cpp kdatetimewidget.cpp ktimewidget.cpp ktimezonewidget.cpp
-  ksconfig.cpp kspelldlg.cpp
-  kspell.cpp ksyntaxhighlighter.cpp ktabbar.cpp ktabwidget.cpp
-  ksplashscreen.cpp kspellui.ui kconfigdialog.cpp
-  kactionselector.cpp klanguagebutton.cpp klistviewsearchline.cpp
+  tdetoolbarhandler.cpp kdatetimewidget.cpp ktimewidget.cpp ktimezonewidget.cpp
+  ksconfig.cpp tdespelldlg.cpp
+  tdespell.cpp ksyntaxhighlighter.cpp ktabbar.cpp ktabwidget.cpp
+  ksplashscreen.cpp tdespellui.ui tdeconfigdialog.cpp
+  tdeactionselector.cpp klanguagebutton.cpp tdelistviewsearchline.cpp
   kpixmapregionselectorwidget.cpp kpixmapregionselectordialog.cpp
   kwhatsthismanager.cpp kiconviewsearchline.cpp
-  ktoolbarlabelaction.cpp
+  tdetoolbarlabelaction.cpp
 )
 
 tde_add_library( ${target} SHARED AUTOMOC
@@ -154,9 +154,9 @@ tde_add_library( ${target} SHARED AUTOMOC
 )
 
 
-##### libkspell #################################
+##### libtdespell #################################
 
-set( target kspell )
+set( target tdespell )
 
 configure_file( ${CMAKE_SOURCE_DIR}/cmake/modules/template_dummy_cpp.cmake dummy.cpp COPYONLY )
 

@@ -19,9 +19,9 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include <kapplication.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdeapplication.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kstaticdeleter.h>
 
 #include "clientiface_stub.h"

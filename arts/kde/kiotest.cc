@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <kmedia2.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <connect.h>
-#include <klocale.h>
-#include <kapplication.h>
-#include <kaboutdata.h>
+#include <tdelocale.h>
+#include <tdeapplication.h>
+#include <tdeaboutdata.h>
 #include "qiomanager.h"
 #include "artskde.h"
 
@@ -12,25 +12,25 @@ using namespace std;
 using namespace Arts;
 
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
     { "+[URL]", I18N_NOOP("URL to open"), 0 },
-    KCmdLineLastOption
+    TDECmdLineLastOption
 };
 
 int main(int argc, char **argv)
 {
-	KAboutData aboutData( "kiotest", I18N_NOOP("KIOTest"), I18N_NOOP("0.1"), "", KAboutData::License_GPL, "");
+	TDEAboutData aboutData( "kiotest", I18N_NOOP("KIOTest"), I18N_NOOP("0.1"), "", TDEAboutData::License_GPL, "");
 							  
-	KCmdLineArgs::init(argc,argv,&aboutData);
-	KCmdLineArgs::addCmdLineOptions(options); 	
-	KApplication app;
+	TDECmdLineArgs::init(argc,argv,&aboutData);
+	TDECmdLineArgs::addCmdLineOptions(options); 	
+	TDEApplication app;
 	QIOManager qiomanager;
 	Dispatcher dispatcher(&qiomanager);
-	KIOInputStream stream;
+	TDEIOInputStream stream;
 	StdoutWriter writer;
 
-	KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+	TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
 	if(args->count())
 	{

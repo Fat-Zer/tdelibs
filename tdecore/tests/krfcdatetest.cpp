@@ -1,8 +1,8 @@
 #include <stdio.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <stdlib.h>
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kcharsets.h>
 #include <tqtextcodec.h>
 #include <krfcdate.h>
@@ -21,7 +21,7 @@ bool check(TQString txt, time_t a, time_t b)
 
 int main(int argc, char *argv[])
 {
-  KApplication app(argc,argv,"kurltest",false,false);
+  TDEApplication app(argc,argv,"kurltest",false,false);
 
   time_t a;
   time_t b;

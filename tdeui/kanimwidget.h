@@ -68,7 +68,7 @@ public:
    * @param icons  The icons name (e.g., "kde") to use for the animation
    * @param size   The size to load
    *               You don't have to set it if the parent is a
-   *               KToolBar; in this case it will use the toolbar's
+   *               TDEToolBar; in this case it will use the toolbar's
    *               size.
    * @param parent The standard parent
    * @param name   The standard internal name
@@ -102,7 +102,7 @@ public:
 
   /**
    * Sets the name of the animated icons to load.  This will use the
-   * KIconLoader::loadAnimated method for the actual loading.
+   * TDEIconLoader::loadAnimated method for the actual loading.
    *
    * @param icons The name of the icons to use for the animation
    */

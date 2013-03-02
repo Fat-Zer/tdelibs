@@ -26,7 +26,7 @@
 #include "kmproprlpr.h"
 #include "kmconfigproxy.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 KMRlprUiManager::KMRlprUiManager(TQObject *parent, const char *name, const TQStringList & /*args*/)
 : KMUiManager(parent,name)

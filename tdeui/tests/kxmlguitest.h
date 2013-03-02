@@ -11,7 +11,7 @@ public:
     Client() {}
 
     void setXMLFile( const TQString &f, bool merge = true ) { KXMLGUIClient::setXMLFile( f, merge ); }
-    void setInstance( KInstance *inst ) { KXMLGUIClient::setInstance( inst ); }
+    void setInstance( TDEInstance *inst ) { KXMLGUIClient::setInstance( inst ); }
 
 public slots:
     void slotSec();

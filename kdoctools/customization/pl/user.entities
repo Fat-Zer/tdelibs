@@ -205,19 +205,19 @@ ktnef
 <!ENTITY ksysguard-narzednik    '<application>Ksysguardem</application>'>
 <!ENTITY ksysguard-miejscownik    '<application>Ksysguardzie</application>'>
 
-<!ENTITY kwallet-mianownik    '<application>Portfel &tde;</application>'>
-<!ENTITY kwallet-dopelniacz    '<application>Portfela &tde;</application>'>
-<!ENTITY kwallet-celownik    '<application>Portfelowi &tde;</application>'>
-<!ENTITY kwallet-biernik    '<application>Portfel &tde;</application>'>
-<!ENTITY kwallet-narzednik    '<application>Portfelem &tde;</application>'>
-<!ENTITY kwallet-miejscownik    '<application>Portfelu &tde;</application>'>
+<!ENTITY tdewallet-mianownik    '<application>Portfel &tde;</application>'>
+<!ENTITY tdewallet-dopelniacz    '<application>Portfela &tde;</application>'>
+<!ENTITY tdewallet-celownik    '<application>Portfelowi &tde;</application>'>
+<!ENTITY tdewallet-biernik    '<application>Portfel &tde;</application>'>
+<!ENTITY tdewallet-narzednik    '<application>Portfelem &tde;</application>'>
+<!ENTITY tdewallet-miejscownik    '<application>Portfelu &tde;</application>'>
 
-<!ENTITY kwalletmanager-mianownik    '<application>Menedżer portfeli &tde;</application>'>
-<!ENTITY kwalletmanager-dopelniacz    '<application>Menedżera portfeli &tde;</application>'>
-<!ENTITY kwalletmanager-celownik    '<application>Menedżerowi portfeli &tde;</application>'>
-<!ENTITY kwalletmanager-biernik    '<application>Menedżera portfeli &tde;</application>'>
-<!ENTITY kwalletmanager-narzednik    '<application>Menedżerem portfeli &tde;</application>'>
-<!ENTITY kwalletmanager-miejscownik    '<application>Menedżerze portfeli &tde;</application>'>
+<!ENTITY tdewalletmanager-mianownik    '<application>Menedżer portfeli &tde;</application>'>
+<!ENTITY tdewalletmanager-dopelniacz    '<application>Menedżera portfeli &tde;</application>'>
+<!ENTITY tdewalletmanager-celownik    '<application>Menedżerowi portfeli &tde;</application>'>
+<!ENTITY tdewalletmanager-biernik    '<application>Menedżera portfeli &tde;</application>'>
+<!ENTITY tdewalletmanager-narzednik    '<application>Menedżerem portfeli &tde;</application>'>
+<!ENTITY tdewalletmanager-miejscownik    '<application>Menedżerze portfeli &tde;</application>'>
 
 <!ENTITY noatun-mianownik    '<application>Noatun</application>'>
 <!ENTITY noatun-dopelniacz    '<application>Noatuna</application>'>

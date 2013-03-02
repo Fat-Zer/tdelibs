@@ -35,8 +35,8 @@ public:
 	virtual ~KMCupsJobManager();
 
 	int actions();
-	TQValueList<KAction*> createPluginActions(KActionCollection*);
-	void validatePluginActions(KActionCollection*, const TQPtrList<KMJob>&);
+	TQValueList<TDEAction*> createPluginActions(TDEActionCollection*);
+	void validatePluginActions(TDEActionCollection*, const TQPtrList<KMJob>&);
 	bool doPluginAction(int, const TQPtrList<KMJob>&);
 
 protected:

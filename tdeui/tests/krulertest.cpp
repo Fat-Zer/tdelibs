@@ -51,7 +51,7 @@ MouseWidget::resizeEvent( TQResizeEvent *r )
 
 
 KRulerTest::KRulerTest( const char *name )
-  : KMainWindow(0, name)
+  : TDEMainWindow(0, name)
 {
   mainframe = new TQFrame(this);
 
@@ -358,10 +358,10 @@ KRulerTest::slotSetYTrans(double d)
 /* --- MAIN -----------------------*/
 int main(int argc, char **argv)
 {
-  KApplication *testapp;
+  TDEApplication *testapp;
   KRulerTest   *window;
 
-  testapp = new KApplication(argc, argv,"krulertest");
+  testapp = new TDEApplication(argc, argv,"krulertest");
   testapp->setFont(TQFont("Helvetica",12),true);
 
   window = new KRulerTest("main");

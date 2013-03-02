@@ -80,10 +80,10 @@ class TQMutex;
 namespace KNetwork {
 
 class KResolverEntry;
-class KSocketDevice;
+class TDESocketDevice;
 
-class KSocketBasePrivate;
-/** @class KSocketBase tdesocketbase.h tdesocketbase.h
+class TDESocketBasePrivate;
+/** @class TDESocketBase tdesocketbase.h tdesocketbase.h
  *  @brief Basic socket functionality.
  *
  * This class provides the basic socket functionlity for descended classes.
@@ -94,7 +94,7 @@ class KSocketBasePrivate;
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class TDECORE_EXPORT KSocketBase
+class TDECORE_EXPORT TDESocketBase
 {
 public:
   /**
@@ -175,12 +175,12 @@ public:
   /**
    * Default constructor.
    */
-  KSocketBase();
+  TDESocketBase();
 
   /**
    * Destructor.
    */
-  virtual ~KSocketBase();
+  virtual ~TDESocketBase();
 
   /*
    * The following functions are shared by all descended classes and will have
@@ -316,7 +316,7 @@ public:
    * This function creates the device if none has been set
    * using the default factory.
    */
-  KSocketDevice* socketDevice() const;
+  TDESocketDevice* socketDevice() const;
 
   /**
    * Sets the socket implementation to be used on this socket.
@@ -331,7 +331,7 @@ public:
    * This function is called by @ref socketDevice above when the socket is
    * first created.
    */
-  virtual void setSocketDevice(KSocketDevice* device);
+  virtual void setSocketDevice(TDESocketDevice* device);
 
   /**
    * Sets the internally requested capabilities for a socket device.
@@ -341,16 +341,16 @@ public:
    * implementation. By using this function, derived classes can request
    * that a backend with those capabilities be created when necessary.
    *
-   * For the possible flags, see @ref KSocketDevice::Capabilities. However, note
+   * For the possible flags, see @ref TDESocketDevice::Capabilities. However, note
    * that only the Can* flags make sense in this context.
    *
    * @note Since socketDevice must always return a valid backend object, it
    *       is is possible that the created device does not conform to all
    *       requirements requested. Implementations sensitive to this fact
    *       should test the object returned by @ref socketDevice (through
-   *       @ref KSocketDevice::capabilities, for instance) the availability.
+   *       @ref TDESocketDevice::capabilities, for instance) the availability.
    *
-   * @param add		mask of @ref KSocketDevice::Capabilities to add
+   * @param add		mask of @ref TDESocketDevice::Capabilities to add
    * @param remove	mask of bits to remove from the requirements
    * @return the current mask of requested capabilities
    */
@@ -420,15 +420,15 @@ public:
 
 private:
   /// @internal
-  /// called by KSocketDevice
+  /// called by TDESocketDevice
   void unsetSocketDevice();
 
-  KSocketBase(const KSocketBase&);
-  KSocketBase& operator =(const KSocketBase&);
+  TDESocketBase(const TDESocketBase&);
+  TDESocketBase& operator =(const TDESocketBase&);
 
-  KSocketBasePrivate *d;
+  TDESocketBasePrivate *d;
 
-  friend class KSocketDevice;
+  friend class TDESocketDevice;
 };
 
 /**
@@ -440,7 +440,7 @@ private:
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class TDECORE_EXPORT KActiveSocketBase: public TQIODevice, virtual public KSocketBase
+class TDECORE_EXPORT KActiveSocketBase: public TQIODevice, virtual public TDESocketBase
 {
 public:
   /**
@@ -575,7 +575,7 @@ public:
    * @param from		the address of the sender will be stored here
    * @returns the actual number of bytes read
    */
-  virtual TQT_TQIO_LONG tqreadBlock(char *data, TQT_TQIO_ULONG maxlen, KSocketAddress& from) = 0;
+  virtual TQT_TQIO_LONG tqreadBlock(char *data, TQT_TQIO_ULONG maxlen, TDESocketAddress& from) = 0;
 
   /**
    * Peeks the data in the socket.
@@ -602,7 +602,7 @@ public:
    * @param from		the address of the sender will be stored here
    * @returns the actual number of bytes copied into @p data
    */
-  virtual TQ_LONG peekBlock(char *data, TQ_ULONG maxlen, KSocketAddress& from) = 0;
+  virtual TQ_LONG peekBlock(char *data, TQ_ULONG maxlen, TDESocketAddress& from) = 0;
 
   /**
    * Writes the given data to the socket.
@@ -623,7 +623,7 @@ public:
    * @param to			the address to send to
    * @returns the number of bytes actually sent
    */
-  virtual TQT_TQIO_LONG tqwriteBlock(const char *data, TQT_TQIO_ULONG len, const KSocketAddress& to) = 0;
+  virtual TQT_TQIO_LONG tqwriteBlock(const char *data, TQT_TQIO_ULONG len, const TDESocketAddress& to) = 0;
 
   /**
    * Reads one character from the socket.
@@ -647,14 +647,14 @@ public:
   /**
    * Returns this socket's local address.
    */
-  virtual KSocketAddress localAddress() const = 0;
+  virtual TDESocketAddress localAddress() const = 0;
 
   /**
    * Return this socket's peer address, if we are connected.
    * If the address cannot be retrieved, the returned object will contain
    * an invalid address.
    */
-  virtual KSocketAddress peerAddress() const = 0;
+  virtual TDESocketAddress peerAddress() const = 0;
 
   // FIXME KDE 4.0:
   // enable this function
@@ -662,7 +662,7 @@ public:
   /**
    * Returns this socket's externally-visible address, if known.
    */
-  virtual KSocketAddress externalAddress() const = 0;
+  virtual TDESocketAddress externalAddress() const = 0;
 #endif
 
 protected:
@@ -689,7 +689,7 @@ protected:
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  */
-class TDECORE_EXPORT KPassiveSocketBase: virtual public KSocketBase
+class TDECORE_EXPORT KPassiveSocketBase: virtual public TDESocketBase
 {
 public:
   /**
@@ -754,12 +754,12 @@ public:
   /**
    * Returns this socket's local address.
    */
-  virtual KSocketAddress localAddress() const = 0;
+  virtual TDESocketAddress localAddress() const = 0;
 
   /**
    * Returns this socket's externally-visible address if known.
    */
-  virtual KSocketAddress externalAddress() const = 0;
+  virtual TDESocketAddress externalAddress() const = 0;
 
 private:
   KPassiveSocketBase(const KPassiveSocketBase&);

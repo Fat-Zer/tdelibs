@@ -27,7 +27,7 @@
 #include <tqpixmap.h>
 #include <tqvaluelist.h>
 #include <kicontheme.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 /**
  * @short An abstract class for GUI data such as ToolTip and Icon.
@@ -61,10 +61,10 @@ public:
     TQString text() const;
     TQString plainText() const;
 #ifndef KDE_NO_COMPAT
-    TQIconSet iconSet( KIcon::Group, int size = 0, KInstance* instance = KGlobal::instance()) const;
-    TQIconSet iconSet() const { return iconSet( KIcon::Small ); }
+    TQIconSet iconSet( TDEIcon::Group, int size = 0, TDEInstance* instance = TDEGlobal::instance()) const;
+    TQIconSet iconSet() const { return iconSet( TDEIcon::Small ); }
 #else
-    TQIconSet iconSet( KIcon::Group=KIcon::Small, int size = 0, KInstance* instance = KGlobal::instance()) const;
+    TQIconSet iconSet( TDEIcon::Group=TDEIcon::Small, int size = 0, TDEInstance* instance = TDEGlobal::instance()) const;
 #endif
 
     TQString iconName() const;

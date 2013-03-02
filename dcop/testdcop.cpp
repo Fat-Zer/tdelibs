@@ -258,12 +258,12 @@ int main(int argc, char **argv)
 	foundApp.data(), foundObj.data());
 
   // Find an object called "object1" in any application.
-  boolResult = client->findObject( "", "ksycoca", "", data, foundApp, foundObj);
+  boolResult = client->findObject( "", "tdesycoca", "", data, foundApp, foundObj);
   tqDebug("findObject: result = %s, %s, %s\n", boolResult ? "true" : "false",
 	foundApp.data(), foundObj.data());
 
   // Find ourselves in any application.
-  boolResult = client->findObject( "testdcop", "ksycoca", "", data, foundApp, foundObj);
+  boolResult = client->findObject( "testdcop", "tdesycoca", "", data, foundApp, foundObj);
   tqDebug("findObject: result = %s, %s, %s\n", boolResult ? "true" : "false",
 	foundApp.data(), foundObj.data());
 

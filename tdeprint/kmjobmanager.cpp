@@ -22,9 +22,9 @@
 #include "kmthreadjob.h"
 #include "kmfactory.h"
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kdebug.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 KMJobManager::KMJobManager(TQObject *parent, const char *name)
 : TQObject(parent,name)
@@ -203,12 +203,12 @@ int KMJobManager::actions()
 	return 0;
 }
 
-TQValueList<KAction*> KMJobManager::createPluginActions(KActionCollection*)
+TQValueList<TDEAction*> KMJobManager::createPluginActions(TDEActionCollection*)
 {
-	return TQValueList<KAction*>();
+	return TQValueList<TDEAction*>();
 }
 
-void KMJobManager::validatePluginActions(KActionCollection*, const TQPtrList<KMJob>&)
+void KMJobManager::validatePluginActions(TDEActionCollection*, const TQPtrList<KMJob>&)
 {
 }
 
@@ -242,14 +242,14 @@ bool KMJobManager::doPluginAction(int, const TQPtrList<KMJob>&)
 
 void KMJobManager::setLimit(int val)
 {
-	KConfig *conf = KMFactory::self()->printConfig();
+	TDEConfig *conf = KMFactory::self()->printConfig();
 	conf->setGroup("Jobs");
 	conf->writeEntry("Limit", val);
 }
 
 int KMJobManager::limit()
 {
-	KConfig	*conf = KMFactory::self()->printConfig();
+	TDEConfig	*conf = KMFactory::self()->printConfig();
 	conf->setGroup("Jobs");
 	return conf->readNumEntry("Limit", 0);
 }

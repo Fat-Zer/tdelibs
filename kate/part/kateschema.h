@@ -29,8 +29,8 @@
 #include <tqlistview.h>
 #include <tqfont.h>
 
-#include <kconfig.h>
-#include <kaction.h>
+#include <tdeconfig.h>
+#include <tdeaction.h>
 
 class KateView;
 class KateStyleListItem;
@@ -53,9 +53,9 @@ class KateSchemaManager
     void update (bool readfromfile = true);
 
     /**
-     * return kconfig with right group set or set to Normal if not there
+     * return tdeconfig with right group set or set to Normal if not there
      */
-    KConfig *schema (uint number);
+    TDEConfig *schema (uint number);
 
     void addSchema (const TQString &t);
 
@@ -85,18 +85,18 @@ class KateSchemaManager
     static TQString printingSchema ();
 
   private:
-    KConfig m_config;
+    TDEConfig m_config;
     TQStringList m_schemas;
 };
 
 
-class KateViewSchemaAction : public KActionMenu
+class KateViewSchemaAction : public TDEActionMenu
 {
   Q_OBJECT
 
   public:
     KateViewSchemaAction(const TQString& text, TQObject* parent = 0, const char* name = 0)
-       : KActionMenu(text, parent, name) { init(); };
+       : TDEActionMenu(text, parent, name) { init(); };
 
     ~KateViewSchemaAction(){;};
 
@@ -216,7 +216,7 @@ class KateSchemaConfigFontTab : public TQWidget
     ~KateSchemaConfigFontTab();
 
   public:
-    void readConfig (KConfig *config);
+    void readConfig (TDEConfig *config);
 
   public slots:
     void apply();
@@ -226,7 +226,7 @@ class KateSchemaConfigFontTab : public TQWidget
     void changed(); // connected to parentWidget()->parentWidget() TQT_SLOT(slotChanged)
 
   private:
-    class KFontChooser *m_fontchooser;
+    class TDEFontChooser *m_fontchooser;
     FontMap m_fonts;
     int m_schema;
 

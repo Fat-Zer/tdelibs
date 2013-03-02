@@ -2,15 +2,15 @@
 
 #include <kurl.h>
 #include <stdio.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <stdlib.h>
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kcharsets.h>
 #include <tqtextcodec.h>
 #include <tqdatastream.h>
 #include <assert.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 
 static bool check(TQString txt, TQString a, TQString b)
 {
@@ -81,9 +81,9 @@ void testAdjustPath()
 
 int main(int argc, char *argv[])
 {
-  KApplication::disableAutoDcopRegistration();
-  KCmdLineArgs::init( argc, argv, "kurltest", 0, 0, 0, 0 );
-  KApplication app( false, false );
+  TDEApplication::disableAutoDcopRegistration();
+  TDECmdLineArgs::init( argc, argv, "kurltest", 0, 0, 0, 0 );
+  TDEApplication app( false, false );
 
   KURL::List lst;
 
@@ -125,8 +125,8 @@ int main(int argc, char *argv[])
   baseURL = "http://www.foo.bar/top//test2/file2.html";
   check( "KURL::url()", baseURL.url(), "http://www.foo.bar/top//test2/file2.html" );
 
-  baseURL = "file:/usr/local/src/kde2/////tdelibs/kio";
-  check( "KURL::url()", baseURL.url(), "file:///usr/local/src/kde2/////tdelibs/kio" );
+  baseURL = "file:/usr/local/src/kde2/////tdelibs/tdeio";
+  check( "KURL::url()", baseURL.url(), "file:///usr/local/src/kde2/////tdelibs/tdeio" );
 
   baseURL = "http://www.foo.bar";
   KURL rel_url2( baseURL, "mailto:bastian@kde.org" );
@@ -135,7 +135,7 @@ int main(int argc, char *argv[])
   baseURL = "mailto:bastian@kde.org?subject=hello";
   check( "KURL::url()", baseURL.url(), "mailto:bastian@kde.org?subject=hello" );
 
-  baseURL = "file:/usr/local/src/kde2/tdelibs/kio/";
+  baseURL = "file:/usr/local/src/kde2/tdelibs/tdeio/";
   KURL url2( baseURL, "../../////tdebase/konqueror" );
   check( "KURL::url()", url2.url(), "file:///usr/local/src/kde2/////tdebase/konqueror" );
 
@@ -318,8 +318,8 @@ int main(int argc, char *argv[])
           "http://www.google.com/foo%20%20%20%20%20%20 bar/");
 
   KURL carsten;
-  carsten.setPath("/home/gis/src/kde/tdelibs/kfile/.#kfiledetailview.cpp.1.18");
-  check("KURL::path()", carsten.path(), "/home/gis/src/kde/tdelibs/kfile/.#kfiledetailview.cpp.1.18");
+  carsten.setPath("/home/gis/src/kde/tdelibs/tdefile/.#tdefiledetailview.cpp.1.18");
+  check("KURL::path()", carsten.path(), "/home/gis/src/kde/tdelibs/tdefile/.#tdefiledetailview.cpp.1.18");
 
   KURL charles;
   charles.setPath( "/home/charles/foo%20moo" );
@@ -817,9 +817,9 @@ int main(int argc, char *argv[])
   check("path",ulong.path(),"/servlet/CookieAccepted");
 
 #if TQT_VERSION < 300
-  qt_set_locale_codec( KGlobal::charsets()->codecForName( "iso-8859-1" ) );
+  qt_set_locale_codec( TDEGlobal::charsets()->codecForName( "iso-8859-1" ) );
 #else
-  TQTextCodec::setCodecForLocale( KGlobal::charsets()->codecForName( "iso-8859-1" ) );
+  TQTextCodec::setCodecForLocale( TDEGlobal::charsets()->codecForName( "iso-8859-1" ) );
 #endif
   TQString raw = "data:text/html,%00%2540%00";
   check("data URL: encode-decode of %00", KURL(raw).url(), raw );
@@ -862,9 +862,9 @@ int main(int argc, char *argv[])
   testAdjustPath();
 
 #if TQT_VERSION < 300
-  qt_set_locale_codec( KGlobal::charsets()->codecForName( "koi8-r" ) );
+  qt_set_locale_codec( TDEGlobal::charsets()->codecForName( "koi8-r" ) );
 #else
-  TQTextCodec::setCodecForLocale( KGlobal::charsets()->codecForName( "koi8-r" ) );
+  TQTextCodec::setCodecForLocale( TDEGlobal::charsets()->codecForName( "koi8-r" ) );
 #endif
   baseURL = "file:/home/coolo";
   KURL russian = baseURL.directory(false, true) + TQString::fromLocal8Bit( "ÆÇÎ7" );

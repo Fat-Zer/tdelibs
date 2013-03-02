@@ -28,8 +28,8 @@ DEALINGS IN THE SOFTWARE.
 #include <tqlayout.h>
 #include <tqsettings.h>
 #include <kdialog.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 
 #include "highcontrastconfig.h"
 
@@ -44,7 +44,7 @@ HighContrastStyleConfig::HighContrastStyleConfig(
 {
     // Should have no margins here, the dialog provides them
     TQVBoxLayout* layout = new TQVBoxLayout(this, 0, 0);
-    KGlobal::locale()->insertCatalogue("kstyle_highcontrast_config");
+    TDEGlobal::locale()->insertCatalogue("kstyle_highcontrast_config");
 
     wideLinesBox = new TQCheckBox(i18n("Use wider lines"), this);
 
@@ -62,7 +62,7 @@ HighContrastStyleConfig::HighContrastStyleConfig(
 
 HighContrastStyleConfig::~HighContrastStyleConfig()
 {
-    KGlobal::locale()->removeCatalogue("kstyle_keramik_config");
+    TDEGlobal::locale()->removeCatalogue("kstyle_keramik_config");
 }
 
 

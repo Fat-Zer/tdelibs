@@ -21,8 +21,8 @@
 #include "kmprinter.h"
 #include "kmfactory.h"
 
-#include <kconfig.h>
-#include <kglobal.h>
+#include <tdeconfig.h>
+#include <tdeglobal.h>
 #include <kdebug.h>
 
 PrinterFilter::PrinterFilter(TQObject *parent, const char *name)
@@ -38,13 +38,13 @@ PrinterFilter::~PrinterFilter()
 
 void PrinterFilter::update()
 {
-	KConfig	*conf = KMFactory::self()->printConfig();
+	TDEConfig	*conf = KMFactory::self()->printConfig();
 	conf->setGroup("Filter");
 	m_locationRe.setPattern(conf->readEntry("LocationRe"));
 	m_printers = conf->readListEntry("Printers");
 	// filter enable state is saved on a per application basis,
 	// so this option is retrieve from the application config file
-	conf = KGlobal::config();
+	conf = TDEGlobal::config();
 	conf->setGroup("KPrinter Settings");
 	m_enabled = conf->readBoolEntry("FilterEnabled", false);
 }
@@ -52,7 +52,7 @@ void PrinterFilter::update()
 void PrinterFilter::setEnabled(bool on)
 {
 	m_enabled = on;
-	KConfig	*conf = KGlobal::config();
+	TDEConfig	*conf = TDEGlobal::config();
 	conf->setGroup("KPrinter Settings");
 	conf->writeEntry("FilterEnabled", m_enabled);
 }

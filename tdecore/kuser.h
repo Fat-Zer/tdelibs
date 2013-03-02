@@ -233,7 +233,7 @@ public:
   static TQStringList allUserNames();
 
 private:
-  KSharedPtr<KUserPrivate> d;
+  TDESharedPtr<KUserPrivate> d;
   void fillPasswd(struct passwd* p);
   void fillName(const char* name);
 };
@@ -375,7 +375,7 @@ public:
   static TQStringList allGroupNames();
   
 private:
-  KSharedPtr<KUserGroupPrivate> d;
+  TDESharedPtr<KUserGroupPrivate> d;
   void fillGroup(struct group* g);
   void fillName(const char* name);
 };

@@ -21,8 +21,8 @@
 #include "kprinter.h"
 #include "driver.h"
 
-#include <klocale.h>
-#include <kfiledialog.h>
+#include <tdelocale.h>
+#include <tdefiledialog.h>
 
 KMPrinter::KMPrinter()
 : KMObject()

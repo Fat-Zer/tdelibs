@@ -43,10 +43,10 @@
 #include <tqstringlist.h>
 #include <tqtimer.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
-#include <kconfig.h>
-#include <kglobal.h>
+#include <tdeconfig.h>
+#include <tdeglobal.h>
 #include <kstaticdeleter.h>
 #include <kde_file.h>
 
@@ -184,7 +184,7 @@ void KSimpleDirWatchPrivate::dnotify_sigio_handler(int sig, siginfo_t *si, void 
  * are supported:
  * - Polling: All files to be watched are polled regularly
  *   using stat (more precise: TQFileInfo.lastModified()).
- *   The polling frequency is determined from global kconfig
+ *   The polling frequency is determined from global tdeconfig
  *   settings, defaulting to 500 ms for local directories
  *   and 5000 ms for remote mounts
  * - FAM (File Alternation Monitor): first used on IRIX, SGI
@@ -214,7 +214,7 @@ KSimpleDirWatchPrivate::KSimpleDirWatchPrivate()
   delayRemove = false;
   m_ref = 0;
 
-  KConfigGroup config(KGlobal::config(), TQCString("DirWatch"));
+  TDEConfigGroup config(TDEGlobal::config(), TQCString("DirWatch"));
   m_nfsPollInterval = config.readNumEntry("NFSPollInterval", 5000);
   m_PollInterval = config.readNumEntry("PollInterval", 500);
 
@@ -1377,7 +1377,7 @@ bool KSimpleDirWatchPrivate::isNoisyFile( const char * filename )
     if (strncmp(filename, ".X.err", 6) == 0) return true;
     if (strncmp(filename, ".xsession-errors", 16) == 0) return true;
     // fontconfig updates the cache on every KDE app start
-    // (inclusive kio_thumbnail slaves)
+    // (inclusive tdeio_thumbnail slaves)
     if (strncmp(filename, ".fonts.cache", 12) == 0) return true;
   }
 

@@ -25,7 +25,7 @@
 #include <tqpixmap.h>
 #include <tqhbox.h>
 #include <kiconloader.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 
 TQPtrDict<MessageWindow> MessageWindow::m_windows;

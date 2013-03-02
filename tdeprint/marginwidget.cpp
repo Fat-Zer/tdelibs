@@ -27,8 +27,8 @@
 #include <tqlayout.h>
 #include <tqlabel.h>
 #include <tqwhatsthis.h>
-#include <klocale.h>
-#include <kglobal.h>
+#include <tdelocale.h>
+#include <tdeglobal.h>
 
 MarginWidget::MarginWidget(TQWidget *parent, const char* name, bool allowMetricUnit)
 : TQWidget(parent, name), m_default(4, 0), m_pagesize( 2 )
@@ -206,7 +206,7 @@ MarginWidget::MarginWidget(TQWidget *parent, const char* name, bool allowMetricU
 
 	if ( allowMetricUnit )
 	{
-		int	mode = (KGlobal::locale()->measureSystem() == KLocale::Metric ? 2 : 1);
+		int	mode = (TDEGlobal::locale()->measureSystem() == TDELocale::Metric ? 2 : 1);
 		m_top->setMode(mode);
 		m_bottom->setMode(mode);
 		m_left->setMode(mode);

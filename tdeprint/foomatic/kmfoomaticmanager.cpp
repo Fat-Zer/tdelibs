@@ -22,7 +22,7 @@
 #include "driver.h"
 
 #include <tqdom.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include <kprocess.h>
 
@@ -77,9 +77,9 @@ DrMain* KMFoomaticManager::loadPrinterDriver(KMPrinter *printer, bool)
 	}
 
 	QString	cmd = "foomatic-combo-xml -p ";
-	cmd += KProcess::quote(printer->option("printer"));
+	cmd += TDEProcess::quote(printer->option("printer"));
 	cmd += " -d ";
-	cmd += KProcess::quote(printer->option("driver"));
+	cmd += TDEProcess::quote(printer->option("driver"));
 	KPipeProcess	proc(cmd);
 	QDomDocument	doc;
 	doc.setContent(&proc);

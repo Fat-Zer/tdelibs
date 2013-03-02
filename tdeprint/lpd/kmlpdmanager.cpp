@@ -32,9 +32,9 @@
 #include <tqmap.h>
 #include <tqregexp.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kprocess.h>
 
 #include <pwd.h>
@@ -185,9 +185,9 @@ bool KMLpdManager::createPrinter(KMPrinter *printer)
 
 	// 4) change permissions of spool directory
 	TQCString cmd = "chmod -R o-rwx,g+rwX ";
-	cmd += TQFile::encodeName(KProcess::quote(ent->arg("sd")));
+	cmd += TQFile::encodeName(TDEProcess::quote(ent->arg("sd")));
 	cmd += "&& chown -R lp.lp ";
-	cmd += TQFile::encodeName(KProcess::quote(ent->arg("sd")));
+	cmd += TQFile::encodeName(TDEProcess::quote(ent->arg("sd")));
 	if (system(cmd.data()) != 0)
 	{
 		setErrorMsg(i18n("Unable to set correct permissions on spool directory %1 for printer <b>%2</b>.").arg(ent->arg("sd")).arg(ent->m_name));
@@ -209,7 +209,7 @@ bool KMLpdManager::removePrinter(KMPrinter *printer)
 			return false;
 		}
 		TQCString cmd = "rm -rf ";
-		cmd += TQFile::encodeName(KProcess::quote(ent->arg("sd")));
+		cmd += TQFile::encodeName(TDEProcess::quote(ent->arg("sd")));
 		system(cmd.data());
 		delete ent;
 		return true;
@@ -225,7 +225,7 @@ bool KMLpdManager::enablePrinter(KMPrinter *printer, bool state)
 	cmd += " ";
 	cmd += state ? "up" : "down";
 	cmd += " ";
-	cmd += KProcess::quote(printer->printerName());
+	cmd += TDEProcess::quote(printer->printerName());
 	if (proc.open(cmd))
 	{
 		QTextStream	t(&proc);
@@ -273,7 +273,7 @@ void KMLpdManager::listPrinters()
 
 TQString KMLpdManager::programName(int f)
 {
-	KConfig	*conf = KMFactory::self()->printConfig();
+	TDEConfig	*conf = KMFactory::self()->printConfig();
 	conf->setGroup("LPD");
 	switch (f)
 	{
@@ -549,9 +549,9 @@ bool KMLpdManager::savePrinterDriver(KMPrinter *printer, DrMain *driver)
 			return false;
 		// write various driver files using templates
 		TQCString cmd = "cp ";
-		cmd += TQFile::encodeName(KProcess::quote(driverDirectory()+"/master-filter"));
+		cmd += TQFile::encodeName(TDEProcess::quote(driverDirectory()+"/master-filter"));
 		cmd += " ";
-		cmd += TQFile::encodeName(KProcess::quote(spooldir + "/filter"));
+		cmd += TQFile::encodeName(TDEProcess::quote(spooldir + "/filter"));
 		if (system(cmd.data()) == 0 &&
 		    savePrinttoolCfgFile(driverDirectory()+"/general.cfg.in",spooldir,options) &&
 		    savePrinttoolCfgFile(driverDirectory()+"/postscript.cfg.in",spooldir,options) &&
@@ -620,9 +620,9 @@ bool KMLpdManager::createSpooldir(PrintcapEntry *entry)
 	if (entry->arg("sd").isEmpty())
 		entry->m_args["sd"] = TQString::fromLatin1("/var/spool/lpd/")+entry->m_name;
 	QString	sd = entry->arg("sd");
-	if (!KStandardDirs::exists(sd))
+	if (!TDEStandardDirs::exists(sd))
 	{
-		if (!KStandardDirs::makeDir(sd,0750))
+		if (!TDEStandardDirs::makeDir(sd,0750))
 			return false;
 		struct passwd	*lp_pw = getpwnam("lp");
 		if (lp_pw && chown(TQFile::encodeName(sd),lp_pw->pw_uid,lp_pw->pw_gid) != 0)

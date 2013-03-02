@@ -91,10 +91,10 @@ TQ_EXPORT_PLUGIN(AsteroidStylePlugin);
 
 /* Ok, now we get to the good stuff. */
 
-AsteroidStyle::AsteroidStyle() : KStyle(AllowMenuTransparency)
+AsteroidStyle::AsteroidStyle() : TDEStyle(AllowMenuTransparency)
 {
-	if (tqApp->inherits("KApplication")) {
-		connect(tqApp, TQT_SIGNAL(kdisplayPaletteChanged()), TQT_SLOT(paletteChanged()));
+	if (tqApp->inherits("TDEApplication")) {
+		connect(tqApp, TQT_SIGNAL(tdedisplayPaletteChanged()), TQT_SLOT(paletteChanged()));
 	}
 
 	backwards = TQApplication::reverseLayout();
@@ -139,13 +139,13 @@ void AsteroidStyle::polish(const TQStyleControlElementData &ceData, ControlEleme
 		installObjectEventHandler(ceData, elementFlags, ptr, this);
 	}
 	else {
-		KStyle::polish(ceData, elementFlags, ptr);
+		TDEStyle::polish(ceData, elementFlags, ptr);
 	}
 }
 
 void AsteroidStyle::unPolish(const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *ptr)
 {
-	KStyle::unPolish(ceData, elementFlags, ptr);
+	TDEStyle::unPolish(ceData, elementFlags, ptr);
 }
 
 /*!
@@ -179,7 +179,7 @@ void AsteroidStyle::renderMenuBlendPixmap(KPixmap &pix,
 	p.fillRect(0, 0, pix.width(), pix.height(), cg.background());
 }
 
-void AsteroidStyle::drawKStylePrimitive(KStylePrimitive ksp,
+void AsteroidStyle::drawTDEStylePrimitive(TDEStylePrimitive ksp,
                                         TQPainter *p,
                                         const TQStyleControlElementData &ceData,
                                         ControlElementFlags elementFlags,
@@ -289,7 +289,7 @@ void AsteroidStyle::drawKStylePrimitive(KStylePrimitive ksp,
         	}
 
 		default: {
-			KStyle::drawKStylePrimitive(ksp, p, ceData, elementFlags, r, cg, sf, o, w);
+			TDEStyle::drawTDEStylePrimitive(ksp, p, ceData, elementFlags, r, cg, sf, o, w);
 		}
 	}
 }
@@ -320,7 +320,7 @@ int AsteroidStyle::styleHint( TQ_StyleHint stylehint,
 		}
 		
 		default:
-			return KStyle::styleHint(stylehint, ceData, elementFlags, option, returnData, widget);
+			return TDEStyle::styleHint(stylehint, ceData, elementFlags, option, returnData, widget);
 	}
 }
 
@@ -975,7 +975,7 @@ void AsteroidStyle::drawPrimitive(TQ_PrimitiveElement pe,
 		}
 
 		default: {
-			KStyle::drawPrimitive(pe, p, ceData, elementFlags, r, cg, sf, o);
+			TDEStyle::drawPrimitive(pe, p, ceData, elementFlags, r, cg, sf, o);
 		}
 	}
 }
@@ -1716,7 +1716,7 @@ void AsteroidStyle::drawControl(TQ_ControlElement ce,
 		}
 
 		default: {
-			KStyle::drawControl(ce, p, ceData, elementFlags, r, cg, sf, o, w);
+			TDEStyle::drawControl(ce, p, ceData, elementFlags, r, cg, sf, o, w);
 		}
 	}
 }
@@ -1763,7 +1763,7 @@ void AsteroidStyle::drawControlMask(TQ_ControlElement ce,
 		CE_HeaderLabel
 	 */
 			default: {
-			KStyle::drawControlMask(ce, p, ceData, elementFlags, r, o, w);
+			TDEStyle::drawControlMask(ce, p, ceData, elementFlags, r, o, w);
 		}
 	}
 }
@@ -2091,7 +2091,7 @@ void AsteroidStyle::drawComplexControl(TQ_ComplexControl cc,
 
 			// Draw slider groove
 			if ((sc & SC_SliderGroove) && groove.isValid()) {
-				drawKStylePrimitive( KPE_SliderGroove, &p2, ceData, elementFlags, groove, cg, sf, o, w );
+				drawTDEStylePrimitive( KPE_SliderGroove, &p2, ceData, elementFlags, groove, cg, sf, o, w );
 
 				// Draw the focus rect around the groove
 				if (elementFlags & CEF_HasFocus)
@@ -2109,7 +2109,7 @@ void AsteroidStyle::drawComplexControl(TQ_ComplexControl cc,
 			if ((sc & SC_SliderHandle) && handle.isValid()) {
 				if (sa == SC_SliderHandle)
 					sf |= Style_Active;
-				drawKStylePrimitive( KPE_SliderHandle, &p2, ceData, elementFlags, handle, cg, sf, o, w );
+				drawTDEStylePrimitive( KPE_SliderHandle, &p2, ceData, elementFlags, handle, cg, sf, o, w );
 			}
 
 			p2.end();
@@ -2179,7 +2179,7 @@ void AsteroidStyle::drawComplexControl(TQ_ComplexControl cc,
 
 
 		default: {
-			KStyle::drawComplexControl(cc, p, ceData, elementFlags, r, cg, sf, sc, sa, o, w);
+			TDEStyle::drawComplexControl(cc, p, ceData, elementFlags, r, cg, sf, sc, sa, o, w);
 		}
 	}
 }
@@ -2204,7 +2204,7 @@ void AsteroidStyle::drawComplexControlMask(TQ_ComplexControl cc,
 		CC_ListView
 	 */
 			default: {
-			KStyle::drawComplexControlMask(cc, p, ceData, elementFlags, r, o, w);
+			TDEStyle::drawComplexControlMask(cc, p, ceData, elementFlags, r, o, w);
 		}
 	}
 }
@@ -2303,7 +2303,7 @@ int AsteroidStyle::pixelMetric(PixelMetric pm, const TQStyleControlElementData &
 			if (ceData.widgetObjectTypes.contains(TQPOPUPMENU_OBJECT_NAME_STRING)) {
 				return 3;
 			} else {
-				return KStyle::pixelMetric(pm, ceData, elementFlags, w);
+				return TDEStyle::pixelMetric(pm, ceData, elementFlags, w);
 			}
 		}
 
@@ -2335,7 +2335,7 @@ int AsteroidStyle::pixelMetric(PixelMetric pm, const TQStyleControlElementData &
 			return 0;
 
 		default: {
-			return KStyle::pixelMetric(pm, ceData, elementFlags, w);
+			return TDEStyle::pixelMetric(pm, ceData, elementFlags, w);
 		}
 	}
 }
@@ -2379,7 +2379,7 @@ TQRect AsteroidStyle::subRect(SubRect sr, const TQStyleControlElementData &ceDat
 		SR_DialogButtonCustom
 	 */
 		default: {
-			return KStyle::subRect(sr, ceData, elementFlags, w);
+			return TDEStyle::subRect(sr, ceData, elementFlags, w);
 		}
 	}
 }
@@ -2441,7 +2441,7 @@ TQRect AsteroidStyle::querySubControlMetrics(TQ_ComplexControl cc,
 					return TQRect(r.x()+2, r.y()+2, r.width()-20, r.height()-4);
 				}
 				default: {
-					return KStyle::querySubControlMetrics(cc, ceData, elementFlags, sc, o, w);
+					return TDEStyle::querySubControlMetrics(cc, ceData, elementFlags, sc, o, w);
 				}
 			}
 
@@ -2474,7 +2474,7 @@ TQRect AsteroidStyle::querySubControlMetrics(TQ_ComplexControl cc,
 				case SC_SpinWidgetFrame:
 					return ceData.rect;
 				default:
-					return KStyle::querySubControlMetrics(cc, ceData, elementFlags, sc, o, w);
+					return TDEStyle::querySubControlMetrics(cc, ceData, elementFlags, sc, o, w);
 					break;
 			}
 
@@ -2482,7 +2482,7 @@ TQRect AsteroidStyle::querySubControlMetrics(TQ_ComplexControl cc,
 		}
 
 		default: {
-			return KStyle::querySubControlMetrics(cc, ceData, elementFlags, sc, o, w);
+			return TDEStyle::querySubControlMetrics(cc, ceData, elementFlags, sc, o, w);
 		}
 	}
 }
@@ -2516,7 +2516,7 @@ TQSize AsteroidStyle::sizeFromContents(ContentsType ct,
 
 		case CT_PushButton: {
 			const TQPushButton *pb = dynamic_cast<const TQPushButton *>(w);
-			const TQSize ret = KStyle::sizeFromContents(ct, ceData, elementFlags, s, o, w);
+			const TQSize ret = TDEStyle::sizeFromContents(ct, ceData, elementFlags, s, o, w);
 			int rw = ret.width(), rh = ret.height();
 			int mw;
 			int mh;
@@ -2615,7 +2615,7 @@ TQSize AsteroidStyle::sizeFromContents(ContentsType ct,
 		}
 
 		default: {
-			return KStyle::sizeFromContents(ct, ceData, elementFlags, s, o, w);
+			return TDEStyle::sizeFromContents(ct, ceData, elementFlags, s, o, w);
 		}
 	}
 }

@@ -1,14 +1,14 @@
 #include <kde_terminal_interface.h>
-#include <kparts/part.h>
+#include <tdeparts/part.h>
 #include <ktrader.h>
 #include <klibloader.h>
-#include <kmainwindow.h>
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
-#include <kapplication.h>
+#include <tdemainwindow.h>
+#include <tdeaboutdata.h>
+#include <tdecmdlineargs.h>
+#include <tdeapplication.h>
 #include <tqdir.h>
 #include <assert.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <cassert>
 #include "main.h"
 #include "main.moc"
@@ -33,9 +33,9 @@ Win::Win()
 
 int main( int argc, char** argv )
 {
-    KAboutData* about = new KAboutData( "tetest", "TETest", "0.1" );
-    KCmdLineArgs::init( argc, argv, about );
-    KApplication a;
+    TDEAboutData* about = new TDEAboutData( "tetest", "TETest", "0.1" );
+    TDECmdLineArgs::init( argc, argv, about );
+    TDEApplication a;
     Win* win = new Win();
     win->show();
     return a.exec();

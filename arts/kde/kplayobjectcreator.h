@@ -46,7 +46,7 @@ private slots:
 
 private:
 	Arts::SoundServerV2 m_server;
-	Arts::KIOInputStream m_instream;
+	Arts::TDEIOInputStream m_instream;
 	Arts::PlayObject playObject;
 	bool m_createBUS;
 };

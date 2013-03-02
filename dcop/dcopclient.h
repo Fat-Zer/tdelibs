@@ -41,7 +41,7 @@ typedef TQValueList<TQCString> QCStringList;
  * for KDE applications.
  *
  * This class provides IPC and RPC for KDE applications.  Usually you
- * will not have to instantiate one yourself because KApplication
+ * will not have to instantiate one yourself because TDEApplication
  * contains a method to return a pointer to a DCOPClient object which
  * can be used for your whole application.
  *
@@ -62,7 +62,7 @@ typedef TQValueList<TQCString> QCStringList;
  *   client->send("someApp", "someObject", "someFunction(TQString)", data);
  * \endcode
  *
- * @see KApplication::dcopClient()
+ * @see TDEApplication::dcopClient()
  * @author Preston Brown <pbrown@kde.org>, Matthias Ettrich <ettrich@kde.org>
  */
 class DCOP_EXPORT DCOPClient : public TQObject
@@ -675,7 +675,7 @@ class DCOP_EXPORT DCOPClient : public TQObject
    * Returns the application's main dcop client. The main client can
    * be used by objects that do not have any specific access to a dcop
    * client. In KDE applications, the main client usually is the same
-   * as KApplication::dcopClient().
+   * as TDEApplication::dcopClient().
    * @return the application's main dcop client
    */
   static DCOPClient* mainClient();
@@ -684,7 +684,7 @@ class DCOP_EXPORT DCOPClient : public TQObject
    * Sets the application's main dcop client. The main client can
    * be used by objects that do not have any specific access to a dcop
    * client. In KDE applications, the main client usually is the same
-   * as KApplication::dcopClient().
+   * as TDEApplication::dcopClient().
    * @param mainClient the new main dcop client
    */
   static void setMainClient( DCOPClient* mainClient);
@@ -772,7 +772,7 @@ signals:
    * synchronous call. In that case, it will enter a local event
    * loop to keep the GUI updated until finally an answer arrives.
    *
-   * In KDE, the KApplication object connects to this signal to be
+   * In KDE, the TDEApplication object connects to this signal to be
    * able to block any user input (i.e. mouse and key events) while
    * we are waiting for an answer. If we did not do this, the
    * application might end up in an illegal state, as a keyboard

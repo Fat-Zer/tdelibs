@@ -18,7 +18,7 @@
  */
 
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tqlayout.h>
 #include <tqwidget.h>
 

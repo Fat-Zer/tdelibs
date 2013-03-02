@@ -73,10 +73,10 @@ public:
   KResolverEntry();
 
   /**
-   * Constructs a new KResolverEntry from a KSocketAddress
+   * Constructs a new KResolverEntry from a TDESocketAddress
    * and other data.
    *
-   * The KSocketAddress @p addr parameter will be deep-copied.
+   * The TDESocketAddress @p addr parameter will be deep-copied.
    *
    * @param addr	the address that was resolved
    * @param socktype	the socket type of the resolved address
@@ -84,7 +84,7 @@ public:
    * @param canonName	the canonical name of the resolved hostname
    * @param encodedName	the ASCII-compatible encoding of the hostname
    */
-  KResolverEntry(const KSocketAddress& addr, int socktype, int protocol,
+  KResolverEntry(const TDESocketAddress& addr, int socktype, int protocol,
 		const TQString& canonName = TQString::null,
 		const TQCString& encodedName = TQCString());
 
@@ -92,7 +92,7 @@ public:
    * Constructs a new KResolverEntry from raw forms of
    * socket addresses and other data.
    *
-   * This constructor instead creates an internal KSocketAddress object.
+   * This constructor instead creates an internal TDESocketAddress object.
    *
    * @param sa		the sockaddr structure containing the raw address
    * @param salen	the length of the sockaddr structure
@@ -123,7 +123,7 @@ public:
   /**
    * Retrieves the socket address associated with this entry.
    */
-  KSocketAddress address() const;
+  TDESocketAddress address() const;
 
   /**
    * Retrieves the length of the socket address structure.

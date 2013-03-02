@@ -35,7 +35,7 @@ class TQStrList;
  * we can't have signals without having a TQObject, which
  * TerminalInterface is not.
  * These are the signals you can connect to:
- *  void processExited( KProcess *process );
+ *  void processExited( TDEProcess *process );
  *  void receivedData( const TQString& s );
  * See the example code below for how to connect to these..
  * 

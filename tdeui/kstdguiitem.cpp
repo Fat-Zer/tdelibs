@@ -19,8 +19,8 @@
 #include "kstdguiitem.h"
 
 #include <kguiitem.h>
-#include <klocale.h>
-#include <kapplication.h>
+#include <tdelocale.h>
+#include <tdeapplication.h>
 
 KGuiItem KStdGuiItem::guiItem ( StdItem ui_enum )
 {

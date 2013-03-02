@@ -118,12 +118,12 @@ const TQString KateCmd::fromHistory( uint index ) const
 //BEGIN KateCmdShellCompletion
 /*
    A lot of the code in the below class is copied from
-   tdelibs/kio/kio/kshellcompletion.cpp
+   tdelibs/tdeio/tdeio/kshellcompletion.cpp
    Copyright (C) 2000 David Smith <dsmith@algonet.se>
    Copyright (C) 2004 Anders Lund <anders@alweb.dk>
 */
 KateCmdShellCompletion::KateCmdShellCompletion()
-  : KCompletion()
+  : TDECompletion()
 {
   m_word_break_char = ' ';
   m_quote_char1 = '\"';
@@ -139,7 +139,7 @@ TQString KateCmdShellCompletion::makeCompletion( const TQString &text )
 
   // Make completion on the last part of text
   //
-  return KCompletion::makeCompletion( m_text_compl );
+  return TDECompletion::makeCompletion( m_text_compl );
 }
 
 void KateCmdShellCompletion::postProcessMatch( TQString *match ) const
@@ -158,9 +158,9 @@ void KateCmdShellCompletion::postProcessMatches( TQStringList *matches ) const
       (*it).prepend( m_text_start );
 }
 
-void KateCmdShellCompletion::postProcessMatches( KCompletionMatches *matches ) const
+void KateCmdShellCompletion::postProcessMatches( TDECompletionMatches *matches ) const
 {
-  for ( KCompletionMatches::Iterator it = matches->begin();
+  for ( TDECompletionMatches::Iterator it = matches->begin();
         it != matches->end(); it++ )
     if ( !(*it).value().isNull() )
       (*it).value().prepend( m_text_start );

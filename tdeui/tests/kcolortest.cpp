@@ -1,6 +1,6 @@
 
 #include "kcolortest.h"
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kimageeffect.h>
 #include <stdio.h>
 #include <tqdatetime.h>
@@ -160,7 +160,7 @@ int main(int argc, char **argv)
       else
 	printf("Usage: %s [int_vs_fade | fullscreen [old_way]]\n ", argv[0]);
     }
-    KApplication *app = new KApplication(argc, argv, "KColorTest");
+    TDEApplication *app = new TDEApplication(argc, argv, "KColorTest");
     KColorWidget w;
     app->setMainWidget(&w);
     w.show();

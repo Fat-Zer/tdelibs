@@ -37,7 +37,7 @@
 
 using namespace KNetwork;
 
-class KNetwork::KServerSocketPrivate
+class KNetwork::TDEServerSocketPrivate
 {
 public:
   KResolver resolver;
@@ -47,67 +47,67 @@ public:
   int backlog;
   int timeout;
 
-  bool bindWhenFound : 1, listenWhenBound : 1, useKBufferedSocket : 1;
+  bool bindWhenFound : 1, listenWhenBound : 1, useTDEBufferedSocket : 1;
 
-  KServerSocketPrivate()
+  TDEServerSocketPrivate()
     : state(None), timeout(0), bindWhenFound(false), listenWhenBound(false),
-      useKBufferedSocket(true)
+      useTDEBufferedSocket(true)
   { 
     resolver.setFlags(KResolver::Passive);
     resolver.setFamily(KResolver::KnownFamily);
   }
 };
 
-KServerSocket::KServerSocket(TQObject* parent, const char *name)
-  : TQObject(parent, name), d(new KServerSocketPrivate)
+TDEServerSocket::TDEServerSocket(TQObject* parent, const char *name)
+  : TQObject(parent, name), d(new TDEServerSocketPrivate)
 {
   TQObject::connect(&d->resolver, TQT_SIGNAL(finished(KResolverResults)), 
 		   this, TQT_SLOT(lookupFinishedSlot()));
 }
 
-KServerSocket::KServerSocket(const TQString& service, TQObject* parent, const char *name)
-  : TQObject(parent, name), d(new KServerSocketPrivate)
+TDEServerSocket::TDEServerSocket(const TQString& service, TQObject* parent, const char *name)
+  : TQObject(parent, name), d(new TDEServerSocketPrivate)
 {
   TQObject::connect(&d->resolver, TQT_SIGNAL(finished(KResolverResults)), 
 		   this, TQT_SLOT(lookupFinishedSlot()));
   d->resolver.setServiceName(service);
 }
 
-KServerSocket::KServerSocket(const TQString& node, const TQString& service,
+TDEServerSocket::TDEServerSocket(const TQString& node, const TQString& service,
 			     TQObject* parent, const char* name)
-  : TQObject(parent, name), d(new KServerSocketPrivate)
+  : TQObject(parent, name), d(new TDEServerSocketPrivate)
 {
   TQObject::connect(&d->resolver, TQT_SIGNAL(finished(KResolverResults)), 
 		   this, TQT_SLOT(lookupFinishedSlot()));
   setAddress(node, service);
 }
 
-KServerSocket::~KServerSocket()
+TDEServerSocket::~TDEServerSocket()
 {
   close();
   delete d;
 }
 
-bool KServerSocket::setSocketOptions(int opts)
+bool TDEServerSocket::setSocketOptions(int opts)
 {
   TQMutexLocker locker(mutex());
-  KSocketBase::setSocketOptions(opts); // call parent
+  TDESocketBase::setSocketOptions(opts); // call parent
   bool result = socketDevice()->setSocketOptions(opts); // and set the implementation
   copyError();
   return result;
 }
 
-KResolver& KServerSocket::resolver() const
+KResolver& TDEServerSocket::resolver() const
 {
   return d->resolver;
 }
 
-const KResolverResults& KServerSocket::resolverResults() const
+const KResolverResults& TDEServerSocket::resolverResults() const
 {
   return d->resolverResults;
 }
 
-void KServerSocket::setResolutionEnabled(bool enable)
+void TDEServerSocket::setResolutionEnabled(bool enable)
 {
   if (enable)
     d->resolver.setFlags(d->resolver.flags() & ~KResolver::NoResolve);
@@ -115,41 +115,41 @@ void KServerSocket::setResolutionEnabled(bool enable)
     d->resolver.setFlags(d->resolver.flags() | KResolver::NoResolve);
 }
 
-void KServerSocket::setFamily(int families)
+void TDEServerSocket::setFamily(int families)
 {
   d->resolver.setFamily(families);
 }
 
-void KServerSocket::setAddress(const TQString& service)
+void TDEServerSocket::setAddress(const TQString& service)
 {
   d->resolver.setNodeName(TQString::null);
   d->resolver.setServiceName(service);
   d->resolverResults.empty();
-  if (d->state <= KServerSocketPrivate::LookupDone)
-    d->state = KServerSocketPrivate::None;
+  if (d->state <= TDEServerSocketPrivate::LookupDone)
+    d->state = TDEServerSocketPrivate::None;
 }
 
-void KServerSocket::setAddress(const TQString& node, const TQString& service)
+void TDEServerSocket::setAddress(const TQString& node, const TQString& service)
 {
   d->resolver.setNodeName(node);
   d->resolver.setServiceName(service);
   d->resolverResults.empty();
-  if (d->state <= KServerSocketPrivate::LookupDone)
-    d->state = KServerSocketPrivate::None;
+  if (d->state <= TDEServerSocketPrivate::LookupDone)
+    d->state = TDEServerSocketPrivate::None;
 }
 
-void KServerSocket::setTimeout(int msec)
+void TDEServerSocket::setTimeout(int msec)
 {
   d->timeout = msec;
 }
 
-bool KServerSocket::lookup()
+bool TDEServerSocket::lookup()
 {
   setError(NoError);
   if (d->resolver.isRunning() && !blocking())
     return true;		// already doing lookup
 
-  if (d->state >= KServerSocketPrivate::LookupDone)
+  if (d->state >= TDEServerSocketPrivate::LookupDone)
     return true;		// results are already available
 
   // make sure we have at least one parameter for lookup
@@ -179,13 +179,13 @@ bool KServerSocket::lookup()
   return true;
 }
 
-bool KServerSocket::bind(const KResolverEntry& address)
+bool TDEServerSocket::bind(const KResolverEntry& address)
 {
   if (socketDevice()->bind(address))
     {
       setError(NoError);
 
-      d->state = KServerSocketPrivate::Bound;
+      d->state = TDEServerSocketPrivate::Bound;
       emit bound(address);
       return true;
     }
@@ -193,30 +193,30 @@ bool KServerSocket::bind(const KResolverEntry& address)
   return false;
 }
 
-bool KServerSocket::bind(const TQString& node, const TQString& service)
+bool TDEServerSocket::bind(const TQString& node, const TQString& service)
 {
   setAddress(node, service);
   return bind();
 }
 
-bool KServerSocket::bind(const TQString& service)
+bool TDEServerSocket::bind(const TQString& service)
 {
   setAddress(service);
   return bind();
 }
 
-bool KServerSocket::bind()
+bool TDEServerSocket::bind()
 {
-  if (d->state >= KServerSocketPrivate::Bound)
+  if (d->state >= TDEServerSocketPrivate::Bound)
     return true;
 
-  if (d->state < KServerSocketPrivate::LookupDone)
+  if (d->state < TDEServerSocketPrivate::LookupDone)
     {
       if (!blocking())
 	{
 	  d->bindWhenFound = true;
 	  bool ok = lookup();	// will call doBind
-	  if (d->state >= KServerSocketPrivate::Bound)
+	  if (d->state >= TDEServerSocketPrivate::Bound)
 	    d->bindWhenFound = false;
 	  return ok;
 	}
@@ -229,19 +229,19 @@ bool KServerSocket::bind()
   return doBind();
 }
 
-bool KServerSocket::listen(int backlog)
+bool TDEServerSocket::listen(int backlog)
 {
   // WARNING
   // this function has to be reentrant
   // due to the mechanisms used for binding, this function might
   // end up calling itself
 
-  if (d->state == KServerSocketPrivate::Listening)
+  if (d->state == TDEServerSocketPrivate::Listening)
     return true;		// already listening
 
   d->backlog = backlog;
 
-  if (d->state < KServerSocketPrivate::Bound)
+  if (d->state < TDEServerSocketPrivate::Bound)
     {
       // we must bind
       // note that we can end up calling ourselves here
@@ -252,7 +252,7 @@ bool KServerSocket::listen(int backlog)
 	  return false;
 	}
 
-      if (d->state < KServerSocketPrivate::Bound)
+      if (d->state < TDEServerSocketPrivate::Bound)
 	// asynchronous lookup in progress...
 	// we can't be blocking here anyways
 	return true;
@@ -260,29 +260,29 @@ bool KServerSocket::listen(int backlog)
       d->listenWhenBound = false;
     }
 
-  if (d->state < KServerSocketPrivate::Listening)
+  if (d->state < TDEServerSocketPrivate::Listening)
     return doListen();
 
   return true;
 }
 
-void KServerSocket::close()
+void TDEServerSocket::close()
 {
   socketDevice()->close();
   if (d->resolver.isRunning())
     d->resolver.cancel(false);
-  d->state = KServerSocketPrivate::None;
+  d->state = TDEServerSocketPrivate::None;
   emit closed();
 }
 
-void KServerSocket::setAcceptBuffered(bool enable)
+void TDEServerSocket::setAcceptBuffered(bool enable)
 {
-  d->useKBufferedSocket = enable;
+  d->useTDEBufferedSocket = enable;
 }
 
-KActiveSocketBase* KServerSocket::accept()
+KActiveSocketBase* TDEServerSocket::accept()
 {
-  if (d->state < KServerSocketPrivate::Listening)
+  if (d->state < TDEServerSocketPrivate::Listening)
     {
       if (!blocking())
 	{
@@ -310,7 +310,7 @@ KActiveSocketBase* KServerSocket::accept()
     }
 
   // we're listening here
-  KSocketDevice* accepted = socketDevice()->accept();
+  TDESocketDevice* accepted = socketDevice()->accept();
   if (!accepted)
     {
       // error happened during accept
@@ -319,8 +319,8 @@ KActiveSocketBase* KServerSocket::accept()
     }
 
   KStreamSocket* streamsocket;
-  if (d->useKBufferedSocket)
-    streamsocket = new KBufferedSocket();
+  if (d->useTDEBufferedSocket)
+    streamsocket = new TDEBufferedSocket();
   else
     streamsocket = new KStreamSocket();
   streamsocket->setSocketDevice(accepted);
@@ -334,19 +334,19 @@ KActiveSocketBase* KServerSocket::accept()
   return streamsocket;
 }
 
-KSocketAddress KServerSocket::localAddress() const
+TDESocketAddress TDEServerSocket::localAddress() const
 {
   return socketDevice()->localAddress();
 }
 
-KSocketAddress KServerSocket::externalAddress() const
+TDESocketAddress TDEServerSocket::externalAddress() const
 {
   return socketDevice()->externalAddress();
 }
 
-void KServerSocket::lookupFinishedSlot()
+void TDEServerSocket::lookupFinishedSlot()
 {
-  if (d->resolver.isRunning() || d->state > KServerSocketPrivate::LookupDone)
+  if (d->resolver.isRunning() || d->state > TDEServerSocketPrivate::LookupDone)
     return;
 
   if (d->resolver.status() < 0)
@@ -354,25 +354,25 @@ void KServerSocket::lookupFinishedSlot()
       setError(LookupFailure);
       emit gotError(LookupFailure);
       d->bindWhenFound = d->listenWhenBound = false;
-      d->state = KServerSocketPrivate::None;
+      d->state = TDEServerSocketPrivate::None;
       return;
     }
 
   // lookup succeeded
   d->resolverResults = d->resolver.results();
-  d->state = KServerSocketPrivate::LookupDone;
+  d->state = TDEServerSocketPrivate::LookupDone;
   emit hostFound();
 
   if (d->bindWhenFound)
     doBind();
 }
 
-void KServerSocket::copyError()
+void TDEServerSocket::copyError()
 {
   setError(socketDevice()->error());
 }
 
-bool KServerSocket::doBind()
+bool TDEServerSocket::doBind()
 {
   d->bindWhenFound = false;
   // loop through the results and bind to the first that works
@@ -393,7 +393,7 @@ bool KServerSocket::doBind()
   return false;
 }
 
-bool KServerSocket::doListen()
+bool TDEServerSocket::doListen()
 {
   if (!socketDevice()->listen(d->backlog))
     {
@@ -405,7 +405,7 @@ bool KServerSocket::doListen()
   // set up ready accept signal
   TQObject::connect(socketDevice()->readNotifier(), TQT_SIGNAL(activated(int)),
 		   this, TQT_SIGNAL(readyAccept()));
-  d->state = KServerSocketPrivate::Listening;
+  d->state = TDEServerSocketPrivate::Listening;
   return true;
 }
 

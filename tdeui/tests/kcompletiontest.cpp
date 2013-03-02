@@ -1,4 +1,4 @@
-#include <klocale.h>
+#include <tdelocale.h>
 /****************************************************************************
 ** Form implementation generated from reading ui file './kcompletiontest.ui'
 **
@@ -18,7 +18,7 @@
 #include <tqtooltip.h>
 #include <tqwhatsthis.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <klineedit.h>
 #include <kcombobox.h>
 /*
@@ -186,7 +186,7 @@ TQStringList Form1::defaultItems() const
 
 int main(int argc, char **argv )
 {
-    KApplication app( argc, argv, "kcompletiontest" );
+    TDEApplication app( argc, argv, "kcompletiontest" );
 
     Form1 *form = new Form1();
     form->show();

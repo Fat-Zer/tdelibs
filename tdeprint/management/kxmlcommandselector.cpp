@@ -30,10 +30,10 @@
 #include <tqtooltip.h>
 #include <tqlineedit.h>
 #include <kinputdialog.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
-#include <kmessagebox.h>
-#include <kfiledialog.h>
+#include <tdemessagebox.h>
+#include <tdefiledialog.h>
 #include <kseparator.h>
 #include <kguiitem.h>
 #include <kactivelabel.h>
@@ -273,7 +273,7 @@ void KXmlCommandSelector::slotXmlCommandToggled( bool on )
 
 void KXmlCommandSelector::slotHelpCommand()
 {
-	KPopupFrame *pop = new KPopupFrame( m_helpbtn );
+	TDEPopupFrame *pop = new TDEPopupFrame( m_helpbtn );
 	KActiveLabel *lab = new KActiveLabel( m_help, pop );
 	lab->resize( lab->sizeHint() );
 	pop->setMainWidget( lab );

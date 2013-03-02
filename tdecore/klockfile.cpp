@@ -37,15 +37,15 @@
 #include <tqtextstream.h>
 
 #include <kde_file.h>
-#include <kapplication.h>
-#include <kcmdlineargs.h>
-#include <kglobal.h>
-#include <ktempfile.h>
+#include <tdeapplication.h>
+#include <tdecmdlineargs.h>
+#include <tdeglobal.h>
+#include <tdetempfile.h>
 
 // TODO: http://www.spinnaker.de/linux/nfs-locking.html
 // TODO: Make regression test
 
-class KLockFile::KLockFilePrivate {
+class TDELockFile::TDELockFilePrivate {
 public:
    TQString file;
    int staleTime;
@@ -62,9 +62,9 @@ public:
 
 
 // 30 seconds
-KLockFile::KLockFile(const TQString &file)
+TDELockFile::TDELockFile(const TQString &file)
 {
-  d = new KLockFilePrivate();
+  d = new TDELockFilePrivate();
   d->file = file;
   d->staleTime = 30;
   d->isLocked = false;
@@ -72,21 +72,21 @@ KLockFile::KLockFile(const TQString &file)
   d->linkCountSupport = true;
 }
 
-KLockFile::~KLockFile()
+TDELockFile::~TDELockFile()
 {
   unlock();
   delete d;
 }
 
 int 
-KLockFile::staleTime() const
+TDELockFile::staleTime() const
 {
   return d->staleTime;
 }
 
 
 void
-KLockFile::setStaleTime(int _staleTime)
+TDELockFile::setStaleTime(int _staleTime)
 {
   d->staleTime = _staleTime;
 }
@@ -109,23 +109,23 @@ static bool testLinkCountSupport(const TQCString &fileName)
    return ((result == 0) && (st_buf.st_nlink == 2));
 }
 
-static KLockFile::LockResult lockFile(const TQString &lockFile, KDE_struct_stat &st_buf, bool &linkCountSupport)
+static TDELockFile::LockResult lockFile(const TQString &lockFile, KDE_struct_stat &st_buf, bool &linkCountSupport)
 {
   TQCString lockFileName = TQFile::encodeName( lockFile );
   int result = KDE_lstat( lockFileName, &st_buf );
   if (result == 0)
-     return KLockFile::LockFail;
+     return TDELockFile::LockFail;
   
   KTempFile uniqueFile(lockFile, TQString::null, 0644);
   uniqueFile.setAutoDelete(true);
   if (uniqueFile.status() != 0)
-     return KLockFile::LockError;
+     return TDELockFile::LockError;
 
   char hostname[256];
   hostname[0] = 0;
   gethostname(hostname, 255);
   hostname[255] = 0;
-  TQCString instanceName = KCmdLineArgs::appName();
+  TQCString instanceName = TDECmdLineArgs::appName();
 
   (*(uniqueFile.textStream())) << TQString::number(getpid()) << endl
       << instanceName << endl
@@ -138,23 +138,23 @@ static KLockFile::LockResult lockFile(const TQString &lockFile, KDE_struct_stat 
   // Create lock file
   result = ::link( uniqueName, lockFileName );
   if (result != 0)
-     return KLockFile::LockError;
+     return TDELockFile::LockError;
      
   if (!linkCountSupport)
-     return KLockFile::LockOK;
+     return TDELockFile::LockOK;
 #else
   //TODO for win32
-  return KLockFile::LockOK;
+  return TDELockFile::LockOK;
 #endif
 
   KDE_struct_stat st_buf2;
   result = KDE_lstat( uniqueName, &st_buf2 );
   if (result != 0)
-     return KLockFile::LockError;
+     return TDELockFile::LockError;
 
   result = KDE_lstat( lockFileName, &st_buf );
   if (result != 0)
-     return KLockFile::LockError;
+     return TDELockFile::LockError;
 
   if (!statResultIsEqual(st_buf, st_buf2) || S_ISLNK(st_buf.st_mode) || S_ISLNK(st_buf2.st_mode))
   {
@@ -163,15 +163,15 @@ static KLockFile::LockResult lockFile(const TQString &lockFile, KDE_struct_stat 
      {
         linkCountSupport = testLinkCountSupport(uniqueName);
         if (!linkCountSupport)
-           return KLockFile::LockOK; // Link count support is missing... assume everything is OK.
+           return TDELockFile::LockOK; // Link count support is missing... assume everything is OK.
      }
-     return KLockFile::LockFail;
+     return TDELockFile::LockFail;
   }
 
-  return KLockFile::LockOK;
+  return TDELockFile::LockOK;
 }
 
-static KLockFile::LockResult deleteStaleLock(const TQString &lockFile, KDE_struct_stat &st_buf, bool &linkCountSupport)
+static TDELockFile::LockResult deleteStaleLock(const TQString &lockFile, KDE_struct_stat &st_buf, bool &linkCountSupport)
 {
    // This is dangerous, we could be deleting a new lock instead of
    // the old stale one, let's be very careful
@@ -179,7 +179,7 @@ static KLockFile::LockResult deleteStaleLock(const TQString &lockFile, KDE_struc
    // Create temp file
    KTempFile ktmpFile(lockFile);
    if (ktmpFile.status() != 0)
-      return KLockFile::LockError;
+      return TDELockFile::LockError;
               
    TQCString lckFile = TQFile::encodeName(lockFile);
    TQCString tmpFile = TQFile::encodeName(ktmpFile.name());
@@ -189,10 +189,10 @@ static KLockFile::LockResult deleteStaleLock(const TQString &lockFile, KDE_struc
 #ifdef Q_OS_UNIX
    // link to lock file
    if (::link(lckFile, tmpFile) != 0)
-      return KLockFile::LockFail; // Try again later
+      return TDELockFile::LockFail; // Try again later
 #else
    //TODO for win32
-   return KLockFile::LockOK;
+   return TDELockFile::LockOK;
 #endif
 
    // check if link count increased with exactly one
@@ -209,7 +209,7 @@ static KLockFile::LockResult deleteStaleLock(const TQString &lockFile, KDE_struc
          tqWarning("WARNING: deleting stale lockfile %s", lckFile.data());
          ::unlink(lckFile);
          ::unlink(tmpFile);
-         return KLockFile::LockOK;
+         return TDELockFile::LockOK;
       }
    }
    
@@ -227,34 +227,34 @@ static KLockFile::LockResult deleteStaleLock(const TQString &lockFile, KDE_struc
       tqWarning("WARNING: deleting stale lockfile %s", lckFile.data());
       ::unlink(lckFile);
       ::unlink(tmpFile);
-      return KLockFile::LockOK;
+      return TDELockFile::LockOK;
    }
    
    // Failed to delete stale lock file
    tqWarning("WARNING: Problem deleting stale lockfile %s", lckFile.data());
    ::unlink(tmpFile);
-   return KLockFile::LockFail;
+   return TDELockFile::LockFail;
 }
 
 
-KLockFile::LockResult KLockFile::lock(int options)
+TDELockFile::LockResult TDELockFile::lock(int options)
 {
   if (d->isLocked)
-     return KLockFile::LockOK;
+     return TDELockFile::LockOK;
 
-  KLockFile::LockResult result;     
+  TDELockFile::LockResult result;     
   int hardErrors = 5;
   int n = 5;
   while(true)
   {
      KDE_struct_stat st_buf;
      result = lockFile(d->file, st_buf, d->linkCountSupport);
-     if (result == KLockFile::LockOK)
+     if (result == TDELockFile::LockOK)
      {
         d->staleTimer = TQTime();
         break;
      }
-     else if (result == KLockFile::LockError)
+     else if (result == TDELockFile::LockError)
      {
         d->staleTimer = TQTime();
         if (--hardErrors == 0)
@@ -262,7 +262,7 @@ KLockFile::LockResult KLockFile::lock(int options)
            break;
         }
      }
-     else // KLockFile::Fail
+     else // TDELockFile::Fail
      {
         if (!d->staleTimer.isNull() && !statResultIsEqual(d->statBuf, st_buf))
            d->staleTimer = TQTime();
@@ -292,17 +292,17 @@ KLockFile::LockResult KLockFile::lock(int options)
            if (isStale)
            {
               if ((options & LockForce) == 0)
-                 return KLockFile::LockStale;
+                 return TDELockFile::LockStale;
                  
               result = deleteStaleLock(d->file, d->statBuf, d->linkCountSupport);
 
-              if (result == KLockFile::LockOK)
+              if (result == TDELockFile::LockOK)
               {
                  // Lock deletion successful
                  d->staleTimer = TQTime();
                  continue; // Now try to get the new lock
               }
-              else if (result != KLockFile::LockFail)
+              else if (result != TDELockFile::LockFail)
               {
                  return result;
               }
@@ -336,7 +336,7 @@ KLockFile::LockResult KLockFile::lock(int options)
      
      struct timeval tv;
      tv.tv_sec = 0;
-     tv.tv_usec = n*((KApplication::random() % 200)+100);
+     tv.tv_usec = n*((TDEApplication::random() % 200)+100);
      if (n < 2000)
         n = n * 2;
      
@@ -351,12 +351,12 @@ KLockFile::LockResult KLockFile::lock(int options)
   return result;
 }
    
-bool KLockFile::isLocked() const
+bool TDELockFile::isLocked() const
 {
   return d->isLocked;
 }
    
-void KLockFile::unlock()
+void TDELockFile::unlock()
 {
   if (d->isLocked)
   {
@@ -365,7 +365,7 @@ void KLockFile::unlock()
   }
 }
 
-bool KLockFile::getLockInfo(int &pid, TQString &hostname, TQString &appname)
+bool TDELockFile::getLockInfo(int &pid, TQString &hostname, TQString &appname)
 {
   if (d->pid == -1)
      return false;

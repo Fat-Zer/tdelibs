@@ -1,5 +1,5 @@
 /*
-* Tests the item container widgets KIconView, KListView, KListBox
+* Tests the item container widgets TDEIconView, TDEListView, TDEListBox
 *
 * Copyright (c) 2000 by Michael Reiher <michael.reiher@gmx.de>
 *
@@ -16,12 +16,12 @@
 #include <tqcheckbox.h>
 #include <tqlabel.h>
 
-#include <kapplication.h>
-#include <kglobal.h>
-#include <kconfig.h>
+#include <tdeapplication.h>
+#include <tdeglobal.h>
+#include <tdeconfig.h>
 #include <kiconview.h>
-#include <klistview.h>
-#include <klistbox.h>
+#include <tdelistview.h>
+#include <tdelistbox.h>
 
 #include "itemcontainertest.h"
 
@@ -54,7 +54,7 @@ static const char * item_xpm[] = {
 "        ......        "};
 
 
-KApplication *app;
+TDEApplication *app;
 
 TopLevel::TopLevel(TQWidget *parent, const char *name)
     : TQWidget(parent, name)
@@ -88,25 +88,25 @@ TopLevel::TopLevel(TQWidget *parent, const char *name)
     m_plblItem = new TQLabel( gbItem );
     vBox->addWidget( gbItem );
 
-    TQButtonGroup* bgListView = new TQButtonGroup( 1, Qt::Horizontal, "KListView", this);
+    TQButtonGroup* bgListView = new TQButtonGroup( 1, Qt::Horizontal, "TDEListView", this);
     TQCheckBox* cbListView = new TQCheckBox("Single Column", bgListView);
     vBox->addWidget( bgListView );
     connect( cbListView, TQT_SIGNAL( toggled( bool ) ),
 	     this, TQT_SLOT( slotToggleSingleColumn( bool ) ) );
 
-    KGlobal::config()->reparseConfiguration();
+    TDEGlobal::config()->reparseConfiguration();
 
     //Create IconView
-    TQGroupBox* gbIconView = new TQGroupBox( 1, Qt::Horizontal, "KIconView", this);
-    m_pIconView = new KIconView( gbIconView );
+    TQGroupBox* gbIconView = new TQGroupBox( 1, Qt::Horizontal, "TDEIconView", this);
+    m_pIconView = new TDEIconView( gbIconView );
     hBox->addWidget( gbIconView );
     hBox->addSpacing( 5 );
     connect( m_pIconView, TQT_SIGNAL( executed( TQIconViewItem* ) ),
 	     this, TQT_SLOT( slotIconViewExec( TQIconViewItem* ) ) );
 
     //Create ListView
-    TQGroupBox* gbListView = new TQGroupBox( 1, Qt::Horizontal, "KListView", this);
-    m_pListView = new KListView( gbListView );
+    TQGroupBox* gbListView = new TQGroupBox( 1, Qt::Horizontal, "TDEListView", this);
+    m_pListView = new TDEListView( gbListView );
     m_pListView->addColumn("Item");
     m_pListView->addColumn("Text");
     hBox->addWidget( gbListView );
@@ -115,8 +115,8 @@ TopLevel::TopLevel(TQWidget *parent, const char *name)
 	     this, TQT_SLOT( slotListViewExec( TQListViewItem* ) ) );
 
     //Create ListBox
-    TQGroupBox* gbListBox = new TQGroupBox( 1, Qt::Horizontal, "KListBox", this);
-    m_pListBox = new KListBox( gbListBox );
+    TQGroupBox* gbListBox = new TQGroupBox( 1, Qt::Horizontal, "TDEListBox", this);
+    m_pListBox = new TDEListBox( gbListBox );
     hBox->addWidget( gbListBox );
     connect( m_pListBox, TQT_SIGNAL( executed( TQListBoxItem* ) ),
 	     this, TQT_SLOT( slotListBoxExec( TQListBoxItem* ) ) );
@@ -151,24 +151,24 @@ void TopLevel::slotSwitchMode( int id )
 
   switch( id ) {
   case TopLevel::NoSelection:
-    m_pIconView->setSelectionMode( KIconView::NoSelection );
+    m_pIconView->setSelectionMode( TDEIconView::NoSelection );
     m_pListView->setSelectionMode( TQListView::NoSelection );
-    m_pListBox->setSelectionMode( KListBox::NoSelection );
+    m_pListBox->setSelectionMode( TDEListBox::NoSelection );
     break;
   case TopLevel::Single:
-    m_pIconView->setSelectionMode( KIconView::Single );
+    m_pIconView->setSelectionMode( TDEIconView::Single );
     m_pListView->setSelectionMode( TQListView::Single );
-    m_pListBox->setSelectionMode( KListBox::Single );
+    m_pListBox->setSelectionMode( TDEListBox::Single );
     break;
   case TopLevel::Multi:
-    m_pIconView->setSelectionMode( KIconView::Multi );
+    m_pIconView->setSelectionMode( TDEIconView::Multi );
     m_pListView->setSelectionMode( TQListView::Multi );
-    m_pListBox->setSelectionMode( KListBox::Multi );
+    m_pListBox->setSelectionMode( TDEListBox::Multi );
     break;
   case TopLevel::Extended:
-    m_pIconView->setSelectionMode( KIconView::Extended );
+    m_pIconView->setSelectionMode( TDEIconView::Extended );
     m_pListView->setSelectionMode( TQListView::Extended );
-    m_pListBox->setSelectionMode( KListBox::Extended );
+    m_pListBox->setSelectionMode( TDEListBox::Extended );
     break;
   default:
     Q_ASSERT(0);
@@ -177,7 +177,7 @@ void TopLevel::slotSwitchMode( int id )
 
 void TopLevel::slotIconViewExec( TQIconViewItem* item )
 {
-  m_plblWidget->setText("KIconView");
+  m_plblWidget->setText("TDEIconView");
   m_plblSignal->setText("executed");
   if( item ) 
     m_plblItem->setText( item->text() );
@@ -187,7 +187,7 @@ void TopLevel::slotIconViewExec( TQIconViewItem* item )
 
 void TopLevel::slotListViewExec( TQListViewItem* item )
 {
-  m_plblWidget->setText("KListView");
+  m_plblWidget->setText("TDEListView");
   m_plblSignal->setText("executed");
   if( item ) 
     m_plblItem->setText( item->text(0) );
@@ -197,7 +197,7 @@ void TopLevel::slotListViewExec( TQListViewItem* item )
 
 void TopLevel::slotListBoxExec( TQListBoxItem* item )
 {
-  m_plblWidget->setText("KListBox");
+  m_plblWidget->setText("TDEListBox");
   m_plblSignal->setText("executed");
   if( item ) 
     m_plblItem->setText( item->text() );
@@ -212,7 +212,7 @@ void TopLevel::slotToggleSingleColumn( bool b )
 
 int main( int argc, char ** argv )
 {
-    app = new KApplication ( argc, argv, "ItemContainerTest" );
+    app = new TDEApplication ( argc, argv, "ItemContainerTest" );
 
     TopLevel *toplevel = new TopLevel(0, "itemcontainertest");
 

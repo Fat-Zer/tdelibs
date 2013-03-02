@@ -17,9 +17,9 @@
 */
 
 #include "kabapi.h"
-#include <klistbox.h>
-#include <kmessagebox.h>
-#include <klocale.h>
+#include <tdelistbox.h>
+#include <tdemessagebox.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 
 
@@ -36,7 +36,7 @@ using namespace std;
 KabAPI::KabAPI(TQWidget* parent, const char* name)
   : KDialogBase(parent, name),
     book(0),
-    listbox(new KListBox(this)),
+    listbox(new TDEListBox(this)),
     selection(-1)
 {
   TQ_CHECK_PTR(listbox);

@@ -27,29 +27,29 @@
 class TQSocketNotifier;
 
 /**
- * @short Used internally by KProcess
+ * @short Used internally by TDEProcess
  * @internal
  * @author Christian Czezatke <e9025461@student.tuwien.ac.at>
  *
- *  A class for internal use by KProcess only. -- Exactly one instance
- *  of this class is created by KApplication.
+ *  A class for internal use by TDEProcess only. -- Exactly one instance
+ *  of this class is created by TDEApplication.
  *
  * This class takes care of the actual (UN*X) signal handling.
  */
-class TDECORE_EXPORT KProcessController : public TQObject
+class TDECORE_EXPORT TDEProcessController : public TQObject
 {
   Q_OBJECT
 
 public:
   /**
    * Create an instance if none exists yet.
-   * Called by KApplication::KApplication()
+   * Called by TDEApplication::TDEApplication()
    */
   static void ref();
 
   /**
    * Destroy the instance if one exists and it is not referenced any more.
-   * Called by KApplication::~KApplication()
+   * Called by TDEApplication::~TDEApplication()
    */
   static void deref();
 
@@ -57,7 +57,7 @@ public:
    * Only a single instance of this class is allowed at a time,
    * and this static variable is used to track the one instance.
    */
-  static KProcessController *theKProcessController; // kde4: rename: instance
+  static TDEProcessController *theTDEProcessController; // kde4: rename: instance
 
   /**
    * Automatically called upon SIGCHLD. Never call it directly.
@@ -71,7 +71,7 @@ public:
   /**
    * Wait for any process to exit and handle their exit without
    * starting an event loop.
-   * This function may cause KProcess to emit any of its signals.
+   * This function may cause TDEProcess to emit any of its signals.
    *
    * @param timeout the timeout in seconds. -1 means no timeout.
    * @return true if a process exited, false
@@ -95,7 +95,7 @@ public:
   void rescheduleCheck();
 
   /*
-   * Obtain the file descriptor KProcessController uses to get notified
+   * Obtain the file descriptor TDEProcessController uses to get notified
    * about process exits. select() or poll() on it if you create a custom
    * event loop that needs to act upon SIGCHLD.
    * @return the file descriptor of the reading end of the notification pipe
@@ -106,11 +106,11 @@ public:
   /**
    * @internal
    */
-  void addKProcess( KProcess* );
+  void addTDEProcess( TDEProcess* );
   /**
    * @internal
    */
-  void removeKProcess( KProcess* );
+  void removeTDEProcess( TDEProcess* );
   /**
    * @internal
    */
@@ -125,7 +125,7 @@ private:
   int fd[2];
   bool needcheck;
   TQSocketNotifier *notifier;
-  TQValueList<KProcess*> kProcessList;
+  TQValueList<TDEProcess*> kProcessList;
   TQValueList<int> unixProcessList;
 
   static void setupHandlers();
@@ -136,12 +136,12 @@ private:
   static int refCount;
 
   // Disallow instantiation
-  KProcessController();
-  ~KProcessController();
+  TDEProcessController();
+  ~TDEProcessController();
 
   // Disallow assignment and copy-construction
-  KProcessController( const KProcessController& );
-  KProcessController& operator= ( const KProcessController& );
+  TDEProcessController( const TDEProcessController& );
+  TDEProcessController& operator= ( const TDEProcessController& );
 };
 
 

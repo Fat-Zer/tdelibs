@@ -26,38 +26,38 @@
 
 #include "kateview.h"
 
-#include <kaction.h>
+#include <tdeaction.h>
 #include <kstdaction.h>
-#include <kspell.h>
+#include <tdespell.h>
 #include <ksconfig.h>
 #include <kdebug.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 
 KateSpell::KateSpell( KateView* view )
   : TQObject( view )
   , m_view (view)
-  , m_kspell (0)
+  , m_tdespell (0)
 {
 }
 
 KateSpell::~KateSpell()
 {
-  // kspell stuff
-  if( m_kspell )
+  // tdespell stuff
+  if( m_tdespell )
   {
-    m_kspell->setAutoDelete(true);
-    m_kspell->cleanUp(); // need a way to wait for this to complete
-    delete m_kspell;
+    m_tdespell->setAutoDelete(true);
+    m_tdespell->cleanUp(); // need a way to wait for this to complete
+    delete m_tdespell;
   }
 }
 
-void KateSpell::createActions( KActionCollection* ac )
+void KateSpell::createActions( TDEActionCollection* ac )
 {
    KStdAction::spelling( this, TQT_SLOT(spellcheck()), ac );
-   KAction *a = new KAction( i18n("Spelling (from cursor)..."), "spellcheck", 0, this, TQT_SLOT(spellcheckFromCursor()), ac, "tools_spelling_from_cursor" );
+   TDEAction *a = new TDEAction( i18n("Spelling (from cursor)..."), "spellcheck", 0, this, TQT_SLOT(spellcheckFromCursor()), ac, "tools_spelling_from_cursor" );
    a->setWhatsThis(i18n("Check the document's spelling from the cursor and forward"));
 
-   m_spellcheckSelection = new KAction( i18n("Spellcheck Selection..."), "spellcheck", 0, this, TQT_SLOT(spellcheckSelection()), ac, "tools_spelling_selection" );
+   m_spellcheckSelection = new TDEAction( i18n("Spellcheck Selection..."), "spellcheck", 0, this, TQT_SLOT(spellcheckSelection()), ac, "tools_spelling_selection" );
    m_spellcheckSelection->setWhatsThis(i18n("Check spelling of the selected text"));
 }
 
@@ -122,27 +122,27 @@ void KateSpell::spellcheck( const KateTextCursor &from, const KateTextCursor &to
   else
     kdDebug(13020)<<"KateSpell::spellCheck(): using encoding: "<<enc<<" and KSpell::Type "<<type<<" (for '"<<mt<<"')"<<endl;
 
-  m_kspell = new KSpell( m_view, i18n("Spellcheck"),
+  m_tdespell = new KSpell( m_view, i18n("Spellcheck"),
                          this, TQT_SLOT(ready(KSpell *)), ksc, true, true, type );
 
-  connect( m_kspell, TQT_SIGNAL(death()),
+  connect( m_tdespell, TQT_SIGNAL(death()),
            this, TQT_SLOT(spellCleanDone()) );
 
-  connect( m_kspell, TQT_SIGNAL(misspelling(const TQString&, const TQStringList&, unsigned int)),
+  connect( m_tdespell, TQT_SIGNAL(misspelling(const TQString&, const TQStringList&, unsigned int)),
            this, TQT_SLOT(misspelling(const TQString&, const TQStringList&, unsigned int)) );
-  connect( m_kspell, TQT_SIGNAL(corrected(const TQString&, const TQString&, unsigned int)),
+  connect( m_tdespell, TQT_SIGNAL(corrected(const TQString&, const TQString&, unsigned int)),
            this, TQT_SLOT(corrected(const TQString&, const TQString&, unsigned int)) );
-  connect( m_kspell, TQT_SIGNAL(done(const TQString&)),
+  connect( m_tdespell, TQT_SIGNAL(done(const TQString&)),
            this, TQT_SLOT(spellResult(const TQString&)) );
 }
 
 void KateSpell::ready(KSpell *)
 {
-  m_kspell->setProgressResolution( 1 );
+  m_tdespell->setProgressResolution( 1 );
 
-  m_kspell->check( m_view->doc()->text( m_spellStart.line(), m_spellStart.col(), m_spellEnd.line(), m_spellEnd.col() ) );
+  m_tdespell->check( m_view->doc()->text( m_spellStart.line(), m_spellStart.col(), m_spellEnd.line(), m_spellEnd.col() ) );
 
-  kdDebug (13020) << "SPELLING READY STATUS: " << m_kspell->status () << endl;
+  kdDebug (13020) << "SPELLING READY STATUS: " << m_tdespell->status () << endl;
 }
 
 void KateSpell::locatePosition( uint pos, uint& line, uint& col )
@@ -193,12 +193,12 @@ void KateSpell::corrected( const TQString& originalword, const TQString& newword
 void KateSpell::spellResult( const TQString& )
 {
   m_view->clearSelection();
-  m_kspell->cleanUp();
+  m_tdespell->cleanUp();
 }
 
 void KateSpell::spellCleanDone()
 {
-  KSpell::spellStatus status = m_kspell->status();
+  KSpell::spellStatus status = m_tdespell->status();
 
   if( status == KSpell::Error ) {
     KMessageBox::sorry( 0,
@@ -210,8 +210,8 @@ void KateSpell::spellCleanDone()
       i18n("The spelling program seems to have crashed."));
   }
 
-  delete m_kspell;
-  m_kspell = 0;
+  delete m_tdespell;
+  m_tdespell = 0;
 
   kdDebug (13020) << "SPELLING END" << endl;
 }

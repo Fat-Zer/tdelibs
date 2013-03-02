@@ -11,12 +11,12 @@
 #include <tqlayout.h>
 #include <tqvgroupbox.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <knuminput.h>
 
 #include "knuminputtest.h"
 
-KApplication *a;
+TDEApplication *a;
 
 #include <kdebug.h>
 void TopLevel::slotPrint( int n ) {
@@ -132,7 +132,7 @@ TopLevel::TopLevel(TQWidget *parent, const char *name)
 
 int main( int argc, char ** argv )
 {
-    a = new KApplication ( argc, argv, "KNuminputTest" );
+    a = new TDEApplication ( argc, argv, "KNuminputTest" );
 
     TopLevel *toplevel = new TopLevel(0, "knuminputtest");
 

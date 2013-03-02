@@ -32,7 +32,7 @@
 
 #include <kdebug.h>
 #include <kstandarddirs.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kde_file.h>
 
 #include "client.h"
@@ -389,7 +389,7 @@ static TQString findDaemon()
 {
     TQString daemon = locate("bin", "tdesud");
     if (daemon.isEmpty()) // if not in TDEDIRS, rely on PATH
-	daemon = KStandardDirs::findExe("tdesud");
+	daemon = TDEStandardDirs::findExe("tdesud");
 
     if (daemon.isEmpty())
     {

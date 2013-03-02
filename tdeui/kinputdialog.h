@@ -79,7 +79,7 @@ class TDEUI_EXPORT KInputDialog : public KDialogBase
     KIntSpinBox *intSpinBox() const;
     KDoubleSpinBox *doubleSpinBox() const;
     KComboBox *comboBox() const;
-    KListBox *listBox() const;
+    TDEListBox *listBox() const;
     KTextEdit *textEdit() const;
 
   private slots:

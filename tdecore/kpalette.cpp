@@ -24,7 +24,7 @@
 #include <tqfile.h>
 #include <tqtextstream.h>
 #include <kstandarddirs.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <ksavefile.h>
 #include <kstringhandler.h>
 
@@ -34,7 +34,7 @@ TQStringList
 KPalette::getPaletteList()
 {
   TQStringList paletteList;
-  KGlobal::dirs()->findAllResources("config", "colors/*", false, true, paletteList);
+  TDEGlobal::dirs()->findAllResources("config", "colors/*", false, true, paletteList);
 
   int strip = strlen("colors/");
   for(TQStringList::Iterator it = paletteList.begin();

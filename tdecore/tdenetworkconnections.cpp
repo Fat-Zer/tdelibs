@@ -23,7 +23,7 @@
 
 #include <tqtimer.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 // #define DEBUG_SIGNAL_QUEUE 1
 
@@ -717,7 +717,7 @@ TDENetworkConnection* TDENetworkConnectionManager::findConnectionByUUID(TQString
 }
 
 TDENetworkDevice* TDENetworkConnectionManager::findDeviceByUUID(TQString uuid) {
-	TDEHardwareDevices *hwdevices = KGlobal::hardwareDevices();
+	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
 	if (!hwdevices) return NULL;
 
 	TDEGenericHardwareList devices = hwdevices->listByDeviceClass(TDEGenericDeviceType::Network);
@@ -1071,7 +1071,7 @@ TDENetworkDevice* TDEGlobalNetworkManager::findDeviceByUUID(TQString uuid) {
 }
 
 TDENetworkWiFiAPInfo* TDEGlobalNetworkManager::findAccessPointByBSSID(TDEMACAddress bssid) {
-	TDEHardwareDevices *hwdevices = KGlobal::hardwareDevices();
+	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
 	if (!hwdevices) {
 		return NULL;
 	}

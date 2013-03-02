@@ -37,10 +37,10 @@ services of given type are present in given domain.
 @short Describes any type of service.
 @author Jakub Stachowski
  */
-class KDNSSD_EXPORT ServiceBase : public KShared
+class KDNSSD_EXPORT ServiceBase : public TDEShared
 {
 public:
-	typedef KSharedPtr<ServiceBase> Ptr;
+	typedef TDESharedPtr<ServiceBase> Ptr;
 
 	/**
 	@param name Service name - empty for metaservices

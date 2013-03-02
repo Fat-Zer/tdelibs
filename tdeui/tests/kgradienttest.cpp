@@ -1,5 +1,5 @@
 #include "kgradienttest.h"
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kpixmapeffect.h>
 #include <tqpainter.h>
 #include <tqdatetime.h>
@@ -98,7 +98,7 @@ void KGradientWidget::paintEvent(TQPaintEvent */*ev*/)
 
 int main(int argc, char **argv)
 {
-    KApplication *app = new KApplication(argc, argv, "KGradientTest");
+    TDEApplication *app = new TDEApplication(argc, argv, "KGradientTest");
     KGradientWidget w;
     w.resize(250 * cols, 250 * rows);
     app->setMainWidget(&w);

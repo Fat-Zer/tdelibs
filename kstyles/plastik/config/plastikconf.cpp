@@ -30,8 +30,8 @@ DEALINGS IN THE SOFTWARE.
 #include <tqsettings.h>
 #include <tqcolor.h>
 #include <tqgroupbox.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <kcolorbutton.h>
 #include <kdemacros.h>
 
@@ -41,7 +41,7 @@ extern "C"
 {
 	KDE_EXPORT TQWidget* allocate_kstyle_config(TQWidget* parent)
 	{
-		KGlobal::locale()->insertCatalogue("kstyle_plastik_config");
+		TDEGlobal::locale()->insertCatalogue("kstyle_plastik_config");
 		return new PlastikStyleConfig(parent);
 	}
 }
@@ -50,7 +50,7 @@ PlastikStyleConfig::PlastikStyleConfig(TQWidget* parent): TQWidget(parent)
 {
 	//Should have no margins here, the dialog provides them
 	TQVBoxLayout* layout = new TQVBoxLayout(this, 0, 0);
-	KGlobal::locale()->insertCatalogue("kstyle_plastik_config");
+	TDEGlobal::locale()->insertCatalogue("kstyle_plastik_config");
 
 // 	scrollBarLines = new TQCheckBox(i18n("Scrollbar handle lines"), this);
 	animateProgressBar = new TQCheckBox(i18n("Animate progress bars"), this);

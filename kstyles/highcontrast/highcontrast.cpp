@@ -113,7 +113,7 @@ void addOffset (TQRect* r, int offset, int lineWidth = 0)
 // ---------------------------------------------------------------------------
 
 HighContrastStyle::HighContrastStyle()
-	: KStyle( 0, ThreeButtonScrollBar )
+	: TDEStyle( 0, ThreeButtonScrollBar )
 {
 	TQSettings settings;
 	settings.beginGroup("/highcontraststyle/Settings/");
@@ -175,7 +175,7 @@ void HighContrastStyle::polish (const TQStyleControlElementData &ceData, Control
 		}
 	}
 
-	KStyle::polish (ceData, elementFlags, ptr);
+	TDEStyle::polish (ceData, elementFlags, ptr);
 }
 
 
@@ -188,7 +188,7 @@ void HighContrastStyle::unPolish (const TQStyleControlElementData &ceData, Contr
 		}
 	}
 
-	KStyle::unPolish (ceData, elementFlags, ptr);
+	TDEStyle::unPolish (ceData, elementFlags, ptr);
 }
 
 void HighContrastStyle::setColorsNormal (TQPainter* p, const TQColorGroup& cg, int flags, int highlight) const
@@ -687,13 +687,13 @@ void HighContrastStyle::drawPrimitive (TQ_PrimitiveElement pe,
 		}
 
 		default: {
-			KStyle::drawPrimitive( pe, p, ceData, elementFlags, r, cg, flags, opt );
+			TDEStyle::drawPrimitive( pe, p, ceData, elementFlags, r, cg, flags, opt );
 		}
 	}
 }
 
 
-void HighContrastStyle::drawKStylePrimitive (KStylePrimitive kpe,
+void HighContrastStyle::drawTDEStylePrimitive (TDEStylePrimitive kpe,
 										TQPainter* p,
 										const TQStyleControlElementData &ceData,
 										ControlElementFlags elementFlags,
@@ -758,11 +758,11 @@ void HighContrastStyle::drawKStylePrimitive (KStylePrimitive kpe,
 
 		case KPE_ListViewExpander: {
 			// TODO There is no pixelMetric associated with the
-			// ListViewExpander in KStyle.
+			// ListViewExpander in TDEStyle.
 			// To have a properly large expander, the CC_ListView case of
 			// drawComplexControl should be handled.
 			// Probably it would be better to add a KPM_ListViewExpander metric
-			// to the KStyle KStylePixelMetric enum, and have the KStyle
+			// to the TDEStyle TDEStylePixelMetric enum, and have the TDEStyle
 			// drawComplexControl handle it.
 			TQ_PrimitiveElement direction;
 			if (flags & Style_On) { // Collapsed = On
@@ -776,10 +776,10 @@ void HighContrastStyle::drawKStylePrimitive (KStylePrimitive kpe,
 			break;
 		}
 		case KPE_ListViewBranch: 
-			// TODO Draw (thick) dotted line. Check kstyle.cpp
+			// TODO Draw (thick) dotted line. Check tdestyle.cpp
 			// Fall down for now
 		default:
-			KStyle::drawKStylePrimitive( kpe, p, ceData, elementFlags, r, cg, flags, opt, widget);
+			TDEStyle::drawTDEStylePrimitive( kpe, p, ceData, elementFlags, r, cg, flags, opt, widget);
 	}
 }
 
@@ -1158,7 +1158,7 @@ void HighContrastStyle::drawControl (TQ_ControlElement element,
 		}
 
 		default:
-			KStyle::drawControl(element, p, ceData, elementFlags, r, cg, flags, opt, widget);
+			TDEStyle::drawControl(element, p, ceData, elementFlags, r, cg, flags, opt, widget);
 	}
 }
 
@@ -1188,13 +1188,13 @@ void HighContrastStyle::drawControlMask (TQ_ControlElement element,
 		}
 
 		default: {
-			KStyle::drawControlMask (element, p, ceData, elementFlags, r, opt, w);
+			TDEStyle::drawControlMask (element, p, ceData, elementFlags, r, opt, w);
 		}
 	}
 }
 
 // Helper to find the next sibling that's not hidden
-// Lifted from kstyle.cpp
+// Lifted from tdestyle.cpp
 static TQListViewItem* nextVisibleSibling(TQListViewItem* item)
 {
     TQListViewItem* sibling = item;
@@ -1329,7 +1329,7 @@ void HighContrastStyle::drawComplexControl (TQ_ComplexControl control,
 		// -------------------------------------------------------------------
 		case CC_ListView: {
 			/*
-			 * Sigh... Lifted and modified from kstyle.cpp 
+			 * Sigh... Lifted and modified from tdestyle.cpp 
 			 */
 			/* 
 			 * Many thanks to TrollTech AS for donating CC_ListView from TQWindowsStyle.
@@ -1405,8 +1405,8 @@ void HighContrastStyle::drawComplexControl (TQ_ComplexControl control,
 							boxrect = TQRect( bx-h/2, linebot-h/2, h, h );
 							boxflags = child->isOpen() ? TQStyle::Style_Off : TQStyle::Style_On;
 
-							// KStyle extension: Draw the box and expand/collapse indicator
-							drawKStylePrimitive( KPE_ListViewExpander, p, ceData, elementFlags, boxrect, cg, boxflags, opt, NULL );
+							// TDEStyle extension: Draw the box and expand/collapse indicator
+							drawTDEStylePrimitive( KPE_ListViewExpander, p, ceData, elementFlags, boxrect, cg, boxflags, opt, NULL );
 
 							// dotlinery
 							p->setPen( cg.mid() );
@@ -1459,8 +1459,8 @@ void HighContrastStyle::drawComplexControl (TQ_ComplexControl control,
 						branchrect  = TQRect( point, other-(thickness/2), end-point, thickness );
 						branchflags = TQStyle::Style_Horizontal;
 
-						// KStyle extension: Draw the horizontal branch
-						drawKStylePrimitive( KPE_ListViewBranch, p, ceData, elementFlags, branchrect, cg, branchflags, opt, NULL );
+						// TDEStyle extension: Draw the horizontal branch
+						drawTDEStylePrimitive( KPE_ListViewBranch, p, ceData, elementFlags, branchrect, cg, branchflags, opt, NULL );
 
 					} else {
 						// Vertical branch
@@ -1475,8 +1475,8 @@ void HighContrastStyle::drawComplexControl (TQ_ComplexControl control,
 						else
 							branchflags = TQStyle::Style_Default;
 
-						// KStyle extension: Draw the vertical branch
-						drawKStylePrimitive( KPE_ListViewBranch, p, ceData, elementFlags, branchrect, cg, branchflags, opt, NULL );
+						// TDEStyle extension: Draw the vertical branch
+						drawTDEStylePrimitive( KPE_ListViewBranch, p, ceData, elementFlags, branchrect, cg, branchflags, opt, NULL );
 					}
 				}
 			}
@@ -1484,7 +1484,7 @@ void HighContrastStyle::drawComplexControl (TQ_ComplexControl control,
 		}
 
 		default:
-			KStyle::drawComplexControl(control, p, ceData, elementFlags,
+			TDEStyle::drawComplexControl(control, p, ceData, elementFlags,
 						r, cg, flags, controls, active, opt, widget);
 			break;
 	}
@@ -1506,7 +1506,7 @@ void HighContrastStyle::drawComplexControlMask(TQ_ComplexControl c,
 			break;
 		}
 		default: {
-			KStyle::drawComplexControlMask (c, p, ceData, elementFlags, r, o, w);
+			TDEStyle::drawComplexControlMask (c, p, ceData, elementFlags, r, o, w);
 		}
 	}
 }
@@ -1530,7 +1530,7 @@ void HighContrastStyle::drawItem( TQPainter *p,
 	
 	enabled = true; //do not ghost it in Qt
 
-	KStyle::drawItem (p, r, flags, cg, enabled, pixmap, text, len, penColor);
+	TDEStyle::drawItem (p, r, flags, cg, enabled, pixmap, text, len, penColor);
 	
 	p->restore();
 }
@@ -1585,7 +1585,7 @@ TQRect HighContrastStyle::querySubControlMetrics( TQ_ComplexControl control,
 		default: break;
 	}
 
-	return KStyle::querySubControlMetrics (control, ceData, elementFlags, subcontrol, opt, widget);
+	return TDEStyle::querySubControlMetrics (control, ceData, elementFlags, subcontrol, opt, widget);
 }
 
 
@@ -1679,19 +1679,19 @@ int HighContrastStyle::pixelMetric(PixelMetric m, const TQStyleControlElementDat
 			return 0;
 
 		default:
-			return KStyle::pixelMetric(m, ceData, elementFlags, widget);
+			return TDEStyle::pixelMetric(m, ceData, elementFlags, widget);
 	}
 }
 
-int HighContrastStyle::kPixelMetric( KStylePixelMetric kpm, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQWidget *widget ) const
+int HighContrastStyle::kPixelMetric( TDEStylePixelMetric kpm, const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, const TQWidget *widget ) const
 {
 	switch (kpm) {
 		case KPM_ListViewBranchThickness:
 			// XXX Proper support of thick branches requires reimplementation of
-			// the drawKStylePrimitive KPE_ListViewBranch case.
+			// the drawTDEStylePrimitive KPE_ListViewBranch case.
 			return basicLineWidth;
 		default:
-			return KStyle::kPixelMetric(kpm, ceData, elementFlags, widget);
+			return TDEStyle::kPixelMetric(kpm, ceData, elementFlags, widget);
 	}
 }
 
@@ -1817,7 +1817,7 @@ TQSize HighContrastStyle::sizeFromContents( ContentsType contents,
 
 
 		default:
-			return KStyle::sizeFromContents( contents, ceData, elementFlags, contentSize, opt, widget );
+			return TDEStyle::sizeFromContents( contents, ceData, elementFlags, contentSize, opt, widget );
 	}
 }
 
@@ -1829,13 +1829,13 @@ TQRect HighContrastStyle::subRect (SubRect subrect, const TQStyleControlElementD
 		case SR_ProgressBarLabel:
 			return ceData.rect;
 		default:
-			return KStyle::subRect (subrect, ceData, elementFlags, widget);
+			return TDEStyle::subRect (subrect, ceData, elementFlags, widget);
 	}
 }
 
 bool HighContrastStyle::objectEventHandler( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void* source, TQEvent *event )
 {
-	return KStyle::objectEventHandler (ceData, elementFlags, source, event);
+	return TDEStyle::objectEventHandler (ceData, elementFlags, source, event);
 }
 
 /*! \reimp */
@@ -1856,7 +1856,7 @@ int HighContrastStyle::styleHint(StyleHint sh, const TQStyleControlElementData &
 			}
 			break;
 		default:
-			ret = KStyle::styleHint(sh, ceData, elementFlags, opt, returnData, w);
+			ret = TDEStyle::styleHint(sh, ceData, elementFlags, opt, returnData, w);
 			break;
 	}
 

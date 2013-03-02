@@ -20,14 +20,14 @@
 #include "smbview.h"
 
 #include <kprocess.h>
-#include <ktempfile.h>
+#include <tdetempfile.h>
 #include <tqheader.h>
 #include <tqapplication.h>
 
 #include <kiconloader.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kcursor.h>
 
 #include <tqfile.h>
@@ -38,7 +38,7 @@
 //*********************************************************************************************
 
 SmbView::SmbView(TQWidget *parent, const char *name)
-: KListView(parent,name)
+: TDEListView(parent,name)
 {
 	addColumn(i18n("Printer"));
 	addColumn(i18n("Comment"));
@@ -49,11 +49,11 @@ SmbView::SmbView(TQWidget *parent, const char *name)
 
 	m_state = Idle;
 	m_current = 0;
-	m_proc = new KProcess();
+	m_proc = new TDEProcess();
 	m_proc->setUseShell(true);
 	m_passwdFile = 0;
-	connect(m_proc,TQT_SIGNAL(processExited(KProcess*)),TQT_SLOT(slotProcessExited(KProcess*)));
-	connect(m_proc,TQT_SIGNAL(receivedStdout(KProcess*,char*,int)),TQT_SLOT(slotReceivedStdout(KProcess*,char*,int)));
+	connect(m_proc,TQT_SIGNAL(processExited(TDEProcess*)),TQT_SLOT(slotProcessExited(TDEProcess*)));
+	connect(m_proc,TQT_SIGNAL(receivedStdout(TDEProcess*,char*,int)),TQT_SLOT(slotReceivedStdout(TDEProcess*,char*,int)));
 	connect(this,TQT_SIGNAL(selectionChanged(TQListViewItem*)),TQT_SLOT(slotSelectionChanged(TQListViewItem*)));
 }
 
@@ -91,7 +91,7 @@ void SmbView::startProcess(int state)
 	m_buffer = TQString::null;
 	m_state = state;
 	TQApplication::setOverrideCursor(KCursor::waitCursor());
-	m_proc->start(KProcess::NotifyOnExit,KProcess::Stdout);
+	m_proc->start(TDEProcess::NotifyOnExit,TDEProcess::Stdout);
 	emit running(true);
 }
 
@@ -118,12 +118,12 @@ void SmbView::endProcess()
 	m_proc->clearArguments();
 }
 
-void SmbView::slotProcessExited(KProcess*)
+void SmbView::slotProcessExited(TDEProcess*)
 {
 	endProcess();
 }
 
-void SmbView::slotReceivedStdout(KProcess*, char *buf, int len)
+void SmbView::slotReceivedStdout(TDEProcess*, char *buf, int len)
 {
 	m_buffer.append(TQString::fromLocal8Bit(buf,len));
 }
@@ -178,7 +178,7 @@ void SmbView::setOpen(TQListViewItem *item, bool on)
 		{ // opening group
 			m_current = item;
 			*m_proc << "nmblookup"+m_wins_server+"-M ";
-                        *m_proc << KProcess::quote(item->text(0));
+                        *m_proc << TDEProcess::quote(item->text(0));
                         *m_proc << " -S";
                         startProcess(ServerListing);
 		}
@@ -194,14 +194,14 @@ void SmbView::setOpen(TQListViewItem *item, bool on)
 			{
 				*m_proc << "smbclient -N -L ";
 			}
-			*m_proc << KProcess::quote (item->text (0));
+			*m_proc << TDEProcess::quote (item->text (0));
 			*m_proc << " -W ";
-			*m_proc << KProcess::quote (item->parent ()->
+			*m_proc << TDEProcess::quote (item->parent ()->
 							text (0));
 			if (!krb5ccname)
 			{
 				*m_proc << " -A ";
-				*m_proc << KProcess::
+				*m_proc << TDEProcess::
 					quote (m_passwdFile->name ());
 			}
 			startProcess(ShareListing);

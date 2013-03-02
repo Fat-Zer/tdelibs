@@ -18,9 +18,9 @@
 
 #include <kdebug.h>
 #include <kuniqueapplication.h>
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
-#include <klocale.h>
+#include <tdeaboutdata.h>
+#include <tdecmdlineargs.h>
+#include <tdelocale.h>
 #include <dcopclient.h>
 
 #include <tqvaluelist.h>
@@ -48,12 +48,12 @@ public:
 
 int main(int argc, char **argv)
 {
-    KAboutData aboutdata("kmcop", I18N_NOOP("KMCOP"),
+    TDEAboutData aboutdata("kmcop", I18N_NOOP("KMCOP"),
                          "0.1", I18N_NOOP("TDE MCOP-DCOP Bridge"),
-                         KAboutData::License_GPL, "(C) 2001, Nikolas Zimmermann");
+                         TDEAboutData::License_GPL, "(C) 2001, Nikolas Zimmermann");
     aboutdata.addAuthor("Nikolas Zimmermann", I18N_NOOP("Author"), "wildfox@kde.org");
 
-    KCmdLineArgs::init(argc, argv, &aboutdata);
+    TDECmdLineArgs::init(argc, argv, &aboutdata);
     KUniqueApplication::addCmdLineOptions();
 
     if(!KUniqueApplication::start())

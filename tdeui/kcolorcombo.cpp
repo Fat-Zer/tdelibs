@@ -44,14 +44,14 @@
 #include <tqpushbutton.h>
 #include <tqtimer.h>
 
-#include <kapplication.h>
-#include <kconfig.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
+#include <tdeapplication.h>
+#include <tdeconfig.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
 #include <kiconloader.h>
-#include <klistbox.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelistbox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kseparator.h>
 #include <kpalette.h>
 #include <kimageeffect.h>

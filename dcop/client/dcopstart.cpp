@@ -49,7 +49,7 @@ void startApp(const char *_app, int argc, const char **args)
     TQDataStream arg(data, IO_WriteOnly);
     arg << app << URLs;
 
-    if ( !dcop->call( "klauncher", "klauncher", function,  data, replyType, replyData) ) {
+    if ( !dcop->call( "tdelauncher", "tdelauncher", function,  data, replyType, replyData) ) {
 	tqWarning( "call failed");
         exit(1);
     } else {

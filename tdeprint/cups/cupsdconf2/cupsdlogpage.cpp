@@ -27,8 +27,8 @@
 #include <tqlayout.h>
 #include <tqwhatsthis.h>
 
-#include <klocale.h>
-#include <kfiledialog.h>
+#include <tdelocale.h>
+#include <tdefiledialog.h>
 
 CupsdLogPage::CupsdLogPage(TQWidget *parent, const char *name)
 	: CupsdPage(parent, name)

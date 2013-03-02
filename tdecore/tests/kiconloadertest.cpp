@@ -1,20 +1,20 @@
 #include <kiconloader.h>
 #include <tqdatetime.h>
 #include <stdio.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <stdlib.h>
 #include <kdebug.h>
 
 int main(int argc, char *argv[])
 {
-  KApplication app(argc,argv,"kiconloadertest"/*,false,false*/);
+  TDEApplication app(argc,argv,"kiconloadertest"/*,false,false*/);
 
-  KIconLoader * mpLoader = KGlobal::iconLoader();
-  KIcon::Context mContext = KIcon::Application;
+  TDEIconLoader * mpLoader = TDEGlobal::iconLoader();
+  TDEIcon::Context mContext = TDEIcon::Application;
   TQTime dt;
   dt.start();
   int count = 0;
-  for ( int mGroup = 0; mGroup < KIcon::LastGroup ; ++mGroup )
+  for ( int mGroup = 0; mGroup < TDEIcon::LastGroup ; ++mGroup )
   {
       kdDebug() << "queryIcons " << mGroup << "," << mContext << endl;
       TQStringList filelist=mpLoader->queryIcons(mGroup, mContext);
@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
           ++it, ++i )
       {
           //kdDebug() << ( i==9 ? "..." : (*it) ) << endl;
-          mpLoader->loadIcon( (*it), (KIcon::Group)mGroup );
+          mpLoader->loadIcon( (*it), (TDEIcon::Group)mGroup );
 	  ++count;
       }
   }

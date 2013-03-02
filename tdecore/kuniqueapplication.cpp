@@ -34,16 +34,16 @@
 #include <tqtimer.h>
 
 #include <dcopclient.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <kstandarddirs.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 
 #if defined Q_WS_X11
 #include <twin.h> 
-#include <kstartupinfo.h> 
+#include <tdestartupinfo.h> 
 #endif
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include "kdebug.h"
 #include "kuniqueapplication.h"
 
@@ -64,10 +64,10 @@ bool KUniqueApplication::s_multipleInstances = false;
 bool KUniqueApplication::s_uniqueTestDone = false;
 bool KUniqueApplication::s_handleAutoStarted = false;
 
-static KCmdLineOptions kunique_options[] =
+static TDECmdLineOptions kunique_options[] =
 {
   { "nofork", "Don't run in the background.", 0 },
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 struct DCOPRequest {
@@ -86,7 +86,7 @@ public:
 void
 KUniqueApplication::addCmdLineOptions()
 {
-  KCmdLineArgs::addCmdLineOptions(kunique_options, 0, "kuniqueapp", "tde" );
+  TDECmdLineArgs::addCmdLineOptions(kunique_options, 0, "kuniqueapp", "tde" );
 }
 
 bool
@@ -99,12 +99,12 @@ KUniqueApplication::start()
 #ifdef Q_WS_WIN
   s_nofork = true;
 #else
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs("kuniqueapp");
+  TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs("kuniqueapp");
   s_nofork = !args->isSet("fork");
   delete args;
 #endif
 
-  TQCString appName = KCmdLineArgs::about->appName();
+  TQCString appName = TDECmdLineArgs::about->appName();
 
   if (s_nofork)
   {
@@ -186,17 +186,17 @@ KUniqueApplication::start()
 #if 0
 #ifdef Q_WS_X11
            // say we're up and running ( probably no new window will appear )
-           KStartupInfoId id;
-           if( kapp != NULL ) // KApplication constructor unsets the env. variable
+           TDEStartupInfoId id;
+           if( kapp != NULL ) // TDEApplication constructor unsets the env. variable
                id.initId( kapp->startupId());
            else
-               id = KStartupInfo::currentStartupIdEnv();
+               id = TDEStartupInfo::currentStartupIdEnv();
            if( !id.none())
            {
                Display* disp = XOpenDisplay( NULL );
                if( disp != NULL ) // use extra X connection
                {
-                   KStartupInfo::sendFinishX( disp, id );
+                   TDEStartupInfo::sendFinishX( disp, id );
                    XCloseDisplay( disp );
                }
            }
@@ -210,19 +210,19 @@ KUniqueApplication::start()
 
      {
 #ifdef Q_WS_X11
-         KStartupInfoId id;
-         if( kapp != NULL ) // KApplication constructor unsets the env. variable
+         TDEStartupInfoId id;
+         if( kapp != NULL ) // TDEApplication constructor unsets the env. variable
              id.initId( kapp->startupId());
          else
-             id = KStartupInfo::currentStartupIdEnv();
+             id = TDEStartupInfo::currentStartupIdEnv();
          if( !id.none())
          { // notice about pid change
             Display* disp = XOpenDisplay( NULL );
             if( disp != NULL ) // use extra X connection
                {
-               KStartupInfoData data;
+               TDEStartupInfoData data;
                data.addPid( getpid());
-               KStartupInfo::sendChangeX( disp, id, data );
+               TDEStartupInfo::sendChangeX( disp, id, data );
                XCloseDisplay( disp );
                }
          }
@@ -273,11 +273,11 @@ KUniqueApplication::start()
 
      TQCString new_asn_id;
 #if defined Q_WS_X11
-     KStartupInfoId id;
-     if( kapp != NULL ) // KApplication constructor unsets the env. variable
+     TDEStartupInfoId id;
+     if( kapp != NULL ) // TDEApplication constructor unsets the env. variable
          id.initId( kapp->startupId());
      else
-         id = KStartupInfo::currentStartupIdEnv();
+         id = TDEStartupInfo::currentStartupIdEnv();
      if( !id.none())
          new_asn_id = id.id();
 #endif
@@ -285,14 +285,14 @@ KUniqueApplication::start()
      TQByteArray data, reply;
      TQDataStream ds(data, IO_WriteOnly);
 
-     KCmdLineArgs::saveAppArgs(ds);
+     TDECmdLineArgs::saveAppArgs(ds);
      ds << new_asn_id;
 
      dc->setPriorityCall(true);
      TQCString replyType;
-     if (!dc->call(appName, KCmdLineArgs::about->appName(), "newInstance()", data, replyType, reply))
+     if (!dc->call(appName, TDECmdLineArgs::about->appName(), "newInstance()", data, replyType, reply))
      {
-        kdError() << "Communication problem with " << KCmdLineArgs::about->appName() << ", it probably crashed." << endl;
+        kdError() << "Communication problem with " << TDECmdLineArgs::about->appName() << ", it probably crashed." << endl;
         delete dc;	// Clean up DCOP commmunication
         ::exit(255);
      }
@@ -315,8 +315,8 @@ KUniqueApplication::start()
 
 
 KUniqueApplication::KUniqueApplication(bool allowStyles, bool GUIenabled, bool configUnique)
-  : KApplication( allowStyles, GUIenabled, initHack( configUnique )),
-    DCOPObject(KCmdLineArgs::about->appName())
+  : TDEApplication( allowStyles, GUIenabled, initHack( configUnique )),
+    DCOPObject(TDECmdLineArgs::about->appName())
 {
   d = new KUniqueApplicationPrivate;
   d->processingRequest = false;
@@ -331,8 +331,8 @@ KUniqueApplication::KUniqueApplication(bool allowStyles, bool GUIenabled, bool c
 #ifdef Q_WS_X11
 KUniqueApplication::KUniqueApplication(Display *display, Qt::HANDLE visual,
 		Qt::HANDLE colormap, bool allowStyles, bool configUnique)
-  : KApplication( display, visual, colormap, allowStyles, initHack( configUnique )),
-    DCOPObject(KCmdLineArgs::about->appName())
+  : TDEApplication( display, visual, colormap, allowStyles, initHack( configUnique )),
+    DCOPObject(TDECmdLineArgs::about->appName())
 {
   d = new KUniqueApplicationPrivate;
   d->processingRequest = false;
@@ -351,12 +351,12 @@ KUniqueApplication::~KUniqueApplication()
 }
 
 // this gets called before even entering TQApplication::TQApplication()
-KInstance* KUniqueApplication::initHack( bool configUnique )
+TDEInstance* KUniqueApplication::initHack( bool configUnique )
 {
-  KInstance* inst = new KInstance( KCmdLineArgs::about );
+  TDEInstance* inst = new TDEInstance( TDECmdLineArgs::about );
   if (configUnique)
   {
-    KConfigGroupSaver saver( inst->config(), "KDE" );
+    TDEConfigGroupSaver saver( inst->config(), "KDE" );
     s_multipleInstances = inst->config()->readBoolEntry("MultipleInstances", false);
   }
   if( !start())
@@ -381,11 +381,11 @@ void KUniqueApplication::newInstanceNoFork()
   // KDE4 remove
   // A hack to make startup notification stop for apps which override newInstance()
   // and reuse an already existing window there, but use KWin::activateWindow()
-  // instead of KStartupInfo::setNewStartupId(). Therefore KWin::activateWindow()
+  // instead of TDEStartupInfo::setNewStartupId(). Therefore KWin::activateWindow()
   // for now sets this flag. Automatically ending startup notification always
   // would cause problem if the new window would show up with a small delay.
   if( s_handleAutoStarted )
-      KStartupInfo::handleAutoAppStartedSending();
+      TDEStartupInfo::handleAutoAppStartedSending();
 #endif
   // What to do with the return value ?
 }
@@ -433,7 +433,7 @@ KUniqueApplication::processDelayed()
      if (request->fun == "newInstance()") {
        dcopClient()->setPriorityCall(false);
        TQDataStream ds(request->data, IO_ReadOnly);
-       KCmdLineArgs::loadAppArgs(ds);
+       TDECmdLineArgs::loadAppArgs(ds);
        if( !ds.atEnd()) // backwards compatibility
        {
            TQCString asn_id;
@@ -445,7 +445,7 @@ KUniqueApplication::processDelayed()
        d->firstInstance = false;
 #if defined Q_WS_X11
        if( s_handleAutoStarted )
-           KStartupInfo::handleAutoAppStartedSending(); // KDE4 remove?
+           TDEStartupInfo::handleAutoAppStartedSending(); // KDE4 remove?
 #endif
        TQDataStream rs(replyData, IO_WriteOnly);
        rs << exitCode;
@@ -476,7 +476,7 @@ int KUniqueApplication::newInstance()
     // and what's important, it does it properly. If you reimplement newInstance(),
     // and don't call the inherited one, use this (but NOT when newInstance()
     // is called for the first time, like here).
-      KStartupInfo::setNewStartupId( mainWidget(), kapp->startupId());
+      TDEStartupInfo::setNewStartupId( mainWidget(), kapp->startupId());
 #endif
     }
   }
@@ -489,7 +489,7 @@ void KUniqueApplication::setHandleAutoStarted()
 }
 
 void KUniqueApplication::virtual_hook( int id, void* data )
-{ KApplication::virtual_hook( id, data );
+{ TDEApplication::virtual_hook( id, data );
   DCOPObject::virtual_hook( id, data ); }
 
 #include "kuniqueapplication.moc"

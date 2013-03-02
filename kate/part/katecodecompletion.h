@@ -28,7 +28,7 @@
 #ifndef __KateCodeCompletion_H__
 #define __KateCodeCompletion_H__
 
-#include <ktexteditor/codecompletioninterface.h>
+#include <tdetexteditor/codecompletioninterface.h>
 
 #include <tqvaluelist.h>
 #include <tqstringlist.h>

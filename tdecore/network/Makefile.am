@@ -38,13 +38,13 @@ include_HEADERS = kresolver.h \
 	kstreamsocket.h \
 	kserversocket.h \
 	kdatagramsocket.h \
-	kmulticastsocketdevice.h \
-	kmulticastsocket.h \
+	tdemulticastsocketdevice.h \
+	tdemulticastsocket.h \
 	knetworkinterface.h \
 	khttpproxysocketdevice.h \
 	ksockssocketdevice.h \
 	kbufferedsocket.h \
-	kiobuffer.h
+	tdeiobuffer.h
 noinst_HEADERS = kresolver_p.h \
 	kresolverworkerbase.h \
 	kresolverstandardworkers_p.h \

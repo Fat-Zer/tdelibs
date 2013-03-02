@@ -353,10 +353,10 @@ class TDECORE_EXPORT TDEGenericDevice : public TQObject
 
 		/**
 		*  Get an icon for this device
-		*  @param size a KIcon::StdSizes structure specifying the desired icon size
+		*  @param size a TDEIcon::StdSizes structure specifying the desired icon size
 		*  @return a TQPixmap containing the icon for the specified type
 		*/
-		virtual TQPixmap icon(KIcon::StdSizes size);
+		virtual TQPixmap icon(TDEIcon::StdSizes size);
 
 	protected:
 		/**
@@ -622,12 +622,12 @@ class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 
 		/**
 		* Get an icon for this device
-		* @param size a KIcon::StdSizes structure specifying the desired icon size
+		* @param size a TDEIcon::StdSizes structure specifying the desired icon size
 		* @return a TQPixmap containing the icon for the specified type
 		*
-		* This method overrides TDEGenericDevice::icon(KIcon::StdSizes size)
+		* This method overrides TDEGenericDevice::icon(TDEIcon::StdSizes size)
 		*/
-		TQPixmap icon(KIcon::StdSizes size);
+		TQPixmap icon(TDEIcon::StdSizes size);
 
 		/**
 		* @return a TQString with a friendly name
@@ -1977,10 +1977,10 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 		/**
 		*  Get an icon for a device type
 		*  @param query a TDEGenericDeviceType::TDEGenericDeviceType specifying a device type
-		*  @param size a KIcon::StdSizes structure specifying the desired icon size
+		*  @param size a TDEIcon::StdSizes structure specifying the desired icon size
 		*  @return a TQPixmap containing the icon for the specified type
 		*/
-		TQPixmap getDeviceTypeIconFromType(TDEGenericDeviceType::TDEGenericDeviceType query, KIcon::StdSizes size);
+		TQPixmap getDeviceTypeIconFromType(TDEGenericDeviceType::TDEGenericDeviceType query, TDEIcon::StdSizes size);
 
 		/**
 		*  Convenience function to obtain the root system device

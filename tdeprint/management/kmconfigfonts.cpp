@@ -28,12 +28,12 @@
 #include <tqsettings.h>
 #include <tqwhatsthis.h>
 
-#include <klocale.h>
-#include <kconfig.h>
+#include <tdelocale.h>
+#include <tdeconfig.h>
 #include <kiconloader.h>
 #include <kurlrequester.h>
-#include <kfile.h>
-#include <klistview.h>
+#include <tdefile.h>
+#include <tdelistview.h>
 #include <kdialog.h>
 
 KMConfigFonts::KMConfigFonts(TQWidget *parent, const char *name)
@@ -47,7 +47,7 @@ KMConfigFonts::KMConfigFonts(TQWidget *parent, const char *name)
 	TQGroupBox	*box2 = new TQGroupBox(0, Qt::Vertical, i18n("Fonts Path"), this);
 
 	m_embedfonts = new TQCheckBox(i18n("&Embed fonts in PostScript data when printing"), box);
-	m_fontpath = new KListView(box2);
+	m_fontpath = new TDEListView(box2);
 	m_fontpath->addColumn("");
 	m_fontpath->header()->setStretchEnabled(true, 0);
 	m_fontpath->header()->hide();
@@ -103,7 +103,7 @@ KMConfigFonts::KMConfigFonts(TQWidget *parent, const char *name)
 	m_down->setEnabled(false);
 }
 
-void KMConfigFonts::loadConfig(KConfig *)
+void KMConfigFonts::loadConfig(TDEConfig *)
 {
 	TQSettings	settings;
 	m_embedfonts->setChecked(settings.readBoolEntry("/qt/embedFonts", true));
@@ -113,7 +113,7 @@ void KMConfigFonts::loadConfig(KConfig *)
 		item = new TQListViewItem(m_fontpath, item, *it);
 }
 
-void KMConfigFonts::saveConfig(KConfig *)
+void KMConfigFonts::saveConfig(TDEConfig *)
 {
 	TQSettings	settings;
 	settings.writeEntry("/qt/embedFonts", m_embedfonts->isChecked());

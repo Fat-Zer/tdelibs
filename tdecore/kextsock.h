@@ -58,8 +58,8 @@ class KExtendedSocketPrivate;
 /**
  * The extended socket class.
  *
- * This class should be used instead of KSocket whenever the user needs
- * fine-grained control over the socket being created. Unlike KSocket, which
+ * This class should be used instead of TDESocket whenever the user needs
+ * fine-grained control over the socket being created. Unlike TDESocket, which
  * does everything at once, without much intervention, KExtendedSocket allows
  * intervention at every step of the process and the setting of parameters.
  *
@@ -87,12 +87,12 @@ class KExtendedSocketPrivate;
  * @deprecated
  *	This class is now deprecated. Please use the classes in KNetwork for
  *	new programs. In particular, this class is replaced by KNetwork::KStreamSocket
- *	and @ref KNetwork::KServerSocket.
+ *	and @ref KNetwork::TDEServerSocket.
  *
  * @author Thiago Macieira <thiago.macieira@kdemail.net>
  * @short an extended socket
  */
-class TDECORE_EXPORT KExtendedSocket: public KBufferedIO // public TQObject, public QIODevice
+class TDECORE_EXPORT KExtendedSocket: public TDEBufferedIO // public TQObject, public QIODevice
 {
   Q_OBJECT
   
@@ -491,7 +491,7 @@ public:
    * @return the local socket address, can be 0 if the connection has not been established
    *         yet
    */
-  const ::KSocketAddress *localAddress();
+  const ::TDESocketAddress *localAddress();
 
   /**
    * Returns the peer socket address. Use KExtendedSocket::resolve() to
@@ -499,7 +499,7 @@ public:
    * @return the peer address, can be 0 if the connection has not been established yet
    *         or the socket is passive
    */
-  const ::KSocketAddress *peerAddress();
+  const ::TDESocketAddress *peerAddress();
 
   /**
    * Returns the file descriptor
@@ -582,7 +582,7 @@ public:
    * @li #closed() will only be sent if we are indeed reading from the input
    *    stream. That is, if this socket is buffering the input. See setBufferSize
    *
-   * Note that, in general, functions inherited/overridden from KBufferedIO will only
+   * Note that, in general, functions inherited/overridden from TDEBufferedIO will only
    * work on buffered sockets, like bytesAvailable and bytesToWrite.
    * @return    The return values are:
    * @li 0: success
@@ -964,7 +964,7 @@ public:
    * @param flags	the same flags as getnameinfo()
    * @returns 0 on success, nonzero otherwise.
    */
-  static int resolve(::KSocketAddress* sock, TQString& host, TQString& port, int flags = 0) KDE_DEPRECATED;
+  static int resolve(::TDESocketAddress* sock, TQString& host, TQString& port, int flags = 0) KDE_DEPRECATED;
 
   /** @deprecated
    * This function is now deprecated. Please use @ref KNetwork::KResolver::resolve.
@@ -994,7 +994,7 @@ public:
    * @param fd		the file descriptor
    * @return the local socket address or 0 if an error occurred. Delete after use.
    */
-  static ::KSocketAddress *localAddress(int fd) KDE_DEPRECATED;
+  static ::TDESocketAddress *localAddress(int fd) KDE_DEPRECATED;
 
   /**
    * Returns the peer socket address. Use KExtendedSocket::resolve() to
@@ -1003,7 +1003,7 @@ public:
    * @param fd		the file descriptor
    * @return the peer socket address or 0 if an error occurred. Delete after use.
    */
-  static ::KSocketAddress *peerAddress(int fd) KDE_DEPRECATED;
+  static ::TDESocketAddress *peerAddress(int fd) KDE_DEPRECATED;
 
   /**
    * Returns the representing text of this error code
@@ -1029,8 +1029,8 @@ protected:
 private:
   KExtendedSocketPrivate *d;
 
-  friend class KSocket;
-  friend class KServerSocket;
+  friend class TDESocket;
+  friend class TDEServerSocket;
 };
 
 /** @deprecated
@@ -1043,7 +1043,7 @@ class TDECORE_EXPORT KAddressInfo
 {
 private:
   addrinfo *ai;
-  ::KSocketAddress *addr;
+  ::TDESocketAddress *addr;
 
   inline KAddressInfo() : ai(0), addr(0)
   { }
@@ -1056,10 +1056,10 @@ public:
   ~KAddressInfo();
 
   /**
-   * Returns the KAddressInfo's KSocketAddress.
+   * Returns the KAddressInfo's TDESocketAddress.
    * Only valid as long as the KAddressInfo exists.
    */
-  inline KDE_DEPRECATED operator const ::KSocketAddress*() const 
+  inline KDE_DEPRECATED operator const ::TDESocketAddress*() const 
   { return addr; }
 
   /**
@@ -1076,11 +1076,11 @@ public:
   { return ai; }
 
   /**
-   * Returns the KAddressInfo's KSocketAddress.
+   * Returns the KAddressInfo's TDESocketAddress.
    * Only valid as long as the KAddressInfo exists.
-   * @return the KAddressInfo's KSocketAddress.
+   * @return the KAddressInfo's TDESocketAddress.
    */
-  inline KDE_DEPRECATED const ::KSocketAddress* address() const
+  inline KDE_DEPRECATED const ::TDESocketAddress* address() const
   { return addr; }
 
   /**
@@ -1116,8 +1116,8 @@ public:
   const char* canonname() const KDE_DEPRECATED;
 
   /**
-   * Returns the length of the KSocketAddress.
-   * @return the KSocketAddress's length
+   * Returns the length of the TDESocketAddress.
+   * @return the TDESocketAddress's length
    */
   inline int length() const
   { if (addr) return addr->size(); return 0; }

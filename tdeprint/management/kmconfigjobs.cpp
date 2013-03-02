@@ -23,8 +23,8 @@
 #include <tqlayout.h>
 
 #include <knuminput.h>
-#include <klocale.h>
-#include <kconfig.h>
+#include <tdelocale.h>
+#include <tdeconfig.h>
 #include <kdialog.h>
 
 KMConfigJobs::KMConfigJobs(TQWidget *parent, const char *name)
@@ -48,13 +48,13 @@ KMConfigJobs::KMConfigJobs(TQWidget *parent, const char *name)
 	l1->addWidget(m_limit);
 }
 
-void KMConfigJobs::loadConfig(KConfig *conf)
+void KMConfigJobs::loadConfig(TDEConfig *conf)
 {
 	conf->setGroup("Jobs");
 	m_limit->setValue(conf->readNumEntry("Limit", 0));
 }
 
-void KMConfigJobs::saveConfig(KConfig *conf)
+void KMConfigJobs::saveConfig(TDEConfig *conf)
 {
 	conf->setGroup("Jobs");
 	conf->writeEntry("Limit", m_limit->value());

@@ -1,5 +1,5 @@
 /*
- testqtargs -- is there really a bug in KCmdLineArgs or am I on crack?
+ testqtargs -- is there really a bug in TDECmdLineArgs or am I on crack?
 
   I used the following compile options:
 
@@ -28,7 +28,7 @@
   --bg is aliased to --background but If you try it with --background or 
   -background, you get the same thing.
 
-  in tdecore/kapplication.cpp, KCmdLineOption qt_options is defined and used 
+  in tdecore/tdeapplication.cpp, TDECmdLineOption qt_options is defined and used 
   by the static method Kapplication::addCmdLineOptions to add the Qt options
   but its' entries look like this:
 
@@ -43,15 +43,15 @@ application palette (light and dark shades are\ncalculated)."), 0},
 
 */
 
-#include <kapplication.h>
-#include <kcmdlineargs.h>
-#include <kaboutdata.h>
-#include <klocale.h>
+#include <tdeapplication.h>
+#include <tdecmdlineargs.h>
+#include <tdeaboutdata.h>
+#include <tdelocale.h>
 
-static const KCmdLineOptions options[] =
+static const TDECmdLineOptions options[] =
 {
   { "hello ", I18N_NOOP("Says hello"), 0 },
-  KCmdLineLastOption
+  TDECmdLineLastOption
 };
 
 int main(int argc, char *argv[])
@@ -60,23 +60,23 @@ int main(int argc, char *argv[])
   {
     tqDebug("argv[%d] = %s", i, argv[i]);
   }
-  KAboutData aboutData( "testqtargs", I18N_NOOP("testqtargs"),
-    "1.0", I18N_NOOP("testqtargs"), KAboutData::License_GPL,
+  TDEAboutData aboutData( "testqtargs", I18N_NOOP("testqtargs"),
+    "1.0", I18N_NOOP("testqtargs"), TDEAboutData::License_GPL,
     "", "", "", "");
 
-  KCmdLineArgs::init(argc, argv, &aboutData);
-  KCmdLineArgs::addCmdLineOptions(options);
+  TDECmdLineArgs::init(argc, argv, &aboutData);
+  TDECmdLineArgs::addCmdLineOptions(options);
 
-  KCmdLineArgs *qtargs = KCmdLineArgs::parsedArgs("qt");
+  TDECmdLineArgs *qtargs = TDECmdLineArgs::parsedArgs("qt");
   for (int i = 0; i < qtargs->count(); i++)
   {
     tqDebug("qt arg[%d] = %s", i, qtargs->arg(i));
   }
 
-  KApplication app;
+  TDEApplication app;
 
-  KCmdLineArgs *kdeargs = KCmdLineArgs::parsedArgs("tde");
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+  TDECmdLineArgs *kdeargs = TDECmdLineArgs::parsedArgs("tde");
+  TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
   // An arg set by Qt
   if(qtargs->isSet("background"))

@@ -21,19 +21,19 @@
 #include "kprintprocess.h"
 
 #include <tqfile.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <knotifyclient.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kdebug.h>
 #include <dcopclient.h>
-#include <kio/passdlg.h>
-#include <kio/authinfo.h>
+#include <tdeio/passdlg.h>
+#include <tdeio/authinfo.h>
 #include <tqlabel.h>
 #include <kpushbutton.h>
 #include <kiconloader.h>
 #include <kstandarddirs.h>
 #include <twin.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tqlayout.h>
 #include <tqtimer.h>
 #include <tqregexp.h>
@@ -124,12 +124,12 @@ int KDEPrintd::print(const TQString& cmd, const TQStringList& files, bool remfla
 		if ( !url.isLocalFile() )
 		{
 			TQString tmpFilename = locateLocal( "tmp", "tdeprint_" + kapp->randomString( 8 ) );
-			command.replace( re, KProcess::quote( tmpFilename ) );
+			command.replace( re, TDEProcess::quote( tmpFilename ) );
 			proc->setOutput( re.cap( 1 ) );
 			proc->setTempOutput( tmpFilename );
 		}
 		else
-			command.replace( re, KProcess::quote( re.cap( 1 ) ) );
+			command.replace( re, TDEProcess::quote( re.cap( 1 ) ) );
 	}
 
 	if ( checkFiles( command, files ) )
@@ -162,7 +162,7 @@ void KDEPrintd::slotPrintError( KPrintProcess *proc, const TQString& msg )
 TQString KDEPrintd::openPassDlg(const TQString& user)
 {
 	TQString	user_(user), pass_, result;
-	if (KIO::PasswordDialog::getNameAndPassword(user_, pass_, NULL) == KDialog::Accepted)
+	if (TDEIO::PasswordDialog::getNameAndPassword(user_, pass_, NULL) == KDialog::Accepted)
 		result.append(user_).append(":").append(pass_);
 	return result;
 }
@@ -181,7 +181,7 @@ bool KDEPrintd::checkFiles(TQString& cmd, const TQStringList& files)
 				i18n("Provide root's Password"),
 				"provideRootsPassword") == KMessageBox::Continue)
 			{
-				cmd = ("tdesu -c " + KProcess::quote(cmd));
+				cmd = ("tdesu -c " + TDEProcess::quote(cmd));
 				break;
 			}
 			else
@@ -252,7 +252,7 @@ void KDEPrintd::processRequest()
 		return;
 
 	Request *req = m_requestsPending.first();
-	KIO::AuthInfo info;
+	TDEIO::AuthInfo info;
 	TQByteArray params, reply;
 	TQCString replyType;
 	TQString authString( "::" );
@@ -264,13 +264,13 @@ void KDEPrintd::processRequest()
 
 	TQDataStream input( params, IO_WriteOnly );
 	input << info << TQString(i18n( "Authentication failed (user name=%1)" ).arg( info.username )) << 0L << (long int) req->seqNbr;
-	if ( callingDcopClient()->call( "kded", "kpasswdserver", "queryAuthInfo(KIO::AuthInfo,TQString,long int,long int)",
+	if ( callingDcopClient()->call( "kded", "kpasswdserver", "queryAuthInfo(TDEIO::AuthInfo,TQString,long int,long int)",
 				params, replyType, reply ) )
 	{
-		if ( replyType == "KIO::AuthInfo" )
+		if ( replyType == "TDEIO::AuthInfo" )
 		{
 			TQDataStream output( reply, IO_ReadOnly );
-			KIO::AuthInfo result;
+			TDEIO::AuthInfo result;
 			int seqNbr;
 			output >> result >> seqNbr;
 
@@ -278,7 +278,7 @@ void KDEPrintd::processRequest()
 				authString = result.username + ":" + result.password + ":" + TQString::number( seqNbr );
 		}
 		else
-			kdWarning( 500 ) << "DCOP returned type error, expected KIO::AuthInfo, received " << replyType << endl;
+			kdWarning( 500 ) << "DCOP returned type error, expected TDEIO::AuthInfo, received " << replyType << endl;
 	}
 	else
 		kdWarning( 500 ) << "Cannot communicate with kded_kpasswdserver" << endl;
@@ -298,7 +298,7 @@ void KDEPrintd::initPassword( const TQString& user, const TQString& passwd, cons
 {
 	TQByteArray params, reply;
 	TQCString replyType;
-	KIO::AuthInfo info;
+	TDEIO::AuthInfo info;
 
 	info.username = user;
 	info.password = passwd;
@@ -307,7 +307,7 @@ void KDEPrintd::initPassword( const TQString& user, const TQString& passwd, cons
 	TQDataStream input( params, IO_WriteOnly );
 	input << info << ( long int )0;
 
-	if ( !callingDcopClient()->call( "kded", "kpasswdserver", "addAuthInfo(KIO::AuthInfo,long int)",
+	if ( !callingDcopClient()->call( "kded", "kpasswdserver", "addAuthInfo(TDEIO::AuthInfo,long int)",
 			params, replyType, reply ) )
 		kdWarning( 500 ) << "Unable to initialize password, cannot communicate with kded_kpasswdserver" << endl;
 }

@@ -26,7 +26,7 @@
 #include <tqmap.h>
 
 #include <kstandarddirs.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 KMRlprManager::KMRlprManager(TQObject *parent, const char *name, const TQStringList & /*args*/)
 : KMManager(parent,name)

@@ -162,7 +162,7 @@ declared but not defined. The compiler was unable to find any destructors for th
 # pragma warning(disable: 4250)
 
 # pragma warning(disable: 4006) /*libxxx : warning LNK4006: 
-         ".... already defined in kaction.obj; second definition ignored" */
+         ".... already defined in tdeaction.obj; second definition ignored" */
 
 /* disable C4100: unreferenced formal parameter */
 # pragma warning(disable: 4100)

@@ -14,18 +14,18 @@
 	* - <a target="_top" href="tdeui/html/index.html"><b>tdeui</b></a>
         *   (<a target="_top" href="tdeui/html/classes.html">classes</a>)\n
 	*   <i>Trinity User interface classes such as widgets.</i>
-	* - <a target="_top" href="khtml/html/index.html"><b>khtml</b></a>
-        *   (<a target="_top" href="khtml/html/classes.html">classes</a>)\n
+	* - <a target="_top" href="tdehtml/html/index.html"><b>tdehtml</b></a>
+        *   (<a target="_top" href="tdehtml/html/classes.html">classes</a>)\n
 	*   <i>The Trinity HTML component.</i>
 	* - <a target="_top" href="kjs/html/index.html"><b>kjs</b></a>
         *   (<a target="_top" href="kjs/html/classes.html">classes</a>)\n
 	*   <i>Javascript (aka. ECMAScript and JScript) support.</i>
-	* - <a target="_top" href="kio/html/index.html"><b>kio</b></a>
-        *   (<a target="_top" href="kio/kio/html/classes.html">classes</a>)\n
+	* - <a target="_top" href="tdeio/html/index.html"><b>kio</b></a>
+        *   (<a target="_top" href="tdeio/tdeio/html/classes.html">classes</a>)\n
 	*   <i>Low level access to network files. Also provides access to facilities
 	*   such as KDirWatcher which monitors directories for changes.</i>
-	* - <a target="_top" href="kparts/html/index.html"><b>kparts</b></a>
-        *   (<a target="_top" href="kparts/html/classes.html">classes</a>)\n
+	* - <a target="_top" href="tdeparts/html/index.html"><b>tdeparts</b></a>
+        *   (<a target="_top" href="tdeparts/html/classes.html">classes</a>)\n
 	*   <i>Support for re-usable, embeddable, extendable applications.</i>
 	* - <a target="_top" href="dcop/html/index.html"><b>dcop</b></a>
         *   (<a target="_top" href="dcop/html/classes.html">classes</a>)\n
@@ -33,30 +33,30 @@
 	* - <a target="_top" href="tdefx/html/index.html"><b>tdefx</b></a>
         *   (<a target="_top" href="tdefx/html/classes.html">classes</a>)\n
 	*   <i>A library with pixmap effects.</i>
-	* - <a target="_top" href="kmdi/html/index.html"><b>kmdi</b></a>
-        *   (<a target="_top" href="kmdi/html/classes.html">classes</a>)\n
+	* - <a target="_top" href="tdemdi/html/index.html"><b>tdemdi</b></a>
+        *   (<a target="_top" href="tdemdi/html/classes.html">classes</a>)\n
 	*   <i>MultiDocument Interface library.</i>
-	* - <a target="_top" href="libkmid/html/index.html"><b>libkmid</b></a>
-        *   (<a target="_top" href="libkmid/html/classes.html">classes</a>)\n
+	* - <a target="_top" href="libtdemid/html/index.html"><b>libtdemid</b></a>
+        *   (<a target="_top" href="libtdemid/html/classes.html">classes</a>)\n
 	*   <i>Midi library.</i>
 	* - <a target="_top" href="tdeprint/html/index.html"><b>tdeprint</b></a>
         *   (<a target="_top" href="tdeprint/html/classes.html">classes</a>)\n
 	*   <i>High level  printer control functionality.</i>
-	* - <a target="_top" href="krandr/html/index.html"><b>krandr</b></a>
-        *   (<a target="_top" href="krandr/html/classes.html">classes</a>)\n
+	* - <a target="_top" href="tderandr/html/index.html"><b>tderandr</b></a>
+        *   (<a target="_top" href="tderandr/html/classes.html">classes</a>)\n
 	*   <i>High level Xorg configuration via XRandr.</i>
 	* - <a target="_top" href="interfaces/html/index.html"><b>interfaces</b></a>
         *   (<a target="_top" href="interfaces/html/classes.html">classes</a>)\n
 	*   <i>Defines interfaces for common components so that new implementations
 	*   can be dropped in.</i>
-	* - <a target="_top" href="kabc/html/index.html"><b>kabc</b></a>
-        *   (<a target="_top" href="kabc/html/classes.html">classes</a>)\n
+	* - <a target="_top" href="tdeabc/html/index.html"><b>kabc</b></a>
+        *   (<a target="_top" href="tdeabc/html/classes.html">classes</a>)\n
 	*   <i>Access to the Trinity address book.</i>
-	* - <a target="_top" href="kresources/html/index.html"><b>kresources</b></a>
-        *   (<a target="_top" href="kresources/html/classes.html">classes</a>)\n
+	* - <a target="_top" href="tderesources/html/index.html"><b>tderesources</b></a>
+        *   (<a target="_top" href="tderesources/html/classes.html">classes</a>)\n
 	*   <i>The Trinity resources system.</i>
-	* - <a target="_top" href="kutils/html/index.html"><b>kutils</b></a>
-        *   (<a target="_top" href="kutils/html/classes.html">classes</a>)\n
+	* - <a target="_top" href="tdeutils/html/index.html"><b>tdeutils</b></a>
+        *   (<a target="_top" href="tdeutils/html/classes.html">classes</a>)\n
 	*   <i>High-level utils, like search/replace support.</i>
 	* - <a target="_top" href="arts/html/index.html"><b>arts</b></a>
         *   (<a target="_top" href="arts/html/classes.html">classes</a>)\n
@@ -67,8 +67,8 @@
 	* - <a target="_top" href="dnssd/html/index.html"><b>dnssd</b></a>
         *   (<a target="_top" href="dnssd/html/classes.html">classes</a>)\n
 	*   <i>Network sevices publishing and discovery.</i>
-	* - <a target="_top" href="kunittest/html/index.html"><b>kunittest</b></a>
-        *   (<a target="_top" href="kunittest/html/classes.html">classes</a>)\n
+	* - <a target="_top" href="tdeunittest/html/index.html"><b>tdeunittest</b></a>
+        *   (<a target="_top" href="tdeunittest/html/classes.html">classes</a>)\n
 	*   <i>Unit testing framework in Trinity.</i>
 
 	*

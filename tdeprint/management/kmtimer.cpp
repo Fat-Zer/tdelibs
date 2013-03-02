@@ -20,7 +20,7 @@
 #include "kmtimer.h"
 #include "kmfactory.h"
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 
 KMTimer* KMTimer::m_self = 0;
 
@@ -86,7 +86,7 @@ void KMTimer::startTimer(int t)
 {
 	if (t == -1)
 	{
-		KConfig	*conf = KMFactory::self()->printConfig();
+		TDEConfig	*conf = KMFactory::self()->printConfig();
 		conf->setGroup("General");
 		t = conf->readNumEntry("TimerDelay", 5) * 1000;
 	}

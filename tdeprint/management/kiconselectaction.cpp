@@ -22,13 +22,13 @@
 #include <tqpopupmenu.h>
 #include <kiconloader.h>
 #include <kdebug.h>
-#include <ktoolbar.h>
-#include <ktoolbarbutton.h>
+#include <tdetoolbar.h>
+#include <tdetoolbarbutton.h>
 
-class KIconSelectActionPrivate
+class TDEIconSelectActionPrivate
 {
 public:
-	KIconSelectActionPrivate()
+	TDEIconSelectActionPrivate()
 	{
 		m_menu = 0;
 	}
@@ -36,18 +36,18 @@ public:
 	TQPopupMenu*	m_menu;
 };
 
-KIconSelectAction::KIconSelectAction(const TQString& text, int accel, TQObject* parent, const char* name)
-: KSelectAction(text, accel, parent, name)
+TDEIconSelectAction::TDEIconSelectAction(const TQString& text, int accel, TQObject* parent, const char* name)
+: TDESelectAction(text, accel, parent, name)
 {
-	d = new KIconSelectActionPrivate;
+	d = new TDEIconSelectActionPrivate;
 }
 
-KIconSelectAction::~KIconSelectAction()
+TDEIconSelectAction::~TDEIconSelectAction()
 {
 	delete d;
 }
 
-void KIconSelectAction::updateIcons()
+void TDEIconSelectAction::updateIcons()
 {
 	if (d->m_menu)
 	{
@@ -57,7 +57,7 @@ void KIconSelectAction::updateIcons()
 	}
 }
 
-void KIconSelectAction::createPopupMenu()
+void TDEIconSelectAction::createPopupMenu()
 {
 	if (!d->m_menu)
 	{
@@ -66,25 +66,25 @@ void KIconSelectAction::createPopupMenu()
 	}
 }
 
-void KIconSelectAction::setItems(const TQStringList& lst, const TQStringList& iconlst)
+void TDEIconSelectAction::setItems(const TQStringList& lst, const TQStringList& iconlst)
 {
-	KSelectAction::setItems(lst);
+	TDESelectAction::setItems(lst);
 	d->m_iconlst = iconlst;
 	updateIcons();
 }
 
-int KIconSelectAction::plug(TQWidget* widget, int index)
+int TDEIconSelectAction::plug(TQWidget* widget, int index)
 {
 	int	value(-1);
 	if (widget->inherits(TQPOPUPMENU_OBJECT_NAME_STRING))
 	{
 		createPopupMenu();
-		value = KSelectAction::plug(widget, index);
+		value = TDESelectAction::plug(widget, index);
 	}
-	else if (widget->inherits("KToolBar"))
+	else if (widget->inherits("TDEToolBar"))
 	{
-		KToolBar* bar = static_cast<KToolBar*>(widget);
-		int id = KAction::getToolButtonID();
+		TDEToolBar* bar = static_cast<TDEToolBar*>(widget);
+		int id = TDEAction::getToolButtonID();
 		// To have a correct layout in the toolbar, a non
 		// empty icon has to be used. Use "unknown" by default.
 		TQString	iconName = (currentItem() != -1 ? d->m_iconlst[currentItem()] : "unknown");
@@ -101,18 +101,18 @@ int KIconSelectAction::plug(TQWidget* widget, int index)
 	return value;
 }
 
-void KIconSelectAction::updateCurrentItem(int id)
+void TDEIconSelectAction::updateCurrentItem(int id)
 {
 	TQWidget*	w = container(id);
-	if (w->inherits("KToolBar"))
-		static_cast<KToolBar*>(w)->getButton(itemId(id))->setIcon(d->m_iconlst[currentItem()]);
+	if (w->inherits("TDEToolBar"))
+		static_cast<TDEToolBar*>(w)->getButton(itemId(id))->setIcon(d->m_iconlst[currentItem()]);
 	else
-		KSelectAction::updateCurrentItem(id);
+		TDESelectAction::updateCurrentItem(id);
 }
 
-void KIconSelectAction::setCurrentItem(int index)
+void TDEIconSelectAction::setCurrentItem(int index)
 {
-	KSelectAction::setCurrentItem(index);
+	TDESelectAction::setCurrentItem(index);
 }
 
 #include "kiconselectaction.moc"

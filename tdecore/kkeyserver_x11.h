@@ -23,7 +23,7 @@
 #ifndef _KKEYSERVER_X11_H
 #define _KKEYSERVER_X11_H
 
-#include "kshortcut.h"
+#include "tdeshortcut.h"
 #include "kkeynative.h"
 
 /**

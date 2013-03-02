@@ -22,7 +22,7 @@
 
 #include "kmwizardpage.h"
 
-class KListBox;
+class TDEListBox;
 
 class KMWClass : public KMWizardPage
 {
@@ -40,7 +40,7 @@ protected slots:
 	void slotRemove();
 
 private:
-	KListBox	*m_list1, *m_list2;
+	TDEListBox	*m_list1, *m_list2;
 };
 
 #endif

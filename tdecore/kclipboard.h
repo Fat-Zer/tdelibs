@@ -33,23 +33,23 @@
  * @since 3.1
  * @internal
  */
-class TDECORE_EXPORT KClipboardSynchronizer : public TQObject
+class TDECORE_EXPORT TDEClipboardSynchronizer : public TQObject
 {
     Q_OBJECT
 
 public:
     /** Systray widget for manipulating the clipboard. */
     friend class KlipperWidget;
-    friend class KApplication;
+    friend class TDEApplication;
 
     /**
-     * Returns the KClipboardSynchronizer singleton object.
-     * @return the KClipboardSynchronizer singleton object.
+     * Returns the TDEClipboardSynchronizer singleton object.
+     * @return the TDEClipboardSynchronizer singleton object.
      */
-    static KClipboardSynchronizer *self();
+    static TDEClipboardSynchronizer *self();
 
     /**
-     * Configures KClipboardSynchronizer to synchronize the Selection to Clipboard whenever
+     * Configures TDEClipboardSynchronizer to synchronize the Selection to Clipboard whenever
      * it changes.
      *
      * Default is false.
@@ -69,7 +69,7 @@ public:
     }
 
     /**
-     * Configures KClipboardSynchronizer to copy the Clipboard buffer to the Selection
+     * Configures TDEClipboardSynchronizer to copy the Clipboard buffer to the Selection
      * buffer whenever the Clipboard changes.
      *
      *
@@ -93,19 +93,19 @@ public:
 
 
 protected:
-    ~KClipboardSynchronizer();
+    ~TDEClipboardSynchronizer();
 
 private slots:
     void slotSelectionChanged();
     void slotClipboardChanged();
 
 private:
-    KClipboardSynchronizer( TQObject *parent = 0, const char *name = 0L );
+    TDEClipboardSynchronizer( TQObject *parent = 0, const char *name = 0L );
     void setupSignals();
 
     static void setClipboard( TQMimeSource* data, TQClipboard::Mode mode );
 
-    static KClipboardSynchronizer *s_self;
+    static TDEClipboardSynchronizer *s_self;
     static bool s_sync;
     static bool s_reverse_sync;
     static bool s_blocked;
@@ -115,7 +115,7 @@ private:
 private:
     // needed by klipper
     enum Configuration { Synchronize = 1 };
-    // called by KApplication upon kipc message, invoked by klipper
+    // called by TDEApplication upon kipc message, invoked by klipper
     static void newConfiguration( int config );
 
 };

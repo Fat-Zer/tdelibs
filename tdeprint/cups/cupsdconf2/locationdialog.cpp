@@ -29,7 +29,7 @@
 #include <tqpushbutton.h>
 #include <tqwhatsthis.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 
 LocationDialog::LocationDialog(TQWidget *parent, const char *name)

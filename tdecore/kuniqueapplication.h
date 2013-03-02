@@ -21,7 +21,7 @@
 #ifndef _KUNIQUEAPP_H
 #define _KUNIQUEAPP_H
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <dcopobject.h>
 
 class KUniqueApplicationPrivate;
@@ -36,27 +36,27 @@ class KUniqueApplicationPrivate;
  * the information to the first instance and then quit.
  *
  * The .desktop file for the application should state X-DCOP-ServiceType=Unique,
- * see kapplication.h
+ * see tdeapplication.h
  *
  * If your application is used to open files, it should also support the --tempfile
- * option (see KCmdLineArgs::addTempFileOption()), to delete tempfiles after use.
+ * option (see TDECmdLineArgs::addTempFileOption()), to delete tempfiles after use.
  * Add X-TDE-HasTempFileOption=true to the .desktop file to indicate this.
  *
- * @see KApplication DCOPObject
+ * @see TDEApplication DCOPObject
  * @author Preston Brown <pbrown@kde.org>
  */
-class TDECORE_EXPORT KUniqueApplication : public KApplication, public DCOPObject
+class TDECORE_EXPORT KUniqueApplication : public TDEApplication, public DCOPObject
 {
   Q_OBJECT
 public:
   /**
-   * Constructor. Takes command line arguments from KCmdLineArgs
+   * Constructor. Takes command line arguments from TDECmdLineArgs
    *
    * @param allowStyles Set to false to disable the loading on plugin based
    * styles. This is only useful to applications that do not display a GUI
    * normally. If you do create an application with @p allowStyles set to false
    * it normally runs in the background but under special circumstances
-   * displays widgets.  Call KApplication::enableStyles() before 
+   * displays widgets.  Call TDEApplication::enableStyles() before 
    * displaying any widgets.
    * @param GUIenabled Set to false to disable all GUI stuff. This implies
    * no styles either.
@@ -70,7 +70,7 @@ public:
 
 #ifdef Q_WS_X11
   /**
-   * Constructor. Takes command line arguments from KCmdLineArgs
+   * Constructor. Takes command line arguments from TDECmdLineArgs
    *
    * @param display Will be passed to Qt as the X display. The display
    * must be valid and already opened.
@@ -82,7 +82,7 @@ public:
    * styles. This is only useful to applications that do not display a GUI
    * normally. If you do create an application with @p allowStyles set to false
    * it normally runs in the background but under special circumstances
-   * displays widgets.  Call KApplication::enableStyles() before 
+   * displays widgets.  Call TDEApplication::enableStyles() before 
    * displaying any widgets.
    * @param configUnique If true, the uniqueness of the application will
    *                 depend on the value of the "MultipleInstances"
@@ -113,9 +113,9 @@ public:
    * Typically this is used like:
    * \code
    * int main(int argc, char **argv) {
-   *    KAboutData about("myappname", "myAppName", .....);
-   *    KCmdLineArgs::init(argc, argv, &about);
-   *    KCmdLineArgs::addCmdLineOptions( myCmdOptions );
+   *    TDEAboutData about("myappname", "myAppName", .....);
+   *    TDECmdLineArgs::init(argc, argv, &about);
+   *    TDECmdLineArgs::addCmdLineOptions( myCmdOptions );
    *    KUniqueApplication::addCmdLineOptions();
    *
    *    if (!KUniqueApplication::start()) {
@@ -162,7 +162,7 @@ public:
    * application asking for a new window to be created, possibly with
    * some data already loaded based on the arguments received.
    *
-   * Command line arguments have been passed to KCmdLineArgs before this
+   * Command line arguments have been passed to TDECmdLineArgs before this
    * function is called and can be checked in the usual way.
    *
    * The default implementation ensures the mainwindow of the already
@@ -204,7 +204,7 @@ private slots:
 
   void newInstanceNoFork();
   
-  static KInstance* initHack( bool configUnique );
+  static TDEInstance* initHack( bool configUnique );
  
 private:
   static bool s_nofork;

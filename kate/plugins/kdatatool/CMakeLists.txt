@@ -17,8 +17,8 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/tdefx
   ${CMAKE_SOURCE_DIR}/tdeui
-  ${CMAKE_SOURCE_DIR}/kio
-  ${CMAKE_SOURCE_DIR}/kio/kio
+  ${CMAKE_SOURCE_DIR}/tdeio
+  ${CMAKE_SOURCE_DIR}/tdeio/tdeio
   ${CMAKE_SOURCE_DIR}/interfaces
 )
 
@@ -29,13 +29,13 @@ link_directories(
 
 ##### other data ################################
 
-install( FILES ktexteditor_kdatatool.desktop DESTINATION ${SERVICES_INSTALL_DIR} )
-install( FILES ktexteditor_kdatatoolui.rc DESTINATION ${DATA_INSTALL_DIR}/ktexteditor_kdatatool )
+install( FILES tdetexteditor_kdatatool.desktop DESTINATION ${SERVICES_INSTALL_DIR} )
+install( FILES tdetexteditor_kdatatoolui.rc DESTINATION ${DATA_INSTALL_DIR}/tdetexteditor_kdatatool )
 
 
-##### ktexteditor_kdatatool #####################
+##### tdetexteditor_kdatatool #####################
 
-set( target ktexteditor_kdatatool )
+set( target tdetexteditor_kdatatool )
 
 set( ${target}_SRCS
   kate_kdatatool.cpp
@@ -43,6 +43,6 @@ set( ${target}_SRCS
 
 tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK ktexteditor-shared
+  LINK tdetexteditor-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )

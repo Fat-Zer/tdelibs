@@ -27,7 +27,7 @@
 #include <tqlayout.h>
 #include <tqwhatsthis.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 int findComboItem(TQComboBox *cb, const TQString& str)
 {

@@ -33,28 +33,28 @@
 using namespace KNetwork;
 using namespace KNetwork::Internal;
 
-KSocketBuffer::KSocketBuffer(TQ_LONG size)
+TDESocketBuffer::TDESocketBuffer(TQ_LONG size)
   : m_mutex(true), m_offset(0), m_size(size), m_length(0)
 {
 }
 
-KSocketBuffer::KSocketBuffer(const KSocketBuffer& other)
-  : KIOBufferBase(other), m_mutex(true)
+TDESocketBuffer::TDESocketBuffer(const TDESocketBuffer& other)
+  : TDEIOBufferBase(other), m_mutex(true)
 {
   *this = other;
 }
 
-KSocketBuffer::~KSocketBuffer()
+TDESocketBuffer::~TDESocketBuffer()
 {
   // TQValueList takes care of deallocating memory
 }
 
-KSocketBuffer& KSocketBuffer::operator=(const KSocketBuffer& other)
+TDESocketBuffer& TDESocketBuffer::operator=(const TDESocketBuffer& other)
 {
   TQMutexLocker locker1(&m_mutex);
   TQMutexLocker locker2(&other.m_mutex);
 
-  KIOBufferBase::operator=(other);
+  TDEIOBufferBase::operator=(other);
 
   m_list = other.m_list;	// copy-on-write
   m_offset = other.m_offset;
@@ -64,7 +64,7 @@ KSocketBuffer& KSocketBuffer::operator=(const KSocketBuffer& other)
   return *this;
 }
 
-bool KSocketBuffer::canReadLine() const
+bool TDESocketBuffer::canReadLine() const
 {
   TQMutexLocker locker(&m_mutex);
 
@@ -85,7 +85,7 @@ bool KSocketBuffer::canReadLine() const
   return false;			// not found
 }
 
-TQCString KSocketBuffer::readLine()
+TQCString TDESocketBuffer::readLine()
 {
   if (!canReadLine())
     return TQCString();		// empty
@@ -120,17 +120,17 @@ TQCString KSocketBuffer::readLine()
   return result;
 }
 
-TQ_LONG KSocketBuffer::length() const
+TQ_LONG TDESocketBuffer::length() const
 {
   return m_length;
 }
 
-TQ_LONG KSocketBuffer::size() const
+TQ_LONG TDESocketBuffer::size() const
 {
   return m_size;
 }
 
-bool KSocketBuffer::setSize(TQ_LONG size)
+bool TDESocketBuffer::setSize(TQ_LONG size)
 {
   m_size = size;
   if (size == -1 || m_length < m_size)
@@ -147,7 +147,7 @@ bool KSocketBuffer::setSize(TQ_LONG size)
   return (m_length - m_size) == consumeBuffer(0L, m_length - m_size, true);
 }
 
-TQ_LONG KSocketBuffer::feedBuffer(const char *data, TQ_LONG len)
+TQ_LONG TDESocketBuffer::feedBuffer(const char *data, TQ_LONG len)
 {
   if (data == 0L || len == 0)
     return 0;			// nothing to write
@@ -168,7 +168,7 @@ TQ_LONG KSocketBuffer::feedBuffer(const char *data, TQ_LONG len)
   return len;
 }
 
-TQ_LONG KSocketBuffer::consumeBuffer(char *destbuffer, TQ_LONG maxlen, bool discard)
+TQ_LONG TDESocketBuffer::consumeBuffer(char *destbuffer, TQ_LONG maxlen, bool discard)
 {
   if (maxlen == 0 || isEmpty())
     return 0;
@@ -220,7 +220,7 @@ TQ_LONG KSocketBuffer::consumeBuffer(char *destbuffer, TQ_LONG maxlen, bool disc
   return copied;
 }
 
-void KSocketBuffer::clear()
+void TDESocketBuffer::clear()
 {
   TQMutexLocker locker(&m_mutex);
   m_list.clear();
@@ -228,7 +228,7 @@ void KSocketBuffer::clear()
   m_length = 0;
 }
 
-TQ_LONG KSocketBuffer::sendTo(KActiveSocketBase* dev, TQ_LONG len)
+TQ_LONG TDESocketBuffer::sendTo(KActiveSocketBase* dev, TQ_LONG len)
 {
   if (len == 0 || isEmpty())
     return 0;
@@ -293,7 +293,7 @@ TQ_LONG KSocketBuffer::sendTo(KActiveSocketBase* dev, TQ_LONG len)
   return written;
 }
 
-TQ_LONG KSocketBuffer::receiveFrom(KActiveSocketBase* dev, TQ_LONG len)
+TQ_LONG TDESocketBuffer::receiveFrom(KActiveSocketBase* dev, TQ_LONG len)
 {
   if (len == 0 || isFull())
     return 0;

@@ -19,7 +19,7 @@
 
 #include "kmjob.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 KMJob::KMJob()
 : KMObject()

@@ -28,19 +28,19 @@
 
 #include <dcopclient.h>
 
-#include <kcmdlineargs.h>
-#include <kapplication.h>
-#include <klocale.h>
-#include <kaboutdata.h>
-#include <kglobal.h>
+#include <tdecmdlineargs.h>
+#include <tdeapplication.h>
+#include <tdelocale.h>
+#include <tdeaboutdata.h>
+#include <tdeglobal.h>
 #include <kstandarddirs.h>
 #include <kprocess.h>
 #include <kde_file.h>
 
-static KCmdLineOptions options[] = {
+static TDECmdLineOptions options[] = {
    { "+old", I18N_NOOP("Old hostname"), 0 },
    { "+new", I18N_NOOP("New hostname"), 0 },
-   KCmdLineLastOption
+   TDECmdLineLastOption
 };
 
 static const char appName[] = "kdontchangethehostname";
@@ -65,7 +65,7 @@ protected:
 
 KHostName::KHostName()
 {
-   KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+   TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
    if (args->count() != 2)
       args->usage();
    oldName = args->arg(0);
@@ -166,15 +166,15 @@ void KHostName::changeX()
       // don't nuke the xauth when XAUTHLOCALHOSTNAME points to it
       if (!xauthlocalhostname || oldNetId != xauthlocalhostname)
       {
-        cmd = "xauth -n remove "+KProcess::quote(netId);
+        cmd = "xauth -n remove "+TDEProcess::quote(netId);
         system(TQFile::encodeName(cmd));
       }
       cmd = "xauth -n add ";
-      cmd += KProcess::quote(newNetId);
+      cmd += TDEProcess::quote(newNetId);
       cmd += " ";
-      cmd += KProcess::quote(authName);
+      cmd += TDEProcess::quote(authName);
       cmd += " ";
-      cmd += KProcess::quote(authKey);
+      cmd += TDEProcess::quote(authKey);
       system(TQFile::encodeName(cmd));
    }
 }
@@ -236,7 +236,7 @@ void KHostName::changeDcop()
       ::symlink(fname.data(), compatLink.data()); // Compatibility link
 
       // Update .ICEauthority
-      TQString cmd = "iceauth list "+KProcess::quote("netid="+oldNetId);
+      TQString cmd = "iceauth list "+TDEProcess::quote("netid="+oldNetId);
       FILE *iceFile = popen(TQFile::encodeName(cmd), "r");
       if (!iceFile)
       {
@@ -272,13 +272,13 @@ void KHostName::changeDcop()
             continue;
 
          cmd = "iceauth add ";
-         cmd += KProcess::quote(protName);
+         cmd += TDEProcess::quote(protName);
          cmd += " '' ";
-         cmd += KProcess::quote(newNetId);
+         cmd += TDEProcess::quote(newNetId);
          cmd += " ";
-         cmd += KProcess::quote(authName);
+         cmd += TDEProcess::quote(authName);
          cmd += " ";
-         cmd += KProcess::quote(authKey);
+         cmd += TDEProcess::quote(authKey);
          system(TQFile::encodeName(cmd));
       }
    }
@@ -288,7 +288,7 @@ void KHostName::changeDcop()
    char* xauthlocalhostname = getenv("XAUTHLOCALHOSTNAME");
    if (!xauthlocalhostname || !oldNetId.contains(xauthlocalhostname))
    {
-      TQString cmd = "iceauth remove "+KProcess::quote("netid="+oldNetId);
+      TQString cmd = "iceauth remove "+TDEProcess::quote("netid="+oldNetId);
       system(TQFile::encodeName(cmd));
       unlink(origFName.data());
       origFName = DCOPClient::dcopServerFileOld(oldName); // Compatibility link
@@ -299,8 +299,8 @@ void KHostName::changeDcop()
 void KHostName::changeStdDirs(const TQCString &type)
 {
    // We make links to the old dirs cause we can't delete the old dirs.
-   TQCString oldDir = TQFile::encodeName(TQString("%1%2-%3").arg(KGlobal::dirs()->localtdedir()).arg(type.data()).arg(oldName.data()));
-   TQCString newDir = TQFile::encodeName(TQString("%1%2-%3").arg(KGlobal::dirs()->localtdedir()).arg(type.data()).arg(newName.data()));
+   TQCString oldDir = TQFile::encodeName(TQString("%1%2-%3").arg(TDEGlobal::dirs()->localtdedir()).arg(type.data()).arg(oldName.data()));
+   TQCString newDir = TQFile::encodeName(TQString("%1%2-%3").arg(TDEGlobal::dirs()->localtdedir()).arg(type.data()).arg(newName.data()));
 
    KDE_struct_stat st_buf;
 
@@ -358,23 +358,23 @@ void KHostName::changeSessionManager()
       delete client;
       return;
    }
-   TQCString launcher = KApplication::launcher();
+   TQCString launcher = TDEApplication::launcher();
    client->send(launcher, launcher, "setLaunchEnv(TQCString,TQCString)", params);
    delete client;
 }
 
 int main(int argc, char **argv)
 {
-   KLocale::setMainCatalogue("tdelibs");
-   KAboutData d(appName, I18N_NOOP("KDontChangeTheHostName"), appVersion,
+   TDELocale::setMainCatalogue("tdelibs");
+   TDEAboutData d(appName, I18N_NOOP("KDontChangeTheHostName"), appVersion,
                 I18N_NOOP("Informs TDE about a change in hostname"),
-                KAboutData::License_GPL, "(c) 2001 Waldo Bastian");
+                TDEAboutData::License_GPL, "(c) 2001 Waldo Bastian");
    d.addAuthor("Waldo Bastian", I18N_NOOP("Author"), "bastian@kde.org");
 
-   KCmdLineArgs::init(argc, argv, &d);
-   KCmdLineArgs::addCmdLineOptions(options);
+   TDECmdLineArgs::init(argc, argv, &d);
+   TDECmdLineArgs::addCmdLineOptions(options);
 
-   KInstance k(&d);
+   TDEInstance k(&d);
 
    KHostName hn;
 

@@ -23,7 +23,7 @@
 #include <stdlib.h> // getenv
 
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kstandarddirs.h>
 #include <kservice.h>
 #include <kde_file.h>
@@ -441,10 +441,10 @@ VFolderMenu::absoluteDir(const TQString &_dir, const TQString &baseDir, bool kee
 
    if (TQDir::isRelativePath(dir) && !keepRelativeToCfg)
    {
-      dir = KGlobal::dirs()->findResource("xdgconf-menu", dir);
+      dir = TDEGlobal::dirs()->findResource("xdgconf-menu", dir);
    }
 
-   dir = KGlobal::dirs()->realPath(dir);
+   dir = TDEGlobal::dirs()->realPath(dir);
 
    return dir;
 }
@@ -642,7 +642,7 @@ VFolderMenu::mergeMenus(TQDomElement &docElem, TQString &name)
       else if( e.tagName() == "MergeDir") {
          TQString dir = absoluteDir(e.text(), e.attribute("__BaseDir"), true);
 
-         TQStringList dirs = KGlobal::dirs()->findDirs("xdgconf-menu", dir);
+         TQStringList dirs = TDEGlobal::dirs()->findDirs("xdgconf-menu", dir);
          for(TQStringList::ConstIterator it=dirs.begin();
              it != dirs.end(); ++it)
          {
@@ -653,12 +653,12 @@ VFolderMenu::mergeMenus(TQDomElement &docElem, TQString &name)
          if (!TQDir::isRelativePath(dir))
          {
             // Absolute
-            fileList = KGlobal::dirs()->findAllResources("xdgconf-menu", dir+"*.menu", false, false);
+            fileList = TDEGlobal::dirs()->findAllResources("xdgconf-menu", dir+"*.menu", false, false);
          }
          else
          {
             // Relative
-            (void) KGlobal::dirs()->findAllResources("xdgconf-menu", dir+"*.menu", false, true, fileList);
+            (void) TDEGlobal::dirs()->findAllResources("xdgconf-menu", dir+"*.menu", false, true, fileList);
          }
 
          for(TQStringList::ConstIterator it=fileList.begin();
@@ -699,7 +699,7 @@ VFolderMenu::pushDocInfo(const TQString &fileName, const TQString &baseDir)
    if (!baseDir.isEmpty())
    {
       if (!TQDir::isRelativePath(baseDir))
-         m_docInfo.baseDir = KGlobal::dirs()->relativeLocation("xdgconf-menu", baseDir);
+         m_docInfo.baseDir = TDEGlobal::dirs()->relativeLocation("xdgconf-menu", baseDir);
       else
          m_docInfo.baseDir = baseDir;
    }
@@ -743,7 +743,7 @@ VFolderMenu::pushDocInfoParent(const TQString &basePath, const TQString &baseDir
    m_docInfo.baseName = fileName.left( fileName.length() - 5 );
    TQString baseName = TQDir::cleanDirPath(m_docInfo.baseDir + fileName);
 
-   TQStringList result = KGlobal::dirs()->findAllResources("xdgconf-menu", baseName);
+   TQStringList result = TDEGlobal::dirs()->findAllResources("xdgconf-menu", baseName);
 
    while( !result.isEmpty() && (result[0] != basePath))
       result.remove(result.begin());
@@ -767,7 +767,7 @@ VFolderMenu::locateMenuFile(const TQString &fileName)
 {
    if (!TQDir::isRelativePath(fileName))
    {
-      if (KStandardDirs::exists(fileName))
+      if (TDEStandardDirs::exists(fileName))
          return fileName;
       return TQString::null;
    }
@@ -808,7 +808,7 @@ VFolderMenu::locateDirectoryFile(const TQString &fileName)
 
    if (!TQDir::isRelativePath(fileName))
    {
-      if (KStandardDirs::exists(fileName))
+      if (TDEStandardDirs::exists(fileName))
          return fileName;
       return TQString::null;
    }
@@ -820,7 +820,7 @@ VFolderMenu::locateDirectoryFile(const TQString &fileName)
        ++it)
    {
       tmp = (*it)+fileName;
-      if (KStandardDirs::exists(tmp))
+      if (TDEStandardDirs::exists(tmp))
          return tmp;
    }
 
@@ -830,13 +830,13 @@ VFolderMenu::locateDirectoryFile(const TQString &fileName)
 void
 VFolderMenu::initDirs()
 {
-   m_defaultDataDirs = TQStringList::split(':', KGlobal::dirs()->kfsstnd_prefixes());
+   m_defaultDataDirs = TQStringList::split(':', TDEGlobal::dirs()->kfsstnd_prefixes());
    TQString localDir = m_defaultDataDirs.first();
    m_defaultDataDirs.remove(localDir); // Remove local dir
 
-   m_defaultAppDirs = KGlobal::dirs()->findDirs("xdgdata-apps", TQString::null);
-   m_defaultDirectoryDirs = KGlobal::dirs()->findDirs("xdgdata-dirs", TQString::null);
-   m_defaultLegacyDirs = KGlobal::dirs()->resourceDirs("apps");
+   m_defaultAppDirs = TDEGlobal::dirs()->findDirs("xdgdata-apps", TQString::null);
+   m_defaultDirectoryDirs = TDEGlobal::dirs()->findDirs("xdgdata-dirs", TQString::null);
+   m_defaultLegacyDirs = TDEGlobal::dirs()->resourceDirs("apps");
 }
 
 void
@@ -1038,7 +1038,7 @@ kdDebug(7021) << "processKDELegacyDirs()" << endl;
    TQRegExp files("\\.(desktop|kdelnk)$");
    TQRegExp dirs("\\.directory$");
 
-   (void) KGlobal::dirs()->findAllResources( "apps",
+   (void) TDEGlobal::dirs()->findAllResources( "apps",
                                              TQString::null,
                                              true, // Recursive!
                                              true, // uniq
@@ -1629,7 +1629,7 @@ VFolderMenu::parseMenu(const TQString &file, bool forceLegacyLoad)
    m_legacyLoaded = false;
    m_appsInfo = 0;
 
-   TQStringList dirs = KGlobal::dirs()->resourceDirs("xdgconf-menu");
+   TQStringList dirs = TDEGlobal::dirs()->resourceDirs("xdgconf-menu");
    for(TQStringList::ConstIterator it=dirs.begin();
        it != dirs.end(); ++it)
    {

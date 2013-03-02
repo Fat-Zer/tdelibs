@@ -17,8 +17,8 @@
  **/
 
 #include "kctimefactory.h"
-#include "ksycoca.h"
-#include "ksycocatype.h"
+#include "tdesycoca.h"
+#include "tdesycocatype.h"
 
 #include <assert.h>
 

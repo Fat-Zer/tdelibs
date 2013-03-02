@@ -16,21 +16,21 @@
     Boston, MA 02110-1301, USA.
 */
 
-#include "kapplication.h"
+#include "tdeapplication.h"
 #include <stdio.h>
 
-#include <kcmdlineargs.h>
-#include <kaboutdata.h>
-#include <kglobalsettings.h>
+#include <tdecmdlineargs.h>
+#include <tdeaboutdata.h>
+#include <tdeglobalsettings.h>
 #include <kdebug.h>
 
 int
 main(int argc, char *argv[])
 {
-   KAboutData about("kapptest", "kapptest", "version");
-   KCmdLineArgs::init(argc, argv, &about);
+   TDEAboutData about("kapptest", "kapptest", "version");
+   TDECmdLineArgs::init(argc, argv, &about);
 
-   KApplication a;
+   TDEApplication a;
 
    TQString error;
    TQCString dcopService;

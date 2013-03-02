@@ -22,13 +22,13 @@
 
 #include <tqstring.h>
 #include <tqstringlist.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kurl.h>
 
 class TDEPRINT_EXPORT KdeprintChecker
 {
 public:
-	static bool check(KConfig *conf, const TQString& group = TQString::null);
+	static bool check(TDEConfig *conf, const TQString& group = TQString::null);
 	static bool check(const TQStringList& uris);
 
 private:

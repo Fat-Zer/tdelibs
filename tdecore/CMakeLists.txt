@@ -11,8 +11,9 @@
 
 add_subdirectory( malloc )
 add_subdirectory( network )
-add_subdirectory( kconfig_compiler )
+add_subdirectory( tdeconfig_compiler )
 add_subdirectory( hwlibdata )
+add_subdirectory( hwlibdaemons )
 
 if( NOT DBUS_SYSTEM_BUS )
   set( DBUS_SYSTEM_BUS "unix:path=/var/run/dbus/system_bus_socket" CACHE INTERNAL "" FORCE )
@@ -52,7 +53,7 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/libltdl
   ${CMAKE_SOURCE_DIR}/tdefx
   ${CMAKE_SOURCE_DIR}/tdeui
-  ${CMAKE_SOURCE_DIR}/kio/kio
+  ${CMAKE_SOURCE_DIR}/tdeio/tdeio
   ${LIBART_INCLUDE_DIRS}
   ${LIBIDN_INCLUDE_DIRS}
   ${GAMIN_INCLUDEDIR}
@@ -68,25 +69,25 @@ link_directories(
 ##### headers ###################################
 
 install( FILES
-    kconfig.h kconfigskeleton.h kconfigdata.h ksimpleconfig.h
-    kconfigdialogmanager.h kconfigbase.h kdesktopfile.h
-    kurl.h ksock.h kaboutdata.h kcmdlineargs.h kconfigbackend.h
-    kapp.h kapplication.h kuniqueapp.h kuniqueapplication.h
+    tdeconfig.h tdeconfigskeleton.h tdeconfigdata.h ksimpleconfig.h
+    tdeconfigdialogmanager.h tdeconfigbase.h kdesktopfile.h
+    kurl.h ksock.h tdeaboutdata.h tdecmdlineargs.h tdeconfigbackend.h
+    kapp.h tdeapplication.h kuniqueapp.h kuniqueapplication.h
     kcharsets.h tdeversion.h kpty.h kprocess.h kprocctrl.h
-    klocale.h kicontheme.h kiconloader.h kdebug.h twinmodule.h
-    twin.h krootprop.h kshortcut.h kkeynative.h kaccel.h
-    kglobalaccel.h kstdaccel.h kshortcutlist.h kcatalogue.h
+    tdelocale.h kicontheme.h kiconloader.h kdebug.h twinmodule.h
+    twin.h krootprop.h tdeshortcut.h kkeynative.h tdeaccel.h
+    kglobalaccel.h tdestdaccel.h tdeshortcutlist.h kcatalogue.h
     kregexp.h kcompletion.h kstringhandler.h kstddirs.h
-    kstandarddirs.h kglobal.h kglobalsettings.h ksharedptr.h
+    kstandarddirs.h tdeglobal.h tdeglobalsettings.h ksharedptr.h
     kallocator.h kvmallocator.h kcrash.h krfcdate.h kinstance.h
-    kpalette.h kipc.h klibloader.h ktempfile.h ksavefile.h
+    kpalette.h kipc.h klibloader.h tdetempfile.h ksavefile.h
     krandomsequence.h knotifyclient.h kiconeffect.h kaudioplayer.h
-    kdcoppropertyproxy.h netwm.h kaccelmanager.h netwm_def.h
+    kdcoppropertyproxy.h netwm.h tdeaccelmanager.h netwm_def.h
     kpixmapprovider.h kunload.h kstaticdeleter.h kextsock.h
     kextendedsocket.h ksockaddr.h kprocio.h kasyncio.h kbufferedio.h
-    kurldrag.h kmimesourcefactory.h kmdcodec.h ksocks.h ksycoca.h
-    ksycocaentry.h ksycocatype.h kxmessages.h kstartupinfo.h
-    klargefile.h kmultipledrag.h kgenericfactory.h kgenericfactory.tcc
+    kurldrag.h kmimesourcefactory.h kmdcodec.h ksocks.h tdesycoca.h
+    tdesycocaentry.h tdesycocatype.h kxmessages.h tdestartupinfo.h
+    klargefile.h tdemultipledrag.h kgenericfactory.h kgenericfactory.tcc
     ktypelist.h ksortablevaluelist.h kdebugclasses.h kclipboard.h
     kcalendarsystem.h kcalendarsystemfactory.h kmacroexpander.h
     kmanagerselection.h kmountpoint.h kuser.h klockfile.h
@@ -109,7 +110,7 @@ install( FILES kdebug.areas kdebugrc language.codes
   DESTINATION ${CONFIG_INSTALL_DIR} )
 
 install( FILES kmdcodec_compat.h
-  DESTINATION ${INCLUDE_INSTALL_DIR}/kio RENAME kmdcodec.h )
+  DESTINATION ${INCLUDE_INSTALL_DIR}/tdeio RENAME kmdcodec.h )
 
 install( FILES eventsrc
   DESTINATION ${DATA_INSTALL_DIR}/knotify )
@@ -119,27 +120,27 @@ install( FILES eventsrc
 set( target tdecore )
 
 set( ${target}_SRCS
-  libintl.cpp kapplication.cpp kdebug.cpp netwm.cpp
-  kconfigbase.cpp kconfig.cpp ksimpleconfig.cpp kconfigbackend.cpp
+  libintl.cpp tdeapplication.cpp kdebug.cpp netwm.cpp
+  tdeconfigbase.cpp tdeconfig.cpp ksimpleconfig.cpp tdeconfigbackend.cpp
   kmanagerselection.cpp kdesktopfile.cpp kstandarddirs.cpp
-  ksock.cpp kpty.cpp kprocess.cpp kprocctrl.cpp klocale.cpp
+  ksock.cpp kpty.cpp kprocess.cpp kprocctrl.cpp tdelocale.cpp
   krfcdate.cpp kiconeffect.cpp kicontheme.cpp kiconloader.cpp
   twin.cpp twinmodule.cpp krootprop.cpp kcharsets.cpp
-  kckey.cpp kshortcut.cpp kkeynative_x11.cpp kkeyserver_x11.cpp
-  kaccelaction.cpp kshortcutmenu.cpp kaccelbase.cpp kaccel.cpp
-  kglobalaccel_x11.cpp kglobalaccel.cpp kstdaccel.cpp kshortcutlist.cpp
-  kcrash.cpp kurl.cpp kregexp.cpp kglobal.cpp kglobalsettings.cpp
+  kckey.cpp tdeshortcut.cpp kkeynative_x11.cpp kkeyserver_x11.cpp
+  tdeaccelaction.cpp tdeshortcutmenu.cpp tdeaccelbase.cpp tdeaccel.cpp
+  kglobalaccel_x11.cpp kglobalaccel.cpp tdestdaccel.cpp tdeshortcutlist.cpp
+  kcrash.cpp kurl.cpp kregexp.cpp tdeglobal.cpp tdeglobalsettings.cpp
   kallocator.cpp kvmallocator.cpp kmimesourcefactory.cpp
-  kinstance.cpp kpalette.cpp kipc.cpp klibloader.cpp ktempfile.cpp
-  kuniqueapplication.cpp kaccelmanager.cpp ksavefile.cpp
+  kinstance.cpp kpalette.cpp kipc.cpp klibloader.cpp tdetempfile.cpp
+  kuniqueapplication.cpp tdeaccelmanager.cpp ksavefile.cpp
   krandomsequence.cpp kstringhandler.cpp kcompletion.cpp
-  kcmdlineargs.cpp kaboutdata.cpp kcompletionbase.cpp knotifyclient.cpp
+  tdecmdlineargs.cpp tdeaboutdata.cpp kcompletionbase.cpp knotifyclient.cpp
   kaudioplayer.cpp kdcoppropertyproxy.cpp ksockaddr.cpp
   kextsock.cpp netsupp.cpp kprocio.cpp kbufferedio.cpp
   kpixmapprovider.cpp kurldrag.cpp kmdcodec.cpp ksocks.cpp
-  fakes.c vsnprintf.c ksycoca.cpp ksycocadict.cpp ksycoca.skel
-  ksycocafactory.cpp kxmessages.cpp kstartupinfo.cpp
-  kcatalogue.cpp kasyncio.cpp kmultipledrag.cpp kstaticdeleter.cpp
+  fakes.c vsnprintf.c tdesycoca.cpp tdesycocadict.cpp tdesycoca.skel
+  tdesycocafactory.cpp kxmessages.cpp tdestartupinfo.cpp
+  kcatalogue.cpp kasyncio.cpp tdemultipledrag.cpp kstaticdeleter.cpp
   kappdcopiface.cpp kappdcopiface.skel kclipboard.cpp
   kcheckaccelerators.cpp tdeversion.cpp kdebugdcopiface.cpp
   kdebugdcopiface.skel kcalendarsystem.cpp kcalendarsystemgregorian.cpp
@@ -147,7 +148,7 @@ set( ${target}_SRCS
   kcalendarsystemfactory.cpp kmacroexpander.cpp kidna.cpp
   ktempdir.cpp kshell.cpp kmountpoint.cpp kcalendarsystemjalali.cpp
   kprotocolinfo_tdecore.cpp kprotocolinfofactory.cpp kxerrorhandler.cpp
-  kuser.cpp kconfigskeleton.cpp kconfigdialogmanager.cpp klockfile.cpp
+  kuser.cpp tdeconfigskeleton.cpp tdeconfigdialogmanager.cpp klockfile.cpp
   kqiodevicegzip_p.cpp ktimezones.cpp tdehardwaredevices.cpp tdenetworkconnections.cpp
   ksimpledirwatch.cpp
   ${TDENM_BACKEND_SOURCES}

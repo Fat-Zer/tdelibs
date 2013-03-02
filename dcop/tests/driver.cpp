@@ -1,8 +1,8 @@
 #include "driver.h"
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <iostream>
 #include <dcopclient.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 #include <tqtimer.h>
 #include <tqtimer.h>
 
@@ -53,8 +53,8 @@ int main(int argc, char** argv)
 	if ( argc < 2 ) { tqWarning("Usage: driver <appid>"); return 1; }
 	const char* appname = strdup( argv[ 1 ] );
 	argv[ 1 ] = 0; // sue me
-	KCmdLineArgs::init( argc, argv, "TestAppDriver", "Tests the dcop familly of tools + libraries", "1.0" ); // FIXME
-	KApplication app;
+	TDECmdLineArgs::init( argc, argv, "TestAppDriver", "Tests the dcop familly of tools + libraries", "1.0" ); // FIXME
+	TDEApplication app;
 	app.dcopClient()->attach(  );
 	app.dcopClient()->registerAs( "TestAppDriver" );
 	Driver * object = new Driver( appname );

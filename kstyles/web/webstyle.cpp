@@ -32,9 +32,9 @@
 #include <tqdrawutil.h>
 #include <tqpainter.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdrawutil.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 #include <kdebug.h>
 
@@ -218,7 +218,7 @@ drawFunkyRect
 }
 
 WebStyle::WebStyle()
-  : KStyle()
+  : TDEStyle()
 {
   setButtonDefaultIndicatorWidth(6);
   setScrollBarExtent(_scrollBarExtent, _scrollBarExtent);
@@ -423,7 +423,7 @@ WebStyle::drawPushButtonLabel(TQPushButton * b, TQPainter * p)
 {
   // This is complicated stuff and we don't really want to mess with it.
 
-  KStyle::drawPushButtonLabel(b, p);
+  TDEStyle::drawPushButtonLabel(b, p);
 }
 
   void
@@ -474,7 +474,7 @@ WebStyle::drawScrollBarControls
     Qt::ArrowType t =
       sb->orientation() == Horizontal ? Qt::RightArrow : Qt::DownArrow;
 
-    // Is it me or is KStyle::drawArrow broken ?
+    // Is it me or is TDEStyle::drawArrow broken ?
 
     drawArrow
       (
@@ -930,7 +930,7 @@ WebStyle::drawArrow
  const TQBrush * fill
 )
 {
-  KStyle::drawArrow(p, type, down, x, y, w, h, g, enabled, fill);
+  TDEStyle::drawArrow(p, type, down, x, y, w, h, g, enabled, fill);
 }
 
   void
@@ -965,7 +965,7 @@ WebStyle::drawSlider
 }
 
   void
-WebStyle::drawKToolBar
+WebStyle::drawTDEToolBar
 (
  TQPainter * p,
  int x,
@@ -973,7 +973,7 @@ WebStyle::drawKToolBar
  int w,
  int h,
  const TQColorGroup & g,
- KToolBarPos /* pos */,
+ TDEToolBarPos /* pos */,
  TQBrush * /* fill */
 )
 {
@@ -993,7 +993,7 @@ WebStyle::drawKBarHandle
  int w,
  int h,
  const TQColorGroup & g,
- KToolBarPos /* pos */,
+ TDEToolBarPos /* pos */,
  TQBrush * /* fill */
 )
 {
@@ -1025,7 +1025,7 @@ WebStyle::drawKMenuBar
 }
 
   void
-WebStyle::drawKToolBarButton
+WebStyle::drawTDEToolBarButton
 (
  TQPainter * p,
  int x,
@@ -1037,7 +1037,7 @@ WebStyle::drawKToolBarButton
  bool raised,
  bool enabled,
  bool popup,
- KToolButtonType type,
+ TDEToolButtonType type,
  const TQString & btext,
  const TQPixmap * pixmap,
  TQFont * font,
@@ -1308,7 +1308,7 @@ WebStyle::drawPopupMenuItem
 )
 {
   // TODO
-  KStyle::drawPopupMenuItem(p, checkable, maxpmw, tab, mi, pal, act, enabled, x, y, w, h);
+  TDEStyle::drawPopupMenuItem(p, checkable, maxpmw, tab, mi, pal, act, enabled, x, y, w, h);
 }
 
   void

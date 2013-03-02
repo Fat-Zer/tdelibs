@@ -22,7 +22,7 @@
 #define DRIVERVIEW_H
 
 #include <tqwidget.h>
-#include <klistview.h>
+#include <tdelistview.h>
 #include <tqmap.h>
 
 #include <tdelibs_export.h>
@@ -30,7 +30,7 @@
 class DrOptionView;
 class DrMain;
 
-class TDEPRINT_EXPORT DrListView : public KListView
+class TDEPRINT_EXPORT DrListView : public TDEListView
 {
 public:
 	DrListView(TQWidget *parent = 0, const char *name = 0);

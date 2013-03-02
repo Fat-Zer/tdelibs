@@ -31,7 +31,7 @@
 #include <pwd.h>
 #include <signal.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kstandarddirs.h>
 #include <tqimage.h>
 #include <tqfile.h>
@@ -39,13 +39,13 @@
 #include <unistd.h>
 #include <stdio.h>
 
-#include <kaction.h>
-#include <kcmdlineargs.h>
+#include <tdeaction.h>
+#include <tdecmdlineargs.h>
 #include "katefactory.h"
-#include <kio/job.h>
-#include <kmainwindow.h>
+#include <tdeio/job.h>
+#include <tdemainwindow.h>
 #include <ksimpleconfig.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 
 #include <tqcolor.h>
 #include <tqcursor.h>
@@ -66,7 +66,7 @@
 
 #include "katedocument.h"
 #include "kateview.h"
-#include <kparts/browserextension.h>
+#include <tdeparts/browserextension.h>
 #include "katejscript.h"
 #include "katedocumenthelpers.h"
 #include "kateconfig.h"
@@ -371,7 +371,7 @@ static TQString findMostRecentFailureSnapshot() {
     return dir[0].mid(sizeof failureSnapshotPrefix - 1);
 }
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
     { "b", 0, 0 },
     { "base <base_dir>", "Directory containing tests, basedir and output directories.", 0},
@@ -390,7 +390,7 @@ static KCmdLineOptions options[] =
     { "output <directory>", "Put output in <directory> instead of <base_dir>/output", 0 } ,
     { "+[base_dir]", "Directory containing tests,basedir and output directories. Only regarded if -b is not specified.", 0 } ,
     { "+[testcases]", "Relative path to testcase, or directory of testcases to be run (equivalent to -t).", 0 } ,
-    KCmdLineLastOption
+    TDECmdLineLastOption
 };
 
 int main(int argc, char *argv[])
@@ -410,11 +410,11 @@ int main(int argc, char *argv[])
 
 //     signal( SIGALRM, signal_handler );
 
-    KCmdLineArgs::init(argc, argv, "testregression", "TestRegression",
+    TDECmdLineArgs::init(argc, argv, "testregression", "TestRegression",
                        "Regression tester for kate", "1.0");
-    KCmdLineArgs::addCmdLineOptions(options);
+    TDECmdLineArgs::addCmdLineOptions(options);
 
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs( );
+    TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs( );
 
     TQCString baseDir = args->getOption("base");
     TQCString baseDirConfigFile(::getenv("HOME") + TQCString(BASE_DIR_CONFIG));
@@ -440,7 +440,7 @@ int main(int argc, char *argv[])
                "\techo \"<root-path>\" > %s\n"
                "You may override the location by specifying the root explicitly on the\n"
                "command line with option -b\n"
-               "", KCmdLineArgs::appName(),
+               "", TDECmdLineArgs::appName(),
                (const char *)baseDirConfigFile,
                (const char *)baseDirConfigFile);
 	::exit( 1 );
@@ -461,7 +461,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    KApplication a;
+    TDEApplication a;
     a.disableAutoDcopRegistration();
     a.setStyle("windows");
     KSimpleConfig cfg( "testkateregressionrc" );
@@ -511,7 +511,7 @@ int main(int argc, char *argv[])
 
     // create widgets
     KateFactory *fac = KateFactory::self();
-    KMainWindow *toplevel = new KMainWindow();
+    TDEMainWindow *toplevel = new TDEMainWindow();
     KateDocument *part = new KateDocument(/*bSingleViewMode*/true,
                                           /*bBrowserView*/false,
                                           /*bReadOnly*/false,
@@ -650,7 +650,7 @@ int main(int argc, char *argv[])
 
 RegressionTest *RegressionTest::curr = 0;
 
-RegressionTest::RegressionTest(KateDocument *part, KConfig *baseConfig,
+RegressionTest::RegressionTest(KateDocument *part, TDEConfig *baseConfig,
                                const TQString &baseDir,
                                const TQString &outputDir, bool _genOutput)
   : TQObject(part)
@@ -723,14 +723,14 @@ RegressionTest::~RegressionTest()
     delete m_failureSave;
 }
 
-void RegressionTest::setFailureSnapshotConfig(KConfig *cfg, const TQString &sname)
+void RegressionTest::setFailureSnapshotConfig(TDEConfig *cfg, const TQString &sname)
 {
     Q_ASSERT(cfg);
     m_failureComp = cfg;
     m_failureComp->setGroup(sname);
 }
 
-void RegressionTest::setFailureSnapshotSaver(KConfig *cfg, const TQString &sname)
+void RegressionTest::setFailureSnapshotSaver(TDEConfig *cfg, const TQString &sname)
 {
     Q_ASSERT(cfg);
     m_failureSave = cfg;
@@ -928,7 +928,7 @@ void RegressionTest::doFailureReport( const TQString& test, int failures )
 
     TQString relOutputDir = makeRelativePath(m_baseDir, m_outputDir);
 
-    // are blocking reads possible with KProcess?
+    // are blocking reads possible with TDEProcess?
     char pwd[PATH_MAX];
     (void) getcwd( pwd, PATH_MAX );
     chdir( TQFile::encodeName( m_baseDir ) );

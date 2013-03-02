@@ -28,7 +28,7 @@ namespace KNetwork {
  * @class KSocksSocketDevice ksockssocketdevice.h ksockssocketdevice.h
  * @brief The low-level class for SOCKS proxying.
  *
- * This class reimplements several functions from @ref KSocketDevice in order
+ * This class reimplements several functions from @ref TDESocketDevice in order
  * to implement SOCKS support.
  *
  * This works by using KSocks.
@@ -37,13 +37,13 @@ namespace KNetwork {
  *
  * @warning This code is untested!
  */
-class TDECORE_EXPORT KSocksSocketDevice: public KSocketDevice
+class TDECORE_EXPORT KSocksSocketDevice: public TDESocketDevice
 {
 public:
   /** 
    * Constructor.
    */
-  KSocksSocketDevice(const KSocketBase* = 0L);
+  KSocksSocketDevice(const TDESocketBase* = 0L);
 
   /**
    * Construct from a file descriptor.
@@ -84,34 +84,34 @@ public:
    * Overrides reading.
    */
   virtual TQ_LONG tqreadBlock(char *data, TQ_ULONG maxlen);
-  virtual TQ_LONG tqreadBlock(char *data, TQ_ULONG maxlen, KSocketAddress& from);
+  virtual TQ_LONG tqreadBlock(char *data, TQ_ULONG maxlen, TDESocketAddress& from);
 
   /**
    * Overrides peeking.
    */
   virtual TQ_LONG peekBlock(char *data, TQ_ULONG maxlen);
-  virtual TQ_LONG peekBlock(char *data, TQ_ULONG maxlen, KSocketAddress& from);
+  virtual TQ_LONG peekBlock(char *data, TQ_ULONG maxlen, TDESocketAddress& from);
 
   /**
    * Overrides writing.
    */
   virtual TQ_LONG tqwriteBlock(const char *data, TQ_ULONG len);
-  virtual TQ_LONG tqwriteBlock(const char *data, TQ_ULONG len, const KSocketAddress& to);
+  virtual TQ_LONG tqwriteBlock(const char *data, TQ_ULONG len, const TDESocketAddress& to);
 
   /**
    * Overrides getting socket address.
    */
-  virtual KSocketAddress localAddress() const;
+  virtual TDESocketAddress localAddress() const;
 
   /**
    * Overrides getting peer address.
    */
-  virtual KSocketAddress peerAddress() const;
+  virtual TDESocketAddress peerAddress() const;
 
   /**
    * Overrides getting external address.
    */
-  virtual KSocketAddress externalAddress() const;
+  virtual TDESocketAddress externalAddress() const;
 
   /**
    * Overrides polling.
@@ -121,7 +121,7 @@ public:
 
 private:
   static void initSocks();
-  friend class KSocketDevice;
+  friend class TDESocketDevice;
 };
 
 }				// namespace KNetwork

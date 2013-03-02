@@ -28,7 +28,7 @@
 
 #include <tqfile.h>
 #include <tqtextstream.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 #include <kstandarddirs.h>
 

@@ -30,7 +30,7 @@
 #include <tqpainter.h>
 #include <tqimage.h>
 #include <tqcolor.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kpixmapeffect.h>
 #include "kled.h"
 

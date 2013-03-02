@@ -22,7 +22,7 @@
 
 #include "kmwizardpage.h"
 
-class KListView;
+class TDEListView;
 class TQListViewItem;
 class TQLineEdit;
 class NetworkScanner;
@@ -43,7 +43,7 @@ protected slots:
 	void slotScanFinished();
 
 private:
-	KListView	*m_list;
+	TDEListView	*m_list;
 	NetworkScanner *m_scanner;
 	TQLineEdit	*m_printer, *m_port;
 };

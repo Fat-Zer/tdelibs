@@ -22,7 +22,7 @@
 #include <tqtimer.h>
 #include <tqpainter.h>
 #include <tqimage.h>
-#include <ktoolbar.h>
+#include <tdetoolbar.h>
 #include <kdebug.h>
 #include <kiconloader.h>
 
@@ -47,7 +47,7 @@ KAnimWidget::KAnimWidget( const TQString& icons, int size, TQWidget *parent,
 {
   connect( &d->timer, TQT_SIGNAL(timeout()), this, TQT_SLOT(slotTimerUpdate()));
 
-  if (parent && parent->inherits( "KToolBar" ))
+  if (parent && parent->inherits( "TDEToolBar" ))
     connect(parent, TQT_SIGNAL(modechange()), this, TQT_SLOT(updateIcons()));
 
   d->loadingCompleted = false;
@@ -182,12 +182,12 @@ void KAnimWidget::updateIcons()
   if (!d->initDone)
      return;
 
-  if (parent()->inherits( "KToolBar" ))
-    d->size = ((KToolBar*)parent())->iconSize();
+  if (parent()->inherits( "TDEToolBar" ))
+    d->size = ((TDEToolBar*)parent())->iconSize();
   if (!d->size)
-     d->size = KGlobal::iconLoader()->currentSize(KIcon::MainToolbar);
+     d->size = TDEGlobal::iconLoader()->currentSize(TDEIcon::MainToolbar);
 
-  TQString path = KGlobal::iconLoader()->iconPath(d->icon_name, -d->size);
+  TQString path = TDEGlobal::iconLoader()->iconPath(d->icon_name, -d->size);
   TQImage img(path);
   
   if (img.isNull())

@@ -17,8 +17,8 @@
 */
 
 #ifdef MAKE_TDECORE_LIB //needed for proper linkage (win32)
-#undef KIO_EXPORT
-#define KIO_EXPORT KDE_EXPORT
+#undef TDEIO_EXPORT
+#define TDEIO_EXPORT KDE_EXPORT
 #endif
 
 #define KPROTOCOLINFO_TDECORE
@@ -26,11 +26,11 @@
 #include "kprotocolinfofactory.h"
 
 #include <kstandarddirs.h>
-#include <kglobal.h>
-#include <kapplication.h>
+#include <tdeglobal.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <ksimpleconfig.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kstringhandler.h>
 
 class KProtocolInfo::KProtocolInfoPrivate
@@ -150,7 +150,7 @@ void
 KProtocolInfo::load( TQDataStream& _str)
 {
    // You may add new fields at the end. Make sure to update the version
-   // number in ksycoca.h
+   // number in tdesycoca.h
    TQ_INT32 i_inputType, i_outputType;
    TQ_INT8 i_isSourceProtocol, i_isHelperProtocol,
           i_supportsListing, i_supportsReading,
@@ -205,7 +205,7 @@ KProtocolInfo::save( TQDataStream& _str)
    KSycocaEntry::save( _str );
 
    // You may add new fields at the end. Make sure to update the version
-   // number in ksycoca.h
+   // number in tdesycoca.h
    TQ_INT32 i_inputType, i_outputType;
    TQ_INT8 i_isSourceProtocol, i_isHelperProtocol,
           i_supportsListing, i_supportsReading,
@@ -403,7 +403,7 @@ TQString KProtocolInfo::config( const TQString& _protocol )
   if ( !prot )
     return TQString::null;
 
-  return TQString("kio_%1rc").arg(prot->m_config);
+  return TQString("tdeio_%1rc").arg(prot->m_config);
 }
 
 int KProtocolInfo::maxSlaves( const TQString& _protocol )
@@ -555,7 +555,7 @@ TQDataStream& operator<<( TQDataStream& s, const KProtocolInfo::ExtraField& fiel
   return s;
 }
 
-// KURL based static functions are implemented in ../kio/kio/kprotocolinfo.cpp
+// KURL based static functions are implemented in ../tdeio/tdeio/kprotocolinfo.cpp
 
 void KProtocolInfo::virtual_hook( int id, void* data )
 { KSycocaEntry::virtual_hook( id, data ); }

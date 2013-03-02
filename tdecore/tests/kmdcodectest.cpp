@@ -27,9 +27,9 @@
 #include <tqfile.h>
 
 #include <kdebug.h>
-#include <klocale.h>
-#include <kcmdlineargs.h>
-#include <kapplication.h>
+#include <tdelocale.h>
+#include <tdecmdlineargs.h>
+#include <tdeapplication.h>
 
 #include <kmdcodec.h>
 
@@ -316,7 +316,7 @@ int main (int argc, char *argv[])
 {
     const char *version = "1.0";
     const char *description = "Unit test for md5, base64 encode/decode and uuencode/decode facilities";
-    KCmdLineOptions options[] =
+    TDECmdLineOptions options[] =
     {
         { "c <digest>", "compare <digest> with the calculated digest for a string or file.", 0 },
         { "d", "decode the given string or file using base64", 0 },
@@ -331,15 +331,15 @@ int main (int argc, char *argv[])
         { "x", "uudecode the given string or file", 0 },
         { "z", "run a preset message-digest test", 0 },
         { "+command", "[input1, input2,...]", 0 },
-        KCmdLineLastOption
+        TDECmdLineLastOption
     };
 
-    KCmdLineArgs::init( argc, argv, "kmdcodectest", description, version );
-    KCmdLineArgs::addCmdLineOptions( options );
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+    TDECmdLineArgs::init( argc, argv, "kmdcodectest", description, version );
+    TDECmdLineArgs::addCmdLineOptions( options );
+    TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
     int count = args->count();
 
-    KApplication app;
+    TDEApplication app;
 
     if (!count)
     {

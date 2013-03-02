@@ -17,14 +17,14 @@
 */
 
 #include "kuniqueapplication.h"
-#include "kglobal.h"
+#include "tdeglobal.h"
 #include "kdebug.h"
 #include "ksock.h"
 #include "ksockaddr.h"
 #include "kextsock.h"
 
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
+#include <tdeaboutdata.h>
+#include <tdecmdlineargs.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -57,11 +57,11 @@ bool check(TQString txt, TQString a, TQString b)
 int
 main(int argc, char *argv[])
 {
-   KAboutData about("socktest", "SockTest", "version");
-   KCmdLineArgs::init(argc, argv, &about);
-   KApplication::addCmdLineOptions();
+   TDEAboutData about("socktest", "SockTest", "version");
+   TDECmdLineArgs::init(argc, argv, &about);
+   TDEApplication::addCmdLineOptions();
 
-   KApplication app;
+   TDEApplication app;
 
    TQString host, port;
 
@@ -100,7 +100,7 @@ main(int argc, char *argv[])
 
    printf("FD %d\n", sock2->fd());
 
-   KSocketAddress* addr = KExtendedSocket::peerAddress( sock2->fd() );
+   TDESocketAddress* addr = KExtendedSocket::peerAddress( sock2->fd() );
    check( "peerAddress:", addr->nodeName().latin1(), "213.203.58.36" );
 
    check( "isEqual:", addr->isEqual(KInetSocketAddress("213.203.58.36", 80)) ? "TRUE" : "FALSE", "TRUE");

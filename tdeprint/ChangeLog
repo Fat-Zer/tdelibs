@@ -59,7 +59,7 @@ Since 2.2 release, Michael Goffioul <tdeprint@swing.be>
     printers (to not confuse the CUPS daemon for example)
   * Improved how the default printer is selected in print dialog to
     work in any cases
-  * General: make use of KLocale::pageSize() to determine the default
+  * General: make use of TDELocale::pageSize() to determine the default
     page size (used for example for pseudo printers and classes)
   * Wizard: fix buffer overflow when adding a remote LPD queue having
     a lot of jobs waiting
@@ -108,7 +108,7 @@ Since 2.2 release, Michael Goffioul <tdeprint@swing.be>
   * tdeprintfax: added possibility to view files being faxed and
     file action (remove and view) are enabled only when needed.
   * KPrinter: when printing to a file, support encoding and spaces
-    in file names + system --> KProcess.
+    in file names + system --> TDEProcess.
 
 07/11/2001 Michael Goffioul <tdeprint@swing.be>
   * tdeprint: fixed some problems:
@@ -389,7 +389,7 @@ Since 2.2 release, Michael Goffioul <tdeprint@swing.be>
     page ranges (problem with option encoding in CUPS).
 
 15/02/2002 Michael Goffioul <tdeprint@swing.be>
-  * general: fixed infinite recursion bug in KIconSelectAction
+  * general: fixed infinite recursion bug in TDEIconSelectAction
   * CUPS: temporarily disabled edition of page-ranges as it seems CUPS is
     buggy. I should find a workaround.
   * general (CUPS): enable some actions for jobs on remote hosts. It seems

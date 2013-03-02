@@ -21,9 +21,9 @@
 
 #include <tqcheckbox.h>
 #include <kurlrequester.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdialog.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <tqgroupbox.h>
 #include <tqlayout.h>
 #include <kcursor.h>
@@ -52,7 +52,7 @@ KMConfigCupsDir::KMConfigCupsDir(TQWidget *parent)
 	m_stddir->setChecked(true);
 }
 
-void KMConfigCupsDir::loadConfig(KConfig *conf)
+void KMConfigCupsDir::loadConfig(TDEConfig *conf)
 {
 	conf->setGroup("CUPS");
 	QString	dir = conf->readPathEntry("InstallDir");
@@ -60,7 +60,7 @@ void KMConfigCupsDir::loadConfig(KConfig *conf)
 	m_installdir->setURL(dir);
 }
 
-void KMConfigCupsDir::saveConfig(KConfig *conf)
+void KMConfigCupsDir::saveConfig(TDEConfig *conf)
 {
 	conf->setGroup("CUPS");
 	conf->writePathEntry("InstallDir",(m_stddir->isChecked() ? TQString::null : m_installdir->url()));

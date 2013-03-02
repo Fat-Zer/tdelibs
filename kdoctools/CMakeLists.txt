@@ -18,9 +18,9 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_BINARY_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/tdecore
-  ${CMAKE_SOURCE_DIR}/kio
-  ${CMAKE_SOURCE_DIR}/kio/kio
-  ${CMAKE_SOURCE_DIR}/kioslave
+  ${CMAKE_SOURCE_DIR}/tdeio
+  ${CMAKE_SOURCE_DIR}/tdeio/tdeio
+  ${CMAKE_SOURCE_DIR}/tdeioslave
   ${LIBXML2_INCLUDE_DIRS}
   ${LIBXSLT_INCLUDE_DIRS}
 )
@@ -33,8 +33,8 @@ link_directories(
 ##### other data ################################
 
 install( PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/checkXML DESTINATION ${BIN_INSTALL_DIR} )
-install( PROGRAMS move_kio_help_cache.sh DESTINATION ${KCONF_UPDATE_INSTALL_DIR} )
-install( FILES kio_help.upd DESTINATION ${KCONF_UPDATE_INSTALL_DIR} )
+install( PROGRAMS move_tdeio_help_cache.sh DESTINATION ${KCONF_UPDATE_INSTALL_DIR} )
+install( FILES tdeio_help.upd DESTINATION ${KCONF_UPDATE_INSTALL_DIR} )
 install( FILES help.protocol ghelp.protocol DESTINATION ${SERVICES_INSTALL_DIR} )
 
 # FIXME why automake version is so complicated?
@@ -54,36 +54,36 @@ install( FILES man-template.docbook template.docbook DESTINATION ${DATA_INSTALL_
 ##### kbzipfilter_dummy ##############################
 
 tde_add_library( kbzipfilter_dummy STATIC_PIC
-  SOURCES ${CMAKE_SOURCE_DIR}/kioslave/bzip2/kbzip2filter.cpp
+  SOURCES ${CMAKE_SOURCE_DIR}/tdeioslave/bzip2/kbzip2filter.cpp
 )
 
 
-#### kio_help ###################################
+#### tdeio_help ###################################
 
-set( target kio_help )
+set( target tdeio_help )
 
 set( ${target}_SRCS
-  kio_help.cpp main.cpp xslt.cpp
+  tdeio_help.cpp main.cpp xslt.cpp
 )
 
 tde_add_kpart( ${target} SHARED
   SOURCES ${${target}_SRCS}
-  LINK kbzipfilter_dummy-static kio-shared ${BZIP2_LIBRARIES} ${LIBXML2_LIBRARIES} ${LIBXSLT_LIBRARIES}
+  LINK kbzipfilter_dummy-static tdeio-shared ${BZIP2_LIBRARIES} ${LIBXML2_LIBRARIES} ${LIBXSLT_LIBRARIES}
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 
 
-#### kio_ghelp ###################################
+#### tdeio_ghelp ###################################
 
-set( target kio_ghelp )
+set( target tdeio_ghelp )
 
 set( ${target}_SRCS
-  kio_help.cpp main_ghelp.cpp xslt.cpp
+  tdeio_help.cpp main_ghelp.cpp xslt.cpp
 )
 
 tde_add_kpart( ${target} SHARED
   SOURCES ${${target}_SRCS}
-  LINK kbzipfilter_dummy-static kio-shared ${BZIP2_LIBRARIES} ${LIBXML2_LIBRARIES} ${LIBXSLT_LIBRARIES}
+  LINK kbzipfilter_dummy-static tdeio-shared ${BZIP2_LIBRARIES} ${LIBXML2_LIBRARIES} ${LIBXSLT_LIBRARIES}
   DESTINATION ${PLUGIN_INSTALL_DIR}
 )
 
@@ -102,6 +102,6 @@ set_source_files_properties( xslt_pure.cpp PROPERTIES COMPILE_FLAGS -DSIMPLE_XSL
 
 tde_add_executable( ${target}
   SOURCES ${${target}_SRCS}
-  LINK kbzipfilter_dummy-static kio-shared ${BZIP2_LIBRARIES} ${LIBXML2_LIBRARIES} ${LIBXSLT_LIBRARIES}
+  LINK kbzipfilter_dummy-static tdeio-shared ${BZIP2_LIBRARIES} ${LIBXML2_LIBRARIES} ${LIBXSLT_LIBRARIES}
   DESTINATION ${BIN_INSTALL_DIR}
 )

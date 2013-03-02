@@ -27,7 +27,7 @@
 #include <tqwhatsthis.h>
 #include <tqcombobox.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <knuminput.h>
 
 CupsdFilterPage::CupsdFilterPage(TQWidget *parent, const char *name)

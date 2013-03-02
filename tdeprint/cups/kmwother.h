@@ -23,7 +23,7 @@
 #include "kmwizardpage.h"
 
 class TQLineEdit;
-class KListView;
+class TDEListView;
 class TQListViewItem;
 
 class KMWOther : public KMWizardPage
@@ -40,7 +40,7 @@ protected slots:
 
 private:
 	TQLineEdit	*m_uri;
-	KListView *m_uriview;
+	TDEListView *m_uriview;
 };
 
 #endif

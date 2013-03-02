@@ -22,15 +22,15 @@
 #include <tqlayout.h>
 #include <tqheader.h>
 #include <tqpushbutton.h>
-#include <klistview.h>
-#include <klocale.h>
-#include <kfiledialog.h>
+#include <tdelistview.h>
+#include <tdelocale.h>
+#include <tdefiledialog.h>
 #include <kiconloader.h>
 
 QDirMultiLineEdit::QDirMultiLineEdit(TQWidget *parent, const char *name)
 : TQWidget(parent, name)
 {
-	m_view = new KListView(this);
+	m_view = new TDEListView(this);
 	m_view->header()->hide();
 	m_view->addColumn("");
 	m_view->setFullWidth(true);

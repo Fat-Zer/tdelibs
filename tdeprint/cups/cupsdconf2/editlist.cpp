@@ -19,17 +19,17 @@
 
 #include "editlist.h"
 
-#include <klistbox.h>
+#include <tdelistbox.h>
 #include <kpushbutton.h>
 #include <tqlayout.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 #include <kguiitem.h>
 
 EditList::EditList(TQWidget *parent, const char *name)
 	: TQWidget(parent, name)
 {
-	list_ = new KListBox(this);
+	list_ = new TDEListBox(this);
 	addbtn_ = new KPushButton(KGuiItem(i18n("Add..."), "filenew"), this);
 	editbtn_ = new KPushButton(KGuiItem(i18n("Edit..."), "edit"), this);
 	delbtn_ = new KPushButton(KGuiItem(i18n("Delete"), "editdelete"), this);

@@ -30,8 +30,8 @@
 #include <kdebug.h>
 #include <kdialog.h>
 #include <klineedit.h>
-#include <klocale.h>
-#include <kapplication.h>
+#include <tdelocale.h>
+#include <tdeapplication.h>
 #include <knotifyclient.h>
 
 #include "keditlistbox.h"

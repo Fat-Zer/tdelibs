@@ -38,18 +38,18 @@ The manual method is covered first, followed by the automatic IDL method.
 
 \section establish Establishing the Connection:
 
-KApplication has gained a method called \p KApplication::dcopClient()
+TDEApplication has gained a method called \p TDEApplication::dcopClient()
 which returns a pointer to a DCOPClient instance.  The first time this
 method is called, the client class will be created.  DCOPClients have
 unique identifiers attached to them which are based on what
-KApplication::name() returns.  In fact, if there is only a single
+TDEApplication::name() returns.  In fact, if there is only a single
 instance of the program running, the appId will be equal to
-KApplication::name().
+TDEApplication::name().
 
 To actually enable DCOP communication to begin, you must use
 \p DCOPClient::attach().  This will attempt to attach to the DCOP server.
 If no server is found or there is any other type of error, 
-DCOPClient::attach() will return false. KApplication will catch a dcop 
+DCOPClient::attach() will return false. TDEApplication will catch a dcop 
 signal and display an appropriate error message box in that case.
 
 After connecting with the server via DCOPClient::attach(), you need to
@@ -62,7 +62,7 @@ case:
 appId = client->registerAs(kapp->name());
 \endcode
 
-If you never retrieve the DCOPClient pointer from KApplication, the
+If you never retrieve the DCOPClient pointer from TDEApplication, the
 object will not be created and thus there will be no memory overhead.
 
 You may also detach from the server by calling DCOPClient::detach().
@@ -541,8 +541,8 @@ in that case the signal connection will always be deleted.
 A receiver can create a non-volatile connection while the sender doesn't (yet)
 exist. An anonymous DCOP connection should always be non-volatile.
 
-The following example shows how KLauncher emits a signal whenever it notices
-that an application that was started via KLauncher terminates:
+The following example shows how TDELauncher emits a signal whenever it notices
+that an application that was started via TDELauncher terminates:
 
 \code
 QByteArray params;
@@ -553,7 +553,7 @@ kapp->dcopClient()->emitDCOPSignal("clientDied(pid_t)", params);
 
 The task manager of the Trinity panel connects to this signal. It uses an 
 anonymous connection (it doesn't require that the signal is being emitted
-by KLauncher) that is non-volatile:
+by TDELauncher) that is non-volatile:
 
 \code
 connectDCOPSignal(0, 0, "clientDied(pid_t)", "clientDied(pid_t)", false);

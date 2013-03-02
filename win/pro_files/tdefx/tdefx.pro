@@ -15,7 +15,7 @@ kimageeffect.cpp \
 kpixmapeffect.cpp \
 kpixmapsplitter.cpp \
 kpixmap.cpp \
-kstyle.cpp \
+tdestyle.cpp \
 kdrawutil.cpp \
 kcpuinfo.cpp
 

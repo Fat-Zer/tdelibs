@@ -24,17 +24,17 @@
 #include "kmcupsmanager.h"
 #include "networkscanner.h"
 
-#include <klistview.h>
+#include <tdelistview.h>
 #include <tqheader.h>
 #include <kpushbutton.h>
 #include <tqlineedit.h>
 #include <tqlabel.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <tqtextview.h>
 #include <tqlayout.h>
 #include <tqregexp.h>
 #include <kseparator.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
 #include <kguiitem.h>
 #include <kurl.h>
@@ -46,7 +46,7 @@ KMWIppPrinter::KMWIppPrinter(TQWidget *parent, const char *name)
 	m_ID = KMWizard::Custom+1;
 	m_nextpage = KMWizard::Driver;
 
-	m_list = new KListView(this);
+	m_list = new TDEListView(this);
 	m_list->addColumn("");
 	m_list->header()->hide();
 	m_list->setFrameStyle(TQFrame::WinPanel|TQFrame::Sunken);

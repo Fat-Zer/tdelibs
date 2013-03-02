@@ -24,13 +24,13 @@
 #warning internal header, do not use except if you are a TDEPrint developer
 #endif
 
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 #include "kmprinterpage.h"
 #include "kpreloadobject.h"
 
 class KMJobManager;
 class KMJob;
-class KListView;
+class TDEListView;
 class JobItem;
 class TQPopupMenu;
 class TQListViewItem;
@@ -46,7 +46,7 @@ class TQCheckBox;
  * if you're a TDEPrint developer. The API might change in the
  * future and binary compatibility might be broken.
  */
-class TDEPRINT_EXPORT KMJobViewer : public KMainWindow, public KMPrinterPage, public KPReloadObject
+class TDEPRINT_EXPORT KMJobViewer : public TDEMainWindow, public KMPrinterPage, public KPReloadObject
 {
 	Q_OBJECT
 public:
@@ -108,7 +108,7 @@ protected:
 	void updateStatusBar();
 
 private:
-	KListView		*m_view;
+	TDEListView		*m_view;
 	TQPtrList<KMJob>		m_jobs;
 	TQPtrList<JobItem>		m_items;
 	TQPopupMenu		*m_pop;

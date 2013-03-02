@@ -29,7 +29,7 @@
 /**
  * @section impldetails Implementation Details
  *
- * The KBufferedIO class has two purposes: first, it defines an API on how
+ * The TDEBufferedIO class has two purposes: first, it defines an API on how
  * that classes providing buffered I/O should provide. Next, it implements on
  * top of that API a generic buffering, that should suffice for most cases.
  *
@@ -86,7 +86,7 @@
  */
 
 // constructor
-KBufferedIO::KBufferedIO() :
+TDEBufferedIO::TDEBufferedIO() :
   inBufIndex(0), outBufIndex(0)
 {
   inBuf.setAutoDelete(true);
@@ -94,14 +94,14 @@ KBufferedIO::KBufferedIO() :
 }
 
 // destructor
-KBufferedIO::~KBufferedIO()
+TDEBufferedIO::~TDEBufferedIO()
 {
 }
 
 // sets the buffer sizes
 // this implementation doesn't support setting the buffer sizes
 // if any parameter is different than -1 or -2, fail
-bool KBufferedIO::setBufferSize(int rsize, int wsize /* = -2 */)
+bool TDEBufferedIO::setBufferSize(int rsize, int wsize /* = -2 */)
 {
   if (wsize != -2 && wsize != -1)
     return false;
@@ -112,27 +112,27 @@ bool KBufferedIO::setBufferSize(int rsize, int wsize /* = -2 */)
 }
 
 #ifdef USE_QT3
-int KBufferedIO::bytesAvailable() const
+int TDEBufferedIO::bytesAvailable() const
 #endif // USE_QT3
 #ifdef USE_QT4
-qint64 KBufferedIO::bytesAvailable() const
+qint64 TDEBufferedIO::bytesAvailable() const
 #endif // USE_QT4
 {
   return readBufferSize();
 }
 
 #ifdef USE_QT3
-int KBufferedIO::bytesToWrite() const
+int TDEBufferedIO::bytesToWrite() const
 #endif // USE_QT3
 #ifdef USE_QT4
-qint64 KBufferedIO::bytesToWrite() const
+qint64 TDEBufferedIO::bytesToWrite() const
 #endif // USE_QT4
 {
   return writeBufferSize();
 }
 
 // This function will scan the read buffer for a '\n'
-bool KBufferedIO::canReadLine() const
+bool TDEBufferedIO::canReadLine() const
 {
   if (bytesAvailable() == 0)
     return false;		// no new line in here
@@ -140,7 +140,7 @@ bool KBufferedIO::canReadLine() const
   TQByteArray* buf;
 
   // scan each TQByteArray for the occurrence of '\n'
-  TQPtrList<TQByteArray> &buflist = ((KBufferedIO*)this)->inBuf;
+  TQPtrList<TQByteArray> &buflist = ((TDEBufferedIO*)this)->inBuf;
   buf = buflist.first();
   char *p = buf->data() + inBufIndex;
   int n = buf->size() - inBufIndex;
@@ -162,7 +162,7 @@ bool KBufferedIO::canReadLine() const
 
 // unreads the current data
 // that is, writes into the read buffer, at the beginning
-int KBufferedIO::unreadBlock(const char *data, uint len)
+int TDEBufferedIO::unreadBlock(const char *data, uint len)
 {
   return feedReadBuffer(len, data, true);
 }
@@ -171,7 +171,7 @@ int KBufferedIO::unreadBlock(const char *data, uint len)
 // protected member functions
 //
 
-unsigned KBufferedIO::consumeReadBuffer(unsigned nbytes, char *destbuffer, bool discard)
+unsigned TDEBufferedIO::consumeReadBuffer(unsigned nbytes, char *destbuffer, bool discard)
 {
   {
     register unsigned u = readBufferSize();
@@ -221,7 +221,7 @@ unsigned KBufferedIO::consumeReadBuffer(unsigned nbytes, char *destbuffer, bool 
   return copied;
 }
 
-void KBufferedIO::consumeWriteBuffer(unsigned nbytes)
+void TDEBufferedIO::consumeWriteBuffer(unsigned nbytes)
 {
   TQByteArray *buf = outBuf.first();
   if (buf == NULL)
@@ -250,7 +250,7 @@ void KBufferedIO::consumeWriteBuffer(unsigned nbytes)
     }
 }
 
-unsigned KBufferedIO::feedReadBuffer(unsigned nbytes, const char *buffer, bool atBeginning)
+unsigned TDEBufferedIO::feedReadBuffer(unsigned nbytes, const char *buffer, bool atBeginning)
 {
   if (nbytes == 0)
     return 0;
@@ -266,7 +266,7 @@ unsigned KBufferedIO::feedReadBuffer(unsigned nbytes, const char *buffer, bool a
   return nbytes;
 }
 
-unsigned KBufferedIO::feedWriteBuffer(unsigned nbytes, const char *buffer)
+unsigned TDEBufferedIO::feedWriteBuffer(unsigned nbytes, const char *buffer)
 {
   if (nbytes == 0)
     return 0;
@@ -277,33 +277,33 @@ unsigned KBufferedIO::feedWriteBuffer(unsigned nbytes, const char *buffer)
   return nbytes;
 }
 
-unsigned KBufferedIO::readBufferSize() const
+unsigned TDEBufferedIO::readBufferSize() const
 {
   unsigned count = 0;
-  TQByteArray *buf = ((KBufferedIO*)this)->inBuf.first();
+  TQByteArray *buf = ((TDEBufferedIO*)this)->inBuf.first();
   while (buf != NULL)
     {
       count += buf->size();
-      buf = ((KBufferedIO*)this)->inBuf.next();
+      buf = ((TDEBufferedIO*)this)->inBuf.next();
     }
 
   return count - inBufIndex;
 }
 
-unsigned KBufferedIO::writeBufferSize() const
+unsigned TDEBufferedIO::writeBufferSize() const
 {
   unsigned count = 0;
-  TQByteArray *buf = ((KBufferedIO*)this)->outBuf.first();
+  TQByteArray *buf = ((TDEBufferedIO*)this)->outBuf.first();
   while (buf != NULL)
     {
       count += buf->size();
-      buf = (const_cast<KBufferedIO*>(this))->outBuf.next();
+      buf = (const_cast<TDEBufferedIO*>(this))->outBuf.next();
     }
 
   return count - outBufIndex;
 }
 
-void KBufferedIO::virtual_hook( int id, void* data )
+void TDEBufferedIO::virtual_hook( int id, void* data )
 { KAsyncIO::virtual_hook( id, data ); }
 
 #include "kbufferedio.moc"

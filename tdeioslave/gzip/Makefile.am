@@ -1,0 +1,12 @@
+INCLUDES = -I$(top_srcdir)/tdeio $(all_includes)
+AM_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
+METASOURCES = AUTO
+
+kde_module_LTLIBRARIES = kgzipfilter.la
+
+kgzipfilter_la_SOURCES = kgzipfilter.cpp
+kgzipfilter_la_LIBADD = $(LIB_KIO) $(LIBZ) $(LIB_QT) $(LIB_TDECORE)
+kgzipfilter_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
+
+kde_services_DATA = kgzipfilter.desktop
+

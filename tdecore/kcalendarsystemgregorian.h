@@ -35,7 +35,7 @@ class KCalendarSystemGregorianPrivate;
  * The Gregorian calender is the most used calendar today. The first year in
  * the calendar is set to the birth of Christ.
  *
- * @see KLocale,KCalendarSystem,KCalendarSystemFactory
+ * @see TDELocale,KCalendarSystem,KCalendarSystemFactory
  *
  * @author Carlos Moro <cfmoro@correo.uniovi.es>
  * @since 3.2
@@ -44,7 +44,7 @@ class TDECORE_EXPORT KCalendarSystemGregorian: public KCalendarSystem
 {
 public:
   /** Constructor. Just like KCalendarSystem::KCalendarSystem(). */
-  KCalendarSystemGregorian (const KLocale * locale = 0);
+  KCalendarSystemGregorian (const TDELocale * locale = 0);
   virtual ~KCalendarSystemGregorian ();
 
   virtual int year (const TQDate & date) const;

@@ -23,11 +23,11 @@
 #include <kxmlguiclient.h>
 #include <kdialogbase.h>
 
-class KProcess;
-class KActionCollection;
+class TDEProcess;
+class TDEActionCollection;
 class TQComboBox;
 class TQToolButton;
-class KListView;
+class TDEListView;
 class TQListViewItem;
 
 class KEditToolbarWidget;
@@ -61,12 +61,12 @@ namespace
  * That code snippet also takes care of redrawing the menu and
  * toolbars if you have made any changes.
  *
- * If you are using KMainWindow's settings methods (either save/apply manually
+ * If you are using TDEMainWindow's settings methods (either save/apply manually
  * or autoSaveSettings), you should write something like:
  * \code
  * void MyClass::slotConfigureToolbars()
  * {
- *   saveMainWindowSettings( KGlobal::config(), "MainWindow" );
+ *   saveMainWindowSettings( TDEGlobal::config(), "MainWindow" );
  *   KEditToolbar dlg(actionCollection());
  *   connect(&dlg,TQT_SIGNAL(newToolbarConfig()),this,TQT_SLOT(slotNewToolbarConfig()));
  *   dlg.exec();
@@ -76,7 +76,7 @@ namespace
  * {
  *    ...if you use any action list, use plugActionList on each here...
  *    createGUI();
- *    applyMainWindowSettings( KGlobal::config(), "MainWindow" );
+ *    applyMainWindowSettings( TDEGlobal::config(), "MainWindow" );
  * }
  * \endcode
  *
@@ -91,7 +91,7 @@ namespace
  * An example would be:
  *
  * \code
- * saveMainWindowSettings( KGlobal::config(), "MainWindow" );
+ * saveMainWindowSettings( TDEGlobal::config(), "MainWindow" );
  * KEditToolbar dlg(factory());
  * connect(&dlg,TQT_SIGNAL(newToolbarConfig()),this,TQT_SLOT(slotNewToolbarConfig()));
  * dlg.exec();
@@ -100,7 +100,7 @@ namespace
  * {
  *    ...if you use any action list, use plugActionList on each here...
  *    // Do NOT call createGUI()!
- *    applyMainWindowSettings( KGlobal::config(), "MainWindow" );
+ *    applyMainWindowSettings( TDEGlobal::config(), "MainWindow" );
  * }
  * \endcode
  *
@@ -123,7 +123,7 @@ public:
    * relative) of your application's UI resource file.  If it is
    * left blank, then the resource file: share/apps/appname/appnameui.rc
    * is used.  This is the same resource file that is used by the
-   * default createGUI() function in KMainWindow so you're usually
+   * default createGUI() function in TDEMainWindow so you're usually
    * pretty safe in leaving it blank.
    *
    * The third parameter, global(), controls whether or not the
@@ -141,7 +141,7 @@ public:
    * @param parent The parent of the dialog.
    * @param name An internal name.
    */
-  KEditToolbar(KActionCollection *collection,
+  KEditToolbar(TDEActionCollection *collection,
                const TQString& xmlfile = TQString::null, bool global = true,
 			   TQWidget* parent = 0, const char* name = 0);
 
@@ -157,7 +157,7 @@ public:
    * @param name An internal name.
    * @since 3.2
    */
-  KEditToolbar(const TQString& defaultToolbar, KActionCollection *collection,
+  KEditToolbar(const TQString& defaultToolbar, TDEActionCollection *collection,
                const TQString& xmlfile = TQString::null, bool global = true,
                TQWidget* parent = 0, const char* name = 0);
   /**
@@ -179,9 +179,9 @@ public:
    * @param parent The usual parent for the dialog.
    * @param name An internal name.
    *
-   * Some people seem tempted to use this also in non-KParts apps, using KMainWindow::guiFactory().
+   * Some people seem tempted to use this also in non-KParts apps, using TDEMainWindow::guiFactory().
    * This works, but only _if_ setting conserveMemory to false when calling
-   * KMainWindow::createGUI()! If not, use the other KEditToolbar constructor.
+   * TDEMainWindow::createGUI()! If not, use the other KEditToolbar constructor.
    */
   KEditToolbar(KXMLGUIFactory* factory, TQWidget* parent = 0, const char* name = 0);
 
@@ -281,7 +281,7 @@ public:
    * relative) of your application's UI resource file.  If it is
    * left blank, then the resource file: share/apps/appname/appnameui.rc
    * is used.  This is the same resource file that is used by the
-   * default createGUI function in KMainWindow so you're usually
+   * default createGUI function in TDEMainWindow so you're usually
    * pretty safe in leaving it blank.
    *
    * The third parameter, global, controls whether or not the
@@ -300,7 +300,7 @@ public:
    *               be parsed
    * @param parent This widget's parent
    */
-  KEditToolbarWidget(KActionCollection *collection,
+  KEditToolbarWidget(TDEActionCollection *collection,
                      const TQString& xmlfile = TQString::null,
                      bool global = true, TQWidget *parent = 0L);
 
@@ -316,7 +316,7 @@ public:
    * @since 3.2
    */
   KEditToolbarWidget(const TQString& defaultToolbar,
-                     KActionCollection *collection,
+                     TDEActionCollection *collection,
                      const TQString& file = TQString::null,
                      bool global = true,
                      TQWidget *parent = 0L);
@@ -366,7 +366,7 @@ public:
   /**
    * @internal Reimplemented for internal purposes.
    */
-  virtual KActionCollection *actionCollection() const;
+  virtual TDEActionCollection *actionCollection() const;
 
   /**
    * Save any changes the user made.  The file will be in the user's
@@ -396,7 +396,7 @@ protected slots:
   void slotInactiveSelected(TQListViewItem *item);
   void slotActiveSelected(TQListViewItem *item);
 
-  void slotDropped(KListView *list, TQDropEvent *e, TQListViewItem *after);
+  void slotDropped(TDEListView *list, TQDropEvent *e, TQListViewItem *after);
 
   void slotInsertButton();
   void slotRemoveButton();
@@ -406,7 +406,7 @@ protected slots:
   void slotChangeIcon();
 
 private slots:
-  void slotProcessExited( KProcess* );
+  void slotProcessExited( TDEProcess* );
 
 protected: // KDE4: make private
   void setupLayout();
@@ -414,7 +414,7 @@ protected: // KDE4: make private
   void insertActive(ToolbarItem *item, TQListViewItem *before, bool prepend = false);
   void removeActive(ToolbarItem *item);
   void moveActive(ToolbarItem *item, TQListViewItem *before);
-  void initNonKPart(KActionCollection *collection, const TQString& file, bool global);
+  void initNonKPart(TDEActionCollection *collection, const TQString& file, bool global);
   void initKPart(KXMLGUIFactory* factory);
   void loadToolbarCombo(const TQString& defaultToolbar = TQString::null);
   void loadActionList(TQDomElement& elem);

@@ -1,11 +1,11 @@
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <dcopclient.h>
 
 #include "KIDLTest_stub.h"
 
 int main( int argc, char** argv )
 {
-    KApplication app( argc, argv, "KIDLTestClient", false /* No GUI */ );
+    TDEApplication app( argc, argv, "KIDLTestClient", false /* No GUI */ );
 
     kapp->dcopClient()->attach();
     // kapp->dcopClient()->registerAs( "kidlclienttest" );

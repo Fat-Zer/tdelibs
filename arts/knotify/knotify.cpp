@@ -44,17 +44,17 @@
 
 // KDE headers
 #include <dcopclient.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #ifndef WITHOUT_ARTS
 #include <kartsdispatcher.h>
 #include <kartsserver.h>
 #endif
-#include <kcmdlineargs.h>
-#include <kconfig.h>
+#include <tdecmdlineargs.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
-#include <kglobal.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kpassivepopup.h>
 #include <kiconloader.h>
 #include <kmacroexpander.h>
@@ -73,12 +73,12 @@
 class KNotifyPrivate
 {
 public:
-    KConfig* globalEvents;
-    KConfig* globalConfig;
-    TQMap<TQString, KConfig*> events;
-    TQMap<TQString, KConfig*> configs;
+    TDEConfig* globalEvents;
+    TDEConfig* globalConfig;
+    TQMap<TQString, TDEConfig*> events;
+    TQMap<TQString, TDEConfig*> configs;
     TQString externalPlayer;
-    KProcess *externalPlayerProc;
+    TDEProcess *externalPlayerProc;
 
 #ifndef WITHOUT_ARTS
     TQPtrList<KDE::PlayObject> playObjects;
@@ -105,15 +105,15 @@ extern "C"{
 
 KDE_EXPORT int kdemain(int argc, char **argv)
 {
-    KAboutData aboutdata("knotify", I18N_NOOP("KNotify"),
+    TDEAboutData aboutdata("knotify", I18N_NOOP("KNotify"),
                          "3.0", I18N_NOOP("TDE Notification Server"),
-                         KAboutData::License_GPL, "(C) 1997-2003, KDE Developers");
+                         TDEAboutData::License_GPL, "(C) 1997-2003, KDE Developers");
     aboutdata.addAuthor("Carsten Pfeiffer",I18N_NOOP("Current Maintainer"),"pfeiffer@kde.org");
     aboutdata.addAuthor("Christian Esken",0,"esken@kde.org");
     aboutdata.addAuthor("Stefan Westerfeld",I18N_NOOP("Sound support"),"stefan@space.twc.de");
     aboutdata.addAuthor("Charles Samuels",I18N_NOOP("Previous Maintainer"),"charles@kde.org");
 
-    KCmdLineArgs::init( argc, argv, &aboutdata );
+    TDECmdLineArgs::init( argc, argv, &aboutdata );
     KUniqueApplication::addCmdLineOptions();
 
 
@@ -136,8 +136,8 @@ KDE_EXPORT int kdemain(int argc, char **argv)
     // abort this.
 
 #ifndef WITHOUT_ARTS
-    KConfigGroup config( KGlobal::config(), "StartProgress" );
-    KConfig artsKCMConfig( "kcmartsrc" );
+    TDEConfigGroup config( TDEGlobal::config(), "StartProgress" );
+    TDEConfig artsKCMConfig( "kcmartsrc" );
     artsKCMConfig.setGroup( "Arts" );
     bool useArts = artsKCMConfig.readBoolEntry( "StartServer", true );
     if (useArts)
@@ -245,8 +245,8 @@ KNotify::KNotify( bool useArts )
     : TQObject(), DCOPObject("Notify")
 {
     d = new KNotifyPrivate;
-    d->globalEvents = new KConfig("knotify/eventsrc", true, false, "data");
-    d->globalConfig = new KConfig("knotify.eventsrc", true, false);
+    d->globalEvents = new TDEConfig("knotify/eventsrc", true, false, "data");
+    d->globalConfig = new TDEConfig("knotify.eventsrc", true, false);
     d->externalPlayerProc = 0;
     d->useArts = useArts;
     d->inStartup = true;
@@ -285,7 +285,7 @@ KNotify::~KNotify()
 
 void KNotify::loadConfig() {
     // load external player settings
-    KConfig *kc = KGlobal::config();
+    TDEConfig *kc = TDEGlobal::config();
     kc->setGroup("Misc");
     d->useExternal = kc->readBoolEntry( "Use external player", false );
     d->externalPlayer = kc->readPathEntry("External player");
@@ -296,7 +296,7 @@ void KNotify::loadConfig() {
         players << "wavplay" << "aplay" << "auplay";
         TQStringList::Iterator it = players.begin();
         while ( d->externalPlayer.isEmpty() && it != players.end() ) {
-            d->externalPlayer = KStandardDirs::findExe( *it );
+            d->externalPlayer = TDEStandardDirs::findExe( *it );
             ++it;
         }
     }
@@ -313,7 +313,7 @@ void KNotify::reconfigure()
 
     // clear loaded config files
     d->globalConfig->reparseConfiguration();
-    for ( TQMapIterator<TQString,KConfig*> it = d->configs.begin(); it != d->configs.end(); ++it )
+    for ( TQMapIterator<TQString,TDEConfig*> it = d->configs.begin(); it != d->configs.end(); ++it )
         delete it.data();
     d->configs.clear();
 }
@@ -344,8 +344,8 @@ void KNotify::notify(const TQString &event, const TQString &fromApp,
     }
 
     TQString commandline;
-    KConfig *eventsFile = NULL;
-    KConfig *configFile = NULL;
+    TDEConfig *eventsFile = NULL;
+    TDEConfig *configFile = NULL;
 
     // check for valid events
     if ( !event.isEmpty() ) {
@@ -354,13 +354,13 @@ void KNotify::notify(const TQString &event, const TQString &fromApp,
         if ( d->events.contains( fromApp ) ) {
             eventsFile = d->events[fromApp];
         } else {
-            eventsFile=new KConfig(locate("data", fromApp+"/eventsrc"),true,false);
+            eventsFile=new TDEConfig(locate("data", fromApp+"/eventsrc"),true,false);
             d->events.insert( fromApp, eventsFile );
         }
         if ( d->configs.contains( fromApp) ) {
             configFile = d->configs[fromApp];
         } else {
-            configFile=new KConfig(fromApp+".eventsrc",true,false);
+            configFile=new TDEConfig(fromApp+".eventsrc",true,false);
             d->configs.insert( fromApp, configFile );
         }
 
@@ -452,7 +452,7 @@ bool KNotify::notifyBySound( const TQString &sound, const TQString &appname, int
     if ( TQFileInfo(sound).isRelative() )
     {
         TQString search = TQString("%1/sounds/%2").arg(appname).arg(sound);
-        soundFile = KGlobal::instance()->dirs()->findResource("data", search);
+        soundFile = TDEGlobal::instance()->dirs()->findResource("data", search);
         if ( soundFile.isEmpty() )
             soundFile = locate( "sound", sound );
     }
@@ -537,12 +537,12 @@ bool KNotify::notifyBySound( const TQString &sound, const TQString &appname, int
 
     } else if(!d->externalPlayer.isEmpty()) {
         // use an external player to play the sound
-        KProcess *proc = d->externalPlayerProc;
+        TDEProcess *proc = d->externalPlayerProc;
         if (!proc)
         {
-           proc = d->externalPlayerProc = new KProcess;
-           connect( proc, TQT_SIGNAL( processExited( KProcess * )),
-                    TQT_SLOT( slotPlayerProcessExited( KProcess * )));
+           proc = d->externalPlayerProc = new TDEProcess;
+           connect( proc, TQT_SIGNAL( processExited( TDEProcess * )),
+                    TQT_SLOT( slotPlayerProcessExited( TDEProcess * )));
         }
         if (proc->isRunning())
         {
@@ -552,7 +552,7 @@ bool KNotify::notifyBySound( const TQString &sound, const TQString &appname, int
         proc->clearArguments();
         (*proc) << d->externalPlayer << TQFile::encodeName( soundFile ).data();
         d->externalPlayerEventId = eventId;
-        proc->start(KProcess::NotifyOnExit);
+        proc->start(TDEProcess::NotifyOnExit);
         return true;
     }
 
@@ -588,14 +588,14 @@ bool KNotify::notifyByMessagebox(const TQString &text, int level, WId winId)
 
 bool KNotify::notifyByPassivePopup( const TQString &text,
                                     const TQString &appName,
-                                    KConfig* eventsFile,
+                                    TDEConfig* eventsFile,
                                     WId senderWinId )
 {
-    KIconLoader iconLoader( appName );
+    TDEIconLoader iconLoader( appName );
     if ( eventsFile != NULL ) {
-        KConfigGroup config( eventsFile, "!Global!" );
+        TDEConfigGroup config( eventsFile, "!Global!" );
         TQString iconName = config.readEntry( "IconName", appName );
-        TQPixmap icon = iconLoader.loadIcon( iconName, KIcon::Small );
+        TQPixmap icon = iconLoader.loadIcon( iconName, TDEIcon::Small );
         TQString title = config.readEntry( "Comment", appName );
         KPassivePopup::message(title, text, icon, senderWinId);
     } else
@@ -619,10 +619,10 @@ bool KNotify::notifyByExecute(const TQString &command, const TQString& event,
         if ( execLine.isEmpty() )
             execLine = command; // fallback
 
-	KProcess p;
+	TDEProcess p;
 	p.setUseShell(true);
 	p << execLine;
-	p.start(KProcess::DontCare);
+	p.start(TDEProcess::DontCare);
 	return true;
     }
     return false;
@@ -721,7 +721,7 @@ bool KNotify::isPlaying( const TQString& soundFile ) const
     return false;
 }
 
-void KNotify::slotPlayerProcessExited( KProcess *proc )
+void KNotify::slotPlayerProcessExited( TDEProcess *proc )
 {
     soundFinished( d->externalPlayerEventId,
                    (proc->normalExit() && proc->exitStatus() == 0) ? PlayedOK : Unknown );

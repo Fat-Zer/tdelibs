@@ -28,7 +28,7 @@
 
 #include <tqcombobox.h>
 #include <kcolordialog.h>
-#include "kselect.h"
+#include "tdeselect.h"
 
 
 class KColorComboInternal;

@@ -29,16 +29,16 @@
 
 #include "../interfaces/document.h"
 
-#include <ktexteditor/configinterfaceextension.h>
-#include <ktexteditor/encodinginterface.h>
-#include <ktexteditor/sessionconfiginterface.h>
-#include <ktexteditor/editinterfaceext.h>
-#include <ktexteditor/templateinterface.h>
+#include <tdetexteditor/configinterfaceextension.h>
+#include <tdetexteditor/encodinginterface.h>
+#include <tdetexteditor/sessionconfiginterface.h>
+#include <tdetexteditor/editinterfaceext.h>
+#include <tdetexteditor/templateinterface.h>
 
 #include <dcopobject.h>
 
 #include <kmimetype.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 #include <tqintdict.h>
 #include <tqmap.h>
@@ -46,7 +46,7 @@
 
 namespace KTextEditor { class Plugin; }
 
-namespace KIO { class TransferJob; }
+namespace TDEIO { class TransferJob; }
 
 class KateUndoGroup;
 class KateCmd;
@@ -163,7 +163,7 @@ class KateDocument : public Kate::Document,
     KTextEditor::ConfigPage *configPage (uint number = 0, TQWidget *parent = 0, const char *name=0 );
     TQString configPageName (uint number = 0) const;
     TQString configPageFullName (uint number = 0) const;
-    TQPixmap configPagePixmap (uint number = 0, int size = KIcon::SizeSmall) const;
+    TQPixmap configPagePixmap (uint number = 0, int size = TDEIcon::SizeSmall) const;
 
   //
   // KTextEditor::EditInterface stuff
@@ -439,10 +439,10 @@ class KateDocument : public Kate::Document,
   public slots:
     void readConfig ();
     void writeConfig ();
-    void readConfig (KConfig *);
-    void writeConfig (KConfig *);
-    void readSessionConfig (KConfig *);
-    void writeSessionConfig (KConfig *);
+    void readConfig (TDEConfig *);
+    void writeConfig (TDEConfig *);
+    void readSessionConfig (TDEConfig *);
+    void writeSessionConfig (TDEConfig *);
     void configDialog ();
 
   //
@@ -555,7 +555,7 @@ class KateDocument : public Kate::Document,
     /* Anders: Reimplemented to do kate specific stuff */
     bool saveAs( const KURL &url );
 
-    bool openFile (KIO::Job * job);
+    bool openFile (TDEIO::Job * job);
     bool openFile ();
 
     bool saveFile ();
@@ -565,8 +565,8 @@ class KateDocument : public Kate::Document,
     void setModified( bool m );
 
   private slots:
-    void slotDataKate ( KIO::Job* kio_job, const TQByteArray &data );
-    void slotFinishedKate ( KIO::Job * job );
+    void slotDataKate ( TDEIO::Job* tdeio_job, const TQByteArray &data );
+    void slotFinishedKate ( TDEIO::Job * job );
 
   private:
     void abortLoadKate();
@@ -955,7 +955,7 @@ class KateDocument : public Kate::Document,
 
   /**
    * Variable Reader
-   * TODO add register functionality/ktexteditor interface
+   * TODO add register functionality/tdetexteditor interface
    */
   private:
     /**
@@ -1004,7 +1004,7 @@ class KateDocument : public Kate::Document,
     static TQRegExp kvLineMime;
     static TQRegExp kvVar;
 
-    KIO::TransferJob *m_job;
+    TDEIO::TransferJob *m_job;
     KTempFile *m_tempFile;
 
   // TemplateInterface

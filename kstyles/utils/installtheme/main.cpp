@@ -25,10 +25,10 @@
 #include <tqstringlist.h>
 #include <tqsettings.h>
 
-#include <kapplication.h>
-#include <kcmdlineargs.h>
-#include <kglobal.h>
-#include <klocale.h>
+#include <tdeapplication.h>
+#include <tdecmdlineargs.h>
+#include <tdeglobal.h>
+#include <tdelocale.h>
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
 
@@ -37,11 +37,11 @@ static const char ver[] = "0.9.1";
 
 int main(int argc, char **argv)
 {
-    KCmdLineArgs::init(argc, argv, "kinstalltheme", I18N_NOOP("KInstalltheme"), desc, ver);
-    KApplication qapp(false, false); //We don't  allow styles.. Kind of ironic, isn't it?
+    TDECmdLineArgs::init(argc, argv, "kinstalltheme", I18N_NOOP("KInstalltheme"), desc, ver);
+    TDEApplication qapp(false, false); //We don't  allow styles.. Kind of ironic, isn't it?
 
-    KGlobal::dirs()->addResourceType("themercs", KGlobal::dirs()->kde_default("data")+TQString("kstyle/themes"));
-    TQStringList themercs = KGlobal::dirs()->findAllResources("themercs","*.themerc");
+    TDEGlobal::dirs()->addResourceType("themercs", TDEGlobal::dirs()->kde_default("data")+TQString("kstyle/themes"));
+    TQStringList themercs = TDEGlobal::dirs()->findAllResources("themercs","*.themerc");
 
     TQMap <TQString, TQString> themes; //Name->file mapping..
 
@@ -62,7 +62,7 @@ int main(int argc, char **argv)
         }
     }
 
-    KSimpleConfig cache( KGlobal::dirs()->saveLocation("config")+"kthemestylerc");
+    KSimpleConfig cache( TDEGlobal::dirs()->saveLocation("config")+"kthemestylerc");
 
 #if 0
 //Doesn't seem to work with present Qt..

@@ -45,7 +45,7 @@ class KTempDirPrivate;
  *
  * KTempFile does not create any missing directories, but locateLocal() does.
  *
- * See also KStandardDirs
+ * See also TDEStandardDirs
  *
  * @since 3.2
  * @author Joseph Wenninger <jowenn@kde.org>
@@ -133,7 +133,7 @@ public:
     *
     * @note This function is more meant for removing a directory
     * not created by the user. For user-created directories,
-    * using KIO::NetAccess::del is recommended instead,
+    * using TDEIO::NetAccess::del is recommended instead,
     * especially as it has user feedback for long operations.
     *
     * @param path Path of the directory to delete

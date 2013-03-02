@@ -26,13 +26,13 @@
 #include <tqwhatsthis.h>
 
 #include <kpushbutton.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kurlrequester.h>
 #include <krun.h>
 #include <kmimemagic.h>
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <knuminput.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kcursor.h>
 #include <klineedit.h>
 #include <kguiitem.h>
@@ -104,7 +104,7 @@ void KMConfigGeneral::setEnabledPreviewButton(bool b)
     m_preview->setEnabled(!m_testpage->url().isEmpty() && b);
 }
 
-void KMConfigGeneral::loadConfig(KConfig *conf)
+void KMConfigGeneral::loadConfig(TDEConfig *conf)
 {
 	conf->setGroup("General");
 	m_timer->setValue(conf->readNumEntry("TimerDelay",5));
@@ -118,7 +118,7 @@ void KMConfigGeneral::loadConfig(KConfig *conf)
 	m_uselast->setChecked(conf->readBoolEntry("UseLast", true));
 }
 
-void KMConfigGeneral::saveConfig(KConfig *conf)
+void KMConfigGeneral::saveConfig(TDEConfig *conf)
 {
 	conf->setGroup("General");
 	conf->writeEntry("TimerDelay",m_timer->value());

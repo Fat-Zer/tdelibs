@@ -23,7 +23,7 @@
 
 #include <tqlabel.h>
 #include <tqlayout.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 // some forward declarations (see kmwquota.cpp)
 const char* unitKeyword(int);

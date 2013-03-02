@@ -9,17 +9,17 @@ DEFINES += MAKE_KIO_LIB
 LIBS += $$KDELIBDESTDIR\tdecore$$KDELIB_SUFFIX $$KDELIBDESTDIR\tdeui$$KDELIB_SUFFIX \
 	$$KDELIBDESTDIR\dcop$$KDELIB_SUFFIX $$KDELIBDESTDIR\kdewin32$$KDELIB_SUFFIX
 
-system( bash kmoc kio kfile misc bookmarks kssl )
+system( bash kmoc kio tdefile misc bookmarks kssl )
 
 TARGET = kio$$KDEBUG
 
-INCLUDEPATH += $(KDELIBS)/tdecore/network $(KDELIBS)/kio/kio $(KDELIBS)/kio/misc $(KDELIBS)/kio/bookmarks \
-  $(KDELIBS)/kio/kssl \
+INCLUDEPATH += $(KDELIBS)/tdecore/network $(KDELIBS)/tdeio/tdeio $(KDELIBS)/tdeio/misc $(KDELIBS)/tdeio/bookmarks \
+  $(KDELIBS)/tdeio/kssl \
   $(KDELIBS)/libltdl $(KDELIBS)/interfaces \
-  $(KDELIBS)/kio/kio/moc $(KDELIBS)/kio/misc/moc $(KDELIBS)/kio/kfile/moc \
-  $(KDELIBS)/kio/misc/moc \
-  $(KDELIBS)/kio/bookmarks/moc \
-  $(KDELIBS)/kio/kssl/moc $(KDELIBS)/kwallet/client 
+  $(KDELIBS)/tdeio/tdeio/moc $(KDELIBS)/tdeio/misc/moc $(KDELIBS)/tdeio/tdefile/moc \
+  $(KDELIBS)/tdeio/misc/moc \
+  $(KDELIBS)/tdeio/bookmarks/moc \
+  $(KDELIBS)/tdeio/kssl/moc $(KDELIBS)/tdewallet/client 
 
 system( cd kio && dcopidl kdirnotify.h > kdirnotify.kidl && dcopidl2cpp --no-stub kdirnotify.kidl )
 system( cd kio && dcopidl observer.h > observer.kidl && dcopidl2cpp observer.kidl )
@@ -29,78 +29,78 @@ system( cd misc && dcopidl uiserver.h > uiserver.kidl && dcopidl2cpp uiserver.ki
 
 
 SOURCES = \
-kio/authinfo.cpp \
-kio/chmodjob.cpp \
-kio/connection.cpp \
-kio/dataprotocol.cpp \
-kio/dataslave.cpp \
-kio/davjob.cpp \
-kio/defaultprogress.cpp \
-kio/global.cpp \
-kio/job.cpp \
-kio/kacl.cpp \
-kio/kar.cpp \
-kio/karchive.cpp \
-kio/kdatatool.cpp \
-kio/kdcopservicestarter.cpp \
-kio/kdirlister.cpp \
-kio/kdirnotify.cpp \
-kio/kdirwatch.cpp \
-kio/kemailsettings.cpp \
-kio/kfilefilter.cpp \
-kio/kfileitem.cpp \
-kio/kfilemetainfo.cpp \
-kio/kfileshare.cpp \
-kio/kfilterbase.cpp \
-kio/kfilterdev.cpp \
-kio/kimageio.cpp \
-kio/kmimemagic.cpp \
-kio/kmimetype.cpp \
-kio/kmimetypechooser.cpp \
-kio/knfsshare.cpp \
-kio/kprotocolinfo.cpp \
-kio/kprotocolmanager.cpp \
-kio/kremoteencoding.cpp \
-kio/krun.cpp \
-kio/ksambashare.cpp \
-kio/kscan.cpp \
-kio/kservice.cpp \
-kio/kservicefactory.cpp \
-kio/kservicegroup.cpp \
-kio/kservicegroupfactory.cpp \
-kio/kservicetype.cpp \
-kio/kservicetypefactory.cpp \
-kio/kshellcompletion.cpp \
-kio/kshred.cpp \
-kio/ktar.cpp \
-kio/ktrader.cpp \
-kio/ktraderparse.cpp \
-kio/ktraderparsetree.cpp \
-kio/kurifilter.cpp \
-kio/kurlcompletion.cpp \
-kio/kurlpixmapprovider.cpp \
-kio/kuserprofile.cpp \
-kio/kzip.cpp \
-kio/lex.c \
-kio/metainfojob.cpp \
-kio/netaccess.cpp \
-kio/observer.cpp \
-kio/passdlg.cpp \
-kio/paste.cpp \
-kio/pastedialog.cpp \
-kio/previewjob.cpp \
-kio/progressbase.cpp \
-kio/renamedlg.cpp \
-kio/scheduler.cpp \
-kio/sessiondata.cpp \
-kio/skipdlg.cpp \
-kio/slave.cpp \
-kio/slavebase.cpp \
-kio/slaveconfig.cpp \
-kio/slaveinterface.cpp \
-kio/statusbarprogress.cpp \
-kio/tcpslavebase.cpp \
-kio/yacc.c \
+tdeio/authinfo.cpp \
+tdeio/chmodjob.cpp \
+tdeio/connection.cpp \
+tdeio/dataprotocol.cpp \
+tdeio/dataslave.cpp \
+tdeio/davjob.cpp \
+tdeio/defaultprogress.cpp \
+tdeio/global.cpp \
+tdeio/job.cpp \
+tdeio/kacl.cpp \
+tdeio/kar.cpp \
+tdeio/karchive.cpp \
+tdeio/kdatatool.cpp \
+tdeio/kdcopservicestarter.cpp \
+tdeio/kdirlister.cpp \
+tdeio/kdirnotify.cpp \
+tdeio/kdirwatch.cpp \
+tdeio/tdeemailsettings.cpp \
+tdeio/tdefilefilter.cpp \
+tdeio/tdefileitem.cpp \
+tdeio/tdefilemetainfo.cpp \
+tdeio/tdefileshare.cpp \
+tdeio/kfilterbase.cpp \
+tdeio/kfilterdev.cpp \
+tdeio/kimageio.cpp \
+tdeio/kmimemagic.cpp \
+tdeio/kmimetype.cpp \
+tdeio/kmimetypechooser.cpp \
+tdeio/knfsshare.cpp \
+tdeio/kprotocolinfo.cpp \
+tdeio/tdeprotocolmanager.cpp \
+tdeio/kremoteencoding.cpp \
+tdeio/krun.cpp \
+tdeio/ksambashare.cpp \
+tdeio/kscan.cpp \
+tdeio/kservice.cpp \
+tdeio/kservicefactory.cpp \
+tdeio/kservicegroup.cpp \
+tdeio/kservicegroupfactory.cpp \
+tdeio/kservicetype.cpp \
+tdeio/kservicetypefactory.cpp \
+tdeio/kshellcompletion.cpp \
+tdeio/kshred.cpp \
+tdeio/ktar.cpp \
+tdeio/ktrader.cpp \
+tdeio/ktraderparse.cpp \
+tdeio/ktraderparsetree.cpp \
+tdeio/kurifilter.cpp \
+tdeio/kurlcompletion.cpp \
+tdeio/kurlpixmapprovider.cpp \
+tdeio/kuserprofile.cpp \
+tdeio/kzip.cpp \
+tdeio/lex.c \
+tdeio/metainfojob.cpp \
+tdeio/netaccess.cpp \
+tdeio/observer.cpp \
+tdeio/passdlg.cpp \
+tdeio/paste.cpp \
+tdeio/pastedialog.cpp \
+tdeio/previewjob.cpp \
+tdeio/progressbase.cpp \
+tdeio/renamedlg.cpp \
+tdeio/scheduler.cpp \
+tdeio/sessiondata.cpp \
+tdeio/skipdlg.cpp \
+tdeio/slave.cpp \
+tdeio/slavebase.cpp \
+tdeio/slaveconfig.cpp \
+tdeio/slaveinterface.cpp \
+tdeio/statusbarprogress.cpp \
+tdeio/tcpslavebase.cpp \
+tdeio/yacc.c \
 \
 bookmarks/kbookmark.cc \
 bookmarks/kbookmarkbar.cc \
@@ -116,41 +116,41 @@ bookmarks/kbookmarkimporter_opera.cc \
 bookmarks/kbookmarkmanager.cc \
 bookmarks/kbookmarkmenu.cc \
 \
-kfile/kcombiview.cpp \
-kfile/kcustommenueditor.cpp \
-kfile/kdiroperator.cpp \
-kfile/kdirselectdialog.cpp \
-kfile/kdirsize.cpp \
-kfile/kdiskfreesp.cpp \
-kfile/kencodingfiledialog.cpp \
-kfile/kfilebookmarkhandler.cpp \
-kfile/kfiledetailview.cpp \
-kfile/kfiledialog.cpp \
-kfile/kfilefiltercombo.cpp \
-kfile/kfileiconview.cpp \
-kfile/kfilemetainfowidget.cpp \
-kfile/kfilemetapreview.cpp \
-kfile/kfilepreview.cpp \
-kfile/kfilesharedlg.cpp \
-kfile/kfilespeedbar.cpp \
-kfile/kfiletreebranch.cpp \
-kfile/kfiletreeview.cpp \
-kfile/kfiletreeviewitem.cpp \
-kfile/kfileview.cpp \
-kfile/kicondialog.cpp \
-kfile/kimagefilepreview.cpp \
-kfile/kmetaprops.cpp \
-kfile/knotifydialog.cpp \
-kfile/kopenwith.cpp \
-kfile/kpreviewprops.cpp \
-kfile/kpreviewwidgetbase.cpp \
-kfile/kpropertiesdialog.cpp \
-kfile/krecentdirs.cpp \
-kfile/krecentdocument.cpp \
-kfile/kurlbar.cpp \
-kfile/kurlcombobox.cpp \
-kfile/kurlrequester.cpp \
-kfile/kurlrequesterdlg.cpp \
+tdefile/kcombiview.cpp \
+tdefile/kcustommenueditor.cpp \
+tdefile/tdediroperator.cpp \
+tdefile/kdirselectdialog.cpp \
+tdefile/kdirsize.cpp \
+tdefile/kdiskfreesp.cpp \
+tdefile/kencodingfiledialog.cpp \
+tdefile/tdefilebookmarkhandler.cpp \
+tdefile/tdefiledetailview.cpp \
+tdefile/tdefiledialog.cpp \
+tdefile/tdefilefiltercombo.cpp \
+tdefile/tdefileiconview.cpp \
+tdefile/tdefilemetainfowidget.cpp \
+tdefile/tdefilemetapreview.cpp \
+tdefile/tdefilepreview.cpp \
+tdefile/tdefilesharedlg.cpp \
+tdefile/tdefilespeedbar.cpp \
+tdefile/tdefiletreebranch.cpp \
+tdefile/tdefiletreeview.cpp \
+tdefile/tdefiletreeviewitem.cpp \
+tdefile/tdefileview.cpp \
+tdefile/kicondialog.cpp \
+tdefile/kimagefilepreview.cpp \
+tdefile/kmetaprops.cpp \
+tdefile/knotifydialog.cpp \
+tdefile/kopenwith.cpp \
+tdefile/kpreviewprops.cpp \
+tdefile/kpreviewwidgetbase.cpp \
+tdefile/kpropertiesdialog.cpp \
+tdefile/tderecentdirs.cpp \
+tdefile/tderecentdocument.cpp \
+tdefile/kurlbar.cpp \
+tdefile/kurlcombobox.cpp \
+tdefile/kurlrequester.cpp \
+tdefile/kurlrequesterdlg.cpp \
 \
 misc/uiserver.cpp \
 \
@@ -176,7 +176,7 @@ kssl/ksslpeerinfo.cc \
 kssl/kopenssl.cc \
 kssl/ksmimecrypto.cc
 
-#removed kio/kautomount.cpp \
+#removed tdeio/kautomount.cpp \
 
 SOURCES += \
 ../tdecore/kprotocolinfo_tdecore.cpp
@@ -189,10 +189,10 @@ SOURCES += \
 
 # generated:
 SOURCES += \
-kio/kdirnotify_stub.cpp \
-kio/kdirnotify_skel.cpp \
-kio/observer_stub.cpp \
-kio/observer_skel.cpp \
+tdeio/kdirnotify_stub.cpp \
+tdeio/kdirnotify_skel.cpp \
+tdeio/observer_stub.cpp \
+tdeio/observer_skel.cpp \
 \
 bookmarks/kbookmarknotifier_stub.cpp \
 bookmarks/kbookmarknotifier_skel.cpp \
@@ -206,7 +206,7 @@ misc/uiserver_skel.cpp
 FORMS = \
 kssl/keygenwizard.ui \
 kssl/keygenwizard2.ui \
-kfile/knotifywidgetbase.ui \
-kfile/kpropertiesdesktopadvbase.ui \
-kfile/kpropertiesdesktopbase.ui \
-kfile/kpropertiesmimetypebase.ui
+tdefile/knotifywidgetbase.ui \
+tdefile/kpropertiesdesktopadvbase.ui \
+tdefile/kpropertiesdesktopbase.ui \
+tdefile/kpropertiesmimetypebase.ui

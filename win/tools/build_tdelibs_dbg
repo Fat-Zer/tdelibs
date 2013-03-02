@@ -47,15 +47,15 @@ $additional \
 tdecore \
 tdeui \
 kio \
-kresources \
-kabc/vcard \
+tderesources \
+tdeabc/vcard \
 kabc \
-kutils \
-kparts \
-kmdi \
-kioslave/gzip \
-kioslave/bzip2 \
-interfaces/ktexteditor \
+tdeutils \
+tdeparts \
+tdemdi \
+tdeioslave/gzip \
+tdeioslave/bzip2 \
+interfaces/tdetexteditor \
 kate/interfaces \
 kate/part \
  ; do 
@@ -69,7 +69,7 @@ kate/part \
 done
 
 cd kdewidgets
-qmake makekdewidgets.pro && $make clean && $make || exit 1
+qmake maketdewidgets.pro && $make clean && $make || exit 1
 qmake && $make clean && $make || exit 1
 
 # copy kdewidgets plugin for Qt Designer

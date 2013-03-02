@@ -14,7 +14,7 @@
 #include <tqdatastream.h>
 
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 typedef TQ_UINT8 uchar;
 

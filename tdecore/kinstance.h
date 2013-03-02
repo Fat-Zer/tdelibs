@@ -18,15 +18,15 @@
 #ifndef _KINSTANCE_H
 #define _KINSTANCE_H
 
-class KStandardDirs;
-class KAboutData;
-class KConfig;
-class KIconLoader;
+class TDEStandardDirs;
+class TDEAboutData;
+class TDEConfig;
+class TDEIconLoader;
 class KCharsets;
 class TQFont;
-class KInstancePrivate;
+class TDEInstancePrivate;
 class KMimeSourceFactory;
-class KSharedConfig;
+class TDESharedConfig;
 class TDEHardwareDevices;
 class TDEGlobalNetworkManager;
 
@@ -38,32 +38,32 @@ class TDEGlobalNetworkManager;
  * Access to KDE global objects for use in shared libraries.  In
  * practical terms, this class is used in KDE components.  This allows
  * components to store things that normally would be accessed by
- * KGlobal.
+ * TDEGlobal.
  *
  * @author Torben Weis
  */
-class TDECORE_EXPORT KInstance
+class TDECORE_EXPORT TDEInstance
 {
-    friend class KStandardDirs;
+    friend class TDEStandardDirs;
 
  public:
     /**
      *  Constructor.
      *  @param instanceName the name of the instance
      */
-    KInstance( const TQCString& instanceName) ;
+    TDEInstance( const TQCString& instanceName) ;
 
     /**
      *  Constructor.
-     *  When building a KInstance that is not your KApplication,
-     *  make sure that the KAboutData and the KInstance have the same life time.
+     *  When building a TDEInstance that is not your TDEApplication,
+     *  make sure that the TDEAboutData and the TDEInstance have the same life time.
      *  You have to destroy both, since the instance doesn't own the about data.
-     *  Don't build a KAboutData on the stack in this case !
-     *  Building a KAboutData on the stack is only ok for usage with
-     *  KCmdLineArgs and KApplication (not destroyed until the app exits).
-     *  @param aboutData data about this instance (see KAboutData)
+     *  Don't build a TDEAboutData on the stack in this case !
+     *  Building a TDEAboutData on the stack is only ok for usage with
+     *  TDECmdLineArgs and TDEApplication (not destroyed until the app exits).
+     *  @param aboutData data about this instance (see TDEAboutData)
      */
-    KInstance( const KAboutData * aboutData );
+    TDEInstance( const TDEAboutData * aboutData );
 
     /*
      * @internal
@@ -71,30 +71,30 @@ class TDECORE_EXPORT KInstance
      * Initialize from src and delete it.
      */
 
-    KInstance( KInstance* src );
+    TDEInstance( TDEInstance* src );
 
     /**
      * Destructor.
      */
-    virtual ~KInstance();
+    virtual ~TDEInstance();
 
     /**
      * Returns the application standard dirs object.
-     * @return The KStandardDirs of the application.
+     * @return The TDEStandardDirs of the application.
      */
-    KStandardDirs	*dirs() const;
+    TDEStandardDirs	*dirs() const;
 
     /**
      * Returns the general config object ("appnamerc").
-     * @return the KConfig object for the instance.
+     * @return the TDEConfig object for the instance.
      */
-    KConfig            *config() const;
+    TDEConfig            *config() const;
 
     /**
      * Returns the general config object ("appnamerc").
-     * @return the KConfig object for the instance.
+     * @return the TDEConfig object for the instance.
      */
-    KSharedConfig      *sharedConfig() const;
+    TDESharedConfig      *sharedConfig() const;
 
     /**
      * Set a read-only flag on the configuration files
@@ -108,7 +108,7 @@ class TDECORE_EXPORT KInstance
      *  Returns an iconloader object.
      * @return the iconloader object.
      */
-    KIconLoader	       *iconLoader() const;
+    TDEIconLoader	       *iconLoader() const;
 
     /**
      *  Returns a TDEHardwareDevices object.
@@ -133,11 +133,11 @@ class TDECORE_EXPORT KInstance
      * @return the about data of the instance, or 0 if it has 
      *         not been set yet
      */
-    const KAboutData *aboutData() const;
+    const TDEAboutData *aboutData() const;
 
     /**
      * Returns the name of the instance
-     * @return the instance name, can be null if the KInstance has been 
+     * @return the instance name, can be null if the TDEInstance has been 
      *         created with a null name
      */
     TQCString          instanceName() const;
@@ -153,7 +153,7 @@ protected:
     /**
      *  Copy Constructor is not allowed
      */
-    KInstance( const KInstance& );
+    TDEInstance( const TDEInstance& );
 
     /**
      * Set name of default config file.
@@ -163,22 +163,22 @@ protected:
     void setConfigName(const TQString &name);
 
 private:
-    mutable KStandardDirs       *_dirs;
+    mutable TDEStandardDirs       *_dirs;
 
-    mutable KConfig             *_config;
-    mutable KIconLoader         *_iconLoader;
+    mutable TDEConfig             *_config;
+    mutable TDEIconLoader         *_iconLoader;
 
     mutable TDEHardwareDevices  *_hardwaredevices;
     mutable TDEGlobalNetworkManager  *_networkmanager;
     mutable void                *_placeholder;
 
     TQCString                     _name;
-    const KAboutData            *_aboutData;
+    const TDEAboutData            *_aboutData;
 
 protected:
     virtual void virtual_hook( int id, void* data );
 private:
-    KInstancePrivate *d;
+    TDEInstancePrivate *d;
     bool m_configReadOnly;
 };
 

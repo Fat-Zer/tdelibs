@@ -35,18 +35,18 @@
 
 #include "config.h"
 #include "twin.h"
-#include "kapplication.h"
+#include "tdeapplication.h"
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kiconloader.h>
 #include <kdebug.h>
 
 #include <kdatastream.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <dcopclient.h>
 #include <dcopref.h>
 #ifdef Q_WS_X11
-#include <kstartupinfo.h>
+#include <tdestartupinfo.h>
 #include <kxerrorhandler.h>
 
 #include <X11/Xlib.h>
@@ -483,8 +483,8 @@ TQPixmap KWin::icon( WId win, int width, int height, bool scale, int flags )
 	    if( XGetClassHint( tqt_xdisplay(), win, &hint ) ) {
 	        TQString className = hint.res_class;
 
-	        TQPixmap pm = KGlobal::instance()->iconLoader()->loadIcon( className.lower(), KIcon::Small, iconWidth,
-								          KIcon::DefaultState, 0, true );
+	        TQPixmap pm = TDEGlobal::instance()->iconLoader()->loadIcon( className.lower(), TDEIcon::Small, iconWidth,
+								          TDEIcon::DefaultState, 0, true );
 	        if( scale && !pm.isNull() )
 		    result.convertFromImage( TQImage(pm.convertToImage()).smoothScale( width, height ) );
 	        else
@@ -500,8 +500,8 @@ TQPixmap KWin::icon( WId win, int width, int height, bool scale, int flags )
 	// If the icon is still a null pixmap, load the 'xapp' icon
 	// as a last resort:
 	if ( result.isNull() ) {
-	    TQPixmap pm = KGlobal::instance()->iconLoader()->loadIcon(  "xapp", KIcon::Small, iconWidth,
-								       KIcon::DefaultState, 0, true );
+	    TQPixmap pm = TDEGlobal::instance()->iconLoader()->loadIcon(  "xapp", TDEIcon::Small, iconWidth,
+								       TDEIcon::DefaultState, 0, true );
 	    if( scale && !pm.isNull() )
 		result.convertFromImage( TQImage(pm.convertToImage()).smoothScale( width, height ) );
 	    else
@@ -731,7 +731,7 @@ void KWin::lowerWindow( WId win )
 void KWin::appStarted()
 {
 #ifdef Q_WS_X11
-    KStartupInfo::appStarted();
+    TDEStartupInfo::appStarted();
 #endif
 }
 

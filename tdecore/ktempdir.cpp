@@ -47,8 +47,8 @@
 #include <tqdatetime.h>
 #include <tqdir.h>
 
-#include "kglobal.h"
-#include "kapplication.h"
+#include "tdeglobal.h"
+#include "tdeapplication.h"
 #include "kinstance.h"
 #include "ktempdir.h"
 #include "kstandarddirs.h"
@@ -63,7 +63,7 @@ KTempDir::KTempDir(TQString directoryPrefix, int mode)
    mError=0;
    if (directoryPrefix.isEmpty())
    {
-      directoryPrefix = locateLocal("tmp", KGlobal::instance()->instanceName());
+      directoryPrefix = locateLocal("tmp", TDEGlobal::instance()->instanceName());
    }
    (void) create(directoryPrefix , mode);
 }
@@ -72,7 +72,7 @@ bool
 KTempDir::create(const TQString &directoryPrefix, int mode)
 {
    // make sure the random seed is randomized
-   (void) KApplication::random();
+   (void) TDEApplication::random();
 
    TQCString nme = TQFile::encodeName(directoryPrefix) + "XXXXXX";
    char *realName;

@@ -3,7 +3,7 @@ that we would like to make for the next binary incompatible release.
 
 - Check for forked classes in kde pim and other modules
 
-- There is no reason why KConfigBase should inherit from QObject, get rid of that.
+- There is no reason why TDEConfigBase should inherit from QObject, get rid of that.
 
 - Change all FooPrivate *d; -> Private * const d; and place initialization
   in the constructor (for classes that would benefit from this).  To help catch silly
@@ -11,20 +11,20 @@ that we would like to make for the next binary incompatible release.
   help prevent mistakes where developers forget to delete the pointer. Maybe make use of
   Qt4 helper macros? 
 
-- Move all utility functions away from KApplication. TBD: Make KApplication 
-  a very thin wrapper around QApplication. Ideally, KApplication should go 
+- Move all utility functions away from TDEApplication. TBD: Make TDEApplication 
+  a very thin wrapper around QApplication. Ideally, TDEApplication should go 
   away completely. The kapp pointer references everywhere must die. Find a 
   way to make that possible
 
 - Remove all KDE_NO_COMPAT from the KDE2 -> KDE3 port before adding new ones for KDE4.
 
-- Remove the smart-to-dumb-pointer conversion operator from KSharedPtr
+- Remove the smart-to-dumb-pointer conversion operator from TDESharedPtr
   and replace it with a T* Get() member function. An implict conversion is
   far too dangerous.
   See: http://groups.google.com/groups?selm=4ognb0%243cd%40linda.teleport.com&oe=UTF-8&output=gplain
-  Also free the client from the requirement to inherit from KShared.
+  Also free the client from the requirement to inherit from TDEShared.
 
-- Remove all KSocket, KServerSocket, KSocks and KExtendedSocket references
+- Remove all TDESocket, TDEServerSocket, KSocks and KExtendedSocket references
   throughout KDE in favor of KNetwork's socket implementations.
   Also, revise the namespace usage.
 	thiago.macieira@kdemail.net
@@ -33,7 +33,7 @@ that we would like to make for the next binary incompatible release.
 
 - Clean up the uses of virtual_hook, use normal virtuals instead (e.g. KZip/KArchive)
 
-- Make it possible to create a KSystemTray without a KMainWindow and instead lazily
+- Make it possible to create a KSystemTray without a TDEMainWindow and instead lazily
   create the main window on demand.
 
 - Make KSystemTray's Quit option in the context menu call kapp->quit() instead of
@@ -68,7 +68,7 @@ that we would like to make for the next binary incompatible release.
   KGuiItem has one of these dangerous ctors, too. KUser has a whole bunch
   of them.
 
-- Solve need for casting when using bitfield enums (e.g. KProcess::Communication),
+- Solve need for casting when using bitfield enums (e.g. TDEProcess::Communication),
   if Simon's solution works.
 
 - Merge tdelibs/tdecore/kuser.h and tdeadmin/kuser/kuser.h.
@@ -88,18 +88,18 @@ that we would like to make for the next binary incompatible release.
 - Other ideas in this thread: http://lists.kde.org/?l=kde-core-devel&m=107608067302571&w=2
   (Contributors to that thread, please add specific items here.)
 
-- KConfigBase: For all the read*Entry methods that take a QFont *, QPoint *, QSize *, etc.
+- TDEConfigBase: For all the read*Entry methods that take a QFont *, QPoint *, QSize *, etc.
   for the default value, add overloads that use a const reference, so that one can write 
   resize( config->readSizeEntry( "Bleh", size() ); for example. Constructing a null 
   QFont/QPoint/QSize is cheap enough to justify a consistent and usable API (IMHO) .
   Keep source compatibility.
 
-- Sort out reference counting of applications and KMainWindows: Add a setRefCountEnabled()
-  function to KApplication; deref()ing the last reference should only quit the application
+- Sort out reference counting of applications and TDEMainWindows: Add a setRefCountEnabled()
+  function to TDEApplication; deref()ing the last reference should only quit the application
   if reference counts are enabled, and the reference count should be disabled by default
-  so apps that don't use a KMainWindow mostly continue to work. Make the KMainWindow
-  constructor call setRefCountEnabled(true), and make each KMainWindow hold its own
-  reference to the application. The KMainWindow should drop its app reference on hide, and
+  so apps that don't use a TDEMainWindow mostly continue to work. Make the TDEMainWindow
+  constructor call setRefCountEnabled(true), and make each TDEMainWindow hold its own
+  reference to the application. The TDEMainWindow should drop its app reference on hide, and
   regain it on show.
 
   Make KSysTray also hold a reference to the app. Then apps that use more than one main
@@ -110,7 +110,7 @@ that we would like to make for the next binary incompatible release.
   calls (readBoolEntry()).  Although not technicaly a binary incompatiblity... 
   just something to bring up for possible change (for the better)
 
-  Use KConfigXT instead! /FransE
+  Use TDEConfigXT instead! /FransE
 
 - Is it really necessary to bother people using the KCM APIs with withFallback? I have
   never heard of it failing and when would you not like to have that fallback? I think
@@ -118,7 +118,7 @@ that we would like to make for the next binary incompatible release.
 
 - Do we need to have factory arguments in the KCM API? (who would use it anyway?)
 
-- KCModuleInfo should use d-pointer. Perhaps there is more classes.
+- TDECModuleInfo should use d-pointer. Perhaps there is more classes.
 
 - The config options in kdeglobals needs to be cleaned up a little. Perhaps I'm being picky..
 	* They should be named properly, for example "enableIcons" instead of "EnableIcons". Or atleast
@@ -133,7 +133,7 @@ that we would like to make for the next binary incompatible release.
 - kpassdlg.h needs to be renamed to kpassworddialog.h - consistent with other classes(it won't 
   break many apps). The class needs a facelift - see the comments in kpassdlg.{h,cpp}
 
-- KProcess needs a major facelift. Not all of these items need to be BIC, but not needing to
+- TDEProcess needs a major facelift. Not all of these items need to be BIC, but not needing to
   worry about legacy will certainly allow an overall cleaner solution.
   - the internals need to be encapsulated properly. many of the virtuals shouldn't be virtual;
     lots of protected members should be accessible only via accessors. the current model is
@@ -149,17 +149,17 @@ that we would like to make for the next binary incompatible release.
   - do something about the NoRead comm mode
   - add setComm(); remove comm arg from start(). as a side effect, this will allow for using
     writeStdin() in Block mode.
-  - merge KProcIO into KProcess; add setBuffered() for separate channels.
+  - merge KProcIO into TDEProcess; add setBuffered() for separate channels.
   - use QByteArray for writeStdin(). better than the buf+len arg, as it is ref-counted.
 
-- To discuss: Migrate the about dialog to use qhtml or khtml rather then the current
+- To discuss: Migrate the about dialog to use qhtml or tdehtml rather then the current
   setup of all of the widgets and sub widgets.  Might be a lot simpler, require a lot
   less code and be much more flexible for additions/enhancments.  Sidenote: currently
   the about information seems to be duplicated.
 
 - Make API use US English, (eg. KCatalogue -> KCatalog)
 
-- It would be nice if some insan^H^H^H brave soul had a look at the KAccel/KShortcut/KKeyWhatever
+- It would be nice if some insan^H^H^H brave soul had a look at the TDEAccel/TDEShortcut/KKeyWhatever
   classes and cleaned it up.
 
 - KKeyDialog needs to be improved. It should simplify using KKeyChooser by not having to instantiate
@@ -180,9 +180,9 @@ that we would like to make for the next binary incompatible release.
 
 - KWallet::Wallet::* functions - remove the default = 0 argument for mainwindow for the dialog
 
-- Make libkwalletclient part of libkio and get rid of libkwalletclient.
+- Make libtdewalletclient part of libtdeio and get rid of libtdewalletclient.
 
-- Get rid of libtdesu dependency in libkio, get rid of SessionData::AuthData*,
+- Get rid of libtdesu dependency in libtdeio, get rid of SessionData::AuthData*,
   get rid of SlaveInterface::authorizationKey and SlaveInterface::delAuthorization
 
 - Make functions in KHelpMenu virtual so they can be overridden (ex: to provide
@@ -209,13 +209,13 @@ an alternative help->contents action)
 - Dump KPixmapIO class. QPixmap with qt-copy patches #0005 and #0007 can perform just as well,
   KPixmapIO can't dither, and it generally doesn't make much sense to have this class.
 
-- KListView: merge setDropHighlighter and setDropVisualizer, add a setDnDMode to choose between
+- TDEListView: merge setDropHighlighter and setDropVisualizer, add a setDnDMode to choose between
   "dnd to move items" (e.g. keditbookmarks) and "dnd onto items" (e.g. kmail). Unless Qt4 does it all :)
 
-- Move KIO::findDeviceMountPoint, findPathMoundPoint, probably_slow_mounted, and testFileSystemFlag to KMountPoint,
+- Move TDEIO::findDeviceMountPoint, findPathMoundPoint, probably_slow_mounted, and testFileSystemFlag to KMountPoint,
   to merge that code.
 
-- Refactor the kio/bookmarks code so we don't need to use the static d-pointer trick anymore.
+- Refactor the tdeio/bookmarks code so we don't need to use the static d-pointer trick anymore.
 
 - Rename the parameters to KDEDesktopMimeType::pixmap so that they use meaningful names rather than
   just a, b, c, and d. Probably not something that has to wait for KDE 4, but seems like a good idea
@@ -223,7 +223,7 @@ an alternative help->contents action)
 
 - Move KRichTextLabel into tdeui if still required with Qt 4.
 
-- Add the concept of a session to KIO, in particular for KHTML so that it can
+- Add the concept of a session to KIO, in particular for TDEHTML so that it can
   have all of its jobs associated in some way (a unique key of sorts).  Will
   make SSL much easier to implement and allow removal of many hacks, mostly
   involving metadata.

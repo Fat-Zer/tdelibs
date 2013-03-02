@@ -1,4 +1,4 @@
-#include "kmessagebox.h"
+#include "tdemessagebox.h"
 
 #include <tqdialog.h>
 #include <tqlayout.h>
@@ -8,9 +8,9 @@
 #include <stdio.h>
 
 #include <kstatusbar.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 class ExampleWidget : public QLabel
 {
@@ -63,7 +63,7 @@ void showResult(int test, int i)
 int main( int argc, char *argv[] )
 {
     int i, test;
-    new KApplication( argc, argv, "MyApplication" );
+    new TDEApplication( argc, argv, "MyApplication" );
 
     ExampleWidget *w = new ExampleWidget();
     w->show();    

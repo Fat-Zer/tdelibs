@@ -6,15 +6,15 @@ cache of servicetypes, mimetypes and services, for a particular user.
 
 It uses KDirWatch to monitor the directories contain the .desktop files.
 When a file is added/removed, it waits 5 seconds (in case of series of
-updates), and then launches kbuildsycoca.
+updates), and then launches tdebuildsycoca.
 
-kbuildsycoca recreates the sycoca file by:
+tdebuildsycoca recreates the sycoca file by:
 * parsing all .desktop files, replacing global ones by local ones (at any
   level of the hierarchy)
 * creating all objects in memory
-* saving everything in the sycoca file (see below for ksycoca internals)
+* saving everything in the sycoca file (see below for tdesycoca internals)
 * clearing all memory
-* notifying the applications that use ksycoca by a DCOP call to the ksycoca
+* notifying the applications that use tdesycoca by a DCOP call to the tdesycoca
 object (KSycoca::notifyDatabaseChanged()).
 
 Format of the sycoca database file

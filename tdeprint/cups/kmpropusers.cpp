@@ -23,7 +23,7 @@
 
 #include <tqtextview.h>
 #include <tqlayout.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 KMPropUsers::KMPropUsers(TQWidget *parent, const char *name)
 : KMPropWidget(parent,name)

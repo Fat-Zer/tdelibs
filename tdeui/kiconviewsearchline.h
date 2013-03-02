@@ -35,33 +35,33 @@ class TQIconViewItem;
  *
  * @since 3.3
  */
-class TDEUI_EXPORT KIconViewSearchLine : public KLineEdit
+class TDEUI_EXPORT TDEIconViewSearchLine : public KLineEdit
 {
   Q_OBJECT
 
 public:
 
   /**
-   * Constructs a KIconViewSearchLine with \a iconView being the TQIconView to
+   * Constructs a TDEIconViewSearchLine with \a iconView being the TQIconView to
    * be filtered.
    *
    * If \a iconView is null then the widget will be disabled until a iconview
    * is set with setIconView().
    */
-  KIconViewSearchLine( TQWidget *parent = 0,
+  TDEIconViewSearchLine( TQWidget *parent = 0,
 		       TQIconView *iconView = 0,
 		       const char *name = 0 );
 
   /**
-   * Constructs a KIconViewSearchLine without any TQIconView to filter. The
+   * Constructs a TDEIconViewSearchLine without any TQIconView to filter. The
    * TQIconView object has to be set later with setIconView().
    */
-  KIconViewSearchLine( TQWidget *parent, const char *name );
+  TDEIconViewSearchLine( TQWidget *parent, const char *name );
 
   /**
-   * Destroys the KIconViewSearchLine.
+   * Destroys the TDEIconViewSearchLine.
    */
-  virtual ~KIconViewSearchLine();
+  virtual ~TDEIconViewSearchLine();
 
   /**
    * Returns true if the search is case sensitive.  This defaults to false.
@@ -175,8 +175,8 @@ private slots:
 
 
 private:
-  class KIconViewSearchLinePrivate;
-  KIconViewSearchLinePrivate *d;
+  class TDEIconViewSearchLinePrivate;
+  TDEIconViewSearchLinePrivate *d;
 };
 
 

@@ -25,8 +25,8 @@
 #include <tqlayout.h>
 
 #include <kurlrequester.h>
-#include <klocale.h>
-#include <kfiledialog.h>
+#include <tdelocale.h>
+#include <tdefiledialog.h>
 
 KMWFile::KMWFile(TQWidget *parent, const char *name)
 : KMWizardPage(parent,name)

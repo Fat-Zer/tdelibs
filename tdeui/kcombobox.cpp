@@ -25,16 +25,16 @@
 #include <tqpopupmenu.h>
 #include <tqapplication.h>
 
-#include <kcompletionbox.h>
+#include <tdecompletionbox.h>
 #include <kcursor.h>
 #include <kiconloader.h>
 #include <kicontheme.h>
-#include <klistviewsearchline.h>
+#include <tdelistviewsearchline.h>
 #include <klineedit.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <knotifyclient.h>
 #include <kpixmapprovider.h>
-#include <kstdaccel.h>
+#include <tdestdaccel.h>
 #include <kurl.h>
 #include <kurldrag.h>
 
@@ -111,13 +111,13 @@ void KComboBox::setAutoCompletion( bool autocomplete )
     {
         if ( autocomplete )
         {
-            d->klineEdit->setCompletionMode( KGlobalSettings::CompletionAuto );
-            setCompletionMode( KGlobalSettings::CompletionAuto );
+            d->klineEdit->setCompletionMode( TDEGlobalSettings::CompletionAuto );
+            setCompletionMode( TDEGlobalSettings::CompletionAuto );
         }
         else
         {
-            d->klineEdit->setCompletionMode( KGlobalSettings::completionMode() );
-            setCompletionMode( KGlobalSettings::completionMode() );
+            d->klineEdit->setCompletionMode( TDEGlobalSettings::completionMode() );
+            setCompletionMode( TDEGlobalSettings::completionMode() );
         }
     }
 }
@@ -169,7 +169,7 @@ void KComboBox::makeCompletion( const TQString& text )
     }
 }
 
-void KComboBox::rotateText( KCompletionBase::KeyBindingType type )
+void KComboBox::rotateText( TDECompletionBase::KeyBindingType type )
 {
     if ( d->klineEdit )
         d->klineEdit->rotateText( type );
@@ -226,7 +226,7 @@ void KComboBox::setCompletedItems( const TQStringList& items )
         d->klineEdit->setCompletedItems( items );
 }
 
-KCompletionBox * KComboBox::completionBox( bool create )
+TDECompletionBox * KComboBox::completionBox( bool create )
 {
     if ( d->klineEdit )
         return d->klineEdit->completionBox( create );
@@ -271,7 +271,7 @@ void KComboBox::setLineEdit( TQLineEdit *edit )
     if ( d->klineEdit )
     {
         // someone calling KComboBox::setEditable( false ) destroys our
-        // lineedit without us noticing. And KCompletionBase::delegate would
+        // lineedit without us noticing. And TDECompletionBase::delegate would
         // be a dangling pointer then, so prevent that. Note: only do this
         // when it is a KLineEdit!
         connect( edit, TQT_SIGNAL( destroyed() ), TQT_SLOT( lineEditDeleted() ));
@@ -286,12 +286,12 @@ void KComboBox::setLineEdit( TQLineEdit *edit )
                  TQT_SIGNAL( substringCompletion( const TQString& )) );
 
         connect( d->klineEdit,
-                 TQT_SIGNAL( textRotation( KCompletionBase::KeyBindingType )),
-                 TQT_SIGNAL( textRotation( KCompletionBase::KeyBindingType )) );
+                 TQT_SIGNAL( textRotation( TDECompletionBase::KeyBindingType )),
+                 TQT_SIGNAL( textRotation( TDECompletionBase::KeyBindingType )) );
 
         connect( d->klineEdit,
-                 TQT_SIGNAL( completionModeChanged( KGlobalSettings::Completion )),
-                 TQT_SIGNAL( completionModeChanged( KGlobalSettings::Completion)));
+                 TQT_SIGNAL( completionModeChanged( TDEGlobalSettings::Completion )),
+                 TQT_SIGNAL( completionModeChanged( TDEGlobalSettings::Completion)));
 
         connect( d->klineEdit,
                  TQT_SIGNAL( aboutToShowContextMenu( TQPopupMenu * )),
@@ -333,7 +333,7 @@ void KComboBox::lineEditDeleted()
     // yes, we need those ugly casts due to the multiple inheritance
     // sender() is guaranteed to be a KLineEdit (see the connect() to the
     // destroyed() signal
-    const KCompletionBase *base = static_cast<const KCompletionBase*>( static_cast<const KLineEdit*>( sender() ));
+    const TDECompletionBase *base = static_cast<const TDECompletionBase*>( static_cast<const KLineEdit*>( sender() ));
 
     // is it our delegate, that is destroyed?
     if ( base == delegate() )
@@ -378,7 +378,7 @@ void KHistoryCombo::init( bool useCompletion )
     setMaxCount( 50 );
 
     if ( useCompletion )
-        completionObject()->setOrder( KCompletion::Weighted );
+        completionObject()->setOrder( TDECompletion::Weighted );
 
     setInsertionPolicy( NoInsertion );
     myIterateIndex = -1;
@@ -421,10 +421,10 @@ void KHistoryCombo::setHistoryItems( TQStringList items,
 
     if ( setCompletionList && useCompletion() ) {
         // we don't have any weighting information here ;(
-        KCompletion *comp = completionObject();
-        comp->setOrder( KCompletion::Insertion );
+        TDECompletion *comp = completionObject();
+        comp->setOrder( TDECompletion::Insertion );
         comp->setItems( items );
-        comp->setOrder( KCompletion::Weighted );
+        comp->setOrder( TDECompletion::Weighted );
     }
 
     clearEdit();
@@ -489,7 +489,7 @@ void KHistoryCombo::addToHistory( const TQString& item )
 
     // now add the item
     if ( myPixProvider )
-        insertItem( myPixProvider->pixmapFor(item, KIcon::SizeSmall), item, 0);
+        insertItem( myPixProvider->pixmapFor(item, TDEIcon::SizeSmall), item, 0);
     else
         insertItem( item, 0 );
 
@@ -616,12 +616,12 @@ void KHistoryCombo::keyPressEvent( TQKeyEvent *e )
     KKey event_key( e );
 
     // going up in the history, rotating when reaching TQListBox::count()
-    if ( KStdAccel::rotateUp().contains(event_key) )
+    if ( TDEStdAccel::rotateUp().contains(event_key) )
         rotateUp();
 
     // going down in the history, no rotation possible. Last item will be
     // the text that was in the lineedit before Up was called.
-    else if ( KStdAccel::rotateDown().contains(event_key) )
+    else if ( TDEStdAccel::rotateDown().contains(event_key) )
         rotateDown();
     else
         KComboBox::keyPressEvent( e );
@@ -679,7 +679,7 @@ void KHistoryCombo::insertItems( const TQStringList& items )
         const TQString item = *it;
         if ( !item.isEmpty() ) { // only insert non-empty items
             if ( myPixProvider )
-                insertItem( myPixProvider->pixmapFor(item, KIcon::SizeSmall),
+                insertItem( myPixProvider->pixmapFor(item, TDEIcon::SizeSmall),
                             item );
             else
                 insertItem( item );
@@ -718,7 +718,7 @@ bool KHistoryCombo::isHistoryEditorEnabled() const
 }
 
 void KComboBox::virtual_hook( int id, void* data )
-{ KCompletionBase::virtual_hook( id, data ); }
+{ TDECompletionBase::virtual_hook( id, data ); }
 
 void KHistoryCombo::virtual_hook( int id, void* data )
 { KComboBox::virtual_hook( id, data ); }
@@ -745,12 +745,12 @@ KHistoryComboEditor::KHistoryComboEditor( const TQStringList& entries, TQWidget 
     clearSearch->setTextLabel(i18n("Clear Search"), true);
     clearSearch->setIconSet(SmallIconSet(TQApplication::reverseLayout() ? "clear_left" : "locationbar_erase"));
     TQLabel* slbl = new TQLabel(i18n("&Search:"), searchbox);
-    KListViewSearchLine* listViewSearch = new KListViewSearchLine(searchbox);
+    TDEListViewSearchLine* listViewSearch = new TDEListViewSearchLine(searchbox);
     slbl->setBuddy(listViewSearch);
     connect(clearSearch, TQT_SIGNAL(pressed()), listViewSearch, TQT_SLOT(clear()));
 
     // Add ListView
-    m_pListView = new KListView( box );
+    m_pListView = new TDEListView( box );
     listViewSearch->setListView(m_pListView);
     m_pListView->setAllColumnsShowFocus(true);
     m_pListView->header()->hide();

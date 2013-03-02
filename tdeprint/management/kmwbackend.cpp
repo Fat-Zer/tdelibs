@@ -28,18 +28,18 @@
 #include <tqwhatsthis.h>
 
 #include <kcursor.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kseparator.h>
 #include <kdialog.h>
 #include <kdebug.h>
 
-class KRadioButton : public TQRadioButton
+class TDERadioButton : public TQRadioButton
 {
 public:
-	KRadioButton(const TQString& txt, TQWidget *parent = 0, const char *name = 0);
+	TDERadioButton(const TQString& txt, TQWidget *parent = 0, const char *name = 0);
 };
 
-KRadioButton::KRadioButton(const TQString& txt, TQWidget *parent, const char *name)
+TDERadioButton::TDERadioButton(const TQString& txt, TQWidget *parent, const char *name)
 : TQRadioButton(txt,parent,name)
 {
 	setCursor(KCursor::handCursor());
@@ -158,7 +158,7 @@ void KMWBackend::addBackend(int ID, const TQString& txt, bool on, const TQString
 	}
 	else
 	{
-		KRadioButton	*btn = new KRadioButton(txt, this);
+		TDERadioButton	*btn = new TDERadioButton(txt, this);
 		btn->setEnabled(on);
 		if ( !whatsThis.isEmpty() )
 			TQWhatsThis::add( btn, whatsThis );

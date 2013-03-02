@@ -18,17 +18,17 @@
 #    Boston, MA 02110-1301, USA.
 
 
-COMPILE_FIRST = dcop libltdl tdefx tdecore kunittest tdeui tdesu kjs kwallet kio kded kded_post
+COMPILE_FIRST = dcop libltdl tdefx tdecore tdeunittest tdeui tdesu kjs tdewallet kio kded kded_post
 COMPILE_BEFORE_doc = kdoctools
-COMPILE_AFTER_kparts = kspell2 kmdi tdeprint kinit kate interfaces kcert khtml krandr
-COMPILE_AFTER_tdeprint = kate khtml
-COMPILE_BEFORE_khtml = kutils
-COMPILE_BEFORE_kabc = kab kresources
-COMPILE_BEFORE_kate = interfaces kutils
-COMPILE_BEFORE_kmdi = kutils
-COMPILE_BEFORE_kspell2 = kutils
-COMPILE_BEFORE_kcmshell = kutils
-COMPILE_BEFORE_kdewidgets = kabc khtml
+COMPILE_AFTER_tdeparts = tdespell2 tdemdi tdeprint kinit kate interfaces tdecert tdehtml tderandr
+COMPILE_AFTER_tdeprint = kate tdehtml
+COMPILE_BEFORE_tdehtml = tdeutils
+COMPILE_BEFORE_kabc = kab tderesources
+COMPILE_BEFORE_kate = interfaces tdeutils
+COMPILE_BEFORE_tdemdi = tdeutils
+COMPILE_BEFORE_tdespell2 = tdeutils
+COMPILE_BEFORE_tdecmshell = tdeutils
+COMPILE_BEFORE_kdewidgets = kabc tdehtml
 COMPILE_BEFORE_interfaces = arts kabc
 
 $(top_srcdir)/acinclude.m4: $(top_srcdir)/libltdl/ltdl.m4
@@ -39,7 +39,7 @@ potdir = $(kde_includes)
 pot_DATA = kde.pot
 
 messages:
-	cd kabc/scripts && perl ./makeaddressee
+	cd tdeabc/scripts && perl ./makeaddressee
 	find . -type d | grep -v '\.svn' | sed -e 's,$$,/,' > dirs
 	mfs=`find . -name Makefile.am | xargs egrep -l '^messages:'` ;\
 	for dir in $$mfs; do \
@@ -54,7 +54,7 @@ messages:
 	find $$dirs -maxdepth 1 -name "*.cc" -print >> files ;\
 	find $$dirs -maxdepth 1 -name "*.h" -print >> files ;\
 	echo ./tdecore/tde-config.cpp.in >> files ;\
-	$(EXTRACTRC) `find $$dirs -maxdepth 1 \( -name "*.rc" -o -name "*.ui" \) ` ./dnssd/kcm_kdnssd.kcfg > rc.cpp; \
+	$(EXTRACTRC) `find $$dirs -maxdepth 1 \( -name "*.rc" -o -name "*.ui" \) ` ./dnssd/kcm_tdednssd.kcfg > rc.cpp; \
 	: > kde.pot ;\
 	$(XGETTEXT) -ktranslate -x qt-messages.pot rc.cpp `cat files` && cat messages.po qt-messages.pot > $(podir)/tdelibs.pot
 	$(XGETTEXT) common_texts.cpp -o kde.pot

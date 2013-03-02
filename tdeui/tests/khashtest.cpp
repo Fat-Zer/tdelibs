@@ -1,5 +1,5 @@
 #include "khashtest.h"
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kpixmapeffect.h>
 #include <kimageeffect.h>
 #include <tqpainter.h>
@@ -126,7 +126,7 @@ void KHashWidget::paintEvent(TQPaintEvent * /*ev*/)
 int main(int argc, char **argv)
 {
 
-    KApplication *app = new KApplication(argc, argv, "KHashTest");
+    TDEApplication *app = new TDEApplication(argc, argv, "KHashTest");
     KHashWidget w;
     w.resize(250 * cols, 250 * rows);
     app->setMainWidget(&w);

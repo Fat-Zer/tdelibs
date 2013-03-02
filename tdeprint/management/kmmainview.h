@@ -26,18 +26,18 @@
 
 #include <tqwidget.h>
 #include <tdeprint/kpreloadobject.h>
-#include <kmainwindow.h>
+#include <tdemainwindow.h>
 
 class KMManager;
 class KMPrinterView;
 class KMPrinter;
 class KMPages;
-class KActionCollection;
+class TDEActionCollection;
 class TQPopupMenu;
 class TQTimer;
 class TQSplitter;
-class KToolBar;
-class KAction;
+class TDEToolBar;
+class TDEAction;
 class PluginComboBox;
 class TQBoxLayout;
 class MessageWindow;
@@ -54,7 +54,7 @@ class TDEPRINT_EXPORT KMMainView : public TQWidget, public KPReloadObject
 {
 	Q_OBJECT
 public:
-	KMMainView(TQWidget *parent = 0, const char *name = 0, KActionCollection *coll = 0);
+	KMMainView(TQWidget *parent = 0, const char *name = 0, TDEActionCollection *coll = 0);
 	~KMMainView();
 
 	void setOrientation(int);
@@ -62,7 +62,7 @@ public:
 	void setViewType(int);
 	int viewType() const;
 	void enableToolbar(bool on = true);
-	KAction* action(const char *name);
+	TDEAction* action(const char *name);
 	void showPrinterInfos(bool on);
 	bool printerInfosShown() const;
 
@@ -115,17 +115,17 @@ private:
 	KMPrinterView	*m_printerview;
 	KMPages		*m_printerpages;
 	TQPopupMenu	*m_pop;
-	KActionCollection	*m_actions;
+	TDEActionCollection	*m_actions;
 	KMPrinter	*m_current;
-	KToolBar	*m_toolbar;
+	TDEToolBar	*m_toolbar;
 	PluginComboBox	*m_plugin;
 	int		m_pactionsindex;
 	TQStringList	m_toollist;
 	bool		m_first;
 	TQBoxLayout	*m_boxlayout;
-	class KMainWindowPrivate;
-	KMainWindowPrivate *d;
-	KToolBar *m_menubar;
+	class TDEMainWindowPrivate;
+	TDEMainWindowPrivate *d;
+	TDEToolBar *m_menubar;
 };
 
 TDEPRINT_EXPORT int tdeprint_management_add_printer_wizard( TQWidget* parent );

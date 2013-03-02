@@ -9,7 +9,7 @@
 *****************************************************************************/
 
 #include "helpwindow.h"
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tqwindowsstyle.h>
 #include <tqstylesheet.h>
 #include <stdlib.h>
@@ -17,7 +17,7 @@
 
 int main( int argc, char ** argv )
 {
-    KApplication a(argc, argv, "helpviewer");
+    TDEApplication a(argc, argv, "helpviewer");
 
     TQString home;
     if (argc > 1)

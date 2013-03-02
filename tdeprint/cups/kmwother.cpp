@@ -29,8 +29,8 @@
 #include <tqheader.h>
 #include <tqdict.h>
 
-#include <klocale.h>
-#include <klistview.h>
+#include <tdelocale.h>
+#include <tdelistview.h>
 #include <kiconloader.h>
 #include <kdebug.h>
 
@@ -49,7 +49,7 @@ KMWOther::KMWOther(TQWidget *parent, const char *name)
 					 "<li>lpd://server/queue</li>"
 					 "<li>parallel:/dev/lp0</li></ul>"));
 	TQLabel	*l2 = new TQLabel(i18n("URI:"), this);
-	m_uriview = new KListView( this );
+	m_uriview = new TDEListView( this );
 	m_uriview->addColumn( "" );
 	m_uriview->header()->hide();
 	m_uriview->setSorting( -1 );

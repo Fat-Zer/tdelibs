@@ -1,19 +1,19 @@
 // -*- c++ -*-
 
-#include <kcmdlineargs.h>
-#include <klocale.h>
+#include <tdecmdlineargs.h>
+#include <tdelocale.h>
 #include <kinstance.h>
 #include <kstandarddirs.h>
-#include <kglobal.h>
-#include <kglobalsettings.h>
+#include <tdeglobal.h>
+#include <tdeglobalsettings.h>
 #include <stdio.h>
-#include <kaboutdata.h>
+#include <tdeaboutdata.h>
 #include <config.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 static const char *description = I18N_NOOP("A little program to output installation paths");
 
-static KCmdLineOptions options[] =
+static TDECmdLineOptions options[] =
 {
     { "expandvars", I18N_NOOP("expand ${prefix} and ${exec_prefix} in output"), 0 },
     { "prefix",	   I18N_NOOP("Compiled in prefix for TDE libraries"), 0 },
@@ -113,19 +113,19 @@ void printResult(const TQString &s)
 
 int main(int argc, char **argv)
 {
-    KLocale::setMainCatalogue("tdelibs");
-    KAboutData about("tde-config", "tde-config", "1.0", description, KAboutData::License_GPL, "(C) 2000 Stephan Kulow");
-    KCmdLineArgs::init( argc, argv, &about);
+    TDELocale::setMainCatalogue("tdelibs");
+    TDEAboutData about("tde-config", "tde-config", "1.0", description, TDEAboutData::License_GPL, "(C) 2000 Stephan Kulow");
+    TDECmdLineArgs::init( argc, argv, &about);
 
-    KCmdLineArgs::addCmdLineOptions( options ); // Add my own options.
+    TDECmdLineArgs::addCmdLineOptions( options ); // Add my own options.
 
-    KInstance a("tde-config");
+    TDEInstance a("tde-config");
     a.setConfigReadOnly(TRUE);
-    (void)KGlobal::dirs(); // trigger the creation
-    (void)KGlobal::config();
+    (void)TDEGlobal::dirs(); // trigger the creation
+    (void)TDEGlobal::config();
 
     // Get application specific arguments
-    KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+    TDECmdLineArgs *args = TDECmdLineArgs::parsedArgs();
 
     _expandvars = args->isSet("expandvars");
 
@@ -151,7 +151,7 @@ int main(int argc, char **argv)
 
     if (args->isSet("localprefix"))
     {
-        printResult(KGlobal::dirs()->localtdedir());
+        printResult(TDEGlobal::dirs()->localtdedir());
         return 0;
     }
 
@@ -163,7 +163,7 @@ int main(int argc, char **argv)
 
     if (args->isSet("types"))
     {
-        TQStringList types = KGlobal::dirs()->allTypes();
+        TQStringList types = TDEGlobal::dirs()->allTypes();
         types.sort();
         const char *helptexts[] = {
             "apps", I18N_NOOP("Applications menu (.desktop files)"),
@@ -176,7 +176,7 @@ int main(int argc, char **argv)
             "kcfg", I18N_NOOP("Configuration description files"),
             "lib", I18N_NOOP("Libraries"),
             "include", I18N_NOOP("Includes/Headers"),
-            "locale", I18N_NOOP("Translation files for KLocale"),
+            "locale", I18N_NOOP("Translation files for TDELocale"),
             "mime", I18N_NOOP("Mime types"),
             "module", I18N_NOOP("Loadable modules"),
             "qtplugins", I18N_NOOP("Qt plugins"),
@@ -211,7 +211,7 @@ int main(int argc, char **argv)
     TQString type = args->getOption("path");
     if (!type.isEmpty())
     {
-        printResult(KGlobal::dirs()->resourceDirs(type.latin1()).join(":"));
+        printResult(TDEGlobal::dirs()->resourceDirs(type.latin1()).join(":"));
         return 0;
     }
 
@@ -219,13 +219,13 @@ int main(int argc, char **argv)
     if (!type.isEmpty())
     {
         if ( type == "desktop" )
-            printResult(KGlobalSettings::desktopPath());
+            printResult(TDEGlobalSettings::desktopPath());
         else if ( type == "autostart" )
-            printResult(KGlobalSettings::autostartPath());
+            printResult(TDEGlobalSettings::autostartPath());
         else if ( type == "trash" )
-            printResult(KGlobalSettings::trashPath());
+            printResult(TDEGlobalSettings::trashPath());
         else if ( type == "document" )
-            printResult(KGlobalSettings::documentPath());
+            printResult(TDEGlobalSettings::documentPath());
         else
             fprintf(stderr, "%s", i18n("%1 - unknown type of userpath\n").arg(type).local8Bit().data() );
         return 0;

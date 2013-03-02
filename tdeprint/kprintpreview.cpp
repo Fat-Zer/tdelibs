@@ -25,27 +25,27 @@
 #include <tqlayout.h>
 #include <tqvbox.h>
 
-#include <kparts/part.h>
-#include <kaccel.h>
-#include <kaction.h>
+#include <tdeparts/part.h>
+#include <tdeaccel.h>
+#include <tdeaction.h>
 #include <klibloader.h>
 #include <ktrader.h>
 #include <kuserprofile.h>
 #include <krun.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kstandarddirs.h>
-#include <klocale.h>
-#include <kmessagebox.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
 #include <kdebug.h>
-#include <kconfig.h>
-#include <ktoolbar.h>
+#include <tdeconfig.h>
+#include <tdetoolbar.h>
 #include <kmimetype.h>
 
 KPreviewProc::KPreviewProc()
-: KProcess()
+: TDEProcess()
 {
 	m_bOk = false;
-	connect(this, TQT_SIGNAL(processExited(KProcess*)), TQT_SLOT(slotProcessExited(KProcess*)));
+	connect(this, TQT_SIGNAL(processExited(TDEProcess*)), TQT_SLOT(slotProcessExited(TDEProcess*)));
 }
 
 KPreviewProc::~KPreviewProc()
@@ -63,7 +63,7 @@ bool KPreviewProc::startPreview()
 		return false;
 }
 
-void KPreviewProc::slotProcessExited(KProcess* proc)
+void KPreviewProc::slotProcessExited(TDEProcess* proc)
 {
 	kapp->exit_loop();
 	if ( proc->normalExit() && proc->exitStatus() == 0 )
@@ -81,26 +81,26 @@ public:
 	KPrintPreviewPrivate(KPrintPreview *dlg) : gvpart_(0)
 	{
 		mainwidget_ = new TQWidget(dlg, "MainWidget");
-		toolbar_ = new KToolBar(mainwidget_, "PreviewToolBar", true);
-		actions_ = new KActionCollection(dlg);
-		accel_ = new KAccel(dlg);
+		toolbar_ = new TDEToolBar(mainwidget_, "PreviewToolBar", true);
+		actions_ = new TDEActionCollection(dlg);
+		accel_ = new TDEAccel(dlg);
 		previewonly_ = false;
 	}
 	~KPrintPreviewPrivate()
 	{
 		if (gvpart_) delete gvpart_;
 	}
-	void plugAction(KAction *act)
+	void plugAction(TDEAction *act)
 	{
 		act->plug(toolbar_);
 		act->plugAccel(accel_);
 	}
 
 	KParts::ReadOnlyPart	*gvpart_;
-	KToolBar		*toolbar_;
-	KActionCollection	*actions_;
+	TDEToolBar		*toolbar_;
+	TDEActionCollection	*actions_;
 	TQWidget		*mainwidget_;
-	KAccel			*accel_;
+	TDEAccel			*accel_;
 	bool			previewonly_;
 };
 
@@ -111,8 +111,8 @@ static KLibFactory* componentFactory()
 	factory = KLibLoader::self()->factory("libkghostviewpart");
         if( factory )
             return factory;
-	KTrader::OfferList	offers = KTrader::self()->query(TQString::fromLatin1("application/postscript"), TQString::fromLatin1("KParts/ReadOnlyPart"), TQString::null, TQString::null);
-	for (KTrader::OfferList::ConstIterator it = offers.begin(); it != offers.end(); ++it)
+	TDETrader::OfferList	offers = TDETrader::self()->query(TQString::fromLatin1("application/postscript"), TQString::fromLatin1("KParts/ReadOnlyPart"), TQString::null, TQString::null);
+	for (TDETrader::OfferList::ConstIterator it = offers.begin(); it != offers.end(); ++it)
 	{
 		KService::Ptr	service = *it;
 		factory = KLibLoader::self()->factory(TQFile::encodeName(service->library()));
@@ -157,8 +157,8 @@ KPrintPreview::KPrintPreview(TQWidget *parent, bool previewOnly)
 		KStdAction::close(TQT_TQOBJECT(this), TQT_SLOT(reject()), d->actions_, "close_print");
 	else
 	{
-		new KAction(i18n("Print"), "fileprint", Qt::Key_Return, TQT_TQOBJECT(this), TQT_SLOT(accept()), d->actions_, "continue_print");
-		new KAction(i18n("Cancel"), "stop", Qt::Key_Escape, TQT_TQOBJECT(this), TQT_SLOT(reject()), d->actions_, "stop_print");
+		new TDEAction(i18n("Print"), "fileprint", Qt::Key_Return, TQT_TQOBJECT(this), TQT_SLOT(accept()), d->actions_, "continue_print");
+		new TDEAction(i18n("Cancel"), "stop", Qt::Key_Escape, TQT_TQOBJECT(this), TQT_SLOT(reject()), d->actions_, "stop_print");
 	}
 
 }
@@ -193,13 +193,13 @@ void KPrintPreview::initView(KLibFactory *factory)
 				TQDomElement a = acts.item( i ).toElement();
 				if ( a.attribute( "name" ) == "goToPage" )
 					continue;
-				KAction *act = d->gvpart_->action( a );
+				TDEAction *act = d->gvpart_->action( a );
 				if ( act != 0 )
 					d->plugAction( act );
 			}
 		}
 		/*
-		KAction	*act;
+		TDEAction	*act;
 		d->toolbar_->insertLineSeparator();
 		if ((act = d->gvpart_->action("zoomIn")) != 0)
 			d->plugAction(act);
@@ -212,8 +212,8 @@ void KPrintPreview::initView(KLibFactory *factory)
 			d->plugAction(act);
 			*/
 	}
-	d->toolbar_->setIconText(KToolBar::IconTextRight);
-	d->toolbar_->setBarPos(KToolBar::Top);
+	d->toolbar_->setIconText(TDEToolBar::IconTextRight);
+	d->toolbar_->setBarPos(TDEToolBar::Top);
 	d->toolbar_->setMovingEnabled(false);
 	//d->adjustSize();
 
@@ -244,7 +244,7 @@ bool KPrintPreview::preview(const TQString& file, bool previewOnly, WId parentId
 	if ( !isPS )
 		kdDebug( 500 ) << "Previewing a non PostScript file, built-in preview disabled" << endl;
 
-	KConfig	*conf = KMFactory::self()->printConfig();
+	TDEConfig	*conf = KMFactory::self()->printConfig();
 	conf->setGroup("General");
 	KLibFactory	*factory(0);
 	bool	externalPreview = conf->readBoolEntry("ExternalPreview", false);
@@ -273,7 +273,7 @@ bool KPrintPreview::preview(const TQString& file, bool previewOnly, WId parentId
 	if (externalPreview && isPS )
 	{
 		exe = conf->readPathEntry("PreviewCommand", "gv");
-		if (KStandardDirs::findExe(exe).isEmpty())
+		if (TDEStandardDirs::findExe(exe).isEmpty())
 		{
 			QString	msg = i18n("The preview program %1 cannot be found. "
 						       "Check that the program is correctly installed and "

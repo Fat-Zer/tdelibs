@@ -20,7 +20,7 @@
    Copyright (C) 2000 Daniel M. Duley       <mosfet@kde.org>
              (C) 2000 Dirk Mueller          <mueller@kde.org>
              (C) 2001 Martijn Klingens      <klingens@kde.org>
-   Progressbar code based on KStyle,
+   Progressbar code based on TDEStyle,
    Copyright (C) 2001-2002 Karol Szwed <gallium@kde.org>
 
    This library is free software; you can redistribute it and/or
@@ -151,7 +151,7 @@ class PlastikStylePlugin : public TQStylePlugin
 KDE_Q_EXPORT_PLUGIN( PlastikStylePlugin )
 // -- end --
 
-PlastikStyle::PlastikStyle() : KStyle( AllowMenuTransparency, ThreeButtonScrollBar),
+PlastikStyle::PlastikStyle() : TDEStyle( AllowMenuTransparency, ThreeButtonScrollBar),
     kickerMode(false),
     kornMode(false),
     flatMode(false)
@@ -240,9 +240,9 @@ void PlastikStyle::polish(const TQStyleControlElementData &ceData, ControlElemen
     if (ceData.widgetObjectTypes.contains(TQWIDGET_OBJECT_NAME_STRING)) {
 	TQWidget *widget = reinterpret_cast<TQWidget*>(ptr);
 
-	if( !strcmp(widget->name(), "__khtml") ) { // is it a khtml widget...?
-		khtmlWidgets[widget] = true;
-		connect(widget, TQT_SIGNAL(destroyed(TQObject*)), this, TQT_SLOT(khtmlWidgetDestroyed(TQObject*)));
+	if( !strcmp(widget->name(), "__tdehtml") ) { // is it a tdehtml widget...?
+		tdehtmlWidgets[widget] = true;
+		connect(widget, TQT_SIGNAL(destroyed(TQObject*)), this, TQT_SLOT(tdehtmlWidgetDestroyed(TQObject*)));
 	}
 	
 	// use tqqt_cast where possible to check if the widget inheits one of the classes. might improve
@@ -275,7 +275,7 @@ void PlastikStyle::polish(const TQStyleControlElementData &ceData, ControlElemen
 	}
     }
 
-    KStyle::polish(ceData, elementFlags, ptr);
+    TDEStyle::polish(ceData, elementFlags, ptr);
 }
 
 void PlastikStyle::unPolish(const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void *ptr)
@@ -283,8 +283,8 @@ void PlastikStyle::unPolish(const TQStyleControlElementData &ceData, ControlElem
     if (ceData.widgetObjectTypes.contains(TQWIDGET_OBJECT_NAME_STRING)) {
 	TQWidget *widget = reinterpret_cast<TQWidget*>(ptr);
 
-	if( !strcmp(widget->name(), "__khtml") ) { // is it a khtml widget...?
-		khtmlWidgets.remove(widget);
+	if( !strcmp(widget->name(), "__tdehtml") ) { // is it a tdehtml widget...?
+		tdehtmlWidgets.remove(widget);
 	}
 	
 	// use tqqt_cast to check if the widget inheits one of the classes.
@@ -311,12 +311,12 @@ void PlastikStyle::unPolish(const TQStyleControlElementData &ceData, ControlElem
 	}
     }
 
-    KStyle::unPolish(ceData, elementFlags, ptr);
+    TDEStyle::unPolish(ceData, elementFlags, ptr);
 }
 
-void PlastikStyle::khtmlWidgetDestroyed(TQObject* obj)
+void PlastikStyle::tdehtmlWidgetDestroyed(TQObject* obj)
 {
-    khtmlWidgets.remove(TQT_TQWIDGET(obj));
+    tdehtmlWidgets.remove(TQT_TQWIDGET(obj));
 }
 
 void PlastikStyle::progressBarDestroyed(TQObject* obj)
@@ -719,7 +719,7 @@ void PlastikStyle::renderButton(TQPainter *p,
                                bool mouseOver,
                                bool horizontal,
                                bool enabled,
-                               bool khtmlMode) const
+                               bool tdehtmlMode) const
 {
     // small fix for the kicker buttons...
     if(kickerMode) enabled = true;
@@ -728,7 +728,7 @@ void PlastikStyle::renderButton(TQPainter *p,
 
     uint contourFlags = Draw_Left|Draw_Right|Draw_Top|Draw_Bottom;
     if(!enabled) contourFlags|=Is_Disabled;
-    if(khtmlMode) contourFlags|=Draw_AlphaBlend;
+    if(tdehtmlMode) contourFlags|=Draw_AlphaBlend;
 
     uint surfaceFlags = Draw_Left|Draw_Right|Draw_Top|Draw_Bottom;
     if(horizontal) surfaceFlags|=Is_Horizontal;
@@ -1198,7 +1198,7 @@ void PlastikStyle::renderTab(TQPainter *p,
     }
 }
 
-void PlastikStyle::drawKStylePrimitive(KStylePrimitive kpe,
+void PlastikStyle::drawTDEStylePrimitive(TDEStylePrimitive kpe,
                                       TQPainter *p,
                                       const TQStyleControlElementData &ceData,
                                       ControlElementFlags elementFlags,
@@ -1373,7 +1373,7 @@ void PlastikStyle::drawKStylePrimitive(KStylePrimitive kpe,
             break;
         }
 
-    // copied and slightly modified from KStyle.
+    // copied and slightly modified from TDEStyle.
     case KPE_ListViewBranch: {
         // Typical Windows style listview branch element (dotted line).
 
@@ -1446,7 +1446,7 @@ void PlastikStyle::drawKStylePrimitive(KStylePrimitive kpe,
     }
 
         default:
-            KStyle::drawKStylePrimitive(kpe, p, ceData, elementFlags, r, cg, flags, opt, widget);
+            TDEStyle::drawTDEStylePrimitive(kpe, p, ceData, elementFlags, r, cg, flags, opt, widget);
     }
 }
 
@@ -1526,8 +1526,8 @@ void PlastikStyle::drawPrimitive(TQ_PrimitiveElement pe,
         case PE_ButtonTool:
         case PE_ButtonDropDown:
         case PE_ButtonCommand: {
-            bool khtmlMode = opt.isDefault() ? false : khtmlWidgets.contains(opt.widget());
-            renderButton(p, r, cg, (on||down), mouseOver, true, enabled, khtmlMode );
+            bool tdehtmlMode = opt.isDefault() ? false : tdehtmlWidgets.contains(opt.widget());
+            renderButton(p, r, cg, (on||down), mouseOver, true, enabled, tdehtmlMode );
             break;
         }
 
@@ -1884,12 +1884,12 @@ void PlastikStyle::drawPrimitive(TQ_PrimitiveElement pe,
 
             // HACK!!
             //
-            // In order to draw nice edges in khtml, we need to paint alpha-blended.
+            // In order to draw nice edges in tdehtml, we need to paint alpha-blended.
             // On the other hand, we can't paint alpha-blended in normal widgets.
             //
-            // In this place there is no reliable way to detect if we are in khtml; the
-            // only thing we know is that khtml buffers its widgets into a pixmap. So
-            // when the paint device is a TQPixmap, chances are high that we are in khtml.
+            // In this place there is no reliable way to detect if we are in tdehtml; the
+            // only thing we know is that tdehtml buffers its widgets into a pixmap. So
+            // when the paint device is a TQPixmap, chances are high that we are in tdehtml.
             // It's possible that this breaks other things, so let's see how it works...
             if (p->device() && dynamic_cast<TQPixmap*>(p->device() ) ) {
                 contourFlags += Draw_AlphaBlend;
@@ -2175,7 +2175,7 @@ void PlastikStyle::drawPrimitive(TQ_PrimitiveElement pe,
         }
 
         default: {
-            return KStyle::drawPrimitive(pe, p, ceData, elementFlags, r, cg, flags, opt);
+            return TDEStyle::drawPrimitive(pe, p, ceData, elementFlags, r, cg, flags, opt);
         }
     }
 }
@@ -2375,7 +2375,7 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
                     renderTab(p, r, cg, mouseOver, selected, true, pos, false, cornerWidget);
                     break;
                     default:
-                            KStyle::drawControl(element, p, ceData, elementFlags, r, cg, flags, opt, widget);
+                            TDEStyle::drawControl(element, p, ceData, elementFlags, r, cg, flags, opt, widget);
             }
 
             break;
@@ -2734,7 +2734,7 @@ void PlastikStyle::drawControl(TQ_ControlElement element,
             break;
 
         default:
-          KStyle::drawControl(element, p, ceData, elementFlags, r, cg, flags, opt, widget);
+          TDEStyle::drawControl(element, p, ceData, elementFlags, r, cg, flags, opt, widget);
     }
 }
 
@@ -2755,7 +2755,7 @@ void PlastikStyle::drawControlMask(TQ_ControlElement element,
         }
 
         default: {
-            KStyle::drawControlMask (element, p, ceData, elementFlags, r, opt, w);
+            TDEStyle::drawControlMask (element, p, ceData, elementFlags, r, opt, w);
         }
     }
 }
@@ -2778,7 +2778,7 @@ void PlastikStyle::drawComplexControlMask(TQ_ComplexControl c,
             break;
         }
         default: {
-            KStyle::drawComplexControlMask (c, p, ceData, elementFlags, r, o, w);
+            TDEStyle::drawComplexControlMask (c, p, ceData, elementFlags, r, o, w);
         }
     }
 }
@@ -2816,7 +2816,7 @@ void PlastikStyle::drawComplexControl(TQ_ComplexControl control,
                                               :cg.background();
 
             uint contourFlags = 0;
-            if( khtmlWidgets.contains(cb) )
+            if( tdehtmlWidgets.contains(cb) )
                 contourFlags |= Draw_AlphaBlend;
             
             if (_inputFocusHighlight && hasFocus && editable && enabled)
@@ -3168,7 +3168,7 @@ void PlastikStyle::drawComplexControl(TQ_ComplexControl control,
         }
 
         default:
-            KStyle::drawComplexControl(control, p, ceData, elementFlags,
+            TDEStyle::drawComplexControl(control, p, ceData, elementFlags,
                                         r, cg, flags, controls,
                                         active, opt, widget);
             break;
@@ -3183,7 +3183,7 @@ TQRect PlastikStyle::subRect(SubRect r, const TQStyleControlElementData &ceData,
             return querySubControlMetrics( CC_ComboBox, ceData, elementFlags, SC_ComboBoxEditField, TQStyleOption::Default, widget );
         }
 
-        // Don't use KStyles progressbar subrect
+        // Don't use TDEStyles progressbar subrect
         // TODO:
         case SR_ProgressBarGroove: {
             return TQRect(ceData.rect);
@@ -3195,7 +3195,7 @@ TQRect PlastikStyle::subRect(SubRect r, const TQStyleControlElementData &ceData,
         }
 
         default: {
-            return KStyle::subRect(r, ceData, elementFlags, widget);
+            return TDEStyle::subRect(r, ceData, elementFlags, widget);
         }
     }
 }
@@ -3216,7 +3216,7 @@ TQRect PlastikStyle::querySubControlMetrics(TQ_ComplexControl control,
                     return TQRect(r.left()+2, r.top()+2, r.width()-4-15-1, r.height()-4);
                 }
                 default: {
-                    return KStyle::querySubControlMetrics(control, ceData, elementFlags, subcontrol, opt, widget);
+                    return TDEStyle::querySubControlMetrics(control, ceData, elementFlags, subcontrol, opt, widget);
                 }
             }
             break;
@@ -3260,13 +3260,13 @@ TQRect PlastikStyle::querySubControlMetrics(TQ_ComplexControl control,
                     return TQRect(buttonsLeft, r.top()+1, bs.width(), r.height()-2);
                 }
                 default: {
-                    return KStyle::querySubControlMetrics(control, ceData, elementFlags, subcontrol, opt, widget);
+                    return TDEStyle::querySubControlMetrics(control, ceData, elementFlags, subcontrol, opt, widget);
                 }
             }
             break;
         }
         default: {
-            return KStyle::querySubControlMetrics(control, ceData, elementFlags, subcontrol, opt, widget);
+            return TDEStyle::querySubControlMetrics(control, ceData, elementFlags, subcontrol, opt, widget);
         }
     }
 }
@@ -3373,7 +3373,7 @@ int PlastikStyle::pixelMetric(PixelMetric m, const TQStyleControlElementData &ce
             return 2;
 
         default:
-            return KStyle::pixelMetric(m, ceData, elementFlags, widget);
+            return TDEStyle::pixelMetric(m, ceData, elementFlags, widget);
     }
 }
 
@@ -3456,14 +3456,14 @@ TQSize PlastikStyle::sizeFromContents(ContentsType t,
             if(widget->parent() && ::tqqt_cast<TQToolBar*>(widget->parent()) )
                 return TQSize( s.width()+2*4, s.height()+2*4 );
             else
-                return KStyle::sizeFromContents (t, ceData, elementFlags, s, opt, widget);
+                return TDEStyle::sizeFromContents (t, ceData, elementFlags, s, opt, widget);
         }
 
         default:
-            return KStyle::sizeFromContents (t, ceData, elementFlags, s, opt, widget);
+            return TDEStyle::sizeFromContents (t, ceData, elementFlags, s, opt, widget);
     }
 
-    return KStyle::sizeFromContents (t, ceData, elementFlags, s, opt, widget);
+    return TDEStyle::sizeFromContents (t, ceData, elementFlags, s, opt, widget);
 }
 
 int PlastikStyle::styleHint( TQ_StyleHint stylehint,
@@ -3489,13 +3489,13 @@ int PlastikStyle::styleHint( TQ_StyleHint stylehint,
 	}
 
         default:
-            return KStyle::styleHint(stylehint, ceData, elementFlags, option, returnData, widget);
+            return TDEStyle::styleHint(stylehint, ceData, elementFlags, option, returnData, widget);
     }
 }
 
 bool PlastikStyle::objectEventHandler( const TQStyleControlElementData &ceData, ControlElementFlags elementFlags, void* source, TQEvent *ev )
 {
-    if (KStyle::objectEventHandler(ceData, elementFlags, source, ev) )
+    if (TDEStyle::objectEventHandler(ceData, elementFlags, source, ev) )
         return true;
 
     if (ceData.widgetObjectTypes.contains(TQOBJECT_OBJECT_NAME_STRING)) {

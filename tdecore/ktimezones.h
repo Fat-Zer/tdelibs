@@ -49,7 +49,7 @@ class KTimezonesPrivate;
  * @author S.R.Haque <srhaque@iee.org>.
  */
 class TDECORE_EXPORT KTimezoneSource :
-    public KShared
+    public TDEShared
 {
 public:
     KTimezoneSource(const TQString &db);
@@ -114,7 +114,7 @@ public:
      * @param comment description of the timezone, if any.
      */
     KTimezone(
-        KSharedPtr<KTimezoneSource> db, const TQString &name,
+        TDESharedPtr<KTimezoneSource> db, const TQString &name,
         const TQString &countryCode = TQString(), float latitude = UNKNOWN, float longitude = UNKNOWN,
         const TQString &comment = TQString());
     ~KTimezone();
@@ -191,7 +191,7 @@ private:
     KTimezone(const KTimezone&);
     KTimezone& operator=(const KTimezone&);
 
-    KSharedPtr<KTimezoneSource> m_db;
+    TDESharedPtr<KTimezoneSource> m_db;
     TQString m_name;
     TQString m_countryCode;
     float m_latitude;

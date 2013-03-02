@@ -23,7 +23,7 @@
 
 #include <tqlabel.h>
 #include <tqlayout.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 KMPropDriver::KMPropDriver(TQWidget *parent, const char *name)
 : KMPropWidget(parent,name)

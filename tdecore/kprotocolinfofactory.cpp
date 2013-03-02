@@ -18,11 +18,11 @@
 */
 
 #include <kstandarddirs.h>
-#include <kglobal.h>
-#include <kapplication.h>
+#include <tdeglobal.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
-#include <ksycoca.h>
-#include <ksycocadict.h>
+#include <tdesycoca.h>
+#include <tdesycocadict.h>
 
 #include "kprotocolinfofactory.h"
 

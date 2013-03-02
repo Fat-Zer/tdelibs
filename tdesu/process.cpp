@@ -48,7 +48,7 @@
 #include <tqcstring.h>
 #include <tqfile.h>
 
-#include <kconfig.h>
+#include <tdeconfig.h>
 #include <kdebug.h>
 #include <kstandarddirs.h>
 
@@ -74,7 +74,7 @@ int PtyProcess::waitMS(int fd,int ms)
 */
 bool PtyProcess::checkPid(pid_t pid)
 {
-	KConfig* config = KGlobal::config();
+	TDEConfig* config = TDEGlobal::config();
 	config->setGroup("super-user-command");
 	TQString superUserCommand = config->readEntry("super-user-command", DEFAULT_SUPER_USER_COMMAND);
 	//sudo does not accept signals from user so we except it
@@ -375,7 +375,7 @@ int PtyProcess::exec(const TQCString &command, const QCStringList &args)
         path = command;
     else 
     {
-        TQString file = KStandardDirs::findExe(command);
+        TQString file = TDEStandardDirs::findExe(command);
         if (file.isEmpty()) 
         {
             kdError(900) << k_lineinfo << command << " not found\n"; 

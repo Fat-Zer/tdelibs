@@ -41,14 +41,14 @@
 #include <tqdatetime.h>
 
 #include <kdebug.h>
-#include <kapplication.h>
-#include <klocale.h>
-#include <kconfig.h>
+#include <tdeapplication.h>
+#include <tdelocale.h>
+#include <tdeconfig.h>
 #include <kstandarddirs.h>
 #include <tdesocketbase.h>
 #include <klibloader.h>
-#include <kmessagebox.h>
-#include <kaction.h>
+#include <tdemessagebox.h>
+#include <tdeaction.h>
 #include <kdialogbase.h>
 #include <kextendedsocket.h>
 #include <kprocess.h>
@@ -111,7 +111,7 @@ TQString KMCupsManager::driverDirectory()
 
 TQString KMCupsManager::cupsInstallDir()
 {
-	KConfig	*conf=  KMFactory::self()->printConfig();
+	TDEConfig	*conf=  KMFactory::self()->printConfig();
 	conf->setGroup("CUPS");
 	TQString	dir = conf->readPathEntry("InstallDir");
 	return dir;
@@ -628,7 +628,7 @@ DrMain* KMCupsManager::loadMaticDriver(const TQString& drname)
 	TQStringList	comps = TQStringList::split('/', drname, false);
 	TQString	tmpFile = locateLocal("tmp", "foomatic_" + kapp->randomString(8));
 	TQString	PATH = getenv("PATH") + TQString::fromLatin1(":/usr/sbin:/usr/local/sbin:/opt/sbin:/opt/local/sbin");
-	TQString	exe = KStandardDirs::findExe("foomatic-datafile", PATH);
+	TQString	exe = TDEStandardDirs::findExe("foomatic-datafile", PATH);
 	if (exe.isEmpty())
 	{
 		setErrorMsg(i18n("Unable to find the executable foomatic-datafile "
@@ -638,11 +638,11 @@ DrMain* KMCupsManager::loadMaticDriver(const TQString& drname)
 
 	KPipeProcess	in;
 	TQFile		out(tmpFile);
-	TQString cmd = KProcess::quote(exe);
+	TQString cmd = TDEProcess::quote(exe);
 	cmd += " -t cups -d ";
-	cmd += KProcess::quote(comps[2]);
+	cmd += TDEProcess::quote(comps[2]);
 	cmd += " -p ";
-	cmd += KProcess::quote(comps[1]);
+	cmd += TDEProcess::quote(comps[1]);
 	if (in.open(cmd) && out.open(IO_WriteOnly))
 	{
 		TQTextStream	tin(&in), tout(&out);
@@ -915,15 +915,15 @@ TQStringList KMCupsManager::detectLocalPrinters()
 	return list;
 }
 
-void KMCupsManager::createPluginActions(KActionCollection *coll)
+void KMCupsManager::createPluginActions(TDEActionCollection *coll)
 {
-	KAction	*act = new KAction(i18n("&Export Driver..."), "tdeprint_uploadsmb", 0, this, TQT_SLOT(exportDriver()), coll, "plugin_export_driver");
+	TDEAction	*act = new TDEAction(i18n("&Export Driver..."), "tdeprint_uploadsmb", 0, this, TQT_SLOT(exportDriver()), coll, "plugin_export_driver");
 	act->setGroup("plugin");
-	act = new KAction(i18n("&Printer IPP Report"), "tdeprint_report", 0, this, TQT_SLOT(printerIppReport()), coll, "plugin_printer_ipp_report");
+	act = new TDEAction(i18n("&Printer IPP Report"), "tdeprint_report", 0, this, TQT_SLOT(printerIppReport()), coll, "plugin_printer_ipp_report");
 	act->setGroup("plugin");
 }
 
-void KMCupsManager::validatePluginActions(KActionCollection *coll, KMPrinter *pr)
+void KMCupsManager::validatePluginActions(TDEActionCollection *coll, KMPrinter *pr)
 {
 	// save selected printer for future use in slots
 	m_currentprinter = pr;
@@ -992,7 +992,7 @@ void KMCupsManager::checkUpdatePossibleInternal()
 {
 	kdDebug(500) << "Checking for update possible" << endl;
 	delete m_socket;
-        m_socket = new KNetwork::KBufferedSocket;
+        m_socket = new KNetwork::TDEBufferedSocket;
 	m_socket->setTimeout( 1500 );
 	connect( m_socket, TQT_SIGNAL( connected(const KResolverEntry&) ), 
                 TQT_SLOT( slotConnectionSuccess() ) );
@@ -1055,14 +1055,14 @@ void KMCupsManager::slotConnectionFailed( int errcode )
     TQString einfo;
 
     switch (errcode) {
-    case KNetwork::KSocketBase::ConnectionRefused:
-    case KNetwork::KSocketBase::ConnectionTimedOut:
+    case KNetwork::TDESocketBase::ConnectionRefused:
+    case KNetwork::TDESocketBase::ConnectionTimedOut:
         einfo = i18n("connection refused") + TQString(" (%1)").arg(errcode);
         break;
-    case KNetwork::KSocketBase::LookupFailure:
+    case KNetwork::TDESocketBase::LookupFailure:
         einfo = i18n("host not found") + TQString(" (%1)").arg(errcode);
         break;
-    case KNetwork::KSocketBase::WouldBlock:
+    case KNetwork::TDESocketBase::WouldBlock:
     default:
         einfo = i18n("read failed (%1)").arg(errcode);
         break;

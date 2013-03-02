@@ -1,7 +1,7 @@
 #include <kmacroexpander.h>
 
-#include <kapplication.h>
-#include <kcmdlineargs.h>
+#include <tdeapplication.h>
+#include <tdecmdlineargs.h>
 #include <kdebug.h>
 
 #include <stdlib.h>
@@ -51,8 +51,8 @@ protected:
 
 int main(int argc, char *argv[])
 {
-  KCmdLineArgs::init(argc, argv, ":", "", "", "");
-  KApplication app(false,false);
+  TDECmdLineArgs::init(argc, argv, ":", "", "", "");
+  TDEApplication app(false,false);
   TQString s, s2;
 
   TQMap<TQChar,TQStringList> map1;

@@ -23,7 +23,7 @@
 
 #include <tqdict.h>
 #include <kdialogbase.h>
-#include <klistview.h>
+#include <tdelistview.h>
 
 class TQButtonGroup;
 class TQCheckBox;
@@ -31,21 +31,21 @@ class TQGroupBox;
 class TQLabel;
 class TQLineEdit;
 class TQRadioButton;
-class KAccel;
-class KAccelActions;
-class KActionCollection;
-class KConfigBase;
-class KGlobalAccel;
+class TDEAccel;
+class TDEAccelActions;
+class TDEActionCollection;
+class TDEConfigBase;
+class TDEGlobalAccel;
 class KKeySequence;
-class KShortcut;
-class KShortcutList;
+class TDEShortcut;
+class TDEShortcutList;
 class KKeyChooserItem;
 
 /**
- * @short Widget for configuration of KAccel and KGlobalAccel.
+ * @short Widget for configuration of TDEAccel and TDEGlobalAccel.
  *
- * Configure dictionaries of key/action associations for KAccel and
- * KGlobalAccel.
+ * Configure dictionaries of key/action associations for TDEAccel and
+ * TDEGlobalAccel.
  *
  * The class takes care of all aspects of configuration, including
  * handling key conflicts internally. Connect to the allDefault()
@@ -73,15 +73,15 @@ class TDEUI_EXPORT KKeyChooser : public TQWidget
 	/**
 	 * \overload
 	 * @param parent parent widget
-	 * @param coll the KActionCollection to configure
+	 * @param coll the TDEActionCollection to configure
 	 * @param bAllowLetterShortcuts Set to false if unmodified alphanumeric
      *  keys ('A', '1', etc.) are not permissible shortcuts.
      */
-	KKeyChooser( KActionCollection* coll, TQWidget* parent, bool bAllowLetterShortcuts = true );
+	KKeyChooser( TDEActionCollection* coll, TQWidget* parent, bool bAllowLetterShortcuts = true );
 
-    KKeyChooser( KAccel* actions, TQWidget* parent, bool bAllowLetterShortcuts = true );
-	KKeyChooser( KGlobalAccel* actions, TQWidget* parent );
-	KKeyChooser( KShortcutList*, TQWidget* parent, ActionType type = Application, bool bAllowLetterShortcuts = true );
+    KKeyChooser( TDEAccel* actions, TQWidget* parent, bool bAllowLetterShortcuts = true );
+	KKeyChooser( TDEGlobalAccel* actions, TQWidget* parent );
+	KKeyChooser( TDEShortcutList*, TQWidget* parent, ActionType type = Application, bool bAllowLetterShortcuts = true );
 
 	virtual ~KKeyChooser();
 
@@ -89,16 +89,16 @@ class TDEUI_EXPORT KKeyChooser : public TQWidget
 	 * Insert an action collection, i.e. add all its actions to the ones
 	 * already associated with the KKeyChooser object.
 	 */
-	bool insert( KActionCollection* ); // #### KDE4 : remove me
+	bool insert( TDEActionCollection* ); // #### KDE4 : remove me
     /**
 	 * Insert an action collection, i.e. add all its actions to the ones
 	 * already associated with the KKeyChooser object.
 	 * @param title subtree title of this collection of shortcut.
 	 * @since 3.1
 	 */
-    bool insert( KActionCollection *, const TQString &title);
+    bool insert( TDEActionCollection *, const TQString &title);
 
-	void syncToConfig( const TQString& sConfigGroup, KConfigBase* pConfig, bool bClearUnset );
+	void syncToConfig( const TQString& sConfigGroup, TDEConfigBase* pConfig, bool bClearUnset );
 
 	/**
 	 * This function writes any shortcut changes back to the original
@@ -108,7 +108,7 @@ class TDEUI_EXPORT KKeyChooser : public TQWidget
 
 	/**
 	 * This commits and then saves the actions to disk.
-	 * Any KActionCollection objects with the xmlFile() value set
+	 * Any TDEActionCollection objects with the xmlFile() value set
 	 * will be written to an XML file.  All other will be written
 	 * to the application's rc file.
 	 */
@@ -127,7 +127,7 @@ class TDEUI_EXPORT KKeyChooser : public TQWidget
          *
          * @since 3.2
          */
-        static bool checkGlobalShortcutsConflict( const KShortcut& cut, bool warnUser, TQWidget* parent );
+        static bool checkGlobalShortcutsConflict( const TDEShortcut& cut, bool warnUser, TQWidget* parent );
 
         /**
          * Checks whether the given shortcut conflicts with standard keyboard shortcuts.
@@ -142,7 +142,7 @@ class TDEUI_EXPORT KKeyChooser : public TQWidget
          *
          * @since 3.2
          */
-        static bool checkStandardShortcutsConflict( const KShortcut& cut, bool warnUser, TQWidget* parent );
+        static bool checkStandardShortcutsConflict( const TDEShortcut& cut, bool warnUser, TQWidget* parent );
 
  signals:
 	/**
@@ -168,9 +168,9 @@ class TDEUI_EXPORT KKeyChooser : public TQWidget
 	enum { NoKey = 1, DefaultKey, CustomKey };
 
 	void initGUI( ActionType type, bool bAllowLetterShortcuts );
-	bool insert( KAccel* );
-	bool insert( KGlobalAccel* );
-	bool insert( KShortcutList* );
+	bool insert( TDEAccel* );
+	bool insert( TDEGlobalAccel* );
+	bool insert( TDEShortcutList* );
 	/// @since 3.1
 	void buildListView( uint iList, const TQString &title = TQString::null );
 
@@ -178,9 +178,9 @@ class TDEUI_EXPORT KKeyChooser : public TQWidget
 
 	void updateButtons();
 	void fontChange( const TQFont& _font );
-	void setShortcut( const KShortcut& cut );
-	bool isKeyPresent( const KShortcut& cut, bool warnuser = true );
-        bool isKeyPresentLocally( const KShortcut& cut, KKeyChooserItem* ignoreItem, const TQString& warnText );
+	void setShortcut( const TDEShortcut& cut );
+	bool isKeyPresent( const TDEShortcut& cut, bool warnuser = true );
+        bool isKeyPresentLocally( const TDEShortcut& cut, KKeyChooserItem* ignoreItem, const TQString& warnText );
 	void _warning( const KKeySequence& seq, TQString sAction, TQString sTitle );
 
  protected slots:
@@ -188,7 +188,7 @@ class TDEUI_EXPORT KKeyChooser : public TQWidget
 	void slotDefaultKey();
 	void slotCustomKey();
 	void slotListItemSelected( TQListViewItem *item );
-	void capturedShortcut( const KShortcut& cut );
+	void capturedShortcut( const TDEShortcut& cut );
         void slotSettingsChanged( int );
         void slotListItemDoubleClicked ( TQListViewItem * ipoQListViewItem, const TQPoint & ipoQPoint, int c );
 
@@ -205,19 +205,19 @@ class TDEUI_EXPORT KKeyChooser : public TQWidget
 	TQRadioButton* m_prbCustom;
 
  private:
-        bool isKeyPresentLocally( const KShortcut& cut, KKeyChooserItem* ignoreItem, bool bWarnUser );
+        bool isKeyPresentLocally( const TDEShortcut& cut, KKeyChooserItem* ignoreItem, bool bWarnUser );
         static bool promptForReassign( const KKeySequence& cut, const TQString& sAction, ActionType action, TQWidget* parent );
         // Remove the key sequences contained in cut from the standard shortcut @p name
         // which currently has @p origCut as shortcut.
-        static void removeStandardShortcut( const TQString& name, KKeyChooser* chooser, const KShortcut &origCut, const KShortcut &cut );
+        static void removeStandardShortcut( const TQString& name, KKeyChooser* chooser, const TDEShortcut &origCut, const TDEShortcut &cut );
         // Remove the key sequences contained in cut from the global shortcut @p name
         // which currently has @p origCut as shortcut.
-        static void removeGlobalShortcut( const TQString& name, KKeyChooser* chooser, const KShortcut &origCut, const KShortcut &cut );
-        static void readGlobalKeys( TQMap< TQString, KShortcut >& map );
-        static bool checkGlobalShortcutsConflict( const KShortcut& cut, bool bWarnUser, TQWidget* parent,
-            const TQMap< TQString, KShortcut >& map, const TQString& ignoreAction );
+        static void removeGlobalShortcut( const TQString& name, KKeyChooser* chooser, const TDEShortcut &origCut, const TDEShortcut &cut );
+        static void readGlobalKeys( TQMap< TQString, TDEShortcut >& map );
+        static bool checkGlobalShortcutsConflict( const TDEShortcut& cut, bool bWarnUser, TQWidget* parent,
+            const TQMap< TQString, TDEShortcut >& map, const TQString& ignoreAction );
         // Remove the key sequences contained in cut from this item
-        bool removeShortcut( const TQString& name, const KShortcut &cut );
+        bool removeShortcut( const TQString& name, const TDEShortcut &cut );
 
 private slots:
         void captureCurrentItem();
@@ -227,14 +227,14 @@ private slots:
 	/**
 	 * @obsolete
 	 */
-	KKeyChooser( KAccel* actions, TQWidget* parent,
+	KKeyChooser( TDEAccel* actions, TQWidget* parent,
 			bool bCheckAgainstStdKeys,
 			bool bAllowLetterShortcuts,
 			bool bAllowWinKey = false );
 	/**
 	 * @obsolete
 	 */
-	KKeyChooser( KGlobalAccel* actions, TQWidget* parent,
+	KKeyChooser( TDEGlobalAccel* actions, TQWidget* parent,
 			bool bCheckAgainstStdKeys,
 			bool bAllowLetterShortcuts,
 			bool bAllowWinKey = false );
@@ -256,14 +256,14 @@ private slots:
 typedef KKeyChooser KKeyChooser;
 
 /**
- * @short Dialog for configuration of KActionCollection, KAccel, and KGlobalAccel.
+ * @short Dialog for configuration of TDEActionCollection, TDEAccel, and TDEGlobalAccel.
  *
  * The KKeyDialog class is used for configuring dictionaries of key/action
- * associations for KActionCollection, KAccel, and KGlobalAccel. It uses the KKeyChooser widget
+ * associations for TDEActionCollection, TDEAccel, and TDEGlobalAccel. It uses the KKeyChooser widget
  * and offers buttons to set all keys to defaults and invoke on-line help.
  *
  * Several static methods are supplied which provide the most convenient interface
- * to the dialog. The most common and most encouraged use is with KActionCollection.
+ * to the dialog. The most common and most encouraged use is with TDEActionCollection.
  *
  * \code
  * KKeyDialog::configure( actionCollection() );
@@ -296,7 +296,7 @@ public:
 	 * Simply call insert with the action collections of each one in turn.
 	 * @return true :)
 	 */
-	bool insert( KActionCollection* ); // #### KDE4: remove me
+	bool insert( TDEActionCollection* ); // #### KDE4: remove me
 
         /**
          * Insert an action collection, i.e. add all its actions to the ones
@@ -306,11 +306,11 @@ public:
 	 * Simply call insert with the action collections of each one in turn.
          *
          * @param title the title associated with the collection (if null, the
-         * KAboutData::progName() of the collection's instance is used)
+         * TDEAboutData::progName() of the collection's instance is used)
          * @return true :)
 	 * @since 3.1
 	 */
-        bool insert(KActionCollection *, const TQString &title);
+        bool insert(TDEActionCollection *, const TQString &title);
 
 	/**
 	 * Run the dialog and call commitChanges() if @p bSaveSettings
@@ -332,64 +332,64 @@ public:
 	 * the *uirc file which they were intially read from.
 	 * @return Accept if the dialog was closed with OK, Reject otherwise.
 	 */
-	static int configure( KActionCollection* coll, TQWidget* parent = 0, bool bSaveSettings = true );
+	static int configure( TDEActionCollection* coll, TQWidget* parent = 0, bool bSaveSettings = true );
 
 	/**
 	 * This is an overloaded member function, provided for convenience.
 	 * It behaves essentially like the above function, except that settings
-	 * are saved to a *.rc file using KConfig.
+	 * are saved to a *.rc file using TDEConfig.
 	 */
-	static int configure( KAccel* keys, TQWidget* parent = 0, bool bSaveSettings = true );
+	static int configure( TDEAccel* keys, TQWidget* parent = 0, bool bSaveSettings = true );
 
 	/**
 	 * This is an overloaded member function, provided for convenience.
 	 * It behaves essentially like the above function.
 	 */
-	static int configure( KGlobalAccel* keys, TQWidget* parent = 0, bool bSaveSettings = true );
+	static int configure( TDEGlobalAccel* keys, TQWidget* parent = 0, bool bSaveSettings = true );
 
 
 	/**
 	 * This is an overloaded member function, provided for convenience.
 	 * It behaves essentially like the above function.
 	 *
-	 * @param coll the KActionCollection to configure
+	 * @param coll the TDEActionCollection to configure
 	 * @param bAllowLetterShortcuts Set to false if unmodified alphanumeric
 	 *  keys ('A', '1', etc.) are not permissible shortcuts.
 	 * @param parent the parent widget to attach to
 	 * @param bSaveSettings if true, the settings will also be saved back to
 	 * the *uirc file which they were intially read from.
 	 */
-	static int configure( KActionCollection* coll, bool bAllowLetterShortcuts, TQWidget* parent = 0, bool bSaveSettings = true ); // BCI: merge with bAllowLetterShortcuts = true
+	static int configure( TDEActionCollection* coll, bool bAllowLetterShortcuts, TQWidget* parent = 0, bool bSaveSettings = true ); // BCI: merge with bAllowLetterShortcuts = true
 
 	/**
 	 * This is an overloaded member function, provided for convenience.
 	 * It behaves essentially like the above function.
 	 **/
-	static int configure( KAccel* keys, bool bAllowLetterShortcuts, TQWidget* parent = 0, bool bSaveSettings = true ); // BCI: merge with bAllowLetterShortcuts = true
+	static int configure( TDEAccel* keys, bool bAllowLetterShortcuts, TQWidget* parent = 0, bool bSaveSettings = true ); // BCI: merge with bAllowLetterShortcuts = true
 
 	/**
 	 * This is an overloaded member function, provided for convenience.
 	 * It behaves essentially like the above function.
 	 **/
-	static int configure( KGlobalAccel* keys, bool bAllowLetterShortcuts, TQWidget* parent = 0, bool bSaveSettings = true ); // BCI: merge with bAllowLetterShortcuts = true
+	static int configure( TDEGlobalAccel* keys, bool bAllowLetterShortcuts, TQWidget* parent = 0, bool bSaveSettings = true ); // BCI: merge with bAllowLetterShortcuts = true
 
 	/**
 	 * @deprecated Obsolete.
 	 * Please use KKeyDialog::configure instead
 	 */
-	static KDE_DEPRECATED int configureKeys( KAccel* keys, bool save_settings = true, TQWidget* parent = 0 )
+	static KDE_DEPRECATED int configureKeys( TDEAccel* keys, bool save_settings = true, TQWidget* parent = 0 )
 		{ return configure( keys, parent, save_settings ); }
 	/**
 	 * @deprecated Obsolete.
 	 * Please use KKeyDialog::configure instead
 	 */
-	static KDE_DEPRECATED int configureKeys( KGlobalAccel* keys, bool save_settings = true, TQWidget* parent = 0 )
+	static KDE_DEPRECATED int configureKeys( TDEGlobalAccel* keys, bool save_settings = true, TQWidget* parent = 0 )
 		{ return configure( keys, parent, save_settings ); }
 	/**
 	 * @deprecated Obsolete.
 	 * Please use KKeyDialog::configure instead
 	 */
-	static KDE_DEPRECATED int configureKeys( KActionCollection* coll, const TQString& /*xmlfile*/,
+	static KDE_DEPRECATED int configureKeys( TDEActionCollection* coll, const TQString& /*xmlfile*/,
 		bool save_settings = true, TQWidget* parent = 0 )
 		{ return configure( coll, parent, save_settings ); }
 

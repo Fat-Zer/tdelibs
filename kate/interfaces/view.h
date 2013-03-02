@@ -19,16 +19,16 @@
 #ifndef _KATE_VIEW_INCLUDE_
 #define _KATE_VIEW_INCLUDE_
 
-#include <ktexteditor/document.h>
-#include <ktexteditor/view.h>
-#include <ktexteditor/clipboardinterface.h>
-#include <ktexteditor/popupmenuinterface.h>
-#include <ktexteditor/markinterface.h>
-#include <ktexteditor/viewcursorinterface.h>
-#include <ktexteditor/codecompletioninterface.h>
-#include <ktexteditor/dynwordwrapinterface.h>
+#include <tdetexteditor/document.h>
+#include <tdetexteditor/view.h>
+#include <tdetexteditor/clipboardinterface.h>
+#include <tdetexteditor/popupmenuinterface.h>
+#include <tdetexteditor/markinterface.h>
+#include <tdetexteditor/viewcursorinterface.h>
+#include <tdetexteditor/codecompletioninterface.h>
+#include <tdetexteditor/dynwordwrapinterface.h>
 
-class KConfig;
+class TDEConfig;
 
 namespace Kate
 {
@@ -189,14 +189,14 @@ class KATEPARTINTERFACES_EXPORT View : public KTextEditor::View, public KTextEdi
 
   public:
     /**
-      Reads session config out of the KConfig object. This also includes
+      Reads session config out of the TDEConfig object. This also includes
       the actual cursor position and the bookmarks.
     */
-    virtual void readSessionConfig(KConfig *) { ; };
+    virtual void readSessionConfig(TDEConfig *) { ; };
     /**
-      Writes session config into the KConfig object.
+      Writes session config into the TDEConfig object.
     */
-    virtual void writeSessionConfig(KConfig *) { ; };
+    virtual void writeSessionConfig(TDEConfig *) { ; };
 
   public slots:
     /**

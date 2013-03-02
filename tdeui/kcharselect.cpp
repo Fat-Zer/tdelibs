@@ -36,11 +36,11 @@
 #include <tqtooltip.h>
 #include <tqvalidator.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdebug.h>
 #include <kdialog.h>
 #include <klineedit.h>
-#include <klocale.h>
+#include <tdelocale.h>
 
 class KCharSelect::KCharSelectPrivate
 {

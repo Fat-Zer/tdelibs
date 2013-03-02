@@ -30,12 +30,12 @@
 #include <kateschema.h>
 #include <katetextline.h>
 
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kcolorbutton.h>
 #include <kdebug.h>
 #include <kdialog.h> // for spacingHint()
-#include <kfontdialog.h>
-#include <klocale.h>
+#include <tdefontdialog.h>
+#include <tdelocale.h>
 #include <kprinter.h>
 #include <kurl.h>
 #include <kuser.h> // for loginName
@@ -190,11 +190,11 @@ bool KatePrinter::print (KateDocument *doc)
          KUser u (KUser::UseRealUserID);
          tags["u"] = u.loginName();
 
-         tags["d"] = KGlobal::locale()->formatDateTime(dt, true, false);
-         tags["D"] =  KGlobal::locale()->formatDateTime(dt, false, false);
-         tags["h"] =  KGlobal::locale()->formatTime(TQT_TQTIME_OBJECT(dt.time()), false);
-         tags["y"] =  KGlobal::locale()->formatDate(TQT_TQDATE_OBJECT(dt.date()), true);
-         tags["Y"] =  KGlobal::locale()->formatDate(TQT_TQDATE_OBJECT(dt.date()), false);
+         tags["d"] = TDEGlobal::locale()->formatDateTime(dt, true, false);
+         tags["D"] =  TDEGlobal::locale()->formatDateTime(dt, false, false);
+         tags["h"] =  TDEGlobal::locale()->formatTime(TQT_TQTIME_OBJECT(dt.time()), false);
+         tags["y"] =  TDEGlobal::locale()->formatDate(TQT_TQDATE_OBJECT(dt.date()), true);
+         tags["Y"] =  TDEGlobal::locale()->formatDate(TQT_TQDATE_OBJECT(dt.date()), false);
          tags["f"] =  doc->url().fileName();
          tags["U"] =  doc->url().prettyURL();
          if ( selectionOnly )
@@ -888,7 +888,7 @@ void KatePrintHeaderFooter::setHFFont()
 {
   TQFont fnt( lFontPreview->font() );
   // display a font dialog
-  if ( KFontDialog::getFont( fnt, false, this ) == KFontDialog::Accepted )
+  if ( TDEFontDialog::getFont( fnt, false, this ) == TDEFontDialog::Accepted )
   {
     // change strFont
     strFont = fnt.toString();

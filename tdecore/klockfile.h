@@ -25,22 +25,22 @@
 
 #include <ksharedptr.h>
 /**
- * The KLockFile class provides NFS safe lockfiles.
+ * The TDELockFile class provides NFS safe lockfiles.
  *
  * @author Waldo Bastian <bastian@kde.org>
  * @since 3.3
  */
-class TDECORE_EXPORT KLockFile : public KShared
+class TDECORE_EXPORT TDELockFile : public TDEShared
 {
 public:
-   typedef KSharedPtr<KLockFile> Ptr;
+   typedef TDESharedPtr<TDELockFile> Ptr;
 
-   KLockFile(const TQString &file);
+   TDELockFile(const TQString &file);
 
    /**
     * Destroys the object, releasing the lock if held
     **/
-   ~KLockFile();
+   ~TDELockFile();
 
    /**
     * Possible return values of the lock function.
@@ -116,8 +116,8 @@ public:
    bool getLockInfo(int &pid, TQString &hostname, TQString &appname);
 
 private:
-   class KLockFilePrivate;
-   KLockFilePrivate *d;
+   class TDELockFilePrivate;
+   TDELockFilePrivate *d;
 };
 
 #endif

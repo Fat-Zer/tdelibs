@@ -23,16 +23,16 @@
 #define KMIMESOURCEFACTORY_H
 
 #include <tqmime.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 
 class KMimeSourceFactoryPrivate;
-class KInstance;
+class TDEInstance;
 
 /**
- * An extension to TQMimeSourceFactory that uses KIconLoader to
+ * An extension to TQMimeSourceFactory that uses TDEIconLoader to
  * find images.
  *
- * Normally you don't have to instantiate this class at all, KApplication does that for
+ * Normally you don't have to instantiate this class at all, TDEApplication does that for
  * you automagically and sets TQMimeSourceFactory::setDefaultFactory().
  *
  * @author Peter Putzer <putzer@kde.org>
@@ -46,7 +46,7 @@ public:
    *
    * @param loader is the iconloader used to find images.
    */
-  KMimeSourceFactory (KIconLoader* loader = KGlobal::iconLoader());
+  KMimeSourceFactory (TDEIconLoader* loader = TDEGlobal::iconLoader());
 
   /**
    * Destructor.
@@ -74,10 +74,10 @@ protected:
 private:
   /**
    * @internal
-   * Associate with a KInstance so we can pull its iconLoader() when need arises.
+   * Associate with a TDEInstance so we can pull its iconLoader() when need arises.
    */
-  friend class KInstance;
-  void setInstance(KInstance *);
+  friend class TDEInstance;
+  void setInstance(TDEInstance *);
 
   KMimeSourceFactoryPrivate* d;
 };

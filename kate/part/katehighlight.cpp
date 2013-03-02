@@ -32,19 +32,19 @@
 #include "kateschema.h"
 #include "kateconfig.h"
 
-#include <kconfig.h>
-#include <kglobal.h>
+#include <tdeconfig.h>
+#include <tdeglobal.h>
 #include <kinstance.h>
 #include <kmimetype.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kregexp.h>
-#include <kpopupmenu.h>
-#include <kglobalsettings.h>
+#include <tdepopupmenu.h>
+#include <tdeglobalsettings.h>
 #include <kdebug.h>
 #include <kstandarddirs.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kstaticdeleter.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 
 #include <tqstringlist.h>
 #include <tqtextstream.h>
@@ -1599,7 +1599,7 @@ void KateHighlighting::doHighlight ( KateTextLine *prevLine,
 
 void KateHighlighting::loadWildcards()
 {
-  KConfig *config = KateHlManager::self()->getKConfig();
+  TDEConfig *config = KateHlManager::self()->getTDEConfig();
   config->setGroup("Highlighting " + iName);
 
   TQString extensionString = config->readEntry("Wildcards", iWildcards);
@@ -1636,7 +1636,7 @@ TQStringList& KateHighlighting::getPlainExtensions()
 
 TQString KateHighlighting::getMimetypes()
 {
-  KConfig *config = KateHlManager::self()->getKConfig();
+  TDEConfig *config = KateHlManager::self()->getTDEConfig();
   config->setGroup("Highlighting " + iName);
 
   return config->readEntry("Mimetypes", iMimetypes);
@@ -1644,7 +1644,7 @@ TQString KateHighlighting::getMimetypes()
 
 int KateHighlighting::priority()
 {
-  KConfig *config = KateHlManager::self()->getKConfig();
+  TDEConfig *config = KateHlManager::self()->getTDEConfig();
   config->setGroup("Highlighting " + iName);
 
   return config->readNumEntry("Priority", m_priority);
@@ -1652,7 +1652,7 @@ int KateHighlighting::priority()
 
 KateHlData *KateHighlighting::getData()
 {
-  KConfig *config = KateHlManager::self()->getKConfig();
+  TDEConfig *config = KateHlManager::self()->getTDEConfig();
   config->setGroup("Highlighting " + iName);
 
   KateHlData *hlData = new KateHlData(
@@ -1666,7 +1666,7 @@ KateHlData *KateHighlighting::getData()
 
 void KateHighlighting::setData(KateHlData *hlData)
 {
-  KConfig *config = KateHlManager::self()->getKConfig();
+  TDEConfig *config = KateHlManager::self()->getTDEConfig();
   config->setGroup("Highlighting " + iName);
 
   config->writeEntry("Wildcards",hlData->wildcards);
@@ -1676,7 +1676,7 @@ void KateHighlighting::setData(KateHlData *hlData)
 
 void KateHighlighting::getKateHlItemDataList (uint schema, KateHlItemDataList &list)
 {
-  KConfig *config = KateHlManager::self()->getKConfig();
+  TDEConfig *config = KateHlManager::self()->getTDEConfig();
   config->setGroup("Highlighting " + iName + " - Schema " + KateFactory::self()->schemaManager()->name(schema));
 
   list.clear();
@@ -1729,7 +1729,7 @@ void KateHighlighting::getKateHlItemDataList (uint schema, KateHlItemDataList &l
  */
 void KateHighlighting::setKateHlItemDataList(uint schema, KateHlItemDataList &list)
 {
-  KConfig *config = KateHlManager::self()->getKConfig();
+  TDEConfig *config = KateHlManager::self()->getTDEConfig();
   config->setGroup("Highlighting " + iName + " - Schema "
       + KateFactory::self()->schemaManager()->name(schema));
 
@@ -2094,7 +2094,7 @@ bool KateHighlighting::isInWord( TQChar c, int attrib ) const
 
 bool KateHighlighting::canBreakAt( TQChar c, int attrib ) const
 {
-  static const TQString& sq = KGlobal::staticQString("\"'");
+  static const TQString& sq = TDEGlobal::staticQString("\"'");
   return (m_additionalData[ hlKeyForAttrib( attrib ) ]->wordWrapDeliminator.find(c) != -1) && (sq.find(c) == -1);
 }
 
@@ -3264,7 +3264,7 @@ void KateHlManager::getDefaults(uint schema, KateAttributeList &list)
   error->setSelectedTextColor(Qt::red);
   list.append(error);
 
-  KConfig *config = KateHlManager::self()->self()->getKConfig();
+  TDEConfig *config = KateHlManager::self()->self()->getTDEConfig();
   config->setGroup("Default Item Styles - Schema " + KateFactory::self()->schemaManager()->name(schema));
 
   for (uint z = 0; z < defaultStyles(); z++)
@@ -3317,7 +3317,7 @@ void KateHlManager::getDefaults(uint schema, KateAttributeList &list)
 
 void KateHlManager::setDefaults(uint schema, KateAttributeList &list)
 {
-  KConfig *config =  KateHlManager::self()->self()->getKConfig();
+  TDEConfig *config =  KateHlManager::self()->self()->getTDEConfig();
   config->setGroup("Default Item Styles - Schema " + KateFactory::self()->schemaManager()->name(schema));
 
   for (uint z = 0; z < defaultStyles(); z++)

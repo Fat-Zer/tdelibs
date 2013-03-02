@@ -15,11 +15,11 @@
 #include "kdockwidgettest.h"
 
 #include <tqpushbutton.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kiconloader.h>
 #include <kstatusbar.h>
-#include <kmenubar.h>
-#include <ktoolbar.h>
+#include <tdemenubar.h>
+#include <tdetoolbar.h>
 #include <tqvbox.h>
 
 static const char*folder[]={
@@ -184,7 +184,7 @@ void DockApplication::initMenuBar()
 void DockApplication::initToolBars()
 {
   TQPixmap p(folder);
-  KToolBar* tool_bar_0 = toolBar(0);
+  TDEToolBar* tool_bar_0 = toolBar(0);
   tool_bar_0->setFullSize(false);
   tool_bar_0->insertButton( p, 1 );
   tool_bar_0->insertButton(p, 2 );
@@ -242,7 +242,7 @@ void DockApplication::gSetPix2() {
 }
 
 int main(int argc, char* argv[]) {
-  KApplication a(argc,argv, "kdockdemoapp1");
+  TDEApplication a(argc,argv, "kdockdemoapp1");
   DockApplication* ap = new DockApplication("DockWidget demo");
   ap->setCaption("DockWidget demo");
   a.setMainWidget(ap);

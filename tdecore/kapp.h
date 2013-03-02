@@ -1,6 +1,6 @@
-// kapp.h is the old name. Use #include <kapplication.h> from now on
+// kapp.h is the old name. Use #include <tdeapplication.h> from now on
 #ifdef KDE_NO_COMPAT
-#error include <kapplication.h> instead of <kapp.h>
+#error include <tdeapplication.h> instead of <kapp.h>
 #else
-#include <kapplication.h>
+#include <tdeapplication.h>
 #endif

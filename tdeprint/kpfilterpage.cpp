@@ -26,13 +26,13 @@
 #include <tqtooltip.h>
 #include <tqlayout.h>
 #include <tqwhatsthis.h>
-#include <klistview.h>
-#include <klocale.h>
+#include <tdelistview.h>
+#include <tdelocale.h>
 #include <kiconloader.h>
-#include <kmessagebox.h>
+#include <tdemessagebox.h>
 #include <kactivelabel.h>
 #include <kdebug.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <kdialog.h>
 
 KPFilterPage::KPFilterPage(TQWidget *parent, const char *name)
@@ -126,7 +126,7 @@ KPFilterPage::KPFilterPage(TQWidget *parent, const char *name)
 	m_activefilters.setAutoDelete(true);
 	m_valid = true;
 
-	m_view = new KListView(this);
+	m_view = new TDEListView(this);
 	  TQWhatsThis::add(m_view, whatsThisFilterchainListView);
 	m_view->addColumn("");
 	m_view->setFrameStyle(TQFrame::WinPanel|TQFrame::Sunken);

@@ -19,9 +19,9 @@
 
 #include <kdialog.h>
 #include <kdebug.h>
-#include <kfile.h>
-#include <klistview.h>
-#include <klocale.h>
+#include <tdefile.h>
+#include <tdelistview.h>
+#include <tdelocale.h>
 #include <kstandarddirs.h>
 #include <ktimezones.h>
 #include <ktimezonewidget.h>
@@ -34,7 +34,7 @@
 #define COLUMN_ZONE 3
 
 KTimezoneWidget::KTimezoneWidget(TQWidget *parent, const char *name, KTimezones *db) :
-    KListView(parent, name),
+    TDEListView(parent, name),
     d(0)
 {
     // If the user did not provide a timezone database, we'll use the system default.
@@ -115,7 +115,7 @@ void KTimezoneWidget::setSelected(const TQString &zone, bool selected)
     {
         if (listItem->text(COLUMN_ZONE) == zone)
         {
-            KListView::setSelected(listItem, selected);
+            TDEListView::setSelected(listItem, selected);
 
             // Ensure the selected item is visible as appropriate.
             listItem = selectedItem();

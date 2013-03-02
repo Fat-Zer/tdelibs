@@ -63,8 +63,8 @@ public:
 	bool configureServer(TQWidget *parent = 0);
 	TQStringList detectLocalPrinters();
 
-	void createPluginActions(KActionCollection*);
-	void validatePluginActions(KActionCollection*, KMPrinter*);
+	void createPluginActions(TDEActionCollection*);
+	void validatePluginActions(TDEActionCollection*, KMPrinter*);
 	TQString stateInformation();
 
 public slots:

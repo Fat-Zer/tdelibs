@@ -27,8 +27,8 @@
 #include <tqfiledialog.h>
 
 #include <kbuttonbox.h>
-#include <klocale.h>
-#include <kapplication.h>
+#include <tdelocale.h>
+#include <tdeapplication.h>
 #include <klineedit.h>
 #include <kstdguiitem.h>
 

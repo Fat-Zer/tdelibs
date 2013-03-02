@@ -1,4 +1,4 @@
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <tqwidget.h>
 #include <tqtimer.h>
 #include <stdlib.h>
@@ -134,7 +134,7 @@ KLedTest::timeout()
 
 int main( int argc, char **argv )
 {
-    KApplication a( argc, argv, "KLedTest" );
+    TDEApplication a( argc, argv, "KLedTest" );
     KLedTest widget;
     // -----
     /*

@@ -21,12 +21,12 @@
 
 class TQObject;
 class TQWidget;
-class KAction;
-class KActionCollection;
-class KRecentFilesAction;
-class KToggleAction;
-class KToggleToolBarAction;
-class KToggleFullScreenAction;
+class TDEAction;
+class TDEActionCollection;
+class TDERecentFilesAction;
+class TDEToggleAction;
+class TDEToggleToolBarAction;
+class TDEToggleFullScreenAction;
 
 #include <tqstringlist.h>
 
@@ -40,8 +40,8 @@ class KToggleFullScreenAction;
  * conform to the KDE UI Style Guide
  * @see http://developer.kde.org/documentation/standards/kde/style/basics/index.html .
  *
- * All of the documentation for KAction holds for KStdAction
- * also.  When in doubt on how things work, check the KAction
+ * All of the documentation for TDEAction holds for KStdAction
+ * also.  When in doubt on how things work, check the TDEAction
  * documention first.
  *
  * <b>Simple Example:</b>\n
@@ -50,15 +50,15 @@ class KToggleFullScreenAction;
  * for regular actions.  For example, if you previously had:
  *
  * \code
- * KAction *newAct = new KAction(i18n("&New"), TQIconSet(BarIcon("filenew")),
- *                               KStdAccel::shortcut(KStdAccel::New), this,
+ * TDEAction *newAct = new TDEAction(i18n("&New"), TQIconSet(BarIcon("filenew")),
+ *                               TDEStdAccel::shortcut(TDEStdAccel::New), this,
  *                               TQT_SLOT(fileNew()), actionCollection());
  * \endcode
  *
  * You could drop that and replace it with:
  *
  * \code
- * KAction *newAct = KStdAction::openNew(this, TQT_SLOT(fileNew()),
+ * TDEAction *newAct = KStdAction::openNew(this, TQT_SLOT(fileNew()),
  *                                       actionCollection());
  * \endcode
  *
@@ -97,7 +97,7 @@ class KToggleFullScreenAction;
  * could do it the hard way:
  *
  * \code
- * KAction *cut = actionCollection()->action(KStdAction::stdName(KStdAction::Cut));
+ * TDEAction *cut = actionCollection()->action(KStdAction::stdName(KStdAction::Cut));
  * \endcode
  *
  * Another non-standard usage concerns instantiating the action in the
@@ -165,22 +165,22 @@ namespace KStdAction
 	 * Creates an action corresponding to the
 	 * KStdAction::StdAction enum.
 	 */
-	TDEUI_EXPORT KAction* create( StdAction id, const char *name,
+	TDEUI_EXPORT TDEAction* create( StdAction id, const char *name,
 		const TQObject *recvr, const char *slot,
-		KActionCollection* parent );
+		TDEActionCollection* parent );
 
-	inline KAction* create( StdAction id,
+	inline TDEAction* create( StdAction id,
 		const TQObject *recvr, const char *slot,
-		KActionCollection* parent )
+		TDEActionCollection* parent )
 		{ return KStdAction::create( id, 0, recvr, slot, parent ); }
 
 	/**
 	* @obsolete. Creates an action corresponding to the
 	* KStdAction::StdAction enum.
 	*/
-	inline KAction *action(StdAction act_enum,
+	inline TDEAction *action(StdAction act_enum,
 		const TQObject *recvr, const char *slot,
-		KActionCollection *parent, const char *name = 0L )
+		TDEActionCollection *parent, const char *name = 0L )
 		{ return KStdAction::create( act_enum, name, recvr, slot, parent ); }
 
 	/**
@@ -192,7 +192,7 @@ namespace KStdAction
 	inline const char* stdName(StdAction act_enum) { return name( act_enum ); }
 
        /**
-         * Returns a list of all standard names. Used by KAccelManager
+         * Returns a list of all standard names. Used by TDEAccelManager
          * to give those heigher weight.
 	 * @since 3.1
         */
@@ -201,12 +201,12 @@ namespace KStdAction
 	/**
 	 * Create a new document or window.
 	 */
-	TDEUI_EXPORT KAction *openNew(const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *openNew(const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	 * Open an existing file.
 	 */
-	TDEUI_EXPORT KAction *open(const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *open(const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	 * Open a recently used document. The signature of the slot being called
@@ -217,87 +217,87 @@ namespace KStdAction
 	 * @param parent parent widget
 	 * @param name name of widget
 	 */
-	TDEUI_EXPORT KRecentFilesAction *openRecent(const TQObject *recvr, const char *slot, KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDERecentFilesAction *openRecent(const TQObject *recvr, const char *slot, TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	 * Save the current document.
 	 */
-	TDEUI_EXPORT KAction *save(const TQObject *recvr, const char *slot,
-		KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *save(const TQObject *recvr, const char *slot,
+		TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Save the current document under a different name.
 	*/
-	TDEUI_EXPORT KAction *saveAs(const TQObject *recvr, const char *slot,
-		KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *saveAs(const TQObject *recvr, const char *slot,
+		TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Revert the current document to the last saved version
 	* (essentially will undo all changes).
 	*/
-	TDEUI_EXPORT KAction *revert(const TQObject *recvr, const char *slot,
-		KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *revert(const TQObject *recvr, const char *slot,
+		TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Close the current document.
 	*/
-	TDEUI_EXPORT KAction *close(const TQObject *recvr, const char *slot,
-		KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *close(const TQObject *recvr, const char *slot,
+		TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Print the current document.
 	*/
-	TDEUI_EXPORT KAction *print(const TQObject *recvr, const char *slot,
-		KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *print(const TQObject *recvr, const char *slot,
+		TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Show a print preview of the current document.
 	*/
-	TDEUI_EXPORT KAction *printPreview(const TQObject *recvr, const char *slot,
-		KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *printPreview(const TQObject *recvr, const char *slot,
+		TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Mail this document.
 	*/
-	TDEUI_EXPORT KAction *mail(const TQObject *recvr, const char *slot,
-		KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *mail(const TQObject *recvr, const char *slot,
+		TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Quit the program.
 	*/
-	TDEUI_EXPORT KAction *quit(const TQObject *recvr, const char *slot,
-		KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *quit(const TQObject *recvr, const char *slot,
+		TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Undo the last operation.
 	*/
-	TDEUI_EXPORT KAction *undo(const TQObject *recvr, const char *slot,
-		KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *undo(const TQObject *recvr, const char *slot,
+		TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Redo the last operation.
 	*/
-	TDEUI_EXPORT KAction *redo(const TQObject *recvr, const char *slot,
-		KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *redo(const TQObject *recvr, const char *slot,
+		TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Cut selected area and store it in the clipboard.
 	*/
-	TDEUI_EXPORT KAction *cut(const TQObject *recvr, const char *slot,
-		KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *cut(const TQObject *recvr, const char *slot,
+		TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Copy the selected area into the clipboard.
 	*/
-	TDEUI_EXPORT KAction *copy(const TQObject *recvr, const char *slot,
-		KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *copy(const TQObject *recvr, const char *slot,
+		TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Paste the contents of clipboard at the current mouse or cursor
 	* position.
 	*/
-	TDEUI_EXPORT KAction *paste(const TQObject *recvr, const char *slot,
-		KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *paste(const TQObject *recvr, const char *slot,
+		TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Paste the contents of clipboard at the current mouse or cursor
@@ -305,228 +305,228 @@ namespace KStdAction
 	* menu if Klipper is running.
 	* @since 3.2
 	*/
-	TDEUI_EXPORT KAction *pasteText(const TQObject *recvr, const char *slot,
-		KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *pasteText(const TQObject *recvr, const char *slot,
+		TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Clear the content of the focus widget
 	* @since 3.2
 	*/
-	TDEUI_EXPORT KAction *clear(const TQObject *recvr, const char *slot,
-		KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *clear(const TQObject *recvr, const char *slot,
+		TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Select all elements in the current document.
 	*/
-	TDEUI_EXPORT KAction *selectAll(const TQObject *recvr, const char *slot,
-		KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *selectAll(const TQObject *recvr, const char *slot,
+		TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Deselect any selected elements in the current document.
 	*/
-	TDEUI_EXPORT KAction *deselect(const TQObject *recvr, const char *slot,
-		KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *deselect(const TQObject *recvr, const char *slot,
+		TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Initiate a 'find' request in the current document.
 	*/
-	TDEUI_EXPORT KAction *find(const TQObject *recvr, const char *slot,
-		KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *find(const TQObject *recvr, const char *slot,
+		TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Find the next instance of a stored 'find'.
 	*/
-	TDEUI_EXPORT KAction *findNext(const TQObject *recvr, const char *slot,
-		KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *findNext(const TQObject *recvr, const char *slot,
+		TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Find a previous instance of a stored 'find'.
 	*/
-	TDEUI_EXPORT KAction *findPrev(const TQObject *recvr, const char *slot,
-		KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *findPrev(const TQObject *recvr, const char *slot,
+		TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Find and replace matches.
 	*/
-	TDEUI_EXPORT KAction *replace(const TQObject *recvr, const char *slot,
-		KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *replace(const TQObject *recvr, const char *slot,
+		TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* View the document at its actual size.
 	*/
-	TDEUI_EXPORT KAction *actualSize(const TQObject *recvr, const char *slot,
-		KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *actualSize(const TQObject *recvr, const char *slot,
+		TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Fit the document view to the size of the current window.
 	*/
-	TDEUI_EXPORT KAction *fitToPage(const TQObject *recvr, const char *slot,
-		KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *fitToPage(const TQObject *recvr, const char *slot,
+		TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Fit the document view to the width of the current window.
 	*/
-	TDEUI_EXPORT KAction *fitToWidth(const TQObject *recvr, const char *slot,
-		KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *fitToWidth(const TQObject *recvr, const char *slot,
+		TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Fit the document view to the height of the current window.
 	*/
-	TDEUI_EXPORT KAction *fitToHeight(const TQObject *recvr, const char *slot,
-					KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *fitToHeight(const TQObject *recvr, const char *slot,
+					TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Zoom in.
 	*/
-	TDEUI_EXPORT KAction *zoomIn(const TQObject *recvr, const char *slot,
-				KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *zoomIn(const TQObject *recvr, const char *slot,
+				TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Zoom out.
 	*/
-	TDEUI_EXPORT KAction *zoomOut(const TQObject *recvr, const char *slot,
-				KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *zoomOut(const TQObject *recvr, const char *slot,
+				TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Popup a zoom dialog.
 	*/
-	TDEUI_EXPORT KAction *zoom(const TQObject *recvr, const char *slot,
-				KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *zoom(const TQObject *recvr, const char *slot,
+				TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Redisplay or redraw the document.
 	*/
-	TDEUI_EXPORT KAction *redisplay(const TQObject *recvr, const char *slot,
-				KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *redisplay(const TQObject *recvr, const char *slot,
+				TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Move up (web style menu).
 	*/
-	TDEUI_EXPORT KAction *up(const TQObject *recvr, const char *slot,
-			KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *up(const TQObject *recvr, const char *slot,
+			TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Move back (web style menu).
 	*/
-	TDEUI_EXPORT KAction *back(const TQObject *recvr, const char *slot,
-				KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *back(const TQObject *recvr, const char *slot,
+				TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Move forward (web style menu).
 	*/
-	TDEUI_EXPORT KAction *forward(const TQObject *recvr, const char *slot,
-				KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *forward(const TQObject *recvr, const char *slot,
+				TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Go to the "Home" position or document.
 	*/
-	TDEUI_EXPORT KAction *home(const TQObject *recvr, const char *slot,
-				KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *home(const TQObject *recvr, const char *slot,
+				TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Scroll up one page.
 	*/
-	TDEUI_EXPORT KAction *prior(const TQObject *recvr, const char *slot,
-				KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *prior(const TQObject *recvr, const char *slot,
+				TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Scroll down one page.
 	*/
-	TDEUI_EXPORT KAction *next(const TQObject *recvr, const char *slot,
-				KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *next(const TQObject *recvr, const char *slot,
+				TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Go to somewhere in general.
 	*/
-	TDEUI_EXPORT KAction *goTo(const TQObject *recvr, const char *slot,
-				KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *goTo(const TQObject *recvr, const char *slot,
+				TDEActionCollection* parent, const char *name = 0 );
 
 
 	/**
 	* Go to a specific page (dialog).
 	*/
-	TDEUI_EXPORT KAction *gotoPage(const TQObject *recvr, const char *slot,
-				KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *gotoPage(const TQObject *recvr, const char *slot,
+				TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Go to a specific line (dialog).
 	*/
-	TDEUI_EXPORT KAction *gotoLine(const TQObject *recvr, const char *slot,
-				KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *gotoLine(const TQObject *recvr, const char *slot,
+				TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Jump to the first page.
 	*/
-	TDEUI_EXPORT KAction *firstPage(const TQObject *recvr, const char *slot,
-				KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *firstPage(const TQObject *recvr, const char *slot,
+				TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Jump to the last page.
 	*/
-	TDEUI_EXPORT KAction *lastPage(const TQObject *recvr, const char *slot,
-				KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *lastPage(const TQObject *recvr, const char *slot,
+				TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Add the current page to the bookmarks tree.
 	*/
-	TDEUI_EXPORT KAction *addBookmark(const TQObject *recvr, const char *slot,
-					KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *addBookmark(const TQObject *recvr, const char *slot,
+					TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Edit the application bookmarks.
 	*/
-	TDEUI_EXPORT KAction *editBookmarks(const TQObject *recvr, const char *slot,
-					KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *editBookmarks(const TQObject *recvr, const char *slot,
+					TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Pop up the spell checker.
 	*/
-	TDEUI_EXPORT KAction *spelling(const TQObject *recvr, const char *slot,
-					KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *spelling(const TQObject *recvr, const char *slot,
+					TDEActionCollection* parent, const char *name = 0 );
 
 
 	/**
 	* Show/Hide the menubar.
 	*/
-	TDEUI_EXPORT KToggleAction *showMenubar(const TQObject *recvr, const char *slot,
-					KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEToggleAction *showMenubar(const TQObject *recvr, const char *slot,
+					TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* @obsolete. toolbar actions are created automatically now in the
 	* Settings menu. Don't use this anymore.
-	* See: KMainWindow::createStandardStatusBarAction()
+	* See: TDEMainWindow::createStandardStatusBarAction()
 	* Show/Hide the primary toolbar.
 	* @since 3.1
 	*/
-	TDEUI_EXPORT KToggleAction *showToolbar(const TQObject *recvr, const char *slot,
-					KActionCollection* parent, const char *name = 0 ) KDE_DEPRECATED;
+	TDEUI_EXPORT TDEToggleAction *showToolbar(const TQObject *recvr, const char *slot,
+					TDEActionCollection* parent, const char *name = 0 ) KDE_DEPRECATED;
 	/**
 	* @obsolete. toolbar actions are created automatically now in the
 	* Settings menu. Don't use this anymore.
-	* See: KMainWindow::setStandardToolBarMenuEnabled(bool);
+	* See: TDEMainWindow::setStandardToolBarMenuEnabled(bool);
 	* Show/Hide the primary toolbar.
 	*/
-	TDEUI_EXPORT KToggleToolBarAction *showToolbar(const char* toolBarName,
-					KActionCollection* parent, const char *name = 0 ) KDE_DEPRECATED;
+	TDEUI_EXPORT TDEToggleToolBarAction *showToolbar(const char* toolBarName,
+					TDEActionCollection* parent, const char *name = 0 ) KDE_DEPRECATED;
 
 	/**
 	* Show/Hide the statusbar.
 	*/
-	TDEUI_EXPORT KToggleAction *showStatusbar(const TQObject *recvr, const char *slot,
-					KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEToggleAction *showStatusbar(const TQObject *recvr, const char *slot,
+					TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Switch to/from full screen mode
 	* @since 3.2
 	*/
-	TDEUI_EXPORT KToggleFullScreenAction *fullScreen(const TQObject *recvr, const char *slot,
-					KActionCollection* parent, TQWidget* window, const char *name = 0 );
+	TDEUI_EXPORT TDEToggleFullScreenAction *fullScreen(const TQObject *recvr, const char *slot,
+					TDEActionCollection* parent, TQWidget* window, const char *name = 0 );
 
 	/**
 	* Display the save options dialog.
 	*/
-	TDEUI_EXPORT KAction *saveOptions(const TQObject *recvr, const char *slot,
-					KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *saveOptions(const TQObject *recvr, const char *slot,
+					TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Display the configure key bindings dialog.
@@ -534,81 +534,81 @@ namespace KStdAction
 	*  Note that you might be able to use the pre-built KXMLGUIFactory's fuction:
 	*  KStdAction::keyBindings(guiFactory(), TQT_SLOT(configureShortcuts()), actionCollection());
         */
-	TDEUI_EXPORT KAction *keyBindings(const TQObject *recvr, const char *slot,
-					KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *keyBindings(const TQObject *recvr, const char *slot,
+					TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Display the preferences/options dialog.
 	*/
-	TDEUI_EXPORT KAction *preferences(const TQObject *recvr, const char *slot,
-					KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *preferences(const TQObject *recvr, const char *slot,
+					TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* The Customize Toolbar dialog.
 	*/
-	TDEUI_EXPORT KAction *configureToolbars(const TQObject *recvr,
+	TDEUI_EXPORT TDEAction *configureToolbars(const TQObject *recvr,
 					const char *slot,
-					KActionCollection* parent,
+					TDEActionCollection* parent,
 					const char *name = 0 );
 
 	/**
 	* The Configure Notifications dialog.
 	* @since 3.1
 	*/
-	TDEUI_EXPORT KAction *configureNotifications(const TQObject *recvr,
+	TDEUI_EXPORT TDEAction *configureNotifications(const TQObject *recvr,
 					const char *slot,
-					KActionCollection *parent,
+					TDEActionCollection *parent,
 					const char *name = 0);
 
 	/**
 	* Display the help.
 	*/
-	TDEUI_EXPORT KAction *help(const TQObject *recvr, const char *slot,
-				KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *help(const TQObject *recvr, const char *slot,
+				TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Display the help contents.
 	*/
-	TDEUI_EXPORT KAction *helpContents(const TQObject *recvr, const char *slot,
-					KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *helpContents(const TQObject *recvr, const char *slot,
+					TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Trigger the What's This cursor.
 	*/
-	TDEUI_EXPORT KAction *whatsThis(const TQObject *recvr, const char *slot,
-				KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *whatsThis(const TQObject *recvr, const char *slot,
+				TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Display "Tip of the Day"
 	* @since 3.1
 	*/
-	TDEUI_EXPORT KAction *tipOfDay(const TQObject *recvr, const char *slot,
-				KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *tipOfDay(const TQObject *recvr, const char *slot,
+				TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Open up the Report Bug dialog.
 	*/
-	TDEUI_EXPORT KAction *reportBug(const TQObject *recvr, const char *slot,
-				KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *reportBug(const TQObject *recvr, const char *slot,
+				TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Display the application's About box.
 	*/
-	TDEUI_EXPORT KAction *aboutApp(const TQObject *recvr, const char *slot,
-				KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *aboutApp(const TQObject *recvr, const char *slot,
+				TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Display the About KDE dialog.
 	*/
-	TDEUI_EXPORT KAction *aboutKDE(const TQObject *recvr, const char *slot,
-				KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *aboutKDE(const TQObject *recvr, const char *slot,
+				TDEActionCollection* parent, const char *name = 0 );
 
 	/**
 	* Display "Switch application language" dialog.
 	* @since 3.5.8
 	*/
-	TDEUI_EXPORT KAction *switchApplicationLanguage(const TQObject *recvr, const char *slot,
-				KActionCollection* parent, const char *name = 0 );
+	TDEUI_EXPORT TDEAction *switchApplicationLanguage(const TQObject *recvr, const char *slot,
+				TDEActionCollection* parent, const char *name = 0 );
 }
 
 #endif // KSTDACTION_H

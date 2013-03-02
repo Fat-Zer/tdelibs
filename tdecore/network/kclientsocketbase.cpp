@@ -83,7 +83,7 @@ void KClientSocketBase::setState(SocketState state)
 bool KClientSocketBase::setSocketOptions(int opts)
 {
   TQMutexLocker locker(mutex());
-  KSocketBase::setSocketOptions(opts); // call parent
+  TDESocketBase::setSocketOptions(opts); // call parent
 
   // don't create the device unnecessarily
   if (hasDevice())
@@ -323,7 +323,7 @@ TQT_TQIO_LONG KClientSocketBase::tqreadBlock(char *data, TQT_TQIO_ULONG maxlen)
   return retval;
 }
 
-TQT_TQIO_LONG KClientSocketBase::tqreadBlock(char *data, TQT_TQIO_ULONG maxlen, KSocketAddress& from)
+TQT_TQIO_LONG KClientSocketBase::tqreadBlock(char *data, TQT_TQIO_ULONG maxlen, TDESocketAddress& from)
 {
   resetError();
   TQ_LONG retval = socketDevice()->tqreadBlock(data, maxlen, from);
@@ -347,7 +347,7 @@ TQ_LONG KClientSocketBase::peekBlock(char *data, TQ_ULONG maxlen)
   return retval;
 }
 
-TQ_LONG KClientSocketBase::peekBlock(char *data, TQ_ULONG maxlen, KSocketAddress& from)
+TQ_LONG KClientSocketBase::peekBlock(char *data, TQ_ULONG maxlen, TDESocketAddress& from)
 {
   resetError();
   TQ_LONG retval = socketDevice()->peekBlock(data, maxlen, from);
@@ -371,7 +371,7 @@ TQT_TQIO_LONG KClientSocketBase::tqwriteBlock(const char *data, TQT_TQIO_ULONG l
   return retval;
 }
 
-TQT_TQIO_LONG KClientSocketBase::tqwriteBlock(const char *data, TQT_TQIO_ULONG len, const KSocketAddress& to)
+TQT_TQIO_LONG KClientSocketBase::tqwriteBlock(const char *data, TQT_TQIO_ULONG len, const TDESocketAddress& to)
 {
   resetError();
   TQ_LONG retval = socketDevice()->tqwriteBlock(data, len, to);
@@ -383,12 +383,12 @@ TQT_TQIO_LONG KClientSocketBase::tqwriteBlock(const char *data, TQT_TQIO_ULONG l
   return retval;
 }
 
-KSocketAddress KClientSocketBase::localAddress() const
+TDESocketAddress KClientSocketBase::localAddress() const
 {
   return socketDevice()->localAddress();
 }
 
-KSocketAddress KClientSocketBase::peerAddress() const
+TDESocketAddress KClientSocketBase::peerAddress() const
 {
   return socketDevice()->peerAddress();
 }

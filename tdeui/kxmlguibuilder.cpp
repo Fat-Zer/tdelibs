@@ -18,16 +18,16 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "kapplication.h"
+#include "tdeapplication.h"
 #include "kxmlguibuilder.h"
-#include "kmenubar.h"
-#include "kpopupmenu.h"
-#include "ktoolbar.h"
+#include "tdemenubar.h"
+#include "tdepopupmenu.h"
+#include "tdetoolbar.h"
 #include "kstatusbar.h"
-#include "kmainwindow.h"
-#include "kaction.h"
-#include "kglobalsettings.h"
-#include <klocale.h>
+#include "tdemainwindow.h"
+#include "tdeaction.h"
+#include "tdeglobalsettings.h"
+#include <tdelocale.h>
 #include <kiconloader.h>
 #include <kdebug.h>
 #include <tqobjectlist.h>
@@ -61,7 +61,7 @@ public:
 
     TQString attrIcon;
 
-    KInstance *m_instance;
+    TDEInstance *m_instance;
     KXMLGUIClient *m_client;
 };
 
@@ -116,9 +116,9 @@ TQWidget *KXMLGUIBuilder::createContainer( TQWidget *parent, int index, const TQ
   id = -1;
   if ( element.tagName().lower() == d->tagMainWindow )
   {
-    KMainWindow *mainwindow = 0;
-    if ( ::tqqt_cast<KMainWindow *>( d->m_widget ) )
-      mainwindow = static_cast<KMainWindow *>(d->m_widget);
+    TDEMainWindow *mainwindow = 0;
+    if ( ::tqqt_cast<TDEMainWindow *>( d->m_widget ) )
+      mainwindow = static_cast<TDEMainWindow *>(d->m_widget);
 
     return mainwindow;
   }
@@ -127,8 +127,8 @@ TQWidget *KXMLGUIBuilder::createContainer( TQWidget *parent, int index, const TQ
   {
     KMenuBar *bar;
 
-    if ( ::tqqt_cast<KMainWindow *>( d->m_widget ) )
-      bar = static_cast<KMainWindow *>(d->m_widget)->menuBar();
+    if ( ::tqqt_cast<TDEMainWindow *>( d->m_widget ) )
+      bar = static_cast<TDEMainWindow *>(d->m_widget)->menuBar();
     else
       bar = new KMenuBar( d->m_widget );
 
@@ -139,21 +139,21 @@ TQWidget *KXMLGUIBuilder::createContainer( TQWidget *parent, int index, const TQ
   if ( element.tagName().lower() == d->tagMenu )
   {
     // Look up to see if we are inside a mainwindow. If yes, then
-    // use it as parent widget (to get kaction to plug itself into the
+    // use it as parent widget (to get tdeaction to plug itself into the
     // mainwindow). Don't use a popupmenu as parent widget, otherwise
     // the popup won't be hidden if it is used as a standalone menu as well.
     // And we don't want to set the parent for a standalone popupmenu,
     // otherwise its shortcuts appear.
     TQWidget* p = parent;
-    while ( p && !::tqqt_cast<KMainWindow *>( p ) )
+    while ( p && !::tqqt_cast<TDEMainWindow *>( p ) )
         p = p->parentWidget();
 
     TQCString name = element.attribute( d->attrName ).utf8();
 
-    if (!kapp->authorizeKAction(name))
+    if (!kapp->authorizeTDEAction(name))
        return 0;
 
-    KPopupMenu *popup = new KPopupMenu( p, name);
+    TDEPopupMenu *popup = new TDEPopupMenu( p, name);
 
     TQString i18nText;
     TQDomElement textElem = element.namedItem( d->attrText1 ).toElement();
@@ -174,9 +174,9 @@ TQWidget *KXMLGUIBuilder::createContainer( TQWidget *parent, int index, const TQ
 
     if ( !icon.isEmpty() )
     {
-      KInstance *instance = d->m_instance;
+      TDEInstance *instance = d->m_instance;
       if ( !instance )
-        instance = KGlobal::instance();
+        instance = TDEGlobal::instance();
 
       pix = SmallIconSet( icon, 16, instance );
     }
@@ -205,13 +205,13 @@ TQWidget *KXMLGUIBuilder::createContainer( TQWidget *parent, int index, const TQ
 
     TQCString name = element.attribute( d->attrName ).utf8();
 
-    KToolBar *bar = static_cast<KToolBar*>(TQT_TQWIDGET(d->m_widget->child( name, "KToolBar" )));
+    TDEToolBar *bar = static_cast<TDEToolBar*>(TQT_TQWIDGET(d->m_widget->child( name, "TDEToolBar" )));
     if( !bar )
     {
-       bar = new KToolBar( d->m_widget, name, honor, false );
+       bar = new TDEToolBar( d->m_widget, name, honor, false );
     }
 
-    if ( ::tqqt_cast<KMainWindow *>( d->m_widget ) )
+    if ( ::tqqt_cast<TDEMainWindow *>( d->m_widget ) )
     {
         if ( d->m_client && !d->m_client->xmlFile().isEmpty() )
             bar->setXMLGUIClient( d->m_client );
@@ -224,9 +224,9 @@ TQWidget *KXMLGUIBuilder::createContainer( TQWidget *parent, int index, const TQ
 
   if ( element.tagName().lower() == d->tagStatusBar )
   {
-      if ( ::tqqt_cast<KMainWindow *>( d->m_widget ) )
+      if ( ::tqqt_cast<TDEMainWindow *>( d->m_widget ) )
     {
-      KMainWindow *mainWin = static_cast<KMainWindow *>(d->m_widget);
+      TDEMainWindow *mainWin = static_cast<TDEMainWindow *>(d->m_widget);
       mainWin->statusBar()->show();
       return mainWin->statusBar();
     }
@@ -253,9 +253,9 @@ void KXMLGUIBuilder::removeContainer( TQWidget *container, TQWidget *parent, TQD
 
     delete container;
   }
-  else if ( ::tqqt_cast<KToolBar *>( container ) )
+  else if ( ::tqqt_cast<TDEToolBar *>( container ) )
   {
-    KToolBar *tb = static_cast<KToolBar *>( container );
+    TDEToolBar *tb = static_cast<TDEToolBar *>( container );
 
     tb->saveState( element );
     delete tb;
@@ -271,7 +271,7 @@ void KXMLGUIBuilder::removeContainer( TQWidget *container, TQWidget *parent, TQD
   }
   else if ( ::tqqt_cast<KStatusBar *>( container ) )
   {
-    if ( ::tqqt_cast<KMainWindow *>( d->m_widget ) )
+    if ( ::tqqt_cast<TDEMainWindow *>( d->m_widget ) )
         container->hide();
     else
       delete static_cast<KStatusBar *>(container);
@@ -319,9 +319,9 @@ int KXMLGUIBuilder::createCustomElement( TQWidget *parent, int index, const TQDo
     }
     else if ( ::tqqt_cast<TQMenuBar *>( parent ) )
        return static_cast<TQMenuBar *>(parent)->insertSeparator( index );
-    else if ( ::tqqt_cast<KToolBar *>( parent ) )
+    else if ( ::tqqt_cast<TDEToolBar *>( parent ) )
     {
-      KToolBar *bar = static_cast<KToolBar *>( parent );
+      TDEToolBar *bar = static_cast<TDEToolBar *>( parent );
 
       bool isLineSep = true;
 
@@ -339,7 +339,7 @@ int KXMLGUIBuilder::createCustomElement( TQWidget *parent, int index, const TQDo
         }
       }
 
-      int id = KAction::getToolButtonID();
+      int id = TDEAction::getToolButtonID();
 
       if ( isLineSep )
           bar->insertLineSeparator( index, id );
@@ -351,12 +351,12 @@ int KXMLGUIBuilder::createCustomElement( TQWidget *parent, int index, const TQDo
   }
   else if ( element.tagName().lower() == d->tagTearOffHandle )
   {
-    if ( ::tqqt_cast<TQPopupMenu *>( parent )  && KGlobalSettings::insertTearOffHandle())
+    if ( ::tqqt_cast<TQPopupMenu *>( parent )  && TDEGlobalSettings::insertTearOffHandle())
       return static_cast<TQPopupMenu *>(parent)->insertTearOffHandle( -1, index );
   }
   else if ( element.tagName().lower() == d->tagMenuTitle )
   {
-    if ( ::tqqt_cast<KPopupMenu *>( parent ) )
+    if ( ::tqqt_cast<TDEPopupMenu *>( parent ) )
     {
       TQString i18nText;
       TQCString text = element.text().utf8();
@@ -371,17 +371,17 @@ int KXMLGUIBuilder::createCustomElement( TQWidget *parent, int index, const TQDo
 
       if ( !icon.isEmpty() )
       {
-        KInstance *instance = d->m_instance;
+        TDEInstance *instance = d->m_instance;
         if ( !instance )
-          instance = KGlobal::instance();
+          instance = TDEGlobal::instance();
 
         pix = SmallIcon( icon, instance );
       }
 
       if ( !icon.isEmpty() )
-        return static_cast<KPopupMenu *>(parent)->insertTitle( pix, i18nText, -1, index );
+        return static_cast<TDEPopupMenu *>(parent)->insertTitle( pix, i18nText, -1, index );
       else
-        return static_cast<KPopupMenu *>(parent)->insertTitle( i18nText, -1, index );
+        return static_cast<TDEPopupMenu *>(parent)->insertTitle( i18nText, -1, index );
     }
   }
   return 0;
@@ -393,8 +393,8 @@ void KXMLGUIBuilder::removeCustomElement( TQWidget *parent, int id )
     static_cast<TQPopupMenu *>(parent)->removeItem( id );
   else if ( ::tqqt_cast<TQMenuBar *>( parent ) )
     static_cast<TQMenuBar *>(parent)->removeItem( id );
-  else if ( ::tqqt_cast<KToolBar *>( parent ) )
-    static_cast<KToolBar *>(parent)->removeItemDelayed( id );
+  else if ( ::tqqt_cast<TDEToolBar *>( parent ) )
+    static_cast<TDEToolBar *>(parent)->removeItemDelayed( id );
 }
 
 KXMLGUIClient *KXMLGUIBuilder::builderClient() const
@@ -409,30 +409,30 @@ void KXMLGUIBuilder::setBuilderClient( KXMLGUIClient *client )
       setBuilderInstance( client->instance() );
 }
 
-KInstance *KXMLGUIBuilder::builderInstance() const
+TDEInstance *KXMLGUIBuilder::builderInstance() const
 {
   return d->m_instance;
 }
 
-void KXMLGUIBuilder::setBuilderInstance( KInstance *instance )
+void KXMLGUIBuilder::setBuilderInstance( TDEInstance *instance )
 {
   d->m_instance = instance;
 }
 
 void KXMLGUIBuilder::finalizeGUI( KXMLGUIClient * )
 {
-    if ( !d->m_widget || !::tqqt_cast<KMainWindow *>( d->m_widget ) )
+    if ( !d->m_widget || !::tqqt_cast<TDEMainWindow *>( d->m_widget ) )
         return;
 #if 0
-    KToolBar *toolbar = 0;
-    QListIterator<KToolBar> it( ( (KMainWindow*)d->m_widget )->toolBarIterator() );
+    TDEToolBar *toolbar = 0;
+    QListIterator<TDEToolBar> it( ( (TDEMainWindow*)d->m_widget )->toolBarIterator() );
     while ( ( toolbar = it.current() ) ) {
         kdDebug() << "KXMLGUIBuilder::finalizeGUI toolbar=" << (void*)toolbar << endl;
         ++it;
         toolbar->positionYourself();
     }
 #else
-    static_cast<KMainWindow *>(d->m_widget)->finalizeGUI( false );
+    static_cast<TDEMainWindow *>(d->m_widget)->finalizeGUI( false );
 #endif
 }
 

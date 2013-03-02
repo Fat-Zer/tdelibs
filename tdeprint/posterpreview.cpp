@@ -25,9 +25,9 @@
 #include <tqtimer.h>
 #include <tqpixmap.h>
 #include <kprinter.h>
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kcursor.h>
-#include <kglobalsettings.h>
+#include <tdeglobalsettings.h>
 
 PosterPreview::PosterPreview( TQWidget *parent, const char *name )
 	: TQFrame( parent, name )
@@ -53,9 +53,9 @@ PosterPreview::~PosterPreview()
 
 void PosterPreview::init()
 {
-	m_process = new KProcess;
-	connect( m_process, TQT_SIGNAL( receivedStderr( KProcess*, char*, int ) ), TQT_SLOT( slotProcessStderr( KProcess*, char*, int ) ) );
-	connect( m_process, TQT_SIGNAL( processExited( KProcess* ) ), TQT_SLOT( slotProcessExited( KProcess* ) ) );
+	m_process = new TDEProcess;
+	connect( m_process, TQT_SIGNAL( receivedStderr( TDEProcess*, char*, int ) ), TQT_SLOT( slotProcessStderr( TDEProcess*, char*, int ) ) );
+	connect( m_process, TQT_SIGNAL( processExited( TDEProcess* ) ), TQT_SLOT( slotProcessExited( TDEProcess* ) ) );
 
 	m_cols = m_rows = m_pw = m_ph = m_mw = m_mh = 0;
 	m_dirty = false;
@@ -93,7 +93,7 @@ void PosterPreview::updatePoster()
 	m_process->clearArguments();
 	*m_process << "poster" << "-F" << "-m" + m_mediasize << "-p" + m_postersize
 		<< "-c" + TQString::number( m_cutmargin ) + "%";
-	if ( !m_process->start( KProcess::NotifyOnExit, KProcess::Stderr ) )
+	if ( !m_process->start( TDEProcess::NotifyOnExit, TDEProcess::Stderr ) )
 	{
 		m_rows = m_cols = 0;
 		m_dirty = false;
@@ -140,11 +140,11 @@ void PosterPreview::drawContents( TQPainter *painter )
 				for ( int j=0; j<m_cols; j++, x+=m_pw )
 				{
 					bool selected = ( m_selectedpages.find( i*m_cols+j+1 ) != m_selectedpages.end() );
-					p->fillRect( x+1, y+1, m_pw-2, m_ph-2, ( selected ? KGlobalSettings::highlightColor() : white ) );
+					p->fillRect( x+1, y+1, m_pw-2, m_ph-2, ( selected ? TDEGlobalSettings::highlightColor() : white ) );
 					p->drawRect( x, y, m_pw, m_ph );
 					if ( pw > 0 && ph > 0 )
 						p->fillRect( x+m_mw+px, y+m_mh+py, QMIN( pw, m_pw-2*m_mw-px ), QMIN( ph, m_ph-2*m_mh-py ),
-								( selected ? TQColor(KGlobalSettings::highlightColor().dark( 160 )) : lightGray ) );
+								( selected ? TQColor(TDEGlobalSettings::highlightColor().dark( 160 )) : lightGray ) );
 					p->setPen( Qt::DotLine );
 					p->drawRect( x+m_mw, y+m_mh, m_pw-2*m_mw, m_ph-2*m_mh );
 					p->setPen( Qt::SolidLine );
@@ -206,12 +206,12 @@ void PosterPreview::mousePressEvent( TQMouseEvent *e )
 	}
 }
 
-void PosterPreview::slotProcessStderr( KProcess*, char *buf, int len )
+void PosterPreview::slotProcessStderr( TDEProcess*, char *buf, int len )
 {
 	m_buffer.append( TQCString( buf, len ) );
 }
 
-void PosterPreview::slotProcessExited( KProcess* )
+void PosterPreview::slotProcessExited( TDEProcess* )
 {
 	if ( m_process->normalExit() && m_process->exitStatus() == 0 )
 		parseBuffer();

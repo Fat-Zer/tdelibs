@@ -4,15 +4,15 @@ When removing an xmlgui-client involves destroying toolbars, we need to save the
 whole set of toolbar positions of the mainwindow, into the xmlgui-client.
 
 Data structure:
-struct KToolBarPos {
+struct TDEToolBarPos {
    short int index;
    short int offset;
    bool newLine;
 };
-typedef QValueVector<KToolBarPos> KToolBarPosList;
+typedef QValueVector<TDEToolBarPos> TDEToolBarPosList;
 
 API:
-KToolBarPosList KMainWindow::toolBarPositionList() const;
+TDEToolBarPosList TDEMainWindow::toolBarPositionList() const;
 
 The remaining problem is to know when to call it:
 * when we know in advance that we'll be able to remove toolbars?
@@ -74,7 +74,7 @@ which would forward the action() and domElement() calls - because a client
 can be in only one factory at a time.
 
 This custom builder needs to know about action plugging too, we don't really want
-to call KAction::plug here. So this would be 'virtualized' (new virtual, in a new
+to call TDEAction::plug here. So this would be 'virtualized' (new virtual, in a new
 interface to keep BC, that by default calls plug, but does something else in
 kedittoolbar's builder).
 

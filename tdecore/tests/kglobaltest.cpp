@@ -1,12 +1,12 @@
 #include <config.h>
 
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <stdio.h>
-#include <kapplication.h>
+#include <tdeapplication.h>
 #include <stdlib.h>
 #include <kdebug.h>
 #include <assert.h>
-#include <kcmdlineargs.h>
+#include <tdecmdlineargs.h>
 
 static bool check(const TQString& txt, TQString a, TQString b)
 {
@@ -53,9 +53,9 @@ void testkasciistricmp()
 
 int main(int argc, char *argv[])
 {
-  KApplication::disableAutoDcopRegistration();
-  KCmdLineArgs::init( argc, argv, "kglobaltest", 0, 0, 0, 0 );
-  KApplication app( false, false );
+  TDEApplication::disableAutoDcopRegistration();
+  TDECmdLineArgs::init( argc, argv, "kglobaltest", 0, 0, 0, 0 );
+  TDEApplication app( false, false );
 
   testkasciistricmp();
 

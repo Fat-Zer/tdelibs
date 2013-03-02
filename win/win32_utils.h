@@ -81,7 +81,7 @@ bool showWin32FilePropertyDialog(const TQString& fileName);
 /**
  \return two-letter locale name (like "en" or "pl") taken from MS Windows native registry.
  Useful when we don't want to rely on KSyCoCa.
- Used e.g. by kbuildsycoca application.
+ Used e.g. by tdebuildsycoca application.
 */
 KDEWIN32_EXPORT
 TQCString getWin32LocaleName();

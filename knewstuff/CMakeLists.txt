@@ -16,9 +16,9 @@ include_directories(
   ${CMAKE_SOURCE_DIR}
   ${CMAKE_SOURCE_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/tdeui
-  ${CMAKE_SOURCE_DIR}/kio
-  ${CMAKE_SOURCE_DIR}/kio/kio
-  ${CMAKE_SOURCE_DIR}/kio/kfile
+  ${CMAKE_SOURCE_DIR}/tdeio
+  ${CMAKE_SOURCE_DIR}/tdeio/tdeio
+  ${CMAKE_SOURCE_DIR}/tdeio/tdefile
 )
 
 link_directories(
@@ -38,7 +38,7 @@ install( FILES
 ##### other data ################################
 
 install( FILES types DESTINATION ${DATA_INSTALL_DIR}/knewstuff )
-install( FILES khotnewstuffrc DESTINATION ${CONFIG_INSTALL_DIR} )
+install( FILES tdehotnewstuffrc DESTINATION ${CONFIG_INSTALL_DIR} )
 tde_install_icons( )
 
 
@@ -55,17 +55,17 @@ set( ${target}_SRCS
 tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 1.0.0
-  LINK kio-shared
+  LINK tdeio-shared
   DESTINATION ${LIB_INSTALL_DIR}
 )
 
 
-##### khotnewstuff ##############################
+##### tdehotnewstuff ##############################
 
-set( target khotnewstuff )
+set( target tdehotnewstuff )
 
 set( ${target}_SRCS
-  khotnewstuff.cpp
+  tdehotnewstuff.cpp
 )
 
 tde_add_executable( ${target} AUTOMOC

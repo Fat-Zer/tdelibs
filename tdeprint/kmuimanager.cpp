@@ -36,7 +36,7 @@
 #include "kxmlcommand.h"
 #include "kpposterpage.h"
 
-#include <klocale.h>
+#include <tdelocale.h>
 #include <kdebug.h>
 
 KMUiManager::KMUiManager(TQObject *parent, const char *name)

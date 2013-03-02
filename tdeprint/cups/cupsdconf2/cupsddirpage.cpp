@@ -26,7 +26,7 @@
 #include <tqlayout.h>
 #include <tqwhatsthis.h>
 
-#include <klocale.h>
+#include <tdelocale.h>
 
 CupsdDirPage::CupsdDirPage(TQWidget *parent, const char *name)
 	: CupsdPage(parent, name)

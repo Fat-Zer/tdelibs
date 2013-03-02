@@ -25,9 +25,9 @@
 
 #include <kdebug.h>
 #include <kstandarddirs.h>
-#include <klocale.h>
-#include <kmessagebox.h>
-#include <kconfig.h>
+#include <tdelocale.h>
+#include <tdemessagebox.h>
+#include <tdeconfig.h>
 
 #include <tqfile.h>
 
@@ -335,7 +335,7 @@ void KateSyntaxDocument::setupModeList (bool force)
     return;
 
   // We'll store the ModeList in katesyntaxhighlightingrc
-  KConfig config("katesyntaxhighlightingrc", false, false);
+  TDEConfig config("katesyntaxhighlightingrc", false, false);
 
   // figure our if the kate install is too new
   config.setGroup ("General");
@@ -346,7 +346,7 @@ void KateSyntaxDocument::setupModeList (bool force)
   }
 
   // Let's get a list of all the xml files for hl
-  TQStringList list = KGlobal::dirs()->findAllResources("data","katepart/syntax/*.xml",false,true);
+  TQStringList list = TDEGlobal::dirs()->findAllResources("data","katepart/syntax/*.xml",false,true);
 
   // Let's iterate through the list and build the Mode List
   for ( TQStringList::Iterator it = list.begin(); it != list.end(); ++it )

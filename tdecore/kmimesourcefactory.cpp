@@ -19,7 +19,7 @@
 */
 
 #include <kdebug.h>
-#include <kglobal.h>
+#include <tdeglobal.h>
 #include <kinstance.h>
 #include <kiconloader.h>
 
@@ -28,8 +28,8 @@
 class KMimeSourceFactoryPrivate
 {
 public:
-  inline KMimeSourceFactoryPrivate (KIconLoader* loader) : m_iconLoader(loader), m_instance(0L) {}
-  inline KIconLoader *iconLoader()
+  inline KMimeSourceFactoryPrivate (TDEIconLoader* loader) : m_iconLoader(loader), m_instance(0L) {}
+  inline TDEIconLoader *iconLoader()
   {
     // If we don't have either of these, things are looking grim.
     Q_ASSERT(m_instance || m_iconLoader);
@@ -40,11 +40,11 @@ public:
     return m_instance->iconLoader();
   }
 
-  KIconLoader *m_iconLoader;
-  KInstance *m_instance;
+  TDEIconLoader *m_iconLoader;
+  TDEInstance *m_instance;
 };
 
-KMimeSourceFactory::KMimeSourceFactory (KIconLoader* loader)
+KMimeSourceFactory::KMimeSourceFactory (TDEIconLoader* loader)
   : TQMimeSourceFactory (),
 	d (new KMimeSourceFactoryPrivate (loader))
 {
@@ -71,23 +71,23 @@ TQString KMimeSourceFactory::makeAbsolute (const TQString& absOrRelName, const T
 
   if (myContext == "desktop")
 	{
-	  result = d->iconLoader()->iconPath (myName, KIcon::Desktop);
+	  result = d->iconLoader()->iconPath (myName, TDEIcon::Desktop);
 	}
   else if (myContext == "toolbar")
 	{	 
-	  result = d->iconLoader()->iconPath (myName, KIcon::Toolbar);
+	  result = d->iconLoader()->iconPath (myName, TDEIcon::Toolbar);
 	}
   else if (myContext == "maintoolbar")
 	{
-	  result = d->iconLoader()->iconPath (myName, KIcon::MainToolbar);
+	  result = d->iconLoader()->iconPath (myName, TDEIcon::MainToolbar);
 	}
   else if (myContext == "small")
 	{
-	  result = d->iconLoader()->iconPath (myName, KIcon::Small);
+	  result = d->iconLoader()->iconPath (myName, TDEIcon::Small);
 	}
   else if (myContext == "user")
 	{	  
-	  result = d->iconLoader()->iconPath (myName, KIcon::User);
+	  result = d->iconLoader()->iconPath (myName, TDEIcon::User);
 	}
 
   if (result.isEmpty())
@@ -96,7 +96,7 @@ TQString KMimeSourceFactory::makeAbsolute (const TQString& absOrRelName, const T
   return result;
 }
 
-void KMimeSourceFactory::setInstance(KInstance *instance)
+void KMimeSourceFactory::setInstance(TDEInstance *instance)
 {
   d->m_instance = instance;
 }
