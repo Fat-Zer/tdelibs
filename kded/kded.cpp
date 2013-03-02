@@ -156,17 +156,19 @@ void Kded::initModules()
 {
      m_dontLoad.clear();
      TDEConfig *config = kapp->config();
-     bool kde_running = !( getenv( "TDE_FULL_SESSION" ) == NULL || getenv( "TDE_FULL_SESSION" )[ 0 ] == '\0' );
+     bool tde_running = !( getenv( "TDE_FULL_SESSION" ) == NULL || getenv( "TDE_FULL_SESSION" )[ 0 ] == '\0' );
     // not the same user like the one running the session (most likely we're run via sudo or something)
     if( getenv( "TDE_SESSION_UID" ) != NULL && uid_t( atoi( getenv( "TDE_SESSION_UID" ))) != getuid())
-        kde_running = false;
+        tde_running = false;
      // Preload kded modules.
      KService::List kdedModules = KServiceType::offers("KDEDModule");
      TQString version = getenv( "KDE_SESSION_VERSION" );
      TQStringList blacklist;
-     if ( version >= "4" )
+     if ( !(version == NULL) && version >= "4" )
      {
-         kdDebug(7020) << "KDE4 is running." << endl;
+         kdDebug(7020) << "KDE4 is running:" << endl;
+         kdDebug(7020) << "  KDE_SESSION_VERSION: " << version << endl;
+         kdDebug(7020) << "  Blacklisting mediamanager, medianotifier, kmilod, kwrited." << endl;
          blacklist << "mediamanager" << "medianotifier" << "kmilod" << "kwrited";
      }
      for(KService::List::ConstIterator it = kdedModules.begin(); it != kdedModules.end(); ++it)
@@ -193,11 +195,11 @@ void Kded::initModules()
             {
                 case 0: // always autoload
                     break;
-                case 1: // autoload only in KDE
-                    if( !kde_running )
+                case 1: // autoload only in TDE
+                    if( !tde_running )
                         prevent_autoload = true;
                     break;
-                case 2: // autoload delayed, only in KDE
+                case 2: // autoload delayed, only in TDE
                 default:
                     prevent_autoload = true;
                     break;   
@@ -207,7 +209,7 @@ void Kded::initModules()
          }
          else
          {
-            if (autoload && kde_running)
+            if (autoload && tde_running)
                loadModule(service, false);
          }
          bool dontLoad = false;
@@ -918,7 +920,7 @@ extern "C" KDE_EXPORT int kdemain(int argc, char *argv[])
 
      if (!KUniqueApplication::start())
      {
-        fprintf(stderr, "[kded] KDE Daemon (kded) already running.\n");
+        fprintf(stderr, "[kded] Daemon (kded) is already running.\n");
         exit(0);
      }
 
