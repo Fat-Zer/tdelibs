@@ -783,23 +783,23 @@ if( NOT DEFINED DBUS_SERVICE_DIRECTORY )
 endif( NOT DEFINED DBUS_SERVICE_DIRECTORY )
 
 
+##### check for dbus-1 ###########################
+pkg_search_module( DBUS dbus-1 )
+if( NOT DBUS_FOUND )
+  tde_message_fatal( "dbus-1 are required, but not found on your system" )
+endif( )
+
+
+##### check for dbus-1-tqt ###########################
+pkg_search_module( DBUS_TQT dbus-1-tqt )
+if( DBUS_TQT_FOUND )
+  find_program( DBUSXML2QT3_EXECUTABLE NAMES dbusxml2qt3 )
+else()
+  tde_message_fatal( "dbus-1-tqt are required, but not found on your system" )
+endif( )
+
+
 if( WITH_NETWORK_MANAGER_BACKEND )
-  ##### check for dbus-1 ###########################
-  pkg_search_module( DBUS dbus-1 )
-  if( NOT DBUS_FOUND )
-    tde_message_fatal( "dbus-1 are required, but not found on your system" )
-  endif( )
-
-
-  ##### check for dbus-1-tqt ###########################
-  pkg_search_module( DBUS_TQT dbus-1-tqt )
-  if( DBUS_TQT_FOUND )
-    find_program( DBUSXML2QT3_EXECUTABLE NAMES dbusxml2qt3 )
-  else()
-    tde_message_fatal( "dbus-1-tqt are required, but not found on your system" )
-  endif( )
-
-
   ##### check for libnm-util ###########################
   pkg_search_module( NM_UTIL libnm-util )
   if( NOT NM_UTIL_FOUND )
