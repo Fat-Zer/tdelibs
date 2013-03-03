@@ -853,10 +853,12 @@ int TCPSlaveBase::verifyCertificate()
             permacache = d->cc->isPermanent(pc);
          }
 
+/*
          if (!_IPmatchesCN && cp == KSSLCertificateCache::Accept) {
             cp = KSSLCertificateCache::Prompt;
 //            ksv = KSSLCertificate::Ok;
          }
+*/
 
          // Precondition: cp is one of Reject, Accept or Prompt
          switch (cp) {
