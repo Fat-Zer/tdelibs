@@ -197,7 +197,7 @@ TDEStyle::TDEStyle( TDEStyleFlags flags, TDEStyleScrollBarType sbtype )
 
 	// Read style settings
 	TQSettings settings;
-	d->popupMenuDelay       = settings.readNumEntry ("/TDEStyle/Settings/PopupMenuDelay", 256);
+	d->popupMenuDelay       = settings.readNumEntry ("/TDEStyle/Settings/PopupMenuDelay", 250);
 	d->sloppySubMenus       = settings.readBoolEntry("/TDEStyle/Settings/SloppySubMenus", false);
 	d->etchDisabledText     = settings.readBoolEntry("/TDEStyle/Settings/EtchDisabledText", true);
 	d->menuAltKeyNavigation = settings.readBoolEntry("/TDEStyle/Settings/MenuAltKeyNavigation", true);
