@@ -1988,13 +1988,15 @@ static int ascmagic(struct config_rec* conf, unsigned char *buf, int nbytes)
 	return 1;
 }
 
-/* Maximal length of a line we consider "reasonable". */
-#define TEXT_MAXLINELEN 300
 
-// This code is taken from the "file" command, where it is licensed
-// in the "beer-ware license" :-)
-// Original author: <joerg@FreeBSD.ORG>
-// Simplified by David Faure to avoid the static array char[256].
+/* This code is taken from the "file" command, where it is licensed
+ * in the "beer-ware license" :-)
+ * Original author: <joerg@FreeBSD.ORG>
+ * Simplified by David Faure to avoid the static array char[256].
+ * Drastically simplified by Laurent Dard for the Trinity Desktop Environment
+ *     Configuration files with big lines are still text files:
+ *     line length checking is now avoided here.
+ */
 static int textmagic(struct config_rec* conf, unsigned char * buf, int nbytes)
 {
     int i;
@@ -2002,28 +2004,11 @@ static int textmagic(struct config_rec* conf, unsigned char * buf, int nbytes)
 
     nbytes--;
 
-    /* First, look whether there are "unreasonable" characters. */
+    /* Look whether there are "unreasonable" characters. */
     for (i = 0, cp = buf; i < nbytes; i++, cp++)
         if ((*cp < 8) || (*cp>13 && *cp<32 && *cp!=27 ) || (*cp==0x7F))
             return 0;
 
-    /* Now, look whether the file consists of lines of
-     * "reasonable" length. */
-
-    for (i = 0; i < nbytes;) {
-        cp = (unsigned char *) memchr(buf, '\n', nbytes - i);
-        if (cp == NULL) {
-            /* Don't fail if we hit the end of buffer. */
-            if (i + TEXT_MAXLINELEN >= nbytes)
-                break;
-            else
-                return 0;
-        }
-        if (cp - buf > TEXT_MAXLINELEN)
-            return 0;
-        i += (cp - buf + 1);
-        buf = cp + 1;
-    }
     conf->resultBuf = MIME_TEXT_PLAIN;
     return 1;
 }
