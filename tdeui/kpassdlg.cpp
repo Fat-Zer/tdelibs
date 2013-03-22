@@ -56,33 +56,6 @@
  * Password line editor.
  */
 
-// BCI: Add a real d-pointer and put the int into that
-
-static TQPtrDict<int>* d_ptr = 0;
-
-static void cleanup_d_ptr() {
-	delete d_ptr;
-}
-
-static int * ourMaxLength( const KPasswordEdit* const e ) {
-	if ( !d_ptr ) {
-		d_ptr = new TQPtrDict<int>;
-		d_ptr->setAutoDelete(true);
-		tqAddPostRoutine( cleanup_d_ptr );
-	}
-	int* ret = d_ptr->find( (void*) e );
-	if ( ! ret ) {
-		ret = new int;
-		d_ptr->replace( (void*) e, ret );
-	}
-	return ret;
-}
-
-static void delete_d( const KPasswordEdit* const e ) {
-	if ( d_ptr )
-		d_ptr->remove( (void*) e );
-}
-
 const int KPasswordEdit::PassLen = 200;
 
 class KPasswordDialog::KPasswordDialogPrivate
@@ -114,191 +87,92 @@ KPasswordEdit::KPasswordEdit(TQWidget *parent, const char *name)
     TDEConfigGroupSaver saver(cfg, "Passwords");
 
     const TQString val = cfg->readEntry("EchoMode", "OneStar");
-    if (val == "ThreeStars")
-	m_EchoMode = ThreeStars;
-    else if (val == "NoEcho")
-	m_EchoMode = NoEcho;
-    else
-	m_EchoMode = OneStar;
+    if (val == "ThreeStars") {
+	setEchoMode(PasswordThreeStars);
+    }
+    else if (val == "NoEcho") {
+	setEchoMode(TQLineEdit::NoEcho);
+    }
+    else {
+	setEchoMode(TQLineEdit::Password);
+    }
 
     setInputMethodEnabled( true );
 }
 
 KPasswordEdit::KPasswordEdit(TQWidget *parent, const char *name, int echoMode)
-    : TQLineEdit(parent, name), m_EchoMode(echoMode)
+    : TQLineEdit(parent, name)
 {
-    init();
-}
-
-KPasswordEdit::KPasswordEdit(EchoModes echoMode, TQWidget *parent, const char *name)
-    : TQLineEdit(parent, name), m_EchoMode(echoMode)
-{
+    setEchoMode((TQLineEdit::EchoMode)echoMode);
     init();
 }
 
 KPasswordEdit::KPasswordEdit(EchoMode echoMode, TQWidget *parent, const char *name)
     : TQLineEdit(parent, name)
-    , m_EchoMode( echoMode == TQLineEdit::NoEcho ? NoEcho : OneStar )
 {
+    setEchoMode(echoMode);
+    init();
+}
+
+KPasswordEdit::KPasswordEdit(EchoModes echoMode, TQWidget *parent, const char *name)
+    : TQLineEdit(parent, name)
+{
+    if (echoMode == KPasswordEdit::NoEcho) {
+	setEchoMode(TQLineEdit::NoEcho);
+    }
+    else if (echoMode == KPasswordEdit::ThreeStars) {
+	setEchoMode(TQLineEdit::PasswordThreeStars);
+    }
+    else if (echoMode == KPasswordEdit::OneStar) {
+	setEchoMode(TQLineEdit::Password);
+    }
     init();
 }
 
 void KPasswordEdit::init()
 {
-    setEchoMode(TQLineEdit::Password); // Just in case
     setAcceptDrops(false);
-    int* t = ourMaxLength(this);
-    *t = (PassLen - 1); // the internal max length
-    m_Password = new char[PassLen];
-    m_Password[0] = '\000';
-    m_Length = 0;
 }
 
 KPasswordEdit::~KPasswordEdit()
 {
-    memset(m_Password, 0, PassLen * sizeof(char));
-    delete[] m_Password;
-    delete_d(this);
 }
 
-void KPasswordEdit::insert(const TQString &txt)
-{
-    const TQCString localTxt = txt.local8Bit();
-    const unsigned int lim = localTxt.length();
-    const int m_MaxLength = maxPasswordLength();
-    for(unsigned int i=0; i < lim; ++i)
-    {
-        const unsigned char ke = localTxt[i];
-        if (m_Length < m_MaxLength)
-        {
-            m_Password[m_Length] = ke;
-            m_Password[++m_Length] = '\000';
-        }
-    }
-    showPass();
+const char *KPasswordEdit::password() const {
+    return text().ascii();
 }
 
 void KPasswordEdit::erase()
 {
-    m_Length = 0;
-    memset(m_Password, 0, PassLen * sizeof(char));
     setText("");
-}
-
-void KPasswordEdit::focusInEvent(TQFocusEvent *e)
-{
-    const TQString txt = text();
-    setUpdatesEnabled(false);
-    TQLineEdit::focusInEvent(e);
-    setUpdatesEnabled(true);
-    setText(txt);
-}
-
-
-void KPasswordEdit::keyPressEvent(TQKeyEvent *e)
-{
-    switch (e->key()) {
-    case Key_Return:
-    case Key_Enter:
-    case Key_Escape:
-	e->ignore();
-	break;
-    case Key_Backspace:
-    case Key_Delete:
-    case 0x7f: // Delete
-	if (e->state() & (ControlButton | AltButton))
-	    e->ignore();
-	else if (m_Length) {
-	    m_Password[--m_Length] = '\000';
-	    showPass();
-	}
-	break;
-    default:
-	const unsigned char ke = TQString(e->text()).local8Bit()[0];
-	if (ke >= 32) {
-	    insert(e->text());
-	} else
-	    e->ignore();
-	break;
-    }
-}
-
-bool KPasswordEdit::event(TQEvent *e) {
-    switch(e->type()) {
-
-      case TQEvent::MouseButtonPress:
-      case TQEvent::MouseButtonRelease:
-      case TQEvent::MouseButtonDblClick:
-      case TQEvent::MouseMove:
-      case TQEvent::IMStart:
-      case TQEvent::IMCompose:
-        return true; //Ignore
-
-      case TQEvent::IMEnd:
-      {
-        TQIMEvent* const ie = (TQIMEvent*) e;
-        if (!ie->text().isEmpty())
-          insert( ie->text() );
-        return true;
-      }
-
-      case TQEvent::AccelOverride:
-      {
-        TQKeyEvent* const k = (TQKeyEvent*) e;
-        switch (k->key()) {
-            case Key_U:
-                if (k->state() & ControlButton) {
-                    m_Length = 0;
-                    m_Password[m_Length] = '\000';
-                    showPass();
-                }
-        }
-        return true; // stop bubbling
-      }
-
-      default:
-        // Do nothing
-        break;
-    }
-    return TQLineEdit::event(e);
-}
-
-void KPasswordEdit::showPass()
-{
-    TQString tmp;
-
-    switch (m_EchoMode) {
-    case OneStar:
-	tmp.fill('*', m_Length);
-	setText(tmp);
-	break;
-    case ThreeStars:
-	tmp.fill('*', m_Length*3);
-	setText(tmp);
-	break;
-    case NoEcho: default:
-	emit textChanged(TQString::null); //To update the password comparison if need be.
-	break;
-    }
 }
 
 void KPasswordEdit::setMaxPasswordLength(int newLength)
 {
-    if (newLength >= PassLen) newLength = PassLen - 1; // belt and braces
-    if (newLength < 0) newLength = 0;
-    int* t = ourMaxLength(this);
-    *t = newLength; 
-    while (m_Length > newLength) {
-        m_Password[m_Length] = '\000';
-        --m_Length;
-    }
-    showPass();
+    setMaxLength(newLength);
 }
 
 int KPasswordEdit::maxPasswordLength() const
 {
-    return *(ourMaxLength(this));
+    return maxLength();
 }
+
+void KPasswordEdit::insert( const TQString &str) {
+    TQLineEdit::insert(str);
+}
+
+void KPasswordEdit::keyPressEvent(TQKeyEvent *e) {
+    TQLineEdit::keyPressEvent(e);
+}
+
+void KPasswordEdit::focusInEvent(TQFocusEvent *e) {
+    TQLineEdit::focusInEvent(e);
+}
+
+bool KPasswordEdit::event(TQEvent *e) {
+    return TQLineEdit::event(e);
+}
+
 /*
  * Password dialog.
  */
@@ -306,7 +180,7 @@ int KPasswordEdit::maxPasswordLength() const
 KPasswordDialog::KPasswordDialog(Types type, bool enableKeep, int extraBttn,
                                  TQWidget *parent, const char *name)
     : KDialogBase(parent, name, true, "", Ok|Cancel|extraBttn,
-                  Ok, true), m_Keep(enableKeep? 1 : 0), m_keepWarnLbl(0), m_Type(type), d(new KPasswordDialogPrivate)
+                  Ok, true), m_Keep(enableKeep? 1 : 0), m_Type(type), m_keepWarnLbl(0), d(new KPasswordDialogPrivate)
 {
     d->iconName = "password";
     init();
@@ -315,7 +189,7 @@ KPasswordDialog::KPasswordDialog(Types type, bool enableKeep, int extraBttn,
 KPasswordDialog::KPasswordDialog(Types type, bool enableKeep, int extraBttn, const TQString& icon,
 				  TQWidget *parent, const char *name )
     : KDialogBase(parent, name, true, "", Ok|Cancel|extraBttn,
-                  Ok, true), m_Keep(enableKeep? 1 : 0), m_keepWarnLbl(0), m_Type(type), d(new KPasswordDialogPrivate)
+                  Ok, true), m_Keep(enableKeep? 1 : 0),  m_Type(type), m_keepWarnLbl(0), d(new KPasswordDialogPrivate)
 {
     if ( icon.stripWhiteSpace().isEmpty() )
 	d->iconName = "password";
@@ -327,7 +201,7 @@ KPasswordDialog::KPasswordDialog(Types type, bool enableKeep, int extraBttn, con
 KPasswordDialog::KPasswordDialog(int type, TQString prompt, bool enableKeep,
                                  int extraBttn)
     : KDialogBase(0L, "Password Dialog", true, "", Ok|Cancel|extraBttn,
-                  Ok, true), m_Keep(enableKeep? 1 : 0), m_keepWarnLbl(0), m_Type(type), d(new KPasswordDialogPrivate)
+                  Ok, true), m_Keep(enableKeep? 1 : 0), m_Type(type), m_keepWarnLbl(0), d(new KPasswordDialogPrivate)
 {
     d->iconName = "password";
     init();

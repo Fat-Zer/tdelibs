@@ -57,7 +57,7 @@ public:
      */
     KPasswordEdit(EchoMode echoMode, TQWidget *parent, const char *name);
 
-    /**
+     /**
      * Constructs a password input widget using echoMode as "echo mode".
      * Note that echoMode is a KPasswordEdit::EchoModes.
      * @since 3.2
@@ -79,7 +79,7 @@ public:
      * Returns the password. The memory is freed in the destructor
      * so you should make a copy.
      */
-    const char *password() const { return m_Password; }
+    const char *password() const;
 
     /**
      * Erases the current password.
@@ -91,8 +91,6 @@ public:
     /**
      * Set the current maximum password length.  If a password longer than the limit
      * specified is currently entered, it is truncated accordingly.
-     *
-     * The length is capped to lie between 0 and 199 inclusive.
      *
      * @param newLength: The new maximum password length
      * @since 3.4
@@ -118,10 +116,6 @@ protected:
 
 private:
     void init();
-    void showPass();
-
-    char *m_Password;
-    int m_EchoMode, m_Length;
 };
 
 
@@ -403,12 +397,15 @@ private:
     void init();
     void erase();
 
-    int m_Keep, m_Type, m_Row;
+    int m_Keep;
+    int m_Type;
+    int m_Row;
     TQLabel *m_pHelpLbl;
     TQLabel *m_keepWarnLbl;
     TQGridLayout *m_pGrid;
     TQWidget *m_pMain;
-    KPasswordEdit *m_pEdit, *m_pEdit2;
+    KPasswordEdit *m_pEdit;
+    KPasswordEdit *m_pEdit2;
 
 protected:
     virtual void virtual_hook( int id, void* data );
