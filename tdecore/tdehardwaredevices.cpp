@@ -3068,7 +3068,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDeviceByExternalRules(udev_
 		TQStringList hardware_info_directories(TDEGlobal::dirs()->resourceDirs("data"));
 		TQString hardware_info_directory_suffix("tdehwlib/deviceclasses/");
 		TQString hardware_info_directory;
-	
+
 		// Scan the hardware_info_directory for configuration files
 		// For each one, open it with TDEConfig() and apply its rules to classify the device
 		// FIXME
@@ -3078,19 +3078,19 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDeviceByExternalRules(udev_
 		for ( TQStringList::Iterator it = hardware_info_directories.begin(); it != hardware_info_directories.end(); ++it ) {
 			hardware_info_directory = (*it);
 			hardware_info_directory += hardware_info_directory_suffix;
-	
+
 			if (TDEGlobal::dirs()->exists(hardware_info_directory)) {
 				TQDir d(hardware_info_directory);
 				d.setFilter( TQDir::Files | TQDir::Hidden );
-				
+
 				const TQFileInfoList *list = d.entryInfoList();
 				TQFileInfoListIterator it( *list );
 				TQFileInfo *fi;
-			
+
 				while ((fi = it.current()) != 0) {
 					if (fi->extension(false) == "hwclass") {
 						bool match = true;
-		
+
 						// Open the rules file
 						TDEConfig rulesFile(fi->absFilePath(), true, false);
 						rulesFile.setGroup("Conditions");
@@ -3476,6 +3476,13 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			|| (devicesubsystem == "scsi_device")
 			|| (devicesubsystem == "scsi_generic")
 			|| (devicesubsystem == "scsi")
+			|| (devicetypestring_alt == "sas_target")
+			|| (devicesubsystem == "sas_host")
+			|| (devicesubsystem == "sas_port")
+			|| (devicesubsystem == "sas_device")
+			|| (devicesubsystem == "sas_generic")
+			|| (devicesubsystem == "sas_phy")
+			|| (devicesubsystem == "sas_end_device")
 			|| (devicesubsystem == "spi_transport")
 			|| (devicesubsystem == "spi_host")
 			|| (devicesubsystem == "ata_port")
@@ -3484,6 +3491,21 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			|| (devicesubsystem == "ata_device")
 			|| (devicesubsystem == "ata")) {
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+		}
+		if (devicesubsystem == "infiniband") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Peripheral);
+		}
+		if ((devicesubsystem == "infiniband_cm")
+			|| (devicesubsystem == "infiniband_mad")) {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+		}
+		if ((devicesubsystem == "enclosure")
+			|| (devicesubsystem == "clocksource")
+			|| (devicesubsystem == "amba")) {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+		}
+		if (devicesubsystem == "ipmi_si") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Mainboard);
 		}
 		if (devicesubsystem == "misc") {
 			if (devicedriver.startsWith("tpm_")) {
@@ -3569,6 +3591,9 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
 		}
 		if (devicesubsystem == "rfkill") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+		}
+		if (devicesubsystem == "machinecheck") {
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
 		}
 		if (devicesubsystem == "pnp") {
