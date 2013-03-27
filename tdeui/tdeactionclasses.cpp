@@ -1506,12 +1506,13 @@ void TDEFontAction::setFont( const TQString &family )
     // check again to solve an alias
     FcPattern *pattern = NULL;
     FcConfig *config = NULL;
+    FcResult result;
     TQString realFamily;
     TQRegExp regExp("[-:]");
     pattern = FcNameParse( (unsigned char*) family.ascii() );
     FcDefaultSubstitute(pattern);
     FcConfigSubstitute (config, pattern, FcMatchPattern);
-    pattern = FcFontMatch(NULL, pattern, NULL);
+    pattern = FcFontMatch(NULL, pattern, &result);
     realFamily = (char*)FcNameUnparse(pattern);
     realFamily.remove(realFamily.find(regExp), realFamily.length());
 
