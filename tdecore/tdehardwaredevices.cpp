@@ -40,6 +40,7 @@
 #include <sys/stat.h>
 #include <sys/ioctl.h>
 #include <linux/fs.h>
+#include <linux/cdrom.h>
 
 // Backlight devices
 #include <linux/fb.h>
@@ -431,6 +432,21 @@ void TDEStorageDevice::internalSetDiskStatus(TDEDiskDeviceStatus::TDEDiskDeviceS
 
 bool TDEStorageDevice::checkDiskStatus(TDEDiskDeviceStatus::TDEDiskDeviceStatus sf) {
 	return ((m_diskStatus&sf)!=(TDEDiskDeviceStatus::TDEDiskDeviceStatus)0);
+}
+
+bool TDEStorageDevice::lockDriveMedia(bool lock) {
+	int fd = open(deviceNode().ascii(), O_RDWR | O_NONBLOCK);
+	if (fd < 0) {
+		return false;
+	}
+	if (ioctl(fd, CDROM_LOCKDOOR, (lock)?1:0) != 0) {
+		close(fd);
+		return false;
+	}
+	else {
+		close(fd);
+		return true;
+	}
 }
 
 TQString TDEStorageDevice::diskLabel() {
@@ -989,6 +1005,9 @@ bool TDECPUDevice::canSetGovernor() {
 			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
 				return reply[0].toVariant().value.toBool();
 			}
+			else {
+				return FALSE;
+			}
 		}
 		else {
 			return FALSE;
@@ -1168,6 +1187,9 @@ bool TDERootSystemDevice::canSuspend() {
 			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
 				return reply[0].toVariant().value.toBool();
 			}
+			else {
+				return FALSE;
+			}
 		}
 		else {
 			return FALSE;
@@ -1201,6 +1223,9 @@ bool TDERootSystemDevice::canHibernate() {
 			TQT_DBusMessage reply = upowerProperties.sendWithReply("Get", params);
 			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
 				return reply[0].toVariant().value.toBool();
+			}
+			else {
+				return FALSE;
 			}
 		}
 		else {
@@ -1674,6 +1699,9 @@ bool TDEBacklightDevice::canSetBrightness() {
 			TQT_DBusMessage reply = hardwareControl.sendWithReply("CanSetBrightness", params);
 			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
 				return reply[0].toVariant().value.toBool();
+			}
+			else {
+				return FALSE;
 			}
 		}
 		else {

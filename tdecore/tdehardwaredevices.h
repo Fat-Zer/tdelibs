@@ -653,6 +653,14 @@ class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 		*/
 		bool checkDiskStatus(TDEDiskDeviceStatus::TDEDiskDeviceStatus sf);
 
+		/**
+		* @param TRUE to engage media lock, FALSE to disable it
+		* @return TRUE on success, FALSE on failure
+		*
+		* This method currently works on CD-ROM drives and similar devices
+		*/
+		bool lockDriveMedia(bool lock);
+
 	protected:
 		/**
 		* @param a TQString with the disk or partition label, if any
