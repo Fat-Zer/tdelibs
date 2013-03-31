@@ -661,6 +661,13 @@ class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 		*/
 		bool lockDriveMedia(bool lock);
 
+		/**
+		* @return TRUE on success, FALSE on failure
+		*
+		* This method currently works on CD-ROM drives and similar devices
+		*/
+		bool ejectDriveMedia();
+
 	protected:
 		/**
 		* @param a TQString with the disk or partition label, if any

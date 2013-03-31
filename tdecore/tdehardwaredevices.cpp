@@ -449,6 +449,21 @@ bool TDEStorageDevice::lockDriveMedia(bool lock) {
 	}
 }
 
+bool TDEStorageDevice::ejectDriveMedia() {
+	int fd = open(deviceNode().ascii(), O_RDWR | O_NONBLOCK);
+	if (fd < 0) {
+		return false;
+	}
+	if (ioctl(fd, CDROMEJECT) != 0) {
+		close(fd);
+		return false;
+	}
+	else {
+		close(fd);
+		return true;
+	}
+}
+
 TQString TDEStorageDevice::diskLabel() {
 	return m_diskName;
 }
