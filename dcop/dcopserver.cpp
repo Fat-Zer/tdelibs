@@ -1635,7 +1635,7 @@ static bool isRunning(const TQCString &fName, bool printNetworkId = false)
 		      "[dcopserver] It looks like dcopserver is already running. If you are sure\n"
 		      "that it is not already running, remove %s\n"
 		      "and start dcopserver again.\n"
-		      "---------------------------------\n",
+		      "---------------------------------",
 		      fName.data() );
 
 	    // lock file present, die silently.
