@@ -98,6 +98,13 @@ KService::init( KDesktopFile *config )
 
   bool absPath = !TQDir::isRelativePath(entryPath());
   bool kde4application = config->fileName().contains("/share/applications/kde4/");
+  TQString kde4applicationprefix;
+  if (kde4application) {
+    // extract prefix
+    kde4applicationprefix = config->fileName();
+    int pos = kde4applicationprefix.find("/share/applications/kde4/");
+    kde4applicationprefix.truncate(pos-1);
+  }
 
   config->setDesktopGroup();
 
@@ -198,7 +205,7 @@ KService::init( KDesktopFile *config )
 
   m_strExec = config->readPathEntry( "Exec" );
   if (kde4application && !m_strExec.startsWith("/")) {
-    m_strExec = "XDG_DATA_DIRS=/usr/share XDG_CONFIG_DIRS=/etc/xdg/ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:$PATH "+m_strExec;
+    m_strExec = "XDG_DATA_DIRS=" + kde4applicationprefix + "/share XDG_CONFIG_DIRS=/etc/xdg/ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:$PATH "+m_strExec;
   } else if (config->readBoolEntry("X-TDE-SubstituteUID")) {
     int space = m_strExec.find(" ");
     if (space==-1)
@@ -213,10 +220,10 @@ KService::init( KDesktopFile *config )
 
   m_strIcon = config->readEntry( "Icon", "unknown" );
   if (kde4application) {
-    if (TQFile::exists("/usr/share/icons/oxygen/22x22/apps/" + m_strIcon + ".png")) {
-      m_strIcon = "/usr/share/icons/oxygen/22x22/apps/" + m_strIcon + ".png";
-    } else if (TQFile::exists("/usr/share/icons/hicolor/22x22/apps/" + m_strIcon + ".png")) {
-      m_strIcon = "/usr/share/icons/hicolor/22x22/apps/" + m_strIcon + ".png";
+    if (TQFile::exists(kde4applicationprefix + "/share/icons/oxygen/22x22/apps/" + m_strIcon + ".png")) {
+      m_strIcon = kde4applicationprefix + "/share/icons/oxygen/22x22/apps/" + m_strIcon + ".png";
+    } else if (TQFile::exists(kde4applicationprefix + "/share/icons/hicolor/22x22/apps/" + m_strIcon + ".png")) {
+      m_strIcon = kde4applicationprefix + "/share/icons/hicolor/22x22/apps/" + m_strIcon + ".png";
     }
   }
   entryMap.remove("Icon");
