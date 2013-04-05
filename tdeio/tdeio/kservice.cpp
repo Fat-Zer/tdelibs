@@ -97,7 +97,7 @@ KService::init( KDesktopFile *config )
   m_bValid = true;
 
   bool absPath = !TQDir::isRelativePath(entryPath());
-  bool kde4application = config->fileName().startsWith("/usr/share/applications/kde4/");
+  bool kde4application = config->fileName().contains("/share/applications/kde4/");
 
   config->setDesktopGroup();
 
