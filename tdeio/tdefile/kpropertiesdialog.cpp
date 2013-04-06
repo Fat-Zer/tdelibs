@@ -3154,7 +3154,7 @@ KDesktopPropsPlugin::KDesktopPropsPlugin( KPropertiesDialog *_props )
   TQString pathStr = config.readPathEntry( "Path" );
   m_terminalBool = config.readBoolEntry( "Terminal" );
   m_terminalOptionStr = config.readEntry( "TerminalOptions" );
-  m_suidBool = config.readBoolEntry( "X-TDE-SubstituteUID" );
+  m_suidBool = config.readBoolEntry( "X-TDE-SubstituteUID" ) || config.readBoolEntry( "X-KDE-SubstituteUID" );
   m_suidUserStr = config.readEntry( "X-TDE-Username" );
   if( config.hasKey( "StartupNotify" ))
     m_startupBool = config.readBoolEntry( "StartupNotify", true );

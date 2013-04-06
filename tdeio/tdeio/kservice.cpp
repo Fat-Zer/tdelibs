@@ -206,7 +206,7 @@ KService::init( KDesktopFile *config )
   m_strExec = config->readPathEntry( "Exec" );
   if (kde4application && !m_strExec.startsWith("/")) {
     m_strExec = "XDG_DATA_DIRS=" + kde4applicationprefix + "/share XDG_CONFIG_DIRS=/etc/xdg/ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:$PATH "+m_strExec;
-  } else if (config->readBoolEntry("X-TDE-SubstituteUID")) {
+  } else if (config->readBoolEntry("X-TDE-SubstituteUID") || config->readBoolEntry("X-KDE-SubstituteUID")) {
     int space = m_strExec.find(" ");
     if (space==-1)
       m_strExec = TDEStandardDirs::findExe(m_strExec);
@@ -710,8 +710,17 @@ KService::List KService::allInitServices()
 }
 
 bool KService::substituteUid() const {
-  TQVariant v = property("X-TDE-SubstituteUID", TQVariant::Bool);
-  return v.isValid() && v.toBool();
+  bool suid = false;
+  TQVariant v;
+  v = property("X-TDE-SubstituteUID", TQVariant::Bool);
+  if (v.isValid()) {
+    if (v.toBool()) suid = true;
+  }
+  v = property("X-KDE-SubstituteUID", TQVariant::Bool);
+  if (v.isValid()) {
+    if (v.toBool()) suid = true;
+  }
+  return suid;
 }
 
 TQString KService::username() const {

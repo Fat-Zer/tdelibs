@@ -98,6 +98,12 @@ Type=bool
 [PropertyDef::X-TDE-Username]
 Type=TQString
 
+[PropertyDef::X-KDE-SubstituteUID]
+Type=bool
+
+[PropertyDef::X-KDE-Username]
+Type=TQString
+
 [PropertyDef::StartupWMClass]
 Type=TQString
 
