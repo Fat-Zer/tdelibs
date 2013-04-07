@@ -2208,16 +2208,22 @@ void KSVGIconPainter::drawPath(const TQString &data, bool filled)
 				break;
 		}
 
-		if(*ptr == '+' || *ptr == '-' || (*ptr >= '0' && *ptr <= '9'))
+		if(*ptr == '+' || *ptr == '-' || *ptr == '.' || (*ptr >= '0' && *ptr <= '9'))
 		{
 			// there are still coords in this command
 			if(command == 'M')
+			{
 				command = 'L';
+			}
 			else if(command == 'm')
+			{
 				command = 'l';
+			}
 		}
 		else
+		{
 			command = *(ptr++);
+		}
 
 		// Detect reflection points
 		if(lastCommand != 'C' && lastCommand != 'c' &&
