@@ -21,6 +21,12 @@ endif()
 
 if( WITH_UPOWER )
   add_definitions( -DWITH_UPOWER )
+  set ( TDEUPOWER_INCLUDE_DIRECTORIES
+    ${DBUS_TQT_INCLUDE_DIRS}
+  )
+  set ( TDEUPOWER_LIBRARIES
+    ${DBUS_TQT_LIBRARIES}
+  )
 endif( )
 
 if( WITH_LIBART )
@@ -58,6 +64,7 @@ include_directories(
   ${LIBIDN_INCLUDE_DIRS}
   ${GAMIN_INCLUDEDIR}
   ${TDENM_INCLUDE_DIRECTORIES}
+  ${TDEUPOWER_INCLUDE_DIRECTORIES}
 )
 
 link_directories(
@@ -158,7 +165,7 @@ tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 4.2.0
   EMBED tdecorenetwork-static
-  LINK ltdlc-static ${KDESVGICONS} DCOP-shared tdefx-shared ${ZLIB_LIBRARIES} ${LIBIDN_LIBRARIES} ${XCOMPOSITE_LIBRARIES} ICE SM udev ${GAMIN_LIBRARIES} ${TDENM_LIBRARIES}
+  LINK ltdlc-static ${KDESVGICONS} DCOP-shared tdefx-shared ${ZLIB_LIBRARIES} ${LIBIDN_LIBRARIES} ${XCOMPOSITE_LIBRARIES} ICE SM udev ${GAMIN_LIBRARIES} ${TDENM_LIBRARIES} ${TDEUPOWER_LIBRARIES}
   DEPENDENCIES dcopidl dcopidl2cpp
   DESTINATION ${LIB_INSTALL_DIR}
 )
