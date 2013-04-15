@@ -199,7 +199,7 @@ void KDirWatchPrivate::dnotify_sigio_handler(int sig, siginfo_t *si, void *p)
  *   The polling frequency is determined from global tdeconfig
  *   settings, defaulting to 500 ms for local directories
  *   and 5000 ms for remote mounts
- * - FAM (File Alternation Monitor): first used on IRIX, SGI
+ * - FAM (File Alteration Monitor): first used on IRIX, SGI
  *   has ported this method to LINUX. It uses a kernel part
  *   (IMON, sending change events to /dev/imon) and a user
  *   level damon (fam), to which applications connect for
@@ -855,12 +855,14 @@ void KDirWatchPrivate::addEntry(KDirWatch* instance, const TQString& _path,
       kdWarning() << "KDirWatch: " << path << " is a file. Use addFile!" << endl;
 
     e->m_ctime = stat_buf.st_ctime;
+    e->m_mtime = stat_buf.st_mtime;
     e->m_status = Normal;
     e->m_nlink = stat_buf.st_nlink;
   }
   else {
     e->isDir = isDir;
     e->m_ctime = invalid_ctime;
+    e->m_mtime = invalid_mtime;
     e->m_status = NonExistent;
     e->m_nlink = 0;
   }
@@ -1056,6 +1058,7 @@ bool KDirWatchPrivate::stopEntryScan( KDirWatch* instance, Entry* e)
   if (stillWatching == 0) {
     // if nobody is interested, we don't watch
     e->m_ctime = invalid_ctime; // invalid
+    e->m_mtime = invalid_mtime; // invalid
     e->m_status = NonExistent;
     //    e->m_status = Normal;
   }
@@ -1091,11 +1094,13 @@ bool KDirWatchPrivate::restartEntryScan( KDirWatch* instance, Entry* e,
       bool exists = (KDE_stat(TQFile::encodeName(e->path), &stat_buf) == 0);
       if (exists) {
 	e->m_ctime = stat_buf.st_ctime;
+	e->m_mtime = stat_buf.st_mtime;
 	e->m_status = Normal;
         e->m_nlink = stat_buf.st_nlink;
       }
       else {
 	e->m_ctime = invalid_ctime;
+	e->m_mtime = invalid_mtime;
 	e->m_status = NonExistent;
         e->m_nlink = 0;
       }
@@ -1165,7 +1170,7 @@ int KDirWatchPrivate::scanEntry(Entry* e)
   if (e->m_mode == DNotifyMode || e->m_mode == INotifyMode ) {
     // we know nothing has changed, no need to stat
     if(!e->dirty) return NoChange;
-    kdDebug(7001) << "scanning " << e->path << " " << e->m_status << " " << e->m_ctime << endl;
+    kdDebug(7001) << "scanning " << e->path << " " << e->m_status << " " << e->m_ctime << " " << e->m_mtime << endl;
     e->dirty = false;
   }
 #endif
@@ -1188,6 +1193,7 @@ int KDirWatchPrivate::scanEntry(Entry* e)
       // ctime is the 'creation time' on windows, but with qMax
       // we get the latest change of any kind, on any platform.
       e->m_ctime = stat_buf.st_ctime;
+      e->m_mtime = stat_buf.st_mtime;
       e->m_status = Normal;
       e->m_nlink = stat_buf.st_nlink;
       return Created;
@@ -1195,8 +1201,10 @@ int KDirWatchPrivate::scanEntry(Entry* e)
 
     if ( (e->m_ctime != invalid_ctime) &&
 	 ((stat_buf.st_ctime != e->m_ctime) ||
+	  (stat_buf.st_mtime != e->m_mtime) ||
 	  (stat_buf.st_nlink != (nlink_t) e->m_nlink)) ) {
       e->m_ctime = stat_buf.st_ctime;
+      e->m_mtime = stat_buf.st_mtime;
       e->m_nlink = stat_buf.st_nlink;
       return Changed;
     }
@@ -1213,6 +1221,7 @@ int KDirWatchPrivate::scanEntry(Entry* e)
   }
 
   e->m_ctime = invalid_ctime;
+  e->m_mtime = invalid_mtime;
   e->m_nlink = 0;
   e->m_status = NonExistent;
 
@@ -1367,8 +1376,9 @@ void KDirWatchPrivate::slotRescan()
     }
 #endif
 
-    if ( ev != NoChange )
+    if ( ev != NoChange ) {
       emitEvent( &(*it), ev);
+    }
   }
 
 

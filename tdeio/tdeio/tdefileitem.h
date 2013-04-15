@@ -120,6 +120,20 @@ public:
   void setURL( const KURL &url );
 
   /**
+   * Returns the lister url of the file.
+   * @return the lister url of the file
+   * @internal
+   */
+  const KURL & listerURL() const { return m_listerURL; }
+
+  /**
+   * Sets the item's lister URL. Do not call unless you know what you are doing!
+   * @param url the item's lister URL
+   * @internal
+   */
+  void setListerURL( const KURL &url );
+
+  /**
    * Sets the item's name (i.e. the filename).
    * This is automatically done by setURL, to set the name from the URL's fileName().
    * This method is provided for some special cases like relative paths as names (KFindPart)
@@ -581,6 +595,11 @@ private:
    * The url of the file
    */
   KURL m_url;
+
+  /**
+   * The lister url of the file
+   */
+  KURL m_listerURL;
 
   /**
    * The text for this item, i.e. the file name without path,

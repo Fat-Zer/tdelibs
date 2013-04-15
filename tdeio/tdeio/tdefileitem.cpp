@@ -296,6 +296,11 @@ void KFileItem::setURL( const KURL &url )
   setName( url.fileName() );
 }
 
+void KFileItem::setListerURL( const KURL &url )
+{
+  m_listerURL = url;
+}
+
 void KFileItem::setName( const TQString& name )
 {
   m_strName = name;

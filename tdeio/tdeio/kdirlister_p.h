@@ -115,6 +115,8 @@ public:
   bool localURLSlotFired;
   KURL localURLResultURL;
   bool localURLResultIsLocal;
+  KURL providedURL;
+  KURL listerURL;
 };
 
 /**

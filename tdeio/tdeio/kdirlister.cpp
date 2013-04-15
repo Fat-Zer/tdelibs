@@ -90,14 +90,27 @@ KDirListerCache::~KDirListerCache()
 bool KDirListerCache::listDir( KDirLister *lister, const KURL& _u,
                                bool _keep, bool _reload )
 {
+  // HACK
+  // The media:/ tdeioslave has massive problems related to not properly updating its root directory
+  // Therefore, force a reload every time the media:/ tdeioslave root is accessed!
+  // FIXME
+  // For anyone wanting to tackle this problem, it was traced into the KDirListerCache::updateDirectory TDEIO::listDir TDEIO job
+  // Specifically, slotUpdateResult is never called for the root directory *iff* the user descends into an unmounted media device
+  // Strangely, slotUpdateResult *is* called if the user instead right-clicks on the unmounted media device and selects Mount from the context menu
+  if ((_u.protocol() == "media") && (_u.path() == "/")) {
+    _reload = true;
+    _keep = false;
+  }
+
   // like this we don't have to worry about trailing slashes any further
   KURL _url = _u;
   _url.cleanPath(); // kill consecutive slashes
   _url.adjustPath(-1);
   TQString urlStr = _url.url();
 
-  if ( !lister->validURL( _url ) )
+  if ( !lister->validURL( _url ) ) {
     return false;
+  }
 
 #ifdef DEBUG_CACHE
   printDebug();
@@ -165,8 +178,9 @@ bool KDirListerCache::listDir( KDirLister *lister, const KURL& _u,
       if ( lister->d->complete )
         emit lister->completed();
 
-      if ( _reload || !itemU->complete )
+      if ( _reload || !itemU->complete ) {
         updateDirectory( _url );
+      }
     }
     else if ( !_reload && (itemC = itemsCached.take( urlStr )) )
     {
@@ -181,8 +195,9 @@ bool KDirListerCache::listDir( KDirLister *lister, const KURL& _u,
 
       emit lister->started( _url );
 
-      if ( !lister->d->rootFileItem && lister->d->url == _url )
+      if ( !lister->d->rootFileItem && lister->d->url == _url ) {
         lister->d->rootFileItem = itemC->rootItem;
+      }
 
       lister->addNewItems( *(itemC->lstItems) );
       lister->emitItems();
@@ -198,8 +213,9 @@ bool KDirListerCache::listDir( KDirLister *lister, const KURL& _u,
       if ( lister->d->complete )
         emit lister->completed();
 
-      if ( !itemC->complete )
+      if ( !itemC->complete ) {
         updateDirectory( _url );
+      }
     }
     else  // dir not in cache or _reload is true
     {
@@ -539,8 +555,9 @@ void KDirListerCache::updateDirectory( const KURL& _dir )
   kdDebug(7004) << k_funcinfo << _dir << endl;
 
   TQString urlStr = _dir.url(-1);
-  if ( !checkUpdate( urlStr ) )
+  if ( !checkUpdate( urlStr ) ) {
     return;
+  }
 
   // A job can be running to
   //   - only list a new directory: the listers are in urlsCurrentlyListed
@@ -562,13 +579,17 @@ void KDirListerCache::updateDirectory( const KURL& _dir )
      killJob( job );
      killed = true;
 
-     if ( listers )
-        for ( KDirLister *kdl = listers->first(); kdl; kdl = listers->next() )
+     if ( listers ) {
+        for ( KDirLister *kdl = listers->first(); kdl; kdl = listers->next() ) {
            kdl->jobDone( job );
+        }
+     }
 
-     if ( holders )
-        for ( KDirLister *kdl = holders->first(); kdl; kdl = holders->next() )
+     if ( holders ) {
+        for ( KDirLister *kdl = holders->first(); kdl; kdl = holders->next() ) {
            kdl->jobDone( job );
+        }
+     }
   }
   kdDebug(7004) << k_funcinfo << "Killed = " << killed << endl;
 
@@ -587,9 +608,11 @@ void KDirListerCache::updateDirectory( const KURL& _dir )
 
   kdDebug(7004) << k_funcinfo << "update started in " << _dir << endl;
 
-  if ( listers )
-     for ( KDirLister *kdl = listers->first(); kdl; kdl = listers->next() )
+  if ( listers ) {
+     for ( KDirLister *kdl = listers->first(); kdl; kdl = listers->next() ) {
         kdl->jobStarted( job );
+     }
+  }
 
   if ( holders )
   {
@@ -611,8 +634,9 @@ void KDirListerCache::updateDirectory( const KURL& _dir )
      {
         job->setWindow( window );
 
-        for ( KDirLister *kdl = holders->first(); kdl; kdl = holders->next() )
+        for ( KDirLister *kdl = holders->first(); kdl; kdl = holders->next() ) {
            kdl->jobStarted( job );
+        }
      }
   }
 }
@@ -642,8 +666,9 @@ KFileItemList *KDirListerCache::itemsForDir( const KURL &_dir ) const
 {
   TQString urlStr = _dir.url(-1);
   DirItem *item = itemsInUse[ urlStr ];
-  if ( !item )
+  if ( !item ) {
     item = itemsCached[ urlStr ];
+  }
   return item ? item->lstItems : 0;
 }
 
@@ -755,21 +780,24 @@ void KDirListerCache::FilesChanged( const KURL::List &fileList )
           fileitem->refresh();
           emitRefreshItem( fileitem );
       }
-      else
+      else {
           kdDebug(7004) << "item not found" << endl;
+      }
     } else {
       // For remote files, refresh() won't be able to figure out the new information.
       // Let's update the dir.
       KURL dir( *it );
       dir.setPath( dir.directory( true ) );
-      if ( dirsToUpdate.find( dir ) == dirsToUpdate.end() )
+      if ( dirsToUpdate.find( dir ) == dirsToUpdate.end() ) {
         dirsToUpdate.prepend( dir );
+      }
     }
   }
 
   KURL::List::ConstIterator itdir = dirsToUpdate.begin();
-  for ( ; itdir != dirsToUpdate.end() ; ++itdir )
+  for ( ; itdir != dirsToUpdate.end() ; ++itdir ) {
     updateDirectory( *itdir );
+  }
   // ## TODO problems with current jobs listing/updating that dir
   // ( see kde-2.2.2's kdirlister )
 }
@@ -873,8 +901,9 @@ void KDirListerCache::slotFileDirty( const TQString& _file )
   {
     KURL dir;
     dir.setPath( _file );
-    if ( checkUpdate( dir.url(-1) ) )
+    if ( checkUpdate( dir.url(-1) ) ) {
       updateDirectory( dir );
+    }
 
     // the parent directory of _file
     dir.setPath( dir.directory() );
@@ -979,9 +1008,11 @@ void KDirListerCache::slotEntries( TDEIO::Job *job, const TDEIO::UDSEntryList &e
       Q_ASSERT( !dir->rootItem );
       dir->rootItem = new KFileItem( *it, url, delayedMimeTypes, true  );
 
-      for ( KDirLister *kdl = listers->first(); kdl; kdl = listers->next() )
-        if ( !kdl->d->rootFileItem && kdl->d->url == url )
+      for ( KDirLister *kdl = listers->first(); kdl; kdl = listers->next() ) {
+        if ( !kdl->d->rootFileItem && kdl->d->url == url ) {
           kdl->d->rootFileItem = dir->rootItem;
+        }
+      }
     }
     else if ( name != dotdot )
     {
@@ -991,13 +1022,15 @@ void KDirListerCache::slotEntries( TDEIO::Job *job, const TDEIO::UDSEntryList &e
       //kdDebug(7004)<< "Adding item: " << item->url() << endl;
       dir->lstItems->append( item );
 
-      for ( KDirLister *kdl = listers->first(); kdl; kdl = listers->next() )
+      for ( KDirLister *kdl = listers->first(); kdl; kdl = listers->next() ) {
         kdl->addNewItem( item );
+      }
     }
   }
 
-  for ( KDirLister *kdl = listers->first(); kdl; kdl = listers->next() )
+  for ( KDirLister *kdl = listers->first(); kdl; kdl = listers->next() ) {
     kdl->emitItems();
+  }
 }
 
 void KDirListerCache::slotResult( TDEIO::Job *j )
@@ -1524,8 +1557,9 @@ void KDirListerCache::slotUpdateResult( TDEIO::Job * j )
 
   // check if anyone wants the mimetypes immediately
   bool delayedMimeTypes = true;
-  for ( kdl = listers->first(); kdl; kdl = listers->next() )
+  for ( kdl = listers->first(); kdl; kdl = listers->next() ) {
     delayedMimeTypes = delayedMimeTypes && kdl->d->delayedMimeTypes;
+  }
 
   // should be enough to get reasonable speed in most cases
   TQDict<KFileItem> fileItems( 9973 );
@@ -1536,7 +1570,12 @@ void KDirListerCache::slotUpdateResult( TDEIO::Job * j )
   for ( ; kit.current(); ++kit )
   {
     (*kit)->unmark();
-    fileItems.insert( (*kit)->url().url(), *kit );
+    if (!((*kit)->listerURL().isEmpty())) {
+      fileItems.insert( (*kit)->listerURL().url(), *kit );
+    }
+    else {
+      fileItems.insert( (*kit)->url().url(), *kit );
+    }
   }
 
   static const TQString& dot = TDEGlobal::staticQString(".");
@@ -1549,10 +1588,12 @@ void KDirListerCache::slotUpdateResult( TDEIO::Job * j )
   for ( ; it != buf.end(); ++it )
   {
     // Form the complete url
-    if ( !item )
+    if ( !item ) {
       item = new KFileItem( *it, jobUrl, delayedMimeTypes, true );
-    else
+    }
+    else {
       item->setUDSEntry( *it, jobUrl, delayedMimeTypes, true );
+    }
 
     // Find out about the name
     TQString name = item->name();
@@ -1560,8 +1601,9 @@ void KDirListerCache::slotUpdateResult( TDEIO::Job * j )
 
     // we duplicate the check for dotdot here, to avoid iterating over
     // all items again and checking in matchesFilter() that way.
-    if ( name.isEmpty() || name == dotdot )
+    if ( name.isEmpty() || name == dotdot ) {
       continue;
+    }
 
     if ( name == dot )
     {
@@ -1572,9 +1614,11 @@ void KDirListerCache::slotUpdateResult( TDEIO::Job * j )
         dir->rootItem = item;
         item = 0;
 
-        for ( KDirLister *kdl = listers->first(); kdl; kdl = listers->next() )
-          if ( !kdl->d->rootFileItem && kdl->d->url == jobUrl )
+        for ( KDirLister *kdl = listers->first(); kdl; kdl = listers->next() ) {
+          if ( !kdl->d->rootFileItem && kdl->d->url == jobUrl ) {
             kdl->d->rootFileItem = dir->rootItem;
+          }
+        }
       }
 
       continue;
@@ -1588,14 +1632,16 @@ void KDirListerCache::slotUpdateResult( TDEIO::Job * j )
       // check if something changed for this file
       if ( !tmp->cmp( *item ) )
       {
-        for ( kdl = listers->first(); kdl; kdl = listers->next() )
+        for ( kdl = listers->first(); kdl; kdl = listers->next() ) {
           kdl->aboutToRefreshItem( tmp );
+        }
 
         //kdDebug(7004) << "slotUpdateResult: file changed: " << tmp->name() << endl;
         tmp->assign( *item );
 
-        for ( kdl = listers->first(); kdl; kdl = listers->next() )
+        for ( kdl = listers->first(); kdl; kdl = listers->next() ) {
           kdl->addRefreshItem( tmp );
+        }
       }
     }
     else // this is a new file
@@ -1605,16 +1651,18 @@ void KDirListerCache::slotUpdateResult( TDEIO::Job * j )
       item->mark();
       dir->lstItems->append( item );
 
-      for ( kdl = listers->first(); kdl; kdl = listers->next() )
+      for ( kdl = listers->first(); kdl; kdl = listers->next() ) {
         kdl->addNewItem( item );
+      }
 
       // item used, we need a new one for the next iteration
       item = 0;
     }
   }
 
-  if ( item )
+  if ( item ) {
     delete item;
+  }
 
   jobs.remove( job );
 
@@ -1866,6 +1914,7 @@ bool KDirLister::openURL( const KURL& _url, bool _keep, bool _reload )
 
   // If a local path is available, monitor that instead of the given remote URL...
   KURL realURL = _url;
+  d->providedURL = _url;
   if (!realURL.isLocalFile()) {
       TDEIO::LocalURLJob* localURLJob = TDEIO::localURL(_url);
       if (localURLJob) {
@@ -1882,6 +1931,7 @@ bool KDirLister::openURL( const KURL& _url, bool _keep, bool _reload )
       }
   }
 
+  d->listerURL = realURL;
   return s_pCache->listDir( this, realURL, _keep, _reload );
 }
 
@@ -2015,8 +2065,9 @@ void KDirLister::emitChanges()
           if ( !(*kit)->isDir() )
             emit deleteItem( *kit );
         }
-        else if ( !(*kit)->isDir() )
+        else if ( !(*kit)->isDir() ) {
           addNewItem( *kit );
+        }
 
         continue;
       }
@@ -2026,10 +2077,12 @@ void KDirLister::emitChanges()
         if ( d->changes & DOT_FILES )
         {
           // the lister switched to dot files mode
-          if ( d->isShowingDotFiles )
+          if ( d->isShowingDotFiles ) {
             addNewItem( *kit );
-          else
+          }
+          else {
             emit deleteItem( *kit );
+          }
 
           continue;
         }
@@ -2049,12 +2102,14 @@ void KDirLister::emitChanges()
           emit deleteItem( *kit );
           continue;
         }
-        else if ( !oldName && newName )
+        else if ( !oldName && newName ) {
           addNewItem( *kit );
+        }
       }
 
-      if ( (d->changes & MIME_FILTER) && !oldMime && newMime )
+      if ( (d->changes & MIME_FILTER) && !oldMime && newMime ) {
         addNewItem( *kit );
+      }
     }
 
     emitItems();
@@ -2250,8 +2305,9 @@ bool KDirLister::validURL( const KURL& _url ) const
 
 void KDirLister::handleError( TDEIO::Job *job )
 {
-  if ( d->autoErrorHandling )
+  if ( d->autoErrorHandling ) {
     job->showErrorDialog( d->errorParent );
+  }
 }
 
 
@@ -2259,20 +2315,35 @@ void KDirLister::handleError( TDEIO::Job *job )
 
 void KDirLister::addNewItem( const KFileItem *item )
 {
-  if ( ( d->dirOnlyMode && !item->isDir() ) || !matchesFilter( item ) )
+  if ( ( d->dirOnlyMode && !item->isDir() ) || !matchesFilter( item ) ) {
     return; // No reason to continue... bailing out here prevents a mimetype scan.
+  }
+
+  if (d->listerURL != d->providedURL) {
+    // Likely a media:/ tdeioslave URL or similar
+    // Rewrite the URL to ensure that the user remains within the media:/ tree!
+    TQString itemPath = item->url().path();
+    if (itemPath.startsWith(d->listerURL.path())) {
+      itemPath = itemPath.remove(0, d->listerURL.path().length());
+      itemPath = d->providedURL.pathOrURL() + itemPath;
+      const_cast<KFileItem*>(item)->setListerURL(item->url());
+      const_cast<KFileItem*>(item)->setURL(itemPath);
+    }
+  }
 
   if ( matchesMimeFilter( item ) )
   {
-    if ( !d->lstNewItems )
+    if ( !d->lstNewItems ) {
       d->lstNewItems = new KFileItemList;
+    }
 
     d->lstNewItems->append( item );            // items not filtered
   }
   else
   {
-    if ( !d->lstMimeFilteredItems )
+    if ( !d->lstMimeFilteredItems ) {
       d->lstMimeFilteredItems = new KFileItemList;
+    }
 
     d->lstMimeFilteredItems->append( item );   // only filtered by mime
   }
@@ -2284,8 +2355,9 @@ void KDirLister::addNewItems( const KFileItemList& items )
   // DF: was this profiled? The matchesFoo() functions should be fast, w/o filters...
   // Of course if there is no filter and we can do a range-insertion instead of a loop, that might be good.
   // But that's for Qt4, not possible with TQPtrList.
-  for ( KFileItemListIterator kit( items ); kit.current(); ++kit )
+  for ( KFileItemListIterator kit( items ); kit.current(); ++kit ) {
     addNewItem( *kit );
+  }
 }
 
 void KDirLister::aboutToRefreshItem( const KFileItem *item )
@@ -2307,23 +2379,26 @@ void KDirLister::addRefreshItem( const KFileItem *item )
   {
     if ( d->refreshItemWasFiltered )
     {
-      if ( !d->lstNewItems )
+      if ( !d->lstNewItems ) {
         d->lstNewItems = new KFileItemList;
+      }
 
       d->lstNewItems->append( item );
     }
     else
     {
-      if ( !d->lstRefreshItems )
+      if ( !d->lstRefreshItems ) {
         d->lstRefreshItems = new KFileItemList;
+      }
 
       d->lstRefreshItems->append( item );
     }
   }
   else if ( !d->refreshItemWasFiltered )
   {
-    if ( !d->lstRemoveItems )
+    if ( !d->lstRemoveItems ) {
       d->lstRemoveItems = new KFileItemList;
+    }
 
     // notify the user that the mimetype of a file changed that doesn't match
     // a filter or does match an exclude filter
@@ -2365,8 +2440,9 @@ void KDirLister::emitItems()
 
   if ( tmpRemove )
   {
-    for ( KFileItem *tmp = tmpRemove->first(); tmp; tmp = tmpRemove->next() )
+    for ( KFileItem *tmp = tmpRemove->first(); tmp; tmp = tmpRemove->next() ) {
       emit deleteItem( tmp );
+    }
     delete tmpRemove;
   }
 }
@@ -2510,19 +2586,22 @@ KFileItemList KDirLister::itemsForDir( const KURL& dir, WhichItems which ) const
 {
     KFileItemList result;
     KFileItemList *allItems = s_pCache->itemsForDir( dir );
-    if ( !allItems )
+    if ( !allItems ) {
         return result;
+    }
 
-    if ( which == AllItems )
+    if ( which == AllItems ) {
         result = *allItems; // shallow copy
+    }
     else // only items passing the filters
     {
         for ( KFileItemListIterator kit( *allItems ); kit.current(); ++kit )
         {
             KFileItem *item = *kit;
             bool isExcluded = (d->dirOnlyMode && !item->isDir()) || !matchesFilter( item );
-            if ( !isExcluded && matchesMimeFilter( item ) )
+            if ( !isExcluded && matchesMimeFilter( item ) ) {
                 result.append( item );
+            }
         }
     }
 

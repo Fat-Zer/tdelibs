@@ -14,6 +14,7 @@
 #include <ctime>
 
 #define invalid_ctime ((time_t)-1)
+#define invalid_mtime ((time_t)-1)
 
 /* KDirWatchPrivate is a singleton and does the watching
  * for every KDirWatch instance in the application.
@@ -39,8 +40,10 @@ public:
   class Entry
   {
   public:
-    // the last observed modification time
+    // the last observed creation time
     time_t m_ctime;
+    // the last observed modification time
+    time_t m_mtime;
     // the last observed link count
     int m_nlink;
     entryStatus m_status;
