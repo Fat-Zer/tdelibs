@@ -67,14 +67,19 @@
 	#include "networkbackends/network-manager/network-manager.h"
 #endif // WITH_NETWORK_MANAGER_BACKEND
 
-// uPower integration
-#ifdef WITH_UPOWER
+// uPower and uDisks2 integration
+#if defined(WITH_UPOWER) || defined(WITH_UDISKS2)
 	#include <tqdbusdata.h>
 	#include <tqdbusmessage.h>
 	#include <tqdbusproxy.h>
 	#include <tqdbusvariant.h>
 	#include <tqdbusconnection.h>
-#endif // WITH_NETWORK_MANAGER_BACKEND
+#endif // defined(WITH_UPOWER) || defined(WITH_UDISKS2)
+#ifdef WITH_UDISKS2
+	#include <tqdbuserror.h>
+	#include <tqdbusdatamap.h>
+	#include <tqdbusobjectpath.h>
+#endif // WITH_UDISKS2
 
 // BEGIN BLOCK
 // Copied from include/linux/genhd.h
@@ -446,6 +451,107 @@ bool TDEStorageDevice::lockDriveMedia(bool lock) {
 	else {
 		close(fd);
 		return true;
+	}
+}
+
+bool ejectDriveUDisks2(TDEStorageDevice* sdevice) {
+#ifdef WITH_UDISKS2
+	TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+	if (dbusConn.isConnected()) {
+		TQString blockDeviceString = sdevice->deviceNode();
+		blockDeviceString.replace("/dev/", "");
+		blockDeviceString = "/org/freedesktop/UDisks2/block_devices/" + blockDeviceString;
+		TQT_DBusProxy hardwareControl("org.freedesktop.UDisks2", blockDeviceString, "org.freedesktop.DBus.Properties", dbusConn);
+
+		// get associated udisks2 drive path
+		TQT_DBusError error;
+		TQValueList<TQT_DBusData> params;
+		params << TQT_DBusData::fromString("org.freedesktop.UDisks2.Block") << TQT_DBusData::fromString("Drive");
+		TQT_DBusMessage reply = hardwareControl.sendWithReply("Get", params, &error);
+		if (error.isValid()) {
+			// Error!
+			printf("[ERROR] %s\n\r", error.name().ascii()); fflush(stdout);
+			return FALSE;
+		}
+		else {
+			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+				TQT_DBusObjectPath driveObjectPath = reply[0].toVariant().value.toObjectPath();
+				if (!driveObjectPath.isValid()) {
+					return FALSE;
+				}
+
+				error = TQT_DBusError();
+				TQT_DBusProxy driveInformation("org.freedesktop.UDisks2", driveObjectPath, "org.freedesktop.DBus.Properties", dbusConn);
+				// can eject?
+				TQValueList<TQT_DBusData> params;
+				params << TQT_DBusData::fromString("org.freedesktop.UDisks2.Drive") << TQT_DBusData::fromString("Ejectable");
+				TQT_DBusMessage reply = driveInformation.sendWithReply("Get", params, &error);
+				if (error.isValid()) {
+					// Error!
+					printf("[ERROR] %s\n\r", error.name().ascii()); fflush(stdout);
+					return FALSE;
+				}
+				if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+					bool ejectable = reply[0].toVariant().value.toBool();
+					if (!ejectable) {
+						return FALSE;
+					}
+
+					// Eject the drive!
+					TQT_DBusProxy driveControl("org.freedesktop.UDisks2", driveObjectPath, "org.freedesktop.UDisks2.Drive", dbusConn);
+					TQValueList<TQT_DBusData> params;
+					TQT_DBusDataMap<TQString> options(TQT_DBusData::Variant);
+					params << TQT_DBusData::fromStringKeyMap(options);
+					TQT_DBusMessage reply = driveControl.sendWithReply("Eject", params, &error);
+					if (error.isValid()) {
+						// Error!
+						printf("[ERROR] %s\n\r", error.name().ascii()); fflush(stdout);
+						return FALSE;
+					}
+					else {
+						return TRUE;
+					}
+				}
+				else {
+					return FALSE;
+				}
+			}
+			else {
+				return FALSE;
+			}
+		}
+	}
+	else {
+		return FALSE;
+	}
+#else // WITH_UDISKS2
+	return FALSE;
+#endif // WITH_UDISKS2
+}
+
+bool TDEStorageDevice::ejectDrive() {
+	if (ejectDriveUDisks2(this)) {
+		return TRUE;
+	}
+	else {
+		TQString command = TQString("eject -v '%1' 2>&1").arg(deviceNode());
+
+		FILE *exepipe = popen(command.ascii(), "r");
+		if (exepipe) {
+			TQString pmount_output;
+			char buffer[8092];
+			pmount_output = fgets(buffer, sizeof(buffer), exepipe);
+			int retcode = pclose(exepipe);
+			if (retcode == 0) {
+				return TRUE;
+			}
+			else {
+				return FALSE;
+			}
+		}
+		else {
+			return FALSE;
+		}
 	}
 }
 

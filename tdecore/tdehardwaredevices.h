@@ -668,6 +668,13 @@ class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 		*/
 		bool ejectDriveMedia();
 
+		/**
+		* @return TRUE on success, FALSE on failure
+		*
+		* This method currently works on all removable storage devices
+		*/
+		bool ejectDrive();
+
 	protected:
 		/**
 		* @param a TQString with the disk or partition label, if any
