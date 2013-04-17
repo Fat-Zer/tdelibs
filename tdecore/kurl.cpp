@@ -466,6 +466,9 @@ KURL::KURL()
 
 KURL::~KURL()
 {
+  if (d) {
+    delete d;
+  }
 }
 
 
