@@ -591,6 +591,16 @@ public:
   bool hasPath() const { return !m_strPath.isEmpty(); }
 
   /**
+   * @brief @internal
+   */
+  void setInternalReferenceURL( const TQString& url );
+
+  /**
+   * @brief @internal
+   */
+  TQString internalReferenceURL( void ) const;
+
+  /**
    * @brief Resolves @c "." and @c ".." components in path
    *
    * Some servers seem not to like the removal of extra @c '/'

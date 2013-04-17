@@ -60,6 +60,7 @@
 #include <tdeglobal.h>
 #include <kstaticdeleter.h>
 #include <kde_file.h>
+#include <kurl.h>
 
 // debug
 #include <sys/ioctl.h>
@@ -429,9 +430,9 @@ void KDirWatchPrivate::slotActivated()
               kdDebug(7001) << "-->got deleteself signal for " << e->path << endl;
               e->m_status = NonExistent;
               if (e->isDir)
-                addEntry(0, TQDir::cleanDirPath(e->path+"/.."), e, true);
+                addEntry(0, TQDir::cleanDirPath(e->path.path()+"/.."), e, true);
               else
-                addEntry(0, TQFileInfo(e->path).dirPath(true), e, true);
+                addEntry(0, TQFileInfo(e->path.path()).dirPath(true), e, true);
             }
             if ( event->mask & IN_IGNORED ) {
               e->wd = 0;
@@ -439,10 +440,10 @@ void KDirWatchPrivate::slotActivated()
             if ( event->mask & (IN_CREATE|IN_MOVED_TO) ) {
               Entry *sub_entry = e->m_entries.first();
               for(;sub_entry; sub_entry = e->m_entries.next())
-                if (sub_entry->path == e->path + "/" + path) break;
+                if (sub_entry->path == e->path.path() + "/" + path) break;
 
               if (sub_entry /*&& sub_entry->isDir*/) {
-                removeEntry(0,e->path, sub_entry);
+                removeEntry(0,e->path.path(), sub_entry);
                 KDE_struct_stat stat_buf;
                 TQCString tpath = TQFile::encodeName(path);
                 KDE_stat(tpath, &stat_buf);
@@ -539,19 +540,19 @@ int KDirWatchPrivate::Entry::clients()
 }
 
 
-KDirWatchPrivate::Entry* KDirWatchPrivate::entry(const TQString& _path)
+KDirWatchPrivate::Entry* KDirWatchPrivate::entry(const KURL& _path)
 {
 // we only support absolute paths
-  if (TQDir::isRelativePath(_path)) {
+  if (TQDir::isRelativePath(_path.path())) {
     return 0;
   }
 
-  TQString path = _path;
+  TQString path = _path.path();
 
   if ( path.length() > 1 && path.right(1) == "/" )
     path.truncate( path.length() - 1 );
 
-  EntryMap::Iterator it = m_mapEntries.find( path );
+  EntryMap::Iterator it = m_mapEntries.find( _path );
   if ( it == m_mapEntries.end() )
     return 0;
   else
@@ -588,10 +589,10 @@ bool KDirWatchPrivate::useFAM(Entry* e)
   if (e->isDir) {
     if (e->m_status == NonExistent) {
       // If the directory does not exist we watch the parent directory
-      addEntry(0, TQDir::cleanDirPath(e->path+"/.."), e, true);
+      addEntry(0, TQDir::cleanDirPath(e->path.path()+"/.."), e, true);
     }
     else {
-      int res =FAMMonitorDirectory(&fc, TQFile::encodeName(e->path),
+      int res =FAMMonitorDirectory(&fc, TQFile::encodeName(e->path.path()),
 				   &(e->fr), e);
       if (res<0) {
 	e->m_mode = UnknownMode;
@@ -600,16 +601,16 @@ bool KDirWatchPrivate::useFAM(Entry* e)
       }
       kdDebug(7001) << " Setup FAM (Req "
 		    << FAMREQUEST_GETREQNUM(&(e->fr))
-		    << ") for " << e->path << endl;
+		    << ") for " << e->path.path() << endl;
     }
   }
   else {
     if (e->m_status == NonExistent) {
       // If the file does not exist we watch the directory
-      addEntry(0, TQFileInfo(e->path).dirPath(true), e, true);
+      addEntry(0, TQFileInfo(e->path.path()).dirPath(true), e, true);
     }
     else {
-      int res = FAMMonitorFile(&fc, TQFile::encodeName(e->path),
+      int res = FAMMonitorFile(&fc, TQFile::encodeName(e->path.path()),
 			       &(e->fr), e);
       if (res<0) {
 	e->m_mode = UnknownMode;
@@ -619,7 +620,7 @@ bool KDirWatchPrivate::useFAM(Entry* e)
 
       kdDebug(7001) << " Setup FAM (Req "
 		    << FAMREQUEST_GETREQNUM(&(e->fr))
-		    << ") for " << e->path << endl;
+		    << ") for " << e->path.path() << endl;
     }
   }
 
@@ -644,7 +645,7 @@ bool KDirWatchPrivate::useDNotify(Entry* e)
 
   if (e->isDir) {
     if (e->m_status == Normal) {
-      int fd = KDE_open(TQFile::encodeName(e->path).data(), O_RDONLY);
+      int fd = KDE_open(TQFile::encodeName(e->path.path()).data(), O_RDONLY);
       // Migrate fd to somewhere above 128. Some libraries have
       // constructs like:
       //    fd = socket(...)
@@ -688,16 +689,16 @@ bool KDirWatchPrivate::useDNotify(Entry* e)
       e->dn_fd = fd;
 
       kdDebug(7001) << " Setup DNotify (fd " << fd
-		    << ") for " << e->path << endl;
+		    << ") for " << e->path.path() << endl;
     }
     else { // NotExisting
-      addEntry(0, TQDir::cleanDirPath(e->path+"/.."), e, true);
+      addEntry(0, TQDir::cleanDirPath(e->path.path()+"/.."), e, true);
     }
   }
   else { // File
     // we always watch the directory (DNOTIFY can't watch files alone)
     // this notifies us about changes of files therein
-    addEntry(0, TQFileInfo(e->path).dirPath(true), e, true);
+    addEntry(0, TQFileInfo(e->path.path()).dirPath(true), e, true);
   }
 
   return true;
@@ -726,14 +727,14 @@ bool KDirWatchPrivate::useINotify( Entry* e )
   }
 
   if ( ( e->wd = inotify_add_watch( m_inotify_fd,
-        TQFile::encodeName( e->path ), mask) ) > 0 )
+        TQFile::encodeName( e->path.path() ), mask) ) > 0 )
     return true;
 
   if ( e->m_status == NonExistent ) {
     if (e->isDir) 
-      addEntry(0, TQDir::cleanDirPath(e->path+"/.."), e, true);
+      addEntry(0, TQDir::cleanDirPath(e->path.path()+"/.."), e, true);
     else
-      addEntry(0, TQFileInfo(e->path).dirPath(true), e, true);
+      addEntry(0, TQFileInfo(e->path.path()).dirPath(true), e, true);
     return true;
   }
 
@@ -743,8 +744,8 @@ bool KDirWatchPrivate::useINotify( Entry* e )
 
 bool KDirWatchPrivate::useStat(Entry* e)
 {
-  if ( e->path.startsWith("/media/") || (e->path == "/media")
-       || (TDEIO::probably_slow_mounted(e->path)) )
+  if ( e->path.path().startsWith("/media/") || (e->path.path() == "/media")
+       || (TDEIO::probably_slow_mounted(e->path.path())) )
     useFreq(e, m_nfsPollInterval);
   else
     useFreq(e, m_PollInterval);
@@ -761,7 +762,7 @@ bool KDirWatchPrivate::useStat(Entry* e)
   }
 
   kdDebug(7001) << " Setup Stat (freq " << e->freq
-		<< ") for " << e->path << endl;
+		<< ") for " << e->path.path() << endl;
 
   return true;
 }
@@ -772,17 +773,17 @@ bool KDirWatchPrivate::useStat(Entry* e)
  * Sometimes, entries are dependant on each other: if <sub_entry> !=0,
  * this entry needs another entry to watch himself (when notExistent).
  */
-void KDirWatchPrivate::addEntry(KDirWatch* instance, const TQString& _path,
+void KDirWatchPrivate::addEntry(KDirWatch* instance, const KURL& _path,
 				Entry* sub_entry, bool isDir)
 {
-  TQString path = _path;
+  TQString path = _path.path();
   if (path.startsWith("/dev/") || (path == "/dev"))
     return; // Don't even go there.
 
   if ( path.length() > 1 && path.right(1) == "/" )
     path.truncate( path.length() - 1 );
 
-  EntryMap::Iterator it = m_mapEntries.find( path );
+  EntryMap::Iterator it = m_mapEntries.find( _path );
   if ( it != m_mapEntries.end() )
   {
     if (sub_entry) {
@@ -820,7 +821,7 @@ void KDirWatchPrivate::addEntry(KDirWatch* instance, const TQString& _path,
            mask |= IN_ONLYDIR;
 
          inotify_rm_watch (m_inotify_fd, e->wd);
-         e->wd = inotify_add_watch( m_inotify_fd, TQFile::encodeName( e->path ), mask);
+         e->wd = inotify_add_watch( m_inotify_fd, TQFile::encodeName( e->path.path() ), mask);
        }
     }
 #endif
@@ -842,9 +843,9 @@ void KDirWatchPrivate::addEntry(KDirWatch* instance, const TQString& _path,
   bool exists = (KDE_stat(tpath, &stat_buf) == 0);
 
   Entry newEntry;
-  m_mapEntries.insert( path, newEntry );
+  m_mapEntries.insert( _path, newEntry );
   // the insert does a copy, so we have to use <e> now
-  Entry* e = &(m_mapEntries[path]);
+  Entry* e = &(m_mapEntries[_path]);
 
   if (exists) {
     e->isDir = S_ISDIR(stat_buf.st_mode);
@@ -867,7 +868,7 @@ void KDirWatchPrivate::addEntry(KDirWatch* instance, const TQString& _path,
     e->m_nlink = 0;
   }
 
-  e->path = path;
+  e->path = _path;
   if (sub_entry)
      e->m_entries.append(sub_entry);
   else
@@ -875,7 +876,7 @@ void KDirWatchPrivate::addEntry(KDirWatch* instance, const TQString& _path,
 
   kdDebug(7001) << "Added " << (e->isDir ? "Dir ":"File ") << path
 		<< (e->m_status == NonExistent ? " NotExisting" : "")
-		<< (sub_entry ? TQString(TQString(" for %1").arg(sub_entry->path)) : TQString(""))
+		<< (sub_entry ? TQString(TQString(" for %1").arg(sub_entry->path.path())) : TQString(""))
 		<< (instance ? TQString(TQString(" [%1]").arg(instance->name())) : TQString(""))
 		<< endl;
 
@@ -904,7 +905,7 @@ void KDirWatchPrivate::addEntry(KDirWatch* instance, const TQString& _path,
 
 
 void KDirWatchPrivate::removeEntry( KDirWatch* instance,
-				    const TQString& _path, Entry* sub_entry )
+				    const KURL& _path, Entry* sub_entry )
 {
   kdDebug(7001) << "KDirWatchPrivate::removeEntry for '" << _path << "' sub_entry: " << sub_entry << endl;
   Entry* e = entry(_path);
@@ -919,7 +920,7 @@ void KDirWatchPrivate::removeEntry( KDirWatch* instance,
     e->removeClient(instance);
 
   if (e->m_clients.count() || e->m_entries.count()) {
-    kdDebug(7001) << "removeEntry: unwatched " << e->path << " " << _path << endl;
+    kdDebug(7001) << "removeEntry: unwatched " << e->path.path() << " " << _path << endl;
     return;
   }
 
@@ -937,13 +938,13 @@ void KDirWatchPrivate::removeEntry( KDirWatch* instance,
       FAMCancelMonitor(&fc, &(e->fr) );
       kdDebug(7001) << "Cancelled FAM (Req "
 		    << FAMREQUEST_GETREQNUM(&(e->fr))
-		    << ") for " << e->path << endl;
+		    << ") for " << e->path.path() << endl;
     }
     else {
       if (e->isDir)
-	removeEntry(0, TQDir::cleanDirPath(e->path+"/.."), e);
+	removeEntry(0, TQDir::cleanDirPath(e->path.path()+"/.."), e);
       else
-	removeEntry(0, TQFileInfo(e->path).dirPath(true), e);
+	removeEntry(0, TQFileInfo(e->path.path()).dirPath(true), e);
     }
   }
 #endif
@@ -955,13 +956,13 @@ void KDirWatchPrivate::removeEntry( KDirWatch* instance,
       (void) inotify_rm_watch( m_inotify_fd, e->wd );
       kdDebug(7001) << "Cancelled INotify (fd " <<
         m_inotify_fd << ", "  << e->wd <<
-        ") for " << e->path << endl;
+        ") for " << e->path.path() << endl;
     }
     else {
       if (e->isDir)
-	removeEntry(0, TQDir::cleanDirPath(e->path+"/.."), e);
+	removeEntry(0, TQDir::cleanDirPath(e->path.path()+"/.."), e);
       else
-	removeEntry(0, TQFileInfo(e->path).dirPath(true), e);
+	removeEntry(0, TQFileInfo(e->path.path()).dirPath(true), e);
     }
   }
 #endif
@@ -969,7 +970,7 @@ void KDirWatchPrivate::removeEntry( KDirWatch* instance,
 #ifdef HAVE_DNOTIFY
   if (e->m_mode == DNotifyMode) {
     if (!e->isDir) {
-      removeEntry(0, TQFileInfo(e->path).dirPath(true), e);
+      removeEntry(0, TQFileInfo(e->path.path()).dirPath(true), e);
     }
     else { // isDir
       // must close the FD.
@@ -979,13 +980,13 @@ void KDirWatchPrivate::removeEntry( KDirWatch* instance,
 	  fd_Entry.remove(e->dn_fd);
 
 	  kdDebug(7001) << "Cancelled DNotify (fd " << e->dn_fd
-			<< ") for " << e->path << endl;
+			<< ") for " << e->path.path() << endl;
 	  e->dn_fd = 0;
 
 	}
       }
       else {
-	removeEntry(0, TQDir::cleanDirPath(e->path+"/.."), e);
+	removeEntry(0, TQDir::cleanDirPath(e->path.path()+"/.."), e);
       }
     }
   }
@@ -999,8 +1000,8 @@ void KDirWatchPrivate::removeEntry( KDirWatch* instance,
     }
   }
 
-  kdDebug(7001) << "Removed " << (e->isDir ? "Dir ":"File ") << e->path
-		<< (sub_entry ? TQString(TQString(" for %1").arg(sub_entry->path)) : TQString(""))
+  kdDebug(7001) << "Removed " << (e->isDir ? "Dir ":"File ") << e->path.path()
+		<< (sub_entry ? TQString(TQString(" for %1").arg(sub_entry->path.path())) : TQString(""))
 		<< (instance ? TQString(TQString(" [%1]").arg(instance->name())) : TQString(""))
 		<< endl;
   m_mapEntries.remove( e->path ); // <e> not valid any more
@@ -1052,7 +1053,7 @@ bool KDirWatchPrivate::stopEntryScan( KDirWatch* instance, Entry* e)
       stillWatching += c->count;
   }
 
-  kdDebug(7001) << instance->name() << " stopped scanning " << e->path
+  kdDebug(7001) << instance->name() << " stopped scanning " << e->path.path()
 		<< " (now " << stillWatching << " watchers)" << endl;
 
   if (stillWatching == 0) {
@@ -1082,7 +1083,7 @@ bool KDirWatchPrivate::restartEntryScan( KDirWatch* instance, Entry* e,
   if (newWatching == 0)
     return false;
 
-  kdDebug(7001) << (instance ? instance->name() : "all") << " restarted scanning " << e->path
+  kdDebug(7001) << (instance ? instance->name() : "all") << " restarted scanning " << e->path.path()
 		<< " (now " << wasWatching+newWatching << " watchers)" << endl;
 
   // restart watching and emit pending events
@@ -1091,7 +1092,7 @@ bool KDirWatchPrivate::restartEntryScan( KDirWatch* instance, Entry* e,
   if (wasWatching == 0) {
     if (!notify) {
       KDE_struct_stat stat_buf;
-      bool exists = (KDE_stat(TQFile::encodeName(e->path), &stat_buf) == 0);
+      bool exists = (KDE_stat(TQFile::encodeName(e->path.path()), &stat_buf) == 0);
       if (exists) {
 	e->m_ctime = stat_buf.st_ctime;
 	e->m_mtime = stat_buf.st_mtime;
@@ -1170,7 +1171,7 @@ int KDirWatchPrivate::scanEntry(Entry* e)
   if (e->m_mode == DNotifyMode || e->m_mode == INotifyMode ) {
     // we know nothing has changed, no need to stat
     if(!e->dirty) return NoChange;
-    kdDebug(7001) << "scanning " << e->path << " " << e->m_status << " " << e->m_ctime << " " << e->m_mtime << endl;
+    kdDebug(7001) << "scanning " << e->path.path() << " " << e->m_status << " " << e->m_ctime << " " << e->m_mtime << endl;
     e->dirty = false;
   }
 #endif
@@ -1186,7 +1187,7 @@ int KDirWatchPrivate::scanEntry(Entry* e)
   }
 
   KDE_struct_stat stat_buf;
-  bool exists = (KDE_stat(TQFile::encodeName(e->path), &stat_buf) == 0);
+  bool exists = (KDE_stat(TQFile::encodeName(e->path.path()), &stat_buf) == 0);
   if (exists) {
 
     if (e->m_status == NonExistent) {
@@ -1232,18 +1233,18 @@ int KDirWatchPrivate::scanEntry(Entry* e)
  * and stored pending events. When watching is stopped, the event is
  * added to the pending events.
  */
-void KDirWatchPrivate::emitEvent(Entry* e, int event, const TQString &fileName)
+void KDirWatchPrivate::emitEvent(Entry* e, int event, const KURL &fileName)
 {
-  TQString path = e->path;
+  TQString path = e->path.path();
   if (!fileName.isEmpty()) {
-    if (!TQDir::isRelativePath(fileName))
-      path = fileName;
+    if (!TQDir::isRelativePath(fileName.path()))
+      path = fileName.path();
     else
 #ifdef Q_OS_UNIX
-      path += "/" + fileName;
+      path += "/" + fileName.path();
 #elif defined(Q_WS_WIN)
       //current drive is passed instead of /
-      path += TQDir::currentDirPath().left(2) + "/" + fileName;
+      path += TQDir::currentDirPath().left(2) + "/" + fileName.path();
 #endif
   }
 
@@ -1279,8 +1280,10 @@ void KDirWatchPrivate::emitEvent(Entry* e, int event, const TQString &fileName)
       // possible emit Change event after creation
     }
 
-    if (event & Changed)
+    if (event & Changed) {
       c->instance->setDirty(path);
+      c->instance->setDirty(e->path);
+    }
   }
 }
 
@@ -1386,11 +1389,11 @@ void KDirWatchPrivate::slotRescan()
   // Scan parent of deleted directories for new creation
   Entry* e;
   for(e=dList.first();e;e=dList.next())
-    addEntry(0, TQDir::cleanDirPath( e->path+"/.."), e, true);
+    addEntry(0, TQDir::cleanDirPath( e->path.path()+"/.."), e, true);
 
   // Remove watch of parent of new created directories
   for(e=cList.first();e;e=cList.next())
-    removeEntry(0, TQDir::cleanDirPath( e->path+"/.."), e);
+    removeEntry(0, TQDir::cleanDirPath( e->path.path()+"/.."), e);
 #endif
 
   if ( timerRunning )
@@ -1492,7 +1495,7 @@ void KDirWatchPrivate::checkFAMEvent(FAMEvent* fe)
   }
 
   if (e->m_status == NonExistent) {
-    kdDebug(7001) << "FAM event for nonExistent entry " << e->path << endl;
+    kdDebug(7001) << "FAM event for nonExistent entry " << e->path.path() << endl;
     return;
   }
 
@@ -1515,9 +1518,9 @@ void KDirWatchPrivate::checkFAMEvent(FAMEvent* fe)
           FAMCancelMonitor(&fc, &(e->fr) ); // needed ?
           kdDebug(7001) << "Cancelled FAMReq "
                         << FAMREQUEST_GETREQNUM(&(e->fr))
-                        << " for " << e->path << endl;
+                        << " for " << e->path.path() << endl;
           // Scan parent for a new creation
-          addEntry(0, TQDir::cleanDirPath( e->path+"/.."), e, true);
+          addEntry(0, TQDir::cleanDirPath( e->path.path()+"/.."), e, true);
         }
         break;
 
@@ -1525,9 +1528,9 @@ void KDirWatchPrivate::checkFAMEvent(FAMEvent* fe)
           // check for creation of a directory we have to watch
           Entry *sub_entry = e->m_entries.first();
           for(;sub_entry; sub_entry = e->m_entries.next())
-            if (sub_entry->path == e->path + "/" + fe->filename) break;
+            if (sub_entry->path.path() == e->path.path() + "/" + fe->filename) break;
           if (sub_entry && sub_entry->isDir) {
-            TQString path = e->path;
+            KURL path = e->path;
             removeEntry(0,e->path,sub_entry); // <e> can be invalid here!!
             sub_entry->m_status = Normal;
             if (!useFAM(sub_entry))
@@ -1560,7 +1563,7 @@ void KDirWatchPrivate::statistics()
     it = m_mapEntries.begin();
     for( ; it != m_mapEntries.end(); ++it ) {
       Entry* e = &(*it);
-      kdDebug(7001) << "  " << e->path << " ("
+      kdDebug(7001) << "  " << e->path.path() << " ("
 		    << ((e->m_status==Normal)?"":"Nonexistent ")
 		    << (e->isDir ? "Dir":"File") << ", using "
 		    << ((e->m_mode == FAMMode) ? "FAM" :
@@ -1648,13 +1651,21 @@ KDirWatch::~KDirWatch()
 
 
 // TODO: add watchFiles/recursive support
-void KDirWatch::addDir( const TQString& _path,
-			bool watchFiles, bool recursive)
+void KDirWatch::addDir( const TQString& _path, bool watchFiles, bool recursive)
 {
   if (watchFiles || recursive) {
-    kdDebug(7001) << "addDir - recursive/watchFiles not supported yet in KDE 3.x" << endl;
+    kdDebug(7001) << "addDir - recursive/watchFiles not supported yet in TDE 3.x" << endl;
   }
   if (d) d->addEntry(this, _path, 0, true);
+}
+
+// TODO: add watchFiles/recursive support
+void KDirWatch::addDir( const KURL& _url, bool watchFiles, bool recursive)
+{
+  if (watchFiles || recursive) {
+    kdDebug(7001) << "addDir - recursive/watchFiles not supported yet in TDE 3.x" << endl;
+  }
+  if (d) d->addEntry(this, _url, 0, true);
 }
 
 void KDirWatch::addFile( const TQString& _path )
@@ -1677,6 +1688,11 @@ TQDateTime KDirWatch::ctime( const TQString &_path )
 void KDirWatch::removeDir( const TQString& _path )
 {
   if (d) d->removeEntry(this, _path, 0);
+}
+
+void KDirWatch::removeDir( const KURL& _url )
+{
+  if (d) d->removeEntry(this, _url, 0);
 }
 
 void KDirWatch::removeFile( const TQString& _path )
@@ -1750,6 +1766,12 @@ void KDirWatch::setDirty( const TQString & _file )
 {
   kdDebug(7001) << name() << " emitting dirty " << _file << endl;
   emit dirty( _file );
+}
+
+void KDirWatch::setDirty( const KURL & _url )
+{
+  kdDebug(7001) << name() << " emitting dirty " << _url << endl;
+  emit dirty( _url );
 }
 
 void KDirWatch::setDeleted( const TQString & _file )

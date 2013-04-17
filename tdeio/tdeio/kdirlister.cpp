@@ -63,8 +63,8 @@ KDirListerCache::KDirListerCache( int maxCount )
   urlsCurrentlyHeld.setAutoDelete( true );
   pendingUpdates.setAutoDelete( true );
 
-  connect( kdirwatch, TQT_SIGNAL( dirty( const TQString& ) ),
-           this, TQT_SLOT( slotFileDirty( const TQString& ) ) );
+  connect( kdirwatch, TQT_SIGNAL( dirty( const KURL& ) ),
+           this, TQT_SLOT( slotFileDirty( const KURL& ) ) );
   connect( kdirwatch, TQT_SIGNAL( created( const TQString& ) ),
            this, TQT_SLOT( slotFileCreated( const TQString& ) ) );
   connect( kdirwatch, TQT_SIGNAL( deleted( const TQString& ) ),
@@ -99,7 +99,6 @@ bool KDirListerCache::listDir( KDirLister *lister, const KURL& _u,
   // Strangely, slotUpdateResult *is* called if the user instead right-clicks on the unmounted media device and selects Mount from the context menu
   if ((_u.protocol() == "media") && (_u.path() == "/")) {
     _reload = true;
-    _keep = false;
   }
 
   // like this we don't have to worry about trailing slashes any further
@@ -162,8 +161,9 @@ bool KDirListerCache::listDir( KDirLister *lister, const KURL& _u,
 
       emit lister->started( _url );
 
-      if ( !lister->d->rootFileItem && lister->d->url == _url )
+      if ( !lister->d->rootFileItem && lister->d->url == _url ) {
         lister->d->rootFileItem = itemU->rootItem;
+      }
 
       lister->addNewItems( *(itemU->lstItems) );
       lister->emitItems();
@@ -174,9 +174,10 @@ bool KDirListerCache::listDir( KDirLister *lister, const KURL& _u,
 
       lister->d->complete = oldState;
 
-      emit lister->completed( _url );
-      if ( lister->d->complete )
+      lister->emitCompleted( _url );
+      if ( lister->d->complete ) {
         emit lister->completed();
+      }
 
       if ( _reload || !itemU->complete ) {
         updateDirectory( _url );
@@ -209,9 +210,10 @@ bool KDirListerCache::listDir( KDirLister *lister, const KURL& _u,
 
       lister->d->complete = oldState;
 
-      emit lister->completed( _url );
-      if ( lister->d->complete )
+      lister->emitCompleted( _url );
+      if ( lister->d->complete ) {
         emit lister->completed();
+      }
 
       if ( !itemC->complete ) {
         updateDirectory( _url );
@@ -237,8 +239,9 @@ bool KDirListerCache::listDir( KDirLister *lister, const KURL& _u,
 //        else
 //        {
 
-      if ( lister->d->url == _url )
+      if ( lister->d->url == _url ) {
         lister->d->rootFileItem = 0;
+      }
 
       TDEIO::ListJob* job = TDEIO::listDir( _url, false /* no default GUI */ );
       jobs.insert( job, TQValueList<TDEIO::UDSEntry>() );
@@ -246,8 +249,9 @@ bool KDirListerCache::listDir( KDirLister *lister, const KURL& _u,
       lister->jobStarted( job );
       lister->connectJob( job );
 
-      if ( lister->d->window )
+      if ( lister->d->window ) {
         job->setWindow( lister->d->window );
+      }
 
       connect( job, TQT_SIGNAL( entries( TDEIO::Job *, const TDEIO::UDSEntryList & ) ),
                this, TQT_SLOT( slotEntries( TDEIO::Job *, const TDEIO::UDSEntryList & ) ) );
@@ -285,8 +289,9 @@ bool KDirListerCache::listDir( KDirLister *lister, const KURL& _u,
   }
 
   // automatic updating of directories
-  if ( lister->d->autoUpdate )
+  if ( lister->d->autoUpdate ) {
     itemU->incAutoUpdate();
+  }
 
   return true;
 }
@@ -744,9 +749,11 @@ void KDirListerCache::FilesRemoved( const KURL::List &fileList )
     if ( fileitem )
     {
       TQPtrList<KDirLister> *listers = urlsCurrentlyHeld[parentDir.url()];
-      if ( listers )
-        for ( KDirLister *kdl = listers->first(); kdl; kdl = listers->next() )
+      if ( listers ) {
+        for ( KDirLister *kdl = listers->first(); kdl; kdl = listers->next() ) {
           kdl->emitDeleteItem( fileitem );
+        }
+      }
     }
 
     // If we found a fileitem, we can test if it's a dir. If not, we'll go to deleteDir just in case.
@@ -893,26 +900,26 @@ bool KDirListerCache::exists()
 // private slots
 
 // _file can also be a directory being currently held!
-void KDirListerCache::slotFileDirty( const TQString& _file )
+void KDirListerCache::slotFileDirty( const KURL& _url )
 {
-  kdDebug(7004) << k_funcinfo << _file << endl;
+  kdDebug(7004) << k_funcinfo << _url << endl;
 
-  if ( !pendingUpdates[_file] )
+  if ( !pendingUpdates[_url.path()] )
   {
     KURL dir;
-    dir.setPath( _file );
+    dir.setPath( _url.path() );
     if ( checkUpdate( dir.url(-1) ) ) {
-      updateDirectory( dir );
+      updateDirectory( _url );
     }
 
-    // the parent directory of _file
+    // the parent directory of _url.path()
     dir.setPath( dir.directory() );
     if ( checkUpdate( dir.url() ) )
     {
       // Nice hack to save memory: use the qt object name to store the filename
-      TQTimer *timer = new TQTimer( this, _file.utf8() );
+      TQTimer *timer = new TQTimer( this, _url.path().utf8() );
       connect( timer, TQT_SIGNAL(timeout()), this, TQT_SLOT(slotFileDirtyDelayed()) );
-      pendingUpdates.insert( _file, timer );
+      pendingUpdates.insert( _url.path(), timer );
       timer->start( 500, true );
     }
   }
@@ -976,8 +983,9 @@ void KDirListerCache::slotEntries( TDEIO::Job *job, const TDEIO::UDSEntryList &e
 
   // check if anyone wants the mimetypes immediately
   bool delayedMimeTypes = true;
-  for ( KDirLister *kdl = listers->first(); kdl; kdl = listers->next() )
+  for ( KDirLister *kdl = listers->first(); kdl; kdl = listers->next() ) {
     delayedMimeTypes = delayedMimeTypes && kdl->d->delayedMimeTypes;
+  }
 
   // avoid creating these QStrings again and again
   static const TQString& dot = TDEGlobal::staticQString(".");
@@ -992,16 +1000,17 @@ void KDirListerCache::slotEntries( TDEIO::Job *job, const TDEIO::UDSEntryList &e
 
     // find out about the name
     TDEIO::UDSEntry::ConstIterator entit = (*it).begin();
-    for( ; entit != (*it).end(); ++entit )
-      if ( (*entit).m_uds == TDEIO::UDS_NAME )
-      {
+    for( ; entit != (*it).end(); ++entit ) {
+      if ( (*entit).m_uds == TDEIO::UDS_NAME ) {
         name = (*entit).m_str;
         break;
       }
+    }
 
     Q_ASSERT( !name.isEmpty() );
-    if ( name.isEmpty() )
+    if ( name.isEmpty() ) {
       continue;
+    }
 
     if ( name == dot )
     {
@@ -1082,7 +1091,7 @@ void KDirListerCache::slotResult( TDEIO::Job *j )
     for ( kdl = listers->first(); kdl; kdl = listers->next() )
     {
       kdl->jobDone( job );
-      emit kdl->completed( jobUrl );
+      kdl->emitCompleted( jobUrl );
       if ( kdl->numJobs() == 0 )
       {
         kdl->d->complete = true;
@@ -1500,6 +1509,7 @@ void KDirListerCache::slotUpdateResult( TDEIO::Job * j )
   KURL jobUrl = joburl( job );
   jobUrl.adjustPath(-1);  // need remove trailing slashes again, in case of redirections
   TQString jobUrlStr = jobUrl.url();
+  TQString jobReferenceUrlStr = jobUrl.internalReferenceURL();
 
   kdDebug(7004) << k_funcinfo << "finished update " << jobUrl << endl;
 
@@ -1674,7 +1684,7 @@ void KDirListerCache::slotUpdateResult( TDEIO::Job * j )
 
     kdl->jobDone( job );
 
-    emit kdl->completed( jobUrl );
+    kdl->emitCompleted( jobUrl );
     if ( kdl->numJobs() == 0 )
     {
       kdl->d->complete = true;
@@ -1705,10 +1715,12 @@ TDEIO::ListJob *KDirListerCache::jobForUrl( const TQString& url, TDEIO::ListJob 
 
 const KURL& KDirListerCache::joburl( TDEIO::ListJob *job )
 {
-  if ( job->redirectionURL().isValid() )
+  if ( job->redirectionURL().isValid() ) {
      return job->redirectionURL();
-  else
+  }
+  else {
      return job->url();
+  }
 }
 
 void KDirListerCache::killJob( TDEIO::ListJob *job )
@@ -1727,11 +1739,13 @@ void KDirListerCache::deleteUnmarkedItems( TQPtrList<KDirLister> *listers, KFile
     if ( !item->isMarked() )
     {
       //kdDebug() << k_funcinfo << item->name() << endl;
-      for ( KDirLister *kdl = listers->first(); kdl; kdl = listers->next() )
+      for ( KDirLister *kdl = listers->first(); kdl; kdl = listers->next() ) {
         kdl->emitDeleteItem( item );
+      }
 
-      if ( item->isDir() )
+      if ( item->isDir() ) {
         deleteDir( item->url() );
+      }
 
       // finally actually delete the item
       lstItems->take();
@@ -1907,45 +1921,50 @@ bool KDirLister::openURL( const KURL& _url, bool _keep, bool _reload )
                 << " keep=" << _keep << " reload=" << _reload << endl;
 
   // emit the current changes made to avoid an inconsistent treeview
-  if ( d->changes != NONE && _keep )
+  if ( d->changes != NONE && _keep ) {
     emitChanges();
+  }
 
   d->changes = NONE;
 
   // If a local path is available, monitor that instead of the given remote URL...
-  KURL realURL = _url;
-  d->providedURL = _url;
-  if (!realURL.isLocalFile()) {
+  if (!_url.isLocalFile()) {
       TDEIO::LocalURLJob* localURLJob = TDEIO::localURL(_url);
       if (localURLJob) {
-          connect(localURLJob, TQT_SIGNAL(localURL(TDEIO::Job*, const KURL&, bool)), this, TQT_SLOT(slotLocalURL(TDEIO::Job*, const KURL&, bool)));
+          d->openURL_url[localURLJob] = _url;
+          d->openURL_keep[localURLJob] = _keep;
+          d->openURL_reload[localURLJob] = _reload;
+          connect(localURLJob, TQT_SIGNAL(localURL(TDEIO::Job*, const KURL&, bool)), this, TQT_SLOT(slotOpenURLGotLocalURL(TDEIO::Job*, const KURL&, bool)));
           connect(localURLJob, TQT_SIGNAL(destroyed()), this, TQT_SLOT(slotLocalURLKIODestroyed()));
-          d->localURLSlotFired = false;
-          while (!d->localURLSlotFired) {
-              tqApp->eventLoop()->processEvents(TQEventLoop::ExcludeUserInput);
-              usleep(1000);
-          }
-          if (d->localURLResultIsLocal) {
-              realURL = d->localURLResultURL;
-          }
       }
+      return true;
   }
-
-  d->listerURL = realURL;
-  return s_pCache->listDir( this, realURL, _keep, _reload );
+  else {
+      return s_pCache->listDir( this, _url, _keep, _reload );
+  }
 }
 
-void KDirLister::slotLocalURL(TDEIO::Job *job, const KURL& url, bool isLocal) {
-  d->localURLSlotFired = true;
-  d->localURLResultURL = url;
-  d->localURLResultIsLocal = isLocal;
+void KDirLister::slotOpenURLGotLocalURL(TDEIO::Job *job, const KURL& url, bool isLocal) {
+  KURL realURL = d->openURL_url[job];
+  if (isLocal) {
+      realURL = url;
+      realURL.setInternalReferenceURL(d->openURL_url[job].url());
+      d->m_referenceURLMap[d->openURL_url[job].url()] = url.path();
+  }
+  s_pCache->listDir( this, realURL, d->openURL_keep[job], d->openURL_reload[job] );
+  d->openURL_url.remove(job);
+  d->openURL_keep.remove(job);
+  d->openURL_reload.remove(job);
 }
 
 void KDirLister::slotLocalURLKIODestroyed() {
-  if (!d->localURLSlotFired) {
-    d->localURLSlotFired = true;
-    d->localURLResultURL = KURL();
-    d->localURLResultIsLocal = false;
+  TDEIO::LocalURLJob* terminatedJob = const_cast<TDEIO::LocalURLJob*>(static_cast<const TDEIO::LocalURLJob*>(sender()));
+
+  if (d->openURL_url.contains(terminatedJob)) {
+      s_pCache->listDir( this, d->openURL_url[terminatedJob], d->openURL_keep[terminatedJob], d->openURL_reload[terminatedJob] );
+      d->openURL_url.remove(terminatedJob);
+      d->openURL_keep.remove(terminatedJob);
+      d->openURL_reload.remove(terminatedJob);
   }
 }
 
@@ -1953,12 +1972,14 @@ void KDirLister::stop()
 {
   kdDebug(7003) << k_funcinfo << endl;
   s_pCache->stop( this );
+  d->m_referenceURLMap.clear();
 }
 
 void KDirLister::stop( const KURL& _url )
 {
   kdDebug(7003) << k_funcinfo << _url.prettyURL() << endl;
   s_pCache->stop( this, _url );
+  d->m_referenceURLMap.remove(_url.url());
 }
 
 bool KDirLister::autoUpdate() const
@@ -2319,15 +2340,20 @@ void KDirLister::addNewItem( const KFileItem *item )
     return; // No reason to continue... bailing out here prevents a mimetype scan.
   }
 
-  if (d->listerURL != d->providedURL) {
+  if ((item->url().internalReferenceURL() != "")
+      && (d->m_referenceURLMap.contains(item->url().internalReferenceURL()))) {
     // Likely a media:/ tdeioslave URL or similar
     // Rewrite the URL to ensure that the user remains within the media:/ tree!
     TQString itemPath = item->url().path();
-    if (itemPath.startsWith(d->listerURL.path())) {
-      itemPath = itemPath.remove(0, d->listerURL.path().length());
-      itemPath = d->providedURL.pathOrURL() + itemPath;
+    if (itemPath.startsWith(d->m_referenceURLMap[item->url().internalReferenceURL()])) {
+      itemPath = itemPath.remove(0, d->m_referenceURLMap[item->url().internalReferenceURL()].length());
+      TQString newPath = item->url().internalReferenceURL();
+      if (!newPath.endsWith("/")) newPath = newPath + "/";
+      while (itemPath.startsWith("/")) itemPath = itemPath.remove(0,1);
+      while (itemPath.endsWith("/")) itemPath.truncate(itemPath.length()-1);
+      newPath = newPath + itemPath;
       const_cast<KFileItem*>(item)->setListerURL(item->url());
-      const_cast<KFileItem*>(item)->setURL(itemPath);
+      const_cast<KFileItem*>(item)->setURL(newPath);
     }
   }
 
@@ -2374,6 +2400,23 @@ void KDirLister::aboutToRefreshItem( const KFileItem *item )
 void KDirLister::addRefreshItem( const KFileItem *item )
 {
   bool isExcluded = (d->dirOnlyMode && !item->isDir()) || !matchesFilter( item );
+
+  if ((item->url().internalReferenceURL() != "")
+      && (d->m_referenceURLMap.contains(item->url().internalReferenceURL()))) {
+    // Likely a media:/ tdeioslave URL or similar
+    // Rewrite the URL to ensure that the user remains within the media:/ tree!
+    TQString itemPath = item->url().path();
+    if (itemPath.startsWith(d->m_referenceURLMap[item->url().internalReferenceURL()])) {
+      itemPath = itemPath.remove(0, d->m_referenceURLMap[item->url().internalReferenceURL()].length());
+      TQString newPath = item->url().internalReferenceURL();
+      if (!newPath.endsWith("/")) newPath = newPath + "/";
+      while (itemPath.startsWith("/")) itemPath = itemPath.remove(0,1);
+      while (itemPath.endsWith("/")) itemPath.truncate(itemPath.length()-1);
+      newPath = newPath + itemPath;
+      const_cast<KFileItem*>(item)->setListerURL(item->url());
+      const_cast<KFileItem*>(item)->setURL(newPath);
+    }
+  }
 
   if ( !isExcluded && matchesMimeFilter( item ) )
   {
@@ -2422,7 +2465,31 @@ void KDirLister::emitItems()
 
   if ( tmpNew )
   {
-    emit newItems( *tmpNew );
+    // For historical reasons, items with different protocols and/or prefixes must be emitted separately
+    TQString protocol;
+    TQString prefix;
+    TQString prevProtocol;
+    TQString prevPrefix;
+    KFileItemList emitList;
+    for ( KFileItemListIterator kit( *tmpNew ); kit.current(); ++kit )
+    {
+      KFileItem *item = *kit;
+      protocol = item->url().protocol();
+      prefix = TQStringList::split("/", item->url().path())[0];
+      if ((protocol != prevProtocol) || (prefix != prevPrefix)) {
+        if (emitList.count() > 0) {
+          emit newItems( emitList );
+          emitList.clear();
+        }
+      }
+      emitList.append(item);
+      prevProtocol = protocol;
+      prevPrefix = prefix;
+    }
+
+    if (emitList.count() > 0) {
+      emit newItems( emitList );
+    }
     delete tmpNew;
   }
 
@@ -2449,10 +2516,13 @@ void KDirLister::emitItems()
 
 void KDirLister::emitDeleteItem( KFileItem *item )
 {
-  if ( ( d->dirOnlyMode && !item->isDir() ) || !matchesFilter( item ) )
+  if ( ( d->dirOnlyMode && !item->isDir() ) || !matchesFilter( item ) ) {
     return; // No reason to continue... bailing out here prevents a mimetype scan.
-  if ( matchesMimeFilter( item ) )
+  }
+
+  if ( matchesMimeFilter( item ) ) {
     emit deleteItem( item );
+  }
 }
 
 
@@ -2565,6 +2635,29 @@ void KDirLister::connectJob( TDEIO::ListJob *job )
            this, TQT_SLOT(slotProcessedSize( TDEIO::Job *, TDEIO::filesize_t )) );
   connect( job, TQT_SIGNAL(speed( TDEIO::Job *, unsigned long )),
            this, TQT_SLOT(slotSpeed( TDEIO::Job *, unsigned long )) );
+}
+
+void KDirLister::emitCompleted( const KURL& _url )
+{
+  KURL emitURL = _url;
+
+  if ((_url.internalReferenceURL() != "")
+      && (d->m_referenceURLMap.contains(_url.internalReferenceURL()))) {
+    // Likely a media:/ tdeioslave URL or similar
+    // Rewrite the URL to ensure that the user remains within the media:/ tree!
+    TQString itemPath = _url.path();
+    if (itemPath.startsWith(d->m_referenceURLMap[_url.internalReferenceURL()])) {
+      itemPath = itemPath.remove(0, d->m_referenceURLMap[_url.internalReferenceURL()].length());
+      TQString newPath = _url.internalReferenceURL();
+      if (!newPath.endsWith("/")) newPath = newPath + "/";
+      while (itemPath.startsWith("/")) itemPath = itemPath.remove(0,1);
+      while (itemPath.endsWith("/")) itemPath.truncate(itemPath.length()-1);
+      newPath = newPath + itemPath;
+      emitURL = newPath;
+    }
+  }
+
+  emit completed( emitURL );
 }
 
 void KDirLister::setMainWindow( TQWidget *window )

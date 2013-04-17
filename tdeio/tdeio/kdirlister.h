@@ -100,7 +100,7 @@ public:
    *                 Use only when opening a dir not yet listed by this lister
    *                 without using the cache. Otherwise use updateDirectory.
    * @return true    if successful, 
-   *         false   otherwise (e.g. invalid @p _url)
+   *         false   otherwise (e.g. unable to communicate with tdeio slave)
    */
   virtual bool openURL( const KURL& _url, bool _keep = false, bool _reload = false );
 
@@ -609,7 +609,7 @@ private slots:
   void slotTotalSize( TDEIO::Job *, TDEIO::filesize_t );
   void slotProcessedSize( TDEIO::Job *, TDEIO::filesize_t );
   void slotSpeed( TDEIO::Job *, unsigned long );
-  void slotLocalURL( TDEIO::Job *, const KURL&, bool );
+  void slotOpenURLGotLocalURL( TDEIO::Job *, const KURL&, bool );
   void slotLocalURLKIODestroyed( );
 
 private:
@@ -618,6 +618,9 @@ private:
   void jobDone( TDEIO::ListJob * );
 
   uint numJobs();
+
+public:
+  void emitCompleted( const KURL& _url );
 
 private:
   virtual void addNewItem( const KFileItem *item );

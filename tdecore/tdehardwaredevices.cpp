@@ -868,7 +868,7 @@ TQString TDEStorageDevice::mountPath() {
 			TQStringList mountInfo = TQStringList::split(" ", line, true);
 			TQString testNode = *mountInfo.at(0);
 			// Check for match
-			if ((testNode == deviceNode()) || (testNode == dmaltname)) {
+			if ((testNode == deviceNode()) || (testNode == dmaltname) || (testNode == ("/dev/disk/by-uuid/" + diskUUID()))) {
 				TQString ret = *mountInfo.at(1);
 				ret.replace("\\040", " ");
 				return ret;

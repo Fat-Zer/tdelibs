@@ -36,7 +36,6 @@ class TQTimer;
 class KDirLister;
 namespace TDEIO { class Job; class ListJob; }
 
-
 class KDirLister::KDirListerPrivate
 {
 public:
@@ -112,11 +111,11 @@ public:
   TQStringList mimeFilter, oldMimeFilter;
   TQStringList mimeExcludeFilter, oldMimeExcludeFilter;
 
-  bool localURLSlotFired;
-  KURL localURLResultURL;
-  bool localURLResultIsLocal;
-  KURL providedURL;
-  KURL listerURL;
+  TQMap<TDEIO::Job*, KURL> openURL_url;
+  TQMap<TDEIO::Job*, bool> openURL_keep;
+  TQMap<TDEIO::Job*, bool> openURL_reload;
+
+  TQMap<TQString,TQString> m_referenceURLMap;
 };
 
 /**
@@ -191,7 +190,7 @@ public:
   static bool exists(); 
 
 private slots:
-  void slotFileDirty( const TQString &_file );
+  void slotFileDirty( const KURL &_url );
   void slotFileCreated( const TQString &_file );
   void slotFileDeleted( const TQString &_file );
 
@@ -249,7 +248,7 @@ private:
       if ( autoUpdates )
       {
         if ( KDirWatch::exists() && url.isLocalFile() )
-          kdirwatch->removeDir( url.path() );
+          kdirwatch->removeDir( url );
         sendSignal( false, url );
       }
       delete rootItem;
@@ -272,11 +271,11 @@ private:
       if ( autoUpdates )
       {
         if ( url.isLocalFile() )
-          kdirwatch->removeDir( url.path() );
+          kdirwatch->removeDir( url );
         sendSignal( false, url );
 
         if ( newUrl.isLocalFile() )
-          kdirwatch->addDir( newUrl.path() );
+          kdirwatch->addDir( newUrl );
         sendSignal( true, newUrl );
       }
 
@@ -291,7 +290,7 @@ private:
       if ( autoUpdates++ == 0 )
       { 
         if ( url.isLocalFile() )
-          kdirwatch->addDir( url.path() );
+          kdirwatch->addDir( url );
         sendSignal( true, url );
       }
     }
@@ -301,7 +300,7 @@ private:
       if ( --autoUpdates == 0 )
       {
         if ( url.isLocalFile() )
-          kdirwatch->removeDir( url.path() );
+          kdirwatch->removeDir( url );
         sendSignal( false, url );
       }
 

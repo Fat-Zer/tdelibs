@@ -22,6 +22,8 @@
 #include <tqdatetime.h>
 #include <tqmap.h>
 
+#include <kurl.h>
+
 #include <tdelibs_export.h>
 
 #define kdirwatch KDirWatch::self()
@@ -96,8 +98,9 @@ class TDEIO_EXPORT KDirWatch : public TQObject
     * @param watchFiles if true, the KDirWatch will also watch files - NOT IMPLEMENTED YET
     * @param recursive if true, all sub directories are also watched - NOT IMPLEMENTED YET
     */
-   void addDir(const TQString& path, 
-	       bool watchFiles = false, bool recursive = false);
+   void addDir(const TQString& path, bool watchFiles = false, bool recursive = false);
+
+   void addDir(const KURL& url, bool watchFiles = false, bool recursive = false);
 
    /**
     * Adds a file to be watched.
@@ -119,6 +122,8 @@ class TDEIO_EXPORT KDirWatch : public TQObject
     * @param path the path of the dir to be removed from the list
     */
    void removeDir(const TQString& path);
+
+   void removeDir(const KURL& path);
 
    /**
     * Removes a file from the list of watched files.
@@ -212,6 +217,8 @@ class TDEIO_EXPORT KDirWatch : public TQObject
     * @param path the path of the file or directory
     */
    void setDirty( const TQString &path );
+
+   void setDirty( const KURL &url );
    /** 
     * Emits deleted().
     * @param path the path of the file or directory
@@ -263,6 +270,8 @@ class TDEIO_EXPORT KDirWatch : public TQObject
     * @param path the path of the file or directory
     */
    void dirty (const TQString &path);
+
+   void dirty (const KURL &url);
 
    /**
     * Emitted when a file or directory is created.

@@ -262,8 +262,9 @@ void KFileItem::readUDSEntry( bool _urlIsDirectory )
 
   // avoid creating these QStrings again and again
   static const TQString& dot = TDEGlobal::staticQString(".");
-  if ( _urlIsDirectory && !UDS_URL_seen && !m_strName.isEmpty() && m_strName != dot )
+  if ( _urlIsDirectory && !UDS_URL_seen && !m_strName.isEmpty() && m_strName != dot ) {
     m_url.addPath( m_strName );
+  }
 }
 
 void KFileItem::refresh()

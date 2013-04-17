@@ -400,6 +400,12 @@ static TQString cleanpath(const TQString &_path, bool cleanDirSeparator, bool de
   return result;
 }
 
+class KURLPrivate
+{
+public:
+  TQString m_strInternalReferenceURL;
+};
+
 bool KURL::isRelativeURL(const TQString &_url)
 {
   int len = _url.length();
@@ -454,6 +460,7 @@ TQStringList KURL::List::toStringList() const
 
 KURL::KURL()
 {
+  d = new KURLPrivate();
   reset();
 }
 
@@ -464,25 +471,30 @@ KURL::~KURL()
 
 KURL::KURL( const TQString &url, int encoding_hint )
 {
+  d = new KURLPrivate();
   reset();
   parse( url, encoding_hint );
 }
 
 KURL::KURL( const char * url, int encoding_hint )
 {
+  d = new KURLPrivate();
   reset();
   parse( TQString::fromLatin1(url), encoding_hint );
 }
 
 KURL::KURL( const TQCString& url, int encoding_hint )
 {
+  d = new KURLPrivate();
   reset();
   parse( TQString::fromLatin1(url), encoding_hint );
 }
 
 KURL::KURL( const KURL& _u )
 {
+  d = new KURLPrivate();
   *this = _u;
+  d->m_strInternalReferenceURL = _u.d->m_strInternalReferenceURL;
 }
 
 TQDataStream & operator<< (TQDataStream & s, const KURL & a)
@@ -521,12 +533,16 @@ TQDataStream & operator>> (TQDataStream & s, KURL & a)
 #ifndef QT_NO_NETWORKPROTOCOL
 KURL::KURL( const TQUrl &u )
 {
+  d = new KURLPrivate();
   *this = u;
 }
 #endif
 
 KURL::KURL( const KURL& _u, const TQString& _rel_url, int encoding_hint )
 {
+  d = new KURLPrivate();
+  d->m_strInternalReferenceURL = _u.d->m_strInternalReferenceURL;
+
   if (_u.hasSubURL()) // Operate on the last suburl, not the first
   {
     KURL::List lst = split( _u );
@@ -534,6 +550,7 @@ KURL::KURL( const KURL& _u, const TQString& _rel_url, int encoding_hint )
     lst.remove( lst.last() );
     lst.append( u );
     *this = join( lst );
+    d->m_strInternalReferenceURL = _u.d->m_strInternalReferenceURL;
     return;
   }
   // WORKAROUND THE RFC 1606 LOOPHOLE THAT ALLOWS
@@ -1077,6 +1094,7 @@ KURL& KURL::operator=( const KURL& _u )
   m_bIsMalformed = _u.m_bIsMalformed;
   m_iPort = _u.m_iPort;
   m_iUriMode = _u.m_iUriMode;
+  d->m_strInternalReferenceURL = _u.d->m_strInternalReferenceURL;
 
   return *this;
 }
@@ -1137,7 +1155,8 @@ bool KURL::operator==( const KURL& _u ) const
          m_strPath_encoded == _u.m_strPath_encoded ) &&
        m_strQuery_encoded == _u.m_strQuery_encoded &&
        m_strRef_encoded == _u.m_strRef_encoded &&
-       m_iPort == _u.m_iPort )
+       m_iPort == _u.m_iPort &&
+       d->m_strInternalReferenceURL == _u.d->m_strInternalReferenceURL )
   {
     return true;
   }
@@ -2295,6 +2314,13 @@ TQString KURL::relativePath(const TQString &base_dir, const TQString &path, bool
    return result;
 }
 
+void KURL::setInternalReferenceURL( const TQString& url ) {
+    d->m_strInternalReferenceURL = url;
+}
+
+TQString KURL::internalReferenceURL( void ) const {
+    return d->m_strInternalReferenceURL;
+}
 
 TQString KURL::relativeURL(const KURL &base_url, const KURL &url, int encoding_hint)
 {

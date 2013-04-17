@@ -298,7 +298,9 @@ static void kDebugBackend( unsigned short nLevel, unsigned int nArea, const char
   }
   case 2: // Shell
   {
-      write( 2, buf, strlen( buf ) );  //fputs( buf, stderr );
+      if (write( 2, buf, strlen( buf ) ) < 0) {  //fputs( buf, stderr );
+          // ERROR
+      }
       break;
   }
   case 3: // syslog

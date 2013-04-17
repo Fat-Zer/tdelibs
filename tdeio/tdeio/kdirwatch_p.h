@@ -53,7 +53,7 @@ public:
     TQPtrList<Client> m_clients;
     // nonexistent entries of this directory
     TQPtrList<Entry> m_entries;
-    TQString path;
+    KURL path;
 
     int msecLeft, freq;
 
@@ -77,15 +77,15 @@ public:
 #endif
   };
 
-  typedef TQMap<TQString,Entry> EntryMap;
+  typedef TQMap<KURL,Entry> EntryMap;
 
   KDirWatchPrivate();
   ~KDirWatchPrivate();
 
   void resetList (KDirWatch*,bool);
   void useFreq(Entry* e, int newFreq);
-  void addEntry(KDirWatch*,const TQString&, Entry*, bool);
-  void removeEntry(KDirWatch*,const TQString&, Entry*);
+  void addEntry(KDirWatch*,const KURL&, Entry*, bool);
+  void removeEntry(KDirWatch*,const KURL&, Entry*);
   bool stopEntryScan(KDirWatch*, Entry*);
   bool restartEntryScan(KDirWatch*, Entry*, bool );
   void stopScan(KDirWatch*);
@@ -94,9 +94,9 @@ public:
   void removeEntries(KDirWatch*);
   void statistics();
 
-  Entry* entry(const TQString&);
+  Entry* entry(const KURL&);
   int scanEntry(Entry* e);
-  void emitEvent(Entry* e, int event, const TQString &fileName = TQString::null);
+  void emitEvent(Entry* e, int event, const KURL &fileName = KURL());
 
   // Memory management - delete when last KDirWatch gets deleted
   void ref() { m_ref++; }
