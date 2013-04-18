@@ -3,9 +3,9 @@
 
 <xsl:import href="../docbook/xsl/html/autoidx.xsl"/>
 <xsl:import href="../docbook/xsl/html/chunk.xsl"/>
-<xsl:include href="kde-navig.xsl"/>
-<xsl:include href="kde-ttlpg.xsl"/>
-<xsl:include href="kde-style.xsl"/>
+<xsl:include href="kde-web-navig.xsl"/>
+<xsl:include href="tde-ttlpg.xsl"/>
+<xsl:include href="tde-style.xsl"/>
 
 <xsl:variable name="TDE_VERSION">1.13</xsl:variable> 
 
@@ -40,31 +40,10 @@
 <xsl:param name="generate.component.toc">0</xsl:param>
 <xsl:param name="use.extensions">0</xsl:param>
 <xsl:param name="admon.graphics">0</xsl:param>
-<xsl:param name="kde.common">help:/common/</xsl:param>
-<xsl:param name="html.stylesheet" select="concat($kde.common,'kde-default.css')"/>
+<xsl:param name="kde.common">../common/</xsl:param>
+<xsl:param name="html.stylesheet" select="concat($kde.common,'tde-default.css')"/>
 <xsl:param name="admon.graphics.path"><xsl:value-of select="kde.common"/></xsl:param>
 <xsl:param name="callout.graphics.path"><xsl:value-of select="kde.common"/></xsl:param>
-
-<xsl:param name="generate.toc">
-appendix  toc,title
-article/appendix  nop
-article   toc,title
-book      toc,title,figure,table,example,equation
-chapter   nop
-part      toc,title
-preface   toc,title
-qandadiv  toc
-qandaset  toc
-reference toc,title
-sect1     nop
-sect2     nop
-sect3     nop
-sect4     nop
-sect5     nop
-section   nop
-set       toc,title
-</xsl:param>
-
 
 
 <xsl:template name="dbhtml-filename">

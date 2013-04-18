@@ -2,46 +2,25 @@
 		version="1.0">
 
 <xsl:import href="../docbook/xsl/html/autoidx.xsl"/>
-<xsl:import href="../docbook/xsl/html/chunk.xsl"/>
-<xsl:include href="kde-web-navig.xsl"/>
-<xsl:include href="kde-ttlpg.xsl"/>
-<xsl:include href="kde-style.xsl"/>
+<xsl:import href="../docbook/xsl/html/docbook.xsl"/>
+<!-- <xsl:include href="kde-print-navig.xsl"/> -->
+<xsl:include href="tde-ttlpg.xsl"/>
+<xsl:include href="tde-style.xsl"/>
 
 <xsl:variable name="TDE_VERSION">1.13</xsl:variable> 
 
-<xsl:template name="make-relative-filename">
-  <xsl:param name="base.dir" select="'./'"/>
-  <xsl:param name="base.name" select="''"/>
+<xsl:param name="using.chunker">0</xsl:param>
+<xsl:param name="chunk.first.sections" select="0"/>
+<xsl:param name="chunk.sections" select="0"/>
+<xsl:param name="chunk.section.depth" select="0"/>
 
-  <!-- XT makes chunks relative -->
-  <xsl:choose>
-    <xsl:when test="count(parent::*) = 0">
-      <xsl:value-of select="concat($base.dir,$base.name)"/>
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:value-of select="$base.name"/>
-    </xsl:otherwise>
-  </xsl:choose>
-</xsl:template>
-
-<xsl:template name="write.chunk">
-  <xsl:param name="filename" select="''"/>
-  <xsl:param name="method" select="'html'"/>
-  <xsl:param name="encoding" select="'utf-8'"/>
-  <xsl:param name="content" select="''"/>
-  
-  <FILENAME filename="{$filename}"> 
-  <xsl:copy-of select="$content"/>
-  </FILENAME>
-</xsl:template>
-
-<xsl:param name="use.id.as.filename">1</xsl:param>
+<xsl:param name="use.id.as.filename">0</xsl:param>
 <xsl:param name="generate.section.toc">0</xsl:param>
 <xsl:param name="generate.component.toc">0</xsl:param>
 <xsl:param name="use.extensions">0</xsl:param>
 <xsl:param name="admon.graphics">0</xsl:param>
 <xsl:param name="kde.common">../common/</xsl:param>
-<xsl:param name="html.stylesheet" select="concat($kde.common,'kde-default.css')"/>
+<xsl:param name="html.stylesheet" select="concat($kde.common,'tde-web.css')"/>
 <xsl:param name="admon.graphics.path"><xsl:value-of select="kde.common"/></xsl:param>
 <xsl:param name="callout.graphics.path"><xsl:value-of select="kde.common"/></xsl:param>
 

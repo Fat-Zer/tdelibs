@@ -3,12 +3,11 @@
 
 <xsl:import href="../docbook/xsl/html/autoidx.xsl"/>
 <xsl:import href="../docbook/xsl/html/chunk.xsl"/>
-<xsl:include href="kde-navig-online.xsl"/>
-<xsl:include href="kde-ttlpg-online.xsl"/>
-<xsl:include href="kde-style.xsl"/>
-<xsl:output encoding="utf-8"/>
+<xsl:include href="tde-navig.xsl"/>
+<xsl:include href="tde-ttlpg.xsl"/>
+<xsl:include href="tde-style.xsl"/>
 
-<xsl:variable name="TDE_VERSION">1.13</xsl:variable>
+<xsl:variable name="TDE_VERSION">1.13</xsl:variable> 
 
 <xsl:template name="make-relative-filename">
   <xsl:param name="base.dir" select="'./'"/>
@@ -30,8 +29,8 @@
   <xsl:param name="method" select="'html'"/>
   <xsl:param name="encoding" select="'utf-8'"/>
   <xsl:param name="content" select="''"/>
-
-  <FILENAME filename="{$filename}">
+  
+  <FILENAME filename="{$filename}"> 
   <xsl:copy-of select="$content"/>
   </FILENAME>
 </xsl:template>
@@ -41,10 +40,31 @@
 <xsl:param name="generate.component.toc">0</xsl:param>
 <xsl:param name="use.extensions">0</xsl:param>
 <xsl:param name="admon.graphics">0</xsl:param>
-<xsl:param name="kde.common">/HEAD/common/</xsl:param>
-<xsl:param name="html.stylesheet" select="concat($kde.common,'kde-default.css')"/>
+<xsl:param name="kde.common">help:/common/</xsl:param>
+<xsl:param name="html.stylesheet" select="concat($kde.common,'tde-default.css')"/>
 <xsl:param name="admon.graphics.path"><xsl:value-of select="kde.common"/></xsl:param>
 <xsl:param name="callout.graphics.path"><xsl:value-of select="kde.common"/></xsl:param>
+
+<xsl:param name="generate.toc">
+appendix  toc,title
+article/appendix  nop
+article   toc,title
+book      toc,title,figure,table,example,equation
+chapter   nop
+part      toc,title
+preface   toc,title
+qandadiv  toc
+qandaset  toc
+reference toc,title
+sect1     nop
+sect2     nop
+sect3     nop
+sect4     nop
+sect5     nop
+section   nop
+set       toc,title
+</xsl:param>
+
 
 
 <xsl:template name="dbhtml-filename">
@@ -63,7 +83,7 @@
 </xsl:template>
 
 <xsl:template name="user.head.content">
-   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
    <meta name="GENERATOR" content="TDE XSL Stylesheet V{$TDE_VERSION} using libxslt"/>
 </xsl:template>
 

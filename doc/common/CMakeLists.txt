@@ -15,7 +15,7 @@ install( FILES
     artistic-license.html bottom1.png bottom2.png
     bsd-license.html doctop1.png doctop2.png fdl-license
     fdl-license.html gpl-license gpl-license.html
-    kde-common.css kde-default.css kde-web.css kde-localised.css.template
+    tde-common.css tde-default.css tde-web.css tde-localised.css.template
     lgpl-license lgpl-license.html qpl-license.html shadow.png
     web-docbottom.png x11-license.html xml.dcl web-doctop.png
     doctop1a.png doctop1b.png 1.png 2.png 3.png 4.png
