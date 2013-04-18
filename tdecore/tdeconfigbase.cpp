@@ -1178,6 +1178,13 @@ void TDEConfigBase::writePathEntry( const char *pKey, const TQString & path,
    writeEntry(pKey, translatePath(path), bPersistent, bGlobal, bNLS, true);
 }
 
+void TDEConfigBase::writePathEntry( const char *pKey, const TQString & path,
+                                  bool bPersistent, bool bGlobal,
+                                  bool bNLS, bool expand)
+{
+   writeEntry(pKey, translatePath(path), bPersistent, bGlobal, bNLS, expand);
+}
+
 void TDEConfigBase::writePathEntry ( const TQString& pKey, const TQStringList &list,
                                char sep , bool bPersistent,
                                bool bGlobal, bool bNLS )
