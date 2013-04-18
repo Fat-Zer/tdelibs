@@ -360,7 +360,7 @@
 #undef HAVE_NL_TYPES_H
 
 /* Define if system has non-POSIX extensions to the ACL support. */
-#undef HAVE_NON_POSIX_ACL_EXTENSIONS
+#cmakedefine HAVE_NON_POSIX_ACL_EXTENSIONS 1
 
 /* Define if your system needs _NSGetEnviron to set up the environment */
 #undef HAVE_NSGETENVIRON
@@ -823,7 +823,7 @@
 #cmakedefine TIME_WITH_SYS_TIME 1
 
 /* Define if system has POSIX ACL support. */
-#undef USE_POSIX_ACL
+#cmakedefine USE_POSIX_ACL 1
 
 /* Version number of package */
 #define VERSION "@VERSION@"

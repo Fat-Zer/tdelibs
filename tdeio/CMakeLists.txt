@@ -55,6 +55,10 @@ if( HAVE_ELFICON )
   set( ELFICON_STATIC_LIB tdelficon-static )
 endif( HAVE_ELFICON )
 
+if( HAVE_NON_POSIX_ACL_EXTENSIONS )
+  set( ACL_LIBRARIES acl )
+endif( HAVE_NON_POSIX_ACL_EXTENSIONS )
+
 
 ##### libtdeio ####################################
 
@@ -66,6 +70,6 @@ tde_add_library( ${target} SHARED
   SOURCES ${CMAKE_CURRENT_BINARY_DIR}/dummy.cpp
   VERSION 4.2.0
   EMBED kssl-static tdeiocore-static tdesycoca-static kbookmarks-static tdefile-static ${ELFICON_STATIC_LIB}
-  LINK ltdlc-static tdeui-shared tdesu-shared tdewalletclient-shared ${LIBR_LIBRARIES}
+  LINK ltdlc-static tdeui-shared tdesu-shared tdewalletclient-shared ${LIBR_LIBRARIES} ${ACL_LIBRARIES}
   DESTINATION ${LIB_INSTALL_DIR}
 )

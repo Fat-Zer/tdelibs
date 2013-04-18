@@ -729,8 +729,9 @@ KFilePropsPlugin::KFilePropsPlugin( KPropertiesDialog *_props )
   TQString magicMimeComment;
   if ( isLocal ) {
       KMimeType::Ptr magicMimeType = KMimeType::findByFileContent( url.path() );
-      if ( magicMimeType->name() != KMimeType::defaultMimeType() )
+      if ( magicMimeType->name() != KMimeType::defaultMimeType() ) {
           magicMimeComment = magicMimeType->comment();
+      }
   }
 
   // Those things only apply to 'single file' mode
@@ -1312,8 +1313,9 @@ void tqt_leave_modal( TQWidget *widget );
 
 void KFilePropsPlugin::applyChanges()
 {
-  if ( d->dirSizeJob )
+  if ( d->dirSizeJob ) {
     slotSizeStop();
+  }
 
   kdDebug(250) << "KFilePropsPlugin::applyChanges" << endl;
 
@@ -1345,17 +1347,20 @@ void KFilePropsPlugin::applyChanges()
       properties->rename( newFileName );
 
       // Update also relative path (for apps and mimetypes)
-      if ( !m_sRelativePath.isEmpty() )
+      if ( !m_sRelativePath.isEmpty() ) {
         determineRelativePath( properties->kurl().path() );
+      }
 
       kdDebug(250) << "New URL = " << properties->kurl().url() << endl;
       kdDebug(250) << "old = " << oldurl.url() << endl;
 
       // Don't remove the template !!
-      if ( !m_bFromTemplate ) // (normal renaming)
+      if ( !m_bFromTemplate ) { // (normal renaming)
         job = TDEIO::move( oldurl, properties->kurl() );
-      else // Copying a template
+      }
+      else { // Copying a template
         job = TDEIO::copy( oldurl, properties->kurl() );
+      }
 
       connect( job, TQT_SIGNAL( result( TDEIO::Job * ) ),
                TQT_SLOT( slotCopyFinished( TDEIO::Job * ) ) );
@@ -1370,8 +1375,9 @@ void KFilePropsPlugin::applyChanges()
     }
     properties->updateUrl(properties->kurl());
     // Update also relative path (for apps and mimetypes)
-    if ( !m_sRelativePath.isEmpty() )
+    if ( !m_sRelativePath.isEmpty() ) {
       determineRelativePath( properties->kurl().path() );
+    }
   }
 
   // No job, keep going
@@ -2584,16 +2590,30 @@ KURLPropsPlugin::KURLPropsPlugin( KPropertiesDialog *_props )
   TQString path = properties->kurl().path();
 
   TQFile f( path );
-  if ( !f.open( IO_ReadOnly ) )
+  if ( !f.open( IO_ReadOnly ) ) {
     return;
+  }
   f.close();
 
   KSimpleConfig config( path );
   config.setDesktopGroup();
   URLStr = config.readPathEntry( "URL" );
 
-  if ( !URLStr.isNull() )
+  KFileItem * item = properties->item();
+
+  if (item && item->mimetype() == "media/builtin-mydocuments") {
+    URLStr = TQString::null;
+    TDEConfig xdguserconfig( TQDir::homeDirPath()+"/.config/user-dirs.dirs" );
+    URLEdit->setMode(KFile::Directory);
+    URLEdit->setURL( xdguserconfig.readPathEntry( "XDG_DOCUMENTS_DIR", TQDir::homeDirPath() + "/Documents").remove(  "\"" ));
+  }
+  else if (item && item->mimetype().startsWith("media/builtin-")) {
+    URLEdit->setEnabled(false);
+  }
+
+  if ( !URLStr.isNull() ) {
     URLEdit->setURL( URLStr );
+  }
 
   connect( URLEdit, TQT_SIGNAL( textChanged( const TQString & ) ),
            this, TQT_SIGNAL( changed() ) );
@@ -2628,6 +2648,24 @@ bool KURLPropsPlugin::supports( KFileItemList _items )
 void KURLPropsPlugin::applyChanges()
 {
   TQString path = properties->kurl().path();
+  KFileItem * item = properties->item();
+
+  if (item && item->mimetype() == "media/builtin-mydocuments") {
+    TDEConfig xdgconfig(TQDir::homeDirPath()+"/.config/user-dirs.dirs" );
+    if (xdgconfig.isReadOnly()) {
+      KMessageBox::sorry( 0, i18n("<qt>Could not save properties. You do not have "
+				"sufficient access to write to <b>%1</b>.</qt>").arg(path));
+      return;
+    }
+    else {
+      xdgconfig.writePathEntry( "XDG_DOCUMENTS_DIR", '"'+ URLEdit->url() + '"', true, false, false, false );
+      xdgconfig.sync();
+      return;
+    }
+  }
+  else if (item && item->mimetype().startsWith("media/builtin-")) {
+    return;
+  }
 
   TQFile f( path );
   if ( !f.open( IO_ReadWrite ) ) {
