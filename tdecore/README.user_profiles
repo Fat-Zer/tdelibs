@@ -12,7 +12,7 @@ Mapping profiles to users
 =========================
 
 A mapping file determines which profile(s) should be used for which user.
-The mapping file can be configured in /etc/kderc in the [Directories] group:
+The mapping file can be configured in /etc/tderc in the [Directories] group:
 
 	[Directories]
 	userProfileMapFile=/etc/kde-user-profile
@@ -99,7 +99,7 @@ user will be assigned the "default" profile.
 The Profile determines the directory prefixes
 =============================================
 
-The global KDE configuration file (e.g. kdeglobals or /etc/kderc) can
+The global KDE configuration file (e.g. kdeglobals or /etc/tderc) can
 contain config-groups that are associated with a certain user profile. 
 Such a config-group is treated similar as the [Directories] config-group.
 
@@ -109,7 +109,7 @@ The name of a such config-group is [Directories-<ProfileName>]
 Integration with KIOSK Admin Tool
 =================================
 
-The KIOSK Admin Tool uses /etc/kderc as source for all its profile
+The KIOSK Admin Tool uses /etc/tderc as source for all its profile
 information. For this it uses the following keys in the
 [Directories-<ProfileName>] config-group:
 
@@ -126,7 +126,7 @@ as default installation directory for this profile.
 Default setting as example
 ==========================
 
-The following snipped could be added to /etc/kderc to define a "default" profile:
+The following snipped could be added to /etc/tderc to define a "default" profile:
 
 	[Directories-default]
 	ProfileDescription=Default profile

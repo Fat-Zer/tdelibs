@@ -350,24 +350,24 @@ bool TDEConfigINIBackEnd::parseConfigFiles()
 
   // Parse the general config files
   if (useKDEGlobals) {
-    TQStringList kdercs = TDEGlobal::dirs()->
+    TQStringList tdercs = TDEGlobal::dirs()->
       findAllResources("config", TQString::fromLatin1("kdeglobals"));
 
 #ifdef Q_WS_WIN
-    TQString etc_kderc = TQFile::decodeName( TQCString(getenv("WINDIR")) + "\\kderc" );
+    TQString etc_tderc = TQFile::decodeName( TQCString(getenv("WINDIR")) + "\\tderc" );
 #else
-    TQString etc_kderc = TQString::fromLatin1("/etc/kderc");
+    TQString etc_tderc = TQString::fromLatin1("/etc/tderc");
 #endif
 
-    if (checkAccess(etc_kderc, R_OK))
-      kdercs += etc_kderc;
+    if (checkAccess(etc_tderc, R_OK))
+      tdercs += etc_tderc;
 
-    kdercs += TDEGlobal::dirs()->
+    tdercs += TDEGlobal::dirs()->
       findAllResources("config", TQString::fromLatin1("system.kdeglobals"));
 
     TQStringList::ConstIterator it;
 
-    for (it = kdercs.fromLast(); it != kdercs.end(); --it) {
+    for (it = tdercs.fromLast(); it != tdercs.end(); --it) {
 
       TQFile aConfigFile( *it );
       if (!aConfigFile.open( IO_ReadOnly ))
