@@ -211,7 +211,7 @@ private:
 
   // check if _url is held by some lister and return true,
   // otherwise schedule a delayed update and return false
-  bool checkUpdate( const TQString& _url );
+  bool checkUpdate( const KURL& _url, int truncationMode = 0 );
   // when there were items deleted from the filesystem all the listers holding
   // the parent directory need to be notified, the unmarked items have to be deleted
   // and removed from the cache including all the childs.

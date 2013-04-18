@@ -1308,8 +1308,9 @@ void KDirWatchPrivate::slotRescan()
   // like showing a message box. We don't want to keep polling during
   // that time, otherwise the value of 'delayRemove' will be reset.
   bool timerRunning = timer->isActive();
-  if ( timerRunning )
+  if ( timerRunning ) {
     timer->stop();
+  }
 
   // We delay deletions of entries this way.
   // removeDir(), when called in slotDirty(), can cause a crash otherwise
@@ -1388,16 +1389,19 @@ void KDirWatchPrivate::slotRescan()
 #if defined(HAVE_DNOTIFY) || defined(HAVE_INOTIFY)
   // Scan parent of deleted directories for new creation
   Entry* e;
-  for(e=dList.first();e;e=dList.next())
+  for(e=dList.first();e;e=dList.next()) {
     addEntry(0, TQDir::cleanDirPath( e->path.path()+"/.."), e, true);
+  }
 
   // Remove watch of parent of new created directories
-  for(e=cList.first();e;e=cList.next())
+  for(e=cList.first();e;e=cList.next()) {
     removeEntry(0, TQDir::cleanDirPath( e->path.path()+"/.."), e);
+  }
 #endif
 
-  if ( timerRunning )
+  if ( timerRunning ) {
     timer->start(freq);
+  }
 
   TQTimer::singleShot(0, this, TQT_SLOT(slotRemoveDelayed()));
 }

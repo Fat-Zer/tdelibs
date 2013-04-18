@@ -68,18 +68,21 @@
 #endif // WITH_NETWORK_MANAGER_BACKEND
 
 // uPower and uDisks2 integration
-#if defined(WITH_UPOWER) || defined(WITH_UDISKS2)
+#if defined(WITH_UPOWER) || defined(WITH_UDISKS) || defined(WITH_UDISKS2)
 	#include <tqdbusdata.h>
 	#include <tqdbusmessage.h>
 	#include <tqdbusproxy.h>
 	#include <tqdbusvariant.h>
 	#include <tqdbusconnection.h>
-#endif // defined(WITH_UPOWER) || defined(WITH_UDISKS2)
-#ifdef WITH_UDISKS2
+#endif // defined(WITH_UPOWER) || defined(WITH_UDISKS) || defined(WITH_UDISKS2)
+#if defined(WITH_UDISKS) || defined(WITH_UDISKS2)
 	#include <tqdbuserror.h>
 	#include <tqdbusdatamap.h>
 	#include <tqdbusobjectpath.h>
-#endif // WITH_UDISKS2
+#endif // defined(WITH_UDISKS) || defined(WITH_UDISKS2)
+#if defined(WITH_UDISKS)
+	#include "tqdbusdatalist.h"
+#endif // ddefined(WITH_UDISKS)
 
 // BEGIN BLOCK
 // Copied from include/linux/genhd.h
@@ -454,6 +457,38 @@ bool TDEStorageDevice::lockDriveMedia(bool lock) {
 	}
 }
 
+bool ejectDriveUDisks(TDEStorageDevice* sdevice) {
+#ifdef WITH_UDISKS
+	TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+	if (dbusConn.isConnected()) {
+		TQString blockDeviceString = sdevice->deviceNode();
+		blockDeviceString.replace("/dev/", "");
+		blockDeviceString = "/org/freedesktop/UDisks/devices/" + blockDeviceString;
+
+		// Eject the drive!
+		TQT_DBusError error;
+		TQT_DBusProxy driveControl("org.freedesktop.UDisks", blockDeviceString, "org.freedesktop.UDisks.Device", dbusConn);
+		TQValueList<TQT_DBusData> params;
+		TQT_DBusDataList options;
+		params << TQT_DBusData::fromList(options);
+		TQT_DBusMessage reply = driveControl.sendWithReply("DriveEject", params, &error);
+		if (error.isValid()) {
+			// Error!
+			printf("[ERROR] %s\n\r", error.name().ascii()); fflush(stdout);
+			return FALSE;
+		}
+		else {
+			return TRUE;
+		}
+	}
+	else {
+		return FALSE;
+	}
+#else // WITH_UDISKS
+	return FALSE;
+#endif // WITH_UDISKS
+}
+
 bool ejectDriveUDisks2(TDEStorageDevice* sdevice) {
 #ifdef WITH_UDISKS2
 	TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
@@ -534,23 +569,36 @@ bool TDEStorageDevice::ejectDrive() {
 		return TRUE;
 	}
 	else {
-		TQString command = TQString("eject -v '%1' 2>&1").arg(deviceNode());
-
-		FILE *exepipe = popen(command.ascii(), "r");
-		if (exepipe) {
-			TQString pmount_output;
-			char buffer[8092];
-			pmount_output = fgets(buffer, sizeof(buffer), exepipe);
-			int retcode = pclose(exepipe);
-			if (retcode == 0) {
-				return TRUE;
-			}
-			else {
-				return FALSE;
-			}
+#ifdef WITH_UDISKS2
+		printf("[tdehwlib] Failed to eject drive '%s' via udisks2, falling back to alternate mechanism\n\r", deviceNode().ascii());
+#endif // WITH_UDISKS2
+		if (ejectDriveUDisks(this)) {
+			return TRUE;
 		}
 		else {
-			return FALSE;
+#ifdef WITH_UDISKS
+			printf("[tdehwlib] Failed to eject drive '%s' via udisks, falling back to alternate mechanism\n\r", deviceNode().ascii());
+#endif // WITH_UDISKS
+			TQString command = TQString("eject -v '%1' 2>&1").arg(deviceNode());
+	
+			FILE *exepipe = popen(command.ascii(), "r");
+			if (exepipe) {
+				TQString pmount_output;
+				char buffer[8092];
+				pmount_output = fgets(buffer, sizeof(buffer), exepipe);
+				int retcode = pclose(exepipe);
+				if (retcode == 0) {
+					return TRUE;
+				}
+				else {
+					printf("[tdehwlib] Failed to eject drive '%s' via 'eject' command\n\r", deviceNode().ascii());
+					return FALSE;
+				}
+			}
+			else {
+				printf("[tdehwlib] Failed to eject drive '%s' via 'eject' command\n\r", deviceNode().ascii());
+				return FALSE;
+			}
 		}
 	}
 }

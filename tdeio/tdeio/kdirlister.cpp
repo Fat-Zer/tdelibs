@@ -106,6 +106,7 @@ bool KDirListerCache::listDir( KDirLister *lister, const KURL& _u,
   _url.cleanPath(); // kill consecutive slashes
   _url.adjustPath(-1);
   TQString urlStr = _url.url();
+  TQString urlReferenceStr = _url.internalReferenceURL();
 
   if ( !lister->validURL( _url ) ) {
     return false;
@@ -144,10 +145,10 @@ bool KDirListerCache::listDir( KDirLister *lister, const KURL& _u,
   if ( lister->d->url.isEmpty() || !_keep ) // set toplevel URL only if not set yet
     lister->d->url = _url;
 
-  DirItem *itemU = itemsInUse[urlStr];
+  DirItem *itemU = itemsInUse[urlStr + ":" + urlReferenceStr];
   DirItem *itemC;
 
-  if ( !urlsCurrentlyListed[urlStr] )
+  if ( !urlsCurrentlyListed[urlStr + ":" + urlReferenceStr] )
   {
     // if there is an update running for _url already we get into
     // the following case - it will just be restarted by updateDirectory().
@@ -169,8 +170,8 @@ bool KDirListerCache::listDir( KDirLister *lister, const KURL& _u,
       lister->emitItems();
 
       // _url is already in use, so there is already an entry in urlsCurrentlyHeld
-      assert( urlsCurrentlyHeld[urlStr] );
-      urlsCurrentlyHeld[urlStr]->append( lister );
+      assert( urlsCurrentlyHeld[urlStr + ":" + urlReferenceStr] );
+      urlsCurrentlyHeld[urlStr + ":" + urlReferenceStr]->append( lister );
 
       lister->d->complete = oldState;
 
@@ -188,7 +189,7 @@ bool KDirListerCache::listDir( KDirLister *lister, const KURL& _u,
       kdDebug(7004) << "listDir: Entry in cache: " << _url << endl;
 
       itemC->decAutoUpdate();
-      itemsInUse.insert( urlStr, itemC );
+      itemsInUse.insert( urlStr + ":" + urlReferenceStr, itemC );
       itemU = itemC;
 
       bool oldState = lister->d->complete;
@@ -203,10 +204,10 @@ bool KDirListerCache::listDir( KDirLister *lister, const KURL& _u,
       lister->addNewItems( *(itemC->lstItems) );
       lister->emitItems();
 
-      Q_ASSERT( !urlsCurrentlyHeld[urlStr] );
+      Q_ASSERT( !urlsCurrentlyHeld[urlStr + ":" + urlReferenceStr] );
       TQPtrList<KDirLister> *list = new TQPtrList<KDirLister>;
       list->append( lister );
-      urlsCurrentlyHeld.insert( urlStr, list );
+      urlsCurrentlyHeld.insert( urlStr + ":" + urlReferenceStr, list );
 
       lister->d->complete = oldState;
 
@@ -225,11 +226,11 @@ bool KDirListerCache::listDir( KDirLister *lister, const KURL& _u,
 
       TQPtrList<KDirLister> *list = new TQPtrList<KDirLister>;
       list->append( lister );
-      urlsCurrentlyListed.insert( urlStr, list );
+      urlsCurrentlyListed.insert( urlStr + ":" + urlReferenceStr, list );
 
       itemsCached.remove( urlStr );
       itemU = new DirItem( _url );
-      itemsInUse.insert( urlStr, itemU );
+      itemsInUse.insert( urlStr + ":" + urlReferenceStr, itemU );
 
 //        // we have a limit of MAX_JOBS_PER_LISTER concurrently running jobs
 //        if ( lister->numJobs() >= MAX_JOBS_PER_LISTER )
@@ -271,7 +272,7 @@ bool KDirListerCache::listDir( KDirLister *lister, const KURL& _u,
 
     emit lister->started( _url );
 
-    urlsCurrentlyListed[urlStr]->append( lister );
+    urlsCurrentlyListed[urlStr + ":" + urlReferenceStr]->append( lister );
 
     TDEIO::ListJob *job = jobForUrl( urlStr );
     Q_ASSERT( job );
@@ -389,21 +390,22 @@ void KDirListerCache::stop( KDirLister *lister )
 void KDirListerCache::stop( KDirLister *lister, const KURL& _u )
 {
   TQString urlStr( _u.url(-1) );
+  TQString urlReferenceStr = _u.internalReferenceURL();
   KURL _url( urlStr );
 
   // TODO: consider to stop all the "child jobs" of _url as well
   kdDebug(7004) << k_funcinfo << lister << " url=" << _url << endl;
 
-  TQPtrList<KDirLister> *listers = urlsCurrentlyListed[urlStr];
+  TQPtrList<KDirLister> *listers = urlsCurrentlyListed[urlStr + ":" + urlReferenceStr];
   if ( !listers || !listers->removeRef( lister ) )
     return;
 
   // move lister to urlsCurrentlyHeld
-  TQPtrList<KDirLister> *holders = urlsCurrentlyHeld[urlStr];
+  TQPtrList<KDirLister> *holders = urlsCurrentlyHeld[urlStr + ":" + urlReferenceStr];
   if ( !holders )
   {
     holders = new TQPtrList<KDirLister>;
-    urlsCurrentlyHeld.insert( urlStr, holders );
+    urlsCurrentlyHeld.insert( urlStr + ":" + urlReferenceStr, holders );
   }
 
   holders->append( lister );
@@ -421,7 +423,7 @@ void KDirListerCache::stop( KDirLister *lister, const KURL& _u )
     if ( job )
       killJob( job );
 
-    urlsCurrentlyListed.remove( urlStr );
+    urlsCurrentlyListed.remove( urlStr + ":" + urlReferenceStr );
   }
 
   if ( lister->numJobs() == 0 )
@@ -440,10 +442,12 @@ void KDirListerCache::setAutoUpdate( KDirLister *lister, bool enable )
   for ( KURL::List::Iterator it = lister->d->lstDirs.begin();
         it != lister->d->lstDirs.end(); ++it )
   {
-    if ( enable )
-      itemsInUse[(*it).url()]->incAutoUpdate();
-    else
-      itemsInUse[(*it).url()]->decAutoUpdate();
+    if ( enable ) {
+      itemsInUse[(*it).url() + ":" + (*it).internalReferenceURL()]->incAutoUpdate();
+    }
+    else {
+      itemsInUse[(*it).url() + ":" + (*it).internalReferenceURL()]->decAutoUpdate();
+    }
   }
 }
 
@@ -469,7 +473,8 @@ void KDirListerCache::forgetDirs( KDirLister *lister, const KURL& _url, bool not
   KURL url( _url );
   url.adjustPath( -1 );
   TQString urlStr = url.url();
-  TQPtrList<KDirLister> *holders = urlsCurrentlyHeld[urlStr];
+  TQString urlReferenceStr = url.internalReferenceURL();
+  TQPtrList<KDirLister> *holders = urlsCurrentlyHeld[urlStr + ":" + urlReferenceStr];
   //Q_ASSERT( holders );
   if ( holders )
   {
@@ -482,15 +487,15 @@ void KDirListerCache::forgetDirs( KDirLister *lister, const KURL& _url, bool not
   // might crash in findByName()).
   lister->d->lstDirs.remove( lister->d->lstDirs.find( url ) );
 
-  DirItem *item = itemsInUse[urlStr];
+  DirItem *item = itemsInUse[urlStr + ":" + urlReferenceStr];
 
   if ( holders && holders->isEmpty() )
   {
-    urlsCurrentlyHeld.remove( urlStr ); // this deletes the (empty) holders list
-    if ( !urlsCurrentlyListed[urlStr] )
+    urlsCurrentlyHeld.remove( urlStr + ":" + urlReferenceStr ); // this deletes the (empty) holders list
+    if ( !urlsCurrentlyListed[urlStr + ":" + urlReferenceStr] )
     {
       // item not in use anymore -> move into cache if complete
-      itemsInUse.remove( urlStr );
+      itemsInUse.remove( urlStr + ":" + urlReferenceStr );
 
       // this job is a running update
       TDEIO::ListJob *job = jobForUrl( urlStr );
@@ -560,7 +565,8 @@ void KDirListerCache::updateDirectory( const KURL& _dir )
   kdDebug(7004) << k_funcinfo << _dir << endl;
 
   TQString urlStr = _dir.url(-1);
-  if ( !checkUpdate( urlStr ) ) {
+  TQString urlReferenceStr = _dir.internalReferenceURL();
+  if ( !checkUpdate( _dir, -1 ) ) {
     return;
   }
 
@@ -570,8 +576,8 @@ void KDirListerCache::updateDirectory( const KURL& _dir )
   //   - update a currently running listing: the listers are in urlsCurrentlyListed
   //     and urlsCurrentlyHeld
 
-  TQPtrList<KDirLister> *listers = urlsCurrentlyListed[urlStr];
-  TQPtrList<KDirLister> *holders = urlsCurrentlyHeld[urlStr];
+  TQPtrList<KDirLister> *listers = urlsCurrentlyListed[urlStr + ":" + urlReferenceStr];
+  TQPtrList<KDirLister> *holders = urlsCurrentlyHeld[urlStr + ":" + urlReferenceStr];
 
   // restart the job for _dir if it is running already
   bool killed = false;
@@ -646,11 +652,11 @@ void KDirListerCache::updateDirectory( const KURL& _dir )
   }
 }
 
-bool KDirListerCache::checkUpdate( const TQString& _dir )
+bool KDirListerCache::checkUpdate( const KURL& _dir, int truncationMode )
 {
-  if ( !itemsInUse[_dir] )
+  if ( !itemsInUse[_dir.url(truncationMode) + ":" + _dir.internalReferenceURL()] )
   {
-    DirItem *item = itemsCached[_dir];
+    DirItem *item = itemsCached[_dir.url(truncationMode)];
     if ( item && item->complete )
     {
       item->complete = false;
@@ -670,7 +676,8 @@ bool KDirListerCache::checkUpdate( const TQString& _dir )
 KFileItemList *KDirListerCache::itemsForDir( const KURL &_dir ) const
 {
   TQString urlStr = _dir.url(-1);
-  DirItem *item = itemsInUse[ urlStr ];
+  TQString urlReferenceStr = _dir.internalReferenceURL();
+  DirItem *item = itemsInUse[ urlStr + ":" + urlReferenceStr ];
   if ( !item ) {
     item = itemsCached[ urlStr ];
   }
@@ -684,7 +691,7 @@ KFileItem *KDirListerCache::findByName( const KDirLister *lister, const TQString
   for ( KURL::List::Iterator it = lister->d->lstDirs.begin();
         it != lister->d->lstDirs.end(); ++it )
   {
-    KFileItemListIterator kit( *itemsInUse[(*it).url()]->lstItems );
+    KFileItemListIterator kit( *itemsInUse[(*it).url() + ":" + (*it).internalReferenceURL()]->lstItems );
     for ( ; kit.current(); ++kit )
       if ( (*kit)->name() == _name )
         return (*kit);
@@ -748,7 +755,7 @@ void KDirListerCache::FilesRemoved( const KURL::List &fileList )
     // file items (see the dirtree).
     if ( fileitem )
     {
-      TQPtrList<KDirLister> *listers = urlsCurrentlyHeld[parentDir.url()];
+      TQPtrList<KDirLister> *listers = urlsCurrentlyHeld[parentDir.url() + ":" + parentDir.internalReferenceURL()];
       if ( listers ) {
         for ( KDirLister *kdl = listers->first(); kdl; kdl = listers->next() ) {
           kdl->emitDeleteItem( fileitem );
@@ -847,13 +854,14 @@ void KDirListerCache::aboutToRefreshItem( KFileItem *fileitem )
   KURL parentDir( fileitem->url() );
   parentDir.setPath( parentDir.directory() );
   TQString parentDirURL = parentDir.url();
-  TQPtrList<KDirLister> *listers = urlsCurrentlyHeld[parentDirURL];
+  TQString parentDirReferenceURL = parentDir.internalReferenceURL();
+  TQPtrList<KDirLister> *listers = urlsCurrentlyHeld[parentDirURL + ":" + parentDirReferenceURL];
   if ( listers )
     for ( KDirLister *kdl = listers->first(); kdl; kdl = listers->next() )
       kdl->aboutToRefreshItem( fileitem );
 
   // Also look in urlsCurrentlyListed, in case the user manages to rename during a listing
-  listers = urlsCurrentlyListed[parentDirURL];
+  listers = urlsCurrentlyListed[parentDirURL + ":" + parentDirReferenceURL];
   if ( listers )
     for ( KDirLister *kdl = listers->first(); kdl; kdl = listers->next() )
       kdl->aboutToRefreshItem( fileitem );
@@ -865,7 +873,8 @@ void KDirListerCache::emitRefreshItem( KFileItem *fileitem )
   KURL parentDir( fileitem->url() );
   parentDir.setPath( parentDir.directory() );
   TQString parentDirURL = parentDir.url();
-  TQPtrList<KDirLister> *listers = urlsCurrentlyHeld[parentDirURL];
+  TQString parentDirReferenceURL = parentDir.internalReferenceURL();
+  TQPtrList<KDirLister> *listers = urlsCurrentlyHeld[parentDirURL + ":" + parentDirReferenceURL];
   if ( listers )
     for ( KDirLister *kdl = listers->first(); kdl; kdl = listers->next() )
     {
@@ -874,7 +883,7 @@ void KDirListerCache::emitRefreshItem( KFileItem *fileitem )
     }
 
   // Also look in urlsCurrentlyListed, in case the user manages to rename during a listing
-  listers = urlsCurrentlyListed[parentDirURL];
+  listers = urlsCurrentlyListed[parentDirURL + ":" + parentDirReferenceURL];
   if ( listers )
     for ( KDirLister *kdl = listers->first(); kdl; kdl = listers->next() )
     {
@@ -908,13 +917,15 @@ void KDirListerCache::slotFileDirty( const KURL& _url )
   {
     KURL dir;
     dir.setPath( _url.path() );
-    if ( checkUpdate( dir.url(-1) ) ) {
+    dir.setInternalReferenceURL(_url.internalReferenceURL());
+    if ( checkUpdate( dir, -1 ) ) {
       updateDirectory( _url );
     }
 
     // the parent directory of _url.path()
     dir.setPath( dir.directory() );
-    if ( checkUpdate( dir.url() ) )
+    dir.setInternalReferenceURL(_url.internalReferenceURL());
+    if ( checkUpdate( dir ) )
     {
       // Nice hack to save memory: use the qt object name to store the filename
       TQTimer *timer = new TQTimer( this, _url.path().utf8() );
@@ -971,13 +982,14 @@ void KDirListerCache::slotEntries( TDEIO::Job *job, const TDEIO::UDSEntryList &e
   KURL url = joburl( static_cast<TDEIO::ListJob *>(job) );
   url.adjustPath(-1);
   TQString urlStr = url.url();
+  TQString urlReferenceStr = url.internalReferenceURL();
 
   kdDebug(7004) << k_funcinfo << "new entries for " << url << endl;
 
-  DirItem *dir = itemsInUse[urlStr];
+  DirItem *dir = itemsInUse[urlStr + ":" + urlReferenceStr];
   Q_ASSERT( dir );
 
-  TQPtrList<KDirLister> *listers = urlsCurrentlyListed[urlStr];
+  TQPtrList<KDirLister> *listers = urlsCurrentlyListed[urlStr + ":" + urlReferenceStr];
   Q_ASSERT( listers );
   Q_ASSERT( !listers->isEmpty() );
 
@@ -1051,20 +1063,21 @@ void KDirListerCache::slotResult( TDEIO::Job *j )
   KURL jobUrl = joburl( job );
   jobUrl.adjustPath(-1);  // need remove trailing slashes again, in case of redirections
   TQString jobUrlStr = jobUrl.url();
+  TQString jobReferenceUrlStr = jobUrl.internalReferenceURL();
 
   kdDebug(7004) << k_funcinfo << "finished listing " << jobUrl << endl;
 #ifdef DEBUG_CACHE
   printDebug();
 #endif
 
-  TQPtrList<KDirLister> *listers = urlsCurrentlyListed.take( jobUrlStr );
+  TQPtrList<KDirLister> *listers = urlsCurrentlyListed.take( jobUrlStr + ":" + jobReferenceUrlStr );
   Q_ASSERT( listers );
 
   // move the directory to the held directories, do it before emitting
   // the signals to make sure it exists in KDirListerCache in case someone
   // calls listDir during the signal emission
-  Q_ASSERT( !urlsCurrentlyHeld[jobUrlStr] );
-  urlsCurrentlyHeld.insert( jobUrlStr, listers );
+  Q_ASSERT( !urlsCurrentlyHeld[jobUrlStr + ":" + jobReferenceUrlStr] );
+  urlsCurrentlyHeld.insert( jobUrlStr + ":" + jobReferenceUrlStr, listers );
 
   KDirLister *kdl;
 
@@ -1084,7 +1097,7 @@ void KDirListerCache::slotResult( TDEIO::Job *j )
   }
   else
   {
-    DirItem *dir = itemsInUse[jobUrlStr];
+    DirItem *dir = itemsInUse[jobUrlStr + ":" + jobReferenceUrlStr];
     Q_ASSERT( dir );
     dir->complete = true;
 
@@ -1138,10 +1151,10 @@ void KDirListerCache::slotRedirection( TDEIO::Job *j, const KURL& url )
   // DF: redirection happens before listDir emits any item. Makes little sense otherwise.
 
   // oldUrl cannot be in itemsCached because only completed items are moved there
-  DirItem *dir = itemsInUse.take( oldUrl.url() );
+  DirItem *dir = itemsInUse.take( oldUrl.url() + ":" + oldUrl.internalReferenceURL() );
   Q_ASSERT( dir );
 
-  TQPtrList<KDirLister> *listers = urlsCurrentlyListed.take( oldUrl.url() );
+  TQPtrList<KDirLister> *listers = urlsCurrentlyListed.take( oldUrl.url() + ":" + oldUrl.internalReferenceURL() );
   Q_ASSERT( listers );
   Q_ASSERT( !listers->isEmpty() );
 
@@ -1171,7 +1184,7 @@ void KDirListerCache::slotRedirection( TDEIO::Job *j, const KURL& url )
 
   // when a lister was stopped before the job emits the redirection signal, the old url will
   // also be in urlsCurrentlyHeld
-  TQPtrList<KDirLister> *holders = urlsCurrentlyHeld.take( oldUrl.url() );
+  TQPtrList<KDirLister> *holders = urlsCurrentlyHeld.take( oldUrl.url() + ":" + oldUrl.internalReferenceURL() );
   if ( holders )
   {
     Q_ASSERT( !holders->isEmpty() );
@@ -1207,7 +1220,7 @@ void KDirListerCache::slotRedirection( TDEIO::Job *j, const KURL& url )
     }
   }
 
-  DirItem *newDir = itemsInUse[newUrl.url()];
+  DirItem *newDir = itemsInUse[newUrl.url() + ":" + newUrl.internalReferenceURL()];
   if ( newDir )
   {
     kdDebug(7004) << "slotRedirection: " << newUrl.url() << " already in use" << endl;
@@ -1221,7 +1234,7 @@ void KDirListerCache::slotRedirection( TDEIO::Job *j, const KURL& url )
 
     // listers of newUrl with oldJob: forget about the oldJob and use the already running one
     // which will be converted to an updateJob
-    TQPtrList<KDirLister> *curListers = urlsCurrentlyListed[newUrl.url()];
+    TQPtrList<KDirLister> *curListers = urlsCurrentlyListed[newUrl.url() + ":" + newUrl.internalReferenceURL()];
     if ( curListers )
     {
       kdDebug(7004) << "slotRedirection: and it is currently listed" << endl;
@@ -1241,13 +1254,13 @@ void KDirListerCache::slotRedirection( TDEIO::Job *j, const KURL& url )
         curListers->append( kdl );
     }
     else
-      urlsCurrentlyListed.insert( newUrl.url(), listers );
+      urlsCurrentlyListed.insert( newUrl.url() + ":" + newUrl.internalReferenceURL(), listers );
 
     if ( oldJob )         // kill the old job, be it a list-job or an update-job
       killJob( oldJob );
 
     // holders of newUrl: use the already running job which will be converted to an updateJob
-    TQPtrList<KDirLister> *curHolders = urlsCurrentlyHeld[newUrl.url()];
+    TQPtrList<KDirLister> *curHolders = urlsCurrentlyHeld[newUrl.url() + ":" + newUrl.internalReferenceURL()];
     if ( curHolders )
     {
       kdDebug(7004) << "slotRedirection: and it is currently held." << endl;
@@ -1264,7 +1277,7 @@ void KDirListerCache::slotRedirection( TDEIO::Job *j, const KURL& url )
           curHolders->append( kdl );
     }
     else if ( holders )
-      urlsCurrentlyHeld.insert( newUrl.url(), holders );
+      urlsCurrentlyHeld.insert( newUrl.url() + ":" + newUrl.internalReferenceURL(), holders );
 
     
     // emit old items: listers, holders. NOT: newUrlListers/newUrlHolders, they already have them listed
@@ -1295,10 +1308,10 @@ void KDirListerCache::slotRedirection( TDEIO::Job *j, const KURL& url )
     kdDebug(7004) << "slotRedirection: " << newUrl.url() << " is unused, but already in the cache." << endl;
 
     delete dir;
-    itemsInUse.insert( newUrl.url(), newDir );
-    urlsCurrentlyListed.insert( newUrl.url(), listers );
+    itemsInUse.insert( newUrl.url() + ":" + newUrl.internalReferenceURL(), newDir );
+    urlsCurrentlyListed.insert( newUrl.url() + ":" + newUrl.internalReferenceURL(), listers );
     if ( holders )
-      urlsCurrentlyHeld.insert( newUrl.url(), holders );
+      urlsCurrentlyHeld.insert( newUrl.url() + ":" + newUrl.internalReferenceURL(), holders );
 
     // emit old items: listers, holders
     for ( KDirLister *kdl = listers->first(); kdl; kdl = listers->next() )
@@ -1330,11 +1343,11 @@ void KDirListerCache::slotRedirection( TDEIO::Job *j, const KURL& url )
     dir->rootItem = 0;
     dir->lstItems->clear();
     dir->redirect( newUrl );
-    itemsInUse.insert( newUrl.url(), dir );
-    urlsCurrentlyListed.insert( newUrl.url(), listers );
+    itemsInUse.insert( newUrl.url() + ":" + newUrl.internalReferenceURL(), dir );
+    urlsCurrentlyListed.insert( newUrl.url() + ":" + newUrl.internalReferenceURL(), listers );
 
     if ( holders )
-      urlsCurrentlyHeld.insert( newUrl.url(), holders );
+      urlsCurrentlyHeld.insert( newUrl.url() + ":" + newUrl.internalReferenceURL(), holders );
     else
     {
 #ifdef DEBUG_CACHE
@@ -1376,7 +1389,9 @@ void KDirListerCache::renameDir( const KURL &oldUrl, const KURL &newUrl )
   {
     goNext = true;
     DirItem *dir = itu.current();
-    KURL oldDirUrl ( itu.currentKey() );
+    TQString oldDirURLIndep = itu.currentKey();
+    oldDirURLIndep.truncate(oldDirURLIndep.length() - (dir->url.internalReferenceURL().length()+strlen(":")));
+    KURL oldDirUrl ( oldDirURLIndep );
     //kdDebug(7004) << "itemInUse: " << oldDirUrl.prettyURL() << endl;
     // Check if this dir is oldUrl, or a subfolder of it
     if ( oldUrl.isParentOf( oldDirUrl ) )
@@ -1385,8 +1400,9 @@ void KDirListerCache::renameDir( const KURL &oldUrl, const KURL &newUrl )
       TQString relPath = oldDirUrl.path().mid( oldUrl.path().length() );
 
       KURL newDirUrl( newUrl ); // take new base
-      if ( !relPath.isEmpty() )
+      if ( !relPath.isEmpty() ) {
         newDirUrl.addPath( relPath ); // add unchanged relative path
+      }
       //kdDebug(7004) << "KDirListerCache::renameDir new url=" << newDirUrl.prettyURL() << endl;
 
       // Update URL in dir item and in itemsInUse
@@ -1426,13 +1442,15 @@ void KDirListerCache::emitRedirections( const KURL &oldUrl, const KURL &url )
   kdDebug(7004) << k_funcinfo << oldUrl.prettyURL() << " -> " << url.prettyURL() << endl;
   TQString oldUrlStr = oldUrl.url(-1);
   TQString urlStr = url.url(-1);
+  TQString oldReferenceUrlStr = oldUrl.internalReferenceURL();
+  TQString urlReferenceStr = url.internalReferenceURL();
 
   TDEIO::ListJob *job = jobForUrl( oldUrlStr );
   if ( job )
     killJob( job );
 
   // Check if we were listing this dir. Need to abort and restart with new name in that case.
-  TQPtrList<KDirLister> *listers = urlsCurrentlyListed.take( oldUrlStr );
+  TQPtrList<KDirLister> *listers = urlsCurrentlyListed.take( oldUrlStr + ":" + oldReferenceUrlStr );
   if ( listers )
   {
     // Tell the world that the job listing the old url is dead.
@@ -1444,19 +1462,19 @@ void KDirListerCache::emitRedirections( const KURL &oldUrl, const KURL &url )
       emit kdl->canceled( oldUrl );
     }
 
-    urlsCurrentlyListed.insert( urlStr, listers );
+    urlsCurrentlyListed.insert( urlStr + ":" + urlReferenceStr, listers );
   }
 
   // Check if we are currently displaying this directory (odds opposite wrt above)
   // Update urlsCurrentlyHeld dict with new URL
-  TQPtrList<KDirLister> *holders = urlsCurrentlyHeld.take( oldUrlStr );
+  TQPtrList<KDirLister> *holders = urlsCurrentlyHeld.take( oldUrlStr + ":" + oldReferenceUrlStr );
   if ( holders )
   {
     if ( job )
       for ( KDirLister *kdl = holders->first(); kdl; kdl = holders->next() )
         kdl->jobDone( job );
 
-    urlsCurrentlyHeld.insert( urlStr, holders );
+    urlsCurrentlyHeld.insert( urlStr + ":" + urlReferenceStr, holders );
   }
 
   if ( listers )
@@ -1515,8 +1533,8 @@ void KDirListerCache::slotUpdateResult( TDEIO::Job * j )
 
   KDirLister *kdl;
 
-  TQPtrList<KDirLister> *listers = urlsCurrentlyHeld[jobUrlStr];
-  TQPtrList<KDirLister> *tmpLst = urlsCurrentlyListed.take( jobUrlStr );
+  TQPtrList<KDirLister> *listers = urlsCurrentlyHeld[jobUrlStr + ":" + jobReferenceUrlStr];
+  TQPtrList<KDirLister> *tmpLst = urlsCurrentlyListed.take( jobUrlStr + ":" + jobReferenceUrlStr );
 
   if ( tmpLst )
   {
@@ -1529,7 +1547,7 @@ void KDirListerCache::slotUpdateResult( TDEIO::Job * j )
     else
     {
       listers = tmpLst;
-      urlsCurrentlyHeld.insert( jobUrlStr, listers );
+      urlsCurrentlyHeld.insert( jobUrlStr + ":" + jobReferenceUrlStr, listers );
     }
   }
 
@@ -1561,7 +1579,7 @@ void KDirListerCache::slotUpdateResult( TDEIO::Job * j )
     return;
   }
 
-  DirItem *dir = itemsInUse[jobUrlStr];
+  DirItem *dir = itemsInUse[jobUrlStr + ":" + jobReferenceUrlStr];
   dir->complete = true;
 
 
@@ -1765,12 +1783,14 @@ void KDirListerCache::deleteDir( const KURL& dirUrl )
   TQDictIterator<DirItem> itu( itemsInUse );
   while ( itu.current() )
   {
-    KURL deletedUrl( itu.currentKey() );
+    TQString deletedUrlIndep = itu.currentKey();
+    deletedUrlIndep.truncate(deletedUrlIndep.length() - ((*itu)->url.internalReferenceURL().length()+strlen(":")));
+    KURL deletedUrl( deletedUrlIndep );
     if ( dirUrl.isParentOf( deletedUrl ) )
     {
       // stop all jobs for deletedUrl
 
-      TQPtrList<KDirLister> *kdls = urlsCurrentlyListed[deletedUrl.url()];
+      TQPtrList<KDirLister> *kdls = urlsCurrentlyListed[deletedUrl.url() + ":" + deletedUrl.internalReferenceURL()];
       if ( kdls )  // yeah, I lack good names
       {
         // we need a copy because stop modifies the list
@@ -1784,7 +1804,7 @@ void KDirListerCache::deleteDir( const KURL& dirUrl )
       // tell listers holding deletedUrl to forget about it
       // this will stop running updates for deletedUrl as well
 
-      kdls = urlsCurrentlyHeld[deletedUrl.url()];
+      kdls = urlsCurrentlyHeld[deletedUrl.url() + ":" + deletedUrl.internalReferenceURL()];
       if ( kdls )
       {
         // we need a copy because forgetDirs modifies the list
@@ -1817,7 +1837,7 @@ void KDirListerCache::deleteDir( const KURL& dirUrl )
       // delete the entry for deletedUrl - should not be needed, it's in
       // items cached now
 
-      DirItem *dir = itemsInUse.take( deletedUrl.url() );
+      DirItem *dir = itemsInUse.take( deletedUrl.url() + ":" + deletedUrl.internalReferenceURL() );
       Q_ASSERT( !dir );
       if ( !dir ) // take didn't find it - move on
           ++itu;
