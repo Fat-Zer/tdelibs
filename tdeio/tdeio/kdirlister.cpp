@@ -274,7 +274,7 @@ bool KDirListerCache::listDir( KDirLister *lister, const KURL& _u,
 
     urlsCurrentlyListed[urlStr + ":" + urlReferenceStr]->append( lister );
 
-    TDEIO::ListJob *job = jobForUrl( urlStr );
+    TDEIO::ListJob *job = jobForUrl( urlStr + ":" + urlReferenceStr );
     Q_ASSERT( job );
 
     lister->jobStarted( job );
@@ -282,8 +282,9 @@ bool KDirListerCache::listDir( KDirLister *lister, const KURL& _u,
 
     Q_ASSERT( itemU );
 
-    if ( !lister->d->rootFileItem && lister->d->url == _url )
+    if ( !lister->d->rootFileItem && lister->d->url == _url ) {
       lister->d->rootFileItem = itemU->rootItem;
+    }
 
     lister->addNewItems( *(itemU->lstItems) );
     lister->emitItems();
@@ -343,10 +344,11 @@ void KDirListerCache::stop( KDirLister *lister )
       //kdDebug(7004) << k_funcinfo << " found lister in list - for " << url << endl;
       bool ret = listers->removeRef( lister );
       Q_ASSERT( ret );
-      
+
       TDEIO::ListJob *job = jobForUrl( url );
-      if ( job )
+      if ( job ) {
         lister->jobDone( job );
+      }
 
       // move lister to urlsCurrentlyHeld
       TQPtrList<KDirLister> *holders = urlsCurrentlyHeld[url];
@@ -411,7 +413,7 @@ void KDirListerCache::stop( KDirLister *lister, const KURL& _u )
   holders->append( lister );
 
 
-  TDEIO::ListJob *job = jobForUrl( urlStr );
+  TDEIO::ListJob *job = jobForUrl( urlStr + ":" + urlReferenceStr );
   if ( job )
     lister->jobDone( job );
 
@@ -498,7 +500,7 @@ void KDirListerCache::forgetDirs( KDirLister *lister, const KURL& _url, bool not
       itemsInUse.remove( urlStr + ":" + urlReferenceStr );
 
       // this job is a running update
-      TDEIO::ListJob *job = jobForUrl( urlStr );
+      TDEIO::ListJob *job = jobForUrl( urlStr + ":" + urlReferenceStr );
       if ( job )
       {
         lister->jobDone( job );
@@ -582,7 +584,7 @@ void KDirListerCache::updateDirectory( const KURL& _dir )
   // restart the job for _dir if it is running already
   bool killed = false;
   TQWidget *window = 0;
-  TDEIO::ListJob *job = jobForUrl( urlStr );
+  TDEIO::ListJob *job = jobForUrl( urlStr + ":" + urlReferenceStr );
   if ( job )
   {
      window = job->window();
@@ -1230,7 +1232,7 @@ void KDirListerCache::slotRedirection( TDEIO::Job *j, const KURL& url )
 
     // get the job if one's running for newUrl already (can be a list-job or an update-job), but
     // do not return this 'job', which would happen because of the use of redirectionURL()
-    TDEIO::ListJob *oldJob = jobForUrl( newUrl.url(), job );
+    TDEIO::ListJob *oldJob = jobForUrl( newUrl.url() + ":" + newUrl.internalReferenceURL(), job );
 
     // listers of newUrl with oldJob: forget about the oldJob and use the already running one
     // which will be converted to an updateJob
@@ -1445,7 +1447,7 @@ void KDirListerCache::emitRedirections( const KURL &oldUrl, const KURL &url )
   TQString oldReferenceUrlStr = oldUrl.internalReferenceURL();
   TQString urlReferenceStr = url.internalReferenceURL();
 
-  TDEIO::ListJob *job = jobForUrl( oldUrlStr );
+  TDEIO::ListJob *job = jobForUrl( oldUrlStr + ":" + oldReferenceUrlStr );
   if ( job )
     killJob( job );
 

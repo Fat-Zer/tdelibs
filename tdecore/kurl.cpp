@@ -1140,6 +1140,9 @@ bool KURL::operator<( const KURL& _u) const
   i = m_strPass.compare(_u.m_strPass);
   if (i) return (i < 0);
 
+  i = d->m_strInternalReferenceURL.compare(_u.d->m_strInternalReferenceURL);
+  if (i) return (i < 0);
+
   return false;
 }
 
@@ -1196,7 +1199,8 @@ bool KURL::equals( const KURL &_u, bool ignore_trailing ) const
          m_strHost == _u.m_strHost &&
          m_strQuery_encoded == _u.m_strQuery_encoded &&
          m_strRef_encoded == _u.m_strRef_encoded &&
-         m_iPort == _u.m_iPort )
+         m_iPort == _u.m_iPort &&
+         d->m_strInternalReferenceURL == _u.d->m_strInternalReferenceURL )
       return true;
 
     return false;

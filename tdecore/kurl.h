@@ -1797,7 +1797,6 @@ private:
   TQString m_strPath;
   TQString m_strRef_encoded;
   TQString m_strQuery_encoded;
-  TQString m_strInternalReferenceURL;
   bool m_bIsMalformed : 1;
   enum URIMode m_iUriMode : 3;
   uint freeForUse     : 4;

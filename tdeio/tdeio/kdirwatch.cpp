@@ -780,8 +780,9 @@ void KDirWatchPrivate::addEntry(KDirWatch* instance, const KURL& _path,
   if (path.startsWith("/dev/") || (path == "/dev"))
     return; // Don't even go there.
 
-  if ( path.length() > 1 && path.right(1) == "/" )
+  if ( path.length() > 1 && path.right(1) == "/" ) {
     path.truncate( path.length() - 1 );
+  }
 
   EntryMap::Iterator it = m_mapEntries.find( _path );
   if ( it != m_mapEntries.end() )
@@ -885,8 +886,9 @@ void KDirWatchPrivate::addEntry(KDirWatch* instance, const KURL& _path,
   e->m_mode = UnknownMode;
   e->msecLeft = 0;
 
-  if ( isNoisyFile( tpath ) )
+  if ( isNoisyFile( tpath ) ) {
     return;
+  }
 
 #ifdef HAVE_FAM
   if (useFAM(e)) return;
@@ -1324,17 +1326,20 @@ void KDirWatchPrivate::slotRescan()
   {
     // mark all as dirty
     it = m_mapEntries.begin();
-    for( ; it != m_mapEntries.end(); ++it )
+    for( ; it != m_mapEntries.end(); ++it ) {
       (*it).dirty = true;
+    }
     rescan_all = false;
   }
   else
   {
     // progate dirty flag to dependant entries (e.g. file watches)
     it = m_mapEntries.begin();
-    for( ; it != m_mapEntries.end(); ++it )
-      if (((*it).m_mode == INotifyMode || (*it).m_mode == DNotifyMode) && (*it).dirty )
+    for( ; it != m_mapEntries.end(); ++it ) {
+      if (((*it).m_mode == INotifyMode || (*it).m_mode == DNotifyMode) && (*it).dirty ) {
         (*it).propagate_dirty();
+      }
+    }
   }
 
   it = m_mapEntries.begin();
@@ -1381,7 +1386,14 @@ void KDirWatchPrivate::slotRescan()
 #endif
 
     if ( ev != NoChange ) {
-      emitEvent( &(*it), ev);
+      // Emit events for any entries with the same path as the changed entry
+      EntryMap::Iterator it2;
+      it2 = m_mapEntries.begin();
+      for( ; it2 != m_mapEntries.end(); ++it2 ) {
+        if ((*it).path.url() == (*it2).path.url()) {
+          emitEvent( &(*it2), ev);
+        }
+      }
     }
   }
 
