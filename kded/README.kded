@@ -80,7 +80,7 @@ filesystem, or when DNOTIFY is used. Specifying larger intervals may reduce
 the CPU load and/or network traffic. Shorter intervals are not recommended.
 
 Please note that in previous versions of KDE these options where listed in 
-the kderc file.
+the tderc file.
 
 Example kdeglobals fragment:
 

@@ -31,7 +31,7 @@ In KDE2 resource management has been largely abstracted by the introduction
 of the TDEStandardDirs class and has become much more flexible. The user /
 administrator can now specify a variable number of locations where resources
 can be found. A list of locations can either be specified via $TDEDIRS
-(notice the extra 'S'), via /etc/kderc and even via the kdeglobals config 
+(notice the extra 'S'), via /etc/tderc and even via the kdeglobals config 
 file. The location where user-specific resources can be found can be
 set with $TDEHOME (The default is $HOME/.trinity). Changes made by the user
 are always written back to $TDEHOME.

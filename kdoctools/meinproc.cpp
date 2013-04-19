@@ -226,7 +226,7 @@ int main(int argc, char **argv) {
     bool index = args->isSet( "htdig" );
     TQString tss = args->getOption( "stylesheet" );
     if ( tss.isEmpty() )
-        tss =  "customization/kde-chunk.xsl";
+        tss =  "customization/tde-chunk.xsl";
     if ( index )
         tss = "customization/htdig_index.xsl" ;
 

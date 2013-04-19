@@ -74,7 +74,7 @@ public:
      *
      * @param configDir The directory which has the TDEConfig file.
      * @param configFile A TDEConfig file to use as the theme configuration.
-     * Defaults to ~/.kderc.
+     * Defaults to ~/.tderc.
      */
     KThemeStyle( const TQString& configDir, const TQString &configFile = TQString::null );
     ~KThemeStyle();

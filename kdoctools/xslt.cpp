@@ -235,7 +235,7 @@ static bool readCache( const TQString &filename,
     kdDebug( 7119 ) << "verifyCache " << filename << " " << cache << endl;
     if ( !compareTimeStamps( filename, cache ) )
         return false;
-    if ( !compareTimeStamps( locate( "dtd", "customization/kde-chunk.xsl"), cache ) )
+    if ( !compareTimeStamps( locate( "dtd", "customization/tde-chunk.xsl"), cache ) )
         return false;
 
     kdDebug( 7119 ) << "create filter" << endl;

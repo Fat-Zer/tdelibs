@@ -209,7 +209,7 @@ void HelpProtocol::get( const KURL& url )
     infoMessage(i18n("Preparing document"));
 
     if ( mGhelp ) {
-        TQString xsl = "customization/kde-nochunk.xsl";
+        TQString xsl = "customization/tde-nochunk.xsl";
         mParsed = transform(file, locate("dtd", xsl));
 
         kdDebug( 7119 ) << "parsed " << mParsed.length() << endl;
@@ -235,7 +235,7 @@ void HelpProtocol::get( const KURL& url )
         kdDebug( 7119 ) << "cached parsed " << mParsed.length() << endl;
 
         if ( mParsed.isEmpty() ) {
-            mParsed = transform(file, locate("dtd", "customization/kde-chunk.xsl"));
+            mParsed = transform(file, locate("dtd", "customization/tde-chunk.xsl"));
             if ( !mParsed.isEmpty() ) {
                 infoMessage( i18n( "Saving to cache" ) );
                 TQString cache = file.left( file.length() - 7 );
