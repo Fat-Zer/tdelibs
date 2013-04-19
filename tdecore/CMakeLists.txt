@@ -29,6 +29,14 @@ if( WITH_UPOWER )
   )
 endif( )
 
+if( WITH_UDISKS )
+  add_definitions( -DWITH_UDISKS )
+endif( )
+
+if( WITH_UDISKS2 )
+  add_definitions( -DWITH_UDISKS2 )
+endif( )
+
 if( WITH_LIBART )
   add_subdirectory( svgicons )
   set( KDESVGICONS kdesvgicons-static )
