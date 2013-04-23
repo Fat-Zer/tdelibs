@@ -334,12 +334,15 @@ void KDirListerCache::stop( KDirLister *lister )
 
   TQDictIterator< TQPtrList<KDirLister> > it( urlsCurrentlyListed );
   TQPtrList<KDirLister> *listers;
+  int curIndex;
   while ( (listers = it.current()) )
   {
-    if ( listers->findRef( lister ) > -1 )
+    curIndex = listers->findRef( lister );
+    if ( curIndex > -1 )
     {
       // lister is listing url
       TQString url = it.currentKey();
+      KDirLister* curLister = listers->at( curIndex );
 
       //kdDebug(7004) << k_funcinfo << " found lister in list - for " << url << endl;
       bool ret = listers->removeRef( lister );
@@ -360,15 +363,16 @@ void KDirListerCache::stop( KDirLister *lister )
 
       holders->append( lister );
 
-      emit lister->canceled( KURL( url ) );
+      emit lister->canceled( curLister->d->url );
 
       //kdDebug(7004) << k_funcinfo << "remaining list: " << listers->count() << " listers" << endl;
 
       if ( listers->isEmpty() )
       {
         // kill the job since it isn't used any more
-        if ( job )
+        if ( job ) {
           killJob( job );
+        }
 
         urlsCurrentlyListed.remove( url );
       }
@@ -414,8 +418,9 @@ void KDirListerCache::stop( KDirLister *lister, const KURL& _u )
 
 
   TDEIO::ListJob *job = jobForUrl( urlStr + ":" + urlReferenceStr );
-  if ( job )
+  if ( job ) {
     lister->jobDone( job );
+  }
 
   emit lister->canceled( _url );
 
@@ -1255,8 +1260,9 @@ void KDirListerCache::slotRedirection( TDEIO::Job *j, const KURL& url )
       for ( KDirLister *kdl = listers->first(); kdl; kdl = listers->next() )
         curListers->append( kdl );
     }
-    else
+    else {
       urlsCurrentlyListed.insert( newUrl.url() + ":" + newUrl.internalReferenceURL(), listers );
+    }
 
     if ( oldJob )         // kill the old job, be it a list-job or an update-job
       killJob( oldJob );
@@ -1726,8 +1732,10 @@ TDEIO::ListJob *KDirListerCache::jobForUrl( const TQString& url, TDEIO::ListJob 
   while ( it != jobs.end() )
   {
     job = it.key();
-    if ( joburl( job ).url(-1) == url && job != not_job )
+    KURL itjoburl = joburl( job );
+    if ( ((itjoburl.url(-1) + ":" + itjoburl.internalReferenceURL()) == url) && (job != not_job) ) {
        return job;
+    }
     ++it;
   }
   return 0;

@@ -108,8 +108,9 @@ KFileItem::KFileItem( const KURL &url, const TQString &mimeType, mode_t mode )
   m_hidden( Auto ),
   d(0)
 {
-  if (m_bMimeTypeKnown)
+  if (m_bMimeTypeKnown) {
     m_pMimeType = KMimeType::mimeType( mimeType );
+  }
 
   init( false );
 }
@@ -136,8 +137,9 @@ void KFileItem::init( bool _determineMimeTypeOnDemand )
   m_access = TQString::null;
   m_size = (TDEIO::filesize_t) -1;
   //  metaInfo = KFileMetaInfo();
-  for ( int i = 0; i < NumFlags; i++ )
+  for ( int i = 0; i < NumFlags; i++ ) {
       m_time[i] = (time_t) -1;
+  }
 
   // determine mode and/or permissions if unknown
   if ( m_fileMode == KFileItem::Unknown || m_permissions == KFileItem::Unknown )
@@ -160,18 +162,22 @@ void KFileItem::init( bool _determineMimeTypeOnDemand )
         if ( S_ISLNK( mode ) )
         {
           m_bLink = true;
-          if ( KDE_stat( path.data(), &buf ) == 0 )
+          if ( KDE_stat( path.data(), &buf ) == 0 ) {
               mode = buf.st_mode;
-          else // link pointing to nowhere (see tdeio/file/file.cc)
+          }
+          else { // link pointing to nowhere (see tdeio/file/file.cc)
               mode = (S_IFMT-1) | S_IRWXU | S_IRWXG | S_IRWXO;
+          }
         }
         // While we're at it, store the times
         m_time[ Modification ] = buf.st_mtime;
         m_time[ Access ] = buf.st_atime;
-        if ( m_fileMode == KFileItem::Unknown )
+        if ( m_fileMode == KFileItem::Unknown ) {
           m_fileMode = mode & S_IFMT; // extract file type
-        if ( m_permissions == KFileItem::Unknown )
+        }
+        if ( m_permissions == KFileItem::Unknown ) {
           m_permissions = mode & 07777; // extract permissions
+        }
       }
     }
   }

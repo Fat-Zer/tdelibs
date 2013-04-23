@@ -738,7 +738,7 @@ void KonfUpdate::gotScript(const TQString &_script)
 
    if (script.isEmpty())
    {
-      log() << currentFilename << ": !! Script fails to specifiy filename in line " << m_lineCount << " : '" << m_line << "'" << endl;
+      log() << currentFilename << ": !! Script fails to specify filename in line " << m_lineCount << " : '" << m_line << "'" << endl;
       skip = true;
       return;
    } 
