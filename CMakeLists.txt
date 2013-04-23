@@ -88,6 +88,7 @@ option( WITH_UDISKS "Enable UDISKS support" ${WITH_ALL_OPTIONS} )
 option( WITH_UDISKS2 "Enable UDISKS2 support" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_NETWORK_MANAGER_BACKEND "Enable network-manager support" OFF )
 OPTION( WITH_SUDO_TDESU_BACKEND "Use sudo as backend for tdesu (default is su)" OFF )
+OPTION( WITH_OLD_XDG_STD "Use the pre R14.0.0 XDG standard where both TDE and KDE are recognized in desktop files" OFF )
 
 OPTION( WITH_ASPELL "Enable aspell support" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_HSPELL "Enable hspell support" ${WITH_ALL_OPTIONS} )

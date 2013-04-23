@@ -84,13 +84,23 @@ KServiceGroup::KServiceGroup( const TQString &configFile, const TQString & _relp
   TQStringList tmpList;
   if (config.hasKey("OnlyShowIn"))
   {
+#ifdef WITH_OLD_XDG_STD
      if ((!config.readListEntry("OnlyShowIn", ';').contains("TDE")) && (!config.readListEntry("OnlyShowIn", ';').contains("KDE")))
         d->m_bNoDisplay = true;
+#else
+     if (!config.readListEntry("OnlyShowIn", ';').contains("TDE"))
+        d->m_bNoDisplay = true;
+#endif
   }
   if (config.hasKey("NotShowIn"))
   {
+#ifdef WITH_OLD_XDG_STD
      if ((config.readListEntry("NotShowIn", ';').contains("TDE")) || (config.readListEntry("NotShowIn", ';').contains("KDE")))
         d->m_bNoDisplay = true;
+#else
+     if (config.readListEntry("NotShowIn", ';').contains("TDE"))
+        d->m_bNoDisplay = true;
+#endif
   }
 
   m_strBaseGroupName = config.readEntry( "X-TDE-BaseGroup" );

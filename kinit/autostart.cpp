@@ -178,13 +178,23 @@ AutoStart::loadAutoStartList()
 
        if (config.hasKey("OnlyShowIn"))
        {
+#ifdef WITH_OLD_XDG_STD
           if ((!config.readListEntry("OnlyShowIn", ';').contains("TDE")) && (!config.readListEntry("OnlyShowIn", ';').contains("KDE")))
               continue;
+#else
+          if (!config.readListEntry("OnlyShowIn", ';').contains("TDE"))
+              continue;
+#endif
        }
        if (config.hasKey("NotShowIn"))
        {
+#ifdef WITH_OLD_XDG_STD
            if ((config.readListEntry("NotShowIn", ';').contains("TDE")) || (config.readListEntry("NotShowIn", ';').contains("KDE")))
                continue;
+#else
+           if (config.readListEntry("NotShowIn", ';').contains("TDE"))
+               continue;
+#endif
        }
 
        AutoStartItem *item = new AutoStartItem;

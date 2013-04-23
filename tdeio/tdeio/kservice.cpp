@@ -749,8 +749,13 @@ bool KService::noDisplay() const {
   {
      TQString aValue = it.data().toString();
      TQStringList aList = TQStringList::split(';', aValue);
+#ifdef WITH_OLD_XDG_STD
      if ((!aList.contains("TDE")) && (!aList.contains("KDE")))
         return true;
+#else
+     if (!aList.contains("TDE"))
+        return true;
+#endif
   }
 
   it = m_mapProps.find( "NotShowIn" );
@@ -758,8 +763,13 @@ bool KService::noDisplay() const {
   {
      TQString aValue = it.data().toString();
      TQStringList aList = TQStringList::split(';', aValue);
+#ifdef WITH_OLD_XDG_STD
      if ((aList.contains("TDE")) || (aList.contains("KDE")))
         return true;
+#else
+     if (aList.contains("TDE"))
+        return true;
+#endif
   }
   
   if (!kapp->authorizeControlModule(d->menuId))
