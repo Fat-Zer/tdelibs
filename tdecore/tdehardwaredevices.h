@@ -1576,7 +1576,8 @@ enum TDESystemPowerState {
 	Standby,
 	Suspend,
 	Hibernate,
-	PowerOff
+	PowerOff,
+	Reboot
 };
 };
 
@@ -1657,6 +1658,11 @@ class TDECORE_EXPORT TDERootSystemDevice : public TDEGenericDevice
 		* @return TRUE if permissions allow the system to be powered down, FALSE if not
 		*/
 		bool canPowerOff();
+
+		/**
+		* @return TRUE if permissions allow the system to be rebooted, FALSE if not
+		*/
+		bool canReboot();
 
 		/**
 		* @param hm a TDESystemHibernationMethod::TDESystemHibernationMethod with the desired hibernation method
