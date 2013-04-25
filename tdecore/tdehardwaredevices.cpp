@@ -468,17 +468,22 @@ bool ejectDriveUDisks(TDEStorageDevice* sdevice) {
 		// Eject the drive!
 		TQT_DBusError error;
 		TQT_DBusProxy driveControl("org.freedesktop.UDisks", blockDeviceString, "org.freedesktop.UDisks.Device", dbusConn);
-		TQValueList<TQT_DBusData> params;
-		TQT_DBusDataList options;
-		params << TQT_DBusData::fromList(options);
-		TQT_DBusMessage reply = driveControl.sendWithReply("DriveEject", params, &error);
-		if (error.isValid()) {
-			// Error!
-			printf("[ERROR] %s\n\r", error.name().ascii()); fflush(stdout);
-			return FALSE;
+		if (driveControl.canSend()) {
+			TQValueList<TQT_DBusData> params;
+			TQT_DBusDataList options;
+			params << TQT_DBusData::fromList(options);
+			TQT_DBusMessage reply = driveControl.sendWithReply("DriveEject", params, &error);
+			if (error.isValid()) {
+				// Error!
+				printf("[ERROR] %s\n\r", error.name().ascii()); fflush(stdout);
+				return FALSE;
+			}
+			else {
+				return TRUE;
+			}
 		}
 		else {
-			return TRUE;
+			return FALSE;
 		}
 	}
 	else {
@@ -497,63 +502,67 @@ bool ejectDriveUDisks2(TDEStorageDevice* sdevice) {
 		blockDeviceString.replace("/dev/", "");
 		blockDeviceString = "/org/freedesktop/UDisks2/block_devices/" + blockDeviceString;
 		TQT_DBusProxy hardwareControl("org.freedesktop.UDisks2", blockDeviceString, "org.freedesktop.DBus.Properties", dbusConn);
-
-		// get associated udisks2 drive path
-		TQT_DBusError error;
-		TQValueList<TQT_DBusData> params;
-		params << TQT_DBusData::fromString("org.freedesktop.UDisks2.Block") << TQT_DBusData::fromString("Drive");
-		TQT_DBusMessage reply = hardwareControl.sendWithReply("Get", params, &error);
-		if (error.isValid()) {
-			// Error!
-			printf("[ERROR] %s\n\r", error.name().ascii()); fflush(stdout);
-			return FALSE;
-		}
-		else {
-			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
-				TQT_DBusObjectPath driveObjectPath = reply[0].toVariant().value.toObjectPath();
-				if (!driveObjectPath.isValid()) {
-					return FALSE;
-				}
-
-				error = TQT_DBusError();
-				TQT_DBusProxy driveInformation("org.freedesktop.UDisks2", driveObjectPath, "org.freedesktop.DBus.Properties", dbusConn);
-				// can eject?
-				TQValueList<TQT_DBusData> params;
-				params << TQT_DBusData::fromString("org.freedesktop.UDisks2.Drive") << TQT_DBusData::fromString("Ejectable");
-				TQT_DBusMessage reply = driveInformation.sendWithReply("Get", params, &error);
-				if (error.isValid()) {
-					// Error!
-					printf("[ERROR] %s\n\r", error.name().ascii()); fflush(stdout);
-					return FALSE;
-				}
+		if (hardwareControl.canSend()) {
+			// get associated udisks2 drive path
+			TQT_DBusError error;
+			TQValueList<TQT_DBusData> params;
+			params << TQT_DBusData::fromString("org.freedesktop.UDisks2.Block") << TQT_DBusData::fromString("Drive");
+			TQT_DBusMessage reply = hardwareControl.sendWithReply("Get", params, &error);
+			if (error.isValid()) {
+				// Error!
+				printf("[ERROR] %s\n\r", error.name().ascii()); fflush(stdout);
+				return FALSE;
+			}
+			else {
 				if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
-					bool ejectable = reply[0].toVariant().value.toBool();
-					if (!ejectable) {
+					TQT_DBusObjectPath driveObjectPath = reply[0].toVariant().value.toObjectPath();
+					if (!driveObjectPath.isValid()) {
 						return FALSE;
 					}
-
-					// Eject the drive!
-					TQT_DBusProxy driveControl("org.freedesktop.UDisks2", driveObjectPath, "org.freedesktop.UDisks2.Drive", dbusConn);
+	
+					error = TQT_DBusError();
+					TQT_DBusProxy driveInformation("org.freedesktop.UDisks2", driveObjectPath, "org.freedesktop.DBus.Properties", dbusConn);
+					// can eject?
 					TQValueList<TQT_DBusData> params;
-					TQT_DBusDataMap<TQString> options(TQT_DBusData::Variant);
-					params << TQT_DBusData::fromStringKeyMap(options);
-					TQT_DBusMessage reply = driveControl.sendWithReply("Eject", params, &error);
+					params << TQT_DBusData::fromString("org.freedesktop.UDisks2.Drive") << TQT_DBusData::fromString("Ejectable");
+					TQT_DBusMessage reply = driveInformation.sendWithReply("Get", params, &error);
 					if (error.isValid()) {
 						// Error!
 						printf("[ERROR] %s\n\r", error.name().ascii()); fflush(stdout);
 						return FALSE;
 					}
+					if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+						bool ejectable = reply[0].toVariant().value.toBool();
+						if (!ejectable) {
+							return FALSE;
+						}
+	
+						// Eject the drive!
+						TQT_DBusProxy driveControl("org.freedesktop.UDisks2", driveObjectPath, "org.freedesktop.UDisks2.Drive", dbusConn);
+						TQValueList<TQT_DBusData> params;
+						TQT_DBusDataMap<TQString> options(TQT_DBusData::Variant);
+						params << TQT_DBusData::fromStringKeyMap(options);
+						TQT_DBusMessage reply = driveControl.sendWithReply("Eject", params, &error);
+						if (error.isValid()) {
+							// Error!
+							printf("[ERROR] %s\n\r", error.name().ascii()); fflush(stdout);
+							return FALSE;
+						}
+						else {
+							return TRUE;
+						}
+					}
 					else {
-						return TRUE;
+						return FALSE;
 					}
 				}
 				else {
 					return FALSE;
 				}
 			}
-			else {
-				return FALSE;
-			}
+		}
+		else {
+			return FALSE;
 		}
 	}
 	else {
@@ -1165,14 +1174,18 @@ bool TDECPUDevice::canSetGovernor() {
 #ifdef WITH_UPOWER
 		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
 		if (dbusConn.isConnected()) {
-			TQT_DBusProxy hardwareControl("org.trinitydesktop.hardwarecontrol", "/org/trinitydesktop/hardwarecontrol", "org.trinitydesktop.hardwarecontrol,CPUGovernor", dbusConn);
-	
-			// can set CPU governor?
-			TQValueList<TQT_DBusData> params;
-			params << TQT_DBusData::fromInt32(coreNumber());
-			TQT_DBusMessage reply = hardwareControl.sendWithReply("CanSetCPUGovernor", params);
-			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
-				return reply[0].toVariant().value.toBool();
+			TQT_DBusProxy hardwareControl("org.trinitydesktop.hardwarecontrol", "/org/trinitydesktop/hardwarecontrol", "org.trinitydesktop.hardwarecontrol.CPUGovernor", dbusConn);
+			if (hardwareControl.canSend()) {
+				// can set CPU governor?
+				TQValueList<TQT_DBusData> params;
+				params << TQT_DBusData::fromInt32(coreNumber());
+				TQT_DBusMessage reply = hardwareControl.sendWithReply("CanSetCPUGovernor", params);
+				if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+					return reply[0].toVariant().value.toBool();
+				}
+				else {
+					return FALSE;
+				}
 			}
 			else {
 				return FALSE;
@@ -1200,11 +1213,15 @@ void TDECPUDevice::setGovernor(TQString gv) {
 		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
 		if (dbusConn.isConnected()) {
 			TQT_DBusProxy hardwareControl("org.trinitydesktop.hardwarecontrol", "/org/trinitydesktop/hardwarecontrol", "org.trinitydesktop.hardwarecontrol.CPUGovernor", dbusConn);
-	
-			// set CPU governor
-			TQValueList<TQT_DBusData> params;
-			params << TQT_DBusData::fromInt32(coreNumber()) << TQT_DBusData::fromString(gv.lower());
-			hardwareControl.sendWithReply("SetCPUGovernor", params);
+			if (hardwareControl.canSend()) {
+				// set CPU governor
+				TQValueList<TQT_DBusData> params;
+				params << TQT_DBusData::fromInt32(coreNumber()) << TQT_DBusData::fromString(gv.lower());
+				hardwareControl.sendWithReply("SetCPUGovernor", params);
+			}
+			else {
+				return;
+			}
 		}
 		else {
 			return;
@@ -1348,13 +1365,17 @@ bool TDERootSystemDevice::canSuspend() {
 		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
 		if (dbusConn.isConnected()) {
 			TQT_DBusProxy upowerProperties("org.freedesktop.UPower", "/org/freedesktop/UPower", "org.freedesktop.DBus.Properties", dbusConn);
-	
-			// can suspend?
-			TQValueList<TQT_DBusData> params;
-			params << TQT_DBusData::fromString(upowerProperties.interface()) << TQT_DBusData::fromString("CanSuspend");
-			TQT_DBusMessage reply = upowerProperties.sendWithReply("Get", params);
-			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
-				return reply[0].toVariant().value.toBool();
+			if (upowerProperties.canSend()) {
+				// can suspend?
+				TQValueList<TQT_DBusData> params;
+				params << TQT_DBusData::fromString(upowerProperties.interface()) << TQT_DBusData::fromString("CanSuspend");
+				TQT_DBusMessage reply = upowerProperties.sendWithReply("Get", params);
+				if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+					return reply[0].toVariant().value.toBool();
+				}
+				else {
+					return FALSE;
+				}
 			}
 			else {
 				return FALSE;
@@ -1385,13 +1406,17 @@ bool TDERootSystemDevice::canHibernate() {
 		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
 		if (dbusConn.isConnected()) {
 			TQT_DBusProxy upowerProperties("org.freedesktop.UPower", "/org/freedesktop/UPower", "org.freedesktop.DBus.Properties", dbusConn);
-	
-			// can hibernate?
-			TQValueList<TQT_DBusData> params;
-			params << TQT_DBusData::fromString(upowerProperties.interface()) << TQT_DBusData::fromString("CanHibernate");
-			TQT_DBusMessage reply = upowerProperties.sendWithReply("Get", params);
-			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
-				return reply[0].toVariant().value.toBool();
+			if (upowerProperties.canSend()) {
+				// can hibernate?
+				TQValueList<TQT_DBusData> params;
+				params << TQT_DBusData::fromString(upowerProperties.interface()) << TQT_DBusData::fromString("CanHibernate");
+				TQT_DBusMessage reply = upowerProperties.sendWithReply("Get", params);
+				if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+					return reply[0].toVariant().value.toBool();
+				}
+				else {
+					return FALSE;
+				}
 			}
 			else {
 				return FALSE;
@@ -1417,12 +1442,16 @@ bool TDERootSystemDevice::canPowerOff() {
 		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
 		if (dbusConn.isConnected()) {
 			TQT_DBusProxy consoleKitManager("org.freedesktop.ConsoleKit", "/org/freedesktop/ConsoleKit/Manager", "org.freedesktop.ConsoleKit.Manager", dbusConn);
-	
-			// can power off?
-			TQValueList<TQT_DBusData> params;
-			TQT_DBusMessage reply = consoleKitManager.sendWithReply("CanStop", params);
-			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
-				maysd = reply[0].toBool();
+			if (consoleKitManager.canSend()) {
+				// can power off?
+				TQValueList<TQT_DBusData> params;
+				TQT_DBusMessage reply = consoleKitManager.sendWithReply("CanStop", params);
+				if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+					maysd = reply[0].toBool();
+				}
+				else {
+					maysd = false;
+				}
 			}
 			else {
 				maysd = false;
@@ -1455,12 +1484,16 @@ bool TDERootSystemDevice::canReboot() {
 		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
 		if (dbusConn.isConnected()) {
 			TQT_DBusProxy consoleKitManager("org.freedesktop.ConsoleKit", "/org/freedesktop/ConsoleKit/Manager", "org.freedesktop.ConsoleKit.Manager", dbusConn);
-	
-			// can reboot?
-			TQValueList<TQT_DBusData> params;
-			TQT_DBusMessage reply = consoleKitManager.sendWithReply("CanRestart", params);
-			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
-				mayrb = reply[0].toBool();
+			if (consoleKitManager.canSend()) {
+				// can reboot?
+				TQValueList<TQT_DBusData> params;
+				TQT_DBusMessage reply = consoleKitManager.sendWithReply("CanRestart", params);
+				if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+					mayrb = reply[0].toBool();
+				}
+				else {
+					mayrb = false;
+				}
 			}
 			else {
 				mayrb = false;
@@ -1980,14 +2013,18 @@ bool TDEBacklightDevice::canSetBrightness() {
 #ifdef WITH_UPOWER
 		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
 		if (dbusConn.isConnected()) {
-			TQT_DBusProxy hardwareControl("org.trinitydesktop.hardwarecontrol", "/org/trinitydesktop/hardwarecontrol", "org.trinitydesktop.hardwarecontrol,Brightness", dbusConn);
-	
-			// can set brightness?
-			TQValueList<TQT_DBusData> params;
-			params << TQT_DBusData::fromString(brightnessnode);
-			TQT_DBusMessage reply = hardwareControl.sendWithReply("CanSetBrightness", params);
-			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
-				return reply[0].toVariant().value.toBool();
+			TQT_DBusProxy hardwareControl("org.trinitydesktop.hardwarecontrol", "/org/trinitydesktop/hardwarecontrol", "org.trinitydesktop.hardwarecontrol.Brightness", dbusConn);
+			if (hardwareControl.canSend()) {
+				// can set brightness?
+				TQValueList<TQT_DBusData> params;
+				params << TQT_DBusData::fromString(brightnessnode);
+				TQT_DBusMessage reply = hardwareControl.sendWithReply("CanSetBrightness", params);
+				if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+					return reply[0].toVariant().value.toBool();
+				}
+				else {
+					return FALSE;
+				}
 			}
 			else {
 				return FALSE;
@@ -2020,11 +2057,15 @@ void TDEBacklightDevice::setRawBrightness(int br) {
 		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
 		if (dbusConn.isConnected()) {
 			TQT_DBusProxy hardwareControl("org.trinitydesktop.hardwarecontrol", "/org/trinitydesktop/hardwarecontrol", "org.trinitydesktop.hardwarecontrol.Brightness", dbusConn);
-	
-			// set brightness
-			TQValueList<TQT_DBusData> params;
-			params << TQT_DBusData::fromString(brightnessnode) << TQT_DBusData::fromString(brightnessCommand);
-			hardwareControl.sendWithReply("SetBrightness", params);
+			if (hardwareControl.canSend()) {
+				// set brightness
+				TQValueList<TQT_DBusData> params;
+				params << TQT_DBusData::fromString(brightnessnode) << TQT_DBusData::fromString(brightnessCommand);
+				hardwareControl.sendWithReply("SetBrightness", params);
+			}
+			else {
+				return;
+			}
 		}
 		else {
 			return;
