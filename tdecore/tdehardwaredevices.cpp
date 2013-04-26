@@ -859,7 +859,7 @@ TQPixmap TDEStorageDevice::icon(TDEIcon::StdSizes size) {
 	return ret;
 }
 
-unsigned long TDEStorageDevice::deviceSize() {
+unsigned long long TDEStorageDevice::deviceSize() {
 	TQString bsnodename = systemPath();
 	bsnodename.append("/queue/physical_block_size");
 	TQFile bsfile( bsnodename );
@@ -870,7 +870,7 @@ unsigned long TDEStorageDevice::deviceSize() {
 		bsfile.close();
 	}
 	else {
-		// Drat, I can't get a gauranteed block size.  Assume a block size of 512, as everything I have read indicates that /sys/block/<dev>/size is given in terms of a 512 byte block...
+		// Drat, I can't get a guaranteed block size.  Assume a block size of 512, as everything I have read indicates that /sys/block/<dev>/size is given in terms of a 512 byte block...
 		blocksize = "512";
 	}
 
@@ -884,7 +884,7 @@ unsigned long TDEStorageDevice::deviceSize() {
 		dsfile.close();
 	}
 
-	return (blocksize.toULong()*devicesize.toULong());
+	return ((unsigned long long)blocksize.toULong()*(unsigned long long)devicesize.toULong());
 }
 
 TQString TDEStorageDevice::deviceFriendlySize() {

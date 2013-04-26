@@ -613,7 +613,7 @@ class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 		/**
 		* @return an unsigned long with the device size in bytes
 		*/
-		unsigned long deviceSize();
+		unsigned long long deviceSize();
 
 		/**
 		* @return a TQString with the device size in human readable form
