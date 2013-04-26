@@ -690,7 +690,7 @@ static pid_t launch(int argc, const char *_name, const char *args,
           if (d.result == 2)
           {
 #ifndef NDEBUG
-             fprintf(stderr, "[tdeinit] %s is executable and not a library. Launching with exec.\n", _name );
+             fprintf(stderr, "[tdeinit] %s is executable. Launching with exec.\n", _name );
 #endif
              exec = true;
              continue;
