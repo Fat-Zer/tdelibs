@@ -429,7 +429,7 @@ int main_console(int argc, char **argv)
 	{
 		access = LIBR_READ_WRITE;
 	}
-	printf("opening executable file %s...\n\r", argv[PARAM_ELF_FILE]); fflush(stdout);
+	printf("opening executable file %s...\n", argv[PARAM_ELF_FILE]); fflush(stdout);
 	if((handle = libr_open(argv[PARAM_ELF_FILE], access)) == NULL)
 	{
 		errorf(_("failed to open file \"%s\": %s"), argv[PARAM_ELF_FILE], libr_errmsg());
@@ -535,7 +535,7 @@ int main_console(int argc, char **argv)
 		}	break;
 		case MODE_TDE_AUTOADD_ICON:
 		{
-			printf("Searching for standard icon for name %s in the following directories:\n\r", argv[PARAM_ICON_NAME]);
+			printf("Searching for standard icon for name %s in the following directories:\n", argv[PARAM_ICON_NAME]);
 			TDEApplication::disableAutoDcopRegistration();
 			TDEAboutData aboutd("tdelfeditor", "tdelfeditor", "0.0.1");
 			TDECmdLineArgs::init(&aboutd);
@@ -543,18 +543,18 @@ int main_console(int argc, char **argv)
 
 			TQStringList rds = TDEGlobal::dirs()->resourceDirs("icon");
 			for ( TQStringList::Iterator it = rds.begin(); it != rds.end(); ++it ) {
-				printf(" * %s\n\r", (*it).ascii()); fflush(stdout);
+				printf(" * %s\n", (*it).ascii()); fflush(stdout);
 			}
 			TQString systemIcon = TDEGlobal::iconLoader()->iconPath(argv[PARAM_ICON_NAME], 0, true);
 			if (systemIcon.isNull()) {
 				systemIcon = TDEGlobal::iconLoader()->iconPath(argv[PARAM_ICON_NAME], 0, false);
-				printf("NOT FOUND, refusing to add unknown icon (this message is harmless)\n\r");
+				printf("NOT FOUND, refusing to add unknown icon (this message is harmless)\n");
 				section = ICON_SECTION;
 				clear_resource(handle, section);
 				goto fail;
 			}
 			else {
-				printf("found %s\n\r", systemIcon.ascii());
+				printf("found %s\n", systemIcon.ascii());
 			}
 
 			libr_icon *icon = NULL;
@@ -567,7 +567,7 @@ int main_console(int argc, char **argv)
 			}
 			TQFileInfo ifi(systemIcon);
 			TQString iconBaseName = ifi.baseName();
-			printf("using %s as icon name\n\r", iconBaseName.ascii());
+			printf("using %s as icon name\n", iconBaseName.ascii());
 			if(!libr_icon_write(handle, icon, const_cast<char*>(iconBaseName.ascii()), LIBR_OVERWRITE))
 			{
 				libr_icon_close(icon);

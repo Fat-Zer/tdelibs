@@ -1445,7 +1445,7 @@ void TDEToolBar::resizeEvent( TQResizeEvent *e )
       }
     }
 //     else {
-//         printf("[WARNING] In TDEToolBar::resizeEvent, but this code block should not be executing.  Preventing toolbar lockup.  [Code 0045]\n\r");
+//         printf("[WARNING] In TDEToolBar::resizeEvent, but this code block should not be executing.  Preventing toolbar lockup.  [Code 0045]\n");
 //         setUpdatesEnabled( true );
 //     }
 }

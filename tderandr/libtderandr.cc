@@ -179,7 +179,7 @@ TQString KRandrSimpleAPI::applyIccFile(TQString screenName, TQString fileName) {
 			icc_command = TQString("xcalib \"%1\"").arg(fileName);
 			if ((pipe_xcalib = popen(icc_command.ascii(), "r")) == NULL)
 			{
-				printf("Xcalib pipe error\n\r [xcalib apply]");
+				printf("Xcalib pipe error\n [xcalib apply]");
 			}
 			else {
 				if (fgets(xcalib_result, 2048, pipe_xcalib)) {
@@ -248,7 +248,7 @@ TQString KRandrSimpleAPI::applyIccFile(TQString screenName, TQString fileName) {
 			icc_command = TQString("xcalib -c");
 			if ((pipe_xcalib = popen(icc_command.ascii(), "r")) == NULL)
 			{
-				printf("Xcalib pipe error\n\r [xcalib clear]");
+				printf("Xcalib pipe error\n [xcalib clear]");
 			}
 			else {
 				if (fgets(xcalib_result, 2048, pipe_xcalib)) {
@@ -403,7 +403,7 @@ TQString KRandrSimpleAPI::applySystemWideIccConfiguration(TQString kde_confdir) 
 	icc_command = TQString("xcalib \"%1\"").arg(getIccFileName(NULL, "Default", kde_confdir));
 	if ((pipe_xcalib = popen(icc_command.ascii(), "r")) == NULL)
 	{
-		printf("Xcalib pipe error [xcalib apply]\n\r");
+		printf("Xcalib pipe error [xcalib apply]\n");
 	}
 	else {
 		if (fgets(xcalib_result, 2048, pipe_xcalib)) {
@@ -697,7 +697,7 @@ bool KRandrSimpleAPI::applyDisplayConfiguration(TQPtrList<SingleScreenData> scre
 				}
 			}
 			else {
-				printf("[WARNING] Unable to find configuration for monitor %d; settings may not be correctly applied...\n\r", i); fflush(stdout);
+				printf("[WARNING] Unable to find configuration for monitor %d; settings may not be correctly applied...\n", i); fflush(stdout);
 			}
 		}
 		freeScreenInfoStructure(randr_screen_info);
@@ -1505,7 +1505,7 @@ TQString KRandrSimpleAPI::clearIccConfiguration() {
 	icc_command = TQString("xcalib -c");
 	if ((pipe_xcalib = popen(icc_command.ascii(), "r")) == NULL)
 	{
-		printf("Xcalib pipe error [xcalib clear]\n\r");
+		printf("Xcalib pipe error [xcalib clear]\n");
 	}
 	else {
 		if (fgets(xcalib_result, 2048, pipe_xcalib)) {

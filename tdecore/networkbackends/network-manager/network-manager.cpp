@@ -28,10 +28,10 @@
 
 // #define DEBUG_NETWORK_MANAGER_COMMUNICATIONS
 
-#define PRINT_ERROR(x) printf("[TDE NM Backend ERROR] [%s:%d] %s\n\r", __FILE__, __LINE__, x.ascii());
+#define PRINT_ERROR(x) printf("[TDE NM Backend ERROR] [%s:%d] %s\n", __FILE__, __LINE__, x.ascii());
 
 #ifdef DEBUG_NETWORK_MANAGER_COMMUNICATIONS
-#define PRINT_WARNING(x) printf("[TDE NM Backend WARNING] [%s:%d] %s\n\r", __FILE__, __LINE__, x.ascii());
+#define PRINT_WARNING(x) printf("[TDE NM Backend WARNING] [%s:%d] %s\n", __FILE__, __LINE__, x.ascii());
 #else
 #define PRINT_WARNING(x)
 #endif
@@ -77,34 +77,34 @@ void printDBUSObjectStructure(TQT_DBusData object, int level=0, TQString mapKey=
 	TQCString signature = object.buildDBusSignature();
 
 	if (object.type() == TQT_DBusData::String) {
-		printf("%s%s\t%s%s'%s'\n\r", levelIndent.ascii(), signature.data(), (mapKey.isNull())?"":mapKey.ascii(), (mapKey.isNull())?"":" = ", object.toString().ascii()); fflush(stdout);
+		printf("%s%s\t%s%s'%s'\n", levelIndent.ascii(), signature.data(), (mapKey.isNull())?"":mapKey.ascii(), (mapKey.isNull())?"":" = ", object.toString().ascii()); fflush(stdout);
 	}
 	else if (object.type() == TQT_DBusData::Bool) {
-		printf("%s%s\t%s%s'%s'\n\r", levelIndent.ascii(), signature.data(), (mapKey.isNull())?"":mapKey.ascii(), (mapKey.isNull())?"":" = ", (object.toBool())?"true":"false"); fflush(stdout);
+		printf("%s%s\t%s%s'%s'\n", levelIndent.ascii(), signature.data(), (mapKey.isNull())?"":mapKey.ascii(), (mapKey.isNull())?"":" = ", (object.toBool())?"true":"false"); fflush(stdout);
 	}
 	else if (object.type() == TQT_DBusData::Byte) {
-		printf("%s%s\t%s%s'%d'\n\r", levelIndent.ascii(), signature.data(), (mapKey.isNull())?"":mapKey.ascii(), (mapKey.isNull())?"":" = ", object.toByte()); fflush(stdout);
+		printf("%s%s\t%s%s'%d'\n", levelIndent.ascii(), signature.data(), (mapKey.isNull())?"":mapKey.ascii(), (mapKey.isNull())?"":" = ", object.toByte()); fflush(stdout);
 	}
 	else if (object.type() == TQT_DBusData::Int16) {
-		printf("%s%s\t%s%s'%d'\n\r", levelIndent.ascii(), signature.data(), (mapKey.isNull())?"":mapKey.ascii(), (mapKey.isNull())?"":" = ", object.toInt16()); fflush(stdout);
+		printf("%s%s\t%s%s'%d'\n", levelIndent.ascii(), signature.data(), (mapKey.isNull())?"":mapKey.ascii(), (mapKey.isNull())?"":" = ", object.toInt16()); fflush(stdout);
 	}
 	else if (object.type() == TQT_DBusData::UInt16) {
-		printf("%s%s\t%s%s'%d'\n\r", levelIndent.ascii(), signature.data(), (mapKey.isNull())?"":mapKey.ascii(), (mapKey.isNull())?"":" = ", object.toUInt16()); fflush(stdout);
+		printf("%s%s\t%s%s'%d'\n", levelIndent.ascii(), signature.data(), (mapKey.isNull())?"":mapKey.ascii(), (mapKey.isNull())?"":" = ", object.toUInt16()); fflush(stdout);
 	}
 	else if (object.type() == TQT_DBusData::Int32) {
-		printf("%s%s\t%s%s'%d'\n\r", levelIndent.ascii(), signature.data(), (mapKey.isNull())?"":mapKey.ascii(), (mapKey.isNull())?"":" = ", object.toInt32()); fflush(stdout);
+		printf("%s%s\t%s%s'%d'\n", levelIndent.ascii(), signature.data(), (mapKey.isNull())?"":mapKey.ascii(), (mapKey.isNull())?"":" = ", object.toInt32()); fflush(stdout);
 	}
 	else if (object.type() == TQT_DBusData::UInt32) {
-		printf("%s%s\t%s%s'%d'\n\r", levelIndent.ascii(), signature.data(), (mapKey.isNull())?"":mapKey.ascii(), (mapKey.isNull())?"":" = ", object.toUInt32()); fflush(stdout);
+		printf("%s%s\t%s%s'%d'\n", levelIndent.ascii(), signature.data(), (mapKey.isNull())?"":mapKey.ascii(), (mapKey.isNull())?"":" = ", object.toUInt32()); fflush(stdout);
 	}
 	else if (object.type() == TQT_DBusData::Int64) {
-		printf("%s%s\t%s%s'%lld'\n\r", levelIndent.ascii(), signature.data(), (mapKey.isNull())?"":mapKey.ascii(), (mapKey.isNull())?"":" = ", object.toInt64()); fflush(stdout);
+		printf("%s%s\t%s%s'%lld'\n", levelIndent.ascii(), signature.data(), (mapKey.isNull())?"":mapKey.ascii(), (mapKey.isNull())?"":" = ", object.toInt64()); fflush(stdout);
 	}
 	else if (object.type() == TQT_DBusData::UInt64) {
-		printf("%s%s\t%s%s'%lld'\n\r", levelIndent.ascii(), signature.data(), (mapKey.isNull())?"":mapKey.ascii(), (mapKey.isNull())?"":" = ", object.toUInt64()); fflush(stdout);
+		printf("%s%s\t%s%s'%lld'\n", levelIndent.ascii(), signature.data(), (mapKey.isNull())?"":mapKey.ascii(), (mapKey.isNull())?"":" = ", object.toUInt64()); fflush(stdout);
 	}
 	else {
-		printf("%s%s\n\r", levelIndent.ascii(), signature.data()); fflush(stdout);
+		printf("%s%s\n", levelIndent.ascii(), signature.data()); fflush(stdout);
 	}
 
 	if (object.type() == TQT_DBusData::Map) {
@@ -1332,7 +1332,7 @@ void TDENetworkConnectionManager_BackendNM_DBusSignalReceiver::dbusSignal(const 
 		TQString member = message.member();
 		TQString path = message.path();
 
-// 		printf("[DEBUG] In dbusSignal: sender: %s, member: %s, interface: %s, path: %s, parent path: %s\n\r", sender.ascii(), member.ascii(), interface.ascii(), path.ascii(), m_parent->m_dbusDeviceString.ascii()); fflush(stdout);
+// 		printf("[DEBUG] In dbusSignal: sender: %s, member: %s, interface: %s, path: %s, parent path: %s\n", sender.ascii(), member.ascii(), interface.ascii(), path.ascii(), m_parent->m_dbusDeviceString.ascii()); fflush(stdout);
 
 		if (interface == NM_VPN_DBUS_CONNECTION_SERVICE) {
 			if (member == "VpnStateChanged") {
@@ -1824,7 +1824,7 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 				}
 
 #ifdef DEBUG_NETWORK_MANAGER_COMMUNICATIONS
-				printf("[network-manager comm debug] %s\n\r", (*it).data()); fflush(stdout);
+				printf("[network-manager comm debug] %s\n", (*it).data()); fflush(stdout);
 #endif // DEBUG_NETWORK_MANAGER_COMMUNICATIONS
 
 #ifndef USE_ASYNC_DBUS_CALLS
@@ -1867,7 +1867,7 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 #endif // USE_ASYNC_DBUS_CALLS
 
 #ifdef DEBUG_NETWORK_MANAGER_COMMUNICATIONS
-					printf("[network-manager comm debug] received DBUS object structure map follows:\n\r"); fflush(stdout);
+					printf("[network-manager comm debug] received DBUS object structure map follows:\n"); fflush(stdout);
 					printDBUSObjectStructure(TQT_DBusData::fromStringKeyMap(connectionSettingsMap));
 #endif // DEBUG_NETWORK_MANAGER_COMMUNICATIONS
 
@@ -1877,7 +1877,7 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 						TQString outerKeyValue = it2.key();
 						TQT_DBusData dataValue = it2.data();
 #ifdef DEBUG_NETWORK_MANAGER_COMMUNICATIONS
-						printf("[network-manager comm debug] [%s]\n\r", outerKeyValue.ascii()); fflush(stdout);
+						printf("[network-manager comm debug] [%s]\n", outerKeyValue.ascii()); fflush(stdout);
 #endif // DEBUG_NETWORK_MANAGER_COMMUNICATIONS
 						TQT_DBusTQStringDataMap nestedConnectionSettingsMap = dataValue.toStringKeyMap();
 						TQT_DBusTQStringDataMap::const_iterator it3;
@@ -1886,7 +1886,7 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 							TQT_DBusData dataValue = it3.data();
 							if (dataValue.type() != TQT_DBusData::Variant) {
 #ifdef DEBUG_NETWORK_MANAGER_COMMUNICATIONS
-								printf("[network-manager comm debug] %s = %s (type %d(%s))\n\r", keyValue.ascii(), dataValue.toString().ascii(), dataValue.type(), dataValue.typeName()); fflush(stdout);
+								printf("[network-manager comm debug] %s = %s (type %d(%s))\n", keyValue.ascii(), dataValue.toString().ascii(), dataValue.type(), dataValue.typeName()); fflush(stdout);
 #endif // DEBUG_NETWORK_MANAGER_COMMUNICATIONS
 								// No NM settings are known which use this style
 							}
@@ -1895,7 +1895,7 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 								TQT_DBusData dataValue2 = dataValueVariant.value;
 								if (dataValue2.type() != TQT_DBusData::Variant) {
 #ifdef DEBUG_NETWORK_MANAGER_COMMUNICATIONS
-									printf("[network-manager comm debug] %s = %s (type %d(%s), signature %s)\n\r", keyValue.ascii(), dataValue2.toString().ascii(), dataValue2.type(), dataValue2.typeName(), dataValueVariant.signature.ascii()); fflush(stdout);
+									printf("[network-manager comm debug] %s = %s (type %d(%s), signature %s)\n", keyValue.ascii(), dataValue2.toString().ascii(), dataValue2.type(), dataValue2.typeName(), dataValueVariant.signature.ascii()); fflush(stdout);
 #endif // DEBUG_NETWORK_MANAGER_COMMUNICATIONS
 									// Most NM settings use this style
 									if (outerKeyValue.lower() == "connection") {
@@ -2999,7 +2999,7 @@ bool TDENetworkConnectionManager_BackendNM::loadConnectionSecretsForGroup(TQStri
 #endif // USE_ASYNC_DBUS_CALLS
 
 #ifdef DEBUG_NETWORK_MANAGER_COMMUNICATIONS
-			printf("[network-manager comm debug] received DBUS object structure map follows:\n\r"); fflush(stdout);
+			printf("[network-manager comm debug] received DBUS object structure map follows:\n"); fflush(stdout);
 			printDBUSObjectStructure(TQT_DBusData::fromStringKeyMap(connectionSecretsMap));
 #endif // DEBUG_NETWORK_MANAGER_COMMUNICATIONS
 
@@ -3009,7 +3009,7 @@ bool TDENetworkConnectionManager_BackendNM::loadConnectionSecretsForGroup(TQStri
 				TQString outerKeyValue = it2.key();
 				TQT_DBusData dataValue = it2.data();
 #ifdef DEBUG_NETWORK_MANAGER_COMMUNICATIONS
-				printf("[network-manager comm debug] [%s]\n\r", outerKeyValue.ascii()); fflush(stdout);
+				printf("[network-manager comm debug] [%s]\n", outerKeyValue.ascii()); fflush(stdout);
 #endif // DEBUG_NETWORK_MANAGER_COMMUNICATIONS
 				TQT_DBusTQStringDataMap nestedConnectionSettingsMap = dataValue.toStringKeyMap();
 				TQT_DBusTQStringDataMap::const_iterator it3;
@@ -3018,7 +3018,7 @@ bool TDENetworkConnectionManager_BackendNM::loadConnectionSecretsForGroup(TQStri
 					TQT_DBusData dataValue = it3.data();
 					if (dataValue.type() != TQT_DBusData::Variant) {
 #ifdef DEBUG_NETWORK_MANAGER_COMMUNICATIONS
-						printf("[network-manager comm debug] %s = %s (type %d(%s))\n\r", keyValue.ascii(), dataValue.toString().ascii(), dataValue.type(), dataValue.typeName()); fflush(stdout);
+						printf("[network-manager comm debug] %s = %s (type %d(%s))\n", keyValue.ascii(), dataValue.toString().ascii(), dataValue.type(), dataValue.typeName()); fflush(stdout);
 #endif // DEBUG_NETWORK_MANAGER_COMMUNICATIONS
 						// No NM settings are known which use this style
 					}
@@ -3027,7 +3027,7 @@ bool TDENetworkConnectionManager_BackendNM::loadConnectionSecretsForGroup(TQStri
 						TQT_DBusData dataValue2 = dataValueVariant.value;
 						if (dataValue2.type() != TQT_DBusData::Variant) {
 #ifdef DEBUG_NETWORK_MANAGER_COMMUNICATIONS
-							printf("[network-manager comm debug] %s = %s (type %d(%s), signature %s)\n\r", keyValue.ascii(), dataValue2.toString().ascii(), dataValue2.type(), dataValue2.typeName(), dataValueVariant.signature.ascii()); fflush(stdout);
+							printf("[network-manager comm debug] %s = %s (type %d(%s), signature %s)\n", keyValue.ascii(), dataValue2.toString().ascii(), dataValue2.type(), dataValue2.typeName(), dataValueVariant.signature.ascii()); fflush(stdout);
 #endif // DEBUG_NETWORK_MANAGER_COMMUNICATIONS
 							// Most NM settings use this style
 							if (outerKeyValue.lower() == "802-1x") {
@@ -4385,13 +4385,13 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 	// To create new: Use 'd->m_networkManagerSettings' and call 'virtual bool AddConnectionAsync(int& asyncCallId, const TQT_DBusDataMap<TQString>& connection, TQT_DBusError& error);'
 
 #ifdef DEBUG_NETWORK_MANAGER_COMMUNICATIONS
-	printf("[network-manager comm debug] uploaded DBUS object structure map follows:\n\r"); fflush(stdout);
+	printf("[network-manager comm debug] uploaded DBUS object structure map follows:\n"); fflush(stdout);
 	printDBUSObjectStructure(TQT_DBusData::fromStringKeyMap(connectionSettingsMap));
 #endif // DEBUG_NETWORK_MANAGER_COMMUNICATIONS
 
 	if (existing) {
 #ifdef DEBUG_NETWORK_MANAGER_COMMUNICATIONS
-		printf("[network-manager comm debug] Updating existing connection\n\r"); fflush(stdout);
+		printf("[network-manager comm debug] Updating existing connection\n"); fflush(stdout);
 #endif // DEBUG_NETWORK_MANAGER_COMMUNICATIONS
 		// Save connection settings to the path specified
 		DBus::ConnectionSettingsInterface connectionSettings(NM_DBUS_SERVICE, existingConnection);
@@ -4427,7 +4427,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 	}
 	else {
 #ifdef DEBUG_NETWORK_MANAGER_COMMUNICATIONS
-		printf("[network-manager comm debug] Creating new connection\n\r"); fflush(stdout);
+		printf("[network-manager comm debug] Creating new connection\n"); fflush(stdout);
 #endif // DEBUG_NETWORK_MANAGER_COMMUNICATIONS
 		// Create new connection
 		connect(d->m_networkManagerSettings, SIGNAL(AddConnectionAsyncReply(int, const TQT_DBusObjectPath&)), d, SLOT(processAddConnectionAsyncReply(int, const TQT_DBusObjectPath&)));

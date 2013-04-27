@@ -203,7 +203,7 @@ public:
 
 		TQWMatrix *current = m_engine->painter()->worldMatrix();
 #ifdef USE_QT4
-printf("[FIXME] *current = matrix * *current locks up under Qt4; bypassing for now\n\r");
+printf("[FIXME] *current = matrix * *current locks up under Qt4; bypassing for now\n");
 #else // USE_QT4
 		*current = matrix * *current;
 #endif // USE_QT4

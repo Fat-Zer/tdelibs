@@ -475,7 +475,7 @@ bool ejectDriveUDisks(TDEStorageDevice* sdevice) {
 			TQT_DBusMessage reply = driveControl.sendWithReply("DriveEject", params, &error);
 			if (error.isValid()) {
 				// Error!
-				printf("[ERROR] %s\n\r", error.name().ascii()); fflush(stdout);
+				printf("[ERROR] %s\n", error.name().ascii()); fflush(stdout);
 				return FALSE;
 			}
 			else {
@@ -510,7 +510,7 @@ bool ejectDriveUDisks2(TDEStorageDevice* sdevice) {
 			TQT_DBusMessage reply = hardwareControl.sendWithReply("Get", params, &error);
 			if (error.isValid()) {
 				// Error!
-				printf("[ERROR] %s\n\r", error.name().ascii()); fflush(stdout);
+				printf("[ERROR] %s\n", error.name().ascii()); fflush(stdout);
 				return FALSE;
 			}
 			else {
@@ -528,7 +528,7 @@ bool ejectDriveUDisks2(TDEStorageDevice* sdevice) {
 					TQT_DBusMessage reply = driveInformation.sendWithReply("Get", params, &error);
 					if (error.isValid()) {
 						// Error!
-						printf("[ERROR] %s\n\r", error.name().ascii()); fflush(stdout);
+						printf("[ERROR] %s\n", error.name().ascii()); fflush(stdout);
 						return FALSE;
 					}
 					if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
@@ -545,7 +545,7 @@ bool ejectDriveUDisks2(TDEStorageDevice* sdevice) {
 						TQT_DBusMessage reply = driveControl.sendWithReply("Eject", params, &error);
 						if (error.isValid()) {
 							// Error!
-							printf("[ERROR] %s\n\r", error.name().ascii()); fflush(stdout);
+							printf("[ERROR] %s\n", error.name().ascii()); fflush(stdout);
 							return FALSE;
 						}
 						else {
@@ -579,14 +579,14 @@ bool TDEStorageDevice::ejectDrive() {
 	}
 	else {
 #ifdef WITH_UDISKS2
-		printf("[tdehwlib] Failed to eject drive '%s' via udisks2, falling back to alternate mechanism\n\r", deviceNode().ascii());
+		printf("[tdehwlib] Failed to eject drive '%s' via udisks2, falling back to alternate mechanism\n", deviceNode().ascii());
 #endif // WITH_UDISKS2
 		if (ejectDriveUDisks(this)) {
 			return TRUE;
 		}
 		else {
 #ifdef WITH_UDISKS
-			printf("[tdehwlib] Failed to eject drive '%s' via udisks, falling back to alternate mechanism\n\r", deviceNode().ascii());
+			printf("[tdehwlib] Failed to eject drive '%s' via udisks, falling back to alternate mechanism\n", deviceNode().ascii());
 #endif // WITH_UDISKS
 			TQString command = TQString("eject -v '%1' 2>&1").arg(deviceNode());
 	
@@ -600,12 +600,12 @@ bool TDEStorageDevice::ejectDrive() {
 					return TRUE;
 				}
 				else {
-					printf("[tdehwlib] Failed to eject drive '%s' via 'eject' command\n\r", deviceNode().ascii());
+					printf("[tdehwlib] Failed to eject drive '%s' via 'eject' command\n", deviceNode().ascii());
 					return FALSE;
 				}
 			}
 			else {
-				printf("[tdehwlib] Failed to eject drive '%s' via 'eject' command\n\r", deviceNode().ascii());
+				printf("[tdehwlib] Failed to eject drive '%s' via 'eject' command\n", deviceNode().ascii());
 				return FALSE;
 			}
 		}
@@ -2268,7 +2268,7 @@ TDEHardwareDevices::TDEHardwareDevices() {
 	// Initialize udev interface
 	m_udevStruct = udev_new();
 	if (!m_udevStruct) {
-		printf("Unable to create udev interface\n\r");
+		printf("Unable to create udev interface\n");
 	}
 
 	if (m_udevStruct) {
@@ -3415,7 +3415,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDeviceByExternalRules(udev_
 						desiredSubdeviceType = readDiskDeviceSubtypeFromString(*paramit, desiredSubdeviceType);
 					}
 					if (desiredSubdeviceType != sdevice->diskType()) {
-						printf("[tdehardwaredevices] Rules file %s used to set device subtype for device at path %s\n\r", device->m_externalRulesFile.ascii(), device->systemPath().ascii()); fflush(stdout);
+						printf("[tdehardwaredevices] Rules file %s used to set device subtype for device at path %s\n", device->m_externalRulesFile.ascii(), device->systemPath().ascii()); fflush(stdout);
 						sdevice->internalSetDiskType(desiredSubdeviceType);
 					}
 				}
@@ -3492,7 +3492,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDeviceByExternalRules(udev_
 		
 							// Handle main type
 							if (desiredDeviceType != device->type()) {
-								printf("[tdehardwaredevices] Rules file %s used to set device type for device at path %s\n\r", fi->absFilePath().ascii(), device->systemPath().ascii()); fflush(stdout);
+								printf("[tdehardwaredevices] Rules file %s used to set device type for device at path %s\n", fi->absFilePath().ascii(), device->systemPath().ascii()); fflush(stdout);
 								if (m_deviceList.contains(device)) {
 									m_deviceList.remove(device);
 								}
@@ -4087,7 +4087,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 	if (device == 0) {
 		// Unhandled
 		if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Other);
-		printf("[FIXME] UNCLASSIFIED DEVICE name: %s type: %s subsystem: %s driver: %s [Node Path: %s] [Syspath: %s] [%s:%s]\n\r", devicename.ascii(), devicetype.ascii(), devicesubsystem.ascii(), devicedriver.ascii(), devicenode.ascii(), udev_device_get_syspath(dev), devicevendorid.ascii(), devicemodelid.ascii()); fflush(stdout);
+		printf("[FIXME] UNCLASSIFIED DEVICE name: %s type: %s subsystem: %s driver: %s [Node Path: %s] [Syspath: %s] [%s:%s]\n", devicename.ascii(), devicetype.ascii(), devicesubsystem.ascii(), devicedriver.ascii(), devicenode.ascii(), udev_device_get_syspath(dev), devicevendorid.ascii(), devicemodelid.ascii()); fflush(stdout);
 	}
 
 	// Root devices are special
@@ -5300,7 +5300,7 @@ TQString TDEHardwareDevices::findPCIDeviceName(TQString vendorid, TQString model
 			database_filename = "/usr/share/misc/pci.ids";
 		}
 		if (!TQFile::exists(database_filename)) {
-			printf("[tdehardwaredevices] Unable to locate PCI information database pci.ids\n\r"); fflush(stdout);
+			printf("[tdehardwaredevices] Unable to locate PCI information database pci.ids\n"); fflush(stdout);
 			return i18n("Unknown PCI Device");
 		}
 	
@@ -5361,7 +5361,7 @@ TQString TDEHardwareDevices::findPCIDeviceName(TQString vendorid, TQString model
 			database.close();
 		}
 		else {
-			printf("[tdehardwaredevices] Unable to open PCI information database %s\n\r", database_filename.ascii()); fflush(stdout);
+			printf("[tdehardwaredevices] Unable to open PCI information database %s\n", database_filename.ascii()); fflush(stdout);
 		}
 	}
 
@@ -5410,7 +5410,7 @@ TQString TDEHardwareDevices::findUSBDeviceName(TQString vendorid, TQString model
 			database_filename = "/usr/share/misc/usb.ids";
 		}
 		if (!TQFile::exists(database_filename)) {
-			printf("[tdehardwaredevices] Unable to locate USB information database usb.ids\n\r"); fflush(stdout);
+			printf("[tdehardwaredevices] Unable to locate USB information database usb.ids\n"); fflush(stdout);
 			return i18n("Unknown USB Device");
 		}
 	
@@ -5471,7 +5471,7 @@ TQString TDEHardwareDevices::findUSBDeviceName(TQString vendorid, TQString model
 			database.close();
 		}
 		else {
-			printf("[tdehardwaredevices] Unable to open USB information database %s\n\r", database_filename.ascii()); fflush(stdout);
+			printf("[tdehardwaredevices] Unable to open USB information database %s\n", database_filename.ascii()); fflush(stdout);
 		}
 	}
 
@@ -5531,7 +5531,7 @@ TQString TDEHardwareDevices::findPNPDeviceName(TQString pnpid) {
 		}
 
 		if (!TQFile::exists(database_filename)) {
-			printf("[tdehardwaredevices] Unable to locate PNP information database pnp.ids\n\r"); fflush(stdout);
+			printf("[tdehardwaredevices] Unable to locate PNP information database pnp.ids\n"); fflush(stdout);
 			return i18n("Unknown PNP Device");
 		}
 	
@@ -5561,7 +5561,7 @@ TQString TDEHardwareDevices::findPNPDeviceName(TQString pnpid) {
 			database.close();
 		}
 		else {
-			printf("[tdehardwaredevices] Unable to open PNP information database %s\n\r", database_filename.ascii()); fflush(stdout);
+			printf("[tdehardwaredevices] Unable to open PNP information database %s\n", database_filename.ascii()); fflush(stdout);
 		}
 	}
 
@@ -5601,7 +5601,7 @@ TQString TDEHardwareDevices::findMonitorManufacturerName(TQString dpyid) {
 		}
 
 		if (!TQFile::exists(database_filename)) {
-			printf("[tdehardwaredevices] Unable to locate monitor information database dpy.ids\n\r"); fflush(stdout);
+			printf("[tdehardwaredevices] Unable to locate monitor information database dpy.ids\n"); fflush(stdout);
 			return i18n("Unknown Monitor Device");
 		}
 	
@@ -5631,7 +5631,7 @@ TQString TDEHardwareDevices::findMonitorManufacturerName(TQString dpyid) {
 			database.close();
 		}
 		else {
-			printf("[tdehardwaredevices] Unable to open monitor information database %s\n\r", database_filename.ascii()); fflush(stdout);
+			printf("[tdehardwaredevices] Unable to open monitor information database %s\n", database_filename.ascii()); fflush(stdout);
 		}
 	}
 
