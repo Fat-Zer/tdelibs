@@ -4311,7 +4311,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 				diskstatus = diskstatus | TDEDiskDeviceStatus::Hotpluggable;
 			}
 	
-			if ((filesystemtype.upper() != "CRYPTO_LUKS") && (filesystemtype.upper() != "CRYPTO")  && (!filesystemtype.isNull())) {
+			if ((filesystemtype.upper() != "CRYPTO_LUKS") && (filesystemtype.upper() != "CRYPTO") && (filesystemtype.upper() != "SWAP") && (!filesystemtype.isNull())) {
 				diskstatus = diskstatus | TDEDiskDeviceStatus::ContainsFilesystem;
 			}
 	
@@ -4327,6 +4327,10 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 				else {
 					diskstatus = diskstatus & ~TDEDiskDeviceStatus::Mountable;
 				}
+			}
+			// Swap partitions cannot be mounted
+			if (filesystemtype.upper() == "SWAP") {
+				diskstatus = diskstatus & ~TDEDiskDeviceStatus::Mountable;
 			}
 			// If certain disk types do not report the presence of a filesystem, they are likely not mountable
 			if ((disktype & TDEDiskDeviceType::HDD) || (disktype & TDEDiskDeviceType::Optical)) {
