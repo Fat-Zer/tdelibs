@@ -447,9 +447,16 @@ void TDEIconView::setIconTextHeight( int n )
 
 /////////////
 
-struct TDEIconViewItem::TDEIconViewItemPrivate
+class TDEIconViewItem::TDEIconViewItemPrivate
 {
-    TQSize m_pixmapSize;
+    public:
+        TDEIconViewItemPrivate() {
+            m_pixmapSize = TQSize(0,0);
+        }
+
+    public:
+        TQSize m_pixmapSize;
+        int realTextHeight;
 };
 
 void TDEIconViewItem::init()
@@ -462,11 +469,18 @@ void TDEIconViewItem::init()
 TDEIconViewItem::~TDEIconViewItem()
 {
     delete m_wordWrap;
-    delete d;
+    if (d) {
+        delete d;
+    }
 }
 
 void TDEIconViewItem::calcRect( const TQString& text_ )
 {
+    if ( !d ) {
+        d = new TDEIconViewItemPrivate;
+    }
+    d->realTextHeight = -1;
+
     bool drawRoundedRect = TDEGlobalSettings::iconUseRoundedRect();
 
     Q_ASSERT( iconView() );
@@ -510,19 +524,22 @@ void TDEIconViewItem::calcRect( const TQString& text_ )
     // properly when the pixmapRect is not at the top of the itemRect, so we
     // have to increase the height of the pixmapRect and leave it at the top
     // of the itemRect...
-    if ( d && !d->m_pixmapSize.isNull() )
+    if ( d && !d->m_pixmapSize.isNull() ) {
         itemIconRect.setHeight( d->m_pixmapSize.height() + 2 );
+    }
     else
 #endif
     itemIconRect.setHeight( ph );
 
     int tw = 0;
-    if ( d && !d->m_pixmapSize.isNull() )
+    if ( d && !d->m_pixmapSize.isNull() ) {
         tw = view->maxItemWidth() - ( view->itemTextPos() == TQIconView::Bottom ? 0 :
                                       d->m_pixmapSize.width() + 2 );
-    else
+    }
+    else {
         tw = view->maxItemWidth() - ( view->itemTextPos() == TQIconView::Bottom ? 0 :
                                       itemIconRect.width() );
+    }
     
     TQFontMetrics *fm = view->itemFontMetrics();
     TQString t;
@@ -550,10 +567,12 @@ void TDEIconViewItem::calcRect( const TQString& text_ )
     r = m_wordWrap->boundingRect();
 
     int realWidth = QMAX( QMIN( r.width() + 4, tw ), fm->width( "X" ) );
-    if (drawRoundedRect == true)
+    if (drawRoundedRect == true) {
       itemTextRect.setWidth( realWidth + 2);
-    else
+    }
+    else {
       itemTextRect.setWidth( realWidth );
+    }
     itemTextRect.setHeight( r.height() );
 
     int w = 0;    int h = 0;    int y = 0;
@@ -582,10 +601,10 @@ void TDEIconViewItem::calcRect( const TQString& text_ )
                               itemTextRect.width(), itemTextRect.height() );
         itemIconRect = TQRect( ( width - itemIconRect.width() ) / 2, y,
                               itemIconRect.width(), itemIconRect.height() );
-    } else {
+    }
+    else {
         // If the pixmap size has been specified, use it
-        if ( d && !d->m_pixmapSize.isNull() )
-        {
+        if ( d && !d->m_pixmapSize.isNull() ) {
             h = QMAX( itemTextRect.height(), d->m_pixmapSize.height() + 2 );
 #if 0 // FIXME 
             // Waiting for the qt bug to be solved, the pixmapRect must
@@ -593,8 +612,9 @@ void TDEIconViewItem::calcRect( const TQString& text_ )
             y = ( d->m_pixmapSize.height() + 2 - itemIconRect.height() ) / 2;
 #endif
         }
-        else
+        else {
             h = QMAX( itemTextRect.height(), itemIconRect.height() );
+        }
         w = itemTextRect.width() + itemIconRect.width() + 1;
 
         itemRect.setWidth( w );
@@ -604,25 +624,30 @@ void TDEIconViewItem::calcRect( const TQString& text_ )
 
         itemTextRect = TQRect( width - itemTextRect.width(), ( height - itemTextRect.height() ) / 2,
                               itemTextRect.width(), itemTextRect.height() );
-        if ( itemIconRect.height() > itemTextRect.height() ) // icon bigger than text -> center vertically
+        if ( itemIconRect.height() > itemTextRect.height() ) { // icon bigger than text -> center vertically
             itemIconRect = TQRect( 0, ( height - itemIconRect.height() ) / 2,
                                   itemIconRect.width(), itemIconRect.height() );
-        else // icon smaller than text -> place in top or center with first line
+        }
+        else { // icon smaller than text -> place in top or center with first line
 	    itemIconRect = TQRect( 0, QMAX(( fm->height() - itemIconRect.height() ) / 2 + y, 0),
                                   itemIconRect.width(), itemIconRect.height() );
-        if ( ( itemIconRect.height() <= 20 ) && ( itemTextRect.height() < itemIconRect.height() ) )
-        {
-            itemTextRect.setHeight( itemIconRect.height() - 2 );
+        }
+        if ( ( itemIconRect.height() <= 20 ) && ( itemTextRect.height() < itemIconRect.height() ) ) {
+            d->realTextHeight = itemTextRect.height();
+            itemTextRect.setHeight( itemIconRect.height() - 4 );
             itemTextRect.setY( itemIconRect.y() );
         }
     }
 
-    if ( itemIconRect != pixmapRect() )
+    if ( itemIconRect != pixmapRect() ) {
         setPixmapRect( itemIconRect );
-    if ( itemTextRect != textRect() )
+    }
+    if ( itemTextRect != textRect() ) {
         setTextRect( itemTextRect );
-    if ( itemRect != rect() )
+    }
+    if ( itemRect != rect() ) {
         setItemRect( itemRect );
+    }
 
     // Done by setPixmapRect, setTextRect and setItemRect !  [and useless if no rect changed]
     //view->updateItemContainer( this );
@@ -706,11 +731,19 @@ void TDEIconViewItem::paintText( TQPainter *p, const TQColorGroup &cg )
 {
     bool drawRoundedRect = TDEGlobalSettings::iconUseRoundedRect();
     int textX;
-    if (drawRoundedRect == true)
+    if (drawRoundedRect == true) {
       textX = textRect( false ).x() + 4;
-    else
+    }
+    else {
       textX = textRect( false ).x() + 2;
-    int textY = textRect( false ).y();
+    }
+    int textY;
+    if ( d && (d->realTextHeight != -1) ) {
+      textY = textRect( false ).y() + ((rect().height() - d->realTextHeight) / 2);
+    }
+    else {
+      textY = textRect( false ).y();
+    }
 
     if ( isSelected() ) {
       if (drawRoundedRect == true) {
@@ -722,9 +755,11 @@ void TDEIconViewItem::paintText( TQPainter *p, const TQColorGroup &cg )
         p->fillRect( textRect( false ), cg.highlight() );
       }
         p->setPen( TQPen( cg.highlightedText() ) );
-    } else {
-        if ( iconView()->itemTextBackground() != Qt::NoBrush )
+    }
+    else {
+        if ( iconView()->itemTextBackground() != Qt::NoBrush ) {
             p->fillRect( textRect( false ), iconView()->itemTextBackground() );
+        }
         p->setPen( cg.text() );
     }
 
@@ -739,8 +774,9 @@ TQSize TDEIconViewItem::pixmapSize() const
 
 void TDEIconViewItem::setPixmapSize( const TQSize& size )
 {
-    if ( !d )
+    if ( !d ) {
         d = new TDEIconViewItemPrivate;
+    }
 
     d->m_pixmapSize = size;
 }
