@@ -634,7 +634,7 @@ void TDEIconViewItem::calcRect( const TQString& text_ )
         }
         if ( ( itemIconRect.height() <= 20 ) && ( itemTextRect.height() < itemIconRect.height() ) ) {
             d->realTextHeight = itemTextRect.height();
-            itemTextRect.setHeight( itemIconRect.height() - 4 );
+            itemTextRect.setHeight( itemIconRect.height() - 2 );
             itemTextRect.setY( itemIconRect.y() );
         }
     }
