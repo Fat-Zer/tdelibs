@@ -85,7 +85,7 @@ KSystemTray::KSystemTray( TQWidget* parent, const char* name )
                     TQT_TQOBJECT(this), TQT_SLOT( minimizeRestoreAction() ),
                     d->actionCollection, "minimizeRestore");
 #ifdef Q_WS_X11
-	KWin::WindowInfo info = KWin::windowInfo( parentWidget()->winId());
+	KWin::WindowInfo info = KWin::windowInfo( parentWidget()->winId() );
 	d->on_all_desktops = info.onAllDesktops();
 #else
 	d->on_all_desktops = false;

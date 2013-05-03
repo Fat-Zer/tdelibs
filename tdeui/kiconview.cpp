@@ -540,18 +540,18 @@ void TDEIconViewItem::calcRect( const TQString& text_ )
         tw = view->maxItemWidth() - ( view->itemTextPos() == TQIconView::Bottom ? 0 :
                                       itemIconRect.width() );
     }
-    
+
     TQFontMetrics *fm = view->itemFontMetrics();
     TQString t;
     TQRect r;
-    
+
     // When is text_ set ? Doesn't look like it's ever set.
     t = text_.isEmpty() ? text() : text_;
-    
+
     // Max text height
     int nbLines = static_cast<TDEIconView*>( iconView() )->iconTextHeight();
     int height = nbLines > 0 ? fm->height() * nbLines : 0xFFFFFFFF;
-    
+
     // Should not be higher than pixmap if text is alongside icons
     if ( view->itemTextPos() != TQIconView::Bottom ) {
         if ( d && !d->m_pixmapSize.isNull() )
@@ -560,7 +560,7 @@ void TDEIconViewItem::calcRect( const TQString& text_ )
             height = QMIN( itemIconRect.height(), height );
         height = QMAX( height, fm->height() );
     }
-    
+
     // Calculate the word-wrap
     TQRect outerRect( 0, 0, tw - 6, height );
     m_wordWrap = KWordWrap::formatText( *fm, outerRect, 0, t );
@@ -634,8 +634,8 @@ void TDEIconViewItem::calcRect( const TQString& text_ )
         }
         if ( ( itemIconRect.height() <= 20 ) && ( itemTextRect.height() < itemIconRect.height() ) ) {
             d->realTextHeight = itemTextRect.height();
-            itemTextRect.setHeight( itemIconRect.height() - 2 );
             itemTextRect.setY( itemIconRect.y() );
+            itemTextRect.setHeight( itemIconRect.height() - 2 );
         }
     }
 

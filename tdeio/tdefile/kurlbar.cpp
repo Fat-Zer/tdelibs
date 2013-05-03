@@ -214,10 +214,12 @@ void KURLBarItem::paint( TQPainter *p )
         p->drawPixmap( margin, yPos, *pm );
         if ( !text().isEmpty() ) {
             TQFontMetrics fm = p->fontMetrics();
-            if ( pm->height() < fm.height() )
+            if ( pm->height() < fm.height() ) {
                 yPos = fm.ascent() + fm.leading()/2;
-            else
-                yPos = pm->height()/2 - fm.height()/2 + fm.ascent();
+            }
+            else {
+                yPos = height(box)/2 - fm.height()/2 + fm.ascent() - margin;
+            }
 
             yPos += margin;
             int stringWidth = box->width() - pm->width() - 2 - (margin * 2);
