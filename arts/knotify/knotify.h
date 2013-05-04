@@ -30,80 +30,67 @@ class TDEConfig;
 
 class KNotify : public TQObject, public DCOPObject
 {
-Q_OBJECT
-K_DCOP
-
-public:
-	KNotify( bool useArts );
-	~KNotify();
-
-    enum PlayingFinishedStatus
-    {
-        PlayedOK = 0,        // success, all following mean failure
-        NoSoundFile,
-        FileAlreadyPlaying,
-        NoSoundSupport,
-        PlayerBusy,
-        Aborted,
-        Unknown = 5000
-    };
-
-protected:
-k_dcop:
-	// deprecated
-	void notify(const TQString &event, const TQString &fromApp,
-                         const TQString &text, TQString sound, TQString file,
-                         int present, int level);
-
-	// deprecated
-	void notify(const TQString &event, const TQString &fromApp,
-                         const TQString &text, TQString sound, TQString file,
-                         int present, int level, int winId);
-
-	void notify(const TQString &event, const TQString &fromApp,
-                         const TQString &text, TQString sound, TQString file,
-                         int present, int level, int winId, int eventId);
-
-
-	void reconfigure();
-	void setVolume( int volume );
-        void sessionReady(); // from ksmserver
-
-private:
-	bool notifyBySound(const TQString &sound, const TQString &appname, int eventId);
-	bool notifyByMessagebox(const TQString &text, int level, WId winId);
-	bool notifyByLogfile(const TQString &text, const TQString &file);
-	bool notifyByStderr(const TQString &text);
-	bool notifyByPassivePopup(const TQString &text, const TQString &appName,
-                                  TDEConfig* eventsFile, WId winId );
-	bool notifyByExecute(const TQString &command, 
-                             const TQString& event, 
-                             const TQString& fromApp, 
-                             const TQString& text,
-                             int winId,
-                             int eventId );
-    bool notifyByTaskbar( WId winId );
+	Q_OBJECT
+	K_DCOP
 	
-	bool isPlaying( const TQString& soundFile ) const;
-
-    void soundFinished( int eventId, PlayingFinishedStatus reason );
-    void abortFirstPlayObject();
+	public:
+		KNotify( bool useArts );
+		~KNotify();
 	
-        WId checkWinId( const TQString& appName, WId senderWinId );
-
-	/**
-	 * checks if eventname is a global event (exists in config/eventsrc)
-	 **/
-	bool isGlobal(const TQString &eventname);
-
-private slots:
-    void playTimeout();
-    void slotPlayerProcessExited( TDEProcess *proc );
-    void restartedArtsd();
-
-private:
-    KNotifyPrivate* d;
-    void loadConfig();
+		enum PlayingFinishedStatus {
+			PlayedOK = 0,        // success, all following mean failure
+			NoSoundFile,
+			FileAlreadyPlaying,
+			NoSoundSupport,
+			PlayerBusy,
+			Aborted,
+			Unknown = 5000
+		};
+	
+	protected:
+	k_dcop:
+		// deprecated
+		void notify(const TQString &event, const TQString &fromApp, const TQString &text, TQString sound, TQString file, int present, int level);
+	
+		// deprecated
+		void notify(const TQString &event, const TQString &fromApp, const TQString &text, TQString sound, TQString file, int present, int level, int winId);
+	
+		void notify(const TQString &event, const TQString &fromApp, const TQString &text, TQString sound, TQString file, int present, int level, int winId, int eventId);
+	
+	
+		void reconfigure();
+		void setVolume( int volume );
+		void sessionReady(); // from ksmserver
+	
+	private:
+		bool notifyBySound(const TQString &sound, const TQString &appname, int eventId);
+		bool notifyByMessagebox(const TQString &text, int level, WId winId);
+		bool notifyByLogfile(const TQString &text, const TQString &file);
+		bool notifyByStderr(const TQString &text);
+		bool notifyByPassivePopup(const TQString &text, const TQString &appName, TDEConfig* eventsFile, WId winId );
+		bool notifyByExecute(const TQString &command, const TQString& event, const TQString& fromApp, const TQString& text, int winId, int eventId );
+		bool notifyByTaskbar( WId winId );
+		
+		bool isPlaying( const TQString& soundFile ) const;
+	
+		void soundFinished( int eventId, PlayingFinishedStatus reason );
+		void abortFirstPlayObject();
+		
+		WId checkWinId( const TQString& appName, WId senderWinId );
+	
+		/**
+		* checks if eventname is a global event (exists in config/eventsrc)
+		**/
+		bool isGlobal(const TQString &eventname);
+	
+	private slots:
+		void playTimeout();
+		void slotPlayerProcessExited( TDEProcess *proc );
+		void restartedArtsd();
+	
+	private:
+		KNotifyPrivate* d;
+		void loadConfig();
 };
 
 
