@@ -439,24 +439,23 @@ KateHlItem::~KateHlItem()
 
 void KateHlItem::dynamicSubstitute(TQString &str, const TQStringList *args)
 {
-  for (uint i = 0; i < str.length() - 1; ++i)
-  {
-    if (str[i] == '%')
-    {
-      char c = str[i + 1].latin1();
-      if (c == '%')
-        str.replace(i, 1, "");
-      else if (c >= '0' && c <= '9')
-      {
-        if ((uint)(c - '0') < args->size())
-        {
-          str.replace(i, 2, (*args)[c - '0']);
-          i += ((*args)[c - '0']).length() - 1;
+  uint strLength = str.length();
+  if (strLength > 0) {
+    for (uint i = 0; i < strLength - 1; ++i) {
+      if (str[i] == '%') {
+        char c = str[i + 1].latin1();
+        if (c == '%') {
+          str.replace(i, 1, "");
         }
-        else
-        {
-          str.replace(i, 2, "");
-          --i;
+        else if (c >= '0' && c <= '9') {
+          if ((uint)(c - '0') < args->size()) {
+            str.replace(i, 2, (*args)[c - '0']);
+            i += ((*args)[c - '0']).length() - 1;
+          }
+          else {
+            str.replace(i, 2, "");
+            --i;
+          }
         }
       }
     }
@@ -1038,7 +1037,7 @@ static int checkEscapedChar(const TQString& text, int offset, int& len)
         // replaced with something else but
         // for right now they work
         // check for hexdigits
-        for (i = 0; (len > 0) && (i < 2) && (static_cast<const char>(text.at(offset)) >= '0' && static_cast<const char>(text.at(offset)) <= '9' || (text[offset] & 0xdf) >= 'A' && (text[offset] & 0xdf) <= 'F'); i++)
+        for (i = 0; (len > 0) && (i < 2) && (((static_cast<const char>(text.at(offset)) >= '0') && (static_cast<const char>(text.at(offset)) <= '9')) || ((text[offset] & 0xdf) >= 'A' && (text[offset] & 0xdf) <= 'F')); i++)
         {
           offset++;
           len--;
@@ -1460,7 +1459,7 @@ void KateHighlighting::doHighlight ( KateTextLine *prevLine,
       if (item->region2)
       {
         // kdDebug(13010)<<TQString("Region mark 2 detected: %1").arg(item->region2)<<endl;
-        if ( !foldingList->isEmpty() && ((item->region2 < 0) && (*foldingList)[foldingList->size()-2] == -item->region2 ) )
+        if ( !foldingList->isEmpty() && ((item->region2 < 0) && ((int)((*foldingList)[foldingList->size()-2]) == -item->region2) ) )
         {
           foldingList->resize (foldingList->size()-2, TQGArray::SpeedOptim);
         }
@@ -2826,7 +2825,7 @@ int KateHighlighting::addToContextList(const TQString &ident, int ctx0)
         // to be matched to at once)
         datasub=KateHlManager::self()->syntax->getSubItems(data);
         bool tmpbool;
-        if (tmpbool=KateHlManager::self()->syntax->nextItem(datasub))
+        if ((tmpbool = KateHlManager::self()->syntax->nextItem(datasub)))
         {
           for (;tmpbool;tmpbool=KateHlManager::self()->syntax->nextItem(datasub))
           {
