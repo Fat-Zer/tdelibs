@@ -609,17 +609,23 @@ Value DOMNodeProtoFunc::tryCall(ExecState *exec, Object &thisObj, const List &ar
 
       DOMString where = args[0].toString(exec).string();
 
-      if (where == "beforeBegin" || where == "BeforeBegin")
+      if (where == "beforeBegin" || where == "BeforeBegin") {
         node.parentNode().insertBefore(docFrag, node);
-      else if (where == "afterBegin" || where == "AfterBegin")
+      }
+      else if (where == "afterBegin" || where == "AfterBegin") {
         node.insertBefore(docFrag, node.firstChild());
-      else if (where == "beforeEnd" || where == "BeforeEnd")
+      }
+      else if (where == "beforeEnd" || where == "BeforeEnd") {
         return getDOMNode(exec, node.appendChild(docFrag));
-      else if (where == "afterEnd" || where == "AfterEnd")
-        if (!node.nextSibling().isNull())
+      }
+      else if (where == "afterEnd" || where == "AfterEnd") {
+        if (!node.nextSibling().isNull()) {
 	  node.parentNode().insertBefore(docFrag, node.nextSibling());
-	else
+	}
+	else {
 	  node.parentNode().appendChild(docFrag);
+	}
+      }
 
       return Undefined();
     }

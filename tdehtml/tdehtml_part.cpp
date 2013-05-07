@@ -1429,8 +1429,10 @@ void TDEHTMLPart::clear()
   d->m_decoder = 0;
 
   // We don't want to change between parts if we are going to delete all of them anyway
-  disconnect( partManager(), TQT_SIGNAL( activePartChanged( KParts::Part * ) ),
+  if (partManager()) {
+    disconnect( partManager(), TQT_SIGNAL( activePartChanged( KParts::Part * ) ),
                this, TQT_SLOT( slotActiveFrameChanged( KParts::Part * ) ) );
+  }
 
   if (d->m_frames.count())
   {
@@ -1462,8 +1464,10 @@ void TDEHTMLPart::clear()
   }
 
   // Listen to part changes again
-  connect( partManager(), TQT_SIGNAL( activePartChanged( KParts::Part * ) ),
+  if (partManager()) {
+    connect( partManager(), TQT_SIGNAL( activePartChanged( KParts::Part * ) ),
              this, TQT_SLOT( slotActiveFrameChanged( KParts::Part * ) ) );
+  }
 
   d->m_delayRedirect = 0;
   d->m_redirectURL = TQString();
@@ -5593,14 +5597,16 @@ void TDEHTMLPart::restoreState( TQDataStream &stream )
 
       if ( (*childFrame)->m_part )
       {
-        if ( (*childFrame)->m_extension )
-        if ( (*childFrame)->m_extension && !(*fBufferIt).isEmpty() )
-        {
-          TQDataStream frameStream( *fBufferIt, IO_ReadOnly );
-          (*childFrame)->m_extension->restoreState( frameStream );
+        if ( (*childFrame)->m_extension ) {
+          if ( (*childFrame)->m_extension && !(*fBufferIt).isEmpty() )
+          {
+            TQDataStream frameStream( *fBufferIt, IO_ReadOnly );
+            (*childFrame)->m_extension->restoreState( frameStream );
+          }
+          else {
+            (*childFrame)->m_part->openURL( *fURLIt );
+          }
         }
-        else
-          (*childFrame)->m_part->openURL( *fURLIt );
       }
     }
 

@@ -1083,6 +1083,7 @@ TDECPUDevice::TDECPUDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQStri
 	m_minfrequency = -1;
 	m_maxfrequency = -1;
 	m_corenumber = -1;
+	m_transitionlatency = -1;
 }
 
 TDECPUDevice::~TDECPUDevice() {
