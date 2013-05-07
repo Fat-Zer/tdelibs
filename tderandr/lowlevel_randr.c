@@ -576,7 +576,7 @@ int internal_main_low_apply (struct ScreenInfo *screen_info)
 	/* set_positions (screen_info); */
 
 	if (!internal_set_screen_size (screen_info)) {
-		printf("Screen Size FAILURE\n\r");
+		printf("Screen Size FAILURE\n");
 		return 0;
 	}
 
