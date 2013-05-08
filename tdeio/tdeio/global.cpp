@@ -165,41 +165,60 @@ TDEIO_EXPORT TQString TDEIO::itemsSummaryString(uint items, uint files, uint dir
 TDEIO_EXPORT TQString TDEIO::encodeFileName( const TQString & _str )
 {
   TQString str( _str );
+  bool unicode_supported = (TQString::fromLocal8Bit(TQString(TQChar((uint)0x2215)).local8Bit())[0].unicode() != 0x3f);
 
   int i = 0;
-  while ( ( i = str.find( "%", i ) ) != -1 )
-  {
+  while ( ( i = str.find( "%", i ) ) != -1 ) {
     str.replace( i, 1, "%%");
     i += 2;
   }
-  while ( ( i = str.find( "/" ) ) != -1 )
-      str.replace( i, 1, "%2f");
+  while ( ( i = str.find( "/" ) ) != -1 ) {
+      if (unicode_supported) {
+          // Use U+2215 (DIVISION SLASH) to represent the forward slash
+          // While U+2044 (FRACTION SLASH) is a tempting replacement, it can indicate to
+          // rendering engines that a combined fraction character should be displayed
+          str.replace( i, 1, TQChar((uint)0x2215));
+      }
+      else {
+          // Unicode does not appear to be supported on this system!
+          // Fall back to older encoding method...
+          str.replace( i, 1, "%2f");
+      }
+
+      str.replace( i, 1, TQChar((uint)0x2215));
+  }
   return str;
 }
 
 TDEIO_EXPORT TQString TDEIO::decodeFileName( const TQString & _str )
 {
   TQString str;
+  bool unicode_supported = (TQString::fromLocal8Bit(TQString(TQChar((uint)0x2215)).local8Bit())[0].unicode() != 0x3f);
 
   unsigned int i = 0;
-  for ( ; i < _str.length() ; ++i )
-  {
-    if ( _str[i]=='%' )
-    {
+  for ( ; i < _str.length() ; ++i ) {
+    if ( _str[i]=='%' ) {
       if ( _str[i+1]=='%' ) // %% -> %
       {
         str.append('%');
         ++i;
       }
-      else if ( _str[i+1]=='2' && (i+2<_str.length()) && _str[i+2].lower()=='f' ) // %2f -> /
+      else if ((!unicode_supported) && ( _str[i+1]=='2' && (i+2<_str.length()) && _str[i+2].lower()=='f' )) // %2f -> /
       {
         str.append('/');
         i += 2;
       }
       else
+      {
         str.append('%');
-    } else
+      }
+    }
+    else if ( _str[i] == TQChar((uint)0x2215) ) {
+        str.append('/');
+    }
+    else {
       str.append(_str[i]);
+    }
   }
 
   return str;

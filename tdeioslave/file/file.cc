@@ -1222,8 +1222,9 @@ void FileProtocol::listDir( const KURL& url)
     // files where TQFile::encodeName(TQFile::decodeName(a)) != a.
     TQStrList entryNames;
 
-    while ( ( ep = KDE_readdir( dp ) ) != 0L )
+    while ( ( ep = KDE_readdir( dp ) ) != 0L ) {
 	entryNames.append( ep->d_name );
+    }
 
     closedir( dp );
     totalSize( entryNames.count() );

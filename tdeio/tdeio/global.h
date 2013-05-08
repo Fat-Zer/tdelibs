@@ -118,7 +118,7 @@ namespace TDEIO
 
   /**
    * Encodes (from the text displayed to the real filename)
-   * This translates % into %% and / into %2f
+   * This translates % into %% and / into ∕ (U+2215, DIVISION SLASH)
    * Used by TDEIO::link, for instance.
    * @param str the file name to encode
    * @return the encoded file name
@@ -126,7 +126,7 @@ namespace TDEIO
   TDEIO_EXPORT TQString encodeFileName( const TQString & str );
   /**
    * Decodes (from the filename to the text displayed)
-   * This translates %2[fF] into / and %% into %
+   * This translates %2[fF] into /, %% into %, and ∕ (U+2215, DIVISION SLASH) into /
    * @param str the file name to decode
    * @return the decoded file name
    */
@@ -502,7 +502,7 @@ public:
 };
 
 /**
- * An entry is the list of atoms containing all the informations for a file or URL
+ * An entry is the list of atoms containing all the information for a file or URL
  */
 typedef TQValueList<UDSAtom> UDSEntry;
 typedef TQValueList<UDSEntry> UDSEntryList;
