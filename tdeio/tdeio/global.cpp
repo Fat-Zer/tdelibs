@@ -184,8 +184,6 @@ TDEIO_EXPORT TQString TDEIO::encodeFileName( const TQString & _str )
           // Fall back to older encoding method...
           str.replace( i, 1, "%2f");
       }
-
-      str.replace( i, 1, TQChar((uint)0x2215));
   }
   return str;
 }
