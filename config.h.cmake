@@ -62,6 +62,9 @@
 /* Defines if bzip2 is compiled */
 #cmakedefine HAVE_BZIP2_SUPPORT 1
 
+/* Defines if lzma/xz is compiled */
+#cmakedefine HAVE_XZ_SUPPORT 1
+
 /* Define to 1 if you have the <Carbon/Carbon.h> header file. */
 #cmakedefine HAVE_CARBON_CARBON_H 1
 

@@ -90,6 +90,7 @@ option( WITH_CONSOLEKIT "Enable ConsoleKit support" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_NETWORK_MANAGER_BACKEND "Enable network-manager support" OFF )
 OPTION( WITH_SUDO_TDESU_BACKEND "Use sudo as backend for tdesu (default is su)" OFF )
 OPTION( WITH_OLD_XDG_STD "Use the pre R14.0.0 XDG standard where both TDE and KDE are recognized in desktop files" OFF )
+OPTION( WITH_LZMA "Enable support for LZMA/XZ" ${WITH_ALL_OPTIONS} )
 
 OPTION( WITH_ASPELL "Enable aspell support" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_HSPELL "Enable hspell support" ${WITH_ALL_OPTIONS} )
@@ -491,6 +492,17 @@ set( HAVE_BZIP2_SUPPORT 1 )
 if( BZIP2_NEED_PREFIX )
   set( NEED_BZ2_PREFIX 1 )
 endif( BZIP2_NEED_PREFIX )
+
+
+##### check for lzma/xz #########################
+
+if( WITH_LZMA )
+  pkg_search_module( LZMA liblzma )
+  if( NOT LZMA_FOUND )
+    tde_message_fatal( "LZMA are requested, but not found on your system" )
+  endif( NOT LZMA_FOUND )
+  set( HAVE_XZ_SUPPORT 1 )
+endif( WITH_LZMA )
 
 
 ##### check for jpeg ############################

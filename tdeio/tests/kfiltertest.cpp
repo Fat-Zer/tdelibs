@@ -94,11 +94,14 @@ int main()
     getcwd( currentdir, PATH_MAX );
     TQString pathgz = TQFile::decodeName(currentdir) + "/test.gz";
     TQString pathbz2 = TQFile::decodeName(currentdir) + "/test.bz2";
+    TQString pathxz = TQFile::decodeName(currentdir) + "/test.xz";
 
     kdDebug() << " -- test_block_write gzip -- " << endl;
     test_block_write(pathgz);
     kdDebug() << " -- test_block_write bzip2 -- " << endl;
     test_block_write(pathbz2);
+    kdDebug() << " -- test_block_write xz -- " << endl;
+    test_block_write(pathxz);
 
     kdDebug() << " -- test_block gzip -- " << endl;
     test_block(pathgz);
@@ -113,6 +116,13 @@ int main()
     test_getch(pathbz2);
     kdDebug() << " -- test_textstream bzip2 -- " << endl;
     test_textstream(pathbz2);
+
+    kdDebug() << " -- test_block xz -- " << endl;
+    test_block(pathxz);
+    kdDebug() << " -- test_getch xz -- " << endl;
+    test_getch(pathxz);
+    kdDebug() << " -- test_textstream xz -- " << endl;
+    test_textstream(pathxz);
 
     return 0;
 }

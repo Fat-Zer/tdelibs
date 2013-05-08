@@ -484,6 +484,9 @@
 # ACE archive
 7      string        **ACE**     application/x-ace
 
+# XZ
+0	string           \0fd\037\07a\058\05a\000             application/x-xz
+
 
 #------------------------------------------------------------------------------
 # frame:  file(1) magic for FrameMaker files

@@ -1482,6 +1482,10 @@ bool KURL::hasSubURL() const
      return true;
   if (m_strRef_encoded.startsWith("zip:"))
      return true;
+  if (m_strRef_encoded.startsWith("lzma:"))
+     return true;
+  if (m_strRef_encoded.startsWith("xz:"))
+     return true;
   if ( m_strProtocol == "error" ) // anything that starts with error: has suburls
      return true;
   return false;
