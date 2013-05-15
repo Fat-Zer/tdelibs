@@ -83,14 +83,8 @@ TQString KRandrSimpleAPI::getIccFileName(TQString profileName, TQString screenNa
 	TQStringList t_cfgProfiles;
 	TQString retval;
 
-	if (profileName != NULL) {
+	if ((profileName != NULL) && (profileName != "")) {
 		t_config = new KSimpleConfig( TQString::fromLatin1( "kiccconfigrc" ));
-	}
-	else {
-		t_systemconfig = new KSimpleConfig( kde_confdir + TQString("/kicc/kiccconfigrc") );
-	}
-
-	if (profileName != NULL) {
 		t_config->setGroup(NULL);
 		if (t_config->readBoolEntry("EnableICC", false) == true) {
 			t_config->setGroup(profileName);
@@ -99,8 +93,10 @@ TQString KRandrSimpleAPI::getIccFileName(TQString profileName, TQString screenNa
 		else {
 			retval = "";
 		}
+		delete t_config;
 	}
 	else {
+		t_systemconfig = new KSimpleConfig( kde_confdir + TQString("/kicc/kiccconfigrc") );
 		t_systemconfig->setGroup(NULL);
 		if (t_systemconfig->readBoolEntry("EnableICC", false) == true) {
 			retval = t_systemconfig->readEntry("ICCFile");
@@ -108,17 +104,7 @@ TQString KRandrSimpleAPI::getIccFileName(TQString profileName, TQString screenNa
 		else {
 			retval = "";
 		}
-	}
-
-	if (profileName != "") {
-		if (t_config) {
-			delete t_config;
-		}
-	}
-	else {
-		if (t_systemconfig) {
-			delete t_systemconfig;
-		}
+		delete t_systemconfig;
 	}
 
 	return retval;
