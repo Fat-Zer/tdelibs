@@ -289,8 +289,9 @@ int callFunction( const char* app, const char* obj, const char* func, const QCSt
     TQDataStream arg(data, IO_WriteOnly);
 
     uint i = 0;
-    for( TQStringList::Iterator it = types.begin(); it != types.end(); ++it )
+    for( TQStringList::Iterator it = types.begin(); it != types.end(); ++it ) {
         marshall( arg, args, i, *it );
+    }
 
     if ( i != args.count() )
     {

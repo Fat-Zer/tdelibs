@@ -278,10 +278,12 @@ void marshall( TQDataStream &arg, QCStringList args, uint &i, TQString type )
     }
     TQString s = TQString::fromLocal8Bit( args[ i ] );
 
-    if (type == TQSTRINGLIST_OBJECT_NAME_STRING)
+    if (type == TQSTRINGLIST_OBJECT_NAME_STRING) {
        type = TQVALUELIST_OBJECT_NAME_STRING "<" TQSTRING_OBJECT_NAME_STRING ">";
-    if (type == "QCStringList")
+    }
+    if (type == "QCStringList") {
        type = TQVALUELIST_OBJECT_NAME_STRING "<" TQSTRING_OBJECT_NAME_STRING ">";
+    }
 
     if ( type == "int" )
 	arg << s.toInt();
@@ -332,26 +334,39 @@ void marshall( TQDataStream &arg, QCStringList args, uint &i, TQString type )
     else if ( type == "KURL" )
 	arg << KURL( s );
     else if ( type == TQVARIANT_OBJECT_NAME_STRING ) {
-	if ( s == "true" || s == "false" )
+	int tqPointKeywordLength = strlen(TQPOINT_OBJECT_NAME_STRING);
+	int tqSizeKeywordLength = strlen(TQSIZE_OBJECT_NAME_STRING);
+	int tqRectKeywordLength = strlen(TQRECT_OBJECT_NAME_STRING);
+	int tqColorKeywordLength = strlen(TQCOLOR_OBJECT_NAME_STRING);
+	if ( s == "true" || s == "false" ) {
 	    arg << TQVariant( mkBool( s ), 42 );
-	else if ( s.left( 4 ) == "int(" )
+	}
+	else if ( s.left( 4 ) == "int(" ) {
 	    arg << TQVariant( s.mid(4, s.length()-5).toInt() );
-	else if ( s.left( 7 ) == TQPOINT_OBJECT_NAME_STRING "(" )
-	    arg << TQVariant( mkPoint( s.mid(7, s.length()-8) ) );
-	else if ( s.left( 6 ) == TQSIZE_OBJECT_NAME_STRING "(" )
-	    arg << TQVariant( mkSize( s.mid(6, s.length()-7) ) );
-	else if ( s.left( 6 ) == TQRECT_OBJECT_NAME_STRING "(" )
-	    arg << TQVariant( mkRect( s.mid(6, s.length()-7) ) );
-	else if ( s.left( 7 ) == TQCOLOR_OBJECT_NAME_STRING "(" )
-	    arg << TQVariant( mkColor( s.mid(7, s.length()-8) ) );
-	else
+	}
+	else if ( s.left( (tqPointKeywordLength+1) ) == TQPOINT_OBJECT_NAME_STRING "(" ) {
+	    arg << TQVariant( mkPoint( s.mid((tqPointKeywordLength+1), s.length()-(tqPointKeywordLength+2)) ) );
+	}
+	else if ( s.left( (tqSizeKeywordLength+1) ) == TQSIZE_OBJECT_NAME_STRING "(" ) {
+	    arg << TQVariant( mkSize( s.mid((tqSizeKeywordLength+1), s.length()-(tqSizeKeywordLength+2)) ) );
+	}
+	else if ( s.left( (tqRectKeywordLength+1) ) == TQRECT_OBJECT_NAME_STRING "(" ) {
+	    arg << TQVariant( mkRect( s.mid((tqRectKeywordLength+1), s.length()-(tqRectKeywordLength+2)) ) );
+	}
+	else if ( s.left( (tqColorKeywordLength+1) ) == TQCOLOR_OBJECT_NAME_STRING "(" ) {
+	    arg << TQVariant( mkColor( s.mid((tqColorKeywordLength+1), s.length()-(tqColorKeywordLength+2)) ) );
+	}
+	else {
 	    arg << TQVariant( s );
-    } else if ( type.startsWith(TQVALUELIST_OBJECT_NAME_STRING "<") ||
-	        type == "KURL::List" ) {
-	if ( type == "KURL::List" )
+	}
+    } else if ( type.startsWith(TQVALUELIST_OBJECT_NAME_STRING "<") || type == "KURL::List" ) {
+	if ( type == "KURL::List" ) {
             type = "KURL";
-        else
-	    type = type.mid(11, type.length() - 12);
+        }
+        else {
+	    int tqValueListKeywordLength = strlen(TQVALUELIST_OBJECT_NAME_STRING);
+	    type = type.mid((tqValueListKeywordLength+1), type.length() - (tqValueListKeywordLength+2));
+	}
 	TQStringList list;
 	TQString delim = s;
 	if (delim == "[")
