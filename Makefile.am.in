@@ -20,7 +20,7 @@
 
 COMPILE_FIRST = dcop libltdl tdefx tdecore tdeunittest tdeui tdesu kjs tdewallet kio kded kded_post
 COMPILE_BEFORE_doc = kdoctools
-COMPILE_AFTER_tdeparts = tdespell2 tdemdi tdeprint kinit kate interfaces tdecert tdehtml tderandr
+COMPILE_AFTER_tdeparts = tdespell2 tdemdi tdeprint tdeinit kate interfaces tdecert tdehtml tderandr
 COMPILE_AFTER_tdeprint = kate tdehtml
 COMPILE_BEFORE_tdehtml = tdeutils
 COMPILE_BEFORE_kabc = kab tderesources

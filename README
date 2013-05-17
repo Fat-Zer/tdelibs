@@ -81,7 +81,7 @@ Here is an alphabetical list:
     An all purpose extension to the qimgio class that supports various
     image formats.
 
-* kinit
+* tdeinit
     Process launcher, used for fast KDE startup
 
 * kio

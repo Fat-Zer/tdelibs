@@ -34,7 +34,7 @@ link_directories(
 set( target tdeinit )
 
 set( ${target}_SRCS
-  kinit.cpp setproctitle.cpp
+  tdeinit.cpp setproctitle.cpp
 )
 
 tde_add_executable( ${target}

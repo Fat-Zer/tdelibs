@@ -24,7 +24,7 @@ bin_PROGRAMS = tdeinit tdeinit_wrapper kshell tdeinit_shutdown lnusertemp kwrapp
 
 lib_LTLIBRARIES = 
 tdeinit_LTLIBRARIES = tdelauncher.la
-tdeinit_SOURCES = kinit.cpp setproctitle.cpp
+tdeinit_SOURCES = tdeinit.cpp setproctitle.cpp
 
 # NOTE: We link against all common libraries even if we don't need them ourselves.
 # For the future: examine if condensing the tons of *_LDFLAGS variables

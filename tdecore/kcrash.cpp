@@ -51,7 +51,7 @@
 #include <tdeapplication.h>
 #include <dcopclient.h>
 
-#include <../kinit/tdelauncher_cmds.h>
+#include <../tdeinit/tdelauncher_cmds.h>
 
 #if defined Q_WS_X11
 #include <X11/Xlib.h>
@@ -337,7 +337,7 @@ void TDECrash::startDirectly( const char* argv[], int )
   }
 }
 
-// From now on this code is copy&pasted from kinit/wrapper.c :
+// From now on this code is copy&pasted from tdeinit/wrapper.c :
 
 extern char **environ;
 
