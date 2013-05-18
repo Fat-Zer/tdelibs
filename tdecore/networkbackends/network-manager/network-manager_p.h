@@ -62,6 +62,7 @@ typedef TQValueList<TQT_DBusData> TQT_DBusDataValueList;
 typedef TQMap<uint, bool> NMAsyncCallIDMap;
 typedef TQMap<uint, TQT_DBusTQStringDataMap> NMAsyncSettingsResponseMap;
 typedef TQMap<uint, TQT_DBusObjectPath> NMAddConnectionAsyncResponseMap;
+typedef TQMap<uint, TQT_DBusError> NMAddConnectionAsyncErrorResponseMap;
 
 typedef TQValueList<TQT_DBusObjectPath> TQT_DBusObjectPathList;
 
@@ -100,6 +101,9 @@ class TDENetworkConnectionManager_BackendNMPrivate : public TQObject
 		NMAsyncCallIDMap nmConnectionSettingsAsyncCallWaiting;
 		NMAsyncSettingsResponseMap nmConnectionSettingsAsyncSettingsResponse;
 		NMAddConnectionAsyncResponseMap nmAddConnectionAsyncResponse;
+		NMAddConnectionAsyncErrorResponseMap nmConnectionSettingsAsyncSettingsErrorResponse;
+		NMAddConnectionAsyncErrorResponseMap nmConnectionSettingsUpdateAsyncSettingsErrorResponse;
+		NMAddConnectionAsyncErrorResponseMap nmAddConnectionAsyncErrorResponse;
 		bool nonReentrantCallActive;
 		TQString m_dbusDeviceString;
 
@@ -107,6 +111,9 @@ class TDENetworkConnectionManager_BackendNMPrivate : public TQObject
 		void processConnectionSettingsAsyncReply(int, const TQT_DBusDataMap<TQString>&);
 		void processConnectionSettingsUpdateAsyncReply(int);
 		void processAddConnectionAsyncReply(int, const TQT_DBusObjectPath&);
+		void processConnectionSettingsAsyncError(int, const TQT_DBusError);
+		void processConnectionSettingsUpdateAsyncError(int, const TQT_DBusError);
+		void processAddConnectionAsyncError(int, const TQT_DBusError);
 
 		void internalProcessGlobalStateChanged(TQ_UINT32 state);
 		void internalProcessVPNStateChanged(TQ_UINT32 state);
@@ -123,7 +130,7 @@ class TDENetworkConnectionManager_BackendNMPrivate : public TQObject
 		TQMap<TQString, DBus::AccessPointProxy*> m_accessPointProxyList;
 		TQT_DBusConnection *m_dbusSignalConnection;
 		TDENetworkConnectionManager_BackendNM_DBusSignalReceiver *m_dbusSignalReceiver;
-		int m_prevDeviceState;
+		TQ_UINT32 m_prevDeviceState;
 
 		friend class TDENetworkConnectionManager_BackendNM_DBusSignalReceiver;
 };

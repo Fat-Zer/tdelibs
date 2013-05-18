@@ -1577,8 +1577,14 @@ TDENetworkConnectionType::TDENetworkConnectionType TDENetworkConnectionManager_B
 			}
 		}
 		TQT_DBusTQStringDataMap connectionSettingsMap = d->nmConnectionSettingsAsyncSettingsResponse[asyncCallID];
+		if (d->nmConnectionSettingsAsyncSettingsErrorResponse.contains(asyncCallID)) {
+			PRINT_ERROR((d->nmConnectionSettingsAsyncSettingsErrorResponse[asyncCallID].name() + ": " + d->nmConnectionSettingsAsyncSettingsErrorResponse[asyncCallID].message()));
+			d->nmConnectionSettingsAsyncSettingsErrorResponse.remove(asyncCallID);
+		}
 		d->nmConnectionSettingsAsyncCallWaiting.remove(asyncCallID);
-		d->nmConnectionSettingsAsyncSettingsResponse.remove(asyncCallID);
+		if (d->nmConnectionSettingsAsyncSettingsResponse.contains(asyncCallID)) {
+			d->nmConnectionSettingsAsyncSettingsResponse.remove(asyncCallID);
+		}
 #endif // USE_ASYNC_DBUS_CALLS
 
 		// Parse settings to find connection type
@@ -1750,6 +1756,18 @@ void TDENetworkConnectionManager_BackendNMPrivate::processAddConnectionAsyncRepl
 	nmAddConnectionAsyncResponse[asyncCallId] = path;
 }
 
+void TDENetworkConnectionManager_BackendNMPrivate::processConnectionSettingsAsyncError(int asyncCallId, const TQT_DBusError error) {
+	nmConnectionSettingsAsyncSettingsErrorResponse[asyncCallId] = error;
+}
+
+void TDENetworkConnectionManager_BackendNMPrivate::processConnectionSettingsUpdateAsyncError(int asyncCallId, const TQT_DBusError error) {
+	nmConnectionSettingsUpdateAsyncSettingsErrorResponse[asyncCallId] = error;
+}
+
+void TDENetworkConnectionManager_BackendNMPrivate::processAddConnectionAsyncError(int asyncCallId, const TQT_DBusError error) {
+	nmAddConnectionAsyncErrorResponse[asyncCallId] = error;
+}
+
 void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 	if (d->nonReentrantCallActive) return;
 
@@ -1843,6 +1861,7 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 				DBus::ConnectionSettingsInterface connectionSettings(NM_DBUS_SERVICE, (*it));
 				connectionSettings.setConnection(TQT_DBusConnection::systemBus());
 				connect(&connectionSettings, SIGNAL(GetSettingsAsyncReply(int, const TQT_DBusDataMap<TQString>&)), d, SLOT(processConnectionSettingsAsyncReply(int, const TQT_DBusDataMap<TQString>&)));
+				connect(&connectionSettings, SIGNAL(AsyncErrorResponseDetected(int, const TQT_DBusError)), d, SLOT(processConnectionSettingsAsyncError(int, const TQT_DBusError)));
 				int asyncCallID;
 				ret = connectionSettings.GetSettingsAsync(asyncCallID, error);
 				if (ret && error.isValid()) {
@@ -1862,8 +1881,14 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 						}
 					}
 					TQT_DBusTQStringDataMap connectionSettingsMap = d->nmConnectionSettingsAsyncSettingsResponse[asyncCallID];
+					if (d->nmConnectionSettingsAsyncSettingsErrorResponse.contains(asyncCallID)) {
+						PRINT_ERROR((d->nmConnectionSettingsAsyncSettingsErrorResponse[asyncCallID].name() + ": " + d->nmConnectionSettingsAsyncSettingsErrorResponse[asyncCallID].message()));
+						d->nmConnectionSettingsAsyncSettingsErrorResponse.remove(asyncCallID);
+					}
 					d->nmConnectionSettingsAsyncCallWaiting.remove(asyncCallID);
-					d->nmConnectionSettingsAsyncSettingsResponse.remove(asyncCallID);
+					if (d->nmConnectionSettingsAsyncSettingsResponse.contains(asyncCallID)) {
+						d->nmConnectionSettingsAsyncSettingsResponse.remove(asyncCallID);
+					}
 #endif // USE_ASYNC_DBUS_CALLS
 
 #ifdef DEBUG_NETWORK_MANAGER_COMMUNICATIONS
@@ -2994,8 +3019,14 @@ bool TDENetworkConnectionManager_BackendNM::loadConnectionSecretsForGroup(TQStri
 				}
 			}
 			connectionSecretsMap = d->nmConnectionSettingsAsyncSettingsResponse[asyncCallID];
+			if (d->nmConnectionSettingsAsyncSettingsErrorResponse.contains(asyncCallID)) {
+				PRINT_ERROR((d->nmConnectionSettingsAsyncSettingsErrorResponse[asyncCallID].name() + ": " + d->nmConnectionSettingsAsyncSettingsErrorResponse[asyncCallID].message()));
+				d->nmConnectionSettingsAsyncSettingsErrorResponse.remove(asyncCallID);
+			}
 			d->nmConnectionSettingsAsyncCallWaiting.remove(asyncCallID);
-			d->nmConnectionSettingsAsyncSettingsResponse.remove(asyncCallID);
+			if (d->nmConnectionSettingsAsyncSettingsResponse.contains(asyncCallID)) {
+				d->nmConnectionSettingsAsyncSettingsResponse.remove(asyncCallID);
+			}
 #endif // USE_ASYNC_DBUS_CALLS
 
 #ifdef DEBUG_NETWORK_MANAGER_COMMUNICATIONS
@@ -3132,6 +3163,7 @@ bool TDENetworkConnectionManager_BackendNM::loadConnectionSecretsForGroup(TQStri
 
 bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection* connection) {
 	bool timed_out = FALSE;
+	bool command_failed = FALSE;
 
 	if (!connection) {
 		PRINT_ERROR(TQString("connection cannot be NULL!"));
@@ -3174,7 +3206,6 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 		// Obtain connection settings from the path specified
 		DBus::ConnectionSettingsInterface connectionSettings(NM_DBUS_SERVICE, existingConnection);
 		connectionSettings.setConnection(TQT_DBusConnection::systemBus());
-		connectionSettingsMap;
 		ret = connectionSettings.GetSettings(connectionSettingsMap, error);
 		if (ret && error.isValid()) {
 			ret = 0;
@@ -3206,8 +3237,14 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 				}
 			}
 			connectionSettingsMap = d->nmConnectionSettingsAsyncSettingsResponse[asyncCallID];
+			if (d->nmConnectionSettingsAsyncSettingsErrorResponse.contains(asyncCallID)) {
+				PRINT_ERROR((d->nmConnectionSettingsAsyncSettingsErrorResponse[asyncCallID].name() + ": " + d->nmConnectionSettingsAsyncSettingsErrorResponse[asyncCallID].message()));
+				d->nmConnectionSettingsAsyncSettingsErrorResponse.remove(asyncCallID);
+			}
 			d->nmConnectionSettingsAsyncCallWaiting.remove(asyncCallID);
-			d->nmConnectionSettingsAsyncSettingsResponse.remove(asyncCallID);
+			if (d->nmConnectionSettingsAsyncSettingsResponse.contains(asyncCallID)) {
+				d->nmConnectionSettingsAsyncSettingsResponse.remove(asyncCallID);
+			}
 #endif // USE_ASYNC_DBUS_CALLS
 			existing = true;
 		}
@@ -3712,7 +3749,9 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 						settingsMap["key-mgmt"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(tdeWiFiKeyTypeToNMWiFiKeyType(wiFiConnection->securitySettings.keyType)));
 					}
 					else {
-						settingsMap.remove("key-mgmt");
+						// The key-mgmt entry seems to be required even if no security is available and/or enabled!
+						// settingsMap.remove("key-mgmt");
+						settingsMap["key-mgmt"] = convertDBUSDataToVariantData(TQT_DBusData::fromString("none"));
 					}
 				}
 				if (wiFiConnection->securitySettings.wepKeyIndex > 0) {
@@ -4431,6 +4470,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 #endif // DEBUG_NETWORK_MANAGER_COMMUNICATIONS
 		// Create new connection
 		connect(d->m_networkManagerSettings, SIGNAL(AddConnectionAsyncReply(int, const TQT_DBusObjectPath&)), d, SLOT(processAddConnectionAsyncReply(int, const TQT_DBusObjectPath&)));
+		connect(d->m_networkManagerSettings, SIGNAL(AsyncErrorResponseDetected(int, const TQT_DBusError)), d, SLOT(processAddConnectionAsyncError(int, const TQT_DBusError)));
 		int asyncCallID;
 		ret = d->m_networkManagerSettings->AddConnectionAsync(asyncCallID, connectionSettingsMap, error);
 		if (ret && error.isValid()) {
@@ -4450,9 +4490,19 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 				}
 				tqApp->processEvents();
 			}
+			if (d->nmAddConnectionAsyncErrorResponse.contains(asyncCallID)) {
+				PRINT_ERROR((d->nmAddConnectionAsyncErrorResponse[asyncCallID].name() + ": " + d->nmAddConnectionAsyncErrorResponse[asyncCallID].message()));
+				d->nmAddConnectionAsyncErrorResponse.remove(asyncCallID);
+			}
+			if (!d->nmAddConnectionAsyncResponse[asyncCallID].data()) {
+				PRINT_ERROR(TQString("NetworkManager did not return a new connection object!"))
+				command_failed = true;
+			}
 			d->nmConnectionSettingsAsyncCallWaiting.remove(asyncCallID);
-			d->nmAddConnectionAsyncResponse.remove(asyncCallID);
-			return !timed_out;
+			if (d->nmAddConnectionAsyncResponse.contains(asyncCallID)) {
+				d->nmAddConnectionAsyncResponse.remove(asyncCallID);
+			}
+			return ((!timed_out) && (!command_failed));
 		}
 		else {
 			// Error!
@@ -4674,6 +4724,7 @@ TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManag
 	TQT_DBusObjectPath existingConnection;
 	TQT_DBusError error;
 	bool ret;
+	bool command_failed = FALSE;
 	if ((d->m_networkManagerSettings) && (d->m_networkManagerProxy)) {
 		ret = d->m_networkManagerSettings->GetConnectionByUuid(uuid, existingConnection, error);
 		if (ret) {
@@ -4694,6 +4745,7 @@ TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManag
 #else // USE_ASYNC_DBUS_CONNECTION_COMMAND_CALLS
 #ifdef WAIT_FOR_OPERATION_BEFORE_RETURNING
 			connect(d->m_networkManagerProxy, SIGNAL(ActivateConnectionAsyncReply(int, const TQT_DBusObjectPath&)), d, SLOT(processAddConnectionAsyncReply(int, const TQT_DBusObjectPath&)));
+			connect(d->m_networkManagerProxy, SIGNAL(AsyncErrorResponseDetected(int, const TQT_DBusError)), d, SLOT(processAddConnectionAsyncError(int, const TQT_DBusError)));
 #endif // WAIT_FOR_OPERATION_BEFORE_RETURNING
 			int asyncCallID;
 			ret = d->m_networkManagerProxy->ActivateConnectionAsync(asyncCallID, existingConnection, TQT_DBusObjectPath(d->m_dbusDeviceString.ascii()), TQT_DBusObjectPath("/"), error);
@@ -4715,13 +4767,23 @@ TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManag
 					tqApp->processEvents();
 				}
 				d->nmConnectionSettingsAsyncCallWaiting.remove(asyncCallID);
-				d->nmAddConnectionAsyncResponse.remove(asyncCallID);
-				return checkConnectionStatus(uuid);
+				if (d->nmAddConnectionAsyncErrorResponse.contains(asyncCallID)) {
+					PRINT_ERROR((d->nmAddConnectionAsyncErrorResponse[asyncCallID].name() + ": " + d->nmAddConnectionAsyncErrorResponse[asyncCallID].message()));
+					d->nmAddConnectionAsyncErrorResponse.remove(asyncCallID);
+				}
+				if (!d->nmAddConnectionAsyncResponse[asyncCallID].data()) {
+					PRINT_ERROR(TQString("NetworkManager did not return a new connection object!"))
+					command_failed = true;
+				}
+				if (d->nmAddConnectionAsyncResponse.contains(asyncCallID)) {
+					d->nmAddConnectionAsyncResponse.remove(asyncCallID);
+				}
+				return ((!command_failed) && checkConnectionStatus(uuid));
 			}
 			else {
 				// Error!
 				PRINT_ERROR(error.name())
-				return checkConnectionStatus(uuid);
+				return ((!command_failed) && checkConnectionStatus(uuid));
 			}
 #else
 			return checkConnectionStatus(uuid);
