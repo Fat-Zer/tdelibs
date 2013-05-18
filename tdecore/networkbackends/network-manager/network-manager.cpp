@@ -1154,7 +1154,7 @@ TQString TDENetworkConnectionManager_BackendNM::deviceInterfaceString(TQString m
 				TDENetworkDeviceType::TDENetworkDeviceType deviceType = nmDeviceTypeToTDEDeviceType(genericDevice.getDeviceType(error));
 				if (error.isValid()) {
 					// Error!
-					PRINT_ERROR(error.name())
+					PRINT_ERROR((error.name() + ": " + error.message()))
 					break;
 				}
 				else if (deviceType == TDENetworkDeviceType::WiredEthernet) {
@@ -1224,7 +1224,7 @@ TQString TDENetworkConnectionManager_BackendNM::deviceInterfaceString(TQString m
 		}
 		else {
 			// Error!
-			PRINT_ERROR(error.name())
+			PRINT_ERROR((error.name() + ": " + error.message()))
 			return "";
 		}
 	}
@@ -1241,7 +1241,7 @@ TQString macAddressForGenericDevice(TQT_DBusObjectPath path) {
 	TQ_UINT32 deviceType = genericDevice.getDeviceType(error);
 	if (error.isValid()) {
 		// Error!
-		PRINT_ERROR(error.name())
+		PRINT_ERROR((error.name() + ": " + error.message()))
 		return TQString();
 	}
 	else if (deviceType == NM_DEVICE_TYPE_ETHERNET) {
@@ -1528,7 +1528,7 @@ TDENetworkDeviceType::TDENetworkDeviceType TDENetworkConnectionManager_BackendNM
 		TDENetworkDeviceType::TDENetworkDeviceType ret = nmDeviceTypeToTDEDeviceType(genericDevice.getDeviceType(error));
 		if (error.isValid()) {
 			// Error!
-			PRINT_ERROR(error.name())
+			PRINT_ERROR((error.name() + ": " + error.message()))
 			return TDENetworkDeviceType::Other;
 		}
 		else {
@@ -1550,7 +1550,7 @@ TDENetworkConnectionType::TDENetworkConnectionType TDENetworkConnectionManager_B
 	ret = connectionSettings.GetSettings(connectionSettingsMap, error);
 	if (ret && error.isValid()) {
 		ret = 0;
-		PRINT_ERROR(error.name())
+		PRINT_ERROR((error.name() + ": " + error.message()))
 	}
 	if (ret) {
 #else // USE_ASYNC_DBUS_CALLS
@@ -1562,7 +1562,7 @@ TDENetworkConnectionType::TDENetworkConnectionType TDENetworkConnectionManager_B
 	ret = connectionSettings.GetSettingsAsync(asyncCallID, error);
 	if (ret && error.isValid()) {
 		ret = 0;
-		PRINT_ERROR(error.name())
+		PRINT_ERROR((error.name() + ": " + error.message()))
 	}
 	if (ret) {
 		// Wait for the asynchronous call to return...
@@ -1627,7 +1627,7 @@ TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags TDENetworkConnectionM
 		ret = d->m_networkManagerProxy->getState(error);
 		if (error.isValid()) {
 			// Error!
-			PRINT_ERROR(error.name())
+			PRINT_ERROR((error.name() + ": " + error.message()))
 			return TDENetworkGlobalManagerFlags::BackendUnavailable;
 		}
 		else {
@@ -1637,7 +1637,18 @@ TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags TDENetworkConnectionM
 				ret = d->m_vpnProxy->getState(error);
 				if (error.isValid()) {
 					// Error!
-					PRINT_ERROR(error.name())
+					bool print_error = true;
+					if (error.name() == "org.freedesktop.DBus.Error.ServiceUnknown") {
+						if (d->vpn_service_error_notified) {
+							print_error = false;
+						}
+						else {
+							d->vpn_service_error_notified = true;
+						}
+					}
+					if (print_error) {
+						PRINT_ERROR(TQString("Attempting to access the network-manager VPN service returned: %1").arg(error.name() + ": " + error.message()))
+					}
 					vpnFlags = TDENetworkGlobalManagerFlags::VPNUnknown;
 				}
 				else {
@@ -1669,7 +1680,7 @@ TDENetworkDeviceInformation TDENetworkConnectionManager_BackendNM::deviceInforma
 		ret.firmwareMissing = d->m_networkDeviceProxy->getFirmwareMissing(error);
 		ret.deviceType = nmDeviceTypeToTDEDeviceType(d->m_networkDeviceProxy->getDeviceType(error));
 		if (error.isValid()) {
-			PRINT_ERROR(error.name())
+			PRINT_ERROR((error.name() + ": " + error.message()))
 		}
 
 		// Populate wiFiInfo
@@ -1681,7 +1692,7 @@ TDENetworkDeviceInformation TDENetworkConnectionManager_BackendNM::deviceInforma
 			ret.wiFiInfo.bitrate = d->m_wiFiDeviceProxy->getBitrate(error);
 			TDENetworkWiFiAPInfo* apInfo = getAccessPointDetails(d->m_wiFiDeviceProxy->getActiveAccessPoint(error));
 			if (error.isValid()) {
-				PRINT_ERROR(error.name())
+				PRINT_ERROR((error.name() + ": " + error.message()))
 			}
 			if (apInfo) {
 				ret.wiFiInfo.activeAccessPointBSSID = apInfo->BSSID;
@@ -1853,7 +1864,7 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 				ret = connectionSettings.GetSettings(connectionSettingsMap, error);
 				if (ret && error.isValid()) {
 					ret = 0;
-					PRINT_ERROR(error.name())
+					PRINT_ERROR((error.name() + ": " + error.message()))
 				}
 				if (ret) {
 #else // USE_ASYNC_DBUS_CALLS
@@ -1866,7 +1877,7 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 				ret = connectionSettings.GetSettingsAsync(asyncCallID, error);
 				if (ret && error.isValid()) {
 					ret = 0;
-					PRINT_ERROR(error.name())
+					PRINT_ERROR((error.name() + ": " + error.message()))
 				}
 				if (ret) {
 					// Wait for the asynchronous call to return...
@@ -2892,13 +2903,13 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 				}
 				else {
 					// Error!
-					PRINT_ERROR(error.name())
+					PRINT_ERROR((error.name() + ": " + error.message()))
 				}
 			}
 		}
 		else {
 			// Error!
-			PRINT_ERROR(error.name())
+			PRINT_ERROR((error.name() + ": " + error.message()))
 		}
 		internalNetworkManagementEvent(TDENetworkGlobalEventType::ConnectionListChanged);
 	}
@@ -2992,7 +3003,7 @@ bool TDENetworkConnectionManager_BackendNM::loadConnectionSecretsForGroup(TQStri
 		ret = connectionSettings.GetSecrets(group, connectionSecretsMap, error);
 		if (ret && error.isValid()) {
 			ret = 0;
-			PRINT_ERROR(error.name())
+			PRINT_ERROR((error.name() + ": " + error.message()))
 		}
 		if (ret) {
 #else // USE_ASYNC_DBUS_CALLS
@@ -3004,7 +3015,7 @@ bool TDENetworkConnectionManager_BackendNM::loadConnectionSecretsForGroup(TQStri
 		ret = connectionSettings.GetSecretsAsync(asyncCallID, group, error);
 		if (ret && error.isValid()) {
 			ret = 0;
-			PRINT_ERROR(error.name())
+			PRINT_ERROR((error.name() + ": " + error.message()))
 		}
 		if (ret) {
 			// Wait for the asynchronous call to return...
@@ -3209,7 +3220,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 		ret = connectionSettings.GetSettings(connectionSettingsMap, error);
 		if (ret && error.isValid()) {
 			ret = 0;
-			PRINT_ERROR(error.name())
+			PRINT_ERROR((error.name() + ": " + error.message()))
 		}
 		if (ret) {
 #else // USE_ASYNC_DBUS_CALLS
@@ -3221,7 +3232,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 		ret = connectionSettings.GetSettingsAsync(asyncCallID, error);
 		if (ret && error.isValid()) {
 			ret = 0;
-			PRINT_ERROR(error.name())
+			PRINT_ERROR((error.name() + ": " + error.message()))
 		}
 		if (ret) {
 			// Wait for the asynchronous call to return...
@@ -4440,7 +4451,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 		ret = connectionSettings.UpdateAsync(asyncCallID, connectionSettingsMap, error);
 		if (ret && error.isValid()) {
 			ret = 0;
-			PRINT_ERROR(error.name())
+			PRINT_ERROR((error.name() + ": " + error.message()))
 		}
 		if (ret) {
 			// Wait for the asynchronous call to return...
@@ -4460,7 +4471,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 		}
 		else {
 			// Error!
-			PRINT_ERROR(error.name())
+			PRINT_ERROR((error.name() + ": " + error.message()))
 			return FALSE;
 		}
 	}
@@ -4475,7 +4486,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 		ret = d->m_networkManagerSettings->AddConnectionAsync(asyncCallID, connectionSettingsMap, error);
 		if (ret && error.isValid()) {
 			ret = 0;
-			PRINT_ERROR(error.name())
+			PRINT_ERROR((error.name() + ": " + error.message()))
 		}
 		if (ret) {
 			// Wait for the asynchronous call to return...
@@ -4506,7 +4517,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 		}
 		else {
 			// Error!
-			PRINT_ERROR(error.name())
+			PRINT_ERROR((error.name() + ": " + error.message()))
 			return FALSE;
 		}
 	}
@@ -4528,7 +4539,7 @@ bool TDENetworkConnectionManager_BackendNM::deleteConnection(TQString uuid) {
 			ret = connectionSettings.DeleteAsync(asyncCallID, error);
 			if (ret && error.isValid()) {
 				ret = 0;
-				PRINT_ERROR(error.name())
+				PRINT_ERROR((error.name() + ": " + error.message()))
 			}
 			if (ret) {
 				// Wait for the asynchronous call to return...
@@ -4724,7 +4735,6 @@ TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManag
 	TQT_DBusObjectPath existingConnection;
 	TQT_DBusError error;
 	bool ret;
-	bool command_failed = FALSE;
 	if ((d->m_networkManagerSettings) && (d->m_networkManagerProxy)) {
 		ret = d->m_networkManagerSettings->GetConnectionByUuid(uuid, existingConnection, error);
 		if (ret) {
@@ -4739,7 +4749,7 @@ TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManag
 			ret = d->m_networkManagerProxy->ActivateConnection(existingConnection, TQT_DBusObjectPath(d->m_dbusDeviceString.ascii()), TQT_DBusObjectPath("/"), active_connection, error);
 			if (ret && error.isValid()) {
 				ret = 0;
-				PRINT_ERROR(error.name())
+				PRINT_ERROR((error.name() + ": " + error.message()))
 			}
 			return checkConnectionStatus(uuid);
 #else // USE_ASYNC_DBUS_CONNECTION_COMMAND_CALLS
@@ -4751,7 +4761,7 @@ TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManag
 			ret = d->m_networkManagerProxy->ActivateConnectionAsync(asyncCallID, existingConnection, TQT_DBusObjectPath(d->m_dbusDeviceString.ascii()), TQT_DBusObjectPath("/"), error);
 			if (ret && error.isValid()) {
 				ret = 0;
-				PRINT_ERROR(error.name())
+				PRINT_ERROR((error.name() + ": " + error.message()))
 			}
 #ifdef WAIT_FOR_OPERATION_BEFORE_RETURNING
 			if (ret) {
@@ -4773,17 +4783,16 @@ TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManag
 				}
 				if (!d->nmAddConnectionAsyncResponse[asyncCallID].data()) {
 					PRINT_ERROR(TQString("NetworkManager did not return a new connection object!"))
-					command_failed = true;
 				}
 				if (d->nmAddConnectionAsyncResponse.contains(asyncCallID)) {
 					d->nmAddConnectionAsyncResponse.remove(asyncCallID);
 				}
-				return ((!command_failed) && checkConnectionStatus(uuid));
+				return checkConnectionStatus(uuid);
 			}
 			else {
 				// Error!
-				PRINT_ERROR(error.name())
-				return ((!command_failed) && checkConnectionStatus(uuid));
+				PRINT_ERROR((error.name() + ": " + error.message()))
+				return checkConnectionStatus(uuid);
 			}
 #else
 			return checkConnectionStatus(uuid);
@@ -4933,7 +4942,7 @@ TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManag
 			ret = d->m_networkManagerProxy->DeactivateConnection(existingConnection, error);
 			if (ret && error.isValid()) {
 				ret = 0;
-				PRINT_ERROR(error.name())
+				PRINT_ERROR((error.name() + ": " + error.message()))
 			}
 			return checkConnectionStatus(uuid);
 #else // USE_ASYNC_DBUS_CONNECTION_COMMAND_CALLS
@@ -4944,7 +4953,7 @@ TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManag
 			ret = d->m_networkManagerProxy->DeactivateConnectionAsync(asyncCallID, existingConnection, error);
 			if (ret && error.isValid()) {
 				ret = 0;
-				PRINT_ERROR(error.name())
+				PRINT_ERROR((error.name() + ": " + error.message()))
 			}
 #ifdef WAIT_FOR_OPERATION_BEFORE_RETURNING
 			if (ret) {
@@ -4964,7 +4973,7 @@ TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManag
 			}
 			else {
 				// Error!
-				PRINT_ERROR(error.name())
+				PRINT_ERROR((error.name() + ": " + error.message()))
 				return checkConnectionStatus(uuid);
 			}
 #else
@@ -5244,7 +5253,7 @@ bool TDENetworkConnectionManager_BackendNM::networkingEnabled() {
 		ret = d->m_networkManagerProxy->getNetworkingEnabled(error);
 		if (error.isValid()) {
 			// Error!
-			PRINT_ERROR(error.name())
+			PRINT_ERROR((error.name() + ": " + error.message()))
 			return FALSE;
 		}
 		else {
@@ -5263,7 +5272,7 @@ bool TDENetworkConnectionManager_BackendNM::wiFiHardwareEnabled() {
 		ret = d->m_networkManagerProxy->getWirelessHardwareEnabled(error);
 		if (error.isValid()) {
 			// Error!
-			PRINT_ERROR(error.name())
+			PRINT_ERROR((error.name() + ": " + error.message()))
 			return FALSE;
 		}
 		else {
@@ -5285,7 +5294,7 @@ bool TDENetworkConnectionManager_BackendNM::enableNetworking(bool enable) {
 		d->m_networkManagerProxy->SleepAsync(asynccallid, !enable, error);
 		if (error.isValid()) {
 			// Error!
-			PRINT_ERROR(error.name())
+			PRINT_ERROR((error.name() + ": " + error.message()))
 			return FALSE;
 		}
 		else {
@@ -5305,7 +5314,7 @@ bool TDENetworkConnectionManager_BackendNM::enableWiFi(bool enable) {
 		d->m_networkManagerProxy->setWirelessEnabled(enable, error);
 		if (error.isValid()) {
 			// Error!
-			PRINT_ERROR(error.name())
+			PRINT_ERROR((error.name() + ": " + error.message()))
 			return FALSE;
 		}
 		else {
@@ -5324,7 +5333,7 @@ bool TDENetworkConnectionManager_BackendNM::wiFiEnabled() {
 		ret = d->m_networkManagerProxy->getWirelessEnabled(error);
 		if (error.isValid()) {
 			// Error!
-			PRINT_ERROR(error.name())
+			PRINT_ERROR((error.name() + ": " + error.message()))
 			return FALSE;
 		}
 		else {
@@ -5373,7 +5382,7 @@ TQStringList TDENetworkConnectionManager_BackendNM::defaultNetworkDevices() {
 	}
 }
 
-TDENetworkConnectionManager_BackendNMPrivate::TDENetworkConnectionManager_BackendNMPrivate(TDENetworkConnectionManager_BackendNM* parent) : m_networkManagerProxy(NULL), m_networkManagerSettings(NULL), m_networkDeviceProxy(NULL), m_wiFiDeviceProxy(NULL), m_vpnProxy(NULL), nonReentrantCallActive(false), m_parent(parent), m_prevDeviceState(-1) {
+TDENetworkConnectionManager_BackendNMPrivate::TDENetworkConnectionManager_BackendNMPrivate(TDENetworkConnectionManager_BackendNM* parent) : m_networkManagerProxy(NULL), m_networkManagerSettings(NULL), m_networkDeviceProxy(NULL), m_wiFiDeviceProxy(NULL), m_vpnProxy(NULL), nonReentrantCallActive(false), vpn_service_error_notified(false), m_parent(parent), m_prevDeviceState(-1) {
 	// Set up global signal handler
 	m_dbusSignalConnection = new TQT_DBusConnection(TQT_DBusConnection::systemBus());
 	m_dbusSignalReceiver = new TDENetworkConnectionManager_BackendNM_DBusSignalReceiver(this);

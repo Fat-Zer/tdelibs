@@ -4083,6 +4083,9 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		if (devicesubsystem == "pci") {
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::OtherPeripheral);
 		}
+		if (devicesubsystem == "cpu") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+		}
 	}
 
 	if (device == 0) {
