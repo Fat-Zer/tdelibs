@@ -94,9 +94,10 @@ TDENetMask::~TDENetMask() {
 void TDENetMask::fromCIDRMask(unsigned char mask, bool ipv6) {
 	unsigned int i;
 	unsigned int j;
+	unsigned int internalMask = mask;
 	if (!ipv6) {
 		m_ipv4NetMask = 0;
-		for (i=31;i>=(32-mask);i--) {
+		for (i=31;i>=(32-internalMask);i--) {
 			SET_BIT(m_ipv4NetMask, i);
 		}
 		m_isIPV6 = false;
@@ -106,7 +107,7 @@ void TDENetMask::fromCIDRMask(unsigned char mask, bool ipv6) {
 		j=0;
 		unsigned int byteno=0;
 		memset(maskarray.c, 0, 16);
-		for (i=127;i>=(128-mask);i--) {
+		for (i=127;i>=(128-internalMask);i--) {
 			SET_BIT(maskarray.c[byteno], (i-((15-byteno)*8)));
 			j++;
 			if (j>7) {
@@ -326,9 +327,14 @@ TDENetworkIEEE8021xConfiguration::TDENetworkIEEE8021xConfiguration() {
 	valid = false;
 	allowedValid = false;
 	secretsValid = false;
+	type = TDENetworkIEEE8021xType::None;
 	fastProvisioningFlags = TDENetworkIEEE8021xFastFlags::None;
+	phase2NonEAPAuthMethod = TDENetworkIEEE8021xType::None;
+	phase2EAPAuthMethod = TDENetworkIEEE8021xType::None;
 	passwordFlags = TDENetworkPasswordHandlingFlags::None;
 	binaryPasswordFlags = TDENetworkPasswordHandlingFlags::None;
+	privateKeyPasswordFlags = TDENetworkPasswordHandlingFlags::None;
+	phase2PrivateKeyPasswordFlags = TDENetworkPasswordHandlingFlags::None;
 	forceSystemCaCertificates = false;
 }
 
@@ -444,14 +450,15 @@ TDENetworkIPConfiguration::~TDENetworkIPConfiguration() {
 TDENetworkWiFiSecurityConfiguration::TDENetworkWiFiSecurityConfiguration() {
 	valid = false;
 	secretsValid = false;
-	wepKeyIndex = 0;
 	keyType = TDENetworkWiFiKeyType::Other;
 	authType = TDENetworkWiFiAuthType::Other;
 	wpaVersion = TDENetworkWiFiWPAVersionFlags::Any;
+	cipher = TDENetworkWiFiConnectionCipher::None;
 	wepKeyFlags = TDENetworkPasswordHandlingFlags::None;
+	wepKeyIndex = 0;
+	wepKeyType = TDENetworkWepKeyType::Hexadecimal;
 	pskFlags = TDENetworkPasswordHandlingFlags::None;
 	leapPasswordFlags = TDENetworkPasswordHandlingFlags::None;
-	wepKeyType = TDENetworkWepKeyType::Hexadecimal;
 }
 
 TDENetworkWiFiSecurityConfiguration::~TDENetworkWiFiSecurityConfiguration() {
