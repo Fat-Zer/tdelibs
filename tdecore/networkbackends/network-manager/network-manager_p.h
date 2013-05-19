@@ -107,6 +107,7 @@ class TDENetworkConnectionManager_BackendNMPrivate : public TQObject
 		bool nonReentrantCallActive;
 		TQString m_dbusDeviceString;
 		bool vpn_service_error_notified;
+		bool device_autoconnect_error_notified;
 
 	public slots:
 		void processConnectionSettingsAsyncReply(int, const TQT_DBusDataMap<TQString>&);

@@ -1680,7 +1680,27 @@ TDENetworkDeviceInformation TDENetworkConnectionManager_BackendNM::deviceInforma
 		ret.firmwareMissing = d->m_networkDeviceProxy->getFirmwareMissing(error);
 		ret.deviceType = nmDeviceTypeToTDEDeviceType(d->m_networkDeviceProxy->getDeviceType(error));
 		if (error.isValid()) {
-			PRINT_ERROR((error.name() + ": " + error.message()))
+			// Error!
+			bool print_error = true;
+			if (error.name() == "org.freedesktop.DBus.Error.AccessDenied") {
+				if (error.message().contains("org.freedesktop.NetworkManager.Device")) {
+					// Unable to determine if device allows autoconnect
+					// Assume true!
+					ret.autoConnect = true;
+					if (d->device_autoconnect_error_notified) {
+						print_error = false;
+					}
+					else {
+						d->device_autoconnect_error_notified = true;
+					}
+				}
+			}
+			if (print_error) {
+				PRINT_ERROR((error.name() + ": " + error.message()))
+			}
+
+			// Reset error object to avoid spurious error messages on the command line
+			error = TQT_DBusError();
 		}
 
 		// Populate wiFiInfo
@@ -1693,6 +1713,9 @@ TDENetworkDeviceInformation TDENetworkConnectionManager_BackendNM::deviceInforma
 			TDENetworkWiFiAPInfo* apInfo = getAccessPointDetails(d->m_wiFiDeviceProxy->getActiveAccessPoint(error));
 			if (error.isValid()) {
 				PRINT_ERROR((error.name() + ": " + error.message()))
+
+				// Reset error object to avoid spurious error messages on the command line
+				error = TQT_DBusError();
 			}
 			if (apInfo) {
 				ret.wiFiInfo.activeAccessPointBSSID = apInfo->BSSID;
@@ -1847,6 +1870,11 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 									TDENetworkIPConfigurationFlags::IPV6DHCPDNS			| \
 									TDENetworkIPConfigurationFlags::IPV6DHCPRoutes			| \
 									TDENetworkIPConfigurationFlags::IPV6MayUseAsDefaultRoute;
+				// Set up NM-specific defaults
+				// Keep in sync with latest NM default settings!
+				// NM 0.9 setting descriptions and default values are available at:
+				// http://projects.gnome.org/NetworkManager/developers/api/09/ref-settings.html
+				connection->autoConnect = true;
 
 				if (wiFiConnection) {
 					wiFiConnection->securitySettings.authType = TDENetworkWiFiAuthType::Open;
@@ -5382,7 +5410,7 @@ TQStringList TDENetworkConnectionManager_BackendNM::defaultNetworkDevices() {
 	}
 }
 
-TDENetworkConnectionManager_BackendNMPrivate::TDENetworkConnectionManager_BackendNMPrivate(TDENetworkConnectionManager_BackendNM* parent) : m_networkManagerProxy(NULL), m_networkManagerSettings(NULL), m_networkDeviceProxy(NULL), m_wiFiDeviceProxy(NULL), m_vpnProxy(NULL), nonReentrantCallActive(false), vpn_service_error_notified(false), m_parent(parent), m_prevDeviceState(-1) {
+TDENetworkConnectionManager_BackendNMPrivate::TDENetworkConnectionManager_BackendNMPrivate(TDENetworkConnectionManager_BackendNM* parent) : m_networkManagerProxy(NULL), m_networkManagerSettings(NULL), m_networkDeviceProxy(NULL), m_wiFiDeviceProxy(NULL), m_vpnProxy(NULL), nonReentrantCallActive(false), vpn_service_error_notified(false), device_autoconnect_error_notified(false), m_parent(parent), m_prevDeviceState(-1) {
 	// Set up global signal handler
 	m_dbusSignalConnection = new TQT_DBusConnection(TQT_DBusConnection::systemBus());
 	m_dbusSignalReceiver = new TDENetworkConnectionManager_BackendNM_DBusSignalReceiver(this);
