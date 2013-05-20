@@ -88,6 +88,7 @@ public:
 
         m_enableContext  = true;
 
+        m_parent         = NULL;
         m_xmlguiClient   = 0;
 
         oldPos = TQt::DockUnmanaged;
@@ -225,7 +226,8 @@ TDEToolBar::~TDEToolBar()
 
 void TDEToolBar::init( bool readConfig, bool honorStyle )
 {
-    d = new TDEToolBarPrivate;
+    d = new TDEToolBarPrivate();
+
     setFullSize( true );
     d->m_honorStyle = honorStyle;
     context = 0;
@@ -1915,8 +1917,9 @@ void TDEToolBar::loadState( const TQDomElement &element )
     // Apply transparent-toolbar-moving setting (ok, this is global to the mainwindow,
     // but we do it only if there are toolbars...)
     // KDE4: move to TDEMainWindow
-    if ( transparentSetting() != !mw->opaqueMoving() )
+    if ( transparentSetting() != !mw->opaqueMoving() ) {
         mw->setOpaqueMoving( !transparentSetting() );
+    }
 }
 
 int TDEToolBar::dockWindowIndex()

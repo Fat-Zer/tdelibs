@@ -53,8 +53,32 @@ template class TQIntDict<TDEToolBarButton>;
 class TDEToolBarButtonPrivate
 {
 public:
-  TDEToolBarButtonPrivate()
-  {
+  TDEToolBarButtonPrivate();
+  ~TDEToolBarButtonPrivate();
+
+  int     m_id;
+  bool    m_buttonDown;
+  bool    m_noStyle;
+  bool    m_isSeparator;
+  bool    m_isRadio;
+  bool    m_highlight;
+  bool    m_isRaised;
+  bool    m_isActive;
+
+  TQString m_iconName;
+
+  TDEToolBar *m_parent;
+  TDEToolBar::IconText m_iconText;
+  int m_iconSize;
+  TQSize size;
+
+  TQPoint m_mousePressPos;
+
+  TDEInstance  *m_instance;
+};
+
+TDEToolBarButtonPrivate::TDEToolBarButtonPrivate()
+{
     m_buttonDown  = false;
 
     m_noStyle     = false;
@@ -70,37 +94,18 @@ public:
 
     m_parent   = 0;
     m_instance = TDEGlobal::instance();
-  }
-  ~TDEToolBarButtonPrivate()
-  {
-  }
+}
 
-  int     m_id;
-  bool    m_buttonDown : 1;
-  bool    m_noStyle: 1;
-  bool    m_isSeparator: 1;
-  bool    m_isRadio: 1;
-  bool    m_highlight: 1;
-  bool    m_isRaised: 1;
-  bool    m_isActive: 1;
-
-  TQString m_iconName;
-
-  TDEToolBar *m_parent;
-  TDEToolBar::IconText m_iconText;
-  int m_iconSize;
-  TQSize size;
-
-  TQPoint m_mousePressPos;
-
-  TDEInstance  *m_instance;
-};
+TDEToolBarButtonPrivate::~TDEToolBarButtonPrivate()
+{
+    //
+}
 
 // This will construct a separator
 TDEToolBarButton::TDEToolBarButton( TQWidget *_parent, const char *_name )
   : TQToolButton( _parent , _name)
 {
-  d = new TDEToolBarButtonPrivate;
+  d = new TDEToolBarButtonPrivate();
 
   resize(6,6);
   hide();
@@ -112,7 +117,7 @@ TDEToolBarButton::TDEToolBarButton( const TQString& _icon, int _id,
                                 const TQString &_txt, TDEInstance *_instance )
     : TQToolButton( _parent, _name ), d( 0 )
 {
-  d = new TDEToolBarButtonPrivate;
+  d = new TDEToolBarButtonPrivate();
 
   d->m_id     = _id;
   TQToolButton::setTextLabel(_txt);
@@ -146,7 +151,7 @@ TDEToolBarButton::TDEToolBarButton( const TQPixmap& pixmap, int _id,
                                 const TQString& txt)
     : TQToolButton( _parent, name ), d( 0 )
 {
-  d = new TDEToolBarButtonPrivate;
+  d = new TDEToolBarButtonPrivate();
 
   d->m_id       = _id;
   TQToolButton::setTextLabel(txt);
@@ -507,7 +512,7 @@ void TDEToolBarButton::drawButton( TQPainter *_painter )
   {
     TQPixmap pixmap = iconSet().pixmap( TQIconSet::Automatic,
         isEnabled() ? (d->m_isActive ? TQIconSet::Active : TQIconSet::Normal) :
-            	TQIconSet::Disabled,
+               TQIconSet::Disabled,
         isOn() ? TQIconSet::On : TQIconSet::Off );
     if( !pixmap.isNull())
     {
