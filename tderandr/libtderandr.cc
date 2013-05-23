@@ -25,6 +25,7 @@
 #include <tqdir.h>
 #include <tqtimer.h>
 #include <tqstringlist.h>
+#include <tqregexp.h>
 
 #include <tdelocale.h>
 #include <tdemessagebox.h>
@@ -691,7 +692,16 @@ bool KRandrSimpleAPI::applyDisplayConfiguration(TQPtrList<SingleScreenData> scre
 		TQString xrandr_command_output = exec(command.ascii());
 		xrandr_command_output = xrandr_command_output.stripWhiteSpace();
 		if (test) {
-			if (xrandr_command_output != "") {
+			// In case gamma settings is not supported, try again without '--gamma' parameter
+			if (xrandr_command_output == "xrandr: Gamma size is 0.") {
+				command = command.replace(TQRegExp("--gamma [0-9\\.]*:[0-9\\.]*:[0-9\\.]*"), "");
+				xrandr_command_output = exec(command.ascii());
+				xrandr_command_output = xrandr_command_output.stripWhiteSpace();
+			}
+			
+			if(xrandr_command_output.startsWith("xrandr: Failed to get size of gamma for output")) {
+				KMessageBox::sorry(0, xrandr_command_output, i18n("Setting gamma failed."));
+			} else if (xrandr_command_output != "") {
 				applyDisplayConfiguration(oldconfig, FALSE, kde_confdir);
 				accepted = false;
 				destroyScreenInformationObject(oldconfig);
@@ -1364,19 +1374,19 @@ TQPtrList<SingleScreenData> KRandrSimpleAPI::readCurrentDisplayConfiguration() {
 				// It may not always be 100% correct, or even anywhere close...
 				// Essentially it "undoes" the LUT gamma calculation from xrandr
 				// lut_gamma->green[i] = (pow(i/(size - 1), desired_gamma.green) * (size - 1) * 256);
+				screendata->gamma_red = 2.2;
+				screendata->gamma_green = 2.2;
+				screendata->gamma_blue = 2.2;
 				if (current_crtc) {
 					//int slot = 127;
 					int slot = 7;
 					int size = XRRGetCrtcGammaSize(randr_display, current_crtc->id);
-					XRRCrtcGamma *gammastruct = XRRGetCrtcGamma (randr_display, current_crtc->id);
-					screendata->gamma_red = log(gammastruct->red[slot]/((size-1.0)*256.0))/log(slot/(size-1.0));
-					screendata->gamma_green = log(gammastruct->green[slot]/((size-1.0)*256.0))/log(slot/(size-1.0));
-					screendata->gamma_blue = log(gammastruct->blue[slot]/((size-1.0)*256.0))/log(slot/(size-1.0));
-				}
-				else {
-					screendata->gamma_red = 2.2;
-					screendata->gamma_green = 2.2;
-					screendata->gamma_blue = 2.2;
+					if(size>0) {
+						XRRCrtcGamma *gammastruct = XRRGetCrtcGamma (randr_display, current_crtc->id);
+						screendata->gamma_red = log(gammastruct->red[slot]/((size-1.0)*256.0))/log(slot/(size-1.0));
+						screendata->gamma_green = log(gammastruct->green[slot]/((size-1.0)*256.0))/log(slot/(size-1.0));
+						screendata->gamma_blue = log(gammastruct->blue[slot]/((size-1.0)*256.0))/log(slot/(size-1.0));
+					}
 				}
 				// Round off the gamma to one decimal place
 				screendata->gamma_red = floorf(screendata->gamma_red * 10 + 0.5) / 10;
