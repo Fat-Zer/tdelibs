@@ -955,16 +955,26 @@ void TDEMainWindow::restoreWindowSize( TDEConfig * config )
         }
         if ( !size.isEmpty() ) {
 #ifdef Q_WS_X11
-            int state = ( size.width() > desk.width() ? NET::MaxHoriz : 0 )
-                        | ( size.height() > desk.height() ? NET::MaxVert : 0 );
-            if(( state & NET::Max ) == NET::Max )
-                ; // no resize
-            else if(( state & NET::MaxHoriz ) == NET::MaxHoriz )
+            int state = 0;
+            if (size.width() > desk.width()) {
+                state = state | NET::MaxHoriz;
+            }
+            if (size.height() > desk.height()) {
+                state = state | NET::MaxVert;
+            }
+
+            if (( state & NET::Max ) == NET::Max ) {
+                resize( desk.width(), desk.height());
+            }
+            else if(( state & NET::MaxHoriz ) == NET::MaxHoriz ) {
                 resize( width(), size.height());
-            else if(( state & NET::MaxVert ) == NET::MaxVert )
+            }
+            else if(( state & NET::MaxVert ) == NET::MaxVert ) {
                 resize( size.width(), height());
-            else
+            }
+            else {
                 resize( size );
+            }
             // TQWidget::showMaximized() is both insufficient and broken
             KWin::setState( winId(), state );
 #else

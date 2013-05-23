@@ -62,7 +62,7 @@ static void dump_xml(const TQDomDocument& doc)
 
 typedef TQValueList<TQDomElement> ToolbarList;
 
-namespace
+namespace KEditToolbarInternal
 {
 class XmlData
 {
@@ -150,7 +150,7 @@ public:
     return e->provides(TOOLBARITEMMIMETYPE);
   }
 
-  static bool decode( const TQMimeSource* e, ToolbarItem& item )
+  static bool decode( const TQMimeSource* e, KEditToolbarInternal::ToolbarItem& item )
   {
     if (!e)
       return false;
@@ -185,9 +185,9 @@ public:
 protected:
   virtual TQDragObject *dragObject()
   {
-    ToolbarItem *item = dynamic_cast<ToolbarItem*>(selectedItem());
+    KEditToolbarInternal::ToolbarItem *item = dynamic_cast<KEditToolbarInternal::ToolbarItem*>(selectedItem());
     if ( item ) {
-      ToolbarItemDrag *obj = new ToolbarItemDrag(item,
+      KEditToolbarInternal::ToolbarItemDrag *obj = new KEditToolbarInternal::ToolbarItemDrag(item,
                                  this, "ToolbarAction drag item");
       const TQPixmap *pm = item->pixmap(0);
       if( pm )
@@ -199,7 +199,7 @@ protected:
 
   virtual bool acceptDrag(TQDropEvent *event) const
   {
-    return ToolbarItemDrag::canDecode( event );
+    return KEditToolbarInternal::ToolbarItemDrag::canDecode( event );
   }
 };
 } // namespace
@@ -276,7 +276,7 @@ public:
   /**
    * Return the name of a given toolbar
    */
-  TQString toolbarName( const XmlData& xmlData, const TQDomElement& it ) const
+  TQString toolbarName( const KEditToolbarInternal::XmlData& xmlData, const TQDomElement& it ) const
   {
       static const TQString &tagText = TDEGlobal::staticQString( "text" );
       static const TQString &tagText2 = TDEGlobal::staticQString( "Text" );
@@ -293,8 +293,8 @@ public:
 
       // the name of the toolbar might depend on whether or not
       // it is in tdeparts
-      if ( ( xmlData.m_type == XmlData::Shell ) ||
-           ( xmlData.m_type == XmlData::Part ) )
+      if ( ( xmlData.m_type == KEditToolbarInternal::XmlData::Shell ) ||
+           ( xmlData.m_type == KEditToolbarInternal::XmlData::Part ) )
       {
         TQString doc_name(xmlData.m_document.documentElement().attribute( attrName ));
         name += " <" + doc_name + ">";
@@ -304,7 +304,7 @@ public:
   /**
    * Look for a given item in the current toolbar
    */
-  TQDomElement findElementForToolbarItem( const ToolbarItem* item ) const
+  TQDomElement findElementForToolbarItem( const KEditToolbarInternal::ToolbarItem* item ) const
   {
     static const TQString &attrName    = TDEGlobal::staticQString( "name" );
     for(TQDomNode n = m_currentToolbarElem.firstChild(); !n.isNull(); n = n.nextSibling())
@@ -321,10 +321,10 @@ public:
   void dump()
   {
     static const char* s_XmlTypeToString[] = { "Shell", "Part", "Local", "Merged" };
-    XmlDataList::Iterator xit = m_xmlFiles.begin();
+    KEditToolbarInternal::XmlDataList::Iterator xit = m_xmlFiles.begin();
     for ( ; xit != m_xmlFiles.end(); ++xit )
     {
-        kdDebug(240) << "XmlData type " << s_XmlTypeToString[(*xit).m_type] << " xmlFile: " << (*xit).m_xmlFile << endl;
+        kdDebug(240) << "KEditToolbarInternal::XmlData type " << s_XmlTypeToString[(*xit).m_type] << " xmlFile: " << (*xit).m_xmlFile << endl;
         for( TQValueList<TQDomElement>::Iterator it = (*xit).m_barList.begin();
              it != (*xit).m_barList.end(); ++it ) {
             kdDebug(240) << "    Toolbar: " << toolbarName( *xit, *it ) << endl;
@@ -341,7 +341,7 @@ public:
   TDEActionCollection* m_collection;
   TDEInstance         *m_instance;
 
-  XmlData*     m_currentXmlData;
+  KEditToolbarInternal::XmlData*     m_currentXmlData;
   TQDomElement m_currentToolbarElem;
 
   TQString            m_xmlFile;
@@ -352,7 +352,7 @@ public:
 
   ToolbarList        m_barList;
 
-  XmlDataList m_xmlFiles;
+  KEditToolbarInternal::XmlDataList m_xmlFiles;
 
   TQLabel     *m_comboLabel;
   KSeparator *m_comboSeparator;
@@ -609,9 +609,9 @@ void KEditToolbarWidget::initNonKPart(TDEActionCollection *collection,
   TQDomElement elem;
 
   // first, get all of the necessary info for our local xml
-  XmlData local;
+  KEditToolbarInternal::XmlData local;
   local.m_xmlFile = d->xmlFile(file);
-  local.m_type    = XmlData::Local;
+  local.m_type    = KEditToolbarInternal::XmlData::Local;
   local.m_document.setContent(localXML);
   elem = local.m_document.documentElement().toElement();
   local.m_barList = d->findToolbars(elem);
@@ -619,9 +619,9 @@ void KEditToolbarWidget::initNonKPart(TDEActionCollection *collection,
   d->m_xmlFiles.append(local);
 
   // then, the merged one (ui_standards + local xml)
-  XmlData merge;
+  KEditToolbarInternal::XmlData merge;
   merge.m_xmlFile  = TQString::null;
-  merge.m_type     = XmlData::Merged;
+  merge.m_type     = KEditToolbarInternal::XmlData::Merged;
   merge.m_document = domDocument();
   elem = merge.m_document.documentElement().toElement();
   merge.m_barList  = d->findToolbars(elem);
@@ -654,12 +654,12 @@ void KEditToolbarWidget::initKPart(KXMLGUIFactory* factory)
     if (client->xmlFile().isNull())
       continue;
 
-    XmlData data;
+    KEditToolbarInternal::XmlData data;
     data.m_xmlFile = client->localXMLFile();
     if ( it.atFirst() )
-      data.m_type = XmlData::Shell;
+      data.m_type = KEditToolbarInternal::XmlData::Shell;
     else
-      data.m_type = XmlData::Part;
+      data.m_type = KEditToolbarInternal::XmlData::Part;
     data.m_document.setContent( KXMLGUIFactory::readConfigFile( client->xmlFile(), client->instance() ) );
     elem = data.m_document.documentElement().toElement();
     data.m_barList = d->findToolbars(elem);
@@ -680,7 +680,7 @@ void KEditToolbarWidget::initKPart(KXMLGUIFactory* factory)
 bool KEditToolbarWidget::save()
 {
   //kdDebug(240) << "KEditToolbarWidget::save" << endl;
-  XmlDataList::Iterator it = d->m_xmlFiles.begin();
+  KEditToolbarInternal::XmlDataList::Iterator it = d->m_xmlFiles.begin();
   for ( ; it != d->m_xmlFiles.end(); ++it)
   {
     // let's not save non-modified files
@@ -688,7 +688,7 @@ bool KEditToolbarWidget::save()
       continue;
 
     // let's also skip (non-existent) merged files
-    if ( (*it).m_type == XmlData::Merged )
+    if ( (*it).m_type == KEditToolbarInternal::XmlData::Merged )
       continue;
 
     dump_xml((*it).m_document);
@@ -775,7 +775,7 @@ void KEditToolbarWidget::setupLayout()
 
   // our list of inactive actions
   TQLabel *inactive_label = new TQLabel(i18n("A&vailable actions:"), this);
-  m_inactiveList = new ToolbarListView(this);
+  m_inactiveList = new KEditToolbarInternal::ToolbarListView(this);
   m_inactiveList->setDragEnabled(true);
   m_inactiveList->setAcceptDrops(true);
   m_inactiveList->setDropVisualizer(false);
@@ -793,7 +793,7 @@ void KEditToolbarWidget::setupLayout()
 
   // our list of active actions
   TQLabel *active_label = new TQLabel(i18n("Curr&ent actions:"), this);
-  m_activeList = new ToolbarListView(this);
+  m_activeList = new KEditToolbarInternal::ToolbarListView(this);
   m_activeList->setDragEnabled(true);
   m_activeList->setAcceptDrops(true);
   m_activeList->setDropVisualizer(true);
@@ -910,11 +910,11 @@ void KEditToolbarWidget::loadToolbarCombo(const TQString& defaultToolbar)
   int defaultToolbarId = -1;
   int count = 0;
   // load in all of the toolbar names into this combo box
-  XmlDataList::Iterator xit = d->m_xmlFiles.begin();
+  KEditToolbarInternal::XmlDataList::Iterator xit = d->m_xmlFiles.begin();
   for ( ; xit != d->m_xmlFiles.end(); ++xit)
   {
     // skip the local one in favor of the merged
-    if ( (*xit).m_type == XmlData::Local )
+    if ( (*xit).m_type == KEditToolbarInternal::XmlData::Local )
       continue;
 
     // each xml file may have any number of toolbars
@@ -974,7 +974,7 @@ void KEditToolbarWidget::loadActionList(TQDomElement& elem)
     if (it.isNull()) continue;
     if (it.tagName() == tagSeparator)
     {
-      ToolbarItem *act = new ToolbarItem(m_activeList, tagSeparator, sep_name.arg(sep_num++), TQString::null);
+      KEditToolbarInternal::ToolbarItem *act = new KEditToolbarInternal::ToolbarItem(m_activeList, tagSeparator, sep_name.arg(sep_num++), TQString::null);
       bool isLineSep = ( it.attribute(attrLineSeparator, "true").lower() == TQString::fromLatin1("true") );
       if(isLineSep)
         act->setText(1, LINESEPARATORSTRING);
@@ -988,7 +988,7 @@ void KEditToolbarWidget::loadActionList(TQDomElement& elem)
     {
       // Merge can be named or not - use the name if there is one
       TQString name = it.attribute( attrName );
-      ToolbarItem *act = new ToolbarItem(m_activeList, tagMerge, name, i18n("This element will be replaced with all the elements of an embedded component."));
+      KEditToolbarInternal::ToolbarItem *act = new KEditToolbarInternal::ToolbarItem(m_activeList, tagMerge, name, i18n("This element will be replaced with all the elements of an embedded component."));
       if ( name.isEmpty() )
           act->setText(1, i18n("<Merge>"));
       else
@@ -998,7 +998,7 @@ void KEditToolbarWidget::loadActionList(TQDomElement& elem)
 
     if (it.tagName() == tagActionList)
     {
-      ToolbarItem *act = new ToolbarItem(m_activeList, tagActionList, it.attribute(attrName), i18n("This is a dynamic list of actions. You can move it, but if you remove it you won't be able to re-add it.") );
+      KEditToolbarInternal::ToolbarItem *act = new KEditToolbarInternal::ToolbarItem(m_activeList, tagActionList, it.attribute(attrName), i18n("This is a dynamic list of actions. You can move it, but if you remove it you won't be able to re-add it.") );
       act->setText(1, i18n("ActionList: %1").arg(it.attribute(attrName)));
       continue;
     }
@@ -1014,13 +1014,16 @@ void KEditToolbarWidget::loadActionList(TQDomElement& elem)
       if (it.attribute( attrName ) == action->name())
       {
         // we have a match!
-        ToolbarItem *act = new ToolbarItem(m_activeList, it.tagName(), action->name(), action->toolTip());
+        KEditToolbarInternal::ToolbarItem *act = new KEditToolbarInternal::ToolbarItem(m_activeList, it.tagName(), action->name(), action->toolTip());
         act->setText(1, action->plainText());
-        if (action->hasIcon())
-          if (!action->icon().isEmpty())
+        if (action->hasIcon()) {
+          if (!action->icon().isEmpty()) {
             act->setPixmap(0, loader->loadIcon(action->icon(), TDEIcon::Toolbar, 16, TDEIcon::DefaultState, 0, true) );
-          else // Has iconset
+          }
+          else { // Has iconset
             act->setPixmap(0, action->iconSet(TDEIcon::Toolbar).pixmap());
+          }
+        }
 
         active_list.insert(action->name(), true);
         break;
@@ -1034,22 +1037,26 @@ void KEditToolbarWidget::loadActionList(TQDomElement& elem)
     TDEAction *action = actionCollection->action( i );
 
     // skip our active ones
-    if (active_list.contains(action->name()))
+    if (active_list.contains(action->name())) {
       continue;
+    }
 
-    ToolbarItem *act = new ToolbarItem(m_inactiveList, tagActionList, action->name(), action->toolTip());
+    KEditToolbarInternal::ToolbarItem *act = new KEditToolbarInternal::ToolbarItem(m_inactiveList, tagActionList, action->name(), action->toolTip());
     act->setText(1, action->plainText());
-    if (action->hasIcon())
-      if (!action->icon().isEmpty())
+    if (action->hasIcon()) {
+      if (!action->icon().isEmpty()) {
         act->setPixmap(0, loader->loadIcon(action->icon(), TDEIcon::Toolbar, 16, TDEIcon::DefaultState, 0, true) );
-      else // Has iconset
+      }
+      else { // Has iconset
         act->setPixmap(0, action->iconSet(TDEIcon::Toolbar).pixmap());
+      }
+    }
   }
 
   // finally, add default separators to the inactive list
-  ToolbarItem *act = new ToolbarItem(m_inactiveList, tagSeparator, sep_name.arg(sep_num++), TQString::null);
+  KEditToolbarInternal::ToolbarItem *act = new KEditToolbarInternal::ToolbarItem(m_inactiveList, tagSeparator, sep_name.arg(sep_num++), TQString::null);
   act->setText(1, LINESEPARATORSTRING);
-  act = new ToolbarItem(m_inactiveList, tagSeparator, sep_name.arg(sep_num++), TQString::null);
+  act = new KEditToolbarInternal::ToolbarItem(m_inactiveList, tagSeparator, sep_name.arg(sep_num++), TQString::null);
   act->setText(1, SEPARATORSTRING);
 }
 
@@ -1061,7 +1068,7 @@ TDEActionCollection *KEditToolbarWidget::actionCollection() const
 void KEditToolbarWidget::slotToolbarSelected(const TQString& _text)
 {
   // iterate through everything
-  XmlDataList::Iterator xit = d->m_xmlFiles.begin();
+  KEditToolbarInternal::XmlDataList::Iterator xit = d->m_xmlFiles.begin();
   for ( ; xit != d->m_xmlFiles.end(); ++xit)
   {
     // each xml file may have any number of toolbars
@@ -1079,7 +1086,7 @@ void KEditToolbarWidget::slotToolbarSelected(const TQString& _text)
         // load in our values
         loadActionList(d->m_currentToolbarElem);
 
-        if ((*xit).m_type == XmlData::Part || (*xit).m_type == XmlData::Shell)
+        if ((*xit).m_type == KEditToolbarInternal::XmlData::Part || (*xit).m_type == KEditToolbarInternal::XmlData::Shell)
           setDOMDocument( (*xit).m_document );
         return;
       }
@@ -1089,7 +1096,7 @@ void KEditToolbarWidget::slotToolbarSelected(const TQString& _text)
 
 void KEditToolbarWidget::slotInactiveSelected(TQListViewItem *item)
 {
-  ToolbarItem* toolitem = static_cast<ToolbarItem *>(item);
+  KEditToolbarInternal::ToolbarItem* toolitem = static_cast<KEditToolbarInternal::ToolbarItem *>(item);
   if (item)
   {
     m_insertAction->setEnabled(true);
@@ -1105,7 +1112,7 @@ void KEditToolbarWidget::slotInactiveSelected(TQListViewItem *item)
 
 void KEditToolbarWidget::slotActiveSelected(TQListViewItem *item)
 {
-  ToolbarItem* toolitem = static_cast<ToolbarItem *>(item);
+  KEditToolbarInternal::ToolbarItem* toolitem = static_cast<KEditToolbarInternal::ToolbarItem *>(item);
   m_removeAction->setEnabled( item );
 
   static const TQString &tagAction = TDEGlobal::staticQString( "Action" );
@@ -1137,8 +1144,8 @@ void KEditToolbarWidget::slotActiveSelected(TQListViewItem *item)
 
 void KEditToolbarWidget::slotDropped(TDEListView *list, TQDropEvent *e, TQListViewItem *after)
 {
-  ToolbarItem *item = new ToolbarItem(m_inactiveList); // needs parent, use inactiveList temporarily
-  if(!ToolbarItemDrag::decode(e, *item)) {
+  KEditToolbarInternal::ToolbarItem *item = new KEditToolbarInternal::ToolbarItem(m_inactiveList); // needs parent, use inactiveList temporarily
+  if(!KEditToolbarInternal::ToolbarItemDrag::decode(e, *item)) {
     delete item;
     return;
   }
@@ -1165,7 +1172,7 @@ void KEditToolbarWidget::slotDropped(TDEListView *list, TQDropEvent *e, TQListVi
 
 void KEditToolbarWidget::slotInsertButton()
 {
-  ToolbarItem *item = (ToolbarItem*)m_inactiveList->currentItem();
+  KEditToolbarInternal::ToolbarItem *item = (KEditToolbarInternal::ToolbarItem*)m_inactiveList->currentItem();
   insertActive(item, m_activeList->currentItem(), false);
 
   // we're modified, so let this change
@@ -1178,7 +1185,7 @@ void KEditToolbarWidget::slotInsertButton()
 
 void KEditToolbarWidget::slotRemoveButton()
 {
-  removeActive( dynamic_cast<ToolbarItem*>(m_activeList->currentItem()) );
+  removeActive( dynamic_cast<KEditToolbarInternal::ToolbarItem*>(m_activeList->currentItem()) );
 
   // we're modified, so let this change
   emit enableOk(true);
@@ -1186,7 +1193,7 @@ void KEditToolbarWidget::slotRemoveButton()
   slotToolbarSelected( m_toolbarCombo->currentText() );
 }
 
-void KEditToolbarWidget::insertActive(ToolbarItem *item, TQListViewItem *before, bool prepend)
+void KEditToolbarWidget::insertActive(KEditToolbarInternal::ToolbarItem *item, TQListViewItem *before, bool prepend)
 {
   if (!item)
     return;
@@ -1212,7 +1219,7 @@ void KEditToolbarWidget::insertActive(ToolbarItem *item, TQListViewItem *before,
   {
     // we have the item in the active list which is before the new
     // item.. so let's try our best to add our new item right after it
-    ToolbarItem *act_item = (ToolbarItem*)before;
+    KEditToolbarInternal::ToolbarItem *act_item = (KEditToolbarInternal::ToolbarItem*)before;
     TQDomElement elem = d->findElementForToolbarItem( act_item );
     Q_ASSERT( !elem.isNull() );
     d->m_currentToolbarElem.insertAfter(new_item, elem);
@@ -1233,7 +1240,7 @@ void KEditToolbarWidget::insertActive(ToolbarItem *item, TQListViewItem *before,
   updateLocal(d->m_currentToolbarElem);
 }
 
-void KEditToolbarWidget::removeActive(ToolbarItem *item)
+void KEditToolbarWidget::removeActive(KEditToolbarInternal::ToolbarItem *item)
 {
   if (!item)
     return;
@@ -1260,7 +1267,7 @@ void KEditToolbarWidget::removeActive(ToolbarItem *item)
 
 void KEditToolbarWidget::slotUpButton()
 {
-  ToolbarItem *item = (ToolbarItem*)m_activeList->currentItem();
+  KEditToolbarInternal::ToolbarItem *item = (KEditToolbarInternal::ToolbarItem*)m_activeList->currentItem();
 
   // make sure we're not the top item already
   if (!item->itemAbove())
@@ -1273,7 +1280,7 @@ void KEditToolbarWidget::slotUpButton()
   delete item;
 }
 
-void KEditToolbarWidget::moveActive( ToolbarItem* item, TQListViewItem* before )
+void KEditToolbarWidget::moveActive( KEditToolbarInternal::ToolbarItem* item, TQListViewItem* before )
 {
   TQDomElement e = d->findElementForToolbarItem( item );
 
@@ -1281,7 +1288,7 @@ void KEditToolbarWidget::moveActive( ToolbarItem* item, TQListViewItem* before )
     return;
 
   // cool, i found me.  now clone myself
-  ToolbarItem *clone = new ToolbarItem(m_activeList,
+  KEditToolbarInternal::ToolbarItem *clone = new KEditToolbarInternal::ToolbarItem(m_activeList,
                                        before,
                                        item->internalTag(),
                                        item->internalName(),
@@ -1303,7 +1310,7 @@ void KEditToolbarWidget::moveActive( ToolbarItem* item, TQListViewItem* before )
   if ( !before )
     d->m_currentToolbarElem.insertBefore(e, d->m_currentToolbarElem.firstChild() );
   else
-    d->m_currentToolbarElem.insertAfter(e, d->findElementForToolbarItem( (ToolbarItem*)before ));
+    d->m_currentToolbarElem.insertAfter(e, d->findElementForToolbarItem( (KEditToolbarInternal::ToolbarItem*)before ));
 
   // and set this container as a noMerge
   static const TQString &attrNoMerge = TDEGlobal::staticQString( "noMerge" );
@@ -1315,7 +1322,7 @@ void KEditToolbarWidget::moveActive( ToolbarItem* item, TQListViewItem* before )
 
 void KEditToolbarWidget::slotDownButton()
 {
-  ToolbarItem *item = (ToolbarItem*)m_activeList->currentItem();
+  KEditToolbarInternal::ToolbarItem *item = (KEditToolbarInternal::ToolbarItem*)m_activeList->currentItem();
 
   // make sure we're not the bottom item already
   if (!item->itemBelow())
@@ -1332,14 +1339,14 @@ void KEditToolbarWidget::updateLocal(TQDomElement& elem)
 {
   static const TQString &attrName = TDEGlobal::staticQString( "name" );
 
-  XmlDataList::Iterator xit = d->m_xmlFiles.begin();
+  KEditToolbarInternal::XmlDataList::Iterator xit = d->m_xmlFiles.begin();
   for ( ; xit != d->m_xmlFiles.end(); ++xit)
   {
-    if ( (*xit).m_type == XmlData::Merged )
+    if ( (*xit).m_type == KEditToolbarInternal::XmlData::Merged )
       continue;
 
-    if ( (*xit).m_type == XmlData::Shell ||
-         (*xit).m_type == XmlData::Part )
+    if ( (*xit).m_type == KEditToolbarInternal::XmlData::Shell ||
+         (*xit).m_type == KEditToolbarInternal::XmlData::Part )
     {
       if ( d->m_currentXmlData->m_xmlFile == (*xit).m_xmlFile )
       {
@@ -1423,11 +1430,11 @@ void KEditToolbarWidget::slotProcessExited( TDEProcess* )
     return;
   }
 
-  ToolbarItem *item = (ToolbarItem*)m_activeList->currentItem();
+  KEditToolbarInternal::ToolbarItem *item = (KEditToolbarInternal::ToolbarItem*)m_activeList->currentItem();
   if(item){
     item->setPixmap(0, BarIcon(icon, 16));
 
-    Q_ASSERT( d->m_currentXmlData->m_type != XmlData::Merged );
+    Q_ASSERT( d->m_currentXmlData->m_type != KEditToolbarInternal::XmlData::Merged );
 
     d->m_currentXmlData->m_isModified = true;
 

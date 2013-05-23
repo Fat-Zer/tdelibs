@@ -33,7 +33,7 @@ class TQListViewItem;
 class KEditToolbarWidget;
 class KEditToolbarPrivate;
 class KEditToolbarWidgetPrivate;
-namespace
+namespace KEditToolbarInternal
 {
   class ToolbarItem;
   class ToolbarListView;
@@ -411,9 +411,9 @@ private slots:
 protected: // KDE4: make private
   void setupLayout();
 
-  void insertActive(ToolbarItem *item, TQListViewItem *before, bool prepend = false);
-  void removeActive(ToolbarItem *item);
-  void moveActive(ToolbarItem *item, TQListViewItem *before);
+  void insertActive(KEditToolbarInternal::ToolbarItem *item, TQListViewItem *before, bool prepend = false);
+  void removeActive(KEditToolbarInternal::ToolbarItem *item);
+  void moveActive(KEditToolbarInternal::ToolbarItem *item, TQListViewItem *before);
   void initNonKPart(TDEActionCollection *collection, const TQString& file, bool global);
   void initKPart(KXMLGUIFactory* factory);
   void loadToolbarCombo(const TQString& defaultToolbar = TQString::null);
@@ -421,8 +421,8 @@ protected: // KDE4: make private
   void updateLocal(TQDomElement& elem);
 
 private:
-  ToolbarListView *m_inactiveList;
-  ToolbarListView *m_activeList;
+  KEditToolbarInternal::ToolbarListView *m_inactiveList;
+  KEditToolbarInternal::ToolbarListView *m_activeList;
   TQComboBox *m_toolbarCombo;
 
   TQToolButton *m_upAction;
