@@ -62,6 +62,9 @@
 
 #include <kdebug.h>
 
+// CVE-2009-2537 (vendors agreed on max 10000 elements)
+#define MAX_SELECT_LENGTH 10000
+
 namespace KJS {
 
 KJS_DEFINE_PROTOTYPE_WITH_PROTOTYPE(HTMLDocumentProto, DOMDocumentProto)
@@ -2550,8 +2553,14 @@ void KJS::HTMLElement::putValueProperty(ExecState *exec, int token, const Value&
       case SelectValue:           { select.setValue(str); return; }
       case SelectLength:          { // read-only according to the NS spec, but webpages need it writeable
                                          Object coll = Object::dynamicCast( getSelectHTMLCollection(exec, select.options(), select) );
-                                         if ( coll.isValid() )
-                                           coll.put(exec,"length",value);
+                                         if ( coll.isValid() ) {
+                                           if (value.toInteger(exec) >= MAX_SELECT_LENGTH) {
+                                             Object err = Error::create(exec, RangeError);
+                                             exec->setException(err);
+                                           } else {
+                                             coll.put(exec, "length", value);
+                                           }
+                                         }
                                          return;
                                        }
       // read-only: form
