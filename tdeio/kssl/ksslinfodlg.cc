@@ -253,6 +253,14 @@ void KSSLInfoDlg::setup(KSSLCertificate *cert,
     layout->addWidget(new TQLabel(i18n("%1 bits used of a %2 bit cipher").arg(usedbits).arg(bits), this), 10, 1);
     d->m_layout->addMultiCell(layout, 2, 2, 0, 2);
 
+    ipl->setTextFormat(TQt::PlainText);
+    urlLabel->setTextFormat(TQt::PlainText);
+    d->_serialNum->setTextFormat(TQt::PlainText);
+    d->_csl->setTextFormat(TQt::PlainText);
+    d->_validFrom->setTextFormat(TQt::PlainText);
+    d->_validUntil->setTextFormat(TQt::PlainText);
+    d->_digest->setTextFormat(TQt::PlainText);
+
     displayCert(cert);
 }
 
@@ -400,32 +408,32 @@ void KSSLCertBox::setValues(TQString certName, TQWidget *mailCatcher) {
     if (!(tmp = cert.getValue("O")).isEmpty()) {
         label = new TQLabel(i18n("Organization:"), _frame);
         label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
-        new TQLabel(tmp, _frame);
+        (new TQLabel(tmp, _frame))->setTextFormat(TQt::PlainText);
     }
     if (!(tmp = cert.getValue("OU")).isEmpty()) {
         label = new TQLabel(i18n("Organizational unit:"), _frame);
         label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
-        new TQLabel(tmp, _frame);
+        (new TQLabel(tmp, _frame))->setTextFormat(TQt::PlainText);
     }
     if (!(tmp = cert.getValue("L")).isEmpty()) {
         label = new TQLabel(i18n("Locality:"), _frame);
         label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
-        new TQLabel(tmp, _frame);
+        (new TQLabel(tmp, _frame))->setTextFormat(TQt::PlainText);
     }
     if (!(tmp = cert.getValue("ST")).isEmpty()) {
         label = new TQLabel(i18n("Federal State","State:"), _frame);
         label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
-        new TQLabel(tmp, _frame);
+        (new TQLabel(tmp, _frame))->setTextFormat(TQt::PlainText);
     }
     if (!(tmp = cert.getValue("C")).isEmpty()) {
         label = new TQLabel(i18n("Country:"), _frame);
         label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
-        new TQLabel(tmp, _frame);
+        (new TQLabel(tmp, _frame))->setTextFormat(TQt::PlainText);
     }
     if (!(tmp = cert.getValue("CN")).isEmpty()) {
         label = new TQLabel(i18n("Common name:"), _frame);
         label->setAlignment(Qt::AlignLeft | Qt::AlignTop);
-        new TQLabel(tmp, _frame);
+        (new TQLabel(tmp, _frame))->setTextFormat(TQt::PlainText);
     }
     if (!(tmp = cert.getValue("Email")).isEmpty()) {
         label = new TQLabel(i18n("Email:"), _frame);
@@ -435,6 +443,7 @@ void KSSLCertBox::setValues(TQString certName, TQWidget *mailCatcher) {
             connect(mail, TQT_SIGNAL(leftClickedURL(const TQString &)), mailCatcher, TQT_SLOT(mailClicked(const TQString &)));
         } else {
             label = new TQLabel(tmp, _frame);
+            label->setTextFormat(TQt::PlainText);
         }
     }
     if (label && viewport()) {

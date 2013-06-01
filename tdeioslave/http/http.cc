@@ -184,6 +184,27 @@ static TQString sanitizeCustomHTTPHeader(const TQString& _header)
   return sanitizedHeaders.stripWhiteSpace();
 }
 
+static TQString htmlEscape(const TQString &plain)
+{
+    TQString rich;
+    rich.reserve(uint(plain.length() * 1.1));
+    for (uint i = 0; i < plain.length(); ++i) {
+        if (plain.at(i) == '<') {
+            rich += "&lt;";
+        } else if (plain.at(i) == '>') {
+            rich += "&gt;";
+        } else if (plain.at(i) == '&') {
+            rich += "&amp;";
+        } else if (plain.at(i) == '"') {
+            rich += "&quot;";
+        } else {
+            rich += plain.at(i);
+        }
+    }
+    rich.squeeze();
+    return rich;
+}
+
 
 #define NO_SIZE		((TDEIO::filesize_t) -1)
 
@@ -5186,7 +5207,7 @@ void HTTPProtocol::promptInfo( AuthInfo& info )
       info.verifyPath = false;
       info.digestInfo = m_strAuthorization;
       info.commentLabel = i18n( "Site:" );
-      info.comment = i18n("<b>%1</b> at <b>%2</b>").arg( m_strRealm ).arg( m_request.hostname );
+      info.comment = i18n("<b>%1</b> at <b>%2</b>").arg( htmlEscape(m_strRealm) ).arg( m_request.hostname );
     }
   }
   else if ( m_responseCode == 407 )
@@ -5203,7 +5224,7 @@ void HTTPProtocol::promptInfo( AuthInfo& info )
       info.verifyPath = false;
       info.digestInfo = m_strProxyAuthorization;
       info.commentLabel = i18n( "Proxy:" );
-      info.comment = i18n("<b>%1</b> at <b>%2</b>").arg( m_strProxyRealm ).arg( m_proxyURL.host() );
+      info.comment = i18n("<b>%1</b> at <b>%2</b>").arg( htmlEscape(m_strProxyRealm) ).arg( m_proxyURL.host() );
     }
   }
 }
