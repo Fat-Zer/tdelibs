@@ -2326,17 +2326,12 @@ TDEHardwareDevices::TDEHardwareDevices() {
 #else
 		m_cpuWatchTimer = new TQTimer(this);
 		connect( m_cpuWatchTimer, SIGNAL(timeout()), this, SLOT(processModifiedCPUs()) );
-		TQDir nodezerocpufreq("/sys/devices/system/cpu/cpu0/cpufreq");
-		if (nodezerocpufreq.exists()) {
-			m_cpuWatchTimer->start( 500, FALSE ); // 0.5 second repeating timer
-		}
 #endif
 
 		// Some devices do not receive update signals from udev
 		// These devices must be polled, and a good polling interval is 1 second
 		m_deviceWatchTimer = new TQTimer(this);
 		connect( m_deviceWatchTimer, SIGNAL(timeout()), this, SLOT(processStatelessDevices()) );
-		m_deviceWatchTimer->start( 1000, FALSE ); // 1 second repeating timer
 
 		// Update internal device information
 		queryHardwareInformation();
@@ -2373,6 +2368,20 @@ TDEHardwareDevices::~TDEHardwareDevices() {
 	}
 	if (dpy_id_map) {
 		delete dpy_id_map;
+	}
+}
+
+void TDEHardwareDevices::setTriggerlessHardwareUpdatesEnabled(bool enable) {
+	if (enable) {
+		TQDir nodezerocpufreq("/sys/devices/system/cpu/cpu0/cpufreq");
+		if (nodezerocpufreq.exists()) {
+			m_cpuWatchTimer->start( 500, FALSE ); // 0.5 second repeating timer
+		}
+		m_deviceWatchTimer->start( 1000, FALSE ); // 1 second repeating timer
+	}
+	else {
+		m_cpuWatchTimer->stop();
+		m_deviceWatchTimer->stop();
 	}
 }
 

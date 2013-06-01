@@ -2024,6 +2024,15 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 		void rescanDeviceInformation(TDEGenericDevice* hwdevice);
 
 		/**
+		*  Enable or disable automatic state updates of triggerless hardware devices
+		*  such as CPUs and network cards.  When enabled, your application will use
+		*  additional CPU resources to continually poll triggerless hardware devices.
+		*  Automatic updates are disabled by default.
+		*  @param enable a bool specifiying whether or not automatic updates should be enabled
+		*/
+		void setTriggerlessHardwareUpdatesEnabled(bool enable);
+
+		/**
 		*  Convert a byte count to human readable form
 		*  @param bytes a double containing the number of bytes
 		*  @return a TQString containing the human readable byte count
