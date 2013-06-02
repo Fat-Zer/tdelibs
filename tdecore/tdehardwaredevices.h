@@ -2024,6 +2024,16 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 		void rescanDeviceInformation(TDEGenericDevice* hwdevice);
 
 		/**
+		*  Rescan a hardware device to look for changes
+		*  WARNING: This method can be very expensive.  Use with caution!
+		*  The computational expense can be reduced somewhat if the device tree structure
+		*  has not changed by calling this method with regenerateDeviceTree = FALSE.
+		*  @param hwdevice TDEGenericDevice* with the device to rescan
+		*  @param regenerateDeviceTree TRUE to update parent/child links in device tree
+		*/
+		void rescanDeviceInformation(TDEGenericDevice* hwdevice, bool regenerateDeviceTree);
+
+		/**
 		*  Enable or disable automatic state updates of triggerless hardware devices
 		*  such as CPUs and network cards.  When enabled, your application will use
 		*  additional CPU resources to continually poll triggerless hardware devices.
@@ -2066,6 +2076,7 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 	private:
 		TDEGenericDevice *classifyUnknownDevice(udev_device* dev, TDEGenericDevice* existingdevice=0, bool force_full_classification=true);
 		TDEGenericDevice *classifyUnknownDeviceByExternalRules(udev_device* dev, TDEGenericDevice* existingdevice=0, bool classifySubDevices=false);
+		void updateExistingDeviceInformation(TDEGenericDevice* existingdevice, udev_device* dev=NULL);
 
 		void updateParentDeviceInformation();
 		void updateParentDeviceInformation(TDEGenericDevice* hwdevice);

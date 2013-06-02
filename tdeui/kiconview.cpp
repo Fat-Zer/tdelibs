@@ -247,7 +247,7 @@ void TDEIconView::emitExecute( TQIconViewItem *item, const TQPoint &pos )
 
   m_pAutoSelect->stop();
 
-  //Don�t emit executed if in SC mode and Shift or Ctrl are pressed
+  //Don't emit executed if in SC mode and Shift or Ctrl are pressed
   if( !( m_bUseSingle && ((keybstate & ShiftButton) || (keybstate & ControlButton)) ) ) {
     setSelected( item, false );
     viewport()->unsetCursor();

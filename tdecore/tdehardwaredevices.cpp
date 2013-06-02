@@ -2386,10 +2386,16 @@ void TDEHardwareDevices::setTriggerlessHardwareUpdatesEnabled(bool enable) {
 }
 
 void TDEHardwareDevices::rescanDeviceInformation(TDEGenericDevice* hwdevice) {
+	rescanDeviceInformation(hwdevice, true);
+}
+
+void TDEHardwareDevices::rescanDeviceInformation(TDEGenericDevice* hwdevice, bool regenerateDeviceTree) {
 	struct udev_device *dev;
 	dev = udev_device_new_from_syspath(m_udevStruct, hwdevice->systemPath().ascii());
-	classifyUnknownDevice(dev, hwdevice, false);
-	updateParentDeviceInformation(hwdevice);	// Update parent/child tables for this device
+	updateExistingDeviceInformation(hwdevice);
+	if (regenerateDeviceTree) {
+		updateParentDeviceInformation(hwdevice);	// Update parent/child tables for this device
+	}
 	udev_device_unref(dev);
 }
 
@@ -2874,7 +2880,7 @@ void TDEHardwareDevices::processStatelessDevices() {
 	TDEGenericHardwareList devList = listAllPhysicalDevices();
 	for ( hwdevice = devList.first(); hwdevice; hwdevice = devList.next() ) {
 		if ((hwdevice->type() == TDEGenericDeviceType::RootSystem) || (hwdevice->type() == TDEGenericDeviceType::Network) || (hwdevice->type() == TDEGenericDeviceType::OtherSensor) || (hwdevice->type() == TDEGenericDeviceType::Event) || (hwdevice->type() == TDEGenericDeviceType::Battery) || (hwdevice->type() == TDEGenericDeviceType::PowerSupply)) {
-			rescanDeviceInformation(hwdevice);
+			rescanDeviceInformation(hwdevice, false);
 			emit hardwareUpdated(hwdevice);
 			emit hardwareEvent(TDEHardwareEvent::HardwareUpdated, hwdevice->uniqueID());
 		}
@@ -4130,6 +4136,56 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		device = classifyUnknownDeviceByExternalRules(dev, device, false);
 	}
 
+	updateExistingDeviceInformation(device, dev);
+
+	if (temp_udev_device) {
+		udev_device_unref(dev);
+	}
+
+	return device;
+}
+
+void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* existingdevice, udev_device* dev) {
+	TQString devicename;
+	TQString devicetype;
+	TQString devicedriver;
+	TQString devicesubsystem;
+	TQString devicenode;
+	TQString systempath;
+	TQString devicevendorid;
+	TQString devicemodelid;
+	TQString devicevendoridenc;
+	TQString devicemodelidenc;
+	TQString devicesubvendorid;
+	TQString devicesubmodelid;
+	TQString devicetypestring;
+	TQString devicetypestring_alt;
+	TQString devicepciclass;
+	TDEGenericDevice* device = existingdevice;
+	bool temp_udev_device = !dev;
+
+	devicename = device->name();
+	devicetype = device->m_udevtype;
+	devicedriver = device->deviceDriver();
+	devicesubsystem = device->subsystem();
+	devicenode = device->deviceNode();
+	systempath = device->systemPath();
+	devicevendorid = device->vendorID();
+	devicemodelid = device->modelID();
+	devicevendoridenc = device->vendorEncoded();
+	devicemodelidenc = device->modelEncoded();
+	devicesubvendorid = device->subVendorID();
+	devicesubmodelid = device->subModelID();
+	devicetypestring = device->m_udevdevicetypestring;
+	devicetypestring_alt = device->udevdevicetypestring_alt;
+	devicepciclass = device->PCIClass();
+
+	if (!dev) {
+		TQString syspathudev = systempath;
+		syspathudev.truncate(syspathudev.length()-1);	// Remove trailing slash
+		dev = udev_device_new_from_syspath(m_udevStruct, syspathudev.ascii());
+	}
+
 	if (device->type() == TDEGenericDeviceType::Disk) {
 		TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(device);
 		if (sdevice->diskType() & TDEDiskDeviceType::Camera) {
@@ -5133,8 +5189,6 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 	if (temp_udev_device) {
 		udev_device_unref(dev);
 	}
-
-	return device;
 }
 
 void TDEHardwareDevices::updateBlacklists(TDEGenericDevice* hwdevice, udev_device* dev) {

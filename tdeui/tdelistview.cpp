@@ -489,36 +489,45 @@ bool TDEListView::isExecuteArea( int x )
 
 bool TDEListView::isExecuteArea( int x, TQListViewItem* item )
 {
-  if( allColumnsShowFocus() )
-    return true;
-  else {
-    int offset = 0;
-
-
-    int width = columnWidth( 0 );
-
-    TQHeader* const thisHeader = header();
-    const int pos = thisHeader->mapToIndex( 0 );
-
-    for ( int index = 0; index < pos; ++index )
-      offset += columnWidth( thisHeader->mapToSection( index ) );
-
-    x += contentsX(); // in case of a horizontal scrollbar
-
-    if ( item )
-    {
-	width = treeStepSize()*( item->depth() + ( rootIsDecorated() ? 1 : 0 ) );
-	width += itemMargin();
-	int ca = AlignHorizontal_Mask & columnAlignment( 0 );
-	if ( ca == AlignLeft || ca == AlignAuto ) {
-	    width += item->width( fontMetrics(), this, 0 );
-	    if ( width > columnWidth( 0 ) )
-		width = columnWidth( 0 );
+	if ( allColumnsShowFocus() ) {
+		return true;
 	}
-    }
+	else {
+		int offset = 0;
+		int width = columnWidth( 0 );
+		
+		TQHeader* const thisHeader = header();
+		const int pos = thisHeader->mapToIndex( 0 );
+		
+		for ( int index = 0; index < pos; ++index ) {
+			offset += columnWidth( thisHeader->mapToSection( index ) );
+		}
+		
+		x += contentsX(); // in case of a horizontal scrollbar
 
-    return ( x > offset && x < ( offset + width ) );
-  }
+		// What was this supposed to do???
+		// Just use the column width, as at least one entire column is highlighted on row selection!
+#if 0
+		if ( item ) {
+			width = treeStepSize()*( item->depth() + ( rootIsDecorated() ? 1 : 0 ) );
+			width += itemMargin();
+			int ca = AlignHorizontal_Mask & columnAlignment( 0 );
+			if ( ca == AlignLeft || ca == AlignAuto ) {
+				width += item->width( fontMetrics(), this, 0 );
+				if ( width > columnWidth( 0 ) ) {
+					width = columnWidth( 0 );
+				}
+			}
+		}
+#endif
+		if ( item ) {
+			if (!allColumnsShowFocus()) {
+				offset += treeStepSize()*( item->depth() + ( rootIsDecorated() ? 1 : 0 ) );
+			}
+		}
+		
+		return ( x > offset && x < ( offset + width ) );
+	}
 }
 
 void TDEListView::slotOnItem( TQListViewItem *item )
@@ -883,8 +892,9 @@ void TDEListView::contentsMouseDoubleClickEvent ( TQMouseEvent *e )
   // We don't want to call the parent method because it does setOpen,
   // whereas we don't do it in single click mode... (David)
   //TQListView::contentsMouseDoubleClickEvent( e );
-  if ( !e || e->button() != Qt::LeftButton )
+  if ( !e || e->button() != Qt::LeftButton ) {
     return;
+  }
 
   TQPoint vp = contentsToViewport(e->pos());
   TQListViewItem *item = itemAt( vp );
@@ -895,15 +905,17 @@ void TDEListView::contentsMouseDoubleClickEvent ( TQMouseEvent *e )
   if( item ) {
     emit doubleClicked( item, e->globalPos(), col );
 
-    if( (e->button() == Qt::LeftButton) && !d->bUseSingle )
+    if( (e->button() == Qt::LeftButton) && !d->bUseSingle ) {
       emitExecute( item, e->globalPos(), col );
+    }
   }
 }
 
 void TDEListView::slotMouseButtonClicked( int btn, TQListViewItem *item, const TQPoint &pos, int c )
 {
-  if( (btn == Qt::LeftButton) && item )
+  if( (btn == Qt::LeftButton) && item ) {
     emitExecute(item, pos, c);
+  }
 }
 
 void TDEListView::contentsDropEvent(TQDropEvent* e)
@@ -2365,7 +2377,7 @@ void TDEListViewItem::paintCell(TQPainter *p, const TQColorGroup &cg, int column
 
 void TDEListView::selectAll( bool select )
 {
-    if ( selectionMode() == Multi || selectionMode() == Extended ) {
+    if ( ((SelectionModeExt)selectionMode() == Multi) || ((SelectionModeExt)selectionMode() == Extended) ) {
 	bool b = signalsBlocked();
 	blockSignals( TRUE );
 	bool anything = FALSE;
