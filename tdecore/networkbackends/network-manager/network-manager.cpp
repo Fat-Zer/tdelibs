@@ -1447,9 +1447,178 @@ void TDENetworkConnectionManager_BackendNMPrivate::internalProcessDeviceStateCha
 	m_prevDeviceState = newState;
 
 	if (newState == NM_DEVICE_STATE_FAILED) {
-		// FIXME
-		// This should provide a plain-text interpretation of the NetworkManager-specific error code
-		m_parent->internalNetworkDeviceEvent(TDENetworkDeviceEventType::Failure, TQString("Connection attempt failed!<br>NetworkManager returned error %1.").arg(reason));
+		TQString errorString;
+		if (reason == NM_DEVICE_STATE_REASON_NONE) {
+			errorString = TQString("Connection attempt failed!");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_UNKNOWN) {
+			errorString = TQString("Connection attempt failed!<br>Unknown error detected.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_NOW_MANAGED) {
+			errorString = TQString("Connection attempt failed!<br>Network device is now managed.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_NOW_UNMANAGED) {
+			errorString = TQString("Connection attempt failed!<br>Network device is now unmanaged.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_CONFIG_FAILED) {
+			errorString = TQString("Connection attempt failed!<br>Configuration failed.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_IP_CONFIG_UNAVAILABLE) {
+			errorString = TQString("Connection attempt failed!<br>IP configuration unavailable.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_IP_CONFIG_EXPIRED) {
+			errorString = TQString("Connection attempt failed!<br>IP configuration expired.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_NO_SECRETS) {
+			errorString = i18n("Connection attempt failed!<br>Secrets were required to establish a connection, but no secrets were available.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_SUPPLICANT_DISCONNECT) {
+			errorString = TQString("Connection attempt failed!<br>The supplicant was disconnected while attempting to establish a wireless connection.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_SUPPLICANT_CONFIG_FAILED) {
+			errorString = TQString("Connection attempt failed!<br>Supplicant configuration failed while attempting to establish a wireless connection.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_SUPPLICANT_FAILED) {
+			errorString = i18n("Connection attempt failed!<br>The supplicant failed while attempting to establish a wireless connection.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_SUPPLICANT_TIMEOUT) {
+			errorString = i18n("Connection attempt failed!<br>The supplicant timed out while attempting to establish a wireless connection.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_PPP_START_FAILED) {
+			errorString = i18n("Connection attempt failed!<br>The PPP client failed to start.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_PPP_DISCONNECT) {
+			errorString = i18n("Connection attempt failed!<br>The PPP client was disconnected.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_PPP_FAILED) {
+			errorString = i18n("Connection attempt failed!<br>Unknown PPP failure.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_DHCP_START_FAILED) {
+			errorString = i18n("Connection attempt failed!<br>The DHCP client failed to start.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_DHCP_ERROR) {
+			errorString = i18n("Connection attempt failed!<br>The DHCP client encountered an error.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_DHCP_FAILED) {
+			errorString = i18n("Connection attempt failed!<br>Uknown DHCP failure.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_SHARED_START_FAILED) {
+			errorString = i18n("Connection attempt failed!<br>The connection sharing service failed to start.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_SHARED_FAILED) {
+			errorString = i18n("Connection attempt failed!<br>The connection sharing service encountered an error.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_AUTOIP_START_FAILED) {
+			errorString = i18n("Connection attempt failed!<br>The AutoIP service failed to start.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_AUTOIP_ERROR) {
+			errorString = i18n("Connection attempt failed!<br>The AutoIP service encountered an error.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_AUTOIP_FAILED) {
+			errorString = i18n("Connection attempt failed!<br>Unknown AutoIP failure.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_MODEM_BUSY) {
+			errorString = i18n("Connection attempt failed!<br>Modem was busy.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_MODEM_NO_DIAL_TONE) {
+			errorString = i18n("Connection attempt failed!<br>No dial tone.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_MODEM_NO_CARRIER) {
+			errorString = i18n("Connection attempt failed!<br>No carrier detected.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_MODEM_DIAL_TIMEOUT) {
+			errorString = i18n("Connection attempt failed!<br>Modem timed out while dialing.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_MODEM_DIAL_FAILED) {
+			errorString = i18n("Connection attempt failed!<br>The modem failed to dial.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_MODEM_INIT_FAILED) {
+			errorString = i18n("Connection attempt failed!<br>Modem initialization failed.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_GSM_APN_FAILED) {
+			errorString = i18n("Connection attempt failed!<br>GSM APN failure.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_GSM_REGISTRATION_NOT_SEARCHING) {
+			errorString = i18n("Connection attempt failed!<br>GSM registration failed to search for networks.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_GSM_REGISTRATION_DENIED) {
+			errorString = i18n("Connection attempt failed!<br>GSM registration attempt was rejected.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_GSM_REGISTRATION_TIMEOUT) {
+			errorString = i18n("Connection attempt failed!<br>GSM registration attempt timed out.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_GSM_REGISTRATION_FAILED) {
+			errorString = i18n("Connection attempt failed!<br>GSM registration attempt failed.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_GSM_PIN_CHECK_FAILED) {
+			errorString = i18n("Connection attempt failed!<br>GSM PIN check failed.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_FIRMWARE_MISSING) {
+			errorString = i18n("Connection attempt failed!<br>Network device firmware is missing.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_REMOVED) {
+			errorString = i18n("Connection attempt failed!<br>Network device was removed.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_SLEEPING) {
+			errorString = i18n("Connection attempt failed!<br>Network device is sleeping.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_CONNECTION_REMOVED) {
+			errorString = i18n("Connection attempt failed!<br>Connection was removed.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_USER_REQUESTED) {
+			errorString = i18n("Connection attempt failed!<br>User requested device disconnection.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_CARRIER) {
+			errorString = i18n("Connection attempt failed!<br>Carrier or link status changed.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_CONNECTION_ASSUMED) {
+			errorString = i18n("Connection attempt failed!<br>Device and/or connection already active.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_SUPPLICANT_AVAILABLE) {
+			errorString = i18n("Connection attempt failed!<br>The supplicant is now available.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_MODEM_NOT_FOUND) {
+			errorString = i18n("Connection attempt failed!<br>Requested modem was not found.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_BT_FAILED) {
+			errorString = i18n("Connection attempt failed!<br>Bluetooth connection timeout.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_GSM_SIM_NOT_INSERTED) {
+			errorString = i18n("Connection attempt failed!<br>GSM SIM not inserted.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_GSM_SIM_PIN_REQUIRED) {
+			errorString = i18n("Connection attempt failed!<br>GSM PIN required.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_GSM_SIM_PUK_REQUIRED) {
+			errorString = i18n("Connection attempt failed!<br>GSM PUK required.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_GSM_SIM_WRONG) {
+			errorString = i18n("Connection attempt failed!<br>GSM SIM incorrect.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_INFINIBAND_MODE) {
+			errorString = i18n("Connection attempt failed!<br>Incorrect Infiniband mode.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_DEPENDENCY_FAILED) {
+			errorString = i18n("Connection attempt failed!<br>Dependency failure.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_BR2684_FAILED) {
+			errorString = i18n("Connection attempt failed!<br>Unknown bridge failure.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_MODEM_MANAGER_UNAVAILABLE) {
+			errorString = i18n("Connection attempt failed!<br>ModemManager not available.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_SSID_NOT_FOUND) {
+			errorString = i18n("Connection attempt failed!<br>SSID not found.");
+		}
+		else if (reason == NM_DEVICE_STATE_REASON_SECONDARY_CONNECTION_FAILED) {
+			errorString = i18n("Connection attempt failed!<br>Secondary connection failure.");
+		}
+		else {
+			// FIXME
+			// This should provide a plain-text interpretation of the NetworkManager-specific error code
+			errorString = TQString("Connection attempt failed!<br>NetworkManager returned error %1.").arg(reason);
+		}
+		m_parent->internalNetworkDeviceEvent(TDENetworkDeviceEventType::Failure, errorString);
 	}
 
 	m_parent->internalNetworkDeviceStateChanged(nmDeviceStateToTDEDeviceState(newState), m_parent->m_macAddress);
@@ -3783,80 +3952,94 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 		if (wiFiConnection) {
 			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
 			{
-				{
+				if (wiFiConnection->securityRequired) {
 					if (wiFiConnection->securityRequired) {
 						settingsMap["key-mgmt"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(tdeWiFiKeyTypeToNMWiFiKeyType(wiFiConnection->securitySettings.keyType)));
 					}
+					if (wiFiConnection->securitySettings.wepKeyIndex > 0) {
+						settingsMap["wep-tx-keyidx"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(wiFiConnection->securitySettings.wepKeyIndex));
+					}
 					else {
-						// The key-mgmt entry seems to be required even if no security is available and/or enabled!
-						// settingsMap.remove("key-mgmt");
-						settingsMap["key-mgmt"] = convertDBUSDataToVariantData(TQT_DBusData::fromString("none"));
+						settingsMap.remove("wep-tx-keyidx");
+					}
+					UPDATE_STRING_SETTING_IF_VALID(tdeWiFiAuthTypeToNMWiFiAuthType(wiFiConnection->securitySettings.authType), "auth-alg", settingsMap)
+					{
+						TQT_DBusDataValueList valueList;
+						{
+							TQStringList strings = tdeWiFiWPAVersionToNMWiFiWPAVersion(wiFiConnection->securitySettings.wpaVersion);
+							for (TQStringList::Iterator it = strings.begin(); it != strings.end(); ++it) {
+								valueList.append(TQT_DBusData::fromString(*it));
+							}
+						}
+						if (valueList.count() > 0) settingsMap["proto"] = convertDBUSDataToVariantData(TQT_DBusData::fromTQValueList(valueList));
+						else settingsMap.remove("proto");
+					}
+					{
+						TQT_DBusDataValueList valueList;
+						{
+							if (wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(TDENetworkWiFiConnectionCipher::Any)) {
+								if (!wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherWEP40)) wiFiConnection->securitySettings.allowedPairWiseCiphers.append(TDENetworkWiFiConnectionCipher::CipherWEP40);
+								if (!wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherWEP104)) wiFiConnection->securitySettings.allowedPairWiseCiphers.append(TDENetworkWiFiConnectionCipher::CipherWEP104);
+								if (!wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherTKIP)) wiFiConnection->securitySettings.allowedPairWiseCiphers.append(TDENetworkWiFiConnectionCipher::CipherTKIP);
+								if (!wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherCCMP)) wiFiConnection->securitySettings.allowedPairWiseCiphers.append(TDENetworkWiFiConnectionCipher::CipherCCMP);
+							}
+							for (TDENetworkWiFiConnectionCipherList::Iterator it = wiFiConnection->securitySettings.allowedPairWiseCiphers.begin(); it != wiFiConnection->securitySettings.allowedPairWiseCiphers.end(); ++it) {
+								valueList.append(TQT_DBusData::fromString(tdeWiFiCipherToNMWiFiCipher(*it)));
+							}
+						}
+						if (valueList.count() > 0) settingsMap["pairwise"] = convertDBUSDataToVariantData(TQT_DBusData::fromTQValueList(valueList));
+						else settingsMap.remove("pairwise");
+					}
+					{
+						TQT_DBusDataValueList valueList;
+						{
+							if (wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(TDENetworkWiFiConnectionCipher::Any)) {
+								if (!wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherWEP40)) wiFiConnection->securitySettings.allowedGroupWiseCiphers.append(TDENetworkWiFiConnectionCipher::CipherWEP40);
+								if (!wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherWEP104)) wiFiConnection->securitySettings.allowedGroupWiseCiphers.append(TDENetworkWiFiConnectionCipher::CipherWEP104);
+								if (!wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherTKIP)) wiFiConnection->securitySettings.allowedGroupWiseCiphers.append(TDENetworkWiFiConnectionCipher::CipherTKIP);
+								if (!wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherCCMP)) wiFiConnection->securitySettings.allowedGroupWiseCiphers.append(TDENetworkWiFiConnectionCipher::CipherCCMP);
+							}
+							for (TDENetworkWiFiConnectionCipherList::Iterator it = wiFiConnection->securitySettings.allowedGroupWiseCiphers.begin(); it != wiFiConnection->securitySettings.allowedGroupWiseCiphers.end(); ++it) {
+								valueList.append(TQT_DBusData::fromString(tdeWiFiCipherToNMWiFiCipher(*it)));
+							}
+						}
+						if (valueList.count() > 0) settingsMap["group"] = convertDBUSDataToVariantData(TQT_DBusData::fromTQValueList(valueList));
+						else settingsMap.remove("group");
+					}
+					UPDATE_STRING_SETTING_IF_VALID(wiFiConnection->securitySettings.leapUsername, "leap-username", settingsMap)
+					settingsMap["wep-key-flags"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(tdePasswordFlagsToNMPasswordFlags(wiFiConnection->securitySettings.wepKeyFlags)));
+					settingsMap["wep-key-type"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(tdeWepKeyTypeToNMWepKeyType(wiFiConnection->securitySettings.wepKeyType)));
+					settingsMap["psk-flags"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(tdePasswordFlagsToNMPasswordFlags(wiFiConnection->securitySettings.pskFlags)));
+					settingsMap["leap-password-flags"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(tdePasswordFlagsToNMPasswordFlags(wiFiConnection->securitySettings.leapPasswordFlags)));
+					if (wiFiConnection->securitySettings.secretsValid) {
+						UPDATE_STRING_SETTING_IF_VALID(wiFiConnection->securitySettings.wepKey0, "wep-key0", settingsMap)
+						UPDATE_STRING_SETTING_IF_VALID(wiFiConnection->securitySettings.wepKey1, "wep-key1", settingsMap)
+						UPDATE_STRING_SETTING_IF_VALID(wiFiConnection->securitySettings.wepKey2, "wep-key2", settingsMap)
+						UPDATE_STRING_SETTING_IF_VALID(wiFiConnection->securitySettings.wepKey3, "wep-key3", settingsMap)
+						UPDATE_STRING_SETTING_IF_VALID(wiFiConnection->securitySettings.psk, "psk", settingsMap)
+						UPDATE_STRING_SETTING_IF_VALID(wiFiConnection->securitySettings.leapPassword, "leap-password", settingsMap)
+					}
+					else {
+						settingsMap.remove("wep-key0");
+						settingsMap.remove("wep-key1");
+						settingsMap.remove("wep-key2");
+						settingsMap.remove("wep-key3");
+						settingsMap.remove("psk");
+						settingsMap.remove("leap-password");
 					}
 				}
-				if (wiFiConnection->securitySettings.wepKeyIndex > 0) {
-					settingsMap["wep-tx-keyidx"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(wiFiConnection->securitySettings.wepKeyIndex));
-				}
 				else {
+					settingsMap.remove("key-mgmt");
 					settingsMap.remove("wep-tx-keyidx");
-				}
-				UPDATE_STRING_SETTING_IF_VALID(tdeWiFiAuthTypeToNMWiFiAuthType(wiFiConnection->securitySettings.authType), "auth-alg", settingsMap)
-				{
-					TQT_DBusDataValueList valueList;
-					{
-						TQStringList strings = tdeWiFiWPAVersionToNMWiFiWPAVersion(wiFiConnection->securitySettings.wpaVersion);
-						for (TQStringList::Iterator it = strings.begin(); it != strings.end(); ++it) {
-							valueList.append(TQT_DBusData::fromString(*it));
-						}
-					}
-					if (valueList.count() > 0) settingsMap["proto"] = convertDBUSDataToVariantData(TQT_DBusData::fromTQValueList(valueList));
-					else settingsMap.remove("proto");
-				}
-				{
-					TQT_DBusDataValueList valueList;
-					{
-						if (wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(TDENetworkWiFiConnectionCipher::Any)) {
-							if (!wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherWEP40)) wiFiConnection->securitySettings.allowedPairWiseCiphers.append(TDENetworkWiFiConnectionCipher::CipherWEP40);
-							if (!wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherWEP104)) wiFiConnection->securitySettings.allowedPairWiseCiphers.append(TDENetworkWiFiConnectionCipher::CipherWEP104);
-							if (!wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherTKIP)) wiFiConnection->securitySettings.allowedPairWiseCiphers.append(TDENetworkWiFiConnectionCipher::CipherTKIP);
-							if (!wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherCCMP)) wiFiConnection->securitySettings.allowedPairWiseCiphers.append(TDENetworkWiFiConnectionCipher::CipherCCMP);
-						}
-						for (TDENetworkWiFiConnectionCipherList::Iterator it = wiFiConnection->securitySettings.allowedPairWiseCiphers.begin(); it != wiFiConnection->securitySettings.allowedPairWiseCiphers.end(); ++it) {
-							valueList.append(TQT_DBusData::fromString(tdeWiFiCipherToNMWiFiCipher(*it)));
-						}
-					}
-					if (valueList.count() > 0) settingsMap["pairwise"] = convertDBUSDataToVariantData(TQT_DBusData::fromTQValueList(valueList));
-					else settingsMap.remove("pairwise");
-				}
-				{
-					TQT_DBusDataValueList valueList;
-					{
-						if (wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(TDENetworkWiFiConnectionCipher::Any)) {
-							if (!wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherWEP40)) wiFiConnection->securitySettings.allowedGroupWiseCiphers.append(TDENetworkWiFiConnectionCipher::CipherWEP40);
-							if (!wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherWEP104)) wiFiConnection->securitySettings.allowedGroupWiseCiphers.append(TDENetworkWiFiConnectionCipher::CipherWEP104);
-							if (!wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherTKIP)) wiFiConnection->securitySettings.allowedGroupWiseCiphers.append(TDENetworkWiFiConnectionCipher::CipherTKIP);
-							if (!wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherCCMP)) wiFiConnection->securitySettings.allowedGroupWiseCiphers.append(TDENetworkWiFiConnectionCipher::CipherCCMP);
-						}
-						for (TDENetworkWiFiConnectionCipherList::Iterator it = wiFiConnection->securitySettings.allowedGroupWiseCiphers.begin(); it != wiFiConnection->securitySettings.allowedGroupWiseCiphers.end(); ++it) {
-							valueList.append(TQT_DBusData::fromString(tdeWiFiCipherToNMWiFiCipher(*it)));
-						}
-					}
-					if (valueList.count() > 0) settingsMap["group"] = convertDBUSDataToVariantData(TQT_DBusData::fromTQValueList(valueList));
-					else settingsMap.remove("group");
-				}
-				UPDATE_STRING_SETTING_IF_VALID(wiFiConnection->securitySettings.leapUsername, "leap-username", settingsMap)
-				settingsMap["wep-key-flags"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(tdePasswordFlagsToNMPasswordFlags(wiFiConnection->securitySettings.wepKeyFlags)));
-				settingsMap["wep-key-type"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(tdeWepKeyTypeToNMWepKeyType(wiFiConnection->securitySettings.wepKeyType)));
-				settingsMap["psk-flags"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(tdePasswordFlagsToNMPasswordFlags(wiFiConnection->securitySettings.pskFlags)));
-				settingsMap["leap-password-flags"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(tdePasswordFlagsToNMPasswordFlags(wiFiConnection->securitySettings.leapPasswordFlags)));
-				if (wiFiConnection->securitySettings.secretsValid) {
-					UPDATE_STRING_SETTING_IF_VALID(wiFiConnection->securitySettings.wepKey0, "wep-key0", settingsMap)
-					UPDATE_STRING_SETTING_IF_VALID(wiFiConnection->securitySettings.wepKey1, "wep-key1", settingsMap)
-					UPDATE_STRING_SETTING_IF_VALID(wiFiConnection->securitySettings.wepKey2, "wep-key2", settingsMap)
-					UPDATE_STRING_SETTING_IF_VALID(wiFiConnection->securitySettings.wepKey3, "wep-key3", settingsMap)
-					UPDATE_STRING_SETTING_IF_VALID(wiFiConnection->securitySettings.psk, "psk", settingsMap)
-					UPDATE_STRING_SETTING_IF_VALID(wiFiConnection->securitySettings.leapPassword, "leap-password", settingsMap)
-				}
-				else {
+					settingsMap.remove("auth-alg");
+					settingsMap.remove("proto");
+					settingsMap.remove("pairwise");
+					settingsMap.remove("group");
+					settingsMap.remove("leap-username");
+					settingsMap.remove("wep-key-flags");
+					settingsMap.remove("wep-key-type");
+					settingsMap.remove("psk-flags");
+					settingsMap.remove("leap-password-flags");
 					settingsMap.remove("wep-key0");
 					settingsMap.remove("wep-key1");
 					settingsMap.remove("wep-key2");
