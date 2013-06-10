@@ -70,6 +70,7 @@ public:
   TDEListViewPrivate (TDEListView* listview)
     : pCurrentItem (0),
       autoSelectDelay(0),
+      useSmallExecuteArea(false),
       dragOverItem(0),
       dragDelay (TDEGlobalSettings::dndEventDelay()),
       editor (new TDEListViewLineEdit (listview)),
@@ -116,6 +117,7 @@ public:
 
   TQTimer autoSelect;
   int autoSelectDelay;
+  bool useSmallExecuteArea;
 
   TQTimer dragExpand;
   TQListViewItem* dragOverItem;
@@ -505,10 +507,9 @@ bool TDEListView::isExecuteArea( int x, TQListViewItem* item )
 		
 		x += contentsX(); // in case of a horizontal scrollbar
 
-		// What was this supposed to do???
-		// Just use the column width, as at least one entire column is highlighted on row selection!
-#if 0
-		if ( item ) {
+		// If a small execute area was requested, trim area to the size of the item text/icon
+		// Otherwise just use the column width, as at least one entire column is highlighted on row selection!
+		if ( item && d->useSmallExecuteArea ) {
 			width = treeStepSize()*( item->depth() + ( rootIsDecorated() ? 1 : 0 ) );
 			width += itemMargin();
 			int ca = AlignHorizontal_Mask & columnAlignment( 0 );
@@ -519,7 +520,6 @@ bool TDEListView::isExecuteArea( int x, TQListViewItem* item )
 				}
 			}
 		}
-#endif
 		if ( item ) {
 			if (!allColumnsShowFocus()) {
 				offset += treeStepSize()*( item->depth() + ( rootIsDecorated() ? 1 : 0 ) );
@@ -2412,6 +2412,16 @@ void TDEListView::selectAll( bool select )
 	TQListViewItem * i = currentItem();
 	setSelected( i, select );
     }
+}
+
+void TDEListView::setUseSmallExecuteArea(bool enable)
+{
+    d->useSmallExecuteArea = enable;
+}
+
+bool TDEListView::useSmallExecuteArea() const
+{
+    return d->useSmallExecuteArea;
 }
 
 void TDEListView::virtual_hook( int, void* )

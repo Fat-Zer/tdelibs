@@ -403,6 +403,22 @@ public:
    * @since 3.4
    */
   bool shadeSortColumn(void) const;
+
+  /**
+   * @param enable TRUE if small execute area should be used (e.g. KonqListViewItem), FALSE if not.
+   * The default is FALSE to match TQt3 behaviour.
+   *
+   * @since 14.0
+   */
+  void setUseSmallExecuteArea(bool enable);
+
+  /**
+   * @return TRUE if small execute area is in use, FALSE if not.
+   *
+   * @since 14.0
+   */
+  bool useSmallExecuteArea() const;
+
 signals:
 
   /**
