@@ -1483,7 +1483,23 @@ public:
    *
    * @since 3.1
    */
-  bool equals( const KURL &u, bool ignore_trailing = false ) const; // TODO KDE4: add bool _ignore_ref = false
+  bool equals( const KURL &u, bool ignore_trailing = false ) const;
+
+  /**
+   * @brief Compares this URL with another one
+   *
+   * @param u the URL to compare this one with
+   * @param ignore_trailing set to @c true to ignore trailing @c '/' characters
+   * @param ignore_internalReferenceURLS set to @c true to ignore the internal reference URLs during comparison
+   *
+   * @return @c true if both urls are the same
+   *
+   * @see operator==. This function should be used if you want to
+   *      ignore trailing @c '/' characters
+   *
+   * @since R14.0.0
+   */
+  bool equals( const KURL &u, bool ignore_trailing, bool ignore_internalReferenceURLS ) const; // TODO KDE4: add bool _ignore_ref = false
 
   /**
    * @brief Tests if the given URL is parent of this URL

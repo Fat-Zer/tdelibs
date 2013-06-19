@@ -1183,6 +1183,11 @@ bool KURL::cmp( const KURL &u, bool ignore_trailing ) const
 
 bool KURL::equals( const KURL &_u, bool ignore_trailing ) const
 {
+  return equals(_u, ignore_trailing, false);
+}
+
+bool KURL::equals( const KURL &_u, bool ignore_trailing, bool ignore_internalReferenceURLS ) const
+{
   if ( !isValid() || !_u.isValid() )
     return false;
 
@@ -1200,7 +1205,7 @@ bool KURL::equals( const KURL &_u, bool ignore_trailing ) const
          m_strQuery_encoded == _u.m_strQuery_encoded &&
          m_strRef_encoded == _u.m_strRef_encoded &&
          m_iPort == _u.m_iPort &&
-         d->m_strInternalReferenceURL == _u.d->m_strInternalReferenceURL )
+         ((ignore_internalReferenceURLS) || (d->m_strInternalReferenceURL == _u.d->m_strInternalReferenceURL)) )
       return true;
 
     return false;
