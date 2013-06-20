@@ -147,6 +147,8 @@ k_dcop:
 	void restore();
 	void show();
 	void close();
+	void setActiveWindow();
+	void setActiveWindowFocused();
 
 //	QCStringList getQTProperties();
 

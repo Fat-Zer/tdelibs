@@ -27,6 +27,29 @@
 #include <tdeaction.h>
 #include <tqclipboard.h>
 
+#include <X11/Xlib.h>
+#include <X11/Xatom.h>
+
+// INTERNAL
+// Originally from http://permalink.gmane.org/gmane.comp.lib.qt.general/4733
+void wmMessage(TDEMainWindow * mainWindow, long type, long l0, long l1, long l2, long l3, long l4)
+{
+	XClientMessageEvent xev;
+	
+	xev.type = ClientMessage;
+	xev.window = mainWindow->winId();
+	xev.message_type = type;
+	xev.format = 32;
+	xev.data.l[0] = l0;
+	xev.data.l[1] = l1;
+	xev.data.l[2] = l2;
+	xev.data.l[3] = l3;
+	xev.data.l[4] = l4;
+
+	XSendEvent(mainWindow->x11Display(), mainWindow->winId(), False,
+		(SubstructureNotifyMask | SubstructureRedirectMask),
+		(XEvent *)&xev);
+}
 
 TDEMainWindowInterface::TDEMainWindowInterface(TDEMainWindow * mainWindow)
 	: DCOPObject( mainWindow->name()) 
@@ -181,6 +204,20 @@ void TDEMainWindowInterface::close()
 void TDEMainWindowInterface::show()
 {
 	m_MainWindow->show();
+}
+void TDEMainWindowInterface::setActiveWindow()
+{
+	m_MainWindow->setActiveWindow();
+}
+void TDEMainWindowInterface::setActiveWindowFocused()
+{
+	// just in case we don't have a WM running
+	m_MainWindow->raise();
+	m_MainWindow->setActiveWindow();
+
+	// activate window (try to work around focus-stealing prevention)
+	static Atom NET_ACTIVE_WINDOW = XInternAtom(m_MainWindow->x11Display(), "_NET_ACTIVE_WINDOW", False);
+	wmMessage(m_MainWindow, NET_ACTIVE_WINDOW, 2, CurrentTime, 0, 0, 0);
 }
 QCStringList TDEMainWindowInterface::functionsDynamic()
 {
