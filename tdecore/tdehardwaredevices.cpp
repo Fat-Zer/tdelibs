@@ -4136,6 +4136,11 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		device = classifyUnknownDeviceByExternalRules(dev, device, false);
 	}
 
+	// Internal use only!
+	device->m_udevtype = devicetype;
+	device->m_udevdevicetypestring = devicetypestring;
+	device->udevdevicetypestring_alt = devicetypestring_alt;
+
 	updateExistingDeviceInformation(device, dev);
 
 	if (temp_udev_device) {
