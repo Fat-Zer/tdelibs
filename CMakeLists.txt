@@ -95,6 +95,7 @@ OPTION( WITH_SUDO_TDESU_BACKEND "Use sudo as backend for tdesu (default is su)" 
 OPTION( WITH_OLD_XDG_STD "Use the pre R14.0.0 XDG standard where both TDE and KDE are recognized in desktop files" OFF )
 OPTION( WITH_LZMA "Enable support for LZMA/XZ" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_LIBBFD "Enable pretty backtraces with libbfd from GNU binutils" OFF )
+OPTION( WITH_XRANDR "Build the tderandr library" ${WITH_ALL_OPTIONS} )
 OPTION( WITH_KDE4_MENU_SUFFIX "Add [KDE4] tag to KDE4 menu items" OFF )
 
 OPTION( WITH_ASPELL "Enable aspell support" ${WITH_ALL_OPTIONS} )
@@ -608,10 +609,14 @@ endif( NOT FONTCONFIG_FOUND )
 
 ##### check for Xrandr ##########################
 
-pkg_search_module( XRANDR xrandr>=1.2 )
-if( XRANDR_FOUND )
-  set( XRANDR_SUPPORT 1 )
-endif( XRANDR_FOUND )
+if( WITH_XRANDR )
+  pkg_search_module( XRANDR xrandr>=1.2 )
+  if( XRANDR_FOUND )
+    set( XRANDR_SUPPORT 1 )
+  else( XRANDR_FOUND )
+	message(FATAL_ERROR "\nxrandr support was required, but not found on your system" )
+  endif( XRANDR_FOUND )
+endif( WITH_XRANDR )
 
 
 ##### check for xrender #########################
@@ -1034,9 +1039,7 @@ add_subdirectory( arts )
 add_subdirectory( interfaces )
 add_subdirectory( kate )
 add_subdirectory( tdecert )
-if( XRANDR_FOUND )
-  add_subdirectory( tderandr )
-endif( XRANDR_FOUND )
+tde_conditional_add_subdirectory( WITH_XRANDR tderandr )
 add_subdirectory( tdehtml )
 add_subdirectory( tdecmshell )
 add_subdirectory( tdeconf_update )
