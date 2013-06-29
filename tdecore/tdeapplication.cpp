@@ -201,7 +201,7 @@ static Atom atom_NetSupported;
 static Atom kde_xdnd_drop;
 #endif
 
-#ifdef Q_WS_X11
+#if defined(Q_WS_X11) && defined(COMPOSITE)
 static int composite_event, composite_error, composite_opcode;
 static bool x11_composite_error_generated;
 static int x11_error(Display *dpy, XErrorEvent *ev) {
@@ -2114,7 +2114,7 @@ bool TDEApplication::isCompositionManagerAvailable() {
 	return false;
 }
 
-bool TDEApplication::detectCompositionManagerAvailable(bool force_available) {
+bool TDEApplication::detectCompositionManagerAvailable(bool force_available, bool available) {
 	const char *home;
 	struct passwd *p;
 	p = getpwuid(getuid());
@@ -2156,20 +2156,16 @@ Display* TDEApplication::openX11RGBADisplay() {
 	return 0;
 }
 
-Qt::HANDLE TDEApplication::getX11RGBAVisual(char *display) {
+Qt::HANDLE TDEApplication::getX11RGBAVisual(Display *dpy) {
 	return 0;
 }
 
-Qt::HANDLE TDEApplication::getX11RGBAColormap(char *display) {
+Qt::HANDLE TDEApplication::getX11RGBAColormap(Display *dpy) {
 	return 0;
 }
 
 bool TDEApplication::isX11CompositionAvailable() {
 	return false;
-}
-
-TDEApplication TDEApplication::KARGBApplication( bool allowStyles ) {
-	return TDEApplication::TDEApplication(allowStyles, true);
 }
 #endif
 
