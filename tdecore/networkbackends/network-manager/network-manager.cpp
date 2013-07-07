@@ -1909,7 +1909,7 @@ TDENetworkDeviceInformation TDENetworkConnectionManager_BackendNM::deviceInforma
 			DBus::ActiveConnectionProxy activeConnection(NM_DBUS_SERVICE, connectionPath);
 			activeConnection.setConnection(TQT_DBusConnection::systemBus());
 			ret.activeConnectionUUID = activeConnection.getUuid(error);
-			if (!error.isValid()) {
+			if (error.isValid()) {
 				ret.activeConnectionUUID = TQString::null;
 			}
 		}
@@ -1934,7 +1934,7 @@ TDENetworkDeviceInformation TDENetworkConnectionManager_BackendNM::deviceStatus(
 			DBus::ActiveConnectionProxy activeConnection(NM_DBUS_SERVICE, connectionPath);
 			activeConnection.setConnection(TQT_DBusConnection::systemBus());
 			ret.activeConnectionUUID = activeConnection.getUuid(error);
-			if (!error.isValid()) {
+			if (error.isValid()) {
 				ret.activeConnectionUUID = TQString::null;
 			}
 		}

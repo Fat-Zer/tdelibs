@@ -3907,6 +3907,9 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
 			}
 		}
+		if (devicesubsystem == "tifm_adapter") {
+			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::StorageController);
+		}
 		if (devicesubsystem == "mmc_host") {
 			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::StorageController);
 		}
