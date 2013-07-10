@@ -1089,7 +1089,10 @@ TDENetworkWiFiAPInfo* TDEGlobalNetworkManager::findAccessPointByBSSID(TDEMACAddr
 		TDENetworkDevice* dev = dynamic_cast<TDENetworkDevice*>(*it);
 		if (dev) {
 			TDENetworkConnectionManager* deviceConnMan = dev->connectionManager();
-			ret = deviceConnMan->findAccessPointByBSSID(bssid);
+			TDENetworkWiFiAPInfo* candidate = deviceConnMan->findAccessPointByBSSID(bssid);
+			if (candidate) {
+				ret = candidate;
+			}
 		}
 	}
 
