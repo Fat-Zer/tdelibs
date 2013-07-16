@@ -1689,19 +1689,26 @@ TDENetworkDeviceType::TDENetworkDeviceType TDENetworkConnectionManager_BackendNM
 		return TDENetworkDeviceType::BackendOnly;
 	}
 	else {
-		// Query NM for the device type
-		TQT_DBusError error;
-		d->m_dbusDeviceString = deviceInterfaceString(m_macAddress);
-		DBus::DeviceProxy genericDevice(NM_DBUS_SERVICE, d->m_dbusDeviceString);
-		genericDevice.setConnection(TQT_DBusConnection::systemBus());
-		TDENetworkDeviceType::TDENetworkDeviceType ret = nmDeviceTypeToTDEDeviceType(genericDevice.getDeviceType(error));
-		if (error.isValid()) {
-			// Error!
-			PRINT_ERROR((error.name() + ": " + error.message()))
-			return TDENetworkDeviceType::Other;
+		if (d->m_dbusDeviceString != "") {
+			// Query NM for the device type
+			TQT_DBusError error;
+			d->m_dbusDeviceString = deviceInterfaceString(m_macAddress);
+			DBus::DeviceProxy genericDevice(NM_DBUS_SERVICE, d->m_dbusDeviceString);
+			genericDevice.setConnection(TQT_DBusConnection::systemBus());
+			TDENetworkDeviceType::TDENetworkDeviceType ret = nmDeviceTypeToTDEDeviceType(genericDevice.getDeviceType(error));
+			if (error.isValid()) {
+				// Error!
+				PRINT_ERROR((error.name() + ": " + error.message()))
+				return TDENetworkDeviceType::Other;
+			}
+			else {
+				return ret;
+			}
 		}
 		else {
-			return ret;
+			// Error!
+			PRINT_ERROR(TQString("Invalid DBUS device string '%1'").arg(d->m_dbusDeviceString))
+			return TDENetworkDeviceType::Other;
 		}
 	}
 }

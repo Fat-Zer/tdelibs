@@ -38,6 +38,7 @@
 #include <tqlabel.h>
 #include <tqstyle.h>
 #include <tqimage.h>
+#include <tqpushbutton.h>
 
 #include "config.h"
 #ifdef Q_WS_X11
@@ -419,12 +420,30 @@ KSMModalDialog::KSMModalDialog(TQWidget* parent)
 	fnt.setBold( false );
 	fnt.setPointSize( fnt.pointSize() * 1 );
 	m_statusLabel->setFont( fnt );
-	gbox->addMultiCellWidget( m_statusLabel, 2, 2, 0, 0, AlignLeft | AlignVCenter );
+	gbox->addMultiCellWidget( m_statusLabel, 2, 2, 0, 2, AlignLeft | AlignVCenter );
 
 	KSMModalDialogHeader *theader = new KSMModalDialogHeader(this);
 	centerbox->addWidget( theader, AlignCenter );
 
 	gbox->addLayout(centerbox, 0, 0);
+
+	TQFrame* frame2 = new TQFrame( this );
+	frame2->setFrameStyle( TQFrame::NoFrame );
+	frame2->setLineWidth( style().pixelMetric( TQStyle::PM_DefaultFrameWidth, frame ) );
+	m_buttonbox = new TQHBoxLayout( frame2, 0, KDialog::spacingHint() );
+
+	m_button1 = new TQPushButton( frame2 );
+	m_button2 = new TQPushButton( frame2 );
+	m_button3 = new TQPushButton( frame2 );
+	m_buttonbox->addWidget( m_button1 );
+	m_buttonbox->addWidget( m_button2 );
+	m_buttonbox->addWidget( m_button3 );
+	m_button1->hide();
+	m_button2->hide();
+	m_button3->hide();
+
+	frame2->hide();
+	gbox->addMultiCellWidget( frame2, 3, 3, 0, 2, 0 );
 
 	setFixedSize( sizeHint() );
 	setCaption( i18n("Please wait...") );

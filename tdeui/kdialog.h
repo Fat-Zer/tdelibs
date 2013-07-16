@@ -234,6 +234,8 @@ public:
   * @author Timothy Pearson <kb9vqf@pearsoncomputing.net>
   */
 class TQLabel;
+class TQPushButton;
+class TQHBoxLayout;
 class TDEUI_EXPORT KSMModalDialog : public TQWidget
 {
       Q_OBJECT
@@ -249,6 +251,12 @@ public:
 protected slots:
       void keepMeOnTop();
       void closeEvent(TQCloseEvent *e);
+
+protected:
+      TQPushButton* m_button1;
+      TQPushButton* m_button2;
+      TQPushButton* m_button3;
+      TQHBoxLayout* m_buttonbox;
 
 private:
       TQTimer* m_keepOnTopTimer;
