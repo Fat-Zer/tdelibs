@@ -412,7 +412,7 @@ KSMModalDialog::KSMModalDialog(TQWidget* parent)
 	// we need to set the minimum size for the window
 	frame->setMinimumWidth(400);
 	vbox->addWidget( frame );
-	TQGridLayout* gbox = new TQGridLayout( frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint() );
+	m_gridlayout = new TQGridLayout( frame, 1, 1, KDialog::marginHint(), KDialog::spacingHint() );
 	TQHBoxLayout* centerbox = new TQHBoxLayout( frame, 0, KDialog::spacingHint() );
 
 	m_statusLabel = new TQLabel( i18n("Pondering what to do next").append("..."), frame );
@@ -420,21 +420,21 @@ KSMModalDialog::KSMModalDialog(TQWidget* parent)
 	fnt.setBold( false );
 	fnt.setPointSize( fnt.pointSize() * 1 );
 	m_statusLabel->setFont( fnt );
-	gbox->addMultiCellWidget( m_statusLabel, 2, 2, 0, 2, AlignLeft | AlignVCenter );
+	m_gridlayout->addMultiCellWidget( m_statusLabel, 2, 2, 0, 2, AlignLeft | AlignVCenter );
 
 	KSMModalDialogHeader *theader = new KSMModalDialogHeader(this);
 	centerbox->addWidget( theader, AlignCenter );
 
-	gbox->addLayout(centerbox, 0, 0);
+	m_gridlayout->addLayout(centerbox, 0, 0);
 
-	TQFrame* frame2 = new TQFrame( this );
-	frame2->setFrameStyle( TQFrame::NoFrame );
-	frame2->setLineWidth( style().pixelMetric( TQStyle::PM_DefaultFrameWidth, frame ) );
-	m_buttonbox = new TQHBoxLayout( frame2, 0, KDialog::spacingHint() );
+	m_buttonframe = new TQFrame( this );
+	m_buttonframe->setFrameStyle( TQFrame::NoFrame );
+	m_buttonframe->setLineWidth( style().pixelMetric( TQStyle::PM_DefaultFrameWidth, frame ) );
+	m_buttonbox = new TQHBoxLayout( m_buttonframe, 0, KDialog::spacingHint() );
 
-	m_button1 = new TQPushButton( frame2 );
-	m_button2 = new TQPushButton( frame2 );
-	m_button3 = new TQPushButton( frame2 );
+	m_button1 = new TQPushButton( m_buttonframe );
+	m_button2 = new TQPushButton( m_buttonframe );
+	m_button3 = new TQPushButton( m_buttonframe );
 	m_buttonbox->addWidget( m_button1 );
 	m_buttonbox->addWidget( m_button2 );
 	m_buttonbox->addWidget( m_button3 );
@@ -442,8 +442,8 @@ KSMModalDialog::KSMModalDialog(TQWidget* parent)
 	m_button2->hide();
 	m_button3->hide();
 
-	frame2->hide();
-	gbox->addMultiCellWidget( frame2, 3, 3, 0, 2, 0 );
+	m_buttonframe->hide();
+	m_gridlayout->addMultiCellWidget( m_buttonframe, 3, 3, 0, 2, 0 );
 
 	setFixedSize( sizeHint() );
 	setCaption( i18n("Please wait...") );

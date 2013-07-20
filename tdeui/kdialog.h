@@ -236,6 +236,8 @@ public:
 class TQLabel;
 class TQPushButton;
 class TQHBoxLayout;
+class TQFrame;
+class TQGridLayout;
 class TDEUI_EXPORT KSMModalDialog : public TQWidget
 {
       Q_OBJECT
@@ -257,6 +259,8 @@ protected:
       TQPushButton* m_button2;
       TQPushButton* m_button3;
       TQHBoxLayout* m_buttonbox;
+      TQFrame* m_buttonframe;
+      TQGridLayout* m_gridlayout;
 
 private:
       TQTimer* m_keepOnTopTimer;
