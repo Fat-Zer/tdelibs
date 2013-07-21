@@ -188,7 +188,7 @@
 <!ENTITY kde-http '<ulink url="http://www.kde.org/">http://www.kde.org/</ulink>'>
 <!ENTITY tde-http	'<ulink url="http://www.trinitydesktop.org/">http://www.trinitydesktop.org/</ulink>'>
 <!ENTITY kde-ftp	'<ulink url="ftp://ftp.kde.org/pub/kde/">ftp://ftp.kde.org/pub/kde/</ulink>'>
-<!ENTITY kdepasswd	"<application>kdepasswd</application>">
+<!ENTITY tdepasswd	"<application>tdepasswd</application>">
 <!ENTITY kdesktop	"<application>KDesktop</application>">
 <!ENTITY kdessh	"<application>kdessh</application>">
 <!ENTITY tdesu	"<application>TDE su</application>">

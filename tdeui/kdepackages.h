@@ -436,7 +436,7 @@ const char * const packages[] = {
 "kdelirc/irkick",
 "kdelirc/kcmlirc",
 "tdemultimedia",
-"kdepasswd",
+"tdepasswd",
 "tdepimlibs",
 "tdepimlibs/gpgme++",
 "tdepimlibs/tdeabc",

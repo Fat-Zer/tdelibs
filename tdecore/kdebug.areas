@@ -105,7 +105,7 @@
 # tdeutils
 1501        khexedit (tdeutils)
 1511        kdessh (tdeutils)
-1512        kdepasswd (tdeutils)
+1512        tdepasswd (tdebase)
 1601        ark (tdeutils)
 1901        kfind
 1902        kfind (KfindWindow::updateResults)
