@@ -6,7 +6,7 @@ README for libtdesu.
 
 Libtdesu provides functionality for building GUI front ends for 
 (password asking) console mode programs. For example, tdesu and
-kdessh use it to interface with su and ssh respectively.
+tdessh use it to interface with su and ssh respectively.
 
 libtdesu is Copyright (c) 1999,2000 Geert Jansen <jansen@kde.org>
 

@@ -459,7 +459,7 @@ const char * const packages[] = {
 "kdesktop/icons",
 "kdesktop/minicli",
 "kdesktop/wallpaper",
-"kdessh",
+"tdessh",
 "tdesu",
 "tdesu/tdesu",
 "tdesu/tdesud",

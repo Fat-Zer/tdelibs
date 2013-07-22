@@ -193,7 +193,7 @@
 <!ENTITY tdepasswd	"<application>tdepasswd</application>">
 <!ENTITY tdeprint       "<application>TDEPrint</application>">
 <!ENTITY kdesktop	"<application>KDesktop</application>">
-<!ENTITY kdessh	"<application>kdessh</application>">
+<!ENTITY tdessh	"<application>tdessh</application>">
 <!ENTITY tdesu	"<application>TDE su</application>">
 <!ENTITY kdiskfree	"<application>KDiskFree</application>">
 <!ENTITY kdict	"<application>KDict</application>">
