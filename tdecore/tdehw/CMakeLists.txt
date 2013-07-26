@@ -64,7 +64,7 @@ link_directories(
 ##### headers ###################################
 
 install( FILES tdehardwaredevices.h tdenetworkconnections.h tdegenericdevice.h
-    tdestoragedevice.h
+    tdestoragedevice.h tdecpudevice.h tdebatterydevice.h tdemainspowerdevice.h
   DESTINATION ${INCLUDE_INSTALL_DIR} )
 
 
@@ -74,7 +74,8 @@ set( target tdehw )
 
 set( ${target}_SRCS
   tdehardwaredevices.cpp tdenetworkconnections.cpp tdegenericdevice.cpp
-  tdestoragedevice.cpp
+  tdestoragedevice.cpp tdecpudevice.cpp tdebatterydevice.cpp
+  tdemainspowerdevice.cpp
 )
 
 tde_add_library( ${target} STATIC_PIC AUTOMOC
