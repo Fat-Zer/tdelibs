@@ -8,11 +8,11 @@
 #
 #################################################
 
-configure_file( ${CMAKE_SOURCE_DIR}/kdoctools/update-entities.sh ${CMAKE_SOURCE_DIR}/kdoctools/update-entities IMMEDIATE @ONLY )
+configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/update-entities.sh ${CMAKE_CURRENT_BINARY_DIR}/update-entities IMMEDIATE @ONLY )
 
-set( UPDATE_SCRIPT "${CMAKE_SOURCE_DIR}/kdoctools/update-entities" )
+set( UPDATE_SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/update-entities" )
 set( TDEVERSION_FILE "${CMAKE_SOURCE_DIR}/tdecore/tdeversion.h" )
-set( ENTITIES_FILE "${CMAKE_SOURCE_DIR}/kdoctools/customization/entities/general.entities" )
+set( ENTITIES_FILE "${CMAKE_CURRENT_SOURCE_DIR}/customization/entities/general.entities" )
 
 if( NOT EXISTS ${UPDATE_SCRIPT} )
   tde_message_fatal( "${UPDATE_SCRIPT} not found!\n Check your sources." )
