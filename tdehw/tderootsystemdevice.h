@@ -23,6 +23,8 @@
 #include "tdegenericdevice.h"
 #include "tdehwcommontypes.h"
 
+namespace TDEHW {
+
 namespace TDESystemFormFactor {
 enum TDESystemFormFactor {
 	Unclassified,
@@ -178,5 +180,7 @@ class TDEHW_EXPORT TDERootSystemDevice : public TDEGenericDevice
 
 	friend class TDEHardwareDevices;
 };
+
+} // namespace TDEHW
 
 #endif // _TDEROOTSYSTEMDEVICE_H

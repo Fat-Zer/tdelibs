@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+using namespace TDEHW;
+
 TDEMonitorDevice::TDEMonitorDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
 }
 

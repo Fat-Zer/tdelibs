@@ -47,6 +47,8 @@
 // #define WAIT_FOR_OPERATION_BEFORE_RETURNING 1
 #define USE_ASYNC_DBUS_CONNECTION_COMMAND_CALLS 1
 
+using namespace TDEHW;
+
 TQ_UINT32 reverseIPV4ByteOrder(TQ_UINT32 address) {
 	TQ_UINT32 ret;
 	unsigned char valuearray[4];

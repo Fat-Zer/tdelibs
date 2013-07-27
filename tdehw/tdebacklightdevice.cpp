@@ -34,6 +34,8 @@
 	#include <tqdbusconnection.h>
 #endif // defined(WITH_TDEHWLIB_DAEMONS)
 
+using namespace TDEHW;
+
 TDEBacklightDevice::TDEBacklightDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
 }
 

@@ -22,6 +22,8 @@
 
 #include "tdegenericdevice.h"
 
+namespace TDEHW {
+
 class TDEHW_EXPORT TDESensorCluster
 {
 	public:
@@ -71,5 +73,7 @@ class TDEHW_EXPORT TDESensorDevice : public TDEGenericDevice
 
 	friend class TDEHardwareDevices;
 };
+
+} // namespace TDEHW
 
 #endif // _TDESENSORDEVICE_H

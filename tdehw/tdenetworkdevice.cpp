@@ -28,6 +28,7 @@
 	#include "network-manager.h"
 #endif // WITH_NETWORK_MANAGER_BACKEND
 
+using namespace TDEHW;
 
 TDENetworkDevice::TDENetworkDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
 	m_rxbytes = -1;

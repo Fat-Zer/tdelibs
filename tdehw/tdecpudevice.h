@@ -22,6 +22,8 @@
 
 #include "tdegenericdevice.h"
 
+namespace TDEHW {
+
 class TDEHW_EXPORT TDECPUDevice : public TDEGenericDevice
 {
 	public:
@@ -182,5 +184,6 @@ class TDEHW_EXPORT TDECPUDevice : public TDEGenericDevice
 	friend class TDEHardwareDevices;
 };
 
+} // namespace TDEHW
 
 #endif // _TDECPUDEVICE_H

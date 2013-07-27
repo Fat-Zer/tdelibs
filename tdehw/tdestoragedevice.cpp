@@ -51,6 +51,8 @@
  	#include "tqdbusdatalist.h"
 #endif // ddefined(WITH_UDISKS)
 
+using namespace TDEHW;
+
 TDEStorageDevice::TDEStorageDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn), m_mediaInserted(true) {
 	m_diskType = TDEDiskDeviceType::Null;
 	m_diskStatus = TDEDiskDeviceStatus::Null;

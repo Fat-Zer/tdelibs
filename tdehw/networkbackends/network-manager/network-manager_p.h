@@ -56,6 +56,8 @@
 #include "accesspointproxy.h"
 #include "vpnpluginproxy.h"
 
+namespace TDEHW {
+
 typedef TQT_DBusDataMap<TQString> TQT_DBusTQStringDataMap;
 typedef TQValueList<TQT_DBusData> TQT_DBusDataValueList;
 
@@ -65,6 +67,7 @@ typedef TQMap<uint, TQT_DBusObjectPath> NMAddConnectionAsyncResponseMap;
 typedef TQMap<uint, TQT_DBusError> NMAddConnectionAsyncErrorResponseMap;
 
 typedef TQValueList<TQT_DBusObjectPath> TQT_DBusObjectPathList;
+
 
 class TDENetworkConnectionManager_BackendNM;
 class TDENetworkConnectionManager_BackendNMPrivate;
@@ -137,4 +140,5 @@ class TDENetworkConnectionManager_BackendNMPrivate : public TQObject
 		friend class TDENetworkConnectionManager_BackendNM_DBusSignalReceiver;
 };
 
+} // namespace TDEHW
 #endif // _TDENETWORKBACKEND_NETWORKMANAGER_P_H

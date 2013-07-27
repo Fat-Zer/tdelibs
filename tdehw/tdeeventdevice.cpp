@@ -30,6 +30,8 @@
 
 #include "config.h"
 
+using namespace TDEHW;
+
 TDEEventDevice::TDEEventDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
 	m_fd = -1;
 	m_fdMonitorActive = false;

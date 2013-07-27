@@ -80,6 +80,8 @@ extern "C" {
 #define GENHD_FL_BLOCK_EVENTS_ON_EXCL_WRITE     256
 // END BLOCK
 
+using namespace TDEHW;
+
 // NOTE TO DEVELOPERS
 // This command will greatly help when attempting to find properties to distinguish one device from another
 // udevadm info --query=all --path=/sys/....

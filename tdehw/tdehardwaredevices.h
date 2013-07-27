@@ -36,9 +36,15 @@
  *
  * @author Timothy Pearson
  */
-struct udev_device;
 
+struct udev;
+struct udev_device;
+struct udev_monitor;
+
+class TQSocketNotifier;
 class KSimpleDirWatch;
+
+namespace TDEHW {
 
 class TDEGenericDevice;
 class TDEStorageDevice;
@@ -49,7 +55,6 @@ class TDESensorDevice;
 class TDERootSystemDevice;
 class TDEEventDevice;
 class TDEInputDevice;
-class TQSocketNotifier;
 
 typedef TQPtrList<TDEGenericDevice> TDEGenericHardwareList;
 typedef TQMap<TQString, TQString> TDEDeviceIDMap;
@@ -283,5 +288,7 @@ class TDEHW_EXPORT TDEHardwareDevices : public TQObject
 	friend class TDEStorageDevice;
 	friend class TDECPUDevice;
 };
+
+} // namespace TDEHW
 
 #endif // _TDEHARDWAREDEVICES_H

@@ -22,6 +22,8 @@
 
 #include "tdegenericdevice.h"
 
+namespace TDEHW {
+
 namespace TDEBatteryStatus {
 enum TDEBatteryStatus {
 	Charging,
@@ -211,5 +213,7 @@ class TDEHW_EXPORT TDEBatteryDevice : public TDEGenericDevice
 
 	friend class TDEHardwareDevices;
 };
+
+} // namespace TDEHW
 
 #endif // _TDEBATTERYDEVICE_H

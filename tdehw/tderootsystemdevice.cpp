@@ -40,6 +40,8 @@
 	#include <tqdbusconnection.h>
 #endif // defined(WITH_TDEHWLIB_DAEMONS) || defined(WITH_UPOWER) || defined(WITH_DEVKITPOWER) || defined(WITH_HAL) || defined(WITH_CONSOLEKIT)
 
+using namespace TDEHW;
+
 bool isNetworkFileSystem(TQString fileSystemType) {
 	if ((fileSystemType.startsWith("nfs"))
 		|| (fileSystemType == "cifs")
