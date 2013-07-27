@@ -12,7 +12,6 @@
 add_subdirectory( malloc )
 add_subdirectory( network )
 add_subdirectory( tdeconfig_compiler )
-add_subdirectory( tdehw )
 
 if( WITH_LIBART )
   add_subdirectory( svgicons )
@@ -25,7 +24,6 @@ include_directories(
   ${CMAKE_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}/network
-  ${CMAKE_CURRENT_SOURCE_DIR}/tdehw
   ${CMAKE_SOURCE_DIR}/dcop
   ${CMAKE_SOURCE_DIR}/libltdl
   ${CMAKE_SOURCE_DIR}/tdefx
@@ -131,7 +129,7 @@ set( ${target}_SRCS
 tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 14.0.0
-  EMBED tdecorenetwork-static tdehw-static
+  EMBED tdecorenetwork-static
   LINK ltdlc-static ${KDESVGICONS} DCOP-shared tdefx-shared ${ZLIB_LIBRARIES}
     ${LIBIDN_LIBRARIES} ${XCOMPOSITE_LIBRARIES} ICE SM ${GAMIN_LIBRARIES}
     ${LIBBFD_LIBRARIES}

@@ -202,7 +202,7 @@ TDEGenericDevice* TDEGenericDevice::parentDevice() {
 }
 
 TQPixmap TDEGenericDevice::icon(TDEIcon::StdSizes size) {
-	return TDEGlobal::hardwareDevices()->getDeviceTypeIconFromType(type(), size);
+	return TDEHardwareDevices::instance()->getDeviceTypeIconFromType(type(), size);
 }
 
 bool TDEGenericDevice::blacklistedForUpdate() {
@@ -214,7 +214,7 @@ void TDEGenericDevice::internalSetBlacklistedForUpdate(bool bl) {
 }
 
 TQString TDEGenericDevice::friendlyDeviceType() {
-	return TDEGlobal::hardwareDevices()->getFriendlyDeviceTypeStringFromType(type());
+	return TDEHardwareDevices::instance()->getFriendlyDeviceTypeStringFromType(type());
 }
 
 TQString TDEGenericDevice::busID() {
@@ -236,10 +236,10 @@ TQString TDEGenericDevice::friendlyName() {
 			m_friendlyName = friendlyDriverName;
 		}
 		else if (m_modAlias.lower().startsWith("pci")) {
-			m_friendlyName = TDEGlobal::hardwareDevices()->findPCIDeviceName(m_vendorID, m_modelID, m_subvendorID, m_submodelID);
+			m_friendlyName = TDEHardwareDevices::instance()->findPCIDeviceName(m_vendorID, m_modelID, m_subvendorID, m_submodelID);
 		}
 		else if (m_modAlias.lower().startsWith("usb")) {
-			m_friendlyName = TDEGlobal::hardwareDevices()->findUSBDeviceName(m_vendorID, m_modelID, m_subvendorID, m_submodelID);
+			m_friendlyName = TDEHardwareDevices::instance()->findUSBDeviceName(m_vendorID, m_modelID, m_subvendorID, m_submodelID);
 		}
 		else {
 			TQString acpigentype = systemPath();
@@ -248,7 +248,7 @@ TQString TDEGenericDevice::friendlyName() {
 			TQString pnpgentype = acpigentype;
 			pnpgentype.truncate(pnpgentype.find(":"));
 			if (pnpgentype.startsWith("PNP")) {
-				m_friendlyName = TDEGlobal::hardwareDevices()->findPNPDeviceName(pnpgentype);
+				m_friendlyName = TDEHardwareDevices::instance()->findPNPDeviceName(pnpgentype);
 			}
 			else if (acpigentype.startsWith("device:")) {
 				acpigentype.remove(0, acpigentype.findRev(":")+1);

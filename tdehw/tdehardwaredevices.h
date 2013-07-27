@@ -82,10 +82,11 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 
 	public:	
 		/**
-		*  Constructor.
-		*/
-		TDEHardwareDevices();
-		
+		 * Get the global instance of the singleton object. 
+		 * @return the global TDEHardwareDevices instance.
+		 */
+		static TDEHardwareDevices* instance();
+
 		/**
 		* Destructor.
 		*/
@@ -241,6 +242,13 @@ class TDECORE_EXPORT TDEHardwareDevices : public TQObject
 		* @param device a TDEEventDevice* with the device that received the event
 		*/
 		void eventDeviceKeyPressed(unsigned int keycode, TDEEventDevice* device);
+	protected:
+		/**
+		*  Protected constructor of singleton object.
+		*/
+		TDEHardwareDevices();
+		
+		static TDEHardwareDevices* _instance;
 
 	private slots:
 		void processHotPluggedHardware();

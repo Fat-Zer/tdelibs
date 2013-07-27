@@ -101,17 +101,17 @@ public:
      * @param obj the object to delete
      * @param isArray tells the destructor to delete an array instead of an object
      **/
-    type *setObject( type* & globalRef, type *obj, bool isArray = false) {
-        globalReference = &globalRef;
-        deleteit = obj;
-	array = isArray;
-	if (obj)
-            TDEGlobal::registerStaticDeleter(this);
-	else
-	    TDEGlobal::unregisterStaticDeleter(this);
-        globalRef = obj;
-	return obj;
-    }
+	type *setObject( type* & globalRef, type *obj, bool isArray = false) {
+		globalReference = &globalRef;
+		deleteit = obj;
+		array = isArray;
+		if (obj)
+			TDEGlobal::registerStaticDeleter(this);
+		else
+			TDEGlobal::unregisterStaticDeleter(this);
+		globalRef = obj;
+		return obj;
+	}
 
     /**
      * Destructs the object. This has the same effect as deleting

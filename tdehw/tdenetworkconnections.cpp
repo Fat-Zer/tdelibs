@@ -726,7 +726,7 @@ TDENetworkConnection* TDENetworkConnectionManager::findConnectionByUUID(TQString
 }
 
 TDENetworkDevice* TDENetworkConnectionManager::findDeviceByUUID(TQString uuid) {
-	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
+	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
 	if (!hwdevices) return NULL;
 
 	TDEGenericHardwareList devices = hwdevices->listByDeviceClass(TDEGenericDeviceType::Network);
@@ -1080,7 +1080,7 @@ TDENetworkDevice* TDEGlobalNetworkManager::findDeviceByUUID(TQString uuid) {
 }
 
 TDENetworkWiFiAPInfo* TDEGlobalNetworkManager::findAccessPointByBSSID(TDEMACAddress bssid) {
-	TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
+	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
 	if (!hwdevices) {
 		return NULL;
 	}

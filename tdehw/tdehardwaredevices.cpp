@@ -26,6 +26,7 @@
 
 #include <tdeconfig.h>
 #include <kstandarddirs.h>
+#include <kstaticdeleter.h>
 
 #include <tdeglobal.h>
 #include <tdelocale.h>
@@ -98,6 +99,18 @@ unsigned int reverse_bits(register unsigned int x)
 }
 
 #define BIT_IS_SET(bits, n) (bits[n >> 3] & (1 << (n & 0x7)))
+
+TDEHardwareDevices* TDEHardwareDevices::_instance = 0;
+
+TDEHardwareDevices* TDEHardwareDevices::instance() {
+	static KStaticDeleter<TDEHardwareDevices> deleter;
+
+	if( !_instance ) {
+		deleter.setObject(_instance, new TDEHardwareDevices);
+	}
+
+	return _instance;
+}
 
 TDEHardwareDevices::TDEHardwareDevices() {
 	// Initialize members

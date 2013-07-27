@@ -80,7 +80,7 @@ install( FILES tdehardwaredevices.h tdenetworkconnections.h tdegenericdevice.h
     tdenetworkdevice.h tdebacklightdevice.h tdemonitordevice.h
     tdesensordevice.h tderootsystemdevice.h tdeeventdevice.h tdeinputdevice.h
     tdehwcommontypes.h
-  DESTINATION ${INCLUDE_INSTALL_DIR} )
+  DESTINATION ${INCLUDE_INSTALL_DIR}/tdehw )
 
 
 ##### libtdecore ################################
@@ -95,8 +95,9 @@ set( ${target}_SRCS
   tdeeventdevice.cpp tdeinputdevice.cpp
 )
 
-tde_add_library( ${target} STATIC_PIC AUTOMOC
+tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
-  LINK udev ${TDENM_LIBRARIES} ${TDEUPOWER_LIBRARIES}
+  LINK tdecore-shared udev ${TDENM_LIBRARIES} ${TDEUPOWER_LIBRARIES}
     ${TDEHW_CUSTOM_LIBRARIES}
+  DESTINATION ${LIB_INSTALL_DIR}
 )
