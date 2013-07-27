@@ -12,54 +12,12 @@
 add_subdirectory( malloc )
 add_subdirectory( network )
 add_subdirectory( tdeconfig_compiler )
-add_subdirectory( hwlibdata )
-add_subdirectory( hwlibdaemons )
-
-if( NOT DBUS_SYSTEM_BUS )
-  set( DBUS_SYSTEM_BUS "unix:path=/var/run/dbus/system_bus_socket" CACHE INTERNAL "" FORCE )
-endif()
-
-if( WITH_UPOWER )
-  add_definitions( -DWITH_UPOWER )
-  set ( TDEUPOWER_INCLUDE_DIRECTORIES
-    ${DBUS_TQT_INCLUDE_DIRS}
-  )
-  set ( TDEUPOWER_LIBRARIES
-    ${DBUS_TQT_LIBRARIES}
-  )
-endif( )
-
-if( WITH_UDISKS )
-  add_definitions( -DWITH_UDISKS )
-endif( )
-
-if( WITH_UDISKS2 )
-  add_definitions( -DWITH_UDISKS2 )
-endif( )
-
-if( WITH_CONSOLEKIT )
-  add_definitions( -DWITH_CONSOLEKIT )
-endif( )
+add_subdirectory( tdehw )
 
 if( WITH_LIBART )
   add_subdirectory( svgicons )
   set( KDESVGICONS kdesvgicons-static )
 endif( WITH_LIBART )
-
-if( WITH_NETWORK_MANAGER_BACKEND )
-  add_subdirectory( networkbackends/network-manager/dbus )
-  set ( TDENM_INCLUDE_DIRECTORIES
-    ${DBUS_TQT_INCLUDE_DIRS}
-    ${NM_UTIL_INCLUDE_DIRS}
-    "${CMAKE_BINARY_DIR}/tdecore/networkbackends/network-manager/dbus"
-  )
-  set ( TDENM_LIBRARIES
-    tdenm_dbus-static
-    ${DBUS_TQT_LIBRARIES}
-  )
-  set ( TDENM_BACKEND_SOURCES networkbackends/network-manager/network-manager.cpp )
-endif( WITH_NETWORK_MANAGER_BACKEND )
-
 
 include_directories(
   ${TQT_INCLUDE_DIRS}
@@ -67,6 +25,7 @@ include_directories(
   ${CMAKE_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}/network
+  ${CMAKE_CURRENT_SOURCE_DIR}/tdehw
   ${CMAKE_SOURCE_DIR}/dcop
   ${CMAKE_SOURCE_DIR}/libltdl
   ${CMAKE_SOURCE_DIR}/tdefx
@@ -75,8 +34,6 @@ include_directories(
   ${LIBART_INCLUDE_DIRS}
   ${LIBIDN_INCLUDE_DIRS}
   ${GAMIN_INCLUDEDIR}
-  ${TDENM_INCLUDE_DIRECTORIES}
-  ${TDEUPOWER_INCLUDE_DIRECTORIES}
 )
 
 link_directories(
@@ -111,8 +68,7 @@ install( FILES
     kcalendarsystem.h kcalendarsystemfactory.h kmacroexpander.h
     kmanagerselection.h kmountpoint.h kuser.h klockfile.h
     kidna.h ktempdir.h kshell.h fixx11h.h kxerrorhandler.h
-    tdelibs_export.h kde_file.h ktimezones.h tdehardwaredevices.h
-    tdenetworkconnections.h
+    tdelibs_export.h kde_file.h ktimezones.h
     ${CMAKE_CURRENT_BINARY_DIR}/kdemacros.h
   DESTINATION ${INCLUDE_INSTALL_DIR} )
 
@@ -168,16 +124,15 @@ set( ${target}_SRCS
   ktempdir.cpp kshell.cpp kmountpoint.cpp kcalendarsystemjalali.cpp
   kprotocolinfo_tdecore.cpp kprotocolinfofactory.cpp kxerrorhandler.cpp
   kuser.cpp tdeconfigskeleton.cpp tdeconfigdialogmanager.cpp klockfile.cpp
-  kqiodevicegzip_p.cpp ktimezones.cpp tdehardwaredevices.cpp tdenetworkconnections.cpp
-  ksimpledirwatch.cpp
-  ${TDENM_BACKEND_SOURCES}
+  kqiodevicegzip_p.cpp ktimezones.cpp ksimpledirwatch.cpp
 )
 
 tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 4.2.0
-  EMBED tdecorenetwork-static
-  LINK ltdlc-static ${KDESVGICONS} DCOP-shared tdefx-shared ${ZLIB_LIBRARIES} ${LIBIDN_LIBRARIES} ${XCOMPOSITE_LIBRARIES} ICE SM udev ${GAMIN_LIBRARIES} ${TDENM_LIBRARIES} ${TDEUPOWER_LIBRARIES}
+  EMBED tdecorenetwork-static tdehw-static
+  LINK ltdlc-static ${KDESVGICONS} DCOP-shared tdefx-shared ${ZLIB_LIBRARIES}
+    ${LIBIDN_LIBRARIES} ${XCOMPOSITE_LIBRARIES} ICE SM ${GAMIN_LIBRARIES}
   DEPENDENCIES dcopidl dcopidl2cpp
   DESTINATION ${LIB_INSTALL_DIR}
 )

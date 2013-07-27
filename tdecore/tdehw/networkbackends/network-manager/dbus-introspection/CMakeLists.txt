@@ -18,7 +18,7 @@ include_directories(
 
 ##### tdenm_dbus (static) #########################
 
-set( INTROSPECTIONPATH "${CMAKE_SOURCE_DIR}/tdecore/networkbackends/network-manager/introspection" )
+set( INTROSPECTIONPATH ${CMAKE_CURRENT_SOURCE_DIR} )
 
 # options:
 #  p - generate proxy files
@@ -71,6 +71,11 @@ add_custom_command( OUTPUT mocfiles.cpp
   COMMAND cat ${_moc_files} > mocfiles.cpp
   DEPENDS ${_moc_files} )
 
+# tde_automoc( accesspointproxy.h deviceproxy.h networkmanagerproxy.h
+#   networkmanagerpppproxy.h bluetoothproxy.h olpcmeshproxy.h
+#   ethernetproxy.h infinibandproxy.h wifiproxy.h wimaxproxy.h
+#   activeconnectionproxy.h vpnconnectionproxy.h vpnpluginproxy.h
+#   modemproxy.h networkmanagersettings.h connectionsettings.h ) 
 
 # build the library
 
