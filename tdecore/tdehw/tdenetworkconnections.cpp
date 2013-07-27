@@ -19,20 +19,22 @@
 #include "tdehardwaredevices.h"
 #include "tdenetworkconnections.h"
 
-#include "config.h"
-
 #include <tqtimer.h>
 
 #include <tdelocale.h>
 
+#include "tdenetworkdevice.h"
 // #define DEBUG_SIGNAL_QUEUE 1
 
+#include "config.h"
+
 #ifdef WITH_NETWORK_MANAGER_BACKEND
-#include "networkbackends/network-manager/network-manager.h"
+#include "network-manager.h"
 #endif // WITH_NETWORK_MANAGER_BACKEND
 
 #define SET_BIT(x, y) (x |= 1 << y)
 #define TEST_BIT(x, y) ((x & (1 << y)) >> y)
+
 
 /*================================================================================================*/
 /* TDENetworkSearchDomain                                                                         */

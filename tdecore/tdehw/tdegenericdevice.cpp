@@ -26,6 +26,8 @@
 
 #include "tdehardwaredevices.h" 
 
+#include "config.h"
+
 TDEGenericDevice::TDEGenericDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TQObject() {
 	m_deviceType = dt;
 	m_deviceName = dn;

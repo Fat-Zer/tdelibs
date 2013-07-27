@@ -19,6 +19,8 @@
 
 #include "tdebatterydevice.h"
 
+#include "config.h"
+
 TDEBatteryDevice::TDEBatteryDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
 }
 

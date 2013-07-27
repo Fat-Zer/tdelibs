@@ -17,22 +17,22 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "tdemainspowerdevice.h"
+#include "tdeinputdevice.h"
 
 #include "config.h"
 
-TDEMainsPowerDevice::TDEMainsPowerDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
+TDEInputDevice::TDEInputDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
 }
 
-TDEMainsPowerDevice::~TDEMainsPowerDevice() {
+TDEInputDevice::~TDEInputDevice() {
 }
 
-bool TDEMainsPowerDevice::online() {
-	return m_online;
+TDEInputDeviceType::TDEInputDeviceType TDEInputDevice::inputType() {
+	return m_inputType;
 }
 
-void TDEMainsPowerDevice::internalSetOnline(bool tc) {
-	m_online = tc;
+void TDEInputDevice::internalSetInputType(TDEInputDeviceType::TDEInputDeviceType it) {
+	m_inputType = it;
 }
 
-#include "tdemainspowerdevice.moc"
+#include "tdeinputdevice.moc"

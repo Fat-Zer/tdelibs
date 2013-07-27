@@ -23,6 +23,12 @@
 
 #include <tqfile.h>
 
+#include "tdeglobal.h"
+
+#include "tdehardwaredevices.h"
+
+#include "config.h"
+
 // uPower
 #if defined(WITH_UPOWER)
  	#include <tqdbusdata.h>
@@ -32,9 +38,6 @@
  	#include <tqdbusconnection.h>
 #endif // defined(WITH_UPOWER)
 
-#include <tdeglobal.h>
-
-#include "tdehardwaredevices.h"
 
 TDECPUDevice::TDECPUDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
 	m_frequency = -1;
