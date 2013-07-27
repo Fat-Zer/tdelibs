@@ -67,6 +67,7 @@ install( FILES tdehardwaredevices.h tdenetworkconnections.h tdegenericdevice.h
     tdestoragedevice.h tdecpudevice.h tdebatterydevice.h tdemainspowerdevice.h
     tdenetworkdevice.h tdebacklightdevice.h tdemonitordevice.h
     tdesensordevice.h tderootsystemdevice.h tdeeventdevice.h tdeinputdevice.h
+    tdehwcommontypes.h
   DESTINATION ${INCLUDE_INSTALL_DIR} )
 
 
