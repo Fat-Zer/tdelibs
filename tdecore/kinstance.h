@@ -27,8 +27,6 @@ class TQFont;
 class TDEInstancePrivate;
 class KMimeSourceFactory;
 class TDESharedConfig;
-class TDEHardwareDevices;
-class TDEGlobalNetworkManager;
 
 #include <tqstring.h>
 #include "tdelibs_export.h"
@@ -111,18 +109,6 @@ class TDECORE_EXPORT TDEInstance
     TDEIconLoader	       *iconLoader() const;
 
     /**
-     *  Returns a TDEHardwareDevices object.
-     * @return the hardwaredevices object.
-     */
-    TDEHardwareDevices	*hardwareDevices() const;
-
-    /**
-     *  Returns a TDEGlobalNetworkManager object.
-     * @return the networkmanager object.
-     */
-    TDEGlobalNetworkManager  *networkManager() const;
-
-    /**
      * Re-allocate the global iconloader.
      */
     void newIconLoader() const;
@@ -168,8 +154,6 @@ private:
     mutable TDEConfig             *_config;
     mutable TDEIconLoader         *_iconLoader;
 
-    mutable TDEHardwareDevices  *_hardwaredevices;
-    mutable TDEGlobalNetworkManager  *_networkmanager;
     mutable void                *_placeholder;
 
     TQCString                     _name;

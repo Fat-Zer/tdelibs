@@ -541,7 +541,7 @@ TQString TDEStorageDevice::mountPath() {
 	// where <something> is listed in <system path>/dm/name
 
 	// First, ensure that all device information (mainly holders/slaves) is accurate
-	TDEGlobal::hardwareDevices()->rescanDeviceInformation(this);
+	TDEHardwareDevices::instance()->rescanDeviceInformation(this);
 
 	TQString dmnodename = systemPath();
 	dmnodename.append("/dm/name");
@@ -581,7 +581,7 @@ TQString TDEStorageDevice::mountPath() {
 	TQStringList slaveDeviceList = holdingDevices();
 	for ( TQStringList::Iterator slavedevit = slaveDeviceList.begin(); slavedevit != slaveDeviceList.end(); ++slavedevit ) {
 		// Try to locate this device path in the TDE device tree
-		TDEHardwareDevices *hwdevices = TDEGlobal::hardwareDevices();
+		TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
 		TDEGenericDevice *hwdevice = hwdevices->findBySystemPath(*slavedevit);
 		if ((hwdevice) && (hwdevice->type() == TDEGenericDeviceType::Disk)) {
 			TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(hwdevice);
@@ -627,7 +627,7 @@ TQString TDEStorageDevice::mountDevice(TQString mediaName, TQString mountOptions
 	}
 
 	// Update internal mount data
-	TDEGlobal::hardwareDevices()->processModifiedMounts();
+	TDEHardwareDevices::instance()->processModifiedMounts();
 
 	ret = mountPath();
 
@@ -676,7 +676,7 @@ TQString TDEStorageDevice::mountEncryptedDevice(TQString passphrase, TQString me
 	}
 
 	// Update internal mount data
-	TDEGlobal::hardwareDevices()->processModifiedMounts();
+	TDEHardwareDevices::instance()->processModifiedMounts();
 
 	ret = mountPath();
 
@@ -714,7 +714,7 @@ bool TDEStorageDevice::unmountDevice(TQString* errRet, int* retcode) {
 	}
 
 	// Update internal mount data
-	TDEGlobal::hardwareDevices()->processModifiedMounts();
+	TDEHardwareDevices::instance()->processModifiedMounts();
 
 	return false;
 }

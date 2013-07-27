@@ -962,6 +962,7 @@ add_subdirectory( kjs )
 add_subdirectory( tdewallet )
 add_subdirectory( tdeio )
 add_subdirectory( kded )
+add_subdirectory( tdehw )
 
 # FIXME this directory/target doesn't exists
 # add_subdirectory( kded_post )

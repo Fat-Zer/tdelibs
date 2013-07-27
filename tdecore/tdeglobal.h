@@ -25,8 +25,6 @@ class KCharsets;
 class TDEConfig;
 class TDESharedConfig;
 class TDEIconLoader;
-class TDEHardwareDevices;
-class TDEGlobalNetworkManager;
 class TDELocale;
 class TDEStandardDirs;
 class KStaticDeleterBase;
@@ -78,18 +76,6 @@ public:
      * @return the global iconloader object
      */
     static TDEIconLoader	        *iconLoader();
-
-    /**
-     *  Returns a TDEHardwareDevices object.
-     * @return the global hardware devices object
-     */
-    static TDEHardwareDevices	*hardwareDevices();
-
-    /**
-     *  Returns a TDEGlobalNetworkManager object.
-     * @return the global network manager object
-     */
-    static TDEGlobalNetworkManager   *networkManager();
 
     /**
      * Returns the global locale object.

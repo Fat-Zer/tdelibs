@@ -20,7 +20,7 @@ include_directories (
   ${NM_UTIL_INCLUDE_DIRS}
   ${CMAKE_BINARY_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/tdecore
-  ${CMAKE_SOURCE_DIR}/tdecore/tdehw
+  ${CMAKE_SOURCE_DIR}/tdehw
   ${CMAKE_CURRENT_BINARY_DIR}/dbus-introspection
 )
 

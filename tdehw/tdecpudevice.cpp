@@ -192,7 +192,7 @@ void TDECPUDevice::setGovernor(TQString gv) {
 #endif // WITH_UPOWER
 
 	// Force update of the device information object
-	TDEGlobal::hardwareDevices()->processModifiedCPUs();
+	TDEHardwareDevices::instance()->processModifiedCPUs();
 }
 
 bool TDECPUDevice::canSetMaximumScalingFrequency() {
@@ -216,7 +216,7 @@ void TDECPUDevice::setMaximumScalingFrequency(double fr) {
 	}
 
 	// Force update of the device information object
-	TDEGlobal::hardwareDevices()->processModifiedCPUs();
+	TDEHardwareDevices::instance()->processModifiedCPUs();
 }
 
 int TDECPUDevice::coreNumber() {

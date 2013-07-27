@@ -24,8 +24,6 @@
 #include "tdelocale.h"
 #include "kcharsets.h"
 #include "kiconloader.h"
-#include "tdehardwaredevices.h"
-#include "tdenetworkconnections.h"
 #include "tdeaboutdata.h"
 #include "kstandarddirs.h"
 #include "kdebug.h"
@@ -72,8 +70,6 @@ TDEInstance::TDEInstance( const TQCString& name)
   : _dirs (0L),
     _config (0L),
     _iconLoader (0L),
-    _hardwaredevices (0L),
-    _networkmanager (0L),
     _name( name ), _aboutData( new TDEAboutData( name, "", 0 ) ), m_configReadOnly(false)
 {
     DEBUG_ADD
@@ -92,8 +88,6 @@ TDEInstance::TDEInstance( const TDEAboutData * aboutData )
   : _dirs (0L),
     _config (0L),
     _iconLoader (0L),
-    _hardwaredevices (0L),
-    _networkmanager (0L),
     _name( aboutData->appName() ), _aboutData( aboutData ), m_configReadOnly(false)
 {
     DEBUG_ADD
@@ -113,8 +107,6 @@ TDEInstance::TDEInstance( TDEInstance* src )
   : _dirs ( src->_dirs ),
     _config ( src->_config ),
     _iconLoader ( src->_iconLoader ),
-    _hardwaredevices ( src->_hardwaredevices ),
-    _networkmanager ( src->_networkmanager ),
     _name( src->_name ), _aboutData( src->_aboutData ), m_configReadOnly(false)
 {
     DEBUG_ADD
@@ -133,8 +125,6 @@ TDEInstance::TDEInstance( TDEInstance* src )
     src->_dirs = 0L;
     src->_config = 0L;
     src->_iconLoader = 0L;
-    src->_hardwaredevices = 0L;
-    src->_networkmanager = 0L;
     src->_aboutData = 0L;
     delete src;
 }
@@ -152,12 +142,6 @@ TDEInstance::~TDEInstance()
 
     delete _iconLoader;
     _iconLoader = 0;
-
-    delete _hardwaredevices;
-    _hardwaredevices = 0;
-
-    delete _networkmanager;
-    _networkmanager = 0;
 
     // delete _config; // Do not delete, stored in d->sharedConfig
     _config = 0;
@@ -268,26 +252,6 @@ TDEIconLoader *TDEInstance::iconLoader() const
     }
 
     return _iconLoader;
-}
-
-TDEHardwareDevices *TDEInstance::hardwareDevices() const
-{
-    DEBUG_CHECK_ALIVE
-    if( _hardwaredevices == 0 ) {
-	_hardwaredevices = new TDEHardwareDevices( );
-    }
-
-    return _hardwaredevices;
-}
-
-TDEGlobalNetworkManager *TDEInstance::networkManager() const
-{
-    DEBUG_CHECK_ALIVE
-    if( _networkmanager == 0 ) {
-        _networkmanager = new TDEGlobalNetworkManager( );
-    }
-
-    return _networkmanager;
 }
 
 void TDEInstance::newIconLoader() const
