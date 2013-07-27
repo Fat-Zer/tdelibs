@@ -31,28 +31,6 @@
 
 #include "tdehwcommontypes.h"
 
-// FIXME delete those headers after complete fixing everything in over modules
-#include "tdegenericdevice.h"
-#include "kiconloader.h"
-extern "C" {
-#include <libudev.h>
-}
-#include <stdio.h>
-#include <stdlib.h>
-#include <locale.h>
-#include <unistd.h>
-#include "tdestoragedevice.h"
-#include "tdecpudevice.h"
-#include "tdebatterydevice.h"
-#include "tdemainspowerdevice.h"
-#include "tdenetworkdevice.h"
-#include "tdebacklightdevice.h"
-#include "tdemonitordevice.h"
-#include "tdesensordevice.h"
-#include "tderootsystemdevice.h"
-#include "tdeeventdevice.h"
-#include "tdeinputdevice.h"
-
 /**
  * Hardware Device Access and Monitoring Library
  *

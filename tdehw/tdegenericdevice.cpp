@@ -21,7 +21,6 @@
 
 #include <tqpixmap.h>
 
-#include "tdeglobal.h" 
 #include "tdelocale.h" 
 
 #include "tdehardwaredevices.h" 

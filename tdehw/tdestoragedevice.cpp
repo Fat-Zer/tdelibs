@@ -29,7 +29,6 @@
 #include <tqfile.h>
 
 #include "tdelocale.h" 
-#include "tdeglobal.h" 
 #include "kiconloader.h" 
 #include "tdetempfile.h" 
 
