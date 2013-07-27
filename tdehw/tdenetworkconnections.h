@@ -25,8 +25,9 @@
 #include <tqdatetime.h>
 #include <tqstringlist.h>
 #include <tqhostaddress.h>
-#include "kiconloader.h"
-#include "tdelibs_export.h"
+
+#include <kiconloader.h>
+#include <tdelibs_export.h>
 
 #define CREATE_FLAG_BITWISE_MANIPULATION_FUNCTIONS(x)														\
 	inline x operator|(x a, x b)																\

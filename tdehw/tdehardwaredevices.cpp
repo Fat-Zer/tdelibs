@@ -27,9 +27,7 @@
 #include <tdeconfig.h>
 #include <kstandarddirs.h>
 #include <kstaticdeleter.h>
-
 #include <tdelocale.h>
-
 #include <tdeapplication.h>
 #include <dcopclient.h>
 
@@ -52,7 +50,7 @@ extern "C" {
 // Input devices
 #include <linux/input.h>
 
-#include "kiconloader.h"
+#include <kiconloader.h>
 
 #include "tdegenericdevice.h"
 #include "tdestoragedevice.h"

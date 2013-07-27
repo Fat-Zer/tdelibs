@@ -23,8 +23,8 @@
 #include <tqobject.h>
 #include <tqstring.h>
 
-#include "tdelibs_export.h" 
-#include "kicontheme.h" 
+#include <tdelibs_export.h> 
+#include <kicontheme.h>
 
 #include "tdehwcommontypes.h" 
 
