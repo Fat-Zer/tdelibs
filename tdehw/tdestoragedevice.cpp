@@ -27,9 +27,9 @@
 #include <tqpixmap.h>
 #include <tqfile.h>
 
-#include "tdelocale.h" 
-#include "kiconloader.h" 
-#include "tdetempfile.h" 
+#include <tdelocale.h> 
+#include <kiconloader.h> 
+#include <tdetempfile.h> 
 
 #include "tdehardwaredevices.h" 
 
