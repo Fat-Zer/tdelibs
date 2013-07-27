@@ -23,8 +23,10 @@
 
 #include <tqfile.h>
 
+#include <dcopclient.h>
 #include "tdeglobal.h"
 #include "tdeconfig.h"
+#include "tdeapplication.h"
 
 #include "config.h"
 
