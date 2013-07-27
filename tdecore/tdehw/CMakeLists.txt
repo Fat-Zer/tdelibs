@@ -41,7 +41,7 @@ if( WITH_CONSOLEKIT )
 endif( )
 
 if( WITH_NETWORK_MANAGER_BACKEND )
-  list( APPEND TDEHW_CUSTOM_INCLUDE_DIR ${CMAKE_CURRENT_BINARY_DIR}/networkbackends/network-manager/dbus )
+  list( APPEND TDEHW_CUSTOM_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/networkbackends/network-manager )
   list( APPEND TDEHW_CUSTOM_LIBRARIES network_manager_backend-static )
 endif( WITH_NETWORK_MANAGER_BACKEND )
 
@@ -65,6 +65,8 @@ link_directories(
 
 install( FILES tdehardwaredevices.h tdenetworkconnections.h tdegenericdevice.h
     tdestoragedevice.h tdecpudevice.h tdebatterydevice.h tdemainspowerdevice.h
+    tdenetworkdevice.h tdebacklightdevice.h tdemonitordevice.h
+    tdesensordevice.h tderootsystemdevice.h tdeeventdevice.h tdeinputdevice.h
   DESTINATION ${INCLUDE_INSTALL_DIR} )
 
 
@@ -75,7 +77,9 @@ set( target tdehw )
 set( ${target}_SRCS
   tdehardwaredevices.cpp tdenetworkconnections.cpp tdegenericdevice.cpp
   tdestoragedevice.cpp tdecpudevice.cpp tdebatterydevice.cpp
-  tdemainspowerdevice.cpp
+  tdemainspowerdevice.cpp tdenetworkdevice.cpp tdebacklightdevice.cpp
+  tdemonitordevice.cpp tdesensordevice.cpp tderootsystemdevice.cpp
+  tdeeventdevice.cpp tdeinputdevice.cpp
 )
 
 tde_add_library( ${target} STATIC_PIC AUTOMOC

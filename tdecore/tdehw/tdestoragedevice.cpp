@@ -21,24 +21,8 @@
 
 #include <unistd.h>
 #include <fcntl.h>
-
 #include <sys/ioctl.h>
 #include <linux/cdrom.h>
-
-// uDisks2 integration
-#if defined(WITH_UDISKS) || defined(WITH_UDISKS2)
-	#include <tqdbusdata.h>
-	#include <tqdbusmessage.h>
-	#include <tqdbusproxy.h>
-	#include <tqdbusvariant.h>
-	#include <tqdbusconnection.h>
-	#include <tqdbuserror.h>
-	#include <tqdbusdatamap.h>
-	#include <tqdbusobjectpath.h>
-#endif // defined(WITH_UDISKS) || defined(WITH_UDISKS2)
-#if defined(WITH_UDISKS)
-	#include "tqdbusdatalist.h"
-#endif // ddefined(WITH_UDISKS)
 
 #include <tqpixmap.h>
 #include <tqfile.h>
@@ -49,6 +33,23 @@
 #include "tdetempfile.h" 
 
 #include "tdehardwaredevices.h" 
+
+#include "config.h"
+
+// uDisks2 integration
+#if defined(WITH_UDISKS) || defined(WITH_UDISKS2)
+ 	#include <tqdbusdata.h>
+ 	#include <tqdbusmessage.h>
+ 	#include <tqdbusproxy.h>
+ 	#include <tqdbusvariant.h>
+ 	#include <tqdbusconnection.h>
+ 	#include <tqdbuserror.h>
+ 	#include <tqdbusdatamap.h>
+ 	#include <tqdbusobjectpath.h>
+#endif // defined(WITH_UDISKS) || defined(WITH_UDISKS2)
+#if defined(WITH_UDISKS)
+ 	#include "tqdbusdatalist.h"
+#endif // ddefined(WITH_UDISKS)
 
 TDEStorageDevice::TDEStorageDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn), m_mediaInserted(true) {
 	m_diskType = TDEDiskDeviceType::Null;

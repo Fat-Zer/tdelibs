@@ -26,61 +26,7 @@
 #include "tdelibs_export.h" 
 #include "kicontheme.h" 
 
-// Keep readGenericDeviceTypeFromString(), getFriendlyDeviceTypeStringFromType(), and getDeviceTypeIconFromType() in tdehardwaredevices.cpp in sync with this enum
-namespace TDEGenericDeviceType {
-enum TDEGenericDeviceType {
-	Root,
-	RootSystem,
-	CPU,
-	GPU,
-	RAM,
-	Bus,
-	I2C,
-	MDIO,
-	Mainboard,
-	Disk,
-	SCSI,
-	StorageController,
-	Mouse,
-	Keyboard,
-	HID,
-	Modem,
-	Monitor,
-	Network,
-	Printer,
-	Scanner,
-	Sound,
-	VideoCapture,
-	IEEE1394,
-	PCMCIA,
-	Camera,
-	TextIO,
-	Serial,
-	Parallel,
-	Peripheral,
-	Backlight,
-	Battery,
-	PowerSupply,
-	Dock,
-	ThermalSensor,
-	ThermalControl,
-	BlueTooth,
-	Bridge,
-	Platform,
-	Cryptography,
-	Event,
-	Input,
-	PNP,
-	OtherACPI,
-	OtherUSB,
-	OtherMultimedia,
-	OtherPeripheral,
-	OtherSensor,
-	OtherVirtual,
-	Other,
-	Last = Other
-};
-};
+#include "tdehwcommontypes.h" 
 
 class TDECORE_EXPORT TDEGenericDevice : public TQObject
 {
