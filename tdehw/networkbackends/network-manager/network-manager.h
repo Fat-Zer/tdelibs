@@ -206,6 +206,8 @@
 #define NM_DEVICE_STATE_REASON_SECONDARY_CONNECTION_FAILED	54
 //====================================================================================================
 
+namespace TDEHW {
+
 class TDENetworkConnectionManager_BackendNMPrivate;
 
 class TDEHW_EXPORT TDENetworkConnectionManager_BackendNM : public TDENetworkConnectionManager
@@ -259,5 +261,7 @@ class TDEHW_EXPORT TDENetworkConnectionManager_BackendNM : public TDENetworkConn
 		TDENetworkConnectionManager_BackendNMPrivate* d;
 		friend class TDENetworkConnectionManager_BackendNMPrivate;
 };
+
+} // namespace TDEHW
 
 #endif // _TDENETWORKBACKEND_NETWORKMANAGER_H

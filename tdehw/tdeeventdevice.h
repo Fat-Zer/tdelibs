@@ -22,6 +22,10 @@
 
 #include "tdegenericdevice.h"
 
+class TQSocketNotifier;
+
+namespace TDEHW {
+
 class TDEHardwareDevices;
 
 namespace TDEEventDeviceType {
@@ -70,8 +74,6 @@ inline TDESwitchType operator~(TDESwitchType a)
 	return static_cast<TDESwitchType>(~static_cast<int>(a));
 }
 };
-
-class TQSocketNotifier;
 
 class TDEHW_EXPORT TDEEventDevice : public TDEGenericDevice
 {
@@ -157,5 +159,7 @@ class TDEHW_EXPORT TDEEventDevice : public TDEGenericDevice
 
 	friend class TDEHardwareDevices;
 };
+
+} // namespace TDEHW
 
 #endif // _TDEEVENTDEVICE_H

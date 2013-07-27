@@ -34,6 +34,8 @@
 	#include <tqdbusconnection.h>
 #endif // defined(WITH_UPOWER)
 
+using namespace TDEHW;
+
 TDEBacklightDevice::TDEBacklightDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
 }
 

@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+using namespace TDEHW;
+
 TDESensorCluster::TDESensorCluster() {
 	label = TQString::null;
 	current = -1;

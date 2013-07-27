@@ -20,6 +20,8 @@
 #ifndef _TDEHWCOMMON_H
 #define _TDEHWCOMMON_H
 
+namespace TDEHW {
+
 // Keep readGenericDeviceTypeFromString(), getFriendlyDeviceTypeStringFromType(), and getDeviceTypeIconFromType() in tdehardwaredevices.cpp in sync with this enum
 namespace TDEGenericDeviceType {
 enum TDEGenericDeviceType {
@@ -96,5 +98,7 @@ enum TDEHardwareEvent {
 	Last = Other
 };
 };
+
+} // namespace TDEHW
 
 #endif // _TDEHWCOMMON_H

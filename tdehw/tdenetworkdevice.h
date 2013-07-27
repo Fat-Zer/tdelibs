@@ -22,6 +22,8 @@
 
 #include "tdegenericdevice.h"
 
+namespace TDEHW {
+
 class TDENetworkConnectionManager;
 
 class TDEHW_EXPORT TDENetworkDevice : public TDEGenericDevice
@@ -246,5 +248,7 @@ class TDEHW_EXPORT TDENetworkDevice : public TDEGenericDevice
 
 	friend class TDEHardwareDevices;
 };
+
+} // namespace TDEHW
 
 #endif // _TDENETWORKDEVICE_H

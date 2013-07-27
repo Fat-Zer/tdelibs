@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+using namespace TDEHW;
+
 TDEBatteryDevice::TDEBatteryDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
 }
 

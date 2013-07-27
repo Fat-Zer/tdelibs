@@ -35,6 +35,7 @@
 #define SET_BIT(x, y) (x |= 1 << y)
 #define TEST_BIT(x, y) ((x & (1 << y)) >> y)
 
+using namespace TDEHW;
 
 /*================================================================================================*/
 /* TDENetworkSearchDomain                                                                         */
@@ -248,6 +249,8 @@ TQString TDEMACAddress::toString() {
 	return ret.lower();
 }
 
+namespace TDEHW {
+
 bool operator==(const TDEMACAddress &a1, const TDEMACAddress &a2) {
 	if (a1.m_macAddress.count() != a2.m_macAddress.count()) {
 		return false;
@@ -279,6 +282,8 @@ bool operator<(const TDEMACAddress &a1, const TDEMACAddress &a2) {
 		}
 		return false;
 	}
+}
+
 }
 
 /*================================================================================================*/

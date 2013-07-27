@@ -22,6 +22,8 @@
 
 #include "tdegenericdevice.h"
 
+namespace TDEHW {
+
 // Keep readDiskDeviceSubtypeFromString() in tdehardwaredevices.cpp in sync with this enum
 namespace TDEDiskDeviceType {
 enum TDEDiskDeviceType {
@@ -338,5 +340,7 @@ class TDEHW_EXPORT TDEStorageDevice : public TDEGenericDevice
 
 	friend class TDEHardwareDevices;
 };
+
+} // namespace TDEHW 
 
 #endif // _TDESTORAGEDEVICE_H

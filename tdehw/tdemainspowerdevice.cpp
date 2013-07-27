@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+using namespace TDEHW;
+
 TDEMainsPowerDevice::TDEMainsPowerDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
 }
 

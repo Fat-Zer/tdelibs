@@ -23,6 +23,8 @@
 #include "tdegenericdevice.h"
 #include "tdehwcommontypes.h"
 
+namespace TDEHW {
+
 typedef TQPair<unsigned int, unsigned int> TDEResolutionPair;
 typedef TQValueList< TDEResolutionPair > TDEResolutionList;
 
@@ -118,5 +120,7 @@ class TDEHW_EXPORT TDEMonitorDevice : public TDEGenericDevice
 	friend class TDEHardwareDevices;
 };
 
+
+} //namespace TDEHW
 
 #endif // _TDEMONITORDEVICE_H

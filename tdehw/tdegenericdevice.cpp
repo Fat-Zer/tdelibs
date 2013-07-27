@@ -27,6 +27,8 @@
 
 #include "config.h"
 
+using namespace TDEHW;
+
 TDEGenericDevice::TDEGenericDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TQObject() {
 	m_deviceType = dt;
 	m_deviceName = dn;

@@ -38,6 +38,8 @@
 	#include <tqdbusconnection.h>
 #endif // defined(WITH_UPOWER) || defined(WITH_CONSOLEKIT)
 
+using namespace TDEHW;
+
 TDERootSystemDevice::TDERootSystemDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
 	m_hibernationSpace = -1;
 }

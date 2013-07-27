@@ -36,6 +36,7 @@
  	#include <tqdbusconnection.h>
 #endif // defined(WITH_UPOWER)
 
+using namespace TDEHW;
 
 TDECPUDevice::TDECPUDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
 	m_frequency = -1;

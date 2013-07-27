@@ -29,6 +29,10 @@
 #include <kiconloader.h>
 #include <tdelibs_export.h>
 
+class TQTimer;
+
+namespace TDEHW {
+  
 #define CREATE_FLAG_BITWISE_MANIPULATION_FUNCTIONS(x)														\
 	inline x operator|(x a, x b)																\
 	{																			\
@@ -1012,8 +1016,6 @@ class TDENetworkEventQueueEvent_Private
 };
 typedef TQValueList<TDENetworkEventQueueEvent_Private> TDENetworkEventQueueEvent_PrivateList;
 
-class TQTimer;
-
 class TDEHW_EXPORT TDENetworkConnectionManager : public TQObject
 {
 	Q_OBJECT
@@ -1593,5 +1595,7 @@ class TDEHW_EXPORT TDEGlobalNetworkManager : public TQObject
 	private:
 		TDENetworkConnectionManager* m_internalConnectionManager;
 };
+
+} // namespace TDEHW
 
 #endif // _TDENETWORKCONNECTIONS_H

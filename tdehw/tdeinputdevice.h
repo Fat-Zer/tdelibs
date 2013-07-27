@@ -22,6 +22,8 @@
 
 #include "tdegenericdevice.h"
 
+namespace TDEHW {
+
 namespace TDEInputDeviceType {
 enum TDEInputDeviceType {
 	Unknown,
@@ -63,5 +65,7 @@ class TDEHW_EXPORT TDEInputDevice : public TDEGenericDevice
 
 	friend class TDEHardwareDevices;
 };
+
+} //namespace TDEHW
 
 #endif // _TDEINPUTDEVICE_H

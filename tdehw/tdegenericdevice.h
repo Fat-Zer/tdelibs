@@ -28,6 +28,8 @@
 
 #include "tdehwcommontypes.h" 
 
+namespace TDEHW {
+
 class TDEHW_EXPORT TDEGenericDevice : public TQObject
 {
 	Q_OBJECT
@@ -330,5 +332,7 @@ class TDEHW_EXPORT TDEGenericDevice : public TQObject
 
 	friend class TDEHardwareDevices;
 };
+
+} // namespace TDEHW
 
 #endif // _TDEGENERICDEVICE_H

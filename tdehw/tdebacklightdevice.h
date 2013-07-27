@@ -23,6 +23,8 @@
 #include "tdegenericdevice.h"
 #include "tdehwcommontypes.h"
 
+namespace TDEHW {
+
 class TDEHW_EXPORT TDEBacklightDevice : public TDEGenericDevice
 {
 	public:
@@ -93,5 +95,7 @@ class TDEHW_EXPORT TDEBacklightDevice : public TDEGenericDevice
 
 	friend class TDEHardwareDevices;
 };
+
+} // namespace TDEHW 
 
 #endif // _TDEBACKLIGHTDEVICE_H
