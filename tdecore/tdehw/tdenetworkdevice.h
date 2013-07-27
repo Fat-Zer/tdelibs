@@ -22,8 +22,6 @@
 
 #include "tdegenericdevice.h"
 
-#include "config.h"
-
 class TDENetworkConnectionManager;
 
 class TDECORE_EXPORT TDENetworkDevice : public TDEGenericDevice
