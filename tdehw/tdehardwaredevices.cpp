@@ -28,7 +28,6 @@
 #include <kstandarddirs.h>
 #include <kstaticdeleter.h>
 
-#include <tdeglobal.h>
 #include <tdelocale.h>
 
 #include <tdeapplication.h>

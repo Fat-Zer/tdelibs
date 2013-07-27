@@ -23,8 +23,6 @@
 
 #include <tqfile.h>
 
-#include "tdeglobal.h"
-
 #include "tdehardwaredevices.h"
 
 #include "config.h"
