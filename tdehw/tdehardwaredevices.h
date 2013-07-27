@@ -54,7 +54,7 @@ class TQSocketNotifier;
 typedef TQPtrList<TDEGenericDevice> TDEGenericHardwareList;
 typedef TQMap<TQString, TQString> TDEDeviceIDMap;
 
-class TDECORE_EXPORT TDEHardwareDevices : public TQObject
+class TDEHW_EXPORT TDEHardwareDevices : public TQObject
 {
 	Q_OBJECT
 

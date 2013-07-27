@@ -26,7 +26,7 @@
 typedef TQPair<unsigned int, unsigned int> TDEResolutionPair;
 typedef TQValueList< TDEResolutionPair > TDEResolutionList;
 
-class TDECORE_EXPORT TDEMonitorDevice : public TDEGenericDevice
+class TDEHW_EXPORT TDEMonitorDevice : public TDEGenericDevice
 {
 	public:
 		/**

@@ -58,7 +58,7 @@ enum TDESystemHibernationMethod {
 typedef TQValueList<TDESystemPowerState::TDESystemPowerState> TDESystemPowerStateList;
 typedef TQValueList<TDESystemHibernationMethod::TDESystemHibernationMethod> TDESystemHibernationMethodList;
 
-class TDECORE_EXPORT TDERootSystemDevice : public TDEGenericDevice
+class TDEHW_EXPORT TDERootSystemDevice : public TDEGenericDevice
 {
 	public:
 		/**

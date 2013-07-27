@@ -23,7 +23,7 @@
 #include "tdegenericdevice.h"
 #include "tdehwcommontypes.h"
 
-class TDECORE_EXPORT TDEBacklightDevice : public TDEGenericDevice
+class TDEHW_EXPORT TDEBacklightDevice : public TDEGenericDevice
 {
 	public:
 		/**

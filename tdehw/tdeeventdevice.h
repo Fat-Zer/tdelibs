@@ -73,7 +73,7 @@ inline TDESwitchType operator~(TDESwitchType a)
 
 class TQSocketNotifier;
 
-class TDECORE_EXPORT TDEEventDevice : public TDEGenericDevice
+class TDEHW_EXPORT TDEEventDevice : public TDEGenericDevice
 {
 	Q_OBJECT
 

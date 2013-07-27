@@ -24,7 +24,7 @@
 
 class TDENetworkConnectionManager;
 
-class TDECORE_EXPORT TDENetworkDevice : public TDEGenericDevice
+class TDEHW_EXPORT TDENetworkDevice : public TDEGenericDevice
 {
 	public:
 		/**

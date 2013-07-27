@@ -495,7 +495,7 @@ namespace TDENetworkIPConfigurationFlags {
 	CREATE_FLAG_BITWISE_MANIPULATION_FUNCTIONS(TDENetworkIPConfigurationFlags)
 };
 
-class TDECORE_EXPORT TDENetworkSearchDomain
+class TDEHW_EXPORT TDENetworkSearchDomain
 {
 	public:
 		TDENetworkSearchDomain();
@@ -515,7 +515,7 @@ class TDECORE_EXPORT TDENetworkSearchDomain
 
 typedef TQValueList<TDENetworkSearchDomain> TDENetworkSearchDomainList;
 
-class TDECORE_EXPORT TDENetMask
+class TDEHW_EXPORT TDENetMask
 {
 	public:
 		TDENetMask();
@@ -537,7 +537,7 @@ class TDECORE_EXPORT TDENetMask
 		bool m_isIPV6;
 };
 
-class TDECORE_EXPORT TDEMACAddress
+class TDEHW_EXPORT TDEMACAddress
 {
 	public:
 		TDEMACAddress();
@@ -558,12 +558,12 @@ class TDECORE_EXPORT TDEMACAddress
 		friend bool operator<(const TDEMACAddress &a1, const TDEMACAddress &a2);
 };
 
-TDECORE_EXPORT bool operator==(const TDEMACAddress &a1, const TDEMACAddress &a2);
-TDECORE_EXPORT bool operator<(const TDEMACAddress &a1, const TDEMACAddress &a2);
+TDEHW_EXPORT bool operator==(const TDEMACAddress &a1, const TDEMACAddress &a2);
+TDEHW_EXPORT bool operator<(const TDEMACAddress &a1, const TDEMACAddress &a2);
 
 typedef TQValueList<TDEMACAddress> TDEMACAddressList;
 
-class TDECORE_EXPORT TDENetworkSingleIPConfiguration
+class TDEHW_EXPORT TDENetworkSingleIPConfiguration
 {
 	public:
 		TDENetworkSingleIPConfiguration();
@@ -581,7 +581,7 @@ class TDECORE_EXPORT TDENetworkSingleIPConfiguration
 
 typedef TQValueList<TDENetworkSingleIPConfiguration> TDENetworkSingleIPConfigurationList;
 
-class TDECORE_EXPORT TDENetworkSingleRouteConfiguration
+class TDEHW_EXPORT TDENetworkSingleRouteConfiguration
 {
 	public:
 		TDENetworkSingleRouteConfiguration();
@@ -600,7 +600,7 @@ class TDECORE_EXPORT TDENetworkSingleRouteConfiguration
 
 typedef TQValueList<TDENetworkSingleRouteConfiguration> TDENetworkSingleRouteConfigurationList;
 
-class TDECORE_EXPORT TDENetworkIEEE8021xConfiguration
+class TDEHW_EXPORT TDENetworkIEEE8021xConfiguration
 {
 	public:
 		TDENetworkIEEE8021xConfiguration();
@@ -644,7 +644,7 @@ class TDECORE_EXPORT TDENetworkIEEE8021xConfiguration
 		bool forceSystemCaCertificates;
 };
 
-class TDECORE_EXPORT TDENetworkPPPConfiguration
+class TDEHW_EXPORT TDENetworkPPPConfiguration
 {
 	public:
 		TDENetworkPPPConfiguration();
@@ -661,7 +661,7 @@ class TDECORE_EXPORT TDENetworkPPPConfiguration
 		TQ_UINT32 lcpEchoFailureThreshold;
 };
 
-class TDECORE_EXPORT TDENetworkPPPOEConfiguration
+class TDEHW_EXPORT TDENetworkPPPOEConfiguration
 {
 	public:
 		TDENetworkPPPOEConfiguration();
@@ -676,7 +676,7 @@ class TDECORE_EXPORT TDENetworkPPPOEConfiguration
 		TDENetworkPasswordHandlingFlags::TDENetworkPasswordHandlingFlags passwordFlags;
 };
 
-class TDECORE_EXPORT TDENetworkSerialConfiguration
+class TDEHW_EXPORT TDENetworkSerialConfiguration
 {
 	public:
 		TDENetworkSerialConfiguration();
@@ -691,7 +691,7 @@ class TDECORE_EXPORT TDENetworkSerialConfiguration
 		TQ_UINT64 txDelay;
 };
 
-class TDECORE_EXPORT TDENetworkCDMAConfiguration
+class TDEHW_EXPORT TDENetworkCDMAConfiguration
 {
 	public:
 		TDENetworkCDMAConfiguration();
@@ -706,7 +706,7 @@ class TDECORE_EXPORT TDENetworkCDMAConfiguration
 		TDENetworkPasswordHandlingFlags::TDENetworkPasswordHandlingFlags passwordFlags;
 };
 
-class TDECORE_EXPORT TDENetworkGSMConfiguration
+class TDEHW_EXPORT TDENetworkGSMConfiguration
 {
 	public:
 		TDENetworkGSMConfiguration();
@@ -758,7 +758,7 @@ class TDENetworkWiFiSecurityConfiguration
 		TDENetworkPasswordHandlingFlags::TDENetworkPasswordHandlingFlags leapPasswordFlags;
 };
 
-class TDECORE_EXPORT TDENetworkIPConfiguration
+class TDEHW_EXPORT TDENetworkIPConfiguration
 {
 	public:
 		TDENetworkIPConfiguration();
@@ -776,7 +776,7 @@ class TDECORE_EXPORT TDENetworkIPConfiguration
 		TQString dhcpClientIdentifier;
 };
 
-class TDECORE_EXPORT TDENetworkWiFiDeviceInfo
+class TDEHW_EXPORT TDENetworkWiFiDeviceInfo
 {
 	public:
 		TDENetworkWiFiDeviceInfo();
@@ -792,7 +792,7 @@ class TDECORE_EXPORT TDENetworkWiFiDeviceInfo
 		TDENetworkWiFiClientFlags::TDENetworkWiFiClientFlags wirelessFlags;
 };
 
-class TDECORE_EXPORT TDENetworkDeviceInformation
+class TDEHW_EXPORT TDENetworkDeviceInformation
 {
 	public:
 		TDENetworkDeviceInformation();
@@ -815,7 +815,7 @@ class TDECORE_EXPORT TDENetworkDeviceInformation
 		TDENetworkWiFiDeviceInfo wiFiInfo;
 };
 
-class TDECORE_EXPORT TDENetworkHWNeighbor
+class TDEHW_EXPORT TDENetworkHWNeighbor
 {
 	public:
 		TDENetworkHWNeighbor();
@@ -825,7 +825,7 @@ class TDECORE_EXPORT TDENetworkHWNeighbor
 		bool valid;
 };
 
-class TDECORE_EXPORT TDENetworkWiFiAPInfo : public TDENetworkHWNeighbor
+class TDEHW_EXPORT TDENetworkWiFiAPInfo : public TDENetworkHWNeighbor
 {
 	public:
 		TDENetworkWiFiAPInfo();
@@ -846,7 +846,7 @@ class TDECORE_EXPORT TDENetworkWiFiAPInfo : public TDENetworkHWNeighbor
 
 typedef TQPtrList< TDENetworkHWNeighbor > TDENetworkHWNeighborList;
 
-class TDECORE_EXPORT TDENetworkConnection
+class TDEHW_EXPORT TDENetworkConnection
 {
 	public:
 		TDENetworkConnection();
@@ -877,14 +877,14 @@ class TDECORE_EXPORT TDENetworkConnection
 		TQDateTime lastKnownConnection;
 };
 
-class TDECORE_EXPORT TDEWiredEthernetConnection : public TDENetworkConnection
+class TDEHW_EXPORT TDEWiredEthernetConnection : public TDENetworkConnection
 {
 	public:
 		TDEWiredEthernetConnection();
 		virtual ~TDEWiredEthernetConnection();
 };
 
-class TDECORE_EXPORT TDEWiFiConnection : public TDENetworkConnection
+class TDEHW_EXPORT TDEWiFiConnection : public TDENetworkConnection
 {
 	public:
 		TDEWiFiConnection();
@@ -905,7 +905,7 @@ class TDECORE_EXPORT TDEWiFiConnection : public TDENetworkConnection
 		TDENetworkWiFiSecurityConfiguration securitySettings;
 };
 
-class TDECORE_EXPORT TDEWiredInfinibandConnection : public TDENetworkConnection
+class TDEHW_EXPORT TDEWiredInfinibandConnection : public TDENetworkConnection
 {
 	public:
 		TDEWiredInfinibandConnection();
@@ -915,7 +915,7 @@ class TDECORE_EXPORT TDEWiredInfinibandConnection : public TDENetworkConnection
 		TDENetworkInfinibandTransportMode::TDENetworkInfinibandTransportMode transportMode;
 };
 
-class TDECORE_EXPORT TDEVPNConnection : public TDENetworkConnection
+class TDEHW_EXPORT TDEVPNConnection : public TDENetworkConnection
 {
 	public:
 		TDEVPNConnection();
@@ -929,7 +929,7 @@ class TDECORE_EXPORT TDEVPNConnection : public TDENetworkConnection
 		TDENetworkSettingsMap pluginSecrets;
 };
 
-class TDECORE_EXPORT TDEWiMaxConnection : public TDENetworkConnection
+class TDEHW_EXPORT TDEWiMaxConnection : public TDENetworkConnection
 {
 	public:
 		TDEWiMaxConnection();
@@ -939,7 +939,7 @@ class TDECORE_EXPORT TDEWiMaxConnection : public TDENetworkConnection
 		TQString networkServiceProvider;
 };
 
-class TDECORE_EXPORT TDEVLANConnection : public TDENetworkConnection
+class TDEHW_EXPORT TDEVLANConnection : public TDENetworkConnection
 {
 	public:
 		TDEVLANConnection();
@@ -954,7 +954,7 @@ class TDECORE_EXPORT TDEVLANConnection : public TDENetworkConnection
 		TDENetworkPriorityMap egressPriorityMap;
 };
 
-class TDECORE_EXPORT TDEOLPCMeshConnection : public TDENetworkConnection
+class TDEHW_EXPORT TDEOLPCMeshConnection : public TDENetworkConnection
 {
 	public:
 		TDEOLPCMeshConnection();
@@ -966,7 +966,7 @@ class TDECORE_EXPORT TDEOLPCMeshConnection : public TDENetworkConnection
 		TQByteArray anycastDHCPHWAddress;
 };
 
-class TDECORE_EXPORT TDEBluetoothConnection : public TDENetworkConnection
+class TDEHW_EXPORT TDEBluetoothConnection : public TDENetworkConnection
 {
 	public:
 		TDEBluetoothConnection();
@@ -976,7 +976,7 @@ class TDECORE_EXPORT TDEBluetoothConnection : public TDENetworkConnection
 		TDEBluetoothConnectionType::TDEBluetoothConnectionType type;
 };
 
-class TDECORE_EXPORT TDEModemConnection : public TDENetworkConnection
+class TDEHW_EXPORT TDEModemConnection : public TDENetworkConnection
 {
 	public:
 		TDEModemConnection();
@@ -1013,7 +1013,7 @@ typedef TQValueList<TDENetworkEventQueueEvent_Private> TDENetworkEventQueueEvent
 
 class TQTimer;
 
-class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
+class TDEHW_EXPORT TDENetworkConnectionManager : public TQObject
 {
 	Q_OBJECT
 
@@ -1357,7 +1357,7 @@ class TDECORE_EXPORT TDENetworkConnectionManager : public TQObject
 		TDENetworkEventQueueEvent_PrivateList m_globalEventQueueEventList;
 };
 
-class TDECORE_EXPORT TDEGlobalNetworkManager : public TQObject
+class TDEHW_EXPORT TDEGlobalNetworkManager : public TQObject
 {
 	Q_OBJECT
 

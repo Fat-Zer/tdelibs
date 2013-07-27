@@ -105,7 +105,7 @@ inline TDEDiskDeviceStatus operator~(TDEDiskDeviceStatus a)
 }
 };
 
-class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
+class TDEHW_EXPORT TDEStorageDevice : public TDEGenericDevice
 {
 	public:
 		/**
