@@ -22,7 +22,7 @@
 
 #include "tdegenericdevice.h"
 
-class TDECORE_EXPORT TDECPUDevice : public TDEGenericDevice
+class TDEHW_EXPORT TDECPUDevice : public TDEGenericDevice
 {
 	public:
 		/**

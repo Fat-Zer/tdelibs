@@ -208,7 +208,7 @@
 
 class TDENetworkConnectionManager_BackendNMPrivate;
 
-class TDECORE_EXPORT TDENetworkConnectionManager_BackendNM : public TDENetworkConnectionManager
+class TDEHW_EXPORT TDENetworkConnectionManager_BackendNM : public TDENetworkConnectionManager
 {
 	Q_OBJECT
 

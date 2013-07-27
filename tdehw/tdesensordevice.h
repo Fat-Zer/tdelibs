@@ -22,7 +22,7 @@
 
 #include "tdegenericdevice.h"
 
-class TDECORE_EXPORT TDESensorCluster
+class TDEHW_EXPORT TDESensorCluster
 {
 	public:
 		/**
@@ -40,7 +40,7 @@ class TDECORE_EXPORT TDESensorCluster
 
 typedef TQMap<TQString, TDESensorCluster> TDESensorClusterMap;
 
-class TDECORE_EXPORT TDESensorDevice : public TDEGenericDevice
+class TDEHW_EXPORT TDESensorDevice : public TDEGenericDevice
 {
 	public:
 		/**

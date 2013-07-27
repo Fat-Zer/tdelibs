@@ -126,7 +126,7 @@ inline TDEDiskDeviceStatus operator~(TDEDiskDeviceStatus a)
 
 typedef TQMap<TQString,TQString> TDEStorageMountOptions;
 
-class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
+class TDEHW_EXPORT TDEStorageDevice : public TDEGenericDevice
 {
 	public:
 		/**

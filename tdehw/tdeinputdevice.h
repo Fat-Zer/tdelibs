@@ -34,7 +34,7 @@ enum TDEInputDeviceType {
 };
 };
 
-class TDECORE_EXPORT TDEInputDevice : public TDEGenericDevice
+class TDEHW_EXPORT TDEInputDevice : public TDEGenericDevice
 {
 	public:
 		/**

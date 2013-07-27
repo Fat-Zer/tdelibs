@@ -28,7 +28,7 @@
 
 #include "tdehwcommontypes.h" 
 
-class TDECORE_EXPORT TDEGenericDevice : public TQObject
+class TDEHW_EXPORT TDEGenericDevice : public TQObject
 {
 	Q_OBJECT
 

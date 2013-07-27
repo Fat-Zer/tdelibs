@@ -31,7 +31,7 @@ enum TDEBatteryStatus {
 };
 };
 
-class TDECORE_EXPORT TDEBatteryDevice : public TDEGenericDevice
+class TDEHW_EXPORT TDEBatteryDevice : public TDEGenericDevice
 {
 	public:
 		/**
