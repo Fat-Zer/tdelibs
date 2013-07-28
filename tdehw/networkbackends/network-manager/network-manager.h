@@ -229,7 +229,7 @@ class TDEHW_EXPORT NetworkConnectionManager_BackendNM : public NetworkConnection
 		virtual bool loadConnectionSecrets(TQString uuid);
 		virtual bool saveConnection(NetworkConnection* connection);
 		virtual bool deleteConnection(TQString uuid);
-		virtual bool verifyConnectionSettings(NetworkConnection* connection, NetworkConnectionErrorFlags::NetworkConnectionErrorFlags* type=NULL, TDENetworkErrorStringMap* reason=NULL);
+		virtual bool verifyConnectionSettings(NetworkConnection* connection, NetworkConnectionErrorFlags::NetworkConnectionErrorFlags* type=NULL, NetworkErrorStringMap* reason=NULL);
 
 		virtual NetworkConnectionStatus::NetworkConnectionStatus initiateConnection(TQString uuid);
 		virtual NetworkConnectionStatus::NetworkConnectionStatus checkConnectionStatus(TQString uuid);

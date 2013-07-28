@@ -25,8 +25,8 @@
 
 namespace TDEHW {
 
-typedef TQPair<unsigned int, unsigned int> TDEResolutionPair;
-typedef TQValueList< TDEResolutionPair > TDEResolutionList;
+typedef TQPair<unsigned int, unsigned int> ResolutionPair;
+typedef TQValueList< ResolutionPair > ResolutionList;
 
 class TDEHW_EXPORT MonitorDevice : public GenericDevice
 {
@@ -58,9 +58,9 @@ class TDEHW_EXPORT MonitorDevice : public GenericDevice
 		TQByteArray edid();
 
 		/**
-		* @return a TDEResolutionList containing this monitor's supported resolutions
+		* @return a ResolutionList containing this monitor's supported resolutions
 		*/
-		TDEResolutionList resolutions();
+		ResolutionList resolutions();
 
 		/**
 		* @return a TQString containing the display port type
@@ -92,10 +92,10 @@ class TDEHW_EXPORT MonitorDevice : public GenericDevice
 		void internalSetEdid(TQByteArray ed);
 
 		/**
-		* @param rs a TDEResolutionList containing this monitor's supported resolutions
+		* @param rs a ResolutionList containing this monitor's supported resolutions
 		* @internal
 		*/
-		void internalSetResolutions(TDEResolutionList rs);
+		void internalSetResolutions(ResolutionList rs);
 
 		/**
 		* @param pt a TQString containing the display port type
@@ -113,7 +113,7 @@ class TDEHW_EXPORT MonitorDevice : public GenericDevice
 		bool m_connected;
 		bool m_enabled;
 		TQByteArray m_edid;
-		TDEResolutionList m_resolutions;
+		ResolutionList m_resolutions;
 		TQString m_portType;
 		DisplayPowerLevel::DisplayPowerLevel m_powerLevel;
 

@@ -53,11 +53,11 @@ void MonitorDevice::internalSetEdid(TQByteArray ed) {
 	m_edid = ed;
 }
 
-TDEResolutionList MonitorDevice::resolutions() {
+ResolutionList MonitorDevice::resolutions() {
 	return m_resolutions;
 }
 
-void MonitorDevice::internalSetResolutions(TDEResolutionList rs) {
+void MonitorDevice::internalSetResolutions(ResolutionList rs) {
 	m_resolutions = rs;
 }
 

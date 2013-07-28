@@ -1307,8 +1307,8 @@ TQString tdeDeviceUUIDForMACAddress(TQString macAddress) {
 		return TQString::null;
 	}
 
-	TDEGenericHardwareList devices = hwdevices->listByDeviceClass(GenericDeviceType::Network);
-	for (TDEGenericHardwareList::iterator it = devices.begin(); it != devices.end(); ++it) {
+	GenericHardwareList devices = hwdevices->listByDeviceClass(GenericDeviceType::Network);
+	for (GenericHardwareList::iterator it = devices.begin(); it != devices.end(); ++it) {
 		NetworkDevice* dev = dynamic_cast<NetworkDevice*>(*it);
 		if (dev) {
 			if (macAddress.lower() == dev->macAddress().lower()) {
@@ -2332,7 +2332,7 @@ void NetworkConnectionManager_BackendNM::loadConnectionInformation() {
 										else if (keyValue.lower() == "mac-address") {
 											TQT_DBusDataValueList valueList = dataValue2.toTQValueList();
 											TQT_DBusDataValueList::const_iterator it4;
-											TDENetworkByteList macAddress;
+											NetworkByteList macAddress;
 											for (it4 = valueList.begin(); it4 != valueList.end(); ++it4) {
 												TQT_DBusData innerDataValue = *it4;
 												macAddress.append(innerDataValue.toByte());
@@ -2342,7 +2342,7 @@ void NetworkConnectionManager_BackendNM::loadConnectionInformation() {
 										else if (keyValue.lower() == "cloned-mac-address") {
 											TQT_DBusDataValueList valueList = dataValue2.toTQValueList();
 											TQT_DBusDataValueList::const_iterator it4;
-											TDENetworkByteList macAddress;
+											NetworkByteList macAddress;
 											for (it4 = valueList.begin(); it4 != valueList.end(); ++it4) {
 												TQT_DBusData innerDataValue = *it4;
 												macAddress.append(innerDataValue.toByte());
@@ -2357,7 +2357,7 @@ void NetworkConnectionManager_BackendNM::loadConnectionInformation() {
 										if (keyValue.lower() == "mac-address") {
 											TQT_DBusDataValueList valueList = dataValue2.toTQValueList();
 											TQT_DBusDataValueList::const_iterator it4;
-											TDENetworkByteList macAddress;
+											NetworkByteList macAddress;
 											for (it4 = valueList.begin(); it4 != valueList.end(); ++it4) {
 												TQT_DBusData innerDataValue = *it4;
 												macAddress.append(innerDataValue.toByte());
@@ -2386,7 +2386,7 @@ void NetworkConnectionManager_BackendNM::loadConnectionInformation() {
 										else if (keyValue.lower() == "mac-address") {
 											TQT_DBusDataValueList valueList = dataValue2.toTQValueList();
 											TQT_DBusDataValueList::const_iterator it4;
-											TDENetworkByteList macAddress;
+											NetworkByteList macAddress;
 											for (it4 = valueList.begin(); it4 != valueList.end(); ++it4) {
 												TQT_DBusData innerDataValue = *it4;
 												macAddress.append(innerDataValue.toByte());
@@ -2396,7 +2396,7 @@ void NetworkConnectionManager_BackendNM::loadConnectionInformation() {
 										else if (keyValue.lower() == "cloned-mac-address") {
 											TQT_DBusDataValueList valueList = dataValue2.toTQValueList();
 											TQT_DBusDataValueList::const_iterator it4;
-											TDENetworkByteList macAddress;
+											NetworkByteList macAddress;
 											for (it4 = valueList.begin(); it4 != valueList.end(); ++it4) {
 												TQT_DBusData innerDataValue = *it4;
 												macAddress.append(innerDataValue.toByte());
@@ -2427,7 +2427,7 @@ void NetworkConnectionManager_BackendNM::loadConnectionInformation() {
 										else if (keyValue.lower() == "bssid") {
 											TQT_DBusDataValueList valueList = dataValue2.toTQValueList();
 											TQT_DBusDataValueList::const_iterator it4;
-											TDENetworkByteList macAddress;
+											NetworkByteList macAddress;
 											for (it4 = valueList.begin(); it4 != valueList.end(); ++it4) {
 												TQT_DBusData innerDataValue = *it4;
 												macAddress.append(innerDataValue.toByte());
@@ -2560,7 +2560,7 @@ void NetworkConnectionManager_BackendNM::loadConnectionInformation() {
 										if (keyValue.lower() == "mac-address") {
 											TQT_DBusDataValueList valueList = dataValue2.toTQValueList();
 											TQT_DBusDataValueList::const_iterator it4;
-											TDENetworkByteList macAddress;
+											NetworkByteList macAddress;
 											for (it4 = valueList.begin(); it4 != valueList.end(); ++it4) {
 												TQT_DBusData innerDataValue = *it4;
 												macAddress.append(innerDataValue.toByte());
@@ -2733,7 +2733,7 @@ void NetworkConnectionManager_BackendNM::loadConnectionInformation() {
 										if (keyValue.lower() == "bdaddr") {
 											TQT_DBusDataValueList valueList = dataValue2.toTQValueList();
 											TQT_DBusDataValueList::const_iterator it4;
-											TDENetworkByteList macAddress;
+											NetworkByteList macAddress;
 											for (it4 = valueList.begin(); it4 != valueList.end(); ++it4) {
 												TQT_DBusData innerDataValue = *it4;
 												macAddress.append(innerDataValue.toByte());
@@ -3766,9 +3766,9 @@ bool NetworkConnectionManager_BackendNM::saveConnection(NetworkConnection* conne
 			{
 				settingsMap["duplex"] = convertDBUSDataToVariantData(TQT_DBusData::fromString((connection->fullDuplex)?"full":"half"));
 				if (connection->lockedHWAddress.isValid()) {
-					TDENetworkByteList address = connection->lockedHWAddress.address();
+					NetworkByteList address = connection->lockedHWAddress.address();
 					TQT_DBusDataValueList valueList;
-					TDENetworkByteList::iterator it;
+					NetworkByteList::iterator it;
 					for (it = address.begin(); it != address.end(); ++it) {
 						TQT_DBusData innerDataValue = TQT_DBusData::fromByte(*it);
 						valueList.append(innerDataValue);
@@ -3780,9 +3780,9 @@ bool NetworkConnectionManager_BackendNM::saveConnection(NetworkConnection* conne
 					settingsMap.remove("mac-address");
 				}
 				if (connection->manualHWAddress.isValid()) {
-					TDENetworkByteList address = connection->manualHWAddress.address();
+					NetworkByteList address = connection->manualHWAddress.address();
 					TQT_DBusDataValueList valueList;
-					TDENetworkByteList::iterator it;
+					NetworkByteList::iterator it;
 					for (it = address.begin(); it != address.end(); ++it) {
 						TQT_DBusData innerDataValue = TQT_DBusData::fromByte(*it);
 						valueList.append(innerDataValue);
@@ -3811,9 +3811,9 @@ bool NetworkConnectionManager_BackendNM::saveConnection(NetworkConnection* conne
 			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
 			{
 				if (connection->lockedHWAddress.isValid()) {
-					TDENetworkByteList address = connection->lockedHWAddress.address();
+					NetworkByteList address = connection->lockedHWAddress.address();
 					TQT_DBusDataValueList valueList;
-					TDENetworkByteList::iterator it;
+					NetworkByteList::iterator it;
 					for (it = address.begin(); it != address.end(); ++it) {
 						TQT_DBusData innerDataValue = TQT_DBusData::fromByte(*it);
 						valueList.append(innerDataValue);
@@ -3852,9 +3852,9 @@ bool NetworkConnectionManager_BackendNM::saveConnection(NetworkConnection* conne
 					settingsMap["ssid"] = convertDBUSDataToVariantData(TQT_DBusData::fromTQValueList(valueList));
 				}
 				if (connection->lockedHWAddress.isValid()) {
-					TDENetworkByteList address = connection->lockedHWAddress.address();
+					NetworkByteList address = connection->lockedHWAddress.address();
 					TQT_DBusDataValueList valueList;
-					TDENetworkByteList::iterator it;
+					NetworkByteList::iterator it;
 					for (it = address.begin(); it != address.end(); ++it) {
 						TQT_DBusData innerDataValue = TQT_DBusData::fromByte(*it);
 						valueList.append(innerDataValue);
@@ -3866,9 +3866,9 @@ bool NetworkConnectionManager_BackendNM::saveConnection(NetworkConnection* conne
 					settingsMap.remove("mac-address");
 				}
 				if (connection->manualHWAddress.isValid()) {
-					TDENetworkByteList address = connection->manualHWAddress.address();
+					NetworkByteList address = connection->manualHWAddress.address();
 					TQT_DBusDataValueList valueList;
-					TDENetworkByteList::iterator it;
+					NetworkByteList::iterator it;
 					for (it = address.begin(); it != address.end(); ++it) {
 						TQT_DBusData innerDataValue = TQT_DBusData::fromByte(*it);
 						valueList.append(innerDataValue);
@@ -3906,9 +3906,9 @@ bool NetworkConnectionManager_BackendNM::saveConnection(NetworkConnection* conne
 					settingsMap.remove("tx-power");
 				}
 				if (wiFiConnection->accessPointRestriction.isValid()) {
-					TDENetworkByteList address = wiFiConnection->accessPointRestriction.address();
+					NetworkByteList address = wiFiConnection->accessPointRestriction.address();
 					TQT_DBusDataValueList valueList;
-					TDENetworkByteList::iterator it;
+					NetworkByteList::iterator it;
 					for (it = address.begin(); it != address.end(); ++it) {
 						TQT_DBusData innerDataValue = TQT_DBusData::fromByte(*it);
 						valueList.append(innerDataValue);
@@ -4078,7 +4078,7 @@ bool NetworkConnectionManager_BackendNM::saveConnection(NetworkConnection* conne
 				UPDATE_STRING_SETTING_IF_VALID(vpnConnection->lockedUserName, "user-name", settingsMap)
 				{
 					TQMap<TQString, TQT_DBusData> nestedConnectionSettingsMap;
-					TDENetworkSettingsMap::const_iterator it;
+					NetworkSettingsMap::const_iterator it;
 					for (it = vpnConnection->pluginData.begin(); it != vpnConnection->pluginData.end(); ++it) {
 						nestedConnectionSettingsMap[it.key()] = TQT_DBusData::fromString(it.data());
 					}
@@ -4087,7 +4087,7 @@ bool NetworkConnectionManager_BackendNM::saveConnection(NetworkConnection* conne
 				}
 				if (vpnConnection->secretsValid) {
 					TQMap<TQString, TQT_DBusData> nestedConnectionSettingsMap;
-					TDENetworkSettingsMap::const_iterator it;
+					NetworkSettingsMap::const_iterator it;
 					for (it = vpnConnection->pluginSecrets.begin(); it != vpnConnection->pluginSecrets.end(); ++it) {
 						nestedConnectionSettingsMap[it.key()] = TQT_DBusData::fromString(it.data());
 					}
@@ -4106,9 +4106,9 @@ bool NetworkConnectionManager_BackendNM::saveConnection(NetworkConnection* conne
 			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
 			{
 				if (connection->lockedHWAddress.isValid()) {
-					TDENetworkByteList address = connection->lockedHWAddress.address();
+					NetworkByteList address = connection->lockedHWAddress.address();
 					TQT_DBusDataValueList valueList;
-					TDENetworkByteList::iterator it;
+					NetworkByteList::iterator it;
 					for (it = address.begin(); it != address.end(); ++it) {
 						TQT_DBusData innerDataValue = TQT_DBusData::fromByte(*it);
 						valueList.append(innerDataValue);
@@ -4137,7 +4137,7 @@ bool NetworkConnectionManager_BackendNM::saveConnection(NetworkConnection* conne
 				settingsMap["flags"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(tdeVLANFlagsToNMVLANFlags(vlanConnection->vlanFlags)));
 				{
 					TQT_DBusDataValueList valueList;
-					TDENetworkPriorityMap::const_iterator it;
+					NetworkPriorityMap::const_iterator it;
 					for (it = vlanConnection->ingressPriorityMap.begin(); it != vlanConnection->ingressPriorityMap.end(); ++it) {
 						valueList.append(TQT_DBusData::fromString(TQString("%1:%2").arg(it.key()).arg(it.data())));
 					}
@@ -4145,7 +4145,7 @@ bool NetworkConnectionManager_BackendNM::saveConnection(NetworkConnection* conne
 				}
 				{
 					TQT_DBusDataValueList valueList;
-					TDENetworkPriorityMap::const_iterator it;
+					NetworkPriorityMap::const_iterator it;
 					for (it = vlanConnection->egressPriorityMap.begin(); it != vlanConnection->egressPriorityMap.end(); ++it) {
 						valueList.append(TQT_DBusData::fromString(TQString("%1:%2").arg(it.key()).arg(it.data())));
 					}
@@ -4275,9 +4275,9 @@ bool NetworkConnectionManager_BackendNM::saveConnection(NetworkConnection* conne
 			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
 			{
 				if (connection->lockedHWAddress.isValid()) {
-					TDENetworkByteList address = connection->lockedHWAddress.address();
+					NetworkByteList address = connection->lockedHWAddress.address();
 					TQT_DBusDataValueList valueList;
-					TDENetworkByteList::iterator it;
+					NetworkByteList::iterator it;
 					for (it = address.begin(); it != address.end(); ++it) {
 						TQT_DBusData innerDataValue = TQT_DBusData::fromByte(*it);
 						valueList.append(innerDataValue);
@@ -4376,7 +4376,7 @@ bool NetworkConnectionManager_BackendNM::saveConnection(NetworkConnection* conne
 				}
 				{
 					TQT_DBusDataValueList valueList;
-					TDENetworkAddressList::iterator it;
+					NetworkAddressList::iterator it;
 					for (it = connection->ipConfig.resolvers.begin(); it != connection->ipConfig.resolvers.end(); ++it) {
 						if ((*it).isIPv4Address()) {
 							valueList.append(TQT_DBusData::fromUInt32(reverseIPV4ByteOrder((*it).toIPv4Address())));
@@ -4523,7 +4523,7 @@ bool NetworkConnectionManager_BackendNM::saveConnection(NetworkConnection* conne
 				}
 				{
 					TQT_DBusDataValueList valueList;
-					TDENetworkAddressList::iterator it;
+					NetworkAddressList::iterator it;
 					for (it = connection->ipConfig.resolvers.begin(); it != connection->ipConfig.resolvers.end(); ++it) {
 						if ((*it).isIPv6Address()) {
 							int i;
@@ -4794,7 +4794,7 @@ bool NetworkConnectionManager_BackendNM::deleteConnection(TQString uuid) {
 	}
 }
 
-bool NetworkConnectionManager_BackendNM::verifyConnectionSettings(NetworkConnection* connection, NetworkConnectionErrorFlags::NetworkConnectionErrorFlags* type, TDENetworkErrorStringMap* reason) {
+bool NetworkConnectionManager_BackendNM::verifyConnectionSettings(NetworkConnection* connection, NetworkConnectionErrorFlags::NetworkConnectionErrorFlags* type, NetworkErrorStringMap* reason) {
 	// FIXME
 	// This should actually attempt to validate all the settings!
 

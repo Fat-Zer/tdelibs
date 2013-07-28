@@ -197,7 +197,7 @@ MACAddress::MACAddress() {
 	m_isValid = false;
 }
 
-MACAddress::MACAddress(TDENetworkByteList address) {
+MACAddress::MACAddress(NetworkByteList address) {
 	m_macAddress = address;
 	m_isValid = true;
 }
@@ -206,11 +206,11 @@ MACAddress::~MACAddress() {
 	//
 }
 
-TDENetworkByteList MACAddress::address() {
+NetworkByteList MACAddress::address() {
 	return m_macAddress;
 }
 
-void MACAddress::setAddress(TDENetworkByteList address) {
+void MACAddress::setAddress(NetworkByteList address) {
 	m_macAddress = address;
 	m_isValid = true;
 }
@@ -239,7 +239,7 @@ void MACAddress::fromString(TQString address) {
 
 TQString MACAddress::toString() {
 	TQString ret;
-	TDENetworkByteList::iterator it;
+	NetworkByteList::iterator it;
 	for (it = m_macAddress.begin(); it != m_macAddress.end(); ++it) {
 		if (ret != "") {
 			ret.append(":");
@@ -734,8 +734,8 @@ NetworkDevice* NetworkConnectionManager::findDeviceByUUID(TQString uuid) {
 	HardwareDevices *hwdevices = HardwareDevices::instance();
 	if (!hwdevices) return NULL;
 
-	TDEGenericHardwareList devices = hwdevices->listByDeviceClass(GenericDeviceType::Network);
-	for (TDEGenericHardwareList::iterator it = devices.begin(); it != devices.end(); ++it)
+	GenericHardwareList devices = hwdevices->listByDeviceClass(GenericDeviceType::Network);
+	for (GenericHardwareList::iterator it = devices.begin(); it != devices.end(); ++it)
 	{
 		NetworkDevice* dev = dynamic_cast<NetworkDevice*>(*it);
 		if (dev) {
@@ -915,7 +915,7 @@ void NetworkConnectionManager::emitQueuedSignals() {
 #ifdef DEBUG_SIGNAL_QUEUE
 		kdDebug() << "NetworkConnectionManager::emitQueuedSignals: Going to dequeue " << m_globalEventQueueEventList.count() << " events..." << endl;
 #endif // DEBUG_SIGNAL_QUEUE
-		TDENetworkEventQueueEvent_PrivateList::Iterator it;
+		NetworkEventQueueEvent_PrivateList::Iterator it;
 		it = m_globalEventQueueEventList.begin();
 		while (it != m_globalEventQueueEventList.end()) {
 			TDENetworkEventQueueEvent_Private event = (*it);
@@ -999,7 +999,7 @@ bool GlobalNetworkManager::deleteConnection(TQString uuid) {
 	return m_internalConnectionManager->deleteConnection(uuid);
 }
 
-bool GlobalNetworkManager::verifyConnectionSettings(NetworkConnection* connection, NetworkConnectionErrorFlags::NetworkConnectionErrorFlags* type, TDENetworkErrorStringMap* reason) {
+bool GlobalNetworkManager::verifyConnectionSettings(NetworkConnection* connection, NetworkConnectionErrorFlags::NetworkConnectionErrorFlags* type, NetworkErrorStringMap* reason) {
 	if (!m_internalConnectionManager) return false;
 	return m_internalConnectionManager->verifyConnectionSettings(connection, type, reason);
 }
@@ -1091,8 +1091,8 @@ NetworkWiFiAPInfo* GlobalNetworkManager::findAccessPointByBSSID(MACAddress bssid
 	}
 
 	NetworkWiFiAPInfo* ret = NULL;
-	TDEGenericHardwareList devices = hwdevices->listByDeviceClass(GenericDeviceType::Network);
-	for (TDEGenericHardwareList::iterator it = devices.begin(); it != devices.end(); ++it) {
+	GenericHardwareList devices = hwdevices->listByDeviceClass(GenericDeviceType::Network);
+	for (GenericHardwareList::iterator it = devices.begin(); it != devices.end(); ++it) {
 		NetworkDevice* dev = dynamic_cast<NetworkDevice*>(*it);
 		if (dev) {
 			NetworkConnectionManager* deviceConnMan = dev->connectionManager();

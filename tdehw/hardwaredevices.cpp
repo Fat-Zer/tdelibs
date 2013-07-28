@@ -257,7 +257,7 @@ GenericDevice* HardwareDevices::findBySystemPath(TQString syspath) {
 	}
 	GenericDevice *hwdevice;
 	// We can't use m_deviceList directly as m_deviceList can only have one iterator active against it at any given time
-	TDEGenericHardwareList devList = listAllPhysicalDevices();
+	GenericHardwareList devList = listAllPhysicalDevices();
 	for ( hwdevice = devList.first(); hwdevice; hwdevice = devList.next() ) {
 		if (hwdevice->systemPath() == syspath) {
 			return hwdevice;
@@ -270,7 +270,7 @@ GenericDevice* HardwareDevices::findBySystemPath(TQString syspath) {
 GenericDevice* HardwareDevices::findByUniqueID(TQString uid) {
 	GenericDevice *hwdevice;
 	// We can't use m_deviceList directly as m_deviceList can only have one iterator active against it at any given time
-	TDEGenericHardwareList devList = listAllPhysicalDevices();
+	GenericHardwareList devList = listAllPhysicalDevices();
 	for ( hwdevice = devList.first(); hwdevice; hwdevice = devList.next() ) {
 		if (hwdevice->uniqueID() == uid) {
 			return hwdevice;
@@ -729,7 +729,7 @@ void HardwareDevices::processStatelessDevices() {
 	GenericDevice *hwdevice;
 
 	// We can't use m_deviceList directly as m_deviceList can only have one iterator active against it at any given time
-	TDEGenericHardwareList devList = listAllPhysicalDevices();
+	GenericHardwareList devList = listAllPhysicalDevices();
 	for ( hwdevice = devList.first(); hwdevice; hwdevice = devList.next() ) {
 		if ((hwdevice->type() == GenericDeviceType::RootSystem) || (hwdevice->type() == GenericDeviceType::Network) || (hwdevice->type() == GenericDeviceType::OtherSensor) || (hwdevice->type() == GenericDeviceType::Event) || (hwdevice->type() == GenericDeviceType::Battery) || (hwdevice->type() == GenericDeviceType::PowerSupply)) {
 			rescanDeviceInformation(hwdevice, false);
@@ -2731,11 +2731,11 @@ void HardwareDevices::updateExistingDeviceInformation(GenericDevice* existingdev
 								resolutionsStringList.append(line.upper());
 							}
 						}
-						TDEResolutionList resolutions;
+						ResolutionList resolutions;
 						resolutions.clear();
 						for (TQStringList::Iterator it = resolutionsStringList.begin(); it != resolutionsStringList.end(); ++it) {
 							resinfo = TQStringList::split('X', *it, true);
-							resolutions.append(TDEResolutionPair((*(resinfo.at(0))).toUInt(), (*(resinfo.at(1))).toUInt()));
+							resolutions.append(ResolutionPair((*(resinfo.at(0))).toUInt(), (*(resinfo.at(1))).toUInt()));
 						}
 						mdevice->internalSetResolutions(resolutions);
 					}
@@ -2781,7 +2781,7 @@ void HardwareDevices::updateExistingDeviceInformation(GenericDevice* existingdev
 		else {
 			mdevice->m_friendlyName = i18n("Disconnected %1 Port").arg(genericPortName);
 			mdevice->internalSetEdid(TQByteArray());
-			mdevice->internalSetResolutions(TDEResolutionList());
+			mdevice->internalSetResolutions(ResolutionList());
 		}
 
 		// FIXME
@@ -3162,7 +3162,7 @@ void HardwareDevices::updateParentDeviceInformation() {
 	GenericDevice *hwdevice;
 
 	// We can't use m_deviceList directly as m_deviceList can only have one iterator active against it at any given time
-	TDEGenericHardwareList devList = listAllPhysicalDevices();
+	GenericHardwareList devList = listAllPhysicalDevices();
 	for ( hwdevice = devList.first(); hwdevice; hwdevice = devList.next() ) {
 		updateParentDeviceInformation(hwdevice);
 	}
@@ -3231,7 +3231,7 @@ TQString HardwareDevices::findPCIDeviceName(TQString vendorid, TQString modelid,
 	TQString friendlyName = TQString::null;
 
 	if (!pci_id_map) {
-		pci_id_map = new TDEDeviceIDMap;
+		pci_id_map = new DeviceIDMap;
 
 		TQString database_filename = "/usr/share/pci.ids";
 		if (!TQFile::exists(database_filename)) {
@@ -3341,7 +3341,7 @@ TQString HardwareDevices::findUSBDeviceName(TQString vendorid, TQString modelid,
 	TQString friendlyName = TQString::null;
 
 	if (!usb_id_map) {
-		usb_id_map = new TDEDeviceIDMap;
+		usb_id_map = new DeviceIDMap;
 
 		TQString database_filename = "/usr/share/usb.ids";
 		if (!TQFile::exists(database_filename)) {
@@ -3449,7 +3449,7 @@ TQString HardwareDevices::findPNPDeviceName(TQString pnpid) {
 	TQString friendlyName = TQString::null;
 
 	if (!pnp_id_map) {
-		pnp_id_map = new TDEDeviceIDMap;
+		pnp_id_map = new DeviceIDMap;
 
 		TQStringList hardware_info_directories(TDEGlobal::dirs()->resourceDirs("data"));
 		TQString hardware_info_directory_suffix("tdehwlib/pnpdev/");
@@ -3519,7 +3519,7 @@ TQString HardwareDevices::findMonitorManufacturerName(TQString dpyid) {
 	TQString friendlyName = TQString::null;
 
 	if (!dpy_id_map) {
-		dpy_id_map = new TDEDeviceIDMap;
+		dpy_id_map = new DeviceIDMap;
 
 		TQStringList hardware_info_directories(TDEGlobal::dirs()->resourceDirs("data"));
 		TQString hardware_info_directory_suffix("tdehwlib/pnpdev/");
@@ -4034,8 +4034,8 @@ TQString HardwareDevices::bytesToFriendlySizeString(double bytes) {
 	return prettystring;
 }
 
-TDEGenericHardwareList HardwareDevices::listByDeviceClass(GenericDeviceType::GenericDeviceType cl) {
-	TDEGenericHardwareList ret;
+GenericHardwareList HardwareDevices::listByDeviceClass(GenericDeviceType::GenericDeviceType cl) {
+	GenericHardwareList ret;
 	ret.setAutoDelete(false);
 
 	GenericDevice *hwdevice;
@@ -4048,8 +4048,8 @@ TDEGenericHardwareList HardwareDevices::listByDeviceClass(GenericDeviceType::Gen
 	return ret;
 }
 
-TDEGenericHardwareList HardwareDevices::listAllPhysicalDevices() {
-	TDEGenericHardwareList ret = m_deviceList;
+GenericHardwareList HardwareDevices::listAllPhysicalDevices() {
+	GenericHardwareList ret = m_deviceList;
 	ret.setAutoDelete(false);
 
 	return ret;
