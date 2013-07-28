@@ -24,8 +24,8 @@
 
 namespace TDEHW {
 
-namespace TDEBatteryStatus {
-enum TDEBatteryStatus {
+namespace BatteryStatus {
+enum BatteryStatus {
 	Charging,
 	Discharging,
 	Full,
@@ -33,19 +33,19 @@ enum TDEBatteryStatus {
 };
 };
 
-class TDEHW_EXPORT TDEBatteryDevice : public TDEGenericDevice
+class TDEHW_EXPORT BatteryDevice : public GenericDevice
 {
 	public:
 		/**
 		*  Constructor.
 		*  @param Device type
 		*/
-		TDEBatteryDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn=TQString::null);
+		BatteryDevice(GenericDeviceType::GenericDeviceType dt, TQString dn=TQString::null);
 		
 		/**
 		* Destructor.
 		*/
-		~TDEBatteryDevice();
+		~BatteryDevice();
 
 		/**
 		* @return a double with the current battery voltage, if available
@@ -103,9 +103,9 @@ class TDEHW_EXPORT TDEBatteryDevice : public TDEGenericDevice
 		TQString technology();
 
 		/**
-		* @return a TDEBatteryStatus::TDEBatteryStatus with the current battery status
+		* @return a BatteryStatus::BatteryStatus with the current battery status
 		*/
-		TDEBatteryStatus::TDEBatteryStatus status();
+		BatteryStatus::BatteryStatus status();
 
 		/**
 		* @return TRUE if the battery is installed
@@ -208,10 +208,10 @@ class TDEHW_EXPORT TDEBatteryDevice : public TDEGenericDevice
 		double m_dischargeRate;
 		double m_timeRemaining;
 		TQString m_technology;
-		TDEBatteryStatus::TDEBatteryStatus m_status;
+		BatteryStatus::BatteryStatus m_status;
 		bool m_installed;
 
-	friend class TDEHardwareDevices;
+	friend class HardwareDevices;
 };
 
 } // namespace TDEHW

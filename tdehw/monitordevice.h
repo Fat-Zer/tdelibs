@@ -28,19 +28,19 @@ namespace TDEHW {
 typedef TQPair<unsigned int, unsigned int> TDEResolutionPair;
 typedef TQValueList< TDEResolutionPair > TDEResolutionList;
 
-class TDEHW_EXPORT TDEMonitorDevice : public TDEGenericDevice
+class TDEHW_EXPORT MonitorDevice : public GenericDevice
 {
 	public:
 		/**
 		*  Constructor.
 		*  @param Device type
 		*/
-		TDEMonitorDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn=TQString::null);
+		MonitorDevice(GenericDeviceType::GenericDeviceType dt, TQString dn=TQString::null);
 		
 		/**
 		* Destructor.
 		*/
-		~TDEMonitorDevice();
+		~MonitorDevice();
 
 		/**
 		* @return TRUE if a monitor is connected, FALSE if not
@@ -68,9 +68,9 @@ class TDEHW_EXPORT TDEMonitorDevice : public TDEGenericDevice
 		TQString portType();
 
 		/**
-		* @return a TDEDisplayPowerLevel::TDEDisplayPowerLevel with the current power level
+		* @return a DisplayPowerLevel::DisplayPowerLevel with the current power level
 		*/
-		TDEDisplayPowerLevel::TDEDisplayPowerLevel powerLevel();
+		DisplayPowerLevel::DisplayPowerLevel powerLevel();
 
 	protected:
 		/**
@@ -104,10 +104,10 @@ class TDEHW_EXPORT TDEMonitorDevice : public TDEGenericDevice
 		void internalSetPortType(TQString pt);
 
 		/**
-		* @param pl a TDEDisplayPowerLevel::TDEDisplayPowerLevel with the current power level
+		* @param pl a DisplayPowerLevel::DisplayPowerLevel with the current power level
 		* @internal
 		*/
-		void internalSetPowerLevel(TDEDisplayPowerLevel::TDEDisplayPowerLevel pl);
+		void internalSetPowerLevel(DisplayPowerLevel::DisplayPowerLevel pl);
 
 	private:
 		bool m_connected;
@@ -115,9 +115,9 @@ class TDEHW_EXPORT TDEMonitorDevice : public TDEGenericDevice
 		TQByteArray m_edid;
 		TDEResolutionList m_resolutions;
 		TQString m_portType;
-		TDEDisplayPowerLevel::TDEDisplayPowerLevel m_powerLevel;
+		DisplayPowerLevel::DisplayPowerLevel m_powerLevel;
 
-	friend class TDEHardwareDevices;
+	friend class HardwareDevices;
 };
 
 

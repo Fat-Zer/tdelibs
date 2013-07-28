@@ -23,17 +23,17 @@
 
 using namespace TDEHW;
 
-TDEMainsPowerDevice::TDEMainsPowerDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
+MainsPowerDevice::MainsPowerDevice(GenericDeviceType::GenericDeviceType dt, TQString dn) : GenericDevice(dt, dn) {
 }
 
-TDEMainsPowerDevice::~TDEMainsPowerDevice() {
+MainsPowerDevice::~MainsPowerDevice() {
 }
 
-bool TDEMainsPowerDevice::online() {
+bool MainsPowerDevice::online() {
 	return m_online;
 }
 
-void TDEMainsPowerDevice::internalSetOnline(bool tc) {
+void MainsPowerDevice::internalSetOnline(bool tc) {
 	m_online = tc;
 }
 

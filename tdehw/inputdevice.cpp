@@ -23,17 +23,17 @@
 
 using namespace TDEHW;
 
-TDEInputDevice::TDEInputDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
+InputDevice::InputDevice(GenericDeviceType::GenericDeviceType dt, TQString dn) : GenericDevice(dt, dn) {
 }
 
-TDEInputDevice::~TDEInputDevice() {
+InputDevice::~InputDevice() {
 }
 
-TDEInputDeviceType::TDEInputDeviceType TDEInputDevice::inputType() {
+InputDeviceType::InputDeviceType InputDevice::inputType() {
 	return m_inputType;
 }
 
-void TDEInputDevice::internalSetInputType(TDEInputDeviceType::TDEInputDeviceType it) {
+void InputDevice::internalSetInputType(InputDeviceType::InputDeviceType it) {
 	m_inputType = it;
 }
 

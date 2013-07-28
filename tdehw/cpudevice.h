@@ -24,19 +24,19 @@
 
 namespace TDEHW {
 
-class TDEHW_EXPORT TDECPUDevice : public TDEGenericDevice
+class TDEHW_EXPORT CPUDevice : public GenericDevice
 {
 	public:
 		/**
 		*  Constructor.
 		*  @param Device type
 		*/
-		TDECPUDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn=TQString::null);
+		CPUDevice(GenericDeviceType::GenericDeviceType dt, TQString dn=TQString::null);
 		
 		/**
 		* Destructor.
 		*/
-		~TDECPUDevice();
+		~CPUDevice();
 
 		/**
 		* @return a double with the current CPU frequency in MHz, if available
@@ -181,7 +181,7 @@ class TDEHW_EXPORT TDECPUDevice : public TDEGenericDevice
 		TQStringList m_governers;
 		int m_corenumber;
 
-	friend class TDEHardwareDevices;
+	friend class HardwareDevices;
 };
 
 } // namespace TDEHW

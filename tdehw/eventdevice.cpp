@@ -32,109 +32,109 @@
 
 using namespace TDEHW;
 
-TDEEventDevice::TDEEventDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
+EventDevice::EventDevice(GenericDeviceType::GenericDeviceType dt, TQString dn) : GenericDevice(dt, dn) {
 	m_fd = -1;
 	m_fdMonitorActive = false;
 }
 
-TDEEventDevice::~TDEEventDevice() {
+EventDevice::~EventDevice() {
 	if (m_fd >= 0) {
 		close(m_fd);
 	}
 }
 
-TDEEventDeviceType::TDEEventDeviceType TDEEventDevice::eventType() {
+EventDeviceType::EventDeviceType EventDevice::eventType() {
 	return m_eventType;
 }
 
-void TDEEventDevice::internalSetEventType(TDEEventDeviceType::TDEEventDeviceType et) {
+void EventDevice::internalSetEventType(EventDeviceType::EventDeviceType et) {
 	m_eventType = et;
 }
 
-TDESwitchType::TDESwitchType TDEEventDevice::providedSwitches() {
+SwitchType::SwitchType EventDevice::providedSwitches() {
 	return m_providedSwitches;
 }
 
-void TDEEventDevice::internalSetProvidedSwitches(TDESwitchType::TDESwitchType sl) {
+void EventDevice::internalSetProvidedSwitches(SwitchType::SwitchType sl) {
 	m_providedSwitches = sl;
 }
 
-TDESwitchType::TDESwitchType TDEEventDevice::activeSwitches() {
+SwitchType::SwitchType EventDevice::activeSwitches() {
 	return m_switchActive;
 }
 
-void TDEEventDevice::internalSetActiveSwitches(TDESwitchType::TDESwitchType sl) {
+void EventDevice::internalSetActiveSwitches(SwitchType::SwitchType sl) {
 	m_switchActive = sl;
 }
 
-// Keep this in sync with the TDESwitchType definition in the header
-TQStringList TDEEventDevice::friendlySwitchList(TDESwitchType::TDESwitchType switches) {
+// Keep this in sync with the SwitchType definition in the header
+TQStringList EventDevice::friendlySwitchList(SwitchType::SwitchType switches) {
 	TQStringList ret;
 
-	if (switches & TDESwitchType::Lid) {
+	if (switches & SwitchType::Lid) {
 		ret.append(i18n("Lid Switch"));
 	}
-	if (switches & TDESwitchType::TabletMode) {
+	if (switches & SwitchType::TabletMode) {
 		ret.append(i18n("Tablet Mode"));
 	}
-	if (switches & TDESwitchType::HeadphoneInsert) {
+	if (switches & SwitchType::HeadphoneInsert) {
 		ret.append(i18n("Headphone Inserted"));
 	}
-	if (switches & TDESwitchType::RFKill) {
+	if (switches & SwitchType::RFKill) {
 		ret.append(i18n("Radio Frequency Device Kill Switch"));
 	}
-	if (switches & TDESwitchType::Radio) {
+	if (switches & SwitchType::Radio) {
 		ret.append(i18n("Enable Radio"));
 	}
-	if (switches & TDESwitchType::MicrophoneInsert) {
+	if (switches & SwitchType::MicrophoneInsert) {
 		ret.append(i18n("Microphone Inserted"));
 	}
-	if (switches & TDESwitchType::Dock) {
+	if (switches & SwitchType::Dock) {
 		ret.append(i18n("Docked"));
 	}
-	if (switches & TDESwitchType::LineOutInsert) {
+	if (switches & SwitchType::LineOutInsert) {
 		ret.append(i18n("Line Out Inserted"));
 	}
-	if (switches & TDESwitchType::JackPhysicalInsert) {
+	if (switches & SwitchType::JackPhysicalInsert) {
 		ret.append(i18n("Physical Jack Inserted"));
 	}
-	if (switches & TDESwitchType::VideoOutInsert) {
+	if (switches & SwitchType::VideoOutInsert) {
 		ret.append(i18n("Video Out Inserted"));
 	}
-	if (switches & TDESwitchType::CameraLensCover) {
+	if (switches & SwitchType::CameraLensCover) {
 		ret.append(i18n("Camera Lens Cover"));
 	}
-	if (switches & TDESwitchType::KeypadSlide) {
+	if (switches & SwitchType::KeypadSlide) {
 		ret.append(i18n("Keypad Slide"));
 	}
-	if (switches & TDESwitchType::FrontProximity) {
+	if (switches & SwitchType::FrontProximity) {
 		ret.append(i18n("Front Proximity"));
 	}
-	if (switches & TDESwitchType::RotateLock) {
+	if (switches & SwitchType::RotateLock) {
 		ret.append(i18n("Rotate Lock"));
 	}
-	if (switches & TDESwitchType::LineInInsert) {
+	if (switches & SwitchType::LineInInsert) {
 		ret.append(i18n("Line In Inserted"));
 	}
 
 	return ret;
 }
 
-void TDEEventDevice::internalStartFdMonitoring(TDEHardwareDevices* hwmanager) {
+void EventDevice::internalStartFdMonitoring(HardwareDevices* hwmanager) {
 	if (!m_fdMonitorActive) {
 		// For security and performance reasons, only monitor known ACPI buttons
-		if (eventType() != TDEEventDeviceType::Unknown) {
+		if (eventType() != EventDeviceType::Unknown) {
 			if (m_fd >= 0) {
 				m_eventNotifier = new TQSocketNotifier(m_fd, TQSocketNotifier::Read, this);
 				connect( m_eventNotifier, TQT_SIGNAL(activated(int)), this, TQT_SLOT(eventReceived()) );
 			}
-			connect( this, TQT_SIGNAL(keyPressed(unsigned int, TDEEventDevice*)), hwmanager, TQT_SLOT(processEventDeviceKeyPressed(unsigned int, TDEEventDevice*)) );
+			connect( this, TQT_SIGNAL(keyPressed(unsigned int, EventDevice*)), hwmanager, TQT_SLOT(processEventDeviceKeyPressed(unsigned int, EventDevice*)) );
 		}
 		m_fdMonitorActive = true;
 	}
 }
 
-void TDEEventDevice::eventReceived() {
+void EventDevice::eventReceived() {
 	struct input_event ev;
 	int r;
 	r = read(m_fd, &ev, sizeof(struct input_event));

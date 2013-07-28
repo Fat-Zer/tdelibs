@@ -24,13 +24,13 @@
 
 namespace TDEHW {
 
-class TDEHW_EXPORT TDESensorCluster
+class TDEHW_EXPORT SensorCluster
 {
 	public:
 		/**
 		*  Constructor.
 		*/
-		TDESensorCluster();
+		SensorCluster();
 
 		TQString label;
 		double current;
@@ -40,38 +40,38 @@ class TDEHW_EXPORT TDESensorCluster
 		double critical;
 };
 
-typedef TQMap<TQString, TDESensorCluster> TDESensorClusterMap;
+typedef TQMap<TQString, SensorCluster> SensorClusterMap;
 
-class TDEHW_EXPORT TDESensorDevice : public TDEGenericDevice
+class TDEHW_EXPORT SensorDevice : public GenericDevice
 {
 	public:
 		/**
 		*  Constructor.
 		*  @param Device type
 		*/
-		TDESensorDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn=TQString::null);
+		SensorDevice(GenericDeviceType::GenericDeviceType dt, TQString dn=TQString::null);
 		
 		/**
 		* Destructor.
 		*/
-		~TDESensorDevice();
+		~SensorDevice();
 
 		/**
-		* @return a TDESensorClusterMap with the current sensor values
+		* @return a SensorClusterMap with the current sensor values
 		*/
-		TDESensorClusterMap values();
+		SensorClusterMap values();
 
 	protected:
 		/**
-		* @param a TDESensorClusterMap with the current sensor values
+		* @param a SensorClusterMap with the current sensor values
 		* @internal
 		*/
-		void internalSetValues(TDESensorClusterMap cl);
+		void internalSetValues(SensorClusterMap cl);
 
 	private:
-		TDESensorClusterMap m_sensorValues;
+		SensorClusterMap m_sensorValues;
 
-	friend class TDEHardwareDevices;
+	friend class HardwareDevices;
 };
 
 } // namespace TDEHW

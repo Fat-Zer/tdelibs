@@ -46,34 +46,34 @@ class KSimpleDirWatch;
 
 namespace TDEHW {
 
-class TDEGenericDevice;
-class TDEStorageDevice;
-class TDENetworkDevice;
-class TDEBacklightDevice;
-class TDEMonitorDevice;
-class TDESensorDevice;
-class TDERootSystemDevice;
-class TDEEventDevice;
-class TDEInputDevice;
+class GenericDevice;
+class StorageDevice;
+class NetworkDevice;
+class BacklightDevice;
+class MonitorDevice;
+class SensorDevice;
+class RootSystemDevice;
+class EventDevice;
+class InputDevice;
 
-typedef TQPtrList<TDEGenericDevice> TDEGenericHardwareList;
+typedef TQPtrList<GenericDevice> TDEGenericHardwareList;
 typedef TQMap<TQString, TQString> TDEDeviceIDMap;
 
-class TDEHW_EXPORT TDEHardwareDevices : public TQObject
+class TDEHW_EXPORT HardwareDevices : public TQObject
 {
 	Q_OBJECT
 
 	public:	
 		/**
 		 * Get the global instance of the singleton object. 
-		 * @return the global TDEHardwareDevices instance.
+		 * @return the global HardwareDevices instance.
 		 */
-		static TDEHardwareDevices* instance();
+		static HardwareDevices* instance();
 
 		/**
 		* Destructor.
 		*/
-		~TDEHardwareDevices();
+		~HardwareDevices();
 
 		/**
 		*  Query all hardware capabilities on all devices
@@ -95,34 +95,34 @@ class TDEHW_EXPORT TDEHardwareDevices : public TQObject
 
 		/**
 		*  List all hardware capabilities on all devices
-		*  @param a TDEGenericDeviceType::TDEGenericDeviceType specifying the device class
+		*  @param a GenericDeviceType::GenericDeviceType specifying the device class
 		*  @return TDEGenericHardwareList containing all known hardware devices
 		*/
-		TDEGenericHardwareList listByDeviceClass(TDEGenericDeviceType::TDEGenericDeviceType cl);
+		TDEGenericHardwareList listByDeviceClass(GenericDeviceType::GenericDeviceType cl);
 
 		/**
 		*  Return the device with system path @arg syspath, or 0 if no device exists for that path
-		*  @return TDEGenericDevice
+		*  @return GenericDevice
 		*/
-		TDEGenericDevice* findBySystemPath(TQString syspath);
+		GenericDevice* findBySystemPath(TQString syspath);
 
 		/**
 		*  Return the device with unique ID @arg uid, or 0 if no device exists for that uid
-		*  @return TDEGenericDevice
+		*  @return GenericDevice
 		*/
-		TDEGenericDevice* findByUniqueID(TQString uid);
+		GenericDevice* findByUniqueID(TQString uid);
 
 		/**
 		*  Return the device with device node @arg devnode, or 0 if no device exists at that node
-		*  @return TDEGenericDevice
+		*  @return GenericDevice
 		*/
-		TDEGenericDevice* findByDeviceNode(TQString devnode);
+		GenericDevice* findByDeviceNode(TQString devnode);
 
 		/**
 		*  Return the storage device with unique ID @arg uid, or 0 if no device exists for that uid
-		*  @return TDEGenericDevice
+		*  @return GenericDevice
 		*/
-		TDEStorageDevice* findDiskByUID(TQString uid);
+		StorageDevice* findDiskByUID(TQString uid);
 
 		/**
 		*  Look up the device in the system PCI database
@@ -160,41 +160,41 @@ class TDEHW_EXPORT TDEHardwareDevices : public TQObject
 
 		/**
 		*  Get a friendly string describing a device type
-		*  @param query a TDEGenericDeviceType::TDEGenericDeviceType specifying a device type
+		*  @param query a GenericDeviceType::GenericDeviceType specifying a device type
 		*  @return a TQString containing the friendly type name
 		*/
-		TQString getFriendlyDeviceTypeStringFromType(TDEGenericDeviceType::TDEGenericDeviceType query);
+		TQString getFriendlyDeviceTypeStringFromType(GenericDeviceType::GenericDeviceType query);
 
 		/**
 		*  Get an icon for a device type
-		*  @param query a TDEGenericDeviceType::TDEGenericDeviceType specifying a device type
+		*  @param query a GenericDeviceType::GenericDeviceType specifying a device type
 		*  @param size a TDEIcon::StdSizes structure specifying the desired icon size
 		*  @return a TQPixmap containing the icon for the specified type
 		*/
-		TQPixmap getDeviceTypeIconFromType(TDEGenericDeviceType::TDEGenericDeviceType query, TDEIcon::StdSizes size);
+		TQPixmap getDeviceTypeIconFromType(GenericDeviceType::GenericDeviceType query, TDEIcon::StdSizes size);
 
 		/**
 		*  Convenience function to obtain the root system device
-		*  @return a pointer to a TDERootSystemDevice object
+		*  @return a pointer to a RootSystemDevice object
 		*/
-		TDERootSystemDevice* rootSystemDevice();
+		RootSystemDevice* rootSystemDevice();
 
 		/**
 		*  Rescan a hardware device to look for changes
 		*  WARNING: This method can be very expensive.  Use with caution!
-		*  @param hwdevice TDEGenericDevice* with the device to rescan
+		*  @param hwdevice GenericDevice* with the device to rescan
 		*/
-		void rescanDeviceInformation(TDEGenericDevice* hwdevice);
+		void rescanDeviceInformation(GenericDevice* hwdevice);
 
 		/**
 		*  Rescan a hardware device to look for changes
 		*  WARNING: This method can be very expensive.  Use with caution!
 		*  The computational expense can be reduced somewhat if the device tree structure
 		*  has not changed by calling this method with regenerateDeviceTree = FALSE.
-		*  @param hwdevice TDEGenericDevice* with the device to rescan
+		*  @param hwdevice GenericDevice* with the device to rescan
 		*  @param regenerateDeviceTree TRUE to update parent/child links in device tree
 		*/
-		void rescanDeviceInformation(TDEGenericDevice* hwdevice, bool regenerateDeviceTree);
+		void rescanDeviceInformation(GenericDevice* hwdevice, bool regenerateDeviceTree);
 
 		/**
 		*  Enable or disable automatic state updates of triggerless hardware devices
@@ -213,43 +213,43 @@ class TDEHW_EXPORT TDEHardwareDevices : public TQObject
 		static TQString bytesToFriendlySizeString(double bytes);
 
 	signals:
-		void hardwareAdded(TDEGenericDevice*);
-		void hardwareRemoved(TDEGenericDevice*);
-		void hardwareUpdated(TDEGenericDevice*);
+		void hardwareAdded(GenericDevice*);
+		void hardwareRemoved(GenericDevice*);
+		void hardwareUpdated(GenericDevice*);
 		void mountTableModified();
-		void hardwareEvent(TDEHardwareEvent::TDEHardwareEvent, TQString uuid);
+		void hardwareEvent(HardwareEvent::HardwareEvent, TQString uuid);
 
 		/**
 		* @param keycode the code of the key that was pressed/released
 		* See include/linux/input.h for a complete list of keycodes
-		* @param device a TDEEventDevice* with the device that received the event
+		* @param device a EventDevice* with the device that received the event
 		*/
-		void eventDeviceKeyPressed(unsigned int keycode, TDEEventDevice* device);
+		void eventDeviceKeyPressed(unsigned int keycode, EventDevice* device);
 	protected:
 		/**
 		*  Protected constructor of singleton object.
 		*/
-		TDEHardwareDevices();
+		HardwareDevices();
 		
-		static TDEHardwareDevices* _instance;
+		static HardwareDevices* _instance;
 
 	private slots:
 		void processHotPluggedHardware();
 		void processModifiedMounts();
 		void processModifiedCPUs();
 		void processStatelessDevices();
-		void processEventDeviceKeyPressed(unsigned int keycode, TDEEventDevice* edevice);
+		void processEventDeviceKeyPressed(unsigned int keycode, EventDevice* edevice);
 
 	private:
-		void updateBlacklists(TDEGenericDevice* hwdevice, udev_device* dev);
+		void updateBlacklists(GenericDevice* hwdevice, udev_device* dev);
 
 	private:
-		TDEGenericDevice *classifyUnknownDevice(udev_device* dev, TDEGenericDevice* existingdevice=0, bool force_full_classification=true);
-		TDEGenericDevice *classifyUnknownDeviceByExternalRules(udev_device* dev, TDEGenericDevice* existingdevice=0, bool classifySubDevices=false);
-		void updateExistingDeviceInformation(TDEGenericDevice* existingdevice, udev_device* dev=NULL);
+		GenericDevice *classifyUnknownDevice(udev_device* dev, GenericDevice* existingdevice=0, bool force_full_classification=true);
+		GenericDevice *classifyUnknownDeviceByExternalRules(udev_device* dev, GenericDevice* existingdevice=0, bool classifySubDevices=false);
+		void updateExistingDeviceInformation(GenericDevice* existingdevice, udev_device* dev=NULL);
 
 		void updateParentDeviceInformation();
-		void updateParentDeviceInformation(TDEGenericDevice* hwdevice);
+		void updateParentDeviceInformation(GenericDevice* hwdevice);
 
 		void addCoreSystemDevices();
 
@@ -284,9 +284,9 @@ class TDEHW_EXPORT TDEHardwareDevices : public TQObject
 		TDEDeviceIDMap* pnp_id_map;
 		TDEDeviceIDMap* dpy_id_map;
 
-	friend class TDEGenericDevice;
-	friend class TDEStorageDevice;
-	friend class TDECPUDevice;
+	friend class GenericDevice;
+	friend class StorageDevice;
+	friend class CPUDevice;
 };
 
 } // namespace TDEHW

@@ -24,19 +24,19 @@
 
 namespace TDEHW {
 
-class TDEHW_EXPORT TDEMainsPowerDevice : public TDEGenericDevice
+class TDEHW_EXPORT MainsPowerDevice : public GenericDevice
 {
 	public:
 		/**
 		*  Constructor.
 		*  @param Device type
 		*/
-		TDEMainsPowerDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn=TQString::null);
+		MainsPowerDevice(GenericDeviceType::GenericDeviceType dt, TQString dn=TQString::null);
 		
 		/**
 		* Destructor.
 		*/
-		~TDEMainsPowerDevice();
+		~MainsPowerDevice();
 
 		/**
 		* @return TRUE if power supply is online via mains power, FALSE if not
@@ -53,7 +53,7 @@ class TDEHW_EXPORT TDEMainsPowerDevice : public TDEGenericDevice
 	private:
 		bool m_online;
 
-	friend class TDEHardwareDevices;
+	friend class HardwareDevices;
 };
 
 } //namespace TDEHW

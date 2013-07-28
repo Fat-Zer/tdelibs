@@ -23,7 +23,7 @@
 
 using namespace TDEHW;
 
-TDESensorCluster::TDESensorCluster() {
+SensorCluster::SensorCluster() {
 	label = TQString::null;
 	current = -1;
 	minimum = -1;
@@ -32,17 +32,17 @@ TDESensorCluster::TDESensorCluster() {
 	critical = -1;
 }
 
-TDESensorDevice::TDESensorDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
+SensorDevice::SensorDevice(GenericDeviceType::GenericDeviceType dt, TQString dn) : GenericDevice(dt, dn) {
 }
 
-TDESensorDevice::~TDESensorDevice() {
+SensorDevice::~SensorDevice() {
 }
 
-TDESensorClusterMap TDESensorDevice::values() {
+SensorClusterMap SensorDevice::values() {
 	return m_sensorValues;
 }
 
-void TDESensorDevice::internalSetValues(TDESensorClusterMap cl) {
+void SensorDevice::internalSetValues(SensorClusterMap cl) {
 	m_sensorValues = cl;
 }
 

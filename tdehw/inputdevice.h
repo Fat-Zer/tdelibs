@@ -24,8 +24,8 @@
 
 namespace TDEHW {
 
-namespace TDEInputDeviceType {
-enum TDEInputDeviceType {
+namespace InputDeviceType {
+enum InputDeviceType {
 	Unknown,
 	ACPILidSwitch,
 	ACPISleepButton,
@@ -34,36 +34,36 @@ enum TDEInputDeviceType {
 };
 };
 
-class TDEHW_EXPORT TDEInputDevice : public TDEGenericDevice
+class TDEHW_EXPORT InputDevice : public GenericDevice
 {
 	public:
 		/**
 		*  Constructor.
 		*  @param Device type
 		*/
-		TDEInputDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn=TQString::null);
+		InputDevice(GenericDeviceType::GenericDeviceType dt, TQString dn=TQString::null);
 		
 		/**
 		* Destructor.
 		*/
-		~TDEInputDevice();
+		~InputDevice();
 
 		/**
-		* @return a TDEInputDeviceType::TDEInputDeviceType with the input device type, if known
+		* @return a InputDeviceType::InputDeviceType with the input device type, if known
 		*/
-		TDEInputDeviceType::TDEInputDeviceType inputType();
+		InputDeviceType::InputDeviceType inputType();
 
 	protected:
 		/**
-		* @param it a TDEInputDeviceType::TDEInputDeviceType with the input device type, if known
+		* @param it a InputDeviceType::InputDeviceType with the input device type, if known
 		* @internal
 		*/
-		void internalSetInputType(TDEInputDeviceType::TDEInputDeviceType it);
+		void internalSetInputType(InputDeviceType::InputDeviceType it);
 
 	private:
-		TDEInputDeviceType::TDEInputDeviceType m_inputType;
+		InputDeviceType::InputDeviceType m_inputType;
 
-	friend class TDEHardwareDevices;
+	friend class HardwareDevices;
 };
 
 } //namespace TDEHW

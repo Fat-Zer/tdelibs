@@ -23,57 +23,57 @@
 
 using namespace TDEHW;
 
-TDEMonitorDevice::TDEMonitorDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
+MonitorDevice::MonitorDevice(GenericDeviceType::GenericDeviceType dt, TQString dn) : GenericDevice(dt, dn) {
 }
 
-TDEMonitorDevice::~TDEMonitorDevice() {
+MonitorDevice::~MonitorDevice() {
 }
 
-bool TDEMonitorDevice::connected() {
+bool MonitorDevice::connected() {
 	return m_connected;
 }
 
-void TDEMonitorDevice::internalSetConnected(bool cn) {
+void MonitorDevice::internalSetConnected(bool cn) {
 	m_connected = cn;
 }
 
-bool TDEMonitorDevice::enabled() {
+bool MonitorDevice::enabled() {
 	return m_enabled;
 }
 
-void TDEMonitorDevice::internalSetEnabled(bool en) {
+void MonitorDevice::internalSetEnabled(bool en) {
 	m_enabled = en;
 }
 
-TQByteArray TDEMonitorDevice::edid() {
+TQByteArray MonitorDevice::edid() {
 	return m_edid;
 }
 
-void TDEMonitorDevice::internalSetEdid(TQByteArray ed) {
+void MonitorDevice::internalSetEdid(TQByteArray ed) {
 	m_edid = ed;
 }
 
-TDEResolutionList TDEMonitorDevice::resolutions() {
+TDEResolutionList MonitorDevice::resolutions() {
 	return m_resolutions;
 }
 
-void TDEMonitorDevice::internalSetResolutions(TDEResolutionList rs) {
+void MonitorDevice::internalSetResolutions(TDEResolutionList rs) {
 	m_resolutions = rs;
 }
 
-TQString TDEMonitorDevice::portType() {
+TQString MonitorDevice::portType() {
 	return m_portType;
 }
 
-void TDEMonitorDevice::internalSetPortType(TQString pt) {
+void MonitorDevice::internalSetPortType(TQString pt) {
 	m_portType = pt;
 }
 
-TDEDisplayPowerLevel::TDEDisplayPowerLevel TDEMonitorDevice::powerLevel() {
+DisplayPowerLevel::DisplayPowerLevel MonitorDevice::powerLevel() {
 	return m_powerLevel;
 }
 
-void TDEMonitorDevice::internalSetPowerLevel(TDEDisplayPowerLevel::TDEDisplayPowerLevel pl) {
+void MonitorDevice::internalSetPowerLevel(DisplayPowerLevel::DisplayPowerLevel pl) {
 	m_powerLevel = pl;
 }
 
