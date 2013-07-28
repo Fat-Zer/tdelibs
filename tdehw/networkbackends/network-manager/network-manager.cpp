@@ -133,247 +133,247 @@ void printDBUSObjectStructure(TQT_DBusData object, int level=0, TQString mapKey=
 	}
 }
 
-TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags nmGlobalStateToTDEGlobalState(TQ_UINT32 nmType) {
-	TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags ret = TDENetworkGlobalManagerFlags::Unknown;
+NetworkGlobalManagerFlags::NetworkGlobalManagerFlags nmGlobalStateToTDEGlobalState(TQ_UINT32 nmType) {
+	NetworkGlobalManagerFlags::NetworkGlobalManagerFlags ret = NetworkGlobalManagerFlags::Unknown;
 
 	if (nmType == NM_STATE_UNKNOWN) {
-		ret |= TDENetworkGlobalManagerFlags::Unknown;
+		ret |= NetworkGlobalManagerFlags::Unknown;
 	}
 	else if (nmType == NM_STATE_ASLEEP) {
-		ret |= TDENetworkGlobalManagerFlags::Disconnected;
-		ret |= TDENetworkGlobalManagerFlags::Sleeping;
+		ret |= NetworkGlobalManagerFlags::Disconnected;
+		ret |= NetworkGlobalManagerFlags::Sleeping;
 	}
 	else if (nmType == NM_STATE_DISCONNECTED) {
-		ret |= TDENetworkGlobalManagerFlags::Disconnected;
+		ret |= NetworkGlobalManagerFlags::Disconnected;
 	}
 	else if (nmType == NM_STATE_DISCONNECTING) {
-		ret |= TDENetworkGlobalManagerFlags::Connected;
-		ret |= TDENetworkGlobalManagerFlags::DeactivatingLink;
+		ret |= NetworkGlobalManagerFlags::Connected;
+		ret |= NetworkGlobalManagerFlags::DeactivatingLink;
 	}
 	else if (nmType == NM_STATE_CONNECTING) {
-		ret |= TDENetworkGlobalManagerFlags::Disconnected;
-		ret |= TDENetworkGlobalManagerFlags::EstablishingLink;
+		ret |= NetworkGlobalManagerFlags::Disconnected;
+		ret |= NetworkGlobalManagerFlags::EstablishingLink;
 	}
 	else if (nmType == NM_STATE_CONNECTED_LOCAL) {
-		ret |= TDENetworkGlobalManagerFlags::Connected;
-		ret |= TDENetworkGlobalManagerFlags::LinkLocalAccess;
+		ret |= NetworkGlobalManagerFlags::Connected;
+		ret |= NetworkGlobalManagerFlags::LinkLocalAccess;
 	}
 	else if (nmType == NM_STATE_CONNECTED_SITE) {
-		ret |= TDENetworkGlobalManagerFlags::Connected;
-		ret |= TDENetworkGlobalManagerFlags::SiteLocalAccess;
+		ret |= NetworkGlobalManagerFlags::Connected;
+		ret |= NetworkGlobalManagerFlags::SiteLocalAccess;
 	}
 	else if (nmType == NM_STATE_CONNECTED_GLOBAL) {
-		ret |= TDENetworkGlobalManagerFlags::Connected;
-		ret |= TDENetworkGlobalManagerFlags::GlobalAccess;
+		ret |= NetworkGlobalManagerFlags::Connected;
+		ret |= NetworkGlobalManagerFlags::GlobalAccess;
 	}
 
 	return ret;
 }
 
-TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags nmVPNStateToTDEGlobalState(TQ_UINT32 nmType) {
-	TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags ret = TDENetworkGlobalManagerFlags::Unknown;
+NetworkGlobalManagerFlags::NetworkGlobalManagerFlags nmVPNStateToTDEGlobalState(TQ_UINT32 nmType) {
+	NetworkGlobalManagerFlags::NetworkGlobalManagerFlags ret = NetworkGlobalManagerFlags::Unknown;
 
 	if (nmType == NM_VPN_STATE_UNKNOWN) {
-		ret |= TDENetworkGlobalManagerFlags::VPNUnknown;
+		ret |= NetworkGlobalManagerFlags::VPNUnknown;
 	}
 	else if (nmType == NM_VPN_STATE_PREPARE) {
-		ret |= TDENetworkGlobalManagerFlags::VPNDisconnected;
-		ret |= TDENetworkGlobalManagerFlags::VPNEstablishingLink;
+		ret |= NetworkGlobalManagerFlags::VPNDisconnected;
+		ret |= NetworkGlobalManagerFlags::VPNEstablishingLink;
 	}
 	else if (nmType == NM_VPN_STATE_NEED_AUTH) {
-		ret |= TDENetworkGlobalManagerFlags::VPNDisconnected;
-		ret |= TDENetworkGlobalManagerFlags::VPNNeedAuthorization;
+		ret |= NetworkGlobalManagerFlags::VPNDisconnected;
+		ret |= NetworkGlobalManagerFlags::VPNNeedAuthorization;
 	}
 	else if (nmType == NM_VPN_STATE_CONNECT) {
-		ret |= TDENetworkGlobalManagerFlags::VPNDisconnected;
-		ret |= TDENetworkGlobalManagerFlags::VPNConfiguringProtocols;
+		ret |= NetworkGlobalManagerFlags::VPNDisconnected;
+		ret |= NetworkGlobalManagerFlags::VPNConfiguringProtocols;
 	}
 	else if (nmType == NM_VPN_STATE_IP_CONFIG_GET) {
-		ret |= TDENetworkGlobalManagerFlags::VPNDisconnected;
-		ret |= TDENetworkGlobalManagerFlags::VPNVerifyingProtocols;
+		ret |= NetworkGlobalManagerFlags::VPNDisconnected;
+		ret |= NetworkGlobalManagerFlags::VPNVerifyingProtocols;
 	}
 	else if (nmType == NM_VPN_STATE_ACTIVATED) {
-		ret |= TDENetworkGlobalManagerFlags::VPNConnected;
+		ret |= NetworkGlobalManagerFlags::VPNConnected;
 	}
 	else if (nmType == NM_VPN_STATE_FAILED) {
-		ret |= TDENetworkGlobalManagerFlags::VPNDisconnected;
-		ret |= TDENetworkGlobalManagerFlags::VPNFailed;
+		ret |= NetworkGlobalManagerFlags::VPNDisconnected;
+		ret |= NetworkGlobalManagerFlags::VPNFailed;
 	}
 	else if (nmType == NM_VPN_STATE_DISCONNECTED) {
-		ret |= TDENetworkGlobalManagerFlags::VPNDisconnected;
+		ret |= NetworkGlobalManagerFlags::VPNDisconnected;
 	}
 
 	return ret;
 }
 
-TDENetworkConnectionStatus::TDENetworkConnectionStatus nmDeviceStateToTDEDeviceState(TQ_UINT32 nmType) {
-	TDENetworkConnectionStatus::TDENetworkConnectionStatus ret = TDENetworkConnectionStatus::None;
+NetworkConnectionStatus::NetworkConnectionStatus nmDeviceStateToTDEDeviceState(TQ_UINT32 nmType) {
+	NetworkConnectionStatus::NetworkConnectionStatus ret = NetworkConnectionStatus::None;
 
 	if (nmType == NM_DEVICE_STATE_UNKNOWN) {
-		ret |= TDENetworkConnectionStatus::Invalid;
+		ret |= NetworkConnectionStatus::Invalid;
 	}
 	else if (nmType == NM_DEVICE_STATE_UNMANAGED) {
-		ret |= TDENetworkConnectionStatus::UnManaged;
+		ret |= NetworkConnectionStatus::UnManaged;
 	}
 	else if (nmType == NM_DEVICE_STATE_UNAVAILABLE) {
-		ret |= TDENetworkConnectionStatus::Disconnected;
-		ret |= TDENetworkConnectionStatus::LinkUnavailable;
+		ret |= NetworkConnectionStatus::Disconnected;
+		ret |= NetworkConnectionStatus::LinkUnavailable;
 	}
 	else if (nmType == NM_DEVICE_STATE_DISCONNECTED) {
-		ret |= TDENetworkConnectionStatus::Disconnected;
+		ret |= NetworkConnectionStatus::Disconnected;
 	}
 	else if (nmType == NM_DEVICE_STATE_PREPARE) {
-		ret |= TDENetworkConnectionStatus::Disconnected;
-		ret |= TDENetworkConnectionStatus::EstablishingLink;
+		ret |= NetworkConnectionStatus::Disconnected;
+		ret |= NetworkConnectionStatus::EstablishingLink;
 	}
 	else if (nmType == NM_DEVICE_STATE_CONFIG) {
-		ret |= TDENetworkConnectionStatus::Disconnected;
-		ret |= TDENetworkConnectionStatus::EstablishingLink;
+		ret |= NetworkConnectionStatus::Disconnected;
+		ret |= NetworkConnectionStatus::EstablishingLink;
 	}
 	else if (nmType == NM_DEVICE_STATE_NEED_AUTH) {
-		ret |= TDENetworkConnectionStatus::Disconnected;
-		ret |= TDENetworkConnectionStatus::NeedAuthorization;
+		ret |= NetworkConnectionStatus::Disconnected;
+		ret |= NetworkConnectionStatus::NeedAuthorization;
 	}
 	else if (nmType == NM_DEVICE_STATE_IP_CONFIG) {
-		ret |= TDENetworkConnectionStatus::Disconnected;
-		ret |= TDENetworkConnectionStatus::ConfiguringProtocols;
+		ret |= NetworkConnectionStatus::Disconnected;
+		ret |= NetworkConnectionStatus::ConfiguringProtocols;
 	}
 	else if (nmType == NM_DEVICE_STATE_IP_CHECK) {
-		ret |= TDENetworkConnectionStatus::Disconnected;
-		ret |= TDENetworkConnectionStatus::VerifyingProtocols;
+		ret |= NetworkConnectionStatus::Disconnected;
+		ret |= NetworkConnectionStatus::VerifyingProtocols;
 	}
 	else if (nmType == NM_DEVICE_STATE_SECONDARIES) {
-		ret |= TDENetworkConnectionStatus::Disconnected;
-		ret |= TDENetworkConnectionStatus::DependencyWait;
+		ret |= NetworkConnectionStatus::Disconnected;
+		ret |= NetworkConnectionStatus::DependencyWait;
 	}
 	else if (nmType == NM_DEVICE_STATE_ACTIVATED) {
-		ret |= TDENetworkConnectionStatus::Connected;
+		ret |= NetworkConnectionStatus::Connected;
 	}
 	else if (nmType == NM_DEVICE_STATE_DEACTIVATING) {
-		ret |= TDENetworkConnectionStatus::Connected;
-		ret |= TDENetworkConnectionStatus::DeactivatingLink;
+		ret |= NetworkConnectionStatus::Connected;
+		ret |= NetworkConnectionStatus::DeactivatingLink;
 	}
 	else if (nmType == NM_DEVICE_STATE_FAILED) {
-		ret |= TDENetworkConnectionStatus::Disconnected;
-		ret |= TDENetworkConnectionStatus::Failed;
+		ret |= NetworkConnectionStatus::Disconnected;
+		ret |= NetworkConnectionStatus::Failed;
 	}
 
 	return ret;
 }
 
-TDENetworkDeviceType::TDENetworkDeviceType TDENetworkConnectionManager_BackendNM::nmDeviceTypeToTDEDeviceType(TQ_UINT32 nmType) {
-	TDENetworkDeviceType::TDENetworkDeviceType ret = TDENetworkDeviceType::Other;
+NetworkDeviceType::NetworkDeviceType NetworkConnectionManager_BackendNM::nmDeviceTypeToTDEDeviceType(TQ_UINT32 nmType) {
+	NetworkDeviceType::NetworkDeviceType ret = NetworkDeviceType::Other;
 
 	if (nmType == NM_DEVICE_TYPE_UNKNOWN) {
-		ret = TDENetworkDeviceType::Other;
+		ret = NetworkDeviceType::Other;
 	}
 	else if (nmType == NM_DEVICE_TYPE_ETHERNET) {
-		ret = TDENetworkDeviceType::WiredEthernet;
+		ret = NetworkDeviceType::WiredEthernet;
 	}
 	else if (nmType == NM_DEVICE_TYPE_WIFI) {
-		ret = TDENetworkDeviceType::WiFi;
+		ret = NetworkDeviceType::WiFi;
 	}
 	else if (nmType == NM_DEVICE_TYPE_UNUSED1) {
 	}
 	else if (nmType == NM_DEVICE_TYPE_UNUSED2) {
 	}
 	else if (nmType == NM_DEVICE_TYPE_BT) {
-		ret = TDENetworkDeviceType::Bluetooth;
+		ret = NetworkDeviceType::Bluetooth;
 	}
 	else if (nmType == NM_DEVICE_TYPE_OLPC_MESH) {
-		ret = TDENetworkDeviceType::OLPCMesh;
+		ret = NetworkDeviceType::OLPCMesh;
 	}
 	else if (nmType == NM_DEVICE_TYPE_WIMAX) {
-		ret = TDENetworkDeviceType::WiMax;
+		ret = NetworkDeviceType::WiMax;
 	}
 	else if (nmType == NM_DEVICE_TYPE_MODEM) {
-		ret = TDENetworkDeviceType::Modem;
+		ret = NetworkDeviceType::Modem;
 	}
 	else if (nmType == NM_DEVICE_TYPE_INFINIBAND) {
-		ret = TDENetworkDeviceType::Infiniband;
+		ret = NetworkDeviceType::Infiniband;
 	}
 	else if (nmType == NM_DEVICE_TYPE_BOND) {
-		ret = TDENetworkDeviceType::Bond;
+		ret = NetworkDeviceType::Bond;
 	}
 	else if (nmType == NM_DEVICE_TYPE_VLAN) {
-		ret = TDENetworkDeviceType::VLAN;
+		ret = NetworkDeviceType::VLAN;
 	}
 	else if (nmType == NM_DEVICE_TYPE_ADSL) {
-		ret = TDENetworkDeviceType::ADSL;
+		ret = NetworkDeviceType::ADSL;
 	}
 
 	return ret;
 }
 
-TDENetworkConnectionType::TDENetworkConnectionType nmConnectionTypeToTDEConnectionType(TQString nm) {
-	TDENetworkConnectionType::TDENetworkConnectionType ret = TDENetworkConnectionType::Other;
+NetworkConnectionType::NetworkConnectionType nmConnectionTypeToTDEConnectionType(TQString nm) {
+	NetworkConnectionType::NetworkConnectionType ret = NetworkConnectionType::Other;
 
 	if (nm.lower() == "802-3-ethernet") {
-		ret = TDENetworkConnectionType::WiredEthernet;
+		ret = NetworkConnectionType::WiredEthernet;
 	}
 	else if (nm.lower() == "infiniband") {
-		ret = TDENetworkConnectionType::Infiniband;
+		ret = NetworkConnectionType::Infiniband;
 	}
 	else if (nm.lower() == "802-11-wireless") {
-		ret = TDENetworkConnectionType::WiFi;
+		ret = NetworkConnectionType::WiFi;
 	}
 	else if (nm.lower() == "vpn") {
-		ret = TDENetworkConnectionType::VPN;
+		ret = NetworkConnectionType::VPN;
 	}
 	else if (nm.lower() == "wimax") {
-		ret = TDENetworkConnectionType::WiMax;
+		ret = NetworkConnectionType::WiMax;
 	}
 	else if (nm.lower() == "vlan") {
-		ret = TDENetworkConnectionType::VLAN;
+		ret = NetworkConnectionType::VLAN;
 	}
 	else if (nm.lower() == "802-11-olpc-mesh") {
-		ret = TDENetworkConnectionType::OLPCMesh;
+		ret = NetworkConnectionType::OLPCMesh;
 	}
 	else if (nm.lower() == "bluetooth") {
-		ret = TDENetworkConnectionType::Bluetooth;
+		ret = NetworkConnectionType::Bluetooth;
 	}
 	else if (nm.lower() == "cdma") {
-		ret = TDENetworkConnectionType::Modem;
+		ret = NetworkConnectionType::Modem;
 	}
 	else if (nm.lower() == "gsm") {
-		ret = TDENetworkConnectionType::Modem;
+		ret = NetworkConnectionType::Modem;
 	}
 
 	return ret;
 }
 
-TQString tdeConnectionTypeToNMConnectionType(TDENetworkConnectionType::TDENetworkConnectionType type, TDEModemConnectionType::TDEModemConnectionType modemType=TDEModemConnectionType::Other) {
+TQString tdeConnectionTypeToNMConnectionType(NetworkConnectionType::NetworkConnectionType type, ModemConnectionType::ModemConnectionType modemType=ModemConnectionType::Other) {
 	TQString ret;
 
-	if (type == TDENetworkConnectionType::WiredEthernet) {
+	if (type == NetworkConnectionType::WiredEthernet) {
 		ret = "802-3-ethernet";
 	}
-	else if (type == TDENetworkConnectionType::Infiniband) {
+	else if (type == NetworkConnectionType::Infiniband) {
 		ret = "infiniband";
 	}
-	else if (type == TDENetworkConnectionType::WiFi) {
+	else if (type == NetworkConnectionType::WiFi) {
 		ret = "802-11-wireless";
 	}
-	else if (type == TDENetworkConnectionType::VPN) {
+	else if (type == NetworkConnectionType::VPN) {
 		ret = "vpn";
 	}
-	else if (type == TDENetworkConnectionType::WiMax) {
+	else if (type == NetworkConnectionType::WiMax) {
 		ret = "wimax";
 	}
-	else if (type == TDENetworkConnectionType::VLAN) {
+	else if (type == NetworkConnectionType::VLAN) {
 		ret = "vlan";
 	}
-	else if (type == TDENetworkConnectionType::OLPCMesh) {
+	else if (type == NetworkConnectionType::OLPCMesh) {
 		ret = "802-11-olpc-mesh";
 	}
-	else if (type == TDENetworkConnectionType::Bluetooth) {
+	else if (type == NetworkConnectionType::Bluetooth) {
 		ret = "bluetooth";
 	}
-	else if (type == TDENetworkConnectionType::Modem) {
-		if (modemType == TDEModemConnectionType::CDMA) {
+	else if (type == NetworkConnectionType::Modem) {
+		if (modemType == ModemConnectionType::CDMA) {
 			ret = "cdma";
 		}
-		else if (modemType == TDEModemConnectionType::GSM) {
+		else if (modemType == ModemConnectionType::GSM) {
 			ret = "gsm";
 		}
 	}
@@ -381,62 +381,62 @@ TQString tdeConnectionTypeToNMConnectionType(TDENetworkConnectionType::TDENetwor
 	return ret;
 }
 
-TDENetworkIEEE8021xType::TDENetworkIEEE8021xType nmEAPTypeToTDEEAPType(TQString nm) {
-	TDENetworkIEEE8021xType::TDENetworkIEEE8021xType ret = TDENetworkIEEE8021xType::None;
+NetworkIEEE8021xType::NetworkIEEE8021xType nmEAPTypeToTDEEAPType(TQString nm) {
+	NetworkIEEE8021xType::NetworkIEEE8021xType ret = NetworkIEEE8021xType::None;
 
 	if (nm.lower() == "") {
-		ret = TDENetworkIEEE8021xType::None;
+		ret = NetworkIEEE8021xType::None;
 	}
 	else if (nm.lower() == "leap") {
-		ret = TDENetworkIEEE8021xType::LEAP;
+		ret = NetworkIEEE8021xType::LEAP;
 	}
 	else if (nm.lower() == "md5") {
-		ret = TDENetworkIEEE8021xType::MD5;
+		ret = NetworkIEEE8021xType::MD5;
 	}
 	else if (nm.lower() == "pap") {
-		ret = TDENetworkIEEE8021xType::PAP;
+		ret = NetworkIEEE8021xType::PAP;
 	}
 	else if (nm.lower() == "chap") {
-		ret = TDENetworkIEEE8021xType::CHAP;
+		ret = NetworkIEEE8021xType::CHAP;
 	}
 	else if (nm.lower() == "mschap") {
-		ret = TDENetworkIEEE8021xType::MSCHAP;
+		ret = NetworkIEEE8021xType::MSCHAP;
 	}
 	else if (nm.lower() == "mschapv2") {
-		ret = TDENetworkIEEE8021xType::MSCHAPV2;
+		ret = NetworkIEEE8021xType::MSCHAPV2;
 	}
 	else if (nm.lower() == "fast") {
-		ret = TDENetworkIEEE8021xType::Fast;
+		ret = NetworkIEEE8021xType::Fast;
 	}
 	else if (nm.lower() == "psk") {
-		ret = TDENetworkIEEE8021xType::PSK;
+		ret = NetworkIEEE8021xType::PSK;
 	}
 	else if (nm.lower() == "pax") {
-		ret = TDENetworkIEEE8021xType::PAX;
+		ret = NetworkIEEE8021xType::PAX;
 	}
 	else if (nm.lower() == "sake") {
-		ret = TDENetworkIEEE8021xType::SAKE;
+		ret = NetworkIEEE8021xType::SAKE;
 	}
 	else if (nm.lower() == "gpsk") {
-		ret = TDENetworkIEEE8021xType::GPSK;
+		ret = NetworkIEEE8021xType::GPSK;
 	}
 	else if (nm.lower() == "tls") {
-		ret = TDENetworkIEEE8021xType::TLS;
+		ret = NetworkIEEE8021xType::TLS;
 	}
 	else if (nm.lower() == "peap") {
-		ret = TDENetworkIEEE8021xType::PEAP;
+		ret = NetworkIEEE8021xType::PEAP;
 	}
 	else if (nm.lower() == "ttls") {
-		ret = TDENetworkIEEE8021xType::TTLS;
+		ret = NetworkIEEE8021xType::TTLS;
 	}
 	else if (nm.lower() == "sim") {
-		ret = TDENetworkIEEE8021xType::SIM;
+		ret = NetworkIEEE8021xType::SIM;
 	}
 	else if (nm.lower() == "gtc") {
-		ret = TDENetworkIEEE8021xType::GTC;
+		ret = NetworkIEEE8021xType::GTC;
 	}
 	else if (nm.lower() == "otp") {
-		ret = TDENetworkIEEE8021xType::OTP;
+		ret = NetworkIEEE8021xType::OTP;
 	}
 	else {
 		PRINT_ERROR(TQString("unknown EAP type %s requested in existing connection").arg(nm.lower()))
@@ -445,61 +445,61 @@ TDENetworkIEEE8021xType::TDENetworkIEEE8021xType nmEAPTypeToTDEEAPType(TQString 
 	return ret;
 }
 
-TQString tdeEAPTypeToNMEAPType(TDENetworkIEEE8021xType::TDENetworkIEEE8021xType eaptype) {
+TQString tdeEAPTypeToNMEAPType(NetworkIEEE8021xType::NetworkIEEE8021xType eaptype) {
 	TQString ret = "";
 
-	if (eaptype == TDENetworkIEEE8021xType::None) {
+	if (eaptype == NetworkIEEE8021xType::None) {
 		ret = "";
 	}
-	else if (eaptype == TDENetworkIEEE8021xType::LEAP) {
+	else if (eaptype == NetworkIEEE8021xType::LEAP) {
 		ret = "leap";
 	}
-	else if (eaptype == TDENetworkIEEE8021xType::MD5) {
+	else if (eaptype == NetworkIEEE8021xType::MD5) {
 		ret = "md5";
 	}
-	else if (eaptype == TDENetworkIEEE8021xType::PAP) {
+	else if (eaptype == NetworkIEEE8021xType::PAP) {
 		ret = "pap";
 	}
-	else if (eaptype == TDENetworkIEEE8021xType::CHAP) {
+	else if (eaptype == NetworkIEEE8021xType::CHAP) {
 		ret = "chap";
 	}
-	else if (eaptype == TDENetworkIEEE8021xType::MSCHAP) {
+	else if (eaptype == NetworkIEEE8021xType::MSCHAP) {
 		ret = "mschap";
 	}
-	else if (eaptype == TDENetworkIEEE8021xType::MSCHAPV2) {
+	else if (eaptype == NetworkIEEE8021xType::MSCHAPV2) {
 		ret = "mschapv2";
 	}
-	else if (eaptype == TDENetworkIEEE8021xType::Fast) {
+	else if (eaptype == NetworkIEEE8021xType::Fast) {
 		ret = "fast";
 	}
-	else if (eaptype == TDENetworkIEEE8021xType::PSK) {
+	else if (eaptype == NetworkIEEE8021xType::PSK) {
 		ret = "psk";
 	}
-	else if (eaptype == TDENetworkIEEE8021xType::PAX) {
+	else if (eaptype == NetworkIEEE8021xType::PAX) {
 		ret = "pax";
 	}
-	else if (eaptype == TDENetworkIEEE8021xType::SAKE) {
+	else if (eaptype == NetworkIEEE8021xType::SAKE) {
 		ret = "sake";
 	}
-	else if (eaptype == TDENetworkIEEE8021xType::GPSK) {
+	else if (eaptype == NetworkIEEE8021xType::GPSK) {
 		ret = "gpsk";
 	}
-	else if (eaptype == TDENetworkIEEE8021xType::TLS) {
+	else if (eaptype == NetworkIEEE8021xType::TLS) {
 		ret = "tls";
 	}
-	else if (eaptype == TDENetworkIEEE8021xType::PEAP) {
+	else if (eaptype == NetworkIEEE8021xType::PEAP) {
 		ret = "peap";
 	}
-	else if (eaptype == TDENetworkIEEE8021xType::TTLS) {
+	else if (eaptype == NetworkIEEE8021xType::TTLS) {
 		ret = "ttls";
 	}
-	else if (eaptype == TDENetworkIEEE8021xType::SIM) {
+	else if (eaptype == NetworkIEEE8021xType::SIM) {
 		ret = "sim";
 	}
-	else if (eaptype == TDENetworkIEEE8021xType::GTC) {
+	else if (eaptype == NetworkIEEE8021xType::GTC) {
 		ret = "gtc";
 	}
-	else if (eaptype == TDENetworkIEEE8021xType::OTP) {
+	else if (eaptype == NetworkIEEE8021xType::OTP) {
 		ret = "otp";
 	}
 	else {
@@ -509,21 +509,21 @@ TQString tdeEAPTypeToNMEAPType(TDENetworkIEEE8021xType::TDENetworkIEEE8021xType 
 	return ret;
 }
 
-TDENetworkIEEE8021xFastFlags::TDENetworkIEEE8021xFastFlags nmEAPFastFlagsToTDEEAPFastFlags(TQString nm) {
-	TDENetworkIEEE8021xFastFlags::TDENetworkIEEE8021xFastFlags ret = TDENetworkIEEE8021xFastFlags::AllowUnauthenticated | TDENetworkIEEE8021xFastFlags::AllowAuthenticated;
+NetworkIEEE8021xFastFlags::NetworkIEEE8021xFastFlags nmEAPFastFlagsToTDEEAPFastFlags(TQString nm) {
+	NetworkIEEE8021xFastFlags::NetworkIEEE8021xFastFlags ret = NetworkIEEE8021xFastFlags::AllowUnauthenticated | NetworkIEEE8021xFastFlags::AllowAuthenticated;
 
 	unsigned int nm_int = nm.toUInt();
 	if (nm_int == NM_EAP_FAST_PROVISIONING_DISABLED) {
-		ret = TDENetworkIEEE8021xFastFlags::None;
+		ret = NetworkIEEE8021xFastFlags::None;
 	}
 	else if (nm_int == NM_EAP_FAST_PROVISIONING_UNAUTHONLY) {
-		ret = TDENetworkIEEE8021xFastFlags::AllowUnauthenticated;
+		ret = NetworkIEEE8021xFastFlags::AllowUnauthenticated;
 	}
 	else if (nm_int == NM_EAP_FAST_PROVISIONING_AUTHONLY) {
-		ret = TDENetworkIEEE8021xFastFlags::AllowAuthenticated;
+		ret = NetworkIEEE8021xFastFlags::AllowAuthenticated;
 	}
 	else if (nm_int == NM_EAP_FAST_PROVISIONING_BOTH) {
-		ret = TDENetworkIEEE8021xFastFlags::AllowUnauthenticated | TDENetworkIEEE8021xFastFlags::AllowAuthenticated;
+		ret = NetworkIEEE8021xFastFlags::AllowUnauthenticated | NetworkIEEE8021xFastFlags::AllowAuthenticated;
 	}
 	else {
 		PRINT_ERROR(TQString("unknown EAP fast flag %s requested in existing connection").arg(nm.lower()))
@@ -532,16 +532,16 @@ TDENetworkIEEE8021xFastFlags::TDENetworkIEEE8021xFastFlags nmEAPFastFlagsToTDEEA
 	return ret;
 }
 
-TQString tdeEAPFastFlagsToNMEAPFastFlags(TDENetworkIEEE8021xFastFlags::TDENetworkIEEE8021xFastFlags eaptype) {
+TQString tdeEAPFastFlagsToNMEAPFastFlags(NetworkIEEE8021xFastFlags::NetworkIEEE8021xFastFlags eaptype) {
 	TQString ret = "";
 
-	if ((eaptype & TDENetworkIEEE8021xFastFlags::AllowUnauthenticated) && (eaptype & TDENetworkIEEE8021xFastFlags::AllowAuthenticated)) {
+	if ((eaptype & NetworkIEEE8021xFastFlags::AllowUnauthenticated) && (eaptype & NetworkIEEE8021xFastFlags::AllowAuthenticated)) {
 		ret = TQString("%1").arg(NM_EAP_FAST_PROVISIONING_BOTH);
 	}
-	else if (eaptype & TDENetworkIEEE8021xFastFlags::AllowAuthenticated) {
+	else if (eaptype & NetworkIEEE8021xFastFlags::AllowAuthenticated) {
 		ret = TQString("%1").arg(NM_EAP_FAST_PROVISIONING_AUTHONLY);
 	}
-	else if (eaptype & TDENetworkIEEE8021xFastFlags::AllowUnauthenticated) {
+	else if (eaptype & NetworkIEEE8021xFastFlags::AllowUnauthenticated) {
 		ret = TQString("%1").arg(NM_EAP_FAST_PROVISIONING_UNAUTHONLY);
 	}
 	else {
@@ -551,599 +551,599 @@ TQString tdeEAPFastFlagsToNMEAPFastFlags(TDENetworkIEEE8021xFastFlags::TDENetwor
 	return ret;
 }
 
-TDEWiFiMode::TDEWiFiMode nmWiFiModeToTDEWiFiMode(TQString nm) {
-	TDEWiFiMode::TDEWiFiMode ret = TDEWiFiMode::Infrastructure;
+WiFiMode::WiFiMode nmWiFiModeToWiFiMode(TQString nm) {
+	WiFiMode::WiFiMode ret = WiFiMode::Infrastructure;
 
 	if (nm.lower() == "infrastructure") {
-		ret = TDEWiFiMode::Infrastructure;
+		ret = WiFiMode::Infrastructure;
 	}
 	else if (nm.lower() == "adhoc") {
-		ret = TDEWiFiMode::AdHoc;
+		ret = WiFiMode::AdHoc;
 	}
 
 	return ret;
 }
 
-TQString tdeWiFiModeToNMWiFiMode(TDEWiFiMode::TDEWiFiMode mode) {
+TQString tdeWiFiModeToNMWiFiMode(WiFiMode::WiFiMode mode) {
 	TQString ret;
 
-	if (mode == TDEWiFiMode::Infrastructure) {
+	if (mode == WiFiMode::Infrastructure) {
 		ret = "infrastructure";
 	}
-	else if (mode == TDEWiFiMode::AdHoc) {
+	else if (mode == WiFiMode::AdHoc) {
 		ret = "adhoc";
 	}
 
 	return ret;
 }
 
-TDEWiFiMode::TDEWiFiMode nmWiFiModeToTDEWiFiMode(TQ_UINT32 nm) {
-	TDEWiFiMode::TDEWiFiMode ret = TDEWiFiMode::Infrastructure;
+WiFiMode::WiFiMode nmWiFiModeToWiFiMode(TQ_UINT32 nm) {
+	WiFiMode::WiFiMode ret = WiFiMode::Infrastructure;
 
 	if (nm == NM_802_11_MODE_INFRASTRUCTURE) {
-		ret = TDEWiFiMode::Infrastructure;
+		ret = WiFiMode::Infrastructure;
 	}
 	else if (nm == NM_802_11_MODE_ADHOC) {
-		ret = TDEWiFiMode::AdHoc;
+		ret = WiFiMode::AdHoc;
 	}
 
 	return ret;
 }
 
-TDENetworkWiFiClientFlags::TDENetworkWiFiClientFlags tdeWiFiFlagsToNMWiFiFlags(TQ_UINT32 nm) {
-	TDENetworkWiFiClientFlags::TDENetworkWiFiClientFlags ret = TDENetworkWiFiClientFlags::None;
+NetworkWiFiClientFlags::NetworkWiFiClientFlags tdeWiFiFlagsToNMWiFiFlags(TQ_UINT32 nm) {
+	NetworkWiFiClientFlags::NetworkWiFiClientFlags ret = NetworkWiFiClientFlags::None;
 
 	if (nm & NM_802_11_DEVICE_CAP_CIPHER_WEP40) {
-		ret | TDENetworkWiFiClientFlags::CipherWEP40;
+		ret | NetworkWiFiClientFlags::CipherWEP40;
 	}
 	if (nm & NM_802_11_DEVICE_CAP_CIPHER_WEP104) {
-		ret | TDENetworkWiFiClientFlags::CipherWEP104;
+		ret | NetworkWiFiClientFlags::CipherWEP104;
 	}
 	if (nm & NM_802_11_DEVICE_CAP_CIPHER_TKIP) {
-		ret | TDENetworkWiFiClientFlags::CipherTKIP;
+		ret | NetworkWiFiClientFlags::CipherTKIP;
 	}
 	if (nm & NM_802_11_DEVICE_CAP_CIPHER_CCMP) {
-		ret | TDENetworkWiFiClientFlags::CipherCCMP;
+		ret | NetworkWiFiClientFlags::CipherCCMP;
 	}
 	if (nm & NM_802_11_DEVICE_CAP_WPA) {
-		ret | TDENetworkWiFiClientFlags::CipherWPA;
+		ret | NetworkWiFiClientFlags::CipherWPA;
 	}
 	if (nm & NM_802_11_DEVICE_CAP_RSN) {
-		ret | TDENetworkWiFiClientFlags::CipherRSN;
+		ret | NetworkWiFiClientFlags::CipherRSN;
 	}
 
 	return ret;
 }
 
-TDEBluetoothConnectionType::TDEBluetoothConnectionType nmBluetoothModeToTDEBluetoothMode(TQString nm) {
-	TDEBluetoothConnectionType::TDEBluetoothConnectionType ret = TDEBluetoothConnectionType::PAN;
+BluetoothConnectionType::BluetoothConnectionType nmBluetoothModeToTDEBluetoothMode(TQString nm) {
+	BluetoothConnectionType::BluetoothConnectionType ret = BluetoothConnectionType::PAN;
 
 	if (nm.lower() == "dun") {
-		ret = TDEBluetoothConnectionType::DUN;
+		ret = BluetoothConnectionType::DUN;
 	}
 	else if (nm.lower() == "panu") {
-		ret = TDEBluetoothConnectionType::PAN;
+		ret = BluetoothConnectionType::PAN;
 	}
 
 	return ret;
 }
 
-TQString tdeBluetoothModeToNMBluetoothMode(TDEBluetoothConnectionType::TDEBluetoothConnectionType type) {
+TQString tdeBluetoothModeToNMBluetoothMode(BluetoothConnectionType::BluetoothConnectionType type) {
 	TQString ret;
 
-	if (type == TDEBluetoothConnectionType::DUN) {
+	if (type == BluetoothConnectionType::DUN) {
 		ret = "dun";
 	}
-	else if (type == TDEBluetoothConnectionType::PAN) {
+	else if (type == BluetoothConnectionType::PAN) {
 		ret = "panu";
 	}
 
 	return ret;
 }
 
-TDEGSMNetworkType::TDEGSMNetworkType nmGSMModeToTDEGSMMode(TQ_INT32 nm) {
-	TDEGSMNetworkType::TDEGSMNetworkType ret = TDEGSMNetworkType::Any;
+GSMNetworkType::GSMNetworkType nmGSMModeToTDEGSMMode(TQ_INT32 nm) {
+	GSMNetworkType::GSMNetworkType ret = GSMNetworkType::Any;
 
 	if (nm == NM_GSM_3G_ONLY) {
-		ret = TDEGSMNetworkType::Only3G;
+		ret = GSMNetworkType::Only3G;
 	}
 	else if (nm == NM_GSM_GPRS_EDGE_ONLY) {
-		ret = TDEGSMNetworkType::GPRSEdge;
+		ret = GSMNetworkType::GPRSEdge;
 	}
 	else if (nm == NM_GSM_PREFER_3G) {
-		ret = TDEGSMNetworkType::Prefer3G;
+		ret = GSMNetworkType::Prefer3G;
 	}
 	else if (nm == NM_GSM_PREFER_2G) {
-		ret = TDEGSMNetworkType::Prefer2G;
+		ret = GSMNetworkType::Prefer2G;
 	}
 
 	return ret;
 }
 
-TQ_INT32 tdeGSMModeToNMGSMMode(TDEGSMNetworkType::TDEGSMNetworkType type) {
+TQ_INT32 tdeGSMModeToNMGSMMode(GSMNetworkType::GSMNetworkType type) {
 	TQ_INT32 ret = -1;
 
-	if (type == TDEGSMNetworkType::Only3G) {
+	if (type == GSMNetworkType::Only3G) {
 		ret = NM_GSM_3G_ONLY;
 	}
-	else if (type == TDEGSMNetworkType::GPRSEdge) {
+	else if (type == GSMNetworkType::GPRSEdge) {
 		ret = NM_GSM_GPRS_EDGE_ONLY;
 	}
-	else if (type == TDEGSMNetworkType::Prefer3G) {
+	else if (type == GSMNetworkType::Prefer3G) {
 		ret = NM_GSM_PREFER_3G;
 	}
-	else if (type == TDEGSMNetworkType::Prefer2G) {
+	else if (type == GSMNetworkType::Prefer2G) {
 		ret = NM_GSM_PREFER_2G;
 	}
 
 	return ret;
 }
 
-TDEWiFiFrequencyBand::TDEWiFiFrequencyBand nmWiFiFrequencyBandToTDEWiFiFrequencyBand(TQString nm) {
-	TDEWiFiFrequencyBand::TDEWiFiFrequencyBand ret = TDEWiFiFrequencyBand::Other;
+WiFiFrequencyBand::WiFiFrequencyBand nmWiFiFrequencyBandToWiFiFrequencyBand(TQString nm) {
+	WiFiFrequencyBand::WiFiFrequencyBand ret = WiFiFrequencyBand::Other;
 
 	if (nm.lower() == "") {
-		ret = TDEWiFiFrequencyBand::None;
+		ret = WiFiFrequencyBand::None;
 	}
 	else if (nm.lower() == "bg") {
-		ret = TDEWiFiFrequencyBand::Band2_4GHz;
+		ret = WiFiFrequencyBand::Band2_4GHz;
 	}
 	else if (nm.lower() == "a") {
-		ret = TDEWiFiFrequencyBand::Band5GHz;
+		ret = WiFiFrequencyBand::Band5GHz;
 	}
 
 	return ret;
 }
 
-TQString tdeWiFiFrequencyBandToNMWiFiFrequencyBand(TDEWiFiFrequencyBand::TDEWiFiFrequencyBand mode) {
+TQString tdeWiFiFrequencyBandToNMWiFiFrequencyBand(WiFiFrequencyBand::WiFiFrequencyBand mode) {
 	TQString ret;
 
-	if (mode == TDEWiFiFrequencyBand::None) {
+	if (mode == WiFiFrequencyBand::None) {
 		ret = TQString::null;
 	}
-	else if (mode == TDEWiFiFrequencyBand::Band2_4GHz) {
+	else if (mode == WiFiFrequencyBand::Band2_4GHz) {
 		ret = "bg";
 	}
-	else if (mode == TDEWiFiFrequencyBand::Band5GHz) {
+	else if (mode == WiFiFrequencyBand::Band5GHz) {
 		ret = "a";
 	}
 
 	return ret;
 }
 
-TDENetworkWiFiKeyType::TDENetworkWiFiKeyType nmWiFiKeyTypeToTDEWiFiKeyType(TQString nm) {
-	TDENetworkWiFiKeyType::TDENetworkWiFiKeyType ret = TDENetworkWiFiKeyType::Other;
+NetworkWiFiKeyType::NetworkWiFiKeyType nmWiFiKeyTypeToTDEWiFiKeyType(TQString nm) {
+	NetworkWiFiKeyType::NetworkWiFiKeyType ret = NetworkWiFiKeyType::Other;
 
 	if (nm.lower() == "none") {
-		ret = TDENetworkWiFiKeyType::WEP;
+		ret = NetworkWiFiKeyType::WEP;
 	}
 	else if (nm.lower() == "ieee8021x") {
-		ret = TDENetworkWiFiKeyType::DynamicWEP;
+		ret = NetworkWiFiKeyType::DynamicWEP;
 	}
 	else if (nm.lower() == "wpa-none") {
-		ret = TDENetworkWiFiKeyType::WPAAdHoc;
+		ret = NetworkWiFiKeyType::WPAAdHoc;
 	}
 	else if (nm.lower() == "wpa-psk") {
-		ret = TDENetworkWiFiKeyType::WPAInfrastructure;
+		ret = NetworkWiFiKeyType::WPAInfrastructure;
 	}
 	else if (nm.lower() == "wpa-eap") {
-		ret = TDENetworkWiFiKeyType::WPAEnterprise;
+		ret = NetworkWiFiKeyType::WPAEnterprise;
 	}
 
 	return ret;
 }
 
-TQString tdeWiFiKeyTypeToNMWiFiKeyType(TDENetworkWiFiKeyType::TDENetworkWiFiKeyType type) {
+TQString tdeWiFiKeyTypeToNMWiFiKeyType(NetworkWiFiKeyType::NetworkWiFiKeyType type) {
 	TQString ret;
 
-	if (type == TDENetworkWiFiKeyType::WEP) {
+	if (type == NetworkWiFiKeyType::WEP) {
 		return "none";
 	}
-	else if (type == TDENetworkWiFiKeyType::DynamicWEP) {
+	else if (type == NetworkWiFiKeyType::DynamicWEP) {
 		return "ieee8021x";
 	}
-	else if (type == TDENetworkWiFiKeyType::WPAAdHoc) {
+	else if (type == NetworkWiFiKeyType::WPAAdHoc) {
 		return "wpa-none";
 	}
-	else if (type == TDENetworkWiFiKeyType::WPAInfrastructure) {
+	else if (type == NetworkWiFiKeyType::WPAInfrastructure) {
 		return "wpa-psk";
 	}
-	else if (type == TDENetworkWiFiKeyType::WPAEnterprise) {
+	else if (type == NetworkWiFiKeyType::WPAEnterprise) {
 		return "wpa-eap";
 	}
 
 	return ret;
 }
 
-TDENetworkWiFiAuthType::TDENetworkWiFiAuthType nmWiFiAuthTypeToTDEWiFiAuthType(TQString nm) {
-	TDENetworkWiFiAuthType::TDENetworkWiFiAuthType ret = TDENetworkWiFiAuthType::Other;
+NetworkWiFiAuthType::NetworkWiFiAuthType nmWiFiAuthTypeToTDEWiFiAuthType(TQString nm) {
+	NetworkWiFiAuthType::NetworkWiFiAuthType ret = NetworkWiFiAuthType::Other;
 
 	if (nm.lower() == "open") {
-		ret = TDENetworkWiFiAuthType::Open;
+		ret = NetworkWiFiAuthType::Open;
 	}
 	else if (nm.lower() == "shared") {
-		ret = TDENetworkWiFiAuthType::Shared;
+		ret = NetworkWiFiAuthType::Shared;
 	}
 	else if (nm.lower() == "leap") {
-		ret = TDENetworkWiFiAuthType::LEAP;
+		ret = NetworkWiFiAuthType::LEAP;
 	}
 
 	return ret;
 }
 
-TQString tdeWiFiAuthTypeToNMWiFiAuthType(TDENetworkWiFiAuthType::TDENetworkWiFiAuthType type) {
+TQString tdeWiFiAuthTypeToNMWiFiAuthType(NetworkWiFiAuthType::NetworkWiFiAuthType type) {
 	TQString ret;
 
-	if (type == TDENetworkWiFiAuthType::Open) {
+	if (type == NetworkWiFiAuthType::Open) {
 		return "open";
 	}
-	else if (type == TDENetworkWiFiAuthType::Shared) {
+	else if (type == NetworkWiFiAuthType::Shared) {
 		return "shared";
 	}
-	else if (type == TDENetworkWiFiAuthType::LEAP) {
+	else if (type == NetworkWiFiAuthType::LEAP) {
 		return "leap";
 	}
 
 	return ret;
 }
 
-TDENetworkWiFiWPAVersionFlags::TDENetworkWiFiWPAVersionFlags nmWiFiWPAVersionToTDEWiFiWPAVersion(TQStringList nm) {
-	TDENetworkWiFiWPAVersionFlags::TDENetworkWiFiWPAVersionFlags ret = TDENetworkWiFiWPAVersionFlags::None;
+NetworkWiFiWPAVersionFlags::NetworkWiFiWPAVersionFlags nmWiFiWPAVersionToTDEWiFiWPAVersion(TQStringList nm) {
+	NetworkWiFiWPAVersionFlags::NetworkWiFiWPAVersionFlags ret = NetworkWiFiWPAVersionFlags::None;
 
 	if ((nm.contains("wpa") && nm.contains("rsn")) || (nm.count() < 1)) {
-		ret |= TDENetworkWiFiWPAVersionFlags::Any;
+		ret |= NetworkWiFiWPAVersionFlags::Any;
 	}
 	else if (nm.contains("wpa")) {
-		ret |= TDENetworkWiFiWPAVersionFlags::WPA;
+		ret |= NetworkWiFiWPAVersionFlags::WPA;
 	}
 	else if (nm.contains("rsn")) {
-		ret |= TDENetworkWiFiWPAVersionFlags::RSN;
+		ret |= NetworkWiFiWPAVersionFlags::RSN;
 	}
 
 	return ret;
 }
 
-TQStringList tdeWiFiWPAVersionToNMWiFiWPAVersion(TDENetworkWiFiWPAVersionFlags::TDENetworkWiFiWPAVersionFlags type) {
+TQStringList tdeWiFiWPAVersionToNMWiFiWPAVersion(NetworkWiFiWPAVersionFlags::NetworkWiFiWPAVersionFlags type) {
 	TQStringList ret;
 
-	if (type & TDENetworkWiFiWPAVersionFlags::WPA) {
+	if (type & NetworkWiFiWPAVersionFlags::WPA) {
 		ret.append("wpa");
 	}
-	if (type & TDENetworkWiFiWPAVersionFlags::RSN) {
+	if (type & NetworkWiFiWPAVersionFlags::RSN) {
 		ret.append("rsn");
 	}
 
 	return ret;
 }
 
-TDENetworkWiFiConnectionCipher::TDENetworkWiFiConnectionCipher nmWiFiCipherToTDEWiFiCipher(TQString nm) {
-	TDENetworkWiFiConnectionCipher::TDENetworkWiFiConnectionCipher ret = TDENetworkWiFiConnectionCipher::None;
+NetworkWiFiConnectionCipher::NetworkWiFiConnectionCipher nmWiFiCipherToTDEWiFiCipher(TQString nm) {
+	NetworkWiFiConnectionCipher::NetworkWiFiConnectionCipher ret = NetworkWiFiConnectionCipher::None;
 
 	if (nm.lower() == "wep40") {
-		ret = TDENetworkWiFiConnectionCipher::CipherWEP40;
+		ret = NetworkWiFiConnectionCipher::CipherWEP40;
 	}
 	else if (nm.lower() == "wep104") {
-		ret = TDENetworkWiFiConnectionCipher::CipherWEP104;
+		ret = NetworkWiFiConnectionCipher::CipherWEP104;
 	}
 	else if (nm.lower() == "tkip") {
-		ret = TDENetworkWiFiConnectionCipher::CipherTKIP;
+		ret = NetworkWiFiConnectionCipher::CipherTKIP;
 	}
 	else if (nm.lower() == "ccmp") {
-		ret = TDENetworkWiFiConnectionCipher::CipherCCMP;
+		ret = NetworkWiFiConnectionCipher::CipherCCMP;
 	}
 
 	return ret;
 }
 
-TQString tdeWiFiCipherToNMWiFiCipher(TDENetworkWiFiConnectionCipher::TDENetworkWiFiConnectionCipher cipher) {
+TQString tdeWiFiCipherToNMWiFiCipher(NetworkWiFiConnectionCipher::NetworkWiFiConnectionCipher cipher) {
 	TQString ret;
 
-	if (cipher == TDENetworkWiFiConnectionCipher::CipherWEP40) {
+	if (cipher == NetworkWiFiConnectionCipher::CipherWEP40) {
 		ret = "wep40";
 	}
-	else if (cipher == TDENetworkWiFiConnectionCipher::CipherWEP104) {
+	else if (cipher == NetworkWiFiConnectionCipher::CipherWEP104) {
 		ret = "wep104";
 	}
-	else if (cipher == TDENetworkWiFiConnectionCipher::CipherTKIP) {
+	else if (cipher == NetworkWiFiConnectionCipher::CipherTKIP) {
 		ret = "tkip";
 	}
-	else if (cipher == TDENetworkWiFiConnectionCipher::CipherCCMP) {
+	else if (cipher == NetworkWiFiConnectionCipher::CipherCCMP) {
 		ret = "ccmp";
 	}
 
 	return ret;
 }
 
-TDENetworkSlaveDeviceType::TDENetworkSlaveDeviceType nmSlaveTypeToTDESlaveType(TQString nm) {
-	TDENetworkSlaveDeviceType::TDENetworkSlaveDeviceType ret = TDENetworkSlaveDeviceType::None;
+NetworkSlaveDeviceType::NetworkSlaveDeviceType nmSlaveTypeToTDESlaveType(TQString nm) {
+	NetworkSlaveDeviceType::NetworkSlaveDeviceType ret = NetworkSlaveDeviceType::None;
 
 	if (nm.lower() == "bond") {
-		ret = TDENetworkSlaveDeviceType::Bond;
+		ret = NetworkSlaveDeviceType::Bond;
 	}
 
 	return ret;
 }
 
-TQString tdeSlaveTypeToNMSlaveType(TDENetworkSlaveDeviceType::TDENetworkSlaveDeviceType slavetype) {
+TQString tdeSlaveTypeToNMSlaveType(NetworkSlaveDeviceType::NetworkSlaveDeviceType slavetype) {
 	TQString ret;
 
-	if (slavetype == TDENetworkSlaveDeviceType::Bond) {
+	if (slavetype == NetworkSlaveDeviceType::Bond) {
 		ret = "bond";
 	}
 
 	return ret;
 }
 
-TDENetworkPasswordHandlingFlags::TDENetworkPasswordHandlingFlags nmPasswordFlagsToTDEPasswordFlags(unsigned int nm) {
-	TDENetworkPasswordHandlingFlags::TDENetworkPasswordHandlingFlags ret = TDENetworkPasswordHandlingFlags::None;
+NetworkPasswordHandlingFlags::NetworkPasswordHandlingFlags nmPasswordFlagsToTDEPasswordFlags(unsigned int nm) {
+	NetworkPasswordHandlingFlags::NetworkPasswordHandlingFlags ret = NetworkPasswordHandlingFlags::None;
 
 	if (nm & NM_PASSWORD_SECRET_AGENTOWNED) {
-		ret |= TDENetworkPasswordHandlingFlags::ExternalStorage;
+		ret |= NetworkPasswordHandlingFlags::ExternalStorage;
 	}
 	if (nm & NM_PASSWORD_SECRET_NOTSAVED) {
-		ret |= TDENetworkPasswordHandlingFlags::NoSave;
+		ret |= NetworkPasswordHandlingFlags::NoSave;
 	}
 	if (nm & NM_PASSWORD_SECRET_NOTREQUIRED) {
-		ret |= TDENetworkPasswordHandlingFlags::NoPrompt;
+		ret |= NetworkPasswordHandlingFlags::NoPrompt;
 	}
 
 	return ret;
 }
 
-unsigned int tdePasswordFlagsToNMPasswordFlags(TDENetworkPasswordHandlingFlags::TDENetworkPasswordHandlingFlags flags) {
+unsigned int tdePasswordFlagsToNMPasswordFlags(NetworkPasswordHandlingFlags::NetworkPasswordHandlingFlags flags) {
 	unsigned int ret = 0;
 
-	if (flags & TDENetworkPasswordHandlingFlags::ExternalStorage) {
+	if (flags & NetworkPasswordHandlingFlags::ExternalStorage) {
 		ret |= NM_PASSWORD_SECRET_AGENTOWNED;
 	}
-	if (flags & TDENetworkPasswordHandlingFlags::NoSave) {
+	if (flags & NetworkPasswordHandlingFlags::NoSave) {
 		ret |= NM_PASSWORD_SECRET_NOTSAVED;
 	}
-	if (flags & TDENetworkPasswordHandlingFlags::NoPrompt) {
+	if (flags & NetworkPasswordHandlingFlags::NoPrompt) {
 		ret |= NM_PASSWORD_SECRET_NOTREQUIRED;
 	}
 
 	return ret;
 }
 
-TDENetworkVLANFlags::TDENetworkVLANFlags nmVLANFlagsToTDEVLANFlags(unsigned int nm) {
-	TDENetworkVLANFlags::TDENetworkVLANFlags ret = TDENetworkVLANFlags::None;
+NetworkVLANFlags::NetworkVLANFlags nmVLANFlagsToTDEVLANFlags(unsigned int nm) {
+	NetworkVLANFlags::NetworkVLANFlags ret = NetworkVLANFlags::None;
 
 	if (nm & NM_VLAN_REORDER_PACKET_HEADERS) {
-		ret |= TDENetworkVLANFlags::ReorderPacketHeaders;
+		ret |= NetworkVLANFlags::ReorderPacketHeaders;
 	}
 	if (nm & NM_VLAN_USE_GVRP) {
-		ret |= TDENetworkVLANFlags::UseGVRP;
+		ret |= NetworkVLANFlags::UseGVRP;
 	}
 	if (nm & NM_VLAN_LOOSE_BINDING) {
-		ret |= TDENetworkVLANFlags::LooseBinding;
+		ret |= NetworkVLANFlags::LooseBinding;
 	}
 
 	return ret;
 }
 
-unsigned int tdeVLANFlagsToNMVLANFlags(TDENetworkVLANFlags::TDENetworkVLANFlags flags) {
+unsigned int tdeVLANFlagsToNMVLANFlags(NetworkVLANFlags::NetworkVLANFlags flags) {
 	unsigned int ret = 0;
 
-	if (flags & TDENetworkVLANFlags::ReorderPacketHeaders) {
+	if (flags & NetworkVLANFlags::ReorderPacketHeaders) {
 		ret |= NM_VLAN_REORDER_PACKET_HEADERS;
 	}
-	if (flags & TDENetworkVLANFlags::UseGVRP) {
+	if (flags & NetworkVLANFlags::UseGVRP) {
 		ret |= NM_VLAN_USE_GVRP;
 	}
-	if (flags & TDENetworkVLANFlags::LooseBinding) {
+	if (flags & NetworkVLANFlags::LooseBinding) {
 		ret |= NM_VLAN_LOOSE_BINDING;
 	}
 
 	return ret;
 }
 
-TDENetworkParity::TDENetworkParity nmParityToTDEParity(char nm) {
-	TDENetworkParity::TDENetworkParity ret = TDENetworkParity::None;
+NetworkParity::NetworkParity nmParityToTDEParity(char nm) {
+	NetworkParity::NetworkParity ret = NetworkParity::None;
 
 	if (nm == 'E') {
-		ret = TDENetworkParity::Even;
+		ret = NetworkParity::Even;
 	}
 	else if (nm == 'o') {
-		ret = TDENetworkParity::Odd;
+		ret = NetworkParity::Odd;
 	}
 
 	return ret;
 }
 
-char tdeParityToNMParity(TDENetworkParity::TDENetworkParity parity) {
+char tdeParityToNMParity(NetworkParity::NetworkParity parity) {
 	char ret = 'n';
 
-	if (parity == TDENetworkParity::Even) {
+	if (parity == NetworkParity::Even) {
 		ret = 'E';
 	}
-	else if (parity == TDENetworkParity::Odd) {
+	else if (parity == NetworkParity::Odd) {
 		ret = 'o';
 	}
 
 	return ret;
 }
 
-TDENetworkWepKeyType::TDENetworkWepKeyType nmWepKeyTypeToTDEWepKeyType(unsigned int nm, TQString key=TQString::null) {
-	TDENetworkWepKeyType::TDENetworkWepKeyType ret = TDENetworkWepKeyType::Hexadecimal;
+NetworkWepKeyType::NetworkWepKeyType nmWepKeyTypeToTDEWepKeyType(unsigned int nm, TQString key=TQString::null) {
+	NetworkWepKeyType::NetworkWepKeyType ret = NetworkWepKeyType::Hexadecimal;
 
 	if (nm == NM_WEP_TYPE_HEXADECIMAL) {
 		if (key.isNull()) {
-			ret = TDENetworkWepKeyType::Hexadecimal;
+			ret = NetworkWepKeyType::Hexadecimal;
 		}
 		else {
 			if ((key.length() == 10) || (key.length() == 26)) {
-				ret = TDENetworkWepKeyType::Hexadecimal;
+				ret = NetworkWepKeyType::Hexadecimal;
 			}
 			else {
-				ret = TDENetworkWepKeyType::Ascii;
+				ret = NetworkWepKeyType::Ascii;
 			}
 		}
 	}
 	else if (nm == NM_WEP_TYPE_PASSPHRASE) {
-		ret = TDENetworkWepKeyType::Passphrase;
+		ret = NetworkWepKeyType::Passphrase;
 	}
 
 	return ret;
 }
 
-unsigned int tdeWepKeyTypeToNMWepKeyType(TDENetworkWepKeyType::TDENetworkWepKeyType type) {
+unsigned int tdeWepKeyTypeToNMWepKeyType(NetworkWepKeyType::NetworkWepKeyType type) {
 	unsigned int ret = 0;
 
-	if (type == TDENetworkWepKeyType::Hexadecimal) {
+	if (type == NetworkWepKeyType::Hexadecimal) {
 		ret = NM_WEP_TYPE_HEXADECIMAL;
 	}
-	else if (type == TDENetworkWepKeyType::Ascii) {
+	else if (type == NetworkWepKeyType::Ascii) {
 		ret = NM_WEP_TYPE_HEXADECIMAL;
 	}
-	else if (type == TDENetworkWepKeyType::Passphrase) {
+	else if (type == NetworkWepKeyType::Passphrase) {
 		ret = NM_WEP_TYPE_PASSPHRASE;
 	}
 
 	return ret;
 }
 
-TDENetworkDeviceCapabilityFlags::TDENetworkDeviceCapabilityFlags nmCapabilityFlagsToTDECapabilityFlags(unsigned int nm) {
-	TDENetworkDeviceCapabilityFlags::TDENetworkDeviceCapabilityFlags ret = TDENetworkDeviceCapabilityFlags::None;
+NetworkDeviceCapabilityFlags::NetworkDeviceCapabilityFlags nmCapabilityFlagsToTDECapabilityFlags(unsigned int nm) {
+	NetworkDeviceCapabilityFlags::NetworkDeviceCapabilityFlags ret = NetworkDeviceCapabilityFlags::None;
 
 	if (nm & NM_DEVICE_CAP_NM_SUPPORTED) {
-		ret |= TDENetworkDeviceCapabilityFlags::Supported;
+		ret |= NetworkDeviceCapabilityFlags::Supported;
 	}
 	if (nm & NM_DEVICE_CAP_CARRIER_DETECT) {
-		ret |= TDENetworkDeviceCapabilityFlags::CanDetectLink;
+		ret |= NetworkDeviceCapabilityFlags::CanDetectLink;
 	}
 
 	return ret;
 }
 
-unsigned int tdeCapabilityFlagsToNMCapabilityFlags(TDENetworkDeviceCapabilityFlags::TDENetworkDeviceCapabilityFlags flags) {
+unsigned int tdeCapabilityFlagsToNMCapabilityFlags(NetworkDeviceCapabilityFlags::NetworkDeviceCapabilityFlags flags) {
 	unsigned int ret = 0;
 
-	if (flags & TDENetworkDeviceCapabilityFlags::Supported) {
+	if (flags & NetworkDeviceCapabilityFlags::Supported) {
 		ret |= NM_DEVICE_CAP_NM_SUPPORTED;
 	}
-	if (flags & TDENetworkDeviceCapabilityFlags::CanDetectLink) {
+	if (flags & NetworkDeviceCapabilityFlags::CanDetectLink) {
 		ret |= NM_DEVICE_CAP_CARRIER_DETECT;
 	}
 
 	return ret;
 }
 
-TDENetworkWiFiAPFlags::TDENetworkWiFiAPFlags nmAPSecFlagsToTDEAPSecFlags(unsigned int genflags, unsigned int nm) {
-	TDENetworkWiFiAPFlags::TDENetworkWiFiAPFlags ret = TDENetworkWiFiAPFlags::None;
+NetworkWiFiAPFlags::NetworkWiFiAPFlags nmAPSecFlagsToTDEAPSecFlags(unsigned int genflags, unsigned int nm) {
+	NetworkWiFiAPFlags::NetworkWiFiAPFlags ret = NetworkWiFiAPFlags::None;
 
 	if (genflags & NM_ACCESS_POINT_CAP_PRIVACY) {
-		ret |= TDENetworkWiFiAPFlags::PrivacySupport;
+		ret |= NetworkWiFiAPFlags::PrivacySupport;
 	}
 
 	if (nm & NM_ACCESS_POINT_SEC_PAIR_WEP40) {
-		ret |= TDENetworkWiFiAPFlags::PairWEP40;
+		ret |= NetworkWiFiAPFlags::PairWEP40;
 	}
 	if (nm & NM_ACCESS_POINT_SEC_PAIR_WEP104) {
-		ret |= TDENetworkWiFiAPFlags::PairWEP104;
+		ret |= NetworkWiFiAPFlags::PairWEP104;
 	}
 	if (nm & NM_ACCESS_POINT_SEC_PAIR_TKIP) {
-		ret |= TDENetworkWiFiAPFlags::PairTKIP;
+		ret |= NetworkWiFiAPFlags::PairTKIP;
 	}
 	if (nm & NM_ACCESS_POINT_SEC_PAIR_CCMP) {
-		ret |= TDENetworkWiFiAPFlags::PairCCMP;
+		ret |= NetworkWiFiAPFlags::PairCCMP;
 	}
 	if (nm & NM_ACCESS_POINT_SEC_GROUP_WEP40) {
-		ret |= TDENetworkWiFiAPFlags::GroupWEP40;
+		ret |= NetworkWiFiAPFlags::GroupWEP40;
 	}
 	if (nm & NM_ACCESS_POINT_SEC_GROUP_WEP104) {
-		ret |= TDENetworkWiFiAPFlags::GroupWEP104;
+		ret |= NetworkWiFiAPFlags::GroupWEP104;
 	}
 	if (nm & NM_ACCESS_POINT_SEC_GROUP_TKIP) {
-		ret |= TDENetworkWiFiAPFlags::GroupTKIP;
+		ret |= NetworkWiFiAPFlags::GroupTKIP;
 	}
 	if (nm & NM_ACCESS_POINT_SEC_GROUP_CCMP) {
-		ret |= TDENetworkWiFiAPFlags::GroupCCMP;
+		ret |= NetworkWiFiAPFlags::GroupCCMP;
 	}
 	if (nm & NM_ACCESS_POINT_SEC_KEY_MGMT_PSK) {
-		ret |= TDENetworkWiFiAPFlags::KeyManagementPSK;
+		ret |= NetworkWiFiAPFlags::KeyManagementPSK;
 	}
 	if (nm & NM_ACCESS_POINT_SEC_KEY_MGMT_802_1X) {
-		ret |= TDENetworkWiFiAPFlags::KeyManagement80211;
+		ret |= NetworkWiFiAPFlags::KeyManagement80211;
 	}
 
 	return ret;
 }
 
-unsigned int tdeAPSecFlagsToNMAPGenSecFlags(TDENetworkWiFiAPFlags::TDENetworkWiFiAPFlags flags) {
+unsigned int tdeAPSecFlagsToNMAPGenSecFlags(NetworkWiFiAPFlags::NetworkWiFiAPFlags flags) {
 	unsigned int ret = 0;
 
-	if (flags & TDENetworkWiFiAPFlags::PrivacySupport) {
+	if (flags & NetworkWiFiAPFlags::PrivacySupport) {
 		ret |= NM_ACCESS_POINT_CAP_PRIVACY;
 	}
 
 	return ret;
 }
 
-unsigned int tdeAPSecFlagsToNMAPSecFlags(TDENetworkWiFiAPFlags::TDENetworkWiFiAPFlags flags) {
+unsigned int tdeAPSecFlagsToNMAPSecFlags(NetworkWiFiAPFlags::NetworkWiFiAPFlags flags) {
 	unsigned int ret = 0;
 
-	if (flags & TDENetworkWiFiAPFlags::PairWEP40) {
+	if (flags & NetworkWiFiAPFlags::PairWEP40) {
 		ret |= NM_ACCESS_POINT_SEC_PAIR_WEP40;
 	}
-	if (flags & TDENetworkWiFiAPFlags::PairWEP104) {
+	if (flags & NetworkWiFiAPFlags::PairWEP104) {
 		ret |= NM_ACCESS_POINT_SEC_PAIR_WEP104;
 	}
-	if (flags & TDENetworkWiFiAPFlags::PairTKIP) {
+	if (flags & NetworkWiFiAPFlags::PairTKIP) {
 		ret |= NM_ACCESS_POINT_SEC_PAIR_TKIP;
 	}
-	if (flags & TDENetworkWiFiAPFlags::PairCCMP) {
+	if (flags & NetworkWiFiAPFlags::PairCCMP) {
 		ret |= NM_ACCESS_POINT_SEC_PAIR_CCMP;
 	}
-	if (flags & TDENetworkWiFiAPFlags::GroupWEP40) {
+	if (flags & NetworkWiFiAPFlags::GroupWEP40) {
 		ret |= NM_ACCESS_POINT_SEC_GROUP_WEP40;
 	}
-	if (flags & TDENetworkWiFiAPFlags::GroupWEP104) {
+	if (flags & NetworkWiFiAPFlags::GroupWEP104) {
 		ret |= NM_ACCESS_POINT_SEC_GROUP_WEP104;
 	}
-	if (flags & TDENetworkWiFiAPFlags::GroupTKIP) {
+	if (flags & NetworkWiFiAPFlags::GroupTKIP) {
 		ret |= NM_ACCESS_POINT_SEC_GROUP_TKIP;
 	}
-	if (flags & TDENetworkWiFiAPFlags::GroupCCMP) {
+	if (flags & NetworkWiFiAPFlags::GroupCCMP) {
 		ret |= NM_ACCESS_POINT_SEC_GROUP_CCMP;
 	}
-	if (flags & TDENetworkWiFiAPFlags::KeyManagementPSK) {
+	if (flags & NetworkWiFiAPFlags::KeyManagementPSK) {
 		ret |= NM_ACCESS_POINT_SEC_KEY_MGMT_PSK;
 	}
-	if (flags & TDENetworkWiFiAPFlags::KeyManagement80211) {
+	if (flags & NetworkWiFiAPFlags::KeyManagement80211) {
 		ret |= NM_ACCESS_POINT_SEC_KEY_MGMT_802_1X;
 	}
 
 	return ret;
 }
 
-TDENetworkInfinibandTransportMode::TDENetworkInfinibandTransportMode nmIBTransportToTDEIBTransport(TQString nm) {
-	TDENetworkInfinibandTransportMode::TDENetworkInfinibandTransportMode ret = TDENetworkInfinibandTransportMode::Other;
+NetworkInfinibandTransportMode::NetworkInfinibandTransportMode nmIBTransportToTDEIBTransport(TQString nm) {
+	NetworkInfinibandTransportMode::NetworkInfinibandTransportMode ret = NetworkInfinibandTransportMode::Other;
 
 	if (nm.lower() == "datagram") {
-		ret = TDENetworkInfinibandTransportMode::Datagram;
+		ret = NetworkInfinibandTransportMode::Datagram;
 	}
 	else if (nm.lower() == "connected") {
-		ret = TDENetworkInfinibandTransportMode::Connected;
+		ret = NetworkInfinibandTransportMode::Connected;
 	}
 
 	return ret;
 }
 
-TQString tdeIBTransportToNMIBTransport(TDENetworkInfinibandTransportMode::TDENetworkInfinibandTransportMode mode) {
+TQString tdeIBTransportToNMIBTransport(NetworkInfinibandTransportMode::NetworkInfinibandTransportMode mode) {
 	TQString ret;
 
-	if (mode == TDENetworkInfinibandTransportMode::Datagram) {
+	if (mode == NetworkInfinibandTransportMode::Datagram) {
 		ret = "datagram";
 	}
-	else if (mode == TDENetworkInfinibandTransportMode::Connected) {
+	else if (mode == NetworkInfinibandTransportMode::Connected) {
 		ret = "connected";
 	}
 
 	return ret;
 }
 
-TQString TDENetworkConnectionManager_BackendNM::deviceInterfaceString(TQString macAddress) {
+TQString NetworkConnectionManager_BackendNM::deviceInterfaceString(TQString macAddress) {
 	if (d->m_networkManagerProxy) {
 		TQT_DBusObjectPathList devices;
 		TQT_DBusError error;
@@ -1154,13 +1154,13 @@ TQString TDENetworkConnectionManager_BackendNM::deviceInterfaceString(TQString m
 			for (it = devices.begin(); it != devices.end(); ++it) {
 				DBus::DeviceProxy genericDevice(NM_DBUS_SERVICE, (*it));
 				genericDevice.setConnection(TQT_DBusConnection::systemBus());
-				TDENetworkDeviceType::TDENetworkDeviceType deviceType = nmDeviceTypeToTDEDeviceType(genericDevice.getDeviceType(error));
+				NetworkDeviceType::NetworkDeviceType deviceType = nmDeviceTypeToTDEDeviceType(genericDevice.getDeviceType(error));
 				if (error.isValid()) {
 					// Error!
 					PRINT_ERROR((error.name() + ": " + error.message()))
 					break;
 				}
-				else if (deviceType == TDENetworkDeviceType::WiredEthernet) {
+				else if (deviceType == NetworkDeviceType::WiredEthernet) {
 					DBus::EthernetDeviceProxy ethernetDevice(NM_DBUS_SERVICE, (*it));
 					ethernetDevice.setConnection(TQT_DBusConnection::systemBus());
 					TQString candidateMACAddress = ethernetDevice.getPermHwAddress(error);
@@ -1170,7 +1170,7 @@ TQString TDENetworkConnectionManager_BackendNM::deviceInterfaceString(TQString m
 						}
 					}
 				}
-				else if (deviceType == TDENetworkDeviceType::Infiniband) {
+				else if (deviceType == NetworkDeviceType::Infiniband) {
 					DBus::InfinibandDeviceProxy infinibandDevice(NM_DBUS_SERVICE, (*it));
 					infinibandDevice.setConnection(TQT_DBusConnection::systemBus());
 					TQString candidateMACAddress = infinibandDevice.getHwAddress(error);
@@ -1180,7 +1180,7 @@ TQString TDENetworkConnectionManager_BackendNM::deviceInterfaceString(TQString m
 						}
 					}
 				}
-				else if (deviceType == TDENetworkDeviceType::WiFi) {
+				else if (deviceType == NetworkDeviceType::WiFi) {
 					DBus::WiFiDeviceProxy wiFiDevice(NM_DBUS_SERVICE, (*it));
 					wiFiDevice.setConnection(TQT_DBusConnection::systemBus());
 					TQString candidateMACAddress = wiFiDevice.getPermHwAddress(error);
@@ -1190,7 +1190,7 @@ TQString TDENetworkConnectionManager_BackendNM::deviceInterfaceString(TQString m
 						}
 					}
 				}
-				else if (deviceType == TDENetworkDeviceType::WiMax) {
+				else if (deviceType == NetworkDeviceType::WiMax) {
 					DBus::WiMaxDeviceProxy wiMaxDevice(NM_DBUS_SERVICE, (*it));
 					wiMaxDevice.setConnection(TQT_DBusConnection::systemBus());
 					TQString candidateMACAddress = wiMaxDevice.getHwAddress(error);
@@ -1200,7 +1200,7 @@ TQString TDENetworkConnectionManager_BackendNM::deviceInterfaceString(TQString m
 						}
 					}
 				}
-				else if (deviceType == TDENetworkDeviceType::OLPCMesh) {
+				else if (deviceType == NetworkDeviceType::OLPCMesh) {
 					DBus::OlpcMeshDeviceProxy olpcMeshDevice(NM_DBUS_SERVICE, (*it));
 					olpcMeshDevice.setConnection(TQT_DBusConnection::systemBus());
 					TQString candidateMACAddress = olpcMeshDevice.getHwAddress(error);
@@ -1210,7 +1210,7 @@ TQString TDENetworkConnectionManager_BackendNM::deviceInterfaceString(TQString m
 						}
 					}
 				}
-				else if (deviceType == TDENetworkDeviceType::Bluetooth) {
+				else if (deviceType == NetworkDeviceType::Bluetooth) {
 					DBus::BluetoothDeviceProxy bluetoothDevice(NM_DBUS_SERVICE, (*it));
 					bluetoothDevice.setConnection(TQT_DBusConnection::systemBus());
 					TQString candidateMACAddress = bluetoothDevice.getHwAddress(error);
@@ -1302,14 +1302,14 @@ TQString macAddressForGenericDevice(TQT_DBusObjectPath path) {
 }
 
 TQString tdeDeviceUUIDForMACAddress(TQString macAddress) {
-	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
+	HardwareDevices *hwdevices = HardwareDevices::instance();
 	if (!hwdevices) {
 		return TQString::null;
 	}
 
-	TDEGenericHardwareList devices = hwdevices->listByDeviceClass(TDEGenericDeviceType::Network);
+	TDEGenericHardwareList devices = hwdevices->listByDeviceClass(GenericDeviceType::Network);
 	for (TDEGenericHardwareList::iterator it = devices.begin(); it != devices.end(); ++it) {
-		TDENetworkDevice* dev = dynamic_cast<TDENetworkDevice*>(*it);
+		NetworkDevice* dev = dynamic_cast<NetworkDevice*>(*it);
 		if (dev) {
 			if (macAddress.lower() == dev->macAddress().lower()) {
 				return dev->uniqueID();
@@ -1320,15 +1320,15 @@ TQString tdeDeviceUUIDForMACAddress(TQString macAddress) {
 	return TQString::null;
 }
 
-TDENetworkConnectionManager_BackendNM_DBusSignalReceiver::TDENetworkConnectionManager_BackendNM_DBusSignalReceiver(TDENetworkConnectionManager_BackendNMPrivate* parent) : m_parent(parent) {
+NetworkConnectionManager_BackendNM_DBusSignalReceiver::NetworkConnectionManager_BackendNM_DBusSignalReceiver(NetworkConnectionManager_BackendNMPrivate* parent) : m_parent(parent) {
 	//
 }
 
-TDENetworkConnectionManager_BackendNM_DBusSignalReceiver::~TDENetworkConnectionManager_BackendNM_DBusSignalReceiver() {
+NetworkConnectionManager_BackendNM_DBusSignalReceiver::~NetworkConnectionManager_BackendNM_DBusSignalReceiver() {
 	//
 }
 
-void TDENetworkConnectionManager_BackendNM_DBusSignalReceiver::dbusSignal(const TQT_DBusMessage& message) {
+void NetworkConnectionManager_BackendNM_DBusSignalReceiver::dbusSignal(const TQT_DBusMessage& message) {
 	if (message.type() == TQT_DBusMessage::SignalMessage) {
 		TQString interface = message.interface();
 		TQString sender = message.sender();
@@ -1361,8 +1361,8 @@ void TDENetworkConnectionManager_BackendNM_DBusSignalReceiver::dbusSignal(const 
 	}
 }
 
-TDENetworkConnectionManager_BackendNM::TDENetworkConnectionManager_BackendNM(TQString macAddress) : TDENetworkConnectionManager(macAddress) {
-	d = new TDENetworkConnectionManager_BackendNMPrivate(this);
+NetworkConnectionManager_BackendNM::NetworkConnectionManager_BackendNM(TQString macAddress) : NetworkConnectionManager(macAddress) {
+	d = new NetworkConnectionManager_BackendNMPrivate(this);
 
 	// Set up proxy interfaces
 	d->m_networkManagerProxy = new DBus::NetworkManagerProxy(NM_DBUS_SERVICE, NM_DBUS_PATH);
@@ -1376,7 +1376,7 @@ TDENetworkConnectionManager_BackendNM::TDENetworkConnectionManager_BackendNM(TQS
 	if (d->m_dbusDeviceString != "") {
 		d->m_networkDeviceProxy = new DBus::DeviceProxy(NM_DBUS_SERVICE, d->m_dbusDeviceString);
 		d->m_networkDeviceProxy->setConnection(TQT_DBusConnection::systemBus());
-		if (deviceType() == TDENetworkDeviceType::WiFi) {
+		if (deviceType() == NetworkDeviceType::WiFi) {
 			d->m_wiFiDeviceProxy = new DBus::WiFiDeviceProxy(NM_DBUS_SERVICE, d->m_dbusDeviceString);
 			d->m_wiFiDeviceProxy->setConnection(TQT_DBusConnection::systemBus());
 		}
@@ -1403,18 +1403,18 @@ TDENetworkConnectionManager_BackendNM::TDENetworkConnectionManager_BackendNM(TQS
 	}
 
 	// Create public lists
-	m_connectionList = new TDENetworkConnectionList;
-	m_hwNeighborList = new TDENetworkHWNeighborList;
+	m_connectionList = new NetworkConnectionList;
+	m_hwNeighborList = new NetworkHWNeighborList;
 
 	// Run site survey to populate neighbor list with initial data
 	siteSurvey();
 }
 
-TDENetworkConnectionManager_BackendNM::~TDENetworkConnectionManager_BackendNM() {
+NetworkConnectionManager_BackendNM::~NetworkConnectionManager_BackendNM() {
 	// Destroy public lists
-	clearTDENetworkConnectionList();
+	clearNetworkConnectionList();
 	delete m_connectionList;
-	clearTDENetworkHWNeighborList();
+	clearNetworkHWNeighborList();
 	delete m_hwNeighborList;
 
 	// Tear down proxy interfaces
@@ -1425,25 +1425,25 @@ TDENetworkConnectionManager_BackendNM::~TDENetworkConnectionManager_BackendNM() 
 	delete d;
 }
 
-void TDENetworkConnectionManager_BackendNMPrivate::internalProcessGlobalStateChanged(TQ_UINT32 state) {
+void NetworkConnectionManager_BackendNMPrivate::internalProcessGlobalStateChanged(TQ_UINT32 state) {
 	m_parent->internalNetworkConnectionStateChanged(m_parent->backendStatus());
 }
 
-void TDENetworkConnectionManager_BackendNMPrivate::internalProcessVPNStateChanged(TQ_UINT32 state) {
+void NetworkConnectionManager_BackendNMPrivate::internalProcessVPNStateChanged(TQ_UINT32 state) {
 	m_parent->internalNetworkConnectionStateChanged(m_parent->backendStatus());
 }
 
-void TDENetworkConnectionManager_BackendNMPrivate::internalProcessVPNLoginBanner(const TQString& banner) {
-	m_parent->internalVpnEvent(TDENetworkVPNEventType::LoginBanner, banner);
+void NetworkConnectionManager_BackendNMPrivate::internalProcessVPNLoginBanner(const TQString& banner) {
+	m_parent->internalVpnEvent(NetworkVPNEventType::LoginBanner, banner);
 }
 
-void TDENetworkConnectionManager_BackendNMPrivate::internalProcessVPNFailure(TQ_UINT32 reason) {
+void NetworkConnectionManager_BackendNMPrivate::internalProcessVPNFailure(TQ_UINT32 reason) {
 	// FIXME
 	// This should provide a plain-text interpretation of the NetworkManager-specific error code
-	m_parent->internalVpnEvent(TDENetworkVPNEventType::Failure, TQString("VPN connection attempt failed!<br>NetworkManager returned error %1.").arg(reason));
+	m_parent->internalVpnEvent(NetworkVPNEventType::Failure, TQString("VPN connection attempt failed!<br>NetworkManager returned error %1.").arg(reason));
 }
 
-void TDENetworkConnectionManager_BackendNMPrivate::internalProcessDeviceStateChanged(TQ_UINT32 newState, TQ_UINT32 oldState, TQ_UINT32 reason) {
+void NetworkConnectionManager_BackendNMPrivate::internalProcessDeviceStateChanged(TQ_UINT32 newState, TQ_UINT32 oldState, TQ_UINT32 reason) {
 	Q_UNUSED(oldState)
 
 	if (m_prevDeviceState == newState) return;
@@ -1621,14 +1621,14 @@ void TDENetworkConnectionManager_BackendNMPrivate::internalProcessDeviceStateCha
 			// This should provide a plain-text interpretation of the NetworkManager-specific error code
 			errorString = TQString("Connection attempt failed!<br>NetworkManager returned error %1.").arg(reason);
 		}
-		m_parent->internalNetworkDeviceEvent(TDENetworkDeviceEventType::Failure, errorString);
+		m_parent->internalNetworkDeviceEvent(NetworkDeviceEventType::Failure, errorString);
 	}
 
 	m_parent->internalNetworkDeviceStateChanged(nmDeviceStateToTDEDeviceState(newState), m_parent->m_macAddress);
 }
 
-void TDENetworkConnectionManager_BackendNMPrivate::internalProcessWiFiAccessPointAdded(const TQT_DBusObjectPath& dbuspath) {
-	TDENetworkWiFiAPInfo* apInfo = m_parent->getAccessPointDetails(dbuspath);
+void NetworkConnectionManager_BackendNMPrivate::internalProcessWiFiAccessPointAdded(const TQT_DBusObjectPath& dbuspath) {
+	NetworkWiFiAPInfo* apInfo = m_parent->getAccessPointDetails(dbuspath);
 	if (apInfo) {
 		if (!m_accessPointProxyList.contains(dbuspath)) {
 			// Set up monitoring object
@@ -1638,17 +1638,17 @@ void TDENetworkConnectionManager_BackendNMPrivate::internalProcessWiFiAccessPoin
 			m_accessPointProxyList[dbuspath] = (apProxy);
 
 			// Notify client applications
-			m_parent->internalAccessPointStatusChanged(apInfo->BSSID, TDENetworkAPEventType::Discovered);
+			m_parent->internalAccessPointStatusChanged(apInfo->BSSID, NetworkAPEventType::Discovered);
 		}
 		delete apInfo;
 	}
 }
 
-void TDENetworkConnectionManager_BackendNMPrivate::internalProcessWiFiAccessPointRemoved(const TQT_DBusObjectPath& dbuspath) {
-	TDENetworkWiFiAPInfo* apInfo = m_parent->getAccessPointDetails(dbuspath);
+void NetworkConnectionManager_BackendNMPrivate::internalProcessWiFiAccessPointRemoved(const TQT_DBusObjectPath& dbuspath) {
+	NetworkWiFiAPInfo* apInfo = m_parent->getAccessPointDetails(dbuspath);
 	if (apInfo) {
 		// Notify client applications
-		m_parent->internalAccessPointStatusChanged(apInfo->BSSID, TDENetworkAPEventType::Lost);
+		m_parent->internalAccessPointStatusChanged(apInfo->BSSID, NetworkAPEventType::Lost);
 		delete apInfo;
 
 		// Destroy related monitoring object
@@ -1660,36 +1660,36 @@ void TDENetworkConnectionManager_BackendNMPrivate::internalProcessWiFiAccessPoin
 	}
 }
 
-void TDENetworkConnectionManager_BackendNMPrivate::internalProcessWiFiPropertiesChanged(const TQMap<TQString, TQT_DBusVariant>& props) {
+void NetworkConnectionManager_BackendNMPrivate::internalProcessWiFiPropertiesChanged(const TQMap<TQString, TQT_DBusVariant>& props) {
 	if (m_wiFiDeviceProxy) {
 		if (props.contains("ActiveAccessPoint")) {
 			TQT_DBusError error;
-			TDENetworkWiFiAPInfo* apInfo = m_parent->getAccessPointDetails(m_wiFiDeviceProxy->getActiveAccessPoint(error));
+			NetworkWiFiAPInfo* apInfo = m_parent->getAccessPointDetails(m_wiFiDeviceProxy->getActiveAccessPoint(error));
 			if (apInfo) {
-				m_parent->internalAccessPointStatusChanged(apInfo->BSSID, TDENetworkAPEventType::AccessPointChanged);
+				m_parent->internalAccessPointStatusChanged(apInfo->BSSID, NetworkAPEventType::AccessPointChanged);
 			}
 		}
 		else if (props.contains("Bitrate")) {
-			m_parent->internalNetworkDeviceEvent(TDENetworkDeviceEventType::BitRateChanged, TQString::null);
+			m_parent->internalNetworkDeviceEvent(NetworkDeviceEventType::BitRateChanged, TQString::null);
 		}
 	}
 }
 
-void TDENetworkConnectionManager_BackendNMPrivate::internalProcessAPPropertiesChanged(const TQMap<TQString, TQT_DBusVariant>& props) {
+void NetworkConnectionManager_BackendNMPrivate::internalProcessAPPropertiesChanged(const TQMap<TQString, TQT_DBusVariant>& props) {
 	const DBus::AccessPointProxy* apProxy = dynamic_cast<const DBus::AccessPointProxy*>(sender());
 	if (apProxy) {
 		TQT_DBusError error;
-		TDEMACAddress BSSID;
+		MACAddress BSSID;
 		BSSID.fromString(apProxy->getHwAddress(error));
 		if (props.contains("Strength")) {
-			m_parent->internalAccessPointStatusChanged(BSSID, TDENetworkAPEventType::SignalStrengthChanged);
+			m_parent->internalAccessPointStatusChanged(BSSID, NetworkAPEventType::SignalStrengthChanged);
 		}
 	}
 }
 
-TDENetworkDeviceType::TDENetworkDeviceType TDENetworkConnectionManager_BackendNM::deviceType() {
+NetworkDeviceType::NetworkDeviceType NetworkConnectionManager_BackendNM::deviceType() {
 	if (m_macAddress == "") {
-		return TDENetworkDeviceType::BackendOnly;
+		return NetworkDeviceType::BackendOnly;
 	}
 	else {
 		if (d->m_dbusDeviceString != "") {
@@ -1698,11 +1698,11 @@ TDENetworkDeviceType::TDENetworkDeviceType TDENetworkConnectionManager_BackendNM
 			d->m_dbusDeviceString = deviceInterfaceString(m_macAddress);
 			DBus::DeviceProxy genericDevice(NM_DBUS_SERVICE, d->m_dbusDeviceString);
 			genericDevice.setConnection(TQT_DBusConnection::systemBus());
-			TDENetworkDeviceType::TDENetworkDeviceType ret = nmDeviceTypeToTDEDeviceType(genericDevice.getDeviceType(error));
+			NetworkDeviceType::NetworkDeviceType ret = nmDeviceTypeToTDEDeviceType(genericDevice.getDeviceType(error));
 			if (error.isValid()) {
 				// Error!
 				PRINT_ERROR((error.name() + ": " + error.message()))
-				return TDENetworkDeviceType::Other;
+				return NetworkDeviceType::Other;
 			}
 			else {
 				return ret;
@@ -1711,13 +1711,13 @@ TDENetworkDeviceType::TDENetworkDeviceType TDENetworkConnectionManager_BackendNM
 		else {
 			// Error!
 			PRINT_ERROR(TQString("Invalid DBUS device string '%1'").arg(d->m_dbusDeviceString))
-			return TDENetworkDeviceType::Other;
+			return NetworkDeviceType::Other;
 		}
 	}
 }
 
-TDENetworkConnectionType::TDENetworkConnectionType TDENetworkConnectionManager_BackendNM::connectionType(TQString dbusPath) {
-	TDENetworkConnectionType::TDENetworkConnectionType connType = TDENetworkConnectionType::Other;
+NetworkConnectionType::NetworkConnectionType NetworkConnectionManager_BackendNM::connectionType(TQString dbusPath) {
+	NetworkConnectionType::NetworkConnectionType connType = NetworkConnectionType::Other;
 	TQ_UINT32 ret;
 	TQT_DBusError error;
 
@@ -1795,11 +1795,11 @@ TDENetworkConnectionType::TDENetworkConnectionType TDENetworkConnectionManager_B
 	return connType;
 }
 
-TQString TDENetworkConnectionManager_BackendNM::backendName() {
+TQString NetworkConnectionManager_BackendNM::backendName() {
 	return i18n("NetworkManager");
 }
 
-TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags TDENetworkConnectionManager_BackendNM::backendStatus() {
+NetworkGlobalManagerFlags::NetworkGlobalManagerFlags NetworkConnectionManager_BackendNM::backendStatus() {
 	if (d->m_networkManagerProxy) {
 		TQ_UINT32 ret;
 		TQT_DBusError error;
@@ -1807,11 +1807,11 @@ TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags TDENetworkConnectionM
 		if (error.isValid()) {
 			// Error!
 			PRINT_ERROR((error.name() + ": " + error.message()))
-			return TDENetworkGlobalManagerFlags::BackendUnavailable;
+			return NetworkGlobalManagerFlags::BackendUnavailable;
 		}
 		else {
-			TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags globalFlags = nmGlobalStateToTDEGlobalState(ret);
-			TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags vpnFlags = TDENetworkGlobalManagerFlags::Unknown;
+			NetworkGlobalManagerFlags::NetworkGlobalManagerFlags globalFlags = nmGlobalStateToTDEGlobalState(ret);
+			NetworkGlobalManagerFlags::NetworkGlobalManagerFlags vpnFlags = NetworkGlobalManagerFlags::Unknown;
 			if (d->m_vpnProxy) {
 				ret = d->m_vpnProxy->getState(error);
 				if (error.isValid()) {
@@ -1828,7 +1828,7 @@ TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags TDENetworkConnectionM
 					if (print_error) {
 						PRINT_ERROR(TQString("Attempting to access the network-manager VPN service returned: %1").arg(error.name() + ": " + error.message()))
 					}
-					vpnFlags = TDENetworkGlobalManagerFlags::VPNUnknown;
+					vpnFlags = NetworkGlobalManagerFlags::VPNUnknown;
 				}
 				else {
 					vpnFlags = nmVPNStateToTDEGlobalState(ret);
@@ -1838,13 +1838,13 @@ TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags TDENetworkConnectionM
 		}
 	}
 	else {
-		return TDENetworkGlobalManagerFlags::BackendUnavailable;
+		return NetworkGlobalManagerFlags::BackendUnavailable;
 	}
 }
 
-TDENetworkDeviceInformation TDENetworkConnectionManager_BackendNM::deviceInformation() {
+NetworkDeviceInformation NetworkConnectionManager_BackendNM::deviceInformation() {
 	TQT_DBusError error;
-	TDENetworkDeviceInformation ret;
+	NetworkDeviceInformation ret;
 
 	if (d->m_networkDeviceProxy) {
 		ret.statusFlags = nmDeviceStateToTDEDeviceState(d->m_networkDeviceProxy->getState(error));
@@ -1883,13 +1883,13 @@ TDENetworkDeviceInformation TDENetworkConnectionManager_BackendNM::deviceInforma
 		}
 
 		// Populate wiFiInfo
-		if ((deviceType() == TDENetworkDeviceType::WiFi) && (d->m_wiFiDeviceProxy)) {
+		if ((deviceType() == NetworkDeviceType::WiFi) && (d->m_wiFiDeviceProxy)) {
 			ret.wiFiInfo.valid = true;
 			ret.wiFiInfo.hwAddress.fromString(d->m_wiFiDeviceProxy->getHwAddress(error));
 			ret.wiFiInfo.permanentHWAddress.fromString(d->m_wiFiDeviceProxy->getPermHwAddress(error));
-			ret.wiFiInfo.operatingMode = nmWiFiModeToTDEWiFiMode(d->m_wiFiDeviceProxy->getMode(error));
+			ret.wiFiInfo.operatingMode = nmWiFiModeToWiFiMode(d->m_wiFiDeviceProxy->getMode(error));
 			ret.wiFiInfo.bitrate = d->m_wiFiDeviceProxy->getBitrate(error);
-			TDENetworkWiFiAPInfo* apInfo = getAccessPointDetails(d->m_wiFiDeviceProxy->getActiveAccessPoint(error));
+			NetworkWiFiAPInfo* apInfo = getAccessPointDetails(d->m_wiFiDeviceProxy->getActiveAccessPoint(error));
 			if (error.isValid()) {
 				PRINT_ERROR((error.name() + ": " + error.message()))
 
@@ -1898,14 +1898,14 @@ TDENetworkDeviceInformation TDENetworkConnectionManager_BackendNM::deviceInforma
 			}
 			if (apInfo) {
 				ret.wiFiInfo.activeAccessPointBSSID = apInfo->BSSID;
-				TDENetworkWiFiAPInfo* neighborListAPInfo = findAccessPointByBSSID(ret.wiFiInfo.activeAccessPointBSSID);
+				NetworkWiFiAPInfo* neighborListAPInfo = findAccessPointByBSSID(ret.wiFiInfo.activeAccessPointBSSID);
 				if (neighborListAPInfo) {
 					*neighborListAPInfo = *apInfo;
 				}
 				delete apInfo;
 			}
 			else {
-				ret.wiFiInfo.activeAccessPointBSSID = TDEMACAddress();
+				ret.wiFiInfo.activeAccessPointBSSID = MACAddress();
 			}
 			ret.wiFiInfo.wirelessFlags = tdeWiFiFlagsToNMWiFiFlags(d->m_wiFiDeviceProxy->getWirelessCapabilities(error));
 		}
@@ -1930,9 +1930,9 @@ TDENetworkDeviceInformation TDENetworkConnectionManager_BackendNM::deviceInforma
 	return ret;
 }
 
-TDENetworkDeviceInformation TDENetworkConnectionManager_BackendNM::deviceStatus() {
+NetworkDeviceInformation NetworkConnectionManager_BackendNM::deviceStatus() {
 	TQT_DBusError error;
-	TDENetworkDeviceInformation ret;
+	NetworkDeviceInformation ret;
 
 	if (d->m_networkDeviceProxy) {
 		ret.statusFlags = nmDeviceStateToTDEDeviceState(d->m_networkDeviceProxy->getState(error));
@@ -1955,42 +1955,42 @@ TDENetworkDeviceInformation TDENetworkConnectionManager_BackendNM::deviceStatus(
 	return ret;
 }
 
-void TDENetworkConnectionManager_BackendNMPrivate::processConnectionSettingsAsyncReply(int asyncCallId, const TQT_DBusDataMap<TQString>& settings) {
+void NetworkConnectionManager_BackendNMPrivate::processConnectionSettingsAsyncReply(int asyncCallId, const TQT_DBusDataMap<TQString>& settings) {
 	nmConnectionSettingsAsyncCallWaiting[asyncCallId] = false;
 	nmConnectionSettingsAsyncSettingsResponse[asyncCallId] = settings;
 }
 
-void TDENetworkConnectionManager_BackendNMPrivate::processConnectionSettingsUpdateAsyncReply(int asyncCallId) {
+void NetworkConnectionManager_BackendNMPrivate::processConnectionSettingsUpdateAsyncReply(int asyncCallId) {
 	nmConnectionSettingsAsyncCallWaiting[asyncCallId] = false;
 }
 
-void TDENetworkConnectionManager_BackendNMPrivate::processAddConnectionAsyncReply(int asyncCallId, const TQT_DBusObjectPath& path) {
+void NetworkConnectionManager_BackendNMPrivate::processAddConnectionAsyncReply(int asyncCallId, const TQT_DBusObjectPath& path) {
 	nmConnectionSettingsAsyncCallWaiting[asyncCallId] = false;
 	nmAddConnectionAsyncResponse[asyncCallId] = path;
 }
 
-void TDENetworkConnectionManager_BackendNMPrivate::processConnectionSettingsAsyncError(int asyncCallId, const TQT_DBusError error) {
+void NetworkConnectionManager_BackendNMPrivate::processConnectionSettingsAsyncError(int asyncCallId, const TQT_DBusError error) {
 	nmConnectionSettingsAsyncSettingsErrorResponse[asyncCallId] = error;
 }
 
-void TDENetworkConnectionManager_BackendNMPrivate::processConnectionSettingsUpdateAsyncError(int asyncCallId, const TQT_DBusError error) {
+void NetworkConnectionManager_BackendNMPrivate::processConnectionSettingsUpdateAsyncError(int asyncCallId, const TQT_DBusError error) {
 	nmConnectionSettingsUpdateAsyncSettingsErrorResponse[asyncCallId] = error;
 }
 
-void TDENetworkConnectionManager_BackendNMPrivate::processAddConnectionAsyncError(int asyncCallId, const TQT_DBusError error) {
+void NetworkConnectionManager_BackendNMPrivate::processAddConnectionAsyncError(int asyncCallId, const TQT_DBusError error) {
 	nmAddConnectionAsyncErrorResponse[asyncCallId] = error;
 }
 
-void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
+void NetworkConnectionManager_BackendNM::loadConnectionInformation() {
 	if (d->nonReentrantCallActive) return;
 
 	d->nonReentrantCallActive = true;
 
-	TDEMACAddress deviceMACAddress;
+	MACAddress deviceMACAddress;
 	deviceMACAddress.fromString(m_macAddress);
 
 	if (d->m_networkManagerSettings) {
-		clearTDENetworkConnectionList();
+		clearNetworkConnectionList();
 		TQT_DBusObjectPathList connections;
 		TQT_DBusError error;
 		bool ret;
@@ -1999,56 +1999,56 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 		if (ret) {
 			TQT_DBusObjectPathList::iterator it;
 			for (it = connections.begin(); it != connections.end(); ++it) {
-				TDENetworkConnection* connection;
-				TDEWiredEthernetConnection* ethernetConnection = NULL;
-				TDEWiredInfinibandConnection* infinibandConnection = NULL;
-				TDEWiFiConnection* wiFiConnection = NULL;
-				TDEVPNConnection* vpnConnection = NULL;
-				TDEWiMaxConnection* wiMaxConnection = NULL;
-				TDEVLANConnection* vlanConnection = NULL;
-				TDEOLPCMeshConnection* olpcMeshConnection = NULL;
-				TDEBluetoothConnection* bluetoothConnection = NULL;
-				TDEModemConnection* modemConnection = NULL;
-				TDENetworkConnectionType::TDENetworkConnectionType connType = connectionType((*it));
-				if (connType == TDENetworkConnectionType::WiredEthernet) {
-					connection = ethernetConnection = new TDEWiredEthernetConnection;
+				NetworkConnection* connection;
+				WiredEthernetConnection* ethernetConnection = NULL;
+				WiredInfinibandConnection* infinibandConnection = NULL;
+				WiFiConnection* wiFiConnection = NULL;
+				VPNConnection* vpnConnection = NULL;
+				WiMaxConnection* wiMaxConnection = NULL;
+				VLANConnection* vlanConnection = NULL;
+				OLPCMeshConnection* olpcMeshConnection = NULL;
+				BluetoothConnection* bluetoothConnection = NULL;
+				ModemConnection* modemConnection = NULL;
+				NetworkConnectionType::NetworkConnectionType connType = connectionType((*it));
+				if (connType == NetworkConnectionType::WiredEthernet) {
+					connection = ethernetConnection = new WiredEthernetConnection;
 				}
-				else if (connType == TDENetworkConnectionType::Infiniband) {
-					connection = infinibandConnection = new TDEWiredInfinibandConnection;
+				else if (connType == NetworkConnectionType::Infiniband) {
+					connection = infinibandConnection = new WiredInfinibandConnection;
 				}
-				else if (connType == TDENetworkConnectionType::WiFi) {
-					connection = wiFiConnection = new TDEWiFiConnection;
+				else if (connType == NetworkConnectionType::WiFi) {
+					connection = wiFiConnection = new WiFiConnection;
 				}
-				else if (connType == TDENetworkConnectionType::VPN) {
-					connection = vpnConnection = new TDEVPNConnection;
+				else if (connType == NetworkConnectionType::VPN) {
+					connection = vpnConnection = new VPNConnection;
 				}
-				else if (connType == TDENetworkConnectionType::WiMax) {
-					connection = wiMaxConnection = new TDEWiMaxConnection;
+				else if (connType == NetworkConnectionType::WiMax) {
+					connection = wiMaxConnection = new WiMaxConnection;
 				}
-				else if (connType == TDENetworkConnectionType::VLAN) {
-					connection = vlanConnection = new TDEVLANConnection;
+				else if (connType == NetworkConnectionType::VLAN) {
+					connection = vlanConnection = new VLANConnection;
 				}
-				else if (connType == TDENetworkConnectionType::OLPCMesh) {
-					connection = olpcMeshConnection = new TDEOLPCMeshConnection;
+				else if (connType == NetworkConnectionType::OLPCMesh) {
+					connection = olpcMeshConnection = new OLPCMeshConnection;
 				}
-				else if (connType == TDENetworkConnectionType::Bluetooth) {
-					connection = bluetoothConnection = new TDEBluetoothConnection;
+				else if (connType == NetworkConnectionType::Bluetooth) {
+					connection = bluetoothConnection = new BluetoothConnection;
 				}
-				else if (connType == TDENetworkConnectionType::Modem) {
-					connection = modemConnection = new TDEModemConnection;
+				else if (connType == NetworkConnectionType::Modem) {
+					connection = modemConnection = new ModemConnection;
 				}
 				else {
-					connection = new TDENetworkConnection;
+					connection = new NetworkConnection;
 				}
 				// Set up defaults
-				connection->ipConfig.connectionFlags =	TDENetworkIPConfigurationFlags::IPV4DHCPIP			| \
-									TDENetworkIPConfigurationFlags::IPV4DHCPDNS			| \
-									TDENetworkIPConfigurationFlags::IPV4DHCPRoutes			| \
-									TDENetworkIPConfigurationFlags::IPV4MayUseAsDefaultRoute	| \
-									TDENetworkIPConfigurationFlags::IPV6DHCPIP			| \
-									TDENetworkIPConfigurationFlags::IPV6DHCPDNS			| \
-									TDENetworkIPConfigurationFlags::IPV6DHCPRoutes			| \
-									TDENetworkIPConfigurationFlags::IPV6MayUseAsDefaultRoute;
+				connection->ipConfig.connectionFlags =	NetworkIPConfigurationFlags::IPV4DHCPIP			| \
+									NetworkIPConfigurationFlags::IPV4DHCPDNS			| \
+									NetworkIPConfigurationFlags::IPV4DHCPRoutes			| \
+									NetworkIPConfigurationFlags::IPV4MayUseAsDefaultRoute	| \
+									NetworkIPConfigurationFlags::IPV6DHCPIP			| \
+									NetworkIPConfigurationFlags::IPV6DHCPDNS			| \
+									NetworkIPConfigurationFlags::IPV6DHCPRoutes			| \
+									NetworkIPConfigurationFlags::IPV6MayUseAsDefaultRoute;
 				// Set up NM-specific defaults
 				// Keep in sync with latest NM default settings!
 				// NM 0.9 setting descriptions and default values are available at:
@@ -2056,7 +2056,7 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 				connection->autoConnect = true;
 
 				if (wiFiConnection) {
-					wiFiConnection->securitySettings.authType = TDENetworkWiFiAuthType::Open;
+					wiFiConnection->securitySettings.authType = NetworkWiFiAuthType::Open;
 				}
 
 #ifdef DEBUG_NETWORK_MANAGER_COMMUNICATIONS
@@ -2407,10 +2407,10 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 											connection->mtu = dataValue2.toUInt32();
 										}
 										else if (keyValue.lower() == "mode") {
-											wiFiConnection->operatingMode = nmWiFiModeToTDEWiFiMode(dataValue2.toString());
+											wiFiConnection->operatingMode = nmWiFiModeToWiFiMode(dataValue2.toString());
 										}
 										else if (keyValue.lower() == "band") {
-											wiFiConnection->bandRestriction = nmWiFiFrequencyBandToTDEWiFiFrequencyBand(dataValue2.toString());
+											wiFiConnection->bandRestriction = nmWiFiFrequencyBandToWiFiFrequencyBand(dataValue2.toString());
 										}
 										else if (keyValue.lower() == "channel") {
 											wiFiConnection->channelRestriction = dataValue2.toUInt32();
@@ -2439,7 +2439,7 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 											TQT_DBusDataValueList::const_iterator it4;
 											for (it4 = valueList.begin(); it4 != valueList.end(); ++it4) {
 												TQT_DBusData innerDataValue = *it4;
-												TDEMACAddress hwAddress;
+												MACAddress hwAddress;
 												hwAddress.fromString(innerDataValue.toString());
 												wiFiConnection->blacklistedBSSIDs.append(hwAddress);
 											}
@@ -2449,7 +2449,7 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 											TQT_DBusDataValueList::const_iterator it4;
 											for (it4 = valueList.begin(); it4 != valueList.end(); ++it4) {
 												TQT_DBusData innerDataValue = *it4;
-												TDEMACAddress hwAddress;
+												MACAddress hwAddress;
 												hwAddress.fromString(innerDataValue.toString());
 												wiFiConnection->heardBSSIDs.append(hwAddress);
 											}
@@ -2495,11 +2495,11 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 												TQT_DBusData innerDataValue = *it4;
 												wiFiConnection->securitySettings.allowedPairWiseCiphers.append(nmWiFiCipherToTDEWiFiCipher(innerDataValue.toString()));
 											}
-											if ((wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherWEP40))
-												|| (wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherWEP104))
-												|| (wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherTKIP))
-												|| (wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherCCMP))) {
-												wiFiConnection->securitySettings.allowedPairWiseCiphers.append(TDENetworkWiFiConnectionCipher::Any);
+											if ((wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(NetworkWiFiConnectionCipher::CipherWEP40))
+												|| (wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(NetworkWiFiConnectionCipher::CipherWEP104))
+												|| (wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(NetworkWiFiConnectionCipher::CipherTKIP))
+												|| (wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(NetworkWiFiConnectionCipher::CipherCCMP))) {
+												wiFiConnection->securitySettings.allowedPairWiseCiphers.append(NetworkWiFiConnectionCipher::Any);
 											}
 										}
 										else if (keyValue.lower() == "group") {
@@ -2510,11 +2510,11 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 												TQT_DBusData innerDataValue = *it4;
 												wiFiConnection->securitySettings.allowedGroupWiseCiphers.append(nmWiFiCipherToTDEWiFiCipher(innerDataValue.toString()));
 											}
-											if ((wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherWEP40))
-												|| (wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherWEP104))
-												|| (wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherTKIP))
-												|| (wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherCCMP))) {
-												wiFiConnection->securitySettings.allowedGroupWiseCiphers.append(TDENetworkWiFiConnectionCipher::Any);
+											if ((wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(NetworkWiFiConnectionCipher::CipherWEP40))
+												|| (wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(NetworkWiFiConnectionCipher::CipherWEP104))
+												|| (wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(NetworkWiFiConnectionCipher::CipherTKIP))
+												|| (wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(NetworkWiFiConnectionCipher::CipherCCMP))) {
+												wiFiConnection->securitySettings.allowedGroupWiseCiphers.append(NetworkWiFiConnectionCipher::Any);
 											}
 										}
 										else if (keyValue.lower() == "leap-username") {
@@ -2626,52 +2626,52 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 											connection->pppConfig.requireServerAuthentication = !(dataValue2.toBool());
 										}
 										else if (keyValue.lower() == "refuse-eap") {
-											if (dataValue2.toBool())	connection->pppConfig.flags |=  TDENetworkPPPFlags::DisableEAP;
-											else				connection->pppConfig.flags &= ~TDENetworkPPPFlags::DisableEAP;
+											if (dataValue2.toBool())	connection->pppConfig.flags |=  NetworkPPPFlags::DisableEAP;
+											else				connection->pppConfig.flags &= ~NetworkPPPFlags::DisableEAP;
 										}
 										else if (keyValue.lower() == "refuse-pap") {
-											if (dataValue2.toBool())	connection->pppConfig.flags |=  TDENetworkPPPFlags::DisablePAP;
-											else				connection->pppConfig.flags &= ~TDENetworkPPPFlags::DisablePAP;
+											if (dataValue2.toBool())	connection->pppConfig.flags |=  NetworkPPPFlags::DisablePAP;
+											else				connection->pppConfig.flags &= ~NetworkPPPFlags::DisablePAP;
 										}
 										else if (keyValue.lower() == "refuse-chap") {
-											if (dataValue2.toBool())	connection->pppConfig.flags |=  TDENetworkPPPFlags::DisableCHAP;
-											else				connection->pppConfig.flags &= ~TDENetworkPPPFlags::DisableCHAP;
+											if (dataValue2.toBool())	connection->pppConfig.flags |=  NetworkPPPFlags::DisableCHAP;
+											else				connection->pppConfig.flags &= ~NetworkPPPFlags::DisableCHAP;
 										}
 										else if (keyValue.lower() == "refuse-mschap") {
-											if (dataValue2.toBool())	connection->pppConfig.flags |=  TDENetworkPPPFlags::DisableMSCHAP;
-											else				connection->pppConfig.flags &= ~TDENetworkPPPFlags::DisableMSCHAP;
+											if (dataValue2.toBool())	connection->pppConfig.flags |=  NetworkPPPFlags::DisableMSCHAP;
+											else				connection->pppConfig.flags &= ~NetworkPPPFlags::DisableMSCHAP;
 										}
 										else if (keyValue.lower() == "refuse-mschapv2") {
-											if (dataValue2.toBool())	connection->pppConfig.flags |=  TDENetworkPPPFlags::DisableMSCHAPv2;
-											else				connection->pppConfig.flags &= ~TDENetworkPPPFlags::DisableMSCHAPv2;
+											if (dataValue2.toBool())	connection->pppConfig.flags |=  NetworkPPPFlags::DisableMSCHAPv2;
+											else				connection->pppConfig.flags &= ~NetworkPPPFlags::DisableMSCHAPv2;
 										}
 										else if (keyValue.lower() == "nobsdcomp") {
-											if (dataValue2.toBool())	connection->pppConfig.flags &= ~TDENetworkPPPFlags::AllowBSDCompression;
-											else				connection->pppConfig.flags |=  TDENetworkPPPFlags::AllowBSDCompression;
+											if (dataValue2.toBool())	connection->pppConfig.flags &= ~NetworkPPPFlags::AllowBSDCompression;
+											else				connection->pppConfig.flags |=  NetworkPPPFlags::AllowBSDCompression;
 										}
 										else if (keyValue.lower() == "nodeflate") {
-											if (dataValue2.toBool())	connection->pppConfig.flags &= ~TDENetworkPPPFlags::AllowDeflateCompression;
-											else				connection->pppConfig.flags |=  TDENetworkPPPFlags::AllowDeflateCompression;
+											if (dataValue2.toBool())	connection->pppConfig.flags &= ~NetworkPPPFlags::AllowDeflateCompression;
+											else				connection->pppConfig.flags |=  NetworkPPPFlags::AllowDeflateCompression;
 										}
 										else if (keyValue.lower() == "no-vj-comp") {
-											if (dataValue2.toBool())	connection->pppConfig.flags &= ~TDENetworkPPPFlags::AllowVJCompression;
-											else				connection->pppConfig.flags |=  TDENetworkPPPFlags::AllowVJCompression;
+											if (dataValue2.toBool())	connection->pppConfig.flags &= ~NetworkPPPFlags::AllowVJCompression;
+											else				connection->pppConfig.flags |=  NetworkPPPFlags::AllowVJCompression;
 										}
 										else if (keyValue.lower() == "require-mppe") {
-											if (dataValue2.toBool())	connection->pppConfig.flags |=  TDENetworkPPPFlags::RequireMPPE;
-											else				connection->pppConfig.flags &= ~TDENetworkPPPFlags::RequireMPPE;
+											if (dataValue2.toBool())	connection->pppConfig.flags |=  NetworkPPPFlags::RequireMPPE;
+											else				connection->pppConfig.flags &= ~NetworkPPPFlags::RequireMPPE;
 										}
 										else if (keyValue.lower() == "require-mppe-128") {
-											if (dataValue2.toBool())	connection->pppConfig.flags |=  TDENetworkPPPFlags::RequireMPPE128;
-											else				connection->pppConfig.flags &= ~TDENetworkPPPFlags::RequireMPPE128;
+											if (dataValue2.toBool())	connection->pppConfig.flags |=  NetworkPPPFlags::RequireMPPE128;
+											else				connection->pppConfig.flags &= ~NetworkPPPFlags::RequireMPPE128;
 										}
 										else if (keyValue.lower() == "mppe-stateful") {
-											if (dataValue2.toBool())	connection->pppConfig.flags |=  TDENetworkPPPFlags::StatefulMPPE;
-											else				connection->pppConfig.flags &= ~TDENetworkPPPFlags::StatefulMPPE;
+											if (dataValue2.toBool())	connection->pppConfig.flags |=  NetworkPPPFlags::StatefulMPPE;
+											else				connection->pppConfig.flags &= ~NetworkPPPFlags::StatefulMPPE;
 										}
 										else if (keyValue.lower() == "crtscts") {
-											if (dataValue2.toBool())	connection->pppConfig.flags |=  TDENetworkPPPFlags::UseHardwareFlowControl;
-											else				connection->pppConfig.flags &= ~TDENetworkPPPFlags::UseHardwareFlowControl;
+											if (dataValue2.toBool())	connection->pppConfig.flags |=  NetworkPPPFlags::UseHardwareFlowControl;
+											else				connection->pppConfig.flags &= ~NetworkPPPFlags::UseHardwareFlowControl;
 										}
 										else if (keyValue.lower() == "baud") {
 											connection->pppConfig.baudRate = dataValue2.toUInt32();
@@ -2754,7 +2754,7 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 										else if (keyValue.lower() == "password-flags") {
 											modemConnection->cdmaConfig.passwordFlags = nmPasswordFlagsToTDEPasswordFlags(dataValue2.toUInt32());
 										}
-										modemConnection->type = TDEModemConnectionType::CDMA;
+										modemConnection->type = ModemConnectionType::CDMA;
 										modemConnection->cdmaConfig.valid = true;
 									}
 									else if ((outerKeyValue.lower() == "gsm") && (modemConnection)) {
@@ -2785,7 +2785,7 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 										else if (keyValue.lower() == "home-only") {
 											modemConnection->gsmConfig.allowRoaming = !dataValue2.toBool();
 										}
-										modemConnection->type = TDEModemConnectionType::GSM;
+										modemConnection->type = ModemConnectionType::GSM;
 										modemConnection->gsmConfig.valid = true;
 									}
 									else if (outerKeyValue.lower() == "ipv4") {
@@ -2797,7 +2797,7 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 												TQT_DBusDataValueList innerValueList = innerDataValue.toTQValueList();
 												TQT_DBusDataValueList::const_iterator it5;
 												state = 0;
-												TDENetworkSingleIPConfiguration ipConfig;
+												NetworkSingleIPConfiguration ipConfig;
 												for (it5 = innerValueList.begin(); it5 != innerValueList.end(); ++it5) {
 													TQT_DBusData innerMostDataValue = *it5;
 													if (state == 0) {
@@ -2834,16 +2834,16 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 											TQT_DBusDataValueList::const_iterator it4;
 											for (it4 = valueList.begin(); it4 != valueList.end(); ++it4) {
 												TQT_DBusData innerDataValue = *it4;
-												connection->ipConfig.searchDomains.append(TDENetworkSearchDomain(innerDataValue.toString(), false));
+												connection->ipConfig.searchDomains.append(NetworkSearchDomain(innerDataValue.toString(), false));
 											}
 										}
 										else if (keyValue.lower() == "ignore-auto-dns") {
 											bool nm_static_dns = dataValue2.toBool();
 											if (nm_static_dns) {
-												connection->ipConfig.connectionFlags &= ~TDENetworkIPConfigurationFlags::IPV4DHCPDNS;
+												connection->ipConfig.connectionFlags &= ~NetworkIPConfigurationFlags::IPV4DHCPDNS;
 											}
 											else {
-												connection->ipConfig.connectionFlags |= TDENetworkIPConfigurationFlags::IPV4DHCPDNS;
+												connection->ipConfig.connectionFlags |= NetworkIPConfigurationFlags::IPV4DHCPDNS;
 											}
 										}
 										else if (keyValue.lower() == "may-fail") {
@@ -2853,37 +2853,37 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 										else if (keyValue.lower() == "method") {
 											TQString nm_method = dataValue2.toString().lower();
 											if (nm_method == "auto") {
-												connection->ipConfig.connectionFlags |= TDENetworkIPConfigurationFlags::IPV4DHCPIP;
+												connection->ipConfig.connectionFlags |= NetworkIPConfigurationFlags::IPV4DHCPIP;
 											}
 											else if (nm_method == "manual") {
-												connection->ipConfig.connectionFlags &= ~TDENetworkIPConfigurationFlags::IPV4DHCPIP;
+												connection->ipConfig.connectionFlags &= ~NetworkIPConfigurationFlags::IPV4DHCPIP;
 											}
 											else if (nm_method == "link-local") {
-												connection->ipConfig.connectionFlags &= ~TDENetworkIPConfigurationFlags::IPV4LocalOnly;
+												connection->ipConfig.connectionFlags &= ~NetworkIPConfigurationFlags::IPV4LocalOnly;
 											}
 											else if (nm_method == "shared") {
-												connection->ipConfig.connectionFlags &= ~TDENetworkIPConfigurationFlags::IPV4StartConnectionSharingServer;
+												connection->ipConfig.connectionFlags &= ~NetworkIPConfigurationFlags::IPV4StartConnectionSharingServer;
 											}
 											else if (nm_method == "disabled") {
-												connection->ipConfig.connectionFlags &= ~TDENetworkIPConfigurationFlags::IPV4Disabled;
+												connection->ipConfig.connectionFlags &= ~NetworkIPConfigurationFlags::IPV4Disabled;
 											}
 										}
 										else if (keyValue.lower() == "ignore-auto-routes") {
 											bool nm_static_routes = dataValue2.toBool();
 											if (nm_static_routes) {
-												connection->ipConfig.connectionFlags &= ~TDENetworkIPConfigurationFlags::IPV4DHCPRoutes;
+												connection->ipConfig.connectionFlags &= ~NetworkIPConfigurationFlags::IPV4DHCPRoutes;
 											}
 											else {
-												connection->ipConfig.connectionFlags |= TDENetworkIPConfigurationFlags::IPV4DHCPRoutes;
+												connection->ipConfig.connectionFlags |= NetworkIPConfigurationFlags::IPV4DHCPRoutes;
 											}
 										}
 										else if (keyValue.lower() == "never-default") {
 											bool nm_can_default_route = !dataValue2.toBool();
 											if (nm_can_default_route) {
-												connection->ipConfig.connectionFlags |= TDENetworkIPConfigurationFlags::IPV4MayUseAsDefaultRoute;
+												connection->ipConfig.connectionFlags |= NetworkIPConfigurationFlags::IPV4MayUseAsDefaultRoute;
 											}
 											else {
-												connection->ipConfig.connectionFlags &= ~TDENetworkIPConfigurationFlags::IPV4MayUseAsDefaultRoute;
+												connection->ipConfig.connectionFlags &= ~NetworkIPConfigurationFlags::IPV4MayUseAsDefaultRoute;
 											}
 										}
 										else if (keyValue.lower() == "routes") {
@@ -2894,7 +2894,7 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 												TQT_DBusDataValueList innerValueList = innerDataValue.toTQValueList();
 												TQT_DBusDataValueList::const_iterator it5;
 												state = 0;
-												TDENetworkSingleRouteConfiguration routeConfig;
+												NetworkSingleRouteConfiguration routeConfig;
 												for (it5 = innerValueList.begin(); it5 != innerValueList.end(); ++it5) {
 													TQT_DBusData innerMostDataValue = *it5;
 													if (state == 0) {
@@ -2929,7 +2929,7 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 												TQT_DBusData innerDataValue = *it4;
 												TQT_DBusDataValueList innerValueList = innerDataValue.toStruct();
 												TQT_DBusDataValueList::const_iterator it5;
-												TDENetworkSingleIPConfiguration ipConfig;
+												NetworkSingleIPConfiguration ipConfig;
 												// Address
 												TQT_DBusDataValueList innerMostValueList;
 												innerMostValueList = innerValueList[0].toTQValueList();
@@ -2990,16 +2990,16 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 												TQT_DBusData innerDataValue = *it4;
 												TQT_DBusDataValueList innerValueList = innerDataValue.toTQValueList();
 												TQT_DBusDataValueList::const_iterator it5;
-												connection->ipConfig.searchDomains.append(TDENetworkSearchDomain(innerDataValue.toString(), true));
+												connection->ipConfig.searchDomains.append(NetworkSearchDomain(innerDataValue.toString(), true));
 											}
 										}
 										else if (keyValue.lower() == "ignore-auto-dns") {
 											bool nm_static_dns = dataValue2.toBool();
 											if (nm_static_dns) {
-												connection->ipConfig.connectionFlags &= ~TDENetworkIPConfigurationFlags::IPV4DHCPDNS;
+												connection->ipConfig.connectionFlags &= ~NetworkIPConfigurationFlags::IPV4DHCPDNS;
 											}
 											else {
-												connection->ipConfig.connectionFlags |= TDENetworkIPConfigurationFlags::IPV4DHCPDNS;
+												connection->ipConfig.connectionFlags |= NetworkIPConfigurationFlags::IPV4DHCPDNS;
 											}
 										}
 										else if (keyValue.lower() == "may-fail") {
@@ -3009,37 +3009,37 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 										else if (keyValue.lower() == "method") {
 											TQString nm_method = dataValue2.toString().lower();
 											if (nm_method == "auto") {
-												connection->ipConfig.connectionFlags |= TDENetworkIPConfigurationFlags::IPV6DHCPIP;
+												connection->ipConfig.connectionFlags |= NetworkIPConfigurationFlags::IPV6DHCPIP;
 											}
 											else if (nm_method == "manual") {
-												connection->ipConfig.connectionFlags &= ~TDENetworkIPConfigurationFlags::IPV6DHCPIP;
+												connection->ipConfig.connectionFlags &= ~NetworkIPConfigurationFlags::IPV6DHCPIP;
 											}
 											else if (nm_method == "link-local") {
-												connection->ipConfig.connectionFlags &= ~TDENetworkIPConfigurationFlags::IPV6LocalOnly;
+												connection->ipConfig.connectionFlags &= ~NetworkIPConfigurationFlags::IPV6LocalOnly;
 											}
 											else if (nm_method == "shared") {
-												connection->ipConfig.connectionFlags &= ~TDENetworkIPConfigurationFlags::IPV6StartConnectionSharingServer;
+												connection->ipConfig.connectionFlags &= ~NetworkIPConfigurationFlags::IPV6StartConnectionSharingServer;
 											}
 											else if (nm_method == "ignore") {
-												connection->ipConfig.connectionFlags &= ~TDENetworkIPConfigurationFlags::IPV6Disabled;
+												connection->ipConfig.connectionFlags &= ~NetworkIPConfigurationFlags::IPV6Disabled;
 											}
 										}
 										else if (keyValue.lower() == "ignore-auto-routes") {
 											bool nm_static_routes = dataValue2.toBool();
 											if (nm_static_routes) {
-												connection->ipConfig.connectionFlags &= ~TDENetworkIPConfigurationFlags::IPV6DHCPRoutes;
+												connection->ipConfig.connectionFlags &= ~NetworkIPConfigurationFlags::IPV6DHCPRoutes;
 											}
 											else {
-												connection->ipConfig.connectionFlags |= TDENetworkIPConfigurationFlags::IPV6DHCPRoutes;
+												connection->ipConfig.connectionFlags |= NetworkIPConfigurationFlags::IPV6DHCPRoutes;
 											}
 										}
 										else if (keyValue.lower() == "never-default") {
 											bool nm_can_default_route = !dataValue2.toBool();
 											if (nm_can_default_route) {
-												connection->ipConfig.connectionFlags |= TDENetworkIPConfigurationFlags::IPV6MayUseAsDefaultRoute;
+												connection->ipConfig.connectionFlags |= NetworkIPConfigurationFlags::IPV6MayUseAsDefaultRoute;
 											}
 											else {
-												connection->ipConfig.connectionFlags &= ~TDENetworkIPConfigurationFlags::IPV6MayUseAsDefaultRoute;
+												connection->ipConfig.connectionFlags &= ~NetworkIPConfigurationFlags::IPV6MayUseAsDefaultRoute;
 											}
 										}
 										else if (keyValue.lower() == "routes") {
@@ -3049,7 +3049,7 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 												TQT_DBusData innerDataValue = *it4;
 												TQT_DBusDataValueList innerValueList = innerDataValue.toStruct();
 												TQT_DBusDataValueList::const_iterator it5;
-												TDENetworkSingleRouteConfiguration routeConfig;
+												NetworkSingleRouteConfiguration routeConfig;
 												// Address
 												TQT_DBusDataValueList innerMostValueList;
 												innerMostValueList = innerValueList[0].toTQValueList();
@@ -3118,30 +3118,30 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionInformation() {
 			// Error!
 			PRINT_ERROR((error.name() + ": " + error.message()))
 		}
-		internalNetworkManagementEvent(TDENetworkGlobalEventType::ConnectionListChanged);
+		internalNetworkManagementEvent(NetworkGlobalEventType::ConnectionListChanged);
 	}
 
 	d->nonReentrantCallActive = false;
 }
 
-void TDENetworkConnectionManager_BackendNM::loadConnectionAllowedValues(TDENetworkConnection* connection) {
+void NetworkConnectionManager_BackendNM::loadConnectionAllowedValues(NetworkConnection* connection) {
 	if (connection) {
 		// Insert all allowed EAP phase 2 methods
 		connection->eapConfig.allowedPhase2NonEAPMethods.clear();
-		connection->eapConfig.allowedPhase2NonEAPMethods.append(TDENetworkIEEE8021xType::MD5);
-		connection->eapConfig.allowedPhase2NonEAPMethods.append(TDENetworkIEEE8021xType::MSCHAPV2);
-		connection->eapConfig.allowedPhase2NonEAPMethods.append(TDENetworkIEEE8021xType::OTP);
-		connection->eapConfig.allowedPhase2NonEAPMethods.append(TDENetworkIEEE8021xType::GTC);
-		connection->eapConfig.allowedPhase2NonEAPMethods.append(TDENetworkIEEE8021xType::TLS);
+		connection->eapConfig.allowedPhase2NonEAPMethods.append(NetworkIEEE8021xType::MD5);
+		connection->eapConfig.allowedPhase2NonEAPMethods.append(NetworkIEEE8021xType::MSCHAPV2);
+		connection->eapConfig.allowedPhase2NonEAPMethods.append(NetworkIEEE8021xType::OTP);
+		connection->eapConfig.allowedPhase2NonEAPMethods.append(NetworkIEEE8021xType::GTC);
+		connection->eapConfig.allowedPhase2NonEAPMethods.append(NetworkIEEE8021xType::TLS);
 
 		connection->eapConfig.allowedPhase2EAPMethods.clear();
-		connection->eapConfig.allowedPhase2EAPMethods.append(TDENetworkIEEE8021xType::PAP);
-		connection->eapConfig.allowedPhase2EAPMethods.append(TDENetworkIEEE8021xType::CHAP);
-		connection->eapConfig.allowedPhase2EAPMethods.append(TDENetworkIEEE8021xType::MSCHAP);
-		connection->eapConfig.allowedPhase2EAPMethods.append(TDENetworkIEEE8021xType::MSCHAPV2);
-		connection->eapConfig.allowedPhase2EAPMethods.append(TDENetworkIEEE8021xType::OTP);
-		connection->eapConfig.allowedPhase2EAPMethods.append(TDENetworkIEEE8021xType::GTC);
-		connection->eapConfig.allowedPhase2EAPMethods.append(TDENetworkIEEE8021xType::TLS);
+		connection->eapConfig.allowedPhase2EAPMethods.append(NetworkIEEE8021xType::PAP);
+		connection->eapConfig.allowedPhase2EAPMethods.append(NetworkIEEE8021xType::CHAP);
+		connection->eapConfig.allowedPhase2EAPMethods.append(NetworkIEEE8021xType::MSCHAP);
+		connection->eapConfig.allowedPhase2EAPMethods.append(NetworkIEEE8021xType::MSCHAPV2);
+		connection->eapConfig.allowedPhase2EAPMethods.append(NetworkIEEE8021xType::OTP);
+		connection->eapConfig.allowedPhase2EAPMethods.append(NetworkIEEE8021xType::GTC);
+		connection->eapConfig.allowedPhase2EAPMethods.append(NetworkIEEE8021xType::TLS);
 
 		connection->eapConfig.allowedValid = true;
 	}
@@ -3150,21 +3150,21 @@ void TDENetworkConnectionManager_BackendNM::loadConnectionAllowedValues(TDENetwo
 // NOTE
 // While this separate separate routine is needed to get the secrets, note that secrets must
 // be saved using the same connection map save routine that all other settings use above.
-bool TDENetworkConnectionManager_BackendNM::loadConnectionSecrets(TQString uuid) {
-	TDENetworkConnection* connection = findConnectionByUUID(uuid);
+bool NetworkConnectionManager_BackendNM::loadConnectionSecrets(TQString uuid) {
+	NetworkConnection* connection = findConnectionByUUID(uuid);
 	if (!connection) {
 		PRINT_ERROR(TQString("Unable to locate connection with uuid '%1' in local database.  Did you run loadConnectionInformation() first?"));
 		return FALSE;
 	}
-	//TDEWiredEthernetConnection* ethernetConnection = dynamic_cast<TDEWiredEthernetConnection*>(connection);
-	//TDEWiredInfinibandConnection* infinibandConnection = dynamic_cast<TDEWiredInfinibandConnection*>(connection);
-	TDEWiFiConnection* wiFiConnection = dynamic_cast<TDEWiFiConnection*>(connection);
-	TDEVPNConnection* vpnConnection = dynamic_cast<TDEVPNConnection*>(connection);
-	//TDEWiMaxConnection* wiMaxConnection = dynamic_cast<TDEWiMaxConnection*>(connection);
-	//TDEVLANConnection* vlanConnection = dynamic_cast<TDEVLANConnection*>(connection);
-	//TDEOLPCMeshConnection* olpcMeshConnection = dynamic_cast<TDEVLANConnection*>(connection);
-	//TDEBluetoothConnection* bluetoothConnection = dynamic_cast<TDEBluetoothConnection*>(connection);
-	TDEModemConnection* modemConnection = dynamic_cast<TDEModemConnection*>(connection);
+	//WiredEthernetConnection* ethernetConnection = dynamic_cast<WiredEthernetConnection*>(connection);
+	//WiredInfinibandConnection* infinibandConnection = dynamic_cast<WiredInfinibandConnection*>(connection);
+	WiFiConnection* wiFiConnection = dynamic_cast<WiFiConnection*>(connection);
+	VPNConnection* vpnConnection = dynamic_cast<VPNConnection*>(connection);
+	//WiMaxConnection* wiMaxConnection = dynamic_cast<WiMaxConnection*>(connection);
+	//VLANConnection* vlanConnection = dynamic_cast<VLANConnection*>(connection);
+	//OLPCMeshConnection* olpcMeshConnection = dynamic_cast<VLANConnection*>(connection);
+	//BluetoothConnection* bluetoothConnection = dynamic_cast<BluetoothConnection*>(connection);
+	ModemConnection* modemConnection = dynamic_cast<ModemConnection*>(connection);
 
 	bool ret = TRUE;
 	ret = ret && loadConnectionSecretsForGroup(uuid, "802-1x");
@@ -3182,21 +3182,21 @@ bool TDENetworkConnectionManager_BackendNM::loadConnectionSecrets(TQString uuid)
 	return ret;
 }
 
-bool TDENetworkConnectionManager_BackendNM::loadConnectionSecretsForGroup(TQString uuid, TQString group) {
-	TDENetworkConnection* connection = findConnectionByUUID(uuid);
+bool NetworkConnectionManager_BackendNM::loadConnectionSecretsForGroup(TQString uuid, TQString group) {
+	NetworkConnection* connection = findConnectionByUUID(uuid);
 	if (!connection) {
 		PRINT_ERROR(TQString("Unable to locate connection with uuid '%1' in local database.  Did you run loadConnectionInformation() first?"));
 		return FALSE;
 	}
-	//TDEWiredEthernetConnection* ethernetConnection = dynamic_cast<TDEWiredEthernetConnection*>(connection);
-	//TDEWiredInfinibandConnection* infinibandConnection = dynamic_cast<TDEWiredInfinibandConnection*>(connection);
-	TDEWiFiConnection* wiFiConnection = dynamic_cast<TDEWiFiConnection*>(connection);
-	TDEVPNConnection* vpnConnection = dynamic_cast<TDEVPNConnection*>(connection);
-	//TDEWiMaxConnection* wiMaxConnection = dynamic_cast<TDEWiMaxConnection*>(connection);
-	//TDEVLANConnection* vlanConnection = dynamic_cast<TDEVLANConnection*>(connection);
-	//TDEOLPCMeshConnection* olpcMeshConnection = dynamic_cast<TDEVLANConnection*>(connection);
-	//TDEBluetoothConnection* bluetoothConnection = dynamic_cast<TDEBluetoothConnection*>(connection);
-	TDEModemConnection* modemConnection = dynamic_cast<TDEModemConnection*>(connection);
+	//WiredEthernetConnection* ethernetConnection = dynamic_cast<WiredEthernetConnection*>(connection);
+	//WiredInfinibandConnection* infinibandConnection = dynamic_cast<WiredInfinibandConnection*>(connection);
+	WiFiConnection* wiFiConnection = dynamic_cast<WiFiConnection*>(connection);
+	VPNConnection* vpnConnection = dynamic_cast<VPNConnection*>(connection);
+	//WiMaxConnection* wiMaxConnection = dynamic_cast<WiMaxConnection*>(connection);
+	//VLANConnection* vlanConnection = dynamic_cast<VLANConnection*>(connection);
+	//OLPCMeshConnection* olpcMeshConnection = dynamic_cast<VLANConnection*>(connection);
+	//BluetoothConnection* bluetoothConnection = dynamic_cast<BluetoothConnection*>(connection);
+	ModemConnection* modemConnection = dynamic_cast<ModemConnection*>(connection);
 	TQT_DBusObjectPath existingConnection;
 	TQT_DBusError error;
 	bool ret;
@@ -3379,7 +3379,7 @@ bool TDENetworkConnectionManager_BackendNM::loadConnectionSecretsForGroup(TQStri
 	}
 }
 
-bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection* connection) {
+bool NetworkConnectionManager_BackendNM::saveConnection(NetworkConnection* connection) {
 	bool timed_out = FALSE;
 	bool command_failed = FALSE;
 
@@ -3403,15 +3403,15 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 
 	// Find path for connection with specified UUID, if it exists
 	// This is so that any settings that we are not aware of can be loaded now and preserved through the update operation
-	TDEWiredEthernetConnection* ethernetConnection = dynamic_cast<TDEWiredEthernetConnection*>(connection);
-	TDEWiredInfinibandConnection* infinibandConnection = dynamic_cast<TDEWiredInfinibandConnection*>(connection);
-	TDEWiFiConnection* wiFiConnection = dynamic_cast<TDEWiFiConnection*>(connection);
-	TDEVPNConnection* vpnConnection = dynamic_cast<TDEVPNConnection*>(connection);
-	TDEWiMaxConnection* wiMaxConnection = dynamic_cast<TDEWiMaxConnection*>(connection);
-	TDEVLANConnection* vlanConnection = dynamic_cast<TDEVLANConnection*>(connection);
-	TDEOLPCMeshConnection* olpcMeshConnection = dynamic_cast<TDEOLPCMeshConnection*>(connection);
-	TDEBluetoothConnection* bluetoothConnection = dynamic_cast<TDEBluetoothConnection*>(connection);
-	TDEModemConnection* modemConnection = dynamic_cast<TDEModemConnection*>(connection);
+	WiredEthernetConnection* ethernetConnection = dynamic_cast<WiredEthernetConnection*>(connection);
+	WiredInfinibandConnection* infinibandConnection = dynamic_cast<WiredInfinibandConnection*>(connection);
+	WiFiConnection* wiFiConnection = dynamic_cast<WiFiConnection*>(connection);
+	VPNConnection* vpnConnection = dynamic_cast<VPNConnection*>(connection);
+	WiMaxConnection* wiMaxConnection = dynamic_cast<WiMaxConnection*>(connection);
+	VLANConnection* vlanConnection = dynamic_cast<VLANConnection*>(connection);
+	OLPCMeshConnection* olpcMeshConnection = dynamic_cast<OLPCMeshConnection*>(connection);
+	BluetoothConnection* bluetoothConnection = dynamic_cast<BluetoothConnection*>(connection);
+	ModemConnection* modemConnection = dynamic_cast<ModemConnection*>(connection);
 	TQT_DBusObjectPath existingConnection;
 	TQT_DBusError error;
 	bool ret;
@@ -3492,10 +3492,10 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 					else if (olpcMeshConnection) type = "802-11-olpc-mesh";
 					else if (bluetoothConnection) type = "bluetooth";
 					else if (modemConnection) {
-						if (modemConnection->type == TDEModemConnectionType::CDMA) {
+						if (modemConnection->type == ModemConnectionType::CDMA) {
 							type = "cdma";
 						}
-						else if (modemConnection->type == TDEModemConnectionType::GSM) {
+						else if (modemConnection->type == ModemConnectionType::GSM) {
 							type = "gsm";
 						}
 					}
@@ -3921,7 +3921,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 				}
 				{
 					TQT_DBusDataValueList valueList;
-					TDEMACAddressList::iterator it;
+					MACAddressList::iterator it;
 					for (it = wiFiConnection->blacklistedBSSIDs.begin(); it != wiFiConnection->blacklistedBSSIDs.end(); ++it) {
 						valueList.append(TQT_DBusData::fromString((*it).toString()));
 					}
@@ -3929,7 +3929,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 				}
 				{
 					TQT_DBusDataValueList valueList;
-					TDEMACAddressList::iterator it;
+					MACAddressList::iterator it;
 					for (it = wiFiConnection->heardBSSIDs.begin(); it != wiFiConnection->heardBSSIDs.end(); ++it) {
 						valueList.append(TQT_DBusData::fromString((*it).toString()));
 					}
@@ -3987,13 +3987,13 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 					{
 						TQT_DBusDataValueList valueList;
 						{
-							if (wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(TDENetworkWiFiConnectionCipher::Any)) {
-								if (!wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherWEP40)) wiFiConnection->securitySettings.allowedPairWiseCiphers.append(TDENetworkWiFiConnectionCipher::CipherWEP40);
-								if (!wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherWEP104)) wiFiConnection->securitySettings.allowedPairWiseCiphers.append(TDENetworkWiFiConnectionCipher::CipherWEP104);
-								if (!wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherTKIP)) wiFiConnection->securitySettings.allowedPairWiseCiphers.append(TDENetworkWiFiConnectionCipher::CipherTKIP);
-								if (!wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherCCMP)) wiFiConnection->securitySettings.allowedPairWiseCiphers.append(TDENetworkWiFiConnectionCipher::CipherCCMP);
+							if (wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(NetworkWiFiConnectionCipher::Any)) {
+								if (!wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(NetworkWiFiConnectionCipher::CipherWEP40)) wiFiConnection->securitySettings.allowedPairWiseCiphers.append(NetworkWiFiConnectionCipher::CipherWEP40);
+								if (!wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(NetworkWiFiConnectionCipher::CipherWEP104)) wiFiConnection->securitySettings.allowedPairWiseCiphers.append(NetworkWiFiConnectionCipher::CipherWEP104);
+								if (!wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(NetworkWiFiConnectionCipher::CipherTKIP)) wiFiConnection->securitySettings.allowedPairWiseCiphers.append(NetworkWiFiConnectionCipher::CipherTKIP);
+								if (!wiFiConnection->securitySettings.allowedPairWiseCiphers.contains(NetworkWiFiConnectionCipher::CipherCCMP)) wiFiConnection->securitySettings.allowedPairWiseCiphers.append(NetworkWiFiConnectionCipher::CipherCCMP);
 							}
-							for (TDENetworkWiFiConnectionCipherList::Iterator it = wiFiConnection->securitySettings.allowedPairWiseCiphers.begin(); it != wiFiConnection->securitySettings.allowedPairWiseCiphers.end(); ++it) {
+							for (NetworkWiFiConnectionCipherList::Iterator it = wiFiConnection->securitySettings.allowedPairWiseCiphers.begin(); it != wiFiConnection->securitySettings.allowedPairWiseCiphers.end(); ++it) {
 								valueList.append(TQT_DBusData::fromString(tdeWiFiCipherToNMWiFiCipher(*it)));
 							}
 						}
@@ -4003,13 +4003,13 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 					{
 						TQT_DBusDataValueList valueList;
 						{
-							if (wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(TDENetworkWiFiConnectionCipher::Any)) {
-								if (!wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherWEP40)) wiFiConnection->securitySettings.allowedGroupWiseCiphers.append(TDENetworkWiFiConnectionCipher::CipherWEP40);
-								if (!wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherWEP104)) wiFiConnection->securitySettings.allowedGroupWiseCiphers.append(TDENetworkWiFiConnectionCipher::CipherWEP104);
-								if (!wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherTKIP)) wiFiConnection->securitySettings.allowedGroupWiseCiphers.append(TDENetworkWiFiConnectionCipher::CipherTKIP);
-								if (!wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(TDENetworkWiFiConnectionCipher::CipherCCMP)) wiFiConnection->securitySettings.allowedGroupWiseCiphers.append(TDENetworkWiFiConnectionCipher::CipherCCMP);
+							if (wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(NetworkWiFiConnectionCipher::Any)) {
+								if (!wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(NetworkWiFiConnectionCipher::CipherWEP40)) wiFiConnection->securitySettings.allowedGroupWiseCiphers.append(NetworkWiFiConnectionCipher::CipherWEP40);
+								if (!wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(NetworkWiFiConnectionCipher::CipherWEP104)) wiFiConnection->securitySettings.allowedGroupWiseCiphers.append(NetworkWiFiConnectionCipher::CipherWEP104);
+								if (!wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(NetworkWiFiConnectionCipher::CipherTKIP)) wiFiConnection->securitySettings.allowedGroupWiseCiphers.append(NetworkWiFiConnectionCipher::CipherTKIP);
+								if (!wiFiConnection->securitySettings.allowedGroupWiseCiphers.contains(NetworkWiFiConnectionCipher::CipherCCMP)) wiFiConnection->securitySettings.allowedGroupWiseCiphers.append(NetworkWiFiConnectionCipher::CipherCCMP);
 							}
-							for (TDENetworkWiFiConnectionCipherList::Iterator it = wiFiConnection->securitySettings.allowedGroupWiseCiphers.begin(); it != wiFiConnection->securitySettings.allowedGroupWiseCiphers.end(); ++it) {
+							for (NetworkWiFiConnectionCipherList::Iterator it = wiFiConnection->securitySettings.allowedGroupWiseCiphers.begin(); it != wiFiConnection->securitySettings.allowedGroupWiseCiphers.end(); ++it) {
 								valueList.append(TQT_DBusData::fromString(tdeWiFiCipherToNMWiFiCipher(*it)));
 							}
 						}
@@ -4179,18 +4179,18 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
 			{
 				settingsMap["noauth"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(!(connection->pppConfig.requireServerAuthentication)));
-				settingsMap["refuse-eap"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(connection->pppConfig.flags & TDENetworkPPPFlags::DisableEAP));
-				settingsMap["refuse-pap"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(connection->pppConfig.flags & TDENetworkPPPFlags::DisablePAP));
-				settingsMap["refuse-chap"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(connection->pppConfig.flags & TDENetworkPPPFlags::DisableCHAP));
-				settingsMap["refuse-mschap"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(connection->pppConfig.flags & TDENetworkPPPFlags::DisableMSCHAP));
-				settingsMap["refuse-mschapv2"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(connection->pppConfig.flags & TDENetworkPPPFlags::DisableMSCHAPv2));
-				settingsMap["nobsdcomp"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(!(connection->pppConfig.flags & TDENetworkPPPFlags::AllowBSDCompression)));
-				settingsMap["nodeflate"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(!(connection->pppConfig.flags & TDENetworkPPPFlags::AllowDeflateCompression)));
-				settingsMap["no-vj-comp"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(!(connection->pppConfig.flags & TDENetworkPPPFlags::AllowVJCompression)));
-				settingsMap["require-mppe"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(connection->pppConfig.flags & TDENetworkPPPFlags::RequireMPPE));
-				settingsMap["require-mppe-128"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(connection->pppConfig.flags & TDENetworkPPPFlags::RequireMPPE128));
-				settingsMap["mppe-stateful"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(connection->pppConfig.flags & TDENetworkPPPFlags::StatefulMPPE));
-				settingsMap["crtscts"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(connection->pppConfig.flags & TDENetworkPPPFlags::UseHardwareFlowControl));
+				settingsMap["refuse-eap"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(connection->pppConfig.flags & NetworkPPPFlags::DisableEAP));
+				settingsMap["refuse-pap"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(connection->pppConfig.flags & NetworkPPPFlags::DisablePAP));
+				settingsMap["refuse-chap"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(connection->pppConfig.flags & NetworkPPPFlags::DisableCHAP));
+				settingsMap["refuse-mschap"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(connection->pppConfig.flags & NetworkPPPFlags::DisableMSCHAP));
+				settingsMap["refuse-mschapv2"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(connection->pppConfig.flags & NetworkPPPFlags::DisableMSCHAPv2));
+				settingsMap["nobsdcomp"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(!(connection->pppConfig.flags & NetworkPPPFlags::AllowBSDCompression)));
+				settingsMap["nodeflate"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(!(connection->pppConfig.flags & NetworkPPPFlags::AllowDeflateCompression)));
+				settingsMap["no-vj-comp"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(!(connection->pppConfig.flags & NetworkPPPFlags::AllowVJCompression)));
+				settingsMap["require-mppe"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(connection->pppConfig.flags & NetworkPPPFlags::RequireMPPE));
+				settingsMap["require-mppe-128"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(connection->pppConfig.flags & NetworkPPPFlags::RequireMPPE128));
+				settingsMap["mppe-stateful"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(connection->pppConfig.flags & NetworkPPPFlags::StatefulMPPE));
+				settingsMap["crtscts"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(connection->pppConfig.flags & NetworkPPPFlags::UseHardwareFlowControl));
 				settingsMap["baud"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(connection->pppConfig.baudRate));
 				if (connection->pppConfig.mru > 0) {
 					settingsMap["mru"] = convertDBUSDataToVariantData(TQT_DBusData::fromUInt32(connection->pppConfig.mru));
@@ -4297,7 +4297,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 
 		groupValid = false;
 		dbusData = outerMap["cdma"];
-		if ((modemConnection) && (modemConnection->type == TDEModemConnectionType::CDMA)) {
+		if ((modemConnection) && (modemConnection->type == ModemConnectionType::CDMA)) {
 			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
 			{
 				UPDATE_STRING_SETTING_IF_VALID(modemConnection->cdmaConfig.providerDataNumber, "number", settingsMap)
@@ -4314,7 +4314,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 
 		groupValid = false;
 		dbusData = outerMap["gsm"];
-		if ((modemConnection) && (modemConnection->type == TDEModemConnectionType::GSM)) {
+		if ((modemConnection) && (modemConnection->type == ModemConnectionType::GSM)) {
 			TQMap<TQString, TQT_DBusData> settingsMap = dbusData.toStringKeyMap().toTQMap();
 			{
 				UPDATE_STRING_SETTING_IF_VALID(modemConnection->gsmConfig.providerDataNumber, "number", settingsMap)
@@ -4345,7 +4345,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 			{
 				{
 					TQT_DBusDataValueList valueList;
-					TDENetworkSingleIPConfigurationList::iterator it;
+					NetworkSingleIPConfigurationList::iterator it;
 					for (it = connection->ipConfig.ipConfigurations.begin(); it != connection->ipConfig.ipConfigurations.end(); ++it) {
 						if ((*it).isIPv4()) {
 							TQT_DBusDataValueList innerValueList;
@@ -4392,7 +4392,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 				}
 				{
 					TQT_DBusDataValueList valueList;
-					TDENetworkSearchDomainList::iterator it;
+					NetworkSearchDomainList::iterator it;
 					for (it = connection->ipConfig.searchDomains.begin(); it != connection->ipConfig.searchDomains.end(); ++it) {
 						if ((*it).isIPv4()) {
 							valueList.append(TQT_DBusData::fromString((*it).searchDomain()));
@@ -4401,23 +4401,23 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 					if (valueList.count() > 0) settingsMap["dns-search"] = convertDBUSDataToVariantData(TQT_DBusData::fromTQValueList(valueList));
 				}
 				{
-					settingsMap["ignore-auto-dns"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(!(connection->ipConfig.connectionFlags & TDENetworkIPConfigurationFlags::IPV4DHCPDNS)));
+					settingsMap["ignore-auto-dns"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(!(connection->ipConfig.connectionFlags & NetworkIPConfigurationFlags::IPV4DHCPDNS)));
 				}
 				{
 					settingsMap["may-fail"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(!connection->requireIPV4));
 				}
 				{
 					TQString method;
-					if (connection->ipConfig.connectionFlags & TDENetworkIPConfigurationFlags::IPV4DHCPIP) {
+					if (connection->ipConfig.connectionFlags & NetworkIPConfigurationFlags::IPV4DHCPIP) {
 						method = "auto";
 					}
-					else if (connection->ipConfig.connectionFlags & TDENetworkIPConfigurationFlags::IPV4LocalOnly) {
+					else if (connection->ipConfig.connectionFlags & NetworkIPConfigurationFlags::IPV4LocalOnly) {
 						method = "link-local";
 					}
-					else if (connection->ipConfig.connectionFlags & TDENetworkIPConfigurationFlags::IPV4StartConnectionSharingServer) {
+					else if (connection->ipConfig.connectionFlags & NetworkIPConfigurationFlags::IPV4StartConnectionSharingServer) {
 						method = "shared";
 					}
-					else if (connection->ipConfig.connectionFlags & TDENetworkIPConfigurationFlags::IPV4Disabled) {
+					else if (connection->ipConfig.connectionFlags & NetworkIPConfigurationFlags::IPV4Disabled) {
 						method = "disabled";
 					}
 					else {
@@ -4427,14 +4427,14 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 						settingsMap["method"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(method));
 				}
 				{
-					settingsMap["ignore-auto-routes"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(!(connection->ipConfig.connectionFlags & TDENetworkIPConfigurationFlags::IPV4DHCPRoutes)));
+					settingsMap["ignore-auto-routes"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(!(connection->ipConfig.connectionFlags & NetworkIPConfigurationFlags::IPV4DHCPRoutes)));
 				}
 				{
-					settingsMap["never-default"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(!(connection->ipConfig.connectionFlags & TDENetworkIPConfigurationFlags::IPV4MayUseAsDefaultRoute)));
+					settingsMap["never-default"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(!(connection->ipConfig.connectionFlags & NetworkIPConfigurationFlags::IPV4MayUseAsDefaultRoute)));
 				}
 				{
 					TQT_DBusDataValueList valueList;
-					TDENetworkSingleRouteConfigurationList::iterator it;
+					NetworkSingleRouteConfigurationList::iterator it;
 					for (it = connection->ipConfig.routeConfigurations.begin(); it != connection->ipConfig.routeConfigurations.end(); ++it) {
 						if ((*it).isIPv4()) {
 							TQT_DBusDataValueList innerValueList;
@@ -4473,7 +4473,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 			{
 				{
 					TQT_DBusDataValueList valueList;
-					TDENetworkSingleIPConfigurationList::iterator it;
+					NetworkSingleIPConfigurationList::iterator it;
 					for (it = connection->ipConfig.ipConfigurations.begin(); it != connection->ipConfig.ipConfigurations.end(); ++it) {
 						if ((*it).isIPv6()) {
 							int i;
@@ -4548,7 +4548,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 				}
 				{
 					TQT_DBusDataValueList valueList;
-					TDENetworkSearchDomainList::iterator it;
+					NetworkSearchDomainList::iterator it;
 					for (it = connection->ipConfig.searchDomains.begin(); it != connection->ipConfig.searchDomains.end(); ++it) {
 						if ((*it).isIPv6()) {
 							valueList.append(TQT_DBusData::fromString((*it).searchDomain()));
@@ -4557,23 +4557,23 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 					if (valueList.count() > 0) settingsMap["dns-search"] = convertDBUSDataToVariantData(TQT_DBusData::fromTQValueList(valueList));
 				}
 				{
-					settingsMap["ignore-auto-dns"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(!(connection->ipConfig.connectionFlags & TDENetworkIPConfigurationFlags::IPV4DHCPDNS)));
+					settingsMap["ignore-auto-dns"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(!(connection->ipConfig.connectionFlags & NetworkIPConfigurationFlags::IPV4DHCPDNS)));
 				}
 				{
 					settingsMap["may-fail"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(!connection->requireIPV6));
 				}
 				{
 					TQString method;
-					if (connection->ipConfig.connectionFlags & TDENetworkIPConfigurationFlags::IPV6DHCPIP) {
+					if (connection->ipConfig.connectionFlags & NetworkIPConfigurationFlags::IPV6DHCPIP) {
 						method = "auto";
 					}
-					else if (connection->ipConfig.connectionFlags & TDENetworkIPConfigurationFlags::IPV6LocalOnly) {
+					else if (connection->ipConfig.connectionFlags & NetworkIPConfigurationFlags::IPV6LocalOnly) {
 						method = "link-local";
 					}
-					else if (connection->ipConfig.connectionFlags & TDENetworkIPConfigurationFlags::IPV6StartConnectionSharingServer) {
+					else if (connection->ipConfig.connectionFlags & NetworkIPConfigurationFlags::IPV6StartConnectionSharingServer) {
 						method = "shared";
 					}
-					else if (connection->ipConfig.connectionFlags & TDENetworkIPConfigurationFlags::IPV6Disabled) {
+					else if (connection->ipConfig.connectionFlags & NetworkIPConfigurationFlags::IPV6Disabled) {
 						method = "ignore";
 					}
 					else {
@@ -4583,14 +4583,14 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 						settingsMap["method"] = convertDBUSDataToVariantData(TQT_DBusData::fromString(method));
 				}
 				{
-					settingsMap["ignore-auto-routes"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(!(connection->ipConfig.connectionFlags & TDENetworkIPConfigurationFlags::IPV6DHCPRoutes)));
+					settingsMap["ignore-auto-routes"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(!(connection->ipConfig.connectionFlags & NetworkIPConfigurationFlags::IPV6DHCPRoutes)));
 				}
 				{
-					settingsMap["never-default"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(!(connection->ipConfig.connectionFlags & TDENetworkIPConfigurationFlags::IPV6MayUseAsDefaultRoute)));
+					settingsMap["never-default"] = convertDBUSDataToVariantData(TQT_DBusData::fromBool(!(connection->ipConfig.connectionFlags & NetworkIPConfigurationFlags::IPV6MayUseAsDefaultRoute)));
 				}
 				{
 					TQT_DBusDataValueList valueList;
-					TDENetworkSingleRouteConfigurationList::iterator it;
+					NetworkSingleRouteConfigurationList::iterator it;
 					for (it = connection->ipConfig.routeConfigurations.begin(); it != connection->ipConfig.routeConfigurations.end(); ++it) {
 						if ((*it).isIPv6()) {
 							int i;
@@ -4744,7 +4744,7 @@ bool TDENetworkConnectionManager_BackendNM::saveConnection(TDENetworkConnection*
 	}
 }
 
-bool TDENetworkConnectionManager_BackendNM::deleteConnection(TQString uuid) {
+bool NetworkConnectionManager_BackendNM::deleteConnection(TQString uuid) {
 	TQT_DBusObjectPath existingConnection;
 	TQT_DBusError error;
 	bool timed_out = false;
@@ -4794,7 +4794,7 @@ bool TDENetworkConnectionManager_BackendNM::deleteConnection(TQString uuid) {
 	}
 }
 
-bool TDENetworkConnectionManager_BackendNM::verifyConnectionSettings(TDENetworkConnection* connection, TDENetworkConnectionErrorFlags::TDENetworkConnectionErrorFlags* type, TDENetworkErrorStringMap* reason) {
+bool NetworkConnectionManager_BackendNM::verifyConnectionSettings(NetworkConnection* connection, NetworkConnectionErrorFlags::NetworkConnectionErrorFlags* type, TDENetworkErrorStringMap* reason) {
 	// FIXME
 	// This should actually attempt to validate all the settings!
 
@@ -4803,29 +4803,29 @@ bool TDENetworkConnectionManager_BackendNM::verifyConnectionSettings(TDENetworkC
 	}
 
 	if (connection->friendlyName == "") {
-		if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidConnectionSetting] = i18n("Connection name is invalid");
-		if (type) *type |= TDENetworkConnectionErrorFlags::InvalidConnectionSetting;
+		if (reason) (*reason)[NetworkConnectionErrorFlags::InvalidConnectionSetting] = i18n("Connection name is invalid");
+		if (type) *type |= NetworkConnectionErrorFlags::InvalidConnectionSetting;
 		return false;
 	}
 
 	if (connection->ipConfig.valid) {
 		// Iterate over all addresses
-		TDENetworkSingleIPConfigurationList::iterator it;
+		NetworkSingleIPConfigurationList::iterator it;
 		for (it = connection->ipConfig.ipConfigurations.begin(); it != connection->ipConfig.ipConfigurations.end(); ++it) {
 			if ((*it).isIPv4()) {
-				if (!(connection->ipConfig.connectionFlags & TDENetworkIPConfigurationFlags::IPV4DHCPIP)) {
-					if (!TDENetworkConnectionManager::validateIPAddress((*it).ipAddress)) {
-						if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidIPv4Setting] = i18n("IPv4 address is invalid");
-						if (type) *type |= TDENetworkConnectionErrorFlags::InvalidIPv4Setting;
+				if (!(connection->ipConfig.connectionFlags & NetworkIPConfigurationFlags::IPV4DHCPIP)) {
+					if (!NetworkConnectionManager::validateIPAddress((*it).ipAddress)) {
+						if (reason) (*reason)[NetworkConnectionErrorFlags::InvalidIPv4Setting] = i18n("IPv4 address is invalid");
+						if (type) *type |= NetworkConnectionErrorFlags::InvalidIPv4Setting;
 						return false;
 					}
 				}
 			}
 			else if ((*it).isIPv6()) {
-				if (!(connection->ipConfig.connectionFlags & TDENetworkIPConfigurationFlags::IPV6DHCPIP)) {
-					if (!TDENetworkConnectionManager::validateIPAddress((*it).ipAddress)) {
-						if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidIPv6Setting] = i18n("IPv6 address is invalid");
-						if (type) *type |= TDENetworkConnectionErrorFlags::InvalidIPv6Setting;
+				if (!(connection->ipConfig.connectionFlags & NetworkIPConfigurationFlags::IPV6DHCPIP)) {
+					if (!NetworkConnectionManager::validateIPAddress((*it).ipAddress)) {
+						if (reason) (*reason)[NetworkConnectionErrorFlags::InvalidIPv6Setting] = i18n("IPv6 address is invalid");
+						if (type) *type |= NetworkConnectionErrorFlags::InvalidIPv6Setting;
 						return false;
 					}
 				}
@@ -4833,115 +4833,115 @@ bool TDENetworkConnectionManager_BackendNM::verifyConnectionSettings(TDENetworkC
 		}
 	}
 
-	TDEWiFiConnection* wiFiConnection = dynamic_cast<TDEWiFiConnection*>(connection);
+	WiFiConnection* wiFiConnection = dynamic_cast<WiFiConnection*>(connection);
 	if (wiFiConnection) {
 		if (wiFiConnection->SSID.count() < 1) {
-			if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidWirelessSetting] = i18n("No SSID provided");
-			if (type) *type |= TDENetworkConnectionErrorFlags::InvalidWirelessSetting;
+			if (reason) (*reason)[NetworkConnectionErrorFlags::InvalidWirelessSetting] = i18n("No SSID provided");
+			if (type) *type |= NetworkConnectionErrorFlags::InvalidWirelessSetting;
 			return false;
 		}
 		if (wiFiConnection->securityRequired) {
 			if (wiFiConnection->securitySettings.secretsValid) {
-				if ((wiFiConnection->securitySettings.keyType == TDENetworkWiFiKeyType::WEP) || ((wiFiConnection->securitySettings.keyType == TDENetworkWiFiKeyType::DynamicWEP) && ((wiFiConnection->securitySettings.authType == TDENetworkWiFiAuthType::Open) || (wiFiConnection->securitySettings.authType == TDENetworkWiFiAuthType::Shared)))) {
-					if (wiFiConnection->securitySettings.wepKeyType == TDENetworkWepKeyType::Hexadecimal) {
+				if ((wiFiConnection->securitySettings.keyType == NetworkWiFiKeyType::WEP) || ((wiFiConnection->securitySettings.keyType == NetworkWiFiKeyType::DynamicWEP) && ((wiFiConnection->securitySettings.authType == NetworkWiFiAuthType::Open) || (wiFiConnection->securitySettings.authType == NetworkWiFiAuthType::Shared)))) {
+					if (wiFiConnection->securitySettings.wepKeyType == NetworkWepKeyType::Hexadecimal) {
 						if (wiFiConnection->securitySettings.wepKey0 != "") {
 							if ((wiFiConnection->securitySettings.wepKey0.length() != 10) && (wiFiConnection->securitySettings.wepKey0.length() != 26)) {
-								if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("WEP key 0 has invalid length");
-								if (type) *type |= TDENetworkConnectionErrorFlags::InvalidWirelessKey;
+								if (reason) (*reason)[NetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("WEP key 0 has invalid length");
+								if (type) *type |= NetworkConnectionErrorFlags::InvalidWirelessKey;
 								return false;
 							}
 						}
 						if (wiFiConnection->securitySettings.wepKey1 != "") {
 							if ((wiFiConnection->securitySettings.wepKey1.length() != 10) && (wiFiConnection->securitySettings.wepKey1.length() != 26)) {
-								if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("WEP key 1 has invalid length");
-								if (type) *type |= TDENetworkConnectionErrorFlags::InvalidWirelessKey;
+								if (reason) (*reason)[NetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("WEP key 1 has invalid length");
+								if (type) *type |= NetworkConnectionErrorFlags::InvalidWirelessKey;
 								return false;
 							}
 						}
 						if (wiFiConnection->securitySettings.wepKey2 != "") {
 							if ((wiFiConnection->securitySettings.wepKey2.length() != 10) && (wiFiConnection->securitySettings.wepKey2.length() != 26)) {
-								if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("WEP key 2 has invalid length");
-								if (type) *type |= TDENetworkConnectionErrorFlags::InvalidWirelessKey;
+								if (reason) (*reason)[NetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("WEP key 2 has invalid length");
+								if (type) *type |= NetworkConnectionErrorFlags::InvalidWirelessKey;
 								return false;
 							}
 						}
 						if (wiFiConnection->securitySettings.wepKey3 != "") {
 							if ((wiFiConnection->securitySettings.wepKey3.length() != 10) && (wiFiConnection->securitySettings.wepKey3.length() != 26)) {
-								if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("WEP key 3 has invalid length");
-								if (type) *type |= TDENetworkConnectionErrorFlags::InvalidWirelessKey;
+								if (reason) (*reason)[NetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("WEP key 3 has invalid length");
+								if (type) *type |= NetworkConnectionErrorFlags::InvalidWirelessKey;
 								return false;
 							}
 						}
 						if ((wiFiConnection->securitySettings.wepKey0 == "") && (wiFiConnection->securitySettings.wepKey1 == "") && (wiFiConnection->securitySettings.wepKey2 == "") && (wiFiConnection->securitySettings.wepKey3 == "")) {
-							if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("No WEP key(s) provided");
-							if (type) *type |= TDENetworkConnectionErrorFlags::InvalidWirelessKey;
+							if (reason) (*reason)[NetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("No WEP key(s) provided");
+							if (type) *type |= NetworkConnectionErrorFlags::InvalidWirelessKey;
 							return false;
 						}
 					}
-					else if (wiFiConnection->securitySettings.wepKeyType == TDENetworkWepKeyType::Ascii) {
+					else if (wiFiConnection->securitySettings.wepKeyType == NetworkWepKeyType::Ascii) {
 						if (wiFiConnection->securitySettings.wepKey0 != "") {
 							if ((wiFiConnection->securitySettings.wepKey0.length() != 5) && (wiFiConnection->securitySettings.wepKey0.length() != 13)) {
-								if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("WEP key 0 has invalid length");
-								if (type) *type |= TDENetworkConnectionErrorFlags::InvalidWirelessKey;
+								if (reason) (*reason)[NetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("WEP key 0 has invalid length");
+								if (type) *type |= NetworkConnectionErrorFlags::InvalidWirelessKey;
 								return false;
 							}
 						}
 						if (wiFiConnection->securitySettings.wepKey1 != "") {
 							if ((wiFiConnection->securitySettings.wepKey1.length() != 5) && (wiFiConnection->securitySettings.wepKey1.length() != 13)) {
-								if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("WEP key 1 has invalid length");
-								if (type) *type |= TDENetworkConnectionErrorFlags::InvalidWirelessKey;
+								if (reason) (*reason)[NetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("WEP key 1 has invalid length");
+								if (type) *type |= NetworkConnectionErrorFlags::InvalidWirelessKey;
 								return false;
 							}
 						}
 						if (wiFiConnection->securitySettings.wepKey2 != "") {
 							if ((wiFiConnection->securitySettings.wepKey2.length() != 5) && (wiFiConnection->securitySettings.wepKey2.length() != 13)) {
-								if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("WEP key 2 has invalid length");
-								if (type) *type |= TDENetworkConnectionErrorFlags::InvalidWirelessKey;
+								if (reason) (*reason)[NetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("WEP key 2 has invalid length");
+								if (type) *type |= NetworkConnectionErrorFlags::InvalidWirelessKey;
 								return false;
 							}
 						}
 						if (wiFiConnection->securitySettings.wepKey3 != "") {
 							if ((wiFiConnection->securitySettings.wepKey3.length() != 5) && (wiFiConnection->securitySettings.wepKey3.length() != 13)) {
-								if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("WEP key 3 has invalid length");
-								if (type) *type |= TDENetworkConnectionErrorFlags::InvalidWirelessKey;
+								if (reason) (*reason)[NetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("WEP key 3 has invalid length");
+								if (type) *type |= NetworkConnectionErrorFlags::InvalidWirelessKey;
 								return false;
 							}
 						}
 						if ((wiFiConnection->securitySettings.wepKey0 == "") && (wiFiConnection->securitySettings.wepKey1 == "") && (wiFiConnection->securitySettings.wepKey2 == "") && (wiFiConnection->securitySettings.wepKey3 == "")) {
-							if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("No WEP key(s) provided");
-							if (type) *type |= TDENetworkConnectionErrorFlags::InvalidWirelessKey;
+							if (reason) (*reason)[NetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("No WEP key(s) provided");
+							if (type) *type |= NetworkConnectionErrorFlags::InvalidWirelessKey;
 							return false;
 						}
 					}
-					else if (wiFiConnection->securitySettings.wepKeyType == TDENetworkWepKeyType::Ascii) {
+					else if (wiFiConnection->securitySettings.wepKeyType == NetworkWepKeyType::Ascii) {
 						if ((wiFiConnection->securitySettings.wepKey0 == "") && (wiFiConnection->securitySettings.wepKey1 == "") && (wiFiConnection->securitySettings.wepKey2 == "") && (wiFiConnection->securitySettings.wepKey3 == "")) {
-							if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("No WEP key(s) provided");
-							if (type) *type |= TDENetworkConnectionErrorFlags::InvalidWirelessKey;
+							if (reason) (*reason)[NetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("No WEP key(s) provided");
+							if (type) *type |= NetworkConnectionErrorFlags::InvalidWirelessKey;
 							return false;
 						}
 					}
 				}
-				else if ((wiFiConnection->securitySettings.keyType == TDENetworkWiFiKeyType::DynamicWEP) && (wiFiConnection->securitySettings.authType == TDENetworkWiFiAuthType::LEAP)) {
+				else if ((wiFiConnection->securitySettings.keyType == NetworkWiFiKeyType::DynamicWEP) && (wiFiConnection->securitySettings.authType == NetworkWiFiAuthType::LEAP)) {
 					if ((wiFiConnection->securitySettings.leapUsername.length() < 1) || (wiFiConnection->securitySettings.leapPassword.length() < 1)) {
-						if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("LEAP username and/or password not provided");
-						if (type) *type |= TDENetworkConnectionErrorFlags::InvalidWirelessKey;
+						if (reason) (*reason)[NetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("LEAP username and/or password not provided");
+						if (type) *type |= NetworkConnectionErrorFlags::InvalidWirelessKey;
 						return false;
 					}
 				}
-				else if ((wiFiConnection->securitySettings.keyType == TDENetworkWiFiKeyType::WPAAdHoc) || (wiFiConnection->securitySettings.keyType == TDENetworkWiFiKeyType::WPAInfrastructure) || (wiFiConnection->securitySettings.keyType == TDENetworkWiFiKeyType::WPAEnterprise)) {
+				else if ((wiFiConnection->securitySettings.keyType == NetworkWiFiKeyType::WPAAdHoc) || (wiFiConnection->securitySettings.keyType == NetworkWiFiKeyType::WPAInfrastructure) || (wiFiConnection->securitySettings.keyType == NetworkWiFiKeyType::WPAEnterprise)) {
 					if (wiFiConnection->securitySettings.psk.length() == 64) {
 						// Verify that only hex characters are present in the string
 						bool ok;
 						wiFiConnection->securitySettings.psk.toULongLong(&ok, 16);
 						if (!ok) {
-							if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("Hexadecimal length PSK contains non-hexadecimal characters");
-							if (type) *type |= TDENetworkConnectionErrorFlags::InvalidWirelessKey;
+							if (reason) (*reason)[NetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("Hexadecimal length PSK contains non-hexadecimal characters");
+							if (type) *type |= NetworkConnectionErrorFlags::InvalidWirelessKey;
 							return false;
 						}
 					}
 					else if ((wiFiConnection->securitySettings.psk.length() < 8) || (wiFiConnection->securitySettings.psk.length() > 63)) {
-						if (reason) (*reason)[TDENetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("No PSK provided");
-						if (type) *type |= TDENetworkConnectionErrorFlags::InvalidWirelessKey;
+						if (reason) (*reason)[NetworkConnectionErrorFlags::InvalidWirelessKey] = i18n("No PSK provided");
+						if (type) *type |= NetworkConnectionErrorFlags::InvalidWirelessKey;
 						return false;
 					}
 				}
@@ -4952,7 +4952,7 @@ bool TDENetworkConnectionManager_BackendNM::verifyConnectionSettings(TDENetworkC
 	return TRUE;
 }
 
-TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManager_BackendNM::initiateConnection(TQString uuid) {
+NetworkConnectionStatus::NetworkConnectionStatus NetworkConnectionManager_BackendNM::initiateConnection(TQString uuid) {
 	TQT_DBusObjectPath existingConnection;
 	TQT_DBusError error;
 	bool ret;
@@ -5022,16 +5022,16 @@ TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManag
 		}
 		else {
 			PRINT_WARNING(TQString("connection for provided uuid '%1' was not found").arg(uuid));
-			return TDENetworkConnectionStatus::Invalid;
+			return NetworkConnectionStatus::Invalid;
 		}
 	}
 	else {
 		PRINT_ERROR(TQString("invalid internal network-manager settings proxy object"));
-		return TDENetworkConnectionStatus::Invalid;
+		return NetworkConnectionStatus::Invalid;
 	}
 }
 
-TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManager_BackendNM::checkConnectionStatus(TQString uuid) {
+NetworkConnectionStatus::NetworkConnectionStatus NetworkConnectionManager_BackendNM::checkConnectionStatus(TQString uuid) {
 	TQT_DBusObjectPath existingConnection;
 	TQT_DBusError error;
 	if (d->m_networkManagerProxy) {
@@ -5045,15 +5045,15 @@ TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManag
 			}
 		}
 		PRINT_WARNING(TQString("active connection for provided uuid '%1' was not found").arg(uuid));
-		return TDENetworkConnectionStatus::Invalid;
+		return NetworkConnectionStatus::Invalid;
 	}
 	else {
 		PRINT_ERROR(TQString("invalid internal network-manager settings proxy object"));
-		return TDENetworkConnectionStatus::Invalid;
+		return NetworkConnectionStatus::Invalid;
 	}
 }
 
-TQCString TDENetworkConnectionManager_BackendNM::getActiveConnectionPath(TQString uuid) {
+TQCString NetworkConnectionManager_BackendNM::getActiveConnectionPath(TQString uuid) {
 	TQT_DBusObjectPath existingConnection;
 	TQT_DBusError error;
 	if (d->m_networkManagerProxy) {
@@ -5075,8 +5075,8 @@ TQCString TDENetworkConnectionManager_BackendNM::getActiveConnectionPath(TQStrin
 	}
 }
 
-TQStringList TDENetworkConnectionManager_BackendNM::connectionPhysicalDeviceUUIDs(TQString uuid) {
-	if (deviceType() == TDENetworkDeviceType::BackendOnly) {
+TQStringList NetworkConnectionManager_BackendNM::connectionPhysicalDeviceUUIDs(TQString uuid) {
+	if (deviceType() == NetworkDeviceType::BackendOnly) {
 		return TQStringList();
 	}
 
@@ -5109,8 +5109,8 @@ TQStringList TDENetworkConnectionManager_BackendNM::connectionPhysicalDeviceUUID
 	}
 }
 
-TDENetworkVPNTypeList TDENetworkConnectionManager_BackendNM::availableVPNTypes() {
-	TDENetworkVPNTypeList ret;
+NetworkVPNTypeList NetworkConnectionManager_BackendNM::availableVPNTypes() {
+	NetworkVPNTypeList ret;
 
 	// Query NetworkManager to verify plugin availability before claiming support for a VPN type
 	TQDir serviceDir(NM_PLUGIN_SERVICE_DIR, TQString(), TQDir::Name|TQDir::IgnoreCase, TQDir::Files);
@@ -5127,16 +5127,16 @@ TDENetworkVPNTypeList TDENetworkConnectionManager_BackendNM::availableVPNTypes()
 			serviceName = serviceName.lower();
 
 			if (serviceName == "openvpn") {
-				ret.append(TDENetworkVPNType::OpenVPN);
+				ret.append(NetworkVPNType::OpenVPN);
 			}
 			if (serviceName == "pptp") {
-				ret.append(TDENetworkVPNType::PPTP);
+				ret.append(NetworkVPNType::PPTP);
 			}
 			if (serviceName == "strongswan") {
-				ret.append(TDENetworkVPNType::StrongSwan);
+				ret.append(NetworkVPNType::StrongSwan);
 			}
 			if (serviceName == "vpnc") {
-				ret.append(TDENetworkVPNType::VPNC);
+				ret.append(NetworkVPNType::VPNC);
 			}
 
 			delete tdeconfig;
@@ -5146,7 +5146,7 @@ TDENetworkVPNTypeList TDENetworkConnectionManager_BackendNM::availableVPNTypes()
 	return ret;
 }
 
-TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManager_BackendNM::deactivateConnection(TQString uuid) {
+NetworkConnectionStatus::NetworkConnectionStatus NetworkConnectionManager_BackendNM::deactivateConnection(TQString uuid) {
 	TQT_DBusObjectPath existingConnection;
 	TQT_DBusError error;
 	bool ret;
@@ -5204,105 +5204,105 @@ TDENetworkConnectionStatus::TDENetworkConnectionStatus TDENetworkConnectionManag
 		}
 		else {
 			PRINT_WARNING(TQString("connection for provided uuid '%1' was not found").arg(uuid));
-			return TDENetworkConnectionStatus::Invalid;
+			return NetworkConnectionStatus::Invalid;
 		}
 	}
 	else {
 		PRINT_ERROR(TQString("invalid internal network-manager settings proxy object"));
-		return TDENetworkConnectionStatus::Invalid;
+		return NetworkConnectionStatus::Invalid;
 	}
 }
 
-TQStringList TDENetworkConnectionManager_BackendNM::validSettings() {
+TQStringList NetworkConnectionManager_BackendNM::validSettings() {
 	TQStringList ret;
 
-	ret.append("TDENetworkSingleIPConfiguration::ipAddress");
-	ret.append("TDENetworkSingleIPConfiguration::networkMask");
-	ret.append("TDENetworkSingleIPConfiguration::gateway");
+	ret.append("NetworkSingleIPConfiguration::ipAddress");
+	ret.append("NetworkSingleIPConfiguration::networkMask");
+	ret.append("NetworkSingleIPConfiguration::gateway");
 
-	ret.append("TDENetworkSingleRouteConfiguration::ipAddress");
-	ret.append("TDENetworkSingleRouteConfiguration::networkMask");
-	ret.append("TDENetworkSingleRouteConfiguration::gateway");
+	ret.append("NetworkSingleRouteConfiguration::ipAddress");
+	ret.append("NetworkSingleRouteConfiguration::networkMask");
+	ret.append("NetworkSingleRouteConfiguration::gateway");
 
-	ret.append("TDENetworkIEEE8021xConfiguration::valid");
-	ret.append("TDENetworkIEEE8021xConfiguration::allowedValid");
-	ret.append("TDENetworkIEEE8021xConfiguration::secretsValid");
-	ret.append("TDENetworkIEEE8021xConfiguration::type");
-	ret.append("TDENetworkIEEE8021xConfiguration::userName");
-	ret.append("TDENetworkIEEE8021xConfiguration::anonymousUserName");
-	ret.append("TDENetworkIEEE8021xConfiguration::pacFileName");
-	ret.append("TDENetworkIEEE8021xConfiguration::caCertificate");
-	ret.append("TDENetworkIEEE8021xConfiguration::additionalCAFilesPath");
-	ret.append("TDENetworkIEEE8021xConfiguration::authServerCertSubjectMatch");
-	ret.append("TDENetworkIEEE8021xConfiguration::alternateAuthServerCertSubjectMatch");
-	ret.append("TDENetworkIEEE8021xConfiguration::clientCertificate");
-	ret.append("TDENetworkIEEE8021xConfiguration::forcePEAPVersion");
-	ret.append("TDENetworkIEEE8021xConfiguration::forcePEAPLabel");
-	ret.append("TDENetworkIEEE8021xConfiguration::fastProvisioningFlags");
-	ret.append("TDENetworkIEEE8021xConfiguration::phase2NonEAPAuthMethod");
-	ret.append("TDENetworkIEEE8021xConfiguration::phase2EAPAuthMethod");
-	ret.append("TDENetworkIEEE8021xConfiguration::allowedPhase2NonEAPMethods");
-	ret.append("TDENetworkIEEE8021xConfiguration::allowedPhase2EAPMethods");
-	ret.append("TDENetworkIEEE8021xConfiguration::phase2CaCertificate");
-	ret.append("TDENetworkIEEE8021xConfiguration::phase2CaFilesPath");
-	ret.append("TDENetworkIEEE8021xConfiguration::phase2AuthServerCertSubjectMatch");
-	ret.append("TDENetworkIEEE8021xConfiguration::phase2AlternateAuthServerCertSubjectMatch");
-	ret.append("TDENetworkIEEE8021xConfiguration::phase2ClientCertificate");
-	ret.append("TDENetworkIEEE8021xConfiguration::password");
-	ret.append("TDENetworkIEEE8021xConfiguration::passwordFlags");
-	ret.append("TDENetworkIEEE8021xConfiguration::binaryPassword");
-	ret.append("TDENetworkIEEE8021xConfiguration::binaryPasswordFlags");
-	ret.append("TDENetworkIEEE8021xConfiguration::privateKey");
-	ret.append("TDENetworkIEEE8021xConfiguration::privateKeyPassword");
-	ret.append("TDENetworkIEEE8021xConfiguration::privateKeyPasswordFlags");
-	ret.append("TDENetworkIEEE8021xConfiguration::phase2PrivateKey");
-	ret.append("TDENetworkIEEE8021xConfiguration::phase2PrivateKeyPassword");
-	ret.append("TDENetworkIEEE8021xConfiguration::phase2PrivateKeyPasswordFlags");
-	ret.append("TDENetworkIEEE8021xConfiguration::forceSystemCaCertificates");
+	ret.append("NetworkIEEE8021xConfiguration::valid");
+	ret.append("NetworkIEEE8021xConfiguration::allowedValid");
+	ret.append("NetworkIEEE8021xConfiguration::secretsValid");
+	ret.append("NetworkIEEE8021xConfiguration::type");
+	ret.append("NetworkIEEE8021xConfiguration::userName");
+	ret.append("NetworkIEEE8021xConfiguration::anonymousUserName");
+	ret.append("NetworkIEEE8021xConfiguration::pacFileName");
+	ret.append("NetworkIEEE8021xConfiguration::caCertificate");
+	ret.append("NetworkIEEE8021xConfiguration::additionalCAFilesPath");
+	ret.append("NetworkIEEE8021xConfiguration::authServerCertSubjectMatch");
+	ret.append("NetworkIEEE8021xConfiguration::alternateAuthServerCertSubjectMatch");
+	ret.append("NetworkIEEE8021xConfiguration::clientCertificate");
+	ret.append("NetworkIEEE8021xConfiguration::forcePEAPVersion");
+	ret.append("NetworkIEEE8021xConfiguration::forcePEAPLabel");
+	ret.append("NetworkIEEE8021xConfiguration::fastProvisioningFlags");
+	ret.append("NetworkIEEE8021xConfiguration::phase2NonEAPAuthMethod");
+	ret.append("NetworkIEEE8021xConfiguration::phase2EAPAuthMethod");
+	ret.append("NetworkIEEE8021xConfiguration::allowedPhase2NonEAPMethods");
+	ret.append("NetworkIEEE8021xConfiguration::allowedPhase2EAPMethods");
+	ret.append("NetworkIEEE8021xConfiguration::phase2CaCertificate");
+	ret.append("NetworkIEEE8021xConfiguration::phase2CaFilesPath");
+	ret.append("NetworkIEEE8021xConfiguration::phase2AuthServerCertSubjectMatch");
+	ret.append("NetworkIEEE8021xConfiguration::phase2AlternateAuthServerCertSubjectMatch");
+	ret.append("NetworkIEEE8021xConfiguration::phase2ClientCertificate");
+	ret.append("NetworkIEEE8021xConfiguration::password");
+	ret.append("NetworkIEEE8021xConfiguration::passwordFlags");
+	ret.append("NetworkIEEE8021xConfiguration::binaryPassword");
+	ret.append("NetworkIEEE8021xConfiguration::binaryPasswordFlags");
+	ret.append("NetworkIEEE8021xConfiguration::privateKey");
+	ret.append("NetworkIEEE8021xConfiguration::privateKeyPassword");
+	ret.append("NetworkIEEE8021xConfiguration::privateKeyPasswordFlags");
+	ret.append("NetworkIEEE8021xConfiguration::phase2PrivateKey");
+	ret.append("NetworkIEEE8021xConfiguration::phase2PrivateKeyPassword");
+	ret.append("NetworkIEEE8021xConfiguration::phase2PrivateKeyPasswordFlags");
+	ret.append("NetworkIEEE8021xConfiguration::forceSystemCaCertificates");
 
-	ret.append("TDENetworkPPPConfiguration::valid");
-	ret.append("TDENetworkPPPConfiguration::requireServerAuthentication");
-	ret.append("TDENetworkPPPConfiguration::flags");
-	ret.append("TDENetworkPPPConfiguration::baudRate");
-	ret.append("TDENetworkPPPConfiguration::mru");
-	ret.append("TDENetworkPPPConfiguration::mtu");
-	ret.append("TDENetworkPPPConfiguration::lcpEchoPingInterval");
-	ret.append("TDENetworkPPPConfiguration::lcpEchoFailureThreshold");
+	ret.append("NetworkPPPConfiguration::valid");
+	ret.append("NetworkPPPConfiguration::requireServerAuthentication");
+	ret.append("NetworkPPPConfiguration::flags");
+	ret.append("NetworkPPPConfiguration::baudRate");
+	ret.append("NetworkPPPConfiguration::mru");
+	ret.append("NetworkPPPConfiguration::mtu");
+	ret.append("NetworkPPPConfiguration::lcpEchoPingInterval");
+	ret.append("NetworkPPPConfiguration::lcpEchoFailureThreshold");
 
-	ret.append("TDENetworkPPPOEConfiguration::valid");
-	ret.append("TDENetworkPPPOEConfiguration::secretsValid");
-	ret.append("TDENetworkPPPOEConfiguration::networkServiceProvider");
-	ret.append("TDENetworkPPPOEConfiguration::username");
-	ret.append("TDENetworkPPPOEConfiguration::password");
-	ret.append("TDENetworkPPPOEConfiguration::passwordFlags");
+	ret.append("NetworkPPPOEConfiguration::valid");
+	ret.append("NetworkPPPOEConfiguration::secretsValid");
+	ret.append("NetworkPPPOEConfiguration::networkServiceProvider");
+	ret.append("NetworkPPPOEConfiguration::username");
+	ret.append("NetworkPPPOEConfiguration::password");
+	ret.append("NetworkPPPOEConfiguration::passwordFlags");
 
-	ret.append("TDENetworkSerialConfiguration::valid");
-	ret.append("TDENetworkSerialConfiguration::baudRate");
-	ret.append("TDENetworkSerialConfiguration::byteWidth");
-	ret.append("TDENetworkSerialConfiguration::parity");
-	ret.append("TDENetworkSerialConfiguration::stopBits");
-	ret.append("TDENetworkSerialConfiguration::txDelay");
+	ret.append("NetworkSerialConfiguration::valid");
+	ret.append("NetworkSerialConfiguration::baudRate");
+	ret.append("NetworkSerialConfiguration::byteWidth");
+	ret.append("NetworkSerialConfiguration::parity");
+	ret.append("NetworkSerialConfiguration::stopBits");
+	ret.append("NetworkSerialConfiguration::txDelay");
 
-	ret.append("TDENetworkCDMAConfiguration::valid");
-	ret.append("TDENetworkCDMAConfiguration::secretsValid");
-	ret.append("TDENetworkCDMAConfiguration::providerDataNumber");
-	ret.append("TDENetworkCDMAConfiguration::username");
-	ret.append("TDENetworkCDMAConfiguration::password");
-	ret.append("TDENetworkCDMAConfiguration::passwordFlags");
+	ret.append("NetworkCDMAConfiguration::valid");
+	ret.append("NetworkCDMAConfiguration::secretsValid");
+	ret.append("NetworkCDMAConfiguration::providerDataNumber");
+	ret.append("NetworkCDMAConfiguration::username");
+	ret.append("NetworkCDMAConfiguration::password");
+	ret.append("NetworkCDMAConfiguration::passwordFlags");
 
-	ret.append("TDENetworkGSMConfiguration::valid");
-	ret.append("TDENetworkGSMConfiguration::secretsValid");
-	ret.append("TDENetworkGSMConfiguration::providerDataNumber");
-	ret.append("TDENetworkGSMConfiguration::username");
-	ret.append("TDENetworkGSMConfiguration::password");
-	ret.append("TDENetworkGSMConfiguration::passwordFlags");
-	ret.append("TDENetworkGSMConfiguration::accessPointName");
-	ret.append("TDENetworkGSMConfiguration::networkID");
-	ret.append("TDENetworkGSMConfiguration::networkType");
-	ret.append("TDENetworkGSMConfiguration::pin");
-	ret.append("TDENetworkGSMConfiguration::pinFlags");
-	ret.append("TDENetworkGSMConfiguration::allowedFrequencyBands");
-	ret.append("TDENetworkGSMConfiguration::allowRoaming");
+	ret.append("NetworkGSMConfiguration::valid");
+	ret.append("NetworkGSMConfiguration::secretsValid");
+	ret.append("NetworkGSMConfiguration::providerDataNumber");
+	ret.append("NetworkGSMConfiguration::username");
+	ret.append("NetworkGSMConfiguration::password");
+	ret.append("NetworkGSMConfiguration::passwordFlags");
+	ret.append("NetworkGSMConfiguration::accessPointName");
+	ret.append("NetworkGSMConfiguration::networkID");
+	ret.append("NetworkGSMConfiguration::networkType");
+	ret.append("NetworkGSMConfiguration::pin");
+	ret.append("NetworkGSMConfiguration::pinFlags");
+	ret.append("NetworkGSMConfiguration::allowedFrequencyBands");
+	ret.append("NetworkGSMConfiguration::allowRoaming");
 
 	ret.append("TDENetworkWiFiSecurityConfiguration::valid");
 	ret.append("TDENetworkWiFiSecurityConfiguration::secretsValid");
@@ -5325,87 +5325,87 @@ TQStringList TDENetworkConnectionManager_BackendNM::validSettings() {
 	ret.append("TDENetworkWiFiSecurityConfiguration::leapPassword");
 	ret.append("TDENetworkWiFiSecurityConfiguration::leapPasswordFlags");
 
-	ret.append("TDENetworkIPConfiguration::valid");
-	ret.append("TDENetworkIPConfiguration::connectionFlags");
-	ret.append("TDENetworkIPConfiguration::ipConfigurations");
-	ret.append("TDENetworkIPConfiguration::routeConfigurations");
-	ret.append("TDENetworkIPConfiguration::broadcast");
-	ret.append("TDENetworkIPConfiguration::destination");
-	ret.append("TDENetworkIPConfiguration::resolvers");
-	ret.append("TDENetworkIPConfiguration::searchDomains");
-	ret.append("TDENetworkIPConfiguration::dhcpClientIdentifier");
+	ret.append("NetworkIPConfiguration::valid");
+	ret.append("NetworkIPConfiguration::connectionFlags");
+	ret.append("NetworkIPConfiguration::ipConfigurations");
+	ret.append("NetworkIPConfiguration::routeConfigurations");
+	ret.append("NetworkIPConfiguration::broadcast");
+	ret.append("NetworkIPConfiguration::destination");
+	ret.append("NetworkIPConfiguration::resolvers");
+	ret.append("NetworkIPConfiguration::searchDomains");
+	ret.append("NetworkIPConfiguration::dhcpClientIdentifier");
 
-	ret.append("TDENetworkConnection::UUID");
-	ret.append("TDENetworkConnection::friendlyName");
-	ret.append("TDENetworkConnection::ipConfig");
-	ret.append("TDENetworkConnection::lockedHWAddress");
-	ret.append("TDENetworkConnection::manualHWAddress");
-	ret.append("TDENetworkConnection::readOnly");
-	ret.append("TDENetworkConnection::autoConnect");
-	ret.append("TDENetworkConnection::fullDuplex");
-	ret.append("TDENetworkConnection::requireIPV4");
-	ret.append("TDENetworkConnection::requireIPV6");
-	ret.append("TDENetworkConnection::mtu");
-	ret.append("TDENetworkConnection::eapConfig");
-	ret.append("TDENetworkConnection::pppConfig");
-	ret.append("TDENetworkConnection::pppoeConfig");
-	ret.append("TDENetworkConnection::serialConfig");
-	ret.append("TDENetworkConnection::authorizedUsers");
-	ret.append("TDENetworkConnection::masterConnectionUUID");
-	ret.append("TDENetworkConnection::slaveType");
-	ret.append("TDENetworkConnection::lastKnownConnection");
+	ret.append("NetworkConnection::UUID");
+	ret.append("NetworkConnection::friendlyName");
+	ret.append("NetworkConnection::ipConfig");
+	ret.append("NetworkConnection::lockedHWAddress");
+	ret.append("NetworkConnection::manualHWAddress");
+	ret.append("NetworkConnection::readOnly");
+	ret.append("NetworkConnection::autoConnect");
+	ret.append("NetworkConnection::fullDuplex");
+	ret.append("NetworkConnection::requireIPV4");
+	ret.append("NetworkConnection::requireIPV6");
+	ret.append("NetworkConnection::mtu");
+	ret.append("NetworkConnection::eapConfig");
+	ret.append("NetworkConnection::pppConfig");
+	ret.append("NetworkConnection::pppoeConfig");
+	ret.append("NetworkConnection::serialConfig");
+	ret.append("NetworkConnection::authorizedUsers");
+	ret.append("NetworkConnection::masterConnectionUUID");
+	ret.append("NetworkConnection::slaveType");
+	ret.append("NetworkConnection::lastKnownConnection");
 
-	ret.append("TDEWiFiConnection::SSID");
-	ret.append("TDEWiFiConnection::operatingMode");
-	ret.append("TDEWiFiConnection::bandRestriction");
-	ret.append("TDEWiFiConnection::channelRestriction");
-	ret.append("TDEWiFiConnection::bitRateRestriction");
-	ret.append("TDEWiFiConnection::powerRestriction");
-	ret.append("TDEWiFiConnection::accessPointRestriction");
-	ret.append("TDEWiFiConnection::blacklistedBSSIDs");
-	ret.append("TDEWiFiConnection::heardBSSIDs");
-	ret.append("TDEWiFiConnection::isHiddenNetwork");
-	ret.append("TDEWiFiConnection::securityRequired");
-	ret.append("TDEWiFiConnection::securitySettings");
+	ret.append("WiFiConnection::SSID");
+	ret.append("WiFiConnection::operatingMode");
+	ret.append("WiFiConnection::bandRestriction");
+	ret.append("WiFiConnection::channelRestriction");
+	ret.append("WiFiConnection::bitRateRestriction");
+	ret.append("WiFiConnection::powerRestriction");
+	ret.append("WiFiConnection::accessPointRestriction");
+	ret.append("WiFiConnection::blacklistedBSSIDs");
+	ret.append("WiFiConnection::heardBSSIDs");
+	ret.append("WiFiConnection::isHiddenNetwork");
+	ret.append("WiFiConnection::securityRequired");
+	ret.append("WiFiConnection::securitySettings");
 
-	ret.append("TDEWiredInfinibandConnection::transportMode");
+	ret.append("WiredInfinibandConnection::transportMode");
 
-	ret.append("TDEVPNConnection::vpnPluginID");
-	ret.append("TDEVPNConnection::lockedUserName");
-	ret.append("TDEVPNConnection::pluginData");
-	ret.append("TDEVPNConnection::secretsValid");
-	ret.append("TDEVPNConnection::pluginSecrets");
+	ret.append("VPNConnection::vpnPluginID");
+	ret.append("VPNConnection::lockedUserName");
+	ret.append("VPNConnection::pluginData");
+	ret.append("VPNConnection::secretsValid");
+	ret.append("VPNConnection::pluginSecrets");
 
-	ret.append("TDEWiMaxConnection::networkServiceProvider");
+	ret.append("WiMaxConnection::networkServiceProvider");
 
-	ret.append("TDEVLANConnection::kernelName");
-	ret.append("TDEVLANConnection::parentConnectionUUID");
-	ret.append("TDEVLANConnection::vlanID");
-	ret.append("TDEVLANConnection::vlanFlags");
-	ret.append("TDEVLANConnection::ingressPriorityMap");
-	ret.append("TDEVLANConnection::egressPriorityMap");
+	ret.append("VLANConnection::kernelName");
+	ret.append("VLANConnection::parentConnectionUUID");
+	ret.append("VLANConnection::vlanID");
+	ret.append("VLANConnection::vlanFlags");
+	ret.append("VLANConnection::ingressPriorityMap");
+	ret.append("VLANConnection::egressPriorityMap");
 
-	ret.append("TDEOLPCMeshConnection::SSID");
-	ret.append("TDEOLPCMeshConnection::channel");
-	ret.append("TDEOLPCMeshConnection::anycastDHCPHWAddress");
+	ret.append("OLPCMeshConnection::SSID");
+	ret.append("OLPCMeshConnection::channel");
+	ret.append("OLPCMeshConnection::anycastDHCPHWAddress");
 
-	ret.append("TDEBluetoothConnection::type");
+	ret.append("BluetoothConnection::type");
 
-	ret.append("TDEModemConnection::type");
-	ret.append("TDEModemConnection::cdmaConfig");
-	ret.append("TDEModemConnection::gsmConfig");
+	ret.append("ModemConnection::type");
+	ret.append("ModemConnection::cdmaConfig");
+	ret.append("ModemConnection::gsmConfig");
 
-	ret.append("TDEWiredInfinibandConnection::transportMode");
+	ret.append("WiredInfinibandConnection::transportMode");
 
 	return ret;
 }
 
-TDENetworkWiFiAPInfo* TDENetworkConnectionManager_BackendNM::getAccessPointDetails(TQString dbusPath) {
+NetworkWiFiAPInfo* NetworkConnectionManager_BackendNM::getAccessPointDetails(TQString dbusPath) {
 	if (dbusPath == "") {
 		return NULL;
 	}
 
-	TDENetworkWiFiAPInfo* apInfo = new TDENetworkWiFiAPInfo;
+	NetworkWiFiAPInfo* apInfo = new NetworkWiFiAPInfo;
 	TQT_DBusError error;
 	unsigned int index;
 	DBus::AccessPointProxy accessPoint(NM_DBUS_SERVICE, dbusPath);
@@ -5436,15 +5436,15 @@ TDENetworkWiFiAPInfo* TDENetworkConnectionManager_BackendNM::getAccessPointDetai
 	return apInfo;
 }
 
-TDENetworkHWNeighborList* TDENetworkConnectionManager_BackendNM::siteSurvey() {
+NetworkHWNeighborList* NetworkConnectionManager_BackendNM::siteSurvey() {
 	TQT_DBusError error;
 	bool ret;
 
-	TDENetworkDeviceType::TDENetworkDeviceType myDeviceType = deviceType();
+	NetworkDeviceType::NetworkDeviceType myDeviceType = deviceType();
 	d->m_dbusDeviceString = deviceInterfaceString(m_macAddress);
-	clearTDENetworkHWNeighborList();
+	clearNetworkHWNeighborList();
 
-	if (myDeviceType == TDENetworkDeviceType::WiFi) {
+	if (myDeviceType == NetworkDeviceType::WiFi) {
 		DBus::WiFiDeviceProxy wiFiDevice(NM_DBUS_SERVICE, d->m_dbusDeviceString);
 		wiFiDevice.setConnection(TQT_DBusConnection::systemBus());
 		// FIXME
@@ -5454,7 +5454,7 @@ TDENetworkHWNeighborList* TDENetworkConnectionManager_BackendNM::siteSurvey() {
 		if (ret) {
 			TQT_DBusObjectPathList::iterator it;
 			for (it = accessPoints.begin(); it != accessPoints.end(); ++it) {
-				TDENetworkWiFiAPInfo* apInfo = getAccessPointDetails(TQString(*it));
+				NetworkWiFiAPInfo* apInfo = getAccessPointDetails(TQString(*it));
 				if (apInfo) {
 					m_hwNeighborList->append(apInfo);
 					// Ensure that this AP is monitored for changes
@@ -5467,7 +5467,7 @@ TDENetworkHWNeighborList* TDENetworkConnectionManager_BackendNM::siteSurvey() {
 	return m_hwNeighborList;
 }
 
-bool TDENetworkConnectionManager_BackendNM::networkingEnabled() {
+bool NetworkConnectionManager_BackendNM::networkingEnabled() {
 	if (d->m_networkManagerProxy) {
 		bool ret;
 		TQT_DBusError error;
@@ -5486,7 +5486,7 @@ bool TDENetworkConnectionManager_BackendNM::networkingEnabled() {
 	}
 }
 
-bool TDENetworkConnectionManager_BackendNM::wiFiHardwareEnabled() {
+bool NetworkConnectionManager_BackendNM::wiFiHardwareEnabled() {
 	if (d->m_networkManagerProxy) {
 		bool ret;
 		TQT_DBusError error;
@@ -5505,7 +5505,7 @@ bool TDENetworkConnectionManager_BackendNM::wiFiHardwareEnabled() {
 	}
 }
 
-bool TDENetworkConnectionManager_BackendNM::enableNetworking(bool enable) {
+bool NetworkConnectionManager_BackendNM::enableNetworking(bool enable) {
 	// FIXME
 	// Yes, this abuses the Sleep command
 	// Is there a better way to do it?
@@ -5529,7 +5529,7 @@ bool TDENetworkConnectionManager_BackendNM::enableNetworking(bool enable) {
 	}
 }
 
-bool TDENetworkConnectionManager_BackendNM::enableWiFi(bool enable) {
+bool NetworkConnectionManager_BackendNM::enableWiFi(bool enable) {
 	if (d->m_networkManagerProxy) {
 		TQT_DBusError error;
 		d->m_networkManagerProxy->setWirelessEnabled(enable, error);
@@ -5547,7 +5547,7 @@ bool TDENetworkConnectionManager_BackendNM::enableWiFi(bool enable) {
 	}
 }
 
-bool TDENetworkConnectionManager_BackendNM::wiFiEnabled() {
+bool NetworkConnectionManager_BackendNM::wiFiEnabled() {
 	if (d->m_networkManagerProxy) {
 		bool ret;
 		TQT_DBusError error;
@@ -5566,7 +5566,7 @@ bool TDENetworkConnectionManager_BackendNM::wiFiEnabled() {
 	}
 }
 
-TQStringList TDENetworkConnectionManager_BackendNM::defaultNetworkDevices() {
+TQStringList NetworkConnectionManager_BackendNM::defaultNetworkDevices() {
 	// Cycle through all available connections and see which one is default, then find all devices for that connection...
 	TQStringList ret;
 
@@ -5603,14 +5603,14 @@ TQStringList TDENetworkConnectionManager_BackendNM::defaultNetworkDevices() {
 	}
 }
 
-TDENetworkConnectionManager_BackendNMPrivate::TDENetworkConnectionManager_BackendNMPrivate(TDENetworkConnectionManager_BackendNM* parent) : m_networkManagerProxy(NULL), m_networkManagerSettings(NULL), m_networkDeviceProxy(NULL), m_wiFiDeviceProxy(NULL), m_vpnProxy(NULL), nonReentrantCallActive(false), vpn_service_error_notified(false), device_autoconnect_error_notified(false), m_parent(parent), m_prevDeviceState(-1) {
+NetworkConnectionManager_BackendNMPrivate::NetworkConnectionManager_BackendNMPrivate(NetworkConnectionManager_BackendNM* parent) : m_networkManagerProxy(NULL), m_networkManagerSettings(NULL), m_networkDeviceProxy(NULL), m_wiFiDeviceProxy(NULL), m_vpnProxy(NULL), nonReentrantCallActive(false), vpn_service_error_notified(false), device_autoconnect_error_notified(false), m_parent(parent), m_prevDeviceState(-1) {
 	// Set up global signal handler
 	m_dbusSignalConnection = new TQT_DBusConnection(TQT_DBusConnection::systemBus());
-	m_dbusSignalReceiver = new TDENetworkConnectionManager_BackendNM_DBusSignalReceiver(this);
+	m_dbusSignalReceiver = new NetworkConnectionManager_BackendNM_DBusSignalReceiver(this);
 	m_dbusSignalConnection->connect(m_dbusSignalReceiver, TQT_SLOT(dbusSignal(const TQT_DBusMessage&)));
 }
 
-TDENetworkConnectionManager_BackendNMPrivate::~TDENetworkConnectionManager_BackendNMPrivate() {
+NetworkConnectionManager_BackendNMPrivate::~NetworkConnectionManager_BackendNMPrivate() {
 	// Destroy global signal handler
 	if (m_dbusSignalConnection) delete m_dbusSignalConnection;
 	if (m_dbusSignalReceiver) delete m_dbusSignalReceiver;

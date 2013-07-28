@@ -25,8 +25,8 @@
 
 namespace TDEHW {
 
-namespace TDESystemFormFactor {
-enum TDESystemFormFactor {
+namespace SystemFormFactor {
+enum SystemFormFactor {
 	Unclassified,
 	Desktop,
 	Laptop,
@@ -35,8 +35,8 @@ enum TDESystemFormFactor {
 };
 };
 
-namespace TDESystemPowerState {
-enum TDESystemPowerState {
+namespace SystemPowerState {
+enum SystemPowerState {
 	Active,
 	Standby,
 	Suspend,
@@ -46,8 +46,8 @@ enum TDESystemPowerState {
 };
 };
 
-namespace TDESystemHibernationMethod {
-enum TDESystemHibernationMethod {
+namespace SystemHibernationMethod {
+enum SystemHibernationMethod {
 	Unsupported,
 	Platform,
 	Shutdown,
@@ -57,42 +57,42 @@ enum TDESystemHibernationMethod {
 };
 };
 
-typedef TQValueList<TDESystemPowerState::TDESystemPowerState> TDESystemPowerStateList;
-typedef TQValueList<TDESystemHibernationMethod::TDESystemHibernationMethod> TDESystemHibernationMethodList;
+typedef TQValueList<SystemPowerState::SystemPowerState> SystemPowerStateList;
+typedef TQValueList<SystemHibernationMethod::SystemHibernationMethod> SystemHibernationMethodList;
 
-class TDEHW_EXPORT TDERootSystemDevice : public TDEGenericDevice
+class TDEHW_EXPORT RootSystemDevice : public GenericDevice
 {
 	public:
 		/**
 		*  Constructor.
 		*  @param Device type
 		*/
-		TDERootSystemDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn=TQString::null);
+		RootSystemDevice(GenericDeviceType::GenericDeviceType dt, TQString dn=TQString::null);
 		
 		/**
 		* Destructor.
 		*/
-		~TDERootSystemDevice();
+		~RootSystemDevice();
 
 		/**
-		* @return a TDESystemFormFactor::TDESystemFormFactor with the system's form factor
+		* @return a SystemFormFactor::SystemFormFactor with the system's form factor
 		*/
-		TDESystemFormFactor::TDESystemFormFactor formFactor();
+		SystemFormFactor::SystemFormFactor formFactor();
 
 		/**
-		* @return a TDESystemPowerStateList with all available power states
+		* @return a SystemPowerStateList with all available power states
 		*/
-		TDESystemPowerStateList powerStates();
+		SystemPowerStateList powerStates();
 
 		/**
-		* @return a TDESystemHibernationMethodList with all available hibernation methods
+		* @return a SystemHibernationMethodList with all available hibernation methods
 		*/
-		TDESystemHibernationMethodList hibernationMethods();
+		SystemHibernationMethodList hibernationMethods();
 
 		/**
-		* @return a TDESystemHibernationMethod::TDESystemHibernationMethod with the current hibernation method
+		* @return a SystemHibernationMethod::SystemHibernationMethod with the current hibernation method
 		*/
-		TDESystemHibernationMethod::TDESystemHibernationMethod hibernationMethod();
+		SystemHibernationMethod::SystemHibernationMethod hibernationMethod();
 
 		/**
 		* @return an unsigned long with the number of bytes required to hibernate
@@ -130,40 +130,40 @@ class TDEHW_EXPORT TDERootSystemDevice : public TDEGenericDevice
 		bool canReboot();
 
 		/**
-		* @param hm a TDESystemHibernationMethod::TDESystemHibernationMethod with the desired hibernation method
+		* @param hm a SystemHibernationMethod::SystemHibernationMethod with the desired hibernation method
 		*/
-		void setHibernationMethod(TDESystemHibernationMethod::TDESystemHibernationMethod hm);
+		void setHibernationMethod(SystemHibernationMethod::SystemHibernationMethod hm);
 
 		/**
-		* @param ps a TDESystemPowerState::TDESystemPowerState with the desired power state
+		* @param ps a SystemPowerState::SystemPowerState with the desired power state
 		* @return TRUE if power state was set
 		*/
-		bool setPowerState(TDESystemPowerState::TDESystemPowerState ps);
+		bool setPowerState(SystemPowerState::SystemPowerState ps);
 
 	protected:
 		/**
-		* @param ff a TDESystemFormFactor::TDESystemFormFactor with the system's form factor
+		* @param ff a SystemFormFactor::SystemFormFactor with the system's form factor
 		* @internal
 		*/
-		void internalSetFormFactor(TDESystemFormFactor::TDESystemFormFactor ff);
+		void internalSetFormFactor(SystemFormFactor::SystemFormFactor ff);
 
 		/**
-		* @param ps a TDESystemPowerStateList with all available power states
+		* @param ps a SystemPowerStateList with all available power states
 		* @internal
 		*/
-		void internalSetPowerStates(TDESystemPowerStateList ps);
+		void internalSetPowerStates(SystemPowerStateList ps);
 
 		/**
-		* @param hm a TDESystemHibernationMethodList with all available hibernation methods
+		* @param hm a SystemHibernationMethodList with all available hibernation methods
 		* @internal
 		*/
-		void internalSetHibernationMethods(TDESystemHibernationMethodList hm);
+		void internalSetHibernationMethods(SystemHibernationMethodList hm);
 
 		/**
-		* @param hm a TDESystemHibernationMethod::TDESystemHibernationMethod with the current hibernation method
+		* @param hm a SystemHibernationMethod::SystemHibernationMethod with the current hibernation method
 		* @internal
 		*/
-		void internalSetHibernationMethod(TDESystemHibernationMethod::TDESystemHibernationMethod hm);
+		void internalSetHibernationMethod(SystemHibernationMethod::SystemHibernationMethod hm);
 
 		/**
 		* @param sz an unsigned long with the number of bytes required to hibernate
@@ -172,13 +172,13 @@ class TDEHW_EXPORT TDERootSystemDevice : public TDEGenericDevice
 		void internalSetDiskSpaceNeededForHibernation(unsigned long sz);
 
 	private:
-		TDESystemFormFactor::TDESystemFormFactor m_formFactor;
-		TDESystemPowerStateList m_powerStates;
-		TDESystemHibernationMethodList m_hibernationMethods;
-		TDESystemHibernationMethod::TDESystemHibernationMethod m_hibernationMethod;
+		SystemFormFactor::SystemFormFactor m_formFactor;
+		SystemPowerStateList m_powerStates;
+		SystemHibernationMethodList m_hibernationMethods;
+		SystemHibernationMethod::SystemHibernationMethod m_hibernationMethod;
 		unsigned long m_hibernationSpace;
 
-	friend class TDEHardwareDevices;
+	friend class HardwareDevices;
 };
 
 } // namespace TDEHW

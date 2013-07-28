@@ -69,31 +69,31 @@ typedef TQMap<uint, TQT_DBusError> NMAddConnectionAsyncErrorResponseMap;
 typedef TQValueList<TQT_DBusObjectPath> TQT_DBusObjectPathList;
 
 
-class TDENetworkConnectionManager_BackendNM;
-class TDENetworkConnectionManager_BackendNMPrivate;
+class NetworkConnectionManager_BackendNM;
+class NetworkConnectionManager_BackendNMPrivate;
 
-class TDENetworkConnectionManager_BackendNM_DBusSignalReceiver : public TQObject
+class NetworkConnectionManager_BackendNM_DBusSignalReceiver : public TQObject
 {
 	Q_OBJECT
 
 	public:
-		TDENetworkConnectionManager_BackendNM_DBusSignalReceiver(TDENetworkConnectionManager_BackendNMPrivate*);
-		~TDENetworkConnectionManager_BackendNM_DBusSignalReceiver();
+		NetworkConnectionManager_BackendNM_DBusSignalReceiver(NetworkConnectionManager_BackendNMPrivate*);
+		~NetworkConnectionManager_BackendNM_DBusSignalReceiver();
 
 	public slots:
 		void dbusSignal(const TQT_DBusMessage&);
 
 	private:
-		TDENetworkConnectionManager_BackendNMPrivate* m_parent;
+		NetworkConnectionManager_BackendNMPrivate* m_parent;
 };
 
-class TDENetworkConnectionManager_BackendNMPrivate : public TQObject
+class NetworkConnectionManager_BackendNMPrivate : public TQObject
 {
 	Q_OBJECT
 
 	public:
-		TDENetworkConnectionManager_BackendNMPrivate(TDENetworkConnectionManager_BackendNM*);
-		~TDENetworkConnectionManager_BackendNMPrivate();
+		NetworkConnectionManager_BackendNMPrivate(NetworkConnectionManager_BackendNM*);
+		~NetworkConnectionManager_BackendNMPrivate();
 
 	public:
 		DBus::NetworkManagerProxy* m_networkManagerProxy;
@@ -131,13 +131,13 @@ class TDENetworkConnectionManager_BackendNMPrivate : public TQObject
 		void internalProcessAPPropertiesChanged(const TQMap<TQString, TQT_DBusVariant>&);
 
 	private:
-		TDENetworkConnectionManager_BackendNM* m_parent;
+		NetworkConnectionManager_BackendNM* m_parent;
 		TQMap<TQString, DBus::AccessPointProxy*> m_accessPointProxyList;
 		TQT_DBusConnection *m_dbusSignalConnection;
-		TDENetworkConnectionManager_BackendNM_DBusSignalReceiver *m_dbusSignalReceiver;
+		NetworkConnectionManager_BackendNM_DBusSignalReceiver *m_dbusSignalReceiver;
 		TQ_UINT32 m_prevDeviceState;
 
-		friend class TDENetworkConnectionManager_BackendNM_DBusSignalReceiver;
+		friend class NetworkConnectionManager_BackendNM_DBusSignalReceiver;
 };
 
 } // namespace TDEHW

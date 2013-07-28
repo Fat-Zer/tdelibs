@@ -26,10 +26,10 @@ class TQSocketNotifier;
 
 namespace TDEHW {
 
-class TDEHardwareDevices;
+class HardwareDevices;
 
-namespace TDEEventDeviceType {
-enum TDEEventDeviceType {
+namespace EventDeviceType {
+enum EventDeviceType {
 	Unknown,
 	ACPILidSwitch,
 	ACPISleepButton,
@@ -39,8 +39,8 @@ enum TDEEventDeviceType {
 };
 
 // Keep friendlySwitchList() in hardwaredevices.cpp in sync with this enum
-namespace TDESwitchType {
-enum TDESwitchType {
+namespace SwitchType {
+enum SwitchType {
 	Null			= 0x00000000,
 	Lid			= 0x00000001,
 	TabletMode		= 0x00000002,
@@ -59,23 +59,23 @@ enum TDESwitchType {
 	LineInInsert		= 0x00004000
 };
 
-inline TDESwitchType operator|(TDESwitchType a, TDESwitchType b)
+inline SwitchType operator|(SwitchType a, SwitchType b)
 {
-	return static_cast<TDESwitchType>(static_cast<int>(a) | static_cast<int>(b));
+	return static_cast<SwitchType>(static_cast<int>(a) | static_cast<int>(b));
 }
 
-inline TDESwitchType operator&(TDESwitchType a, TDESwitchType b)
+inline SwitchType operator&(SwitchType a, SwitchType b)
 {
-	return static_cast<TDESwitchType>(static_cast<int>(a) & static_cast<int>(b));
+	return static_cast<SwitchType>(static_cast<int>(a) & static_cast<int>(b));
 }
 
-inline TDESwitchType operator~(TDESwitchType a)
+inline SwitchType operator~(SwitchType a)
 {
-	return static_cast<TDESwitchType>(~static_cast<int>(a));
+	return static_cast<SwitchType>(~static_cast<int>(a));
 }
 };
 
-class TDEHW_EXPORT TDEEventDevice : public TDEGenericDevice
+class TDEHW_EXPORT EventDevice : public GenericDevice
 {
 	Q_OBJECT
 
@@ -84,58 +84,58 @@ class TDEHW_EXPORT TDEEventDevice : public TDEGenericDevice
 		*  Constructor.
 		*  @param Device type
 		*/
-		TDEEventDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn=TQString::null);
+		EventDevice(GenericDeviceType::GenericDeviceType dt, TQString dn=TQString::null);
 		
 		/**
 		* Destructor.
 		*/
-		~TDEEventDevice();
+		~EventDevice();
 
 		/**
-		* @return a TDEEventDeviceType::TDEEventDeviceType with the event device type, if known
+		* @return a EventDeviceType::EventDeviceType with the event device type, if known
 		*/
-		TDEEventDeviceType::TDEEventDeviceType eventType();
+		EventDeviceType::EventDeviceType eventType();
 
 		/**
-		* @return a TDESwitchType::TDESwitchType with all switches provided by this device
+		* @return a SwitchType::SwitchType with all switches provided by this device
 		*/
-		TDESwitchType::TDESwitchType providedSwitches();
+		SwitchType::SwitchType providedSwitches();
 
 		/**
-		* @return a TDESwitchType::TDESwitchType with all active switches provided by this device
+		* @return a SwitchType::SwitchType with all active switches provided by this device
 		*/
-		TDESwitchType::TDESwitchType activeSwitches();
+		SwitchType::SwitchType activeSwitches();
 
 		/**
-		* @param switches a TDESwitchType::TDESwitchType with any switch flags set
+		* @param switches a SwitchType::SwitchType with any switch flags set
 		* @return a TQStringList with friendly names for all set switch flags
 		*/
-		static TQStringList friendlySwitchList(TDESwitchType::TDESwitchType switches);
+		static TQStringList friendlySwitchList(SwitchType::SwitchType switches);
 
 	protected:
 		/**
-		* @param et a TDEEventDeviceType::TDEEventDeviceType with the event device type, if known
+		* @param et a EventDeviceType::EventDeviceType with the event device type, if known
 		* @internal
 		*/
-		void internalSetEventType(TDEEventDeviceType::TDEEventDeviceType et);
+		void internalSetEventType(EventDeviceType::EventDeviceType et);
 
 		/**
-		* @param sl a TDESwitchType::TDESwitchType with all switches provided by this device
+		* @param sl a SwitchType::SwitchType with all switches provided by this device
 		* @internal
 		*/
-		void internalSetProvidedSwitches(TDESwitchType::TDESwitchType sl);
+		void internalSetProvidedSwitches(SwitchType::SwitchType sl);
 
 		/**
-		* @param sl a TDESwitchType::TDESwitchType with all active switches provided by this device
+		* @param sl a SwitchType::SwitchType with all active switches provided by this device
 		* @internal
 		*/
-		void internalSetActiveSwitches(TDESwitchType::TDESwitchType sl);
+		void internalSetActiveSwitches(SwitchType::SwitchType sl);
 
 		/**
 		* @param hwmanager the master hardware manager
 		* @internal
 		*/
-		void internalStartFdMonitoring(TDEHardwareDevices* hwmanager);
+		void internalStartFdMonitoring(HardwareDevices* hwmanager);
 
 	protected slots:
 		void eventReceived();
@@ -144,20 +144,20 @@ class TDEHW_EXPORT TDEEventDevice : public TDEGenericDevice
 		/**
 		* @param keycode the code of the key that was pressed/released
 		* See include/linux/input.h for a complete list of keycodes
-		* @param device a TDEEventDevice* with the device that received the event
+		* @param device a EventDevice* with the device that received the event
 		*/
-		void keyPressed(unsigned int keycode, TDEEventDevice* device);
+		void keyPressed(unsigned int keycode, EventDevice* device);
 
 	private:
-		TDEEventDeviceType::TDEEventDeviceType m_eventType;
-		TDESwitchType::TDESwitchType m_providedSwitches;
-		TDESwitchType::TDESwitchType m_switchActive;
+		EventDeviceType::EventDeviceType m_eventType;
+		SwitchType::SwitchType m_providedSwitches;
+		SwitchType::SwitchType m_switchActive;
 
 		int m_fd;
 		bool m_fdMonitorActive;
 		TQSocketNotifier* m_eventNotifier;
 
-	friend class TDEHardwareDevices;
+	friend class HardwareDevices;
 };
 
 } // namespace TDEHW

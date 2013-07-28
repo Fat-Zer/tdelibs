@@ -208,37 +208,37 @@
 
 namespace TDEHW {
 
-class TDENetworkConnectionManager_BackendNMPrivate;
+class NetworkConnectionManager_BackendNMPrivate;
 
-class TDEHW_EXPORT TDENetworkConnectionManager_BackendNM : public TDENetworkConnectionManager
+class TDEHW_EXPORT NetworkConnectionManager_BackendNM : public NetworkConnectionManager
 {
 	Q_OBJECT
 
 	public:
-		TDENetworkConnectionManager_BackendNM(TQString macAddress);
-		~TDENetworkConnectionManager_BackendNM();
+		NetworkConnectionManager_BackendNM(TQString macAddress);
+		~NetworkConnectionManager_BackendNM();
 
 		virtual TQString backendName();
-		virtual TDENetworkDeviceType::TDENetworkDeviceType deviceType();
-		virtual TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags backendStatus();
-		virtual TDENetworkDeviceInformation deviceInformation();
-		virtual TDENetworkDeviceInformation deviceStatus();
+		virtual NetworkDeviceType::NetworkDeviceType deviceType();
+		virtual NetworkGlobalManagerFlags::NetworkGlobalManagerFlags backendStatus();
+		virtual NetworkDeviceInformation deviceInformation();
+		virtual NetworkDeviceInformation deviceStatus();
 
 		virtual void loadConnectionInformation();
-		virtual void loadConnectionAllowedValues(TDENetworkConnection* connection);
+		virtual void loadConnectionAllowedValues(NetworkConnection* connection);
 		virtual bool loadConnectionSecrets(TQString uuid);
-		virtual bool saveConnection(TDENetworkConnection* connection);
+		virtual bool saveConnection(NetworkConnection* connection);
 		virtual bool deleteConnection(TQString uuid);
-		virtual bool verifyConnectionSettings(TDENetworkConnection* connection, TDENetworkConnectionErrorFlags::TDENetworkConnectionErrorFlags* type=NULL, TDENetworkErrorStringMap* reason=NULL);
+		virtual bool verifyConnectionSettings(NetworkConnection* connection, NetworkConnectionErrorFlags::NetworkConnectionErrorFlags* type=NULL, TDENetworkErrorStringMap* reason=NULL);
 
-		virtual TDENetworkConnectionStatus::TDENetworkConnectionStatus initiateConnection(TQString uuid);
-		virtual TDENetworkConnectionStatus::TDENetworkConnectionStatus checkConnectionStatus(TQString uuid);
-		virtual TDENetworkConnectionStatus::TDENetworkConnectionStatus deactivateConnection(TQString uuid);
+		virtual NetworkConnectionStatus::NetworkConnectionStatus initiateConnection(TQString uuid);
+		virtual NetworkConnectionStatus::NetworkConnectionStatus checkConnectionStatus(TQString uuid);
+		virtual NetworkConnectionStatus::NetworkConnectionStatus deactivateConnection(TQString uuid);
 		virtual TQStringList validSettings();
 
-		virtual TDENetworkHWNeighborList* siteSurvey();
+		virtual NetworkHWNeighborList* siteSurvey();
 		virtual TQStringList connectionPhysicalDeviceUUIDs(TQString uuid);
-		virtual TDENetworkVPNTypeList availableVPNTypes();
+		virtual NetworkVPNTypeList availableVPNTypes();
 
 		virtual bool networkingEnabled();
 		virtual bool wiFiHardwareEnabled();
@@ -250,16 +250,16 @@ class TDEHW_EXPORT TDENetworkConnectionManager_BackendNM : public TDENetworkConn
 		virtual TQStringList defaultNetworkDevices();
 
 	private:
-		TDENetworkDeviceType::TDENetworkDeviceType nmDeviceTypeToTDEDeviceType(TQ_UINT32 nmType);
+		NetworkDeviceType::NetworkDeviceType nmDeviceTypeToTDEDeviceType(TQ_UINT32 nmType);
 		TQString deviceInterfaceString(TQString macAddress);
 		bool loadConnectionSecretsForGroup(TQString uuid, TQString group);
-		TDENetworkWiFiAPInfo* getAccessPointDetails(TQString dbusPath);
-		TDENetworkConnectionType::TDENetworkConnectionType connectionType(TQString dbusPath);
+		NetworkWiFiAPInfo* getAccessPointDetails(TQString dbusPath);
+		NetworkConnectionType::NetworkConnectionType connectionType(TQString dbusPath);
 		TQCString getActiveConnectionPath(TQString uuid);
 
 	private:
-		TDENetworkConnectionManager_BackendNMPrivate* d;
-		friend class TDENetworkConnectionManager_BackendNMPrivate;
+		NetworkConnectionManager_BackendNMPrivate* d;
+		friend class NetworkConnectionManager_BackendNMPrivate;
 };
 
 } // namespace TDEHW

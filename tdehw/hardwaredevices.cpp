@@ -96,19 +96,19 @@ unsigned int reverse_bits(register unsigned int x)
 
 #define BIT_IS_SET(bits, n) (bits[n >> 3] & (1 << (n & 0x7)))
 
-TDEHardwareDevices* TDEHardwareDevices::_instance = 0;
+HardwareDevices* HardwareDevices::_instance = 0;
 
-TDEHardwareDevices* TDEHardwareDevices::instance() {
-	static KStaticDeleter<TDEHardwareDevices> deleter;
+HardwareDevices* HardwareDevices::instance() {
+	static KStaticDeleter<HardwareDevices> deleter;
 
 	if( !_instance ) {
-		deleter.setObject(_instance, new TDEHardwareDevices);
+		deleter.setObject(_instance, new HardwareDevices);
 	}
 
 	return _instance;
 }
 
-TDEHardwareDevices::TDEHardwareDevices() {
+HardwareDevices::HardwareDevices() {
 	// Initialize members
 	pci_id_map = 0;
 	usb_id_map = 0;
@@ -190,7 +190,7 @@ TDEHardwareDevices::TDEHardwareDevices() {
 	}
 }
 
-TDEHardwareDevices::~TDEHardwareDevices() {
+HardwareDevices::~HardwareDevices() {
 	// Stop device scanning
 	m_deviceWatchTimer->stop();
 
@@ -223,7 +223,7 @@ TDEHardwareDevices::~TDEHardwareDevices() {
 	}
 }
 
-void TDEHardwareDevices::setTriggerlessHardwareUpdatesEnabled(bool enable) {
+void HardwareDevices::setTriggerlessHardwareUpdatesEnabled(bool enable) {
 	if (enable) {
 		TQDir nodezerocpufreq("/sys/devices/system/cpu/cpu0/cpufreq");
 		if (nodezerocpufreq.exists()) {
@@ -237,11 +237,11 @@ void TDEHardwareDevices::setTriggerlessHardwareUpdatesEnabled(bool enable) {
 	}
 }
 
-void TDEHardwareDevices::rescanDeviceInformation(TDEGenericDevice* hwdevice) {
+void HardwareDevices::rescanDeviceInformation(GenericDevice* hwdevice) {
 	rescanDeviceInformation(hwdevice, true);
 }
 
-void TDEHardwareDevices::rescanDeviceInformation(TDEGenericDevice* hwdevice, bool regenerateDeviceTree) {
+void HardwareDevices::rescanDeviceInformation(GenericDevice* hwdevice, bool regenerateDeviceTree) {
 	struct udev_device *dev;
 	dev = udev_device_new_from_syspath(m_udevStruct, hwdevice->systemPath().ascii());
 	updateExistingDeviceInformation(hwdevice);
@@ -251,11 +251,11 @@ void TDEHardwareDevices::rescanDeviceInformation(TDEGenericDevice* hwdevice, boo
 	udev_device_unref(dev);
 }
 
-TDEGenericDevice* TDEHardwareDevices::findBySystemPath(TQString syspath) {
+GenericDevice* HardwareDevices::findBySystemPath(TQString syspath) {
 	if (!syspath.endsWith("/")) {
 		syspath += "/";
 	}
-	TDEGenericDevice *hwdevice;
+	GenericDevice *hwdevice;
 	// We can't use m_deviceList directly as m_deviceList can only have one iterator active against it at any given time
 	TDEGenericHardwareList devList = listAllPhysicalDevices();
 	for ( hwdevice = devList.first(); hwdevice; hwdevice = devList.next() ) {
@@ -267,8 +267,8 @@ TDEGenericDevice* TDEHardwareDevices::findBySystemPath(TQString syspath) {
 	return 0;
 }
 
-TDEGenericDevice* TDEHardwareDevices::findByUniqueID(TQString uid) {
-	TDEGenericDevice *hwdevice;
+GenericDevice* HardwareDevices::findByUniqueID(TQString uid) {
+	GenericDevice *hwdevice;
 	// We can't use m_deviceList directly as m_deviceList can only have one iterator active against it at any given time
 	TDEGenericHardwareList devList = listAllPhysicalDevices();
 	for ( hwdevice = devList.first(); hwdevice; hwdevice = devList.next() ) {
@@ -280,8 +280,8 @@ TDEGenericDevice* TDEHardwareDevices::findByUniqueID(TQString uid) {
 	return 0;
 }
 
-TDEGenericDevice* TDEHardwareDevices::findByDeviceNode(TQString devnode) {
-	TDEGenericDevice *hwdevice;
+GenericDevice* HardwareDevices::findByDeviceNode(TQString devnode) {
+	GenericDevice *hwdevice;
 	for ( hwdevice = m_deviceList.first(); hwdevice; hwdevice = m_deviceList.next() ) {
 		if (hwdevice->deviceNode() == devnode) {
 			return hwdevice;
@@ -291,11 +291,11 @@ TDEGenericDevice* TDEHardwareDevices::findByDeviceNode(TQString devnode) {
 	return 0;
 }
 
-TDEStorageDevice* TDEHardwareDevices::findDiskByUID(TQString uid) {
-	TDEGenericDevice *hwdevice;
+StorageDevice* HardwareDevices::findDiskByUID(TQString uid) {
+	GenericDevice *hwdevice;
 	for ( hwdevice = m_deviceList.first(); hwdevice; hwdevice = m_deviceList.next() ) {
-		if (hwdevice->type() == TDEGenericDeviceType::Disk) {
-			TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(hwdevice);
+		if (hwdevice->type() == GenericDeviceType::Disk) {
+			StorageDevice* sdevice = static_cast<StorageDevice*>(hwdevice);
 			if (sdevice->uniqueID() == uid) {
 				return sdevice;
 			}
@@ -305,15 +305,15 @@ TDEStorageDevice* TDEHardwareDevices::findDiskByUID(TQString uid) {
 	return 0;
 }
 
-void TDEHardwareDevices::processHotPluggedHardware() {
+void HardwareDevices::processHotPluggedHardware() {
 	udev_device* dev = udev_monitor_receive_device(m_udevMonitorStruct);
 	if (dev) {
 		TQString actionevent(udev_device_get_action(dev));
 		if (actionevent == "add") {
-			TDEGenericDevice* device = classifyUnknownDevice(dev);
+			GenericDevice* device = classifyUnknownDevice(dev);
 
 			// Make sure this device is not a duplicate
-			TDEGenericDevice *hwdevice;
+			GenericDevice *hwdevice;
 			for (hwdevice = m_deviceList.first(); hwdevice; hwdevice = m_deviceList.next()) {
 				if (hwdevice->systemPath() == device->systemPath()) {
 					delete device;
@@ -326,30 +326,30 @@ void TDEHardwareDevices::processHotPluggedHardware() {
 				m_deviceList.append(device);
 				updateParentDeviceInformation(device);	// Update parent/child tables for this device
 				emit hardwareAdded(device);
-				emit hardwareEvent(TDEHardwareEvent::HardwareAdded, device->uniqueID());
+				emit hardwareEvent(HardwareEvent::HardwareAdded, device->uniqueID());
 			}
 		}
 		else if (actionevent == "remove") {
 			// Delete device from hardware listing
 			TQString systempath(udev_device_get_syspath(dev));
 			systempath += "/";
-			TDEGenericDevice *hwdevice;
+			GenericDevice *hwdevice;
 			for (hwdevice = m_deviceList.first(); hwdevice; hwdevice = m_deviceList.next()) {
 				if (hwdevice->systemPath() == systempath) {
 					emit hardwareRemoved(hwdevice);
-					emit hardwareEvent(TDEHardwareEvent::HardwareRemoved, hwdevice->uniqueID());
+					emit hardwareEvent(HardwareEvent::HardwareRemoved, hwdevice->uniqueID());
 
 					// If the device is a storage device and has a slave, update it as well
-					if (hwdevice->type() == TDEGenericDeviceType::Disk) {
-						TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(hwdevice);
+					if (hwdevice->type() == GenericDeviceType::Disk) {
+						StorageDevice* sdevice = static_cast<StorageDevice*>(hwdevice);
 						TQStringList slavedevices = sdevice->slaveDevices();
 						m_deviceList.remove(hwdevice);
 						for ( TQStringList::Iterator slaveit = slavedevices.begin(); slaveit != slavedevices.end(); ++slaveit ) {
-							TDEGenericDevice* slavedevice = findBySystemPath(*slaveit);
+							GenericDevice* slavedevice = findBySystemPath(*slaveit);
 							if (slavedevice) {
 								rescanDeviceInformation(slavedevice);
 								emit hardwareUpdated(slavedevice);
-								emit hardwareEvent(TDEHardwareEvent::HardwareUpdated, slavedevice->uniqueID());
+								emit hardwareEvent(HardwareEvent::HardwareUpdated, slavedevice->uniqueID());
 							}
 						}
 					}
@@ -365,17 +365,17 @@ void TDEHardwareDevices::processHotPluggedHardware() {
 			// Update device and emit change event
 			TQString systempath(udev_device_get_syspath(dev));
 			systempath += "/";
-			TDEGenericDevice *hwdevice;
+			GenericDevice *hwdevice;
 			for (hwdevice = m_deviceList.first(); hwdevice; hwdevice = m_deviceList.next()) {
 				if (hwdevice->systemPath() == systempath) {
 					if (!hwdevice->blacklistedForUpdate()) {
 						classifyUnknownDevice(dev, hwdevice, false);
 						updateParentDeviceInformation(hwdevice);	// Update parent/child tables for this device
 						emit hardwareUpdated(hwdevice);
-						emit hardwareEvent(TDEHardwareEvent::HardwareUpdated, hwdevice->uniqueID());
+						emit hardwareEvent(HardwareEvent::HardwareUpdated, hwdevice->uniqueID());
 					}
 				}
-				else if ((hwdevice->type() == TDEGenericDeviceType::Monitor)
+				else if ((hwdevice->type() == GenericDeviceType::Monitor)
 						&& (hwdevice->systemPath().contains(systempath))) {
 					if (!hwdevice->blacklistedForUpdate()) {
 						struct udev_device *slavedev;
@@ -384,7 +384,7 @@ void TDEHardwareDevices::processHotPluggedHardware() {
 						udev_device_unref(slavedev);
 						updateParentDeviceInformation(hwdevice);	// Update parent/child tables for this device
 						emit hardwareUpdated(hwdevice);
-						emit hardwareEvent(TDEHardwareEvent::HardwareUpdated, hwdevice->uniqueID());
+						emit hardwareEvent(HardwareEvent::HardwareUpdated, hwdevice->uniqueID());
 					}
 				}
 			}
@@ -392,7 +392,7 @@ void TDEHardwareDevices::processHotPluggedHardware() {
 	}
 }
 
-void TDEHardwareDevices::processModifiedCPUs() {
+void HardwareDevices::processModifiedCPUs() {
 	// Detect what changed between the old cpu information and the new information,
 	// and emit appropriate events
 
@@ -451,7 +451,7 @@ void TDEHardwareDevices::processModifiedCPUs() {
 	}
 
 	// Parse CPU information table
-	TDECPUDevice *cdevice;
+	CPUDevice *cdevice;
 	cdevice = 0;
 	bool modified = false;
 	bool have_frequency = false;
@@ -471,7 +471,7 @@ void TDEHardwareDevices::processModifiedCPUs() {
 				curline.remove(0, curline.find(":")+1);
 				curline = curline.stripWhiteSpace();
 				processorNumber = curline.toInt();
-				if (!cdevice) cdevice = dynamic_cast<TDECPUDevice*>(findBySystemPath(TQString("/sys/devices/system/cpu/cpu%1").arg(processorNumber)));
+				if (!cdevice) cdevice = dynamic_cast<CPUDevice*>(findBySystemPath(TQString("/sys/devices/system/cpu/cpu%1").arg(processorNumber)));
 				if (cdevice) {
 					if (cdevice->coreNumber() != processorNumber) modified = true;
 					cdevice->internalSetCoreNumber(processorNumber);
@@ -543,7 +543,7 @@ void TDEHardwareDevices::processModifiedCPUs() {
 				curline = curline.stripWhiteSpace();
 				processorNumber = curline.toInt();
 				if (!cdevice) {
-					cdevice = dynamic_cast<TDECPUDevice*>(findBySystemPath(TQString("/sys/devices/system/cpu/cpu%1").arg(processorNumber)));
+					cdevice = dynamic_cast<CPUDevice*>(findBySystemPath(TQString("/sys/devices/system/cpu/cpu%1").arg(processorNumber)));
 					if (cdevice) {
 						// Set up CPU information structures
 						if (cdevice->coreNumber() != processorNumber) modified = true;
@@ -570,7 +570,7 @@ void TDEHardwareDevices::processModifiedCPUs() {
 
 	// Read in other information from cpufreq, if available
 	for (processorNumber=0; processorNumber<processorCount; processorNumber++) {
-		cdevice = dynamic_cast<TDECPUDevice*>(findBySystemPath(TQString("/sys/devices/system/cpu/cpu%1").arg(processorNumber)));
+		cdevice = dynamic_cast<CPUDevice*>(findBySystemPath(TQString("/sys/devices/system/cpu/cpu%1").arg(processorNumber)));
 		TQDir cpufreq_dir(TQString("/sys/devices/system/cpu/cpu%1/cpufreq").arg(processorNumber));
 		TQString scalinggovernor;
 		TQString scalingdriver;
@@ -715,35 +715,35 @@ void TDEHardwareDevices::processModifiedCPUs() {
 
 	if (modified) {
 		for (processorNumber=0; processorNumber<processorCount; processorNumber++) {
-			TDEGenericDevice* hwdevice = findBySystemPath(TQString("/sys/devices/system/cpu/cpu%1").arg(processorNumber));
+			GenericDevice* hwdevice = findBySystemPath(TQString("/sys/devices/system/cpu/cpu%1").arg(processorNumber));
 			// Signal new information available
 			emit hardwareUpdated(hwdevice);
-			emit hardwareEvent(TDEHardwareEvent::HardwareUpdated, hwdevice->uniqueID());
+			emit hardwareEvent(HardwareEvent::HardwareUpdated, hwdevice->uniqueID());
 		}
 	}
 }
 
-void TDEHardwareDevices::processStatelessDevices() {
+void HardwareDevices::processStatelessDevices() {
 	// Some devices do not emit changed signals
 	// So far, network cards and sensors need to be polled
-	TDEGenericDevice *hwdevice;
+	GenericDevice *hwdevice;
 
 	// We can't use m_deviceList directly as m_deviceList can only have one iterator active against it at any given time
 	TDEGenericHardwareList devList = listAllPhysicalDevices();
 	for ( hwdevice = devList.first(); hwdevice; hwdevice = devList.next() ) {
-		if ((hwdevice->type() == TDEGenericDeviceType::RootSystem) || (hwdevice->type() == TDEGenericDeviceType::Network) || (hwdevice->type() == TDEGenericDeviceType::OtherSensor) || (hwdevice->type() == TDEGenericDeviceType::Event) || (hwdevice->type() == TDEGenericDeviceType::Battery) || (hwdevice->type() == TDEGenericDeviceType::PowerSupply)) {
+		if ((hwdevice->type() == GenericDeviceType::RootSystem) || (hwdevice->type() == GenericDeviceType::Network) || (hwdevice->type() == GenericDeviceType::OtherSensor) || (hwdevice->type() == GenericDeviceType::Event) || (hwdevice->type() == GenericDeviceType::Battery) || (hwdevice->type() == GenericDeviceType::PowerSupply)) {
 			rescanDeviceInformation(hwdevice, false);
 			emit hardwareUpdated(hwdevice);
-			emit hardwareEvent(TDEHardwareEvent::HardwareUpdated, hwdevice->uniqueID());
+			emit hardwareEvent(HardwareEvent::HardwareUpdated, hwdevice->uniqueID());
 		}
 	}
 }
 
-void TDEHardwareDevices::processEventDeviceKeyPressed(unsigned int keycode, TDEEventDevice* edevice) {
+void HardwareDevices::processEventDeviceKeyPressed(unsigned int keycode, EventDevice* edevice) {
 	emit eventDeviceKeyPressed(keycode, edevice);
 }
 
-void TDEHardwareDevices::processModifiedMounts() {
+void HardwareDevices::processModifiedMounts() {
 	// Detect what changed between the old mount table and the new one,
 	// and emit appropriate events
 
@@ -781,19 +781,19 @@ void TDEHardwareDevices::processModifiedMounts() {
 	for ( it = addedEntries.begin(); it != addedEntries.end(); ++it ) {
 		TQStringList mountInfo = TQStringList::split(" ", (*it), true);
 		// Try to find a device that matches the altered node
-		TDEGenericDevice* hwdevice = findByDeviceNode(*mountInfo.at(0));
+		GenericDevice* hwdevice = findByDeviceNode(*mountInfo.at(0));
 		if (hwdevice) {
 			emit hardwareUpdated(hwdevice);
-			emit hardwareEvent(TDEHardwareEvent::HardwareUpdated, hwdevice->uniqueID());
+			emit hardwareEvent(HardwareEvent::HardwareUpdated, hwdevice->uniqueID());
 			// If the device is a storage device and has a slave, update it as well
-			if (hwdevice->type() == TDEGenericDeviceType::Disk) {
-				TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(hwdevice);
+			if (hwdevice->type() == GenericDeviceType::Disk) {
+				StorageDevice* sdevice = static_cast<StorageDevice*>(hwdevice);
 				TQStringList slavedevices = sdevice->slaveDevices();
 				for ( TQStringList::Iterator slaveit = slavedevices.begin(); slaveit != slavedevices.end(); ++slaveit ) {
-					TDEGenericDevice* slavedevice = findBySystemPath(*slaveit);
+					GenericDevice* slavedevice = findBySystemPath(*slaveit);
 					if (slavedevice) {
 						emit hardwareUpdated(slavedevice);
-						emit hardwareEvent(TDEHardwareEvent::HardwareUpdated, slavedevice->uniqueID());
+						emit hardwareEvent(HardwareEvent::HardwareUpdated, slavedevice->uniqueID());
 					}
 				}
 			}
@@ -802,19 +802,19 @@ void TDEHardwareDevices::processModifiedMounts() {
 	for ( it = deletedEntries.begin(); it != deletedEntries.end(); ++it ) {
 		TQStringList mountInfo = TQStringList::split(" ", (*it), true);
 		// Try to find a device that matches the altered node
-		TDEGenericDevice* hwdevice = findByDeviceNode(*mountInfo.at(0));
+		GenericDevice* hwdevice = findByDeviceNode(*mountInfo.at(0));
 		if (hwdevice) {
 			emit hardwareUpdated(hwdevice);
-			emit hardwareEvent(TDEHardwareEvent::HardwareUpdated, hwdevice->uniqueID());
+			emit hardwareEvent(HardwareEvent::HardwareUpdated, hwdevice->uniqueID());
 			// If the device is a storage device and has a slave, update it as well
-			if (hwdevice->type() == TDEGenericDeviceType::Disk) {
-				TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(hwdevice);
+			if (hwdevice->type() == GenericDeviceType::Disk) {
+				StorageDevice* sdevice = static_cast<StorageDevice*>(hwdevice);
 				TQStringList slavedevices = sdevice->slaveDevices();
 				for ( TQStringList::Iterator slaveit = slavedevices.begin(); slaveit != slavedevices.end(); ++slaveit ) {
-					TDEGenericDevice* slavedevice = findBySystemPath(*slaveit);
+					GenericDevice* slavedevice = findBySystemPath(*slaveit);
 					if (slavedevice) {
 						emit hardwareUpdated(slavedevice);
-						emit hardwareEvent(TDEHardwareEvent::HardwareUpdated, slavedevice->uniqueID());
+						emit hardwareEvent(HardwareEvent::HardwareUpdated, slavedevice->uniqueID());
 					}
 				}
 			}
@@ -822,103 +822,103 @@ void TDEHardwareDevices::processModifiedMounts() {
 	}
 
 	emit mountTableModified();
-	emit hardwareEvent(TDEHardwareEvent::MountTableModified, TQString());
+	emit hardwareEvent(HardwareEvent::MountTableModified, TQString());
 }
 
-TDEDiskDeviceType::TDEDiskDeviceType classifyDiskType(udev_device* dev, const TQString devicebus, const TQString disktypestring, const TQString systempath, const TQString devicevendor, const TQString devicemodel, const TQString filesystemtype, const TQString devicedriver) {
+DiskDeviceType::DiskDeviceType classifyDiskType(udev_device* dev, const TQString devicebus, const TQString disktypestring, const TQString systempath, const TQString devicevendor, const TQString devicemodel, const TQString filesystemtype, const TQString devicedriver) {
 	// Classify a disk device type to the best of our ability
-	TDEDiskDeviceType::TDEDiskDeviceType disktype = TDEDiskDeviceType::Null;
+	DiskDeviceType::DiskDeviceType disktype = DiskDeviceType::Null;
 
 	if (devicebus.upper() == "USB") {
-		disktype = disktype | TDEDiskDeviceType::USB;
+		disktype = disktype | DiskDeviceType::USB;
 	}
 
 	if (disktypestring.upper() == "ZIP") {
-		disktype = disktype | TDEDiskDeviceType::Zip;
+		disktype = disktype | DiskDeviceType::Zip;
 	}
 	if ((devicevendor.upper() == "IOMEGA") && (devicemodel.upper().contains("ZIP"))) {
-		disktype = disktype | TDEDiskDeviceType::Zip;
+		disktype = disktype | DiskDeviceType::Zip;
 	}
 
 	if ((devicevendor.upper() == "APPLE") && (devicemodel.upper().contains("IPOD"))) {
-		disktype = disktype | TDEDiskDeviceType::MediaDevice;
+		disktype = disktype | DiskDeviceType::MediaDevice;
 	}
 	if ((devicevendor.upper() == "SANDISK") && (devicemodel.upper().contains("SANSA"))) {
-		disktype = disktype | TDEDiskDeviceType::MediaDevice;
+		disktype = disktype | DiskDeviceType::MediaDevice;
 	}
 
 	if (disktypestring.upper() == "TAPE") {
-		disktype = disktype | TDEDiskDeviceType::Tape;
+		disktype = disktype | DiskDeviceType::Tape;
 	}
 
 	if ((disktypestring.upper() == "COMPACT_FLASH")
 		|| (TQString(udev_device_get_property_value(dev, "ID_DRIVE_FLASH_CF")) == "1")) {
-		disktype = disktype | TDEDiskDeviceType::CompactFlash;
+		disktype = disktype | DiskDeviceType::CompactFlash;
 	}
 
 	if ((disktypestring.upper() == "MEMORY_STICK")
 		|| (TQString(udev_device_get_property_value(dev, "ID_DRIVE_FLASH_MS")) == "1")) {
-		disktype = disktype | TDEDiskDeviceType::MemoryStick;
+		disktype = disktype | DiskDeviceType::MemoryStick;
 	}
 
 	if ((disktypestring.upper() == "SMART_MEDIA")
 		|| (TQString(udev_device_get_property_value(dev, "ID_DRIVE_FLASH_SM")) == "1")) {
-		disktype = disktype | TDEDiskDeviceType::SmartMedia;
+		disktype = disktype | DiskDeviceType::SmartMedia;
 	}
 
 	if ((disktypestring.upper() == "SD_MMC")
 		|| (TQString(udev_device_get_property_value(dev, "ID_DRIVE_FLASH_SD")) == "1")
 		|| (TQString(udev_device_get_property_value(dev, "ID_DRIVE_FLASH_SDHC")) == "1")
 		|| (TQString(udev_device_get_property_value(dev, "ID_DRIVE_FLASH_MMC")) == "1")) {
-		disktype = disktype | TDEDiskDeviceType::SDMMC;
+		disktype = disktype | DiskDeviceType::SDMMC;
 	}
 
 	if ((disktypestring.upper() == "FLASHKEY")
 		|| (TQString(udev_device_get_property_value(dev, " ID_DRIVE_FLASH")) == "1")) {
-		disktype = disktype | TDEDiskDeviceType::Flash;
+		disktype = disktype | DiskDeviceType::Flash;
 	}
 
 	if (disktypestring.upper() == "OPTICAL") {
-		disktype = disktype | TDEDiskDeviceType::Optical;
+		disktype = disktype | DiskDeviceType::Optical;
 	}
 
 	if (disktypestring.upper() == "JAZ") {
-		disktype = disktype | TDEDiskDeviceType::Jaz;
+		disktype = disktype | DiskDeviceType::Jaz;
 	}
 
 	if (disktypestring.upper() == "DISK") {
-		disktype = disktype | TDEDiskDeviceType::HDD;
+		disktype = disktype | DiskDeviceType::HDD;
 	}
 	if (disktypestring.isNull()) {
 		// Fallback
 		// If we can't recognize the disk type then set it as a simple HDD volume
-		disktype = disktype | TDEDiskDeviceType::HDD;
+		disktype = disktype | DiskDeviceType::HDD;
 	}
 
 	// Certain combinations of media flags should never be set at the same time as they don't make sense
 	// This block is needed as udev is more than happy to provide inconsistent data to us
-	if ((disktype & TDEDiskDeviceType::Zip) || (disktype & TDEDiskDeviceType::Floppy) || (disktype & TDEDiskDeviceType::Jaz) || (disktype & TDEDiskDeviceType::Tape)) {
-		disktype = disktype & ~TDEDiskDeviceType::HDD;
+	if ((disktype & DiskDeviceType::Zip) || (disktype & DiskDeviceType::Floppy) || (disktype & DiskDeviceType::Jaz) || (disktype & DiskDeviceType::Tape)) {
+		disktype = disktype & ~DiskDeviceType::HDD;
 	}
 
 	if (disktypestring.upper() == "CD") {
-		disktype = disktype & ~TDEDiskDeviceType::HDD;
-		disktype = disktype | TDEDiskDeviceType::Optical;
+		disktype = disktype & ~DiskDeviceType::HDD;
+		disktype = disktype | DiskDeviceType::Optical;
 
 		if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA")) == "1") {
-			disktype = disktype | TDEDiskDeviceType::CDROM;
+			disktype = disktype | DiskDeviceType::CDROM;
 		}
 		if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_CD_RW")) == "1") {
-			disktype = disktype | TDEDiskDeviceType::CDRW;
-			disktype = disktype & ~TDEDiskDeviceType::CDROM;
+			disktype = disktype | DiskDeviceType::CDRW;
+			disktype = disktype & ~DiskDeviceType::CDROM;
 		}
 		if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD")) == "1") {
-			disktype = disktype | TDEDiskDeviceType::DVDROM;
-			disktype = disktype & ~TDEDiskDeviceType::CDROM;
+			disktype = disktype | DiskDeviceType::DVDROM;
+			disktype = disktype & ~DiskDeviceType::CDROM;
 		}
 		if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_RAM")) == "1") {
-			disktype = disktype | TDEDiskDeviceType::DVDRAM;
-			disktype = disktype & ~TDEDiskDeviceType::DVDROM;
+			disktype = disktype | DiskDeviceType::DVDRAM;
+			disktype = disktype & ~DiskDeviceType::DVDROM;
 		}
 		if ((TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_R")) == "1")
 			|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_R_DL")) == "1")
@@ -927,8 +927,8 @@ TDEDiskDeviceType::TDEDiskDeviceType classifyDiskType(udev_device* dev, const TQ
 			|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_PLUS_R_DL")) == "1")
 			|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_MINUS_R_DL")) == "1")
 			) {
-			disktype = disktype | TDEDiskDeviceType::DVDRW;
-			disktype = disktype & ~TDEDiskDeviceType::DVDROM;
+			disktype = disktype | DiskDeviceType::DVDRW;
+			disktype = disktype & ~DiskDeviceType::DVDROM;
 		}
 		if ((TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_RW")) == "1")
 			|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_RW_DL")) == "1")
@@ -937,12 +937,12 @@ TDEDiskDeviceType::TDEDiskDeviceType classifyDiskType(udev_device* dev, const TQ
 			|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_PLUS_RW_DL")) == "1")
 			|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_MINUS_RW_DL")) == "1")
 			) {
-			disktype = disktype | TDEDiskDeviceType::DVDRW;	// FIXME
-			disktype = disktype & ~TDEDiskDeviceType::DVDROM;
+			disktype = disktype | DiskDeviceType::DVDRW;	// FIXME
+			disktype = disktype & ~DiskDeviceType::DVDROM;
 		}
 		if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_BD")) == "1") {
-			disktype = disktype | TDEDiskDeviceType::BDROM;
-			disktype = disktype & ~TDEDiskDeviceType::CDROM;
+			disktype = disktype | DiskDeviceType::BDROM;
+			disktype = disktype & ~DiskDeviceType::CDROM;
 		}
 		if ((TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_BD_R")) == "1")
 			|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_BD_R_DL")) == "1")
@@ -951,8 +951,8 @@ TDEDiskDeviceType::TDEDiskDeviceType classifyDiskType(udev_device* dev, const TQ
 			|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_PLUS_R_DL")) == "1")
 			|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_MINUS_R_DL")) == "1")
 			) {
-			disktype = disktype | TDEDiskDeviceType::BDRW;	// FIXME
-			disktype = disktype & ~TDEDiskDeviceType::BDROM;
+			disktype = disktype | DiskDeviceType::BDRW;	// FIXME
+			disktype = disktype & ~DiskDeviceType::BDROM;
 		}
 		if ((TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_BD_RW")) == "1")
 			|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_BD_RW_DL")) == "1")
@@ -961,30 +961,30 @@ TDEDiskDeviceType::TDEDiskDeviceType classifyDiskType(udev_device* dev, const TQ
 			|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_PLUS_RW_DL")) == "1")
 			|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_MINUS_RW_DL")) == "1")
 			) {
-			disktype = disktype | TDEDiskDeviceType::BDRW;
-			disktype = disktype & ~TDEDiskDeviceType::BDROM;
+			disktype = disktype | DiskDeviceType::BDRW;
+			disktype = disktype & ~DiskDeviceType::BDROM;
 		}
 		if (!TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_TRACK_COUNT_AUDIO")).isNull()) {
-			disktype = disktype | TDEDiskDeviceType::CDAudio;
+			disktype = disktype | DiskDeviceType::CDAudio;
 		}
 		if ((TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_VCD")) == "1") || (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_SDVD")) == "1")) {
-			disktype = disktype | TDEDiskDeviceType::CDVideo;
+			disktype = disktype | DiskDeviceType::CDVideo;
 		}
 	}
 
 	// Detect RAM and Loop devices, since udev can't seem to...
 	if (systempath.startsWith("/sys/devices/virtual/block/ram")) {
-		disktype = disktype | TDEDiskDeviceType::RAM;
+		disktype = disktype | DiskDeviceType::RAM;
 	}
 	if (systempath.startsWith("/sys/devices/virtual/block/loop")) {
-		disktype = disktype | TDEDiskDeviceType::Loop;
+		disktype = disktype | DiskDeviceType::Loop;
 	}
 
 	if (filesystemtype.upper() == "CRYPTO_LUKS") {
-		disktype = disktype | TDEDiskDeviceType::LUKS;
+		disktype = disktype | DiskDeviceType::LUKS;
 	}
 	else if (filesystemtype.upper() == "CRYPTO") {
-		disktype = disktype | TDEDiskDeviceType::OtherCrypted;
+		disktype = disktype | DiskDeviceType::OtherCrypted;
 	}
 
 	return disktype;
@@ -998,286 +998,286 @@ TQString readUdevAttribute(udev_device* dev, TQString attr) {
 	return TQString(udev_device_get_property_value(dev, attr.ascii()));
 }
 
-TDEGenericDeviceType::TDEGenericDeviceType readGenericDeviceTypeFromString(TQString query) {
-	TDEGenericDeviceType::TDEGenericDeviceType ret = TDEGenericDeviceType::Other;
+GenericDeviceType::GenericDeviceType readGenericDeviceTypeFromString(TQString query) {
+	GenericDeviceType::GenericDeviceType ret = GenericDeviceType::Other;
 
-	// Keep this in sync with the TDEGenericDeviceType definition in the header
+	// Keep this in sync with the GenericDeviceType definition in the header
 	if (query == "Root") {
-		ret = TDEGenericDeviceType::Root;
+		ret = GenericDeviceType::Root;
 	}
 	else if (query == "RootSystem") {
-		ret = TDEGenericDeviceType::RootSystem;
+		ret = GenericDeviceType::RootSystem;
 	}
 	else if (query == "CPU") {
-		ret = TDEGenericDeviceType::CPU;
+		ret = GenericDeviceType::CPU;
 	}
 	else if (query == "GPU") {
-		ret = TDEGenericDeviceType::GPU;
+		ret = GenericDeviceType::GPU;
 	}
 	else if (query == "RAM") {
-		ret = TDEGenericDeviceType::RAM;
+		ret = GenericDeviceType::RAM;
 	}
 	else if (query == "Bus") {
-		ret = TDEGenericDeviceType::Bus;
+		ret = GenericDeviceType::Bus;
 	}
 	else if (query == "I2C") {
-		ret = TDEGenericDeviceType::I2C;
+		ret = GenericDeviceType::I2C;
 	}
 	else if (query == "MDIO") {
-		ret = TDEGenericDeviceType::MDIO;
+		ret = GenericDeviceType::MDIO;
 	}
 	else if (query == "Mainboard") {
-		ret = TDEGenericDeviceType::Mainboard;
+		ret = GenericDeviceType::Mainboard;
 	}
 	else if (query == "Disk") {
-		ret = TDEGenericDeviceType::Disk;
+		ret = GenericDeviceType::Disk;
 	}
 	else if (query == "SCSI") {
-		ret = TDEGenericDeviceType::SCSI;
+		ret = GenericDeviceType::SCSI;
 	}
 	else if (query == "StorageController") {
-		ret = TDEGenericDeviceType::StorageController;
+		ret = GenericDeviceType::StorageController;
 	}
 	else if (query == "Mouse") {
-		ret = TDEGenericDeviceType::Mouse;
+		ret = GenericDeviceType::Mouse;
 	}
 	else if (query == "Keyboard") {
-		ret = TDEGenericDeviceType::Keyboard;
+		ret = GenericDeviceType::Keyboard;
 	}
 	else if (query == "HID") {
-		ret = TDEGenericDeviceType::HID;
+		ret = GenericDeviceType::HID;
 	}
 	else if (query == "Modem") {
-		ret = TDEGenericDeviceType::Modem;
+		ret = GenericDeviceType::Modem;
 	}
 	else if (query == "Monitor") {
-		ret = TDEGenericDeviceType::Monitor;
+		ret = GenericDeviceType::Monitor;
 	}
 	else if (query == "Network") {
-		ret = TDEGenericDeviceType::Network;
+		ret = GenericDeviceType::Network;
 	}
 	else if (query == "Printer") {
-		ret = TDEGenericDeviceType::Printer;
+		ret = GenericDeviceType::Printer;
 	}
 	else if (query == "Scanner") {
-		ret = TDEGenericDeviceType::Scanner;
+		ret = GenericDeviceType::Scanner;
 	}
 	else if (query == "Sound") {
-		ret = TDEGenericDeviceType::Sound;
+		ret = GenericDeviceType::Sound;
 	}
 	else if (query == "VideoCapture") {
-		ret = TDEGenericDeviceType::VideoCapture;
+		ret = GenericDeviceType::VideoCapture;
 	}
 	else if (query == "IEEE1394") {
-		ret = TDEGenericDeviceType::IEEE1394;
+		ret = GenericDeviceType::IEEE1394;
 	}
 	else if (query == "PCMCIA") {
-		ret = TDEGenericDeviceType::PCMCIA;
+		ret = GenericDeviceType::PCMCIA;
 	}
 	else if (query == "Camera") {
-		ret = TDEGenericDeviceType::Camera;
+		ret = GenericDeviceType::Camera;
 	}
 	else if (query == "Serial") {
-		ret = TDEGenericDeviceType::Serial;
+		ret = GenericDeviceType::Serial;
 	}
 	else if (query == "Parallel") {
-		ret = TDEGenericDeviceType::Parallel;
+		ret = GenericDeviceType::Parallel;
 	}
 	else if (query == "TextIO") {
-		ret = TDEGenericDeviceType::TextIO;
+		ret = GenericDeviceType::TextIO;
 	}
 	else if (query == "Peripheral") {
-		ret = TDEGenericDeviceType::Peripheral;
+		ret = GenericDeviceType::Peripheral;
 	}
 	else if (query == "Backlight") {
-		ret = TDEGenericDeviceType::Backlight;
+		ret = GenericDeviceType::Backlight;
 	}
 	else if (query == "Battery") {
-		ret = TDEGenericDeviceType::Battery;
+		ret = GenericDeviceType::Battery;
 	}
 	else if (query == "Power") {
-		ret = TDEGenericDeviceType::PowerSupply;
+		ret = GenericDeviceType::PowerSupply;
 	}
 	else if (query == "Dock") {
-		ret = TDEGenericDeviceType::Dock;
+		ret = GenericDeviceType::Dock;
 	}
 	else if (query == "ThermalSensor") {
-		ret = TDEGenericDeviceType::ThermalSensor;
+		ret = GenericDeviceType::ThermalSensor;
 	}
 	else if (query == "ThermalControl") {
-		ret = TDEGenericDeviceType::ThermalControl;
+		ret = GenericDeviceType::ThermalControl;
 	}
 	else if (query == "Bluetooth") {
-		ret = TDEGenericDeviceType::BlueTooth;
+		ret = GenericDeviceType::BlueTooth;
 	}
 	else if (query == "Bridge") {
-		ret = TDEGenericDeviceType::Bridge;
+		ret = GenericDeviceType::Bridge;
 	}
 	else if (query == "Platform") {
-		ret = TDEGenericDeviceType::Platform;
+		ret = GenericDeviceType::Platform;
 	}
 	else if (query == "Cryptography") {
-		ret = TDEGenericDeviceType::Cryptography;
+		ret = GenericDeviceType::Cryptography;
 	}
 	else if (query == "Event") {
-		ret = TDEGenericDeviceType::Event;
+		ret = GenericDeviceType::Event;
 	}
 	else if (query == "Input") {
-		ret = TDEGenericDeviceType::Input;
+		ret = GenericDeviceType::Input;
 	}
 	else if (query == "PNP") {
-		ret = TDEGenericDeviceType::PNP;
+		ret = GenericDeviceType::PNP;
 	}
 	else if (query == "OtherACPI") {
-		ret = TDEGenericDeviceType::OtherACPI;
+		ret = GenericDeviceType::OtherACPI;
 	}
 	else if (query == "OtherUSB") {
-		ret = TDEGenericDeviceType::OtherUSB;
+		ret = GenericDeviceType::OtherUSB;
 	}
 	else if (query == "OtherMultimedia") {
-		ret = TDEGenericDeviceType::OtherMultimedia;
+		ret = GenericDeviceType::OtherMultimedia;
 	}
 	else if (query == "OtherPeripheral") {
-		ret = TDEGenericDeviceType::OtherPeripheral;
+		ret = GenericDeviceType::OtherPeripheral;
 	}
 	else if (query == "OtherSensor") {
-		ret = TDEGenericDeviceType::OtherSensor;
+		ret = GenericDeviceType::OtherSensor;
 	}
 	else if (query == "OtherVirtual") {
-		ret = TDEGenericDeviceType::OtherVirtual;
+		ret = GenericDeviceType::OtherVirtual;
 	}
 	else {
-		ret = TDEGenericDeviceType::Other;
+		ret = GenericDeviceType::Other;
 	}
 
 	return ret;
 }
 
-TDEDiskDeviceType::TDEDiskDeviceType readDiskDeviceSubtypeFromString(TQString query, TDEDiskDeviceType::TDEDiskDeviceType flagsIn=TDEDiskDeviceType::Null) {
-	TDEDiskDeviceType::TDEDiskDeviceType ret = flagsIn;
+DiskDeviceType::DiskDeviceType readDiskDeviceSubtypeFromString(TQString query, DiskDeviceType::DiskDeviceType flagsIn=DiskDeviceType::Null) {
+	DiskDeviceType::DiskDeviceType ret = flagsIn;
 
-	// Keep this in sync with the TDEDiskDeviceType definition in the header
+	// Keep this in sync with the DiskDeviceType definition in the header
 	if (query == "MediaDevice") {
-		ret = ret | TDEDiskDeviceType::MediaDevice;
+		ret = ret | DiskDeviceType::MediaDevice;
 	}
 	if (query == "Floppy") {
-		ret = ret | TDEDiskDeviceType::Floppy;
+		ret = ret | DiskDeviceType::Floppy;
 	}
 	if (query == "CDROM") {
-		ret = ret | TDEDiskDeviceType::CDROM;
+		ret = ret | DiskDeviceType::CDROM;
 	}
 	if (query == "CDRW") {
-		ret = ret | TDEDiskDeviceType::CDRW;
+		ret = ret | DiskDeviceType::CDRW;
 	}
 	if (query == "DVDROM") {
-		ret = ret | TDEDiskDeviceType::DVDROM;
+		ret = ret | DiskDeviceType::DVDROM;
 	}
 	if (query == "DVDRAM") {
-		ret = ret | TDEDiskDeviceType::DVDRAM;
+		ret = ret | DiskDeviceType::DVDRAM;
 	}
 	if (query == "DVDRW") {
-		ret = ret | TDEDiskDeviceType::DVDRW;
+		ret = ret | DiskDeviceType::DVDRW;
 	}
 	if (query == "BDROM") {
-		ret = ret | TDEDiskDeviceType::BDROM;
+		ret = ret | DiskDeviceType::BDROM;
 	}
 	if (query == "BDRW") {
-		ret = ret | TDEDiskDeviceType::BDRW;
+		ret = ret | DiskDeviceType::BDRW;
 	}
 	if (query == "Zip") {
-		ret = ret | TDEDiskDeviceType::Zip;
+		ret = ret | DiskDeviceType::Zip;
 	}
 	if (query == "Jaz") {
-		ret = ret | TDEDiskDeviceType::Jaz;
+		ret = ret | DiskDeviceType::Jaz;
 	}
 	if (query == "Camera") {
-		ret = ret | TDEDiskDeviceType::Camera;
+		ret = ret | DiskDeviceType::Camera;
 	}
 	if (query == "LUKS") {
-		ret = ret | TDEDiskDeviceType::LUKS;
+		ret = ret | DiskDeviceType::LUKS;
 	}
 	if (query == "OtherCrypted") {
-		ret = ret | TDEDiskDeviceType::OtherCrypted;
+		ret = ret | DiskDeviceType::OtherCrypted;
 	}
 	if (query == "CDAudio") {
-		ret = ret | TDEDiskDeviceType::CDAudio;
+		ret = ret | DiskDeviceType::CDAudio;
 	}
 	if (query == "CDVideo") {
-		ret = ret | TDEDiskDeviceType::CDVideo;
+		ret = ret | DiskDeviceType::CDVideo;
 	}
 	if (query == "DVDVideo") {
-		ret = ret | TDEDiskDeviceType::DVDVideo;
+		ret = ret | DiskDeviceType::DVDVideo;
 	}
 	if (query == "BDVideo") {
-		ret = ret | TDEDiskDeviceType::BDVideo;
+		ret = ret | DiskDeviceType::BDVideo;
 	}
 	if (query == "Flash") {
-		ret = ret | TDEDiskDeviceType::Flash;
+		ret = ret | DiskDeviceType::Flash;
 	}
 	if (query == "USB") {
-		ret = ret | TDEDiskDeviceType::USB;
+		ret = ret | DiskDeviceType::USB;
 	}
 	if (query == "Tape") {
-		ret = ret | TDEDiskDeviceType::Tape;
+		ret = ret | DiskDeviceType::Tape;
 	}
 	if (query == "HDD") {
-		ret = ret | TDEDiskDeviceType::HDD;
+		ret = ret | DiskDeviceType::HDD;
 	}
 	if (query == "Optical") {
-		ret = ret | TDEDiskDeviceType::Optical;
+		ret = ret | DiskDeviceType::Optical;
 	}
 	if (query == "RAM") {
-		ret = ret | TDEDiskDeviceType::RAM;
+		ret = ret | DiskDeviceType::RAM;
 	}
 	if (query == "Loop") {
-		ret = ret | TDEDiskDeviceType::Loop;
+		ret = ret | DiskDeviceType::Loop;
 	}
 	if (query == "CompactFlash") {
-		ret = ret | TDEDiskDeviceType::CompactFlash;
+		ret = ret | DiskDeviceType::CompactFlash;
 	}
 	if (query == "MemoryStick") {
-		ret = ret | TDEDiskDeviceType::MemoryStick;
+		ret = ret | DiskDeviceType::MemoryStick;
 	}
 	if (query == "SmartMedia") {
-		ret = ret | TDEDiskDeviceType::SmartMedia;
+		ret = ret | DiskDeviceType::SmartMedia;
 	}
 	if (query == "SDMMC") {
-		ret = ret | TDEDiskDeviceType::SDMMC;
+		ret = ret | DiskDeviceType::SDMMC;
 	}
 	if (query == "UnlockedCrypt") {
-		ret = ret | TDEDiskDeviceType::UnlockedCrypt;
+		ret = ret | DiskDeviceType::UnlockedCrypt;
 	}
 
 	return ret;
 }
 
-TDEGenericDevice* createDeviceObjectForType(TDEGenericDeviceType::TDEGenericDeviceType type) {
-	TDEGenericDevice* ret = 0;
+GenericDevice* createDeviceObjectForType(GenericDeviceType::GenericDeviceType type) {
+	GenericDevice* ret = 0;
 
-	if (type == TDEGenericDeviceType::Disk) {
-		ret = new TDEStorageDevice(type);
+	if (type == GenericDeviceType::Disk) {
+		ret = new StorageDevice(type);
 	}
 	else {
-		ret = new TDEGenericDevice(type);
+		ret = new GenericDevice(type);
 	}
 
 	return ret;
 }
 
-TDEGenericDevice* TDEHardwareDevices::classifyUnknownDeviceByExternalRules(udev_device* dev, TDEGenericDevice* existingdevice, bool classifySubDevices) {
+GenericDevice* HardwareDevices::classifyUnknownDeviceByExternalRules(udev_device* dev, GenericDevice* existingdevice, bool classifySubDevices) {
 	// This routine expects to see the hardware config files into <prefix>/share/apps/tdehwlib/deviceclasses/, suffixed with "hwclass"
-	TDEGenericDevice* device = existingdevice;
-	if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Other);
+	GenericDevice* device = existingdevice;
+	if (!device) device = new GenericDevice(GenericDeviceType::Other);
 
 	// Handle subtype if needed/desired
 	// To speed things up we rely on the prior scan results stored in m_externalSubtype
 	if (classifySubDevices) {
 		if (!device->m_externalRulesFile.isNull()) {
-			if (device->type() == TDEGenericDeviceType::Disk) {
+			if (device->type() == GenericDeviceType::Disk) {
 				// Disk class
-				TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(device);
+				StorageDevice* sdevice = static_cast<StorageDevice*>(device);
 				TQStringList subtype = device->m_externalSubtype;
-				TDEDiskDeviceType::TDEDiskDeviceType desiredSubdeviceType = TDEDiskDeviceType::Null;
+				DiskDeviceType::DiskDeviceType desiredSubdeviceType = DiskDeviceType::Null;
 				if (subtype.count()>0) {
 					for ( TQStringList::Iterator paramit = subtype.begin(); paramit != subtype.end(); ++paramit ) {
 						desiredSubdeviceType = readDiskDeviceSubtypeFromString(*paramit, desiredSubdeviceType);
@@ -1353,7 +1353,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDeviceByExternalRules(udev_
 						if (match) {
 							rulesFile.setGroup("DeviceType");
 							TQString gentype = rulesFile.readEntry("GENTYPE");
-							TDEGenericDeviceType::TDEGenericDeviceType desiredDeviceType = device->type();
+							GenericDeviceType::GenericDeviceType desiredDeviceType = device->type();
 							if (!gentype.isNull()) {
 								desiredDeviceType = readGenericDeviceTypeFromString(gentype);
 							}
@@ -1389,7 +1389,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDeviceByExternalRules(udev_
 	return device;
 }
 
-TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TDEGenericDevice* existingdevice, bool force_full_classification) {
+GenericDevice* HardwareDevices::classifyUnknownDevice(udev_device* dev, GenericDevice* existingdevice, bool force_full_classification) {
 	// Classify device and create TDEHW device object
 	TQString devicename;
 	TQString devicetype;
@@ -1406,7 +1406,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 	TQString devicetypestring;
 	TQString devicetypestring_alt;
 	TQString devicepciclass;
-	TDEGenericDevice* device = existingdevice;
+	GenericDevice* device = existingdevice;
 	bool temp_udev_device = !dev;
 	if (dev) {
 		devicename = (udev_device_get_sysname(dev));
@@ -1553,11 +1553,11 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 	syspath_tail.truncate(syspath_tail.length()-1);
 	syspath_tail.remove(0, syspath_tail.findRev("/")+1);
 	if (syspath_tail.startsWith("event")) {
-		if (!device) device = new TDEEventDevice(TDEGenericDeviceType::Event);
+		if (!device) device = new EventDevice(GenericDeviceType::Event);
 	}
 	// Pull out all input special devices and stuff them under Input
 	if (syspath_tail.startsWith("input")) {
-		if (!device) device = new TDEInputDevice(TDEGenericDeviceType::Input);
+		if (!device) device = new InputDevice(GenericDeviceType::Input);
 	}
 
 	// Check for keyboard
@@ -1585,7 +1585,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		}
 	}
 	if (is_keyboard) {
-		if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Keyboard);
+		if (!device) device = new GenericDevice(GenericDeviceType::Keyboard);
 	}
 
 	// Classify specific known devices
@@ -1596,11 +1596,11 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 		|| (devicesubsystem == "scsi_tape"))
 		&& ((devicenode != "")
 		)) {
-		if (!device) device = new TDEStorageDevice(TDEGenericDeviceType::Disk);
+		if (!device) device = new StorageDevice(GenericDeviceType::Disk);
 	}
 	else if (devicetype == "host") {
 		if (devicesubsystem == "bluetooth") {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::BlueTooth);
+			if (!device) device = new GenericDevice(GenericDeviceType::BlueTooth);
 		}
 	}
 	else if (devicetype.isNull()) {
@@ -1614,10 +1614,10 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 				// If a device has been classified as belonging to the ACPI subsystem usually there is a "real" device related to it elsewhere in the system
 				// Furthermore, the "real" device elsewhere almost always has more functionality exposed via sysfs
 				// Therefore all ACPI subsystem devices should be stuffed in the OtherACPI category and largely ignored
-				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::OtherACPI);
+				if (!device) device = new GenericDevice(GenericDeviceType::OtherACPI);
 			}
 			else {
-				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::OtherACPI);
+				if (!device) device = new GenericDevice(GenericDeviceType::OtherACPI);
 			}
 		}
 		else if (devicesubsystem == "input") {
@@ -1625,63 +1625,63 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			// Check for mouse
 			// udev doesn't reliably help here, so guess from the device name
 			if (systempath.contains("/mouse")) {
-				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Mouse);
+				if (!device) device = new GenericDevice(GenericDeviceType::Mouse);
 			}
 			if (!device) {
 				// Second mouse check
 				// Look for ID_INPUT_MOUSE property presence
 				if (udev_device_get_property_value(dev, "ID_INPUT_MOUSE") != 0) {
-					if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Mouse);
+					if (!device) device = new GenericDevice(GenericDeviceType::Mouse);
 				}
 			}
 			if (!device) {
 				// Check for keyboard
 				// Look for ID_INPUT_KEYBOARD property presence
 				if (udev_device_get_property_value(dev, "ID_INPUT_KEYBOARD") != 0) {
-					if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Keyboard);
+					if (!device) device = new GenericDevice(GenericDeviceType::Keyboard);
 				}
 			}
 			if (!device) {
-				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::HID);
+				if (!device) device = new GenericDevice(GenericDeviceType::HID);
 			}
 		}
 		else if (devicesubsystem == "tty") {
 			if (devicenode.contains("/ttyS")) {
-				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Serial);
+				if (!device) device = new GenericDevice(GenericDeviceType::Serial);
 			}
 			else {
-				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::TextIO);
+				if (!device) device = new GenericDevice(GenericDeviceType::TextIO);
 			}
 		}
 		else if (devicesubsystem == "usb-serial") {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Serial);
+			if (!device) device = new GenericDevice(GenericDeviceType::Serial);
 		}
 		else if ((devicesubsystem == "spi_master")
 			|| (devicesubsystem == "spidev")) {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Serial);
+			if (!device) device = new GenericDevice(GenericDeviceType::Serial);
 		}
 		else if (devicesubsystem == "spi") {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+			if (!device) device = new GenericDevice(GenericDeviceType::Platform);
 		}
 		else if (devicesubsystem == "thermal") {
 			// FIXME
 			// Figure out a way to differentiate between ThermalControl (fans and coolers) and ThermalSensor types
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::ThermalControl);
+			if (!device) device = new GenericDevice(GenericDeviceType::ThermalControl);
 		}
 		else if (devicesubsystem == "hwmon") {
 			// FIXME
 			// This might pick up thermal sensors
-			if (!device) device = new TDESensorDevice(TDEGenericDeviceType::OtherSensor);
+			if (!device) device = new SensorDevice(GenericDeviceType::OtherSensor);
 		}
 		else if (devicesubsystem == "virtio") {
 			if (devicedriver == "virtio_blk") {
-				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::SCSI);
+				if (!device) device = new GenericDevice(GenericDeviceType::SCSI);
 			}
 			if (devicedriver == "virtio_net") {
-				if (!device) device = new TDENetworkDevice(TDEGenericDeviceType::Network);
+				if (!device) device = new NetworkDevice(GenericDeviceType::Network);
 			}
 			if (devicedriver == "virtio_balloon") {
-				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::RAM);
+				if (!device) device = new GenericDevice(GenericDeviceType::RAM);
 			}
 		}
 	}
@@ -1689,23 +1689,23 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 	// Try to at least generally classify unclassified devices
 	if (device == 0) {
 		if (devicesubsystem == "backlight") {
-			if (!device) device = new TDEBacklightDevice(TDEGenericDeviceType::Backlight);
+			if (!device) device = new BacklightDevice(GenericDeviceType::Backlight);
 		}
 		if (systempath.lower().startsWith("/sys/devices/virtual")) {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::OtherVirtual);
+			if (!device) device = new GenericDevice(GenericDeviceType::OtherVirtual);
 		}
 		if (systempath.lower().startsWith("/sys/module/")
 			|| (systempath.lower().startsWith("/sys/kernel/"))) {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);	// FIXME Should go into a new kernel module category when the tdelibs ABI can be broken again
+			if (!device) device = new GenericDevice(GenericDeviceType::Platform);	// FIXME Should go into a new kernel module category when the tdelibs ABI can be broken again
 		}
 		if ((devicetypestring == "audio")
 			|| (devicesubsystem == "sound")
 			|| (devicesubsystem == "ac97")) {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Sound);
+			if (!device) device = new GenericDevice(GenericDeviceType::Sound);
 		}
 		if ((devicesubsystem == "video4linux")
 			|| (devicesubsystem == "dvb")) {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::VideoCapture);
+			if (!device) device = new GenericDevice(GenericDeviceType::VideoCapture);
 		}
 		if ((devicetypestring_alt == "scsi_target")
 			|| (devicesubsystem == "scsi_host")
@@ -1727,130 +1727,130 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			|| (devicesubsystem == "ata_disk")
 			|| (devicesubsystem == "ata_device")
 			|| (devicesubsystem == "ata")) {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+			if (!device) device = new GenericDevice(GenericDeviceType::Platform);
 		}
 		if (devicesubsystem == "infiniband") {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Peripheral);
+			if (!device) device = new GenericDevice(GenericDeviceType::Peripheral);
 		}
 		if ((devicesubsystem == "infiniband_cm")
 			|| (devicesubsystem == "infiniband_mad")) {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+			if (!device) device = new GenericDevice(GenericDeviceType::Platform);
 		}
 		if ((devicesubsystem == "enclosure")
 			|| (devicesubsystem == "clocksource")
 			|| (devicesubsystem == "amba")) {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+			if (!device) device = new GenericDevice(GenericDeviceType::Platform);
 		}
 		if (devicesubsystem == "ipmi_si") {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Mainboard);
+			if (!device) device = new GenericDevice(GenericDeviceType::Mainboard);
 		}
 		if (devicesubsystem == "misc") {
 			if (devicedriver.startsWith("tpm_")) {
-				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Cryptography);
+				if (!device) device = new GenericDevice(GenericDeviceType::Cryptography);
 			}
 		}
 		if (devicesubsystem == "leds") {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::OtherACPI);
+			if (!device) device = new GenericDevice(GenericDeviceType::OtherACPI);
 		}
 		if (devicesubsystem == "net") {
-			if (!device) device = new TDENetworkDevice(TDEGenericDeviceType::Network);
+			if (!device) device = new NetworkDevice(GenericDeviceType::Network);
 		}
 		if ((devicesubsystem == "i2c")
 			|| (devicesubsystem == "i2c-dev")) {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::I2C);
+			if (!device) device = new GenericDevice(GenericDeviceType::I2C);
 		}
 		if (devicesubsystem == "mdio_bus") {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::MDIO);
+			if (!device) device = new GenericDevice(GenericDeviceType::MDIO);
 		}
 		if (devicesubsystem == "graphics") {
 			if (devicenode.isNull()) {	// GPUs do not have associated device nodes
-				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::GPU);
+				if (!device) device = new GenericDevice(GenericDeviceType::GPU);
 			}
 			else {
-				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+				if (!device) device = new GenericDevice(GenericDeviceType::Platform);
 			}
 		}
 		if (devicesubsystem == "tifm_adapter") {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::StorageController);
+			if (!device) device = new GenericDevice(GenericDeviceType::StorageController);
 		}
 		if (devicesubsystem == "mmc_host") {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::StorageController);
+			if (!device) device = new GenericDevice(GenericDeviceType::StorageController);
 		}
 		if (devicesubsystem == "mmc") {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+			if (!device) device = new GenericDevice(GenericDeviceType::Platform);
 		}
 		if ((devicesubsystem == "event_source")
 			|| (devicesubsystem == "rtc")) {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Mainboard);
+			if (!device) device = new GenericDevice(GenericDeviceType::Mainboard);
 		}
 		if (devicesubsystem == "bsg") {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::SCSI);
+			if (!device) device = new GenericDevice(GenericDeviceType::SCSI);
 		}
 		if (devicesubsystem == "firewire") {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::IEEE1394);
+			if (!device) device = new GenericDevice(GenericDeviceType::IEEE1394);
 		}
 		if (devicesubsystem == "drm") {
 			if (devicenode.isNull()) {	// Monitors do not have associated device nodes
-				if (!device) device = new TDEMonitorDevice(TDEGenericDeviceType::Monitor);
+				if (!device) device = new MonitorDevice(GenericDeviceType::Monitor);
 			}
 			else {
-				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+				if (!device) device = new GenericDevice(GenericDeviceType::Platform);
 			}
 		}
 		if (devicesubsystem == "serio") {
 			if (devicedriver.contains("atkbd")) {
-				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Keyboard);
+				if (!device) device = new GenericDevice(GenericDeviceType::Keyboard);
 			}
 			else if (devicedriver.contains("mouse")) {
-				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Mouse);
+				if (!device) device = new GenericDevice(GenericDeviceType::Mouse);
 			}
 			else {
-				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Serial);
+				if (!device) device = new GenericDevice(GenericDeviceType::Serial);
 			}
 		}
 		if (devicesubsystem == "ppdev") {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Parallel);
+			if (!device) device = new GenericDevice(GenericDeviceType::Parallel);
 		}
 		if (devicesubsystem == "printer") {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Printer);
+			if (!device) device = new GenericDevice(GenericDeviceType::Printer);
 		}
 		if (devicesubsystem == "bridge") {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Bridge);
+			if (!device) device = new GenericDevice(GenericDeviceType::Bridge);
 		}
 		if ((devicesubsystem == "pci_bus")
 			|| (devicesubsystem == "pci_express")) {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Bus);
+			if (!device) device = new GenericDevice(GenericDeviceType::Bus);
 		}
 		if (devicesubsystem == "pcmcia_socket") {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::PCMCIA);
+			if (!device) device = new GenericDevice(GenericDeviceType::PCMCIA);
 		}
 		if (devicesubsystem == "platform") {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+			if (!device) device = new GenericDevice(GenericDeviceType::Platform);
 		}
 		if (devicesubsystem == "ieee80211") {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+			if (!device) device = new GenericDevice(GenericDeviceType::Platform);
 		}
 		if (devicesubsystem == "rfkill") {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+			if (!device) device = new GenericDevice(GenericDeviceType::Platform);
 		}
 		if (devicesubsystem == "machinecheck") {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+			if (!device) device = new GenericDevice(GenericDeviceType::Platform);
 		}
 		if (devicesubsystem == "pnp") {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::PNP);
+			if (!device) device = new GenericDevice(GenericDeviceType::PNP);
 		}
 		if ((devicesubsystem == "hid")
 			|| (devicesubsystem == "hidraw")
 			|| (devicesubsystem == "usbhid")) {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::HID);
+			if (!device) device = new GenericDevice(GenericDeviceType::HID);
 		}
 		if (devicesubsystem == "power_supply") {
 			TQString powersupplyname(udev_device_get_property_value(dev, "POWER_SUPPLY_NAME"));
 			if (powersupplyname.upper().startsWith("AC")) {
-				if (!device) device = new TDEMainsPowerDevice(TDEGenericDeviceType::PowerSupply);
+				if (!device) device = new MainsPowerDevice(GenericDeviceType::PowerSupply);
 			}
 			else {
-				if (!device) device = new TDEBatteryDevice(TDEGenericDeviceType::Battery);
+				if (!device) device = new BatteryDevice(GenericDeviceType::Battery);
 			}
 		}
 
@@ -1860,51 +1860,51 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 			// Pre PCI 2.0
 			if (devicepciclass.startsWith("0001")) {
 				if (devicenode.isNull()) {	// GPUs do not have associated device nodes
-					if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::GPU);
+					if (!device) device = new GenericDevice(GenericDeviceType::GPU);
 				}
 				else {
-					if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+					if (!device) device = new GenericDevice(GenericDeviceType::Platform);
 				}
 			}
 			// Post PCI 2.0
 			TQString devicepcisubclass = devicepciclass;
 			devicepcisubclass = devicepcisubclass.remove(0,2);
 			if (devicepciclass.startsWith("01")) {
-				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::StorageController);
+				if (!device) device = new GenericDevice(GenericDeviceType::StorageController);
 			}
 			if (devicepciclass.startsWith("02")) {
-				if (!device) device = new TDENetworkDevice(TDEGenericDeviceType::Network);
+				if (!device) device = new NetworkDevice(GenericDeviceType::Network);
 			}
 			if (devicepciclass.startsWith("03")) {
 				if (devicenode.isNull()) {	// GPUs do not have associated device nodes
-					if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::GPU);
+					if (!device) device = new GenericDevice(GenericDeviceType::GPU);
 				}
 				else {
-					if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+					if (!device) device = new GenericDevice(GenericDeviceType::Platform);
 				}
 			}
 			if (devicepciclass.startsWith("04")) {
-				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::OtherMultimedia);
+				if (!device) device = new GenericDevice(GenericDeviceType::OtherMultimedia);
 			}
 			if (devicepciclass.startsWith("05")) {
-				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::RAM);
+				if (!device) device = new GenericDevice(GenericDeviceType::RAM);
 			}
 			if (devicepciclass.startsWith("06")) {
-				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Bridge);
+				if (!device) device = new GenericDevice(GenericDeviceType::Bridge);
 			}
 			if (devicepciclass.startsWith("07")) {
 				if (devicepcisubclass.startsWith("03")) {
-					if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Modem);
+					if (!device) device = new GenericDevice(GenericDeviceType::Modem);
 				}
 			}
 			if (devicepciclass.startsWith("0a")) {
-				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Dock);
+				if (!device) device = new GenericDevice(GenericDeviceType::Dock);
 			}
 			if (devicepciclass.startsWith("0b")) {
-				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::CPU);
+				if (!device) device = new GenericDevice(GenericDeviceType::CPU);
 			}
 			if (devicepciclass.startsWith("0c")) {
-				if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Serial);
+				if (!device) device = new GenericDevice(GenericDeviceType::Serial);
 			}
 		}
 
@@ -1946,9 +1946,9 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 				if ((usbInterfaceClass == 6) && (usbInterfaceSubClass == 1) && (usbInterfaceProtocol == 1)) {
 					// PictBridge
 					if (!device) {
-						device = new TDEStorageDevice(TDEGenericDeviceType::Disk);
-						TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(device);
-						sdevice->internalSetDiskType(TDEDiskDeviceType::Camera);
+						device = new StorageDevice(GenericDeviceType::Disk);
+						StorageDevice* sdevice = static_cast<StorageDevice*>(device);
+						sdevice->internalSetDiskType(DiskDeviceType::Camera);
 						TQString parentsyspathudev = systempath;
 						parentsyspathudev.truncate(parentsyspathudev.length()-1);	// Remove trailing slash
 						parentsyspathudev.truncate(parentsyspathudev.findRev("/"));
@@ -1958,25 +1958,25 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 					}
 				}
 				else {
-					if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::OtherUSB);
+					if (!device) device = new GenericDevice(GenericDeviceType::OtherUSB);
 				}
 		}
 		if (devicesubsystem == "pci") {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::OtherPeripheral);
+			if (!device) device = new GenericDevice(GenericDeviceType::OtherPeripheral);
 		}
 		if (devicesubsystem == "cpu") {
-			if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Platform);
+			if (!device) device = new GenericDevice(GenericDeviceType::Platform);
 		}
 	}
 
 	if (device == 0) {
 		// Unhandled
-		if (!device) device = new TDEGenericDevice(TDEGenericDeviceType::Other);
+		if (!device) device = new GenericDevice(GenericDeviceType::Other);
 		printf("[FIXME] UNCLASSIFIED DEVICE name: %s type: %s subsystem: %s driver: %s [Node Path: %s] [Syspath: %s] [%s:%s]\n", devicename.ascii(), devicetype.ascii(), devicesubsystem.ascii(), devicedriver.ascii(), devicenode.ascii(), udev_device_get_syspath(dev), devicevendorid.ascii(), devicemodelid.ascii()); fflush(stdout);
 	}
 
 	// Root devices are special
-	if ((device->type() == TDEGenericDeviceType::Root) || (device->type() == TDEGenericDeviceType::RootSystem)) {
+	if ((device->type() == GenericDeviceType::Root) || (device->type() == GenericDeviceType::RootSystem)) {
 		systempath = device->systemPath();
 	}
 
@@ -2016,7 +2016,7 @@ TDEGenericDevice* TDEHardwareDevices::classifyUnknownDevice(udev_device* dev, TD
 	return device;
 }
 
-void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* existingdevice, udev_device* dev) {
+void HardwareDevices::updateExistingDeviceInformation(GenericDevice* existingdevice, udev_device* dev) {
 	TQString devicename;
 	TQString devicetype;
 	TQString devicedriver;
@@ -2032,7 +2032,7 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 	TQString devicetypestring;
 	TQString devicetypestring_alt;
 	TQString devicepciclass;
-	TDEGenericDevice* device = existingdevice;
+	GenericDevice* device = existingdevice;
 	bool temp_udev_device = !dev;
 
 	devicename = device->name();
@@ -2057,11 +2057,11 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 		dev = udev_device_new_from_syspath(m_udevStruct, syspathudev.ascii());
 	}
 
-	if (device->type() == TDEGenericDeviceType::Disk) {
-		TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(device);
-		if (sdevice->diskType() & TDEDiskDeviceType::Camera) {
+	if (device->type() == GenericDeviceType::Disk) {
+		StorageDevice* sdevice = static_cast<StorageDevice*>(device);
+		if (sdevice->diskType() & DiskDeviceType::Camera) {
 			// PictBridge cameras are special and should not be classified by standard rules
-			sdevice->internalSetDiskStatus(TDEDiskDeviceStatus::Removable);
+			sdevice->internalSetDiskStatus(DiskDeviceStatus::Removable);
 			sdevice->internalSetFileSystemName("pictbridge");
 		}
 		else {
@@ -2150,31 +2150,31 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 			device->internalSetVendorModel(devicemodel);
 			device->internalSetDeviceBus(devicebus);
 	
-			TDEDiskDeviceType::TDEDiskDeviceType disktype = sdevice->diskType();
-			TDEDiskDeviceStatus::TDEDiskDeviceStatus diskstatus = TDEDiskDeviceStatus::Null;
+			DiskDeviceType::DiskDeviceType disktype = sdevice->diskType();
+			DiskDeviceStatus::DiskDeviceStatus diskstatus = DiskDeviceStatus::Null;
 	
 			disktype = classifyDiskType(dev, devicebus, devicetypestring, systempath, devicevendor, devicemodel, filesystemtype, devicedriver);
 			sdevice->internalSetDiskType(disktype);
 			device = classifyUnknownDeviceByExternalRules(dev, device, true);	// Check external rules for possible subtype overrides
 			disktype = sdevice->diskType();						// The type can be overridden by an external rule
 	
-			if ((disktype & TDEDiskDeviceType::CDROM)
-				|| (disktype & TDEDiskDeviceType::CDRW)
-				|| (disktype & TDEDiskDeviceType::DVDROM)
-				|| (disktype & TDEDiskDeviceType::DVDRAM)
-				|| (disktype & TDEDiskDeviceType::DVDRW)
-				|| (disktype & TDEDiskDeviceType::BDROM)
-				|| (disktype & TDEDiskDeviceType::BDRW)
-				|| (disktype & TDEDiskDeviceType::CDAudio)
-				|| (disktype & TDEDiskDeviceType::CDVideo)
-				|| (disktype & TDEDiskDeviceType::DVDVideo)
-				|| (disktype & TDEDiskDeviceType::BDVideo)
+			if ((disktype & DiskDeviceType::CDROM)
+				|| (disktype & DiskDeviceType::CDRW)
+				|| (disktype & DiskDeviceType::DVDROM)
+				|| (disktype & DiskDeviceType::DVDRAM)
+				|| (disktype & DiskDeviceType::DVDRW)
+				|| (disktype & DiskDeviceType::BDROM)
+				|| (disktype & DiskDeviceType::BDRW)
+				|| (disktype & DiskDeviceType::CDAudio)
+				|| (disktype & DiskDeviceType::CDVideo)
+				|| (disktype & DiskDeviceType::DVDVideo)
+				|| (disktype & DiskDeviceType::BDVideo)
 				) {
 				// These drives are guaranteed to be optical
-				disktype = disktype | TDEDiskDeviceType::Optical;
+				disktype = disktype | DiskDeviceType::Optical;
 			}
 	
-			if (disktype & TDEDiskDeviceType::Floppy) {
+			if (disktype & DiskDeviceType::Floppy) {
 				// Floppy drives don't work well under udev
 				// I have to look for the block device name manually
 				TQString floppyblknodename = systempath;
@@ -2217,18 +2217,18 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 	
 				if (devicenode.isNull()) {
 					// This floppy drive cannot be mounted, so ignore it
-					disktype = disktype & ~TDEDiskDeviceType::Floppy;
+					disktype = disktype & ~DiskDeviceType::Floppy;
 				}
 			}
 	
 			if (devicetypestring.upper() == "CD") {
 				if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_STATE")).upper() == "BLANK") {
-					diskstatus = diskstatus | TDEDiskDeviceStatus::Blank;
+					diskstatus = diskstatus | DiskDeviceStatus::Blank;
 				}
 				sdevice->internalSetMediaInserted((TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA")) != ""));
 			}
 	
-			if (disktype & TDEDiskDeviceType::Zip) {
+			if (disktype & DiskDeviceType::Zip) {
 				// A Zip drive does not advertise its status via udev, but it can be guessed from the size parameter
 				TQString zipnodename = systempath;
 				zipnodename.append("/size");
@@ -2245,46 +2245,46 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 			}
 	
 			if (removable) {
-				diskstatus = diskstatus | TDEDiskDeviceStatus::Removable;
+				diskstatus = diskstatus | DiskDeviceStatus::Removable;
 			}
 			if (hotpluggable) {
-				diskstatus = diskstatus | TDEDiskDeviceStatus::Hotpluggable;
+				diskstatus = diskstatus | DiskDeviceStatus::Hotpluggable;
 			}
 	
 			if ((filesystemtype.upper() != "CRYPTO_LUKS") && (filesystemtype.upper() != "CRYPTO") && (filesystemtype.upper() != "SWAP") && (!filesystemtype.isNull())) {
-				diskstatus = diskstatus | TDEDiskDeviceStatus::ContainsFilesystem;
+				diskstatus = diskstatus | DiskDeviceStatus::ContainsFilesystem;
 			}
 	
 			// Set mountable flag if device is likely to be mountable
-			diskstatus = diskstatus | TDEDiskDeviceStatus::Mountable;
-			if ((devicetypestring.upper().isNull()) && (disktype & TDEDiskDeviceType::HDD)) {
-				diskstatus = diskstatus & ~TDEDiskDeviceStatus::Mountable;
+			diskstatus = diskstatus | DiskDeviceStatus::Mountable;
+			if ((devicetypestring.upper().isNull()) && (disktype & DiskDeviceType::HDD)) {
+				diskstatus = diskstatus & ~DiskDeviceStatus::Mountable;
 			}
 			if (removable) {
 				if (sdevice->mediaInserted()) {
-					diskstatus = diskstatus | TDEDiskDeviceStatus::Inserted;
+					diskstatus = diskstatus | DiskDeviceStatus::Inserted;
 				}
 				else {
-					diskstatus = diskstatus & ~TDEDiskDeviceStatus::Mountable;
+					diskstatus = diskstatus & ~DiskDeviceStatus::Mountable;
 				}
 			}
 			// Swap partitions cannot be mounted
 			if (filesystemtype.upper() == "SWAP") {
-				diskstatus = diskstatus & ~TDEDiskDeviceStatus::Mountable;
+				diskstatus = diskstatus & ~DiskDeviceStatus::Mountable;
 			}
 			// If certain disk types do not report the presence of a filesystem, they are likely not mountable
-			if ((disktype & TDEDiskDeviceType::HDD) || (disktype & TDEDiskDeviceType::Optical)) {
-				if (!(diskstatus & TDEDiskDeviceStatus::ContainsFilesystem)) {
-					diskstatus = diskstatus & ~TDEDiskDeviceStatus::Mountable;
+			if ((disktype & DiskDeviceType::HDD) || (disktype & DiskDeviceType::Optical)) {
+				if (!(diskstatus & DiskDeviceStatus::ContainsFilesystem)) {
+					diskstatus = diskstatus & ~DiskDeviceStatus::Mountable;
 				}
 			}
 	
 			if (holdingDeviceNodes.count() > 0) {
-				diskstatus = diskstatus | TDEDiskDeviceStatus::UsedByDevice;
+				diskstatus = diskstatus | DiskDeviceStatus::UsedByDevice;
 			}
 	
 			if (slaveDeviceNodes.count() > 0) {
-				diskstatus = diskstatus | TDEDiskDeviceStatus::UsesDevice;
+				diskstatus = diskstatus | DiskDeviceStatus::UsesDevice;
 			}
 	
 			// See if any slaves were crypted
@@ -2293,7 +2293,7 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 				slavedev = udev_device_new_from_syspath(m_udevStruct, (*slaveit).ascii());
 				TQString slavediskfstype(udev_device_get_property_value(slavedev, "ID_FS_TYPE"));
 				if ((slavediskfstype.upper() == "CRYPTO_LUKS") || (slavediskfstype.upper() == "CRYPTO")) {
-					disktype = disktype | TDEDiskDeviceType::UnlockedCrypt;
+					disktype = disktype | DiskDeviceType::UnlockedCrypt;
 					// Set disk type based on parent device
 					disktype = disktype | classifyDiskType(slavedev, TQString(udev_device_get_property_value(dev, "ID_BUS")), TQString(udev_device_get_property_value(dev, "ID_TYPE")), (*slaveit), TQString(udev_device_get_property_value(dev, "ID_VENDOR")), TQString(udev_device_get_property_value(dev, "ID_MODEL")), TQString(udev_device_get_property_value(dev, "ID_FS_TYPE")), TQString(udev_device_get_driver(dev)));
 				}
@@ -2309,16 +2309,16 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 			sdevice->internalSetHoldingDevices(holdingDeviceNodes);
 	
 			// Clean up disk label
-			if ((sdevice->isDiskOfType(TDEDiskDeviceType::CDROM))
-				|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDRW))
-				|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDROM))
-				|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRW))
-				|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDROM))
-				|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDRW))
-				|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDAudio))
-				|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDVideo))
-				|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDVideo))
-				|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDVideo))
+			if ((sdevice->isDiskOfType(DiskDeviceType::CDROM))
+				|| (sdevice->isDiskOfType(DiskDeviceType::CDRW))
+				|| (sdevice->isDiskOfType(DiskDeviceType::DVDROM))
+				|| (sdevice->isDiskOfType(DiskDeviceType::DVDRW))
+				|| (sdevice->isDiskOfType(DiskDeviceType::BDROM))
+				|| (sdevice->isDiskOfType(DiskDeviceType::BDRW))
+				|| (sdevice->isDiskOfType(DiskDeviceType::CDAudio))
+				|| (sdevice->isDiskOfType(DiskDeviceType::CDVideo))
+				|| (sdevice->isDiskOfType(DiskDeviceType::DVDVideo))
+				|| (sdevice->isDiskOfType(DiskDeviceType::BDVideo))
 				) {
 				if (disklabel == "" && sdevice->diskLabel().isNull()) {
 					// Read the volume label in via volname, since udev couldn't be bothered to do this on its own
@@ -2335,7 +2335,7 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 		}
 	}
 
-	if (device->type() == TDEGenericDeviceType::Network) {
+	if (device->type() == GenericDeviceType::Network) {
 		// Network devices don't have devices nodes per se, but we can at least return the Linux network name...
 		TQString potentialdevicenode = systempath;
 		if (potentialdevicenode.endsWith("/")) potentialdevicenode.truncate(potentialdevicenode.length()-1);
@@ -2350,12 +2350,12 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 		if (devicenode.isNull()) {
 			// Platform device, not a physical device
 			// HACK
-			// This only works because devices of type Platform only access the TDEGenericDevice class!
-			device->m_deviceType = TDEGenericDeviceType::Platform;
+			// This only works because devices of type Platform only access the GenericDevice class!
+			device->m_deviceType = GenericDeviceType::Platform;
 		}
 		else {
 			// Gather network device information
-			TDENetworkDevice* ndevice = dynamic_cast<TDENetworkDevice*>(device);
+			NetworkDevice* ndevice = dynamic_cast<NetworkDevice*>(device);
 			TQString valuesnodename = systempath + "/";
 			TQDir valuesdir(valuesnodename);
 			valuesdir.setFilter(TQDir::All);
@@ -2494,9 +2494,9 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 		}
 	}
 
-	if ((device->type() == TDEGenericDeviceType::OtherSensor) || (device->type() == TDEGenericDeviceType::ThermalSensor)) {
+	if ((device->type() == GenericDeviceType::OtherSensor) || (device->type() == GenericDeviceType::ThermalSensor)) {
 		// Populate all sensor values
-		TDESensorClusterMap sensors;
+		SensorClusterMap sensors;
 		TQString valuesnodename = systempath + "/";
 		TQDir valuesdir(valuesnodename);
 		valuesdir.setFilter(TQDir::All);
@@ -2545,13 +2545,13 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 			}
 		}
 
-		TDESensorDevice* sdevice = dynamic_cast<TDESensorDevice*>(device);
+		SensorDevice* sdevice = dynamic_cast<SensorDevice*>(device);
 		sdevice->internalSetValues(sensors);
 	}
 
-	if (device->type() == TDEGenericDeviceType::Battery) {
+	if (device->type() == GenericDeviceType::Battery) {
 		// Populate all battery values
-		TDEBatteryDevice* bdevice = dynamic_cast<TDEBatteryDevice*>(device);
+		BatteryDevice* bdevice = dynamic_cast<BatteryDevice*>(device);
 		TQString valuesnodename = systempath + "/";
 		TQDir valuesdir(valuesnodename);
 		valuesdir.setFilter(TQDir::All);
@@ -2620,9 +2620,9 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 		bdevice->internalSetTimeRemaining((bdevice->energy()/bdevice->dischargeRate())*60*60);
 	}
 
-	if (device->type() == TDEGenericDeviceType::PowerSupply) {
+	if (device->type() == GenericDeviceType::PowerSupply) {
 		// Populate all power supply values
-		TDEMainsPowerDevice* pdevice = dynamic_cast<TDEMainsPowerDevice*>(device);
+		MainsPowerDevice* pdevice = dynamic_cast<MainsPowerDevice*>(device);
 		TQString valuesnodename = systempath + "/";
 		TQDir valuesdir(valuesnodename);
 		valuesdir.setFilter(TQDir::All);
@@ -2657,9 +2657,9 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 		}
 	}
 
-	if (device->type() == TDEGenericDeviceType::Backlight) {
+	if (device->type() == GenericDeviceType::Backlight) {
 		// Populate all backlight values
-		TDEBacklightDevice* bdevice = dynamic_cast<TDEBacklightDevice*>(device);
+		BacklightDevice* bdevice = dynamic_cast<BacklightDevice*>(device);
 		TQString valuesnodename = systempath + "/";
 		TQDir valuesdir(valuesnodename);
 		valuesdir.setFilter(TQDir::All);
@@ -2676,13 +2676,13 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 					TQString line;
 					line = stream.readLine();
 					if (nodename == "bl_power") {
-						TDEDisplayPowerLevel::TDEDisplayPowerLevel pl = TDEDisplayPowerLevel::On;
+						DisplayPowerLevel::DisplayPowerLevel pl = DisplayPowerLevel::On;
 						int rpl = line.toInt();
 						if (rpl == FB_BLANK_UNBLANK) {
-							pl = TDEDisplayPowerLevel::On;
+							pl = DisplayPowerLevel::On;
 						}
 						else if (rpl == FB_BLANK_POWERDOWN) {
-							pl = TDEDisplayPowerLevel::Off;
+							pl = DisplayPowerLevel::Off;
 						}
 						bdevice->internalSetPowerLevel(pl);
 					}
@@ -2699,8 +2699,8 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 		}
 	}
 
-	if (device->type() == TDEGenericDeviceType::Monitor) {
-		TDEMonitorDevice* mdevice = dynamic_cast<TDEMonitorDevice*>(device);
+	if (device->type() == GenericDeviceType::Monitor) {
+		MonitorDevice* mdevice = dynamic_cast<MonitorDevice*>(device);
 		TQString valuesnodename = systempath + "/";
 		TQDir valuesdir(valuesnodename);
 		valuesdir.setFilter(TQDir::All);
@@ -2740,18 +2740,18 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 						mdevice->internalSetResolutions(resolutions);
 					}
 					if (nodename == "dpms") {
-						TDEDisplayPowerLevel::TDEDisplayPowerLevel pl = TDEDisplayPowerLevel::On;
+						DisplayPowerLevel::DisplayPowerLevel pl = DisplayPowerLevel::On;
 						if (line == "On") {
-							pl = TDEDisplayPowerLevel::On;
+							pl = DisplayPowerLevel::On;
 						}
 						else if (line == "Standby") {
-							pl = TDEDisplayPowerLevel::Standby;
+							pl = DisplayPowerLevel::Standby;
 						}
 						else if (line == "Suspend") {
-							pl = TDEDisplayPowerLevel::Suspend;
+							pl = DisplayPowerLevel::Suspend;
 						}
 						else if (line == "Off") {
-							pl = TDEDisplayPowerLevel::Off;
+							pl = DisplayPowerLevel::Off;
 						}
 						mdevice->internalSetPowerLevel(pl);
 					}
@@ -2788,15 +2788,15 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 		// Much of the code in libtderandr should be integrated into/interfaced with this library
 	}
 
-	if (device->type() == TDEGenericDeviceType::RootSystem) {
+	if (device->type() == GenericDeviceType::RootSystem) {
 		// Try to obtain as much generic information about this system as possible
-		TDERootSystemDevice* rdevice = dynamic_cast<TDERootSystemDevice*>(device);
+		RootSystemDevice* rdevice = dynamic_cast<RootSystemDevice*>(device);
 
 		// Guess at my form factor
 		// dmidecode would tell me this, but is somewhat unreliable
-		TDESystemFormFactor::TDESystemFormFactor formfactor = TDESystemFormFactor::Desktop;
-		if (listByDeviceClass(TDEGenericDeviceType::Backlight).count() > 0) {	// Is this really a good way to determine if a machine is a laptop?
-			formfactor = TDESystemFormFactor::Laptop;
+		SystemFormFactor::SystemFormFactor formfactor = SystemFormFactor::Desktop;
+		if (listByDeviceClass(GenericDeviceType::Backlight).count() > 0) {	// Is this really a good way to determine if a machine is a laptop?
+			formfactor = SystemFormFactor::Laptop;
 		}
 		rdevice->internalSetFormFactor(formfactor);
 
@@ -2816,59 +2816,59 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 					TQString line;
 					line = stream.readLine();
 					if (nodename == "state") {
-						TDESystemPowerStateList powerstates;
+						SystemPowerStateList powerstates;
 						// Always assume that these two fully on/fully off states are available
-						powerstates.append(TDESystemPowerState::Active);
-						powerstates.append(TDESystemPowerState::PowerOff);
+						powerstates.append(SystemPowerState::Active);
+						powerstates.append(SystemPowerState::PowerOff);
 						if (line.contains("standby")) {
-							powerstates.append(TDESystemPowerState::Standby);
+							powerstates.append(SystemPowerState::Standby);
 						}
 						if (line.contains("mem")) {
-							powerstates.append(TDESystemPowerState::Suspend);
+							powerstates.append(SystemPowerState::Suspend);
 						}
 						if (line.contains("disk")) {
-							powerstates.append(TDESystemPowerState::Hibernate);
+							powerstates.append(SystemPowerState::Hibernate);
 						}
 						rdevice->internalSetPowerStates(powerstates);
 					}
 					if (nodename == "disk") {
 						// Get list of available hibernation methods
-						TDESystemHibernationMethodList hibernationmethods;
+						SystemHibernationMethodList hibernationmethods;
 						if (line.contains("platform")) {
-							hibernationmethods.append(TDESystemHibernationMethod::Platform);
+							hibernationmethods.append(SystemHibernationMethod::Platform);
 						}
 						if (line.contains("shutdown")) {
-							hibernationmethods.append(TDESystemHibernationMethod::Shutdown);
+							hibernationmethods.append(SystemHibernationMethod::Shutdown);
 						}
 						if (line.contains("reboot")) {
-							hibernationmethods.append(TDESystemHibernationMethod::Reboot);
+							hibernationmethods.append(SystemHibernationMethod::Reboot);
 						}
 						if (line.contains("testproc")) {
-							hibernationmethods.append(TDESystemHibernationMethod::TestProc);
+							hibernationmethods.append(SystemHibernationMethod::TestProc);
 						}
 						if (line.contains("test")) {
-							hibernationmethods.append(TDESystemHibernationMethod::Test);
+							hibernationmethods.append(SystemHibernationMethod::Test);
 						}
 						rdevice->internalSetHibernationMethods(hibernationmethods);
 
 						// Get current hibernation method
 						line.truncate(line.findRev("]"));
 						line.remove(0, line.findRev("[")+1);
-						TDESystemHibernationMethod::TDESystemHibernationMethod hibernationmethod = TDESystemHibernationMethod::Unsupported;
+						SystemHibernationMethod::SystemHibernationMethod hibernationmethod = SystemHibernationMethod::Unsupported;
 						if (line.contains("platform")) {
-							hibernationmethod = TDESystemHibernationMethod::Platform;
+							hibernationmethod = SystemHibernationMethod::Platform;
 						}
 						if (line.contains("shutdown")) {
-							hibernationmethod = TDESystemHibernationMethod::Shutdown;
+							hibernationmethod = SystemHibernationMethod::Shutdown;
 						}
 						if (line.contains("reboot")) {
-							hibernationmethod = TDESystemHibernationMethod::Reboot;
+							hibernationmethod = SystemHibernationMethod::Reboot;
 						}
 						if (line.contains("testproc")) {
-							hibernationmethod = TDESystemHibernationMethod::TestProc;
+							hibernationmethod = SystemHibernationMethod::TestProc;
 						}
 						if (line.contains("test")) {
-							hibernationmethod = TDESystemHibernationMethod::Test;
+							hibernationmethod = SystemHibernationMethod::Test;
 						}
 						rdevice->internalSetHibernationMethod(hibernationmethod);
 					}
@@ -2885,146 +2885,146 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 	// NOTE
 	// Keep these two handlers (Event and Input) in sync!
 
-	if (device->type() == TDEGenericDeviceType::Event) {
+	if (device->type() == GenericDeviceType::Event) {
 		// Try to obtain as much type information about this event device as possible
-		TDEEventDevice* edevice = dynamic_cast<TDEEventDevice*>(device);
+		EventDevice* edevice = dynamic_cast<EventDevice*>(device);
 		if (edevice->systemPath().contains("PNP0C0D")) {
-			edevice->internalSetEventType(TDEEventDeviceType::ACPILidSwitch);
+			edevice->internalSetEventType(EventDeviceType::ACPILidSwitch);
 		}
 		else if (edevice->systemPath().contains("PNP0C0E") || edevice->systemPath().contains("/LNXSLPBN")) {
-			edevice->internalSetEventType(TDEEventDeviceType::ACPISleepButton);
+			edevice->internalSetEventType(EventDeviceType::ACPISleepButton);
 		}
 		else if (edevice->systemPath().contains("PNP0C0C") || edevice->systemPath().contains("/LNXPWRBN")) {
-			edevice->internalSetEventType(TDEEventDeviceType::ACPIPowerButton);
+			edevice->internalSetEventType(EventDeviceType::ACPIPowerButton);
 		}
 		else {
-			edevice->internalSetEventType(TDEEventDeviceType::Unknown);
+			edevice->internalSetEventType(EventDeviceType::Unknown);
 		}
 	}
 
-	if (device->type() == TDEGenericDeviceType::Input) {
+	if (device->type() == GenericDeviceType::Input) {
 		// Try to obtain as much type information about this input device as possible
-		TDEInputDevice* idevice = dynamic_cast<TDEInputDevice*>(device);
+		InputDevice* idevice = dynamic_cast<InputDevice*>(device);
 		if (idevice->systemPath().contains("PNP0C0D")) {
-			idevice->internalSetInputType(TDEInputDeviceType::ACPILidSwitch);
+			idevice->internalSetInputType(InputDeviceType::ACPILidSwitch);
 		}
 		else if (idevice->systemPath().contains("PNP0C0E") || idevice->systemPath().contains("/LNXSLPBN")) {
-			idevice->internalSetInputType(TDEInputDeviceType::ACPISleepButton);
+			idevice->internalSetInputType(InputDeviceType::ACPISleepButton);
 		}
 		else if (idevice->systemPath().contains("PNP0C0C") || idevice->systemPath().contains("/LNXPWRBN")) {
-			idevice->internalSetInputType(TDEInputDeviceType::ACPIPowerButton);
+			idevice->internalSetInputType(InputDeviceType::ACPIPowerButton);
 		}
 		else {
-			idevice->internalSetInputType(TDEInputDeviceType::Unknown);
+			idevice->internalSetInputType(InputDeviceType::Unknown);
 		}
 	}
 
-	if (device->type() == TDEGenericDeviceType::Event) {
+	if (device->type() == GenericDeviceType::Event) {
 		// Try to obtain as much specific information about this event device as possible
-		TDEEventDevice* edevice = dynamic_cast<TDEEventDevice*>(device);
+		EventDevice* edevice = dynamic_cast<EventDevice*>(device);
 		int r;
 		char switches[SW_CNT];
 
 		// Figure out which switch types are supported, if any
-		TDESwitchType::TDESwitchType supportedSwitches = TDESwitchType::Null;
+		SwitchType::SwitchType supportedSwitches = SwitchType::Null;
 		if (edevice->m_fd < 0) {
 			edevice->m_fd = open(edevice->deviceNode().ascii(), O_RDONLY);
 		}
 		r = ioctl(edevice->m_fd, EVIOCGBIT(EV_SW, sizeof(switches)), switches);
 		if (r > 0) {
 			if (BIT_IS_SET(switches, SW_LID)) {
-				supportedSwitches = supportedSwitches | TDESwitchType::Lid;
+				supportedSwitches = supportedSwitches | SwitchType::Lid;
 			}
 			if (BIT_IS_SET(switches, SW_TABLET_MODE)) {
-				supportedSwitches = supportedSwitches | TDESwitchType::TabletMode;
+				supportedSwitches = supportedSwitches | SwitchType::TabletMode;
 			}
 			if (BIT_IS_SET(switches, SW_RFKILL_ALL)) {
-				supportedSwitches = supportedSwitches | TDESwitchType::RFKill;
+				supportedSwitches = supportedSwitches | SwitchType::RFKill;
 			}
 			if (BIT_IS_SET(switches, SW_RADIO)) {
-				supportedSwitches = supportedSwitches | TDESwitchType::Radio;
+				supportedSwitches = supportedSwitches | SwitchType::Radio;
 			}
 			if (BIT_IS_SET(switches, SW_MICROPHONE_INSERT)) {
-				supportedSwitches = supportedSwitches | TDESwitchType::MicrophoneInsert;
+				supportedSwitches = supportedSwitches | SwitchType::MicrophoneInsert;
 			}
 			if (BIT_IS_SET(switches, SW_DOCK)) {
-				supportedSwitches = supportedSwitches | TDESwitchType::Dock;
+				supportedSwitches = supportedSwitches | SwitchType::Dock;
 			}
 			if (BIT_IS_SET(switches, SW_LINEOUT_INSERT)) {
-				supportedSwitches = supportedSwitches | TDESwitchType::LineOutInsert;
+				supportedSwitches = supportedSwitches | SwitchType::LineOutInsert;
 			}
 			if (BIT_IS_SET(switches, SW_JACK_PHYSICAL_INSERT)) {
-				supportedSwitches = supportedSwitches | TDESwitchType::JackPhysicalInsert;
+				supportedSwitches = supportedSwitches | SwitchType::JackPhysicalInsert;
 			}
 			if (BIT_IS_SET(switches, SW_VIDEOOUT_INSERT)) {
-				supportedSwitches = supportedSwitches | TDESwitchType::VideoOutInsert;
+				supportedSwitches = supportedSwitches | SwitchType::VideoOutInsert;
 			}
 #if 0	// Some old kernels don't provide these defines... [FIXME]
 			if (BIT_IS_SET(switches, SW_CAMERA_LENS_COVER)) {
-				supportedSwitches = supportedSwitches | TDESwitchType::CameraLensCover;
+				supportedSwitches = supportedSwitches | SwitchType::CameraLensCover;
 			}
 			if (BIT_IS_SET(switches, SW_KEYPAD_SLIDE)) {
-				supportedSwitches = supportedSwitches | TDESwitchType::KeypadSlide;
+				supportedSwitches = supportedSwitches | SwitchType::KeypadSlide;
 			}
 			if (BIT_IS_SET(switches, SW_FRONT_PROXIMITY)) {
-				supportedSwitches = supportedSwitches | TDESwitchType::FrontProximity;
+				supportedSwitches = supportedSwitches | SwitchType::FrontProximity;
 			}
 			if (BIT_IS_SET(switches, SW_ROTATE_LOCK)) {
-				supportedSwitches = supportedSwitches | TDESwitchType::RotateLock;
+				supportedSwitches = supportedSwitches | SwitchType::RotateLock;
 			}
 			if (BIT_IS_SET(switches, SW_LINEIN_INSERT)) {
-				supportedSwitches = supportedSwitches | TDESwitchType::LineInInsert;
+				supportedSwitches = supportedSwitches | SwitchType::LineInInsert;
 			}
 #endif
 		}
 		edevice->internalSetProvidedSwitches(supportedSwitches);
 
 		// Figure out which switch types are active, if any
-		TDESwitchType::TDESwitchType activeSwitches = TDESwitchType::Null;
+		SwitchType::SwitchType activeSwitches = SwitchType::Null;
 		r = ioctl(edevice->m_fd, EVIOCGSW(sizeof(switches)), switches);
 		if (r > 0) {
 			if (BIT_IS_SET(switches, SW_LID)) {
-				activeSwitches = activeSwitches | TDESwitchType::Lid;
+				activeSwitches = activeSwitches | SwitchType::Lid;
 			}
 			if (BIT_IS_SET(switches, SW_TABLET_MODE)) {
-				activeSwitches = activeSwitches | TDESwitchType::TabletMode;
+				activeSwitches = activeSwitches | SwitchType::TabletMode;
 			}
 			if (BIT_IS_SET(switches, SW_RFKILL_ALL)) {
-				activeSwitches = activeSwitches | TDESwitchType::RFKill;
+				activeSwitches = activeSwitches | SwitchType::RFKill;
 			}
 			if (BIT_IS_SET(switches, SW_RADIO)) {
-				activeSwitches = activeSwitches | TDESwitchType::Radio;
+				activeSwitches = activeSwitches | SwitchType::Radio;
 			}
 			if (BIT_IS_SET(switches, SW_MICROPHONE_INSERT)) {
-				activeSwitches = activeSwitches | TDESwitchType::MicrophoneInsert;
+				activeSwitches = activeSwitches | SwitchType::MicrophoneInsert;
 			}
 			if (BIT_IS_SET(switches, SW_DOCK)) {
-				activeSwitches = activeSwitches | TDESwitchType::Dock;
+				activeSwitches = activeSwitches | SwitchType::Dock;
 			}
 			if (BIT_IS_SET(switches, SW_LINEOUT_INSERT)) {
-				activeSwitches = activeSwitches | TDESwitchType::LineOutInsert;
+				activeSwitches = activeSwitches | SwitchType::LineOutInsert;
 			}
 			if (BIT_IS_SET(switches, SW_JACK_PHYSICAL_INSERT)) {
-				activeSwitches = activeSwitches | TDESwitchType::JackPhysicalInsert;
+				activeSwitches = activeSwitches | SwitchType::JackPhysicalInsert;
 			}
 			if (BIT_IS_SET(switches, SW_VIDEOOUT_INSERT)) {
-				activeSwitches = activeSwitches | TDESwitchType::VideoOutInsert;
+				activeSwitches = activeSwitches | SwitchType::VideoOutInsert;
 			}
 #if 0	// Some old kernels don't provide these defines... [FIXME]
 			if (BIT_IS_SET(switches, SW_CAMERA_LENS_COVER)) {
-				activeSwitches = activeSwitches | TDESwitchType::CameraLensCover;
+				activeSwitches = activeSwitches | SwitchType::CameraLensCover;
 			}
 			if (BIT_IS_SET(switches, SW_KEYPAD_SLIDE)) {
-				activeSwitches = activeSwitches | TDESwitchType::KeypadSlide;
+				activeSwitches = activeSwitches | SwitchType::KeypadSlide;
 			}
 			if (BIT_IS_SET(switches, SW_FRONT_PROXIMITY)) {
-				activeSwitches = activeSwitches | TDESwitchType::FrontProximity;
+				activeSwitches = activeSwitches | SwitchType::FrontProximity;
 			}
 			if (BIT_IS_SET(switches, SW_ROTATE_LOCK)) {
-				activeSwitches = activeSwitches | TDESwitchType::RotateLock;
+				activeSwitches = activeSwitches | SwitchType::RotateLock;
 			}
 			if (BIT_IS_SET(switches, SW_LINEIN_INSERT)) {
-				activeSwitches = activeSwitches | TDESwitchType::LineInInsert;
+				activeSwitches = activeSwitches | SwitchType::LineInInsert;
 			}
 #endif
 		}
@@ -3034,7 +3034,7 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 	}
 
 	// Root devices are still special
-	if ((device->type() == TDEGenericDeviceType::Root) || (device->type() == TDEGenericDeviceType::RootSystem)) {
+	if ((device->type() == GenericDeviceType::Root) || (device->type() == GenericDeviceType::RootSystem)) {
 		systempath = device->systemPath();
 	}
 
@@ -3062,7 +3062,7 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 	}
 }
 
-void TDEHardwareDevices::updateBlacklists(TDEGenericDevice* hwdevice, udev_device* dev) {
+void HardwareDevices::updateBlacklists(GenericDevice* hwdevice, udev_device* dev) {
 	// HACK
 	// I am lucky enough to have a Flash drive that spams udev continually with device change events
 	// I imagine I am not the only one, so here is a section in which specific devices can be blacklisted!
@@ -3073,7 +3073,7 @@ void TDEHardwareDevices::updateBlacklists(TDEGenericDevice* hwdevice, udev_devic
 	}
 }
 
-bool TDEHardwareDevices::queryHardwareInformation() {
+bool HardwareDevices::queryHardwareInformation() {
 	if (!m_udevStruct) {
 		return false;
 	}
@@ -3099,10 +3099,10 @@ bool TDEHardwareDevices::queryHardwareInformation() {
 		path = udev_list_entry_get_name(dev_list_entry);
 		dev = udev_device_new_from_syspath(m_udevStruct, path);
 
-		TDEGenericDevice* device = classifyUnknownDevice(dev);
+		GenericDevice* device = classifyUnknownDevice(dev);
 
 		// Make sure this device is not a duplicate
-		TDEGenericDevice *hwdevice;
+		GenericDevice *hwdevice;
 		for (hwdevice = m_deviceList.first(); hwdevice; hwdevice = m_deviceList.next()) {
 			if (hwdevice->systemPath() == device->systemPath()) {
 				delete device;
@@ -3124,16 +3124,16 @@ bool TDEHardwareDevices::queryHardwareInformation() {
 	// Update parent/child tables for all devices
 	updateParentDeviceInformation();
 
-	emit hardwareEvent(TDEHardwareEvent::HardwareListModified, TQString());
+	emit hardwareEvent(HardwareEvent::HardwareListModified, TQString());
 
 	return true;
 }
 
-void TDEHardwareDevices::updateParentDeviceInformation(TDEGenericDevice* hwdevice) {
+void HardwareDevices::updateParentDeviceInformation(GenericDevice* hwdevice) {
 	// Scan for the first path up the sysfs tree that is available in the main hardware table
 	bool done = false;
 	TQString current_path = hwdevice->systemPath();
-	TDEGenericDevice* parentdevice = 0;
+	GenericDevice* parentdevice = 0;
 
 	if (current_path.endsWith("/")) {
 		current_path.truncate(current_path.findRev("/"));
@@ -3158,8 +3158,8 @@ void TDEHardwareDevices::updateParentDeviceInformation(TDEGenericDevice* hwdevic
 	hwdevice->internalSetParentDevice(parentdevice);
 }
 
-void TDEHardwareDevices::updateParentDeviceInformation() {
-	TDEGenericDevice *hwdevice;
+void HardwareDevices::updateParentDeviceInformation() {
+	GenericDevice *hwdevice;
 
 	// We can't use m_deviceList directly as m_deviceList can only have one iterator active against it at any given time
 	TDEGenericHardwareList devList = listAllPhysicalDevices();
@@ -3168,11 +3168,11 @@ void TDEHardwareDevices::updateParentDeviceInformation() {
 	}
 }
 
-void TDEHardwareDevices::addCoreSystemDevices() {
-	TDEGenericDevice *hwdevice;
+void HardwareDevices::addCoreSystemDevices() {
+	GenericDevice *hwdevice;
 
 	// Add the Main Root System Device, which provides all other devices
-	hwdevice = new TDERootSystemDevice(TDEGenericDeviceType::RootSystem);
+	hwdevice = new RootSystemDevice(GenericDeviceType::RootSystem);
 	hwdevice->internalSetSystemPath("/sys/devices");
 	m_deviceList.append(hwdevice);
 	rescanDeviceInformation(hwdevice);
@@ -3190,7 +3190,7 @@ void TDEHardwareDevices::addCoreSystemDevices() {
 		while ( (dirfi = devicesdirit.current()) != 0 ) {
 			nodename = dirfi->fileName();
 			if (nodename != "." && nodename != "..") {
-				hwdevice = new TDEGenericDevice(TDEGenericDeviceType::Root);
+				hwdevice = new GenericDevice(GenericDeviceType::Root);
 				hwdevice->internalSetSystemPath(dirfi->absFilePath());
 				m_deviceList.append(hwdevice);
 			}
@@ -3213,7 +3213,7 @@ void TDEHardwareDevices::addCoreSystemDevices() {
 			bool isInt;
 			int processorNumber = directoryName.toUInt(&isInt, 10);
 			if (isInt) {
-				hwdevice = new TDECPUDevice(TDEGenericDeviceType::CPU);
+				hwdevice = new CPUDevice(GenericDeviceType::CPU);
 				hwdevice->internalSetSystemPath(TQString("/sys/devices/system/cpu/cpu%1").arg(processorNumber));
 				m_deviceList.append(hwdevice);
 			}
@@ -3225,7 +3225,7 @@ void TDEHardwareDevices::addCoreSystemDevices() {
 	processModifiedCPUs();
 }
 
-TQString TDEHardwareDevices::findPCIDeviceName(TQString vendorid, TQString modelid, TQString subvendorid, TQString submodelid) {
+TQString HardwareDevices::findPCIDeviceName(TQString vendorid, TQString modelid, TQString subvendorid, TQString submodelid) {
 	TQString vendorName = TQString::null;
 	TQString modelName = TQString::null;
 	TQString friendlyName = TQString::null;
@@ -3335,7 +3335,7 @@ TQString TDEHardwareDevices::findPCIDeviceName(TQString vendorid, TQString model
 	}
 }
 
-TQString TDEHardwareDevices::findUSBDeviceName(TQString vendorid, TQString modelid, TQString subvendorid, TQString submodelid) {
+TQString HardwareDevices::findUSBDeviceName(TQString vendorid, TQString modelid, TQString subvendorid, TQString submodelid) {
 	TQString vendorName = TQString::null;
 	TQString modelName = TQString::null;
 	TQString friendlyName = TQString::null;
@@ -3445,7 +3445,7 @@ TQString TDEHardwareDevices::findUSBDeviceName(TQString vendorid, TQString model
 	}
 }
 
-TQString TDEHardwareDevices::findPNPDeviceName(TQString pnpid) {
+TQString HardwareDevices::findPNPDeviceName(TQString pnpid) {
 	TQString friendlyName = TQString::null;
 
 	if (!pnp_id_map) {
@@ -3515,7 +3515,7 @@ TQString TDEHardwareDevices::findPNPDeviceName(TQString pnpid) {
 	}
 }
 
-TQString TDEHardwareDevices::findMonitorManufacturerName(TQString dpyid) {
+TQString HardwareDevices::findMonitorManufacturerName(TQString dpyid) {
 	TQString friendlyName = TQString::null;
 
 	if (!dpy_id_map) {
@@ -3585,7 +3585,7 @@ TQString TDEHardwareDevices::findMonitorManufacturerName(TQString dpyid) {
 	}
 }
 
-TQPair<TQString,TQString> TDEHardwareDevices::getEDIDMonitorName(TQString path) {
+TQPair<TQString,TQString> HardwareDevices::getEDIDMonitorName(TQString path) {
 	TQPair<TQString,TQString> edid;
 	TQByteArray binaryedid = getEDID(path);
 	if (binaryedid.isNull()) {
@@ -3655,7 +3655,7 @@ TQPair<TQString,TQString> TDEHardwareDevices::getEDIDMonitorName(TQString path) 
 	return edid;
 }
 
-TQByteArray TDEHardwareDevices::getEDID(TQString path) {
+TQByteArray HardwareDevices::getEDID(TQString path) {
 	TQFile file(TQString("%1/edid").arg(path));
 	if (!file.open (IO_ReadOnly)) {
 		return TQByteArray();
@@ -3665,152 +3665,152 @@ TQByteArray TDEHardwareDevices::getEDID(TQString path) {
 	return binaryedid;
 }
 
-TQString TDEHardwareDevices::getFriendlyDeviceTypeStringFromType(TDEGenericDeviceType::TDEGenericDeviceType query) {
+TQString HardwareDevices::getFriendlyDeviceTypeStringFromType(GenericDeviceType::GenericDeviceType query) {
 	TQString ret = "Unknown Device";
 
-	// Keep this in sync with the TDEGenericDeviceType definition in the header
-	if (query == TDEGenericDeviceType::Root) {
+	// Keep this in sync with the GenericDeviceType definition in the header
+	if (query == GenericDeviceType::Root) {
 		ret = i18n("Root");
 	}
-	else if (query == TDEGenericDeviceType::RootSystem) {
+	else if (query == GenericDeviceType::RootSystem) {
 		ret = i18n("System Root");
 	}
-	else if (query == TDEGenericDeviceType::CPU) {
+	else if (query == GenericDeviceType::CPU) {
 		ret = i18n("CPU");
 	}
-	else if (query == TDEGenericDeviceType::GPU) {
+	else if (query == GenericDeviceType::GPU) {
 		ret = i18n("Graphics Processor");
 	}
-	else if (query == TDEGenericDeviceType::RAM) {
+	else if (query == GenericDeviceType::RAM) {
 		ret = i18n("RAM");
 	}
-	else if (query == TDEGenericDeviceType::Bus) {
+	else if (query == GenericDeviceType::Bus) {
 		ret = i18n("Bus");
 	}
-	else if (query == TDEGenericDeviceType::I2C) {
+	else if (query == GenericDeviceType::I2C) {
 		ret = i18n("I2C Bus");
 	}
-	else if (query == TDEGenericDeviceType::MDIO) {
+	else if (query == GenericDeviceType::MDIO) {
 		ret = i18n("MDIO Bus");
 	}
-	else if (query == TDEGenericDeviceType::Mainboard) {
+	else if (query == GenericDeviceType::Mainboard) {
 		ret = i18n("Mainboard");
 	}
-	else if (query == TDEGenericDeviceType::Disk) {
+	else if (query == GenericDeviceType::Disk) {
 		ret = i18n("Disk");
 	}
-	else if (query == TDEGenericDeviceType::SCSI) {
+	else if (query == GenericDeviceType::SCSI) {
 		ret = i18n("SCSI");
 	}
-	else if (query == TDEGenericDeviceType::StorageController) {
+	else if (query == GenericDeviceType::StorageController) {
 		ret = i18n("Storage Controller");
 	}
-	else if (query == TDEGenericDeviceType::Mouse) {
+	else if (query == GenericDeviceType::Mouse) {
 		ret = i18n("Mouse");
 	}
-	else if (query == TDEGenericDeviceType::Keyboard) {
+	else if (query == GenericDeviceType::Keyboard) {
 		ret = i18n("Keyboard");
 	}
-	else if (query == TDEGenericDeviceType::HID) {
+	else if (query == GenericDeviceType::HID) {
 		ret = i18n("HID");
 	}
-	else if (query == TDEGenericDeviceType::Modem) {
+	else if (query == GenericDeviceType::Modem) {
 		ret = i18n("Modem");
 	}
-	else if (query == TDEGenericDeviceType::Monitor) {
+	else if (query == GenericDeviceType::Monitor) {
 		ret = i18n("Monitor and Display");
 	}
-	else if (query == TDEGenericDeviceType::Network) {
+	else if (query == GenericDeviceType::Network) {
 		ret = i18n("Network");
 	}
-	else if (query == TDEGenericDeviceType::Printer) {
+	else if (query == GenericDeviceType::Printer) {
 		ret = i18n("Printer");
 	}
-	else if (query == TDEGenericDeviceType::Scanner) {
+	else if (query == GenericDeviceType::Scanner) {
 		ret = i18n("Scanner");
 	}
-	else if (query == TDEGenericDeviceType::Sound) {
+	else if (query == GenericDeviceType::Sound) {
 		ret = i18n("Sound");
 	}
-	else if (query == TDEGenericDeviceType::VideoCapture) {
+	else if (query == GenericDeviceType::VideoCapture) {
 		ret = i18n("Video Capture");
 	}
-	else if (query == TDEGenericDeviceType::IEEE1394) {
+	else if (query == GenericDeviceType::IEEE1394) {
 		ret = i18n("IEEE1394");
 	}
-	else if (query == TDEGenericDeviceType::PCMCIA) {
+	else if (query == GenericDeviceType::PCMCIA) {
 		ret = i18n("PCMCIA");
 	}
-	else if (query == TDEGenericDeviceType::Camera) {
+	else if (query == GenericDeviceType::Camera) {
 		ret = i18n("Camera");
 	}
-	else if (query == TDEGenericDeviceType::TextIO) {
+	else if (query == GenericDeviceType::TextIO) {
 		ret = i18n("Text I/O");
 	}
-	else if (query == TDEGenericDeviceType::Serial) {
+	else if (query == GenericDeviceType::Serial) {
 		ret = i18n("Serial Communications Controller");
 	}
-	else if (query == TDEGenericDeviceType::Parallel) {
+	else if (query == GenericDeviceType::Parallel) {
 		ret = i18n("Parallel Port");
 	}
-	else if (query == TDEGenericDeviceType::Peripheral) {
+	else if (query == GenericDeviceType::Peripheral) {
 		ret = i18n("Peripheral");
 	}
-	else if (query == TDEGenericDeviceType::Backlight) {
+	else if (query == GenericDeviceType::Backlight) {
 		ret = i18n("Backlight");
 	}
-	else if (query == TDEGenericDeviceType::Battery) {
+	else if (query == GenericDeviceType::Battery) {
 		ret = i18n("Battery");
 	}
-	else if (query == TDEGenericDeviceType::PowerSupply) {
+	else if (query == GenericDeviceType::PowerSupply) {
 		ret = i18n("Power Supply");
 	}
-	else if (query == TDEGenericDeviceType::Dock) {
+	else if (query == GenericDeviceType::Dock) {
 		ret = i18n("Docking Station");
 	}
-	else if (query == TDEGenericDeviceType::ThermalSensor) {
+	else if (query == GenericDeviceType::ThermalSensor) {
 		ret = i18n("Thermal Sensor");
 	}
-	else if (query == TDEGenericDeviceType::ThermalControl) {
+	else if (query == GenericDeviceType::ThermalControl) {
 		ret = i18n("Thermal Control");
 	}
-	else if (query == TDEGenericDeviceType::BlueTooth) {
+	else if (query == GenericDeviceType::BlueTooth) {
 		ret = i18n("Bluetooth");
 	}
-	else if (query == TDEGenericDeviceType::Bridge) {
+	else if (query == GenericDeviceType::Bridge) {
 		ret = i18n("Bridge");
 	}
-	else if (query == TDEGenericDeviceType::Platform) {
+	else if (query == GenericDeviceType::Platform) {
 		ret = i18n("Platform");
 	}
-	else if (query == TDEGenericDeviceType::Cryptography) {
+	else if (query == GenericDeviceType::Cryptography) {
 		ret = i18n("Cryptography");
 	}
-	else if (query == TDEGenericDeviceType::Event) {
+	else if (query == GenericDeviceType::Event) {
 		ret = i18n("Platform Event");
 	}
-	else if (query == TDEGenericDeviceType::Input) {
+	else if (query == GenericDeviceType::Input) {
 		ret = i18n("Platform Input");
 	}
-	else if (query == TDEGenericDeviceType::PNP) {
+	else if (query == GenericDeviceType::PNP) {
 		ret = i18n("Plug and Play");
 	}
-	else if (query == TDEGenericDeviceType::OtherACPI) {
+	else if (query == GenericDeviceType::OtherACPI) {
 		ret = i18n("Other ACPI");
 	}
-	else if (query == TDEGenericDeviceType::OtherUSB) {
+	else if (query == GenericDeviceType::OtherUSB) {
 		ret = i18n("Other USB");
 	}
-	else if (query == TDEGenericDeviceType::OtherMultimedia) {
+	else if (query == GenericDeviceType::OtherMultimedia) {
 		ret = i18n("Other Multimedia");
 	}
-	else if (query == TDEGenericDeviceType::OtherPeripheral) {
+	else if (query == GenericDeviceType::OtherPeripheral) {
 		ret = i18n("Other Peripheral");
 	}
-	else if (query == TDEGenericDeviceType::OtherSensor) {
+	else if (query == GenericDeviceType::OtherSensor) {
 		ret = i18n("Other Sensor");
 	}
-	else if (query == TDEGenericDeviceType::OtherVirtual) {
+	else if (query == GenericDeviceType::OtherVirtual) {
 		ret = i18n("Other Virtual");
 	}
 	else {
@@ -3820,152 +3820,152 @@ TQString TDEHardwareDevices::getFriendlyDeviceTypeStringFromType(TDEGenericDevic
 	return ret;
 }
 
-TQPixmap TDEHardwareDevices::getDeviceTypeIconFromType(TDEGenericDeviceType::TDEGenericDeviceType query, TDEIcon::StdSizes size) {
+TQPixmap HardwareDevices::getDeviceTypeIconFromType(GenericDeviceType::GenericDeviceType query, TDEIcon::StdSizes size) {
 	TQPixmap ret = DesktopIcon("misc", size);
 
-// 	// Keep this in sync with the TDEGenericDeviceType definition in the header
-	if (query == TDEGenericDeviceType::Root) {
+// 	// Keep this in sync with the GenericDeviceType definition in the header
+	if (query == GenericDeviceType::Root) {
 		ret = DesktopIcon("kcmdevices", size);
 	}
-	else if (query == TDEGenericDeviceType::RootSystem) {
+	else if (query == GenericDeviceType::RootSystem) {
 		ret = DesktopIcon("kcmdevices", size);
 	}
-	else if (query == TDEGenericDeviceType::CPU) {
+	else if (query == GenericDeviceType::CPU) {
 		ret = DesktopIcon("kcmprocessor", size);
 	}
-	else if (query == TDEGenericDeviceType::GPU) {
+	else if (query == GenericDeviceType::GPU) {
 		ret = DesktopIcon("kcmpci", size);
 	}
-	else if (query == TDEGenericDeviceType::RAM) {
+	else if (query == GenericDeviceType::RAM) {
 		ret = DesktopIcon("memory", size);
 	}
-	else if (query == TDEGenericDeviceType::Bus) {
+	else if (query == GenericDeviceType::Bus) {
 		ret = DesktopIcon("kcmpci", size);
 	}
-	else if (query == TDEGenericDeviceType::I2C) {
+	else if (query == GenericDeviceType::I2C) {
 		ret = DesktopIcon("input_devices_settings", size);
 	}
-	else if (query == TDEGenericDeviceType::MDIO) {
+	else if (query == GenericDeviceType::MDIO) {
 		ret = DesktopIcon("input_devices_settings", size);
 	}
-	else if (query == TDEGenericDeviceType::Mainboard) {
+	else if (query == GenericDeviceType::Mainboard) {
 		ret = DesktopIcon("kcmpci", size);	// FIXME
 	}
-	else if (query == TDEGenericDeviceType::Disk) {
+	else if (query == GenericDeviceType::Disk) {
 		ret = DesktopIcon("hdd_unmount", size);
 	}
-	else if (query == TDEGenericDeviceType::SCSI) {
+	else if (query == GenericDeviceType::SCSI) {
 		ret = DesktopIcon("kcmscsi", size);
 	}
-	else if (query == TDEGenericDeviceType::StorageController) {
+	else if (query == GenericDeviceType::StorageController) {
 		ret = DesktopIcon("kcmpci", size);
 	}
-	else if (query == TDEGenericDeviceType::Mouse) {
+	else if (query == GenericDeviceType::Mouse) {
 		ret = DesktopIcon("mouse", size);
 	}
-	else if (query == TDEGenericDeviceType::Keyboard) {
+	else if (query == GenericDeviceType::Keyboard) {
 		ret = DesktopIcon("keyboard", size);
 	}
-	else if (query == TDEGenericDeviceType::HID) {
+	else if (query == GenericDeviceType::HID) {
 		ret = DesktopIcon("kcmdevices", size);	// FIXME
 	}
-	else if (query == TDEGenericDeviceType::Modem) {
+	else if (query == GenericDeviceType::Modem) {
 		ret = DesktopIcon("kcmpci", size);
 	}
-	else if (query == TDEGenericDeviceType::Monitor) {
+	else if (query == GenericDeviceType::Monitor) {
 		ret = DesktopIcon("background", size);
 	}
-	else if (query == TDEGenericDeviceType::Network) {
+	else if (query == GenericDeviceType::Network) {
 		ret = DesktopIcon("kcmpci", size);
 	}
-	else if (query == TDEGenericDeviceType::Printer) {
+	else if (query == GenericDeviceType::Printer) {
 		ret = DesktopIcon("printer1", size);
 	}
-	else if (query == TDEGenericDeviceType::Scanner) {
+	else if (query == GenericDeviceType::Scanner) {
 		ret = DesktopIcon("scanner", size);
 	}
-	else if (query == TDEGenericDeviceType::Sound) {
+	else if (query == GenericDeviceType::Sound) {
 		ret = DesktopIcon("kcmsound", size);
 	}
-	else if (query == TDEGenericDeviceType::VideoCapture) {
+	else if (query == GenericDeviceType::VideoCapture) {
 		ret = DesktopIcon("tv", size);		// FIXME
 	}
-	else if (query == TDEGenericDeviceType::IEEE1394) {
+	else if (query == GenericDeviceType::IEEE1394) {
 		ret = DesktopIcon("ieee1394", size);
 	}
-	else if (query == TDEGenericDeviceType::PCMCIA) {
+	else if (query == GenericDeviceType::PCMCIA) {
 		ret = DesktopIcon("kcmdevices", size);	// FIXME
 	}
-	else if (query == TDEGenericDeviceType::Camera) {
+	else if (query == GenericDeviceType::Camera) {
 		ret = DesktopIcon("camera", size);
 	}
-	else if (query == TDEGenericDeviceType::Serial) {
+	else if (query == GenericDeviceType::Serial) {
 		ret = DesktopIcon("input_devices_settings", size);
 	}
-	else if (query == TDEGenericDeviceType::Parallel) {
+	else if (query == GenericDeviceType::Parallel) {
 		ret = DesktopIcon("input_devices_settings", size);
 	}
-	else if (query == TDEGenericDeviceType::TextIO) {
+	else if (query == GenericDeviceType::TextIO) {
 		ret = DesktopIcon("chardevice", size);
 	}
-	else if (query == TDEGenericDeviceType::Peripheral) {
+	else if (query == GenericDeviceType::Peripheral) {
 		ret = DesktopIcon("kcmpci", size);
 	}
-	else if (query == TDEGenericDeviceType::Backlight) {
+	else if (query == GenericDeviceType::Backlight) {
 		ret = DesktopIcon("tdescreensaver", size);	// FIXME
 	}
-	else if (query == TDEGenericDeviceType::Battery) {
+	else if (query == GenericDeviceType::Battery) {
 		ret = DesktopIcon("energy", size);
 	}
-	else if (query == TDEGenericDeviceType::PowerSupply) {
+	else if (query == GenericDeviceType::PowerSupply) {
 		ret = DesktopIcon("energy", size);
 	}
-	else if (query == TDEGenericDeviceType::Dock) {
+	else if (query == GenericDeviceType::Dock) {
 		ret = DesktopIcon("kcmdevices", size);	// FIXME
 	}
-	else if (query == TDEGenericDeviceType::ThermalSensor) {
+	else if (query == GenericDeviceType::ThermalSensor) {
 		ret = DesktopIcon("kcmdevices", size);	// FIXME
 	}
-	else if (query == TDEGenericDeviceType::ThermalControl) {
+	else if (query == GenericDeviceType::ThermalControl) {
 		ret = DesktopIcon("kcmdevices", size);	// FIXME
 	}
-	else if (query == TDEGenericDeviceType::BlueTooth) {
+	else if (query == GenericDeviceType::BlueTooth) {
 		ret = DesktopIcon("kcmpci", size);	// FIXME
 	}
-	else if (query == TDEGenericDeviceType::Bridge) {
+	else if (query == GenericDeviceType::Bridge) {
 		ret = DesktopIcon("kcmpci", size);
 	}
-	else if (query == TDEGenericDeviceType::Platform) {
+	else if (query == GenericDeviceType::Platform) {
 		ret = DesktopIcon("kcmsystem", size);
 	}
-	else if (query == TDEGenericDeviceType::Cryptography) {
+	else if (query == GenericDeviceType::Cryptography) {
 		ret = DesktopIcon("password", size);
 	}
-	else if (query == TDEGenericDeviceType::Event) {
+	else if (query == GenericDeviceType::Event) {
 		ret = DesktopIcon("kcmsystem", size);
 	}
-	else if (query == TDEGenericDeviceType::Input) {
+	else if (query == GenericDeviceType::Input) {
 		ret = DesktopIcon("kcmsystem", size);
 	}
-	else if (query == TDEGenericDeviceType::PNP) {
+	else if (query == GenericDeviceType::PNP) {
 		ret = DesktopIcon("kcmsystem", size);
 	}
-	else if (query == TDEGenericDeviceType::OtherACPI) {
+	else if (query == GenericDeviceType::OtherACPI) {
 		ret = DesktopIcon("kcmdevices", size);	// FIXME
 	}
-	else if (query == TDEGenericDeviceType::OtherUSB) {
+	else if (query == GenericDeviceType::OtherUSB) {
 		ret = DesktopIcon("usb", size);
 	}
-	else if (query == TDEGenericDeviceType::OtherMultimedia) {
+	else if (query == GenericDeviceType::OtherMultimedia) {
 		ret = DesktopIcon("kcmsound", size);
 	}
-	else if (query == TDEGenericDeviceType::OtherPeripheral) {
+	else if (query == GenericDeviceType::OtherPeripheral) {
 		ret = DesktopIcon("kcmpci", size);
 	}
-	else if (query == TDEGenericDeviceType::OtherSensor) {
+	else if (query == GenericDeviceType::OtherSensor) {
 		ret = DesktopIcon("kcmdevices", size);	// FIXME
 	}
-	else if (query == TDEGenericDeviceType::OtherVirtual) {
+	else if (query == GenericDeviceType::OtherVirtual) {
 		ret = DesktopIcon("kcmsystem", size);
 	}
 	else {
@@ -3975,18 +3975,18 @@ TQPixmap TDEHardwareDevices::getDeviceTypeIconFromType(TDEGenericDeviceType::TDE
 	return ret;
 }
 
-TDERootSystemDevice* TDEHardwareDevices::rootSystemDevice() {
-	TDEGenericDevice *hwdevice;
+RootSystemDevice* HardwareDevices::rootSystemDevice() {
+	GenericDevice *hwdevice;
 	for ( hwdevice = m_deviceList.first(); hwdevice; hwdevice = m_deviceList.next() ) {
-		if (hwdevice->type() == TDEGenericDeviceType::RootSystem) {
-			return dynamic_cast<TDERootSystemDevice*>(hwdevice);
+		if (hwdevice->type() == GenericDeviceType::RootSystem) {
+			return dynamic_cast<RootSystemDevice*>(hwdevice);
 		}
 	}
 
 	return 0;
 }
 
-TQString TDEHardwareDevices::bytesToFriendlySizeString(double bytes) {
+TQString HardwareDevices::bytesToFriendlySizeString(double bytes) {
 	TQString prettystring;
 
 	prettystring = TQString("%1B").arg(bytes);
@@ -4034,11 +4034,11 @@ TQString TDEHardwareDevices::bytesToFriendlySizeString(double bytes) {
 	return prettystring;
 }
 
-TDEGenericHardwareList TDEHardwareDevices::listByDeviceClass(TDEGenericDeviceType::TDEGenericDeviceType cl) {
+TDEGenericHardwareList HardwareDevices::listByDeviceClass(GenericDeviceType::GenericDeviceType cl) {
 	TDEGenericHardwareList ret;
 	ret.setAutoDelete(false);
 
-	TDEGenericDevice *hwdevice;
+	GenericDevice *hwdevice;
 	for ( hwdevice = m_deviceList.first(); hwdevice; hwdevice = m_deviceList.next() ) {
 		if (hwdevice->type() == cl) {
 			ret.append(hwdevice);
@@ -4048,7 +4048,7 @@ TDEGenericHardwareList TDEHardwareDevices::listByDeviceClass(TDEGenericDeviceTyp
 	return ret;
 }
 
-TDEGenericHardwareList TDEHardwareDevices::listAllPhysicalDevices() {
+TDEGenericHardwareList HardwareDevices::listAllPhysicalDevices() {
 	TDEGenericHardwareList ret = m_deviceList;
 	ret.setAutoDelete(false);
 

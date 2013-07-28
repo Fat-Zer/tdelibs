@@ -52,39 +52,39 @@
 
 using namespace TDEHW;
 
-TDEStorageDevice::TDEStorageDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn), m_mediaInserted(true) {
-	m_diskType = TDEDiskDeviceType::Null;
-	m_diskStatus = TDEDiskDeviceStatus::Null;
+StorageDevice::StorageDevice(GenericDeviceType::GenericDeviceType dt, TQString dn) : GenericDevice(dt, dn), m_mediaInserted(true) {
+	m_diskType = DiskDeviceType::Null;
+	m_diskStatus = DiskDeviceStatus::Null;
 }
 
-TDEStorageDevice::~TDEStorageDevice() {
+StorageDevice::~StorageDevice() {
 }
 
-TDEDiskDeviceType::TDEDiskDeviceType TDEStorageDevice::diskType() {
+DiskDeviceType::DiskDeviceType StorageDevice::diskType() {
 	return m_diskType;
 }
 
-void TDEStorageDevice::internalSetDiskType(TDEDiskDeviceType::TDEDiskDeviceType dt) {
+void StorageDevice::internalSetDiskType(DiskDeviceType::DiskDeviceType dt) {
 	m_diskType = dt;
 }
 
-bool TDEStorageDevice::isDiskOfType(TDEDiskDeviceType::TDEDiskDeviceType tf) {
-	return ((m_diskType&tf)!=TDEDiskDeviceType::Null);
+bool StorageDevice::isDiskOfType(DiskDeviceType::DiskDeviceType tf) {
+	return ((m_diskType&tf)!=DiskDeviceType::Null);
 }
 
-TDEDiskDeviceStatus::TDEDiskDeviceStatus TDEStorageDevice::diskStatus() {
+DiskDeviceStatus::DiskDeviceStatus StorageDevice::diskStatus() {
 	return m_diskStatus;
 }
 
-void TDEStorageDevice::internalSetDiskStatus(TDEDiskDeviceStatus::TDEDiskDeviceStatus st) {
+void StorageDevice::internalSetDiskStatus(DiskDeviceStatus::DiskDeviceStatus st) {
 	m_diskStatus = st;
 }
 
-bool TDEStorageDevice::checkDiskStatus(TDEDiskDeviceStatus::TDEDiskDeviceStatus sf) {
-	return ((m_diskStatus&sf)!=(TDEDiskDeviceStatus::TDEDiskDeviceStatus)0);
+bool StorageDevice::checkDiskStatus(DiskDeviceStatus::DiskDeviceStatus sf) {
+	return ((m_diskStatus&sf)!=(DiskDeviceStatus::DiskDeviceStatus)0);
 }
 
-bool TDEStorageDevice::lockDriveMedia(bool lock) {
+bool StorageDevice::lockDriveMedia(bool lock) {
 	int fd = open(deviceNode().ascii(), O_RDWR | O_NONBLOCK);
 	if (fd < 0) {
 		return false;
@@ -99,7 +99,7 @@ bool TDEStorageDevice::lockDriveMedia(bool lock) {
 	}
 }
 
-bool ejectDriveUDisks(TDEStorageDevice* sdevice) {
+bool ejectDriveUDisks(StorageDevice* sdevice) {
 #ifdef WITH_UDISKS
 	TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
 	if (dbusConn.isConnected()) {
@@ -136,7 +136,7 @@ bool ejectDriveUDisks(TDEStorageDevice* sdevice) {
 #endif // WITH_UDISKS
 }
 
-bool ejectDriveUDisks2(TDEStorageDevice* sdevice) {
+bool ejectDriveUDisks2(StorageDevice* sdevice) {
 #ifdef WITH_UDISKS2
 	TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
 	if (dbusConn.isConnected()) {
@@ -215,7 +215,7 @@ bool ejectDriveUDisks2(TDEStorageDevice* sdevice) {
 #endif // WITH_UDISKS2
 }
 
-bool TDEStorageDevice::ejectDrive() {
+bool StorageDevice::ejectDrive() {
 	if (ejectDriveUDisks2(this)) {
 		return TRUE;
 	}
@@ -254,7 +254,7 @@ bool TDEStorageDevice::ejectDrive() {
 	}
 }
 
-bool TDEStorageDevice::ejectDriveMedia() {
+bool StorageDevice::ejectDriveMedia() {
 	int fd = open(deviceNode().ascii(), O_RDWR | O_NONBLOCK);
 	if (fd < 0) {
 		return false;
@@ -269,63 +269,63 @@ bool TDEStorageDevice::ejectDriveMedia() {
 	}
 }
 
-TQString TDEStorageDevice::diskLabel() {
+TQString StorageDevice::diskLabel() {
 	return m_diskName;
 }
 
-void TDEStorageDevice::internalSetDiskLabel(TQString dn) {
+void StorageDevice::internalSetDiskLabel(TQString dn) {
 	m_diskName = dn;
 }
 
-bool TDEStorageDevice::mediaInserted() {
+bool StorageDevice::mediaInserted() {
 	return m_mediaInserted;
 }
 
-void TDEStorageDevice::internalSetMediaInserted(bool inserted) {
+void StorageDevice::internalSetMediaInserted(bool inserted) {
 	m_mediaInserted = inserted;
 }
 
-TQString TDEStorageDevice::fileSystemName() {
+TQString StorageDevice::fileSystemName() {
 	return m_fileSystemName;
 }
 
-void TDEStorageDevice::internalSetFileSystemName(TQString fn) {
+void StorageDevice::internalSetFileSystemName(TQString fn) {
 	m_fileSystemName = fn;
 }
 
-TQString TDEStorageDevice::fileSystemUsage() {
+TQString StorageDevice::fileSystemUsage() {
 	return m_fileSystemUsage;
 }
 
-void TDEStorageDevice::internalSetFileSystemUsage(TQString fu) {
+void StorageDevice::internalSetFileSystemUsage(TQString fu) {
 	m_fileSystemUsage = fu;
 }
 
-TQString TDEStorageDevice::diskUUID() {
+TQString StorageDevice::diskUUID() {
 	return m_diskUUID;
 }
 
-void TDEStorageDevice::internalSetDiskUUID(TQString id) {
+void StorageDevice::internalSetDiskUUID(TQString id) {
 	m_diskUUID = id;
 }
 
-TQStringList TDEStorageDevice::holdingDevices() {
+TQStringList StorageDevice::holdingDevices() {
 	return m_holdingDevices;
 }
 
-void TDEStorageDevice::internalSetHoldingDevices(TQStringList hd) {
+void StorageDevice::internalSetHoldingDevices(TQStringList hd) {
 	m_holdingDevices = hd;
 }
 
-TQStringList TDEStorageDevice::slaveDevices() {
+TQStringList StorageDevice::slaveDevices() {
 	return m_slaveDevices;
 }
 
-void TDEStorageDevice::internalSetSlaveDevices(TQStringList sd) {
+void StorageDevice::internalSetSlaveDevices(TQStringList sd) {
 	m_slaveDevices = sd;
 }
 
-TQString TDEStorageDevice::friendlyName() {
+TQString StorageDevice::friendlyName() {
 	// Return the actual storage device name
 	TQString devicevendorid = vendorEncoded();
 	TQString devicemodelid = modelEncoded();
@@ -347,18 +347,18 @@ TQString TDEStorageDevice::friendlyName() {
 		return devicename;
 	}
 
-	if (isDiskOfType(TDEDiskDeviceType::Camera)) {
-		return TDEGenericDevice::friendlyName();
+	if (isDiskOfType(DiskDeviceType::Camera)) {
+		return GenericDevice::friendlyName();
 	}
 
-	if (isDiskOfType(TDEDiskDeviceType::Floppy)) {
+	if (isDiskOfType(DiskDeviceType::Floppy)) {
 		return friendlyDeviceType();
 	}
 
 	TQString label = diskLabel();
 	if (label.isNull()) {
 		if (deviceSize() > 0) {
-			if (checkDiskStatus(TDEDiskDeviceStatus::Hotpluggable)) {
+			if (checkDiskStatus(DiskDeviceStatus::Hotpluggable)) {
 				label = i18n("%1 Removable Device").arg(deviceFriendlySize());
 			}
 			else {
@@ -374,134 +374,134 @@ TQString TDEStorageDevice::friendlyName() {
 	return friendlyDeviceType();
 }
 
-TQString TDEStorageDevice::friendlyDeviceType() {
+TQString StorageDevice::friendlyDeviceType() {
 	TQString ret = i18n("Hard Disk Drive");
 
-	// Keep this in sync with TDEStorageDevice::icon(TDEIcon::StdSizes size) below
-	if (isDiskOfType(TDEDiskDeviceType::Floppy)) {
+	// Keep this in sync with StorageDevice::icon(TDEIcon::StdSizes size) below
+	if (isDiskOfType(DiskDeviceType::Floppy)) {
 		ret = i18n("Floppy Drive");
 	}
-	if (isDiskOfType(TDEDiskDeviceType::Optical)) {
+	if (isDiskOfType(DiskDeviceType::Optical)) {
 		ret = i18n("Optical Drive");
 	}
-	if (isDiskOfType(TDEDiskDeviceType::CDROM)) {
+	if (isDiskOfType(DiskDeviceType::CDROM)) {
 		ret = i18n("CDROM Drive");
 	}
-	if (isDiskOfType(TDEDiskDeviceType::CDRW)) {
+	if (isDiskOfType(DiskDeviceType::CDRW)) {
 		ret = i18n("CDRW Drive");
 	}
-	if (isDiskOfType(TDEDiskDeviceType::DVDROM)) {
+	if (isDiskOfType(DiskDeviceType::DVDROM)) {
 		ret = i18n("DVD Drive");
 	}
-	if (isDiskOfType(TDEDiskDeviceType::DVDRW)) {
+	if (isDiskOfType(DiskDeviceType::DVDRW)) {
 		ret = i18n("DVDRW Drive");
 	}
-	if (isDiskOfType(TDEDiskDeviceType::DVDRAM)) {
+	if (isDiskOfType(DiskDeviceType::DVDRAM)) {
 		ret = i18n("DVDRAM Drive");
 	}
-	if (isDiskOfType(TDEDiskDeviceType::Zip)) {
+	if (isDiskOfType(DiskDeviceType::Zip)) {
 		ret = i18n("Zip Drive");
 	}
-	if (isDiskOfType(TDEDiskDeviceType::Tape)) {
+	if (isDiskOfType(DiskDeviceType::Tape)) {
 		ret = i18n("Tape Drive");
 	}
-	if (isDiskOfType(TDEDiskDeviceType::Camera)) {
+	if (isDiskOfType(DiskDeviceType::Camera)) {
 		ret = i18n("Digital Camera");
 	}
 
-	if (isDiskOfType(TDEDiskDeviceType::HDD)) {
+	if (isDiskOfType(DiskDeviceType::HDD)) {
 		ret = i18n("Hard Disk Drive");
-		if (checkDiskStatus(TDEDiskDeviceStatus::Hotpluggable)) {
+		if (checkDiskStatus(DiskDeviceStatus::Hotpluggable)) {
 			ret = i18n("Removable Storage");
 		}
-		if (isDiskOfType(TDEDiskDeviceType::CompactFlash)) {
+		if (isDiskOfType(DiskDeviceType::CompactFlash)) {
 			ret = i18n("Compact Flash");
 		}
-		if (isDiskOfType(TDEDiskDeviceType::MemoryStick)) {
+		if (isDiskOfType(DiskDeviceType::MemoryStick)) {
 			ret = i18n("Memory Stick");
 		}
-		if (isDiskOfType(TDEDiskDeviceType::SmartMedia)) {
+		if (isDiskOfType(DiskDeviceType::SmartMedia)) {
 			ret = i18n("Smart Media");
 		}
-		if (isDiskOfType(TDEDiskDeviceType::SDMMC)) {
+		if (isDiskOfType(DiskDeviceType::SDMMC)) {
 			ret = i18n("Secure Digital");
 		}
 	}
 
-	if (isDiskOfType(TDEDiskDeviceType::RAM)) {
+	if (isDiskOfType(DiskDeviceType::RAM)) {
 		ret = i18n("Random Access Memory");
 	}
-	if (isDiskOfType(TDEDiskDeviceType::Loop)) {
+	if (isDiskOfType(DiskDeviceType::Loop)) {
 		ret = i18n("Loop Device");
 	}
 
 	return ret;
 }
 
-TQPixmap TDEStorageDevice::icon(TDEIcon::StdSizes size) {
+TQPixmap StorageDevice::icon(TDEIcon::StdSizes size) {
 	TQPixmap ret = DesktopIcon("hdd_unmount", size);
 
-	if (isDiskOfType(TDEDiskDeviceType::Floppy)) {
+	if (isDiskOfType(DiskDeviceType::Floppy)) {
 		ret = DesktopIcon("3floppy_unmount", size);
 	}
-	if (isDiskOfType(TDEDiskDeviceType::Optical)) {
+	if (isDiskOfType(DiskDeviceType::Optical)) {
 		ret = DesktopIcon("cdrom_unmount", size);
 	}
-	if (isDiskOfType(TDEDiskDeviceType::CDROM)) {
+	if (isDiskOfType(DiskDeviceType::CDROM)) {
 		ret = DesktopIcon("cdrom_unmount", size);
 	}
-	if (isDiskOfType(TDEDiskDeviceType::CDRW)) {
+	if (isDiskOfType(DiskDeviceType::CDRW)) {
 		ret = DesktopIcon("cdwriter_unmount", size);
 	}
-	if (isDiskOfType(TDEDiskDeviceType::DVDROM)) {
+	if (isDiskOfType(DiskDeviceType::DVDROM)) {
 		ret = DesktopIcon("dvd_unmount", size);
 	}
-	if (isDiskOfType(TDEDiskDeviceType::DVDRW)) {
+	if (isDiskOfType(DiskDeviceType::DVDRW)) {
 		ret = DesktopIcon("dvd_unmount", size);
 	}
-	if (isDiskOfType(TDEDiskDeviceType::DVDRAM)) {
+	if (isDiskOfType(DiskDeviceType::DVDRAM)) {
 		ret = DesktopIcon("dvd_unmount", size);
 	}
-	if (isDiskOfType(TDEDiskDeviceType::Zip)) {
+	if (isDiskOfType(DiskDeviceType::Zip)) {
 		ret = DesktopIcon("zip_unmount", size);
 	}
-	if (isDiskOfType(TDEDiskDeviceType::Tape)) {
+	if (isDiskOfType(DiskDeviceType::Tape)) {
 		ret = DesktopIcon("tape_unmount", size);
 	}
-	if (isDiskOfType(TDEDiskDeviceType::Camera)) {
+	if (isDiskOfType(DiskDeviceType::Camera)) {
 		ret = DesktopIcon("camera_unmount");
 	}
 
-	if (isDiskOfType(TDEDiskDeviceType::HDD)) {
+	if (isDiskOfType(DiskDeviceType::HDD)) {
 		ret = DesktopIcon("hdd_unmount", size);
-		if (checkDiskStatus(TDEDiskDeviceStatus::Hotpluggable)) {
+		if (checkDiskStatus(DiskDeviceStatus::Hotpluggable)) {
 			ret = DesktopIcon("usbpendrive_unmount", size);
 		}
-		if (isDiskOfType(TDEDiskDeviceType::CompactFlash)) {
+		if (isDiskOfType(DiskDeviceType::CompactFlash)) {
 			ret = DesktopIcon("compact_flash_unmount", size);
 		}
-		if (isDiskOfType(TDEDiskDeviceType::MemoryStick)) {
+		if (isDiskOfType(DiskDeviceType::MemoryStick)) {
 			ret = DesktopIcon("memory_stick_unmount", size);
 		}
-		if (isDiskOfType(TDEDiskDeviceType::SmartMedia)) {
+		if (isDiskOfType(DiskDeviceType::SmartMedia)) {
 			ret = DesktopIcon("smart_media_unmount", size);
 		}
-		if (isDiskOfType(TDEDiskDeviceType::SDMMC)) {
+		if (isDiskOfType(DiskDeviceType::SDMMC)) {
 			ret = DesktopIcon("sd_mmc_unmount", size);
 		}
 	}
 
-	if (isDiskOfType(TDEDiskDeviceType::RAM)) {
+	if (isDiskOfType(DiskDeviceType::RAM)) {
 		ret = DesktopIcon("memory", size);
 	}
-	if (isDiskOfType(TDEDiskDeviceType::Loop)) {
+	if (isDiskOfType(DiskDeviceType::Loop)) {
 		ret = DesktopIcon("blockdevice", size);
 	}
 
 	return ret;
 }
 
-unsigned long long TDEStorageDevice::deviceSize() {
+unsigned long long StorageDevice::deviceSize() {
 	TQString bsnodename = systemPath();
 	bsnodename.append("/queue/physical_block_size");
 	TQFile bsfile( bsnodename );
@@ -529,11 +529,11 @@ unsigned long long TDEStorageDevice::deviceSize() {
 	return ((unsigned long long)blocksize.toULong()*(unsigned long long)devicesize.toULong());
 }
 
-TQString TDEStorageDevice::deviceFriendlySize() {
-	return TDEHardwareDevices::bytesToFriendlySizeString(deviceSize());
+TQString StorageDevice::deviceFriendlySize() {
+	return HardwareDevices::bytesToFriendlySizeString(deviceSize());
 }
 
-TQString TDEStorageDevice::mountPath() {
+TQString StorageDevice::mountPath() {
 	// See if this device node is mounted
 	// This requires parsing /proc/mounts, looking for deviceNode()
 
@@ -542,7 +542,7 @@ TQString TDEStorageDevice::mountPath() {
 	// where <something> is listed in <system path>/dm/name
 
 	// First, ensure that all device information (mainly holders/slaves) is accurate
-	TDEHardwareDevices::instance()->rescanDeviceInformation(this);
+	HardwareDevices::instance()->rescanDeviceInformation(this);
 
 	TQString dmnodename = systemPath();
 	dmnodename.append("/dm/name");
@@ -582,10 +582,10 @@ TQString TDEStorageDevice::mountPath() {
 	TQStringList slaveDeviceList = holdingDevices();
 	for ( TQStringList::Iterator slavedevit = slaveDeviceList.begin(); slavedevit != slaveDeviceList.end(); ++slavedevit ) {
 		// Try to locate this device path in the TDE device tree
-		TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
-		TDEGenericDevice *hwdevice = hwdevices->findBySystemPath(*slavedevit);
-		if ((hwdevice) && (hwdevice->type() == TDEGenericDeviceType::Disk)) {
-			TDEStorageDevice* sdevice = static_cast<TDEStorageDevice*>(hwdevice);
+		HardwareDevices *hwdevices = HardwareDevices::instance();
+		GenericDevice *hwdevice = hwdevices->findBySystemPath(*slavedevit);
+		if ((hwdevice) && (hwdevice->type() == GenericDeviceType::Disk)) {
+			StorageDevice* sdevice = static_cast<StorageDevice*>(hwdevice);
 			return sdevice->mountPath();
 		}
 	}
@@ -593,7 +593,7 @@ TQString TDEStorageDevice::mountPath() {
 	return TQString::null;
 }
 
-TQString TDEStorageDevice::mountDevice(TQString mediaName, TQString mountOptions, TQString* errRet, int* retcode) {
+TQString StorageDevice::mountDevice(TQString mediaName, TQString mountOptions, TQString* errRet, int* retcode) {
 	int internal_retcode;
 	if (!retcode) {
 		retcode = &internal_retcode;
@@ -628,14 +628,14 @@ TQString TDEStorageDevice::mountDevice(TQString mediaName, TQString mountOptions
 	}
 
 	// Update internal mount data
-	TDEHardwareDevices::instance()->processModifiedMounts();
+	HardwareDevices::instance()->processModifiedMounts();
 
 	ret = mountPath();
 
 	return ret;
 }
 
-TQString TDEStorageDevice::mountEncryptedDevice(TQString passphrase, TQString mediaName, TQString mountOptions, TQString* errRet, int* retcode) {
+TQString StorageDevice::mountEncryptedDevice(TQString passphrase, TQString mediaName, TQString mountOptions, TQString* errRet, int* retcode) {
 	int internal_retcode;
 	if (!retcode) {
 		retcode = &internal_retcode;
@@ -677,14 +677,14 @@ TQString TDEStorageDevice::mountEncryptedDevice(TQString passphrase, TQString me
 	}
 
 	// Update internal mount data
-	TDEHardwareDevices::instance()->processModifiedMounts();
+	HardwareDevices::instance()->processModifiedMounts();
 
 	ret = mountPath();
 
 	return ret;
 }
 
-bool TDEStorageDevice::unmountDevice(TQString* errRet, int* retcode) {
+bool StorageDevice::unmountDevice(TQString* errRet, int* retcode) {
 	int internal_retcode;
 	if (!retcode) {
 		retcode = &internal_retcode;
@@ -715,7 +715,7 @@ bool TDEStorageDevice::unmountDevice(TQString* errRet, int* retcode) {
 	}
 
 	// Update internal mount data
-	TDEHardwareDevices::instance()->processModifiedMounts();
+	HardwareDevices::instance()->processModifiedMounts();
 
 	return false;
 }
