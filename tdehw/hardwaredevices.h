@@ -56,8 +56,8 @@ class RootSystemDevice;
 class EventDevice;
 class InputDevice;
 
-typedef TQPtrList<GenericDevice> TDEGenericHardwareList;
-typedef TQMap<TQString, TQString> TDEDeviceIDMap;
+typedef TQPtrList<GenericDevice> GenericHardwareList;
+typedef TQMap<TQString, TQString> DeviceIDMap;
 
 class TDEHW_EXPORT HardwareDevices : public TQObject
 {
@@ -80,7 +80,7 @@ class TDEHW_EXPORT HardwareDevices : public TQObject
 		*  This does not normally need to be called by an application, as
 		*  device detection is handled internally and automatically
 		*  
-		*  A call to this method immediately invalidates any TDEGenericHardwareList
+		*  A call to this method immediately invalidates any GenericHardwareList
 		*  structures returned by listAllPhysicalDevices()
 		*  
 		*  @return TRUE if successful
@@ -89,16 +89,16 @@ class TDEHW_EXPORT HardwareDevices : public TQObject
 
 		/**
 		*  List all hardware capabilities on all devices
-		*  @return TDEGenericHardwareList containing all known hardware devices
+		*  @return GenericHardwareList containing all known hardware devices
 		*/
-		TDEGenericHardwareList listAllPhysicalDevices();
+		GenericHardwareList listAllPhysicalDevices();
 
 		/**
 		*  List all hardware capabilities on all devices
 		*  @param a GenericDeviceType::GenericDeviceType specifying the device class
-		*  @return TDEGenericHardwareList containing all known hardware devices
+		*  @return GenericHardwareList containing all known hardware devices
 		*/
-		TDEGenericHardwareList listByDeviceClass(GenericDeviceType::GenericDeviceType cl);
+		GenericHardwareList listByDeviceClass(GenericDeviceType::GenericDeviceType cl);
 
 		/**
 		*  Return the device with system path @arg syspath, or 0 if no device exists for that path
@@ -267,7 +267,7 @@ class TDEHW_EXPORT HardwareDevices : public TQObject
 
 		struct udev *m_udevStruct;
 		struct udev_monitor *m_udevMonitorStruct;
-		TDEGenericHardwareList m_deviceList;
+		GenericHardwareList m_deviceList;
 		int m_procMountsFd;
 		KSimpleDirWatch* m_cpuWatch;
 		TQTimer* m_cpuWatchTimer;
@@ -279,10 +279,10 @@ class TDEHW_EXPORT HardwareDevices : public TQObject
 		TQStringList m_mountTable;
 		TQStringList m_cpuInfo;
 
-		TDEDeviceIDMap* pci_id_map;
-		TDEDeviceIDMap* usb_id_map;
-		TDEDeviceIDMap* pnp_id_map;
-		TDEDeviceIDMap* dpy_id_map;
+		DeviceIDMap* pci_id_map;
+		DeviceIDMap* usb_id_map;
+		DeviceIDMap* pnp_id_map;
+		DeviceIDMap* dpy_id_map;
 
 	friend class GenericDevice;
 	friend class StorageDevice;

@@ -63,10 +63,10 @@ namespace TDEHW {
 
 class NetworkDevice;
 
-typedef TQValueList<TQ_UINT8> TDENetworkByteList;
-typedef TQValueList<TQHostAddress> TDENetworkAddressList;
-typedef TQMap<TQString, TQString> TDENetworkSettingsMap;
-typedef TQMap<TQ_UINT32, TQ_UINT32> TDENetworkPriorityMap;
+typedef TQValueList<TQ_UINT8> NetworkByteList;
+typedef TQValueList<TQHostAddress> NetworkAddressList;
+typedef TQMap<TQString, TQString> NetworkSettingsMap;
+typedef TQMap<TQ_UINT32, TQ_UINT32> NetworkPriorityMap;
 
 namespace NetworkDeviceType {
 	enum NetworkDeviceType {
@@ -119,7 +119,7 @@ namespace NetworkConnectionErrorFlags {
 	CREATE_FLAG_BITWISE_MANIPULATION_FUNCTIONS(NetworkConnectionErrorFlags)
 };
 
-typedef TQMap<NetworkConnectionErrorFlags::NetworkConnectionErrorFlags, TQString> TDENetworkErrorStringMap;
+typedef TQMap<NetworkConnectionErrorFlags::NetworkConnectionErrorFlags, TQString> NetworkErrorStringMap;
 
 namespace NetworkInfinibandTransportMode {
 	enum NetworkInfinibandTransportMode {
@@ -546,18 +546,18 @@ class TDEHW_EXPORT MACAddress
 {
 	public:
 		MACAddress();
-		MACAddress(TDENetworkByteList address);
+		MACAddress(NetworkByteList address);
 		~MACAddress();
 
-		TDENetworkByteList address();
-		void setAddress(TDENetworkByteList address);
+		NetworkByteList address();
+		void setAddress(NetworkByteList address);
 		TQString toString();
 		void fromString(TQString address);
 		bool isValid();
 
 	private:
 		bool m_isValid;
-		TDENetworkByteList m_macAddress;
+		NetworkByteList m_macAddress;
 
 		friend bool operator==(const MACAddress &a1, const MACAddress &a2);
 		friend bool operator<(const MACAddress &a1, const MACAddress &a2);
@@ -776,7 +776,7 @@ class TDEHW_EXPORT NetworkIPConfiguration
 		NetworkSingleRouteConfigurationList routeConfigurations;
 		TQHostAddress broadcast;
 		TQHostAddress destination;
-		TDENetworkAddressList resolvers;
+		NetworkAddressList resolvers;
 		NetworkSearchDomainList searchDomains;
 		TQString dhcpClientIdentifier;
 };
@@ -929,9 +929,9 @@ class TDEHW_EXPORT VPNConnection : public NetworkConnection
 	public:
 		TQString vpnPluginID;
 		TQString lockedUserName;
-		TDENetworkSettingsMap pluginData;
+		NetworkSettingsMap pluginData;
 		bool secretsValid;
-		TDENetworkSettingsMap pluginSecrets;
+		NetworkSettingsMap pluginSecrets;
 };
 
 class TDEHW_EXPORT WiMaxConnection : public NetworkConnection
@@ -955,8 +955,8 @@ class TDEHW_EXPORT VLANConnection : public NetworkConnection
 		TQString parentConnectionUUID;
 		TQ_UINT32 vlanID;
 		NetworkVLANFlags::NetworkVLANFlags vlanFlags;
-		TDENetworkPriorityMap ingressPriorityMap;
-		TDENetworkPriorityMap egressPriorityMap;
+		NetworkPriorityMap ingressPriorityMap;
+		NetworkPriorityMap egressPriorityMap;
 };
 
 class TDEHW_EXPORT OLPCMeshConnection : public NetworkConnection
@@ -1014,7 +1014,7 @@ class TDENetworkEventQueueEvent_Private
 		NetworkVPNEventType::NetworkVPNEventType vpnevent;
 		NetworkGlobalEventType::NetworkGlobalEventType globalevent;
 };
-typedef TQValueList<TDENetworkEventQueueEvent_Private> TDENetworkEventQueueEvent_PrivateList;
+typedef TQValueList<TDENetworkEventQueueEvent_Private> NetworkEventQueueEvent_PrivateList;
 
 class TDEHW_EXPORT NetworkConnectionManager : public TQObject
 {
@@ -1106,11 +1106,11 @@ class TDEHW_EXPORT NetworkConnectionManager : public TQObject
 		* connection for which to verify integrity of all settings.
 		* @param type a pointer to an NetworkConnectionErrorFlags::NetworkConnectionErrorFlags
 		* which will be filled with the generic error type code if provided.
-		* @param reason a pointer to a TDENetworkErrorStringMap which will be filled with translated
+		* @param reason a pointer to a NetworkErrorStringMap which will be filled with translated
 		* strings containing the reason for the failure if provided.
 		* @return true on success, false if invalid settings are detected.
 		*/
-		virtual bool verifyConnectionSettings(NetworkConnection* connection, NetworkConnectionErrorFlags::NetworkConnectionErrorFlags* type=NULL, TDENetworkErrorStringMap* reason=NULL) = 0;
+		virtual bool verifyConnectionSettings(NetworkConnection* connection, NetworkConnectionErrorFlags::NetworkConnectionErrorFlags* type=NULL, NetworkErrorStringMap* reason=NULL) = 0;
 
 		/**
 		* Initiates a connection with UUID @param uuid.
@@ -1357,7 +1357,7 @@ class TDEHW_EXPORT NetworkConnectionManager : public TQObject
 		NetworkGlobalManagerFlags::NetworkGlobalManagerFlags m_prevConnectionStatus;
 		TQMap<TQString, NetworkConnectionStatus::NetworkConnectionStatus> m_prevDeviceStatus;
 		TQTimer* m_emissionTimer;
-		TDENetworkEventQueueEvent_PrivateList m_globalEventQueueEventList;
+		NetworkEventQueueEvent_PrivateList m_globalEventQueueEventList;
 };
 
 class TDEHW_EXPORT GlobalNetworkManager : public TQObject
@@ -1427,11 +1427,11 @@ class TDEHW_EXPORT GlobalNetworkManager : public TQObject
 		* connection for which to verify integrity of all settings.
 		* @param type a pointer to an NetworkConnectionErrorFlags::NetworkConnectionErrorFlags
 		* which will be filled with the generic error type code if provided.
-		* @param reason a pointer to a TDENetworkErrorStringMap which will be filled with translated
+		* @param reason a pointer to a NetworkErrorStringMap which will be filled with translated
 		* strings containing the reason for the failure if provided.
 		* @return true on success, false if invalid settings are detected.
 		*/
-		virtual bool verifyConnectionSettings(NetworkConnection* connection, NetworkConnectionErrorFlags::NetworkConnectionErrorFlags* type=NULL, TDENetworkErrorStringMap* reason=NULL);
+		virtual bool verifyConnectionSettings(NetworkConnection* connection, NetworkConnectionErrorFlags::NetworkConnectionErrorFlags* type=NULL, NetworkErrorStringMap* reason=NULL);
 
 		/**
 		* Initiates a connection with UUID @param uuid.
