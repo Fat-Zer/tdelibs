@@ -25,11 +25,11 @@
 namespace TDEHW {
 
 // Keep readDiskDeviceSubtypeFromString() in hardwaredevices.cpp in sync with this enum
-namespace TDEDiskDeviceType {
+namespace DiskDeviceType {
 #if __cplusplus >= 201103L
-enum TDEDiskDeviceType : unsigned long long {
+enum DiskDeviceType : unsigned long long {
 #else
-enum TDEDiskDeviceType {
+enum DiskDeviceType {
 #endif
 	Null =		0x0000000000000000ULL,
 	MediaDevice =	0x0000000000000001ULL,
@@ -80,24 +80,24 @@ enum TDEDiskDeviceType {
 	Other =		0x8000000000000000ULL
 };
 
-inline TDEDiskDeviceType operator|(TDEDiskDeviceType a, TDEDiskDeviceType b)
+inline DiskDeviceType operator|(DiskDeviceType a, DiskDeviceType b)
 {
-	return static_cast<TDEDiskDeviceType>(static_cast<unsigned long long>(a) | static_cast<unsigned long long>(b));
+	return static_cast<DiskDeviceType>(static_cast<unsigned long long>(a) | static_cast<unsigned long long>(b));
 }
 
-inline TDEDiskDeviceType operator&(TDEDiskDeviceType a, TDEDiskDeviceType b)
+inline DiskDeviceType operator&(DiskDeviceType a, DiskDeviceType b)
 {
-	return static_cast<TDEDiskDeviceType>(static_cast<unsigned long long>(a) & static_cast<unsigned long long>(b));
+	return static_cast<DiskDeviceType>(static_cast<unsigned long long>(a) & static_cast<unsigned long long>(b));
 }
 
-inline TDEDiskDeviceType operator~(TDEDiskDeviceType a)
+inline DiskDeviceType operator~(DiskDeviceType a)
 {
-	return static_cast<TDEDiskDeviceType>(~static_cast<unsigned long long>(a));
+	return static_cast<DiskDeviceType>(~static_cast<unsigned long long>(a));
 }
 };
 
-namespace TDEDiskDeviceStatus {
-enum TDEDiskDeviceStatus {
+namespace DiskDeviceStatus {
+enum DiskDeviceStatus {
 	Null =			0x00000000,
 	Mountable =		0x00000001,
 	Removable =		0x00000002,
@@ -110,37 +110,37 @@ enum TDEDiskDeviceStatus {
 	Other =			0x80000000
 };
 
-inline TDEDiskDeviceStatus operator|(TDEDiskDeviceStatus a, TDEDiskDeviceStatus b)
+inline DiskDeviceStatus operator|(DiskDeviceStatus a, DiskDeviceStatus b)
 {
-	return static_cast<TDEDiskDeviceStatus>(static_cast<int>(a) | static_cast<int>(b));
+	return static_cast<DiskDeviceStatus>(static_cast<int>(a) | static_cast<int>(b));
 }
 
-inline TDEDiskDeviceStatus operator&(TDEDiskDeviceStatus a, TDEDiskDeviceStatus b)
+inline DiskDeviceStatus operator&(DiskDeviceStatus a, DiskDeviceStatus b)
 {
-	return static_cast<TDEDiskDeviceStatus>(static_cast<int>(a) & static_cast<int>(b));
+	return static_cast<DiskDeviceStatus>(static_cast<int>(a) & static_cast<int>(b));
 }
 
-inline TDEDiskDeviceStatus operator~(TDEDiskDeviceStatus a)
+inline DiskDeviceStatus operator~(DiskDeviceStatus a)
 {
-	return static_cast<TDEDiskDeviceStatus>(~static_cast<int>(a));
+	return static_cast<DiskDeviceStatus>(~static_cast<int>(a));
 }
 };
 
-typedef TQMap<TQString,TQString> TDEStorageMountOptions;
+typedef TQMap<TQString,TQString> StorageMountOptions;
 
-class TDEHW_EXPORT TDEStorageDevice : public TDEGenericDevice
+class TDEHW_EXPORT StorageDevice : public GenericDevice
 {
 	public:
 		/**
 		*  Constructor.
 		*  @param Device type
 		*/
-		TDEStorageDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn=TQString::null);
+		StorageDevice(GenericDeviceType::GenericDeviceType dt, TQString dn=TQString::null);
 		
 		/**
 		* Destructor.
 		*/
-		~TDEStorageDevice();
+		~StorageDevice();
 
 		/**
 		* @return a TQString with the disk or partition label, if any
@@ -153,14 +153,14 @@ class TDEHW_EXPORT TDEStorageDevice : public TDEGenericDevice
 		TQString diskUUID();
 
 		/**
-		* @return an OR-ed combination of TDEDiskDeviceType::TDEDiskDeviceType type flags
+		* @return an OR-ed combination of DiskDeviceType::DiskDeviceType type flags
 		*/
-		TDEDiskDeviceType::TDEDiskDeviceType diskType();
+		DiskDeviceType::DiskDeviceType diskType();
 
 		/**
-		* @return an OR-ed combination of TDEDiskDeviceStatus::TDEDiskDeviceStatus type flags
+		* @return an OR-ed combination of DiskDeviceStatus::DiskDeviceStatus type flags
 		*/
-		TDEDiskDeviceStatus::TDEDiskDeviceStatus diskStatus();
+		DiskDeviceStatus::DiskDeviceStatus diskStatus();
 
 		/**
 		* @return true if media inserted, false if no media available
@@ -197,7 +197,7 @@ class TDEHW_EXPORT TDEStorageDevice : public TDEGenericDevice
 		*
 		* @return a TQString with the mount path, if successful
 		*/
-		TQString mountDevice(TQString mediaName=TQString::null, TDEStorageMountOptions mountOptions=TDEStorageMountOptions(), TQString* errRet=0, int* retcode=0);
+		TQString mountDevice(TQString mediaName=TQString::null, StorageMountOptions mountOptions=StorageMountOptions(), TQString* errRet=0, int* retcode=0);
 
 		/**
 		* Mounts the encrypted device if the correct passphrase is given
@@ -210,7 +210,7 @@ class TDEHW_EXPORT TDEStorageDevice : public TDEGenericDevice
 		*
 		* @return a TQString with the mount path, if successful
 		*/
-		TQString mountEncryptedDevice(TQString passphrase, TQString mediaName=TQString::null, TDEStorageMountOptions mountOptions=TDEStorageMountOptions(), TQString* errRet=0, int* retcode=0);
+		TQString mountEncryptedDevice(TQString passphrase, TQString mediaName=TQString::null, StorageMountOptions mountOptions=StorageMountOptions(), TQString* errRet=0, int* retcode=0);
 
 		/**
 		* Unmounts the device
@@ -242,33 +242,33 @@ class TDEHW_EXPORT TDEStorageDevice : public TDEGenericDevice
 		* @param size a TDEIcon::StdSizes structure specifying the desired icon size
 		* @return a TQPixmap containing the icon for the specified type
 		*
-		* This method overrides TDEGenericDevice::icon(TDEIcon::StdSizes size)
+		* This method overrides GenericDevice::icon(TDEIcon::StdSizes size)
 		*/
 		TQPixmap icon(TDEIcon::StdSizes size);
 
 		/**
 		* @return a TQString with a friendly name
 		*
-		* This method overrides TDEGenericDevice::friendlyName()
+		* This method overrides GenericDevice::friendlyName()
 		*/
 		TQString friendlyName();
 
 		/**
 		*  @return a TQString containing the friendly type name
 		*
-		* This method overrides TDEGenericDevice::friendlyDeviceType()
+		* This method overrides GenericDevice::friendlyDeviceType()
 		*/
 		TQString friendlyDeviceType();
 
 		/**
-		* @param an OR-ed combination of TDEDiskDeviceType::TDEDiskDeviceType type flags
+		* @param an OR-ed combination of DiskDeviceType::DiskDeviceType type flags
 		*/
-		bool isDiskOfType(TDEDiskDeviceType::TDEDiskDeviceType tf);
+		bool isDiskOfType(DiskDeviceType::DiskDeviceType tf);
 
 		/**
-		* @param an OR-ed combination of TDEDiskDeviceStatus::TDEDiskDeviceStatus type flags
+		* @param an OR-ed combination of DiskDeviceStatus::DiskDeviceStatus type flags
 		*/
-		bool checkDiskStatus(TDEDiskDeviceStatus::TDEDiskDeviceStatus sf);
+		bool checkDiskStatus(DiskDeviceStatus::DiskDeviceStatus sf);
 
 		/**
 		* @param TRUE to engage media lock, FALSE to disable it
@@ -313,16 +313,16 @@ class TDEHW_EXPORT TDEStorageDevice : public TDEGenericDevice
 		void internalSetDiskUUID(TQString id);
 
 		/**
-		* @param an OR-ed combination of TDEDiskDeviceType::TDEDiskDeviceType type flags
+		* @param an OR-ed combination of DiskDeviceType::DiskDeviceType type flags
 		* @internal
 		*/
-		void internalSetDiskType(TDEDiskDeviceType::TDEDiskDeviceType tf);
+		void internalSetDiskType(DiskDeviceType::DiskDeviceType tf);
 
 		/**
-		* @param an OR-ed combination of TDEDiskDeviceStatus::TDEDiskDeviceStatus type flags
+		* @param an OR-ed combination of DiskDeviceStatus::DiskDeviceStatus type flags
 		* @internal
 		*/
-		void internalSetDiskStatus(TDEDiskDeviceStatus::TDEDiskDeviceStatus st);
+		void internalSetDiskStatus(DiskDeviceStatus::DiskDeviceStatus st);
 
 		/**
 		* @param a bool with the media status
@@ -355,8 +355,8 @@ class TDEHW_EXPORT TDEStorageDevice : public TDEGenericDevice
 		void internalSetSlaveDevices(TQStringList sd);
 
 	private:
-		TDEDiskDeviceType::TDEDiskDeviceType m_diskType;
-		TDEDiskDeviceStatus::TDEDiskDeviceStatus m_diskStatus;
+		DiskDeviceType::DiskDeviceType m_diskType;
+		DiskDeviceStatus::DiskDeviceStatus m_diskStatus;
 		TQString m_diskName;
 		TQString m_diskUUID;
 		TQString m_fileSystemName;
@@ -366,7 +366,7 @@ class TDEHW_EXPORT TDEStorageDevice : public TDEGenericDevice
 		TQStringList m_holdingDevices;
 		TQStringList m_slaveDevices;
 
-	friend class TDEHardwareDevices;
+	friend class HardwareDevices;
 };
 
 } // namespace TDEHW 

@@ -23,130 +23,130 @@
 
 using namespace TDEHW;
 
-TDEBatteryDevice::TDEBatteryDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
+BatteryDevice::BatteryDevice(GenericDeviceType::GenericDeviceType dt, TQString dn) : GenericDevice(dt, dn) {
 }
 
-TDEBatteryDevice::~TDEBatteryDevice() {
+BatteryDevice::~BatteryDevice() {
 }
 
-double TDEBatteryDevice::voltage() {
+double BatteryDevice::voltage() {
 	return m_currentVoltage;
 }
 
-void TDEBatteryDevice::internalSetVoltage(double vt) {
+void BatteryDevice::internalSetVoltage(double vt) {
 	m_currentVoltage = vt;
 }
 
-double TDEBatteryDevice::maximumVoltage() {
+double BatteryDevice::maximumVoltage() {
 	return m_maximumVoltage;
 }
 
-void TDEBatteryDevice::internalSetMaximumVoltage(double vt) {
+void BatteryDevice::internalSetMaximumVoltage(double vt) {
 	m_maximumVoltage = vt;
 }
 
-double TDEBatteryDevice::minimumVoltage() {
+double BatteryDevice::minimumVoltage() {
 	return m_minimumVoltage;
 }
 
-void TDEBatteryDevice::internalSetMinimumVoltage(double vt) {
+void BatteryDevice::internalSetMinimumVoltage(double vt) {
 	m_minimumVoltage = vt;
 }
 
-double TDEBatteryDevice::maximumDesignVoltage() {
+double BatteryDevice::maximumDesignVoltage() {
 	return m_maximumDesignVoltage;
 }
 
-void TDEBatteryDevice::internalSetMaximumDesignVoltage(double vt) {
+void BatteryDevice::internalSetMaximumDesignVoltage(double vt) {
 	m_maximumDesignVoltage = vt;
 }
 
-double TDEBatteryDevice::energy() {
+double BatteryDevice::energy() {
 	return m_currentEnergy;
 }
 
-void TDEBatteryDevice::internalSetEnergy(double vt) {
+void BatteryDevice::internalSetEnergy(double vt) {
 	m_currentEnergy = vt;
 }
 
-double TDEBatteryDevice::alarmEnergy() {
+double BatteryDevice::alarmEnergy() {
 	return m_alarmEnergy;
 }
 
-void TDEBatteryDevice::internalSetAlarmEnergy(double vt) {
+void BatteryDevice::internalSetAlarmEnergy(double vt) {
 	m_alarmEnergy = vt;
 }
 
-double TDEBatteryDevice::maximumEnergy() {
+double BatteryDevice::maximumEnergy() {
 	return m_maximumEnergy;
 }
 
-void TDEBatteryDevice::internalSetMaximumEnergy(double vt) {
+void BatteryDevice::internalSetMaximumEnergy(double vt) {
 	m_maximumEnergy = vt;
 }
 
-double TDEBatteryDevice::maximumDesignEnergy() {
+double BatteryDevice::maximumDesignEnergy() {
 	return m_maximumDesignEnergy;
 }
 
-void TDEBatteryDevice::internalSetMaximumDesignEnergy(double vt) {
+void BatteryDevice::internalSetMaximumDesignEnergy(double vt) {
 	m_maximumDesignEnergy = vt;
 }
 
-double TDEBatteryDevice::dischargeRate() {
+double BatteryDevice::dischargeRate() {
 	return m_dischargeRate;
 }
 
-void TDEBatteryDevice::internalSetDischargeRate(double vt) {
+void BatteryDevice::internalSetDischargeRate(double vt) {
 	m_dischargeRate = vt;
 }
 
-double TDEBatteryDevice::timeRemaining() {
+double BatteryDevice::timeRemaining() {
 	return m_timeRemaining;
 }
 
-void TDEBatteryDevice::internalSetTimeRemaining(double tr) {
+void BatteryDevice::internalSetTimeRemaining(double tr) {
 	m_timeRemaining = tr;
 }
 
-TQString TDEBatteryDevice::technology() {
+TQString BatteryDevice::technology() {
 	return m_technology;
 }
 
-void TDEBatteryDevice::internalSetTechnology(TQString tc) {
+void BatteryDevice::internalSetTechnology(TQString tc) {
 	m_technology = tc;
 }
 
-TDEBatteryStatus::TDEBatteryStatus TDEBatteryDevice::status() {
+BatteryStatus::BatteryStatus BatteryDevice::status() {
 	return m_status;
 }
 
-void TDEBatteryDevice::internalSetStatus(TQString tc) {
+void BatteryDevice::internalSetStatus(TQString tc) {
 	tc = tc.lower();
 
 	if (tc == "charging") {
-		m_status = TDEBatteryStatus::Charging;
+		m_status = BatteryStatus::Charging;
 	}
 	else if (tc == "discharging") {
-		m_status = TDEBatteryStatus::Discharging;
+		m_status = BatteryStatus::Discharging;
 	}
 	else if (tc == "full") {
-		m_status = TDEBatteryStatus::Full;
+		m_status = BatteryStatus::Full;
 	}
 	else {
-		m_status = TDEBatteryStatus::Unknown;
+		m_status = BatteryStatus::Unknown;
 	}
 }
 
-bool TDEBatteryDevice::installed() {
+bool BatteryDevice::installed() {
 	return m_installed;
 }
 
-void TDEBatteryDevice::internalSetInstalled(bool tc) {
+void BatteryDevice::internalSetInstalled(bool tc) {
 	m_installed = tc;
 }
 
-double TDEBatteryDevice::chargePercent() {
+double BatteryDevice::chargePercent() {
 	return (m_currentEnergy/m_maximumEnergy)*100.0;
 }
 

@@ -36,37 +36,37 @@
 
 using namespace TDEHW;
 
-TDEBacklightDevice::TDEBacklightDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
+BacklightDevice::BacklightDevice(GenericDeviceType::GenericDeviceType dt, TQString dn) : GenericDevice(dt, dn) {
 }
 
-TDEBacklightDevice::~TDEBacklightDevice() {
+BacklightDevice::~BacklightDevice() {
 }
 
-TDEDisplayPowerLevel::TDEDisplayPowerLevel TDEBacklightDevice::powerLevel() {
+DisplayPowerLevel::DisplayPowerLevel BacklightDevice::powerLevel() {
 	return m_powerLevel;
 }
 
-void TDEBacklightDevice::internalSetPowerLevel(TDEDisplayPowerLevel::TDEDisplayPowerLevel pl) {
+void BacklightDevice::internalSetPowerLevel(DisplayPowerLevel::DisplayPowerLevel pl) {
 	m_powerLevel = pl;
 }
 
-void TDEBacklightDevice::internalSetMaximumRawBrightness(int br) {
+void BacklightDevice::internalSetMaximumRawBrightness(int br) {
 	m_maximumBrightness = br;
 }
 
-void TDEBacklightDevice::internalSetCurrentRawBrightness(int br) {
+void BacklightDevice::internalSetCurrentRawBrightness(int br) {
 	m_currentBrightness = br;
 }
 
-int TDEBacklightDevice::brightnessSteps() {
+int BacklightDevice::brightnessSteps() {
 	return m_maximumBrightness + 1;
 }
 
-double TDEBacklightDevice::brightnessPercent() {
+double BacklightDevice::brightnessPercent() {
 	return (((m_currentBrightness*1.0)/m_maximumBrightness)*100.0);
 }
 
-bool TDEBacklightDevice::canSetBrightness() {
+bool BacklightDevice::canSetBrightness() {
 	TQString brightnessnode = systemPath() + "/brightness";
 	int rval = access (brightnessnode.ascii(), W_OK);
 	if (rval == 0) {
@@ -94,11 +94,11 @@ bool TDEBacklightDevice::canSetBrightness() {
 	return FALSE;
 }
 
-int TDEBacklightDevice::rawBrightness() {
+int BacklightDevice::rawBrightness() {
 	return m_currentBrightness;
 }
 
-void TDEBacklightDevice::setRawBrightness(int br) {
+void BacklightDevice::setRawBrightness(int br) {
 	bool setRawBrightnessDone = FALSE;
 
 	TQString brightnessnode = systemPath() + "/brightness";

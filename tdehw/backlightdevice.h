@@ -25,24 +25,24 @@
 
 namespace TDEHW {
 
-class TDEHW_EXPORT TDEBacklightDevice : public TDEGenericDevice
+class TDEHW_EXPORT BacklightDevice : public GenericDevice
 {
 	public:
 		/**
 		*  Constructor.
 		*  @param Device type
 		*/
-		TDEBacklightDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn=TQString::null);
+		BacklightDevice(GenericDeviceType::GenericDeviceType dt, TQString dn=TQString::null);
 		
 		/**
 		* Destructor.
 		*/
-		~TDEBacklightDevice();
+		~BacklightDevice();
 
 		/**
-		* @return a TDEDisplayPowerLevel::TDEDisplayPowerLevel with the current power level
+		* @return a DisplayPowerLevel::DisplayPowerLevel with the current power level
 		*/
-		TDEDisplayPowerLevel::TDEDisplayPowerLevel powerLevel();
+		DisplayPowerLevel::DisplayPowerLevel powerLevel();
 
 		/**
 		* @return an integer with the number of discrete control steps available
@@ -71,10 +71,10 @@ class TDEHW_EXPORT TDEBacklightDevice : public TDEGenericDevice
 
 	protected:
 		/**
-		* @param pl a TDEDisplayPowerLevel::TDEDisplayPowerLevel with the current power level
+		* @param pl a DisplayPowerLevel::DisplayPowerLevel with the current power level
 		* @internal
 		*/
-		void internalSetPowerLevel(TDEDisplayPowerLevel::TDEDisplayPowerLevel pl);
+		void internalSetPowerLevel(DisplayPowerLevel::DisplayPowerLevel pl);
 
 		/**
 		* @param br an integer with the maximum raw brightness value
@@ -89,11 +89,11 @@ class TDEHW_EXPORT TDEBacklightDevice : public TDEGenericDevice
 		void internalSetCurrentRawBrightness(int br);
 
 	private:
-		TDEDisplayPowerLevel::TDEDisplayPowerLevel m_powerLevel;
+		DisplayPowerLevel::DisplayPowerLevel m_powerLevel;
 		int m_currentBrightness;
 		int m_maximumBrightness;
 
-	friend class TDEHardwareDevices;
+	friend class HardwareDevices;
 };
 
 } // namespace TDEHW 

@@ -30,7 +30,7 @@
 
 using namespace TDEHW;
 
-TDENetworkDevice::TDENetworkDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
+NetworkDevice::NetworkDevice(GenericDeviceType::GenericDeviceType dt, TQString dn) : GenericDevice(dt, dn) {
 	m_rxbytes = -1;
 	m_txbytes = -1;
 	m_rxpackets = -1;
@@ -38,151 +38,151 @@ TDENetworkDevice::TDENetworkDevice(TDEGenericDeviceType::TDEGenericDeviceType dt
 	m_connectionManager = NULL;
 }
 
-TDENetworkDevice::~TDENetworkDevice() {
+NetworkDevice::~NetworkDevice() {
 	if (m_connectionManager) {
 		delete m_connectionManager;
 	}
 }
 
-TQString TDENetworkDevice::macAddress() {
+TQString NetworkDevice::macAddress() {
 	return m_macAddress;
 }
 
-void TDENetworkDevice::internalSetMacAddress(TQString ma) {
+void NetworkDevice::internalSetMacAddress(TQString ma) {
 	m_macAddress = ma;
 }
 
-TQString TDENetworkDevice::state() {
+TQString NetworkDevice::state() {
 	return m_state;
 }
 
-void TDENetworkDevice::internalSetState(TQString st) {
+void NetworkDevice::internalSetState(TQString st) {
 	m_state = st;
 }
 
-bool TDENetworkDevice::carrierPresent() {
+bool NetworkDevice::carrierPresent() {
 	return m_carrier;
 }
 
-void TDENetworkDevice::internalSetCarrierPresent(bool cp) {
+void NetworkDevice::internalSetCarrierPresent(bool cp) {
 	m_carrier = cp;
 }
 
-bool TDENetworkDevice::dormant() {
+bool NetworkDevice::dormant() {
 	return m_dormant;
 }
 
-void TDENetworkDevice::internalSetDormant(bool dm) {
+void NetworkDevice::internalSetDormant(bool dm) {
 	m_dormant = dm;
 }
 
-TQString TDENetworkDevice::ipV4Address() {
+TQString NetworkDevice::ipV4Address() {
 	return m_ipV4Address;
 }
 
-void TDENetworkDevice::internalSetIpV4Address(TQString ad) {
+void NetworkDevice::internalSetIpV4Address(TQString ad) {
 	m_ipV4Address = ad;
 }
 
-TQString TDENetworkDevice::ipV6Address() {
+TQString NetworkDevice::ipV6Address() {
 	return m_ipV6Address;
 }
 
-void TDENetworkDevice::internalSetIpV6Address(TQString ad) {
+void NetworkDevice::internalSetIpV6Address(TQString ad) {
 	m_ipV6Address = ad;
 }
 
-TQString TDENetworkDevice::ipV4Netmask() {
+TQString NetworkDevice::ipV4Netmask() {
 	return m_ipV4Netmask;
 }
 
-void TDENetworkDevice::internalSetIpV4Netmask(TQString nm) {
+void NetworkDevice::internalSetIpV4Netmask(TQString nm) {
 	m_ipV4Netmask = nm;
 }
 
-TQString TDENetworkDevice::ipV6Netmask() {
+TQString NetworkDevice::ipV6Netmask() {
 	return m_ipV6Netmask;
 }
 
-void TDENetworkDevice::internalSetIpV6Netmask(TQString nm) {
+void NetworkDevice::internalSetIpV6Netmask(TQString nm) {
 	m_ipV6Netmask = nm;
 }
 
-TQString TDENetworkDevice::ipV4Broadcast() {
+TQString NetworkDevice::ipV4Broadcast() {
 	return m_ipV4Broadcast;
 }
 
-void TDENetworkDevice::internalSetIpV4Broadcast(TQString br) {
+void NetworkDevice::internalSetIpV4Broadcast(TQString br) {
 	m_ipV4Broadcast = br;
 }
 
-TQString TDENetworkDevice::ipV6Broadcast() {
+TQString NetworkDevice::ipV6Broadcast() {
 	return m_ipV6Broadcast;
 }
 
-void TDENetworkDevice::internalSetIpV6Broadcast(TQString br) {
+void NetworkDevice::internalSetIpV6Broadcast(TQString br) {
 	m_ipV6Broadcast = br;
 }
 
-TQString TDENetworkDevice::ipV4Destination() {
+TQString NetworkDevice::ipV4Destination() {
 	return m_ipV4Destination;
 }
 
-void TDENetworkDevice::internalSetIpV4Destination(TQString ds) {
+void NetworkDevice::internalSetIpV4Destination(TQString ds) {
 	m_ipV4Destination = ds;
 }
 
-TQString TDENetworkDevice::ipV6Destination() {
+TQString NetworkDevice::ipV6Destination() {
 	return m_ipV6Destination;
 }
 
-void TDENetworkDevice::internalSetIpV6Destination(TQString ds) {
+void NetworkDevice::internalSetIpV6Destination(TQString ds) {
 	m_ipV6Destination = ds;
 }
 
-double TDENetworkDevice::rxBytes() {
+double NetworkDevice::rxBytes() {
 	return m_rxbytes;
 }
 
-void TDENetworkDevice::internalSetRxBytes(double rx) {
+void NetworkDevice::internalSetRxBytes(double rx) {
 	m_rxbytes = rx;
 }
 
-double TDENetworkDevice::txBytes() {
+double NetworkDevice::txBytes() {
 	return m_txbytes;
 }
 
-void TDENetworkDevice::internalSetTxBytes(double tx) {
+void NetworkDevice::internalSetTxBytes(double tx) {
 	m_txbytes = tx;
 }
 
-double TDENetworkDevice::rxPackets() {
+double NetworkDevice::rxPackets() {
 	return m_rxpackets;
 }
 
-void TDENetworkDevice::internalSetRxPackets(double rx) {
+void NetworkDevice::internalSetRxPackets(double rx) {
 	m_rxpackets = rx;
 }
 
-double TDENetworkDevice::txPackets() {
+double NetworkDevice::txPackets() {
 	return m_txpackets;
 }
 
-void TDENetworkDevice::internalSetTxPackets(double tx) {
+void NetworkDevice::internalSetTxPackets(double tx) {
 	m_txpackets = tx;
 }
 
-TDENetworkConnectionManager* TDENetworkDevice::connectionManager() {
+NetworkConnectionManager* NetworkDevice::connectionManager() {
 #ifdef WITH_NETWORK_MANAGER_BACKEND
 	if (!m_connectionManager) {
-		m_connectionManager = new TDENetworkConnectionManager_BackendNM(m_macAddress);
+		m_connectionManager = new NetworkConnectionManager_BackendNM(m_macAddress);
 	}
 #endif // WITH_NETWORK_MANAGER_BACKEND
 
 	return m_connectionManager;
 }
 
-void TDENetworkDevice::internalSetConnectionManager(TDENetworkConnectionManager* mgr) {
+void NetworkDevice::internalSetConnectionManager(NetworkConnectionManager* mgr) {
 	m_connectionManager = mgr;
 }
 

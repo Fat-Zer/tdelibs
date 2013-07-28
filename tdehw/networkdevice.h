@@ -24,21 +24,21 @@
 
 namespace TDEHW {
 
-class TDENetworkConnectionManager;
+class NetworkConnectionManager;
 
-class TDEHW_EXPORT TDENetworkDevice : public TDEGenericDevice
+class TDEHW_EXPORT NetworkDevice : public GenericDevice
 {
 	public:
 		/**
 		*  Constructor.
 		*  @param Device type
 		*/
-		TDENetworkDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn=TQString::null);
+		NetworkDevice(GenericDeviceType::GenericDeviceType dt, TQString dn=TQString::null);
 		
 		/**
 		* Destructor.
 		*/
-		~TDENetworkDevice();
+		~NetworkDevice();
 
 		/**
 		* @return a TQString containing the network device's MAC address
@@ -121,9 +121,9 @@ class TDEHW_EXPORT TDENetworkDevice : public TDEGenericDevice
 		double txPackets();
 
 		/**
-		* @return a pointer to a TDENetworkConnectionManager object, if available
+		* @return a pointer to a NetworkConnectionManager object, if available
 		*/
-		TDENetworkConnectionManager* connectionManager();
+		NetworkConnectionManager* connectionManager();
 
 	protected:
 		/**
@@ -223,9 +223,9 @@ class TDEHW_EXPORT TDENetworkDevice : public TDEGenericDevice
 		void internalSetTxPackets(double tx);
 
 		/**
-		* @param mgr a pointer to a TDENetworkConnectionManager object, if available
+		* @param mgr a pointer to a NetworkConnectionManager object, if available
 		*/
-		void internalSetConnectionManager(TDENetworkConnectionManager* mgr);
+		void internalSetConnectionManager(NetworkConnectionManager* mgr);
 
 	private:
 		TQString m_macAddress;
@@ -244,9 +244,9 @@ class TDEHW_EXPORT TDENetworkDevice : public TDEGenericDevice
 		double m_txbytes;
 		double m_rxpackets;
 		double m_txpackets;
-		TDENetworkConnectionManager* m_connectionManager;
+		NetworkConnectionManager* m_connectionManager;
 
-	friend class TDEHardwareDevices;
+	friend class HardwareDevices;
 };
 
 } // namespace TDEHW

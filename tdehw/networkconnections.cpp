@@ -38,63 +38,63 @@
 using namespace TDEHW;
 
 /*================================================================================================*/
-/* TDENetworkSearchDomain                                                                         */
+/* NetworkSearchDomain                                                                         */
 /*================================================================================================*/
 
-TDENetworkSearchDomain::TDENetworkSearchDomain() {
+NetworkSearchDomain::NetworkSearchDomain() {
 	m_isIPV6 = false;
 }
 
-TDENetworkSearchDomain::TDENetworkSearchDomain(TQString domain, bool ipv6) {
+NetworkSearchDomain::NetworkSearchDomain(TQString domain, bool ipv6) {
 	m_isIPV6 = ipv6;
 	m_domain = domain;
 }
 
-TDENetworkSearchDomain::~TDENetworkSearchDomain() {
+NetworkSearchDomain::~NetworkSearchDomain() {
 	//
 }
 
-TQString TDENetworkSearchDomain::searchDomain() {
+TQString NetworkSearchDomain::searchDomain() {
 	return m_domain;
 }
 
-void TDENetworkSearchDomain::setSearchDomain(TQString domain, bool ipv6) {
+void NetworkSearchDomain::setSearchDomain(TQString domain, bool ipv6) {
 	m_isIPV6 = ipv6;
 	m_domain = domain;
 }
 
-bool TDENetworkSearchDomain::isIPv4() {
+bool NetworkSearchDomain::isIPv4() {
 	return !m_isIPV6;
 }
 
-bool TDENetworkSearchDomain::isIPv6() {
+bool NetworkSearchDomain::isIPv6() {
 	return m_isIPV6;
 }
 
 /*================================================================================================*/
-/* TDENetMask                                                                                     */
+/* NetMask                                                                                     */
 /*================================================================================================*/
 
-TDENetMask::TDENetMask() {
+NetMask::NetMask() {
 	m_ipv4NetMask = 0;
 	m_isIPV6 = false;
 }
 
-TDENetMask::TDENetMask(TQ_UINT32 netmask) {
+NetMask::NetMask(TQ_UINT32 netmask) {
 	m_ipv4NetMask = netmask;
 	m_isIPV6 = false;
 }
 
-TDENetMask::TDENetMask(TQ_UINT8* netmask) {
+NetMask::NetMask(TQ_UINT8* netmask) {
 	m_ipv6NetMask = TQHostAddress(netmask);
 	m_isIPV6 = true;
 }
 
-TDENetMask::~TDENetMask() {
+NetMask::~NetMask() {
 	//
 }
 
-void TDENetMask::fromCIDRMask(unsigned char mask, bool ipv6) {
+void NetMask::fromCIDRMask(unsigned char mask, bool ipv6) {
 	unsigned int i;
 	unsigned int j;
 	unsigned int internalMask = mask;
@@ -123,7 +123,7 @@ void TDENetMask::fromCIDRMask(unsigned char mask, bool ipv6) {
 	}
 }
 
-unsigned char TDENetMask::toCIDRMask() {
+unsigned char NetMask::toCIDRMask() {
 	unsigned int i;
 	unsigned int j;
 	if (!m_isIPV6) {
@@ -150,7 +150,7 @@ unsigned char TDENetMask::toCIDRMask() {
 	}
 }
 
-void TDENetMask::fromString(TQString mask) {
+void NetMask::fromString(TQString mask) {
 	if (mask.contains(".")) {
 		m_isIPV6 = false;
 		m_ipv4NetMask = 0;
@@ -171,7 +171,7 @@ void TDENetMask::fromString(TQString mask) {
 	}
 }
 
-TQString TDENetMask::toString() {
+TQString NetMask::toString() {
 	if (!m_isIPV6) {
 		return TQString("%1.%2.%3.%4").arg((m_ipv4NetMask & 0xff000000) >> 24).arg((m_ipv4NetMask & 0x00ff0000) >> 16).arg((m_ipv4NetMask & 0x0000ff00) >> 8).arg((m_ipv4NetMask & 0x000000ff) >> 0);
 	}
@@ -180,42 +180,42 @@ TQString TDENetMask::toString() {
 	}
 }
 
-bool TDENetMask::isIPv4() {
+bool NetMask::isIPv4() {
 	return !m_isIPV6;
 }
 
-bool TDENetMask::isIPv6() {
+bool NetMask::isIPv6() {
 	return m_isIPV6;
 }
 
 /*================================================================================================*/
-/* TDEMACAddress                                                                      */
+/* MACAddress                                                                      */
 /*================================================================================================*/
 
-TDEMACAddress::TDEMACAddress() {
+MACAddress::MACAddress() {
 	m_macAddress.clear();
 	m_isValid = false;
 }
 
-TDEMACAddress::TDEMACAddress(TDENetworkByteList address) {
+MACAddress::MACAddress(TDENetworkByteList address) {
 	m_macAddress = address;
 	m_isValid = true;
 }
 
-TDEMACAddress::~TDEMACAddress() {
+MACAddress::~MACAddress() {
 	//
 }
 
-TDENetworkByteList TDEMACAddress::address() {
+TDENetworkByteList MACAddress::address() {
 	return m_macAddress;
 }
 
-void TDEMACAddress::setAddress(TDENetworkByteList address) {
+void MACAddress::setAddress(TDENetworkByteList address) {
 	m_macAddress = address;
 	m_isValid = true;
 }
 
-bool TDEMACAddress::isValid() {
+bool MACAddress::isValid() {
 	if (!m_isValid) {
 		return false;
 	}
@@ -228,7 +228,7 @@ bool TDEMACAddress::isValid() {
 	}
 }
 
-void TDEMACAddress::fromString(TQString address) {
+void MACAddress::fromString(TQString address) {
 	TQStringList pieces = TQStringList::split(":", address);
 	m_macAddress.clear();
 	for (TQStringList::Iterator it = pieces.begin(); it != pieces.end(); ++it) {
@@ -237,7 +237,7 @@ void TDEMACAddress::fromString(TQString address) {
 	m_isValid = true;
 }
 
-TQString TDEMACAddress::toString() {
+TQString MACAddress::toString() {
 	TQString ret;
 	TDENetworkByteList::iterator it;
 	for (it = m_macAddress.begin(); it != m_macAddress.end(); ++it) {
@@ -251,7 +251,7 @@ TQString TDEMACAddress::toString() {
 
 namespace TDEHW {
 
-bool operator==(const TDEMACAddress &a1, const TDEMACAddress &a2) {
+bool operator==(const MACAddress &a1, const MACAddress &a2) {
 	if (a1.m_macAddress.count() != a2.m_macAddress.count()) {
 		return false;
 	}
@@ -266,7 +266,7 @@ bool operator==(const TDEMACAddress &a1, const TDEMACAddress &a2) {
 	}
 }
 
-bool operator<(const TDEMACAddress &a1, const TDEMACAddress &a2) {
+bool operator<(const MACAddress &a1, const MACAddress &a2) {
 	if (a1.m_macAddress.count() < a2.m_macAddress.count()) {
 		return true;
 	}
@@ -287,76 +287,76 @@ bool operator<(const TDEMACAddress &a1, const TDEMACAddress &a2) {
 }
 
 /*================================================================================================*/
-/* TDENetworkSingleIPConfiguration                                                                */
+/* NetworkSingleIPConfiguration                                                                */
 /*================================================================================================*/
 
-TDENetworkSingleIPConfiguration::TDENetworkSingleIPConfiguration() {
+NetworkSingleIPConfiguration::NetworkSingleIPConfiguration() {
 	valid = false;
 }
 
-TDENetworkSingleIPConfiguration::~TDENetworkSingleIPConfiguration() {
+NetworkSingleIPConfiguration::~NetworkSingleIPConfiguration() {
 	//
 }
 
-bool TDENetworkSingleIPConfiguration::isIPv4() {
+bool NetworkSingleIPConfiguration::isIPv4() {
 	return ipAddress.isIPv4Address() & valid;
 }
 
-bool TDENetworkSingleIPConfiguration::isIPv6() {
+bool NetworkSingleIPConfiguration::isIPv6() {
 	return ipAddress.isIPv6Address() & valid;
 }
 
 /*================================================================================================*/
-/* TDENetworkSingleRouteConfiguration                                                                */
+/* NetworkSingleRouteConfiguration                                                                */
 /*================================================================================================*/
 
-TDENetworkSingleRouteConfiguration::TDENetworkSingleRouteConfiguration() {
+NetworkSingleRouteConfiguration::NetworkSingleRouteConfiguration() {
 	valid = false;
 }
 
-TDENetworkSingleRouteConfiguration::~TDENetworkSingleRouteConfiguration() {
+NetworkSingleRouteConfiguration::~NetworkSingleRouteConfiguration() {
 	//
 }
 
-bool TDENetworkSingleRouteConfiguration::isIPv4() {
+bool NetworkSingleRouteConfiguration::isIPv4() {
 	return ipAddress.isIPv4Address() & valid;
 }
 
-bool TDENetworkSingleRouteConfiguration::isIPv6() {
+bool NetworkSingleRouteConfiguration::isIPv6() {
 	return ipAddress.isIPv6Address() & valid;
 }
 
 /*================================================================================================*/
-/* TDENetworkIEEE8021xConfiguration                                                               */
+/* NetworkIEEE8021xConfiguration                                                               */
 /*================================================================================================*/
 
-TDENetworkIEEE8021xConfiguration::TDENetworkIEEE8021xConfiguration() {
+NetworkIEEE8021xConfiguration::NetworkIEEE8021xConfiguration() {
 	valid = false;
 	allowedValid = false;
 	secretsValid = false;
-	type = TDENetworkIEEE8021xType::None;
-	fastProvisioningFlags = TDENetworkIEEE8021xFastFlags::None;
-	phase2NonEAPAuthMethod = TDENetworkIEEE8021xType::None;
-	phase2EAPAuthMethod = TDENetworkIEEE8021xType::None;
-	passwordFlags = TDENetworkPasswordHandlingFlags::None;
-	binaryPasswordFlags = TDENetworkPasswordHandlingFlags::None;
-	privateKeyPasswordFlags = TDENetworkPasswordHandlingFlags::None;
-	phase2PrivateKeyPasswordFlags = TDENetworkPasswordHandlingFlags::None;
+	type = NetworkIEEE8021xType::None;
+	fastProvisioningFlags = NetworkIEEE8021xFastFlags::None;
+	phase2NonEAPAuthMethod = NetworkIEEE8021xType::None;
+	phase2EAPAuthMethod = NetworkIEEE8021xType::None;
+	passwordFlags = NetworkPasswordHandlingFlags::None;
+	binaryPasswordFlags = NetworkPasswordHandlingFlags::None;
+	privateKeyPasswordFlags = NetworkPasswordHandlingFlags::None;
+	phase2PrivateKeyPasswordFlags = NetworkPasswordHandlingFlags::None;
 	forceSystemCaCertificates = false;
 }
 
-TDENetworkIEEE8021xConfiguration::~TDENetworkIEEE8021xConfiguration() {
+NetworkIEEE8021xConfiguration::~NetworkIEEE8021xConfiguration() {
 	//
 }
 
 /*================================================================================================*/
-/* TDENetworkPPPConfiguration                                                                     */
+/* NetworkPPPConfiguration                                                                     */
 /*================================================================================================*/
 
-TDENetworkPPPConfiguration::TDENetworkPPPConfiguration() {
+NetworkPPPConfiguration::NetworkPPPConfiguration() {
 	valid = false;
 	requireServerAuthentication = false;
-	flags = TDENetworkPPPFlags::None;
+	flags = NetworkPPPFlags::None;
 	baudRate = 115200;
 	mru = 0;
 	mtu = 0;
@@ -364,89 +364,89 @@ TDENetworkPPPConfiguration::TDENetworkPPPConfiguration() {
 	lcpEchoFailureThreshold = 0;
 }
 
-TDENetworkPPPConfiguration::~TDENetworkPPPConfiguration() {
+NetworkPPPConfiguration::~NetworkPPPConfiguration() {
 	//
 }
 
 /*================================================================================================*/
-/* TDENetworkPPPOEConfiguration                                                                   */
+/* NetworkPPPOEConfiguration                                                                   */
 /*================================================================================================*/
 
-TDENetworkPPPOEConfiguration::TDENetworkPPPOEConfiguration() {
+NetworkPPPOEConfiguration::NetworkPPPOEConfiguration() {
 	valid = false;
 	secretsValid = false;
-	passwordFlags = TDENetworkPasswordHandlingFlags::None;
+	passwordFlags = NetworkPasswordHandlingFlags::None;
 }
 
-TDENetworkPPPOEConfiguration::~TDENetworkPPPOEConfiguration() {
+NetworkPPPOEConfiguration::~NetworkPPPOEConfiguration() {
 	//
 }
 
 /*================================================================================================*/
-/* TDENetworkSerialConfiguration                                                                  */
+/* NetworkSerialConfiguration                                                                  */
 /*================================================================================================*/
 
-TDENetworkSerialConfiguration::TDENetworkSerialConfiguration() {
+NetworkSerialConfiguration::NetworkSerialConfiguration() {
 	valid = false;
 	baudRate = 115200;
 	byteWidth = 8;
-	parity = TDENetworkParity::None;
+	parity = NetworkParity::None;
 	stopBits = 1;
 	txDelay = 0;
 }
 
-TDENetworkSerialConfiguration::~TDENetworkSerialConfiguration() {
+NetworkSerialConfiguration::~NetworkSerialConfiguration() {
 	//
 }
 
 /*================================================================================================*/
-/* TDENetworkCDMAConfiguration                                                                    */
+/* NetworkCDMAConfiguration                                                                    */
 /*================================================================================================*/
 
-TDENetworkCDMAConfiguration::TDENetworkCDMAConfiguration() {
+NetworkCDMAConfiguration::NetworkCDMAConfiguration() {
 	valid = false;
 	secretsValid = false;
-	passwordFlags = TDENetworkPasswordHandlingFlags::None;
+	passwordFlags = NetworkPasswordHandlingFlags::None;
 }
 
-TDENetworkCDMAConfiguration::~TDENetworkCDMAConfiguration() {
+NetworkCDMAConfiguration::~NetworkCDMAConfiguration() {
 	//
 }
 
 /*================================================================================================*/
-/* TDENetworkGSMConfiguration                                                                     */
+/* NetworkGSMConfiguration                                                                     */
 /*================================================================================================*/
 
-TDENetworkGSMConfiguration::TDENetworkGSMConfiguration() {
+NetworkGSMConfiguration::NetworkGSMConfiguration() {
 	valid = false;
 	secretsValid = false;
-	passwordFlags = TDENetworkPasswordHandlingFlags::None;
-	networkType = TDEGSMNetworkType::Any;
-	pinFlags = TDENetworkPasswordHandlingFlags::None;
+	passwordFlags = NetworkPasswordHandlingFlags::None;
+	networkType = GSMNetworkType::Any;
+	pinFlags = NetworkPasswordHandlingFlags::None;
 	allowRoaming = false;
 }
 
-TDENetworkGSMConfiguration::~TDENetworkGSMConfiguration() {
+NetworkGSMConfiguration::~NetworkGSMConfiguration() {
 	//
 }
 
 /*================================================================================================*/
-/* TDENetworkIPConfiguration                                                                      */
+/* NetworkIPConfiguration                                                                      */
 /*================================================================================================*/
 
-TDENetworkIPConfiguration::TDENetworkIPConfiguration() {
+NetworkIPConfiguration::NetworkIPConfiguration() {
 	valid = false;
-	connectionFlags =	TDENetworkIPConfigurationFlags::IPV4DHCPIP			| \
-				TDENetworkIPConfigurationFlags::IPV4DHCPDNS			| \
-				TDENetworkIPConfigurationFlags::IPV4DHCPRoutes			| \
-				TDENetworkIPConfigurationFlags::IPV4MayUseAsDefaultRoute	| \
-				TDENetworkIPConfigurationFlags::IPV6DHCPIP			| \
-				TDENetworkIPConfigurationFlags::IPV6DHCPDNS			| \
-				TDENetworkIPConfigurationFlags::IPV6DHCPRoutes			| \
-				TDENetworkIPConfigurationFlags::IPV6MayUseAsDefaultRoute;
+	connectionFlags =	NetworkIPConfigurationFlags::IPV4DHCPIP			| \
+				NetworkIPConfigurationFlags::IPV4DHCPDNS			| \
+				NetworkIPConfigurationFlags::IPV4DHCPRoutes			| \
+				NetworkIPConfigurationFlags::IPV4MayUseAsDefaultRoute	| \
+				NetworkIPConfigurationFlags::IPV6DHCPIP			| \
+				NetworkIPConfigurationFlags::IPV6DHCPDNS			| \
+				NetworkIPConfigurationFlags::IPV6DHCPRoutes			| \
+				NetworkIPConfigurationFlags::IPV6MayUseAsDefaultRoute;
 }
 
-TDENetworkIPConfiguration::~TDENetworkIPConfiguration() {
+NetworkIPConfiguration::~NetworkIPConfiguration() {
 	//
 }
 
@@ -457,15 +457,15 @@ TDENetworkIPConfiguration::~TDENetworkIPConfiguration() {
 TDENetworkWiFiSecurityConfiguration::TDENetworkWiFiSecurityConfiguration() {
 	valid = false;
 	secretsValid = false;
-	keyType = TDENetworkWiFiKeyType::Other;
-	authType = TDENetworkWiFiAuthType::Other;
-	wpaVersion = TDENetworkWiFiWPAVersionFlags::Any;
-	cipher = TDENetworkWiFiConnectionCipher::None;
-	wepKeyFlags = TDENetworkPasswordHandlingFlags::None;
+	keyType = NetworkWiFiKeyType::Other;
+	authType = NetworkWiFiAuthType::Other;
+	wpaVersion = NetworkWiFiWPAVersionFlags::Any;
+	cipher = NetworkWiFiConnectionCipher::None;
+	wepKeyFlags = NetworkPasswordHandlingFlags::None;
 	wepKeyIndex = 0;
-	wepKeyType = TDENetworkWepKeyType::Hexadecimal;
-	pskFlags = TDENetworkPasswordHandlingFlags::None;
-	leapPasswordFlags = TDENetworkPasswordHandlingFlags::None;
+	wepKeyType = NetworkWepKeyType::Hexadecimal;
+	pskFlags = NetworkPasswordHandlingFlags::None;
+	leapPasswordFlags = NetworkPasswordHandlingFlags::None;
 }
 
 TDENetworkWiFiSecurityConfiguration::~TDENetworkWiFiSecurityConfiguration() {
@@ -473,56 +473,56 @@ TDENetworkWiFiSecurityConfiguration::~TDENetworkWiFiSecurityConfiguration() {
 }
 
 /*================================================================================================*/
-/* TDENetworkWiFiDeviceInfo                                                                      */
+/* NetworkWiFiDeviceInfo                                                                      */
 /*================================================================================================*/
 
-TDENetworkWiFiDeviceInfo::TDENetworkWiFiDeviceInfo() {
+NetworkWiFiDeviceInfo::NetworkWiFiDeviceInfo() {
 	valid = false;
 }
 
-TDENetworkWiFiDeviceInfo::~TDENetworkWiFiDeviceInfo() {
+NetworkWiFiDeviceInfo::~NetworkWiFiDeviceInfo() {
 	//
 }
 
 /*================================================================================================*/
-/* TDENetworkDeviceInformation                                                                      */
+/* NetworkDeviceInformation                                                                      */
 /*================================================================================================*/
 
-TDENetworkDeviceInformation::TDENetworkDeviceInformation() {
+NetworkDeviceInformation::NetworkDeviceInformation() {
 	valid = false;
-	statusFlags = TDENetworkConnectionStatus::Invalid;
-	capabilityFlags = TDENetworkDeviceCapabilityFlags::None;
+	statusFlags = NetworkConnectionStatus::Invalid;
+	capabilityFlags = NetworkDeviceCapabilityFlags::None;
 }
 
-TDENetworkDeviceInformation::~TDENetworkDeviceInformation() {
+NetworkDeviceInformation::~NetworkDeviceInformation() {
 	//
 }
 
 /*================================================================================================*/
-/* TDENetworkHWNeighbor                                                                      */
+/* NetworkHWNeighbor                                                                      */
 /*================================================================================================*/
 
-TDENetworkHWNeighbor::TDENetworkHWNeighbor() {
+NetworkHWNeighbor::NetworkHWNeighbor() {
 	valid = false;
 }
 
-TDENetworkHWNeighbor::~TDENetworkHWNeighbor() {
+NetworkHWNeighbor::~NetworkHWNeighbor() {
 	//
 }
 
 /*================================================================================================*/
-/* TDENetworkWiFiAPInfo                                                                      */
+/* NetworkWiFiAPInfo                                                                      */
 /*================================================================================================*/
 
-TDENetworkWiFiAPInfo::TDENetworkWiFiAPInfo() : TDENetworkHWNeighbor() {
+NetworkWiFiAPInfo::NetworkWiFiAPInfo() : NetworkHWNeighbor() {
 	//
 }
 
-TDENetworkWiFiAPInfo::~TDENetworkWiFiAPInfo() {
+NetworkWiFiAPInfo::~NetworkWiFiAPInfo() {
 	//
 }
 
-TQString TDENetworkWiFiAPInfo::friendlySSID() const {
+TQString NetworkWiFiAPInfo::friendlySSID() const {
 	TQString ret;
 
 	ret = TQString(SSID);
@@ -534,10 +534,10 @@ TQString TDENetworkWiFiAPInfo::friendlySSID() const {
 }
 
 /*================================================================================================*/
-/* TDENetworkConnection                                                                           */
+/* NetworkConnection                                                                           */
 /*================================================================================================*/
 
-TDENetworkConnection::TDENetworkConnection() {
+NetworkConnection::NetworkConnection() {
 	readOnly = false;
 	autoConnect = false;
 	fullDuplex = true;
@@ -546,146 +546,146 @@ TDENetworkConnection::TDENetworkConnection() {
 	mtu = 0;
 }
 
-TDENetworkConnection::~TDENetworkConnection() {
+NetworkConnection::~NetworkConnection() {
 	//
 }
 
-TDENetworkConnectionType::TDENetworkConnectionType TDENetworkConnection::type() {
-	if (dynamic_cast<TDEWiredEthernetConnection*>(this)) {
-		return TDENetworkConnectionType::WiredEthernet;
+NetworkConnectionType::NetworkConnectionType NetworkConnection::type() {
+	if (dynamic_cast<WiredEthernetConnection*>(this)) {
+		return NetworkConnectionType::WiredEthernet;
 	}
-	else if (dynamic_cast<TDEWiredInfinibandConnection*>(this)) {
-		return TDENetworkConnectionType::Infiniband;
+	else if (dynamic_cast<WiredInfinibandConnection*>(this)) {
+		return NetworkConnectionType::Infiniband;
 	}
-	else if (dynamic_cast<TDEVPNConnection*>(this)) {
-		return TDENetworkConnectionType::VPN;
+	else if (dynamic_cast<VPNConnection*>(this)) {
+		return NetworkConnectionType::VPN;
 	}
-	else if (dynamic_cast<TDEWiMaxConnection*>(this)) {
-		return TDENetworkConnectionType::WiMax;
+	else if (dynamic_cast<WiMaxConnection*>(this)) {
+		return NetworkConnectionType::WiMax;
 	}
-	else if (dynamic_cast<TDEVLANConnection*>(this)) {
-		return TDENetworkConnectionType::VLAN;
+	else if (dynamic_cast<VLANConnection*>(this)) {
+		return NetworkConnectionType::VLAN;
 	}
-	else if (dynamic_cast<TDEOLPCMeshConnection*>(this)) {
-		return TDENetworkConnectionType::OLPCMesh;
+	else if (dynamic_cast<OLPCMeshConnection*>(this)) {
+		return NetworkConnectionType::OLPCMesh;
 	}
-	else if (dynamic_cast<TDEBluetoothConnection*>(this)) {
-		return TDENetworkConnectionType::Bluetooth;
+	else if (dynamic_cast<BluetoothConnection*>(this)) {
+		return NetworkConnectionType::Bluetooth;
 	}
-	else if (dynamic_cast<TDEModemConnection*>(this)) {
-		return TDENetworkConnectionType::Modem;
+	else if (dynamic_cast<ModemConnection*>(this)) {
+		return NetworkConnectionType::Modem;
 	}
-	else if (dynamic_cast<TDEWiFiConnection*>(this)) {
-		return TDENetworkConnectionType::WiFi;
+	else if (dynamic_cast<WiFiConnection*>(this)) {
+		return NetworkConnectionType::WiFi;
 	}
 	else {
-		return TDENetworkConnectionType::Other;
+		return NetworkConnectionType::Other;
 	}
 }
 
 /*================================================================================================*/
-/* TDEWiredEthernetConnection                                                                     */
+/* WiredEthernetConnection                                                                     */
 /*================================================================================================*/
 
-TDEWiredEthernetConnection::TDEWiredEthernetConnection() : TDENetworkConnection() {
+WiredEthernetConnection::WiredEthernetConnection() : NetworkConnection() {
 	//
 }
 
-TDEWiredEthernetConnection::~TDEWiredEthernetConnection() {
-	//
-}
-
-/*================================================================================================*/
-/* TDEWiredInfinibandConnection                                                                   */
-/*================================================================================================*/
-
-TDEWiredInfinibandConnection::TDEWiredInfinibandConnection() : TDENetworkConnection() {
-	//
-}
-
-TDEWiredInfinibandConnection::~TDEWiredInfinibandConnection() {
+WiredEthernetConnection::~WiredEthernetConnection() {
 	//
 }
 
 /*================================================================================================*/
-/* TDEVPNConnection                                                                               */
+/* WiredInfinibandConnection                                                                   */
 /*================================================================================================*/
 
-TDEVPNConnection::TDEVPNConnection() : TDENetworkConnection() {
+WiredInfinibandConnection::WiredInfinibandConnection() : NetworkConnection() {
+	//
+}
+
+WiredInfinibandConnection::~WiredInfinibandConnection() {
+	//
+}
+
+/*================================================================================================*/
+/* VPNConnection                                                                               */
+/*================================================================================================*/
+
+VPNConnection::VPNConnection() : NetworkConnection() {
 	secretsValid = false;
 }
 
-TDEVPNConnection::~TDEVPNConnection() {
+VPNConnection::~VPNConnection() {
 	//
 }
 
 /*================================================================================================*/
-/* TDEWiMaxConnection                                                                             */
+/* WiMaxConnection                                                                             */
 /*================================================================================================*/
 
-TDEWiMaxConnection::TDEWiMaxConnection() : TDENetworkConnection() {
+WiMaxConnection::WiMaxConnection() : NetworkConnection() {
 	//
 }
 
-TDEWiMaxConnection::~TDEWiMaxConnection() {
-	//
-}
-
-/*================================================================================================*/
-/* TDEVLANConnection                                                                              */
-/*================================================================================================*/
-
-TDEVLANConnection::TDEVLANConnection() : TDENetworkConnection() {
-	//
-}
-
-TDEVLANConnection::~TDEVLANConnection() {
+WiMaxConnection::~WiMaxConnection() {
 	//
 }
 
 /*================================================================================================*/
-/* TDEOLPCMeshConnection                                                                          */
+/* VLANConnection                                                                              */
 /*================================================================================================*/
 
-TDEOLPCMeshConnection::TDEOLPCMeshConnection() : TDENetworkConnection() {
+VLANConnection::VLANConnection() : NetworkConnection() {
+	//
+}
+
+VLANConnection::~VLANConnection() {
+	//
+}
+
+/*================================================================================================*/
+/* OLPCMeshConnection                                                                          */
+/*================================================================================================*/
+
+OLPCMeshConnection::OLPCMeshConnection() : NetworkConnection() {
 	channel = 0;
 }
 
-TDEOLPCMeshConnection::~TDEOLPCMeshConnection() {
+OLPCMeshConnection::~OLPCMeshConnection() {
 	//
 }
 
 /*================================================================================================*/
-/* TDEBluetoothConnection                                                                         */
+/* BluetoothConnection                                                                         */
 /*================================================================================================*/
 
-TDEBluetoothConnection::TDEBluetoothConnection() : TDENetworkConnection() {
-	type = TDEBluetoothConnectionType::Other;
+BluetoothConnection::BluetoothConnection() : NetworkConnection() {
+	type = BluetoothConnectionType::Other;
 }
 
-TDEBluetoothConnection::~TDEBluetoothConnection() {
+BluetoothConnection::~BluetoothConnection() {
 	//
 }
 
 /*================================================================================================*/
-/* TDEModemConnection                                                                             */
+/* ModemConnection                                                                             */
 /*================================================================================================*/
 
-TDEModemConnection::TDEModemConnection() : TDENetworkConnection() {
-	type = TDEModemConnectionType::Other;
+ModemConnection::ModemConnection() : NetworkConnection() {
+	type = ModemConnectionType::Other;
 }
 
-TDEModemConnection::~TDEModemConnection() {
+ModemConnection::~ModemConnection() {
 	//
 }
 
 /*================================================================================================*/
-/* TDEWiFiConnection                                                                              */
+/* WiFiConnection                                                                              */
 /*================================================================================================*/
 
-TDEWiFiConnection::TDEWiFiConnection() : TDENetworkConnection() {
-	operatingMode = TDEWiFiMode::Other;
-	bandRestriction = TDEWiFiFrequencyBand::None;
+WiFiConnection::WiFiConnection() : NetworkConnection() {
+	operatingMode = WiFiMode::Other;
+	bandRestriction = WiFiFrequencyBand::None;
 	channelRestriction = -1;
 	bitRateRestriction = -1;
 	powerRestriction = -1;
@@ -693,35 +693,35 @@ TDEWiFiConnection::TDEWiFiConnection() : TDENetworkConnection() {
 	securityRequired = false;
 }
 
-TDEWiFiConnection::~TDEWiFiConnection() {
+WiFiConnection::~WiFiConnection() {
 	//
 }
 
 /*================================================================================================*/
-/* TDENetworkConnectionManager                                                                    */
+/* NetworkConnectionManager                                                                    */
 /*================================================================================================*/
 
-TDENetworkConnectionManager::TDENetworkConnectionManager(TQString macAddress) : TQObject(), m_connectionList(NULL), m_hwNeighborList(NULL), m_macAddress(macAddress), m_prevConnectionStatus(TDENetworkGlobalManagerFlags::Unknown) {
+NetworkConnectionManager::NetworkConnectionManager(TQString macAddress) : TQObject(), m_connectionList(NULL), m_hwNeighborList(NULL), m_macAddress(macAddress), m_prevConnectionStatus(NetworkGlobalManagerFlags::Unknown) {
 	m_emissionTimer = new TQTimer();
 	connect(m_emissionTimer, TQT_SIGNAL(timeout()), this, TQT_SLOT(emitQueuedSignals()));
 	if (!m_emissionTimer->isActive()) m_emissionTimer->start(0, TRUE);
 }
 
-TDENetworkConnectionManager::~TDENetworkConnectionManager() {
+NetworkConnectionManager::~NetworkConnectionManager() {
 	m_emissionTimer->stop();
 	delete m_emissionTimer;
 }
 
-TQString TDENetworkConnectionManager::deviceMACAddress() {
+TQString NetworkConnectionManager::deviceMACAddress() {
 	return m_macAddress;
 }
 
-TDENetworkConnectionList* TDENetworkConnectionManager::connections() {
+NetworkConnectionList* NetworkConnectionManager::connections() {
 	return m_connectionList;
 }
 
-TDENetworkConnection* TDENetworkConnectionManager::findConnectionByUUID(TQString uuid) {
-	TDENetworkConnection *connection;
+NetworkConnection* NetworkConnectionManager::findConnectionByUUID(TQString uuid) {
+	NetworkConnection *connection;
 	for (connection = m_connectionList->first(); connection; connection = m_connectionList->next()) {
 		if (connection->UUID == uuid) {
 			return connection;
@@ -730,16 +730,16 @@ TDENetworkConnection* TDENetworkConnectionManager::findConnectionByUUID(TQString
 	return NULL;
 }
 
-TDENetworkDevice* TDENetworkConnectionManager::findDeviceByUUID(TQString uuid) {
-	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
+NetworkDevice* NetworkConnectionManager::findDeviceByUUID(TQString uuid) {
+	HardwareDevices *hwdevices = HardwareDevices::instance();
 	if (!hwdevices) return NULL;
 
-	TDEGenericHardwareList devices = hwdevices->listByDeviceClass(TDEGenericDeviceType::Network);
+	TDEGenericHardwareList devices = hwdevices->listByDeviceClass(GenericDeviceType::Network);
 	for (TDEGenericHardwareList::iterator it = devices.begin(); it != devices.end(); ++it)
 	{
-		TDENetworkDevice* dev = dynamic_cast<TDENetworkDevice*>(*it);
+		NetworkDevice* dev = dynamic_cast<NetworkDevice*>(*it);
 		if (dev) {
-			TDENetworkConnectionManager* deviceConnectionManager = dev->connectionManager();
+			NetworkConnectionManager* deviceConnectionManager = dev->connectionManager();
 			if (deviceConnectionManager) {
 				if (deviceConnectionManager->deviceInformation().UUID == uuid) {
 					return dev;
@@ -751,14 +751,14 @@ TDENetworkDevice* TDENetworkConnectionManager::findDeviceByUUID(TQString uuid) {
 	return NULL;
 }
 
-TDENetworkWiFiAPInfo* TDENetworkConnectionManager::findAccessPointByBSSID(TDEMACAddress bssid) {
+NetworkWiFiAPInfo* NetworkConnectionManager::findAccessPointByBSSID(MACAddress bssid) {
 	if (!bssid.isValid()) {
 		return NULL;
 	}
 
-	TDENetworkHWNeighbor *neighbor;
+	NetworkHWNeighbor *neighbor;
 	for (neighbor = m_hwNeighborList->first(); neighbor; neighbor = m_hwNeighborList->next()) {
-		TDENetworkWiFiAPInfo* apInfo = dynamic_cast<TDENetworkWiFiAPInfo*>(neighbor);
+		NetworkWiFiAPInfo* apInfo = dynamic_cast<NetworkWiFiAPInfo*>(neighbor);
 		if (!apInfo) {
 			continue;
 		}
@@ -769,41 +769,41 @@ TDENetworkWiFiAPInfo* TDENetworkConnectionManager::findAccessPointByBSSID(TDEMAC
 	return NULL;
 }
 
-TQString TDENetworkConnectionManager::friendlyConnectionTypeName(TDENetworkConnectionType::TDENetworkConnectionType type) {
-	if (type == TDENetworkConnectionType::WiredEthernet) {
+TQString NetworkConnectionManager::friendlyConnectionTypeName(NetworkConnectionType::NetworkConnectionType type) {
+	if (type == NetworkConnectionType::WiredEthernet) {
 		return i18n("Wired Ethernet");
 	}
-	else if (type == TDENetworkConnectionType::WiFi) {
+	else if (type == NetworkConnectionType::WiFi) {
 		return i18n("802.11 WiFi");
 	}
-	else if (type == TDENetworkConnectionType::Bluetooth) {
+	else if (type == NetworkConnectionType::Bluetooth) {
 		return i18n("Bluetooth");
 	}
-	else if (type == TDENetworkConnectionType::OLPCMesh) {
+	else if (type == NetworkConnectionType::OLPCMesh) {
 		return i18n("OLPC Mesh");
 	}
-	else if (type == TDENetworkConnectionType::WiMax) {
+	else if (type == NetworkConnectionType::WiMax) {
 		return i18n("WiMax");
 	}
-	else if (type == TDENetworkConnectionType::Modem) {
+	else if (type == NetworkConnectionType::Modem) {
 		return i18n("Cellular Modem");
 	}
-	else if (type == TDENetworkConnectionType::Infiniband) {
+	else if (type == NetworkConnectionType::Infiniband) {
 		return i18n("Infiniband");
 	}
-	else if (type == TDENetworkConnectionType::Bond) {
+	else if (type == NetworkConnectionType::Bond) {
 		return i18n("Bond");
 	}
-	else if (type == TDENetworkConnectionType::VLAN) {
+	else if (type == NetworkConnectionType::VLAN) {
 		return i18n("Virtual LAN");
 	}
-	else if (type == TDENetworkConnectionType::ADSL) {
+	else if (type == NetworkConnectionType::ADSL) {
 		return i18n("ADSL");
 	}
-	else if (type == TDENetworkConnectionType::VPN) {
+	else if (type == NetworkConnectionType::VPN) {
 		return i18n("Virtual Private Network");
 	}
-	else if (type == TDENetworkConnectionType::Other) {
+	else if (type == NetworkConnectionType::Other) {
 		return i18n("Other");
 	}
 	else {
@@ -811,7 +811,7 @@ TQString TDENetworkConnectionManager::friendlyConnectionTypeName(TDENetworkConne
 	}
 }
 
-bool TDENetworkConnectionManager::validateIPAddress(TQHostAddress address) {
+bool NetworkConnectionManager::validateIPAddress(TQHostAddress address) {
 	if (address.isIPv4Address()) {
 		TQ_UINT32 rawaddress = address.toIPv4Address();
 		if ((((rawaddress & 0xff000000) >> 24) == 0) || ((rawaddress & 0x000000ff) == 0) || ((rawaddress & 0x000000ff) == 255)) {
@@ -827,28 +827,28 @@ bool TDENetworkConnectionManager::validateIPAddress(TQHostAddress address) {
 	return true;
 }
 
-bool TDENetworkConnectionManager::validateIPNeworkMask(TQHostAddress netmask) {
+bool NetworkConnectionManager::validateIPNeworkMask(TQHostAddress netmask) {
 	Q_UNUSED(netmask);
 	return TRUE;
 }
 
-void TDENetworkConnectionManager::clearTDENetworkConnectionList() {
-	TDENetworkConnection *connection;
+void NetworkConnectionManager::clearNetworkConnectionList() {
+	NetworkConnection *connection;
 	for (connection = m_connectionList->first(); connection; connection = m_connectionList->next()) {
 		delete connection;
 	}
 	m_connectionList->clear();
 }
 
-void TDENetworkConnectionManager::clearTDENetworkHWNeighborList() {
-	TDENetworkHWNeighbor *neighbor;
+void NetworkConnectionManager::clearNetworkHWNeighborList() {
+	NetworkHWNeighbor *neighbor;
 	for (neighbor = m_hwNeighborList->first(); neighbor; neighbor = m_hwNeighborList->next()) {
 		delete neighbor;
 	}
 	m_hwNeighborList->clear();
 }
 
-void TDENetworkConnectionManager::internalNetworkConnectionStateChanged(TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags newState) {
+void NetworkConnectionManager::internalNetworkConnectionStateChanged(NetworkGlobalManagerFlags::NetworkGlobalManagerFlags newState) {
 	TDENetworkEventQueueEvent_Private queuedEvent;
 	queuedEvent.eventType = 0;
 	queuedEvent.newState = newState;
@@ -859,9 +859,9 @@ void TDENetworkConnectionManager::internalNetworkConnectionStateChanged(TDENetwo
 	m_prevConnectionStatus = newState;
 }
 
-void TDENetworkConnectionManager::internalNetworkDeviceStateChanged(TDENetworkConnectionStatus::TDENetworkConnectionStatus newState, TQString hwAddress) {
+void NetworkConnectionManager::internalNetworkDeviceStateChanged(NetworkConnectionStatus::NetworkConnectionStatus newState, TQString hwAddress) {
 	if (!m_prevDeviceStatus.contains(hwAddress)) {
-		m_prevDeviceStatus[hwAddress] = TDENetworkConnectionStatus::Invalid;
+		m_prevDeviceStatus[hwAddress] = NetworkConnectionStatus::Invalid;
 	}
 
 	TDENetworkEventQueueEvent_Private queuedEvent;
@@ -875,7 +875,7 @@ void TDENetworkConnectionManager::internalNetworkDeviceStateChanged(TDENetworkCo
 	m_prevDeviceStatus[hwAddress] = newState;
 }
 
-void TDENetworkConnectionManager::internalAccessPointStatusChanged(TDEMACAddress BSSID, TDENetworkAPEventType::TDENetworkAPEventType event) {
+void NetworkConnectionManager::internalAccessPointStatusChanged(MACAddress BSSID, NetworkAPEventType::NetworkAPEventType event) {
 	TDENetworkEventQueueEvent_Private queuedEvent;
 	queuedEvent.eventType = 2;
 	queuedEvent.BSSID = BSSID;
@@ -884,7 +884,7 @@ void TDENetworkConnectionManager::internalAccessPointStatusChanged(TDEMACAddress
 	if (!m_emissionTimer->isActive()) m_emissionTimer->start(0, TRUE);
 }
 
-void TDENetworkConnectionManager::internalNetworkDeviceEvent(TDENetworkDeviceEventType::TDENetworkDeviceEventType event, TQString message) {
+void NetworkConnectionManager::internalNetworkDeviceEvent(NetworkDeviceEventType::NetworkDeviceEventType event, TQString message) {
 	TDENetworkEventQueueEvent_Private queuedEvent;
 	queuedEvent.eventType = 3;
 	queuedEvent.ndevent = event;
@@ -893,7 +893,7 @@ void TDENetworkConnectionManager::internalNetworkDeviceEvent(TDENetworkDeviceEve
 	if (!m_emissionTimer->isActive()) m_emissionTimer->start(0, TRUE);
 }
 
-void TDENetworkConnectionManager::internalVpnEvent(TDENetworkVPNEventType::TDENetworkVPNEventType event, TQString message) {
+void NetworkConnectionManager::internalVpnEvent(NetworkVPNEventType::NetworkVPNEventType event, TQString message) {
 	TDENetworkEventQueueEvent_Private queuedEvent;
 	queuedEvent.eventType = 4;
 	queuedEvent.vpnevent = event;
@@ -902,7 +902,7 @@ void TDENetworkConnectionManager::internalVpnEvent(TDENetworkVPNEventType::TDENe
 	if (!m_emissionTimer->isActive()) m_emissionTimer->start(0, TRUE);
 }
 
-void TDENetworkConnectionManager::internalNetworkManagementEvent(TDENetworkGlobalEventType::TDENetworkGlobalEventType event) {
+void NetworkConnectionManager::internalNetworkManagementEvent(NetworkGlobalEventType::NetworkGlobalEventType event) {
 	TDENetworkEventQueueEvent_Private queuedEvent;
 	queuedEvent.eventType = 5;
 	queuedEvent.globalevent = event;
@@ -910,10 +910,10 @@ void TDENetworkConnectionManager::internalNetworkManagementEvent(TDENetworkGloba
 	if (!m_emissionTimer->isActive()) m_emissionTimer->start(0, TRUE);
 }
 
-void TDENetworkConnectionManager::emitQueuedSignals() {
+void NetworkConnectionManager::emitQueuedSignals() {
 	if (!m_globalEventQueueEventList.isEmpty()) {
 #ifdef DEBUG_SIGNAL_QUEUE
-		kdDebug() << "TDENetworkConnectionManager::emitQueuedSignals: Going to dequeue " << m_globalEventQueueEventList.count() << " events..." << endl;
+		kdDebug() << "NetworkConnectionManager::emitQueuedSignals: Going to dequeue " << m_globalEventQueueEventList.count() << " events..." << endl;
 #endif // DEBUG_SIGNAL_QUEUE
 		TDENetworkEventQueueEvent_PrivateList::Iterator it;
 		it = m_globalEventQueueEventList.begin();
@@ -940,163 +940,163 @@ void TDENetworkConnectionManager::emitQueuedSignals() {
 			}
 		}
 #ifdef DEBUG_SIGNAL_QUEUE
-		kdDebug() << "TDENetworkConnectionManager::emitQueuedSignals: " << m_globalEventQueueEventList.count() << " events remain in queue" << endl;
+		kdDebug() << "NetworkConnectionManager::emitQueuedSignals: " << m_globalEventQueueEventList.count() << " events remain in queue" << endl;
 #endif // DEBUG_SIGNAL_QUEUE
 	}
 }
 
 /*================================================================================================*/
-/* TDEGlobalNetworkManager                                                                        */
+/* GlobalNetworkManager                                                                        */
 /*================================================================================================*/
 
-TDEGlobalNetworkManager::TDEGlobalNetworkManager() : m_internalConnectionManager(NULL) {
+GlobalNetworkManager::GlobalNetworkManager() : m_internalConnectionManager(NULL) {
 #ifdef WITH_NETWORK_MANAGER_BACKEND
-	m_internalConnectionManager = new TDENetworkConnectionManager_BackendNM(TQString::null);
+	m_internalConnectionManager = new NetworkConnectionManager_BackendNM(TQString::null);
 #endif // WITH_NETWORK_MANAGER_BACKEND
 	if (m_internalConnectionManager) {
-		connect(m_internalConnectionManager, SIGNAL(networkConnectionStateChanged(TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags, TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags)), this, SIGNAL(networkConnectionStateChanged(TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags, TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags)));
-		connect(m_internalConnectionManager, SIGNAL(vpnEvent(TDENetworkVPNEventType::TDENetworkVPNEventType, TQString)), this, SIGNAL(vpnEvent(TDENetworkVPNEventType::TDENetworkVPNEventType, TQString)));
-		connect(m_internalConnectionManager, SIGNAL(networkManagementEvent(TDENetworkGlobalEventType::TDENetworkGlobalEventType)), this, SIGNAL(networkManagementEvent(TDENetworkGlobalEventType::TDENetworkGlobalEventType)));
+		connect(m_internalConnectionManager, SIGNAL(networkConnectionStateChanged(NetworkGlobalManagerFlags::NetworkGlobalManagerFlags, NetworkGlobalManagerFlags::NetworkGlobalManagerFlags)), this, SIGNAL(networkConnectionStateChanged(NetworkGlobalManagerFlags::NetworkGlobalManagerFlags, NetworkGlobalManagerFlags::NetworkGlobalManagerFlags)));
+		connect(m_internalConnectionManager, SIGNAL(vpnEvent(NetworkVPNEventType::NetworkVPNEventType, TQString)), this, SIGNAL(vpnEvent(NetworkVPNEventType::NetworkVPNEventType, TQString)));
+		connect(m_internalConnectionManager, SIGNAL(networkManagementEvent(NetworkGlobalEventType::NetworkGlobalEventType)), this, SIGNAL(networkManagementEvent(NetworkGlobalEventType::NetworkGlobalEventType)));
 	}
 }
 
-TDEGlobalNetworkManager::~TDEGlobalNetworkManager() {
+GlobalNetworkManager::~GlobalNetworkManager() {
 	delete m_internalConnectionManager;
 }
 
-TQString TDEGlobalNetworkManager::backendName() {
+TQString GlobalNetworkManager::backendName() {
 	if (!m_internalConnectionManager) return TQString::null;
 	return m_internalConnectionManager->backendName();
 }
 
-TDENetworkGlobalManagerFlags::TDENetworkGlobalManagerFlags TDEGlobalNetworkManager::backendStatus() {
-	if (!m_internalConnectionManager) return TDENetworkGlobalManagerFlags::BackendUnavailable;
+NetworkGlobalManagerFlags::NetworkGlobalManagerFlags GlobalNetworkManager::backendStatus() {
+	if (!m_internalConnectionManager) return NetworkGlobalManagerFlags::BackendUnavailable;
 	return m_internalConnectionManager->backendStatus();
 }
 
-void TDEGlobalNetworkManager::loadConnectionInformation() {
+void GlobalNetworkManager::loadConnectionInformation() {
 	if (!m_internalConnectionManager) return;
 	return m_internalConnectionManager->loadConnectionInformation();
 }
 
-void TDEGlobalNetworkManager::loadConnectionAllowedValues(TDENetworkConnection* connection) {
+void GlobalNetworkManager::loadConnectionAllowedValues(NetworkConnection* connection) {
 	if (!m_internalConnectionManager) return;
 	return m_internalConnectionManager->loadConnectionAllowedValues(connection);
 }
 
-bool TDEGlobalNetworkManager::loadConnectionSecrets(TQString uuid) {
+bool GlobalNetworkManager::loadConnectionSecrets(TQString uuid) {
 	if (!m_internalConnectionManager) return false;
 	return m_internalConnectionManager->loadConnectionSecrets(uuid);
 }
 
-bool TDEGlobalNetworkManager::saveConnection(TDENetworkConnection* connection) {
+bool GlobalNetworkManager::saveConnection(NetworkConnection* connection) {
 	if (!m_internalConnectionManager) return false;
 	return m_internalConnectionManager->saveConnection(connection);
 }
 
-bool TDEGlobalNetworkManager::deleteConnection(TQString uuid) {
+bool GlobalNetworkManager::deleteConnection(TQString uuid) {
 	if (!m_internalConnectionManager) return false;
 	return m_internalConnectionManager->deleteConnection(uuid);
 }
 
-bool TDEGlobalNetworkManager::verifyConnectionSettings(TDENetworkConnection* connection, TDENetworkConnectionErrorFlags::TDENetworkConnectionErrorFlags* type, TDENetworkErrorStringMap* reason) {
+bool GlobalNetworkManager::verifyConnectionSettings(NetworkConnection* connection, NetworkConnectionErrorFlags::NetworkConnectionErrorFlags* type, TDENetworkErrorStringMap* reason) {
 	if (!m_internalConnectionManager) return false;
 	return m_internalConnectionManager->verifyConnectionSettings(connection, type, reason);
 }
 
-TDENetworkConnectionStatus::TDENetworkConnectionStatus TDEGlobalNetworkManager::initiateConnection(TQString uuid) {
-	if (!m_internalConnectionManager) return TDENetworkConnectionStatus::Invalid;
+NetworkConnectionStatus::NetworkConnectionStatus GlobalNetworkManager::initiateConnection(TQString uuid) {
+	if (!m_internalConnectionManager) return NetworkConnectionStatus::Invalid;
 	return m_internalConnectionManager->initiateConnection(uuid);
 }
 
-TDENetworkConnectionStatus::TDENetworkConnectionStatus TDEGlobalNetworkManager::checkConnectionStatus(TQString uuid) {
-	if (!m_internalConnectionManager) return TDENetworkConnectionStatus::Invalid;
+NetworkConnectionStatus::NetworkConnectionStatus GlobalNetworkManager::checkConnectionStatus(TQString uuid) {
+	if (!m_internalConnectionManager) return NetworkConnectionStatus::Invalid;
 	return m_internalConnectionManager->checkConnectionStatus(uuid);
 }
 
-TDENetworkConnectionStatus::TDENetworkConnectionStatus TDEGlobalNetworkManager::deactivateConnection(TQString uuid) {
-	if (!m_internalConnectionManager) return TDENetworkConnectionStatus::Invalid;
+NetworkConnectionStatus::NetworkConnectionStatus GlobalNetworkManager::deactivateConnection(TQString uuid) {
+	if (!m_internalConnectionManager) return NetworkConnectionStatus::Invalid;
 	return m_internalConnectionManager->deactivateConnection(uuid);
 }
 
-TQStringList TDEGlobalNetworkManager::validSettings() {
+TQStringList GlobalNetworkManager::validSettings() {
 	if (!m_internalConnectionManager) return TQStringList();
 	return m_internalConnectionManager->validSettings();
 }
 
-TDENetworkHWNeighborList* TDEGlobalNetworkManager::siteSurvey() {
+NetworkHWNeighborList* GlobalNetworkManager::siteSurvey() {
 	if (!m_internalConnectionManager) return NULL;
 	return m_internalConnectionManager->siteSurvey();
 }
 
-TQStringList TDEGlobalNetworkManager::connectionPhysicalDeviceUUIDs(TQString uuid) {
+TQStringList GlobalNetworkManager::connectionPhysicalDeviceUUIDs(TQString uuid) {
 	if (!m_internalConnectionManager) return TQStringList();
 	return m_internalConnectionManager->connectionPhysicalDeviceUUIDs(uuid);
 }
 
-TDENetworkVPNTypeList TDEGlobalNetworkManager::availableVPNTypes() {
-	if (!m_internalConnectionManager) return TDENetworkVPNTypeList();
+NetworkVPNTypeList GlobalNetworkManager::availableVPNTypes() {
+	if (!m_internalConnectionManager) return NetworkVPNTypeList();
 	return m_internalConnectionManager->availableVPNTypes();
 }
 
-bool TDEGlobalNetworkManager::networkingEnabled() {
+bool GlobalNetworkManager::networkingEnabled() {
 	if (!m_internalConnectionManager) return false;
 	return m_internalConnectionManager->networkingEnabled();
 }
 
-bool TDEGlobalNetworkManager::enableNetworking(bool enable) {
+bool GlobalNetworkManager::enableNetworking(bool enable) {
 	if (!m_internalConnectionManager) return false;
 	return m_internalConnectionManager->enableNetworking(enable);
 }
 
-bool TDEGlobalNetworkManager::wiFiHardwareEnabled() {
+bool GlobalNetworkManager::wiFiHardwareEnabled() {
 	if (!m_internalConnectionManager) return false;
 	return m_internalConnectionManager->wiFiHardwareEnabled();
 }
 
-bool TDEGlobalNetworkManager::enableWiFi(bool enable) {
+bool GlobalNetworkManager::enableWiFi(bool enable) {
 	if (!m_internalConnectionManager) return false;
 	return m_internalConnectionManager->enableWiFi(enable);
 }
 
-bool TDEGlobalNetworkManager::wiFiEnabled() {
+bool GlobalNetworkManager::wiFiEnabled() {
 	if (!m_internalConnectionManager) return false;
 	return m_internalConnectionManager->wiFiEnabled();
 }
 
-TQStringList TDEGlobalNetworkManager::defaultNetworkDevices() {
+TQStringList GlobalNetworkManager::defaultNetworkDevices() {
 	if (!m_internalConnectionManager) return TQStringList();
 	return m_internalConnectionManager->defaultNetworkDevices();
 }
 
-TDENetworkConnectionList* TDEGlobalNetworkManager::connections() {
+NetworkConnectionList* GlobalNetworkManager::connections() {
 	if (!m_internalConnectionManager) return NULL;
 	return m_internalConnectionManager->connections();
 }
 
-TDENetworkConnection* TDEGlobalNetworkManager::findConnectionByUUID(TQString uuid) {
+NetworkConnection* GlobalNetworkManager::findConnectionByUUID(TQString uuid) {
 	if (!m_internalConnectionManager) return NULL;
 	return m_internalConnectionManager->findConnectionByUUID(uuid);
 }
 
-TDENetworkDevice* TDEGlobalNetworkManager::findDeviceByUUID(TQString uuid) {
+NetworkDevice* GlobalNetworkManager::findDeviceByUUID(TQString uuid) {
 	if (!m_internalConnectionManager) return NULL;
 	return m_internalConnectionManager->findDeviceByUUID(uuid);
 }
 
-TDENetworkWiFiAPInfo* TDEGlobalNetworkManager::findAccessPointByBSSID(TDEMACAddress bssid) {
-	TDEHardwareDevices *hwdevices = TDEHardwareDevices::instance();
+NetworkWiFiAPInfo* GlobalNetworkManager::findAccessPointByBSSID(MACAddress bssid) {
+	HardwareDevices *hwdevices = HardwareDevices::instance();
 	if (!hwdevices) {
 		return NULL;
 	}
 
-	TDENetworkWiFiAPInfo* ret = NULL;
-	TDEGenericHardwareList devices = hwdevices->listByDeviceClass(TDEGenericDeviceType::Network);
+	NetworkWiFiAPInfo* ret = NULL;
+	TDEGenericHardwareList devices = hwdevices->listByDeviceClass(GenericDeviceType::Network);
 	for (TDEGenericHardwareList::iterator it = devices.begin(); it != devices.end(); ++it) {
-		TDENetworkDevice* dev = dynamic_cast<TDENetworkDevice*>(*it);
+		NetworkDevice* dev = dynamic_cast<NetworkDevice*>(*it);
 		if (dev) {
-			TDENetworkConnectionManager* deviceConnMan = dev->connectionManager();
-			TDENetworkWiFiAPInfo* candidate = deviceConnMan->findAccessPointByBSSID(bssid);
+			NetworkConnectionManager* deviceConnMan = dev->connectionManager();
+			NetworkWiFiAPInfo* candidate = deviceConnMan->findAccessPointByBSSID(bssid);
 			if (candidate) {
 				ret = candidate;
 			}

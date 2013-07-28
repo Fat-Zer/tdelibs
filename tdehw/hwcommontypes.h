@@ -23,8 +23,8 @@
 namespace TDEHW {
 
 // Keep readGenericDeviceTypeFromString(), getFriendlyDeviceTypeStringFromType(), and getDeviceTypeIconFromType() in hardwaredevices.cpp in sync with this enum
-namespace TDEGenericDeviceType {
-enum TDEGenericDeviceType {
+namespace GenericDeviceType {
+enum GenericDeviceType {
 	Root,
 	RootSystem,
 	CPU,
@@ -78,8 +78,8 @@ enum TDEGenericDeviceType {
 };
 };
 
-namespace TDEDisplayPowerLevel {
-enum TDEDisplayPowerLevel {
+namespace DisplayPowerLevel {
+enum DisplayPowerLevel {
 	On,
 	Standby,
 	Suspend,
@@ -87,8 +87,8 @@ enum TDEDisplayPowerLevel {
 };
 };
 
-namespace TDEHardwareEvent {
-enum TDEHardwareEvent {
+namespace HardwareEvent {
+enum HardwareEvent {
 	HardwareListModified,
 	MountTableModified,
 	HardwareAdded,

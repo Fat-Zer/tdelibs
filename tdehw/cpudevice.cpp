@@ -38,7 +38,7 @@
 
 using namespace TDEHW;
 
-TDECPUDevice::TDECPUDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
+CPUDevice::CPUDevice(GenericDeviceType::GenericDeviceType dt, TQString dn) : GenericDevice(dt, dn) {
 	m_frequency = -1;
 	m_minfrequency = -1;
 	m_maxfrequency = -1;
@@ -46,86 +46,86 @@ TDECPUDevice::TDECPUDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQStri
 	m_transitionlatency = -1;
 }
 
-TDECPUDevice::~TDECPUDevice() {
+CPUDevice::~CPUDevice() {
 }
 
-double TDECPUDevice::frequency() {
+double CPUDevice::frequency() {
 	return m_frequency;
 }
 
-void TDECPUDevice::internalSetFrequency(double fr) {
+void CPUDevice::internalSetFrequency(double fr) {
 	m_frequency = fr;
 }
 
-double TDECPUDevice::minFrequency() {
+double CPUDevice::minFrequency() {
 	return m_minfrequency;
 }
 
-void TDECPUDevice::internalSetMinFrequency(double fr) {
+void CPUDevice::internalSetMinFrequency(double fr) {
 	m_minfrequency = fr;
 }
 
-double TDECPUDevice::maxFrequency() {
+double CPUDevice::maxFrequency() {
 	return m_maxfrequency;
 }
 
-void TDECPUDevice::internalSetMaxFrequency(double fr) {
+void CPUDevice::internalSetMaxFrequency(double fr) {
 	m_maxfrequency = fr;
 }
 
-double TDECPUDevice::transitionLatency() {
+double CPUDevice::transitionLatency() {
 	return m_transitionlatency;
 }
 
-void TDECPUDevice::internalSetTransitionLatency(double tl) {
+void CPUDevice::internalSetTransitionLatency(double tl) {
 	m_transitionlatency = tl;
 }
 
-TQString TDECPUDevice::governor() {
+TQString CPUDevice::governor() {
 	return m_governor;
 }
 
-void TDECPUDevice::internalSetGovernor(TQString gr) {
+void CPUDevice::internalSetGovernor(TQString gr) {
 	m_governor = gr;
 }
 
-TQString TDECPUDevice::scalingDriver() {
+TQString CPUDevice::scalingDriver() {
 	return m_scalingdriver;
 }
 
-void TDECPUDevice::internalSetScalingDriver(TQString dr) {
+void CPUDevice::internalSetScalingDriver(TQString dr) {
 	m_scalingdriver = dr;
 }
 
-TQStringList TDECPUDevice::dependentProcessors() {
+TQStringList CPUDevice::dependentProcessors() {
 	return m_tiedprocs;
 }
 
-void TDECPUDevice::internalSetDependentProcessors(TQStringList dp) {
+void CPUDevice::internalSetDependentProcessors(TQStringList dp) {
 	m_tiedprocs = dp;
 }
 
-TQStringList TDECPUDevice::availableFrequencies() {
+TQStringList CPUDevice::availableFrequencies() {
 	return m_frequencies;
 }
 
-void TDECPUDevice::internalSetAvailableFrequencies(TQStringList af) {
+void CPUDevice::internalSetAvailableFrequencies(TQStringList af) {
 	m_frequencies = af;
 }
 
-TQStringList TDECPUDevice::availableGovernors() {
+TQStringList CPUDevice::availableGovernors() {
 	return m_governers;
 }
 
-void TDECPUDevice::internalSetAvailableGovernors(TQStringList gp) {
+void CPUDevice::internalSetAvailableGovernors(TQStringList gp) {
 	m_governers = gp;
 }
 
-void TDECPUDevice::internalSetCoreNumber(int cn) {
+void CPUDevice::internalSetCoreNumber(int cn) {
 	m_corenumber = cn;
 }
 
-bool TDECPUDevice::canSetGovernor() {
+bool CPUDevice::canSetGovernor() {
 	TQString governornode = systemPath() + "/cpufreq/scaling_governor";
 	int rval = access (governornode.ascii(), W_OK);
 	if (rval == 0) {
@@ -170,7 +170,7 @@ bool TDECPUDevice::canSetGovernor() {
 	return FALSE;
 }
 
-void TDECPUDevice::setGovernor(TQString gv) {
+void CPUDevice::setGovernor(TQString gv) {
 	bool setGovernorDone = FALSE;
 
 	TQString governornode = systemPath() + "/cpufreq/scaling_governor";
@@ -220,11 +220,11 @@ void TDECPUDevice::setGovernor(TQString gv) {
 
 	// Force update of the device information object
 	if ( setGovernorDone ) {
-		TDEHardwareDevices::instance()->processModifiedCPUs();
+		HardwareDevices::instance()->processModifiedCPUs();
 	}
 }
 
-bool TDECPUDevice::canSetMaximumScalingFrequency() {
+bool CPUDevice::canSetMaximumScalingFrequency() {
 	TQString freqnode = systemPath() + "/cpufreq/scaling_max_freq";
 	int rval = access (freqnode.ascii(), W_OK);
 	if (rval == 0) {
@@ -235,7 +235,7 @@ bool TDECPUDevice::canSetMaximumScalingFrequency() {
 	}
 }
 
-void TDECPUDevice::setMaximumScalingFrequency(double fr) {
+void CPUDevice::setMaximumScalingFrequency(double fr) {
 	TQString freqnode = systemPath() + "/cpufreq/scaling_max_freq";
 	TQFile file( freqnode );
 	if ( file.open( IO_WriteOnly ) ) {
@@ -245,10 +245,10 @@ void TDECPUDevice::setMaximumScalingFrequency(double fr) {
 	}
 
 	// Force update of the device information object
-	TDEHardwareDevices::instance()->processModifiedCPUs();
+	HardwareDevices::instance()->processModifiedCPUs();
 }
 
-int TDECPUDevice::coreNumber() {
+int CPUDevice::coreNumber() {
 	return m_corenumber;
 }
 

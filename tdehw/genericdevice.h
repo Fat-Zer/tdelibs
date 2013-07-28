@@ -30,7 +30,7 @@
 
 namespace TDEHW {
 
-class TDEHW_EXPORT TDEGenericDevice : public TQObject
+class TDEHW_EXPORT GenericDevice : public TQObject
 {
 	Q_OBJECT
 
@@ -39,17 +39,17 @@ class TDEHW_EXPORT TDEGenericDevice : public TQObject
 		*  Constructor.
 		*  @param Device type
 		*/
-		TDEGenericDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn=TQString::null);
+		GenericDevice(GenericDeviceType::GenericDeviceType dt, TQString dn=TQString::null);
 		
 		/**
 		* Destructor.
 		*/
-		~TDEGenericDevice();
+		~GenericDevice();
 
 		/**
-		* @return a TDEGenericDeviceType::TDEGenericDeviceType specifying the device type
+		* @return a GenericDeviceType::GenericDeviceType specifying the device type
 		*/
-		TDEGenericDeviceType::TDEGenericDeviceType type();
+		GenericDeviceType::GenericDeviceType type();
 
 		/**
 		* @return a TQString with the device name, if any
@@ -159,9 +159,9 @@ class TDEHW_EXPORT TDEGenericDevice : public TQObject
 		TQString subsystem();
 
 		/**
-		* @return a TDEGenericDevice* with the parent device, if any
+		* @return a GenericDevice* with the parent device, if any
 		*/
-		TDEGenericDevice* parentDevice();
+		GenericDevice* parentDevice();
 
 		/**
 		*  @return a TQString containing the friendly type name
@@ -294,13 +294,13 @@ class TDEHW_EXPORT TDEGenericDevice : public TQObject
 		void internalSetSubsystem(TQString ss);
 
 		/**
-		* @param a TDEGenericDevice* with the parent device, if any
+		* @param a GenericDevice* with the parent device, if any
 		* @internal
 		*/
-		void internalSetParentDevice(TDEGenericDevice* pd);
+		void internalSetParentDevice(GenericDevice* pd);
 
 	private:
-		TDEGenericDeviceType::TDEGenericDeviceType m_deviceType;
+		GenericDeviceType::GenericDeviceType m_deviceType;
 		TQString m_deviceName;
 		TQString m_systemPath;
 		TQString m_deviceNode;
@@ -321,7 +321,7 @@ class TDEHW_EXPORT TDEGenericDevice : public TQObject
 		TQString m_subsystem;
 		TQString m_friendlyName;
 		bool m_blacklistedForUpdate;
-		TDEGenericDevice* m_parentDevice;
+		GenericDevice* m_parentDevice;
 
 		// Internal use only!
 		TQStringList m_externalSubtype;
@@ -330,7 +330,7 @@ class TDEHW_EXPORT TDEGenericDevice : public TQObject
 		TQString m_udevdevicetypestring;
 		TQString udevdevicetypestring_alt;
 
-	friend class TDEHardwareDevices;
+	friend class HardwareDevices;
 };
 
 } // namespace TDEHW

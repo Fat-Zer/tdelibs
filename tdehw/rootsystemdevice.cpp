@@ -52,54 +52,54 @@ bool isNetworkFileSystem(TQString fileSystemType) {
 	return FALSE;
 }
 
-TDERootSystemDevice::TDERootSystemDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
+RootSystemDevice::RootSystemDevice(GenericDeviceType::GenericDeviceType dt, TQString dn) : GenericDevice(dt, dn) {
 	m_hibernationSpace = -1;
 }
 
-TDERootSystemDevice::~TDERootSystemDevice() {
+RootSystemDevice::~RootSystemDevice() {
 }
 
-TDESystemFormFactor::TDESystemFormFactor TDERootSystemDevice::formFactor() {
+SystemFormFactor::SystemFormFactor RootSystemDevice::formFactor() {
 	return m_formFactor;
 }
 
-void TDERootSystemDevice::internalSetFormFactor(TDESystemFormFactor::TDESystemFormFactor ff) {
+void RootSystemDevice::internalSetFormFactor(SystemFormFactor::SystemFormFactor ff) {
 	m_formFactor = ff;
 }
 
-TDESystemPowerStateList TDERootSystemDevice::powerStates() {
+SystemPowerStateList RootSystemDevice::powerStates() {
 	return m_powerStates;
 }
 
-void TDERootSystemDevice::internalSetPowerStates(TDESystemPowerStateList ps) {
+void RootSystemDevice::internalSetPowerStates(SystemPowerStateList ps) {
 	m_powerStates = ps;
 }
 
-TDESystemHibernationMethodList TDERootSystemDevice::hibernationMethods() {
+SystemHibernationMethodList RootSystemDevice::hibernationMethods() {
 	return m_hibernationMethods;
 }
 
-void TDERootSystemDevice::internalSetHibernationMethods(TDESystemHibernationMethodList hm) {
+void RootSystemDevice::internalSetHibernationMethods(SystemHibernationMethodList hm) {
 	m_hibernationMethods = hm;
 }
 
-TDESystemHibernationMethod::TDESystemHibernationMethod TDERootSystemDevice::hibernationMethod() {
+SystemHibernationMethod::SystemHibernationMethod RootSystemDevice::hibernationMethod() {
 	return m_hibernationMethod;
 }
 
-void TDERootSystemDevice::internalSetHibernationMethod(TDESystemHibernationMethod::TDESystemHibernationMethod hm) {
+void RootSystemDevice::internalSetHibernationMethod(SystemHibernationMethod::SystemHibernationMethod hm) {
 	m_hibernationMethod = hm;
 }
 
-unsigned long TDERootSystemDevice::diskSpaceNeededForHibernation() {
+unsigned long RootSystemDevice::diskSpaceNeededForHibernation() {
 	return m_hibernationSpace;
 }
 
-void TDERootSystemDevice::internalSetDiskSpaceNeededForHibernation(unsigned long sz) {
+void RootSystemDevice::internalSetDiskSpaceNeededForHibernation(unsigned long sz) {
 	m_hibernationSpace = sz;
 }
 
-bool TDERootSystemDevice::canSetHibernationMethod() {
+bool RootSystemDevice::canSetHibernationMethod() {
 	TQString hibernationnode = "/sys/power/disk";
 	int rval = access (hibernationnode.ascii(), W_OK);
 	if (rval == 0) {
@@ -110,17 +110,17 @@ bool TDERootSystemDevice::canSetHibernationMethod() {
 	}
 }
 
-bool TDERootSystemDevice::canStandby() {
+bool RootSystemDevice::canStandby() {
 	// Network file systems mounted on $HOME typically cause nasty suspend/resume failures
 	// See Bug 1615 for details
-	if (isNetworkFileSystem(TDEStorageDevice::determineFileSystemType(TDEGlobal::dirs()->localtdedir()))) {
+	if (isNetworkFileSystem(StorageDevice::determineFileSystemType(TDEGlobal::dirs()->localtdedir()))) {
 		return FALSE;
 	}
 
 	TQString statenode = "/sys/power/state";
 	int rval = access (statenode.ascii(), W_OK);
 	if (rval == 0) {
-		if (powerStates().contains(TDESystemPowerState::Standby)) {
+		if (powerStates().contains(SystemPowerState::Standby)) {
 			return TRUE;
 		}
 		else {
@@ -149,17 +149,17 @@ bool TDERootSystemDevice::canStandby() {
 	return FALSE;
 }
 
-bool TDERootSystemDevice::canSuspend() {
+bool RootSystemDevice::canSuspend() {
 	// Network file systems mounted on $HOME typically cause nasty suspend/resume failures
 	// See Bug 1615 for details
-	if (isNetworkFileSystem(TDEStorageDevice::determineFileSystemType(TDEGlobal::dirs()->localtdedir()))) {
+	if (isNetworkFileSystem(StorageDevice::determineFileSystemType(TDEGlobal::dirs()->localtdedir()))) {
 		return FALSE;
 	}
 
 	TQString statenode = "/sys/power/state";
 	int rval = access (statenode.ascii(), W_OK);
 	if (rval == 0) {
-		if (powerStates().contains(TDESystemPowerState::Suspend)) {
+		if (powerStates().contains(SystemPowerState::Suspend)) {
 			return TRUE;
 		}
 		else {
@@ -250,17 +250,17 @@ bool TDERootSystemDevice::canSuspend() {
 	return FALSE;
 }
 
-bool TDERootSystemDevice::canHibernate() {
+bool RootSystemDevice::canHibernate() {
 	// Network file systems mounted on $HOME typically cause nasty suspend/resume failures
 	// See Bug 1615 for details
-	if (isNetworkFileSystem(TDEStorageDevice::determineFileSystemType(TDEGlobal::dirs()->localtdedir()))) {
+	if (isNetworkFileSystem(StorageDevice::determineFileSystemType(TDEGlobal::dirs()->localtdedir()))) {
 		return FALSE;
 	}
 
 	TQString statenode = "/sys/power/state";
 	int rval = access (statenode.ascii(), W_OK);
 	if (rval == 0) {
-		if (powerStates().contains(TDESystemPowerState::Hibernate)) {
+		if (powerStates().contains(SystemPowerState::Hibernate)) {
 			return TRUE;
 		}
 		else {
@@ -351,7 +351,7 @@ bool TDERootSystemDevice::canHibernate() {
 	return FALSE;
 }
 
-bool TDERootSystemDevice::canPowerOff() {
+bool RootSystemDevice::canPowerOff() {
 	TDEConfig *config = TDEGlobal::config();
 	config->reparseConfiguration(); // config may have changed in the KControl module
 	
@@ -393,7 +393,7 @@ bool TDERootSystemDevice::canPowerOff() {
 	return maysd;
 }
 
-bool TDERootSystemDevice::canReboot() {
+bool RootSystemDevice::canReboot() {
 	TDEConfig *config = TDEGlobal::config();
 	config->reparseConfiguration(); // config may have changed in the KControl module
 	
@@ -435,24 +435,24 @@ bool TDERootSystemDevice::canReboot() {
 	return mayrb;
 }
 
-void TDERootSystemDevice::setHibernationMethod(TDESystemHibernationMethod::TDESystemHibernationMethod hm) {
+void RootSystemDevice::setHibernationMethod(SystemHibernationMethod::SystemHibernationMethod hm) {
 	TQString hibernationnode = "/sys/power/disk";
 	TQFile file( hibernationnode );
 	if ( file.open( IO_WriteOnly ) ) {
 		TQString hibernationCommand;
-		if (hm == TDESystemHibernationMethod::Platform) {
+		if (hm == SystemHibernationMethod::Platform) {
 			hibernationCommand = "platform";
 		}
-		if (hm == TDESystemHibernationMethod::Shutdown) {
+		if (hm == SystemHibernationMethod::Shutdown) {
 			hibernationCommand = "shutdown";
 		}
-		if (hm == TDESystemHibernationMethod::Reboot) {
+		if (hm == SystemHibernationMethod::Reboot) {
 			hibernationCommand = "reboot";
 		}
-		if (hm == TDESystemHibernationMethod::TestProc) {
+		if (hm == SystemHibernationMethod::TestProc) {
 			hibernationCommand = "testproc";
 		}
-		if (hm == TDESystemHibernationMethod::Test) {
+		if (hm == SystemHibernationMethod::Test) {
 			hibernationCommand = "test";
 		}
 		TQTextStream stream( &file );
@@ -461,19 +461,19 @@ void TDERootSystemDevice::setHibernationMethod(TDESystemHibernationMethod::TDESy
 	}
 }
 
-bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState ps) {
-	if ((ps == TDESystemPowerState::Standby) || (ps == TDESystemPowerState::Suspend) || (ps == TDESystemPowerState::Hibernate)) {
+bool RootSystemDevice::setPowerState(SystemPowerState::SystemPowerState ps) {
+	if ((ps == SystemPowerState::Standby) || (ps == SystemPowerState::Suspend) || (ps == SystemPowerState::Hibernate)) {
 		TQString statenode = "/sys/power/state";
 		TQFile file( statenode );
 		if ( file.open( IO_WriteOnly ) ) {
 			TQString powerCommand;
-			if (ps == TDESystemPowerState::Standby) {
+			if (ps == SystemPowerState::Standby) {
 				powerCommand = "standby";
 			}
-			if (ps == TDESystemPowerState::Suspend) {
+			if (ps == SystemPowerState::Suspend) {
 				powerCommand = "mem";
 			}
-			if (ps == TDESystemPowerState::Hibernate) {
+			if (ps == SystemPowerState::Hibernate) {
 				powerCommand = "disk";
 			}
 			TQTextStream stream( &file );
@@ -487,7 +487,7 @@ bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState
 			TQT_DBusConnection dbusConn;
 			dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
 			if ( dbusConn.isConnected() ) {
-				if (ps == TDESystemPowerState::Suspend) {
+				if (ps == SystemPowerState::Suspend) {
 					TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
 								"org.freedesktop.UPower",
 								"/org/freedesktop/UPower",
@@ -498,7 +498,7 @@ bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState
 						return true;
 					}
 				}
-				else if (ps == TDESystemPowerState::Hibernate) {
+				else if (ps == SystemPowerState::Hibernate) {
 					TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
 								"org.freedesktop.UPower",
 								"/org/freedesktop/UPower",
@@ -621,7 +621,7 @@ bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState
 
 		return false;
 	}
-	else if (ps == TDESystemPowerState::PowerOff) {
+	else if (ps == SystemPowerState::PowerOff) {
 #ifdef WITH_CONSOLEKIT
 		TDEConfig *config = TDEGlobal::config();
 		config->reparseConfiguration(); // config may have changed in the KControl module
@@ -657,7 +657,7 @@ bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState
 		return false;
 #endif // WITH_CONSOLEKIT
 	}
-	else if (ps == TDESystemPowerState::Reboot) {
+	else if (ps == SystemPowerState::Reboot) {
 #ifdef WITH_CONSOLEKIT
 		TDEConfig *config = TDEGlobal::config();
 		config->reparseConfiguration(); // config may have changed in the KControl module
@@ -693,7 +693,7 @@ bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState
 		return false;
 #endif // WITH_CONSOLEKIT
 	}
-	else if (ps == TDESystemPowerState::Active) {
+	else if (ps == SystemPowerState::Active) {
 		// Ummm...we're already active...
 		return true;
 	}

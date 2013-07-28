@@ -29,7 +29,7 @@
 
 using namespace TDEHW;
 
-TDEGenericDevice::TDEGenericDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TQObject() {
+GenericDevice::GenericDevice(GenericDeviceType::GenericDeviceType dt, TQString dn) : TQObject() {
 	m_deviceType = dt;
 	m_deviceName = dn;
 
@@ -38,209 +38,209 @@ TDEGenericDevice::TDEGenericDevice(TDEGenericDeviceType::TDEGenericDeviceType dt
 	m_blacklistedForUpdate = false;
 }
 
-TDEGenericDevice::~TDEGenericDevice() {
+GenericDevice::~GenericDevice() {
 }
 
-TDEGenericDeviceType::TDEGenericDeviceType TDEGenericDevice::type() {
+GenericDeviceType::GenericDeviceType GenericDevice::type() {
 	return m_deviceType;
 }
 
-TQString TDEGenericDevice::name() {
+TQString GenericDevice::name() {
 	return m_deviceName;
 }
 
-void TDEGenericDevice::internalSetName(TQString dn) {
+void GenericDevice::internalSetName(TQString dn) {
 	m_deviceName = dn;
 }
 
-TQString TDEGenericDevice::vendorName() {
+TQString GenericDevice::vendorName() {
 	return m_vendorName;
 }
 
-void TDEGenericDevice::internalSetVendorName(TQString vn) {
+void GenericDevice::internalSetVendorName(TQString vn) {
 	m_vendorName = vn;
 }
 
-TQString TDEGenericDevice::vendorModel() {
+TQString GenericDevice::vendorModel() {
 	return m_vendorModel;
 }
 
-void TDEGenericDevice::internalSetVendorModel(TQString vm) {
+void GenericDevice::internalSetVendorModel(TQString vm) {
 	m_vendorModel = vm;
 }
 
-TQString TDEGenericDevice::serialNumber() {
+TQString GenericDevice::serialNumber() {
 	return m_serialNumber;
 }
 
-void TDEGenericDevice::internalSetSerialNumber(TQString sn) {
+void GenericDevice::internalSetSerialNumber(TQString sn) {
 	m_serialNumber = sn;
 }
 
-TQString TDEGenericDevice::systemPath() {
+TQString GenericDevice::systemPath() {
 	if (!m_systemPath.endsWith("/")) {
 		m_systemPath += "/";
 	}
 	return m_systemPath;
 }
 
-void TDEGenericDevice::internalSetSystemPath(TQString sp) {
+void GenericDevice::internalSetSystemPath(TQString sp) {
 	m_systemPath = sp;
 }
 
-TQString TDEGenericDevice::deviceNode() {
+TQString GenericDevice::deviceNode() {
 	return m_deviceNode;
 }
 
-void TDEGenericDevice::internalSetDeviceNode(TQString sn) {
+void GenericDevice::internalSetDeviceNode(TQString sn) {
 	m_deviceNode = sn;
 }
 
-TQString TDEGenericDevice::deviceBus() {
+TQString GenericDevice::deviceBus() {
 	return m_deviceBus;
 }
 
-void TDEGenericDevice::internalSetDeviceBus(TQString db) {
+void GenericDevice::internalSetDeviceBus(TQString db) {
 	m_deviceBus = db;
 }
 
-TQString TDEGenericDevice::uniqueID() {
+TQString GenericDevice::uniqueID() {
 	m_uniqueID = m_systemPath+m_deviceNode;
 	return m_uniqueID;
 }
 
-TQString TDEGenericDevice::vendorID() {
+TQString GenericDevice::vendorID() {
 	return m_vendorID;
 }
 
-void TDEGenericDevice::internalSetVendorID(TQString id) {
+void GenericDevice::internalSetVendorID(TQString id) {
 	m_vendorID = id;
 	m_vendorID.replace("0x", "");
 }
 
-TQString TDEGenericDevice::modelID() {
+TQString GenericDevice::modelID() {
 	return m_modelID;
 }
 
-void TDEGenericDevice::internalSetModelID(TQString id) {
+void GenericDevice::internalSetModelID(TQString id) {
 	m_modelID = id;
 	m_modelID.replace("0x", "");
 }
 
-TQString TDEGenericDevice::vendorEncoded() {
+TQString GenericDevice::vendorEncoded() {
 	return m_vendorenc;
 }
 
-void TDEGenericDevice::internalSetVendorEncoded(TQString id) {
+void GenericDevice::internalSetVendorEncoded(TQString id) {
 	m_vendorenc = id;
 }
 
-TQString TDEGenericDevice::modelEncoded() {
+TQString GenericDevice::modelEncoded() {
 	return m_modelenc;
 }
 
-void TDEGenericDevice::internalSetModelEncoded(TQString id) {
+void GenericDevice::internalSetModelEncoded(TQString id) {
 	m_modelenc = id;
 }
 
-TQString TDEGenericDevice::subVendorID() {
+TQString GenericDevice::subVendorID() {
 	return m_subvendorID;
 }
 
-void TDEGenericDevice::internalSetSubVendorID(TQString id) {
+void GenericDevice::internalSetSubVendorID(TQString id) {
 	m_subvendorID = id;
 	m_subvendorID.replace("0x", "");
 }
 
-TQString TDEGenericDevice::PCIClass() {
+TQString GenericDevice::PCIClass() {
 	return m_pciClass;
 }
 
-void TDEGenericDevice::internalSetPCIClass(TQString cl) {
+void GenericDevice::internalSetPCIClass(TQString cl) {
 	m_pciClass = cl;
 	m_pciClass.replace("0x", "");
 }
 
-TQString TDEGenericDevice::moduleAlias() {
+TQString GenericDevice::moduleAlias() {
 	return m_modAlias;
 }
 
-void TDEGenericDevice::internalSetModuleAlias(TQString ma) {
+void GenericDevice::internalSetModuleAlias(TQString ma) {
 	m_modAlias = ma;
 }
 
-TQString TDEGenericDevice::deviceDriver() {
+TQString GenericDevice::deviceDriver() {
 	return m_deviceDriver;
 }
 
-void TDEGenericDevice::internalSetDeviceDriver(TQString dr) {
+void GenericDevice::internalSetDeviceDriver(TQString dr) {
 	m_deviceDriver = dr;
 }
 
-TQString TDEGenericDevice::subsystem() {
+TQString GenericDevice::subsystem() {
 	return m_subsystem;
 }
 
-void TDEGenericDevice::internalSetSubsystem(TQString ss) {
+void GenericDevice::internalSetSubsystem(TQString ss) {
 	m_subsystem = ss;
 }
 
-TQString TDEGenericDevice::subModelID() {
+TQString GenericDevice::subModelID() {
 	return m_submodelID;
 }
 
-void TDEGenericDevice::internalSetSubModelID(TQString id) {
+void GenericDevice::internalSetSubModelID(TQString id) {
 	m_submodelID = id;
 	m_submodelID.replace("0x", "");
 }
 
-void TDEGenericDevice::internalSetParentDevice(TDEGenericDevice* pd) {
+void GenericDevice::internalSetParentDevice(GenericDevice* pd) {
 	m_parentDevice = pd;
 }
 
-TDEGenericDevice* TDEGenericDevice::parentDevice() {
+GenericDevice* GenericDevice::parentDevice() {
 	return m_parentDevice;
 }
 
-TQPixmap TDEGenericDevice::icon(TDEIcon::StdSizes size) {
-	return TDEHardwareDevices::instance()->getDeviceTypeIconFromType(type(), size);
+TQPixmap GenericDevice::icon(TDEIcon::StdSizes size) {
+	return HardwareDevices::instance()->getDeviceTypeIconFromType(type(), size);
 }
 
-bool TDEGenericDevice::blacklistedForUpdate() {
+bool GenericDevice::blacklistedForUpdate() {
 	return m_blacklistedForUpdate;
 }
 
-void TDEGenericDevice::internalSetBlacklistedForUpdate(bool bl) {
+void GenericDevice::internalSetBlacklistedForUpdate(bool bl) {
 	m_blacklistedForUpdate = bl;
 }
 
-TQString TDEGenericDevice::friendlyDeviceType() {
-	return TDEHardwareDevices::instance()->getFriendlyDeviceTypeStringFromType(type());
+TQString GenericDevice::friendlyDeviceType() {
+	return HardwareDevices::instance()->getFriendlyDeviceTypeStringFromType(type());
 }
 
-TQString TDEGenericDevice::busID() {
+TQString GenericDevice::busID() {
 	TQString busid = m_systemPath;
 	busid = busid.remove(0, busid.findRev("/")+1);
 	busid = busid.remove(0, busid.find(":")+1);
 	return busid;
 }
 
-TQString TDEGenericDevice::friendlyName() {
+TQString GenericDevice::friendlyName() {
 	if (m_friendlyName.isNull()) {
-		if (type() == TDEGenericDeviceType::RootSystem) {
+		if (type() == GenericDeviceType::RootSystem) {
 			m_friendlyName = "Linux System";
 		}
-		else if (type() == TDEGenericDeviceType::Root) {
+		else if (type() == GenericDeviceType::Root) {
 			TQString friendlyDriverName = systemPath();
 			friendlyDriverName.truncate(friendlyDriverName.length()-1);
 			friendlyDriverName.remove(0, friendlyDriverName.findRev("/")+1);
 			m_friendlyName = friendlyDriverName;
 		}
 		else if (m_modAlias.lower().startsWith("pci")) {
-			m_friendlyName = TDEHardwareDevices::instance()->findPCIDeviceName(m_vendorID, m_modelID, m_subvendorID, m_submodelID);
+			m_friendlyName = HardwareDevices::instance()->findPCIDeviceName(m_vendorID, m_modelID, m_subvendorID, m_submodelID);
 		}
 		else if (m_modAlias.lower().startsWith("usb")) {
-			m_friendlyName = TDEHardwareDevices::instance()->findUSBDeviceName(m_vendorID, m_modelID, m_subvendorID, m_submodelID);
+			m_friendlyName = HardwareDevices::instance()->findUSBDeviceName(m_vendorID, m_modelID, m_subvendorID, m_submodelID);
 		}
 		else {
 			TQString acpigentype = systemPath();
@@ -249,7 +249,7 @@ TQString TDEGenericDevice::friendlyName() {
 			TQString pnpgentype = acpigentype;
 			pnpgentype.truncate(pnpgentype.find(":"));
 			if (pnpgentype.startsWith("PNP")) {
-				m_friendlyName = TDEHardwareDevices::instance()->findPNPDeviceName(pnpgentype);
+				m_friendlyName = HardwareDevices::instance()->findPNPDeviceName(pnpgentype);
 			}
 			else if (acpigentype.startsWith("device:")) {
 				acpigentype.remove(0, acpigentype.findRev(":")+1);
@@ -270,10 +270,10 @@ TQString TDEGenericDevice::friendlyName() {
 	if (m_friendlyName.isNull()) {
 		// Could not identify based on model/vendor
 		// Guess by type
-		if (type() == TDEGenericDeviceType::CPU) {
+		if (type() == GenericDeviceType::CPU) {
 			m_friendlyName = name();
 		}
-		else if (type() == TDEGenericDeviceType::Event) {
+		else if (type() == GenericDeviceType::Event) {
 			if (m_systemPath.contains("PNP0C0D")) {
 				m_friendlyName = i18n("ACPI Lid Switch");
 			}
@@ -291,7 +291,7 @@ TQString TDEGenericDevice::friendlyName() {
 				m_friendlyName = i18n("Generic Event Device");
 			}
 		}
-		else if (type() == TDEGenericDeviceType::Input) {
+		else if (type() == GenericDeviceType::Input) {
 			if (m_systemPath.contains("PNP0C0D")) {
 				m_friendlyName = i18n("ACPI Lid Switch");
 			}
