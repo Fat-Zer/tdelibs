@@ -11,7 +11,7 @@
 
 add_subdirectory( hwlibdata )
 tde_conditional_add_subdirectory( WITH_TDEHWLIB_DAEMONS hwlibdaemons )
-add_subdirectory( networkbackends )
+add_subdirectory( backends )
 
 if( NOT DBUS_SYSTEM_BUS )
   set( DBUS_SYSTEM_BUS "unix:path=/var/run/dbus/system_bus_socket" CACHE INTERNAL "" FORCE )
@@ -53,7 +53,7 @@ if( WITH_CONSOLEKIT )
 endif( )
 
 if( WITH_NETWORK_MANAGER_BACKEND )
-  list( APPEND TDEHW_CUSTOM_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/networkbackends/network-manager )
+  list( APPEND TDEHW_CUSTOM_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/backends/network-manager )
   list( APPEND TDEHW_CUSTOM_LIBRARIES network_manager_backend-static )
 endif( WITH_NETWORK_MANAGER_BACKEND )
 
