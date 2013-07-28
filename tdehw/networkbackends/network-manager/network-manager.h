@@ -18,7 +18,7 @@
 #ifndef _TDENETWORKBACKEND_NETWORKMANAGER_H
 #define _TDENETWORKBACKEND_NETWORKMANAGER_H
 
-#include "tdenetworkconnections.h"
+#include "networkconnections.h"
 
 //====================================================================================================
 // General NetworkManager DBUS service paths

@@ -17,33 +17,24 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "tdesensordevice.h"
+#include "mainspowerdevice.h"
 
 #include "config.h"
 
 using namespace TDEHW;
 
-TDESensorCluster::TDESensorCluster() {
-	label = TQString::null;
-	current = -1;
-	minimum = -1;
-	maximum = -1;
-	warning = -1;
-	critical = -1;
+TDEMainsPowerDevice::TDEMainsPowerDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
 }
 
-TDESensorDevice::TDESensorDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
+TDEMainsPowerDevice::~TDEMainsPowerDevice() {
 }
 
-TDESensorDevice::~TDESensorDevice() {
+bool TDEMainsPowerDevice::online() {
+	return m_online;
 }
 
-TDESensorClusterMap TDESensorDevice::values() {
-	return m_sensorValues;
+void TDEMainsPowerDevice::internalSetOnline(bool tc) {
+	m_online = tc;
 }
 
-void TDESensorDevice::internalSetValues(TDESensorClusterMap cl) {
-	m_sensorValues = cl;
-}
-
-#include "tdesensordevice.moc"
+#include "mainspowerdevice.moc"

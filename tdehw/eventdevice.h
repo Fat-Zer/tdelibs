@@ -20,7 +20,7 @@
 #ifndef _TDEEVENTDEVICE_H
 #define _TDEEVENTDEVICE_H
 
-#include "tdegenericdevice.h"
+#include "genericdevice.h"
 
 class TQSocketNotifier;
 
@@ -38,7 +38,7 @@ enum TDEEventDeviceType {
 };
 };
 
-// Keep friendlySwitchList() in tdehardwaredevices.cpp in sync with this enum
+// Keep friendlySwitchList() in hardwaredevices.cpp in sync with this enum
 namespace TDESwitchType {
 enum TDESwitchType {
 	Null			= 0x00000000,

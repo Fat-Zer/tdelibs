@@ -17,7 +17,7 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "tdebatterydevice.h"
+#include "batterydevice.h"
 
 #include "config.h"
 
@@ -150,4 +150,4 @@ double TDEBatteryDevice::chargePercent() {
 	return (m_currentEnergy/m_maximumEnergy)*100.0;
 }
 
-#include "tdebatterydevice.moc"
+#include "batterydevice.moc"

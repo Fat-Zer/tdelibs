@@ -17,13 +17,13 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "tdegenericdevice.h"
+#include "genericdevice.h"
 
 #include <tqpixmap.h>
 
 #include <tdelocale.h> 
 
-#include "tdehardwaredevices.h" 
+#include "hardwaredevices.h" 
 
 #include "config.h"
 
@@ -317,4 +317,4 @@ TQString TDEGenericDevice::friendlyName() {
 	return m_friendlyName;
 }
 
-#include "tdegenericdevice.moc"
+#include "genericdevice.moc"

@@ -22,7 +22,7 @@
 
 namespace TDEHW {
 
-// Keep readGenericDeviceTypeFromString(), getFriendlyDeviceTypeStringFromType(), and getDeviceTypeIconFromType() in tdehardwaredevices.cpp in sync with this enum
+// Keep readGenericDeviceTypeFromString(), getFriendlyDeviceTypeStringFromType(), and getDeviceTypeIconFromType() in hardwaredevices.cpp in sync with this enum
 namespace TDEGenericDeviceType {
 enum TDEGenericDeviceType {
 	Root,

@@ -17,7 +17,7 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "tdemonitordevice.h"
+#include "monitordevice.h"
 
 #include "config.h"
 
@@ -77,4 +77,4 @@ void TDEMonitorDevice::internalSetPowerLevel(TDEDisplayPowerLevel::TDEDisplayPow
 	m_powerLevel = pl;
 }
 
-#include "tdemonitordevice.moc"
+#include "monitordevice.moc"

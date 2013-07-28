@@ -16,14 +16,14 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "tdehardwaredevices.h"
-#include "tdenetworkconnections.h"
+#include "hardwaredevices.h"
+#include "networkconnections.h"
 
 #include <tqtimer.h>
 
 #include <tdelocale.h>
 
-#include "tdenetworkdevice.h"
+#include "networkdevice.h"
 // #define DEBUG_SIGNAL_QUEUE 1
 
 #include "config.h"
@@ -1110,4 +1110,4 @@ TDENetworkWiFiAPInfo* TDEGlobalNetworkManager::findAccessPointByBSSID(TDEMACAddr
 /* End                                                                                            */
 /*================================================================================================*/
 
-#include "tdenetworkconnections.moc"
+#include "networkconnections.moc"

@@ -17,45 +17,24 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef _TDEMAINSPOWERDEVICE_H
-#define _TDEMAINSPOWERDEVICE_H
+#include "inputdevice.h"
 
-#include "tdegenericdevice.h"
+#include "config.h"
 
-namespace TDEHW {
+using namespace TDEHW;
 
-class TDEHW_EXPORT TDEMainsPowerDevice : public TDEGenericDevice
-{
-	public:
-		/**
-		*  Constructor.
-		*  @param Device type
-		*/
-		TDEMainsPowerDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn=TQString::null);
-		
-		/**
-		* Destructor.
-		*/
-		~TDEMainsPowerDevice();
+TDEInputDevice::TDEInputDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
+}
 
-		/**
-		* @return TRUE if power supply is online via mains power, FALSE if not
-		*/
-		bool online();
+TDEInputDevice::~TDEInputDevice() {
+}
 
-	protected:
-		/**
-		* @param TRUE if power supply is online via mains power, FALSE if not
-		* @internal
-		*/
-		void internalSetOnline(bool vt);
+TDEInputDeviceType::TDEInputDeviceType TDEInputDevice::inputType() {
+	return m_inputType;
+}
 
-	private:
-		bool m_online;
+void TDEInputDevice::internalSetInputType(TDEInputDeviceType::TDEInputDeviceType it) {
+	m_inputType = it;
+}
 
-	friend class TDEHardwareDevices;
-};
-
-} //namespace TDEHW
-
-#endif // _TDEMAINSPOWERDEVICE_H
+#include "inputdevice.moc"

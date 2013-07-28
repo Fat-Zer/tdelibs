@@ -21,8 +21,8 @@
 #include <tqdbusmessage.h>
 
 #include "tdeconfig.h"
-#include "tdehardwaredevices.h"
-#include "tdenetworkdevice.h"
+#include "hardwaredevices.h"
+#include "networkdevice.h"
 
 #include "network-manager.h"
 #include "network-manager_p.h"

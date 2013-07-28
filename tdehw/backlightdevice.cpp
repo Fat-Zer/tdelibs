@@ -17,7 +17,7 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "tdebacklightdevice.h"
+#include "backlightdevice.h"
 
 #include <unistd.h>
 
@@ -137,4 +137,4 @@ void TDEBacklightDevice::setRawBrightness(int br) {
 #endif // WITH_UPOWER
 }
 
-#include "tdebacklightdevice.moc"
+#include "backlightdevice.moc"

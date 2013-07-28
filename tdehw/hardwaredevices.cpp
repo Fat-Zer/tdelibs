@@ -16,7 +16,7 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "tdehardwaredevices.h"
+#include "hardwaredevices.h"
 
 #include <tqfile.h>
 #include <tqdir.h>
@@ -50,18 +50,18 @@
 
 #include <kiconloader.h>
 
-#include "tdegenericdevice.h"
-#include "tdestoragedevice.h"
-#include "tdecpudevice.h"
-#include "tdebatterydevice.h"
-#include "tdemainspowerdevice.h"
-#include "tdenetworkdevice.h"
-#include "tdebacklightdevice.h"
-#include "tdemonitordevice.h"
-#include "tdesensordevice.h"
-#include "tderootsystemdevice.h"
-#include "tdeeventdevice.h"
-#include "tdeinputdevice.h"
+#include "genericdevice.h"
+#include "storagedevice.h"
+#include "cpudevice.h"
+#include "batterydevice.h"
+#include "mainspowerdevice.h"
+#include "networkdevice.h"
+#include "backlightdevice.h"
+#include "monitordevice.h"
+#include "sensordevice.h"
+#include "rootsystemdevice.h"
+#include "eventdevice.h"
+#include "inputdevice.h"
 
 #include "config.h"
 
@@ -4055,4 +4055,4 @@ TDEGenericHardwareList TDEHardwareDevices::listAllPhysicalDevices() {
 	return ret;
 }
 
-#include "tdehardwaredevices.moc"
+#include "hardwaredevices.moc"

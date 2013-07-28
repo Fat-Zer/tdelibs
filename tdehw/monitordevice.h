@@ -20,8 +20,8 @@
 #ifndef _TDEMONITORDEVICE_H
 #define _TDEMONITORDEVICE_H
 
-#include "tdegenericdevice.h"
-#include "tdehwcommontypes.h"
+#include "genericdevice.h"
+#include "hwcommontypes.h"
 
 namespace TDEHW {
 
