@@ -20,7 +20,7 @@
 #ifndef _TDECPUDEVICE_H
 #define _TDECPUDEVICE_H
 
-#include "tdegenericdevice.h"
+#include "genericdevice.h"
 
 namespace TDEHW {
 

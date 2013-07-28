@@ -20,7 +20,7 @@
 #ifndef _TDESENSORDEVICE_H
 #define _TDESENSORDEVICE_H
 
-#include "tdegenericdevice.h"
+#include "genericdevice.h"
 
 namespace TDEHW {
 

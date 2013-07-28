@@ -17,13 +17,13 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "tdecpudevice.h"
+#include "cpudevice.h"
 
 #include <unistd.h>
 
 #include <tqfile.h>
 
-#include "tdehardwaredevices.h"
+#include "hardwaredevices.h"
 
 #include "config.h"
 
@@ -222,4 +222,4 @@ int TDECPUDevice::coreNumber() {
 	return m_corenumber;
 }
 
-#include "tdecpudevice.moc"
+#include "cpudevice.moc"

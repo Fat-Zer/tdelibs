@@ -17,7 +17,7 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "tdestoragedevice.h"
+#include "storagedevice.h"
 
 #include <unistd.h>
 #include <fcntl.h>
@@ -31,7 +31,7 @@
 #include <kiconloader.h> 
 #include <tdetempfile.h> 
 
-#include "tdehardwaredevices.h" 
+#include "hardwaredevices.h" 
 
 #include "config.h"
 
@@ -720,4 +720,4 @@ bool TDEStorageDevice::unmountDevice(TQString* errRet, int* retcode) {
 	return false;
 }
 
-#include "tdestoragedevice.moc"
+#include "storagedevice.moc"

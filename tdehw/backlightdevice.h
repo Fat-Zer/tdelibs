@@ -20,8 +20,8 @@
 #ifndef _TDEBACKLIGHTDEVICE_H
 #define _TDEBACKLIGHTDEVICE_H
 
-#include "tdegenericdevice.h"
-#include "tdehwcommontypes.h"
+#include "genericdevice.h"
+#include "hwcommontypes.h"
 
 namespace TDEHW {
 

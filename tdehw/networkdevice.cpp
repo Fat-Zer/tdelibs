@@ -17,10 +17,10 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "tdenetworkdevice.h"
+#include "networkdevice.h"
 
 // Network connection manager
-#include "tdenetworkconnections.h"
+#include "networkconnections.h"
 
 #include "config.h"
 
@@ -186,4 +186,4 @@ void TDENetworkDevice::internalSetConnectionManager(TDENetworkConnectionManager*
 	m_connectionManager = mgr;
 }
 
-#include "tdenetworkdevice.moc"
+#include "networkdevice.moc"

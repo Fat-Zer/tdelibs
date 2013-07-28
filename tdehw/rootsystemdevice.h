@@ -20,8 +20,8 @@
 #ifndef _TDEROOTSYSTEMDEVICE_H
 #define _TDEROOTSYSTEMDEVICE_H
 
-#include "tdegenericdevice.h"
-#include "tdehwcommontypes.h"
+#include "genericdevice.h"
+#include "hwcommontypes.h"
 
 namespace TDEHW {
 
