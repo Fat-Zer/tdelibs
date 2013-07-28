@@ -17,45 +17,63 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef _TDEMAINSPOWERDEVICE_H
-#define _TDEMAINSPOWERDEVICE_H
+#ifndef _TDESENSORDEVICE_H
+#define _TDESENSORDEVICE_H
 
-#include "tdegenericdevice.h"
+#include "genericdevice.h"
 
 namespace TDEHW {
 
-class TDEHW_EXPORT TDEMainsPowerDevice : public TDEGenericDevice
+class TDEHW_EXPORT TDESensorCluster
+{
+	public:
+		/**
+		*  Constructor.
+		*/
+		TDESensorCluster();
+
+		TQString label;
+		double current;
+		double minimum;
+		double maximum;
+		double warning;
+		double critical;
+};
+
+typedef TQMap<TQString, TDESensorCluster> TDESensorClusterMap;
+
+class TDEHW_EXPORT TDESensorDevice : public TDEGenericDevice
 {
 	public:
 		/**
 		*  Constructor.
 		*  @param Device type
 		*/
-		TDEMainsPowerDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn=TQString::null);
+		TDESensorDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn=TQString::null);
 		
 		/**
 		* Destructor.
 		*/
-		~TDEMainsPowerDevice();
+		~TDESensorDevice();
 
 		/**
-		* @return TRUE if power supply is online via mains power, FALSE if not
+		* @return a TDESensorClusterMap with the current sensor values
 		*/
-		bool online();
+		TDESensorClusterMap values();
 
 	protected:
 		/**
-		* @param TRUE if power supply is online via mains power, FALSE if not
+		* @param a TDESensorClusterMap with the current sensor values
 		* @internal
 		*/
-		void internalSetOnline(bool vt);
+		void internalSetValues(TDESensorClusterMap cl);
 
 	private:
-		bool m_online;
+		TDESensorClusterMap m_sensorValues;
 
 	friend class TDEHardwareDevices;
 };
 
-} //namespace TDEHW
+} // namespace TDEHW
 
-#endif // _TDEMAINSPOWERDEVICE_H
+#endif // _TDESENSORDEVICE_H

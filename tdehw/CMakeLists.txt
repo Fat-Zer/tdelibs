@@ -75,11 +75,11 @@ link_directories(
 
 ##### headers ###################################
 
-install( FILES tdehardwaredevices.h tdenetworkconnections.h tdegenericdevice.h
-    tdestoragedevice.h tdecpudevice.h tdebatterydevice.h tdemainspowerdevice.h
-    tdenetworkdevice.h tdebacklightdevice.h tdemonitordevice.h
-    tdesensordevice.h tderootsystemdevice.h tdeeventdevice.h tdeinputdevice.h
-    tdehwcommontypes.h
+install( FILES hardwaredevices.h networkconnections.h genericdevice.h
+    storagedevice.h cpudevice.h batterydevice.h mainspowerdevice.h
+    networkdevice.h backlightdevice.h monitordevice.h
+    sensordevice.h rootsystemdevice.h eventdevice.h inputdevice.h
+    hwcommontypes.h
   DESTINATION ${INCLUDE_INSTALL_DIR}/tdehw )
 
 
@@ -88,11 +88,11 @@ install( FILES tdehardwaredevices.h tdenetworkconnections.h tdegenericdevice.h
 set( target tdehw )
 
 set( ${target}_SRCS
-  tdehardwaredevices.cpp tdenetworkconnections.cpp tdegenericdevice.cpp
-  tdestoragedevice.cpp tdecpudevice.cpp tdebatterydevice.cpp
-  tdemainspowerdevice.cpp tdenetworkdevice.cpp tdebacklightdevice.cpp
-  tdemonitordevice.cpp tdesensordevice.cpp tderootsystemdevice.cpp
-  tdeeventdevice.cpp tdeinputdevice.cpp
+  hardwaredevices.cpp networkconnections.cpp genericdevice.cpp
+  storagedevice.cpp cpudevice.cpp batterydevice.cpp
+  mainspowerdevice.cpp networkdevice.cpp backlightdevice.cpp
+  monitordevice.cpp sensordevice.cpp rootsystemdevice.cpp
+  eventdevice.cpp inputdevice.cpp
 )
 
 tde_add_library( ${target} SHARED AUTOMOC

@@ -26,7 +26,7 @@
 #include <tdelibs_export.h> 
 #include <kicontheme.h>
 
-#include "tdehwcommontypes.h" 
+#include "hwcommontypes.h" 
 
 namespace TDEHW {
 

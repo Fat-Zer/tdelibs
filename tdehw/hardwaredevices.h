@@ -29,7 +29,7 @@
 #include <tdelibs_export.h>
 #include <kicontheme.h>
 
-#include "tdehwcommontypes.h"
+#include "hwcommontypes.h"
 
 /**
  * Hardware Device Access and Monitoring Library

@@ -20,11 +20,11 @@
 #ifndef _TDESTORAGEDEVICE_H
 #define _TDESTORAGEDEVICE_H
 
-#include "tdegenericdevice.h"
+#include "genericdevice.h"
 
 namespace TDEHW {
 
-// Keep readDiskDeviceSubtypeFromString() in tdehardwaredevices.cpp in sync with this enum
+// Keep readDiskDeviceSubtypeFromString() in hardwaredevices.cpp in sync with this enum
 namespace TDEDiskDeviceType {
 #if __cplusplus >= 201103L
 enum TDEDiskDeviceType : unsigned long long {

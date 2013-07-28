@@ -17,8 +17,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "tderootsystemdevice.h"
-#include "tdestoragedevice.h"
+#include "rootsystemdevice.h"
+#include "storagedevice.h"
 
 #include <unistd.h>
 
@@ -701,4 +701,4 @@ bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState
 	return false;
 }
 
-#include "tderootsystemdevice.moc"
+#include "rootsystemdevice.moc"

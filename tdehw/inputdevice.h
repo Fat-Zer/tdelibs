@@ -17,63 +17,57 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef _TDESENSORDEVICE_H
-#define _TDESENSORDEVICE_H
+#ifndef _TDEINPUTDEVICE_H
+#define _TDEINPUTDEVICE_H
 
-#include "tdegenericdevice.h"
+#include "genericdevice.h"
 
 namespace TDEHW {
 
-class TDEHW_EXPORT TDESensorCluster
-{
-	public:
-		/**
-		*  Constructor.
-		*/
-		TDESensorCluster();
-
-		TQString label;
-		double current;
-		double minimum;
-		double maximum;
-		double warning;
-		double critical;
+namespace TDEInputDeviceType {
+enum TDEInputDeviceType {
+	Unknown,
+	ACPILidSwitch,
+	ACPISleepButton,
+	ACPISuspendButton,
+	ACPIPowerButton,
+	ACPIOtherInput,
+	Other = 0x80000000
+};
 };
 
-typedef TQMap<TQString, TDESensorCluster> TDESensorClusterMap;
-
-class TDEHW_EXPORT TDESensorDevice : public TDEGenericDevice
+class TDEHW_EXPORT TDEInputDevice : public TDEGenericDevice
 {
 	public:
 		/**
 		*  Constructor.
 		*  @param Device type
 		*/
-		TDESensorDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn=TQString::null);
+		TDEInputDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn=TQString::null);
 		
 		/**
 		* Destructor.
 		*/
-		~TDESensorDevice();
+		~TDEInputDevice();
 
 		/**
-		* @return a TDESensorClusterMap with the current sensor values
+		* @return a TDEInputDeviceType::TDEInputDeviceType with the input device type, if known
 		*/
-		TDESensorClusterMap values();
+		TDEInputDeviceType::TDEInputDeviceType inputType();
 
 	protected:
 		/**
-		* @param a TDESensorClusterMap with the current sensor values
+		* @param it a TDEInputDeviceType::TDEInputDeviceType with the input device type, if known
 		* @internal
 		*/
-		void internalSetValues(TDESensorClusterMap cl);
+		void internalSetInputType(TDEInputDeviceType::TDEInputDeviceType it);
 
 	private:
-		TDESensorClusterMap m_sensorValues;
+		TDEInputDeviceType::TDEInputDeviceType m_inputType;
 
 	friend class TDEHardwareDevices;
 };
 
-} // namespace TDEHW
+} //namespace TDEHW
 
-#endif // _TDESENSORDEVICE_H
+#endif // _TDEINPUTDEVICE_H

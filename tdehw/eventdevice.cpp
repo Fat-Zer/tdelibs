@@ -17,7 +17,7 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "tdeeventdevice.h"
+#include "eventdevice.h"
 
 #include <unistd.h>
 #include <linux/input.h>
@@ -26,7 +26,7 @@
 
 #include "tdelocale.h"
 
-#include "tdehardwaredevices.h"
+#include "hardwaredevices.h"
 
 #include "config.h"
 
@@ -151,4 +151,4 @@ void TDEEventDevice::eventReceived() {
 	}
 }
 
-#include "tdeeventdevice.moc"
+#include "eventdevice.moc"

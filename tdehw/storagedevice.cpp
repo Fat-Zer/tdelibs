@@ -17,7 +17,7 @@
    Boston, MA 02110-1301, USA.
 */
 
-#include "tdestoragedevice.h"
+#include "storagedevice.h"
 
 #include <unistd.h>
 #include <fcntl.h>
@@ -32,7 +32,7 @@
 #include <kiconloader.h> 
 #include <tdetempfile.h> 
 
-#include "tdehardwaredevices.h" 
+#include "hardwaredevices.h" 
 
 #include "config.h"
 
@@ -824,4 +824,4 @@ TQString TDEStorageDevice::determineFileSystemType(TQString path) {
 	return TQString::null;
 }
 
-#include "tdestoragedevice.moc"
+#include "storagedevice.moc"

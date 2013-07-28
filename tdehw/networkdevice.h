@@ -20,7 +20,7 @@
 #ifndef _TDENETWORKDEVICE_H
 #define _TDENETWORKDEVICE_H
 
-#include "tdegenericdevice.h"
+#include "genericdevice.h"
 
 namespace TDEHW {
 
