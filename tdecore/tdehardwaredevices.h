@@ -27,7 +27,9 @@
 #include "tdelibs_export.h"
 
 // udev includes
+extern "C" {
 #include <libudev.h>
+}
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
