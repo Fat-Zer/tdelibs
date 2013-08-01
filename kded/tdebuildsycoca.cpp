@@ -379,7 +379,7 @@ bool KBuildSycoca::build()
      connect(g_vfolder, TQT_SIGNAL(newService(const TQString &, KService **)),
              this, TQT_SLOT(slotCreateEntry(const TQString &, KService **)));
              
-     VFolderMenu::SubMenu *kdeMenu = g_vfolder->parseMenu("applications.menu", true);
+     VFolderMenu::SubMenu *kdeMenu = g_vfolder->parseMenu("tde-applications.menu", true);
 
      KServiceGroup *entry = g_bsgf->addNew("/", kdeMenu->directoryFile, 0, false);
      entry->setLayoutInfo(kdeMenu->layoutList);
