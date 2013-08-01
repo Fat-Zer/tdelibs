@@ -4716,6 +4716,15 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 					if (nodename == "alarm") {
 						bdevice->internalSetAlarmEnergy(line.toDouble()/1000000.0);
 					}
+					if (nodename == "charge_full") {
+						bdevice->internalSetMaximumEnergy(line.toDouble()/1000000.0);
+					}
+					if (nodename == "charge_full_design") {
+						bdevice->internalSetMaximumDesignEnergy(line.toDouble()/1000000.0);
+					}
+					if (nodename == "charge_now") {
+						bdevice->internalSetEnergy(line.toDouble()/1000000.0);
+					}
 					if (nodename == "energy_full") {
 						bdevice->internalSetMaximumEnergy(line.toDouble()/1000000.0);
 					}
