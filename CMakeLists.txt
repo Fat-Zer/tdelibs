@@ -591,6 +591,8 @@ endif( XRANDR_FOUND )
 pkg_search_module( XRENDER xrender )
 if( XRENDER_FOUND )
   set( HAVE_XRENDER 1 )
+else( XRENDER_FOUND)
+  message(FATAL_ERROR "\nxrender support is required, but not found on your system" )
 endif( XRENDER_FOUND )
 
 ##### check for xcomposite #########################
