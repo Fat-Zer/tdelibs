@@ -35,7 +35,14 @@
 #undef QT_NO_TRANSLATION
 #undef TQT_NO_TRANSLATION
 #include <tqtranslator.h>
+
+// FIXME
+// FOR BINARY COMPATIBILITY ONLY
+// REMOVE WHEN PRACTICAL!
+#define TDEAPPLICATION_BINARY_COMPAT_HACK 1
 #include "tdeapplication.h"
+#undef TDEAPPLICATION_BINARY_COMPAT_HACK
+
 #define QT_NO_TRANSLATION
 #define TQT_NO_TRANSLATION
 #include <tqdir.h>
@@ -621,6 +628,34 @@ static SmcConn tmpSmcConnection = 0;
 #endif
 static TQTime* smModificationTime = 0;
 
+TDEApplication::TDEApplication( int& argc, char** argv, const TQCString& rAppName,
+                            bool allowStyles, bool GUIenabled, bool SMenabled ) :
+  TQApplication( argc, argv, GUIenabled, SMenabled ), TDEInstance(rAppName),
+#ifdef Q_WS_X11
+  display(0L),
+  argb_visual(false),
+#endif
+  d (new TDEApplicationPrivate())
+{
+    aIconPixmap.pm.icon = 0L;
+    aIconPixmap.pm.miniIcon = 0L;
+    read_app_startup_id();
+    if (!GUIenabled)
+       allowStyles = false;
+    useStyles = allowStyles;
+    Q_ASSERT (!rAppName.isEmpty());
+    setName(rAppName);
+
+    installSigpipeHandler();
+    TDECmdLineArgs::initIgnore(argc, argv, rAppName.data());
+    parseCommandLine( );
+    init(GUIenabled);
+    d->m_KAppDCOPInterface = new KAppDCOPInterface(this);
+}
+
+// FIXME
+// FOR BINARY COMPATIBILITY ONLY
+// REMOVE WHEN PRACTICAL!
 TDEApplication::TDEApplication( int& argc, char** argv, const TQCString& rAppName,
                             bool allowStyles, bool GUIenabled ) :
   TQApplication( argc, argv, GUIenabled ), TDEInstance(rAppName),

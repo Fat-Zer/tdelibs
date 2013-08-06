@@ -257,8 +257,16 @@ public:
    */
   // REMOVE FOR KDE 4.0 - using it only gives crashing applications because
   // TDECmdLineArgs::init isn't called
- TDEApplication(int& argc, char** argv,
-              const TQCString& rAppName, bool allowStyles=true, bool GUIenabled=true) KDE_DEPRECATED;
+  TDEApplication(int& argc, char** argv,
+              const TQCString& rAppName, bool allowStyles=true, bool GUIenabled=true, bool SMenabled=true) KDE_DEPRECATED;
+
+#ifdef TDEAPPLICATION_BINARY_COMPAT_HACK
+  // FIXME
+  // FOR BINARY COMPATIBILITY ONLY
+  // REMOVE WHEN PRACTICAL!
+  TDEApplication(int& argc, char** argv,
+              const TQCString& rAppName, bool allowStyles, bool GUIenabled) KDE_DEPRECATED;
+#endif // TDEAPPLICATION_BINARY_COMPAT_HACK
 
   /**
     * Add Qt and KDE command line options to TDECmdLineArgs.
