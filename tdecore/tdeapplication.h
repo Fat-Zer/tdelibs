@@ -128,7 +128,14 @@ public:
    * @param GUIenabled Set to false to disable all GUI stuff. This implies
    * no styles either.
    */
+  TDEApplication( bool allowStyles=true, bool GUIenabled=true, bool SMenabled=true);
+
+#ifdef TDEAPPLICATION_BINARY_COMPAT_HACK
+  // FIXME
+  // FOR BINARY COMPATIBILITY ONLY
+  // REMOVE WHEN PRACTICAL!
   TDEApplication( bool allowStyles=true, bool GUIenabled=true);
+#endif // TDEAPPLICATION_BINARY_COMPAT_HACK
 
 #ifdef Q_WS_X11
   /**

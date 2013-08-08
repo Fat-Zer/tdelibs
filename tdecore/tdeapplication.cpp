@@ -750,6 +750,33 @@ TDEApplication::TDEApplication( int& argc, char** argv, const TQCString& rAppNam
     d->m_KAppDCOPInterface = new KAppDCOPInterface(this);
 }
 
+TDEApplication::TDEApplication( bool allowStyles, bool GUIenabled, bool SMenabled ) :
+//  TQApplication( *TDECmdLineArgs::tqt_argc(), *TDECmdLineArgs::tqt_argv(), TRUE ),	// Qt4 requires that there always be a GUI
+  TQApplication( *TDECmdLineArgs::tqt_argc(), *TDECmdLineArgs::tqt_argv(), GUIenabled, SMenabled ),	// We need to be able to run command line apps
+  TDEInstance( TDECmdLineArgs::about),
+#ifdef Q_WS_X11
+  display(0L),
+  argb_visual(false),
+#endif
+  d (new TDEApplicationPrivate)
+{
+    aIconPixmap.pm.icon = 0L;
+    aIconPixmap.pm.miniIcon = 0L;
+    read_app_startup_id();
+    if (!GUIenabled)
+       allowStyles = false;
+    useStyles = allowStyles;
+    setName( instanceName() );
+
+    installSigpipeHandler();
+    parseCommandLine( );
+    init(GUIenabled);
+    d->m_KAppDCOPInterface = new KAppDCOPInterface(this);
+}
+
+// FIXME
+// FOR BINARY COMPATIBILITY ONLY
+// REMOVE WHEN PRACTICAL!
 TDEApplication::TDEApplication( bool allowStyles, bool GUIenabled ) :
 //  TQApplication( *TDECmdLineArgs::tqt_argc(), *TDECmdLineArgs::tqt_argv(), TRUE ),	// Qt4 requires that there always be a GUI
   TQApplication( *TDECmdLineArgs::tqt_argc(), *TDECmdLineArgs::tqt_argv(), GUIenabled ),	// We need to be able to run command line apps
