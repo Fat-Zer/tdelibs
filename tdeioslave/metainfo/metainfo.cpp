@@ -42,7 +42,7 @@ extern "C"
 
 int kdemain(int argc, char **argv)
 {
-    TDEApplication app(argc, argv, "tdeio_metainfo", false, true);
+    TDEApplication app(argc, argv, "tdeio_metainfo", false, true, false);
 
     if (argc != 4)
     {
