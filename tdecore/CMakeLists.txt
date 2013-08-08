@@ -19,14 +19,15 @@ if( NOT DBUS_SYSTEM_BUS )
   set( DBUS_SYSTEM_BUS "unix:path=/var/run/dbus/system_bus_socket" CACHE INTERNAL "" FORCE )
 endif()
 
+if( WITH_UPOWER OR WITH_UDISKS OR WITH_UDISKS2 OR
+    WITH_NETWORK_MANAGER_BACKEND OR WITH_CONSOLEKIT )
+  list( APPEND TDEHW_CUSTOM_INCLUDE_DIRS ${DBUS_TQT_INCLUDE_DIRS} )
+  list( APPEND TDEHW_CUSTOM_LIBRARY_DIRS ${DBUS_TQT_LIBRARY_DIRS} )
+  list( APPEND TDEHW_CUSTOM_LIBRARIES ${DBUS_TQT_LIBRARIES} )
+endif( )
+
 if( WITH_UPOWER )
   add_definitions( -DWITH_UPOWER )
-  set ( TDEUPOWER_INCLUDE_DIRECTORIES
-    ${DBUS_TQT_INCLUDE_DIRS}
-  )
-  set ( TDEUPOWER_LIBRARIES
-    ${DBUS_TQT_LIBRARIES}
-  )
 endif( )
 
 if( WITH_UDISKS )
@@ -48,14 +49,12 @@ endif( WITH_LIBART )
 
 if( WITH_NETWORK_MANAGER_BACKEND )
   add_subdirectory( networkbackends/network-manager/dbus )
-  set ( TDENM_INCLUDE_DIRECTORIES
-    ${DBUS_TQT_INCLUDE_DIRS}
+  list( APPEND TDEHW_CUSTOM_INCLUDE_DIRS
     ${NM_UTIL_INCLUDE_DIRS}
-    "${CMAKE_BINARY_DIR}/tdecore/networkbackends/network-manager/dbus"
+    "${CMAKE_CURRENT_BINARY_DIR}/networkbackends/network-manager/dbus"
   )
-  set ( TDENM_LIBRARIES
+  list( APPEND TDEHW_CUSTOM_LIBRARIES
     tdenm_dbus-static
-    ${DBUS_TQT_LIBRARIES}
   )
   set ( TDENM_BACKEND_SOURCES networkbackends/network-manager/network-manager.cpp )
 endif( WITH_NETWORK_MANAGER_BACKEND )
@@ -75,8 +74,7 @@ include_directories(
   ${LIBART_INCLUDE_DIRS}
   ${LIBIDN_INCLUDE_DIRS}
   ${GAMIN_INCLUDEDIR}
-  ${TDENM_INCLUDE_DIRECTORIES}
-  ${TDEUPOWER_INCLUDE_DIRECTORIES}
+  ${TDEHW_CUSTOM_INCLUDE_DIRS}
 )
 
 link_directories(
@@ -84,6 +82,7 @@ link_directories(
   ${LIBIDN_LIBRARY_DIRS}
   ${GAMIN_LIBDIR}
   ${LIBART_LIBRARY_DIRS}
+  ${TDEHW_CUSTOM_LIBRARY_DIRS}
 )
 
 ##### headers ###################################
@@ -178,7 +177,7 @@ tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
   VERSION 4.2.0
   EMBED tdecorenetwork-static
-  LINK ltdlc-static ${KDESVGICONS} DCOP-shared tdefx-shared ${ZLIB_LIBRARIES} ${LIBIDN_LIBRARIES} ${XCOMPOSITE_LIBRARIES} ICE SM udev ${GAMIN_LIBRARIES} ${TDENM_LIBRARIES} ${TDEUPOWER_LIBRARIES}
+  LINK ltdlc-static ${KDESVGICONS} DCOP-shared tdefx-shared ${ZLIB_LIBRARIES} ${LIBIDN_LIBRARIES} ${XCOMPOSITE_LIBRARIES} ICE SM udev ${GAMIN_LIBRARIES} ${TDEHW_CUSTOM_LIBRARIES}
   DEPENDENCIES dcopidl dcopidl2cpp
   DESTINATION ${LIB_INSTALL_DIR}
 )

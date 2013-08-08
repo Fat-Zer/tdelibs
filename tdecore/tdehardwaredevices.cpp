@@ -70,7 +70,7 @@ extern "C" {
 #endif // WITH_NETWORK_MANAGER_BACKEND
 
 // uPower and uDisks2 integration
-#if defined(WITH_UPOWER) || defined(WITH_UDISKS) || defined(WITH_UDISKS2)
+#if defined(WITH_UPOWER) || defined(WITH_UDISKS) || defined(WITH_UDISKS2) || defined(WITH_CONSOLEKIT)
 	#include <tqdbusdata.h>
 	#include <tqdbusmessage.h>
 	#include <tqdbusproxy.h>
