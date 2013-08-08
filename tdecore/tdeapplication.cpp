@@ -175,6 +175,14 @@ typedef void* IceIOErrorHandler;
 #include <tqimage.h>
 #endif
 
+#if defined Q_WS_X11
+#include <sys/ioctl.h>
+#include <linux/vt.h>
+extern "C" {
+extern int getfd(const char *fnam);
+}
+#endif
+
 #include "kappdcopiface.h"
 
 // exported for tdm kfrontend
@@ -241,6 +249,67 @@ void TDEApplication_init_windows(bool GUIenabled);
 
 class QAssistantClient;
 #endif
+
+#ifdef Q_WS_X11
+// --------------------------------------------------------------------------------------
+// Get the VT number X is running on
+// (code taken from GDM, daemon/getvt.c, GPLv2+)
+// --------------------------------------------------------------------------------------
+int get_x_vtnum(Display *dpy)
+{
+	Atom prop;
+	Atom actualtype;
+	int actualformat;
+	unsigned long nitems;
+	unsigned long bytes_after;
+	unsigned char *buf;
+	int num;
+	
+	prop = XInternAtom (dpy, "XFree86_VT", False);
+	if (prop == None)
+	return -1;
+	
+	if (XGetWindowProperty (dpy, DefaultRootWindow (dpy), prop, 0, 1,
+				False, AnyPropertyType, &actualtype, &actualformat,
+				&nitems, &bytes_after, &buf)) {
+		return -1;
+	}
+	
+	if (nitems != 1) {
+		XFree (buf);
+		return -1;
+	}
+	
+	switch (actualtype) {
+		case XA_CARDINAL:
+		case XA_INTEGER:
+		case XA_WINDOW:
+		switch (actualformat) {
+			case 8:
+				num = (*(uint8_t  *)(void *)buf);
+			break;
+			case 16:
+				num = (*(uint16_t *)(void *)buf);
+			break;
+			case 32:
+				num = (*(uint32_t *)(void *)buf);
+			break;
+			default:
+				XFree (buf);
+				return -1;
+			}
+		break;
+		default:
+		XFree (buf);
+		return -1;
+	}
+	
+	XFree (buf);
+	
+	return num;
+}
+// --------------------------------------------------------------------------------------
+#endif // Q_WS_X11
 
 /*
   Private data to make keeping binary compatibility easier
@@ -3631,6 +3700,18 @@ TQ_ButtonState TDEApplication::keyboardMouseState()
 #endif
     return static_cast< ButtonState >( ret );
 }
+
+#if defined Q_WS_X11
+int TDEApplication::currentX11VT()
+{
+	return get_x_vtnum(TQPaintDevice::x11AppDisplay());
+}
+#else // Q_WS_X11
+int TDEApplication::currentX11VT()
+{
+	return -1;
+}
+#endif // Q_WS_X11
 
 void TDEApplication::installSigpipeHandler()
 {

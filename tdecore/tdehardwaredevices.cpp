@@ -937,7 +937,7 @@ TQString TDEStorageDevice::mountPath() {
 		file.close();
 	}
 
-	// While this device is not directly mounted, it could concievably be mounted via the Device Mapper
+	// While this device is not directly mounted, it could conceivably be mounted via the Device Mapper
 	// If so, try to retrieve the mount path...
 	TQStringList slaveDeviceList = holdingDevices();
 	for ( TQStringList::Iterator slavedevit = slaveDeviceList.begin(); slavedevit != slaveDeviceList.end(); ++slavedevit ) {
@@ -953,7 +953,7 @@ TQString TDEStorageDevice::mountPath() {
 	return TQString::null;
 }
 
-TQString TDEStorageDevice::mountDevice(TQString mediaName, TQString mountOptions, TQString* errRet, int* retcode) {
+TQString TDEStorageDevice::mountDevice(TQString mediaName, TDEStorageMountOptions mountOptions, TQString* errRet, int* retcode) {
 	int internal_retcode;
 	if (!retcode) {
 		retcode = &internal_retcode;
@@ -969,12 +969,37 @@ TQString TDEStorageDevice::mountDevice(TQString mediaName, TQString mountOptions
 	KTempFile passwordFile(TQString::null, "tmp", 0600);
 	passwordFile.setAutoDelete(true);
 
+	TQString optionString;
+	if (mountOptions["ro"] == "true") {
+		optionString.append(" -r");
+	}
+	
+	if (mountOptions["atime"] != "true") {
+		optionString.append(" -A");
+	}
+	
+	if (mountOptions["utf8"] == "true") {
+		optionString.append(" -c utf8");
+	}
+	
+	if (mountOptions["sync"] == "true") {
+		optionString.append(" -s");
+	}
+
+	if (mountOptions.contains("filesystem")) {
+		optionString.append(TQString(" -t %1").arg(mountOptions["filesystem"]));
+	}
+
+	if (mountOptions.contains("locale")) {
+		optionString.append(TQString(" -c %1").arg(mountOptions["locale"]));
+	}
+
 	TQString passFileName = passwordFile.name();
 	TQString devNode = deviceNode();
 	passFileName.replace("'", "'\\''");
 	devNode.replace("'", "'\\''");
 	mediaName.replace("'", "'\\''");
-	TQString command = TQString("pmount -p '%1' %2 '%3' '%4' 2>&1").arg(passFileName).arg(mountOptions).arg(devNode).arg(mediaName);
+	TQString command = TQString("pmount -p '%1' %2 '%3' '%4' 2>&1").arg(passFileName).arg(optionString).arg(devNode).arg(mediaName);
 
 	FILE *exepipe = popen(command.ascii(), "r");
 	if (exepipe) {
@@ -995,7 +1020,7 @@ TQString TDEStorageDevice::mountDevice(TQString mediaName, TQString mountOptions
 	return ret;
 }
 
-TQString TDEStorageDevice::mountEncryptedDevice(TQString passphrase, TQString mediaName, TQString mountOptions, TQString* errRet, int* retcode) {
+TQString TDEStorageDevice::mountEncryptedDevice(TQString passphrase, TQString mediaName, TDEStorageMountOptions mountOptions, TQString* errRet, int* retcode) {
 	int internal_retcode;
 	if (!retcode) {
 		retcode = &internal_retcode;
@@ -1018,12 +1043,37 @@ TQString TDEStorageDevice::mountEncryptedDevice(TQString passphrase, TQString me
 	pwFile->writeBlock(passphrase.ascii(), passphrase.length());
 	pwFile->flush();
 
+	TQString optionString;
+	if (mountOptions["ro"] == "true") {
+		optionString.append(" -r");
+	}
+	
+	if (mountOptions["atime"] != "true") {
+		optionString.append(" -A");
+	}
+	
+	if (mountOptions["utf8"] == "true") {
+		optionString.append(" -c utf8");
+	}
+	
+	if (mountOptions["sync"] == "true") {
+		optionString.append(" -s");
+	}
+
+	if (mountOptions.contains("filesystem")) {
+		optionString.append(TQString(" -t %1").arg(mountOptions["filesystem"]));
+	}
+
+	if (mountOptions.contains("locale")) {
+		optionString.append(TQString(" -c %1").arg(mountOptions["locale"]));
+	}
+
 	TQString passFileName = passwordFile.name();
 	TQString devNode = deviceNode();
 	passFileName.replace("'", "'\\''");
 	devNode.replace("'", "'\\''");
 	mediaName.replace("'", "'\\''");
-	TQString command = TQString("pmount -p '%1' %2 '%3' '%4' 2>&1").arg(passFileName).arg(mountOptions).arg(devNode).arg(mediaName);
+	TQString command = TQString("pmount -p '%1' %2 '%3' '%4' 2>&1").arg(passFileName).arg(optionString).arg(devNode).arg(mediaName);
 
 	FILE *exepipe = popen(command.ascii(), "r");
 	if (exepipe) {

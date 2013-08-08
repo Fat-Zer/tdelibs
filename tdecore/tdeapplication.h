@@ -1220,6 +1220,13 @@ public:
    */
   static uint mouseState() KDE_DEPRECATED;
 
+   /**
+   * Returns the VT that the current X server is running on, or -1 if this information is unavailable.
+   *
+   * @since 14.0.0
+   */
+  static int currentX11VT();
+
 
 public slots:
   /**
