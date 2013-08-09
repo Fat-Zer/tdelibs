@@ -150,7 +150,7 @@ class TDEHW_EXPORT EventDevice : public GenericDevice
 		* See include/linux/input.h for a complete list of keycodes
 		* @param device a EventDevice* with the device that received the event
 		*/
-		void keyPressed(unsigned int keycode, EventDevice* device);
+		void keyPressed(unsigned int keycode, TDEHW::EventDevice* device);
 
 	private:
 		EventDeviceType::EventDeviceType m_eventType;

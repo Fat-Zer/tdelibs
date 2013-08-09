@@ -213,11 +213,11 @@ class TDEHW_EXPORT HardwareDevices : public TQObject
 		static TQString bytesToFriendlySizeString(double bytes);
 
 	signals:
-		void hardwareAdded(GenericDevice*);
-		void hardwareRemoved(GenericDevice*);
-		void hardwareUpdated(GenericDevice*);
+		void hardwareAdded(TDEHW::GenericDevice*);
+		void hardwareRemoved(TDEHW::GenericDevice*);
+		void hardwareUpdated(TDEHW::GenericDevice*);
 		void mountTableModified();
-		void hardwareEvent(HardwareEvent::HardwareEvent, TQString uuid);
+		void hardwareEvent(TDEHW::HardwareEvent::HardwareEvent, TQString uuid);
 
 		/**
 		* @param keycode the code of the key that was pressed/released
@@ -238,7 +238,7 @@ class TDEHW_EXPORT HardwareDevices : public TQObject
 		void processModifiedMounts();
 		void processModifiedCPUs();
 		void processStatelessDevices();
-		void processEventDeviceKeyPressed(unsigned int keycode, EventDevice* edevice);
+		void processEventDeviceKeyPressed(unsigned int keycode, TDEHW::EventDevice* edevice);
 
 	private:
 		void updateBlacklists(GenericDevice* hwdevice, udev_device* dev);

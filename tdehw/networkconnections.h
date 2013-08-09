@@ -1204,7 +1204,7 @@ class TDEHW_EXPORT NetworkConnectionManager : public TQObject
 		* Emitted whenever the state of the system's connection changes
 		* If previous state data was unavailable, @param previousState will contain NetworkConnectionStatus::Invalid
 		*/
-		void networkConnectionStateChanged(NetworkGlobalManagerFlags::NetworkGlobalManagerFlags newState, NetworkGlobalManagerFlags::NetworkGlobalManagerFlags previousState);
+		void networkConnectionStateChanged(TDEHW::NetworkGlobalManagerFlags::NetworkGlobalManagerFlags newState, TDEHW::NetworkGlobalManagerFlags::NetworkGlobalManagerFlags previousState);
 
 		/**
 		* Emitted whenever the state of a device changes
@@ -1212,33 +1212,33 @@ class TDEHW_EXPORT NetworkConnectionManager : public TQObject
 		* If the global connection state has changed, @param hwAddress will be empty, otherwise it will contain the MAC address
 		* of the networking hardware that has changed state.
 		*/
-		void networkDeviceStateChanged(NetworkConnectionStatus::NetworkConnectionStatus newState, NetworkConnectionStatus::NetworkConnectionStatus previousState, TQString hwAddress);
+		void networkDeviceStateChanged(TDEHW::NetworkConnectionStatus::NetworkConnectionStatus newState, TDEHW::NetworkConnectionStatus::NetworkConnectionStatus previousState, TQString hwAddress);
 
 		/**
 		* Emitted whenever the status of a wireless access point changes
 		* The event type that caused the signal is available in @param event
 		*/
-		void accessPointStatusChanged(MACAddress BSSID, NetworkAPEventType::NetworkAPEventType event);
+		void accessPointStatusChanged(MACAddress BSSID, TDEHW::NetworkAPEventType::NetworkAPEventType event);
 
 		/**
 		* Emitted whenever a network device event occurs
 		* The event type that caused the signal is available in @param event
 		* @param message contains additional information if available
 		*/
-		void networkDeviceEvent(NetworkDeviceEventType::NetworkDeviceEventType event, TQString message);
+		void networkDeviceEvent(TDEHW::NetworkDeviceEventType::NetworkDeviceEventType event, TQString message);
 
 		/**
 		* Emitted whenever a VPN-related event occurs
 		* The event type that caused the signal is available in @param event
 		* @param message contains additional information if available
 		*/
-		void vpnEvent(NetworkVPNEventType::NetworkVPNEventType event, TQString message);
+		void vpnEvent(TDEHW::NetworkVPNEventType::NetworkVPNEventType event, TQString message);
 
 		/**
 		* Emitted whenever a global network management event occurs
 		* The event type that caused the signal is available in @param event
 		*/
-		void networkManagementEvent(NetworkGlobalEventType::NetworkGlobalEventType event);
+		void networkManagementEvent(TDEHW::NetworkGlobalEventType::NetworkGlobalEventType event);
 
 	public:
 		/**
@@ -1523,7 +1523,7 @@ class TDEHW_EXPORT GlobalNetworkManager : public TQObject
 		* Emitted whenever the state of the system's connection changes
 		* If previous state data was unavailable, @param previousState will contain NetworkConnectionStatus::Invalid
 		*/
-		void networkConnectionStateChanged(NetworkGlobalManagerFlags::NetworkGlobalManagerFlags newState, NetworkGlobalManagerFlags::NetworkGlobalManagerFlags previousState);
+		void networkConnectionStateChanged(TDEHW::NetworkGlobalManagerFlags::NetworkGlobalManagerFlags newState, TDEHW::NetworkGlobalManagerFlags::NetworkGlobalManagerFlags previousState);
 
 		/**
 		* Emitted whenever the state of a device changes
@@ -1531,26 +1531,26 @@ class TDEHW_EXPORT GlobalNetworkManager : public TQObject
 		* If the global connection state has changed, @param hwAddress will be empty, otherwise it will contain the MAC address
 		* of the networking hardware that has changed state.
 		*/
-		void networkDeviceStateChanged(NetworkConnectionStatus::NetworkConnectionStatus newState, NetworkConnectionStatus::NetworkConnectionStatus previousState, TQString hwAddress);
+		void networkDeviceStateChanged(TDEHW::NetworkConnectionStatus::NetworkConnectionStatus newState, TDEHW::NetworkConnectionStatus::NetworkConnectionStatus previousState, TQString hwAddress);
 
 		/**
 		* Emitted whenever the status of a wireless access point changes
 		* The event type that caused the signal is available in @param event
 		*/
-		void accessPointStatusChanged(MACAddress BSSID, NetworkAPEventType::NetworkAPEventType event);
+		void accessPointStatusChanged(MACAddress BSSID, TDEHW::NetworkAPEventType::NetworkAPEventType event);
 
 		/**
 		* Emitted whenever a VPN-related event occurs
 		* The event type that caused the signal is available in @param event
 		* @param message contains additional information if available
 		*/
-		void vpnEvent(NetworkVPNEventType::NetworkVPNEventType event, TQString message);
+		void vpnEvent(TDEHW::NetworkVPNEventType::NetworkVPNEventType event, TQString message);
 
 		/**
 		* Emitted whenever a global network management event occurs
 		* The event type that caused the signal is available in @param event
 		*/
-		void networkManagementEvent(NetworkGlobalEventType::NetworkGlobalEventType event);
+		void networkManagementEvent(TDEHW::NetworkGlobalEventType::NetworkGlobalEventType event);
 
 	public:
 		/**

@@ -954,9 +954,9 @@ GlobalNetworkManager::GlobalNetworkManager() : m_internalConnectionManager(NULL)
 	m_internalConnectionManager = new NetworkConnectionManager_BackendNM(TQString::null);
 #endif // WITH_NETWORK_MANAGER_BACKEND
 	if (m_internalConnectionManager) {
-		connect(m_internalConnectionManager, SIGNAL(networkConnectionStateChanged(NetworkGlobalManagerFlags::NetworkGlobalManagerFlags, NetworkGlobalManagerFlags::NetworkGlobalManagerFlags)), this, SIGNAL(networkConnectionStateChanged(NetworkGlobalManagerFlags::NetworkGlobalManagerFlags, NetworkGlobalManagerFlags::NetworkGlobalManagerFlags)));
-		connect(m_internalConnectionManager, SIGNAL(vpnEvent(NetworkVPNEventType::NetworkVPNEventType, TQString)), this, SIGNAL(vpnEvent(NetworkVPNEventType::NetworkVPNEventType, TQString)));
-		connect(m_internalConnectionManager, SIGNAL(networkManagementEvent(NetworkGlobalEventType::NetworkGlobalEventType)), this, SIGNAL(networkManagementEvent(NetworkGlobalEventType::NetworkGlobalEventType)));
+		connect(m_internalConnectionManager, SIGNAL(networkConnectionStateChanged(TDEHW::NetworkGlobalManagerFlags::NetworkGlobalManagerFlags, TDEHW::NetworkGlobalManagerFlags::NetworkGlobalManagerFlags)), this, SIGNAL(networkConnectionStateChanged(TDEHW::NetworkGlobalManagerFlags::NetworkGlobalManagerFlags, TDEHW::NetworkGlobalManagerFlags::NetworkGlobalManagerFlags)));
+		connect(m_internalConnectionManager, SIGNAL(vpnEvent(TDEHW::NetworkVPNEventType::NetworkVPNEventType, TQString)), this, SIGNAL(vpnEvent(TDEHW::NetworkVPNEventType::NetworkVPNEventType, TQString)));
+		connect(m_internalConnectionManager, SIGNAL(networkManagementEvent(TDEHW::NetworkGlobalEventType::NetworkGlobalEventType)), this, SIGNAL(networkManagementEvent(TDEHW::NetworkGlobalEventType::NetworkGlobalEventType)));
 	}
 }
 

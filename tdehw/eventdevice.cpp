@@ -134,7 +134,7 @@ void EventDevice::internalStartFdMonitoring(HardwareDevices* hwmanager) {
 				m_eventNotifier = new TQSocketNotifier(m_fd, TQSocketNotifier::Read, this);
 				connect( m_eventNotifier, TQT_SIGNAL(activated(int)), this, TQT_SLOT(eventReceived()) );
 			}
-			connect( this, TQT_SIGNAL(keyPressed(unsigned int, EventDevice*)), hwmanager, TQT_SLOT(processEventDeviceKeyPressed(unsigned int, EventDevice*)) );
+			connect( this, TQT_SIGNAL(keyPressed(unsigned int, TDEHW::EventDevice*)), hwmanager, TQT_SLOT(processEventDeviceKeyPressed(unsigned int, TDEHW::EventDevice*)) );
 		}
 		m_fdMonitorActive = true;
 	}
