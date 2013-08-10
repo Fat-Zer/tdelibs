@@ -105,6 +105,8 @@ inline TDEDiskDeviceStatus operator~(TDEDiskDeviceStatus a)
 }
 };
 
+typedef TQMap<TQString,TQString> TDEStorageMountOptions;
+
 class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 {
 	public:
@@ -174,7 +176,7 @@ class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 		*
 		* @return a TQString with the mount path, if successful
 		*/
-		TQString mountDevice(TQString mediaName=TQString::null, TQString mountOptions=TQString::null, TQString* errRet=0, int* retcode=0);
+		TQString mountDevice(TQString mediaName=TQString::null, TDEStorageMountOptions mountOptions=TDEStorageMountOptions(), TQString* errRet=0, int* retcode=0);
 
 		/**
 		* Mounts the encrypted device if the correct passphrase is given
@@ -187,7 +189,7 @@ class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 		*
 		* @return a TQString with the mount path, if successful
 		*/
-		TQString mountEncryptedDevice(TQString passphrase, TQString mediaName=TQString::null, TQString mountOptions=TQString::null, TQString* errRet=0, int* retcode=0);
+		TQString mountEncryptedDevice(TQString passphrase, TQString mediaName=TQString::null, TDEStorageMountOptions mountOptions=TDEStorageMountOptions(), TQString* errRet=0, int* retcode=0);
 
 		/**
 		* Unmounts the device

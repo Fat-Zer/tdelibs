@@ -128,7 +128,14 @@ public:
    * @param GUIenabled Set to false to disable all GUI stuff. This implies
    * no styles either.
    */
+  TDEApplication( bool allowStyles=true, bool GUIenabled=true, bool SMenabled=true);
+
+#ifdef TDEAPPLICATION_BINARY_COMPAT_HACK
+  // FIXME
+  // FOR BINARY COMPATIBILITY ONLY
+  // REMOVE WHEN PRACTICAL!
   TDEApplication( bool allowStyles=true, bool GUIenabled=true);
+#endif // TDEAPPLICATION_BINARY_COMPAT_HACK
 
 #ifdef Q_WS_X11
   /**
@@ -257,8 +264,16 @@ public:
    */
   // REMOVE FOR KDE 4.0 - using it only gives crashing applications because
   // TDECmdLineArgs::init isn't called
- TDEApplication(int& argc, char** argv,
-              const TQCString& rAppName, bool allowStyles=true, bool GUIenabled=true) KDE_DEPRECATED;
+  TDEApplication(int& argc, char** argv,
+              const TQCString& rAppName, bool allowStyles=true, bool GUIenabled=true, bool SMenabled=true) KDE_DEPRECATED;
+
+#ifdef TDEAPPLICATION_BINARY_COMPAT_HACK
+  // FIXME
+  // FOR BINARY COMPATIBILITY ONLY
+  // REMOVE WHEN PRACTICAL!
+  TDEApplication(int& argc, char** argv,
+              const TQCString& rAppName, bool allowStyles, bool GUIenabled) KDE_DEPRECATED;
+#endif // TDEAPPLICATION_BINARY_COMPAT_HACK
 
   /**
     * Add Qt and KDE command line options to TDECmdLineArgs.
@@ -1211,6 +1226,13 @@ public:
    * @since 3.1
    */
   static uint mouseState() KDE_DEPRECATED;
+
+   /**
+   * Returns the VT that the current X server is running on, or -1 if this information is unavailable.
+   *
+   * @since 14.0.0
+   */
+  static int currentX11VT();
 
 
 public slots:

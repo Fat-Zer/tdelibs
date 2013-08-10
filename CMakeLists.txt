@@ -17,7 +17,7 @@ cmake_minimum_required( VERSION 2.8 )
 project( tdelibs )
 
 set( PACKAGE tdelibs )
-set( VERSION "3.5.13" )
+set( VERSION R14.0.0 )
 
 
 ##### include essential cmake modules ###########
@@ -591,6 +591,8 @@ endif( XRANDR_FOUND )
 pkg_search_module( XRENDER xrender )
 if( XRENDER_FOUND )
   set( HAVE_XRENDER 1 )
+else( XRENDER_FOUND)
+  message(FATAL_ERROR "\nxrender support is required, but not found on your system" )
 endif( XRENDER_FOUND )
 
 ##### check for xcomposite #########################

@@ -35,7 +35,14 @@
 #undef QT_NO_TRANSLATION
 #undef TQT_NO_TRANSLATION
 #include <tqtranslator.h>
+
+// FIXME
+// FOR BINARY COMPATIBILITY ONLY
+// REMOVE WHEN PRACTICAL!
+#define TDEAPPLICATION_BINARY_COMPAT_HACK 1
 #include "tdeapplication.h"
+#undef TDEAPPLICATION_BINARY_COMPAT_HACK
+
 #define QT_NO_TRANSLATION
 #define TQT_NO_TRANSLATION
 #include <tqdir.h>
@@ -168,6 +175,14 @@ typedef void* IceIOErrorHandler;
 #include <tqimage.h>
 #endif
 
+#if defined Q_WS_X11
+#include <sys/ioctl.h>
+#include <linux/vt.h>
+extern "C" {
+extern int getfd(const char *fnam);
+}
+#endif
+
 #include "kappdcopiface.h"
 
 // exported for tdm kfrontend
@@ -234,6 +249,67 @@ void TDEApplication_init_windows(bool GUIenabled);
 
 class QAssistantClient;
 #endif
+
+#ifdef Q_WS_X11
+// --------------------------------------------------------------------------------------
+// Get the VT number X is running on
+// (code taken from GDM, daemon/getvt.c, GPLv2+)
+// --------------------------------------------------------------------------------------
+int get_x_vtnum(Display *dpy)
+{
+	Atom prop;
+	Atom actualtype;
+	int actualformat;
+	unsigned long nitems;
+	unsigned long bytes_after;
+	unsigned char *buf;
+	int num;
+	
+	prop = XInternAtom (dpy, "XFree86_VT", False);
+	if (prop == None)
+	return -1;
+	
+	if (XGetWindowProperty (dpy, DefaultRootWindow (dpy), prop, 0, 1,
+				False, AnyPropertyType, &actualtype, &actualformat,
+				&nitems, &bytes_after, &buf)) {
+		return -1;
+	}
+	
+	if (nitems != 1) {
+		XFree (buf);
+		return -1;
+	}
+	
+	switch (actualtype) {
+		case XA_CARDINAL:
+		case XA_INTEGER:
+		case XA_WINDOW:
+		switch (actualformat) {
+			case 8:
+				num = (*(uint8_t  *)(void *)buf);
+			break;
+			case 16:
+				num = (*(uint16_t *)(void *)buf);
+			break;
+			case 32:
+				num = (*(uint32_t *)(void *)buf);
+			break;
+			default:
+				XFree (buf);
+				return -1;
+			}
+		break;
+		default:
+		XFree (buf);
+		return -1;
+	}
+	
+	XFree (buf);
+	
+	return num;
+}
+// --------------------------------------------------------------------------------------
+#endif // Q_WS_X11
 
 /*
   Private data to make keeping binary compatibility easier
@@ -622,6 +698,34 @@ static SmcConn tmpSmcConnection = 0;
 static TQTime* smModificationTime = 0;
 
 TDEApplication::TDEApplication( int& argc, char** argv, const TQCString& rAppName,
+                            bool allowStyles, bool GUIenabled, bool SMenabled ) :
+  TQApplication( argc, argv, GUIenabled, SMenabled ), TDEInstance(rAppName),
+#ifdef Q_WS_X11
+  display(0L),
+  argb_visual(false),
+#endif
+  d (new TDEApplicationPrivate())
+{
+    aIconPixmap.pm.icon = 0L;
+    aIconPixmap.pm.miniIcon = 0L;
+    read_app_startup_id();
+    if (!GUIenabled)
+       allowStyles = false;
+    useStyles = allowStyles;
+    Q_ASSERT (!rAppName.isEmpty());
+    setName(rAppName);
+
+    installSigpipeHandler();
+    TDECmdLineArgs::initIgnore(argc, argv, rAppName.data());
+    parseCommandLine( );
+    init(GUIenabled);
+    d->m_KAppDCOPInterface = new KAppDCOPInterface(this);
+}
+
+// FIXME
+// FOR BINARY COMPATIBILITY ONLY
+// REMOVE WHEN PRACTICAL!
+TDEApplication::TDEApplication( int& argc, char** argv, const TQCString& rAppName,
                             bool allowStyles, bool GUIenabled ) :
   TQApplication( argc, argv, GUIenabled ), TDEInstance(rAppName),
 #ifdef Q_WS_X11
@@ -646,6 +750,33 @@ TDEApplication::TDEApplication( int& argc, char** argv, const TQCString& rAppNam
     d->m_KAppDCOPInterface = new KAppDCOPInterface(this);
 }
 
+TDEApplication::TDEApplication( bool allowStyles, bool GUIenabled, bool SMenabled ) :
+//  TQApplication( *TDECmdLineArgs::tqt_argc(), *TDECmdLineArgs::tqt_argv(), TRUE ),	// Qt4 requires that there always be a GUI
+  TQApplication( *TDECmdLineArgs::tqt_argc(), *TDECmdLineArgs::tqt_argv(), GUIenabled, SMenabled ),	// We need to be able to run command line apps
+  TDEInstance( TDECmdLineArgs::about),
+#ifdef Q_WS_X11
+  display(0L),
+  argb_visual(false),
+#endif
+  d (new TDEApplicationPrivate)
+{
+    aIconPixmap.pm.icon = 0L;
+    aIconPixmap.pm.miniIcon = 0L;
+    read_app_startup_id();
+    if (!GUIenabled)
+       allowStyles = false;
+    useStyles = allowStyles;
+    setName( instanceName() );
+
+    installSigpipeHandler();
+    parseCommandLine( );
+    init(GUIenabled);
+    d->m_KAppDCOPInterface = new KAppDCOPInterface(this);
+}
+
+// FIXME
+// FOR BINARY COMPATIBILITY ONLY
+// REMOVE WHEN PRACTICAL!
 TDEApplication::TDEApplication( bool allowStyles, bool GUIenabled ) :
 //  TQApplication( *TDECmdLineArgs::tqt_argc(), *TDECmdLineArgs::tqt_argv(), TRUE ),	// Qt4 requires that there always be a GUI
   TQApplication( *TDECmdLineArgs::tqt_argc(), *TDECmdLineArgs::tqt_argv(), GUIenabled ),	// We need to be able to run command line apps
@@ -3596,6 +3727,18 @@ TQ_ButtonState TDEApplication::keyboardMouseState()
 #endif
     return static_cast< ButtonState >( ret );
 }
+
+#if defined Q_WS_X11
+int TDEApplication::currentX11VT()
+{
+	return get_x_vtnum(TQPaintDevice::x11AppDisplay());
+}
+#else // Q_WS_X11
+int TDEApplication::currentX11VT()
+{
+	return -1;
+}
+#endif // Q_WS_X11
 
 void TDEApplication::installSigpipeHandler()
 {
