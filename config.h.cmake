@@ -48,7 +48,7 @@
 #cmakedefine HAVE_AWE_VOICE_H 1
 
 /* Define if execinfo.h exists and defines backtrace (GLIBC >= 2.1) */
-#undef HAVE_BACKTRACE
+#cmakedefine HAVE_BACKTRACE 1
 
 /* Define to 1 if you have the `bcopy' function. */
 #cmakedefine HAVE_BCOPY 1
