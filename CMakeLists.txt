@@ -266,6 +266,7 @@ check_symbol_exists( gethostbyname2_r "netdb.h" HAVE_GETHOSTBYNAME2_R )
 check_symbol_exists( gethostbyname_r "netdb.h" HAVE_GETHOSTBYNAME_R )
 check_symbol_exists( gai_strerror "sys/types.h;sys/socket.h;netdb.h" HAVE_GAI_STRERROR )
 check_symbol_exists( getaddrinfo "sys/types.h;sys/socket.h;netdb.h" HAVE_GETADDRINFO )
+check_symbol_exists( backtrace "execinfo.h" HAVE_BACKTRACE )
 
 check_function_exists( usleep HAVE_USLEEP )
 check_symbol_exists( usleep "unistd.h" HAVE_USLEEP_PROTO )
