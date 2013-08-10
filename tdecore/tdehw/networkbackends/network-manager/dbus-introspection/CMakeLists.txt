@@ -59,23 +59,8 @@ set( MOCHEADERS accesspointproxy.h deviceproxy.h networkmanagerproxy.h networkma
   networkmanagersettings.h connectionsettings.h )
 
 foreach( _header_file ${MOCHEADERS} )
-  get_filename_component( _basename "${_header_file}" NAME_WE )
-  set( _moc_file ${_basename}.moc )
-  list( APPEND _moc_files ${_moc_file} )
-  add_custom_command( OUTPUT ${_moc_file}
-    COMMAND ${TMOC_EXECUTABLE} ${_header_file} -o ${_moc_file}
-    DEPENDS ${_header_file} )
+  tde_moc( MOCSOURCES ${CMAKE_CURRENT_BINARY_DIR}/${_header_file} )
 endforeach( )
-
-add_custom_command( OUTPUT mocfiles.cpp
-  COMMAND cat ${_moc_files} > mocfiles.cpp
-  DEPENDS ${_moc_files} )
-
-# tde_automoc( accesspointproxy.h deviceproxy.h networkmanagerproxy.h
-#   networkmanagerpppproxy.h bluetoothproxy.h olpcmeshproxy.h
-#   ethernetproxy.h infinibandproxy.h wifiproxy.h wimaxproxy.h
-#   activeconnectionproxy.h vpnconnectionproxy.h vpnpluginproxy.h
-#   modemproxy.h networkmanagersettings.h connectionsettings.h ) 
 
 # build the library
 
@@ -85,6 +70,6 @@ tde_add_library( tdenm_dbus STATIC_PIC
     deviceproxy.cpp bluetoothproxy.cpp olpcmeshproxy.cpp ethernetproxy.cpp
     infinibandproxy.cpp wifiproxy.cpp wimaxproxy.cpp accesspointproxy.cpp
     networkmanagersettings.cpp connectionsettings.cpp
-    mocfiles.cpp activeconnectionproxy.cpp vpnconnectionproxy.cpp
-    vpnpluginproxy.cpp modemproxy.cpp
+    activeconnectionproxy.cpp vpnconnectionproxy.cpp
+    vpnpluginproxy.cpp modemproxy.cpp ${MOCSOURCES}
 )
