@@ -130,12 +130,15 @@ public:
    */
   TDEApplication( bool allowStyles=true, bool GUIenabled=true, bool SMenabled=true);
 
+#ifdef Q_QDOC
+#else // Q_QDOC
 #ifdef TDEAPPLICATION_BINARY_COMPAT_HACK
   // FIXME
   // FOR BINARY COMPATIBILITY ONLY
   // REMOVE WHEN PRACTICAL!
   TDEApplication( bool allowStyles=true, bool GUIenabled=true);
 #endif // TDEAPPLICATION_BINARY_COMPAT_HACK
+#endif // Q_QDOC
 
 #ifdef Q_WS_X11
   /**
@@ -267,6 +270,8 @@ public:
   TDEApplication(int& argc, char** argv,
               const TQCString& rAppName, bool allowStyles=true, bool GUIenabled=true, bool SMenabled=true) KDE_DEPRECATED;
 
+#ifdef Q_QDOC
+#else // Q_QDOC
 #ifdef TDEAPPLICATION_BINARY_COMPAT_HACK
   // FIXME
   // FOR BINARY COMPATIBILITY ONLY
@@ -274,6 +279,7 @@ public:
   TDEApplication(int& argc, char** argv,
               const TQCString& rAppName, bool allowStyles, bool GUIenabled) KDE_DEPRECATED;
 #endif // TDEAPPLICATION_BINARY_COMPAT_HACK
+#endif // Q_QDOC
 
   /**
     * Add Qt and KDE command line options to TDECmdLineArgs.
