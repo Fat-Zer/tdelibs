@@ -10,18 +10,22 @@
 #################################################
 
 add_subdirectory( hwlibdata )
-add_subdirectory( hwlibdaemons )
+tde_conditional_add_subdirectory( WITH_TDEHWLIB_DAEMONS hwlibdaemons )
 add_subdirectory( networkbackends )
 
 if( NOT DBUS_SYSTEM_BUS )
   set( DBUS_SYSTEM_BUS "unix:path=/var/run/dbus/system_bus_socket" CACHE INTERNAL "" FORCE )
 endif()
 
-if( WITH_UPOWER OR WITH_UDISKS OR WITH_UDISKS2 OR
+if( WITH_TDEHWLIB_DAEMONS OR WITH_UPOWER OR WITH_UDISKS OR WITH_UDISKS2 OR
     WITH_NETWORK_MANAGER_BACKEND OR WITH_CONSOLEKIT )
   list( APPEND TDEHW_CUSTOM_INCLUDE_DIRS ${DBUS_TQT_INCLUDE_DIRS} )
   list( APPEND TDEHW_CUSTOM_LIBRARY_DIRS ${DBUS_TQT_LIBRARY_DIRS} )
   list( APPEND TDEHW_CUSTOM_LIBRARIES ${DBUS_TQT_LIBRARIES} )
+endif( )
+
+if( WITH_TDEHWLIB_DAEMONS )
+  add_definitions( -DWITH_TDEHWLIB_DAEMONS )
 endif( )
 
 if( WITH_UPOWER )

@@ -30,13 +30,13 @@
 #include "config.h"
 
 // uPower
-#if defined(WITH_UPOWER)
+#if defined(WITH_TDEHWLIB_DAEMONS)
  	#include <tqdbusdata.h>
  	#include <tqdbusmessage.h>
  	#include <tqdbusproxy.h>
  	#include <tqdbusvariant.h>
  	#include <tqdbusconnection.h>
-#endif // defined(WITH_UPOWER)
+#endif // defined(WITH_TDEHWLIB_DAEMONS)
 
 
 TDECPUDevice::TDECPUDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
@@ -132,8 +132,9 @@ bool TDECPUDevice::canSetGovernor() {
 	if (rval == 0) {
 		return TRUE;
 	}
-	else {
-#ifdef WITH_UPOWER
+
+#ifdef WITH_TDEHWLIB_DAEMONS
+	{
 		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
 		if (dbusConn.isConnected()) {
 			TQT_DBusProxy hardwareControl("org.trinitydesktop.hardwarecontrol", "/org/trinitydesktop/hardwarecontrol", "org.trinitydesktop.hardwarecontrol.CPUGovernor", dbusConn);
@@ -145,33 +146,28 @@ bool TDECPUDevice::canSetGovernor() {
 				if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
 					return reply[0].toVariant().value.toBool();
 				}
-				else {
-					return FALSE;
-				}
-			}
-			else {
-				return FALSE;
 			}
 		}
-		else {
-			return FALSE;
-		}
-#else // WITH_UPOWER
-		return FALSE;
-#endif// WITH_UPOWER
 	}
+#endif // WITH_TDEHWLIB_DAEMONS
+
+	return FALSE;
 }
 
 void TDECPUDevice::setGovernor(TQString gv) {
+	bool setGovernorDone = FALSE;
+
 	TQString governornode = systemPath() + "/cpufreq/scaling_governor";
 	TQFile file( governornode );
 	if ( file.open( IO_WriteOnly ) ) {
 		TQTextStream stream( &file );
 		stream << gv.lower();
 		file.close();
+		setGovernorDone = TRUE;
 	}
-#ifdef WITH_UPOWER
-	else {
+
+#ifdef WITH_TDEHWLIB_DAEMONS
+	if ( !setGovernorDone ) {
 		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
 		if (dbusConn.isConnected()) {
 			TQT_DBusProxy hardwareControl("org.trinitydesktop.hardwarecontrol", "/org/trinitydesktop/hardwarecontrol", "org.trinitydesktop.hardwarecontrol.CPUGovernor", dbusConn);
@@ -179,20 +175,19 @@ void TDECPUDevice::setGovernor(TQString gv) {
 				// set CPU governor
 				TQValueList<TQT_DBusData> params;
 				params << TQT_DBusData::fromInt32(coreNumber()) << TQT_DBusData::fromString(gv.lower());
-				hardwareControl.sendWithReply("SetCPUGovernor", params);
+				TQT_DBusMessage reply = hardwareControl.sendWithReply("SetCPUGovernor", params);
+				if (reply.type() == TQT_DBusMessage::ReplyMessage) {
+					setGovernorDone = TRUE;
+				}
 			}
-			else {
-				return;
-			}
-		}
-		else {
-			return;
 		}
 	}
-#endif // WITH_UPOWER
+#endif // WITH_TDEHWLIB_DAEMONS
 
 	// Force update of the device information object
-	TDEGlobal::hardwareDevices()->processModifiedCPUs();
+	if ( setGovernorDone ) {
+		TDEGlobal::hardwareDevices()->processModifiedCPUs();
+	}
 }
 
 bool TDECPUDevice::canSetMaximumScalingFrequency() {

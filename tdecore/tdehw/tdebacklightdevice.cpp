@@ -26,13 +26,13 @@
 #include "config.h"
 
 // uPower
-#if defined(WITH_UPOWER)
+#if defined(WITH_TDEHWLIB_DAEMONS)
 	#include <tqdbusdata.h>
 	#include <tqdbusmessage.h>
 	#include <tqdbusproxy.h>
 	#include <tqdbusvariant.h>
 	#include <tqdbusconnection.h>
-#endif // defined(WITH_UPOWER)
+#endif // defined(WITH_TDEHWLIB_DAEMONS)
 
 TDEBacklightDevice::TDEBacklightDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
 }
@@ -70,8 +70,9 @@ bool TDEBacklightDevice::canSetBrightness() {
 	if (rval == 0) {
 		return TRUE;
 	}
-	else {
-#ifdef WITH_UPOWER
+
+#ifdef WITH_TDEHWLIB_DAEMONS
+	{
 		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
 		if (dbusConn.isConnected()) {
 			TQT_DBusProxy hardwareControl("org.trinitydesktop.hardwarecontrol", "/org/trinitydesktop/hardwarecontrol", "org.trinitydesktop.hardwarecontrol.Brightness", dbusConn);
@@ -83,21 +84,12 @@ bool TDEBacklightDevice::canSetBrightness() {
 				if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
 					return reply[0].toVariant().value.toBool();
 				}
-				else {
-					return FALSE;
-				}
-			}
-			else {
-				return FALSE;
 			}
 		}
-		else {
-			return FALSE;
-		}
-#else // WITH_UPOWER
-		return FALSE;
-#endif// WITH_UPOWER
 	}
+#endif // WITH_TDEHWLIB_DAEMONS
+
+	return FALSE;
 }
 
 int TDEBacklightDevice::rawBrightness() {
@@ -105,6 +97,8 @@ int TDEBacklightDevice::rawBrightness() {
 }
 
 void TDEBacklightDevice::setRawBrightness(int br) {
+	bool setRawBrightnessDone = FALSE;
+
 	TQString brightnessnode = systemPath() + "/brightness";
 	TQString brightnessCommand = TQString("%1").arg(br);
 	TQFile file( brightnessnode );
@@ -112,9 +106,11 @@ void TDEBacklightDevice::setRawBrightness(int br) {
 		TQTextStream stream( &file );
 		stream << brightnessCommand;
 		file.close();
+		setRawBrightnessDone = TRUE;
 	}
-#ifdef WITH_UPOWER
-	else {
+
+#ifdef WITH_TDEHWLIB_DAEMONS
+	if ( !setRawBrightnessDone ) {
 		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
 		if (dbusConn.isConnected()) {
 			TQT_DBusProxy hardwareControl("org.trinitydesktop.hardwarecontrol", "/org/trinitydesktop/hardwarecontrol", "org.trinitydesktop.hardwarecontrol.Brightness", dbusConn);
@@ -122,17 +118,15 @@ void TDEBacklightDevice::setRawBrightness(int br) {
 				// set brightness
 				TQValueList<TQT_DBusData> params;
 				params << TQT_DBusData::fromString(brightnessnode) << TQT_DBusData::fromString(brightnessCommand);
-				hardwareControl.sendWithReply("SetBrightness", params);
+				TQT_DBusMessage reply = hardwareControl.sendWithReply("SetBrightness", params);
+				if (reply.type() == TQT_DBusMessage::ReplyMessage) {
+					setRawBrightnessDone = TRUE;
+				}
 			}
-			else {
-				return;
-			}
-		}
-		else {
-			return;
 		}
 	}
-#endif // WITH_UPOWER
+#endif // WITH_TDEHWLIB_DAEMONS
+
 }
 
 #include "tdebacklightdevice.moc"
