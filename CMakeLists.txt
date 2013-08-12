@@ -84,6 +84,7 @@ OPTION( WITH_GCC_VISIBILITY "Enable fvisibility and fvisibility-inlines-hidden" 
 OPTION( WITH_INOTIFY "Enable inotify support for tdeio" ON )
 OPTION( WITH_GAMIN "Enable FAM/GAMIN support" ${WITH_ALL_OPTIONS} )
 option( WITH_TDEHWLIB_DAEMONS "Enable daemons for TDE hwlib" ${WITH_ALL_OPTIONS} )
+option( WITH_HAL "Enable HAL support" OFF )
 option( WITH_UPOWER "Enable uPower support" ${WITH_ALL_OPTIONS} )
 option( WITH_UDISKS "Enable uDisks support" ${WITH_ALL_OPTIONS} )
 option( WITH_UDISKS2 "Enable uDisks2 support" ${WITH_ALL_OPTIONS} )

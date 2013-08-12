@@ -30,13 +30,13 @@
 #include "config.h"
 
 // uPower
-#if defined(WITH_TDEHWLIB_DAEMONS)
+#if defined(WITH_TDEHWLIB_DAEMONS) || defined(WITH_HAL)
  	#include <tqdbusdata.h>
  	#include <tqdbusmessage.h>
  	#include <tqdbusproxy.h>
  	#include <tqdbusvariant.h>
  	#include <tqdbusconnection.h>
-#endif // defined(WITH_TDEHWLIB_DAEMONS)
+#endif // defined(WITH_TDEHWLIB_DAEMONS) || defined(WITH_HAL)
 
 
 TDECPUDevice::TDECPUDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
@@ -151,6 +151,23 @@ bool TDECPUDevice::canSetGovernor() {
 	}
 #endif // WITH_TDEHWLIB_DAEMONS
 
+#ifdef WITH_HAL
+	{
+		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+		if (dbusConn.isConnected()) {
+			TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
+						"org.freedesktop.Hal",
+						"/org/freedesktop/Hal/devices/computer",
+						"org.freedesktop.Hal.Device.CPUFreq",
+						"GetCPUFreqGovernor");
+			TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
+			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+				return true;
+			}
+		}
+	}
+#endif // WITH_HAL
+
 	return FALSE;
 }
 
@@ -183,6 +200,24 @@ void TDECPUDevice::setGovernor(TQString gv) {
 		}
 	}
 #endif // WITH_TDEHWLIB_DAEMONS
+
+#ifdef WITH_HAL
+	if ( !setGovernorDone ) {
+		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+		if (dbusConn.isConnected()) {
+			TQT_DBusProxy cpuFreqControl("org.freedesktop.Hal", "/org/freedesktop/Hal/devices/computer", "org.freedesktop.Hal.Device.CPUFreq", dbusConn);
+			if (cpuFreqControl.canSend()) {
+				// set CPU governor
+				TQValueList<TQT_DBusData> params;
+				params << TQT_DBusData::fromString(gv.lower());
+				TQT_DBusMessage reply = cpuFreqControl.sendWithReply("SetCPUFreqGovernor", params);
+				if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+					setGovernorDone = TRUE;
+				}
+			}
+		}
+	}
+#endif // WITH_HAL
 
 	// Force update of the device information object
 	if ( setGovernorDone ) {

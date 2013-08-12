@@ -123,8 +123,9 @@ bool TDERootSystemDevice::canSuspend() {
 			return FALSE;
 		}
 	}
-	else {
+
 #ifdef WITH_UPOWER
+	{
 		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
 		if (dbusConn.isConnected()) {
 			TQT_DBusProxy upowerProperties("org.freedesktop.UPower", "/org/freedesktop/UPower", "org.freedesktop.DBus.Properties", dbusConn);
@@ -136,21 +137,38 @@ bool TDERootSystemDevice::canSuspend() {
 				if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
 					return reply[0].toVariant().value.toBool();
 				}
-				else {
-					return FALSE;
+			}
+		}
+	}
+#endif// WITH_UPOWER
+
+#ifdef WITH_HAL
+	{
+		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+		if (dbusConn.isConnected()) {
+			TQT_DBusProxy halProperties("org.freedesktop.Hal", "/org/freedesktop/Hal/devices/computer", "org.freedesktop.Hal.Device", dbusConn);
+			if (halProperties.canSend()) {
+				// can suspend?
+				TQValueList<TQT_DBusData> params;
+				TQT_DBusMessage reply;
+				params.clear();
+				params << TQT_DBusData::fromString("power_management.can_suspend");
+				reply = halProperties.sendWithReply("GetPropertyBoolean", params);
+				if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+					return reply[0].toBool();
+				}
+				params.clear();
+				params << TQT_DBusData::fromString("power_management.can_suspend_to_ram");
+				reply = halProperties.sendWithReply("GetPropertyBoolean", params);
+				if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+					return reply[0].toBool();
 				}
 			}
-			else {
-				return FALSE;
-			}
 		}
-		else {
-			return FALSE;
-		}
-#else // WITH_UPOWER
-		return FALSE;
-#endif// WITH_UPOWER
 	}
+#endif // WITH_HAL
+
+	return FALSE;
 }
 
 bool TDERootSystemDevice::canHibernate() {
@@ -164,8 +182,9 @@ bool TDERootSystemDevice::canHibernate() {
 			return FALSE;
 		}
 	}
-	else {
+
 #ifdef WITH_UPOWER
+	{
 		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
 		if (dbusConn.isConnected()) {
 			TQT_DBusProxy upowerProperties("org.freedesktop.UPower", "/org/freedesktop/UPower", "org.freedesktop.DBus.Properties", dbusConn);
@@ -177,21 +196,38 @@ bool TDERootSystemDevice::canHibernate() {
 				if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
 					return reply[0].toVariant().value.toBool();
 				}
-				else {
-					return FALSE;
+			}
+		}
+	}
+#endif// WITH_UPOWER
+
+#ifdef WITH_HAL
+	{
+		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+		if (dbusConn.isConnected()) {
+			TQT_DBusProxy halProperties("org.freedesktop.Hal", "/org/freedesktop/Hal/devices/computer", "org.freedesktop.Hal.Device", dbusConn);
+			if (halProperties.canSend()) {
+				// can hibernate?
+				TQValueList<TQT_DBusData> params;
+				TQT_DBusMessage reply;
+				params.clear();
+				params << TQT_DBusData::fromString("power_management.can_hibernate");
+				reply = halProperties.sendWithReply("GetPropertyBoolean", params);
+				if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+					return reply[0].toBool();
+				}
+				params.clear();
+				params << TQT_DBusData::fromString("power_management.can_suspend_to_disk");
+				reply = halProperties.sendWithReply("GetPropertyBoolean", params);
+				if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+					return reply[0].toBool();
 				}
 			}
-			else {
-				return FALSE;
-			}
 		}
-		else {
-			return FALSE;
-		}
-#else // WITH_UPOWER
-		return FALSE;
-#endif// WITH_UPOWER
 	}
+#endif // WITH_HAL
+
+	return FALSE;
 }
 
 bool TDERootSystemDevice::canPowerOff() {
@@ -324,8 +360,9 @@ bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState
 			file.close();
 			return true;
 		}
-		else {
+
 #ifdef WITH_UPOWER
+		{
 			TQT_DBusConnection dbusConn;
 			dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
 			if ( dbusConn.isConnected() ) {
@@ -335,8 +372,10 @@ bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState
 								"/org/freedesktop/UPower",
 								"org.freedesktop.UPower",
 								"Suspend");
-					dbusConn.sendWithReply(msg);
-					return true;
+					TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
+					if (reply.type() == TQT_DBusMessage::ReplyMessage) {
+						return true;
+					}
 				}
 				else if (ps == TDESystemPowerState::Hibernate) {
 					TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
@@ -344,20 +383,49 @@ bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState
 								"/org/freedesktop/UPower",
 								"org.freedesktop.UPower",
 								"Hibernate");
-					dbusConn.sendWithReply(msg);
-					return true;
-				}
-				else {
-					return false;
+					TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
+					if (reply.type() == TQT_DBusMessage::ReplyMessage) {
+						return true;
+					}
 				}
 			}
-			else {
-				return false;
-			}
-#else // WITH_UPOWER
-			return false;
-#endif // WITH_UPOWER
 		}
+#endif // WITH_UPOWER
+
+#ifdef WITH_HAL
+		{
+			TQT_DBusConnection dbusConn;
+			dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+			if ( dbusConn.isConnected() ) {
+				if (ps == TDESystemPowerState::Suspend) {
+					TQT_DBusProxy halPowerManagement(
+							"org.freedesktop.Hal",
+							"/org/freedesktop/Hal/devices/computer",
+							"org.freedesktop.Hal.Device.SystemPowerManagement",
+							dbusConn);
+					TQValueList<TQT_DBusData> params;
+					params << TQT_DBusData::fromInt32(0);
+					TQT_DBusMessage reply = halPowerManagement.sendWithReply("Suspend", params);
+					if (reply.type() == TQT_DBusMessage::ReplyMessage) {
+						return true;
+					}
+				}
+				else if (ps == TDESystemPowerState::Hibernate) {
+					TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
+								"org.freedesktop.Hal",
+								"/org/freedesktop/Hal/devices/computer",
+								"org.freedesktop.Hal.Device.SystemPowerManagement",
+								"Hibernate");
+					TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
+					if (reply.type() == TQT_DBusMessage::ReplyMessage) {
+						return true;
+					}
+				}
+			}
+		}
+#endif // WITH_HAL
+
+		return false;
 	}
 	else if (ps == TDESystemPowerState::PowerOff) {
 #ifdef WITH_CONSOLEKIT
