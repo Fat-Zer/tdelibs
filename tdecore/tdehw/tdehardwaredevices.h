@@ -34,7 +34,9 @@
 // FIXME delete those headers after complete fixing everything in over modules
 #include "tdegenericdevice.h"
 #include "kiconloader.h"
+extern "C" {
 #include <libudev.h>
+}
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>

@@ -33,7 +33,9 @@
 #include <tdeapplication.h>
 #include <dcopclient.h>
 
+extern "C" {
 #include <libudev.h>
+}
 
 #include <stdlib.h>
 #include <unistd.h>
