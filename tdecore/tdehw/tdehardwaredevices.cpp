@@ -899,9 +899,35 @@ TDEDiskDeviceType::TDEDiskDeviceType classifyDiskType(udev_device* dev, const TQ
 		if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA")) == "1") {
 			disktype = disktype | TDEDiskDeviceType::CDROM;
 		}
+		if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_CD_R")) == "1") {
+			disktype = disktype | TDEDiskDeviceType::CDR;
+			disktype = disktype & ~TDEDiskDeviceType::CDROM;
+		}
 		if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_CD_RW")) == "1") {
 			disktype = disktype | TDEDiskDeviceType::CDRW;
 			disktype = disktype & ~TDEDiskDeviceType::CDROM;
+			disktype = disktype & ~TDEDiskDeviceType::CDR;
+		}
+		if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_MRW")) == "1") {
+			disktype = disktype | TDEDiskDeviceType::CDMRRW;
+			disktype = disktype & ~TDEDiskDeviceType::CDROM;
+			disktype = disktype & ~TDEDiskDeviceType::CDR;
+			disktype = disktype & ~TDEDiskDeviceType::CDRW;
+		}
+		if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_MRW_W")) == "1") {
+			disktype = disktype | TDEDiskDeviceType::CDMRRWW;
+			disktype = disktype & ~TDEDiskDeviceType::CDROM;
+			disktype = disktype & ~TDEDiskDeviceType::CDR;
+			disktype = disktype & ~TDEDiskDeviceType::CDRW;
+			disktype = disktype & ~TDEDiskDeviceType::CDMRRW;
+		}
+		if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_MO")) == "1") {
+			disktype = disktype | TDEDiskDeviceType::CDMO;
+			disktype = disktype & ~TDEDiskDeviceType::CDROM;
+			disktype = disktype & ~TDEDiskDeviceType::CDR;
+			disktype = disktype & ~TDEDiskDeviceType::CDRW;
+			disktype = disktype & ~TDEDiskDeviceType::CDMRRW;
+			disktype = disktype & ~TDEDiskDeviceType::CDMRRWW;
 		}
 		if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD")) == "1") {
 			disktype = disktype | TDEDiskDeviceType::DVDROM;
@@ -911,45 +937,95 @@ TDEDiskDeviceType::TDEDiskDeviceType classifyDiskType(udev_device* dev, const TQ
 			disktype = disktype | TDEDiskDeviceType::DVDRAM;
 			disktype = disktype & ~TDEDiskDeviceType::DVDROM;
 		}
-		if ((TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_R")) == "1")
-			|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_R_DL")) == "1")
-			|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_PLUS_R")) == "1")
-			|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_MINUS_R")) == "1")
-			|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_PLUS_R_DL")) == "1")
-			|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_MINUS_R_DL")) == "1")
-			) {
-			disktype = disktype | TDEDiskDeviceType::DVDRW;
+		if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_R")) == "1") {
+			disktype = disktype | TDEDiskDeviceType::DVDR;
 			disktype = disktype & ~TDEDiskDeviceType::DVDROM;
 		}
-		if ((TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_RW")) == "1")
-			|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_RW_DL")) == "1")
-			|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_PLUS_RW")) == "1")
-			|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_MINUS_RW")) == "1")
-			|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_PLUS_RW_DL")) == "1")
-			|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_MINUS_RW_DL")) == "1")
-			) {
-			disktype = disktype | TDEDiskDeviceType::DVDRW;	// FIXME
+		if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_R_DL")) == "1") {
+			disktype = disktype | TDEDiskDeviceType::DVDRDL;
 			disktype = disktype & ~TDEDiskDeviceType::DVDROM;
+			disktype = disktype & ~TDEDiskDeviceType::DVDR;
+		}
+		if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_PLUS_R")) == "1") {
+			disktype = disktype | TDEDiskDeviceType::DVDPLUSR;
+			disktype = disktype & ~TDEDiskDeviceType::DVDROM;
+			disktype = disktype & ~TDEDiskDeviceType::DVDR;
+			disktype = disktype & ~TDEDiskDeviceType::DVDRDL;
+		}
+		if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_PLUS_R_DL")) == "1") {
+			disktype = disktype | TDEDiskDeviceType::DVDPLUSRDL;
+			disktype = disktype & ~TDEDiskDeviceType::DVDROM;
+			disktype = disktype & ~TDEDiskDeviceType::DVDR;
+			disktype = disktype & ~TDEDiskDeviceType::DVDRDL;
+			disktype = disktype & ~TDEDiskDeviceType::DVDPLUSR;
+		}
+		if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_RW")) == "1") {
+			disktype = disktype | TDEDiskDeviceType::DVDRW;
+			disktype = disktype & ~TDEDiskDeviceType::DVDROM;
+			disktype = disktype & ~TDEDiskDeviceType::DVDR;
+			disktype = disktype & ~TDEDiskDeviceType::DVDRDL;
+			disktype = disktype & ~TDEDiskDeviceType::DVDPLUSR;
+			disktype = disktype & ~TDEDiskDeviceType::DVDPLUSRDL;
+		}
+		if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_RW_DL")) == "1") {
+			disktype = disktype | TDEDiskDeviceType::DVDRWDL;
+			disktype = disktype & ~TDEDiskDeviceType::DVDROM;
+			disktype = disktype & ~TDEDiskDeviceType::DVDR;
+			disktype = disktype & ~TDEDiskDeviceType::DVDRDL;
+			disktype = disktype & ~TDEDiskDeviceType::DVDPLUSR;
+			disktype = disktype & ~TDEDiskDeviceType::DVDPLUSRDL;
+			disktype = disktype & ~TDEDiskDeviceType::DVDRW;
+		}
+		if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_PLUS_RW")) == "1") {
+			disktype = disktype | TDEDiskDeviceType::DVDPLUSRW;
+			disktype = disktype & ~TDEDiskDeviceType::DVDROM;
+			disktype = disktype & ~TDEDiskDeviceType::DVDR;
+			disktype = disktype & ~TDEDiskDeviceType::DVDRDL;
+			disktype = disktype & ~TDEDiskDeviceType::DVDPLUSR;
+			disktype = disktype & ~TDEDiskDeviceType::DVDPLUSRDL;
+			disktype = disktype & ~TDEDiskDeviceType::DVDRW;
+			disktype = disktype & ~TDEDiskDeviceType::DVDRWDL;
+		}
+		if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_DVD_PLUS_RW_DL")) == "1") {
+			disktype = disktype | TDEDiskDeviceType::DVDPLUSRWDL;
+			disktype = disktype & ~TDEDiskDeviceType::DVDROM;
+			disktype = disktype & ~TDEDiskDeviceType::DVDR;
+			disktype = disktype & ~TDEDiskDeviceType::DVDRDL;
+			disktype = disktype & ~TDEDiskDeviceType::DVDPLUSR;
+			disktype = disktype & ~TDEDiskDeviceType::DVDPLUSRDL;
+			disktype = disktype & ~TDEDiskDeviceType::DVDRW;
+			disktype = disktype & ~TDEDiskDeviceType::DVDRWDL;
+			disktype = disktype & ~TDEDiskDeviceType::DVDPLUSRW;
 		}
 		if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_BD")) == "1") {
 			disktype = disktype | TDEDiskDeviceType::BDROM;
 			disktype = disktype & ~TDEDiskDeviceType::CDROM;
 		}
 		if ((TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_BD_R")) == "1")
-			|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_BD_R_DL")) == "1")
-			|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_BD_PLUS_R")) == "1")
-			|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_BD_MINUS_R")) == "1")
+			|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_BD_R_DL")) == "1")	// FIXME There is no official udev attribute for this type of disc (yet!)
 			) {
-			disktype = disktype | TDEDiskDeviceType::BDRW;	// FIXME
+			disktype = disktype | TDEDiskDeviceType::BDR;
 			disktype = disktype & ~TDEDiskDeviceType::BDROM;
 		}
-		if ((TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_BD_RW")) == "1")
-			|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_BD_RW_DL")) == "1")
-			|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_BD_PLUS_RW")) == "1")
-			|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_BD_MINUS_RW")) == "1")
+		if ((TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_BD_RE")) == "1")
+			|| (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_BD_RE_DL")) == "1")	// FIXME There is no official udev attribute for this type of disc (yet!)
 			) {
 			disktype = disktype | TDEDiskDeviceType::BDRW;
 			disktype = disktype & ~TDEDiskDeviceType::BDROM;
+			disktype = disktype & ~TDEDiskDeviceType::BDR;
+		}
+		if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_HDDVD")) == "1") {
+			disktype = disktype | TDEDiskDeviceType::HDDVDROM;
+			disktype = disktype & ~TDEDiskDeviceType::CDROM;
+		}
+		if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_HDDVD_R")) == "1") {
+			disktype = disktype | TDEDiskDeviceType::HDDVDR;
+			disktype = disktype & ~TDEDiskDeviceType::HDDVDROM;
+		}
+		if (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_HDDVD_RW")) == "1") {
+			disktype = disktype | TDEDiskDeviceType::HDDVDRW;
+			disktype = disktype & ~TDEDiskDeviceType::HDDVDROM;
+			disktype = disktype & ~TDEDiskDeviceType::HDDVDR;
 		}
 		if (!TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_TRACK_COUNT_AUDIO")).isNull()) {
 			disktype = disktype | TDEDiskDeviceType::CDAudio;
@@ -1153,8 +1229,20 @@ TDEDiskDeviceType::TDEDiskDeviceType readDiskDeviceSubtypeFromString(TQString qu
 	if (query == "CDROM") {
 		ret = ret | TDEDiskDeviceType::CDROM;
 	}
+	if (query == "CDR") {
+		ret = ret | TDEDiskDeviceType::CDR;
+	}
 	if (query == "CDRW") {
 		ret = ret | TDEDiskDeviceType::CDRW;
+	}
+	if (query == "CDMO") {
+		ret = ret | TDEDiskDeviceType::CDMO;
+	}
+	if (query == "CDMRRW") {
+		ret = ret | TDEDiskDeviceType::CDMRRW;
+	}
+	if (query == "CDMRRWW") {
+		ret = ret | TDEDiskDeviceType::CDMRRWW;
 	}
 	if (query == "DVDROM") {
 		ret = ret | TDEDiskDeviceType::DVDROM;
@@ -1162,14 +1250,47 @@ TDEDiskDeviceType::TDEDiskDeviceType readDiskDeviceSubtypeFromString(TQString qu
 	if (query == "DVDRAM") {
 		ret = ret | TDEDiskDeviceType::DVDRAM;
 	}
+	if (query == "DVDR") {
+		ret = ret | TDEDiskDeviceType::DVDR;
+	}
 	if (query == "DVDRW") {
 		ret = ret | TDEDiskDeviceType::DVDRW;
+	}
+	if (query == "DVDRDL") {
+		ret = ret | TDEDiskDeviceType::DVDRDL;
+	}
+	if (query == "DVDRWDL") {
+		ret = ret | TDEDiskDeviceType::DVDRWDL;
+	}
+	if (query == "DVDPLUSR") {
+		ret = ret | TDEDiskDeviceType::DVDPLUSR;
+	}
+	if (query == "DVDPLUSRW") {
+		ret = ret | TDEDiskDeviceType::DVDPLUSRW;
+	}
+	if (query == "DVDPLUSRDL") {
+		ret = ret | TDEDiskDeviceType::DVDPLUSRDL;
+	}
+	if (query == "DVDPLUSRWDL") {
+		ret = ret | TDEDiskDeviceType::DVDPLUSRWDL;
 	}
 	if (query == "BDROM") {
 		ret = ret | TDEDiskDeviceType::BDROM;
 	}
+	if (query == "BDR") {
+		ret = ret | TDEDiskDeviceType::BDR;
+	}
 	if (query == "BDRW") {
 		ret = ret | TDEDiskDeviceType::BDRW;
+	}
+	if (query == "HDDVDROM") {
+		ret = ret | TDEDiskDeviceType::HDDVDROM;
+	}
+	if (query == "HDDVDR") {
+		ret = ret | TDEDiskDeviceType::HDDVDR;
+	}
+	if (query == "HDDVDRW") {
+		ret = ret | TDEDiskDeviceType::HDDVDRW;
 	}
 	if (query == "Zip") {
 		ret = ret | TDEDiskDeviceType::Zip;
@@ -2146,12 +2267,27 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 			disktype = sdevice->diskType();						// The type can be overridden by an external rule
 	
 			if ((disktype & TDEDiskDeviceType::CDROM)
+				|| (disktype & TDEDiskDeviceType::CDR)
 				|| (disktype & TDEDiskDeviceType::CDRW)
+				|| (disktype & TDEDiskDeviceType::CDMO)
+				|| (disktype & TDEDiskDeviceType::CDMRRW)
+				|| (disktype & TDEDiskDeviceType::CDMRRWW)
 				|| (disktype & TDEDiskDeviceType::DVDROM)
 				|| (disktype & TDEDiskDeviceType::DVDRAM)
+				|| (disktype & TDEDiskDeviceType::DVDR)
 				|| (disktype & TDEDiskDeviceType::DVDRW)
+				|| (disktype & TDEDiskDeviceType::DVDRDL)
+				|| (disktype & TDEDiskDeviceType::DVDRWDL)
+				|| (disktype & TDEDiskDeviceType::DVDPLUSR)
+				|| (disktype & TDEDiskDeviceType::DVDPLUSRW)
+				|| (disktype & TDEDiskDeviceType::DVDPLUSRDL)
+				|| (disktype & TDEDiskDeviceType::DVDPLUSRWDL)
 				|| (disktype & TDEDiskDeviceType::BDROM)
+				|| (disktype & TDEDiskDeviceType::BDR)
 				|| (disktype & TDEDiskDeviceType::BDRW)
+				|| (disktype & TDEDiskDeviceType::HDDVDROM)
+				|| (disktype & TDEDiskDeviceType::HDDVDR)
+				|| (disktype & TDEDiskDeviceType::HDDVDRW)
 				|| (disktype & TDEDiskDeviceType::CDAudio)
 				|| (disktype & TDEDiskDeviceType::CDVideo)
 				|| (disktype & TDEDiskDeviceType::DVDVideo)
@@ -2297,11 +2433,27 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 	
 			// Clean up disk label
 			if ((sdevice->isDiskOfType(TDEDiskDeviceType::CDROM))
+				|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDR))
 				|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDRW))
+				|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDMO))
+				|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDMRRW))
+				|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDMRRWW))
 				|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDROM))
+				|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRAM))
+				|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDR))
 				|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRW))
+				|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRDL))
+				|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDRWDL))
+				|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDPLUSR))
+				|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDPLUSRW))
+				|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDPLUSRDL))
+				|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDPLUSRWDL))
 				|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDROM))
+				|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDR))
 				|| (sdevice->isDiskOfType(TDEDiskDeviceType::BDRW))
+				|| (sdevice->isDiskOfType(TDEDiskDeviceType::HDDVDROM))
+				|| (sdevice->isDiskOfType(TDEDiskDeviceType::HDDVDR))
+				|| (sdevice->isDiskOfType(TDEDiskDeviceType::HDDVDRW))
 				|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDAudio))
 				|| (sdevice->isDiskOfType(TDEDiskDeviceType::CDVideo))
 				|| (sdevice->isDiskOfType(TDEDiskDeviceType::DVDVideo))

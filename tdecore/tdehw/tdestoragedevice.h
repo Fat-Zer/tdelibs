@@ -24,54 +24,73 @@
 
 // Keep readDiskDeviceSubtypeFromString() in tdehardwaredevices.cpp in sync with this enum
 namespace TDEDiskDeviceType {
+#if __cplusplus >= 201103L
+enum TDEDiskDeviceType : unsigned long long {
+#else
 enum TDEDiskDeviceType {
-	Null =		0x00000000,
-	MediaDevice =	0x00000001,
-	Floppy =	0x00000002,
-	CDROM =		0x00000004,
-	CDRW =		0x00000008,
-	DVDROM =	0x00000010,
-	DVDRAM =	0x00000020,
-	DVDRW =		0x00000040,
-	BDROM =		0x00000080,
-	BDRW =		0x00000100,
-	Zip =		0x00000200,
-	Jaz =		0x00000400,
-	Camera =	0x00000800,
-	LUKS =		0x00001000,
-	OtherCrypted =	0x00002000,
-	CDAudio =	0x00004000,
-	CDVideo =	0x00008000,
-	DVDVideo =	0x00010000,
-	BDVideo =	0x00020000,
-	Flash =		0x00040000,
-	USB =		0x00080000,
-	Tape =		0x00100000,
-	HDD =		0x00200000,
-	Optical =	0x00400000,
-	RAM =		0x00800000,
-	Loop =		0x01000000,
-	CompactFlash =	0x02000000,
-	MemoryStick =	0x04000000,
-	SmartMedia =	0x08000000,
-	SDMMC =		0x10000000,
-	UnlockedCrypt =	0x20000000,
-	Other =		0x80000000
+#endif
+	Null =		0x0000000000000000ULL,
+	MediaDevice =	0x0000000000000001ULL,
+	Floppy =	0x0000000000000002ULL,
+	CDROM =		0x0000000000000004ULL,
+	CDR =		0x0000000000000008ULL,
+	CDRW =		0x0000000000000010ULL,
+	CDMO =		0x0000000000000020ULL,
+	CDMRRW =	0x0000000000000040ULL,
+	CDMRRWW =	0x0000000000000080ULL,
+	DVDROM =	0x0000000000000100ULL,
+	DVDRAM =	0x0000000000000200ULL,
+	DVDR =		0x0000000000000400ULL,
+	DVDRW =		0x0000000000000800ULL,
+	DVDRDL =	0x0000000000001000ULL,
+	DVDRWDL =	0x0000000000002000ULL,
+	DVDPLUSR =	0x0000000000004000ULL,
+	DVDPLUSRW =	0x0000000000008000ULL,
+	DVDPLUSRDL =	0x0000000000010000ULL,
+	DVDPLUSRWDL =	0x0000000000020000ULL,
+	BDROM =		0x0000000000040000ULL,
+	BDR =		0x0000000000080000ULL,
+	BDRW =		0x0000000000100000ULL,
+	HDDVDROM =	0x0000000000200000ULL,
+	HDDVDR =	0x0000000000400000ULL,
+	HDDVDRW =	0x0000000000800000ULL,
+	Zip =		0x0000000001000000ULL,
+	Jaz =		0x0000000002000000ULL,
+	Camera =	0x0000000004000000ULL,
+	LUKS =		0x0000000008000000ULL,
+	OtherCrypted =	0x0000000010000000ULL,
+	CDAudio =	0x0000000020000000ULL,
+	CDVideo =	0x0000000040000000ULL,
+	DVDVideo =	0x0000000080000000ULL,
+	BDVideo =	0x0000000100000000ULL,
+	Flash =		0x0000000200000000ULL,
+	USB =		0x0000000400000000ULL,
+	Tape =		0x0000000800000000ULL,
+	HDD =		0x0000001000000000ULL,
+	Optical =	0x0000002000000000ULL,
+	RAM =		0x0000004000000000ULL,
+	Loop =		0x0000008000000000ULL,
+	CompactFlash =	0x0000010000000000ULL,
+	MemoryStick =	0x0000020000000000ULL,
+	SmartMedia =	0x0000040000000000ULL,
+	SDMMC =		0x0000080000000000ULL,
+	UnlockedCrypt =	0x0000100000000000ULL,
+	Other =		0x8000000000000000ULL
 };
 
 inline TDEDiskDeviceType operator|(TDEDiskDeviceType a, TDEDiskDeviceType b)
 {
-	return static_cast<TDEDiskDeviceType>(static_cast<int>(a) | static_cast<int>(b));
+	return static_cast<TDEDiskDeviceType>(static_cast<unsigned long long>(a) | static_cast<unsigned long long>(b));
 }
 
 inline TDEDiskDeviceType operator&(TDEDiskDeviceType a, TDEDiskDeviceType b)
 {
-	return static_cast<TDEDiskDeviceType>(static_cast<int>(a) & static_cast<int>(b));
+	return static_cast<TDEDiskDeviceType>(static_cast<unsigned long long>(a) & static_cast<unsigned long long>(b));
 }
 
 inline TDEDiskDeviceType operator~(TDEDiskDeviceType a)
 {
-	return static_cast<TDEDiskDeviceType>(~static_cast<int>(a));
+	return static_cast<TDEDiskDeviceType>(~static_cast<unsigned long long>(a));
 }
 };
 
