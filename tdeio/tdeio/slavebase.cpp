@@ -66,6 +66,29 @@
 #endif
 #endif
 
+#ifndef NDEBUG
+#ifdef HAVE_BACKTRACE
+void print_trace()
+{
+	void *array[10];
+	size_t size;
+	char **strings;
+	size_t i;
+
+	size = backtrace (array, 10);
+	strings = backtrace_symbols (array, size);
+
+	printf ("[tdeioslave] Obtained %zd stack frames.\n\r", size);
+
+	for (i = 0; i < size; i++) {
+		printf ("[tdeioslave] %s\n\r", strings[i]);
+	}
+
+	free (strings);
+}
+#endif
+#endif
+
 using namespace TDEIO;
 
 template class TQPtrList<TQValueList<UDSAtom> >;
@@ -743,10 +766,7 @@ void SlaveBase::sigsegv_handler(int sig)
     write(2, buffer, strlen(buffer));
 #ifndef NDEBUG
 #ifdef HAVE_BACKTRACE
-    void* trace[256];
-    int n = backtrace(trace, 256);
-    if (n)
-      backtrace_symbols_fd(trace, n, 2);
+    print_trace();
 #endif
 #endif
     ::exit(1);

@@ -81,12 +81,13 @@ set( ${target}_SRCS
   kdirnotify.cpp kdirnotify.skel kdirnotify_stub.cpp
   observer.cpp ../misc/uiserver.stub observer.skel tdeemailsettings.cpp
   kprotocolinfo.cpp renamedlg.cpp skipdlg.cpp kremoteencoding.cpp
-  kmimetypechooser.cpp
+  kmimetypechooser.cpp backtrace_symbols.c
 )
 
 tde_add_library( ${target} STATIC_PIC AUTOMOC
   SOURCES ${${target}_SRCS}
   DEPENDENCIES dcopidl
+  LINK bfd
 )
 
 
