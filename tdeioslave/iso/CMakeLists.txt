@@ -17,6 +17,7 @@ include_directories(
   ${CMAKE_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_BINARY_DIR}/tdecore
+  ${CMAKE_SOURCE_DIR}/dcop
   ${CMAKE_SOURCE_DIR}/tdecore
   ${CMAKE_SOURCE_DIR}/tdeio
   ${CMAKE_SOURCE_DIR}/tdeio/tdeio
@@ -48,4 +49,19 @@ tde_add_kpart( ${target} AUTOMOC
   SOURCES ${${target}_SRCS}
   LINK isofs-static tdeio-shared
   DESTINATION ${PLUGIN_INSTALL_DIR}
+)
+
+##### tdeiso_info #################################
+
+set( target tdeiso_info )
+
+set( ${target}_SRCS
+  kisodirectory.cpp kisofile.cpp qfilehack.cpp
+  kiso.cpp tdeiso_info.cpp
+)
+
+tde_add_executable( ${target} AUTOMOC
+  SOURCES ${${target}_SRCS}
+  LINK isofs-static tdeio-shared
+  DESTINATION ${BIN_INSTALL_DIR}
 )

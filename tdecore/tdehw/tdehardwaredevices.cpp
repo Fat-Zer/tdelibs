@@ -816,7 +816,7 @@ void TDEHardwareDevices::processModifiedMounts() {
 	emit hardwareEvent(TDEHardwareEvent::MountTableModified, TQString());
 }
 
-TDEDiskDeviceType::TDEDiskDeviceType classifyDiskType(udev_device* dev, const TQString devicebus, const TQString disktypestring, const TQString systempath, const TQString devicevendor, const TQString devicemodel, const TQString filesystemtype, const TQString devicedriver) {
+TDEDiskDeviceType::TDEDiskDeviceType classifyDiskType(udev_device* dev, const TQString devicenode, const TQString devicebus, const TQString disktypestring, const TQString systempath, const TQString devicevendor, const TQString devicemodel, const TQString filesystemtype, const TQString devicedriver) {
 	// Classify a disk device type to the best of our ability
 	TDEDiskDeviceType::TDEDiskDeviceType disktype = TDEDiskDeviceType::Null;
 
@@ -1033,6 +1033,26 @@ TDEDiskDeviceType::TDEDiskDeviceType classifyDiskType(udev_device* dev, const TQ
 		if ((TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_VCD")) == "1") || (TQString(udev_device_get_property_value(dev, "ID_CDROM_MEDIA_SDVD")) == "1")) {
 			disktype = disktype | TDEDiskDeviceType::CDVideo;
 		}
+
+		if ((disktype & TDEDiskDeviceType::DVDROM)
+			|| (disktype & TDEDiskDeviceType::DVDRAM)
+			|| (disktype & TDEDiskDeviceType::DVDR)
+			|| (disktype & TDEDiskDeviceType::DVDRW)
+			|| (disktype & TDEDiskDeviceType::DVDRDL)
+			|| (disktype & TDEDiskDeviceType::DVDRWDL)
+			|| (disktype & TDEDiskDeviceType::DVDPLUSR)
+			|| (disktype & TDEDiskDeviceType::DVDPLUSRW)
+			|| (disktype & TDEDiskDeviceType::DVDPLUSRDL)
+			|| (disktype & TDEDiskDeviceType::DVDPLUSRWDL)
+			) {
+				// Every VideoDVD must have a VIDEO_TS.IFO file
+				// Read this info via tdeiso_info, since udev couldn't be bothered to check DVD type on its own
+				int retcode = system(TQString("tdeiso_info --exists=ISO9660/VIDEO_TS/VIDEO_TS.IFO %1").arg(devicenode).ascii());
+				if (retcode == 0) {
+					disktype = disktype | TDEDiskDeviceType::DVDVideo;
+				}
+		}
+
 	}
 
 	// Detect RAM and Loop devices, since udev can't seem to...
@@ -2261,7 +2281,7 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 			TDEDiskDeviceType::TDEDiskDeviceType disktype = sdevice->diskType();
 			TDEDiskDeviceStatus::TDEDiskDeviceStatus diskstatus = TDEDiskDeviceStatus::Null;
 	
-			disktype = classifyDiskType(dev, devicebus, devicetypestring, systempath, devicevendor, devicemodel, filesystemtype, devicedriver);
+			disktype = classifyDiskType(dev, devicenode, devicebus, devicetypestring, systempath, devicevendor, devicemodel, filesystemtype, devicedriver);
 			sdevice->internalSetDiskType(disktype);
 			device = classifyUnknownDeviceByExternalRules(dev, device, true);	// Check external rules for possible subtype overrides
 			disktype = sdevice->diskType();						// The type can be overridden by an external rule
@@ -2418,7 +2438,7 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 				if ((slavediskfstype.upper() == "CRYPTO_LUKS") || (slavediskfstype.upper() == "CRYPTO")) {
 					disktype = disktype | TDEDiskDeviceType::UnlockedCrypt;
 					// Set disk type based on parent device
-					disktype = disktype | classifyDiskType(slavedev, TQString(udev_device_get_property_value(dev, "ID_BUS")), TQString(udev_device_get_property_value(dev, "ID_TYPE")), (*slaveit), TQString(udev_device_get_property_value(dev, "ID_VENDOR")), TQString(udev_device_get_property_value(dev, "ID_MODEL")), TQString(udev_device_get_property_value(dev, "ID_FS_TYPE")), TQString(udev_device_get_driver(dev)));
+					disktype = disktype | classifyDiskType(slavedev, devicenode, TQString(udev_device_get_property_value(dev, "ID_BUS")), TQString(udev_device_get_property_value(dev, "ID_TYPE")), (*slaveit), TQString(udev_device_get_property_value(dev, "ID_VENDOR")), TQString(udev_device_get_property_value(dev, "ID_MODEL")), TQString(udev_device_get_property_value(dev, "ID_FS_TYPE")), TQString(udev_device_get_driver(dev)));
 				}
 				udev_device_unref(slavedev);
 			}
