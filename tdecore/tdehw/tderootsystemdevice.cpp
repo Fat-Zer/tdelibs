@@ -142,6 +142,24 @@ bool TDERootSystemDevice::canSuspend() {
 	}
 #endif// WITH_UPOWER
 
+#ifdef WITH_DEVKITPOWER
+	{
+		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+		if (dbusConn.isConnected()) {
+			TQT_DBusProxy devkitpowerProperties("org.freedesktop.DeviceKit.Power", "/org/freedesktop/DeviceKit/Power", "org.freedesktop.DBus.Properties", dbusConn);
+			if (devkitpowerProperties.canSend()) {
+				// can suspend?
+				TQValueList<TQT_DBusData> params;
+				params << TQT_DBusData::fromString(devkitpowerProperties.interface()) << TQT_DBusData::fromString("CanSuspend");
+				TQT_DBusMessage reply = devkitpowerProperties.sendWithReply("Get", params);
+				if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+					return reply[0].toVariant().value.toBool();
+				}
+			}
+		}
+	}
+#endif// WITH_DEVKITPOWER
+
 #ifdef WITH_HAL
 	{
 		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
@@ -200,6 +218,24 @@ bool TDERootSystemDevice::canHibernate() {
 		}
 	}
 #endif// WITH_UPOWER
+
+#ifdef WITH_DEVKITPOWER
+	{
+		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+		if (dbusConn.isConnected()) {
+			TQT_DBusProxy devkitpowerProperties("org.freedesktop.DeviceKit.Power", "/org/freedesktop/DeviceKit/Power", "org.freedesktop.DBus.Properties", dbusConn);
+			if (devkitpowerProperties.canSend()) {
+				// can hibernate?
+				TQValueList<TQT_DBusData> params;
+				params << TQT_DBusData::fromString(devkitpowerProperties.interface()) << TQT_DBusData::fromString("CanHibernate");
+				TQT_DBusMessage reply = devkitpowerProperties.sendWithReply("Get", params);
+				if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+					return reply[0].toVariant().value.toBool();
+				}
+			}
+		}
+	}
+#endif// WITH_DEVKITPOWER
 
 #ifdef WITH_HAL
 	{
@@ -391,6 +427,37 @@ bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState
 			}
 		}
 #endif // WITH_UPOWER
+
+#ifdef WITH_DEVKITPOWER
+		{
+			TQT_DBusConnection dbusConn;
+			dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+			if ( dbusConn.isConnected() ) {
+				if (ps == TDESystemPowerState::Suspend) {
+					TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
+								"org.freedesktop.DeviceKit.Power",
+								"/org/freedesktop/DeviceKit/Power",
+								"org.freedesktop.DeviceKit.Power",
+								"Suspend");
+					TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
+					if (reply.type() == TQT_DBusMessage::ReplyMessage) {
+						return true;
+					}
+				}
+				else if (ps == TDESystemPowerState::Hibernate) {
+					TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
+								"org.freedesktop.DeviceKit.Power",
+								"/org/freedesktop/DeviceKit/Power",
+								"org.freedesktop.DeviceKit.Power",
+								"Hibernate");
+					TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
+					if (reply.type() == TQT_DBusMessage::ReplyMessage) {
+						return true;
+					}
+				}
+			}
+		}
+#endif // WITH_DEVKITPOWER
 
 #ifdef WITH_HAL
 		{
