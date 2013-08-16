@@ -56,9 +56,7 @@ int main(int argc, char *argv[])
 	KUniqueApplication::addCmdLineOptions();
 	TDEApplication::disableAutoDcopRegistration();
 
-	TDEApplication app(false, false);
-
-	TDEStartupInfo::appStarted();
+	TDEApplication app(false, false, false);
 
 	//======================================================================================================================================================
 	//
