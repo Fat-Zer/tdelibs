@@ -8,12 +8,12 @@ those platforms xxxx.la and libxxxx.la both generate DSOs with the
 same name "libxxxx.so". Since this leads to problems you should never
 use both "xxxx.la" and "libxxxx.la" as names for DSOs!!
 
-*** Since <appname>.la is reserved for KDEInit loadable modules, it is 
+*** Since <appname>.la is reserved for TDEInit loadable modules, it is 
 *** strongly recommended NEVER to use lib<appname>.la as the name of a 
 *** library.
 
 
-KDEInit Loadable Modules
+TDEInit Loadable Modules
 ========================
 Name: <appname>.la
 Definition: tdeinit_LTLIBRARIES = <appname>.la

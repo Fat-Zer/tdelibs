@@ -606,7 +606,7 @@ TDELauncher::slotKDEInitData(int)
      return;
    }
 
-   kdWarning(7016) << "Unexpected command from KDEInit (" << (unsigned int) request_header.cmd
+   kdWarning(7016) << "Unexpected command from TDEInit (" << (unsigned int) request_header.cmd
                  << ")" << endl;
 }
 
@@ -741,7 +741,7 @@ TDELauncher::requestDone(TDELaunchRequest *request)
    {
       DCOPresult.result = 1;
       DCOPresult.dcopName = "";
-      DCOPresult.error = i18n("KDEInit could not launch '%1'.").arg(TQString(request->name));
+      DCOPresult.error = i18n("TDEInit could not launch '%1'.").arg(TQString(request->name));
       if (!request->errorMsg.isEmpty())
          DCOPresult.error += ":\n" + request->errorMsg;
       DCOPresult.pid = 0;
