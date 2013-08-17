@@ -66,10 +66,10 @@
 #endif
 #endif
 
-#ifndef NDEBUG
-#ifdef HAVE_BACKTRACE
+#ifndef NDEBUG 
 void print_trace()
 {
+#if	defined(HAVE_BACKTRACE) && defined(HAVE_DEMANGLE_H)
 	void *array[10];
 	size_t size;
 	char **strings;
@@ -85,9 +85,9 @@ void print_trace()
 	}
 
 	free (strings);
+#endif // defined(HAVE_BACKTRACE) && defined(HAVE_DEMANGLE_H)
 }
-#endif
-#endif
+#endif // NDEBUG
 
 using namespace TDEIO;
 
@@ -765,9 +765,7 @@ void SlaveBase::sigsegv_handler(int sig)
     snprintf(buffer, sizeof(buffer), "tdeioslave: ####### CRASH ###### protocol = %s pid = %d signal = %d\n", s_protocol, getpid(), sig);
     write(2, buffer, strlen(buffer));
 #ifndef NDEBUG
-#ifdef HAVE_BACKTRACE
     print_trace();
-#endif
 #endif
     ::exit(1);
 #endif

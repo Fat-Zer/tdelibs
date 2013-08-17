@@ -653,6 +653,9 @@
 /* Define to 1 if you have the <values.h> header file. */
 #cmakedefine HAVE_VALUES_H 1
 
+/* Define to 1 if you have the <demangle.h> header file from binutils package. */
+#cmakedefine HAVE_DEMANGLE_H 1
+
 /* Define, to enable volume management (Solaris 2.x), if you have -lvolmgt */
 #undef HAVE_VOLMGT
 
