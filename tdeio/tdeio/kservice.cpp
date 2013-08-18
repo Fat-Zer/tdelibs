@@ -236,9 +236,11 @@ KService::init( KDesktopFile *config )
   m_strComment = config->readComment();
   entryMap.remove("Comment");
   m_strGenName = config->readGenericName();
+#ifdef KDE4_MENU_SUFFIX
   if (kde4application) {
     m_strGenName += " [KDE4]";
   }
+#endif
   entryMap.remove("GenericName");
   TQString untranslatedGenericName = config->readEntryUntranslated( "GenericName" );
   if (!untranslatedGenericName.isEmpty())
@@ -496,12 +498,12 @@ public:
 
    void reparseConfiguration() { }
 
-   KEntryMap internalEntryMap( const TQString &pGroup) const 
+   KEntryMap internalEntryMap( const TQString &pGroup) const
    { Q_UNUSED(pGroup); return KEntryMap(); }
 
    KEntryMap internalEntryMap() const { return KEntryMap(); }
 
-   void putData(const KEntryKey &_key, const KEntry& _data, bool _checkGroup) 
+   void putData(const KEntryKey &_key, const KEntry& _data, bool _checkGroup)
    { Q_UNUSED(_key); Q_UNUSED(_data); Q_UNUSED(_checkGroup); }
 
    KEntry lookupData(const KEntryKey &_key) const
@@ -771,10 +773,10 @@ bool KService::noDisplay() const {
         return true;
 #endif
   }
-  
+
   if (!kapp->authorizeControlModule(d->menuId))
      return true;
-  
+
   return false;
 }
 

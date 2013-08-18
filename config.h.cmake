@@ -65,6 +65,9 @@
 /* Defines if lzma/xz is compiled */
 #cmakedefine HAVE_XZ_SUPPORT 1
 
+/* Defines if '[KDE4]' is added to KDE4 menu items */
+#cmakedefine KDE4_MENU_SUFFIX 1
+
 /* Define to 1 if you have the <Carbon/Carbon.h> header file. */
 #cmakedefine HAVE_CARBON_CARBON_H 1
 
