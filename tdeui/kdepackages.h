@@ -428,7 +428,7 @@ const char * const packages[] = {
 "tdelibs/knewstuff",
 "tdelibs/knotify",
 "tdelibs/tdespell",
-"tdelibs/kstyle",
+"tdelibs/tdestyle",
 "tdelibs/tdesycoca",
 "tdelibs/tdewallet",
 "tdelibs/qt",

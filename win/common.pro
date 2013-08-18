@@ -109,7 +109,7 @@ contains( TEMPLATE, lib ) {
 	!contains( CONFIG, trinitylib ) {
 	  DESTDIR = $$KDELIBDESTDIR
 	}
-	contains( CONFIG, kstyle ) {
+	contains( CONFIG, tdestyle ) {
 	  DESTDIR = $$KDEBINDESTDIR/lib/trinity/plugins/styles
 	  CONFIG += plugin
 	}

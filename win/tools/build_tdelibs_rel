@@ -45,7 +45,7 @@ dcop/iceauth \
 tdefx \
 tdecore \
 tdeui \
-kstyles/thinkeramik/widget-engine \
+tdestyles/thinkeramik/widget-engine \
 kio \
 tderesources \
 tdeabc/vcard \

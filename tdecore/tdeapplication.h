@@ -893,7 +893,7 @@ public:
   /**
    * @deprecated
    */
-  KDE_DEPRECATED TDEStyle* kstyle() const { return 0; }
+  KDE_DEPRECATED TDEStyle* tdestyle() const { return 0; }
 
   /**
    * Builds a caption that contains the application name along with the

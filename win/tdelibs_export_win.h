@@ -115,10 +115,10 @@
 #endif
 
 // all TDEStyle libs
-#ifdef MAKE_KSTYLE_LIB
-# define KSTYLE_EXPORT KDE_EXPORT
+#ifdef MAKE_TDESTYLE_LIB
+# define TDESTYLE_EXPORT KDE_EXPORT
 #else
-# define KSTYLE_EXPORT KDE_IMPORT
+# define TDESTYLE_EXPORT KDE_IMPORT
 #endif
 
 #ifdef MAKE_KMDI_LIB

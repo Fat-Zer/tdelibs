@@ -98,7 +98,7 @@ Here is an alphabetical list:
 * tdeparts
     KDE component model.
 
-* kstyles
+* tdestyles
     The theme engine lies within. It handles nearly anything relating to
     customizing the appearance of widgets.
 

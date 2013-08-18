@@ -154,7 +154,7 @@ class TransparencyHandler : public TQObject
 		bool    dropShadow;
 		float   opacity;
 		TQPixmap pix;
-		TDEStyle* kstyle;
+		TDEStyle* tdestyle;
 		TransparencyEngine te;
 };
 } // namespace
@@ -1600,7 +1600,7 @@ TQRect TDEStyle::querySubControlMetrics( TQ_ComplexControl control,
 	return ret;
 }
 
-static const char * const kstyle_close_xpm[] = {
+static const char * const tdestyle_close_xpm[] = {
 "12 12 2 1",
 "# c #000000",
 ". c None",
@@ -1617,7 +1617,7 @@ static const char * const kstyle_close_xpm[] = {
 "............",
 "............"};
 
-static const char * const kstyle_maximize_xpm[]={
+static const char * const tdestyle_maximize_xpm[]={
 "12 12 2 1",
 "# c #000000",
 ". c None",
@@ -1635,7 +1635,7 @@ static const char * const kstyle_maximize_xpm[]={
 "............"};
 
 
-static const char * const kstyle_minimize_xpm[] = {
+static const char * const tdestyle_minimize_xpm[] = {
 "12 12 2 1",
 "# c #000000",
 ". c None",
@@ -1652,7 +1652,7 @@ static const char * const kstyle_minimize_xpm[] = {
 "............",
 "............"};
 
-static const char * const kstyle_normalizeup_xpm[] = {
+static const char * const tdestyle_normalizeup_xpm[] = {
 "12 12 2 1",
 "# c #000000",
 ". c None",
@@ -1670,7 +1670,7 @@ static const char * const kstyle_normalizeup_xpm[] = {
 "............"};
 
 
-static const char * const kstyle_shade_xpm[] = {
+static const char * const tdestyle_shade_xpm[] = {
 "12 12 2 1",
 "# c #000000",
 ". c None",
@@ -1687,7 +1687,7 @@ static const char * const kstyle_shade_xpm[] = {
 "............",
 "............"};
 
-static const char * const kstyle_unshade_xpm[] = {
+static const char * const tdestyle_unshade_xpm[] = {
 "12 12 2 1",
 "# c #000000",
 ". c None",
@@ -1850,17 +1850,17 @@ TQPixmap TDEStyle::stylePixmap( StylePixmap stylepixmap,
 {
 	switch (stylepixmap) {
 		case SP_TitleBarShadeButton:
-			return TQPixmap(const_cast<const char**>(kstyle_shade_xpm));
+			return TQPixmap(const_cast<const char**>(tdestyle_shade_xpm));
 		case SP_TitleBarUnshadeButton:
-			return TQPixmap(const_cast<const char**>(kstyle_unshade_xpm));
+			return TQPixmap(const_cast<const char**>(tdestyle_unshade_xpm));
 		case SP_TitleBarNormalButton:
-			return TQPixmap(const_cast<const char**>(kstyle_normalizeup_xpm));
+			return TQPixmap(const_cast<const char**>(tdestyle_normalizeup_xpm));
 		case SP_TitleBarMinButton:
-			return TQPixmap(const_cast<const char**>(kstyle_minimize_xpm));
+			return TQPixmap(const_cast<const char**>(tdestyle_minimize_xpm));
 		case SP_TitleBarMaxButton:
-			return TQPixmap(const_cast<const char**>(kstyle_maximize_xpm));
+			return TQPixmap(const_cast<const char**>(tdestyle_maximize_xpm));
 		case SP_TitleBarCloseButton:
-			return TQPixmap(const_cast<const char**>(kstyle_close_xpm));
+			return TQPixmap(const_cast<const char**>(tdestyle_close_xpm));
 		case SP_DockWindowCloseButton:
 			return TQPixmap(const_cast<const char**>(dock_window_close_xpm ));
 		case SP_MessageBoxInformation:
@@ -1998,7 +1998,7 @@ TransparencyHandler::TransparencyHandler( TDEStyle* style,
 	: TQObject()
 {
 	te = tEngine;
-	kstyle = style;
+	tdestyle = style;
 	opacity = menuOpacity;
 	dropShadow = useDropShadow;
 	pix.setOptimization(TQPixmap::BestOptim);
@@ -2341,7 +2341,7 @@ void TransparencyHandler::blendToPixmap(const TQColorGroup &cg, const TQWidget* 
 
 	// Allow styles to define the blend pixmap - allows for some interesting effects.
 	if (::tqqt_cast<TQPopupMenu*>(p))
-		kstyle->renderMenuBlendPixmap( blendPix, cg, ::tqqt_cast<TQPopupMenu*>(p) );
+		tdestyle->renderMenuBlendPixmap( blendPix, cg, ::tqqt_cast<TQPopupMenu*>(p) );
 	else
 		blendPix.fill(cg.button());	// Just tint as the default behavior
 
@@ -2363,7 +2363,7 @@ void TransparencyHandler::XRenderBlendToPixmap(const TQWidget* p)
 
 	// Allow styles to define the blend pixmap - allows for some interesting effects.
 	if (::tqqt_cast<TQPopupMenu*>(p))
-	   kstyle->renderMenuBlendPixmap( renderPix, p->colorGroup(),
+	   tdestyle->renderMenuBlendPixmap( renderPix, p->colorGroup(),
 			   ::tqqt_cast<TQPopupMenu*>(p) );
 	else
 		renderPix.fill(p->colorGroup().button());	// Just tint as the default behavior
@@ -2407,7 +2407,7 @@ void TDEStyle::virtual_hook( int, void* )
 // HACK for gtk-qt-engine
 
 extern "C" KDE_EXPORT
-void kde_kstyle_set_scrollbar_type_windows( void* style )
+void kde_tdestyle_set_scrollbar_type_windows( void* style )
 {
     ((TDEStyle*)style)->setScrollBarType( TDEStyle::WindowsStyleScrollBar );
 }
