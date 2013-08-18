@@ -203,6 +203,7 @@ check_include_file( "termio.h" HAVE_TERMIO_H )
 check_include_file( "unistd.h" HAVE_UNISTD_H )
 check_include_file( "util.h" HAVE_UTIL_H )
 check_include_file( "values.h" HAVE_VALUES_H )
+check_include_file( "demangle.h" HAVE_DEMANGLE_H )
 
 # FIXME I'm not sure if test TIME_WITH_SYS_TIME are correct
 check_include_file( "sys/time.h" HAVE_SYS_TIME_H )
