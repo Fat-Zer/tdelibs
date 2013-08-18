@@ -2729,22 +2729,13 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 					if (nodename == "alarm") {
 						bdevice->internalSetAlarmEnergy(line.toDouble()/1000000.0);
 					}
-					if (nodename == "charge_full") {
+					if (nodename == "charge_full" || nodename == "energy_full") {
 						bdevice->internalSetMaximumEnergy(line.toDouble()/1000000.0);
 					}
-					if (nodename == "charge_full_design") {
+					if (nodename == "charge_full_design" || nodename == "energy_full_design") {
 						bdevice->internalSetMaximumDesignEnergy(line.toDouble()/1000000.0);
 					}
-					if (nodename == "charge_now") {
-						bdevice->internalSetEnergy(line.toDouble()/1000000.0);
-					}
-					if (nodename == "energy_full") {
-						bdevice->internalSetMaximumEnergy(line.toDouble()/1000000.0);
-					}
-					if (nodename == "energy_full_design") {
-						bdevice->internalSetMaximumDesignEnergy(line.toDouble()/1000000.0);
-					}
-					if (nodename == "energy_now") {
+					if (nodename == "charge_now" || nodename == "energy_now") {
 						bdevice->internalSetEnergy(line.toDouble()/1000000.0);
 					}
 					if (nodename == "manufacturer") {
@@ -2753,7 +2744,7 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 					if (nodename == "model_name") {
 						bdevice->internalSetVendorModel(line.stripWhiteSpace());
 					}
-					if (nodename == "power_now") {
+					if (nodename == "power_now" || nodename == "current_now") {
 						bdevice->internalSetDischargeRate(line.toDouble()/1000000.0);
 					}
 					if (nodename == "present") {
