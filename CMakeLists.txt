@@ -956,6 +956,11 @@ install( FILES
 
 ##### pkg-config #################################
 
+execute_process(
+  COMMAND awk "/^#define TDE_VERSION_MAJOR/,/^#define TDE_VERSION_RELEASE/{ v[++i]=$3 }; END { print v[1]\".\"v[2]\".\"v[3] };"
+  INPUT_FILE ${CMAKE_SOURCE_DIR}/tdecore/tdeversion.h
+  OUTPUT_VARIABLE TDE_RELEASE_NUM
+  OUTPUT_STRIP_TRAILING_WHITESPACE )
 configure_file( tdelibs.pc.cmake tdelibs.pc @ONLY )
 install( FILES ${CMAKE_CURRENT_BINARY_DIR}/tdelibs.pc DESTINATION ${PKGCONFIG_INSTALL_DIR} )
 
