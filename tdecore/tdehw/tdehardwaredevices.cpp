@@ -3135,6 +3135,16 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 				supportedSwitches = supportedSwitches | TDESwitchType::LineInInsert;
 			}
 #endif
+			// Keep in sync with ACPI Event/Input identification routines above
+			if (edevice->systemPath().contains("PNP0C0D")) {
+				supportedSwitches = supportedSwitches | TDESwitchType::Lid;
+			}
+			if (edevice->systemPath().contains("PNP0C0E") || edevice->systemPath().contains("/LNXSLPBN")) {
+				supportedSwitches = supportedSwitches | TDESwitchType::SleepButton;
+			}
+			if (edevice->systemPath().contains("PNP0C0C") || edevice->systemPath().contains("/LNXPWRBN")) {
+				supportedSwitches = supportedSwitches | TDESwitchType::PowerButton;
+			}
 		}
 		edevice->internalSetProvidedSwitches(supportedSwitches);
 

@@ -114,6 +114,12 @@ TQStringList TDEEventDevice::friendlySwitchList(TDESwitchType::TDESwitchType swi
 	if (switches & TDESwitchType::LineInInsert) {
 		ret.append(i18n("Line In Inserted"));
 	}
+	if (switches & TDESwitchType::PowerButton) {
+		ret.append(i18n("Power Button"));
+	}
+	if (switches & TDESwitchType::SleepButton) {
+		ret.append(i18n("Sleep Button"));
+	}
 
 	return ret;
 }

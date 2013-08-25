@@ -273,8 +273,17 @@ TQString TDEGenericDevice::friendlyName() {
 			m_friendlyName = name();
 		}
 		else if (type() == TDEGenericDeviceType::Event) {
-			// Use parent node name
-			if (m_parentDevice) {
+			if (m_systemPath.contains("PNP0C0D")) {
+				m_friendlyName = i18n("ACPI Lid Switch");
+			}
+			else if (m_systemPath.contains("PNP0C0E") || m_systemPath.contains("/LNXSLPBN")) {
+				m_friendlyName = i18n("ACPI Sleep Button");
+			}
+			else if (m_systemPath.contains("PNP0C0C") || m_systemPath.contains("/LNXPWRBN")) {
+				m_friendlyName = i18n("ACPI Power Button");
+			}
+			else if (m_parentDevice) {
+				// Use parent node name
 				return m_parentDevice->friendlyName();
 			}
 			else {
@@ -282,8 +291,17 @@ TQString TDEGenericDevice::friendlyName() {
 			}
 		}
 		else if (type() == TDEGenericDeviceType::Input) {
-			// Use parent node name
-			if (m_parentDevice) {
+			if (m_systemPath.contains("PNP0C0D")) {
+				m_friendlyName = i18n("ACPI Lid Switch");
+			}
+			else if (m_systemPath.contains("PNP0C0E") || m_systemPath.contains("/LNXSLPBN")) {
+				m_friendlyName = i18n("ACPI Sleep Button");
+			}
+			else if (m_systemPath.contains("PNP0C0C") || m_systemPath.contains("/LNXPWRBN")) {
+				m_friendlyName = i18n("ACPI Power Button");
+			}
+			else if (m_parentDevice) {
+				// Use parent node name
 				return m_parentDevice->friendlyName();
 			}
 			else {

@@ -52,7 +52,9 @@ enum TDESwitchType {
 	KeypadSlide		= 0x00000800,
 	FrontProximity		= 0x00001000,
 	RotateLock		= 0x00002000,
-	LineInInsert		= 0x00004000
+	LineInInsert		= 0x00004000,
+	PowerButton		= 0x00008000,
+	SleepButton		= 0x00010000
 };
 
 inline TDESwitchType operator|(TDESwitchType a, TDESwitchType b)
