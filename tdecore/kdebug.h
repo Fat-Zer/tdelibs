@@ -601,17 +601,21 @@ TDECORE_EXPORT kdbgstream kdDebug(bool cond, int area = 0);
 /**
  * \relates TDEGlobal
  * Returns a backtrace.
- * @return a backtrace
- */
-TDECORE_EXPORT TQString kdBacktrace();
-/**
- * \relates TDEGlobal
- * Returns a backtrace.
- * @param levels the number of levels of the backtrace
+ * @param levels the number of levels of the backtrace. Defauls to -1 (as much as avalible).
  * @return a backtrace
  * @since 3.1
  */
-TDECORE_EXPORT TQString kdBacktrace(int levels);
+TDECORE_EXPORT TQString kdBacktrace(int levels=-1);
+/**
+ * \relates TDEGlobal
+ * Writes a backtrace to the given file descriptor. In contrast to 
+ * kdBacktrace, this function doesn't call any malloc(). So it supposed to be
+ * used in situations than any extra memmmory allocation may lead to yet 
+ * another crash. As a limitation it doesn't produce any symbol demangling.
+ * @param fd a file descriptor to write to. Defaults to 2 (stderr)
+ * @since 14.0
+ */
+TDECORE_EXPORT void kdBacktraceFD(int fd=2);
 /**
  * Returns a dummy debug stream. The stream does not print anything.
  * @param area an id to identify the output, 0 for default
@@ -619,9 +623,6 @@ TDECORE_EXPORT TQString kdBacktrace(int levels);
  */
 inline kndbgstream kndDebug(int area = 0) { Q_UNUSED(area); return kndbgstream(); }
 inline kndbgstream kndDebug(bool , int  = 0) { return kndbgstream(); }
-inline TQString kndBacktrace() { return TQString::null; }
-inline TQString kndBacktrace(int) { return TQString::null; }
-
 /**
  * \relates TDEGlobal
  * Returns a warning stream. You can use it to print warning
@@ -658,7 +659,6 @@ TDECORE_EXPORT void kdClearDebugConfig();
 
 #ifdef NDEBUG
 #define kdDebug kndDebug
-#define kdBacktrace kndBacktrace
 #endif
 
 #endif

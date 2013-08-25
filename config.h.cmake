@@ -47,8 +47,73 @@
 /* Define to 1 if you have the <awe_voice.h> header file. */
 #cmakedefine HAVE_AWE_VOICE_H 1
 
-/* Define if execinfo.h exists and defines backtrace (GLIBC >= 2.1) */
+/* Define if you have basename prototype */
+#cmakedefine HAVE_BASENAME_PROTO  1
+
+/* Define if you have ffs prototype */
+#cmakedefine HAVE_FFS_PROTO       1
+
+/* Define if you have asprintf prototype */
+#cmakedefine HAVE_ASPRINTF_PROTO  1
+
+/* Define if you have vasprintf prototype */
+#cmakedefine HAVE_VASPRINTF_PROTO 1
+
+/* Define if you have snsprintf prototype */
+#cmakedefine HAVE_SNPRINTF_PROTO  1
+
+/* Define if you have vsnsprintf prototype */
+#cmakedefine HAVE_VSNPRINTF_PROTO 1
+
+/* Define if you have strvercmp prototype */
+#cmakedefine HAVE_STRVERCMP_PROTO 1
+
+/* Define to 1 if execinfo.h exists and defines backtrace (GLIBC >= 2.1) */
 #cmakedefine HAVE_BACKTRACE 1
+
+/* Define to 1 if gcc (or may be some over compiller) provides abi::__cxa_demangle() */
+#cmakedefine HAVE_ABI_CXA_DEMANGLE 1
+
+/* Define to 1 if compiled with libbfd support */
+#cmakedefine WITH_LIBBFD 1
+
+#ifdef WITH_LIBBFD
+#cmakedefine HAVE_DECL_BASENAME 1
+/* Some declarations are needed by demangle.h (libiberty.h) and/or bfd.h */
+/* those heders use HAVE_DECL_* format but we decided to follow our macro style */
+
+#ifdef HAVE_BASENAME_PROTO
+#define HAVE_DECL_BASENAME 1
+#endif /* HAVE_BASENAME_PROTO */
+
+#ifdef HAVE_FFS_PROTO
+#define HAVE_DECL_FFS 1
+#endif /* HAVE_FFS_PROTO */
+
+#ifdef HAVE_ASPRINTF_PROTO
+#define HAVE_DECL_ASPRINTF 1
+#endif /* HAVE_ASPRINTF_PROTO */
+
+#ifdef HAVE_VASPRINTF_PROTO
+#define HAVE_DECL_VASPRINTF 1
+#endif /* HAVE_VASPRINTF_PROTO */
+
+#ifdef HAVE_SNPRINTF_PROTO
+#define HAVE_DECL_SNPRINTF 1
+#endif /* HAVE_SNPRINTF_PROTO */
+
+#ifdef HAVE_VSNPRINTF_PROTO
+#define HAVE_DECL_VSNPRINTF 1
+#endif /* HAVE_VSNPRINTF_PROTO */
+
+#ifdef HAVE_STRVERCMP_PROTO
+#define HAVE_DECL_STRVERCMP 1
+#endif /* HAVE_STRVERCMP_PROTO */
+
+#endif /* HAVE_BASENAME_PROTO */
+
+/* Define to 1 if libbfd provides demangle.h header */
+#cmakedefine HAVE_DEMANGLE_H 1
 
 /* Define to 1 if you have the `bcopy' function. */
 #cmakedefine HAVE_BCOPY 1

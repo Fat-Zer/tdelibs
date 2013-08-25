@@ -84,15 +84,9 @@ set( ${target}_SRCS
   kmimetypechooser.cpp
 )
 
-if( HAVE_BACKTRACE AND HAVE_DEMANGLE_H )
-  list( APPEND ${target}_SRCS backtrace_symbols.c )
-  set( BACKTRACE_LIBRARY bfd )
-endif( )
-
 tde_add_library( ${target} STATIC_PIC AUTOMOC
   SOURCES ${${target}_SRCS}
   DEPENDENCIES dcopidl
-  LINK ${BACKTRACE_LIBRARY}
 )
 
 

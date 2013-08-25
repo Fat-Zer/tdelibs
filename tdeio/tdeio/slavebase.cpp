@@ -60,35 +60,6 @@
 
 #include "uiserver_stub.h"
 
-#ifndef NDEBUG
-#ifdef HAVE_BACKTRACE
-#include <execinfo.h>
-#endif
-#endif
-
-#ifndef NDEBUG 
-void print_trace()
-{
-#if	defined(HAVE_BACKTRACE) && defined(HAVE_DEMANGLE_H)
-	void *array[10];
-	size_t size;
-	char **strings;
-	size_t i;
-
-	size = backtrace (array, 10);
-	strings = backtrace_symbols (array, size);
-
-	printf ("[tdeioslave] Obtained %zd stack frames.\n\r", size);
-
-	for (i = 0; i < size; i++) {
-		printf ("[tdeioslave] %s\n\r", strings[i]);
-	}
-
-	free (strings);
-#endif // defined(HAVE_BACKTRACE) && defined(HAVE_DEMANGLE_H)
-}
-#endif // NDEBUG
-
 using namespace TDEIO;
 
 template class TQPtrList<TQValueList<UDSAtom> >;
@@ -764,9 +735,20 @@ void SlaveBase::sigsegv_handler(int sig)
     char buffer[120];
     snprintf(buffer, sizeof(buffer), "tdeioslave: ####### CRASH ###### protocol = %s pid = %d signal = %d\n", s_protocol, getpid(), sig);
     write(2, buffer, strlen(buffer));
-#ifndef NDEBUG
-    print_trace();
-#endif
+#ifdef SECURE_DEBUG
+	kdBacktraceFD();
+#else // SECURE_DEBUG
+	// Screw the malloc issue! We want nice demangled backtrace! 
+	// Anyway we are not supposed to go into infinite loop because next signal
+	// will kill us. If you are unlucky and  there is a second crash during 
+	// backtrase in your system, you can define SECURE_DEBUG to avoid it 
+
+	// Extra sync here so we are sure even if the backtrace will fail
+	// we will pass at least some crash message.
+	fsync(2);
+	TQString backtrace = kdBacktrace();
+	write(2, backtrace.ascii(), backtrace.length());
+#endif // SECURE_DEBUG
     ::exit(1);
 #endif
 }

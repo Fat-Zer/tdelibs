@@ -22,7 +22,6 @@
 
 #ifdef NDEBUG
 #undef kdDebug
-#undef kdBacktrace
 #endif
 
 #include "kdebugdcopiface.h"
@@ -54,14 +53,41 @@
 #include <ctype.h>      // isprint
 #include <syslog.h>
 #include <errno.h>
-#include <string.h>
+#include <cstring>
 #include <tdeconfig.h>
 #include "kstaticdeleter.h"
 #include <config.h>
 
 #ifdef HAVE_BACKTRACE
 #include <execinfo.h>
+
+#ifdef HAVE_ABI_CXA_DEMANGLE
+#include <cxxabi.h>
 #endif
+
+#include <link.h>
+#ifdef WITH_LIBBFD
+/* newer versions of libbfd require some autotools-specific macros to be defined */
+/* see binutils Bug 14243 and 14072 */
+#define PACKAGE tdelibs
+#define PACKAGE_VERSION TDE_VERSION
+
+#include <bfd.h>
+
+#ifdef HAVE_DEMANGLE_H
+#include <demangle.h>
+#endif // HAVE_DEMANGLE_H
+#endif // WITH_LIBBFD
+
+#endif // HAVE_BACKTRACE
+
+#ifdef HAVE_ALLOCA_H
+#include <alloca.h>
+#endif // HAVE_ALLOCA_H
+
+#ifdef HAVE_STDINT_H
+#include <stdint.h>
+#endif // HAVE_STDINT_H
 
 class KDebugEntry;
 
@@ -556,36 +582,247 @@ kdbgstream& kdbgstream::operator<<( const TQByteArray& data) {
     return *this;
 }
 
-TQString kdBacktrace(int levels)
-{
-    TQString s;
 #ifdef HAVE_BACKTRACE
-    void* trace[256];
-    int n = backtrace(trace, 256);
-    if (!n)
-	return s;
-    char** strings = backtrace_symbols (trace, n);
+struct BacktraceFunctionInfo {
+	const void *addr;      //< the address of function returned by backtrace()
+	const char* fileName;  //< the file of binary owning the function (e.g. shared library or current header)
+	const void *base;      //< the base address there the binary is loaded to
+	uintptr_t offset;      //< offset of the function in binary (base - address)
+	TQString functionName; //< mangled name of function
+	TQString prettyName;   //< demangled name of function
+	TQString sourceName;   //< name of source file function declared in
+	unsigned sourceLine;   //< line where function defined
+};
 
-    if ( levels != -1 )
-        n = QMIN( n, levels );
-    s = "[\n";
+#ifdef WITH_LIBBFD
 
-    for (int i = 0; i < n; ++i)
-        s += TQString::number(i) +
-             TQString::fromLatin1(": ") +
-             TQString::fromLatin1(strings[i]) + TQString::fromLatin1("\n");
-    s += "]\n";
-    if (strings)
-        free (strings);
-#endif
-    return s;
+// load symbol table from file
+asymbol** bfdLoadSymtab (bfd *abfd) {
+	long symCount;  // count of entries in symbol table
+	long symtab_sz;      // size of the table
+	asymbol** rv;
+	bfd_boolean dynamic = FALSE;
+
+	// make shure the file has symbol table
+	if ((bfd_get_file_flags (abfd) & HAS_SYMS) == 0){
+		return 0;
+	}
+	
+	// determin the amount of space we'll need to store the table
+	symtab_sz = bfd_get_symtab_upper_bound (abfd);
+	if (symtab_sz == 0) {
+		symtab_sz = bfd_get_dynamic_symtab_upper_bound (abfd);
+		dynamic = TRUE;
+	}
+	if (symtab_sz < 0) {
+		return 0;
+	}
+	
+	// allocate memory
+	rv = (asymbol **) malloc(symtab_sz); // dunno, why not malloc
+	if ( !rv ) {
+		return 0;
+	}
+	
+	// actually load the table
+	if (dynamic) {
+		symCount = bfd_canonicalize_dynamic_symtab (abfd, rv);
+	} else {
+		symCount = bfd_canonicalize_symtab (abfd, rv);
+	}
+	
+	if (symCount < 0) {
+		if (rv) {
+			free(rv);
+		}
+		return 0;
+	}
+
+	return rv;
 }
 
+void bfdFillAdditionalFunctionsInfo(BacktraceFunctionInfo &func) {
+	static bool inited=0;
+	if (!inited) {
+		bfd_init();
+		inited=1;
+	}
+	
+	bfd *abfd = bfd_openr(func.fileName, 0); // a bfd object
+	if( !abfd ) {
+		return;
+	}
+	
+	//  check format of the object
+	if( !bfd_check_format(abfd, bfd_object) ) {
+		bfd_close(abfd);
+		return;
+	} 
+	
+	// load symbol table
+	asymbol **syms= bfdLoadSymtab(abfd);    
+	if(!syms) {
+		bfd_close(abfd);
+		return;
+	}
+
+	// found source file and line for given address
+	for (asection *sect = abfd->sections; sect != NULL; sect = sect->next) {
+
+		if (bfd_get_section_flags(abfd, sect) & SEC_ALLOC) {
+			bfd_vma sectStart = bfd_get_section_vma(abfd, sect);
+			bfd_vma sectEnd   = sectStart + bfd_section_size(abfd, sect);
+			if (sectStart <= func.offset && func.offset < sectEnd) {
+				bfd_vma sectOffset = func.offset - sectStart;
+				const char* functionName;
+				const char* sourceName;
+				unsigned sourceLine;
+				if (bfd_find_nearest_line(abfd, sect, syms, sectOffset, 
+							&sourceName, &functionName, &sourceLine))
+				{
+					func.sourceName   = sourceName;
+					func.sourceLine   = sourceLine;
+					if(func.functionName.isEmpty()) {
+						func.functionName = TQString::fromAscii(functionName);
+					}
+					break;
+				}
+			}
+		}
+	}
+#ifdef HAVE_DEMANGLE_H	
+	if(func.prettyName.isEmpty() && !func.functionName.isEmpty()) {
+		char *demangled = bfd_demangle(abfd, func.functionName.ascii(), DMGL_AUTO | DMGL_PARAMS);
+		if (demangled) {
+			func.prettyName = demangled;
+			free(demangled);
+		}
+	}
+#endif // HAVE_DEMANGLE_H	
+
+	if( syms ) {
+		free(syms);
+	}
+	bfd_close(abfd);
+}
+
+#endif // WITH_LIBBFD
+
+void fillAdditionalFunctionsInfo(BacktraceFunctionInfo &func) {
+#ifdef WITH_LIBBFD
+	bfdFillAdditionalFunctionsInfo(func);
+#endif // WITH_LIBBFD
+
+#ifdef HAVE_ABI_CXA_DEMANGLE
+	if(func.prettyName.isEmpty() && !func.functionName.isEmpty()) {
+		int status=0;
+		char *demangled = abi::__cxa_demangle(func.functionName.ascii(), 0, 0, &status);
+		if (demangled) {
+			func.prettyName = demangled;
+			free(demangled);
+		}
+	}
+#endif // HAVE_ABI_CXA_DEMANGLE
+
+}
+
+TQString formatBacktrace(void *addr) {
+	TQString rv;
+	BacktraceFunctionInfo func;
+	func.addr = addr;
+	
+	// NOTE: if somebody would compile for some non-linux-glibc platform
+	//       check if dladdr function is avalible there
+	Dl_info info;
+	dladdr(func.addr, &info); // obtain information about the function.
+
+	func.fileName = info.dli_fname;
+	func.base = info.dli_fbase;
+	func.offset = (uintptr_t)func.addr - (uintptr_t)func.base;
+	func.functionName = TQString::fromAscii(info.dli_sname);
+	func.sourceLine = 0;
+
+	fillAdditionalFunctionsInfo(func);
+
+	rv.sprintf("0x%0*lx", (int) sizeof(void*)*2, (uintptr_t) func.addr);
+	
+	rv += " in ";
+	if (!func.prettyName.isEmpty()) {
+		rv += func.prettyName;
+	} else if (!func.functionName.isEmpty()) {
+		rv += func.functionName;
+	} else {
+		rv += "??";
+	}
+	
+	if (!func.sourceName.isEmpty()) {
+		rv += " in "; 
+		rv += func.sourceName;
+		rv += ":";
+		rv += func.sourceLine ? TQString::number(func.sourceLine) : "??";
+	} else if (func.fileName && func.fileName[0]) {
+		rv += TQString().sprintf(" from %s:0x%08lx",func.fileName, func.offset);
+	} else {
+		rv += " from ??";
+	}
+	
+	return rv;
+}
+#endif // HAVE_BACKTRACE
+
+
+TQString kdBacktrace(int levels)
+{
+	TQString rv;
+#ifdef HAVE_BACKTRACE
+	if (levels < 0 || levels > 256 ) {
+		levels = 256;
+	}
+	
+	rv = "[\n";
+
+	if (levels) {
+#ifdef HAVE_ALLOCA
+		void** trace = (void**)alloca(levels * sizeof(void*));
+#else  // HAVE_ALLOCA
+		void* trace[256];
+#endif // HAVE_ALLOCA
+		levels = backtrace(trace, levels);
+
+		if (levels) { 
+			for (int i = 0; i < levels; ++i) {
+				rv += QString().sprintf("#%-2d ", i);
+				rv += formatBacktrace(trace[i]);
+				rv += '\n';
+			}
+		} else {
+			rv += "backtrace() failed\n";
+		}
+	}
+	
+	rv += "]\n";
+#endif // HAVE_BACKTRACE
+	return rv;
+}
+
+// Keep for ABI compatability for some time
+// FIXME remove this (2013-08-18, 18:09, Fat-Zer)
 TQString kdBacktrace()
 {
     return kdBacktrace(-1 /*all*/);
 }
 
+void kdBacktraceFD(int fd) {
+#ifdef HAVE_BACKTRACE
+	void *trace[256];
+	int levels;
+	
+	levels = backtrace(trace, 256);
+	if (levels) {
+		backtrace_symbols_fd(trace, levels, fd);
+	}
+#endif // HAVE_BACKTRACE
+}
 void kdClearDebugConfig()
 {
     if (kDebug_data) {

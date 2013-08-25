@@ -94,6 +94,7 @@ OPTION( WITH_NETWORK_MANAGER_BACKEND "Enable network-manager support" OFF )
 OPTION( WITH_SUDO_TDESU_BACKEND "Use sudo as backend for tdesu (default is su)" OFF )
 OPTION( WITH_OLD_XDG_STD "Use the pre R14.0.0 XDG standard where both TDE and KDE are recognized in desktop files" OFF )
 OPTION( WITH_LZMA "Enable support for LZMA/XZ" ${WITH_ALL_OPTIONS} )
+OPTION( WITH_LIBBFD "Enable pretty backtraces with libbfd from GNU binutils" OFF )
 OPTION( WITH_KDE4_MENU_SUFFIX "Add [KDE4] tag to KDE4 menu items" OFF )
 
 OPTION( WITH_ASPELL "Enable aspell support" ${WITH_ALL_OPTIONS} )
@@ -204,7 +205,6 @@ check_include_file( "termio.h" HAVE_TERMIO_H )
 check_include_file( "unistd.h" HAVE_UNISTD_H )
 check_include_file( "util.h" HAVE_UTIL_H )
 check_include_file( "values.h" HAVE_VALUES_H )
-check_include_file( "demangle.h" HAVE_DEMANGLE_H )
 
 # FIXME I'm not sure if test TIME_WITH_SYS_TIME are correct
 check_include_file( "sys/time.h" HAVE_SYS_TIME_H )
@@ -272,9 +272,32 @@ check_symbol_exists( gethostbyname_r "netdb.h" HAVE_GETHOSTBYNAME_R )
 check_symbol_exists( gai_strerror "sys/types.h;sys/socket.h;netdb.h" HAVE_GAI_STRERROR )
 check_symbol_exists( getaddrinfo "sys/types.h;sys/socket.h;netdb.h" HAVE_GETADDRINFO )
 check_symbol_exists( backtrace "execinfo.h" HAVE_BACKTRACE )
+check_cxx_source_compiles( "#include <cxxabi.h>
+    int main() { abi::__cxa_demangle(0, 0, 0, 0); return 0; }"
+    HAVE_ABI_CXA_DEMANGLE )
+
+# Some declarations are needed by demangle.h (libiberty.h) and/or bfd.h but we
+# will check them uncondionally
+# See WITH_LIBBFD also see binutils bugs 14243 and 14072
+# NOTE: those headers use HAVE_DECL_* names but we would follow our macro
+#       naming style
+check_symbol_exists( basename  "libgen.h" HAVE_BASENAME_PROTO )
+check_symbol_exists( ffs       "string.h" HAVE_FFS_PROTO )
+check_symbol_exists( asprintf  "stdio.h"  HAVE_ASPRINTF_PROTO )
+check_symbol_exists( vasprintf "stdio.h"  HAVE_VASPRINTF_PROTO )
+check_symbol_exists( snprintf  "stdio.h"  HAVE_SNPRINTF_PROTO )
+check_symbol_exists( vsnprintf "stdarg.h" HAVE_VSNPRINTF_PROTO )
+check_symbol_exists( strvercmp "string.h" HAVE_STRVERCMP_PROTO )
+
 
 check_function_exists( usleep HAVE_USLEEP )
 check_symbol_exists( usleep "unistd.h" HAVE_USLEEP_PROTO )
+
+if (HAVE_ALLOCA_H )
+  check_symbol_exists( alloca "alloca.h" HAVE_ALLOCA )
+else (HAVE_ALLOCA_H )
+  check_symbol_exists( alloca "stdlib.h" HAVE_ALLOCA )
+endif (HAVE_ALLOCA_H )
 
 check_function_exists( getmntinfo HAVE_GETMNTINFO )
 check_function_exists( getnameinfo HAVE_GETNAMEINFO )
@@ -331,7 +354,6 @@ check_function_exists( getcwd HAVE_GETCWD )
 check_function_exists( dlerror HAVE_DLERROR )
 check_function_exists( crypt HAVE_CRYPT )
 check_function_exists( bcopy HAVE_BCOPY )
-check_function_exists( alloca HAVE_ALLOCA )
 check_function_exists( mmap HAVE_MMAP )
 check_function_exists( munmap HAVE_MUNMAP )
 
@@ -702,6 +724,17 @@ if( WITH_LIBIDN )
   check_include_file( "punycode.h" HAVE_PUNYCODE_H )
   check_include_file( "stringprep.h" HAVE_STRINGPREP_H )
 endif( WITH_LIBIDN )
+
+##### check for libbfq ##########################
+
+if( WITH_LIBBFD )
+  check_library_exists( bfd bfd_init "" HAVE_LIBBFD )
+  if( NOT HAVE_LIBBFD )
+    tde_message_fatal( "libbfd support is requested, but not found on your system" )
+  endif( NOT HAVE_LIBBFD )
+  set( LIBBFD_LIBRARIES bfd )
+  check_include_file( "demangle.h" HAVE_DEMANGLE_H )
+endif( WITH_LIBBFD )
 
 
 ##### check for openssl #########################
