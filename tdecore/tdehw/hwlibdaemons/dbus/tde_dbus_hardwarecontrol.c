@@ -286,14 +286,149 @@ void reply_SetPower(DBusMessage* msg, DBusConnection* conn, char* state) {
 	reply_SetGivenPath(msg, conn, "/sys/power/state", state);
 }
 
-void listen() {
-	DBusMessage* msg;
+void signal_NameAcquired(DBusMessage* msg) {
+	DBusMessageIter args;
+	char *name = NULL;
+	if(dbus_message_iter_init(msg, &args)) {
+		if(DBUS_TYPE_STRING == dbus_message_iter_get_arg_type(&args)) {
+			dbus_message_iter_get_basic(&args, &name);
+		}
+	}
+	fprintf(stderr, "[tde_dbus_hardwarecontrol] Name acquired: %s\n", name);
+}
+
+void reply_Introspect(DBusMessage* msg, DBusConnection* conn) {
 	DBusMessage* reply;
 	DBusMessageIter args;
+	dbus_uint32_t serial = 0;
+	size_t size = 2048;
+	const char* member = dbus_message_get_member(msg);
+	const char *path = dbus_message_get_path(msg);
+	char *data = malloc(size);
+
+	// compose reply
+	strncpy(data,
+		"<!DOCTYPE node PUBLIC \"-//freedesktop//DTD D-BUS Object Introspection 1.0//EN\"\n"
+		" \"http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd\">\n",
+		size);
+	strncat(data, "<node>\n", size-strlen(data));
+	if(strcmp("/", path) == 0) {
+		strncat(data, "  <node name=\"org\" />\n", size-strlen(data));
+	}
+	else if(strcmp("/org", path) == 0) {
+		strncat(data, "  <node name=\"trinitydesktop\" />\n", size-strlen(data));
+	}
+	else if(strcmp("/org/trinitydesktop", path) == 0) {
+		strncat(data, "  <node name=\"hardwarecontrol\" />\n", size-strlen(data));
+	}
+	else if(strcmp("/org/trinitydesktop/hardwarecontrol", path) == 0) {
+		strncat(data,
+			"  <interface name=\"org.trinitydesktop.hardwarecontrol.CPUGovernor\">\n"
+			"    <method name=\"CanSetCPUGovernor\">\n"
+			"      <arg name=\"cpu\" direction=\"in\" type=\"i\" />\n"
+			"      <arg name=\"value\" direction=\"out\" type=\"b\" />\n"
+			"    </method>\n"
+			"    <method name=\"SetCPUGovernor\">\n"
+			"      <arg name=\"cpu\" direction=\"in\" type=\"i\" />\n"
+			"      <arg name=\"governor\" direction=\"in\" type=\"s\" />\n"
+			"      <arg name=\"value\" direction=\"out\" type=\"b\" />\n"
+			"    </method>\n"
+			"  </interface>\n",
+			size-strlen(data));
+		strncat(data,
+			"  <interface name=\"org.trinitydesktop.hardwarecontrol.Brightness\">\n"
+			"    <method name=\"CanSetBrightness\">\n"
+			"      <arg name=\"device\" direction=\"in\" type=\"s\" />\n"
+			"      <arg name=\"value\" direction=\"out\" type=\"b\" />\n"
+			"    </method>\n"
+			"    <method name=\"SetBrightness\">\n"
+			"      <arg name=\"device\" direction=\"in\" type=\"s\" />\n"
+			"      <arg name=\"brightness\" direction=\"in\" type=\"s\" />\n"
+			"      <arg name=\"value\" direction=\"out\" type=\"b\" />\n"
+			"    </method>\n"
+			"  </interface>\n",
+			size-strlen(data));
+		strncat(data,
+			"  <interface name=\"org.trinitydesktop.hardwarecontrol.Power\">\n"
+			"    <method name=\"CanStandby\">\n"
+			"      <arg name=\"value\" direction=\"out\" type=\"b\" />\n"
+			"    </method>\n"
+			"    <method name=\"Standby\">\n"
+			"      <arg name=\"value\" direction=\"out\" type=\"b\" />\n"
+			"    </method>\n"
+			"    <method name=\"CanSuspend\">\n"
+			"      <arg name=\"value\" direction=\"out\" type=\"b\" />\n"
+			"    </method>\n"
+			"    <method name=\"Suspend\">\n"
+			"      <arg name=\"value\" direction=\"out\" type=\"b\" />\n"
+			"    </method>\n"
+			"    <method name=\"CanHibernate\">\n"
+			"      <arg name=\"value\" direction=\"out\" type=\"b\" />\n"
+			"    </method>\n"
+			"    <method name=\"Hibernate\">\n"
+			"      <arg name=\"value\" direction=\"out\" type=\"b\" />\n"
+			"    </method>\n"
+			"  </interface>\n",
+			size-strlen(data));
+	}
+	strncat(data, "</node>\n", size-strlen(data));
+
+	// create a reply from the message
+	reply = dbus_message_new_method_return(msg);
+
+	// add the arguments to the reply
+	dbus_message_iter_init_append(reply, &args);
+	if (!dbus_message_iter_append_basic(&args, DBUS_TYPE_STRING, &data)) {
+		fprintf(stderr, "[tde_dbus_hardwarecontrol] %s: dbus_message_iter_append_basic failed\n", member);
+		return;
+	}
+
+	// send the reply && flush the connection
+	if (!dbus_connection_send(conn, reply, &serial)) {
+		fprintf(stderr, "[tde_dbus_hardwarecontrol] %s: dbus_connection_send failed\n", member);
+		return;
+	}
+	dbus_connection_flush(conn);
+
+	// free the reply
+	dbus_message_unref(reply);
+	free((void*)data);
+}
+
+void error_UnknownMessage(DBusMessage* msg, DBusConnection* conn) {
+	DBusMessage* reply;
+	dbus_uint32_t serial = 0;
+	const char* member = dbus_message_get_member(msg);
+	const char* interface = dbus_message_get_interface(msg);
+
+	// print message
+	fprintf(stderr, "[tde_dbus_hardwarecontrol] Unknown method '%s' called on interface '%s', ignoring\n", member, interface);
+	if (DBUS_MESSAGE_TYPE_METHOD_CALL != dbus_message_get_type(msg)) {
+		return;
+	}
+
+	// create a reply from the message
+	reply = dbus_message_new_error_printf(msg,
+		"org.freedesktop.DBus.Error.UnknownMethod",
+		"Method \"%s\" on interface \"%s\" doesn't exist",
+		member, interface);
+
+	// send the reply && flush the connection
+	if (!dbus_connection_send(conn, reply, &serial)) {
+		fprintf(stderr, "[tde_dbus_hardwarecontrol] %s: dbus_connection_send failed\n", member);
+		return;
+	}
+	dbus_connection_flush(conn);
+
+	// free the reply
+	dbus_message_unref(reply);
+}
+
+void listen() {
+	DBusMessage* msg;
 	DBusConnection* conn;
 	DBusError err;
 	int ret;
-	char* param;
 
 	fprintf(stderr, "[tde_dbus_hardwarecontrol] Listening...\n");
 
@@ -327,7 +462,7 @@ void listen() {
 		// non blocking read of the next available message
 		dbus_connection_read_write(conn, 1000); // block for up to 1 second
 		msg = dbus_connection_pop_message(conn);
-	
+
 		// loop again if we haven't got a message
 		if (NULL == msg) {
 			continue;
@@ -364,8 +499,14 @@ void listen() {
 		else if (dbus_message_is_method_call(msg, "org.trinitydesktop.hardwarecontrol.Power", "Hibernate")) {
 			reply_SetPower(msg, conn, "disk");
 		}
+		else if (dbus_message_is_signal(msg, "org.freedesktop.DBus", "NameAcquired")) {
+			signal_NameAcquired(msg);
+		}
+		else if (dbus_message_is_method_call(msg, "org.freedesktop.DBus.Introspectable", "Introspect")) {
+			reply_Introspect(msg, conn);
+		}
 		else {
-			fprintf(stderr, "[tde_dbus_hardwarecontrol] Unknown method '%s' called on interface '%s', ignoring\n", dbus_message_get_member(msg), dbus_message_get_interface(msg));
+			error_UnknownMessage(msg, conn);
 		}
 		
 		// free the message
