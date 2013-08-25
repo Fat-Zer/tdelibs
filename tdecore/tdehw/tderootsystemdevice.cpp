@@ -30,13 +30,13 @@
 
 #include "config.h"
 
-#if defined(WITH_UPOWER) || defined(WITH_CONSOLEKIT)
+#if defined(WITH_TDEHWLIB_DAEMONS) || defined(WITH_UPOWER) || defined(WITH_DEVKITPOWER) || defined(WITH_HAL) || defined(WITH_CONSOLEKIT)
 	#include <tqdbusdata.h>
 	#include <tqdbusmessage.h>
 	#include <tqdbusproxy.h>
 	#include <tqdbusvariant.h>
 	#include <tqdbusconnection.h>
-#endif // defined(WITH_UPOWER) || defined(WITH_CONSOLEKIT)
+#endif // defined(WITH_TDEHWLIB_DAEMONS) || defined(WITH_UPOWER) || defined(WITH_DEVKITPOWER) || defined(WITH_HAL) || defined(WITH_CONSOLEKIT)
 
 TDERootSystemDevice::TDERootSystemDevice(TDEGenericDeviceType::TDEGenericDeviceType dt, TQString dn) : TDEGenericDevice(dt, dn) {
 	m_hibernationSpace = -1;
@@ -107,9 +107,24 @@ bool TDERootSystemDevice::canStandby() {
 			return FALSE;
 		}
 	}
-	else {
-		return FALSE;
+
+#ifdef WITH_TDEHWLIB_DAEMONS
+	{
+		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+		if (dbusConn.isConnected()) {
+			// can standby?
+			TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
+						"org.trinitydesktop.hardwarecontrol",
+						"/org/trinitydesktop/hardwarecontrol",
+						"org.trinitydesktop.hardwarecontrol.Power",
+						"CanStandby");
+			TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
+			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+				return reply[0].toBool();
+			}
+		}
 	}
+#endif // WITH_TDEHWLIB_DAEMONS
 }
 
 bool TDERootSystemDevice::canSuspend() {
@@ -185,6 +200,24 @@ bool TDERootSystemDevice::canSuspend() {
 		}
 	}
 #endif // WITH_HAL
+
+#ifdef WITH_TDEHWLIB_DAEMONS
+	{
+		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+		if (dbusConn.isConnected()) {
+			// can suspend?
+			TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
+						"org.trinitydesktop.hardwarecontrol",
+						"/org/trinitydesktop/hardwarecontrol",
+						"org.trinitydesktop.hardwarecontrol.Power",
+						"CanSuspend");
+			TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
+			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+				return reply[0].toBool();
+			}
+		}
+	}
+#endif // WITH_TDEHWLIB_DAEMONS
 
 	return FALSE;
 }
@@ -262,6 +295,24 @@ bool TDERootSystemDevice::canHibernate() {
 		}
 	}
 #endif // WITH_HAL
+
+#ifdef WITH_TDEHWLIB_DAEMONS
+	{
+		TQT_DBusConnection dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+		if (dbusConn.isConnected()) {
+			// can hibernate?
+			TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
+						"org.trinitydesktop.hardwarecontrol",
+						"/org/trinitydesktop/hardwarecontrol",
+						"org.trinitydesktop.hardwarecontrol.Power",
+						"CanHibernate");
+			TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
+			if (reply.type() == TQT_DBusMessage::ReplyMessage && reply.count() == 1) {
+				return reply[0].toBool();
+			}
+		}
+	}
+#endif // WITH_TDEHWLIB_DAEMONS
 
 	return FALSE;
 }
@@ -491,6 +542,48 @@ bool TDERootSystemDevice::setPowerState(TDESystemPowerState::TDESystemPowerState
 			}
 		}
 #endif // WITH_HAL
+
+#ifdef WITH_TDEHWLIB_DAEMONS
+		{
+			TQT_DBusConnection dbusConn;
+			dbusConn = TQT_DBusConnection::addConnection(TQT_DBusConnection::SystemBus);
+			if ( dbusConn.isConnected() ) {
+				if (ps == TDESystemPowerState::Standby) {
+					TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
+								"org.trinitydesktop.hardwarecontrol",
+								"/org/trinitydesktop/hardwarecontrol",
+								"org.trinitydesktop.hardwarecontrol.Power",
+								"Standby");
+					TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
+					if (reply.type() == TQT_DBusMessage::ReplyMessage) {
+						return true;
+					}
+				}
+				else if (ps == TDESystemPowerState::Suspend) {
+					TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
+								"org.trinitydesktop.hardwarecontrol",
+								"/org/trinitydesktop/hardwarecontrol",
+								"org.trinitydesktop.hardwarecontrol.Power",
+								"Suspend");
+					TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
+					if (reply.type() == TQT_DBusMessage::ReplyMessage) {
+						return true;
+					}
+				}
+				else if (ps == TDESystemPowerState::Hibernate) {
+					TQT_DBusMessage msg = TQT_DBusMessage::methodCall(
+								"org.trinitydesktop.hardwarecontrol",
+								"/org/trinitydesktop/hardwarecontrol",
+								"org.trinitydesktop.hardwarecontrol.Power",
+								"Hibernate");
+					TQT_DBusMessage reply = dbusConn.sendWithReply(msg);
+					if (reply.type() == TQT_DBusMessage::ReplyMessage) {
+						return true;
+					}
+				}
+			}
+		}
+#endif // WITH_TDEHWLIB_DAEMONS
 
 		return false;
 	}

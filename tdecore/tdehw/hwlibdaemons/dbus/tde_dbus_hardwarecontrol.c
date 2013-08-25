@@ -249,6 +249,43 @@ void reply_SetBrightness(DBusMessage* msg, DBusConnection* conn) {
 	free(safepath);
 }
 
+void reply_CanSetPower(DBusMessage* msg, DBusConnection* conn, char* state) {
+
+	// check if path is writable
+	int writable = false;
+	int rval = access ("/sys/power/state", W_OK);
+	if (rval == 0) {
+		writable = true;
+	}
+
+	// check if method is supported
+	int method = false;
+	if (writable) {
+		FILE *node = fopen("/sys/power/state", "r");
+		if (node != NULL) {
+			char *line = NULL;
+			size_t len = 0;
+			ssize_t read = getline(&line, &len, node);
+			if (line) {
+				method = strstr(line, state) != NULL;
+				free(line);
+			}
+			if (fclose(node) == EOF) {
+				// Error!
+			}
+		}
+	}
+
+	// send reply
+	reply_Bool(msg, conn, writable && method);
+}
+
+void reply_SetPower(DBusMessage* msg, DBusConnection* conn, char* state) {
+
+	// set power state
+	reply_SetGivenPath(msg, conn, "/sys/power/state", state);
+}
+
 void listen() {
 	DBusMessage* msg;
 	DBusMessage* reply;
@@ -308,6 +345,24 @@ void listen() {
 		}
 		else if (dbus_message_is_method_call(msg, "org.trinitydesktop.hardwarecontrol.Brightness", "SetBrightness")) {
 			reply_SetBrightness(msg, conn);
+		}
+		else if (dbus_message_is_method_call(msg, "org.trinitydesktop.hardwarecontrol.Power", "CanStandby")) {
+			reply_CanSetPower(msg, conn, "standby");
+		}
+		else if (dbus_message_is_method_call(msg, "org.trinitydesktop.hardwarecontrol.Power", "Standby")) {
+			reply_SetPower(msg, conn, "standby");
+		}
+		else if (dbus_message_is_method_call(msg, "org.trinitydesktop.hardwarecontrol.Power", "CanSuspend")) {
+			reply_CanSetPower(msg, conn, "mem");
+		}
+		else if (dbus_message_is_method_call(msg, "org.trinitydesktop.hardwarecontrol.Power", "Suspend")) {
+			reply_SetPower(msg, conn, "mem");
+		}
+		else if (dbus_message_is_method_call(msg, "org.trinitydesktop.hardwarecontrol.Power", "CanHibernate")) {
+			reply_CanSetPower(msg, conn, "disk");
+		}
+		else if (dbus_message_is_method_call(msg, "org.trinitydesktop.hardwarecontrol.Power", "Hibernate")) {
+			reply_SetPower(msg, conn, "disk");
 		}
 		else {
 			fprintf(stderr, "[tde_dbus_hardwarecontrol] Unknown method '%s' called on interface '%s', ignoring\n", dbus_message_get_member(msg), dbus_message_get_interface(msg));
