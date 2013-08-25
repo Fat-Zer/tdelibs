@@ -27,7 +27,9 @@ enum TDEInputDeviceType {
 	Unknown,
 	ACPILidSwitch,
 	ACPISleepButton,
+	ACPISuspendButton,
 	ACPIPowerButton,
+	ACPIOtherInput,
 	Other = 0x80000000
 };
 };

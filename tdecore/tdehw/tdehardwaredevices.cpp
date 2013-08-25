@@ -3056,6 +3056,9 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 		else if (edevice->systemPath().contains("PNP0C0C") || edevice->systemPath().contains("/LNXPWRBN")) {
 			edevice->internalSetEventType(TDEEventDeviceType::ACPIPowerButton);
 		}
+		else if (edevice->systemPath().contains("_acpi")) {
+			edevice->internalSetEventType(TDEEventDeviceType::ACPIOtherInput);
+		}
 		else {
 			edevice->internalSetEventType(TDEEventDeviceType::Unknown);
 		}
@@ -3072,6 +3075,9 @@ void TDEHardwareDevices::updateExistingDeviceInformation(TDEGenericDevice* exist
 		}
 		else if (idevice->systemPath().contains("PNP0C0C") || idevice->systemPath().contains("/LNXPWRBN")) {
 			idevice->internalSetInputType(TDEInputDeviceType::ACPIPowerButton);
+		}
+		else if (idevice->systemPath().contains("_acpi")) {
+			idevice->internalSetInputType(TDEInputDeviceType::ACPIOtherInput);
 		}
 		else {
 			idevice->internalSetInputType(TDEInputDeviceType::Unknown);

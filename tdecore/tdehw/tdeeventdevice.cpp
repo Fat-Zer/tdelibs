@@ -143,7 +143,7 @@ void TDEEventDevice::eventReceived() {
 	int r;
 	r = read(m_fd, &ev, sizeof(struct input_event));
 	if (r > 0) {
-		if (ev.type == EV_KEY) {
+		if ((ev.type == EV_KEY) && (ev.value == 1)) {	// Only detect keypress events (value == 1)
 			emit keyPressed(ev.code, this);
 		}
 	}
