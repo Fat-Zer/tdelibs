@@ -21,6 +21,7 @@
 
 #include <unistd.h>
 #include <fcntl.h>
+#include <sys/stat.h>
 #include <sys/ioctl.h>
 #include <linux/cdrom.h>
 
@@ -767,6 +768,59 @@ bool TDEStorageDevice::unmountDevice(TQString* errRet, int* retcode) {
 	TDEGlobal::hardwareDevices()->processModifiedMounts();
 
 	return false;
+}
+
+TQString TDEStorageDevice::determineFileSystemType(TQString path) {
+	TQStringList mountTable;
+	TQString prevPath = path;
+	dev_t prevDev = 0;
+	int pos;
+	struct stat directory_info;
+	if (path.startsWith("/")) {
+		stat(path.ascii(), &directory_info);
+		prevDev = directory_info.st_dev;
+		// Walk the directory tree up to the root, checking for any change in st_dev
+		// If a change is found, the previous value of path is the mount point itself
+		while (path != "/") {
+			pos = path.findRev("/", -1, TRUE);
+			if (pos < 0) {
+				break;
+			}
+			path = path.mid(0, pos);
+			if (path == "") {
+				path = "/";
+			}
+			stat(path.ascii(), &directory_info);
+			if (directory_info.st_dev != prevDev) {
+				break;
+			}
+			prevPath = path;
+			prevDev = directory_info.st_dev;
+		}
+	}
+
+	// Read in mount table
+	mountTable.clear();
+	TQFile file( "/proc/mounts" );
+	if ( file.open( IO_ReadOnly ) ) {
+		TQTextStream stream( &file );
+		while ( !stream.atEnd() ) {
+			mountTable.append(stream.readLine());
+		}
+		file.close();
+	}
+
+	// Parse mount table
+	TQStringList::Iterator it;
+	for ( it = mountTable.begin(); it != mountTable.end(); ++it ) {
+		TQStringList mountInfo = TQStringList::split(" ", (*it), true);
+		if ((*mountInfo.at(1)) == prevPath) {
+			return (*mountInfo.at(2));
+		}
+	}
+
+	// Unknown file system type
+	return TQString::null;
 }
 
 #include "tdestoragedevice.moc"

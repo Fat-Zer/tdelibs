@@ -290,6 +290,13 @@ class TDECORE_EXPORT TDEStorageDevice : public TDEGenericDevice
 		*/
 		bool ejectDrive();
 
+		/**
+		* @param path Full path to arbitrary file or directory
+		* @return TQString with type of file system containing the given file,
+		* or TQString::null if file system type unknown
+		*/
+		static TQString determineFileSystemType(TQString path);
+
 	protected:
 		/**
 		* @param a TQString with the disk or partition label, if any
