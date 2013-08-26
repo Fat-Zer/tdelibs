@@ -85,7 +85,7 @@ set( ${target}_SRCS
 
 tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
-  VERSION 4.2.0
+  VERSION 14.0.0
   LINK ${VSCRIPT} kjava-static kjs_html-static tdehtmldom-static tdehtmlcss-static
     tdehtmlhtml-static tdehtmlxml-static tdehtmlrender-static tdehtmlmisc-static
     tdeutils-shared tdeprint-shared kjs-shared ${JPEG_LIBRARIES}

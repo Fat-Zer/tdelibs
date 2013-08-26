@@ -130,7 +130,7 @@ set( ${target}_SRCS
 
 tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
-  VERSION 4.2.0
+  VERSION 14.0.0
   EMBED tdecorenetwork-static tdehw-static
   LINK ltdlc-static ${KDESVGICONS} DCOP-shared tdefx-shared ${ZLIB_LIBRARIES}
     ${LIBIDN_LIBRARIES} ${XCOMPOSITE_LIBRARIES} ICE SM ${GAMIN_LIBRARIES}
@@ -177,7 +177,7 @@ set( ${target}_SRCS
 
 tde_add_library( ${target} SHARED
   SOURCES ${${target}_SRCS}
-  VERSION 4.2.0
+  VERSION 14.0.0
   DESTINATION ${LIB_INSTALL_DIR}
 )
 

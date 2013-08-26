@@ -76,7 +76,7 @@ set( ${target}_SRCS
 
 tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
-  VERSION 4.2.0
+  VERSION 14.0.0
   LINK tdeprint-shared
   DESTINATION ${LIB_INSTALL_DIR}
 )

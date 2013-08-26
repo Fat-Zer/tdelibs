@@ -147,7 +147,7 @@ set( ${target}_SRCS
 
 tde_add_library( ${target} SHARED AUTOMOC
   SOURCES ${${target}_SRCS}
-  VERSION 4.2.0
+  VERSION 14.0.0
   LINK tdecore-shared ${FREETYPE_LIBRARIES} ${FONTCONFIG_LIBRARIES}
   DEPENDENCIES dcopidl
   DESTINATION ${LIB_INSTALL_DIR}
@@ -163,6 +163,6 @@ configure_file( ${CMAKE_SOURCE_DIR}/cmake/modules/template_dummy_cpp.cmake dummy
 tde_add_library( ${target} SHARED
   SOURCES ${CMAKE_CURRENT_BINARY_DIR}/dummy.cpp
   LINK ${TQT_LIBRARIES}
-  VERSION 4.2.0
+  VERSION 14.0.0
   DESTINATION ${LIB_INSTALL_DIR}
 )

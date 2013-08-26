@@ -41,7 +41,7 @@ set( ${target}_SRCS
 
 tde_add_library( ${target} SHARED
   SOURCES ${${target}_SRCS}
-  VERSION 4.2.0
+  VERSION 14.0.0
   LINK tdecore-shared ${LIB_UTIL}
   DESTINATION ${LIB_INSTALL_DIR}
 )
