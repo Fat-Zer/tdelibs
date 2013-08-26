@@ -19,7 +19,16 @@
 # For file output you can give a filename by *Filename=<file>
 # otherwise kdebug.dbg in the current directory is used.
 #
-# ekzample:
+# the Default section sets the destination there all output goes to unless 
+# there will be explicitly specefied in apropriate area-number section.
+
+[Default]
+FatalOutput=1
+ErrorOutput=2
+WarnOutput=2
+InfoOutput=4
+
+# Example:
 #
 # For the debug area 100 you want output of debug messages
 # to a file /var/log/dbg.log and error messages as message boxes.
@@ -31,112 +40,6 @@
 # ErrorOutput=1
 # AbortFatal=1
 #
-
 # TDEAccel debug info off
-[125]
-InfoOutput=4
-
-# KCheckAccel debug info off
-[131]
-InfoOutput=4
-
-# TDEAction debug info off
-[129]
-InfoOutput=4
-
-# TDEStartupInfo debug info off
-[172]
-InfoOutput=4
-
-# TDELocale debug info off
-[173]
-InfoOutput=4
-
-# TDEMainWindow debug info off
-[200]
-InfoOutput=4
-
-# KFile debug info off
-[250]
-InfoOutput=4
-
-# TDEIconloader debug info off
-[264]
-InfoOutput=4
-
-# KSpell debug info off
-[750]
-InfoOutput=4
-
-# KPart's mainwindow info off
-[1001]
-InfoOutput=4
-
-# KPart's factory info off
-[1002]
-InfoOutput=4
-
-# KDesktop icons
-[1214]
-InfoOutput=4
-
-# KHotKeys
-[1217]
-InfoOutput=4
-
-# KMail
-[5006]
-InfoOutput=4
-
-# KitchenSync (Syncing Algorithm)
-[5250]
-InfoOutput=4
-
-# calendarsystem debug info off
-[5400]
-InfoOutput=4
-
-# tdeabc/vcard
-[5710]
-InfoOutput=4
-
-# korganizer (verbose)
-[5855]
-InfoOutput=4
-
-# korgac (check)
-[5891]
-InfoOutput=4
-
-# kalarmd check
-[5901]
-InfoOutput=4
-
-# tdeio_http_debug debug info off
-[7113]
-InfoOutput=4
-
-# kbzip2filter's debug info off
-[7118]
-InfoOutput=4
-
-# tdeio_nntp debug info off
-[7114]
-InfoOutput=4
-
-# KRun debug info off
-[7010]
-InfoOutput=4
-
-# KMimeMagic debug info off
-[7018]
-InfoOutput=4
-
-# KGame debug info off
-[11001]
-InfoOutput=4
-
-# KOStore debug info off
-[30002]
-InfoOutput=4
-
+# [125]
+# InfoOutput=4

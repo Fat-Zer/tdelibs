@@ -222,14 +222,16 @@ static void kDebugBackend( unsigned short nLevel, unsigned int nArea, const char
         kDebug_data->aAreaName = TDEGlobal::instance()->instanceName();
   }
 
-  if (kDebug_data->config && kDebug_data->oldarea != nArea) {
-    kDebug_data->config->setGroup( TQString::number(static_cast<int>(nArea)) );
+  if ( kDebug_data->oldarea != nArea ) {
     kDebug_data->oldarea = nArea;
-    if ( nArea > 0 && TDEGlobal::_instance )
-      kDebug_data->aAreaName = getDescrFromNum(nArea);
-    if ((nArea == 0) || kDebug_data->aAreaName.isEmpty())
-      if ( TDEGlobal::_instance )
+    if( TDEGlobal::_instance ) {
+      if ( nArea > 0 ) {
+        kDebug_data->aAreaName = getDescrFromNum(nArea);
+      }
+      if ( nArea == 0 || kDebug_data->aAreaName.isEmpty() ) {
         kDebug_data->aAreaName = TDEGlobal::instance()->instanceName();
+      }
+    }
   }
 
   int nPriority = 0;
@@ -249,7 +251,7 @@ static void kDebugBackend( unsigned short nLevel, unsigned int nArea, const char
       key = "WarnOutput";
       aCaption = "Warning";
       nPriority = LOG_WARNING;
-	break;
+    break;
   case KDEBUG_FATAL:
       key = "FatalOutput";
       aCaption = "Fatal Error";
@@ -263,16 +265,31 @@ static void kDebugBackend( unsigned short nLevel, unsigned int nArea, const char
       nPriority = LOG_ERR;
       break;
   }
-
-  // if no output mode is specified default to no debug output
-  short nOutput = kDebug_data->config ? kDebug_data->config->readNumEntry(key, 4) : 4;
+  
+  short nOutput = -1;
+  if ( kDebug_data->config ) {
+    kDebug_data->config->setGroup( TQString::number(static_cast<int>(nArea)) );
+    nOutput = kDebug_data->config->readNumEntry(key, -1);
+    if( nOutput == -1 ) {
+      kDebug_data->config->setGroup( TQString::fromAscii("Default") );
+      nOutput = kDebug_data->config->readNumEntry(key, -1);
+    }
+  }
+  // if no output mode is specified default to no stderr output
+  // NOTE: don't set this to 4 (no output) because in that case you won't be 
+  //       able to get any output from applications which don't create 
+  //       TDEApplication objects.
+  if ( nOutput == -1 ) {
+    nOutput = 2;
+  }
 
   // If the application doesn't have a TQApplication object it can't use
-  // a messagebox.
-  if (!kapp && (nOutput == 1))
+  // a messagebox, as well as in case of GUI is disabled.
+  if ( nOutput == 1 && ( !kapp || !kapp->guiEnabled()) ) {
     nOutput = 2;
-  else if ( nOutput == 4 && nLevel != KDEBUG_FATAL )
+  } else if ( nOutput == 4 && nLevel != KDEBUG_FATAL ) {
       return;
+  }
 
   const int BUFSIZE = 4096;
   char buf[BUFSIZE];
