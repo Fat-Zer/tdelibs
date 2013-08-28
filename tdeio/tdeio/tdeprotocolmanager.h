@@ -189,7 +189,7 @@ public:
    * Please note the use of .kionetrc files is highly discouraged since
    * password is stored in clear text. For future releases the ability
    * to store preset password for proxy servers will probably be supported
-   * through KWallet integration.
+   * through TDEWallet integration.
    */
   enum ProxyAuthMode
   {

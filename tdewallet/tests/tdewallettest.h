@@ -3,7 +3,7 @@
 
 #include <tqobject.h>
 
-namespace KWallet { class Wallet; }
+namespace TDEWallet { class Wallet; }
 
 class WalletReceiver : public TQObject
 {

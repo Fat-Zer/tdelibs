@@ -7,7 +7,7 @@
 ** place of a destructor.
 *****************************************************************************/
 
-void KWalletWizard::passwordPageUpdate()
+void TDEWalletWizard::passwordPageUpdate()
 {
     bool fe = !_useWallet->isChecked() || _pass1->text() == _pass2->text();
     if (_basic->isChecked()) {
@@ -34,7 +34,7 @@ void KWalletWizard::passwordPageUpdate()
 }
 
 
-void KWalletWizard::init()
+void TDEWalletWizard::init()
 {
     setHelpEnabled(page1, false);
     setHelpEnabled(page2, false);
@@ -46,7 +46,7 @@ void KWalletWizard::init()
 }
 
 
-void KWalletWizard::setAdvanced()
+void TDEWalletWizard::setAdvanced()
 {
     setAppropriate(page3, true);
     setAppropriate(page4, true);
@@ -57,7 +57,7 @@ void KWalletWizard::setAdvanced()
 }
 
 
-void KWalletWizard::setBasic()
+void TDEWalletWizard::setBasic()
 {
     setAppropriate(page3, false);
     setAppropriate(page4, false);
@@ -67,7 +67,7 @@ void KWalletWizard::setBasic()
 }
 
 
-void KWalletWizard::destroy()
+void TDEWalletWizard::destroy()
 {
     _pass1->clear();
     _pass2->clear();

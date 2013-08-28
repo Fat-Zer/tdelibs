@@ -49,7 +49,7 @@ namespace tdehtml
     typedef TQValueList<TQCString> encodingList;
 }
 
-namespace KWallet {
+namespace TDEWallet {
     class Wallet;
 }
 
@@ -85,7 +85,7 @@ public:
 
     bool autoComplete() const { return m_autocomplete; }
     void doAutoFill();
-    void walletOpened(KWallet::Wallet *w);
+    void walletOpened(TDEWallet::Wallet *w);
 
     virtual void parseAttribute(AttributeImpl *attr);
 

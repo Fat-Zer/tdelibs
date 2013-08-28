@@ -49,18 +49,18 @@
 #define KWALLET_HASH_MD5		1 // unsupported
 
 
-using namespace KWallet;
+using namespace TDEWallet;
 
 #define KWMAGIC "KWALLET\n\r\0\r\n"
 #define KWMAGIC_LEN 12
 
-static void initKWalletDir()
+static void initTDEWalletDir()
 {
     TDEGlobal::dirs()->addResourceType("tdewallet", "share/apps/tdewallet");
 }
 
 Backend::Backend(const TQString& name, bool isPath) : _name(name), _ref(0) {
-	initKWalletDir();
+	initTDEWalletDir();
 	if (isPath) {
 		_path = name;
 	} else {
@@ -244,7 +244,7 @@ static int password2hash(const TQByteArray& password, TQByteArray& hash) {
 
 
 bool Backend::exists(const TQString& wallet) {
-	initKWalletDir();
+	initTDEWalletDir();
 	TQString path = TDEGlobal::dirs()->saveLocation("tdewallet") + "/" + wallet + ".kwl";
 	// Note: 60 bytes is presently the minimum size of a wallet file.
 	//       Anything smaller is junk.
@@ -453,17 +453,17 @@ int Backend::open(const TQByteArray& password) {
 
 		for (size_t i = 0; i < n; i++) {
 			TQString key;
-			KWallet::Wallet::EntryType et = KWallet::Wallet::Unknown;
+			TDEWallet::Wallet::EntryType et = TDEWallet::Wallet::Unknown;
 			Entry *e = new Entry;
 			eStream >> key;
 			TQ_INT32 x = 0; // necessary to read properly
 			eStream >> x;
-			et = static_cast<KWallet::Wallet::EntryType>(x);
+			et = static_cast<TDEWallet::Wallet::EntryType>(x);
 
 			switch (et) {
-			case KWallet::Wallet::Password:
-			case KWallet::Wallet::Stream:
-			case KWallet::Wallet::Map:
+			case TDEWallet::Wallet::Password:
+			case TDEWallet::Wallet::Stream:
+			case TDEWallet::Wallet::Map:
 			break;
 			default: // Unknown entry
 				delete e;

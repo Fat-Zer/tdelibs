@@ -106,7 +106,7 @@ namespace KParts
   class LiveConnectExtension;
 }
 
-namespace KWallet
+namespace TDEWallet
 {
   class Wallet;
 }
@@ -1540,7 +1540,7 @@ private slots:
    */
   void restoreScrollPosition();
 
-  void walletOpened(KWallet::Wallet*);
+  void walletOpened(TDEWallet::Wallet*);
 
 private:
 
@@ -1564,7 +1564,7 @@ private:
 
   bool processObjectRequest( tdehtml::ChildFrame *child, const KURL &url, const TQString &mimetype );
 
-  KWallet::Wallet* wallet();
+  TDEWallet::Wallet* wallet();
 
   void openWallet(DOM::HTMLFormElementImpl*);
   void saveToWallet(const TQString& key, const TQMap<TQString,TQString>& data);

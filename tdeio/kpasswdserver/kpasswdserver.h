@@ -32,7 +32,7 @@
 #include <tdeio/authinfo.h>
 #include <kded/kdedmodule.h>
 
-namespace KWallet {
+namespace TDEWallet {
     class Wallet;
 }
 
@@ -111,7 +111,7 @@ protected:
   TQPtrList< Request > m_authWait;
   TQIntDict<TQStringList> mWindowIdList;
   DCOPClient *m_dcopClient;
-  KWallet::Wallet* m_wallet;
+  TDEWallet::Wallet* m_wallet;
   long m_seqNr;
 };
 

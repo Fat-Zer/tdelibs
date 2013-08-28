@@ -9,8 +9,8 @@
 int main(int argc, char **argv) {
    TDEApplication a(argc, argv, "tdewalletbackendtest");
 
-   KWallet::Backend be("ktestwallet");
-   printf("KWalletBackend constructed\n");
+   TDEWallet::Backend be("ktestwallet");
+   printf("TDEWalletBackend constructed\n");
 
    TQByteArray apass, bpass, cpass;
 

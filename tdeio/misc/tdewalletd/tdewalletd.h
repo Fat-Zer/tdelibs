@@ -37,14 +37,14 @@ class KDirWatch;
 class KTimeout;
 
 // @Private
-class KWalletTransaction;
+class TDEWalletTransaction;
 
-class KWalletD : public KDEDModule {
+class TDEWalletD : public KDEDModule {
 	Q_OBJECT
 	K_DCOP
 	public:
-		KWalletD(const TQCString &name);
-		virtual ~KWalletD();
+		TDEWalletD(const TQCString &name);
+		virtual ~TDEWalletD();
 
 	k_dcop:
 		// Is the wallet enabled?  If not, all open() calls fail.
@@ -157,7 +157,7 @@ class KWalletD : public KDEDModule {
 		int internalOpen(const TQCString& appid, const TQString& wallet, bool isPath = false, WId w = 0, bool modal = false);
 		bool isAuthorizedApp(const TQCString& appid, const TQString& wallet, WId w);
 		// This also validates the handle.  May return NULL.
-		KWallet::Backend* getWallet(const TQCString& appid, int handle);
+		TDEWallet::Backend* getWallet(const TQCString& appid, int handle);
 		// Generate a new unique handle.
 		int generateHandle();
 		// Invalidate a handle (remove it from the TQMap)
@@ -166,7 +166,7 @@ class KWalletD : public KDEDModule {
 		void doCloseSignals(int,const TQString&);
 		void emitFolderUpdated(const TQString&, const TQString&);
 		// Internal - close this wallet.
-		int closeWallet(KWallet::Backend *w, int handle, bool force);
+		int closeWallet(TDEWallet::Backend *w, int handle, bool force);
 		// Implicitly allow access for this application
 		bool implicitAllow(const TQString& wallet, const TQCString& app);
 		bool implicitDeny(const TQString& wallet, const TQCString& app);
@@ -178,7 +178,7 @@ class KWalletD : public KDEDModule {
 		void setupDialog( TQWidget* dialog, WId wId, const TQCString& appid, bool modal );
 		void checkActiveDialog();
 
-		TQIntDict<KWallet::Backend> _wallets;
+		TQIntDict<TDEWallet::Backend> _wallets;
 		TQMap<TQCString,TQValueList<int> > _handles;
 		TQMap<TQString,TQCString> _passwords;
 		KDirWatch *_dw;
@@ -191,7 +191,7 @@ class KWalletD : public KDEDModule {
 		KTimeout *_timeouts;
 		TQTimer _tryOpenBlocked;
 
-		TQPtrList<KWalletTransaction> _transactions;
+		TQPtrList<TDEWalletTransaction> _transactions;
 		TQGuardedPtr< TQWidget > activeDialog;
 };
 

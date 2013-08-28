@@ -19,7 +19,7 @@ void openWallet()
 	_out << "About to ask for wallet async" << endl;
 
         // we have no wallet: ask for one.
-	KWallet::Wallet *wallet = KWallet::Wallet::openWallet( KWallet::Wallet::NetworkWallet(), 0, KWallet::Wallet::Asynchronous );
+	TDEWallet::Wallet *wallet = TDEWallet::Wallet::openWallet( TDEWallet::Wallet::NetworkWallet(), 0, TDEWallet::Wallet::Asynchronous );
 
 	WalletReceiver r;
 	r.connect( wallet, TQT_SIGNAL( walletOpened(bool) ), TQT_SLOT( walletOpened(bool) ) );

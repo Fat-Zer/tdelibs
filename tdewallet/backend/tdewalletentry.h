@@ -27,7 +27,7 @@
 
 #include "tdewallet.h"
 
-namespace KWallet {
+namespace TDEWallet {
 
 /* @internal
  */

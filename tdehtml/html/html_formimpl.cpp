@@ -428,8 +428,8 @@ void HTMLFormElementImpl::doAutoFill()
 #ifndef TDEHTML_NO_WALLET
     const TQString key = calculateAutoFillKey(*this);
 
-    if (KWallet::Wallet::keyDoesNotExist(KWallet::Wallet::NetworkWallet(),
-                                         KWallet::Wallet::FormDataFolder(),
+    if (TDEWallet::Wallet::keyDoesNotExist(TDEWallet::Wallet::NetworkWallet(),
+                                         TDEWallet::Wallet::FormDataFolder(),
                                          key))
         return;
 
@@ -439,14 +439,14 @@ void HTMLFormElementImpl::doAutoFill()
 }
 
 
-void HTMLFormElementImpl::walletOpened(KWallet::Wallet *w) {
+void HTMLFormElementImpl::walletOpened(TDEWallet::Wallet *w) {
 #ifndef TDEHTML_NO_WALLET
     assert(w);
     const TQString key = calculateAutoFillKey(*this);
-    if (!w->hasFolder(KWallet::Wallet::FormDataFolder())) {
+    if (!w->hasFolder(TDEWallet::Wallet::FormDataFolder())) {
         return; // failed
     }
-    w->setFolder(KWallet::Wallet::FormDataFolder());
+    w->setFolder(TDEWallet::Wallet::FormDataFolder());
     TQMap<TQString, TQString> map;
     if (w->readMap(key, map))
         return; // failed, abort
@@ -578,17 +578,17 @@ void HTMLFormElementImpl::submit(  )
             gatherWalletData();
         }
 #ifndef TDEHTML_NO_WALLET
-        if (m_havePassword && !m_haveTextarea && KWallet::Wallet::isEnabled()) {
+        if (m_havePassword && !m_haveTextarea && TDEWallet::Wallet::isEnabled()) {
             const TQString key = calculateAutoFillKey(*this);
-            const bool doesnotexist = KWallet::Wallet::keyDoesNotExist(KWallet::Wallet::NetworkWallet(), KWallet::Wallet::FormDataFolder(), key);
-            KWallet::Wallet* const w = view->part()->wallet();
+            const bool doesnotexist = TDEWallet::Wallet::keyDoesNotExist(TDEWallet::Wallet::NetworkWallet(), TDEWallet::Wallet::FormDataFolder(), key);
+            TDEWallet::Wallet* const w = view->part()->wallet();
             bool login_changed = false;
 
             if (!doesnotexist && w) {
                 // check if the login information changed from what
                 // we had so far.
-                if (w->hasFolder(KWallet::Wallet::FormDataFolder())) {
-                    w->setFolder(KWallet::Wallet::FormDataFolder());
+                if (w->hasFolder(TDEWallet::Wallet::FormDataFolder())) {
+                    w->setFolder(TDEWallet::Wallet::FormDataFolder());
                     TQMap<TQString, TQString> map;
                     if (!w->readMap(key, map)) {
                         TQMapConstIterator<TQString, TQString> it = map.begin();

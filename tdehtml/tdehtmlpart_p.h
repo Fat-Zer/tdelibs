@@ -144,7 +144,7 @@ class TDEHTMLWalletQueue : public TQObject
 #endif // TDEHTML_NO_WALLET
     }
 #ifndef TDEHTML_NO_WALLET
-    KWallet::Wallet *wallet;
+    TDEWallet::Wallet *wallet;
 #endif // TDEHTML_NO_WALLET
     typedef QPair<DOM::HTMLFormElementImpl*, TQGuardedPtr<DOM::DocumentImpl> > Caller;
     typedef TQValueList<Caller> CallerList;
@@ -152,7 +152,7 @@ class TDEHTMLWalletQueue : public TQObject
     TQValueList<QPair<TQString, TQMap<TQString, TQString> > > savers;
 
   signals:
-    void walletOpened(KWallet::Wallet*);
+    void walletOpened(TDEWallet::Wallet*);
 
   public slots:
     void walletOpened(bool success) {
@@ -163,15 +163,15 @@ class TDEHTMLWalletQueue : public TQObject
       }
       emit walletOpened(wallet);
       if (wallet) {
-        if (!wallet->hasFolder(KWallet::Wallet::FormDataFolder())) {
-          wallet->createFolder(KWallet::Wallet::FormDataFolder());
+        if (!wallet->hasFolder(TDEWallet::Wallet::FormDataFolder())) {
+          wallet->createFolder(TDEWallet::Wallet::FormDataFolder());
         }
         for (CallerList::Iterator i = callers.begin(); i != callers.end(); ++i) {
           if ((*i).first && (*i).second) {
             (*i).first->walletOpened(wallet);
           }
         }
-        wallet->setFolder(KWallet::Wallet::FormDataFolder());
+        wallet->setFolder(TDEWallet::Wallet::FormDataFolder());
         for (TQValueList<QPair<TQString, TQMap<TQString, TQString> > >::Iterator i = savers.begin(); i != savers.end(); ++i) {
           wallet->writeMap((*i).first, (*i).second);
         }
@@ -326,7 +326,7 @@ public:
   TQString scheduledScript;
   DOM::Node scheduledScriptNode;
 
-  KWallet::Wallet* m_wallet;
+  TDEWallet::Wallet* m_wallet;
   int m_runningScripts;
   bool m_bOpenMiddleClick :1;
   bool m_bBackRightClick :1;

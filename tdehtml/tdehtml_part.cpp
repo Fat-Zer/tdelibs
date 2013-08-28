@@ -7163,11 +7163,11 @@ void TDEHTMLPart::openWallet(DOM::HTMLFormElementImpl *form)
   }
 
   if (!d->m_wq) {
-    KWallet::Wallet *wallet = KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(), widget() ? widget()->topLevelWidget()->winId() : 0, KWallet::Wallet::Asynchronous);
+    TDEWallet::Wallet *wallet = TDEWallet::Wallet::openWallet(TDEWallet::Wallet::NetworkWallet(), widget() ? widget()->topLevelWidget()->winId() : 0, TDEWallet::Wallet::Asynchronous);
     d->m_wq = new TDEHTMLWalletQueue(this);
     d->m_wq->wallet = wallet;
     connect(wallet, TQT_SIGNAL(walletOpened(bool)), d->m_wq, TQT_SLOT(walletOpened(bool)));
-    connect(d->m_wq, TQT_SIGNAL(walletOpened(KWallet::Wallet*)), this, TQT_SLOT(walletOpened(KWallet::Wallet*)));
+    connect(d->m_wq, TQT_SIGNAL(walletOpened(TDEWallet::Wallet*)), this, TQT_SLOT(walletOpened(TDEWallet::Wallet*)));
   }
   assert(form);
   d->m_wq->callers.append(TDEHTMLWalletQueue::Caller(form, form->getDocument()));
@@ -7191,10 +7191,10 @@ void TDEHTMLPart::saveToWallet(const TQString& key, const TQMap<TQString,TQStrin
   if (d->m_wallet) {
     if (d->m_bWalletOpened) {
       if (d->m_wallet->isOpen()) {
-        if (!d->m_wallet->hasFolder(KWallet::Wallet::FormDataFolder())) {
-          d->m_wallet->createFolder(KWallet::Wallet::FormDataFolder());
+        if (!d->m_wallet->hasFolder(TDEWallet::Wallet::FormDataFolder())) {
+          d->m_wallet->createFolder(TDEWallet::Wallet::FormDataFolder());
         }
-        d->m_wallet->setFolder(KWallet::Wallet::FormDataFolder());
+        d->m_wallet->setFolder(TDEWallet::Wallet::FormDataFolder());
         d->m_wallet->writeMap(key, data);
         return;
       }
@@ -7205,11 +7205,11 @@ void TDEHTMLPart::saveToWallet(const TQString& key, const TQMap<TQString,TQStrin
   }
 
   if (!d->m_wq) {
-    KWallet::Wallet *wallet = KWallet::Wallet::openWallet(KWallet::Wallet::NetworkWallet(), widget() ? widget()->topLevelWidget()->winId() : 0, KWallet::Wallet::Asynchronous);
+    TDEWallet::Wallet *wallet = TDEWallet::Wallet::openWallet(TDEWallet::Wallet::NetworkWallet(), widget() ? widget()->topLevelWidget()->winId() : 0, TDEWallet::Wallet::Asynchronous);
     d->m_wq = new TDEHTMLWalletQueue(this);
     d->m_wq->wallet = wallet;
     connect(wallet, TQT_SIGNAL(walletOpened(bool)), d->m_wq, TQT_SLOT(walletOpened(bool)));
-    connect(d->m_wq, TQT_SIGNAL(walletOpened(KWallet::Wallet*)), this, TQT_SLOT(walletOpened(KWallet::Wallet*)));
+    connect(d->m_wq, TQT_SIGNAL(walletOpened(TDEWallet::Wallet*)), this, TQT_SLOT(walletOpened(TDEWallet::Wallet*)));
   }
   d->m_wq->savers.append(qMakePair(key, data));
 #endif // TDEHTML_NO_WALLET
@@ -7235,7 +7235,7 @@ void TDEHTMLPart::dequeueWallet(DOM::HTMLFormElementImpl *form) {
 }
 
 
-void TDEHTMLPart::walletOpened(KWallet::Wallet *wallet) {
+void TDEHTMLPart::walletOpened(TDEWallet::Wallet *wallet) {
 #ifndef TDEHTML_NO_WALLET
   assert(!d->m_wallet);
   assert(d->m_wq);
@@ -7264,12 +7264,12 @@ void TDEHTMLPart::walletOpened(KWallet::Wallet *wallet) {
   } else {
     TQToolTip::remove(d->m_statusBarWalletLabel);
   }
-  TQToolTip::add(d->m_statusBarWalletLabel, i18n("The wallet '%1' is open and being used for form data and passwords.").arg(KWallet::Wallet::NetworkWallet()));
+  TQToolTip::add(d->m_statusBarWalletLabel, i18n("The wallet '%1' is open and being used for form data and passwords.").arg(TDEWallet::Wallet::NetworkWallet()));
 #endif // TDEHTML_NO_WALLET
 }
 
 
-KWallet::Wallet *TDEHTMLPart::wallet()
+TDEWallet::Wallet *TDEHTMLPart::wallet()
 {
 #ifndef TDEHTML_NO_WALLET
   TDEHTMLPart *p;

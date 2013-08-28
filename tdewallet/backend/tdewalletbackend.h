@@ -30,7 +30,7 @@
 #include "tdewalletentry.h"
 
 
-namespace KWallet {
+namespace TDEWallet {
 
 class MD5Digest;
 

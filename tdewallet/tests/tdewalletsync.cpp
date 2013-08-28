@@ -16,7 +16,7 @@ void openWallet()
 {
 	_out << "About to ask for wallet sync" << endl;
 
-	KWallet::Wallet *w = KWallet::Wallet::openWallet( KWallet::Wallet::NetworkWallet(), 0, KWallet::Wallet::Synchronous );
+	TDEWallet::Wallet *w = TDEWallet::Wallet::openWallet( TDEWallet::Wallet::NetworkWallet(), 0, TDEWallet::Wallet::Synchronous );
 
 	_out << "Got sync wallet: " << (w != 0) << endl;
 }

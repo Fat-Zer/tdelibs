@@ -1,8 +1,8 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
-<class>KWalletWizard</class>
+<class>TDEWalletWizard</class>
 <widget class="TQWizard">
     <property name="name">
-        <cstring>KWalletWizard</cstring>
+        <cstring>TDEWalletWizard</cstring>
     </property>
     <property name="geometry">
         <rect>
@@ -53,7 +53,7 @@
                     </font>
                 </property>
                 <property name="text">
-                    <string>&lt;u&gt;KWallet&lt;/u&gt; - The KDE Wallet System</string>
+                    <string>&lt;u&gt;TDEWallet&lt;/u&gt; - The KDE Wallet System</string>
                 </property>
                 <property name="textFormat">
                     <enum>RichText</enum>
@@ -78,7 +78,7 @@
                     <number>26</number>
                 </property>
                 <property name="text">
-                    <string>Welcome to KWallet, the KDE Wallet System.  KWallet allows you to store your passwords and other personal information on disk in an encrypted file, preventing others from viewing the information.  This wizard will tell you about KWallet and help you configure it for the first time.</string>
+                    <string>Welcome to TDEWallet, the KDE Wallet System.  TDEWallet allows you to store your passwords and other personal information on disk in an encrypted file, preventing others from viewing the information.  This wizard will tell you about TDEWallet and help you configure it for the first time.</string>
                 </property>
                 <property name="textFormat">
                     <enum>RichText</enum>
@@ -398,7 +398,7 @@
                     <cstring>textLabel1_3</cstring>
                 </property>
                 <property name="text">
-                    <string>The KDE Wallet system allows you to control the level of security of your personal data.  Some of these settings do impact usability.  While the default settings are generally acceptable for most users, you may wish to change some of them.  You may further tune these settings from the KWallet control module.</string>
+                    <string>The KDE Wallet system allows you to control the level of security of your personal data.  Some of these settings do impact usability.  While the default settings are generally acceptable for most users, you may wish to change some of them.  You may further tune these settings from the TDEWallet control module.</string>
                 </property>
                 <property name="textFormat">
                     <enum>RichText</enum>
@@ -494,31 +494,31 @@
     <connection>
         <sender>_useWallet</sender>
         <signal>clicked()</signal>
-        <receiver>KWalletWizard</receiver>
+        <receiver>TDEWalletWizard</receiver>
         <slot>passwordPageUpdate()</slot>
     </connection>
     <connection>
         <sender>_pass1</sender>
         <signal>textChanged(const TQString&amp;)</signal>
-        <receiver>KWalletWizard</receiver>
+        <receiver>TDEWalletWizard</receiver>
         <slot>passwordPageUpdate()</slot>
     </connection>
     <connection>
         <sender>_pass2</sender>
         <signal>textChanged(const TQString&amp;)</signal>
-        <receiver>KWalletWizard</receiver>
+        <receiver>TDEWalletWizard</receiver>
         <slot>passwordPageUpdate()</slot>
     </connection>
     <connection>
         <sender>_advanced</sender>
         <signal>clicked()</signal>
-        <receiver>KWalletWizard</receiver>
+        <receiver>TDEWalletWizard</receiver>
         <slot>setAdvanced()</slot>
     </connection>
     <connection>
         <sender>_basic</sender>
         <signal>clicked()</signal>
-        <receiver>KWalletWizard</receiver>
+        <receiver>TDEWalletWizard</receiver>
         <slot>setBasic()</slot>
     </connection>
 </connections>

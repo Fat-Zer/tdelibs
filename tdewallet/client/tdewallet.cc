@@ -30,7 +30,7 @@
 
 #include <assert.h>
 
-using namespace KWallet;
+using namespace TDEWallet;
 
 
 const TQString Wallet::LocalWallet() {

@@ -100,12 +100,12 @@ static TQString makeMapKey( const char* key, int entryNumber )
     return str;
 }
 
-static bool storeInWallet( KWallet::Wallet* wallet, const TQString& key, const TDEIO::AuthInfo &info )
+static bool storeInWallet( TDEWallet::Wallet* wallet, const TQString& key, const TDEIO::AuthInfo &info )
 {
-    if ( !wallet->hasFolder( KWallet::Wallet::PasswordFolder() ) )
-        if ( !wallet->createFolder( KWallet::Wallet::PasswordFolder() ) )
+    if ( !wallet->hasFolder( TDEWallet::Wallet::PasswordFolder() ) )
+        if ( !wallet->createFolder( TDEWallet::Wallet::PasswordFolder() ) )
             return false;
-    wallet->setFolder( KWallet::Wallet::PasswordFolder() );
+    wallet->setFolder( TDEWallet::Wallet::PasswordFolder() );
     // Before saving, check if there's already an entry with this login.
     // If so, replace it (with the new password). Otherwise, add a new entry.
     typedef TQMap<TQString,TQString> Map;
@@ -135,12 +135,12 @@ static bool storeInWallet( KWallet::Wallet* wallet, const TQString& key, const T
 }
 
 
-static bool readFromWallet( KWallet::Wallet* wallet, const TQString& key, const TQString& realm, TQString& username, TQString& password, bool userReadOnly, TQMap<TQString,TQString>& knownLogins )
+static bool readFromWallet( TDEWallet::Wallet* wallet, const TQString& key, const TQString& realm, TQString& username, TQString& password, bool userReadOnly, TQMap<TQString,TQString>& knownLogins )
 {
     //kdDebug(130) << "readFromWallet: key=" << key << " username=" << username << " password=" /*<< password*/ << " userReadOnly=" << userReadOnly << " realm=" << realm << endl;
-    if ( wallet->hasFolder( KWallet::Wallet::PasswordFolder() ) )
+    if ( wallet->hasFolder( TDEWallet::Wallet::PasswordFolder() ) )
     {
-        wallet->setFolder( KWallet::Wallet::PasswordFolder() );
+        wallet->setFolder( TDEWallet::Wallet::PasswordFolder() );
 
         TQMap<TQString,TQString> map;
         if ( wallet->readMap( makeWalletKey( key, realm ), map ) == 0 )
@@ -219,8 +219,8 @@ KPasswdServer::checkAuthInfo(TDEIO::AuthInfo info, long windowId, unsigned long 
     {
        if (!result &&
            (info.username.isEmpty() || info.password.isEmpty()) &&
-           !KWallet::Wallet::keyDoesNotExist(KWallet::Wallet::NetworkWallet(),
-                                             KWallet::Wallet::PasswordFolder(), makeWalletKey(key, info.realmValue)))
+           !TDEWallet::Wallet::keyDoesNotExist(TDEWallet::Wallet::NetworkWallet(),
+                                             TDEWallet::Wallet::PasswordFolder(), makeWalletKey(key, info.realmValue)))
        {
           TQMap<TQString, TQString> knownLogins;
           if (openWallet(windowId)) {
@@ -304,8 +304,8 @@ KPasswdServer::openWallet( WId windowId )
         m_wallet = 0;
     }
     if ( !m_wallet )
-        m_wallet = KWallet::Wallet::openWallet(
-            KWallet::Wallet::NetworkWallet(), windowId );
+        m_wallet = TDEWallet::Wallet::openWallet(
+            TDEWallet::Wallet::NetworkWallet(), windowId );
     return m_wallet != 0;
 }
 
@@ -359,7 +359,7 @@ KPasswdServer::processRequest()
             TQMap<TQString, TQString> knownLogins;
 
             if ( ( username.isEmpty() || password.isEmpty() )
-                && !KWallet::Wallet::keyDoesNotExist(KWallet::Wallet::NetworkWallet(), KWallet::Wallet::PasswordFolder(), makeWalletKey( request->key, info.realmValue )) )
+                && !TDEWallet::Wallet::keyDoesNotExist(TDEWallet::Wallet::NetworkWallet(), TDEWallet::Wallet::PasswordFolder(), makeWalletKey( request->key, info.realmValue )) )
             {
                 // no login+pass provided, check if tdewallet has one
                 if ( openWallet( request->windowId ) )

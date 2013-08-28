@@ -21,7 +21,7 @@
 #include "tdewalletentry.h"
 
 
-using namespace KWallet;
+using namespace TDEWallet;
 
 
 Entry::Entry() {

@@ -103,10 +103,10 @@ void KSSLKeyGen::slotGenerate() {
 	kpd->progressBar()->setProgress(100);
 
 #ifndef Q_OS_WIN //TODO: reenable for WIN32
-	if (rc == 0 && KWallet::Wallet::isEnabled()) {
+	if (rc == 0 && TDEWallet::Wallet::isEnabled()) {
 		rc = KMessageBox::questionYesNo(this, i18n("Do you wish to store the passphrase in your wallet file?"), TQString::null, i18n("Store"), i18n("Do Not Store"));
 		if (rc == KMessageBox::Yes) {
-			KWallet::Wallet *w = KWallet::Wallet::openWallet(KWallet::Wallet::LocalWallet(), winId());
+			TDEWallet::Wallet *w = TDEWallet::Wallet::openWallet(TDEWallet::Wallet::LocalWallet(), winId());
 			if (w) {
 				// FIXME: store passphrase in wallet
 				delete w;

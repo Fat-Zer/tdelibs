@@ -38,7 +38,7 @@
 class DCOPRef;
 
 /** Namespace collecting all the Wallet-related classes. */
-namespace KWallet {
+namespace TDEWallet {
 
 /**
  * KDE Wallet
@@ -55,14 +55,14 @@ class TDEIO_EXPORT Wallet : public TQObject, public DCOPObject {
 	Q_OBJECT
 	protected:
 		/**
-		 *  Construct a KWallet object.
+		 *  Construct a TDEWallet object.
 		 *  @internal
 		 *  @param handle The handle for the wallet.
 		 *  @param name The name of the wallet.
 		 */
 		Wallet(int handle, const TQString& name);
 		/**
-		 *  Copy a KWallet object.
+		 *  Copy a TDEWallet object.
 		 *  @internal
 		 */
 		Wallet(const Wallet&);
@@ -71,7 +71,7 @@ class TDEIO_EXPORT Wallet : public TQObject, public DCOPObject {
 		enum EntryType { Unknown=0, Password, Stream, Map, Unused=0xffff };
 
 		/**
-		 *  Destroy a KWallet object.  Closes the wallet.
+		 *  Destroy a TDEWallet object.  Closes the wallet.
 		 */
 		virtual ~Wallet();
 		
