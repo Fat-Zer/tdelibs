@@ -19,8 +19,8 @@
  */ 
 
 
-#ifndef _KWALLET_H
-#define _KWALLET_H
+#ifndef _TDEWALLET_H
+#define _TDEWALLET_H
 
 #include <tqglobal.h>
 
@@ -521,5 +521,5 @@ class TDEIO_EXPORT Wallet : public TQObject, public DCOPObject {
 
 #endif //Q_OS_UNIX
 
-#endif //_KWALLET_H
+#endif //_TDEWALLET_H
 

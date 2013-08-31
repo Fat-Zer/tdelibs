@@ -19,8 +19,8 @@
  */ 
 
 
-#ifndef _KWALLETENTRY_H
-#define _KWALLETENTRY_H
+#ifndef _TDEWALLETENTRY_H
+#define _TDEWALLETENTRY_H
 
 #include <tqstring.h>
 #include <tqdatastream.h>

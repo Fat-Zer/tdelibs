@@ -39,19 +39,19 @@
 
 #include <assert.h>
 
-#define KWALLET_VERSION_MAJOR		0
-#define KWALLET_VERSION_MINOR		0
+#define TDEWALLET_VERSION_MAJOR		0
+#define TDEWALLET_VERSION_MINOR		0
 
-#define KWALLET_CIPHER_BLOWFISH_CBC	0
-#define KWALLET_CIPHER_3DES_CBC		1 // unsupported
+#define TDEWALLET_CIPHER_BLOWFISH_CBC	0
+#define TDEWALLET_CIPHER_3DES_CBC		1 // unsupported
 
-#define KWALLET_HASH_SHA1		0
-#define KWALLET_HASH_MD5		1 // unsupported
+#define TDEWALLET_HASH_SHA1		0
+#define TDEWALLET_HASH_MD5		1 // unsupported
 
 
 using namespace TDEWallet;
 
-#define KWMAGIC "KWALLET\n\r\0\r\n"
+#define KWMAGIC "TDEWALLET\n\r\0\r\n"
 #define KWMAGIC_LEN 12
 
 static void initTDEWalletDir()
@@ -317,19 +317,19 @@ int Backend::open(const TQByteArray& password) {
 	db.readBlock(magicBuf, 4);
 
 	// First byte is major version, second byte is minor version
-	if (magicBuf[0] != KWALLET_VERSION_MAJOR) {
+	if (magicBuf[0] != TDEWALLET_VERSION_MAJOR) {
 		return -4;         // unknown version
 	}
 
-	if (magicBuf[1] != KWALLET_VERSION_MINOR) {
+	if (magicBuf[1] != TDEWALLET_VERSION_MINOR) {
 		return -4;	   // unknown version
 	}
 
-	if (magicBuf[2] != KWALLET_CIPHER_BLOWFISH_CBC) {
+	if (magicBuf[2] != TDEWALLET_CIPHER_BLOWFISH_CBC) {
 		return -42;	   // unknown cipher
 	}
 
-	if (magicBuf[3] != KWALLET_HASH_SHA1) {
+	if (magicBuf[3] != TDEWALLET_HASH_SHA1) {
 		return -42;	   // unknown hash
 	}
 
@@ -501,10 +501,10 @@ int Backend::sync(const TQByteArray& password) {
 
 	// Write the version number
 	TQByteArray version(4);
-	version[0] = KWALLET_VERSION_MAJOR;
-	version[1] = KWALLET_VERSION_MINOR;
-	version[2] = KWALLET_CIPHER_BLOWFISH_CBC;
-	version[3] = KWALLET_HASH_SHA1;
+	version[0] = TDEWALLET_VERSION_MAJOR;
+	version[1] = TDEWALLET_VERSION_MINOR;
+	version[2] = TDEWALLET_CIPHER_BLOWFISH_CBC;
+	version[3] = TDEWALLET_HASH_SHA1;
 	qf->writeBlock(version, 4);
 
 	// Holds the hashes we write out

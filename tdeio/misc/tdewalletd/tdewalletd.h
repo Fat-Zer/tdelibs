@@ -19,8 +19,8 @@
    Boston, MA 02110-1301, USA.
 
 */
-#ifndef _KWALLETD_H_
-#define _KWALLETD_H_
+#ifndef _TDEWALLETD_H_
+#define _TDEWALLETD_H_
 
 #include <kded/kdedmodule.h>
 #include <tqintdict.h>

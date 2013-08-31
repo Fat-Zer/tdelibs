@@ -19,8 +19,8 @@
  */
 
 
-#ifndef _KWALLETBACKEND_H
-#define _KWALLETBACKEND_H
+#ifndef _TDEWALLETBACKEND_H
+#define _TDEWALLETBACKEND_H
 
 #include <kmdcodec.h>
 

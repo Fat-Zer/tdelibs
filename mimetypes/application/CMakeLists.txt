@@ -58,7 +58,7 @@ install( FILES
     x-msaccess.desktop x-gettext.desktop x-ruby.desktop x-kcsrc.desktop
     x-php.desktop x-font-ttc.desktop x-font-otf.desktop
     vnd.mozilla.xul+xml.desktop vnd.sun.xml.draw.desktop
-    x-kde-wallet.desktop x-cue.desktop x-ica.desktop x-iso.desktop x-ace.desktop
+    x-tde-wallet.desktop x-cue.desktop x-ica.desktop x-iso.desktop x-ace.desktop
     x-afm.desktop x-arc.desktop vnd.rn-realmedia.desktop x-dbase.desktop
     vnd.sun.xml.calc.template.desktop vnd.sun.xml.writer.template.desktop
     vnd.sun.xml.impress.template.desktop vnd.sun.xml.draw.template.desktop

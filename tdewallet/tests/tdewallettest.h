@@ -1,5 +1,5 @@
-#ifndef KWALLETASYNC_H
-#define KWALLETASYNC_H
+#ifndef TDEWALLETASYNC_H
+#define TDEWALLETASYNC_H
 
 #include <tqobject.h>
 

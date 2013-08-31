@@ -18,8 +18,8 @@
  * Boston, MA 02110-1301, USA.
  */ 
 
-#ifndef KWALLET_TYPES_H
-#define KWALLET_TYPES_H
+#ifndef TDEWALLET_TYPES_H
+#define TDEWALLET_TYPES_H
 
 #include <tqmap.h>
 
