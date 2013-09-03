@@ -25,7 +25,7 @@ Types:          local  Exchange   file   dir   ldap  ...
 
 Resource families are usually implemented as (abstract) classes
 in a library, e.g. the calendar resource in libkcal en the
-addressbook resource family in libkabc. Resource type are like 
+addressbook resource family in libtdeabc. Resource type are like 
 plugins: that can be loaded on-demand, they are implemented in
 their own library, and a .desktop file tells KDE where to find 
 them.
@@ -168,6 +168,6 @@ mechanism, like SQL locks, or file locks, or whatever.
 
 - Maybe the resource class should have some generic support
 for searching. In the calendar family, you could search by
-date, by category or by key word, in the kabc family you 
+date, by category or by key word, in the tdeabc family you 
 could search by key word, name, country, etc.
 

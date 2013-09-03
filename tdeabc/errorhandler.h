@@ -1,5 +1,5 @@
 /*
-    This file is part of libkabc.
+    This file is part of libtdeabc.
 
     Copyright (c) 2002 Tobias Koenig <tokoe@kde.org>
     Copyright (c) 2003 Cornelius Schumacher <schumacher@kde.org>
@@ -32,7 +32,7 @@ namespace TDEABC {
 
 /**
   Abstract class that provides displaying of error messages.
-  We need this to make libkabc gui independent on the one side
+  We need this to make libtdeabc gui independent on the one side
   and provide user friendly error messages on the other side.
   Use @p ConsoleErrorHandler or @p GuiErrorHandler in your
   application or provide your own ErrorHandler.

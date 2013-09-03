@@ -16,8 +16,8 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef __KCMODULEPROXYIFACEIMPL_H__
-#define __KCMODULEPROXYIFACEIMPL_H__
+#ifndef __TDECMODULEPROXYIFACEIMPL_H__
+#define __TDECMODULEPROXYIFACEIMPL_H__
 
 #include "tdecmoduleproxyIface.h"
 
@@ -93,5 +93,5 @@ TDECModuleProxy* p;
 };
 /***************************************************************/
 
-#endif // __KCMODULEPROXYIFACEIMPL_H__
+#endif // __TDECMODULEPROXYIFACEIMPL_H__
 

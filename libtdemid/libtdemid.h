@@ -22,8 +22,8 @@
     Send comments and bug fixes to Antonio Larrosa <larrosa@kde.org>
  
 ***************************************************************************/
-#ifndef _LIBKMID_H
-#define _LIBKMID_H 
+#ifndef _LIBTDEMID_H
+#define _LIBTDEMID_H 
 
 #ifdef __cplusplus
 

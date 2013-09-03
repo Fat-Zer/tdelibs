@@ -24,8 +24,8 @@
 #include <tqimage.h>
 #include <tdelocale.h>
 
-#ifndef _KABOUTDATA_H_
-#define _KABOUTDATA_H_
+#ifndef _TDEABOUTDATA_H_
+#define _TDEABOUTDATA_H_
 
 class TDEAboutPersonPrivate;
 class TDEAboutDataPrivate;

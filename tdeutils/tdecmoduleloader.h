@@ -42,7 +42,7 @@ class KLibLoader;
  * @since 3.2
  * @internal
 **/
-class KUTILS_EXPORT TDECModuleLoader
+class TDEUTILS_EXPORT TDECModuleLoader
 {
   public:
 

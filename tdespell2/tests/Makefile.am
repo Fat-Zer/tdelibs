@@ -18,7 +18,7 @@ test_dialog_SOURCES = test_dialog.cpp
 test_dialog_LDADD = ../ui/libtdespell2.la $(LIB_TDECORE)
 
 test_highlighter_SOURCES = test_highlighter.cpp
-test_highlighter_LDADD = ../ui/libtdespell2_noinst.la ../libtdespell2base.la $(LIB_TDECORE) $(LIB_KPARTS) ../../tdeutils/libtdeutils.la
+test_highlighter_LDADD = ../ui/libtdespell2_noinst.la ../libtdespell2base.la $(LIB_TDECORE) $(LIB_TDEPARTS) ../../tdeutils/libtdeutils.la
 
 test_configdialog_SOURCES = test_configdialog.cpp
-test_configdialog_LDADD = ../ui/libtdespell2_noinst.la ../libtdespell2base.la $(LIB_TDECORE) $(LIB_KPARTS) ../../tdeutils/libtdeutils.la
+test_configdialog_LDADD = ../ui/libtdespell2_noinst.la ../libtdespell2base.la $(LIB_TDECORE) $(LIB_TDEPARTS) ../../tdeutils/libtdeutils.la

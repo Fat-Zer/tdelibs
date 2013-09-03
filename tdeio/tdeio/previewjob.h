@@ -32,7 +32,7 @@ class TQPixmap;
 namespace TDEIO {
     /*!
      * This class catches a preview (thumbnail) for files.
-     * @short KIO Job to get a thumbnail picture
+     * @short TDEIO Job to get a thumbnail picture
      */
     class TDEIO_EXPORT PreviewJob : public TDEIO::Job
     {

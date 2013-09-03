@@ -19,8 +19,8 @@ METASOURCES = AUTO
 messages: rc.cpp
 	$(XGETTEXT) *.cpp -o $(podir)/tdeabc_dir.pot
 
-kabcincludedir = $(includedir)/tdeabc
-kabcinclude_HEADERS = resourcedir.h
+tdeabcincludedir = $(includedir)/tdeabc
+tdeabcinclude_HEADERS = resourcedir.h
 
 servicedir = $(kde_servicesdir)/tderesources/tdeabc
 service_DATA = dir.desktop

@@ -20,8 +20,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef KCOMPLETIONBOX_H
-#define KCOMPLETIONBOX_H
+#ifndef TDECOMPLETIONBOX_H
+#define TDECOMPLETIONBOX_H
 
 class TQEvent;
 #include <tqstringlist.h>
@@ -243,4 +243,4 @@ private:
 };
 
 
-#endif // KCOMPLETIONBOX_H
+#endif // TDECOMPLETIONBOX_H

@@ -37,7 +37,7 @@ class Part;
  *
  * @see KLibFactory.
  */
-class KPARTS_EXPORT Factory : public KLibFactory
+class TDEPARTS_EXPORT Factory : public KLibFactory
 {
   Q_OBJECT
 public:

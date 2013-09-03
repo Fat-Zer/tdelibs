@@ -50,7 +50,7 @@ class KIOConnection
     static void setData(String jobid, int code, byte [] data) {
         KIOConnection job = (KIOConnection) jobs.get(jobid);
         if (job == null || !job.setData(code, data))
-            Main.info("KIO KJASHttpURLConnection gone (timedout/closed)");
+            Main.info("TDEIO KJASHttpURLConnection gone (timedout/closed)");
         else
             Thread.yield();
     }
@@ -119,11 +119,11 @@ class KIOConnection
 
     protected URL url;
     protected int connect_status = 0;
-    protected String jobid = null;                // connection id with KIO 
+    protected String jobid = null;                // connection id with TDEIO 
     protected LinkedList data = new LinkedList(); // not thread safe
     protected int errorcode = 0;
     protected boolean finished = false;           // all data has arived
-    protected boolean onhold = false;             // KIO job is suspended
+    protected boolean onhold = false;             // TDEIO job is suspended
     protected boolean request_data = false;       // need data for put job
     private KJASOutputStream out = null;
     private KJASInputStream in = null;
@@ -156,12 +156,12 @@ class KIOConnection
                 finished = true;
                 onhold = false;
                 jobs.remove(jobid);
-                Main.debug ("KIO FINISHED (" + jobid + ") " + data.size());
+                Main.debug ("TDEIO FINISHED (" + jobid + ") " + data.size());
                 break;
             case DATA:
                 if (d.length > 0)
                     data.addLast(d);
-                // Main.debug ("KIO DATA (" + jobid + ") " + data.size());
+                // Main.debug ("TDEIO DATA (" + jobid + ") " + data.size());
                 if (!onhold && data.size() > HIGH_BUFFER_LIMIT) {
                     Main.protocol.sendDataCmd(jobid, HOLD);
                     onhold = true;
@@ -170,15 +170,15 @@ class KIOConnection
             case ERRORCODE:
                 String codestr = new String(d);
                 errorcode = Integer.parseInt(codestr);
-                Main.debug ("KIO ERRORECODE(" + jobid + ") " + errorcode);
+                Main.debug ("TDEIO ERRORECODE(" + jobid + ") " + errorcode);
                 break;
             case CONNECT:
-                Main.debug ("KIO CONNECT(" + jobid + ") ");
+                Main.debug ("TDEIO CONNECT(" + jobid + ") ");
                 request_data = true;
                 errorcode = 0;
                 break;
             case REQUESTDATA:
-                Main.debug ("KIO REQUESTDATA(" + jobid + ") ");
+                Main.debug ("TDEIO REQUESTDATA(" + jobid + ") ");
                 request_data = true;
                 break;
         }
@@ -234,7 +234,7 @@ class KIOConnection
         return total;
     }
     synchronized private void sendData(byte [] d, boolean force) throws IOException {
-        Main.debug ("KIO sendData(" + jobid + ") force:" + force + " request_data:" + request_data);
+        Main.debug ("TDEIO sendData(" + jobid + ") force:" + force + " request_data:" + request_data);
         if (d != null)
             data.addLast(d);
         if (!request_data && !force) return;
@@ -246,7 +246,7 @@ class KIOConnection
                 return;
             }
             if (!request_data) {
-                Main.debug ("KIO sendData(" + jobid + ") timeout");
+                Main.debug ("TDEIO sendData(" + jobid + ") timeout");
                 data.clear();
                 disconnect();
                 throw new IOException("timeout");
@@ -273,7 +273,7 @@ class KIOConnection
         if (connect_status == CONNECTED)
             return; // javadocs: call is ignored
 	//(new Exception()).printStackTrace();
-        Main.debug ("KIO connect " + url);
+        Main.debug ("TDEIO connect " + url);
         errorcode = 0;
         finished = in_eof = false;
         jobid = String.valueOf(id++);
@@ -294,7 +294,7 @@ class KIOConnection
                 in = new KJASInputStream();
             else
                 out = new KJASOutputStream();
-            Main.debug ("KIO connect(" + jobid + ") " + url);
+            Main.debug ("TDEIO connect(" + jobid + ") " + url);
             return;
         }
         connect_status = NOT_CONNECTED;
@@ -302,16 +302,16 @@ class KIOConnection
         if (isconnected) {
             if (!finished)
                 Main.protocol.sendDataCmd(jobid, STOP);
-            Main.debug ("KIO connect error " + url);
+            Main.debug ("TDEIO connect error " + url);
             throw new ConnectException("connection failed (not found)");
         }
-        Main.debug ("KIO connect timeout " + url);
+        Main.debug ("TDEIO connect timeout " + url);
         throw new IOException("connection failed (timeout)");
     }
     synchronized void disconnect() {
         if (connect_status == NOT_CONNECTED)
             return;
-        Main.debug ("KIO disconnect " + jobid);
+        Main.debug ("TDEIO disconnect " + jobid);
 	//(new Exception()).printStackTrace();
         if (out != null) {
             try {
@@ -328,11 +328,11 @@ class KIOConnection
         notifyAll();
     }
     InputStream getInputStream() throws IOException {
-        Main.debug ("KIO getInputStream(" + jobid + ") " + url);
+        Main.debug ("TDEIO getInputStream(" + jobid + ") " + url);
         return in;
     }
     OutputStream getOutputStream() throws IOException {
-        Main.debug ("KIO getOutputStream(" + jobid + ") " + url);
+        Main.debug ("TDEIO getOutputStream(" + jobid + ") " + url);
         return out;
     }
 }
@@ -367,7 +367,7 @@ final class KIOHttpConnection extends KIOConnection
                     };
                     headers.add(entry);
                     headersmap.put(entry[0], entry[1]);
-                    // Main.debug ("KIO header " + entry[0] + "=" + entry[1]);
+                    // Main.debug ("TDEIO header " + entry[0] + "=" + entry[1]);
                 }
                 responseCode = 0;
                 if (headersmap.size() > 0) {
@@ -379,7 +379,7 @@ final class KIOHttpConnection extends KIOConnection
                     if (epos < 0) break;
                     responseCode = Integer.parseInt(token.substring(spos+1, epos));
                     responseMessage = token.substring(epos+1);
-                    Main.debug ("KIO responsecode=" + responseCode);
+                    Main.debug ("TDEIO responsecode=" + responseCode);
                 }
                 break;
         }
@@ -408,7 +408,7 @@ final class KJASHttpURLConnection extends HttpURLConnection
 	} catch (IOException e) {
             Main.debug ("Error on implicit connect()");
 	}
-        Main.debug ("KIO getHeaderFields");
+        Main.debug ("TDEIO getHeaderFields");
         return kioconnection.headersmap;
     }
     public String getHeaderField(String name) {
@@ -418,7 +418,7 @@ final class KJASHttpURLConnection extends HttpURLConnection
             Main.debug ("Error on implicit connect()");
 	}
         String field = (String) kioconnection.headersmap.get(name);
-        Main.debug ("KIO getHeaderField:" + name + "=" + field);
+        Main.debug ("TDEIO getHeaderField:" + name + "=" + field);
 	//(new Exception()).printStackTrace();
         return field;
     }
@@ -428,14 +428,14 @@ final class KJASHttpURLConnection extends HttpURLConnection
 	} catch (IOException e) {
             Main.debug ("Error on implicit connect()");
 	}
-        Main.debug ("KIO getHeaderField(" + n + ") size=" + kioconnection.headersmap.size());
+        Main.debug ("TDEIO getHeaderField(" + n + ") size=" + kioconnection.headersmap.size());
         if (n >= kioconnection.headersmap.size())
             return null;
         String [] entry = (String []) kioconnection.headers.get(n);
         String line = entry[0];
         if (entry[1].length() > 0)
             line += ":" + entry[1];
-        Main.debug ("KIO getHeaderField(" + n + ")=#" + line + "#");
+        Main.debug ("TDEIO getHeaderField(" + n + ")=#" + line + "#");
         return line;
     }
     public String getHeaderFieldKey(int n) {
@@ -444,13 +444,13 @@ final class KJASHttpURLConnection extends HttpURLConnection
 	} catch (IOException e) {
             Main.debug ("Error on implicit connect()");
 	}
-        Main.debug ("KIO getHeaderFieldKey " + n);
+        Main.debug ("TDEIO getHeaderFieldKey " + n);
         if (n >= kioconnection.headersmap.size())
             return null;
         return ((String []) kioconnection.headers.get(n))[0];
     }
     public int getResponseCode() throws IOException {
-        Main.debug ("KIO getResponseCode");
+        Main.debug ("TDEIO getResponseCode");
         if (kioconnection.responseCode == -1) {
             try {
                 connect();
@@ -468,7 +468,7 @@ final class KJASHttpURLConnection extends HttpURLConnection
     public void connect() throws IOException {
         if (connected)
             return;
-        Main.debug ("KIO KJASHttpURLConnection.connect " + url);
+        Main.debug ("TDEIO KJASHttpURLConnection.connect " + url);
         SecurityManager security = System.getSecurityManager();
         if (security != null)
             security.checkPermission(getPermission());
@@ -494,7 +494,7 @@ final class KJASHttpURLConnection extends HttpURLConnection
         return kioconnection.getOutputStream();
     }
     public InputStream getErrorStream() {
-        Main.debug("KIO KJASHttpURLConnection.getErrorStream" + url);
+        Main.debug("TDEIO KJASHttpURLConnection.getErrorStream" + url);
         try {
             if (connected && kioconnection.responseCode == 404)
                 return kioconnection.getInputStream();
@@ -524,7 +524,7 @@ final class KJASSimpleURLConnection extends URLConnection
     public void connect() throws IOException {
         if (kioconnection != null)
             return;
-        Main.debug ("KIO KJASSimpleURLConnection.connection " + url);
+        Main.debug ("TDEIO KJASSimpleURLConnection.connection " + url);
         SecurityManager security = System.getSecurityManager();
         if (security != null)
             security.checkPermission(getPermission());
@@ -593,7 +593,7 @@ public final class KJASURLStreamHandlerFactory
         if (protocol.equals("jar") || protocol.equals("file"))
             return null;
         //outputs to early: Main.debug ("createURLStreamHandler " + protocol);
-        Main.debug ("KIO createURLStreamHandler " + protocol);
+        Main.debug ("TDEIO createURLStreamHandler " + protocol);
         if (protocol.equals("http"))
             return new KJASHttpURLStreamHandler(80);
         else if (protocol.equals("https"))

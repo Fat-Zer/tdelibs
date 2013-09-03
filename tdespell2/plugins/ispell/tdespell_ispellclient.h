@@ -18,8 +18,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301  USA
  */
-#ifndef KSPELL_ISPELLCLIENT_H
-#define KSPELL_ISPELLCLIENT_H
+#ifndef TDESPELL_ISPELLCLIENT_H
+#define TDESPELL_ISPELLCLIENT_H
 
 #include "client.h"
 #include <tqobject.h>

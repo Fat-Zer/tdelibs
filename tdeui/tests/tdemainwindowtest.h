@@ -1,5 +1,5 @@
-#ifndef KMAINWINDOWTEST_H
-#define KMAINWINDOWTEST_H
+#ifndef TDEMAINWINDOWTEST_H
+#define TDEMAINWINDOWTEST_H
 
 #include <tdemainwindow.h>
 
@@ -13,6 +13,6 @@ private slots:
     void showMessage();
 };
 
-#endif // KMAINWINDOWTEST_H
+#endif // TDEMAINWINDOWTEST_H
 /* vim: et sw=4 ts=4
  */

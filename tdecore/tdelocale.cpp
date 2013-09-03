@@ -137,7 +137,7 @@ void TDELocale::initMainCatalogues(const TQString & catalog)
     d->catalogNames.append( mainCatalogue );   // application catalog
     if (mainCatalogue.contains("desktop") == 0 || mainCatalogue.contains("kdesktop") == 1) { //don't bother if we're looking up desktop translations
       d->catalogNames.append( SYSTEM_MESSAGES ); // always include tdelibs.mo
-      d->catalogNames.append( "kio" );            // always include kio.mo
+      d->catalogNames.append( "tdeio" );            // always include tdeio.mo
       d->catalogNames.append( "xdg-user-dirs" );
     }
     updateCatalogues(); // evaluate this for all languages
@@ -440,7 +440,7 @@ bool TDELocale::setLanguage(const TQStringList & languages)
   // 1) some empty strings that we have to eliminate
   // 2) duplicate entries like in de:fr:de, where we have to keep the first occurrance of a language in order
   //    to preserve the order of precenence of the user => iterate backwards
-  // 3) languages into which the application is not translated. For those languages we should not even load tdelibs.mo or kio.po.
+  // 3) languages into which the application is not translated. For those languages we should not even load tdelibs.mo or tdeio.po.
   //    these langugage have to be dropped. Otherwise we get strange side effects, e.g. with Hebrew:
   //    the right/left switch for languages that write from
   //    right to left (like Hebrew or Arabic) is set in tdelibs.mo. If you only have tdelibs.mo

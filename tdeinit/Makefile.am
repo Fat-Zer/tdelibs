@@ -33,12 +33,12 @@ AM_LDFLAGS = $(LDFLAGS_AS_NEEDED) $(LDFLAGS_NEW_DTAGS)
 
 tdeinit_LDFLAGS = $(KDE_MT_LDFLAGS) $(QT_LDFLAGS) $(X_LDFLAGS) $(USER_LDFLAGS) \
                   $(KDE_RPATH)
-tdeinit_LDADD = $(LIB_KPARTS) -lXft $(LIB_QT)
+tdeinit_LDADD = $(LIB_TDEPARTS) -lXft $(LIB_QT)
 
 tdeioslave_SOURCES = tdeioslave.cpp
 tdeioslave_LDFLAGS = $(KDE_MT_LDFLAGS) $(QT_LDFLAGS) $(X_LDFLAGS) $(USER_LDFLAGS) \
                   $(KDE_RPATH)
-tdeioslave_LDADD = $(LIB_KIO) 
+tdeioslave_LDADD = $(LIB_TDEIO) 
 
 tdeinit_wrapper_SOURCES = wrapper.c
 tdeinit_wrapper_LDADD = $(LIBSOCKET)
@@ -56,7 +56,7 @@ kwrapper_SOURCES = kwrapper.c
 kwrapper_LDADD = $(LIBSOCKET)
 
 tdelauncher_la_LDFLAGS = $(all_libraries) -module -avoid-version
-tdelauncher_la_LIBADD = $(LIB_KIO) $(LIB_QT) $(LIB_TDECORE) $(top_builddir)/dcop/libDCOP.la $(LIB_X11)
+tdelauncher_la_LIBADD = $(LIB_TDEIO) $(LIB_QT) $(LIB_TDECORE) $(top_builddir)/dcop/libDCOP.la $(LIB_X11)
 tdelauncher_la_SOURCES = tdelauncher.cpp tdelauncher_main.cpp autostart.cpp
 
 tdestartupconfig_SOURCES  = tdestartupconfig.cpp

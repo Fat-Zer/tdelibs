@@ -262,6 +262,6 @@ ConstructorArgs=(parent, 210, 16)
 
 [TDEABC::AddressLineEdit]
 IncludeFile=tdeabc/addresslineedit.h
-ToolTip=A lineedit with LDAP and kabc completion.
+ToolTip=A lineedit with LDAP and tdeabc completion.
 Group=Input (KDE)
 ConstructorArgs=(parent, true, name)

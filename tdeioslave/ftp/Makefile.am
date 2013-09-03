@@ -5,7 +5,7 @@ INCLUDES= $(all_includes)
 kde_module_LTLIBRARIES = tdeio_ftp.la
 
 tdeio_ftp_la_SOURCES = ftp.cc
-tdeio_ftp_la_LIBADD  = $(LIB_KIO) $(LIB_QT) $(LIB_TDECORE)
+tdeio_ftp_la_LIBADD  = $(LIB_TDEIO) $(LIB_QT) $(LIB_TDECORE)
 tdeio_ftp_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN) 
 
 noinst_HEADERS = ftp.h

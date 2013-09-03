@@ -25,8 +25,8 @@
  * SUCH DAMAGE.
  *
  */
-#ifndef __KRECENTDIRS_H
-#define __KRECENTDIRS_H
+#ifndef __TDERECENTDIRS_H
+#define __TDERECENTDIRS_H
 
 #include <tqstringlist.h>
 

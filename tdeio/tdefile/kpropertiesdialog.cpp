@@ -3193,7 +3193,10 @@ KDesktopPropsPlugin::KDesktopPropsPlugin( KPropertiesDialog *_props )
   m_terminalBool = config.readBoolEntry( "Terminal" );
   m_terminalOptionStr = config.readEntry( "TerminalOptions" );
   m_suidBool = config.readBoolEntry( "X-TDE-SubstituteUID" ) || config.readBoolEntry( "X-KDE-SubstituteUID" );
-  m_suidUserStr = config.readEntry( "X-TDE-Username" );
+  if( config.hasKey( "X-TDE-Username" ))
+    m_suidUserStr = config.readEntry( "X-TDE-Username" );
+  else
+    m_suidUserStr = config.readEntry( "X-KDE-Username" );
   if( config.hasKey( "StartupNotify" ))
     m_startupBool = config.readBoolEntry( "StartupNotify", true );
   else

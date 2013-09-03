@@ -18,8 +18,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef KSCREENSAVER_H
-#define KSCREENSAVER_H
+#ifndef TDESCREENSAVER_H
+#define TDESCREENSAVER_H
 
 #include <tqwidget.h>
 

@@ -18,8 +18,8 @@
 */
 
 
-#ifndef __K_ACCELMANAGER_H__
-#define __K_ACCELMANAGER_H__
+#ifndef __TDE_ACCELMANAGER_H__
+#define __TDE_ACCELMANAGER_H__
 
 
 class TQWidget;

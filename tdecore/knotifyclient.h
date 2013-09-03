@@ -70,7 +70,7 @@ class TDEInstance;
  * <li>catastrophe
  *</ul>
  *
- * The events can be configured in an application using KNotifyDialog, which is part of KIO.
+ * The events can be configured in an application using KNotifyDialog, which is part of TDEIO.
  * 
  * @author Charles Samuels <charles@kde.org>
  */

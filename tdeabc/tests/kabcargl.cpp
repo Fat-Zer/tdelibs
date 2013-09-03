@@ -1,5 +1,5 @@
 /*
-    This file is part of libkabc.
+    This file is part of libtdeabc.
     Copyright (c) 2001 Cornelius Schumacher <schumacher@kde.org>
 
     This library is free software; you can redistribute it and/or
@@ -35,7 +35,7 @@ using namespace TDEABC;
 
 int main(int argc,char **argv)
 {
-  TDEAboutData aboutData("kabcargl","Fix broken pre3.0rc3 format","0.1");
+  TDEAboutData aboutData("tdeabcargl","Fix broken pre3.0rc3 format","0.1");
   aboutData.addAuthor("Cornelius Schumacher", 0, "schumacher@kde.org");
 
   TDECmdLineArgs::init(argc,argv,&aboutData);

@@ -18,8 +18,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301  USA
  */
-#ifndef KSPELL_BACKGROUNDENGINE_H
-#define KSPELL_BACKGROUNDENGINE_H
+#ifndef TDESPELL_BACKGROUNDENGINE_H
+#define TDESPELL_BACKGROUNDENGINE_H
 
 #include "broker.h"
 

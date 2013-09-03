@@ -39,7 +39,7 @@ service is resolved are name, type.and domain.
 @short class representing service announced on remote machine.
 @author Jakub Stachowski
  */
-class KDNSSD_EXPORT RemoteService : public TQObject, public ServiceBase
+class TDEDNSSD_EXPORT RemoteService : public TQObject, public ServiceBase
 {
 	Q_OBJECT
 public:
@@ -101,8 +101,8 @@ private:
 		const char* txtRecord);
 	RemoteServicePrivate *d;
 
-	friend KDNSSD_EXPORT TQDataStream & operator<< (TQDataStream & s, const RemoteService & a);
-	friend KDNSSD_EXPORT TQDataStream & operator>> (TQDataStream & s, RemoteService & a);
+	friend TDEDNSSD_EXPORT TQDataStream & operator<< (TQDataStream & s, const RemoteService & a);
+	friend TDEDNSSD_EXPORT TQDataStream & operator>> (TQDataStream & s, RemoteService & a);
 
 };
 

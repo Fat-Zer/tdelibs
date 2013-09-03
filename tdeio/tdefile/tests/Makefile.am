@@ -29,7 +29,7 @@ check_PROGRAMS = kfstest kurlrequestertest tdefiletreeviewtest \
 
 METASOURCES = AUTO
 
-LDADD = $(LIB_KIO)
+LDADD = $(LIB_TDEIO)
 kcustommenueditortest_SOURCES = kcustommenueditortest.cpp
 kurlrequestertest_SOURCES = kurlrequestertest.cpp
 kfstest_SOURCES = kfstest.cpp kfdtest.cpp

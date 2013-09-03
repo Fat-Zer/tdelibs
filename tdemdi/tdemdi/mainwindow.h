@@ -35,12 +35,12 @@
    //    copyright            : (C) 1999-2003 by Falk Brettschneider
    //                                         and
    //                                         Szymon Stefanek (stefanek@tin.it)
-   //    email                :  falkbr@tdevelop.org (Falk Brettschneider)
+   //    email                :  falkbr@kdevelop.org (Falk Brettschneider)
    //----------------------------------------------------------------------------
 */
 
-#ifndef _KMDI_MAINWINDOW_H_
-#define _KMDI_MAINWINDOW_H_
+#ifndef _TDEMDI_MAINWINDOW_H_
+#define _TDEMDI_MAINWINDOW_H_
 
 #include <tdeparts/dockmainwindow.h>
 #include <tdemenubar.h>

@@ -22,10 +22,10 @@
 using namespace KParts;
 
 //the answer!
-#define KPARTS_EVENT_MAGIC 42
+#define TDEPARTS_EVENT_MAGIC 42
 
 Event::Event( const char *eventName )
- : TQCustomEvent( (TQEvent::Type)(TQEvent::User + KPARTS_EVENT_MAGIC), (void *)eventName )
+ : TQCustomEvent( (TQEvent::Type)(TQEvent::User + TDEPARTS_EVENT_MAGIC), (void *)eventName )
 {
 }
 
@@ -42,7 +42,7 @@ bool Event::test( const TQEvent *event )
   if ( !event )
     return false;
   
-  return ( event->type() == (TQEvent::Type)(TQEvent::User + KPARTS_EVENT_MAGIC ) );
+  return ( event->type() == (TQEvent::Type)(TQEvent::User + TDEPARTS_EVENT_MAGIC ) );
 } 
 
 bool Event::test( const TQEvent *event, const char *name )

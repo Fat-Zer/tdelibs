@@ -8,7 +8,7 @@ kde_module_LTLIBRARIES = tdeabc_sql.la
 tdeabc_sql_la_SOURCES = resourcesql.cpp resourcesqlconfig.cpp
 
 tdeabc_sql_la_LDFLAGS	= $(all_libraries) -module $(KDE_PLUGIN)
-tdeabc_sql_la_LIBADD	= ../../libkabc.la ../../../tdeui/libtdeui.la
+tdeabc_sql_la_LIBADD	= ../../libtdeabc.la ../../../tdeui/libtdeui.la
 
 METASOURCES = AUTO
 

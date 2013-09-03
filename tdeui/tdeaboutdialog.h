@@ -27,8 +27,8 @@
  */
 
 
-#ifndef _KABOUTDIALOG_H_
-#define _KABOUTDIALOG_H_
+#ifndef _TDEABOUTDIALOG_H_
+#define _TDEABOUTDIALOG_H_
 
 #include <kdialogbase.h>
 #include <tqstring.h>
@@ -630,4 +630,4 @@ private:
   TDEAboutDialogPrivate* const d;
 };
 
-#endif // defined KABOUTDIALOG_H
+#endif // defined TDEABOUTDIALOG_H

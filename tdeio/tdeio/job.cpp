@@ -84,7 +84,7 @@ template class TQPtrList<TDEIO::Job>;
 //this will update the report dialog with 5 Hz, I think this is fast enough, aleXXX
 #define REPORT_TIMEOUT 200
 
-#define KIO_ARGS TQByteArray packedArgs; TQDataStream stream( packedArgs, IO_WriteOnly ); stream
+#define TDEIO_ARGS TQByteArray packedArgs; TQDataStream stream( packedArgs, IO_WriteOnly ); stream
 
 class Job::JobPrivate
 {
@@ -552,13 +552,13 @@ void SimpleJob::start(Slave *slave)
 
     if (!m_outgoingMetaData.isEmpty())
     {
-       KIO_ARGS << m_outgoingMetaData;
+       TDEIO_ARGS << m_outgoingMetaData;
        slave->send( CMD_META_DATA, packedArgs );
     }
 
     if (!m_subUrl.isEmpty())
     {
-       KIO_ARGS << m_subUrl;
+       TDEIO_ARGS << m_subUrl;
        m_slave->send( CMD_SUBURL, packedArgs );
     }
 
@@ -751,35 +751,35 @@ void MkdirJob::slotFinished()
 SimpleJob *TDEIO::mkdir( const KURL& url, int permissions )
 {
     //kdDebug(7007) << "mkdir " << url << endl;
-    KIO_ARGS << url << permissions;
+    TDEIO_ARGS << url << permissions;
     return new MkdirJob(url, CMD_MKDIR, packedArgs, false);
 }
 
 SimpleJob *TDEIO::rmdir( const KURL& url )
 {
     //kdDebug(7007) << "rmdir " << url << endl;
-    KIO_ARGS << url << TQ_INT8(false); // isFile is false
+    TDEIO_ARGS << url << TQ_INT8(false); // isFile is false
     return new SimpleJob(url, CMD_DEL, packedArgs, false);
 }
 
 SimpleJob *TDEIO::chmod( const KURL& url, int permissions )
 {
     //kdDebug(7007) << "chmod " << url << endl;
-    KIO_ARGS << url << permissions;
+    TDEIO_ARGS << url << permissions;
     return new SimpleJob(url, CMD_CHMOD, packedArgs, false);
 }
 
 SimpleJob *TDEIO::rename( const KURL& src, const KURL & dest, bool overwrite )
 {
     //kdDebug(7007) << "rename " << src << " " << dest << endl;
-    KIO_ARGS << src << dest << (TQ_INT8) overwrite;
+    TDEIO_ARGS << src << dest << (TQ_INT8) overwrite;
     return new SimpleJob(src, CMD_RENAME, packedArgs, false);
 }
 
 SimpleJob *TDEIO::symlink( const TQString& target, const KURL & dest, bool overwrite, bool showProgressInfo )
 {
     //kdDebug(7007) << "symlink target=" << target << " " << dest << endl;
-    KIO_ARGS << target << dest << (TQ_INT8) overwrite;
+    TDEIO_ARGS << target << dest << (TQ_INT8) overwrite;
     return new SimpleJob(dest, CMD_SYMLINK, packedArgs, showProgressInfo);
 }
 
@@ -791,7 +791,7 @@ SimpleJob *TDEIO::special(const KURL& url, const TQByteArray & data, bool showPr
 
 SimpleJob *TDEIO::mount( bool ro, const char *fstype, const TQString& dev, const TQString& point, bool showProgressInfo )
 {
-    KIO_ARGS << int(1) << TQ_INT8( ro ? 1 : 0 )
+    TDEIO_ARGS << int(1) << TQ_INT8( ro ? 1 : 0 )
              << TQString::fromLatin1(fstype) << dev << point;
     SimpleJob *job = special( KURL("file:/"), packedArgs, showProgressInfo );
     if ( showProgressInfo )
@@ -801,7 +801,7 @@ SimpleJob *TDEIO::mount( bool ro, const char *fstype, const TQString& dev, const
 
 SimpleJob *TDEIO::unmount( const TQString& point, bool showProgressInfo )
 {
-    KIO_ARGS << int(2) << point;
+    TDEIO_ARGS << int(2) << point;
     SimpleJob *job = special( KURL("file:/"), packedArgs, showProgressInfo );
     if ( showProgressInfo )
          Observer::self()->unmounting( job, point );
@@ -839,7 +839,7 @@ void LocalURLJob::slotFinished()
 
 LocalURLJob *TDEIO::localURL( const KURL& remoteUrl )
 {
-    KIO_ARGS << remoteUrl;
+    TDEIO_ARGS << remoteUrl;
     return new LocalURLJob(remoteUrl, CMD_LOCALURL, packedArgs, false);
 }
 
@@ -926,7 +926,7 @@ StatJob *TDEIO::stat(const KURL& url, bool showProgressInfo)
 StatJob *TDEIO::stat(const KURL& url, bool sideIsSource, short int details, bool showProgressInfo)
 {
     kdDebug(7007) << "stat " << url << endl;
-    KIO_ARGS << url;
+    TDEIO_ARGS << url;
     StatJob * job = new StatJob(url, CMD_STAT, packedArgs, showProgressInfo );
     job->setSide( sideIsSource );
     job->setDetails( details );
@@ -939,7 +939,7 @@ SimpleJob *TDEIO::http_update_cache( const KURL& url, bool no_cache, time_t expi
 {
     assert( (url.protocol() == "http") || (url.protocol() == "https") );
     // Send http update_cache command (2)
-    KIO_ARGS << (int)2 << url << no_cache << expireDate;
+    TDEIO_ARGS << (int)2 << url << no_cache << expireDate;
     SimpleJob * job = new SimpleJob( url, CMD_SPECIAL, packedArgs, false );
     Scheduler::scheduleJob(job);
     return job;
@@ -1254,7 +1254,7 @@ void TransferJob::slotResult( TDEIO::Job *job)
 TransferJob *TDEIO::get( const KURL& url, bool reload, bool showProgressInfo )
 {
     // Send decoded path and encoded query
-    KIO_ARGS << url;
+    TDEIO_ARGS << url;
     TransferJob * job = new TransferJob( url, CMD_GET, packedArgs, TQByteArray(), showProgressInfo );
     if (reload)
        job->addMetaData("cache", "reload");
@@ -1384,13 +1384,13 @@ TransferJob *TDEIO::http_post( const KURL& url, const TQByteArray &postData, boo
     // if request is not valid, return an invalid transfer job
     if (_error)
     {
-        KIO_ARGS << (int)1 << url;
+        TDEIO_ARGS << (int)1 << url;
         TransferJob * job = new PostErrorJob(_error, url.prettyURL(), packedArgs, postData, showProgressInfo);
         return job;
     }
 
     // Send http post command (1), decoded path and encoded query
-    KIO_ARGS << (int)1 << _url;
+    TDEIO_ARGS << (int)1 << _url;
     TransferJob * job = new TransferJob( _url, CMD_SPECIAL,
                                          packedArgs, postData, showProgressInfo );
 
@@ -1414,7 +1414,7 @@ void TransferJob::slotPostRedirection()
 TransferJob *TDEIO::put( const KURL& url, int permissions,
                   bool overwrite, bool resume, bool showProgressInfo )
 {
-    KIO_ARGS << url << TQ_INT8( overwrite ? 1 : 0 ) << TQ_INT8( resume ? 1 : 0 ) << permissions;
+    TDEIO_ARGS << url << TQ_INT8( overwrite ? 1 : 0 ) << TQ_INT8( resume ? 1 : 0 ) << permissions;
     TransferJob * job = new TransferJob( url, CMD_PUT, packedArgs, TQByteArray(), showProgressInfo );
     return job;
 }
@@ -1475,7 +1475,7 @@ void StoredTransferJob::slotStoredDataReq( TDEIO::Job *, TQByteArray &data )
 StoredTransferJob *TDEIO::storedGet( const KURL& url, bool reload, bool showProgressInfo )
 {
     // Send decoded path and encoded query
-    KIO_ARGS << url;
+    TDEIO_ARGS << url;
     StoredTransferJob * job = new StoredTransferJob( url, CMD_GET, packedArgs, TQByteArray(), showProgressInfo );
     if (reload)
        job->addMetaData("cache", "reload");
@@ -1485,7 +1485,7 @@ StoredTransferJob *TDEIO::storedGet( const KURL& url, bool reload, bool showProg
 StoredTransferJob *TDEIO::storedPut( const TQByteArray& arr, const KURL& url, int permissions,
                                    bool overwrite, bool resume, bool showProgressInfo )
 {
-    KIO_ARGS << url << TQ_INT8( overwrite ? 1 : 0 ) << TQ_INT8( resume ? 1 : 0 ) << permissions;
+    TDEIO_ARGS << url << TQ_INT8( overwrite ? 1 : 0 ) << TQ_INT8( resume ? 1 : 0 ) << permissions;
     StoredTransferJob * job = new StoredTransferJob( url, CMD_PUT, packedArgs, TQByteArray(), showProgressInfo );
     job->setData( arr );
     return job;
@@ -1542,7 +1542,7 @@ void MimetypeJob::slotFinished( )
 
 MimetypeJob *TDEIO::mimetype(const KURL& url, bool showProgressInfo )
 {
-    KIO_ARGS << url;
+    TDEIO_ARGS << url;
     MimetypeJob * job = new MimetypeJob(url, CMD_MIMETYPE, packedArgs, showProgressInfo);
     if ( showProgressInfo )
       Observer::self()->stating( job, url );
@@ -1697,7 +1697,7 @@ void FileCopyJob::startCopyJob()
 void FileCopyJob::startCopyJob(const KURL &slave_url)
 {
     //kdDebug(7007) << "FileCopyJob::startCopyJob()" << endl;
-    KIO_ARGS << m_src << m_dest << m_permissions << (TQ_INT8) m_overwrite;
+    TDEIO_ARGS << m_src << m_dest << m_permissions << (TQ_INT8) m_overwrite;
     m_copyJob = new DirectCopyJob(slave_url, CMD_COPY, packedArgs, false);
     addSubjob( m_copyJob );
     connectSubjob( m_copyJob );
@@ -1707,7 +1707,7 @@ void FileCopyJob::startCopyJob(const KURL &slave_url)
 
 void FileCopyJob::startRenameJob(const KURL &slave_url)
 {
-    KIO_ARGS << m_src << m_dest << (TQ_INT8) m_overwrite;
+    TDEIO_ARGS << m_src << m_dest << (TQ_INT8) m_overwrite;
     m_moveJob = new SimpleJob(slave_url, CMD_RENAME, packedArgs, false);
     addSubjob( m_moveJob );
     connectSubjob( m_moveJob );
@@ -2008,7 +2008,7 @@ FileCopyJob *TDEIO::file_move( const KURL& src, const KURL& dest, int permission
 
 SimpleJob *TDEIO::file_delete( const KURL& src, bool showProgressInfo)
 {
-    KIO_ARGS << src << TQ_INT8(true); // isFile
+    TDEIO_ARGS << src << TQ_INT8(true); // isFile
     return new SimpleJob(src, CMD_DEL, packedArgs, showProgressInfo );
 }
 
@@ -2797,7 +2797,7 @@ void CopyJob::startRenameJob( const KURL& slave_url )
     files.append(info);
     emit aboutToCreate( this, files );
 
-    KIO_ARGS << m_currentSrcURL << dest << (TQ_INT8) false /*no overwrite*/;
+    TDEIO_ARGS << m_currentSrcURL << dest << (TQ_INT8) false /*no overwrite*/;
     SimpleJob * newJob = new SimpleJob(slave_url, CMD_RENAME, packedArgs, false);
     Scheduler::scheduleJob(newJob);
     addSubjob( newJob );
@@ -4469,7 +4469,7 @@ void MultiGetJob::flushQueue(TQPtrList<GetRequest> &queue)
       }
    }
    // Send number of URLs, (URL, metadata)*
-   KIO_ARGS << (TQ_INT32) queue.count();
+   TDEIO_ARGS << (TQ_INT32) queue.count();
    for(entry = queue.first(); entry; entry = queue.next())
    {
       stream << entry->url << entry->metaData;
@@ -4490,7 +4490,7 @@ void MultiGetJob::start(Slave *slave)
    if (!entry->url.protocol().startsWith("http"))
    {
       // Use normal get
-      KIO_ARGS << entry->url;
+      TDEIO_ARGS << entry->url;
       m_packedArgs = packedArgs;
       m_outgoingMetaData = entry->metaData;
       m_command = CMD_GET;

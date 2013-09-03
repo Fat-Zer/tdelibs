@@ -1,5 +1,5 @@
 /*
-    This file is part of libkabc.
+    This file is part of libtdeabc.
     Copyright (c) 2002 Helge Deller <deller@gmx.de>
                   2002 Lubos Lunak <llunak@suse.cz>
 
@@ -37,7 +37,7 @@ namespace TDEABC {
 class LdapSearch;
 
 /**
- * A lineedit with LDAP and kabc completion
+ * A lineedit with LDAP and tdeabc completion
  *
  * This lineedit is supposed to be used wherever the user types email addresses
  * and might want a completion. You can simply use it as a replacement for

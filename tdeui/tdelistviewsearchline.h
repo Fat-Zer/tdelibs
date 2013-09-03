@@ -16,8 +16,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef KLISTVIEWSEARCHLINE_H
-#define KLISTVIEWSEARCHLINE_H
+#ifndef TDELISTVIEWSEARCHLINE_H
+#define TDELISTVIEWSEARCHLINE_H
 
 #include <klineedit.h>
 #include <tqhbox.h>

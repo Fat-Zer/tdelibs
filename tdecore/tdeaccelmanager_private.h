@@ -18,8 +18,8 @@
 */
 
 
-#ifndef __KACCELMANAGER_PRIVATE_H__
-#define __KACCELMANAGER_PRIVATE_H__
+#ifndef __TDEACCELMANAGER_PRIVATE_H__
+#define __TDEACCELMANAGER_PRIVATE_H__
 
 
 #include <tqstring.h>

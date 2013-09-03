@@ -5,8 +5,8 @@ kde_module_LTLIBRARIES = libtdecertpart.la
 libtdecertpart_la_SOURCES	= tdecertpart.cc
 
 libtdecertpart_la_LDFLAGS = $(KDE_PLUGIN) $(all_libraries)
-libtdecertpart_la_LIBADD = $(LIB_KPARTS) $(LIB_QT) $(LIB_TDEUI) $(LIB_TDEFILE) $(LIB_TDECORE)
-libtdecertpart_la_DEPENDENCIES = $(LIB_KPARTS)
+libtdecertpart_la_LIBADD = $(LIB_TDEPARTS) $(LIB_QT) $(LIB_TDEUI) $(LIB_TDEFILE) $(LIB_TDECORE)
+libtdecertpart_la_DEPENDENCIES = $(LIB_TDEPARTS)
 
 libtdecertpart_la_METASOURCES = AUTO
 

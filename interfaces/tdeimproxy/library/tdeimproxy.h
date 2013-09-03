@@ -21,8 +21,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef KIMPROXY_H
-#define KIMPROXY_H
+#ifndef TDEIMPROXY_H
+#define TDEIMPROXY_H
 
 #include <tqdict.h>
 #include <tqmap.h>
@@ -104,7 +104,7 @@ typedef TQMap<TQString, ContactPresenceListCurrent> PresenceStringMap;
  * @since 3.3
  * @author Will Stephenson <lists@stevello.free-online.co.uk>
  */
-class KIMPROXY_EXPORT KIMProxy : public TQObject, virtual public KIMProxyIface
+class TDEIMPROXY_EXPORT KIMProxy : public TQObject, virtual public KIMProxyIface
 {
 	Q_OBJECT
 	struct Private;

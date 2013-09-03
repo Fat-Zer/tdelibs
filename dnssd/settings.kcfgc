@@ -8,4 +8,4 @@ Mutators=true
 NameSpace=DNSSD
 SetUserTexts=false
 Singleton=true
-Visibility=KDNSSD_EXPORT
+Visibility=TDEDNSSD_EXPORT

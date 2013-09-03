@@ -1,5 +1,5 @@
 /*
-    This file is part of libkabc.
+    This file is part of libtdeabc.
     Copyright (c) 2001 Mark Westcott <mark@houseoffish.org>
 
     This library is free software; you can redistribute it and/or

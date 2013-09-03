@@ -17,8 +17,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef __KCMODULEPROXYIFACE_H__
-#define __KCMODULEPROXYIFACE_H__
+#ifndef __TDECMODULEPROXYIFACE_H__
+#define __TDECMODULEPROXYIFACE_H__
 
 #include <dcopobject.h>
 
@@ -118,4 +118,4 @@ k_dcop:
 	virtual void quickHelpChanged() = 0;
 };
 
-#endif // __KCMODULEPROXYIFACE_H__
+#endif // __TDECMODULEPROXYIFACE_H__

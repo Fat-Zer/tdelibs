@@ -30,10 +30,10 @@ Here is an alphabetical list:
     tdeparts interface for text editors, mediaplayer and scripting.
 
 * kab
-    OBSOLETE, see kabc: Used to be the address book library, but now only
-    used to convert kab-Addressbooks into kabc format.
+    OBSOLETE, see tdeabc: Used to be the address book library, but now only
+    used to convert kab-Addressbooks into tdeabc format.
 
-* kabc
+* tdeabc
     The address book library.
 
 * kate
@@ -84,7 +84,7 @@ Here is an alphabetical list:
 * tdeinit
     Process launcher, used for fast KDE startup
 
-* kio
+* tdeio
     Classes that fetch and decode URLs are contained here. This library also
     contains "tdesycoca", the system configure cache containing services,
     applications, servicetypes and mimetypes.

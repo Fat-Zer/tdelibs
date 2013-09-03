@@ -82,7 +82,7 @@ public:
 
 int KSycoca::version()
 {
-   return KSYCOCA_VERSION;
+   return TDESYCOCA_VERSION;
 }
 
 // Read-only constructor
@@ -181,7 +181,7 @@ bool KSycoca::openDatabase( bool openDummyIfNotFound )
         buffer->setBuffer(TQByteArray());
         buffer->open(IO_ReadWrite);
         m_str = new TQDataStream( buffer);
-        (*m_str) << (TQ_INT32) KSYCOCA_VERSION;
+        (*m_str) << (TQ_INT32) TDESYCOCA_VERSION;
         (*m_str) << (TQ_INT32) 0;
      }
      else
@@ -309,9 +309,9 @@ bool KSycoca::checkVersion(bool abortOnError)
    m_str->device()->at(0);
    TQ_INT32 aVersion;
    (*m_str) >> aVersion;
-   if ( aVersion < KSYCOCA_VERSION )
+   if ( aVersion < TDESYCOCA_VERSION )
    {
-      kdWarning(7011) << "Found version " << aVersion << ", expecting version " << KSYCOCA_VERSION << " or higher." << endl;
+      kdWarning(7011) << "Found version " << aVersion << ", expecting version " << TDESYCOCA_VERSION << " or higher." << endl;
       if (!abortOnError) return false;
       kdError(7011) << "Outdated database ! Stop kded and restart it !" << endl;
       abort();

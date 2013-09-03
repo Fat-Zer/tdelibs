@@ -19,7 +19,7 @@ or <a href="http://doc.trolltech.com/3.0/porting.html">this page online</a>.<P>
 <LI><A HREF="#kab">Changes in kab</A></LI>
 <LI><A HREF="#tdecore">Changes in tdecore</A></LI>
 <LI><A HREF="#tdeui">Changes in tdeui</A></LI>
-<LI><A HREF="#kio">Changes in kio</A></LI>
+<LI><A HREF="#tdeio">Changes in tdeio</A></LI>
 <LI><A HREF="#tdeparts">Changes in tdeparts</A></LI>
 <LI><A HREF="#tdespell">Changes in tdespell</A></LI>
 <LI><A HREF="#tdehtmlpart">API-cleanup in TDEHTML</A></LI>
@@ -33,7 +33,7 @@ or <a href="http://doc.trolltech.com/3.0/porting.html">this page online</a>.<P>
   The first step to get your KDE application to compile under KDE 3.0,
   is to detect KDE 3.0 and Qt 3.x at configure time. The easiest way to
   get a working autoconf/automake framework, is to either use 
-  <a href="http://www.tdevelop.org">KDevelop</a> or
+  <a href="http://www.kdevelop.org">KDevelop</a> or
   <a href="http://home.earthlink.net/~granroth/kapptemplate/index.html">kapptemplate</a>
   (available in CVS under the module "tdesdk"), to generate a new
   application template. Replace the generated source files by yours
@@ -214,7 +214,7 @@ The preferred means of defining a shortcut, however, is to use <b>TDEAction</b>.
 <H4>TDEIconLoader, TDEIconTheme</H4>
 Methods now use TDEIcon::Group and TDEIcon::Context instead of int as types for group and context arguments.
 The change should affect only code using hardcoded numeric values instead of using the proper enum constants.
-This applies to classes TDEIconLoader, TDEIconTheme and (in kio and tdefile) KMimeType, KService, TDEIconDialog, TDEIconButton,
+This applies to classes TDEIconLoader, TDEIconTheme and (in tdeio and tdefile) KMimeType, KService, TDEIconDialog, TDEIconButton,
 KURLBar and KURLBarItem.
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
@@ -345,7 +345,7 @@ TQString&) is not a slot anymore.
 
 <H4><P ALIGN="RIGHT"><A HREF="#TOC">Return to the Table of Contents</A></P></H4>
 
-<H3><A NAME="kio">Changes in kio</A></H3>
+<H3><A NAME="tdeio">Changes in tdeio</A></H3>
 
 <H4>KPropertiesDialog</H4>
 <ul>
@@ -361,7 +361,7 @@ TQString&) is not a slot anymore.
   <li>KTarGz is now KTar (#define for source compatibility)</li>
   <li>A base class KArchive has been written, to support other archive formats in the future</li>
   <li>KTarEntry is now KArchiveEntry, KTarDirectory is now KArchiveDirectory, and KTarFile is now KArchiveFile.</li>
-  <li>The classes ProgressBase, StatusbarProgress and DefaultProgress have been moved to the KIO namespace.</li>
+  <li>The classes ProgressBase, StatusbarProgress and DefaultProgress have been moved to the TDEIO namespace.</li>
   <li>The signal KDirLister::started(const TQString &amp;url) has changed to KDirLister::started(const KURL &amp;url).<li>
   <li>KServiceTypeProfile::preferredService( const TQString &amp; serviceType, bool needApp ) has been removed, use
       KServiceTypeProfile::preferredService( ..., "Application") if needApp was true, or
@@ -531,7 +531,7 @@ parts are rarely used outside of tdefile.
 <p>
 The changes are:
 <H4>KFileItem</H4>
-The KFileViewItem class is completely replaced with KFileItem from kio. All its functionality has
+The KFileViewItem class is completely replaced with KFileItem from tdeio. All its functionality has
 been merged with its former base class KFileItem. Additionally, some of its methods have been
 modified:
 <table>
@@ -543,7 +543,7 @@ modified:
 </table>
 
 <H4>KFileReader</H4>
-This class has been merged with KDirLister from kio.
+This class has been merged with KDirLister from tdeio.
 
 <H4>KDirOperator</H4>
 <table>

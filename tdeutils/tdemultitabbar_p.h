@@ -22,8 +22,8 @@
     Boston, MA 02110-1301, USA.
  ***************************************************************************/
 
-#ifndef K_MULTI_TAB_BAR_P_H
-#define K_MULTI_TAB_BAR_P_H
+#ifndef TDE_MULTI_TAB_BAR_P_H
+#define TDE_MULTI_TAB_BAR_P_H
 #include <tqscrollview.h>
 #include <tdemultitabbar.h>
 

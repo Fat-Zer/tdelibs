@@ -17,8 +17,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef KWINDOW_INTERFACE_H
-#define KWINDOW_INTERFACE_H
+#ifndef TDEWINDOW_INTERFACE_H
+#define TDEWINDOW_INTERFACE_H
 
 #include <dcopobject.h>
 #include <tqstringlist.h>

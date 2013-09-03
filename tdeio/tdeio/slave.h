@@ -19,8 +19,8 @@
  *  Boston, MA 02110-1301, USA.
  **/
 
-#ifndef KIO_SLAVE_H
-#define KIO_SLAVE_H
+#ifndef TDEIO_SLAVE_H
+#define TDEIO_SLAVE_H
 
 #include <time.h>
 #include <unistd.h>

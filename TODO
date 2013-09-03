@@ -50,11 +50,11 @@ that we would like to make for the next binary incompatible release.
   Konqueror and KMail tend to stall occasionally too, but that's harder to refactor
   because the bulk of the work there is X11-related.
 
-- Make it possible to use SSL-ed sockets outside KIO. KSSL isn't very suitable for
+- Make it possible to use SSL-ed sockets outside TDEIO. KSSL isn't very suitable for
   reuse, and the certificate dialogs are not even available in public API at all,
   leading e.g. to Kopete IRC duplicating a lot of stuff and all KDE Jabber clients
   based on libpsi (PSI, Light Hawk and Kopete) using homebrewn solutions.  [How
-  does this have to do with changing KIO?  It's just a request to have that
+  does this have to do with changing TDEIO?  It's just a request to have that
   code in a different form....]
 
 - Manually, properly clean up the includes in all of the headers.  Remove
@@ -174,7 +174,7 @@ that we would like to make for the next binary incompatible release.
   too many problems in the past. Not worth the trouble.
 
 - Split KProtocolInfo into KProtocolInfoBase in tdecore (with almost everything) 
-  and KProtocolInfo in kio (with the methods taking a KURL, which need KProtocolManager)
+  and KProtocolInfo in tdeio (with the methods taking a KURL, which need KProtocolManager)
 
 - Rename KDirNotify_stub and update API (no need for '*' arguments anymore)
 
@@ -223,7 +223,7 @@ an alternative help->contents action)
 
 - Move KRichTextLabel into tdeui if still required with Qt 4.
 
-- Add the concept of a session to KIO, in particular for TDEHTML so that it can
+- Add the concept of a session to TDEIO, in particular for TDEHTML so that it can
   have all of its jobs associated in some way (a unique key of sorts).  Will
   make SSL much easier to implement and allow removal of many hacks, mostly
   involving metadata.

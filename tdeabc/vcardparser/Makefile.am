@@ -8,16 +8,16 @@ vcardsinclude_HEADERS = vcard.h vcardline.h vcardparser.h
 
 check_PROGRAMS = testread testwrite testread2
 
-testread_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
-testread_LDADD = libvcards.la $(top_builddir)/tdeabc/libkabc.la
+testread_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_TDEIO) -ltdetexteditor
+testread_LDADD = libvcards.la $(top_builddir)/tdeabc/libtdeabc.la
 testread_SOURCES = testread.cpp
 
-testread2_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
-testread2_LDADD = libvcards.la $(top_builddir)/tdeabc/libkabc.la
+testread2_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_TDEIO) -ltdetexteditor
+testread2_LDADD = libvcards.la $(top_builddir)/tdeabc/libtdeabc.la
 testread2_SOURCES = testread2.cpp testutils.cpp
 
-testwrite_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
-testwrite_LDADD = libvcards.la $(top_builddir)/tdeabc/libkabc.la
+testwrite_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_TDEIO) -ltdetexteditor
+testwrite_LDADD = libvcards.la $(top_builddir)/tdeabc/libtdeabc.la
 testwrite_SOURCES = testwrite.cpp
 
 TESTFILES = vcard1.vcf vcard2.vcf vcard3.vcf vcard4.vcf vcard6.vcf vcard7.vcf

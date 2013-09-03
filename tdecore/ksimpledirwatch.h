@@ -30,7 +30,7 @@ class KSimpleDirWatchPrivate;
 
  /**
   * KSimpleDirWatch is a basic copy of KDirWatch
-  * but with the KIO linking requirement removed
+  * but with the TDEIO linking requirement removed
   *
   * Watch directories and files for changes.
   * The watched directories or files don't have to exist yet.

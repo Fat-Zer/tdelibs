@@ -47,7 +47,7 @@ TDEHTMLRun::TDEHTMLRun( TDEHTMLPart *part, tdehtml::ChildFrame *child, const KUR
 void TDEHTMLRun::foundMimeType( const TQString &_type )
 {
     Q_ASSERT(!m_bFinished);
-    TQString mimeType = _type; // this ref comes from the job, we lose it when using KIO again
+    TQString mimeType = _type; // this ref comes from the job, we lose it when using TDEIO again
     if ( static_cast<TDEHTMLPart *>(m_part)->processObjectRequest( m_child, m_strURL, mimeType ) )
         m_bFinished = true;
     else {

@@ -17,8 +17,8 @@
    Boston, MA 02110-1301, USA.
  */
 
-#ifndef KNTLM_H
-#define KNTLM_H
+#ifndef TDENTLM_H
+#define TDENTLM_H
 
 #include <tqglobal.h>
 #include <tqcstring.h>
@@ -230,4 +230,4 @@ private:
   static void convertKey( unsigned char *key_56, void* ks );
 };
 
-#endif /* KNTLM_H */
+#endif /* TDENTLM_H */

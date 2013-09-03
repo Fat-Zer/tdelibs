@@ -19,8 +19,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef _KCONFIGDATA_H
-#define _KCONFIGDATA_H
+#ifndef _TDECONFIGDATA_H
+#define _TDECONFIGDATA_H
 
 #include <tqmap.h> // generic red-black tree class
 #include "tdelibs_export.h"

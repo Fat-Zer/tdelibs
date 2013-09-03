@@ -258,7 +258,7 @@ changes.
 <dfaure> weis: you should have come before. coolo is talking about re-writing libtdeio.
 <dfaure> well in fact he started the rewrite
  dfaure having a look
-<weis> dfaure: Unfortunately I am not paid for KDE but for Qt hacking :-( So I fear I have no time for kio anyway.
+<weis> dfaure: Unfortunately I am not paid for KDE but for Qt hacking :-( So I fear I have no time for tdeio anyway.
 <dfaure> weis: I know that, but perhaps a little discussion would help him with the new design :)
 <weis> dfaure: So you are not convinced by his design ?
 <weis> dfaure: It is about this daemon that forks and loads ioslaves as libs, or ?

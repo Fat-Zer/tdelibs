@@ -8,8 +8,8 @@ INCLUDES=	$(all_includes)
 check_PROGRAMS = kcookiejartest
 
 kcookiejartest_SOURCES = kcookiejartest.cpp 
-kcookiejartest_LDADD   = $(LIB_KIO)
-kcookiejartest_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
+kcookiejartest_LDADD   = $(LIB_TDEIO)
+kcookiejartest_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_TDEIO) -ltdetexteditor
 
 check-local: kcookiejartest
 	./kcookiejartest $(srcdir)/cookie.test

@@ -22,8 +22,8 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef KMULTICASTSOCKET_H
-#define KMULTICASTSOCKET_H
+#ifndef TDEMULTICASTSOCKET_H
+#define TDEMULTICASTSOCKET_H
 
 #include "kdatagramsocket.h"
 #include "tdemulticastsocketdevice.h"

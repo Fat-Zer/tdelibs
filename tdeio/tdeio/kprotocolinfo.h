@@ -403,7 +403,7 @@ public:
 
   /**
    * Returns whether the protocol can recursively delete directories by itself.
-   * If not (the usual case) then KIO will list the directory and delete files
+   * If not (the usual case) then TDEIO will list the directory and delete files
    * and empty directories one by one.
    *
    * This corresponds to the "deleteRecursive=" field in the protocol description file.

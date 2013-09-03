@@ -461,7 +461,7 @@ void JobTest::moveFileNoPermissions()
     bool ok = TDEIO::NetAccess::synchronousRun( job, 0, 0, 0, &metaData );
     assert( !ok );
     assert( TDEIO::NetAccess::lastError() == TDEIO::ERR_ACCESS_DENIED );
-    // OK this is fishy. Just like mv(1), KIO's behavior depends on whether
+    // OK this is fishy. Just like mv(1), TDEIO's behavior depends on whether
     // a direct rename(2) was used, or a full copy+del. In the first case
     // there is no destination file created, but in the second case the
     // destination file remains.

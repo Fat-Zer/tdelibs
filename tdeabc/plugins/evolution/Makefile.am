@@ -8,7 +8,7 @@ kde_module_LTLIBRARIES = tdeabc_evo.la
 tdeabc_evo_la_SOURCES = dbwrapper.cpp resourceevo.cpp
 
 tdeabc_evo_la_LDFLAGS	= $(all_libraries) -module $(KDE_PLUGIN)
-tdeabc_evo_la_LIBADD	= ../../../tdeabc/libkabc.la ../../../tdeui/libtdeui.la -ldb ../../../tdeabc/vcardparser/libvcards.la
+tdeabc_evo_la_LIBADD	= ../../../tdeabc/libtdeabc.la ../../../tdeui/libtdeui.la -ldb ../../../tdeabc/vcardparser/libvcards.la
 
 METASOURCES = AUTO
 

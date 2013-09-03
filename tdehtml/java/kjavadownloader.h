@@ -25,7 +25,7 @@
 #include <tqobject.h>
 
 /**
- * @short A class for handling downloads from KIO
+ * @short A class for handling downloads from TDEIO
  *
  * This class handles a TDEIO::get job and passes the data
  * back to the AppletServer.

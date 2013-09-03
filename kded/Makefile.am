@@ -23,11 +23,11 @@ lib_LTLIBRARIES =
 tdeinit_LTLIBRARIES = kded.la tdebuildsycoca.la
 
 kded_la_LDFLAGS = $(all_libraries) -module -avoid-version
-kded_la_LIBADD = $(LIB_KIO) $(LIB_QT) $(LIB_TDECORE) $(top_builddir)/dcop/libDCOP.la $(LIB_X11)
+kded_la_LIBADD = $(LIB_TDEIO) $(LIB_QT) $(LIB_TDECORE) $(top_builddir)/dcop/libDCOP.la $(LIB_X11)
 kded_la_SOURCES = kded.cpp kdedmodule.cpp
 
 tdebuildsycoca_la_LDFLAGS = $(all_libraries) -module -avoid-version
-tdebuildsycoca_la_LIBADD = $(LIB_KIO) $(LIB_QT) $(top_builddir)/dcop/libDCOP.la $(LIB_TDECORE)
+tdebuildsycoca_la_LIBADD = $(LIB_TDEIO) $(LIB_QT) $(top_builddir)/dcop/libDCOP.la $(LIB_TDECORE)
 tdebuildsycoca_la_SOURCES = tdebuildsycoca.cpp kbuildservicetypefactory.cpp \
 				kbuildservicefactory.cpp \
 				kbuildservicegroupfactory.cpp \
@@ -38,16 +38,16 @@ tdebuildsycoca_la_SOURCES = tdebuildsycoca.cpp kbuildservicetypefactory.cpp \
 
 bin_PROGRAMS = kdontchangethehostname tde-menu tdemimelist
 
-kdontchangethehostname_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
+kdontchangethehostname_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_TDEIO) -ltdetexteditor
 kdontchangethehostname_LDADD = $(LIB_TDECORE)
 kdontchangethehostname_SOURCES = khostname.cpp
 
-tdemimelist_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
+tdemimelist_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_TDEIO) -ltdetexteditor
 tdemimelist_LDADD = ../tdeio/libtdeio.la
 tdemimelist_SOURCES = tdemimelist.cpp
 
-kde_menu_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
-kde_menu_LDADD = $(LIB_KIO)
+kde_menu_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_TDEIO) -ltdetexteditor
+kde_menu_LDADD = $(LIB_TDEIO)
 kde_menu_SOURCES = tde-menu.cpp
 
 METASOURCES = AUTO

@@ -17,8 +17,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef _KLAUNCHER_H_
-#define _KLAUNCHER_H_
+#ifndef _TDELAUNCHER_H_
+#define _TDELAUNCHER_H_
 
 #include <sys/types.h>
 #include <unistd.h>

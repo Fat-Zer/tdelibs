@@ -5,13 +5,13 @@ The KDE address book framework tries to provide an easy to use and powerful
 mechanism to handle contacts in all KDE applications.
 
 If you want to make use of it, this small introduction to programming
-with libkabc may be helpful.
+with libtdeabc may be helpful.
 
 
 General Concepts
 =================
 
-In libkabc the storage and management of contacts is devided in 2 layers.
+In libtdeabc the storage and management of contacts is devided in 2 layers.
 
 ******************
 Management Layer *
@@ -63,7 +63,7 @@ The Storage Layer
 The Storage Layer consists of the class TDEABC::Resource and its derived classes.
 These classes are used by TDEABC::AddressBook to load and store the contacts to
 the single backends.
-At the moment libkabc provides 4 types of resources:
+At the moment libtdeabc provides 4 types of resources:
 1) ResourceFile
   - stores all contacts in a single file
 
@@ -76,7 +76,7 @@ At the moment libkabc provides 4 types of resources:
 
 4) ResourceNet
   - stores all contacts in a single file, which can be accessable via HTTP,
-    FTP, Fish, WebDAV, POP3, IMAP or whatever the KIO frame work supports
+    FTP, Fish, WebDAV, POP3, IMAP or whatever the TDEIO frame work supports
 
 In general the developer does not have to take how to save the single contacts.
 He just has to plug one of the above mentioned resources into TDEABC::AddressBook
@@ -85,7 +85,7 @@ and perform a save action.
 Examples
 =========
 Like a picture, C/C++ code is worth a 1000 words I'd like to give you a
-lot of examples now, how to use libkabc for several tasks:
+lot of examples now, how to use libtdeabc for several tasks:
 
 
 Using TDEABC::StdAddressBook and Iterators
@@ -217,7 +217,7 @@ The following code will create a file resource and save a contact into it:
 In line 1 the TDEABC::AddressBook is created.  In line 4 you creat the
 TDEABC::ResourceFile (which will handle the loading/saving).
 The resource takes 2 arguments, the first is the file name and the
-second one the file format. At the moment libkabc supports two file formats:
+second one the file format. At the moment libtdeabc supports two file formats:
 1) vCard, as specified in RFC 2426
 2) Binary, which increases performance during loading and saving
 
@@ -262,7 +262,7 @@ From 49 - 50 we insert 2 email addresses with the first one as preferred
 (second argument is true).
 
 In 53 and the following 3 lines we add two telephone numbers. For this purpose
-libkabc provides the TDEABC::PhoneNumber class, which takes the phone number in
+libtdeabc provides the TDEABC::PhoneNumber class, which takes the phone number in
 string representation as first argument and the type as second. The types can
 be combined, so 'TDEABC::PhoneNumber::Home | TDEABC::PhoneNumber::Fax' would be
 the Home Fax.
@@ -312,7 +312,7 @@ please take a look at the official API documentation or the header files.
 
 Distribution Lists
 -------------------
-libkabc provides so called distribution lists to group contacts. These lists
+libtdeabc provides so called distribution lists to group contacts. These lists
 just store the uid of contacts, so they can be used for every kind of contact
 grouping. There are 2 classes which handle the whole distribution list tasks,
 TDEABC::DistributionListManager and TDEABC::DistributionList. The first one keeps

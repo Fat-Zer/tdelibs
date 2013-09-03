@@ -18,8 +18,8 @@
 
 */
 
-#ifndef KCMODULEPROXY_H
-#define KCMODULEPROXY_H
+#ifndef TDECMODULEPROXY_H
+#define TDECMODULEPROXY_H
 
 #include <tqwidget.h>
 #include <tqstringlist.h>
@@ -65,7 +65,7 @@ class TDEProcess;
  * @author Matthias Kretz <kretz@kde.org>
  *
  */
-class KUTILS_EXPORT TDECModuleProxy : public TQWidget
+class TDEUTILS_EXPORT TDECModuleProxy : public TQWidget
 {
 Q_OBJECT
 
@@ -354,5 +354,5 @@ private:
 	TDECModuleProxyPrivate * d;
 };
 
-#endif // KCMODULEPROXY_H
+#endif // TDECMODULEPROXY_H
 // vim: sw=4 ts=4 noet

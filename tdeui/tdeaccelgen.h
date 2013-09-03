@@ -17,8 +17,8 @@
     Boston, MA  02110-1301, USA.
 */
 
-#ifndef KACCELGEN_H
-#define KACCELGEN_H
+#ifndef TDEACCELGEN_H
+#define TDEACCELGEN_H
 
 #include <tqmap.h>
 #include <tqstring.h>

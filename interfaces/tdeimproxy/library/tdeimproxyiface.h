@@ -23,8 +23,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef KIMPROXYIFACE_H
-#define KIMPROXYIFACE_H
+#ifndef TDEIMPROXYIFACE_H
+#define TDEIMPROXYIFACE_H
 
 #include <dcopobject.h>
 

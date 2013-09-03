@@ -188,7 +188,7 @@ install-exec-hook:
 
 DISTCLEANFILES = tde-config.cpp
 
-DOXYGEN_REFERENCES = dcop tdeui tdeparts kio
+DOXYGEN_REFERENCES = dcop tdeui tdeparts tdeio
 DOXYGEN_EXCLUDE = malloc kde_file.h
 DOXYGEN_SET_WARN_IF_UNDOCUMENTED = YES
 

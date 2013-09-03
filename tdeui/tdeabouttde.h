@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef _KABOUT_KDE_H_
-#define _KABOUT_KDE_H_
+#ifndef _TDEABOUT_KDE_H_
+#define _TDEABOUT_KDE_H_
 
 #include <tdeaboutdialog.h>
 

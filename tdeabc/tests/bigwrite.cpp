@@ -20,7 +20,7 @@ int main(int argc,char **argv)
   TDEApplication app( false, false );
 
   AddressBook ab;
-  ResourceFile r( "my.kabc", "vcard" );
+  ResourceFile r( "my.tdeabc", "vcard" );
   ab.addResource( &r );
   
   for( int i = 0; i < 5000; ++i ) {

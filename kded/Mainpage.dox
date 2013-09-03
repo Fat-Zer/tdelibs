@@ -21,6 +21,6 @@ Waldo Bastian \<bastian@kde.org\>
 
 */
 
-// DOXYGEN_REFERENCES = tdecore tdeui kio
+// DOXYGEN_REFERENCES = tdecore tdeui tdeio
 // DOXYGEN_SET_PROJECT_NAME = TrinityD
 // vim:ts=4:sw=4:expandtab:filetype=doxygen

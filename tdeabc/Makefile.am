@@ -21,7 +21,7 @@ CLEANFILES = addressee.h addressee.cpp field.cpp
 
 lib_LTLIBRARIES = libtdeabc.la
 libtdeabc_la_LDFLAGS = $(KDE_RPATH) $(all_libraries) -version-info 3:0:2 -no-undefined
-libtdeabc_la_LIBADD = vcard/libvcard.la vcardparser/libvcards.la $(LIB_KIO) \
+libtdeabc_la_LIBADD = vcard/libvcard.la vcardparser/libvcards.la $(LIB_TDEIO) \
                     $(top_builddir)/tderesources/libtderesources.la $(LIB_QT) $(top_builddir)/dcop/libDCOP.la $(LIB_TDEUI) $(LIB_TDECORE)
 libtdeabc_la_COMPILE_FIRST = addressee.h
 
@@ -52,7 +52,7 @@ METASOURCES = AUTO
 
 bin_PROGRAMS = tdeab2tdeabc
 
-tdeab2tdeabc_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
+tdeab2tdeabc_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_TDEIO) -ltdetexteditor
 tdeab2tdeabc_LDADD = libtdeabc.la ../kab/libkab.la
 tdeab2tdeabc_SOURCES = tdeab2tdeabc.cpp
 

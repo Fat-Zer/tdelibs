@@ -9,7 +9,7 @@ INCLUDES = $(all_includes)
 tdeio_iso_la_METASOURCES=AUTO
 
 tdeio_iso_la_SOURCES = kisodirectory.cpp kisofile.cpp qfilehack.cpp kiso.cpp iso.cpp
-tdeio_iso_la_LIBADD = libisofs/libisofs.la $(LIB_QT) $(LIB_TDECORE) $(LIB_KIO)
+tdeio_iso_la_LIBADD = libisofs/libisofs.la $(LIB_QT) $(LIB_TDECORE) $(LIB_TDEIO)
 
 tdeio_iso_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
 

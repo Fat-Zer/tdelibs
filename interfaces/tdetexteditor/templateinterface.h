@@ -82,10 +82,10 @@ class KTEXTEDITOR_EXPORT TemplateInterface //should be named AbstractTemplateInt
      *
      * - index: "i"
      * - loginname: The current users's loginname
-     * - firstname: The current user's first name retrieved from kabc
-     * - lastname: The current user's last name retrieved from kabc
-     * - fullname: The current user's first and last name retrieved from kabc
-     * - email: The current user's primary email adress  retrieved from kabc
+     * - firstname: The current user's first name retrieved from tdeabc
+     * - lastname: The current user's last name retrieved from tdeabc
+     * - fullname: The current user's first and last name retrieved from tdeabc
+     * - email: The current user's primary email adress  retrieved from tdeabc
      * - date: current date
      * - time: current time
      * - year: current year

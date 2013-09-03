@@ -4,7 +4,7 @@ AM_CPPFLAGS = -I$(top_srcdir)/tdecore -I$(top_srcdir) $(all_includes)
 
 bin_PROGRAMS = tdeconfig_compiler
 
-tdeconfig_compiler_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
+tdeconfig_compiler_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_TDEIO) -ltdetexteditor
 tdeconfig_compiler_LDADD = $(LIB_TDECORE)
 tdeconfig_compiler_SOURCES = tdeconfig_compiler.cpp
 

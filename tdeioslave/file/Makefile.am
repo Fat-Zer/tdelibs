@@ -9,7 +9,7 @@ INCLUDES = $(all_includes)
 kde_module_LTLIBRARIES = tdeio_file.la
 
 tdeio_file_la_SOURCES = file.cc
-tdeio_file_la_LIBADD = $(LIB_KIO) $(LIB_QT) $(LIB_TDECORE) $(ACL_LIBS)
+tdeio_file_la_LIBADD = $(LIB_TDEIO) $(LIB_QT) $(LIB_TDECORE) $(ACL_LIBS)
 tdeio_file_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN) $(top_builddir)/dcop/libDCOP.la
 noinst_HEADERS = file.h
 

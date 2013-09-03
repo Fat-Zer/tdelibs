@@ -2399,7 +2399,7 @@ bool KateDocument::openFile(TDEIO::Job * job)
   if (pos != -1)
     setEncoding (serviceType.mid(pos+1));
 
-  // if the encoding is set here - on the command line/from the dialog/from KIO
+  // if the encoding is set here - on the command line/from the dialog/from TDEIO
   // we prevent file type and document variables from changing it
   bool encodingSticky = m_encodingSticky;
   m_encodingSticky = m_config->isSetEncoding();

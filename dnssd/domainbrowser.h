@@ -38,7 +38,7 @@ class DomainBrowserPrivate;
 @short Class used to provide current list of domains for browsing.
 @author Jakub Stachowski
 */
-class KDNSSD_EXPORT DomainBrowser : public TQObject
+class TDEDNSSD_EXPORT DomainBrowser : public TQObject
 {
 	Q_OBJECT
 public:

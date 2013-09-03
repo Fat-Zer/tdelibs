@@ -46,10 +46,10 @@ tdefx \
 $additional \
 tdecore \
 tdeui \
-kio \
+tdeio \
 tderesources \
 tdeabc/vcard \
-kabc \
+tdeabc \
 tdeutils \
 tdeparts \
 tdemdi \

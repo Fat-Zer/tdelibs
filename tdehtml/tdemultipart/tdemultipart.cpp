@@ -189,7 +189,7 @@ void KMultiPart::slotData( TDEIO::Job *job, const TQByteArray &data )
     if (m_boundary.isNull())
     {
        TQString tmp = job->queryMetaData("media-boundary");
-       kdDebug() << "Got Boundary from kio-http '" << tmp << "'" << endl;
+       kdDebug() << "Got Boundary from tdeio-http '" << tmp << "'" << endl;
        if ( !tmp.isEmpty() ) {
            if (tmp.startsWith("--"))
                m_boundary = tmp.latin1();

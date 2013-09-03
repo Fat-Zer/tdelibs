@@ -15,8 +15,8 @@
    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA 02110-1301, USA.
 */
-#ifndef _KGLOBALSETTINGS_H
-#define _KGLOBALSETTINGS_H
+#ifndef _TDEGLOBALSETTINGS_H
+#define _TDEGLOBALSETTINGS_H
 
 #include <tqstring.h>
 #include <tqcolor.h>

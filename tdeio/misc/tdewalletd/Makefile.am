@@ -21,7 +21,7 @@ INCLUDES= -I$(srcdir)/.. -I$(top_srcdir) -I$(top_srcdir)/tdewallet/backend -I$(t
 kde_module_LTLIBRARIES = kded_tdewalletd.la
 
 kded_tdewalletd_la_LDFLAGS = $(all_libraries) -module -avoid-version
-kded_tdewalletd_la_LIBADD = $(LIB_KIO) ../../../tdewallet/backend/libtdewalletbackend.la ../../../tdewallet/client/libtdewalletclient.la $(LIB_KDED) $(LIB_QT) $(top_builddir)/dcop/libDCOP.la $(LIB_TDECORE) $(LIB_TDEUI)
+kded_tdewalletd_la_LIBADD = $(LIB_TDEIO) ../../../tdewallet/backend/libtdewalletbackend.la ../../../tdewallet/client/libtdewalletclient.la $(LIB_KDED) $(LIB_QT) $(top_builddir)/dcop/libDCOP.la $(LIB_TDECORE) $(LIB_TDEUI)
 kded_tdewalletd_la_SOURCES = tdewalletd.cpp tdewalletd.skel ktimeout.cpp tdewalletwizard.ui kbetterthankdialogbase.ui
 
 METASOURCES = AUTO

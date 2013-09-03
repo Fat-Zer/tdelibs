@@ -728,7 +728,7 @@ TQString KDEDesktopMimeType::icon( const KURL& _url, bool _is_local ) const
           const TQString u = cfg.readPathEntry( "URL" );
           const KURL url( u );
           if ( url.protocol() == "trash" ) {
-              // We need to find if the trash is empty, preferrably without using a KIO job.
+              // We need to find if the trash is empty, preferrably without using a TDEIO job.
               // So instead tdeio_trash leaves an entry in its config file for us.
               KSimpleConfig trashConfig( "trashrc", true );
               trashConfig.setGroup( "Status" );

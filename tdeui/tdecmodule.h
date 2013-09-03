@@ -20,8 +20,8 @@
 
 */
 
-#ifndef KCMODULE_H
-#define KCMODULE_H
+#ifndef TDECMODULE_H
+#define TDECMODULE_H
 
 #include <tqwidget.h>
 
@@ -357,5 +357,5 @@ private:
 
 };
 
-#endif //KCMODULE_H
+#endif //TDECMODULE_H
 

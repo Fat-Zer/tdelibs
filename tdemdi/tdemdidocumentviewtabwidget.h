@@ -7,8 +7,8 @@
 //
 //----------------------------------------------------------------------------
 
-#ifndef _KMDI_DOCUMENT_VIEW_TAB_WIDGET_H_
-#define _KMDI_DOCUMENT_VIEW_TAB_WIDGET_H_
+#ifndef _TDEMDI_DOCUMENT_VIEW_TAB_WIDGET_H_
+#define _TDEMDI_DOCUMENT_VIEW_TAB_WIDGET_H_
 
 #include <ktabwidget.h>
 #include <tdemdidefines.h>

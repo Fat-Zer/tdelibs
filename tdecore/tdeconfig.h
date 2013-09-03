@@ -19,8 +19,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef _KCONFIG_H
-#define _KCONFIG_H
+#ifndef _TDECONFIG_H
+#define _TDECONFIG_H
 
 class TQTimer;
 

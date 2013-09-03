@@ -16,7 +16,7 @@ libkate_la_SOURCES = katesearch.cpp katebuffer.cpp katecmds.cpp \
 
 libkatepart_la_SOURCES = dummy.cpp
 
-libkatepart_la_LIBADD = libkate.la ../interfaces/libkatepartinterfaces.la $(LIB_TDEPRINT) $(top_builddir)/tdeutils/libtdeutils.la $(top_builddir)/kjs/libkjs.la $(LUA_LIBS) $(LIB_QT) $(LIB_TDEUI) $(LIB_TDECORE) $(LIB_KPARTS) $(top_builddir)/interfaces/tdetexteditor/libtdetexteditor.la $(LIB_TDEFILE) $(top_builddir)/dcop/libDCOP.la
+libkatepart_la_LIBADD = libkate.la ../interfaces/libkatepartinterfaces.la $(LIB_TDEPRINT) $(top_builddir)/tdeutils/libtdeutils.la $(top_builddir)/kjs/libkjs.la $(LUA_LIBS) $(LIB_QT) $(LIB_TDEUI) $(LIB_TDECORE) $(LIB_TDEPARTS) $(top_builddir)/interfaces/tdetexteditor/libtdetexteditor.la $(LIB_TDEFILE) $(top_builddir)/dcop/libDCOP.la
 
 libkatepart_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN)
 

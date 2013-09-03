@@ -18,8 +18,8 @@
  *  Boston, MA 02110-1301, USA.
  **/
 
-#ifndef KIO_SLAVE_CONFIG_H
-#define KIO_SLAVE_CONFIG_H
+#ifndef TDEIO_SLAVE_CONFIG_H
+#define TDEIO_SLAVE_CONFIG_H
 
 #include <tqobject.h>
 #include <tdeio/global.h>

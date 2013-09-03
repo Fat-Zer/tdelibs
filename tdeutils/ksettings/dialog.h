@@ -70,7 +70,7 @@ namespace KSettings
  * @author Matthias Kretz <kretz@kde.org>
  * @since 3.2
  */
-class KUTILS_EXPORT Dialog : public TQObject
+class TDEUTILS_EXPORT Dialog : public TQObject
 {
     friend class PageNode;
     Q_OBJECT

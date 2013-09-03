@@ -20,8 +20,8 @@
 // Selector widgets for KDE Color Selector, but probably useful for other
 // stuff also.
 
-#ifndef __KSELECT_H__
-#define __KSELECT_H__
+#ifndef __TDESELECT_H__
+#define __TDESELECT_H__
 
 #include <tqwidget.h>
 #include <tqrangecontrol.h>
@@ -369,5 +369,5 @@ private:
 };
 
 
-#endif		// __KSELECT_H__
+#endif		// __TDESELECT_H__
 

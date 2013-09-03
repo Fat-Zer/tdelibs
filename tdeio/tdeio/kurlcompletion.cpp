@@ -215,7 +215,7 @@ void DirectoryListThread::run()
 			}
 		}
 
-		// A trick from KIO that helps performance by a little bit:
+		// A trick from TDEIO that helps performance by a little bit:
 		// chdir to the directroy so we won't have to deal with full paths
 		// with stat()
 
@@ -459,12 +459,12 @@ public:
 	bool replace_home;
 	bool complete_url; // if true completing a URL (i.e. 'prepend' is a URL), otherwise a path
 
-	TDEIO::ListJob *list_job; // kio job to list directories
+	TDEIO::ListJob *list_job; // tdeio job to list directories
 
 	TQString prepend; // text to prepend to listed items
 	TQString compl_text; // text to pass on to TDECompletion
 
-	// Filters for files read with  kio
+	// Filters for files read with  tdeio
 	bool list_urls_only_exe; // true = only list executables
 	bool list_urls_no_hidden;
 	TQString list_urls_filter; // filter for listed files
@@ -667,7 +667,7 @@ TQString KURLCompletion::finished()
 /*
  * isRunning
  *
- * Return true if either a KIO job or the DirLister
+ * Return true if either a TDEIO job or the DirLister
  * is running
  */
 bool KURLCompletion::isRunning() const
@@ -678,7 +678,7 @@ bool KURLCompletion::isRunning() const
 /*
  * stop
  *
- * Stop and delete a running KIO job or the DirLister
+ * Stop and delete a running TDEIO job or the DirLister
  */
 void KURLCompletion::stop()
 {
@@ -1129,7 +1129,7 @@ void KURLCompletion::addMatches( const TQStringList &matches )
  * files, and eventually finished() when the listing is done
  *
  * Returns the match if available, or TQString::null if
- * DirLister timed out or using kio
+ * DirLister timed out or using tdeio
  */
 TQString KURLCompletion::listDirectories(
 		const TQStringList &dirList,
@@ -1141,11 +1141,11 @@ TQString KURLCompletion::listDirectories(
 {
 	assert( !isRunning() );
 
-	if ( !::getenv("KURLCOMPLETION_LOCAL_KIO") ) {
+	if ( !::getenv("KURLCOMPLETION_LOCAL_TDEIO") ) {
 
-		//kdDebug() << "Listing (listDirectories): " << dirList << " filter=" << filter << " without KIO" << endl;
+		//kdDebug() << "Listing (listDirectories): " << dirList << " filter=" << filter << " without TDEIO" << endl;
 
-		// Don't use KIO
+		// Don't use TDEIO
 
 		if ( d->dirListThread )
 			d->dirListThread->requestTermination();
@@ -1172,8 +1172,8 @@ TQString KURLCompletion::listDirectories(
 	}
 	else {
 
-		// Use KIO
-		//kdDebug() << "Listing (listDirectories): " << dirList << " with KIO" << endl;
+		// Use TDEIO
+		//kdDebug() << "Listing (listDirectories): " << dirList << " with TDEIO" << endl;
 
 		TQValueList<KURL*> url_list;
 
@@ -1192,7 +1192,7 @@ TQString KURLCompletion::listDirectories(
 /*
  * listURLs
  *
- * Use KIO to list the given urls
+ * Use TDEIO to list the given urls
  *
  * addMatches() is called with the listed files
  * finished() is called when the listing is done
@@ -1224,7 +1224,7 @@ void KURLCompletion::listURLs(
 /*
  * slotEntries
  *
- * Receive files listed by KIO and call addMatches()
+ * Receive files listed by TDEIO and call addMatches()
  */
 void KURLCompletion::slotEntries(TDEIO::Job*, const TDEIO::UDSEntryList& entries)
 {
@@ -1296,7 +1296,7 @@ void KURLCompletion::slotEntries(TDEIO::Job*, const TDEIO::UDSEntryList& entries
 /*
  * slotIOFinished
  *
- * Called when a KIO job is finished.
+ * Called when a TDEIO job is finished.
  *
  * Start a new list job if there are still urls in
  * d->list_urls, otherwise call finished()
@@ -1320,7 +1320,7 @@ void KURLCompletion::slotIOFinished( TDEIO::Job * job )
 
 		d->list_urls.remove( kurl );
 
-//		kdDebug() << "Start KIO: " << kurl->prettyURL() << endl;
+//		kdDebug() << "Start TDEIO: " << kurl->prettyURL() << endl;
 
 		d->list_job = TDEIO::listDir( *kurl, false );
 		d->list_job->addMetaData("no-auth-prompt", "true");

@@ -382,7 +382,7 @@ bool TDERootSystemDevice::canPowerOff() {
 #else // WITH_CONSOLEKIT
 	// FIXME
 	// Can we power down this system?
-	// This should probably be checked via DCOP and therefore interface with KDM
+	// This should probably be checked via DCOP and therefore interface with TDM
 	if (config->readBoolEntry( "offerShutdown", true )/* && DM().canShutdown()*/) {	// FIXME
 		maysd = true;
 	}
@@ -424,7 +424,7 @@ bool TDERootSystemDevice::canReboot() {
 #else // WITH_CONSOLEKIT
 	// FIXME
 	// Can we power down this system?
-	// This should probably be checked via DCOP and therefore interface with KDM
+	// This should probably be checked via DCOP and therefore interface with TDM
 	if (config->readBoolEntry( "offerShutdown", true )/* && DM().canShutdown()*/) {	// FIXME
 		mayrb = true;
 	}

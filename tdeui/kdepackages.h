@@ -653,7 +653,7 @@ const char * const packages[] = {
 "kimagemapeditor",
 "kimdaba",
 "kinkatta",
-"kio",
+"tdeio",
 "tdeio/audiocd",
 "tdeio/cgi",
 "tdeio/devices",

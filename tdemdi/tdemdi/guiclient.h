@@ -18,8 +18,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef _KMDI_GUICLIENT_H_
-#define _KMDI_GUICLIENT_H_
+#ifndef _TDEMDI_GUICLIENT_H_
+#define _TDEMDI_GUICLIENT_H_
 
 #include <tqobject.h>
 #include <tqguardedptr.h>

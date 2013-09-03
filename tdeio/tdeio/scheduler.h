@@ -234,7 +234,7 @@ namespace TDEIO {
          * Send the slave that was put on hold back to TDELauncher. This
          * allows another process to take over the slave and resume the job
          * the that was started.
-         * Register the mainwindow @p wid with the KIO subsystem
+         * Register the mainwindow @p wid with the TDEIO subsystem
          * Do not call this, it is called automatically from
          * void TDEIO::Job::setWindow(TQWidget*).
 	 * @param wid the window to register

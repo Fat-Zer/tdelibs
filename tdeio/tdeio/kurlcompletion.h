@@ -33,7 +33,7 @@ class KURLCompletionPrivate;
 
 /**
  * This class does completion of URLs including user directories (~user)
- * and environment variables.  Remote URLs are passed to KIO.
+ * and environment variables.  Remote URLs are passed to TDEIO.
  *
  * @short Completion of a single URL
  * @author David Smith <dsmith@algonet.se>
@@ -47,7 +47,7 @@ public:
 	 * Determines how completion is done.
 	 * @li ExeCompletion - executables in $PATH or with full path.
 	 * @li FileCompletion - all files with full path or in dir(), URLs
-	 * are listed using KIO.
+	 * are listed using TDEIO.
 	 * @li DirCompletion - Same as FileCompletion but only returns directories.
 	 */
 	enum Mode { ExeCompletion=1, FileCompletion, DirCompletion, SystemExeCompletion };
@@ -69,12 +69,12 @@ public:
 	/**
 	 * Finds completions to the given text.
 	 *
-	 * Remote URLs are listed with KIO. For performance reasons, local files
-	 * are listed with KIO only if KURLCOMPLETION_LOCAL_KIO is set.
-	 * The completion is done asyncronously if KIO is used.
+	 * Remote URLs are listed with TDEIO. For performance reasons, local files
+	 * are listed with TDEIO only if KURLCOMPLETION_LOCAL_TDEIO is set.
+	 * The completion is done asyncronously if TDEIO is used.
 	 *
 	 * Returns the first match for user, environment, and local dir completion
-	 * and TQString::null for asynchronous completion (KIO or threaded).
+	 * and TQString::null for asynchronous completion (TDEIO or threaded).
 	 *
 	 * @param text the text to complete
 	 * @return the first match, or TQString::null if not found

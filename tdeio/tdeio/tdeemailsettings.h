@@ -25,8 +25,8 @@
  *
  */
 
-#ifndef _KEMAILSETTINGS_H
-#define _KEMAILSETTINGS_H
+#ifndef _TDEEMAILSETTINGS_H
+#define _TDEEMAILSETTINGS_H
 
 #include <tqstring.h>
 #include <tqstringlist.h>

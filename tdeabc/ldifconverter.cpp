@@ -1,5 +1,5 @@
 /*
-    This file is part of libkabc.
+    This file is part of libtdeabc.
     Copyright (c) 2003  Helge Deller <deller@kde.org>
 
     This library is free software; you can redistribute it and/or
@@ -142,7 +142,7 @@ bool LDIFConverter::addresseeToLDIF( const Addressee &addr, TQString &str )
   ldif_out( t, "organization", addr.organization() );
   ldif_out( t, "organizationname", addr.organization() );
 
-  // Compatibility with older kabc versions.
+  // Compatibility with older tdeabc versions.
   if ( !addr.department().isEmpty() )
     ldif_out( t, "department", addr.department() );
   else
@@ -321,7 +321,7 @@ addComment:
     }
     if ( a.url().prettyURL() == KURL(value).prettyURL() )
       return true;
-    // TODO: current version of kabc only supports one URL.
+    // TODO: current version of tdeabc only supports one URL.
     // TODO: change this with KDE 4
   }
 

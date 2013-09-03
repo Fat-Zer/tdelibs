@@ -17,7 +17,7 @@
 //    copyright            : (C) 1999-2003 by Falk Brettschneider
 //                                         and
 //                                         Szymon Stefanek (stefanek@tin.it)
-//    email                :  falkbr@tdevelop.org (Falk Brettschneider)
+//    email                :  falkbr@kdevelop.org (Falk Brettschneider)
 //----------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------
@@ -28,8 +28,8 @@
 //    License, or (at your option) any later version.
 //
 //----------------------------------------------------------------------------
-#ifndef _KMDI_CHILD_VIEW_H_
-#define _KMDI_CHILD_VIEW_H_
+#ifndef _TDEMDI_CHILD_VIEW_H_
+#define _TDEMDI_CHILD_VIEW_H_
 
 #include <tqwidget.h>
 #include <tqpixmap.h>
@@ -610,6 +610,6 @@ inline KMdiChildFrm *KMdiChildView::mdiParent() const
 	return 0L;
 }
 
-#endif //_KMDICHILDVIEW_H_
+#endif //_TDEMDI_CHILD_VIEW_H_
 
 // kate: space-indent off; replace-tabs off; indent-mode csands; tab-width 4;

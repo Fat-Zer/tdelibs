@@ -17,8 +17,8 @@
     the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
     Boston, MA 02110-1301, USA.
 */
-#ifndef KSTDACCEL_H
-#define KSTDACCEL_H
+#ifndef TDESTDACCEL_H
+#define TDESTDACCEL_H
 
 #include <tqstring.h>
 #include <tdeshortcut.h>

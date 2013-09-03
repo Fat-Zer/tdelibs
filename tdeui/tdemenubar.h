@@ -22,8 +22,8 @@
 
 //$Id$
 
-#ifndef _KMENUBAR_H
-#define _KMENUBAR_H
+#ifndef _TDEMENUBAR_H
+#define _TDEMENUBAR_H
 
 #include <tqmenubar.h>
 

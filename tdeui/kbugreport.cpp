@@ -337,7 +337,7 @@ void KBugReport::slotSetFrom()
   m_process = 0;
   m_configureEmail->setEnabled(true);
 
-  // ### KDE4: why oh why is KEmailSettings in kio?
+  // ### KDE4: why oh why is KEmailSettings in tdeio?
   TDEConfig emailConf( TQString::fromLatin1("emaildefaults") );
 
   // find out the default profile

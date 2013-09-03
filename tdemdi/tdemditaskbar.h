@@ -13,7 +13,7 @@
 //    copyright            : (C) 1999-2003 by Falk Brettschneider
 //                                         and
 //                                         Szymon Stefanek (stefanek@tin.it)
-//    email                :  falkbr@tdevelop.org (Falk Brettschneider)
+//    email                :  falkbr@kdevelop.org (Falk Brettschneider)
 //----------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------
@@ -25,8 +25,8 @@
 //
 //----------------------------------------------------------------------------
 
-#ifndef _KMDITASKBAR_H_
-#define _KMDITASKBAR_H_
+#ifndef _TDEMDITASKBAR_H_
+#define _TDEMDITASKBAR_H_
 
 #include <tdetoolbar.h>
 #include <tqptrlist.h>
@@ -214,6 +214,6 @@ private:
 	KMdiTaskBarPrivate *d;
 };
 
-#endif //_KMDITASKBAR_H_ 
+#endif //_TDEMDITASKBAR_H_ 
 // kate: space-indent off; tab-width 4; replace-tabs off; indent-mode csands;
 

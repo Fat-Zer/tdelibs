@@ -30,8 +30,8 @@
 
 using namespace KUnitTest;
 
-KUNITTEST_MODULE( tdeunittest_samplemodule, "Suite1" );
-KUNITTEST_MODULE_REGISTER_TESTER( SampleTester );
+TDEUNITTEST_MODULE( tdeunittest_samplemodule, "Suite1" );
+TDEUNITTEST_MODULE_REGISTER_TESTER( SampleTester );
 
 void SampleTester::allTests()
 {

@@ -9,7 +9,7 @@ INCLUDES = $(all_includes)
 libisofs_la_METASOURCES=AUTO
 
 libisofs_la_SOURCES = isofs.c
-#libisofs_la_LIBADD = $(LIB_KIO)
+#libisofs_la_LIBADD = $(LIB_TDEIO)
 
 #libisofs_la_LDFLAGS = -module $(all_libraries) $(KDE_PLUGIN)
 

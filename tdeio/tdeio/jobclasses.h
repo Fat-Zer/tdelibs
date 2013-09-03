@@ -37,7 +37,7 @@
 class Observer;
 class TQTimer;
 
-#define KIO_COPYJOB_HAS_SETINTERACTIVE // new in 3.4. Used by tdeio_trash.
+#define TDEIO_COPYJOB_HAS_SETINTERACTIVE // new in 3.4. Used by tdeio_trash.
 
 namespace TDEIO {
 
@@ -682,7 +682,7 @@ namespace TDEIO {
     };
 
     /**
-     * A KIO job that retrieves information about a file or directory.
+     * A TDEIO job that retrieves information about a file or directory.
      * @see TDEIO::stat()
      */
     class TDEIO_EXPORT StatJob : public SimpleJob {
@@ -773,7 +773,7 @@ namespace TDEIO {
     };
 
     /**
-     * A KIO job that creates a directory
+     * A TDEIO job that creates a directory
      * @see TDEIO::mkdir()
      * @since 3.3
      */
@@ -1859,7 +1859,7 @@ namespace TDEIO {
     };
 
     /**
-     * A KIO job that finds a local URL
+     * A TDEIO job that finds a local URL
      * @see TDEIO::localURL()
      * @since R14.0.0
      */

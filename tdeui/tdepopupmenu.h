@@ -15,8 +15,8 @@
    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA 02110-1301, USA.
 */
-#ifndef _KPOPUP_H
-#define _KPOPUP_H "$Id$"
+#ifndef _TDEPOPUP_H
+#define _TDEPOPUP_H "$Id$"
 
 #define INCLUDE_MENUITEM_DEF
 

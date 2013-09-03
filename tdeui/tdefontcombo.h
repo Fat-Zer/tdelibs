@@ -18,8 +18,8 @@
 
 // $Id$
 
-#ifndef _KFONTCOMBO_H_
-#define _KFONTCOMBO_H_
+#ifndef _TDEFONTCOMBO_H_
+#define _TDEFONTCOMBO_H_
 
 #include <kcombobox.h>
 

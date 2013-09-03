@@ -13,7 +13,7 @@ static TDECmdLineOptions options[] =
 
 int main ( int argc, char** argv )
 {
-    TDEAboutData aboutData("kpropertiesdialogtest", "KIO Properties Dialog Test", "1.0");
+    TDEAboutData aboutData("kpropertiesdialogtest", "TDEIO Properties Dialog Test", "1.0");
     TDECmdLineArgs::init(argc, argv, &aboutData);
     TDECmdLineArgs::addCmdLineOptions( options );
 

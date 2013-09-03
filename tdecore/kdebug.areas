@@ -7,10 +7,10 @@
 
 125        tdecore (TDEAccel)
 126        tdecore (KURL)
-127        kio (KProtocolInfo)
+127        tdeio (KProtocolInfo)
 128        tdecore (KRegExp)
 129        tdecore (TDEAction)
-130        kio (KPasswdServer)
+130        tdeio (KPasswdServer)
 131        tdecore (TDEAcceleratorManager)
 150        tdecore (KLibLoader)
 160        tdecore (KNotifyClient)
@@ -183,7 +183,7 @@
 5601        kontact (interfaces)
 5602        kontact (plugins)
 5650        tderesources
-5700        kabc
+5700        tdeabc
 5710        tdeabc/vcard
 5720        kaddressbook
 5800        libkcal
@@ -221,44 +221,44 @@
 6210        tdehtml (editor)
 
 # libtdeio
-7000        kio
-7001        kio (KDirWatch)
-7002        kio (Slave)
-7003        kio (KDirLister)
-7004        kio (KDirListerCache)
-7005        kio (Filter)
-7006        kio (Scheduler)
-7007        kio (TDEIOJob)
-7009        kio (KMimeType)
-7010        kio (KRun)
-7011        kio (KSycoca)
-7012        kio (KService*)
-7013        kio (KPing)
-7014        kio (TDETrader)
-7015        kio (KAutoMount)
-7016        kio (TDELauncher)
-7017        kio (KIOConnection)
-7018        kio (KMimeMagic)
-7019        kio (tdeioslave)
+7000        tdeio
+7001        tdeio (KDirWatch)
+7002        tdeio (Slave)
+7003        tdeio (KDirLister)
+7004        tdeio (KDirListerCache)
+7005        tdeio (Filter)
+7006        tdeio (Scheduler)
+7007        tdeio (TDEIOJob)
+7009        tdeio (KMimeType)
+7010        tdeio (KRun)
+7011        tdeio (KSycoca)
+7012        tdeio (KService*)
+7013        tdeio (KPing)
+7014        tdeio (TDETrader)
+7015        tdeio (KAutoMount)
+7016        tdeio (TDELauncher)
+7017        tdeio (KIOConnection)
+7018        tdeio (KMimeMagic)
+7019        tdeio (tdeioslave)
 7020        kded
 7021        tdebuildsycoca
 7022        kurifilter
 7023        kurifilter (plugins)
-7024        kio (UIServer)
+7024        tdeio (UIServer)
 7025        kpac
-7026        kio (KShred)
-7027        kio (TCPSlaveBase)
-7028        kio (Observer)
+7026        tdeio (KShred)
+7027        tdeio (TCPSlaveBase)
+7028        tdeio (Observer)
 7029        kssl
-7030        kio (KEMailSettings)
+7030        tdeio (KEMailSettings)
 7031        KImageIO
-7032        kio (KURLCompletion)
+7032        tdeio (KURLCompletion)
 7033        KFileMetaInfo
 7034        KFileMetainfo (plugins)
 7040        KZip
 7041        KTar
 7042        KAr
-7043        kio (bookmarks)
+7043        tdeio (bookmarks)
 
 # 71xx      are for tdeioslaves
 7101        tdeio_file

@@ -19,7 +19,7 @@
 
 
 // KSimpleDirWatch is a basic copy of KDirWatch
-// but with the KIO linking requirement removed
+// but with the TDEIO linking requirement removed
 
 #include <config.h>
 #include <errno.h>

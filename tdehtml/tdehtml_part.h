@@ -270,7 +270,7 @@ public:
 
   /**
    * Called when a certain error situation (i.e. connection timed out) occurred.
-   * The default implementation either shows a KIO error dialog or loads a more
+   * The default implementation either shows a TDEIO error dialog or loads a more
    * verbose error description a as page, depending on the users configuration.
    * @p job is the job that signaled the error situation
    */
@@ -1118,8 +1118,8 @@ protected:
 
   /**
    * presents a detailed error message to the user.
-   * @p errorCode kio error code, eg TDEIO::ERR_SERVER_TIMEOUT.
-   * @p text kio additional information text.
+   * @p errorCode tdeio error code, eg TDEIO::ERR_SERVER_TIMEOUT.
+   * @p text tdeio additional information text.
    * @p url the url that triggered the error.
    */
   void htmlError( int errorCode, const TQString& text, const KURL& reqUrl );

@@ -17,8 +17,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef __KSHORTCUTLIST_H
-#define __KSHORTCUTLIST_H
+#ifndef __TDESHORTCUTLIST_H
+#define __TDESHORTCUTLIST_H
 
 #include <tqglobal.h>	// For uint
 #include <tqstring.h>
@@ -292,4 +292,4 @@ class TDECORE_EXPORT ShortcutList : public TDEShortcutList
 };
 }
 
-#endif // __KSHORTCUTLIST_H
+#endif // __TDESHORTCUTLIST_H

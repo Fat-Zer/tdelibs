@@ -29,7 +29,7 @@ namespace TDEIO {
 /**
  * A dialog for requesting a login and a password from the end user.
  *
- * KIO-Slave authors are encouraged to use SlaveBase::openPassDlg
+ * TDEIO-Slave authors are encouraged to use SlaveBase::openPassDlg
  * instead of directly instantiating this dialog.
  * @short dialog for requesting login and password from the end user
  */

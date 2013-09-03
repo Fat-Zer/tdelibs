@@ -1,5 +1,5 @@
-#ifndef _KACTIONSHORTCUTLIST_H
-#define _KACTIONSHORTCUTLIST_H
+#ifndef _TDEACTIONSHORTCUTLIST_H
+#define _TDEACTIONSHORTCUTLIST_H
 
 #include <tdeshortcutlist.h>
 #include <tdeaction.h>
@@ -76,4 +76,4 @@ class TDEUI_EXPORT TDEActionPtrShortcutList : public TDEShortcutList
 	TDEAccelShortcutListPrivate* d;
 };
 
-#endif // !_KACTIONSHORTCUTLIST_H
+#endif // !_TDEACTIONSHORTCUTLIST_H

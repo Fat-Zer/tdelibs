@@ -20,7 +20,7 @@
 	* - <a target="_top" href="kjs/html/index.html"><b>kjs</b></a>
         *   (<a target="_top" href="kjs/html/classes.html">classes</a>)\n
 	*   <i>Javascript (aka. ECMAScript and JScript) support.</i>
-	* - <a target="_top" href="tdeio/html/index.html"><b>kio</b></a>
+	* - <a target="_top" href="tdeio/html/index.html"><b>tdeio</b></a>
         *   (<a target="_top" href="tdeio/tdeio/html/classes.html">classes</a>)\n
 	*   <i>Low level access to network files. Also provides access to facilities
 	*   such as KDirWatcher which monitors directories for changes.</i>
@@ -49,7 +49,7 @@
         *   (<a target="_top" href="interfaces/html/classes.html">classes</a>)\n
 	*   <i>Defines interfaces for common components so that new implementations
 	*   can be dropped in.</i>
-	* - <a target="_top" href="tdeabc/html/index.html"><b>kabc</b></a>
+	* - <a target="_top" href="tdeabc/html/index.html"><b>tdeabc</b></a>
         *   (<a target="_top" href="tdeabc/html/classes.html">classes</a>)\n
 	*   <i>Access to the Trinity address book.</i>
 	* - <a target="_top" href="tderesources/html/index.html"><b>tderesources</b></a>

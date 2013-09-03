@@ -16,8 +16,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef _LIBKRSYNC_H
-#define _LIBKRSYNC_H
+#ifndef _LIBTDERSYNC_H
+#define _LIBTDERSYNC_H
 
 #include <tqmap.h>
 #include <tqstringlist.h>

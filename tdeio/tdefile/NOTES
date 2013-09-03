@@ -48,7 +48,7 @@ KFileView's requests to KDirLister's methods.
 
 This class inherits from KFileChooserWidget and adds the file management
 operations. It uses a KFileOperations class (taken from the current
-KonqOperations) for all KIO operations, and it uses KFileUndo, taken from
+KonqOperations) for all TDEIO operations, and it uses KFileUndo, taken from
 the KonqUndo stuff. The popupMenu method is reimplemented to add those
 operations to it.
 

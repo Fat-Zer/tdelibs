@@ -1,5 +1,5 @@
 /*
-    This file is part of libkabc.
+    This file is part of libtdeabc.
     Copyright (c) 2001 Cornelius Schumacher <schumacher@kde.org>
 
     This library is free software; you can redistribute it and/or
@@ -292,7 +292,7 @@ void importKab( TDEABC::AddressBook *ab, bool override, bool quiet )
   }
 
   kdDebug(5700) << "Converting old-style kab addressbook to "
-               "new-style kabc addressbook." << endl;
+               "new-style tdeabc addressbook." << endl;
 
   KabAPI kab( 0 );
   if ( kab.init() != ::AddressBook::NoError ) {
@@ -463,14 +463,14 @@ int main( int argc, char **argv )
     config->writeEntry( "EnableAutostart", false );
   }
 
-  TDEABC::AddressBook *kabcBook = StdAddressBook::self();
+  TDEABC::AddressBook *tdeabcBook = StdAddressBook::self();
 
-  importKMailAddressBook( kabcBook );
+  importKMailAddressBook( tdeabcBook );
 
-  importKab( kabcBook, override, quiet );
+  importKab( tdeabcBook, override, quiet );
 
   StdAddressBook::save();
 
-  kdDebug(5700) << "Saved kabc addressbook to '" << kabcBook->identifier() << "'" << endl;
+  kdDebug(5700) << "Saved tdeabc addressbook to '" << tdeabcBook->identifier() << "'" << endl;
 }
 

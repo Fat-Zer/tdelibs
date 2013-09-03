@@ -4,7 +4,7 @@ include( $(KDELIBS)/win/common.pro )
 
 
 # needed to export library classes:
-DEFINES += MAKE_KPARTS_LIB
+DEFINES += MAKE_TDEPARTS_LIB
 
 TARGET		= tdeparts$$KDEBUG
 

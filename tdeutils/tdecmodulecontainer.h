@@ -17,8 +17,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef KCMODULECONTAINER_H
-#define KCMODULECONTAINER_H
+#ifndef TDECMODULECONTAINER_H
+#define TDECMODULECONTAINER_H
 
 #include <tqvaluelist.h>
 #include <tqstring.h>
@@ -50,7 +50,7 @@ class TDECModuleProxy;
  * @author Frans Englich <frans.englich@telia.com>
  * @since 3.4
  */
-class KUTILS_EXPORT TDECModuleContainer : public TDECModule
+class TDEUTILS_EXPORT TDECModuleContainer : public TDECModule
 {
 	Q_OBJECT
 	public:
@@ -203,5 +203,5 @@ extern "C" \
 	} \
 }
 
-#endif // KCMODULECONTAINER_H
+#endif // TDECMODULECONTAINER_H
 

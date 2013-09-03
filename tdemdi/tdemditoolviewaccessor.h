@@ -18,8 +18,8 @@
 //    License, or (at your option) any later version.
 //
 //----------------------------------------------------------------------------
-#ifndef _KMDITOOLVIEWACCESSOR_H_
-#define _KMDITOOLVIEWACCESSOR_H_
+#ifndef _TDEMDITOOLVIEWACCESSOR_H_
+#define _TDEMDITOOLVIEWACCESSOR_H_
 
 #include <tqwidget.h>
 #include <tqpixmap.h>
@@ -81,6 +81,6 @@ protected:
 };
 
 
-#endif //_KMDITOOLVIEWACCESSOR_H_ 
+#endif //_TDEMDITOOLVIEWACCESSOR_H_ 
 // kate: space-indent off; tab-width 4; replace-tabs off; indent-mode csands;
 

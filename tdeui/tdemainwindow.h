@@ -18,8 +18,8 @@
 
 */
 
-#ifndef KMAINWINDOW_H
-#define KMAINWINDOW_H
+#ifndef TDEMAINWINDOW_H
+#define TDEMAINWINDOW_H
 
 #include "kxmlguifactory.h"
 #include "kxmlguiclient.h"

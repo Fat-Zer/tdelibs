@@ -166,6 +166,6 @@ dummy.cpp:
 	echo "}" >> dummy.cpp
 	echo "#endif" >> dummy.cpp
 
-DOXYGEN_REFERENCES = tdecore tdefx dcop kio tdeutils
+DOXYGEN_REFERENCES = tdecore tdefx dcop tdeio tdeutils
 DOXYGEN_SET_INTERNAL_DOCS = YES
 include ../admin/Doxyfile.am

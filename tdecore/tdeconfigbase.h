@@ -20,8 +20,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef _KCONFIGBASE_H
-#define _KCONFIGBASE_H
+#ifndef _TDECONFIGBASE_H
+#define _TDECONFIGBASE_H
 
 #include <tqobject.h>
 #include <tqcolor.h>

@@ -18,7 +18,7 @@ libconnectionmanager_la_SOURCES = connectionmanager.cpp networkstatusindicator.c
 kded_networkstatus_la_SOURCES = networkstatus.cpp networkstatus.skel \
 	clientiface.skel serviceiface.skel network.cpp
 #kclientiface.skel serviceiface.skel
-kded_networkstatus_la_LIBADD = $(LIB_TDECORE) $(LIB_KIO) ./libnetworkstatus.la
+kded_networkstatus_la_LIBADD = $(LIB_TDECORE) $(LIB_TDEIO) ./libnetworkstatus.la
 kded_networkstatus_la_LDFLAGS = $(all_libraries) -module -avoid-version 
 
 servicesdir = $(kde_servicesdir)/kded

@@ -64,7 +64,7 @@ KPlayObject *KPlayObjectFactory::createPlayObject(const KURL& url, bool createBU
 
 KPlayObject *KPlayObjectFactory::createPlayObject(const KURL& _url, const TQString &mimetype, bool createBUS)
 {
-	// WHY DOES BROKEN KIO_MEDIA GIVE WRONG URLS?
+	// WHY DOES BROKEN TDEIO_MEDIA GIVE WRONG URLS?
 	// I hate it
 	// I hate it
 	// It sucks
@@ -135,7 +135,7 @@ KDE::PlayObject *KDE::PlayObjectFactory::createPlayObject(const KURL& url, bool 
 
 KDE::PlayObject *KDE::PlayObjectFactory::createPlayObject(const KURL& _url, const TQString &mimetype, bool createBUS)
 {
-	// WHY DOES BROKEN KIO_MEDIA GIVE WRONG URLS?
+	// WHY DOES BROKEN TDEIO_MEDIA GIVE WRONG URLS?
 	// I hate it
 	// I hate it
 	// It sucks

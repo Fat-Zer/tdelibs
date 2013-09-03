@@ -171,7 +171,7 @@ A. progress handling
 ---------------------
 There will be two ways how the application can display progress :
 
-1. regular apps will use NetAccess for all kio operations and will not  care
+1. regular apps will use NetAccess for all tdeio operations and will not  care
     about progress handling :
  - NetAccess creates Job
  - NetAccess creates JobObserver that will connect to the Job's signals and

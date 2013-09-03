@@ -6,5 +6,5 @@ INCLUDES=	-I$(srcdir)/../.. $(all_includes)
 check_PROGRAMS = tdelaunchertest
 
 tdelaunchertest_SOURCES = tdelaunchertest.cpp 
-tdelaunchertest_LDADD   = $(LIB_KIO)
+tdelaunchertest_LDADD   = $(LIB_TDEIO)
 

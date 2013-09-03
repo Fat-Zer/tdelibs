@@ -288,7 +288,7 @@ protected:
  *   - <tt>('KParts/ReadOnlyPart' in ServiceTypes) and ('text/plain' in ServiceTypes)</tt>@n
  *     All read-only KParts that handle the mime type 'text/plain'.
  *
- * @author Bernd Gehrmann <a href="mailto:bernd@tdevelop.org">bernd@tdevelop.org</a>
+ * @author Bernd Gehrmann <a href="mailto:bernd@kdevelop.org">bernd@kdevelop.org</a>
 */
 
 

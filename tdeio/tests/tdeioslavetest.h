@@ -9,8 +9,8 @@
   LGPL version 2.
  */
 
-#ifndef _KIOSLAVETEST_H
-#define _KIOSLAVETEST_H
+#ifndef _TDEIOSLAVETEST_H
+#define _TDEIOSLAVETEST_H
 
 #include <tqlabel.h>
 #include <tqlineedit.h>
@@ -105,4 +105,4 @@ private:
   TDEIO::Slave *slave;
 };
 
-#endif // _KIOSLAVETEST_H
+#endif // _TDEIOSLAVETEST_H

@@ -12,7 +12,7 @@ noinst_HEADERS = kjavaappletwidget.h kqeventutil.h kxeventutil.h \
 METASOURCES = AUTO
 
 libkjava_la_LDFLAGS = $(KDE_MT_LDFLAGS) -no-undefined
-libkjava_la_LIBADD = $(LIB_KPARTS)
+libkjava_la_LIBADD = $(LIB_TDEPARTS)
 
 INCLUDES = -I$(top_srcdir) -I$(top_srcdir)/tdehtml \
 	-I$(top_srcdir)/tdeio/kssl -I$(top_builddir)/tdeio/kssl \
@@ -32,6 +32,6 @@ kjavaappletviewer_la_SOURCES= kjavaapplet.cpp kjavaappletcontext.cpp \
         kjavadownloader.cpp kjavaappletviewer.cpp
 
 kjavaappletviewer_la_LDFLAGS= $(all_libraries) -module $(KDE_PLUGIN)
-kjavaappletviewer_la_LIBADD= $(LIB_KPARTS) $(LIB_QT) $(LIB_TDEUI) $(LIB_TDECORE) $(LIB_TDEFILE) $(top_builddir)/dcop/libDCOP.la
+kjavaappletviewer_la_LIBADD= $(LIB_TDEPARTS) $(LIB_QT) $(LIB_TDEUI) $(LIB_TDECORE) $(LIB_TDEFILE) $(top_builddir)/dcop/libDCOP.la
 
 kde_services_DATA= kjavaappletviewer.desktop

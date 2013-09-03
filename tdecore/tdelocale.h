@@ -19,8 +19,8 @@
     the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
     Boston, MA 02110-1301, USA.
 */
-#ifndef _KLOCALE_H
-#define _KLOCALE_H
+#ifndef _TDELOCALE_H
+#define _TDELOCALE_H
 
 #include <tqstring.h>
 #include <tdelibs_export.h>
@@ -1188,7 +1188,7 @@ private:
   void initFormat(TDEConfig *config);
   
   /**
-   * @internal Initializes the catalogs appname, tdelibs and kio for all chosen languages.
+   * @internal Initializes the catalogs appname, tdelibs and tdeio for all chosen languages.
    *
    * @param config The configuration object used for init
    * @param useEnv True if we should use environment variables

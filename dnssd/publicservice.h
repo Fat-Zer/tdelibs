@@ -58,7 +58,7 @@ service->publishAsync();
 @author Jakub Stachowski
  */
 
-class KDNSSD_EXPORT PublicService : public TQObject, public ServiceBase
+class TDEDNSSD_EXPORT PublicService : public TQObject, public ServiceBase
 {
 	Q_OBJECT
 public:

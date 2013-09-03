@@ -39,7 +39,7 @@ class ConfigWidget;
  
   The KDE Resource framework can be used to manage resources of
   different types, organized in families. The Resource framework
-  is for example used for addressbook resources in libkabc and for
+  is for example used for addressbook resources in libtdeabc and for
   calendar resources in libkcal.
  
   When you want to use the framework for a new family, you need to

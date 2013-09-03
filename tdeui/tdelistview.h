@@ -17,8 +17,8 @@
    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA 02110-1301, USA.
 */
-#ifndef KLISTVIEW_H
-#define KLISTVIEW_H
+#ifndef TDELISTVIEW_H
+#define TDELISTVIEW_H
 
 #include <tqheader.h>
 #include <tqlistview.h>

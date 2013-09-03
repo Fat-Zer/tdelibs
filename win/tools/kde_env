@@ -14,7 +14,7 @@ fi
 
 # Generic settings
 export KDELIBS=$KDEWIN\\tdelibs  # KDElibs/win32 source directory
-export INCLUDE="$KDELIBS\\win;$KDELIBS;$KDELIBS\\tdecore;$KDELIBS\\tdefx;$KDELIBS\\tdeprint;$KDELIBS\\tdeui;$KDELIBS\\tdemdi;$KDELIBS\\dcop;$KDELIBS\\kio;$KDELIBS\\kio\\kio;$KDELIBS\\kio\\tdefile;$INCLUDE"
+export INCLUDE="$KDELIBS\\win;$KDELIBS;$KDELIBS\\tdecore;$KDELIBS\\tdefx;$KDELIBS\\tdeprint;$KDELIBS\\tdeui;$KDELIBS\\tdemdi;$KDELIBS\\dcop;$KDELIBS\\tdeio;$KDELIBS\\tdeio\\tdeio;$KDELIBS\\tdeio\\tdefile;$INCLUDE"
 
 # Version information for binaries
 # We're changing this from time to time

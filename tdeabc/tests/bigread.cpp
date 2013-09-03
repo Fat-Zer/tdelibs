@@ -24,7 +24,7 @@ int main(int argc,char **argv)
   
   AddressBook ab; 
    
-  ResourceFile r( "my.kabc", "vcard2" );
+  ResourceFile r( "my.tdeabc", "vcard2" );
   ab.addResource( &r );
 
 #if 0  

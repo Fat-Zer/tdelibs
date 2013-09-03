@@ -18,18 +18,18 @@
 #    Boston, MA 02110-1301, USA.
 
 
-COMPILE_FIRST = dcop libltdl tdefx tdecore tdeunittest tdeui tdesu kjs tdewallet kio kded kded_post
+COMPILE_FIRST = dcop libltdl tdefx tdecore tdeunittest tdeui tdesu kjs tdewallet tdeio kded kded_post
 COMPILE_BEFORE_doc = kdoctools
 COMPILE_AFTER_tdeparts = tdespell2 tdemdi tdeprint tdeinit kate interfaces tdecert tdehtml tderandr
 COMPILE_AFTER_tdeprint = kate tdehtml
 COMPILE_BEFORE_tdehtml = tdeutils
-COMPILE_BEFORE_kabc = kab tderesources
+COMPILE_BEFORE_tdeabc = kab tderesources
 COMPILE_BEFORE_kate = interfaces tdeutils
 COMPILE_BEFORE_tdemdi = tdeutils
 COMPILE_BEFORE_tdespell2 = tdeutils
 COMPILE_BEFORE_tdecmshell = tdeutils
-COMPILE_BEFORE_kdewidgets = kabc tdehtml
-COMPILE_BEFORE_interfaces = arts kabc
+COMPILE_BEFORE_kdewidgets = tdeabc tdehtml
+COMPILE_BEFORE_interfaces = arts tdeabc
 
 $(top_srcdir)/acinclude.m4: $(top_srcdir)/libltdl/ltdl.m4
 

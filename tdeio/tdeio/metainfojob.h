@@ -27,9 +27,9 @@
 
 namespace TDEIO {
     /**
-     * MetaInfoJob is a KIO Job to retrieve meta information from files.
+     * MetaInfoJob is a TDEIO Job to retrieve meta information from files.
      * 
-     * @short KIO Job to retrieve meta information from files.
+     * @short TDEIO Job to retrieve meta information from files.
      * @since 3.1
      */
     class TDEIO_EXPORT MetaInfoJob : public TDEIO::Job

@@ -24,7 +24,7 @@
 
 /**
  * @internal
- * Allows KIO classes to display dialog boxes with the correct
+ * Allows TDEIO classes to display dialog boxes with the correct
  * theme/style even in non-GUI apps like kded and kfmclient
  */
 class TDEIO_EXPORT KMessageBoxWrapper : public KMessageBox

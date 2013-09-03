@@ -18,8 +18,8 @@
  *  the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  *  Boston, MA 02110-1301, USA.
  */
-#ifndef KCONFIGDIALOGMANAGER_H
-#define KCONFIGDIALOGMANAGER_H
+#ifndef TDECONFIGDIALOGMANAGER_H
+#define TDECONFIGDIALOGMANAGER_H
 
 #include <tqobject.h>
 #include <tqptrlist.h>
@@ -232,5 +232,5 @@ private:
 
 };
 
-#endif // KCONFIGDIALOGMANAGER_H
+#endif // TDECONFIGDIALOGMANAGER_H
 

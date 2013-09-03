@@ -128,7 +128,7 @@ bool KURLDrag::decode( const TQMimeSource *e, KURL::List &uris, TQMap<TQString,T
 {
     if ( decode( e, uris ) ) // first decode the URLs (see above)
     {
-        TQByteArray ba = e->encodedData( "application/x-kio-metadata" );
+        TQByteArray ba = e->encodedData( "application/x-tdeio-metadata" );
         if ( ba.size() )
         {
             TQString s = ba.data();
@@ -175,7 +175,7 @@ const char * KURLDrag::format( int i ) const
     if ( i == 0 )
         return "text/uri-list";
     else if ( i == 1 )
-        return "application/x-kio-metadata";
+        return "application/x-tdeio-metadata";
     if ( d && d->m_exportAsText == false )
         return 0;
     if ( i == 2 )
@@ -230,7 +230,7 @@ TQByteArray KURLDrag::encodedData( const char* mime ) const
         a.resize( s.length());
         memcpy( a.data(), s.data(), s.length());
     }
-    else if ( mimetype == "application/x-kio-metadata" )
+    else if ( mimetype == "application/x-tdeio-metadata" )
     {
         if ( !m_metaData.isEmpty() )
         {

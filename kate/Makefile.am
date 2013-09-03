@@ -6,6 +6,6 @@ messages:
 	$(EXTRACTATTR) --attr=language,name,Language --attr="language,section,Language Section" data/*.xml >> rc.cpp
 	$(XGETTEXT) `find . -name "*.cpp"` part/*.h -o $(podir)/katepart.pot
 
-DOXYGEN_REFERENCES = tdecore dcop kio tdeui tdeparts
+DOXYGEN_REFERENCES = tdecore dcop tdeio tdeui tdeparts
 include ../admin/Doxyfile.am
 

@@ -17,8 +17,8 @@
  *  the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  *  Boston, MA 02110-1301, USA.
  */
-#ifndef KILEMETAINFO_H
-#define KILEMETAINFO_H
+#ifndef TDEFILEMETAINFO_H
+#define TDEFILEMETAINFO_H
 
 /* Hack for HPUX: Namespace pollution
    m_unit is a define in <sys/sysmacros.h> */
@@ -1735,4 +1735,4 @@ TDEIO_EXPORT TQDataStream& operator <<(TQDataStream& s, const KFileMetaInfo& );
 TDEIO_EXPORT TQDataStream& operator >>(TQDataStream& s, KFileMetaInfo& );
 
 
-#endif // KILEMETAINFO_H
+#endif // TDEFILEMETAINFO_H

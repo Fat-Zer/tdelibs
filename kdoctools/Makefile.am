@@ -11,11 +11,11 @@ libkbzipfilter_dummy_la_SOURCES = kbzip2filter.cpp
 kde_module_LTLIBRARIES = tdeio_help.la tdeio_ghelp.la
 
 tdeio_help_la_SOURCES = tdeio_help.cpp main.cpp xslt.cpp
-tdeio_help_la_LIBADD = $(LIBXSLT_LIBS) $(LIBXML_LIBS)  libkbzipfilter_dummy.la $(LIB_KIO) $(LIBBZ2) $(LIB_QT) $(LIB_TDECORE)
+tdeio_help_la_LIBADD = $(LIBXSLT_LIBS) $(LIBXML_LIBS)  libkbzipfilter_dummy.la $(LIB_TDEIO) $(LIBBZ2) $(LIB_QT) $(LIB_TDECORE)
 tdeio_help_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
 
 tdeio_ghelp_la_SOURCES = tdeio_help.cpp main_ghelp.cpp xslt.cpp
-tdeio_ghelp_la_LIBADD = $(LIBXSLT_LIBS) $(LIBXML_LIBS) libkbzipfilter_dummy.la $(LIB_KIO) $(LIBBZ2) $(LIB_QT) $(LIB_TDECORE)
+tdeio_ghelp_la_LIBADD = $(LIBXSLT_LIBS) $(LIBXML_LIBS) libkbzipfilter_dummy.la $(LIB_TDEIO) $(LIBBZ2) $(LIB_QT) $(LIB_TDECORE)
 tdeio_ghelp_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
 
 noinst_HEADERS = tdeio_help.h
@@ -24,7 +24,7 @@ kdelnk_DATA = help.protocol ghelp.protocol
 kdelnkdir = $(kde_servicesdir)
 
 bin_PROGRAMS = meinproc 
-meinproc_LDADD = xslt_pure.o libkbzipfilter_dummy.la $(LIBXSLT_LIBS) $(LIBXML_LIBS) $(LIB_KIO) $(LIBBZ2) $(LIB_TDECORE)
+meinproc_LDADD = xslt_pure.o libkbzipfilter_dummy.la $(LIBXSLT_LIBS) $(LIBXML_LIBS) $(LIB_TDEIO) $(LIBBZ2) $(LIB_TDECORE)
 meinproc_SOURCES = meinproc.cpp
 
 xslt_pure.o: xslt.cpp

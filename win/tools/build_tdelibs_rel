@@ -46,10 +46,10 @@ tdefx \
 tdecore \
 tdeui \
 tdestyles/thinkeramik/widget-engine \
-kio \
+tdeio \
 tderesources \
 tdeabc/vcard \
-kabc \
+tdeabc \
 tdeutils \
 tdeparts \
 tdemdi \

@@ -16,8 +16,8 @@
     the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
     Boston, MA 02110-1301, USA.
 */
-#ifndef _KMESSAGEBOX_H_
-#define _KMESSAGEBOX_H_
+#ifndef _TDEMESSAGEBOX_H_
+#define _TDEMESSAGEBOX_H_
 
 #include <tqstring.h>
 #include <tqmessagebox.h>

@@ -17,8 +17,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef _KMDI_DOCK_CONTAINER_
-#define _KMDI_DOCK_CONTAINER_
+#ifndef _TDEMDI_DOCK_CONTAINER_
+#define _TDEMDI_DOCK_CONTAINER_
 
 #include <tqwidget.h>
 #include <tqstringlist.h>

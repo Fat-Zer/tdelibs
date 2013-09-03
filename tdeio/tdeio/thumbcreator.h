@@ -51,7 +51,7 @@ class TQImage;
  * INCLUDES = $(all_includes)
  * kde_module_LTLIBRARIES = yourthumbcreator.la
  * yourthumbcreator_la_SOURCES = yourthumbcreator.cpp
- * yourthumbcreator_la_LIBADD = $(LIB_KIO)
+ * yourthumbcreator_la_LIBADD = $(LIB_TDEIO)
  * yourthumbcreator_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
  * kde_services_DATA = yourthumbcreator.desktop
  * \endcode

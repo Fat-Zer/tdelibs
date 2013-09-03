@@ -46,7 +46,7 @@ namespace KParts
  * You should also install a "plugin info" .desktop file with the same name.
  * \see PluginInfo
  */
-class KPARTS_EXPORT Plugin : public TQObject, virtual public KXMLGUIClient
+class TDEPARTS_EXPORT Plugin : public TQObject, virtual public KXMLGUIClient
 {
     Q_OBJECT
 public:

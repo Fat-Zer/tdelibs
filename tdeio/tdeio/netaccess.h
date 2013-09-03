@@ -52,9 +52,9 @@ namespace TDEIO {
    * namespace for static functions, though an instance of the class
    * is built for internal purposes.
    *
-   * Port to kio done by David Faure, faure@kde.org
+   * Port to tdeio done by David Faure, faure@kde.org
    *
-   * @short Provides an easy, synchronous interface to KIO file operations.
+   * @short Provides an easy, synchronous interface to TDEIO file operations.
    */
 class TDEIO_EXPORT NetAccess : public TQObject
 {

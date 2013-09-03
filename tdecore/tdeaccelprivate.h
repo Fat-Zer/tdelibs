@@ -1,5 +1,5 @@
-#ifndef __KACCELPRIVATE_H
-#define __KACCELPRIVATE_H
+#ifndef __TDEACCELPRIVATE_H
+#define __TDEACCELPRIVATE_H
 
 #include "kkeyserver_x11.h"
 #include <tqtimer.h>
@@ -50,4 +50,4 @@ class TDECORE_EXPORT TDEAccelPrivate : public TQObject, public TDEAccelBase
 	bool eventFilter( TQObject* pWatched, TQEvent* pEvent ); // virtual method from QObject
 };
 
-#endif // !__KACCELPRIVATE_H
+#endif // !__TDEACCELPRIVATE_H

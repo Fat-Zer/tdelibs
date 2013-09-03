@@ -65,8 +65,8 @@ using namespace TDEIO;
 template class TQPtrList<TQValueList<UDSAtom> >;
 typedef TQValueList<TQCString> AuthKeysList;
 typedef TQMap<TQString,TQCString> AuthKeysMap;
-#define KIO_DATA TQByteArray data; TQDataStream stream( data, IO_WriteOnly ); stream
-#define KIO_FILESIZE_T(x) (unsigned long)(x & 0xffffffff) << (unsigned long)(x >> 32)
+#define TDEIO_DATA TQByteArray data; TQDataStream stream( data, IO_WriteOnly ); stream
+#define TDEIO_FILESIZE_T(x) (unsigned long)(x & 0xffffffff) << (unsigned long)(x >> 32)
 
 namespace TDEIO {
 
@@ -329,7 +329,7 @@ void SlaveBase::dispatchLoop()
        }
     }
 #else
-#error The KIO slave system only works under UNIX
+#error The TDEIO slave system only works under UNIX
 #endif
 }
 
@@ -390,7 +390,7 @@ TDEConfigBase *SlaveBase::config()
 
 void SlaveBase::sendMetaData()
 {
-   KIO_DATA << mOutgoingMetaData;
+   TDEIO_DATA << mOutgoingMetaData;
 
    slaveWriteError = false;
    m_pConnection->send( INF_META_DATA, data );
@@ -430,7 +430,7 @@ void SlaveBase::error( int _errid, const TQString &_text )
 {
     mIncomingMetaData.clear(); // Clear meta data
     mOutgoingMetaData.clear();
-    KIO_DATA << (TQ_INT32) _errid << _text;
+    TDEIO_DATA << (TQ_INT32) _errid << _text;
 
     m_pConnection->send( MSG_ERROR, data );
     //reset
@@ -468,7 +468,7 @@ void SlaveBase::slaveStatus( const TQString &host, bool connected )
 {
     pid_t pid = getpid();
     TQ_INT8 b = connected ? 1 : 0;
-    KIO_DATA << pid << mProtocol << host << b;
+    TDEIO_DATA << pid << mProtocol << host << b;
     if (d->onHold)
        stream << d->onHoldUrl;
     m_pConnection->send( MSG_SLAVE_STATUS, data );
@@ -481,7 +481,7 @@ void SlaveBase::canResume()
 
 void SlaveBase::totalSize( TDEIO::filesize_t _bytes )
 {
-    KIO_DATA << KIO_FILESIZE_T(_bytes);
+    TDEIO_DATA << TDEIO_FILESIZE_T(_bytes);
     slaveWriteError = false;
     m_pConnection->send( INF_TOTAL_SIZE, data );
     if (slaveWriteError) exit();
@@ -519,7 +519,7 @@ void SlaveBase::processedSize( TDEIO::filesize_t _bytes )
     }
 
     if( emitSignal ) {
-        KIO_DATA << KIO_FILESIZE_T(_bytes);
+        TDEIO_DATA << TDEIO_FILESIZE_T(_bytes);
         slaveWriteError = false;
         m_pConnection->send( INF_PROCESSED_SIZE, data );
             if (slaveWriteError) exit();
@@ -539,7 +539,7 @@ void SlaveBase::processedPercent( float /* percent */ )
 
 void SlaveBase::speed( unsigned long _bytes_per_second )
 {
-    KIO_DATA << (TQ_UINT32) _bytes_per_second;
+    TDEIO_DATA << (TQ_UINT32) _bytes_per_second;
     slaveWriteError = false;
     m_pConnection->send( INF_SPEED, data );
     if (slaveWriteError) exit();
@@ -547,7 +547,7 @@ void SlaveBase::speed( unsigned long _bytes_per_second )
 
 void SlaveBase::redirection( const KURL& _url )
 {
-    KIO_DATA << _url;
+    TDEIO_DATA << _url;
     m_pConnection->send( INF_REDIRECTION, data );
 }
 
@@ -578,10 +578,10 @@ void SlaveBase::mimeType( const TQString &_type)
     if (!mOutgoingMetaData.isEmpty())
     {
       // kdDebug(7019) << "(" << getpid() << ") mimeType: emitting meta data" << endl;
-      KIO_DATA << mOutgoingMetaData;
+      TDEIO_DATA << mOutgoingMetaData;
       m_pConnection->send( INF_META_DATA, data );
     }
-    KIO_DATA << _type;
+    TDEIO_DATA << _type;
     m_pConnection->send( INF_MIME_TYPE, data );
     while(true)
     {
@@ -613,19 +613,19 @@ void SlaveBase::exit()
 
 void SlaveBase::warning( const TQString &_msg)
 {
-    KIO_DATA << _msg;
+    TDEIO_DATA << _msg;
     m_pConnection->send( INF_WARNING, data );
 }
 
 void SlaveBase::infoMessage( const TQString &_msg)
 {
-    KIO_DATA << _msg;
+    TDEIO_DATA << _msg;
     m_pConnection->send( INF_INFOMESSAGE, data );
 }
 
 bool SlaveBase::requestNetwork(const TQString& host)
 {
-    KIO_DATA << host << d->slaveid;
+    TDEIO_DATA << host << d->slaveid;
     m_pConnection->send( MSG_NET_REQUEST, data );
 
     if ( waitForAnswer( INF_NETWORK_STATUS, 0, data ) != -1 )
@@ -640,13 +640,13 @@ bool SlaveBase::requestNetwork(const TQString& host)
 
 void SlaveBase::dropNetwork(const TQString& host)
 {
-    KIO_DATA << host << d->slaveid;
+    TDEIO_DATA << host << d->slaveid;
     m_pConnection->send( MSG_NET_DROP, data );
 }
 
 void SlaveBase::statEntry( const UDSEntry& entry )
 {
-    KIO_DATA << entry;
+    TDEIO_DATA << entry;
     slaveWriteError = false;
     m_pConnection->send( MSG_STAT_ENTRY, data );
     if (slaveWriteError) exit();
@@ -696,7 +696,7 @@ void SlaveBase::listEntry( const UDSEntry& entry, bool _ready )
 
 void SlaveBase::listEntries( const UDSEntryList& list )
 {
-    KIO_DATA << (TQ_UINT32)list.count();
+    TDEIO_DATA << (TQ_UINT32)list.count();
     UDSEntryListConstIterator it = list.begin();
     UDSEntryListConstIterator end = list.end();
     for (; it != end; ++it)
@@ -711,13 +711,13 @@ void SlaveBase::sendAuthenticationKey( const TQCString& key,
                                        const TQCString& group,
                                        bool keepPass )
 {
-    KIO_DATA << key << group << keepPass;
+    TDEIO_DATA << key << group << keepPass;
     m_pConnection->send( MSG_AUTH_KEY, data );
 }
 
 void SlaveBase::delCachedAuthentication( const TQString& key )
 {
-    KIO_DATA << key.utf8() ;
+    TDEIO_DATA << key.utf8() ;
     m_pConnection->send( MSG_DEL_AUTH_KEY, data );
 }
 
@@ -822,7 +822,7 @@ void SlaveBase::localURL(const KURL& remoteURL)
         islocal = false;
         retURL = remoteURL;
     }
-    KIO_DATA << islocal << retURL;
+    TDEIO_DATA << islocal << retURL;
     m_pConnection->send( INF_LOCALURL, data );
 }
 
@@ -917,7 +917,7 @@ int SlaveBase::messageBox( const TQString &text, MessageBoxType type, const TQSt
                            const TQString &buttonYes, const TQString &buttonNo, const TQString &dontAskAgainName )
 {
     kdDebug(7019) << "messageBox " << type << " " << text << " - " << caption << buttonYes << buttonNo << endl;
-    KIO_DATA << (TQ_INT32)type << text << caption << buttonYes << buttonNo << dontAskAgainName;
+    TDEIO_DATA << (TQ_INT32)type << text << caption << buttonYes << buttonNo << dontAskAgainName;
     m_pConnection->send( INF_MESSAGEBOX, data );
     if ( waitForAnswer( CMD_MESSAGEBOXANSWER, 0, data ) != -1 )
     {
@@ -934,7 +934,7 @@ bool SlaveBase::canResume( TDEIO::filesize_t offset )
 {
     kdDebug(7019) << "SlaveBase::canResume offset=" << TDEIO::number(offset) << endl;
     d->needSendCanResume = false;
-    KIO_DATA << KIO_FILESIZE_T(offset);
+    TDEIO_DATA << TDEIO_FILESIZE_T(offset);
     m_pConnection->send( MSG_RESUME, data );
     if ( offset )
     {

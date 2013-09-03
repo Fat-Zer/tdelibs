@@ -54,7 +54,7 @@ struct URLArgsPrivate;
  * This can also be used the other way round, when a part asks
  * for a URL to be opened (with openURLRequest or createNewWindow).
  */
-struct KPARTS_EXPORT URLArgs
+struct TDEPARTS_EXPORT URLArgs
 {
   URLArgs();
   URLArgs( const URLArgs &args );
@@ -128,7 +128,7 @@ struct KPARTS_EXPORT URLArgs
   bool newTab() const;
 
   /**
-   * Meta-data to associate with the next KIO operation
+   * Meta-data to associate with the next TDEIO operation
    * @see TDEIO::TransferJob etc.
    */
   TQMap<TQString, TQString> &metaData();
@@ -181,7 +181,7 @@ struct WindowArgsPrivate;
  * call (see the createNewWindow variant that uses WindowArgs).
  * The primary reason for this is the javascript window.open function.
  */
-struct KPARTS_EXPORT WindowArgs
+struct TDEPARTS_EXPORT WindowArgs
 {
     WindowArgs();
     ~WindowArgs();
@@ -218,7 +218,7 @@ struct KPARTS_EXPORT WindowArgs
  * The event should be sent before opening the URL in the part, so that the plugins
  * can use part()->url() to get the old URL.
  */
-class KPARTS_EXPORT OpenURLEvent : public Event
+class TDEPARTS_EXPORT OpenURLEvent : public Event
 {
 public:
   OpenURLEvent( ReadOnlyPart *part, const KURL &url, const URLArgs &args = URLArgs() );
@@ -305,7 +305,7 @@ class BrowserExtensionPrivate;
   *                                       otherwise, they are saved globally.
   * @li @p disableScrolling: no scrollbars
   */
-class KPARTS_EXPORT BrowserExtension : public TQObject
+class TDEPARTS_EXPORT BrowserExtension : public TQObject
 {
   Q_OBJECT
   TQ_PROPERTY( bool urlDropHandling READ isURLDropHandlingEnabled WRITE setURLDropHandlingEnabled )
@@ -686,7 +686,7 @@ signals:
    */
   void setPageSecurity( int );
 
-#define KPARTS_BROWSEREXTENSION_HAS_ITEMS_REMOVED
+#define TDEPARTS_BROWSEREXTENSION_HAS_ITEMS_REMOVED
   /**
    * Inform the host about items that have been removed.
    * @since 3.5.5
@@ -721,7 +721,7 @@ private:
  * other parts.
  * For instance a TDEHTMLPart hosts one part per frame.
  */
-class KPARTS_EXPORT BrowserHostExtension : public TQObject
+class TDEPARTS_EXPORT BrowserHostExtension : public TQObject
 {
   Q_OBJECT
 public:
@@ -789,7 +789,7 @@ private:
  * A part can have an object hierarchie by using objid as a reference
  * to an object.
  */
-class KPARTS_EXPORT LiveConnectExtension : public TQObject
+class TDEPARTS_EXPORT LiveConnectExtension : public TQObject
 {
   Q_OBJECT
 public:

@@ -580,7 +580,7 @@ bool TDEHTMLPart::openURL( const KURL &url )
 
     /**
      * The format of the error url is that two variables are passed in the query:
-     * error = int kio error code, errText = TQString error text from kio
+     * error = int tdeio error code, errText = TQString error text from tdeio
      * and the URL where the error happened is passed as a sub URL.
      */
     KURL::List urls = KURL::split( url );
@@ -1576,7 +1576,7 @@ void TDEHTMLPart::slotData( TDEIO::Job* tdeio_job, const TQByteArray &data )
   {
       //kdDebug( 6050 ) << "begin!" << endl;
 
-    // We must suspend KIO while we're inside begin() because it can cause
+    // We must suspend TDEIO while we're inside begin() because it can cause
     // crashes if a window (such as kjsdebugger) goes back into the event loop,
     // more data arrives, and begin() gets called again (re-entered).
     d->m_job->suspend();
@@ -1827,7 +1827,7 @@ void TDEHTMLPart::slotFinished( TDEIO::Job * job )
 
     // The following catches errors that occur as a result of HTTP
     // to FTP redirections where the FTP URL is a directory. Since
-    // KIO cannot change a redirection request from GET to LISTDIR,
+    // TDEIO cannot change a redirection request from GET to LISTDIR,
     // we have to take care of it here once we know for sure it is
     // a directory...
     if (job->error() == TDEIO::ERR_IS_DIRECTORY)
@@ -2460,7 +2460,7 @@ void TDEHTMLPart::slotRedirect()
 void TDEHTMLPart::slotRedirection(TDEIO::Job*, const KURL& url)
 {
   // the slave told us that we got redirected
-  //kdDebug( 6050 ) << "redirection by KIO to " << url.url() << endl;
+  //kdDebug( 6050 ) << "redirection by TDEIO to " << url.url() << endl;
   emit d->m_extension->setLocationBarURL( url.prettyURL() );
   d->m_workingURL = url;
 }

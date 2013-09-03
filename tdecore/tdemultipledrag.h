@@ -17,8 +17,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef KMULTIPLEDRAG_H
-#define KMULTIPLEDRAG_H
+#ifndef TDEMULTIPLEDRAG_H
+#define TDEMULTIPLEDRAG_H
 
 #ifndef QT_NO_DRAGANDDROP
 
@@ -102,4 +102,4 @@ private:
 
 #endif // QT_NO_DRAGANDDROP
 
-#endif // KMULTIPLEDRAG_H
+#endif // TDEMULTIPLEDRAG_H

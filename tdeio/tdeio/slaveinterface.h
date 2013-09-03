@@ -39,7 +39,7 @@ class SlaveInterfacePrivate;
   // Definition of enum Command has been moved to global.h
 
  /**
-  * Identifiers for KIO informational messages.
+  * Identifiers for TDEIO informational messages.
   */
  enum Info {
    INF_TOTAL_SIZE = 10,
@@ -60,7 +60,7 @@ class SlaveInterfacePrivate;
  };
 
  /**
-  * Identifiers for KIO data messages.
+  * Identifiers for TDEIO data messages.
   */
  enum Message {
    MSG_DATA = 100,

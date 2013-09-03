@@ -80,7 +80,7 @@ namespace tdehtml
      * A cached object. Classes who want to use this object should derive
      * from CachedObjectClient, to get the function calls in case the requested data has arrived.
      *
-     * This class also does the actual communication with kio and loads the file.
+     * This class also does the actual communication with tdeio and loads the file.
      */
     class CachedObject
     {

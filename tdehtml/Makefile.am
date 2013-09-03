@@ -53,7 +53,7 @@ libtdehtml_la_LDFLAGS = -version-info 6:0:2 -no-undefined $(VSCRIPT) $(all_libra
 libtdehtml_la_LIBADD = ./xml/libtdehtmlxml.la ./html/libtdehtmlhtml.la \
 	./rendering/libtdehtmlrender.la ./css/libtdehtmlcss.la \
 	./misc/libtdehtmlmisc.la ecma/libkjs_html.la ./dom/libtdehtmldom.la $(LIBKJAVA) \
-	$(LIB_KPARTS) \
+	$(LIB_TDEPARTS) \
 	$(LIBTHAI) \
 	$(top_builddir)/tdeprint/libtdeprint.la  \
 	$(top_builddir)/tdeutils/libtdeutils.la \
@@ -124,7 +124,7 @@ testtdehtml_static_LDFLAGS = -static
 testregression_SOURCES = test_regression.cpp test_regression_fontoverload.cpp
 testregression_LDADD = libtdehtml.la
 
-DOXYGEN_REFERENCES = tdecore tdeui kio tdefx tdeparts
+DOXYGEN_REFERENCES = tdecore tdeui tdeio tdefx tdeparts
 DOXYGEN_EXCLUDE =  test*.* css ecma html java tdemultipart misc pics rendering test xml
 
 include ../admin/Doxyfile.am

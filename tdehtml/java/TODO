@@ -19,4 +19,4 @@ both versions.
 - Better support for Java 2
   - Use a factory to create the classloader and security managers
   - Use URLClassLoader- this is done
-- Support for KIO URLs
+- Support for TDEIO URLs

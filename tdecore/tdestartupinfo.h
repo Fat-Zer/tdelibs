@@ -22,8 +22,8 @@ DEALINGS IN THE SOFTWARE.
 
 ****************************************************************************/
 
-#ifndef __KSTARTUPINFO_H
-#define __KSTARTUPINFO_H
+#ifndef __TDESTARTUPINFO_H
+#define __TDESTARTUPINFO_H
 
 #include <sys/types.h>
 #include <tqobject.h>

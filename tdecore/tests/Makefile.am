@@ -82,5 +82,5 @@ ktimezonestest_SOURCES = ktimezonestest.cpp
 check_LTLIBRARIES = tdeunittest_tdeconfig.la
 
 tdeunittest_tdeconfig_la_SOURCES = tdeconfigtest.cpp
-tdeunittest_tdeconfig_la_LIBADD = $(LIB_KUNITTEST)
+tdeunittest_tdeconfig_la_LIBADD = $(LIB_TDEUNITTEST)
 tdeunittest_tdeconfig_la_LDFLAGS = -module $(KDE_CHECK_PLUGIN)

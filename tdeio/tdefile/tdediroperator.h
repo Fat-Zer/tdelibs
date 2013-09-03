@@ -18,8 +18,8 @@
     the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
     Boston, MA 02110-1301, USA.
 */
-#ifndef KDIROPERATOR_H_
-#define KDIROPERATOR_H_
+#ifndef TDEDIROPERATOR_H_
+#define TDEDIROPERATOR_H_
 
 #include <tqwidget.h>
 #include <tqptrstack.h>

@@ -1,5 +1,5 @@
 /*
-    This file is part of libkabc.
+    This file is part of libtdeabc.
 
     Copyright (c) 2002 Tobias Koenig <tokoe@kde.org>
     Copyright (c) 2003 Cornelius Schumacher <schumacher@kde.org>
@@ -39,7 +39,7 @@ void ConsoleErrorHandler::error( const TQString &msg )
 
 void GUIErrorHandler::error( const TQString &msg )
 {
-  KMessageBox::error( 0, msg, i18n( "Error in libkabc" ) );
+  KMessageBox::error( 0, msg, i18n( "Error in libtdeabc" ) );
 }
 
 

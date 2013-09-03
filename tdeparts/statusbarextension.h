@@ -18,8 +18,8 @@
    Boston, MA 02110-1301, USA.
  */
 
-#ifndef KPARTS_STATUSBAREXTENSION_H
-#define KPARTS_STATUSBAREXTENSION_H
+#ifndef TDEPARTS_STATUSBAREXTENSION_H
+#define TDEPARTS_STATUSBAREXTENSION_H
 
 #include <tqwidget.h>
 #include <tqvaluelist.h>
@@ -50,7 +50,7 @@ namespace KParts
    *
    * @since 3.2
    */
-  class KPARTS_EXPORT StatusBarExtension : public TQObject
+  class TDEPARTS_EXPORT StatusBarExtension : public TQObject
   {
     Q_OBJECT
 
@@ -121,6 +121,6 @@ namespace KParts
   };
 
 }
-#endif // KPARTS_STATUSBAREXTENSION_H
+#endif // TDEPARTS_STATUSBAREXTENSION_H
 
 // vim: ts=2 sw=2 et

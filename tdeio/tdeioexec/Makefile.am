@@ -3,8 +3,8 @@ AM_CPPFLAGS = $(all_includes)
 bin_PROGRAMS = tdeioexec
 
 tdeioexec_SOURCES = main.cpp
-tdeioexec_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
-tdeioexec_LDADD   = $(LIB_KIO)
+tdeioexec_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_TDEIO) -ltdetexteditor
+tdeioexec_LDADD   = $(LIB_TDEIO)
 
 noinst_HEADERS = main.h
 METASOURCES = AUTO

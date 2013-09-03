@@ -467,7 +467,7 @@ void BrowserRun::redirectToError( int error, const TQString& errorText )
      *
      * The format of the error:/ URL is error:/?query#url,
      * where two variables are passed in the query:
-     * error = int kio error code, errText = TQString error text from kio
+     * error = int tdeio error code, errText = TQString error text from tdeio
      * The sub-url is the URL that we were trying to open.
      */
     KURL newURL(TQString("error:/?error=%1&errText=%2")

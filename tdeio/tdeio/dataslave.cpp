@@ -30,7 +30,7 @@
 
 using namespace TDEIO;
 
-#define KIO_DATA_POLL_INTERVAL 0
+#define TDEIO_DATA_POLL_INTERVAL 0
 
 // don't forget to sync DISPATCH_DECL in dataslave.h
 #define DISPATCH_IMPL(type) \
@@ -38,7 +38,7 @@ using namespace TDEIO;
 	  if (_suspended) { \
 	    QueueStruct q(Queue_##type); \
 	    dispatchQueue.push_back(q); \
-	    if (!timer->isActive()) timer->start(KIO_DATA_POLL_INTERVAL); \
+	    if (!timer->isActive()) timer->start(TDEIO_DATA_POLL_INTERVAL); \
 	  } else \
 	    type(); \
 	}
@@ -50,7 +50,7 @@ using namespace TDEIO;
 	    QueueStruct q(Queue_##type); \
 	    q.paramname = paramname; \
 	    dispatchQueue.push_back(q); \
-	    if (!timer->isActive()) timer->start(KIO_DATA_POLL_INTERVAL); \
+	    if (!timer->isActive()) timer->start(TDEIO_DATA_POLL_INTERVAL); \
 	  } else \
 	    type(paramname); \
 	}
@@ -85,7 +85,7 @@ void DataSlave::resume() {
   // aarrrgh! This makes the once hyper fast and efficient data protocol
   // implementation slow as molasses. But it wouldn't work otherwise,
   // and I don't want to start messing around with threads
-  timer->start(KIO_DATA_POLL_INTERVAL);
+  timer->start(TDEIO_DATA_POLL_INTERVAL);
 }
 
 // finished is a special case. If we emit it right away, then
@@ -93,7 +93,7 @@ void DataSlave::resume() {
 void DataSlave::dispatch_finished() {
     QueueStruct q(Queue_finished);
     dispatchQueue.push_back(q);
-    if (!timer->isActive()) timer->start(KIO_DATA_POLL_INTERVAL);
+    if (!timer->isActive()) timer->start(TDEIO_DATA_POLL_INTERVAL);
 }
 
 void DataSlave::dispatchNext() {

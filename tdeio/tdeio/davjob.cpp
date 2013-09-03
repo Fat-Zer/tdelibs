@@ -38,7 +38,7 @@
 #include <tdeio/job.h>
 #include <tdeio/slaveinterface.h>
 
-#define KIO_ARGS TQByteArray packedArgs; TQDataStream stream( packedArgs, IO_WriteOnly ); stream
+#define TDEIO_ARGS TQByteArray packedArgs; TQDataStream stream( packedArgs, IO_WriteOnly ); stream
 
 using namespace TDEIO;
 

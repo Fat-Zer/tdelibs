@@ -10,7 +10,7 @@ libtdeunittestinclude_HEADERS = runner.h tester.h module.h
 libtdeunittestincludedir = $(includedir)/tdeunittest
 
 bin_PROGRAMS = tdeunittestmodrunner
-tdeunittestmodrunner_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
+tdeunittestmodrunner_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_TDEIO) -ltdetexteditor
 tdeunittestmodrunner_LDADD = libtdeunittest.la $(LIB_TDECORE)
 tdeunittestmodrunner_SOURCES = modrunner.cpp
 

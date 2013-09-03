@@ -17,8 +17,8 @@
 #    Boston, MA 02110-1301, USA.
 
 INCLUDES= -I$(top_srcdir) -I$(top_srcdir)/tdeio $(all_includes)
-LDADD = $(LIB_KIO)
-AM_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
+LDADD = $(LIB_TDEIO)
+AM_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_TDEIO) -ltdetexteditor
 
 check_PROGRAMS = tdesycocatest getalltest kruntest ktartest kziptest\
                  tdeioslavetest kdirwatchtest kshredtest speed kurifiltertest \
@@ -77,14 +77,14 @@ kacltest_SOURCES = kacltest.cpp
 
 check_LTLIBRARIES = tdeunittest_kdirwatch.la
 tdeunittest_kdirwatch_la_SOURCES = kdirwatchunittest.cpp
-tdeunittest_kdirwatch_la_LIBADD = $(LIB_KUNITTEST) $(LIB_KIO)
+tdeunittest_kdirwatch_la_LIBADD = $(LIB_TDEUNITTEST) $(LIB_TDEIO)
 tdeunittest_kdirwatch_la_LDFLAGS = -module $(KDE_CHECK_PLUGIN)
 
 # tdefile meta stuff. Comment this in, if you want a small
 # metadata plugin test and "make install".
 #kde_module_LTLIBRARIES = dummymeta.la
 #dummymeta_la_SOURCES = dummymeta.cpp
-#dummymeta_la_LIBADD = $(LIB_KIO)
+#dummymeta_la_LIBADD = $(LIB_TDEIO)
 #dummymeta_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
 
 #services_DATA = dummymeta.desktop

@@ -15,7 +15,7 @@ knotify_la_METASOURCES = AUTO
 check_PROGRAMS		= knotifytest
 knotifytest_SOURCES	= knotifytest.cpp
 knotifytest_LDADD	= $(LIB_TDECORE)
-knotifytest_LDFLAGS	= $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
+knotifytest_LDFLAGS	= $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_TDEIO) -ltdetexteditor
 
 noinst_HEADERS	=  knotify.h
 

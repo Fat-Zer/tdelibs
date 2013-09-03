@@ -16,8 +16,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef KBARHANDLER_H
-#define KBARHANDLER_H
+#ifndef TDEBARHANDLER_H
+#define TDEBARHANDLER_H
 
 #include <tqobject.h>
 #include <tqguardedptr.h>
@@ -63,7 +63,7 @@ private:
 
 } // namespace KDEPrivate
 
-#endif // KBARHANDLER_H
+#endif // TDEBARHANDLER_H
 
 /* vim: et sw=4 ts=4
  */

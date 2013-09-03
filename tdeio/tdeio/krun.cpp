@@ -697,7 +697,7 @@ static pid_t runTempService( const KService& _service, const KURL::List& _urls, 
 static KURL::List resolveURLs( const KURL::List& _urls, const KService& _service )
 {
   // Check which protocols the application supports.
-  // This can be a list of actual protocol names, or just KIO for KDE apps.
+  // This can be a list of actual protocol names, or just TDEIO for KDE apps.
   TQStringList supportedProtocols = _service.property("X-TDE-Protocols").toStringList();
   KRunMX1 mx1( _service );
   TQString exec = _service.exec();
@@ -706,10 +706,10 @@ static KURL::List resolveURLs( const KURL::List& _urls, const KService& _service
   } else {
     if ( supportedProtocols.isEmpty() )
     {
-      // compat mode: assume KIO if not set and it's a KDE app
+      // compat mode: assume TDEIO if not set and it's a KDE app
       TQStringList categories = _service.property("Categories").toStringList();
       if (( categories.find("TDE") != categories.end() ) && ( categories.find("KDE") != categories.end() ))
-         supportedProtocols.append( "KIO" );
+         supportedProtocols.append( "TDEIO" );
       else { // if no KDE app, be a bit over-generic
          supportedProtocols.append( "http");
          supportedProtocols.append( "ftp");
@@ -719,7 +719,7 @@ static KURL::List resolveURLs( const KURL::List& _urls, const KService& _service
   kdDebug(7010) << "supportedProtocols:" << supportedProtocols << endl;
 
   KURL::List urls( _urls );
-  if ( supportedProtocols.find( "KIO" ) == supportedProtocols.end() ) {
+  if ( supportedProtocols.find( "TDEIO" ) == supportedProtocols.end() ) {
     for( KURL::List::Iterator it = urls.begin(); it != urls.end(); ++it ) {
       const KURL url = *it;
       bool supported = url.isLocalFile() || supportedProtocols.find( url.protocol().lower() ) != supportedProtocols.end();
@@ -1155,7 +1155,7 @@ void KRun::scanFile()
   }
 
   // No mimetype found, and the URL is not local  (or fast mode not allowed).
-  // We need to apply the 'KIO' method, i.e. either asking the server or
+  // We need to apply the 'TDEIO' method, i.e. either asking the server or
   // getting some data out of the file, to know what mimetype it is.
 
   if ( !KProtocolInfo::supportsReading( m_strURL ) )
@@ -1311,7 +1311,7 @@ void KRun::foundMimeType( const TQString& type )
 /*
   // Automatically unzip stuff
 
-  // Disabled since the new KIO doesn't have filters yet.
+  // Disabled since the new TDEIO doesn't have filters yet.
 
   if ( type == "application/x-gzip"  ||
        type == "application/x-bzip"  ||

@@ -37,7 +37,7 @@ services of given type are present in given domain.
 @short Describes any type of service.
 @author Jakub Stachowski
  */
-class KDNSSD_EXPORT ServiceBase : public TDEShared
+class TDEDNSSD_EXPORT ServiceBase : public TDEShared
 {
 public:
 	typedef TDESharedPtr<ServiceBase> Ptr;
@@ -107,8 +107,8 @@ protected:
 	 */
 	void decode(const TQString& name);
 
-	friend KDNSSD_EXPORT TQDataStream & operator<< (TQDataStream & s, const ServiceBase & a);
-	friend KDNSSD_EXPORT TQDataStream & operator>> (TQDataStream & s, ServiceBase & a);
+	friend TDEDNSSD_EXPORT TQDataStream & operator<< (TQDataStream & s, const ServiceBase & a);
+	friend TDEDNSSD_EXPORT TQDataStream & operator>> (TQDataStream & s, ServiceBase & a);
 
 	virtual void virtual_hook(int, void*);
 private:

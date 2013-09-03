@@ -17,8 +17,8 @@
    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA 02110-1301, USA.
 */
-#ifndef __KSPELLDLG_H__
-#define __KSPELLDLG_H__
+#ifndef __TDESPELLDLG_H__
+#define __TDESPELLDLG_H__
 
 #include <kdialogbase.h>
 

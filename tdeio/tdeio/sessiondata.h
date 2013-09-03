@@ -18,8 +18,8 @@
    Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
-#ifndef __KIO_SESSIONDATA_H
-#define __KIO_SESSIONDATA_H
+#ifndef __TDEIO_SESSIONDATA_H
+#define __TDEIO_SESSIONDATA_H
 
 #include <tqobject.h>
 #include <tdeio/global.h>

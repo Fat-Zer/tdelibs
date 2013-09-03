@@ -22,8 +22,8 @@
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifndef KIOBUFFER_H
-#define KIOBUFFER_H
+#ifndef TDEIOBUFFER_H
+#define TDEIOBUFFER_H
 
 #include <tqcstring.h>
 

@@ -16,8 +16,8 @@
   Boston, MA 02110-1301, USA.
 */
 
-#ifndef KMDIGUICLIENT_H
-#define KMDIGUICLIENT_H
+#ifndef TDEMDIGUICLIENT_H
+#define TDEMDIGUICLIENT_H
 
 #include <tqobject.h>
 #include <tqguardedptr.h>

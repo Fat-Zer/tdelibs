@@ -17,8 +17,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef _KSHORTCUTDIALOG_H_
-#define _KSHORTCUTDIALOG_H_
+#ifndef _TDESHORTCUTDIALOG_H_
+#define _TDESHORTCUTDIALOG_H_
 
 #include "kdialogbase.h"
 #include "tdeshortcut.h"
@@ -93,4 +93,4 @@ private:
         static bool s_showMore;
 };
 
-#endif // _KSHORTCUTDIALOG_H_
+#endif // _TDESHORTCUTDIALOG_H_

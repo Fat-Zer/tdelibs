@@ -44,7 +44,7 @@ class DockMainWindowPrivate;
  * It implements all internal interfaces in the case of a KDockMainWindow as host:
  * the builder and servant interface (for menu merging).
  */
-class KPARTS_EXPORT DockMainWindow : public KDockMainWindow, virtual public PartBase
+class TDEPARTS_EXPORT DockMainWindow : public KDockMainWindow, virtual public PartBase
 {
   Q_OBJECT
  public:

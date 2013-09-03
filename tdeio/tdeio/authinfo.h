@@ -18,8 +18,8 @@
  *  Boston, MA 02110-1301, USA.
  */
 
-#ifndef __KIO_AUTHINFO_H
-#define __KIO_AUTHINFO_H
+#ifndef __TDEIO_AUTHINFO_H
+#define __TDEIO_AUTHINFO_H
 
 #include <tqmap.h>
 #include <tqvaluelist.h>

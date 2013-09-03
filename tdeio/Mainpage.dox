@@ -82,7 +82,7 @@
  * KDirOperator:
  * The class encapsulating different KFileViews, offering file browsing and
  * file selection. Asynchronous, network transparent reading of directories
- * is performed via the KIO library.
+ * is performed via the TDEIO library.
  *
  * KURLRequester:
  * A widget to be used for asking for a filename/path/URL. It consists of a

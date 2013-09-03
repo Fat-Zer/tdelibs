@@ -17,8 +17,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef _KLAUNCHER_CMDS_H_
-#define _KLAUNCHER_CMDS_H_
+#ifndef _TDELAUNCHER_CMDS_H_
+#define _TDELAUNCHER_CMDS_H_
 
 typedef struct
 {

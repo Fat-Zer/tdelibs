@@ -19,8 +19,8 @@
     Boston, MA 02110-1301, USA.
     */
 
-#ifndef _KTOOLBARRADIOGROUP_H
-#define _KTOOLBARRADIOGROUP_H
+#ifndef _TDETOOLBARRADIOGROUP_H
+#define _TDETOOLBARRADIOGROUP_H
 
 #include <tqobject.h>
 

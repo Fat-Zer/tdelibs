@@ -35,12 +35,12 @@
    //    copyright            : (C) 1999-2003 by Falk Brettschneider
    //                                         and
    //                                         Szymon Stefanek (stefanek@tin.it)
-   //    email                :  falkbr@tdevelop.org (Falk Brettschneider)
+   //    email                :  falkbr@kdevelop.org (Falk Brettschneider)
    //----------------------------------------------------------------------------
 */
 
-#ifndef _KMDI_GLOBAL_H_
-#define _KMDI_GLOBAL_H_
+#ifndef _TDEMDI_GLOBAL_H_
+#define _TDEMDI_GLOBAL_H_
 
 /**
  * @short A namespace for the KMDI library

@@ -5,7 +5,7 @@ kde_module_LTLIBRARIES = tdefileaudiopreview.la
 
 tdefileaudiopreview_la_SOURCES = tdefileaudiopreview.cpp
 tdefileaudiopreview_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) -module -avoid-version -no-undefined
-tdefileaudiopreview_la_LIBADD = $(top_builddir)/interfaces/tdemediaplayer/libtdemediaplayer.la $(top_builddir)/arts/kde/libartskde.la $(LIB_KIO) $(LIB_QT) $(LIB_TDECORE)
+tdefileaudiopreview_la_LIBADD = $(top_builddir)/interfaces/tdemediaplayer/libtdemediaplayer.la $(top_builddir)/arts/kde/libartskde.la $(LIB_TDEIO) $(LIB_QT) $(LIB_TDECORE)
 
 noinst_HEADERS = tdefileaudiopreview.h
 

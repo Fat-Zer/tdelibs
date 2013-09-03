@@ -20,8 +20,8 @@
  *
  */
 
-#ifndef _KABOUT_APPLICATION_H_
-#define _KABOUT_APPLICATION_H_
+#ifndef _TDEABOUT_APPLICATION_H_
+#define _TDEABOUT_APPLICATION_H_
 
 #include <tdeaboutdata.h>
 #include <tdeaboutdialog.h>

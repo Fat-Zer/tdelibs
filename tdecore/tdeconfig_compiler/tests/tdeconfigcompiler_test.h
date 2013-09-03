@@ -13,8 +13,8 @@
     *************************************************************************
 */
 
-#ifndef KCONFIGCOMPILER_TEST_H
-#define KCONFIGCOMPILER_TEST_H
+#ifndef TDECONFIGCOMPILER_TEST_H
+#define TDECONFIGCOMPILER_TEST_H
 
 #include <tdeunittest/tester.h>
 

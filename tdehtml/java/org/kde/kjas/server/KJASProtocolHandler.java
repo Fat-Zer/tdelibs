@@ -238,7 +238,7 @@ public class KJASProtocolHandler
             
             String id = getArg( command );
             String code = getArg( command );
-            Main.debug( "KIO URLData received(" + id + ") code:" + code );
+            Main.debug( "TDEIO URLData received(" + id + ") code:" + code );
 
             //rest of the command should be the data...
             byte[] data = null;

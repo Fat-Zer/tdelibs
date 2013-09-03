@@ -17,8 +17,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef KFONTREQUESTER_H
-#define KFONTREQUESTER_H
+#ifndef TDEFONTREQUESTER_H
+#define TDEFONTREQUESTER_H
 
 #include <tqwidget.h>
 #include <tqfont.h>
@@ -151,7 +151,7 @@ class TDEUI_EXPORT TDEFontRequester : public TQWidget
     TDEFontRequesterPrivate *d;
 };
 
-#endif // KFONTREQUESTER_H
+#endif // TDEFONTREQUESTER_H
 
 /* vim: et sw=2 ts=2
 */

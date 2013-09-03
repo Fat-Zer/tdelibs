@@ -28,7 +28,7 @@
 #include <kurl.h>
 
 /**
- * @short A namespace for KIO globals
+ * @short A namespace for TDEIO globals
  *
  */
 namespace TDEIO
@@ -170,7 +170,7 @@ namespace TDEIO
   };
 
   /**
-   * Error codes that can be emitted by KIO.
+   * Error codes that can be emitted by TDEIO.
    */
   enum Error {
     ERR_CANNOT_OPEN_FOR_READING = 1,

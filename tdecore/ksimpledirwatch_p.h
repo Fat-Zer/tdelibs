@@ -4,7 +4,7 @@
  * because KSimpleDirWatchPrivate has signals and slots
  *
  * KSimpleDirWatch is a basic copy of KDirWatch
- * but with the KIO linking requirement removed
+ * but with the TDEIO linking requirement removed
  */
 
 #ifndef _KSIMPLEDIRWATCH_P_H

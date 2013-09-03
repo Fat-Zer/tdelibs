@@ -49,7 +49,7 @@
 
 /* These are to link libtdeio even if 'smart' linker is used */
 #include <tdeio/authinfo.h>
-extern "C" TDEIO::AuthInfo* _tdeioslave_init_kio() { return new TDEIO::AuthInfo(); }
+extern "C" TDEIO::AuthInfo* _tdeioslave_init_tdeio() { return new TDEIO::AuthInfo(); }
 
 int main(int argc, char **argv)
 {

@@ -14,7 +14,7 @@
 //    copyright            : (C) 1999-2003 by Falk Brettschneider
 //                                         and
 //                                         Szymon Stefanek (stefanek@tin.it)
-//    email                :  falkbr@tdevelop.org (Falk Brettschneider)
+//    email                :  falkbr@kdevelop.org (Falk Brettschneider)
 //----------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------
@@ -25,8 +25,8 @@
 //    License, or (at your option) any later version.
 //
 //------------------------------------------------------------------------------
-#ifndef _KMDI_CHILD_FRM_H_
-#define _KMDI_CHILD_FRM_H_
+#ifndef _TDEMDI_CHILD_FRM_H_
+#define _TDEMDI_CHILD_FRM_H_
 
 #include <tqptrlist.h>
 #include <tqpixmap.h>
@@ -441,6 +441,6 @@ private:
 	KMdiChildFrmPrivate *d;
 };
 
-#endif //_KMDICHILDFRM_H_
+#endif //_TDEMDI_CHILDFRM_H_
 
 // kate: space-indent off; replace-tabs off; tab-width 4; indent-mode csands;

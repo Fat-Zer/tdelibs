@@ -81,7 +81,7 @@ void AddresseeHelper::initSettings()
   mPrefixes.insert( "von" );
   mPrefixes.insert( "de" );
 
-  TDEConfig config( "kabcrc", true, false ); // readonly, no kdeglobals
+  TDEConfig config( "tdeabcrc", true, false ); // readonly, no kdeglobals
   config.setGroup( "General" );
 
   addToSet( config.readListEntry( "Prefixes" ),   mTitles );

@@ -17,8 +17,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef _KACCELBASE_H
-#define _KACCELBASE_H
+#ifndef _TDEACCELBASE_H
+#define _TDEACCELBASE_H
 
 #include <tqmap.h>
 #include <tqptrvector.h>
@@ -279,4 +279,4 @@ class TDECORE_EXPORT TDEAccelBase
 	friend class TDEAccelActions;
 };
 
-#endif // _KACCELBASE_H
+#endif // _TDEACCELBASE_H

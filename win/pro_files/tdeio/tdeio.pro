@@ -4,14 +4,14 @@ include( $(KDELIBS)/win/common.pro )
 include( $(KDELIBS)/win/zlib.pro )
 
 # needed to export library classes:
-DEFINES += MAKE_KIO_LIB
+DEFINES += MAKE_TDEIO_LIB
 
 LIBS += $$KDELIBDESTDIR\tdecore$$KDELIB_SUFFIX $$KDELIBDESTDIR\tdeui$$KDELIB_SUFFIX \
 	$$KDELIBDESTDIR\dcop$$KDELIB_SUFFIX $$KDELIBDESTDIR\kdewin32$$KDELIB_SUFFIX
 
-system( bash kmoc kio tdefile misc bookmarks kssl )
+system( bash kmoc tdeio tdefile misc bookmarks kssl )
 
-TARGET = kio$$KDEBUG
+TARGET = tdeio$$KDEBUG
 
 INCLUDEPATH += $(KDELIBS)/tdecore/network $(KDELIBS)/tdeio/tdeio $(KDELIBS)/tdeio/misc $(KDELIBS)/tdeio/bookmarks \
   $(KDELIBS)/tdeio/kssl \
@@ -21,8 +21,8 @@ INCLUDEPATH += $(KDELIBS)/tdecore/network $(KDELIBS)/tdeio/tdeio $(KDELIBS)/tdei
   $(KDELIBS)/tdeio/bookmarks/moc \
   $(KDELIBS)/tdeio/kssl/moc $(KDELIBS)/tdewallet/client 
 
-system( cd kio && dcopidl kdirnotify.h > kdirnotify.kidl && dcopidl2cpp --no-stub kdirnotify.kidl )
-system( cd kio && dcopidl observer.h > observer.kidl && dcopidl2cpp observer.kidl )
+system( cd tdeio && dcopidl kdirnotify.h > kdirnotify.kidl && dcopidl2cpp --no-stub kdirnotify.kidl )
+system( cd tdeio && dcopidl observer.h > observer.kidl && dcopidl2cpp observer.kidl )
 system( cd bookmarks && dcopidl kbookmarknotifier.h > kbookmarknotifier.kidl && dcopidl2cpp kbookmarknotifier.kidl )
 system( cd bookmarks && dcopidl kbookmarkmanager.h > kbookmarkmanager.kidl && dcopidl2cpp kbookmarkmanager.kidl )
 system( cd misc && dcopidl uiserver.h > uiserver.kidl && dcopidl2cpp uiserver.kidl )

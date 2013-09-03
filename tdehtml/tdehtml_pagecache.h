@@ -29,7 +29,7 @@ class TDEHTMLPageCachePrivate;
 
 /**
  * Singleton Object that handles a binary cache on top of
- * the http cache management of kio.
+ * the http cache management of tdeio.
  *
  * A limited number of HTML pages are stored in this cache. This
  * cache is used for the history and operations like "view source".

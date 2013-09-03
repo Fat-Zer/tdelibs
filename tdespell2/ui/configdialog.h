@@ -18,8 +18,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301  USA
  */
-#ifndef KSPELL_CONFIGDIALOG_H
-#define KSPELL_CONFIGDIALOG_H
+#ifndef TDESPELL_CONFIGDIALOG_H
+#define TDESPELL_CONFIGDIALOG_H
 
 #include <kdialogbase.h>
 

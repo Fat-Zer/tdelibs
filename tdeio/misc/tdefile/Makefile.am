@@ -5,6 +5,6 @@ INCLUDES= -I$(top_srcdir) -I$(top_srcdir)/tdeio/tdeio $(all_includes)
 
 bin_PROGRAMS = tdefile
 tdefile_SOURCES = fileprops.cpp
-tdefile_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
-tdefile_LDADD = $(LIB_KIO)
+tdefile_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_TDEIO) -ltdetexteditor
+tdefile_LDADD = $(LIB_TDEIO)
 

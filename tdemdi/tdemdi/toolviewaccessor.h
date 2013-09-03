@@ -17,8 +17,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef _KMDI_TOOLVIEWACCESSOR_H_
-#define _KMDI_TOOLVIEWACCESSOR_H_
+#ifndef _TDEMDI_TOOLVIEWACCESSOR_H_
+#define _TDEMDI_TOOLVIEWACCESSOR_H_
 
 #include <tqwidget.h>
 #include <tqpixmap.h>
@@ -83,6 +83,6 @@ protected:
 
 }
 
-#endif //_KMDITOOLVIEWACCESSOR_H_
+#endif //_TDEMDI_TOOLVIEWACCESSOR_H_
 
 // kate: space-indent on; indent-width 2; replace-tabs on;

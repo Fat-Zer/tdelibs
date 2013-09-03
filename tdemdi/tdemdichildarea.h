@@ -13,7 +13,7 @@
 //    copyright            : (C) 1999-2003 by Falk Brettschneider
 //                                         and
 //                                         Szymon Stefanek (stefanek@tin.it)
-//    email                :  falkbr@tdevelop.org (Falk Brettschneider)
+//    email                :  falkbr@kdevelop.org (Falk Brettschneider)
 //----------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------
@@ -25,8 +25,8 @@
 //
 //----------------------------------------------------------------------------
 
-#ifndef _KMDI_CHILD_AREA_H_
-#define _KMDI_CHILD_AREA_H_
+#ifndef _TDEMDI_CHILD_AREA_H_
+#define _TDEMDI_CHILD_AREA_H_
 
 #include <tqframe.h>
 #include <tqptrlist.h>
@@ -299,6 +299,6 @@ private:
 	KMdiChildAreaPrivate *d;
 };
 
-#endif   // _KMDICHILDAREA_H_
+#endif   // _TDEMDI_CHILDAREA_H_
 
 // kate: indent-mode csands; tab-width 4; auto-insert-doxygen on;

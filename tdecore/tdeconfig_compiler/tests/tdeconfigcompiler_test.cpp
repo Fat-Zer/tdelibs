@@ -21,8 +21,8 @@
 
 using namespace KUnitTest;
 
-KUNITTEST_MODULE( tdeunittest_tdeconfigcompiler_test, "TDEConfigXT")
-KUNITTEST_MODULE_REGISTER_TESTER( TDEConfigCompiler_Test )
+TDEUNITTEST_MODULE( tdeunittest_tdeconfigcompiler_test, "TDEConfigXT")
+TDEUNITTEST_MODULE_REGISTER_TESTER( TDEConfigCompiler_Test )
 
 typedef const char * CompilerTestSet[];
 

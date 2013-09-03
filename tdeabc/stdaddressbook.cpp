@@ -1,5 +1,5 @@
 /*
-    This file is part of libkabc.
+    This file is part of libtdeabc.
     Copyright (c) 2001 Cornelius Schumacher <schumacher@kde.org>
 
     This library is free software; you can redistribute it and/or
@@ -188,7 +188,7 @@ bool StdAddressBook::automaticSave()
 // should get const for 4.X
 Addressee StdAddressBook::whoAmI()
 {
-  TDEConfig config( "kabcrc" );
+  TDEConfig config( "tdeabcrc" );
   config.setGroup( "General" );
 
   return findByUid( config.readEntry( "WhoAmI" ) );
@@ -196,7 +196,7 @@ Addressee StdAddressBook::whoAmI()
 
 void StdAddressBook::setWhoAmI( const Addressee &addr )
 {
-  TDEConfig config( "kabcrc" );
+  TDEConfig config( "tdeabcrc" );
   config.setGroup( "General" );
 
   config.writeEntry( "WhoAmI", addr.uid() );

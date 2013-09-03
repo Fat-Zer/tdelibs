@@ -1,5 +1,5 @@
 /*
-    This file is part of libkabc.
+    This file is part of libtdeabc.
 
     Copyright (c) 2003 Cornelius Schumacher <schumacher@kde.org>
 
@@ -165,7 +165,7 @@ static const TDECmdLineOptions options[] =
 
 int main(int argc,char **argv)
 {
-  TDEAboutData aboutData("testlock",I18N_NOOP("Test libkabc Lock"),"0.1");
+  TDEAboutData aboutData("testlock",I18N_NOOP("Test libtdeabc Lock"),"0.1");
   TDECmdLineArgs::init(argc,argv,&aboutData);
   TDECmdLineArgs::addCmdLineOptions( options );
 

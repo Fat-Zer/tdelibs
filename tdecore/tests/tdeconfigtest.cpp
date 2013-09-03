@@ -31,8 +31,8 @@ private:
     void revertEntries();
 };
 
-KUNITTEST_MODULE( tdeunittest_tdeconfig, "TDEConfigTest" )
-KUNITTEST_MODULE_REGISTER_TESTER( TDEConfigTest )
+TDEUNITTEST_MODULE( tdeunittest_tdeconfig, "TDEConfigTest" )
+TDEUNITTEST_MODULE_REGISTER_TESTER( TDEConfigTest )
 
 // test data
 #define BOOLENTRY1 true

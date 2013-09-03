@@ -71,7 +71,7 @@ class TQCheckBox;
  * To use your own extensions: see findExtension().
  *
  */
-class KUTILS_EXPORT KFindDialog:
+class TDEUTILS_EXPORT KFindDialog:
     public KDialogBase
 {
     Q_OBJECT

@@ -28,8 +28,8 @@
  * Provides macros to ease building unit tests as shared libraries
  */
 
-#ifndef KUNITTEST_MODULE_H
-#define KUNITTEST_MODULE_H
+#ifndef TDEUNITTEST_MODULE_H
+#define TDEUNITTEST_MODULE_H
 
 #include <tqstring.h>
 
@@ -38,16 +38,16 @@
 
 namespace KUnitTest
 {
-    /*! @def KUNITTEST_MODULE(library,suite)
+    /*! @def TDEUNITTEST_MODULE(library,suite)
     * Use this macro if you are creating a KUnitTest module named library. 
     * This macro creates a module-class named a factory class. The module
     * will appear under the name suite in the test runner.
     * There is no need in calling the K_EXPORT_COMPONENT_FACTORY macro,
     * this is taken care of automatically.
     * 
-    * @code KUNITTEST_MODULE(tdeunittest_samplemodule,"TestSuite") @endcode
+    * @code TDEUNITTEST_MODULE(tdeunittest_samplemodule,"TestSuite") @endcode
     */
-    #define KUNITTEST_MODULE(library,suite)                                                 \
+    #define TDEUNITTEST_MODULE(library,suite)                                                 \
     static const TQString s_tdeunittest_suite  = TQString::fromLatin1(suite);                   \
     class library##Module : public TQObject                                                  \
     {                                                                                       \
@@ -80,13 +80,13 @@ namespace KUnitTest
                                                                                             \
     K_EXPORT_COMPONENT_FACTORY( library, module##Factory )
 
-    /*! @def KUNITTEST_MODULE_REGISTER_TESTER(tester)
+    /*! @def TDEUNITTEST_MODULE_REGISTER_TESTER(tester)
     * Use this macro to add a tester class to your module. The name of the tester will
     * be identical to the class name.
     *
-    * @code KUNITTEST_MODULE_REGISTER_TESTER(SimpleSampleTester) @endcode
+    * @code TDEUNITTEST_MODULE_REGISTER_TESTER(SimpleSampleTester) @endcode
     */
-    #define KUNITTEST_MODULE_REGISTER_TESTER( tester)                                           \
+    #define TDEUNITTEST_MODULE_REGISTER_TESTER( tester)                                           \
     static class tester##ModuleAutoregister                                                     \
     {                                                                                           \
     public:                                                                                     \
@@ -99,12 +99,12 @@ namespace KUnitTest
         }                                                                                       \
     } tester##ModuleAutoregisterInstance;
 
-    /*! @def KUNITTEST_MODULE_REGISTER_NAMEDTESTER(name,tester)
+    /*! @def TDEUNITTEST_MODULE_REGISTER_NAMEDTESTER(name,tester)
     * Use this macro to add a tester class, with specified name, to your module..
     *
-    * @code KUNITTEST_MODULE_REGISTER_TESTER("SubSuite::PrettyName",SimpleSampleTester) @endcode
+    * @code TDEUNITTEST_MODULE_REGISTER_TESTER("SubSuite::PrettyName",SimpleSampleTester) @endcode
     */
-    #define KUNITTEST_MODULE_REGISTER_NAMEDTESTER( name , tester)                             \
+    #define TDEUNITTEST_MODULE_REGISTER_NAMEDTESTER( name , tester)                             \
     static class tester##ModuleAutoregister                                                   \
     {                                                                                         \
     public:                                                                                   \

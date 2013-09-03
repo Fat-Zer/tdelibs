@@ -2,13 +2,13 @@
 ## Makefile.am of tdebase/tdeioslave/metainfo
 
 INCLUDES = $(all_includes)
-AM_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
+AM_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_TDEIO) -ltdetexteditor
 METASOURCES = AUTO
 
 kde_module_LTLIBRARIES = tdeio_metainfo.la
 
 tdeio_metainfo_la_SOURCES = metainfo.cpp
-tdeio_metainfo_la_LIBADD = $(LIB_KIO) $(LIB_QT) $(LIB_TDECORE)
+tdeio_metainfo_la_LIBADD = $(LIB_TDEIO) $(LIB_QT) $(LIB_TDECORE)
 tdeio_metainfo_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
 
 noinst_HEADERS = metainfo.h 

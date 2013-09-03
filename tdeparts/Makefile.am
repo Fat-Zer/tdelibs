@@ -5,7 +5,7 @@ AM_LDFLAGS = $(LDFLAGS_AS_NEEDED)
 INCLUDES= -I$(srcdir)/../ -I$(top_srcdir)/tdeio/ -I$(top_srcdir)/libltdl \
 	-I$(top_srcdir)/tdefile $(all_includes)
 libtdeparts_la_LDFLAGS = $(KDE_MT_LDFLAGS) -version-info 3:0:1 -no-undefined
-libtdeparts_la_LIBADD  = $(LIB_KIO) $(LIB_QT) $(LIB_TDEUI) $(LIB_TDECORE) $(top_builddir)/dcop/libDCOP.la
+libtdeparts_la_LIBADD  = $(LIB_TDEIO) $(LIB_QT) $(LIB_TDEUI) $(LIB_TDECORE) $(top_builddir)/dcop/libDCOP.la
 
 check-local:
 	(cd tests && $(MAKE) check )
@@ -28,5 +28,5 @@ libtdeparts_la_METASOURCES = AUTO
 servicetype_DATA = kpart.desktop krop.desktop krwp.desktop browserview.desktop 
 servicetypedir = $(kde_servicetypesdir)
 
-DOXYGEN_REFERENCES = tdecore tdeui tdefx kio
+DOXYGEN_REFERENCES = tdecore tdeui tdefx tdeio
 include ../admin/Doxyfile.am

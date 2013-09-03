@@ -39,7 +39,7 @@ namespace KParts {
      *
      * @author David Faure <faure@kde.org>
      */
-    class KPARTS_EXPORT BrowserRun : public KRun
+    class TDEPARTS_EXPORT BrowserRun : public KRun
     {
         Q_OBJECT
     public:

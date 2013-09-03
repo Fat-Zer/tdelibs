@@ -16,8 +16,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef _KCMDLINEARGS_H_
-#define _KCMDLINEARGS_H_
+#ifndef _TDECMDLINEARGS_H_
+#define _TDECMDLINEARGS_H_
 
 #include "tdelibs_export.h"
 #include <kurl.h>

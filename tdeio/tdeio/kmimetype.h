@@ -544,7 +544,7 @@ public:
 
   /**
    * Returns a list of services for the given .desktop file that are handled
-   * by kio itself. Namely mount/unmount for FSDevice files.
+   * by tdeio itself. Namely mount/unmount for FSDevice files.
    * @return the list of services
    */
   static TQValueList<Service> builtinServices( const KURL& _url );

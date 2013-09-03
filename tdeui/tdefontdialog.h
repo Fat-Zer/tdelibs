@@ -23,8 +23,8 @@
     the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
     Boston, MA 02110-1301, USA.
 */
-#ifndef _K_FONT_DIALOG_H_
-#define _K_FONT_DIALOG_H_
+#ifndef _TDE_FONT_DIALOG_H_
+#define _TDE_FONT_DIALOG_H_
 
 #include <tqlineedit.h>
 #include <tqbutton.h>

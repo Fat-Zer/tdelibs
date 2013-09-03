@@ -13,7 +13,7 @@
 //    copyright            : (C) 1999-2003 by Falk Brettschneider
 //                                         and
 //                                         Szymon Stefanek (stefanek@tin.it)
-//    email                :  falkbr@tdevelop.org (Falk Brettschneider)
+//    email                :  falkbr@kdevelop.org (Falk Brettschneider)
 //----------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------
@@ -24,8 +24,8 @@
 //    License, or (at your option) any later version.
 //
 //----------------------------------------------------------------------------
-#ifndef _KMDI_DEFINES_H_
-#define _KMDI_DEFINES_H_
+#ifndef _TDEMDI_DEFINES_H_
+#define _TDEMDI_DEFINES_H_
 
 #include <tdelibs_export.h>
 
@@ -114,4 +114,4 @@ namespace KMdi
    };
 } //namespace
 
-#endif //_KMDIDEFINES_H_
+#endif //_TDEMDI_DEFINES_H_

@@ -37,7 +37,7 @@ namespace KSettings
   to the okClicked() and applyClicked() signals to be notified about
   configuration changes.
 */
-class KUTILS_EXPORT ComponentsDialog : public KDialogBase
+class TDEUTILS_EXPORT ComponentsDialog : public KDialogBase
 {
     Q_OBJECT
     public:

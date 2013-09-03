@@ -21,8 +21,8 @@
   Boston, MA 02110-1301, USA.
 */
 
-#ifndef KCMODULEINFO_H
-#define KCMODULEINFO_H
+#ifndef TDECMODULEINFO_H
+#define TDECMODULEINFO_H
 
 #include <kservice.h>
 
@@ -46,7 +46,7 @@ class TQStringList;
  * @since 3.2
  *
  */
-class KUTILS_EXPORT TDECModuleInfo
+class TDEUTILS_EXPORT TDECModuleInfo
 {
 
 public:
@@ -291,6 +291,6 @@ private:
 
 };
 
-#endif // KCMODULEINFO_H
+#endif // TDECMODULEINFO_H
 
 // vim: ts=2 sw=2 et

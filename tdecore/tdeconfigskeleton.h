@@ -20,8 +20,8 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifndef _KCONFIGSKELETON_H
-#define _KCONFIGSKELETON_H
+#ifndef _TDECONFIGSKELETON_H
+#define _TDECONFIGSKELETON_H
 
 #include <tqcolor.h>
 #include <tqdatetime.h>

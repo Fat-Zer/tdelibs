@@ -15,8 +15,8 @@
    the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
    Boston, MA 02110-1301, USA.
 */
-#ifndef _KGLOBAL_H
-#define _KGLOBAL_H
+#ifndef _TDEGLOBAL_H
+#define _TDEGLOBAL_H
 
 #include "tdelibs_export.h"
 #include <kinstance.h> // KDE4: class TDEInstance is enough here
@@ -247,5 +247,5 @@ int TDECORE_EXPORT kasciistricmp( const char *str1, const char *str2 );
  * KDE environment.
  */
 
-#endif // _KGLOBAL_H
+#endif // _TDEGLOBAL_H
 

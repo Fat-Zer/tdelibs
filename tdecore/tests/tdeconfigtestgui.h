@@ -16,8 +16,8 @@
     the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
     Boston, MA 02110-1301, USA.
 */
-#ifndef _KCONFIG_TEST_H
-#define _KCONFIG_TEST_H
+#ifndef _TDECONFIG_TEST_H
+#define _TDECONFIG_TEST_H
 
 #include <tdeapplication.h>
 #include <tqdialog.h>

@@ -51,7 +51,7 @@ to constructor, domains configured by user will be searched.
 @author Jakub Stachowski
 @short Browsing for specific type of services or all available service types
  */
-class KDNSSD_EXPORT ServiceBrowser : public TQObject
+class TDEDNSSD_EXPORT ServiceBrowser : public TQObject
 {
 	Q_OBJECT
 public:

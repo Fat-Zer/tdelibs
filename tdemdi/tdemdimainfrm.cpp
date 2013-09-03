@@ -16,7 +16,7 @@
 //    copyright            : (C) 1999-2003 by Szymon Stefanek (stefanek@tin.it)
 //                                         and
 //                                         Falk Brettschneider
-//    email                :  falkbr@tdevelop.org (Falk Brettschneider)
+//    email                :  falkbr@kdevelop.org (Falk Brettschneider)
 //----------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------

@@ -484,7 +484,7 @@ void KJavaAppletServer::slotJavaRequest( const TQByteArray& qb )
         contextID += qb[ index++ ];
     }
     bool ok;
-    const int ID_num = contextID.toInt( &ok ); // context id or kio job id
+    const int ID_num = contextID.toInt( &ok ); // context id or tdeio job id
     /*if (d->locked_context > -1 &&
         ID_num != d->locked_context &&
         (cmd_code == KJAS_JAVASCRIPT_EVENT ||
@@ -500,7 +500,7 @@ void KJavaAppletServer::slotJavaRequest( const TQByteArray& qb )
     ++index; //skip the sep
 
     if (cmd_code == KJAS_PUT_DATA) {
-        // rest of the data is for kio put
+        // rest of the data is for tdeio put
         if (ok) {
             TDEIOJobMap::iterator it = d->kiojobs.find( ID_num );
             if (ok && it != d->kiojobs.end()) {
@@ -568,9 +568,9 @@ void KJavaAppletServer::slotJavaRequest( const TQByteArray& qb )
                 TDEIOJobMap::iterator it = d->kiojobs.find( ID_num );
                 if (ok && it != d->kiojobs.end())
                     it.data()->jobCommand( cmd );
-                kdDebug(6100) << "KIO Data command: " << ID_num << " " << args.first() << endl;
+                kdDebug(6100) << "TDEIO Data command: " << ID_num << " " << args.first() << endl;
             } else
-                kdError(6100) << "KIO Data command error " << ok << " args:" << args.size() << endl;
+                kdError(6100) << "TDEIO Data command error " << ok << " args:" << args.size() << endl;
             return;
         case KJAS_JAVASCRIPT_EVENT:
             cmd = TQString::fromLatin1( "JS_Event" );

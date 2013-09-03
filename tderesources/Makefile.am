@@ -15,7 +15,7 @@ libtderesources_la_SOURCES = resource.cpp \
   configpage.cpp
 
 libtderesources_la_LDFLAGS = $(all_libraries) -no-undefined -version-info 3:0:2
-libtderesources_la_LIBADD = $(LIB_TDEUI) $(LIB_KIO) $(LIB_QT) $(top_builddir)/dcop/libDCOP.la $(LIB_TDECORE)
+libtderesources_la_LIBADD = $(LIB_TDEUI) $(LIB_TDEIO) $(LIB_QT) $(top_builddir)/dcop/libDCOP.la $(LIB_TDECORE)
 
 kresincludedir = $(includedir)/tderesources
 kresinclude_HEADERS = resource.h \
@@ -37,7 +37,7 @@ kcm_tderesources_la_LIBADD = libtderesources.la $(LIB_QT) $(LIB_TDEUI) $(LIB_TDE
 
 check_PROGRAMS = testresources
 
-testresources_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_KIO) -ltdetexteditor
+testresources_LDFLAGS = $(all_libraries) $(KDE_RPATH) $(LIB_QT) -lDCOP $(LIB_TDECORE) $(LIB_TDEUI) -ltdefx $(LIB_TDEIO) -ltdetexteditor
 testresources_LDADD   = libtderesources.la
 testresources_SOURCES = testresources.cpp
 

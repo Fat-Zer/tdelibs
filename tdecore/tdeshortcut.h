@@ -17,8 +17,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef __KSHORTCUT_H
-#define __KSHORTCUT_H
+#ifndef __TDESHORTCUT_H
+#define __TDESHORTCUT_H
 
 #include <tqkeysequence.h>
 #include <tqstring.h>
@@ -848,4 +848,4 @@ class TDECORE_EXPORT TDEShortcut
 #endif
 };
 
-#endif // __KSHORTCUT_H
+#endif // __TDESHORTCUT_H

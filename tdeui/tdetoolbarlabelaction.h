@@ -15,8 +15,8 @@
     the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
     Boston, MA 02110-1301, USA.
 */
-#ifndef KTOOLBARLABELACTION_H
-#define KTOOLBARLABELACTION_H
+#ifndef TDETOOLBARLABELACTION_H
+#define TDETOOLBARLABELACTION_H
 
 #include <tdeactionclasses.h>
 

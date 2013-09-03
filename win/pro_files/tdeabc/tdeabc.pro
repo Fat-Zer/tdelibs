@@ -6,7 +6,7 @@ include( $(KDELIBS)/win/common.pro )
 DEFINES += MAKE_KABC_LIB
 LIBS += $$KDELIBDESTDIR\tdecore$$KDELIB_SUFFIX $$KDELIBDESTDIR\tdeui$$KDELIB_SUFFIX \
 	$$KDELIBDESTDIR\tderesources$$KDELIB_SUFFIX $$KDELIBDESTDIR\dcop$$KDELIB_SUFFIX \
-	$$KDELIBDESTDIR\kio$$KDELIB_SUFFIX $$KDELIBDESTDIR\kvcard$$KDELIB_SUFFIX
+	$$KDELIBDESTDIR\tdeio$$KDELIB_SUFFIX $$KDELIBDESTDIR\kvcard$$KDELIB_SUFFIX
 
 INCLUDEPATH += $(KDELIBS)/tdeabc/vcard/include $(KDELIBS)/tdeabc/vcard/include/generated \
 	$(KDELIBS)/tdeabc/vcardparser
@@ -15,7 +15,7 @@ system( bash kmoc )
 system( bash kdcopidl )
 system( cd scripts && perl.exe makeaddressee )
 
-TARGET		= kabc$$KDEBUG
+TARGET		= tdeabc$$KDEBUG
 
 SOURCES = \
   address.cpp addressbook.cpp addressee.cpp addresseedialog.cpp agent.cpp \

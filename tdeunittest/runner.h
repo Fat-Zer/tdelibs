@@ -30,8 +30,8 @@
  * Defines a set of macros and classes for running unit tests
  */
 
-#ifndef KUNITTEST_RUNNER_H
-#define KUNITTEST_RUNNER_H
+#ifndef TDEUNITTEST_RUNNER_H
+#define TDEUNITTEST_RUNNER_H
 
 #include <iostream>
 using namespace std;
@@ -48,15 +48,15 @@ class TQSocketNotifier;
 
 namespace KUnitTest
 {
-    /*! @def KUNITTEST_SUITE(suite)
+    /*! @def TDEUNITTEST_SUITE(suite)
      * 
      * This macro must be used if you are not making a test-module. The macro
      * defines the name of the test suite.
      */
-    #define KUNITTEST_SUITE(suite)\
+    #define TDEUNITTEST_SUITE(suite)\
     static const TQString s_tdeunittest_suite  = suite;
 
-    /*! @def KUNITTEST_REGISTER_TESTER( tester )
+    /*! @def TDEUNITTEST_REGISTER_TESTER( tester )
      * @brief Automatic registration of Tester classes.
      *
      * This macro can be used to register the Tester into the global registry. Use
@@ -65,10 +65,10 @@ namespace KUnitTest
      * macro as this macro relies on the static initialization of a TesterAutoregister class.
      * You can always use the static Runner::registerTester(const char *name, Tester *test) method.
     */
-    #define KUNITTEST_REGISTER_TESTER( tester )\
+    #define TDEUNITTEST_REGISTER_TESTER( tester )\
     static TesterAutoregister tester##Autoregister( TQString(s_tdeunittest_suite + TQString("::") + TQString::fromLocal8Bit(#tester)).local8Bit() , new tester ())
 
-    #define KUNITTEST_REGISTER_NAMEDTESTER( name, tester )\
+    #define TDEUNITTEST_REGISTER_NAMEDTESTER( name, tester )\
     static TesterAutoregister tester##Autoregister( TQString(s_tdeunittest_suite + TQString("::") + TQString::fromLocal8Bit(name)).local8Bit() , new tester ())
 
     /*! The type of the registry. */
@@ -90,11 +90,11 @@ namespace KUnitTest
      * the KUnitTest library can be kept separate from the test case sources. Test cases
      * (classes inheriting from Tester) can be added using the static 
      * registerTester(const char *name, Tester *test) method. Allthough most users
-     * will want to use the KUNITTEST_REGISTER_TESTER macro.
+     * will want to use the TDEUNITTEST_REGISTER_TESTER macro.
      *
-     * @see KUNITTEST_REGISTER_TESTER
+     * @see TDEUNITTEST_REGISTER_TESTER
      */
-    class KUNITTEST_EXPORT Runner : public TQObject
+    class TDEUNITTEST_EXPORT Runner : public TQObject
     {
         Q_OBJECT
     
@@ -163,7 +163,7 @@ namespace KUnitTest
 
         /*! Call this slot to run a single test.
          * @param name The name of the test case. This name has to correspond to the name
-         * that was used to register the test. If the KUNITTEST_REGISTER_TESTER macro was
+         * that was used to register the test. If the TDEUNITTEST_REGISTER_TESTER macro was
          * used to register the test case then this name is the class name.
          */
         void runTest(const char *name);

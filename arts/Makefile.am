@@ -4,6 +4,6 @@ else
 SUBDIRS = knotify
 endif
 
-DOXYGEN_REFERENCES = kio tdecore tdeui
+DOXYGEN_REFERENCES = tdeio tdecore tdeui
 include ../admin/Doxyfile.am
 

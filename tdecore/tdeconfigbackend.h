@@ -19,8 +19,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef _KCONFIGBACKEND_H
-#define _KCONFIGBACKEND_H
+#ifndef _TDECONFIGBACKEND_H
+#define _TDECONFIGBACKEND_H
 
 #include "tdeconfigdata.h"
 #include <tdeconfigbase.h>

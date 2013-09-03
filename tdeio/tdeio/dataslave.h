@@ -19,8 +19,8 @@
  *  Boston, MA 02110-1301, USA.
  **/
 
-#ifndef __KIO_DATASLAVE_H__
-#define __KIO_DATASLAVE_H__
+#ifndef __TDEIO_DATASLAVE_H__
+#define __TDEIO_DATASLAVE_H__
 
 #include <tdeio/global.h>
 #include <tdeio/slave.h>
@@ -43,7 +43,7 @@ namespace TDEIO {
      *
      * @internal
      * Do not use this class in external applications. It is an implementation
-     * detail of KIO and subject to change without notice.
+     * detail of TDEIO and subject to change without notice.
      * @author Leo Savernik
      */
     class DataSlave : public TDEIO::Slave {
@@ -123,4 +123,4 @@ namespace TDEIO {
 #undef DISPATCH_DECL
 #undef DISPATCH_DECL1
 
-#endif /*__KIO_DATASLAVE_H__*/
+#endif /*__TDEIO_DATASLAVE_H__*/

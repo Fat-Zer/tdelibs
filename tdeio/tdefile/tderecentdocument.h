@@ -25,8 +25,8 @@
  * SUCH DAMAGE.
  *
  */
-#ifndef __KRECENTDOCUMENT_H
-#define __KRECENTDOCUMENT_H
+#ifndef __TDERECENTDOCUMENT_H
+#define __TDERECENTDOCUMENT_H
 
 #include <tqstring.h>
 #include <kurl.h>

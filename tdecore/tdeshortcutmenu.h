@@ -17,8 +17,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef __KSHORTCUTMENU_H
-#define __KSHORTCUTMENU_H
+#ifndef __TDESHORTCUTMENU_H
+#define __TDESHORTCUTMENU_H
 
 #include <tqmap.h>
 #include <tqpopupmenu.h>
@@ -58,4 +58,4 @@ class TDECORE_EXPORT TDEShortcutMenu : public TQPopupMenu
 	IndexToKKeySequence m_seqs;
 };
 
-#endif // __KSHORTCUTMENU_H
+#endif // __TDESHORTCUTMENU_H

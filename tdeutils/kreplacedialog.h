@@ -56,7 +56,7 @@ class TQRect;
  * \code
  * \endcode
  */
-class KUTILS_EXPORT KReplaceDialog:
+class TDEUTILS_EXPORT KReplaceDialog:
     public KFindDialog
 {
     Q_OBJECT

@@ -21,8 +21,8 @@
     Boston, MA 02110-1301, USA.
     */
 
-#ifndef KTOOLBAR_H
-#define KTOOLBAR_H
+#ifndef TDETOOLBAR_H
+#define TDETOOLBAR_H
 
 #include <tqtoolbar.h>
 #include <tqmainwindow.h>

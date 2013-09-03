@@ -22,8 +22,8 @@
     Boston, MA 02110-1301, USA.
  ***************************************************************************/
 
-#ifndef _KMultitabbar_h_
-#define _KMultitabbar_h_
+#ifndef _TDEMultitabbar_h_
+#define _TDEMultitabbar_h_
 
 #include <tqscrollview.h>
 #include <tqvbox.h>
@@ -53,7 +53,7 @@ class KMultiTabBarInternal;
  * should be raisable is left to the "user".
  *@author Joseph Wenninger
  */
-class KUTILS_EXPORT KMultiTabBar: public TQWidget
+class TDEUTILS_EXPORT KMultiTabBar: public TQWidget
 {
 	Q_OBJECT
 public:
@@ -202,7 +202,7 @@ private:
  * This class represents a tab bar button in a KMultiTabBarWidget.
  * This class should never be created except with the appendButton call of KMultiTabBar
  */
-class KUTILS_EXPORT KMultiTabBarButton: public TQPushButton
+class TDEUTILS_EXPORT KMultiTabBarButton: public TQPushButton
 {
 	Q_OBJECT
 public:
@@ -265,7 +265,7 @@ protected slots:
  * This class represents a tab bar's tab in a KMultiTabBarWidget.
  * This class should never be created except with the appendTab call of KMultiTabBar
  */
-class KUTILS_EXPORT KMultiTabBarTab: public KMultiTabBarButton
+class TDEUTILS_EXPORT KMultiTabBarTab: public KMultiTabBarButton
 {
 	Q_OBJECT
 public:

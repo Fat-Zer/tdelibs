@@ -3,7 +3,7 @@
    Copyright (C) 2001 Joseph Wenninger <jowenn@kde.org>
    Copyright (C) 2002 John Firebaugh <jfirebaugh@kde.org>
    Copyright (C) 2001 by Victor Röder <Victor_Roeder@GMX.de>
-   Copyright (C) 2002 by Roberto Raggi <roberto@tdevelop.org>
+   Copyright (C) 2002 by Roberto Raggi <roberto@kdevelop.org>
 
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public

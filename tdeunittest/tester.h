@@ -105,10 +105,10 @@
  * @c operator==() defined.
  *
  * Now that you did that the only other thing to do is to tell the
- * framework to add this test case, by using the KUNITTEST_REGISTER_TESTER(x) macro. Just
+ * framework to add this test case, by using the TDEUNITTEST_REGISTER_TESTER(x) macro. Just
  * put the following line in the implementation file:
  *
- * @code KUNITTEST_REGISTER_TESTER( SampleTest ); @endcode
+ * @code TDEUNITTEST_REGISTER_TESTER( SampleTest ); @endcode
  *
  * Note the ;, it is necessary.
  *
@@ -210,18 +210,18 @@ SampleTest - 1 test passed, 1 test failed
  * how you use them:
  *
  * @code
- * KUNITTEST_MODULE( tdeunittest_samplemodule, "Tests for sample module" );
- * KUNITTEST_MODULE_REGISTER_TESTER( SimpleSampleTester );
- * KUNITTEST_MODULE_REGISTER_TESTER( SomeSampleTester );
+ * TDEUNITTEST_MODULE( tdeunittest_samplemodule, "Tests for sample module" );
+ * TDEUNITTEST_MODULE_REGISTER_TESTER( SimpleSampleTester );
+ * TDEUNITTEST_MODULE_REGISTER_TESTER( SomeSampleTester );
  * @endcode
  *
- * The first macro, KUNITTEST_MODULE(), makes sure that the module can be loaded and that
+ * The first macro, TDEUNITTEST_MODULE(), makes sure that the module can be loaded and that
  * the test classes are created. The first argument "tdeunittest_samplemodule" is the library
  * name, in this case the library we're creating a tdeunittest_samplemodule.la module. The
  * second argument is name which will appear in the test runner for this test suite.
  *
- * The tester class are now added by the KUNITTEST_MODULE_REGISTER_TESTER() macro, not the
- * KUNITTEST_REGISTER_TESTER(). The only difference between the two is that you have to
+ * The tester class are now added by the TDEUNITTEST_MODULE_REGISTER_TESTER() macro, not the
+ * TDEUNITTEST_REGISTER_TESTER(). The only difference between the two is that you have to
  * pass the module class name to this macro.
  *
  * The Makefile.am is also a bit different, but not much:
@@ -231,7 +231,7 @@ SampleTest - 1 test passed, 1 test failed
  * METASOURCES = AUTO
  * check_LTLIBRARIES = tdeunittest_samplemodule.la
  * tdeunittest_samplemodule_la_SOURCES = samplemodule.cpp
- * tdeunittest_samplemodule_la_LIBADD = $(LIB_KUNITTEST)
+ * tdeunittest_samplemodule_la_LIBADD = $(LIB_TDEUNITTEST)
  * tdeunittest_samplemodule_la_LDFLAGS = -module $(KDE_CHECK_PLUGIN) $(all_libraries)
  * @endcode
  *
@@ -429,7 +429,7 @@ namespace KUnitTest
      * has a single TestResults instance associated with it, however the SlotTester
      * class can have more TestResults instances (one for each test slot in fact).
      */
-    class KUNITTEST_EXPORT TestResults
+    class TDEUNITTEST_EXPORT TestResults
     {
         friend class Tester;
 
@@ -519,7 +519,7 @@ namespace KUnitTest
      *
      * @see CHECK, XFAIL, SKIP
      */
-    class KUNITTEST_EXPORT Tester : public TQObject
+    class TDEUNITTEST_EXPORT Tester : public TQObject
     {
     public:
         Tester(const char *name = 0L)
@@ -683,7 +683,7 @@ namespace KUnitTest
      * execute all slots that start with the string "test". The method
      * void allTests() is implemented and should not be overriden.
      */
-    class KUNITTEST_EXPORT SlotTester : public Tester
+    class TDEUNITTEST_EXPORT SlotTester : public Tester
     {
         Q_OBJECT
 
@@ -707,10 +707,10 @@ namespace KUnitTest
     };
 }
 
-KUNITTEST_EXPORT TQTextStream& operator<<( TQTextStream& str, const TQRect& r );
+TDEUNITTEST_EXPORT TQTextStream& operator<<( TQTextStream& str, const TQRect& r );
 
-KUNITTEST_EXPORT TQTextStream& operator<<( TQTextStream& str, const TQPoint& r );
+TDEUNITTEST_EXPORT TQTextStream& operator<<( TQTextStream& str, const TQPoint& r );
 
-KUNITTEST_EXPORT TQTextStream& operator<<( TQTextStream& str, const TQSize& r );
+TDEUNITTEST_EXPORT TQTextStream& operator<<( TQTextStream& str, const TQSize& r );
 
 #endif

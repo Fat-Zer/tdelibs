@@ -20,8 +20,8 @@
  *
  */
 
-#ifndef _KABOUTDIALOG_PRIVATE_H_
-#define _KABOUTDIALOG_PRIVATE_H_
+#ifndef _TDEABOUTDIALOG_PRIVATE_H_
+#define _TDEABOUTDIALOG_PRIVATE_H_
 
 #include <tqlabel.h>
 class TQFrame;

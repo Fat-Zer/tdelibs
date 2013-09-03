@@ -16,8 +16,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef _KACTION_SELECTOR_H_
-#define _KACTION_SELECTOR_H_
+#ifndef _TDEACTION_SELECTOR_H_
+#define _TDEACTION_SELECTOR_H_
 
 #include <tqwidget.h>
 
@@ -399,4 +399,4 @@ private:
   TDEActionSelectorPrivate *d;
 };
 
-#endif // _KACTION_SELECTOR_H_
+#endif // _TDEACTION_SELECTOR_H_

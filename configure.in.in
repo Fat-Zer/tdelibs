@@ -249,18 +249,18 @@ AC_SUBST(LIBRESOLV)
 AC_SUBST(LIBICE)
 
 AC_SUBST(LIB_KAB, '$(top_builddir)/kab/libkab.la')
-AC_SUBST(LIB_TDEABC, '$(top_builddir)/tdeabc/libkabc.la')
+AC_SUBST(LIB_TDEABC, '$(top_builddir)/tdeabc/libtdeabc.la')
 AC_SUBST(LIB_TDECORE, '$(top_builddir)/tdecore/libtdecore.la')
 AC_SUBST(LIB_TDEUI, '$(top_builddir)/tdeui/libtdeui.la')
-AC_SUBST(LIB_KIO, '$(top_builddir)/tdeio/libtdeio.la')
+AC_SUBST(LIB_TDEIO, '$(top_builddir)/tdeio/libtdeio.la')
 AC_SUBST(LIB_TDEFILE, '$(top_builddir)/tdeio/libtdeio.la')
-AC_SUBST(LIB_KSYCOCA, '$(top_builddir)/tdeio/libtdeio.la')
+AC_SUBST(LIB_TDESYCOCA, '$(top_builddir)/tdeio/libtdeio.la')
 AC_SUBST(LIB_TDEHTML, '$(top_builddir)/tdehtml/libtdehtml.la')
 AC_SUBST(LIB_TDEPRINT, '$(top_builddir)/tdeprint/libtdeprint.la')
-AC_SUBST(LIB_KPARTS, '$(top_builddir)/tdeparts/libtdeparts.la')
+AC_SUBST(LIB_TDEPARTS, '$(top_builddir)/tdeparts/libtdeparts.la')
 AC_SUBST(LIB_KIMGIO, '$(top_builddir)/kimgio/libkimgio.la')
 AC_SUBST(LIB_KNEWSTUFF, '$(top_builddir)/knewstuff/libknewstuff.la')
-AC_SUBST(LIB_KUNITTEST, '$(top_builddir)/tdeunittest/libtdeunittest.la')
+AC_SUBST(LIB_TDEUNITTEST, '$(top_builddir)/tdeunittest/libtdeunittest.la')
 case $host in 
 	*cygwin*) lib_kded='$(top_builddir)/kded/libtdeinit_kded.la' ;;
 	*) lib_kded='' ;;

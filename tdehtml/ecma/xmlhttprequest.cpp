@@ -377,7 +377,7 @@ void XMLHttpRequest::send(const TQString& _body)
       TQString key = i.key();
       TQString value = i.data();
       if (key == "accept") {
-        // The HTTP KIO slave supports an override this way
+        // The HTTP TDEIO slave supports an override this way
         job->addMetaData("accept", value);
       } else {
         if (i != begin)

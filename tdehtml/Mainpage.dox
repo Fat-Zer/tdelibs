@@ -40,7 +40,7 @@ Maksim Orlovich
 @lgpl
 
 */
-// DOXYGEN_REFERENCES = tdecore tdeui kio tdeparts kjs
+// DOXYGEN_REFERENCES = tdecore tdeui tdeio tdeparts kjs
 // DOXYGEN_EXCLUDE =  test*.* html rendering xml misc ecma css imload pics test 
 // DOXYGEN_SET_PROJECT_NAME = TDEHTML
 // vim:ts=4:sw=4:expandtab:filetype=doxygen

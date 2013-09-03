@@ -20,8 +20,8 @@
     Boston, MA 02110-1301, USA.
 */
 
-#ifndef _KTOOLBARBUTTON_H
-#define _KTOOLBARBUTTON_H
+#ifndef _TDETOOLBARBUTTON_H
+#define _TDETOOLBARBUTTON_H
 
 #include <tqpixmap.h>
 #include <tqtoolbutton.h>

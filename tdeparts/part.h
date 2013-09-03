@@ -54,7 +54,7 @@ class PartBasePrivate;
  *
  *  @short Base class for all parts.
  */
-class KPARTS_EXPORT PartBase : virtual public KXMLGUIClient
+class TDEPARTS_EXPORT PartBase : virtual public KXMLGUIClient
 {
     friend class PartBasePrivate;
 public:
@@ -178,7 +178,7 @@ private:
  * framework for a "viewer" part and for an "editor"-like part.
  * Use Part directly only if your part doesn't fit into those.
  */
-class KPARTS_EXPORT Part : public TQObject, public PartBase
+class TDEPARTS_EXPORT Part : public TQObject, public PartBase
 {
     Q_OBJECT
 
@@ -335,7 +335,7 @@ class ReadOnlyPartPrivate;
  * If you want another caption, set it in openFile() and
  * (if the part might ever be used with a part manager) in guiActivateEvent()
  */
-class KPARTS_EXPORT ReadOnlyPart : public Part
+class TDEPARTS_EXPORT ReadOnlyPart : public Part
 {
   Q_OBJECT
   friend class ReadWritePart;
@@ -353,7 +353,7 @@ public:
 
   /**
    * Call this to turn off the progress info dialog used by
-   * the internal KIO job. Use this if you provide another way
+   * the internal TDEIO job. Use this if you provide another way
    * of displaying progress info (e.g. a statusbar), using the
    * signals emitted by this class, and/or those emitted by
    * the Job given by started.
@@ -362,7 +362,7 @@ public:
 
   /**
    * Returns whether the part shows the progress info dialog used by internal
-   * KIO job.
+   * TDEIO job.
    */
   bool isProgressInfoEnabled() const;
 
@@ -541,7 +541,7 @@ private:
  * The part probably wants to reimplement setReadWrite, disable those
  * actions. Don't forget to call the parent setReadWrite().
  */
-class KPARTS_EXPORT ReadWritePart : public ReadOnlyPart
+class TDEPARTS_EXPORT ReadWritePart : public ReadOnlyPart
 {
   Q_OBJECT
 public:

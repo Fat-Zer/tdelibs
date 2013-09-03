@@ -22,6 +22,6 @@ endif
 
 SUBDIRS = file http ftp gzip $(BZIP2DIR) metainfo iso
 
-messages: # they get into kio.pot
+messages: # they get into tdeio.pot
 
 include $(top_srcdir)/admin/Doxyfile.am

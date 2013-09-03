@@ -18,8 +18,8 @@
  *  the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  *  Boston, MA 02110-1301, USA.
  */
-#ifndef KCONFIGDIALOG_H
-#define KCONFIGDIALOG_H
+#ifndef TDECONFIGDIALOG_H
+#define TDECONFIGDIALOG_H
 
 class TDEConfig;
 class TDEConfigSkeleton;
@@ -275,5 +275,5 @@ private:
   TDEConfigDialogPrivate *d;
 };
 
-#endif //KCONFIGDIALOG_H
+#endif //TDECONFIGDIALOG_H
 

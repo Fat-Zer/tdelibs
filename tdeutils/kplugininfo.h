@@ -39,7 +39,7 @@ class TDEConfigGroup;
  * @author Matthias Kretz <kretz@kde.org>
  * @since 3.2
  */
-class KUTILS_EXPORT KPluginInfo
+class TDEUTILS_EXPORT KPluginInfo
 {
     public:
         typedef TQValueList<KPluginInfo*> List;

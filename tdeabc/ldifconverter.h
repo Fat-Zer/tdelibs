@@ -1,5 +1,5 @@
 /*
-    This file is part of libkabc.
+    This file is part of libtdeabc.
     Copyright (c) 2003 Helge Deller <deller@kde.org>
 
     This library is free software; you can redistribute it and/or

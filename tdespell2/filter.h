@@ -20,8 +20,8 @@
  * 02110-1301  USA
  */
 
-#ifndef KSPELL_FILTER_H
-#define KSPELL_FILTER_H
+#ifndef TDESPELL_FILTER_H
+#define TDESPELL_FILTER_H
 
 #include <tqstring.h>
 #include <tdelibs_export.h>

@@ -16,7 +16,7 @@
 //    copyright            : (C) 1999-2003 by Falk Brettschneider
 //                                         and
 //                                         Szymon Stefanek (stefanek@tin.it)
-//    email                :  falkbr@tdevelop.org (Falk Brettschneider)
+//    email                :  falkbr@kdevelop.org (Falk Brettschneider)
 //----------------------------------------------------------------------------
 //
 //----------------------------------------------------------------------------
@@ -28,8 +28,8 @@
 //
 //----------------------------------------------------------------------------
 
-#ifndef _KMDIMAINFRM_H_
-#define _KMDIMAINFRM_H_
+#ifndef _TDEMDIMAINFRM_H_
+#define _TDEMDIMAINFRM_H_
 
 #include <tdeparts/dockmainwindow.h>
 #include <tdemenubar.h>
@@ -878,7 +878,7 @@ signals:
 	void toggleBottom();
 };
 
-#endif //_KMDIMAINFRM_H_
+#endif //_TDEMDIMAINFRM_H_
 
 // kate: space-indent off; tab-width 4; replace-tabs off; indent-mode csands;
 

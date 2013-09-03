@@ -33,7 +33,7 @@ class Part;
 /**
  * Base class for all KParts events.
  */
-class KPARTS_EXPORT Event : public TQCustomEvent
+class TDEPARTS_EXPORT Event : public TQCustomEvent
 {
 public:
   Event( const char *eventName );
@@ -51,7 +51,7 @@ public:
  * only for parts that have GUI elements, and only if using KParts::MainWindow.
  * @see KParts::Part::guiActivateEvent()
  */
-class KPARTS_EXPORT GUIActivateEvent : public Event
+class TDEPARTS_EXPORT GUIActivateEvent : public Event
 {
 public:
   GUIActivateEvent( bool activated ) : Event( s_strGUIActivateEvent ), m_bActivated( activated ) {}
@@ -73,7 +73,7 @@ private:
  * with activated=true, part=newPart, widget=newWidget.
  * @see KParts::Part::partActivateEvent
  */
-class KPARTS_EXPORT PartActivateEvent : public Event
+class TDEPARTS_EXPORT PartActivateEvent : public Event
 {
 public:
   PartActivateEvent( bool activated, Part *part, TQWidget *widget ) : Event( s_strPartActivateEvent ), m_bActivated( activated ), m_part( part ), m_widget( widget ) {}
@@ -96,7 +96,7 @@ private:
  * This event is sent when a part is selected or deselected.
  * @see KParts::PartManager::setSelectionPolicy
  */
-class KPARTS_EXPORT PartSelectEvent : public Event
+class TDEPARTS_EXPORT PartSelectEvent : public Event
 {
 public:
   PartSelectEvent( bool selected, Part *part, TQWidget *widget ) : Event( s_strPartSelectEvent ), m_bSelected( selected ), m_part( part ), m_widget( widget ) {}

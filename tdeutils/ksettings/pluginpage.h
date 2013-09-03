@@ -70,7 +70,7 @@ namespace KSettings
  * @author Matthias Kretz <kretz@kde.org>
  * @since 3.2
  */
-class KUTILS_EXPORT PluginPage : public TDECModule
+class TDEUTILS_EXPORT PluginPage : public TDECModule
 {
     Q_OBJECT
     public:

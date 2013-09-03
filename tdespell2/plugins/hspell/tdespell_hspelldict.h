@@ -19,8 +19,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301  USA
  */
-#ifndef KSPELL_HSPELLDICT_H
-#define KSPELL_HSPELLDICT_H
+#ifndef TDESPELL_HSPELLDICT_H
+#define TDESPELL_HSPELLDICT_H
 
 #include "dictionary.h"
 /* libhspell is a C library and it does not have #ifdef __cplusplus */

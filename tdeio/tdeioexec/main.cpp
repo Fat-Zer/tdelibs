@@ -47,7 +47,7 @@
 
 
 static const char description[] =
-        I18N_NOOP("KIO Exec - Opens remote files, watches modifications, asks for upload");
+        I18N_NOOP("TDEIO Exec - Opens remote files, watches modifications, asks for upload");
 
 static TDECmdLineOptions options[] =
 {

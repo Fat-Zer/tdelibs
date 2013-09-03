@@ -17,8 +17,8 @@
    Boston, MA 02110-1301, USA.
 */
 
-#ifndef _KTEMPFILE_H_
-#define _KTEMPFILE_H_
+#ifndef _TDETEMPFILE_H_
+#define _TDETEMPFILE_H_
 
 #include <tqstring.h>
 #include <stdio.h>

@@ -1,5 +1,5 @@
 /*
-    This file is part of libkabc.
+    This file is part of libtdeabc.
     Copyright (c) 2002 Helge Deller <deller@gmx.de>
                   2002 Lubos Lunak <llunak@suse.cz>
                   2001,2003 Carsten Pfeiffer <pfeiffer@kde.org>

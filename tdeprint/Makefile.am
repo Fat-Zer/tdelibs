@@ -11,7 +11,7 @@ INCLUDES= -I$(top_srcdir)/tdefx -I$(top_srcdir)/kded -I$(top_srcdir) $(all_inclu
 kde_module_LTLIBRARIES = kded_tdeprintd.la
 
 kded_tdeprintd_la_SOURCES = tdeprintd.skel tdeprintd.cpp kprintprocess.cpp
-kded_tdeprintd_la_LIBADD = $(LIB_KIO) $(LIB_KDED) $(LIB_QT) $(LIB_TDEUI) $(top_builddir)/dcop/libDCOP.la $(LIB_TDECORE) $(top_builddir)/kded/libtdeinit_kded.la
+kded_tdeprintd_la_LIBADD = $(LIB_TDEIO) $(LIB_KDED) $(LIB_QT) $(LIB_TDEUI) $(top_builddir)/dcop/libDCOP.la $(LIB_TDECORE) $(top_builddir)/kded/libtdeinit_kded.la
 kded_tdeprintd_la_LDFLAGS = $(all_libraries) -module -avoid-version
 #kded_tdeprintd_la_METASOURCES = AUTO
 
@@ -31,7 +31,7 @@ libtdeprint_la_SOURCES = kmfactory.cpp kmjob.cpp kmjobmanager.cpp kmmanager.cpp 
 
 libtdeprint_la_LDFLAGS = $(all_libraries) -version-info 6:0:2 -no-undefined
 libtdeprint_la_LIBADD = $(LIBZ) $(LIB_QT) $(LIB_TDEUI) $(top_builddir)/dcop/libDCOP.la $(LIB_TDECORE) $(LIB_TDEFILE)
-libtdeprint_la_DEPENDENCIES =  $(LIB_KPARTS) 
+libtdeprint_la_DEPENDENCIES =  $(LIB_TDEPARTS) 
 libtdeprint_la_METASOURCES = AUTO
 
 noinst_HEADERS = kmdbentry.h kmfactory.h \

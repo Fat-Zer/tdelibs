@@ -18,8 +18,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301  USA
  */
-#ifndef KSPELL_THREADEVENTS_H
-#define KSPELL_THREADEVENTS_H
+#ifndef TDESPELL_THREADEVENTS_H
+#define TDESPELL_THREADEVENTS_H
 
 #include <tqevent.h>
 #include <tqstring.h>

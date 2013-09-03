@@ -70,7 +70,7 @@ or <a href="http://doc.trolltech.com/porting.html">this page online</a>.<P>
   The first step to get your KDE application to compile under KDE 2.0,
   is to detect KDE 2.0 and Qt 2.x at configure time. The easiest way to
   get a working autoconf/automake framework, is to either use 
-  <a href="http://www.tdevelop.org">KDevelop</a> or
+  <a href="http://www.kdevelop.org">KDevelop</a> or
   <a href="http://home.earthlink.net/~granroth/kapptemplate/index.html">kapptemplate</a>
   (available in CVS under the module "tdesdk"), to generate a new
   application template. Replace the generated source files by yours
@@ -910,7 +910,7 @@ Stefan Westerfeld <A HREF="mailto:stefan@space.twc.de">stefan@space.twc.de</A>
 <H3><A NAME="KImageIO">KImageIO (kimgio.h)</A></H3>
 <p>
 KImageIO has moved from 'kimgio.h' to 'kimageio.h'. LIB_KIMGIO does no longer
-exists, you need to link against LIB_KSYCOCA instead.
+exists, you need to link against LIB_TDESYCOCA instead.
 </p>
 <p>
 kimgioRegister() has been replaced by KImageIO::registerFormats().

@@ -44,7 +44,7 @@ class MainWindowPrivate;
  * TDEMainWindow as host: the builder and servant interface (for menu
  * merging).
  */
-class KPARTS_EXPORT MainWindow : public TDEMainWindow, virtual public PartBase
+class TDEPARTS_EXPORT MainWindow : public TDEMainWindow, virtual public PartBase
 {
   Q_OBJECT
  public:

@@ -1,5 +1,5 @@
 /*
-    This file is part of libkabc.
+    This file is part of libtdeabc.
     Copyright (c) 2001 Cornelius Schumacher <schumacher@kde.org>
 
     This library is free software; you can redistribute it and/or
@@ -162,7 +162,7 @@ bool VCardFormatImpl::loadAddressee( Addressee& addressee, VCARD::VCard &v )
         break;
 
       case EntityLabel:
-        // not yet supported by kabc
+        // not yet supported by tdeabc
         break;
 
       case EntityMailer:

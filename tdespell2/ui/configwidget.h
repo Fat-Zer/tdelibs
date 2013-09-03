@@ -18,8 +18,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301  USA
  */
-#ifndef KSPELL_CONFIGWIDGET_H
-#define KSPELL_CONFIGWIDGET_H
+#ifndef TDESPELL_CONFIGWIDGET_H
+#define TDESPELL_CONFIGWIDGET_H
 
 #include <tqwidget.h>
 #include <tdelibs_export.h>
