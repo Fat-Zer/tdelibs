@@ -446,26 +446,17 @@ set( CMAKE_REQUIRED_LIBRARIES ${bak_CMAKE_REQUIRED_LIBRARIES} )
 unset( bak_CMAKE_REQUIRED_LIBRARIES )
 
 
-# FIXME for unknown reason cmake cannot find su
-#find_program( __PATH_SU su )
-set( __PATH_SU "/bin/su" )
+#### set tdesu backend ##########################
 
-if( __PATH_SU )
-  set( DEFAULT_SUPER_USER_COMMAND ${__PATH_SU} )
-else( __PATH_SU )
-  message( STATUS "WARNING: su was not found" )
-endif( __PATH_SU )
-
-# FIXME for unknown reason cmake cannot find sudo
-# find_program( __PATH_SUDO "sudo" )
-set( __PATH_SUDO "/usr/bin/sudo" )
 if( WITH_SUDO_TDESU_BACKEND )
-  if( __PATH_SUDO )
-    set( DEFAULT_SUPER_USER_COMMAND ${__PATH_SUDO} )
-  else( __PATH_SUDO )
-    message( FATAL_ERROR "sudo was chosen as tdesu backend, but was not found in path." )
-  endif( __PATH_SUDO )
-endif( WITH_SUDO_TDESU_BACKEND )
+  set( DEFAULT_SUPER_USER_COMMAND sudo CACHE INTERNAL "" FORCE )
+else()
+  set( DEFAULT_SUPER_USER_COMMAND su CACHE INTERNAL "" FORCE )
+endif()
+find_file( TDESU_BACKEND ${DEFAULT_SUPER_USER_COMMAND} PATHS ENV PATH )
+if( TDESU_BACKEND-NOTFOUND )
+  tde_message_fatal( "${DEFAULT_SUPER_USER_COMMAND} was chosen as tdesu backend, but was not found in path." )
+endif( TDESU_BACKEND-NOTFOUND )
 
 
 #### set some constants #########################
