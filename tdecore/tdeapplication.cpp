@@ -1251,13 +1251,13 @@ TDEConfig* TDEApplication::sessionConfig()
 void TDEApplication::ref()
 {
     d->refCount++;
-    //kdDebug() << "TDEApplication::ref() : refCount = " << d->refCount << endl;
+    //kdDebug() << "[tdecore-tdeapplication] TDEApplication::ref() : refCount = " << d->refCount << endl;
 }
 
 void TDEApplication::deref()
 {
     d->refCount--;
-    //kdDebug() << "TDEApplication::deref() : refCount = " << d->refCount << endl;
+    //kdDebug() << "[tdecore-tdeapplication] TDEApplication::deref() : refCount = " << d->refCount << endl;
     if ( d->refCount <= 0 )
         quit();
 }
@@ -2090,7 +2090,7 @@ void TDEApplication::getX11RGBAInformation(Display *dpy) {
 			if ( format->type == PictTypeDirect && format->direct.alphaMask ) {
 				visual = xvi[i].visual;
 				colormap = XCreateColormap( dpy, RootWindow( dpy, screen ), visual, AllocNone );
-				kdDebug() << "found visual with alpha support" << endl;
+				kdDebug() << "[tdecore-tdeapplication] Found visual with alpha support" << endl;
 				argb_visual = true;
 				break;
 			}
@@ -2373,7 +2373,7 @@ void TDEApplication::addKipcEventMask(int id)
 {
     if (id >= 32)
     {
-        kdDebug(101) << "Cannot use KIPC event mask for message IDs >= 32\n";
+        kdDebug(101) << "[tdecore-tdeapplication] Cannot use KIPC event mask for message IDs >= 32\n";
         return;
     }
     kipcEventMask |= (1 << id);
@@ -2383,7 +2383,7 @@ void TDEApplication::removeKipcEventMask(int id)
 {
     if (id >= 32)
     {
-        kdDebug(101) << "Cannot use KIPC event mask for message IDs >= 32\n";
+        kdDebug(101) << "[tdecore-tdeapplication] Cannot use KIPC event mask for message IDs >= 32\n";
         return;
     }
     kipcEventMask &= ~(1 << id);
@@ -2878,7 +2878,7 @@ static TQStringList splitEmailAddressList( const TQString & aStr )
         if (commentlevel > 0)
           commentlevel--;
         else {
-          //kdDebug() << "Error in address splitting: Unmatched ')'"
+          //kdDebug() << "[tdecore-tdeapplication] Error in address splitting: Unmatched ')'"
           //          << endl;
           return list;
         }
@@ -2904,7 +2904,7 @@ static TQStringList splitEmailAddressList( const TQString & aStr )
       list += addr.simplifyWhiteSpace();
   }
   //else
-  //  kdDebug() << "Error in address splitting: "
+  //  kdDebug() << "[tdecore-tdeapplication] Error in address splitting: "
   //            << "Unexpected end of address list"
   //            << endl;
 

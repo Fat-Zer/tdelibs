@@ -237,7 +237,7 @@
 7014        tdeio (TDETrader)
 7015        tdeio (KAutoMount)
 7016        tdeio (TDELauncher)
-7017        tdeio (KIOConnection)
+7017        tdeio (TDEIOConnection)
 7018        tdeio (KMimeMagic)
 7019        tdeio (tdeioslave)
 7020        kded
