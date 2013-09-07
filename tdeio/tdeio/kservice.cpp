@@ -103,7 +103,7 @@ KService::init( KDesktopFile *config )
     // extract prefix
     kde4applicationprefix = config->fileName();
     int pos = kde4applicationprefix.find("/share/applications/kde4/");
-    kde4applicationprefix.truncate(pos-1);
+    kde4applicationprefix.truncate(pos);
   }
 
   config->setDesktopGroup();
