@@ -178,8 +178,8 @@ TDELauncher::TDELauncher(int _tdeinitSocket, bool new_startup)
    dcopClient()->setNotifications( true );
    connect(dcopClient(), TQT_SIGNAL( applicationRegistered( const TQCString &)),
            this, TQT_SLOT( slotAppRegistered( const TQCString &)));
-   dcopClient()->connectDCOPSignal( "DCOPServer", "", "terminateKDE()",
-                                    objId(), "terminateKDE()", false );
+   dcopClient()->connectDCOPSignal( "DCOPServer", "", "terminateTDE()",
+                                    objId(), "terminateTDE()", false );
 
    TQString prefix = locateLocal("socket", "tdelauncher");
    KTempFile domainname(prefix, TQString::fromLatin1(".slave-socket"));
@@ -405,11 +405,11 @@ TDELauncher::process(const TQCString &fun, const TQByteArray &data,
       replyType = "void";
       return true;
    }
-   else if (fun == "terminateKDE()")
+   else if (fun == "terminateTDE()")
    {
       ::signal( SIGHUP, SIG_IGN);
       ::signal( SIGTERM, SIG_IGN);
-      kdDebug() << "TDELauncher::process ---> terminateKDE" << endl;
+      kdDebug() << "TDELauncher::process ---> terminateTDE" << endl;
       tdelauncher_header request_header;
       request_header.cmd = LAUNCHER_TERMINATE_KDE;
       request_header.arg_length = 0;
@@ -474,7 +474,7 @@ TDELauncher::functions()
     funcs << "void waitForSlave(pid_t)";
     funcs << "void setLaunchEnv(TQCString,TQCString)";
     funcs << "void reparseConfiguration()";
-//    funcs << "void terminateKDE()";
+//    funcs << "void terminateTDE()";
     funcs << "void autoStart()";
     funcs << "void autoStart(int)";
     return funcs;

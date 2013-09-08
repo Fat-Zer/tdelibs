@@ -770,7 +770,7 @@ public:
   KDEDApplication() : KUniqueApplication( )
     {
        startup = true;
-       dcopClient()->connectDCOPSignal( "DCOPServer", "", "terminateKDE()",
+       dcopClient()->connectDCOPSignal( "DCOPServer", "", "terminateTDE()",
                                         objId(), "quit()", false );
     }
 

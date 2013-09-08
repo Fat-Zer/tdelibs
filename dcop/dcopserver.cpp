@@ -1290,10 +1290,10 @@ void DCOPServer::removeConnection( void* data )
 void DCOPServer::slotTerminate()
 {
 #ifndef NDEBUG
-    fprintf( stderr, "[dcopserver] slotTerminate() -> sending terminateKDE signal." );
+    fprintf( stderr, "[dcopserver] slotTerminate() -> sending terminateTDE signal." );
 #endif
     TQByteArray data;
-    dcopSignals->emitSignal(0L /* dcopserver */, "terminateKDE()", data, false);
+    dcopSignals->emitSignal(0L /* dcopserver */, "terminateTDE()", data, false);
     disconnect( m_timer, TQT_SIGNAL(timeout()), this, TQT_SLOT(slotTerminate()) );
     connect( m_timer, TQT_SIGNAL(timeout()), this, TQT_SLOT(slotSuicide()) );
     system(findDcopserverShutdown()+" --nokill");
@@ -1320,7 +1320,7 @@ void DCOPServer::slotShutdown()
     {
        shutdown = true;
        TQByteArray data;
-       dcopSignals->emitSignal(0L /* dcopserver */, "terminateKDE()", data, false);
+       dcopSignals->emitSignal(0L /* dcopserver */, "terminateTDE()", data, false);
        m_timer->start( 10000 ); // if within 10 seconds nothing happens, we'll terminate
        disconnect( m_timer, TQT_SIGNAL(timeout()), this, TQT_SLOT(slotTerminate()) );
        connect( m_timer, TQT_SIGNAL(timeout()), this, TQT_SLOT(slotExit()) );
