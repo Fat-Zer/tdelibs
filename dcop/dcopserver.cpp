@@ -130,8 +130,8 @@ static TQCString readQCString(TQDataStream &ds)
    int bytesLeft = device->size()-device->at();
    if ((bytesLeft < 0 ) || (len > (uint) bytesLeft))
    {
-      tqWarning("[dcopserver] Corrupt data!\n");
-      printf("[dcopserver] bytesLeft: %d, len: %d\n", bytesLeft, len);
+      tqWarning("[dcopserver] Corrupt data!");
+      printf("[dcopserver] bytesLeft: %d, len: %d", bytesLeft, len);
       return result;
    }
    result.TQByteArray::resize( (uint)len );
@@ -149,7 +149,7 @@ static TQByteArray readQByteArray(TQDataStream &ds)
    int bytesLeft = device->size()-device->at();
    if ((bytesLeft < 0 ) || (len > (uint) bytesLeft))
    {
-      tqWarning("[dcopserver] Corrupt data!\n");
+      tqWarning("[dcopserver] Corrupt data!");
       return result;
    }
    result.resize( (uint)len );
@@ -645,7 +645,7 @@ SetAuthentication (int count, IceListenObj *_listenObjs,
 
     if (command.isEmpty())
     {
-       fprintf( stderr, "[dcopserver] 'iceauth' not found in path, aborting.\n" );
+       fprintf( stderr, "[dcopserver] 'iceauth' not found in path, aborting." );
        exit(1);
     }
 
@@ -1012,7 +1012,7 @@ DCOPServer::DCOPServer(bool _suicide)
     if (!IceListenForConnections (&numTransports, &listenObjs,
 				  256, errormsg))
 	{
-	    fprintf (stderr, "[dcopserver] %s\n", errormsg);
+	    fprintf (stderr, "[dcopserver] %s", errormsg);
 	    exit (1);
 	} else {
 	    (void) umask(orig_umask);
@@ -1020,7 +1020,7 @@ DCOPServer::DCOPServer(bool _suicide)
 	    TQCString fName = DCOPClient::dcopServerFile();
 	    FILE *f;
 	    if(!(f = ::fopen(fName.data(), "w+"))) {
-	        fprintf (stderr, "[dcopserver] Can not create file %s: %s\n",
+	        fprintf (stderr, "[dcopserver] Can not create file %s: %s",
 			 fName.data(), ::strerror(errno));
 		exit(1);
 	    }
@@ -1158,9 +1158,9 @@ void DCOPServer::newClient( int /*socket*/ )
     IceConn iceConn = IceAcceptConnection( static_cast<const  DCOPListener*>(sender())->listenObj, &status);
     if (!iceConn) {
       if (status == IceAcceptBadMalloc)
-	 tqWarning("[dcopserver] Failed to alloc connection object!\n");
+	 tqWarning("[dcopserver] Failed to alloc connection object!");
       else // IceAcceptFailure
-         tqWarning("[dcopserver] Failed to accept ICE connection!\n");
+         tqWarning("[dcopserver] Failed to accept ICE connection!");
       return;
     }
 
@@ -1173,9 +1173,9 @@ void DCOPServer::newClient( int /*socket*/ )
 
     if (cstatus != IceConnectAccepted) {
 	if (cstatus == IceConnectIOError)
-	    tqWarning ("[dcopserver] IO error opening ICE Connection!\n");
+	    tqWarning ("[dcopserver] IO error opening ICE Connection!");
 	else
-	    tqWarning ("[dcopserver] ICE Connection rejected!\n");
+	    tqWarning ("[dcopserver] ICE Connection rejected!");
         deadConnections.removeRef(iceConn);
 	(void) IceCloseConnection (iceConn);
     }
@@ -1290,7 +1290,7 @@ void DCOPServer::removeConnection( void* data )
 void DCOPServer::slotTerminate()
 {
 #ifndef NDEBUG
-    fprintf( stderr, "[dcopserver] slotTerminate() -> sending terminateKDE signal.\n" );
+    fprintf( stderr, "[dcopserver] slotTerminate() -> sending terminateKDE signal." );
 #endif
     TQByteArray data;
     dcopSignals->emitSignal(0L /* dcopserver */, "terminateKDE()", data, false);
@@ -1302,7 +1302,7 @@ void DCOPServer::slotTerminate()
 void DCOPServer::slotSuicide()
 {
 #ifndef NDEBUG
-    fprintf( stderr, "[dcopserver] slotSuicide() -> exit.\n" );
+    fprintf( stderr, "[dcopserver] slotSuicide() -> exit." );
 #endif
     exit(0);
 }
@@ -1310,7 +1310,7 @@ void DCOPServer::slotSuicide()
 void DCOPServer::slotShutdown()
 {
 #ifndef NDEBUG
-    fprintf( stderr, "[dcopserver] slotShutdown() -> waiting for clients to disconnect.\n" );
+    fprintf( stderr, "[dcopserver] slotShutdown() -> waiting for clients to disconnect." );
 #endif
     char c;
 #ifndef Q_OS_WIN
@@ -1332,7 +1332,7 @@ void DCOPServer::slotShutdown()
 void DCOPServer::slotExit()
 {
 #ifndef NDEBUG
-	fprintf( stderr, "[dcopserver] slotExit() -> exit.\n" );
+	fprintf( stderr, "[dcopserver] slotExit() -> exit." );
 #endif
 #ifdef Q_OS_WIN
 	SetEvent(m_evTerminate);
@@ -1354,7 +1354,7 @@ bool DCOPServer::receive(const TQCString &/*app*/, const TQCString &obj,
                 << fun << "\", replyType =\""
                 << replyType << "\", data.size() =\""
                 << data.size() << "\", replyData.size() ="
-                << replyData.size() << "\n";
+                << replyData.size() << "";
     m_logger->flush();
 #endif
 
@@ -1656,7 +1656,7 @@ const char* const ABOUT =
 "Usage: dcopserver [--nofork] [--nosid] [--help]\n"
 "       dcopserver --serverid\n"
 "\n"
-"DCOP is KDE's Desktop Communications Protocol. It is a lightweight IPC/RPC\n"
+"DCOP is TDE's Desktop Communications Protocol. It is a lightweight IPC/RPC\n"
 "mechanism built on top of the X Consortium's Inter Client Exchange protocol.\n"
 "It enables desktop applications to communicate reliably with low overhead.\n"
 "\n"
