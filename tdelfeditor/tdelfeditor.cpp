@@ -30,6 +30,7 @@
 
 /* Obtaining command-line options */
 #include <getopt.h>
+#include <cstdlib>
 
 /* Internationalization support */
 extern "C" {
